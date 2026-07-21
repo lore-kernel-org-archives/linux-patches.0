@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC76F40B112;
-	Tue, 21 Jul 2026 17:43:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C1040587A;
+	Tue, 21 Jul 2026 17:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655801; cv=none; b=H9Eh0VDY3C2FYdIbOthDTp+65JK8nY+fKMYVKJ/3rVQxk+Ii3KotDdaSerGWOG+GSmCvhdkkyCMnWhCAfF6bRQybZyZq6m0TQsEYtYwn0HZ5xnwqhccgR4jFjMm8Icqij70/zEqD2baMBdcqV2ZDvKSj+bSkiNmkEXf6+Ltw8vA=
+	t=1784655803; cv=none; b=aoAFdbYPfDjoeb5tn2QtEKyHkcQzduEX2uM72lm1dO6C/j60/ff5UAGk6OADJcq07bWGXsyaGUTJNZKESUrNcjyfADYJyyJkxCiEO9gj2Dj7lZ4zMQqe2pi6DYkHVFGzj9oP4tKHPsEua2RgIkD7sVLhm1fpnFs2CKRJeY8Shuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655801; c=relaxed/simple;
-	bh=xL5A6c3hG5l/YPrtmF6+H4NEAbUIXAIDhXnLCAqukv8=;
+	s=arc-20240116; t=1784655803; c=relaxed/simple;
+	bh=LZhHRBQ3ddwuE4Uh3+3ThXjeewzj5kdnVDQ7PZ7cCOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YWukFRYCO+eVyx9C0PH3KwMRQ4rzAaT/nNni/0OJA8OgfEm85n2Mz+G+pagVssaVz8IwjcQkBFJTBtZZx63fKg7n54iDLjK51EBXkQh9+RCTd/W9T6rzaoGUuNGUuEMd+xRjrV7+nbHTmY7v5ugfIt3Du8L2hDFcEgje2PsMFjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XXMagQdi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HvNye1Z2+/vcNr+3P75As6uF4INjNLs7dQo8ZTsr1ATDbsXx4CzZYVtAlSWiV/bC5LaEm3DvKiO2rhCusNx2QaoE2s1R46IK4VOYBP1BC+kCJv70tfhZe2HEIZMqFbeL6iuSFjP7Lm0koaRPRc3RI/xHAaOKaXQhltmqZVGW1/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJfeforn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XXMagQdi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C411F000E9;
-	Tue, 21 Jul 2026 17:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJfeforn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5C91F000E9;
+	Tue, 21 Jul 2026 17:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655799;
-	bh=Z5V/o8izt2qVD0W2bDgv6rOG76dETDigHcjn2mbSKdg=;
+	s=korg; t=1784655802;
+	bh=0LC4IzJ57n5FEI8Kg4219nWyfQvCz9WBWbvvZVOyPVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XXMagQdi6oshHucUweatukYN6XFL2v0MwIHPQQnPCWGAYjPcxknATm/QOtM+A6DfQ
-	 W03FRv0m4j3kgm5im0i0YPE5wAG+ZPqDQ7J6D6p4DCgJVzpqJNEY0uZIFf3sx71dEg
-	 RhDPSl+lh3RgSkMrB38n1JfRounaG6bainNdzDgA=
+	b=ZJfeforn1JpQbopM/aXPgm0Ab1v9LkM3BMzbdbp64lLrDYSrqPj3+VsiJVlzE7QUs
+	 gYrqIjQaay8lCongklkRBcNtpTxKhfC120TECwJzWcjm6DLO5s87WpIX2uG3ZP/Bq7
+	 uTUvcXjEjeo23u9RMYqCUchj3x3gRh2OrtimKGj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damian Muszynski <damian.muszynski@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	David Laight <david.laight.linux@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0103/1611] crypto: qat - fix heartbeat error injection
-Date: Tue, 21 Jul 2026 17:03:39 +0200
-Message-ID: <20260721152517.161758009@linuxfoundation.org>
+Subject: [PATCH 6.18 0104/1611] lib/vsprintf: Fix to check field_width and precision
+Date: Tue, 21 Jul 2026 17:03:40 +0200
+Message-ID: <20260721152517.184989906@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,97 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damian Muszynski <damian.muszynski@intel.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 2e96024632b386c86860aa78639940fc96d6fcc9 ]
+[ Upstream commit 71876dffab295b6e25d4209f0424da8fc5020e12 ]
 
-The current implementation of the heartbeat error injection uses
-adf_disable_arb_thd() to stop a specific accelerator engine thread
-from processing requests. This does not reliably prevent the device
-from generating responses.
+Check the field_width and presition correctly. Previously it depends
+on the bitfield conversion from int to check out-of-range error.
+However, commit 938df695e98d ("vsprintf: associate the format state
+with the format pointer") changed those fields to int.
+We need to check the out-of-range correctly without bitfield
+conversion.
 
-Fix the error injection by disabling the device arbiter through
-exit_arb() instead. This properly simulates a device failure by
-stopping all arbitration, which results in missing responses for
-sent requests.
-
-Remove the now unused adf_disable_arb_thd() function and its
-declaration.
-
-Fixes: e2b67859ab6e ("crypto: qat - add heartbeat error simulator")
-Signed-off-by: Damian Muszynski <damian.muszynski@intel.com>
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 938df695e98d ("vsprintf: associate the format state with the format pointer")
+Reported-by: David Laight <david.laight.linux@gmail.com>
+Closes: https://lore.kernel.org/all/20260318151250.40fef0ab@pumpkin/
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Link: https://patch.msgid.link/177452712047.197965.16376597502504928495.stgit@devnote2
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../intel/qat/qat_common/adf_common_drv.h     |  1 -
- .../qat/qat_common/adf_heartbeat_inject.c     |  6 ++---
- .../intel/qat/qat_common/adf_hw_arbiter.c     | 25 -------------------
- 3 files changed, 2 insertions(+), 30 deletions(-)
+ lib/vsprintf.c | 36 ++++++++++++++----------------------
+ 1 file changed, 14 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_common_drv.h b/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
-index a2b9491c26b139..63e1f1c8358e27 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
-+++ b/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
-@@ -90,7 +90,6 @@ void adf_exit_aer(void);
- int adf_init_arb(struct adf_accel_dev *accel_dev);
- void adf_exit_arb(struct adf_accel_dev *accel_dev);
- void adf_update_ring_arb(struct adf_etr_ring_data *ring);
--int adf_disable_arb_thd(struct adf_accel_dev *accel_dev, u32 ae, u32 thr);
- 
- int adf_dev_get(struct adf_accel_dev *accel_dev);
- void adf_dev_put(struct adf_accel_dev *accel_dev);
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_heartbeat_inject.c b/drivers/crypto/intel/qat/qat_common/adf_heartbeat_inject.c
-index a3b474bdef6c83..023c5f1e78b075 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_heartbeat_inject.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_heartbeat_inject.c
-@@ -64,10 +64,8 @@ int adf_heartbeat_inject_error(struct adf_accel_dev *accel_dev)
- 	if (ret)
- 		return ret;
- 
--	/* Configure worker threads to stop processing any packet */
--	ret = adf_disable_arb_thd(accel_dev, rand_ae, rand_thr);
--	if (ret)
--		return ret;
-+	/* Disable arbiter to stop processing any packet */
-+	hw_device->exit_arb(accel_dev);
- 
- 	/* Change HB counters memory to simulate a hang */
- 	adf_set_hb_counters_fail(accel_dev, rand_ae, rand_thr);
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c b/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c
-index f93d9cca70cee4..dd9a31c20bc9c9 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c
-@@ -99,28 +99,3 @@ void adf_exit_arb(struct adf_accel_dev *accel_dev)
- 		csr_ops->write_csr_ring_srv_arb_en(csr, i, 0);
+diff --git a/lib/vsprintf.c b/lib/vsprintf.c
+index a356965c1d7348..a8f12833fbb32f 100644
+--- a/lib/vsprintf.c
++++ b/lib/vsprintf.c
+@@ -2619,6 +2619,18 @@ static unsigned char spec_flag(unsigned char c)
+ 	return (c < sizeof(spec_flag_array)) ? spec_flag_array[c] : 0;
  }
- EXPORT_SYMBOL_GPL(adf_exit_arb);
--
--int adf_disable_arb_thd(struct adf_accel_dev *accel_dev, u32 ae, u32 thr)
+ 
++static void set_field_width(struct printf_spec *spec, int width)
++{
++	spec->field_width = clamp(width, -FIELD_WIDTH_MAX, FIELD_WIDTH_MAX);
++	WARN_ONCE(spec->field_width != width, "field width %d out of range", width);
++}
++
++static void set_precision(struct printf_spec *spec, int prec)
++{
++	spec->precision = clamp(prec, 0, PRECISION_MAX);
++	WARN_ONCE(spec->precision < prec, "precision %d too large", prec);
++}
++
+ /*
+  * Helper function to decode printf style format.
+  * Each call decode a token from the format and return the
+@@ -2689,7 +2701,7 @@ struct fmt format_decode(struct fmt fmt, struct printf_spec *spec)
+ 	spec->field_width = -1;
+ 
+ 	if (isdigit(*fmt.str))
+-		spec->field_width = skip_atoi(&fmt.str);
++		set_field_width(spec, skip_atoi(&fmt.str));
+ 	else if (unlikely(*fmt.str == '*')) {
+ 		/* it's the next argument */
+ 		fmt.state = FORMAT_STATE_WIDTH;
+@@ -2703,9 +2715,7 @@ struct fmt format_decode(struct fmt fmt, struct printf_spec *spec)
+ 	if (unlikely(*fmt.str == '.')) {
+ 		fmt.str++;
+ 		if (isdigit(*fmt.str)) {
+-			spec->precision = skip_atoi(&fmt.str);
+-			if (spec->precision < 0)
+-				spec->precision = 0;
++			set_precision(spec, skip_atoi(&fmt.str));
+ 		} else if (*fmt.str == '*') {
+ 			/* it's the next argument */
+ 			fmt.state = FORMAT_STATE_PRECISION;
+@@ -2778,24 +2788,6 @@ struct fmt format_decode(struct fmt fmt, struct printf_spec *spec)
+ 	return fmt;
+ }
+ 
+-static void
+-set_field_width(struct printf_spec *spec, int width)
 -{
--	void __iomem *csr = accel_dev->transport->banks[0].csr_addr;
--	struct adf_hw_device_data *hw_data = accel_dev->hw_device;
--	const u32 *thd_2_arb_cfg;
--	struct arb_info info;
--	u32 ae_thr_map;
--
--	if (ADF_AE_STRAND0_THREAD == thr || ADF_AE_STRAND1_THREAD == thr)
--		thr = ADF_AE_ADMIN_THREAD;
--
--	hw_data->get_arb_info(&info);
--	thd_2_arb_cfg = hw_data->get_arb_mapping(accel_dev);
--	if (!thd_2_arb_cfg)
--		return -EFAULT;
--
--	/* Disable scheduling for this particular AE and thread */
--	ae_thr_map = *(thd_2_arb_cfg + ae);
--	ae_thr_map &= ~(GENMASK(3, 0) << (thr * BIT(2)));
--
--	WRITE_CSR_ARB_WT2SAM(csr, info.arb_offset, info.wt2sam_offset, ae,
--			     ae_thr_map);
--	return 0;
+-	spec->field_width = width;
+-	if (WARN_ONCE(spec->field_width != width, "field width %d too large", width)) {
+-		spec->field_width = clamp(width, -FIELD_WIDTH_MAX, FIELD_WIDTH_MAX);
+-	}
 -}
+-
+-static void
+-set_precision(struct printf_spec *spec, int prec)
+-{
+-	spec->precision = prec;
+-	if (WARN_ONCE(spec->precision != prec, "precision %d too large", prec)) {
+-		spec->precision = clamp(prec, 0, PRECISION_MAX);
+-	}
+-}
+-
+ /*
+  * Turn a 1/2/4-byte value into a 64-bit one for printing: truncate
+  * as necessary and deal with signedness.
 -- 
 2.53.0
 
