@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43725433BC0;
-	Tue, 21 Jul 2026 19:36:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A428F43079F;
+	Tue, 21 Jul 2026 19:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662585; cv=none; b=UtoCivJlEpZfbwuRuVZv/Yzub3+PaX8YJhOp3Z0Np2wsTNGkz0buMVTRv20rsBU0QPFqRnZZoqocjH6F07IWtuDr2ZxumaWI5VF9CZsRPNtw91CVNSSss3tQ9C1rzztaJy5DmA/jH1ka94RRhkaYbHOgSjVMBVmPKBLgzm9rlAg=
+	t=1784662587; cv=none; b=gINHX2mv8IPlJJA1PTmtoJSf9mWdzNIGHhHHKr8xzY/9fVRzswkDj771NUN2+Uue53aqzINkfDgYGh6pZUmcKFswvCUgR1vLXxCKhvSkIa1XrjSJqAcl/lbLpqR3t2VkWcqXryOk8rOtrxad3KukJ3PhQZjDMtYBT8UW9EMerfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662585; c=relaxed/simple;
-	bh=5eHywpHnaFz5GodpDaIlSVymm5NCTpnSuijQ0XTZ/HE=;
+	s=arc-20240116; t=1784662587; c=relaxed/simple;
+	bh=HaVLFfW/jjA4XQFk5XX7mqBWG3JsU6Fjj0w8HzS8/4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XcWgn0mvNYg6Iis6RbJyHnCCT48YHi0f/pjNcTif5mYeu6AoyUxf1accxia0+MCflUq80MtQfi4fsNmgrX5ArICyA6GQOl3aVzOgUqcVav+Pm61W6fIM2xfPtiuNDKFzw/1TsB20OCHvmYCuHhI/fm0vg7ETNWqgIaaCqRvl8gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0JetDE+E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p6XrbDdXibPqNJf7To8CVrjkzB+DBXfH/5vgW+HH1reLszg3FKb13Aekw8RVXPjIh7cY1BE96149M81SXkCRlZyouoC4Sel4KjWUqaldrxaQLste8FlfQv1mBXNkpDmGHeLMA3ZspiBs5CBxRZpdLKJNCMsvo0qY30o+JQOLvOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxW2zn1/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0JetDE+E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C461F00A3E;
-	Tue, 21 Jul 2026 19:36:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxW2zn1/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E7791F000E9;
+	Tue, 21 Jul 2026 19:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662583;
-	bh=6rSaXlQFEbTw6cNqGaxMWCZHhOYiCxFkNISEQIFOTwg=;
+	s=korg; t=1784662586;
+	bh=cB+oVKHwG1xPLLPcBkzPaCxdzMnT6oY66yY/vRtIw7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0JetDE+EZPPFFe2SVMfj+YhiX9+wS5eusW0WdgGrIBR5rlx+zdSXO2yOoK8DtvHn/
-	 a61gZUJCfys3EKG3i5wqvdShv0vG0jCuG4ZgVAka41j3Z1XWz/TcpU4UxIGyOimtKr
-	 49MZRQPV9LZCqOJeo1ICSgnomO/JtHJfU8rLxlmg=
+	b=DxW2zn1/AJBFQg+pl+dVbp5z9AH0HY8dZA9WGMYcJRWIQ8jqMyuTJ3xlSW2No/1BZ
+	 vdshj3bIHwNoOytKQw1ygdrjSu2eZ6O0wsTAACWBfLRMcmclxUX9yMbUdz4auy0qau
+	 a3nDMU4e4WHz9mYu1f5QpXR+LNvICmVd8c1HESQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Ingo Molnar <mingo@elte.hu>,
+	Ian Rogers <irogers@google.com>,
+	Kan Liang <kan.liang@intel.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0463/1276] perf sched: Fix register_pid() overflow, strcpy, and BUG_ON
-Date: Tue, 21 Jul 2026 17:15:06 +0200
-Message-ID: <20260721152456.464059639@linuxfoundation.org>
+Subject: [PATCH 6.12 0499/1276] perf tools: Use perf_env__get_cpu_topology() in machine__resolve()
+Date: Tue, 21 Jul 2026 17:15:42 +0200
+Message-ID: <20260721152457.271289003@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,7 +47,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -55,136 +55,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 5949d339f5ec98752d56dcd4e36f619a59d513a5 ]
+[ Upstream commit 5484b43a0ec8231c36fba6ead654cb72dbba8b8f ]
 
-register_pid() has several issues when processing untrusted perf.data:
+machine__resolve() accesses env->cpu[al->cpu].socket_id after checking
+al->cpu >= 0 and env->cpu != NULL, but without validating al->cpu
+against env->nr_cpus_avail.  Since al->cpu comes from the untrusted
+perf.data sample, a crafted file with a large CPU index causes an
+out-of-bounds heap read.
 
-1. Integer overflow: (pid + 1) * sizeof(struct task_desc *) can wrap
-   to a small value on 32-bit systems when pid is large (e.g.
-   0x40000000), causing realloc to return a tiny buffer followed by
-   out-of-bounds writes in the initialization loop.
+Use perf_env__get_cpu_topology() which validates both NULL and bounds.
+Also bounds-check al->cpu before the cast to struct perf_cpu (int16_t):
+without this, values like 65536 silently truncate to 0, bypassing the
+accessor's internal check and returning CPU 0's topology.
 
-2. Heap buffer overflow: strcpy(task->comm, comm) copies the
-   untrusted comm string into a fixed 20-byte COMM_LEN buffer with
-   no length check.
-
-3. BUG_ON on allocation failure: perf.data is untrusted input, so
-   allocation failures should be handled gracefully rather than
-   killing the process.
-
-4. Realloc of sched->tasks assigned directly back, leaking the old
-   pointer on failure; nr_tasks incremented before the realloc,
-   leaving corrupted state on failure.
-
-Cap pid at PID_MAX_LIMIT (4194304, matching the kernel's maximum
-on 64-bit), replace strcpy with strlcpy, guard against NULL comm,
-replace BUG_ON with NULL returns using safe realloc patterns, and
-add NULL checks in callers that dereference the result.
-
-Fixes: ec156764d424 ("perf sched: Import schedbench.c")
+Fixes: 0c4c4debb0adda4c ("perf tools: Add processor socket info to hist_entry and addr_location")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Ingo Molnar <mingo@elte.hu>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Kan Liang <kan.liang@intel.com>
+Cc: Ian Rogers <irogers@google.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 40 ++++++++++++++++++++++++++++----------
- 1 file changed, 30 insertions(+), 10 deletions(-)
+ tools/perf/util/event.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 12db6fe6e05a6a..4596037b5763c0 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -51,6 +51,7 @@
- #define COMM_LEN		20
- #define SYM_LEN			129
- #define MAX_PID			1024000
-+#define PID_MAX_LIMIT		4194304 /* kernel limit on 64-bit */
- #define MAX_PRIO		140
+diff --git a/tools/perf/util/event.c b/tools/perf/util/event.c
+index aac96d5d191700..1e5085817e8250 100644
+--- a/tools/perf/util/event.c
++++ b/tools/perf/util/event.c
+@@ -12,6 +12,7 @@
+ #include <linux/zalloc.h>
+ #include "cpumap.h"
+ #include "dso.h"
++#include "env.h"
+ #include "event.h"
+ #include "debug.h"
+ #include "hist.h"
+@@ -763,8 +764,18 @@ int machine__resolve(struct machine *machine, struct addr_location *al,
+ 	if (al->cpu >= 0) {
+ 		struct perf_env *env = machine->env;
  
- static const char *cpu_list;
-@@ -440,17 +441,28 @@ static void add_sched_event_sleep(struct perf_sched *sched, struct task_desc *ta
- static struct task_desc *register_pid(struct perf_sched *sched,
- 				      unsigned long pid, const char *comm)
- {
--	struct task_desc *task;
-+	struct task_desc *task, **tasks_p;
- 	static int pid_max;
- 
-+	/* perf.data is untrusted — cap pid to prevent overflow in size calculations */
-+	if (pid >= PID_MAX_LIMIT) {
-+		pr_err("pid %lu exceeds limit %d, skipping\n", pid, PID_MAX_LIMIT);
-+		return NULL;
-+	}
+-		if (env && env->cpu)
+-			al->socket = env->cpu[al->cpu].socket_id;
++		/*
++		 * Bounds-check al->cpu (s32) before casting to struct perf_cpu
++		 * (int16_t): without this, e.g. 65536 truncates to 0 and silently
++		 * returns CPU 0's topology.  Can go once perf_cpu.cpu is widened.
++		 */
++		if (env && al->cpu < env->nr_cpus_avail) {
++			struct cpu_topology_map *topo;
 +
- 	if (sched->pid_to_task == NULL) {
- 		if (sysctl__read_int("kernel/pid_max", &pid_max) < 0)
- 			pid_max = MAX_PID;
--		BUG_ON((sched->pid_to_task = calloc(pid_max, sizeof(struct task_desc *))) == NULL);
-+		sched->pid_to_task = calloc(pid_max, sizeof(struct task_desc *));
-+		if (sched->pid_to_task == NULL)
-+			return NULL;
++			topo = perf_env__get_cpu_topology(env, (struct perf_cpu){ al->cpu });
++			if (topo)
++				al->socket = topo->socket_id;
++		}
  	}
- 	if (pid >= (unsigned long)pid_max) {
--		BUG_ON((sched->pid_to_task = realloc(sched->pid_to_task, (pid + 1) *
--			sizeof(struct task_desc *))) == NULL);
-+		void *p = realloc(sched->pid_to_task, (pid + 1) * sizeof(struct task_desc *));
-+
-+		if (p == NULL)
-+			return NULL;
-+		sched->pid_to_task = p;
- 		while (pid >= (unsigned long)pid_max)
- 			sched->pid_to_task[pid_max++] = NULL;
- 	}
-@@ -461,9 +473,11 @@ static struct task_desc *register_pid(struct perf_sched *sched,
- 		return task;
  
- 	task = zalloc(sizeof(*task));
-+	if (task == NULL)
-+		return NULL;
- 	task->pid = pid;
--	task->nr = sched->nr_tasks;
--	strcpy(task->comm, comm);
-+	if (comm)
-+		strlcpy(task->comm, comm, sizeof(task->comm));
- 	/*
- 	 * every task starts in sleeping state - this gets ignored
- 	 * if there's no wakeup pointing to this sleep state:
-@@ -471,10 +485,12 @@ static struct task_desc *register_pid(struct perf_sched *sched,
- 	add_sched_event_sleep(sched, task, 0, 0);
- 
- 	sched->pid_to_task[pid] = task;
--	sched->nr_tasks++;
--	sched->tasks = realloc(sched->tasks, sched->nr_tasks * sizeof(struct task_desc *));
--	BUG_ON(!sched->tasks);
--	sched->tasks[task->nr] = task;
-+	tasks_p = realloc(sched->tasks, (sched->nr_tasks + 1) * sizeof(struct task_desc *));
-+	if (!tasks_p)
-+		return NULL;
-+	sched->tasks = tasks_p;
-+	sched->tasks[sched->nr_tasks] = task;
-+	task->nr = sched->nr_tasks++;
- 
- 	if (verbose > 0)
- 		printf("registered task #%ld, PID %ld (%s)\n", sched->nr_tasks, pid, comm);
-@@ -838,6 +854,8 @@ replay_wakeup_event(struct perf_sched *sched,
- 
- 	waker = register_pid(sched, sample->tid, "<unknown>");
- 	wakee = register_pid(sched, pid, comm);
-+	if (waker == NULL || wakee == NULL)
-+		return -1;
- 
- 	add_sched_event_wakeup(sched, waker, sample->time, wakee);
- 	return 0;
-@@ -880,6 +898,8 @@ static int replay_switch_event(struct perf_sched *sched,
- 
- 	prev = register_pid(sched, prev_pid, prev_comm);
- 	next = register_pid(sched, next_pid, next_comm);
-+	if (prev == NULL || next == NULL)
-+		return -1;
- 
- 	sched->cpu_last_switched[cpu] = timestamp;
- 
+ 	if (al->map) {
 -- 
 2.53.0
 
