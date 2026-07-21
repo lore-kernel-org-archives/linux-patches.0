@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7576A43D51D;
-	Tue, 21 Jul 2026 22:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD1843D502;
+	Tue, 21 Jul 2026 22:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673515; cv=none; b=eG7XbxsMy8y+IEi+hP8KUonMcv7iGF9xBSANTbbRn4UZ+cZquLB4/4d1DV5OQT3EOZSgFKbieyCx1IZ3SptfyedkdXGGjF5HU172RUIt43zena2tS0RebRF/loylfJOxm2ysmoZ6iMCgSvjUWbiFNW0fN5Ep0QygN2n2nzwVF5c=
+	t=1784673518; cv=none; b=MQgSM/4U5j9Adc9D90o0h9CIR4eKoELzfWFggZP1L03O2YUYG2sTizVGpJlslwmjfHjcUd6LRBnlQGULIlry8d0MbbnCJo+cLK6CghS4TYI6AqH7AkBQBAx8IQwXhKGOVSPUwnU0oyD6M9Fe4S3MGrJAGQjpMZUcpVyBFK9VWBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673515; c=relaxed/simple;
-	bh=Wz2wDzoKMkvX1rCo6cSC12ALwPY7UhT4bXaOeJbUA+M=;
+	s=arc-20240116; t=1784673518; c=relaxed/simple;
+	bh=pqglV1aBRn/B6i+YVlYETD8W+JN7z/Qc3VmKcAoTsDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mbiVBazsg5LzcHVrKFi0FKOf7xN/8KY5aWWOXGECvpaX4m15nkQD1m38spAcMITjFfDn2kIErfaRwsDIkmSL/XkQdY6rctwWrCwpWy702GLCCLk/xyRUc8OQQpF1VDgB0Y8ij4tk8SbdnYa7E+LksS2h2Ou+NRznUaDrZd9fJPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cC+FBHYn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nG8jB77Wsf5wfnnypAdU4UMkNqvXIvOptDqJy/XAbrCq4sBx/BYjvKSVhA6zHfQ9RAToBj5BPFA5WlYdUS0iFJyY9km1wSNTHLH2bKRklv6Ey/Kba+SCezBmORcUBGv4uiFSZOGVjOuAeRg8cfFA/3xBmxZEADoE+aHolN3iF8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U7pYqyth; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cC+FBHYn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E921F000E9;
-	Tue, 21 Jul 2026 22:38:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U7pYqyth"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FAE11F000E9;
+	Tue, 21 Jul 2026 22:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673514;
-	bh=r2d6UNppvE9Vw/o3Ygcz7T0t/TW1OvABbjFgRdTD8x8=;
+	s=korg; t=1784673517;
+	bh=EErc66Tidg2F6SDSJCf+fH5prFO+1gBoULd+/gFx1rI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cC+FBHYnyw+mYxOGiUILZ+tXMc3WcGgYQvtc1hRgXIFkmDIyYVOj2hXlceEIVUtyI
-	 bp1dNDH5Pe18CYuRT64dRg7dQ8OX4CAl4+S103mRAY1VshQzY52Q33jDOCrUqqHvfZ
-	 oeoUZjaVA5Nf6GRz3xXVKW7GFY6gO490g07iK1Cg=
+	b=U7pYqythebH3sXYev+M0kcwD9MafdW/l+Kz21u5t9FWYrJlB9Ic0i1PoxszE+C2wp
+	 rUzEdC1BjAR6kDipIlA/RxNJPQ4KqGi6/aJEdRJ0vL9Pasr78GS8GftQmn84FGd5PH
+	 8YPBf/X6VKwVaWGqmlrrWiPZm0cpmG+XpYSoT/IU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 174/699] wifi: ath9k: fix OOB access from firmware tx status queue ID
-Date: Tue, 21 Jul 2026 17:18:53 +0200
-Message-ID: <20260721152359.626159790@linuxfoundation.org>
+Subject: [PATCH 5.10 192/699] media: atomisp: Fix memory leak in atomisp_fixed_pattern_table()
+Date: Tue, 21 Jul 2026 17:19:11 +0200
+Message-ID: <20260721152400.030361292@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -46,50 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 7ce2f118a2389e8f0a64068c6fe7cc7d40639be0 ]
+[ Upstream commit 4e8156bd9517fa18c3613ea39c222c7035f0221e ]
 
-ath_tx_edma_tasklet() accesses sc->tx.txq[ts.qid] where ts.qid is a
-4-bit hardware field (0-15), but the txq array only has
-ATH9K_NUM_TX_QUEUES (10) entries. A qid >= 10 causes an OOB array
-access.
+atomisp_v4l2_framebuffer_to_css_frame() allocates memory for
+temporary variable raw_black_frame, which must be released via
+ia_css_frame_free() before the function returns. However, if
+sh_css_set_black_frame() fails, the function returns immediately without
+performing this cleanup, leading to a memory leak.
 
-Add a bounds check on ts.qid before using it as an array index.
+Fix this by assigning the return value of sh_css_set_black_frame() to
+ret. This ensures that the error code is propagated while allowing the
+execution to fall through to the ia_css_frame_free() cleanup call.
 
-Fixes: fce041beb03f ("ath9k: unify edma and non-edma tx code, improve tx fifo handling")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20260415222343.1540564-1-tristmd@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+The bug was originally detected on v6.13-rc1 using an experimental
+static analysis tool we are developing, and we have verified that the
+issue persists in the latest mainline kernel. The tool is based on the
+LLVM framework and is specifically designed to detect memory management
+issues. It is currently under active development and not yet publicly
+available.
+
+We performed build testing on x86_64 with allyesconfig. Since triggering
+this error path in atomisp requires specific Intel Atom ISP hardware and
+firmware, we were unable to perform runtime testing and instead verified
+the fix according to the code logic.
+
+Fixes: 85b606e02ad7 ("media: atomisp: get rid of a bunch of other wrappers")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/xmit.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/staging/media/atomisp/pci/atomisp_cmd.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/xmit.c b/drivers/net/wireless/ath/ath9k/xmit.c
-index 84c68aefc171a7..cd175d9e729df3 100644
---- a/drivers/net/wireless/ath/ath9k/xmit.c
-+++ b/drivers/net/wireless/ath/ath9k/xmit.c
-@@ -2695,6 +2695,11 @@ void ath_tx_edma_tasklet(struct ath_softc *sc)
- 			continue;
- 		}
+diff --git a/drivers/staging/media/atomisp/pci/atomisp_cmd.c b/drivers/staging/media/atomisp/pci/atomisp_cmd.c
+index 613bd962022424..0e92a6156ed5b6 100644
+--- a/drivers/staging/media/atomisp/pci/atomisp_cmd.c
++++ b/drivers/staging/media/atomisp/pci/atomisp_cmd.c
+@@ -4689,10 +4689,8 @@ int atomisp_fixed_pattern_table(struct atomisp_sub_device *asd,
+ 	if (ret)
+ 		return ret;
  
-+		if (ts.qid >= ATH9K_NUM_TX_QUEUES) {
-+			ath_dbg(common, XMIT, "invalid qid %d\n", ts.qid);
-+			continue;
-+		}
-+
- 		txq = &sc->tx.txq[ts.qid];
- 
- 		ath_txq_lock(sc, txq);
+-	if (sh_css_set_black_frame(asd->stream_env[ATOMISP_INPUT_STREAM_GENERAL].stream,
+-				   raw_black_frame) != 0)
+-		return -ENOMEM;
+-
++	ret = sh_css_set_black_frame(asd->stream_env[ATOMISP_INPUT_STREAM_GENERAL].stream,
++				     raw_black_frame);
+ 	ia_css_frame_free(raw_black_frame);
+ 	return ret;
+ }
 -- 
 2.53.0
 
