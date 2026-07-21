@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFF33CAE7F;
-	Tue, 21 Jul 2026 22:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D053D16EF;
+	Tue, 21 Jul 2026 22:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673154; cv=none; b=gNQqV9jKlEyrniFjdGcpp3AloCW7no6xatkaMmnP6kA/DnPmVDwg+3bH5NhfPsjkipw6v6LY6k3Ktj0/dzC0/rnwYBIb29XO3W0fADj8CHYMV/24ysauX5TbOwKZjnzG6zZYsyP4spXbH6HMg5VMn91OIlcGxbgAhtnvLk0Xsso=
+	t=1784673157; cv=none; b=boq2k1+IZz28sn6bbXSJdToryrT2GCRcCXs14SrGyMLyx8QSdOTd341la9AXraEf836UX6GYbsjAbXGbO4Pa/euIFSkWq3VGJwAE28df32Qx33/eC0z/FbGdqJJTahFU/i3N3pfuAZ+ecxitMTsVAdvlf97XDyYJs7SSVD8DI0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673154; c=relaxed/simple;
-	bh=PzdNHpiYUjKvd5r/ju6ai+WDka8mZsWXRZsYEUb0wU8=;
+	s=arc-20240116; t=1784673157; c=relaxed/simple;
+	bh=cXcGC5vRmDtDjkB+aKBh8Emk/XdCrwbNlJEjDFOlWHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y5E1Dypj2+XMREHUWJZWW/I4d/p0AmL0TkP8eXyMm5wn+0VUclCvtPnGjIsqp3LgdIFP9Dt/Fob7VdMUOPrPvfWVlImdgyvEk7Zk4FHa2NBMrqpue7Q+5LhoVbV09gREhrupb1OokFQt7kC9oeszhhDQ3EIn9TxJsMR1b1NpFhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQvtSRY2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LCUs4hXLbS5KiTyhQzUUzIlc3QUR2Dc+ha34AMgqgga8wekGMlL1NH6sQlsdNuJl7rm6s3hKHhrau05vA8UDxQZZ1o4CWK/vS6lKwXHbc412ZyugZWq9OGvnLr18abSbGmBW9i2fQAzKwKlRNVtBJuB4VXvXHKQa+lukWGTaIRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ktX2ijqc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQvtSRY2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A811F000E9;
-	Tue, 21 Jul 2026 22:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ktX2ijqc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B5E61F000E9;
+	Tue, 21 Jul 2026 22:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673153;
-	bh=EPRqpPAoD8BBymzBjPy+6ezduV/R5/CxPu7vHrGr27Y=;
+	s=korg; t=1784673155;
+	bh=GU6Gsgy4RREOs323A44evtUTWnR9/LWLkHrgrktSURI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lQvtSRY2+pcFONt3XPPU1xknqd+FDjRgygw9MIMUyKfk/fHtJacJ9MzmvEgs8fXDH
-	 etrLVvbmwUNgEaX5z8YrRhzJvVZCejC8QgvJbDwpR0Pq58taHYAVqzlyeM0iPWWCsa
-	 lS6FjZ4cu4suY6TdUjpSeEypyD2+M1UI2QyRzDk0=
+	b=ktX2ijqcdmIanEYwEN7E0T16loSWnvPlzEvRWEWllh+Dd50/U0NKY/ZPJMrk1xjw7
+	 opsTaxr/GALBuCVpZOetW0ZDFufYv2f6amCJ9VEQIVpIZ91ktuF5/kavwhzXMIDPlj
+	 gvFJWJ4CTqrV8iEUknVXGf/RF5B8gVs02+Rw/c1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 055/699] ALSA: usb-audio: Propagate errors in scarlett_ctl_enum_put()
-Date: Tue, 21 Jul 2026 17:16:54 +0200
-Message-ID: <20260721152356.950740289@linuxfoundation.org>
+Subject: [PATCH 5.10 056/699] ALSA: usb-audio: Propagate US-16x08 write errors in route/mix EQ-switch put callbacks
+Date: Tue, 21 Jul 2026 17:16:55 +0200
+Message-ID: <20260721152356.972074540@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,37 +53,129 @@ Content-Transfer-Encoding: 8bit
 
 From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 0f25cf1f02e3dba626791d949c759a48c0a44996 upstream.
+commit 3c06aec8abda6ba068b58a8b7119cdb2a48456b1 upstream.
 
-scarlett_ctl_enum_put() ignores the return value from
-snd_usb_set_cur_mix_value() and reports success whenever the
-requested enum value differs from the current one.
+Several US-16x08 mixer put callbacks log failed control URBs but
+still return success to userspace. That hides device write failures
+even though the requested value was not applied.
 
-If the SET_CUR request fails, the callback still returns success even
-though neither the hardware state nor the cached mixer value changed.
+Return the negative write error instead in the route, master, bus,
+channel, and EQ switch put callbacks.
 
-Fixes: 76b188c4b370 ("ALSA: usb-audio: Scarlett mixer interface for 6i6, 18i6, 18i8 and 18i20")
+Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
 Cc: stable@vger.kernel.org
 Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-2-5a3bd4a673ae@gmail.com
+Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-3-5a3bd4a673ae@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_scarlett.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/usb/mixer_us16x08.c |   49 ++++++++++++++++++++++------------------------
+ 1 file changed, 24 insertions(+), 25 deletions(-)
 
---- a/sound/usb/mixer_scarlett.c
-+++ b/sound/usb/mixer_scarlett.c
-@@ -438,7 +438,9 @@ static int scarlett_ctl_enum_put(struct
- 	val = ucontrol->value.integer.value[0];
- 	val = val + opt->start;
- 	if (val != oval) {
--		snd_usb_set_cur_mix_value(elem, 0, 0, val);
-+		err = snd_usb_set_cur_mix_value(elem, 0, 0, val);
-+		if (err < 0)
-+			return err;
- 		return 1;
+--- a/sound/usb/mixer_us16x08.c
++++ b/sound/usb/mixer_us16x08.c
+@@ -225,14 +225,14 @@ static int snd_us16x08_route_put(struct
+ 
+ 	err = snd_us16x08_send_urb(chip, buf, sizeof(route_msg));
+ 
+-	if (err > 0) {
+-		elem->cached |= 1 << index;
+-		elem->cache_val[index] = val;
+-	} else {
++	if (err < 0) {
+ 		usb_audio_dbg(chip, "Failed to set routing, err:%d\n", err);
++		return err;
  	}
+ 
+-	return err > 0 ? 1 : 0;
++	elem->cached |= 1 << index;
++	elem->cache_val[index] = val;
++	return 1;
+ }
+ 
+ static int snd_us16x08_master_info(struct snd_kcontrol *kcontrol,
+@@ -284,14 +284,14 @@ static int snd_us16x08_master_put(struct
+ 	buf[5] = index + 1;
+ 	err = snd_us16x08_send_urb(chip, buf, sizeof(mix_msg_out));
+ 
+-	if (err > 0) {
+-		elem->cached |= 1 << index;
+-		elem->cache_val[index] = val;
+-	} else {
++	if (err < 0) {
+ 		usb_audio_dbg(chip, "Failed to set master, err:%d\n", err);
++		return err;
+ 	}
+ 
+-	return err > 0 ? 1 : 0;
++	elem->cached |= 1 << index;
++	elem->cache_val[index] = val;
++	return 1;
+ }
+ 
+ static int snd_us16x08_bus_put(struct snd_kcontrol *kcontrol,
+@@ -325,14 +325,14 @@ static int snd_us16x08_bus_put(struct sn
+ 		break;
+ 	}
+ 
+-	if (err > 0) {
+-		elem->cached |= 1;
+-		elem->cache_val[0] = val;
+-	} else {
++	if (err < 0) {
+ 		usb_audio_dbg(chip, "Failed to set bus parameter, err:%d\n", err);
++		return err;
+ 	}
+ 
+-	return err > 0 ? 1 : 0;
++	elem->cached |= 1;
++	elem->cache_val[0] = val;
++	return 1;
+ }
+ 
+ static int snd_us16x08_bus_get(struct snd_kcontrol *kcontrol,
+@@ -393,14 +393,14 @@ static int snd_us16x08_channel_put(struc
+ 
+ 	err = snd_us16x08_send_urb(chip, buf, sizeof(mix_msg_in));
+ 
+-	if (err > 0) {
+-		elem->cached |= 1 << index;
+-		elem->cache_val[index] = val;
+-	} else {
++	if (err < 0) {
+ 		usb_audio_dbg(chip, "Failed to set channel, err:%d\n", err);
++		return err;
+ 	}
+ 
+-	return err > 0 ? 1 : 0;
++	elem->cached |= 1 << index;
++	elem->cache_val[index] = val;
++	return 1;
+ }
+ 
+ static int snd_us16x08_mix_info(struct snd_kcontrol *kcontrol,
+@@ -530,13 +530,13 @@ static int snd_us16x08_eqswitch_put(stru
+ 		msleep(15);
+ 	}
+ 
+-	if (err > 0) {
+-		elem->cached |= 1 << index;
+-		elem->cache_val[index] = val;
+-	} else {
++	if (err < 0) {
+ 		usb_audio_dbg(chip, "Failed to set eq switch, err:%d\n", err);
++		return err;
+ 	}
+ 
++	elem->cached |= 1 << index;
++	elem->cache_val[index] = val;
+ 	return 1;
+ }
+ 
+@@ -1419,4 +1419,3 @@ int snd_us16x08_controls_create(struct u
+ 
  	return 0;
+ }
+-
 
 
