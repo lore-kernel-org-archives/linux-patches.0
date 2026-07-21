@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2793B47DF;
-	Tue, 21 Jul 2026 20:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697B93B47DF;
+	Tue, 21 Jul 2026 20:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667353; cv=none; b=rttvzC5r2l+vkQal5Q7zhR4RE98RSbM+TxOsOIrqbiiH4WVrvJz1Dhadc5NDTuiMKj4UBU7+f8JtvFgB8bieABfUZwlaS42vlHazXa8cOP2p4U3w2ws6fjAHyJYTdMVnZdxQLNC4kORYWK6KQHhvuj6/uq7vyjgOJ1ev/mqa5sU=
+	t=1784667356; cv=none; b=nXHs7AGAEGW+6ATlFhTQMIYH/9vuorPqAfebL33ikL5kasQL5erSA6j5JcaXpMYcEFRouJ3WJGh49DjMog221+4HY3Z9fudVScj6/k8qZd8dUrDS9ZxirEUCru0fIfS0UvlrgEbJIr/AFZjoVzgXgscudYrqEc7wwP2ge6xcxHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667353; c=relaxed/simple;
-	bh=LdRsxgBkvfubITPnMKuuELRL8vriijwKnLsuzkdtsqU=;
+	s=arc-20240116; t=1784667356; c=relaxed/simple;
+	bh=FeE/4XIh90gncgG8e3Gh9KE8/Bj058BZeytqIrkcn0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YcKaWmtBnb/HWtUpqgq0n8NuWMypKLAnxhZ2GM9cT3JXM+SX9aHiWsmP/zO42jZQdjeWUSTYV1l+jV7GbzdiRX6AVCqgB8QVl+f8Pc+4qUADlud21Q0WiS999/V/aqOXcPRzIGGfNAGuNdOjmZOm9I4tdsapjm+DkdeGlfTGQAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GB8ZhUSf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qN9E4ehdW6Q2f24/DwmieChTqEt7zHAgv7hAMg1Tnz0Xz71rRx5bZ4L5HoeMEjcWgzsJnSLFoSxkyROsoZCI605wyQ1OY3IRqyqP5WocMGpnd73X1Hj4ilwRruh6zmwuOj3NnOvzbpDaPLdmmnc+juvcxt9dnISMLgKUUNtq0TA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6uL7HgB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GB8ZhUSf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F871F000E9;
-	Tue, 21 Jul 2026 20:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6uL7HgB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7411F000E9;
+	Tue, 21 Jul 2026 20:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667352;
-	bh=d1C/Qpfm0iyesa4KnSMSJ+cCucSJsMaKgFtarbq3M8A=;
+	s=korg; t=1784667355;
+	bh=fGJXYUyXYyEXXIjDVjFp9csMoY87+TbFpRgOUfBzvB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GB8ZhUSfXF+mI0H2zOPhfZnHpkebMPa0YkQcnv/aYbPRflJeFoVBuRHKCCkjzYyNX
-	 BuXRLR+oz43JrqB+5a9IqLiLZNLtNr5kM5xkYUlL1yqieEwLxsDmi6tCqsNz+hXU93
-	 Sz3KIKtLT9Kl/QdMC1gyC/KgS+d5+f9sZwrmLntw=
+	b=I6uL7HgBkYy5zOVJj5lFprAUvU+/y32YFzJSlwkTMZTasB9k6dVaggw9N+ffLmFzJ
+	 JkftDFwp8iDHNvuJJG8/S5jOep6bFSE936rbpocF+q9Q1gNFo15A+rGl68uFVq3YuM
+	 q/pLAZmnTePdajtrAWCexe6jRI0oyfqdGnisMLJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.6 1030/1266] tpm: fix event_size output in tpm1_binary_bios_measurements_show
-Date: Tue, 21 Jul 2026 17:24:27 +0200
-Message-ID: <20260721152504.873410040@linuxfoundation.org>
+	Jaewon Yang <yong010301@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.6 1031/1266] tpm: Make the TPM character devices non-seekable
+Date: Tue, 21 Jul 2026 17:24:28 +0200
+Message-ID: <20260721152504.895643099@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,51 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Jaewon Yang <yong010301@gmail.com>
 
-commit 1a58f6115bfb34eabcc7de8a3a9745b219179781 upstream.
+commit f20d61c22bcaf172d6790b6500e3838e532e71c8 upstream.
 
-Commit 186d124f07da ("tpm_eventlog.c: fix binary_bios_measurements")
-split the output to write the endian-converted event header first and
-then the variable-length event data.
+The TPM character devices expose a sequential command/response
+interface, but their open handlers leave FMODE_PREAD and FMODE_PWRITE
+enabled.
 
-However, the split was at sizeof(struct tcpa_event) - 1, even though
-event_data was a zero-length array, and later a flexible array member,
-both of which already excluded the event data.
+After a command leaves a response pending, pread(fd, buf, 16, 0x1400)
+passes 0x1400 as *off to tpm_common_read(). The transfer length is
+bounded by response_length, but the offset is used unchecked when
+forming data_buffer + *off. A sufficiently large offset therefore causes
+an out-of-bounds heap read through copy_to_user() and, if the copy
+succeeds, an out-of-bounds zero-write through the following memset().
 
-Therefore, the current code writes the first three bytes of event_size
-from the endian-converted header and then the last byte from the raw
-header, which can emit a corrupted event_size on PPC64, where
-do_endian_conversion() maps to be32_to_cpu().
+Positional I/O does not provide coherent semantics for this interface.
+An arbitrary pread offset cannot represent how much of a response has
+been consumed sequentially. The write callback always stores a command
+at the start of data_buffer, while pwrite() does not update file->f_pos
+and can leave the sequential read cursor stale.
 
-Split one byte later to write the full endian-converted header first,
-followed by the variable-length event->event_data.
+Call nonseekable_open() from both open handlers. This removes
+FMODE_PREAD and FMODE_PWRITE, causing positional reads and writes to
+fail with -ESPIPE before reaching the TPM callbacks, and explicitly
+marks the files non-seekable. Normal read() and write() continue to use
+the existing sequential f_pos cursor, leaving the response state machine
+unchanged.
 
-Fixes: 186d124f07da ("tpm_eventlog.c: fix binary_bios_measurements")
-Cc: stable@vger.kernel.org # v5.10+
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Tested on Linux 6.12 with KASAN and a swtpm TPM2 device:
+
+ - sequential partial reads returned the complete response
+ - pread() and preadv() with offset 0x1400 returned -ESPIPE
+ - pwrite() and pwritev() with offset zero returned -ESPIPE
+ - the pending response remained intact after the rejected operations
+ - a subsequent normal command/response cycle completed normally
+ - no KASAN report was produced.
+
+Fixes: 9488585b21be ("tpm: add support for partial reads")
+Link: https://lore.kernel.org/all/20260710090217.191289-1-yong010301@gmail.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Jaewon Yang <yong010301@gmail.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/eventlog/tpm1.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/char/tpm/tpm-dev.c   |    2 +-
+ drivers/char/tpm/tpmrm-dev.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/char/tpm/eventlog/tpm1.c
-+++ b/drivers/char/tpm/eventlog/tpm1.c
-@@ -236,12 +236,12 @@ static int tpm1_binary_bios_measurements
+--- a/drivers/char/tpm/tpm-dev.c
++++ b/drivers/char/tpm/tpm-dev.c
+@@ -36,7 +36,7 @@ static int tpm_open(struct inode *inode,
  
- 	temp_ptr = (char *) &temp_event;
+ 	tpm_common_open(file, chip, priv, NULL);
  
--	for (i = 0; i < (sizeof(struct tcpa_event) - 1) ; i++)
-+	for (i = 0; i < sizeof(struct tcpa_event); i++)
- 		seq_putc(m, temp_ptr[i]);
+-	return 0;
++	return nonseekable_open(inode, file);
  
- 	temp_ptr = (char *) v;
+  out:
+ 	clear_bit(0, &chip->is_open);
+--- a/drivers/char/tpm/tpmrm-dev.c
++++ b/drivers/char/tpm/tpmrm-dev.c
+@@ -29,7 +29,7 @@ static int tpmrm_open(struct inode *inod
  
--	for (i = (sizeof(struct tcpa_event) - 1);
-+	for (i = sizeof(struct tcpa_event);
- 	     i < (sizeof(struct tcpa_event) + temp_event.event_size); i++)
- 		seq_putc(m, temp_ptr[i]);
+ 	tpm_common_open(file, chip, &priv->priv, &priv->space);
  
+-	return 0;
++	return nonseekable_open(inode, file);
+ }
+ 
+ static int tpmrm_release(struct inode *inode, struct file *file)
 
 
