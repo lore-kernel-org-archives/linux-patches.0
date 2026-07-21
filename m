@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48269470111;
-	Tue, 21 Jul 2026 19:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BFC470444;
+	Tue, 21 Jul 2026 19:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662173; cv=none; b=EVRZ9RaoSU+K75qLOdF6xVFQeZGhXYGWYtXEpp7Yk9MD7if51CLUDYnzVpfcDC81YsJLiHXLT0J3Fry/TDi+mA94L1ddDl1H0mE0V7/H+udkb2KOCROQhmTZncK5n7Bj8YvlnQMkeEtCelGj7coQYjeAEFIPnYGBaZ7dASvE+b0=
+	t=1784662175; cv=none; b=TwLxMmCg4Op1OQileBmhMKQ60+TftdLbarqIYZIQBdrFBmJxHxP8KMaCtmAVP/7BwtDYOlNETlMGzvhAKDeIZTids9OhCuSEaEyhoR0fWeYL+MJxft/qMyUykGT5vVz7ES+ibfsnGCxQvATsRzjoO0MeSA3FQRcnLhvCgGadNuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662173; c=relaxed/simple;
-	bh=ezGYtjuchvjVKBdg/RRYSP/70rslb58prpaB0TCd/pU=;
+	s=arc-20240116; t=1784662175; c=relaxed/simple;
+	bh=70obdEOFFwScIfHA6y9g0lzj7BGJ8Q5bivECXa1/py4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jHzR8U2vawT1+OzUv45SCuaCWx1HEH2RUX0JDSNebjRBi8DaSPR/HE4+qNnhAeoDfrW6IxJAKMQQM2Ua4VjwsFlRrAo6YLOJO8B6OiG9sqhrpDjPKNshzZLKv+crAi8AP+OYeT0W9uqR07bTFSY17eicsYr2emmCFyx+UpOfCl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+es1WUM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AWBbSEgI0fMX1v1G6q0qsdm+zKoE70JtHg7UFw9fsEO8+1oY1Qh3R0lfQY5JO2sGwBZodfesgM3G7bp09VPuMfhWiM2O0NBehdPARfn5GCXbPARrKdeLcjFLcC7zkCtLLIrn4woEYRB2I0TSmAlpBbAWaxZjlFdmupddANZsxeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wxu6CSBG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+es1WUM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80BC11F000E9;
-	Tue, 21 Jul 2026 19:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wxu6CSBG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC8D1F000E9;
+	Tue, 21 Jul 2026 19:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662172;
-	bh=F6xQoWMcP3Xy39HmzjNQ/nS5ixHh4jQBXABhMp0CyZw=;
+	s=korg; t=1784662174;
+	bh=LtRjlRZKA3rgbqPWkNVm5/uCnIj1HOOm1igapmSZxjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0+es1WUM4fxmqPdYT73oLxV0/u/ovbK+iPTrtBrnZIcRW9oTDiUQZV54iotgTZ6bf
-	 gIxvKt6qKVbSyGCVwOWD4tqZ+EGfXUYC6r+zOUK1ZPkb3pCCbX4oMlDdr18G/XTFqP
-	 LaefDkJJ73nai0e3xEjkZlIjvCHYCxnuotWtJVIg=
+	b=Wxu6CSBG2ohCWsU+M1TQLnjgLNVcL6kKIv6zqLw/qXaV2oFX7YiCjbTW8O5AC/4Yf
+	 53HJ4VdTNosXP9z5L8uXc6zTTh5Q0S5bJsWKiREgCcanqwzx79V1dOd0kwm2Texm03
+	 iF1eD2F7Zb+KF8ECkmA3agfbi7vbC2SPLDqUtHoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Felix Gu <ustc.gu@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0344/1276] crypto: marvell/octeontx - fix DMA cleanup using wrong loop index
-Date: Tue, 21 Jul 2026 17:13:07 +0200
-Message-ID: <20260721152453.806352617@linuxfoundation.org>
+Subject: [PATCH 6.12 0345/1276] crypto: cavium/cpt - fix DMA cleanup using wrong loop index
+Date: Tue, 21 Jul 2026 17:13:08 +0200
+Message-ID: <20260721152453.829054278@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,25 +53,25 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 7891c64c0520519782470ba29bac8a5761e295d8 ]
+[ Upstream commit 9dbf173bd32d5f81b005008b682bfb50aa093455 ]
 
-The sg_cleanup path used list[i] instead of list[j] when unmapping DMA
-buffers, leaking successfully mapped entries and repeatedly unmapping
+The sg_cleanup error path used list[i] instead of list[j] when unmapping
+DMA buffers, leaking successfully mapped entries and repeatedly unmapping
 the failed one.
 
-Fixes: 10b4f09491bf ("crypto: marvell - add the Virtual Function driver for CPT")
+Fixes: c694b233295b ("crypto: cavium - Add the Virtual Function driver for CPT")
 Signed-off-by: Felix Gu <ustc.gu@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/marvell/octeontx/otx_cptvf_reqmgr.c | 4 ++--
+ drivers/crypto/cavium/cpt/cptvf_reqmanager.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/marvell/octeontx/otx_cptvf_reqmgr.c b/drivers/crypto/marvell/octeontx/otx_cptvf_reqmgr.c
-index c80baf1ad90b2f..89030e2711ce41 100644
---- a/drivers/crypto/marvell/octeontx/otx_cptvf_reqmgr.c
-+++ b/drivers/crypto/marvell/octeontx/otx_cptvf_reqmgr.c
-@@ -157,8 +157,8 @@ static inline int setup_sgio_components(struct pci_dev *pdev,
+diff --git a/drivers/crypto/cavium/cpt/cptvf_reqmanager.c b/drivers/crypto/cavium/cpt/cptvf_reqmanager.c
+index 153004bdfb5cde..753bdb2ae33f8d 100644
+--- a/drivers/crypto/cavium/cpt/cptvf_reqmanager.c
++++ b/drivers/crypto/cavium/cpt/cptvf_reqmanager.c
+@@ -108,8 +108,8 @@ static int setup_sgio_components(struct cpt_vf *cptvf, struct buf_ptr *list,
  sg_cleanup:
  	for (j = 0; j < i; j++) {
  		if (list[j].dma_addr) {
