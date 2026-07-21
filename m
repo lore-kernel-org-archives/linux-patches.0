@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DBE471268;
-	Tue, 21 Jul 2026 20:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207144307AD;
+	Tue, 21 Jul 2026 20:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664652; cv=none; b=nE7lDUifl+trQocodhtScSlA34odE7HfePgaktM5grYy2CRL7SqFtuYOHnHzVgRLp5mfOEU6+KGVML762YGoiyda6KvGvNsPnVGtNGYAWKgY89TSUWkK2aqGNdLkDiJGhVbRoCmqw3rciwYEOJolLtIFVOEmKTOdDou1t+hKmtM=
+	t=1784664655; cv=none; b=IBTGsrQGhN1f/Mj5ApdAldIt4SUoy7nmLHQo8CYuOki8a3jtpIWVx6gI2LdEhH2YIuEWWaE08FeQW7QkXWyc+IE/Kcnl2JxrqULtJImaoFN+WrdjuHALr7T+TB26NyMlh6GrYjzlfy3CCaSD06sA4/KE1A2R5fuDf5RqGTW1FbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664652; c=relaxed/simple;
-	bh=k0g0imRNeF1rna9LOdf/TgkviKHFeMgPldqWhjQVVig=;
+	s=arc-20240116; t=1784664655; c=relaxed/simple;
+	bh=tG7fLh8FlJ1zwr5GgiUFHfvxPQbSpixDwEbmO3CfNVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XS8SHm+miFrL+pFGqWjiHcUhgbEVF28XVOr1QBzQj8+HLfblUaoOJyI/8QS0bU2TIzeRA+1ixNQTL0s91uKUrVESgBKRmsjSPTgsbQsY6kYl5r8cC8JYu6FaoOxnN2KUHj8yeGDPzWx8yR4eFV9OLOb548TuotaOFDOtdEpgJmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s70lq8xv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R3CHIuyx13YcIA9TDbvxrD2aPpW/3Z4flWZ8tteOwLO1252q3pT3m0VwGrMKgs/jY8znyxMzZG0GkprcZ0J3be+YgASK3n45cmiVmD50Cvw8FNMhvTtN1iR+yqM182gPAQG2pbp7wBBIEocNRu8La1ydp6RW7ROFPSaCxVysMSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yx5XbdBJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s70lq8xv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F751F000E9;
-	Tue, 21 Jul 2026 20:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yx5XbdBJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A931F000E9;
+	Tue, 21 Jul 2026 20:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664651;
-	bh=TEt+rmWVYMVp2xK5B1w+aaWUnAKDgA/NPhqufazsrSI=;
+	s=korg; t=1784664654;
+	bh=mMSeybww4KYW+tzjRhy0kNQMG5IlHBATDXCFPbf2N4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s70lq8xvBIocbRzIZnLtwAO8ePTDIiKMXwLmf1abdnoa4Mt20eEMroIiFBzwnVS7i
-	 HZPPDtWvG49fPY5cNcICyjZps4gcRKGKL2+ntMN8jwlAVoBaFPYh/OjyGQdfVRW7Tt
-	 Z7FDh6E+RMN/sV6t2WFZ/wmSGTJwd96JQggLC+xA=
+	b=yx5XbdBJTXtu3V4DNL7xM00vIMyFjday+nz8LcnEp941Huyz/DY+kGt2FRLas5F4R
+	 Sxen9pCm15LlDNdnKMSuhqyFT1D0tP8zmwqwCakIjXzIYwcUCeBiAa6dII2r25RUWy
+	 vbXQDGq2uFZ0L3JXEcZn98ZcE0r0wM/fqeidK1nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Jan Polensky <japo@linux.ibm.com>,
-	linux-s390@vger.kernel.org,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 6.12 1251/1276] perf callchain: Handle multiple address spaces
-Date: Tue, 21 Jul 2026 17:28:14 +0200
-Message-ID: <20260721152514.089791467@linuxfoundation.org>
+	Gil Portnoy <dddhkts1@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 1252/1276] ksmbd: fix durable reconnect double-bind race in ksmbd_reopen_durable_fd
+Date: Tue, 21 Jul 2026 17:28:15 +0200
+Message-ID: <20260721152514.111239409@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -57,150 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richter <tmricht@linux.ibm.com>
+From: Gil Portnoy <dddhkts1@gmail.com>
 
-commit ae15db3e9b639491007cc1e9e99638e4b6091781 upstream.
+commit 7ce4fc40018de07f05f3035241122d992610dbfb upstream.
 
-perf test 'perf inject to convert DWARF callchains to regular ones'
-fails on s390. It was introduced with commit 92ea788d2af4e65a ("perf
-inject: Add --convert-callchain option")
+Two concurrent same-user DHnC reconnects can both observe fp->conn == NULL
+before either sets it. ksmbd_reopen_durable_fd() checks fp->conn to guard
+against a handle already being reconnected, but the check and the binding
+assignment are not atomic: both threads pass the guard, both call
+ksmbd_conn_get() on the same fp, and both eventually reach
+kfree(fp->owner.name) -- a double-free of the owner.name slab object.
+The double-bound ksmbd_file also causes a write-UAF on the 344-byte
+ksmbd_file_cache object when a concurrent smb2_close() spins on fp->f_lock
+after the object has been freed by the losing reconnect path.
 
-The failure comes the difference in output. Without the inject script to
-convert DWARF the callchains is:
+KASAN on 7.1-rc5 (48-thread concurrent reconnect, 3000 cycles):
+  BUG: KASAN: double-free in ksmbd_reopen_durable_fd+0x268/0x308
+  BUG: KASAN: slab-use-after-free in _raw_spin_lock+0xac/0x150
+    Write of size 4 at offset 24 into freed ksmbd_file_cache object
+Five double-bind windows observed; 63 total KASAN reports triggered.
 
- # perf record -F 999 --call-graph dwarf -- perf test -w noploop
- # perf report -i perf.data --stdio --no-children -q \
-					 --percent-limit=1 > /tmp/111
- # cat /tmp/111
-    99.30%  perf-noploop  perf               [.] noploop
-            |
-            ---noploop
-               run_workload (inlined)
-               cmd_test
-               run_builtin (inlined)
-               handle_internal_command
-               run_argv (inlined)
-               main
-               __libc_start_call_main
-               __libc_start_main_impl (inlined)
-               _start
- #
+Fix: validate and claim fp->conn under write_lock(&global_ft.lock) so the
+check-and-claim is atomic. ksmbd_lookup_durable_fd() already treats
+fp->conn != NULL as "in use" and skips such an fp; setting fp->conn before
+dropping the lock closes the race. ksmbd_conn_get() is a non-sleeping
+refcount increment, safe under the rwlock. The rollback path on __open_id()
+failure also clears fp->conn/tcon under the lock so concurrent readers see
+a consistent state.
 
-With the inject script step the output is:
-
- # perf inject -i perf.data --convert-callchain -o /tmp/perf-inject-1.out
- # perf report -i /tmp/perf-inject-1.out --stdio --no-children -q \
-		--percent-limit=1 > /tmp/222
- # cat /tmp/222
-    99.40%  perf-noploop  perf               [.] noploop
-            |
-            ---noploop
-               run_workload (inlined)
-               cmd_test
-               run_builtin (inlined)
-               handle_internal_command
-               run_argv (inlined)
-               main
-               _start
- # diff /tmp/111 /tmp/222
- 1c1
- <     99.30%  perf-noploop  perf               [.] noploop
- ---
- >     99.40%  perf-noploop  perf               [.] noploop
- 10,11d9
- <                __libc_start_call_main
- <                __libc_start_main_impl (inlined)
- #
-
-The difference are the symbols __libc_start_call_main and
-__libc_start_main_impl.
-
-On x86_64, kernel and user space share a single virtual address space,
-with the kernel mapped to the upper end of memory. The instruction
-pointer value alone is sufficient to distinguish between user space and
-kernel space addresses.
-
-This is not true for s390, which uses separate address spaces for user
-and kernel.
-
-The same virtual address can be valid in both address spaces, so the
-instruction pointer value alone cannot determine whether an address
-belongs to the kernel or user space.
-
-Instead, perf must rely on the cpumode metadata derived from the
-processor status word (PSW) at sample time.
-
-In function perf_event__convert_sample_callchain() the first part
-copies a kernel callchain and context entries, if any.
-
-It then appends additional entries ignoring the address space
-architecture. Taking that into account, the symbols at addresses
-
-   0x3ff970348cb __libc_start_call_main
-   0x3ff970349c5 __libc_start_main_impl
-
-(located after the kernel address space on s390) are now included.
-
-Output before:
-
- # perf test 83
- 83: perf inject to convert DWARF callchains to regular ones : FAILED!
-
-Output after:
- # perf test 83
- 83: perf inject to convert DWARF callchains to regular ones : Ok
-
-Question to Namhyung:
-
-In function perf_event__convert_sample_callchain() just before the
-for() loop this patch modifies, the kernel callchain is copied,
-see this comment and the next 5 lines:
-
-   /* copy kernel callchain and context entries */
-
-Then why is machine__kernel_ip() needed in the for() loop, when
-the kernel entries have been copied just before the loop?
-
-Note: This patch was tested on x86_64 virtual machine and succeeded.
-
-Fixes: 92ea788d2af4e65a ("perf inject: Add --convert-callchain option")
-Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Jan Polensky <japo@linux.ibm.com>
-Cc: linux-s390@vger.kernel.org
-Cc: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: b1f1e80620de ("ksmbd: centralize ksmbd_conn final release to plug transport leak")
+Assisted-by: Henry (Claude):claude-opus-4
+Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/arch/common.c    |    4 +++-
- tools/perf/builtin-inject.c |    3 ++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ fs/smb/server/vfs_cache.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/tools/perf/arch/common.c
-+++ b/tools/perf/arch/common.c
-@@ -237,5 +237,7 @@ int perf_env__lookup_objdump(struct perf
-  */
- bool perf_env__single_address_space(struct perf_env *env)
- {
--	return strcmp(perf_env__arch(env), "sparc");
-+	const char *arch = perf_env__arch(env);
-+
-+	return strcmp(arch, "s390") && strcmp(arch, "sparc");
- }
---- a/tools/perf/builtin-inject.c
-+++ b/tools/perf/builtin-inject.c
-@@ -452,7 +452,8 @@ static int perf_event__convert_sample_ca
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -1185,19 +1185,19 @@ int ksmbd_reopen_durable_fd(struct ksmbd
+ 	struct ksmbd_lock *smb_lock;
+ 	unsigned int old_f_state;
  
- 	node = cursor->first;
- 	for (k = 0; k < cursor->nr && i < PERF_MAX_STACK_DEPTH; k++) {
--		if (machine__kernel_ip(machine, node->ip))
-+		if (machine->single_address_space &&
-+		    machine__kernel_ip(machine, node->ip))
- 			/* kernel IPs were added already */;
- 		else if (node->ms.sym && node->ms.sym->inlined)
- 			/* we can't handle inlined callchains */;
++	write_lock(&global_ft.lock);
+ 	if (!fp->is_durable || fp->conn || fp->tcon) {
++		write_unlock(&global_ft.lock);
+ 		pr_err("Invalid durable fd [%p:%p]\n", fp->conn, fp->tcon);
+ 		return -EBADF;
+ 	}
+ 
+ 	if (has_file_id(fp->volatile_id)) {
++		write_unlock(&global_ft.lock);
+ 		pr_err("Still in use durable fd: %llu\n", fp->volatile_id);
+ 		return -EBADF;
+ 	}
+ 
+-	old_f_state = fp->f_state;
+-	fp->f_state = FP_NEW;
+-
+ 	/*
+ 	 * Initialize fp's connection binding before publishing fp into the
+ 	 * session's file table.  If __open_id() is ordered first, a
+@@ -1208,11 +1208,17 @@ int ksmbd_reopen_durable_fd(struct ksmbd
+ 	 */
+ 	fp->conn = ksmbd_conn_get(conn);
+ 	fp->tcon = work->tcon;
++	write_unlock(&global_ft.lock);
++
++	old_f_state = fp->f_state;
++	fp->f_state = FP_NEW;
+ 
+ 	__open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
+ 	if (!has_file_id(fp->volatile_id)) {
++		write_lock(&global_ft.lock);
+ 		fp->conn = NULL;
+ 		fp->tcon = NULL;
++		write_unlock(&global_ft.lock);
+ 		ksmbd_conn_put(conn);
+ 		fp->f_state = old_f_state;
+ 		return -EBADF;
 
 
