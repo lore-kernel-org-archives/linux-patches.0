@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 796B0418A58;
-	Tue, 21 Jul 2026 21:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB3144AB9E;
+	Tue, 21 Jul 2026 21:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670135; cv=none; b=hH15qMYGihouOO+yfdDLNkuyLvgSMYUl32eQk4NOnQbBX76uV7e1PzGBkHVo0xi6nNesdQbS30MpkIOZtZBnyPu9CVK4pgW8xRfxULCkXgVhpbYuLoPVx8HILQIhL4B/AOlhgqO9cS7raGidknX60T1a5HVzK78tH+Wz8NdDZtc=
+	t=1784670138; cv=none; b=bCZpyVRQZ3bjT71ZKd3rMtMdElP6/UcvdKOL6UiJybcSGQCtDg3WQ3Z+DV4o50+m+jzF+ODDjhBTfsGYuzwl2dvRwF8TTQsC75fVMJaHR3oaLjuRNHu1LXo2OvHZOXYh6obxrOIwjY0ow4hbxlY74YD/qbkab0kqjDjFOLkxIuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670135; c=relaxed/simple;
-	bh=FZOZ872xXfblHd6/ZKv1oE1K65u9oUiOSq3bpnBRUqs=;
+	s=arc-20240116; t=1784670138; c=relaxed/simple;
+	bh=rk0yIfOjv4keGvBwT64Z9FeDGylQwyoY6nkcb1NyiyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eYFr5G4qYKgNxOw9OIpm25c+rqt6LiPTBlnA7yJn2pU5SdgEqxLO9erQYzo5GyD9oxFkhUgdhKreRdQCSC3b5Q5OM76GoQanONq7a77SIJ407iVOKdpN50z+s4BcsdHxDaj8puybrvz54wATGU6yCNE0IEb7tBXamWcDrXnEqHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duelOUwX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xl66Kx9CXpc/PA6dD6lG0kbns+qYN+Y6JVNm8FdsWyyFz10x6CvwcSdx/XQPRVUXr0z8GaDKSkwsdssPsBiCq4HdK8FEDpAcjNciLtZ9P9m7O79K+9c0pKmNLv/wx9QaCzQOQpXDwoEnKzkHecRy4JdQe8V9slztAK5CmxUx00U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dg5RXqYW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duelOUwX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D99BB1F000E9;
-	Tue, 21 Jul 2026 21:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dg5RXqYW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A271F000E9;
+	Tue, 21 Jul 2026 21:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670134;
-	bh=FyMIs09FS7IlErUv2MOJm7uweu83ejkd7PvKrYt5h0c=;
+	s=korg; t=1784670137;
+	bh=Kg4Sxtf+fRD58P4os7+aw1UbidqQL9swzC0FSF5H++0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=duelOUwX5LOOHxQMcjz+hH90nOg1FJDYqUDIvtjjVV3cCV3MqgAojVr7t1kPmibWd
-	 k1nKp4YkyaPCQ/3OAgD3KJgRrQEHNOguxwirUNW2aV+TukSuts3Cwx4hLAQYrAn1Rq
-	 nBxsg/Lyp6Bl0i6IWaUw4lylpH8cQAS8sfqDlpmg=
+	b=dg5RXqYW18nSCXk2uykWVCSyJeesUaPlZwZWxfJXmJGfFnLvUoon8vaiPpaAslBeo
+	 t7PJ9hERe/cDbDt1NnEQY2LylI0HK6sITS99EyOLueYKK2hAMxg4yEvKkYiRy1tZxh
+	 LsMl41HmwdNkfNG2c3e1xiAaFAzj6ijvdhPfyQtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.1 0818/1067] tpm: tpm_tis_spi: Use wait_woken() in wait_for_tmp_stat()
-Date: Tue, 21 Jul 2026 17:23:39 +0200
-Message-ID: <20260721152442.851831735@linuxfoundation.org>
+	Kartik Rajput <kkartik@nvidia.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.1 0819/1067] dmaengine: tegra: Fix burst size calculation
+Date: Tue, 21 Jul 2026 17:23:40 +0200
+Message-ID: <20260721152442.875544794@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,95 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Kartik Rajput <kkartik@nvidia.com>
 
-commit c0c9cfb3b75def8bf200a2d4db09015806acfeaf upstream.
+commit 4651df83b6c796daead3447e8fd874322918ee4f upstream.
 
-wait_event_interruptible_timeout() evaluates its condition after setting
-the current task state to TASK_INTERRUPTIBLE.
+Currently, the Tegra GPC DMA hardware requires the transfer length to
+be a multiple of the max burst size configured for the channel. When a
+client requests a transfer where the length is not evenly divisible by
+the configured max burst size, the DMA hangs with partial burst at
+the end.
 
-With CONFIG_DEBUG_ATOMIC_SLEEP this triggers a warning when the IRQ wait
-path is used:
+Fix this by reducing the burst size to the largest power-of-2 value
+that evenly divides the transfer length. For example, a 40-byte
+transfer with a 16-byte max burst will now use an 8-byte burst
+(40 / 8 = 5 complete bursts) instead of causing a hang.
 
-    tpm_tis_status()
-      tpm_tis_spi_read_bytes()
-        tpm_tis_spi_transfer_full()
-          spi_bus_lock()
-            mutex_lock()
+This issue was observed with the PL011 UART driver where TX DMA
+transfers of arbitrary lengths were stuck.
 
-Address this with the following measures:
-
-1. Call wait_tpm_stat_cond() only while tasking is running.
-2. Use wait_woken() to wait for changes.
-
-Cc: stable@vger.kernel.org # v4.19+
-Cc: Linus Walleij <linusw@kernel.org>
-Reported-by: Stefan Wahren <wahrenst@gmx.net>
-Closes: https://lore.kernel.org/linux-integrity/6964bec7-3dbb-453b-89ef-9b990217a8b9@gmx.net/
-Fixes: 1a339b658d9d ("tpm_tis_spi: Pass the SPI IRQ down to the driver")
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Tested-by: Stefan Wahren <wahrenst@gmx.net>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: ee17028009d4 ("dmaengine: tegra: Add tegra gpcdma driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260422064134.1323610-1-kkartik@nvidia.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_tis_core.c |   35 +++++++++++++++++++++--------------
- 1 file changed, 21 insertions(+), 14 deletions(-)
+ drivers/dma/tegra186-gpc-dma.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -49,8 +49,8 @@ static int wait_for_tpm_stat(struct tpm_
- 		bool check_cancel)
- {
- 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
-+	DEFINE_WAIT_FUNC(wait, woken_wake_function);
- 	unsigned long stop;
--	long rc;
- 	u8 status;
- 	bool canceled = false;
- 	u8 sts_mask = 0;
-@@ -77,23 +77,30 @@ static int wait_for_tpm_stat(struct tpm_
- 	/* process status changes with irq support */
- 	if (sts_mask) {
- 		ret = -ETIME;
-+		add_wait_queue(queue, &wait);
- again:
-+		if (wait_for_tpm_stat_cond(chip, sts_mask, check_cancel,
-+					   &canceled)) {
-+			ret = canceled ? -ECANCELED : 0;
-+			goto out;
-+		}
+--- a/drivers/dma/tegra186-gpc-dma.c
++++ b/drivers/dma/tegra186-gpc-dma.c
+@@ -821,6 +821,13 @@ static unsigned int get_burst_size(struc
+ 	 * len to calculate the optimum burst size
+ 	 */
+ 	burst_byte = burst_size ? burst_size * slave_bw : len;
 +
- 		timeout = stop - jiffies;
- 		if ((long)timeout <= 0)
--			return -ETIME;
--		rc = wait_event_interruptible_timeout(*queue,
--			wait_for_tpm_stat_cond(chip, sts_mask, check_cancel,
--					       &canceled),
--			timeout);
--		if (rc > 0) {
--			if (canceled)
--				return -ECANCELED;
--			ret = 0;
--		}
--		if (rc == -ERESTARTSYS && freezing(current)) {
--			clear_thread_flag(TIF_SIGPENDING);
--			goto again;
-+			goto out;
-+
-+		if (signal_pending(current)) {
-+			if (freezing(current)) {
-+				clear_thread_flag(TIF_SIGPENDING);
-+				goto again;
-+			}
-+			goto out;
- 		}
-+
-+		wait_woken(&wait, TASK_INTERRUPTIBLE, timeout);
-+		goto again;
-+out:
-+		remove_wait_queue(queue, &wait);
- 	}
++	/*
++	 * Find the largest burst size that evenly divides the transfer length.
++	 * The hardware requires the transfer length to be a multiple of the
++	 * burst size - partial bursts are not supported.
++	 */
++	burst_byte = min(burst_byte, 1U << __ffs(len));
+ 	burst_mmio_width = burst_byte / 4;
  
- 	if (ret)
+ 	if (burst_mmio_width < TEGRA_GPCDMA_MMIOSEQ_BURST_MIN)
 
 
