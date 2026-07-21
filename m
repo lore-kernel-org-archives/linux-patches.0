@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4727846DFF9;
-	Tue, 21 Jul 2026 17:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C9746E003;
+	Tue, 21 Jul 2026 17:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655179; cv=none; b=b47Bbm8KFPG7fjXF0LwL6ddpak3/Wru0WBANSkkQWQwsEqQPXTzLElLmI9iemNA3sNobJBL1oeGuQy84c/1nxn/UJQo3xvBWxRav022gbrSXkcKVPXX6NLjiTNBDqI/vK8Eiuf+zfht7zGJBs2cvLgrbWI0PTgdVVWR3butl7n4=
+	t=1784655181; cv=none; b=p1URiDvOQEtRZb5Q2JIcZ8zxXgWXstd2zAlP68U6wKEZpzVm4WQBni93rBMS1eM5AB3iViWHXpeUqOeOBzfsdDpzlYyIR1VF8cOYdToFo6J8qLzseYfGcbXSxfDiy2sFm0YLoNZlWe51nX0YkdRsTtTSCDdVgSUMGYsk7K+05bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655179; c=relaxed/simple;
-	bh=ptlm7Dcqq99EBk/J2ZwOryteaykcU7yxdW0wxX9ii1Y=;
+	s=arc-20240116; t=1784655181; c=relaxed/simple;
+	bh=WuLELtOfnu/RCVpGLMQW+uyP0XTGk/svJIBaphFMVg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qiPwBqMOtCKXOFpxHaAvNaX4i4H6k0Y14HIyq6ViLTDDX4MAVLKBUikx0gwgZWPoS0x9iTsqH5snMhIsPacBLL/EXKG0Z4oHCxBzE6JF36yGCfGa4ndrTw35IHUagPXN6cwl3Sjepp6kQ8beLsfyodrOCgAA3XBswJNj2kszSx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+wmZ28B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K88uwS1mv5dw3BbJ52fFDzOuKNxXzJM52fJDZbIrgPEPSX7ShY0saMurooi6lnhXRz9TWcnTs33MCHb2/mDD7mO41Ay7IBcBpXy3R/7Dj8fvO5iHumIZjkTzhET0o3DFye3bQ3NnjTXv+KkGQDkbPaaEeUq0XUpUlyI9cmV+6DE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVRuCHUI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+wmZ28B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0C11F00A3D;
-	Tue, 21 Jul 2026 17:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVRuCHUI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473351F000E9;
+	Tue, 21 Jul 2026 17:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655177;
-	bh=3iJ136ryJoezgIzTSvEwWy1V6M6sGs27m9gVLvcqrGQ=;
+	s=korg; t=1784655179;
+	bh=objwsKzarFqjJ6uT+mwZhq5QnFAFLAMyPnb2Ih39hAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d+wmZ28BTIVMrz8cdWDSOv50puOXGB3iNCI3RGvVkOn+qa+S8WPq4r+k4nqmAD6sB
-	 t40YvL0gGWCzwf+LyOXQpAUuuPcQ9hZL24sVplbuIV9e/bO9lkEJMs9g5IyAvlXz56
-	 p3G1dvyxdUYhJTIGxCsGZj6WjTrrFv1J2Cm0Qld4=
+	b=HVRuCHUI9pVCYs4fBGlKRtzKrpxBQ7DMyViYzvf6XVE3i2FacRjFy9vxAYT+wcIVb
+	 fm6vcUxeZowYuQdwKVLQrdTqGiL67+jubccFsxNelavCOATiPnYPNV8d8qgysuCjvA
+	 rJvVMyecIFa9jmsxASImSVw9Yc031p6uCAbC9SeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Esau <aaron1esau@gmail.com>,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 7.1 1941/2077] espintcp: use sk_msg_free_partial to fix partial send
-Date: Tue, 21 Jul 2026 17:26:54 +0200
-Message-ID: <20260721152638.489356371@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Corey Minyard <corey@minyard.net>
+Subject: [PATCH 7.1 1942/2077] ipmi: fix refcount leak in i_ipmi_request()
+Date: Tue, 21 Jul 2026 17:26:55 +0200
+Message-ID: <20260721152638.514203280@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,78 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 007800408002d871f5699bdb944f985896730b8f upstream.
+commit a3f3859cecacb64f18fd446271ece9a3b3f2d4de upstream.
 
-sk_msg_free_partial() ensures consistency of the skmsg at every
-iteration, without having to manually handle uncharges and offsets.
-This simplifies the code, and fixes some bugs in skmsg accounting when
-we don't send the full contents.
+When a caller provides a `supplied_recv` message to i_ipmi_request(),
+the function increments the user's `nr_msgs` reference count. If an
+error occurs later, the out_err cleanup path only frees the recv_msg
+if the function allocated it itself (i.e., !supplied_recv). In the
+supplied_recv case the cleanup is skipped, leaving the reference count
+elevated. The caller ipmi_request_supply_msgs() does not release the
+supplied_recv on error, so the reference is permanently leaked.
+
+Fix this by explicitly reverting the reference count operations when a
+supplied recv_msg with a valid user pointer is present in the error
+path: decrement nr_msgs and drop the user's kref.
 
 Cc: stable@vger.kernel.org
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
-Reported-by: Aaron Esau <aaron1esau@gmail.com>
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: b52da4054ee0 ("ipmi: Rework user message limit handling")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Message-ID: <20260603120634.3758747-1-vulab@iscas.ac.cn>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/espintcp.c |   34 +++++++---------------------------
- 1 file changed, 7 insertions(+), 27 deletions(-)
+ drivers/char/ipmi/ipmi_msghandler.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/net/xfrm/espintcp.c
-+++ b/net/xfrm/espintcp.c
-@@ -212,43 +212,23 @@ static int espintcp_sendskmsg_locked(str
- 	struct sk_msg *skmsg = &emsg->skmsg;
- 	bool more = flags & MSG_MORE;
- 	struct scatterlist *sg;
--	int done = 0;
- 	int ret;
- 
--	sg = &skmsg->sg.data[skmsg->sg.start];
- 	do {
- 		struct bio_vec bvec;
--		size_t size = sg->length - emsg->offset;
--		int offset = sg->offset + emsg->offset;
--		struct page *p;
--
--		emsg->offset = 0;
- 
-+		sg = &skmsg->sg.data[skmsg->sg.start];
- 		if (sg_is_last(sg) && !more)
- 			msghdr.msg_flags &= ~MSG_MORE;
- 
--		p = sg_page(sg);
--retry:
--		bvec_set_page(&bvec, p, size, offset);
--		iov_iter_bvec(&msghdr.msg_iter, ITER_SOURCE, &bvec, 1, size);
--		ret = tcp_sendmsg_locked(sk, &msghdr, size);
--		if (ret < 0) {
--			emsg->offset = offset - sg->offset;
--			skmsg->sg.start += done;
-+		bvec_set_page(&bvec, sg_page(sg), sg->length, sg->offset);
-+		iov_iter_bvec(&msghdr.msg_iter, ITER_SOURCE, &bvec, 1, sg->length);
-+		ret = tcp_sendmsg_locked(sk, &msghdr, sg->length);
-+		if (ret < 0)
- 			return ret;
--		}
- 
--		if (ret != size) {
--			offset += ret;
--			size -= ret;
--			goto retry;
--		}
--
--		done++;
--		put_page(p);
--		sk_mem_uncharge(sk, sg->length);
--		sg = sg_next(sg);
--	} while (sg);
-+		sk_msg_free_partial(sk, skmsg, ret);
-+	} while (skmsg->sg.size);
- 
- 	memset(emsg, 0, sizeof(*emsg));
- 
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -2347,6 +2347,10 @@ static int i_ipmi_request(struct ipmi_us
+ 		if (smi_msg == NULL) {
+ 			if (!supplied_recv)
+ 				ipmi_free_recv_msg(recv_msg);
++			else if (recv_msg->user) {
++				atomic_dec(&recv_msg->user->nr_msgs);
++				kref_put(&recv_msg->user->refcount, free_ipmi_user);
++			}
+ 			return -ENOMEM;
+ 		}
+ 	}
+@@ -2420,6 +2424,10 @@ out_err:
+ 			ipmi_free_smi_msg(smi_msg);
+ 		if (!supplied_recv)
+ 			ipmi_free_recv_msg(recv_msg);
++		else if (recv_msg->user) {
++			atomic_dec(&recv_msg->user->nr_msgs);
++			kref_put(&recv_msg->user->refcount, free_ipmi_user);
++		}
+ 	}
+ 	return rv;
+ }
 
 
