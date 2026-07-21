@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928653B7B70;
-	Tue, 21 Jul 2026 20:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338293B6BF0;
+	Tue, 21 Jul 2026 20:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666531; cv=none; b=NcgJJ8FcfnaMI2HqZW+NU/Oi8joWzGezcSembVt1RLiIbyqThAjjxzD/euDqhHeTnm/yOZrlFj6WJWqiOLGvcrPBscf8ZA4NJ16xShvmlO/f60Vq4LgHYJgysKJUPggH4mjJwpsFiapKKHjjZ/2Sc7EWM7WQHQpIxs/K2I3uYT0=
+	t=1784666534; cv=none; b=S1E0LR/TmpS//U4l20ZZQSu8uVrRewYI9JfyFzKebOkEysofpYq9rvEFF9HAHWFqzrdkBeGsbZ/K65VSzqPb4yGzpuEqXJ1SDjpo1NIFfwzHf6WWCOUS9v60QwAj7oW10kCgilsXDWx0Jby2flJkJuTovttSM9WOiPvyArQgXAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666531; c=relaxed/simple;
-	bh=/ATYRqJf345FgIgbmFR/ROF0sWu5rCLR8Yca+NXlKns=;
+	s=arc-20240116; t=1784666534; c=relaxed/simple;
+	bh=xG/QUd7YcCKre6BU/IxFTSf46hiTyAIay3HaLg+Obew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hFpIRFOpcEYKK9n1+A4drVowag5+o04CiCZll5GbsQWspRIS2PBXwTMHDYbHgMrpz46eeKjr5XvIHQWX/KXzk2tDa4VT9I562P3ZsCwEXE4mh9ePe1dgddx5e4xUA2bYRRZQQyTvMluHzfjoo1OEhIL1SSl8xXjYRfo2CTI7Qp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1s94H0+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cg059b7iDWDD+EqcHDMjU9UaSGz4Mas7B2bANG6d8y8G/YkHuUDehc4/wisJDlVoJkjWkW4W4q7L1rIMgtRl1MY1jvqodGTfuFuagzCM6mb+yZqeOXjNr3qZ3cKbSNqul/9aw/djSOylOscK9Sm2Imv2SsNC36IZ1IIReVMPDgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oq2gvhn6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1s94H0+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 049F11F000E9;
-	Tue, 21 Jul 2026 20:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oq2gvhn6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAEB1F000E9;
+	Tue, 21 Jul 2026 20:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666530;
-	bh=V2cAsw7vIWfbF63+A+gSe515DhxQqzYOhOEpo2wQABo=;
+	s=korg; t=1784666533;
+	bh=/fxtS70KCJnwwOPYVQMNkV6c2qd4bmcZSJiwe1ONo2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w1s94H0+OYDD4MCSkL6oBOA1fF55546dghV3Ef9VrI2HiBCbrPjDDMWqpHV87EPsz
-	 bZs74NdO83HXF0CJohuOAMl4S7ggdPRBRgyILeYcUBiZ24E+8/y+F0rVUEvB4FgafQ
-	 /3BDDTHU+6Ior8imNASvw2AHKNPKld8Zb09AuNcs=
+	b=oq2gvhn6rqn2BJ1sEV/mvjG4HGrGK9/VNI+ZDKeQ4C9ILW5xjQDCjnvyVIwsAr2Lw
+	 3V/yig+YoFAxqTWAy2YKXz3IC/ItCnxeg6U1Rir4Dqfgb+aKPQWLmTLJj8EC61MDIB
+	 pR9jSZIi5hdV3Df9tQ7+PnBhQK6tdBkNfMm7Udfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	James Clark <james.clark@arm.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	Tor Jeremiassen <tor@ti.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0691/1266] perf symbols: Add bounds checks to elf_read_build_id() note iteration
-Date: Tue, 21 Jul 2026 17:18:48 +0200
-Message-ID: <20260721152457.317184455@linuxfoundation.org>
+Subject: [PATCH 6.6 0718/1266] perf cs-etm: Validate num_cpu before metadata allocation
+Date: Tue, 21 Jul 2026 17:19:15 +0200
+Message-ID: <20260721152457.935076046@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -54,60 +57,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit acc56d3941fc2997a5a21ea9233a8ac3d87c4f2f ]
+[ Upstream commit 312d91329b8fc6989a916a3f9a12d0674167b7e4 ]
 
-elf_read_build_id() iterates ELF notes using pointer arithmetic
-driven by n_namesz and n_descsz from the note headers.  Neither
-the note header read nor the subsequent name/desc advances are
-checked against the section boundary.  A malformed ELF file with
-oversized note sizes causes out-of-bounds reads past the section
-data buffer.
+cs_etm__process_auxtrace_info_full() reads num_cpu from untrusted
+perf.data and uses it to allocate the metadata pointer array:
 
-Add two bounds checks: verify the note header fits within the
-remaining section data, and verify that namesz + descsz (after
-alignment) fits before advancing the pointer.
+  metadata = zalloc(sizeof(*metadata) * num_cpu);
 
-Fixes: fd7a346ea292074e ("perf symbols: Filename__read_build_id should look at .notes section too")
+On 32-bit, sizeof(*metadata) is 4, so num_cpu = 0x40000000 overflows
+the multiplication to 0, causing zalloc(0) to return a valid zero-sized
+allocation followed by out-of-bounds writes in the population loop.
+
+Fix by computing priv_size early and using it to bound num_cpu: each
+CPU needs at least one u64 metadata entry, so num_cpu cannot exceed
+the total number of u64 entries in the event's private data area.
+
+Fixes: cd8bfd8c973eaff8 ("perf tools: Add processing of coresight metadata")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Tor Jeremiassen <tor@ti.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-elf.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ tools/perf/util/cs-etm.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index 4a2fb6e3d4ef38..96bb84a8c5c2ed 100644
---- a/tools/perf/util/symbol-elf.c
-+++ b/tools/perf/util/symbol-elf.c
-@@ -908,10 +908,24 @@ static int elf_read_build_id(Elf *elf, void *bf, size_t size)
- 	ptr = data->d_buf;
- 	while (ptr < (data->d_buf + data->d_size)) {
- 		GElf_Nhdr *nhdr = ptr;
--		size_t namesz = NOTE_ALIGN(nhdr->n_namesz),
--		       descsz = NOTE_ALIGN(nhdr->n_descsz);
-+		size_t namesz, descsz, remaining;
- 		const char *name;
- 
-+		/* ensure the note header fits within the section */
-+		if (ptr + sizeof(*nhdr) > data->d_buf + data->d_size)
-+			break;
+diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
+index 8dc12759ee62f4..10ea1e3254fe21 100644
+--- a/tools/perf/util/cs-etm.c
++++ b/tools/perf/util/cs-etm.c
+@@ -3355,6 +3355,18 @@ int cs_etm__process_auxtrace_info_full(union perf_event *event,
+ 	/* First the global part */
+ 	ptr = (u64 *) auxtrace_info->priv;
+ 	num_cpu = ptr[CS_PMU_TYPE_CPUS] & 0xffffffff;
 +
-+		namesz = NOTE_ALIGN(nhdr->n_namesz);
-+		descsz = NOTE_ALIGN(nhdr->n_descsz);
++	/*
++	 * Bound num_cpu by the event size: the global header consumes
++	 * CS_ETM_HEADER_SIZE bytes, and each CPU needs at least one u64
++	 * metadata entry after that.
++	 */
++	priv_size = total_size - event_header_size - INFO_HEADER_SIZE -
++		    CS_ETM_HEADER_SIZE;
++	if (num_cpu <= 0 || priv_size <= 0 ||
++	    num_cpu > priv_size / (int)sizeof(u64))
++		return -EINVAL;
 +
-+		/* validate individually to avoid size_t overflow on 32-bit */
-+		remaining = data->d_buf + data->d_size - ptr - sizeof(*nhdr);
-+		if (namesz > remaining || descsz > remaining - namesz) {
-+			pr_warning("%s: oversized note: n_namesz=%u, n_descsz=%u\n",
-+				   __func__, nhdr->n_namesz, nhdr->n_descsz);
-+			break;
-+		}
-+
- 		ptr += sizeof(*nhdr);
- 		name = ptr;
- 		ptr += namesz;
+ 	metadata = zalloc(sizeof(*metadata) * num_cpu);
+ 	if (!metadata) {
+ 		err = -ENOMEM;
 -- 
 2.53.0
 
