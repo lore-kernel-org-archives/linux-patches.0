@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1055446A61C;
-	Tue, 21 Jul 2026 17:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB763FE67B;
+	Tue, 21 Jul 2026 17:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655083; cv=none; b=eXNSsf4yDGBYN3GU5oJfkjB6B5wJr8qi+uh8IHXgDsimGmfqwqnFlefrNwjapYBgjX1tANr6zeqKDZB4Kc2sfyXkV6h/CxDFh5ssogoPWzFufZG+QUTJrtjC62B8rQ890UsdqJv+lnG9ImbyycWNP2qtlQdeQIBNyaN6rPCDopM=
+	t=1784655085; cv=none; b=Mg7bTQ5Y9Gq6Pv7FJoGRVeMoVXhoPd4Y3vdoFRoFYaz4GRQ/4MV9PjlVWstvCsvHE1LFvrMtYISQBWlENtdZN9C7t/GYJOt1+i1ShM165hs/7lG59a+I7y5XpZa6l/QD8psXtyz2h+quhrJ5J8KLhBAkhIDZJIw9+zK1YDnS8vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655083; c=relaxed/simple;
-	bh=nrI7b2AGsYs4JP8jhXd+iYl/Bwjk89UxVzsbLun+9fM=;
+	s=arc-20240116; t=1784655085; c=relaxed/simple;
+	bh=vtFWseq5C49tQzI3nv0s1q7mpOULsGaG4OKfKDVsHi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gmxKY7Ot4ZNVkTuE01Id7vdmu2Bk8/cLx2xoP4OgEtdAp/32W8RRNavQXIp+O6jhDn8BvBGpAG31SAxQmyQLbALwlpUR7Drj4wBHEIO3jE9Bd1jqjmQEJpWFIQaVJX/uWM9pRilpUuikmKpzEfwax9W+j2Ia6SP4B2+erkvlMZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uw2QJqFS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GoC3EfuXqxalsFTPhv7CpRMTEPKt2UjcerrT1owh5iazfbwWSAVHEWtWx6MEtB+XzhH6jyqSJVXzGYVthQv/GGAmntjBwHb1kKnmJ8V8m/n242xg/eCgUY0Qy5Xdu9bpsYO5Nb4ywlguPac20w8qCJCVm+bzNyAqlrUxA8T3kgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVDoEvZj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uw2QJqFS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7727F1F000E9;
-	Tue, 21 Jul 2026 17:31:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVDoEvZj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224B41F000E9;
+	Tue, 21 Jul 2026 17:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655082;
-	bh=pmFZGf6tws0u13XKOKvV8a/F6HlJyjNarDHwrEN9qMg=;
+	s=korg; t=1784655084;
+	bh=mP87UZaJTtlMnPZnTGUCeWZ0JbJCO1cRSgIyhQmm4bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uw2QJqFSx3AbdaDuD6pmgza925E4lRx2KS6cm0BiKmlJkO6casjgpNRVCBPA/l0GL
-	 dkNxAxHlgQY84DlxzB/YFUe3mAgXXeIHBoWhrXjXLgF4zUstgY7lAn1CxgsMz+m6WN
-	 D44opnP3PVB9+p90Eph5FuWVsEBpJZiA502NGwS4=
+	b=EVDoEvZj3owYodI72T3KvvVcR4NBAXCsOQX4xkJHYVuMdCSiF/jQG9Sew8OWxr5D1
+	 MDbfNvb0DTcYX+SKDvvW7p4xOOUOq32V3kNdsVhzq7zs8ehO4rk+O5s6VJy9POobf3
+	 GW53urzHSMnNPnj23Iq42qTrEFyyskyfbEubyuq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 7.1 1950/2077] ACPI: TAD: Check AC wake capability before enabling wakeup
-Date: Tue, 21 Jul 2026 17:27:03 +0200
-Message-ID: <20260721152638.704406881@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 7.1 1951/2077] hwmon: (occ) unregister sysfs devices outside occ lock
+Date: Tue, 21 Jul 2026 17:27:04 +0200
+Message-ID: <20260721152638.728734261@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,39 +50,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 8522d806d84e2c3816c275ae6dd79e124c1b3dac upstream.
+commit e31408734332b8cc611342cdaaab6ba492180156 upstream.
 
-ACPI_TAD_AC_WAKE is a non-zero bit definition, so testing the macro
-itself is always true. As a result, every TAD device is initialized as
-a system wakeup device, including RTC-only devices and devices whose
-wake capability bits were cleared because _PRW is absent.
+occ_active(false) and occ_shutdown() unregister sysfs-backed devices while
+occ->lock is held.  hwmon_device_unregister() and sysfs_remove_group() can
+wait for active sysfs callbacks to drain, and those callbacks can enter the
+OCC update path and try to take occ->lock again.  That gives the unregister
+paths the lock ordering occ->lock -> sysfs callback drain, while a callback
+has the opposite edge sysfs callback -> occ->lock.
 
-Test the capability value returned by _GCP instead. This keeps
-RTC-only TAD devices usable without advertising a wakeup capability
-that the firmware does not provide.
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
 
-Fixes: 6c711fde3a1c ("ACPI: TAD: Support RTC without wakeup")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/961A84FF37B50665+20260625132903.2840457-1-raoxu@uniontech.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+The grounded PoC kept the real unregister and callback carrier:
+
+  occ_shutdown()
+  hwmon_device_unregister()
+  occ_show_temp_1()
+  occ_update_response()
+
+Lockdep reported the circular dependency with occ_shutdown() already
+holding the OCC mutex and hwmon_device_unregister() waiting on the sysfs
+side:
+
+  WARNING: possible circular locking dependency detected
+  ... (sysfs_lock) ... at: hwmon_device_unregister+0x12/0x30 [vuln_msv]
+  ... (&test_occ.lock) ... at: occ_shutdown.constprop.0+0xe/0x40 [vuln_msv]
+  occ_update_response.isra.0+0xb/0x20 [vuln_msv]
+  occ_show_temp_1.constprop.0.isra.0+0x23/0x40 [vuln_msv]
+  *** DEADLOCK ***
+
+Serialize hwmon registration and removal with a separate hwmon_lock.
+Under that lock, detach occ->hwmon and update occ->active while occ->lock
+is held so concurrent OCC state changes still see a stable state, then
+drop occ->lock before calling hwmon_device_unregister().  Remove the
+driver sysfs group before taking occ->lock in occ_shutdown(), so draining
+the driver attributes cannot wait while the OCC mutex is held.  Also make
+OCC update callbacks return -ENODEV after deactivation, so callbacks that
+already passed sysfs active protection do not poll the hardware after
+teardown has detached the hwmon device.
+
+Fixes: 849b0156d996 ("hwmon: (occ) Delay hwmon registration until user request")
+Fixes: ac6888ac5a11 ("hwmon: (occ) Lock mutex in shutdown to prevent race with occ_active")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://lore.kernel.org/r/20260619015938.494464-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpi_tad.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/occ/common.c |   34 ++++++++++++++++++++++++++++------
+ drivers/hwmon/occ/common.h |    1 +
+ 2 files changed, 29 insertions(+), 6 deletions(-)
 
---- a/drivers/acpi/acpi_tad.c
-+++ b/drivers/acpi/acpi_tad.c
-@@ -856,7 +856,7 @@ static int acpi_tad_probe(struct platfor
- 	 * runtime suspend.  Everything else should be taken care of by the ACPI
- 	 * PM domain callbacks.
- 	 */
--	if (ACPI_TAD_AC_WAKE) {
-+	if (caps & ACPI_TAD_AC_WAKE) {
- 		device_init_wakeup(dev, true);
- 		dev_pm_set_driver_flags(dev, DPM_FLAG_SMART_SUSPEND |
- 					     DPM_FLAG_MAY_SKIP_RESUME);
+--- a/drivers/hwmon/occ/common.c
++++ b/drivers/hwmon/occ/common.c
+@@ -214,6 +214,11 @@ int occ_update_response(struct occ *occ)
+ 	if (rc)
+ 		return rc;
+ 
++	if (!occ->active) {
++		rc = -ENODEV;
++		goto unlock;
++	}
++
+ 	/* limit the maximum rate of polling the OCC */
+ 	if (time_after(jiffies, occ->next_update)) {
+ 		rc = occ_poll(occ);
+@@ -222,6 +227,7 @@ int occ_update_response(struct occ *occ)
+ 		rc = occ->last_error;
+ 	}
+ 
++unlock:
+ 	mutex_unlock(&occ->lock);
+ 	return rc;
+ }
+@@ -1105,11 +1111,16 @@ static void occ_parse_poll_response(stru
+ 
+ int occ_active(struct occ *occ, bool active)
+ {
+-	int rc = mutex_lock_interruptible(&occ->lock);
++	struct device *hwmon = NULL;
++	int rc = mutex_lock_interruptible(&occ->hwmon_lock);
+ 
+ 	if (rc)
+ 		return rc;
+ 
++	rc = mutex_lock_interruptible(&occ->lock);
++	if (rc)
++		goto unlock_hwmon;
++
+ 	if (active) {
+ 		if (occ->active) {
+ 			rc = -EALREADY;
+@@ -1154,14 +1165,17 @@ int occ_active(struct occ *occ, bool act
+ 			goto unlock;
+ 		}
+ 
+-		if (occ->hwmon)
+-			hwmon_device_unregister(occ->hwmon);
++		hwmon = occ->hwmon;
+ 		occ->active = false;
+ 		occ->hwmon = NULL;
+ 	}
+ 
+ unlock:
+ 	mutex_unlock(&occ->lock);
++	if (hwmon)
++		hwmon_device_unregister(hwmon);
++unlock_hwmon:
++	mutex_unlock(&occ->hwmon_lock);
+ 	return rc;
+ }
+ 
+@@ -1170,6 +1184,7 @@ int occ_setup(struct occ *occ)
+ 	int rc;
+ 
+ 	mutex_init(&occ->lock);
++	mutex_init(&occ->hwmon_lock);
+ 	occ->groups[0] = &occ->group;
+ 
+ 	rc = occ_setup_sysfs(occ);
+@@ -1190,15 +1205,22 @@ EXPORT_SYMBOL_GPL(occ_setup);
+ 
+ void occ_shutdown(struct occ *occ)
+ {
+-	mutex_lock(&occ->lock);
++	struct device *hwmon;
+ 
+ 	occ_shutdown_sysfs(occ);
+ 
+-	if (occ->hwmon)
+-		hwmon_device_unregister(occ->hwmon);
++	mutex_lock(&occ->hwmon_lock);
++	mutex_lock(&occ->lock);
++
++	hwmon = occ->hwmon;
++	occ->active = false;
+ 	occ->hwmon = NULL;
+ 
+ 	mutex_unlock(&occ->lock);
++
++	if (hwmon)
++		hwmon_device_unregister(hwmon);
++	mutex_unlock(&occ->hwmon_lock);
+ }
+ EXPORT_SYMBOL_GPL(occ_shutdown);
+ 
+--- a/drivers/hwmon/occ/common.h
++++ b/drivers/hwmon/occ/common.h
+@@ -101,6 +101,7 @@ struct occ {
+ 
+ 	unsigned long next_update;
+ 	struct mutex lock;		/* lock OCC access */
++	struct mutex hwmon_lock;		/* serialize hwmon registration/removal */
+ 
+ 	struct device *hwmon;
+ 	struct occ_attribute *attrs;
 
 
