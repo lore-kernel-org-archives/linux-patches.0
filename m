@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6827546EC7C;
-	Tue, 21 Jul 2026 18:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB3F47125D;
+	Tue, 21 Jul 2026 18:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658958; cv=none; b=QrWqTPGQaLfMmP9P7LeOQBIKSIXQwqERhh5e5Qi1vdMljnt0kUWyJGo9rS5z3Lc6x349c0dwKYKBbmpe5NA5m8XzTh/ZMz28bd1iUxLQUwYv4qD/yLFVlmYPS3Py2O4NzBevKSzqggjZDguXhuflUCXpD2tWhocByJEKh1AqoWg=
+	t=1784658961; cv=none; b=HlvBaCAZI6JDBLHWx56XzCMk7Nx+Rek/5367j1+PeR8YGYfRqWMs+3T5qsZZh+i63tVpiHcODP7r74d0+j7lg6DLcfsm0THekfDAtiNRvcpHvdghcORgITr6YPaAyJlucFqwgiq9aHBQEq3tO7C3rsA4SjJ4omc1eFfQYunl3Dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658958; c=relaxed/simple;
-	bh=ZbtT5BAH4oiYjkA0AuD0TGgRqU+A71DRXoivMb8AOL0=;
+	s=arc-20240116; t=1784658961; c=relaxed/simple;
+	bh=nQs2JKMRhB7N62RoTr9RIgaq8UWaEXvQ0gebtWwXX4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pnGFogNH9BYCwBWnvrKTbcvfF8BvrxAuzIqpL6eqib3+Vf7ER3ERYWbh6guJuEMV2uAC0j42HTxNZnTHKFB452nnW3wMeH8tzp6paT+9Ai5hSpiv7sTinBFunAR5jw0JcTRUEANJQuyf5/jfAj9DVhXojamD32u0FUjQoouqkBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fR6bIfJz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=StMvKdwrlCYyeCWCkbP58KzKM/t5irevXVKMs+bLT5JRWTAXEHefOCrb8x5IxIsw9sRgX+/9sT86bmSzdvT+wc0I2Bj0Cj/+FAtZHN0VTs79Ng0IHyWxSWzODiRpRXt1RaaFBX2wgFQv+uOCzppPdm76jlBQAt2w6fjMe6K8z9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q8qsya6l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fR6bIfJz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E801F000E9;
-	Tue, 21 Jul 2026 18:35:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8qsya6l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E771F000E9;
+	Tue, 21 Jul 2026 18:35:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658957;
-	bh=YLyhJyRyRvD7jkpTUNOEpwv5pw6iPDJx2qFlGlKa0LM=;
+	s=korg; t=1784658959;
+	bh=W1n3hb9/4W9cnftx7xI+Nu/yLRvRJJFV8i8JWk0scu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fR6bIfJzJYCVGykuAXzkj8MDlkZkTbPINz6XbBf94uo1UvRxJkA9W4FtElmGUiFkh
-	 KBwO1TqzfmOHNgMffvujE5r4M2Tt+GtiLhySvjWerjxb/0dYCmqJSVpZ2isn8kmJPI
-	 PP74YRSk45H/d7AnxHpjiNeBEeiKYaVTpsaM9OIs=
+	b=q8qsya6lV/utRTX/ukAor+Q0VRL2pNCtUamrUDY6SggDxN4fESGPuyabXrB+Pa9oK
+	 NLFoxuF19J32Iq/iO7nO14iwIusJu6DPQx/v+sUoMp8ix5G5k/qAnBQQPrHWTH+815
+	 tDHqnXJrhBPzZUJ/pA+ZhkKFwzwevj1G34KZDAjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.18 1338/1611] bpf: Reset register bounds before narrowing retval range in check_mem_access()
-Date: Tue, 21 Jul 2026 17:24:14 +0200
-Message-ID: <20260721152545.547802491@linuxfoundation.org>
+	stable@kernel.org,
+	Jann Horn <jannh@google.com>,
+	Andrii Nakryiko <andrii@kernel.org>
+Subject: [PATCH 6.18 1339/1611] bpf,fork: wipe ->bpf_storage before bailouts that access it
+Date: Tue, 21 Jul 2026 17:24:15 +0200
+Message-ID: <20260721152545.569873607@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,47 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Jann Horn <jannh@google.com>
 
-commit 5e0b273e0a62cc04ec338c7b502797c66c2ed42a upstream.
+commit 9b51a6155d14389876916726430da30eabb1d4ed upstream.
 
-When the BPF verifier processes a context load of an LSM hook return
-value, it calls __mark_reg_s32_range() to narrow the register to the
-hook's valid range. However, __mark_reg_s32_range() intersects the new
-range with the register's existing bounds using max_t()/min_t() rather
-than replacing them.
+Currently, copy_process() can bail out to free_task() before p->bpf_storage
+has been initialized, with this call graph (shown here for the
+!CONFIG_MEMCG case):
 
-If the destination register carries stale bounds from a prior instruction
-(e.g. BPF_MOV64_IMM), the intersection can produce a range narrower than
-reality. The verifier then believes it knows the register's exact value,
-while at runtime the actual hook return value is loaded, creating a
-verifier/runtime mismatch that can be used to bypass BPF memory safety
-checks.
+copy_process
+  dup_task_struct
+    arch_dup_task_struct
+      [copies the entire task_struct, including ->bpf_storage member]
+  [RLIMIT_NPROC check fails]
+  delayed_free_task
+    free_task
+      bpf_task_storage_free
+        rcu_dereference(task->bpf_storage)
+        bpf_local_storage_destroy
 
-The else branch already calls mark_reg_unknown() to reset register state
-before any narrowing. Apply the same reset in the is_retval path so
-stale bounds are cleared before __mark_reg_s32_range() intersects.
+In this case, the nascent task's ->bpf_storage member that
+bpf_local_storage_destroy() operates on is a plain copy of the parent's
+->bpf_storage pointer, not a real initialized pointer.
+This leads to badness (kernel hangs, UAF).
 
-Fixes: 5d99e198be27 ("bpf, lsm: Add check for BPF LSM return value")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260622230123.3695446-2-tristmd@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+This is reachable as long as the process calling fork() has been inserted
+into a task storage map.
+
+Cc: stable@kernel.org
+Fixes: a10787e6d58c ("bpf: Enable task local storage for tracing programs")
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/fork.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -7672,6 +7672,7 @@ static int check_mem_access(struct bpf_v
- 			 */
- 			if (info.reg_type == SCALAR_VALUE) {
- 				if (info.is_retval && get_func_retval_range(env->prog, &range)) {
-+					mark_reg_unknown(env, regs, value_regno);
- 					err = __mark_reg_s32_range(env, regs, value_regno,
- 								   range.minval, range.maxval);
- 					if (err)
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -961,6 +961,11 @@ static struct task_struct *dup_task_stru
+ 	tsk->mm_cid_active = 0;
+ 	tsk->migrate_from_cpu = -1;
+ #endif
++
++#ifdef CONFIG_BPF_SYSCALL
++	RCU_INIT_POINTER(tsk->bpf_storage, NULL);
++	tsk->bpf_ctx = NULL;
++#endif
+ 	return tsk;
+ 
+ free_stack:
+@@ -2143,10 +2148,6 @@ __latent_entropy struct task_struct *cop
+ 	p->sequential_io	= 0;
+ 	p->sequential_io_avg	= 0;
+ #endif
+-#ifdef CONFIG_BPF_SYSCALL
+-	RCU_INIT_POINTER(p->bpf_storage, NULL);
+-	p->bpf_ctx = NULL;
+-#endif
+ 
+ 	unwind_task_init(p);
+ 
 
 
