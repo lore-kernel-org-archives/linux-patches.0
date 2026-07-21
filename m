@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B693C471253;
-	Tue, 21 Jul 2026 18:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6BA47126B;
+	Tue, 21 Jul 2026 18:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656860; cv=none; b=r/yuH9lz9ONDuPastBzdbpwi50NMZgrHcj7GxiRaEPmPx1trqCEGPeBIII1d0zaeUBFyOhgL5YaYcVZiB/RjAYcogf4qyopEhirnIX0M9qXfS6mWn1QhVlozuEQDaLhhuEdDMQQZikW9xS82OTlxmYZvKzZDOGu0qyoD8hPmEjc=
+	t=1784656863; cv=none; b=km1wt8373fbqPg5cGkhDJ0D5C6BNIbNqBotWtL1UcfnDXjNOcDmHrDiti4z/K5iCLed1N/gX3WramhRiCagQz8kG2hPRPi2qYFRwZa7zwajLZiKhVqJHHNXZT1Q1dVI5suQiwSG9yd7nU4c23eKJ202ED9xsqWA4B/Il2MEKmrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656860; c=relaxed/simple;
-	bh=kuUeY0F6UnEsqAT/FwGvF54bjf3lxHJE9ntVIcZFRmo=;
+	s=arc-20240116; t=1784656863; c=relaxed/simple;
+	bh=L1lTBYG1ymHIH2yAM0b4jSYN4q1wF1CvZBVSk7w3VyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DD3jQNbHYR2UKQZcD2Ud/pOnLve9laUcYRcpc2b/as1uYB0wDBVftXkXqCJeo9egVfIJfBsHZUDBi6rb5D9LENIJDas3VwHFXJAE9AbPtGgGsMzxTzcTtI5cp5Wgk812jLzIjsEDH3jFXR4VTKZsdHpg1u4SAUkdAelSoPmov24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmntIIjE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mITu1KxQNNW4khXRtlNRy+zMNuZo1q5hrqHpxldLZouVscyiZubKG+G17dSLZPaSK3d/OvZjJG2fm+9PQaYChEo5wqmw27dho6vW6BF13wQBryK4JGK+UnnqlpeZjxyfTyLTWDduzV8MV2M37uDaldhrdUev+cvBsF3/okHD/0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGBuIwpz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmntIIjE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299031F00A3A;
-	Tue, 21 Jul 2026 18:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGBuIwpz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0E01F000E9;
+	Tue, 21 Jul 2026 18:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656859;
-	bh=FGDOVIXwt17elooSaFXBcdxFr/BDrhDzEJ4vjfDdcmI=;
+	s=korg; t=1784656862;
+	bh=LUEO9ldDuDgGESjsKTIJmpv1pJuyq4Aux8f3hE6qSaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lmntIIjEQZmmV2/V5rFCFsUHIvo4GtSOU3oG/JNycPwNPe5OSi+927j3u8eRGRXsz
-	 tIKtIcC3FLX68US+l4Vmd4r8Mu0+C5+v4x3wfdn3iRZ6RBJKT1l9qzkJFVgMBJPMVB
-	 3QkcuFT41isk4Ny74rYYGN5rH9RH9AckpEmSEYLs=
+	b=EGBuIwpzgl29BTv7a44dB4hGMx5KAJB2T/BfVwCYtBuYbRSpmDbr6qJt7KL0sFvGz
+	 QpWQXmK/N5SMMUhj/sxSNHFgCORA9XgJz/+IsEXFv6OjzB90vL/drHugaYxcTEv8j5
+	 4yJbJxLuX57zapRVSPtd34Ose0Ed/T2EJjPPZlm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yadan Fan <ydfan@suse.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0545/1611] MIPS: mm: Fix out-of-bounds write in maar_res_walk()
-Date: Tue, 21 Jul 2026 17:11:01 +0200
-Message-ID: <20260721152527.626756990@linuxfoundation.org>
+Subject: [PATCH 6.18 0546/1611] powerpc/perf: fix preempt count underflow in fsl_emb_pmu_del
+Date: Tue, 21 Jul 2026 17:11:02 +0200
+Message-ID: <20260721152527.649707926@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,61 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yadan Fan <ydfan@suse.com>
+From: Aboorva Devarajan <aboorvad@linux.ibm.com>
 
-[ Upstream commit 1b001b16bc88f3f7817e228acfd91ee01bdcfcce ]
+[ Upstream commit 81e3a86030462824a67d697739cf3f387f4ba350 ]
 
-maar_res_walk() uses wi->num_cfg as the index into the fixed-size
-wi->cfg array, but checks whether the array is full only after it has
-filled the selected entry. If walk_system_ram_range() reports more than
-16 memory ranges, the overflow call writes one struct maar_config past
-the end of the array before WARN_ON() prevents num_cfg from advancing.
+fsl_emb_pmu_del() unconditionally calls put_cpu_var(cpu_hw_events) at
+the 'out:' label, but only calls the matching get_cpu_var() after the
+'i < 0' early-return check. When event->hw.idx is negative the
+function jumps to 'out:' without having taken get_cpu_var(), and the
+trailing put_cpu_var() then issues an unmatched preempt_enable(),
+underflowing preempt_count.
 
-Move the full-array check before taking the array slot and return non-zero
-when the scratch array is full, so walk_system_ram_range() terminates the
-walk instead of invoking the callback for further ranges.
+On a CONFIG_PREEMPT=y kernel preempt_count would underflow and
+eventually present as a 'scheduling while atomic' BUG.
 
-Fixes: a5718fe8f70f ("MIPS: mm: Drop boot_mem_map")
+Move put_cpu_var() to pair with get_cpu_var() so the percpu access is
+correctly bracketed and the 'out:' label only handles perf_pmu_enable.
 
-Signed-off-by: Yadan Fan <ydfan@suse.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: a11106544f33 ("powerpc/perf: e500 support")
+Reviewed-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260605082912.305100-2-aboorvad@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/mm/init.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ arch/powerpc/perf/core-fsl-emb.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/mips/mm/init.c b/arch/mips/mm/init.c
-index 8986048f9b110b..decd201504043c 100644
---- a/arch/mips/mm/init.c
-+++ b/arch/mips/mm/init.c
-@@ -275,9 +275,15 @@ static int maar_res_walk(unsigned long start_pfn, unsigned long nr_pages,
- 			 void *data)
- {
- 	struct maar_walk_info *wi = data;
--	struct maar_config *cfg = &wi->cfg[wi->num_cfg];
-+	struct maar_config *cfg;
- 	unsigned int maar_align;
+diff --git a/arch/powerpc/perf/core-fsl-emb.c b/arch/powerpc/perf/core-fsl-emb.c
+index 7120ab20cbfecb..02b5dd74c187a0 100644
+--- a/arch/powerpc/perf/core-fsl-emb.c
++++ b/arch/powerpc/perf/core-fsl-emb.c
+@@ -366,9 +366,10 @@ static void fsl_emb_pmu_del(struct perf_event *event, int flags)
  
-+	/* Ensure we don't overflow the cfg array */
-+	if (WARN_ON(wi->num_cfg >= ARRAY_SIZE(wi->cfg)))
-+		return -1;
+ 	cpuhw->n_events--;
+ 
++	put_cpu_var(cpu_hw_events);
 +
-+	cfg = &wi->cfg[wi->num_cfg];
-+
- 	/* MAAR registers hold physical addresses right shifted by 4 bits */
- 	maar_align = BIT(MIPS_MAAR_ADDR_SHIFT + 4);
- 
-@@ -286,9 +292,7 @@ static int maar_res_walk(unsigned long start_pfn, unsigned long nr_pages,
- 	cfg->upper = ALIGN_DOWN(PFN_PHYS(start_pfn + nr_pages), maar_align) - 1;
- 	cfg->attrs = MIPS_MAAR_S;
- 
--	/* Ensure we don't overflow the cfg array */
--	if (!WARN_ON(wi->num_cfg >= ARRAY_SIZE(wi->cfg)))
--		wi->num_cfg++;
-+	wi->num_cfg++;
- 
- 	return 0;
+  out:
+ 	perf_pmu_enable(event->pmu);
+-	put_cpu_var(cpu_hw_events);
  }
+ 
+ static void fsl_emb_pmu_start(struct perf_event *event, int ef_flags)
 -- 
 2.53.0
 
