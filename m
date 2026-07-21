@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2C8336888;
-	Tue, 21 Jul 2026 17:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C8E2E736D;
+	Tue, 21 Jul 2026 17:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653966; cv=none; b=UDznJqx7Qq60h7yEsY4bYU7xWOT+ziJ2WdcUzDsAclG0S2IrAVkOu4wzrr9ekR9srcgvITIf6z6XjJH1yPi0Q2ullpV3ClHpWo6VBZwlA03j/c3VZJBUggfBMK4EpWT5vvKm7qrWx8X4d5MInu6AHOo2ZYWR43P3TD2c4lZip8k=
+	t=1784653968; cv=none; b=r8J4N/ht5Sgc7lDnUkg1vO8nmBXXgw0JQad8W/ejAylOF/7k9eicGg7UcNYKNiAnl1RTIkMxnd7LhZpVWgo/iMUzUBI+MfWwALMHr6Z8qWB9cndw+oBrkPUTqMRbnRbQrqRE/mlvsM4qdNHB2r5tH8wSRus4uiQBSI1/yDDktaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653966; c=relaxed/simple;
-	bh=STXSxsFT200Z7dg/aXCOt0HmSRCaTiiuQgJL0SmHu0c=;
+	s=arc-20240116; t=1784653968; c=relaxed/simple;
+	bh=5kTl5Qc8zg5AOL0z7x+2XfBGuPsUFk4z8ZXD3SpeZSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IeP3DsTyRnoHjd/afpS8V1XOE5+VywgdNBHa7gxQ5g3KLSW1ivT4AG5W9JB8EHYbmqZ1oGhXQyuha3H15gis2TKR5EnvOkzB4LjaEMflTd/J2UBTuFAvWH0pxs43uVx1jb/dor7GfXDwXE41awaUfgtZmEYagX7BXYZM9bk8qys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5nhdghV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mvv6CQIDv5xkKKDU/DIA817U2zxspNTFWbzypbqedf+f4u9NwfbjcyasUZGrBqnpB4pZ+mkBIu+nqLP6uWU0+twHU7aPkzVGrqFuBoOJPymTFg5zJCob3zwrgwQuqkNef6vdRo7UOm6ewGyjTUkrhcyZdcv2nyyfC+YbmaCkwnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJHhHmgn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5nhdghV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EE21F00A3A;
-	Tue, 21 Jul 2026 17:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJHhHmgn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 478B81F000E9;
+	Tue, 21 Jul 2026 17:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653965;
-	bh=rqUVEJKmJqonfwJF7hGmZfzSLE5zge3GVCRx0VyMi4o=;
+	s=korg; t=1784653967;
+	bh=yoQEOu+qF+IM5a3m63L1HDkmjGUogFj9fmK2hVS1a0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S5nhdghVz2Cig/p+CN1lSkHwlHIbov5cqNZ2Hjm4IZFeqLzGcPOdajPUS9KIWiF4A
-	 BgM4HppH6tC556e8Ttb2umBa5WijuUgoWub0Xht775dzIGNFn+DpU+8xF79cszVDh+
-	 gDOVC9BBRwe5JlRqqwxOV7e8mX/h3IDvG9WHHudE=
+	b=AJHhHmgnTvGBJJpqCpe8eOvUxYwxo7chOYIWvB5Qv8at43qk1aueXyEZSAAXgl9ab
+	 B5RTG4mWGGiEbfJYVT9uMtfaQrvkTBLvEOjaOkSyD8j7DZ7mj2Qov4wH7kaWX4ehrU
+	 apMmmM+A0dX//YrIadxAFHLSPYAT16ZHXK7OXvao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1473/2077] net/liquidio: drop cached VF pci_dev LUT
-Date: Tue, 21 Jul 2026 17:19:06 +0200
-Message-ID: <20260721152627.537375278@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.1 1520/2077] ASoC: SOF: ipc4-control: Fix TOCTOU in sof_ipc4_bytes_put
+Date: Tue, 21 Jul 2026 17:19:53 +0200
+Message-ID: <20260721152628.634167068@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,168 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 5c0e3ba4f500fd4314ceb42f07f16bc445156431 ]
+commit 3ad673e7139cf214afd24321a829aad6575f4163 upstream.
 
-The PF SR-IOV enable path caches VF pci_dev pointers in
-dpiring_to_vfpcidev_lut[] by iterating with pci_get_device(). Those
-entries do not own a reference, because the iterator drops the previous
-device reference on each step. The cached pointer is then dereferenced
-later when handling OCTEON_VF_FLR_REQUEST.
+In sof_ipc4_bytes_put(), the copy size is derived from the old
+data->size in the buffer rather than the incoming new data's size
+field from ucontrol. If the new data has a different size, the copy
+uses the wrong length: it may truncate valid data or copy stale bytes.
 
-Replace the cached VF mapping with runtime lookup on the mailbox DPI
-ring: derive the VF index from q_no, resolve the VF via exported PCI
-IOV helpers, validate it with the PF pointer and VF ID, then issue
-pcie_flr() and drop the reference with pci_dev_put(). Remove the
-unused VF lookup table initialization and cleanup.
+Fix by validating and using the incoming data's sof_abi_hdr.size from
+ucontrol before copying.
 
-Fixes: ca6139ffc67ee ("liquidio CN23XX: sysfs VF config support")
-Fixes: 8c978d059224 ("liquidio CN23XX: Mailbox support")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260701040847.1897845-1-dbgh9129@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a062c8899fed ("ASoC: SOF: ipc4-control: Add support for bytes control get and put")
+Cc: stable@vger.kernel.org
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20260609083458.31193-2-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/cavium/liquidio/lio_main.c   | 27 ---------------
- .../ethernet/cavium/liquidio/octeon_device.h  |  3 --
- .../ethernet/cavium/liquidio/octeon_mailbox.c | 33 ++++++++++++++++++-
- 3 files changed, 32 insertions(+), 31 deletions(-)
+ sound/soc/sof/ipc4-control.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/cavium/liquidio/lio_main.c b/drivers/net/ethernet/cavium/liquidio/lio_main.c
-index c1a3df22525492..32dd9b25760e31 100644
---- a/drivers/net/ethernet/cavium/liquidio/lio_main.c
-+++ b/drivers/net/ethernet/cavium/liquidio/lio_main.c
-@@ -3781,9 +3781,7 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
- static int octeon_enable_sriov(struct octeon_device *oct)
- {
- 	unsigned int num_vfs_alloced = oct->sriov_info.num_vfs_alloced;
--	struct pci_dev *vfdev;
- 	int err;
--	u32 u;
+--- a/sound/soc/sof/ipc4-control.c
++++ b/sound/soc/sof/ipc4-control.c
+@@ -562,6 +562,8 @@ static int sof_ipc4_bytes_put(struct snd
+ 	struct snd_soc_component *scomp = scontrol->scomp;
+ 	struct snd_sof_dev *sdev = snd_soc_component_get_drvdata(scomp);
+ 	struct sof_abi_hdr *data = cdata->data;
++	const struct sof_abi_hdr *new_hdr =
++		(const struct sof_abi_hdr *)ucontrol->value.bytes.data;
+ 	size_t size;
+ 	int ret;
  
- 	if (OCTEON_CN23XX_PF(oct) && num_vfs_alloced) {
- 		err = pci_enable_sriov(oct->pci_dev,
-@@ -3796,23 +3794,6 @@ static int octeon_enable_sriov(struct octeon_device *oct)
- 			return err;
- 		}
- 		oct->sriov_info.sriov_enabled = 1;
--
--		/* init lookup table that maps DPI ring number to VF pci_dev
--		 * struct pointer
--		 */
--		u = 0;
--		vfdev = pci_get_device(PCI_VENDOR_ID_CAVIUM,
--				       OCTEON_CN23XX_VF_VID, NULL);
--		while (vfdev) {
--			if (vfdev->is_virtfn &&
--			    (vfdev->physfn == oct->pci_dev)) {
--				oct->sriov_info.dpiring_to_vfpcidev_lut[u] =
--					vfdev;
--				u += oct->sriov_info.rings_per_vf;
--			}
--			vfdev = pci_get_device(PCI_VENDOR_ID_CAVIUM,
--					       OCTEON_CN23XX_VF_VID, vfdev);
--		}
+@@ -572,15 +574,16 @@ static int sof_ipc4_bytes_put(struct snd
+ 		return -EINVAL;
  	}
  
- 	return num_vfs_alloced;
-@@ -3820,8 +3801,6 @@ static int octeon_enable_sriov(struct octeon_device *oct)
+-	/* scontrol->max_size has been verified to be >= sizeof(struct sof_abi_hdr) */
+-	if (data->size > scontrol->max_size - sizeof(*data)) {
++	/* Validate the new data's size, not the old one */
++	if (new_hdr->size > scontrol->max_size - sizeof(*new_hdr)) {
+ 		dev_err_ratelimited(scomp->dev,
+ 				    "data size too big %u bytes max is %zu\n",
+-				    data->size, scontrol->max_size - sizeof(*data));
++				    new_hdr->size,
++				    scontrol->max_size - sizeof(*new_hdr));
+ 		return -EINVAL;
+ 	}
  
- static int lio_pci_sriov_disable(struct octeon_device *oct)
- {
--	int u;
--
- 	if (pci_vfs_assigned(oct->pci_dev)) {
- 		dev_err(&oct->pci_dev->dev, "VFs are still assigned to VMs.\n");
- 		return -EPERM;
-@@ -3829,12 +3808,6 @@ static int lio_pci_sriov_disable(struct octeon_device *oct)
+-	size = data->size + sizeof(*data);
++	size = new_hdr->size + sizeof(*new_hdr);
  
- 	pci_disable_sriov(oct->pci_dev);
- 
--	u = 0;
--	while (u < MAX_POSSIBLE_VFS) {
--		oct->sriov_info.dpiring_to_vfpcidev_lut[u] = NULL;
--		u += oct->sriov_info.rings_per_vf;
--	}
--
- 	oct->sriov_info.num_vfs_alloced = 0;
- 	dev_info(&oct->pci_dev->dev, "oct->pf_num:%d disabled VFs\n",
- 		 oct->pf_num);
-diff --git a/drivers/net/ethernet/cavium/liquidio/octeon_device.h b/drivers/net/ethernet/cavium/liquidio/octeon_device.h
-index 19344b21f8fb94..858a0fff2cc0b6 100644
---- a/drivers/net/ethernet/cavium/liquidio/octeon_device.h
-+++ b/drivers/net/ethernet/cavium/liquidio/octeon_device.h
-@@ -390,9 +390,6 @@ struct octeon_sriov_info {
- 
- 	struct lio_trusted_vf	trusted_vf;
- 
--	/*lookup table that maps DPI ring number to VF pci_dev struct pointer*/
--	struct pci_dev *dpiring_to_vfpcidev_lut[MAX_POSSIBLE_VFS];
--
- 	u64	vf_macaddr[MAX_POSSIBLE_VFS];
- 
- 	u16	vf_vlantci[MAX_POSSIBLE_VFS];
-diff --git a/drivers/net/ethernet/cavium/liquidio/octeon_mailbox.c b/drivers/net/ethernet/cavium/liquidio/octeon_mailbox.c
-index ad685f5d0a1363..697fcdc41e3cd7 100644
---- a/drivers/net/ethernet/cavium/liquidio/octeon_mailbox.c
-+++ b/drivers/net/ethernet/cavium/liquidio/octeon_mailbox.c
-@@ -26,6 +26,31 @@
- #include "octeon_mailbox.h"
- #include "cn23xx_pf_device.h"
- 
-+static struct pci_dev *lio_vf_pci_dev_by_qno(struct octeon_device *oct, u32 q_no)
-+{
-+	struct pci_dev *vfdev = NULL;
-+	int vfidx;
-+
-+	if (!oct->sriov_info.rings_per_vf)
-+		return NULL;
-+
-+	if (q_no % oct->sriov_info.rings_per_vf)
-+		return NULL;
-+
-+	vfidx = q_no / oct->sriov_info.rings_per_vf;
-+	if (vfidx >= oct->sriov_info.num_vfs_alloced)
-+		return NULL;
-+
-+	while ((vfdev = pci_get_device(PCI_VENDOR_ID_CAVIUM,
-+				       OCTEON_CN23XX_VF_VID, vfdev))) {
-+		if (pci_physfn(vfdev) && pci_physfn(vfdev) == oct->pci_dev &&
-+		    pci_iov_vf_id(vfdev) == vfidx)
-+			return vfdev;
-+	}
-+
-+	return NULL;
-+}
-+
- /**
-  * octeon_mbox_read:
-  * @mbox: Pointer mailbox
-@@ -237,6 +262,7 @@ static int octeon_mbox_process_cmd(struct octeon_mbox *mbox,
- 				   struct octeon_mbox_cmd *mbox_cmd)
- {
- 	struct octeon_device *oct = mbox->oct_dev;
-+	struct pci_dev *vfdev;
- 
- 	switch (mbox_cmd->msg.s.cmd) {
- 	case OCTEON_VF_ACTIVE:
-@@ -260,7 +286,12 @@ static int octeon_mbox_process_cmd(struct octeon_mbox *mbox,
- 		dev_info(&oct->pci_dev->dev,
- 			 "got a request for FLR from VF that owns DPI ring %u\n",
- 			 mbox->q_no);
--		pcie_flr(oct->sriov_info.dpiring_to_vfpcidev_lut[mbox->q_no]);
-+		vfdev = lio_vf_pci_dev_by_qno(oct, mbox->q_no);
-+		if (!vfdev)
-+			break;
-+
-+		pcie_flr(vfdev);
-+		pci_dev_put(vfdev);
- 		break;
- 
- 	case OCTEON_PF_CHANGED_VF_MACADDR:
--- 
-2.53.0
-
+ 	/* copy from kcontrol */
+ 	memcpy(data, ucontrol->value.bytes.data, size);
 
 
