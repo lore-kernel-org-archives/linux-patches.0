@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D2A1474CC;
-	Tue, 21 Jul 2026 18:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03FA73264FF;
+	Tue, 21 Jul 2026 18:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659270; cv=none; b=tnyEWBXsALQ4SZefmKssi84SffGMNg/V9ZWD2b3Sm/LaJ30vgEh1pWCk82K+QRI5X+T3T6MtqGDoBChXBhQ2c/ZMuxRiZzrqEbiutGbOcknGtBQTnWTSSoaojLNftpmJxEsVuzIWdu/iVlTD64OUYq98uh3Wbn8eXcv8FocleS4=
+	t=1784659273; cv=none; b=pQlM7s8Sz7KaVNNZD3eZlhV0T+B/zstuM6Nc/QVG5GJ5QWhMqy2Oj8QIpBcOv9MBsEYQ+b5KnwgWuhftM9B3yviimwLCqO1psqxEEbhVcNpaKYESxmMc/NAh5iyDfheAhhrlw9vkurHCq7llCbeHE6fLInttmctqRwRO7hd+qPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659270; c=relaxed/simple;
-	bh=8SuqLYJ4kmP7wYCm9eJJFwO9uoMlcQ/QrC7+lFzTipI=;
+	s=arc-20240116; t=1784659273; c=relaxed/simple;
+	bh=PONMa2t8BS3Xx2ettbVp9eAidZJPU7pg170H/25yxFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JSAoOenreUvS0Q2jGpfDSMuU/Hqxmth2PtKwBG73eqdn2UvGTJ38qzx30rWRUDr1SgxUzPuZPKiTNCJ7qzl64dK6HKmzJSU8Jze8vKDnAguuE9z6afL4gTV4W7lhowIkYOjWxoZGPo2WvVcnkqp0e0/omFegd/Kh0h4NZt1djmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GV1viZE3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wz+jFn0I5OZer0FM0oPVsZXJ4/Q2Fhxnz5Lk0lx9KghGnwJVJJDhSh1WO+dyJNYYHzGlXkZ2ub5YyAqJARDKkn+Iw4CE7f1inXkQsZLOrSi2ti1mVjmPi3LMKPS5RjMvecUBrfxSuLRpIMVUgkkTRHmpG175w3MRTjJKDewJfyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=njdIAGRU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GV1viZE3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18D11F000E9;
-	Tue, 21 Jul 2026 18:41:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njdIAGRU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646BB1F000E9;
+	Tue, 21 Jul 2026 18:41:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659269;
-	bh=aaabkDc0RaTk7+7LEwKi1BfjAHL3ZHjtxcuwSl5cZl4=;
+	s=korg; t=1784659271;
+	bh=N5GAVE1l2YASYNy8xIlTlgeOF5OWk9JmhV10tdfeWOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GV1viZE33331+kvO/dnqXF7tL0LJUbsopImdYiJ7Pl+Nr0xvC90q6fwkqhDnYAEeF
-	 j4G24obPyePHsngT1JfOYB/AutDIFWL8KwxB+DJfkQtQYKxg5UmlpqITWP6U7E1njn
-	 FjqD9i9rLVArtqCfF1M+DQi6Nojh7/G8LsAUlE6U=
+	b=njdIAGRU92SBJ4cHhOAa4dTFR+mpBuXP6uMjwrMAx414Qj/Cxouk934e9OWom+crj
+	 6Fyz6Tl6jR9a+szxnphmXEEDwFIPIZZCH0UCXDjy2Cb/3gYTHbdm2iwDLFD2PVV6yP
+	 nkNIBaAWxANCebNp9/YXF19/4ck/2ZdFDhx5rM20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
+	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Baul Lee <baul.lee@xbow.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 1457/1611] macsec: dont read an unset MAC header in macsec_encrypt()
-Date: Tue, 21 Jul 2026 17:26:13 +0200
-Message-ID: <20260721152548.218901912@linuxfoundation.org>
+Subject: [PATCH 6.18 1458/1611] dibs: loopback: validate offset and size in move_data()
+Date: Tue, 21 Jul 2026 17:26:14 +0200
+Message-ID: <20260721152548.241240419@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,47 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Dust Li <dust.li@linux.alibaba.com>
 
-commit f5089008f90c0a7c5520dff3934e0af00adf322d upstream.
+commit 78237e3c0720fcc6eb9b87e90fd70f63eeca886f upstream.
 
-macsec_encrypt() reads the Ethernet header via eth_hdr(skb)
-(skb->head + skb->mac_header) to memmove() the 12 source/destination MAC
-bytes forward and make room for the SecTAG.
+The loopback move_data() performs a memcpy into the registered DMB
+without checking whether offset + size exceeds the DMB length.  Unlike
+real ISM hardware, which enforces memory region bounds natively, the
+software loopback has no such protection.
 
-On the AF_PACKET SOCK_RAW + PACKET_QDISC_BYPASS transmit path the skb
-reaches the macsec ndo_start_xmit() with the MAC header unset, so
-eth_hdr(skb) resolves to skb->head + (u16)~0 and the read is out of
-bounds: a 12-byte heap over-read that is also emitted on the wire as the
-frame's outer source/destination MAC. KASAN reports a slab-out-of-bounds
-read in macsec_start_xmit() on 6.0; on current mainline a CONFIG_DEBUG_NET
-build flags it as an unset mac header in skb_mac_header().
+A peer-supplied out-of-bounds offset or oversized write would result in
+an OOB write past the allocated kernel buffer.  Add an explicit bounds
+check before the memcpy to reject such requests with -EINVAL.
 
-On the TX path the L2 header is at skb->data, so use skb_eth_hdr(), added
-by commit 96cc4b69581d ("macvlan: do not assume mac_header is set in
-macvlan_broadcast()") for exactly this purpose.
-
-Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
+Fixes: f7a22071dbf3 ("net/smc: implement DMB-related operations of loopback-ism")
 Cc: stable@vger.kernel.org
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20260703083634.2035145-1-4ncienth@gmail.com
+Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
+Signed-off-by: Dust Li <dust.li@linux.alibaba.com>
+Reported-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260707074318.1448662-1-dust.li@linux.alibaba.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/macsec.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dibs/dibs_loopback.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -642,7 +642,7 @@ static struct sk_buff *macsec_encrypt(st
+--- a/drivers/dibs/dibs_loopback.c
++++ b/drivers/dibs/dibs_loopback.c
+@@ -254,6 +254,11 @@ static int dibs_lo_move_data(struct dibs
+ 		read_unlock_bh(&ldev->dmb_ht_lock);
+ 		return -EINVAL;
  	}
- 
- 	unprotected_len = skb->len;
--	eth = eth_hdr(skb);
-+	eth = skb_eth_hdr(skb);
- 	sci_present = macsec_send_sci(secy);
- 	hh = skb_push(skb, macsec_extra_len(sci_present));
- 	memmove(hh, eth, 2 * ETH_ALEN);
++	if ((u64)offset + size > rmb_node->len) {
++		read_unlock_bh(&ldev->dmb_ht_lock);
++		return -EINVAL;
++	}
++
+ 	memcpy((char *)rmb_node->cpu_addr + offset, data, size);
+ 	sba_idx = rmb_node->sba_idx;
+ 	read_unlock_bh(&ldev->dmb_ht_lock);
 
 
