@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A042B3B9D9D;
-	Tue, 21 Jul 2026 22:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CE63C1081;
+	Tue, 21 Jul 2026 22:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671944; cv=none; b=GZS3ZFe9ny5MyIO748XOjjwXTZFDKzmsHhL7m0ZKP02uVS0g9QFP5nhHrzhegCRxe1TdJVmY3qVMRLg4DlAeKgVcjeoKAb3/YNuF0E7RyGbPM2227xso8kkQJFw/9IV3pJddmXB5Bl2PXIk0pg/nsbkJcf8vjFS8RzzrHiWvnAE=
+	t=1784671945; cv=none; b=oUSAOg6vYcqCwffH2MPbBYgkKyXwZKkTvAgp7q1xeBovurKsHXWuF0PwZkfQmD8i7pZMksUUVqtDxM3B4fOIC48wJwWjeEaXUM6n6FYuQIyCxkn9TVNOs0Sb7gqTvSjB5V39FNuAdJCHi6m5nwblBPDJ/UqudLAZ3cQFUUt6XJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671944; c=relaxed/simple;
-	bh=pxw4agxpG5m/lV127hMz6/d6lB4GFIWtNwI2HlNoefk=;
+	s=arc-20240116; t=1784671945; c=relaxed/simple;
+	bh=t3QNcYA/a/GLDbS+DJek1j9K+9haifXkVF+Jmg7HN6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Prq1FCdJQv5lIhhCucUzx0Ug6/OwnkRyfKzVfT3zsKt0Ktj13ugQsYX55V218KN5541YgKkVr3i+hOBw0JW9nrb/DuDGDtPUo9mrcntzFQnkILGeBhKODSEG8OsWgy1aYNeayKItXkK5pkklvZNs8xS2HDDOVjPLej2SA5CBZFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DRBuFo0V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q+aXH8Drn6bkdG/L589L+y4GV9pHqv5cPOsFg9Xwft5XQqFHsdcS6QXzsBOZ6q3kFlr5YRcHHz+dsJ343Pw7ClWdi3DbOozSJVcm1Sy8zh4++wr061ni9XRAawG69a6QSmPxCx0ZWOrLJSMxS3hSVtD7/wSMVDHcPJuL59Q1ans=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GNDga9x4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRBuFo0V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C2C1F000E9;
-	Tue, 21 Jul 2026 22:12:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNDga9x4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6AC1F00A3A;
+	Tue, 21 Jul 2026 22:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671941;
-	bh=g0kaRpOFRmLXv3vyJs1YFGqLFSBaNq2GQl17pKIILEU=;
+	s=korg; t=1784671944;
+	bh=vwoZIPr14vYmzg96pWh4s64FhkEpRaeC8e2sJXkUlbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DRBuFo0Vbk7uz1BmPphc2OpozpASYn8Rg41UMeJK/+VtYtaU7qFXXvqW/o+Iv7Pnz
-	 cgfkbj8icTPulPX7VOcjycrq/CbFnBuGRh5kqTAGWuX2lfFTZyIFQNocy/86ysR0mF
-	 FoVcfaKm0RqSCZe6IrkL6zojNrwhoHXDK58KSHE8=
+	b=GNDga9x4c156zwN88A7XL7yFH+pze132AH/LX0TCcILWHwp9xu4REtGwYp3atWBH7
+	 aTIsamo6eX2mgRXwxavBNIewUlID8HslediFXthKh/Q2UHGtzmoa8tIXGENMQZs/VK
+	 mK0tODFrpbSStn/aSeQ04jnIDre2S7q4g/ZiJbvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
+	Zhang Yanmin <yanmin_zhang@linux.intel.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 436/843] perf symbols: Break infinite loop on zero-filled notes in sysfs__read_build_id()
-Date: Tue, 21 Jul 2026 17:21:11 +0200
-Message-ID: <20260721152415.842000798@linuxfoundation.org>
+Subject: [PATCH 5.15 437/843] perf tools: Use snprintf() for root_dir path construction
+Date: Tue, 21 Jul 2026 17:21:12 +0200
+Message-ID: <20260721152415.863231413@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -46,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
@@ -55,44 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 063c647b24f640657d6d9e2e90d620ea3ee19ae6 ]
+[ Upstream commit 7b0df6f4d498b1608afccfd6dffb264e6da91693 ]
 
-sysfs__read_build_id() iterates ELF note headers from sysfs files in a
-while(1) loop.  If the file contains a zero-filled note header (both
-n_namesz and n_descsz are 0), the code computes n = namesz + descsz = 0
-and calls read(fd, bf, 0).  read() with count 0 returns 0, which
-matches the expected (ssize_t)n value, so the error check passes and
-the loop repeats — reading the same zero bytes and spinning forever.
+get_kernel_version() in machine.c and dso__load_guest_kernel_sym() in
+symbol.c use sprintf() to construct paths by prepending root_dir to
+"/proc/version" and "/proc/kallsyms" respectively.  Both write into
+PATH_MAX stack buffers, but root_dir comes from --guestmount or KVM
+configuration and is not length-checked.  A root_dir at or near
+PATH_MAX causes a stack buffer overflow.
 
-This can happen with corrupted or zero-padded sysfs pseudo-files.
-
-Add a check for n == 0 before the read, since no valid ELF note has
-both name and description of zero length.
+Switch to snprintf() with sizeof(path) to prevent overflow.
 
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: f1617b40596cb341 ("perf symbols: Record the build_ids of kernel modules too")
-Reviewed-by: Ian Rogers <irogers@google.com>
+Fixes: a1645ce12adb6c9c ("perf: 'perf kvm' tool for monitoring guest performance from host")
+Cc: Zhang Yanmin <yanmin_zhang@linux.intel.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-elf.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/perf/util/machine.c | 2 +-
+ tools/perf/util/symbol.c  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index d3bfa278df8141..fffe097fba9eda 100644
---- a/tools/perf/util/symbol-elf.c
-+++ b/tools/perf/util/symbol-elf.c
-@@ -723,6 +723,9 @@ int sysfs__read_build_id(const char *filename, struct build_id *bid)
- 			} else {
- 				n = namesz + descsz;
- 			}
-+			/* no valid note has both namesz and descsz zero */
-+			if (n == 0)
-+				break;
- 			if (read(fd, bf, n) != (ssize_t)n)
- 				break;
- 		}
+diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
+index a0df9d24b2cb47..7e7c63fcd14068 100644
+--- a/tools/perf/util/machine.c
++++ b/tools/perf/util/machine.c
+@@ -1338,7 +1338,7 @@ static char *get_kernel_version(const char *root_dir)
+ 	char *name, *tmp;
+ 	const char *prefix = "Linux version ";
+ 
+-	sprintf(version, "%s/proc/version", root_dir);
++	snprintf(version, sizeof(version), "%s/proc/version", root_dir);
+ 	file = fopen(version, "r");
+ 	if (!file)
+ 		return NULL;
+diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
+index b48d237124e121..51e86e3d2e674a 100644
+--- a/tools/perf/util/symbol.c
++++ b/tools/perf/util/symbol.c
+@@ -2313,7 +2313,7 @@ static int dso__load_guest_kernel_sym(struct dso *dso, struct map *map)
+ 		if (!kallsyms_filename)
+ 			return -1;
+ 	} else {
+-		sprintf(path, "%s/proc/kallsyms", machine->root_dir);
++		snprintf(path, sizeof(path), "%s/proc/kallsyms", machine->root_dir);
+ 		kallsyms_filename = path;
+ 	}
+ 
 -- 
 2.53.0
 
