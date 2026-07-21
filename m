@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2439470428;
-	Tue, 21 Jul 2026 17:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673893382C7;
+	Tue, 21 Jul 2026 17:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656235; cv=none; b=Xlu8UVvD00zs/cigqr2W8T4zI68MDBbssdHZvW6g/K3agsu0kis7w3IQEJq+gz8yXk3NL+bFZOfnifNIZaaasnlqPlWTYKz99dKveDs14Bf93+gmL2oqzCIAFVYEHbQ8GBMD1imwN16CgxZD12CFPbMHv2MGlz1imL+ou/vCUsU=
+	t=1784656237; cv=none; b=beoDQXWHWTgBbdXKd8+LeFtVc2MRbnbjz7Lh6KQVdTZLu4tITC2VGCMSS1QOx/SD/Tia9F6tGSIGhYAmQaeZ7izhP+6jc/AVZRRoZkuD559bP2rJCcEzMRwfOMQ67dFadRdnk5/SiAc0vxUN3t0K//DFFiCxj2punuofflhI/n0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656235; c=relaxed/simple;
-	bh=INaywhpv1bQ7fwebFUAZGz7rEDQqGqWdYA8euG18SVc=;
+	s=arc-20240116; t=1784656237; c=relaxed/simple;
+	bh=75nh0qcsmdhuAVThet7D/5y3j5jeECuWdUmwfQp/nYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sKCLbVOVjxLxbdXKj7DoVUyvKm3+QwNxoASGaTI+AbNks2Qu5H/3HG4llGzuhVMHHED49R5ZfJbmxmP89brTtHN8udEAen46G/AB6uPdWFxzSNBbaaRLVHvgEcyMzAjOi6+ZZwx0o3OT2vbvi6zHeMzXPMK/OZXYnU8nMwXt8Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBjQQplg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JqtLPydgJ2N2vFbR+TokKM8RjzZs2fTgRjeq+OPWKCayA6M3Rc3j3XY5MPukCVI+fIF8tpDnyv4QOqSza6gjpyWmIKTjwDXfMoklk8bqSj1wpHKhG0p9Q1Odb6b5k2rDLTL0I5hZWdoRg4LT7oFgNg0ckjhVEpniI0hX/Y+vRys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zz0JAfQv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBjQQplg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366451F00A3A;
-	Tue, 21 Jul 2026 17:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zz0JAfQv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE01D1F000E9;
+	Tue, 21 Jul 2026 17:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656233;
-	bh=eBdtkpdH0/JonvwxveURm6YJskgdv1zxG5jQ3MLkhko=;
+	s=korg; t=1784656236;
+	bh=rZTpxylGSGCTLedx2bXsuPp5gf2ENneNZc/tdkIQffk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sBjQQplgu00hIqqB4jG4wNWr38DhLZuhxiN37fgsgNlqsuuKMr4UQaWBtSi8YS1eY
-	 5VlVYDbqTbNMg40Pn3ZL/XGaAqoE5ACRmK98jopya2jpNlsypuJBt0mGBD7yosYzh2
-	 mQweygyeOT2ReJ8k/phu/P1xv9LB2bJ/szKcxIto=
+	b=zz0JAfQv9x2Rdirj83z83J25HlKIEJXi7N+rDW/LPtydm0C8Ryrw/aUXLGtfiqFcr
+	 EA2EMaaHkCKh/LC/94zD4kj0ocg2ND1FpXQ1HMfwkh0wSFsP3ADgZI7XhNiVrqHsai
+	 sz0ll+qKtklfG4kjqlIjvt6vYSjmrUlclF5ChmN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Cheng <chencheng@fnnas.com>,
-	Xiao Ni <xiao@kernel.org>,
-	Yu Kuai <yukuai@fygo.io>,
+	Danila Chernetsov <listdansp@mail.ru>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0283/1611] md/raid10: reset read_slot when reusing r10bio for discard
-Date: Tue, 21 Jul 2026 17:06:39 +0200
-Message-ID: <20260721152521.422404590@linuxfoundation.org>
+Subject: [PATCH 6.18 0310/1611] ext2: fix ignored return value of generic_write_sync()
+Date: Tue, 21 Jul 2026 17:07:06 +0200
+Message-ID: <20260721152522.049153086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,40 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Cheng <chencheng@fnnas.com>
+From: Danila Chernetsov <listdansp@mail.ru>
 
-[ Upstream commit 6b8a26af065ddc93de2aa5c9f0df98dce9723442 ]
+[ Upstream commit a4659be0bc7cb1856ffb15b67f903229ae8891ec ]
 
-put_all_bios() always drops devs[i].bio, but it only drops
-devs[i].repl_bio when r10_bio->read_slot < 0. If discard reuses an
-r10bio that was previously used for a read, read_slot can still be
-non-negative, and discard cleanup can skip bio_put() on repl_bio.
+Fix ext2_dio_write_iter() to propagate the error returned by
+generic_write_sync() instead of silently discarding it, which could
+cause write(2) to return success to userspace on O_SYNC/O_DSYNC files
+even when the sync failed.
 
-Reset read_slot to -1 when preparing an r10bio for discard so the
-replacement bio is always released correctly.
+The correct pattern, already used in ext2_dax_write_iter() in the same
+file and in ext4, xfs, f2fs among others, is:
+    if (ret > 0)
+        ret = generic_write_sync(iocb, ret);
 
-Fixes: d30588b2731f ("md/raid10: improve raid10 discard request")
-Signed-off-by: Chen Cheng <chencheng@fnnas.com>
-Reviewed-by: Xiao Ni <xiao@kernel.org>
-Link: https://patch.msgid.link/20260515093019.3436882-1-chencheng@fnnas.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+[JK: Reflect also filemap_write_and_wait() return value]
+
+Fixes: fb5de4358e1a ("ext2: Move direct-io to use iomap")
+Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
+Link: https://patch.msgid.link/20260530122311.136803-1-listdansp@mail.ru
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ext2/file.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 2815c05d1c9f0b..4a8814fd75cd0e 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1727,6 +1727,7 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
- 	r10_bio->mddev = mddev;
- 	r10_bio->state = 0;
- 	r10_bio->sectors = 0;
-+	r10_bio->read_slot = -1;
- 	memset(r10_bio->devs, 0, sizeof(r10_bio->devs[0]) * geo->raid_disks);
- 	wait_blocked_dev(mddev, r10_bio);
+diff --git a/fs/ext2/file.c b/fs/ext2/file.c
+index 76bddce462fced..c59c19e5ff72ba 100644
+--- a/fs/ext2/file.c
++++ b/fs/ext2/file.c
+@@ -264,12 +264,15 @@ static ssize_t ext2_dio_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 		endbyte = pos + status - 1;
+ 		ret2 = filemap_write_and_wait_range(inode->i_mapping, pos,
+ 						    endbyte);
+-		if (!ret2)
++		if (!ret2) {
+ 			invalidate_mapping_pages(inode->i_mapping,
+ 						 pos >> PAGE_SHIFT,
+ 						 endbyte >> PAGE_SHIFT);
+-		if (ret > 0)
+-			generic_write_sync(iocb, ret);
++			if (ret > 0)
++				ret = generic_write_sync(iocb, ret);
++		} else {
++			ret = ret2;
++		}
+ 	}
  
+ out_unlock:
 -- 
 2.53.0
 
