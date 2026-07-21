@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9144946EC9B;
-	Tue, 21 Jul 2026 19:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0BC46EC9A;
+	Tue, 21 Jul 2026 19:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660523; cv=none; b=WnUl3kvGUVl3FJh3antBWVsKBWNuNciEQTFhu6imhy+lFFvTcfpTe/AAmO4lCJpkKXwMOmQSSL2Q3PImNvpRVrA9UkMzBDRH+FCRYwQOqJxgezCSTBhtCSe8Jt+icLGz4JUCaQrUtg81jsVAIG91vaHylk/L/sTLurXZEXtsrO4=
+	t=1784660525; cv=none; b=jJsSmX1tDdFIQYTfnl4BHu5jtq5zbTSkqp0LZ7wDSE48hzvhwn6tBepgixjYEbZySvBSbpb8sxmsRQfSiN5KGzEIM0jH1b6gHy4DRpo75Vl8No2q3XCVl6HCbZqR/Gh3dGGbGnyRb49VrAtyB0BQuXzarxxzx1xi8whGcsnL3p8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660523; c=relaxed/simple;
-	bh=ERlScBrfrEg5//qeKVfmoUCQP11+M0lhYn0ZwSzE70g=;
+	s=arc-20240116; t=1784660525; c=relaxed/simple;
+	bh=6MpHqfotbCSE+Erk5yqdCB3/Gqo3PgY340lwfI6UEU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QWBDwmoQEdBinDvhFtljLQLmgFHYZvBCpAq27USm3iP6FoxifHCqurmQx0DqO6DXelEYHOkT6IqOm353l7lu/h539XxDhD04KGBkcxOCPZR3Ybf0tqGzOcuH8BTMozXjbTCQz5rpKvfilhuOUd+nmtf+NqOBEyOGkGkBeIWFNY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tO17nJrF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NMy5rnMWXM2megQITqJsZoo/Bx/1pCHahP1N/VBKdjPsIRCnzjRBCmpqbBbSg2Y+rVq+dScg4USLE9uM8q2QvSbrcsS0eVtdJm4vbWdK7N6zj2f6alrt1u3oB1kzX2mOtTG3jctGNWc9cewzX9tVZHs16lfueCsbj2OoioyQFh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17/hfsCa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tO17nJrF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD611F000E9;
-	Tue, 21 Jul 2026 19:01:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17/hfsCa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE0D1F00A3A;
+	Tue, 21 Jul 2026 19:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660520;
-	bh=gsCvMAtHYLUeWI2ymABZ+wEmsUReXAB4pGgiWqDpQ7M=;
+	s=korg; t=1784660523;
+	bh=zANaXrBpIqCMXyJUi8srJ24x2w4XzqmqWtKquOb1zBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tO17nJrF+0e55gyE9lxpjfJFlesYNAczjpcVP8XhPLTgwMky05nxh0K9But2TEN1x
-	 XUuqqusdL/QFq4P/4jqrfvuh1m+eM+B99L3yKf4NJo4W/a5rCP3NBTAndIR/SFvudo
-	 yyvdQ+SbC/3g5BOfeKU1qvJ3MbOCBcn4JCGfzBjQ=
+	b=17/hfsCaz9+7z6SrUfSya1BPY4E+qXB1cEzbTC+YvIMcyjV4wDCt0En3Rq9EkueIX
+	 ul59EJoL+BpVVEYzYJcXfU0e1Xupm0X1pdb/Vwurx+llr0eDbXbvs82Og+UZlZST+n
+	 U9i4dGugeWIGkw16Qc6Hp35rZkZ3Kc4olsDQPZ98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Stephen Brennan <stephen.s.brennan@oracle.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1009/2077] perf tools: Use mkostemp() for O_CLOEXEC on temporary files
-Date: Tue, 21 Jul 2026 17:11:22 +0200
-Message-ID: <20260721152616.614653274@linuxfoundation.org>
+Subject: [PATCH 7.1 0969/2077] NFSv4/flexfiles: honor FF_FLAGS_NO_IO_THRU_MDS on fatal DS connect errors
+Date: Tue, 21 Jul 2026 17:10:42 +0200
+Message-ID: <20260721152615.678173959@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -48,81 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-[ Upstream commit b8acc68f1382a3f380a0e7320a95d328ac5e9027 ]
+[ Upstream commit 7a375cafc14ed151508f908ea5681caf0a9cc1d6 ]
 
-mkstemp() creates file descriptors without the close-on-exec flag.
-These fds leak to child processes spawned during symbol resolution
-(addr2line, objdump), wasting descriptors and potentially exposing
-temporary file contents.
+Commit f06bedfa62d5 ("pNFS/flexfiles: don't attempt pnfs on fatal DS
+errors") teaches ff_layout_{read,write}_pagelist() to return
+PNFS_NOT_ATTEMPTED when nfs4_ff_layout_prepare_ds() fails with a
+nfs_error_is_fatal() errno (e.g. -ETIMEDOUT from a SOFTCONN connect
+deadline, -ENOMEM, -ERESTARTSYS), so that the client gives up instead
+of spinning.  pnfs_do_{read,write}() then dispatches the I/O through
+pnfs_{read,write}_through_mds() → nfs_pageio_reset_{read,write}_mds().
 
-Replace mkstemp() with mkostemp(tmpbuf, O_CLOEXEC) at all three
-call sites:
+That fallback is unconditional and silently violates FF_FLAGS_NO_IO_THRU_MDS:
+when the layout segment carries the flag (typically single-mirror
+appliance layouts where MDS I/O is explicitly forbidden), the
+out_failed: path's \`&& !ds_fatal_error\` clause overrides the flag's
+short-circuit through ff_layout_avoid_mds_available_ds() and routes
+the I/O to the MDS file handle anyway.
 
-  - filename__decompress() in dso.c
-  - read_gnu_debugdata() in symbol-elf.c
-  - kcore__init() in symbol-elf.c
+This is reachable in practice during a data-server restart: SOFTCONN
+exhaustion produces -ETIMEDOUT, which is fatal per nfs_error_is_fatal(),
+which triggers PNFS_NOT_ATTEMPTED, which silently goes to MDS.
 
-Fixes: 42b3fa670825983f ("perf tools: Introduce dso__decompress_kmodule_{fd,path}")
-Fixes: b10f74308e130527 ("perf symbol: Support .gnu_debugdata for symbols")
-Fixes: afba19d9dc8eba66 ("perf symbols: Workaround objdump difficulties with kcore")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Stephen Brennan <stephen.s.brennan@oracle.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Preserve the upstream "don't spin on fatal errors" intent for layouts
+that permit MDS fallback.  For layouts with FF_FLAGS_NO_IO_THRU_MDS
+set, mark the layout for return and request PNFS_TRY_AGAIN instead;
+if the server cannot supply a usable layout the failure now surfaces
+cleanly via pnfs_update_layout(), rather than via silent MDS I/O that
+contradicts the flag.
+
+Fixes: f06bedfa62d5 ("pNFS/flexfiles: don't attempt pnfs on fatal DS errors")
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dso.c        | 2 +-
- tools/perf/util/symbol-elf.c | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
-index 511e91843fbd8e..d878c46de52a79 100644
---- a/tools/perf/util/dso.c
-+++ b/tools/perf/util/dso.c
-@@ -346,7 +346,7 @@ int filename__decompress(const char *name, char *pathname,
- 	if (!compressions[comp].is_compressed(name))
- 		return open(name, O_RDONLY | O_CLOEXEC);
- 
--	fd = mkstemp(tmpbuf);
-+	fd = mkostemp(tmpbuf, O_CLOEXEC);
- 	if (fd < 0) {
- 		*err = errno;
- 		return -1;
-diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index 3b2e31367196c2..c415670453bed9 100644
---- a/tools/perf/util/symbol-elf.c
-+++ b/tools/perf/util/symbol-elf.c
-@@ -1118,9 +1118,9 @@ static Elf *read_gnu_debugdata(struct dso *dso, Elf *elf, const char *name, int
- 		return NULL;
- 	}
- 
--	temp_fd = mkstemp(temp_filename);
-+	temp_fd = mkostemp(temp_filename, O_CLOEXEC);
- 	if (temp_fd < 0) {
--		pr_debug("%s: mkstemp: %m\n", __func__);
-+		pr_debug("%s: mkostemp: %m\n", __func__);
- 		*dso__load_errno(dso) = -errno;
- 		fclose(wrapped);
- 		return NULL;
-@@ -1986,7 +1986,7 @@ static int kcore__init(struct kcore *kcore, char *filename, int elfclass,
- 	kcore->elfclass = elfclass;
- 
- 	if (temp)
--		kcore->fd = mkstemp(filename);
-+		kcore->fd = mkostemp(filename, O_CLOEXEC);
- 	else
- 		kcore->fd = open(filename, O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC, 0400);
- 	if (kcore->fd == -1)
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index e22a8e0daf2c50..80a3c43aaac052 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -2204,6 +2204,14 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
+ out_failed:
+ 	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
+ 		return PNFS_TRY_AGAIN;
++	if (ff_layout_no_fallback_to_mds(lseg)) {
++		/*
++		 * FF_FLAGS_NO_IO_THRU_MDS: force fresh LAYOUTGET,
++		 * never fall through to MDS I/O.
++		 */
++		pnfs_error_mark_layout_for_return(hdr->inode, lseg);
++		return PNFS_TRY_AGAIN;
++	}
+ 	trace_pnfs_mds_fallback_read_pagelist(hdr->inode,
+ 			hdr->args.offset, hdr->args.count,
+ 			IOMODE_READ, NFS_I(hdr->inode)->layout, lseg);
+@@ -2289,6 +2297,14 @@ ff_layout_write_pagelist(struct nfs_pgio_header *hdr, int sync)
+ out_failed:
+ 	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
+ 		return PNFS_TRY_AGAIN;
++	if (ff_layout_no_fallback_to_mds(lseg)) {
++		/*
++		 * FF_FLAGS_NO_IO_THRU_MDS: force fresh LAYOUTGET,
++		 * never fall through to MDS I/O.
++		 */
++		pnfs_error_mark_layout_for_return(hdr->inode, lseg);
++		return PNFS_TRY_AGAIN;
++	}
+ 	trace_pnfs_mds_fallback_write_pagelist(hdr->inode,
+ 			hdr->args.offset, hdr->args.count,
+ 			IOMODE_RW, NFS_I(hdr->inode)->layout, lseg);
 -- 
 2.53.0
 
