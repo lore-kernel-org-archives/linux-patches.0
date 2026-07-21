@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F0F47606B;
-	Tue, 21 Jul 2026 20:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FFF47252F;
+	Tue, 21 Jul 2026 20:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664731; cv=none; b=VAkATVoRRRsqaea0iJxgbdNw831hL6nlZmJoIvr1i+Bl0/XFUT+DvvOe9QiK9AbjhAhrz4QGGzJ3amTbOCfy9dOs3HXFliBtZha30DcNd3+XxUoullhPygzPYuPCLwtmugJfI0CYuHMu3Jc3nZb96sHTnFAE4m5L2QiNHTWl41o=
+	t=1784664734; cv=none; b=G7rFoOykqXOkHLJqfwlaAjg14fvIlBdhBdG9JkvMSPTl/qmwi8hv35TqFl7lkxYYDG0DSnzkVRJYRLvWDNLhq5oSZFISj1o8FNdy9vPJOM+8j8uHKBUzOc2T1E2s70ST+MHabhTG6qyuoccvuUoKd7dPtfPzbQ12bw/1GeySvjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664731; c=relaxed/simple;
-	bh=EHzIsqcLHY++iUL9K43YO9EEHS6i5VKqqrE59Nt10U0=;
+	s=arc-20240116; t=1784664734; c=relaxed/simple;
+	bh=6xfofKGZDdz/F8IkxyN5wUhpcqmqCmav1p+7ZLuiitA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qp2HplQneqyrDpKz+pME8M4pPQ4muGGzLWZUe9derFUXgUExQdU9LJFbymsYoXtzMbxOZckodiLP5VoOpidUBhXEX/htA0etQWa2iMvq8RKnYrSoQcsd8qENt98jLtB72m+JeMoipHg5PT1G8gwPCAHzC57pVe0eGCzx0pQ/Bhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4cf7G6Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u2es1kAihAZ5YZVGfl90kU2XUZwXpZFTURXfnNtKUHL26YCh8fVYDMIZMc+IRat9vXqAhJ3zNFOcP+7msUZxiPjY+8tZzjQ5VaViFYmAnKV+K5ztT1Dxu+jD05ZmD3LeNKKKn/N+q/aSpinXVQmUUjvJNsIpQfc9M+OKgMEiRU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/pCJjet; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4cf7G6Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13C51F000E9;
-	Tue, 21 Jul 2026 20:12:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/pCJjet"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568231F000E9;
+	Tue, 21 Jul 2026 20:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664730;
-	bh=3BrRQiXKQ5qD8cSDVws60eUC+gKv0Muvjb03gjAsMMM=;
+	s=korg; t=1784664732;
+	bh=91+zbuJ12boTsjIZ3/ZlJ8zusxrmYBOg8VTUCLVWUz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W4cf7G6ZcZ/ME2ieCj663RpFCgVsfaX0LpyzwHxqLPix83m/YQaocb5ZB2/VXvrgk
-	 dBdV05el7P2Md8NWYh8bufVe2Rs3cW+17xi/NKxbWNcPDjUQgFcEMpj8rL7zhsMPdz
-	 x2mHAMf48SyTSFIE2pUn8hDl30KgaOtMWveu4Bqc=
+	b=e/pCJjet2Jpy12+69jLB3CeQvQbG8Ml4+TcUZyCOUsSsmlYp6DD6S2c9KJJltScoH
+	 lCisoHmkVjSWtpWSUPynccrFLoAuonp126Tj1Z9WAWfUDFYuYTYjbvpfL+5zPHNbnc
+	 w3rAJ/qrvN5BkI2oscOystmR1qrjLpPle+VknCgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0036/1266] i2c: core: fix adapter registration race
-Date: Tue, 21 Jul 2026 17:07:53 +0200
-Message-ID: <20260721152442.607504039@linuxfoundation.org>
+Subject: [PATCH 6.6 0037/1266] fbdev: fbcon: fix out-of-bounds read in err_out of fbcon_do_set_font()
+Date: Tue, 21 Jul 2026 17:07:54 +0200
+Message-ID: <20260721152442.629951851@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,62 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-[ Upstream commit ba14d7cf2fe7284610a29854bdff22b2537d3ce6 ]
+[ Upstream commit 8fdc8c2057eea08d40ce2c8eed41ff9e451c65c2 ]
 
-Adapters can be looked up based on their id using i2c_get_adapter()
-which takes a reference to the embedded struct device.
+When fbcon_do_set_font() fails (e.g., due to a memory allocation failure
+inside vc_resize() under heavy memory pressure), it jumps to the `err_out`
+label to roll back the console state. However, the current rollback logic
+forgets to restore the `hi_font` state, leading to a severe state machine
+corruption.
 
-Make sure that the adapter (including its struct device) has been
-initialised before adding it to the IDR to avoid accessing uninitialised
-data which could, for example, lead to NULL-pointer dereferences or
-use-after-free.
+Earlier in the function, `set_vc_hi_font()` might be called to change
+`vc->vc_hi_font_mask` and mutate the screen buffer. If `vc_resize()`
+subsequently fails, the `err_out` path restores `vc_font.charcount`
+but entirely skips rolling back the `vc_hi_font_mask` and the screen
+buffer.
 
-Note that the i2c-dev chardev, which is registered from a bus notifier,
-currently uses i2c_get_adapter() so the adapter needs to be added to the
-IDR before registration.
+This mismatch leaves the terminal in a desynchronized state. Because
+`vc_hi_font_mask` remains set, the VT subsystem will still accept
+character indices greater than 255 from userspace and write them to the
+screen buffer. Subsequent rendering calls (e.g., `fbcon_putcs()`) will
+then use these inflated indices to access the reverted, 256-character
+font array, leading to a deterministic out-of-bounds read and potential
+kernel memory disclosure.
 
-Fixes: 6e13e6418418 ("i2c: Add i2c_add_numbered_adapter()")
-Cc: stable@vger.kernel.org	# 2.6.22
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Fix this by adding the missing rollback logic for the `hi_font` mask
+and screen buffer in the error path.
+
+Fixes: a5a923038d70 ("fbdev: fbcon: Properly revert changes when vc_resize() failed")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core-base.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/core/fbcon.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -1556,6 +1556,10 @@ static int i2c_register_adapter(struct i
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2418,6 +2418,7 @@ static int fbcon_do_set_font(struct vc_d
+ 	struct fbcon_display *p = &fb_display[vc->vc_num];
+ 	int resize, ret, old_userfont, old_width, old_height, old_charcount;
+ 	u8 *old_data = vc->vc_font.data;
++	unsigned short old_hi_font_mask = vc->vc_hi_font_mask;
  
- 	adap->debugfs = debugfs_create_dir(dev_name(&adap->dev), i2c_debugfs_root);
+ 	resize = (w != vc->vc_font.width) || (h != vc->vc_font.height);
+ 	vc->vc_font.data = (void *)(p->fontdata = data);
+@@ -2471,6 +2472,12 @@ err_out:
+ 	vc->vc_font.height = old_height;
+ 	vc->vc_font.charcount = old_charcount;
  
-+	mutex_lock(&core_lock);
-+	idr_replace(&i2c_adapter_idr, adap, adap->nr);
-+	mutex_unlock(&core_lock);
++	/* Restore the hi_font state and screen buffer */
++	if (old_hi_font_mask && !vc->vc_hi_font_mask)
++		set_vc_hi_font(vc, true);
++	else if (!old_hi_font_mask && vc->vc_hi_font_mask)
++		set_vc_hi_font(vc, false);
 +
- 	res = device_add(&adap->dev);
- 	if (res) {
- 		pr_err("adapter '%s': can't register device (%d)\n", adap->name, res);
-@@ -1629,7 +1633,7 @@ static int __i2c_add_numbered_adapter(st
- 	int id;
+ 	return ret;
+ }
  
- 	mutex_lock(&core_lock);
--	id = idr_alloc(&i2c_adapter_idr, adap, adap->nr, adap->nr + 1, GFP_KERNEL);
-+	id = idr_alloc(&i2c_adapter_idr, NULL, adap->nr, adap->nr + 1, GFP_KERNEL);
- 	mutex_unlock(&core_lock);
- 	if (WARN(id < 0, "couldn't get idr"))
- 		return id == -ENOSPC ? -EBUSY : id;
-@@ -1665,7 +1669,7 @@ int i2c_add_adapter(struct i2c_adapter *
- 	}
- 
- 	mutex_lock(&core_lock);
--	id = idr_alloc(&i2c_adapter_idr, adapter,
-+	id = idr_alloc(&i2c_adapter_idr, NULL,
- 		       __i2c_first_dynamic_bus_num, 0, GFP_KERNEL);
- 	mutex_unlock(&core_lock);
- 	if (WARN(id < 0, "couldn't get idr"))
 
 
