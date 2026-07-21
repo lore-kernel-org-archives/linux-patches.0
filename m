@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767A33E7141;
-	Tue, 21 Jul 2026 17:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4A93C276E;
+	Tue, 21 Jul 2026 17:33:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655236; cv=none; b=ZkUcpI0FwfSXgnkxylu5QjjA1rSf2oNbSK+XoWPivX1TtPNxFME5perwbL89otUDLTbt/QMFKlPVbeZuOTU/tKnZMU6xL1/GAa3eTwt8fXh8A75Ly/EBx1G2xX9GcD/hZB829frAqq1Xg01waSTGsWszZsIGykSI0JI/xlqDEhI=
+	t=1784655239; cv=none; b=b5pVkc2SbQPAqTVxT1HXjE8ybGcUDvw/ZLKVmmJ5ETrQoGcJJh4KuN6nBSJxQEmclT+atONOGnQdl6iJ369kgt9R3GleV584IFAW5HS9fkNMsZxO3vuNNDT9DCDLFhLkNRaXuwEj9wz7w7bC88y8kXXmfXSq8dHa2FXJgNYYw3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655236; c=relaxed/simple;
-	bh=JtN7FCX1S4WcRJ4kLfo9jYezbGsiir4ZdtvS4QFlGXw=;
+	s=arc-20240116; t=1784655239; c=relaxed/simple;
+	bh=O27a1zgMNw7rNiKNpcOWNqEkoa/JjtTGlb7pHx+XxqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tGSx5uY3YCMr/OK5/LZG197Mi7ao2uHygr1IaJM2eFvDYnHQJLn3JG//DZSbZYvk3IqlTmcoJlKOikXLIdX1MlvsdJD/NBzv1ueLZ8p1LEkc1+qB1Abn0Bm+oOc2qVySuqDg9URtqB9N6J9VBPkhPQkn2iUpaDMWI4CSTEw2Qa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mIOGCFW1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ev5R0lQBrbyafL8ccV4XbEBcoeffJy1qupR+u9iMN4SLLyfQBkM18MxxYvI+ukkehwggQo8CwJ61Z9JvJ8J5BJTNsdcXDvp3EgH99yuNezHV5A3tU2qGLNJb+S0ycJK7WQkPs/WtJY7Onwc7sP5nmMZ/rFQ9suloKQM4FjoZ/88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NmOCZhJJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mIOGCFW1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCDE71F000E9;
-	Tue, 21 Jul 2026 17:33:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NmOCZhJJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 847F81F000E9;
+	Tue, 21 Jul 2026 17:33:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655235;
-	bh=2j/tn0LmhOpk0UD+9F5vrFEQAvgYB34P2MLjuV12vvI=;
+	s=korg; t=1784655238;
+	bh=VnVihxfAymbRAyViGMqEPzsbpFc4D+7ZD6Cx6SFpFzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mIOGCFW13+FtJdNb7aQ5GTKYn/bjjllLv5rZqBkF9bBdpx4A0VQGVEh70E4anId08
-	 fog9KcLjtRi60rHcLBGWtbzbYAQRCcQAgCs6yHi9Zx0P6zdToVy3Klyzi48620sVcs
-	 ol/xoaOLImTOAtWFBvbEczzJ7sre75508srtBVqk=
+	b=NmOCZhJJioyQ4a9P7+d5z558niWSDPWlQIvOgC9sVxHK7WWbxif/ChZx+wEfXdI5p
+	 Xv/WP9PsoqIQcXF89PEr4h+06tKC2a0ARrv5Onyc5G+zWPud66nItHrovsErkyxMZo
+	 zzIMGzN6UvatHxWjFbdXsS927CaEIa/tVIOrLikY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Joel Stanley <joel@jms.id.au>,
 	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 7.1 2007/2077] riscv: vdso: Do not use LTO for the vDSO
-Date: Tue, 21 Jul 2026 17:28:00 +0200
-Message-ID: <20260721152640.048433006@linuxfoundation.org>
+Subject: [PATCH 7.1 2008/2077] arch/riscv: vdso: remove CFI landing pad from rt_sigreturn
+Date: Tue, 21 Jul 2026 17:28:01 +0200
+Message-ID: <20260721152640.071317151@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,50 +45,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Aurelien Jarno <aurelien@aurel32.net>
 
-commit ad6dcfa023762e37962f77ee48e752b7570e9440 upstream.
+commit e4bf6eb4c7b61db1cf24487e14e6ae8755e61e3d upstream.
 
-With LTO enabled the compiler assumes that the vDSO functions are not
-used and optimizes them away completely. Currently this happens to
-__vdso_clock_getres(), __vdso_clock_gettime(), __vdso_getrandom(),
-__vdso_gettimeofday() and __vdso_riscv_hwprobe().
+When CONFIG_RISCV_USER_CFI is enabled, the CFI version of the vDSO, has
+a CFI landing pad instruction at the start of __vdso_rt_sigreturn. This
+breaks libgcc's unwinding code which matches on the first two
+instructions. Other unwinders that rely on similar instruction matching
+may also be affected.
 
-Disable LTO for the vDSO, as these functions are hand-optimized anyways.
+Since __vdso_rt_sigreturn is reached as part of signal-return handling
+rather than via an indirect call/jump from userspace, it does not need a
+CFI landing pad. Remove it and restore the instruction sequence expected
+by existing unwinding code.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202606301855.WvkSC4kD-lkp@intel.com/
-Fixes: 021d23428bdb ("RISC-V: build: Allow LTO to be selected")
+This matches what was done on arm64 in commit 9a964285572b ("arm64:
+vdso: Don't prefix sigreturn trampoline with a BTI C instruction") for a
+similar issue.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Link: https://patch.msgid.link/20260701-riscv-vdso-lto-v1-1-89db0cd82077@linutronix.de
+Fixes: 37f57bd3faea ("arch/riscv: compile vdso with landing pad and shadow stack note")
+Co-authored-by: Joel Stanley <joel@jms.id.au>
+Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Link: https://patch.msgid.link/20260623204058.498120-1-aurelien@aurel32.net
+[pjw@kernel.org: fixed comment style]
 Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/vdso/Makefile |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/riscv/kernel/vdso/rt_sigreturn.S | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/kernel/vdso/Makefile
-+++ b/arch/riscv/kernel/vdso/Makefile
-@@ -69,9 +69,9 @@ CPPFLAGS_$(vdso_lds) += -DHAS_VGETTIMEOF
- endif
+diff --git a/arch/riscv/kernel/vdso/rt_sigreturn.S b/arch/riscv/kernel/vdso/rt_sigreturn.S
+index e82987dc3739..d6f96b1abe40 100644
+--- a/arch/riscv/kernel/vdso/rt_sigreturn.S
++++ b/arch/riscv/kernel/vdso/rt_sigreturn.S
+@@ -7,11 +7,19 @@
+ #include <asm/unistd.h>
+ #include <asm/assembler.h>
  
- # Disable -pg to prevent insert call site
--CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS)
--CFLAGS_REMOVE_getrandom.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS)
--CFLAGS_REMOVE_hwprobe.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS)
-+CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS) $(CC_FLAGS_LTO)
-+CFLAGS_REMOVE_getrandom.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS) $(CC_FLAGS_LTO)
-+CFLAGS_REMOVE_hwprobe.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS) $(CC_FLAGS_LTO)
- 
- # Force dependency
- $(obj)/$(vdso_o): $(obj)/$(vdso_so)
++/*
++ * WARNING: Do NOT add a CFI landing pad at the start of this function.
++ * Unwinders such as libgcc identify the sigreturn trampoline by matching the
++ * instruction sequence. Adding a landing pad here would break unwinding from
++ * signal handlers.
++ *
++ * This trampoline is used only for signal return and not via an indirect
++ * call/jump from userspace, so adding CFI landing pad is unnecessary.
++ */
+ 	.text
+ SYM_FUNC_START(__vdso_rt_sigreturn)
+ 	.cfi_startproc
+ 	.cfi_signal_frame
+-	vdso_lpad
+ 	li a7, __NR_rt_sigreturn
+ 	ecall
+ 	.cfi_endproc
+-- 
+2.55.0
+
 
 
