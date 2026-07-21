@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5442040B119;
-	Tue, 21 Jul 2026 16:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80593FDC06;
+	Tue, 21 Jul 2026 16:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649752; cv=none; b=IbG9PTdfAGV2hmlfNBlKlTCf0RQ/Arl9C5DBkDMLXDl5T7YIc6PCoVGqj+gTf+G48jaSORnTWq95nnXI0G+shQ8RywPHbUXqKnHz8eF2xDRQgTi0R83UyMI8ygp3Bf9VtsfjbtFiuhBk7idqNpKY1M1FtAP+07HfPyVnxC53k2I=
+	t=1784649755; cv=none; b=htaZf9ydXuvy4vhZoiRPVu7zL44hl0rxQfWObh7Yc0qNE4AyWk34+DTkEuhjf+1pI9DKuIqzfOvcphyyn7NUlSbH61N0G5ynNR7PrJDZmBA6jrkFQZmL3afAZ7Fs5jmpStUl+C4XWhWHuxeMdqQ+I6oaPiwdwegHZl0Noq6etM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649752; c=relaxed/simple;
-	bh=e0d+yGf3nkX/CxTJmxZuYJez7gJkgtIpqFeYMvB/kxY=;
+	s=arc-20240116; t=1784649755; c=relaxed/simple;
+	bh=LuNHuFRGj59GzDFi10/c0/sMpNShL4QSbovYkJAoX2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dOmmG5I7pJ32abdH/+tvgO9MkxAjgCm6+2ait1S9Oz4Mh69J1KMm9AmeJNhq8dz0S8SmxSyrTX9F8CzncAjNCCp7pRZOAbdcAVt7/n5e9CfIuj1CVOMLK1E76qrKio+dKeLm+eMxT1ChKmqDC76KXlGmI7tl+GLmqctxUZnAn2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFB+b/bN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IjnATxLDuMgMF188GCHT1I0yz2iaY7ajii/r+LqElkeLBFwm6npjOFHtpkxTZTdSOnVL1qe/xLy08+hqV3vZP3MWxuM+GMncAkgP34CjFb7UcMCrTI+GIsghHKEi026VD6HcPfhQpeC7yljCy2goU/slFO/MMsTsWvbPhOlV6cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lX53qQjK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFB+b/bN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669981F000E9;
-	Tue, 21 Jul 2026 16:02:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lX53qQjK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197471F000E9;
+	Tue, 21 Jul 2026 16:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649750;
-	bh=LPt5LFL3xaqN/CegsMRYmHZcrCygaZkNyBFKH4e5ZFg=;
+	s=korg; t=1784649753;
+	bh=e1yBG9i8enodS7ANSg35kGL8QRD4MPe8QBrE4YPBVz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QFB+b/bNOryuCdW8XBy3JrlD5/p0Vz9UKGZW1ASrl2ERPznaU2oG0ebmafuce6fYE
-	 QCYyZMvPZ96ZyMROMqZF3SN0nqlhjyy0ITe8QsrW6f9tw51Y510YcPuOYbeLGZyVEt
-	 rjJvLa8TFo6TX77UXARvWL4o45jqPGig0XcJ0t9I=
+	b=lX53qQjKXewIz3ZgP56wR8fMAg1ef6AEvqAkGBi48cVt+ur+0No/paHjnC9GmzAHV
+	 h/+n5CSEkVNH1/J7E8u3X8SeHA60+26RyqzPK4frQWTFjqpprBQ9Mx6VyCaxt4d22W
+	 ZcyF1kSiyPwDUgtTc7cNZWmjEFtubnxi7EzEfrOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko <sashiko@sashiko.dev>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0640/2077] ASoC: cs35l56: Prevent double-free of debugfs
-Date: Tue, 21 Jul 2026 17:05:13 +0200
-Message-ID: <20260721152607.904601539@linuxfoundation.org>
+Subject: [PATCH 7.1 0687/2077] RDMA/mlx5: Fix TPH extraction in FRMR pool key
+Date: Tue, 21 Jul 2026 17:06:00 +0200
+Message-ID: <20260721152608.999023804@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,51 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Michael Guralnik <michaelgur@nvidia.com>
 
-[ Upstream commit 344a12ca7ba6e10f9779476780afe9d977d47322 ]
+[ Upstream commit fe683274fee497834d2e6b54b7342642e1f21892 ]
 
-Invalidate the debugfs pointer after debugfs_remove_recursive() in
-cs35l56_remove_cal_debugfs(). This prevents a double-free situation when
-a future commit adds proper failure cleanup in cs35l56_component_probe().
+Fix reading the PH value from the FRMR pool key by shifting the pool key
+to the relevant bits.
 
-As described by Sashiko (including the future cs35l56_component_probe()
-cleanup commit):
-
-During a normal component unbind, cs35l56_component_remove() calls
-cs35l56_remove_cal_debugfs() which removes the directory but leaves
-a dangling pointer.
-
-If the component is later bound again, but _cs35l56_component_probe()
-fails early (for example, if the init_completion times out), this new
-error path will call cs35l56_component_remove(). This causes
-cs35l56_remove_cal_debugfs() to be called again with the dangling
-cs35l56_base->debugfs pointer from the previous lifecycle, resulting in
-a use-after-free in debugfs_remove_recursive().
-
-Fixes: f7097161e94c ("ASoC: cs35l56: Add common code for factory calibration")
-Reported-by: sashiko <sashiko@sashiko.dev>
-Link: https://sashiko.dev/#/patchset/20260609120738.284770-1-rf%40opensource.cirrus.com
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260610093432.557375-3-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 36680ef7bceb ("RDMA/mlx5: Switch from MR cache to FRMR pools")
+Link: https://patch.msgid.link/r/20260610000145.820592-3-michaelgur@nvidia.com
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l56-shared.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/mlx5/mr.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
-index 795e2764d67ec8..e04b114a32b7f2 100644
---- a/sound/soc/codecs/cs35l56-shared.c
-+++ b/sound/soc/codecs/cs35l56-shared.c
-@@ -1293,6 +1293,7 @@ EXPORT_SYMBOL_NS_GPL(cs35l56_create_cal_debugfs, "SND_SOC_CS35L56_SHARED");
- void cs35l56_remove_cal_debugfs(struct cs35l56_base *cs35l56_base)
- {
- 	debugfs_remove_recursive(cs35l56_base->debugfs);
-+	cs35l56_base->debugfs = ERR_PTR(-ENOENT);
- }
- EXPORT_SYMBOL_NS_GPL(cs35l56_remove_cal_debugfs, "SND_SOC_CS35L56_SHARED");
+diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
+index 253545ae39fd53..7fbb01371f1f77 100644
+--- a/drivers/infiniband/hw/mlx5/mr.c
++++ b/drivers/infiniband/hw/mlx5/mr.c
+@@ -31,6 +31,7 @@
+  * SOFTWARE.
+  */
  
++#include <linux/bitfield.h>
+ #include <linux/kref.h>
+ #include <linux/random.h>
+ #include <linux/debugfs.h>
+@@ -163,9 +164,8 @@ static int get_unchangeable_access_flags(struct mlx5_ib_dev *dev,
+ #define MLX5_FRMR_POOLS_KEY_VENDOR_KEY_SUPPORTED \
+ 	MLX5_FRMR_POOLS_KEY_ACCESS_MODE_KSM_MASK
+ 
+-#define MLX5_FRMR_POOLS_KERNEL_KEY_PH_SHIFT 16
+-#define MLX5_FRMR_POOLS_KERNEL_KEY_PH_MASK 0xFF0000
+-#define MLX5_FRMR_POOLS_KERNEL_KEY_ST_INDEX_MASK 0xFFFF
++#define MLX5_FRMR_POOLS_KERNEL_KEY_PH_MASK GENMASK_ULL(23, 16)
++#define MLX5_FRMR_POOLS_KERNEL_KEY_ST_INDEX_MASK GENMASK_ULL(15, 0)
+ 
+ static struct mlx5_ib_mr *
+ _mlx5_frmr_pool_alloc(struct mlx5_ib_dev *dev, struct ib_umem *umem,
+@@ -194,7 +194,8 @@ _mlx5_frmr_pool_alloc(struct mlx5_ib_dev *dev, struct ib_umem *umem,
+ 		ph ^= MLX5_IB_NO_PH;
+ 
+ 	mr->ibmr.frmr.key.kernel_vendor_key =
+-		st_index | (ph << MLX5_FRMR_POOLS_KERNEL_KEY_PH_SHIFT);
++		FIELD_PREP(MLX5_FRMR_POOLS_KERNEL_KEY_ST_INDEX_MASK, st_index) |
++		FIELD_PREP(MLX5_FRMR_POOLS_KERNEL_KEY_PH_MASK, ph);
+ 	err = ib_frmr_pool_pop(&dev->ib_dev, &mr->ibmr);
+ 	if (err) {
+ 		kfree(mr);
+@@ -271,9 +272,10 @@ static int mlx5r_create_mkeys(struct ib_device *device, struct ib_frmr_key *key,
+ 		 get_mkc_octo_size(access_mode, key->num_dma_blocks));
+ 	MLX5_SET(mkc, mkc, log_page_size, PAGE_SHIFT);
+ 
+-	st_index = key->kernel_vendor_key &
+-		   MLX5_FRMR_POOLS_KERNEL_KEY_ST_INDEX_MASK;
+-	ph = key->kernel_vendor_key & MLX5_FRMR_POOLS_KERNEL_KEY_PH_MASK;
++	st_index = FIELD_GET(MLX5_FRMR_POOLS_KERNEL_KEY_ST_INDEX_MASK,
++			     key->kernel_vendor_key);
++	ph = FIELD_GET(MLX5_FRMR_POOLS_KERNEL_KEY_PH_MASK,
++		       key->kernel_vendor_key);
+ 	if (ph) {
+ 		/* Normalize ph: swap MLX5_IB_NO_PH for 0 */
+ 		if (ph == MLX5_IB_NO_PH)
 -- 
 2.53.0
 
