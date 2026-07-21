@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43EFC415F0E;
-	Tue, 21 Jul 2026 20:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEB2318ED6;
+	Tue, 21 Jul 2026 20:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665582; cv=none; b=lZaG1+N2GbVachPFIOVVuswuioIiXpnmFnoFKKDjzjYIHizvB1E+3kGoC3c41dGiYLK/GG8wz2YaWIxFeQngsvtJcc4wB0d7li0gkgF99TzVV9OGay8TnZBguOp0W3STQ9EhfFppwgws9LsiJ9+KIbtPq0c8HkZuUMMJOQPOj+U=
+	t=1784665584; cv=none; b=FAgxqvN1WgIb6jxjzBBxke+cAzUWFt+rKKML0JO2qO9U2/u1lKE87/n+OzxZ+GuFce1dhH8sJwvtQSwNS89riuj6y1TGB5+FSuR3Ycxm75lP6N1oGy5KjeudFI30KE4Vf+Lai//GIz8RBuEkHTczBh+FIRvDeAPDhfXrW0Nyh3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665582; c=relaxed/simple;
-	bh=1zfopcWsxNPQBYGHwTbJJhLv4DWCWLsIr4ieccTkrsQ=;
+	s=arc-20240116; t=1784665584; c=relaxed/simple;
+	bh=7pJvObSHLiatt3WgiWbJDn5JazYubni1C95KQQQWmiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/C2pulXVKCpn4TR3gZ+rhk37VQcmOyyhSiR6o4lULhR4TeqTrDEScflaZhAR8PvYJtHgagkP5PKQr8PsbJFdG4s1FFfPI7qcM1PVTac4+55tL1qvPMp+Zbe76QmHYCaos4owhNfend2rvjbJQEuaLFtQKmYuuZkaa818LQLrI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdvqSyiF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b81YZiKl35A5o3CNlsfd+xhC7EiSJ4bVol/niXqfKuglNzfOB6Zz+UrXo1pazNQefk9+ENpT+NvjCNeglsg/eNgjigs8UPEzJMti2/fGlBrCj16fEd4MPT6DNgrBB13IOHiuoSEktgwb6SRVSf+GE3qgUexqvRBI6F6dQTv2LQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9PDzXz6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdvqSyiF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721261F000E9;
-	Tue, 21 Jul 2026 20:26:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9PDzXz6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193031F000E9;
+	Tue, 21 Jul 2026 20:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665580;
-	bh=iWQ6z6JGnt4kKt61E1TnbZR1PU6ORVKbZheHZaf4cBQ=;
+	s=korg; t=1784665583;
+	bh=xvlJX5GEmDxkiDjF+d+WjyJyf/MX7xf/hXGiJ+6qFr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tdvqSyiF7FjdvuD3iGGRBiMpLKnjB7ZzlbsX2uUOoJJfQt+tF8IkPT7VdTuzrm3/O
-	 9vu2rngnzM8sGP5Y0yYg0PNHbWtq1+EXG9bI2gQ2YvkRgHzeaNdpPMRketWiyEcCpo
-	 daq9mbT3uOeaB6YcQqn++42DFrTi7sd88RlUkiF8=
+	b=q9PDzXz6nDCDXqmg+YBOQ/WNOa77Bswuzag2v8R3uVkyB2/822ys8aefzaopFMtSV
+	 Wu4b7jc8s5NF24KPK86vebAFJESwavq86uTfMfNz9CJxI1UwJNjm1MaAC6Tg2h8T07
+	 kdY/yQdtiiI7t4sMWb8YxnyAuLajiF2ibRMnb2nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+42525d636f430fd5d983@syzkaller.appspotmail.com,
-	Ian Bridges <icb@fastmail.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 0357/1266] fbcon: fix NULL pointer dereference for a console without vc_data
-Date: Tue, 21 Jul 2026 17:13:14 +0200
-Message-ID: <20260721152449.818752598@linuxfoundation.org>
+	Joanne Koong <joannelkoong@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 6.6 0322/1266] fuse: re-lock request before returning from fuse_ref_folio()
+Date: Tue, 21 Jul 2026 17:12:39 +0200
+Message-ID: <20260721152449.041652688@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,61 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-commit 5fae9a928482d4845bca169a3a098789203a1ca4 upstream.
+commit b5befa80fdbe287a98480effed9564712924add5 upstream.
 
-fbcon_new_modelist() runs when a framebuffer's modelist changes. For each
-console mapped to it with fb_display[i].mode set, it reads vc_cons[i].d and
-passes the vc_num to fbcon_set_disp(). This assumes a console with a mode
-set has a vc_data, but it can be NULL. fbcon_set_disp() sets
-fb_display[i].mode before it checks vc_data, and fbcon_deinit() leaves the
-mode set after the vc_data is freed. fbcon_new_modelist() then dereferences
-the NULL vc_data.
+fuse_ref_folio() unlocks the request but does not re-lock it before
+returning. fuse_chan_abort() can end the request and the async end
+callback (eg fuse_writepage_free()) can free the args while the
+subsequent copy chain logic after fuse_ref_folio() accesses them,
+leading to use-after-free issues.
 
-Keep fb_display[i].mode set only while the console has a vc_data. Check
-vc_data before setting the mode in fbcon_set_disp(), and clear the mode in
-fbcon_deinit(). The existing mode check in fbcon_new_modelist() then skips
-such consoles.
+Fix this by locking the request in fuse_ref_folio() before returning.
 
-Reported-by: syzbot+42525d636f430fd5d983@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=42525d636f430fd5d983
+Fixes: c3021629a0d8 ("fuse: support splice() reading from fuse device")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbcon.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/fuse/dev.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -1183,6 +1183,7 @@ static void fbcon_deinit(struct vc_data
- 	int idx;
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -912,7 +912,7 @@ static int fuse_ref_page(struct fuse_cop
+ 	cs->nr_segs++;
+ 	cs->len = 0;
  
- 	fbcon_free_font(p);
-+	p->mode = NULL;
- 	idx = con2fb_map[vc->vc_num];
+-	return 0;
++	return lock_request(cs->req);
+ }
  
- 	if (idx == -1)
-@@ -1361,14 +1362,14 @@ static void fbcon_set_disp(struct fb_inf
- 
- 	p = &fb_display[unit];
- 
--	if (var_to_display(p, var, info))
--		return;
--
- 	vc = vc_cons[unit].d;
- 
- 	if (!vc)
- 		return;
- 
-+	if (var_to_display(p, var, info))
-+		return;
-+
- 	default_mode = vc->vc_display_fg;
- 	svc = *default_mode;
- 	t = &fb_display[svc->vc_num];
+ /*
 
 
