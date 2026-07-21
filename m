@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16376471268;
-	Tue, 21 Jul 2026 18:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD7F40587A;
+	Tue, 21 Jul 2026 18:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657464; cv=none; b=nkjKehCbM8bbQh89nPSoIrRi9c7boILVj7EUccdyFdpOpJ0K3QPoaXV0aITWfTncZ9nfsjteIbzW1ROiziSGxGAiShClJoabjpGCN7t0iipgD/3Pb7o6Vpj9QcQSPXf/ki5zHLx//AK6bwXPDHlYlmbAIoz0VkuNZC/n7iurH/U=
+	t=1784657467; cv=none; b=tRCZFDBbeGdAtWp/RXb2B/XcUc4QSsFqF9oG9QjUAj5cxl9PnEAheTUCfu5FJCHEgrQ87KVsGjkVwd4J+jb1y8houTPXM87Gd6SnP3ZW1+AOwYLb+1oEjettX99zWPh2dStMR2og2PjJ0bmBZFpUTqvGRfVZt8qBWd+8zl4QNCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657464; c=relaxed/simple;
-	bh=9YX8cjqmNX2kMbtOuSLBQmiwuoNM0QkoJsl7t+TrH20=;
+	s=arc-20240116; t=1784657467; c=relaxed/simple;
+	bh=PoKEV8s38wM+PCWizvijWve3qy4jk0Vceew1AUNNzAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wv737O6zPSvnkzx2aluWuqx6ciLWVIC2gtiuFlxIz6b8FzmUphGeFGaFRBTHUlFNXMa908IWM7hV3jVh+svK4GwVX+SlIq3pOr///EwW7GlyNvun6VEi5cJDPqTGwZtRsvPBEWylt9F2JG/QpF5X+4sbbauC6dkSqMuT/v4l9Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2KLN6Ao; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ggAqEN+B5+6EJFKnPvVpoqp4CRXsA6nPvHHqsuVbH8vMeL//9WmEWq1ZZo7xG3dylZ9SsKHcbkGf3OSl67CyJZpA9UaalUNofUexsis8nQbYFvkFVRU21tLGnn2JXZ9fwHEwCNhApJpmySfMxBAdGI9B7MNrQSmpNoQPdLM8ej4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbHswRuy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2KLN6Ao"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB871F000E9;
-	Tue, 21 Jul 2026 18:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbHswRuy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263A61F000E9;
+	Tue, 21 Jul 2026 18:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657463;
-	bh=qnSnEYfNzcrkDS9JQGnHloa3hQI5KlWjB9gOGdOZhXg=;
+	s=korg; t=1784657465;
+	bh=K/peCKyUcUEyYV+v8BXoEFoYZ5Yb2NlR4avbHo1e9NI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W2KLN6AoXJA2LEltZ/ldUOhgMtvQb7p5gs5HzN2EOypFJumdS+z9Z//rNoSvgTHJK
-	 Mx3eNC4jamSUzR7nxb5rpO6c7A4Oy42wieuiyW8bI8/7GlA5eAii7jW5ulznGR/jge
-	 6dL6VBtLcn3zBeaz39gsxiaKKBIXBANQPu0gFgVM=
+	b=bbHswRuyZ2kY+rd61yMq8OzWjtoCgCxNzaokhPVOO1S55aYySpqvIa7YQmfzHOM9L
+	 zWzgs19lOn72jVrOBfUbih3SRgeZtLAP9UzBamQL2ky1+wDKLNZpmqM+tnM4qf6VyL
+	 BFinBw3mx3tXH2vZrqDrj8vYosKCXyetSkMjg93w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0773/1611] perf tools: Add O_CLOEXEC to open() calls in DSO and ELF code
-Date: Tue, 21 Jul 2026 17:14:49 +0200
-Message-ID: <20260721152532.773045201@linuxfoundation.org>
+Subject: [PATCH 6.18 0774/1611] perf tools: Fix uninitialized pathname on uncompressed fallback in filename__decompress()
+Date: Tue, 21 Jul 2026 17:14:50 +0200
+Message-ID: <20260721152532.796623277@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -56,142 +54,124 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit b145137fec13dc8fc7fcb14193ce395a1164e3a1 ]
+[ Upstream commit 51cdb188edeaf389e4377859b9c483c19ce5a259 ]
 
-open() calls in dso.c and symbol-elf.c omit O_CLOEXEC, which leaks
-file descriptors to child processes spawned during symbol resolution
-(e.g., addr2line, objdump).  This can exhaust the fd limit during
-long profiling sessions or when processing many DSOs.
+filename__decompress() has an early return path for files that are not
+actually compressed.  This path returns the fd from open() directly but
+never writes to the pathname output parameter, leaving the caller with
+an uninitialized buffer despite a successful return.
 
-Add O_CLOEXEC to all open() calls in both files (12 call sites).
+Callers like dso__decompress_kmodule_path() pass pathname to
+decompress_kmodule() which uses it to set the decompressed file path.
+If pathname is uninitialized, subsequent operations on the path produce
+undefined behavior.
 
-Fixes: cdd059d731eeb466 ("perf tools: Move dso_* related functions into dso object")
-Fixes: e5a1845fc0aeca85 ("perf symbols: Split out util/symbol-elf.c")
+Fix by setting pathname to an empty string on the uncompressed path.
+Callers already check for an empty pathname to distinguish temporary
+decompressed files (which need unlink) from the original file.
+
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
+Fixes: 7ac22b088afe26a4 ("perf tools: Add filename__decompress function")
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Stable-dep-of: f973e52a9977 ("perf dso: Fix heap overflow in dso__get_filename() on decompressed path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dso.c        |  4 ++--
- tools/perf/util/symbol-elf.c | 20 ++++++++++----------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ tools/perf/tests/code-reading.c |  7 +++++--
+ tools/perf/util/disasm.c        |  7 +++++--
+ tools/perf/util/dso.c           | 12 +++++++++---
+ tools/perf/util/symbol-elf.c    |  6 ++++--
+ 4 files changed, 23 insertions(+), 9 deletions(-)
 
+diff --git a/tools/perf/tests/code-reading.c b/tools/perf/tests/code-reading.c
+index 4c9fbf6965c4ad..4e759b8989806a 100644
+--- a/tools/perf/tests/code-reading.c
++++ b/tools/perf/tests/code-reading.c
+@@ -465,8 +465,11 @@ static int read_object_code(u64 addr, size_t len, u8 cpumode,
+ 			goto out;
+ 		}
+ 
+-		decomp = true;
+-		objdump_name = decomp_name;
++		/* empty pathname means file wasn't actually compressed */
++		if (decomp_name[0] != '\0') {
++			decomp = true;
++			objdump_name = decomp_name;
++		}
+ 	}
+ 
+ 	/* Read the object code using objdump */
+diff --git a/tools/perf/util/disasm.c b/tools/perf/util/disasm.c
+index c513db41137fa4..61a18639903542 100644
+--- a/tools/perf/util/disasm.c
++++ b/tools/perf/util/disasm.c
+@@ -1684,8 +1684,11 @@ int symbol__disassemble(struct symbol *sym, struct annotate_args *args)
+ 		if (dso__decompress_kmodule_path(dso, symfs_filename, tmp, sizeof(tmp)) < 0)
+ 			return -1;
+ 
+-		decomp = true;
+-		strcpy(symfs_filename, tmp);
++		/* empty pathname means file wasn't actually compressed */
++		if (tmp[0] != '\0') {
++			decomp = true;
++			strcpy(symfs_filename, tmp);
++		}
+ 	}
+ 
+ 	/*
 diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
-index 3077f2ab3f125a..db0513936cea88 100644
+index db0513936cea88..1205224e110375 100644
 --- a/tools/perf/util/dso.c
 +++ b/tools/perf/util/dso.c
-@@ -343,7 +343,7 @@ int filename__decompress(const char *name, char *pathname,
+@@ -342,8 +342,11 @@ int filename__decompress(const char *name, char *pathname,
+ 	 * To keep this transparent, we detect this and return the file
  	 * descriptor to the uncompressed file.
  	 */
- 	if (!compressions[comp].is_compressed(name))
--		return open(name, O_RDONLY);
-+		return open(name, O_RDONLY | O_CLOEXEC);
+-	if (!compressions[comp].is_compressed(name))
++	if (!compressions[comp].is_compressed(name)) {
++		if (pathname && len > 0)
++			pathname[0] = '\0';
+ 		return open(name, O_RDONLY | O_CLOEXEC);
++	}
  
  	fd = mkstemp(tmpbuf);
  	if (fd < 0) {
-@@ -1843,7 +1843,7 @@ static const u8 *__dso__read_symbol(struct dso *dso, const char *symfs_filename,
- 	int saved_errno;
+@@ -600,8 +603,11 @@ static char *dso__get_filename(struct dso *dso, const char *root_dir,
+ 			goto out;
+ 		}
  
- 	nsinfo__mountns_enter(dso__nsinfo(dso), &nsc);
--	fd = open(symfs_filename, O_RDONLY);
-+	fd = open(symfs_filename, O_RDONLY | O_CLOEXEC);
- 	saved_errno = errno;
- 	nsinfo__mountns_exit(&nsc);
- 	if (fd < 0) {
+-		*decomp = true;
+-		strcpy(name, newpath);
++		/* empty pathname means file wasn't actually compressed */
++		if (newpath[0] != '\0') {
++			*decomp = true;
++			strcpy(name, newpath);
++		}
+ 	}
+ 	return name;
+ 
 diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index 26c842ddaf235b..0dbc3d56a00a1f 100644
+index 0dbc3d56a00a1f..491f43a68540dd 100644
 --- a/tools/perf/util/symbol-elf.c
 +++ b/tools/perf/util/symbol-elf.c
-@@ -217,7 +217,7 @@ bool filename__has_section(const char *filename, const char *sec)
- 	GElf_Shdr shdr;
- 	bool found = false;
- 
--	fd = open(filename, O_RDONLY);
-+	fd = open(filename, O_RDONLY | O_CLOEXEC);
- 	if (fd < 0)
- 		return false;
- 
-@@ -887,7 +887,7 @@ static int read_build_id(const char *filename, struct build_id *bid)
- 	if (size < BUILD_ID_SIZE)
- 		goto out;
- 
--	fd = open(filename, O_RDONLY);
-+	fd = open(filename, O_RDONLY | O_CLOEXEC);
- 	if (fd < 0)
- 		goto out;
- 
-@@ -948,7 +948,7 @@ int sysfs__read_build_id(const char *filename, struct build_id *bid)
- 	size_t size = sizeof(bid->data);
- 	int fd, err = -1;
- 
--	fd = open(filename, O_RDONLY);
-+	fd = open(filename, O_RDONLY | O_CLOEXEC);
- 	if (fd < 0)
- 		goto out;
- 
-@@ -1019,7 +1019,7 @@ int filename__read_debuglink(const char *filename, char *debuglink,
- 	if (err >= 0)
- 		goto out;
- 
--	fd = open(filename, O_RDONLY);
-+	fd = open(filename, O_RDONLY | O_CLOEXEC);
- 	if (fd < 0)
- 		goto out;
- 
-@@ -1184,7 +1184,7 @@ int symsrc__init(struct symsrc *ss, struct dso *dso, const char *name,
- 
- 		type = dso__symtab_type(dso);
- 	} else {
--		fd = open(name, O_RDONLY);
-+		fd = open(name, O_RDONLY | O_CLOEXEC);
- 		if (fd < 0) {
- 			*dso__load_errno(dso) = errno;
+@@ -933,12 +933,14 @@ int filename__read_build_id(const char *filename, struct build_id *bid)
  			return -1;
-@@ -1985,7 +1985,7 @@ static int kcore__open(struct kcore *kcore, const char *filename)
- {
- 	GElf_Ehdr *ehdr;
+ 		}
+ 		close(fd);
+-		filename = path;
++		/* non-empty path means a temp file was created */
++		if (path[0] != '\0')
++			filename = path;
+ 	}
  
--	kcore->fd = open(filename, O_RDONLY);
-+	kcore->fd = open(filename, O_RDONLY | O_CLOEXEC);
- 	if (kcore->fd == -1)
- 		return -1;
+ 	err = read_build_id(filename, bid);
  
-@@ -2018,7 +2018,7 @@ static int kcore__init(struct kcore *kcore, char *filename, int elfclass,
- 	if (temp)
- 		kcore->fd = mkstemp(filename);
- 	else
--		kcore->fd = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0400);
-+		kcore->fd = open(filename, O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC, 0400);
- 	if (kcore->fd == -1)
- 		return -1;
- 
-@@ -2494,11 +2494,11 @@ static int kcore_copy__compare_files(const char *from_filename,
- {
- 	int from, to, err = -1;
- 
--	from = open(from_filename, O_RDONLY);
-+	from = open(from_filename, O_RDONLY | O_CLOEXEC);
- 	if (from < 0)
- 		return -1;
- 
--	to = open(to_filename, O_RDONLY);
-+	to = open(to_filename, O_RDONLY | O_CLOEXEC);
- 	if (to < 0)
- 		goto out_close_from;
- 
-@@ -2916,7 +2916,7 @@ int get_sdt_note_list(struct list_head *head, const char *target)
- 	Elf *elf;
- 	int fd, ret;
- 
--	fd = open(target, O_RDONLY);
-+	fd = open(target, O_RDONLY | O_CLOEXEC);
- 	if (fd < 0)
- 		return -EBADF;
- 
+-	if (m.comp)
++	if (m.comp && filename == path)
+ 		unlink(filename);
+ 	return err;
+ }
 -- 
 2.53.0
 
