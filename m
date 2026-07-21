@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B5E318ED6;
-	Tue, 21 Jul 2026 20:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361D53783D4;
+	Tue, 21 Jul 2026 20:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665603; cv=none; b=Qzm2y1QWdvgnV9/meKoimLyYp2EuAkOcVEdbN8LjC4lH9vidY3SIgUUD6p0snWf+dYOsfU4N876xEhOU64yQEjgFo/yEpYOtld4HxNzP7XF4BRC0nNDHZcS/sV2+XNwtMZRRc2/Bxi83mkgwOyH+OarIOYTDiaCWZ5DIsOM1gMI=
+	t=1784665606; cv=none; b=Yrr41UD7RkZ2dBkC7cLlDqSSNQurIytzsBlVKDq950TiqJnLjVgoTJ03dK8JEAk1Z2HYSv1kUfoM10bCAyCdhnB0fBN7dYS0IUNXhgZHYhzp2c763fIEtctF/TCcANWA1IScsAOoQUXeKYyORISUXEiP2WZWYZSQZxj47kHCPV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665603; c=relaxed/simple;
-	bh=7dH7v4dBXP1FiZNjqJQpzzWc7KVcnrxUniSay7puFME=;
+	s=arc-20240116; t=1784665606; c=relaxed/simple;
+	bh=AdUDYY7G2NdW+GG0s8o15p9IhU8cjy9I9xLP6Wxsb4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kwjIyTJ9j+SV/42yGHuEIjrmbOUGI9jDKWXokpnx+lkOSTVgtd2bPdldQaHSAw9mQIyaIOgxPTyHP0tgArQ4tXXjBhLxvDOya29Vp2CAFsZ93m51O20BHL4IltzbSv0jmcLtZ97k1rs7/yC3Zt1Eaa9ptSoxhMLYXg/G3osPPjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IlNL4gTf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FmsgGT+KS1W5pUjQAptIpab4jev7OGydwP1sUABLXlDTI5/GWWuzcSXgEi0l/mCmq9ErvrobTPrvXXHbNp8ytHpAX7Ji8NIvcOhjwgCX5jJX5tjNhkXdS2S5gTa7dpwcxeBkb6Fe+y5BEwLFEvtRy06VqemMKRSKnubuUc1BVyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2jWyP3l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IlNL4gTf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C843D1F000E9;
-	Tue, 21 Jul 2026 20:26:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2jWyP3l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727F91F000E9;
+	Tue, 21 Jul 2026 20:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665602;
-	bh=IZIL4I4avNU1ewBTJHmESJ/Pxj6AcyVr0bDm12+UDbk=;
+	s=korg; t=1784665604;
+	bh=AJq29apRwVziY1roccfJa3msMU8hnuHPGw3zn/ISfNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IlNL4gTfFHyw5NwH4bUoDSlJG+fDf+1KOaVHqUxkrIEme7eXBUy0jtUdHJrNBSmuD
-	 InTxaxvqreaPex999y7v5TCqTPIsXrDuWl4Xt2UV03w9YHZepaVnGr7sYs+XX2NUwd
-	 HsW0s7nohJ8lOQ0yVi+QoMtZO3xd5mUCrQwxaWGY=
+	b=g2jWyP3l1kPSoUiLKD0jo1lFkRUJg7bppI/sjyQjb2HGaVnzlwHKa9ZO1pDmJVR6R
+	 rznTrI0TVYJPD2pKpebaF/4Y6lRQGjnNzuezBxj8uuVDMKkHL5Qg0MBqD1wJ/xpNy9
+	 yx2B/wfnKcXjuBfZ0w5iEDn3qrQt4St2uk7uiucM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shoichiro Miyamoto <shoichiro.miyamoto@gmail.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 0323/1266] smb: client: reject overlapping data areas in SMB2 responses
-Date: Tue, 21 Jul 2026 17:12:40 +0200
-Message-ID: <20260721152449.063234951@linuxfoundation.org>
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.6 0324/1266] xfs: fail recovery on a committed log item with no regions
+Date: Tue, 21 Jul 2026 17:12:41 +0200
+Message-ID: <20260721152449.084752246@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,116 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shoichiro Miyamoto <shoichiro.miyamoto@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit 8986c932905ea508d66da421eb2eb6e676ace1fe upstream.
+commit 2094dab19d45c487285617b7b68913d0cc0c1211 upstream.
 
-Commit 53b7c271f06b ("smb: client: restrict implied bcc[0] exemption to
-responses without data area") restricted the implied bcc[0] length
-exception to responses without a data area. However, the overlap
-handling in __smb2_calc_size() clears data_length, which can make an
-invalid response appear to have no data area and so qualify for the
-exception.
+If the first op of a transaction is a bare transaction header
+(len == sizeof(struct xfs_trans_header)), xlog_recover_add_to_trans()
+adds an item but no region, leaving it on r_itemq with ri_cnt == 0 and
+ri_buf == NULL.
 
-Track data area overlap separately and reject such responses before
-applying the length compatibility exceptions.
+The header can be split across op records, so later ops may still add
+regions; the item is only invalid if the transaction commits with none.
+The runtime commit path never emits such a transaction, so this only
+happens on a crafted log.  It came from an AI-assisted code audit of the
+recovery parser.
 
-Fixes: 53b7c271f06b ("smb: client: restrict implied bcc[0] exemption to responses without data area")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shoichiro Miyamoto <shoichiro.miyamoto@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+xlog_recover_reorder_trans() calls ITEM_TYPE() on the item, which reads
+*(unsigned short *)item->ri_buf[0].iov_base and faults on the NULL
+ri_buf.  Reject it there, before the commit handlers that also read
+ri_buf[0].
+
+ KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+ RIP: 0010:xlog_recover_reorder_trans (fs/xfs/xfs_log_recover.c:1836)
+  xlog_recover_commit_trans (fs/xfs/xfs_log_recover.c:2043)
+  xlog_recover_process_data (fs/xfs/xfs_log_recover.c:2501)
+  xlog_do_recovery_pass (fs/xfs/xfs_log_recover.c:3244)
+  xlog_recover (fs/xfs/xfs_log_recover.c:3493)
+  xfs_log_mount (fs/xfs/xfs_log.c:618)
+  xfs_mountfs (fs/xfs/xfs_mount.c:1034)
+  xfs_fs_fill_super (fs/xfs/xfs_super.c:1938)
+  vfs_get_tree (fs/super.c:1695)
+  path_mount (fs/namespace.c:4161)
+  __x64_sys_mount (fs/namespace.c:4367)
+
+Fixes: 89cebc847729 ("xfs: validate transaction header length on log recovery")
+Cc: stable@vger.kernel.org # v4.3
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2misc.c |   34 +++++++++++++++++++++++++---------
- 1 file changed, 25 insertions(+), 9 deletions(-)
+ fs/xfs/xfs_log_recover.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/smb/client/smb2misc.c
-+++ b/fs/smb/client/smb2misc.c
-@@ -18,7 +18,8 @@
- #include "nterr.h"
- #include "cached_dir.h"
+--- a/fs/xfs/xfs_log_recover.c
++++ b/fs/xfs/xfs_log_recover.c
+@@ -1872,6 +1872,15 @@ xlog_recover_reorder_trans(
+ 	list_for_each_entry_safe(item, n, &sort_list, ri_list) {
+ 		enum xlog_recover_reorder	fate = XLOG_REORDER_ITEM_LIST;
  
--static unsigned int __smb2_calc_size(void *buf, bool *have_data);
-+static unsigned int __smb2_calc_size(void *buf, bool *have_data,
-+				     bool *data_area_overlap);
- 
- static int
- check_smb2_hdr(struct smb2_hdr *shdr, __u64 mid)
-@@ -146,6 +147,7 @@ smb2_check_message(char *buf, unsigned i
- 	__u32 calc_len; /* calculated length */
- 	__u64 mid;
- 	bool have_data;
-+	bool data_area_overlap;
- 
- 	/* If server is a channel, select the primary channel */
- 	pserver = SERVER_IS_CHAN(server) ? server->primary_server : server;
-@@ -230,7 +232,12 @@ smb2_check_message(char *buf, unsigned i
- 	}
- 
- 	have_data = false;
--	calc_len = __smb2_calc_size(buf, &have_data);
-+	data_area_overlap = false;
-+	calc_len = __smb2_calc_size(buf, &have_data, &data_area_overlap);
++		/* a committed item with no regions has a NULL ri_buf[0] */
++		if (!item->ri_cnt || !item->ri_buf) {
++			xfs_warn(log->l_mp,
++				"%s: committed log item has no regions",
++				__func__);
++			error = -EFSCORRUPTED;
++			break;
++		}
 +
-+	/* Reject responses whose data area overlaps the fixed area. */
-+	if (data_area_overlap)
-+		return 1;
- 
- 	/* For SMB2_IOCTL, OutputOffset and OutputLength are optional, so might
- 	 * be 0, and not a real miscalculation */
-@@ -414,14 +421,15 @@ smb2_get_data_area_len(int *off, int *le
- }
- 
- /*
-- * Calculate the size of the SMB message based on the fixed header
-- * portion, the number of word parameters and the data portion of the message.
-- * If have_data is non-NULL, it is set to true when a non-empty data area was
-- * found (data_length > 0), allowing callers to distinguish the implied bcc[0]
-- * case (no data area) from an overreported data length.
-+ * Calculate the size of the SMB message based on the fixed header, fixed
-+ * parameter area, and variable data area.
-+ *
-+ * If have_data is not NULL, it is set when a non-empty data area is found.
-+ * If data_area_overlap is not NULL, it is set when the data area overlaps
-+ * the fixed area.
-  */
- static unsigned int
--__smb2_calc_size(void *buf, bool *have_data)
-+__smb2_calc_size(void *buf, bool *have_data, bool *data_area_overlap)
- {
- 	struct smb2_pdu *pdu = buf;
- 	struct smb2_hdr *shdr = &pdu->hdr;
-@@ -430,6 +438,11 @@ __smb2_calc_size(void *buf, bool *have_d
- 	/* Structure Size has already been checked to make sure it is 64 */
- 	int len = le16_to_cpu(shdr->StructureSize);
- 
-+	if (have_data)
-+		*have_data = false;
-+	if (data_area_overlap)
-+		*data_area_overlap = false;
-+
- 	/*
- 	 * StructureSize2, ie length of fixed parameter area has already
- 	 * been checked to make sure it is the correct length.
-@@ -452,7 +465,10 @@ __smb2_calc_size(void *buf, bool *have_d
- 		if (offset + 1 < len) {
- 			cifs_dbg(VFS, "data area offset %d overlaps SMB2 header %d\n",
- 				 offset + 1, len);
-+			if (data_area_overlap)
-+				*data_area_overlap = true;
- 			data_length = 0;
-+			goto calc_size_exit;
- 		} else {
- 			len = offset + data_length;
- 		}
-@@ -467,7 +483,7 @@ calc_size_exit:
- unsigned int
- smb2_calc_size(void *buf)
- {
--	return __smb2_calc_size(buf, NULL);
-+	return __smb2_calc_size(buf, NULL, NULL);
- }
- 
- /* Note: caller must free return buffer */
+ 		item->ri_ops = xlog_find_item_ops(item);
+ 		if (!item->ri_ops) {
+ 			xfs_warn(log->l_mp,
 
 
