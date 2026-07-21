@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88DC45DF4E;
-	Tue, 21 Jul 2026 20:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6093C8716;
+	Tue, 21 Jul 2026 20:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667481; cv=none; b=p2gVCgR+fLfmH0ZsJ/QSnWhBBHq9K/lRnN9kldBBodqY84nc/i12pWROQjw3Z+WFxnBqs0zIFERz6wlp4K90I/FaS2O1ujLb1mOJspzmmRdsCIV1afxodfKNHJ2rDndo3UZBmBuw5mSjo4plOyPUWbBxWjRKtTN3oVpbEdFgp7U=
+	t=1784667483; cv=none; b=TOgeEuShvEloC6N85Oec9HWOf2Eh0/fJyDPifPYsdAUMEfFE8BdSxX804UBgZHxUkOMaEi/zv4VtW7PNqwQGnTeKI1GEjIwbqMM+AKnmjuE0vIkkjjVruOhudCVTvuU1vOM+dmW0kaPTyEFxUUE+rS+EDN19FGrCjnRUjVyJ6+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667481; c=relaxed/simple;
-	bh=IwAxh4WunEZ1JbfqOYFKHals0w3+nIxq/y0YLQX4S/c=;
+	s=arc-20240116; t=1784667483; c=relaxed/simple;
+	bh=Y+RW+dBlHXOWGtCQfmfB7UqKp4pdutqwytIRd5XyAQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mB/Fp0ZHqaliWDUZpbyBX6GTP5cv25cdrkDEAK+6Kzfx2LGoWuZckJ4YQXq4/djin/3bfB5C/knaC1a2sF5MuKYX6qV0gvpJFLh+G1LKUxgO9/GaTLh57QEiD0dyaNdKIGNz3ze7ANOs9YttLCVe8cctoPJRgsPobFcRPv/EtPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBZVzV8e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jlgMv5tCQ1GupVqMEoNKLrEuMUpZIl9LGUjL6pqF0WPJK1gAXyNX8ayoYKW4bBkxHai85QsHp5ltdIia7oV2Ryqi69jAExJN88DWSVo603iNst0NVeqHrVlRWlSiAIFnXbrQlH5pDm/CvR8UQ8Mk+shMelpzPGApDNBKxh2MuKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zv5pE2OL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBZVzV8e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F7F1F000E9;
-	Tue, 21 Jul 2026 20:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zv5pE2OL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA6E1F00ACF;
+	Tue, 21 Jul 2026 20:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667474;
-	bh=2os/h1c9uLwwPpKxaUZ62oB+iAt6y42bP5Ldab3lItg=;
+	s=korg; t=1784667471;
+	bh=gVJeKSTWpLnVWasf3BJicwE3VrPU8AQsld9bCR7YFE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XBZVzV8e9BBGX7hNFqNTfyrbvDc1PClc1OZiqldoUlxmpt6kIGsgAGhj2p1TeGXKe
-	 TUst5tIK2h+GBiXhlbIMC9fbMYf8yPYWb8E5A/TSkEKyRY1w+7NxLAWS2ZZqLmKGD7
-	 GNQ1l/k+k814ga94OZK0/KIWI5V3rQ5SqUJuC738=
+	b=Zv5pE2OL3TDzYnJQYAV1CZeFmxPdEv8FzUvLeyLjWV0Ic4tUByuZhtBllhg44G0Pj
+	 Sy4TzChYcg0Miozd2A8VlMNGVrSmCCLwvTFgPjskWJcHcW2/enfeXm1hl/0Jj8N2kq
+	 xzyYZ08Mf9QoBAiHLA7wgqTk05K0RbP6RLhMlc44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <include@grrlz.net>,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
 	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.6 1076/1266] cpu: hotplug: Preserve per instance callback errors
-Date: Tue, 21 Jul 2026 17:25:13 +0200
-Message-ID: <20260721152505.895636454@linuxfoundation.org>
+Subject: [PATCH 6.6 1075/1266] posix-cpu-timers: Use u64 multiplication in update_rlimit_cpu()
+Date: Tue, 21 Jul 2026 17:25:12 +0200
+Message-ID: <20260721152505.873556444@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,53 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <include@grrlz.net>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-commit 673db10729fb121ea1b16fe57791a0cb9eac1eb5 upstream.
+commit 26aff38fefb1d6cd87e22525f41cc8f1aa61b24f upstream.
 
-cpuhp_invoke_callback() unwinds earlier callbacks for the same
-hotplug state when one instance fails. The rollback path currently
-reuses ret, so a successful rollback can hide the original error and
-make the failed transition look successful.
+update_rlimit_cpu() converts the RLIMIT_CPU value to nanoseconds with
 
-Keep the rollback result separate from the original error.
+        u64 nsecs = rlim_new * NSEC_PER_SEC;
 
-Fixes: 724a86881d03 ("smp/hotplug: Callback vs state-machine consistency")
-Signed-off-by: Bradley Morgan <include@grrlz.net>
+On 32-bit kernels both rlim_new (unsigned long) and NSEC_PER_SEC
+(1000000000L) are 32-bit, so the multiplication is performed in unsigned
+long and truncated for rlim_new > 4 seconds before being widened to u64.
+
+The same file already casts to u64 for the matching computation in
+check_process_timers():
+
+        u64 softns = (u64)soft * NSEC_PER_SEC;
+
+As a result, the truncated value is installed into the CPUCLOCK_PROF
+expiry cache (nextevt), causing the process CPU timer to be programmed
+to fire prematurely for any RLIMIT_CPU soft limit >= 5 seconds. The
+actual SIGXCPU/SIGKILL decision in check_process_timers() already casts
+to u64 and is therefore correct, so limit enforcement is not broken;
+only the expiry-cache programming is wrong. Apply the same cast here so
+both paths convert rlim_cur identically.
+
+64-bit kernels are unaffected.
+
+Fixes: 858cf3a8c599 ("timers/itimer: Convert internal cputime_t units to nsec")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260619163719.12103-1-include@grrlz.net
+Link: https://patch.msgid.link/20260616112017.1681372-1-zhanxusheng@xiaomi.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cpu.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/time/posix-cpu-timers.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -175,7 +175,7 @@ static int cpuhp_invoke_callback(unsigne
- 	struct cpuhp_step *step = cpuhp_get_step(state);
- 	int (*cbm)(unsigned int cpu, struct hlist_node *node);
- 	int (*cb)(unsigned int cpu);
--	int ret, cnt;
-+	int ret, cnt, rollback_ret;
+--- a/kernel/time/posix-cpu-timers.c
++++ b/kernel/time/posix-cpu-timers.c
+@@ -41,7 +41,7 @@ void posix_cputimers_group_init(struct p
+  */
+ int update_rlimit_cpu(struct task_struct *task, unsigned long rlim_new)
+ {
+-	u64 nsecs = rlim_new * NSEC_PER_SEC;
++	u64 nsecs = (u64)rlim_new * NSEC_PER_SEC;
+ 	unsigned long irq_fl;
  
- 	if (st->fail == state) {
- 		st->fail = CPUHP_INVALID;
-@@ -239,12 +239,12 @@ err:
- 			break;
- 
- 		trace_cpuhp_multi_enter(cpu, st->target, state, cbm, node);
--		ret = cbm(cpu, node);
--		trace_cpuhp_exit(cpu, st->state, state, ret);
-+		rollback_ret = cbm(cpu, node);
-+		trace_cpuhp_exit(cpu, st->state, state, rollback_ret);
- 		/*
- 		 * Rollback must not fail,
- 		 */
--		WARN_ON_ONCE(ret);
-+		WARN_ON_ONCE(rollback_ret);
- 	}
- 	return ret;
- }
+ 	if (!lock_task_sighand(task, &irq_fl))
 
 
