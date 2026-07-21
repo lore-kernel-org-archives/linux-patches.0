@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59342415F1A;
-	Tue, 21 Jul 2026 19:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156543783D4;
+	Tue, 21 Jul 2026 19:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662717; cv=none; b=k7RY3kXP/RB8b6Yk7TURGvbV2xv53n7qhM03SDJFPDWpJdyf2HDG7hRr+Te2JqRGz5+h4BX/5qLtti5+0nmEblDRQvK+UAn1wjHvyssXKLrRz4F2DGhWgrRWhlXGHtmYSJtC1kIvVsp6C4gMllpmivpA9C+aiv9yMXbSC66Rx8w=
+	t=1784662720; cv=none; b=k6699XTxWir2uDUhik2mc7Z5+ZrTcRXTyAMGk0tKLPkhPnFAj9wgczeOiuqYXTO+9PDEvdo1np5+Kys9u5mCBgJuuaFtXqbb5lPvlUJ6oP0Z4uRlOzCjLxmUkN9qI23NdLw5667d/ACfQcI5W2FErloQJP7HilvZ/Le77RiHM/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662717; c=relaxed/simple;
-	bh=6laJXuoiiWCJg5dITAxH/ss87CEBkIBEPBeveXFYPuA=;
+	s=arc-20240116; t=1784662720; c=relaxed/simple;
+	bh=hHIYV7OZj7xT7IvvDXqA3qyjgBfBreoqTJRjcD3YMAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XgSrkTV2mZ/afuqEa4M1LBU47+g93MpgclI+lflsETD/olYhG/gOTqGe64yHK8WKHHGHGdFw65Ua/2JegFzJy87mSmXBMrxWnQFCw/QLEiVF7cBDLVTAlM9CgVD/6JehObCENu/fiEig50iMF1vpS99rU3pOurHUzJ/+VIdz55s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRghmGww; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dGJASCJQ1MDRhaa8IWkpeWb+O5ASAEZYC0kprTvjj9rjuyir/c3JmdTjeD0hicBA+Xr9ADKtZLfodImg3IgpmQJZ/m51Bjx/tjyOis3purvfDaoQO5SZajgFMuEVCiCrSe7iznTYdtvlILHaqrSp+YdmMN/bMhnVB6R2yufjRRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8BMUGkd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRghmGww"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFEC21F000E9;
-	Tue, 21 Jul 2026 19:38:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8BMUGkd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 768DE1F000E9;
+	Tue, 21 Jul 2026 19:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662716;
-	bh=GEiatgmQPlFVjAk1cdbdNcZPI7A1st340ycW1MOBAbY=;
+	s=korg; t=1784662719;
+	bh=fClHvS8QFxc9PCDCOEjYt1/Njyif4nJZv8qHQ1adJCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aRghmGwwALe5ZZkj1FDTr705rBQTsfpXKnTiGa5uunce1EIDKJMDWgunDKE11fsdd
-	 +rFeIpcvhE0W1CoQ8yf7LL5/2PoNGWgQCoT4JutYE82JN8DSCgE8kL7wafeXH2NCWV
-	 yFYUx4os9fIH8YxyntZ1PemzA7bLu2qHNkOn2IXQ=
+	b=v8BMUGkde+Iuy0I7A8Z3w49ffVHd9/xQcibp+SxI4JIjKI1mE/c9XQ/DZwlWRLbeF
+	 nsdpgPK6TdpzDnCposeJ9mCuJEd38z2t1knEzDRDW7V8LWBpASd++QrdMiQP8GdFLF
+	 +ZIe1w0CocMn/umZT/b+dJ9L1IgAP1W/o6qaocps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	kernel test robot <lkp@intel.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0548/1276] i3c: master: Prevent reuse of dynamic address on device add failure
-Date: Tue, 21 Jul 2026 17:16:31 +0200
-Message-ID: <20260721152458.386783155@linuxfoundation.org>
+Subject: [PATCH 6.12 0549/1276] apparmor: fix label can not be immediately before a declaration
+Date: Tue, 21 Jul 2026 17:16:32 +0200
+Message-ID: <20260721152458.408377026@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,74 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit b3ba8383da4d0cff15810e32ea785eceb0a80813 ]
+[ Upstream commit 1ed40bd525c00d22af666016af9aef7167f8085f ]
 
-i3c_master_add_i3c_dev_locked() is called after a device has already
-been assigned a dynamic address.  If the function fails, the address
-remains marked as free and may be reallocated to another device,
-leading to address conflicts on the bus.
+Fix error reported by kernel test robot
 
-Ensure the address is not marked as free on failure, by updating the
-address slot state to prevent the address from being re-used.
+security/apparmor/policy.c:1381:2: error: a label can only be part of
+a statement and a declaration is not a statement
 
-Emit an error message to inform of the failure.
+All errors (new ones prefixed by >>):
 
-Opportunistically remove the !master check because it is impossible.
+   security/apparmor/policy.c: In function 'aa_replace_profiles':
+>> security/apparmor/policy.c:1381:2: error: a label can only be part
+   of a statement and a declaration is not a statement
+     ssize_t udata_sz = udata->size;
+     ^~~~~
 
-Note, directly resetting the device's dynamic address is no longer
-an option, since Direct RSTDAA was deprecated from I3C starting from
-version 1.1 and v1.1 (or later) target devices are meant to NACK it.
-
-Fixes: 3a379bbcea0af ("i3c: Add core I3C infrastructure")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260612080107.11606-4-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202606150525.npax8WiH-lkp@intel.com/
+Fixes: 7b42f95813dc9 ("apparmor: fix potential UAF in aa_replace_profiles")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ security/apparmor/policy.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index ab89c8ef6ae86f..dd1508455da213 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -2055,12 +2055,11 @@ int i3c_master_add_i3c_dev_locked(struct i3c_master_controller *master,
- 	bool enable_ibi = false;
- 	int ret;
+diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
+index 5e359cddd109e7..da39bd937c2a4d 100644
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -1342,9 +1342,10 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
+ 	mutex_unlock(&ns->lock);
  
--	if (!master)
--		return -EINVAL;
--
- 	newdev = i3c_master_alloc_i3c_dev(master, &info);
--	if (IS_ERR(newdev))
--		return PTR_ERR(newdev);
-+	if (IS_ERR(newdev)) {
-+		ret = PTR_ERR(newdev);
-+		goto err_prevent_addr_reuse;
-+	}
- 
- 	ret = i3c_master_attach_i3c_dev(master, newdev);
- 	if (ret)
-@@ -2182,6 +2181,16 @@ int i3c_master_add_i3c_dev_locked(struct i3c_master_controller *master,
- err_free_dev:
- 	i3c_master_free_i3c_dev(newdev);
- 
-+err_prevent_addr_reuse:
-+	/*
-+	 * Although the device has not been added, the address has been
-+	 * assigned. Prevent the address from being used again.
-+	 */
-+	if (i3c_bus_get_addr_slot_status(&master->bus, addr) == I3C_ADDR_SLOT_FREE)
-+		i3c_bus_set_addr_slot_status(&master->bus, addr, I3C_ADDR_SLOT_I3C_DEV);
+ out:
++	aa_put_ns(ns);
 +
-+	dev_err(&master->dev, "Failed to add I3C device at address %u, error %d\n", addr, ret);
-+
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(i3c_master_add_i3c_dev_locked);
+ 	ssize_t udata_sz = udata->size;
+ 
+-	aa_put_ns(ns);
+ 	aa_put_profile_loaddata(udata);
+ 	kfree(ns_name);
+ 
 -- 
 2.53.0
 
