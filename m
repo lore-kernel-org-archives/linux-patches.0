@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8323D46D081;
-	Tue, 21 Jul 2026 17:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536DA472F8C;
+	Tue, 21 Jul 2026 17:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656393; cv=none; b=XFIH4p9g6Bvxsod5lkGbFxXdJ/eOUKsjZw8TSCtef31s8b0WT9ZpojVd7pZkIB+dlVKMK6BiLatmdw7sNGfXuygmbmZZEsbePDobGBs9EuP/G39zkEn96yJcXVboC4gPpSYj3vsBmIOmjLgxUpNrad2E3o16f2gvbJgJBJr7MCA=
+	t=1784656396; cv=none; b=O1Izfi40k+Lf8dlI38JEdeTQzBZbxag4N6zN9AFEoBmy9AbPiO3ldVQiBZu8sjOf86+87TWpCb7PClKnvfU7FDs6lwXI148dxExH3xf10/iOB8EOowLx1Tf5Ao24mDKwqXUcM49nhOEjPmqdEKmzaYP/M44F4j0rGMMStRnZZts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656393; c=relaxed/simple;
-	bh=VnowQi0NQCbuKQa/H1wrzG9dE3FOPRrIr39M0cbbV24=;
+	s=arc-20240116; t=1784656396; c=relaxed/simple;
+	bh=gJUHCDmP2K/MFGD0ORptTTpMQjLFZzL5bnIArFmt9e0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JGbn0DrSNbKshMRGvjgJ850E6R0IpCeFXexwg4As1XMywvugNl8JGUlowlRNYHzwHFefwRTtPSqFKFPjWz4vzOXn0SEXNX+eTJu4LwgWnL5ZmqRPSLNWFzAakV1jvxeeV5D6FiXUQgyudsuQ/7diY4ZWsJf8akqGvt9r9t4w0XY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYZ9CHJ6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XLK185Xsb3wKj1/kO1m+nH097wUGdqb0FcJLPyy+84nYrG0CSSyLqOq9FWObxflxvDMqKyAcqfOOHB/3UK66cfZmwzLDbfnwvYznBxazRryLnbNkJocTUwPyVzE4zptA51XfOMvGsL8k8kKXXy1LnudX54FoqyFiZMwadVZXeg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=US2FuSx+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYZ9CHJ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD101F00A3D;
-	Tue, 21 Jul 2026 17:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="US2FuSx+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841C11F00A3A;
+	Tue, 21 Jul 2026 17:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656392;
-	bh=IH5GFNZ3SKvFQjmMMbUyXLJwpLcj5aI4DGYF46ddVTs=;
+	s=korg; t=1784656395;
+	bh=rIEpMAKeEJqea8BXTTJ+ifjZoqJzZHBySVsKqgRjFAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TYZ9CHJ6zu0t+Ggjky0cq0sbl1W5fLn2Jr4e+WKxqEn8PP1kKw9Wieq+AKCwF7OBI
-	 dZc3KtJU2oXwRDqhTebfkajidGYX/bCWEZFPoWoNZfo59f5MM3i4WFsblovkIMXwzr
-	 yKB4TD9Tz+8PFEUIZ7kRNiu4WV8NDt6nVqhvas+U=
+	b=US2FuSx+T53xhceGW77ev/vMy0f7MesJxy7PO4rH16qhBRDZKyQ8JILQszhLugWGI
+	 AJuWIIec9cO+JLi4Y0e2rprQL5lqpfMvKXAdMoJuJj3GTH40gm6bqYxixlflBtsPpb
+	 Psbjqx9b1zWCgW/0+l3oFigM8oSOHD2mAjO4SOsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hui Wang <hui.wang@canonical.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0368/1611] ALSA: seq: Fix partial userptr event expansion
-Date: Tue, 21 Jul 2026 17:08:04 +0200
-Message-ID: <20260721152523.449071018@linuxfoundation.org>
+Subject: [PATCH 6.18 0369/1611] riscv: cpu_ops: Change return value type of cpu_is_stopped() to bool
+Date: Tue, 21 Jul 2026 17:08:05 +0200
+Message-ID: <20260721152523.472161693@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,46 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Hui Wang <hui.wang@canonical.com>
 
-[ Upstream commit 2b7bd6f548292aec92a386deebe62324d21d62a9 ]
+[ Upstream commit 2b2b207e1162e577cd6208e184d3d3a0fcfa9cca ]
 
-snd_seq_expand_var_event_at() clamps the number of bytes to copy to the
-remaining variable-event length, but passes the original buffer size to
-expand_var_event().
+In the original sbi_cpu_is_stopped(), if rc doesn't equal to the
+SBI_HSM_STATE_STOPPED, it will return rc to the caller directly. But
+there is a hidden problem, the rc could be SBI_HSM_STATE_STARTED, if
+so, this function will report cpu stopped while the cpu isn't really
+stopped.
 
-For SNDRV_SEQ_EXT_USRPTR events, expand_var_event() copies exactly the
-size argument from userspace.  On the final chunk, when the remaining
-event data is shorter than the caller's buffer, this can read past the
-declared event data and can spuriously fail with -EFAULT if the extra
-bytes cross an unmapped page.
+Furthermore, from the name of cpu_is_stopped(), it gives a sense the
+return value is a bool type, true means the cpu is stopped, conversely
+false means the cpu is not stopped.
 
-Pass the clamped length instead.  The chained and kernel-backed paths
-already reclamp in dump_var_event(), but the user-pointer path handles
-the size directly.
+Here change the return value type to bool and change the callers
+accordingly. This could fix the above two issues.
 
-Fixes: ea46f79709b6 ("ALSA: seq: Add snd_seq_expand_var_event_at() helper")
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20260606040913.230213-1-sammiee5311@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: f1e58583b9c7c ("RISC-V: Support cpu hotplug")
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+Link: https://patch.msgid.link/20260413123515.48423-1-hui.wang@canonical.com
+[pjw@kernel.org: cleaned up some of the pr_warn() messages]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_memory.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/include/asm/cpu_ops.h |  2 +-
+ arch/riscv/kernel/cpu-hotplug.c  |  4 ++--
+ arch/riscv/kernel/cpu_ops_sbi.c  | 11 +++++++----
+ 3 files changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/sound/core/seq/seq_memory.c b/sound/core/seq/seq_memory.c
-index e7edea10027f3f..60afe351bbca81 100644
---- a/sound/core/seq/seq_memory.c
-+++ b/sound/core/seq/seq_memory.c
-@@ -211,7 +211,7 @@ int snd_seq_expand_var_event_at(const struct snd_seq_event *event, int count,
- 	len -= offset;
- 	if (len > count)
- 		len = count;
--	err = expand_var_event(event, offset, count, buf, true);
-+	err = expand_var_event(event, offset, len, buf, true);
- 	if (err < 0)
- 		return err;
- 	return len;
+diff --git a/arch/riscv/include/asm/cpu_ops.h b/arch/riscv/include/asm/cpu_ops.h
+index 176b570ef98276..065811fca594d9 100644
+--- a/arch/riscv/include/asm/cpu_ops.h
++++ b/arch/riscv/include/asm/cpu_ops.h
+@@ -24,7 +24,7 @@ struct cpu_operations {
+ 				     struct task_struct *tidle);
+ #ifdef CONFIG_HOTPLUG_CPU
+ 	void		(*cpu_stop)(void);
+-	int		(*cpu_is_stopped)(unsigned int cpu);
++	bool		(*cpu_is_stopped)(unsigned int cpu);
+ #endif
+ };
+ 
+diff --git a/arch/riscv/kernel/cpu-hotplug.c b/arch/riscv/kernel/cpu-hotplug.c
+index 3f50d3dd76c6f2..4570ff4b4e8ad6 100644
+--- a/arch/riscv/kernel/cpu-hotplug.c
++++ b/arch/riscv/kernel/cpu-hotplug.c
+@@ -58,8 +58,8 @@ void arch_cpuhp_cleanup_dead_cpu(unsigned int cpu)
+ 	/* Verify from the firmware if the cpu is really stopped*/
+ 	if (cpu_ops->cpu_is_stopped)
+ 		ret = cpu_ops->cpu_is_stopped(cpu);
+-	if (ret)
+-		pr_warn("CPU%u may not have stopped: %d\n", cpu, ret);
++	if (!ret)
++		pr_warn("CPU%u may not have stopped\n", cpu);
+ }
+ 
+ /*
+diff --git a/arch/riscv/kernel/cpu_ops_sbi.c b/arch/riscv/kernel/cpu_ops_sbi.c
+index 87d6559448039c..05b9fe3a35a419 100644
+--- a/arch/riscv/kernel/cpu_ops_sbi.c
++++ b/arch/riscv/kernel/cpu_ops_sbi.c
+@@ -88,16 +88,19 @@ static void sbi_cpu_stop(void)
+ 	pr_crit("Unable to stop the cpu %u (%d)\n", smp_processor_id(), ret);
+ }
+ 
+-static int sbi_cpu_is_stopped(unsigned int cpuid)
++static bool sbi_cpu_is_stopped(unsigned int cpuid)
+ {
+ 	int rc;
+ 	unsigned long hartid = cpuid_to_hartid_map(cpuid);
+ 
+ 	rc = sbi_hsm_hart_get_status(hartid);
+ 
+-	if (rc == SBI_HSM_STATE_STOPPED)
+-		return 0;
+-	return rc;
++	if (rc != SBI_HSM_STATE_STOPPED) {
++		pr_warn("HART%lu isn't stopped; status %d\n", hartid, rc);
++		return false;
++	}
++
++	return true;
+ }
+ #endif
+ 
 -- 
 2.53.0
 
