@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA7C35C682;
-	Tue, 21 Jul 2026 22:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D1130EF9A;
+	Tue, 21 Jul 2026 22:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672858; cv=none; b=OUJpgb0m8Am9XO3beXV9JYCMzQq8RKf143ZKV84yhg9hkf5T5UdqAY4Que8cb+mLG21bQaGf7Pg/nQ9YVuZBpA3SlY0eZRwSENYTJJPaxEYpuXSvmH+mQD3KtXzq80HX5/z2UiMzeAB9oN/QLSmrWy1WW6R2LLD49cL7EUzN41A=
+	t=1784672861; cv=none; b=AIv2EPoQLSEh/Om2oEpbKJd3GPDsReqWLKm3dvDh2RLaAK7lIIo8GG/Jbd8PoUGKEpvSZnflqZwVF/dlzbbyuGVnLYXRMnEZBcDoP0rxSuJWH2Eo2gsDr/XlGSqFCDI30CTrZIywO3O1wCMWsRo9KGbj7SzoSfOaB6NS8APkBuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672858; c=relaxed/simple;
-	bh=yLjSsTnsRB/RS5+ZFTlbYSb9atISxtYViAPpvgln2DU=;
+	s=arc-20240116; t=1784672861; c=relaxed/simple;
+	bh=I8OlI5FyyvoNXT8ncOSbBsVisKjB8r4aIbtTPe4coSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s6uA5nLmSklMorDgfq0K7K9wn4EDU/2jScYjFb9He0lTxaNF1NhbnsENE/6ma7SW8b3sjOe2D4mX0ZdJlJFZPX4BM+gTCW4M7d2pLb6guigkRsdXqgwajPXkx47Me76GC6T/KBnyDoWgD7kG+4aEXTWItdn6uCfnuBh/mI5Kmpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRBZDgjW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HKqInL1d/ryHrjTofz3t6QipBNQXMwzWdNrcpCfMXFonx+BhbWjSY529jStKublOW/YK8lK7FTIWSaxlQ+QY9JhIk+kC2JLSoCbGa0EHvah99Q0FYzhVPuDVGAK/EkfcknalwPIvxJJsgmfPF+Vp43ZUsPQO7EiN9hsT9eUGD8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kvk1H9Vj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRBZDgjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834A31F000E9;
-	Tue, 21 Jul 2026 22:27:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kvk1H9Vj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 222021F000E9;
+	Tue, 21 Jul 2026 22:27:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672857;
-	bh=/s/WHUd+Kyp5dBe0cw4gW38L0egL8MIH4x05blRK3gY=;
+	s=korg; t=1784672859;
+	bh=Q9XuaFndJPH+Qo0zwxolU9QVhx9Vt/JxYUFF9KEcFz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lRBZDgjWZxZ8RVB0VvH9P3JJsjgoTd2DGdtD8PDb6tASvtnDczY4xuie+XvBsDpVX
-	 R5jhI7WonJ5eWU0Hw1PmL9eVTq6CESnu+foVLRnzCZEgoKQTqexzULx0JFD5uZ7a/S
-	 sG3dBv3yZ9lgX0Snc9eXGTld6DHMQyhFYC0It8nI=
+	b=kvk1H9Vj+DVmKpfS2Jrxx5sS/f+RUpyui252g8m9IpiG2LosRgxZHeoIowwLuj+D5
+	 5z2N/SVQzC/IrbQPRD3R5xf9pT9V/uq3HhH07oCjv6H32LEO0KQGkMLl4d3MlJvg0r
+	 HbALyfjHnEmojkT6sx4wLM3LWNzV9j5VQBRhVgyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Zihan Xi <xizh2024@lzu.edu.cn>,
-	Ren Wei <n05ec@lzu.edu.cn>,
+	munan Huang <munanevil@gmail.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 784/843] smb: client: harden POSIX SID length parsing
-Date: Tue, 21 Jul 2026 17:26:59 +0200
-Message-ID: <20260721152423.696618504@linuxfoundation.org>
+Subject: [PATCH 5.15 785/843] ksmbd: fix use-after-free in __ksmbd_close_fd() via durable scavenger
+Date: Tue, 21 Jul 2026 17:27:00 +0200
+Message-ID: <20260721152423.721419064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -56,41 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <xizh2024@lzu.edu.cn>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 7ad2bcf2441430bb2e918fb3ef9a90d775a6e422 ]
+[ Upstream commit 235e32320a470fcd3998fb3774f2290a0eb302a1 ]
 
-posix_info_sid_size() reads sid[1] to obtain the subauthority count,
-but its existing boundary check still accepts buffers with only one
-remaining byte. Require two bytes before reading sid[1] so all client
-paths that reuse the helper reject truncated POSIX SIDs safely.
+When a durable file handle survives session disconnect (TCP close without
+SMB2_LOGOFF), session_fd_check() sets fp->conn = NULL to preserve the
+handle for later reconnection. However, it did not clean up the byte-range
+locks on fp->lock_list.
 
-Fixes: 349e13ad30b4 ("cifs: add smb2 POSIX info level")
-Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Zihan Xi <xizh2024@lzu.edu.cn>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Later, when the durable scavenger thread times out and calls
+__ksmbd_close_fd(NULL, fp), the lock cleanup loop did:
+
+    spin_lock(&fp->conn->llist_lock);
+
+This caused a slab use-after-free because fp->conn was NULL and the
+original connection object had already been freed by
+ksmbd_tcp_disconnect().
+
+The root cause is asymmetric cleanup: lock entries (smb_lock->clist) were
+left dangling on the freed conn->lock_list while fp->conn was nulled out.
+
+To fix this issue properly, we need to handle the lifetime of
+smb_lock->clist across three paths:
+ - Safely skip clist deletion when list is empty and fp->conn is NULL.
+ - Remove the lock from the old connection's lock_list in
+   session_fd_check()
+ - Re-add the lock to the new connection's lock_list in
+   ksmbd_reopen_durable_fd().
+
+Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
+Co-developed-by: munan Huang <munanevil@gmail.com>
+Signed-off-by: munan Huang <munanevil@gmail.com>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: c1016dd1d8b2 ("ksmbd: track the connection owning a byte-range lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/smb2pdu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ksmbd/vfs_cache.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/fs/cifs/smb2pdu.c
-+++ b/fs/cifs/smb2pdu.c
-@@ -4592,7 +4592,7 @@ int posix_info_sid_size(const void *beg,
- 	size_t subauth;
- 	int total;
+--- a/fs/ksmbd/vfs_cache.c
++++ b/fs/ksmbd/vfs_cache.c
+@@ -317,9 +317,11 @@ static void __ksmbd_close_fd(struct ksmb
+ 	 * there are not accesses to fp->lock_list.
+ 	 */
+ 	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
+-		spin_lock(&fp->conn->llist_lock);
+-		list_del(&smb_lock->clist);
+-		spin_unlock(&fp->conn->llist_lock);
++		if (!list_empty(&smb_lock->clist) && fp->conn) {
++			spin_lock(&fp->conn->llist_lock);
++			list_del(&smb_lock->clist);
++			spin_unlock(&fp->conn->llist_lock);
++		}
  
--	if (beg + 1 > end)
-+	if (beg + 2 > end)
- 		return -1;
- 
- 	subauth = *(u8 *)(beg+1);
+ 		list_del(&smb_lock->flist);
+ 		locks_free_lock(smb_lock->fl);
 
 
