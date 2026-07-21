@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C94535C6AD;
-	Tue, 21 Jul 2026 21:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4737635C6BE;
+	Tue, 21 Jul 2026 21:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669348; cv=none; b=B/RCqZeHzhJeAx1K/S1FFV5xt49EcaGAahhWuC0hrDcNKgArtydnP6gXYuxAD3vodl54fa03PF+5vzNjBY/ZmZgC8Z1NkDrPRMl0K0sxmCODU7+MS/hJV6fFBBxUgGUPxtEcnAB2ZGSvrXdTdIJ9RvmzpNDyEQt8vdCqv3LTIcg=
+	t=1784669348; cv=none; b=ijXNhh9q89fDZc9QS4HWstvcZErHIWoDuWzzrH0NDC/bzCgw+NthHIh8AQF+p17bHUVHtO+fwAXGk2n2N72NbXgv+pCMJMh1CD+qz7hkPiWs7YFQy/ANmnO95B2jWIi38nFreJm8Xnx4zyYtXUOcfl+XCoZDs81vIy1A4xusLVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784669348; c=relaxed/simple;
-	bh=QB+mOgXfVerDMxxxQohPFvrYWHhwimHaGuLwBOJ8kic=;
+	bh=cIEupPf6Cz0EJZ2kteLyjenCsXsq7BKLe5KSY8j6soM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GFwggag7K68xhZRp9E6Uzq9ZbI5HGtryvCKdv0xaHxAwaLXziGmYgRFwWyl0ZRnRk8AAetT3wMxLR8WBpUghcr1O6M6QxYc1ZtUhLI9lJ5KPSP0eofKNpLjFnGpQYD4s4RrIdqX55iExp2JAkrOsJDTsgyrWlYRrI+5Jv8l8wgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UxfMd1/k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Uog1Y/gxdTbLOrUTVuWruZVnMNfrACjRzhFylBq/fBBAXA2bEJXJwYjOEKu2dsSQeBnb6kOE1CeDn7okPAxajJQGBrWrsw7EJfvdPCD32BYOXwp3OBApvQ7z5eZTN8a/Bh+yJ9u3PGaTiGsXeTONqw0FHZ8qzcTBDB2bCxEFD7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eR2lLdQI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UxfMd1/k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C671F000E9;
-	Tue, 21 Jul 2026 21:29:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eR2lLdQI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3EE1F00A3A;
+	Tue, 21 Jul 2026 21:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669345;
-	bh=/bBnLDiG2kAc7FKqB6YkSEwLRXFOuwKkq9PNGwra2dU=;
+	s=korg; t=1784669342;
+	bh=N93/PkrpMpa7xf6p17AlUfABQgQnaDHbrRRRETv6Knc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UxfMd1/kmH/qfnGkSwHSp8/yNa0uz461WFrx1n0D17K7pMOuKFQLq2oec8KEHSNaH
-	 BIM2jNJN4bvh7ch9NOm1/KROLZ2Vwd9Fdn5nOXMN4QsEPtpgheQRvCiomzg4oOcJCo
-	 p21OLqQtPZi/jfYL6Of7FMs9g/Y9fnDbn3OE+6iE=
+	b=eR2lLdQI+IC7drQUGybTWeZ9k3n/9QmpEBNPale7CwnopLnqMa/8rvfCfD/0Iia8p
+	 /9rvEt/HMCDhKRQHAqU1RdEI3sFgNjhKog+AUIb8wTLC5qEL9lHs6ep88uMJm4h/r+
+	 0pvjCHV/mmr1ulRnOZUdAh5UkMlJtNAyt3U+kfuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
+	"Carlos Bilbao (Lambda)" <carlos.bilbao@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0476/1067] PCI: Introduce named defines for PCI ROM
-Date: Tue, 21 Jul 2026 17:17:57 +0200
-Message-ID: <20260721152435.262830296@linuxfoundation.org>
+Subject: [PATCH 6.1 0475/1067] PCI/ASPM: Dont reconfigure ASPM entering low-power state
+Date: Tue, 21 Jul 2026 17:17:56 +0200
+Message-ID: <20260721152435.240835154@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -47,105 +45,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Carlos Bilbao <carlos.bilbao@kernel.org>
 
-[ Upstream commit 113e86bc58a918f85d250723436a4d541a873358 ]
+[ Upstream commit c855c9921da72e535c24737c748f603a52d03f7e ]
 
-Convert the magic numbers associated with PCI ROM into named
-definitions. Some of these definitions will be used in the second
-fix patch.
+Reconfiguring ASPM when a device transitions to low-power state can enable
+L1.1/L1.2 substates on the PCIe link at a time when the device is sleeping
+and may be unable to exit them. ASPM should be reconfigured on D0 entry
+(resume), not on the way down.
 
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+pci_set_low_power_state() calls pcie_aspm_pm_state_change() after writing
+D3hot to PCI_PM_CTRL. pcie_aspm_pm_state_change() resets link->aspm_capable
+to link->aspm_support and then calls pcie_config_aspm_path(), which can
+enable ASPM L1.1/L1.2 substates on the PCIe link. If the device cannot
+recover the link from L1.2 while in D3hot, subsequent config space reads
+return 0xFFFF ("device inaccessible") and pci_power_up() fails with
+messages like:
+
+  vfio-pci 0000:5d:00.0: Unable to change power state from D3hot to D0, device inaccessible
+
+This was observed on NVIDIA H100 SXM5 GPUs bound to vfio-pci when Linux
+runtime PM suspends them to D3hot: the GPU becomes permanently inaccessible
+and disappears from the PCIe bus.
+
+The call to pcie_aspm_pm_state_change() in pci_set_low_power_state() was
+restored by f93e71aea6c6 ("Revert "PCI/ASPM: Remove
+pcie_aspm_pm_state_change()""), which reverted 08d0cc5f3426 ("PCI/ASPM:
+Remove pcie_aspm_pm_state_change()").  The revert was necessary because the
+removal broke suspend/resume on certain platforms that required ASPM to be
+reconfigured on D0 entry. However, the revert restored the call in both
+pci_set_full_power_state() (D0 entry) and pci_set_low_power_state()
+(low-power entry).
+
+Only the D0-entry call is needed to fix the suspend/resume regression. The
+low-power-entry call is harmful: reconfiguring ASPM immediately after
+putting a device into D3hot can enable link substates that the device or
+platform cannot exit while the device is sleeping.
+
+Remove the pcie_aspm_pm_state_change() call from pci_set_low_power_state().
+ASPM will still be reconfigured correctly when the device returns to D0 via
+pci_set_full_power_state().
+
+Fixes: f93e71aea6c6 ("Revert "PCI/ASPM: Remove pcie_aspm_pm_state_change()"")
+Signed-off-by: Carlos Bilbao (Lambda) <carlos.bilbao@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Reviewed-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Link: https://patch.msgid.link/20260508082128.3344255-2-kanie@linux.alibaba.com
-Stable-dep-of: 538796b807fc ("PCI: Check ROM header and data structure addr before accessing")
+Link: https://patch.msgid.link/20260428040104.78524-1-carlos.bilbao@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/rom.c | 40 ++++++++++++++++++++++++++++------------
- 1 file changed, 28 insertions(+), 12 deletions(-)
+ drivers/pci/pci.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/pci/rom.c b/drivers/pci/rom.c
-index e18d3a4383ba6b..d4a141bd148b4b 100644
---- a/drivers/pci/rom.c
-+++ b/drivers/pci/rom.c
-@@ -5,13 +5,28 @@
-  * (C) Copyright 2004 Jon Smirl <jonsmirl@yahoo.com>
-  * (C) Copyright 2004 Silicon Graphics, Inc. Jesse Barnes <jbarnes@sgi.com>
-  */
-+
-+#include <linux/bits.h>
- #include <linux/kernel.h>
- #include <linux/export.h>
- #include <linux/pci.h>
-+#include <linux/sizes.h>
- #include <linux/slab.h>
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 953646cd759b03..92fa1e9444a99f 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -1488,9 +1488,6 @@ static int pci_set_low_power_state(struct pci_dev *dev, pci_power_t state, bool
+ 				     pci_power_name(dev->current_state),
+ 				     pci_power_name(state));
  
- #include "pci.h"
+-	if (dev->bus->self)
+-		pcie_aspm_pm_state_change(dev->bus->self, locked);
+-
+ 	return 0;
+ }
  
-+#define PCI_ROM_HEADER_SIZE			0x1A
-+#define PCI_ROM_POINTER_TO_DATA_STRUCT		0x18
-+#define PCI_ROM_LAST_IMAGE_INDICATOR		0x15
-+#define PCI_ROM_LAST_IMAGE_INDICATOR_BIT	BIT(7)
-+#define PCI_ROM_IMAGE_LEN			0x10
-+#define PCI_ROM_IMAGE_SECTOR_SIZE		SZ_512
-+#define PCI_ROM_IMAGE_SIGNATURE			0xAA55
-+
-+/* Data structure signature is "PCIR" in ASCII representation */
-+#define PCI_ROM_DATA_STRUCT_SIGNATURE		0x52494350
-+#define PCI_ROM_DATA_STRUCT_LEN			0x0A
-+
- /**
-  * pci_enable_rom - enable ROM decoding for a PCI device
-  * @pdev: PCI device to enable
-@@ -91,26 +106,27 @@ static size_t pci_get_rom_size(struct pci_dev *pdev, void __iomem *rom,
- 	do {
- 		void __iomem *pds;
- 		/* Standard PCI ROMs start out with these bytes 55 AA */
--		if (readw(image) != 0xAA55) {
--			pci_info(pdev, "Invalid PCI ROM header signature: expecting 0xaa55, got %#06x\n",
--				 readw(image));
-+		if (readw(image) != PCI_ROM_IMAGE_SIGNATURE) {
-+			pci_info(pdev, "Invalid PCI ROM header signature: expecting %#06x, got %#06x\n",
-+				 PCI_ROM_IMAGE_SIGNATURE, readw(image));
- 			break;
- 		}
--		/* get the PCI data structure and check its "PCIR" signature */
--		pds = image + readw(image + 24);
--		if (readl(pds) != 0x52494350) {
--			pci_info(pdev, "Invalid PCI ROM data signature: expecting 0x52494350, got %#010x\n",
--				 readl(pds));
-+		/* Get the PCI data structure and check its "PCIR" signature */
-+		pds = image + readw(image + PCI_ROM_POINTER_TO_DATA_STRUCT);
-+		if (readl(pds) != PCI_ROM_DATA_STRUCT_SIGNATURE) {
-+			pci_info(pdev, "Invalid PCI ROM data signature: expecting %#010x, got %#010x\n",
-+				 PCI_ROM_DATA_STRUCT_SIGNATURE, readl(pds));
- 			break;
- 		}
--		last_image = readb(pds + 21) & 0x80;
--		length = readw(pds + 16);
--		image += length * 512;
-+		last_image = readb(pds + PCI_ROM_LAST_IMAGE_INDICATOR) &
-+				   PCI_ROM_LAST_IMAGE_INDICATOR_BIT;
-+		length = readw(pds + PCI_ROM_IMAGE_LEN);
-+		image += length * PCI_ROM_IMAGE_SECTOR_SIZE;
- 		/* Avoid iterating through memory outside the resource window */
- 		if (image >= rom + size)
- 			break;
- 		if (!last_image) {
--			if (readw(image) != 0xAA55) {
-+			if (readw(image) != PCI_ROM_IMAGE_SIGNATURE) {
- 				pci_info(pdev, "No more image in the PCI ROM\n");
- 				break;
- 			}
 -- 
 2.53.0
 
