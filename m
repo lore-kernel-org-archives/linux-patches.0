@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99788427A10;
-	Tue, 21 Jul 2026 19:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625A1427A10;
+	Tue, 21 Jul 2026 19:20:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661604; cv=none; b=pmY7HMGFW7wXVL7rlv8FNV0MMZWHdYJnnAaksr/SLwgOJrJLEXV96K3EV/Mmtw1NwoghkaGzjOkRpwotPORWWYFwAzskmqKbZf07A1gqamAJvuQjoydCP+3iLVUCY2vbICaH4UUMbn44mOIaoHTT9eugLYKNrYcXIC6xoGdhVHA=
+	t=1784661607; cv=none; b=l3YGlWpRwhJP0P9h4202uBEEDYcyNuqx2GFyOm/IPhTcbh0lfm+TDrA3UhhUxpYntGYo9YNkQ8jsMLVdvGVSpPqERsEs7aDYR0du4S5cY/lbRHBo6yKRCKyU/e4+U0Ct/BNymLBh17kst63D+gjyn4HPW9HbIIp0WfaomrhNSBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661604; c=relaxed/simple;
-	bh=Ft4UCK/35OEROe34UN+v0mY/qWWMJuD/vACD0U0ZZ3k=;
+	s=arc-20240116; t=1784661607; c=relaxed/simple;
+	bh=7z6pcPdDsSkhMiwTdmlOPacdsDzcWoeo35WKjfe6PRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OgXQ34KCORhAnCq6XRo5VVUKe+8l2F91sjpUerLFEijx1+NPqom83ulWS4KEzPcWoOu5g4dd7fxD0i5GNDnxiXAliiVdeY28XZ2JQ9+xmn0R9gcU/59qtDczxJGCzK9RIZFlVBwt9OPoy5Xji9YcTZbmDIirS+yTq8kUhYhz8KY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=weHTXONk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jd7GPm++knSy20iGzbAR4bqzfcNajcfUk1X8ihmkSYzeIHFsMbMWYsQmTzbLhhs5RLVie0eoISb8zyhmhYIzLxHqSn0aUusj4z5ZNOPgQpUlIWYa8SXUwiZCpa3Kfndtg2MkxiZ3ql7EBCgscaWeBIh0rWINuBk1403vMQwLA90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N07vdwJe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="weHTXONk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9C01F000E9;
-	Tue, 21 Jul 2026 19:20:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N07vdwJe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9B721F000E9;
+	Tue, 21 Jul 2026 19:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661603;
-	bh=OorTo3BU0U/PDbEWghUKo3Wn8PWND0E4agGdZRnEIZo=;
+	s=korg; t=1784661606;
+	bh=83Iwhz4TyrGta5LTwx+WoylU1lu5y+hbAxZy3D8FWHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=weHTXONkYZCA+Ivji3yj7SIckOSHHOxkpq0gsDcyyxdLeGg8qvNmTWk2V+XG1kx8t
-	 OqoakW32JFB2IXMxKSmqIPF1bvNkfRBgvejZddKGrmQlqT5ld/LM2YZwjnkpvebJCF
-	 fP3BJ1PzjAzrfVRNYYOCAVAl+jcfzwzaCGKCFGJ0=
+	b=N07vdwJeVbwx+RecyGY6CWjKl2TPZTEPcyImRNc60DwW3YNyBjwqafNm8Qz15qQZX
+	 QcDsJBqFq3AantMUE2Dl35/AP1XGPOam71iyreDMf8QsMORieOub165CALJnWk1fSa
+	 Yq50+5UGCyFfeBMS6qFipCZRRSTnVFE6tz4+VSjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Brodsky <kevin.brodsky@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Weixin Guo <2298701336@qq.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0128/1276] selftests/mm: Fix resv_sz when parsing arm64 signal frame
-Date: Tue, 21 Jul 2026 17:09:31 +0200
-Message-ID: <20260721152448.968910957@linuxfoundation.org>
+Subject: [PATCH 6.12 0093/1276] arm64: dts: rockchip: fix rk809 interrupt pin on rk3566-roc-pc
+Date: Tue, 21 Jul 2026 17:08:56 +0200
+Message-ID: <20260721152448.177176286@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,47 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Brodsky <kevin.brodsky@arm.com>
+From: Weixin Guo <2298701336@qq.com>
 
-[ Upstream commit c364aa56d6738c8759e88941d7a45a1d6b4c52d0 ]
+[ Upstream commit 460bac478c5fe69054ffc60d607bba03bcaf909b ]
 
-get_header() wants the size of the reserved area in struct
-sigcontext, but instead we pass it the size of the entire struct.
-This could in theory result in an out-of-bounds read (if the signal
-frame is malformed).
+The RK809 PMIC interrupt pin on the Firefly ROC-RK3566-PC (Station M2)
+is physically connected to GPIO0_A3 (RK_PA3) according to the board's
+schematic.
 
-Fix this using one of the existing macros from
-tools/testing/selftests/arm64/signal/testcases/testcases.h.
+Currently, the PMIC node incorrectly specifies RK_PA7 for the interrupt,
+which prevents the PMIC from correctly signaling interrupts. (Note that
+the pinctrl node 'pmic_int' correctly configures RK_PA3).
 
-This issue was reported by Sashiko on a patch that copied this
-portion of the code.
+Fix this by updating the interrupts property to use RK_PA3.
 
-Link: https://sashiko.dev/#/patchset/20260421144252.1440365-1-kevin.brodsky%40arm.com
-Fixes: f5b5ea51f78f ("selftests: mm: make protection_keys test work on arm64")
-Signed-off-by: Kevin Brodsky <kevin.brodsky@arm.com>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 30ac9b4e25d8 ("arm64: dts: rockchip: add dts for Firefly Station M2 rk3566")
+Signed-off-by: Weixin Guo <2298701336@qq.com>
+Link: https://patch.msgid.link/tencent_5035EEE630C845B1B51DEA4284DE23DCCE06@qq.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/pkey-arm64.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/mm/pkey-arm64.h b/tools/testing/selftests/mm/pkey-arm64.h
-index 580e1b0bb38e8d..5583ea47768d0c 100644
---- a/tools/testing/selftests/mm/pkey-arm64.h
-+++ b/tools/testing/selftests/mm/pkey-arm64.h
-@@ -129,9 +129,10 @@ static inline u64 get_pkey_bits(u64 reg, int pkey)
- static void aarch64_write_signal_pkey(ucontext_t *uctxt, u64 pkey)
- {
- 	struct _aarch64_ctx *ctx = GET_UC_RESV_HEAD(uctxt);
-+	size_t resv_size = GET_UCP_RESV_SIZE(uctxt);
- 	struct poe_context *poe_ctx =
- 		(struct poe_context *) get_header(ctx, POE_MAGIC,
--						sizeof(uctxt->uc_mcontext), NULL);
-+						  resv_size, NULL);
- 	if (poe_ctx)
- 		poe_ctx->por_el0 = pkey;
- }
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts b/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts
+index 67e7801bd48964..43b0b202852c94 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts
+@@ -245,7 +245,7 @@ rk809: pmic@20 {
+ 		compatible = "rockchip,rk809";
+ 		reg = <0x20>;
+ 		interrupt-parent = <&gpio0>;
+-		interrupts = <RK_PA7 IRQ_TYPE_LEVEL_LOW>;
++		interrupts = <RK_PA3 IRQ_TYPE_LEVEL_LOW>;
+ 		clock-output-names = "rk808-clkout1", "rk808-clkout2";
+ 		assigned-clocks = <&cru I2S1_MCLKOUT_TX>;
+ 		assigned-clock-parents = <&cru CLK_I2S1_8CH_TX>;
 -- 
 2.53.0
 
