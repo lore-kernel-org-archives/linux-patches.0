@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3008A46AA6A;
-	Tue, 21 Jul 2026 15:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C693346AA69;
+	Tue, 21 Jul 2026 15:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784647977; cv=none; b=Y3rjZupRqbEjeh0lhzEmLOkDbqyj+ifAmqwMKBlFw9faxwqVMp9jPKhVdVm9GD8jdWSbBCk8H+vfBx1txhK8WeY2xN8Q0wmQSe/w5yO9VQT/dkpMYbFKyMxqvDAkS9+Z4jrAxjD5Zp9moWJIwg7PkCe4b5bcNcY4Vvkhhc9hOJY=
+	t=1784647979; cv=none; b=GyJ1b2omem+jhB5NgVEZukhs05F+sqcNBpU5xmYLCsuolYAX3cpIld5lFhcGAwJz3A/Y/w2H1NYrTeGF8qFcmDlTic+IPWG1uXreSoV5Ij1tGZsWXsqIVqvkJtqNsrHMsw+wS3Npxk7UYmld1CH/XRyk1cKEA0jfp7uNU4PivSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784647977; c=relaxed/simple;
-	bh=DWcXAtOmc8tPrz/B4pxMF42Al6qXXoGOwpOm0GxGnE0=;
+	s=arc-20240116; t=1784647979; c=relaxed/simple;
+	bh=Z4xkQ+xjcyb02DYQCrz7f5bw4kRk6n/WS3iCOovJ/LA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SbjC+ValoyOla3gf0fEMcI82LB1hDHg6e7E3uQNpM/h6Fh7sDF5+2SKZUJmwpVSL1sMMuiD9rg+GPf7rKR4v6R0Jr9VflbVgL9nVbJ8FRlWWczinDY6ZVw1yvDneb+R1XSkrg90NQ9Z59pMUlgBDMsMA/sU0w75dAN9Tqz4tvzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CgnSQhTY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BnyAltcZevesxC3KNnrAH08+xM9HPTd6ugPtA41czQP09lBahKyTgnq4NBnnTf1tk68rr7Pt3w/2fmFaaQRQPiaE4bvqsGwhgTE+sj9LDKQzPAQrnfvWWCxz3+zalfD7qaHvdq1Uks6lzjlBL9mqmc6AS18QUgZDEL8KtBzMrRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6ii6zeM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgnSQhTY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E1D1F000E9;
-	Tue, 21 Jul 2026 15:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6ii6zeM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D77C1F000E9;
+	Tue, 21 Jul 2026 15:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784647976;
-	bh=TEZDiFCOOIwnuDLyo8L684Mmh3KOJI5o0acOPAhI9XA=;
+	s=korg; t=1784647978;
+	bh=WidZE20E0REpV4rFvGGeY5gDuF7IT5ANE+hWX99l0JE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CgnSQhTYmyHxjvl3TbyrFsYLWByhjaPZ4Rnql9C0QfZTXcCFb5WZ2nu8OiUpvPgTx
-	 z+sT9mK2xU+A85gtdxVhdFYYS0FPKVzP97ns6a+o/IcN7SHr3W10ryHpONyBSGSix+
-	 zjP7iou2dVOs3qRzIqVzXaZAUWPAdJGNy8Y80rLA=
+	b=C6ii6zeMSa75q17/B9LdjyCvXAdjGb6rpX8/UPevkrC9s6S86ZpIS7cU1+mITUPSW
+	 UTxs5GZZG5lDn0LRpJyb3g2K+DK5tHgQFR1pjw5KVc00+KjLRTrWhjMBzL+zpkTOpA
+	 mdvO2rDyIBKvSngZdSHamMa4ek33SnE+CMaxAwUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linux-afs@lists.infradead.org,
 	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 0025/2077] rxrpc: Fix socket notification race
-Date: Tue, 21 Jul 2026 16:54:58 +0200
-Message-ID: <20260721152553.265677917@linuxfoundation.org>
+Subject: [PATCH 7.1 0026/2077] rxrpc: Fix leak of released call in recvmsg(MSG_PEEK)
+Date: Tue, 21 Jul 2026 16:54:59 +0200
+Message-ID: <20260721152553.291426900@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -57,17 +57,13 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-commit e66f8f32f50116670dbbee5bc9e692cd2cd0c8f8 upstream.
+commit 4bdb9e471f5b1ac9cbe4add5de7ff085a0ec303c upstream.
 
-There's a race between rxrpc_recvmsg() and rxrpc_notify_socket(), whereby
-the latter's attempt to avoid disabling interrupts and taking the socket's
-recvmsg_lock if the call is already queued may happen simultaneously with
-the former's discarding of a call that has nothing queued.
+Fix rxrpc_recvmsg() to also drop the ref it holds on an already-released
+call if MSG_PEEK is in force (the function holds a ref on the call
+irrespective of whether MSG_PEEK is specified or not).
 
-Fix this by removing the shortcut.  Note that this only affects userspace's
-use of AF_RXRPC; the AFS filesystem driver doesn't use the socket queue.
-
-Fixes: 248f219cb8bc ("rxrpc: Rewrite the data and ack handling code")
+Fixes: 962fb1f651c2 ("rxrpc: Fix recv-recv race of completed call")
 Link: https://sashiko.dev/#/patchset/20260616155749.2125907-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
@@ -75,23 +71,24 @@ cc: Jeffrey Altman <jaltman@auristor.com>
 cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@kernel.org
-Link: https://patch.msgid.link/20260624163819.3017002-10-dhowells@redhat.com
+Link: https://patch.msgid.link/20260624163819.3017002-11-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/recvmsg.c |    2 --
- 1 file changed, 2 deletions(-)
+ net/rxrpc/recvmsg.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 --- a/net/rxrpc/recvmsg.c
 +++ b/net/rxrpc/recvmsg.c
-@@ -27,8 +27,6 @@ void rxrpc_notify_socket(struct rxrpc_ca
- 
- 	_enter("%d", call->debug_id);
- 
--	if (!list_empty(&call->recvmsg_link))
--		return;
+@@ -528,8 +528,7 @@ try_again:
  	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
- 		rxrpc_see_call(call, rxrpc_call_see_notify_released);
- 		return;
+ 		rxrpc_see_call(call, rxrpc_call_see_already_released);
+ 		mutex_unlock(&call->user_mutex);
+-		if (!(flags & MSG_PEEK))
+-			rxrpc_put_call(call, rxrpc_call_put_recvmsg);
++		rxrpc_put_call(call, rxrpc_call_put_recvmsg);
+ 		goto try_again;
+ 	}
+ 
 
 
