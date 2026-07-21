@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E1546C4AC;
-	Tue, 21 Jul 2026 18:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0FE46D0A6;
+	Tue, 21 Jul 2026 18:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657420; cv=none; b=LPHlYWGdXE21tM0VsV81yDSiZTWXev9U2DzOrkYXKk9St3s7T/CWrh1QVOQVZCNk6epKdXZO7YfdiJyOB/IFDYiqLEyftNOsZ6r3IQ5QmnyuAD2Hq9C8CEwuhQ7Ic3aarhrrFvyDTy4c4gsFhViKhtQB52inndcBN7e4Pnq+lIM=
+	t=1784657422; cv=none; b=Li4fCgScYyMLi+kjfRBiXPVxUvGO/M4JTTsZ90Mj+eCA0Rmo+OCZ0HD2fz/36Wjxcegmn0z043WT8HbH4W1OvtSQ3+CfgVsQ0aiICWlrdI3u2O0dh3fqC9Ra5lhmDLat/v7C7ZQu2dGco16Wjh3zje+pfEojOve+9JCVUGh6JTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657420; c=relaxed/simple;
-	bh=oxvKJc0bWMSmLBmstr5jE5UlxnxR1ocFlUAD8w30iMI=;
+	s=arc-20240116; t=1784657422; c=relaxed/simple;
+	bh=d5P2c7U5SdRR3pAwGSJyJN2ND5g/bJ6IbWzRkXps6bo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJR5GaartKON7JvHoeIOtkQKtzzI21kuCeEaOW1vtSVHh7d3XYf56LzsMzG962xL+z0mgjZtE7a5gC7pirtWYP05q3gyqCVFSkuA6HuSHnmAqp14fRid2esDEXWmlt3FKMYEEHu02JYfhJVKYZCu9OjRxyxBMKVCE8ZhLI3Bqgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2NUe9Ir; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e0/di08me7tWLLvlhgDWWyXllR7dOV06ZW0a13f0HVhAXbUyXNPrgVAvovjf5e6XgOQtZebdTtKt0hcMs05kLCOwj4tqDNFFf9DxicUeZBSTvHqhCqjik1jtYu3z9VlIezqyLRjW0rsORpCrbG/vwX6V476GvGukjGyoV8c2CIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXrKjYcZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2NUe9Ir"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE7B1F000E9;
-	Tue, 21 Jul 2026 18:10:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXrKjYcZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A887B1F00A3D;
+	Tue, 21 Jul 2026 18:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657417;
-	bh=kQXGC8Ey7kKyHUzbOcO7N9JPB5IZi4OZQa6JXi3V4ss=;
+	s=korg; t=1784657420;
+	bh=fDGkKhhVYoUqxH7lzjCQUp8bx4wVZw7i6DmfWsoCcHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n2NUe9Ir5B0j5BTM6abrHlnhyLePh7lMfey9jIQ2GEpPalA2bsvnvhDSfK8atOEK3
-	 CHZXx/k/2ST4YEyVVQO1AzEPy2JNbrvP3MXXOQPs1n81aES8snc+fKvkmNrUckVtDh
-	 qVlrCtWeTTYVAei0xVOqGs4GK2FpF7w4MreqC2cs=
+	b=xXrKjYcZj69UECf8nN2CCnua8uyqV3gGRIJTJyPoeBRn+9au9BZ/hx125yDsoO2oy
+	 uVM4qastt5vV36IgesjGx8Xc5G+7nHvrorZHuuSYnojDux9zvdTXuzLSDBR5i91BuO
+	 3YB/GIvkKTZ8AkvupLsm5lBX3WNgJtPXf8zQOvqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0758/1611] i3c: master: Introduce optional Runtime PM support
-Date: Tue, 21 Jul 2026 17:14:34 +0200
-Message-ID: <20260721152532.427903507@linuxfoundation.org>
+Subject: [PATCH 6.18 0759/1611] i3c: master: Add i3c_master_do_daa_ext() for post-hibernation address recovery
+Date: Tue, 21 Jul 2026 17:14:35 +0200
+Message-ID: <20260721152532.450037377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,390 +54,128 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 990c149c61ee45da4fb6372e6b2fdd9808414e7a ]
+[ Upstream commit c481ef12e713fb7c292d04f53b3532ac0804ab3d ]
 
-Master drivers currently manage Runtime PM individually, but all require
-runtime resume for bus operations.  This can be centralized in common code.
+After system hibernation, I3C Dynamic Addresses may be reassigned at boot
+and no longer match the values recorded before suspend. Introduce
+i3c_master_do_daa_ext() to handle this situation.
 
-Add optional Runtime PM support to ensure the parent device is runtime
-resumed before bus operations and auto-suspended afterward.
+The restore procedure is straightforward: issue a Reset Dynamic Address
+Assignment (RSTDAA), then run the standard DAA sequence. The existing DAA
+logic already supports detecting and updating devices whose dynamic
+addresses differ from previously known values.
 
-Notably, do not call ->bus_cleanup() if runtime resume fails.  Master
-drivers that opt-in to core runtime PM support must take that into account.
+Refactor the DAA path by introducing a shared helper used by both the
+normal i3c_master_do_daa() path and the new extended restore function,
+and correct the kernel-doc in the process.
 
-Also provide an option to allow IBIs and hot-joins while runtime suspended.
+Export i3c_master_do_daa_ext() so that master drivers can invoke it from
+their PM restore callbacks.
 
 Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260113072702.16268-20-adrian.hunter@intel.com
+Link: https://patch.msgid.link/20260123063325.8210-2-adrian.hunter@intel.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Stable-dep-of: 3f79dac3ea1c ("i3c: master: Defer new-device registration out of DAA caller context")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/device.c       | 46 +++++++++++++++++--
- drivers/i3c/internals.h    |  4 ++
- drivers/i3c/master.c       | 93 +++++++++++++++++++++++++++++++++++---
- include/linux/i3c/master.h |  4 ++
- 4 files changed, 138 insertions(+), 9 deletions(-)
+ drivers/i3c/master.c       | 49 +++++++++++++++++++++++++++++---------
+ include/linux/i3c/master.h |  1 +
+ 2 files changed, 39 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/i3c/device.c b/drivers/i3c/device.c
-index 2396545763ff85..6382d70299e2b3 100644
---- a/drivers/i3c/device.c
-+++ b/drivers/i3c/device.c
-@@ -47,10 +47,16 @@ int i3c_device_do_priv_xfers(struct i3c_device *dev,
- 			return -EINVAL;
- 	}
- 
-+	ret = i3c_bus_rpm_get(dev->bus);
-+	if (ret)
-+		return ret;
-+
- 	i3c_bus_normaluse_lock(dev->bus);
- 	ret = i3c_dev_do_priv_xfers_locked(dev->desc, xfers, nxfers);
- 	i3c_bus_normaluse_unlock(dev->bus);
- 
-+	i3c_bus_rpm_put(dev->bus);
-+
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(i3c_device_do_priv_xfers);
-@@ -67,10 +73,16 @@ int i3c_device_do_setdasa(struct i3c_device *dev)
- {
- 	int ret;
- 
-+	ret = i3c_bus_rpm_get(dev->bus);
-+	if (ret)
-+		return ret;
-+
- 	i3c_bus_normaluse_lock(dev->bus);
- 	ret = i3c_dev_setdasa_locked(dev->desc);
- 	i3c_bus_normaluse_unlock(dev->bus);
- 
-+	i3c_bus_rpm_put(dev->bus);
-+
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(i3c_device_do_setdasa);
-@@ -107,16 +119,27 @@ EXPORT_SYMBOL_GPL(i3c_device_get_info);
-  */
- int i3c_device_disable_ibi(struct i3c_device *dev)
- {
--	int ret = -ENOENT;
-+	int ret;
-+
-+	if (i3c_bus_rpm_ibi_allowed(dev->bus)) {
-+		ret = i3c_bus_rpm_get(dev->bus);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	i3c_bus_normaluse_lock(dev->bus);
- 	if (dev->desc) {
- 		mutex_lock(&dev->desc->ibi_lock);
- 		ret = i3c_dev_disable_ibi_locked(dev->desc);
- 		mutex_unlock(&dev->desc->ibi_lock);
-+	} else {
-+		ret = -ENOENT;
- 	}
- 	i3c_bus_normaluse_unlock(dev->bus);
- 
-+	if (!ret || i3c_bus_rpm_ibi_allowed(dev->bus))
-+		i3c_bus_rpm_put(dev->bus);
-+
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(i3c_device_disable_ibi);
-@@ -136,16 +159,25 @@ EXPORT_SYMBOL_GPL(i3c_device_disable_ibi);
-  */
- int i3c_device_enable_ibi(struct i3c_device *dev)
- {
--	int ret = -ENOENT;
-+	int ret;
-+
-+	ret = i3c_bus_rpm_get(dev->bus);
-+	if (ret)
-+		return ret;
- 
- 	i3c_bus_normaluse_lock(dev->bus);
- 	if (dev->desc) {
- 		mutex_lock(&dev->desc->ibi_lock);
- 		ret = i3c_dev_enable_ibi_locked(dev->desc);
- 		mutex_unlock(&dev->desc->ibi_lock);
-+	} else {
-+		ret = -ENOENT;
- 	}
- 	i3c_bus_normaluse_unlock(dev->bus);
- 
-+	if (ret || i3c_bus_rpm_ibi_allowed(dev->bus))
-+		i3c_bus_rpm_put(dev->bus);
-+
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(i3c_device_enable_ibi);
-@@ -164,19 +196,27 @@ EXPORT_SYMBOL_GPL(i3c_device_enable_ibi);
- int i3c_device_request_ibi(struct i3c_device *dev,
- 			   const struct i3c_ibi_setup *req)
- {
--	int ret = -ENOENT;
-+	int ret;
- 
- 	if (!req->handler || !req->num_slots)
- 		return -EINVAL;
- 
-+	ret = i3c_bus_rpm_get(dev->bus);
-+	if (ret)
-+		return ret;
-+
- 	i3c_bus_normaluse_lock(dev->bus);
- 	if (dev->desc) {
- 		mutex_lock(&dev->desc->ibi_lock);
- 		ret = i3c_dev_request_ibi_locked(dev->desc, req);
- 		mutex_unlock(&dev->desc->ibi_lock);
-+	} else {
-+		ret = -ENOENT;
- 	}
- 	i3c_bus_normaluse_unlock(dev->bus);
- 
-+	i3c_bus_rpm_put(dev->bus);
-+
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(i3c_device_request_ibi);
-diff --git a/drivers/i3c/internals.h b/drivers/i3c/internals.h
-index 79ceaa5f5afd6f..a0c76adf7ea334 100644
---- a/drivers/i3c/internals.h
-+++ b/drivers/i3c/internals.h
-@@ -11,6 +11,10 @@
- #include <linux/i3c/master.h>
- #include <linux/io.h>
- 
-+int __must_check i3c_bus_rpm_get(struct i3c_bus *bus);
-+void i3c_bus_rpm_put(struct i3c_bus *bus);
-+bool i3c_bus_rpm_ibi_allowed(struct i3c_bus *bus);
-+
- void i3c_bus_normaluse_lock(struct i3c_bus *bus);
- void i3c_bus_normaluse_unlock(struct i3c_bus *bus);
- 
 diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 5d8afd147efa89..f426c4bcb271e1 100644
+index f426c4bcb271e1..0430e5898dae42 100644
 --- a/drivers/i3c/master.c
 +++ b/drivers/i3c/master.c
-@@ -106,6 +106,38 @@ static struct i3c_master_controller *dev_to_i3cmaster(struct device *dev)
- 	return container_of(dev, struct i3c_master_controller, dev);
+@@ -1770,22 +1770,24 @@ i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
  }
  
-+static int __must_check i3c_master_rpm_get(struct i3c_master_controller *master)
-+{
-+	int ret = master->rpm_allowed ? pm_runtime_resume_and_get(master->dev.parent) : 0;
-+
-+	if (ret < 0) {
-+		dev_err(master->dev.parent, "runtime resume failed, error %d\n", ret);
-+		return ret;
-+	}
-+	return 0;
-+}
-+
-+static void i3c_master_rpm_put(struct i3c_master_controller *master)
-+{
-+	if (master->rpm_allowed)
-+		pm_runtime_put_autosuspend(master->dev.parent);
-+}
-+
-+int i3c_bus_rpm_get(struct i3c_bus *bus)
-+{
-+	return i3c_master_rpm_get(i3c_bus_to_i3c_master(bus));
-+}
-+
-+void i3c_bus_rpm_put(struct i3c_bus *bus)
-+{
-+	i3c_master_rpm_put(i3c_bus_to_i3c_master(bus));
-+}
-+
-+bool i3c_bus_rpm_ibi_allowed(struct i3c_bus *bus)
-+{
-+	return i3c_bus_to_i3c_master(bus)->rpm_ibi_allowed;
-+}
-+
- static const struct device_type i3c_device_type;
- 
- static struct i3c_bus *dev_to_i3cbus(struct device *dev)
-@@ -613,6 +645,12 @@ static int i3c_set_hotjoin(struct i3c_master_controller *master, bool enable)
- 	if (!master->ops->enable_hotjoin || !master->ops->disable_hotjoin)
- 		return -EINVAL;
- 
-+	if (enable || master->rpm_ibi_allowed) {
-+		ret = i3c_master_rpm_get(master);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	i3c_bus_normaluse_lock(&master->bus);
- 
- 	if (enable)
-@@ -625,6 +663,9 @@ static int i3c_set_hotjoin(struct i3c_master_controller *master, bool enable)
- 
- 	i3c_bus_normaluse_unlock(&master->bus);
- 
-+	if ((enable && ret) || (!enable && !ret) || master->rpm_ibi_allowed)
-+		i3c_master_rpm_put(master);
-+
- 	return ret;
- }
- 
-@@ -1747,18 +1788,23 @@ int i3c_master_do_daa(struct i3c_master_controller *master)
+ /**
+- * i3c_master_do_daa() - do a DAA (Dynamic Address Assignment)
+- * @master: master doing the DAA
++ * i3c_master_do_daa_ext() - Dynamic Address Assignment (extended version)
++ * @master: controller
++ * @rstdaa: whether to first perform Reset of Dynamic Addresses (RSTDAA)
+  *
+- * This function is instantiating an I3C device object and adding it to the
+- * I3C device list. All device information are automatically retrieved using
+- * standard CCC commands.
+- *
+- * The I3C device object is returned in case the master wants to attach
+- * private data to it using i3c_dev_set_master_data().
++ * Perform Dynamic Address Assignment with optional support for System
++ * Hibernation (@rstdaa is true).
+  *
+- * This function must be called with the bus lock held in write mode.
++ * After System Hibernation, Dynamic Addresses can have been reassigned at boot
++ * time to different values. A simple strategy is followed to handle that.
++ * Perform a Reset of Dynamic Addresses (RSTDAA) followed by the normal DAA
++ * procedure which has provision for reassigning addresses that differ from the
++ * previously recorded addresses.
+  *
+  * Return: a 0 in case of success, an negative error code otherwise.
+  */
+-int i3c_master_do_daa(struct i3c_master_controller *master)
++int i3c_master_do_daa_ext(struct i3c_master_controller *master, bool rstdaa)
  {
++	int rstret = 0;
  	int ret;
  
-+	ret = i3c_master_rpm_get(master);
-+	if (ret)
-+		return ret;
-+
+ 	ret = i3c_master_rpm_get(master);
+@@ -1793,7 +1795,15 @@ int i3c_master_do_daa(struct i3c_master_controller *master)
+ 		return ret;
+ 
  	i3c_bus_maintenance_lock(&master->bus);
++
++	if (rstdaa) {
++		rstret = i3c_master_rstdaa_locked(master, I3C_BROADCAST_ADDR);
++		if (rstret == I3C_ERROR_M2)
++			rstret = 0;
++	}
++
  	ret = master->ops->do_daa(master);
++
  	i3c_bus_maintenance_unlock(&master->bus);
  
  	if (ret)
--		return ret;
-+		goto out;
- 
- 	i3c_bus_normaluse_lock(&master->bus);
- 	i3c_master_register_new_i3c_devs(master);
+@@ -1804,7 +1814,24 @@ int i3c_master_do_daa(struct i3c_master_controller *master)
  	i3c_bus_normaluse_unlock(&master->bus);
--
--	return 0;
-+out:
-+	i3c_master_rpm_put(master);
-+	return ret;
+ out:
+ 	i3c_master_rpm_put(master);
+-	return ret;
++
++	return rstret ?: ret;
++}
++EXPORT_SYMBOL_GPL(i3c_master_do_daa_ext);
++
++/**
++ * i3c_master_do_daa() - do a DAA (Dynamic Address Assignment)
++ * @master: master doing the DAA
++ *
++ * This function instantiates I3C device objects and adds them to the
++ * I3C device list. All device information is automatically retrieved using
++ * standard CCC commands.
++ *
++ * Return: a 0 in case of success, an negative error code otherwise.
++ */
++int i3c_master_do_daa(struct i3c_master_controller *master)
++{
++	return i3c_master_do_daa_ext(master, false);
  }
  EXPORT_SYMBOL_GPL(i3c_master_do_daa);
  
-@@ -2101,8 +2147,17 @@ static int i3c_master_bus_init(struct i3c_master_controller *master)
- 
- static void i3c_master_bus_cleanup(struct i3c_master_controller *master)
- {
--	if (master->ops->bus_cleanup)
--		master->ops->bus_cleanup(master);
-+	if (master->ops->bus_cleanup) {
-+		int ret = i3c_master_rpm_get(master);
-+
-+		if (ret) {
-+			dev_err(&master->dev,
-+				"runtime resume error: master bus_cleanup() not done\n");
-+		} else {
-+			master->ops->bus_cleanup(master);
-+			i3c_master_rpm_put(master);
-+		}
-+	}
- 
- 	i3c_master_detach_free_devs(master);
- }
-@@ -2457,6 +2512,10 @@ static int i3c_master_i2c_adapter_xfer(struct i2c_adapter *adap,
- 			return -EOPNOTSUPP;
- 	}
- 
-+	ret = i3c_master_rpm_get(master);
-+	if (ret)
-+		return ret;
-+
- 	i3c_bus_normaluse_lock(&master->bus);
- 	dev = i3c_master_find_i2c_dev_by_addr(master, addr);
- 	if (!dev)
-@@ -2465,6 +2524,8 @@ static int i3c_master_i2c_adapter_xfer(struct i2c_adapter *adap,
- 		ret = master->ops->i2c_xfers(dev, xfers, nxfers);
- 	i3c_bus_normaluse_unlock(&master->bus);
- 
-+	i3c_master_rpm_put(master);
-+
- 	return ret ? ret : nxfers;
- }
- 
-@@ -2567,6 +2628,10 @@ static int i3c_i2c_notifier_call(struct notifier_block *nb, unsigned long action
- 
- 	master = i2c_adapter_to_i3c_master(adap);
- 
-+	ret = i3c_master_rpm_get(master);
-+	if (ret)
-+		return ret;
-+
- 	i3c_bus_maintenance_lock(&master->bus);
- 	switch (action) {
- 	case BUS_NOTIFY_ADD_DEVICE:
-@@ -2580,6 +2645,8 @@ static int i3c_i2c_notifier_call(struct notifier_block *nb, unsigned long action
- 	}
- 	i3c_bus_maintenance_unlock(&master->bus);
- 
-+	i3c_master_rpm_put(master);
-+
- 	return ret;
- }
- 
-@@ -2917,6 +2984,10 @@ int i3c_master_register(struct i3c_master_controller *master,
- 	INIT_LIST_HEAD(&master->boardinfo.i2c);
- 	INIT_LIST_HEAD(&master->boardinfo.i3c);
- 
-+	ret = i3c_master_rpm_get(master);
-+	if (ret)
-+		return ret;
-+
- 	device_initialize(&master->dev);
- 
- 	master->dev.dma_mask = parent->dma_mask;
-@@ -3000,6 +3071,8 @@ int i3c_master_register(struct i3c_master_controller *master,
- 	if (master->ops->set_dev_nack_retry)
- 		device_create_file(&master->dev, &dev_attr_dev_nack_retry_count);
- 
-+	i3c_master_rpm_put(master);
-+
- 	return 0;
- 
- err_del_dev:
-@@ -3009,6 +3082,7 @@ int i3c_master_register(struct i3c_master_controller *master,
- 	i3c_master_bus_cleanup(master);
- 
- err_put_dev:
-+	i3c_master_rpm_put(master);
- 	put_device(&master->dev);
- 
- 	return ret;
-@@ -3158,8 +3232,15 @@ void i3c_dev_free_ibi_locked(struct i3c_dev_desc *dev)
- 		return;
- 
- 	if (dev->ibi->enabled) {
-+		int ret;
-+
- 		dev_err(&master->dev, "Freeing IBI that is still enabled\n");
--		if (i3c_dev_disable_ibi_locked(dev))
-+		ret = i3c_master_rpm_get(master);
-+		if (!ret) {
-+			ret = i3c_dev_disable_ibi_locked(dev);
-+			i3c_master_rpm_put(master);
-+		}
-+		if (ret)
- 			dev_err(&master->dev, "Failed to disable IBI before freeing\n");
- 	}
- 
 diff --git a/include/linux/i3c/master.h b/include/linux/i3c/master.h
-index abe0a134465e62..bff98590eb2a7c 100644
+index bff98590eb2a7c..2e39a0d443a1e9 100644
 --- a/include/linux/i3c/master.h
 +++ b/include/linux/i3c/master.h
-@@ -509,6 +509,8 @@ struct i3c_master_controller_ops {
-  * @secondary: true if the master is a secondary master
-  * @init_done: true when the bus initialization is done
-  * @hotjoin: true if the master support hotjoin
-+ * @rpm_allowed: true if Runtime PM allowed
-+ * @rpm_ibi_allowed: true if IBI and Hot-Join allowed while runtime suspended
-  * @boardinfo.i3c: list of I3C  boardinfo objects
-  * @boardinfo.i2c: list of I2C boardinfo objects
-  * @boardinfo: board-level information attached to devices connected on the bus
-@@ -533,6 +535,8 @@ struct i3c_master_controller {
- 	unsigned int secondary : 1;
- 	unsigned int init_done : 1;
- 	unsigned int hotjoin: 1;
-+	unsigned int rpm_allowed: 1;
-+	unsigned int rpm_ibi_allowed: 1;
- 	struct {
- 		struct list_head i3c;
- 		struct list_head i2c;
+@@ -605,6 +605,7 @@ int i3c_master_get_free_addr(struct i3c_master_controller *master,
+ int i3c_master_add_i3c_dev_locked(struct i3c_master_controller *master,
+ 				  u8 addr);
+ int i3c_master_do_daa(struct i3c_master_controller *master);
++int i3c_master_do_daa_ext(struct i3c_master_controller *master, bool rstdaa);
+ struct i3c_dma *i3c_master_dma_map_single(struct device *dev, void *ptr,
+ 					  size_t len, bool force_bounce,
+ 					  enum dma_data_direction dir);
 -- 
 2.53.0
 
