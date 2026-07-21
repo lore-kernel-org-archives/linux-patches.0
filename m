@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871AD40244D;
-	Tue, 21 Jul 2026 17:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52822E736D;
+	Tue, 21 Jul 2026 17:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654545; cv=none; b=R6LEuzJ/NC9FJRHCUDB16NcONiW1jIcQfLUVidsfINxyLVqgd/PsKLK58aZR0J4PqerItpvM5ub3TWOGtYSSyQ+d5LJ1X39kjhURwufLEigYqcJK42LwdQpD62WpP1d5Y1WoXMxzKPJY5fYSmUZclN9hJdX5Iz13XckA7P+onmo=
+	t=1784654548; cv=none; b=NVBgw4wEBNnWwDrVyIT9aAJdmLwHcMzr9gEzX68aGUF3dYx439cTPgHSHzdkTUfv5EgnAFIQyqbbaAfuhJ4jHeEC5JhBcp0heNx7h2yG0UqHKIAbntVxyzrCl7kHvqg9OdXn4k7u57Uo6kLv0n5ykskQD8hD/glOQO0YTcIWnZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654545; c=relaxed/simple;
-	bh=9Tb2+WLrmCN7b5S28rGsIwQA7MzhBn6mm9AeO2un3ro=;
+	s=arc-20240116; t=1784654548; c=relaxed/simple;
+	bh=z+u5UtKAEAGSHiUU+7rahwXCnomvMh7V4EHtQ0GJv5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pC3R9pz5cc9MDd4Rk1ndJtXAju6fX1wiXgsdk07kwp6aXziBpBMaqC5MFA2ud98XD22kb/4lmcAGy/Rke3+FEqYHnkkK5DRo2GL5Sih17h+Ki8MZDCe1FVCsm26VhVfHDyioKd+cKN7jN7bLXj/C69Xp2pTrGATlgSD7vTKHsYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/AX7vso; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mgfZPfbsTyIqKCyZAdJDTpj+sVA6JWPJbDHC7bEqgN/0HNq/qstDFfGlJKjvit6nK0zWIawGcB6vcqLyfpJGE2rTcEVXskbL3Ok62lkIfGvxkjNcBp4K+eirU9WbWuUYVI5RZdwsuBizomeH6E5gmHtAnYwqbKtTGLFluvbasUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDS79zlA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/AX7vso"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EE01F000E9;
-	Tue, 21 Jul 2026 17:22:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDS79zlA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573351F000E9;
+	Tue, 21 Jul 2026 17:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654544;
-	bh=i6Vz2RIyFP9PhcC5uzlKg8OBTZVcC2Zt12NYfDnTBLM=;
+	s=korg; t=1784654546;
+	bh=2xkA5fWRXtNcyMP0qQVibXCRBDf7DgVT+it8vaeaYwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T/AX7vsopVYm1/OUL6CB6xVM2H14Nvx0uBiJmiir1EbDwQdhJgVeAIKhaG+VTZwj4
-	 +D8qmHOhXFmonW81zpf99yL7IQ3yy5EaenqGkOzYX4bXBc80m8Wzg98/SMNz5Var2x
-	 BgGLunSZcUcDGJMkAN5MhSeMAHcRsSAEc4symqrk=
+	b=mDS79zlA14GytyQI5LlRQK7yEX3XTdV296uGNyNb8Sk0WEdoHZpXR2nL+3QiOQVcI
+	 EhkdmUjLsviY7MxwkBVOcHZcvwnWfjwTEsicA2bP49Y8Rs3PtH+1W3x6P/vAfCSI+f
+	 WhhNejvsoB2+mW8ucKgatTQGXCwRLqMNmXpV1YOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fuchs <fuchsfl@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 7.1 1744/2077] mtd: maps: vmu-flash: fix fault in unaligned fixup
-Date: Tue, 21 Jul 2026 17:23:37 +0200
-Message-ID: <20260721152633.881031371@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 7.1 1709/2077] ntfs3: bound to_move in indx_insert_into_root before hdr_insert_head
+Date: Tue, 21 Jul 2026 17:23:02 +0200
+Message-ID: <20260721152633.068709989@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,52 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fuchs <fuchsfl@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 79d1661502c6e4b6f626185cef72cf2fa78116e1 upstream.
+commit 9b6926ac9c970ae0b2c2fe6289b16e9aa10b6a67 upstream.
 
-Use kzalloc_obj() / kzalloc_objs() to allocate the memcard structs,
-instead of kmalloc_obj() / kmalloc_objs() to prevent access to
-uninitialized data.
+indx_insert_into_root() promotes a full resident $INDEX_ROOT into
+$INDEX_ALLOCATION and copies all non-last resident root entries into
+a newly allocated INDEX_BUFFER via hdr_insert_head(). The source
+byte count 'to_move' is summed from the on-disk resident entry sizes
+and is independent of the destination buffer size, which comes from
+root->index_block_size (via indx->index_bits).
 
-Fixes runtime error: Fault in unaligned fixup: 0000 [#1] at
-mtd_get_fact_prot_info.
+A crafted NTFS image that keeps a valid, full resident root but
+shrinks root->index_block_size down to 512 after the root has been
+populated makes hdr_insert_head() memcpy attacker-controlled resident
+entry bytes past the end of the kmalloc(1u << indx->index_bits)
+allocation returned by indx_new(). For a 512-byte destination and a
+resident root whose non-last entries total 560 bytes, the memcpy
+overruns by 120 bytes and a following memmove extends the highest
+written offset to 136 bytes past the allocation. The overflow bytes
+are a direct copy of on-disk entries (via kmemdup), so they are
+fully attacker-controlled.
 
-Fixes: 47a72688fae7 ("mtd: flash mapping support for Dreamcast VMU.")
+The write is reachable from unprivileged open(O_CREAT) on a mounted
+crafted NTFS image: a single sufficiently long create in a directory
+whose resident root is already full forces root promotion and
+triggers the copy.
+
+This is a controlled out-of-bounds write of 120-136 bytes past a
+kmalloc(index_block_size) allocation, with attacker-controlled
+content. It is a bounded adjacent-heap corruption primitive; it is
+not an arbitrary-address write. Successful exploitation into a named
+victim object depends on the surrounding slab layout.
+
+Reject the copy at the sink. The destination's INDEX_HDR already
+reports hdr_total (the payload capacity of the new buffer) and
+hdr_used (the bytes already consumed by the terminal END entry
+installed by indx_new()); require that to_move fits in the remaining
+payload before calling hdr_insert_head(). On mismatch, fail with
+-EINVAL and mark the filesystem as having a detected on-disk
+inconsistency, which is the same behaviour as the surrounding
+validation in this function.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
 Cc: stable@vger.kernel.org
-Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/maps/vmu-flash.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ntfs3/index.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/mtd/maps/vmu-flash.c
-+++ b/drivers/mtd/maps/vmu-flash.c
-@@ -609,7 +609,7 @@ static int vmu_connect(struct maple_devi
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -1742,6 +1742,22 @@ static int indx_insert_into_root(struct
+ 	hdr_used = le32_to_cpu(hdr->used);
+ 	hdr_total = le32_to_cpu(hdr->total);
  
- 	basic_flash_data = be32_to_cpu(mdev->devinfo.function_data[c - 1]);
++	/*
++	 * The destination INDEX_BUFFER has 'hdr_total' bytes of payload
++	 * available after the header, of which 'hdr_used' are already
++	 * consumed by the single terminal END entry installed by
++	 * indx_new(). A crafted image can present a resident root whose
++	 * non-last entries (summing to 'to_move') exceed what fits in
++	 * this buffer; copying them unchecked would overrun the
++	 * kmalloc(1u << indx->index_bits) allocation backing the new
++	 * buffer. Reject the copy in that case.
++	 */
++	if (to_move > hdr_total - hdr_used) {
++		err = -EINVAL;
++		ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
++		goto out_put_n;
++	}
++
+ 	/* Copy root entries into new buffer. */
+ 	hdr_insert_head(hdr, re, to_move);
  
--	card = kmalloc_obj(struct memcard);
-+	card = kzalloc_obj(struct memcard);
- 	if (!card) {
- 		error = -ENOMEM;
- 		goto fail_nomem;
-@@ -627,13 +627,13 @@ static int vmu_connect(struct maple_devi
- 	* Not sure there are actually any multi-partition devices in the
- 	* real world, but the hardware supports them, so, so will we
- 	*/
--	card->parts = kmalloc_objs(struct vmupart, card->partitions);
-+	card->parts = kzalloc_objs(struct vmupart, card->partitions);
- 	if (!card->parts) {
- 		error = -ENOMEM;
- 		goto fail_partitions;
- 	}
- 
--	card->mtd = kmalloc_objs(struct mtd_info, card->partitions);
-+	card->mtd = kzalloc_objs(struct mtd_info, card->partitions);
- 	if (!card->mtd) {
- 		error = -ENOMEM;
- 		goto fail_mtd_info;
 
 
