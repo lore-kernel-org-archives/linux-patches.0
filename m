@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D059D29CE9;
-	Tue, 21 Jul 2026 18:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D2A46D0A4;
+	Tue, 21 Jul 2026 18:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658525; cv=none; b=ifrupAgeVIpEAXkIp9gndKv19UKRhGdvKA8iTnqCN8d/K2TfoQqI8TKERFYsLBziGixvswyojz5T5VzZ29Vjff8VVjJUgGnP+Lq+eIh+WEbdA7WpaCk/j9+wBWOecpEbySTgThVJT1oV/UwlFkhUNKrd7hdDEmZ+NXYHsa8AcQM=
+	t=1784658526; cv=none; b=m0PnXXFmCamq6F4pR1tIgdzbJnEl0HC3vAvKQfzaWeNXK4cjnqHxzK058v+H5VRP7ASuGrui0mk030PXvcjh7TPPLMUylTxzfdM0zQZb2Tg/K9H2GVj6V2PUMvr6UTxoOpSy2lo0b/WkIIrNMSHORbVZGpfpavqOkfXg8lk5f6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658525; c=relaxed/simple;
-	bh=e9KLmsvjdza3EdMk0TUngCOa6i9cQP1H4feGCRjN7wk=;
+	s=arc-20240116; t=1784658526; c=relaxed/simple;
+	bh=b0GFSHNbta/LSMxT79uF8jIvAOc+pyREPgd06TljAsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ecKL3TZ5ZbBAnkrLGw+oaSiD3cCUr/svj9JdJWFyaHzZmzGYZNWFsHP2Y06PRMAgDNxNfqlWlker/4QBzk5FMz+ZeNTB/uu0HBFIrHsRdNKDAaUPEv3xRq+34YcSzIsapi3Pin8zYfxXh7QkFqzX9p26KENTf9neu7dBKyg1eWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vmz+7W3N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EWaiJ0RVHKqBxW5LNu8kgdRr9DCT4Kt0sO/as6am/NCb+UtAQoWTygWNLSvU9SfziI28WtefJBf5w2wtMGwUg2+QC5XIO+uvMJTce7cuFC2yB7OmIlXfttVJdCAZJqggGPTWHHS4dhX8HSXNRD0ktpLP9msXYTihWmsmK1UYtYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ymcuvcmb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vmz+7W3N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF0F1F000E9;
-	Tue, 21 Jul 2026 18:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ymcuvcmb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24871F00A3A;
+	Tue, 21 Jul 2026 18:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658518;
-	bh=1SmVdvtT/B+CdEmr9XSAhd+lo0NdigSk32ju8uks2CI=;
+	s=korg; t=1784658521;
+	bh=jJZqZ7spdRiv9SfcLqLIRRvI1ZcqPjLLXwHWQfS64yU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vmz+7W3N1pghFrDBy5qHgABAq6aVtADCjfsSXo02BzeNFh/2LBSS9OEl8o3maMWuA
-	 rAWFQUAYelt2bNh/5UJ9spDWn3JMCLHrt8KFJ+tnuaD7uZqX9PIjrKWPih4mpbJX1U
-	 mDz29GrJN8E6whbrkUyyNW5rb/LHLrpoyPXJJOvs=
+	b=YmcuvcmbYK/DhJcIMajUu9riN8KAbneK9gxyyJTxW7wfjuvA/0lpTAOT3EQfJBWQx
+	 d/YIEQOV66EWkDSBVZGT6Z5V1kBclFxcvKunjPjavVgsr2mhT2Gb07EOwsjTy8e9D0
+	 XoGonkrHP5f+RpzmjF7erfcUGaCcGjLbHKSAn/t8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.18 1175/1611] netfilter: bridge: fix stale prevhdr pointer in br_ip6_fragment()
-Date: Tue, 21 Jul 2026 17:21:31 +0200
-Message-ID: <20260721152541.860751619@linuxfoundation.org>
+	Eliot Courtney <ecourtney@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Gary Guo <gary@garyguo.net>
+Subject: [PATCH 6.18 1176/1611] gpu: nova-core: simplify and_then with condition to filter
+Date: Tue, 21 Jul 2026 17:21:32 +0200
+Message-ID: <20260721152541.883236996@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,78 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Eliot Courtney <ecourtney@nvidia.com>
 
-commit 86f3ce81dd2b4b0aa2c3016c989a943e4b1b643d upstream.
+commit 16df3873c80388a71c4695909a51be0c809b889c upstream.
 
-br_ip6_fragment() gets prevhdr, a pointer into the skb head, from
-ip6_find_1stfragopt(), then calls skb_checksum_help().  For a cloned skb
-skb_checksum_help() reallocates the head via pskb_expand_head(), leaving
-prevhdr dangling.  It is later dereferenced in ip6_frag_next(), causing a
-use-after-free write.
+This code is more simply expressed using Option::filter instead of the
+and_then with conditional.
 
-Save prevhdr's offset before skb_checksum_help() and recompute it after,
-like commit ef0efcd3bd3f ("ipv6: Fix dangling pointer when ipv6
-fragment").
+This fixes the following warning with latest nightly Rust clippy build:
 
-  BUG: KASAN: slab-use-after-free in ip6_frag_next (net/ipv6/ip6_output.c:857)
-  Write of size 1 at addr ffff888013ff5016 by task exploit/141
-  Call Trace:
-   ...
-   kasan_report (mm/kasan/report.c:595)
-   ip6_frag_next (net/ipv6/ip6_output.c:857)
-   br_ip6_fragment (net/ipv6/netfilter.c:212)
-   nf_ct_bridge_post (net/bridge/netfilter/nf_conntrack_bridge.c:407)
-   nf_hook_slow (net/netfilter/core.c:619)
-   br_forward_finish (net/bridge/br_forward.c:66)
-   __br_forward (net/bridge/br_forward.c:115)
-   maybe_deliver (net/bridge/br_forward.c:191)
-   br_flood (net/bridge/br_forward.c:245)
-   br_handle_frame_finish (net/bridge/br_input.c:229)
-   br_handle_frame (net/bridge/br_input.c:442)
-   ...
-   packet_sendmsg (net/packet/af_packet.c:3114)
-   ...
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  Kernel panic - not syncing: Fatal exception in interrupt
+warning: manual implementation of `Option::filter`
+   --> drivers/gpu/nova-core/firmware.rs:391:14
+    |
+391 |               .and_then(|hdr| {
+    |  ______________^
+392 | |                 if hdr.bin_magic == BIN_MAGIC {
+393 | |                     Some(hdr)
+394 | |                 } else {
+...   |
+397 | |             })
+    | |______________^ help: try: `filter(|hdr| hdr.bin_magic == BIN_MAGIC)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#manual_filter
+    = note: `-D clippy::manual-filter` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::manual_filter)]`
 
-Fixes: 764dd163ac92 ("netfilter: nf_conntrack_bridge: add support for IPv6")
 Cc: stable@vger.kernel.org
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: d6cb7319e64e ("gpu: nova-core: firmware: add support for common firmware header")
+Signed-off-by: Eliot Courtney <ecourtney@nvidia.com>
+Acked-by: Danilo Krummrich <dakr@kernel.org>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Link: https://patch.msgid.link/20260423-fix-filter-v1-1-b3b197c65daf@nvidia.com
+[aliceryhl: add Fixes: tag and quote the warning it fixes]
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/netfilter.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/nova-core/firmware.rs |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/net/ipv6/netfilter.c
-+++ b/net/ipv6/netfilter.c
-@@ -134,7 +134,7 @@ int br_ip6_fragment(struct net *net, str
- 	ktime_t tstamp = skb->tstamp;
- 	struct ip6_frag_state state;
- 	u8 *prevhdr, nexthdr = 0;
--	unsigned int mtu, hlen;
-+	unsigned int mtu, hlen, nexthdr_offset;
- 	int hroom, err = 0;
- 	__be32 frag_id;
- 
-@@ -143,6 +143,7 @@ int br_ip6_fragment(struct net *net, str
- 		goto blackhole;
- 	hlen = err;
- 	nexthdr = *prevhdr;
-+	nexthdr_offset = prevhdr - skb_network_header(skb);
- 
- 	mtu = skb->dev->mtu;
- 	if (frag_max_size > mtu ||
-@@ -161,6 +162,7 @@ int br_ip6_fragment(struct net *net, str
- 	    (err = skb_checksum_help(skb)))
- 		goto blackhole;
- 
-+	prevhdr = skb_network_header(skb) + nexthdr_offset;
- 	hroom = LL_RESERVED_SPACE(skb->dev);
- 	if (skb_has_frag_list(skb)) {
- 		unsigned int first_len = skb_pagelen(skb);
+--- a/drivers/gpu/nova-core/firmware.rs
++++ b/drivers/gpu/nova-core/firmware.rs
+@@ -176,13 +176,7 @@ impl<'a> BinFirmware<'a> {
+             // Extract header.
+             .and_then(BinHdr::from_bytes_copy)
+             // Validate header.
+-            .and_then(|hdr| {
+-                if hdr.bin_magic == BIN_MAGIC {
+-                    Some(hdr)
+-                } else {
+-                    None
+-                }
+-            })
++            .filter(|hdr| hdr.bin_magic == BIN_MAGIC)
+             .map(|hdr| Self { hdr, fw })
+             .ok_or(EINVAL)
+     }
 
 
