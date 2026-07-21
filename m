@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C23638757B;
-	Tue, 21 Jul 2026 18:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86893909A9;
+	Tue, 21 Jul 2026 18:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658382; cv=none; b=Q0CoJiasTbyVecNxxZ7Auucld6BaK0eZCpOJX6prUOXxHFQUghcFhl2IQ9knXU11Za9HZuA6rTLlxY6qT94pGSYA7NevfBcaJ1x3qGwFdYzUzogrDVsOmMWX2uUbEdN21Gr2nW4iihzgNlpotGGkRrIjYGTUOH8Y6ozo1CWXA1g=
+	t=1784658384; cv=none; b=DPfS7p7OD0FXlhYTfDC9DfDT8Yn/dm4PnibQhw2676GOdCtoOxiVknIFGawqUoTmsxR9TFHbmRook39DK4yQ8pGJsJxgZ6CAhDSWhgsVGwKbOB5hdBrvnnYgElQAbxjRf0xowfND2KvnTNhGBTwXCwSDzDKEx7eoJBDIPlyr/os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658382; c=relaxed/simple;
-	bh=NR0E5beWoRKtT4KuGUCeRLctfJNr9/QlUQXhohBaIVE=;
+	s=arc-20240116; t=1784658384; c=relaxed/simple;
+	bh=NZkBp3cGPkNalr5jQJO39YhtTSx3zOykRmzA+M5HGsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gl4H43K6DWartMTusnLfdji1iVXuiHW6qlyI+cUAWJDEtJT+WRCRkrJUxQdGiNYsNVJCcHG5EbhNgYKYwplEynPATu9gcgd1hEm4N/pmCCoc7ULF4gGCPnPsr4y5fDUOhpEApqEEpZ78i6zYcrtlp5ql5+Sk11HOHnrxdKC6q58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJmd24k3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oEG795X1tu4INAQdSwR7r4Y4LO6I9Lmm69bwvyLL8ngCZK5XWTuYBfyc5v1uJErCGk3x1rSXrmRpczH5Pm6sjnIh/sfFdcOR5PBDbtzs18NBtZ9rBJWoPuYZpfFgT1DigSdZn/3nKFl1ocExzxvvEW3tUdsJrY+fpjCkNzrLuNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3kP2nCp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJmd24k3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72AAE1F000E9;
-	Tue, 21 Jul 2026 18:26:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3kP2nCp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A21A1F000E9;
+	Tue, 21 Jul 2026 18:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658380;
-	bh=KemlQW1Iy7fVWCm7tv4OPdNsPmy8XaXb0uj7Tz9+JTI=;
+	s=korg; t=1784658383;
+	bh=KLyH3d5EeNDzRRfHOAHWDYAmTVGtjGGPqIpYaIArp34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AJmd24k3Dj7z5KOF6lQFLLiYd0i7/5ZVZnwicA1nq/OCn3/hJweJA//mR60C3FQsR
-	 ePxcgEDqyvtyk+H0gEhrqHjnyH2qrQ0vGHjZZkdPMHf9ZnPOuTzD3YXpM6+gj+OJ2l
-	 ECQuIt36C3BaQQw8KAwpdwYN2QodoTeGWKXavZkM=
+	b=i3kP2nCpGciWLqqN1q+wlmJYgaLP9RCzHlLCIRiek3/Tl7+3Vk9YLpgpbmQAzpbgq
+	 a2XyJj/Aa1/Sy4yi9oYCO6RdDRpwB0egSMT4FM7CiDhU3vqSpf7yivj1aJ+fCh+ReR
+	 5yox8zIwmg50QOcBxFGMGJE07keoHHNnJEROsscM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	Bibo Mao <maobibo@loongson.cn>,
-	Yanfei Xu <yanfei.xu@bytedance.com>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 1123/1611] LoongArch: KVM: Validate irqchip index in irqfd routing
-Date: Tue, 21 Jul 2026 17:20:39 +0200
-Message-ID: <20260721152540.679571689@linuxfoundation.org>
+Subject: [PATCH 6.18 1124/1611] LoongArch: KVM: Check irq validity in kvm_vcpu_ioctl_interrupt()
+Date: Tue, 21 Jul 2026 17:20:40 +0200
+Message-ID: <20260721152540.700772139@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,37 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yanfei Xu <yanfei.xu@bytedance.com>
+From: Bibo Mao <maobibo@loongson.cn>
 
-commit 3474037904c20ff915e3ebab0ab5c1e41bbe549e upstream.
+commit 09b318ab77b7a4fc9987fd98d1525fc55ddc2617 upstream.
 
-Sashiko reported that the irqchip index is not validated for LoongArch.
-Add validation and reject out-of-range irqchip indexes to avoid indexing
-past the routing table's chip array.
+Function kvm_vcpu_ioctl_interrupt() can be called from userspace, here
+add irq validility cheking in kvm_vcpu_ioctl_interrupt().
 
 Cc: stable@vger.kernel.org
-Fixes: 1928254c5ccb ("LoongArch: KVM: Add irqfd support")
-Closes: https://lore.kernel.org/kvm/20260525051714.485D51F000E9@smtp.kernel.org/
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+Fixes: f45ad5b8aa93 ("LoongArch: KVM: Implement vcpu interrupt operations")
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/irqfd.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/loongarch/kvm/vcpu.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/loongarch/kvm/irqfd.c
-+++ b/arch/loongarch/kvm/irqfd.c
-@@ -53,7 +53,8 @@ int kvm_set_routing_entry(struct kvm *kv
- 		e->irqchip.irqchip = ue->u.irqchip.irqchip;
- 		e->irqchip.pin = ue->u.irqchip.pin;
+--- a/arch/loongarch/kvm/vcpu.c
++++ b/arch/loongarch/kvm/vcpu.c
+@@ -1461,6 +1461,10 @@ void kvm_lose_fpu(struct kvm_vcpu *vcpu)
+ int kvm_vcpu_ioctl_interrupt(struct kvm_vcpu *vcpu, struct kvm_interrupt *irq)
+ {
+ 	int intr = (int)irq->irq;
++	unsigned int vector = abs(intr);
++
++	if (vector >= EXCCODE_INT_NUM)
++		return -EINVAL;
  
--		if (e->irqchip.pin >= KVM_IRQCHIP_NUM_PINS)
-+		if (e->irqchip.pin >= KVM_IRQCHIP_NUM_PINS ||
-+		    e->irqchip.irqchip >= KVM_NR_IRQCHIPS)
- 			return -EINVAL;
- 
- 		return 0;
+ 	if (intr > 0)
+ 		kvm_queue_irq(vcpu, intr);
 
 
