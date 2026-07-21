@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A2C3E49EF;
-	Tue, 21 Jul 2026 17:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58C337B40C;
+	Tue, 21 Jul 2026 17:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653823; cv=none; b=Fn+cucAQmCVQmjxBVYBag4+xsmqen5uTDAxCKUrPtqDHm83gI1VV8B/LNK+yugB6GjqsWRNWJ85j7NZfma94jWImmwc0Vfy7Dy2+X99UBB4I43k2ZILNoSc02Wip9C5xU7fpNWs44ngL9n5jJ/1tQ8qOKTRcfufcqSRZkwnjuNU=
+	t=1784653826; cv=none; b=B6bC+k+70klnldgQ+1W6dW7w4oBgrI0xqetAo5VoqYlIeIGqUM9PymMogqjbFBVill571QMPxPuigwBeg1dTs255mhGJ56I4r+Yt4G62+msd9FlmmnhU/ZSA+7UaEmSBR5V78jiVo8TlDRxy7W6HXP+YZAKjkPvo4D9jZhHw5ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653823; c=relaxed/simple;
-	bh=c8UUE5Tg3JBRZrjUuhPfs+ee4Q00SHZs4eqVbawnoDc=;
+	s=arc-20240116; t=1784653826; c=relaxed/simple;
+	bh=E3RXpvK49nFf4cXxCci4ds8VRorv5xfXGIcqXBBVHxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cNFDvs2cAlaQSm83dRy8e5l1aejmVvevzYG6ZBqp4FHbShw2CCgyco72RMU7r22oZxZdm7SW+xtNRbQcHosc5+jF/F6vwG99kFfS4NcAB03JX5B3/Y0zVW4PNquDdSEqZSw3grgh41shWgkYab4vwE0f8aYewZ78xCzcJ8O0eXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lmklhe5M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GuULHdYsHaj8PnRXxd3WScfSfBWiih1HLfMn+eBsT5xRAUFf9wPMEZo2z6gZuiuD01Ccnk2G0tYKZxYjptCq+FGWYGPPsP7hbgWPTyFsvhHnPdwObd41cT34xh93yb3LzPrZh7f1nhWqhEzjRouMUk86ZH4UVWjFfgH7c89ly2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ftsDuxP/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lmklhe5M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7F21F000E9;
-	Tue, 21 Jul 2026 17:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftsDuxP/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B6D1F00A3A;
+	Tue, 21 Jul 2026 17:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653822;
-	bh=7qwLkB4juBFVxHVoWSP7iOKe843ux3q9BRI/GCLrU9o=;
+	s=korg; t=1784653824;
+	bh=j1aKEKVw0qHl3AMv9jR7GGojJjVbl0QQdK0dOedujcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lmklhe5Mqox9xtWFSxupM4VOYI6tgj+NnQllp/k/uFKNSTASCrnh3e3XLM2USez34
-	 wBIzUDaxscR+rsrtkhShJLqzj8HfjLxPVMEXMO/AG+aDNxbqtBfBy8Wse4zCujto08
-	 nbR87AhRu0a/IshGJPe6tS0LuwCDd6wn3/pPOZx0=
+	b=ftsDuxP/ZrtVISTnUI1NAeL2qJPEgkWAsyO0CL9d4c3iwFbXTTsTsq40g/Qu8pggx
+	 Yog3dln/W2OShvAihXlMXxNS/m3tCWyPSLz6BUAXm5rEeiVgzm90r5qp4qumk/tPB3
+	 dbMywghqLFPypTODorttJCvexvdHYJoZbFW7xF1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Zhen <max.zhen@amd.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	Chuck Lever <cel@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1470/2077] accel/amdxdna: Fix VMA access race
-Date: Tue, 21 Jul 2026 17:19:03 +0200
-Message-ID: <20260721152627.466028620@linuxfoundation.org>
+Subject: [PATCH 7.1 1471/2077] net/tls: Consume empty data records in tls_sw_read_sock()
+Date: Tue, 21 Jul 2026 17:19:04 +0200
+Message-ID: <20260721152627.488287338@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,142 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 1ba02717e821cf14ece642273958647e79698d3d ]
+[ Upstream commit 3be28e2c9cd0230cb51fd4967df095273afd3848 ]
 
-aie2_populate_range() and amdxdna_umap_release() access a saved VMA
-pointer that may have already been freed, leading to a potential
-use-after-free.
+A peer may send a zero-length TLS application_data record; TLS 1.3
+explicitly permits these as a traffic-analysis countermeasure (RFC
+8446, Section 5.1). After decryption such a record has full_len ==
+0. tls_sw_read_sock() hands it to the read_actor, which has no
+payload to consume and returns zero. The loop treats a zero return
+as backpressure (used <= 0), requeues the skb at the head of
+rx_list, and stops. rx_list is serviced head-first on the next
+call, so the empty record is dequeued, fails the same way, and is
+requeued again; every later record on the connection is blocked
+behind it.
 
-Remove the VMA accesses from these functions to avoid the race.
+tls_sw_recvmsg() does not stall on this: a zero-length data record
+copies nothing and falls through to consume_skb(). Mirror that in
+the read_sock() path by recognizing an empty data record before
+the actor runs, consuming it, and continuing.
 
-Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
-Reviewed-by: Max Zhen <max.zhen@amd.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260609011242.2833740-1-lizhi.hou@amd.com
+Fixes: 662fbcec32f4 ("net/tls: implement ->read_sock()")
+Signed-off-by: Chuck Lever <cel@kernel.org>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260630191551.875664-1-cel@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/aie2_ctx.c    |  2 --
- drivers/accel/amdxdna/amdxdna_gem.c | 31 +++++++++++++++++++----------
- drivers/accel/amdxdna/amdxdna_gem.h |  1 -
- 3 files changed, 21 insertions(+), 13 deletions(-)
+ net/tls/tls_sw.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
-index f5d247d65cb065..884a64fa3e4fac 100644
---- a/drivers/accel/amdxdna/aie2_ctx.c
-+++ b/drivers/accel/amdxdna/aie2_ctx.c
-@@ -977,8 +977,6 @@ static int aie2_populate_range(struct amdxdna_gem_obj *abo)
- 	kref_get(&mapp->refcnt);
- 	up_write(&xdna->notifier_lock);
- 
--	XDNA_DBG(xdna, "populate memory range %lx %lx",
--		 mapp->vma->vm_start, mapp->vma->vm_end);
- 	mm = mapp->notifier.mm;
- 	if (!mmget_not_zero(mm)) {
- 		amdxdna_umap_put(mapp);
-diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
-index 2ac12b49a70035..eb440bccd0cbd7 100644
---- a/drivers/accel/amdxdna/amdxdna_gem.c
-+++ b/drivers/accel/amdxdna/amdxdna_gem.c
-@@ -200,7 +200,7 @@ static bool amdxdna_hmm_invalidate(struct mmu_interval_notifier *mni,
- 
- 	xdna = to_xdna_dev(to_gobj(abo)->dev);
- 	XDNA_DBG(xdna, "Invalidating range 0x%lx, 0x%lx, type %d",
--		 mapp->vma->vm_start, mapp->vma->vm_end, abo->type);
-+		 mapp->range.start, mapp->range.end, abo->type);
- 
- 	if (!mmu_notifier_range_blockable(range))
- 		return false;
-@@ -229,15 +229,23 @@ static const struct mmu_interval_notifier_ops amdxdna_hmm_ops = {
- 	.invalidate = amdxdna_hmm_invalidate,
- };
- 
-+static inline bool compare_range(struct amdxdna_umap *mapp,
-+				 struct mm_struct *mm,
-+				 unsigned long start, unsigned long end)
-+{
-+	return (!mapp->unmapped && mapp->notifier.mm == mm &&
-+		mapp->range.start == start && mapp->range.end == end);
-+}
-+
- static void amdxdna_hmm_unregister(struct amdxdna_gem_obj *abo,
- 				   struct vm_area_struct *vma)
- {
- 	struct amdxdna_dev *xdna = to_xdna_dev(to_gobj(abo)->dev);
- 	struct amdxdna_umap *mapp;
- 
--	down_read(&xdna->notifier_lock);
-+	down_write(&xdna->notifier_lock);
- 	list_for_each_entry(mapp, &abo->mem.umap_list, node) {
--		if (!vma || mapp->vma == vma) {
-+		if (!vma || compare_range(mapp, vma->vm_mm, vma->vm_start, vma->vm_end)) {
- 			if (!mapp->unmapped) {
- 				queue_work(xdna->notifier_wq, &mapp->hmm_unreg_work);
- 				mapp->unmapped = true;
-@@ -246,19 +254,16 @@ static void amdxdna_hmm_unregister(struct amdxdna_gem_obj *abo,
- 				break;
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index a47f6a1e2c77d5..ba95f9d927a35b 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -2424,6 +2424,17 @@ int tls_sw_read_sock(struct sock *sk, read_descriptor_t *desc,
+ 			goto read_sock_requeue;
  		}
- 	}
--	up_read(&xdna->notifier_lock);
-+	up_write(&xdna->notifier_lock);
- }
  
- static void amdxdna_umap_release(struct kref *ref)
- {
- 	struct amdxdna_umap *mapp = container_of(ref, struct amdxdna_umap, refcnt);
- 	struct amdxdna_gem_obj *abo = mapp->abo;
--	struct vm_area_struct *vma = mapp->vma;
- 	struct amdxdna_dev *xdna;
- 
- 	mmu_interval_notifier_remove(&mapp->notifier);
--	if (is_import_bo(abo) && vma->vm_file && vma->vm_file->f_mapping)
--		mapping_clear_unevictable(vma->vm_file->f_mapping);
- 
- 	xdna = to_xdna_dev(to_gobj(mapp->abo)->dev);
- 	down_write(&xdna->notifier_lock);
-@@ -297,6 +302,15 @@ static int amdxdna_hmm_register(struct amdxdna_gem_obj *abo,
- 	if (!xdna->dev_info->ops->hmm_invalidate)
- 		return 0;
- 
-+	down_read(&xdna->notifier_lock);
-+	list_for_each_entry(mapp, &abo->mem.umap_list, node) {
-+		if (compare_range(mapp, current->mm, addr, addr + len)) {
-+			up_read(&xdna->notifier_lock);
-+			return 0;
++		/* An empty data record (legal in TLS 1.3) gives a zero
++		 * read_actor return, indistinguishable from the consumer
++		 * stalling; the used <= 0 path would requeue it at the
++		 * head of rx_list and block all later records. Consume it
++		 * here instead.
++		 */
++		if (rxm->full_len == 0) {
++			consume_skb(skb);
++			continue;
 +		}
-+	}
-+	up_read(&xdna->notifier_lock);
 +
- 	mapp = kzalloc_obj(*mapp);
- 	if (!mapp)
- 		return -ENOMEM;
-@@ -322,13 +336,10 @@ static int amdxdna_hmm_register(struct amdxdna_gem_obj *abo,
- 	mapp->range.start = vma->vm_start;
- 	mapp->range.end = vma->vm_end;
- 	mapp->range.default_flags = HMM_PFN_REQ_FAULT;
--	mapp->vma = vma;
- 	mapp->abo = abo;
- 	kref_init(&mapp->refcnt);
- 
- 	INIT_WORK(&mapp->hmm_unreg_work, amdxdna_hmm_unreg_work);
--	if (is_import_bo(abo) && vma->vm_file && vma->vm_file->f_mapping)
--		mapping_set_unevictable(vma->vm_file->f_mapping);
- 
- 	down_write(&xdna->notifier_lock);
- 	if (list_empty(&abo->mem.umap_list))
-diff --git a/drivers/accel/amdxdna/amdxdna_gem.h b/drivers/accel/amdxdna/amdxdna_gem.h
-index 957305ccb485af..10242f4a5ca983 100644
---- a/drivers/accel/amdxdna/amdxdna_gem.h
-+++ b/drivers/accel/amdxdna/amdxdna_gem.h
-@@ -12,7 +12,6 @@
- #include "amdxdna_pci_drv.h"
- 
- struct amdxdna_umap {
--	struct vm_area_struct		*vma;
- 	struct mmu_interval_notifier	notifier;
- 	struct hmm_range		range;
- 	struct work_struct		hmm_unreg_work;
+ 		used = read_actor(desc, skb, rxm->offset, rxm->full_len);
+ 		if (used <= 0) {
+ 			if (!copied)
 -- 
 2.53.0
 
