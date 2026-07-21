@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A154B46D0BA;
-	Tue, 21 Jul 2026 18:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6659847125C;
+	Tue, 21 Jul 2026 18:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658417; cv=none; b=KbK15Q7Eslds5YTULhzE7ST2LKI4OCsV5S43+3Tw6K7KMLgxkCW3rNt9Pgy/BfVfjRS6acAz5ltv9XUBaNhqotuzYiyCDrtWZuK9O1+6V1Mktog7drv1MdaI02MnZbFCMGpfDArcvMgqefXe02dmJRESZU7X6RXkcgh+g/sVYDg=
+	t=1784658419; cv=none; b=NE36I6Lwsb32ZeWu7Q6sqP/Y/eYREteki+34SMPowGdKu+CrZ6aiLU4K+JX+3vGeNWkNx8pVubQo4oJz9vgn04ktQf/P1VmLKRZT9DRZB6Sk6DBIg5AH5ivRydWUyoDa5gZldQjYWPTVD2vqG268Mu0NczmxnUO40PxHpHWY5xA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658417; c=relaxed/simple;
-	bh=IHUDeqXVhyZgvjVGsMA48txyk9K60VB+NZrW51b+oUo=;
+	s=arc-20240116; t=1784658419; c=relaxed/simple;
+	bh=ZJS6TjE9CxWBOVImnAdc7bsydzyOjcFn4yj+PwZ/lCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qtWIk9ZhnGCFbe3IqwzpO8UlXmV1clYxUdXhjD9FFFFyVkHDx6K0f9P6p3J05HwCOZLAKiF78NKEl8qXKLNrlI2MwgWvBMJAhvWYqMQ7nV1f9g+zYiFiaWTpFG7kNQ6BSAwjxJZBHwvJDX9pxgjam+qxNXabBKEsMYBZ7zoN5BE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ghMKcLE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=US1jlIe7MPdD7tx5qNFgTIg4SKI/0srRV2/O8JxKZBiyu0nNGfiT95xo497b4ICkSASGYkgyh/8an5W2ugBMqQ58g+6gkMZZqYeR1U5gEnUzyntAK1c0c4zwoDt0Zq9IIFebOAzV81xEBTHCEX9caRaTMrcb7BZKOm0qEnOjep0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTVUNY/A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ghMKcLE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0631F000E9;
-	Tue, 21 Jul 2026 18:26:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTVUNY/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F1C1F000E9;
+	Tue, 21 Jul 2026 18:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658415;
-	bh=DNeoDhJCIntNf5YtdtEjQc1QNaSah0/AYmkp9+RQp7s=;
+	s=korg; t=1784658418;
+	bh=rG+m9ZNQofCmjYDn51M6vT2VfbQdiiciHbzkVBPzHJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1ghMKcLEZfDWJdvSsMy8sTqqKVA1qBvRxNi4PEfRYqle8b91hyMb7ai0a1p5E9Uom
-	 bsXLixV8FSFdg/uaMF7EGt47jfNPmke2y4rGB2HeZjDGY+pbDIsoLrWLd5ZZgFbKLu
-	 8uuQ+qbxxIkxcrXhzTbc0Eewf03qP1DSj0726fJU=
+	b=kTVUNY/A8Ki5encnJ3YQHmeQmNSd96bwQQTyLFl22+dBdwC93NhgWayKFOGrJUeH1
+	 9pxsi4or7njBFJ758ZPzfL5+/GB0iRfksBueXM30PsMf43v2y8/kt7vUywSPXsyKYY
+	 Zu/29Ji0JoN3pYxtLjGE2QVggank3XaCgrhVtXxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	leixiang <leixiang@kylinos.cn>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 1135/1611] KVM: x86: Nullify irqfd->producer if updating IRTE for bypass fails
-Date: Tue, 21 Jul 2026 17:20:51 +0200
-Message-ID: <20260721152540.954553204@linuxfoundation.org>
+	Minh Nguyen <minhnguyen.080505@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.18 1136/1611] KVM: nVMX: Put vmcs12 pages if nested VM-Enter fails due to invalid guest state
+Date: Tue, 21 Jul 2026 17:20:52 +0200
+Message-ID: <20260721152540.977363479@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,40 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: leixiang <leixiang@kylinos.cn>
+From: Sean Christopherson <seanjc@google.com>
 
-commit ed446e8aa894883c08892cfee69782fdf8f6c3ca upstream.
+commit 2f2312c422fd2695da772cecb30c69994b795964 upstream.
 
-Nullify irqfd->producer if updating the IRTE for bypass fails, as leaving a
-dangling pointer will result in a use-after-free if the irqfd is reachable
-through KVM's routing, but the producer is freed separately.  E.g. for VFIO
-PCI, the producer is embedded in struct "vfio_pci_irq_ctx" and freed when
-the vector is disabled, which can happen independent of routing updates.
+Put all vmcs12 pages if KVM synthesizes a nested VM-Exit due to invalid
+guest while emulating VMLAUNCH or VMRESUME.  The invalid guest state path
+doesn't use nested_vmx_vmexit() as that API is intended to be used if and
+only if L2 is active, and the open coded equivalent neglects to put the
+vmcs12 pages.  Failure to put the vmcs12 pages leaks any pinned pages
+(and/or mappings) if L1 retries VMLAUNCH/VMRESUME.
 
-Fixes: 77e1b8332d1d ("KVM: x86: Decouple device assignment from IRQ bypass")
+Note, the !from_vmenter scenario doesn't suffer the same problem, as
+vmx_get_nested_state_pages() only gets/pins/maps the vmcs12 pages if L2 is
+active, i.e. if a "full" VM-Exit is guaranteed before KVM will retry
+getting vmcs12 pages.
+
+Fixes: 96c66e87deee ("KVM/nVMX: Use kvm_vcpu_map when mapping the virtual APIC page")
+Fixes: 3278e0492554 ("KVM/nVMX: Use kvm_vcpu_map when mapping the posted interrupt descriptor table")
+Fixes: fe1911aa443e ("KVM: nVMX: Use kvm_vcpu_map() to get/pin vmcs12's APIC-access page")
+Reported-by: Minh Nguyen <minhnguyen.080505@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: leixiang <leixiang@kylinos.cn>
-Link: https://patch.msgid.link/1782119051448443.14545.seg@mailgw.kylinos.cn
-[sean: drop PPC change, massage changelog]
 Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/irq.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/kvm/vmx/nested.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/kvm/irq.c
-+++ b/arch/x86/kvm/irq.c
-@@ -488,8 +488,10 @@ int kvm_arch_irq_bypass_add_producer(str
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -3799,6 +3799,8 @@ vmentry_fail_vmexit:
+ 	if (!from_vmentry)
+ 		return NVMX_VMENTRY_VMEXIT;
  
- 	if (irqfd->irq_entry.type == KVM_IRQ_ROUTING_MSI) {
- 		ret = kvm_pi_update_irte(irqfd, &irqfd->irq_entry);
--		if (ret)
-+		if (ret) {
- 			kvm->arch.nr_possible_bypass_irqs--;
-+			irqfd->producer = NULL;
-+		}
- 	}
- 	spin_unlock_irq(&kvm->irqfds.lock);
- 
++	nested_put_vmcs12_pages(vcpu);
++
+ 	load_vmcs12_host_state(vcpu, vmcs12);
+ 	vmcs12->vm_exit_reason = exit_reason.full;
+ 	if (enable_shadow_vmcs || nested_vmx_is_evmptr12_valid(vmx))
 
 
