@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1EC235DA40;
-	Tue, 21 Jul 2026 19:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4499335DA40;
+	Tue, 21 Jul 2026 19:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662389; cv=none; b=nWZIBozwlJ2xSt+zjVRCj4ZDYNErvxTFRp95LnyiRyPo79GweZS/rF/RzkYuIERFn2vUGyLKnBYhLevkwf4yeDNJ//6HkAG0P/fYZl91jcXD4cAFx0T/4ZtelVLaXe/7cSn4j9DPKeUhYLJwQvElB4rcgDNBZFe36Uzy09qJSKg=
+	t=1784662392; cv=none; b=PAO0WvsIgFWOkgoNQUTs5YaOweKYcCRY4EbJUgrEzmIXItL6G8d8Ai+6jBErB1U/dNoMrg/43r8vlrCY538hyMpw11cci+EOyayPyvzoc9oo7w+UQ6bp5jCrON6lcF4ynZ//R8ZBj3sj15oSwff0n3N+sLaxC2bDK3jj7EMsGdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662389; c=relaxed/simple;
-	bh=puni2tKkMfJBQmI53kSGiRgzSnbwNk4YhQ+aHrSTD6A=;
+	s=arc-20240116; t=1784662392; c=relaxed/simple;
+	bh=UPRMPcnOfEXvrCRwWS3XZ4UsjWA6u7uTuewO7T0LX2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W12ppWi+RUbntOfO1pT57/68kuXrh5qy75UQkZnXR7PWCq3NhlP/rtzQXp5aU33WCy19/I86vQmyrQiYtwJ2SAGEDvNiEiOPw5hSqYTARW1qBUJw/i+ZlkT2QLnoj54RtlRxIHI/isQiawuC9VBnpkJgpvUDsyY8vX7hEjKF+B8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSZgnaYk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gVEnayrr8tWIbr22Rh7lSohpxutYrCzOJj548zVfx6iMJO/eYfr9qmiJhOSLPLNoljSTGCCm9guu3AjFRUcLRIFHKQ3/iJ8R6PXZNtdHwWp05ps0bKjWSQTdboKOr+w1aHbStVvO3LLRYBr8hIvOmZwcXpgDY86pNsalm2FvoUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJEheJfp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSZgnaYk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F1A1F000E9;
-	Tue, 21 Jul 2026 19:33:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJEheJfp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26111F000E9;
+	Tue, 21 Jul 2026 19:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662388;
-	bh=dSwiMsC/r/rxkKSIk9QcpRZD5d5taRXfwB8jJ4IGvzc=;
+	s=korg; t=1784662391;
+	bh=fq3KS2ZgpxfNyRKKKoYvmDvSrN7i4wyGaNYVVHz1HcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tSZgnaYk7INUNKIVAuqmJ7YNc59XKbrvRqRHShyTwAATF0MlmESHOqkzkjzPKB5Dg
-	 4CAVd7vSrzwJ60Gs1kPRMoTQOHZ8njwD9FBPGrtE2Bp36g7SECHFWe6W5nRx3RLKTC
-	 u6WwyNQqKG7JbdO3dgmCxk1S+CthdkpcGeBS2XSs=
+	b=aJEheJfp394PZnfX+AxIUt75/blYc3w+B9q+6sx+N4WZLi1hpvV3a6shVaV4GB16a
+	 8BYek1PCh7PUt6vJnbjR01ectyIaLQGq0wtoC1D1sKHI7PW2IaHYsZuxiIpu2qaKok
+	 5z33pavH0yYdg9L7LknUMLf98VBw3QKKkXxuf/1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0427/1276] phy: phy-can-transceiver: Check driver match and driver data against NULL
-Date: Tue, 21 Jul 2026 17:14:30 +0200
-Message-ID: <20260721152455.658388363@linuxfoundation.org>
+Subject: [PATCH 6.12 0428/1276] perf pmu: Skip test on Arm64 when #slots is zero
+Date: Tue, 21 Jul 2026 17:14:31 +0200
+Message-ID: <20260721152455.681649834@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,41 +58,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit ebee9004cc0200b2b708ebf7ac625d35c71c049f ]
+[ Upstream commit 2e2ba7d1ea554ee6e9e751a53eebf3e9270b0670 ]
 
-Every platform driver can be forced to match a device that doesn't
-match its list of device IDs because of device_match_driver_override()
-so platform drivers that rely on the existence of a device's driver
-data need to verify its presence.
+Some Arm64 PMUs expose 'caps/slots' as 0 when the slot count is not
+implemented, tool_pmu__read_event() currently returns false for this,
+so metrics that reference #slots are reported as syntax error.
 
-Accordingly, add requisite match and driver data checks against NULL
-to the driver where they are missing.
+Since the commit 3a61fd866ef9 ("perf expr: Return -EINVAL for syntax
+error in expr__find_ids()"), these syntax errors are populated as
+failures and make the PMU metric test fail:
 
-Fixes: a4a86d273ff1 ("phy: phy-can-transceiver: Add support for generic CAN transceiver driver")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260513220336.369628-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+    9.3: Parsing of PMU event table metrics:
+    --- start ---
+    ...
+
+    Found metric 'backend_bound'
+    metric expr 100 * (stall_slot_backend / (#slots * cpu_cycles)) for backend_bound
+    parsing metric: 100 * (stall_slot_backend / (#slots * cpu_cycles))
+    Failure to read '#slots'
+    literal: #slots = nan
+    syntax error
+    Fail to parse metric or group `backend_bound'
+
+    ...
+    ---- end(-1) ----
+    9.3: Parsing of PMU event table metrics    : FAILED!
+
+This commit introduces a new function is_expected_broken_metric() to
+identify broken metrics, and treats metrics containing "#slots" as
+expected broken when #slots == 0 on Arm64 platforms.
+
+Fixes: 3a61fd866ef9aaa1 ("perf expr: Return -EINVAL for syntax error in expr__find_ids()")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/phy-can-transceiver.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/perf/tests/pmu-events.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/phy-can-transceiver.c b/drivers/phy/phy-can-transceiver.c
-index ee4ce42496985d..95a02705bf2ad9 100644
---- a/drivers/phy/phy-can-transceiver.c
-+++ b/drivers/phy/phy-can-transceiver.c
-@@ -111,6 +111,9 @@ static int can_transceiver_phy_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+diff --git a/tools/perf/tests/pmu-events.c b/tools/perf/tests/pmu-events.c
+index db004d26fcb005..8c73ab189c5fce 100644
+--- a/tools/perf/tests/pmu-events.c
++++ b/tools/perf/tests/pmu-events.c
+@@ -15,6 +15,7 @@
+ #include "util/expr.h"
+ #include "util/hashmap.h"
+ #include "util/parse-events.h"
++#include "util/tool_pmu.h"
+ #include "metricgroup.h"
+ #include "stat.h"
  
- 	match = of_match_node(can_transceiver_phy_ids, pdev->dev.of_node);
-+	if (!match || !match->data)
-+		return -ENODEV;
+@@ -864,6 +865,26 @@ struct metric {
+ 	struct metric_ref metric_ref;
+ };
+ 
++static bool is_expected_broken_metric(const struct pmu_metric *pm)
++{
++	if (!strcmp(pm->metric_name, "M1") || !strcmp(pm->metric_name, "M2") ||
++	    !strcmp(pm->metric_name, "M3"))
++		return true;
 +
- 	drvdata = match->data;
++#if defined(__aarch64__)
++	/*
++	 * Arm64 platforms may return "#slots == 0", which is treated as a
++	 * syntax error by the parser. Don't test these metrics when running
++	 * on such platforms.
++	 */
++	if (strstr(pm->metric_expr, "#slots") &&
++	    !tool_pmu__cpu_slots_per_cycle())
++		return true;
++#endif
++
++	return false;
++}
++
+ static int test__parsing_callback(const struct pmu_metric *pm,
+ 				  const struct pmu_metrics_table *table,
+ 				  void *data)
+@@ -902,8 +923,7 @@ static int test__parsing_callback(const struct pmu_metric *pm,
  
- 	if (of_property_read_bool(dev->of_node, "mux-states")) {
+ 	err = metricgroup__parse_groups_test(evlist, table, pm->metric_name, &metric_events);
+ 	if (err) {
+-		if (!strcmp(pm->metric_name, "M1") || !strcmp(pm->metric_name, "M2") ||
+-		    !strcmp(pm->metric_name, "M3")) {
++		if (is_expected_broken_metric(pm)) {
+ 			(*failures)--;
+ 			pr_debug("Expected broken metric %s skipping\n", pm->metric_name);
+ 			err = 0;
 -- 
 2.53.0
 
