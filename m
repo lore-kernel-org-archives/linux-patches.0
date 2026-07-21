@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A2E3F12CE;
-	Tue, 21 Jul 2026 17:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E273F12CE;
+	Tue, 21 Jul 2026 17:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654313; cv=none; b=D8WK83BWLUUbb2OjaFhwEZqeSFpVZ/Wntcf0DBm8SNEj7zIVDi5MLqRPtJyMi9RhX6u6si3Jla2l8+lSq5dynsB/rs9qNSnZySrL5IWt6e9axQTbKd1QHEVUsw2gPk6A8WsUAVNBhG3SUMy7dxNE4C2JzrQv6TdxPK8S60JVsl8=
+	t=1784654316; cv=none; b=ThpLcVsy6ChGNSdYSTPUVZNgEmWyNlqGVGunVJWtTLKdkHAPTFZJNyV/BTSi3qCn+i5BRxaXEevoYHJoSgtwVPnhoE+19BB6fqgSzjqWA/aO26FLVC+GCYVEbI1aZxePeCeNbXL7WVYDnUuXh7G6iRLGHgFC4AMZqjKP54hCgDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654313; c=relaxed/simple;
-	bh=6x0Fs54yea8Q5wjhE3G9pgg8ES1iTwKq/Gmj33jQUsU=;
+	s=arc-20240116; t=1784654316; c=relaxed/simple;
+	bh=JlLO6thW4n6fFqTnopq2owNubX69RhG5ITZpxrxii04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rppnA1TDWwEml7lKnmDkyRMKw8E6ImC/KjePEF2iLmaUVF7Z1kozHIB8dNgyiXICTGHy/i4sb3u/6q4LvlawqDV8reBfxeb/biLSVcVnRgspnINNZrNGNGmOMwbrHaFSjxDDIkpXODamyK9dxrUkgNI5M9EMQDP9mYYz1T5HQAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJBEQLg5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P8WgmBzR1MT745NL/dp3w8MNko4/yk6xFHPxHfVYv9Ma1jaosygKa3sz9wiP3iWQCkclZiGK+BAeR8YZ5eBkiwYlH3R3kGkAtqKScOK2/+iBXCm8iTBseZO71eM7p+1YbFM3A/jcvm7fud/RuYpIAh8DMetXoYhv7gjIgn3XeRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIoKSQO5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJBEQLg5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985A21F000E9;
-	Tue, 21 Jul 2026 17:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIoKSQO5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422271F000E9;
+	Tue, 21 Jul 2026 17:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654312;
-	bh=lc3yuhZ59qbeJmEXtVBoftjBS8ZKF7tRAVJwUvmuUns=;
+	s=korg; t=1784654314;
+	bh=UI2VxE2+2SprlKw1F3Y44t8w/mKa3wiNzQgneWFgBA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yJBEQLg5RxnbkNKmv1JuNFlIfBLXU1t/ix6Adlu81cmZ2Zj8GbQLIIeV1xz5Dx+6E
-	 jGyE3Bh9tneWbH6BPIxpB4md50EToseShubeVMKzQorYVEStXa0OWfGcrFmgDOAEYK
-	 toIP/S+yiXjF20HNn1BLnLg+B7amJIHsHoiiwwMM=
+	b=yIoKSQO56KsOMXiUEfz6wqO7Yln8d34RHrL9DS4AueiQqjsBOAUSftl96RkXmAVaH
+	 dxPBX9Iz9YCl2iCwGadMOUTjuIoS5Qpop3oXSPwMf+DSydbUmkiEa9xFr4FEUI7TRi
+	 qPOVs50Bm1bK9Ovs2yjgfHGtPfRsveDZ5DpHoJHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Duje=20Mihanovi=C4=87?= <duje@dujemihanovic.xyz>,
-	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 7.1 1655/2077] backlight: ktd2801: Enable BL_CORE_SUSPENDRESUME
-Date: Tue, 21 Jul 2026 17:22:08 +0200
-Message-ID: <20260721152631.783182010@linuxfoundation.org>
+	Terry Bowman <terry.bowman@amd.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Ben Cheatham <benjamin.cheatham@amd.com>,
+	Richard Cheng <icheng@nvidia.com>
+Subject: [PATCH 7.1 1656/2077] cxl: Fix CXL_HEADERLOG_SIZE to match RAS Capability size
+Date: Tue, 21 Jul 2026 17:22:09 +0200
+Message-ID: <20260721152631.806544023@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,42 +47,221 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Duje Mihanović <duje@dujemihanovic.xyz>
+From: Terry Bowman <terry.bowman@amd.com>
 
-commit f37f5a2ac9d3737617c08f0dc7270b42e9cad907 upstream.
+commit c268f949e219f9e179558e836f457f6c5fbec416 upstream.
 
-Boards using this backlight chip do not power the backlight off on
-suspend. Enable BL_CORE_SUSPENDRESUME so the chip gets powered off by
-the backlight core on suspend.
+The CXL r4.0 8.2.4.17.7 RAS Capability Structure has total length 0x58
+bytes (CXL_RAS_CAPABILITY_LENGTH); the Header Log occupies the trailing
+64 bytes at offset 0x18.  CXL_HEADERLOG_SIZE was defined as SZ_512,
+eight times the actual on-device size.
 
-Tested on samsung,coreprimevelte.
+header_log_copy() reads CXL_HEADERLOG_SIZE_U32 (128) dwords from the
+RAS capability iomap, overrunning the 88-byte mapping by 448 bytes.
+The cxl_aer_uncorrectable_error trace event memcpy()s CXL_HEADERLOG_SIZE
+(512) bytes from its source.  For the CPER caller the source is
+struct cxl_ras_capability_regs::header_log[16] (64 bytes) embedded in a
+stack-local cxl_cper_prot_err_work_data, so the memcpy reads 448 bytes
+of kernel stack into the trace event ring buffer where userspace can
+read it via tracefs.
 
-Cc: stable@vger.kernel.org # v6.19
-Signed-off-by: Duje Mihanović <duje@dujemihanovic.xyz>
-Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
-Link: https://patch.msgid.link/20260328-ktd2801-pm-fix-v1-1-007cb103faeb@dujemihanovic.xyz
-Signed-off-by: Lee Jones <lee@kernel.org>
+Set CXL_HEADERLOG_SIZE to 64 and derive CXL_HEADERLOG_SIZE_U32 from it,
+bringing all iomap readers into agreement on 16 dwords.  Userspace tools
+such as rasdaemon have grown a dependency on the buggy 512-byte (128 u32)
+header_log layout in the cxl_aer_uncorrectable_error trace event.  Add
+CXL_HEADERLOG_TRACE_SIZE_U32 = 128 and use it for the trace event
+__array and its memcpy to preserve that ABI.  Both callers now pass a
+zero-filled u32[CXL_HEADERLOG_TRACE_SIZE_U32] staging buffer with only
+the first CXL_HEADERLOG_SIZE_U32 (16) entries populated from hardware;
+the remaining 112 u32s are zero-padded, keeping the 512-byte trace ring
+buffer layout intact.
+
+[ dj: Replaced 64 with SZ_64 per RichardC ]
+
+Fixes: 36f257e3b0ba ("acpi/ghes, cxl/pci: Process CXL CPER Protocol Errors")
+Fixes: 2905cb5236cb ("cxl/pci: Add (hopeful) error handling support")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko
+Signed-off-by: Terry Bowman <terry.bowman@amd.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Ben Cheatham <benjamin.cheatham@amd.com>
+Reviewed-by: Richard Cheng <icheng@nvidia.com>
+Link: https://patch.msgid.link/20260605180610.2249458-1-terry.bowman@amd.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/backlight/ktd2801-backlight.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/cxl/core/ras.c   |   27 ++++++++++++++++++++-------
+ drivers/cxl/core/trace.h |   24 ++++++++++++++++--------
+ drivers/cxl/cxl.h        |   14 ++++++++++++--
+ 3 files changed, 48 insertions(+), 17 deletions(-)
 
---- a/drivers/video/backlight/ktd2801-backlight.c
-+++ b/drivers/video/backlight/ktd2801-backlight.c
-@@ -53,6 +53,7 @@ static int ktd2801_update_status(struct
+--- a/drivers/cxl/core/ras.c
++++ b/drivers/cxl/core/ras.c
+@@ -8,6 +8,10 @@
+ #include <cxlpci.h>
+ #include "trace.h"
+ 
++/* Check that UCE header definition is maintained to keep ABI intact  */
++static_assert(CXL_HEADERLOG_TRACE_SIZE_U32 == 128,
++	      "rasdaemon ABI requires exactly 128 u32s");
++
+ static void cxl_cper_trace_corr_port_prot_err(struct pci_dev *pdev,
+ 					      struct cxl_ras_capability_regs ras_cap)
+ {
+@@ -19,6 +23,7 @@ static void cxl_cper_trace_corr_port_pro
+ static void cxl_cper_trace_uncorr_port_prot_err(struct pci_dev *pdev,
+ 						struct cxl_ras_capability_regs ras_cap)
+ {
++	u32 hl[CXL_HEADERLOG_TRACE_SIZE_U32] = {};
+ 	u32 status = ras_cap.uncor_status & ~ras_cap.uncor_mask;
+ 	u32 fe;
+ 
+@@ -28,8 +33,8 @@ static void cxl_cper_trace_uncorr_port_p
+ 	else
+ 		fe = status;
+ 
+-	trace_cxl_port_aer_uncorrectable_error(&pdev->dev, status, fe,
+-					       ras_cap.header_log);
++	memcpy(hl, ras_cap.header_log, CXL_HEADERLOG_SIZE);
++	trace_cxl_port_aer_uncorrectable_error(&pdev->dev, status, fe, hl);
  }
  
- static const struct backlight_ops ktd2801_backlight_ops = {
-+	.options = BL_CORE_SUSPENDRESUME,
- 	.update_status = ktd2801_update_status,
- };
+ static void cxl_cper_trace_corr_prot_err(struct cxl_memdev *cxlmd,
+@@ -44,6 +49,7 @@ static void
+ cxl_cper_trace_uncorr_prot_err(struct cxl_memdev *cxlmd,
+ 			       struct cxl_ras_capability_regs ras_cap)
+ {
++	u32 hl[CXL_HEADERLOG_TRACE_SIZE_U32] = {};
+ 	u32 status = ras_cap.uncor_status & ~ras_cap.uncor_mask;
+ 	u32 fe;
  
+@@ -53,8 +59,15 @@ cxl_cper_trace_uncorr_prot_err(struct cx
+ 	else
+ 		fe = status;
+ 
+-	trace_cxl_aer_uncorrectable_error(cxlmd, status, fe,
+-					  ras_cap.header_log);
++	/*
++	 * ras_cap.header_log[] holds CXL_HEADERLOG_SIZE_U32 (16) hardware
++	 * dwords.  Copy them into the front of a zero-filled
++	 * CXL_HEADERLOG_TRACE_SIZE_U32 (128) u32 staging buffer so the trace
++	 * event memcpy sees a full 512-byte source and the userspace ABI
++	 * (rasdaemon) is preserved.
++	 */
++	memcpy(hl, ras_cap.header_log, CXL_HEADERLOG_SIZE);
++	trace_cxl_aer_uncorrectable_error(cxlmd, status, fe, hl);
+ }
+ 
+ static int match_memdev_by_parent(struct device *dev, const void *uport)
+@@ -204,12 +217,12 @@ static void header_log_copy(void __iomem
+ {
+ 	void __iomem *addr;
+ 	u32 *log_addr;
+-	int i, log_u32_size = CXL_HEADERLOG_SIZE / sizeof(u32);
++	int i;
+ 
+ 	addr = ras_base + CXL_RAS_HEADER_LOG_OFFSET;
+ 	log_addr = log;
+ 
+-	for (i = 0; i < log_u32_size; i++) {
++	for (i = 0; i < CXL_HEADERLOG_SIZE_U32; i++) {
+ 		*log_addr = readl(addr);
+ 		log_addr++;
+ 		addr += sizeof(u32);
+@@ -222,7 +235,7 @@ static void header_log_copy(void __iomem
+  */
+ bool cxl_handle_ras(struct device *dev, void __iomem *ras_base)
+ {
+-	u32 hl[CXL_HEADERLOG_SIZE_U32];
++	u32 hl[CXL_HEADERLOG_TRACE_SIZE_U32] = {};
+ 	void __iomem *addr;
+ 	u32 status;
+ 	u32 fe;
+--- a/drivers/cxl/core/trace.h
++++ b/drivers/cxl/core/trace.h
+@@ -56,7 +56,7 @@ TRACE_EVENT(cxl_port_aer_uncorrectable_e
+ 		__string(host, dev_name(dev->parent))
+ 		__field(u32, status)
+ 		__field(u32, first_error)
+-		__array(u32, header_log, CXL_HEADERLOG_SIZE_U32)
++		__array(u32, header_log, CXL_HEADERLOG_TRACE_SIZE_U32)
+ 	),
+ 	TP_fast_assign(
+ 		__assign_str(device);
+@@ -64,10 +64,14 @@ TRACE_EVENT(cxl_port_aer_uncorrectable_e
+ 		__entry->status = status;
+ 		__entry->first_error = fe;
+ 		/*
+-		 * Embed the 512B headerlog data for user app retrieval and
+-		 * parsing, but no need to print this in the trace buffer.
++		 * Embed headerlog data for user app retrieval and parsing,
++		 * but no need to print in the trace buffer. Only
++		 * CXL_HEADERLOG_SIZE_U32 (16) dwords are hardware data;
++		 * the remaining entries preserve the 512-byte ABI layout
++		 * rasdaemon depends on and are zero-filled by the caller.
+ 		 */
+-		memcpy(__entry->header_log, hl, CXL_HEADERLOG_SIZE);
++		memcpy(__entry->header_log, hl,
++			CXL_HEADERLOG_TRACE_SIZE_U32 * sizeof(u32));
+ 	),
+ 	TP_printk("device=%s host=%s status: '%s' first_error: '%s'",
+ 		  __get_str(device), __get_str(host),
+@@ -85,7 +89,7 @@ TRACE_EVENT(cxl_aer_uncorrectable_error,
+ 		__field(u64, serial)
+ 		__field(u32, status)
+ 		__field(u32, first_error)
+-		__array(u32, header_log, CXL_HEADERLOG_SIZE_U32)
++		__array(u32, header_log, CXL_HEADERLOG_TRACE_SIZE_U32)
+ 	),
+ 	TP_fast_assign(
+ 		__assign_str(memdev);
+@@ -94,10 +98,14 @@ TRACE_EVENT(cxl_aer_uncorrectable_error,
+ 		__entry->status = status;
+ 		__entry->first_error = fe;
+ 		/*
+-		 * Embed the 512B headerlog data for user app retrieval and
+-		 * parsing, but no need to print this in the trace buffer.
++		 * Embed headerlog data for user app retrieval and parsing,
++		 * but no need to print in the trace buffer. Only
++		 * CXL_HEADERLOG_SIZE_U32 (16) dwords are hardware data;
++		 * the remaining entries preserve the 512-byte ABI layout
++		 * rasdaemon depends on and are zero-filled by the caller.
+ 		 */
+-		memcpy(__entry->header_log, hl, CXL_HEADERLOG_SIZE);
++		memcpy(__entry->header_log, hl,
++			CXL_HEADERLOG_TRACE_SIZE_U32 * sizeof(u32));
+ 	),
+ 	TP_printk("memdev=%s host=%s serial=%lld: status: '%s' first_error: '%s'",
+ 		  __get_str(memdev), __get_str(host), __entry->serial,
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -158,8 +158,18 @@ static inline int ways_to_eiw(unsigned i
+ #define CXL_RAS_CAP_CONTROL_FE_MASK GENMASK(5, 0)
+ #define CXL_RAS_HEADER_LOG_OFFSET 0x18
+ #define CXL_RAS_CAPABILITY_LENGTH 0x58
+-#define CXL_HEADERLOG_SIZE SZ_512
+-#define CXL_HEADERLOG_SIZE_U32 SZ_512 / sizeof(u32)
++#define CXL_HEADERLOG_SIZE SZ_64
++#define CXL_HEADERLOG_SIZE_U32 (CXL_HEADERLOG_SIZE / sizeof(u32))
++
++/*
++ * The RAS UCE trace event header array was originally sized at SZ_512/sizeof(u32)
++ * = 128 u32s due to a bug. Userspace tools (rasdaemon) have grown a dependency
++ * on that 512-byte layout. Keep the trace array at 128 u32s to preserve the
++ * ABI; only CXL_HEADERLOG_SIZE_U32 (16) dwords are valid hardware data, the
++ * remainder are zero-filled.
++ */
++#define CXL_HEADERLOG_TRACE_SIZE SZ_512
++#define CXL_HEADERLOG_TRACE_SIZE_U32 (CXL_HEADERLOG_TRACE_SIZE / sizeof(u32))
+ 
+ /* CXL 2.0 8.2.8.1 Device Capabilities Array Register */
+ #define CXLDEV_CAP_ARRAY_OFFSET 0x0
 
 
