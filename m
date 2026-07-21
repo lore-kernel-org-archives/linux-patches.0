@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4F3427A10;
-	Tue, 21 Jul 2026 19:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B87546D549;
+	Tue, 21 Jul 2026 19:17:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661476; cv=none; b=oW8eYsW2QtIAka8RQrdzkDW/gu+YsUkXw4Ur61ehxqWnqEHO60x49CpRgBp34huhuB7l0Wnd/8ysF5mfqEVTcLxZGmBZ2cs9SzQzQH3dGDz4JbmnMhAGSWSVc0Tl90Bxb/ZGyTCQuqI3I6gD7tJCT4G3zanusZmO1fYy9Creiec=
+	t=1784661478; cv=none; b=V9MXbIYE8RZpdkMNuhw5KlefiyLio74h4lmaa1AWXCLl7MbjmmVZIkjbkn+eYpGPIMLFt4CEquHC0T++q8fzTcyxD7pdtYpnt6Pparr+XTXcL6Cqh/yqmIrTGyN6CBG26ILu7fELBJv6lddh/LD92yEsdtCCIQXZc4cgxxtAQQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661476; c=relaxed/simple;
-	bh=OV9vyiwp5d6hqrKIllR7fEOGVtKn/NrwsMpvXAQ/KuI=;
+	s=arc-20240116; t=1784661478; c=relaxed/simple;
+	bh=GP3ENy2qtQPwmF61R5oRF+mMHPTQ6OuQy3TJtSHFkLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ban+rzOKPhg6PG9wNvERgfqkushOoSZ1KEhglHT+Bv0vUgoHU71tLhxI2muiT8pFSijnh8lRkoOhLn9JEQiwWoi1FMwx7rtVnuYsM3HT4zxsVnmktcVYfO/NqgO/lHoy4P5r3ojc1otUbHOh3LmksOLgmGO8z11IsjoVfgSBRc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omUdlU/0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DmYOpG6OSl1TmGtiHh9OAoNKYmeXEdbaUNb83BSiIFSB5Nf6uqzsIbILBMDbTYwMT/PQyCzC5qRFQIhnksEffyFe104s5ddMyiqzGUIwKgzkYfzFodu7I/0VKWPtLP3IeM9UqgfLR33sk5brnbBYiEtzKq0wIBD0HmCE3QeBsqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmM3ftRm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omUdlU/0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EACEB1F00A3A;
-	Tue, 21 Jul 2026 19:17:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmM3ftRm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F70B1F000E9;
+	Tue, 21 Jul 2026 19:17:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661473;
-	bh=qJJpOEcbrf41zizz7ARzqt+ganGHKpgH6hyQD6pkebI=;
+	s=korg; t=1784661476;
+	bh=cevU2vwJDkdhgUSuP5kmIPxIE/xkbQjvtw/f4GGFJsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=omUdlU/00CpdYaSXbCbfdHjqgsTxPZYQf4RH2CZuhcNjRljDjqoyGopPTGnBbcush
-	 xCGyNTVxwFUeNsz3v8wLMsZjieZKbfIGpLf2d0jP/owMP4oU6nGpmEcaVINgZCyFtd
-	 eA6SSTXBc49zrP6PHBRH9UQ61SQcMc3m9iiXRLIM=
+	b=tmM3ftRmjt4C1cLXHxa6jVy5xagn1KrGRBmLQ6KmT4+3DvuKHu/W4d7pjHQVssh0P
+	 IrNWiMpcBWAZR+9TIrV/NZQcJhrhqlu/ohdkPwuFq7WIBsYXoHoe0yvdeuoMoAqSBH
+	 RLjviE3/9p4tarW7jvnXJ7aLawCX0c1uWTEUw+WY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Xingjing Deng <micro6947@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0079/1276] wifi: rtw88: fix OOB read from firmware RX descriptor exceeding DMA buffer
-Date: Tue, 21 Jul 2026 17:08:42 +0200
-Message-ID: <20260721152447.862281301@linuxfoundation.org>
+Subject: [PATCH 6.12 0080/1276] kconfig: fix potential NULL pointer dereference in conf_askvalue
+Date: Tue, 21 Jul 2026 17:08:43 +0200
+Message-ID: <20260721152447.884506849@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,45 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Xingjing Deng <micro6947@gmail.com>
 
-[ Upstream commit 6e76e9ed273dfb4b3333a5ebbb94958cc5752ab6 ]
+[ Upstream commit b9d21c32dca2167a614e66c9e27999b9e1c33d55 ]
 
-In rtw_pci_rx_napi(), new_len is computed as the sum of pkt_len (14-bit
-descriptor field, max 16383) and pkt_offset (drv_info_sz + shift, both
-firmware-controlled). The result can exceed RTK_PCI_RX_BUF_SIZE (11478),
-causing an out-of-bounds read from the pre-allocated DMA buffer when
-skb_put_data copies new_len bytes. The USB transport already validates
-this (rtw_usb_rx_data_put checks against RTW_USB_MAX_RECVBUF_SZ); the
-PCIe path does not.
+In conf_askvalue(), the 'def' argument (retrieved via sym_get_string_value)
+can be NULL. While current call sites ensure that 'def' is valid,
+calling printf("%s\n", def) is technically undefined behavior and could
+lead to a segmentation fault on certain libc implementations if the
+function were called with a NULL pointer in the future.
 
-Add a check that new_len does not exceed the DMA buffer size.
+Improve the robustness of conf_askvalue() by providing an empty string
+as a fallback.
 
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260421111434.3389674-1-tristmd@gmail.com
+Additionally, remove the redundant re-initialization of the 'line'
+buffer inside the !sym_is_changeable(sym) block, as it is already
+properly initialized at the function entry.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Xingjing Deng <micro6947@gmail.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20260306021709.27068-1-micro6947@gmail.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/pci.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ scripts/kconfig/conf.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/pci.c b/drivers/net/wireless/realtek/rtw88/pci.c
-index 7e33518ce311e8..f58a5a1a083c04 100644
---- a/drivers/net/wireless/realtek/rtw88/pci.c
-+++ b/drivers/net/wireless/realtek/rtw88/pci.c
-@@ -1076,6 +1076,11 @@ static u32 rtw_pci_rx_napi(struct rtw_dev *rtwdev, struct rtw_pci *rtwpci,
- 		 * discard the frame if none available
- 		 */
- 		new_len = pkt_stat.pkt_len + pkt_offset;
-+		if (unlikely(new_len > RTK_PCI_RX_BUF_SIZE)) {
-+			rtw_dbg(rtwdev, RTW_DBG_RX,
-+				"oversized RX packet: %u\n", new_len);
-+			goto next_rp;
-+		}
- 		new = dev_alloc_skb(new_len);
- 		if (WARN_ONCE(!new, "rx routine starvation\n"))
- 			goto next_rp;
+diff --git a/scripts/kconfig/conf.c b/scripts/kconfig/conf.c
+index 3d7d454c54da3c..7f4b371ef41f30 100644
+--- a/scripts/kconfig/conf.c
++++ b/scripts/kconfig/conf.c
+@@ -297,9 +297,7 @@ static int conf_askvalue(struct symbol *sym, const char *def)
+ 	line[1] = 0;
+ 
+ 	if (!sym_is_changeable(sym)) {
+-		printf("%s\n", def);
+-		line[0] = '\n';
+-		line[1] = 0;
++		printf("%s\n", def ?: "");
+ 		return 0;
+ 	}
+ 
+@@ -307,7 +305,7 @@ static int conf_askvalue(struct symbol *sym, const char *def)
+ 	case oldconfig:
+ 	case syncconfig:
+ 		if (sym_has_value(sym)) {
+-			printf("%s\n", def);
++			printf("%s\n", def ?: "");
+ 			return 0;
+ 		}
+ 		/* fall through */
 -- 
 2.53.0
 
