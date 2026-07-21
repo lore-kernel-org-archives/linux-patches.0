@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31AD46C4D9;
-	Tue, 21 Jul 2026 19:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F9C46A60E;
+	Tue, 21 Jul 2026 19:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661671; cv=none; b=WsTzAfU+ga0tyTBV+OgKp+TG+x4qPe+wtqEh/bnmzrnT/+gG31W8Gf28Km/goQAoeOAOATUVa9N2oNRcOtbIchxqW7DUorpnwl4AbrhYCU8jxUUN02Rwy0rnjhvhGsEnM3edeylIy5AGjP83XlwR8jI2bTmCZ3onworI4YnH694=
+	t=1784661673; cv=none; b=FWstzzOo74NFtX8vjVDFOeGWIVYskUzdZPzhBC7yAyOywC0lg0eulPiVCGQi04KeSOoBOtwHLkCebbV5S7pcR4aukaLfcflxWyiIR8JYNbmpMJ6m083kqjgTLdLUXLE5/jKQTEHtZZ4v8rYq6ZeIR6WUGI7+EWVb/+eIf43J/g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661671; c=relaxed/simple;
-	bh=BJ5W3ZkVLHHeXO7bQvViQWvUNDewAYE7qn+jJMQ2fL4=;
+	s=arc-20240116; t=1784661673; c=relaxed/simple;
+	bh=WXkPBzWw2MsVm9k+3fe2cgT+4YpTrkg5L98gZDmBhGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LC7CLTLTbm/zMkkgPTgwS3gQrof5dWVZEsYKfvgF2S2OwTgO0ANVuu/V6U9E69VB7Xxyb0NG/dCm9s9PIDzOID4I1Ul+6R3Y1J/gRfZUXssFwfF5zVx5WTAQgtO9oK5dcZieIrAXR3dppgYjqmBsToeyNb6yhfnIx1T7cPfBq44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCbmXHLF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cs5FSrppqq/ryI7vRJNjrbWeQWgV5u56at61ATSaoOv9NAxPD2HkdAiIrQSZFUqCBuR/Oficfzy1g5sBct70KVJOtUamvu3UB26EEFfSSRv7a6S2X5NuoPyROoM7bGt9pRHT2IVTKtlLiqGW/dycp+WCUePSFyet+SGbwBHj13A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JR3dgicf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCbmXHLF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8091F000E9;
-	Tue, 21 Jul 2026 19:21:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JR3dgicf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E361F000E9;
+	Tue, 21 Jul 2026 19:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661669;
-	bh=ZxIdPwT69JagsfdRYzmYAKDQcU7/Ti9tE7iX5xN09Sc=;
+	s=korg; t=1784661672;
+	bh=TG39Us+2FlHiCRN27Dcwe/LkbR2zGvp8BFHa8TU9l58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JCbmXHLFUMXqZ4ZOY8a5nJ51OK8SqOb2hU4Dpqch/u2J28riGPmLx1yiU6F3tUz0X
-	 5d/e8eeEEtH3s1HD6G/zRJ21iBIIquKfwvq+wbov2OepxU7iLgo+vjNg8GE9UyJKrz
-	 WC0NtLn1sxSR5QTcMu0NjnTmD+5iwIIFXvXu0k7o=
+	b=JR3dgicfRKmnj0l/Vr66mAXx8BFrqyg5gkHlR8ZkjmxPbvmf9gEayK02p1wAjEXEU
+	 TSq1EdHrHDJYD9I3C/xEOKnrqd+CFn8j1U50IPm3/uMckuJwEybXwE6VP0PyWoiGUX
+	 oPz10Yvn+FlJtldUqk/twI82bRX3+9Qg5W5XIfmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	=?UTF-8?q?Sven=20P=C3=BCschel?= <s.pueschel@pengutronix.de>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0137/1276] media: rockchip: rga: fix too small buffer size
-Date: Tue, 21 Jul 2026 17:09:40 +0200
-Message-ID: <20260721152449.166844663@linuxfoundation.org>
+Subject: [PATCH 6.12 0155/1276] IB/mlx4: Fix refcount leak in add_port() error path
+Date: Tue, 21 Jul 2026 17:09:58 +0200
+Message-ID: <20260721152449.570385985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,64 +45,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Püschel <s.pueschel@pengutronix.de>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 65017e26c065d1240b0512c15867ef1128034fd8 ]
+[ Upstream commit 9a8826fdfbcd7ed2ccf745f5d54208358d939def ]
 
-Fix the command buffer size being only a quarter of the actual size.
-The RGA_CMDBUF_SIZE macro was potentially intended to specify the length
-of the cmdbuf u32 array pointer. But as it's used to specify the size of
-the allocation, which is counted in bytes. Therefore adjust the macro
-size to bytes as it better matches the variable name and adjust it's
-users accordingly.
+After kobject_init_and_add(), the lifetime of the embedded struct
+kobject is expected to be managed through the kobject core reference
+counting.
 
-As the command buffer is relatively small, it probably didn't caused
-an issue due to being smaller than a single page.
+In add_port(), failure paths after kobject_init_and_add() must not free
+struct mlx4_port directly, because the embedded kobject is then managed
+by the kobject core. Freeing it directly leaves the kobject reference
+counting unbalanced and can lead to incorrect lifetime handling.
 
-Fixes: f7e7b48e6d79 ("[media] rockchip/rga: v4l2 m2m support")
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Sven Püschel <s.pueschel@pengutronix.de>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Allocate the pkey and gid attribute arrays before kobject_init_and_add(),
+so failures before kobject initialization can be handled by directly
+freeing the allocated memory. Once kobject_init_and_add() has been
+called, unwind later failures by removing any successfully created sysfs
+groups, calling kobject_del(), and then releasing the embedded kobject
+with kobject_put().
+
+Fixes: c1e7e466120b ("IB/mlx4: Add iov directory in sysfs under the ib device")
+Link: https://patch.msgid.link/r/20260518021910.972900-1-lgs201920130244@gmail.com
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/rockchip/rga/rga-hw.c | 2 +-
- drivers/media/platform/rockchip/rga/rga-hw.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/mlx4/sysfs.c | 45 ++++++++++++++++++------------
+ 1 file changed, 27 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/media/platform/rockchip/rga/rga-hw.c b/drivers/media/platform/rockchip/rga/rga-hw.c
-index b2ef3beec5258a..7de6f80fdce7e5 100644
---- a/drivers/media/platform/rockchip/rga/rga-hw.c
-+++ b/drivers/media/platform/rockchip/rga/rga-hw.c
-@@ -414,7 +414,7 @@ static void rga_cmd_set(struct rga_ctx *ctx,
- {
- 	struct rockchip_rga *rga = ctx->rga;
+diff --git a/drivers/infiniband/hw/mlx4/sysfs.c b/drivers/infiniband/hw/mlx4/sysfs.c
+index 88f534cf690e92..1676f819c2f760 100644
+--- a/drivers/infiniband/hw/mlx4/sysfs.c
++++ b/drivers/infiniband/hw/mlx4/sysfs.c
+@@ -638,12 +638,6 @@ static int add_port(struct mlx4_ib_dev *dev, int port_num, int slave)
+ 	p->port_num = port_num;
+ 	p->slave = slave;
  
--	memset(rga->cmdbuf_virt, 0, RGA_CMDBUF_SIZE * 4);
-+	memset(rga->cmdbuf_virt, 0, RGA_CMDBUF_SIZE);
+-	ret = kobject_init_and_add(&p->kobj, &port_type,
+-				   kobject_get(dev->dev_ports_parent[slave]),
+-				   "%d", port_num);
+-	if (ret)
+-		goto err_alloc;
+-
+ 	p->pkey_group.name  = "pkey_idx";
+ 	p->pkey_group.attrs =
+ 		alloc_group_attrs(show_port_pkey,
+@@ -651,13 +645,9 @@ static int add_port(struct mlx4_ib_dev *dev, int port_num, int slave)
+ 				  dev->dev->caps.pkey_table_len[port_num]);
+ 	if (!p->pkey_group.attrs) {
+ 		ret = -ENOMEM;
+-		goto err_alloc;
++		goto err_free_port;
+ 	}
  
- 	rga_cmd_set_src_addr(ctx, src->dma_desc_pa);
- 	/*
-diff --git a/drivers/media/platform/rockchip/rga/rga-hw.h b/drivers/media/platform/rockchip/rga/rga-hw.h
-index e8917e5630a48d..03990fd30f158c 100644
---- a/drivers/media/platform/rockchip/rga/rga-hw.h
-+++ b/drivers/media/platform/rockchip/rga/rga-hw.h
-@@ -6,7 +6,7 @@
- #ifndef __RGA_HW_H__
- #define __RGA_HW_H__
+-	ret = sysfs_create_group(&p->kobj, &p->pkey_group);
+-	if (ret)
+-		goto err_free_pkey;
+-
+ 	p->gid_group.name  = "gid_idx";
+ 	p->gid_group.attrs = alloc_group_attrs(show_port_gid_idx, NULL, 1);
+ 	if (!p->gid_group.attrs) {
+@@ -665,28 +655,47 @@ static int add_port(struct mlx4_ib_dev *dev, int port_num, int slave)
+ 		goto err_free_pkey;
+ 	}
  
--#define RGA_CMDBUF_SIZE 0x20
-+#define RGA_CMDBUF_SIZE 0x80
++	ret = kobject_init_and_add(&p->kobj, &port_type,
++				   kobject_get(dev->dev_ports_parent[slave]),
++				   "%d", port_num);
++	if (ret)
++		goto err_put;
++
++	ret = sysfs_create_group(&p->kobj, &p->pkey_group);
++	if (ret)
++		goto err_del;
++
+ 	ret = sysfs_create_group(&p->kobj, &p->gid_group);
+ 	if (ret)
+-		goto err_free_gid;
++		goto err_remove_pkey;
  
- /* Hardware limits */
- #define MAX_WIDTH 8192
+ 	ret = add_vf_smi_entries(p);
+ 	if (ret)
+-		goto err_free_gid;
++		goto err_remove_gid;
+ 
+ 	list_add_tail(&p->kobj.entry, &dev->pkeys.pkey_port_list[slave]);
+ 	return 0;
+ 
+-err_free_gid:
+-	kfree(p->gid_group.attrs[0]);
+-	kfree(p->gid_group.attrs);
++err_remove_gid:
++	sysfs_remove_group(&p->kobj, &p->gid_group);
++
++err_remove_pkey:
++	sysfs_remove_group(&p->kobj, &p->pkey_group);
++
++err_del:
++	kobject_del(&p->kobj);
++
++err_put:
++	kobject_put(dev->dev_ports_parent[slave]);
++	kobject_put(&p->kobj);
++	return ret;
+ 
+ err_free_pkey:
+ 	for (i = 0; i < dev->dev->caps.pkey_table_len[port_num]; ++i)
+ 		kfree(p->pkey_group.attrs[i]);
+ 	kfree(p->pkey_group.attrs);
+ 
+-err_alloc:
+-	kobject_put(dev->dev_ports_parent[slave]);
++err_free_port:
+ 	kfree(p);
+ 	return ret;
+ }
 -- 
 2.53.0
 
