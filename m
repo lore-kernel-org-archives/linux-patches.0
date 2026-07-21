@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6AF3B8412;
-	Tue, 21 Jul 2026 21:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1E544AB62;
+	Tue, 21 Jul 2026 21:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670850; cv=none; b=JQxSa65OmpNr8woyPOyBz8AvnA1gkYQWzx9ZC7h4kdL2zIVBwamW2JKaifsbp3ali7JUtNWbQT7OhN03+qEGMmLMRVTxbkkHlfPYG2tYIrXj51Sta2RZU8IM5txch6W1ViWALZQDlZ6nUmO/GYTHb1jTgufGjRinnwfzDicqIPQ=
+	t=1784670853; cv=none; b=qS3nGT6kl+jrZj6fog/W1SjrYRiZEhOtSuvZhey0ggMSIw0UJKm4qsKgM/bW9RtcjfEwm0uDASglhr8xjUsZWsI6wbSZr6hqFLmqALT3qZAb8RluuuK0Gzm55H3NB18KlxxYazTRTyXpQsX4YXWB2ALr7/5+qcu7ynjYEtwltdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670850; c=relaxed/simple;
-	bh=6AGYB3IjiYiCdYxJ2nOVroN6ZcLT5jjIpiNJFTDIorI=;
+	s=arc-20240116; t=1784670853; c=relaxed/simple;
+	bh=duxw/cZi3zIu409MfDBjuOKsvot7SN7thspv96gYeq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XQXzRBKIA1aRHidk4M3jzmI625TO/yMi2A/inLYTU21BIju4BIHrPyKMzxfsz9qziR2Pw2aB/wnb80Nh9ZXD3yD+SeRKjZXxjNoAcvQ4rDEkQC7n0IrYw5OlhG2tW2yXhjXTdXvnk9AFCd6InMZyaNpfxMYGL51c2cEj39YMGi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8fwdssX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WyAnMBlkctnzVd0CVbEzKxeubePtwQiyICtM+F0sbd146E3mkgUaH1aiXaqx1cz7qtalgzLaF7IiB0rZH6lPtIOL4yiYg7h+FhiO+uchIsJtTrxEa1LSzZ3vz/IPo+NZCANpSRILpMVH7YL1JXcdamXZg50ufn8yoJzOd7LPOcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LUgmVfMy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8fwdssX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3026F1F000E9;
-	Tue, 21 Jul 2026 21:54:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LUgmVfMy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEBFC1F000E9;
+	Tue, 21 Jul 2026 21:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670849;
-	bh=tzlxJqf+NY/iyvqu15IyowKV5xKURDcUekn9UUvahA0=;
+	s=korg; t=1784670852;
+	bh=mlc0Psc/UoulhSDWzOB7tua4yBHJcj1KVsFCBZ/wCwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g8fwdssXgD8K2ACbRwcAIClbRCGthAicj9dXds8B8ngDdlE2fknoKo5K2twrrDTRo
-	 hDOHP5AmqARyrDcB/CJdCwM1/r96l2ckvw9Ks+sOSpKdZ0flVOho46nY1FOMcQuey/
-	 zWzMxyzZ3alCZQ1dZmO75omyS12PrHC6qfYi32EM=
+	b=LUgmVfMyn3kDux8RpUNiJRGk18L/qm51f4ztsuSBCGQkGEJpToJK9zoPuvzS4+oGJ
+	 ktcsYV8Z1XQcZifY2oTHHfp5lZifVpqn2ICMCFm7GzVw/xO/XWw7sYzM48Ymd0txp5
+	 cX6OCiNvFFYsAX35IhUd+5g6Su6sxW7j0nOqb88s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 024/843] f2fs: fix to detect corrupted meta ino
-Date: Tue, 21 Jul 2026 17:14:19 +0200
-Message-ID: <20260721152406.507622599@linuxfoundation.org>
+Subject: [PATCH 5.15 025/843] f2fs: validate compress cache inode only when enabled
+Date: Tue, 21 Jul 2026 17:14:20 +0200
+Message-ID: <20260721152406.531223910@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,75 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-[ Upstream commit fcc2d8cc96b2f6141bbbe5b1e8953db990794b44 ]
+[ Upstream commit 5073c66a96a9c23c0c2533ed4ed06e42f9021208 ]
 
-It is possible that ino of dirent or orphan inode is corrupted in a
-fuzzed image, occasionally, if corrupted ino is equal to meta ino:
-meta_ino, node_ino or compress_ino, caller of f2fs_iget() from below
-call paths will get meta inode directly, it's not allowed, let's
-add sanity check to detect such cases.
+F2FS_COMPRESS_INO() uses NM_I(sbi)->max_nid as the synthetic inode
+number for the compressed page cache inode. That inode only exists when
+the compress_cache mount option is enabled.
 
-case #1
-- recover_dentry
- - __f2fs_find_entry
- - f2fs_iget_retry
+When compress_cache is disabled, max_nid is outside the valid inode
+range. A corrupted directory entry that points to ino == max_nid should
+therefore be rejected by f2fs_check_nid_range(). However, is_meta_ino()
+currently treats F2FS_COMPRESS_INO() as a meta inode unconditionally,
+so f2fs_iget() bypasses do_read_inode() and its nid range check, and
+instantiates a fake internal inode instead.
 
-case #2
-- recover_orphan_inode
- - f2fs_iget_retry
+Gate the compressed cache inode case on COMPRESS_CACHE, matching
+f2fs_init_compress_inode(). With compress_cache disabled, ino ==
+max_nid now follows the normal inode path and is rejected as an
+out-of-range nid.
 
-Signed-off-by: Chao Yu <chao@kernel.org>
+Cc: stable@kernel.org
+Fixes: 6ce19aff0b8c ("f2fs: compress: add compress_inode to cache compressed blocks")
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 5073c66a96a9 ("f2fs: validate compress cache inode only when enabled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/inode.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ fs/f2fs/inode.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 --- a/fs/f2fs/inode.c
 +++ b/fs/f2fs/inode.c
-@@ -496,6 +496,12 @@ static int do_read_inode(struct inode *i
- 	return 0;
+@@ -498,8 +498,13 @@ static int do_read_inode(struct inode *i
+ 
+ static bool is_meta_ino(struct f2fs_sb_info *sbi, unsigned int ino)
+ {
+-	return ino == F2FS_NODE_INO(sbi) || ino == F2FS_META_INO(sbi) ||
+-		ino == F2FS_COMPRESS_INO(sbi);
++	if (ino == F2FS_NODE_INO(sbi) || ino == F2FS_META_INO(sbi))
++		return true;
++#ifdef CONFIG_F2FS_FS_COMPRESSION
++	if (test_opt(sbi, COMPRESS_CACHE) && ino == F2FS_COMPRESS_INO(sbi))
++		return true;
++#endif
++	return false;
  }
  
-+static bool is_meta_ino(struct f2fs_sb_info *sbi, unsigned int ino)
-+{
-+	return ino == F2FS_NODE_INO(sbi) || ino == F2FS_META_INO(sbi) ||
-+		ino == F2FS_COMPRESS_INO(sbi);
-+}
-+
  struct inode *f2fs_iget(struct super_block *sb, unsigned long ino)
- {
- 	struct f2fs_sb_info *sbi = F2FS_SB(sb);
-@@ -507,16 +513,21 @@ struct inode *f2fs_iget(struct super_blo
- 		return ERR_PTR(-ENOMEM);
- 
- 	if (!(inode->i_state & I_NEW)) {
-+		if (is_meta_ino(sbi, ino)) {
-+			f2fs_err(sbi, "inaccessible inode: %lu, run fsck to repair", ino);
-+			set_sbi_flag(sbi, SBI_NEED_FSCK);
-+			ret = -EFSCORRUPTED;
-+			trace_f2fs_iget_exit(inode, ret);
-+			iput(inode);
-+			return ERR_PTR(ret);
-+		}
-+
- 		trace_f2fs_iget(inode);
- 		return inode;
- 	}
--	if (ino == F2FS_NODE_INO(sbi) || ino == F2FS_META_INO(sbi))
--		goto make_now;
- 
--#ifdef CONFIG_F2FS_FS_COMPRESSION
--	if (ino == F2FS_COMPRESS_INO(sbi))
-+	if (is_meta_ino(sbi, ino))
- 		goto make_now;
--#endif
- 
- 	ret = do_read_inode(inode);
- 	if (ret)
 
 
