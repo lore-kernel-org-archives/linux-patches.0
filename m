@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9545546F484;
-	Tue, 21 Jul 2026 19:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAC746EF91;
+	Tue, 21 Jul 2026 19:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660893; cv=none; b=VqJBpHGfylIyCAdVy7khUkgYDl7AAUUyUFvtdrRM5IIEz9ayAbfsLSmhcVNFfQewZqwrqiGw50TmCesCBFEqsfeJkPmiEgFVzZJpc+obvwQCiKBp/5W/ByV7BAvKoZXiDedJt4Y9EhOoWmVO/65hZ2D954KaLalRAK2gPTUHtkk=
+	t=1784660895; cv=none; b=EVlgP5ZBseR2xtuzQ73MX2NWkELMbY1RnBUXiJ/k4mJpk7seIdhf802951J3hy5894IOZUmLDSK0IN9dcckyd54asBhptXXdqbmXTZ1W5Bd0ygItzSbNp2Buut+Djj2YU1mgWZFKmhvmccOp++HDxHIIzn7KuxEFLHMx1HW842s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660893; c=relaxed/simple;
-	bh=lRSuBDIm3XstC8Rq2yggBApRaXqS1WFoHij8atPZKs4=;
+	s=arc-20240116; t=1784660895; c=relaxed/simple;
+	bh=DeMtrZweBU2jHPx+8dCqSk3EOrPcExrNhogPmF3V/fU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RrDuh9ASI1s6YR17aqwWn/sCtHvUilCTOEquWg7TEY/Jy0GAF0xdBTobsnRE0aOvdzUvOMHhcjednxz9YIXwgZLM+CjYJjGD4l0MZNQXb5c7jRamH59R1+9yZ3ludX3lfSXRNUC4jQRLzEcbqWrCGAhpTsHp9/SazzpGZUtjv+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zm2cjpPE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kefgLibLZTiweTsxaHiDbBzi1C1hnI/uvuCvijzDV5PdD9pLkajJnKmcx2V59YOaEdlz2cwH20Y8WKU68z7SenSpvY2/OKLpnbUCO77ObLORE4iwG6My2ov1j3ygGDhP9hW45JlyOfG7rN+oyq+NbV2sbk3NyTBi0rEJcYCC5dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vz5WHdT3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zm2cjpPE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63A81F00A3A;
-	Tue, 21 Jul 2026 19:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vz5WHdT3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 639391F00A3D;
+	Tue, 21 Jul 2026 19:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660888;
-	bh=kw7L/4lMJfpzQ2HqpRPoZAi9hVM6Pb/SvBLbC+rBX0A=;
+	s=korg; t=1784660890;
+	bh=Mj6yylMrtkjjjcXsb2cw7huVO3hxxhlR/xX87KrPODE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zm2cjpPEUbuHFBWCuVP9kjZzQcX6CnNvopDzTtdb+SphlPjHzb5pXSHgsqN4Nso95
-	 nNISCXZyIjLO42Z6zSakDSuLriaJ8i3XJvtKsq84RgaoQwRd+AwFrUkOwv0D2cZbjd
-	 KJaFmxSaSjOwdK4r5v18/OlvHyXpvl5s0VogQ1R4=
+	b=Vz5WHdT3McQQ+NBqHjTh08cLz1VUCD7c4Gy7L8fUoA1XqhqH2SMMVNCSDJY5iY26k
+	 kfPlSviXxyUs6zGjdoyIpYzwSPtm6c5VO4SHOqFbqOh7WbHhXrMUJjInQ5Sdj4Le5q
+	 dvO7O94NnGfe9RPgd8ASfJpwUfuCwPqnF1WTS0HY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jozsef Kadlecsik <kadlec@netfilter.org>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1148/2077] netfilter: ipset: fix order of kfree_rcu() and rcu_assign_pointer()
-Date: Tue, 21 Jul 2026 17:13:41 +0200
-Message-ID: <20260721152619.899183796@linuxfoundation.org>
+Subject: [PATCH 7.1 1149/2077] netfilter: ipset: make sure gc is properly stopped
+Date: Tue, 21 Jul 2026 17:13:42 +0200
+Message-ID: <20260721152619.922679549@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,44 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-[ Upstream commit 3ca9982a8882470aa0ac4e8bb9a552b181d1efcd ]
+[ Upstream commit 4a597a87e2e2f608edb6be2c510dc826b4fdfb53 ]
 
-Sashiko pointed out that kfree_rcu() was called before
-rcu_assign_pointer() in handling the comment extension.
-Fix the order so that rcu_assign_pointer() called first.
+Sashiko noticed that when destroying a set,
+cancel_delayed_work_sync() was called while gc
+calls queue_delayed_work() unconditionally which
+can lead not to properly shutting down the gc.
 
-Fixes: b57b2d1fa53f ("netfilter: ipset: Prepare the ipset core to use RCU at set level")
+Fixes: f66ee0410b1c ("netfilter: ipset: Fix "INFO: rcu detected stall in hash_xxx" reports")
 Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/ipset/ip_set_hash_gen.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
-index 955556513eeb61..6cfad152d7d1ba 100644
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -351,8 +351,8 @@ ip_set_init_comment(struct ip_set *set, struct ip_set_comment *comment,
+diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
+index 00c27b95207f79..dedf59b661ddf3 100644
+--- a/net/netfilter/ipset/ip_set_hash_gen.h
++++ b/net/netfilter/ipset/ip_set_hash_gen.h
+@@ -606,7 +606,7 @@ mtype_cancel_gc(struct ip_set *set)
+ 	struct htype *h = set->data;
  
- 	if (unlikely(c)) {
- 		set->ext_size -= sizeof(*c) + strlen(c->str) + 1;
--		kfree_rcu(c, rcu);
- 		rcu_assign_pointer(comment->c, NULL);
-+		kfree_rcu(c, rcu);
- 	}
- 	if (!len)
- 		return;
-@@ -393,8 +393,8 @@ ip_set_comment_free(struct ip_set *set, void *ptr)
- 	if (unlikely(!c))
- 		return;
- 	set->ext_size -= sizeof(*c) + strlen(c->str) + 1;
--	kfree_rcu(c, rcu);
- 	rcu_assign_pointer(comment->c, NULL);
-+	kfree_rcu(c, rcu);
+ 	if (SET_WITH_TIMEOUT(set))
+-		cancel_delayed_work_sync(&h->gc.dwork);
++		disable_delayed_work_sync(&h->gc.dwork);
  }
  
- typedef void (*destroyer)(struct ip_set *, void *);
+ static int
 -- 
 2.53.0
 
