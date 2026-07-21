@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A6542DFEC;
-	Tue, 21 Jul 2026 19:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC9142DFEC;
+	Tue, 21 Jul 2026 19:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662305; cv=none; b=lh1/nFlN/1DdhhJ02KcBNg+Pf+bOYoSVvtbUtqfnoqgKNrBl2WEYSKQPO3P6yWYFaF7VGA/glK7dITauQOLhLTZfcSgKQs4CEMQz/6+3KCz6QJp/LABHY7kqghGK8vzcAzFOlRVZHQTe0FM0L9um/4wxjHhY3WIcSsV+LT/1bus=
+	t=1784662309; cv=none; b=AC3EFeYUbRXRb6GOkdXrWZ6cpFRdXN4SBSblu4vcr1fNpu1qeUTWy0+D7SkuLo+VhShUhgSirE6Iynb2MtYhseN3Btl8wDan8x9lqQLMhWArXg1Ephj0uPiSMkWEdGVs11a1LWsg37S+rK/G/7MZB5mqasiOvUnygeTrLVQW8EQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662305; c=relaxed/simple;
-	bh=uWacMiCrV/zz2V2vpdrznyE+mOBccI2MT9oQBh3MsxQ=;
+	s=arc-20240116; t=1784662309; c=relaxed/simple;
+	bh=cnI7VBYnGJ/vqabb1yKCa73sTYgWxO4yfEKTNSBweys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PJEZFdlSHYnjYwtv3E/F+Yp3Uo6RLrn2PYm2dG5qubx3+A4L7NqLl7GGJ1SdPZNDwcv0nAVWXfH5HYuxWXWf/+ncbkJvbzLSO2TafaJHtrLeenVZQcvHGEzjznYhIlCD/6WVhp2dYKg4l0Bnm5NrGwb/D6pOHQyB6hm7xluiqbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GyWrfY1S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h5PX57IfVE6Qz/v2e9tsqSp+ZUP5J6WU6bY+WBuu/QoptneQiFcvR0CT6BLV4daWdMkcJ0oYKm17Ppm0O0HCgt/2HsQTp0S/YegWlOq6cZPGdIigifnCTuxnN99a0N70w/yQxqI8oEYV1jFJ8J5dR8i8agsj+A0Mybu4GSls8IY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VyzerB/u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GyWrfY1S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E961F000E9;
-	Tue, 21 Jul 2026 19:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VyzerB/u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744D51F000E9;
+	Tue, 21 Jul 2026 19:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662304;
-	bh=sxWSjlxtfM8Wp/W0R15gNRFzXNjv71jaFdd7om6LLSY=;
+	s=korg; t=1784662307;
+	bh=SN19s3h9Kg7hVb/5OuijKfIc29gXYZ6qKZnR6+hfsCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GyWrfY1SGYSr5V1iuwBhY255SAM0aoxFtdPr525NP6+mBDCMF4if0lykoE147qTBn
-	 pdHaDcl2nwPSMoV+QOIBugj7jaVjLBbMD/Gw9CCTMDnw+zCTWwGbtACS7ergQC5FSd
-	 XTNV0Uu62NeNK0HdKk29K6S1ncBgzBCrAaGJcYMo=
+	b=VyzerB/uzPcqaLD2qDP/gi2+griWPzZTxlmGEIQSWsacSoO7IONNDcZ2vC6h8zn26
+	 usx+EXvA3cJ6GzOQWZeFsGnI1X6TzW/CuO/NtZid23HxrxW+2RZ/sshfqoy/7OpRTG
+	 ZGJLALDSQYsNjBfEpjjiFwkMzTAfTQLS2TqSC5lE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Wayen.Yan" <win847@gmail.com>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0394/1276] net: airoha: Add sched ETS offload support
-Date: Tue, 21 Jul 2026 17:13:57 +0200
-Message-ID: <20260721152454.922918867@linuxfoundation.org>
+Subject: [PATCH 6.12 0395/1276] net: airoha: Fix always-true condition in PPE1 queue reservation loop
+Date: Tue, 21 Jul 2026 17:13:58 +0200
+Message-ID: <20260721152454.945637665@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,301 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Wayen.Yan <win847@gmail.com>
 
-[ Upstream commit 20bf7d07c956e5c7a22d3076c599cbb7a6054917 ]
+[ Upstream commit c66f8511a8109fa50767941b26d3623e316fde02 ]
 
-Introduce support for ETS Qdisc offload available on the Airoha EN7581
-ethernet controller. In order to be effective, ETS Qdisc must configured
-as leaf of a HTB Qdisc (HTB Qdisc offload will be added in the following
-patch). ETS Qdisc available on EN7581 ethernet controller supports at
-most 8 concurrent bands (QoS queues). We can enable an ETS Qdisc for
-each available QoS channel.
+In airoha_fe_pse_ports_init(), the inner condition for PPE1 queue
+reservation is identical to the for-loop bound, making it always true
+and the else branch dead code:
 
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: c66f8511a810 ("net: airoha: Fix always-true condition in PPE1 queue reservation loop")
+  for (q = 0; q < pse_port_num_queues[FE_PSE_PORT_PPE1]; q++) {
+      if (q < pse_port_num_queues[FE_PSE_PORT_PPE1])  /* always true */
+          set RSV_PAGES;
+      else
+          set 0;  /* unreachable */
+  }
+
+The intended behavior is to reserve pages only for the first half of
+the queues, matching the PPE2 implementation on line 334 which
+correctly uses the /2 divisor. Fix the PPE1 condition accordingly.
+
+Fixes: 23020f049327 ("net: airoha: Introduce ethernet support for EN7581 SoC")
+Signed-off-by: Wayen.Yan <win847@gmail.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/6a2ca3de.ad59c0a6.147df9.2ac1@mx.google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/airoha_eth.c | 196 ++++++++++++++++++++-
- 1 file changed, 195 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mediatek/airoha_eth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/mediatek/airoha_eth.c b/drivers/net/ethernet/mediatek/airoha_eth.c
-index b6d36217ff6e73..0f70dda9344114 100644
+index 0f70dda9344114..4dab9237006d4b 100644
 --- a/drivers/net/ethernet/mediatek/airoha_eth.c
 +++ b/drivers/net/ethernet/mediatek/airoha_eth.c
-@@ -15,6 +15,7 @@
- #include <linux/u64_stats_sync.h>
- #include <net/dsa.h>
- #include <net/page_pool/helpers.h>
-+#include <net/pkt_cls.h>
- #include <uapi/linux/ppp_defs.h>
- 
- #define AIROHA_MAX_NUM_GDM_PORTS	1
-@@ -543,9 +544,24 @@
- #define INGRESS_SLOW_TICK_RATIO_MASK	GENMASK(29, 16)
- #define INGRESS_FAST_TICK_MASK		GENMASK(15, 0)
- 
-+#define REG_QUEUE_CLOSE_CFG(_n)		(0x00a0 + ((_n) & 0xfc))
-+#define TXQ_DISABLE_CHAN_QUEUE_MASK(_n, _m)	BIT((_m) + (((_n) & 0x3) << 3))
-+
- #define REG_TXQ_DIS_CFG_BASE(_n)	((_n) ? 0x20a0 : 0x00a0)
- #define REG_TXQ_DIS_CFG(_n, _m)		(REG_TXQ_DIS_CFG_BASE((_n)) + (_m) << 2)
- 
-+#define REG_CNTR_CFG(_n)		(0x0400 + ((_n) << 3))
-+#define CNTR_EN_MASK			BIT(31)
-+#define CNTR_ALL_CHAN_EN_MASK		BIT(30)
-+#define CNTR_ALL_QUEUE_EN_MASK		BIT(29)
-+#define CNTR_ALL_DSCP_RING_EN_MASK	BIT(28)
-+#define CNTR_SRC_MASK			GENMASK(27, 24)
-+#define CNTR_DSCP_RING_MASK		GENMASK(20, 16)
-+#define CNTR_CHAN_MASK			GENMASK(7, 3)
-+#define CNTR_QUEUE_MASK			GENMASK(2, 0)
-+
-+#define REG_CNTR_VAL(_n)		(0x0404 + ((_n) << 3))
-+
- #define REG_LMGR_INIT_CFG		0x1000
- #define LMGR_INIT_START			BIT(31)
- #define LMGR_SRAM_MODE_MASK		BIT(30)
-@@ -571,9 +587,19 @@
- #define TWRR_WEIGHT_SCALE_MASK		BIT(31)
- #define TWRR_WEIGHT_BASE_MASK		BIT(3)
- 
-+#define REG_TXWRR_WEIGHT_CFG		0x1024
-+#define TWRR_RW_CMD_MASK		BIT(31)
-+#define TWRR_RW_CMD_DONE		BIT(30)
-+#define TWRR_CHAN_IDX_MASK		GENMASK(23, 19)
-+#define TWRR_QUEUE_IDX_MASK		GENMASK(18, 16)
-+#define TWRR_VALUE_MASK			GENMASK(15, 0)
-+
- #define REG_PSE_BUF_USAGE_CFG		0x1028
- #define PSE_BUF_ESTIMATE_EN_MASK	BIT(29)
- 
-+#define REG_CHAN_QOS_MODE(_n)		(0x1040 + ((_n) << 2))
-+#define CHAN_QOS_MODE_MASK(_n)		GENMASK(2 + ((_n) << 2), (_n) << 2)
-+
- #define REG_GLB_TRTCM_CFG		0x1080
- #define GLB_TRTCM_EN_MASK		BIT(31)
- #define GLB_TRTCM_MODE_MASK		BIT(30)
-@@ -722,6 +748,17 @@ enum {
- 	FE_PSE_PORT_DROP = 0xf,
- };
- 
-+enum tx_sched_mode {
-+	TC_SCH_WRR8,
-+	TC_SCH_SP,
-+	TC_SCH_WRR7,
-+	TC_SCH_WRR6,
-+	TC_SCH_WRR5,
-+	TC_SCH_WRR4,
-+	TC_SCH_WRR3,
-+	TC_SCH_WRR2,
-+};
-+
- struct airoha_queue_entry {
- 	union {
- 		void *buf;
-@@ -812,6 +849,10 @@ struct airoha_gdm_port {
- 	int id;
- 
- 	struct airoha_hw_stats stats;
-+
-+	/* qos stats counters */
-+	u64 cpu_tx_packets;
-+	u64 fwd_tx_packets;
- };
- 
- struct airoha_eth {
-@@ -1968,6 +2009,27 @@ static void airoha_qdma_init_qos(struct airoha_qdma *qdma)
- 			FIELD_PREP(SLA_SLOW_TICK_RATIO_MASK, 40));
- }
- 
-+static void airoha_qdma_init_qos_stats(struct airoha_qdma *qdma)
-+{
-+	int i;
-+
-+	for (i = 0; i < AIROHA_NUM_QOS_CHANNELS; i++) {
-+		/* Tx-cpu transferred count */
-+		airoha_qdma_wr(qdma, REG_CNTR_VAL(i << 1), 0);
-+		airoha_qdma_wr(qdma, REG_CNTR_CFG(i << 1),
-+			       CNTR_EN_MASK | CNTR_ALL_QUEUE_EN_MASK |
-+			       CNTR_ALL_DSCP_RING_EN_MASK |
-+			       FIELD_PREP(CNTR_CHAN_MASK, i));
-+		/* Tx-fwd transferred count */
-+		airoha_qdma_wr(qdma, REG_CNTR_VAL((i << 1) + 1), 0);
-+		airoha_qdma_wr(qdma, REG_CNTR_CFG(i << 1),
-+			       CNTR_EN_MASK | CNTR_ALL_QUEUE_EN_MASK |
-+			       CNTR_ALL_DSCP_RING_EN_MASK |
-+			       FIELD_PREP(CNTR_SRC_MASK, 1) |
-+			       FIELD_PREP(CNTR_CHAN_MASK, i));
-+	}
-+}
-+
- static int airoha_qdma_hw_init(struct airoha_qdma *qdma)
- {
- 	int i;
-@@ -2018,6 +2080,7 @@ static int airoha_qdma_hw_init(struct airoha_qdma *qdma)
- 
- 	airoha_qdma_set(qdma, REG_TXQ_CNGST_CFG,
- 			TXQ_CNGST_DROP_EN | TXQ_CNGST_DEI_DROP_EN);
-+	airoha_qdma_init_qos_stats(qdma);
- 
- 	return 0;
- }
-@@ -2637,6 +2700,135 @@ airoha_ethtool_get_rmon_stats(struct net_device *dev,
- 	} while (u64_stats_fetch_retry(&port->stats.syncp, start));
- }
- 
-+static int airoha_qdma_set_chan_tx_sched(struct airoha_gdm_port *port,
-+					 int channel, enum tx_sched_mode mode,
-+					 const u16 *weights, u8 n_weights)
-+{
-+	int i;
-+
-+	for (i = 0; i < AIROHA_NUM_TX_RING; i++)
-+		airoha_qdma_clear(port->qdma, REG_QUEUE_CLOSE_CFG(channel),
-+				  TXQ_DISABLE_CHAN_QUEUE_MASK(channel, i));
-+
-+	for (i = 0; i < n_weights; i++) {
-+		u32 status;
-+		int err;
-+
-+		airoha_qdma_wr(port->qdma, REG_TXWRR_WEIGHT_CFG,
-+			       TWRR_RW_CMD_MASK |
-+			       FIELD_PREP(TWRR_CHAN_IDX_MASK, channel) |
-+			       FIELD_PREP(TWRR_QUEUE_IDX_MASK, i) |
-+			       FIELD_PREP(TWRR_VALUE_MASK, weights[i]));
-+		err = read_poll_timeout(airoha_qdma_rr, status,
-+					status & TWRR_RW_CMD_DONE,
-+					USEC_PER_MSEC, 10 * USEC_PER_MSEC,
-+					true, port->qdma,
-+					REG_TXWRR_WEIGHT_CFG);
-+		if (err)
-+			return err;
-+	}
-+
-+	airoha_qdma_rmw(port->qdma, REG_CHAN_QOS_MODE(channel >> 3),
-+			CHAN_QOS_MODE_MASK(channel),
-+			mode << __ffs(CHAN_QOS_MODE_MASK(channel)));
-+
-+	return 0;
-+}
-+
-+static int airoha_qdma_set_tx_prio_sched(struct airoha_gdm_port *port,
-+					 int channel)
-+{
-+	static const u16 w[AIROHA_NUM_QOS_QUEUES] = {};
-+
-+	return airoha_qdma_set_chan_tx_sched(port, channel, TC_SCH_SP, w,
-+					     ARRAY_SIZE(w));
-+}
-+
-+static int airoha_qdma_set_tx_ets_sched(struct airoha_gdm_port *port,
-+					int channel,
-+					struct tc_ets_qopt_offload *opt)
-+{
-+	struct tc_ets_qopt_offload_replace_params *p = &opt->replace_params;
-+	enum tx_sched_mode mode = TC_SCH_SP;
-+	u16 w[AIROHA_NUM_QOS_QUEUES] = {};
-+	int i, nstrict = 0;
-+
-+	if (p->bands > AIROHA_NUM_QOS_QUEUES)
-+		return -EINVAL;
-+
-+	for (i = 0; i < p->bands; i++) {
-+		if (!p->quanta[i])
-+			nstrict++;
-+	}
-+
-+	/* this configuration is not supported by the hw */
-+	if (nstrict == AIROHA_NUM_QOS_QUEUES - 1)
-+		return -EINVAL;
-+
-+	for (i = 0; i < p->bands - nstrict; i++)
-+		w[i] = p->weights[nstrict + i];
-+
-+	if (!nstrict)
-+		mode = TC_SCH_WRR8;
-+	else if (nstrict < AIROHA_NUM_QOS_QUEUES - 1)
-+		mode = nstrict + 1;
-+
-+	return airoha_qdma_set_chan_tx_sched(port, channel, mode, w,
-+					     ARRAY_SIZE(w));
-+}
-+
-+static int airoha_qdma_get_tx_ets_stats(struct airoha_gdm_port *port,
-+					int channel,
-+					struct tc_ets_qopt_offload *opt)
-+{
-+	u64 cpu_tx_packets = airoha_qdma_rr(port->qdma,
-+					    REG_CNTR_VAL(channel << 1));
-+	u64 fwd_tx_packets = airoha_qdma_rr(port->qdma,
-+					    REG_CNTR_VAL((channel << 1) + 1));
-+	u64 tx_packets = (cpu_tx_packets - port->cpu_tx_packets) +
-+			 (fwd_tx_packets - port->fwd_tx_packets);
-+	_bstats_update(opt->stats.bstats, 0, tx_packets);
-+
-+	port->cpu_tx_packets = cpu_tx_packets;
-+	port->fwd_tx_packets = fwd_tx_packets;
-+
-+	return 0;
-+}
-+
-+static int airoha_tc_setup_qdisc_ets(struct airoha_gdm_port *port,
-+				     struct tc_ets_qopt_offload *opt)
-+{
-+	int channel = TC_H_MAJ(opt->handle) >> 16;
-+
-+	if (opt->parent == TC_H_ROOT)
-+		return -EINVAL;
-+
-+	switch (opt->command) {
-+	case TC_ETS_REPLACE:
-+		return airoha_qdma_set_tx_ets_sched(port, channel, opt);
-+	case TC_ETS_DESTROY:
-+		/* PRIO is default qdisc scheduler */
-+		return airoha_qdma_set_tx_prio_sched(port, channel);
-+	case TC_ETS_STATS:
-+		return airoha_qdma_get_tx_ets_stats(port, channel, opt);
-+	default:
-+		return -EOPNOTSUPP;
-+	}
-+}
-+
-+static int airoha_dev_tc_setup(struct net_device *dev, enum tc_setup_type type,
-+			       void *type_data)
-+{
-+	struct airoha_gdm_port *port = netdev_priv(dev);
-+
-+	switch (type) {
-+	case TC_SETUP_QDISC_ETS:
-+		return airoha_tc_setup_qdisc_ets(port, type_data);
-+	default:
-+		return -EOPNOTSUPP;
-+	}
-+}
-+
- static const struct net_device_ops airoha_netdev_ops = {
- 	.ndo_init		= airoha_dev_init,
- 	.ndo_open		= airoha_dev_open,
-@@ -2645,6 +2837,7 @@ static const struct net_device_ops airoha_netdev_ops = {
- 	.ndo_start_xmit		= airoha_dev_xmit,
- 	.ndo_get_stats64        = airoha_dev_get_stats64,
- 	.ndo_set_mac_address	= airoha_dev_set_macaddr,
-+	.ndo_setup_tc		= airoha_dev_tc_setup,
- };
- 
- static const struct ethtool_ops airoha_ethtool_ops = {
-@@ -2694,7 +2887,8 @@ static int airoha_alloc_gdm_port(struct airoha_eth *eth, struct device_node *np)
- 	dev->watchdog_timeo = 5 * HZ;
- 	dev->hw_features = NETIF_F_IP_CSUM | NETIF_F_RXCSUM |
- 			   NETIF_F_TSO6 | NETIF_F_IPV6_CSUM |
--			   NETIF_F_SG | NETIF_F_TSO;
-+			   NETIF_F_SG | NETIF_F_TSO |
-+			   NETIF_F_HW_TC;
- 	dev->features |= dev->hw_features;
- 	dev->dev.of_node = np;
- 	dev->irq = qdma->irq;
+@@ -1238,7 +1238,7 @@ static void airoha_fe_pse_ports_init(struct airoha_eth *eth)
+ 					 PSE_QUEUE_RSV_PAGES);
+ 	/* PPE1 */
+ 	for (q = 0; q < pse_port_num_queues[FE_PSE_PORT_PPE1]; q++) {
+-		if (q < pse_port_num_queues[FE_PSE_PORT_PPE1])
++		if (q < pse_port_num_queues[FE_PSE_PORT_PPE1] / 2)
+ 			airoha_fe_set_pse_oq_rsv(eth, FE_PSE_PORT_PPE1, q,
+ 						 PSE_QUEUE_RSV_PAGES);
+ 		else
 -- 
 2.53.0
 
