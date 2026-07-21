@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC6B3B8407;
-	Tue, 21 Jul 2026 21:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABD73C0617;
+	Tue, 21 Jul 2026 21:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670239; cv=none; b=DG2LnRf3+3284njB3V2TZyXdcdLiouPnSsGrK389c58xZMI8ZVavhQVKHPlMa9aJYAeGE5qmF4MuQ/BH6Ckr65JspfOdmyBMickXtqNP8zhpHCWGtXNvPACm/c7im3ZRv2dTkYdhpxI2RtEcQUccQ+P4Bc7iUhi9+9ALknND5Bo=
+	t=1784670241; cv=none; b=UsIUi7UUkXcx0vtqmQ6U022tBE3EnvNZMlKbHLkWzzlI7MWlo2Pd/QB+v98/zruWWz5vX8ZU9ccaLWgpmqTufI1qp+aJ8uebInEwXUZyOkn5jG85dKUgl8lFsxMRKbPktgulT9UqcEduSLSIgvsxY7GUa80xRp7Wi+5qKxJEjaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670239; c=relaxed/simple;
-	bh=xJDy3I1AqXYXHYv2flFof2aL3OXvF4Sh/slgOxWdrXk=;
+	s=arc-20240116; t=1784670241; c=relaxed/simple;
+	bh=auMEpz7buocMnj4KxttulUKmAQ1NmVtluLBBeqhxEvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jm+LlHIijPc1Vn2Vm5bmMQOuFxc55g9Aec2X9V5y3UeGeaa8apEk079E+H+Z7lAFWb4dsLfrjwzKweErGG//PMjL/Wbo1bQ9CiJXA4u5i3GFEnJ73FW1C4zHaxFRpUy7UDb1YVYtiqF5YUG/e9aWTPfEBAi7myyfuDySB+YreUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZXz46US; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lj3y+urBa33t0hjGtYWJoSK6Jukn4bWeZBbm9tmh6KOBG7ofG/5ynUWl9r9g/6Qi03+3czXZXxS0pEccZnxB6J3jcKNH7iEL0lKFmBbtdkkmQ6psMdXsUmrAaCLz8I5o2byXQRIu9Rx2R4GBC80LZqroDGI4Ry0gIdTeg+2e3W0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TklE8MCI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZXz46US"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DD71F000E9;
-	Tue, 21 Jul 2026 21:43:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TklE8MCI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A69E1F000E9;
+	Tue, 21 Jul 2026 21:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670237;
-	bh=GY9bRZ29x2n8gnqsKySXRviF3oUfnqV3HaiUJ7MQgBg=;
+	s=korg; t=1784670240;
+	bh=hGloPQDOkyAnKIeq6VxvMy2sQfGQDhqcFMQf44jTU4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BZXz46USqd7C0H4UgB2kNF2PtqqRwZSWfix6j6iI0Ti1gNWtx9FPzzE6tYfvKYBhU
-	 y40QUIVcZGCAE83kxD/x+oLgaAAEMC1Uuzb5Hdp+CuxqiuD++4gqtuqQqWIJwDNKQx
-	 AMaYM1eKfGWoy22jQnSpOuA7fbs8o3rxq2B8jbp0=
+	b=TklE8MCIOIuJonw7/ZY0BBGhrdWYGNdyMvDQCpyXjoUfAkKb+p4DUcLLpLDsW/Eik
+	 1LnlzAhRRTK6cHKIc7FAsoLT2x/AzIfgLtYYjWKrS+C0hA1PUbhBrkLGnkXtcoHOYn
+	 QEcnyQTkUOA246IHM/SkH3b+xAut+UPRVxwOmv9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.1 0840/1067] bpf: Add missing access_ok call to copy_user_syms
-Date: Tue, 21 Jul 2026 17:24:01 +0200
-Message-ID: <20260721152443.340545723@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	John Garry <john.g.garry@oracle.com>,
+	David Disseldorp <ddiss@suse.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 0858/1067] scsi: target: core: Fix iSCSI ISID use-after-free in REGISTER AND MOVE
+Date: Tue, 21 Jul 2026 17:24:19 +0200
+Message-ID: <20260721152443.736800285@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,58 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit d5dc200c3a3f217de072af269dd90adddf90e48d upstream.
+commit fda6a1f3c3d7047b5ce5654487649c2daa738bfc upstream.
 
-As reported by sashiko we use __get_user without prior access_ok call on the
-user space pointer. Adding the missing call for the whole pointer array.
+core_scsi3_emulate_pro_register_and_move() maps the PERSISTENT RESERVE OUT
+parameter list with transport_kmap_data_sg() and parses the destination
+TransportID with target_parse_pr_out_transport_id(). For an iSCSI
+TransportID (FORMAT CODE 01b), iscsi_parse_pr_out_transport_id() returns
+the ISID in iport_ptr as a raw pointer into that mapped buffer.
 
-Plus removing the err check in the error path, because it's not needed and
-also we can return -ENOMEM directly from the first kvmalloc_array fail path.
+The function then unmaps the buffer with transport_kunmap_data_sg() before
+dereferencing iport_ptr in strcmp(), __core_scsi3_locate_pr_reg() and
+core_scsi3_alloc_registration(). When the parameter list spans more than
+one page (PARAMETER LIST LENGTH > 4096), transport_kmap_data_sg() uses
+vmap() and transport_kunmap_data_sg() does vunmap(), so the kernel virtual
+address backing iport_ptr is torn down and every subsequent dereference is
+a use-after-free read of the unmapped region.
 
+Keep the parameter list mapped until iport_ptr is no longer needed: drop
+the early transport_kunmap_data_sg() and unmap once on the success path,
+right before returning. The error paths already unmap through the existing
+"if (buf) transport_kunmap_data_sg(cmd)" at the out: label, which now runs
+on every post-map error exit because buf is no longer cleared early. Only
+reads of the mapping happen while spinlocks are held; the map and unmap
+calls remain outside any lock. The sibling caller
+core_scsi3_decode_spec_i_port() already uses the buffer before unmapping it
+and is left unchanged.
+
+Fixes: 4949314c7283 ("target: Allow control CDBs with data > 1 page")
 Cc: stable@vger.kernel.org
-[1] https://lore.kernel.org/bpf/20260611115503.AC16D1F00893@smtp.kernel.org/
-Fixes: 0236fec57a15 ("bpf: Resolve symbols with ftrace_lookup_symbols for kprobe multi link")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/bpf/20260611115503.AC16D1F00893@smtp.kernel.org/
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/r/20260616083056.405652-1-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: David Disseldorp <ddiss@suse.de>
+Link: https://patch.msgid.link/20260610042245.35473-1-hexlabsecurity@proton.me
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/bpf_trace.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/target/target_core_pr.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2504,9 +2504,12 @@ static int copy_user_syms(struct user_sy
- 	int err = -ENOMEM;
- 	unsigned int i;
+--- a/drivers/target/target_core_pr.c
++++ b/drivers/target/target_core_pr.c
+@@ -3288,9 +3288,6 @@ core_scsi3_emulate_pro_register_and_move
+ 		goto out;
+ 	}
  
-+	if (!access_ok(usyms, cnt * sizeof(*usyms)))
-+		return -EFAULT;
-+
- 	syms = kvmalloc_array(cnt, sizeof(*syms), GFP_KERNEL);
- 	if (!syms)
--		goto error;
-+		return -ENOMEM;
+-	transport_kunmap_data_sg(cmd);
+-	buf = NULL;
+-
+ 	pr_debug("SPC-3 PR [%s] Extracted initiator %s identifier: %s"
+ 		" %s\n", dest_tf_ops->fabric_name, (iport_ptr != NULL) ?
+ 		"port" : "device", initiator_str, (iport_ptr != NULL) ?
+@@ -3527,6 +3524,11 @@ after_iport_check:
+ 	core_scsi3_update_and_write_aptpl(cmd->se_dev, aptpl);
  
- 	buf = kvmalloc_array(cnt, KSYM_NAME_LEN, GFP_KERNEL);
- 	if (!buf)
-@@ -2531,10 +2534,8 @@ static int copy_user_syms(struct user_sy
+ 	core_scsi3_put_pr_reg(dest_pr_reg);
++	/*
++	 * iport_ptr aliases the PR-OUT parameter list mapped above, so the
++	 * buffer is unmapped only here on success (and at out: on error).
++	 */
++	transport_kunmap_data_sg(cmd);
  	return 0;
- 
- error:
--	if (err) {
--		kvfree(syms);
--		kvfree(buf);
--	}
-+	kvfree(syms);
-+	kvfree(buf);
- 	return err;
- }
- 
+ out:
+ 	if (buf)
 
 
