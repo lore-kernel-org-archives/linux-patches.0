@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7BC3EEAE2;
-	Tue, 21 Jul 2026 18:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAED40860A;
+	Tue, 21 Jul 2026 18:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660047; cv=none; b=dcFEF0EuEnyBlhBkpNNxqFxbvWHMy7OoTTkXG9QQ+SRHn+6+7hrZ9OqCDJx577pUF/gI/6kkiyAxCOlpGZ2/um82lDFpci5Ek1mRui+BsnpZqwwEpkZRop6dNQrBRhmawjoXtaUqN63+i9lgyAmdvKqDKOe1QLmQDg/5dupyvdA=
+	t=1784660049; cv=none; b=lmK5MGt9+G/+EKAB+5dkM1lusejwUx0mzV2GwOaHJJg/9SKd3qaLAahCFLIlGxto+9Tc94mXimjb7vNAiNnRR1zSE/T2uhlIAQ6PXMS7LpzRHwxTakRbSsHBd81sm2seiT1LRGTA2eq4oeYmp280OxHaUhHOGNNGC4DdaXyLoGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660047; c=relaxed/simple;
-	bh=V5JUBQCL00JmncE6xBt5Vi2HLsgjdqTX1ftwj9NFRU8=;
+	s=arc-20240116; t=1784660049; c=relaxed/simple;
+	bh=S6OYvaLvXsxcw6oMdpWt4jBOaCYMOj84sgNpZm5Fg3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cz8X6h2fQLYN0/et0u1QFwLf0dLBTRiaKB42rX5dTfksistHKVMUjMQYspwmd5NFzECDA+CPTtezxPdnsSTQvkO+pmGKzuY6EYQagECqPvjvdH3r0NxIplT3A18/Jj8/0bBcXS89aVON0nNW0LtyCau7oz0n6WA6/b9E/l8/NJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OVW7d2Gl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dyCRKlz4xAeDyqxgcv/MqjyM9cWJDZxbxyZLGv10bKhzK4LkBGl3rIJ2Iq6HPPWrbV7/ZuM1Wl6SK3FPOpkxvVkeaftf9x95gtw6jwihZ0eXcTFP0+6vuB6M5DNDNle+rUXqjkCS/PFhPJ3Dq46hBfqWf1fI0t9ax2TSREm006Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMrrxZnM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OVW7d2Gl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921611F00A3A;
-	Tue, 21 Jul 2026 18:54:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMrrxZnM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366461F000E9;
+	Tue, 21 Jul 2026 18:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660046;
-	bh=FcXIptE6hT2TNrbUrwWJ6KcWM+UrKdQtME/saB409o8=;
+	s=korg; t=1784660048;
+	bh=liTDciA4AX68BrbXxef7pziDxfG2eAWhW/2XFcssFRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OVW7d2GloOm7UM/rfP/XeBnU2omQlvqMAxg96pNU6O1gcafXytUxvqW92d8CBIAw+
-	 OupXOq1cw6Ykdp0mTGVAvhyG3Nu9J2vqeeKzeC1g4ZzmmWo7qZnPrikignOqv7o8kE
-	 1j3kRShj/cYxMnG3QgGQDOBUeDvtprjNdcWQ27R4=
+	b=jMrrxZnM7kIdJi5FrUvrrCOC2mzDNB945EiedMmdZYv4OV5q8J4I2/ZF/6pvt7ERG
+	 YRJL3NOSACNEiGNirhU1MVxJAaz8ESYzg2LSoQ+k1+3/FRi5aX/1ftEapi4Bv0Ctje
+	 Y7/8WcvdlXZpmRxROOX8yB8rTKP+vlRMyRKFUjP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yadan Fan <ydfan@suse.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Marco Crivellari <marco.crivellari@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0788/2077] MIPS: mm: Fix out-of-bounds write in maar_res_walk()
-Date: Tue, 21 Jul 2026 17:07:41 +0200
-Message-ID: <20260721152611.382454490@linuxfoundation.org>
+Subject: [PATCH 7.1 0779/2077] btrfs: Drop WQ_PERCPU from ordered_flags in btrfs_init_workqueues()
+Date: Tue, 21 Jul 2026 17:07:32 +0200
+Message-ID: <20260721152611.171866433@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,61 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yadan Fan <ydfan@suse.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 1b001b16bc88f3f7817e228acfd91ee01bdcfcce ]
+[ Upstream commit c7703f05d85f71153f5e241184397bc34da305e3 ]
 
-maar_res_walk() uses wi->num_cfg as the index into the fixed-size
-wi->cfg array, but checks whether the array is full only after it has
-filled the selected entry. If walk_system_ram_range() reports more than
-16 memory ranges, the overflow call writes one struct maar_config past
-the end of the array before WARN_ON() prevents num_cfg from advancing.
+After commit 21c05ca88a54 ("workqueue: Add warnings and ensure one among
+WQ_PERCPU or WQ_UNBOUND is present"), there is a warning from the
+btrfs-qgroup-rescan workqueue at run time:
 
-Move the full-array check before taking the array slot and return non-zero
-when the scratch array is full, so walk_system_ram_range() terminates the
-walk instead of invoking the callback for further ranges.
+  workqueue: btrfs-qgroup-rescan uses both WQ_PERCPU and WQ_UNBOUND. Dropped WQ_PERCPU, keeping WQ_UNBOUND.
 
-Fixes: a5718fe8f70f ("MIPS: mm: Drop boot_mem_map")
+WQ_PERCPU is included in ordered_flags after commit 69635d7f4b34 ("fs:
+WQ_PERCPU added to alloc_workqueue users") and WQ_UNBOUND is set in
+alloc_ordered_workqueue(), which btrfs_alloc_ordered_workqueue() calls.
 
-Signed-off-by: Yadan Fan <ydfan@suse.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Drop WQ_PERCPU from ordered_flags, as alloc_ordered_workqueue() notes
+that only WQ_FREEZABLE and WQ_MEM_RECLAIM are meaningful.
+
+Fixes: 69635d7f4b34 ("fs: WQ_PERCPU added to alloc_workqueue users")
+Fixes: 21c05ca88a54 ("workqueue: Add warnings and ensure one among WQ_PERCPU or WQ_UNBOUND is present")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Acked-by: Marco Crivellari <marco.crivellari@suse.com>
+Acked-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/mm/init.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fs/btrfs/disk-io.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/mm/init.c b/arch/mips/mm/init.c
-index 55b25e85122a32..1c07ca84ee2141 100644
---- a/arch/mips/mm/init.c
-+++ b/arch/mips/mm/init.c
-@@ -272,9 +272,15 @@ static int maar_res_walk(unsigned long start_pfn, unsigned long nr_pages,
- 			 void *data)
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index c0a30bb213d7a0..ab92b35fa3cc10 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -1928,7 +1928,7 @@ static int btrfs_init_workqueues(struct btrfs_fs_info *fs_info)
  {
- 	struct maar_walk_info *wi = data;
--	struct maar_config *cfg = &wi->cfg[wi->num_cfg];
-+	struct maar_config *cfg;
- 	unsigned int maar_align;
+ 	u32 max_active = fs_info->thread_pool_size;
+ 	unsigned int flags = WQ_MEM_RECLAIM | WQ_FREEZABLE | WQ_UNBOUND;
+-	unsigned int ordered_flags = WQ_MEM_RECLAIM | WQ_FREEZABLE | WQ_PERCPU;
++	unsigned int ordered_flags = WQ_MEM_RECLAIM | WQ_FREEZABLE;
  
-+	/* Ensure we don't overflow the cfg array */
-+	if (WARN_ON(wi->num_cfg >= ARRAY_SIZE(wi->cfg)))
-+		return -1;
-+
-+	cfg = &wi->cfg[wi->num_cfg];
-+
- 	/* MAAR registers hold physical addresses right shifted by 4 bits */
- 	maar_align = BIT(MIPS_MAAR_ADDR_SHIFT + 4);
- 
-@@ -283,9 +289,7 @@ static int maar_res_walk(unsigned long start_pfn, unsigned long nr_pages,
- 	cfg->upper = ALIGN_DOWN(PFN_PHYS(start_pfn + nr_pages), maar_align) - 1;
- 	cfg->attrs = MIPS_MAAR_S;
- 
--	/* Ensure we don't overflow the cfg array */
--	if (!WARN_ON(wi->num_cfg >= ARRAY_SIZE(wi->cfg)))
--		wi->num_cfg++;
-+	wi->num_cfg++;
- 
- 	return 0;
- }
+ 	fs_info->workers =
+ 		btrfs_alloc_workqueue(fs_info, "worker", flags, max_active, 16);
 -- 
 2.53.0
 
