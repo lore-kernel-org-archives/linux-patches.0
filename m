@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CAF434E4E;
-	Tue, 21 Jul 2026 20:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A57F46EF88;
+	Tue, 21 Jul 2026 20:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665073; cv=none; b=PVWPqqi77JFfb+6BW4DDRcB5lTAIFqz+gFEXFvnxIlV053ZLkJVpMnvdf5jUzTIWWsv+u1J/jFFpa3QtMQZAZOtuX4lSqMz4UeTpsjoUw3tTeEJ18AiqB39YbjIZcXb481rHC2j8BQlthE1GWl5WLPJ9DA0jFgweSfBQzPaN9+w=
+	t=1784665075; cv=none; b=tFtChV9ZumjHUolYiUsPeP0b1hQhozDkW1cn/MUnIyrT3KpFOUBmAXBBFHZ4SQWUogsxjfTy6ONxd7YUgvLD021Z6h9ZWFZ3nYryz3VhxvhnzUc0NyXYyY7twNcSp+1uCrnVn2JfFmYSnwCuy3/BtvQb4K2JOQywq1mhFIycBRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665073; c=relaxed/simple;
-	bh=Nk/ozI9/Nlb9TeSAiBtujH/t6qJD2PqsYPS19YfTm4Q=;
+	s=arc-20240116; t=1784665075; c=relaxed/simple;
+	bh=jXbZPa6YapHVYgEJEL6Dic7wQLer6z46hqMPPRDIFvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O6PZao3LbqPmv0eymBoYWTjX9fdB3xgHLEMfx9cRfklAE5sQu5V2Ro0vOtgTAS1kct8eSup8exM1jgipajP4Xt7nYlHxcqqj99QvvE+xdlmqWpb9pfy1gwP1w7hALQUHXMWHfsA9cfn855v2cVbr6/eEOnNnBmoVzubst/savTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2pmWYObI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eqinwRcBjXDvWFAOJBgHk5s7K7VgMz8rkfBdZosI6TFJefunTy0wf6CgkBr8VvzjMefCvY2rWGbN2daogpui9DVqpn2eghkxPVDCITc/9ATw8idytzYaZ6hXLw/2fGSIVnMv70W/k2TsvHlgzkUq7OwxZcty/N5jYV/ByAIphnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkSiFkqQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2pmWYObI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63AE61F00A3A;
-	Tue, 21 Jul 2026 20:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkSiFkqQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AD881F000E9;
+	Tue, 21 Jul 2026 20:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665071;
-	bh=ZClIHe4erAFeogcyI63b37l2fsi2kvZOCOv8Qg4rz4I=;
+	s=korg; t=1784665074;
+	bh=tpikDl8Ipl4qqcVOS8zMUFxtwzo8W7OdliaVZ0kiGhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2pmWYObIzKqpn68W1G1auuRxp26HXIK++v838P0OYLaDU8UzaTv2q1E+au56Pz7pO
-	 PAB5zfaXn8tc/oKr2CcwpiwWPNZ2g3jt374q0WPsF9elx4FTYSh4EpJMhD2a0KVlBC
-	 TPn0yHaYnIO76rIMvVcABEHGe8198q0OiZn80wsg=
+	b=mkSiFkqQZ3pwJAIBrOOmeWTMDp38hh3RSDApn8x1p1xRLC9XyBMeRz4E9PVpw44Dy
+	 jTzvlq6JcSd/0FJ23YvdTqVsLzvE1j/mT/p1DH9lk1z0b+19AA+oVSNY0t2OMT5TQb
+	 tLV+93+7i33wVFeOFJt7lzNHr0+xx2bSgq2Rs96Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Benson Leung <bleung@chromium.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 0165/1266] mfd: cros_ec: Delay dev_set_drvdata() until probe success
-Date: Tue, 21 Jul 2026 17:10:02 +0200
-Message-ID: <20260721152445.498427942@linuxfoundation.org>
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Dave Chinner <david@fromorbit.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 0166/1266] mm: shrinker: fix NULL pointer dereference in debugfs
+Date: Tue, 21 Jul 2026 17:10:03 +0200
+Message-ID: <20260721152445.521073409@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,70 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Kuchynski <akuchynski@chromium.org>
+From: Qi Zheng <zhengqi.arch@bytedance.com>
 
-commit 8b2c1d41bc36c100b38ce5ee6def246c527eaf8a upstream.
+commit e30453c61e185e914fde83c650e268067b140218 upstream.
 
-If ec_device_probe() fails, cros_ec_class_release releases memory for the
-cros_ec_dev structure. However, because the drvdata was already set,
-sub-drivers like cros_ec_typec can still retrieve the stale pointer via the
-platform device. This leads to a use-after-free when cros_ec_typec attempts
-to access &typec->ec->ec->dev on a device that has already been released.
-Move dev_set_drvdata() to ensure that the pointer is only made available
-once all initialization steps have succeeded.
+shrinker_debugfs_add() creates both "count" and "scan" debugfs files
+unconditionally.
 
- sysfs: cannot create duplicate filename '/class/chromeos/cros_ec'
- Call trace:
-  sysfs_do_create_link_sd+0x94/0xdc
-  sysfs_create_link+0x30/0x44
-  device_add_class_symlinks+0x90/0x13c
-  device_add+0xf0/0x50c
-  ec_device_probe+0x150/0x4f0
-  platform_probe+0xa0/0xe0
- ...
- BUG: KASAN: invalid-access in __memcpy+0x44/0x230
- Write at addr f5ffff809e2d33ac by task kworker/u32:5/125
- Pointer tag: [f5], memory tag: [fe]
- Tainted : [W]=WARN, [O]=OOT_MODULE
- Hardware name: Google Navi unprovisioned 0x7FFFFFFF/sku0 board/sku3
- Workqueue: events_unbound deferred_probe_work_func
- Call trace:
-  __memcpy+0x44/0x230
-  cros_ec_check_features+0x60/0xcc [cros_ec_proto]
-  cros_typec_probe+0xe8/0x6e0 [cros_ec_typec]
-  platform_probe+0xa0/0xe0
+That assumes every shrinker implements both count_objects() and
+scan_objects(), which is not guaranteed.  For example, the xen-backend
+shrinker sets count_objects() but leaves scan_objects() NULL, so writing
+to its scan file calls through a NULL function pointer and panics the
+kernel:
 
-Cc: stable@vger.kernel.org
-Fixes: 1c1d152cc5ac ("platform/chrome: cros_ec_dev - utilize new cdev_device_add helper function")
-Co-developed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Link: https://patch.msgid.link/20260427131721.1165078-1-akuchynski@chromium.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+RIP: 0010:0x0
+Code: Unable to access opcode bytes at 0xffffffffffffffd6.
+Call Trace:
+ <TASK>
+ shrinker_debugfs_scan_write+0x12e/0x270
+ full_proxy_write+0x5f/0x90
+ vfs_write+0xde/0x420
+ ? filp_flush+0x75/0x90
+ ? filp_close+0x1d/0x30
+ ? do_dup2+0xb8/0x120
+ ksys_write+0x68/0xf0
+ ? filp_flush+0x75/0x90
+ do_syscall_64+0xb3/0x5b0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+The count path has the same issue in principle if a shrinker omits
+count_objects().
+
+To fix it, only create "count" and "scan" debugfs files when the
+corresponding callbacks are present.
+
+Link: https://lore.kernel.org/20260617090052.27325-1-qi.zheng@linux.dev
+Fixes: bbf535fd6f06 ("mm: shrinkers: add scan interface for shrinker debugfs")
+Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/cros_ec_dev.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/shrinker_debug.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/mfd/cros_ec_dev.c
-+++ b/drivers/mfd/cros_ec_dev.c
-@@ -145,7 +145,6 @@ static int ec_device_probe(struct platfo
- 	if (!ec)
- 		return retval;
+--- a/mm/shrinker_debug.c
++++ b/mm/shrinker_debug.c
+@@ -198,10 +198,12 @@ int shrinker_debugfs_add(struct shrinker
+ 	}
+ 	shrinker->debugfs_entry = entry;
  
--	dev_set_drvdata(dev, ec);
- 	ec->ec_dev = dev_get_drvdata(dev->parent);
- 	ec->dev = dev;
- 	ec->cmd_offset = ec_platform->cmd_offset;
-@@ -187,6 +186,8 @@ static int ec_device_probe(struct platfo
- 	if (retval)
- 		goto failed;
+-	debugfs_create_file("count", 0440, entry, shrinker,
+-			    &shrinker_debugfs_count_fops);
+-	debugfs_create_file("scan", 0220, entry, shrinker,
+-			    &shrinker_debugfs_scan_fops);
++	if (shrinker->count_objects)
++		debugfs_create_file("count", 0440, entry, shrinker,
++				    &shrinker_debugfs_count_fops);
++	if (shrinker->scan_objects)
++		debugfs_create_file("scan", 0220, entry, shrinker,
++				    &shrinker_debugfs_scan_fops);
+ 	return 0;
+ }
  
-+	dev_set_drvdata(dev, ec);
-+
- 	/* check whether this EC is a sensor hub. */
- 	if (cros_ec_get_sensor_count(ec) > 0) {
- 		retval = mfd_add_hotplug_devices(ec->dev,
 
 
