@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A41635C697;
-	Tue, 21 Jul 2026 21:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C1835C6A0;
+	Tue, 21 Jul 2026 21:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668408; cv=none; b=E2+MCznRLVKr3GwNyiaY/tE4sLsIa4Jla57q3FW9byMabRIwWcunlR9BQu3bEcZSPm9XK12F1xe4hi6ERa+ASvEwvZ9zNnvL8RupQZVRw19Q672v6MFQUG0ZrosFv+lKyrpppZK73eWlAHdl9a+4tONT2inVCGIHCZF6/f8i5F8=
+	t=1784668411; cv=none; b=QNIH7MelIuzR2pOH8jcDxaMI90Q/v9BPlItlpL7pZZFV1sXo+J4lgJaS7PiqMcXURePGUCgyDJ4qygXdPtej9BLCiLqU93M3fzHtYAFwbT3tLwBD/5bAk9WmxDPJiD2m4vDcEkk/De5BeUNGYHkBpj+5rmiWJy4R3u6rknn6Nvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668408; c=relaxed/simple;
-	bh=NX1XTASJ+/EQmvZB/PFyUZ78+mpN6J1MsLEH9G7//Pw=;
+	s=arc-20240116; t=1784668411; c=relaxed/simple;
+	bh=MP+xI7djdqYrfDqnLCM0JnmVxsRbM756jXC/9LuFhbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j/ipuJj3JwQMze22ZKswT6JDt2GEePoFMU+ovHLdkeHbAHgN8nM8iNxaOL2xksXhzPwKnZkYzpbTmgzQITb4kaaJtbrUsT41IRx8YRWC/hAcBnv2r7+Zxrp7dTp607qffVdAR1dAJr7dufWjszonAgs4vT9d5LlgUlvTE0eHNTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IYMRCC3W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TgqTauVwRMFvLr1nMoKN5TcCon7jBhvGVNc3+xNeAGDDImvO8kIX1+fvgtxopFeKjALy4pqbk2NAU3Pc/WdgYeXx93rlBwc4aBheYzBLQ4t+BVwj6chX6zG66v/EjRHh1/lYC/M2f2o6zacMOQSRNwnj0AstUuDFuY8R/nc2EHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvmWWew4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYMRCC3W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A044D1F00A3A;
-	Tue, 21 Jul 2026 21:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvmWWew4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 486F51F000E9;
+	Tue, 21 Jul 2026 21:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668407;
-	bh=NPyEcmJS/vsFG8N25YeW91Eu9+XPOz52jaQHiahVH0M=;
+	s=korg; t=1784668409;
+	bh=iCzdLO6A1OJJRHlCwYWuUxlZN0tuHTZsA/vQoTERHHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IYMRCC3WvAJO3UgMl1KZuywqC2QMS6KQ0VN1gNIr9BDqjmIDdW2o/lCLR2YIk3S+S
-	 s2M54WmB+6YEvGzZ5pHxTlOt56ZzKKJuNk21Z8lcIx6Me1CL5dBY5gtsaKQurXKyK/
-	 ey5ZsP3S5HPQGqcCFJcO6pm0Ro7dqqP+IbmDOj14=
+	b=dvmWWew4+OOA/Mvb3hvEP1wsQMP7mWXeocdIJ5AOKjEUdjlCbKkamz5FZGUqx8Gqj
+	 TX3dydkOrzXMF0lxjgjYLyrcQkXnz7Q6dtg71zLSusLjghJ3D7A6AS7/8E0L0t83xO
+	 dTjus4ZFTwqnlWhc9j4w4727xlcQmU4B2lOZBsPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.1 0147/1067] firmware_loader: fix device reference leak in firmware_upload_register()
-Date: Tue, 21 Jul 2026 17:12:28 +0200
-Message-ID: <20260721152427.884125888@linuxfoundation.org>
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 0165/1067] net: usb: kalmia: bound RX frame length in kalmia_rx_fixup()
+Date: Tue, 21 Jul 2026 17:12:46 +0200
+Message-ID: <20260721152428.283067360@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,73 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit 896df22ee57648b0c505bd76ddbc6b2341834696 upstream.
+commit 47b6bcef6e679593d2e86e04ee72c46a4e2f7139 upstream.
 
-firmware_upload_register()
-  -> fw_create_instance()
-     -> device_initialize()
+kalmia_rx_fixup() computes usb_packet_length = skb->len - (2 *
+KALMIA_HEADER_LENGTH) as a u16, guarded only by a pre-loop check that
+skb->len is at least KALMIA_HEADER_LENGTH, which is 6. A device can
+deliver a short bulk-IN frame with skb->len in the 6 to 11 range, or
+leave a short trailing remainder on a later loop iteration. Either case
+underflows usb_packet_length to about 65530.
 
-After fw_create_instance() succeeds, the lifetime of the embedded struct
-device is expected to be managed through the device core reference
-counting, since fw_create_instance() has already called
-device_initialize().
+That bypasses the usb_packet_length < ether_packet_length truncation path.
+The device-supplied ether_packet_length, a le16 up to 65535 read from
+header_start[2], then drives a memcmp() and the following skb_trim() and
+skb_pull() past the end of the rx buffer. The rx buffer is hard_mtu * 10,
+which is 14000 bytes. That is an out of bounds read.
 
-In firmware_upload_register(), if alloc_lookup_fw_priv() fails after
-fw_create_instance() succeeds, the code reaches free_fw_sysfs and frees
-fw_sysfs directly instead of releasing the device reference with
-put_device(). This may leave the reference count of the embedded struct
-device unbalanced, resulting in a refcount leak.
+Require both the start and end framing headers to be present before
+subtracting them, on every loop iteration.
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review. Fix this by using put_device(fw_dev) in the
-failure path and letting fw_dev_release() handle the final cleanup,
-instead of freeing the instance directly from the error path.
-
-Fixes: 97730bbb242c ("firmware_loader: Add firmware-upload support")
+Fixes: d40261236e8e ("net/usb: Add Samsung Kalmia driver for Samsung GT-B3730")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260505091231.607089-1-lgs201920130244@gmail.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/178211531778.2216480.12637613349790980750@maoyixie.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/firmware_loader/sysfs_upload.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/usb/kalmia.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/base/firmware_loader/sysfs_upload.c
-+++ b/drivers/base/firmware_loader/sysfs_upload.c
-@@ -340,7 +340,6 @@ firmware_upload_register(struct module *
- 		goto free_fw_upload_priv;
- 	}
- 	fw_upload->priv = fw_sysfs;
--	fw_sysfs->fw_upload_priv = fw_upload_priv;
- 	fw_dev = &fw_sysfs->dev;
+--- a/drivers/net/usb/kalmia.c
++++ b/drivers/net/usb/kalmia.c
+@@ -276,6 +276,14 @@ kalmia_rx_fixup(struct usbnet *dev, stru
+ 				"Received header: %6phC. Package length: %i\n",
+ 				header_start, skb->len - KALMIA_HEADER_LENGTH);
  
- 	ret = alloc_lookup_fw_priv(name, &fw_cache, &fw_priv,  NULL, 0, 0,
-@@ -348,10 +347,12 @@ firmware_upload_register(struct module *
- 	if (ret != 0) {
- 		if (ret > 0)
- 			ret = -EINVAL;
--		goto free_fw_sysfs;
-+		put_device(fw_dev);
-+		goto free_fw_upload_priv;
- 	}
- 	fw_priv->is_paged_buf = true;
- 	fw_sysfs->fw_priv = fw_priv;
-+	fw_sysfs->fw_upload_priv = fw_upload_priv;
- 
- 	ret = device_add(fw_dev);
- 	if (ret) {
-@@ -362,9 +363,6 @@ firmware_upload_register(struct module *
- 
- 	return fw_upload;
- 
--free_fw_sysfs:
--	kfree(fw_sysfs);
--
- free_fw_upload_priv:
- 	kfree(fw_upload_priv);
- 
++		/* both framing headers must be present before we subtract
++		 * them, otherwise usb_packet_length underflows and the
++		 * device-supplied ether_packet_length drives an out of bounds
++		 * access below
++		 */
++		if (skb->len < 2 * KALMIA_HEADER_LENGTH)
++			return 0;
++
+ 		/* subtract start header and end header */
+ 		usb_packet_length = skb->len - (2 * KALMIA_HEADER_LENGTH);
+ 		ether_packet_length = get_unaligned_le16(&header_start[2]);
 
 
