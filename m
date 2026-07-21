@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9271343F8C9;
-	Tue, 21 Jul 2026 22:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522B339768C;
+	Tue, 21 Jul 2026 22:19:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672339; cv=none; b=uND0kVcmwNAEIRwmGfeuYXJW7+hxEsXh2/vTu08MxQF5grBGFOfjE5QyybkNfzpFN7bGdRupxcEC3Bf0rlnYdvvk7x8K5gBGHLSfPTOQ00EItvmWnIG1Oqhr5my0CyYz79fdjvw8l9FgDJY0OWM2APRTPmOP/dFGIKLQNM90uoI=
+	t=1784672342; cv=none; b=XhhIwBzdoVZG35Og8/UHiVUbZFUcHwPDs30sB5FFBwtb3KuCfBgNGlHOoY4jeMb6Ql4I03NIGOnazlJyl61B6wV28ZYjQlo/5EXB//45n6dZY/RregJv1pbvTbM63hpMoY3yYc5B5JPqCu7f2Jw5HyjWvK7umBGC/u9CR6CS6FA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672339; c=relaxed/simple;
-	bh=F8Ne7YC0MlV19qSAqHMJ9/43OkmIhURQ7cn0CA/samE=;
+	s=arc-20240116; t=1784672342; c=relaxed/simple;
+	bh=eChGDw0NfRK+VtxxAAiMF/LzS2wVQsz5pRfTWS2IKVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sf5M2grpkwgLl02EcZxTwWFR8FiO9bYCFsMDHSAKHBXHVAlZO/+uI+ZtKLJoIewUz2a6djvpbCpG4CSlbQISA7LIBwzM6Hnw/d2PcQnKCc7vcAtY+I24FRFLj/FLtaA7cKyWyxXRr35JqlxjcwQ/gW/K2pPb5Y42Bkrq+R9ZlLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdeU0CHS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g52MigZkvJnlA/BOwEwH+wNB3bZb/FNkXEW7DxZZCnSqb158xutAxHcbaO9E7IFhVR2NJBDW2qA9sm0D6KeQEaQvyGKUEGAFAx3g4deVI6nqsMuIVqwpXWs7DV7fGGsmLN1lR42wkBlodQ66XEklyikFCJbR+NhnW5iCKuMuotU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vEdflL/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdeU0CHS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034881F000E9;
-	Tue, 21 Jul 2026 22:18:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vEdflL/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9BE1F000E9;
+	Tue, 21 Jul 2026 22:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672338;
-	bh=z1si5sTWSmPOpWSIQgkYWCWR300rYXu7sE7z89mW/68=;
+	s=korg; t=1784672341;
+	bh=iyqH7jz/22JynZWU93g2zTs6e5Jy3GwjcC8nk3dZzUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bdeU0CHSYZXPQe5CFeJKPrlwobMIl7TezWAASPgfX7Vp9OIKD5wSJ25CEOebOYlc6
-	 dOkBFT0pDhHq4M4peZRoQN11f8DWYlkBngh4R9xfrtZFfmHAhuaCukcmwsnO6ltHlo
-	 kWgv5XVwHAQPJmNEdVTljbwpkt5INlfbFm3/gTCU=
+	b=1vEdflL/ZC6CtIicXUFv482JHdZimLN0vncvnMZgFfyWBZMeNh1wvfUZltaiT3c0/
+	 R+p7XfxrH3VatvqkyxBIAAD6nHqS0vayKh4EFQ0UxmlZnZCbLvu23PSBaKXASpBQk5
+	 DsOyqGjGT5zLk4LVXZIAKEr6DZnOuY0KC7WaTyA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
 	Julian Anastasov <ja@ssi.bg>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 544/843] ipvs: pass parsed transport offset to state handlers
-Date: Tue, 21 Jul 2026 17:22:59 +0200
-Message-ID: <20260721152418.273506995@linuxfoundation.org>
+Subject: [PATCH 5.15 545/843] ipvs: use parsed transport offset in TCP state lookup
+Date: Tue, 21 Jul 2026 17:23:00 +0200
+Message-ID: <20260721152418.298153694@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -54,131 +59,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit bae7ce7bafb59e42dc0e0e2999fdd9d1cffe3866 ]
+[ Upstream commit 2500fa3958b1ba51c2b065e39db1b04dfa7e23a2 ]
 
-IPVS callers already parse the packet into struct ip_vs_iphdr before
-updating connection state. For IPv6 this records the real
-transport-header offset after extension headers in iph.len.
+TCP state handling reparses the skb to find the TCP header. For IPv6 it
+uses sizeof(struct ipv6hdr), while the surrounding IPVS code already
+parsed the packet with ip_vs_fill_iph_skb() and has the real
+transport-header offset in iph.len.
 
-Pass this parsed transport offset through ip_vs_set_state() and the
-protocol state_transition() callback so protocol handlers can use the
-same packet context as scheduling and NAT handling. This patch only
-changes the common callback plumbing and adapts the protocol callback
-signatures; TCP and SCTP start using the value in follow-up patches.
+This makes TCP state handling look at the wrong bytes when an IPv6
+packet carries extension headers. Use the parsed transport offset passed
+down from ip_vs_set_state() when reading the TCP header.
 
+For IPv4 and for IPv6 packets without extension headers, the passed
+offset matches the previous value.
+
+Fixes: 0bbdd42b7efa6 ("IPVS: Extend protocol DNAT/SNAT and state handlers")
+Link: https://lore.kernel.org/netdev/20260705125659.37744-1-zhaoyz24@mails.tsinghua.edu.cn/
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: Claude Code:GLM-5.2
 Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 Acked-by: Julian Anastasov <ja@ssi.bg>
 Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: 2500fa3958b1 ("ipvs: use parsed transport offset in TCP state lookup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_vs.h                   |  3 ++-
- net/netfilter/ipvs/ip_vs_core.c       | 10 +++++-----
- net/netfilter/ipvs/ip_vs_proto_sctp.c |  3 ++-
- net/netfilter/ipvs/ip_vs_proto_tcp.c  |  3 ++-
- net/netfilter/ipvs/ip_vs_proto_udp.c  |  3 ++-
- 5 files changed, 13 insertions(+), 9 deletions(-)
+ net/netfilter/ipvs/ip_vs_proto_tcp.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
-index 41e20b7e8e88db..3ed8ddc0dd5d8c 100644
---- a/include/net/ip_vs.h
-+++ b/include/net/ip_vs.h
-@@ -455,7 +455,8 @@ struct ip_vs_protocol {
- 
- 	void (*state_transition)(struct ip_vs_conn *cp, int direction,
- 				 const struct sk_buff *skb,
--				 struct ip_vs_proto_data *pd);
-+				 struct ip_vs_proto_data *pd,
-+				 unsigned int iph_len);
- 
- 	int (*register_app)(struct netns_ipvs *ipvs, struct ip_vs_app *inc);
- 
-diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
-index 393058a43aa73c..225fcc80dc901f 100644
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -220,10 +220,10 @@ ip_vs_conn_stats(struct ip_vs_conn *cp, struct ip_vs_service *svc)
- static inline void
- ip_vs_set_state(struct ip_vs_conn *cp, int direction,
- 		const struct sk_buff *skb,
--		struct ip_vs_proto_data *pd)
-+		struct ip_vs_proto_data *pd, unsigned int iph_len)
- {
- 	if (likely(pd->pp->state_transition))
--		pd->pp->state_transition(cp, direction, skb, pd);
-+		pd->pp->state_transition(cp, direction, skb, pd, iph_len);
- }
- 
- static inline int
-@@ -625,7 +625,7 @@ int ip_vs_leave(struct ip_vs_service *svc, struct sk_buff *skb,
- 		ip_vs_in_stats(cp, skb);
- 
- 		/* set state */
--		ip_vs_set_state(cp, IP_VS_DIR_INPUT, skb, pd);
-+		ip_vs_set_state(cp, IP_VS_DIR_INPUT, skb, pd, iph->len);
- 
- 		/* transmit the first SYN packet */
- 		ret = cp->packet_xmit(skb, cp, pd->pp, iph);
-@@ -1308,7 +1308,7 @@ handle_response(int af, struct sk_buff *skb, struct ip_vs_proto_data *pd,
- 
- after_nat:
- 	ip_vs_out_stats(cp, skb);
--	ip_vs_set_state(cp, IP_VS_DIR_OUTPUT, skb, pd);
-+	ip_vs_set_state(cp, IP_VS_DIR_OUTPUT, skb, pd, iph->len);
- 	skb->ipvs_property = 1;
- 	if (!(cp->flags & IP_VS_CONN_F_NFCT))
- 		ip_vs_notrack(skb);
-@@ -2104,7 +2104,7 @@ ip_vs_in(struct netns_ipvs *ipvs, unsigned int hooknum, struct sk_buff *skb, int
- 	IP_VS_DBG_PKT(11, af, pp, skb, iph.off, "Incoming packet");
- 
- 	ip_vs_in_stats(cp, skb);
--	ip_vs_set_state(cp, IP_VS_DIR_INPUT, skb, pd);
-+	ip_vs_set_state(cp, IP_VS_DIR_INPUT, skb, pd, iph.len);
- 	if (cp->packet_xmit)
- 		ret = cp->packet_xmit(skb, cp, pp, &iph);
- 		/* do not touch skb anymore */
-diff --git a/net/netfilter/ipvs/ip_vs_proto_sctp.c b/net/netfilter/ipvs/ip_vs_proto_sctp.c
-index 63c78a1f3918a7..394367b7b38879 100644
---- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
-@@ -468,7 +468,8 @@ set_sctp_state(struct ip_vs_proto_data *pd, struct ip_vs_conn *cp,
- 
- static void
- sctp_state_transition(struct ip_vs_conn *cp, int direction,
--		const struct sk_buff *skb, struct ip_vs_proto_data *pd)
-+		const struct sk_buff *skb, struct ip_vs_proto_data *pd,
-+		unsigned int iph_len)
- {
- 	spin_lock_bh(&cp->lock);
- 	set_sctp_state(pd, cp, direction, skb);
 diff --git a/net/netfilter/ipvs/ip_vs_proto_tcp.c b/net/netfilter/ipvs/ip_vs_proto_tcp.c
-index ede4fa3b63f52d..dc8394383c148e 100644
+index dc8394383c148e..b382810156b2c6 100644
 --- a/net/netfilter/ipvs/ip_vs_proto_tcp.c
 +++ b/net/netfilter/ipvs/ip_vs_proto_tcp.c
-@@ -580,7 +580,8 @@ set_tcp_state(struct ip_vs_proto_data *pd, struct ip_vs_conn *cp,
- static void
- tcp_state_transition(struct ip_vs_conn *cp, int direction,
- 		     const struct sk_buff *skb,
--		     struct ip_vs_proto_data *pd)
-+		     struct ip_vs_proto_data *pd,
-+		     unsigned int iph_len)
+@@ -585,13 +585,7 @@ tcp_state_transition(struct ip_vs_conn *cp, int direction,
  {
  	struct tcphdr _tcph, *th;
  
-diff --git a/net/netfilter/ipvs/ip_vs_proto_udp.c b/net/netfilter/ipvs/ip_vs_proto_udp.c
-index ffbebda547fc10..dbd4155bb07526 100644
---- a/net/netfilter/ipvs/ip_vs_proto_udp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_udp.c
-@@ -445,7 +445,8 @@ static const char * udp_state_name(int state)
- static void
- udp_state_transition(struct ip_vs_conn *cp, int direction,
- 		     const struct sk_buff *skb,
--		     struct ip_vs_proto_data *pd)
-+		     struct ip_vs_proto_data *pd,
-+		     unsigned int iph_len)
- {
- 	if (unlikely(!pd)) {
- 		pr_err("UDP no ns data\n");
+-#ifdef CONFIG_IP_VS_IPV6
+-	int ihl = cp->af == AF_INET ? ip_hdrlen(skb) : sizeof(struct ipv6hdr);
+-#else
+-	int ihl = ip_hdrlen(skb);
+-#endif
+-
+-	th = skb_header_pointer(skb, ihl, sizeof(_tcph), &_tcph);
++	th = skb_header_pointer(skb, iph_len, sizeof(_tcph), &_tcph);
+ 	if (th == NULL)
+ 		return;
+ 
 -- 
 2.53.0
 
