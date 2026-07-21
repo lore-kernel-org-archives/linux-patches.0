@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334043F825C;
-	Tue, 21 Jul 2026 17:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE75D19049B;
+	Tue, 21 Jul 2026 17:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654721; cv=none; b=u+fAlb3EsQXP/HK10th5nakTxLi23ho1w4QnewiGjar8Dxp8uuXKNOGtCkBnsLnJy8NAX/C7cg+IgG5aH7+Dm1PgSaOat2dtKd7lX6V9995HBx1KtCtqufIHPZhvulN83kLIHHLQuy+rtiw4ovwcBIyNgO8mmrpeH0+282k1tuU=
+	t=1784654723; cv=none; b=qleyWjCoirX2d8b8JBipYhw5Smb55trn8TNIK18bqaqB/+ReCVfvTqQxNB03tgQtRCIRmJKBtqqGvA9eVDiR/LieKgGesw4S+t5vnw3vXRXFggPCvuXgsvbdP3AC7FkHmuFFVpFAbqtwWyWuQ/98w3aLvJgxXLdk0DFS2UlHkJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654721; c=relaxed/simple;
-	bh=vbjosK66EC6nQn22LXP6ZLCKWjUz5vuNuG97n8U38is=;
+	s=arc-20240116; t=1784654723; c=relaxed/simple;
+	bh=kjIMYDcK3veXt1SMcmD40oPxVdKA8TZwYqUgUUqqDyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j0FOmz0YXKMaRmOpUPj8SEWHzmcFKW1pMbbmxNUwmXEKNErAWpw0/7ovMFiOUy0t5m1Dw+a4VIwl2PwOMunwW5TmuxrHYYwagb3OhC47edkrVEHDu5ATxZCF1lqdDyi3+CKpp8wadfFZM2TNGrHF/sVRwtfauWuZCC1Ox8Oh5JA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e209G2Dd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MMFXsvToudTkJWBcK5Wg/sTweIO6Y4lwK2tyc+qqDHjTZEjFE+PhjE1Z2tjrj+04+92/evE/Hr2aQMu2U5mqH6YHjjRzfQERI+MWJwsLVYtu8Jk8cAix0vlSdPdRB9frbjhJ4tqbtald18uUqLGxSXbgQXSq/o6duFb0KzPxxuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhjoFZVW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e209G2Dd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F851F000E9;
-	Tue, 21 Jul 2026 17:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhjoFZVW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40C5B1F000E9;
+	Tue, 21 Jul 2026 17:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654720;
-	bh=0aLMLeJqbbBm5tlzVF0NjN7PrCOnv1tUjMBC8/sSOBc=;
+	s=korg; t=1784654722;
+	bh=+SzVabR8w4OAuprYzraNd12Krwv4qTHrVEH7udiH0Gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e209G2Dd63F/xhsABtNbyr57bIDVJMS7trg5pJpfGnYwQmiXCsLRjsJuGL+rc35pa
-	 QehzgFhyDzGuYeIYTc/4ObH+AuO4L+t2AXFTOfg4WNzPOjZg1PfZ4OGVvDCOHCEJTi
-	 1s+uOzi+LYXfiGd/ygxmxDOIBx7TNJWFKQ8zPbxo=
+	b=UhjoFZVWE5eX8sCGcbFCwnvWKQCsmBn0IbC5stTSFo1t/NnmLfElw9oDOvHX90Fvq
+	 9NePIhAXYJJejJRbhY1FFQsnjRNb86QW8q+kEphu8suigAc3+CSv1FWpe/EsSX12CW
+	 n2CPEBbUtUnaYNP7bozT8NQzWgSuamEHabDhHY2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Peter <sven@kernel.org>,
-	Nick Chan <towinchenmi@gmail.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.1 1813/2077] nvme-apple: Prevent shared tags across queues on Apple A11
-Date: Tue, 21 Jul 2026 17:24:46 +0200
-Message-ID: <20260721152635.509183267@linuxfoundation.org>
+Subject: [PATCH 7.1 1814/2077] nvmet-auth: reject short AUTH_RECEIVE buffers
+Date: Tue, 21 Jul 2026 17:24:47 +0200
+Message-ID: <20260721152635.533007673@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,68 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Chan <towinchenmi@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 6fe0687245e8406bf26143bd45eb16441bbe5280 upstream.
+commit 779575bc35c687697ba69e904f2cd22e60112534 upstream.
 
-On Apple A11, tags of pending commands must be unique across the admin
-and IO queues, else the firmware crashes with
-"duplicate tag error for tag N", with N being the tag.
+nvmet_execute_auth_receive() trusts the AUTH_RECEIVE allocation length
+after checking only that it is nonzero and matches the transfer length.
+In the SUCCESS1 and FAILURE1/default states, that lets a remote NVMe-oF
+initiator reach the fixed-size DH-HMAC-CHAP response builders with a
+kmalloc() buffer shorter than the response, so nvmet_auth_success1() and
+nvmet_auth_failure1() write past the allocation; both only WARN_ON the
+short length and then format the message anyway.
 
-Apply the existing workaround for M1 of reserving two tags for the admin
-queue to A11.
+Impact: A remote NVMe-oF initiator with access to an auth-enabled target
+can trigger a 16-byte heap out-of-bounds write via a one-byte
+AUTH_RECEIVE allocation length.
 
+Compute the minimum response length for the current DH-HMAC-CHAP step in
+nvmet_auth_receive_data_len() and report a zero data length when the
+host-supplied allocation length is shorter, so the existing zero-length
+check in nvmet_execute_auth_receive() rejects the command before any
+builder runs. The SUCCESS1 minimum is sizeof(struct
+nvmf_auth_dhchap_success1_data) plus the HMAC hash length, because the
+response hash is written into the rval[] flexible-array tail, so the
+minimum is state dependent rather than a flat sizeof. CHALLENGE keeps its
+existing variable-length guard in nvmet_auth_challenge().
+
+This is reachable only when in-band DH-HMAC-CHAP authentication is
+configured on the target.
+
+Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
 Cc: stable@vger.kernel.org
-Fixes: 04d8ecf37b5e ("nvme: apple: Add Apple A11 support")
-Reviewed-by: Sven Peter <sven@kernel.org>
-Signed-off-by: Nick Chan <towinchenmi@gmail.com>
+Assisted-by: Codex:gpt-5-5-xhigh
+Assisted-by: Claude:claude-opus-4-8
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/apple.c |   12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/nvme/target/fabrics-cmd-auth.c |   26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/host/apple.c
-+++ b/drivers/nvme/host/apple.c
-@@ -225,7 +225,7 @@ static unsigned int apple_nvme_queue_dep
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -493,7 +493,31 @@ static void nvmet_auth_failure1(struct n
+ 
+ u32 nvmet_auth_receive_data_len(struct nvmet_req *req)
  {
- 	struct apple_nvme *anv = queue_to_apple_nvme(q);
+-	return le32_to_cpu(req->cmd->auth_receive.al);
++	struct nvmet_ctrl *ctrl = req->sq->ctrl;
++	u32 al = le32_to_cpu(req->cmd->auth_receive.al);
++	u32 min_len;
++
++	/*
++	 * Reject too-short al before kmalloc(al), since the SUCCESS1 and
++	 * FAILURE1/default builders write fixed response headers into it.
++	 */
++	switch (req->sq->dhchap_step) {
++	case NVME_AUTH_DHCHAP_MESSAGE_CHALLENGE:
++		return al;
++	case NVME_AUTH_DHCHAP_MESSAGE_SUCCESS1:
++		min_len = sizeof(struct nvmf_auth_dhchap_success1_data);
++		if (req->sq->dhchap_c2)
++			min_len += nvme_auth_hmac_hash_len(ctrl->shash_id);
++		break;
++	default:
++		min_len = sizeof(struct nvmf_auth_dhchap_failure_data);
++		break;
++	}
++
++	if (al < min_len)
++		return 0;
++
++	return al;
+ }
  
--	if (q->is_adminq && anv->hw->has_lsq_nvmmu)
-+	if (q->is_adminq)
- 		return APPLE_NVME_AQ_DEPTH;
- 
- 	return anv->hw->max_queue_depth;
-@@ -303,7 +303,7 @@ static void apple_nvme_submit_cmd_t8015(
- 		memcpy((void *)q->sqes + (q->sq_tail << APPLE_NVME_IOSQES),
- 			cmd, sizeof(*cmd));
- 
--	if (++q->sq_tail == anv->hw->max_queue_depth)
-+	if (++q->sq_tail == apple_nvme_queue_depth(q))
- 		q->sq_tail = 0;
- 
- 	writel(q->sq_tail, q->sq_db);
-@@ -1139,10 +1139,7 @@ static void apple_nvme_reset_work(struct
- 	}
- 
- 	/* Setup the admin queue */
--	if (anv->hw->has_lsq_nvmmu)
--		aqa = APPLE_NVME_AQ_DEPTH - 1;
--	else
--		aqa = anv->hw->max_queue_depth - 1;
-+	aqa = APPLE_NVME_AQ_DEPTH - 1;
- 	aqa |= aqa << 16;
- 	writel(aqa, anv->mmio_nvme + NVME_REG_AQA);
- 	writeq(anv->adminq.sq_dma_addr, anv->mmio_nvme + NVME_REG_ASQ);
-@@ -1325,8 +1322,7 @@ static int apple_nvme_alloc_tagsets(stru
- 	 * both queues. The admin queue gets the first APPLE_NVME_AQ_DEPTH which
- 	 * must be marked as reserved in the IO queue.
- 	 */
--	if (anv->hw->has_lsq_nvmmu)
--		anv->tagset.reserved_tags = APPLE_NVME_AQ_DEPTH;
-+	anv->tagset.reserved_tags = APPLE_NVME_AQ_DEPTH;
- 	anv->tagset.queue_depth = anv->hw->max_queue_depth - 1;
- 	anv->tagset.timeout = NVME_IO_TIMEOUT;
- 	anv->tagset.numa_node = NUMA_NO_NODE;
+ void nvmet_execute_auth_receive(struct nvmet_req *req)
 
 
