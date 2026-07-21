@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282E629CE9;
-	Tue, 21 Jul 2026 21:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40ED44AB60;
+	Tue, 21 Jul 2026 21:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669046; cv=none; b=aVUFtsen0XHJHWSRbmnmMvrgDs1tcwKZAt6z+CrpLBXoP8ijujyhwWjldfV8nrOMgVcax17wmhZOOe6xHv5+qHZPzBHMBU3NS0981au1vntBbhmn0CCnuH3ifiiosjfSasOotz29o6UvIkx8nghTz9pS0ZRSLRtw4JHzEItvYLM=
+	t=1784669048; cv=none; b=MmUSMeyPo02+kSeNNBTCqNE2a5gc73tgTjoHoA66k6cD9tGWTmiJ/wDqZsU4Xyqd0rRQpLd/kDeoL+UetQYUPN0rs+0X0GP65MXt0WLlnSB0kPACsen1zyiF9Ir+CUY3hRhb9pv9Xxti94tSo7RbV3uSO6O89qaWKtoETSWYR/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669046; c=relaxed/simple;
-	bh=rAdz/J0TyflNkr33lzBPsv0Oyt3o3KEuUBR1r2jASP0=;
+	s=arc-20240116; t=1784669048; c=relaxed/simple;
+	bh=GIYuGs7HzkLsWRjetNtIEQ0R65qiBdesb4JD/vmG14Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GK5+XJrjp5evU1pAkuqaBij9tlP9P7pqpu0ddM35HJK8y70Ljtgu1QRAivzyw/YO+PIg/d/20UQyhZ/unjGEPumqDict0dw1HoO16Plj7+fxuJU5R7+GiVjLLhoENsD67eweLebIOtMNKPH36AUH5rnGKX+g9MVosbp8TyDh7bI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9MraCYD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gAFTpR7aEjEW7gldQDmFGtfqRAfBpg9AZWdA6q/Mv/W6myQ8kpMrrBnRyzIi/xf0JSs/Qx9BvfEoqYivjj67Vwxik8CAFpm8AZ07bos+OgvLz074UU3LTKBT/NiVlgLJNhpcc3FAmGcfPOQSBt+7+dCBqQ7jdTcqOuWnAmW7fX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0o8ehztD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9MraCYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A241F000E9;
-	Tue, 21 Jul 2026 21:24:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0o8ehztD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 383791F000E9;
+	Tue, 21 Jul 2026 21:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669045;
-	bh=qvo//ZFlpxYKIBZI6NltRiIchjWjR3pgcMp9C/QOEE4=;
+	s=korg; t=1784669047;
+	bh=6G5HO+3KI1dgczJrxpPVwDJ/4DqSYV2/kix0N9ReWgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c9MraCYDXl+nh8ec0igwCT61TPrX37s90Ci454VqtHqjGrTiFc6Z7pgyc1todIS8W
-	 bkQtO2iVUMWE//u1fe2+piHOB38RORbk7C5dE4Ml+qZW8Z3A/d2hBAjWHdLUlLro2E
-	 nRNFezH7w/7Qs+ceA5zs3pMAeultrGCpcLyC7PiY=
+	b=0o8ehztDFrBp3Kav6aQCUEQMzGKyhnv1iThn1Zq99gs3FdmBy4WJ09PKjaCoPOMgS
+	 /P8P/1J+DL9isTdEX1pCEVrByw5PT7NnsGhm0zFtzsNr3BNtnK8qv3u/NjDGkwGBPs
+	 o66GUNAZlEtCP6DQpQRUx3QIya2Xg9BwCOfKZk2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
+	Hui Zhu <zhuhui@kylinos.cn>,
+	Dev Jain <dev.jain@arm.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0379/1067] ocfs2/dlm: require a ref for locking_state debugfs open
-Date: Tue, 21 Jul 2026 17:16:20 +0200
-Message-ID: <20260721152433.105356220@linuxfoundation.org>
+Subject: [PATCH 6.1 0406/1067] vmalloc: fix NULL pointer dereference in is_vm_area_hugepages()
+Date: Tue, 21 Jul 2026 17:16:47 +0200
+Message-ID: <20260721152433.713619530@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -58,146 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Hui Zhu <zhuhui@kylinos.cn>
 
-[ Upstream commit 03ad858ce8064861ea580021976dc19b7aabb549 ]
+[ Upstream commit c55dd3b46c1208d6d2ea737a8aefef4aa4c70cb8 ]
 
-debug_lockres_open() copies inode->i_private into struct debug_lockres and
-debug_lockres_release() later drops that pointer with dlm_put().  That
-only works if open successfully pins the struct dlm_ctxt.
+find_vm_area() can return NULL if the given address is not a valid vmalloc
+area.  Check the return value before dereferencing it to avoid a kernel
+crash.
 
-Today open calls dlm_grab(dlm) but ignores its return value.  Once the
-last domain unregister has removed the context from dlm_domains,
-dlm_grab() returns NULL, yet open still stores the raw pointer and returns
-success.  The later release path is outside the debugfs removal barrier,
-so it can call dlm_put() after dlm_free_ctxt_mem() has freed the context.
-KASAN reports this as a slab-use-after-free in dlm_put() called from
-debug_lockres_release().
-
-Fail the open when dlm_grab() cannot acquire the reference and unwind the
-seq_file private state before returning.  That keeps locking_state from
-handing out a file descriptor whose release path does not own the
-dlm_ctxt.
-
-The buggy scenario involves two paths, with each column showing the order
-within that path:
-
-locking_state debugfs open:          last domain unregister:
-1. debug_lockres_open() reads        1. dlm_unregister_domain() calls
-   inode->i_private.                    dlm_complete_dlm_shutdown().
-2. debug_lockres_open() calls        2. shutdown removes the dlm_ctxt from
-   dlm_grab(dlm) and gets NULL.         dlm_domains.
-3. open still stores the raw dlm     3. final teardown reaches
-   pointer in dl->dl_ctxt and           dlm_free_ctxt_mem() and frees it.
-   returns success.
-4. debug_lockres_release() later
-   calls dlm_put(dl->dl_ctxt).
-
-Validation reproduced this kernel report:
-KASAN slab-use-after-free in dlm_put+0x82/0x200
-RIP: 0033:0x7f4d349bc9e0
-The buggy address belongs to the object at ffff888103a3c000 which belongs
-to the cache kmalloc-2k of size 2048
-The buggy address is located 816 bytes inside of freed 2048-byte region
-[ffff888103a3c000, ffff888103a3c800)
-Write of size 4
-Call trace:
-  dump_stack_lvl+0x66/0xa0 (?:?)
-  print_report+0xd0/0x630 (?:?)
-  dlm_put+0x82/0x200 (?:?)
-  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
-  __virt_addr_valid+0x188/0x2f0 (?:?)
-  kasan_report+0xe4/0x120 (?:?)
-  kasan_check_range+0x105/0x1b0 (?:?)
-  debug_lockres_release+0x53/0x80 (fs/ocfs2/dlm/dlmdebug.c:587)
-  dlm_put+0x9/0x200 (?:?)
-  debug_lockres_release+0x5c/0x80 (fs/ocfs2/dlm/dlmdebug.c:587)
-  full_proxy_release+0x67/0x90 (?:?)
-  __fput+0x1df/0x4b0 (?:?)
-  do_raw_spin_lock+0x10f/0x1b0 (?:?)
-  fput_close_sync+0xd2/0x170 (?:?)
-  __x64_sys_close+0x55/0x90 (?:?)
-  do_syscall_64+0x10c/0x640 (arch/x86/entry/syscall_64.c:87)
-  irqentry_exit+0xac/0x6e0 (?:?)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
-Freed by task stack:
-  kasan_save_stack+0x33/0x60 (?:?)
-  kasan_save_track+0x14/0x30 (?:?)
-  kasan_save_free_info+0x3b/0x60 (?:?)
-  __kasan_slab_free+0x5f/0x80 (?:?)
-  kfree+0x30f/0x580 (?:?)
-  dlm_put+0x1ce/0x200 (?:?)
-  dlm_unregister_domain+0xf6/0xb30 (?:?)
-  o2cb_cluster_disconnect+0x6b/0x90 (?:?)
-  ocfs2_cluster_disconnect+0x41/0x70 (?:?)
-  ocfs2_dlm_shutdown+0x1c4/0x220 (?:?)
-  ocfs2_dismount_volume+0x38a/0x550 (?:?)
-  generic_shutdown_super+0xc3/0x220 (?:?)
-  kill_block_super+0x29/0x60 (?:?)
-  deactivate_locked_super+0x66/0xe0 (?:?)
-  cleanup_mnt+0x13d/0x210 (?:?)
-  task_work_run+0xfa/0x170 (?:?)
-  exit_to_user_mode_loop+0xd6/0x430 (?:?)
-  do_syscall_64+0x3cb/0x640 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f (?:?)
-
-Link: https://lore.kernel.org/20260531044714.1640172-1-rollkingzzc@gmail.com
-Fixes: 4e3d24ed1a12 ("ocfs2/dlm: Dumps the lockres' into a debugfs file")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
+Link: https://lore.kernel.org/20260529014130.671291-1-hui.zhu@linux.dev
+Fixes: 121e6f3258fe ("mm/vmalloc: hugepage vmalloc mappings")
+Signed-off-by: Hui Zhu <zhuhui@kylinos.cn>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlm/dlmdebug.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ include/linux/vmalloc.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/dlm/dlmdebug.c b/fs/ocfs2/dlm/dlmdebug.c
-index be5e9ed7da8d94..e62ed98df7de4b 100644
---- a/fs/ocfs2/dlm/dlmdebug.c
-+++ b/fs/ocfs2/dlm/dlmdebug.c
-@@ -612,6 +612,7 @@ static int debug_lockres_open(struct inode *inode, struct file *file)
- 	struct dlm_ctxt *dlm = inode->i_private;
- 	struct debug_lockres *dl;
- 	void *buf;
-+	int status = -ENOMEM;
- 
- 	buf = kmalloc(PAGE_SIZE, GFP_KERNEL);
- 	if (!buf)
-@@ -624,16 +625,23 @@ static int debug_lockres_open(struct inode *inode, struct file *file)
- 	dl->dl_len = PAGE_SIZE;
- 	dl->dl_buf = buf;
- 
--	dlm_grab(dlm);
--	dl->dl_ctxt = dlm;
-+	/* ->release uses dl_ctxt after open, so it needs a real pin. */
-+	dl->dl_ctxt = dlm_grab(dlm);
-+	if (!dl->dl_ctxt) {
-+		status = -ENOENT;
-+		goto bailseq;
-+	}
- 
- 	return 0;
- 
-+bailseq:
-+	seq_release_private(inode, file);
- bailfree:
- 	kfree(buf);
- bail:
--	mlog_errno(-ENOMEM);
--	return -ENOMEM;
-+	if (status != -ENOENT)
-+		mlog_errno(status);
-+	return status;
- }
- 
- static int debug_lockres_release(struct inode *inode, struct file *file)
+diff --git a/include/linux/vmalloc.h b/include/linux/vmalloc.h
+index 07843967bc52f7..0a14c117c0fdb8 100644
+--- a/include/linux/vmalloc.h
++++ b/include/linux/vmalloc.h
+@@ -211,7 +211,9 @@ static inline bool is_vm_area_hugepages(const void *addr)
+ 	 * allocated in the vmalloc layer.
+ 	 */
+ #ifdef CONFIG_HAVE_ARCH_HUGE_VMALLOC
+-	return find_vm_area(addr)->page_order > 0;
++	struct vm_struct *area = find_vm_area(addr);
++
++	return area && area->page_order > 0;
+ #else
+ 	return false;
+ #endif
 -- 
 2.53.0
 
