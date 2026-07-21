@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E09F46D57B;
-	Tue, 21 Jul 2026 18:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE8F46E015;
+	Tue, 21 Jul 2026 18:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658041; cv=none; b=JQ4WL/LxjM3GgN9wr04nMQ8wDPxiNFDpNNRs11FwoK1uP02elxbSThe//F/C7b/C6C4PIsh7y9KyMXlwOOAJOit6zUG+xpRUk1DjH2BlSfxWXkuj6Bw8NKHKV+LtjZw3rp+7XpI3KCWBNm4eCEH0lsb5W6sgxBzy+bCck5J58Zo=
+	t=1784658043; cv=none; b=pE23JmAkv56WYJBBbT1q+XlbmAH7+toRj4cYaeMQVsFOHWsDRd97G2UWDrTVgNJaONXHlUm+Zw0ovRazWf1WYly+acUJ6YxKuAX9QyBv70e7wb0SVlcp7T9CHTShyAD5Qv3t8Dp1wq+Y+cTLTfSa6NuuwgUdeIMFJut88kbgLBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658041; c=relaxed/simple;
-	bh=m+7Lo3N6WwujkDCJXBpjKRE2BJh6SqpKCT8vIa1MQMg=;
+	s=arc-20240116; t=1784658043; c=relaxed/simple;
+	bh=t2VbMxUPlwbdlRguOFJYy0YJMwDW/Dprc1W0nyVlytY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CyZXfaERP268Zt1KGCa1FazuZ+FVM+dmhR4kGcSRmbC+cDjeKMObm8bWERMbk0URCRC8nWxD5/Rg3px0sYjwB/OHCsDLd6UKZrPPuyvnvvMasoE/eQOEBB6VOe1dC4A3IYNmqsDezD29U1z+gfv671DnancbSYvPJbWkUJeyNKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OTZAwHfA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R2b8rDT9oaFNQkyqLCVYqI1kL9IEz0BKQBnmbGaDH5OFavpAbBIvdx8ktntjNEMkMUUtS2bV8dOk+HijV1r5F68k1CafeE606gvu4C3qLGFmH7f1Lf7bE2bkUHp9vM5tz6oqd3M8tN+XtUf/NzrEneGeKb9m85ZhgxWt2b5CT78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uErQf4Dv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OTZAwHfA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D7F1F00A3D;
-	Tue, 21 Jul 2026 18:20:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uErQf4Dv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4DF1F000E9;
+	Tue, 21 Jul 2026 18:20:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658040;
-	bh=xzE0UQBbRIDbvQXUzBuxoNRv6rGu/zyCwPuW+iNBaF0=;
+	s=korg; t=1784658042;
+	bh=xahLY+848P64qBm1+zP+8axxTFZ5WBcRBv61tbfx9hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OTZAwHfAtOQrDACrgK+ivOm3/pUWHuQkUYKj15CBq7EaoudoeuU2cx9fe2goE7IiW
-	 tdonObWDiTrZMOFdUrusX2Ql2DaWDj4oxkxm3GHLQ7Vf6kJy7V239edFn0I0/P4DDD
-	 ywbZFxSCiZj9L/shtvv6A8UwTbj4o1PW9XcEjmG4=
+	b=uErQf4Dvwvoz29mrAphDjHIKc0QaEoy8STFVc97CUwRSoAAV9z5cQbNmgKlWJddw9
+	 LrQdRGzH0pNGp2NpP2UaGlHG9qH7MkMCOId1kkeOhNdTsJ/Vn9zOCTajJ7m55lZvSi
+	 QEVHXeeprKtbd9oc1irsuZR1X8uMJyfgw2L2zqz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Portnoy <dddhkts1@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Vladimir Zapolskiy <vz@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0993/1611] ksmbd: fix use-after-free of fp->owner.name in durable handle owner check
-Date: Tue, 21 Jul 2026 17:18:29 +0200
-Message-ID: <20260721152537.728209851@linuxfoundation.org>
+Subject: [PATCH 6.18 0994/1611] gpio: timberdale: Return -ENOMEM on dynamic memory allocation in probe
+Date: Tue, 21 Jul 2026 17:18:30 +0200
+Message-ID: <20260721152537.749858804@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,130 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Portnoy <dddhkts1@gmail.com>
+From: Vladimir Zapolskiy <vz@kernel.org>
 
-[ Upstream commit 38637163501fd9e2f684b8cd275d0db5d79f37c6 ]
+[ Upstream commit 8d7e62d5e9b2d2ff146f472a9215d7e29c7e2307 ]
 
-Two concurrent SMB2 durable reconnects (DH2C/DHnC) on the same
-persistent_id race the fp->owner.name compare-read in
-ksmbd_vfs_compare_durable_owner() against the kfree() in
-ksmbd_reopen_durable_fd()'s reopen-success path. fp->owner.name is a
-standalone kstrdup() buffer whose lifetime is independent of the fp
-refcount, and the two sites share no lock: the compare reads the buffer
-while the reopen frees it, so the strcmp() can dereference freed memory.
+Out of memory situation on driver's probe is expected to be reported to
+the driver's framework with a proper -ENOMEM error code.
 
-Commit 7ce4fc40018d ("ksmbd: fix durable reconnect double-bind race in
-ksmbd_reopen_durable_fd") made the fp->conn claim atomic under
-global_ft.lock (closing the owner.name double-free and the ksmbd_file
-write-UAF), but the compare-read versus reopen-free pair was left
-unserialized.
-
-  BUG: KASAN: slab-use-after-free in strcmp+0x2c/0x80
-  Read of size 1 by task kworker
-    strcmp
-    ksmbd_vfs_compare_durable_owner
-    smb2_check_durable_oplock
-    smb2_open
-  Freed by task kworker:
-    kfree
-    ksmbd_reopen_durable_fd
-    smb2_open
-  Allocated by task kworker:
-    kstrdup
-    session_fd_check
-    smb2_session_logoff
-  The buggy address belongs to the cache kmalloc-8
-
-Serialize both sides of the race with fp->f_lock.  The global durable
-file-table lock still protects the durable reconnect claim, but
-fp->owner.name is per-open state and does not need to block unrelated
-durable table lookups or reconnects.  The teardown is left at its
-existing location after the reopen-success point so that an __open_id()
-rollback still retains owner.name for a later legitimate reconnect to
-verify.
-
-Fixes: 49110a8ce654 ("ksmbd: validate owner of durable handle on reconnect")
-Assisted-by: Henry (Claude):claude-opus-4
-Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
-Co-developed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 35570ac6039e ("gpio: add GPIO driver for the Timberdale FPGA")
+Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
+Link: https://patch.msgid.link/20260630145148.4081967-1-vz@kernel.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs_cache.c | 29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ drivers/gpio/gpio-timberdale.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index a1f59a8e16e281..fad426fe3d14d6 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -980,16 +980,21 @@ void ksmbd_stop_durable_scavenger(void)
- static int ksmbd_vfs_copy_durable_owner(struct ksmbd_file *fp,
- 		struct ksmbd_user *user)
- {
-+	char *name;
-+
- 	if (!user)
- 		return -EINVAL;
+diff --git a/drivers/gpio/gpio-timberdale.c b/drivers/gpio/gpio-timberdale.c
+index f488939dd00a8a..b77c9d16fd166a 100644
+--- a/drivers/gpio/gpio-timberdale.c
++++ b/drivers/gpio/gpio-timberdale.c
+@@ -235,7 +235,7 @@ static int timbgpio_probe(struct platform_device *pdev)
  
- 	/* Duplicate the user name to ensure identity persistence */
--	fp->owner.name = kstrdup(user->name, GFP_KERNEL);
--	if (!fp->owner.name)
-+	name = kstrdup(user->name, GFP_KERNEL);
-+	if (!name)
- 		return -ENOMEM;
+ 	tgpio = devm_kzalloc(dev, sizeof(*tgpio), GFP_KERNEL);
+ 	if (!tgpio)
+-		return -EINVAL;
++		return -ENOMEM;
  
-+	spin_lock(&fp->f_lock);
- 	fp->owner.uid = user->uid;
- 	fp->owner.gid = user->gid;
-+	fp->owner.name = name;
-+	spin_unlock(&fp->f_lock);
+ 	tgpio->irq_base = pdata->irq_base;
  
- 	return 0;
- }
-@@ -1007,18 +1012,24 @@ static int ksmbd_vfs_copy_durable_owner(struct ksmbd_file *fp,
- bool ksmbd_vfs_compare_durable_owner(struct ksmbd_file *fp,
- 		struct ksmbd_user *user)
- {
--	if (!user || !fp->owner.name)
-+	bool ret = false;
-+
-+	if (!user)
- 		return false;
- 
-+	spin_lock(&fp->f_lock);
-+	if (!fp->owner.name)
-+		goto out;
-+
- 	/* Check if the UID and GID match first (fast path) */
- 	if (fp->owner.uid != user->uid || fp->owner.gid != user->gid)
--		return false;
-+		goto out;
- 
- 	/* Validate the account name to ensure the same SecurityContext */
--	if (strcmp(fp->owner.name, user->name))
--		return false;
--
--	return true;
-+	ret = (strcmp(fp->owner.name, user->name) == 0);
-+out:
-+	spin_unlock(&fp->f_lock);
-+	return ret;
- }
- 
- static bool session_fd_check(struct ksmbd_tree_connect *tcon,
-@@ -1172,9 +1183,11 @@ int ksmbd_reopen_durable_fd(struct ksmbd_work *work, struct ksmbd_file *fp)
- 	}
- 	up_write(&ci->m_lock);
- 
-+	spin_lock(&fp->f_lock);
- 	fp->owner.uid = fp->owner.gid = 0;
- 	kfree(fp->owner.name);
- 	fp->owner.name = NULL;
-+	spin_unlock(&fp->f_lock);
- 
- 	return 0;
- }
 -- 
 2.53.0
 
