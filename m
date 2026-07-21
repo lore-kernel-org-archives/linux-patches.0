@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAC83FFF85;
-	Tue, 21 Jul 2026 20:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDD13FA5CC;
+	Tue, 21 Jul 2026 20:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666941; cv=none; b=OFq0NJUJew7k/rs1uLweABTFtiIjtHPxb1T01UHRUJxmRwVcF6fpRg9v2CeTh+VKp97vBbTu7h17OMTWYpfe1SsplxtZTVpVIRmz9u0qlXR0BN1hiKnsIqOAN+ffMujLhpzvwas0BDqqYr6G4GvvCsxJre/rFCqAUxAPmC4Xngw=
+	t=1784666942; cv=none; b=XffEgVmSLAyHPKX45yZY9LF3yrgrqAoAtDf1cRPCMRdFuYYZSvAX8CQ5uAXXgayvLvUyoTtITEc+pxUU2w+vNdBlXC62TN+Sp7cOQ6Qd+gAq7Q5hT41UFIsv0P4oAAElGTyyj2tg1lSInx4CPuMd8cortv5D7OmluKKi9QSaUqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666941; c=relaxed/simple;
-	bh=IJ7oollwmVWJoTffA+ACjOUi4GIfGiZ/4+fL4uRRMwY=;
+	s=arc-20240116; t=1784666942; c=relaxed/simple;
+	bh=lDEhg9+LVwJBRaTNo/d9cOWMzTL4VAEecZq1elVpxDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HCiUrboyP6Ne656EQ5otwYXm4Igmgp8jk0+OUmixxp1YMEGhlMbewGhShGgMdJBgN5tdf6sBDxBzVnQaY9LU8ApH0wYy1Xl2BGk9M/E1FGoEAixTq3P5N7TcMQYJhUoI7Cfls2HDBWRrgPAREbMwQGX+RF8R6aHblj/sMPpxaNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7JE/G0f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BPvHJyTVwvxMDMc2QBTFQcZZYenvtB7fggrryzSHY35fAc+WjSCkLwEuOjknre8RcEOZWYGKvk7Qex0mWeiQLSsI2fK7MQQpSFlbGgM27tyVlnR+IjGJKbSXNjihwk0t1xwfT8/uLckaYnnauDqKjrOowiPg0v0nQCThJQ44rlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tz1p3d7h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7JE/G0f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C1C1F000E9;
-	Tue, 21 Jul 2026 20:48:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tz1p3d7h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1D31F00A3A;
+	Tue, 21 Jul 2026 20:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666938;
-	bh=JYm3BuKX6ulip9hN/BdLlqytazW7rONFf4nZNWEBhP8=;
+	s=korg; t=1784666940;
+	bh=mBNzayh7Rh+iXBrlK9m7cRImkYdatilZQYOMsa55BUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h7JE/G0f/0WLErO/7uJv2cceEQIYKZtumVCkK17EYUlwgzchVQXE9C+6j50W66Zj0
-	 CKjb+sVn/eZbhDNdva6gT2rVtnuGgrgjtjdkFVfZWJJ+xzuwfZ7Sylf1wCc93uxn48
-	 TmvLNAPbgFKONjsTxO4dMn6TpCsKlUESgE39NuYE=
+	b=tz1p3d7hk7fWZ8uyJD84PPqtUhimMIikRDxu65c6hXxibvEFdqYTai+N8nDhe5ORF
+	 ZmxHurbbz65QxxMsp4PTTUAPAGVzHruLgDXXUIAtC5sn2rtBYl8AedBCvqgC5+Gabe
+	 x0EgYiC+AD2bIAO3FbkZaG4A89kGSETQLYrbWHqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Suman Ghosh <sumang@marvell.com>,
+	Nitin Shetty J <nshettyj@marvell.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0870/1266] net/sched: cake: reject overhead values that underflow length
-Date: Tue, 21 Jul 2026 17:21:47 +0200
-Message-ID: <20260721152501.315284162@linuxfoundation.org>
+Subject: [PATCH 6.6 0871/1266] octeontx2-pf: check DMAC extraction support before filtering
+Date: Tue, 21 Jul 2026 17:21:48 +0200
+Message-ID: <20260721152501.338544542@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -46,57 +47,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Suman Ghosh <sumang@marvell.com>
 
-[ Upstream commit b7f97cae7ec1b6c3c32843c42be218690d310467 ]
+[ Upstream commit 235acadd310533ba386ae61ad155b72bee381559 ]
 
-CAKE accepts signed overhead values and stores them in an s16, but the
-adjusted packet length calculation uses unsigned arithmetic.  A negative
-effective length can therefore wrap to a large value.
+Currently, configuring a VF MAC address via the PF (e.g., 'ip link
+set <pf> vf 0 mac <mac>') blindly attempts to install a DMAC-based
+hardware filter. However, the hardware parser profile might not
+support DMAC extraction.
 
-Such configurations make rate accounting depend on integer wraparound
-rather than on the packet size userspace intended to model.  A static
-netlink lower bound is not enough because packets reaching CAKE can be
-smaller than any reasonable manual-overhead allowance.
+Check if the hardware parsing profile supports DMAC extraction
+before adding the filter. Additionally, emit a warning message
+to inform the operator if the MAC filter installation fails due
+to missing DMAC extraction support. Update config->mac only
+after hardware programming succeeds in otx2_set_vf_mac().
 
-Fold the signed overhead adjustment into the existing datapath MPU clamp
-so negative adjusted lengths are clamped before link-layer framing
-adjustments.
-
-Fixes: a729b7f0bd5b ("sch_cake: Add overhead compensation support to the rate shaper")
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20260702000758.297407.e5c888d9d99d.cake-overhead-underflow@trailofbits.com
+Fixes: f0c2982aaf98 ("octeontx2-pf: Add support for SR-IOV management functions")
+Signed-off-by: Suman Ghosh <sumang@marvell.com>
+Signed-off-by: Nitin Shetty J <nshettyj@marvell.com>
+Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Link: https://patch.msgid.link/20260702033451.2969880-1-nshettyj@marvell.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_cake.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ .../ethernet/marvell/octeontx2/nic/otx2_pf.c  | 43 ++++++++++++++++---
+ 1 file changed, 37 insertions(+), 6 deletions(-)
 
-diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index 0b85971165d2a3..ce9ee43e9ee2bc 100644
---- a/net/sched/sch_cake.c
-+++ b/net/sched/sch_cake.c
-@@ -1382,10 +1382,7 @@ static u32 cake_calc_overhead(struct cake_sched_data *q, u32 len, u32 off)
- 	if (q->min_netlen > len)
- 		q->min_netlen = len;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+index a41ca759ce77fb..c4f5635284ef6f 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -2361,10 +2361,42 @@ EXPORT_SYMBOL(otx2_ioctl);
  
--	len += q->rate_overhead;
+ static int otx2_do_set_vf_mac(struct otx2_nic *pf, int vf, const u8 *mac)
+ {
++	struct npc_get_field_status_req *freq;
++	struct npc_get_field_status_rsp *frsp;
+ 	struct npc_install_flow_req *req;
+ 	int err;
+ 
+ 	mutex_lock(&pf->mbox.lock);
++
++	/* Skip installing the DMAC filter if the hardware parser profile
++	 * does not support DMAC extraction.
++	 */
++	freq = otx2_mbox_alloc_msg_npc_get_field_status(&pf->mbox);
++	if (!freq) {
++		err = -ENOMEM;
++		goto out;
++	}
++
++	freq->field = NPC_DMAC;
++	err = otx2_sync_mbox_msg(&pf->mbox);
++	if (err)
++		goto out;
++
++	frsp = (struct npc_get_field_status_rsp *)otx2_mbox_get_rsp
++	       (&pf->mbox.mbox, 0, &freq->hdr);
++	if (IS_ERR(frsp)) {
++		err = PTR_ERR(frsp);
++		goto out;
++	}
++
++	if (!frsp->enable) {
++		netdev_warn(pf->netdev,
++			    "VF %d MAC filter not installed: DMAC extraction not supported by parser profile\n",
++			    vf);
++		err = -EOPNOTSUPP;
++		goto out;
++	}
++
+ 	req = otx2_mbox_alloc_msg_npc_install_flow(&pf->mbox);
+ 	if (!req) {
+ 		err = -ENOMEM;
+@@ -2403,13 +2435,12 @@ static int otx2_set_vf_mac(struct net_device *netdev, int vf, u8 *mac)
+ 	if (!is_valid_ether_addr(mac))
+ 		return -EINVAL;
+ 
+-	config = &pf->vf_configs[vf];
+-	ether_addr_copy(config->mac, mac);
 -
--	if (len < q->rate_mpu)
--		len = q->rate_mpu;
-+	len = max((s32)len + q->rate_overhead, (s32)q->rate_mpu);
+ 	ret = otx2_do_set_vf_mac(pf, vf, mac);
+-	if (ret == 0)
+-		dev_info(&pdev->dev,
+-			 "Load/Reload VF driver\n");
++	if (ret == 0) {
++		config = &pf->vf_configs[vf];
++		ether_addr_copy(config->mac, mac);
++		dev_info(&pdev->dev, "Load/Reload VF driver\n");
++	}
  
- 	if (q->atm_mode == CAKE_ATM_ATM) {
- 		len += 47;
+ 	return ret;
+ }
 -- 
 2.53.0
 
