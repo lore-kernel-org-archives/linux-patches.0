@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70033E49F5;
-	Tue, 21 Jul 2026 17:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F443E63AE;
+	Tue, 21 Jul 2026 17:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653695; cv=none; b=ktcayTuSm3n0WCtmZk8VVHoDep20YnTSPH4CHnMX4PSpdF6UcrUzf8/LW6wsaGZzcfHsqkYf6DaLxuo6bNb9aaWnf5yUvHycBY+BkW/O2egH0fLtgRFge01Dyx9xzsabJbFntCA70DcBDi0pem3wzZd8EN7L+nsA8XDwJpOQkKo=
+	t=1784653696; cv=none; b=BGBAC+1yXZyaL2x2hWFk4hftrbKjnfWNA2+03ly+7pypkw7Ko8dFx3rjnC0wSiU3vpRZEZ4C0abKpYEf+gw6oAti0BBha7O+v8BED9QRI70KknZEX5Lrrcxk0Rkddz7iRHxmcPBeqlidtA4x32vKujQeSCRLHdWNq7bmZOqOtOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653695; c=relaxed/simple;
-	bh=pOXHelGb5gzRzOzNaCnDFA5AL9bj/bxJGIH52OyV/dY=;
+	s=arc-20240116; t=1784653696; c=relaxed/simple;
+	bh=EUWP96bu3QfWT1hlltVwZp96/MR6uOc5NEP5wVGMd/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eJm6E+rG9qos4gnP8wGHGimF+ZDeob8xVg5nKm+EiYCXcxWqFhh4ZV0ddiUAF/AGTkzw8dRHgv0itSstAoChdOWtNupRo1nB9E8hlZYFPfjKkbgHnTQhSnjFwnIr9k76QaxtIoHMZcsADWsqPUiDz5q1WgNd4tXUqA/vFOBkKLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yUsTY3Z/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sf82n5aBqbaII+CuL1C/QrorIQIkwaSbis6xXsYRrOJalEEtmgFIRGxk+193X0xL2AaMGb8elqHnDecANrN0Wz7m6yJEDGwRJBWIoHR39rhV8q1XBVffmkyIUK8S1DeZgkwzRRNQiYCs9fJGjzqqh4lJ23G41ZPc/95Gxch8vfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjRWs5IQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yUsTY3Z/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5D61F00A3A;
-	Tue, 21 Jul 2026 17:08:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjRWs5IQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 740C21F00A3D;
+	Tue, 21 Jul 2026 17:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653692;
-	bh=fH9mfzOGFLyXZI3tXmmzsvX9nApRyU+BXOZZNF5/Wkk=;
+	s=korg; t=1784653694;
+	bh=TLIw1VsGAov2DitKc+7sYnbkdSiURoQG/dqLsfzNSMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yUsTY3Z/bkuLCfHKI9XDGQkLNiXHgvPzQcNPZLK0Ur/t4SFOEPX8qCM80RBhOPb0S
-	 EuYcKoSqKcSbnxOg2TjZxLrVcp/1g462z+OILe2qL9JBKa73JxKygK+Lff8hZoaqEA
-	 WY1EXWoGx1kPxvtDdR/2IlQp+ra3v8dMOoKYt06k=
+	b=EjRWs5IQliwa6Lgx5fRhadawSaf4d3Wfb6D8EGfem1ZmQkyw1oQx8qLHc+iagZ0Zx
+	 rEPrXHu8GXqs2GOxXaraJAq8IQ6GoyAGDscz6Acgfprynpf4oNjYb5HX0F1pEHR80y
+	 SAPTTyq5WQeb2lJ5NV6o+RW96rsdMS9o+dtBtsxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Bin Guo <guobin@linux.alibaba.com>,
+	Jia He <justin.he@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Oliver Upton <oupton@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1421/2077] selftests/hid: Cover hid_bpf_get_data() size overflow
-Date: Tue, 21 Jul 2026 17:18:14 +0200
-Message-ID: <20260721152626.318082410@linuxfoundation.org>
+Subject: [PATCH 7.1 1422/2077] arm64/sysreg: Fix BWE field encoding in ID_AA64DFR2_EL1
+Date: Tue, 21 Jul 2026 17:18:15 +0200
+Message-ID: <20260721152626.342013436@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,106 +55,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
+From: Jia He <justin.he@arm.com>
 
-[ Upstream commit eebbef7c468a5cb58c4772849ee5066441166cf0 ]
+[ Upstream commit 6666336d8fe5f3f0cd3f8da2865ca78110a6e170 ]
 
-Add a HID-BPF regression check for hid_bpf_get_data() requests whose
-size would overflow when added to the offset.
+Commit 93d7356e4b30 ("arm64: sysreg: Describe ID_AA64DFR2_EL1 fields")
+encodes the FEAT_BWE2 value of the BWE field as '0b0002'. Binary
+literals only accept the digits 0 and 1, so the intended value is 2,
+i.e. 0b0010.
 
-The new rdesc fixup callback asks for offset 2 and size ~0ULL, then
-records whether the helper returns NULL. A vulnerable kernel returns a
-non-NULL pointer because the runtime check wraps the addition. A fixed
-kernel rejects the request. The callback records the helper result
-without dereferencing any returned pointer.
+The macro generated by gen-sysreg.awk currently expands to
+	#define ID_AA64DFR2_EL1_BWE_FEAT_BWE2 UL(0b0002)
+is not legal C and would fail to compile if any in-tree code referenced
+it. At present no caller uses this enum value, so the kernel still
+builds cleanly, but the bug is latent.
 
-The callback reports the helper result through BSS and returns 0
-intentionally. hid_rdesc_fixup return values are consumed as report
-descriptor fixup results, so a positive test-result value would be
-interpreted as a replacement report descriptor size.
+Fix the typo by using the correct binary literal 0b0010.
 
-Also add KHDR_INCLUDES to the HID selftest build so hid_bpf.c sees the
-current kernel UAPI HID definitions on systems whose installed headers do
-not provide enum hid_report_type.
-
-Fixes: 658ee5a64fcf ("HID: bpf: allocate data memory for device_event BPF programs")
-Signed-off-by: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Cc: Bin Guo <guobin@linux.alibaba.com>
+Fixes: 93d7356e4b30 ("arm64: sysreg: Describe ID_AA64DFR2_EL1 fields")
+Signed-off-by: Jia He <justin.he@arm.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Oliver Upton <oupton@kernel.org>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/hid/Makefile    |  2 +-
- tools/testing/selftests/hid/hid_bpf.c   | 11 +++++++++++
- tools/testing/selftests/hid/progs/hid.c | 15 +++++++++++++++
- 3 files changed, 27 insertions(+), 1 deletion(-)
+ arch/arm64/tools/sysreg | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/hid/Makefile b/tools/testing/selftests/hid/Makefile
-index 50ec9e0406abaf..357c6eb5ff5ee3 100644
---- a/tools/testing/selftests/hid/Makefile
-+++ b/tools/testing/selftests/hid/Makefile
-@@ -24,7 +24,7 @@ CXX ?= $(CROSS_COMPILE)g++
- 
- HOSTPKG_CONFIG := pkg-config
- 
--CFLAGS += -g -O0 -rdynamic -Wall -Werror -I$(OUTPUT)
-+CFLAGS += -g -O0 -rdynamic -Wall -Werror -I$(OUTPUT) $(KHDR_INCLUDES)
- CFLAGS += -I$(OUTPUT)/tools/include
- 
- LDLIBS += -lelf -lz -lrt -lpthread
-diff --git a/tools/testing/selftests/hid/hid_bpf.c b/tools/testing/selftests/hid/hid_bpf.c
-index 269256e1decd84..b851339308c214 100644
---- a/tools/testing/selftests/hid/hid_bpf.c
-+++ b/tools/testing/selftests/hid/hid_bpf.c
-@@ -898,6 +898,17 @@ TEST_F(hid_bpf, test_rdesc_fixup)
- 	ASSERT_EQ(rpt_desc.value[4], 0x42);
- }
- 
-+TEST_F(hid_bpf, test_rdesc_fixup_get_data_overflow)
-+{
-+	const struct test_program progs[] = {
-+		{ .name = "hid_rdesc_fixup_get_data_overflow" },
-+	};
-+
-+	LOAD_PROGRAMS(progs);
-+
-+	ASSERT_EQ(self->skel->bss->get_data_overflow_check, 1);
-+}
-+
- static int libbpf_print_fn(enum libbpf_print_level level,
- 			   const char *format, va_list args)
- {
-diff --git a/tools/testing/selftests/hid/progs/hid.c b/tools/testing/selftests/hid/progs/hid.c
-index 5ecc845ef79216..b21fbb13c926f8 100644
---- a/tools/testing/selftests/hid/progs/hid.c
-+++ b/tools/testing/selftests/hid/progs/hid.c
-@@ -13,6 +13,7 @@ struct attach_prog_args {
- 
- __u64 callback_check = 52;
- __u64 callback2_check = 52;
-+__u64 get_data_overflow_check;
- 
- SEC("?struct_ops/hid_device_event")
- int BPF_PROG(hid_first_event, struct hid_bpf_ctx *hid_ctx, enum hid_report_type type)
-@@ -240,6 +241,20 @@ struct hid_bpf_ops rdesc_fixup = {
- 	.hid_rdesc_fixup = (void *)hid_rdesc_fixup,
- };
- 
-+SEC("?struct_ops.s/hid_rdesc_fixup")
-+int BPF_PROG(hid_rdesc_fixup_get_data_overflow, struct hid_bpf_ctx *hid_ctx)
-+{
-+	if (!hid_bpf_get_data(hid_ctx, 2 /* offset */, ~0ULL /* size */))
-+		get_data_overflow_check = 1;
-+
-+	return 0;
-+}
-+
-+SEC(".struct_ops.link")
-+struct hid_bpf_ops rdesc_fixup_get_data_overflow = {
-+	.hid_rdesc_fixup = (void *)hid_rdesc_fixup_get_data_overflow,
-+};
-+
- SEC("?struct_ops/hid_device_event")
- int BPF_PROG(hid_test_insert1, struct hid_bpf_ctx *hid_ctx, enum hid_report_type type)
- {
+diff --git a/arch/arm64/tools/sysreg b/arch/arm64/tools/sysreg
+index 6c3ff14e561e69..88b31ae8450f4e 100644
+--- a/arch/arm64/tools/sysreg
++++ b/arch/arm64/tools/sysreg
+@@ -1806,7 +1806,7 @@ Res0	15:8
+ UnsignedEnum	7:4	BWE
+ 	0b0000	NI
+ 	0b0001	FEAT_BWE
+-	0b0002	FEAT_BWE2
++	0b0010	FEAT_BWE2
+ EndEnum
+ UnsignedEnum	3:0	STEP
+ 	0b0000	NI
 -- 
 2.53.0
 
