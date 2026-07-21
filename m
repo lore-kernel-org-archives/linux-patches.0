@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E269746DFFD;
-	Tue, 21 Jul 2026 19:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D6640683D;
+	Tue, 21 Jul 2026 19:04:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660691; cv=none; b=CPsR90G/UYvIhvt+vYsNheAQpefNhPseFdZch1F6DvW1K1c6EtZzuClOiJ4WKTHCqJ1yF0reOJOVHgF0V9vTPGhZFPQADE97ayxg2Jum+S4hT3YLYX/oE7Nj8Or/kkZJZqi+hTr42OB9QcNtyil6q0VReDiB/PpO16ulpFAwB1U=
+	t=1784660693; cv=none; b=H4wzZI0X7J2+VrEqBd9mjsqGI/ASvCggIkuGxhWE55r/nhTF0lhI2a+pMMY9jrtr65539ocohk4RS5HZw8lbD+OCQ0mqzG4ROOupwotghvDUOv2h389iTMgpwcwdJELSefcLxUyCFvUVu1vYHeFIdYFIMHt5fg3nRn/gIkyTJro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660691; c=relaxed/simple;
-	bh=sDj7F0NwPP940bQ35oB580mGkCDMRWVeVTuhwKEtREQ=;
+	s=arc-20240116; t=1784660693; c=relaxed/simple;
+	bh=CnFtYguolLU55ujFJtjZ0QUguo8T3OntwGrOG/jbfmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uSFjx+oUFk9gJgcjCxd2o/IRdxbmFLFkQPMXEwViVsbXfpLeqrRhxsh/hmaDhSCVWIlxbwjhS//LuOrZnlUFB3QWWmWra7bLyYukMRwLEbw32VTSAlmk9ps8mqZXbzrNZI+lI5IBP8nqDNhJqG4CkZCv7iMthk0wB+XtareOLkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Y5hh2To; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n34GQha4fQEOCUpeLOYTD5JdCgmdM0ICx8t6i0mC32JkFPID3ZZWPQX3Xlh2215Efr7oo0s4adx19h1x6BAoWRH59d4h5quoPztzGMowbq4OP6uXk/HInQv1DG5FR9fwfhjmY+7r3Hi7lmo1GvcwSDthw5pqjaWAOL6gnOPMFpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyR1EPu8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Y5hh2To"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534CB1F00A3A;
-	Tue, 21 Jul 2026 19:04:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyR1EPu8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103F51F000E9;
+	Tue, 21 Jul 2026 19:04:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660689;
-	bh=/KNK++H6v+sFsXpiKAnqTyX2AlrHcCY1TaEYvSoeG5Q=;
+	s=korg; t=1784660692;
+	bh=pzsFuJ8FnHVmAqbEoYHyHaFSaAJrcH7vhuPuJgd8dQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Y5hh2Tof8mujGPFwSbpAxdeEOXSPXM+iSDt+gB2GsObauYas4tAH1nBQPszD8SUj
-	 Kc4idhVpe1tO0jkkYQGnTwg8qex+akmvRsmMpJSTFDpVhOvO4XDDTzGWgsgl+eHYDf
-	 gDr6gRkMCpRi9CPMjW1vNNCkYhjcKyGukFLh0mEg=
+	b=jyR1EPu85vVD+U6gZcoJO02JXAvoE6YPnYECO2k/Bw94v803FIloYYVe1dRAeTAx8
+	 FaoQyZlPdT4Dw/SU6RxMLn2pcbl/27dbnP/P3dDBZee7eXrVYDNCwSD7U8PjP2V1xD
+	 w277BByaHBZmt8KvNv7rQUYnwZks16p9xvIfq32s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1076/2077] perf sched: Replace (void*)1 sentinel with proper runtime allocation
-Date: Tue, 21 Jul 2026 17:12:29 +0200
-Message-ID: <20260721152618.201490630@linuxfoundation.org>
+Subject: [PATCH 7.1 1059/2077] i3c: master: Serialize i3c_set_hotjoin() with the maintenance lock
+Date: Tue, 21 Jul 2026 17:12:12 +0200
+Message-ID: <20260721152617.798887045@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,95 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 500f5dd0a8b6f7bd174102587c7dff5a7d2fecbf ]
+[ Upstream commit 5b130aadc36b6a935b90937dcd67b8ed4ba57831 ]
 
-map__findnew_thread() marks color-pid threads by storing (void*)1 as
-the thread private data via thread__set_priv().  This sentinel value
-causes two problems:
+i3c_set_hotjoin() dispatches the controller's enable_hotjoin() or
+disable_hotjoin() op and updates master->hotjoin under
+i3c_bus_normaluse_lock(). That lock is a read-side acquisition of
+bus->lock (down_read()), so it does not exclude concurrent callers.
 
-1. thread__get_runtime() returns (void*)1 as a struct thread_runtime
-   pointer.  Any field access (e.g. tr->shortname) dereferences address
-   1, which is an unmapped page — immediate segfault.
+The hotjoin sysfs attribute can be opened multiple times, and writes
+through different opens are not serialized.  Two concurrent writers
+to "hotjoin" can therefore race in i3c_set_hotjoin(), with the
+controller op and the master->hotjoin store from one call interleaving
+with the other.  The hardware enable/disable state and the value reported
+by hotjoin_show() can end up out of sync.
 
-2. cmd_sched() registers free() as the thread priv destructor, so thread
-   cleanup calls free((void*)1) — undefined behavior that corrupts the
-   heap on many allocators.
+Take i3c_bus_maintenance_lock() instead. Toggling Hot Join enable
+changes bus state and is conceptually a maintenance operation, so the
+write-side acquisition of bus->lock is the appropriate lock and
+serializes concurrent callers against each other and against other
+maintenance operations.
 
-Fix by adding a 'color' flag to struct thread_runtime and allocating a
-real runtime struct for color-pid threads.  thread__has_color() now
-checks the flag instead of relying on priv being non-NULL.
-
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: 58a606149c60d5da ("perf sched: Avoid union type punning undefined behavior")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Ian Rogers <irogers@google.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 317bacf960a48 ("i3c: master: add enable(disable) hot join in sys entry")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260608054312.10604-3-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ drivers/i3c/master.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 2ccda1e382930a..f6c772cde0bc94 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -274,6 +274,7 @@ struct thread_runtime {
- 	u64 migrations;
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index ab11e2d79aabb4..38ffc87131678a 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -649,7 +649,7 @@ static int i3c_set_hotjoin(struct i3c_master_controller *master, bool enable)
+ 			return ret;
+ 	}
  
- 	int prio;
-+	bool color;
- };
+-	i3c_bus_normaluse_lock(&master->bus);
++	i3c_bus_maintenance_lock(&master->bus);
  
- /* per event run time data */
-@@ -1596,22 +1597,32 @@ static int process_sched_wakeup_ignore(const struct perf_tool *tool __maybe_unus
+ 	if (enable)
+ 		ret = master->ops->enable_hotjoin(master);
+@@ -659,7 +659,7 @@ static int i3c_set_hotjoin(struct i3c_master_controller *master, bool enable)
+ 	if (!ret)
+ 		master->hotjoin = enable;
  
- static bool thread__has_color(struct thread *thread)
- {
--	return thread__priv(thread) != NULL;
-+	struct thread_runtime *tr = thread__priv(thread);
-+
-+	return tr != NULL && tr->color;
- }
+-	i3c_bus_normaluse_unlock(&master->bus);
++	i3c_bus_maintenance_unlock(&master->bus);
  
- static struct thread*
- map__findnew_thread(struct perf_sched *sched, struct machine *machine, pid_t pid, pid_t tid)
- {
- 	struct thread *thread = machine__findnew_thread(machine, pid, tid);
--	bool color = false;
- 
--	if (!sched->map.color_pids || !thread || thread__priv(thread))
-+	if (!sched->map.color_pids || !thread)
- 		return thread;
- 
--	if (thread_map__has(sched->map.color_pids, tid))
--		color = true;
-+	/*
-+	 * Always check the color-pids map, even if thread__priv() is
-+	 * already set.  COMM events processed before the first sched_switch
-+	 * allocate a thread_runtime via thread__get_runtime(), so priv is
-+	 * non-NULL before we ever get here.  Skipping the check on non-NULL
-+	 * priv would prevent those threads from being colored.
-+	 */
-+	if (thread_map__has(sched->map.color_pids, tid)) {
-+		struct thread_runtime *tr = thread__get_runtime(thread);
- 
--	thread__set_priv(thread, color ? ((void*)1) : NULL);
-+		if (tr)
-+			tr->color = true;
-+	}
- 	return thread;
- }
- 
+ 	if ((enable && ret) || (!enable && !ret) || master->rpm_ibi_allowed)
+ 		i3c_master_rpm_put(master);
 -- 
 2.53.0
 
