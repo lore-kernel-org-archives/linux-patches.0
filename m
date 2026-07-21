@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CA8305E3B;
-	Tue, 21 Jul 2026 22:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD65144AB7B;
+	Tue, 21 Jul 2026 22:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671320; cv=none; b=OjacLnyBzh9GdrxiEAGNeW8fhc+yVp+op2sFVyWFzhIaqKEGayIbFitTAFiCp1gSDM7wWJSDtwMwKoWvUTNSSC99Wz6boDY3hdh17eLb5ptC3n5WNXP1OwSV5VRw1iCkM3FoOkHvxEswAweZjEy3ztfSp9aRShNiseMThv/e04U=
+	t=1784671322; cv=none; b=fABVCEEDhdeDKF3EWySFPotamypv2LwpPJzNpzi3OSwP3JYQLsUrSXpk+Ts4oKTK34n7SsJsjXvtFhQMZj4XZYKEpAosCWQxQPtZ2X4aXDNrjFjotGAZUQR1Spect2hveCqPQq2sv8sUDzby6dNkLzm96BkmCBzcCpGJvBHy4Ek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671320; c=relaxed/simple;
-	bh=5nPF0ckQUcmoSU201B/AG+pvf4cRNmVQtqpS5KT7Dh0=;
+	s=arc-20240116; t=1784671322; c=relaxed/simple;
+	bh=fjLkek7l91Dsc6DWTVsaXLrAMAkWNBoriJbyekMmyCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V3Oi4XCqz02VIvsVbKADDzzyDw6wASMXWR/PVg/md46AFBARY83wlv0vix8IOxzlntTNoMHIuWfjLLgm/htMUTFdUMlAmiq360nltAoCdY6PmK6ZcHwVD9NNtefx1HCm2vbF4x63SPGSbhj7OlMZe8MRZ7kQp2VmNayDP353Bsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b94gcXvB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sl9zlTTchsQ7v1NUTk2PsA0M8bKiyskdVNSRkdPq2/1PyYgDZi8wG0PKbC48PVE3FC0sUcsz1o5RI7hTjBVjhitZEHSSNIHMJeQrYRXnk2+4QJCcw9MaSFGZz/bQ2Cdo5uTjRxRW9cAI++mpbjfxDOE5fLJRO3hzU3w5jKjjRsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JMgcRkAP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b94gcXvB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D88B1F00A3A;
-	Tue, 21 Jul 2026 22:01:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMgcRkAP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083781F000E9;
+	Tue, 21 Jul 2026 22:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671318;
-	bh=6chLkqReQWfT3U7CR4EYD0pGqKtqTmw/G/4Q8B+LTQk=;
+	s=korg; t=1784671321;
+	bh=ScyL/fAFnEO7jBcLcguQ/c5i4PKwZbQ2UmFdoQAxBeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b94gcXvB3G74Tp2UisiG90x5BXDc9M3dfhH4T/WqajT267YaOFioX8piv+61pKugd
-	 UPIasGu1FNH52CqsuZK/vgCWscR3ln3vvzGe7oVZjQ6x63N0zdwPF/615mfoibxczG
-	 ihqeOg6laBvIGiNxfXaLZJFLsaw3zDh1LQ4Uc/rk=
+	b=JMgcRkAPoTpp9tUcbWPR142Xj3gYZLmj1bAKjNqihdykDNiE0W4nW+1221+AhP94O
+	 Hm9Z6paol52Xk3JmuqpBVK7vXkQi6IZgBnDMejmPlpJE5Yk5pPsOwd6EAqvhgpfNyd
+	 YJe5rC4kzjfGQGGS1mRZNv1HjMWK7Ujurcb0eWvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trondmy@kernel.org>,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>
-Subject: [PATCH 5.15 174/843] NFSv4: include MAY_WRITE in open permission mask for O_TRUNC
-Date: Tue, 21 Jul 2026 17:16:49 +0200
-Message-ID: <20260721152409.933006437@linuxfoundation.org>
+	Yichong Chen <chenyichong@uniontech.com>,
+	SeongJae Park <sj@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 201/843] tools/mm/slabinfo: fix total_objects attribute name
+Date: Tue, 21 Jul 2026 17:17:16 +0200
+Message-ID: <20260721152410.538142736@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,48 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <ben.coddington@hammerspace.com>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-commit 5140f099ecd8a2f2808b7f7b720ee1bad8468974 upstream.
+[ Upstream commit 892a7864730775c3dbee2a39e9ead4fa8d4256e7 ]
 
-POSIX requires write permission to truncate a file, so an open() that
-specifies O_TRUNC must be authorized for write access regardless of the
-O_ACCMODE access mode.
+SLUB exports the total_objects sysfs attribute, but slabinfo tries to read
+objects_total. As a result, the lookup fails and the field remains zero.
 
-nfs_open_permission_mask() builds the access mask passed to
-nfs_may_open(), which is the local authorization gate for OPENs the
-client serves itself from a cached write delegation via the
-can_open_delegated() path in nfs4_try_open_cached().  The mask is
-derived from O_ACCMODE alone, so an open(O_RDONLY | O_TRUNC) against a
-file the caller cannot write requests only MAY_READ and passes the
-local check.  The OPEN is then satisfied locally and the truncation is
-issued to the server as a SETATTR(size=0) over the delegation stateid,
-which the server accepts under standard write-delegation semantics.
-POSIX requires that this open fail with EACCES.
+Use the correct attribute name and rename the corresponding structure
+member to match.
 
-Include MAY_WRITE in the mask whenever O_TRUNC is set so the local
-check matches the access the server would have enforced.
-
-Suggested-by: Trond Myklebust <trondmy@kernel.org>
-Fixes: af22f94ae02a ("NFSv4: Simplify _nfs4_do_access()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 205ab99dd103 ("slub: Update statistics handling for variable order slabs")
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Cc: <stable@vger.kernel.org>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Link: https://patch.msgid.link/96556748872BB47E+20260612071359.649946-1-chenyichong@uniontech.com
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/dir.c |    2 ++
- 1 file changed, 2 insertions(+)
+ tools/vm/slabinfo.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -3026,6 +3026,8 @@ static int nfs_open_permission_mask(int
- 			mask |= MAY_READ;
- 		if ((openflags & O_ACCMODE) != O_RDONLY)
- 			mask |= MAY_WRITE;
-+		if (openflags & O_TRUNC)
-+			mask |= MAY_WRITE;
- 	}
- 
- 	return mask;
+diff --git a/tools/vm/slabinfo.c b/tools/vm/slabinfo.c
+index 0fffaeedee7672..d26a44e3e68470 100644
+--- a/tools/vm/slabinfo.c
++++ b/tools/vm/slabinfo.c
+@@ -33,7 +33,7 @@ struct slabinfo {
+ 	unsigned int hwcache_align, object_size, objs_per_slab;
+ 	unsigned int sanity_checks, slab_size, store_user, trace;
+ 	int order, poison, reclaim_account, red_zone;
+-	unsigned long partial, objects, slabs, objects_partial, objects_total;
++	unsigned long partial, objects, slabs, objects_partial, total_objects;
+ 	unsigned long alloc_fastpath, alloc_slowpath;
+ 	unsigned long free_fastpath, free_slowpath;
+ 	unsigned long free_frozen, free_add_partial, free_remove_partial;
+@@ -1254,7 +1254,7 @@ static void read_slab_dir(void)
+ 			slab->object_size = get_obj("object_size");
+ 			slab->objects = get_obj("objects");
+ 			slab->objects_partial = get_obj("objects_partial");
+-			slab->objects_total = get_obj("objects_total");
++			slab->total_objects = get_obj("total_objects");
+ 			slab->objs_per_slab = get_obj("objs_per_slab");
+ 			slab->order = get_obj("order");
+ 			slab->partial = get_obj("partial");
+-- 
+2.53.0
+
 
 
