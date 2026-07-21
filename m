@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454D643C079;
-	Tue, 21 Jul 2026 22:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C36743D502;
+	Tue, 21 Jul 2026 22:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671346; cv=none; b=ImkT3sAKR+UFvD+Os0bRsMdbOFazCPTXUBkczNFv5YlOM4SVoEuNZXOdyDTjhlgQf+hMtqeYUDft112GJPNRQh2Jl/kw0YaYKuT1b4INMKiDF+Xrb1Qs6ARbb50BZ6NujRVlZRQV5+KRnqUTP8DUM/Rt72MNo9WmC/CENuG457w=
+	t=1784671350; cv=none; b=uXoakIvfTgRG2d8F7nnE0Rob/wipReU5F2B22vGZBoBBBzTV0vlHA6t2zrlbZWjTJQiOOf9LLRmgxfgYPbx4dKuT4/L8tw3ZvQQnsgYgmEsN67B7lvMoP82lHIPAlV4iS3SxguqFzo1mpVVlAH4fv1WUHPSMgEDs8vqccyLTTmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671346; c=relaxed/simple;
-	bh=HeWAh1CcUn+T/lkiG7nr50ak5soiI2hT6NeUP9OBPpk=;
+	s=arc-20240116; t=1784671350; c=relaxed/simple;
+	bh=vndOWNH27l5YyJy+0V2nhEahN6SE1bukFRr5nPeCcXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GScMzRL54sEgtxQM6RYPNqu0+V4E2KOizdP0AMKez/dTRcwPCbOajdzrv2ufs68js9jCFW6eXLUqBE94xNd787mKD7rNfMsqsoxDnSz8evS1Il9R4eLrTsfYiW+bHg6vf08sKwFKLEhgAO4jCytLR9PjtDvjGkk5B2clXrR06ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1QJD6ocB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GVxSeOsXeAsZ1RGTDmib2qgcdpV9GR6WqrzcUwBPGkEQCGgNebtIHEPmwmtzyBJcZv58YC4O5L/bu9nYal27QNVSdL9/7RhWQQMGia0pXDWU3NTlbdOLnxqmjGUlK6G+qVY0clGnZG0JW+HeFJ9TyxmOg9WB2P/SJvzn1gDFFjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBThN27d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QJD6ocB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96A01F00A3A;
-	Tue, 21 Jul 2026 22:02:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBThN27d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4BD1F000E9;
+	Tue, 21 Jul 2026 22:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671345;
-	bh=JqjcZC1B+5tbH4m0lLf38ZaREPndOCrOscbrgln7vP4=;
+	s=korg; t=1784671347;
+	bh=p9Rwhu+UxALOwGtcHmtVps5tnyTOu9M+3kuYVqwYM2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1QJD6ocB3+ctdSiIXjCFO86gkdCf1Xce7iqUVeG1NArJTzNm34CsZre+rKlGolAJe
-	 V8uwV/tiWlxPjwEp12166tSkPkPw3l7GRkOdNChhjapcWz0PUrbfq4u6M1520Hc3cF
-	 4snOiXHhodxjzGw9s2RxuFBFBhhRY6jkmmQQpEaY=
+	b=xBThN27dAyiZdHz2P1kc1rMtuTtYa8qqucy8+m+MzQn8QfNa7hKCmQmhHMcC//TK/
+	 tenPdRkOjYlqRG84+mJrNPGhij2lUA/CcMP2aeeGv027jEaw1AzNY5jARWbYXoMLu3
+	 pKSBJX6Ie3T5wEOdCyhhl5ER3gsxnFWhugMaNAYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wens@kernel.org>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 210/843] dt-bindings: media: sun4i-a10-video-engine: Add interconnect properties
-Date: Tue, 21 Jul 2026 17:17:25 +0200
-Message-ID: <20260721152410.742629030@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>
+Subject: [PATCH 5.15 175/843] exfat: bound uniname advance in exfat_find_dir_entry()
+Date: Tue, 21 Jul 2026 17:16:50 +0200
+Message-ID: <20260721152409.954904894@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,45 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@kernel.org>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 018f2dc3a42098d3b04edd1480adc51d268adb14 upstream.
+commit 3a1230e7b043c62737b05a3e9275ca83a43ad20a upstream.
 
-The Allwinner video engine sits behind the MBUS that is represented as
-an interconnect.
+In exfat_find_dir_entry(), each TYPE_EXTEND (file name) entry advances the
+output pointer by a fixed amount while the loop guard only tracks the
+accumulated name length:
 
-Make sure that the interconnect properties are valid in the binding.
+	if (++order == 2)
+		uniname = p_uniname->name;
+	else
+		uniname += EXFAT_FILE_NAME_LEN;
+	len = exfat_extract_uni_name(ep, entry_uniname);
+	name_len += len;
+	unichar = *(uniname+len);
+	*(uniname+len) = 0x0;
 
-Fixes: d41662e52a03 ("media: dt-bindings: media: allwinner,sun4i-a10-video-engine: Add R40 compatible")
+uniname grows by EXFAT_FILE_NAME_LEN (15) per name entry, but name_len
+grows only by the actual extracted length, which is shorter when a name
+fragment contains an early NUL.  The only guard is
+`name_len >= MAX_NAME_LENGTH`, so a crafted directory with many short
+name fragments lets uniname run far past the
+p_uniname->name[MAX_NAME_LENGTH + 3] buffer while name_len stays small,
+causing an out-of-bounds read and write at *(uniname+len).
+
+The sibling extractor exfat_get_uniname_from_ext_entry() already stops
+on a short fragment (the lockstep `len != EXFAT_FILE_NAME_LEN` guard
+added in commit d42334578eba ("exfat: check if filename entries exceeds
+max filename length")); exfat_find_dir_entry() never got the
+equivalent.  Track the per-entry write offset as a count and reject a
+fragment once the offset, or the offset plus the extracted length, would
+exceed MAX_NAME_LENGTH, before forming the output pointer.
+
+Fixes: ca06197382bd ("exfat: add directory operations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/exfat/dir.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml
-+++ b/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml
-@@ -58,6 +58,16 @@ properties:
-       CMA pool to use for buffers allocation instead of the default
-       CMA pool.
+--- a/fs/exfat/dir.c
++++ b/fs/exfat/dir.c
+@@ -1050,6 +1050,7 @@ rewind:
  
-+  # FIXME: This should be made required eventually once every SoC will
-+  # have the MBUS declared.
-+  interconnects:
-+    maxItems: 1
-+
-+  # FIXME: This should be made required eventually once every SoC will
-+  # have the MBUS declared.
-+  interconnect-names:
-+    const: dma-mem
-+
- required:
-   - compatible
-   - reg
+ 			if (entry_type == TYPE_EXTEND) {
+ 				unsigned short entry_uniname[16], unichar;
++				unsigned int offset;
+ 
+ 				if (step != DIRENT_STEP_NAME ||
+ 				    name_len >= MAX_NAME_LENGTH) {
+@@ -1058,13 +1059,15 @@ rewind:
+ 					continue;
+ 				}
+ 
+-				if (++order == 2)
+-					uniname = p_uniname->name;
+-				else
+-					uniname += EXFAT_FILE_NAME_LEN;
+-
++				offset = (++order - 2) * EXFAT_FILE_NAME_LEN;
+ 				len = exfat_extract_uni_name(ep, entry_uniname);
+ 				brelse(bh);
++				if (offset > MAX_NAME_LENGTH ||
++				    len > MAX_NAME_LENGTH - offset) {
++					step = DIRENT_STEP_FILE;
++					continue;
++				}
++				uniname = p_uniname->name + offset;
+ 				name_len += len;
+ 
+ 				unichar = *(uniname+len);
 
 
