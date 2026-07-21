@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4DB844AB6A;
-	Tue, 21 Jul 2026 22:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC1A41F7C3;
+	Tue, 21 Jul 2026 22:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672599; cv=none; b=fAf/V6y3OAPikDrNpnBMYDVV6AXWQ1QM6VaSYy+liqvAFYRtNPSB1snpVTnbM6J2SpcENZZvVS7Nr3cBcwOqh7heCp5dCiUd7jnWuK58LPAYOYn95FY6GtaZmjr1WarPaB9/QLqvB+tpenVsURdpdehz3CAPZl6MFqx16SidHUU=
+	t=1784672602; cv=none; b=j9DcrLmAz6QRtm5y/4ZkIQg4DTclv8rAEXyBqzTECFUOCTX6rvDtPafQ1uRa1SUTLiUv0YRDZn+Ydb0lZ5UR1GB9HdaS3Zd3xXIbJHi64o5XA+YT5dH+yJysL6Iyf5t08Vijrm+ky2lpPgopB4Y70SEFPCqjkdLn4Hm9zCD0HS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672599; c=relaxed/simple;
-	bh=w2lAfbsTz1MCzyCKuriZjtmEY3Twvk/FEWI3eUsWPcs=;
+	s=arc-20240116; t=1784672602; c=relaxed/simple;
+	bh=s4UFgHtQDMy67vU0rmvroGopO89PwKJt3OO016hZBRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XJSo0oFr3xmzz1hO5iCjfkJwLoBOOOPrsy+iQu5nIS/0QNUN0GO2lvim6dMFD0P6zhCAr7HRrzT2PFRPVrIZZxZi1vmW9w4YH2XEecJXqO/FX9Z/TIgqNBnEXB4JMnvt7ZTFU3tB8gHFyABY0Uobb4UywY+vz8keP09MQDEi16k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9pUcobT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JXrRDRPKMAP4If5BNV+TT8HR6tArU1jR6ewV0//vUwRJ343Q4KlVMSIkinTZVznsnEBUZ8MNIAE35My9qB0i2l3Zc/r0OvGL/cx8djdPpFPEIT8eQv9KnQ+rfOqx1y62wUa9Of8EV0Adjc0HziAoAg/tih/sgk8jo27zJun+GPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TuEgrRGO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9pUcobT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18C321F00A3A;
-	Tue, 21 Jul 2026 22:23:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TuEgrRGO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B267F1F000E9;
+	Tue, 21 Jul 2026 22:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672597;
-	bh=+pqX63160/8WJShMGL7p8vEnW8V11uvnCbKSVYWVg78=;
+	s=korg; t=1784672600;
+	bh=zOAL2ooqX6j/mr1/yC+v68AnJtH8Aoz4aKa13uIyYI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H9pUcobTBzcaoyo0kPRNgiivSR98V4vZnqNX8p4KA5mZ13lfuHr2ZyJakRZAONT57
-	 kVRhStqMGY7Wie8SNFO+LWJc7GBI9ZmPtDBIpQC8MnbxNv5McLv72dOg8IreJhK6zh
-	 QyYOewLf0MxLqTRqxhq1iSjsIs3YNUV8JoMTQjGA=
+	b=TuEgrRGOGGgsFJtvE5ol97dY0r4RAzapltkkXR2U5YRxu8jYCYMJowTYl+Fg1vxyj
+	 c/Dpn8hQyvEwo2Fm7g2Ye7japKWY+Rx7D058+H3RmPkGIgRqOTjW5WFG4cIKO1mKuJ
+	 3oEsptrApsouWa9FKPVV5mSE0kf4UxuhK97XUUSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 5.15 678/843] gpios: palmas: add .get_direction() op
-Date: Tue, 21 Jul 2026 17:25:13 +0200
-Message-ID: <20260721152421.310214729@linuxfoundation.org>
+	Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>,
+	Simon Horman <horms@kernel.org>,
+	Stefan Schmidt <stefan@datenfreihafen.org>
+Subject: [PATCH 5.15 687/843] ieee802154: ca8210: fix pointer truncation in kfifo on 64-bit
+Date: Tue, 21 Jul 2026 17:25:22 +0200
+Message-ID: <20260721152421.509838409@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,58 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Shitalkumar Gandhi <shital.gandhi45@gmail.com>
 
-commit db4a79713ed8e252d5e4edf6eaaa80948b6855a2 upstream.
+commit 6d7f7bcf225b2d566176bf6229dbd1252940cb3c upstream.
 
-Accessing debug/gpio is quite noisy without a get_direction()
-implementation. To calm that down add an implementation.
+ca8210_test_int_driver_write() and ca8210_test_int_user_read() exchange
+a kmalloc'd buffer pointer through a struct kfifo, but pass a literal
+'4' as the byte count to kfifo_in()/kfifo_out().
 
-Fixes: 3d50a2785271 ("gpio: palmas: Add support for Palmas GPIO")
+This is correct on 32-bit (pointer = 4 bytes), but on 64-bit only the
+low 4 bytes of the 8-byte pointer are written into the FIFO. The reader
+then reads back 4 bytes into an 8-byte local pointer variable, leaving
+the upper 4 bytes uninitialized stack data. The first dereference of
+the reconstructed pointer (fifo_buffer[1]) accesses an arbitrary kernel
+address and generally results in an oops.
+
+Use sizeof(fifo_buffer) so the byte count matches pointer width on every
+architecture.
+
+The driver has no architecture restriction in Kconfig, so any 64-bit
+build with CONFIG_IEEE802154_CA8210_DEBUGFS=y is exposed. Issue has
+been latent since the driver was added in 2017 because it is most
+commonly deployed on 32-bit MCUs.
+
+Found via a custom Coccinelle semantic patch hunting for short-byte
+kfifo I/O on byte-mode kfifos used to shuttle pointers.
+
+Fixes: ded845a781a5 ("ieee802154: Add CA8210 IEEE 802.15.4 device driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20260704-palmas-getdirection-v2-1-2fd85fee3832@kemnade.info
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/20260520105750.30144-1-shitalkumar.gandhi@cambiumnetworks.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-palmas.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/net/ieee802154/ca8210.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpio/gpio-palmas.c
-+++ b/drivers/gpio/gpio-palmas.c
-@@ -118,6 +118,24 @@ static int palmas_gpio_input(struct gpio
- 	return ret;
- }
+--- a/drivers/net/ieee802154/ca8210.c
++++ b/drivers/net/ieee802154/ca8210.c
+@@ -639,7 +639,7 @@ static int ca8210_test_int_driver_write(
+ 	fifo_buffer = kmemdup(buf, len, GFP_KERNEL);
+ 	if (!fifo_buffer)
+ 		return -ENOMEM;
+-	kfifo_in(&test->up_fifo, &fifo_buffer, 4);
++	kfifo_in(&test->up_fifo, &fifo_buffer, sizeof(fifo_buffer));
+ 	wake_up_interruptible(&priv->test.readq);
  
-+static int palmas_gpio_get_direction(struct gpio_chip *gc, unsigned int offset)
-+{
-+	struct palmas_gpio *pg = gpiochip_get_data(gc);
-+	struct palmas *palmas = pg->palmas;
-+	unsigned int val;
-+	unsigned int reg;
-+	int ret;
-+	int gpio16 = (offset/8);
-+
-+	offset %= 8;
-+	reg = (gpio16) ? PALMAS_GPIO_DATA_DIR2 : PALMAS_GPIO_DATA_DIR;
-+	ret = palmas_read(palmas, PALMAS_GPIO_BASE, reg, &val);
-+	if (ret)
-+		return ret;
-+
-+	return (val & BIT(offset)) ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
-+}
-+
- static int palmas_gpio_to_irq(struct gpio_chip *gc, unsigned offset)
- {
- 	struct palmas_gpio *pg = gpiochip_get_data(gc);
-@@ -166,6 +184,7 @@ static int palmas_gpio_probe(struct plat
- 	palmas_gpio->gpio_chip.can_sleep = true;
- 	palmas_gpio->gpio_chip.direction_input = palmas_gpio_input;
- 	palmas_gpio->gpio_chip.direction_output = palmas_gpio_output;
-+	palmas_gpio->gpio_chip.get_direction = palmas_gpio_get_direction;
- 	palmas_gpio->gpio_chip.to_irq = palmas_gpio_to_irq;
- 	palmas_gpio->gpio_chip.set	= palmas_gpio_set;
- 	palmas_gpio->gpio_chip.get	= palmas_gpio_get;
+ 	return 0;
+@@ -2571,6 +2571,7 @@ static ssize_t ca8210_test_int_user_read
+ 	struct ca8210_priv *priv = filp->private_data;
+ 	unsigned char *fifo_buffer;
+ 	unsigned long bytes_not_copied;
++	unsigned int copied;
+ 
+ 	if (filp->f_flags & O_NONBLOCK) {
+ 		/* Non-blocking mode */
+@@ -2584,7 +2585,8 @@ static ssize_t ca8210_test_int_user_read
+ 		);
+ 	}
+ 
+-	if (kfifo_out(&priv->test.up_fifo, &fifo_buffer, 4) != 4) {
++	copied = kfifo_out(&priv->test.up_fifo, &fifo_buffer, sizeof(fifo_buffer));
++	if (copied != sizeof(fifo_buffer)) {
+ 		dev_err(
+ 			&priv->spi->dev,
+ 			"test_interface: Wrong number of elements popped from upstream fifo\n"
 
 
