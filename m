@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DF6403B06;
-	Tue, 21 Jul 2026 17:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26E3223708;
+	Tue, 21 Jul 2026 17:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654840; cv=none; b=Pi6u14tD4h77efYbQs/l+sXotmJ3Pml+nNSsMABRz2SAH9uAI7Ug0Nz3p4sdtNJSCi0Aj1crt0VvYqvrlVLXfjIeHkJrg0TN7gnXqYA03Dar5nPHyYT3/IzC1T/dgp/nWYhJaDWC9w14YqVJenumkfOaD/plU8vQZ+NInnk7s5E=
+	t=1784654842; cv=none; b=qk6OMKJ4ZGri2T0I0HPSc9eablMaRgKb2A8OVn3sk28gwTf7wr0qFqCFVVP2ioYbXvgIPGF5+0L0d10MQ9XhXtoQ8FabifQdbhEl9wMt7xcDBHWhvLmC51K208HgSQ7zVBlEShskt6pNsIisR58Dl7gC1OHNrM7+QLBXb2QTwTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654840; c=relaxed/simple;
-	bh=arJqiLIatxxhogsNdcC0hh+iIG/B+kmJ26uZFYfDjdU=;
+	s=arc-20240116; t=1784654842; c=relaxed/simple;
+	bh=9hy3XDSlnu801GXRa9o1nIFWYUvVa6LIf00VYhIz9nA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rW8Y28aBT1sAHf/cuxw6f5kHG3VtGnWVTfK3GZDCKWlapR9TQig6Sb8SsW8BHgicMM14xQSxvLd5qCo2ogHsGlslPLystgKh6ABxLiNQi+NeY/hyOfMjH9WAaRilZjNmq81ei+Ul+mh0NJyMiNKC2kVqojaCgtkD+lY17wcsbNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PIagLoSm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uD2scVETboX1P92E+PCrhY2JAWqkzAGHsbhC5aC9hiZ72lHCwk7uLpfDEwsA9VNA9nbMxmD1A03h5uLsV0eWkCOM/dN+E7AHNJ9pw8jPOrBTcOqrRrwvZrXOt8xqwGddSMsZQmg5XFwut1xDPNxs1B05yMD/qwsc8Xd88E2ybO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lnkI9Zdn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PIagLoSm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638B41F000E9;
-	Tue, 21 Jul 2026 17:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lnkI9Zdn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081741F000E9;
+	Tue, 21 Jul 2026 17:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654838;
-	bh=9bp0xvE7aSkQb5epqCt4uBdUdGjfXcpfjiYLKaOGZcY=;
+	s=korg; t=1784654841;
+	bh=Vj3bzX1jG3wCJzSqQB6hgfB8Urkzbx4sTLUAMhjbBJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PIagLoSmR+4zXq765B0MwG1KJpHjHZ1eFvD4wd6MOkIlyYwaXU2mO0e05Zn3Xn/Ln
-	 rRH8OvrZP9BRmFKZiez9bnNr/L7QHvB4YKJIozG1qJR6anLbq1EnQ/55gZ4oIogMam
-	 7aSa1uspLetkOUpbaHMk0A566LO/GH59hW6rqbmw=
+	b=lnkI9ZdnyJemFcaVyoPuKV9314Ga4KpCBt5ylNh/nwmGdy2PTj7vxLKDFrmJyc8gF
+	 yq4bP7SHzbfa8T09arzDvUgfr9g4qiYvD2/VifSFH3xjZvEBYZ1cuJC/1SYmSZRmfk
+	 ARfXINUwo0DF+NHERfcFgt4DU8rph4aC/UI8w4yQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.1 1858/2077] dm-verity: avoid double increment of &use_bh_wq_enabled
-Date: Tue, 21 Jul 2026 17:25:31 +0200
-Message-ID: <20260721152636.558890060@linuxfoundation.org>
+Subject: [PATCH 7.1 1859/2077] dm-verity: fix a possible NULL pointer dereference
+Date: Tue, 21 Jul 2026 17:25:32 +0200
+Message-ID: <20260721152636.582637952@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,35 +51,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 72e9ec2fe32b00994f41719cf77423fca67d48b2 upstream.
+commit e72b793ae440f6900fb17a4b8518c707b5cd3e17 upstream.
 
-verity_parse_opt_args is called twice, first with the only_modifier_opts,
-first with only_modifier_opts == true and then with only_modifier_opts ==
-false. Thus, the static branch &use_bh_wq_enabled was incremented twice
-and the destructor verity_dtr would only decrement it once.
-
-Fix tihs bug by only incrementing it on the first call, on the second
-call, when v->use_bh_wq is true, do nothing.
+Fix a possible NULL pointer dereference dm_verity_loadpin_is_bdev_trusted
+if the device has no table.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Assisted-by: Claude:claude-opus-4-6
+Fixes: b6c1c5745ccc ("dm: Add verity helpers for LoadPin")
 Cc: stable@vger.kernel.org
-Fixes: df326e7a0699 ("dm verity: allow optional args to alter primary args handling")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-target.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/dm-verity-loadpin.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-verity-target.c
-+++ b/drivers/md/dm-verity-target.c
-@@ -1262,6 +1262,8 @@ static int verity_parse_opt_args(struct
- 			continue;
+--- a/drivers/md/dm-verity-loadpin.c
++++ b/drivers/md/dm-verity-loadpin.c
+@@ -70,7 +70,7 @@ bool dm_verity_loadpin_is_bdev_trusted(s
  
- 		} else if (!strcasecmp(arg_name, DM_VERITY_OPT_TASKLET_VERIFY)) {
-+			if (v->use_bh_wq)
-+				continue;
- 			v->use_bh_wq = true;
- 			static_branch_inc(&use_bh_wq_enabled);
- 			continue;
+ 	table = dm_get_live_table(md, &srcu_idx);
+ 
+-	if (table->num_targets != 1)
++	if (!table || table->num_targets != 1)
+ 		goto out;
+ 
+ 	ti = dm_table_get_target(table, 0);
 
 
