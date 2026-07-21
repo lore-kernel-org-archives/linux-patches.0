@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B12471264;
-	Tue, 21 Jul 2026 18:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A69315D53;
+	Tue, 21 Jul 2026 18:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659254; cv=none; b=ekILln9ADHaYRFtN2eyxcjbZWYtTVQYRhujRfgH5N3o1iwSQndZU+F+tBYfyHH03octBQcbYCVThqBdurSbN5vtcglZAUYA4Xcw/RAon9bYkXKCwaIvUG+SsZRZ/5B6IL1/RZxTS8CefEQsO0yxGfRrDOWOWsCwxFm6I+AiAqzc=
+	t=1784659257; cv=none; b=oCq+44llTecP5sP2CsSE4gyjCmHlmez3NJnPg2La6173VSzlEfxcTgqvoXPB7cQlayBlXhTOkxLlaNWsz1/m+suhiqWxlAOpLnsKzZisYy7MUNv0McYJKcFHmLatUJH1tW1ODeQqP7M5IXDDSNKSBO/FGxJ19wxOg1EXLFtHzaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659254; c=relaxed/simple;
-	bh=xu0KTsHV8GKjrrKaW4enrzMH5LChHvO71GvLJ2YP9S4=;
+	s=arc-20240116; t=1784659257; c=relaxed/simple;
+	bh=gCESBkTmHOZf+DG20sTjFBjRdESocS8gNzT4kRUOrP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dN9M83XGb4WS0OJwMYS2qj7Pcuh8ytenmG24/4h+IQwmPTlRv0bhCnaegm2fuyiWgqQI4QrM+MUCzb5+d4KsHZWkfvpm7F7Ofi35EfI00zAuTft5hgSV5iuwdIwou/qGSomb/t8qCfeOXxQq/jdmfmxzrbdQeEqv68Lag5kIEpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzrNEuzp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TqboXnGIASJ0pDvT0ZZgBQMOg/CKSTnJMY4JvxYR2Ik1I6Ucj4msMUQJj/P+X+M0fIJ43tdbzT0sKBf5Kv4d4EYuVm2W8hlAgpJv1fmk7mQijX0O6NwsT5J4X2QpjXPNZRW+O5R5us+X7WcWvso9OO/PlFsRH20EF/4A6utkYxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBLcLuz9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzrNEuzp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B691F000E9;
-	Tue, 21 Jul 2026 18:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBLcLuz9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F061F000E9;
+	Tue, 21 Jul 2026 18:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659253;
-	bh=Tgw7cwC1EPyYiFSzfzwflzPLjcSpDg7rUwf/qGAzC+o=;
+	s=korg; t=1784659255;
+	bh=5YCMt/6BXVwUOcmGjKH+pjzcmyrxeCRU+wo+HbFdajU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nzrNEuzpcQlMSO/U0U9YEmML8znMGd7/ibdwuKR3ZtOjEmyMDN5TDe5jiyKMAmxHw
-	 ZhUpOZelcEx9t8GEVuXCURe2FBclmkPhtBGay2k+sMpGH/DGmi93g/debNYyVIoX9K
-	 RdimB5P7QVoMtik0luRq/8gyLpiSSKP6tjTRsl+A=
+	b=OBLcLuz9MIOvzR9jZwgEjGpyPDA9OHTLXuMse6MvUtEXy/YTLHGRlJs7efFO1g7vS
+	 OpVwBKdJco3kSt/0HGd9DZ7AJ72UbmTg9O0uZGS7EvFhJ/EjYL4fJtjFRaSxoM40jb
+	 DMVqK62qeds3buk71Jo8vuaB/ESoaaGwcwcCL110=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Nirmoy Das <nirmoyd@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 1452/1611] octeontx2-pf: fix SQB pointer leak on init failure
-Date: Tue, 21 Jul 2026 17:26:08 +0200
-Message-ID: <20260721152548.107532911@linuxfoundation.org>
+Subject: [PATCH 6.18 1453/1611] selftests: net: make busywait timeout clock portable
+Date: Tue, 21 Jul 2026 17:26:09 +0200
+Message-ID: <20260721152548.129689936@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,79 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Nirmoy Das <nirmoyd@nvidia.com>
 
-commit 62e7df6d042aeebd5efb581074e28865c04477be upstream.
+commit dd6a23bac306b7aa322e0aaccb60c6e32a198fb3 upstream.
 
-otx2_init_hw_resources() initializes SQ aura and pool resources before
-several later setup steps. On failure, err_free_sq_ptrs only frees SQB
-pages, leaving the per-SQ sqb_ptrs arrays behind.
+loopy_wait() expects millisecond timestamps. However, Ubuntu Resolute
+can use uutils date, where `date -u +%s%3N` returns seconds plus full
+nanoseconds instead of a 3-digit millisecond field. This makes
+busywait expire too early and can make vlan_bridge_binding.sh read a
+stale operstate.
 
-Use otx2_free_sq_res() for the SQ unwind path and let it free sqb_ptrs
-even when sq->sqe has not been allocated yet.
-
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still
-present in v7.1.1.
-
-An x86_64 allyesconfig build showed no new warnings. As we do not have an
-OcteonTX2 PF device and the corresponding AF mailbox setup to test with,
-no runtime testing was able to be performed.
-
-Fixes: caa2da34fd25 ("octeontx2-pf: Initialize and config queues")
-Cc: stable@vger.kernel.org
-Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Link: https://patch.msgid.link/20260630071625.349996-1-dawei.feng@seu.edu.cn
+Fixes: 25ae948b4478 ("selftests/net: add lib.sh")
+Cc: stable@vger.kernel.org # 6.8+
+Link: https://github.com/uutils/coreutils/issues/11658
+Signed-off-by: Nirmoy Das <nirmoyd@nvidia.com>
+Link: https://patch.msgid.link/20260630165157.3814871-1-nirmoyd@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c |   21 +++++++++----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ tools/testing/selftests/net/lib.sh |   25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -1569,15 +1569,15 @@ static void otx2_free_sq_res(struct otx2
- 	otx2_sq_free_sqbs(pf);
- 	for (qidx = 0; qidx < otx2_get_total_tx_queues(pf); qidx++) {
- 		sq = &qset->sq[qidx];
--		/* Skip freeing Qos queues if they are not initialized */
--		if (!sq->sqe)
--			continue;
--		qmem_free(pf->dev, sq->sqe);
--		qmem_free(pf->dev, sq->sqe_ring);
--		qmem_free(pf->dev, sq->cpt_resp);
--		qmem_free(pf->dev, sq->tso_hdrs);
--		qmem_free(pf->dev, sq->timestamps);
--		kfree(sq->sg);
-+		/* sq->sqe is not initialized for unused QoS queues */
-+		if (sq->sqe) {
-+			qmem_free(pf->dev, sq->sqe);
-+			qmem_free(pf->dev, sq->sqe_ring);
-+			qmem_free(pf->dev, sq->cpt_resp);
-+			qmem_free(pf->dev, sq->tso_hdrs);
-+			qmem_free(pf->dev, sq->timestamps);
-+			kfree(sq->sg);
-+		}
- 		kfree(sq->sqb_ptrs);
- 	}
+--- a/tools/testing/selftests/net/lib.sh
++++ b/tools/testing/selftests/net/lib.sh
+@@ -70,12 +70,33 @@ ksft_exit_status_merge()
+ 		$ksft_xfail $ksft_pass $ksft_skip $ksft_fail
  }
-@@ -1712,13 +1712,12 @@ int otx2_init_hw_resources(struct otx2_n
- 	return err;
  
- err_free_nix_queues:
--	otx2_free_sq_res(pf);
- 	otx2_free_cq_res(pf);
- 	otx2_ctx_disable(mbox, NIX_AQ_CTYPE_RQ, false);
- err_free_txsch:
- 	otx2_txschq_stop(pf);
- err_free_sq_ptrs:
--	otx2_sq_free_sqbs(pf);
-+	otx2_free_sq_res(pf);
- err_free_rq_ptrs:
- 	otx2_free_aura_ptr(pf, AURA_NIX_RQ);
- 	otx2_ctx_disable(mbox, NPA_AQ_CTYPE_POOL, true);
++timestamp_ms()
++{
++	local now
++	local seconds
++	local nanoseconds
++
++	now=$(date -u +%s:%N) || return
++	seconds=${now%:*}
++	nanoseconds=${now#*:}
++
++	if [[ $nanoseconds =~ ^[0-9]+$ ]]; then
++		nanoseconds=${nanoseconds:0:9}
++	else
++		nanoseconds=0
++	fi
++
++	echo $((seconds * 1000 + 10#$nanoseconds / 1000000))
++}
++
+ loopy_wait()
+ {
+ 	local sleep_cmd=$1; shift
+ 	local timeout_ms=$1; shift
++	local start_time
++	local current_time
+ 
+-	local start_time="$(date -u +%s%3N)"
++	start_time=$(timestamp_ms) || return
+ 	while true
+ 	do
+ 		local out
+@@ -84,7 +105,7 @@ loopy_wait()
+ 			return 0
+ 		fi
+ 
+-		local current_time="$(date -u +%s%3N)"
++		current_time=$(timestamp_ms) || return
+ 		if ((current_time - start_time > timeout_ms)); then
+ 			echo -n "$out"
+ 			return 1
 
 
