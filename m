@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8866144AB8E;
-	Tue, 21 Jul 2026 22:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C9F403AE9;
+	Tue, 21 Jul 2026 22:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674280; cv=none; b=p1fNNvnGtir6XTxFIpLC2D9DmdC5ookR28TXzZQkvCuI+TmeEYJ1NsNktDa9DaVKzwmCW9xRIR22IF0gNJIUGPbeCsDBzBlYt7DON+OBBrREgPvtRj3gcaQVdELM7ylU1BBxxGfakS/L4QRWHRmQvsMMH9Lax1SF/ftFVPovfYs=
+	t=1784674283; cv=none; b=VALPZs6OPYE01ZZGBUHy7N0LJasjt+13XtiecBxfUrJA/P97YMpEOW8T6WdoUBFWGqMiHzdUGu3onVpZqxxxw2yrFt+IIdzWLGBfH0kxJpRahrjc+VELqnHWVzWqfjsSGQ/t+bEv+XFC9XsxZITg0/rneeco52/E1ddEhCIOawc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674280; c=relaxed/simple;
-	bh=M0u2s8j2WDi4EYq59pZHIEvG6r8AfwkM+7vfx+GDmZU=;
+	s=arc-20240116; t=1784674283; c=relaxed/simple;
+	bh=d3KkoqPPWw7yXfaw/2l+eY7NAuC0ezKKUlYA4ezGl7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=esuC6bICKq+SgxB6L/r/nXqD1wZWOlaYuwOg17ShV3mnvF6pronNq4RWV3KLDC7QiI8s/cfgWmcYKaIn/fhilOScRQ27WdmPFja7Rjw/OPapW21j71YeYHMB3W6e81nUkKsioHs9HKQFthNtDIxywvITMVkbSAnGVoXFjsA+GnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sx/rP8di; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HToTpaARjuMQRVBQB+rz6Cs86uryNcyIg5AsY9yPBO5sUXojEDH/o2O6m7vV+C63eV7QZSaq+5gKWCOtvcb+iGkWe6kiDy9j9jHt/tAWy9/qKagC9LiYgip4Bf7PLk2M6ciySS2RIX74VEg26m2wSn9n6pX2az///DkWS7vrJ9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTI6UARK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sx/rP8di"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B76631F000E9;
-	Tue, 21 Jul 2026 22:51:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTI6UARK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABA81F000E9;
+	Tue, 21 Jul 2026 22:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674279;
-	bh=a4ZNJ0stLUHPKVNDtXocAmB/lxAqe1D2DONLM0XRPr8=;
+	s=korg; t=1784674281;
+	bh=GRoivzDtRpnLVqHvzldnpofjtu0hksjRNfSvB8FBmCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sx/rP8diVaaRiXCY4qa5sPVxb4zAV3Ia3aMjbGzAN3dICv3XWHRemm4+nDoX377ZL
-	 BSHHOqytX+swDTrAuJDcxMUgz8QJzb1CE1yFELp7Q0cfw83Ol3BaJDqQ8Ihb/zFtUL
-	 s3uGfI7HDXIUMeXSPBJGkEdJT+9hV8hzpX0b1zWg=
+	b=yTI6UARKslEXtaeXP96vkAgm9CL6UPGmZ0eA/kMoSw9I+FhcCFYssePKjK9ApY9DR
+	 NDI+BPLtJjEX9bsFWCPGi+8k41hYGr2/CLz/t9QqYxJ2dEPFZcfvHNPlWYmf+5KGaW
+	 wTGEi3X+4L7/PMofSIbq1J3IZejrtxyMOOeVIR1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 5.10 480/699] proc: only bump parent nlink when registering directories
-Date: Tue, 21 Jul 2026 17:23:59 +0200
-Message-ID: <20260721152406.529444681@linuxfoundation.org>
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.10 481/699] mtd: slram: remove failed entries from the device list
+Date: Tue, 21 Jul 2026 17:24:00 +0200
+Message-ID: <20260721152406.551534225@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -44,94 +44,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-commit 16b02eb4b9b272c221255c20d34ccd5db53a3ed3 upstream.
+commit 36f1648644d769c496a8e47e53603e863e358d73 upstream.
 
-proc_register() increments the parent directory's link count for every
-entry it registers, while remove_proc_entry() and remove_proc_subtree()
-decrement it only when the removed entry is a directory.  Regular files
-thus inflate the parent's count while they exist, and leak one link
-permanently on every create and remove cycle.
+register_device() links a new slram_mtdlist entry before allocating all
+of the state needed by the entry. If a later allocation, memremap(), or
+mtd_device_register() fails, the partially initialized entry remains on
+the global list. A later cleanup can then dereference or free invalid
+state from that failed entry.
 
-For example, /proc/bus/pci/00 with twenty-two device files and no
-subdirectories reports nlink 24 instead of 2, and SR-IOV VF enable
-and disable cycles, each creating and removing the VF config space
-entries under /proc/bus/pci/<bus>, inflate the link count of that
-directory without bound.
+Unwind the partially initialized entry and clear the list tail on each
+failure path after the entry has been linked.
 
-Before commit e06689bf5701 ("proc: change ->nlink under
-proc_subdir_lock"), the increment lived in proc_mkdir_data() and
-proc_create_mount_point(), and was therefore applied only to
-directories.  Moving it into proc_register() to bring it under
-proc_subdir_lock dropped the S_ISDIR check.
-
-Thus, move the nlink accounting into pde_subdir_insert() and
-pde_erase(), only updating it for directories in both, so the link
-count is always changed together with the directory entry itself.
-
-Fixes: e06689bf5701 ("proc: change ->nlink under proc_subdir_lock")
-Cc: stable@vger.kernel.org # v5.5+
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Link: https://patch.msgid.link/20260613211005.921692-1-kwilczynski@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/generic.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/mtd/devices/slram.c |   22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
---- a/fs/proc/generic.c
-+++ b/fs/proc/generic.c
-@@ -112,6 +112,8 @@ static bool pde_subdir_insert(struct pro
- 	/* Add new node and rebalance tree. */
- 	rb_link_node(&de->subdir_node, parent, new);
- 	rb_insert_color(&de->subdir_node, root);
-+	if (S_ISDIR(de->mode))
-+		dir->nlink++;
- 	return true;
- }
- 
-@@ -383,7 +385,6 @@ struct proc_dir_entry *proc_register(str
- 		write_unlock(&proc_subdir_lock);
- 		goto out_free_inum;
- 	}
--	dir->nlink++;
- 	write_unlock(&proc_subdir_lock);
- 
- 	return dp;
-@@ -697,6 +698,8 @@ static void pde_erase(struct proc_dir_en
+--- a/drivers/mtd/devices/slram.c
++++ b/drivers/mtd/devices/slram.c
+@@ -129,6 +129,7 @@ static int slram_write(struct mtd_info *
+ static int register_device(char *name, unsigned long start, unsigned long length)
  {
- 	rb_erase(&pde->subdir_node, &parent->subdir);
- 	RB_CLEAR_NODE(&pde->subdir_node);
-+	if (S_ISDIR(pde->mode))
-+		parent->nlink--;
+ 	slram_mtd_list_t **curmtd;
++	int ret = -ENOMEM;
+ 
+ 	curmtd = &slram_mtdlist;
+ 	while (*curmtd) {
+@@ -155,14 +156,15 @@ static int register_device(char *name, u
+ 
+ 	if (!(*curmtd)->mtdinfo) {
+ 		E("slram: Cannot allocate new MTD device.\n");
+-		return(-ENOMEM);
++		goto err_free_list;
+ 	}
+ 
+ 	if (!(((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start =
+ 		memremap(start, length,
+ 			 MEMREMAP_WB | MEMREMAP_WT | MEMREMAP_WC))) {
+ 		E("slram: memremap failed\n");
+-		return -EIO;
++		ret = -EIO;
++		goto err_free_priv;
+ 	}
+ 	((slram_priv_t *)(*curmtd)->mtdinfo->priv)->end =
+ 		((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start + length;
+@@ -183,10 +185,8 @@ static int register_device(char *name, u
+ 
+ 	if (mtd_device_register((*curmtd)->mtdinfo, NULL, 0))	{
+ 		E("slram: Failed to register new device\n");
+-		memunmap(((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start);
+-		kfree((*curmtd)->mtdinfo->priv);
+-		kfree((*curmtd)->mtdinfo);
+-		return(-EAGAIN);
++		ret = -EAGAIN;
++		goto err_unmap;
+ 	}
+ 	T("slram: Registered device %s from %luKiB to %luKiB\n", name,
+ 			(start / 1024), ((start + length) / 1024));
+@@ -194,6 +194,16 @@ static int register_device(char *name, u
+ 			((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start,
+ 			((slram_priv_t *)(*curmtd)->mtdinfo->priv)->end);
+ 	return(0);
++
++err_unmap:
++	memunmap(((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start);
++err_free_priv:
++	kfree((*curmtd)->mtdinfo->priv);
++err_free_list:
++	kfree((*curmtd)->mtdinfo);
++	kfree(*curmtd);
++	*curmtd = NULL;
++	return ret;
  }
  
- /*
-@@ -722,8 +725,6 @@ void remove_proc_entry(const char *name,
- 			de = NULL;
- 		} else {
- 			pde_erase(de, parent);
--			if (S_ISDIR(de->mode))
--				parent->nlink--;
- 		}
- 	}
- 	write_unlock(&proc_subdir_lock);
-@@ -782,8 +783,6 @@ int remove_proc_subtree(const char *name
- 			continue;
- 		}
- 		next = de->parent;
--		if (S_ISDIR(de->mode))
--			next->nlink--;
- 		write_unlock(&proc_subdir_lock);
- 
- 		proc_entry_rundown(de);
+ static void unregister_devices(void)
 
 
