@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711E7442FA0;
-	Tue, 21 Jul 2026 22:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9294582D3;
+	Tue, 21 Jul 2026 22:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673048; cv=none; b=BNZ0WheXj5LzfgcU5RSpt2BgfjogSN4/Gyc6AzBg5L4CxEzf9c7R2ofqpyiv87fxotV12MTDPdrE2iEd5EaTz0Eaa7ipUecB5ojaUYUAHG5f8Gc655oO/5qp0tNGDL+KY0e6kF6au0f0DmiGVNbHTAtP/0VH27uXxTHBFzwA8v4=
+	t=1784673053; cv=none; b=EQ9gIPDrCkmeaiIgdZ70uKfAcR4cvF6mhHX5jzr2J5Shut2E/K65Nriej3BXDH25CzGUQfKluop/TcEdNnGGbg5/nYZo1rF01FVcwmZsmFvTvI6yAONmhqPzdagmNMRTOHSRj1t7egCwZ83FaaKymx/Jdd4i4d2R0TpJQtbNPow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673048; c=relaxed/simple;
-	bh=8dz61K2aFzjacw8e8Q7J5Qz0bgDBVZb9240ZXfFRmvE=;
+	s=arc-20240116; t=1784673053; c=relaxed/simple;
+	bh=QGViPQmvIu7CYnm72TUjK87BzrVt96aavo8wcCIk+J4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cw9SHwx2FDxbwWKorAoMXstXE6xDPsU39hze27kKEzNy5lDx6OGQ8EYTQSjHUqMcLIhyFxuia/5dDJzjojz2XIu82X/hAXz6C4uK/tILND/b++U3DXtfKHUsP2nFpW9RuPovC2HU3427+cFz4/V01nrhJjUCKPMM6cvGzH5NVdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xII3b9os; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hksqQQo5UEhRv1yph+h5pqw2w5lBIHeM26gUmtSHspRhTyenN74tiTcKdPZ3MbNiOtUX0TSp3SPFpYXLHwkM8rnj0rW/qDLuKZS0AVSO0mVx6y5BxBkpk23m2ay14T/myg7JWhsZ4iFluVCvccU5uD9wn3E1WHqq5wpnS1wlhXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dI55yX4Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xII3b9os"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D9D1F000E9;
-	Tue, 21 Jul 2026 22:30:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dI55yX4Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5F01F000E9;
+	Tue, 21 Jul 2026 22:30:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673047;
-	bh=P6hXszRTbgaPdgBSoWyIL1vu1aHHTl70jvxdPTIRSkY=;
+	s=korg; t=1784673052;
+	bh=L/fZ8DzKD3IvgguCYGjW2GH7lw3ZjcJlvdMm2yma0og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xII3b9osITEdhHsU4fDQhtQJ/DgBhdzE/tS9wEpmxKB7rtRnzk5Q9m25OpUq/r80e
-	 q6BW6oZEKdIP49gN7WzU/g2gRVSpx/UJ8YyPAdACZlueE5LN9H+vyx8wTuNLdXyo37
-	 el3Nq0sktbLuE8iNXdYFWtIgnRot1x4M3o6/HiF0=
+	b=dI55yX4Q/eW3/8rXbG1WRIo9zQyQPHKpQQ58tixj+DdBHTH2hSEaF7mB3QMklNfx9
+	 tIYev0NAIZJuwscKHauSB2a/VCsHKYNuGn8FSW1D48xQyTe7RaySPbstTji6Hk7icm
+	 qkMkBqczhDXWFB7XEaiJFfm/ntm3ElI0D7/fEa1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Liang <shaw.leon@gmail.com>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 016/699] net: ip_gre: require CAP_NET_ADMIN in the device netns for changelink
-Date: Tue, 21 Jul 2026 17:16:15 +0200
-Message-ID: <20260721152356.055181394@linuxfoundation.org>
+Subject: [PATCH 5.10 018/699] f2fs: adjust zone capacity when considering valid block count
+Date: Tue, 21 Jul 2026 17:16:17 +0200
+Message-ID: <20260721152356.099420992@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,96 +51,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-[ Upstream commit 8165f7ff57d9667d2bb477ef6af83ede7fed4ad7 ]
+[ Upstream commit 074b5ea2900ea8e40f8e7a3fd37e0a55ad3d5874 ]
 
-A tunnel changelink() operates on at most two netns, dev_net(dev) and
-the tunnel link netns t->net. They differ once the device is created in
-or moved to a netns other than the one the request runs in. The rtnl
-changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
-caller privileged there but not in t->net can rewrite a tunnel that
-lives in t->net.
+This patch fixes counting unusable blocks set by zone capacity when
+checking the valid block count in a section.
 
-Add rtnl_dev_link_net_capable() next to rtnl_get_net_ns_capable() in
-net/core/rtnetlink.c. It requires CAP_NET_ADMIN in the link netns and is
-skipped when the link netns is dev_net(dev), where the rtnl path already
-checked it. The other patches in this series use the same helper.
-
-Gate ipgre_changelink() and erspan_changelink() with it, at the top of
-the op before any attribute is parsed, because the parsers update live
-tunnel fields first. ipgre_netlink_parms() sets t->collect_md before
-ip_tunnel_changelink() runs.
-
-Commit 8b484efd5cb4 ("ip6: vti: Use ip6_tnl.net in
-vti6_siocdevprivate().") added the same check on the ioctl path. This
-adds it on RTM_NEWLINK.
-
-Reported-by: Xiao Liang <shaw.leon@gmail.com>
-Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
-Fixes: b57708add314 ("gre: add x-netns support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260612085941.3158249-2-maoyixie.tju@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 4275b59673eb ("f2fs: fix to round down start offset of fallocate for pin file")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/rtnetlink.h |    2 ++
- net/core/rtnetlink.c    |    8 ++++++++
- net/ipv4/ip_gre.c       |    6 ++++++
- 3 files changed, 16 insertions(+)
+ fs/f2fs/debug.c   |    2 +-
+ fs/f2fs/file.c    |    6 +++---
+ fs/f2fs/gc.c      |    4 ++--
+ fs/f2fs/segment.c |    7 +++----
+ fs/f2fs/segment.h |    8 ++++----
+ 5 files changed, 13 insertions(+), 14 deletions(-)
 
---- a/include/net/rtnetlink.h
-+++ b/include/net/rtnetlink.h
-@@ -183,6 +183,8 @@ int rtnl_configure_link(struct net_devic
- int rtnl_nla_parse_ifinfomsg(struct nlattr **tb, const struct nlattr *nla_peer,
- 			     struct netlink_ext_ack *exterr);
- struct net *rtnl_get_net_ns_capable(struct sock *sk, int netnsid);
-+bool rtnl_dev_link_net_capable(const struct net_device *dev,
-+			       const struct net *link_net);
+--- a/fs/f2fs/debug.c
++++ b/fs/f2fs/debug.c
+@@ -39,7 +39,7 @@ void f2fs_update_sit_info(struct f2fs_sb
  
- #define MODULE_ALIAS_RTNL_LINK(kind) MODULE_ALIAS("rtnl-link-" kind)
+ 	bimodal = 0;
+ 	total_vblocks = 0;
+-	blks_per_sec = BLKS_PER_SEC(sbi);
++	blks_per_sec = CAP_BLKS_PER_SEC(sbi);
+ 	hblks_per_sec = blks_per_sec / 2;
+ 	for (segno = 0; segno < MAIN_SEGS(sbi); segno += sbi->segs_per_sec) {
+ 		vblocks = get_valid_blocks(sbi, segno, true);
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -1681,7 +1681,7 @@ static int expand_inode_data(struct inod
+ 		return 0;
  
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -2024,6 +2024,14 @@ struct net *rtnl_get_net_ns_capable(stru
- }
- EXPORT_SYMBOL_GPL(rtnl_get_net_ns_capable);
+ 	if (f2fs_is_pinned_file(inode)) {
+-		block_t sec_blks = BLKS_PER_SEC(sbi);
++		block_t sec_blks = CAP_BLKS_PER_SEC(sbi);
+ 		block_t sec_len = roundup(map.m_len, sec_blks);
  
-+bool rtnl_dev_link_net_capable(const struct net_device *dev,
-+			       const struct net *link_net)
-+{
-+	return net_eq(link_net, dev_net(dev)) ||
-+	       ns_capable(link_net->user_ns, CAP_NET_ADMIN);
-+}
-+EXPORT_SYMBOL_GPL(rtnl_dev_link_net_capable);
-+
- static int rtnl_valid_dump_ifinfo_req(const struct nlmsghdr *nlh,
- 				      bool strict_check, struct nlattr **tb,
- 				      struct netlink_ext_ack *extack)
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -1407,6 +1407,9 @@ static int ipgre_changelink(struct net_d
- 	struct ip_tunnel_parm p;
- 	int err;
+ 		map.m_len = sec_blks;
+@@ -2595,7 +2595,7 @@ do_more:
+ 			ret = -EAGAIN;
+ 		goto out;
+ 	}
+-	range->start += BLKS_PER_SEC(sbi);
++	range->start += CAP_BLKS_PER_SEC(sbi);
+ 	if (range->start <= end)
+ 		goto do_more;
+ out:
+@@ -2717,7 +2717,7 @@ static int f2fs_defragment_range(struct
+ 		goto out;
+ 	}
  
-+	if (!rtnl_dev_link_net_capable(dev, t->net))
-+		return -EPERM;
-+
- 	err = ipgre_newlink_encap_setup(dev, data);
- 	if (err)
- 		return err;
-@@ -1436,6 +1439,9 @@ static int erspan_changelink(struct net_
- 	struct ip_tunnel_parm p;
- 	int err;
+-	sec_num = DIV_ROUND_UP(total, BLKS_PER_SEC(sbi));
++	sec_num = DIV_ROUND_UP(total, CAP_BLKS_PER_SEC(sbi));
  
-+	if (!rtnl_dev_link_net_capable(dev, t->net))
-+		return -EPERM;
-+
- 	err = ipgre_newlink_encap_setup(dev, data);
- 	if (err)
- 		return err;
+ 	/*
+ 	 * make sure there are enough free section for LFS allocation, this can
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -441,7 +441,7 @@ static void atgc_lookup_victim(struct f2
+ 	unsigned long long age, u, accu;
+ 	unsigned long long max_mtime = sit_i->dirty_max_mtime;
+ 	unsigned long long min_mtime = sit_i->dirty_min_mtime;
+-	unsigned int sec_blocks = BLKS_PER_SEC(sbi);
++	unsigned int sec_blocks = CAP_BLKS_PER_SEC(sbi);
+ 	unsigned int vblocks;
+ 	unsigned int dirty_threshold = max(am->max_candidate_count,
+ 					am->candidate_ratio *
+@@ -1421,7 +1421,7 @@ next_step:
+ 		 */
+ 		if ((gc_type == BG_GC && has_not_enough_free_secs(sbi, 0, 0)) ||
+ 			(!force_migrate && get_valid_blocks(sbi, segno, true) ==
+-							BLKS_PER_SEC(sbi)))
++							CAP_BLKS_PER_SEC(sbi)))
+ 			return submitted;
+ 
+ 		if (check_valid_map(sbi, segno, off) == 0)
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -820,7 +820,7 @@ static void __locate_dirty_segment(struc
+ 				get_valid_blocks(sbi, segno, true);
+ 
+ 			f2fs_bug_on(sbi, unlikely(!valid_blocks ||
+-					valid_blocks == BLKS_PER_SEC(sbi)));
++					valid_blocks == CAP_BLKS_PER_SEC(sbi)));
+ 
+ 			if (!IS_CURSEC(sbi, secno))
+ 				set_bit(secno, dirty_i->dirty_secmap);
+@@ -856,7 +856,7 @@ static void __remove_dirty_segment(struc
+ 			unsigned int secno = GET_SEC_FROM_SEG(sbi, segno);
+ 
+ 			if (!valid_blocks ||
+-					valid_blocks == BLKS_PER_SEC(sbi)) {
++					valid_blocks == CAP_BLKS_PER_SEC(sbi)) {
+ 				clear_bit(secno, dirty_i->dirty_secmap);
+ 				return;
+ 			}
+@@ -4577,7 +4577,6 @@ static void init_dirty_segmap(struct f2f
+ 	struct free_segmap_info *free_i = FREE_I(sbi);
+ 	unsigned int segno = 0, offset = 0, secno;
+ 	block_t valid_blocks, usable_blks_in_seg;
+-	block_t blks_per_sec = BLKS_PER_SEC(sbi);
+ 
+ 	while (1) {
+ 		/* find dirty segment based on free segmap */
+@@ -4606,7 +4605,7 @@ static void init_dirty_segmap(struct f2f
+ 		valid_blocks = get_valid_blocks(sbi, segno, true);
+ 		secno = GET_SEC_FROM_SEG(sbi, segno);
+ 
+-		if (!valid_blocks || valid_blocks == blks_per_sec)
++		if (!valid_blocks || valid_blocks == CAP_BLKS_PER_SEC(sbi))
+ 			continue;
+ 		if (IS_CURSEC(sbi, secno))
+ 			continue;
+--- a/fs/f2fs/segment.h
++++ b/fs/f2fs/segment.h
+@@ -608,10 +608,10 @@ static inline bool has_not_enough_free_s
+ 					get_pages(sbi, F2FS_DIRTY_DENTS) +
+ 					get_pages(sbi, F2FS_DIRTY_IMETA);
+ 	unsigned int total_dent_blocks = get_pages(sbi, F2FS_DIRTY_DENTS);
+-	unsigned int node_secs = total_node_blocks / BLKS_PER_SEC(sbi);
+-	unsigned int dent_secs = total_dent_blocks / BLKS_PER_SEC(sbi);
+-	unsigned int node_blocks = total_node_blocks % BLKS_PER_SEC(sbi);
+-	unsigned int dent_blocks = total_dent_blocks % BLKS_PER_SEC(sbi);
++	unsigned int node_secs = total_node_blocks / CAP_BLKS_PER_SEC(sbi);
++	unsigned int dent_secs = total_dent_blocks / CAP_BLKS_PER_SEC(sbi);
++	unsigned int node_blocks = total_node_blocks % CAP_BLKS_PER_SEC(sbi);
++	unsigned int dent_blocks = total_dent_blocks % CAP_BLKS_PER_SEC(sbi);
+ 	unsigned int free, need_lower, need_upper;
+ 
+ 	if (unlikely(is_sbi_flag_set(sbi, SBI_POR_DOING)))
 
 
