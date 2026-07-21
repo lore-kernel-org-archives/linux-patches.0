@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD41E46AA9A;
-	Tue, 21 Jul 2026 15:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3C346AA71;
+	Tue, 21 Jul 2026 15:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648385; cv=none; b=BhceU8oxW1zSef4T9SScfoflwu6hi3DXl2Fw9GBp/30atgHES97x+wAUUNK5pquXb2CEDHxFOA0rx7HCPpYCWB2Snr9ccZbC4mjJHYiuVNwWc7dY/9puWbqKQIkVQGQuPeRpEfehSM7NJ3s/dORDO6o55ct4yKZm5gB9x9SoCW4=
+	t=1784648387; cv=none; b=XCuQ1L8JsR8ntaRmV3TPx968HQehHyao/dZkqZOBeJdh/86sIVacqeRcV1rTuEOyje5qLeUjAWed3JRuKCXYqZCkx8NUONMeV/aZConkJMNk4d615YijeEeS73DhYaKAth/veixoVs8BTqmlzvpDawW+WUzp2wSgtTIeKENJ4KA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648385; c=relaxed/simple;
-	bh=scUKIcSSoGF/2x0enJxbdc59PQQ4JgY3H0yipSUKUYo=;
+	s=arc-20240116; t=1784648387; c=relaxed/simple;
+	bh=3/uR/QOrhdeDmVroalDKlmeA2QkqPHyBItpz3KpoOeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EMUbYPYXcMQHQFrF5k+EMGA31nsZuSJ2eSw7Ff3O2m/eb57vIa6TJfYSJM7ZXSkwZ4c+5NexHqG2gsslNjdbYLG2/jXTxXtoX6Si0Ae+2+yjtRiaSKkNJ7swc39P07sfVBU4QuNlEiykhmsFPnwOOqDjccEY+sGqrkoojejD63c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BKSU0pkV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W21ntH53r5lpgru7Pw2LtaPD4qJO80BJmzM6IG7FrEG47JMZ9zbXn8Ds1fWjTjYRnCOSMrVcyxxL4HBf2ggky1JOCcLnBS4WIY+2UhQZGittiIIXaVMT4Usw4QIhTmj/rBfHi/FwRj7ofGecEKp1jRmOUp+BPLs6T3B07ym9jyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDB2Qbnq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BKSU0pkV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE821F000E9;
-	Tue, 21 Jul 2026 15:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDB2Qbnq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4BF11F000E9;
+	Tue, 21 Jul 2026 15:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648383;
-	bh=9yaHJ5icR4b0AeoTAxrRUmN8ALlRuBOdKEgBMq6IzhI=;
+	s=korg; t=1784648386;
+	bh=CFpq3qFjVRliF1s361GSMm7JcTifO5WrvM8YYy8Anc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BKSU0pkVZXvEwP9jdctI8kLRi6oUQRraOZz8GD1ZUIAis5SYN3T3GwXP2R1aNCShn
-	 M+EfZ1R32oLggftAEfwwSEyfI7/n2z5BNfTZsh0Wy1NBsb+mq0YLt6WiGC3TjVibkz
-	 c3CCDt3RMmjeW161UEY9gTy1268dr9udscSOj6nY=
+	b=hDB2Qbnqe+bOPrqbqfTY7NuglbF+PXiRf5O18pHiyIQMnzEajUj8MH8CAbOlm4Jxz
+	 BOlmsB9LS7lpcY0+gJaVCV7zMa+opfdDpJFET+ZYol2y5Ew854DaTT2ps+cU2l0xWY
+	 n0eOXDqBEKnjBnXwmtOWSWkFj0aMCAgzwbOPAOjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vivian Wang <wangruikang@iscas.ac.cn>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Yixun Lan <dlan@kernel.org>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0135/2077] dts: spacemit: set console baud rate on bpif3
-Date: Tue, 21 Jul 2026 16:56:48 +0200
-Message-ID: <20260721152555.874027365@linuxfoundation.org>
+Subject: [PATCH 7.1 0136/2077] pinctrl: sunxi: fix regulator leak in sunxi_pmx_request() error path
+Date: Tue, 21 Jul 2026 16:56:49 +0200
+Message-ID: <20260721152555.898014335@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,38 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 24c12ca43b12c104389d9a159207d0b25779d0af ]
+[ Upstream commit 334f7bcbdc79dc8e5b938ac3372453a5368221cf ]
 
-Because the default console's baud rate is not set, defconfig kernels do
-not have any serial output on this platform. Set the baud rate to
-115200, matching what is used by U-Boot etc on this platform.
+In the error path of sunxi_pmx_request(), the code calls
+regulator_put(s_reg->regulator) to release the regulator. However,
+s_reg->regulator is only assigned after a successful regulator_enable().
+This causes a memory leak: the regulator obtained via regulator_get()
+is never properly released when regulator_enable() fails.
 
-Suggested-by: Vivian Wang <wangruikang@iscas.ac.cn>
-Fixes: d60d57ab6b2a8 ("riscv: dts: spacemit: add Banana Pi BPI-F3 board device tree")
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-Link: https://lore.kernel.org/r/20260430-reword-overstep-3be08b7eab25@spud
-Signed-off-by: Yixun Lan <dlan@kernel.org>
+Fixes: dc1445584177 ("pinctrl: sunxi: Fix and simplify pin bank regulator handling")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 2 +-
+ drivers/pinctrl/sunxi/pinctrl-sunxi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index 5790d927b93db3..333ac8ebf3f516 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -19,7 +19,7 @@ aliases {
- 	};
+diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi.c b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
+index d3042e0c9712e8..25489beeb31253 100644
+--- a/drivers/pinctrl/sunxi/pinctrl-sunxi.c
++++ b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
+@@ -925,7 +925,7 @@ static int sunxi_pmx_request(struct pinctrl_dev *pctldev, unsigned offset)
+ 	return 0;
  
- 	chosen {
--		stdout-path = "serial0";
-+		stdout-path = "serial0:115200n8";
- 	};
+ out:
+-	regulator_put(s_reg->regulator);
++	regulator_put(reg);
  
- 	leds {
+ 	return ret;
+ }
 -- 
 2.53.0
 
