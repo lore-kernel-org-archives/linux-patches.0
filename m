@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2D142DFEC;
-	Tue, 21 Jul 2026 21:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5050437473A;
+	Tue, 21 Jul 2026 21:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670951; cv=none; b=iR3zdyjgazJx7ikzJOsBlh67heMpLdxnA9zYN1IpErxoYdcv5JCGpUpvsKcIBhZcIBPoYtmS42O/HoxLEu/Dje07jmOX9JBcKLnH1wLrS1LBPpn70qI03zt3gcShi1pb9JohCfXNAjPqdyqVrwTWOh/RTGEgRCZ3NqMtPQu3pUQ=
+	t=1784670954; cv=none; b=ktH47CkuGiJLnUKKeGv3s2pCv60d3Zhc8fz1Bi605sJOt+Xz5pFYKh0/NkdEmVM4PDV+gvBeqbidAlb7UO90jd/Do+yxsdRToarL3Ddib7riNlaEQ7l3POJlOmD9pqguFafGg4eEb6WO3Ba3RWr3bN62SAyAiON3NlFgnfTDogY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670951; c=relaxed/simple;
-	bh=4MnpRYRrlq8rE3jbTsDrrnVuJ50pDXzMDZG3eDDafhM=;
+	s=arc-20240116; t=1784670954; c=relaxed/simple;
+	bh=zeItRSjvZRoDgwgMiiQjSsHfkuh71HIqIFRnenRD5Go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VoHFJFNBspb61TZ030mu8oC8EgYxSXvnZR9oOKdMnE0HHhT1h6Zl8kF7YrODKHWy1b7VZ0mxQ97qklJEzDjh/uhgiqaknxH3jQLdhrkYPUnNQtZb7bnAIYpaYflK1mRw7veEuHUJEQTGMexMRVeIRZeo6+HP27awbBjfQQ4g088=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nn3ORP0B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tfjhDqw7eS7P0MdTsqzEJbkOsAIcMogBsiqbXFwBKX+2j4xLS7v538t+Ad/zDTo5yWdLzrgbrhKzGBjSWZs8ayasvAXy1HvejqhxWIBl74Au5qLHFXOI9PnL/gqwLzQV7WeQB6fI83wZI9OiNLSb8NQISb5w8927pbK4aVFyyjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXRY+ZGC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nn3ORP0B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5A61F000E9;
-	Tue, 21 Jul 2026 21:55:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXRY+ZGC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61811F00A3A;
+	Tue, 21 Jul 2026 21:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670950;
-	bh=k59lns3XR1JSHesT8zT/nQbuKENJP7D2Fu39kwjvTrU=;
+	s=korg; t=1784670953;
+	bh=wp0j1WB/DiYR77OcrOmgJNK4yQoKzrJ7zVFZjMm0OK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nn3ORP0B4BD8rJT2eygY+y25gSQOwCzPVSu1OeQFfDgrv60X3taW+k791cbq1+qi3
-	 Pj1qiSSNkoXQfd5DsD17pBFa/KNOa1cBdUpATE2aD/DA8pNGmRiM5EkrZ2Q/L6ccHt
-	 DOc7nJv0kf28GigR3oIGM2+fzQw38fUWx/uyTRP4=
+	b=bXRY+ZGCWkiB7Ra6mKKzdi3i4AbRHM72WMJ6gnM0YSm95f6TV0lt4CcJhtJxb2p2K
+	 dWMuTWHJmWHJyR60E+YeH5OIcuG06C1E0NahTHMuI8zUOfzWzk4r0Zk63IFhPFoWcI
+	 nIeo2GmkA8WCs1SsfSXgHBbd2teh1Z4QxfW/0v7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 035/843] i2c: core: fix irq domain leak on adapter registration failure
-Date: Tue, 21 Jul 2026 17:14:30 +0200
-Message-ID: <20260721152406.761646889@linuxfoundation.org>
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 5.15 062/843] iio: light: tsl2591: return actual error from probe IRQ failure
+Date: Tue, 21 Jul 2026 17:14:57 +0200
+Message-ID: <20260721152407.383415496@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,47 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-[ Upstream commit 8ce19524e4cc2462685f596a6402fbd8fb984ab2 ]
+commit a00ffd15674bfaf8b906503c1600e3d8709af56c upstream.
 
-Make sure to tear down the host notify irq domain on adapter
-registration failure to avoid leaking it.
+When devm_request_threaded_irq() fails, probe logs the error and
+then returns -EINVAL, dropping the real error code and breaking the
+deferred-probe flow for -EPROBE_DEFER.
 
-This issue was flagged by Sashiko when reviewing another adapter
-registration fix.
+Return ret directly; the IRQ subsystem already prints on failure.
 
-Fixes: 4d5538f5882a ("i2c: use an IRQ to report Host Notify events, not alert")
-Cc: stable@vger.kernel.org	# 4.10
-Cc: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Stable-dep-of: ba14d7cf2fe7 ("i2c: core: fix adapter registration race")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2335f0d7c790 ("iio: light: Added AMS tsl2591 driver implementation")
+Cc: stable@vger.kernel.org
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core-base.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iio/light/tsl2591.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -1554,7 +1554,7 @@ static int i2c_register_adapter(struct i
- 	res = device_register(&adap->dev);
- 	if (res) {
- 		pr_err("adapter '%s': can't register device (%d)\n", adap->name, res);
--		goto out_list;
-+		goto err_remove_irq_domain;
- 	}
- 
- 	adap->debugfs = debugfs_create_dir(dev_name(&adap->dev), i2c_debugfs_root);
-@@ -1601,6 +1601,8 @@ out_reg:
- 	init_completion(&adap->dev_released);
- 	device_unregister(&adap->dev);
- 	wait_for_completion(&adap->dev_released);
-+err_remove_irq_domain:
-+	i2c_host_notify_irq_teardown(adap);
- out_list:
- 	mutex_lock(&core_lock);
- 	idr_remove(&i2c_adapter_idr, adap->nr);
+--- a/drivers/iio/light/tsl2591.c
++++ b/drivers/iio/light/tsl2591.c
+@@ -1141,10 +1141,8 @@ static int tsl2591_probe(struct i2c_clie
+ 						NULL, tsl2591_event_handler,
+ 						IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
+ 						"tsl2591_irq", indio_dev);
+-		if (ret) {
+-			dev_err_probe(&client->dev, ret, "IRQ request error\n");
+-			return -EINVAL;
+-		}
++		if (ret)
++			return ret;
+ 		indio_dev->info = &tsl2591_info;
+ 	} else {
+ 		indio_dev->info = &tsl2591_info_no_irq;
 
 
