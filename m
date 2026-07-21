@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04AA415F0E;
-	Tue, 21 Jul 2026 19:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9325B388890;
+	Tue, 21 Jul 2026 19:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662356; cv=none; b=qxiOQg+NaGNDhpJ7bHyZUiYCZBEyG04H82xhk+me0cwsiVxnKk3ync52R0x7E/pF5AK3NLKOIHbJ8lqZrGN5seEM8eoP4SuFWT1gCnpSboFsYLeFMTd5TdiQqpEAyeVMJLgiMg91xeZOx6aGAQ8h/NJlrdeUxjVv99e8tlfSz40=
+	t=1784662358; cv=none; b=pZwK0yWBNRcONoR9FKhY6m5Lurvz1tTc319+ru47sFqMnycDVjTMaGQJst4W8ZcVgeD5byoyQf9dAw4L+zTjDCXX7A80TtxXXBokKKsnRRQUzwLz/vtIX868m36C1yVB1Ca9RaFKZM19NeYYKS9Oev2QCFtzwVzQXC0ZDzDquwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662356; c=relaxed/simple;
-	bh=c2+qd1JvZzy+cRm6Bvg9rx6suffqKwCumnC4g6vNPAY=;
+	s=arc-20240116; t=1784662358; c=relaxed/simple;
+	bh=suSSWUyDUJbuYjwXMa4omYUnDz93B+nci8CgDvXb60c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ILBYug06R45PABPS/WQpiXk0utEpyAIlGzdHOomoSSgu0T+zuLo5vG1Ls9weg44sPxQYPMYI0KelCvElWnDcsUzUdvors9VCEyIEF8efEr4aGSy1TYrk8XYgr4bJ4/aQCdNV9lcUk2LCf6zwBhz+rKkpE3iTxOv9eRgy/jrrdvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4JUrgGD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qr8kyzClQg/ccpar5ojL4ICaT1CPlsieHK9TOm7fG5PHlXIH6HKBo0+Zj4/Sget7+tYBR7PpPq+vMLRu7CRjD6DL2wcit7LsYiqaXRqQUno021rMPa6gDY9dZRBwDGZNXzShiowf+GO2b/4bz7bAfhHXer5ZafKyd53Rg/b1F8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UpVTj1fN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4JUrgGD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D2181F00ADB;
-	Tue, 21 Jul 2026 19:32:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UpVTj1fN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC2D1F000E9;
+	Tue, 21 Jul 2026 19:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662354;
-	bh=yeT6vI2aIE0IlKJicNlLPSm/7BJFpFazMFkMACRGw38=;
+	s=korg; t=1784662357;
+	bh=l742RGA8U0J5NWW6N/ZLL8oz/pgGGRShm+gzGxtqcwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h4JUrgGDyWtjhF24Wy+Kanw0anBmDnahrhEk6og9nWl7gb9ux5VedPFsAHUCEb9+K
-	 N3+AlZ9pZDYt5IBtQkED0gQtUdkVdJvVSGzgA1opRwfiPhDuQZmEET4SESFiS4vVEP
-	 I3x4lpsCvPec6OfpNxeSzBowQ+rGWMGuZ1HPt6XU=
+	b=UpVTj1fNUTvalRZCJ4FfJ9rz3lxZg3nsBh8qQHaQ7jmJttmoyFRhtSBEo1n/yhIZE
+	 ACN2tHMh+MARY7sSVh9cDCxAzsoFraYZByeLe0u8L1IExYK0A/V1yusF7KZPf1gb4f
+	 xfA+mJW4xQc/YRZrSuTqwuwmYQKVNBCFbWs4M4Aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	Nam Cao <namcao@linutronix.de>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Francesco Lauritano <francesco.lauritano1@protonmail.com>,
+	Marco Scardovi <mscardovi95@gmail.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0411/1276] eventpoll: Fix epoll_wait() report false negative
-Date: Tue, 21 Jul 2026 17:14:14 +0200
-Message-ID: <20260721152455.293252569@linuxfoundation.org>
+Subject: [PATCH 6.12 0412/1276] gpiolib: acpi: Only trigger ActiveBoth interrupts on boot
+Date: Tue, 21 Jul 2026 17:14:15 +0200
+Message-ID: <20260721152455.315616173@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,139 +56,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 0c4aefe3c2d0f272a2ad73699a12d4446ffdbe7b ]
+[ Upstream commit 3bb62e3f99a557d257e5f5a803200051b7de3afa ]
 
-ep_events_available() checks for available events by looking at
-ep->rdllist and ep_is_scanning(). However, this is done without a lock
-and can report false negative if ep_start_scan() or ep_done_scan() are
-executed by another task concurrently. For example:
-_________________________________________________________________________
-                                   |ep_start_scan()
-                                   |  list_splice_init(&ep->rdllist, ...)
-ep_events_available()              |
-  !list_empty_careful(&ep->rdllist)|
-  || ep_is_scanning(ep)            |
-	                           |  ep_enter_scan(ep)
-___________________________________|_____________________________________
+Commit ca876c7483b6 ("gpiolib-acpi: make sure we trigger edge events at
+least once on boot") introduced logic to trigger edge-based GPIO
+interrupts during initialization to ensure proper initial state setup
+when firmware doesn't initialize it.
 
-Another example:
-_________________________________________________________________________
-ep_events_available()              |
-                                   |ep_start_scan()
-                                   |  list_splice_init(&ep->rdllist, ...)
-	                           |  ep_enter_scan(ep)
-  !list_empty_careful(&ep->rdllist)|
-                                   |ep_done_scan()
-                                   |  ep_exit_scan(ep)
-                                   |  list_splice(..., &ep->rdllist)
-  || ep_is_scanning(ep)            |
-___________________________________|_____________________________________
+However, according to the Microsoft GPIO documentation, triggering GPIO
+interrupts during initialization should only happen for interrupts
+marked as ActiveBoth (both IRQF_TRIGGER_RISING and IRQF_TRIGGER_FALLING)
+and only when the associated GPIO line is already asserted (logic level
+low).
 
-In the above examples, ep_events_available() sees no event despite
-events being available. In case epoll_wait() is called with timeout=0,
-epoll_wait() will wrongly return "no event" to user.
+The current implementation incorrectly triggers:
+1. Any edge-triggered interrupt (RISING-only or FALLING-only)
+2. RISING interrupts when value is high and FALLING when value is low
 
-Introduce a sequence lock to resolve this issue.
+This causes problems at bootup for single-edge interrupts that
+don't follow the ActiveBoth pattern.
 
-Measuring the time consumption of 10 million loop iterations doing
-epoll_wait(), the following performance drop is observed:
+Fix this by:
+- Only triggering when BOTH rising and falling edges are configured
+- Only triggering when the GPIO line is asserted (value == 0)
 
-   timeout  #event  before    after    diff
-     0ms      0     3727ms   3974ms   +6.6%
-     0ms      1     8099ms   9134ms    +13%
-     1ms      1    13525ms  13586ms  +0.45%
-
-Considering the use case of epoll_wait() (wait for events, do something
-with the events, repeat), it should only contribute to a small portion of
-user's CPU consumption. Therefore this performance drop is not alarming.
-
-Fixes: c5a282e9635e ("fs/epoll: reduce the scope of wq lock in epoll_wait()")
-Suggested-by: Mateusz Guzik <mjguzik@gmail.com>
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Link: https://patch.msgid.link/4363cd8e34a21d4f0d257be1b33e84dc25030fdf.1780422138.git.namcao@linutronix.de
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Reported-by: Francesco Lauritano <francesco.lauritano1@protonmail.com>
+Closes: https://lore.kernel.org/all/6iFCwGH2vssb7NRUTWGpkubGMNbgIlBHSz40z8ZsezjxngXpoiiRiJaijviNvhiDAGIr43bfUmdxLmxYoHDjyft4DgwFc3Pnu5hzPguTa0s=@protonmail.com/
+Tested-by: Marco Scardovi <mscardovi95@gmail.com>
+Fixes: ca876c7483b69 ("gpiolib-acpi: make sure we trigger edge events at least once on boot")
+Link: https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/general-purpose-i-o--gpio-
+Suggested-by: Armin Wolf <W_Armin@gmx.de>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ drivers/gpio/gpiolib-acpi-core.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index 855dd357edd0ee..5a19edda2b7777 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -38,6 +38,7 @@
- #include <linux/compat.h>
- #include <linux/rculist.h>
- #include <linux/capability.h>
-+#include <linux/seqlock.h>
- #include <net/busy_poll.h>
+diff --git a/drivers/gpio/gpiolib-acpi-core.c b/drivers/gpio/gpiolib-acpi-core.c
+index f6bec9d2fd2654..895b891f825dd9 100644
+--- a/drivers/gpio/gpiolib-acpi-core.c
++++ b/drivers/gpio/gpiolib-acpi-core.c
+@@ -233,12 +233,23 @@ static void acpi_gpiochip_request_irq(struct acpi_gpio_chip *acpi_gpio,
  
- /*
-@@ -324,6 +325,9 @@ struct eventpoll {
- 	/* Lock which protects rdllist and ovflist */
- 	spinlock_t lock;
+ 	event->irq_requested = true;
  
-+	/* Protect switching between rdllist and ovflist */
-+	seqcount_spinlock_t seq;
-+
- 	/* RB tree root used to store monitored fd structs */
- 	struct rb_root_cached rbr;
- 
-@@ -556,7 +560,10 @@ static inline void epi_clear_ovflist(struct epitem *epi)
-  */
- static inline int ep_events_available(struct eventpoll *ep)
- {
--	return !list_empty_careful(&ep->rdllist) || ep_is_scanning(ep);
-+	unsigned int seq = read_seqcount_begin(&ep->seq);
-+
-+	return !list_empty_careful(&ep->rdllist) || ep_is_scanning(ep) ||
-+		read_seqcount_retry(&ep->seq, seq);
- }
- 
- #ifdef CONFIG_NET_RX_BUSY_POLL
-@@ -880,8 +887,12 @@ static void ep_start_scan(struct eventpoll *ep, struct list_head *scan_batch)
- 	 */
- 	lockdep_assert_irqs_enabled();
- 	spin_lock_irq(&ep->lock);
-+	write_seqcount_begin(&ep->seq);
-+
- 	list_splice_init(&ep->rdllist, scan_batch);
- 	ep_enter_scan(ep);
-+
-+	write_seqcount_end(&ep->seq);
- 	spin_unlock_irq(&ep->lock);
- }
- 
-@@ -912,6 +923,9 @@ static void ep_done_scan(struct eventpoll *ep,
- 			ep_pm_stay_awake(epi);
- 		}
+-	/* Make sure we trigger the initial state of edge-triggered IRQs */
++	/*
++	 * Make sure we trigger the initial state of ActiveBoth IRQs.
++	 *
++	 * According to the Microsoft GPIO documentation, triggering GPIO
++	 * interrupts marked as ActiveBoth during initialization is correct
++	 * as long as the associated GPIO line is already "asserted"
++	 * (logic level low). We should not trigger edge-based GPIO
++	 * interrupts not marked as ActiveBoth.
++	 *
++	 * See: https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/general-purpose-i-o--gpio-
++	 * Section: "GPIO controllers and ActiveBoth interrupts"
++	 */
+ 	if (acpi_gpio_need_run_edge_events_on_boot() &&
+-	    (event->irqflags & (IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING))) {
++	    ((event->irqflags & (IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING)) ==
++	     (IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING))) {
+ 		value = gpiod_get_raw_value_cansleep(event->desc);
+-		if (((event->irqflags & IRQF_TRIGGER_RISING) && value == 1) ||
+-		    ((event->irqflags & IRQF_TRIGGER_FALLING) && value == 0))
++		if (value == 0)
+ 			event->handler(event->irq, event);
  	}
-+
-+	write_seqcount_begin(&ep->seq);
-+
- 	/* Back out of scan mode; callbacks target ep->rdllist again. */
- 	ep_exit_scan(ep);
- 
-@@ -919,6 +933,9 @@ static void ep_done_scan(struct eventpoll *ep,
- 	 * Quickly re-inject items left on "scan_batch".
- 	 */
- 	list_splice(scan_batch, &ep->rdllist);
-+
-+	write_seqcount_end(&ep->seq);
-+
- 	__pm_relax(ep->ws);
- 
- 	if (!list_empty(&ep->rdllist)) {
-@@ -1302,6 +1319,7 @@ static int ep_alloc(struct eventpoll **pep)
- 
- 	mutex_init(&ep->mtx);
- 	spin_lock_init(&ep->lock);
-+	seqcount_spinlock_init(&ep->seq, &ep->lock);
- 	init_waitqueue_head(&ep->wq);
- 	init_waitqueue_head(&ep->poll_wait);
- 	INIT_LIST_HEAD(&ep->rdllist);
+ }
 -- 
 2.53.0
 
