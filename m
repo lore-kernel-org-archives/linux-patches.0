@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B51D3B1ECC;
-	Tue, 21 Jul 2026 20:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077A32EBB8D;
+	Tue, 21 Jul 2026 20:39:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666357; cv=none; b=Wb/3Sw5lm+VWC+17IDE5QVGiZG6cYRz2vWWTglsazqReGXgx/Y39Maku4vub04+h6g8XWEMqNr+QnYGcOhQvG0CC0jLd4V2caxoDZf/7gOlqmOelNe0Zd378d1Yo+v8i9hvym34Wv88ywm9RORSRlXqRO5a1N98kkjrGHwruByc=
+	t=1784666360; cv=none; b=ACGuQVj2YllWnPg6Zo9IpLVRqYe35ImuEDgSB+mSTNeqDJC07D//jYV6pEFIXtWICmcyisk2PDKrNc9cKq/JbrD5R+zBmCZ+ehMd3pFes65QaJApivV2R9OyxvKeabrKonN1Cn/N1HYe6GKsReI9Bgov1cniaXeekRLsY0J1bII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666357; c=relaxed/simple;
-	bh=TljcrmXFdAIwS3peTiLeCze2SQhEWG7Ce+lA8vq7+/c=;
+	s=arc-20240116; t=1784666360; c=relaxed/simple;
+	bh=p54g1JphZsU1ebf+4Mfh9gMJmp80Crwhxl4BX/dPbK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pxgfzVMN7b6i1wLkmPAJ73eH0boavlfUpBLPaP2hmTQMhEaGjNHth8KdNAhvvksnFsZFUchVcI27+zn1WS/BEIGhyVMb40dOyWgVjYdIpA8JmoWMMQjMOqeXj/LZZa/WJni7EVDegkhhoahBlCgWjNCrKjBP1gGqoAVmW8cJfXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xlyev01t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JiiJzn0CFCB/T3gXniWZtr3rwGT/DwfZZw4Jc1H3JwdzDGUHudDaK1hcClWayZEh93ZFNTwBrL7tjfN8DnYBnjPl+9GYmIKl5/ingz764YVhm7lXGNh+x+Tv0USi6a6PX+DVgtvpNkf0yImNiX02spuv4MFhdQgZU4F1KHxedzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWhs/Wcp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xlyev01t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CB11F000E9;
-	Tue, 21 Jul 2026 20:39:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWhs/Wcp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C46A1F000E9;
+	Tue, 21 Jul 2026 20:39:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666356;
-	bh=Uf4y2zmMCkdZpJwkHGdtfqryRXISEw8Ngu4T4Uwivr4=;
+	s=korg; t=1784666358;
+	bh=OV89tzN2ccgNw3f3wPExmGsKa5gRv5oeklaBqad3lD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xlyev01tbnlC6ntFGhnNs3Fgg2mW6TsvXkZ9/0PQyvHD1Lm2C92T5wsVCEoPDyjcA
-	 Rwk03uVn72a1Z49gjp2GPmd4xPFbWnbAdMdpwap/Z/eeByb8sbu6NLUAGOdVH9Q/Bj
-	 7fSHQQQvm157LRIxw7kEhnCY1l5iIExRAZvSp88k=
+	b=WWhs/WcpOAu+Svicps1wpopLOxR/Xrieor0+Ng3i1QKtxh+TaQBgihla5iPP3CNif
+	 l0xjaSQcrnek6YqygEbFuGEBnt3Sa9UlZGfvOXvNeYvgow2yTGUDpMJOd24yuAKpzV
+	 VUGwjIAuCvG+K2PCg7+AjpcV6pTF2toQdf3HQntE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0653/1266] xprtrdma: Post receive buffers after RPC completion
-Date: Tue, 21 Jul 2026 17:18:10 +0200
-Message-ID: <20260721152456.468206860@linuxfoundation.org>
+Subject: [PATCH 6.6 0654/1266] xprtrdma: Use sendctx DMA state for Send signaling
+Date: Tue, 21 Jul 2026 17:18:11 +0200
+Message-ID: <20260721152456.491325027@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,65 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 704f3f640f72db4d44ec5ce3db8d4e150c974bc7 ]
+[ Upstream commit 2797ae7c929610fb2d2303a996a08173fa096730 ]
 
-rpcrdma_post_recvs() runs in CQ poll context and its cost
-falls on the latency-critical path between polling a Receive
-completion and waking the RPC consumer. Every cycle spent
-refilling the Receive Queue delays delivery of the reply to
-the NFS layer.
+Send signaling matters only when the prepared Send has page
+mappings to unmap. Today that test is expressed indirectly with
+rl_kref, because the Send-side reference is taken only for Sends
+with mapped SGEs.
 
-Move the rpcrdma_post_recvs() call in rpcrdma_reply_handler()
-to after the RPC has been decoded and completed. The larger
-batch size from the preceding patch provides sufficient
-Receive Queue headroom to absorb the brief delay before
-buffers are replenished.
+Split the SGE DMA unmap loop into its own helper and use
+sc_unmap_count directly for the signaling decision. This keeps the
+current behavior but removes one dependency on the old rl_kref
+semantics before the request lifetime rules are changed.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Stable-dep-of: e786233d2e0b ("xprtrdma: Decouple req recycling from RPC completion")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/rpc_rdma.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ net/sunrpc/xprtrdma/frwr_ops.c |  2 +-
+ net/sunrpc/xprtrdma/rpc_rdma.c | 22 +++++++++++++---------
+ 2 files changed, 14 insertions(+), 10 deletions(-)
 
+diff --git a/net/sunrpc/xprtrdma/frwr_ops.c b/net/sunrpc/xprtrdma/frwr_ops.c
+index 47f33bb7bff814..a0d49580dcb871 100644
+--- a/net/sunrpc/xprtrdma/frwr_ops.c
++++ b/net/sunrpc/xprtrdma/frwr_ops.c
+@@ -404,7 +404,7 @@ int frwr_send(struct rpcrdma_xprt *r_xprt, struct rpcrdma_req *req)
+ 		++num_wrs;
+ 	}
+ 
+-	if ((kref_read(&req->rl_kref) > 1) || num_wrs > ep->re_send_count) {
++	if (req->rl_sendctx->sc_unmap_count || num_wrs > ep->re_send_count) {
+ 		send_wr->send_flags |= IB_SEND_SIGNALED;
+ 		ep->re_send_count = min_t(unsigned int, ep->re_send_batch,
+ 					  num_wrs - ep->re_send_count);
 diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
-index 1478c41c7e9da7..6e7bd1b47d7c7c 100644
+index 6e7bd1b47d7c7c..e6679adbedae51 100644
 --- a/net/sunrpc/xprtrdma/rpc_rdma.c
 +++ b/net/sunrpc/xprtrdma/rpc_rdma.c
-@@ -1471,7 +1471,6 @@ void rpcrdma_reply_handler(struct rpcrdma_rep *rep)
- 		credits = 1;	/* don't deadlock */
- 	else if (credits > r_xprt->rx_ep->re_max_requests)
- 		credits = r_xprt->rx_ep->re_max_requests;
--	rpcrdma_post_recvs(r_xprt, credits + (buf->rb_bc_srv_max_requests << 1));
- 	if (buf->rb_credits != credits)
- 		rpcrdma_update_cwnd(r_xprt, credits);
+@@ -526,19 +526,11 @@ static void rpcrdma_sendctx_done(struct kref *kref)
+ 	rep->rr_rxprt->rx_stats.reply_waits_for_send++;
+ }
  
-@@ -1490,15 +1489,20 @@ void rpcrdma_reply_handler(struct rpcrdma_rep *rep)
- 		/* LocalInv completion will complete the RPC */
- 	else
- 		kref_put(&req->rl_kref, rpcrdma_reply_done);
--	return;
+-/**
+- * rpcrdma_sendctx_unmap - DMA-unmap Send buffer
+- * @sc: sendctx containing SGEs to unmap
+- *
+- */
+-void rpcrdma_sendctx_unmap(struct rpcrdma_sendctx *sc)
++static void rpcrdma_sendctx_dma_unmap(struct rpcrdma_sendctx *sc)
+ {
+ 	struct rpcrdma_regbuf *rb = sc->sc_req->rl_sendbuf;
+ 	struct ib_sge *sge;
  
--out_badversion:
--	trace_xprtrdma_reply_vers_err(rep);
--	goto out;
-+out_post:
-+	rpcrdma_post_recvs(r_xprt,
-+			   credits + (buf->rb_bc_srv_max_requests << 1));
-+	return;
- 
- out_norqst:
- 	spin_unlock(&xprt->queue_lock);
- 	trace_xprtrdma_reply_rqst_err(rep);
-+	rpcrdma_rep_put(buf, rep);
-+	goto out_post;
+-	if (!sc->sc_unmap_count)
+-		return;
+-
+ 	/* The first two SGEs contain the transport header and
+ 	 * the inline buffer. These are always left mapped so
+ 	 * they can be cheaply re-used.
+@@ -547,7 +539,19 @@ void rpcrdma_sendctx_unmap(struct rpcrdma_sendctx *sc)
+ 	     ++sge, --sc->sc_unmap_count)
+ 		ib_dma_unmap_page(rdmab_device(rb), sge->addr, sge->length,
+ 				  DMA_TO_DEVICE);
++}
 +
-+out_badversion:
-+	trace_xprtrdma_reply_vers_err(rep);
- 	goto out;
++/**
++ * rpcrdma_sendctx_unmap - DMA-unmap Send buffer
++ * @sc: sendctx containing SGEs to unmap
++ *
++ */
++void rpcrdma_sendctx_unmap(struct rpcrdma_sendctx *sc)
++{
++	if (!sc->sc_unmap_count)
++		return;
  
- out_shortreply:
++	rpcrdma_sendctx_dma_unmap(sc);
+ 	kref_put(&sc->sc_req->rl_kref, rpcrdma_sendctx_done);
+ }
+ 
 -- 
 2.53.0
 
