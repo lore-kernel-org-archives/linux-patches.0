@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E809D415F10;
-	Tue, 21 Jul 2026 21:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C3740097F;
+	Tue, 21 Jul 2026 21:06:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667971; cv=none; b=QaOvbuPaBiDqiuDkziIM9SMCD2yb8fuyoXcijERcO/RXrWOgpMB030Qyo21Ww0qCbf2RHqN4INqy3jlMeXD7TfTUVNeV0tc09Gm+jfKPkRY1g7uYp1nphUI0xPUWjQtmWvqU1WbyICp0uoL5dz7OuShC5i9wPqhYqMa5VSnmSpg=
+	t=1784667974; cv=none; b=aemd/YuDizkT5KbbRlJRVoE51lW217mnoGiJJAj9FOuFx1A4aukX2Mdu6Xt2wuoheVIojptj4hJUF+W+aHGQVQJifU29ew53nsLOEUw1CBMt6ctUwtQZpST1BpPsJDuymkx5strUeehDwZSq0slFpKKy/n9dJxX4Pzn0syc8qpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667971; c=relaxed/simple;
-	bh=JGccPRH+P6+j9nckwgJMVneh1iAarSJec2xK3sFR+0w=;
+	s=arc-20240116; t=1784667974; c=relaxed/simple;
+	bh=wDc+s4XxAKg0UB4EPvpcQTZYAG9Qpfu8XErjGAUdpx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gyvGOSpVIDc82al5bgvhtFfZvdgq4Bhzvgip/DID4nfqH7l/8+yGSar/f+yN59t02yAXhcL6tmXyJSAg55EBgtOZrOKazMdLBXr8lEuL9coLgA5WgtxfDBCjg0o4g+Ah5FycZrA4/3RbGj4vopwNDUQqUe/2OBvWMSIOx90ALQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9iJXTDV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tLF5RG2GxF0BMz61fUzdjbITCsU7uG1SnALtIhkOKOditO9MpBSQiYyOXnkFYHXhQKUv1QtEkvoQ21KFzp6NHwVePqsp8p79byeae6NMzLE4c0BVUsfy9OdPJrCY4ur5M6tCK1H9SWEwMm2wXNBEs+4yK2M3jMK954I9AoUm3Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jki+MGfs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9iJXTDV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A26F1F000E9;
-	Tue, 21 Jul 2026 21:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jki+MGfs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 140291F000E9;
+	Tue, 21 Jul 2026 21:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667969;
-	bh=2x4EDL6HQDm1uXajTu4uUfcf6C64srF+G1QrXjQj2NM=;
+	s=korg; t=1784667972;
+	bh=tdT+ve2HxB9+PUHfNTFZIyNk8hR3YsWMkqfWrYEcR58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K9iJXTDVKg7alDIjRaJolXbuNCuiflv5qhV2Zk28GvUQOjLybRDgpZyH2a3HOV1U/
-	 yJTdUOQIPRzUgIQC95RxnqGCzF25z7c+lpdef2O1DYcLbvWNjD+HLXYzGKD9w9WOLr
-	 d6LDzqXCffWbMTcoFn1LgxOECB2+bdgZbAqhF61A=
+	b=Jki+MGfslfwGq08jbV1ATO9G45oR1tosZ6hyDVf57cvqgwl+v66H1SDTIMrMgq+rN
+	 VswXfUaMwgV1aDD/SeGKFrpcyCeWjUEYhFqwOrgHUk9hmcX84jjKC9ROifgwCvbIAF
+	 CU54ax5Gy5IfA47fjxNaARTIc24ps34m/M9KHtyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Tejun Heo <tj@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.6 1262/1266] writeback: drop now-unnecessary rcu_barrier() in cgroup_writeback_umount()
-Date: Tue, 21 Jul 2026 17:28:19 +0200
-Message-ID: <20260721152510.064293303@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	Easwar Hariharan <eahariha@linux.microsoft.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 1263/1266] jiffies: Define secs_to_jiffies()
+Date: Tue, 21 Jul 2026 17:28:20 +0200
+Message-ID: <20260721152510.087062826@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,42 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Easwar Hariharan <eahariha@linux.microsoft.com>
 
-commit e90a6d668e26e00a72df2d09c173b563468f09c9 upstream.
+commit b35108a51cf7bab58d7eace1267d7965978bcdb8 upstream.
 
-Commit e1b849cfa6b6 ("writeback: Avoid contention on wb->list_lock when
-switching inodes") replaced the queue_rcu_work() based scheduling of
-inode wb switches with a plain queue_work().  Since then no switcher
-goes through call_rcu(), so rcu_barrier() in cgroup_writeback_umount()
-has no callbacks of its own to wait for.  It still drains unrelated
-call_rcu() callbacks from other subsystems on busy systems, which
-incidentally slows umount down; drop it.
+secs_to_jiffies() is defined in hci_event.c and cannot be reused by
+other call sites. Hoist it into the core code to allow conversion of the
+~1150 usages of msecs_to_jiffies() that either:
 
-Fixes: e1b849cfa6b6 ("writeback: Avoid contention on wb->list_lock when switching inodes")
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Link: https://patch.msgid.link/20260521095016.2791354-3-libaokun@linux.alibaba.com
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+ - use a multiplier value of 1000 or equivalently MSEC_PER_SEC, or
+ - have timeouts that are denominated in seconds (i.e. end in 000)
+
+It's implemented as a macro to allow usage in static initializers.
+
+This will also allow conversion of yet more sites that use (sec * HZ)
+directly, and improve their readability.
+
+Suggested-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://lore.kernel.org/all/20241030-open-coded-timeouts-v3-1-9ba123facf88@linux.microsoft.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fs-writeback.c |    5 -----
- 1 file changed, 5 deletions(-)
+ include/linux/jiffies.h   |   13 +++++++++++++
+ net/bluetooth/hci_event.c |    2 --
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -1191,11 +1191,6 @@ void cgroup_writeback_umount(void)
- 		 * will then drain it.
- 		 */
- 		synchronize_rcu();
--		/*
--		 * Use rcu_barrier() to wait for all pending callbacks to
--		 * ensure that all in-flight wb switches are in the workqueue.
--		 */
--		rcu_barrier();
- 		flush_workqueue(isw_wq);
+--- a/include/linux/jiffies.h
++++ b/include/linux/jiffies.h
+@@ -523,6 +523,19 @@ static __always_inline unsigned long mse
  	}
  }
+ 
++/**
++ * secs_to_jiffies: - convert seconds to jiffies
++ * @_secs: time in seconds
++ *
++ * Conversion is done by simple multiplication with HZ
++ *
++ * secs_to_jiffies() is defined as a macro rather than a static inline
++ * function so it can be used in static initializers.
++ *
++ * Return: jiffies value
++ */
++#define secs_to_jiffies(_secs) ((_secs) * HZ)
++
+ extern unsigned long __usecs_to_jiffies(const unsigned int u);
+ #if !(USEC_PER_SEC % HZ)
+ static inline unsigned long _usecs_to_jiffies(const unsigned int u)
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -43,8 +43,6 @@
+ #define ZERO_KEY "\x00\x00\x00\x00\x00\x00\x00\x00" \
+ 		 "\x00\x00\x00\x00\x00\x00\x00\x00"
+ 
+-#define secs_to_jiffies(_secs) msecs_to_jiffies((_secs) * 1000)
+-
+ /* Handle HCI Event packets */
+ 
+ static void *hci_ev_skb_pull(struct hci_dev *hdev, struct sk_buff *skb,
 
 
