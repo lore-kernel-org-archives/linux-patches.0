@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53F63BE156;
-	Tue, 21 Jul 2026 21:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3492D3749F0;
+	Tue, 21 Jul 2026 21:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668500; cv=none; b=YIBv1I1UNr2COuy+ILlYbZn8HA3gvgU95lOb8o9bChfhOgq9E+hlT6gr8oEu8JWS0hhemJ07nhH/fbw1KBWfqLf3SpjR1YYgDTw3PP993mKQDpGKQ76Rc3TJFe/ZTOyLtgaRnfeBg9rPtgNCVEF3URgxdKjysspAdNNXcmZ4zaQ=
+	t=1784668503; cv=none; b=QcSE9IcZ4IQ4fpgqA+efO71T/M4KTfvglMqmGxWAz5dKUyhJij4uygSb19QL0I4vgT+HWC1Zq8ft8StOFiC5bAYKO6M8t1cmdphIbI0g3OW2hiS0504JCAPIStTCsxVJ+94T1JmY5YMVYBJarWl9oVEwjtlhsEEVz3DZFHPk9J0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668500; c=relaxed/simple;
-	bh=QuKj8NFQmSblLYc12KdrOjHGOKLwlgfwzpwuwI3M5EY=;
+	s=arc-20240116; t=1784668503; c=relaxed/simple;
+	bh=AayL3sgsH/iXt/k0Hu8xWuRYhfppIIgFDT6KxZ5AjRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DQriGPascpLYD984yYRjWTvBkoB9fHhpXaKSNHCDV8Rie9FTeWQqMrmS3Fndi/X6Wh//taj8Mse63gpOXGzshWx4HeJS0yqYfiB+A5R4GjvJ7/b3vz64B0EsRwSxqT94GRRqKXcV+6Pa6SEIXlGicWbCnjKjv/4RXMy7dGBxPL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxOyhdvf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lLoaKUeLYyUEXL97na2S414FR7EL/hXZ5V3RG+mycWLbbW1dYLKMwmGQl/Q6uc0Z2YKpnaCnrTp0gzb4W8rWn+ygxM7hgXuvq5sv/g7w+BNxehNvfqTZhuXC+MmmJz296G2Fbnnx7tTna6P2w2FT4QUiD9cJXz6OvFNKuVVa5/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jc3yanWh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxOyhdvf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17EAE1F000E9;
-	Tue, 21 Jul 2026 21:14:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jc3yanWh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A5D1F000E9;
+	Tue, 21 Jul 2026 21:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668499;
-	bh=c3vddHi5t5NT8HtyDB/TQtK+MK5kMP+JrRfP2FypDTM=;
+	s=korg; t=1784668502;
+	bh=N16trzPMrBwl934Zp0+QJtPzOM3aWNobYapt3dY7fwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vxOyhdvfb0NEcZSUtkws7yztfuzCC3gFBL/+1b30bYdA36SZExI78BOCdPwMRONgC
-	 lYlTjdysGU+jiaohD2rsTZgbF0Y4K88TPMxeH2+razjXUgoeZotRJejLkjaMpFCk+t
-	 Ywty1X2aq+AN9tkVJLT78Pn7M1QUDh6aFJWyxiCY=
+	b=jc3yanWhg7paUHgsKZaisnTTYmPh15anGszcrfawp1Z49XA+iXuEvevwNu/5U62BD
+	 W093HC4KEvJJAfmYk6nRMUvJxcDJYTDKb08u63RX30vZDnZIPihMlvqoLbsEtD1Z5F
+	 4NCWgDmyqkarTHkPpxBdVCAG157aX1kdgvEVWEvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	RD Babiera <rdbabiera@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.1 0192/1067] usb: typec: tcpm: Validate SVID index in svdm_consume_modes()
-Date: Tue, 21 Jul 2026 17:13:13 +0200
-Message-ID: <20260721152428.889984100@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.1 0201/1067] udf: validate VAT header length against the VAT inode size
+Date: Tue, 21 Jul 2026 17:13:22 +0200
+Message-ID: <20260721152429.089647560@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,57 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Badhri Jagan Sridharan <badhri@google.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 7b681dd5fbf60b24a13c14661e5b7735759fb491 upstream.
+commit d8202786b3d75125c84ebc4de6d946f92fde0ee8 upstream.
 
-In svdm_consume_modes(), the SVID value is read from pmdata->svids using
-pmdata->svid_index as an array index without bounds validation:
+udf_load_vat() takes the virtual partition's start offset straight from
+the on-disk VAT 2.0 header without checking it against the VAT inode
+size:
 
-    paltmode->svid = pmdata->svids[pmdata->svid_index];
+	map->s_type_specific.s_virtual.s_start_offset =
+		le16_to_cpu(vat20->lengthHeader);
+	map->s_type_specific.s_virtual.s_num_entries =
+		(sbi->s_vat_inode->i_size -
+			map->s_type_specific.s_virtual.s_start_offset) >> 2;
 
-If pmdata->svid_index is driven beyond SVID_DISCOVERY_MAX (16), it results
-in an out-of-bounds read of the pmdata->svids array. Because pd_mode_data
-is embedded inside struct tcpm_port, indexing past svids reads into
-adjacent fields. In particular:
-- At index 16, it reads the altmodes count.
-- At index 18 and beyond, it reads into altmode_desc[], which contains
-  partner-supplied SVDM Discovery Modes VDOs.
+lengthHeader is a fully attacker-controlled 16-bit value.  If it exceeds
+the VAT inode size, the s_num_entries subtraction underflows to a huge
+count, which defeats the "block > s_num_entries" bound in
+udf_get_pblock_virt15(); and on the ICB-inline path that function reads
 
-By injecting a chosen SVID into altmode_desc[0].vdo and driving svid_index
-to 20, the partner can force paltmode->svid to be loaded with an arbitrary,
-partner- chosen SVID, which is then registered via
-typec_partner_register_altmode().
+	((__le32 *)(iinfo->i_data + s_start_offset))[block]
 
-Fix this by validating that pmdata->svid_index is non-negative and strictly
-less than pmdata->nsvids before accessing the pmdata->svids array inside
-svdm_consume_modes().
+so a large s_start_offset indexes past the inode's in-ICB data.  Mounting
+a crafted UDF image with a virtual (VAT) partition then triggers an
+out-of-bounds read.
 
-Assisted-by: Antigravity:gemini-3.5-flash
-Fixes: 4ab8c18d4d67 ("usb: typec: Register a device for every mode")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
-Reviewed-by: RD Babiera <rdbabiera@google.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260622220803.305750-1-badhri@google.com
+Reject a VAT whose header length does not leave room for at least one
+entry within the VAT inode.
+
+Fixes: fa5e08156335 ("udf: Handle VAT packed inside inode properly")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260612-b4-disp-9a2317ee-v1-1-fefef5736154@proton.me
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/udf/super.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -1546,6 +1546,11 @@ static void svdm_consume_modes(struct tc
- 		return;
- 	}
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -1233,6 +1233,14 @@ static int udf_load_vat(struct super_blo
  
-+	if (pmdata->svid_index < 0 || pmdata->svid_index >= pmdata->nsvids) {
-+		tcpm_log(port, "Invalid SVID index %d", pmdata->svid_index);
-+		return;
-+	}
-+
- 	for (i = 1; i < cnt; i++) {
- 		paltmode = &pmdata->altmode_desc[pmdata->altmodes];
- 		memset(paltmode, 0, sizeof(*paltmode));
+ 		map->s_type_specific.s_virtual.s_start_offset =
+ 			le16_to_cpu(vat20->lengthHeader);
++		if (map->s_type_specific.s_virtual.s_start_offset
++		    > sbi->s_vat_inode->i_size) {
++			udf_err(sb, "Corrupted VAT header length %u (VAT inode size %lld)\n",
++				map->s_type_specific.s_virtual.s_start_offset,
++				sbi->s_vat_inode->i_size);
++			brelse(bh);
++			return -EFSCORRUPTED;
++		}
+ 		map->s_type_specific.s_virtual.s_num_entries =
+ 			(sbi->s_vat_inode->i_size -
+ 				map->s_type_specific.s_virtual.
 
 
