@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5995326D44;
-	Tue, 21 Jul 2026 17:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8765E326D44;
+	Tue, 21 Jul 2026 17:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655885; cv=none; b=qIC6lFMFrrVVbkkrK5QORKYSK6Vu7taqq7wYlv6CUlHiZvXEjxumaznmLKTW1CPMt1riMx1Z1U6c2OTzcSbZz4nicDRy69rvoAP6Pue+POXzSo21ksRhBsgPCw6i/tHUEMpYHjILchdH+XFD9wzAAzV3xyT8nWc0yN6cwh8DwgI=
+	t=1784655888; cv=none; b=biYvN2DNAc51SKdjCuUaZ0aqz4lXyeLgP0AgkXtSVYdZsVMFRVxybVOUcLIRY6q10qk8FFQMxUhQRDtbAhMD8U8M2ePUWM327CR4pzbYkrw3YMpYuLxTdPO4kFfek3jHv5COPGtgXdrLfEx3S0NmI/j3B+Z3Ledx7WByfKIlk0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655885; c=relaxed/simple;
-	bh=Z90JwjSTbPaVUspszbpPqZ00qtlfKEH5myNbkD9/jXc=;
+	s=arc-20240116; t=1784655888; c=relaxed/simple;
+	bh=6jop+VqChku7KugTXoJa0BpR9CkBjOk/WahufHJAza4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PvqFoDRkx/pN6ANtg2eyvmtyx54nFXZNT2ikVCIJYMnGmxvhk6/B1Oxs3jZ7unZr6wSboGBzJlmtR+JqWul3QGWs6l6XlvAprjPpsevkiKbIEKlUeFTFv8qT6Ql+hsKk7CFXQBANZDdJO96ZPXQS1IyNTBONqWjmRQg302u8o7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zqub8dYt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DdkoItXiMA87PUJV6qk6sRiUUfjb7a1KneTudCUy4RPf5A186dPEHm1QopGLkMlWfMKcVLH8om49aqO18FtnjUMxSyNpGo9WskkXjedNARumCSaOqsGNbg5F+B8B6LzWnrb8MUCy3Va0tBwDRuiNi2CyrRHibKCRrvBDRlUElEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNyXbWQ2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zqub8dYt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270531F000E9;
-	Tue, 21 Jul 2026 17:44:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNyXbWQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06671F000E9;
+	Tue, 21 Jul 2026 17:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655884;
-	bh=ZhBS/SE95xVwoPf10FM6ExTt4n4CPE8SnyILxbGd+sk=;
+	s=korg; t=1784655887;
+	bh=JzLBtI4inPx4ZJsw0MUOXDNE1nG4aP/O9evpO+Kv8fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zqub8dYtFWL97XCGOpclRQvBDRD1EVgMMq/a0mbmJNAtWKm27PNb2GQk1xcwVBkeW
-	 SyFvmbAbKOP9NmvWY6tub97Zs9eQpbtXMSnRcfkjaSBHucxQqk0/ALM8AhpqDj1hJG
-	 DNFMhPWYveIYCWzel/bZ7v9gAEcHG3LZTIfC8QD4=
+	b=gNyXbWQ26vvbHFchCs+BIoSH/caqtqWiyjYCqA1L69n+fCj2QRKCAFgjIlmXlGaxv
+	 cmW7oN53p9xtvjAbyaIVKm43IgBzGlbZzrfOWthOljxA0ZNqEiGcu6I4u9vkcWFlF+
+	 srS1DJmIHrhuub0QP5FvCwFP5hpR2Zr+KxFaZxzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
+	Daniel Palmer <daniel@thingy.jp>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0177/1611] regulator: dt-bindings: mt6359: Drop regulator-name pattern restrictions
-Date: Tue, 21 Jul 2026 17:04:53 +0200
-Message-ID: <20260721152518.892940458@linuxfoundation.org>
+Subject: [PATCH 6.18 0178/1611] tools/nolibc: getopt: Fix potential out of bounds access
+Date: Tue, 21 Jul 2026 17:04:54 +0200
+Message-ID: <20260721152518.918524373@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -46,121 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Daniel Palmer <daniel@thingy.jp>
 
-[ Upstream commit cdc517688ffa2c30a64a20b558a9ecbf046c70f1 ]
+[ Upstream commit 136ca91411b0b637e862eb7b1cce2a56853edd17 ]
 
-The name of the regulator should match what the board design specifies
-for the power rail. There should be no limitations on what the name can
-be, and they definitely don't always follow the PMIC's own names.
+Running clang-tidy on a program that uses getopt() from nolibc
+this warning appears:
 
-Drop the restrictions on regulator-name.
+getopt.h:80:6: warning: Out of bound access to memory after the end of the string literal [clang-analyzer-security.ArrayBound]
+80 |         if (optstring[i] == ':') {
 
-Fixes: 8771456635d5 ("dt-bindings: regulator: Add document for MT6359 regulator")
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://patch.msgid.link/20260514091520.2718987-3-wenst@chromium.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This looks like a very unlikely case that an argument
+inside of argv is being changed between getopt() calls.
+
+Adding a check for d becoming 0 in the guard after the loop
+stops getopt() getting far enough to access beyond the end
+of the array and seems to correct the issue.
+
+Fixes: bae3cd708e8a ("tools/nolibc: add getopt()")
+Assisted-by: Claude:claude-4.6-sonnet # reproducer
+Signed-off-by: Daniel Palmer <daniel@thingy.jp>
+Link: https://patch.msgid.link/20260520111931.1027758-1-daniel@thingy.jp
+[Thomas: clean up commit message a bit]
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/regulator/mt6359-regulator.yaml  | 43 -------------------
- 1 file changed, 43 deletions(-)
+ tools/include/nolibc/getopt.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml b/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml
-index d6b3b5a5c0b346..5e4b1e74179500 100644
---- a/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml
-+++ b/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml
-@@ -18,84 +18,41 @@ patternProperties:
-   "^buck_v(s1|gpu11|modem|pu|core|s2|pa|proc2|proc1|core_sshub)$":
-     type: object
-     $ref: regulator.yaml#
--
--    properties:
--      regulator-name:
--        pattern: "^v(s1|gpu11|modem|pu|core|s2|pa|proc2|proc1|core_sshub)$"
--
-     unevaluatedProperties: false
+diff --git a/tools/include/nolibc/getopt.h b/tools/include/nolibc/getopt.h
+index 217abb95264b28..0329690941876a 100644
+--- a/tools/include/nolibc/getopt.h
++++ b/tools/include/nolibc/getopt.h
+@@ -71,7 +71,7 @@ int getopt(int argc, char * const argv[], const char *optstring)
+ 		d = optstring[i++];
+ 	} while (d && d != c);
  
-   "^ldo_v(ibr|rf12|usb|camio|efuse|xo22)$":
-     type: object
-     $ref: regulator.yaml#
--
--    properties:
--      regulator-name:
--        pattern: "^v(ibr|rf12|usb|camio|efuse|xo22)$"
--
-     unevaluatedProperties: false
- 
-   "^ldo_v(rfck|emc|a12|a09|ufs|bbck)$":
-     type: object
-     $ref: regulator.yaml#
--
--    properties:
--      regulator-name:
--        pattern: "^v(rfck|emc|a12|a09|ufs|bbck)$"
--
-     unevaluatedProperties: false
- 
-   "^ldo_vcn(18|13|33_1_bt|13_1_wifi|33_2_bt|33_2_wifi)$":
-     type: object
-     $ref: regulator.yaml#
--
--    properties:
--      regulator-name:
--        pattern: "^vcn(18|13|33_1_bt|13_1_wifi|33_2_bt|33_2_wifi)$"
--
-     unevaluatedProperties: false
- 
-   "^ldo_vsram_(proc2|others|md|proc1|others_sshub)$":
-     type: object
-     $ref: regulator.yaml#
--
--    properties:
--      regulator-name:
--        pattern: "^vsram_(proc2|others|md|proc1|others_sshub)$"
--
-     unevaluatedProperties: false
- 
-   "^ldo_v(fe|bif|io)28$":
-     type: object
-     $ref: regulator.yaml#
--
--    properties:
--      regulator-name:
--        pattern: "^v(fe|bif|io)28$"
--
-     unevaluatedProperties: false
- 
-   "^ldo_v(aud|io|aux|rf|m)18$":
-     type: object
-     $ref: regulator.yaml#
--
--    properties:
--      regulator-name:
--        pattern: "^v(aud|io|aux|rf|m)18$"
--
-     unevaluatedProperties: false
- 
-   "^ldo_vsim[12]$":
-     type: object
-     $ref: regulator.yaml#
--
--    properties:
--      regulator-name:
--        pattern: "^vsim[12]$"
--
--    required:
--      - regulator-name
--
-     unevaluatedProperties: false
- 
- additionalProperties: false
+-	if (d != c || c == ':') {
++	if (!d || d != c || c == ':') {
+ 		optopt = c;
+ 		if (optstring[0] != ':' && opterr)
+ 			fprintf(stderr, "%s: unrecognized option: %c\n", argv[0], *optchar);
 -- 
 2.53.0
 
