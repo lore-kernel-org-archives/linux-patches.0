@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C564386C39;
-	Tue, 21 Jul 2026 19:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71AB386C39;
+	Tue, 21 Jul 2026 19:41:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662868; cv=none; b=QGRaDTQ/wJ+bY2m5RQBYxWcg8AuPEmXsAvJ2wCCckg8RJ79xchaBHYQWM5/+SsZiaF/o0ErZC4IA3Mb6uAQTuZInsi+zy8X41bJBpSHUYPWaativW+be7TfG+e4vtzne/oo3HWyrhSchtPlSg2z+wSn/R+7H0iZLtg0w37MYuGY=
+	t=1784662870; cv=none; b=ocS9kumGISkHQ0LKZexlJJPIScPFCwmrGf9hbx9qPKvd0pl+oQlj44wb7qh0nkpXaQICw+PX0W52MeSWY04JzumfAX3PjT0mOfUO3m2M6z3rzieAqnuNCBfm733jhCGMCEZP7ZdqT+5n8Yn2DTK3f2sOXZaHq1YwsTWqxrp6oKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662868; c=relaxed/simple;
-	bh=MxKOkcQi+EGzhiOygq+VYc58YXRgN2ObkRf6D/TFSp0=;
+	s=arc-20240116; t=1784662870; c=relaxed/simple;
+	bh=XyU5GtDpRtoz4oxqxm71XK6O1OqC1elpR6wheAr2l8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gRJ18YQOTNWuyiaknDlqxqIzGgBjB65HGjx3pYZb5cqLelZxTA6luXUuy2sBIQnFu6M8BaPn33PuMqJRVv1d0EweeAbLT264dUrkPJcWMbFLj9TLOQInLHSR4S4OxDNzWYt3soUstuZzPxnnzuTcnukHLKc7nIkEOBt0OW6PT6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZsBe838A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dOOtF9TXLIQDLSKcFF2tLPuI5+xe5giBXsMX8a/6HMO/SHNzWRSGSKivbsoCoumc28F3CDDwC3QDy7cG/z+p0BvofbAoFkmzoKSJuLFnVONCavqooUYQr9ZWxJj3jd8oj7cSVYygur7R7AtMuPzLVVv/rypKpPlW8wAHyzkPgl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvP5FV5z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZsBe838A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831511F00A3A;
-	Tue, 21 Jul 2026 19:41:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvP5FV5z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E971F000E9;
+	Tue, 21 Jul 2026 19:41:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662867;
-	bh=1Fo+qlc3iXjEok1WQqn+vlWFrhyLSAC6fATjfTSd2mc=;
+	s=korg; t=1784662869;
+	bh=9AkzbAhR6Ow5b/2lVjWSFXX5Fi8SMMr+j6PLKLp4M80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZsBe838AStp+J1V0g+xlgx1wLN70pjLujHPRYnKDlVawybtKiggRXLFRUmxiLPtOo
-	 cuoln+eviRfN2raKJHCaBO0f8xqjg1CYxYgNnKtnwyNU5ewGOEPS7pxnvfCdZbpRZe
-	 t2Es35liXFM288uLjaQjtC7eL8/oClpC8CtB474k=
+	b=vvP5FV5zi9OeRhRQ0e6hh88dwXnPPzTLubWpXM0Zbbd1iCQD6gTzfhODJPtVVG5tN
+	 b1/5NCOfXm1xNJ+BBCEVNYY/KlBn9KOrZiJvOqZrpG1e2jHejDZXCODsbkaqYiw94E
+	 aXYGKnBfoCrN33aTSkQvGEG1x0sigkjzTL1WjX70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Wayen Yan <win847@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0608/1276] tipc: fix use-after-free of the discoverer in tipc_disc_rcv()
-Date: Tue, 21 Jul 2026 17:17:31 +0200
-Message-ID: <20260721152459.715543572@linuxfoundation.org>
+Subject: [PATCH 6.12 0609/1276] net: ethernet: mtk_ppe: Fix rhashtable leak in mtk_ppe_init error paths
+Date: Tue, 21 Jul 2026 17:17:32 +0200
+Message-ID: <20260721152459.738539305@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,121 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Wayen Yan <win847@gmail.com>
 
-[ Upstream commit 1579342d71133da7f00daa02c75cebec7372097b ]
+[ Upstream commit 41782770be567abc6509169d0ffdada31c783a66 ]
 
-bearer_disable() frees b->disc with tipc_disc_delete()'s plain kfree(),
-but tipc_disc_rcv() still dereferences b->disc in RX softirq under
-rcu_read_lock() (tipc_udp_recv -> tipc_rcv -> tipc_disc_rcv).
+In mtk_ppe_init(), when accounting is enabled, the error paths for
+dmam_alloc_coherent(mib) and devm_kzalloc(acct) failures return NULL
+directly, bypassing the err_free_l2_flows label that destroys the
+rhashtable initialized earlier.
 
-L2 bearers are safe thanks to the synchronize_net() in
-tipc_disable_l2_media(), but the UDP bearer defers that call to the
-cleanup_bearer() workqueue, so the discoverer is freed with no grace
-period:
+While this leak only occurs during probe (not runtime) and the leaked
+memory is minimal (an empty rhash table), fixing it ensures proper
+error path cleanup consistency.
 
- BUG: KASAN: slab-use-after-free in tipc_disc_rcv (net/tipc/discover.c:149)
- Read of size 8 at addr ffff88802348b728 by task poc_tipc/184
- <IRQ>
-  tipc_disc_rcv (net/tipc/discover.c:149)
-  tipc_rcv (net/tipc/node.c:2126)
-  tipc_udp_recv (net/tipc/udp_media.c:391)
-  udp_rcv (net/ipv4/udp.c:2643)
-  ip_local_deliver_finish (net/ipv4/ip_input.c:241)
- </IRQ>
- Freed by task 181:
-  kfree (mm/slub.c:6565)
-  bearer_disable (net/tipc/bearer.c:418)
-  tipc_nl_bearer_disable (net/tipc/bearer.c:1001)
+Fix by changing the two return NULL statements to goto err_free_l2_flows.
 
-The bearer is freed with kfree_rcu(); free the discoverer the same way.
-Add an rcu_head to struct tipc_discoverer and free it and its skb from an
-RCU callback.
-
-Because the RCU callback (tipc_disc_free_rcu) lives in module text, a
-call_rcu() that is still pending when the tipc module is unloaded would
-invoke a freed function. Add an rcu_barrier() to tipc_exit() after the
-bearer subsystem has been torn down, so all pending discoverer callbacks
-have run before the module text goes away.
-
-Reachable from an unprivileged user namespace: the TIPCv2 genl family is
-netnsok and its bearer commands have no GENL_ADMIN_PERM. Needs CONFIG_TIPC
-and CONFIG_TIPC_MEDIA_UDP.
-
-Fixes: 25b0b9c4e835 ("tipc: handle collisions of 32-bit node address hash values")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260617135744.3383175-3-bestswngs@gmail.com
+Fixes: 603ea5e7ffa7 ("net: ethernet: mtk_eth_soc: fix memory leak in error path")
+Signed-off-by: Wayen Yan <win847@gmail.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/178167550101.2217645.14579307712717502425@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/core.c     |  5 +++++
- net/tipc/discover.c | 14 ++++++++++++--
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_ppe.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/tipc/core.c b/net/tipc/core.c
-index 434e70eabe0812..1ddecea1df6e91 100644
---- a/net/tipc/core.c
-+++ b/net/tipc/core.c
-@@ -218,6 +218,11 @@ static void __exit tipc_exit(void)
- 	unregister_pernet_device(&tipc_net_ops);
- 	tipc_unregister_sysctl();
+diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.c b/drivers/net/ethernet/mediatek/mtk_ppe.c
+index fa688a42a22f5c..bb01a7355932aa 100644
+--- a/drivers/net/ethernet/mediatek/mtk_ppe.c
++++ b/drivers/net/ethernet/mediatek/mtk_ppe.c
+@@ -918,7 +918,7 @@ struct mtk_ppe *mtk_ppe_init(struct mtk_eth *eth, void __iomem *base, int index)
+ 		mib = dmam_alloc_coherent(ppe->dev, MTK_PPE_ENTRIES * sizeof(*mib),
+ 					  &ppe->mib_phys, GFP_KERNEL);
+ 		if (!mib)
+-			return NULL;
++			goto err_free_l2_flows;
  
-+	/* TODO: Wait for all timers that called call_rcu() to finish before
-+	 * calling rcu_barrier().
-+	 */
-+	rcu_barrier();
-+
- 	pr_info("Deactivated\n");
- }
+ 		ppe->mib_table = mib;
  
-diff --git a/net/tipc/discover.c b/net/tipc/discover.c
-index 685389d4b245ea..da60f572dda03a 100644
---- a/net/tipc/discover.c
-+++ b/net/tipc/discover.c
-@@ -58,6 +58,7 @@
-  * @skb: request message to be (repeatedly) sent
-  * @timer: timer governing period between requests
-  * @timer_intv: current interval between requests (in ms)
-+ * @rcu: RCU head for deferred freeing
-  */
- struct tipc_discoverer {
- 	u32 bearer_id;
-@@ -69,6 +70,7 @@ struct tipc_discoverer {
- 	struct sk_buff *skb;
- 	struct timer_list timer;
- 	unsigned long timer_intv;
-+	struct rcu_head rcu;
- };
+@@ -926,7 +926,7 @@ struct mtk_ppe *mtk_ppe_init(struct mtk_eth *eth, void __iomem *base, int index)
+ 				    GFP_KERNEL);
  
- /**
-@@ -382,6 +384,15 @@ int tipc_disc_create(struct net *net, struct tipc_bearer *b,
- 	return 0;
- }
+ 		if (!acct)
+-			return NULL;
++			goto err_free_l2_flows;
  
-+static void tipc_disc_free_rcu(struct rcu_head *rp)
-+{
-+	struct tipc_discoverer *d = container_of(rp, struct tipc_discoverer,
-+						 rcu);
-+
-+	kfree_skb(d->skb);
-+	kfree(d);
-+}
-+
- /**
-  * tipc_disc_delete - destroy object sending periodic link setup requests
-  * @d: ptr to link dest structure
-@@ -389,8 +400,7 @@ int tipc_disc_create(struct net *net, struct tipc_bearer *b,
- void tipc_disc_delete(struct tipc_discoverer *d)
- {
- 	timer_shutdown_sync(&d->timer);
--	kfree_skb(d->skb);
--	kfree(d);
-+	call_rcu(&d->rcu, tipc_disc_free_rcu);
- }
- 
- /**
+ 		ppe->acct_table = acct;
+ 	}
 -- 
 2.53.0
 
