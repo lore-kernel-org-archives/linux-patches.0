@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7D847127A;
-	Tue, 21 Jul 2026 18:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F20D47127A;
+	Tue, 21 Jul 2026 18:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659917; cv=none; b=t/7F5zjaWRORoJmLcf7B/WVymvlQVRKMWifA7xd0nnuMklyhkGNqIRzfqTLTOn4i0US+H2qm7Xr0stxnDRF1LHd9jYR9Lt1ra+bcT+p6Fg2RhjEG9Swm4vYm6iPel4rxdpuKNEbnSMcxts2biahdlPgmVxLL5vEeLR57ZK+WCJQ=
+	t=1784659920; cv=none; b=r+uRTp590PXhcYJkYYykMFM8+lTUJWD4k9LzOI8Bp0yaG1nDzktx2PUT7NpM6A7BLt6YCx0m6bmL69+A1z3OtdhuIm4xtna9g2Zfouovzr4F/4zhYgCXfhCI6qVMONPlkqyt9ifWfp22Au6tpXppgXIIMW3AxfxxFGwGxn8boPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659917; c=relaxed/simple;
-	bh=OzpunsyFjzkjz7JKRvbCBvzbGocVJ8ZKii+Xgy+hg6U=;
+	s=arc-20240116; t=1784659920; c=relaxed/simple;
+	bh=LEWe0KojWKyBRpH5oB9VIsXkx53lOefJ9buztARTyvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ava3QFZsrZHbcm5rfGbRS2GLxf66XVhoiYQLm5hfYOksaq8BerS1uRpKJyV0GwvXCrC8EqolFqZV4yNwSHfyloiosvOAOQDQ5z+B7KtS7EXFlz2oowpDltEhdBL37BXhMc/SBsw9K4WAIdkC3yEwQ1MKG/J1dkCeJz2aynAyKsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mA24MY54; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P6TUAz5Wr1D7kHbrAv9gNO7HyZM1FV6RSntiCp/tfQnG0g08rOezNL9Gmtx+MBqAY8hhyzNjnkFcTk5Guc03XCqkdjn/B3iuTyY22wHDP0FUrOMYvQTsiY2uC8tzHPlOEAFeLTcIIaF+Hhbu5br6YLYMNv8Yrk21Tex2ALKQuK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/E/BF8v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mA24MY54"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BAF1F000E9;
-	Tue, 21 Jul 2026 18:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/E/BF8v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B2C1F00A3A;
+	Tue, 21 Jul 2026 18:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659916;
-	bh=I7F9y5w0MHyixIViagDTkj/U/CMflx+kfxnpkQxCdBw=;
+	s=korg; t=1784659919;
+	bh=snkan5oi0JQ2llbPwLz5fk/HrmJzrh2tVqIWkpQXGhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mA24MY541medCEWaR4ODPOK44MtCjRmywrKFUOtdP5+EFxslGqEuhKD8beTiNO0x0
-	 7wARskeXDEc4NzT0WXUzLfYhZpkGxtmY61G9raDYXFwUJvat6FesZ9nf3N/kBLSUqc
-	 1dkxGz85bcje9YIuPwjj7JrEX3HnvvpQlvqDLJIc=
+	b=M/E/BF8voJ7pKX+Zb5KVheb9borWpIqvupMamdZBfXh7YkLmZqAMmvEkx2sm7EmB0
+	 NMeIlXYtGeVzNhAYXFvVW2NkH1iQyr6pkuAGdoEB7jbvm/4LaOA9cHjJJmccv0HyfU
+	 xxdybxLdWTYTIiOtIVVyd+PDdwv8jWgMI7xV2Enk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Williams <djbw@kernel.org>,
-	Alejandro Lucero <alucerop@amd.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Lucas Tsai <lucas_tsai@richtek.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0738/2077] cxl/memdev: Pin parents for entire memdev lifetime
-Date: Tue, 21 Jul 2026 17:06:51 +0200
-Message-ID: <20260721152610.203305086@linuxfoundation.org>
+Subject: [PATCH 7.1 0739/2077] power: supply: core: fix supplied_from allocations
+Date: Tue, 21 Jul 2026 17:06:52 +0200
+Message-ID: <20260721152610.226688180@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,51 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <djbw@kernel.org>
+From: Lucas Tsai <lucas_tsai@richtek.com>
 
-[ Upstream commit bd3a6ff4b84e0fc3fca8556d338270603df13f2e ]
+[ Upstream commit ba61aed9a34671222d1149acfc2f0179a9ce7e80 ]
 
-In order to be able to manage the driver that uses a memdev attach
-mechanism the parent needs to stick around for the
-device_release_driver(cxlmd->dev.parent) event.
+If dts property power-supplies has multiple values, then accessing to
+psy->supplied_from[i-1] in __power_supply_populate_supplied_from will
+overrun supplied_from array.
 
-Fixes: 29317f8dc6ed ("cxl/mem: Introduce cxl_memdev_attach for CXL-dependent operation")
-Signed-off-by: Dan Williams <djbw@kernel.org>
-Reviewed-by: Alejandro Lucero <alucerop@amd.com>
-Tested-by: ALejandro Lucero <alucerop@amd.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260519210158.1499795-4-djbw@kernel.org
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: f6e0b081fb30 ("power_supply: Populate supplied_from hierarchy from the device tree")
+Signed-off-by: Lucas Tsai <lucas_tsai@richtek.com>
+Link: https://patch.msgid.link/20260609114403.3896073-1-lucas_tsai@richtek.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/memdev.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/power/supply/power_supply_core.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
-index 80e65690eb773e..91c99eeea92ce4 100644
---- a/drivers/cxl/core/memdev.c
-+++ b/drivers/cxl/core/memdev.c
-@@ -25,9 +25,11 @@ static DEFINE_IDA(cxl_memdev_ida);
- static void cxl_memdev_release(struct device *dev)
- {
- 	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
-+	struct device *parent = dev->parent;
+diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
+index a446d3d086fcd2..2532e221b2e191 100644
+--- a/drivers/power/supply/power_supply_core.c
++++ b/drivers/power/supply/power_supply_core.c
+@@ -292,18 +292,13 @@ static int power_supply_check_supplies(struct power_supply *psy)
+ 	if (cnt == 1)
+ 		return 0;
  
- 	ida_free(&cxl_memdev_ida, cxlmd->id);
- 	kfree(cxlmd);
-+	put_device(parent);
+-	/* All supplies found, allocate char ** array for filling */
+-	psy->supplied_from = devm_kzalloc(&psy->dev, sizeof(*psy->supplied_from),
++	/* All supplies found, allocate char * array for filling */
++	psy->supplied_from = devm_kcalloc(&psy->dev,
++					  cnt - 1, sizeof(*psy->supplied_from),
+ 					  GFP_KERNEL);
+ 	if (!psy->supplied_from)
+ 		return -ENOMEM;
+ 
+-	*psy->supplied_from = devm_kcalloc(&psy->dev,
+-					   cnt - 1, sizeof(**psy->supplied_from),
+-					   GFP_KERNEL);
+-	if (!*psy->supplied_from)
+-		return -ENOMEM;
+-
+ 	return power_supply_populate_supplied_from(psy);
  }
- 
- static char *cxl_memdev_devnode(const struct device *dev, umode_t *mode, kuid_t *uid,
-@@ -707,7 +709,7 @@ static struct cxl_memdev *cxl_memdev_alloc(struct cxl_dev_state *cxlds,
- 	dev = &cxlmd->dev;
- 	device_initialize(dev);
- 	lockdep_set_class(&dev->mutex, &cxl_memdev_key);
--	dev->parent = cxlds->dev;
-+	dev->parent = get_device(cxlds->dev);
- 	dev->bus = &cxl_bus_type;
- 	dev->devt = MKDEV(cxl_mem_major, cxlmd->id);
- 	dev->type = &cxl_memdev_type;
+ #else
 -- 
 2.53.0
 
