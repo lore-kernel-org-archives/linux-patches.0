@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A985B2EBB8D;
-	Tue, 21 Jul 2026 20:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5242EBB8D;
+	Tue, 21 Jul 2026 20:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666515; cv=none; b=LhRrUa5C3DVPeeoCcZVtyUL2VBncOpdJ3o+nZ+bpev8F1NE1yrH2yu6achYYMsH46LeVwDoG/10cI73G583Y/OnA0FpXDOmWsY+mE9voyH9AbDWIGuTHHMyCE+fUxSkT3AZpGlBSQq2/QpJFGZTRR0tFNU+uJR5Zb690yNw+5AU=
+	t=1784666518; cv=none; b=AiZ3lmavvnjHNsbeCwVu+6OWGLv1wC8DKpiVqHNVa9f8WaCoAk9HEy4VUfteSjDnaEm6EltrezefQFvBSMszboWHs6A7Ss8SIhDx/zjktL2wAhYrERLIm7Rtpv/qPEG8eNvpF58EQsDLqQJuP8gUEHwEVIp3LGUZkXsMWG0GOk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666515; c=relaxed/simple;
-	bh=ndQuP/NoFwvjAK5CkVXrRWujz05l67zsnndatTtJz2g=;
+	s=arc-20240116; t=1784666518; c=relaxed/simple;
+	bh=C0Z0uox2CgDqjEyCEJVJxR5DoTLju4mjcKiRbX+vLtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HHp+a3Xfw7bd5Hir2S13odCQ2cRjvocvQ/y8zASjWNH39l8qRcAcSLCcgUABvaYXsaDZo3+s6puRsMGvOIvXJBNn+CvA1puoxjDavMZ9LFuGGEsWDtWRQLcgF+ZRDwe3wypRWpOM6WtQLLKzXX2GOmD3fQAwAKztY8vORm0CtMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBDqOvbL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OMRQ0oOO+w73MHoMuKm5w23B59oa6HEFv63kjhC7UnRGq9cnYWsGGFWVtpVmhsN8xzU4TYTbKIfEPfrC5NHasIkoZKbPE/pXgYf98u2cflFjaHVJutC8lkxZoeH78C0a9FI1/92otzKkrEShvJEcjpNqFeAJ//Lf8WnUUTsbwKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Soi/C7rS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBDqOvbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ADCB1F000E9;
-	Tue, 21 Jul 2026 20:41:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Soi/C7rS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B389E1F000E9;
+	Tue, 21 Jul 2026 20:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666514;
-	bh=hvlX8j/+s0UGJBIAySDvnSBHxHz4bk4Sl1jVbt9NJB8=;
+	s=korg; t=1784666517;
+	bh=FX5TMsz9NCJ7YKMu5EE4jdkWOdda4fCO886FxbMas34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MBDqOvbLftjRQ194XrDWi84LOhi1dUnpbxgHfZUY+DDTJX7l/WtvoAzMAXYXVpiKn
-	 riL9ydAntnlAdK4LUMWZBv7bOHq5PWfBrAMIQRD8S12dZUSSPGL56svVlrtMUh8l4t
-	 xsQvNHsLGBD4GHN4OwM+3TIwx1aWlQmqQ+Ejjl8U=
+	b=Soi/C7rSRaXH2HVZR7H2IE0ZWtvG2kzfuNi8sop78Q25HcLR+i8f/OWtMuwbbrkX5
+	 rDGfF6sIcjxs6UcBdIwWLu1p3KHWVFynUnlCW3kehfuZjzORo/KNXif77CMhCZ2dY0
+	 9Z3fpov9ZjjQ3mwp1NSOmOueeNgBCXsJArdFhgf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Antony Antony <antony.antony@secunet.com>,
+	Eyal Birger <eyal.birger@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0712/1266] spi: dw: fix wrong BAUDR setting after resume
-Date: Tue, 21 Jul 2026 17:19:09 +0200
-Message-ID: <20260721152457.797225204@linuxfoundation.org>
+Subject: [PATCH 6.6 0713/1266] xfrm: Use the XFRM_GRO to indicate a GRO call on input
+Date: Tue, 21 Jul 2026 17:19:10 +0200
+Message-ID: <20260721152457.819259775@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,46 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Steffen Klassert <steffen.klassert@secunet.com>
 
-[ Upstream commit 66b6605bcea7af7aca3d1d858b9c5f14903f9f9a ]
+[ Upstream commit b439475a0dba2b50fb39a6356069969780e45fd4 ]
 
-After resuming from suspend to ram, spi transfer stops working. Further
-debugging shows that the BAUDR register isn't correctly set, this is
-due to dws->current_freq doesn't match the HW BAUDR setting,
-specifically, the dws->current_freq equals to speed_hz, but BAUDR is 0.
-so the dw_spi_set_clk() in below code won't be called:
+This is needed to support GRO for ESP in UDP encapsulation.
 
-        if (dws->current_freq != speed_hz) {
-                dw_spi_set_clk(dws, clk_div);
-                dws->current_freq = speed_hz;
-        }
-
-The mismatch comes from dw_spi_shutdown_chip() when suspending.
-Fix this mismatch by setting dws->current_freq to 0 as well when
-clearing BAUDR reg in dw_spi_shutdown_chip().
-
-Fixes: e24c74527207 ("spi: controller driver for Designware SPI core")
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Link: https://patch.msgid.link/20260612002835.5240-1-jszhang@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Co-developed-by: Antony Antony <antony.antony@secunet.com>
+Signed-off-by: Antony Antony <antony.antony@secunet.com>
+Reviewed-by: Eyal Birger <eyal.birger@gmail.com>
+Stable-dep-of: 68de007d5ac9 ("xfrm: annotate data-races around xfrm_policy_count[] and xfrm_policy_default[]")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-dw.h | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/esp4_offload.c | 2 +-
+ net/ipv6/esp6_offload.c | 2 +-
+ net/xfrm/xfrm_input.c   | 6 ++----
+ 3 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/spi/spi-dw.h b/drivers/spi/spi-dw.h
-index 6cafeee8ee2a9a..e25e5554ce89d5 100644
---- a/drivers/spi/spi-dw.h
-+++ b/drivers/spi/spi-dw.h
-@@ -282,6 +282,7 @@ static inline void dw_spi_shutdown_chip(struct dw_spi *dws)
- {
- 	dw_spi_enable_chip(dws, 0);
- 	dw_spi_set_clk(dws, 0);
-+	dws->current_freq = 0;
- }
+diff --git a/net/ipv4/esp4_offload.c b/net/ipv4/esp4_offload.c
+index 028d2d3477d132..0984f330362749 100644
+--- a/net/ipv4/esp4_offload.c
++++ b/net/ipv4/esp4_offload.c
+@@ -77,7 +77,7 @@ static struct sk_buff *esp4_gro_receive(struct list_head *head,
  
- extern void dw_spi_set_cs(struct spi_device *spi, bool enable);
+ 	/* We don't need to handle errors from xfrm_input, it does all
+ 	 * the error handling and frees the resources on error. */
+-	xfrm_input(skb, IPPROTO_ESP, spi, -2);
++	xfrm_input(skb, IPPROTO_ESP, spi, 0);
+ 
+ 	return ERR_PTR(-EINPROGRESS);
+ out_reset:
+diff --git a/net/ipv6/esp6_offload.c b/net/ipv6/esp6_offload.c
+index 333d87557bf32b..84affcc7f4d760 100644
+--- a/net/ipv6/esp6_offload.c
++++ b/net/ipv6/esp6_offload.c
+@@ -104,7 +104,7 @@ static struct sk_buff *esp6_gro_receive(struct list_head *head,
+ 
+ 	/* We don't need to handle errors from xfrm_input, it does all
+ 	 * the error handling and frees the resources on error. */
+-	xfrm_input(skb, IPPROTO_ESP, spi, -2);
++	xfrm_input(skb, IPPROTO_ESP, spi, 0);
+ 
+ 	return ERR_PTR(-EINPROGRESS);
+ out_reset:
+diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
+index 77bc0ad368d7eb..1d20f2a0a7386b 100644
+--- a/net/xfrm/xfrm_input.c
++++ b/net/xfrm/xfrm_input.c
+@@ -470,7 +470,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
+ 	struct xfrm_offload *xo = xfrm_offload(skb);
+ 	struct sec_path *sp;
+ 
+-	if (encap_type < 0) {
++	if (encap_type < 0 || (xo && xo->flags & XFRM_GRO)) {
+ 		x = xfrm_input_state(skb);
+ 
+ 		if (unlikely(x->km.state != XFRM_STATE_VALID)) {
+@@ -493,9 +493,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
+ 			seq = XFRM_SKB_CB(skb)->seq.input.low;
+ 			goto resume;
+ 		}
+-
+-		/* encap_type < -1 indicates a GRO call. */
+-		encap_type = 0;
++		/* GRO call */
+ 		seq = XFRM_SPI_SKB_CB(skb)->seq;
+ 
+ 		if (xo && (xo->flags & CRYPTO_DONE)) {
 -- 
 2.53.0
 
