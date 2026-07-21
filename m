@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6F044AB74;
-	Tue, 21 Jul 2026 21:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A7944AB79;
+	Tue, 21 Jul 2026 21:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669365; cv=none; b=UafYY4FYA33ScV/SzEMlyw3i0bBDy6oN2Nc8W+Xitb+18iC1pWUbjnOCD9045M48LQR2HILuHNAmsjCuDHdQFodrnwR0zCrqt9e9yIlNL87tfJ1072VlHlM2U8BqSMvHOm41m82OiuARsRmHVduEjHkv4kde34Klsd9GpCQP1eY=
+	t=1784669368; cv=none; b=CW92xijBDicbe9raeS1NGkwpDoB7gXtV8MzoUTTYxEG1e6FwpXX9zymll1sDo9Y2K8ca6faAZJY2axjn38vyCebpIxwbo6x1ZJb+xO5qTScasqMrVtKXNdlAuZmjhfGYBZO8UXW3epfgEo/Kx11+HZ9j4u3s/i8FONvZyoa72jU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669365; c=relaxed/simple;
-	bh=PwN3/+LuCZWVgojohi5/vFlcd3L9vQK6qJMl7g55WI4=;
+	s=arc-20240116; t=1784669368; c=relaxed/simple;
+	bh=BtodqOJfb25CxfDby0pV/UaSste7r0PQpBfNHrx2Hao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ulFj25INPh4DDS4Yi8BquOrmiKrdXNa2j2S6xAruTxv8OdtIrJnRRKsJy5EtC5IVeIHpocbfy/3VHM2ry/LItNO4DLiiX4FcBIYl3GCnEUN56mIrVFlxnKfR6J0dharxTey0dqbIUc/G0ZnYlrop6iXfihE104NsddcrNAOOZeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0P6q+xy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dB+v0q0FM0C3x/BpZ91cJ+egv4sPI3x/Tpnrepc3wu1rs7G2saorku8P8aF9Py2dF5JBLUNntv2i0vsMHjv8jy+PJ4Txe4WJZvAAIn3qmiqhJvc9k6tuQgcLzh9pEDZRMoPGcdUZbOPTiC3ElPsdjc8xZ0qHG943CpK8CTwVdn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xzv5+yj+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0P6q+xy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64DCC1F000E9;
-	Tue, 21 Jul 2026 21:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xzv5+yj+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC1D1F000E9;
+	Tue, 21 Jul 2026 21:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669363;
-	bh=DkA2e3WQHU7gxVDuYQR9al7f7tUK3UN6G2ZD7SE3HTc=;
+	s=korg; t=1784669366;
+	bh=CzXzuMWD37ByaqkwtQ86TethBd4i2jtVYPcEyMLFSDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p0P6q+xynJoKWDHo3hzBGybV7XBgXl4OrtYPW3d7wubsZvc71Yg2FFzf0MJjSXBo9
-	 +6BK5xE+XjVA0diuyvO8gjw1/8G2q8kmYtfQXw/pJOvesAwA/ulctscoNCn05F6pE9
-	 BjGZ8urb4GrZ9o7HtqSuIpqgY4lX4OoBARHDzhSM=
+	b=Xzv5+yj+zGax/8ff0uUbdGC8nzYMSYFWYr8gCFQqwZWhFgGbgcNFyCFWp9sHDS366
+	 o5N0b4SVq+y7M3pyfsl6y2oQTB/n7CrIS+kbQL5oF63Ar4eh2jTC3Js1F2LtwULj3x
+	 04e72eV95gQm6qAgKYwCu52ItRdsha8x9P9cCorI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0528/1067] perf hists: Fix snprintf() in hists__scnprintf_title() UID filter path
-Date: Tue, 21 Jul 2026 17:18:49 +0200
-Message-ID: <20260721152436.420011428@linuxfoundation.org>
+Subject: [PATCH 6.1 0529/1067] xprtrdma: Check frwr_wp_create() during connect
+Date: Tue, 21 Jul 2026 17:18:50 +0200
+Message-ID: <20260721152436.441387192@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,49 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 227a8748742f0263f1fe3131449b44563b77a209 ]
+[ Upstream commit 0f13fc7c7d2e0427517e63c739277a4cd338b0c5 ]
 
-hists__scnprintf_title() accumulates formatted output into a buffer
-using scnprintf() for all filter clauses except the UID filter, which
-uses snprintf().  If the buffer fills up and snprintf() returns more
-than the remaining space, printed exceeds size and the next 'size -
-printed' underflows, causing later scnprintf() calls to write past
-the buffer.
+frwr_wp_create() creates the singleton Memory Region used to encode
+padding for Write chunks whose payload length is not XDR-aligned. Its
+failure paths return a negative errno and leave ep->re_write_pad_mr set
+to NULL.
 
-Switch the UID filter clause to scnprintf() to match the rest of the
-function.
+rpcrdma_xprt_connect() currently ignores that return value. If
+frwr_wp_create() fails after the rest of the connection setup succeeds,
+xprt_rdma_connect_worker() treats the connection attempt as successful
+and sets XPRT_CONNECTED. A later NFS/RDMA read with a non-4-byte-aligned
+receive page length reaches rpcrdma_encode_write_list(), passes the NULL
+write-pad MR to encode_rdma_segment(), and dereferences it.
 
-Fixes: 25c312dbf88ca402 ("perf hists: Move hists__scnprintf_title() away from the TUI code")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+This is locally triggerable on an NFS/RDMA client after a connect or
+reconnect hits a local MR allocation, DMA-map, MR-map, or post-send
+failure; a remote peer alone cannot force the local MR setup failure.
+
+Check the return value and fail the connect as -ENOTCONN, matching the
+adjacent setup failures. This keeps XPRT_CONNECTED clear and lets the
+normal reconnect path retry.
+
+Fixes: 21037b8c2258 ("xprtrdma: Provide a buffer to pad Write chunks of unaligned length")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/hist.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/sunrpc/xprtrdma/verbs.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/hist.c b/tools/perf/util/hist.c
-index 2e7977a8ca559b..36bb336b406fb6 100644
---- a/tools/perf/util/hist.c
-+++ b/tools/perf/util/hist.c
-@@ -2769,9 +2769,10 @@ int __hists__scnprintf_title(struct hists *hists, char *bf, size_t size, bool sh
- 			   ev_name, sample_freq_str, enable_ref ? ref : " ", nr_events);
- 
- 
--	if (hists->uid_filter_str)
--		printed += snprintf(bf + printed, size - printed,
--				    ", UID: %s", hists->uid_filter_str);
-+	if (hists->uid_filter_str) {
-+		printed += scnprintf(bf + printed, size - printed,
-+				     ", UID: %s", hists->uid_filter_str);
+diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+index ad463196f8e95d..46e3db61f1b4e7 100644
+--- a/net/sunrpc/xprtrdma/verbs.c
++++ b/net/sunrpc/xprtrdma/verbs.c
+@@ -536,7 +536,17 @@ int rpcrdma_xprt_connect(struct rpcrdma_xprt *r_xprt)
+ 		goto out;
+ 	}
+ 	rpcrdma_mrs_create(r_xprt);
+-	frwr_wp_create(r_xprt);
++
++	/*
++	 * rpcrdma_encode_write_list() dereferences the write-pad
++	 * MR with no NULL check, so fail the connect rather than
++	 * publish a transport whose write-pad MR is NULL.
++	 */
++	rc = frwr_wp_create(r_xprt);
++	if (rc) {
++		rc = -ENOTCONN;
++		goto out;
 +	}
- 	if (thread) {
- 		if (hists__has(hists, thread)) {
- 			printed += scnprintf(bf + printed, size - printed,
+ 
+ out:
+ 	trace_xprtrdma_connect(r_xprt, rc);
 -- 
 2.53.0
 
