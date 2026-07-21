@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB11471246;
-	Tue, 21 Jul 2026 19:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1DB471252;
+	Tue, 21 Jul 2026 19:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660767; cv=none; b=XgeIA2+ZydzEAFM48Kr0bg58sDwwWq35KYIFZWufFEefSNX3RkGlS4oBZbBlS0o96rJckTyJRe6Y8arvHxZf7GJWanNVN023HPBcqe2E4Uur2l1LbZPvp+mT8O0Els3kkdCK57e4gmwOyOD60Wd0IY8hp+kXBWYg/pFNggrGmdw=
+	t=1784660770; cv=none; b=aFsOKgVxhWiRWlEFXovumREbHI6OyviZGUGXwusVFRjXExWkljRFqlXxE/grNI2tewmn2FquSNNV3dNl0xSZ/4JlwCxn/+2E/5fMqPcwgwMHcg7+wc6u2/Lb2gjs3cJF0afUBhA4GhTYvM6OLXrFP5za7/8Wcqwupq0TRFx6Tyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660767; c=relaxed/simple;
-	bh=YQBBoVLlj6OvLI6DD5aY6O4hn0qCAOeYOewHF5WgYH0=;
+	s=arc-20240116; t=1784660770; c=relaxed/simple;
+	bh=KkU9fsJpHt1BtYwDFnb1UcfY7bzg1zMIOBYczAcqWPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qkcfLlcE6CH6HfkvFCIKVJnz1M2PsW+ka5aDBTbebx4zWVBAbw1oXPcQMqxhi6CAWi3VJzwfuoIMnQ/0Nib5fhBs39V0CvXgW6LW/SFu9EGtt43w3BfFjNPVCN70gFVb6xl0RlcFvE7S9SS8HBY/ytDxx268EzQKwFBxhDJG6Q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UR2XD3Jk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oZKl62Bov0LmqOidtC5rgvzcIyZJNR90ZBXcfmwTL3n1lA1+sjloi8IA7XvBi3Ih/W1CxVuZlJ5gUnL1RIpGwVht0bGmV4laAvg+ZFQPQqmetrCUlU55hhmzspdMhFop+trFtUDoJ6MAalwhC3wW87c2NxFxaFFBS4y7jeDKTNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lOdi71nJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UR2XD3Jk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3854C1F000E9;
-	Tue, 21 Jul 2026 19:06:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lOdi71nJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EA51F000E9;
+	Tue, 21 Jul 2026 19:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660766;
-	bh=QAFjje+QQEO3BCpFbqygXJYz8CTAU0eQCwbwyY3B4Tc=;
+	s=korg; t=1784660769;
+	bh=7BSp3XkvnYY/SuAgH5bhH0rHXejA3Xk/XTQHj64G1+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UR2XD3JkGFFbt2GoNmYDZHsLMV0FFPJGEMIoCU218RFkHbM69Fxyixck55aHntV3Q
-	 rAb0tRC6je1aR78RZGJwxrCnvH6YXZcneqt8G0rML7RZS257+MpkXk3y5vUGqbvuw9
-	 GrLlt3nRoqiPPUryP/pApy/gkMjEpA85eq2Ld/FY=
+	b=lOdi71nJLF8pxW3dtxhrteysCtCxh8L4niMxyu85iT7ZS98iN63r/R0Ws9dgcIrCT
+	 Alz0Om5kSwad/Trbea6n1QfWFxG2uFl9oPk1EUe0Mw3xOOi6MUOLj8l7oxcctdeazs
+	 fo1OtZvRLNTjkz5yKGN/FCavkWiLDcK0KWonHeNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mir Jeffres <m-jeffres@ti.com>,
-	Sen Wang <sen@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1102/2077] ASoC: tlv320aic3x: restrict CLKDIV bypass Q values in dual-rate mode
-Date: Tue, 21 Jul 2026 17:12:55 +0200
-Message-ID: <20260721152618.811040579@linuxfoundation.org>
+Subject: [PATCH 7.1 1062/2077] i3c: master: Defer new-device registration out of DAA caller context
+Date: Tue, 21 Jul 2026 17:12:15 +0200
+Message-ID: <20260721152617.868439692@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,93 +52,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sen Wang <sen@ti.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit fdf043f5f3bae150b678feae3d7bb1beed87ec14 ]
+[ Upstream commit 3f79dac3ea1c30516fcc791770af034387c7f917 ]
 
-The datasheet documents that when the PLL is disabled and dual-rate mode
-is enabled, only Q values {4, 8, 9, 12, 16} are valid for the CLKDIV
-bypass path; all other Q values produce invalid bitclock output.
+Master drivers may invoke i3c_master_do_daa_ext() during resume to
+re-run Dynamic Address Assignment.  As well as assigning addresses to
+any newly arrived devices, this restores the dynamic address of devices
+that lost it across system suspend, so it has to run as part of the
+controller's resume path.
 
-The existing loop iterates Q from 2 to 17 without this restriction,
-causing silent audio failure when an out-of-spec Q is picked.
+A side effect of i3c_master_do_daa_ext() today is that it also
+registers any newly discovered I3C devices with the driver model
+inline, via i3c_master_register_new_i3c_devs().  Doing that from the
+resume path is problematic: a hot-join-capable device may join the bus
+during this same DAA, and registering it immediately would push driver
+model work (probing, sysfs, etc.) into the controller's resume context,
+where the rest of the system is not yet fully resumed and the
+controller driver is still partway through its own resume sequence.
 
-Restrict the Q search to the allowed set in dual-rate mode.
+Decouple discovery from registration: add a reg_work work item to
+struct i3c_master_controller and have i3c_master_do_daa_ext() queue it
+on master->wq (the freezable workqueue) instead of calling
+i3c_master_register_new_i3c_devs() directly.  The worker performs the
+registration only when the controller is not shutting_down, and is
+cancelled alongside hj_work in i3c_master_shutdown().  Because wq is
+freezable, any newly observed devices end up being registered after
+the system has finished resuming.
 
-Fixes: 4f9c16ccfa26 ("[ALSA] soc - tlv320aic3x - revisit clock setup")
-Suggested-by: Mir Jeffres <m-jeffres@ti.com>
-Signed-off-by: Sen Wang <sen@ti.com>
-Link: https://patch.msgid.link/20260616233322.873081-1-sen@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+i3c_master_register() also routes its initial post-bus-init registration
+through reg_work, using flush_work() to keep probe-time behavior
+synchronous.  This keeps a single registration code path and ensures the
+worker is the only writer of desc->dev.
+
+Fixes: 3a379bbcea0af ("i3c: Add core I3C infrastructure")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260608054312.10604-7-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tlv320aic3x.c | 25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ drivers/i3c/master.c       | 27 ++++++++++++++++++++-------
+ include/linux/i3c/master.h |  6 ++++++
+ 2 files changed, 26 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/codecs/tlv320aic3x.c b/sound/soc/codecs/tlv320aic3x.c
-index ce22298b43efc1..f8e847d28258b7 100644
---- a/sound/soc/codecs/tlv320aic3x.c
-+++ b/sound/soc/codecs/tlv320aic3x.c
-@@ -1049,11 +1049,13 @@ static int aic3x_hw_params(struct snd_pcm_substream *substream,
- 			   struct snd_pcm_hw_params *params,
- 			   struct snd_soc_dai *dai)
- {
-+	static const u8 dual_rate_q[] = {4, 8, 9, 12, 16};
- 	struct snd_soc_component *component = dai->component;
- 	struct aic3x_priv *aic3x = snd_soc_component_get_drvdata(component);
- 	int codec_clk = 0, bypass_pll = 0, fsref, last_clk = 0;
- 	u8 data, j, r, p, pll_q, pll_p = 1, pll_r = 1, pll_j = 1;
- 	u16 d, pll_d = 1;
-+	bool dual_rate;
- 	int clk;
- 	int width = aic3x->slot_width;
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index a59c4b744b3693..c9685379e86867 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -839,6 +839,7 @@ static void i3c_master_shutdown(struct i3c_master_controller *master)
+ 	i3c_bus_maintenance_unlock(&master->bus);
  
-@@ -1079,14 +1081,25 @@ static int aic3x_hw_params(struct snd_pcm_substream *substream,
+ 	cancel_work_sync(&master->hj_work);
++	cancel_work_sync(&master->reg_work);
+ }
  
- 	/* Fsref can be 44100 or 48000 */
- 	fsref = (params_rate(params) % 11025 == 0) ? 44100 : 48000;
-+	dual_rate = params_rate(params) >= 64000;
+ static void i3c_device_shutdown(struct device *dev)
+@@ -1838,6 +1839,16 @@ i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
+ 	}
+ }
  
- 	/* Try to find a value for Q which allows us to bypass the PLL and
- 	 * generate CODEC_CLK directly. */
--	for (pll_q = 2; pll_q < 18; pll_q++)
--		if (aic3x->sysclk / (128 * pll_q) == fsref) {
--			bypass_pll = 1;
--			break;
-+	if (dual_rate) {
-+		for (int i = 0; i < ARRAY_SIZE(dual_rate_q); i++) {
-+			pll_q = dual_rate_q[i];
-+			if (aic3x->sysclk / (128 * pll_q) == fsref) {
-+				bypass_pll = 1;
-+				break;
-+			}
- 		}
-+	} else {
-+		for (pll_q = 2; pll_q < 18; pll_q++)
-+			if (aic3x->sysclk / (128 * pll_q) == fsref) {
-+				bypass_pll = 1;
-+				break;
-+			}
-+	}
++static void i3c_master_reg_work_fn(struct work_struct *work)
++{
++	struct i3c_master_controller *master = container_of(work, typeof(*master), reg_work);
++
++	i3c_bus_normaluse_lock(&master->bus);
++	if (!master->shutting_down)
++		i3c_master_register_new_i3c_devs(master);
++	i3c_bus_normaluse_unlock(&master->bus);
++}
++
+ /**
+  * i3c_master_do_daa_ext() - Dynamic Address Assignment (extended version)
+  * @master: controller
+@@ -1878,9 +1889,7 @@ int i3c_master_do_daa_ext(struct i3c_master_controller *master, bool rstdaa)
+ 	if (ret)
+ 		goto out;
  
- 	if (bypass_pll) {
- 		pll_q &= 0xf;
-@@ -1106,13 +1119,13 @@ static int aic3x_hw_params(struct snd_pcm_substream *substream,
- 	 * right DAC to right channel input */
- 	data = (LDAC2LCH | RDAC2RCH);
- 	data |= (fsref == 44100) ? FSREF_44100 : FSREF_48000;
--	if (params_rate(params) >= 64000)
-+	if (dual_rate)
- 		data |= DUAL_RATE_MODE;
- 	snd_soc_component_write(component, AIC3X_CODEC_DATAPATH_REG, data);
+-	i3c_bus_normaluse_lock(&master->bus);
+-	i3c_master_register_new_i3c_devs(master);
+-	i3c_bus_normaluse_unlock(&master->bus);
++	queue_work(master->wq, &master->reg_work);
+ out:
+ 	i3c_master_rpm_put(master);
  
- 	/* codec sample rate select */
- 	data = (fsref * 20) / params_rate(params);
--	if (params_rate(params) < 64000)
-+	if (!dual_rate)
- 		data /= 2;
- 	data /= 5;
- 	data -= 2;
+@@ -3126,6 +3135,7 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 		goto err_put_dev;
+ 	}
+ 	INIT_WORK(&master->hj_work, i3c_master_hj_work_fn);
++	INIT_WORK(&master->reg_work, i3c_master_reg_work_fn);
+ 
+ 	ret = i3c_master_bus_init(master);
+ 	if (ret)
+@@ -3151,12 +3161,15 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 
+ 	/*
+ 	 * We're done initializing the bus and the controller, we can now
+-	 * register I3C devices discovered during the initial DAA.
++	 * register I3C devices discovered during the initial DAA. Device
++	 * registration is done via reg_work because that keeps a single
++	 * registration code path and ensures the worker is the only writer
++	 * of desc->dev. Flush the work to preserve synchronous probe-time
++	 * behavior.
+ 	 */
+ 	master->init_done = true;
+-	i3c_bus_normaluse_lock(&master->bus);
+-	i3c_master_register_new_i3c_devs(master);
+-	i3c_bus_normaluse_unlock(&master->bus);
++	queue_work(master->wq, &master->reg_work);
++	flush_work(&master->reg_work);
+ 
+ 	if (master->ops->set_dev_nack_retry)
+ 		device_create_file(&master->dev, &dev_attr_dev_nack_retry_count);
+diff --git a/include/linux/i3c/master.h b/include/linux/i3c/master.h
+index 77e63082b06e41..8cdd7be505d319 100644
+--- a/include/linux/i3c/master.h
++++ b/include/linux/i3c/master.h
+@@ -523,6 +523,11 @@ struct i3c_master_controller_ops {
+  *	be done from a sleep-able context
+  * @hj_work: work item used to run DAA after a Hot-Join event is detected.
+  *           Queued to @wq by i3c_master_queue_hotjoin()
++ * @reg_work: work item used to register newly discovered I3C devices with
++ *            the driver model. Queued to @wq by i3c_master_do_daa_ext() so
++ *            that device registration is deferred out of the DAA caller's
++ *            context (notably the resume path), and is skipped if the
++ *            controller is shutting down
+  * @dev_nack_retry_count: retry count when slave device nack
+  *
+  * A &struct i3c_master_controller has to be registered to the I3C subsystem
+@@ -548,6 +553,7 @@ struct i3c_master_controller {
+ 	struct i3c_bus bus;
+ 	struct workqueue_struct *wq;
+ 	struct work_struct hj_work;
++	struct work_struct reg_work;
+ 	unsigned int dev_nack_retry_count;
+ };
+ 
 -- 
 2.53.0
 
