@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0663955F4;
-	Tue, 21 Jul 2026 15:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92814D90C0;
+	Tue, 21 Jul 2026 15:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649507; cv=none; b=DGCSyQdSvF2Q7TpqVkPKeeC3oceLUnJRno+JTqBV21Fy9RkC9WOag1c3Ta0QeXGJl2rnsxx9mRiMFAGU0ecGg5hjaycF/OszC8zxN8+Ej3q+EMGLyLi5WDhvCx8mX8cXETSJ/XHruRV8lmiBAInqeiXh9xlSoDL3XAVA/i+6Y8Q=
+	t=1784649509; cv=none; b=XYN5iQGcOQ/a++J1hiNIad6UYrSuMpCm4bFzNeYyRU6V5h6U/y7UQWDfFZWyV/Z9rxyoXPEGHOL8sm71F8xdq8vCscPDmPfo7lapzJ2wAMnrJKCs/6a5eOCoM3QMnKhqqcYZSYBFhrpqS1g13lB0cCMkYght+MkklHQ6gjUOmUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649507; c=relaxed/simple;
-	bh=bI0VqIG+Ao6V5ow2qjYU9++ljsFe5/uldhKkP/NVbLw=;
+	s=arc-20240116; t=1784649509; c=relaxed/simple;
+	bh=HnZxdGYBS8KKTvZCoQ4qKlbnAkY/eewpDhweP1KzGRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q4mARi62Zwg7NsRMPTc2UCgPgfq9DXPIIQha31fe9ro3NSaIWOeLwcXkejXvXEtxnswQcCy5USFZau2mvFHGT6Zdz9d5QbNP+KP0xWp4huqmEW3s4IKm9QA3SwikAxapTJg3LQldRvdtz9GYQvQKTwcaEdzZH+xJS9i6udhTVYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fr7jlpyh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tDE0sIxr8D/fEF9o0FT1Z2uK5gyQrTe9Ij0sHlcazNm3kTMomhzVVEOJf9uvbslUpdPAUiDSvnNT7bt1w/a8zRvpZSuaM68NKPAOYUSY0LLfcwGe9hjLphba98v8x0LabSUOd2boQeAzmfpGZPHmNs1cx37VRf5Vu3LKl/Hpocc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=stEOF/wk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fr7jlpyh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F3A1F000E9;
-	Tue, 21 Jul 2026 15:58:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="stEOF/wk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 219721F000E9;
+	Tue, 21 Jul 2026 15:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649506;
-	bh=0KlipjN+E/G0MeHN6cVXS2WlXmPBeRlpM2ONMEaV06E=;
+	s=korg; t=1784649508;
+	bh=zY8jqUG5qlGEkLeNn3I2gePbEly/ECu3JZJXP3zdpSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fr7jlpyhVzddBxBmiuqFY9uxy+/HM6Ob+V9y5wAIRen+uK/QLB8AiwqErfXksAZ0N
-	 G6NW3KxAPnobSkfqe2iDrChQVT0BIsBNrKkY/sD/D+oPNL4RnWTvpqSAmQauoo9aGy
-	 ad/NgTWdgtoKiYvzdtG/Y5p1t2Pr/SKvqxF8OSHY=
+	b=stEOF/wkIcIRi/75b35XsGlmcH4Hi8o47YJ4WD5io66OipWH5EGH44eiu+WswfhHP
+	 N6Iw/ymd4Yg6d0ZMdK6i3JHHH0q56WGAe7442fahHPtpDIhHsyz8v9NJDQIEHlU4MV
+	 EVrV2Bwl/sSl4V/f/ETOpxIVDr0bhBTUJvIJ4Hmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0605/2077] vfs: add FS_USERNS_DELEGATABLE flag and set it for NFS
-Date: Tue, 21 Jul 2026 17:04:38 +0200
-Message-ID: <20260721152607.080070303@linuxfoundation.org>
+Subject: [PATCH 7.1 0606/2077] hwmon: (it87) Clamp negative values to zero in set_fan()
+Date: Tue, 21 Jul 2026 17:04:39 +0200
+Message-ID: <20260721152607.103491775@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,102 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit c5d6cac28646b0d5d81ef632be748ae93c1f36c7 ]
+[ Upstream commit 7f8581c70a3bd50a932d3d2d253e99c5ec3eda74 ]
 
-Commit e1c5ae59c0f2 ("fs: don't allow non-init s_user_ns for filesystems
-without FS_USERNS_MOUNT") prevents the mount of any filesystem inside a
-container that doesn't have FS_USERNS_MOUNT set.
+set_fan() parses user input with kstrtol() and passes the resulting
+value to FAN16_TO_REG() on chips with 16-bit fan support.
 
-This broke NFS mounts in our containerized environment. We have a daemon
-somewhat like systemd-mountfsd running in the init_ns. A process does a
-fsopen() inside the container and passes it to the daemon via unix
-socket.
+Negative fan speeds are not meaningful and should be rejected before
+conversion. Worst scenario, one may be able to abuse undefined
+behaviour of signed overflow to possibly induce rpm * 2 == 0 in
+FAN16_TO_REG(), thus causing a division by zero.
 
-The daemon then vets that the request is for an allowed NFS server and
-performs the mount. This now fails because the fc->user_ns is set to the
-value in the container and NFS doesn't set FS_USERNS_MOUNT.  We don't
-want to add FS_USERNS_MOUNT to NFS since that would allow the container
-to mount any NFS server (even malicious ones).
+Instead, clamp val < 0 to zero and keep the conversion in its valid
+input domain, avoiding unsafe arithmetic in the register conversion
+path.
 
-Add a new FS_USERNS_DELEGATABLE flag, and enable it on NFS.
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-Fixes: e1c5ae59c0f2 ("fs: don't allow non-init s_user_ns for filesystems without FS_USERNS_MOUNT")
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260129-twmount-v1-1-4874ed2a15c4@kernel.org
-Acked-by: Anna Schumaker <anna.schumaker@oracle.com>
-Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 17d648bf5786 ("it87: Add support for the IT8716F")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://lore.kernel.org/r/20260529141839.1639287-1-n.zhandarovich@fintech.ru
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/fs_context.c |  8 ++++++--
- fs/super.c          | 11 ++++++-----
- include/linux/fs.h  |  1 +
- 3 files changed, 13 insertions(+), 7 deletions(-)
+ drivers/hwmon/it87.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/nfs/fs_context.c b/fs/nfs/fs_context.c
-index c105882edd16e7..1967de7d1dff97 100644
---- a/fs/nfs/fs_context.c
-+++ b/fs/nfs/fs_context.c
-@@ -1769,7 +1769,9 @@ struct file_system_type nfs_fs_type = {
- 	.init_fs_context	= nfs_init_fs_context,
- 	.parameters		= nfs_fs_parameters,
- 	.kill_sb		= nfs_kill_super,
--	.fs_flags		= FS_RENAME_DOES_D_MOVE|FS_BINARY_MOUNTDATA,
-+	.fs_flags		= FS_RENAME_DOES_D_MOVE	|
-+				  FS_BINARY_MOUNTDATA	|
-+				  FS_USERNS_DELEGATABLE,
- };
- MODULE_ALIAS_FS("nfs");
- EXPORT_SYMBOL_GPL(nfs_fs_type);
-@@ -1781,7 +1783,9 @@ struct file_system_type nfs4_fs_type = {
- 	.init_fs_context	= nfs_init_fs_context,
- 	.parameters		= nfs_fs_parameters,
- 	.kill_sb		= nfs_kill_super,
--	.fs_flags		= FS_RENAME_DOES_D_MOVE|FS_BINARY_MOUNTDATA,
-+	.fs_flags		= FS_RENAME_DOES_D_MOVE	|
-+				  FS_BINARY_MOUNTDATA	|
-+				  FS_USERNS_DELEGATABLE,
- };
- MODULE_ALIAS_FS("nfs4");
- MODULE_ALIAS("nfs4");
-diff --git a/fs/super.c b/fs/super.c
-index 378e81efe643bd..97df9e574d8bf5 100644
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -741,12 +741,13 @@ struct super_block *sget_fc(struct fs_context *fc,
- 	int err;
+diff --git a/drivers/hwmon/it87.c b/drivers/hwmon/it87.c
+index 5fd310662ee432..87edb1b6048bb5 100644
+--- a/drivers/hwmon/it87.c
++++ b/drivers/hwmon/it87.c
+@@ -1412,6 +1412,9 @@ static ssize_t set_fan(struct device *dev, struct device_attribute *attr,
+ 	if (kstrtol(buf, 10, &val) < 0)
+ 		return -EINVAL;
  
- 	/*
--	 * Never allow s_user_ns != &init_user_ns when FS_USERNS_MOUNT is
--	 * not set, as the filesystem is likely unprepared to handle it.
--	 * This can happen when fsconfig() is called from init_user_ns with
--	 * an fs_fd opened in another user namespace.
-+	 * Never allow s_user_ns != &init_user_ns when FS_USERNS_MOUNT or
-+	 * FS_USERNS_DELEGATABLE is not set, as the filesystem is likely
-+	 * unprepared to handle it. This can happen when fsconfig() is called
-+	 * from init_user_ns with an fs_fd opened in another user namespace.
- 	 */
--	if (user_ns != &init_user_ns && !(fc->fs_type->fs_flags & FS_USERNS_MOUNT)) {
-+	if (user_ns != &init_user_ns &&
-+	    !(fc->fs_type->fs_flags & (FS_USERNS_MOUNT | FS_USERNS_DELEGATABLE))) {
- 		errorfc(fc, "VFS: Mounting from non-initial user namespace is not allowed");
- 		return ERR_PTR(-EPERM);
- 	}
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index f93b216149cc92..0f5f022e6e7bc7 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -2281,6 +2281,7 @@ struct file_system_type {
- #define FS_MGTIME		64	/* FS uses multigrain timestamps */
- #define FS_LBS			128	/* FS supports LBS */
- #define FS_POWER_FREEZE		256	/* Always freeze on suspend/hibernate */
-+#define FS_USERNS_DELEGATABLE	1024	/* Can be mounted inside userns from outside */
- #define FS_RENAME_DOES_D_MOVE	32768	/* FS will handle d_move() during rename() internally. */
- 	int (*init_fs_context)(struct fs_context *);
- 	const struct fs_parameter_spec *parameters;
++	if (val < 0)
++		val = 0;
++
+ 	err = it87_lock(data);
+ 	if (err)
+ 		return err;
 -- 
 2.53.0
 
