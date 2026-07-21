@@ -1,63 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080873FFAD1;
-	Tue, 21 Jul 2026 17:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A128646C4D8;
+	Tue, 21 Jul 2026 17:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655772; cv=none; b=tf0yQzUHOAVAjUsFa8AZKr34vpl2LusRgg+LpZ7UcWnlbaQ6FBlnIt0d/W9EBqzT/xtt0MiHG63MfkEZM/XAZtQB58FJdx/+yvDYgQe6/XoYSbk5r+znJrqPfifYI4T9R3aIktS1/UZsNQZyVbeSJrt2BPwuiBAZjufbu0dYM7A=
+	t=1784655774; cv=none; b=JWNHCh0cFvdGjQSme52WjHAvapxPJ2OXA3Q6InYIqzc3niLlGgLfPFLSmErb4TTVcpCbeNgzUbxYK3U6HAE+axbXxqpBgynqwnWXTW5gyHpvd/H144JBvMIDMsvEcj52xuT4OXRN64W6IU0GTjM8bTJ2vjGZZkAluK/Zij2WtQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655772; c=relaxed/simple;
-	bh=uX1TFoFmHp3s41wK4xd0cVaSj/v4V7louZzn5RsQkYs=;
+	s=arc-20240116; t=1784655774; c=relaxed/simple;
+	bh=Q2u4RrpeKLr29/B6gkEN2hqyM32m+gAssd71VYJHuz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LERdSnuCltnqQwkwt8szHYCdKEQJcm1LFpzE4DPzj3l3GtClqNhQyAxVUhlq0Atzb3GWaLnO5jMxHjjHZ6KwG24l2ybIVztYkX3gTnjuKLNCskm61SZ8DE+J/TKifPvneHW515cCgWGPw+8fw8oFjCvGF0mafD9kCcjRdZr6ZPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSv4mG9m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q0hgJur+vE3VOHJMpSF/HM0P/8x3SnLce0Sp5Bp/DkykA+OaRWt1MhXozcokpfomT1fKsCtu+wmsq/SrA0lzpSQTAeo5V5b+4LbVjN5lOpF/maSyyMwBo9X63o5SCxdFJiX9UdPfae/cEa4c2aJDj5ozzmAMmilHFfjpAyZRO6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VrZPw9R9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSv4mG9m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238F11F00A3A;
-	Tue, 21 Jul 2026 17:42:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VrZPw9R9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8731F000E9;
+	Tue, 21 Jul 2026 17:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655770;
-	bh=Qs5Gg6NQG5qgry7TO0mMYwc3Oul0GiK8K1O+spC+UyE=;
+	s=korg; t=1784655773;
+	bh=vr/RL+03jcErnMIldPBXJgA0qBugNHpd1i/9maZZt34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FSv4mG9mUQFAr5sS/AzRS6t9dXPzY9H/n8zXRKtdkGYE4Ksh60nZTc5xy9A/SPIX+
-	 SYW0ctYaAKjtcTRgVcJKxY5jgWZj9zNk6NYnMMVhicuxgcOfQL9jiHAHm107ZDCi2r
-	 o0ndpjhedyCgrWAV4sQaWaudG31mWVGpGPiYwxIw=
+	b=VrZPw9R91FCxob5PY9Ull0jGm4DZKmgotu5rXSir8EyTJMBNXxvpK2lsm+D9ojeh5
+	 Sm1hDLOkGrBV9dqGTXLW7W2fsf650AZcy2GQDRPpF+5Jbs1FR3mxvs4hJNRgnENS2Z
+	 EYq4XzBcJAenwrg0vttrsTmg849hh2TzbC5t2WuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Safonov <0x7f454c46@gmail.com>,
-	Dmitry Safonov <dima@arista.com>,
-	Francesco Ruggeri <fruggeri@arista.com>,
-	Salam Noureddine <noureddine@arista.com>,
-	David Ahern <dsahern@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Michal Luczaj <mhal@rbox.co>,
-	David Wei <dw@davidwei.uk>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Xin Long <lucien.xin@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	netdev@vger.kernel.org,
-	linux-bluetooth@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Aleksa Sarai <aleksa@amutable.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0134/1611] uaccess: fix ignored_trailing logic in copy_struct_to_user()
-Date: Tue, 21 Jul 2026 17:04:10 +0200
-Message-ID: <20260721152517.888258701@linuxfoundation.org>
+Subject: [PATCH 6.18 0099/1611] watchdog: sprd_wdt: Remove redundant sprd_wdt_disable() on register failure
+Date: Tue, 21 Jul 2026 17:03:35 +0200
+Message-ID: <20260721152517.071049809@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -76,68 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 4911de3145a797389577abfdf9a5185d36cc18d7 ]
+[ Upstream commit 96b3cfc3b8ad0524d12fed1e08bc5df3ff345f64 ]
 
-Currently all callers pass ignored_trailing=NULL, but I have
-code that will make use of.
+The driver uses devm_add_action_or_reset() to register sprd_wdt_disable()
+as a managed cleanup action.
 
-Now it actually behaves like documented:
+When devm_watchdog_register_device() fails, the devm core will invoke
+the cleanup action automatically.
 
-* If @usize < @ksize, then the kernel is trying to pass userspace a newer
-  struct than it supports. Thus we only copy the interoperable portions
-  (@usize) and ignore the rest (but @ignored_trailing is set to %true if
-  any of the trailing (@ksize - @usize) bytes are non-zero).
+The explicit sprd_wdt_disable() call in the error path is therefore
+redundant and results in adouble cleanup.
 
-Fixes: 424a55a4a908 ("uaccess: add copy_struct_to_user helper")
-Cc: Dmitry Safonov <0x7f454c46@gmail.com>
-Cc: Dmitry Safonov <dima@arista.com>
-Cc: Francesco Ruggeri <fruggeri@arista.com>
-Cc: Salam Noureddine <noureddine@arista.com>
-Cc: David Ahern <dsahern@kernel.org>
-Cc: David S. Miller <davem@davemloft.net>
-Cc: Michal Luczaj <mhal@rbox.co>
-Cc: David Wei <dw@davidwei.uk>
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: Marcel Holtmann <marcel@holtmann.org>
-Cc: Xin Long <lucien.xin@gmail.com>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Kuniyuki Iwashima <kuniyu@google.com>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Willem de Bruijn <willemb@google.com>
-Cc: Neal Cardwell <ncardwell@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Simon Horman <horms@kernel.org>
-Cc: Aleksa Sarai <cyphar@cyphar.com>
-Cc: Christian Brauner <brauner@kernel.org>
-CC: Kees Cook <keescook@chromium.org>
-Cc: netdev@vger.kernel.org
-Cc: linux-bluetooth@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Link: https://patch.msgid.link/71f69442410c1186ed8ce6d5b4b9d4a5a70edbad.1775576651.git.metze@samba.org
-Reviewed-by: Aleksa Sarai <aleksa@amutable.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 78d9bfad2e89 ("watchdog: sprd_wdt: Convert to use device managed functions and other improvements")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20260223-sprd_wdt-v1-1-2e71f9a76ecb@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/uaccess.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/watchdog/sprd_wdt.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/uaccess.h b/include/linux/uaccess.h
-index 7657904c8db9c8..6973fee49f091c 100644
---- a/include/linux/uaccess.h
-+++ b/include/linux/uaccess.h
-@@ -499,7 +499,7 @@ copy_struct_to_user(void __user *dst, size_t usize, const void *src,
- 			return -EFAULT;
- 	}
- 	if (ignored_trailing)
--		*ignored_trailing = ksize < usize &&
-+		*ignored_trailing = usize < ksize &&
- 			memchr_inv(src + size, 0, rest) != NULL;
- 	/* Copy the interoperable parts of the struct. */
- 	if (copy_to_user(dst, src, size))
+diff --git a/drivers/watchdog/sprd_wdt.c b/drivers/watchdog/sprd_wdt.c
+index 4e689b6ff1418c..aacf04616fefe2 100644
+--- a/drivers/watchdog/sprd_wdt.c
++++ b/drivers/watchdog/sprd_wdt.c
+@@ -320,10 +320,9 @@ static int sprd_wdt_probe(struct platform_device *pdev)
+ 	watchdog_init_timeout(&wdt->wdd, 0, dev);
+ 
+ 	ret = devm_watchdog_register_device(dev, &wdt->wdd);
+-	if (ret) {
+-		sprd_wdt_disable(wdt);
++	if (ret)
+ 		return ret;
+-	}
++
+ 	platform_set_drvdata(pdev, wdt);
+ 
+ 	return 0;
 -- 
 2.53.0
 
