@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0DE2EBB8D;
-	Tue, 21 Jul 2026 20:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931CF33A9FC;
+	Tue, 21 Jul 2026 20:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666475; cv=none; b=nN68eXTa29FjoQ/QszY+Qivu3sG1uUJJQZpfFgKFYQZxResLMnM9Zzoj7IR+zt20nKJNzMfdAcxeF5dh0Jt1g4nqHhW1I50y2Dja4hakoApnI2Un3UWtnBsEQSskLs4qqCxCgmlSdzPsZ1VeQO2O+yxN5W+6tq8Z2EFzMKk6LGc=
+	t=1784666478; cv=none; b=jNj7LEAkuvq/QyuqfDjGdkUY9EYo0jsh4coJRpMthMly1b+JSKJi0PDjkHD4UbEK9M5hKssEgMgboOmqtQDl7gzDTN9QL3jU2A+Ck7J5vow/EE/8Gl/p1CVtGLZYA4TkQGpaoP1MZ5e+V3E3NQny5KOIFmJHHTpWjOnOt2NABtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666475; c=relaxed/simple;
-	bh=HSl7WJm4CltPqLIOOiQta+W4rN0JOvuOMW7ndOH7dsE=;
+	s=arc-20240116; t=1784666478; c=relaxed/simple;
+	bh=TYavxxVcNZeyUWZo1E4qvescDHAHyiSi7/bAh1YfENw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oN6q2IiyQJslX334to59iP1FJqhN4/yLswKWh+wPUnDKokYTT4gVtnr4e9Mkp4PC3zBPrLiDXTXuIPYLZO2LZdCvivYUR4MFIup91Qic2uKQjJcSIC4ZV92ZyO8e0y4tRgO6Jbyrrctv11tZ3Pzj/Gu+uaN3KSzWYoTZ4S54QDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTH0gK9e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EB2qJCy8YuZVYsUXTLyITbrVGTOpvZh8yN17HF91tQSh5l8j0TVkZ2ktGwg/7sDMZ6LDCvwmTlyLbAGWHGyvhnVV3KOb3GfArur/mOFSvytr4L+TUHrJWB7crLdwEc5SnzM0TyQQ4NMrqmGvJqL33i9ChnEeeX2pWysE5j0yEu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c0+GSYGt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTH0gK9e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9711F00A3A;
-	Tue, 21 Jul 2026 20:41:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0+GSYGt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043461F000E9;
+	Tue, 21 Jul 2026 20:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666474;
-	bh=s35Ttn6kSJssw47lv3mGRT/c+VZfM69Xv7ASNerpdBA=;
+	s=korg; t=1784666477;
+	bh=bYNc7LQAnVdjnvHqrnMhKf3K3bDTuZ2OruKd/TBxnaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aTH0gK9eeOCdRLgQfQXy2Lkl919l4B6YmoRW+INJIqZqEw8QZXnXRFyh/l27mq3nV
-	 +FW6TX0uSlkAdjIzyoLbU7ffRai8OaQFmYqT5PF48u1skWpeA8XoCzWyEd1E2O5Zsf
-	 jLfFJ03IMyuieSCKHUo1uar6aFZt6iTKjfFbvYrw=
+	b=c0+GSYGtuOUwNd2i4lZygU+9KQGIuILoio2DfLWfS7ONKQtg3Xd2vplVzdlTOnvzw
+	 F5y/HQ04hibE9K0qNpok9Z/mLjcmV42ryHHjNzQXmLiVXHzQGKKEAm3TK727W963Ba
+	 5SmIlOn5tBhAUM6HvVaYhxq4QVGjkjUq2JlvZO9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zygmunt Krynicki <me@zygoon.pl>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0698/1266] apparmor: aa_label_alloc use aa_label_free on alloc failure
-Date: Tue, 21 Jul 2026 17:18:55 +0200
-Message-ID: <20260721152457.479007816@linuxfoundation.org>
+Subject: [PATCH 6.6 0699/1266] apparmor: fix rawdata_f_data implicit flex array
+Date: Tue, 21 Jul 2026 17:18:56 +0200
+Message-ID: <20260721152457.501919312@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,39 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zygmunt Krynicki <me@zygoon.pl>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit 654fe7505dc6889724d4094fa64f89991afabfc3 ]
+[ Upstream commit ad213bbbc0e3e270ce7df2d9d80d4ce3826993d7 ]
 
-aa_label_alloc() allocates a secid before allocating or taking the label
-proxy. If the later proxy step fails, the error path only freed the label
-memory, leaking any resources initialized by aa_label_init().
+rawdata_f_data has a blob of data that is allocated at its end but
+not explicitly declared. Makes sure it is correctly declared as a
+flex_rray.
 
-Use aa_label_free() on the failure path so partially initialized labels
-release their secid and other label resources before the backing memory is
-freed.
-
-Fixes: f1bd904175e81 ("apparmor: add the base fns() for domain labels")
-Signed-off-by: Zygmunt Krynicki <me@zygoon.pl>
+Fixes: 63c16c3a76085 ("apparmor: Initial implementation of raw policy blob compression")
+Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/label.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/apparmor/apparmorfs.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/security/apparmor/label.c b/security/apparmor/label.c
-index 73428072a754f1..37282a3c68a720 100644
---- a/security/apparmor/label.c
-+++ b/security/apparmor/label.c
-@@ -452,7 +452,7 @@ struct aa_label *aa_label_alloc(int size, struct aa_proxy *proxy, gfp_t gfp)
- 	return new;
+diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
+index 3fdb084db3a917..bb183924b7a2cd 100644
+--- a/security/apparmor/apparmorfs.c
++++ b/security/apparmor/apparmorfs.c
+@@ -71,10 +71,10 @@
  
- fail:
--	kfree(new);
-+	aa_label_free(new);
+ struct rawdata_f_data {
+ 	struct aa_loaddata *loaddata;
++	DECLARE_FLEX_ARRAY(char, data);
+ };
  
- 	return NULL;
+ #ifdef CONFIG_SECURITY_APPARMOR_EXPORT_BINARY
+-#define RAWDATA_F_DATA_BUF(p) (char *)(p + 1)
+ 
+ static void rawdata_f_data_free(struct rawdata_f_data *private)
+ {
+@@ -1436,7 +1436,7 @@ static ssize_t rawdata_read(struct file *file, char __user *buf, size_t size,
+ 	struct rawdata_f_data *private = file->private_data;
+ 
+ 	return simple_read_from_buffer(buf, size, ppos,
+-				       RAWDATA_F_DATA_BUF(private),
++				       private->data,
+ 				       private->loaddata->size);
  }
+ 
+@@ -1469,8 +1469,7 @@ static int rawdata_open(struct inode *inode, struct file *file)
+ 	private->loaddata = loaddata;
+ 
+ 	error = decompress_zstd(loaddata->data, loaddata->compressed_size,
+-				RAWDATA_F_DATA_BUF(private),
+-				loaddata->size);
++				private->data, loaddata->size);
+ 	if (error)
+ 		goto fail_decompress;
+ 
 -- 
 2.53.0
 
