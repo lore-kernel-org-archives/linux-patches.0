@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C8A44AB88;
-	Tue, 21 Jul 2026 21:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A299244AB60;
+	Tue, 21 Jul 2026 21:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669170; cv=none; b=PSh5fFyTAklZ2fCidYNgS6rMmaPlGHmW/bOwMvjT6p8+l0M9gKLWuRa26wPl6kQpq06WGCUYWQMZ2BWIksF3IKwmbK+ZF7CdYXxcfOzYsc/I9SFse/RuufQcCeiKTA7AWUVj3A4MIzN1vEIvT1wXNsEP3ONDY97Me/U6gSdWOZ0=
+	t=1784669172; cv=none; b=gL5FTA6jQEThiekJGoJxSzUvQKSTH2aHUkuM7/katSUoLO6b98s1vP1VoUCvSAtwQLdwDTQqK0BB6sGD6YgWT5YlS23gSInde5oJ1FAEvP/D1xP2wD5ZWkrb4OB3e5t8Esn++tIRs1J+eHZnPQTJWFkqyPvV/Om4a4weTFgjUM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669170; c=relaxed/simple;
-	bh=V27ejXd1w3kKES29Sg94KpxlN3/Yr9WC+0Ka+XETVPc=;
+	s=arc-20240116; t=1784669172; c=relaxed/simple;
+	bh=rBH/xwImEJwNfOeOKHUK4IDCO6AtaPfpZWbK7kyH7qY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l98DseL49rf4/ruj0EiaFq8LXJZUHFhStr/MpYtjFmu19lXkwGK8pbuDoXpEoLIhAGWqKRjdfqmNwCec/Q2KIS4W/pYPWCyGB26LacjmLgZ5A/qrlSRVWYZ+jq/lwHulpxU8wGErWlYVmo4FuPBmnd13tyCIzojOShDgTlZ5VjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/yoW2hh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jg0jjI1i8lJ9X+D0FiSEsKs/OXGUYuCw8SLH4iUG8R6UT/28TMW/enc/GIqaSRXRGdRrD5oWFiHFZ5ssVH4wvg1R7FRafZIXPJtgqkC45Oo7jPOEb0fe/TGDFI+U9Bvcu52qkovqiurIOBjjgAeotYtTHATL37WfLyJ5FpcUwwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwoL8jgg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/yoW2hh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB491F000E9;
-	Tue, 21 Jul 2026 21:26:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwoL8jgg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135E11F000E9;
+	Tue, 21 Jul 2026 21:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669168;
-	bh=Tih+EmprBJu3O5DDBld+8AdCQ9TVdVWmxaTg/d6+AZ4=;
+	s=korg; t=1784669171;
+	bh=RtmCEPWsYinsl2Ude6YQI4BJEa69CsiQXnoMByfW5xY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y/yoW2hhZ4oEwX4byeIvvsF3V9EHacXK6i0BZEdPokfidvNGlWYAb4JBkoRxwabwI
-	 Zgod4ezHXxmVIljwvurwoeUl5K7362j82pUwiI370+HAXAluqBeU6keJyoeBnjjzth
-	 xHzruQsUF34e59Ag8tfKIo7L7wKsqipdrEzEkVVI=
+	b=nwoL8jggDegQi4YZvqYih2sqQTK+4wxBh/J2D59fufCKllwT+TPGqzaU2pxEh3pGL
+	 bbCzD0MFQP2fgbbZtDSl8fMH8IvErG9SZSusKpFQMNP3jhQQew0m9OnLQlZwGLTjtg
+	 vUfzIbjQYu84RjQTJJKO6takgzR4mH77pKqD69u4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Yael Chemla <ychemla@nvidia.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0452/1067] net/mlx5: Check max_macs devlink param value against max capability
-Date: Tue, 21 Jul 2026 17:17:33 +0200
-Message-ID: <20260721152434.728969779@linuxfoundation.org>
+Subject: [PATCH 6.1 0453/1067] net: bcmgenet: Use weighted round-robin TX DMA arbitration
+Date: Tue, 21 Jul 2026 17:17:34 +0200
+Message-ID: <20260721152434.751878081@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -55,73 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
 
-[ Upstream commit d7b0413b35715d7b32cb12d4d424613eff85ed2b ]
+[ Upstream commit fd615abd53110f0f815984e99e7cc51ca6b7d979 ]
 
-The max_macs devlink param is checked against the FW max value only at
-param register time (driver load) and inside the validate callback
-(devlink param set). The stored DRIVERINIT value persists across FW
-resets and devlink reloads without any further checks against the max.
+Under heavy network traffic, we observed sporadic TX queue timeouts on the
+Raspberry Pi 4. The timeouts can be reproduced by stress testing the TX
+path with multiple concurrent iperf UDP streams:
 
-If the FW link type changes from Ethernet to IB and a FW reset happens,
-the MAX cap for log_max_current_uc_list will become zero, but the
-previously stored max_macs value remains and is unconditionally
-programmed into the HCA caps in handle_hca_cap(). FW will then return a
-syndrome during SET_HCA_CAP:
+    iperf3 -c <ip> -u -b0 -P16 -t60
+    NETDEV WATCHDOG: CPU: 0: transmit queue 0 timed out 2044 ms
+    NETDEV WATCHDOG: CPU: 3: transmit queue 0 timed out 2004 ms
 
- mlx5_cmd_out_err:839:(pid 3831): SET_HCA_CAP(0x109) op_mod(0x0) failed,
- status bad parameter(0x3), syndrome (0x537801), err(-22)
- set_hca_cap:907:(pid 3831): handle_hca_cap failed
+Investigation showed that the timeouts are caused by the priority-based
+arbiter. Under heavy load the highest priority queue starves the lower
+priority ones, causing timeouts. The TX strict priority arbiter is not
+suitable for the default use case where all the traffic gets spread
+across all the TX queues.
 
-This results in a failure to register the RDMA device.
+Therefore, to fix this, switch the TX DMA arbiter to Weighted Round-Robin,
+which services all queues, so they do not stall. The weights were chosen
+to follow the existing priority scheme: q0 gets the smallest weight, while
+q1-4 get the bulk of the TX bandwidth.
 
-This patch skips programming log_max_current_uc_list when the MAX
-capability is 0 (in case of IB).
-
-Fixes: 8680a60fc1fc ("net/mlx5: Let user configure max_macs generic param")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Yael Chemla <ychemla@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Link: https://patch.msgid.link/20260611135230.534513-1-tariqt@nvidia.com
+Fixes: 1c1008c793fa ("net: bcmgenet: add main driver file")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+Link: https://patch.msgid.link/20260610085238.56300-1-ovidiu.panait.rb@renesas.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ .../net/ethernet/broadcom/genet/bcmgenet.c    | 23 +++++++------------
+ 1 file changed, 8 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index 72af9827157d8e..ef406e8d5fc4e9 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -550,7 +550,6 @@ static int handle_hca_cap(struct mlx5_core_dev *dev, void *set_ctx)
- {
- 	struct mlx5_profile *prof = &dev->profile;
- 	void *set_hca_cap;
--	int max_uc_list;
- 	int err;
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index ab06c676e2cbaa..a22f569987c6f8 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -41,9 +41,8 @@
  
- 	err = mlx5_core_get_caps(dev, MLX5_CAP_GENERAL);
-@@ -627,10 +626,13 @@ static int handle_hca_cap(struct mlx5_core_dev *dev, void *set_ctx)
- 		MLX5_SET(cmd_hca_cap, set_hca_cap, roce,
- 			 mlx5_is_roce_on(dev));
+ #include "bcmgenet.h"
  
--	max_uc_list = max_uc_list_get_devlink_param(dev);
--	if (max_uc_list > 0)
--		MLX5_SET(cmd_hca_cap, set_hca_cap, log_max_current_uc_list,
--			 ilog2(max_uc_list));
-+	if (MLX5_CAP_GEN_MAX(dev, log_max_current_uc_list)) {
-+		int max_uc_list = max_uc_list_get_devlink_param(dev);
-+
-+		if (max_uc_list > 0)
-+			MLX5_SET(cmd_hca_cap, set_hca_cap,
-+				 log_max_current_uc_list, ilog2(max_uc_list));
-+	}
+-/* Default highest priority queue for multi queue support */
+-#define GENET_Q1_PRIORITY	0
+-#define GENET_Q0_PRIORITY	1
++#define GENET_Q0_WEIGHT		1
++#define GENET_Q1_WEIGHT		4
  
- 	return set_caps(dev, set_ctx, MLX5_SET_HCA_CAP_OP_MOD_GENERAL_DEVICE);
- }
+ #define GENET_Q0_RX_BD_CNT	\
+ 	(TOTAL_DESC - priv->hw_params->rx_queues * priv->hw_params->rx_bds_per_q)
+@@ -2081,13 +2080,6 @@ static netdev_tx_t bcmgenet_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	int i;
+ 
+ 	index = skb_get_queue_mapping(skb);
+-	/* Mapping strategy:
+-	 * queue_mapping = 0, unclassified, packet xmited through ring 0
+-	 * queue_mapping = 1, goes to ring 1. (highest priority queue)
+-	 * queue_mapping = 2, goes to ring 2.
+-	 * queue_mapping = 3, goes to ring 3.
+-	 * queue_mapping = 4, goes to ring 4.
+-	 */
+ 	ring = &priv->tx_rings[index];
+ 	txq = netdev_get_tx_queue(dev, index);
+ 
+@@ -2787,8 +2779,9 @@ static void bcmgenet_fini_tx_napi(struct bcmgenet_priv *priv)
+ 
+ /* Initialize Tx queues
+  *
+- * Queues 1-4 are priority-based, each one has 32 descriptors,
+- * with queue 1 being the highest priority queue.
++ * Queues 1-4 are the priority queues, each one has 32 descriptors.
++ * The weighted round-robin arbiter gives them a larger share of TX
++ * bandwidth than the default queue 0.
+  *
+  * Queue 0 is the default Tx queue with
+  * GENET_Q0_TX_BD_CNT = 256 - 4 * 32 = 128 descriptors.
+@@ -2816,8 +2809,8 @@ static void bcmgenet_init_tx_queues(struct net_device *dev)
+ 	dma_ctrl = 0;
+ 	ring_cfg = 0;
+ 
+-	/* Enable strict priority arbiter mode */
+-	bcmgenet_tdma_writel(priv, DMA_ARBITER_SP, DMA_ARB_CTRL);
++	/* Enable Weighted Round-Robin arbiter mode */
++	bcmgenet_tdma_writel(priv, DMA_ARBITER_WRR, DMA_ARB_CTRL);
+ 
+ 	/* Initialize Tx priority queues */
+ 	for (i = 0; i <= priv->hw_params->tx_queues; i++) {
+@@ -2827,7 +2820,7 @@ static void bcmgenet_init_tx_queues(struct net_device *dev)
+ 		ring_cfg |= (1 << i);
+ 		dma_ctrl |= (1 << (i + DMA_RING_BUF_EN_SHIFT));
+ 		dma_priority[DMA_PRIO_REG_INDEX(i)] |=
+-			(i ? GENET_Q1_PRIORITY : GENET_Q0_PRIORITY)
++			(i ? GENET_Q1_WEIGHT : GENET_Q0_WEIGHT)
+ 			<< DMA_PRIO_REG_SHIFT(i);
+ 	}
+ 
 -- 
 2.53.0
 
