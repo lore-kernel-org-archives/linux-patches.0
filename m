@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4383B8412;
-	Tue, 21 Jul 2026 21:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A34239B97E;
+	Tue, 21 Jul 2026 21:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670083; cv=none; b=HGVCbt7AhAlj6a/kd26RwWe12XqqgB/z4n/YCZx/o1t0vjB8gYbyIfbVrm0djwdEP2FKAmoIbDv2ECTwP5eOTiBdZsDp7reuzetqOcMmolNaDmcp6q+fr0+8sJGANzW6ZZRKJAvsBPkSon6V/KvyS2/VLL41aXNwGzdQ8XGRSas=
+	t=1784670085; cv=none; b=qOizFr467IQDSuZsAq4v4nzsrc138Wpc/nSaLH+Zdv2zZySdVK++RTfeTpdSB8TNptcjzvsWjvw0fVSiRx6iwSHDaup/JMPFZJhao6oUCCSH+Tkt84K6zvbN2kuHM/ctrr2XFtF4+R1PoDPQD2pZJoFMpibshI8ObtokAJSJbe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670083; c=relaxed/simple;
-	bh=ncq+1boDj1q7IiQ0tv3IYk0/xXXItYnp6F3ZtvyHn8I=;
+	s=arc-20240116; t=1784670085; c=relaxed/simple;
+	bh=Z6JEvfsVNTN94FcL9t1xwLkSatxQzpjwWTn5s0LJsys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MeSvYFGcb5H404Wpzyf3VBwAlJ7t0K4jSVQsFYxcGsuS5H1CRsqOoOs9YhGJr++J6lMZIvRqXN7r7UtIwEA3Z5OGBOWSMvDXP4lp4QdiSjAlFw8WFI1tPGxwbgdjiOAYVxiDIg7UsbC5dAKHbJNuD71aQZzPfVNcg+2gbFtN+AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BBe2n9uy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EJhssGg+95gERHpBUqbmVmX+ZvPBlY7D+qrLTt2ULxEZM9gmTCwD45XA8zokBZyC6gjk2o3D/KJ8i3MldWZqz+zjwY7p4yUtpiW7dsF+tJ9xC21GA7TNQ/aifN5aFTK0TtPo45/mGmBQcSpx3Uvc6URd5K3LdFlnBu+5/cApflo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Usw2YdQy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BBe2n9uy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6153D1F000E9;
-	Tue, 21 Jul 2026 21:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Usw2YdQy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0425C1F000E9;
+	Tue, 21 Jul 2026 21:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670081;
-	bh=kN1mc/M8F9iVhhjgkQZBCPzrHrJKVEiVARtIR2H6l1I=;
+	s=korg; t=1784670084;
+	bh=FWeXUaYkmOJ2+NngWJfvZmmkgcz90pBD6RlKdZfT1kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BBe2n9uyGI15Ig9xq1YZaZRcTO1evD9xEfgVEs+EhZT0ieZBK3iOxn5WMStIDemdB
-	 YczWzqcJH/wTDjhL57P1SnbB+PU0GkWXYG2vtxyrXbHRhEwIm1T7wIEIXxcxy5T4dF
-	 uvHO2/9Vh/6Mi9rjJvQ+fWeFsfby/WZ5DjDEDTj0=
+	b=Usw2YdQyzWyWxfXWuQ7dd99wIxRvBNZREzXdM0TOStCOqiDToNNrWq55jN4/KksJQ
+	 V2YRlcCpoP9GhEOOSnm/6JorS3cIT/7AFnBHeWoPM93Bo8q/ya8hLo441SJLmaQ0k0
+	 heEwTgvfyU5YSmxqbIBccW1FZsNXaDeTc3kOpGGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Jun <1742789905@qq.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>
-Subject: [PATCH 6.1 0754/1067] soc: fsl: qe: panic on ioremap() failure in qe_reset()
-Date: Tue, 21 Jul 2026 17:22:35 +0200
-Message-ID: <20260721152441.440936358@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Haoze Xie <royenheart@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.1 0745/1067] netfilter: nf_queue: pin bridge device while NFQUEUE holds fake dst
+Date: Tue, 21 Jul 2026 17:22:26 +0200
+Message-ID: <20260721152441.245016583@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,42 +56,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Jun <1742789905@qq.com>
+From: Haoze Xie <royenheart@gmail.com>
 
-commit a0fe29d20e7822182e12324905af5115c1b3aed3 upstream.
+commit c9c9b37f8c5505224e8d206184df3bb668ee00cf upstream.
 
-When ioremap() fails in qe_reset(), the global pointer qe_immr remains
-NULL, leading to a subsequent NULL pointer dereference when the pointer
-is accessed. Since this happens early in the boot process, a failure to
-map a few bytes of I/O memory indicates a fatal error from which the
-system cannot recover.
+The br_netfilter fake rtable is embedded in struct net_bridge and is
+attached to bridged packets with skb_dst_set_noref(). If such a packet is
+queued to NFQUEUE, __nf_queue() upgrades that fake dst with
+skb_dst_force().
 
-Follow the same pattern as qe_sdma_init() and panic immediately when
-ioremap() fails. This avoids a silent NULL pointer dereference later
-and makes the error explicit.
+At that point the queued skb can hold a real dst reference after bridge
+teardown has started. The problem is not that every bridged packet needs
+its own dst reference. The problem is that NFQUEUE can keep the bridge
+private fake dst alive after unregister begins.
 
-Fixes: 986585385131 ("[POWERPC] Add QUICC Engine (QE) infrastructure")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wang Jun <1742789905@qq.com>
-Link: https://lore.kernel.org/r/tencent_FED49CF5331CC0C7910618883332A08E2606@qq.com
-[chleroy: Rearranged change to reduce churn]
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Fix this by keeping the bridge fake dst model unchanged and pinning the
+bridge master device only while the packet sits in NFQUEUE. Record the
+bridge device in nf_queue_entry when the queued skb carries a bridge fake
+dst, take a device reference for the queue lifetime, and drop it when the
+queue entry is freed.
+
+Also make sure queued entries are reaped when that bridge device goes
+down, and drop the redundant nf_bridge_info_exists() test from the fake
+dst detection.
+
+This keeps netdev_priv(br->dev) alive until verdict completion, so the
+embedded fake rtable and its metrics backing storage cannot be freed out
+from under dst_release(). It also avoids the constant refcount bump and
+avoids using ipv4-specific dst helpers for IPv6 bridge traffic.
+
+Fixes: 34666d467cbf ("netfilter: bridge: move br_netfilter out of the core")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Haoze Xie <royenheart@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/fsl/qe/qe.c |    3 +++
- 1 file changed, 3 insertions(+)
+ include/net/netfilter/nf_queue.h |    1 +
+ net/netfilter/nf_queue.c         |   14 ++++++++++++++
+ net/netfilter/nfnetlink_queue.c  |    3 +++
+ 3 files changed, 18 insertions(+)
 
---- a/drivers/soc/fsl/qe/qe.c
-+++ b/drivers/soc/fsl/qe/qe.c
-@@ -88,6 +88,9 @@ void qe_reset(void)
- 	if (qe_immr == NULL)
- 		qe_immr = ioremap(get_qe_base(), QE_IMMAP_SIZE);
+--- a/include/net/netfilter/nf_queue.h
++++ b/include/net/netfilter/nf_queue.h
+@@ -16,6 +16,7 @@ struct nf_queue_entry {
+ 	unsigned int		id;
+ 	unsigned int		hook_index;	/* index in hook_entries->hook[] */
+ #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
++	struct net_device	*bridge_dev;
+ 	struct net_device	*physin;
+ 	struct net_device	*physout;
+ #endif
+--- a/net/netfilter/nf_queue.c
++++ b/net/netfilter/nf_queue.c
+@@ -67,6 +67,7 @@ static void nf_queue_entry_release_refs(
+ 		nf_queue_sock_put(state->sk);
  
-+	if (!qe_immr)
-+		panic("QE:ioremap failed!");
+ #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
++	dev_put(entry->bridge_dev);
+ 	dev_put(entry->physin);
+ 	dev_put(entry->physout);
+ #endif
+@@ -83,6 +84,8 @@ static void __nf_queue_entry_init_physde
+ {
+ #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
+ 	const struct sk_buff *skb = entry->skb;
++	struct dst_entry *dst = skb_dst(skb);
++	struct net_device *dev = NULL;
+ 
+ 	if (nf_bridge_info_exists(skb)) {
+ 		entry->physin = nf_bridge_get_physindev(skb, entry->state.net);
+@@ -91,6 +94,16 @@ static void __nf_queue_entry_init_physde
+ 		entry->physin = NULL;
+ 		entry->physout = NULL;
+ 	}
 +
- 	qe_snums_init();
++	if (entry->state.pf == NFPROTO_BRIDGE &&
++	    dst && (dst->flags & DST_FAKE_RTABLE))
++		dev = dst_dev_rcu(dst);
++
++	/* Must hold a reference on the bridge device: dst_hold() protects
++	 * the dst itself, but the fake rtable is embedded in bridge-private
++	 * storage that netdevice teardown can free independently.
++	 */
++	entry->bridge_dev = dev;
+ #endif
+ }
  
- 	qe_issue_cmd(QE_RESET, QE_CR_SUBBLOCK_INVALID,
+@@ -107,6 +120,7 @@ bool nf_queue_entry_get_refs(struct nf_q
+ 	dev_hold(state->out);
+ 
+ #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
++	dev_hold(entry->bridge_dev);
+ 	dev_hold(entry->physin);
+ 	dev_hold(entry->physout);
+ #endif
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -950,6 +950,9 @@ dev_cmp(struct nf_queue_entry *entry, un
+ 
+ 	if (physinif == ifindex || physoutif == ifindex)
+ 		return 1;
++
++	if (entry->bridge_dev && entry->bridge_dev->ifindex == ifindex)
++		return 1;
+ #endif
+ 	if (entry->skb_dev && entry->skb_dev->ifindex == ifindex)
+ 		return 1;
 
 
