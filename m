@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EC546EC65;
-	Tue, 21 Jul 2026 18:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161019475;
+	Tue, 21 Jul 2026 18:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658634; cv=none; b=SVfLbTH10C/6Fk2psQ9FEqhLlzHVQwgfZ8VT05QsI+qdpcda0+0dcgcn1/Cs7xhY1QLIlJq4AMln3/bZEySpNr5VajOe98FmIjgL0wloY9bHzYgdr34CLOArgN9pLd3uTxnpLnhawM85CdoVpfJPJfoDigXr5zUHU5IcIk8SfLE=
+	t=1784658637; cv=none; b=PWEOok48G9F/UdJ45pgt/HehjV3537eenGjkMg+wC373lrrmrbJv7vzYkITMnaxKK9k40obsQoppYIf0oCbQqM0hkySMvT+KhU+uc5ZTQLfQvpWrcoDaU3+DXFPAZM0I9JTpyaDzhDsYhmIV/EOH00h99P8AYIW5LHTROX2jfnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658634; c=relaxed/simple;
-	bh=XpdSWWgqfVEc4P8x67mIbpuAkJgm5RLxgawSqO/7Fs4=;
+	s=arc-20240116; t=1784658637; c=relaxed/simple;
+	bh=zoC8bHeDG3EmjUFcmgow3Q4Lj6k/hmv2H74JEEOeaGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hiu/2pWzgLbLKeelj542cVIosMsuF59Fh9VW/ccbTRKWc5rdY/L0lxxz0g+9oW79gVsaLSreyv6h12YYNo5bfKK8O0SXNBzJpxxeb8CqotMs4+rNsLesA3BHZHfSjwmL3NcKbDeM/sc3lSvr+tsqAlLU1stjruUGHVYyaDyhK+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2cLvtJ8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JXRSGqcWCnspzYoRymqTHqkzEzUsJ1dN281lpJHvQV+eBdG4cZSWWYSY78UGZYmwWYRayTm0G/8ha1AhjVbAVzU2Xr170499awBFiYRB5E9tuLankGVmuLY4M8jgKkpzq4HNK8AqU3+Y2lsOE3MOXSEkuVb305SjgxqWHMlj62U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ALSFVvqx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2cLvtJ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1351F00A3E;
-	Tue, 21 Jul 2026 18:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ALSFVvqx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80EA91F00A3E;
+	Tue, 21 Jul 2026 18:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658633;
-	bh=2dVXz+hnrYkufG9UUWKO3JIOaJhx29nexJ7+NQPE5UQ=;
+	s=korg; t=1784658636;
+	bh=BG00C1o28LmsXrA7J+5ojN9V/31sAd5BJVQfYNOQ5FE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D2cLvtJ8vm1+zwC8BjDd1KvUmK/15x6mKkedpdaIL+dHFgfLHZTyQVIIR3FWc14l0
-	 DpyaMaIhNm+TWqMUk6kJ/Njy+dIWMMa+fDkIixoYdX+kpulKy41CMlfdtp2sHxnSNw
-	 pgzSib5PezZdAzQzo83+5y1DP7L2PWoV4NM+mVHk=
+	b=ALSFVvqxU3rR6xcgvQZoutXiSAdqn/MYCboWZigqukzMWGpOHeiN4jcxeKP7QMZ2l
+	 4MqHhiWxI30yw9NSRkYCZGOjDNj/TyZuQk38g4MSWciunwzPTCvoSult0Pr/gLAG5E
+	 5Q/eRcsjEoBorYpHHdrg/vEC633/6gNRowhDp/TQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Chuck Lever <cel@kernel.org>,
 	Jeff Layton <jlayton@kernel.org>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 1218/1611] sunrpc: wait for in-flight TLS handshake callback when cancel loses race
-Date: Tue, 21 Jul 2026 17:22:14 +0200
-Message-ID: <20260721152542.831818324@linuxfoundation.org>
+Subject: [PATCH 6.18 1219/1611] sunrpc: harden rq_procinfo lifecycle to prevent double-free
+Date: Tue, 21 Jul 2026 17:22:15 +0200
+Message-ID: <20260721152542.854784382@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,62 +57,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-commit d00e32f84ca1a77cb67a3fbf59f58dada95f5a21 upstream.
+commit 18d216788bef06332ff8901670ecf1ed8f6eb614 upstream.
 
-When wait_for_completion_interruptible_timeout() in
-svc_tcp_handshake() returns 0 (timeout) or -ERESTARTSYS (signal) and
-tls_handshake_cancel() then returns false, handshake_complete() has
-won the cancellation race: it has set HANDSHAKE_F_REQ_COMPLETED and
-is about to invoke svc_tcp_handshake_done(), but the callback's
-side effects on xpt_flags and on svsk->sk_handshake_done have not
-yet committed.
+The svc_release_rqst() function executes the callback inside
+rqstp->rq_procinfo->pc_release. However, if a worker thread begins
+processing a new request and encounters an early error path (e.g.,
+unsupported protocol, short frame, or bad auth) before a valid
+rq_procinfo is installed, a stale release hook can be re-triggered
+against reused state from the previous RPC, resulting in a double-free
+or use-after-free vulnerability.
 
-The current code reads xpt_flags immediately to decide whether the
-session succeeded. Two races result.
+Harden the lifecycle of rq_procinfo by:
+1. Ensuring svc_release_rqst() always clears rq_procinfo after the
+   optional pc_release() call, regardless of whether the hook exists.
+2. Explicitly clearing rq_procinfo at request entry in svc_process()
+   before any early decode or drop paths.
+3. Ensuring svc_process_bc() does the same at backchannel entry.
 
-If the callback has executed set_bit(XPT_TLS_SESSION) but not yet
-clear_bit(XPT_HANDSHAKE), svc_tcp_handshake() sees a session,
-enqueues the transport, and returns. svc_xprt_received() then
-clears XPT_BUSY, a worker thread picks the transport up, the
-dispatcher in svc_handle_xprt() observes XPT_HANDSHAKE still set,
-and xpo_handshake is invoked a second time. That svc_tcp_handshake()
-calls init_completion(&svsk->sk_handshake_done) while the original
-callback concurrently calls complete_all() on it, corrupting the
-embedded swait_queue.
+This guarantees that error flows will not encounter a non-NULL stale
+rq_procinfo pointer when there is nothing to release.
 
-If the callback has set HANDSHAKE_F_REQ_COMPLETED but not yet
-entered svc_tcp_handshake_done(), svc_tcp_handshake() reads
-XPT_TLS_SESSION as clear and tears the connection down even though
-the handshake is about to succeed.
-
-Wait for the callback to commit before inspecting xpt_flags. The
-completion is guaranteed to fire because handshake_complete()
-invokes svc_tcp_handshake_done() unconditionally once it has set
-HANDSHAKE_F_REQ_COMPLETED.
-
-Fixes: b3cbf98e2fdf ("SUNRPC: Support TLS handshake in the server-side TCP socket code")
+Fixes: d9adbb6e10bf ("sunrpc: delay pc_release callback until after the reply is sent")
 Cc: stable@vger.kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Suggested-by: Chuck Lever <cel@kernel.org>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svcsock.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/sunrpc/svc.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -504,6 +504,10 @@ static void svc_tcp_handshake(struct svc
- 			svc_xprt_put(xprt);
- 			goto out_close;
- 		}
-+		/* Cancellation lost to handshake_complete(): the
-+		 * callback is in flight and should finish quickly.
-+		 */
-+		wait_for_completion(&svsk->sk_handshake_done);
- 	}
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -1529,6 +1529,12 @@ static void svc_release_rqst(struct svc_
  
- 	if (!test_bit(XPT_TLS_SESSION, &xprt->xpt_flags)) {
+ 	if (procp && procp->pc_release)
+ 		procp->pc_release(rqstp);
++
++	/*
++	 * A subsequent svc_release_rqst() on this rqstp must not
++	 * re-invoke pc_release against released state.
++	 */
++	rqstp->rq_procinfo = NULL;
+ }
+ 
+ /**
+@@ -1547,6 +1553,9 @@ void svc_process(struct svc_rqst *rqstp)
+ 		svc_xprt_deferred_close(rqstp->rq_xprt);
+ #endif
+ 
++	/* Discard a stale release hook from a previous RPC. */
++	rqstp->rq_procinfo = NULL;
++
+ 	/*
+ 	 * Setup response xdr_buf.
+ 	 * Initially it has just one page
+@@ -1603,6 +1612,7 @@ void svc_process_bc(struct rpc_rqst *req
+ 	int proc_error;
+ 
+ 	/* Build the svc_rqst used by the common processing routine */
++	rqstp->rq_procinfo = NULL;
+ 	rqstp->rq_xid = req->rq_xid;
+ 	rqstp->rq_prot = req->rq_xprt->prot;
+ 	rqstp->rq_bc_net = req->rq_xprt->xprt_net;
 
 
