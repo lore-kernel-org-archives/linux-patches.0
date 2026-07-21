@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71A24746A6;
-	Tue, 21 Jul 2026 20:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1418B43D51D;
+	Tue, 21 Jul 2026 20:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667507; cv=none; b=F9G0pm0rVPBxbH+Fh07V9sYTFp1bLAifli9cN5v8jPTVbiOfW/S4HRY9J0c/eZaJY3gYpvEPjFCJEj5EtE9eL5yWwwL2sBh2VOP2CSUcE0CYMxfieiGtUokmAvy37kywjFyd6bFk1jDPQEgZHWa+KFzbHGwWWCuJ95p5PEzISsY=
+	t=1784667507; cv=none; b=ZPEpXmMn7gHSYwsXLsbh3Qu89BcW+SeCxmoSshct48amjDqF06vvdKXXID7RNgTEz8h9LuLNLX3uDMST/QhCuB0uAfvQ8OyNHoDX75fYo72/gQE6gp8AH483E146XOsz31qhNUR6gpWC5Nod8wfttjk9d5tlN02nyN1r0C1s5E0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784667507; c=relaxed/simple;
-	bh=2lSdh18JwAsQ9OjjgYWC4BVHkuTZmf/Nw4+W/f1NbZk=;
+	bh=YrWwz1zc/rypNR1uQuQ4xPucj6J/zOlcb58n3/W/wp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NB8LLbNla/B3Nl5epp9Z9J5V7UUnaQk1lQOoL6n70rUwpeGivxNYXThlBLivb5CpxNWEXYasRhi8mKTnxGxF7ssjhDNh7FHVeJrgP2Wg1MgnXNvXm2X8Twq9/I+E+unNm2SbpkgyRoalKc3dEj8tHd6u5Fm755VgRlPzip19I+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+FzYC8I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fi6gsgKkbI3LwNJ3YI6JfYhQYKE8CyCKMpBDplfWSkZU2zOntp+GQtpmHBws2VqyiPSUylzFVeqfegTjqNkJrGz7iwMHhhzJWVq36Jyo+bK1D4mexAC+mwSXovBgddtGIxtG0xw6jEAKLhICIhuetJBysglVSQPcvwbS3i+aF3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDZfQqQ1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+FzYC8I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D6F1F00A3E;
-	Tue, 21 Jul 2026 20:58:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDZfQqQ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77EFE1F000E9;
+	Tue, 21 Jul 2026 20:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667490;
-	bh=2zBYyUlIw7pfX777FidV2iz4QX2ceehLM+6VJWZYq9A=;
+	s=korg; t=1784667496;
+	bh=jJBzItftmwlHecNe3ltE3xG7Gdth3jYyKlMO5ccSgdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g+FzYC8I7SdVcKa12aq9r/3R/BLi49W/eDw8PEGYUo94kml4yRH8JRfeiZpG9wcv6
-	 EXHpYDt6HUnqp+hXNObfV11f1+oakuKTShru5jl8H2kPmVm2+eAEgMnhu9ysk5mQcs
-	 0Z5NJp5oygnPUDLb9kEgWJAVfckBJL/jTDff8rHc=
+	b=hDZfQqQ12eYRmqBfi59AgdcRHbn1GXJc2gFL8UVz4ntM4ZHH8MrkhGGT/VvvgGVHu
+	 8ZcPJGGSYxf+IzxxZUx6RJF4eo0lGF+ln0MB2e5owcj7mzYrZ2VUmkh+JkIS/0Rl6w
+	 qqfi4sun/wyAKrHoATjRE0Yc1QGiyJgWv38km01A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Zihan Xi <xizh2024@lzu.edu.cn>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 1081/1266] net: wwan: t7xx: destroy DMA pool on CLDMA late init failure
-Date: Tue, 21 Jul 2026 17:25:18 +0200
-Message-ID: <20260721152506.001286035@linuxfoundation.org>
+Subject: [PATCH 6.6 1083/1266] net/sched: act_ct: preserve tc_skb_cb across defragmentation
+Date: Tue, 21 Jul 2026 17:25:20 +0200
+Message-ID: <20260721152506.047269439@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,40 +55,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Zihan Xi <xizh2024@lzu.edu.cn>
 
-commit 2bd6f26d4ce1e87de4d736b1e8896daf3acf1c0e upstream.
+commit 9092e15defbe6c7bc241c306093ca9d358a578e7 upstream.
 
-t7xx_cldma_late_init() creates md_ctrl->gpd_dmapool before
-initializing the TX and RX rings. If any ring initialization
-fails, the error path frees the already initialized rings but
-leaves the DMA pool allocated.
+tcf_ct_handle_fragments() calls nf_ct_handle_fragments() without saving
+and restoring skb->cb. The defrag helper clears IPCB/IP6CB, which aliases
+the tc_skb_cb/qdisc_skb_cb control buffer. Fragmented traffic through
+act_ct therefore loses qdisc metadata such as pkt_segs and can trigger
+WARN_ON_ONCE() in qdisc_pkt_segs() when panic_on_warn is enabled.
 
-Destroy md_ctrl->gpd_dmapool on the late-init failure path
-to avoid leaking the DMA pool.
+Save and restore the full tc_skb_cb around nf_ct_handle_fragments(),
+matching the pattern used by ovs_ct_handle_fragments().
 
-Fixes: 39d439047f1d ("net: wwan: t7xx: Add control DMA interface")
+Fixes: ec624fe740b4 ("net/sched: Extend qdisc control block with tc control block")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260621031714.3605022-1-haoxiang_li2024@163.com
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Zihan Xi <xizh2024@lzu.edu.cn>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Link: https://patch.msgid.link/510c51217fd7aaf29c6dc298bab8d643fe229b1c.1781358692.git.xizh2024@lzu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wwan/t7xx/t7xx_hif_cldma.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/sched/act_ct.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wwan/t7xx/t7xx_hif_cldma.c
-+++ b/drivers/net/wwan/t7xx/t7xx_hif_cldma.c
-@@ -1053,6 +1053,9 @@ err_free_tx_ring:
- 	while (i--)
- 		t7xx_cldma_ring_free(md_ctrl, &md_ctrl->tx_ring[i], DMA_TO_DEVICE);
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -845,11 +845,11 @@ static int tcf_ct_handle_fragments(struc
+ 				   u8 family, u16 zone, bool *defrag)
+ {
+ 	enum ip_conntrack_info ctinfo;
++	struct tc_skb_cb cb;
+ 	struct nf_conn *ct;
+ 	int err = 0;
+ 	bool frag;
+ 	u8 proto;
+-	u16 mru;
  
-+	dma_pool_destroy(md_ctrl->gpd_dmapool);
-+	md_ctrl->gpd_dmapool = NULL;
-+
- 	return ret;
+ 	/* Previously seen (loopback)? Ignore. */
+ 	ct = nf_ct_get(skb, &ctinfo);
+@@ -863,12 +863,13 @@ static int tcf_ct_handle_fragments(struc
+ 	if (err || !frag)
+ 		return err;
+ 
+-	err = nf_ct_handle_fragments(net, skb, zone, family, &proto, &mru);
++	cb = *tc_skb_cb(skb);
++	err = nf_ct_handle_fragments(net, skb, zone, family, &proto, &cb.mru);
+ 	if (err)
+ 		return err;
+ 
+ 	*defrag = true;
+-	tc_skb_cb(skb)->mru = mru;
++	*tc_skb_cb(skb) = cb;
+ 
+ 	return 0;
  }
- 
 
 
