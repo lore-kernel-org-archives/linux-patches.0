@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C4B30EF9A;
-	Tue, 21 Jul 2026 19:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEA6425863;
+	Tue, 21 Jul 2026 19:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662429; cv=none; b=TNWDprDOdgDaA06eCx1SOTWNrJ3PS+4ps1vOXx+bU6/mx492exeF3OPjF0scgMTKQwE4+vNmEG6JdDMZif5OWw3iXrL1pZAsutcmq/5cerpwcgeqkH8W3NFSvudH/PdA1db5Rqtw9GfNf47oo8L77KbCNuq2lGcAcfxWiEQGZUM=
+	t=1784662431; cv=none; b=JjyCA2EMKLwoXrvQi7lC52FNJZFeSXVZ0k79iG2WdSR7MjlSRJvlKXKSUX9AXjxosXAVqJ7KuEnk7JM/SwZhGfvtnHsAOMgePS19e572ak/fFV6TOw/w0ANM26qzaAQ4cDmBEbK1p4imnSCutm3K5dlhtqKgyJSdI71yPWQGJjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662429; c=relaxed/simple;
-	bh=4zru547EVyA/nTx54Ea9U9sUQjIKnpvDXH1b0Bp8VYE=;
+	s=arc-20240116; t=1784662431; c=relaxed/simple;
+	bh=G6rIHKqkBWLFuF/WUJN4dyT6t8/NVmjK1yepu+bR2YE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Na1zJ97SrNyiASunO5tK/dbuuy3qbMJzY/QfyYQyVPXAQzqSwWu3PrkHPKdFe4uzf3amXTdY3buc3YuBdD4kZJqssP1DGfZmnAQuHj/UbFo/sN44cNgJZU0lt2fueVwOLk73c77qF5G7UfevtLohUEq6g3XDRXoa1HvVaXBX8SA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ez4KnZpj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WZ1CFkNfXPphGWuki+NDY2E56V1fPtDMijkd42wssvDIx/FdmpXqRooNbkMEUirACveBtB2hcjx8EnJiBjjM0WLxWStEwFs3RWhNlms29RRTC+q5ZAI+fJ5eYXkZFHqG8TQXuEM6I5k9NpddwOX+RgKrZ79NfSdeREm/Qmr5Fg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lx/Rx539; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ez4KnZpj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FECD1F000E9;
-	Tue, 21 Jul 2026 19:33:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lx/Rx539"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38AC41F000E9;
+	Tue, 21 Jul 2026 19:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662428;
-	bh=U+mYS3ij1Y/P20DC0UcPoPNo9X8qsAWmlHWMF72TngI=;
+	s=korg; t=1784662430;
+	bh=gm5en09o9kmiTt4mq2imauKGEtp7ZeaI7jiuopMSx94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ez4KnZpjLTfsjB+R2oBgb0ZFxgETZZrLXUCw26ZuRGLF3rMZqjeTKqP+v87szTlpn
-	 V3GlyaZHFSscwUOAKP9N5I+gT2/PR39xMd6ektFZ2lr5/UvCCFE6Kw/nwHjLBmwTyB
-	 oLsm1aN2m8/w5aCK5xCJ5GewkPTDBG6hx3whoUD8=
+	b=Lx/Rx539F3TSvWzcRQLXpk64K22QI9DZijovr/ZSPOIGgklKJjwfz3l0NM5UHdhxx
+	 MZcVETwwA6tlaXNghy1qF2ztNJ+fSJg3CuxMOjryleeI5mMMQSG8dgzLJDHKpy9qlV
+	 czTFXDO3i59ajMAylKZbuMQO3mtV1Ur6m60Dttno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Kim <james010kim@gmail.com>,
+	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0441/1276] char: tlclk: fix use-after-free in tlclk_cleanup()
-Date: Tue, 21 Jul 2026 17:14:44 +0200
-Message-ID: <20260721152455.969416337@linuxfoundation.org>
+Subject: [PATCH 6.12 0442/1276] PCI: qcom: Disable ASPM L0s for SA8775P
+Date: Tue, 21 Jul 2026 17:14:45 +0200
+Message-ID: <20260721152455.992549035@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,58 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Kim <james010kim@gmail.com>
+From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
 
-[ Upstream commit bbf003b7794d6ad6f939fdd29f1f1bde8ac554c1 ]
+[ Upstream commit 29f692985819f4089f02a86e151a72f6d4cdd90d ]
 
-This patch improves the module cleanup process in the tlclk driver to
-prevent potential use-after-free and race conditions.
+Due to a hardware issue, L0s is not properly supported by the PCIe
+controller on the SA8775p SoC. If enabled, the L0s to L0 transition
+triggers below correctable AER errors and may also affect link stability:
 
-Currently, the file_operations structure does not specify the .owner
-field, which could allow the module to be unloaded while user-space
-processes are still interacting with the device. Additionally, the
-tlclk_cleanup() function frees the alarm_events memory before ensuring
-that blocked processes in the waitqueue are fully awakened and that the
-switchover_timer has completed.
+  pcieport 0000:00:00.0: PME: Signaling with IRQ 332
+  pcieport 0000:00:00.0: AER: enabled with IRQ 332
+  pcieport 0000:00:00.0: AER: Correctable error message received from 0000:01:00.0
+  pci 0000:01:00.0: PCIe Bus Error: severity=Correctable, type=Data Link Layer, (Transmitter ID)
+  pci 0000:01:00.0:   device [17cb:1103] error status/mask=00001000/0000e000
+  pci 0000:01:00.0:    [12] Timeout
+  pcieport 0000:00:00.0: AER: Multiple Correctable error message received from 0000:01:00.0
+  pcieport 0000:00:00.0: PCIe Bus Error: severity=Correctable, type=Data Link Layer, (Transmitter ID)
+  pcieport 0000:00:00.0:   device [17cb:0115] error status/mask=00001000/0000e000
+  pcieport 0000:00:00.0:    [12] Timeout
 
-To address these cases, this patch:
-- Sets '.owner = THIS_MODULE' in tlclk_fops to safely defer module
-  unloading while the device is in use.
-- Updates tlclk_cleanup() to explicitly wake up all blocked readers
-  (wake_up_all), properly release hardware I/O regions, and safely
-  delete the timer (timer_delete_sync) prior to freeing memory.
+Hence, disable L0s for the SA8775p SoC to allow it to properly function
+by sacrificing a little bit of power saving.
 
-Fixes: 1a80ba882730 ("[PATCH] Telecom Clock Driver for MPCBL0010 ATCA computer blade")
-Signed-off-by: James Kim <james010kim@gmail.com>
-Link: https://patch.msgid.link/20260503101131.64219-1-james010kim@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 58d0d3e032b3 ("PCI: qcom-ep: Add support for SA8775P SOC")
+Assisted-by: Claude:claude-4-6-sonnet
+Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+[mani: commit log, corrected fixes tag]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20260419093934.1223027-1-shengchao.guo@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tlclk.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/pci/controller/dwc/pcie-qcom.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/char/tlclk.c b/drivers/char/tlclk.c
-index 377bebf6c925da..103127c2aeabcd 100644
---- a/drivers/char/tlclk.c
-+++ b/drivers/char/tlclk.c
-@@ -264,6 +264,7 @@ static ssize_t tlclk_read(struct file *filp, char __user *buf, size_t count,
- }
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 533782940f2e21..81ba04cedc72ab 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1385,6 +1385,7 @@ static const struct qcom_pcie_cfg cfg_1_9_0 = {
+ static const struct qcom_pcie_cfg cfg_1_34_0 = {
+ 	.ops = &ops_1_9_0,
+ 	.override_no_snoop = true,
++	.no_l0s = true,
+ };
  
- static const struct file_operations tlclk_fops = {
-+	.owner = THIS_MODULE,
- 	.read = tlclk_read,
- 	.open = tlclk_open,
- 	.release = tlclk_release,
-@@ -853,6 +854,9 @@ static void __exit tlclk_cleanup(void)
- 	misc_deregister(&tlclk_miscdev);
- 	unregister_chrdev(tlclk_major, "telco_clock");
- 
-+	got_event = 1;
-+	wake_up_all(&wq);
-+
- 	release_region(TLCLK_BASE, 8);
- 	del_timer_sync(&switchover_timer);
- 	kfree(alarm_events);
+ static const struct qcom_pcie_cfg cfg_2_1_0 = {
 -- 
 2.53.0
 
