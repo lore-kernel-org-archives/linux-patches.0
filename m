@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D9924A078;
-	Tue, 21 Jul 2026 21:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F067C282F31;
+	Tue, 21 Jul 2026 21:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668838; cv=none; b=pX3NFqvK9F9yJmK+Ghso+sE0WM7hP2sOev9GDrvTIBFtx9VJ8U4goSmDKp7eVUY3Ebgo9IBlFD3zZ3fbQLsfShF3eSSKt8sh0g42ik24guGULOOpTuQ+zQGKkSDuPuRLFYIIzdqntcg4UDiqUm2FuxOx/ufJlFSt10jlIIcIaHE=
+	t=1784668841; cv=none; b=bh7G3TdIyMBv7+48u8ErBz9mtlJqSbgc9r5uf8JrLf/DLJbT8YzTxy0dnlLeDhwnlnuZke5S3B+AzGSqQHBjnYY7G4yf8TJw/0alkQ4sq10tb1iMigDt7aEE8FDKZTb8d0VTGRvd4Z5leqmSf9WMDskhWln6xx5SvLK/mZOeRB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668838; c=relaxed/simple;
-	bh=2uqwCMLqj230L0m37I/JRYSd+4EUBNKxtKS+5EfKYAw=;
+	s=arc-20240116; t=1784668841; c=relaxed/simple;
+	bh=LMiCwwh+K/bPq6I/HRcS1Te3zzC0jKMyx0pMOE6jZIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NlaBcLTF9UM5SQ53nVzXbF/l+n6M0oK3bkjlwBwenPjUhYgIYaUsb7PbTcZOKJvzdRuR4OGazAsA9tTAqBBYZ+hbLUf5ZuJz93Cy4ZbuHh3nFPQjl4/QVCGVFxgM0e5W0K9AjeWSuWJFJPCdczmfn97pFVIqbTc+nPoNq8jCd/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUQ+jiuj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l7/bSqg4oSaKBdfIcejj0uM9Qzd3H3Jhk00OT896iuG7x4SBjhvAxl5su+s+TrshSHKIOJRNnryNX9vOhvNmprCcEhwZcDs5uprY2xaW2ZrhcV838nFiRR8SvaeUhLAEUdrIVB7kQJyUZyiA3XKMOJ3zglutVX4Jr33SXaxCh18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lEIqFrrV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUQ+jiuj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C9E1F00A3A;
-	Tue, 21 Jul 2026 21:20:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lEIqFrrV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619B41F00A3A;
+	Tue, 21 Jul 2026 21:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668837;
-	bh=DhBGX/8Kf4ezsj8+xm9P9ixdbFImaUuaqwtCjspKlOE=;
+	s=korg; t=1784668839;
+	bh=RXfKEeMLCJFgoOCAjO9GfXX6b/x96EWKfh5thT/F7tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OUQ+jiujM9dT4asAdJ4Q11Cih1h9f70dW40rnNeC/hODsgV57/4n8ieoMVicWDG+T
-	 J7rAsgoKJKI5b9e8I7YdHWmlncRF4B30RoTJBbjrcnH0Aq35aFw5O3tqyKaU/SzSkJ
-	 C6l/TkHR4IHTsL/miANtyb3MWiRgDyybPiFN4XHI=
+	b=lEIqFrrV9cRr3/urTxcuSkfXbgAPniPZ+OXFW0sb+1pL8qKwI0We0OHPP1yn/ULEr
+	 oPMGj7+j/OVKP8l9xJWS/F1FrsgYEVFFciLj4GVt9lsjuUJGjpIBiMhwm3XZQRaZYU
+	 RVGrDL+eRC5HekbGKGeqGkSM1Sr53aAHQrE9FgJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronaldo Nunez <rnunez@baylibre.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Samuel Holland <samuel@sholland.org>,
+	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0325/1067] pwm: imx27: Fix variable truncation in .apply()
-Date: Tue, 21 Jul 2026 17:15:26 +0200
-Message-ID: <20260721152431.861747178@linuxfoundation.org>
+Subject: [PATCH 6.1 0326/1067] bus: sunxi-rsb: Always check register address validity
+Date: Tue, 21 Jul 2026 17:15:27 +0200
+Message-ID: <20260721152431.883930353@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -46,68 +47,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ronaldo Nunez <rnunez@baylibre.com>
+From: Samuel Holland <samuel@sholland.org>
 
-[ Upstream commit dc9e08fdbcc3eb08a1d2b868b535081c44425e27 ]
+[ Upstream commit 61192938a5870ac36edae81e4775b680dcf02c61 ]
 
-Fix a variable truncation when calculating period in microseconds as
-part of the solution for the ERR051198 in .apply() callback.
+The register address was already validated for read operations in
+regmap_sunxi_rsb_reg_read before being truncated to a u8. Write operations
+have the same set of possible addresses, and the address is being truncated
+from u32 to u8 here as well, so the same check is needed.
 
-Example scenario:
- - Period of 3us (PWMPR = 196 and prescaler = 1)
- - Expected value in tmp: 198000000000 (NSEC_PER_SEC * (196 + 2) * 1)
- - Actual value is 431504384 (truncation to u32)
-
-Signed-off-by: Ronaldo Nunez <rnunez@baylibre.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260522191348.6227-1-rnunez@baylibre.com
-Fixes: a25351e4c774 ("pwm: imx27: Workaround of the pwm output bug when decrease the duty cycle")
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+Signed-off-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+Fixes: d787dcdb9c8f ("bus: sunxi-rsb: Add driver for Allwinner Reduced Serial Bus")
+Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://patch.msgid.link/20260301144939.1832806-1-andrej.skvortzov@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-imx27.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/bus/sunxi-rsb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pwm/pwm-imx27.c b/drivers/pwm/pwm-imx27.c
-index 0cd42ae5c0a4c9..dfbc99227e8970 100644
---- a/drivers/pwm/pwm-imx27.c
-+++ b/drivers/pwm/pwm-imx27.c
-@@ -218,7 +218,7 @@ static void pwm_imx27_wait_fifo_slot(struct pwm_chip *chip,
- static int pwm_imx27_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 			   const struct pwm_state *state)
- {
--	unsigned long period_cycles, duty_cycles, prescale, period_us, tmp;
-+	unsigned long period_cycles, duty_cycles, prescale, period_us;
- 	struct pwm_imx27_chip *imx = to_pwm_imx27_chip(chip);
- 	struct pwm_state cstate;
- 	unsigned long long c;
-@@ -227,6 +227,7 @@ static int pwm_imx27_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 	int val;
- 	int ret;
- 	u32 cr;
-+	u64 tmp;
+diff --git a/drivers/bus/sunxi-rsb.c b/drivers/bus/sunxi-rsb.c
+index 226e87b85116ea..21e7d8a4cc5aae 100644
+--- a/drivers/bus/sunxi-rsb.c
++++ b/drivers/bus/sunxi-rsb.c
+@@ -442,6 +442,9 @@ static int regmap_sunxi_rsb_reg_write(void *context, unsigned int reg,
+ 	struct sunxi_rsb_ctx *ctx = context;
+ 	struct sunxi_rsb_device *rdev = ctx->rdev;
  
- 	pwm_get_state(pwm, &cstate);
- 
-@@ -270,6 +271,11 @@ static int pwm_imx27_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 	val = readl(imx->mmio_base + MX3_PWMPR);
- 	val = val >= MX3_PWMPR_MAX ? MX3_PWMPR_MAX : val;
- 	cr = readl(imx->mmio_base + MX3_PWMCR);
++	if (reg > 0xff)
++		return -EINVAL;
 +
-+	/*
-+	 * tmp stores period in nanoseconds. Result fits in u64 since
-+	 * val <= 0xfffe and prescaler in [1, 0x1000].
-+	 */
- 	tmp = NSEC_PER_SEC * (u64)(val + 2) * MX3_PWMCR_PRESCALER_GET(cr);
- 	tmp = DIV_ROUND_UP_ULL(tmp, clkrate);
- 	period_us = DIV_ROUND_UP_ULL(tmp, 1000);
+ 	return sunxi_rsb_write(rdev->rsb, rdev->rtaddr, reg, &val, ctx->size);
+ }
+ 
 -- 
 2.53.0
 
