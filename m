@@ -1,39 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731484195C9;
-	Tue, 21 Jul 2026 19:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFAC146D544;
+	Tue, 21 Jul 2026 19:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660499; cv=none; b=lgt2znRovAzFF0Py0JhtPQ2FV3u9/nWgeRsKj5sfMu35mgbGCRepJC4/R9C59BG1IHS2ktPSLYqwzcBiA5MnD1Xvu6aLmB/LwRBo6J2rB0ghkRPIEn6V+y28IFOKtpv/QRgONSZt7vcOG8HA5FBA0iazlwxF1SplWqRlVAzkRqg=
+	t=1784660499; cv=none; b=RrpKUvk/XisXZroUO3pmkY1qgSkleAw7VJyVtcIuahbaWlck/h0Mcmmb5Qbk8/Tup8Sw5YSB3CC/JxAkjbLvXUA4Ga/u1QNu0phGa6pBjskLN8fUBR2FOMo/6/4ODd1nbT6B5tUvqagVrFtm+syVrvPja2WDd83rDRtRQd9ztn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784660499; c=relaxed/simple;
-	bh=x7T6GcmnUFj3fyLdouAgmy1WqdewzXzNo8zwo7qV1L4=;
+	bh=mh3w9Mczk2yfK1Ltte5/HYnqvrMbnguhLcKvw5ZAe9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OfiwwHtM2Qlsw+pAS5Nyb2pmlWn+9xCGzW891csnEGvdOoyBs5l0TUxxVjZO2cqOXHiibFAZsnX6okXu0ZdMI246vFm8IrAUhRTNhmRkDRnnEydDpgD8GVWJW6Vfgl1GgEg4VQ6pgNQGt0ADo9L+Mn69r9CdHtP2FgL5aUdNhBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqlKiTFa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M7KAtvcXpegIcOtDJJXhvsOZ4KhEEMSedP5nwKkVc2oI9mj+7TZiocAFiD6ApIqOEZuSzqpq6rnEy//w+SpzXzHW6B01EA/j12ycp/w6YPzOXP1fFHhRsto0AoeIb0fonl9WDgXI7UmYUmKOYI+zJcOVA4rE9WJKt1YVipxUVqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SYpmiQbo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqlKiTFa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79BC31F01560;
-	Tue, 21 Jul 2026 19:01:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SYpmiQbo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AAE71F00A3D;
+	Tue, 21 Jul 2026 19:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660473;
-	bh=XPULf3+aLxQxsb7BYK4RsS0GwbP9HbjEgxQl9KXHFMs=;
+	s=korg; t=1784660496;
+	bh=xWZpHCEsuEf8yaVOF/o8+pTPZB5YtpKyW/qv6jZ7IR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XqlKiTFaTs1CdHFuT+4m2k9oHZVZieghZUvbwdmzkFd8F593zXrgs6L1/SGl864lO
-	 K40500+dZ/7+6WmHQ0n4DgjAzskKqaPKd7bv91f9ZQB1LpUBpH+zNoRggNjncVOfXk
-	 lVr2kihj5PvOhDrJnbBcdMAlGQnYufKz7wrMPbkI=
+	b=SYpmiQbokbOlpS0wDq4rhnsDsqpB7H0mcL92coH8gzOTXMI1KmknYG8qUB3j2RIF2
+	 NQxwyXBL/6q8K5qVhKkmUylpplh25NbojANxxgWwdars7E909PA1VQdyHu3N8BejUK
+	 H0RkvwEld1iRBV2tLuny+9Q6iT1iPlZ/nn/DZC7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@linaro.org>,
+	Jens Remus <jremus@linux.ibm.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Bill Wendling <morbo@google.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Hendrik Brueckner <brueckner@linux.ibm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jan Polensky <japo@linux.ibm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Justin Stitt <justinstitt@google.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0993/2077] xprtrdma: Initialize re_id before removal registration
-Date: Tue, 21 Jul 2026 17:11:06 +0200
-Message-ID: <20260721152616.239299493@linuxfoundation.org>
+Subject: [PATCH 7.1 1001/2077] perf s390: Fix TEXTREL in Python extension by compiling as PIC
+Date: Tue, 21 Jul 2026 17:11:14 +0200
+Message-ID: <20260721152616.426266379@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,58 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Jens Remus <jremus@linux.ibm.com>
 
-[ Upstream commit bb7caa63e1db22fd03e8dc591b12169e99169dff ]
+[ Upstream commit 49f5f6ae67dec54014584bb3126a5a94f14e2a5c ]
 
-rpcrdma_create_id() registers ep->re_rn with the rpcrdma ib_client
-before returning the new rdma_cm_id to rpcrdma_ep_create(). However
-rpcrdma_ep_create() currently stores that pointer in ep->re_id only
-after rpcrdma_create_id() returns.
+On s390 the Python extension build fails as follows when using a linker
+that is configured to treat text relocations (TEXTREL) in shared
+libraries as error by default:
 
-A local administrator can race an NFS/RDMA mount against RDMA device
-removal. If rpcrdma_remove_one() observes the just-registered
-notification before rpcrdma_ep_create() assigns ep->re_id,
-rpcrdma_ep_removal_done() calls trace_xprtrdma_device_removal(NULL).
-The tracepoint dereferences id->device->name and copies
-id->route.addr.dst_addr, so the callback can crash the kernel with a
-NULL pointer dereference.
+  GEN     python/perf.cpython-314-s390x-linux-gnu.so
+/usr/bin/ld.bfd: error: read-only segment has dynamic relocations
 
-Store the rdma_cm_id in ep->re_id immediately before publishing
-ep->re_rn. The existing error path still destroys the id directly if
-registration fails; ep is then freed by the caller without using
-ep->re_id. Remove the later duplicate assignment in rpcrdma_ep_create().
+This occurrs because util/llvm-c-helpers.o is erroneously built from
+util/llvm-c-helpers.cpp without compiler option -fPIC but linked into
+the shared library (via libperf-util.a(perf-util-in.o)).
 
-Fixes: 3f4eb9ff9234 ("xprtrdma: Handle device removal outside of the CM event handler")
-Assisted-by: kres:openai-gpt-5
-Signed-off-by: Chris Mason <clm@meta.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+On s390, object files must be compiled as position-indepedent code (PIC)
+in order to be linked into shared libraries.  Commit a9a3f1d18a6c ("perf
+s390: Always build with -fPIC") added compiler option -fPIC to CFLAGS
+for s390, which is used in C compiles.  Add -fPIC to CXXFLAGS for s390
+as well, so that it is also used in C++ compiles.
+
+Fixes: a9a3f1d18a6c9ccf ("perf s390: Always build with -fPIC")
+Reported-by: Thomas Richter <tmricht@linux.ibm.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Jens Remus <jremus@linux.ibm.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Hendrik Brueckner <brueckner@linux.ibm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jan Polensky <japo@linux.ibm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/verbs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/Makefile.config | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index 5a36f35792e0d3..9b2c186fd221b8 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -334,6 +334,7 @@ static struct rdma_cm_id *rpcrdma_create_id(struct rpcrdma_xprt *r_xprt,
- 	if (rc)
- 		goto out;
+diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
+index 333ddd0e4bd814..33f90968c8a95a 100644
+--- a/tools/perf/Makefile.config
++++ b/tools/perf/Makefile.config
+@@ -109,6 +109,7 @@ endif
  
-+	ep->re_id = id;
- 	rc = rpcrdma_rn_register(id->device, &ep->re_rn, rpcrdma_ep_removal_done);
- 	if (rc)
- 		goto out;
-@@ -406,7 +407,6 @@ static int rpcrdma_ep_create(struct rpcrdma_xprt *r_xprt)
- 	}
- 	__module_get(THIS_MODULE);
- 	device = id->device;
--	ep->re_id = id;
- 	reinit_completion(&ep->re_done);
+ ifeq ($(ARCH),s390)
+   CFLAGS += -fPIC
++  CXXFLAGS += -fPIC
+ endif
  
- 	ep->re_max_requests = r_xprt->rx_xprt.max_reqs;
+ ifeq ($(ARCH),mips)
 -- 
 2.53.0
 
