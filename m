@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D5A3672BA;
-	Tue, 21 Jul 2026 17:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853103E49EF;
+	Tue, 21 Jul 2026 17:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655742; cv=none; b=iagjnpX4yklf1khmgTrpMUcikUNgFmF+7cTMFizuTlCwHgNWR9ybZP4GeqfdRqtBxFsCbkY5ee8a5xanL+9wQlm5iPPqZz4CEXAtVtCIrRiVrOY2Br3faYbbFylalxp9JyO9vLNCu44K6pMmsAJGBSxjzda5BGOAVFZifpuU1HY=
+	t=1784655745; cv=none; b=Tt0GMXanwi1U6tlg90JRMjCTEnYS3IMrKbj+Ic/6y1aIwWPvIlKPfz1KhOQb+olHxiBF9KFdEevP/xJBXIZcPw6QxplIvQXuGvEX4M3uOSfoxI1Py2P6leowfb3VBDbZK3tGHMgc8yglnbkpr69ZavGPl+Y0060t3WUJvk3ZrE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655742; c=relaxed/simple;
-	bh=IQ8GyIGE63kAPIO46dX1JMryNjdu4AKfkm99eO1bxy8=;
+	s=arc-20240116; t=1784655745; c=relaxed/simple;
+	bh=TOKhgiJbivNvIB291oJQoRJTmyZaY+5L3cwkRKaev1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gR6ssSP1yO1wckewZ1rs84M8jpKKkOKCUpaIvzSQBMEM5qlFkofsKZEzgxaEfEED7R5OMk0mrXLnmIITjQBDfMGhWBxOWi0EP19VsPB+rmq6R1MTYY8fCiQnRNR8TfREzkzsIVxQF/dQWNBQl48VGS207PqwISzTaApt+Jm4K9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOSE2+Gz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tgmQlQTh+ndMAA9dO0C+tg3pE3RDbIF9q36vC4m6wA0ThWHV5DCAK7kwzKWK99/jRvFtTAoaX8xLLonpU8ZfDR0qapOetDh4mclDT+7isqlUN1q1cPvjOfpKNHReswfxjzN8KqDpxdscJw6xe3aBRD4CUjLh869erEOMkF0IVSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTm5JlPG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOSE2+Gz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44DA41F000E9;
-	Tue, 21 Jul 2026 17:42:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTm5JlPG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB56C1F000E9;
+	Tue, 21 Jul 2026 17:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655741;
-	bh=1JAYuk9H0YGyoIDPHem+UW7CS7VDsnR1kyT2b+aV0vw=;
+	s=korg; t=1784655744;
+	bh=2WqG9+F/v3+WGPnu83EHVGauZL7y/2KeJ3zkZuYtz1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tOSE2+Gz6cA84uG/Z+uzVnzHN39842m5RJCjB+PrjuAcNbsPl/HPAvzgHxgYN60AR
-	 aebX/Mr2191fQ8vp6YakJZmZpZvLPST3PETmW4uxsUcQZ8j9cHS0JZwwGX/mU1I57f
-	 OnzwPOqJnCNNHfgYl3Yg/WfmQOOAyuAjRlkE/g6w=
+	b=mTm5JlPGyjtVrd3JwSA39jUUAzfKWmQtV1uBGRFQMm2c0Su81XStFQaksuR//e0EA
+	 R35PtBIoLIYRJcBBlMeWp+hKzoQMZ3DMQZHeAUx/7OOtLmGFaMXPaxzB5cn70RkS7F
+	 3F0LCxaAEj+2UoCP6O4tSeg0peeuiVKZq/Ahilnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Andrei Simion <andrei.simion@microchip.com>,
+	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0124/1611] crypto: asymmetric_keys - fix OOB read in pefile_digest_pe_contents
-Date: Tue, 21 Jul 2026 17:04:00 +0200
-Message-ID: <20260721152517.650201822@linuxfoundation.org>
+Subject: [PATCH 6.18 0098/1611] watchdog: sama5d4_wdt: Fix WDDIS detection on SAM9X60 and SAMA7G5
+Date: Tue, 21 Jul 2026 17:03:34 +0200
+Message-ID: <20260721152517.049628247@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,56 +53,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
 
-[ Upstream commit f7dd32c5179d7755de18e21d5674b08f9e5cb180 ]
+[ Upstream commit e8bc610b14a99d24b0916635102cc52ba41def9b ]
 
-pefile_digest_pe_contents() computes the trailing-data hash length as
-pelen - (hashed_bytes + certs_size). A crafted PE can make the addition
-exceed pelen, causing the unsigned subtraction to underflow to ~4 GiB.
-This is passed to crypto_shash_update() which reads out of bounds and
-panics on unmapped vmalloc guard pages.
+The driver hardcoded AT91_WDT_WDDIS (bit 15) in wdt_enabled and the
+probe initial state readout. SAM9X60 and SAMA7G5 use bit 12
+(AT91_SAM9X60_WDDIS), causing incorrect WDDIS detection.
 
- BUG: unable to handle page fault for address: ffffc900038d8000
- Oops: Oops: 0000 [#1] SMP KASAN NOPTI
- RIP: 0010:sha256_blocks_generic (lib/crypto/sha256.c:152)
- Call Trace:
-  <TASK>
-  __sha256_update (lib/crypto/sha256.c:208)
-  crypto_sha256_update (crypto/sha256.c:142)
-  verify_pefile_signature (crypto/asymmetric_keys/verify_pefile.c:436)
-  kexec_kernel_verify_pe_sig (kernel/kexec_file.c:151)
-  __do_sys_kexec_file_load (kernel/kexec_file.c:406)
-  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  </TASK>
- Kernel panic - not syncing: Fatal exception
+Introduce a per-device wddis_mask field to select the correct WDDIS
+bit based on the compatible string.
 
-Validate that the addition does not overflow and the result does not
-exceed pelen before the subtraction. Return -ELIBBAD on failure.
-
-Fixes: af316fc442ef ("pefile: Digest the PE binary and compare to the PKCS#7 data")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 266da53c35fc ("watchdog: sama5d4: readout initial state")
+Co-developed-by: Andrei Simion <andrei.simion@microchip.com>
+Signed-off-by: Andrei Simion <andrei.simion@microchip.com>
+Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/r/20260302113310.133989-2-balakrishnan.s@microchip.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/asymmetric_keys/verify_pefile.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/watchdog/sama5d4_wdt.c | 48 +++++++++++++++-------------------
+ 1 file changed, 21 insertions(+), 27 deletions(-)
 
-diff --git a/crypto/asymmetric_keys/verify_pefile.c b/crypto/asymmetric_keys/verify_pefile.c
-index 1f3b227ba7f221..cec99db14129af 100644
---- a/crypto/asymmetric_keys/verify_pefile.c
-+++ b/crypto/asymmetric_keys/verify_pefile.c
-@@ -305,6 +305,8 @@ static int pefile_digest_pe_contents(const void *pebuf, unsigned int pelen,
+diff --git a/drivers/watchdog/sama5d4_wdt.c b/drivers/watchdog/sama5d4_wdt.c
+index 13e72918338a20..704b786cc2ec63 100644
+--- a/drivers/watchdog/sama5d4_wdt.c
++++ b/drivers/watchdog/sama5d4_wdt.c
+@@ -30,6 +30,7 @@ struct sama5d4_wdt {
+ 	void __iomem		*reg_base;
+ 	u32			mr;
+ 	u32			ir;
++	u32			wddis_mask;
+ 	unsigned long		last_ping;
+ 	bool			need_irq;
+ 	bool			sam9x60_support;
+@@ -48,7 +49,10 @@ MODULE_PARM_DESC(nowayout,
+ 	"Watchdog cannot be stopped once started (default="
+ 	__MODULE_STRING(WATCHDOG_NOWAYOUT) ")");
  
- 	if (pelen > hashed_bytes) {
- 		tmp = hashed_bytes + ctx->certs_size;
-+		if (tmp <= hashed_bytes || pelen < tmp)
-+			return -ELIBBAD;
- 		ret = crypto_shash_update(desc,
- 					  pebuf + hashed_bytes,
- 					  pelen - tmp);
+-#define wdt_enabled (!(wdt->mr & AT91_WDT_WDDIS))
++static inline bool wdt_enabled(struct sama5d4_wdt *wdt)
++{
++	return !(wdt->mr & wdt->wddis_mask);
++}
+ 
+ #define wdt_read(wdt, field) \
+ 	readl_relaxed((wdt)->reg_base + (field))
+@@ -81,12 +85,9 @@ static int sama5d4_wdt_start(struct watchdog_device *wdd)
+ {
+ 	struct sama5d4_wdt *wdt = watchdog_get_drvdata(wdd);
+ 
+-	if (wdt->sam9x60_support) {
++	if (wdt->sam9x60_support)
+ 		writel_relaxed(wdt->ir, wdt->reg_base + AT91_SAM9X60_IER);
+-		wdt->mr &= ~AT91_SAM9X60_WDDIS;
+-	} else {
+-		wdt->mr &= ~AT91_WDT_WDDIS;
+-	}
++	wdt->mr &= ~wdt->wddis_mask;
+ 	wdt_write(wdt, AT91_WDT_MR, wdt->mr);
+ 
+ 	return 0;
+@@ -96,12 +97,9 @@ static int sama5d4_wdt_stop(struct watchdog_device *wdd)
+ {
+ 	struct sama5d4_wdt *wdt = watchdog_get_drvdata(wdd);
+ 
+-	if (wdt->sam9x60_support) {
++	if (wdt->sam9x60_support)
+ 		writel_relaxed(wdt->ir, wdt->reg_base + AT91_SAM9X60_IDR);
+-		wdt->mr |= AT91_SAM9X60_WDDIS;
+-	} else {
+-		wdt->mr |= AT91_WDT_WDDIS;
+-	}
++	wdt->mr |= wdt->wddis_mask;
+ 	wdt_write(wdt, AT91_WDT_MR, wdt->mr);
+ 
+ 	return 0;
+@@ -117,7 +115,7 @@ static int sama5d4_wdt_ping(struct watchdog_device *wdd)
+ }
+ 
+ static int sama5d4_wdt_set_timeout(struct watchdog_device *wdd,
+-				 unsigned int timeout)
++				    unsigned int timeout)
+ {
+ 	struct sama5d4_wdt *wdt = watchdog_get_drvdata(wdd);
+ 	u32 value = WDT_SEC2TICKS(timeout);
+@@ -140,8 +138,8 @@ static int sama5d4_wdt_set_timeout(struct watchdog_device *wdd,
+ 	 * If the watchdog is enabled, then the timeout can be updated. Else,
+ 	 * wait that the user enables it.
+ 	 */
+-	if (wdt_enabled)
+-		wdt_write(wdt, AT91_WDT_MR, wdt->mr & ~AT91_WDT_WDDIS);
++	if (wdt_enabled(wdt))
++		wdt_write(wdt, AT91_WDT_MR, wdt->mr & ~wdt->wddis_mask);
+ 
+ 	wdd->timeout = timeout;
+ 
+@@ -184,10 +182,7 @@ static int of_sama5d4_wdt_init(struct device_node *np, struct sama5d4_wdt *wdt)
+ {
+ 	const char *tmp;
+ 
+-	if (wdt->sam9x60_support)
+-		wdt->mr = AT91_SAM9X60_WDDIS;
+-	else
+-		wdt->mr = AT91_WDT_WDDIS;
++	wdt->mr = wdt->wddis_mask;
+ 
+ 	if (!of_property_read_string(np, "atmel,watchdog-type", &tmp) &&
+ 	    !strcmp(tmp, "software"))
+@@ -213,15 +208,11 @@ static int sama5d4_wdt_init(struct sama5d4_wdt *wdt)
+ 	 * If the watchdog is already running, we can safely update it.
+ 	 * Else, we have to disable it properly.
+ 	 */
+-	if (!wdt_enabled) {
++	if (!wdt_enabled(wdt)) {
+ 		reg = wdt_read(wdt, AT91_WDT_MR);
+-		if (wdt->sam9x60_support && (!(reg & AT91_SAM9X60_WDDIS)))
+-			wdt_write_nosleep(wdt, AT91_WDT_MR,
+-					  reg | AT91_SAM9X60_WDDIS);
+-		else if (!wdt->sam9x60_support &&
+-			 (!(reg & AT91_WDT_WDDIS)))
++		if (!(reg & wdt->wddis_mask))
+ 			wdt_write_nosleep(wdt, AT91_WDT_MR,
+-					  reg | AT91_WDT_WDDIS);
++					  reg | wdt->wddis_mask);
+ 	}
+ 
+ 	if (wdt->sam9x60_support) {
+@@ -273,6 +264,9 @@ static int sama5d4_wdt_probe(struct platform_device *pdev)
+ 	    of_device_is_compatible(dev->of_node, "microchip,sama7g5-wdt"))
+ 		wdt->sam9x60_support = true;
+ 
++	wdt->wddis_mask = wdt->sam9x60_support ? AT91_SAM9X60_WDDIS
++						: AT91_WDT_WDDIS;
++
+ 	watchdog_set_drvdata(wdd, wdt);
+ 
+ 	regs = devm_platform_ioremap_resource(pdev, 0);
+@@ -306,8 +300,8 @@ static int sama5d4_wdt_probe(struct platform_device *pdev)
+ 	watchdog_init_timeout(wdd, wdt_timeout, dev);
+ 
+ 	reg = wdt_read(wdt, AT91_WDT_MR);
+-	if (!(reg & AT91_WDT_WDDIS)) {
+-		wdt->mr &= ~AT91_WDT_WDDIS;
++	if (!(reg & wdt->wddis_mask)) {
++		wdt->mr &= ~wdt->wddis_mask;
+ 		set_bit(WDOG_HW_RUNNING, &wdd->status);
+ 	}
+ 
 -- 
 2.53.0
 
