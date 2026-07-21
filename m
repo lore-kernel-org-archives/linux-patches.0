@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853103E49EF;
-	Tue, 21 Jul 2026 17:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDE33368B8;
+	Tue, 21 Jul 2026 17:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655745; cv=none; b=Tt0GMXanwi1U6tlg90JRMjCTEnYS3IMrKbj+Ic/6y1aIwWPvIlKPfz1KhOQb+olHxiBF9KFdEevP/xJBXIZcPw6QxplIvQXuGvEX4M3uOSfoxI1Py2P6leowfb3VBDbZK3tGHMgc8yglnbkpr69ZavGPl+Y0060t3WUJvk3ZrE8=
+	t=1784655748; cv=none; b=Gs63kJkWGxKhH3HgqPe1Oqi+wp5+PqcOvrRHCzyeWK/DMG6mCxTjvQ7lfJDJXUlZMhHUIHNT04GkylZj7EPA8p4uD9AH9LkKsbIT1YjNK5wifnz2Z5y3CtORpGr8Xfcwa7Pbiz2S/bWs27e//Ol04B4wBuV16YxQK6MXBV3EPt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655745; c=relaxed/simple;
-	bh=TOKhgiJbivNvIB291oJQoRJTmyZaY+5L3cwkRKaev1o=;
+	s=arc-20240116; t=1784655748; c=relaxed/simple;
+	bh=5lLxKAmgXZkyFdnenWKc6JCh5x4aqdRIWTJIMRXJZ7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tgmQlQTh+ndMAA9dO0C+tg3pE3RDbIF9q36vC4m6wA0ThWHV5DCAK7kwzKWK99/jRvFtTAoaX8xLLonpU8ZfDR0qapOetDh4mclDT+7isqlUN1q1cPvjOfpKNHReswfxjzN8KqDpxdscJw6xe3aBRD4CUjLh869erEOMkF0IVSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTm5JlPG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X1WzdpDQ3y9BbyM1b0/O1+lE5l9atBhlvdsZw5aRDDbPkqTQ1wESNzAymuuWpdiFHXw9CD076jFL7kI5KxvdW6cV9eSLRcXziqSh5qZBqaMmtwm9jza+wqFSw7Kd6ygNs7LT5v89i+D169o/VcR7epJS5g228F4STj5dyGmR2dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZtDisM0z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTm5JlPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB56C1F000E9;
-	Tue, 21 Jul 2026 17:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZtDisM0z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9334B1F000E9;
+	Tue, 21 Jul 2026 17:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655744;
-	bh=2WqG9+F/v3+WGPnu83EHVGauZL7y/2KeJ3zkZuYtz1Q=;
+	s=korg; t=1784655747;
+	bh=9Vru9VBeucdEv3Bwu19jG58Gpcu/SUzOodfqwLXaY/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mTm5JlPGyjtVrd3JwSA39jUUAzfKWmQtV1uBGRFQMm2c0Su81XStFQaksuR//e0EA
-	 R35PtBIoLIYRJcBBlMeWp+hKzoQMZ3DMQZHeAUx/7OOtLmGFaMXPaxzB5cn70RkS7F
-	 3F0LCxaAEj+2UoCP6O4tSeg0peeuiVKZq/Ahilnk=
+	b=ZtDisM0zscMScRe/JPPDmPy88C2GfgxAxVdLj424HVeca3ChIupiRcUVuJwspJrAm
+	 yqdEUw9DLBoyKK0D6oxWQ+2MqPHiz2vpvqsAoQ6vja9W4ZJc8QEXsY1/UwYJvsAv1J
+	 wfOP9RGOWtvof6VEfYYXlVxITgux1QUxGZ56rn1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Simion <andrei.simion@microchip.com>,
-	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0098/1611] watchdog: sama5d4_wdt: Fix WDDIS detection on SAM9X60 and SAMA7G5
-Date: Tue, 21 Jul 2026 17:03:34 +0200
-Message-ID: <20260721152517.049628247@linuxfoundation.org>
+Subject: [PATCH 6.18 0125/1611] ARM: multi_v7_defconfig: Correct QCOM_RPMH and QCOM_RPMHPD
+Date: Tue, 21 Jul 2026 17:04:01 +0200
+Message-ID: <20260721152517.675403864@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,155 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit e8bc610b14a99d24b0916635102cc52ba41def9b ]
+[ Upstream commit 02802b40c31d2f2cfc94716189cfaf610930c589 ]
 
-The driver hardcoded AT91_WDT_WDDIS (bit 15) in wdt_enabled and the
-probe initial state readout. SAM9X60 and SAMA7G5 use bit 12
-(AT91_SAM9X60_WDDIS), causing incorrect WDDIS detection.
+QCOM_RPMH and QCOM_RPMHPD can be build only as modules when
+QCOM_COMMAND_DB is module itself.
 
-Introduce a per-device wddis_mask field to select the correct WDDIS
-bit based on the compatible string.
-
-Fixes: 266da53c35fc ("watchdog: sama5d4: readout initial state")
-Co-developed-by: Andrei Simion <andrei.simion@microchip.com>
-Signed-off-by: Andrei Simion <andrei.simion@microchip.com>
-Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://lore.kernel.org/r/20260302113310.133989-2-balakrishnan.s@microchip.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 1c25ca9bb5c5 ("ARM: multi_v7_defconfig: enable more Qualcomm drivers")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/sama5d4_wdt.c | 48 +++++++++++++++-------------------
- 1 file changed, 21 insertions(+), 27 deletions(-)
+ arch/arm/configs/multi_v7_defconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/watchdog/sama5d4_wdt.c b/drivers/watchdog/sama5d4_wdt.c
-index 13e72918338a20..704b786cc2ec63 100644
---- a/drivers/watchdog/sama5d4_wdt.c
-+++ b/drivers/watchdog/sama5d4_wdt.c
-@@ -30,6 +30,7 @@ struct sama5d4_wdt {
- 	void __iomem		*reg_base;
- 	u32			mr;
- 	u32			ir;
-+	u32			wddis_mask;
- 	unsigned long		last_ping;
- 	bool			need_irq;
- 	bool			sam9x60_support;
-@@ -48,7 +49,10 @@ MODULE_PARM_DESC(nowayout,
- 	"Watchdog cannot be stopped once started (default="
- 	__MODULE_STRING(WATCHDOG_NOWAYOUT) ")");
- 
--#define wdt_enabled (!(wdt->mr & AT91_WDT_WDDIS))
-+static inline bool wdt_enabled(struct sama5d4_wdt *wdt)
-+{
-+	return !(wdt->mr & wdt->wddis_mask);
-+}
- 
- #define wdt_read(wdt, field) \
- 	readl_relaxed((wdt)->reg_base + (field))
-@@ -81,12 +85,9 @@ static int sama5d4_wdt_start(struct watchdog_device *wdd)
- {
- 	struct sama5d4_wdt *wdt = watchdog_get_drvdata(wdd);
- 
--	if (wdt->sam9x60_support) {
-+	if (wdt->sam9x60_support)
- 		writel_relaxed(wdt->ir, wdt->reg_base + AT91_SAM9X60_IER);
--		wdt->mr &= ~AT91_SAM9X60_WDDIS;
--	} else {
--		wdt->mr &= ~AT91_WDT_WDDIS;
--	}
-+	wdt->mr &= ~wdt->wddis_mask;
- 	wdt_write(wdt, AT91_WDT_MR, wdt->mr);
- 
- 	return 0;
-@@ -96,12 +97,9 @@ static int sama5d4_wdt_stop(struct watchdog_device *wdd)
- {
- 	struct sama5d4_wdt *wdt = watchdog_get_drvdata(wdd);
- 
--	if (wdt->sam9x60_support) {
-+	if (wdt->sam9x60_support)
- 		writel_relaxed(wdt->ir, wdt->reg_base + AT91_SAM9X60_IDR);
--		wdt->mr |= AT91_SAM9X60_WDDIS;
--	} else {
--		wdt->mr |= AT91_WDT_WDDIS;
--	}
-+	wdt->mr |= wdt->wddis_mask;
- 	wdt_write(wdt, AT91_WDT_MR, wdt->mr);
- 
- 	return 0;
-@@ -117,7 +115,7 @@ static int sama5d4_wdt_ping(struct watchdog_device *wdd)
- }
- 
- static int sama5d4_wdt_set_timeout(struct watchdog_device *wdd,
--				 unsigned int timeout)
-+				    unsigned int timeout)
- {
- 	struct sama5d4_wdt *wdt = watchdog_get_drvdata(wdd);
- 	u32 value = WDT_SEC2TICKS(timeout);
-@@ -140,8 +138,8 @@ static int sama5d4_wdt_set_timeout(struct watchdog_device *wdd,
- 	 * If the watchdog is enabled, then the timeout can be updated. Else,
- 	 * wait that the user enables it.
- 	 */
--	if (wdt_enabled)
--		wdt_write(wdt, AT91_WDT_MR, wdt->mr & ~AT91_WDT_WDDIS);
-+	if (wdt_enabled(wdt))
-+		wdt_write(wdt, AT91_WDT_MR, wdt->mr & ~wdt->wddis_mask);
- 
- 	wdd->timeout = timeout;
- 
-@@ -184,10 +182,7 @@ static int of_sama5d4_wdt_init(struct device_node *np, struct sama5d4_wdt *wdt)
- {
- 	const char *tmp;
- 
--	if (wdt->sam9x60_support)
--		wdt->mr = AT91_SAM9X60_WDDIS;
--	else
--		wdt->mr = AT91_WDT_WDDIS;
-+	wdt->mr = wdt->wddis_mask;
- 
- 	if (!of_property_read_string(np, "atmel,watchdog-type", &tmp) &&
- 	    !strcmp(tmp, "software"))
-@@ -213,15 +208,11 @@ static int sama5d4_wdt_init(struct sama5d4_wdt *wdt)
- 	 * If the watchdog is already running, we can safely update it.
- 	 * Else, we have to disable it properly.
- 	 */
--	if (!wdt_enabled) {
-+	if (!wdt_enabled(wdt)) {
- 		reg = wdt_read(wdt, AT91_WDT_MR);
--		if (wdt->sam9x60_support && (!(reg & AT91_SAM9X60_WDDIS)))
--			wdt_write_nosleep(wdt, AT91_WDT_MR,
--					  reg | AT91_SAM9X60_WDDIS);
--		else if (!wdt->sam9x60_support &&
--			 (!(reg & AT91_WDT_WDDIS)))
-+		if (!(reg & wdt->wddis_mask))
- 			wdt_write_nosleep(wdt, AT91_WDT_MR,
--					  reg | AT91_WDT_WDDIS);
-+					  reg | wdt->wddis_mask);
- 	}
- 
- 	if (wdt->sam9x60_support) {
-@@ -273,6 +264,9 @@ static int sama5d4_wdt_probe(struct platform_device *pdev)
- 	    of_device_is_compatible(dev->of_node, "microchip,sama7g5-wdt"))
- 		wdt->sam9x60_support = true;
- 
-+	wdt->wddis_mask = wdt->sam9x60_support ? AT91_SAM9X60_WDDIS
-+						: AT91_WDT_WDDIS;
-+
- 	watchdog_set_drvdata(wdd, wdt);
- 
- 	regs = devm_platform_ioremap_resource(pdev, 0);
-@@ -306,8 +300,8 @@ static int sama5d4_wdt_probe(struct platform_device *pdev)
- 	watchdog_init_timeout(wdd, wdt_timeout, dev);
- 
- 	reg = wdt_read(wdt, AT91_WDT_MR);
--	if (!(reg & AT91_WDT_WDDIS)) {
--		wdt->mr &= ~AT91_WDT_WDDIS;
-+	if (!(reg & wdt->wddis_mask)) {
-+		wdt->mr &= ~wdt->wddis_mask;
- 		set_bit(WDOG_HW_RUNNING, &wdd->status);
- 	}
- 
+diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
+index 12f706e2ded541..2707c4c5022642 100644
+--- a/arch/arm/configs/multi_v7_defconfig
++++ b/arch/arm/configs/multi_v7_defconfig
+@@ -1117,7 +1117,7 @@ CONFIG_QCOM_COMMAND_DB=m
+ CONFIG_QCOM_GSBI=y
+ CONFIG_QCOM_OCMEM=m
+ CONFIG_QCOM_RMTFS_MEM=m
+-CONFIG_QCOM_RPMH=y
++CONFIG_QCOM_RPMH=m
+ CONFIG_QCOM_SMEM=y
+ CONFIG_QCOM_SMD_RPM=y
+ CONFIG_QCOM_SMP2P=y
+@@ -1135,7 +1135,7 @@ CONFIG_KEYSTONE_NAVIGATOR_QMSS=y
+ CONFIG_KEYSTONE_NAVIGATOR_DMA=y
+ CONFIG_RASPBERRYPI_POWER=y
+ CONFIG_QCOM_CPR=y
+-CONFIG_QCOM_RPMHPD=y
++CONFIG_QCOM_RPMHPD=m
+ CONFIG_QCOM_RPMPD=y
+ CONFIG_ROCKCHIP_PM_DOMAINS=y
+ CONFIG_TI_SCI_PM_DOMAINS=y
 -- 
 2.53.0
 
