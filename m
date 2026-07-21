@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE4B44AB6A;
-	Tue, 21 Jul 2026 22:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9280A430CE3;
+	Tue, 21 Jul 2026 22:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674013; cv=none; b=oSJWloVFsYvqO/5FofWiD7Xu0CayYkPrQzmTCk+xXZ2y8E2Edjh/0Zp4PNfRkGwpVPbQ+gS7+lxF1O8GgvfhbAIS8csWdIyZ31OlWXIqTjxjJrvKSnHsPiFvRYJyhlRs9Z4rSiqvNEtuB7AY8okhkuM0mhVeDENO5rCRP9YBTAA=
+	t=1784674015; cv=none; b=E4JsWBGNNm+gq+VyjSvTm8cIKqlXzG4qIa6kOQSeLuWCVWtM+DkkR5hASQMN5IakuOjYVQAZwFxw8bNiBKYmN6ZvfTHX627wsQTlWgFRkx9AabKB2PDC/w8YaatSaZAT9IRz5QX95idNcrXDvBDP0Zukodo4YgwX70zgfi/79P4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674013; c=relaxed/simple;
-	bh=qLe2OgztIoOGqjkQiThP29HBI1/8PexV5Db6WlsXdok=;
+	s=arc-20240116; t=1784674015; c=relaxed/simple;
+	bh=kx+w/OZVgmsmr/Q2ReSAKSgEaNZoKH1pnE9q0EVylbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qQaN72hVt8Ppdc1QTAe/8MBHII16TdQydazSqn69O/k3xVsx/6KDn0p83wWcSBqyrQAkIQFUs2Lz9YX8qqyknyXPabv8RvB7B+g37kTLEfzVeE9X/Cw13N9FvnWBGOEaHRVMowOC/E7V91mTVjuyKwmfzmixY1zJkxJY/a9OJzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ep6RTU32; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UA8I/YePKnY+pGHigC3965yxfLs5+W/iNgDQWGUtsUuh03UD8hDoHdQBBpf76d9SgNmipq+yzCecC8f4ER5EH1I+HJoQjsc3WphF1J7Z9/0CXLtLXw4ftSKsn331KXSWh2swJ3Xhdeb42HHlwLnq8NfEonnR9NUsETAPs3I7aew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tv8+mmnm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ep6RTU32"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55EE41F000E9;
-	Tue, 21 Jul 2026 22:46:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tv8+mmnm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF1F01F00A3F;
+	Tue, 21 Jul 2026 22:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674011;
-	bh=GO9OvOlGl08BupNcMC2tALZuVucgmdatJAS6VchuJ0o=;
+	s=korg; t=1784674014;
+	bh=Tl7OHReHrI75J41IASP3x22ijTdbQKFTY4vo0fqjXog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ep6RTU32av47YwqGzLYzKGAbmlW9LsGu8QFFG9yyh3aJ7geRf2SI0Avo3qwUYOfG6
-	 wckHkv9C1BJBRIIAefcHTYGJ0y11xk4EC8+u/KxkiAEmo3Y+1ZvXE9y39i4rRhpp7G
-	 /FNA0p2KlkPxQLz9CjK2f93erPb0xTtBg7ADjUU4=
+	b=tv8+mmnmmyOtQGFp4msNYUXeKfFpQ8siu5PEmNFH4oRhjjT45MuQyyZR/aB0+yRQ5
+	 05+FPBqLgP5hAIK/T9/YkkS539zW91qZbbhzpO3zVAnnBdUyo9Mj0cRTv+hr7xBqF0
+	 BnQJU5CQMwSrHPmwzcPw6Nih3rJMrz8f3j9tNCJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Longjun Tang <tanglongjun@kylinos.cn>,
+	Gleb Markov <markov.gi@npc-ksb.ru>,
+	Potnuri Bharat Teja <bharat@chelsio.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 380/699] virtio_net: disable cb when NAPI is busy-polled
-Date: Tue, 21 Jul 2026 17:22:19 +0200
-Message-ID: <20260721152404.263629166@linuxfoundation.org>
+Subject: [PATCH 5.10 381/699] cxgb4: Fix decode strings dump for T6 adapters
+Date: Tue, 21 Jul 2026 17:22:20 +0200
+Message-ID: <20260721152404.286865299@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,44 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longjun Tang <tanglongjun@kylinos.cn>
+From: Gleb Markov <markov.gi@npc-ksb.ru>
 
-[ Upstream commit 1eb8fc67ca41db71c90866ff76c990d85247daef ]
+[ Upstream commit 5d6dc22d62682d93f5f55f145ad792f2891de911 ]
 
-When busy-poll is active, napi_schedule_prep() returns false in
-virtqueue_napi_schedule(), so virtqueue_disable_cb() is skipped.
-The device may keep firing irqs until reaches virtqueue_napi_complete().
-Under load (received == budget), it will lead to a large number
-of spurious interrupts.
+Depending on the value of chip_version, the correct decode set is selected.
+However, the subsequent matching with the t4 encoding type in the if-else
+block results in a reassignment, which leads to the loss of support for
+t6_decode as well as reinitializing of values t4_decode and t5_decode.
 
-Fix it by disabling the callback at the virtnet_poll() entry.
-This keeps the callback off while we poll and it is re-enabled by
-virtqueue_napi_complete() when going idle.
+The component history shows that the if-else block previously used for
+this purpose, as well as the execution order, was not affected by the
+change.
+Furthermore, it is suggested by the execution order that the scenario with
+overwriting and loss of support will be implemented.
 
-Fixes: ceef438d613f ("virtio_net: remove custom busy_poll")
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Longjun Tang <tanglongjun@kylinos.cn>
-Link: https://patch.msgid.link/20260629024230.37325-1-lange_tang@163.com
+Delete the if-else block.
+
+Fixes: 6df397539cb0 ("cxgb4: Update correct encoding of SGE Ingress DMA States for T6 adapter")
+Signed-off-by: Gleb Markov <markov.gi@npc-ksb.ru>
+Reviewed-by: Potnuri Bharat Teja <bharat@chelsio.com>
+Link: https://patch.msgid.link/20260629130856.1168-1-markov.gi@npc-ksb.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/chelsio/cxgb4/t4_hw.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index fe7b28a595f163..aa61bf852e2e0e 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -1555,6 +1555,9 @@ static int virtnet_poll(struct napi_struct *napi, int budget)
- 	unsigned int received;
- 	unsigned int xdp_xmit = 0;
+diff --git a/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c b/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
+index 51ea81638b31b9..465b3591cbdbe2 100644
+--- a/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
++++ b/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
+@@ -6767,14 +6767,6 @@ void t4_sge_decode_idma_state(struct adapter *adapter, int state)
+ 		return;
+ 	}
  
-+	if (budget)
-+		virtqueue_disable_cb(rq->vq);
-+
- 	virtnet_poll_cleantx(rq, budget);
- 
- 	received = virtnet_receive(rq, budget, &xdp_xmit);
+-	if (is_t4(adapter->params.chip)) {
+-		sge_idma_decode = (const char **)t4_decode;
+-		sge_idma_decode_nstates = ARRAY_SIZE(t4_decode);
+-	} else {
+-		sge_idma_decode = (const char **)t5_decode;
+-		sge_idma_decode_nstates = ARRAY_SIZE(t5_decode);
+-	}
+-
+ 	if (state < sge_idma_decode_nstates)
+ 		CH_WARN(adapter, "idma state %s\n", sge_idma_decode[state]);
+ 	else
 -- 
 2.53.0
 
