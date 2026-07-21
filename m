@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601E246C4BC;
-	Tue, 21 Jul 2026 19:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0AF47044A;
+	Tue, 21 Jul 2026 19:58:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663884; cv=none; b=Np3UERvEAzVKugZPjNVttekjuirJGyh0HJCnVDsdL9dtSfGOeE/qix/zFqG+VMripSpn6R6jhG0oXipA9MosB3v0xLLwqoKq8LCu2Ieva9MDhn2VdEhHTLhlLMdaUIXwHE2bBKD4Ovt9ay0YAC/AIXzEn2aAi3pqvKy+BSzlNDE=
+	t=1784663886; cv=none; b=N3t81HOoaO1Y4uAWXWuTA2rUypv5xxMg4gK4uDXm23c+HBnlxIfjiKF2Dfku9qYWTBM44r8AWyixc2wCcB3bF4bUoJTE/c7pCZYu1AUomyAflzmfLupdRvzPU2TxKc9erKtuEV0PQvILyEMqxI+sioArnV3RXGHqjVdxo9noiuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663884; c=relaxed/simple;
-	bh=n5teEfF9++6U1B3Jf8qc7oNFGd3Qzm04cmYwxReuI4Y=;
+	s=arc-20240116; t=1784663886; c=relaxed/simple;
+	bh=2+NdZx5Q+nohDNgZ/P0N7AvxCUAgfPNSxDDVm+entDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J8hnv1LzNAm77UCiiAPlWOC59OipIE3uepPW/TZSqgdR0f4GEEha8OJmDqMKiSfZRVVqV3CtB8m1r6kMTz6cz+WJMuyd2ucVofVBKWIHTg7ZJQf1OelXCCctKKJdPw0J8u7j1HToEABs0ly+c27Fb60v9OZtUkIdlvoEfJ0bKns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sIGC51cs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KruhQw/X8+0lv9StfnZt+amk6wOP6x5s+sFc8cq55I1j2YaixfuerdyjcZVmUvrdZUYCanz8JIFTG80jneANTwShRb+KXEm3qCf5Rg+mRauo9BX5UcrLtHuzogvjhr4EtLKp+gFFHdd5G/4zZZmfYouxXLv5HXuLbgmxp7RrR+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KRBqXcEq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sIGC51cs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4EA61F000E9;
-	Tue, 21 Jul 2026 19:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRBqXcEq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056EF1F00A3A;
+	Tue, 21 Jul 2026 19:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663877;
-	bh=CbsQHsqQiKFQGJ4o0HbxF4LKTta0mnrwQt9skCsx7RQ=;
+	s=korg; t=1784663882;
+	bh=0sNlPf5j+gDwdfmGFMzuPQs520GwtBjh43alqRbMIgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sIGC51csn2i/RnZ8NyesQfTyDaT42quhn1N6lVfXDHDuG/SAfRAw93890XMoZOf8s
-	 u0+KKIqkbMfEt2T6Vmq0sajAHZuS7/j+Z4Hh0lfVrwY1UG8JilixYjhL3QPClHVcY9
-	 uA6oPB6j9pqhWbunu/W/d557K88jEkzYZKCN+y3Y=
+	b=KRBqXcEqIL4E4vxSfAr6XNjK1NJGEbuNKaFfNWX1VrNrbIGWgAkwxzkPqGYl//VyM
+	 Lsbzm4z/9CzM9D8mZlmOqzT5NBIqPy4TTucSoIgzPM+4+M7H/ZozcbOgcXJ+5FBbjG
+	 fY530kd7AOPXPoi6SxzJdi04bdo607jOidcNyIKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Bryam Vargas <hexlabsecurity@proton.me>
-Subject: [PATCH 6.12 0989/1276] nvmet-rdma: handle inline data with a nonzero offset
-Date: Tue, 21 Jul 2026 17:23:52 +0200
-Message-ID: <20260721152508.146045400@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.12 0991/1276] can: esd_usb: kill anchored URBs before freeing netdevs
+Date: Tue, 21 Jul 2026 17:23:54 +0200
+Message-ID: <20260721152508.190613331@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,89 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 48c0162f647bb47e6084ffbc71b8f213f5e2f4f8 upstream.
+commit c43122fef328a70045fe7621c06de6b2b8e19264 upstream.
 
-nvmet_rdma_use_inline_sg() maps the host-controlled inline data offset
-into the per-command inline scatterlist.  The bounds check admits any
-offset with off + len <= inline_data_size, but the mapping still assumes
-the data begins in the first inline page:
+esd_usb_disconnect() frees each CAN netdev with free_candev() inside
+its per-netdev loop and only calls unlink_all_urbs(dev) afterwards.
+The per-netdev private data (struct esd_usb_net_priv) is embedded in
+the net_device allocation returned by alloc_candev(), so once
+free_candev() has run, dev->nets[i] points to freed memory.
+unlink_all_urbs() then dereferences the freed dev->nets[i] to kill the
+per-netdev TX anchor (usb_kill_anchored_urbs(&priv->tx_submitted)),
+clear active_tx_jobs, and reset priv->tx_contexts[].
 
-	sg->offset = off;
-	sg->length = min_t(int, len, PAGE_SIZE - off);
+Reorder the teardown so the anchored URBs are killed before the netdevs
+are freed, matching other CAN/USB drivers in the same directory such as
+ems_usb, usb_8dev and mcba_usb, which unregister, then unlink, then
+free: unregister the netdevs first (which stops their TX queues), call
+unlink_all_urbs(dev) once, then free the netdevs.
 
-When a port is configured with inline_data_size > PAGE_SIZE (settable up
-to max(SZ_16K, PAGE_SIZE)), an offset in (PAGE_SIZE, inline_data_size]
-makes "PAGE_SIZE - off" underflow, so sg->length is set to ~4 GiB and
-the block backend reads far past the first inline page.  num_pages(len)
-also ignores the offset, so an in-bounds offset whose [off, off+len)
-span crosses a page boundary under-counts the scatterlist.
+This issue was found by an in-house static analysis tool.
 
-Map the offset properly: split it into a page index and an in-page
-offset, start the scatterlist at that page, and size the page count from
-page_off + len.  Because the request scatterlist may now start at
-inline_sg[page_idx] rather than inline_sg[0], generalize the inline-SGL
-identity test in nvmet_rdma_release_rsp() to a range test; otherwise the
-persistent inline scatterlist is mistaken for an allocated one and
-nvmet_req_free_sgls() frees an inline page (and warns in
-free_large_kmalloc()).
-
-Fixes: 0d5ee2b2ab4f ("nvmet-rdma: support max(16KB, PAGE_SIZE) inline data")
+Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
 Cc: stable@vger.kernel.org
-Suggested-by: Keith Busch <kbusch@kernel.org>
-Reported-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260709164159.497640-1-fanwu01@zju.edu.cn
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/rdma.c |   18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/net/can/usb/esd_usb.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -667,7 +667,8 @@ static void nvmet_rdma_release_rsp(struc
- 	if (rsp->n_rdma)
- 		nvmet_rdma_rw_ctx_destroy(rsp);
- 
--	if (rsp->req.sg != rsp->cmd->inline_sg)
-+	if (rsp->req.sg < rsp->cmd->inline_sg ||
-+	    rsp->req.sg >= rsp->cmd->inline_sg + queue->dev->inline_page_count)
- 		nvmet_req_free_sgls(&rsp->req);
- 
- 	if (unlikely(!list_empty_careful(&queue->rsp_wr_wait_list)))
-@@ -822,24 +823,25 @@ static void nvmet_rdma_write_data_done(s
- static void nvmet_rdma_use_inline_sg(struct nvmet_rdma_rsp *rsp, u32 len,
- 		u64 off)
- {
--	int sg_count = num_pages(len);
-+	u64 page_off = off % PAGE_SIZE;
-+	u64 page_idx = off / PAGE_SIZE;
-+	int sg_count = num_pages(page_off + len);
- 	struct scatterlist *sg;
- 	int i;
- 
--	sg = rsp->cmd->inline_sg;
-+	sg = &rsp->cmd->inline_sg[page_idx];
- 	for (i = 0; i < sg_count; i++, sg++) {
- 		if (i < sg_count - 1)
- 			sg_unmark_end(sg);
- 		else
- 			sg_mark_end(sg);
--		sg->offset = off;
--		sg->length = min_t(int, len, PAGE_SIZE - off);
-+		sg->offset = page_off;
-+		sg->length = min_t(u64, len, PAGE_SIZE - page_off);
- 		len -= sg->length;
--		if (!i)
--			off = 0;
-+		page_off = 0;
+--- a/drivers/net/can/usb/esd_usb.c
++++ b/drivers/net/can/usb/esd_usb.c
+@@ -1365,10 +1365,13 @@ static void esd_usb_disconnect(struct us
+ 			if (dev->nets[i]) {
+ 				netdev = dev->nets[i]->netdev;
+ 				unregister_netdev(netdev);
+-				free_candev(netdev);
+ 			}
+ 		}
+ 		unlink_all_urbs(dev);
++		for (i = 0; i < dev->net_count; i++) {
++			if (dev->nets[i])
++				free_candev(dev->nets[i]->netdev);
++		}
+ 		kfree(dev);
  	}
- 
--	rsp->req.sg = rsp->cmd->inline_sg;
-+	rsp->req.sg = &rsp->cmd->inline_sg[page_idx];
- 	rsp->req.sg_cnt = sg_count;
  }
- 
 
 
