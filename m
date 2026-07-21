@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84E913644B3;
-	Tue, 21 Jul 2026 19:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EF743302F;
+	Tue, 21 Jul 2026 19:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663297; cv=none; b=n4RMYSP0DaZhyZRJk7MwmNkrXLfW6liKXkN00EkYslw052reA18a2nCD8ZIBRFJgxr84RdwF1DW4qlQSPhA6/1xdiJyVSFDVBEbea/QjyuTliKAfkhhH9GdZLD42uiZhb32YKkH7/96q0x8kshOmaxBrW/t2mcUZmaJ9tnjGexs=
+	t=1784663298; cv=none; b=gg7E/dL6upeghDJSnhGckdVncgT7U6o3wIgw0XbVsGM2r6AvpJsvgNidfvGiw+4TY4Vha43FPtc4nCmK2Wwe44BN5MYIj7dTMmVgoU2wkWI1ojXAPGWEoECY+cYrAg9nOBFrGuZeB0lF92qaSr/68UeMnfcqobCflvM+Zlqu6m4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663297; c=relaxed/simple;
-	bh=B+mM7muVaPApo1Umjr2bhrcgkXnVs09HrzWNUOUkK4c=;
+	s=arc-20240116; t=1784663298; c=relaxed/simple;
+	bh=CzDBehKuum7sLdc0ssP39KgfeAxi43Y68SgK4S7T/z4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E/HOuhU8LH7ZlyDsurS6huAnOfPE0nYX0ls+AsbOzVQYMN3l0HrpwjSA5VXFDJNUsRYSKzMXvBgcMS3+4aq4Bcukkz7izj9RpqmTlzqvvaFAGPSbyEhz7j8wmonHjhMOnzTRyUW9Qnyla8GwgAS2p9QJeJta8vxstuVSN1Ihu3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vapEzozq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oWrN17ES2UIvhQcJlZzhRB1uIXoKl9JwaS42UlWuxGtHg6e6SZ3TDa9bY3HzQWk68ZILmsPbpRqp7bBOx3ka6oj0kyMrsG3HkNIsb/h5uugJ3ttZZstMdsRu+JeVQOIz8dSqCIdlIayIGpJe333u+2HfaP6x0SALUEDWeLa1NSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3KHv0xt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vapEzozq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92311F00A3D;
-	Tue, 21 Jul 2026 19:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3KHv0xt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D8FA1F00A3E;
+	Tue, 21 Jul 2026 19:48:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663292;
-	bh=DKQarZ1Jl9e218eoOoJAwYqTZX43wR4OVFNfyGqiTok=;
+	s=korg; t=1784663295;
+	bh=QtW+0Gz9PkE1BU7i9Ge0IKsoPsxZCmUH5u/z9GNiltE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vapEzozqXH8yeGV0EZsify8srsUSljzoV8u1aq2wbG5f5CbW6Wa3CelTJyd40WXQA
-	 /+RM53rf/bgU6XbEriqRs/cHzg8wHu4Vg7jv8NNerprmvWn/n5NrPWHZxq9BAGfTLi
-	 7//8dMZ7uGM48exLodt0oyHvUFWKYu+Lsm4sxgsg=
+	b=G3KHv0xtrOw2Pgk89VVk68nDhVpOp+jtFG+6Hjf7LlKG+nVKD5cL8Ta5w+NAG4aOL
+	 Yiv4wwqbOvpfsoMNmdy3HKEovvWf2Z4l27nilcOLJrGTsolD58LhpEuV1u71ffFM9X
+	 Zp+lO9w3MLwjPejDCUyGGf0jpeCAIG93yN5+kwp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Liu <feliu@nvidia.com>,
-	Eran Ben Elisha <eranbe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	=?UTF-8?q?Jens=20Emil=20Schulz=20=C3=98stergaard?= <jensemil.schulzostergaard@microchip.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0767/1276] net/mlx5e: Fix HV VHCA stats agent registration race
-Date: Tue, 21 Jul 2026 17:20:10 +0200
-Message-ID: <20260721152503.238229291@linuxfoundation.org>
+Subject: [PATCH 6.12 0768/1276] net: microchip: vcap: fix races on the shared Super VCAP block
+Date: Tue, 21 Jul 2026 17:20:11 +0200
+Message-ID: <20260721152503.261223942@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -47,196 +45,494 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Feng Liu <feliu@nvidia.com>
+From: Jens Emil Schulz Østergaard <jensemil.schulzostergaard@microchip.com>
 
-[ Upstream commit 89b25b5f46f488ea3b29b3444864c76944c9075b ]
+[ Upstream commit d7a8d500d7e42837bd8dce40cb52c97c6e8706a9 ]
 
-mlx5e_hv_vhca_stats_create() registers the stats agent through
-mlx5_hv_vhca_agent_create(). The helper publishes the agent in
-hv_vhca->agents[type] under agents_lock and immediately schedules an
-asynchronous control invalidation on the HV VHCA workqueue before
-returning to mlx5e.
+The VCAP instances on a chip are not independent, yet they are locked
+independently. On sparx5 and lan969x the IS0 and IS2 instances are
+backed by the same Super VCAP hardware block and share its cache and
+command registers: every access drives the shared VCAP_SUPER_CTRL
+register and moves data through the shared cache registers.
 
-The asynchronous invalidation invokes the control agent's invalidate
-callback, which reads the hypervisor control block and forwards the
-command to mlx5e_hv_vhca_stats_control(). That callback may either:
+Accessing one instance therefore races with accessing another. The
+per-instance admin->lock cannot prevent this, as each instance takes a
+different lock.
 
-  - call cancel_delayed_work_sync(&priv->stats_agent.work), or
-  - call queue_delayed_work(priv->wq, &sagent->work, sagent->delay).
+The locking issue is mostly disguised by the fact that the core usage of
+the vcap api runs under rtnl. However, the full rule dump in debugfs
+decodes rules straight from hardware (a READ command followed by a cache
+read) and runs outside rtnl, so it races a concurrent tc-flower rule
+write to another Super VCAP instance.
 
-However, the delayed_work and priv->stats_agent.agent are only
-initialized after mlx5_hv_vhca_agent_create() returns to mlx5e:
+Besides corrupting the dump, the read repopulates the shared cache
+between the writers cache fill and its write command, so the writer
+commits the wrong data and corrupts the hardware entry.
 
-    agent = mlx5_hv_vhca_agent_create(...);   /* publish + invalidate */
-    ...
-    priv->stats_agent.agent = agent;          /* too late */
-    INIT_DELAYED_WORK(&priv->stats_agent.work, ...); /* too late */
+Introduce vcap_lock() and vcap_unlock() helpers and route every rule
+lock site in the VCAP API and its debugfs code through them. Replace the
+per-instance admin->lock with a single mutex in struct vcap_control that
+serializes access to all instances. The helpers reach it through a new
+admin->vctrl back-pointer, and the clients initialise and destroy the
+control lock instead of a per-instance one.
 
-If the asynchronous control path runs before the two assignments
-above, it can:
+No path holds more than one instance lock, so collapsing them onto a
+single mutex cannot self-deadlock.
 
-  - Operate on an uninitialized delayed_work whose timer.function is
-    NULL. queue_delayed_work() calls add_timer() unconditionally, so
-    when the timer expires the timer softirq invokes a NULL function
-    pointer.
-  - Re-initialize the timer later through INIT_DELAYED_WORK() while
-    the timer is already enqueued in the timer wheel, corrupting the
-    hlist (entry.pprev cleared while the previous bucket node still
-    points at this entry).
-  - When the worker eventually runs, mlx5e_hv_vhca_stats_work() reads
-    sagent->agent (NULL) and dereferences it inside
-    mlx5_hv_vhca_agent_write().
-
-Fix this by:
-
-  - Initializing priv->stats_agent.work before invoking
-    mlx5_hv_vhca_agent_create(), so the work is always in a valid
-    state when the control callback observes it.
-  - Adding a struct mlx5_hv_vhca_agent **ctx_update out-parameter
-    to mlx5_hv_vhca_agent_create(). The helper writes the agent
-    pointer to *ctx_update before publishing into hv_vhca->agents[]
-    and triggering the agents_update flow, so any callback
-    subsequently invoked from that flow already sees a valid
-    priv->stats_agent.agent. This avoids having the control
-    callback participate in agent initialization.
-
-While at it, access priv->stats_agent.agent with
-READ_ONCE()/WRITE_ONCE() for the cross-CPU access with the worker, and
-clear priv->stats_agent.buf on the agent_create() failure path.
-
-Fixes: cef35af34d6d ("net/mlx5e: Add mlx5e HV VHCA stats agent")
-Signed-off-by: Feng Liu <feliu@nvidia.com>
-Reviewed-by: Eran Ben Elisha <eranbe@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260630115151.729219-3-tariqt@nvidia.com
+Fixes: 71c9de995260 ("net: microchip: sparx5: Add VCAP locking to protect rules")
+Signed-off-by: Jens Emil Schulz Østergaard <jensemil.schulzostergaard@microchip.com>
+Link: https://patch.msgid.link/20260630-microchip_fix_vcap_locking-v1-1-f60a4596734d@microchip.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/en/hv_vhca_stats.c     | 21 +++++++++++--------
- .../ethernet/mellanox/mlx5/core/lib/hv_vhca.c |  8 +++++--
- .../ethernet/mellanox/mlx5/core/lib/hv_vhca.h |  6 ++++--
- 3 files changed, 22 insertions(+), 13 deletions(-)
+ .../microchip/lan966x/lan966x_vcap_impl.c     |  5 +-
+ .../microchip/sparx5/sparx5_vcap_impl.c       |  5 +-
+ .../net/ethernet/microchip/vcap/vcap_api.c    | 72 +++++++++++--------
+ .../net/ethernet/microchip/vcap/vcap_api.h    |  3 +-
+ .../microchip/vcap/vcap_api_debugfs.c         |  8 +--
+ .../microchip/vcap/vcap_api_debugfs_kunit.c   |  3 +-
+ .../ethernet/microchip/vcap/vcap_api_kunit.c  |  3 +-
+ .../microchip/vcap/vcap_api_private.h         |  3 +
+ 8 files changed, 60 insertions(+), 42 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c b/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c
-index 41a662d47be6f4..1856d211339f2a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c
-@@ -73,7 +73,7 @@ static void mlx5e_hv_vhca_stats_work(struct work_struct *work)
- 	sagent = container_of(dwork, struct mlx5e_hv_vhca_stats_agent, work);
- 	priv = container_of(sagent, struct mlx5e_priv, stats_agent);
- 	buf_len = mlx5e_hv_vhca_stats_buf_size(priv);
--	agent = sagent->agent;
-+	agent = READ_ONCE(sagent->agent);
- 	buf = sagent->buf;
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_vcap_impl.c b/drivers/net/ethernet/microchip/lan966x/lan966x_vcap_impl.c
+index 2a37fc1ba4bcda..dca60c818d4b81 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_vcap_impl.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_vcap_impl.c
+@@ -601,7 +601,6 @@ static void lan966x_vcap_admin_free(struct vcap_admin *admin)
+ 	kfree(admin->cache.keystream);
+ 	kfree(admin->cache.maskstream);
+ 	kfree(admin->cache.actionstream);
+-	mutex_destroy(&admin->lock);
+ 	kfree(admin);
+ }
  
- 	memset(buf, 0, buf_len);
-@@ -135,11 +135,14 @@ void mlx5e_hv_vhca_stats_create(struct mlx5e_priv *priv)
- 	if (!priv->stats_agent.buf)
- 		return;
+@@ -615,7 +614,7 @@ lan966x_vcap_admin_alloc(struct lan966x *lan966x, struct vcap_control *ctrl,
+ 	if (!admin)
+ 		return ERR_PTR(-ENOMEM);
  
-+	INIT_DELAYED_WORK(&priv->stats_agent.work, mlx5e_hv_vhca_stats_work);
-+
- 	agent = mlx5_hv_vhca_agent_create(priv->mdev->hv_vhca,
- 					  MLX5_HV_VHCA_AGENT_STATS,
- 					  mlx5e_hv_vhca_stats_control, NULL,
- 					  mlx5e_hv_vhca_stats_cleanup,
--					  priv);
-+					  priv,
-+					  &priv->stats_agent.agent);
+-	mutex_init(&admin->lock);
++	admin->vctrl = ctrl;
+ 	INIT_LIST_HEAD(&admin->list);
+ 	INIT_LIST_HEAD(&admin->rules);
+ 	INIT_LIST_HEAD(&admin->enabled);
+@@ -721,6 +720,7 @@ int lan966x_vcap_init(struct lan966x *lan966x)
+ 	ctrl->ops = &lan966x_vcap_ops;
  
- 	if (IS_ERR_OR_NULL(agent)) {
- 		if (IS_ERR(agent))
-@@ -148,20 +151,20 @@ void mlx5e_hv_vhca_stats_create(struct mlx5e_priv *priv)
- 				    PTR_ERR(agent));
+ 	INIT_LIST_HEAD(&ctrl->list);
++	mutex_init(&ctrl->lock);
+ 	for (int i = 0; i < ARRAY_SIZE(lan966x_vcap_inst_cfg); ++i) {
+ 		cfg = &lan966x_vcap_inst_cfg[i];
  
- 		kvfree(priv->stats_agent.buf);
--		return;
-+		priv->stats_agent.buf = NULL;
+@@ -780,5 +780,6 @@ void lan966x_vcap_deinit(struct lan966x *lan966x)
+ 		lan966x_vcap_admin_free(admin);
  	}
--
--	priv->stats_agent.agent = agent;
--	INIT_DELAYED_WORK(&priv->stats_agent.work, mlx5e_hv_vhca_stats_work);
- }
  
- void mlx5e_hv_vhca_stats_destroy(struct mlx5e_priv *priv)
++	mutex_destroy(&ctrl->lock);
+ 	kfree(ctrl);
+ }
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_vcap_impl.c b/drivers/net/ethernet/microchip/sparx5/sparx5_vcap_impl.c
+index 967c8621c25051..fd03b56432a724 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_vcap_impl.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_vcap_impl.c
+@@ -1941,7 +1941,6 @@ static void sparx5_vcap_admin_free(struct vcap_admin *admin)
  {
--	if (IS_ERR_OR_NULL(priv->stats_agent.agent))
-+	struct mlx5_hv_vhca_agent *agent;
-+
-+	agent = READ_ONCE(priv->stats_agent.agent);
-+	if (IS_ERR_OR_NULL(agent))
+ 	if (!admin)
  		return;
+-	mutex_destroy(&admin->lock);
+ 	kfree(admin->cache.keystream);
+ 	kfree(admin->cache.maskstream);
+ 	kfree(admin->cache.actionstream);
+@@ -1961,7 +1960,7 @@ sparx5_vcap_admin_alloc(struct sparx5 *sparx5, struct vcap_control *ctrl,
+ 	INIT_LIST_HEAD(&admin->list);
+ 	INIT_LIST_HEAD(&admin->rules);
+ 	INIT_LIST_HEAD(&admin->enabled);
+-	mutex_init(&admin->lock);
++	admin->vctrl = ctrl;
+ 	admin->vtype = cfg->vtype;
+ 	admin->vinst = cfg->vinst;
+ 	admin->ingress = cfg->ingress;
+@@ -2069,6 +2068,7 @@ int sparx5_vcap_init(struct sparx5 *sparx5)
+ 	ctrl->ops = &sparx5_vcap_ops;
  
--	mlx5_hv_vhca_agent_destroy(priv->stats_agent.agent);
--	priv->stats_agent.agent = NULL;
-+	mlx5_hv_vhca_agent_destroy(agent);
-+	WRITE_ONCE(priv->stats_agent.agent, NULL);
- 	kvfree(priv->stats_agent.buf);
- 	priv->stats_agent.buf = NULL;
+ 	INIT_LIST_HEAD(&ctrl->list);
++	mutex_init(&ctrl->lock);
+ 	for (idx = 0; idx < ARRAY_SIZE(sparx5_vcap_inst_cfg); ++idx) {
+ 		cfg = &sparx5_vcap_inst_cfg[idx];
+ 		admin = sparx5_vcap_admin_alloc(sparx5, ctrl, cfg);
+@@ -2107,5 +2107,6 @@ void sparx5_vcap_destroy(struct sparx5 *sparx5)
+ 		list_del(&admin->list);
+ 		sparx5_vcap_admin_free(admin);
+ 	}
++	mutex_destroy(&ctrl->lock);
+ 	kfree(ctrl);
  }
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/hv_vhca.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/hv_vhca.c
-index 30564d9b00e9f7..779342ebc843e0 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/hv_vhca.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/hv_vhca.c
-@@ -190,7 +190,7 @@ mlx5_hv_vhca_control_agent_create(struct mlx5_hv_vhca *hv_vhca)
- 	return mlx5_hv_vhca_agent_create(hv_vhca, MLX5_HV_VHCA_AGENT_CONTROL,
- 					 NULL,
- 					 mlx5_hv_vhca_control_agent_invalidate,
--					 NULL, NULL);
-+					 NULL, NULL, NULL);
+diff --git a/drivers/net/ethernet/microchip/vcap/vcap_api.c b/drivers/net/ethernet/microchip/vcap/vcap_api.c
+index 2687765abe5200..49eef025d29006 100644
+--- a/drivers/net/ethernet/microchip/vcap/vcap_api.c
++++ b/drivers/net/ethernet/microchip/vcap/vcap_api.c
+@@ -934,6 +934,16 @@ static bool vcap_rule_exists(struct vcap_control *vctrl, u32 id)
+ 	return false;
  }
  
- static void mlx5_hv_vhca_control_agent_destroy(struct mlx5_hv_vhca_agent *agent)
-@@ -256,7 +256,8 @@ mlx5_hv_vhca_agent_create(struct mlx5_hv_vhca *hv_vhca,
- 			  void (*invalidate)(struct mlx5_hv_vhca_agent*,
- 					     u64 block_mask),
- 			  void (*cleaup)(struct mlx5_hv_vhca_agent *agent),
--			  void *priv)
-+			  void *priv,
-+			  struct mlx5_hv_vhca_agent **ctx_update)
- {
- 	struct mlx5_hv_vhca_agent *agent;
- 
-@@ -284,6 +285,9 @@ mlx5_hv_vhca_agent_create(struct mlx5_hv_vhca *hv_vhca,
- 	agent->invalidate = invalidate;
- 	agent->cleanup   = cleaup;
- 
-+	if (ctx_update)
-+		WRITE_ONCE(*ctx_update, agent);
++void vcap_lock(struct vcap_admin *admin)
++{
++	mutex_lock(&admin->vctrl->lock);
++}
 +
- 	mutex_lock(&hv_vhca->agents_lock);
- 	hv_vhca->agents[type] = agent;
- 	mutex_unlock(&hv_vhca->agents_lock);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/hv_vhca.h b/drivers/net/ethernet/mellanox/mlx5/core/lib/hv_vhca.h
-index f240ffe5116c5b..8b3974cf0ee49a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/hv_vhca.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/hv_vhca.h
-@@ -43,7 +43,8 @@ mlx5_hv_vhca_agent_create(struct mlx5_hv_vhca *hv_vhca,
- 			  void (*invalidate)(struct mlx5_hv_vhca_agent*,
- 					     u64 block_mask),
- 			  void (*cleanup)(struct mlx5_hv_vhca_agent *agent),
--			  void *context);
-+			  void *context,
-+			  struct mlx5_hv_vhca_agent **ctx_update);
++void vcap_unlock(struct vcap_admin *admin)
++{
++	mutex_unlock(&admin->vctrl->lock);
++}
++
+ /* Find a rule with a provided rule id return a locked vcap */
+ static struct vcap_rule_internal *
+ vcap_get_locked_rule(struct vcap_control *vctrl, u32 id)
+@@ -943,11 +953,11 @@ vcap_get_locked_rule(struct vcap_control *vctrl, u32 id)
  
- void mlx5_hv_vhca_agent_destroy(struct mlx5_hv_vhca_agent *agent);
- int mlx5_hv_vhca_agent_write(struct mlx5_hv_vhca_agent *agent,
-@@ -84,7 +85,8 @@ mlx5_hv_vhca_agent_create(struct mlx5_hv_vhca *hv_vhca,
- 			  void (*invalidate)(struct mlx5_hv_vhca_agent*,
- 					     u64 block_mask),
- 			  void (*cleanup)(struct mlx5_hv_vhca_agent *agent),
--			  void *context)
-+			  void *context,
-+			  struct mlx5_hv_vhca_agent **ctx_update)
- {
+ 	/* Look for the rule id in all vcaps */
+ 	list_for_each_entry(admin, &vctrl->list, list) {
+-		mutex_lock(&admin->lock);
++		vcap_lock(admin);
+ 		list_for_each_entry(ri, &admin->rules, list)
+ 			if (ri->data.id == id)
+ 				return ri;
+-		mutex_unlock(&admin->lock);
++		vcap_unlock(admin);
+ 	}
  	return NULL;
  }
+@@ -961,14 +971,14 @@ int vcap_lookup_rule_by_cookie(struct vcap_control *vctrl, u64 cookie)
+ 
+ 	/* Look for the rule id in all vcaps */
+ 	list_for_each_entry(admin, &vctrl->list, list) {
+-		mutex_lock(&admin->lock);
++		vcap_lock(admin);
+ 		list_for_each_entry(ri, &admin->rules, list) {
+ 			if (ri->data.cookie == cookie) {
+ 				id = ri->data.id;
+ 				break;
+ 			}
+ 		}
+-		mutex_unlock(&admin->lock);
++		vcap_unlock(admin);
+ 		if (id)
+ 			return id;
+ 	}
+@@ -985,11 +995,11 @@ int vcap_admin_rule_count(struct vcap_admin *admin, int cid)
+ 	int count = 0;
+ 
+ 	list_for_each_entry(elem, &admin->rules, list) {
+-		mutex_lock(&admin->lock);
++		vcap_lock(admin);
+ 		if (elem->data.vcap_chain_id >= min_cid &&
+ 		    elem->data.vcap_chain_id < max_cid)
+ 			++count;
+-		mutex_unlock(&admin->lock);
++		vcap_unlock(admin);
+ 	}
+ 	return count;
+ }
+@@ -2266,7 +2276,7 @@ int vcap_add_rule(struct vcap_rule *rule)
+ 	if (ret)
+ 		return ret;
+ 	/* Insert the new rule in the list of vcap rules */
+-	mutex_lock(&ri->admin->lock);
++	vcap_lock(ri->admin);
+ 
+ 	vcap_rule_set_state(ri);
+ 	ret = vcap_insert_rule(ri, &move);
+@@ -2302,7 +2312,7 @@ int vcap_add_rule(struct vcap_rule *rule)
+ 		goto out;
+ 	}
+ out:
+-	mutex_unlock(&ri->admin->lock);
++	vcap_unlock(ri->admin);
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(vcap_add_rule);
+@@ -2330,7 +2340,7 @@ struct vcap_rule *vcap_alloc_rule(struct vcap_control *vctrl,
+ 	if (vctrl->vcaps[admin->vtype].rows == 0)
+ 		return ERR_PTR(-EINVAL);
+ 
+-	mutex_lock(&admin->lock);
++	vcap_lock(admin);
+ 	/* Check if a rule with this id already exists */
+ 	if (vcap_rule_exists(vctrl, id)) {
+ 		err = -EINVAL;
+@@ -2369,13 +2379,13 @@ struct vcap_rule *vcap_alloc_rule(struct vcap_control *vctrl,
+ 		goto out_free;
+ 	}
+ 
+-	mutex_unlock(&admin->lock);
++	vcap_unlock(admin);
+ 	return (struct vcap_rule *)ri;
+ 
+ out_free:
+ 	kfree(ri);
+ out_unlock:
+-	mutex_unlock(&admin->lock);
++	vcap_unlock(admin);
+ 	return ERR_PTR(err);
+ 
+ }
+@@ -2446,7 +2456,7 @@ struct vcap_rule *vcap_get_rule(struct vcap_control *vctrl, u32 id)
+ 		return ERR_PTR(-ENOENT);
+ 
+ 	rule = vcap_decode_rule(elem);
+-	mutex_unlock(&elem->admin->lock);
++	vcap_unlock(elem->admin);
+ 	return rule;
+ }
+ EXPORT_SYMBOL_GPL(vcap_get_rule);
+@@ -2483,7 +2493,7 @@ int vcap_mod_rule(struct vcap_rule *rule)
+ 	err =  vcap_write_counter(ri, &ctr);
+ 
+ out:
+-	mutex_unlock(&ri->admin->lock);
++	vcap_unlock(ri->admin);
+ 	return err;
+ }
+ EXPORT_SYMBOL_GPL(vcap_mod_rule);
+@@ -2570,7 +2580,7 @@ int vcap_del_rule(struct vcap_control *vctrl, struct net_device *ndev, u32 id)
+ 		admin->last_used_addr = elem->addr;
+ 	}
+ 
+-	mutex_unlock(&admin->lock);
++	vcap_unlock(admin);
+ 	return err;
+ }
+ EXPORT_SYMBOL_GPL(vcap_del_rule);
+@@ -2585,7 +2595,7 @@ int vcap_del_rules(struct vcap_control *vctrl, struct vcap_admin *admin)
+ 	if (ret)
+ 		return ret;
+ 
+-	mutex_lock(&admin->lock);
++	vcap_lock(admin);
+ 	list_for_each_entry_safe(ri, next_ri, &admin->rules, list) {
+ 		vctrl->ops->init(ri->ndev, admin, ri->addr, ri->size);
+ 		list_del(&ri->list);
+@@ -2598,7 +2608,7 @@ int vcap_del_rules(struct vcap_control *vctrl, struct vcap_admin *admin)
+ 		list_del(&eport->list);
+ 		kfree(eport);
+ 	}
+-	mutex_unlock(&admin->lock);
++	vcap_unlock(admin);
+ 
+ 	return 0;
+ }
+@@ -3016,7 +3026,7 @@ static int vcap_enable_rules(struct vcap_control *vctrl,
+ 			continue;
+ 
+ 		/* Found the admin, now find the offloadable rules */
+-		mutex_lock(&admin->lock);
++		vcap_lock(admin);
+ 		list_for_each_entry(ri, &admin->rules, list) {
+ 			/* Is the rule in the lookup defined by the chain */
+ 			if (!(ri->data.vcap_chain_id >= chain &&
+@@ -3034,7 +3044,7 @@ static int vcap_enable_rules(struct vcap_control *vctrl,
+ 			if (err)
+ 				break;
+ 		}
+-		mutex_unlock(&admin->lock);
++		vcap_unlock(admin);
+ 		if (err)
+ 			break;
+ 	}
+@@ -3074,7 +3084,7 @@ static int vcap_disable_rules(struct vcap_control *vctrl,
+ 			continue;
+ 
+ 		/* Found the admin, now find the rules on the chain */
+-		mutex_lock(&admin->lock);
++		vcap_lock(admin);
+ 		list_for_each_entry(ri, &admin->rules, list) {
+ 			if (ri->data.vcap_chain_id != chain)
+ 				continue;
+@@ -3089,7 +3099,7 @@ static int vcap_disable_rules(struct vcap_control *vctrl,
+ 			if (err)
+ 				break;
+ 		}
+-		mutex_unlock(&admin->lock);
++		vcap_unlock(admin);
+ 		if (err)
+ 			break;
+ 	}
+@@ -3133,9 +3143,9 @@ static int vcap_enable(struct vcap_control *vctrl, struct net_device *ndev,
+ 	eport->cookie = cookie;
+ 	eport->src_cid = src_cid;
+ 	eport->dst_cid = dst_cid;
+-	mutex_lock(&admin->lock);
++	vcap_lock(admin);
+ 	list_add_tail(&eport->list, &admin->enabled);
+-	mutex_unlock(&admin->lock);
++	vcap_unlock(admin);
+ 
+ 	if (vcap_path_exist(vctrl, ndev, src_cid)) {
+ 		/* Enable chained lookups */
+@@ -3185,9 +3195,9 @@ static int vcap_disable(struct vcap_control *vctrl, struct net_device *ndev,
+ 		dst_cid = vcap_get_next_chain(vctrl, ndev, dst_cid);
+ 	}
+ 
+-	mutex_lock(&found->lock);
++	vcap_lock(found);
+ 	list_del(&eport->list);
+-	mutex_unlock(&found->lock);
++	vcap_unlock(found);
+ 	kfree(eport);
+ 	return 0;
+ }
+@@ -3270,9 +3280,9 @@ int vcap_rule_set_counter(struct vcap_rule *rule, struct vcap_counter *ctr)
+ 		return -EINVAL;
+ 	}
+ 
+-	mutex_lock(&ri->admin->lock);
++	vcap_lock(ri->admin);
+ 	err = vcap_write_counter(ri, ctr);
+-	mutex_unlock(&ri->admin->lock);
++	vcap_unlock(ri->admin);
+ 
+ 	return err;
+ }
+@@ -3291,9 +3301,9 @@ int vcap_rule_get_counter(struct vcap_rule *rule, struct vcap_counter *ctr)
+ 		return -EINVAL;
+ 	}
+ 
+-	mutex_lock(&ri->admin->lock);
++	vcap_lock(ri->admin);
+ 	err = vcap_read_counter(ri, ctr);
+-	mutex_unlock(&ri->admin->lock);
++	vcap_unlock(ri->admin);
+ 
+ 	return err;
+ }
+@@ -3395,7 +3405,7 @@ int vcap_get_rule_count_by_cookie(struct vcap_control *vctrl,
+ 
+ 	/* Iterate all rules in each VCAP instance */
+ 	list_for_each_entry(admin, &vctrl->list, list) {
+-		mutex_lock(&admin->lock);
++		vcap_lock(admin);
+ 		list_for_each_entry(ri, &admin->rules, list) {
+ 			if (ri->data.cookie != cookie)
+ 				continue;
+@@ -3412,12 +3422,12 @@ int vcap_get_rule_count_by_cookie(struct vcap_control *vctrl,
+ 			if (err)
+ 				goto unlock;
+ 		}
+-		mutex_unlock(&admin->lock);
++		vcap_unlock(admin);
+ 	}
+ 	return err;
+ 
+ unlock:
+-	mutex_unlock(&admin->lock);
++	vcap_unlock(admin);
+ 	return err;
+ }
+ EXPORT_SYMBOL_GPL(vcap_get_rule_count_by_cookie);
+diff --git a/drivers/net/ethernet/microchip/vcap/vcap_api.h b/drivers/net/ethernet/microchip/vcap/vcap_api.h
+index 6069ad95c27e93..05b4b02e59ef5f 100644
+--- a/drivers/net/ethernet/microchip/vcap/vcap_api.h
++++ b/drivers/net/ethernet/microchip/vcap/vcap_api.h
+@@ -164,7 +164,7 @@ struct vcap_admin {
+ 	struct list_head list; /* for insertion in vcap_control */
+ 	struct list_head rules; /* list of rules */
+ 	struct list_head enabled; /* list of enabled ports */
+-	struct mutex lock; /* control access to rules */
++	struct vcap_control *vctrl; /* the control instance owning this vcap */
+ 	enum vcap_type vtype;  /* type of vcap */
+ 	int vinst; /* instance number within the same type */
+ 	int first_cid; /* first chain id in this vcap */
+@@ -275,6 +275,7 @@ struct vcap_control {
+ 	const struct vcap_info *vcaps; /* client supplied vcap models */
+ 	const struct vcap_statistics *stats; /* client supplied vcap stats */
+ 	struct list_head list; /* list of vcap instances */
++	struct mutex lock; /* serialize access to all vcap instances */
+ };
+ 
+ #endif /* __VCAP_API__ */
+diff --git a/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.c b/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.c
+index 59bfbda29bb3da..e0c65c7ab23e1e 100644
+--- a/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.c
++++ b/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.c
+@@ -410,9 +410,9 @@ static int vcap_debugfs_show(struct seq_file *m, void *unused)
+ 	};
+ 	int ret;
+ 
+-	mutex_lock(&info->admin->lock);
++	vcap_lock(info->admin);
+ 	ret = vcap_show_admin(info->vctrl, info->admin, &out);
+-	mutex_unlock(&info->admin->lock);
++	vcap_unlock(info->admin);
+ 	return ret;
+ }
+ DEFINE_SHOW_ATTRIBUTE(vcap_debugfs);
+@@ -427,9 +427,9 @@ static int vcap_raw_debugfs_show(struct seq_file *m, void *unused)
+ 	};
+ 	int ret;
+ 
+-	mutex_lock(&info->admin->lock);
++	vcap_lock(info->admin);
+ 	ret = vcap_show_admin_raw(info->vctrl, info->admin, &out);
+-	mutex_unlock(&info->admin->lock);
++	vcap_unlock(info->admin);
+ 	return ret;
+ }
+ DEFINE_SHOW_ATTRIBUTE(vcap_raw_debugfs);
+diff --git a/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs_kunit.c b/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs_kunit.c
+index 9c9d380421255d..ac2a3b8c4f3217 100644
+--- a/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs_kunit.c
++++ b/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs_kunit.c
+@@ -243,10 +243,11 @@ static void vcap_test_api_init(struct vcap_admin *admin)
+ {
+ 	/* Initialize the shared objects */
+ 	INIT_LIST_HEAD(&test_vctrl.list);
++	mutex_init(&test_vctrl.lock);
+ 	INIT_LIST_HEAD(&admin->list);
+ 	INIT_LIST_HEAD(&admin->rules);
+ 	INIT_LIST_HEAD(&admin->enabled);
+-	mutex_init(&admin->lock);
++	admin->vctrl = &test_vctrl;
+ 	list_add_tail(&admin->list, &test_vctrl.list);
+ 	memset(test_updateaddr, 0, sizeof(test_updateaddr));
+ 	test_updateaddridx = 0;
+diff --git a/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c b/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c
+index 16eb3de60eb6df..70683855cbfcee 100644
+--- a/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c
++++ b/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c
+@@ -233,10 +233,11 @@ static void vcap_test_api_init(struct vcap_admin *admin)
+ {
+ 	/* Initialize the shared objects */
+ 	INIT_LIST_HEAD(&test_vctrl.list);
++	mutex_init(&test_vctrl.lock);
+ 	INIT_LIST_HEAD(&admin->list);
+ 	INIT_LIST_HEAD(&admin->rules);
+ 	INIT_LIST_HEAD(&admin->enabled);
+-	mutex_init(&admin->lock);
++	admin->vctrl = &test_vctrl;
+ 	list_add_tail(&admin->list, &test_vctrl.list);
+ 	memset(test_updateaddr, 0, sizeof(test_updateaddr));
+ 	test_updateaddridx = 0;
+diff --git a/drivers/net/ethernet/microchip/vcap/vcap_api_private.h b/drivers/net/ethernet/microchip/vcap/vcap_api_private.h
+index 844bdf6b5f4502..b4057fbe3d188c 100644
+--- a/drivers/net/ethernet/microchip/vcap/vcap_api_private.h
++++ b/drivers/net/ethernet/microchip/vcap/vcap_api_private.h
+@@ -50,6 +50,9 @@ struct vcap_stream_iter {
+ 
+ /* Check that the control has a valid set of callbacks */
+ int vcap_api_check(struct vcap_control *ctrl);
++/* Serialize access to the vcap instances of a control */
++void vcap_lock(struct vcap_admin *admin);
++void vcap_unlock(struct vcap_admin *admin);
+ /* Erase the VCAP cache area used or encoding and decoding */
+ void vcap_erase_cache(struct vcap_rule_internal *ri);
+ 
 -- 
 2.53.0
 
