@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81C444AB91;
-	Tue, 21 Jul 2026 22:36:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7577E44AB91;
+	Tue, 21 Jul 2026 22:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673369; cv=none; b=Ns77/ocpFCpQeN1+SDfkoyMU/rgV2IxZoPS0yc81YsG04rVjtN+XFf8vzeBbIhEQwg9+zu02ZVfY3r5qHdXd+FjD814TqLH5WcjOzhAD/i+Oms/61X6fI4dcR62tAgURrzxTqSgm6uITmp+9X5tF0US53IRAcSKnmB2DUU10Cq4=
+	t=1784673372; cv=none; b=W/F849b7jU8KUamHKU/RF8mb0YUeyOL0wLAXVJr1aRmm39cW85HvuQADx43oQ/ULLnM4V1c6Rz1e29pwaIGfyW6KA72beSAnCaNxSQxW9Tjzgn33ARZFua4baGIowIONOzqTZuyO4xg/Wg9Wbz7mBhQq06hF3qv8K18EXnaKr3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673369; c=relaxed/simple;
-	bh=j5iMDU+15SEtoqRs75Rt4dcrqH2KHTTka9AD3fZ0npc=;
+	s=arc-20240116; t=1784673372; c=relaxed/simple;
+	bh=Mvqz4A25IYcwe9gFSWNmqA1Jo2t8HsocHBEPfkESn6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKsrHwtwLNSLJ6jQUJ0wArd25Czl6wtihO+pz7UUrmcXdrH07rwIeMK3OMyvOAdJ5zpmqJSaW/nQ6iLS0ZpXTXyjeGdAHPRAvhR7xVOxASVIg6NwOnNik2VHV2pf8JcvHgqiuS+0sv1JQP4rYutZ+3PMC10OIaagpwMLcfbp2Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPWxYe4s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lqrl4RIRvLdwM2uAavOxfm5sHd062a8VpzdloEzO5Rs4sHxqd1d1i1CsL5+PJao/Xe5xXrscY/WSJ4XOrOiN/fnceGc4Ua46VM0CVkP/tFHHrXemfSkD4IGveCH3x+Yt4tZpGC5YrDtZeZVz8/J8nTVLfGeT5DW3mYTHm6bxRIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SB01bbDX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPWxYe4s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41DF21F000E9;
-	Tue, 21 Jul 2026 22:36:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SB01bbDX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA581F000E9;
+	Tue, 21 Jul 2026 22:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673367;
-	bh=LOA5cZ66INRlmdo6wC3XH67O07F1FnYNT16BYib8hx4=;
+	s=korg; t=1784673370;
+	bh=vDANF5ZAkdkI2ERNmZn9g9/pAUynu7tOVlPOzhQ7mt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lPWxYe4sGAAHCWPg6ddqbAFEBx59KHpJeKKlOPU1B4yLehqnKQzfGy/C+P+igV1j+
-	 /4HvUIkow4DpHp78WxyOppGgeCBKIAklsY/TTTwFh1hAuPe2rIPq9oIZaAFjIVwNO/
-	 FQNjQXM+ubVFsWMA4hHKXlEx4hywqT6QxYo3PVCs=
+	b=SB01bbDX72NSH7ExrzRvXW/jQSRn3UjZJlLPp7IaVBtEheiHVyMvdTIwxmeflpluE
+	 c70KVlG+apsPEx6bfsLNWcCnRxp8eXQuBXE1gQ5/5fPyMT6PGVzmjNqJkkcPlKD9wX
+	 TathYaOyRmOq7QOuGXouA4hfWd7jHkpdRBHnHAA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Huihui Huang <hhhuang@smu.edu.sg>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.10 137/699] tracing: Prevent out-of-bounds read in glob matching
-Date: Tue, 21 Jul 2026 17:18:16 +0200
-Message-ID: <20260721152358.800887633@linuxfoundation.org>
+	Trond Myklebust <trondmy@kernel.org>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>
+Subject: [PATCH 5.10 138/699] NFSv4: include MAY_WRITE in open permission mask for O_TRUNC
+Date: Tue, 21 Jul 2026 17:18:17 +0200
+Message-ID: <20260721152358.822795855@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -57,132 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huihui Huang <hhhuang@smu.edu.sg>
+From: Benjamin Coddington <ben.coddington@hammerspace.com>
 
-commit 0a6070839b1ef276d5b05bedfb787743e140fb17 upstream.
+commit 5140f099ecd8a2f2808b7f7b720ee1bad8468974 upstream.
 
-String event fields are not necessarily NUL-terminated, so the filter
-predicate functions (filter_pred_string(), filter_pred_strloc() and
-filter_pred_strrelloc()) pass the field length to the regex match
-callbacks, and the length-aware matchers honour it.
+POSIX requires write permission to truncate a file, so an open() that
+specifies O_TRUNC must be authorized for write access regardless of the
+O_ACCMODE access mode.
 
-regex_match_glob() was the exception: it ignored the length and called
-glob_match(), which scans the string until it hits a NUL byte. Some
-string fields are not NUL-terminated. One example is the dynamic char
-array of the xfs_* namespace tracepoints, which is copied without a
-trailing NUL. For such a field, glob matching reads past the end of
-the event field, causing a KASAN slab-out-of-bounds read in
-glob_match(), reached via regex_match_glob() and filter_match_preds()
-from the xfs_lookup tracepoint.
+nfs_open_permission_mask() builds the access mask passed to
+nfs_may_open(), which is the local authorization gate for OPENs the
+client serves itself from a cached write delegation via the
+can_open_delegated() path in nfs4_try_open_cached().  The mask is
+derived from O_ACCMODE alone, so an open(O_RDONLY | O_TRUNC) against a
+file the caller cannot write requests only MAY_READ and passes the
+local check.  The OPEN is then satisfied locally and the truncation is
+issued to the server as a SETATTR(size=0) over the delegation stateid,
+which the server accepts under standard write-delegation semantics.
+POSIX requires that this open fail with EACCES.
 
-Add a length-bounded glob_match_len() and use it from regex_match_glob()
-so glob matching always stops at the field boundary. The matching loop
-is factored into a shared helper so glob_match() keeps its behaviour.
+Include MAY_WRITE in the mask whenever O_TRUNC is set so the local
+check matches the access the server would have enforced.
 
-Fixes: 60f1d5e3bac4 ("ftrace: Support full glob matching")
+Suggested-by: Trond Myklebust <trondmy@kernel.org>
+Fixes: af22f94ae02a ("NFSv4: Simplify _nfs4_do_access()")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/da1aaf125fc3b63320b0c540fd6afa7c3d5b4f1a.1782836943.git.hhhuang@smu.edu.sg
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Huihui Huang <hhhuang@smu.edu.sg>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/glob.h               |    1 +
- kernel/trace/trace_events_filter.c |    6 ++----
- lib/glob.c                         |   31 +++++++++++++++++++++++++++++--
- 3 files changed, 32 insertions(+), 6 deletions(-)
+ fs/nfs/dir.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/linux/glob.h
-+++ b/include/linux/glob.h
-@@ -6,5 +6,6 @@
- #include <linux/compiler.h>	/* For __pure */
- 
- bool __pure glob_match(char const *pat, char const *str);
-+bool __pure glob_match_len(char const *pat, char const *str, size_t len);
- 
- #endif	/* _LINUX_GLOB_H */
---- a/kernel/trace/trace_events_filter.c
-+++ b/kernel/trace/trace_events_filter.c
-@@ -865,11 +865,9 @@ static int regex_match_end(char *str, st
- 	return 0;
- }
- 
--static int regex_match_glob(char *str, struct regex *r, int len __maybe_unused)
-+static int regex_match_glob(char *str, struct regex *r, int len)
- {
--	if (glob_match(r->pattern, str))
--		return 1;
--	return 0;
-+	return glob_match_len(r->pattern, str, len) ? 1 : 0;
- }
- 
- /**
---- a/lib/glob.c
-+++ b/lib/glob.c
-@@ -9,6 +9,9 @@
- MODULE_DESCRIPTION("glob(7) matching");
- MODULE_LICENSE("Dual MIT/GPL");
- 
-+static bool __pure glob_match_str(char const *pat, char const *str,
-+				  char const *str_end);
-+
- /**
-  * glob_match - Shell-style pattern matching, like !fnmatch(pat, str, 0)
-  * @pat: Shell-style pattern to match, e.g. "*.[ch]".
-@@ -39,6 +42,29 @@ MODULE_LICENSE("Dual MIT/GPL");
-  */
- bool __pure glob_match(char const *pat, char const *str)
- {
-+	return glob_match_str(pat, str, NULL);
-+}
-+EXPORT_SYMBOL(glob_match);
-+
-+/**
-+ * glob_match_len - glob match against a length-bounded string
-+ * @pat: Shell-style pattern to match.
-+ * @str: String to match.  Need not be NUL-terminated.
-+ * @len: Number of bytes of @str that may be read.
-+ *
-+ * Like glob_match(), but @str is only read up to @len bytes, so it can be
-+ * used on buffers that are not NUL-terminated (e.g. trace event fields).
-+ * A NUL byte within @len still terminates the string.
-+ */
-+bool __pure glob_match_len(char const *pat, char const *str, size_t len)
-+{
-+	return glob_match_str(pat, str, str + len);
-+}
-+EXPORT_SYMBOL(glob_match_len);
-+
-+static bool __pure glob_match_str(char const *pat, char const *str,
-+				  char const *str_end)
-+{
- 	/*
- 	 * Backtrack to previous * on mismatch and retry starting one
- 	 * character later in the string.  Because * matches all characters
-@@ -53,9 +79,11 @@ bool __pure glob_match(char const *pat,
- 	 * on mismatch, or true after matching the trailing nul bytes.
- 	 */
- 	for (;;) {
--		unsigned char c = *str++;
-+		unsigned char c = (str_end && str >= str_end) ? '\0' : *str;
- 		unsigned char d = *pat++;
- 
-+		str++;
-+
- 		switch (d) {
- 		case '?':	/* Wildcard: anything but nul */
- 			if (c == '\0')
-@@ -120,4 +148,3 @@ backtrack:
- 		}
+--- a/fs/nfs/dir.c
++++ b/fs/nfs/dir.c
+@@ -2803,6 +2803,8 @@ static int nfs_open_permission_mask(int
+ 			mask |= MAY_READ;
+ 		if ((openflags & O_ACCMODE) != O_RDONLY)
+ 			mask |= MAY_WRITE;
++		if (openflags & O_TRUNC)
++			mask |= MAY_WRITE;
  	}
- }
--EXPORT_SYMBOL(glob_match);
+ 
+ 	return mask;
 
 
