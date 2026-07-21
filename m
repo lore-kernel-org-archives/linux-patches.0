@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3438244AB97;
-	Tue, 21 Jul 2026 21:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C1D44AB9E;
+	Tue, 21 Jul 2026 21:18:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668722; cv=none; b=ALJYa1kaFwxeU35Shzpjdv22QF/wWi1OrzwZ4UE9yjxuH5xtvw4mOwyZ4MytKP2MfzP02lmDvL/tspEzS3UIEa21sPJL5pGnLr+ABGnB/eKYsJpuehHF0LB/YeGiHno7kxT8egIbgN7KMeexRQwUSQzN59LC/L3imP8iSfHZAxI=
+	t=1784668726; cv=none; b=fBa7u4LsClNk6to3KxkuZ9OmAc/CfQH+zeR0NpHaf7DuPS75vnZvzGgZC63qY+x80wnJqy3VOJ9299nQtNB12eKkni2/iIT6rUaxBLBDq9BwMyPqSdgyNerFEspsOoyPFTz6EikG88B3qaEfd10aL5sw1yET6uDpaKDjwnSvcog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668722; c=relaxed/simple;
-	bh=pVnMinjSeJciINQpdUNwIvSCtGlJohUXRS15UUUJ2Go=;
+	s=arc-20240116; t=1784668726; c=relaxed/simple;
+	bh=IMlqzIAkQJdjmGCigmQtKgaDKcREQXRQ7PTwcI68HKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FBzPAsKjCxZGRpwuYbtjlYOVw2nnuh5VOpHXJrKMjAyofyylwbj/N960xPfrNyK5ODvuDxEEMQsn7Jrd79PLCjsf5w8NGWpx3XrPSy7UN7bgpPH64imZmyq/qzjuUH+bjooJk/JPnd4tj+itkHgAefYGUzmslZmO8Y7vvl2p4Mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7rZ7zgH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cvsvtdF/541Bug2zg0I7Uu/mg75cLYEN92fq3iuPYCjUTk7bZabRFQqKa13fQtKyE47N5aUj5Ti7n/dH/8IOcSEhzHiaKjWAHDT960AzmW+j1S0OGsZELWa+6TQI94a97h67UvNDS2hlxqLx4fKvZGB2VyTqCBC/VVwYkD/yR8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jb6sD4R+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7rZ7zgH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A89C1F000E9;
-	Tue, 21 Jul 2026 21:18:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jb6sD4R+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424991F000E9;
+	Tue, 21 Jul 2026 21:18:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668721;
-	bh=Rw4LiBtGdTEnXWi1Cda72REsZq6A/dPm+cS/D3WnRfo=;
+	s=korg; t=1784668723;
+	bh=kyLgGxgQ3wE/KqikIVEtzu2cGmTlIYL/pNM5FXFwDmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h7rZ7zgHDC0nFD1jPrlHZWLnNODtekTdIb6KkIwZW89Zyn3ahzXC4/+q5TKdbaA8o
-	 LSCee+ncs+NNnNm3xBcL7EDqSV3kSR+ID/zPpZciiPaB33O64sNrGnSfBIOrUIiKap
-	 EYGiy+thco2vkhsskm+RtsejKlKkDCLWoi/Wp5+k=
+	b=jb6sD4R+ynnrpr80+7Z2PGO7tymX/md8VVotyhzYSlCawz0M1LUM8C+QrV5n7aG2v
+	 LZRSWeZZMmk3sA2dDU/GcBTewWhGoysW/VQk/ZP/p0Q+9XV3B93D9zNiFOw0hEQHMc
+	 8VFs54S8+llqq3Fzfy6xlBqa0j8k/9eynJMknnmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	Mykyta Yatsenko <yatsenko@meta.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Baolin Liu <liubaolin@kylinos.cn>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0281/1067] libbpf: Report error when a negative kprobe offset is specified
-Date: Tue, 21 Jul 2026 17:14:42 +0200
-Message-ID: <20260721152430.887225621@linuxfoundation.org>
+Subject: [PATCH 6.1 0282/1067] Documentation: proc: fix section numbering in table of contents
+Date: Tue, 21 Jul 2026 17:14:43 +0200
+Message-ID: <20260721152430.909465801@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,65 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Tomlin <atomlin@atomlin.com>
+From: Baolin Liu <liubaolin@kylinos.cn>
 
-[ Upstream commit ad35d8018669fd2eea76e3f74eb050fd3d2fb690 ]
+[ Upstream commit 97a7bd8c2c58a6d820df563d1d0f68aafec45477 ]
 
-In attach_kprobe(), the parsing logic uses sscanf() to extract the
-target function name and offset from the section definition. Currently,
-if a user specifies a negative offset (e.g., SEC("kprobe/func+-100")),
-the input is not explicitly caught and reported as an error.
+Commit e24ccaaf7ec4 ("block: remove last remaining traces of IDE
+documentation") removed the IDE section but left its table of
+contents entry behind.
+Fix the stale entry and renumber the following sections.
 
-This commit updates the logic to explicitly notify the user when a
-negative integer is provided. To facilitate this check, the offset
-variable is changed from unsigned long to long so that sscanf()
-can accurately capture a negative input for evaluation.
-
-If a negative offset is detected, the loader will now print an
-informative warning stating that the offset must be non-negative,
-and return -EINVAL.
-
-Additionally, free(func) is called in this new error path to prevent
-a memory leak, as the function name string is dynamically allocated
-by sscanf().
-
-Fixes: e3f9bc35ea7e9 ("libbpf: Allow decimal offset for kprobes")
-Signed-off-by: Aaron Tomlin <atomlin@atomlin.com>
-Acked-by: Mykyta Yatsenko <yatsenko@meta.com>
-Link: https://lore.kernel.org/bpf/20260419030944.1423642-1-atomlin@atomlin.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: e24ccaaf7ec4 ("block: remove last remaining traces of IDE documentation")
+Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Message-ID: <20260424090654.19229-1-liubaolin12138@163.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ Documentation/filesystems/proc.rst | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 7bd6aff6e260ee..c3de45c739e948 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -10350,7 +10350,7 @@ bpf_program__attach_kprobe_multi_opts(const struct bpf_program *prog,
- static int attach_kprobe(const struct bpf_program *prog, long cookie, struct bpf_link **link)
- {
- 	DECLARE_LIBBPF_OPTS(bpf_kprobe_opts, opts);
--	unsigned long offset = 0;
-+	long offset = 0;
- 	const char *func_name;
- 	char *func;
- 	int n;
-@@ -10372,6 +10372,13 @@ static int attach_kprobe(const struct bpf_program *prog, long cookie, struct bpf
- 		pr_warn("kprobe name is invalid: %s\n", func_name);
- 		return -EINVAL;
- 	}
-+
-+	if (offset < 0) {
-+		free(func);
-+		pr_warn("kprobe offset must be a non-negative integer: %li\n", offset);
-+		return -EINVAL;
-+	}
-+
- 	if (opts.retprobe && offset != 0) {
- 		free(func);
- 		pr_warn("kretprobes do not support offset specification\n");
+diff --git a/Documentation/filesystems/proc.rst b/Documentation/filesystems/proc.rst
+index 898c99eae8e446..2efadcb651bc3e 100644
+--- a/Documentation/filesystems/proc.rst
++++ b/Documentation/filesystems/proc.rst
+@@ -23,13 +23,13 @@ fixes/update part 1.1  Stefani Seibold <stefani@seibold.net>    June 9 2009
+   1	Collecting System Information
+   1.1	Process-Specific Subdirectories
+   1.2	Kernel data
+-  1.3	IDE devices in /proc/ide
+-  1.4	Networking info in /proc/net
+-  1.5	SCSI info
+-  1.6	Parallel port info in /proc/parport
+-  1.7	TTY info in /proc/tty
+-  1.8	Miscellaneous kernel statistics in /proc/stat
+-  1.9	Ext4 file system parameters
++  1.3	Networking info in /proc/net
++  1.4	SCSI info
++  1.5	Parallel port info in /proc/parport
++  1.6	TTY info in /proc/tty
++  1.7	Miscellaneous kernel statistics in /proc/stat
++  1.8	Ext4 file system parameters
++  1.9	/proc/consoles - Shows registered system consoles
+ 
+   2	Modifying System Parameters
+ 
 -- 
 2.53.0
 
