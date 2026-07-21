@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27DF44AB8A;
-	Tue, 21 Jul 2026 21:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F9F4307AD;
+	Tue, 21 Jul 2026 21:41:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670070; cv=none; b=bdh9ZTq5ijGQ3yUUjDQkB5J0GjvB47Jsm4VHPyd5flJ0UHPdDC0+gd9rMCnzPH6WLlFOhAL4d1azC8YR+k8Bd4RYzg41X4iM8BLIl1kx7u15ZGOhJs87em1sfAO9XOhvAQccTuR2HUivr9y+ijb1q4j0nOyQjEHtNndQCjm0YZY=
+	t=1784670072; cv=none; b=jL3FZVck9eQLz8mjbpZPv04DxtNB5ZQ5KIB8H7KzA2/qzfY9kV+fNpcErZ9QkQ59X9L5GCagOie4ykxwXgucIfftmMJRiETRAHrQ7cYbaLECQoB4PyxxlK5FGlriLFurvQXR5HpEscU6BCwz2gEoytfvwljNDao1gzpx8rtBxjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670070; c=relaxed/simple;
-	bh=I6zEYsPfhbNfgPw5ON+HlEtOjck4jrCIMnxCt5ncHjk=;
+	s=arc-20240116; t=1784670072; c=relaxed/simple;
+	bh=pKjHa1rV3crYcY9yJMN6Di3+OLqOWvDTSYm+qDhfJyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MZkD5iLrugNJsHpInGW5AomqI3jqc+FEP69XsQT9EtfV3i8L3kiehGTghlGdHx7UBiwzYlWpQmqeZvJb3tZqlxRnaLtPNixTxAR3ZEHwbqsijVl8VMAyIKo++gWw9wzwWuiPmeJtgO67z4fpB3tViCK34Xxa1Y3YPg/ZsEjbZd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZrLWH70Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HI13ArtNNtxkvY2dWZD6MhfiZeiz5fTgfUQ+TUgQD8ni4B3Zggi3cz3rPWtJHmeus5Wj0+SV3qFAz8cNQteu72uCTXWeIFlXFZMoJ+zA9wCkazVpHbPpJCTHTtiGyjUnurChIbnMuXUo3/CY9s4qACqkBg8M5f70kzu+PQgyAvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNRgUgGg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZrLWH70Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C4A1F00A3A;
-	Tue, 21 Jul 2026 21:41:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNRgUgGg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF5BA1F000E9;
+	Tue, 21 Jul 2026 21:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670068;
-	bh=bU/D8rn0EYfbia2T23h+MKPikQvS/jcq2TgtTORhpHI=;
+	s=korg; t=1784670071;
+	bh=Q5Hkgr2XWt/bjMShVVVz+s8UZEDPx54VQ6eIqKUalf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZrLWH70ZNGEfu0EuqwBrHrlOsI//iodsGuK9CD1Dos6tODrPzjyM4MzyIZrMx2Ol8
-	 1dwvKEG1cn3RVbNVN/SgvCW5HW4TuKR9Z3u1PcN5+VeHO4bBSX9OjGXZcAtKry0uVU
-	 d/xfEjKmnU+LlUR6D5uuv8K2dvO5Vx9cjAfKrJyg=
+	b=yNRgUgGgDOkidoL57pAPBja911Kknj7VgVge30nLBg8C9pFRsJ92cIv4GzRz3eQHt
+	 +eAvAeFmBj46/b1NZLls6WXTu5+HH0aoIWGILgjiY37bZqyt0mXIUv2oDm0hqzcfkQ
+	 iJd6PopL/iNwDFp8yh7kUnyYhEvJLbtPjk20uCDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.1 0791/1067] fs/ntfs3: add depth limit to indx_find_buffer to prevent stack overflow
-Date: Tue, 21 Jul 2026 17:23:12 +0200
-Message-ID: <20260721152442.257632761@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Wyatt Feng <bronzed_45_vested@icloud.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.1 0750/1067] netfilter: xt_nat: reject unsupported target families
+Date: Tue, 21 Jul 2026 17:22:31 +0200
+Message-ID: <20260721152441.352678243@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,81 +56,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Wyatt Feng <bronzed_45_vested@icloud.com>
 
-commit 1ebd684b8f627f75bc3e03f8b2ad8400fd1f02cd upstream.
+commit 5d1a2240935ea47e2673d0ea17fdb058e4dc91dd upstream.
 
-indx_find_buffer() recursively descends the B+ tree index with no depth
-limit.  A crafted NTFS image with circular index node references causes
-unbounded recursion, overflowing the kernel stack and panicking the
-system.
+xt_nat SNAT and DNAT target handlers assume IP-family conntrack state
+is present and can dereference a NULL pointer when instantiated from an
+unsupported family through nft_compat. A bridge-family compat rule can
+therefore trigger a NULL-dereference in nf_nat_setup_info().
 
-This is reachable by mounting a malicious NTFS filesystem (e.g. from a
-USB drive via desktop automount) and deleting a file whose index entry
-triggers the rebalancing fallback path in indx_delete_entry().
+Reject non-IP families in xt_nat_checkentry() so unsupported targets
+cannot be installed. Keep NFPROTO_INET allowed for valid inet NAT
+compat users and leave the runtime fast path unchanged.
 
-Add a depth parameter and bail out with -EINVAL when it reaches the
-fnd->nodes array bound, matching the constraint already enforced by
-fnd_push() in indx_find().
+[ The crash was fixed via
+  9dbba7e694ec ("netfilter: nft_compat: ebtables emulation must reject non-bridge targets"),
+  so this patch is no longer critical.
+  Nevertheless, NAT is only relevant for ipv4/ipv6, so this extra
+  family check is a good idea in any case. ]
 
-The related function indx_find() was previously patched for a similar
-infinite-loop issue (commit 1732053c8a6b), but indx_find_buffer() was
-missed.
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Fixes: c7232c9979cb ("netfilter: add protocol independent NAT core")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/index.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ net/netfilter/xt_nat.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -1991,13 +1991,21 @@ out1:
- static struct indx_node *indx_find_buffer(struct ntfs_index *indx,
- 					  struct ntfs_inode *ni,
- 					  const struct INDEX_ROOT *root,
--					  __le64 vbn, struct indx_node *n)
-+					  __le64 vbn, struct indx_node *n,
-+					  int depth)
+--- a/net/netfilter/xt_nat.c
++++ b/net/netfilter/xt_nat.c
+@@ -26,6 +26,15 @@ static int xt_nat_checkentry_v0(const st
+ 
+ static int xt_nat_checkentry(const struct xt_tgchk_param *par)
  {
- 	int err;
- 	const struct NTFS_DE *e;
- 	struct indx_node *r;
- 	const struct INDEX_HDR *hdr = n ? &n->index->ihdr : &root->ihdr;
- 
-+	/*
-+	 * Limit recursion depth to prevent stack overflow from crafted
-+	 * images.  Use the same bound as the fnd->nodes array (20).
-+	 */
-+	if (depth > ARRAY_SIZE(((struct ntfs_fnd *)NULL)->nodes))
-+		return ERR_PTR(-EINVAL);
++	switch (par->family) {
++	case NFPROTO_IPV4:
++	case NFPROTO_IPV6:
++	case NFPROTO_INET:
++		break;
++	default:
++		return -EINVAL;
++	}
 +
- 	/* Step 1: Scan one level. */
- 	for (e = hdr_first_de(hdr);; e = hdr_next_de(hdr, e)) {
- 		if (!e)
-@@ -2018,7 +2026,8 @@ static struct indx_node *indx_find_buffe
- 			if (err)
- 				return ERR_PTR(err);
+ 	return nf_ct_netns_get(par->net, par->family);
+ }
  
--			r = indx_find_buffer(indx, ni, root, vbn, n);
-+			r = indx_find_buffer(indx, ni, root, vbn, n,
-+					     depth + 1);
- 			if (r)
- 				return r;
- 		}
-@@ -2419,7 +2428,7 @@ int indx_delete_entry(struct ntfs_index
- 
- 		fnd_clear(fnd);
- 
--		in = indx_find_buffer(indx, ni, root, sub_vbn, NULL);
-+		in = indx_find_buffer(indx, ni, root, sub_vbn, NULL, 0);
- 		if (IS_ERR(in)) {
- 			err = PTR_ERR(in);
- 			goto out;
 
 
