@@ -1,51 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCE346EC7A;
-	Tue, 21 Jul 2026 18:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E11F47253D;
+	Tue, 21 Jul 2026 18:31:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658675; cv=none; b=aOS3tdA2Xfc0NRtRJOS+nKlF4cWYtLTEW3/uhNyKYGr7dk2gXKdK+LYN9U5+h5h7cxGK7xMDwfikq8mjzeiPc9gn4z/xngWaEt6vBLNITCRfiEWiZGaqlRWmuKguRq0jRcGhwJ0u8/9B8xypWenEgMPgTFyP7ewSnhFmfD1CjLs=
+	t=1784658677; cv=none; b=SLwMej6pMLGO08VWSX5UawITHMunDauoqfoeBVJ6s7tCB8drHWFxu4sB5ONRHZHqGVqonlfBbQn3U2YGBUFQ6z7pBRqlu7f+HUPROrXf3v8WeuR4ctFgEmVKAA9MkAJMqLYRKCzdx0dmLDmdrz6BZqaT9QCiA8HgvoS8nniu+gI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658675; c=relaxed/simple;
-	bh=ZNHw+YjaP/OhOJ/b1xJPo9sKfIdWScKExyaTYVq4JgY=;
+	s=arc-20240116; t=1784658677; c=relaxed/simple;
+	bh=HbRE/735HhlE/t0Bxk+rXF5ryPy8aqixreUOU2rWlZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n5mjKMuxw0OoPoXeLYd0nXPVqiQPQGbSYpoDzd0Duoi5JTOIjWH6/DllndJzF/wHt8WwVVAXQ7P/GRb7aHzlTptE8T9mO+ahnZ+vCM9ECZ3lwPNCNslxJIc8uM3hw8SMsdWfa5Eg3U2Lpox3hel751YDvFEApwNJlp31ULpGT/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPSBGFvj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lPd7KkBOq83rxvln0sZOawQZdbB3pzSt8ahUjH2ApF209HIBGml/IzArlw8JnvKWU5LlV67w1rNElDXwQq+MTAXb5E+4X/FBc4C4MKlKgaALfi47e8gBKmF2IAzmyHzSNHLfhUEcOqbRrehYlxIPIVWgWmUt8K3g/rF5PhV1GM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wU7z87o2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPSBGFvj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FFFD1F00A3E;
-	Tue, 21 Jul 2026 18:31:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wU7z87o2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74BF51F000E9;
+	Tue, 21 Jul 2026 18:31:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658673;
-	bh=huj3Xr6/muvPWOVyBqPdtjuyWl+M3zHpRGG7PUB7UqY=;
+	s=korg; t=1784658676;
+	bh=dHF4eoRDPXDjnzsQ2+u8VDg2LRuVe2cYIHKrsElArlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qPSBGFvj7E/NjjAl/t+S61NbhTYBOXCMPXwsKj+agjtQ7yE08DaogKrykK1iPGMD3
-	 FgKw5Y59oMB8HOTaWRR7U0OvKrpr//4/yD2HEIgX5xghrOpyBSGg21Fok6DSdJ4Hpb
-	 KyJziHy1O9H7YRvoCBttVnuTlTH2inFGD/o+e8io=
+	b=wU7z87o2O8RuUTkRzer1Dgssk1nqrg+G5Bvw4cmjW/sk74fJAz2rqUhaj38UtW+lD
+	 dkIL7GeTgQZMy8bXptrQzwDU1He4lpoicbqgiljYCjSNqpTo76RvtLBtOr1VjoLW7s
+	 jitjk8FM8mihed8fkctryhy/E/wKyZ22SaH4skuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Georgi Djakov <georgi.djakov@oss.qualcomm.com>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Michal Hocko <mhocko@suse.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 1232/1611] mm/memory_hotplug: fix incorrect altmap passing in error path
-Date: Tue, 21 Jul 2026 17:22:28 +0200
-Message-ID: <20260721152543.152103043@linuxfoundation.org>
+Subject: [PATCH 6.18 1233/1611] mm/damon/core: make charge_addr_from aware of end-address exclusivity
+Date: Tue, 21 Jul 2026 17:22:29 +0200
+Message-ID: <20260721152543.174339898@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -64,61 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit 2fac4afa0e2e68841334c78c1821e49f74fbc66a upstream.
+commit 5a2d162e22bf33eb89d53e802d0fc1ec422e19b6 upstream.
 
-In create_altmaps_and_memory_blocks(), when arch_add_memory() succeeds
-with memmap_on_memory enabled, the vmemmap pages are allocated from
-params.altmap.  If create_memory_block_devices() subsequently fails, the
-error path calls arch_remove_memory() with a NULL altmap instead of
-params.altmap.
+DAMON region end address is exclusive one, but charge_addr_from is
+assigned assuming the end address is inclusive.  As a result, DAMOS action
+to next up to min_region_sz memory can be skipped.  This is quite
+negligible user impact.  But, the bug is a bug that can be very simply
+fixed.  Fix the wrong assignment to respect the exclusiveness of the
+address.
 
-This is a bug that could lead to memory corruption.  Since altmap is NULL,
-vmemmap_free() falls back to freeing the vmemmap pages into the system
-buddy allocator via free_pages() instead of the altmap.
-arch_remove_memory() then immediately destroys the physical linear mapping
-for this memory.  This injects unowned pages into the buddy allocator,
-causing machine checks or memory corruption if the system later attempts
-to allocate and use those freed pages.
+The issue was discovered [1] by Sashiko.
 
-Fix this by passing params.altmap to arch_remove_memory() in the error
-path.
-
-Link: https://lore.kernel.org/20260428081855.1249045-3-songmuchun@bytedance.com
-Fixes: 6b8f0798b85a ("mm/memory_hotplug: split memmap_on_memory requests across memblocks")
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Liam R. Howlett <liam@infradead.org>
-Reviewed-by: Georgi Djakov <georgi.djakov@oss.qualcomm.com>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
-Cc: Joao Martins <joao.m.martins@oracle.com>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/20260428042942.118230-1-sj@kernel.org
+Link: https://lore.kernel.org/20260428032324.115663-1-sj@kernel.org [1]
+Fixes: 50585192bc2e ("mm/damon/schemes: skip already charged targets and regions")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.16.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory_hotplug.c |    2 +-
+ mm/damon/core.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -1489,7 +1489,7 @@ static int create_altmaps_and_memory_blo
- 		ret = create_memory_block_devices(cur_start, memblock_size, nid,
- 						  params.altmap, group);
- 		if (ret) {
--			arch_remove_memory(cur_start, memblock_size, NULL);
-+			arch_remove_memory(cur_start, memblock_size, params.altmap);
- 			kfree(params.altmap);
- 			goto out;
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1950,7 +1950,7 @@ static void damos_apply_scheme(struct da
+ 		quota->charged_sz += sz;
+ 		if (quota->esz && quota->charged_sz >= quota->esz) {
+ 			quota->charge_target_from = t;
+-			quota->charge_addr_from = r->ar.end + 1;
++			quota->charge_addr_from = r->ar.end;
  		}
+ 	}
+ 	if (s->action != DAMOS_STAT)
 
 
