@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D7A3F2101;
-	Tue, 21 Jul 2026 18:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7D92DEA74;
+	Tue, 21 Jul 2026 18:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660112; cv=none; b=Lm0FFSWNUO7OFv635nbw29UU3W93URMIv1w2U2xphJ5wIkfJ8lPEKrs8a9RERwtMoJl03/6o2VlpdcJfSrk4QoAhmIvKCNsJAANUvCdAXp2IZEKel6POuBvKbvxCmmrrQpufLPWR7n+oIkH3egD3coxVvxPCNWTS6K1Z+rhrIqk=
+	t=1784660115; cv=none; b=BDQDm31oMH3A0zANy3cAVwe2zSkr3SXESb0dhq+chHJi06YK/1ZR++pBJwUOuZiucyj73nlgzDzEtXALW+LKtETyNuYEgAn54tJ6p5ydaOvmTwftlj2GhmMdv5o+K96mlfhwRw5APwauVJ9MKnWK26UiVXpXvnzsX2juKJDb4IQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660112; c=relaxed/simple;
-	bh=Yli6JMMkRLq+JqRusUwWHLOkyAvZGNrduUH/g2sY27o=;
+	s=arc-20240116; t=1784660115; c=relaxed/simple;
+	bh=uYn8lGbLmnhOmwiqPtB0av7XCmf6eNNPVKeV2GWpMMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ke8vmWZPjhZXr8K35oJab/Q1b+2+XWq6YWfUsWtinspK4Bn4Il2zZFLYfP8S+tp1Pv6hEETQxvLUozuMSet95v4VQYb7fNHuR2oF/tYnI+zwXNbIRtLiqbEpGpuy1pbrYIObPzrhWiELfGdKoCjEz7qPbg9CFWKBVSfnffXh2gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THJry8ie; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Cxpbx4AC6AWvsIQ66rqh1Vz/aTssxaYl/q5F1hpmhjcFAtsNv4WmzId0KbRhfiaBzc8aLYg0WssxJD8NYI+PR9x8vYAfimQ5rOqXz0aT7ZTt3NqlQExsK9YlU+oX0LxRT94cq/oKGr7TXMtocTFfVqAhUUEbBJ4aZHs4HGvCZ2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nCf5kM3F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THJry8ie"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CFD1F000E9;
-	Tue, 21 Jul 2026 18:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nCf5kM3F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C6F91F000E9;
+	Tue, 21 Jul 2026 18:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660111;
-	bh=MNFNwY3kCVSZIYPacMgKDwTUhBCPHBSUblCTU5OPEpE=;
+	s=korg; t=1784660113;
+	bh=3/4+WHrok//R9YaenlnaKfVvmWISS9bQUuLIjj8lZys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=THJry8ie1SCHt/aR62T3uuFwjPhunmoer8GVsW6mUGJv7U8yxRhQKPfyoX4co2+kL
-	 rmpXsgZJf9w90DVLTJr7FCcAiwmhcu/nmQWfxwqGxWuTZ3U+AZS7xFiTrabIAmztLu
-	 NX157mPQBCTJLJ0tenqXj/rUDC7UXUjEs2S1394Y=
+	b=nCf5kM3FwKIJwlOgBVOc+9+kW4ezDSi94eox4uALBkPW9m3OPXI9spq/3RX6zT18k
+	 JbS3JEDXxh1u90NLy2Ral8mBvq53SSst3Kx0hzLU71MVQesYo+ttoiHrcyemBQN2HQ
+	 qmN4jqVoXzxF1/RTocoUu8W1IjdO/OZ+PrjDM0FY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0855/2077] PCI: intel-gw: Move interrupt enable to own function
-Date: Tue, 21 Jul 2026 17:08:48 +0200
-Message-ID: <20260721152612.954774940@linuxfoundation.org>
+Subject: [PATCH 7.1 0856/2077] PCI: intel-gw: Enable clock before PHY init
+Date: Tue, 21 Jul 2026 17:08:49 +0200
+Message-ID: <20260721152612.977542952@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -55,25 +55,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Eckert <fe@dev.tdt.de>
 
-[ Upstream commit abddc0539e5931f4ad2f589a03cbba5a6a64485f ]
+[ Upstream commit febf9ed3c35e5eec7ea384ebbd55a5296e3ca5e9 ]
 
-To improve the readability of the code, move the interrupt enable
-instructions to a separate function. That is already done for the disable
-interrupt instruction.
-
-In addition, clear and disable all pending interrupts, as is done in
-intel_pcie_core_irq_disable(). After that, enable all relevant interrupts
-again. The 'PCIE_APP_IRNEN' definition contains all the relevant interrupts
-that are of interest.
-
-This change is also done in the MaxLinear SDK [1]. As I unfortunately don’t
-have any documentation for this IP core, I suspect that the intention is to
-set the IP core for interrupt handling to a specific state. Perhaps the
-problem is that the IP core did not reinitialize the interrupt register
-properly after a power cycle.
-
-In my view, it can’t do any harm to switch the interrupt off and then on
-again to set them to a specific state.
+To ensure that the boot sequence is correct, the DWC PCIe core clock must
+be switched on before PHY init call [1]. This changes are based on patched
+kernel sources of the MaxLinear SDK.
 
 The reason why the MaxLinear SDK is used as a reference here is, that this
 PCIe DWC IP is used in the URX851 and URX850 SoC. This SoC was originally
@@ -82,49 +68,80 @@ developed by Intel when they acquired Lantiq’s home networking division in
 Since then, this SoC belongs to MaxLinear. They use their own SDK, which
 runs on kernel version '5.15.x'.
 
-[1] https://github.com/maxlinear/linux/blob/updk_9.1.90/drivers/pci/controller/dwc/pcie-intel-gw.c#L431
+[1] https://github.com/maxlinear/linux/blob/updk_9.1.90/drivers/pci/controller/dwc/pcie-intel-gw.c#L544
 [2] https://www.intc.com/news-events/press-releases/detail/364/intel-to-acquire-lantiq-advancing-the-connected-home
 [3] https://investors.maxlinear.com/press-releases/detail/395/maxlinear-to-acquire-intels-home-gateway-platform
 
 Signed-off-by: Florian Eckert <fe@dev.tdt.de>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260417-pcie-intel-gw-v5-3-0a2b933fe04f@dev.tdt.de
+Link: https://patch.msgid.link/20260417-pcie-intel-gw-v5-4-0a2b933fe04f@dev.tdt.de
 Stable-dep-of: 1eedabe7c617 ("PCI: intel-gw: Add .start_link() callback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-intel-gw.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/pci/controller/dwc/pcie-intel-gw.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/pci/controller/dwc/pcie-intel-gw.c b/drivers/pci/controller/dwc/pcie-intel-gw.c
-index c21906eced6189..3a85bd0ef1b7f9 100644
+index 3a85bd0ef1b7f9..e84703c1c4a1c8 100644
 --- a/drivers/pci/controller/dwc/pcie-intel-gw.c
 +++ b/drivers/pci/controller/dwc/pcie-intel-gw.c
-@@ -196,6 +196,13 @@ static void intel_pcie_device_rst_deassert(struct intel_pcie *pcie)
- 	gpiod_set_value_cansleep(pcie->reset_gpio, 0);
- }
+@@ -292,13 +292,9 @@ static int intel_pcie_host_setup(struct intel_pcie *pcie)
  
-+static void intel_pcie_core_irq_enable(struct intel_pcie *pcie)
-+{
-+	pcie_app_wr(pcie, PCIE_APP_IRNEN, 0);
-+	pcie_app_wr(pcie, PCIE_APP_IRNCR, PCIE_APP_IRN_INT);
-+	pcie_app_wr(pcie, PCIE_APP_IRNEN, PCIE_APP_IRN_INT);
-+}
+ 	intel_pcie_core_rst_assert(pcie);
+ 	intel_pcie_device_rst_assert(pcie);
+-
+-	ret = phy_init(pcie->phy);
+-	if (ret)
+-		return ret;
+-
+ 	intel_pcie_core_rst_deassert(pcie);
+ 
++	/* Controller clock must be provided earlier than PHY */
+ 	ret = clk_prepare_enable(pcie->core_clk);
+ 	if (ret) {
+ 		dev_err(pcie->pci.dev, "Core clock enable failed: %d\n", ret);
+@@ -307,13 +303,17 @@ static int intel_pcie_host_setup(struct intel_pcie *pcie)
+ 
+ 	pci->atu_base = pci->dbi_base + 0xC0000;
+ 
++	ret = phy_init(pcie->phy);
++	if (ret)
++		goto phy_err;
 +
- static void intel_pcie_core_irq_disable(struct intel_pcie *pcie)
- {
- 	pcie_app_wr(pcie, PCIE_APP_IRNEN, 0);
-@@ -317,9 +324,7 @@ static int intel_pcie_host_setup(struct intel_pcie *pcie)
- 	if (ret)
- 		goto app_init_err;
+ 	intel_pcie_ltssm_disable(pcie);
+ 	intel_pcie_link_setup(pcie);
+ 	intel_pcie_init_n_fts(pci);
  
--	/* Enable integrated interrupts */
--	pcie_app_wr_mask(pcie, PCIE_APP_IRNEN, PCIE_APP_IRN_INT,
--			 PCIE_APP_IRN_INT);
-+	intel_pcie_core_irq_enable(pcie);
+ 	ret = dw_pcie_setup_rc(&pci->pp);
+ 	if (ret)
+-		goto app_init_err;
++		goto err;
+ 
+ 	dw_pcie_upconfig_setup(pci);
+ 
+@@ -322,17 +322,18 @@ static int intel_pcie_host_setup(struct intel_pcie *pcie)
+ 
+ 	ret = dw_pcie_wait_for_link(pci);
+ 	if (ret)
+-		goto app_init_err;
++		goto err;
+ 
+ 	intel_pcie_core_irq_enable(pcie);
  
  	return 0;
  
+-app_init_err:
++err:
++	phy_exit(pcie->phy);
++phy_err:
+ 	clk_disable_unprepare(pcie->core_clk);
+ clk_err:
+ 	intel_pcie_core_rst_assert(pcie);
+-	phy_exit(pcie->phy);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
