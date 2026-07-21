@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEE03E7141;
-	Tue, 21 Jul 2026 17:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767A33E7141;
+	Tue, 21 Jul 2026 17:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655234; cv=none; b=VnnuFhhPgVf5z30OD93FL2so3t1nWHG4jd2LzFvkyGZeGfWR9A4xA3oK1F8BxsSpzF0y75pks2CpSby5fD/zjdZulQZ2MTO6zgY9BCtjpjIhVMXBrBtycnW2M1XdMYFNJT9VtiDXdV39QLgSRze4m8LYme5WJjJijMo6ktReGF4=
+	t=1784655236; cv=none; b=ZkUcpI0FwfSXgnkxylu5QjjA1rSf2oNbSK+XoWPivX1TtPNxFME5perwbL89otUDLTbt/QMFKlPVbeZuOTU/tKnZMU6xL1/GAa3eTwt8fXh8A75Ly/EBx1G2xX9GcD/hZB829frAqq1Xg01waSTGsWszZsIGykSI0JI/xlqDEhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655234; c=relaxed/simple;
-	bh=M6QeezxVFi34pm1s36pm+5kNP+eCpr0Li/hebKfdFyA=;
+	s=arc-20240116; t=1784655236; c=relaxed/simple;
+	bh=JtN7FCX1S4WcRJ4kLfo9jYezbGsiir4ZdtvS4QFlGXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VDvElxIVt4Ae6sqvpMlyqzlxbPuYayhIfeusPABCiXV3X3SKbtiXiRY/8HrXFPXnLo9nSKorUj1soyFymyKQxSvIUf6lcEu+uNHToJBQyAKb+0/uk2zE0NbY+twmVam2RYvu4r9iTyCgZE9xGbTfJ5390QllrbTSrBHy+RWKM/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGxIBn6r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tGSx5uY3YCMr/OK5/LZG197Mi7ao2uHygr1IaJM2eFvDYnHQJLn3JG//DZSbZYvk3IqlTmcoJlKOikXLIdX1MlvsdJD/NBzv1ueLZ8p1LEkc1+qB1Abn0Bm+oOc2qVySuqDg9URtqB9N6J9VBPkhPQkn2iUpaDMWI4CSTEw2Qa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mIOGCFW1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGxIBn6r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F9B1F000E9;
-	Tue, 21 Jul 2026 17:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mIOGCFW1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCDE71F000E9;
+	Tue, 21 Jul 2026 17:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655232;
-	bh=aMEygpz6ZOVHGW1kEj5nNIuwIBu0TUV3qtT7vSDNleA=;
+	s=korg; t=1784655235;
+	bh=2j/tn0LmhOpk0UD+9F5vrFEQAvgYB34P2MLjuV12vvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GGxIBn6rWSnidD3myRtRgXRkscuIshMyY2yItTPpEOWQw3Nykos466drItauk4tK9
-	 e1D3NziCifa1J0y+riu/+TmkhKLzOuPGBvbnJTAdOdATk3L7FYhEg1mklcGdhq47s4
-	 KgO3rm+E41BvE0TF7v4OEodEq93p89bZB210Ef6c=
+	b=mIOGCFW13+FtJdNb7aQ5GTKYn/bjjllLv5rZqBkF9bBdpx4A0VQGVEh70E4anId08
+	 fog9KcLjtRi60rHcLBGWtbzbYAQRCcQAgCs6yHi9Zx0P6zdToVy3Klyzi48620sVcs
+	 ol/xoaOLImTOAtWFBvbEczzJ7sre75508srtBVqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaixuan Li <kaixuan.li@ntu.edu.sg>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.1 2006/2077] wifi: brcmfmac: cyw: fix heap overflow on a short auth frame
-Date: Tue, 21 Jul 2026 17:27:59 +0200
-Message-ID: <20260721152640.025175280@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Paul Walmsley <pjw@kernel.org>
+Subject: [PATCH 7.1 2007/2077] riscv: vdso: Do not use LTO for the vDSO
+Date: Tue, 21 Jul 2026 17:28:00 +0200
+Message-ID: <20260721152640.048433006@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,62 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-commit 240c8d2c717b3f8153e7e877b22a82518d78dbdc upstream.
+commit ad6dcfa023762e37962f77ee48e752b7570e9440 upstream.
 
-brcmf_notify_auth_frame_rx() takes the frame length from the firmware
-event and copies the frame body with the management header offset
-subtracted:
+With LTO enabled the compiler assumes that the vDSO functions are not
+used and optimizes them away completely. Currently this happens to
+__vdso_clock_getres(), __vdso_clock_gettime(), __vdso_getrandom(),
+__vdso_gettimeofday() and __vdso_riscv_hwprobe().
 
-	u32 mgmt_frame_len = e->datalen - sizeof(struct brcmf_rx_mgmt_data);
-	...
-	memcpy(&mgmt_frame->u, frame,
-	       mgmt_frame_len - offsetof(struct ieee80211_mgmt, u));
+Disable LTO for the vDSO, as these functions are hand-optimized anyways.
 
-The only length check is e->datalen >= sizeof(*rxframe), so mgmt_frame_len
-can be anything from 0 up. offsetof(struct ieee80211_mgmt, u) is 24. When
-mgmt_frame_len is below that, the subtraction wraps as an unsigned value to
-a huge length. The memcpy then runs far past the kzalloc'd buffer. A
-malicious or malfunctioning AP can make the frame short during the
-external SAE auth exchange, so this is a remotely triggered heap overflow.
-
-Reject frames shorter than the management header offset before the copy.
-
-Fixes: 66f909308a7c ("wifi: brcmfmac: cyw: support external SAE authentication in station mode")
-Link: https://lore.kernel.org/r/178214417708.2368577.16740907093694208834@maoyixie.com
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202606301855.WvkSC4kD-lkp@intel.com/
+Fixes: 021d23428bdb ("RISC-V: build: Allow LTO to be selected")
 Cc: stable@vger.kernel.org
-Co-developed-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
-Signed-off-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260627131313.3878893-1-maoyixie.tju@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://patch.msgid.link/20260701-riscv-vdso-lto-v1-1-89db0cd82077@linutronix.de
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/riscv/kernel/vdso/Makefile |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-@@ -293,6 +293,12 @@ brcmf_notify_auth_frame_rx(struct brcmf_
- 		return -EINVAL;
- 	}
+--- a/arch/riscv/kernel/vdso/Makefile
++++ b/arch/riscv/kernel/vdso/Makefile
+@@ -69,9 +69,9 @@ CPPFLAGS_$(vdso_lds) += -DHAS_VGETTIMEOF
+ endif
  
-+	if (mgmt_frame_len < offsetof(struct ieee80211_mgmt, u)) {
-+		bphy_err(drvr, "Event %s (%d) frame too small. Ignore\n",
-+			 brcmf_fweh_event_name(e->event_code), e->event_code);
-+		return -EINVAL;
-+	}
-+
- 	wdev = &ifp->vif->wdev;
- 	WARN_ON(!wdev);
+ # Disable -pg to prevent insert call site
+-CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS)
+-CFLAGS_REMOVE_getrandom.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS)
+-CFLAGS_REMOVE_hwprobe.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS)
++CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS) $(CC_FLAGS_LTO)
++CFLAGS_REMOVE_getrandom.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS) $(CC_FLAGS_LTO)
++CFLAGS_REMOVE_hwprobe.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS) $(CC_FLAGS_LTO)
  
+ # Force dependency
+ $(obj)/$(vdso_o): $(obj)/$(vdso_so)
 
 
