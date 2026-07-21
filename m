@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E3F256C84;
-	Tue, 21 Jul 2026 15:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6776546A610;
+	Tue, 21 Jul 2026 15:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649502; cv=none; b=ducrZiiHcQHWClLTa2GfdUXZHQE5NoEyK98pqAgCi+guPRi9DyEf9IE6Ih6FouL56nHftkffb+2TQ/dgNGYki+fIWOi9RuDULbyCgIIoespLVRN511fkX4ZBOW/JReekF+6Kj9XDUn3jfy/d2odhXCVF1Ru7NtiRkgf4t/5J4vM=
+	t=1784649504; cv=none; b=Bvve2ncGsDQAnP31MYAiu6y0LfftH0mFFEVR9s7RYcdcC9gOaT5YI4svqJJJfxXrH+M8oHGFwQIueHY4Goyd/yKP67uFjwiAJHzDX6GCkYVc7djT1IYlzbYYnDloWUoSJUVyr3Nks82gPpyKyHdgS1M2sVKYJ68gVos0TG6llbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649502; c=relaxed/simple;
-	bh=IhVRPJEeizSKsq7lbpLYgAlTg7byox07nz8rbzuIWX4=;
+	s=arc-20240116; t=1784649504; c=relaxed/simple;
+	bh=LWRIke1nQ+nmJqYhR0cyKxscJTTAPqcjmtCKQxxFZas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EpupVTn6FgjulorkiOn9ofGI7j18Io5nupldTm5DUoV0HiDrJ5u59NGE0CsbI/As90h1SynD3/iCDL7+RoggHYbtlU5xQVxzNik6lDoxzaGy68yDoI6D1yMEeLQ4Lh+vVQZ9+O94asool+LgEC4S4ZnYLOtM7OzFkAJE0I47ffU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPRjhEFs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rJqKmX1OxEhcTNDNrGoNXspPco1gDv67RV81lijiy2hyKrAoTJGkGWmS1Wkup7seVarJGqElntJ/9sjL5jrI8KE3jnWcObul246y+NLIcgbKqAjk+Hgou7yW9ffH4Ruy6WXfGJtKiovYBQguBVIupGX7E/5SoeFQ/6P3CYDvrWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVvlpwL3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPRjhEFs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388B71F000E9;
-	Tue, 21 Jul 2026 15:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVvlpwL3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF6B1F000E9;
+	Tue, 21 Jul 2026 15:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649500;
-	bh=FgSrSrwR3PXoKkf3HmETtzbJmwl7Cyx8ItlUt96YJMc=;
+	s=korg; t=1784649503;
+	bh=8QZdw6+KQ1OlyjvbkJF0+diT+GFfDZbZIf5o4/SslAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MPRjhEFsPdtt+28RnIxV8QC/578kuCcI4xsCWDLPd2kL9+DcXTfZsXMxPAckidqOG
-	 dFFUd3fTsxjkuNhcdnAHJ5CRpoVf5WaQ1WanUDVbF5ZY3OLNmwnPzZF3T+jh0TXawk
-	 0npI7qM5AhSHfdYF/MajA3+VWsSPoNbgFitGs4tk=
+	b=EVvlpwL3FIlpD3BzhzkY61ddl2/aIg9SqmYdDqxOASHcyl8zhp2xA0cPSvC22vDzX
+	 5BTJO8AbrhBcPyy3oiCpat/ydYmMthpEW2TJkcf5GSrmZOCTzq81MAOU7GWJ8iby8O
+	 UvbRUcuR2C87ncvEFeinNfEIrm7jHv3LefR+XDEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0603/2077] fbdev: sm501fb: Fix buffer errors in OF binding code
-Date: Tue, 21 Jul 2026 17:04:36 +0200
-Message-ID: <20260721152607.029662603@linuxfoundation.org>
+Subject: [PATCH 7.1 0604/2077] memory: tegra186-emc: stop borrowing MC aggregate hook for EMC
+Date: Tue, 21 Jul 2026 17:04:37 +0200
+Message-ID: <20260721152607.056065436@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,91 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Laight <david.laight.linux@gmail.com>
+From: Sumit Gupta <sumitg@nvidia.com>
 
-[ Upstream commit d8421e09382cfe0bd2a044c8b0a822f64855dd4e ]
+[ Upstream commit 2e05f3d6005d9aa3e2e423d2471f290d9ccbe3d2 ]
 
-The code that gets the frame buffer mode from OF has 'use after free',
-'buffer overrun' and memory leaks.
+tegra186_emc_interconnect_init() copies the MC's ICC aggregate hook
+into the EMC provider.  That hook (tegra234_mc_icc_aggregate /
+tegra264_mc_icc_aggregate) uses container_of() to recover 'mc',
+which is only valid when the icc_provider is embedded in struct
+tegra_mc.  For an EMC node the provider is embedded in struct
+tegra186_emc, so 'mc' points into unrelated memory.
 
-info->edid_data isn't free if the probe functions fail or if
-pd->def_mode is set.
+This stayed harmless until commit faafd6ca7e6e ("memory: tegra:
+make icc_set_bw return zero if BWMGR not supported") added an
+unconditional read of mc->bwmgr_mrq_supported at the top of the
+hook.  UBSAN catches the stray load on every EMC aggregation:
 
-If both the CRT and PANEL are enabled info->edid_data is used after
-being freed and is freed twice.
+  UBSAN: invalid-load in drivers/memory/tegra/tegra234.c:1104:9
+  load of value 112 is not a valid value for type '_Bool'
 
-The string returned by of_get_property(np, "mode", &len) is just
-written over either the static "640x480-16@60" or the module parameter
-string without any regard for the length (which is most likely longer).
+No functional impact in practice, since the hook's only other mc
+dereference (mc->num_channels) sits inside a
+TEGRA_ICC_MC_CPU_CLUSTER* branch that EMC nodes never enter.
 
-Use kstrump() for the OF mode and free everything before freeing 'info.
+Fix this by setting the EMC provider's aggregate hook to
+icc_std_aggregate, instead of borrowing the MC's hook.  The MC
+providers continue using their own aggregate hooks, where
+container_of() correctly resolves to struct tegra_mc.
 
-Fixes: 4295f9bf74a88 ("video, sm501: add OF binding to support SM501")
-Signed-off-by: David Laight <david.laight.linux@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Reported-by: Jon Hunter <jonathanh@nvidia.com>
+Fixes: 9a38cb27668e ("memory: tegra: Add interconnect support for DRAM scaling in Tegra234")
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260527140127.49172-2-sumitg@nvidia.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sm501fb.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/memory/tegra/tegra186-emc.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/video/fbdev/sm501fb.c b/drivers/video/fbdev/sm501fb.c
-index fee4b9f84592f7..ea5375ed4ea6f3 100644
---- a/drivers/video/fbdev/sm501fb.c
-+++ b/drivers/video/fbdev/sm501fb.c
-@@ -96,6 +96,7 @@ struct sm501fb_info {
- 	void __iomem		*fbmem;		/* remapped framebuffer */
- 	size_t			 fbmem_len;	/* length of remapped region */
- 	u8 *edid_data;
-+	char *fb_mode;
- };
+diff --git a/drivers/memory/tegra/tegra186-emc.c b/drivers/memory/tegra/tegra186-emc.c
+index 03ebab6fbe68fe..f71265b303b976 100644
+--- a/drivers/memory/tegra/tegra186-emc.c
++++ b/drivers/memory/tegra/tegra186-emc.c
+@@ -258,15 +258,13 @@ static int tegra186_emc_icc_get_init_bw(struct icc_node *node, u32 *avg, u32 *pe
  
- /* per-framebuffer private data */
-@@ -1793,12 +1794,11 @@ static int sm501fb_init_fb(struct fb_info *fb, enum sm501_controller head,
- 			fb->var.yres_virtual = fb->var.yres;
- 		} else {
- 			if (info->edid_data) {
--				ret = fb_find_mode(&fb->var, fb, fb_mode,
-+				ret = fb_find_mode(&fb->var, fb,
-+					info->fb_mode ?: fb_mode,
- 					fb->monspecs.modedb,
- 					fb->monspecs.modedb_len,
- 					&sm501_default_mode, default_bpp);
--				/* edid_data is no longer needed, free it */
--				kfree(info->edid_data);
- 			} else {
- 				ret = fb_find_mode(&fb->var, fb,
- 					   NULL, NULL, 0, NULL, 8);
-@@ -1974,7 +1974,7 @@ static int sm501fb_probe(struct platform_device *pdev)
- 			/* Get EDID */
- 			cp = of_get_property(np, "mode", &len);
- 			if (cp)
--				strcpy(fb_mode, cp);
-+				info->fb_mode = kstrdup(cp, GFP_KERNEL);
- 			prop = of_get_property(np, "edid", &len);
- 			if (prop && len == EDID_LENGTH) {
- 				info->edid_data = kmemdup(prop, EDID_LENGTH,
-@@ -2031,6 +2031,12 @@ static int sm501fb_probe(struct platform_device *pdev)
- 		goto err_started_crt;
- 	}
+ static int tegra186_emc_interconnect_init(struct tegra186_emc *emc)
+ {
+-	struct tegra_mc *mc = dev_get_drvdata(emc->dev->parent);
+-	const struct tegra_mc_soc *soc = mc->soc;
+ 	struct icc_node *node;
+ 	int err;
  
-+	/* These aren't needed any more */
-+	kfree(info->edid_data);
-+	kfree(info->fb_mode);
-+	info->edid_data = NULL;
-+	info->fb_mode = NULL;
-+
- 	/* we registered, return ok */
- 	return 0;
+ 	emc->provider.dev = emc->dev;
+ 	emc->provider.set = tegra186_emc_icc_set_bw;
+ 	emc->provider.data = &emc->provider;
+-	emc->provider.aggregate = soc->icc_ops->aggregate;
++	emc->provider.aggregate = icc_std_aggregate;
+ 	emc->provider.xlate = tegra186_emc_of_icc_xlate;
+ 	emc->provider.get_bw = tegra186_emc_icc_get_init_bw;
  
-@@ -2048,6 +2054,8 @@ static int sm501fb_probe(struct platform_device *pdev)
- 	framebuffer_release(info->fb[HEAD_CRT]);
- 
- err_alloc:
-+	kfree(info->edid_data);
-+	kfree(info->fb_mode);
- 	kfree(info);
- 
- 	return ret;
 -- 
 2.53.0
 
