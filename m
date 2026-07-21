@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580C8367B63;
-	Tue, 21 Jul 2026 22:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17260367B63;
+	Tue, 21 Jul 2026 22:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673424; cv=none; b=tyRc6tbwxcTArQT/T346MFJ0OWZOeALD8eEKdoeu9K4znKLg8iLH0urHU9t0Xqi27V4I7v+9eck9WFLmXYGUfHRfLbpcumYxkvl+J7H0SUr19av2UypzAhLAtuBRbo33AX8PLGa5NPIsHqSNUg55zqrN8FdXncLvJ5GNknkaIY0=
+	t=1784673427; cv=none; b=WjWejvf1xHTlSI1tExn7h402AnHdWOVhYr687rDUEZjG35ozr7EveI0DuK5TKR1F+ve698/t59C6bkBi0eyg6LhGnI0MZqNzkiCPrueamtnsDUuyk4Inkb8YRHVe6igXdVtf9xcDkJZm6ODn8e4MoXGoeUdwsS0ol+00BpjFpIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673424; c=relaxed/simple;
-	bh=n0aJQjuKNkQLAqmmWA0V4EOSUpiy/cP8hAnNZByMphs=;
+	s=arc-20240116; t=1784673427; c=relaxed/simple;
+	bh=CoLttRy44o3E9kTFkXCG4VpMrstNeN3wn33HblraioQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W39x+P/NiyMaVrd9Bnh/joY6v+OHZI0FmnMLqD9Tei5/3yuSRJPYL/0wCnvkCmyrozaryQsmoFjFlweCCV3OypwoFO9QABerhq+CO9uHIb2OZ5fXWuMWBYI8CdD29Q/gKdAY8Ft2YJFwmf27X9MzV37Q9mEzcPWLr8hOwFDrHAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KHFwxDJ9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LGltFfTD3ADLFRJq+mxqizsIrAbP0b+j/swAb7Kj+R04eqr9k1v6Bl4Uv9C1BZy1vPiEmhMg4jEa6bQAMsOTL8nFMdtxCDMscv7r9ub2rDt//wnFD3oHrOU8BRpVovT8rTvlsUgl+/leeXC6P3DHwBYQzsrv3W8/JV+TihUcK9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QD/1MhMa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHFwxDJ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB481F000E9;
-	Tue, 21 Jul 2026 22:37:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QD/1MhMa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C091F000E9;
+	Tue, 21 Jul 2026 22:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673423;
-	bh=4NDyf37xb0Zzkt7BnYgVcAiIbXj0LLXOyOuK65p4Idg=;
+	s=korg; t=1784673426;
+	bh=0FV7HkTPfWEfIYp7hTsLhIGJcKUwrhJBjqnqIEh6JQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KHFwxDJ90RVw7fEmcQyjhkAxVeWYEx0ALIpBpLND1KeZRPJn3lY92JbvwvSOkJdPh
-	 mti/6F/jo94xXSLM+7aHnxsV/nIn0w1uvW/gVZcvk101mqmP3TOn6BvcsJDggy290T
-	 pbbBTNDSJqo5EWCjJoFLEXuXhMJJp6U68myFjAQg=
+	b=QD/1MhMaGdqFPU7T1SwiqQornaQIrQDRQeSPHitLUjP/k96O85gNm4qEjVgHP2RKU
+	 m0o/qtFsr9p+ePLEv4Y/QAqiyqXd2lAcZL6gzsqNxU4if+icjEtE1hOCReuBHX5saz
+	 uMn4IkVMIsT4HaBQ5I/mWi4yyIdMhS1uJ2TN6+N8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alberto Ruiz <aruiz@redhat.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
 	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 5.10 156/699] fuse: fix device node leak in cuse_process_init_reply()
-Date: Tue, 21 Jul 2026 17:18:35 +0200
-Message-ID: <20260721152359.220824868@linuxfoundation.org>
+Subject: [PATCH 5.10 157/699] fuse: re-lock request before returning from fuse_ref_folio()
+Date: Tue, 21 Jul 2026 17:18:36 +0200
+Message-ID: <20260721152359.243934332@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,68 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alberto Ruiz <aruiz@redhat.com>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-commit 9fa4f7a53406430ee9982f2f636a15b338185122 upstream.
+commit b5befa80fdbe287a98480effed9564712924add5 upstream.
 
-If device_add() succeeds during CUSE initialization but a subsequent
-step (cdev_alloc() or cdev_add()) fails, the error path calls
-put_device() without first calling device_del().  This leaks the
-devtmpfs entry created by device_add(), leaving a stale /dev/<name>
-node that persists until reboot.
+fuse_ref_folio() unlocks the request but does not re-lock it before
+returning. fuse_chan_abort() can end the request and the async end
+callback (eg fuse_writepage_free()) can free the args while the
+subsequent copy chain logic after fuse_ref_folio() accesses them,
+leading to use-after-free issues.
 
-Since the cuse_conn is never linked into cuse_conntbl on the failure
-path, cuse_channel_release() sees cc->dev == NULL and skips
-device_unregister(), so no other code path cleans up the node.
+Fix this by locking the request in fuse_ref_folio() before returning.
 
-This has several consequences:
-
- - The device name is permanently poisoned: any subsequent attempt to
-   create a CUSE device with the same name hits the stale sysfs entry,
-   device_add() fails, and the new device is aborted.
-
- - The collision manifests as ENODEV returned to userspace with no
-   dmesg diagnostic, making it very difficult to debug.
-
- - The failure is self-perpetuating: once a name is leaked, all future
-   attempts with that name fail identically.
-
-Fix this by introducing an err_dev label that calls device_del() to
-undo device_add() before falling through to err_unlock.  The existing
-err_unlock path from a device_add() failure correctly skips device_del()
-since the device was never added.
-
-Testing instructions can be found at the lore link below.
-
-Link: https://lore.kernel.org/all/20260408-wip-cuse-leak-fix-v1-0-1c028d575e97@redhat.com/
-Signed-off-by: Alberto Ruiz <aruiz@redhat.com>
-Fixes: 151060ac1314 ("CUSE: implement CUSE - Character device in Userspace")
+Fixes: c3021629a0d8 ("fuse: support splice() reading from fuse device")
 Cc: stable@vger.kernel.org
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/cuse.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/fuse/dev.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/fuse/cuse.c
-+++ b/fs/fuse/cuse.c
-@@ -386,7 +386,7 @@ static void cuse_process_init_reply(stru
- 	rc = -ENOMEM;
- 	cdev = cdev_alloc();
- 	if (!cdev)
--		goto err_unlock;
-+		goto err_dev;
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -927,7 +927,7 @@ static int fuse_ref_page(struct fuse_cop
+ 	cs->nr_segs++;
+ 	cs->len = 0;
  
- 	cdev->owner = THIS_MODULE;
- 	cdev->ops = &cuse_frontend_fops;
-@@ -412,6 +412,8 @@ out:
+-	return 0;
++	return lock_request(cs->req);
+ }
  
- err_cdev:
- 	cdev_del(cdev);
-+err_dev:
-+	device_del(dev);
- err_unlock:
- 	mutex_unlock(&cuse_lock);
- 	put_device(dev);
+ /*
 
 
