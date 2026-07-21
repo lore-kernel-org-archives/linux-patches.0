@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE75384CC3;
-	Tue, 21 Jul 2026 20:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2F53B8BA4;
+	Tue, 21 Jul 2026 20:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667126; cv=none; b=ons/uyRHTJqDOpVmUVhhXFlNI50x4lqoZoMBoRMnYm3VcG0xUNhEkIsNQDP0+j0U2PjNwCb7M/baxWtRyltuJ/OzYInX8ZR244lZg+N2sWaOIkYnVPXk3OODP4p4yXqYweGjfkczNZLzsQWUtFuodH1AAnhk5TUG8CrqNM7D8fY=
+	t=1784667129; cv=none; b=nD3sm68ZCAk+uSPGlf6sXBzVfMOpS7paH58mzUc3kj3KSR9k1VAlGcnjSkAvGwU4qnI2If/MtJhqqjr7WqEf/yvVPFDmtEbvO+EDQlIbwE1skRfvHIgk+uv7DGfBc9fjvOm/vVDh7B84K3rax8AdtGk0g1gMBqkhLSyNHL6QWF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667126; c=relaxed/simple;
-	bh=IpkFQJVDNsuuQ4lsI1DGMmV0SwGi1MeO3Rzm3uQD55Y=;
+	s=arc-20240116; t=1784667129; c=relaxed/simple;
+	bh=zTwANm4Mi4jxidbtpYrHQ4PtlmLaI/iKv/KmYP8sET4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YcFvesfxk9NMZKYCdy+pfozj8hbCfgMy4NAMR6b9HZEJh/DTTjFPyfp/Y8whpOO/j4jAx0XM9R5DASTIvg7vT4UWDdVZdSd1zrz6840UGzowDbWLGvNB5RMRo4HYT3W7Frf52kmMg0CDDBZmh1IKr1oN7bNSOfl6xxNperwwXL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IH7wcFBR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C3fb186twkWCHVBF4Ydz2VxdoeM9XaBERYEhIFvxl7Orst0GwfG4/mP0G6iWRRCX1DZ7kVcBBZIhzIpK6HKwV8MBcEB1tVl2byBX9ADtbmA1Xo/QweFP020b0pquy4mE/NI+eOZolw832di/FZ66CWmOVg3QGKepcAVcfG4BKck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ywKIIzOk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IH7wcFBR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2281F000E9;
-	Tue, 21 Jul 2026 20:52:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ywKIIzOk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77851F000E9;
+	Tue, 21 Jul 2026 20:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667125;
-	bh=hER9RRzfRYtfU9Z7BmH7R0RMN/30H47zC1raJSoKeNY=;
+	s=korg; t=1784667128;
+	bh=6/HaMUVvuivhznOmdsNAFaLBu1HZGgXOiYT7yQeOQaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IH7wcFBRX3579D4IYiuZ0wLE/Ag1bhz0CZEaGG+8ao0J9mMaDIST/DQgIAoIBIUw6
-	 4KDuzEQJCcTdxPZSckVA094Qhjd2Bn8rMilVWS7wFNqmLS1UOBABe/qm85edNZX9le
-	 OT5KDppNFbebp9Y1EazmMyEsABHMNDp0ks9+brAo=
+	b=ywKIIzOkpEcff/ZBn2UvAmI5IsLNiq4gNuslGkmS02lsni9XkfW+HaVuw2jNW8J/Q
+	 f3xZRYwgh54tQEVcXTNmxbIlVu2fIWZN5RIAxpHq9DtpbptTbkPUF1oSF+Fj+OIJpT
+	 yG8zEMUW57tYvz/3+gG9TNvaiP6Oo3ue03B9XLCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 6.6 0943/1266] perf/x86/amd/lbr: Fix kernel address leakage
-Date: Tue, 21 Jul 2026 17:23:00 +0200
-Message-ID: <20260721152502.933755288@linuxfoundation.org>
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.6 0944/1266] s390/perf_cpum_cf: Add missing array_index_nospec() to __hw_perf_event_init()
+Date: Tue, 21 Jul 2026 17:23:01 +0200
+Message-ID: <20260721152502.955774576@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,63 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Sumanth Korikkar <sumanthk@linux.ibm.com>
 
-commit 2a892294b83f541115c94b0bb637f39bef187657 upstream.
+commit 49145bce539117db4b6e9e83c0e5ef528e361050 upstream.
 
-A user-only branch stack can contain branches that originate from
-the kernel. As a result, kernel addresses are exposed to user space
-even when PERF_SAMPLE_BRANCH_USER is requested. On AMD processors
-supporting X86_FEATURE_AMD_LBR_V2, perf can still report SYSRET/ERET
-entries for which the branch-from addresses are in the kernel.
+ev variable is userspace controlled via event->attr.config and used
+as an array index after bounds checking, but without speculation
+barriers.
 
-E.g.
+Add the missing array_index_nospec() call to prevent speculative
+execution.
 
-  $ perf record -e cycles -o - -j any,save_type,u -- \
-        perf bench syscall basic --loop 1000 | \
-        perf script -i - -F brstack|tr ' ' '\n'| \
-        grep -E '0x[89a-f][0-9a-f]{15}'
-
-  ...
-  0xffffffff81001268/0x717a90a38f1a/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a39157/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a2c628/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a41b60/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a260db/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a260db/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a8bef1c30/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a8e4d3c90/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  ...
-
-The reason is that the hardware filter only considers the privilege
-level applicable to the branch target. Extend software filtering to
-also validate the branch-from addresses against br_sel, so that any
-branch record whose branch-from address is in the kernel is dropped
-when PERF_SAMPLE_BRANCH_USER is requested.
-
-Fixes: f4f925dae741 ("perf/x86/amd/lbr: Add LbrExtV2 hardware branch filter support")
-Reported-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Cc: stable@vger.kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://patch.msgid.link/a898a29725f6b2f30518354cdc2e432db66c43cf.1783680119.git.sandipan.das@amd.com
+Fixes: 212188a596d1 ("[S390] perf: add support for s390x CPU counters")
+Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Acked-by: Thomas Richter <tmricht@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/amd/lbr.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/kernel/perf_cpum_cf.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/x86/events/amd/lbr.c
-+++ b/arch/x86/events/amd/lbr.c
-@@ -124,7 +124,8 @@ static void amd_pmu_lbr_filter(void)
- 		}
+--- a/arch/s390/kernel/perf_cpum_cf.c
++++ b/arch/s390/kernel/perf_cpum_cf.c
+@@ -17,6 +17,7 @@
+ #include <linux/export.h>
+ #include <linux/miscdevice.h>
+ #include <linux/perf_event.h>
++#include <linux/nospec.h>
  
- 		/* If type does not correspond, then discard */
--		if (type == X86_BR_NONE || (br_sel & type) != type) {
-+		if (type == X86_BR_NONE || (br_sel & type) != type ||
-+		    (!(br_sel & X86_BR_KERNEL) && kernel_ip(cpuc->lbr_entries[i].from))) {
- 			cpuc->lbr_entries[i].from = 0;	/* mark invalid */
- 			compress = true;
+ #include <asm/cpu_mf.h>
+ #include <asm/hwctrset.h>
+@@ -766,6 +767,7 @@ static int __hw_perf_event_init(struct p
+ 			if (!is_userspace_event(ev)) {
+ 				if (ev >= ARRAY_SIZE(cpumf_generic_events_user))
+ 					return -EOPNOTSUPP;
++				ev = array_index_nospec(ev, ARRAY_SIZE(cpumf_generic_events_user));
+ 				ev = cpumf_generic_events_user[ev];
+ 			}
+ 		} else if (!attr->exclude_kernel && attr->exclude_user) {
+@@ -776,6 +778,7 @@ static int __hw_perf_event_init(struct p
+ 			if (!is_userspace_event(ev)) {
+ 				if (ev >= ARRAY_SIZE(cpumf_generic_events_basic))
+ 					return -EOPNOTSUPP;
++				ev = array_index_nospec(ev, ARRAY_SIZE(cpumf_generic_events_basic));
+ 				ev = cpumf_generic_events_basic[ev];
+ 			}
  		}
 
 
