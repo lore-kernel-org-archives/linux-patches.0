@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B2C4CA28D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D2346C4AC;
 	Tue, 21 Jul 2026 17:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656098; cv=none; b=A9ZoGT1mp7DVumtsbXjANw3Uc8wUV442ZRjn5JptEFh8AyZyrdhfyTYJsEiSeKnz+6bdbSxDVeCznP0tpkP4XIOLSZHjsNtqLstvXGZrwssQbZhE2eEQkcoMaVJpWWVLiGjTtOxewAIGE67RqT/IHMr9HfMV0PvxlmO9RHSiqG0=
+	t=1784656099; cv=none; b=bNJVHLChmiPRYm4QNHDnCZrHH2cHfx8dB63bJM58WsPxytZd7qTfwglANAvZU7wquf+I1Vqg9I5JOVVuj3Na1ked2hHZA/hgpBdZarxinb1W3H1W+jwEVN4e0uuqlLMzlQonyf+sKEz2sK1x0ghOyyfN6w/5QGRRbbF4oBYui7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656098; c=relaxed/simple;
-	bh=huEcZqEgS0KHxRMQXGDVgY0a8T/0xf/w9WhuE7nzhC0=;
+	s=arc-20240116; t=1784656099; c=relaxed/simple;
+	bh=zE58FzTqWrji9N1+8FZ4deevsaE0PmV9yLaYsUgPDLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k3g/8ZREDovqnoN1xT763zaXaxxxr6l1VKH0ERX7PjGhrotVnFosbF8RfWuvJLqsfjQZlwNXIFV2gLDw5Oaq+mghMb18fIeB9+a4DWKlB4mtxfKbY5uzDdg1aZtwTM13oBKSjo+CHK8wW3ycup+3blsQsjxMyRXxgNKrySv9Wnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epeQa4AW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RmOnNe77t0YBhTGCTAKRSCKuHPGSZZvyIo2HCR0JIF14TghdRcBAtRnWlQ1lkW7r0sdEnpTVwCf7yXwjznLHI/S08CgvLspFMGp1sXiW/M8+BdIKMf362RBiM9fVvjdeTh2nz+sic9LfJ2PxgDe/FG+Dnt6HcuSEbMjGCbO9N6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i88ccLYp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epeQa4AW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C4F1F00A3A;
-	Tue, 21 Jul 2026 17:48:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i88ccLYp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEED91F000E9;
+	Tue, 21 Jul 2026 17:48:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656088;
-	bh=ptqxjIwaswEmuvVswK+18USJPAfhHdMQBreN+zTYWBA=;
+	s=korg; t=1784656091;
+	bh=kUEYo2H1NnJ182sDP+Ray0I6X9WefDVjVuNrk0q3qfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=epeQa4AWt3KTlkSiUqoeZuRrBh7PX//g3mcfBGv3RgMf/pnMsEnoi5TS8L96d1wiW
-	 N0+BdBr3DwqagjmCoAZshs/zY6+xaNagErNO9F1kfcSiWSbCJFJjeo5BfVtXXEIaeI
-	 2kZI3BAmNuAkKQAi7DlTMz//oPShKWjpkriR8nkg=
+	b=i88ccLYp1rP3oiIZ7V0Mw3dYb1X/pNws1PD+fYkU6qgd+n/sWcU5zZGzXhZUkEMah
+	 HtOykF7hM/0W7xUm3D15vaKHDFLjnXm7TTEc6gfyVbHk/2Oopy/s8HsgMBuK5Uurdl
+	 ELY3ViphKlC8/AUrR+D317a0RnjdYDFlyzCb5XlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Mykyta Yatsenko <yatsenko@meta.com>,
-	Carlos Llamas <cmllamas@google.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0255/1611] libbpf: Fix UAF in strset__add_str()
-Date: Tue, 21 Jul 2026 17:06:11 +0200
-Message-ID: <20260721152520.778442343@linuxfoundation.org>
+Subject: [PATCH 6.18 0256/1611] ARM: tegra: Add #{address,size}-cells to Chromium-based /firmware
+Date: Tue, 21 Jul 2026 17:06:12 +0200
+Message-ID: <20260721152520.802345867@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,167 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Brian Norris <briannorris@chromium.org>
 
-[ Upstream commit b23705e6afb6ac4ae6d220dcb35975698667dd76 ]
+[ Upstream commit 1fe27b10dc97c85821dfae1e4e6f9db4472287aa ]
 
-strset_add_str_mem() might reallocate the strset data buffer in order to
-accommodate the provided string 's'. However, if 's' points to a string
-already present in the buffer, it becomes dangling after the realloc.
-This leads to a use-after-free when attempting to memcpy() the string
-into the new buffer.
+Chromium/Depthcharge bootloaders may dynamically add a few device nodes
+to a system's DTB under a /firmware node. A typical DT looks something
+like the following:
 
-One scenario that triggers this problematic path is when resolve_btfids
-attempts to patch kfunc prototypes using existing BTF parameter names:
+/ {
+        firmware {
+                ranges;
 
- | resolve_btfids: function bpf_list_push_back_impl already exists in BTF
- | Segmentation fault (core dumped)
+                coreboot {
+                        compatible = "coreboot";
+                        reg = <...>;
+                        ...;
+                };
+        };
+};
 
-Compiling resolve_btfids with fsanitize=address generates a detailed
-report of the UAF:
+Notably, the /firmware node has an empty 'ranges', but does not have
+address/size-cells.
 
- | =================================================================
- | ERROR: AddressSanitizer: heap-use-after-free on address 0x7f4c4a500bd4
- | ==1507892==ERROR: AddressSanitizer: heap-use-after-free on address 0x7f4c4a500bd4 at pc 0x55d25155a2a8 bp 0x7ffcef879060 sp 0x7ffcef878818
- | READ of size 5 at 0x7f4c4a500bd4 thread T0
- |     #0 0x55d25155a2a7 in memcpy (tools/bpf/resolve_btfids/resolve_btfids+0xcf2a7)
- |     #1 0x55d2515d708e in strset__add_str tools/lib/bpf/strset.c:162:2
- |     #2 0x55d2515c730b in btf__add_str tools/lib/bpf/btf.c:2109:8
- |     #3 0x55d2515c9020 in btf__add_func_param tools/lib/bpf/btf.c:3108:14
- |     #4 0x55d25159f0b5 in process_kfunc_with_implicit_args tools/bpf/resolve_btfids/main.c:1196:9
- |     #5 0x55d25159e004 in btf2btf tools/bpf/resolve_btfids/main.c:1229:9
- |     #6 0x55d25159cee7 in main tools/bpf/resolve_btfids/main.c:1535:6
- |     #7 0x7f4c78e29f76 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
- |     #8 0x7f4c78e2a026 in __libc_start_main csu/../csu/libc-start.c:360:3
- |     #9 0x55d2514bb860 in _start (tools/bpf/resolve_btfids/resolve_btfids+0x30860)
- |
- | 0x7f4c4a500bd4 is located 13268 bytes inside of 2829000-byte region [0x7f4c4a4fd800,0x7f4c4a7b02c8)
- | freed by thread T0 here:
- |     #0 0x55d25155b700 in realloc (tools/bpf/resolve_btfids/resolve_btfids+0xd0700)
- |     #1 0x55d2515c426c in libbpf_reallocarray tools/lib/bpf/./libbpf_internal.h:220:9
- |     #2 0x55d2515c426c in libbpf_add_mem tools/lib/bpf/btf.c:224:13
- |
- | previously allocated by thread T0 here:
- |     #0 0x55d25155b2e3 in malloc (tools/bpf/resolve_btfids/resolve_btfids+0xd02e3)
- |     #1 0x55d2515d6e7d in strset__new tools/lib/bpf/strset.c:58:20
+Commit 6e5773d52f4a ("of/address: Fix WARN when attempting translating
+non-translatable addresses") started requiring #address-cells for a
+device's parent if we want to use the reg resource in a device node.
+This leads to errors like the following:
 
-While resolve_btfids could be refactored to avoid this call path, let's
-instead fix this issue at the source in strset__add_str() and avoid
-similar scenarios.
+[    7.763870] coreboot_table firmware:coreboot: probe with driver coreboot_table failed with error -22
 
-Let's check if set->strs_data was reallocated and whether 's' points to
-an internal string within the old strset buffer. In such case, 's' is
-reconstructed to point to the new buffer.
+Add appropriate #{address,size}-cells to work around the problem.
 
-While already here, also fix strset__find_str() which suffers from the
-same problem by factoring out the common operations into a new helper
-function strset_str_append().
+Note that Google has also patched the Depthcharge bootloader source to
+add {address,size}-cells [1], but bootloader updates are typically
+delivered only via Google OS updates. Not all users install Google
+software updates, and even if they do, Google may not produce updated
+binaries for all/older devices.
 
-Fixes: 90d76d3ececc ("libbpf: Extract internal set-of-strings datastructure APIs")
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Suggested-by: Mykyta Yatsenko <yatsenko@meta.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260523162722.2718940-1-cmllamas@google.com
+[1] https://lore.kernel.org/all/20241209092809.GA3246424@google.com/
+    https://crrev.com/c/6051580 ("coreboot: Insert #address-cells and
+    #size-cells for firmware node")
+
+Closes: https://lore.kernel.org/all/aeKlYzTiL0OB1y3g@google.com/
+Fixes: 6e5773d52f4a ("of/address: Fix WARN when attempting translating non-translatable addresses")
+Signed-off-by: Brian Norris <briannorris@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/strset.c | 62 ++++++++++++++++++++++++++++--------------
- 1 file changed, 41 insertions(+), 21 deletions(-)
+ arch/arm/boot/dts/nvidia/tegra124-nyan.dtsi   | 5 +++++
+ arch/arm/boot/dts/nvidia/tegra124-venice2.dts | 5 +++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/tools/lib/bpf/strset.c b/tools/lib/bpf/strset.c
-index 2464bcbd04e037..ace73c6b3d62b4 100644
---- a/tools/lib/bpf/strset.c
-+++ b/tools/lib/bpf/strset.c
-@@ -107,6 +107,41 @@ static void *strset_add_str_mem(struct strset *set, size_t add_sz)
- 			      set->strs_data_len, set->strs_data_max_len, add_sz);
- }
+diff --git a/arch/arm/boot/dts/nvidia/tegra124-nyan.dtsi b/arch/arm/boot/dts/nvidia/tegra124-nyan.dtsi
+index 974c76f007db4d..89a749cb893388 100644
+--- a/arch/arm/boot/dts/nvidia/tegra124-nyan.dtsi
++++ b/arch/arm/boot/dts/nvidia/tegra124-nyan.dtsi
+@@ -14,6 +14,11 @@ chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
  
-+static long strset_str_append(struct strset *set, const char *s)
-+{
-+	uintptr_t old_data = (uintptr_t)set->strs_data;
-+	size_t old_data_len = set->strs_data_len;
-+	uintptr_t old_s = (uintptr_t)s;
-+	long len = strlen(s) + 1;
-+	void *p;
++	firmware {
++		#address-cells = <1>;
++		#size-cells = <1>;
++	};
 +
-+	/*
-+	 * Hashmap keys are always offsets within set->strs_data, so to even
-+	 * look up some string from the "outside", we need to first append it
-+	 * at the end, so that it can be addressed with an offset. Luckily,
-+	 * until set->strs_data_len is incremented, that string is just a piece
-+	 * of garbage for the rest of the code, so no harm, no foul. On the
-+	 * other hand, if the string is unique, it's already appended and
-+	 * ready to be used, only a simple set->strs_data_len increment away.
-+	 */
-+	p = strset_add_str_mem(set, len);
-+	if (!p)
-+		return -ENOMEM;
+ 	/*
+ 	 * Note that recent version of the device tree compiler (starting with
+ 	 * version 1.4.2) warn about this node containing a reg property, but
+diff --git a/arch/arm/boot/dts/nvidia/tegra124-venice2.dts b/arch/arm/boot/dts/nvidia/tegra124-venice2.dts
+index df98dc2a67b858..059ee6c5b13cdb 100644
+--- a/arch/arm/boot/dts/nvidia/tegra124-venice2.dts
++++ b/arch/arm/boot/dts/nvidia/tegra124-venice2.dts
+@@ -18,6 +18,11 @@ chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
+ 
++	firmware {
++		#address-cells = <1>;
++		#size-cells = <1>;
++	};
 +
-+	/*
-+	 * The set->strs_data might have reallocated and if 's' pointed
-+	 * to an internal string within the old buffer, then it became
-+	 * dangling and needs to be reconstructed before the copy.
-+	 */
-+	if (old_data && old_data != (uintptr_t)set->strs_data &&
-+	    old_s >= old_data && old_s < old_data + old_data_len)
-+		s = set->strs_data + (old_s - old_data);
-+
-+	memcpy(p, s, len);
-+
-+	return len;
-+}
-+
- /* Find string offset that corresponds to a given string *s*.
-  * Returns:
-  *   - >0 offset into string data, if string is found;
-@@ -116,16 +151,12 @@ static void *strset_add_str_mem(struct strset *set, size_t add_sz)
- int strset__find_str(struct strset *set, const char *s)
- {
- 	long old_off, new_off, len;
--	void *p;
- 
--	/* see strset__add_str() for why we do this */
--	len = strlen(s) + 1;
--	p = strset_add_str_mem(set, len);
--	if (!p)
--		return -ENOMEM;
-+	len = strset_str_append(set, s);
-+	if (len < 0)
-+		return len;
- 
- 	new_off = set->strs_data_len;
--	memcpy(p, s, len);
- 
- 	if (hashmap__find(set->strs_hash, new_off, &old_off))
- 		return old_off;
-@@ -142,24 +173,13 @@ int strset__find_str(struct strset *set, const char *s)
- int strset__add_str(struct strset *set, const char *s)
- {
- 	long old_off, new_off, len;
--	void *p;
- 	int err;
- 
--	/* Hashmap keys are always offsets within set->strs_data, so to even
--	 * look up some string from the "outside", we need to first append it
--	 * at the end, so that it can be addressed with an offset. Luckily,
--	 * until set->strs_data_len is incremented, that string is just a piece
--	 * of garbage for the rest of the code, so no harm, no foul. On the
--	 * other hand, if the string is unique, it's already appended and
--	 * ready to be used, only a simple set->strs_data_len increment away.
--	 */
--	len = strlen(s) + 1;
--	p = strset_add_str_mem(set, len);
--	if (!p)
--		return -ENOMEM;
-+	len = strset_str_append(set, s);
-+	if (len < 0)
-+		return len;
- 
- 	new_off = set->strs_data_len;
--	memcpy(p, s, len);
- 
- 	/* Now attempt to add the string, but only if the string with the same
- 	 * contents doesn't exist already (HASHMAP_ADD strategy). If such
+ 	memory@80000000 {
+ 		reg = <0x0 0x80000000 0x0 0x80000000>;
+ 	};
 -- 
 2.53.0
 
