@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AD946D57E;
-	Tue, 21 Jul 2026 15:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFCA46D57E;
+	Tue, 21 Jul 2026 15:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648641; cv=none; b=Z3wtgp65RhObU/5DaRAfKlBmgnOXy4jHkGdyvq8osz6zo0eh9xYqaRocitnbXH22swCRW+1GuWXSAAhr03B2MFK/zEdfes6KbB0/jjYYYgFd8khEBvTf5pQLrdfmlh4rOLl7d0DqPkwtQdgi/FDbaaO7m5MhFv+Dw1p+qEONnLE=
+	t=1784648644; cv=none; b=nIFpyGp68aBsJlneTldGdtN0aarG6/O2cMAnD8Y+eNwcyWaznlExjaT/JrHG7vkqcmrFHgUs6bhxTwSCuFUqc5NmeSfDE19eoID2YGYL+CUM82jl3JBSvGGgbjJzSCJK8uSWaHlpQyqZW8XlHOIDpdVwS+BdSZQapD/sFTTPnI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648641; c=relaxed/simple;
-	bh=Rv7C1sXhvURcjD4c6FoTZvf4q1Lmd2mWyof7+je7FA4=;
+	s=arc-20240116; t=1784648644; c=relaxed/simple;
+	bh=HgOifuwG6vaINmKGfUrNgmJICZ3IsvnDSORb8bsLuf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CDCrVAyRikxW1+kU5qUQQLKLOrX9NkQ9jfJ0qwobFzRo10P9z/wF0+d2dRJInipyPm3vcS/1eWmGF5WH2pu7xES0l3eDfFz64qVlVOW13GwlLM1oUMi+D3viYkM+vaqUXXYl1xwqKgiqDqpuLo+qelYHoBgt4r6RdQ/kj/N8lBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgQ9mhnh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kuNF58uQb2rJLjgU3g3zpmv+Tu6orCrKcYtGPOn/Osp3LNWeGXrGVNiDbBrTCNMUh/3jgq757A8cRYNlSOoUOcFv+evGWfTABoAlKqGyRBn/waEm9XuUKB1EUTnNdBz95cHUYBif6iU8yzUDPFEpl2/v36OzULP4JDXSSzSAwWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xzRzoLe+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgQ9mhnh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82BE1F00A3A;
-	Tue, 21 Jul 2026 15:43:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzRzoLe+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B461F000E9;
+	Tue, 21 Jul 2026 15:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648640;
-	bh=cuTGakr+E43JGf0ztkKfptApr8SDBzDAnRBEpC+a3wE=;
+	s=korg; t=1784648642;
+	bh=adzqu1U8KVUAKR2FCvc0ufM8nqu7by5XRG4A29WvGjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hgQ9mhnhDN9sokAWThMYk9ndMm4x3Vcact5j1RY/ReM+hVICg0DxB0teq2bLTIRU2
-	 HnRqq1ueTT6S4VDppbg+gk/Epd/LUxW56f7M3sqHh9t0UMkf5m2/DVh2TVVnPdMamR
-	 6jvcK9STozw1UcE6DJqy2aG7DgmBKf7EqwOZMYAs=
+	b=xzRzoLe+fgskFI0dlsve891miFdyOtYWHxdSsXyu6amN54xyLFEForzDDvuGRIwpa
+	 p/XAJzfsFFxhEvbkkrm13O4Z4N8kTHIzRftMDFYV4lpYUZTRNmxxzXpefC7ZQJDn2J
+	 XWDF8TN2ymHYEUF36dXsXiEuV8TgzoESQ4AWijsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-	Harshal Dev <harshal.dev@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	syzbot+0dfe499ea713e0a15bec@syzkaller.appspotmail.com,
+	Conor Kotwasinski <conorkotwasinski2024@u.northwestern.edu>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0269/2077] arm64: dts: qcom: sm8450: Add power-domain and iface clk for ice node
-Date: Tue, 21 Jul 2026 16:59:02 +0200
-Message-ID: <20260721152559.020409307@linuxfoundation.org>
+Subject: [PATCH 7.1 0278/2077] kernfs: fix suspicious RCU usage in kernfs_put()
+Date: Tue, 21 Jul 2026 16:59:11 +0200
+Message-ID: <20260721152559.240222672@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,46 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshal Dev <harshal.dev@oss.qualcomm.com>
+From: Conor Kotwasinski <conorkotwasinski2024@u.northwestern.edu>
 
-[ Upstream commit 3a5cb1ccbfb3141862b28f24cd5050083233aae7 ]
+[ Upstream commit 0fdde3f2aeadcf8d090ee3edee0aad73fb91f690 ]
 
-Qualcomm in-line crypto engine (ICE) platform driver specifies and votes
-for its own resources. Before accessing ICE hardware during probe, to
-avoid potential unclocked register access issues (when clk_ignore_unused
-is not passed on the kernel command line), in addition to the 'core' clock
-the 'iface' clock should also be turned on by the driver. This can only be
-done if the UFS_PHY_GDSC power domain is enabled. Specify both the
-UFS_PHY_GDSC power domain and the 'iface' clock in the ICE node for sm8450.
+Commit 741c10b096bc ("kernfs: Use RCU to access kernfs_node::name.")
+converted the WARN_ONCE() in kernfs_put() to read kn->name and
+parent->name via rcu_dereference(), but kernfs_put() has callers that
+hold neither kernfs_rwsem nor the RCU read lock. The inode eviction
+path driven by memory reclaim is one such case:
 
-Fixes: 86b0aef435851 ("arm64: dts: qcom: sm8450: Use standalone ICE node for UFS")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260416-qcom_ice_power_and_clk_vote-v5-8-5ccf5d7e2846@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+  kernfs_put+0x53/0x60 fs/kernfs/dir.c:602
+  evict+0x3c2/0xad0 fs/inode.c:846
+  iput_final fs/inode.c:1966 [inline]
+  iput.part.0+0x605/0xf50 fs/inode.c:2015
+  iput+0x35/0x40 fs/inode.c:1981
+  dentry_unlink_inode+0x2a1/0x490 fs/dcache.c:467
+  __dentry_kill+0x1d0/0x600 fs/dcache.c:670
+  shrink_dentry_list+0x180/0x5e0 fs/dcache.c:1174
+  prune_dcache_sb+0xea/0x150 fs/dcache.c:1256
+  super_cache_scan+0x328/0x550 fs/super.c:223
+  ...
+  kswapd+0x556/0xba0 mm/vmscan.c:7343
+
+lockdep complains with "suspicious RCU usage" whenever the WARN
+fires from such a context.
+
+Wrap the rcu_dereference() calls in an RCU read-side critical section.
+Gate on the active-ref check so the lock is only taken when the WARN
+is about to fire.
+
+Note that this does not address the underlying imbalance in
+kn->active that triggers the WARN.
+
+Fixes: 741c10b096bc ("kernfs: Use RCU to access kernfs_node::name.")
+Reported-by: syzbot+0dfe499ea713e0a15bec@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0dfe499ea713e0a15bec
+Signed-off-by: Conor Kotwasinski <conorkotwasinski2024@u.northwestern.edu>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20260416134315.1474726-1-conorkotwasinski2024@u.northwestern.edu
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/kernfs/dir.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index e0c37ce3042a22..47b028259d9101 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -5374,7 +5374,11 @@ ice: crypto@1d88000 {
- 			compatible = "qcom,sm8450-inline-crypto-engine",
- 				     "qcom,inline-crypto-engine";
- 			reg = <0 0x01d88000 0 0x18000>;
--			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-+			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
-+				 <&gcc GCC_UFS_PHY_AHB_CLK>;
-+			clock-names = "core",
-+				      "iface";
-+			power-domains = <&gcc UFS_PHY_GDSC>;
- 		};
+diff --git a/fs/kernfs/dir.c b/fs/kernfs/dir.c
+index 4f9ade82b08abd..e88b71607f1e51 100644
+--- a/fs/kernfs/dir.c
++++ b/fs/kernfs/dir.c
+@@ -597,10 +597,13 @@ void kernfs_put(struct kernfs_node *kn)
+ 	 */
+ 	parent = kernfs_parent(kn);
  
- 		cryptobam: dma-controller@1dc4000 {
+-	WARN_ONCE(atomic_read(&kn->active) != KN_DEACTIVATED_BIAS,
+-		  "kernfs_put: %s/%s: released with incorrect active_ref %d\n",
+-		  parent ? rcu_dereference(parent->name) : "",
+-		  rcu_dereference(kn->name), atomic_read(&kn->active));
++	if (atomic_read(&kn->active) != KN_DEACTIVATED_BIAS) {
++		guard(rcu)();
++		WARN_ONCE(1,
++			  "kernfs_put: %s/%s: released with incorrect active_ref %d\n",
++			  parent ? rcu_dereference(parent->name) : "",
++			  rcu_dereference(kn->name), atomic_read(&kn->active));
++	}
+ 
+ 	if (kernfs_type(kn) == KERNFS_LINK)
+ 		kernfs_put(kn->symlink.target_kn);
 -- 
 2.53.0
 
