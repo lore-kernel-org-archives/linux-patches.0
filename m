@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0853368A2;
-	Tue, 21 Jul 2026 18:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C030140099C;
+	Tue, 21 Jul 2026 18:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658078; cv=none; b=tUbDYvV/osb5oQpAD84ewRLF9IkIQJWDZhxpcyCltn45xIq1hOayHocuO5A6v/HWT9DEmrqJ9GBjx4WSGTNbe62+gRi8mMzeNwVbirHGLcMLWBrxGViDHCIGzmiePhET6xj7AmQTXbqJhoRs2aTmHEpzr4jWaBw7V0E3C/DRB+4=
+	t=1784658080; cv=none; b=I0FU5/38Qw92i1yByxz/gnTIvnR9ZscdNSK4S5n5Kbsg7M6SHG8WZ3snVYmbvmTV3S6PQWEiu7GjpfK/BMHxCn+gVV4GMucpqQqdzGC6vnuLejSeiWJDGIK1oHP4qTUWYmeYx01szQNzc3V3/4q4SJhVqOQAWNVDdohIlY6v0eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658078; c=relaxed/simple;
-	bh=NNCgRhHSITfyl7eprYOVxWNHqjazf/CRcvNqqHJ90Ww=;
+	s=arc-20240116; t=1784658080; c=relaxed/simple;
+	bh=Z1btdlbUp9Y8vvbXj2TjXRcCEfwqO7nb1GeWea4B4qY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ciSp4lju1SIyL7yEP877Ez1skgpb/BUcmSt6iC/gBHFsJpxzrqPrhQLCXkJv9Ri2IjnXn+mp+ZSJZOAE9sbe441nE/eQqX1F9jOi5usWJVrZwmzilRRKxluHxpQkx6TpNo1+LjBpy6nj8f2QAJSZICRR/xgPNlwVf3o/xaUV044=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iI6cTcc/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Oi34wb3gUDp7H8XD1XCQaNdRXEM5gx9mcKbmxc3o8hVyE2oik6QliATIKJ+2m0xS/7sswrqG3HtqJRDxUyYIQbRSQFtXyivbV86EMbpPxKkSGvR9PY84J66m+94Xj7rZY1VQ3IYivwVqvjPqqE4MJ58HwYIo+woK85+ItQcOX10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTPc2kAD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iI6cTcc/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846761F00A3A;
-	Tue, 21 Jul 2026 18:21:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTPc2kAD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 283191F00A3A;
+	Tue, 21 Jul 2026 18:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658077;
-	bh=VcQsTQhT8wlmqflsdqPc/g33gcKluSOHjTT4SnMW7kw=;
+	s=korg; t=1784658079;
+	bh=AFenUwh40S29is/fbb7bL65QXHstSLfFtdbxCWPx+NQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iI6cTcc/CzYpGPAeKfM5xFl6vx+q/BgwMRGTK7QodOgm7jZzWvGgI0JsUCAN3eiGM
-	 gver7TPLmmj8dW6KYBlOD7aSOu0nf4EWWNAohfsBMVp5cX751vfVy1fiyLZMLfc8vt
-	 iorMhkYwVLpE87ZT9U0z6EsUGP78HZRx3zM4oSZc=
+	b=LTPc2kADXa31RccvKDKIsxo3WFfqK8wiDz1GvDSZV4rVFxopLdv5cUeM6hemeKF1N
+	 QH/rG/FvHDTNI83Ul3ciaqugO4zyfwWKkndoI2dxOlfNfU+vkpWwHZSiBdNnT+DurR
+	 pAzl51D83bwMTJcyenLuhX9Kh/+jhcvTXW2tyQN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linux-afs@lists.infradead.org,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1006/1611] afs: Fix callback service message parsers to pass through -EAGAIN
-Date: Tue, 21 Jul 2026 17:18:42 +0200
-Message-ID: <20260721152538.023171456@linuxfoundation.org>
+Subject: [PATCH 6.18 1007/1611] afs: Fix missing NULL pointer check in afs_break_some_callbacks()
+Date: Tue, 21 Jul 2026 17:18:43 +0200
+Message-ID: <20260721152538.044757535@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,46 +55,42 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 0f36469d7ce98b362934113c550d08bb0c784231 ]
+[ Upstream commit 794a01110390c1b76f59ece773fb0fbfd89c6f5c ]
 
-The AFS filesystem client uses an rxrpc server to listen for callback
-notifications.  Each callback call type handler has a delivery function
-that parses the incoming request stream, and this should return -EAGAIN the
-last packet hasn't yet been seen, but all currently queued received data is
-consumed.  afs_extract_data() does this, but the -EAGAIN return is switched
-to 0 inadvertantly
+Fix afs_break_some_callbacks() to check to see if afs_lookup_volume_rcu()
+returned NULL (e.g. the specified volume is unknown).
 
-Fix callback service message parsers to pass through -EAGAIN
-
-Fixes: d001648ec7cf ("rxrpc: Don't expose skbs to in-kernel users [ver #2]")
+Fixes: 8230fd8217b7 ("afs: Make callback processing more efficient.")
 Closes: https://sashiko.dev/#/patchset/20260609081738.770127-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260622090856.2746629-14-dhowells@redhat.com
+Link: https://patch.msgid.link/20260622090856.2746629-16-dhowells@redhat.com
 cc: Marc Dionne <marc.dionne@auristor.com>
 cc: linux-afs@lists.infradead.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/cmservice.c |    2 --
- 1 file changed, 2 deletions(-)
+ fs/afs/callback.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/afs/cmservice.c
-+++ b/fs/afs/cmservice.c
-@@ -335,7 +335,6 @@ static int afs_deliver_cb_init_call_back
- 		ret = afs_extract_data(call, false);
- 		switch (ret) {
- 		case 0:		break;
--		case -EAGAIN:	return 0;
- 		default:	return ret;
- 		}
+diff --git a/fs/afs/callback.c b/fs/afs/callback.c
+index 833ac3178ddc75..0a09a9ca3c6b37 100644
+--- a/fs/afs/callback.c
++++ b/fs/afs/callback.c
+@@ -220,7 +220,11 @@ static void afs_break_some_callbacks(struct afs_server *server,
  
-@@ -457,7 +456,6 @@ static int afs_deliver_cb_probe_uuid(str
- 		ret = afs_extract_data(call, false);
- 		switch (ret) {
- 		case 0:		break;
--		case -EAGAIN:	return 0;
- 		default:	return ret;
- 		}
- 
+ 	rcu_read_lock();
+ 	volume = afs_lookup_volume_rcu(server->cell, vid);
+-	if (cbb->fid.vnode == 0 && cbb->fid.unique == 0) {
++	if (!volume) {
++		/* Ignore breaks on unknown volumes. */
++		rcu_read_unlock();
++		*_count = 0;
++	} else if (cbb->fid.vnode == 0 && cbb->fid.unique == 0) {
+ 		afs_break_volume_callback(server, volume);
+ 		*_count -= 1;
+ 		if (*_count)
+-- 
+2.53.0
+
 
 
