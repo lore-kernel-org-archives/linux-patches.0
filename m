@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F77472533;
-	Tue, 21 Jul 2026 17:57:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9AE472555;
+	Tue, 21 Jul 2026 17:57:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656659; cv=none; b=XOlLpk3be8TYsFFQSghmUfCimgeXQqpZL70A1wskNkqiGvInE9qFqn6wjPNKa6+UVVUV4On8WSDRthjrH7q6I6E7lOUVzC+SWIgeeEs/FbD+P6D5+8in185Q1TIZVsG+lBTQho4Qz6zs5pxbhICj+l9qcf5i5tSE4NmYL+UrcZ4=
+	t=1784656662; cv=none; b=u05v59N9qClZcUxTjPLeVXL1XETs4dBnLaW/6mQhB5noArbz3fdo4G3jSL0vUzdfA5CDmVTdDl5lxIsy7WTUQULfY3MQb+p/tjZj9zzXTCQg/PCI5HP56Gt0ZE3TckxRZYNoWte0Ml2OhIBP5gDbjlvPRqWgUG9WOamSO1dkehw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656659; c=relaxed/simple;
-	bh=Vfb/3CBPEQuJ1Zdcy8IlIaeLKFBYSCIaWYU8EcF9NXo=;
+	s=arc-20240116; t=1784656662; c=relaxed/simple;
+	bh=tJ/4T3hm/ncUbE8r8ET/8rNvkS4oN0JzC34s1NmouVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OEKyu1mumrnNUD4A01kXMxBFvMy1O4VxKFOYRRfvm9o6uWitPHU9BkQK2tlpzhFjuANdZAZa+jYDS5u+yJMux0UzR0yBynZiRAOqQBWdOMOqgtocU8bCuAYoOEBiq4vPk0+Lfu3VaUq7W/wNS5d5u3W77p3xgmXgLHJaB772UbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mmnuy330; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y9oiOsACMgR+oc8mlCuIScYeRgDtUkAYXezkyjGy8I88sS/ih2bkhIxnUxTIiL+x5YCZ+vOxpROtVfLLC2SJ3PkUmebIxTIU/Xb1uWNgGa4ggIQ7ak+dLmdqEh0Prq21eJzKrK18m5xA0BbB1A6vQtWdhyPV72+I76HlBU7rXBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nRMPba9m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mmnuy330"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8585E1F000E9;
-	Tue, 21 Jul 2026 17:57:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRMPba9m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9C81F000E9;
+	Tue, 21 Jul 2026 17:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656658;
-	bh=PFwn6D6j9INeoYWe6JE+NIyJ9EzY5OyeOOLf+C6le78=;
+	s=korg; t=1784656660;
+	bh=vMyEQvw+q6/0Lhbyvl7WV0Ld8UPTrhbV70L8n4AC/AQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mmnuy3305WdqEjY9ao3s1Bo2aRMqTSFHFVS7UYFJfnw5wDGort24HSvfo5m2x81hn
-	 79n4mRSrRrPRZTYEa23IQmAlF33nedlW06t2hlVwGnGUEE4Dcqom28LolTHcbEaMR+
-	 lB0+f/qrNTWmI2YMnWg14ZJJYJu9YGESC+bJ7f48=
+	b=nRMPba9mEHkNt9PwntUURGAjFFzooJ1KBonduk/b5V9iRVKNyw2+3DWJyhjp3ufH3
+	 1KTNVHalT0ac8PQBjR1azwH7la6ZXLYOdG4NNIIa9D4FOeu+lGnHZbJE66eN+JWwAV
+	 aRsTfbJMVs6De/ttWLLisiSAA+0te/QoqFNydRrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c7443384724bb0f9e913@syzkaller.appspotmail.com,
-	Boris Burkov <boris@bur.io>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Vicente Bergas <vicencb@gmail.com>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0427/1611] btrfs: fix deadlock cloning inline extent when using flushoncommit
-Date: Tue, 21 Jul 2026 17:09:03 +0200
-Message-ID: <20260721152524.874644622@linuxfoundation.org>
+Subject: [PATCH 6.18 0418/1611] gpio: mt7621: fix interrupt banks mapping on gpio chips
+Date: Tue, 21 Jul 2026 17:08:54 +0200
+Message-ID: <20260721152524.665043145@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,261 +52,480 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 
-[ Upstream commit 532085d00eb54c074bdeae648b194765239f4d11 ]
+[ Upstream commit a46f2e5720f5670feda145709d1f0d20be5c7263 ]
 
-In commit b48c980b6a7e ("btrfs: fix deadlock between reflink and
-transaction commit when using flushoncommit") a deadlock was fixed
-between reflinks and transaction commits when the fs is mounted with the
-flushoncommit option. This happened when we had to copy an inline extent's
-data to the destination file. However the issue was fixed only for the
-case where the destination offset is 0, it missed the case when the offset
-is greater than zero.
+The GPIO controller's registers are organized as sets of eight 32-bit
+registers with each set controlling a bank of up to 32 pins. A single
+interrupt is shared for all of the banks handled by the controller.
+The driver implements this using three gpio chip instances every one
+with its own irq chip. Every single pin can generate interrupts having
+a total of 96 possible interrupts here. It looks like there is a problem
+with interrupts being properly mapped to the gpio bank using this solution.
+This problem report is in the following lore's link [0].
 
-Fix this by ensuring we get i_size update whenever we copied an inline
-extent's data into the destination file.
+Device tree is using two cells for this, so only the interrupt pin and the
+interrupt type are described there. Changing to have three cells to setup
+also the bank and implement 'of_node_instance_match()' would also work but
+this would be an ABI breakage and also a bit incoherent since gpios itself
+are also using two cells and properly mapped in desired bank using through
+its pin number on 'of_xlate()'.
 
-Syzbot reported this with the following trace:
+That said, register a linear IRQ domain of the total of 96 interrupts shared
+with the three gpio chip instances so the bank and the interrupt is properly
+decoded and devices using gpio IRQs properly work.
 
-   INFO: task kworker/u8:3:57 blocked for more than 143 seconds.
-         Not tainted syzkaller #0
-   "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-   task:kworker/u8:3    state:D stack:21600 pid:57    tgid:57    ppid:2      task_flags:0x4208160 flags:0x00080000
-   Workqueue: writeback wb_workfn (flush-btrfs-129)
-   Call Trace:
-    <TASK>
-    context_switch kernel/sched/core.c:5402 [inline]
-    __schedule+0x16f9/0x5500 kernel/sched/core.c:7204
-    __schedule_loop kernel/sched/core.c:7283 [inline]
-    schedule+0x164/0x360 kernel/sched/core.c:7298
-    wait_extent_bit fs/btrfs/extent-io-tree.c:905 [inline]
-    btrfs_lock_extent_bits+0x59c/0x700 fs/btrfs/extent-io-tree.c:2008
-    btrfs_lock_extent fs/btrfs/extent-io-tree.h:152 [inline]
-    btrfs_invalidate_folio+0x440/0xc00 fs/btrfs/inode.c:7718
-    extent_writepage fs/btrfs/extent_io.c:1848 [inline]
-    extent_write_cache_pages fs/btrfs/extent_io.c:2552 [inline]
-    btrfs_writepages+0x12f3/0x2410 fs/btrfs/extent_io.c:2684
-    do_writepages+0x32e/0x550 mm/page-writeback.c:2571
-    __writeback_single_inode+0x133/0x10e0 fs/fs-writeback.c:1764
-    writeback_sb_inodes+0x97f/0x1980 fs/fs-writeback.c:2056
-    wb_writeback+0x445/0xb00 fs/fs-writeback.c:2241
-    wb_do_writeback fs/fs-writeback.c:2388 [inline]
-    wb_workfn+0x3fd/0xf20 fs/fs-writeback.c:2428
-    process_one_work+0x98b/0x1630 kernel/workqueue.c:3318
-    process_scheduled_works kernel/workqueue.c:3401 [inline]
-    worker_thread+0xb49/0x1140 kernel/workqueue.c:3482
-    kthread+0x388/0x470 kernel/kthread.c:436
-    ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
-    ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-    </TASK>
-   INFO: task syz.0.145:8523 blocked for more than 143 seconds.
-         Not tainted syzkaller #0
-   "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-   task:syz.0.145       state:D stack:22752 pid:8523  tgid:8522  ppid:5850   task_flags:0x400140 flags:0x00080002
-   Call Trace:
-    <TASK>
-    context_switch kernel/sched/core.c:5402 [inline]
-    __schedule+0x16f9/0x5500 kernel/sched/core.c:7204
-    __schedule_loop kernel/sched/core.c:7283 [inline]
-    schedule+0x164/0x360 kernel/sched/core.c:7298
-    wb_wait_for_completion+0x3e8/0x790 fs/fs-writeback.c:227
-    __writeback_inodes_sb_nr+0x24c/0x2d0 fs/fs-writeback.c:2847
-    try_to_writeback_inodes_sb+0x9a/0xc0 fs/fs-writeback.c:2895
-    btrfs_start_delalloc_flush fs/btrfs/transaction.c:2182 [inline]
-    btrfs_commit_transaction+0x813/0x2fc0 fs/btrfs/transaction.c:2371
-    btrfs_sync_file+0xdf4/0x1230 fs/btrfs/file.c:1822
-    generic_write_sync include/linux/fs.h:2663 [inline]
-    btrfs_do_write_iter+0x6a9/0x840 fs/btrfs/file.c:1473
-    new_sync_write fs/read_write.c:595 [inline]
-    vfs_write+0x629/0xba0 fs/read_write.c:688
-    ksys_write+0x156/0x270 fs/read_write.c:740
-    do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-    do_syscall_64+0x15f/0x560 arch/x86/entry/syscall_64.c:94
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   RIP: 0033:0x7f5a0bdece59
-   RSP: 002b:00007f5a0b446028 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-   RAX: ffffffffffffffda RBX: 00007f5a0c065fa0 RCX: 00007f5a0bdece59
-   RDX: 000000000000029f RSI: 0000200000000200 RDI: 0000000000000004
-   RBP: 00007f5a0be82d6f R08: 0000000000000000 R09: 0000000000000000
-   R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-   R13: 00007f5a0c066038 R14: 00007f5a0c065fa0 R15: 00007ffe149206b8
-    </TASK>
-   INFO: task syz.0.145:8539 blocked for more than 143 seconds.
-         Not tainted syzkaller #0
-   "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-   task:syz.0.145       state:D stack:23704 pid:8539  tgid:8522  ppid:5850   task_flags:0x400140 flags:0x00080002
-   Call Trace:
-    <TASK>
-    context_switch kernel/sched/core.c:5402 [inline]
-    __schedule+0x16f9/0x5500 kernel/sched/core.c:7204
-    __schedule_loop kernel/sched/core.c:7283 [inline]
-    schedule+0x164/0x360 kernel/sched/core.c:7298
-    wait_current_trans+0x39f/0x590 fs/btrfs/transaction.c:536
-    start_transaction+0xbd8/0x1820 fs/btrfs/transaction.c:716
-    clone_copy_inline_extent fs/btrfs/reflink.c:299 [inline]
-    btrfs_clone+0x1316/0x2540 fs/btrfs/reflink.c:574
-    btrfs_clone_files+0x271/0x3f0 fs/btrfs/reflink.c:795
-    btrfs_remap_file_range+0x76b/0x1320 fs/btrfs/reflink.c:948
-    vfs_clone_file_range+0x435/0x7b0 fs/remap_range.c:403
-    ioctl_file_clone fs/ioctl.c:239 [inline]
-    ioctl_file_clone_range fs/ioctl.c:257 [inline]
-    do_vfs_ioctl+0xe15/0x1540 fs/ioctl.c:544
-    __do_sys_ioctl fs/ioctl.c:595 [inline]
-    __se_sys_ioctl+0x82/0x170 fs/ioctl.c:583
-    do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-    do_syscall_64+0x15f/0x560 arch/x86/entry/syscall_64.c:94
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   RIP: 0033:0x7f5a0bdece59
-   RSP: 002b:00007f5a0b425028 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-   RAX: ffffffffffffffda RBX: 00007f5a0c066090 RCX: 00007f5a0bdece59
-   RDX: 00002000000000c0 RSI: 000000004020940d RDI: 0000000000000004
-   RBP: 00007f5a0be82d6f R08: 0000000000000000 R09: 0000000000000000
-   R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-   R13: 00007f5a0c066128 R14: 00007f5a0c066090 R15: 00007ffe149206b8
-    </TASK>
+[0]: https://lore.kernel.org/linux-gpio/CAAMcf8C_A9dJ_v4QRKtb9eGNOpJ7BZNOGsFP4i2WFOZxOVBPnQ@mail.gmail.com/T/#u
 
-Reported-by: syzbot+c7443384724bb0f9e913@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/6a150a09.820a0220.e7972.0006.GAE@google.com/
-Fixes: 05a5a7621ce6 ("Btrfs: implement full reflink support for inline extents")
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 4ba9c3afda41 ("gpio: mt7621: Add a driver for MT7621")
+Co-developed-by: Vicente Bergas <vicencb@gmail.com>
+Signed-off-by: Vicente Bergas <vicencb@gmail.com>
+Tested-by: Vicente Bergas <vicencb@gmail.com>
+Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Link: https://patch.msgid.link/20260609031118.2275735-1-sergio.paracuellos@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/reflink.c | 101 +++++++++++++++++++++++++--------------------
- 1 file changed, 57 insertions(+), 44 deletions(-)
+ drivers/gpio/gpio-mt7621.c | 282 ++++++++++++++++++++++++++++---------
+ 1 file changed, 216 insertions(+), 66 deletions(-)
 
-diff --git a/fs/btrfs/reflink.c b/fs/btrfs/reflink.c
-index b5f7b20c585a0f..8356e3b74cd37a 100644
---- a/fs/btrfs/reflink.c
-+++ b/fs/btrfs/reflink.c
-@@ -178,10 +178,12 @@ static int clone_copy_inline_extent(struct btrfs_inode *inode,
- 	struct btrfs_drop_extents_args drop_args = { 0 };
- 	int ret;
- 	struct btrfs_key key;
-+	bool copied_inline_to_page = false;
+diff --git a/drivers/gpio/gpio-mt7621.c b/drivers/gpio/gpio-mt7621.c
+index 91230be5158790..a814885ccd5d11 100644
+--- a/drivers/gpio/gpio-mt7621.c
++++ b/drivers/gpio/gpio-mt7621.c
+@@ -29,8 +29,8 @@
+ #define GPIO_REG_EDGE		0xA0
  
- 	if (new_key->offset > 0) {
- 		ret = copy_inline_to_page(inode, new_key->offset,
- 					  inline_data, size, datal, comp_type);
-+		copied_inline_to_page = (ret == 0);
- 		goto out;
+ struct mtk_gc {
+-	struct irq_chip irq_chip;
+ 	struct gpio_generic_chip chip;
++	struct mtk *parent_priv;
+ 	int bank;
+ 	u32 rising;
+ 	u32 falling;
+@@ -41,20 +41,32 @@ struct mtk_gc {
+ /**
+  * struct mtk - state container for
+  * data of the platform driver. It is 3
+- * separate gpio-chip each one with its
+- * own irq_chip.
+- * @dev: device instance
++ * separate gpio-chip having an IRQ
++ * linear domain shared for all of them
++ * @pdev: platform device instance
+  * @base: memory base address
++ * @irq_domain: IRQ linear domain shared across the three gpio chips
+  * @gpio_irq: irq number from the device tree
++ * @num_gpios: total number of gpio pins on the three gpio chips
+  * @gc_map: array of the gpio chips
+  */
+ struct mtk {
+-	struct device *dev;
++	struct platform_device *pdev;
+ 	void __iomem *base;
++	struct irq_domain *irq_domain;
+ 	int gpio_irq;
++	int num_gpios;
+ 	struct mtk_gc gc_map[MTK_BANK_CNT];
+ };
+ 
++static inline struct mtk *
++mt7621_gpio_gc_to_priv(struct gpio_chip *gc)
++{
++	struct mtk_gc *bank = gpiochip_get_data(gc);
++
++	return bank->parent_priv;
++}
++
+ static inline struct mtk_gc *
+ to_mediatek_gpio(struct gpio_chip *chip)
+ {
+@@ -67,7 +79,7 @@ static inline void
+ mtk_gpio_w32(struct mtk_gc *rg, u32 offset, u32 val)
+ {
+ 	struct gpio_chip *gc = &rg->chip.gc;
+-	struct mtk *mtk = gpiochip_get_data(gc);
++	struct mtk *mtk = mt7621_gpio_gc_to_priv(gc);
+ 
+ 	offset = (rg->bank * GPIO_BANK_STRIDE) + offset;
+ 	gpio_generic_write_reg(&rg->chip, mtk->base + offset, val);
+@@ -77,41 +89,62 @@ static inline u32
+ mtk_gpio_r32(struct mtk_gc *rg, u32 offset)
+ {
+ 	struct gpio_chip *gc = &rg->chip.gc;
+-	struct mtk *mtk = gpiochip_get_data(gc);
++	struct mtk *mtk = mt7621_gpio_gc_to_priv(gc);
+ 
+ 	offset = (rg->bank * GPIO_BANK_STRIDE) + offset;
+ 	return gpio_generic_read_reg(&rg->chip, mtk->base + offset);
+ }
+ 
+-static irqreturn_t
+-mediatek_gpio_irq_handler(int irq, void *data)
++static void
++mt7621_gpio_irq_bank_handler(struct mtk_gc *bank)
+ {
+-	struct gpio_chip *gc = data;
+-	struct mtk_gc *rg = to_mediatek_gpio(gc);
+-	irqreturn_t ret = IRQ_NONE;
++	struct mtk *priv = bank->parent_priv;
++	struct irq_domain *domain = priv->irq_domain;
++	int hwbase = bank->chip.gc.offset;
+ 	unsigned long pending;
+-	int bit;
++	unsigned int offset;
++
++	pending = mtk_gpio_r32(bank, GPIO_REG_STAT);
++	if (!pending)
++		return;
++
++	mtk_gpio_w32(bank, GPIO_REG_STAT, pending);
++
++	for_each_set_bit(offset, &pending, MTK_BANK_WIDTH)
++		generic_handle_domain_irq(domain, hwbase + offset);
++}
++
++static void
++mt7621_gpio_irq_handler(struct irq_desc *desc)
++{
++	struct mtk *priv = irq_desc_get_handler_data(desc);
++	struct irq_chip *chip = irq_desc_get_chip(desc);
++	int i;
+ 
+-	pending = mtk_gpio_r32(rg, GPIO_REG_STAT);
++	chained_irq_enter(chip, desc);
++	for (i = 0; i < MTK_BANK_CNT; i++) {
++		struct mtk_gc *bank = &priv->gc_map[i];
+ 
+-	for_each_set_bit(bit, &pending, MTK_BANK_WIDTH) {
+-		generic_handle_domain_irq(gc->irq.domain, bit);
+-		mtk_gpio_w32(rg, GPIO_REG_STAT, BIT(bit));
+-		ret |= IRQ_HANDLED;
++		mt7621_gpio_irq_bank_handler(bank);
+ 	}
++	chained_irq_exit(chip, desc);
++}
+ 
+-	return ret;
++static int
++mt7621_gpio_hwirq_to_offset(irq_hw_number_t hwirq, struct mtk_gc *bank)
++{
++	return hwirq - bank->chip.gc.offset;
+ }
+ 
+ static void
+ mediatek_gpio_irq_unmask(struct irq_data *d)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+-	struct mtk_gc *rg = to_mediatek_gpio(gc);
+-	int pin = d->hwirq;
++	struct mtk_gc *rg = gpiochip_get_data(gc);
++	u32 mask = mt7621_gpio_hwirq_to_offset(d->hwirq, rg);
+ 	u32 rise, fall, high, low;
+ 
+-	gpiochip_enable_irq(gc, d->hwirq);
++	gpiochip_enable_irq(gc, mask);
+ 
+ 	guard(gpio_generic_lock_irqsave)(&rg->chip);
+ 
+@@ -119,18 +152,18 @@ mediatek_gpio_irq_unmask(struct irq_data *d)
+ 	fall = mtk_gpio_r32(rg, GPIO_REG_FEDGE);
+ 	high = mtk_gpio_r32(rg, GPIO_REG_HLVL);
+ 	low = mtk_gpio_r32(rg, GPIO_REG_LLVL);
+-	mtk_gpio_w32(rg, GPIO_REG_REDGE, rise | (BIT(pin) & rg->rising));
+-	mtk_gpio_w32(rg, GPIO_REG_FEDGE, fall | (BIT(pin) & rg->falling));
+-	mtk_gpio_w32(rg, GPIO_REG_HLVL, high | (BIT(pin) & rg->hlevel));
+-	mtk_gpio_w32(rg, GPIO_REG_LLVL, low | (BIT(pin) & rg->llevel));
++	mtk_gpio_w32(rg, GPIO_REG_REDGE, rise | (BIT(mask) & rg->rising));
++	mtk_gpio_w32(rg, GPIO_REG_FEDGE, fall | (BIT(mask) & rg->falling));
++	mtk_gpio_w32(rg, GPIO_REG_HLVL, high | (BIT(mask) & rg->hlevel));
++	mtk_gpio_w32(rg, GPIO_REG_LLVL, low | (BIT(mask) & rg->llevel));
+ }
+ 
+ static void
+ mediatek_gpio_irq_mask(struct irq_data *d)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+-	struct mtk_gc *rg = to_mediatek_gpio(gc);
+-	int pin = d->hwirq;
++	struct mtk_gc *rg = gpiochip_get_data(gc);
++	u32 mask = mt7621_gpio_hwirq_to_offset(d->hwirq, rg);
+ 	u32 rise, fall, high, low;
+ 
+ 	scoped_guard(gpio_generic_lock_irqsave, &rg->chip) {
+@@ -138,22 +171,21 @@ mediatek_gpio_irq_mask(struct irq_data *d)
+ 		fall = mtk_gpio_r32(rg, GPIO_REG_FEDGE);
+ 		high = mtk_gpio_r32(rg, GPIO_REG_HLVL);
+ 		low = mtk_gpio_r32(rg, GPIO_REG_LLVL);
+-		mtk_gpio_w32(rg, GPIO_REG_FEDGE, fall & ~BIT(pin));
+-		mtk_gpio_w32(rg, GPIO_REG_REDGE, rise & ~BIT(pin));
+-		mtk_gpio_w32(rg, GPIO_REG_HLVL, high & ~BIT(pin));
+-		mtk_gpio_w32(rg, GPIO_REG_LLVL, low & ~BIT(pin));
++		mtk_gpio_w32(rg, GPIO_REG_FEDGE, fall & ~BIT(mask));
++		mtk_gpio_w32(rg, GPIO_REG_REDGE, rise & ~BIT(mask));
++		mtk_gpio_w32(rg, GPIO_REG_HLVL, high & ~BIT(mask));
++		mtk_gpio_w32(rg, GPIO_REG_LLVL, low & ~BIT(mask));
  	}
  
-@@ -287,6 +289,60 @@ static int clone_copy_inline_extent(struct btrfs_inode *inode,
- 		btrfs_abort_transaction(trans, ret);
- out:
- 	if (!ret && !trans) {
-+		if (copied_inline_to_page &&
-+		    new_key->offset + datal > i_size_read(&inode->vfs_inode)) {
-+			/*
-+			 * If we copied the inline extent data to a page/folio
-+			 * beyond the i_size of the destination inode, then we
-+			 * need to increase the i_size before we start a
-+			 * transaction to update the inode item. This is to
-+			 * prevent a deadlock when the flushoncommit mount
-+			 * option is used, which happens like this:
-+			 *
-+			 * 1) Task A clones an inline extent from inode X to an
-+			 *    offset of inode Y that is beyond Y's current
-+			 *    i_size. This means we copied the inline extent's
-+			 *    data to a folio of inode Y that is beyond its EOF,
-+			 *    using the call above to copy_inline_to_page();
-+			 *
-+			 * 2) Task B starts a transaction commit and calls
-+			 *    btrfs_start_delalloc_flush() to flush delalloc;
-+			 *
-+			 * 3) The delalloc flushing sees the new dirty folio of
-+			 *    inode Y and when it attempts to flush it, it ends
-+			 *    up at extent_writepage() and sees that the offset
-+			 *    of the folio is beyond the i_size of inode Y, so
-+			 *    it attempts to invalidate the folio by calling
-+			 *    folio_invalidate(), which ends up at btrfs' folio
-+			 *    invalidate callback - btrfs_invalidate_folio().
-+			 *    There it tries to lock the folio's range in inode
-+			 *    Y's extent io tree, but it blocks since it's
-+			 *    currently locked by task A - during reflink we
-+			 *    lock the inodes and the source and destination
-+			 *    ranges after flushing all delalloc and waiting for
-+			 *    ordered extent completion - after that we don't
-+			 *    expect to have dirty folios in the ranges, the
-+			 *    exception is if we have to copy an inline extent's
-+			 *    data (because the destination offset is not zero);
-+			 *
-+			 * 4) Task A then does the 'goto out' below and attempts
-+			 *    to start a transaction to update the inode item,
-+			 *    and then it's blocked since the current
-+			 *    transaction is in the TRANS_STATE_COMMIT_START
-+			 *    state. Therefore task A has to wait for the
-+			 *    current transaction to become unblocked (its
-+			 *    state >= TRANS_STATE_UNBLOCKED).
-+			 *
-+			 * This leads to a deadlock - the task committing the
-+			 * transaction waiting for the delalloc flushing which
-+			 * is blocked during folio invalidation on the inode's
-+			 * extent lock and the reflink task waiting for the
-+			 * current transaction to be unblocked so that it can
-+			 * start a new one to update the inode item (while
-+			 * holding the extent lock).
-+			 */
-+			i_size_write(&inode->vfs_inode, new_key->offset + datal);
-+		}
- 		/*
- 		 * No transaction here means we copied the inline extent into a
- 		 * page of the destination inode.
-@@ -319,50 +375,7 @@ static int clone_copy_inline_extent(struct btrfs_inode *inode,
- 
- 	ret = copy_inline_to_page(inode, new_key->offset,
- 				  inline_data, size, datal, comp_type);
--
--	/*
--	 * If we copied the inline extent data to a page/folio beyond the i_size
--	 * of the destination inode, then we need to increase the i_size before
--	 * we start a transaction to update the inode item. This is to prevent a
--	 * deadlock when the flushoncommit mount option is used, which happens
--	 * like this:
--	 *
--	 * 1) Task A clones an inline extent from inode X to an offset of inode
--	 *    Y that is beyond Y's current i_size. This means we copied the
--	 *    inline extent's data to a folio of inode Y that is beyond its EOF,
--	 *    using the call above to copy_inline_to_page();
--	 *
--	 * 2) Task B starts a transaction commit and calls
--	 *    btrfs_start_delalloc_flush() to flush delalloc;
--	 *
--	 * 3) The delalloc flushing sees the new dirty folio of inode Y and when
--	 *    it attempts to flush it, it ends up at extent_writepage() and sees
--	 *    that the offset of the folio is beyond the i_size of inode Y, so
--	 *    it attempts to invalidate the folio by calling folio_invalidate(),
--	 *    which ends up at btrfs' folio invalidate callback -
--	 *    btrfs_invalidate_folio(). There it tries to lock the folio's range
--	 *    in inode Y's extent io tree, but it blocks since it's currently
--	 *    locked by task A - during reflink we lock the inodes and the
--	 *    source and destination ranges after flushing all delalloc and
--	 *    waiting for ordered extent completion - after that we don't expect
--	 *    to have dirty folios in the ranges, the exception is if we have to
--	 *    copy an inline extent's data (because the destination offset is
--	 *    not zero);
--	 *
--	 * 4) Task A then does the 'goto out' below and attempts to start a
--	 *    transaction to update the inode item, and then it's blocked since
--	 *    the current transaction is in the TRANS_STATE_COMMIT_START state.
--	 *    Therefore task A has to wait for the current transaction to become
--	 *    unblocked (its state >= TRANS_STATE_UNBLOCKED).
--	 *
--	 * This leads to a deadlock - the task committing the transaction
--	 * waiting for the delalloc flushing which is blocked during folio
--	 * invalidation on the inode's extent lock and the reflink task waiting
--	 * for the current transaction to be unblocked so that it can start a
--	 * a new one to update the inode item (while holding the extent lock).
--	 */
--	if (ret == 0 && new_key->offset + datal > i_size_read(&inode->vfs_inode))
--		i_size_write(&inode->vfs_inode, new_key->offset + datal);
-+	copied_inline_to_page = (ret == 0);
- 
- 	goto out;
+-	gpiochip_disable_irq(gc, d->hwirq);
++	gpiochip_disable_irq(gc, mask);
  }
+ 
+ static int
+ mediatek_gpio_irq_type(struct irq_data *d, unsigned int type)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+-	struct mtk_gc *rg = to_mediatek_gpio(gc);
+-	int pin = d->hwirq;
+-	u32 mask = BIT(pin);
++	struct mtk_gc *rg = gpiochip_get_data(gc);
++	u32 mask = BIT(mt7621_gpio_hwirq_to_offset(d->hwirq, rg));
+ 
+ 	if (type == IRQ_TYPE_PROBE) {
+ 		if ((rg->rising | rg->falling |
+@@ -190,6 +222,26 @@ mediatek_gpio_irq_type(struct irq_data *d, unsigned int type)
+ 	return 0;
+ }
+ 
++static int
++mt7621_gpio_irq_reqres(struct irq_data *d)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	struct mtk_gc *rg = gpiochip_get_data(gc);
++	unsigned int irq = mt7621_gpio_hwirq_to_offset(d->hwirq, rg);
++
++	return gpiochip_reqres_irq(gc, irq);
++}
++
++static void
++mt7621_gpio_irq_relres(struct irq_data *d)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	struct mtk_gc *rg = gpiochip_get_data(gc);
++	unsigned int irq = mt7621_gpio_hwirq_to_offset(d->hwirq, rg);
++
++	gpiochip_relres_irq(gc, irq);
++}
++
+ static int
+ mediatek_gpio_xlate(struct gpio_chip *chip,
+ 		    const struct of_phandle_args *spec, u32 *flags)
+@@ -208,14 +260,123 @@ mediatek_gpio_xlate(struct gpio_chip *chip,
+ 
+ static const struct irq_chip mt7621_irq_chip = {
+ 	.name		= "mt7621-gpio",
++	.irq_request_resources = mt7621_gpio_irq_reqres,
++	.irq_release_resources = mt7621_gpio_irq_relres,
+ 	.irq_mask_ack	= mediatek_gpio_irq_mask,
+ 	.irq_mask	= mediatek_gpio_irq_mask,
+ 	.irq_unmask	= mediatek_gpio_irq_unmask,
+ 	.irq_set_type	= mediatek_gpio_irq_type,
+ 	.flags		= IRQCHIP_IMMUTABLE,
+-	GPIOCHIP_IRQ_RESOURCE_HELPERS,
++};
++
++static void
++mt7621_gpio_remove(struct platform_device *pdev)
++{
++	struct mtk *priv = platform_get_drvdata(pdev);
++	int offset, virq;
++
++	if (priv->gpio_irq > 0)
++		irq_set_chained_handler_and_data(priv->gpio_irq, NULL, NULL);
++
++	/* Remove all IRQ mappings and delete the domain */
++	if (priv->irq_domain) {
++		for (offset = 0; offset < priv->num_gpios; offset++) {
++			virq = irq_find_mapping(priv->irq_domain, offset);
++			irq_dispose_mapping(virq);
++		}
++		irq_domain_remove(priv->irq_domain);
++	}
++}
++
++static struct mtk_gc *
++mt7621_gpio_hwirq_to_bank(struct mtk *priv, irq_hw_number_t hwirq)
++{
++	int i;
++
++	for (i = 0; i < MTK_BANK_CNT; i++) {
++		struct mtk_gc *bank = &priv->gc_map[i];
++
++		if (hwirq >= bank->chip.gc.offset &&
++		    hwirq < (bank->chip.gc.offset + bank->chip.gc.ngpio))
++			return bank;
++	}
++
++	return NULL;
++}
++
++static int
++mt7621_gpio_irq_map(struct irq_domain *d, unsigned int irq,
++		    irq_hw_number_t hwirq)
++{
++	struct mtk *priv = d->host_data;
++	struct mtk_gc *bank = mt7621_gpio_hwirq_to_bank(priv, hwirq);
++	struct platform_device *pdev = priv->pdev;
++	int ret;
++
++	if (!bank)
++		return -EINVAL;
++
++	dev_dbg(&pdev->dev, "Mapping irq %d for gpio line %d (bank %d)\n",
++		irq, (int)hwirq, bank->bank);
++
++	ret = irq_set_chip_data(irq, &bank->chip.gc);
++	if (ret < 0)
++		return ret;
++
++	irq_set_chip_and_handler(irq, &mt7621_irq_chip, handle_simple_irq);
++	irq_set_noprobe(irq);
++
++	return 0;
++}
++
++static void
++mt7621_gpio_irq_unmap(struct irq_domain *d, unsigned int irq)
++{
++	irq_set_chip_and_handler(irq, NULL, NULL);
++	irq_set_chip_data(irq, NULL);
++}
++
++static const struct irq_domain_ops mt7621_gpio_irq_domain_ops = {
++	.map = mt7621_gpio_irq_map,
++	.unmap = mt7621_gpio_irq_unmap,
++	.xlate = irq_domain_xlate_twocell,
+ };
+ 
++static int
++mt7621_gpio_irq_setup(struct platform_device *pdev,
++		      struct mtk *priv)
++{
++	struct device *dev = &pdev->dev;
++
++	priv->irq_domain = irq_domain_create_linear(dev_fwnode(dev),
++						    priv->num_gpios,
++						    &mt7621_gpio_irq_domain_ops,
++						    priv);
++	if (!priv->irq_domain) {
++		dev_err(dev, "Couldn't allocate IRQ domain\n");
++		return -ENXIO;
++	}
++
++	irq_set_chained_handler_and_data(priv->gpio_irq,
++					 mt7621_gpio_irq_handler, priv);
++	irq_set_status_flags(priv->gpio_irq, IRQ_DISABLE_UNLAZY);
++
++	return 0;
++}
++
++static int
++mt7621_gpio_to_irq(struct gpio_chip *gc, unsigned int offset)
++{
++	struct mtk *priv = mt7621_gpio_gc_to_priv(gc);
++	/* gc_offset is relative to this gpio_chip; want real offset */
++	int hwirq = offset + gc->offset;
++
++	if (hwirq >= priv->num_gpios)
++		return -ENXIO;
++
++	return irq_create_mapping(priv->irq_domain, hwirq);
++}
++
+ static int
+ mediatek_gpio_bank_probe(struct device *dev, int bank)
+ {
+@@ -228,6 +389,7 @@ mediatek_gpio_bank_probe(struct device *dev, int bank)
+ 	rg = &mtk->gc_map[bank];
+ 	memset(rg, 0, sizeof(*rg));
+ 
++	rg->parent_priv = mtk;
+ 	rg->bank = bank;
+ 
+ 	dat = mtk->base + GPIO_REG_DATA + (rg->bank * GPIO_BANK_STRIDE);
+@@ -253,41 +415,17 @@ mediatek_gpio_bank_probe(struct device *dev, int bank)
+ 
+ 	rg->chip.gc.of_gpio_n_cells = 2;
+ 	rg->chip.gc.of_xlate = mediatek_gpio_xlate;
++	rg->chip.gc.ngpio = MTK_BANK_WIDTH;
+ 	rg->chip.gc.label = devm_kasprintf(dev, GFP_KERNEL, "%s-bank%d",
+ 					dev_name(dev), bank);
+ 	if (!rg->chip.gc.label)
+ 		return -ENOMEM;
+ 
+ 	rg->chip.gc.offset = bank * MTK_BANK_WIDTH;
++	if (mtk->gpio_irq > 0)
++		rg->chip.gc.to_irq = mt7621_gpio_to_irq;
+ 
+-	if (mtk->gpio_irq) {
+-		struct gpio_irq_chip *girq;
+-
+-		/*
+-		 * Directly request the irq here instead of passing
+-		 * a flow-handler because the irq is shared.
+-		 */
+-		ret = devm_request_irq(dev, mtk->gpio_irq,
+-				       mediatek_gpio_irq_handler, IRQF_SHARED,
+-				       rg->chip.gc.label, &rg->chip.gc);
+-
+-		if (ret) {
+-			dev_err(dev, "Error requesting IRQ %d: %d\n",
+-				mtk->gpio_irq, ret);
+-			return ret;
+-		}
+-
+-		girq = &rg->chip.gc.irq;
+-		gpio_irq_chip_set_chip(girq, &mt7621_irq_chip);
+-		/* This will let us handle the parent IRQ in the driver */
+-		girq->parent_handler = NULL;
+-		girq->num_parents = 0;
+-		girq->parents = NULL;
+-		girq->default_type = IRQ_TYPE_NONE;
+-		girq->handler = handle_simple_irq;
+-	}
+-
+-	ret = devm_gpiochip_add_data(dev, &rg->chip.gc, mtk);
++	ret = devm_gpiochip_add_data(dev, &rg->chip.gc, rg);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Could not register gpio %d, ret=%d\n",
+ 			rg->chip.gc.ngpio, ret);
+@@ -322,7 +460,8 @@ mediatek_gpio_probe(struct platform_device *pdev)
+ 	if (mtk->gpio_irq < 0)
+ 		return mtk->gpio_irq;
+ 
+-	mtk->dev = dev;
++	mtk->pdev = pdev;
++	mtk->num_gpios = MTK_BANK_WIDTH * MTK_BANK_CNT;
+ 	platform_set_drvdata(pdev, mtk);
+ 
+ 	for (i = 0; i < MTK_BANK_CNT; i++) {
+@@ -331,7 +470,17 @@ mediatek_gpio_probe(struct platform_device *pdev)
+ 			return ret;
+ 	}
+ 
++	if (mtk->gpio_irq > 0) {
++		ret = mt7621_gpio_irq_setup(pdev, mtk);
++		if (ret)
++			goto fail;
++	}
++
+ 	return 0;
++
++fail:
++	mt7621_gpio_remove(pdev);
++	return ret;
+ }
+ 
+ static const struct of_device_id mediatek_gpio_match[] = {
+@@ -342,6 +491,7 @@ MODULE_DEVICE_TABLE(of, mediatek_gpio_match);
+ 
+ static struct platform_driver mediatek_gpio_driver = {
+ 	.probe = mediatek_gpio_probe,
++	.remove = mt7621_gpio_remove,
+ 	.driver = {
+ 		.name = "mt7621_gpio",
+ 		.of_match_table = mediatek_gpio_match,
 -- 
 2.53.0
 
