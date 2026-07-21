@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD0A4028F7;
-	Tue, 21 Jul 2026 17:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883A8403B1E;
+	Tue, 21 Jul 2026 17:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654369; cv=none; b=BNJmWjgYdk9el/T5Q7pWZLBYOxF4UZuzBCzbLJyMCn9Yi7DNoBAUGYgVdudjE/DTuyHpBJ44x/bA2H0CsibI7Ic1AKjq+o2746eNkMUFm/k8hyWHjqtFChjp3V/QrOW9WdiWZB16GpIFWnBtqOSS4FLhYiemidrvcwes2UPKDTo=
+	t=1784654371; cv=none; b=CzNM/pclpb6nqrtS+dbfB36tbINtisS6GtJP2E8kCYK/bcvxspL75abb1J1EkzJL/YUnqn2gH4UdQiVrStDbMxt9OdNBYOx0sFg7ekC2IAhaedpzQHAVW2KOYGrmxw9bPQyFkMtDt0+noAXSle2cyiadPfMJ5rPeza/3c+ENOBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654369; c=relaxed/simple;
-	bh=+WAjHOhg0NEmtv4x4f3N4SBrGMC/rDFb6cVhE7DFySM=;
+	s=arc-20240116; t=1784654371; c=relaxed/simple;
+	bh=8ORpfGzEYrnspoFJXpP8V+L/nE0Yn6ALJKCg5G0wzIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EMeuBo4/vdkYkQTJYQsCBBgriNGPpoey/luMSbgtwyuiM38OnsPYXzWYE8IG7gc9Ex2h31hthLSfND2c2GtnKjqzNVFDy5yu92v2LVN9/iqkQvkTpHUt2RRPkxPM5cm2V8Szai8BBKbjDHkdNSuBDR6Xia2735N53h5nAIdQ20s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVYNWXY3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lsNGJ2L5DugqUQxn8JphHmi74CCMQIM9oIv+UatWE+Rj/m77E47nPxT7kHLJNnWggEfzmrzvL0QT8aq6LYn2JrRtA42HgR9VyLzB8NLXYVPcBxFXJnS3M7ozake0QHp/5bfNxUQWI2NI0okhatCQLNxk1z6Qh/XZxTs9q7rOZ2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGbcDNKL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVYNWXY3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 501671F000E9;
-	Tue, 21 Jul 2026 17:19:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGbcDNKL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC13A1F000E9;
+	Tue, 21 Jul 2026 17:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654367;
-	bh=WHVqbW3HAsEz4mR0ItR8f0gzNYauvQ0vEiwJjXH7cxE=;
+	s=korg; t=1784654370;
+	bh=GyWAjFfGm+HJJdLmHUDMgWCv5XM5ijCp7sdGPmCPW04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AVYNWXY365eKBD/AKLUyxvD2cJ0Ro107wMzYpVuLJokcGhV6ZPeCzwhLeHtuUKTKm
-	 +VpIlnLGb79Ak7CIjwFSiN59Fy8HhIl3H0MbRTTb8vLeD0FyYoMNYvEbMXcxodtgIT
-	 EQ+nXs0EdlmVstXPU6pdgBZCowJ4YksDMKXHJYnA=
+	b=CGbcDNKLBMN8tu1mwREvDwljGGapTo7Dh0PwlkGrLK108G3qBu3TkMTwjr//HWlzn
+	 /E+FCVEVB1fJyRyW7Av2m+N1Aqg+TygQabuurDU0d+gJSQuIIyvU7PsYwSzBzC6gTG
+	 UrhprEcANxV0RJX+Jwk6WnEoLVDV2Db4vYT7rE5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.1 1661/2077] sunrpc: pin svc_xprt across the asynchronous TLS handshake callback
-Date: Tue, 21 Jul 2026 17:22:14 +0200
-Message-ID: <20260721152631.922646003@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.1 1679/2077] mm/damon/core: make charge_addr_from aware of end-address exclusivity
+Date: Tue, 21 Jul 2026 17:22:32 +0200
+Message-ID: <20260721152632.348403658@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,88 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit 4f988f3a2808fb659f3880c282041ff067acad78 upstream.
+commit 5a2d162e22bf33eb89d53e802d0fc1ec422e19b6 upstream.
 
-svc_tcp_handshake() stores the raw svc_xprt pointer in
-tls_handshake_args.ta_data and submits the request through
-tls_server_hello_x509(). The handshake core takes only
-sock_hold(req->hr_sk); nothing references the embedding struct
-svc_sock that svc_tcp_handshake_done() reaches via container_of().
+DAMON region end address is exclusive one, but charge_addr_from is
+assigned assuming the end address is inclusive.  As a result, DAMOS action
+to next up to min_region_sz memory can be skipped.  This is quite
+negligible user impact.  But, the bug is a bug that can be very simply
+fixed.  Fix the wrong assignment to respect the exclusiveness of the
+address.
 
-Two close races leave the in-flight callback writing through a freed
-svc_sock. svc_sock_free() calls tls_handshake_cancel() and discards
-its return value: a false return means handshake_complete() has
-already set HANDSHAKE_F_REQ_COMPLETED but hp_done() may not have
-finished, yet svc_sock_free() proceeds to kfree(svsk). The
-cancel-loser fall-through inside svc_tcp_handshake() itself produces
-the same window: when wait_for_completion_interruptible_timeout()
-returns <= 0 (timeout or signal) and tls_handshake_cancel() returns
-false, the function does not drain, returns, and svc_handle_xprt()
-calls svc_xprt_received(), which clears XPT_BUSY and can drop the
-last reference. A concurrent close then runs svc_sock_free() while
-svc_tcp_handshake_done() is still updating xpt_flags and walking
-svsk->sk_handshake_done.
+The issue was discovered [1] by Sashiko.
 
-The corruption surfaces as set_bit/clear_bit RMW into the freed
-xpt_flags slab slot and as complete_all() walking and writing the
-freed wait_queue_head_t list embedded in sk_handshake_done -- a
-slab-corruption primitive, not a benign read. The path is reachable
-on any TLS-enabled NFS server whenever a connection close overlaps
-the tlshd downcall delivery window; the interruptible wait means
-signal delivery suffices, not just SVC_HANDSHAKE_TO expiry.
-
-Take svc_xprt_get(xprt) immediately before tls_server_hello_x509()
-so the in-flight callback owns its own reference. Release it on the
-two edges where the callback is guaranteed not to fire -- submission
-failure from tls_server_hello_x509() and a successful
-tls_handshake_cancel() -- and at the tail of
-svc_tcp_handshake_done() after complete_all().
-
-Fixes: b3cbf98e2fdf ("SUNRPC: Support TLS handshake in the server-side TCP socket code")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <clm@meta.com>
-Assisted-by: kres (claude-opus-4-7)
-[cel: rewrote commit message to describe the actual change]
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://lore.kernel.org/20260428042942.118230-1-sj@kernel.org
+Link: https://lore.kernel.org/20260428032324.115663-1-sj@kernel.org [1]
+Fixes: 50585192bc2e ("mm/damon/schemes: skip already charged targets and regions")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.16.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svcsock.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ mm/damon/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -471,6 +471,7 @@ static void svc_tcp_handshake_done(void
- 	}
- 	clear_bit(XPT_HANDSHAKE, &xprt->xpt_flags);
- 	complete_all(&svsk->sk_handshake_done);
-+	svc_xprt_put(xprt);
- }
- 
- /**
-@@ -494,9 +495,13 @@ static void svc_tcp_handshake(struct svc
- 	clear_bit(XPT_TLS_SESSION, &xprt->xpt_flags);
- 	init_completion(&svsk->sk_handshake_done);
- 
-+	/* Pin the transport across the asynchronous handshake callback. */
-+	svc_xprt_get(xprt);
-+
- 	ret = tls_server_hello_x509(&args, GFP_KERNEL);
- 	if (ret) {
- 		trace_svc_tls_not_started(xprt);
-+		svc_xprt_put(xprt);
- 		goto out_failed;
- 	}
- 
-@@ -505,6 +510,7 @@ static void svc_tcp_handshake(struct svc
- 	if (ret <= 0) {
- 		if (tls_handshake_cancel(sk)) {
- 			trace_svc_tls_timed_out(xprt);
-+			svc_xprt_put(xprt);
- 			goto out_close;
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2106,7 +2106,7 @@ static void damos_apply_scheme(struct da
+ 		if (damos_quota_is_set(quota) &&
+ 				quota->charged_sz >= quota->esz) {
+ 			quota->charge_target_from = t;
+-			quota->charge_addr_from = r->ar.end + 1;
++			quota->charge_addr_from = r->ar.end;
  		}
  	}
+ 	if (s->action != DAMOS_STAT)
 
 
