@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66A4436BC6;
-	Tue, 21 Jul 2026 20:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D1B4229C6;
+	Tue, 21 Jul 2026 20:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664012; cv=none; b=WSp3J3qTaFyDSd02wo815MWpipzO3bLPW9Ypz86Xt8+GQMaZ+FkbkkD6P5hONXL0+hB2pYDxHK3Cx+kU0fRL9K45Ikb7+mr2hWq3Nz2uPxeji0nSz+0o7s3PQTHbYws+NsyJQoDXSDH1Vpx0diPNh/fiyO+jC7pDuCXPtWIlsn8=
+	t=1784664015; cv=none; b=nlYZ+7uZ5pyTNJH0YPkqPUcUxqAPMaWaGb55ChHw3tMdl4vBGPBtbMLYgdHh/P8Ufv04IDtMyiwZ00zqinKgR7xnHQuCUrQnVZMOHcbTqoGPvbjxRaKGVbVWuhfa324UyvdpTZbA8CDkNL4QiG803522kgIsaZhmer/4purfBj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664012; c=relaxed/simple;
-	bh=UQElhNXIE/ncPM2jkxOkamXkchDarTZ6lNjyOPWAKwI=;
+	s=arc-20240116; t=1784664015; c=relaxed/simple;
+	bh=L9roLUsqp5oY8hXLbjdhb/gFD/N1Bv3wJqi582mB2bQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T8g0CiX3kj9XMOfJAG864uw9/1sAAwanznMVhIP8UWChqWxyPjnCoEfe5k65pOYXeZJSNv1ufv7xNE1ZsaizBjiD8NNfJMmcv/3XUucBL+/sYFlPmnVXRyxVHPPFzganLH4D0Um5tEQEsmeWFQpv0Wu1cj1EvfNHgcNoMJoa/dE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9a2DCa+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FJL9DYu5SEuRLIAPelHp0WXZIcOIRtiYV47cEy9D4EfuRT+IwstTsujUeZCsiq0vIVk4ZeXFehxLIhefYaPzbc3d65bCp9MYaUAuCKxfOp2hNfBxSH08yRQfDy5TIo5/J24nzhcjXjnhkdggywgdbNL/0nTnAR/ufplaTJUNHPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EppUG7Gj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9a2DCa+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF25C1F000E9;
-	Tue, 21 Jul 2026 20:00:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EppUG7Gj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ABCB1F000E9;
+	Tue, 21 Jul 2026 20:00:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664011;
-	bh=Rf8o6LGF9mnlAFrL+fk8elfffW6fyQw7Fd7j7VScx9c=;
+	s=korg; t=1784664014;
+	bh=pzkDjQm+i5tQ5yc1kcsaQbsD7uUAoHLlnVNjG5RRNN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j9a2DCa+hjRyHrOioHAS4j/hKzoSnlnQS2WSrIx6ZVuCFkIyNOxGLWZLescBd2HMS
-	 AlwR5Z34waD3lrRNl5C8bp9/LCWGN85VAqlxFV4Uk4W+uAkM71d1FC7tGywbXIUcaV
-	 pr6gtkTr+El2BYZ63ZlYLQ7mjkvC/wpkPazCdg0w=
+	b=EppUG7Gj2dAlgDavZmDbZJwPTms8JMdD7elfY7m63S2zbq22V9cybYzdLsu9euhbw
+	 Oibx4SOcmTzG56QKpYpSxis1bcNYt2GwDnNDG0elQSkDvePOyekibdsOPsdRaushJU
+	 M8Q92iiYIgTOHGvqzbf5lk/hD7vB5L93GWzwFrEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cao Ruichuang <create0818@163.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.12 1039/1276] selftests/ftrace: Drop invalid top-level local in test_ownership
-Date: Tue, 21 Jul 2026 17:24:42 +0200
-Message-ID: <20260721152509.238257059@linuxfoundation.org>
+	Bradley Morgan <include@grrlz.net>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.12 1040/1276] cpu: hotplug: Preserve per instance callback errors
+Date: Tue, 21 Jul 2026 17:24:43 +0200
+Message-ID: <20260721152509.260002627@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,47 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cao Ruichuang <create0818@163.com>
+From: Bradley Morgan <include@grrlz.net>
 
-commit 808c447df2fe234eb7d9e08ecf53159d291c104c upstream.
+commit 673db10729fb121ea1b16fe57791a0cb9eac1eb5 upstream.
 
-test_ownership.tc is sourced by ftracetest under /bin/sh.
+cpuhp_invoke_callback() unwinds earlier callbacks for the same
+hotplug state when one instance fails. The rollback path currently
+reuses ret, so a successful rollback can hide the original error and
+make the failed transition look successful.
 
-The script currently declares mount_point with local at file scope,
-which makes /bin/sh abort with "local: not in a function" before the
-test can reach the eventfs ownership checks.
+Keep the rollback result separate from the original error.
 
-Replace the top-level local declaration with a normal shell variable so
-kernels that support the gid= tracefs mount option can run the test at
-all.
-
-Link: https://lore.kernel.org/r/20260407102613.81419-1-create0818@163.com
-Fixes: 8b55572e51805 ("tracing/selftests: Add tracefs mount options test")
-Signed-off-by: Cao Ruichuang <create0818@163.com>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 724a86881d03 ("smp/hotplug: Callback vs state-machine consistency")
+Signed-off-by: Bradley Morgan <include@grrlz.net>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://patch.msgid.link/20260619163719.12103-1-include@grrlz.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/ftrace/test.d/00basic/test_ownership.tc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/cpu.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/00basic/test_ownership.tc b/tools/testing/selftests/ftrace/test.d/00basic/test_ownership.tc
-index e71cc3ad0bdf..6d00d3c0f493 100644
---- a/tools/testing/selftests/ftrace/test.d/00basic/test_ownership.tc
-+++ b/tools/testing/selftests/ftrace/test.d/00basic/test_ownership.tc
-@@ -6,7 +6,7 @@
- original_group=`stat -c "%g" .`
- original_owner=`stat -c "%u" .`
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -174,7 +174,7 @@ static int cpuhp_invoke_callback(unsigne
+ 	struct cpuhp_step *step = cpuhp_get_step(state);
+ 	int (*cbm)(unsigned int cpu, struct hlist_node *node);
+ 	int (*cb)(unsigned int cpu);
+-	int ret, cnt;
++	int ret, cnt, rollback_ret;
  
--local mount_point=$(get_mount_point)
-+mount_point=$(get_mount_point)
+ 	if (st->fail == state) {
+ 		st->fail = CPUHP_INVALID;
+@@ -238,12 +238,12 @@ err:
+ 			break;
  
- mount_options=$(get_mnt_options "$mount_point")
- 
--- 
-2.55.0
-
+ 		trace_cpuhp_multi_enter(cpu, st->target, state, cbm, node);
+-		ret = cbm(cpu, node);
+-		trace_cpuhp_exit(cpu, st->state, state, ret);
++		rollback_ret = cbm(cpu, node);
++		trace_cpuhp_exit(cpu, st->state, state, rollback_ret);
+ 		/*
+ 		 * Rollback must not fail,
+ 		 */
+-		WARN_ON_ONCE(ret);
++		WARN_ON_ONCE(rollback_ret);
+ 	}
+ 	return ret;
+ }
 
 
