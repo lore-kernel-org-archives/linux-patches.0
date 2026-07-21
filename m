@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6AD2417D9;
-	Tue, 21 Jul 2026 18:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E243F2101;
+	Tue, 21 Jul 2026 18:49:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659742; cv=none; b=jXeDzF8olQ3Dl0HS1sXR/q+IffUH+JX8njS4xTftr2Nw4VUva/3Zk/xWGqP4qiPsDmcXTc001PFbB47WanIAOFdvJSHbyWcb8p9M80M1oTS2GmykBefazuQAHehy/m7ZYJrwCZkvpLXHDX1dTWbdGFEadg0HuwgluPvp37mBCVg=
+	t=1784659745; cv=none; b=Piammpj7Y3bPjhOut1r2I5MrHTaGmUm0T2HH5wHwATAdzcKl3VbS5nMf4RvzvNZdJQdcafymG3PE11H1L8JDIFZqvpCV3/3J6PwpSU6ywYbZu6YYxLxc2f3EtmXu11qJ4j3p5dxdADTtLOqIJD5PpYF80NoTEKdMFdR4dzTRidY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659742; c=relaxed/simple;
-	bh=D9FBclbJIxPnXH2uGrg7Pn5aWS02Y+PS2zfdIacHuuI=;
+	s=arc-20240116; t=1784659745; c=relaxed/simple;
+	bh=MPMT9fpN8eypP1/tqp7EPP2kEMr21rAuznuTsashD0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/fJuSZLB6MPv8jjdXB9UhfSnvZQSLOuZZr0oOpsLdynlruybpWUTdQXfeyHSiQdk84HGzYPtgVQHkmPEUs7KnM3mtVDzRI8/meEuPE0/TpA7LJ/I3CyaX9zLc7xmEfN+YRMZJyxGoM1vadsigMeQlVpnCOWzJLFQEOX/MqDwOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yvpGD+ER; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h3l8UEP3XTIWC0sFCWLYWXPplc3gNuG03JAmpW7F42Rc7hgVcYshba7QfyqmjMLqnUVE9UJooEKZhFJ1Tn8Lex0MwaCbLq32Z0d8KmhTIfhW+IJCG2JIuyfGojIi2vRmlCBOiXigbF/6MQgF8DYLtHECfnj1tdcJmCu930ydqMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTV6X3Nf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvpGD+ER"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98731F000E9;
-	Tue, 21 Jul 2026 18:49:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTV6X3Nf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681A41F000E9;
+	Tue, 21 Jul 2026 18:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659741;
-	bh=IIsKhlx9iX8YtjyM7LKSeD814YtvZh1tgjfuJJUnFDk=;
+	s=korg; t=1784659743;
+	bh=1nv2NtyKzsSlg9dPFs3x01djGzni5Ft792Nd/uwRIUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yvpGD+ER6MoGNtYXObO01hdsfvyerCMTSv2oOe6kzFuSqByLQ8EKYikKgsrbXdFTV
-	 8Exixsbo/yrRZboR8oEUAmY3ADDrPmfHBpwlGgjgEk2PXto8ntTEZqD1jhz704xWz8
-	 rrbatp1+zU8n5Frkllx8B6yRmYa5/MPFeK4UA2HU=
+	b=BTV6X3NfElbiMI0NPyGm3V902Q6Lp4gmyJC706QB46gFBQR0SHk3966La8f6TKZW/
+	 SFYLCjAVI6XLNAA7c9/dvzrT2hBVLR6vjh2o/8XLXrRySsHtZ7w2wZLA/ITThSMdC7
+	 hsKrKYDCOkAV0s64s8eb0W2CEOcUZVfkWTCj0GX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Anirudh Gupta <anirudhrudr@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0689/2077] RDMA/core: Fix FRMR aging push to queue error flow
-Date: Tue, 21 Jul 2026 17:06:02 +0200
-Message-ID: <20260721152609.043580318@linuxfoundation.org>
+Subject: [PATCH 7.1 0716/2077] net/sched: sch_hfsc: Dont make class passive twice
+Date: Tue, 21 Jul 2026 17:06:29 +0200
+Message-ID: <20260721152609.689298118@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,128 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Guralnik <michaelgur@nvidia.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit c6936506ed556ce3ccad36ab999baf2764dd7d25 ]
+[ Upstream commit 90b662ea25f5e83bb3b8ccec5b93ced810b92fb8 ]
 
-Aging pools with pinned handles requires moving handles from the
-active queue to a non-empty inactive queue that might fail on new page
-allocation, we are currently not handling the fault and leaking any mkey
-that fails the push.
+update_vf() is called from two places for the same class during a single
+dequeue when the class's child qdisc (e.g. codel/fq_codel) drops its last
+packets while dequeuing:
 
-Fix by Introducing push_queue_to_queue_locked() that fills the
-destination's partial tail page from the source and then splices the
-remaining source pages onto the destination, performing no allocation.
+1. The child calls qdisc_tree_reduce_backlog(), which, now that the child
+   is empty, invokes hfsc_qlen_notify() -> update_vf(cl, 0, 0) and turns
+   the class passive (cl_nactive is decremented up the hierarchy).
 
-Replace the per-handle move loop in age_pinned_pool() and the
-open-coded splice in pool_aging_work() with calls to the helper.
-As the helper cannot fail under memory pressure, removing a class of
-GFP_ATOMIC allocations under the pool lock and simplifying the error
-flow.
+2. hfsc_dequeue() then calls update_vf(cl, qdisc_pkt_len(skb), cur_time)
+   to charge the dequeued bytes.
 
-Fixes: 020d189d16a6 ("RDMA/core: Add pinned handles to FRMR pools")
-Link: https://patch.msgid.link/r/20260610000145.820592-5-michaelgur@nvidia.com
-Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+On the second call the class is already passive, but its child qdisc is
+still empty, so update_vf() arms go_passive again:
+
+      if (cl->qdisc->q.qlen == 0 && cl->cl_flags & HFSC_FSC)
+              go_passive = 1;
+
+The leaf is then skipped by the cl_nactive == 0 check inside the loop,
+which does not clear go_passive, so the stale go_passive propagates to the
+parent and decrements its cl_nactive a second time. A parent that still
+has other active children is driven to cl_nactive == 0 and removed from
+the vttree, even though those siblings are still backlogged. They are
+never dequeued again and the qdisc stalls.
+
+Fix this by only arming go_passive when the class is actually active, so an
+already-passive class no longer triggers a second passive transition. The
+byte accounting (cl->cl_total += len) still runs for every ancestor, so
+dequeued bytes continue to be counted exactly once.
+
+Fixes: 51eb3b65544c ("sch_hfsc: make hfsc_qlen_notify() idempotent")
+Reported-by: Anirudh Gupta <anirudhrudr@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAN2cbVe79oj0O9==m4+4x3v+O+qzRagA=2=wkrp9i9=CqYvyZA@mail.gmail.com/
+Tested-by: Anirudh Gupta <anirudhrudr@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260610132824.3027549-1-victor@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/frmr_pools.c | 53 ++++++++++++++++++++--------
- 1 file changed, 38 insertions(+), 15 deletions(-)
+ net/sched/sch_hfsc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/frmr_pools.c b/drivers/infiniband/core/frmr_pools.c
-index 6170466ea9581a..927642c06f3a4c 100644
---- a/drivers/infiniband/core/frmr_pools.c
-+++ b/drivers/infiniband/core/frmr_pools.c
-@@ -97,13 +97,44 @@ static void destroy_all_handles_in_queue(struct ib_device *device,
- 	}
- }
+diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
+index e3dd6de8f1b6e5..50112c8a71e033 100644
+--- a/net/sched/sch_hfsc.c
++++ b/net/sched/sch_hfsc.c
+@@ -753,7 +753,7 @@ update_vf(struct hfsc_class *cl, unsigned int len, u64 cur_time)
+ 	u64 f; /* , myf_bound, delta; */
+ 	int go_passive = 0;
  
-+/*
-+ * Bulk-move all handles from @src into @dst without allocating new pages.
-+ * If @dst has a partial tail page, fill it handle-by-handle from @src first
-+ * to preserve the invariant that only the tail page is partial, then splice
-+ * the remaining @src pages onto @dst. On return @src is empty.
-+ *
-+ * Caller must hold the lock protecting both queues.
-+ */
-+static void splice_frmr_queue_locked(struct frmr_queue *dst,
-+				     struct frmr_queue *src)
-+{
-+	u32 free_in_tail = dst->ci % NUM_HANDLES_PER_PAGE;
-+	u32 handle;
-+
-+	if (free_in_tail) {
-+		free_in_tail = NUM_HANDLES_PER_PAGE - free_in_tail;
-+		while (free_in_tail && src->ci) {
-+			handle = pop_handle_from_queue_locked(src);
-+			push_handle_to_queue_locked(dst, handle);
-+			free_in_tail--;
-+		}
-+	}
-+
-+	if (src->ci > 0) {
-+		list_splice_tail_init(&src->pages_list, &dst->pages_list);
-+		dst->num_pages += src->num_pages;
-+		dst->ci += src->ci;
-+		src->num_pages = 0;
-+		src->ci = 0;
-+	}
-+}
-+
- static bool age_pinned_pool(struct ib_device *device, struct ib_frmr_pool *pool)
- {
- 	struct ib_frmr_pools *pools = device->frmr_pools;
- 	u32 total, to_destroy, destroyed = 0;
- 	bool has_work = false;
- 	u32 *handles;
--	u32 handle;
+-	if (cl->qdisc->q.qlen == 0 && cl->cl_flags & HFSC_FSC)
++	if (cl->qdisc->q.qlen == 0 && cl->cl_flags & HFSC_FSC && cl->cl_nactive)
+ 		go_passive = 1;
  
- 	spin_lock(&pool->lock);
- 	total = pool->queue.ci + pool->inactive_queue.ci + pool->in_use;
-@@ -112,7 +143,7 @@ static bool age_pinned_pool(struct ib_device *device, struct ib_frmr_pool *pool)
- 		return false;
- 	}
- 
--	to_destroy = total - pool->pinned_handles;
-+	to_destroy = min(total - pool->pinned_handles, pool->inactive_queue.ci);
- 
- 	handles = kcalloc(to_destroy, sizeof(*handles), GFP_ATOMIC);
- 	if (!handles) {
-@@ -121,15 +152,13 @@ static bool age_pinned_pool(struct ib_device *device, struct ib_frmr_pool *pool)
- 	}
- 
- 	/* Destroy all excess handles in the inactive queue */
--	while (pool->inactive_queue.ci && destroyed < to_destroy) {
--		handles[destroyed++] = pop_handle_from_queue_locked(
-+	for (; destroyed < to_destroy; destroyed++)
-+		handles[destroyed] = pop_handle_from_queue_locked(
- 			&pool->inactive_queue);
--	}
- 
- 	/* Move all handles from regular queue to inactive queue */
--	while (pool->queue.ci) {
--		handle = pop_handle_from_queue_locked(&pool->queue);
--		push_handle_to_queue_locked(&pool->inactive_queue, handle);
-+	if (pool->queue.ci > 0) {
-+		splice_frmr_queue_locked(&pool->inactive_queue, &pool->queue);
- 		has_work = true;
- 	}
- 
-@@ -158,13 +187,7 @@ static void pool_aging_work(struct work_struct *work)
- 	/* Move all pages from regular queue to inactive queue */
- 	spin_lock(&pool->lock);
- 	if (pool->queue.ci > 0) {
--		list_splice_tail_init(&pool->queue.pages_list,
--				      &pool->inactive_queue.pages_list);
--		pool->inactive_queue.num_pages = pool->queue.num_pages;
--		pool->inactive_queue.ci = pool->queue.ci;
--
--		pool->queue.num_pages = 0;
--		pool->queue.ci = 0;
-+		splice_frmr_queue_locked(&pool->inactive_queue, &pool->queue);
- 		has_work = true;
- 	}
- 	spin_unlock(&pool->lock);
+ 	for (; cl->cl_parent != NULL; cl = cl->cl_parent) {
 -- 
 2.53.0
 
