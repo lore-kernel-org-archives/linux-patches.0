@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FE3433BCA;
-	Tue, 21 Jul 2026 21:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04A8433BCA;
+	Tue, 21 Jul 2026 21:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668101; cv=none; b=WjYo6Vf1wW0AJTwNvnMyxjMwMVyRogeQW1xLenfc7F+IWHmVx4ZJnOI09KB/pbThRGaR+lGUgMj7zfVgx3xhLx57g8p3g7luPMMic64pSPcfyr7GdsO0p+owLcpTu3BTtGe3LJAQulx1g42mMmqhnb6bLmoCvLxgNoLRscnwznk=
+	t=1784668104; cv=none; b=hx4CAlqACyScboy0hwS9P7mXbdI+v407G8eBYchfkp1jskHl9ksBu/sD9eQ/l3qbDGRb8sq1bCpL5w/GQAJKQuDq32lvQpZRiZBtBBIZyU95Vc9CFNblHY06QHezRaD6UUjQEZy3JWO3m5WffoII2fuDg/0cNPlHz6nPBesml98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668101; c=relaxed/simple;
-	bh=YmY2gE+SFBn/OKEdvL1x3uy56DEaNvWtZ6WvhPYrgms=;
+	s=arc-20240116; t=1784668104; c=relaxed/simple;
+	bh=BponuXSAg2xx83IsE4EvoEKR+1DW02MsdUN7dljnIg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LrDBN7buAKkIsmjFSRcMhZI6UxsW7A7DbYfp/OicaC9HSl0DYzkdL0t6lPeWxfbPxZBT7Ej0isp53lqosHcbnX0FVb5w8BXCAx1kvhxluqDIjFhYroBdzxTIS+5ovKZhEIN+mlUREcJZW75IthBnD5yLZt753NSWu1BtbL6bwCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLJi4pC9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=urn5X2gqX9mnff3XlCNcpNsI7uvCBY6an9Z532ULjg56PkUOq+TFfOMJcNMcMnPY/dYQb1td41s5YxSas1s73m1Eekx5pKMoJFELPmJvVC5TpMZiyXD6hLGuZqmLYhXcvcgJdIhB5t3QIiGvcFge1tL3Kc38BWr2OPCLp4SYx/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HnYJRAGI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLJi4pC9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7AAE1F000E9;
-	Tue, 21 Jul 2026 21:08:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HnYJRAGI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6139A1F000E9;
+	Tue, 21 Jul 2026 21:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668100;
-	bh=Xo0UqODDeblbTmVsKYUHZn610zYUgFcBQ2XNwOLfN/M=;
+	s=korg; t=1784668102;
+	bh=51121VZTKwuB/TAhbQN6MiQeNSVM1/rKC7NP4B8q0Jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VLJi4pC9qyuYapyLmUadqQoGYqyy/v4243aTTlS9e7M0glXyw1gjysHeP78OZMDt6
-	 3na1692qq/l7kOnJ2Dsf7B9SPy/4bTuSTrDjQJoUdid/ZZvvU9kewGHuWUKyN4Elrv
-	 E5mDbXoycg78QqN4lTsFwOvkGsR9UjcjATfMAK28=
+	b=HnYJRAGI0Jqlg683mb++t6TACb4/Y7Bcw4QBWbnuBsP7N8G+UAuNJcSZpxGS3yp4f
+	 28U1X5qqLqNbvmTxDfyU9nj+8xQwpNHCGyoNkwM4irpvqSEAffy/HtPW2eWKqasQmM
+	 ctE2H8E/DJKZp04obfnxGZPZlUKFFVTBcSGWRaHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	carnil@debian.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: [PATCH 6.1 0046/1067] eventpoll: fix ep_remove struct eventpoll / struct file UAF
-Date: Tue, 21 Jul 2026 17:10:47 +0200
-Message-ID: <20260721152425.590221009@linuxfoundation.org>
+	Jeremy Linton <jeremy.linton@arm.com>,
+	Jarred White <jarredwhite@linux.microsoft.com>,
+	Easwar Hariharan <easwar.hariharan@linux.microsoft.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.1 0047/1067] ACPI: CPPC: Suppress UBSAN warning caused by field misuse
+Date: Tue, 21 Jul 2026 17:10:48 +0200
+Message-ID: <20260721152425.613824985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,96 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Jeremy Linton <jeremy.linton@arm.com>
 
-[ Upstream commit a6dc643c69311677c574a0f17a3f4d66a5f3744b ]
+commit 1b1acf2dada0cc3931bb2cb9ff8832edfbee46a1 upstream.
 
-ep_remove() (via ep_remove_file()) cleared file->f_ep under
-file->f_lock but then kept using @file inside the critical section
-(is_file_epoll(), hlist_del_rcu() through the head, spin_unlock).
-A concurrent __fput() taking the eventpoll_release() fastpath in
-that window observed the transient NULL, skipped
-eventpoll_release_file() and ran to f_op->release / file_free().
+The definition of reg->access_width changes depending on the
+reg->space_id type.  Type ACPI_ADR_SPACE_PLATFORM_COMM uses
+access_width to indicate the PCC region, which can result in a UBSAN
+if the value is greater than 4.
 
-For the epoll-watches-epoll case, f_op->release is
-ep_eventpoll_release() -> ep_clear_and_put() -> ep_free(), which
-kfree()s the watched struct eventpoll. Its embedded ->refs
-hlist_head is exactly where epi->fllink.pprev points, so the
-subsequent hlist_del_rcu()'s "*pprev = next" scribbles into freed
-kmalloc-192 memory.
+For example:
 
-In addition, struct file is SLAB_TYPESAFE_BY_RCU, so the slot
-backing @file could be recycled by alloc_empty_file() --
-reinitializing f_lock and f_ep -- while ep_remove() is still
-nominally inside that lock. The upshot is an attacker-controllable
-kmem_cache_free() against the wrong slab cache.
+ UBSAN: shift-out-of-bounds in drivers/acpi/cppc_acpi.c:1090:9
+ shift exponent 32 is too large for 32-bit type 'int'
+ CPU: 61 UID: 0 PID: 1220 Comm: (udev-worker) Not tainted 7.0.10-201.fc44.aarch64 #1 PREEMPT(lazy)
+ Hardware name: To be filled by O.E.M.
+ Call trace:
+  ...(trimming)
+  ubsan_epilogue+0x10/0x48
+  __ubsan_handle_shift_out_of_bounds+0xdc/0x1e0
+  cpc_write+0x4d0/0x670
+  cppc_set_perf+0x18c/0x490
+  cppc_cpufreq_cpu_init+0x1c8/0x380 [cppc_cpufreq]
+  ... (trimming)
 
-Pin @file via epi_fget() at the top of ep_remove() and gate the
-critical section on the pin succeeding. With the pin held @file
-cannot reach refcount zero, which holds __fput() off and
-transitively keeps the watched struct eventpoll alive across the
-hlist_del_rcu() and the f_lock use, closing both UAFs.
+Lets fix this by validating the region type, as well as whether
+access_width has a value. Then since we are returning bit_width
+directly for ACPI_ADR_SPACE_PLATFORM_COMM, drop the code correcting
+the size.
 
-If the pin fails @file has already reached refcount zero and its
-__fput() is in flight. Because we bailed before clearing f_ep,
-that path takes the eventpoll_release() slow path into
-eventpoll_release_file() and blocks on ep->mtx until the waiter
-side's ep_clear_and_put() drops it. The bailed epi's share of
-ep->refcount stays intact, so the trailing ep_refcount_dec_and_test()
-in ep_clear_and_put() cannot free the eventpoll out from under
-eventpoll_release_file(); the orphaned epi is then cleaned up
-there.
-
-A successful pin also proves we are not racing
-eventpoll_release_file() on this epi, so drop the now-redundant
-re-check of epi->dying under f_lock. The cheap lockless
-READ_ONCE(epi->dying) fast-path bailout stays.
-
-Fixes: 58c9b016e128 ("epoll: use refcount to reduce ep_mutex contention")
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://patch.msgid.link/20260423-work-epoll-uaf-v1-6-2470f9eec0f5@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-(cherry picked from commit a6dc643c69311677c574a0f17a3f4d66a5f3744b)
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Fixes: 2f4a4d63a193 ("ACPI: CPPC: Use access_width over bit_width for system memory accesses")
+Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
+Tested-by: Jarred White <jarredwhite@linux.microsoft.com>
+Reviewed-by: Jarred White <jarredwhite@linux.microsoft.com>
+Reviewed-by: Easwar Hariharan <easwar.hariharan@linux.microsoft.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260601235808.1113137-1-jeremy.linton@arm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/eventpoll.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/acpi/cppc_acpi.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -801,22 +801,26 @@ static bool ep_remove_epi(struct eventpo
-  */
- static void ep_remove(struct eventpoll *ep, struct epitem *epi)
- {
--	struct file *file = epi->ffd.file;
-+	struct file *file __free(fput) = NULL;
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -166,8 +166,13 @@ show_cppc_data(cppc_get_perf_caps, cppc_
+ show_cppc_data(cppc_get_perf_ctrs, cppc_perf_fb_ctrs, reference_perf);
+ show_cppc_data(cppc_get_perf_ctrs, cppc_perf_fb_ctrs, wraparound_time);
  
- 	lockdep_assert_irqs_enabled();
- 	lockdep_assert_held(&ep->mtx);
+-/* Check for valid access_width, otherwise, fallback to using bit_width */
+-#define GET_BIT_WIDTH(reg) ((reg)->access_width ? (8 << ((reg)->access_width - 1)) : (reg)->bit_width)
++/*
++ * PCC reuses the access_width field as the subspace id, so only decode access
++ * size for non-PCC registers. Otherwise, use the bit_width.
++ */
++#define GET_BIT_WIDTH(reg) (((reg)->access_width &&				\
++			     (reg)->space_id != ACPI_ADR_SPACE_PLATFORM_COMM) ? \
++			    (8 << ((reg)->access_width - 1)) : (reg)->bit_width)
  
- 	ep_unregister_pollwait(ep, epi);
- 
--	/* sync with eventpoll_release_file() */
-+	/* cheap sync with eventpoll_release_file() */
- 	if (unlikely(READ_ONCE(epi->dying)))
- 		return;
- 
--	spin_lock(&file->f_lock);
--	if (epi->dying) {
--		spin_unlock(&file->f_lock);
-+	/*
-+	 * If we manage to grab a reference it means we're not in
-+	 * eventpoll_release_file() and aren't going to be.
-+	 */
-+	file = epi_fget(epi);
-+	if (!file)
- 		return;
--	}
-+
-+	spin_lock(&file->f_lock);
- 	ep_remove_file(ep, epi, file);
- 
- 	if (ep_remove_epi(ep, epi))
+ /* Shift and apply the mask for CPC reads/writes */
+ #define MASK_VAL_READ(reg, val) (((val) >> (reg)->bit_offset) &				\
+@@ -1027,7 +1032,6 @@ static int cpc_read(int cpu, struct cpc_
+ 		 * by the bit width field; the access size is used to indicate
+ 		 * the PCC subspace id.
+ 		 */
+-		size = reg->bit_width;
+ 		vaddr = GET_PCC_VADDR(reg->address, pcc_ss_id);
+ 	}
+ 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
+@@ -1099,7 +1103,6 @@ static int cpc_write(int cpu, struct cpc
+ 		 * by the bit width field; the access size is used to indicate
+ 		 * the PCC subspace id.
+ 		 */
+-		size = reg->bit_width;
+ 		vaddr = GET_PCC_VADDR(reg->address, pcc_ss_id);
+ 	}
+ 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
 
 
