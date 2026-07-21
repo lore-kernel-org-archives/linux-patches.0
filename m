@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C499846AA6B;
-	Tue, 21 Jul 2026 15:35:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC7D46AA73;
+	Tue, 21 Jul 2026 15:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648152; cv=none; b=Eg2PrRuYkzkzCuUisuJkl+Eqj2t0UBUDdHHjGKmofeXwS0IfMD+JbX1qXxmfUvPSCmQ8uihaQ218DMdQlBKOzwklz8QJLH3MOjZlyeYPaSvdPsyp0cNf53DzIas2m9z60kEMmL2X3zN8K4d7kzbXH/pw+GF9JbFmm0HEYIO0yoM=
+	t=1784648154; cv=none; b=o6te5wm2AZjECG8dkkAn3e/vVW09Ek7fxZvhqZLsI3caiH4kGqhG7YXYewUdDt4m6TAm0jijasCn+4i70nn0JrT+PC7Y0tY3Ly/1EvL8/BeFi6injAfz31O1fJUHRjBmOovxrqcWGB+5pB8iU1ZG2MsEc+D1s/v+sCV6MOycKO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648152; c=relaxed/simple;
-	bh=938SylO5c/ny4F81cDHBQUPVJ7yMQgO/H9UaszywY78=;
+	s=arc-20240116; t=1784648154; c=relaxed/simple;
+	bh=y322GALiyhVBJAMaw4/PONzL1sVUJ4KfxvottvQvq8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZwGteUP8p1A23/Fjq7XtxIZ7erAVL0l79jBKQWiCFkJict4Nl9udxYDCTgT7c2a9dcSdHtourMU3i5cphNUsYxy4y5pptvTSzt0gvIOg0sdEykvsRnyZBS8luo3eUl7keKBT9a+iZruPEKlkLljQvW779g280AjBcbs3Lj1V7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryOFF1ln; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nHSIa2Npu1rmQdLS+KsiJVH5CwHHyrZkxUrj4jhu/Y/BnMOvEaCibJqAATqm6u8Kn7C6iQNq/FUj5DYi4wi7VW1alK1+T2XlRj2ETeCNPRl3tyzOhIYESDufaiF+z53yjuQGt6FNgkoWb8A6fu3VTOS4lF7m2eJpwCO1NebeyaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGtDISU1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryOFF1ln"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349BA1F000E9;
-	Tue, 21 Jul 2026 15:35:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGtDISU1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF321F000E9;
+	Tue, 21 Jul 2026 15:35:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648150;
-	bh=RAMCCW+H3AS1/kK1DuOBZxnnFi6P07ejMOSqi4NABYY=;
+	s=korg; t=1784648153;
+	bh=D4DCWwvIjtNFfZTrSauWD5HcHRb5nY1CncOeYBMOV7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ryOFF1lnEtUWJW8sGkep2V5vCMnU/wRfD38rWfYboYHeTHX4AoFXR1LOQz3LB8W98
-	 TrHYcP/VDMn+pxd836veYu09gIm4CvX6yKPjzDwvc3BChimMUut5IxCbbAGRsVa9f6
-	 eSwp9GrBCVfW6R6YUu1ygwDc0muHVHaZEadbiLBI=
+	b=MGtDISU1YUNgPxDjM935+iJLf5xgHWxMXM/PW8k0dSEnC6xsCyGpnb/lHxqEHYSrd
+	 uYGGTWRJiZu1L0fAgW+V+36UoohUvgjIqQrnymSLYmJH8JKSF0ePNMbtmB9bTRvLYs
+	 MonLVG9uYs+bI3xok44sIaDOhYfktSufqF3mMirA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+217eb327242d08197efb@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Louis Kotze <loukot@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0092/2077] hfsplus: Add a sanity check for btree node size
-Date: Tue, 21 Jul 2026 16:56:05 +0200
-Message-ID: <20260721152554.862821462@linuxfoundation.org>
+Subject: [PATCH 7.1 0093/2077] wifi: cfg80211: fix grammar in MLO group key error message
+Date: Tue, 21 Jul 2026 16:56:06 +0200
+Message-ID: <20260721152554.885669453@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,73 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Louis Kotze <loukot@gmail.com>
 
-[ Upstream commit 3f95e2661574ff13f099dd13456751933c280628 ]
+[ Upstream commit 9dcc1af3bbf5441f71a1e51b8d81bdf38a249607 ]
 
-Syzbot reported an uninit-value bug in [1] with a corrupted HFS+ image,
-during the file system mounting process, specifically while loading the
-catalog, a corrupted node_size value of 1 caused the rec_off argument
-passed to hfs_bnode_read_u16() (within hfs_bnode_find()) to be excessively
-large. Consequently, the function failed to return a valid value to
-initialize the off variable, triggering the bug [1].
+The error message emitted by nl80211_validate_key_link_id() when a group
+key install on an MLO wdev is missing the link ID reads "link ID must
+for MLO group key", which is missing the words "be set". This makes the
+error harder to grep and parse in userspace logs, and is reported
+verbatim by wpa_supplicant via its nl80211 extack relay, e.g.:
 
-Every node starts from BTree node descriptor: struct hfs_bnode_desc.
-So, the size of node cannot be lesser than that. However, technical
-specification declares that: "The node size (which is expressed in bytes)
-must be power of two, from 512 through 32,768, inclusive." Add a check
-for btree node size base on technical specification.
+  wpa_supplicant: nl80211: kernel reports: link ID must for MLO group key
 
-[1]
-BUG: KMSAN: uninit-value in hfsplus_bnode_find+0x141c/0x1600 fs/hfsplus/bnode.c:584
- hfsplus_bnode_find+0x141c/0x1600 fs/hfsplus/bnode.c:584
- hfsplus_btree_open+0x169a/0x1e40 fs/hfsplus/btree.c:382
- hfsplus_fill_super+0x111f/0x2770 fs/hfsplus/super.c:553
- get_tree_bdev_flags+0x6e6/0x920 fs/super.c:1694
- get_tree_bdev+0x38/0x50 fs/super.c:1717
- hfsplus_get_tree+0x35/0x40 fs/hfsplus/super.c:709
- vfs_get_tree+0xb3/0x5d0 fs/super.c:1754
- fc_mount fs/namespace.c:1193 [inline]
+The sibling error strings in the same helper already use grammatical
+phrasing ("link ID not allowed for pairwise key", "invalid link ID for
+MLO group key", "link ID not allowed for non-MLO group key"). Fix this
+one to match.
 
-Fixes: 8ad2c6a36ac4 ("hfsplus: validate b-tree node 0 bitmap at mount time")
-Reported-by: syzbot+217eb327242d08197efb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=217eb327242d08197efb
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/tencent_5ED373437A697F83A4A446B771577626CD05@qq.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+No functional change.
+
+Fixes: e7a7b84e3317 ("wifi: cfg80211: Add link_id parameter to various key operations for MLO")
+Signed-off-by: Louis Kotze <loukot@gmail.com>
+Link: https://patch.msgid.link/20260414122728.92234-1-loukot@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/btree.c         | 2 ++
- include/linux/hfs_common.h | 1 +
- 2 files changed, 3 insertions(+)
+ net/wireless/nl80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/hfsplus/btree.c b/fs/hfsplus/btree.c
-index 761c74ccd6531e..394542a47e6009 100644
---- a/fs/hfsplus/btree.c
-+++ b/fs/hfsplus/btree.c
-@@ -365,6 +365,8 @@ struct hfs_btree *hfs_btree_open(struct super_block *sb, u32 id)
- 	}
- 
- 	size = tree->node_size;
-+	if (size < HFSPLUS_NODE_MINSZ || size > HFSPLUS_NODE_MXSZ)
-+		goto fail_page;
- 	if (!is_power_of_2(size))
- 		goto fail_page;
- 	if (!tree->node_count)
-diff --git a/include/linux/hfs_common.h b/include/linux/hfs_common.h
-index 07dfc39630ab91..45fb4c9ff9f5ee 100644
---- a/include/linux/hfs_common.h
-+++ b/include/linux/hfs_common.h
-@@ -513,6 +513,7 @@ struct hfs_btree_header_rec {
- /* HFS+ BTree misc info */
- #define HFSPLUS_TREE_HEAD			0
- #define HFSPLUS_NODE_MXSZ			32768
-+#define HFSPLUS_NODE_MINSZ			512
- #define HFSPLUS_ATTR_TREE_NODE_SIZE		8192
- #define HFSPLUS_BTREE_HDR_NODE_RECS_COUNT	3
- #define HFSPLUS_BTREE_HDR_MAP_REC_INDEX		2	/* Map (bitmap) record in Header node */
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 76c537a6e8b52d..21e43e08b5d795 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -5112,7 +5112,7 @@ static int nl80211_validate_key_link_id(struct genl_info *info,
+ 	if (wdev->valid_links) {
+ 		if (link_id == -1) {
+ 			GENL_SET_ERR_MSG(info,
+-					 "link ID must for MLO group key");
++					 "link ID must be set for MLO group key");
+ 			return -EINVAL;
+ 		}
+ 		if (!(wdev->valid_links & BIT(link_id))) {
 -- 
 2.53.0
 
