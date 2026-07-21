@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C583F2101;
-	Tue, 21 Jul 2026 18:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F8E46EC9B;
+	Tue, 21 Jul 2026 18:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658847; cv=none; b=Q+uDmOdYMXbbsjz4jEZOPMXQrnIZW1WzwdX6i2GQuad5ufNLw42AvywI7lu9hAZCKaNTYVYQgMXB2mMuIu9b+DpJD4DgVxSNqk1GI6WXUFB0S2ZGKAFFkQwOlB80WAsRTJnL0GPcNLdCSY65mCz2//KvhJEsp90DVtoGh8uSBoo=
+	t=1784658850; cv=none; b=aZdVKUieZG/BLpCsCKBSPGT2xvcA4ek0eBFRbcjEI7D09XS7h1kx1k+NEnsMUbHApisIv4uleQV0i4ihYUqh6iBJ58CFFDbiS392ZOnO3smwmPNfCtDDELflVZRlYSoh9RonWziYJZvlxxQZBW1DlqW0GrnxbIjQgRmyDXwb3fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658847; c=relaxed/simple;
-	bh=cIbBMzfjb593YKa7o6aefAEIMz/lnet0bZb7Ev3v5ms=;
+	s=arc-20240116; t=1784658850; c=relaxed/simple;
+	bh=ufnPjS1ax5XRIVjJQvwcTVT3yNtTe4qz9HAnq2z6xWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lWoRUYZXFMc82mio8M5ONfwD4LLzgMpWhDqrcUaxN7dBzubn/VV1moNUWZrLyrdt/+gyCDjIJx7Pu5wOGKOaCozR1tXrkV9USiP55GwoUtpjfjKNzMHekHHZV6bdpkRqmSTK7NhN10PulAeT7ZoTazaiIYQ2+HRM+0kxNUPmSBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZkdGkxC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jvzl4SyuLEbJLew10nVozbNO1Mug7AY7S6I7ImdBLumrtNlMfCa+fEI9D9nSDZdhl15CcEdr3Z6FIkfVwHlfOe0JHGCNgpvsWL1xh60TUY2GPv9HEeiTk4llRq5lIVYQ+AiXSXUJoBhkRsCo1qYsO7/WMFH6nEppoLHsY2LePP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqscLfIV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZkdGkxC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C581F000E9;
-	Tue, 21 Jul 2026 18:34:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqscLfIV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CDB71F000E9;
+	Tue, 21 Jul 2026 18:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658846;
-	bh=2uScvcWDv3T4IcDgoi/9h2gvrhU+h5M4dtD2eJQd3+0=;
+	s=korg; t=1784658848;
+	bh=y4BflOfPHi/coKt87IzkmysZdK4IZhyhqnPTeBNbqis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XZkdGkxCnpdhJ8D9Xg9pyrD1KCmuTFzg7MJmPmYc2jgsBXqL2Rxkvt80vL/gbmp2v
-	 Y2VUMPu8N+T8hg04PP0ZxeZZ06w4qM/+pgIrTRIBYSS4c119B4YISwkjiosdmDY0aF
-	 iL/InkWxcL3htHqq5v+/uUF6z9O2kzckuySa77Q0=
+	b=wqscLfIV/3gGwEq6sl14vfYL/YxQ4Oug6RTGxwAsr+ApXIKImjWTA4Pt6olflRynJ
+	 Qn92BP2tFnX4Ejq1PBqoRKq1sLiqIXDNEEwYHWPfmCEUVfI/dDcY3diNfA2HRlZ5LY
+	 gv/54lxQpQYERmI+rmzkVI3sgomChKq9V0hyja6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.18 1296/1611] platform/x86: dell-laptop: fix missing cleanups in init error path
-Date: Tue, 21 Jul 2026 17:23:32 +0200
-Message-ID: <20260721152544.596203106@linuxfoundation.org>
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.18 1256/1611] powerpc/dt_cpu_ftrs: Set CPU_FTR_P11_PVR for Power11 and later processors
+Date: Tue, 21 Jul 2026 17:22:52 +0200
+Message-ID: <20260721152543.699933044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -44,56 +46,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-commit 6e9cab2247e5b243ae2d907ce7c948a8a9c8d61a upstream.
+commit e4de1b9cb3b5c981e4fe9bca253a7fb9161f5acd upstream.
 
-dell_init() initializes several resources after dell_setup_rfkill(),
-including the optional touchpad LED, keyboard backlight LED, battery
-hook, debugfs directory and dell-laptop notifier.
+When using device tree CPU features (dt-cpu-ftrs), the kernel bypasses
+the traditional cputable-based CPU identification and instead derives
+CPU features from the device tree's "ibm,powerpc-cpu-features" node
+provided by firmware.
 
-If a later LED or backlight registration fails, the error path only
-tears down the battery hook and rfkill resources. This leaves the
-notifier, debugfs directory, keyboard backlight LED and optional
-touchpad LED registered after dell_init() returns an error.
+However, CPU_FTR_P11_PVR is a kernel-internal feature flag used to
+identify Power11 and later processors, and is not represented in the
+device tree's ISA feature set. While ISA v3.1 support (indicated by
+CPU_FTR_ARCH_31) is present on both Power10 and Power11, the
+CPU_FTR_P11_PVR flag is specifically needed by code that must
+distinguish between Power10 and Power11 processors.
 
-Add the missing cleanup calls before tearing down rfkill.
+Without this flag set, code that checks for Power11 using
+cpu_has_feature(CPU_FTR_P11_PVR) will incorrectly return false on
+Power11+ systems using dt-cpu-ftrs, leading to incorrect behavior.
 
-Fixes: 9c656b07997f ("platform/x86: dell-*: Call new led hw_changed API on kbd brightness change")
-Fixes: 037accfa14b2 ("dell-laptop: Add debugfs support")
-Fixes: 2d8b90be4f1c ("dell-laptop: support Synaptics/Alps touchpad led")
-Fixes: 6cff8d60aa0a ("platform: x86: dell-laptop: Add support for keyboard backlight")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Link: https://patch.msgid.link/20260609081419.1995169-1-lihaoxiang@isrc.iscas.ac.cn
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+This issue manifests specifically in powernv environments (bare-metal
+or QEMU TCG with powernv machine type), where skiboot/OPAL firmware
+provides the "ibm,powerpc-cpu-features" node, causing the kernel to
+use dt-cpu-ftrs. The issue does not affect pseries guests, where SLOF
+firmware does not provide this node, causing the kernel to fall back
+to the traditional cputable path (identify_cpu) which correctly sets
+CPU_FTR_P11_PVR during PVR-based CPU identification.
+
+In powernv TCG guests, the missing flag causes KVM code to trigger
+warnings when attempting to create KVM guests, as cpu_features shows
+0x000c00eb8f4fb187 (missing bit 53) instead of the correct
+0x002c00eb8f4fb187 (with bit 53 set).
+
+Fix this by setting CPU_FTR_P11_PVR for all processors with
+PVR >= PVR_POWER11 when ISA v3.1 support is detected in
+cpufeatures_setup_start(). This approach ensures forward
+compatibility with future processor generations.
+
+Fixes: 96e266e3bcd6 ("KVM: PPC: Book3S HV: Add Power11 capability support for Nested PAPR guests")
+Cc: stable@vger.kernel.org # v6.13+
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260614173437.26352-1-amachhiw@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/dell/dell-laptop.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/powerpc/kernel/dt_cpu_ftrs.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/platform/x86/dell/dell-laptop.c
-+++ b/drivers/platform/x86/dell/dell-laptop.c
-@@ -2551,7 +2551,12 @@ fail_backlight:
- 	if (mute_led_registered)
- 		led_classdev_unregister(&mute_led_cdev);
- fail_led:
-+	dell_laptop_unregister_notifier(&dell_laptop_notifier);
-+	debugfs_remove_recursive(dell_laptop_dir);
- 	dell_battery_exit();
-+	kbd_led_exit();
-+	if (quirks && quirks->touchpad_led)
-+		touchpad_led_exit();
- 	dell_cleanup_rfkill();
- fail_rfkill:
- 	platform_device_del(platform_device);
+--- a/arch/powerpc/kernel/dt_cpu_ftrs.c
++++ b/arch/powerpc/kernel/dt_cpu_ftrs.c
+@@ -704,6 +704,15 @@ static void __init cpufeatures_setup_sta
+ 	if (isa >= ISA_V3_1) {
+ 		cur_cpu_spec->cpu_features |= CPU_FTR_ARCH_31;
+ 		cur_cpu_spec->cpu_user_features2 |= PPC_FEATURE2_ARCH_3_1;
++
++		/*
++		 * CPU_FTR_P11_PVR is a kernel-internal flag to identify
++		 * Power11 and later processors. While ISA v3.1 is supported
++		 * by Power10+, this flag specifically indicates Power11+
++		 * for code that needs to distinguish between P10 and P11.
++		 */
++		if (PVR_VER(mfspr(SPRN_PVR)) >= PVR_POWER11)
++			cur_cpu_spec->cpu_features |= CPU_FTR_P11_PVR;
+ 	}
+ }
+ 
 
 
