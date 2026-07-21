@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B4B37703B;
-	Tue, 21 Jul 2026 22:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B340A347BC6;
+	Tue, 21 Jul 2026 22:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673025; cv=none; b=YIyCZoHLvttLg77cVHkrCz9E7BEoOPUKLGVNjXUzD9n3kLvoEYoa5fHxJlxkiuEiwfOsjTN5G/HjjGDKmh3AeoUTO4pCpodEzWAOUGRSPBBMdK5hdUJZPPTsXKSKskhjwb/RyOa7OwLNbXxWowecZCsc1okQ9DLa8lMgNQJpdjA=
+	t=1784673027; cv=none; b=MzaK6SNGdCouACR9Y9GPPKAswSfLm/ZSMSqGc/f1UoCVPe9eejcci02wtEK8ClSSPshlfYTbd2Za9/2zwQ0Oa30m0SR54zAppllWLowRWQQq6ClAhroZHE78MgQAHUEfANJczDt6wXBL5h1upiEYdAusA9qAFouoXKQ851HxM3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673025; c=relaxed/simple;
-	bh=lPpfuoAi1C/3CjzRdn80kFag6cUt/bdcuF/5TYR8sNA=;
+	s=arc-20240116; t=1784673027; c=relaxed/simple;
+	bh=W1f2gq342pmr5SsYrVR5nBOJiRtbpsDwHI+/dPhmg6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d6DXqJO1carn9AqnKIOisqVgpv73LkoV7Jr7EkRWuOBj4EKzvl5O4oGC+RYmLfVCY+e9D+nAuthfHXKI9v6nr+TK5r2PlRQhAkEi03s5qLNJpyNNXjUE148nCF1dIIe+8wl32B1YWcKPsyPcpJal3tPINP4H7I/sp0WjJ20YiJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEtZK8dM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=B1XmLNzmw8KQKYQ31ca9SqlBz4zb6Z8NlM+ftLFQw6q5aDjdQ6FSLw9r4tehEheC53zNW6kaJiCkgcPEzz9Sl8lNjpQTD3nu6LBBTpQV1xKvo0Yn8BxVJ2awyw6aIr+yAe6jtcxQ6lPFo1fi+IBdFcqqAea81vDLuT2Oi60Jahw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7Gn67TE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEtZK8dM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E3631F000E9;
-	Tue, 21 Jul 2026 22:30:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7Gn67TE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0691F000E9;
+	Tue, 21 Jul 2026 22:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673023;
-	bh=veH8Md48s6tCbg6gF4/J9h2HgkrGeeId7OI2X0OVigQ=;
+	s=korg; t=1784673026;
+	bh=ZXHt9DZTjeGTH9ezjJN6NZLgE9SoFhJqq/6V9qpXZ4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kEtZK8dMlp5KYUtJT0K+0zhZK/aT19pCnpYTiXvdV79dbsrV2BDAMPhW8OWwA+BrA
-	 06qcDrPNtdQfkCBpjiac9NbiP+5Ibu2iOTtrAjZnuaVU56FlmvYMF8cdlb5eJ+G0JA
-	 qfzSeSy1PS0yNljXZm5szXOi97CztTs1aDe2njRg=
+	b=g7Gn67TE4JV0eAhIDodI6zD+1W5qVcGYRY5y+8hdKAe1CHkJp09K9IR5YXS6NsxPd
+	 XK0WXjG8cy4d3J9uEqjWyHzJC4J6XwaWSNn8jJFkv/kEvUceKD4c7Xj0jdheoSc1L3
+	 jhVtjmLw9vitl4v3O+vnqzRdRkZlTZs/NfWsQN1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Andy Yan <andyshrk@163.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Tyler Baker <tyler.baker@oss.qualcomm.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Peter Chen <peter.chen@kernel.org>,
+	=?UTF-8?q?Micha=C5=82=20Nazarewicz?= <mina86@mina86.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 820/843] usb: typec: tcpm: Fix VDM type for Enter Mode commands
-Date: Tue, 21 Jul 2026 17:27:35 +0200
-Message-ID: <20260721152424.522163180@linuxfoundation.org>
+Subject: [PATCH 5.15 821/843] usb: gadget: f_fs: initialize reset_work at allocation time
+Date: Tue, 21 Jul 2026 17:27:36 +0200
+Message-ID: <20260721152424.545374296@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -46,42 +50,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Yan <andyshrk@163.com>
+From: Tyler Baker <tyler.baker@oss.qualcomm.com>
 
-[ Upstream commit 9cff680e47632b7723cb19f9c5e63669063c3417 ]
+[ Upstream commit 3137b243c93982fe3460335e12f9247739766e10 ]
 
-VDO() second parameter is VDM type (bit 15): 1 for SVDM, 0 for UVDM.
-Using 'vdo ? 2 : 1' corrupts SVID low bit when vdo is non-NULL
-(2 << 15 = BIT(16)). Enter Mode is always SVDM, hardcode to 1.
+ffs_fs_kill_sb() unconditionally calls cancel_work_sync() on
+ffs->reset_work when a functionfs instance is unmounted:
 
-Fixes: 8face9aa57c8 ("usb: typec: Add parameter for the VDO to typec_altmode_enter()")
+	ffs_data_reset(ffs);
+	cancel_work_sync(&ffs->reset_work);
+
+However ffs->reset_work is only ever initialized via INIT_WORK() in
+ffs_func_set_alt() and ffs_func_disable(), and only on the
+FFS_DEACTIVATED path. That state is reached solely by ffs_data_closed()
+when the instance is mounted with the "no_disconnect" option, so for the
+common case (no "no_disconnect", or mounted and unmounted without ever
+being deactivated) reset_work is never initialized.
+
+ffs_data_new() allocates the ffs_data with kzalloc_obj() and does not
+initialize reset_work, and ffs_data_reset()/ffs_data_clear() do not touch
+it either, so reset_work.func is left NULL. cancel_work_sync() on such a
+work then trips the WARN_ON(!work->func) guard in __flush_work():
+
+  WARNING: kernel/workqueue.c:4301 at __flush_work+0x330/0x360, CPU#3: umount
+  Call trace:
+   __flush_work
+   cancel_work_sync
+   ffs_fs_kill_sb [usb_f_fs]
+   deactivate_locked_super
+   deactivate_super
+   cleanup_mnt
+   __cleanup_mnt
+   task_work_run
+   exit_to_user_mode_loop
+   el0_svc
+
+On older kernels cancel_work_sync() on a zero-initialized work struct was
+a silent no-op, which hid the missing initialization.
+
+Initialize reset_work once in ffs_data_new() so it is always valid for
+the lifetime of the ffs_data, and drop the now-redundant INIT_WORK()
+calls from the two deactivation paths.
+
+Fixes: 18d6b32fca38 ("usb: gadget: f_fs: add "no_disconnect" mode")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Andy Yan <andyshrk@163.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260604105059.18750-1-andyshrk@163.com
+Signed-off-by: Tyler Baker <tyler.baker@oss.qualcomm.com>
+Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Tested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Reviewed-by: Peter Chen <peter.chen@kernel.org>
+Acked-by: Michał Nazarewicz <mina86@mina86.com>
+Link: https://patch.msgid.link/20260609193635.2284430-1-tyler.baker@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ dropped the ffs_func_disable hunk since 6.6 predates the disable-body split and routes disable through ffs_func_set_alt, so removing the single lazy INIT_WORK there covers both paths ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_fs.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -2223,7 +2223,7 @@ static int tcpm_altmode_enter(struct typ
- 	if (svdm_version < 0)
- 		return svdm_version;
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -255,6 +255,7 @@ static int ffs_acquire_dev(const char *d
+ static void ffs_release_dev(struct ffs_dev *ffs_dev);
+ static int ffs_ready(struct ffs_data *ffs);
+ static void ffs_closed(struct ffs_data *ffs);
++static void ffs_reset_work(struct work_struct *work);
  
--	header = VDO(altmode->svid, vdo ? 2 : 1, svdm_version, CMD_ENTER_MODE);
-+	header = VDO(altmode->svid, 1, svdm_version, CMD_ENTER_MODE);
- 	header |= VDO_OPOS(altmode->mode);
+ /* Misc helper functions ****************************************************/
  
- 	tcpm_queue_vdm_unlocked(port, header, vdo, vdo ? 1 : 0);
+@@ -1786,6 +1787,7 @@ static struct ffs_data *ffs_data_new(con
+ 	init_waitqueue_head(&ffs->ev.waitq);
+ 	init_waitqueue_head(&ffs->wait);
+ 	init_completion(&ffs->ep0req_completion);
++	INIT_WORK(&ffs->reset_work, ffs_reset_work);
+ 
+ 	/* XXX REVISIT need to update it in some places, or do we? */
+ 	ffs->ev.can_stall = 1;
+@@ -3342,7 +3344,6 @@ static int ffs_func_set_alt(struct usb_f
+ 
+ 	if (ffs->state == FFS_DEACTIVATED) {
+ 		ffs->state = FFS_CLOSING;
+-		INIT_WORK(&ffs->reset_work, ffs_reset_work);
+ 		schedule_work(&ffs->reset_work);
+ 		return -ENODEV;
+ 	}
 
 
