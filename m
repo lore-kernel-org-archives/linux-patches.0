@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465C735C68A;
-	Tue, 21 Jul 2026 21:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B0235C694;
+	Tue, 21 Jul 2026 21:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668151; cv=none; b=E5r+LuO7bdrOoAQC/tP2kDoGG4H2uV9ERY4MtlbgBbzFlnm++l4JhCW5Ffl2nm2ZifNX+Jsrf2i/nLohHoyCzk1+zEvMR8yH8u9QuFDB2OM0fhjK4kY/dN3BvX2UZerjhaOIdMuluLMX4RfVKjxcRSxQ19VW1HItY4Qptyhzs+A=
+	t=1784668153; cv=none; b=IWZb1ANbpZeqpidKdTyGczpoNEXAsVOFEm0lHno8+LijakdEqrG8VpHRZU3d+DGUpdNA5uEjVjysheQFt+olACaKauTnYEaMHbNuzvzEr3BveSKlxQ46yL3yH7TtQzA6iflc70UQes8+dAMWSeJe+LnbOAC30I6IERJLHxxA5Xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668151; c=relaxed/simple;
-	bh=KcNMlHkaUXCXDuvGPB5UyO/msyQO27QEgfO6x3dh20U=;
+	s=arc-20240116; t=1784668153; c=relaxed/simple;
+	bh=QYubaG/odMRGWdN8T3G7wPUCcE1TBku82KFxU34IJfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pR4RJu3ipTEL45XhBjDbHkjUqLORR86T8XHri3mpdoYg7WyCFKeszEYCZ3uaFzwlEs/9sWHbTRC2gasGkifk2j6UBZHQ0IhM2rkOT1SWdAiUBqu2Z1yI59LINwnNNEpzGOBu4oCZOR204rbMgwv91CkH8v+xf7h+8OPX8La+LD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lIfibka; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QX05Gd7snW2Ohv7bYiK85m+dSD1TLuGNevlCpzeWqUhHUOwIAuvgUr8SVgSdyP8YAWNrLzIJaqgS4hy2ntVzqJqUNLcWuk5TkPTJlNaflQeygIyLR+BUbV+fbjzssJr087ouJDoS8g61PsWj4ejRGztEb1N4IsVln1b7KwR3skI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0PHe4oqz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lIfibka"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67C61F000E9;
-	Tue, 21 Jul 2026 21:09:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0PHe4oqz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B16A1F00A3A;
+	Tue, 21 Jul 2026 21:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668150;
-	bh=wqkVCts54y/XRcRgQabAFC0Fg4ZOka2n25o6pxDRuiU=;
+	s=korg; t=1784668152;
+	bh=0y59o2lcnOjd+mHcfGhuicXk1jftQ+57ny5Jji4X1uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2lIfibkalMCLhJQhcAH6q75wWhljAOabfeHdCNNmqERs2PoRJTovPYqZ84iBESySR
-	 WndYNTFkV9Zc0kNW8XiiUw+vvhktR4i6oO8be2ejXr7DElhYauVVlVdWdX9xcaAzNs
-	 SIE0EAo8T7XsTn1VvQyOS3S/Ygvle+dz0QRKImB8=
+	b=0PHe4oqzLg8cLPVNBuNoSZVsfMW+HP5TdOVO7o3QuOK27cFj/ogTiVgEry8VevVUe
+	 V5R7Np0cmPqmQ0HS+O2d857JP8wSq6d8gpnE+A8q8K58rC+J2RgHb2nsKXAksc5pqo
+	 pvI+NYcYAA8OFbQits4rFx9x1pqnLglH0y0ITAgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.1 0068/1067] iio: light: tsl2591: return actual error from probe IRQ failure
-Date: Tue, 21 Jul 2026 17:11:09 +0200
-Message-ID: <20260721152426.092363480@linuxfoundation.org>
+Subject: [PATCH 6.1 0069/1067] iio: light: veml6030: fix channel type when pushing events
+Date: Tue, 21 Jul 2026 17:11:10 +0200
+Message-ID: <20260721152426.114678452@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,39 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit a00ffd15674bfaf8b906503c1600e3d8709af56c upstream.
+commit c52bb33b641ebaae3e209f97714cb1758206f7d9 upstream.
 
-When devm_request_threaded_irq() fails, probe logs the error and
-then returns -EINVAL, dropping the real error code and breaking the
-deferred-probe flow for -EPROBE_DEFER.
+The events are registered for IIO_LIGHT and not for IIO_INTENSITY.
+Use the correct channel type.
 
-Return ret directly; the IRQ subsystem already prints on failure.
+When at it, fix minor checkpatch code style warning (alignment).
 
-Fixes: 2335f0d7c790 ("iio: light: Added AMS tsl2591 driver implementation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Fixes: 7b779f573c48 ("iio: light: add driver for veml6030 ambient light sensor")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/tsl2591.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/iio/light/veml6030.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/iio/light/tsl2591.c
-+++ b/drivers/iio/light/tsl2591.c
-@@ -1139,10 +1139,8 @@ static int tsl2591_probe(struct i2c_clie
- 						NULL, tsl2591_event_handler,
- 						IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
- 						"tsl2591_irq", indio_dev);
--		if (ret) {
--			dev_err_probe(&client->dev, ret, "IRQ request error\n");
--			return -EINVAL;
--		}
-+		if (ret)
-+			return ret;
- 		indio_dev->info = &tsl2591_info;
- 	} else {
- 		indio_dev->info = &tsl2591_info_no_irq;
+--- a/drivers/iio/light/veml6030.c
++++ b/drivers/iio/light/veml6030.c
+@@ -710,9 +710,11 @@ static irqreturn_t veml6030_event_handle
+ 	else
+ 		evtdir = IIO_EV_DIR_FALLING;
+ 
+-	iio_push_event(indio_dev, IIO_UNMOD_EVENT_CODE(IIO_INTENSITY,
+-					0, IIO_EV_TYPE_THRESH, evtdir),
+-					iio_get_time_ns(indio_dev));
++	iio_push_event(indio_dev, IIO_UNMOD_EVENT_CODE(IIO_LIGHT,
++						       0,
++						       IIO_EV_TYPE_THRESH,
++						       evtdir),
++		       iio_get_time_ns(indio_dev));
+ 
+ 	return IRQ_HANDLED;
+ }
 
 
