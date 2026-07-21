@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFF347013D;
-	Tue, 21 Jul 2026 17:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A9746F48E;
+	Tue, 21 Jul 2026 17:59:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656775; cv=none; b=nCJeJAeISAQU/aO4C/Ph7MVD82K95BzvM1CRGOe0oJHSMNhKqkbNRkyLmol1YG2zzT71b/20/9Qa5qvPZipOWnilDHupnQualn7IBziKbTgeoxWaBxPOaSzXEpVlwMAdRdqU4m0sA1Y+pM8srZq/0u1b6Hbfr8GpNCxVk5erIYQ=
+	t=1784656778; cv=none; b=eBGD9tk8n0Z0f1oDDQ40bEt6kyB7TzdJFyQpGwITU5iTg47E49JF1F8M6J0IWt48LeOCAh3t3gBz+jTqF1aBN/VyaXhJqNBN1M9vet21mRvn9PVati3795rXJUEtCqNjyIhQq6XXPotoN2fjmddJXzkM2tXrxLA1iJ450m0Sx58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656775; c=relaxed/simple;
-	bh=0c5eqFecRM+31I43m1npbuuvTYWWB8SE5kNQnatQhNY=;
+	s=arc-20240116; t=1784656778; c=relaxed/simple;
+	bh=C92UV7XKTs4vmSBNeL+M8NSDl35bGH1IqKwSywGsG7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q9bM8Oav566CPNHRb8Q8T9IAjWdwrn3oPn/qVHnTpl/4IrpDUiPSVOMUZGd3yx8Y1toS+KbE3BPUbpSA5j/8N+IVC2lRyU2E74YS+yya92805HPBX8tR2vTAWwQ+C6CZgUu/VdgGKH/NktlozSVgLJTDQanjZBKgYWgfjGg0IsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6V6B8Lk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fw+FMBrsvfdrVY44KL2M6MJiJdpUFc16p3mN3km+2kaE8fUg3mAnbhYI/v0v6VyU/s4rhVyo0wd5NyojZv+T/iiubIWeaas1MSpC73gTOwqM5R60nppqKvQip574/iQMl/xvthfcu8qgGbZKKgayhA9RoJF7IfMNSbMjSRCfxeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVHYM4+r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6V6B8Lk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D6E1F000E9;
-	Tue, 21 Jul 2026 17:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVHYM4+r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F1231F000E9;
+	Tue, 21 Jul 2026 17:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656774;
-	bh=k5NYGvAO5kttfAyDe2W5Ivun08OxYZsIWQVazp0ANYI=;
+	s=korg; t=1784656776;
+	bh=gCEkzPeUtM3eL+VXPgNEcnXhC5M4l1sSQp8kpNJIpOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m6V6B8Lkv4/QotN615Gyzttt2opMVn8qo3qI0keBObwZtwr7zmpQB0sAIeakZP3sC
-	 1U2X3hH7P2yxnNEnemzVw02kQqgONocSwr0Csw7HaHBK/zHw0JtQRVknbB+Ll2naIr
-	 tim4wDh/lH3r0RxUBFNYGqqUSXCz66iZKQxcCUGg=
+	b=GVHYM4+rY4gBF4N5+2AHwEv6ZfeLIHhlZm0YFlSsjMXO/5D+HJ402lXCphUjvdgP+
+	 37GYOh3XgdmWhZ+4EmhC2IQ36YGHtUfOlUEOmPvI4oVy7Wv+kdSq1mhSKQqYafAAXa
+	 hgteRcRGBeR9gQlRFCR2V/i/QJ/eqvEwCJ/4/9is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Samuel Moelius <sam.moelius@trailofbits.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0470/1611] Bluetooth: hci: validate codec capability element length
-Date: Tue, 21 Jul 2026 17:09:46 +0200
-Message-ID: <20260721152525.893011216@linuxfoundation.org>
+Subject: [PATCH 6.18 0471/1611] Bluetooth: vhci: validate devcoredump state before side effects
+Date: Tue, 21 Jul 2026 17:09:47 +0200
+Message-ID: <20260721152525.916641631@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,45 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Samuel Moelius <sam.moelius@trailofbits.com>
 
-[ Upstream commit c38fbcdc407925c7088f7e5f11c1fff73d2d35a2 ]
+[ Upstream commit 88c2404a3c59c3126453919388dbd5ed98ed01bd ]
 
-Read Local Codec Capabilities returns a sequence of capability elements.
-Each element starts with a one-byte length followed by that many payload
-bytes.
+The VHCI force_devcoredump debugfs hook accepts a small test record from
+userspace. It validates the requested terminal state only after
+registering, initializing and appending a Bluetooth devcoredump.
 
-hci_read_codec_capabilities() checks that the skb contains the length
-byte, but then validates only caps->len against the remaining skb
-length.  A malformed controller response with one remaining byte and
-caps->len set to one passes that check even though the element needs two
-bytes.  The parser then records a two-byte capability and copies one
-byte beyond the advertised response payload into the codec list.
+As a result, an invalid state returns -EINVAL but still leaves queued
+devcoredump work behind. With a non-zero timeout field, the rejected
+write can still emit a devcoredump after the timeout expires.
 
-Validate the full element size, including the length byte, before adding
-it to the accumulated capability length.  This preserves all well-formed
-capability elements and drops only truncated controller responses.
+Reject unsupported states before allocating the skb or changing the HCI
+devcoredump state machine.
 
-Fixes: 8961987f3f5f ("Bluetooth: Enumerate local supported codec and cache details")
+Fixes: ab4e4380d4e1 ("Bluetooth: Add vhci devcoredump support")
 Assisted-by: Codex:gpt-5.5-cyber-preview
 Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_codec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/hci_vhci.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/bluetooth/hci_codec.c b/net/bluetooth/hci_codec.c
-index 3cc135bb1d30ca..5bc5003c387c66 100644
---- a/net/bluetooth/hci_codec.c
-+++ b/net/bluetooth/hci_codec.c
-@@ -100,7 +100,7 @@ static void hci_read_codec_capabilities(struct hci_dev *hdev, __u8 transport,
- 				caps = (void *)skb->data;
- 				if (skb->len < sizeof(*caps))
- 					goto error;
--				if (skb->len < caps->len)
-+				if (skb->len < sizeof(caps->len) + caps->len)
- 					goto error;
- 				len += sizeof(caps->len) + caps->len;
- 				skb_pull(skb,  sizeof(caps->len) + caps->len);
+diff --git a/drivers/bluetooth/hci_vhci.c b/drivers/bluetooth/hci_vhci.c
+index 2fef08254d78d9..22edae35580804 100644
+--- a/drivers/bluetooth/hci_vhci.c
++++ b/drivers/bluetooth/hci_vhci.c
+@@ -337,7 +337,17 @@ static ssize_t force_devcd_write(struct file *file, const char __user *user_buf,
+ 	if (copy_from_user(&dump_data, user_buf, count))
+ 		return -EFAULT;
+ 
++	switch (dump_data.state) {
++	case HCI_DEVCOREDUMP_DONE:
++	case HCI_DEVCOREDUMP_ABORT:
++	case HCI_DEVCOREDUMP_TIMEOUT:
++		break;
++	default:
++		return -EINVAL;
++	}
++
+ 	data_size = count - offsetof(struct devcoredump_test_data, data);
++
+ 	skb = alloc_skb(data_size, GFP_ATOMIC);
+ 	if (!skb)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
