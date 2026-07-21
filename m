@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DA1367B92;
-	Tue, 21 Jul 2026 21:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611493B9930;
+	Tue, 21 Jul 2026 21:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670898; cv=none; b=RZJlsdxFc5Sgkw8IV1paHJTIjhn1l9VEKNvP7kEtT638ZUPLg0YX3YhUpsBkh2bSa0Z0y7MTR7sBg2DI2QCFqf2IB5qMJvS//3oImRAqVePVAPcHdnhpE6sbyvUT/VXY3L0zE1HGjrPIPiXj/B/FT4NGkNQndH3OrhbJCoXC7hw=
+	t=1784670901; cv=none; b=DtjrdMuV8ee26jIroaczAnVmWuhqUbDtlduSdxB9YWorHjNUKgICFuKQqJrDH+KVN7T4M6+U6gXJ9MrVEmW877z8gA9OLiO/qWzIWCn3g3a5HdexKP9LSJ98lUchRpAZUi15wEAZBJFaEl7Ab+R2DxG/0GAoWl1TK0vCretheno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670898; c=relaxed/simple;
-	bh=KIKHLDzf+TvqC5rYYFfrNfhVMaxniqLOEjMsaHv9COw=;
+	s=arc-20240116; t=1784670901; c=relaxed/simple;
+	bh=o+O1VidZy53TnaAJHnrXL2MS7bARXHPHDcdY3+frj5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uCRI7r1ewauA4baUdNMpmL8faD8TmdssLOH6XD+a9mGKjhatjEP3SCuwfDzGIXtu0hQQTHTQ4RciItWj2E2+0MsISWuxnQrs1sJqLscKWhdsqyKyyCxwjc6VDEXwJNKFGzbsZo53yOpZahkNmU5BtPd65n/KxurgXV4m9ZEpQh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2qKjfvWi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CzOup/oSnFZexzC7n99xi7YCwq0L14jky2LErBqzkg6iy6AtEbj7Yf2M3/16zYrMWFMAyQC6ZwOVT0TxYtrJg8FLSMqu3UJ7eqUjk1M/5i5EsjVZnB0SIyAs7pGXaD4ESgc3tiUamsGsMhPR7ambMvR2REOIliwcsDhbaEIt5jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nDHxeJTv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qKjfvWi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3833C1F000E9;
-	Tue, 21 Jul 2026 21:54:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nDHxeJTv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7C11F000E9;
+	Tue, 21 Jul 2026 21:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670897;
-	bh=iipHJsbnOQDrOfj2ypQB4HGwIbSSbkUmXwDslKr1XJM=;
+	s=korg; t=1784670900;
+	bh=CUhkG8Rf81oZ0vw+4CEhaWmWZlrK8cncgUQ+14+JhpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2qKjfvWiRFMFMgI9sJc5xjeE6DztkBJVIQS3PXnUf+4RMDG7/C+7SWPupoeQYPjzA
-	 SJVexnHIqYafL69S8SlSgRwbTUMgtXaplcrj7o9+s0lg+9uf3VRUQc5KWYqVXkhFwQ
-	 HnZ+6RStHeD2vA/ujqreDiUJ+TUOBbTWWnnA9X+4=
+	b=nDHxeJTvVHbpUy4dJxMSnrOfCaRfrq9OyPvCMlivtq3XTfFXNCgCeogd552DOv0n0
+	 mbxlry1+2AjB4T7QyybfJE7ASaYgJnPQNVPWJ2FE9f4BY+YMAzHQt9L6Qpu29jt1ft
+	 r6NzWzHRJyDLC/Xm2UQ0SXUA/JUrzgmywq+8IxOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taeyang Lee <0wn@theori.io>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Keenan Dong <keenanat2000@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 043/843] perf/core: Detach event groups during remove_on_exec
-Date: Tue, 21 Jul 2026 17:14:38 +0200
-Message-ID: <20260721152406.948172562@linuxfoundation.org>
+Subject: [PATCH 5.15 044/843] rtmutex: Use waiter::task instead of current in remove_waiter()
+Date: Tue, 21 Jul 2026 17:14:39 +0200
+Message-ID: <20260721152406.971147013@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,96 +55,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taeyang Lee <0wn@theori.io>
+From: Keenan Dong <keenanat2000@gmail.com>
 
-[ Upstream commit 037a3c43edfb597665dd34457cd22b14692f2ba3 ]
+[ Upstream commit 3bfdc63936dd4773109b7b8c280c0f3b5ae7d349 ]
 
-perf_event_remove_on_exec() removes events by calling
-perf_event_exit_event(). For top-level events, this removes the event from
-the context without DETACH_GROUP.
+remove_waiter() is used by the slowlock paths, but it is also used for
+proxy-lock rollback in rt_mutex_start_proxy_lock() when invoked from
+futex_requeue().
 
-This can leave inconsistent group state when a removed event is a group
-leader and the group contains siblings without remove_on_exec. If the group
-was active, the surviving siblings can remain active and attached to the
-removed leader's sibling list, but are no longer represented by a valid
-group leader on the PMU context active lists.
+In the latter case waiter::task is not current, but remove_waiter()
+operates on current for the dequeue operation. That results in several
+problems:
 
-A later close of the removed leader uses DETACH_GROUP and can promote the
-still-active siblings from this stale group state. The next schedule-in can
-then add an already-linked active_list entry again, corrupting the PMU
-context active list.
+  1) the rbtree dequeue happens without waiter::task::pi_lock being held
 
-With DEBUG_LIST enabled, this is caught as a list_add double-add in
-merge_sched_in().
+  2) the waiter task's pi_blocked_on state is not cleared, which leaves a
+     dangling pointer primed for UAF around.
 
-Fix this by detaching group relationships when remove_on_exec removes an
-event. This preserves the existing task-exit behavior, while ensuring
-surviving siblings are ungrouped before the removed event leaves the context.
+  3) rt_mutex_adjust_prio_chain() operates on the wrong top priority waiter
+     task
 
-Fixes: 2e498d0a74e5 ("perf: Add support for event removal on exec")
-Signed-off-by: Taeyang Lee <0wn@theori.io>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/ai65GgZcC0LAlWLG@Taeyangs-MacBook-Pro.local
+Use waiter::task instead of current in all related operations in
+remove_waiter() to cure those problems.
+
+[ tglx: Fixup rt_mutex_adjust_prio_chain(), add a comment and amend the
+  	changelog ]
+
+Fixes: 8161239a8bcc ("rtmutex: Simplify PI algorithm and make highest prio task get lock")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Keenan Dong <keenanat2000@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ kernel/locking/rtmutex.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 156221bd56615c..9b01cfeb3a0663 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -4422,7 +4422,8 @@ static void perf_event_enable_on_exec(int ctxn)
- 
- static void perf_remove_from_owner(struct perf_event *event);
- static void perf_event_exit_event(struct perf_event *event,
--				  struct perf_event_context *ctx);
-+				  struct perf_event_context *ctx,
-+				  unsigned long detach_flags);
- 
- /*
-  * Removes all events from the current task that have been marked
-@@ -4454,7 +4455,7 @@ static void perf_event_remove_on_exec(int ctxn)
- 
- 		modified = true;
- 
--		perf_event_exit_event(event, ctx);
-+		perf_event_exit_event(event, ctx, DETACH_GROUP);
- 	}
- 
- 	raw_spin_lock_irqsave(&ctx->lock, flags);
-@@ -13024,10 +13025,11 @@ static void sync_child_event(struct perf_event *child_event)
- }
- 
- static void
--perf_event_exit_event(struct perf_event *event, struct perf_event_context *ctx)
-+perf_event_exit_event(struct perf_event *event,
-+		      struct perf_event_context *ctx,
-+		      unsigned long detach_flags)
+diff --git a/kernel/locking/rtmutex.c b/kernel/locking/rtmutex.c
+index cf72ef77bfe75a..f79c9286c7c0c1 100644
+--- a/kernel/locking/rtmutex.c
++++ b/kernel/locking/rtmutex.c
+@@ -1500,20 +1500,23 @@ static bool rtmutex_spin_on_owner(struct rt_mutex_base *lock,
+  *
+  * Must be called with lock->wait_lock held and interrupts disabled. It must
+  * have just failed to try_to_take_rt_mutex().
++ *
++ * When invoked from rt_mutex_start_proxy_lock() waiter::task != current !
+  */
+ static void __sched remove_waiter(struct rt_mutex_base *lock,
+ 				  struct rt_mutex_waiter *waiter)
  {
- 	struct perf_event *parent_event = event->parent;
--	unsigned long detach_flags = 0;
+ 	bool is_top_waiter = (waiter == rt_mutex_top_waiter(lock));
+ 	struct task_struct *owner = rt_mutex_owner(lock);
++	struct task_struct *waiter_task = waiter->task;
+ 	struct rt_mutex_base *next_lock;
  
- 	if (parent_event) {
- 		/*
-@@ -13042,7 +13044,7 @@ perf_event_exit_event(struct perf_event *event, struct perf_event_context *ctx)
- 		 * Do destroy all inherited groups, we don't care about those
- 		 * and being thorough is better.
- 		 */
--		detach_flags = DETACH_GROUP | DETACH_CHILD;
-+		detach_flags |= DETACH_GROUP | DETACH_CHILD;
- 		mutex_lock(&parent_event->child_mutex);
- 	}
+ 	lockdep_assert_held(&lock->wait_lock);
  
-@@ -13127,7 +13129,7 @@ static void perf_event_exit_task_context(struct task_struct *child, int ctxn)
- 	perf_event_task(child, child_ctx, 0);
+-	raw_spin_lock(&current->pi_lock);
++	raw_spin_lock(&waiter_task->pi_lock);
+ 	rt_mutex_dequeue(lock, waiter);
+-	current->pi_blocked_on = NULL;
+-	raw_spin_unlock(&current->pi_lock);
++	waiter_task->pi_blocked_on = NULL;
++	raw_spin_unlock(&waiter_task->pi_lock);
  
- 	list_for_each_entry_safe(child_event, next, &child_ctx->event_list, event_entry)
--		perf_event_exit_event(child_event, child_ctx);
-+		perf_event_exit_event(child_event, child_ctx, 0);
+ 	/*
+ 	 * Only update priority if the waiter was the highest priority
+@@ -1549,7 +1552,7 @@ static void __sched remove_waiter(struct rt_mutex_base *lock,
+ 	raw_spin_unlock_irq(&lock->wait_lock);
  
- 	mutex_unlock(&child_ctx->mutex);
+ 	rt_mutex_adjust_prio_chain(owner, RT_MUTEX_MIN_CHAINWALK, lock,
+-				   next_lock, NULL, current);
++				   next_lock, NULL, waiter_task);
  
+ 	raw_spin_lock_irq(&lock->wait_lock);
+ }
 -- 
 2.53.0
 
