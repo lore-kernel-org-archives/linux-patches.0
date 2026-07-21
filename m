@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9A7430CDC;
-	Tue, 21 Jul 2026 19:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39D7430CDC;
+	Tue, 21 Jul 2026 19:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663754; cv=none; b=X0ivq+DuwIamApTqbHJcRJK7Ylv/Ufhe6MBCX7Y7U1jnI66QsMF8oN9G4Y3ZkkRXbJFVoF1IAdtwk436dlQSS6gQNMxwxwbfbUEVjrXrvr0bhW9X55xsH/rDTbBk0XC0C6juH5KZHCsB0blnGYA1TFL+caOWn+982lpLHVDjdHM=
+	t=1784663757; cv=none; b=KlzGEqUJGSyrl1LmBVrSMELth8i1y9DPqgNkiT0IYwD4cojOpYQlyXMgWUUNz5UqbncT4S/tHmjiXnOcxZLjP1CQ+CO2RP6bOLaunW/SK1ee8sZAMidJehyvPjTWrry/d4DXR8mjXvIpvlb6ItNawP8ukXguqhey6aSiiaipoaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663754; c=relaxed/simple;
-	bh=nrJqohUQS0tZunLkOCNSRAF3yQE2OGIR72zzBkOHmlg=;
+	s=arc-20240116; t=1784663757; c=relaxed/simple;
+	bh=iRlhoibTvOJe8Kg21IO0HhpP6HFKC/x7W+CZSQFp0bs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BBdNQrzyG7umOyRFb7e0/fPisEJJC9rmaiNbFVqFCuKHrQW/aJIeJF0FpfbHgvqM9y+O+gt+yzbS2zh3TVnApnh9JYB0FzUIW3dgMfDKqOtm5QLhSGqSjik6GLjMFOWupLn+oPir/RK02E3wAhO8q9fVATw4HJ4IeR6228GZCn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZi74Tfd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Brq+E3clJHAsk0yLJya9CwunjTCX+/S6ZN3+DYMe0IQQPmFqjxo3ylbOByOe1Qkz1EaOXzu3Intthv0SaqEpNB+gbl0T/IUi1o5/IzZi/pYAvb9YbTh8EpsToCVOnIupTn1VGzM1FGuD83JsPYkjIYQBWEpla4tqBQYwrVGNrM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g36lj4eM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZi74Tfd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07121F00A3A;
-	Tue, 21 Jul 2026 19:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g36lj4eM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D881F000E9;
+	Tue, 21 Jul 2026 19:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663753;
-	bh=VrPVBnT4K0wK4ZdkvmEKN/yAiw8wGjn+SqqtYaU4nnk=;
+	s=korg; t=1784663755;
+	bh=zoznstjPKw32Bgo8mZC1At4DTDXmWc6uSrn4d9pLHGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YZi74Tfd+HiU9tsF1mpqehZv93Y9GhMmMHEJbYqCmdAm2nrB1BSMpaY+CXaTUYj9n
-	 ssGzBbWXADNGXDkn45lq4o8LmUGXDFWcgBaR220WoJf//6C2rXqzypn0lsQMkG7ON+
-	 yrr+1UlYri5D1Z5W6Yia0bg36UXo2rQkUdgHV9t0=
+	b=g36lj4eMz7Tm7cAsrx+zJXjGUsbIkESwjSzx4IihUBLiMgPG62vV2kvqbNlItb/xM
+	 H+Ph5GEhRtQNUnObszNeyTkTeheAPb9yIatgKsDn5DQx8znQNGtxEmGYU2f9vdQV5V
+	 rfaxJHoPRnKzSDEYF5/NTE4kcv4Xfb37OwjJziD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bastien Curutchet <bastien.curutchet@bootlin.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.12 0942/1276] mtd: rawnand: pl353: fix probe resource allocation
-Date: Tue, 21 Jul 2026 17:23:05 +0200
-Message-ID: <20260721152507.113687169@linuxfoundation.org>
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Dominique Martinet <asmadeus@codewreck.org>
+Subject: [PATCH 6.12 0943/1276] net/9p: fix infinite loop in p9_client_rpc on fatal signal
+Date: Tue, 21 Jul 2026 17:23:06 +0200
+Message-ID: <20260721152507.136244644@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,35 +50,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bastien Curutchet <bastien.curutchet@bootlin.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-commit 19ed11aee966d91beebdef9d32ce926474872f79 upstream.
+commit 6b4f48728faa8bb514368f7eacda05565dea8696 upstream.
 
-During probe(), the devm_ioremap() is called with the parent device
-instead of the current one. So when the module is unloaded, the register
-area isn't released.
+When p9_client_rpc() is called with type P9_TFLUSH and the transport
+has no peer (e.g. fd transport backed by pipes with no 9p server),
+a fatal signal causes an infinite loop:
 
-Target the pl35x device in the devm_ioremap() instead of its parent.
+  again:
+	err = io_wait_event_killable(req->wq, ...)
+	/* SIGKILL wakes the task, returns -ERESTARTSYS */
 
+	if (err == -ERESTARTSYS && c->status == Connected &&
+		type == P9_TFLUSH) {
+		sigpending = 1;
+		clear_thread_flag(TIF_SIGPENDING);
+		goto again;
+	}
+
+clear_thread_flag() clears TIF_SIGPENDING before jumping back to
+io_wait_event_killable(). signal_pending_state() checks TIF_SIGPENDING,
+finds it zero, and the task goes to sleep again. The task can only wake
+on the next signal delivery that calls signal_wake_up() and sets
+TIF_SIGPENDING again. When that happens the loop repeats, clears
+TIF_SIGPENDING, and sleeps again indefinitely.
+
+This is triggered in practice by coredump_wait(): when a thread in a
+multi-threaded process causes a coredump (e.g. via SIGSYS from Syscall
+User Dispatch), coredump_wait() sends SIGKILL to all other threads and
+waits for them to call mm_release(). If one of those threads is blocked
+in p9_client_rpc() over an fd transport with no peer, it enters the
+P9_TFLUSH loop and never calls mm_release(), so coredump_wait() stalls
+forever:
+
+INFO: task syz.0.18:676 blocked for more than 143 seconds.
+      Not tainted 6.12.77+ #1
+task:syz.0.18 state:D stack:27600 pid:676 tgid:673 ppid:630 flags:0x00000004
+Call Trace:
+ <TASK>
+ context_switch kernel/sched/core.c:5344 [inline]
+ __schedule+0xcb4/0x5d50 kernel/sched/core.c:6724
+ __schedule_loop kernel/sched/core.c:6801 [inline]
+ schedule+0xe5/0x350 kernel/sched/core.c:6816
+ schedule_timeout+0x253/0x290 kernel/time/timer.c:2593
+ do_wait_for_common kernel/sched/completion.c:95 [inline]
+ __wait_for_common+0x409/0x600 kernel/sched/completion.c:116
+ wait_for_common kernel/sched/completion.c:127 [inline]
+ wait_for_completion_state+0x1d/0x40 kernel/sched/completion.c:264
+ coredump_wait fs/coredump.c:448 [inline]
+ do_coredump+0x854/0x4350 fs/coredump.c:629
+ get_signal+0x1425/0x2730 kernel/signal.c:2903
+ arch_do_signal_or_restart+0x81/0x880 arch/x86/kernel/signal.c:337
+ exit_to_user_mode_loop kernel/entry/common.c:111 [inline]
+ exit_to_user_mode_prepare include/linux/entry-common.h:328 [inline]
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:207 [inline]
+ syscall_exit_to_user_mode+0xf9/0x160 kernel/entry/common.c:218
+ do_syscall_64+0x102/0x220 arch/x86/entry/common.c:84
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
+
+Fix: check fatal_signal_pending() before clearing TIF_SIGPENDING in the
+P9_TFLUSH retry loop. At that point TIF_SIGPENDING is still set, so
+fatal_signal_pending() works correctly. If a fatal signal is pending,
+jump to recalc_sigpending to restore TIF_SIGPENDING and return
+-ERESTARTSYS to the caller.
+
+The same defect is present in stable kernels back to 5.4. On those
+kernels the infinite loop is broken earlier by a second SIGKILL from
+the parent process (e.g. kill_and_wait() retrying after a timeout),
+resulting in a zombie process and a shutdown delay rather than a
+permanent D-state hang, but the underlying flaw is the same.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 91b8534fa8f5 ("9p: make rpc code common and rework flush code")
+Closes: https://syzkaller.appspot.com/bug?extid=3ce7863f8fc836a427e7
 Cc: stable@vger.kernel.org
-Fixes: 08d8c62164a3 ("mtd: rawnand: pl353: Add support for the ARM PL353 SMC NAND controller")
-Signed-off-by: Bastien Curutchet <bastien.curutchet@bootlin.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Message-ID: <20260415155237.182891-1-kovalev@altlinux.org>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/pl35x-nand-controller.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/9p/client.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
-+++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
-@@ -1152,7 +1152,7 @@ static int pl35x_nand_probe(struct platf
- 	nfc->controller.ops = &pl35x_nandc_ops;
- 	INIT_LIST_HEAD(&nfc->chips);
+--- a/net/9p/client.c
++++ b/net/9p/client.c
+@@ -723,6 +723,8 @@ again:
  
--	nfc->conf_regs = devm_ioremap_resource(&smc_amba->dev, &smc_amba->res);
-+	nfc->conf_regs = devm_ioremap_resource(nfc->dev, &smc_amba->res);
- 	if (IS_ERR(nfc->conf_regs))
- 		return PTR_ERR(nfc->conf_regs);
- 
+ 	if (err == -ERESTARTSYS && c->status == Connected &&
+ 	    type == P9_TFLUSH) {
++		if (fatal_signal_pending(current))
++			goto recalc_sigpending;
+ 		sigpending = 1;
+ 		clear_thread_flag(TIF_SIGPENDING);
+ 		goto again;
 
 
