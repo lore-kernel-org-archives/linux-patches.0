@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26323B8412;
-	Tue, 21 Jul 2026 21:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9637235C6B3;
+	Tue, 21 Jul 2026 21:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670748; cv=none; b=Kg7pHUM5J5b+rAUVza3cm4EqGgZdgbvnxE7SlcvW1HaYhz05msKnv+b6uzpoqsDW/GewwfxGDZYcIOX/ADRJECw0TXjiwtMA9Nww/ZsIIOxPX8gkF2Oo13I0OLcfAP45ayYcT0bocR/U1OPTz8MyO4WehG6ToZCBZABcuf1zHk0=
+	t=1784670750; cv=none; b=EXwNlolLE9PsDpMAEDEO3Tw38xiAau41zjAG3HVS7YW1UdZimm6CrmVFpNc9LlEMzQwd/YV2vOe8QoY2ZeoDUdLwh4zqcBc8ueOyL+ryS+Eeh9SP9sPtZbfKN7gWymdzAv7c/PZZCb/lK/mmyAfSeH4RDcdJOTN3sI4mBjA0fiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670748; c=relaxed/simple;
-	bh=Xj8B0Dthu6azaZqs6ALpwYGaJxwypzwtL3XRipjCBCg=;
+	s=arc-20240116; t=1784670750; c=relaxed/simple;
+	bh=oyYihs+pKX6jxptEbqd6i0Io3p/7Xv70DgnTvWplI7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dNUAXmcFSO3R024uzG8/6s6MqJZGDqDfVlgpeBh+jwFfLNwxuCSDQmou2aJ3nUceM6ILZlFOQCYmCw8ew9hMRMC+/z/uskxbB3KCJO8fTKlZQq5wKsw0FVaJx3+YD05312yyBReWLgiVk1BrIIawYRj3vT/hFmP8qRNhglMyb3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxk1VIKx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zrl3G18P4jIaRXxf7xl4oH8fMTlxmJxDCogJPcj6JLtb/RsE9vXGMKoDRfBUvYTtef4AnKz+InwLDrFm2i/1Qkw3rYEVSuu9CyN0G4LOiyGdXEyPwOFgpuRJUWcEIhNhXOGxhzpFlOxQBB0SqoW/irOb60xHsdqS4JlZgQGIRfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyjuaXb2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxk1VIKx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBAB1F000E9;
-	Tue, 21 Jul 2026 21:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyjuaXb2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB9B51F000E9;
+	Tue, 21 Jul 2026 21:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670746;
-	bh=Dt8/421PPK9tC5pVzWtuXw/eiCbnPzGBfYYi9XikGt4=;
+	s=korg; t=1784670749;
+	bh=IoMMUGd77dD//fATmDccDBrerNIeKod5f/pQnjOHA7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sxk1VIKxpuqIF2wqaDVVnkocHx9yuuiUj09jXSGolaRLcMzlErt2UMrufvtLPF/rQ
-	 74Gmp/mPAH4edvoFmbWCa8ntA0TzOhIAu2QOXIxydq7PcqRXZA7aYZ/r15vmiitL3N
-	 XqPN8nxzqOOYgKTMhNTx13AoS8n+UxEIpYppuE9g=
+	b=CyjuaXb2DUFfcsSjXU6UzM7D3rxcytxVkXSqZCqRbwZMWeG0HJrCpWF1jMMa6gjUU
+	 63A6VxY9BpzAl9TRIV4sHsixlxKucopu/cvCNw/pNMKRaulK1rQBEc6SVINuhOaxAW
+	 0zwkSWhnm/kP6Vzc0M2z85e8JNdwUxkCOTLkBBvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stig Hornang <stig@hornang.me>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 1049/1067] Bluetooth: L2CAP: fix tx ident leak for commands without a response
-Date: Tue, 21 Jul 2026 17:27:30 +0200
-Message-ID: <20260721152448.054995337@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Tejun Heo <tj@kernel.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 1050/1067] writeback: Fix use after free in inode_switch_wbs_work_fn()
+Date: Tue, 21 Jul 2026 17:27:31 +0200
+Message-ID: <20260721152448.076726524@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,93 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stig Hornang <stig@hornang.me>
+From: Jan Kara <jack@suse.cz>
 
-commit 6e1930ece855a4c256f1c7e6632d634cfb9888b5 upstream.
+commit 6689f01d6740cf358932b3e97ee968c6099800d9 upstream.
 
-Commit 6c3ea155e5ee ("Bluetooth: L2CAP: Fix not tracking outstanding
-TX ident") changed ident allocation to use an IDA, releasing idents in
-l2cap_put_ident() when the matching response command is received.
+inode_switch_wbs_work_fn() has a loop like:
 
-But identifiers allocated for commands that have no response defined
-are never released. In particular L2CAP_LE_CREDITS is sent repeatedly for
-the lifetime of an LE CoC channel, so a peer streaming data to the
-host exhausts the 1-255 ident range after 254 credit packets. From
-then on l2cap_get_ident() fails:
+  wb_get(new_wb);
+  while (1) {
+    list = llist_del_all(&new_wb->switch_wbs_ctxs);
+    /* Nothing to do? */
+    if (!list)
+      break;
+    ... process the items ...
+  }
 
-    kernel: Bluetooth: Unable to allocate ident: -28
+Now adding of items to the list looks like:
 
-and every subsequent L2CAP_LE_CREDITS packet is sent with ident 0,
-which is invalid (Core Spec, Vol 3, Part A, Section 4: "Signaling
-identifier 0x00 is an invalid identifier and shall never be used in
-any command"). Remote stacks that validate the ident drop these
-commands, never receive new credits, and the channel stalls
-permanently. With default socket buffers this happens after roughly 0.5 MB
-of received data (the exact amount depends on the socket receive buffer):
+wb_queue_isw()
+  if (llist_add(&isw->list, &wb->switch_wbs_ctxs))
+    queue_work(isw_wq, &wb->switch_work);
 
-  < ACL Data TX: Handle 2048 flags 0x00 dlen 12
-        LE L2CAP: LE Flow Control Credit (0x16) ident 0 len 4
-          Source CID: 64
-          Credits: 1
+Because inode_switch_wbs_work_fn() loops when processing isw items, it
+can happen that wb->switch_work is pending while wb->switch_wbs_ctxs is
+empty. This is a problem because in that case wb can get freed (no isw
+items -> no wb reference) while the work is still pending causing
+use-after-free issues.
 
-Release the ident immediately after sending L2CAP_LE_CREDITS since no
-response will ever release it. Use a local variable instead of
-chan->ident so that an ident that an EXT_FLOWCTL channel may be waiting on
-(e.g. a pending reconfigure) is not overwritten by a credit packet.
+We cannot just fix this by cancelling work when freeing wb because that
+could still trigger problematic 0 -> 1 transitions on wb refcount due to
+wb_get() in inode_switch_wbs_work_fn(). It could be all handled with
+more careful code but that seems unnecessarily complex so let's avoid
+that until it is proven that the looping actually brings practical
+benefit. Just remove the loop from inode_switch_wbs_work_fn() instead.
+That way when wb_queue_isw() queues work, we are guaranteed we have
+added the first item to wb->switch_wbs_ctxs and nobody is going to
+remove it (and drop the wb reference it holds) until the queued work
+runs.
 
-Also add the missing L2CAP_LE_CONN_RSP case to l2cap_put_ident() so
-idents allocated for outgoing L2CAP_LE_CONN_REQ commands are released
-when the response arrives.
-
-Fixes: 6c3ea155e5ee ("Bluetooth: L2CAP: Fix not tracking outstanding TX ident")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221629
-Assisted-by: Claude:claude-opus-4.8
-Assisted-by: Fable:5
-Signed-off-by: Stig Hornang <stig@hornang.me>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: e1b849cfa6b6 ("writeback: Avoid contention on wb->list_lock when switching inodes")
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260413093618.17244-2-jack@suse.cz
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ fs/fs-writeback.c |   36 +++++++++++++++++++-----------------
+ 1 file changed, 19 insertions(+), 17 deletions(-)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4895,6 +4895,7 @@ static void l2cap_put_ident(struct l2cap
- 	case L2CAP_ECHO_RSP:
- 	case L2CAP_INFO_RSP:
- 	case L2CAP_CONN_PARAM_UPDATE_RSP:
-+	case L2CAP_LE_CONN_RSP:
- 	case L2CAP_ECRED_CONN_RSP:
- 	case L2CAP_ECRED_RECONF_RSP:
- 		/* The remote may send bogus ids that would make ida_free
-@@ -6805,6 +6806,7 @@ static void l2cap_chan_le_send_credits(s
- 	struct l2cap_conn *conn = chan->conn;
- 	struct l2cap_le_credits pkt;
- 	u16 return_credits = l2cap_le_rx_credits(chan);
-+	int ident;
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -533,28 +533,30 @@ void inode_switch_wbs_work_fn(struct wor
+ 	struct inode_switch_wbs_context *isw, *next_isw;
+ 	struct llist_node *list;
  
- 	if (chan->mode != L2CAP_MODE_LE_FLOWCTL &&
- 	    chan->mode != L2CAP_MODE_EXT_FLOWCTL)
-@@ -6822,9 +6824,18 @@ static void l2cap_chan_le_send_credits(s
- 	pkt.cid     = cpu_to_le16(chan->scid);
- 	pkt.credits = cpu_to_le16(return_credits);
- 
--	chan->ident = l2cap_get_ident(conn);
-+	ident = l2cap_get_ident(conn);
-+
-+	l2cap_send_cmd(conn, ident, L2CAP_LE_CREDITS, sizeof(pkt), &pkt);
- 
--	l2cap_send_cmd(conn, chan->ident, L2CAP_LE_CREDITS, sizeof(pkt), &pkt);
-+	/* L2CAP_LE_CREDITS has no response so the ident is never released by
-+	 * l2cap_put_ident() - release it right away, otherwise the tx_ida
-+	 * range is exhausted after 254 packets and from then on credits are
-+	 * sent with the invalid ident 0, which some remote stacks ignore,
-+	 * stalling the channel.
++	list = llist_del_all(&new_wb->switch_wbs_ctxs);
+ 	/*
+-	 * Grab out reference to wb so that it cannot get freed under us
++	 * Nothing to do? That would be a problem as references held by isw
++	 * items protect wb from freeing...
 +	 */
-+	if (ident > 0)
-+		ida_free(&conn->tx_ida, ident);
++	if (WARN_ON_ONCE(!list))
++		return;
++
++	/*
++	 * Grab our reference to wb so that it cannot get freed under us
+ 	 * after we process all the isw items.
+ 	 */
+ 	wb_get(new_wb);
+-	while (1) {
+-		list = llist_del_all(&new_wb->switch_wbs_ctxs);
+-		/* Nothing to do? */
+-		if (!list)
+-			break;
+-		/*
+-		 * In addition to synchronizing among switchers, I_WB_SWITCH
+-		 * tells the RCU protected stat update paths to grab the i_page
+-		 * lock so that stat transfer can synchronize against them.
+-		 * Let's continue after I_WB_SWITCH is guaranteed to be
+-		 * visible.
+-		 */
+-		synchronize_rcu();
++	/*
++	 * In addition to synchronizing among switchers, I_WB_SWITCH
++	 * tells the RCU protected stat update paths to grab the i_page
++	 * lock so that stat transfer can synchronize against them.
++	 * Let's continue after I_WB_SWITCH is guaranteed to be
++	 * visible.
++	 */
++	synchronize_rcu();
+ 
+-		llist_for_each_entry_safe(isw, next_isw, list, list)
+-			process_inode_switch_wbs(new_wb, isw);
+-	}
++	llist_for_each_entry_safe(isw, next_isw, list, list)
++		process_inode_switch_wbs(new_wb, isw);
+ 	wb_put(new_wb);
  }
  
- void l2cap_chan_rx_avail(struct l2cap_chan *chan, ssize_t rx_avail)
 
 
