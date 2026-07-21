@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBAB46A61C;
-	Tue, 21 Jul 2026 17:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028A646C4AB;
+	Tue, 21 Jul 2026 17:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655331; cv=none; b=P/Kb4Jzf/+xcUDwZaQftTkneKs4Px/+Jo+kG62I+as5et5JiQcL0RczKsHptW5+0677V64ob3ToMl6Az6ha8horSBudgN5VxbkD2UprSWHF/EQM9bsBZWRhAOAwv6QurFpYKPdR1H17IpdgtK1tdi3LRSaf1NUswlhg51R/jsEY=
+	t=1784655334; cv=none; b=leXKfYezUEqjtM2d+CNNWM16hIFTkn1FbbXteu7DelOjpg5y0c3v0+lV0lS7REyaCODCpHHhWr1oPcMG666UTlDZt9u25ZHQcA7Dc+3ppf0TNnX8dch9P4Yv07WwtBSuV2duyb2qLGYf12+fyAR3tdfbUgUyuUxL0krqlMmX7ek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655331; c=relaxed/simple;
-	bh=MFZMfbebD9O90lyRtUEg3E+WHwK3VvdGEXXC1HZMeOI=;
+	s=arc-20240116; t=1784655334; c=relaxed/simple;
+	bh=Bq1ZPxRlm4eyP0Qmjy6wRNtC36w9bh/lvj9A+8z0Zxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZklGGVSGJLfTl7q/+hH6C6j7LtLtE0ymmiURz5yH/5QeovC3l9x2UHRpGQfKkYs1KvOruCDVbyq9GUgcDlezW8GRtOxEb091v3ZQNddsY1iXfRWZeft+yfyx7ZXrnp3MLMfR8Wv+Zm6b+buWovom1U255D023JZ5uFOBl20PD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gq7CCL0T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pbfyTv3PacXv0eCYtdy54yILdrU7OQzyealJcjTSkjjQxfK58QnBa8xvzqysLvFumshhe+iIMqpjvEZSYyY59uEJIi8c0cCsxvJQmyizCYQ8tVW9z/U00XrvoOWoV7jEfcZg/AQBoaTBkWidUUHnIdjJps9qc9+JPGWzZ/e5ugQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrosDvM/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gq7CCL0T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C754D1F000E9;
-	Tue, 21 Jul 2026 17:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrosDvM/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A0F31F000E9;
+	Tue, 21 Jul 2026 17:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655330;
-	bh=ggrPEDmL018Idpl3Clq/4oglyF3m8z07USzm+S0sB+Y=;
+	s=korg; t=1784655332;
+	bh=dc1a17l7ZI1wNHHwpVVDtTeljEhb+G7EvzjlAoTQr68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gq7CCL0TFrh0uxGQOZMupDaOk1OL7nALENQDCOyqK4xSIsDmftAOnLembD9iIr8Rp
-	 Nxyjdm3yJj8TAnS1Mf6Lg2KE4anjpANVyCiA9DpLNp7GinYvquaUMATsl9Xb43c7cC
-	 Kr+y7Ws8bWmn1AWeDLNJqv/D5bLdezTjEbuJ2UK0=
+	b=TrosDvM/kGZQjQvQnIZ5PfWlggXOqM3nIVsqnhNaJILGf+PvZSnRLOkKFMfboawBr
+	 av1+fNo3+WSqC+l3RmroIrsbvoIdAvAepgNWWd/k7V/pgwTfumfRjGtaAbTJdAP7G8
+	 XvImGpmN+SuuEFW0XGw7VIRRItRVdss6se9ERbgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sun Jian <sun.jian.kdev@gmail.com>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Eduard Zingerman <eddyz87@gmail.com>
-Subject: [PATCH 7.1 2044/2077] bpf: Reject negative const offsets for buffer pointers
-Date: Tue, 21 Jul 2026 17:28:37 +0200
-Message-ID: <20260721152640.905751962@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.1 2045/2077] mm/damon/core: trace esz at first setup
+Date: Tue, 21 Jul 2026 17:28:38 +0200
+Message-ID: <20260721152640.931714395@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,112 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sun Jian <sun.jian.kdev@gmail.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit fd4cfa8c8f9a17cdec0539334d28754bc1d8a5d9 upstream.
+commit 7e6cc35f5283eab81a14231a64ecd640b690c48c upstream.
 
-The verifier rejects variable offsets for PTR_TO_TP_BUFFER and PTR_TO_BUF
-accesses, but it currently accepts a constant negative offset produced by
-pointer arithmetic.
+DAMON traces effective size quota from the second update, only if a change
+has been made by the update.  Tracing only changed updates was an
+intentional decision to avoid unnecessary same value tracing.  Always
+skipping the first value is just an unintended mistake.
 
-Commit 022ac0750883 ("bpf: use reg->var_off instead of reg->off for
-pointers") moved constant pointer offsets from reg->off to reg->var_off.
-However, __check_buffer_access() continued to check only the instruction
-offset. An access with reg->var_off equal to -8 and an instruction offset
-of zero therefore passes verification.
+The mistake makes the tracepoint based investigation incomplete, because
+the first effective size quota is never traced.  It is not a big issue
+when the 'consist' quota tuner is used, because it keeps changing the
+quota in the usual setup.
 
-For writable raw tracepoints, the access end is also calculated from the
-unsigned reg->var_off.value. An eight-byte access starting at -8 wraps
-the calculated end to zero, allowing the program to load and attach
-without increasing max_tp_access.
+However, when the 'temporal' tuner is used, the quota value is not changed
+before the goal achievement status is completely changed.  For example, if
+the DAMOS scheme is started with an under-achieved goal, the quota is set
+to the maximum value, and kept the same value until the goal is achieved.
+Because DAMON skips the first value, the user cannot know what effective
+quota the current scheme is using.  Only after the goal is achieved, the
+effective quota is changed to zero, and traced.
 
-After ensuring that reg->var_off is constant, calculate the effective
-access start using signed arithmetic and reject it when it is negative.
-Use the validated start to calculate the access end for both
-PTR_TO_TP_BUFFER and PTR_TO_BUF.
+Unconditionally trace the initial quota value to fix this problem.
 
-Fixes: 022ac0750883 ("bpf: use reg->var_off instead of reg->off for pointers")
-Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Cc: stable@vger.kernel.org # 5.2.0
-Link: https://patch.msgid.link/20260714093846.18159-2-sun.jian.kdev@gmail.com
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Note that the 'temporal' quota tuner was introduced by commit af738a6a00c1
+("mm/damon/core: introduce DAMOS_QUOTA_GOAL_TUNER_TEMPORAL"), which was
+added to 7.1-rc1.  But even with the 'consist' quota tuner, the tracing is
+unintentionally incomplete.  Hence this commit marks the introduction of
+the trace event as the broken commit.
+
+Link: https://lore.kernel.org/20260520150311.80925-1-sj@kernel.org
+Fixes: a86d695193bf ("mm/damon: add trace event for effective size quota")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.17.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |   31 +++++++++++++++++++------------
- 1 file changed, 19 insertions(+), 12 deletions(-)
+ mm/damon/core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -5559,14 +5559,11 @@ static int check_max_stack_depth(struct
- static int __check_buffer_access(struct bpf_verifier_env *env,
- 				 const char *buf_info,
- 				 const struct bpf_reg_state *reg,
--				 int regno, int off, int size)
-+				 int regno, int off, int size,
-+				 u32 *access_end)
- {
--	if (off < 0) {
--		verbose(env,
--			"R%d invalid %s buffer access: off=%d, size=%d\n",
--			regno, buf_info, off, size);
--		return -EACCES;
--	}
-+	s64 start;
-+
- 	if (!tnum_is_const(reg->var_off)) {
- 		char tn_buf[48];
- 
-@@ -5577,6 +5574,15 @@ static int __check_buffer_access(struct
- 		return -EACCES;
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2492,6 +2492,8 @@ static void damos_adjust_quota(struct da
+ 	if (!quota->total_charged_sz && !quota->charged_from) {
+ 		quota->charged_from = jiffies;
+ 		damos_set_effective_quota(quota, c);
++		if (trace_damos_esz_enabled())
++			damos_trace_esz(c, s, quota);
  	}
  
-+	start = (s64)reg->var_off.value + off;
-+	if (start < 0) {
-+		verbose(env,
-+			"R%d invalid negative %s buffer offset: off=%d, var_off=%lld\n",
-+			regno, buf_info, off, (s64)reg->var_off.value);
-+		return -EACCES;
-+	}
-+
-+	*access_end = start + size;
- 	return 0;
- }
- 
-@@ -5584,14 +5590,14 @@ static int check_tp_buffer_access(struct
- 				  const struct bpf_reg_state *reg,
- 				  int regno, int off, int size)
- {
-+	u32 access_end;
- 	int err;
- 
--	err = __check_buffer_access(env, "tracepoint", reg, regno, off, size);
-+	err = __check_buffer_access(env, "tracepoint", reg, regno, off, size, &access_end);
- 	if (err)
- 		return err;
- 
--	env->prog->aux->max_tp_access = max(reg->var_off.value + off + size,
--					    env->prog->aux->max_tp_access);
-+	env->prog->aux->max_tp_access = max(access_end, env->prog->aux->max_tp_access);
- 
- 	return 0;
- }
-@@ -5603,13 +5609,14 @@ static int check_buffer_access(struct bp
- 			       u32 *max_access)
- {
- 	const char *buf_info = type_is_rdonly_mem(reg->type) ? "rdonly" : "rdwr";
-+	u32 access_end;
- 	int err;
- 
--	err = __check_buffer_access(env, buf_info, reg, regno, off, size);
-+	err = __check_buffer_access(env, buf_info, reg, regno, off, size, &access_end);
- 	if (err)
- 		return err;
- 
--	*max_access = max(reg->var_off.value + off + size, *max_access);
-+	*max_access = max(access_end, *max_access);
- 
- 	return 0;
- }
+ 	/* New charge window starts */
 
 
