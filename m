@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95649368D66;
-	Tue, 21 Jul 2026 21:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FF135C68D;
+	Tue, 21 Jul 2026 21:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668843; cv=none; b=YZVaaMdQhTeBnt3jtUaHroffpqGZUCFghOUyyK1KO70qiuJP2vaNMqzMcnRW0XtKUSWZhYd7TJb4NZYXMBwN2zaKTN7sfq2H6AMeYWI4lEC3UaUFGBhL7y1oft08P+QW8opX3BoQLvi0FC+kJ8IiTvxoumfkIncDuO4A+4UjmHc=
+	t=1784668846; cv=none; b=pI0DzOIOHR7AsdP/vD9RfXjr1QWZdwOchGkmUqzMTRzAyFLaHmpKoipHEOBMCtoz/Z6TgQG3PgeE6kZsl8QEhURJFvUwyvU1i3sDFWGjzjxbcbBC7jGCIx5hLL/vmlz1hNPea2UlI8Y94FhWT3x0MrBs2GmrDjEeEEl7xu/OOzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668843; c=relaxed/simple;
-	bh=mKdIxN9i4t19ULUJR636j80i8LF0L4pp7+z+oCcF9aE=;
+	s=arc-20240116; t=1784668846; c=relaxed/simple;
+	bh=6Eb95/PXUzfApM+rPC5K++2C27r000N4udSzF6fNCWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pl+pgKF0kfQwLAZ/2iQ5dm6+Wlp5p1nSlmEKxJd6+4lp8Xvg9VKig2x2Rw4QS3vn9epU4gzAvskVOf9rBIfRXc0scM9DCRw5VEiBkPi3Pnzq5TIgxtyDSZ5VdkM5LbKJCPD7MAimUHRs2u5xijiXla1raRCxs1J508On5CZkEHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f1BrIfZ/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QmbHA+1pTwor1cj7MGmM7KNttqJReEPRQ+dbuwwo9b9NUz17RqM1PhCU8rJZV3EHX1c7PXVj+OH0T8SZHhEhE9Z+BNf/ycRlegKy1u0dYm79cL6fPddbeo25ebHgitTfxlO+nS5Ki9bIw4rv9Fyf5sXwTRXfjaD9QVqdSHFp3Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2QgtYN7U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f1BrIfZ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F1E1F000E9;
-	Tue, 21 Jul 2026 21:20:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QgtYN7U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B481F000E9;
+	Tue, 21 Jul 2026 21:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668842;
-	bh=Mk4CruhwI/8os2TzV8qo5FVwWJz6M48mHj6H5kNUfW4=;
+	s=korg; t=1784668845;
+	bh=m4tedjptSh64BUhYcdLzXEwOhNhZ28WOIo7vlpdMZhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f1BrIfZ/cxxj7RscCYuKJ9+xe9Qn9d2bHbpEg8UuAtrnDQT9VQRlblW8mjjfqzUC3
-	 rF6D6baAdrvzyVyu0l+wm6fUfY06o7gb44B3TfAsUtzjxzLCpcHTpjGCTkLkZ1EAEP
-	 X24A2icCqQ3yPhI/mJu5ACAK28EDxXEOEurSMAWk=
+	b=2QgtYN7UvbUGOqpwN+TK4mQOg9dCP4m6wXhbXKc2ILWCGCf53tE8VufIJFHaFMAcF
+	 1GgoCcbxcB+IgQslcUiDxeP6qJ++Wn/Fp+ZdQJgeua9NOgmJ9ukbTjnTPWPf9Nqsb4
+	 7LVvhcp2cWhZJubscAF9IvGeX5OYMmib8Y8kw+1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0327/1067] RDMA/irdma: Fix out-of-bounds write in irdma_copy_user_pgaddrs
-Date: Tue, 21 Jul 2026 17:15:28 +0200
-Message-ID: <20260721152431.909205184@linuxfoundation.org>
+Subject: [PATCH 6.1 0328/1067] IB/mlx4: Fix refcount leak in add_port() error path
+Date: Tue, 21 Jul 2026 17:15:29 +0200
+Message-ID: <20260721152431.932234237@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,102 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 5ebb3ed757be3e04cf803026004aa0beaeb13e9b ]
+[ Upstream commit 9a8826fdfbcd7ed2ccf745f5d54208358d939def ]
 
-The irdma_copy_user_pgaddrs function loops through all of the umem DMA
-blocks to populate the PBLEs and will stop when either the last DMA
-block is reached or palloc->total_cnt is reached. The issue is that
-the logic for checking palloc->total_cnt would only work for non-zero
-values.
+After kobject_init_and_add(), the lifetime of the embedded struct
+kobject is expected to be managed through the kobject core reference
+counting.
 
-When irdma_setup_pbles is called with lvl==0, it
-calls irdma_copy_user_pgaddrs with palloc->total_cnt==0, which means
-the only way to break out of the loop is to reach the last umem DMA
-block, which means it could end up going beyond the fixed size of 4
-iwmr->pgaddrmem array that is used in the lvl==0 case.
+In add_port(), failure paths after kobject_init_and_add() must not free
+struct mlx4_port directly, because the embedded kobject is then managed
+by the kobject core. Freeing it directly leaves the kobject reference
+counting unbalanced and can lead to incorrect lifetime handling.
 
-In the case of QP/CQ/SRQ rings, the value of lvl is determined by a
-separate input (for example, req.cq_pages in the case of a CQ). So,
-we must perform explicit checking to ensure we don't overflow the
-pgaddrmem array if the user provides a umem that consists of more
-blocks than their provided req.cq_pages.
+Allocate the pkey and gid attribute arrays before kobject_init_and_add(),
+so failures before kobject initialization can be handled by directly
+freeing the allocated memory. Once kobject_init_and_add() has been
+called, unwind later failures by removing any successfully created sysfs
+groups, calling kobject_del(), and then releasing the embedded kobject
+with kobject_put().
 
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Link: https://patch.msgid.link/r/20260512183852.614045-1-jmoroni@google.com
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Fixes: c1e7e466120b ("IB/mlx4: Add iov directory in sysfs under the ib device")
+Link: https://patch.msgid.link/r/20260518021910.972900-1-lgs201920130244@gmail.com
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/mlx4/sysfs.c | 45 ++++++++++++++++++------------
+ 1 file changed, 27 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 1eb219fa0d453a..8258bb2218df6f 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -2296,10 +2296,11 @@ static inline u64 *irdma_next_pbl_addr(u64 *pbl, struct irdma_pble_info **pinfo,
-  * irdma_copy_user_pgaddrs - copy user page address to pble's os locally
-  * @iwmr: iwmr for IB's user page addresses
-  * @pbl: ple pointer to save 1 level or 0 level pble
-+ * @pbl_len: Max number of PBL entries to populate
-  * @level: indicated level 0, 1 or 2
-  */
- static void irdma_copy_user_pgaddrs(struct irdma_mr *iwmr, u64 *pbl,
--				    enum irdma_pble_level level)
-+				    u32 pbl_len, enum irdma_pble_level level)
- {
- 	struct ib_umem *region = iwmr->region;
- 	struct irdma_pbl *iwpbl = &iwmr->iwpbl;
-@@ -2307,7 +2308,9 @@ static void irdma_copy_user_pgaddrs(struct irdma_mr *iwmr, u64 *pbl,
- 	struct irdma_pble_info *pinfo;
- 	struct ib_block_iter biter;
- 	u32 idx = 0;
--	u32 pbl_cnt = 0;
+diff --git a/drivers/infiniband/hw/mlx4/sysfs.c b/drivers/infiniband/hw/mlx4/sysfs.c
+index 88f534cf690e92..1676f819c2f760 100644
+--- a/drivers/infiniband/hw/mlx4/sysfs.c
++++ b/drivers/infiniband/hw/mlx4/sysfs.c
+@@ -638,12 +638,6 @@ static int add_port(struct mlx4_ib_dev *dev, int port_num, int slave)
+ 	p->port_num = port_num;
+ 	p->slave = slave;
+ 
+-	ret = kobject_init_and_add(&p->kobj, &port_type,
+-				   kobject_get(dev->dev_ports_parent[slave]),
+-				   "%d", port_num);
+-	if (ret)
+-		goto err_alloc;
+-
+ 	p->pkey_group.name  = "pkey_idx";
+ 	p->pkey_group.attrs =
+ 		alloc_group_attrs(show_port_pkey,
+@@ -651,13 +645,9 @@ static int add_port(struct mlx4_ib_dev *dev, int port_num, int slave)
+ 				  dev->dev->caps.pkey_table_len[port_num]);
+ 	if (!p->pkey_group.attrs) {
+ 		ret = -ENOMEM;
+-		goto err_alloc;
++		goto err_free_port;
+ 	}
+ 
+-	ret = sysfs_create_group(&p->kobj, &p->pkey_group);
+-	if (ret)
+-		goto err_free_pkey;
+-
+ 	p->gid_group.name  = "gid_idx";
+ 	p->gid_group.attrs = alloc_group_attrs(show_port_gid_idx, NULL, 1);
+ 	if (!p->gid_group.attrs) {
+@@ -665,28 +655,47 @@ static int add_port(struct mlx4_ib_dev *dev, int port_num, int slave)
+ 		goto err_free_pkey;
+ 	}
+ 
++	ret = kobject_init_and_add(&p->kobj, &port_type,
++				   kobject_get(dev->dev_ports_parent[slave]),
++				   "%d", port_num);
++	if (ret)
++		goto err_put;
 +
-+	if (!pbl_len)
-+		return;
++	ret = sysfs_create_group(&p->kobj, &p->pkey_group);
++	if (ret)
++		goto err_del;
++
+ 	ret = sysfs_create_group(&p->kobj, &p->gid_group);
+ 	if (ret)
+-		goto err_free_gid;
++		goto err_remove_pkey;
  
- 	pinfo = (level == PBLE_LEVEL_1) ? NULL : palloc->level2.leaf;
+ 	ret = add_vf_smi_entries(p);
+ 	if (ret)
+-		goto err_free_gid;
++		goto err_remove_gid;
  
-@@ -2316,7 +2319,7 @@ static void irdma_copy_user_pgaddrs(struct irdma_mr *iwmr, u64 *pbl,
+ 	list_add_tail(&p->kobj.entry, &dev->pkeys.pkey_port_list[slave]);
+ 	return 0;
  
- 	rdma_umem_for_each_dma_block(region, &biter, iwmr->page_size) {
- 		*pbl = rdma_block_iter_dma_address(&biter);
--		if (++pbl_cnt == palloc->total_cnt)
-+		if (!--pbl_len)
- 			break;
- 		pbl = irdma_next_pbl_addr(pbl, &pinfo, &idx);
- 	}
-@@ -2393,6 +2396,7 @@ static int irdma_setup_pbles(struct irdma_pci_f *rf, struct irdma_mr *iwmr,
- 	u64 *pbl;
- 	int status;
- 	enum irdma_pble_level level = PBLE_LEVEL_1;
-+	u32 pbl_len;
+-err_free_gid:
+-	kfree(p->gid_group.attrs[0]);
+-	kfree(p->gid_group.attrs);
++err_remove_gid:
++	sysfs_remove_group(&p->kobj, &p->gid_group);
++
++err_remove_pkey:
++	sysfs_remove_group(&p->kobj, &p->pkey_group);
++
++err_del:
++	kobject_del(&p->kobj);
++
++err_put:
++	kobject_put(dev->dev_ports_parent[slave]);
++	kobject_put(&p->kobj);
++	return ret;
  
- 	if (use_pbles) {
- 		status = irdma_get_pble(rf->pble_rsrc, palloc, iwmr->page_cnt,
-@@ -2400,16 +2404,18 @@ static int irdma_setup_pbles(struct irdma_pci_f *rf, struct irdma_mr *iwmr,
- 		if (status)
- 			return status;
+ err_free_pkey:
+ 	for (i = 0; i < dev->dev->caps.pkey_table_len[port_num]; ++i)
+ 		kfree(p->pkey_group.attrs[i]);
+ 	kfree(p->pkey_group.attrs);
  
-+		pbl_len = palloc->total_cnt;
- 		iwpbl->pbl_allocated = true;
- 		level = palloc->level;
- 		pinfo = (level == PBLE_LEVEL_1) ? &palloc->level1 :
- 						  palloc->level2.leaf;
- 		pbl = pinfo->addr;
- 	} else {
-+		pbl_len = IRDMA_MAX_SAVED_PHY_PGADDR;
- 		pbl = iwmr->pgaddrmem;
- 	}
- 
--	irdma_copy_user_pgaddrs(iwmr, pbl, level);
-+	irdma_copy_user_pgaddrs(iwmr, pbl, pbl_len, level);
- 
- 	if (use_pbles)
- 		iwmr->pgaddrmem[0] = *pbl;
+-err_alloc:
+-	kobject_put(dev->dev_ports_parent[slave]);
++err_free_port:
+ 	kfree(p);
+ 	return ret;
+ }
 -- 
 2.53.0
 
