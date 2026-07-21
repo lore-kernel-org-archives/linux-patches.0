@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0F4375AC3;
-	Tue, 21 Jul 2026 17:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FA119049B;
+	Tue, 21 Jul 2026 17:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654710; cv=none; b=D37QEygPPev4vXC6Yt0culWxU5YAAt8XOcjJpvWVBadAIyxVQIuY010h2p5XZbVkUFOQbc1pI+Jn2KE1MmmPCQoFvWElRp6jecEALPjPYrBVxBxT2OVBf7987R0fysFQICvBrp1oJeQg8VED4fHiCfla2Q6YeSxk+2tzMyAdAXY=
+	t=1784654713; cv=none; b=t6DGTBm9HIrN3q1DSQoqKdgHVS4SQ+gYEym3ixtvGvhao0x+7Sdg4wTHdBUKC/6oamGr/VgmvqveKVJ3c7n+W5EroI6igIp+WZZLU3SNU00I51clrx8/mI76XZBEPIs6dr0BXZupo9KYnI+CFypJ9YSpcmwE0mGCHIPEh9A9zH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654710; c=relaxed/simple;
-	bh=+ci7tKCnRxm53Wesh1qdA/fenWPy+qzmepg301DEnpk=;
+	s=arc-20240116; t=1784654713; c=relaxed/simple;
+	bh=uns9oEF020c06iHXW59nUxihspguE5vA87JzNoIQ1D8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W2E75Rx1Xq7c8O2LOFDOHK3DPDwz05EN4fquXcfyMpOOdqDx8nZT37kPUPThYrIaHCJOnHwbgTt6bm2K9s/0JBB7Qdnq+aA4h8KfVcPo/SEAi4Ifr2T/ml1iKOTQ8+w0wuUYXeFIFVvQGoyJSBHCeBUN4EpTZFAEiajOmau3YIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Md6I7/s9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FKQ3BndFhc9+C0CLdIO9BqH9ams+HFyyRa1sENHeTJ0S5PbdEYTpEHaeEliv06/pByHcuSm4jUI74vm5rIerYdVhf+TWKJY2HIGIySX0+mubljQCSWcrh6NEKOo8+z+dhmyflwDhKYh/LBJRnuAD4poyzx+MHzWmatgGHZ9Tp6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJ48THxi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Md6I7/s9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA3C1F000E9;
-	Tue, 21 Jul 2026 17:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJ48THxi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B76771F000E9;
+	Tue, 21 Jul 2026 17:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654709;
-	bh=Z9aMnFpmXUIAPrhacDN54iKeWBceurtBqkqC3+pwhhI=;
+	s=korg; t=1784654712;
+	bh=rl9tPmrIjzMT3SSGrakXfxH2P6eRrthVhSnWE3cSkIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Md6I7/s9co5LZsGECqkyWkyHqIkB9womjXD1UHTjApEZDxyUmonkzO27paEgy16a5
-	 pA9i/8Rkb+KmkvTvPtfF7XQS5PkYbqUwnuOeobqnaXPfnhiufMt9Z4/n7S//6RMCza
-	 OzUJm/PAmq+hZfjsf/NDZtnrBI+RHCCz5zNDqINM=
+	b=JJ48THxi9Hz2wtCcT5xbugn/DAlEBHQ/KJUhe47vAZvrVOvKNXIN7/fNJSAXYt9gw
+	 Q7nNYvejdDikDaNPouJHqK+E6bzATMmddCwudP6LnGaQIUNUsYI7+y1G4lUEfTrdH9
+	 4GqG+YtEtVEoCriYXGSENWlQdaXHT6areNmuM9ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Fernandez Pastrana <javier.pastrana@linutronix.de>,
-	Carlos Song <carlos.song@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	Kyungwook Boo <bookyungwook@gmail.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.1 1809/2077] spi: imx: reconfigure for PIO when DMA cannot be started
-Date: Tue, 21 Jul 2026 17:24:42 +0200
-Message-ID: <20260721152635.415572413@linuxfoundation.org>
+Subject: [PATCH 7.1 1810/2077] spi: uniphier: Fix completion initialization order before devm_request_irq()
+Date: Tue, 21 Jul 2026 17:24:43 +0200
+Message-ID: <20260721152635.438209218@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,66 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Fernandez Pastrana <javier.pastrana@linutronix.de>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-commit 245404c26563aafb36aafb01298f148db1851be3 upstream.
+commit f3ad1c87d8201e54b66bd6072442f0b5d5a308ee upstream.
 
-When spi_imx_can_dma() selects DMA, the ECSPI is configured for DMA:
-spi_imx_setupxfer() sets CTRL.SMC and clears dynamic_burst, and
-spi_imx_dma_transfer() programs the dynamic-burst BURST_LENGTH and the
-SDMA watermarks.
+The driver calls devm_request_irq() before initializing the completion
+used by the interrupt handler. Because the interrupt may occur immediately
+after devm_request_irq(), the handler may execute before init_completion().
 
-If the DMA descriptor cannot be prepared (dmaengine_prep_slave_single()
-returns NULL), the transfer is failed with SPI_TRANS_FAIL_NO_START and
-falls back to PIO. The dynamic-burst DMA path uses its own bounce
-buffers instead of the SPI core's mapping, so xfer->{tx,rx}_sg_mapped
-are not set and the core's DMA->PIO retry is skipped; the driver falls
-back to PIO internally. But none of the DMA-mode configuration is
-undone, so the PIO transfer runs with CTRL.SMC set, the wrong burst
-length and dynamic_burst cleared, and the transferred data is corrupted.
+This may result in calling complete() on an uninitialized completion,
+causing undefined behavior. This has been observed with KASAN.
 
-This is easily hit on i.MX8MP boards that describe ECSPI DMA in the
-device tree but run SDMA on ROM firmware (no external sdma-imx7d.bin):
-every ECSPI DMA prepare fails. An Infineon SLB9670 TPM on ECSPI1 then
-returns shifted TPM2_GetCapability data, is flagged "field failure
-mode", /dev/tpmrm0 is never created.
+Fix this by initializing the completion before registering the IRQ.
 
-Set controller->fallback before re-running spi_imx_setupxfer() so the
-ECSPI is reconfigured exactly like a normal PIO transfer. With
-controller->fallback set, spi_imx_setupxfer() sees spi_imx_can_dma()
-return false, so it clears spi_imx->usedma and reprograms the controller
-(clears CTRL.SMC, restores dynamic_burst and the PIO burst length). No
-explicit spi_imx->usedma = false is needed: setupxfer() already updates
-it from the can_dma() result.
-
-Fixes: faa8e404ad8e ("spi: imx: support dynamic burst length for ECSPI DMA mode")
+Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
+Fixes: 5ba155a4d4cc ("spi: add SPI controller driver for UniPhier SoC")
 Cc: stable@vger.kernel.org
-Signed-off-by: Javier Fernandez Pastrana <javier.pastrana@linutronix.de>
-Acked-by: Carlos Song <carlos.song@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260624151958.18626-1-javier.pastrana@linutronix.de
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://patch.msgid.link/20260616011223.201357-1-hayashi.kunihiko@socionext.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-imx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/spi/spi-uniphier.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
-index ae9912905c67..79a6c1a60b0a 100644
---- a/drivers/spi/spi-imx.c
-+++ b/drivers/spi/spi-imx.c
-@@ -2152,7 +2152,8 @@ static int spi_imx_transfer_one(struct spi_controller *controller,
- 	if (spi_imx->usedma) {
- 		ret = spi_imx_dma_transfer(spi_imx, transfer);
- 		if (transfer->error & SPI_TRANS_FAIL_NO_START) {
--			spi_imx->usedma = false;
-+			controller->fallback = true;
-+			spi_imx_setupxfer(spi, transfer);
- 			if (spi_imx->target_mode)
- 				return spi_imx_pio_transfer_target(spi, transfer);
- 			else
--- 
-2.55.0
-
+--- a/drivers/spi/spi-uniphier.c
++++ b/drivers/spi/spi-uniphier.c
+@@ -659,6 +659,8 @@ static int uniphier_spi_probe(struct pla
+ 	priv->host = host;
+ 	priv->is_save_param = false;
+ 
++	init_completion(&priv->xfer_done);
++
+ 	priv->base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+ 	if (IS_ERR(priv->base)) {
+ 		ret = PTR_ERR(priv->base);
+@@ -686,8 +688,6 @@ static int uniphier_spi_probe(struct pla
+ 		goto out_host_put;
+ 	}
+ 
+-	init_completion(&priv->xfer_done);
+-
+ 	clk_rate = clk_get_rate(priv->clk);
+ 
+ 	host->max_speed_hz = DIV_ROUND_UP(clk_rate, SSI_MIN_CLK_DIVIDER);
 
 
