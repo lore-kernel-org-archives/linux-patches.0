@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36DC3446C7;
-	Tue, 21 Jul 2026 21:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45730376A0B;
+	Tue, 21 Jul 2026 21:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669440; cv=none; b=S/Pqg0vmo61MFAVROzZMbm3zX2P2eUokjekvZJu0HqX/NpcyuxQ9ZOsXfIGLn0/uyrNLyEjCJQOhc8uvg9hSU9wkpRuhFUn5ac/d7whYh59dOLHFBXpcGcRCp5Gv1G+dmpY9r8IZQB8498yhd8OQ8BSYCh6wRlr+RXFBL5JLTCY=
+	t=1784669443; cv=none; b=Wp7+5yAxF7lEVexbz/AxNkfGHXH6jYl6p8VWiFsIULD3iuGEmiRc2eWVicMvIi3TqBOOJeVq9dPS7bry0v3CpnrejX0CKqN4D40eXYV/3XnB+vuYkYGhb4Ygapw1YeyGHPEvf5P9H+J0rKGhEhRvD75hn8oBpLQ5mskdmnkefoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669440; c=relaxed/simple;
-	bh=vBjQgw1vrtMJarX/8YkMW1WD7j59HN5DVV886T0JE8g=;
+	s=arc-20240116; t=1784669443; c=relaxed/simple;
+	bh=YM6UyNl7cOj62JWli1wmO1OzJHS0tU7A7/QKoLNZubM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F3LmJHzyGhbvU7PCU0lcQcpvpbFJS7t1zgOrqWsbF4Pyox+ya+n7W6ySXCyjBPrLnjN47V/lcsZ5QteC5DpjfJrDijQKEAm95vkwOTn/4xFXAgInJckFilJNOw9S22cw74m/TfmCWLeHXMlcZ4K3SRQvzefM1IHBhhT0/P7teuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nhcmjq1W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hsXjxB2Duz/tIj/rP+BFtkpVyaxD8i5iDxVBgd3sbAWqVZ6DwO9Wkj63aootXUz+O5vYWvOoafu2ISchIWdRjF7DQPWkKmlaIfAWyeX3TYfMk6BNHFMvI1e5cLt/r2813wHLTgNMzB5M4zPqfpMTtPjaKUjJlWAfP7lI8wjY+3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSc5Wzzt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nhcmjq1W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2191F000E9;
-	Tue, 21 Jul 2026 21:30:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSc5Wzzt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FC41F000E9;
+	Tue, 21 Jul 2026 21:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669438;
-	bh=1ucDsBPc+j/ueNd2GRUZLnl3xO9TOFJ6m2iqFvJvXk0=;
+	s=korg; t=1784669441;
+	bh=Jy/goGY5pbZgZMmYOCnkk4XMmOO5MTV6V2mEAYPk4IY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nhcmjq1WS/O6nWmN954iOfDphFq9F7c4WYq9O3MfUuseDePuuZ+rtFhj6t8Pms83d
-	 NDl4j1ATQJixzfF5A1nQT1WUVf2o0GJ/A8cXxqEycVaO02xl9kCYfA/AeItq+nTUiq
-	 N6SdqAWgT+lVWXZ5jt02nwFAyVP3EqweFF4W/DzU=
+	b=pSc5WzztqmU+415XqTJxOAD91Ydxw0VWREaJRF2b8VppJ9Ty8hCm/cNKQU4KQCsrc
+	 octDGwwlEOK8CxPE9CI2yGI/nW/VPuqx4HOrZAslB06HyqqSEUmwOQ8AcAOubxxM0h
+	 +Ionr/dEk75m/c8uQsFubNz8LZfeCoGec2APnKW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zygmunt Krynicki <me@zygoon.pl>,
-	John Johansen <john.johansen@canonical.com>,
+	Dai Ngo <dai.ngo@oracle.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0554/1067] apparmor: aa_label_alloc use aa_label_free on alloc failure
-Date: Tue, 21 Jul 2026 17:19:15 +0200
-Message-ID: <20260721152437.002342761@linuxfoundation.org>
+Subject: [PATCH 6.1 0519/1067] NFSv4/pnfs: defer return_range callbacks until after inode unlock
+Date: Tue, 21 Jul 2026 17:18:40 +0200
+Message-ID: <20260721152436.221377793@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,39 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zygmunt Krynicki <me@zygoon.pl>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit 654fe7505dc6889724d4094fa64f89991afabfc3 ]
+[ Upstream commit 77b160b2d863d37f36b6c38e80a7d259ce939e69 ]
 
-aa_label_alloc() allocates a secid before allocating or taking the label
-proxy. If the later proxy step fails, the error path only freed the label
-memory, leaking any resources initialized by aa_label_init().
+Sometimes unmounting an NFS filesystem mounted with pNFS SCSI
+layouts triggers the following warning:
 
-Use aa_label_free() on the failure path so partially initialized labels
-release their secid and other label resources before the backing memory is
-freed.
+     BUG: scheduling while atomic: umount.nfs4/...
 
-Fixes: f1bd904175e81 ("apparmor: add the base fns() for domain labels")
-Signed-off-by: Zygmunt Krynicki <me@zygoon.pl>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+    __schedule_bug+0xbd/0x100
+     schedule_debug.constprop.0+0x19f/0x220
+     __schedule+0x10d/0x10a0
+     schedule+0x74/0x190
+     schedule_timeout+0xf5/0x220
+     io_schedule_timeout+0xd5/0x160
+     __wait_for_common+0x186/0x4b0
+     blk_execute_rq+0x2ef/0x3a0
+     scsi_execute_cmd+0x1ff/0x700
+     sd_pr_out_command.isra.0+0x242/0x380 [sd_mod]
+     bl_unregister_scsi.constprop.0+0x109/0x3c0 [blocklayoutdriver]
+     bl_unregister_dev+0x175/0x1c0 [blocklayoutdriver]
+     bl_free_device+0x1f/0x1b0 [blocklayoutdriver]
+     bl_free_deviceid_node+0x12/0x30 [blocklayoutdriver]
+     nfs4_put_deviceid_node+0x171/0x360 [nfsv4]
+     ext_tree_remove+0x11c/0x1d0 [blocklayoutdriver]
+     _pnfs_return_layout+0x416/0x900 [nfsv4]
+     nfs4_evict_inode+0x108/0x130 [nfsv4]
+     evict+0x316/0x750
+     dispose_list+0xf1/0x1a0
+     evict_inodes+0x33f/0x440
+     generic_shutdown_super+0xc9/0x4e0
+     kill_anon_super+0x3a/0x90
+     nfs_kill_super+0x44/0x60 [nfs]
+     deactivate_locked_super+0xb8/0x1b0
+     cleanup_mnt+0x25a/0x380
+     task_work_run+0x13e/0x210
+     exit_to_user_mode_loop+0x169/0x400
+     do_syscall_64+0x467/0x1550
+     entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+The warning occurs because the block layout driver unregisters the SCSI
+device while the inode lock is still held. Device unregistration issues
+a SCSI PR command, which may sleep, resulting in a "scheduling while
+atomic" warning.
+
+During layout return, ext_tree_remove() invokes the layout driver's
+return_range callback while holding the inode lock. For block layouts,
+this callback eventually calls bl_unregister_scsi(), which may block in
+scsi_execute_cmd() while issuing PR commands to the device.
+
+Fix this by deferring the return_range callbacks until after the inode
+lock has been released. The layout header reference count is incremented
+before invoking return_range(), ensuring that the layout header remains
+valid while the layout driver removes extents from the extent tree.
+
+Fixes: c88953d87f5c8 ("pnfs: add return_range method")
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/label.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/callback_proc.c | 9 +++++----
+ fs/nfs/pnfs.c          | 4 ++--
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/security/apparmor/label.c b/security/apparmor/label.c
-index c57c5d296b5199..dc12488b5b3da1 100644
---- a/security/apparmor/label.c
-+++ b/security/apparmor/label.c
-@@ -452,7 +452,7 @@ struct aa_label *aa_label_alloc(int size, struct aa_proxy *proxy, gfp_t gfp)
- 	return new;
+diff --git a/fs/nfs/callback_proc.c b/fs/nfs/callback_proc.c
+index c1eda73254e16f..25ba728d8eedd7 100644
+--- a/fs/nfs/callback_proc.c
++++ b/fs/nfs/callback_proc.c
+@@ -248,6 +248,7 @@ static u32 initiate_file_draining(struct nfs_client *clp,
+ 	struct pnfs_layout_hdr *lo;
+ 	u32 rv = NFS4ERR_NOMATCHING_LAYOUT;
+ 	LIST_HEAD(free_me_list);
++	bool return_range = false;
  
- fail:
--	kfree(new);
-+	aa_label_free(new);
+ 	ino = nfs_layout_find_inode(clp, &args->cbl_fh, &args->cbl_stateid);
+ 	if (IS_ERR(ino)) {
+@@ -292,13 +293,13 @@ static u32 initiate_file_draining(struct nfs_client *clp,
+ 		/* Embrace your forgetfulness! */
+ 		rv = NFS4ERR_NOMATCHING_LAYOUT;
  
- 	return NULL;
- }
+-		if (NFS_SERVER(ino)->pnfs_curr_ld->return_range) {
+-			NFS_SERVER(ino)->pnfs_curr_ld->return_range(lo,
+-				&args->cbl_range);
+-		}
++		return_range = true;
+ 	}
+ unlock:
+ 	spin_unlock(&ino->i_lock);
++	if (return_range && NFS_SERVER(ino)->pnfs_curr_ld->return_range)
++		NFS_SERVER(ino)->pnfs_curr_ld->return_range(lo,
++			&args->cbl_range);
+ 	pnfs_free_lseg_list(&free_me_list);
+ 	/* Free all lsegs that are attached to commit buckets */
+ 	nfs_commit_inode(ino, 0);
+diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
+index fa310bf1ed9abc..0eddfd74577846 100644
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -1375,8 +1375,6 @@ _pnfs_return_layout(struct inode *ino)
+ 	pnfs_clear_layoutcommit(ino, &tmp_list);
+ 	pnfs_mark_matching_lsegs_return(lo, &tmp_list, &range, 0);
+ 
+-	if (NFS_SERVER(ino)->pnfs_curr_ld->return_range)
+-		NFS_SERVER(ino)->pnfs_curr_ld->return_range(lo, &range);
+ 
+ 	/* Don't send a LAYOUTRETURN if list was initially empty */
+ 	if (!test_bit(NFS_LAYOUT_RETURN_REQUESTED, &lo->plh_flags) ||
+@@ -1388,6 +1386,8 @@ _pnfs_return_layout(struct inode *ino)
+ 
+ 	send = pnfs_prepare_layoutreturn(lo, &stateid, &cred, NULL);
+ 	spin_unlock(&ino->i_lock);
++	if (NFS_SERVER(ino)->pnfs_curr_ld->return_range)
++		NFS_SERVER(ino)->pnfs_curr_ld->return_range(lo, &range);
+ 	if (send)
+ 		status = pnfs_send_layoutreturn(lo, &stateid, &cred, IOMODE_ANY, true);
+ out_wait_layoutreturn:
 -- 
 2.53.0
 
