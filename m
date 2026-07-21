@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD73C46D0A4;
-	Tue, 21 Jul 2026 17:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E99946D555;
+	Tue, 21 Jul 2026 17:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655465; cv=none; b=e22irmR/3sO1jpRg6Jq+MuoY+b5ns7clbJbzy7u+1G8kRZRSCiKens9Z5R0Jhgm9jXdPB15ztGnajTL9Qv6FXPDQcptob7soIJ+no71dSyIy1bMgSm3sCZtfBlhbmLGEPqsAU8NQ15iRCq/7Jj4atmxvYZkVBZUBe1kAF3RQfOU=
+	t=1784655466; cv=none; b=RX5faMUSRjAWcUXFDTh1dvCwXbm3dxcx/cuqbV2RI70IyX5MSIGVnNs/CBXBRMM+kANfOfPxVi8m23ctqLxnX4Yn4cVZ5UD15ZCkhYS4wAf+ox/X0tlG3FGOoBEX/w1Bt8JwFu5cDwzswHrMiwDcYoThf3URKFy1q8/nfdChyDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655465; c=relaxed/simple;
-	bh=wOuDYqMoQ72Z2UlMQ7duBhgvXhLieDQBheE+omWQEFA=;
+	s=arc-20240116; t=1784655466; c=relaxed/simple;
+	bh=lgjIDTGBd0ipruMwjzOHvVaxvifgcDGet/CzzhvuBSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NpnIYMYoDWe7Ab3CDmTXl3oW/1Y8gjlN7yHwQAnqNMmXJL1HhZf9JjkyqnKjVhy256RCYUwkjwt4633whN74+24G2mbcdatg4kGEvD6g1i4fXNgw+033kNwAwS3yraN7lYRJMMAlzC26VbZ4HtSHo9/3ZVUzbvxzhL/Jon8vjIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tMvy328q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nsB/jTohKtpU76QNF8tidVQXZmeYe0ErmfFaRpZ6s9ejsu+EY6D2p3VC8G6EJjiyie1g9MWy6IEYJ8n6WDqO2kyssQOJungcU5eNBjnieAOwqBf3xuS5pZwdaPptWSgGhjTQws+JGehgJ65ZfdcQfj1U/y4ua79IYY/nzlf4mu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQddRH7e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tMvy328q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DC61F000E9;
-	Tue, 21 Jul 2026 17:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQddRH7e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E071F00A3A;
+	Tue, 21 Jul 2026 17:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655462;
-	bh=GZyJVwJhQZykdzoLF1xulRsEJE0AbQLEAiH7HeuKiLc=;
+	s=korg; t=1784655465;
+	bh=k9GJVDxnwYozllgYH4S3lXHLiT6ZCd9OPNfzSsHcxUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tMvy328q7Ji8beM6n/5d8qmld2lI5F0uQkPNVsAJ4p8WoOXfTpwlivv9Xx/X6KZnJ
-	 iEsZECxT8GnZkbzNGV3d/JPO+ujH3aM12SgL3wmH7iQ7FKKZMX8gi9qhaKv8f1fro9
-	 LRqM1T9xJiTfaEeIRF4P/XFSSsb10e5FQlD+bcfk=
+	b=LQddRH7eXIXSD2Zn3vVGSTDIKLj9vqNPE8W/s8BzrfO/cJpM94iJCwUaCRch8QqhE
+	 AbXlQmZQFcHBC6U4dH4sbWh825wfyIZ8CWFnh2D3TXwUuqd1M0hz63sn405IwW/xp9
+	 s/gRvpB7cVgpL6/pc8/7XtfhvCi/C0+ybaWb5HAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@alien8.de>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>,
+	Xingyu Jin <xingyuj@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0019/1611] iommu/amd: Use maximum PPR log buffer size when SNP is enabled on Family 0x19
-Date: Tue, 21 Jul 2026 17:02:15 +0200
-Message-ID: <20260721152515.228743536@linuxfoundation.org>
+Subject: [PATCH 6.18 0020/1611] af_unix: Drop all SCM attributes for SOCKMAP.
+Date: Tue, 21 Jul 2026 17:02:16 +0200
+Message-ID: <20260721152515.254940872@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,147 +52,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 1f44aab79bac31f459422dfb213e907bb386509c ]
+[ Upstream commit 965dc93481d1b80d341bdd16c27b16fe197175ee ]
 
-Due to CVE-2023-20585, the PPR log buffer must use the maximum supported
-size (512K) on Genoa (Family 0x19, model >= 0x10) systems when SNP is
-enabled, to mitigate a potential security vulnerability. Note that Family
-0x19 models below 0x10 (Milan) do not support PPR when SNP is enabled.
-Hence the PPR log size increase is only applied for model >= 0x10.
-All other systems continue to use the default PPR log buffer size (8K).
+SOCKMAP can hide inflight fd from AF_UNIX GC.
 
-Apply the errata fix by making the following changes:
+When a socket in SOCKMAP receives skb with inflight fd,
+sk_psock_verdict_data_ready() looks up the mapped socket and
+enqueue skb to its psock->ingress_skb.
 
-- Introduce global new variable (amd_iommu_pprlog_size) to have PPR log buffer
-  size. Adjust variable size for Genoa family.
+Since neither the old nor the new GC can inspect the psock
+queue, the hidden skb leaks the inflight sockets.  Note that
+this cannot be detected via kmemleak because inflight sockets
+are linked to a global list.
 
-- Extend 'amd_iommu_apply_erratum_snp()' to also set the PPR log buffer
-  size to maximum for Family 0x19 model >= 0x10 when SNP is enabled.
+In addition, SOCKMAP redirect breaks the Tarjan-based GC's
+assumption that unix_edge.successor is always alive, which
+is no longer true once skb is redirected, resulting in
+use-after-free below. [0]
 
-- Rename PPR_* macros to make it more readable.
+Moreover, SOCKMAP does not call scm_stat_del() properly,
+so unix_show_fdinfo() could report an incorrect fd count.
 
-Link: https://www.amd.com/en/resources/product-security/bulletin/amd-sb-3016.html
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Cc: Joerg Roedel <joerg.roedel@amd.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Tested-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+sk_msg_recvmsg() does not support any SCM attributes in the
+first place.
+
+Let's drop all SCM attributes before passing skb to the
+SOCKMAP layer.
+
+[0]:
+BUG: KASAN: slab-use-after-free in unix_del_edges (net/unix/garbage.c:118 net/unix/garbage.c:181 net/unix/garbage.c:251)
+Read of size 8 at addr ffff888125362670 by task kworker/56:1/496
+
+CPU: 56 UID: 0 PID: 496 Comm: kworker/56:1 Not tainted 7.0.0-rc7-00263-gb9d8b856689d #3 PREEMPT(lazy)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+Workqueue: events sk_psock_backlog
+Call Trace:
+ <TASK>
+ dump_stack_lvl (lib/dump_stack.c:122)
+ print_report (mm/kasan/report.c:379)
+ kasan_report (mm/kasan/report.c:597)
+ unix_del_edges (net/unix/garbage.c:118 net/unix/garbage.c:181 net/unix/garbage.c:251)
+ unix_destroy_fpl (net/unix/garbage.c:317)
+ unix_destruct_scm (./include/net/scm.h:80 ./include/net/scm.h:86 net/unix/af_unix.c:1976)
+ sk_psock_backlog (./include/linux/skbuff.h:?)
+ process_scheduled_works (kernel/workqueue.c:?)
+ worker_thread (kernel/workqueue.c:?)
+ kthread (kernel/kthread.c:438)
+ ret_from_fork (arch/x86/kernel/process.c:164)
+ ret_from_fork_asm (arch/x86/entry/entry_64.S:258)
+ </TASK>
+
+Allocated by task 955:
+ kasan_save_track (mm/kasan/common.c:58 mm/kasan/common.c:78)
+ __kasan_slab_alloc (mm/kasan/common.c:369)
+ kmem_cache_alloc_noprof (mm/slub.c:4539)
+ sk_prot_alloc (net/core/sock.c:2240)
+ sk_alloc (net/core/sock.c:2301)
+ unix_create1 (net/unix/af_unix.c:1099)
+ unix_create (net/unix/af_unix.c:1169)
+ __sock_create (net/socket.c:1606)
+ __sys_socketpair (net/socket.c:1811)
+ __x64_sys_socketpair (net/socket.c:1863 net/socket.c:1860 net/socket.c:1860)
+ do_syscall_64 (arch/x86/entry/syscall_64.c:?)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+Freed by task 496:
+ kasan_save_track (mm/kasan/common.c:58 mm/kasan/common.c:78)
+ kasan_save_free_info (mm/kasan/generic.c:587)
+ __kasan_slab_free (mm/kasan/common.c:287)
+ kmem_cache_free (mm/slub.c:6165)
+ __sk_destruct (net/core/sock.c:2282 net/core/sock.c:2384)
+ sk_psock_destroy (./include/net/sock.h:?)
+ process_scheduled_works (kernel/workqueue.c:?)
+ worker_thread (kernel/workqueue.c:?)
+ kthread (kernel/kthread.c:438)
+ ret_from_fork (arch/x86/kernel/process.c:164)
+ ret_from_fork_asm (arch/x86/entry/entry_64.S:258)
+
+Fixes: c63829182c37 ("af_unix: Implement ->psock_update_sk_prot()")
+Fixes: 77462de14a43 ("af_unix: Add read_sock for stream socket types")
+Reported-by: Xingyu Jin <xingyuj@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260415184830.3988432-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/amd_iommu.h       |  1 +
- drivers/iommu/amd/amd_iommu_types.h | 11 ++++++-----
- drivers/iommu/amd/init.c            | 13 ++++++++++++-
- drivers/iommu/amd/ppr.c             |  8 +++++---
- 4 files changed, 24 insertions(+), 9 deletions(-)
+ net/unix/af_unix.c | 35 +++++++++++++++++++++++++++--------
+ 1 file changed, 27 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/iommu/amd/amd_iommu.h b/drivers/iommu/amd/amd_iommu.h
-index 57d7f3faa98c6e..ef397c5a2c4ab2 100644
---- a/drivers/iommu/amd/amd_iommu.h
-+++ b/drivers/iommu/amd/amd_iommu.h
-@@ -12,6 +12,7 @@
- #include "amd_iommu_types.h"
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index b339f83caf036e..12c075a07e76b7 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1985,16 +1985,19 @@ static void unix_peek_fds(struct scm_cookie *scm, struct sk_buff *skb)
  
- extern int amd_iommu_evtlog_size;
-+extern int amd_iommu_pprlog_size;
- 
- irqreturn_t amd_iommu_int_thread(int irq, void *data);
- irqreturn_t amd_iommu_int_thread_evtlog(int irq, void *data);
-diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
-index bdd6c38ddfec9b..2494b1958117b2 100644
---- a/drivers/iommu/amd/amd_iommu_types.h
-+++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -257,11 +257,12 @@
- #define EVTLOG_LEN_MASK_MAX	(0xFULL << EVTLOG_SIZE_SHIFT)
- 
- /* Constants for PPR Log handling */
--#define PPR_LOG_ENTRIES		512
--#define PPR_LOG_SIZE_SHIFT	56
--#define PPR_LOG_SIZE_512	(0x9ULL << PPR_LOG_SIZE_SHIFT)
--#define PPR_ENTRY_SIZE		16
--#define PPR_LOG_SIZE		(PPR_ENTRY_SIZE * PPR_LOG_ENTRIES)
-+#define PPRLOG_ENTRY_SIZE	0x10
-+#define PPRLOG_SIZE_SHIFT	56
-+#define PPRLOG_SIZE_DEF		SZ_8K	/* 512 entries */
-+#define PPRLOG_LEN_MASK_DEF	(0x9ULL << PPRLOG_SIZE_SHIFT)
-+#define PPRLOG_SIZE_MAX		SZ_512K	/* 32K entries */
-+#define PPRLOG_LEN_MASK_MAX	(0xFULL << PPRLOG_SIZE_SHIFT)
- 
- /* PAGE_SERVICE_REQUEST PPR Log Buffer Entry flags */
- #define PPR_FLAG_EXEC		0x002	/* Execute permission requested */
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 64964bb5ce0d36..6e5efc340c83e4 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -133,6 +133,7 @@ struct ivhd_entry {
- } __attribute__((packed));
- 
- int amd_iommu_evtlog_size = EVTLOG_SIZE_DEF;
-+int amd_iommu_pprlog_size = PPRLOG_SIZE_DEF;
- 
- /*
-  * An AMD IOMMU memory definition structure. It defines things like exclusion
-@@ -3411,6 +3412,16 @@ static void amd_iommu_apply_erratum_snp(void)
- 	amd_iommu_evtlog_size = EVTLOG_SIZE_MAX;
- 	pr_info("Applying erratum: Increase Event log size to 0x%x\n",
- 		amd_iommu_evtlog_size);
-+
-+	/*
-+	 * Set PPR log buffer size to max.
-+	 * (Family 0x19, model < 0x10 doesn't support PPR when SNP is enabled).
-+	 */
-+	if (boot_cpu_data.x86_model >= 0x10) {
-+		amd_iommu_pprlog_size = PPRLOG_SIZE_MAX;
-+		pr_info("Applying erratum: Increase PPR log size to 0x%x\n",
-+			amd_iommu_pprlog_size);
-+	}
- #endif
- }
- 
-@@ -4071,7 +4082,7 @@ int amd_iommu_snp_disable(void)
- 		if (ret)
- 			return ret;
- 
--		ret = iommu_make_shared(iommu->ppr_log, PPR_LOG_SIZE);
-+		ret = iommu_make_shared(iommu->ppr_log, amd_iommu_pprlog_size);
- 		if (ret)
- 			return ret;
- 
-diff --git a/drivers/iommu/amd/ppr.c b/drivers/iommu/amd/ppr.c
-index e6767c057d01fa..1f8d2823bea42c 100644
---- a/drivers/iommu/amd/ppr.c
-+++ b/drivers/iommu/amd/ppr.c
-@@ -20,7 +20,7 @@
- int __init amd_iommu_alloc_ppr_log(struct amd_iommu *iommu)
+ static void unix_destruct_scm(struct sk_buff *skb)
  {
- 	iommu->ppr_log = iommu_alloc_4k_pages(iommu, GFP_KERNEL | __GFP_ZERO,
--					      PPR_LOG_SIZE);
-+					      amd_iommu_pprlog_size);
- 	return iommu->ppr_log ? 0 : -ENOMEM;
+-	struct scm_cookie scm;
++	struct scm_cookie scm = {};
++
++	swap(scm.pid, UNIXCB(skb).pid);
+ 
+-	memset(&scm, 0, sizeof(scm));
+-	scm.pid = UNIXCB(skb).pid;
+ 	if (UNIXCB(skb).fp)
+ 		unix_detach_fds(&scm, skb);
+ 
+-	/* Alas, it calls VFS */
+-	/* So fscking what? fput() had been SMP-safe since the last Summer */
+ 	scm_destroy(&scm);
++}
++
++static void unix_wfree(struct sk_buff *skb)
++{
++	unix_destruct_scm(skb);
+ 	sock_wfree(skb);
  }
  
-@@ -33,7 +33,9 @@ void amd_iommu_enable_ppr_log(struct amd_iommu *iommu)
+@@ -2010,7 +2013,7 @@ static int unix_scm_to_skb(struct scm_cookie *scm, struct sk_buff *skb, bool sen
+ 	if (scm->fp && send_fds)
+ 		err = unix_attach_fds(scm, skb);
  
- 	iommu_feature_enable(iommu, CONTROL_PPR_EN);
+-	skb->destructor = unix_destruct_scm;
++	skb->destructor = unix_wfree;
+ 	return err;
+ }
  
--	entry = iommu_virt_to_phys(iommu->ppr_log) | PPR_LOG_SIZE_512;
-+	entry = iommu_virt_to_phys(iommu->ppr_log);
-+	entry |= (amd_iommu_pprlog_size == PPRLOG_SIZE_DEF) ?
-+			PPRLOG_LEN_MASK_DEF : PPRLOG_LEN_MASK_MAX;
+@@ -2087,6 +2090,13 @@ static void scm_stat_del(struct sock *sk, struct sk_buff *skb)
+ 	}
+ }
  
- 	memcpy_toio(iommu->mmio_base + MMIO_PPR_LOG_OFFSET,
- 		    &entry, sizeof(entry));
-@@ -201,7 +203,7 @@ void amd_iommu_poll_ppr_log(struct amd_iommu *iommu)
- 			raw[0] = raw[1] = 0UL;
++static void unix_orphan_scm(struct sock *sk, struct sk_buff *skb)
++{
++	scm_stat_del(sk, skb);
++	unix_destruct_scm(skb);
++	skb->destructor = sock_wfree;
++}
++
+ /*
+  *	Send AF_UNIX data.
+  */
+@@ -2704,10 +2714,16 @@ static int unix_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ 	int err;
  
- 		/* Update head pointer of hardware ring-buffer */
--		head = (head + PPR_ENTRY_SIZE) % PPR_LOG_SIZE;
-+		head = (head + PPRLOG_ENTRY_SIZE) % amd_iommu_pprlog_size;
- 		writel(head, iommu->mmio_base + MMIO_PPR_HEAD_OFFSET);
+ 	mutex_lock(&u->iolock);
++
+ 	skb = skb_recv_datagram(sk, MSG_DONTWAIT, &err);
+-	mutex_unlock(&u->iolock);
+-	if (!skb)
++	if (!skb) {
++		mutex_unlock(&u->iolock);
+ 		return err;
++	}
++
++	unix_orphan_scm(sk, skb);
++
++	mutex_unlock(&u->iolock);
  
- 		/* Handle PPR entry */
+ 	return recv_actor(sk, skb);
+ }
+@@ -2905,6 +2921,9 @@ static int unix_stream_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ #endif
+ 
+ 	spin_unlock(&queue->lock);
++
++	unix_orphan_scm(sk, skb);
++
+ 	mutex_unlock(&u->iolock);
+ 
+ 	return recv_actor(sk, skb);
 -- 
 2.53.0
 
