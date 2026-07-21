@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3953B95E0;
-	Tue, 21 Jul 2026 21:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316E934DCF3;
+	Tue, 21 Jul 2026 21:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668234; cv=none; b=VCZ2Ga4afocyKc8tm4ocAgw7/ovgf4ZgS6YF1mFBEs7HSv4iqhEWSUVGhCZ9Uyljhc0ZIPoVJWmct2ysteRnBzKluGMipPp1TQ6Nz2wsmJvhfE1fjhhKGG2OjN7GRsXeSn4g4Rf7D+wmZ2XfHBqwxtcpQ8mU2AXA/cJjENx8NP0=
+	t=1784668236; cv=none; b=izpBmyiIFBUpFabdhbP7HTpe67LJRSIAGdJGQLoR5bESnefAx7XO1tgjf+mKl54g3Apx6/fcwjaQiESjRtaSLtN5JE2RH3ToU5tADFsDESObOKVYbymNHNsLoToz71pMpde4u7ZblX2wHI70pb0cFjFgfXFENtxV/Gx4b6+OglY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668234; c=relaxed/simple;
-	bh=PROtPILrG94iG9csjhQN2EUyY076V7K4JSp5aUt4WH8=;
+	s=arc-20240116; t=1784668236; c=relaxed/simple;
+	bh=S3dHw2dZCBdaQidA9eb/GP3aYsrESWfw+hQhohjZqII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A6yoYYSqvlv9UdF1RB1vShBjSTM6TPu6hulznHhyLFslqwSxfsuwwJOH0/pIaYu/Mt5X5xy+tvnrBU0z+aK7K92yVmoVJjyJ4qiBoxmYrBzlj6p0inW41BsG0TxSMZztvUCp/LZX+1waMij12vgCs1B2jYZVFuT5D4M5Y1snW0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wYkuSNTK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BOryWJbBx/tA/XWweS2N4ht+risG3B1pBIBb3crKMmsc5qIZ82zQU+WXq3f1RPcNvROlY8z7qsjYIKYdKdb+1+wgpQMgX9K/JyzD1vbtS0i2m1VBgf5Z29ydoY/78/EjJl2QZIZ1uM5/gS+eQODgx+EVsLtrJ0LfCVZXAis5N7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvlFm7nF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wYkuSNTK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8F141F000E9;
-	Tue, 21 Jul 2026 21:10:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvlFm7nF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E2F1F000E9;
+	Tue, 21 Jul 2026 21:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668232;
-	bh=g7hABGeofsyrgX3WmmkwDDas9wip7gsdaRlB9KNT+8c=;
+	s=korg; t=1784668235;
+	bh=wNrqwluGubeo0qb5WRaej/bV7m4J3FYb+cwP3DzeQEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wYkuSNTK52KHQVSKSFapvOesHMZKfesqwtkG6sVYPvATs8bnuaNTXHtdrz+rAN894
-	 xHdpMxUtKC7cyhUl+eVULL34314rQ80q9mkznhGDl72U2F+euLnYpuv1fSvIUg1Nih
-	 L+Ef/JPxLkAxV5FrDjA290Git7RfFqdedIAYAGvc=
+	b=vvlFm7nFq0vIPiKk4+yrbhLK9T/gzSu9xqpy8XWg5m0StdqFAK7Mk+Y1c2tsjeezV
+	 n11m8e6n4H31c0+HhQoPY3R3yOBUiPN8o8a/hfMf/xevWJWos6JO+qQj65vycmYSDw
+	 4l9wcRAcMDhP2VWkbAYKGaf7DEUrIDXt6Qk3ZSHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.1 0096/1067] netfilter: ipset: fix race between dump and ip_set_list resize
-Date: Tue, 21 Jul 2026 17:11:37 +0200
-Message-ID: <20260721152426.735585677@linuxfoundation.org>
+	Pawel Moll <pawel.moll@arm.com>,
+	Johan Hovold <johan@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.1 0097/1067] virtio-mmio: fix device release warning on module unload
+Date: Tue, 21 Jul 2026 17:11:38 +0200
+Message-ID: <20260721152426.759774099@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,77 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Johan Hovold <johan@kernel.org>
 
-commit 7cd9103283b26b917360ec99d7d2f2d761bcf1ab upstream.
+commit c687bc35694698ec4c7f92bf929c3d659f0cecb8 upstream.
 
-The release path of ip_set_dump_do() and ip_set_dump_done() read
-inst->ip_set_list via ip_set_ref_netlink(), a plain rcu_dereference_raw()
-of the array pointer. These run from netlink_recvmsg() without the nfnl
-mutex and without an RCU read-side critical section.
+Driver core expects devices to be allocated dynamically and complains
+loudly when a device that lacks a release function is freed.
 
-A concurrent ip_set_create() can grow the array: it publishes the new
-array, calls synchronize_net() and then kvfree()s the old one. Since the
-dump paths read the array outside any RCU reader, synchronize_net() does
-not wait for them and the old array can be freed while they still index
-into it, causing a use-after-free.
+Use __root_device_register() to allocate and register the root device
+instead of open coding using a static device.
 
-The dumped set itself stays pinned via set->ref_netlink, so only the
-array load needs protecting. Take rcu_read_lock() around it, matching
-ip_set_get_byname() and __ip_set_put_byindex().
+Note that root_device_register(), which also creates a link to the
+module, cannot be used as the device is registered when parsing the
+module parameters which happens before the module kobject has been set
+up.
 
-  BUG: KASAN: slab-use-after-free in ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1697)
-  Read of size 8 at addr ffff88800b5c4018 by task exploit/150
-  Call Trace:
-   ...
-   kasan_report (mm/kasan/report.c:595)
-   ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1697)
-   netlink_dump (net/netlink/af_netlink.c:2325)
-   netlink_recvmsg (net/netlink/af_netlink.c:1976)
-   sock_recvmsg (net/socket.c:1159)
-   __sys_recvfrom (net/socket.c:2315)
-   ...
-  Oops: general protection fault, probably for non-canonical address ... KASAN NOPTI
-  KASAN: maybe wild-memory-access in range [0x02d6...d0-0x02d6...d7]
-  RIP: 0010:ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1698)
-  Kernel panic - not syncing: Fatal exception
-
-Fixes: 8a02bdd50b2e ("netfilter: ipset: Fix calling ip_set() macro at dumping")
-Cc: stable@vger.kernel.org
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 81a054ce0b46 ("virtio-mmio: Devices parameter parsing")
+Cc: stable@vger.kernel.org	# 3.5
+Cc: Pawel Moll <pawel.moll@arm.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260427143710.14702-1-johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipset/ip_set_core.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/virtio/virtio_mmio.c |   26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -1482,7 +1482,11 @@ ip_set_dump_done(struct netlink_callback
- 		struct ip_set_net *inst =
- 			(struct ip_set_net *)cb->args[IPSET_CB_NET];
- 		ip_set_id_t index = (ip_set_id_t)cb->args[IPSET_CB_INDEX];
--		struct ip_set *set = ip_set_ref_netlink(inst, index);
-+		struct ip_set *set;
-+
-+		rcu_read_lock();
-+		set = ip_set_ref_netlink(inst, index);
-+		rcu_read_unlock();
+--- a/drivers/virtio/virtio_mmio.c
++++ b/drivers/virtio/virtio_mmio.c
+@@ -693,9 +693,7 @@ static int virtio_mmio_remove(struct pla
  
- 		if (set->variant->uref)
- 			set->variant->uref(set, cb, false);
-@@ -1687,7 +1691,9 @@ next_set:
- release_refcount:
- 	/* If there was an error or set is done, release set */
- 	if (ret || !cb->args[IPSET_CB_ARG0]) {
-+		rcu_read_lock();
- 		set = ip_set_ref_netlink(inst, index);
-+		rcu_read_unlock();
- 		if (set->variant->uref)
- 			set->variant->uref(set, cb, false);
- 		pr_debug("release set %s\n", set->name);
+ #if defined(CONFIG_VIRTIO_MMIO_CMDLINE_DEVICES)
+ 
+-static struct device vm_cmdline_parent = {
+-	.init_name = "virtio-mmio-cmdline",
+-};
++static struct device *vm_cmdline_parent;
+ 
+ static int vm_cmdline_parent_registered;
+ static int vm_cmdline_id;
+@@ -703,7 +701,6 @@ static int vm_cmdline_id;
+ static int vm_cmdline_set(const char *device,
+ 		const struct kernel_param *kp)
+ {
+-	int err;
+ 	struct resource resources[2] = {};
+ 	char *str;
+ 	long long base, size;
+@@ -735,11 +732,10 @@ static int vm_cmdline_set(const char *de
+ 	resources[1].start = resources[1].end = irq;
+ 
+ 	if (!vm_cmdline_parent_registered) {
+-		err = device_register(&vm_cmdline_parent);
+-		if (err) {
+-			put_device(&vm_cmdline_parent);
++		vm_cmdline_parent = __root_device_register("virtio-mmio-cmdline", NULL);
++		if (IS_ERR(vm_cmdline_parent)) {
+ 			pr_err("Failed to register parent device!\n");
+-			return err;
++			return PTR_ERR(vm_cmdline_parent);
+ 		}
+ 		vm_cmdline_parent_registered = 1;
+ 	}
+@@ -750,7 +746,7 @@ static int vm_cmdline_set(const char *de
+ 		       (unsigned long long)resources[0].end,
+ 		       (int)resources[1].start);
+ 
+-	pdev = platform_device_register_resndata(&vm_cmdline_parent,
++	pdev = platform_device_register_resndata(vm_cmdline_parent,
+ 			"virtio-mmio", vm_cmdline_id++,
+ 			resources, ARRAY_SIZE(resources), NULL, 0);
+ 
+@@ -774,8 +770,12 @@ static int vm_cmdline_get_device(struct
+ static int vm_cmdline_get(char *buffer, const struct kernel_param *kp)
+ {
+ 	buffer[0] = '\0';
+-	device_for_each_child(&vm_cmdline_parent, buffer,
+-			vm_cmdline_get_device);
++
++	if (vm_cmdline_parent_registered) {
++		device_for_each_child(vm_cmdline_parent, buffer,
++				vm_cmdline_get_device);
++	}
++
+ 	return strlen(buffer) + 1;
+ }
+ 
+@@ -797,9 +797,9 @@ static int vm_unregister_cmdline_device(
+ static void vm_unregister_cmdline_devices(void)
+ {
+ 	if (vm_cmdline_parent_registered) {
+-		device_for_each_child(&vm_cmdline_parent, NULL,
++		device_for_each_child(vm_cmdline_parent, NULL,
+ 				vm_unregister_cmdline_device);
+-		device_unregister(&vm_cmdline_parent);
++		root_device_unregister(vm_cmdline_parent);
+ 		vm_cmdline_parent_registered = 0;
+ 	}
+ }
 
 
