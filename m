@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8080B47252F;
-	Tue, 21 Jul 2026 20:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9499447143C;
+	Tue, 21 Jul 2026 20:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664228; cv=none; b=S3I+vXyXRAykYvKqiA+faq3YhPhpj2LoI0/fROlT9vJSq44M5De968y4DjTnwO8tQ8TYeFrS/SzrO9a42hrH1FvY1l54ivyuHKmbh8gKeFbAZ7ciwaghER1hgCE9AUytx2379ZAfEvjkLTXFla/K2BbpDCsyKg2uXmlzr2TWS78=
+	t=1784664228; cv=none; b=PhZvuVRtvtqXkdo6+gw/olC9cPcjst/0xDvvlaodUPWGh6fTvgJXVt02QzCirW2RwtX/T9ZBNSUl8ozLSkCIwu7X3Crrs54HqL5IK3BI3C7rjx0vOwOtALitEilIKWdzB2khw3t2j+ZcMtDM/lbzIpwGBQAa4oTURAgQa4+neMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784664228; c=relaxed/simple;
-	bh=K1I41DtArZVU32JF8ZJJ6MzwC7k1vMXteHpzaeGf3hc=;
+	bh=2X9SqOTi24FfvfOExUmuwOR3mtl8Rv+BYL4u03pHp00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lGpCPLxuVR3/s2soBIYJj/w3cfIDj9Ggmy3vhNZyoordE1Zj3/J4dFIHReQwdx5ln6fR6Ccz/0VrVZHPEbgJJ0Hkp8qLeqsFOTqlBdIVSMdo0PL0+eNk5uQ4Mvb1+5HFTxh/8XfaEc8GVQyn823MqeM25LZk/QsGtDUiFBv2J1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LmItFCaa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MCylhsG3HuppZ/sJfdFiYcX1E17lEI6sbkRQrM0epUyHXH1YOowwUtJTlLXBxT/VDPocRYpQrG4ezDysALsG1W5VC4s/rWJXTBEcdNCXFOtxx7HsNXk9wJm3FSqrMfr24Xlx2kL5uRf3vToT53r3ECde6AX7U/dHWNE9Asz71JY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUJWl5f1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LmItFCaa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E53DD1F00A3A;
-	Tue, 21 Jul 2026 20:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUJWl5f1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9CF1F000E9;
+	Tue, 21 Jul 2026 20:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664223;
-	bh=3fk4ugkvP8U50/lo/0mFPdReFkLB5JUiW3Xp9g8XgTU=;
+	s=korg; t=1784664226;
+	bh=Mw/K8w8C0BLa/TNTVYBHooS91ypnjoDORZj/o9EEuHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LmItFCaa4QcOp6cA4THieIBX99IJxoqcvdkbvkG7ajdIHJ0Qwd5/VUfa7Jnl2QbWc
-	 yDEQL0yxu+7Yu7payGnpnYUoB2k1jivTDNVfbJof+Sx9XsxaCg6qaHl8RRMcVcZck6
-	 dqdGlH9im2ty9ZwX6amhOqVLr3OPJWLv1Al8K4XE=
+	b=VUJWl5f1+vUDM0PyHjtBUxHmmodSg6GNxlAkJgiYRb7LxDjrr+2N4JcYu7sV0D8vZ
+	 8QOExoV9jTDiLgb3FXL7YTWc5ymbSR/c9OBKg8fkhkSNpa8PwuC6zq4tz+KYYa/5DX
+	 HjJap0Zgm3UkMrhGAERdh9B9PmhU1WcnU1Nmxwmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.12 1120/1276] powerpc/spufs: fix out-of-bounds access in spufs_mem_mmap_access()
-Date: Tue, 21 Jul 2026 17:26:03 +0200
-Message-ID: <20260721152511.059624164@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Zhiling Zou <roxy520tt@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 1121/1276] wifi: mac80211: free ack status frame on TX header build failure
+Date: Tue, 21 Jul 2026 17:26:04 +0200
+Message-ID: <20260721152511.081180247@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,47 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Zhiling Zou <roxy520tt@gmail.com>
 
-commit 47b87f469a35b5ffc81c16eee6b13a9b6c8d55c6 upstream.
+commit 2c51457d930f723e5f2903af90f5847f7df53f42 upstream.
 
-spufs_mem_mmap_access() computes the local store offset as
-address - vma->vm_start, but bounds-checks it against vma->vm_end
-instead of the local store size. On 64-bit, offset is always well
-below vma->vm_end, so the clamp never fires and len stays unbounded
-against the LS_SIZE buffer returned by ctx->ops->get_ls().
+ieee80211_build_hdr() stores an ACK status frame before it has
+finished all validation and header construction. If a later error path
+is taken, the transmit skb is freed but the stored ACK status frame
+remains in local->ack_status_frames.
 
-Reject offsets at or beyond LS_SIZE and clamp len to the remaining
-space, mirroring the guard already used by spufs_mem_mmap_fault() and
-spufs_ps_fault().
+This can happen for control port frames when the requested MLO link ID
+does not match the link selected for a non-MLO station. Repeated
+failures can fill the ACK status IDR and leave pending ACK frames until
+hardware teardown.
 
-Fixes: a352894d0705 ("spufs: use new vm_ops->access to allow local state access from gdb")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Remove any stored ACK status frame before returning an error after it
+has been inserted into the IDR.
+
+Fixes: a729cff8ad51 ("mac80211: implement wifi TX status")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/SYBPR01MB7881EE775E8B51C09F5A29E7AF152@SYBPR01MB7881.ausprd01.prod.outlook.com
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Link: https://patch.msgid.link/9de0423da840e92084915b8f92e66a421245c4b8.1782462409.git.roxy520tt@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/cell/spufs/file.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/mac80211/tx.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/arch/powerpc/platforms/cell/spufs/file.c
-+++ b/arch/powerpc/platforms/cell/spufs/file.c
-@@ -268,10 +268,12 @@ static int spufs_mem_mmap_access(struct
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -2578,6 +2578,18 @@ static u16 ieee80211_store_ack_skb(struc
+ 	return info_id;
+ }
  
- 	if (write && !(vma->vm_flags & VM_WRITE))
- 		return -EACCES;
-+	if (offset >= LS_SIZE)
-+		return -EFAULT;
- 	if (spu_acquire(ctx))
- 		return -EINTR;
--	if ((offset + len) > vma->vm_end)
--		len = vma->vm_end - offset;
-+	if ((offset + len) > LS_SIZE)
-+		len = LS_SIZE - offset;
- 	local_store = ctx->ops->get_ls(ctx);
- 	if (write)
- 		memcpy_toio(local_store + offset, buf, len);
++static void ieee80211_remove_ack_skb(struct ieee80211_local *local, u16 info_id)
++{
++	struct sk_buff *ack_skb;
++	unsigned long flags;
++
++	spin_lock_irqsave(&local->ack_status_lock, flags);
++	ack_skb = idr_remove(&local->ack_status_frames, info_id);
++	spin_unlock_irqrestore(&local->ack_status_lock, flags);
++
++	kfree_skb(ack_skb);
++}
++
+ /**
+  * ieee80211_build_hdr - build 802.11 header in the given frame
+  * @sdata: virtual interface to build the header for
+@@ -2935,7 +2947,8 @@ static struct sk_buff *ieee80211_build_h
+ 		if (ieee80211_skb_resize(sdata, skb, head_need, ENCRYPT_DATA)) {
+ 			ieee80211_free_txskb(&local->hw, skb);
+ 			skb = NULL;
+-			return ERR_PTR(-ENOMEM);
++			ret = -ENOMEM;
++			goto free;
+ 		}
+ 	}
+ 
+@@ -3003,6 +3016,8 @@ static struct sk_buff *ieee80211_build_h
+ 
+ 	return skb;
+  free:
++	if (info_id)
++		ieee80211_remove_ack_skb(local, info_id);
+ 	kfree_skb(skb);
+ 	return ERR_PTR(ret);
+ }
 
 
