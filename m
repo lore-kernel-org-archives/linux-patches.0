@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2919F47143C;
-	Tue, 21 Jul 2026 20:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E9547044D;
+	Tue, 21 Jul 2026 20:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664174; cv=none; b=KJzeoL8Lu8k5NRE43zf0NS4KQflVbAnCJfN4w5yFebwKXwaQWLrp1nM3noAT0Ewx+O05RG9PbOQn/qGMJ2sc9S/AqUyrfzUMqnm6Dv9dPkUTrOPfAuHCA+fW3pV1PmBqdy9x9J+jLLdBS50DuNLzgt5IvkRr1w0VME45zIrYsnI=
+	t=1784664176; cv=none; b=lKICLpd6SKVJSTuTsTGspdfYUISHUTEYdXRPkvYseMm03edJNd0/pwVqFCCYgpDZSxYU2NB2oPVTF1fBmQt8nDowKBK6vHudLdTGOZf3VBcTWFmD0FSkJSZZFixTgASMEp/LfAFD0L3tbWgKvuWMnUye9TzhgAt+081DTqTcB/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664174; c=relaxed/simple;
-	bh=572GHXuc4GjRdhjtSMLAe8gVhLZzSfIMGT4A6/Lf/dE=;
+	s=arc-20240116; t=1784664176; c=relaxed/simple;
+	bh=81uVUIk+NtjVETagzHrpAtE0jYVnFV9QRAkWrbdK7y0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q8TSsGIsTLYIN7f4/GLRN2EdZ6Va1nNM5ZhyEIcf8FUY0JCaXQX9kWNoXci8ziKbvHPi8RClPi/gkUYzKhG+oZ+qTGyF8rLRFhXg5KtAixb4GQB+vVyCqezMOvR5uPO415QC+ntUe6Acggmn1eQpgOk/8l9GA9Ij2JDEXhj0Vv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VJcoDOo7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nWp1a2c3FyCKvF5P/vCWpjL2o8/dveb1+Mg94rWWmXbCPVFy4n9u3QwaYxndiW/T2XvmaCaWWrpAY8SrgbtwLlHWjrwqi8Gy1epi9n0m8fcQVxvHXr0atqxIF6RwpHvS2+h68Rsx/PhLbpZUxhYKv1mO4a72lhB44ZFPqBgby6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zd7vBnjZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VJcoDOo7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7A21F000E9;
-	Tue, 21 Jul 2026 20:02:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zd7vBnjZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354E81F000E9;
+	Tue, 21 Jul 2026 20:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664173;
-	bh=dBpUJuhu2WjIYnsBXSbJVG5FUSVYMZSJnjgkpywd3vg=;
+	s=korg; t=1784664175;
+	bh=C0zGTwdUvOwoKm0qiJxGj0bu0iCweu2/Yk4dmrrU4Go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VJcoDOo7pwmySpPVetL5Rd4Ua62UpKauN/qDmB8Cw+W3TYSIdtaHzT2kBHs8/73ki
-	 NRw8PQ6O+zbJhR1p8NMB3ktaasIj1HgAPz8bagLcURIaSFjUIkBOejeWOvPhyEOHpf
-	 tB1CDOwXWSn654A8DQEvWAlZR7ezXICrjfQd2qJo=
+	b=zd7vBnjZtxU/W61L59TGMF9Wcu+PqL/X4/xf32MkWaFpayoBdadXyPLK4mtCe0D6b
+	 daljh6i6lmSCiR6CQQ5XLKH3qoZbLDKRnqB0F3/SOx3CRxXF7z3Zd7xchYsfDjhxV4
+	 5bU+6odUmZaWptMeem0p8UrYXrQVlADJa3hzghrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Crystal Wood <crwood@redhat.com>
-Subject: [PATCH 6.12 1099/1276] tracing/osnoise: Call synchronize_rcu() when unregistering
-Date: Tue, 21 Jul 2026 17:25:42 +0200
-Message-ID: <20260721152510.581951657@linuxfoundation.org>
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Boqun Feng <boqun@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 1064/1276] rust: block: `allow(deprecated)` for `fetch_update` for Rust >= 1.99.0
+Date: Tue, 21 Jul 2026 17:25:07 +0200
+Message-ID: <20260721152509.796996174@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,37 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Crystal Wood <crwood@redhat.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit fe58f457ad8d0a2bef4e053cfecca4b5cd266b1a upstream.
+Starting with Rust 1.99.0 (expected 2026-10-01), the
+`Atomic*::fetch_update` method is deprecated, with the compiler suggesting
+the `try_update` alias instead:
 
-This ensures that any RCU readers traversing the instance list
-have finished, before releasing the reference on the tracer that
-the instance points to.
+    error: use of deprecated method `core::sync::atomic::Atomic::<u64>::fetch_update`: renamed to `try_update` for consistency
+       --> rust/kernel/block/mq/request.rs:206:22
+        |
+    206 |     let old = target.fetch_update(Ordering::Relaxed, Ordering::Relaxed, |x| Some(op(x)));
+        |                      ^^^^^^^^^^^^
+        |
+        = note: `-D deprecated` implied by `-D warnings`
+        = help: to override `-D warnings` add `#[allow(deprecated)]`
+    help: replace the use of the deprecated method
+        |
+    206 -     let old = target.fetch_update(Ordering::Relaxed, Ordering::Relaxed, |x| Some(op(x)));
+    206 +     let old = target.try_update(Ordering::Relaxed, Ordering::Relaxed, |x| Some(op(x)));
+        |
 
-Cc: stable@vger.kernel.org
-Fixes: a6ed2aee54644 ("tracing: Switch to kvfree_rcu() API")
-Link: https://patch.msgid.link/20260609045430.1589786-1-crwood@redhat.com
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Crystal Wood <crwood@redhat.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The deprecation was added in Rust 1.95.0 [1], but only triggers starting
+with Rust 1.99.0.
+
+However, we cannot use the alias since our minimum in 6.12.y is Rust
+1.78.0 -- `try_update` was added in Rust 1.86.0 [2].
+
+Thus just allow the lint.
+
+Cc: Andreas Hindborg <a.hindborg@kernel.org>
+Cc: Boqun Feng <boqun@kernel.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Link: https://github.com/rust-lang/rust/pull/148590 [1]
+Link: https://github.com/rust-lang/rust/pull/133829 [2]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_osnoise.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ rust/kernel/block/mq/request.rs | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/trace/trace_osnoise.c
-+++ b/kernel/trace/trace_osnoise.c
-@@ -159,7 +159,9 @@ static void osnoise_unregister_instance(
- 	if (!found)
- 		return;
+diff --git a/rust/kernel/block/mq/request.rs b/rust/kernel/block/mq/request.rs
+index 7943f43b957532..1c793765354260 100644
+--- a/rust/kernel/block/mq/request.rs
++++ b/rust/kernel/block/mq/request.rs
+@@ -203,6 +203,7 @@ unsafe impl<T: Operations> Sync for Request<T> {}
+ /// Store the result of `op(target.load())` in target, returning new value of
+ /// target.
+ fn atomic_relaxed_op_return(target: &AtomicU64, op: impl Fn(u64) -> u64) -> u64 {
++    #[allow(deprecated)]
+     let old = target.fetch_update(Ordering::Relaxed, Ordering::Relaxed, |x| Some(op(x)));
  
--	kvfree_rcu_mightsleep(inst);
-+	/* Do a full sync to ensure that tr remains valid, not just inst */
-+	synchronize_rcu();
-+	kvfree(inst);
- }
- 
- /*
+     // SAFETY: Because the operation passed to `fetch_update` above always
+@@ -215,6 +216,7 @@ fn atomic_relaxed_op_return(target: &AtomicU64, op: impl Fn(u64) -> u64) -> u64
+ /// Store the result of `op(target.load)` in `target` if `target.load() !=
+ /// pred`, returning [`true`] if the target was updated.
+ fn atomic_relaxed_op_unless(target: &AtomicU64, op: impl Fn(u64) -> u64, pred: u64) -> bool {
++    #[allow(deprecated)]
+     target
+         .fetch_update(Ordering::Relaxed, Ordering::Relaxed, |x| {
+             if x == pred {
+-- 
+2.53.0
+
 
 
