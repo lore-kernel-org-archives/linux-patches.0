@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3684D47127E;
-	Tue, 21 Jul 2026 19:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB73D46D08C;
+	Tue, 21 Jul 2026 19:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663034; cv=none; b=puWrwwZvJnV5cn7gDTJmLrAXEBnRAW5dDgOYXuIyIQFw6BqO/HEyqdVxP+dbwK6galdFPNLW4mvwTbfCe67ChQU4KqOGx9bTfgRSknpRPhDG1MSM0IsZVML7Z6duybvCMdbVD9Mjo5qukfNkPfltxxUrd/+vIK70FIQnYKofXfk=
+	t=1784663037; cv=none; b=fEDjrkEso2VT0FfshxYm7O+PzDCpip0L6Y1fxtU0PwFrPQzP8ic1+01rIa2P0JI7kWNlqc+5zGvmNc7wnX4FPvqvXcgSOP1J85HqP9Qw9JThFvPEGLsVGKYDy3H91uH6JuA9XflVHu2LMry6mQjwC4TqQ6cGzQhs5lICyH44O0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663034; c=relaxed/simple;
-	bh=Dm+RjSIt0+k4+LG81LRR1PmPFkuuTFzZ4v7T/6Bsols=;
+	s=arc-20240116; t=1784663037; c=relaxed/simple;
+	bh=oic7xv6JuIHnr9ZJJtb36jxmhrtWwL4ik2KDgZRCVp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YbwyAGzGxnVqwLhuvM37Xi06MJpj9SomK+oZPKnNBmPbyZO52lihwvjp2wtpy4t2cKREejqG029VgC5ilg8GLedOzz0AN+sf0LxUO0NknxhdHtKiyjt+c089eWnDGUv3Rw+sB9OxLvLBl5UYLFFUpTi5WMAQqWJsyjgp3UQApjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0y5EiTmg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WL9/ykBz1g0z2yOxzEa5yiIVOkLlGCL661nov16cXYrdyA6pUHqGNUd07yI/URIrA/rnOabQs7gwwjOXJfioOE9x7edHGmf7i1jIylr+QzN+gPbcPiveppew4zEExjN7M17WsVaBYwr9790SRT205xKgjvPajAQlZ9KIb2cU4Sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NSKGUGRS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0y5EiTmg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7251F000E9;
-	Tue, 21 Jul 2026 19:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NSKGUGRS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577CE1F000E9;
+	Tue, 21 Jul 2026 19:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663033;
-	bh=Toq+TXZFru7p868pN8q5A8AZBGaC8+eu1MjO/0F5cbA=;
+	s=korg; t=1784663035;
+	bh=lyqdUdo5ap/1GirX+Lz7pFPdLr7i2dLvuaAHPXSJLpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0y5EiTmgj0n1JxnL9IWGuR4qCHPcsXemL6heKrRY2dBS8PSMXnxXGxx2TGO594ZIb
-	 kAixcAyV4ZNQaJGvzCqIVnIv25arsgr4C33Pnpl+O8hEEjDMbyphR2OB2tYveMjKcV
-	 XCT6UIikLeUp3J3747EGp6dUxMtwkQFxQqqxZuBk=
+	b=NSKGUGRSU9PqCBBqBt1yGQhrBvJYF07vCpooBdIptOPwhGfZCnX6dsVw9VkrOwd+V
+	 wo14fS51jbojc6Px3QKoZOFUGulql9bQs5BvZ+V8A6bC3B/QDGvBEO6vnrrUcSO1Qa
+	 bG0AYiiAkMd3qBqYabRkG4+c76uHaBK8XYXboYfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>,
-	Fredrik M Olsson <fredrik.m.olsson@axis.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0670/1276] rtc: ds1307: Fix off-by-one issue with wday for rx8130
-Date: Tue, 21 Jul 2026 17:18:33 +0200
-Message-ID: <20260721152501.097777788@linuxfoundation.org>
+Subject: [PATCH 6.12 0671/1276] rtc: cmos: unregister HPET IRQ handler on probe failure
+Date: Tue, 21 Jul 2026 17:18:34 +0200
+Message-ID: <20260721152501.119790507@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,48 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fredrik M Olsson <fredrik.m.olsson@axis.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit 6882aab3c66112b33b251be95c09c8ead3e8d580 ]
+[ Upstream commit a5bb580df018b5d1c5668f05f7979044fb19e23a ]
 
-The RTC represent each weekday with a individual bit set in the WDAY
-register, where the 0th bit represent the first day of the week and the
-6th bit represents the last day of the week. For each passed day the
-chip performs a rotary-left-shift by one to advance the weekday by one.
+cmos_do_probe() registers cmos_interrupt() as the HPET RTC IRQ
+handler before requesting the RTC IRQ and registering the RTC
+device. If either request_irq() or devm_rtc_register_device()
+fails afterwards, the error path leaves the HPET RTC IRQ handler
+installed. This leaves a stale handler behind and make a later
+hpet_register_irq_handler() fail with -EBUSY.
 
-The tm_wday field represent weekdays by a value in the range of 0-6.
+Track whether the HPET handler was registered successfully and
+undo the registration on the probe error path. Also mask the HPET
+RTC IRQ bits to match the normal shutdown cleanup.
 
-The fls() function return the bit index of the last bit set. To handle
-when there are no bits set it will return 0, and if the 0th bit is set
-it will return 1, and if the 1st bit is set it will return 2, and so on.
-
-In order to make the result of the fls() function fall into the expected
-range of 0-6 (instead of 1-7) this patch subtracts one from the result
-(which matches how the value is written in ds1307_set_time()).
-
-Fixes: 204756f016726 ("rtc: ds1307: Fix wday settings for rx8130")
-Reviewed-by: Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>
-Signed-off-by: Fredrik M Olsson <fredrik.m.olsson@axis.com>
-Link: https://patch.msgid.link/20260520-ds1307-rx8901-add-v2-2-e069ea32e1db@axis.com
+Fixes: 9d8af78b0797 ("rtc: add HPET RTC emulation to RTC_DRV_CMOS")
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20260623100848.2127281-1-haoxiang_li2024@163.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ds1307.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-cmos.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
-index 39de98dd6cf66e..858c29494f5f50 100644
---- a/drivers/rtc/rtc-ds1307.c
-+++ b/drivers/rtc/rtc-ds1307.c
-@@ -311,7 +311,7 @@ static int ds1307_get_time(struct device *dev, struct rtc_time *t)
- 	t->tm_hour = bcd2bin(tmp);
- 	/* rx8130 is bit position, not BCD */
- 	if (ds1307->type == rx_8130)
--		t->tm_wday = fls(regs[DS1307_REG_WDAY] & 0x7f);
-+		t->tm_wday = fls(regs[DS1307_REG_WDAY] & 0x7f) - 1;
- 	else
- 		t->tm_wday = bcd2bin(regs[DS1307_REG_WDAY] & 0x07) - 1;
- 	t->tm_mday = bcd2bin(regs[DS1307_REG_MDAY] & 0x3f);
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index 095de4e0e4f388..e06f3b9cab2c84 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -932,6 +932,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 	unsigned char			rtc_control;
+ 	unsigned			address_space;
+ 	u32				flags = 0;
++	bool				hpet_registered = false;
+ 	struct nvmem_config nvmem_cfg = {
+ 		.name = "cmos_nvram",
+ 		.word_size = 1,
+@@ -1089,6 +1090,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 						" failed in rtc_init().");
+ 				goto cleanup1;
+ 			}
++			hpet_registered = true;
+ 		} else
+ 			rtc_cmos_int_handler = cmos_interrupt;
+ 
+@@ -1138,6 +1140,10 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 	if (is_valid_irq(rtc_irq))
+ 		free_irq(rtc_irq, cmos_rtc.rtc);
+ cleanup1:
++	if (hpet_registered) {
++		hpet_mask_rtc_irq_bit(RTC_IRQMASK);
++		hpet_unregister_irq_handler(cmos_interrupt);
++	}
+ 	cmos_rtc.dev = NULL;
+ cleanup0:
+ 	if (RTC_IOMAPPED)
 -- 
 2.53.0
 
