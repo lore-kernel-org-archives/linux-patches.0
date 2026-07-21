@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233923368A5;
-	Tue, 21 Jul 2026 20:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B673B2D00;
+	Tue, 21 Jul 2026 20:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667264; cv=none; b=elS8+r94O63hNlANdHoLP5sM/OGj3OeARx/VopvJYNDBi/qU7XWn8ROVKFCDp7PWpubXasZzBeoBajAb9LSZtZHeH7GaReFmdbz8TJdC+XMkr3eZuYgfvM9I5Gvzk+7BdjU5wk6O1y5hD1tzpkRnVBJ1Q5IphcxPaiP0el03e04=
+	t=1784667266; cv=none; b=PvkKRbJvUbnVsiSTGXrRieag3jYz7KtAYNmPSUHjJLQpSNTW+5+wi0BmcUeUhg6nvykzOXAPREU0Hp9+zwJxjwMZzd76p9P/vO9IkVodM85hkmqeKhPd0+58nSsLashfj7n/GRreSgbPlXYtFqo9KWCLLO/Oisk/KcDOAYOc0G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667264; c=relaxed/simple;
-	bh=V5zziDHrzqgWN4WMt8vtd0Nkpt72O4YCHELPrWJxzoA=;
+	s=arc-20240116; t=1784667266; c=relaxed/simple;
+	bh=ArPZR/2z6ItF8UtDbVQ33qOfJq3Go6rWZp8usyrMsak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TJRKIN8CPI+gGQziLgtUjzjZgBKJlKvvp2XS+zIvQ9j9sZHf5087JkJeVvlltfKVRBLO2W4qxAvG87Q4V89jtzblyOGBuVM3x7ix52/5m/rTuHhnhaKrp0O+q3GPGye16oUdosOGmXt2oBsPgW4mCC02eHonavOBCdfnXebytZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KHcPmkNl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N8Ww0dM8GMSq1n9MSeRz89YIi2WNwwVvVuA8yVuBm5ktmQyLuu8s14IqjBbaUcGKZKX4VExskod+TjbSPHbzAfT46YRQSw5LFNuCzC162StnhdCKxJqdeVKpsLgTs4Tmzfxa4hMdh3jdPpiUXUd4GZw+JZqeFN/7idz3x2oHdbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQX4oBLV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHcPmkNl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A1F61F000E9;
-	Tue, 21 Jul 2026 20:54:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQX4oBLV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325571F000E9;
+	Tue, 21 Jul 2026 20:54:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667263;
-	bh=9GbPlF5vm7hRFGgW9pSLVF5T10RtJP0J0fNEyDN1CrI=;
+	s=korg; t=1784667265;
+	bh=rwguPb9pTbAROowiuii5Jgx+aPNVKawOvU0kmsmpyg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KHcPmkNllY7OhpKwrCFMKWM9GN4ggEKgmT12Jd/QzlXSF3ZAw32mWHPbVFNkWwbJK
-	 SYaC4a7PSHznYDL7SkbZErBKHjEQOfmbyVizaUROSySVFfsoC5hy/p93RV+W5b4TXK
-	 bi3rfxqkC3LzYDF1WDirQ3PYpldnHsG5jS02tKt0=
+	b=QQX4oBLVQNiQZfKVIF9c2mpulTYIP2635N9R89v8xUNG1b8ZBuexujw+/NTDJnZp9
+	 nnS+xzYvT1xXaFJhvezNbHyO15HbMAOWP6msBV8tBovRKEnRa31siBOZqx3U1fEfvo
+	 UTSkEfaMgxX8AvvJ6mJHT8G1oDy2H3NjQJm2CDpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 0968/1266] SUNRPC: Bound-check xdr_buf_to_bvec() stores before writing
-Date: Tue, 21 Jul 2026 17:23:25 +0200
-Message-ID: <20260721152503.492917897@linuxfoundation.org>
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Breno Leitao <leitao@debian.org>
+Subject: [PATCH 6.6 0995/1266] 9p: skip nlink update in cacheless mode to fix WARN_ON
+Date: Tue, 21 Jul 2026 17:23:52 +0200
+Message-ID: <20260721152504.096695178@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,80 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 42f5b80dda6b86e424054baf1475df686c403d5c upstream.
+commit 574aa0b4799470ac814479f1138d19efe6262255 upstream.
 
-xdr_buf_to_bvec() writes a bio_vec into the caller's array before
-testing whether that slot is in range, and the head branch performs
-the store with no check at all. When the caller's budget is exactly
-used up, the next store lands one element past the end of the array.
-The overflow label returns count - 1, which masks the surplus store
-but cannot undo it.
+v9fs_dec_count() unconditionally calls drop_nlink() on regular files,
+even when the inode's nlink is already zero. In cacheless mode the
+client refetches inode metadata from the server (the source of truth)
+on every operation, so by the time v9fs_remove() returns, the locally
+cached nlink may already reflect the post-unlink value:
 
-rq_bvec, the array passed by nfsd_vfs_write(), is allocated to
-exactly rq_maxpages entries with no slack. The OOB store can land in
-adjacent slab memory; the bv_len and bv_offset fields written there
-are derived from client-supplied RPC payload sizes.
+  1. Client initiates unlink, server processes it and sets nlink to 0
+  2. Client refetches inode metadata (nlink=0) before unlink returns
+  3. Client's v9fs_remove() completes successfully
+  4. Client calls v9fs_dec_count() which calls drop_nlink() on nlink=0
 
-Move the in-range check ahead of the store in the head, page-loop,
-and tail branches. With the check at the top of each sequence, count
-is incremented only after a successful store, so the overflow label
-can return count directly.
+This race is easily triggered under heavy unlink workloads, such as
+stress-ng's unlink stressor, producing the following warning:
 
-Reported-by: Chris Mason <clm@meta.com>
-Fixes: 2eb2b9358181 ("SUNRPC: Convert svc_tcp_sendmsg to use bio_vecs directly")
+  WARNING: fs/inode.c:417 at drop_nlink+0x4c/0xc8
+  Call trace:
+   drop_nlink+0x4c/0xc8
+   v9fs_remove+0x1e0/0x250 [9p]
+   v9fs_vfs_unlink+0x20/0x38 [9p]
+   vfs_unlink+0x13c/0x258
+   ...
+
+In cacheless mode the server is authoritative and the inode is on its
+way out, so locally adjusting nlink buys nothing. Skip v9fs_dec_count()
+entirely when neither CACHE_META nor CACHE_LOOSE is set, which both
+avoids the warning and removes a class of nlink races (two concurrent
+unlinkers observing nlink > 0 and both calling drop_nlink()) that an
+nlink == 0 guard alone would only narrow rather than close.
+
+Fixes: ac89b2ef9b55 ("9p: don't maintain dir i_nlink if the exported fs doesn't either")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Suggested-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Message-ID: <20260421-9p-v2-1-48762d294fad@debian.org>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xdr.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ fs/9p/vfs_inode.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/net/sunrpc/xdr.c
-+++ b/net/sunrpc/xdr.c
-@@ -180,6 +180,8 @@ unsigned int xdr_buf_to_bvec(struct bio_
- 	unsigned int count = 0;
- 
- 	if (head->iov_len) {
-+		if (unlikely(count >= bvec_size))
-+			goto bvec_overflow;
- 		bvec_set_virt(bvec++, head->iov_base, head->iov_len);
- 		++count;
- 	}
-@@ -193,25 +195,27 @@ unsigned int xdr_buf_to_bvec(struct bio_
- 		while (remaining > 0) {
- 			len = min_t(unsigned int, remaining,
- 				    PAGE_SIZE - offset);
-+			if (unlikely(count >= bvec_size))
-+				goto bvec_overflow;
- 			bvec_set_page(bvec++, *pages++, len, offset);
- 			remaining -= len;
- 			offset = 0;
--			if (unlikely(++count > bvec_size))
--				goto bvec_overflow;
-+			++count;
- 		}
- 	}
- 
- 	if (tail->iov_len) {
--		bvec_set_virt(bvec, tail->iov_base, tail->iov_len);
--		if (unlikely(++count > bvec_size))
-+		if (unlikely(count >= bvec_size))
- 			goto bvec_overflow;
-+		bvec_set_virt(bvec, tail->iov_base, tail->iov_len);
-+		++count;
- 	}
- 
- 	return count;
- 
- bvec_overflow:
- 	pr_warn_once("%s: bio_vec array overflow\n", __func__);
--	return count - 1;
-+	return count;
+--- a/fs/9p/vfs_inode.c
++++ b/fs/9p/vfs_inode.c
+@@ -521,10 +521,19 @@ static int v9fs_at_to_dotl_flags(int fla
+  * - ext4 (with dir_nlink feature enabled) sets nlink to 1 if a dir has more
+  *   than EXT4_LINK_MAX (65000) links.
+  *
++ * In cacheless mode the server is the source of truth for nlink and the
++ * inode is going away immediately, so locally adjusting i_nlink buys
++ * nothing and races with concurrent metadata fetches that may already
++ * have observed the post-unlink value (nlink == 0).
++ *
+  * @inode: inode whose nlink is being dropped
+  */
+ static void v9fs_dec_count(struct inode *inode)
+ {
++	struct v9fs_session_info *v9ses = v9fs_inode2v9ses(inode);
++
++	if (!(v9ses->cache & (CACHE_META | CACHE_LOOSE)))
++		return;
+ 	if (!S_ISDIR(inode->i_mode) || inode->i_nlink > 2)
+ 		drop_nlink(inode);
  }
- 
- /**
 
 
