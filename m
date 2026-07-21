@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE3D46D094;
-	Tue, 21 Jul 2026 18:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0174946AA64;
+	Tue, 21 Jul 2026 18:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659863; cv=none; b=UdxCJ9evHuGTQqGEI1YuNz3JpAGIxFPH9mobnk5z1sAv1dDq0PvGnwYBTkU5WkRoAtikK+CwqgiwUPAh9uBplndhZjKAhV1a9sdbHtpQiRNMUaZeOOuBxSlmHU7OkiZTj7eFZVlXLBuv9UtXkrm3gqxalPWbv3QCzGvsbmInvu0=
+	t=1784659864; cv=none; b=HWdnkGe0sajU/F/WHlKgjuE4fgKOkay1bVSXhpK1Uyn/Xh0g5vaPFDWDJQ2P/GK1sfQAKFhp9pjEI7RNNh7cvOGQSNG2UJwDAW9Uavb+oue/c6yQ2fTWCToZc/HelAx4bGVJRPb3VwPRAF5JTy8DpIE8G1yFSWiueP8D07ez45o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659863; c=relaxed/simple;
-	bh=7MouR4AY4CSAi8hf5vllGDvkRjW/1HJUSGaYgSQjjfA=;
+	s=arc-20240116; t=1784659864; c=relaxed/simple;
+	bh=I8OIAzTe094j2KU4CSsw1qCTlYPsu5ccZoRZPqCc5s0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cFvX3tNMpPiG7wRgwA5zTLE+efeJ886NedYc0Dqev/a7OADTa9//8qwYRUEWgJFngy45dnO7F/f7kN3o8kSTNw55R9Roblclq9KIRvkiZYpJZNvUcc7X1v1hztt2bxW3kjDBEksUpFpzfY4gBCBOuRSfDn+afhAViLhFHwfVmY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKmYcnm6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SoVKdjsHDNhMbra5Jl4moa7bhjbxc0wu/SEkAI7oAfosMPrOof5W7nB68vRSra5mlcSvBkJp+ZDjfe/WHd1HMKM2+Ssp0sVtqkZP9+oubUTI0BXkh8vfvpYjbpBDDgdaJ7gaxn4m8vyLQsDmJcsn2XedYoNPgtcsakaupBn6BRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysCemOvC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKmYcnm6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284A61F00A3A;
-	Tue, 21 Jul 2026 18:50:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysCemOvC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689581F000E9;
+	Tue, 21 Jul 2026 18:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659857;
-	bh=VfNnskLTvk7QQRAasSYj1ylSxDA1ZKo3/99JsDWUeWE=;
+	s=korg; t=1784659862;
+	bh=LAr6zwRHf7UUcTq0p2TNaZYPG+xK/GZq0JNNRuxwGIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FKmYcnm6ckw6Yq7RvgMPmXAqX2Hn7QYvw4l3eQtZB208t0m3rb8r/YgkkDdies6FV
-	 fTV4jznT0cFY/994zi1qXOW2JONxrk8y1wGatGxfcnLs8z7TeVHOuroVehyGnvd3Vj
-	 xlrYQyIyOHPMdxDuc3SEM7wbNXoJKLfLLe8MP+ow=
+	b=ysCemOvColXo184r9j51VDknDDZ7GbkNiHr67TT4DH8Rhu1+9UBKwh8Jc44H3nC+e
+	 F8pKlqywO84/MK3ywWQT4V2dZCJkHW7RlgM9zxJpkN3UMEsHd5XsQUmCOBtSGWEFzs
+	 W7oh1Ko7wVrpABD1pxyRpYyqMJviNa/kvy72ONNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Grzegorz Nitka <grzegorz.nitka@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0760/2077] dpll: send delete notification before unregister in on-pin rollback
-Date: Tue, 21 Jul 2026 17:07:13 +0200
-Message-ID: <20260721152610.720118833@linuxfoundation.org>
+Subject: [PATCH 7.1 0735/2077] ASoC: adau1372: Clear PLL_EN on failed PLL lock without reset GPIO
+Date: Tue, 21 Jul 2026 17:06:48 +0200
+Message-ID: <20260721152610.133325678@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,45 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Grzegorz Nitka <grzegorz.nitka@intel.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit e83b403eb142be18d223fc599c0ac45519053671 ]
+[ Upstream commit 69b4141b428bcf2cf7a863950c0d6e5c5ae89ac1 ]
 
-The rollback path in dpll_pin_on_pin_register() called
-__dpll_pin_unregister() before dpll_pin_delete_ntf(). When the
-unregister dropped the pin's last DPLL reference it cleared the
-DPLL_REGISTERED mark in dpll_pin_xa, so the subsequent
-dpll_pin_event_send() failed dpll_pin_available() and aborted with
--ENODEV. As a result userspace was never notified of the rollback
-deletion and remained out of sync with the kernel.
+The PLL lock failure path in adau1372_set_power() unwinds by putting
+the regmap back in cache-only mode, asserting the optional power-down
+GPIO and disabling mclk.
 
-Send the delete notification first, matching the order used by
-dpll_pin_unregister() and dpll_pin_on_pin_unregister().
+adau1372_enable_pll() enables CLK_CTRL.PLL_EN before polling the PLL
+lock bit. If the lock fails on a board without a power-down GPIO, the
+error path disables mclk and returns an error, but leaves PLL_EN set in
+the hardware register. The normal power-off path already handles the
+no-GPIO case by explicitly clearing PLL_EN.
 
-Fixes: 9d71b54b65b1 ("dpll: netlink: Add DPLL framework base functions")
-Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
-Link: https://patch.msgid.link/20260607183045.1213735-5-grzegorz.nitka@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Mirror that cleanup in the PLL lock failure path and clear PLL_EN while
+the regmap is still live, before switching it back to cache-only mode.
+
+Fixes: bfe6a264effc ("ASoC: adau1372: Fix clock leak on PLL lock failure")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260604125520.1428905-1-lgs201920130244@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/dpll_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/adau1372.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
-index 1f1b9a6696231a..a58977c87de193 100644
---- a/drivers/dpll/dpll_core.c
-+++ b/drivers/dpll/dpll_core.c
-@@ -994,9 +994,9 @@ int dpll_pin_on_pin_register(struct dpll_pin *parent, struct dpll_pin *pin,
- dpll_unregister:
- 	xa_for_each(&parent->dpll_refs, i, ref)
- 		if (i < stop) {
-+			dpll_pin_delete_ntf(pin);
- 			__dpll_pin_unregister(ref->dpll, pin, ops, priv,
- 					      parent);
--			dpll_pin_delete_ntf(pin);
- 		}
- 	dpll_xa_ref_pin_del(&pin->parent_refs, parent, ops, priv, pin);
- unlock:
+diff --git a/sound/soc/codecs/adau1372.c b/sound/soc/codecs/adau1372.c
+index d7363f9d53bb31..879afeb81c422d 100644
+--- a/sound/soc/codecs/adau1372.c
++++ b/sound/soc/codecs/adau1372.c
+@@ -813,6 +813,11 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
+ 		if (adau1372->use_pll) {
+ 			ret = adau1372_enable_pll(adau1372);
+ 			if (ret) {
++				if (!adau1372->pd_gpio)
++					regmap_update_bits(adau1372->regmap,
++							   ADAU1372_REG_CLK_CTRL,
++							   ADAU1372_CLK_CTRL_PLL_EN,
++							   0);
+ 				regcache_cache_only(adau1372->regmap, true);
+ 				if (adau1372->pd_gpio)
+ 					gpiod_set_value(adau1372->pd_gpio, 1);
 -- 
 2.53.0
 
