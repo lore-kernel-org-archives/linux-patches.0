@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FBB46AA9D;
-	Tue, 21 Jul 2026 15:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4090B46AA9D;
+	Tue, 21 Jul 2026 15:40:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648446; cv=none; b=hdE5vCIA31qGIT3gxn4w1otfel7aAsEbcw4jNPVG8SR49HxmbX+Q7RpWUdeuh3dAXzD+uN+LrUuWC5vKHqqxOWvULv9hXPGks6ooNDgWyP+hhUDrJBfny15QizS+cU59l5ELKTnW0+f8S5PZ8bY4TmuzMt++ZWfTmdVDEy8BPpQ=
+	t=1784648448; cv=none; b=f3g/3eYEe2hx++h8kNctWzB9i+DmHppSQpucGq+ERjNu+hMtgKa1sJyC/JmLFJ2VU3RxFusSpso7uMveJryziOIiKvZIXeCxBLYfnLUmTn7q6FbLSJdBiN2+mkIuR8dHhmWfVlnX1Zz9tmbGvevqNL0e7FYTEA4tJZzDgpZ4cWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648446; c=relaxed/simple;
-	bh=D7cEoN8wJqzl5uYuoSIrDUOzOynr9ugBgH5MKFpw0fw=;
+	s=arc-20240116; t=1784648448; c=relaxed/simple;
+	bh=uNOP0OS1tUQhV16pfA2cZQmhXLMMZ8MkMrUEAXuWzLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IEo+SV/BxQ0DGbEcO4plIweUVRjsgNoUJD6q/KmAgX9fyxOlxcZBJnk6cq5SPef6WGc0f5hwhy79iAQrCFA/UNxc+W8aHhafIYxofZiV6ymyc2hDfW+Eds/mCyZm3MxMVOkUYfpY8z2wJUX1/8LRwXJq1cV9PCWnY6V6G7gPYkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BBHyj0/q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PqOITP6LbNawOm/COmS1MBcZNIen3+XtSOCRoqmdadvXU7zSlVSjbkyrp93AU71iWJoQluHAX3rfvFNnIQEYgkmsbErlAFosp+x+XjdKys/EhNaVm7mue0ejIscjtg4UgeSpDqoJnszvisadPQQ/mwbCtn5QYUat/8tm5A+7d3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HlKGrmRJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BBHyj0/q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0834F1F000E9;
-	Tue, 21 Jul 2026 15:40:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HlKGrmRJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63461F000E9;
+	Tue, 21 Jul 2026 15:40:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648444;
-	bh=cKoDt9UMR13S53itP6w028BndZDUEq9G8vqd4RfwyMk=;
+	s=korg; t=1784648447;
+	bh=V28Q7tFSUv+eoxai6f91QAaHzWLC5ZRj4J4YAr8UsKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BBHyj0/qCiQfjOpPpKRefy/cBfI/oz/AiwSdpDcZ7Wrf9LeWcwFlksTuHPNznkwan
-	 XiPHGtN8q/iJpzb11hQxCumhEf+a+UXG2UgLrAate+v14MU72uq5n454uIFmeKS+Fm
-	 1X8x4nTRKLcIWRUIuVOnU5aw7Oc4dGkYjVt2tmyU=
+	b=HlKGrmRJr8KY1lEuVNlMoaDiz9T2QeK4PuZHr/TKnMIVXJp/2GOaGctaPMhBYj2iV
+	 iN0aN4sj/H6FBveS8j1EZq6n1h1qoBTJvAsvbrb9X0KOKQJRSYhK9kAKwsFGqqN5sJ
+	 pwBSjakbSTpR5O+I9scxPIkxVgiL0Z2ZuOk0pa+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
 	Lin He <helin52@huawei.com>,
 	Yongbang Shi <shiyongbang@huawei.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0202/2077] drm/hisilicon/hibmc: fix no showing when no connectors connected
-Date: Tue, 21 Jul 2026 16:57:55 +0200
-Message-ID: <20260721152557.446441105@linuxfoundation.org>
+Subject: [PATCH 7.1 0203/2077] drm/hisilicon/hibmc: move display contrl config to hibmc_probe()
+Date: Tue, 21 Jul 2026 16:57:56 +0200
+Message-ID: <20260721152557.471677169@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,238 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Lin He <helin52@huawei.com>
 
-[ Upstream commit 4110e29a7c384f1ff21d6b187b6a1772f6e17b23 ]
+[ Upstream commit de2a56c71f9b223922ea8fe0192d3c1fa2954608 ]
 
-Our chip support KVM over IP feature, so hibmc driver need to support
-displaying without any connectors plugged in. If no connectors are
-connected, the vdac connector status should be set to 'connected' to
-ensure proper KVM display functionality. Additionally, for
-previous-generation products that may lack hardware link support and
-thus cannot detect the monitor, the same approach should be applied
-to ensure VGA display functionality.
+If there's no VGA output, this encoder modeset won't be called, which
+will cause displaying data from GPU being cut off. It's actually a
+common display config for DP and VGA, so move the vdac encoder modeset
+to driver load stage.
 
-* Add phys_state in the struct of dp and vdac to check physical outputs.
+Removed invalid bit configurations from `hibmc_display_ctrl`
 
-* The 'epoch_counter' of the vdac connector is incremented when the
-physical status changes.
-
-For get_modes: using BMC modes for connector if no display is attached to
-phys VGA cable, otherwise use EDID modes by drm_connector_helper_get_modes,
-because KVM doesn't provide EDID reads.
-
-The polling mechanism for the KMS helper is enabled.
-
-Fixes: 4c962bc929f1 ("drm/hisilicon/hibmc: Add vga connector detect functions")
-Reported-by: Thomas Zimmermann <tzimmermann@suse.de>
-Closes: https://lore.kernel.org/all/0eb5c509-2724-4c57-87ad-74e4270d5a5a@suse.de/
+Fixes: 5294967f4ae4 ("drm/hisilicon/hibmc: Add support for VDAC")
 Signed-off-by: Lin He <helin52@huawei.com>
 Signed-off-by: Yongbang Shi <shiyongbang@huawei.com>
 Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Tested-by: Thomas Zimmermann <tzimmermann@suse.de>
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260509032302.2057227-3-shiyongbang@huawei.com
+Link: https://patch.msgid.link/20260509032302.2057227-4-shiyongbang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.h    |  1 +
- .../gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c    | 33 ++++++++----
- .../gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c   |  3 ++
- .../gpu/drm/hisilicon/hibmc/hibmc_drm_drv.h   |  1 +
- .../gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c  | 53 +++++++++++++------
- 5 files changed, 64 insertions(+), 27 deletions(-)
+ .../gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c   | 11 ++++++++++
+ .../gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c  | 22 -------------------
+ 2 files changed, 11 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.h b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.h
-index 31316fe1ea8dbf..0f3662d8737e99 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.h
-+++ b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.h
-@@ -55,6 +55,7 @@ struct hibmc_dp {
- 	struct drm_dp_aux aux;
- 	struct hibmc_dp_cbar_cfg cfg;
- 	u32 irq_status;
-+	int phys_status;
- };
- 
- int hibmc_dp_hw_init(struct hibmc_dp *dp);
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c
-index 35dff7bfbf76f3..596c5bfe32d8e7 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c
-+++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c
-@@ -61,27 +61,38 @@ static int hibmc_dp_detect(struct drm_connector *connector,
- {
- 	struct hibmc_dp *dp = to_hibmc_dp(connector);
- 	struct hibmc_dp_dev *dp_dev = dp->dp_dev;
--	int ret;
-+	int ret = connector_status_disconnected;
- 
- 	if (dp->irq_status) {
--		if (dp_dev->hpd_status != HIBMC_HPD_IN)
--			return connector_status_disconnected;
-+		if (dp_dev->hpd_status != HIBMC_HPD_IN) {
-+			ret = connector_status_disconnected;
-+			goto exit;
-+		}
- 	}
- 
--	if (!hibmc_dp_get_dpcd(dp_dev))
--		return connector_status_disconnected;
-+	if (!hibmc_dp_get_dpcd(dp_dev)) {
-+		ret = connector_status_disconnected;
-+		goto exit;
-+	}
- 
--	if (!dp_dev->is_branch)
--		return connector_status_connected;
-+	if (!dp_dev->is_branch) {
-+		ret = connector_status_connected;
-+		goto exit;
-+	}
- 
- 	if (drm_dp_read_sink_count_cap(connector, dp_dev->dpcd, &dp_dev->desc) &&
- 	    dp_dev->downstream_ports[0] & DP_DS_PORT_HPD) {
- 		ret = drm_dp_read_sink_count(dp_dev->aux);
--		if (ret > 0)
--			return connector_status_connected;
-+		if (ret > 0) {
-+			ret = connector_status_connected;
-+			goto exit;
-+		}
- 	}
- 
--	return connector_status_disconnected;
-+exit:
-+	dp->phys_status = ret;
-+
-+	return ret;
- }
- 
- static int hibmc_dp_mode_valid(struct drm_connector *connector,
-@@ -243,5 +254,7 @@ int hibmc_dp_init(struct hibmc_drm_private *priv)
- 
- 	connector->polled = DRM_CONNECTOR_POLL_HPD;
- 
-+	dp->phys_status = connector_status_disconnected;
-+
- 	return 0;
- }
 diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
-index 289304500ab097..481e5e62c30bf1 100644
+index 481e5e62c30bf1..99b36de1fe1370 100644
 --- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
 +++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
-@@ -24,6 +24,7 @@
- #include <drm/drm_managed.h>
- #include <drm/drm_module.h>
- #include <drm/drm_vblank.h>
-+#include <drm/drm_probe_helper.h>
- 
- #include "hibmc_drm_drv.h"
- #include "hibmc_drm_regs.h"
-@@ -355,6 +356,8 @@ static int hibmc_load(struct drm_device *dev)
- 	/* reset all the states of crtc/plane/encoder/connector */
- 	drm_mode_config_reset(dev);
- 
-+	drmm_kms_helper_poll_init(dev);
-+
- 	return 0;
- 
- err:
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.h b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.h
-index ca8502e2760c12..cd3a3fca1fe60a 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.h
-+++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.h
-@@ -31,6 +31,7 @@ struct hibmc_vdac {
- 	struct drm_connector connector;
- 	struct i2c_adapter adapter;
- 	struct i2c_algo_bit_data bit_data;
-+	int phys_status;
- };
- 
- struct hibmc_drm_private {
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
-index 841e81f47b6862..2fcfa3246fd124 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
-+++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
-@@ -24,28 +24,21 @@
- 
- static int hibmc_connector_get_modes(struct drm_connector *connector)
- {
-+	struct drm_mode_config *mode_config = &connector->dev->mode_config;
- 	struct hibmc_vdac *vdac = to_hibmc_vdac(connector);
--	const struct drm_edid *drm_edid;
- 	int count;
- 
--	drm_edid = drm_edid_read_ddc(connector, &vdac->adapter);
--
--	drm_edid_connector_update(connector, drm_edid);
--
--	if (drm_edid) {
--		count = drm_edid_connector_add_modes(connector);
-+	if (vdac->phys_status == connector_status_connected) {
-+		count = drm_connector_helper_get_modes(connector);
-+	} else {
-+		drm_edid_connector_update(connector, NULL);
-+		count = drm_add_modes_noedid(connector,
-+					     mode_config->max_width,
-+					     mode_config->max_height);
- 		if (count)
--			goto out;
-+			drm_set_preferred_mode(connector, 1024, 768);
- 	}
- 
--	count = drm_add_modes_noedid(connector,
--				     connector->dev->mode_config.max_width,
--				     connector->dev->mode_config.max_height);
--	drm_set_preferred_mode(connector, 1024, 768);
--
--out:
--	drm_edid_free(drm_edid);
--
- 	return count;
+@@ -215,6 +215,15 @@ void hibmc_set_current_gate(struct hibmc_drm_private *priv, unsigned int gate)
+ 	writel(gate, mmio + gate_reg);
  }
  
-@@ -57,10 +50,34 @@ static void hibmc_connector_destroy(struct drm_connector *connector)
- 	drm_connector_cleanup(connector);
- }
- 
-+static int hibmc_vdac_detect(struct drm_connector *connector,
-+			     struct drm_modeset_acquire_ctx *ctx,
-+			     bool force)
++static void hibmc_display_ctrl(struct hibmc_drm_private *priv)
 +{
-+	struct hibmc_drm_private *priv = to_hibmc_drm_private(connector->dev);
-+	int status = drm_connector_helper_detect_from_ddc(connector, ctx,
-+							 force);
-+	struct hibmc_vdac *vdac = to_hibmc_vdac(connector);
++	u32 reg;
 +
-+	if (priv->dp.phys_status == connector_status_connected) {
-+		vdac->phys_status = status;
-+		return status;
-+	}
-+
-+	if (status != vdac->phys_status)
-+		++connector->epoch_counter;
-+	vdac->phys_status = status;
-+
-+	/* When both the DP and VDAC physical status are disconnected,
-+	 * the "connected" status is returned to support KVM display.
-+	 */
-+	return connector_status_connected;
++	reg = readl(priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
++	reg |= HIBMC_DISPLAY_CONTROL_PANELDATE(1);
++	writel(reg, priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
 +}
 +
- static const struct drm_connector_helper_funcs
- 	hibmc_connector_helper_funcs = {
- 	.get_modes = hibmc_connector_get_modes,
--	.detect_ctx = drm_connector_helper_detect_from_ddc,
-+	.detect_ctx = hibmc_vdac_detect,
+ static void hibmc_hw_config(struct hibmc_drm_private *priv)
+ {
+ 	u32 reg;
+@@ -246,6 +255,8 @@ static void hibmc_hw_config(struct hibmc_drm_private *priv)
+ 	reg |= HIBMC_MSCCTL_LOCALMEM_RESET(1);
+ 
+ 	writel(reg, priv->mmio + HIBMC_MISC_CTRL);
++
++	hibmc_display_ctrl(priv);
+ }
+ 
+ static int hibmc_hw_map(struct hibmc_drm_private *priv)
+diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
+index 2fcfa3246fd124..b9bd6d33fb0f7b 100644
+--- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
++++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
+@@ -88,26 +88,6 @@ static const struct drm_connector_funcs hibmc_connector_funcs = {
+ 	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
  };
  
- static const struct drm_connector_funcs hibmc_connector_funcs = {
-@@ -130,6 +147,8 @@ int hibmc_vdac_init(struct hibmc_drm_private *priv)
+-static void hibmc_encoder_mode_set(struct drm_encoder *encoder,
+-				   struct drm_display_mode *mode,
+-				   struct drm_display_mode *adj_mode)
+-{
+-	u32 reg;
+-	struct drm_device *dev = encoder->dev;
+-	struct hibmc_drm_private *priv = to_hibmc_drm_private(dev);
+-
+-	reg = readl(priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
+-	reg |= HIBMC_DISPLAY_CONTROL_FPVDDEN(1);
+-	reg |= HIBMC_DISPLAY_CONTROL_PANELDATE(1);
+-	reg |= HIBMC_DISPLAY_CONTROL_FPEN(1);
+-	reg |= HIBMC_DISPLAY_CONTROL_VBIASEN(1);
+-	writel(reg, priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
+-}
+-
+-static const struct drm_encoder_helper_funcs hibmc_encoder_helper_funcs = {
+-	.mode_set = hibmc_encoder_mode_set,
+-};
+-
+ int hibmc_vdac_init(struct hibmc_drm_private *priv)
+ {
+ 	struct drm_device *dev = &priv->dev;
+@@ -130,8 +110,6 @@ int hibmc_vdac_init(struct hibmc_drm_private *priv)
+ 		goto err;
+ 	}
  
- 	connector->polled = DRM_CONNECTOR_POLL_CONNECT | DRM_CONNECTOR_POLL_DISCONNECT;
- 
-+	vdac->phys_status = connector_status_disconnected;
-+
- 	return 0;
- 
- err:
+-	drm_encoder_helper_add(encoder, &hibmc_encoder_helper_funcs);
+-
+ 	ret = drm_connector_init_with_ddc(dev, connector,
+ 					  &hibmc_connector_funcs,
+ 					  DRM_MODE_CONNECTOR_VGA,
 -- 
 2.53.0
 
