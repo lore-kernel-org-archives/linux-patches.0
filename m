@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7739449B2A;
-	Tue, 21 Jul 2026 22:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7576A43D51D;
+	Tue, 21 Jul 2026 22:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673513; cv=none; b=FdZ+n/+Wu1ky6Xc1Q16VSo/2Oy0OPCZmDuce5uyS1ttxIFenpQ5ndbiuiGnPlrs8gJLurWgFeWuUi1a3MGScAYcchipdPRiAlpLKnxM01p7lTY4rTfgCAshsQwxl1ortx2DB3VZvmBWjKbXzpBJ3KDpSr9IZfQbPvXjXMdr7ySM=
+	t=1784673515; cv=none; b=eG7XbxsMy8y+IEi+hP8KUonMcv7iGF9xBSANTbbRn4UZ+cZquLB4/4d1DV5OQT3EOZSgFKbieyCx1IZ3SptfyedkdXGGjF5HU172RUIt43zena2tS0RebRF/loylfJOxm2ysmoZ6iMCgSvjUWbiFNW0fN5Ep0QygN2n2nzwVF5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673513; c=relaxed/simple;
-	bh=+wlnChEvSXt2JOhxSB27lq0jUFF9K6PBBDZyuUPjnWg=;
+	s=arc-20240116; t=1784673515; c=relaxed/simple;
+	bh=Wz2wDzoKMkvX1rCo6cSC12ALwPY7UhT4bXaOeJbUA+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YHadf1OtzIZcvOtwxVj3upy8EQ2ys8I3mE3yN0cM8hiWiC3TGTdeC3odVsR38h06zYmsVTL8d+We/G312fGoeA7fELFLo7U9j7MPJWOdyLHj9zZERuIOPMV/FfXsL9a7hTfzE8KSWYLzuvRJT3zHkig6Sh3wKAjjLYbsjDFkw+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BmaFLC7k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mbiVBazsg5LzcHVrKFi0FKOf7xN/8KY5aWWOXGECvpaX4m15nkQD1m38spAcMITjFfDn2kIErfaRwsDIkmSL/XkQdY6rctwWrCwpWy702GLCCLk/xyRUc8OQQpF1VDgB0Y8ij4tk8SbdnYa7E+LksS2h2Ou+NRznUaDrZd9fJPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cC+FBHYn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BmaFLC7k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2748A1F00A3A;
-	Tue, 21 Jul 2026 22:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cC+FBHYn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E921F000E9;
+	Tue, 21 Jul 2026 22:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673511;
-	bh=9hVyusDbaMWojJuYPkM3p/rF0LlT58okwxKUQqzSDFg=;
+	s=korg; t=1784673514;
+	bh=r2d6UNppvE9Vw/o3Ygcz7T0t/TW1OvABbjFgRdTD8x8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BmaFLC7kk9DxkEO0kthSqbj51jBk5qXWB3THgei/tiL66z1Kp3XEdfELQ5HJaeX/c
-	 OYNTy3iwwh0WHMsm7P2D55pxE0P4hkg1MKzJjeSZuXa79maGfN+pOV6KWd9lC2fIzZ
-	 7u3acWGDGxQesrdEamY3zs/CZ2O21MU4jyONvzEQ=
+	b=cC+FBHYnyw+mYxOGiUILZ+tXMc3WcGgYQvtc1hRgXIFkmDIyYVOj2hXlceEIVUtyI
+	 bp1dNDH5Pe18CYuRT64dRg7dQ8OX4CAl4+S103mRAY1VshQzY52Q33jDOCrUqqHvfZ
+	 oeoUZjaVA5Nf6GRz3xXVKW7GFY6gO490g07iK1Cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Carlos Bilbao (Lambda)" <carlos.bilbao@kernel.org>,
-	Sara Venkatesh <sarajvenkatesh@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leon@kernel.org>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 191/699] RDMA/srpt: fix integer overflow in immediate data length check
-Date: Tue, 21 Jul 2026 17:19:10 +0200
-Message-ID: <20260721152400.008364958@linuxfoundation.org>
+Subject: [PATCH 5.10 174/699] wifi: ath9k: fix OOB access from firmware tx status queue ID
+Date: Tue, 21 Jul 2026 17:18:53 +0200
+Message-ID: <20260721152359.626159790@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -47,53 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sara Venkatesh <sarajvenkatesh@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit eb4ecdf631fe00e8020bf461503cb9b7017ed796 ]
+[ Upstream commit 7ce2f118a2389e8f0a64068c6fe7cc7d40639be0 ]
 
-imm_buf->len is a user-controlled uint32_t received from the network.
-Adding it to imm_data_offset without overflow checking allows a
-malicious initiator to send len=0xFFFFFFFF, causing req_size to wrap
-around to a small value, bypassing the bounds check, and subsequently
-passing a ~4GB length to sg_init_one().
+ath_tx_edma_tasklet() accesses sc->tx.txq[ts.qid] where ts.qid is a
+4-bit hardware field (0-15), but the txq array only has
+ATH9K_NUM_TX_QUEUES (10) entries. A qid >= 10 causes an OOB array
+access.
 
-Use check_add_overflow() to detect wrapping before the comparison.
+Add a bounds check on ts.qid before using it as an array index.
 
-Fixes: 5dabcd0456d7 ("RDMA/srpt: Add support for immediate data")
-Reported-by: Carlos Bilbao (Lambda) <carlos.bilbao@kernel.org>
-Signed-off-by: Sara Venkatesh <sarajvenkatesh@gmail.com>
-Link: https://patch.msgid.link/20260504080036.3482415-1-sarajvenkatesh@gmail.com
-Reviewed-by: Carlos Bilbao (Lambda) <carlos.bilbao@kernel.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: fce041beb03f ("ath9k: unify edma and non-edma tx code, improve tx fifo handling")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/20260415222343.1540564-1-tristmd@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srpt/ib_srpt.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath9k/xmit.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
-index 960f870a952a52..5fce4cdb88eb46 100644
---- a/drivers/infiniband/ulp/srpt/ib_srpt.c
-+++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
-@@ -1070,9 +1070,10 @@ static int srpt_get_desc_tbl(struct srpt_recv_ioctx *recv_ioctx,
- 		struct srp_imm_buf *imm_buf = srpt_get_desc_buf(srp_cmd);
- 		void *data = (void *)srp_cmd + imm_data_offset;
- 		uint32_t len = be32_to_cpu(imm_buf->len);
--		uint32_t req_size = imm_data_offset + len;
-+		uint32_t req_size;
+diff --git a/drivers/net/wireless/ath/ath9k/xmit.c b/drivers/net/wireless/ath/ath9k/xmit.c
+index 84c68aefc171a7..cd175d9e729df3 100644
+--- a/drivers/net/wireless/ath/ath9k/xmit.c
++++ b/drivers/net/wireless/ath/ath9k/xmit.c
+@@ -2695,6 +2695,11 @@ void ath_tx_edma_tasklet(struct ath_softc *sc)
+ 			continue;
+ 		}
  
--		if (req_size > srp_max_req_size) {
-+		if (check_add_overflow((uint32_t)imm_data_offset, len, &req_size) ||
-+		    req_size > srp_max_req_size) {
- 			pr_err("Immediate data (length %d + %d) exceeds request size %d\n",
- 			       imm_data_offset, len, srp_max_req_size);
- 			return -EINVAL;
++		if (ts.qid >= ATH9K_NUM_TX_QUEUES) {
++			ath_dbg(common, XMIT, "invalid qid %d\n", ts.qid);
++			continue;
++		}
++
+ 		txq = &sc->tx.txq[ts.qid];
+ 
+ 		ath_txq_lock(sc, txq);
 -- 
 2.53.0
 
