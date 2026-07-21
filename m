@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9C54582CE;
-	Tue, 21 Jul 2026 21:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F7B473C94;
+	Tue, 21 Jul 2026 21:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667795; cv=none; b=CxHpPmV7Ykc7qSwfufZ/TX0JBwwEIQhttfIz8O26bp/OBznVMReIhT8pD78qXXMlYT+MGQD/3DGBkjlvBIBGis3UeOismH/zhF7DRF1HJaWIyMejTX4lLoeMpu5Tpf9WLGJPA44Yg8uMd04m2iHG1UfOd1hSgh9Xx6OcTAVfRQQ=
+	t=1784667799; cv=none; b=VHOP74brS2/RxikdCdwlkzB3kGuq7UB03TyqUsG6nr7QmLgc3wS5JAQPqNtkHIUQh7mI6DqjqmCksTodiwHCBnQ8m/66lvEaT6nswTJIn+KxFFO4gnSNi9CFk9AdGCkFqSLtIu177JMMpSzuM4AX+KYxMXsajnKxjGDK3DGAlTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667795; c=relaxed/simple;
-	bh=eztsUGIeLJX1zf8tjkp+caA3o4FBjALd5ytLUjpgqtg=;
+	s=arc-20240116; t=1784667799; c=relaxed/simple;
+	bh=Nw4/Qa7KxXEoezrhJ/xIlStef+N/aSVno6i5eAbZSFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G1KbEc30O+SH6mTefQ32XMbbeUczxy2MXtxJwe3eUxdq8fvQVTUCsW2mex/z2Pj2FnzlpNy+DEORL8bacYC5pnKYXJixfIq6BLJognlEL4ZrryfNm+nNuiZJg6AD+zNjSHCR5x677X7Gjbu9qJ31vMYLgvpdvBO1Jt+vuY24urE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cdv29jdw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k1rkGNwZlszY4jk9lh3HkUe5Kc0Tvh6jOp8GJfIRba88ew8zD/MeA/sX6vySugGsKk0ZF0eSKw8+nXvR+5yOwHGScEQosE0ekVBojEc4Jl4z3oFFvfolUtykCfz4F+i3GsmKfz0SmZ6z4dgkBLmsLeH7BatLFByFGuMd4cpMm9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BhuyeXs5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cdv29jdw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B7B1F00A3A;
-	Tue, 21 Jul 2026 21:03:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BhuyeXs5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83A91F000E9;
+	Tue, 21 Jul 2026 21:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667792;
-	bh=uSox84SpKmuZvIBioCkH3f8hBY50+27/CyWU5HGMDs8=;
+	s=korg; t=1784667795;
+	bh=NH/vumlrGodQiJ0oenBFOk7SjMtfHo7hAWlKtln+PPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cdv29jdwAICF7Yp5WDPVTc/5645KmTB9l/QtzIT0iOGbcKGivcqjW7sKgZwuPpFLB
-	 CgkxVtOXZk0jeEJjfU/BGa8kx1H6HMZaGa+IB7Lxv4rrOniyezNjkFPWr2Oy4Ggre+
-	 snXfiE/gsZHA3twg1KXxlAHkH9L7wzvUEGL5E0u8=
+	b=BhuyeXs5N4Wp/3662EYxDCYxoLgIGmcGTv+m5STjQbyggsxHSHXl7OnVRCxU+03wL
+	 31af28yNWrQn2fSPV5vo8n/w09DDst4P0tvM80aA/L6qZTqJD+nes5Swl0kfLnvBGi
+	 MXsoCXjG6n7CQkolplV7VGOUCi7jYdlRZTl31JnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1193/1266] Bluetooth: 6lowpan: fix cyclic locking warning on netdev unregister
-Date: Tue, 21 Jul 2026 17:27:10 +0200
-Message-ID: <20260721152508.492574505@linuxfoundation.org>
+Subject: [PATCH 6.6 1154/1266] ACPI: NFIT: core: Fix possible deadlock and missing notifications
+Date: Tue, 21 Jul 2026 17:26:31 +0200
+Message-ID: <20260721152507.605629119@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,98 +51,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 9707a015fe8f3ba8ec7c270f3b2b8efb38823d6b ]
+[ Upstream commit 18a00ed0e718473f5c3fcfa49df46c944575e60c ]
 
-6lowpan.c has theoretically conflicting lock orderings, which lockdep
-complains about:
+After commit 9b311b7313d6 ("ACPI: NFIT: Install Notify() handler before
+getting NFIT table"), ACPI NFIT driver removal may deadlock if an ACPI
+notify on the NFIT device is triggered concurrently.  A similar deadlock
+may occur if an ACPI notify on the NFIT device is triggered during a
+failing driver probe.
 
-    a) rtnl_lock > hdev->workqueue
+The deadlock is possible because acpi_dev_remove_notify_handler() calls
+acpi_os_wait_events_complete() after removing the notify handler and the
+driver core invokes it under the NFIT platform device lock which is also
+acquired by acpi_nfit_notify().  Thus acpi_os_wait_events_complete() may
+be waiting for acpi_nfit_notify() to complete, but the latter may not be
+able to acquire the device lock which is being held by the driver core
+while the former is being executed.
 
-    from 6lowpan.c:delete_netdev -> rtnl_lock -> device_del
-    -> put_device(parent) -> hci_release_dev -> destroy_workqueue
+Moreover, after commit 03667e146f81 ("ACPI: NFIT: core: Convert the
+driver to a platform one"), there are no sysfs notifications regarding
+NVDIMM devices because __acpi_nvdimm_notify() always bails out after
+checking the driver data pointer of the device's parent.  That parent
+is the ACPI companion of the platform device used for driver binding,
+so its driver data pointer is always NULL after the commit in question
+which was overlooked by it.
 
-    b) hdev->workqueue > l2cap_conn->lock > chan->lock > rtnl_lock
+A remedy for the deadlock is to use a special separate lock for ACPI
+notify synchronization with driver probe and removal instead of the
+device lock of the NFIT device, while a remedy for the second issue
+is to populate the driver data pointer of the NFIT device's ACPI
+companion when the driver is ready to operate, so do both these things.
+However, since the new lock is not held across the entire teardown and
+acpi_nfit_notify() should do nothing when teardown is in progress, make
+it check the driver data pointer of the NFIT device's ACPI companion, in
+analogy with the existing check in __acpi_nvdimm_notify(), and bail out
+if that pointer is NULL.
 
-    from hci_rx_work -> 6lowpan.c:chan_ready_cb
-    -> lowpan_register_netdev, ifup -> rtnl_lock
-
-Actual deadlock appears not possible, as hci_rx_work is disabled and
-l2cap_conn flushed already on hdev unregister. Hence, do minimal thing
-to make lockdep happy by breaking chain a) by holding hdev refcount
-until after netdev put in 6lowpan.c.
-
-Fixes the lockdep complaint:
-WARNING: possible circular locking dependency detected.
-kworker/0:1/11 is trying to acquire lock:
-ffff8880023b3940 ((wq_completion)hci0#2){+.+.}-{0:0}, at: touch_wq_lockdep_map+0x8b/0x130
-but task is already holding lock:
-ffffffff95e4f9c0 (rtnl_mutex){+.+.}-{4:4}, at: lowpan_unregister_netdev+0xd/0x30
-Workqueue: events delete_netdev
-
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 6fef032af009 ("Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_new_connection_cb()")
+Fixes: 9b311b7313d6 ("ACPI: NFIT: Install Notify() handler before getting NFIT table")
+Fixes: 03667e146f81 ("ACPI: NFIT: core: Convert the driver to a platform one")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: All applicable <stable@vger.kernel.org> # 9995e4404ea4: ACPI: NFIT: core: Eliminate redundant local variable
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/3420096.aeNJFYEL58@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/6lowpan.c |   25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+ drivers/acpi/nfit/core.c |   59 +++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 47 insertions(+), 12 deletions(-)
 
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -759,13 +759,33 @@ static inline struct l2cap_chan *chan_ne
- 	return chan;
- }
+--- a/drivers/acpi/nfit/core.c
++++ b/drivers/acpi/nfit/core.c
+@@ -55,6 +55,8 @@ MODULE_PARM_DESC(force_labels, "Opt-in t
+ LIST_HEAD(acpi_descs);
+ DEFINE_MUTEX(acpi_desc_lock);
  
-+static void unregister_dev(struct lowpan_btle_dev *dev)
-+{
-+	struct hci_dev *hdev = READ_ONCE(dev->hdev);
++DEFINE_MUTEX(acpi_notify_lock);
 +
-+	/* If netdev holds last reference to hci_dev (its parent device), this
-+	 * leads to theoretical cyclic locking on lowpan_unregister_netdev:
-+	 *
-+	 * rtnl_lock -> put_device(parent) -> hci_release_dev ->
-+	 * destroy_workqueue -> hci_rx_work -> l2cap_recv_acldata ->
-+	 * chan_ready_cb -> ifup -> rtnl_lock
-+	 *
-+	 * However, hci_rx_work is disabled in hci_unregister_dev, so this
-+	 * should not occur. Make lockdep happy by postponing hdev release after
-+	 * netdev put.
+ static struct workqueue_struct *nfit_wq;
+ 
+ struct nfit_table_prev {
+@@ -1702,9 +1704,15 @@ static void acpi_nvdimm_notify(acpi_hand
+ 	struct acpi_device *adev = data;
+ 	struct device *dev = &adev->dev;
+ 
+-	device_lock(dev->parent);
+-	__acpi_nvdimm_notify(dev, event);
+-	device_unlock(dev->parent);
++	/*
++	 * Locking is needed here for synchronization with driver probe and
++	 * removal and the parent NFIT device's ACPI driver data pointer is
++	 * NULL when teardown is in progress.
 +	 */
-+	hci_dev_hold(hdev);
-+	lowpan_unregister_netdev(dev->netdev);
-+	hci_dev_put(hdev);
-+}
++	guard(mutex)(&acpi_notify_lock);
 +
- static void delete_netdev(struct work_struct *work)
++	if (acpi_driver_data(to_acpi_device(dev->parent)))
++		__acpi_nvdimm_notify(dev, event);
+ }
+ 
+ static bool acpi_nvdimm_has_method(struct acpi_device *adev, char *method)
+@@ -3156,11 +3164,10 @@ EXPORT_SYMBOL_GPL(acpi_nfit_init);
+ static int acpi_nfit_flush_probe(struct nvdimm_bus_descriptor *nd_desc)
  {
- 	struct lowpan_btle_dev *entry = container_of(work,
- 						     struct lowpan_btle_dev,
- 						     delete_netdev);
+ 	struct acpi_nfit_desc *acpi_desc = to_acpi_desc(nd_desc);
+-	struct device *dev = acpi_desc->dev;
  
--	lowpan_unregister_netdev(entry->netdev);
-+	unregister_dev(entry);
+-	/* Bounce the device lock to flush acpi_nfit_add / acpi_nfit_notify */
+-	device_lock(dev);
+-	device_unlock(dev);
++	/* Bounce the notify lock to flush acpi_nfit_add / acpi_nfit_notify */
++	mutex_lock(&acpi_notify_lock);
++	mutex_unlock(&acpi_notify_lock);
  
- 	/* The entry pointer is deleted by the netdev destructor. */
+ 	/* Bounce the init_mutex to complete initial registration */
+ 	mutex_lock(&acpi_desc->init_mutex);
+@@ -3293,9 +3300,15 @@ static void acpi_nfit_notify(acpi_handle
+ {
+ 	struct acpi_device *adev = data;
+ 
+-	device_lock(&adev->dev);
+-	__acpi_nfit_notify(&adev->dev, handle, event);
+-	device_unlock(&adev->dev);
++	/*
++	 * Locking is needed here for synchronization with driver probe and
++	 * removal and the ACPI driver data pointer is NULL when teardown
++	 * is in progress.
++	 */
++	guard(mutex)(&acpi_notify_lock);
++
++	if (acpi_driver_data(adev))
++		__acpi_nfit_notify(&adev->dev, handle, event);
  }
-@@ -1254,6 +1274,7 @@ static void disconnect_devices(void)
- 			break;
  
- 		new_dev->netdev = entry->netdev;
-+		new_dev->hdev = entry->hdev;
- 		INIT_LIST_HEAD(&new_dev->list);
+ void acpi_nfit_shutdown(void *data)
+@@ -3342,6 +3355,12 @@ static int acpi_nfit_add(struct acpi_dev
+ 	acpi_size sz;
+ 	int rc = 0;
  
- 		list_add_rcu(&new_dev->list, &devices);
-@@ -1265,7 +1286,7 @@ static void disconnect_devices(void)
- 		ifdown(entry->netdev);
- 		BT_DBG("Unregistering netdev %s %p",
- 		       entry->netdev->name, entry->netdev);
--		lowpan_unregister_netdev(entry->netdev);
-+		unregister_dev(entry);
- 		kfree(entry);
++	/*
++	 * Prevent acpi_nfit_notify() from progressing until the probe is
++	 * complete in case there is a concurrent event to process.
++	 */
++	guard(mutex)(&acpi_notify_lock);
++
+ 	rc = devm_acpi_install_notify_handler(dev, ACPI_DEVICE_NOTIFY,
+ 					      acpi_nfit_notify);
+ 	if (rc)
+@@ -3357,6 +3376,11 @@ static int acpi_nfit_add(struct acpi_dev
+ 		 * data in the format of a series of NFIT Structures.
+ 		 */
+ 		dev_dbg(dev, "failed to find NFIT at startup\n");
++		/*
++		 * Let acpi_nfit_update_notify() run in case it will need to
++		 * allocate the acpi_desc object.
++		 */
++		adev->driver_data = dev;
+ 		return 0;
  	}
+ 
+@@ -3391,14 +3415,25 @@ static int acpi_nfit_add(struct acpi_dev
+ 				+ sizeof(struct acpi_table_nfit),
+ 				sz - sizeof(struct acpi_table_nfit));
+ 
+-	if (rc)
++	if (rc) {
+ 		acpi_nfit_shutdown(acpi_desc);
++		return rc;
++	}
+ 
+-	return rc;
++	/*
++	 * Let notify handlers operate (the actual value of the ACPI driver
++	 * data pointer does not matter here so long as it is not NULL).
++	 */
++	adev->driver_data = dev;
++	return 0;
  }
+ 
+ static void acpi_nfit_remove(struct acpi_device *adev)
+ {
++	guard(mutex)(&acpi_notify_lock);
++
++	/* Make notify handlers bail out early going forward. */
++	adev->driver_data = NULL;
+ 	acpi_nfit_shutdown(dev_get_drvdata(&adev->dev));
+ }
+ 
 
 
