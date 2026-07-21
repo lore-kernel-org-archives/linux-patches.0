@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D972D4D991D;
-	Tue, 21 Jul 2026 17:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14DE4EA395;
+	Tue, 21 Jul 2026 17:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656272; cv=none; b=RGIxqDD3X9qIO/kxzXikgrfEXTF+b2b0BPTFEHs5x1Y1T2HMQDDcaUlcSkNIOuWverVlB/t6qMBsdAk2oT45h0hPqBJbkU9B32c6cWUTh6xcKOwddesxsQZZcFUXDnNZ8Jl1nLQKjARNwLxU7umw3pJfDEJaaPzkkfwnSibZf3o=
+	t=1784656275; cv=none; b=HNZScouw2TVOukXEhnKTDWfCfE2rry96FRQhbMiNoofhYPcjxTsDarMmfGzeBa9wb4bYVrG6ef4k90JPKr8XzQTprR+Wjv3rrIURmSdaOq/Di7d7V5dLKCL24N6n2g4qHI4eoAc6Uq8hHCxyb1Mey+rzvr4McxgtwwHx6p26IYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656272; c=relaxed/simple;
-	bh=vYIcD0+BsShWCWABq4c2zRvSc2AqGRD4K8+BLEFfDh8=;
+	s=arc-20240116; t=1784656275; c=relaxed/simple;
+	bh=7NN5Ci7FSzpM00Umg/XcsEBe9ZwHL0L5rFD5GxOuGz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P+Fu4cJYbOdOmb8SASWh287/9autwqufFHEpreMSyABTbLx+HKdw4+tkkktLfsX8Vm2GCDNmkEFSGBYCIzqn0Ch2Mvu1s4fQueOjqxUxKiuDrqaq/UrDW03tWHA+gI7FsWEHTt/UlEn1ZlefQtq57UVnIorvj4FaYK8MFGGstzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f02Izfg+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LHtzLB+SI+I0yU6cO+X9xUlwm6glIZT2x25PhZYfcb7+NPuBj9MD3DX+5EQt/u1cKHxo8Ame7BjLPcDhNfoRd+4q2WzFx84oZxYa1+4ea72/q3s7vaxLhLIixRo1YNwZRroamsaCYFC8Y5dZlb6qAP9lM0EVxXCUD2y0+D79QJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RakMirr4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f02Izfg+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DCBA1F000E9;
-	Tue, 21 Jul 2026 17:51:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RakMirr4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33E11F00A3D;
+	Tue, 21 Jul 2026 17:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656270;
-	bh=jdJ5+OAsWAhLxpaLjaoVDSjacY20Dp4zlflUb6Sxx4U=;
+	s=korg; t=1784656273;
+	bh=Qz3gbDhrpRJ8aAuoxE9jZwPfIv2EIJO7BWi/LEUHceg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f02Izfg+Ld0Mg13zPeMbyJyCo9WMo6MifBl93IY8MBoK9edVIGaEwN0qDWX+R79Co
-	 uqed8bUWP2/hpvlZJLSk/6xXexD1OA+97MOANfUBcNsljrVqA9BsHJfNMlXEaj+j0j
-	 S5P/fVzkyp+ZE/DTBGs0TXP19kMyzirYgV9YvvzQ=
+	b=RakMirr4QbWLz7gDAYox0BAEc7EBO9jgUpuRNxG0aLhCaA2c16ll1SE5k+9ZsLY3F
+	 BEXMDS3nFDoLZWiEK1OKDlxQsGAmdM70tcqDjFM6pkUPsIvwDFWOQzp2dBUvLL/O6r
+	 G5XNCKIaVAvvi4q+YTLfe2mTdQKFBFzwvNOuXAXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI review <sashiko-bot@kernel.org>,
-	Li Chen <chenl311@chinatelecom.cn>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Yunxiang Li <Yunxiang.Li@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0322/1611] ext4: fix fast commit wait/wake bit mapping on 64-bit
-Date: Tue, 21 Jul 2026 17:07:18 +0200
-Message-ID: <20260721152522.329456394@linuxfoundation.org>
+Subject: [PATCH 6.18 0323/1611] drm/amdgpu: set sub_block_index for mca ras sub-blocks
+Date: Tue, 21 Jul 2026 17:07:19 +0200
+Message-ID: <20260721152522.353145798@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,180 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <me@linux.beauty>
+From: Yunxiang Li <Yunxiang.Li@amd.com>
 
-[ Upstream commit 8b3bc93fee6771775243665a0cf31857d6659775 ]
+[ Upstream commit baa286df5fb366e4aee5b747443dfc7194fdaa59 ]
 
-On 64-bit, ext4 dynamic inode states live in the upper half of i_flags,
-and ext4_test_inode_state() applies the corresponding +32 offset.
+The mca ras sub-blocks (mp0, mp1, mpio) all share the
+AMDGPU_RAS_BLOCK__MCA block id and are distinguished only by
+sub_block_index. The ras manager object for an mca block is selected
+with:
 
-The fast-commit wait and wake paths open-coded the wait key with the raw
-EXT4_STATE_* value. Add small helpers for the state wait word and bit,
-and use them for the FC_COMMITTING and FC_FLUSHING_DATA waits so the wait
-key follows the same mapping as the state helpers.
+	con->objs[AMDGPU_RAS_BLOCK__LAST + head->sub_block_index]
 
-Fixes: 857d32f26181 ("ext4: rework fast commit commit path")
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
-Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260513085818.552432-1-me@linux.beauty
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Since the rework in commit 7f544c5488cf ("drm/amdgpu: Rework mca ras
+sw_init") moved the ras_comm setup into amdgpu_mca_mp*_ras_sw_init() but
+left sub_block_index unset, mp0/mp1/mpio all default to index 0 and
+collide on the same object slot. mp0 grabs the slot and creates its
+sysfs node first; mp1 (and mpio) then find the slot already in use, so
+amdgpu_ras_block_late_init() -> amdgpu_ras_sysfs_create() returns
+-EINVAL:
+
+  amdgpu: mca.mp1 failed to execute ras_block_late_init_default! ret:-22
+  amdgpu: amdgpu_ras_late_init failed -22
+  amdgpu: amdgpu_device_ip_late_init failed
+  amdgpu: Fatal error during GPU init
+
+The error is currently masked because amdgpu_ras_late_init() does not
+check the return value of amdgpu_ras_block_late_init_default(), but it
+already leaves mp1/mpio without their sysfs nodes and becomes a fatal
+init failure as soon as that return value is honored.
+
+Restore the per-sub-block sub_block_index assignment so each mca
+sub-block maps to its own object slot.
+
+Fixes: 7f544c5488cf ("drm/amdgpu: Rework mca ras sw_init")
+Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ext4.h        | 20 +++++++++++++++++
- fs/ext4/fast_commit.c | 50 ++++++++++++++++---------------------------
- 2 files changed, 38 insertions(+), 32 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
-index 9bf82b568cfe23..54be698b9a1c18 100644
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -1990,6 +1990,8 @@ EXT4_INODE_BIT_FNS(flag, flags, 0)
- static inline int ext4_test_inode_state(struct inode *inode, int bit);
- static inline void ext4_set_inode_state(struct inode *inode, int bit);
- static inline void ext4_clear_inode_state(struct inode *inode, int bit);
-+static inline unsigned long *ext4_inode_state_wait_word(struct inode *inode);
-+static inline int ext4_inode_state_wait_bit(int bit);
- #if (BITS_PER_LONG < 64)
- EXT4_INODE_BIT_FNS(state, state_flags, 0)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c
+index 3ca03b5e0f9139..e1e4a61b1301c6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c
+@@ -99,6 +99,7 @@ int amdgpu_mca_mp0_ras_sw_init(struct amdgpu_device *adev)
  
-@@ -2005,6 +2007,24 @@ static inline void ext4_clear_state_flags(struct ext4_inode_info *ei)
- 	/* We depend on the fact that callers will set i_flags */
- }
- #endif
-+
-+static inline unsigned long *ext4_inode_state_wait_word(struct inode *inode)
-+{
-+#if (BITS_PER_LONG < 64)
-+	return &EXT4_I(inode)->i_state_flags;
-+#else
-+	return &EXT4_I(inode)->i_flags;
-+#endif
-+}
-+
-+static inline int ext4_inode_state_wait_bit(int bit)
-+{
-+#if (BITS_PER_LONG < 64)
-+	return bit;
-+#else
-+	return bit + 32;
-+#endif
-+}
- #else
- /* Assume that user mode programs are passing in an ext4fs superblock, not
-  * a kernel struct super_block.  This will allow us to call the feature-test
-diff --git a/fs/ext4/fast_commit.c b/fs/ext4/fast_commit.c
-index bab522ca1573df..2c4e628acb8d13 100644
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -233,6 +233,8 @@ void ext4_fc_del(struct inode *inode)
- 	struct ext4_inode_info *ei = EXT4_I(inode);
- 	struct ext4_fc_dentry_update *fc_dentry;
- 	wait_queue_head_t *wq;
-+	unsigned long *wait_word = ext4_inode_state_wait_word(inode);
-+	int wait_bit = ext4_inode_state_wait_bit(EXT4_STATE_FC_FLUSHING_DATA);
- 	int alloc_ctx;
+ 	strcpy(ras->ras_block.ras_comm.name, "mca.mp0");
+ 	ras->ras_block.ras_comm.block = AMDGPU_RAS_BLOCK__MCA;
++	ras->ras_block.ras_comm.sub_block_index = AMDGPU_RAS_MCA_BLOCK__MP0;
+ 	ras->ras_block.ras_comm.type = AMDGPU_RAS_ERROR__MULTI_UNCORRECTABLE;
+ 	adev->mca.mp0.ras_if = &ras->ras_block.ras_comm;
  
- 	if (ext4_fc_disabled(inode->i_sb))
-@@ -262,17 +264,9 @@ void ext4_fc_del(struct inode *inode)
- 	WARN_ON(ext4_test_inode_state(inode, EXT4_STATE_FC_COMMITTING)
- 		&& !ext4_test_mount_flag(inode->i_sb, EXT4_MF_FC_INELIGIBLE));
- 	while (ext4_test_inode_state(inode, EXT4_STATE_FC_FLUSHING_DATA)) {
--#if (BITS_PER_LONG < 64)
--		DEFINE_WAIT_BIT(wait, &ei->i_state_flags,
--				EXT4_STATE_FC_FLUSHING_DATA);
--		wq = bit_waitqueue(&ei->i_state_flags,
--				   EXT4_STATE_FC_FLUSHING_DATA);
--#else
--		DEFINE_WAIT_BIT(wait, &ei->i_flags,
--				EXT4_STATE_FC_FLUSHING_DATA);
--		wq = bit_waitqueue(&ei->i_flags,
--				   EXT4_STATE_FC_FLUSHING_DATA);
--#endif
-+		DEFINE_WAIT_BIT(wait, wait_word, wait_bit);
-+
-+		wq = bit_waitqueue(wait_word, wait_bit);
- 		prepare_to_wait(wq, &wait.wq_entry, TASK_UNINTERRUPTIBLE);
- 		if (ext4_test_inode_state(inode, EXT4_STATE_FC_FLUSHING_DATA)) {
- 			ext4_fc_unlock(inode->i_sb, alloc_ctx);
-@@ -552,6 +546,8 @@ void ext4_fc_track_inode(handle_t *handle, struct inode *inode)
- {
- 	struct ext4_inode_info *ei = EXT4_I(inode);
- 	wait_queue_head_t *wq;
-+	unsigned long *wait_word = ext4_inode_state_wait_word(inode);
-+	int wait_bit = ext4_inode_state_wait_bit(EXT4_STATE_FC_COMMITTING);
- 	int ret;
+@@ -123,6 +124,7 @@ int amdgpu_mca_mp1_ras_sw_init(struct amdgpu_device *adev)
  
- 	if (S_ISDIR(inode->i_mode))
-@@ -577,17 +573,9 @@ void ext4_fc_track_inode(handle_t *handle, struct inode *inode)
- 	lockdep_assert_not_held(&ei->i_data_sem);
+ 	strcpy(ras->ras_block.ras_comm.name, "mca.mp1");
+ 	ras->ras_block.ras_comm.block = AMDGPU_RAS_BLOCK__MCA;
++	ras->ras_block.ras_comm.sub_block_index = AMDGPU_RAS_MCA_BLOCK__MP1;
+ 	ras->ras_block.ras_comm.type = AMDGPU_RAS_ERROR__MULTI_UNCORRECTABLE;
+ 	adev->mca.mp1.ras_if = &ras->ras_block.ras_comm;
  
- 	while (ext4_test_inode_state(inode, EXT4_STATE_FC_COMMITTING)) {
--#if (BITS_PER_LONG < 64)
--		DEFINE_WAIT_BIT(wait, &ei->i_state_flags,
--				EXT4_STATE_FC_COMMITTING);
--		wq = bit_waitqueue(&ei->i_state_flags,
--				   EXT4_STATE_FC_COMMITTING);
--#else
--		DEFINE_WAIT_BIT(wait, &ei->i_flags,
--				EXT4_STATE_FC_COMMITTING);
--		wq = bit_waitqueue(&ei->i_flags,
--				   EXT4_STATE_FC_COMMITTING);
--#endif
-+		DEFINE_WAIT_BIT(wait, wait_word, wait_bit);
-+
-+		wq = bit_waitqueue(wait_word, wait_bit);
- 		prepare_to_wait(wq, &wait.wq_entry, TASK_UNINTERRUPTIBLE);
- 		if (ext4_test_inode_state(inode, EXT4_STATE_FC_COMMITTING))
- 			schedule();
-@@ -1050,6 +1038,8 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 	int ret = 0;
- 	u32 crc = 0;
- 	int alloc_ctx;
-+	int flushing_wait_bit =
-+		ext4_inode_state_wait_bit(EXT4_STATE_FC_FLUSHING_DATA);
+@@ -147,6 +149,7 @@ int amdgpu_mca_mpio_ras_sw_init(struct amdgpu_device *adev)
  
- 	/*
- 	 * Step 1: Mark all inodes on s_fc_q[MAIN] with
-@@ -1075,11 +1065,8 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 	list_for_each_entry(iter, &sbi->s_fc_q[FC_Q_MAIN], i_fc_list) {
- 		ext4_clear_inode_state(&iter->vfs_inode,
- 				       EXT4_STATE_FC_FLUSHING_DATA);
--#if (BITS_PER_LONG < 64)
--		wake_up_bit(&iter->i_state_flags, EXT4_STATE_FC_FLUSHING_DATA);
--#else
--		wake_up_bit(&iter->i_flags, EXT4_STATE_FC_FLUSHING_DATA);
--#endif
-+		wake_up_bit(ext4_inode_state_wait_word(&iter->vfs_inode),
-+			    flushing_wait_bit);
- 	}
+ 	strcpy(ras->ras_block.ras_comm.name, "mca.mpio");
+ 	ras->ras_block.ras_comm.block = AMDGPU_RAS_BLOCK__MCA;
++	ras->ras_block.ras_comm.sub_block_index = AMDGPU_RAS_MCA_BLOCK__MPIO;
+ 	ras->ras_block.ras_comm.type = AMDGPU_RAS_ERROR__MULTI_UNCORRECTABLE;
+ 	adev->mca.mpio.ras_if = &ras->ras_block.ras_comm;
  
- 	/*
-@@ -1295,6 +1282,8 @@ static void ext4_fc_cleanup(journal_t *journal, int full, tid_t tid)
- 	struct ext4_inode_info *ei;
- 	struct ext4_fc_dentry_update *fc_dentry;
- 	int alloc_ctx;
-+	int committing_wait_bit =
-+		ext4_inode_state_wait_bit(EXT4_STATE_FC_COMMITTING);
- 
- 	if (full && sbi->s_fc_bh)
- 		sbi->s_fc_bh = NULL;
-@@ -1331,11 +1320,8 @@ static void ext4_fc_cleanup(journal_t *journal, int full, tid_t tid)
- 		 * barrier in prepare_to_wait() in ext4_fc_track_inode().
- 		 */
- 		smp_mb();
--#if (BITS_PER_LONG < 64)
--		wake_up_bit(&ei->i_state_flags, EXT4_STATE_FC_COMMITTING);
--#else
--		wake_up_bit(&ei->i_flags, EXT4_STATE_FC_COMMITTING);
--#endif
-+		wake_up_bit(ext4_inode_state_wait_word(&ei->vfs_inode),
-+			    committing_wait_bit);
- 	}
- 
- 	while (!list_empty(&sbi->s_fc_dentry_q[FC_Q_MAIN])) {
 -- 
 2.53.0
 
