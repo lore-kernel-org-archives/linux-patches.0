@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC79B46A5F9;
-	Tue, 21 Jul 2026 15:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043E2366DA5;
+	Tue, 21 Jul 2026 15:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649053; cv=none; b=YjtVGHcmq3dzwK+DlmpyEyBZXWaKQjdHZ72RPfwO2wgSSlhqcvNRskxgqmCYKPwbOml24v9h8ztI3hOIeKpeys2783dY4+pXFXJJUgT9I90YaCkpw9WgQ3ggHUvouG3dkSNQOg8Fpu5XYxbp8SUjB+httUbdlnoiFolsMUx7joc=
+	t=1784649056; cv=none; b=q/qRINC+SxYS4ZcR0fIahYQ6DLs8euO/h/a0IMsx0qbmbw38yLq/poQglBdwhLtOM5fVxDRP87u+GnSPvONJaPQkHv+VAC45t+3J9pcTbw3K0DqbafVHqRdWns8eMTjK8M/bI508zEpLa2AHVDzpSNJbVfqDC8UwVbAzQe7FtI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649053; c=relaxed/simple;
-	bh=g9t0xcF2eDoXoBy5XjqPtvX5Wg78HoBV8yyQtapGOMc=;
+	s=arc-20240116; t=1784649056; c=relaxed/simple;
+	bh=qvM604U7flrZCzF/9lt58I7EFee5MUrLcOcDA85CgBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aDPdvUWFme2n2aUH0pqkmwCnLchP6oLrr6guDboeros75roGCg+nvj/JYCtaS7vOnAmmnSzKlX4Wp/V26Ina6s34CgGorODCWyqkRftHWYuViLk0wCBrBKYnGM6v4h+Bqgu89aef2AKkohifRvXzM642y054TQux+c3AO8jxHuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PkA10AYT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cjoe1n31uwmu5iTbM0fva7526bgXx3Dx4XgzyQZpFijauS5JRXLH02PHrMKcV+pHrTGy4+i+QTBVmzdDljEY8OsZDV3ufAbxqGQTDlFGh1ju8Mj7NMJmS+xycTfSuepsrjffx/nizfkyLSiD+2v766mfSMZQjRO3UEC/4t2wy70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJsk2rIF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PkA10AYT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27781F000E9;
-	Tue, 21 Jul 2026 15:50:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJsk2rIF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D5C1F000E9;
+	Tue, 21 Jul 2026 15:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649052;
-	bh=nlMdJXLGraPkftSAIzLs8orChiuiqfu069/TWD6UbEE=;
+	s=korg; t=1784649054;
+	bh=dpc1WqePzXr67KpdHGSgpWxO/UshGT34QtKDW9TuRUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PkA10AYTtloTOkCjuc+1h53BjshYRwQOWGRKDsKvYeCKbDXK6HSq5S/xBjHHOxHXz
-	 Xm0P8y41iMCLskxnpgkUtrE0d6j4IeoU/AV90YbJLZab42m7Fi6DC0YbTSinITjy4v
-	 BjX5n5R96RB8gPk+Qz6bd0bAkvxxuAHkQC6pP9JI=
+	b=mJsk2rIFMAJCwicuuJyQR7RQBNc4K30vAMBLip2dNwQBoBPpTyIeg4vI7Zktfa8WQ
+	 QIiCtzVgsLMD6VFAu24IwhHcB4Qcb2VHQNruo5APjZHxTcEvRhda8bMtw2ADSsw/FC
+	 c+EE5SLmpu1Qp23N8V7Mlna7QghCV6XgZrXayuOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0432/2077] libbpf: Skip max_entries override on signed loaders
-Date: Tue, 21 Jul 2026 17:01:45 +0200
-Message-ID: <20260721152602.939284460@linuxfoundation.org>
+Subject: [PATCH 7.1 0433/2077] scsi: pm8001: Fix error code in non_fatal_log_show()
+Date: Tue, 21 Jul 2026 17:01:46 +0200
+Message-ID: <20260721152602.964242016@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,59 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 60214435b365ecdd40b2f96d4e54564b5c927645 ]
+[ Upstream commit 1b6f03b7ae9ee27054c55bb55a69d05555a78516 ]
 
-bpf_gen__map_create() lets the host-supplied loader ctx override a
-map's max_entries at runtime (map_desc[idx].max_entries, when non-zero).
-This is how the light skeleton sizes maps to the target machine, but
-it happens after emit_signature_match() and is covered by neither the
-signed loader instructions nor the hashed blob.
+The non_fatal_log_show() function is supposed to return negative error
+codes on failure.  But because the error codes are saved in a u32 and
+then cast to signed long, they end up being high positive values instead
+of negative.  Remove the intermediary u32 variable to fix this bug.
 
-For a signed loader this means an untrusted host can re-dimension the
-program's maps, outside what the signature attests to. Gate the override
-on gen_hash so signed loaders use the signer-provided max_entries baked
-into the blob.
-
-Fixes: ea923080c145 ("libbpf: Embed and verify the metadata hash in the loader")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260601150248.394863-6-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: dba2cc03b9db ("scsi: pm80xx: sysfs attribute for non fatal dump")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Link: https://patch.msgid.link/ahs-bEsBJH0KhnsX@stanley.mountain
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/gen_loader.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/scsi/pm8001/pm8001_ctl.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
-index 0cb14e030b8be6..40004aa3af71bc 100644
---- a/tools/lib/bpf/gen_loader.c
-+++ b/tools/lib/bpf/gen_loader.c
-@@ -545,13 +545,22 @@ void bpf_gen__map_create(struct bpf_gen *gen,
- 	default:
- 		break;
- 	}
--	/* conditionally update max_entries */
--	if (map_idx >= 0)
-+
-+	/*
-+	 * Conditionally update max_entries from the host-supplied loader
-+	 * ctx. This sizes the map at runtime, but for a signed loader
-+	 * (gen_hash) it would let an untrusted host re-dimension the
-+	 * program's maps after emit_signature_match(), outside what the
-+	 * signature attests to. Keep the signer-provided max_entries
-+	 * baked into the blob in that case.
-+	 */
-+	if (map_idx >= 0 && !OPTS_GET(gen->opts, gen_hash, false))
- 		move_ctx2blob(gen, attr_field(map_create_attr, max_entries), 4,
- 			      sizeof(struct bpf_loader_ctx) +
- 			      sizeof(struct bpf_map_desc) * map_idx +
- 			      offsetof(struct bpf_map_desc, max_entries),
- 			      true /* check that max_entries != 0 */);
-+
- 	/* emit MAP_CREATE command */
- 	emit_sys_bpf(gen, BPF_MAP_CREATE, map_create_attr, attr_size);
- 	debug_ret(gen, "map_create %s idx %d type %d value_size %d value_btf_id %d",
+diff --git a/drivers/scsi/pm8001/pm8001_ctl.c b/drivers/scsi/pm8001/pm8001_ctl.c
+index cbfda8c04e956a..c10854ec44c7bd 100644
+--- a/drivers/scsi/pm8001/pm8001_ctl.c
++++ b/drivers/scsi/pm8001/pm8001_ctl.c
+@@ -588,10 +588,7 @@ static DEVICE_ATTR(fatal_log, S_IRUGO, pm8001_ctl_fatal_log_show, NULL);
+ static ssize_t non_fatal_log_show(struct device *cdev,
+ 	struct device_attribute *attr, char *buf)
+ {
+-	u32 count;
+-
+-	count = pm80xx_get_non_fatal_dump(cdev, attr, buf);
+-	return count;
++	return pm80xx_get_non_fatal_dump(cdev, attr, buf);
+ }
+ static DEVICE_ATTR_RO(non_fatal_log);
+ 
 -- 
 2.53.0
 
