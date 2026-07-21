@@ -1,96 +1,106 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A2E394783;
-	Tue, 21 Jul 2026 20:16:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8AA924A078
+	for <patches@lists.linux.dev>; Tue, 21 Jul 2026 20:16:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664982; cv=none; b=W90pLcbgyvR1uK6Ch2fAMRbkLIfp6JhOeKe9yeg44BfL2iWW/IuwNvX6WoVoHHABMnJMXNkZ5/n6funuY2/FBOXmSn2yNJb3oBKR5U+6ac0TRALZ4Ut3fjr0GFcG+QoQ4Z/XgsOi3maTJtbrY6mW3NZp0TbsRxZB4cKGuDEsmWs=
+	t=1784664985; cv=none; b=M5MvYP8sf1JueWZRi96knnbUTyJTihfzUc5MBl3HidHDjOl3JtSAkeichgOM0ZSci9NlkFpGUq/BZIX74Bl9Dksl22sM+lKRYLcpChOQgxhoT+kpItZjRdCYl43dvDtKsLq2FTn8EOaZP4OaWtT0GJyPVtrC7yYmbfVmzHTMQ/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664982; c=relaxed/simple;
-	bh=EM9vOrVclhhxXhfMHd+KZHoomRNGQYulUhsIcJ5Ub6A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o+fbTueJW8uV8WuN66PIlCejBx2tvIGBhQfHVtTxOrEhT4Lky+Q47oPh0qK4W+LtdbLPR8RlpGjoJ0NC0XXzFeF2jSKTpK7RfjHGGJoe7Fg1HZngeBLfH18W4yH7xcfck1EK5Y7C1n9lplWpwdaWuNiwkIcUyFkFKfmhvePK3RY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yt2xijH0; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784664985; c=relaxed/simple;
+	bh=2nW/jag0OFDmdU0QuqvgLMi7C7DzkcAZdE9Mb2LmPvk=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=XYPdXLeBFwVrFg6blo10CwPTqwuE5dOaecijvL0qp+AO2+0+JueKEem6zlRkhkt021IXO3ezv/i+J45y3qbl6FTvaV5w4fCzfp3G0B3KvuiLbh+RYfVif6PPIxCzT9kK/3nn+t7Z5xpgiWtkLGzbUqXxDD7A6uDZr0XEvqwqv+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DR5HoyHq; arc=none smtp.client-ip=209.85.222.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yt2xijH0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 117971F000E9;
-	Tue, 21 Jul 2026 20:16:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664981;
-	bh=sEi2RVRCt2v0ZwjvkLGIykLLj7zTE8V1uh+D+SsnfUc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yt2xijH0urDqxQqX3LcYFNC+2j9sVv3XW65m7FSJsrfCpF4TFyKVBiaMfRT+lglAE
-	 ShFHTrUv3yXn1fFwBEiNs8ruVkWr8F5KXILPES/HB9IwknHtu/b7B4RpH7ygw2HH94
-	 cZPrw9y20Id3ZmoveEwQ/2YVBWwonzkOmadmjO1s=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Mahesh Vaidya <mahesh.vaidya@altera.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	"Subhransu S. Prusty" <subhransu.sekhar.prusty@altera.com>
-Subject: [PATCH 6.6 0130/1266] PCI: altera: Do not dispose parent IRQ mapping
-Date: Tue, 21 Jul 2026 17:09:27 +0200
-Message-ID: <20260721152444.713988462@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
-References: <20260721152441.786066624@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DR5HoyHq"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-92e512a9a6bso757398385a.2
+        for <patches@lists.linux.dev>; Tue, 21 Jul 2026 13:16:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784664983; x=1785269783; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Eq/I2Yx4I4ai7680JlcJEOI0mPA0NT1fgrQ0REFG2zw=;
+        b=DR5HoyHqGaXUmdf7ko/vZ5y2zvZVViCU+9XC79U88ZZbQN7Vb1GxIsPX9TxuOIgs4r
+         Gj8HEckL6E6YmlCH+3lBYzzvs/LUNgOTiOn7uHJNzVlBKzmVGW01vp2HtZfNQNmKkSNi
+         rIue30gwUWUzdCo0p3U06klrunyAjx/QbIJbZmcXdQYYFP9mLT7yZXXXoOKYZQd7RYwR
+         BIIv5E654YolD8w5KcN1xoKk9Z8HyXbdqyckSkexOdJdzJcM2rTutAcRWQ8eN+tanSUw
+         DQXrarX5UAS/Z8OlW+YcGBOxmctzpogj5L5/qTnSXkzWtxV0klBwAOKYUbUS2Jsnv9gw
+         M7sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784664983; x=1785269783;
+        h=content-transfer-encoding:content-type:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Eq/I2Yx4I4ai7680JlcJEOI0mPA0NT1fgrQ0REFG2zw=;
+        b=ilYUo/6mRmj99NAfe6PIA6n8iOgR4hC6ZYCkYTTQ2brTuISsnoWJrAREUMnVzrTlmz
+         hKknU+Zs5MV3ysLSvPaDTaHMRH+FgacucOFSK99a+IE6EGEt9rCKT+UIYtIoejzQWozc
+         Kzt8Uh1nDPsNptq8KMiXbfLyP/yP7navzDgmFa2HbVighcWNfkdxlPrpQtqHIUTCAyrg
+         3kiC8gqTHGMnI0zRua/AsWgim0oZ2B0XzZlxJwUPBW+N3t9T9s1OcuXGNhd+nZ09++5d
+         rPasGhhZCAoTs3H/F6zRfzqx/+v9f+ebDs1jFN2yYqQVeHBIgVrFVhu/PpB52GEHFdec
+         PIXQ==
+X-Gm-Message-State: AOJu0YyYFodIsQ4y9d4mi26LOs5eCVUHrp3fSLeZvmdHEdDbVGtQpEVo
+	f9dMWdhJLYJl5M/96gz9Z0zsST5qJfrnl7lwH8YKu8wkyHXqXnjDyRo=
+X-Gm-Gg: AfdE7cnmV6223KWkYDhol/ffa762Ij+n+iu2IGOaPnS/AZrHl95OPFfW0+BGfB+uGkl
+	EKIoMghPHck2T0agaJx/FmKTJX2S7TSo+qAsbk7ChAooQ5kvoptyusUEPpcuPiU6DpuHkrkIepY
+	c/6kRzbfS+dH46WdSXLuyrSOW+KOzsvp+yV13yo16zelqIf6nc3imOy5wWv+e/xF805s8LmZedX
+	dgFbU5pPQoV5W13sXKByPPne17MVkbWVwabTWzs8XeA8FAFUewv1k2k4hluHRwa2j/PpGinA7Vt
+	ks15bwturt/n/g4uZ8V/Mkov8J8/2n4Yc50MqCQzne+exRodhqFY1b+8nBNma6Bj4O9Pe+h+Rz5
+	s1Df2l0CsISvcPuJPnRXSoJTl95D0YNzSsewNv7tyvk1oEEr3hCTI6x9e5axGrmlBm7e9Z7gAt5
+	zV2urGoUXN3Dnusx1F0ww46hWXz27H6oh/M+f8LxC0
+X-Received: by 2002:a05:620a:d8e:b0:92e:f3ca:2ebc with SMTP id af79cd13be357-930b3ed6f01mr2150766185a.37.1784664982638;
+        Tue, 21 Jul 2026 13:16:22 -0700 (PDT)
+Received: from [120.7.1.23] (135-23-94-154.cpe.pppoe.ca. [135.23.94.154])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-930b542e60asm1223396085a.31.2026.07.21.13.16.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jul 2026 13:16:22 -0700 (PDT)
+Subject: Re: [PATCH 5.10 000/699] 5.10.261-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260721152355.667394603@linuxfoundation.org>
+From: Woody Suwalski <terraluna977@gmail.com>
+Message-ID: <eafe67c7-4e17-ce8c-1a93-e018074b6973@gmail.com>
+Date: Tue, 21 Jul 2026 16:16:37 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101
+ Firefox/140.0 SeaMonkey/2.53.24
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.261 release.
+> There are 699 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 23 Jul 2026 15:23:00 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.261-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+>
+>
+Compiled OK for an i386 and runs OK on a 32-bit eeepc. No new problems 
+noticed.
 
-------------------
-
-From: Mahesh Vaidya <mahesh.vaidya@altera.com>
-
-commit 5ef4bac02189bee0b7c170e352d7a38e13fe9678 upstream.
-
-altera_pcie_irq_teardown() calls irq_dispose_mapping() on pcie->irq.
-However, pcie->irq is the parent IRQ returned by platform_get_irq(), not
-the mapping created by Altera INTx irq_domain.
-
-The Altera driver only sets the chained handler on the parent IRQ. It
-should detach that handler during teardown, but it should not dispose the
-parent IRQ mapping, which belongs to the parent interrupt controller's
-irq_domain.
-
-Drop irq_dispose_mapping(pcie->irq) from the teardown path.
-
-Note that during irqchip remove(), the child IRQs should've disposed. But
-since the chained handler itself is removed, there is no way the stale
-child IRQs (if exists) could fire. So it is safe here.
-
-Fixes: ec15c4d0d5d2 ("PCI: altera: Allow building as module")
-Signed-off-by: Mahesh Vaidya <mahesh.vaidya@altera.com>
-[mani: added a note about IRQ disposal]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Subhransu S. Prusty <subhransu.sekhar.prusty@altera.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260430204330.3121003-2-mahesh.vaidya@altera.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/pci/controller/pcie-altera.c |    1 -
- 1 file changed, 1 deletion(-)
-
---- a/drivers/pci/controller/pcie-altera.c
-+++ b/drivers/pci/controller/pcie-altera.c
-@@ -684,7 +684,6 @@ static void altera_pcie_irq_teardown(str
- {
- 	irq_set_chained_handler_and_data(pcie->irq, NULL, NULL);
- 	irq_domain_remove(pcie->irq_domain);
--	irq_dispose_mapping(pcie->irq);
- }
- 
- static int altera_pcie_parse_dt(struct altera_pcie *pcie)
-
+Tested-by: Woody Suwalski <terraluna977@gmail.com>
 
