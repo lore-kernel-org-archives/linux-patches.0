@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88243C1081;
-	Tue, 21 Jul 2026 21:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF7D35C699;
+	Tue, 21 Jul 2026 21:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670874; cv=none; b=SqM06kPIC6UJFmCRpfErOzcGpi+c4N4sb+XN766b5P04xzZd8dsW4Z6vbEgVhbWyO4ZKNNpVdI8T7MTHLxXZzC33B1lomZWXXmvS03C/dtFrv+JHeYyBr4X/Hmilm6V4cznNQvYFpsadI89rxWe8iF4yvcOVQYPCaTFHygWBoUE=
+	t=1784670877; cv=none; b=XoUK3CCbfxeBwqKN/DyHj06L9qQgMxa3xX0dYNPPibGWJLOZsz4qIw4y6ucA1X/rxchOL8SBQqPKLRpkzT/R1xeA/kagKW0+ilh+I3MlKVfmicJdu5CsiyyhUiBy8A2eJRV6d73z9AnJioYD1x42YDeIzywf3yJQv4laUWhcm9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670874; c=relaxed/simple;
-	bh=61gMhbYKOWxFxxMuT4GdG/Gr9l5BR4hptPZ4LA4uURU=;
+	s=arc-20240116; t=1784670877; c=relaxed/simple;
+	bh=N02wdaYoNKAhZjMxhYYkvRvNoVnC6+P93KtbZwBF+dg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YBxPFHHtEUHn8cFLxezgIaQWK/9HneX0wVei4XleupWkXuXDd/l7WPohmNiOO5o3qJwHJewuZZDAU4EV2tkeposs0Yap0g6aLfgqUmBD6vo13aaKmUBmpQbOoN08rv0arSQnMT2qvtzCSsawdlfhUvI/3wXW1wcB0ExjWQ8Y5xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGyWiw/3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D3VbFLPDD92tuEDqpYFyYpYXXZCce2jwJVsqmQrqTKqOpCTNp3nJf366qKqE1HosKeM1sfKvZBZY/V5s7W4OMBrXWm2gGt8WNVyX+DRF0JCBZK65cFaDSuSNLvFbbDj/XPFrZ3/IH1SyaZIK42ShKc8JqSegR33U9ywZkcwJlMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vesChcqM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGyWiw/3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB151F000E9;
-	Tue, 21 Jul 2026 21:54:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vesChcqM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CA81F000E9;
+	Tue, 21 Jul 2026 21:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670873;
-	bh=g8aFS4e9o0ys1carscQiK7uoS9NweHIayDU4RNqOnYk=;
+	s=korg; t=1784670876;
+	bh=2MU5WAXERuFlAEFpdLDCCZLh0VgU3Z3b9ATI4vZjFGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BGyWiw/33sQUPcvjnJKcSj6l0blaz4IJL7mUOVSasI17lBNBTe72vu6vfHORtHoUv
-	 ZUnX6k5Hg0CkddvxiL+4hdZQkQpVWxWKHF6W0xTkU7DKBa0VrKtdKOJdjCdxkQggfr
-	 iu9gvUaWjVtZqh2BFdB5rB9iL+p6Seix7OeLLKi4=
+	b=vesChcqMYF9cNEsCk+2gLHK6Ya+j/zFVYDK4eyRn/EUyHtdKH40Y4Bma0tZgrQgTh
+	 1We3Yhelik7t9z0v/gCjfkYX0fryDYQQ4CXvkTlkrb4DUdRVf+GPPXNVFXkAW70N7d
+	 PBClGLphx8asjfi6Qof0DGhG7QtQ/Tzb5+PATiKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 008/843] dma-buf: remove unused dma-fence-unwrap.c (stable/linux-5.15.y only)
-Date: Tue, 21 Jul 2026 17:14:03 +0200
-Message-ID: <20260721152406.142805683@linuxfoundation.org>
+Subject: [PATCH 5.15 009/843] slimbus: qcom-ngd-ctrl: Fix up platform_driver registration
+Date: Tue, 21 Jul 2026 17:14:04 +0200
+Message-ID: <20260721152406.163652743@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -44,220 +47,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-The file drivers/dma-buf/dma-fence-unwrap.c was incorrectly added to
-the 5.15.y stable branch in commit 4e82b9c11d3c ("dma-buf: add
-dma_fence_timestamp helper") as a new file, but it was never enabled in
-the Makefile, and its header include/linux/dma-fence-unwrap.h was not
-present, making it uncompilable.
+[ Upstream commit 8663e8334d7b6007f5d8a4e5dd270246f35107a6 ]
 
-A full revert of commit 4e82b9c11d3c ("dma-buf: add dma_fence_timestamp
-helper") is not desirable because that commit also introduced the valid
-dma_fence_timestamp() helper and fixed legitimate timestamp race
-windows in drivers/dma-buf/sync_file.c and
-drivers/gpu/drm/scheduler/sched_main.c.
+Device drivers should not invoke platform_driver_register()/unregister()
+in their probe and remove paths. They should further not rely on
+platform_driver_unregister() as their only means of "deleting" their
+child devices.
 
-Since there are no users of dma-fence-unwrap in the 5.15.y branch,
-remove the unused file to clean up the tree and avoid confusion.
+Introduce a helper to unregister the child device and move the
+platform_driver_register()/unregister() to module_init()/exit().
 
-Fixes: 4e82b9c11d3c ("dma-buf: add dma_fence_timestamp helper")
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260530204421.116824-3-srini@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/dma-fence-unwrap.c | 176 -----------------------------
- 1 file changed, 176 deletions(-)
- delete mode 100644 drivers/dma-buf/dma-fence-unwrap.c
+ drivers/slimbus/qcom-ngd-ctrl.c | 36 ++++++++++++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma-buf/dma-fence-unwrap.c b/drivers/dma-buf/dma-fence-unwrap.c
-deleted file mode 100644
-index 628af51c81af3d..00000000000000
---- a/drivers/dma-buf/dma-fence-unwrap.c
-+++ /dev/null
-@@ -1,176 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0-only
--/*
-- * dma-fence-util: misc functions for dma_fence objects
-- *
-- * Copyright (C) 2022 Advanced Micro Devices, Inc.
-- * Authors:
-- *	Christian König <christian.koenig@amd.com>
-- */
--
--#include <linux/dma-fence.h>
--#include <linux/dma-fence-array.h>
--#include <linux/dma-fence-chain.h>
--#include <linux/dma-fence-unwrap.h>
--#include <linux/slab.h>
--
--/* Internal helper to start new array iteration, don't use directly */
--static struct dma_fence *
--__dma_fence_unwrap_array(struct dma_fence_unwrap *cursor)
--{
--	cursor->array = dma_fence_chain_contained(cursor->chain);
--	cursor->index = 0;
--	return dma_fence_array_first(cursor->array);
--}
--
--/**
-- * dma_fence_unwrap_first - return the first fence from fence containers
-- * @head: the entrypoint into the containers
-- * @cursor: current position inside the containers
-- *
-- * Unwraps potential dma_fence_chain/dma_fence_array containers and return the
-- * first fence.
-- */
--struct dma_fence *dma_fence_unwrap_first(struct dma_fence *head,
--					 struct dma_fence_unwrap *cursor)
--{
--	cursor->chain = dma_fence_get(head);
--	return __dma_fence_unwrap_array(cursor);
--}
--EXPORT_SYMBOL_GPL(dma_fence_unwrap_first);
--
--/**
-- * dma_fence_unwrap_next - return the next fence from a fence containers
-- * @cursor: current position inside the containers
-- *
-- * Continue unwrapping the dma_fence_chain/dma_fence_array containers and return
-- * the next fence from them.
-- */
--struct dma_fence *dma_fence_unwrap_next(struct dma_fence_unwrap *cursor)
--{
--	struct dma_fence *tmp;
--
--	++cursor->index;
--	tmp = dma_fence_array_next(cursor->array, cursor->index);
--	if (tmp)
--		return tmp;
--
--	cursor->chain = dma_fence_chain_walk(cursor->chain);
--	return __dma_fence_unwrap_array(cursor);
--}
--EXPORT_SYMBOL_GPL(dma_fence_unwrap_next);
--
--/* Implementation for the dma_fence_merge() marco, don't use directly */
--struct dma_fence *__dma_fence_unwrap_merge(unsigned int num_fences,
--					   struct dma_fence **fences,
--					   struct dma_fence_unwrap *iter)
--{
--	struct dma_fence_array *result;
--	struct dma_fence *tmp, **array;
--	ktime_t timestamp;
--	unsigned int i;
--	size_t count;
--
--	count = 0;
--	timestamp = ns_to_ktime(0);
--	for (i = 0; i < num_fences; ++i) {
--		dma_fence_unwrap_for_each(tmp, &iter[i], fences[i]) {
--			if (!dma_fence_is_signaled(tmp)) {
--				++count;
--			} else {
--				ktime_t t = dma_fence_timestamp(tmp);
--
--				if (ktime_after(t, timestamp))
--					timestamp = t;
--			}
--		}
--	}
--
--	/*
--	 * If we couldn't find a pending fence just return a private signaled
--	 * fence with the timestamp of the last signaled one.
--	 */
--	if (count == 0)
--		return dma_fence_allocate_private_stub(timestamp);
--
--	array = kmalloc_array(count, sizeof(*array), GFP_KERNEL);
--	if (!array)
--		return NULL;
--
--	/*
--	 * This trashes the input fence array and uses it as position for the
--	 * following merge loop. This works because the dma_fence_merge()
--	 * wrapper macro is creating this temporary array on the stack together
--	 * with the iterators.
--	 */
--	for (i = 0; i < num_fences; ++i)
--		fences[i] = dma_fence_unwrap_first(fences[i], &iter[i]);
--
--	count = 0;
--	do {
--		unsigned int sel;
--
--restart:
--		tmp = NULL;
--		for (i = 0; i < num_fences; ++i) {
--			struct dma_fence *next;
--
--			while (fences[i] && dma_fence_is_signaled(fences[i]))
--				fences[i] = dma_fence_unwrap_next(&iter[i]);
--
--			next = fences[i];
--			if (!next)
--				continue;
--
--			/*
--			 * We can't guarantee that inpute fences are ordered by
--			 * context, but it is still quite likely when this
--			 * function is used multiple times. So attempt to order
--			 * the fences by context as we pass over them and merge
--			 * fences with the same context.
--			 */
--			if (!tmp || tmp->context > next->context) {
--				tmp = next;
--				sel = i;
--
--			} else if (tmp->context < next->context) {
--				continue;
--
--			} else if (dma_fence_is_later(tmp, next)) {
--				fences[i] = dma_fence_unwrap_next(&iter[i]);
--				goto restart;
--			} else {
--				fences[sel] = dma_fence_unwrap_next(&iter[sel]);
--				goto restart;
--			}
--		}
--
--		if (tmp) {
--			array[count++] = dma_fence_get(tmp);
--			fences[sel] = dma_fence_unwrap_next(&iter[sel]);
--		}
--	} while (tmp);
--
--	if (count == 0) {
--		tmp = dma_fence_allocate_private_stub(ktime_get());
--		goto return_tmp;
--	}
--
--	if (count == 1) {
--		tmp = array[0];
--		goto return_tmp;
--	}
--
--	result = dma_fence_array_create(count, array,
--					dma_fence_context_alloc(1),
--					1, false);
--	if (!result) {
--		tmp = NULL;
--		goto return_tmp;
--	}
--	return &result->base;
--
--return_tmp:
--	kfree(array);
--	return tmp;
--}
--EXPORT_SYMBOL_GPL(__dma_fence_unwrap_merge);
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index defd22edcb414d..346cd7c8127065 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1471,6 +1471,13 @@ static int of_qcom_slim_ngd_register(struct device *parent,
+ 	return -ENODEV;
+ }
+ 
++static void qcom_slim_ngd_unregister(struct qcom_slim_ngd_ctrl *ctrl)
++{
++	struct qcom_slim_ngd *ngd = ctrl->ngd;
++
++	platform_device_del(ngd->pdev);
++}
++
+ static int qcom_slim_ngd_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -1580,7 +1587,6 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
+ 		goto err_pdr_lookup;
+ 	}
+ 
+-	platform_driver_register(&qcom_slim_ngd_driver);
+ 	return of_qcom_slim_ngd_register(dev, ctrl);
+ 
+ err_pdr_alloc:
+@@ -1594,7 +1600,9 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
+ 
+ static int qcom_slim_ngd_ctrl_remove(struct platform_device *pdev)
+ {
+-	platform_driver_unregister(&qcom_slim_ngd_driver);
++	struct qcom_slim_ngd_ctrl *ctrl = platform_get_drvdata(pdev);
++
++	qcom_slim_ngd_unregister(ctrl);
+ 
+ 	return 0;
+ }
+@@ -1673,6 +1681,28 @@ static struct platform_driver qcom_slim_ngd_driver = {
+ 	},
+ };
+ 
+-module_platform_driver(qcom_slim_ngd_ctrl_driver);
++static int qcom_slim_ngd_init(void)
++{
++	int ret;
++
++	ret = platform_driver_register(&qcom_slim_ngd_driver);
++	if (ret)
++		return ret;
++
++	ret = platform_driver_register(&qcom_slim_ngd_ctrl_driver);
++	if (ret)
++		platform_driver_unregister(&qcom_slim_ngd_driver);
++
++	return ret;
++}
++
++static void qcom_slim_ngd_exit(void)
++{
++	platform_driver_unregister(&qcom_slim_ngd_ctrl_driver);
++	platform_driver_unregister(&qcom_slim_ngd_driver);
++}
++
++module_init(qcom_slim_ngd_init);
++module_exit(qcom_slim_ngd_exit);
+ MODULE_LICENSE("GPL v2");
+ MODULE_DESCRIPTION("Qualcomm SLIMBus NGD controller");
 -- 
 2.53.0
 
