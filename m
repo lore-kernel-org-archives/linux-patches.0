@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC3C3C9ED9;
-	Tue, 21 Jul 2026 18:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E702F3909A9;
+	Tue, 21 Jul 2026 18:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658448; cv=none; b=Osyd5RAhYW2s9hEAtK0mWhCMGPyApfOOCzRg6Qh84zod38x3EBbE7G2jJdckbFMtOY/I42Ge2uu4hHpGcBFt9COTANWg+CuU9mX0qrRNkmW8qafWdecWDzdYdN8tS8tDmEJMHCtytkZCC/GILcJIIR0BnfmomP+1SEOUmVWjHrw=
+	t=1784658451; cv=none; b=AfgxDaOJhRux7fg1LW1KV+wkXokanDQ4zz/dmNlUmq+I9RKinpgiwkBdis5DvWix43uN3FJtDiibihyW334KJRe3bEWEyfnvMoLNmvaHEJD1yozpd0IC1ZLDDU+W/gG4NjH1LsbueZv7XT4dqs6xL3UvCSDliiAv/e7BB6RAS5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658448; c=relaxed/simple;
-	bh=LFshqUwMLUkOoOWBoZtJbK6m9q9gObc+L3tnPiy2ZwE=;
+	s=arc-20240116; t=1784658451; c=relaxed/simple;
+	bh=RrdZ+QNtJo6EQaS7+Byb4DTfihcGhvr+jPpSWW4K3ow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4CC0UHwfDI+ZNspSdxpJ8Vi1JOjVAifJNEFaP8a7M1qOqL7ROtzSTKkEOpH1n3W07L3slTr1D4JVMLzmgzAUegEGua6G9NKAXQZ5Qrtli7X+BAvcvuBTbnx2Mw8o5qG+H2zLLsfxGeQJyPhM7dgw96KIyKAEmQdoSfWnvyxTe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=POsPSWi/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nfx55YKj8zwb0qgIznTNDoEFv9Jr/oubf/gnQbCwTJUqzfuRg3tVcyxeCOKkAQ8S03KSsyf2bxpAKtkf14hyg+M/6Qri5GQ1n3P71JxGpZucCrg1gZ0a0VCOEuS2dmB94oyB/gjQ5Ol26peiwFDxj+jtKjg51qnkT6E2MNvLalo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqhdCbOQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="POsPSWi/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9761F000E9;
-	Tue, 21 Jul 2026 18:27:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqhdCbOQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2751F000E9;
+	Tue, 21 Jul 2026 18:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658447;
-	bh=RMQ3/B3qoG3byYvzC91qN3Y3g+/i6+SAyKVBejM4nS0=;
+	s=korg; t=1784658449;
+	bh=266r5sj3dZ4bmDgf3gCmfOgK0uptW2FBSvNbnwoZ+Xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=POsPSWi/GtVi4ifFyHq5Tka2Ay+GPO1SUurAFM1aDui+OYh9TWzZenzvVKe3G9rg9
-	 Dv9zM2sN1Bob4U6BSh8cSXLwvGFUjfmadZj+eT+i7+TFonnYKoummq4G4aFFHbzCf4
-	 k6c0qZWTu10ylwL05HglWHqp6JlO5IrDWf0GSLE8=
+	b=QqhdCbOQqhj4h92ItBNn2wLQRuovKB/Kn7QYTRSp9Q6k+ZIEZ9pUKhWFZ6R4scO1Z
+	 632m0ysMiLKB1/ycOQreGq9lqAMZAzdSLsjY7rJEAmh7NlSOKkqF+ikZluKbUgcU1A
+	 UnOPNHZ44hZmzp7Km4hK0gz3r4j3EGtbOCKzju/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Li RongQing <lirongqing@baidu.com>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.18 1146/1611] fbdev: hecubafb: fix potential memory leak in hecubafb_probe()
-Date: Tue, 21 Jul 2026 17:21:02 +0200
-Message-ID: <20260721152541.195735732@linuxfoundation.org>
+Subject: [PATCH 6.18 1147/1611] fbdev: sm712: Fix operator precedence in big_swap macro
+Date: Tue, 21 Jul 2026 17:21:03 +0200
+Message-ID: <20260721152541.217985866@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,44 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Li RongQing <lirongqing@baidu.com>
 
-commit cbef2a305a8a72969b86f96b7c07b86edde61aff upstream.
+commit 5dbe5b65df0b0c0ec77492427c274b7b5011890e upstream.
 
-The memory allocated for pagerefs in fb_deferred_io_init() is not freed
-on the error path. Fix it by calling fb_deferred_io_cleanup().
+The big_swap(p) macro was intended to swap bytes within 16-bit halves
+of a 32-bit value. However, because the bitwise shift operators (<<, >>)
+have higher precedence than the bitwise AND operator (&), the original
+code failed to perform any shifting on the masked bits.
 
-Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
+For example, 'p & 0xff00ff00 >> 8' was evaluated as 'p &
+(0xff00ff00 >> 8)', effectively neutralizing the intended swap.
+
+Fix this by adding parentheses to ensure the bitwise AND is performed
+before the shift, correctly implementing the byte swap logic.
+
+Fixes: 1461d66728648 ("staging: sm7xxfb: merge sm712fb with fbdev")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/hecubafb.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/sm712.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/hecubafb.c
-+++ b/drivers/video/fbdev/hecubafb.c
-@@ -192,7 +192,9 @@ static int hecubafb_probe(struct platfor
- 	info->flags = FBINFO_VIRTFB;
- 
- 	info->fbdefio = &hecubafb_defio;
--	fb_deferred_io_init(info);
-+	retval = fb_deferred_io_init(info);
-+	if (retval)
-+		goto err_fbdefio;
- 
- 	retval = register_framebuffer(info);
- 	if (retval < 0)
-@@ -209,6 +211,8 @@ static int hecubafb_probe(struct platfor
- 
- 	return 0;
- err_fbreg:
-+	fb_deferred_io_cleanup(info);
-+err_fbdefio:
- 	framebuffer_release(info);
- err_fballoc:
- 	vfree(videomemory);
+--- a/drivers/video/fbdev/sm712.h
++++ b/drivers/video/fbdev/sm712.h
+@@ -101,7 +101,7 @@ struct modeinit {
+ #define mmio_addr		0x00800000
+ #define seqw17()		smtc_seqw(0x17, 0x30)
+ #define big_pixel_depth(p, d)	{if (p == 24) {p = 32; d = 32; } }
+-#define big_swap(p)		((p & 0xff00ff00 >> 8) | (p & 0x00ff00ff << 8))
++#define big_swap(p)		(((p & 0xff00ff00) >> 8) | ((p & 0x00ff00ff) << 8))
+ #else
+ #define pal_rgb(r, g, b, val)	val
+ #define big_addr		0
 
 
