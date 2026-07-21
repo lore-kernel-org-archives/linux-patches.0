@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7713B1EFC;
-	Tue, 21 Jul 2026 20:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6302EBB8D;
+	Tue, 21 Jul 2026 20:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666510; cv=none; b=mDr2BHjcezylO9rMcKxANlcQYHuR5IW84rsZTvq2mcK3N4pORnxxQ+3jkBDObD+iPdobtPx+QZ19/hjnJ1wEGMyETnwLuzKUNtJSA4vNQDCm/sjGs4WivUIp8NMtG4s7QEu7MmQfeJuBoE2udXy7UzSe1/3ktj8SnecHqfB1fnE=
+	t=1784666513; cv=none; b=iZilgYHJ2+P9HNtlJx2kWu8k57+hsNHSXpYZVHGcQgDEELt8kSF4xej/PeWxkSmQBDGxoGQyxSpRegK7atCNTokVmUYYna/+w/idJFJau9CIojDtlHAIkucS8qa84bZoqFvVyRdcKeziF1mwkUYO1nPqpKGXZCSnOQVb66FBsv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666510; c=relaxed/simple;
-	bh=iIXLeXV48/KioOirZuyZC4G5Cl77sHJM1mA4bGzfrOQ=;
+	s=arc-20240116; t=1784666513; c=relaxed/simple;
+	bh=ak+KG7ZD6aBidBE8rogGTgmFHyZwsxp2t1cPHwnuR+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ekpxj464BFi35z+GfCV88AAZvsocaZtab6yeWsqYWBc5w3QOQ3G0/4bNI7haHlNNyqDB8u9wVH4Y+3vHM2fI/pa9o6g0z/Od8r39jGCOex+jXQpvH2W780O3uWH2/5sLpEsWe+4sxUNJ54PHMtxPUd9UD/OezfbVbSMazBSqy2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bm648tC5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z/WjSkB/NXgRnSfpkWRl+MfJFaOTyVK9ZEfuhcs3SflyuEoeoP8qoCXQLmlSnVj/U6OcZsygWI6DUrGGnOwu53x5mh/fa1qJETEmnYZJruAeK+ephbBnp6xguBLBzxLJdH/TGh2blHKQzklO9eQkLA1TFPtZkTSI2MggDbmRQqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xsmslUG+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bm648tC5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D253C1F000E9;
-	Tue, 21 Jul 2026 20:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xsmslUG+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E381F000E9;
+	Tue, 21 Jul 2026 20:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666509;
-	bh=oP818f4DSFidxxprLYZOerZc7FE+779ah4hz+dyN/TE=;
+	s=korg; t=1784666512;
+	bh=HqRWHzLyCv78qERH9OM+IS2+Ly4ols+r4PowXWLHXLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bm648tC5dJKNXSBXmzSxCDUAMjKByH0XZJ36TCsd3K6J1Pj6ZBQ/wwOknGt7UKgXA
-	 iOIQqXV43t4xORycRDjsExL3NWLWGhGcLHTXkxOBtyM7DBOxT1CK5UY4+eWlJbIOYC
-	 wgIGVdVuUL4zVaPQgMoz/N8g51Mb5xqn+DRPwG5k=
+	b=xsmslUG+U1vkHHTUYXu3DiWgFAusmHE1SBm4VcDVqV5FiPRO24XwCWdkIABVxZM3U
+	 XMU51UE24wWh5Z28yl4KYBYYGY/+EsY/PJ79Sv8RYYz1kxCbMt3mgieyXLKbPjkkaw
+	 Xu/Qz1u0IdgLcg2uDsul41NeeHPbCZS4VNwAEk84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Dave Marchevsky <davemarchevsky@fb.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0710/1266] perf bpf: Bounds-check array offsets in bpil_offs_to_addr()
-Date: Tue, 21 Jul 2026 17:19:07 +0200
-Message-ID: <20260721152457.752651624@linuxfoundation.org>
+Subject: [PATCH 6.6 0711/1266] gpio: mlxbf3: fail probe if gpiochip registration fails
+Date: Tue, 21 Jul 2026 17:19:08 +0200
+Message-ID: <20260721152457.774257803@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -46,75 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 033e85edfbf271f92979d2a39aeaf40f8472a795 ]
+[ Upstream commit 0482862a90169f4daaba0ed31a85d8304bf51e04 ]
 
-bpil_offs_to_addr() converts offsets stored in perf.data's
-bpf_prog_info_linear structure into heap pointers by adding the offset
-to the data allocation base.  The offsets come from untrusted file input
-and are not validated against data_len.
+mlxbf3_gpio_probe() logs a devm_gpiochip_add_data() failure but still
+returns success. That leaves the platform device bound even though the
+GPIO chip was not registered.
 
-If an offset exceeds data_len, the computed address points outside the
-allocated data buffer.  Callers like synthesize_bpf_prog_name() then
-dereference prog_tags[sub_id] or func_info pointers, reading arbitrary
-heap memory.
+Return the registration error so probe failure matches the missing
+gpiochip state.
 
-Add a bounds check: when an offset exceeds data_len, zero the field
-and skip the conversion.  This prevents out-of-bounds pointer
-construction from crafted perf.data files.
-
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: 6ac22d036f86c4e2 ("perf bpf: Pull in bpf_program__get_prog_info_linear()")
-Cc: Dave Marchevsky <davemarchevsky@fb.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: cd33f216d241 ("gpio: mlxbf3: Add gpio driver support")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260615091918.43333-1-pengpeng@iscas.ac.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf-utils.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/gpio/gpio-mlxbf3.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/bpf-utils.c b/tools/perf/util/bpf-utils.c
-index 80b1d2b3729ba4..a20ed281bcaf80 100644
---- a/tools/perf/util/bpf-utils.c
-+++ b/tools/perf/util/bpf-utils.c
-@@ -246,6 +246,7 @@ void bpil_offs_to_addr(struct perf_bpil *info_linear)
- 	for (i = PERF_BPIL_FIRST_ARRAY; i < PERF_BPIL_LAST_ARRAY; ++i) {
- 		struct bpil_array_desc *desc;
- 		__u64 addr, offs;
-+		__u32 count, size;
+diff --git a/drivers/gpio/gpio-mlxbf3.c b/drivers/gpio/gpio-mlxbf3.c
+index ed29b07d16c190..a662989ff21e7c 100644
+--- a/drivers/gpio/gpio-mlxbf3.c
++++ b/drivers/gpio/gpio-mlxbf3.c
+@@ -252,7 +252,8 @@ static int mlxbf3_gpio_probe(struct platform_device *pdev)
  
- 		if ((info_linear->arrays & (1UL << i)) == 0)
- 			continue;
-@@ -253,6 +254,21 @@ void bpil_offs_to_addr(struct perf_bpil *info_linear)
- 		desc = bpil_array_desc + i;
- 		offs = bpf_prog_info_read_offset_u64(&info_linear->info,
- 						     desc->array_offset);
-+		count = bpf_prog_info_read_offset_u32(&info_linear->info,
-+						      desc->count_offset);
-+		size = bpf_prog_info_read_offset_u32(&info_linear->info,
-+						     desc->size_offset);
-+		/* offset and extent from perf.data are untrusted — keep within data[] */
-+		if (offs >= info_linear->data_len ||
-+		    (u64)count * size > info_linear->data_len - offs) {
-+			bpf_prog_info_set_offset_u64(&info_linear->info,
-+						     desc->array_offset, 0);
-+			bpf_prog_info_set_offset_u32(&info_linear->info,
-+						     desc->count_offset, 0);
-+			/* clear the bit so bpil_addr_to_offs() won't reverse a zeroed address */
-+			info_linear->arrays &= ~(1UL << i);
-+			continue;
-+		}
- 		addr = offs + ptr_to_u64(info_linear->data);
- 		bpf_prog_info_set_offset_u64(&info_linear->info,
- 					     desc->array_offset, addr);
+ 	ret = devm_gpiochip_add_data(dev, &gs->gc, gs);
+ 	if (ret)
+-		dev_err_probe(dev, ret, "Failed adding memory mapped gpiochip\n");
++		return dev_err_probe(dev, ret,
++				     "Failed adding memory mapped gpiochip\n");
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
