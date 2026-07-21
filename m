@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D83E35C682;
-	Tue, 21 Jul 2026 22:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B1E3B9D9D;
+	Tue, 21 Jul 2026 22:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671591; cv=none; b=ZcKyhL2vjqG149p+YN1QcMUFw4Lrif2VKZTRRGuizYdAgEVWrnNtmsAuiCOGO6ChBlVSSxoWPUO0CnOJwIlBCzF6vPPixPTWQl/YA6fyk5I0/BoD384of1yRhuC59r6o4lrfSXggKr4erI6wB3p4b4tJegS5B1o1gmilnDq1rgE=
+	t=1784671594; cv=none; b=d181vI6D3gT7GAnqrnsAfrOB0rK472zIg+bgtwk4MGQdz5knUJ2F71/IkKC9bp7+ttUcWcIqUIpcZ24QeOC4T3pfjpcM7sLT5lmKta8JwU/v4YUuqaFB2sN+XLxBpunVOjGqNj1+WcVSv7Hv5egkDMRd5RCLXRrhrHo2BivgrZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671591; c=relaxed/simple;
-	bh=PR3nBNTgdsqayAf3kbIJ0Qg5HZsjlTjBMT1xfptyS6Y=;
+	s=arc-20240116; t=1784671594; c=relaxed/simple;
+	bh=zO7d0BIDmVRndaNKrZQz70tOT+TVBW3Roo+K64CyzmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gIsYEAOW5si7dYXxHDKTwaH1ikb2NlcAMz3rYWwEnJ/oWEQ4OfkWGZIphaJZAciwwnfhOl7SZZ6zQoNaYzetaZBO6BjDX/+zLZ5iIeS8UWQMOo7yAdAZZPYezAevpGO5AL3s/yUcf8yMXHv6ndDuyMKtXu05HUr2ZLBlOU5TpOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GC927WB9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vEsdZwzjX1h0eS7VThkzMCEOhMkvKIcd62Um/HCLXxqv1lWiGY+s+aQyBrMVN/LO1OrQnS1Ui5pNXk4uQ9Eqo0jtg1v205RPhjUWoZVB/ctlg4n5rirt35rskDjy3ChrCtMtgqGr4WgxxKjpjzQYoLpL0GmX3hB8BMaZ/2gxjBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wMaNj54+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GC927WB9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941E41F000E9;
-	Tue, 21 Jul 2026 22:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wMaNj54+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DBF41F000E9;
+	Tue, 21 Jul 2026 22:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671590;
-	bh=8cySC0frBvlUtQRs0EIfWbtfdXiJ+9KNWskIABfg8B0=;
+	s=korg; t=1784671592;
+	bh=hd4YMFgGKO4P+Z4PnvLNRwLVhS+/uXFpg37RdSKr9wE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GC927WB9f2bAE3uwTxs/dwA09767p2QhquH9ymdemVX8O9xaIVxLELg6LDitvQb7t
-	 W+E+VZrWpx2kdtovtxP5GkTH4YHBeePTuG1kxZeodQIHoqNEk9d5I/HD1+7+YrN7XR
-	 tG96fremaE5kWUIPJ01aiPDocxT96M5PdE9Ge/cY=
+	b=wMaNj54+j3AILZ9cRkiVTUvUqpcJQxSruQNJd1BhvafbO+9+kvj9Kzs/BOxJo+HIz
+	 iXKGlfS9eHCmiOamFST1V0I73dYtPuyXtQl1pssxEdUOqZsJda7J8kj0M5OewkvL1z
+	 3ODFVgJEBicDVJUCX792K5E9qjH9GGQf9avdHb1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Stephen Suryaputra <ssuryaextr@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 267/843] ipv6: guard against possible NULL deref in __in6_dev_stats_get()
-Date: Tue, 21 Jul 2026 17:18:22 +0200
-Message-ID: <20260721152412.028744220@linuxfoundation.org>
+Subject: [PATCH 5.15 303/843] netfilter: conntrack: call nf_ct_gre_keymap_destroy() if master helper is pptp
+Date: Tue, 21 Jul 2026 17:18:58 +0200
+Message-ID: <20260721152412.844047865@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,41 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 507541c2a8eeb76c02bd2511958f73a8cfa3e1bc ]
+[ Upstream commit b0f02608fbcd607b5131cceb91fc0a035264e61c ]
 
-dev_get_by_index_rcu() could return NULL if the original physical
-device is unregistered.
+For GRE flows, validate that the ct master helper (if any) is pptp
+before calling nf_ct_gre_keymap_destroy(), so the helper data area
+can be accessed safely. Note that only the pptp helper provides a
+.destroy callback.
 
-Found by Sashiko.
-
-Fixes: e1ae5c2ea478 ("vrf: Increment Icmp6InMsgs on the original netdev")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Stephen Suryaputra <ssuryaextr@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260526145529.3587126-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e56894356f60 ("netfilter: conntrack: remove l4proto destroy hook")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/addrconf.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_core.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/addrconf.h b/include/net/addrconf.h
-index 5cf1a73774078a..39da955b0326f7 100644
---- a/include/net/addrconf.h
-+++ b/include/net/addrconf.h
-@@ -332,8 +332,11 @@ static inline struct inet6_dev *__in6_dev_get(const struct net_device *dev)
- static inline struct inet6_dev *__in6_dev_stats_get(const struct net_device *dev,
- 						    const struct sk_buff *skb)
+diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
+index 00a97743507deb..ea9aba75b38afd 100644
+--- a/net/netfilter/nf_conntrack_core.c
++++ b/net/netfilter/nf_conntrack_core.c
+@@ -622,9 +622,23 @@ static void destroy_gre_conntrack(struct nf_conn *ct)
  {
--	if (netif_is_l3_master(dev))
-+	if (netif_is_l3_master(dev)) {
- 		dev = dev_get_by_index_rcu(dev_net(dev), inet6_iif(skb));
-+		if (!dev)
-+			return NULL;
+ #ifdef CONFIG_NF_CT_PROTO_GRE
+ 	struct nf_conn *master = ct->master;
++	struct nf_conn_help *help;
++
++	if (!master)
++		return;
++
++	help = nfct_help(master);
++	if (help) {
++		struct nf_conntrack_helper *helper;
+ 
+-	if (master)
+-		nf_ct_gre_keymap_destroy(master);
++		rcu_read_lock();
++		helper = rcu_dereference(help->helper);
++		/* Only pptp helper has a destroy callback. */
++		if (helper && helper->destroy)
++			nf_ct_gre_keymap_destroy(master);
++
++		rcu_read_unlock();
 +	}
- 	return __in6_dev_get(dev);
+ #endif
  }
  
 -- 
