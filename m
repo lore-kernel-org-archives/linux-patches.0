@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718DC17A2F6;
-	Tue, 21 Jul 2026 19:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1387B17A2F6;
+	Tue, 21 Jul 2026 19:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661429; cv=none; b=gcg4Noaqmo6jQLxZF9xnT3ubMmGjOcPVEpTTR4zPdLmtusphslY3//yOkIpoo1qB20twWQQePy7ILY9PsGkLFOW/athiMaR3DTynPaEW7EaY7WnJFFyEuyaYB3LMHeq0Xt3uTFbsUfSzs4oH46NDxHjKXFIXtNOmJI+zsnyNfwI=
+	t=1784661432; cv=none; b=SpU0kGdMAQekaKSyeltUg2BqCZLvOY0vYBmlUV68Bqod6l35LBzxUZQOAYQGClPcXGcAvjUOatNAwsqTlG5kAFzMT0MzgLjvM4H8Gp7lcvyX3Vqpgr+k1Jb5f4aigJd6jIJPBLu8/tlue+YTi1VFcoxG6xoVN6bwq+2U7o2UK7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661429; c=relaxed/simple;
-	bh=lWB0ID8jTjoxdnpIw9Pmn2BICoU4DPyhpYZXuJfCsLw=;
+	s=arc-20240116; t=1784661432; c=relaxed/simple;
+	bh=KwpZIm/2QVxWewnVX2zUK0ELtgk1WnRvemsbjs0gVm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6nJWe+2qDG8FfYgpY2npqDigv2yq/9fseb/GQz/cCzOySU654On7TqeHreDIDtvMnXBIknVzWHIuascZK/cE/EYrFuWaCfl0pLorFlUYOZQHJlQRdkInIkKYvTXxlMs87M4gYmVCHPbyhD5e6waCDXGdna7oatFg5PzZPjCLjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJcZEC7R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J5XQWPgPyEy0xHnKtYISaKVMbv1GKsvhnc/SV8IUhmSIPBIbspukFrB73NuF+fIlh7ycFC4n/4myZFWvDeurrGys6cmmAVfYzAMarvNef8EALPPFozLOQ/LxyC3TacuWYPzCnBSYI3fMRvxC4Kw0aZeDTdIXTWk+FkwGfINGO+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JAdg6Sme; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJcZEC7R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D77CB1F000E9;
-	Tue, 21 Jul 2026 19:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JAdg6Sme"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6281F000E9;
+	Tue, 21 Jul 2026 19:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661428;
-	bh=62/is63yEYGyBCP1EZS+BIpXHtk1mLtJyRTToXQeLRc=;
+	s=korg; t=1784661431;
+	bh=2yXYx1yZa7dh3PIeN15Au51UOvJbhPN2X4spwsAy78w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJcZEC7R0DathLenFkJw71EZRuPkc0WtHZkbBX+W9ye47d26NaR34nD15UhGyQd9T
-	 b/kAcoBMLdcOvbF6KQ+/Jy8QqtcBIjhKY4SVClOnIaVy0UNFdC2d+Y9+btor1ePUkC
-	 OomHGUzvbhezSNg7vaQvoY6h7SsY/eWHq5k03Los=
+	b=JAdg6SmenSDhknuIoyM5ASaEkxES1JepqD13bZFiIDUYZp7TY98zabqkIWsHvV23t
+	 0g6XSm1rtQIqUTFEd0BBWspQPx/eEBpOTOGKkm+CfeA3A8hh9HIjBFgMXUBCxpe0SR
+	 jDHbS0eAW5qZb5Feygnj0usnvhRQjniJPmrTZRto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Kasselman <werner@verivus.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0063/1276] drm/radeon: fix integer overflow in radeon_align_pitch()
-Date: Tue, 21 Jul 2026 17:08:26 +0200
-Message-ID: <20260721152447.495574240@linuxfoundation.org>
+Subject: [PATCH 6.12 0064/1276] drm/radeon: fix memory leak in radeon_ring_restore() on lock failure
+Date: Tue, 21 Jul 2026 17:08:27 +0200
+Message-ID: <20260721152447.518399547@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,80 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Werner Kasselman <werner@verivus.ai>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit ce3b24eb3ee8f82de851535f516bf21f83e82259 ]
+[ Upstream commit 82f1d6042611d45b8b9de423bbcb4e0ced9ec62b ]
 
-radeon_align_pitch() has the same kind of overflow issue as the old
-amdgpu helper: both the alignment round-up add and the final
-'aligned * cpp' calculation can overflow signed int.
+radeon_ring_restore() takes ownership of the data buffer allocated by
+radeon_ring_backup(). The caller (radeon_gpu_reset()) only frees it in
+the non-restore branch; in the restore branch it relies on
+radeon_ring_restore() to free it.
 
-If that wraps, radeon_mode_dumb_create() can end up returning an
-invalid pitch or creating a zero-sized dumb buffer.
+If radeon_ring_lock() fails, the function returned early without calling
+kvfree(data), leaking the ring backup buffer on every GPU reset that
+fails at the lock stage. During repeated GPU resets this causes
+cumulative kernel memory exhaustion.
 
-Fix this by using check_add_overflow() for the alignment round-up and
-check_mul_overflow() for the final pitch calculation, returning 0 on
-overflow. Also reject zero pitch and size in
-radeon_mode_dumb_create().
+Free data before returning the error.
 
-Found via AST-based call-graph analysis using sqry.
-
-Fixes: ff72145badb8 ("drm: dumb scanout create/mmap for intel/radeon (v3)")
-Signed-off-by: Werner Kasselman <werner@verivus.com>
+Fixes: 55d7c22192be ("drm/radeon: implement ring saving on reset v4")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/radeon_gem.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/radeon/radeon_ring.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/radeon/radeon_gem.c b/drivers/gpu/drm/radeon/radeon_gem.c
-index bf2d4b16dc2a7f..49a9ec358124c5 100644
---- a/drivers/gpu/drm/radeon/radeon_gem.c
-+++ b/drivers/gpu/drm/radeon/radeon_gem.c
-@@ -28,6 +28,7 @@
+diff --git a/drivers/gpu/drm/radeon/radeon_ring.c b/drivers/gpu/drm/radeon/radeon_ring.c
+index 581ae20c46e4b5..a5dff072c1ac03 100644
+--- a/drivers/gpu/drm/radeon/radeon_ring.c
++++ b/drivers/gpu/drm/radeon/radeon_ring.c
+@@ -356,8 +356,10 @@ int radeon_ring_restore(struct radeon_device *rdev, struct radeon_ring *ring,
  
- #include <linux/debugfs.h>
- #include <linux/iosys-map.h>
-+#include <linux/overflow.h>
- #include <linux/pci.h>
+ 	/* restore the saved ring content */
+ 	r = radeon_ring_lock(rdev, ring, size);
+-	if (r)
++	if (r) {
++		kvfree(data);
+ 		return r;
++	}
  
- #include <drm/drm_device.h>
-@@ -807,6 +808,7 @@ int radeon_align_pitch(struct radeon_device *rdev, int width, int cpp, bool tile
- 	int aligned = width;
- 	int align_large = (ASIC_IS_AVIVO(rdev)) || tiled;
- 	int pitch_mask = 0;
-+	int pitch;
- 
- 	switch (cpp) {
- 	case 1:
-@@ -821,9 +823,12 @@ int radeon_align_pitch(struct radeon_device *rdev, int width, int cpp, bool tile
- 		break;
- 	}
- 
--	aligned += pitch_mask;
-+	if (check_add_overflow(aligned, pitch_mask, &aligned))
-+		return 0;
- 	aligned &= ~pitch_mask;
--	return aligned * cpp;
-+	if (check_mul_overflow(aligned, cpp, &pitch))
-+		return 0;
-+	return pitch;
- }
- 
- int radeon_mode_dumb_create(struct drm_file *file_priv,
-@@ -837,8 +842,12 @@ int radeon_mode_dumb_create(struct drm_file *file_priv,
- 
- 	args->pitch = radeon_align_pitch(rdev, args->width,
- 					 DIV_ROUND_UP(args->bpp, 8), 0);
-+	if (!args->pitch)
-+		return -EINVAL;
- 	args->size = (u64)args->pitch * args->height;
- 	args->size = ALIGN(args->size, PAGE_SIZE);
-+	if (!args->size)
-+		return -EINVAL;
- 
- 	r = radeon_gem_object_create(rdev, args->size, 0,
- 				     RADEON_GEM_DOMAIN_VRAM, 0,
+ 	for (i = 0; i < size; ++i) {
+ 		radeon_ring_write(ring, data[i]);
 -- 
 2.53.0
 
