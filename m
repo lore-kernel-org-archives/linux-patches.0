@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7C3401A18;
-	Tue, 21 Jul 2026 17:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27CE308F39;
+	Tue, 21 Jul 2026 17:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654595; cv=none; b=bNtTbfj5hIg93gK7BtxpH3iXsK5/nCwenNugJs3IW2m2yWiDdwj1arqSSsIpK/CaWjYKYD23j9+leX06L/YqIf29aQgPK4ccbGqBZGToIdknjvCXK/fgIaIxN+6UrMV4UY3blqLh6tbifOnvrF+UQFJ9pDncrxgC90KydARhMxI=
+	t=1784654597; cv=none; b=MdBgYqZCzi+W0WXhB2Sr38c75xRFTOX2Yeg+yqXZb2wCP561JPZdkLC8E6JJnUAIfUmheub7OOVO+qTF0q8nZRLzLozvVuRYq3odsSN3HYOPk+qmyG01JhUXFZy0bVWj7L/WUwuGvVnEIjhOcwFl82w2l4ol1QpaZRDB14b+/tg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654595; c=relaxed/simple;
-	bh=Vsat8Hxl5gpnmBV200azzL3ooTWcEjv3VNXh8CALv/E=;
+	s=arc-20240116; t=1784654597; c=relaxed/simple;
+	bh=wsy+NUfAZFvD2AQhygD1fvLVvtcWSaaI6NOx+yj+5eM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C38CTuFeB16pIm/HTJ0jWhbWAhG81qWDn5ldoRGwdSruJTWp+zf0/LitHophYH8DxeQHwjHu3K1Mkh4nT3mo4c/ln2EbmrbOJXKRGOVJfYyK8B+0gifD9OCQzEhlolXswz9xuR/JZ7JHgj+YHixVindOkv06tH9Egc6xwOpKs7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16CUBzTb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QhibiAeYiRldpaolYK0ooS7CL494GwTEEZi3KH/9gwLUloxhiPy+UUd9sHqe7iATxzsiZqfuiJ1n0RHjvaKC2ICRof51Qj0YtmYPdxG1n1InM0FIUDqN8U7VTfvsFL88R26Rw5W8Evh3tN4ZbhQVhccMkGB0sUiHtBwUwuQnz58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2RR1761; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16CUBzTb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE431F000E9;
-	Tue, 21 Jul 2026 17:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2RR1761"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154E91F00A3A;
+	Tue, 21 Jul 2026 17:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654593;
-	bh=GM7Nm5S2i740dweYsPqiDQziA88KaV5dteDDKUTwuIw=;
+	s=korg; t=1784654596;
+	bh=Ig6Ade1aPaPClPa+bOLg47xiw9Ix6WMcYRQyVXzOcQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=16CUBzTbtZ3qvQY4bJUbcLccDtc9MgJdZT0vw91mduyw1bv0I2LPjsjRN93GHOC39
-	 Rq88Ptyr2ybxweJPtVspVOGh1166oMvdsUaL55A85md93pQLkUkD/mn3YFtalXsARk
-	 lApMP8Bns5D4PmmZS3P2JCQeB+GM71thpJsvKjus=
+	b=l2RR1761rfhqCwt9TGkJEPEsu+TpEjAPL4YI/YxlFbFHnVwHLSuCk/SBMH7470s/U
+	 nVHS7QAXxVv33CF9tqgqsHNtPaFpwLSmMn7QEcGAhaisXxTuigrQLuiYackUB6n012
+	 cMwZ5OOLwRCegHrg9Z1hLEFyuLlYFbhHqI+6mO1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 7.1 1765/2077] mtd: rawnand: Pause continuous reads at block boundaries
-Date: Tue, 21 Jul 2026 17:23:58 +0200
-Message-ID: <20260721152634.374594573@linuxfoundation.org>
+	Stafford Horne <shorne@gmail.com>
+Subject: [PATCH 7.1 1766/2077] openrisc: Fix jump_label smp syncing
+Date: Tue, 21 Jul 2026 17:23:59 +0200
+Message-ID: <20260721152634.399078869@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -49,68 +49,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Stafford Horne <shorne@gmail.com>
 
-commit 8e4531667d718e2e9b193928cf9b2497fa0d01ef upstream.
+commit aca063c9024522e4e5b9a9d1927433f6a01785a3 upstream.
 
-Some chips do not support sequential cached reads past block
-boundaries, like Winbond. In practice when using UBI, this should very
-rarely happen, but let's make sure it never happens.
+The original commit 8c30b0018f9d ("openrisc: Add jump label support")
+copies from arm64 and does not properly consider how icache invalidation
+on remote cores works in OpenRISC.  On OpenRISC remote icaches need to
+be invalidated otherwise static key's may remain state after updating.
 
-Cc: stable@vger.kernel.org
-Fixes: 003fe4b9545b ("mtd: rawnand: Support for sequential cache reads")
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fix SMP cache syncing by:
+
+ 1. Properly invalidate remote core icaches on SMP systems by using
+    icache_all_inv.  The old code uses kick_all_cpus_sync() which runs a
+    no-op IPI function call on remote CPU's which does execute a lot of
+    code and flushes many cache lines in the process, but does not flush
+    all and it's not correct on OpenRISC.
+ 2. For architectures that do not have WRITETHROUGH caches be sure
+    to flush the dcache after patching.
+
+To test this I first reproduced the issue using a custom test module
+[0].  The test confirmed that some icache lines maintained stale
+static_key code sequences after calling static_branch_enable().  After
+this patch there are no longer jump_label coherency issues.
+
+[0] https://github.com/stffrdhrn/or1k-utils/tree/master/tests/smp_static_key_test
+
+Cc: stable@vger.kernel.org # depends on openrisc: Add icache_all_inv
+Fixes: 8c30b0018f9d ("openrisc: Add jump label support")
+Signed-off-by: Stafford Horne <shorne@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/nand_base.c |   24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ arch/openrisc/kernel/jump_label.c |    2 +-
+ arch/openrisc/kernel/patching.c   |    3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/nand_base.c
-+++ b/drivers/mtd/nand/raw/nand_base.c
-@@ -1216,32 +1216,32 @@ static int nand_lp_exec_read_page_op(str
- 	return nand_exec_op(chip, &op);
- }
+--- a/arch/openrisc/kernel/jump_label.c
++++ b/arch/openrisc/kernel/jump_label.c
+@@ -47,5 +47,5 @@ bool arch_jump_label_transform_queue(str
  
--static unsigned int rawnand_last_page_of_lun(unsigned int pages_per_lun, unsigned int lun)
-+static unsigned int rawnand_last_page_of_block(unsigned int ppb, unsigned int block)
+ void arch_jump_label_transform_apply(void)
  {
--	/* lun is expected to be very small */
--	return (lun * pages_per_lun) + pages_per_lun - 1;
-+	/* block is expected to be very small */
-+	return (block * ppb) + ppb - 1;
+-	kick_all_cpus_sync();
++	icache_all_inv();
  }
+--- a/arch/openrisc/kernel/patching.c
++++ b/arch/openrisc/kernel/patching.c
+@@ -49,6 +49,9 @@ static int __patch_insn_write(void *addr
+ 	waddr = patch_map(addr, FIX_TEXT_POKE0);
  
- static void rawnand_cap_cont_reads(struct nand_chip *chip)
- {
- 	struct nand_memory_organization *memorg;
--	unsigned int ppl, first_lun, last_lun;
-+	unsigned int ppb, first_block, last_block;
+ 	ret = copy_to_kernel_nofault(waddr, &insn, OPENRISC_INSN_SIZE);
++	if (!IS_ENABLED(CONFIG_DCACHE_WRITETHROUGH))
++		local_dcache_range_flush((unsigned long)waddr,
++					 (unsigned long)waddr + OPENRISC_INSN_SIZE);
+ 	local_icache_range_inv((unsigned long)waddr,
+ 			       (unsigned long)waddr + OPENRISC_INSN_SIZE);
  
- 	memorg = nanddev_get_memorg(&chip->base);
--	ppl = memorg->pages_per_eraseblock * memorg->eraseblocks_per_lun;
--	first_lun = chip->cont_read.first_page / ppl;
--	last_lun = chip->cont_read.last_page / ppl;
--
--	/* Prevent sequential cache reads across LUN boundaries */
--	if (first_lun != last_lun)
--		chip->cont_read.pause_page = rawnand_last_page_of_lun(ppl, first_lun);
-+	ppb = memorg->pages_per_eraseblock;
-+	first_block = chip->cont_read.first_page / ppb;
-+	last_block = chip->cont_read.last_page / ppb;
-+
-+	/* Prevent sequential cache reads across block boundaries */
-+	if (first_block != last_block)
-+		chip->cont_read.pause_page = rawnand_last_page_of_block(ppb, first_block);
- 	else
- 		chip->cont_read.pause_page = chip->cont_read.last_page;
- 
- 	if (chip->cont_read.first_page == chip->cont_read.pause_page) {
- 		chip->cont_read.first_page++;
- 		chip->cont_read.pause_page = min(chip->cont_read.last_page,
--						 rawnand_last_page_of_lun(ppl, first_lun + 1));
-+						 rawnand_last_page_of_block(ppb, first_block + 1));
- 	}
- 
- 	if (chip->cont_read.first_page >= chip->cont_read.last_page)
 
 
