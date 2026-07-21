@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0132F3B47F6;
-	Tue, 21 Jul 2026 20:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2152EBB8D;
+	Tue, 21 Jul 2026 20:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665986; cv=none; b=GvaFJ8JVuy3GRE0m4bMnE8a4Dv5a3I0J0kwXmhmeYF483QTjUYhmdmrgTYvZP1XLJ9yZyeRYTCvTkQEpEDPTnfKEf8Mkn45eH7K/cPYSu+1ZNyvlJFzjFZPyxd4HPurusGxUQGGPMj+2dBYT3J1Zu0U6ygW9wyUt4cFSbfUSVPw=
+	t=1784665988; cv=none; b=oFUTwPQ5KYqA36kgBlRkhXNm8c8lxzvFQqtG50N52R/IkhXzPDe7ud3B8ZygSYUul/h5yiRT99bSsT4XFEMrk2bLCMkmO5NaZbucMUSfy80XB5LhalZcAKaktk3ZdSdx+4yuFigd0oVXjAXbSWcTJew1GrrNVCK2/XqiDp9kPZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665986; c=relaxed/simple;
-	bh=Ej1GyMPS+e4OcEOGCSzmxQWHHvZFo/cDoRcHliGH1/0=;
+	s=arc-20240116; t=1784665988; c=relaxed/simple;
+	bh=zqZjq8iwQb0wEstQGvToNmrKMLlutmlDMXwXvLI/XDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IinIISrNQgxdaYHeT7JUBC4yZNwitujbirabPvBkDCm/moOi1kz0Wb6mw49SyqXdcwavpPs4b+so1DOnMPg3RIj+86D1N33mzddP6FKcDcJHwC7jVhIdp+T2idXkCtCi+Q1XehnWruzSJ07jRmULgOj7rKa5sHCmMUoFXvGGXSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UkLZRbX7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=caVfwv71D8HlTKSIjEJcp6PhgwmetkghoeYMo91gznGAaArdZQHILLev+gPvUHnN4s0bjdtgfbj6t3CRSnNF1b/o6UUXZ41ze7j8JxdAzplKG4ru97DzBdv/xvUmvFi7xqzW5OUt3N43n2I3oSmalaMZT572OL6PCDcFCcFeoFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ohC9o0+6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UkLZRbX7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A841F000E9;
-	Tue, 21 Jul 2026 20:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ohC9o0+6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27591F000E9;
+	Tue, 21 Jul 2026 20:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665984;
-	bh=jycOxTBhOpVt7/V+yKyguBX+RP3WRUoufpQB1GgMlnc=;
+	s=korg; t=1784665987;
+	bh=7cklesvD4CfqcNKfnI1htZQ/NxkDI2lVLbPtZfvuJkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UkLZRbX7Z+25DiP74ea3Kjt3/0PTGRzQrKtUiQlMFDkG1BKqjicAHNOeiYPJ4v7uJ
-	 oI5Haj5B6joXV4Nhb4OVGYKNOumHtEocdJdDa60+KJO6E0lftUybsIYsbbbmf7ktpX
-	 QC/MtAy7Ng+gTM+Mb0Ux49vPM+9fhVIPeu24aqg0=
+	b=ohC9o0+6xKmMMPNQWqzTqB4K8h6voKzXSSzcvJMv6fedv8FZzPH6D7IJ5wbdqg5d9
+	 vxzeD+f0aJhmS8o3F7t/vwaXy79V2OnunlK/J/poNyaN1sRplt+GargjVLGF00+Rtt
+	 I/DeMYtMHD+ZTRQwWJwUNmRGlPPit67kIfWqmNP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0504/1266] wifi: wcn36xx: fix OOB read from firmware count in PRINT_REG_INFO indication
-Date: Tue, 21 Jul 2026 17:15:41 +0200
-Message-ID: <20260721152453.124685002@linuxfoundation.org>
+Subject: [PATCH 6.6 0513/1266] spi: ep93xx: fix double-free of zeropage on DMA setup failure
+Date: Tue, 21 Jul 2026 17:15:50 +0200
+Message-ID: <20260721152453.327754331@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,44 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit df2187acfca6c6cca372c5d35f42394d9c270b09 ]
+[ Upstream commit 7886054b06f762f62054957a8f6de0f14e6b7541 ]
 
-The firmware-controlled rsp->count field is used as the loop bound for
-indexing into the flexible rsp->regs[] array without validation against
-the message length. A count exceeding the actual data causes out-of-
-bounds reads from the heap-allocated message buffer.
+If DMA setup fails after allocating the zeropage, the error path frees
+the page but leaves espi->zeropage dangling. A subsequent call to
+ep93xx_spi_release_dma() sees the non-NULL pointer and frees the page
+again.
 
-Add a check that count fits within the received message.
+Clear the pointer after freeing in the error path of
+ep93xx_spi_setup_dma().
 
-Fixes: 43efa3c0f241 ("wcn36xx: Implement print_reg indication")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260421135018.352774-3-tristmd@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 626a96db1169 ("spi/ep93xx: add DMA support")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260529-ep93xx-v1-1-9185070ca1fc@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/wcn36xx/smd.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/spi/spi-ep93xx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
-index daab434b19d581..32a0e41c41ca9a 100644
---- a/drivers/net/wireless/ath/wcn36xx/smd.c
-+++ b/drivers/net/wireless/ath/wcn36xx/smd.c
-@@ -2865,6 +2865,12 @@ static int wcn36xx_smd_print_reg_info_ind(struct wcn36xx *wcn,
- 		return -EIO;
- 	}
+diff --git a/drivers/spi/spi-ep93xx.c b/drivers/spi/spi-ep93xx.c
+index a1d60e51c053e4..22677e37f47e19 100644
+--- a/drivers/spi/spi-ep93xx.c
++++ b/drivers/spi/spi-ep93xx.c
+@@ -625,6 +625,7 @@ static int ep93xx_spi_setup_dma(struct ep93xx_spi *espi)
+ 	espi->dma_rx = NULL;
+ fail_free_page:
+ 	free_page((unsigned long)espi->zeropage);
++	espi->zeropage = NULL;
  
-+	if (rsp->count > (len - sizeof(*rsp)) / sizeof(rsp->regs[0])) {
-+		wcn36xx_warn("Truncated print reg info indication: count %u, len %zu\n",
-+			     rsp->count, len);
-+		return -EIO;
-+	}
-+
- 	wcn36xx_dbg(WCN36XX_DBG_HAL,
- 		    "reginfo indication, scenario: 0x%x reason: 0x%x\n",
- 		    rsp->scenario, rsp->reason);
+ 	return ret;
+ }
 -- 
 2.53.0
 
