@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A276C4582C9;
-	Tue, 21 Jul 2026 21:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBF745DF51;
+	Tue, 21 Jul 2026 21:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667756; cv=none; b=n5wHqPRoprTUeU9wpIc33VyZzKuxFwGaKiucoPL/bqsPyCvjmUWItK8pexLjdGXkFuVsG/CtPUzA8shfGJwB3T01q1kHnBB8r8qlqReJJB6jEyUX3XuW0YYACfi9q8QsaJDl48h9to+2Q5MomPRWe2Z4Pt02vcFoZ0fxm5R+7WM=
+	t=1784667758; cv=none; b=OCCRF6xsopNiQ0XV4nWNCSIJD8Jje2QdFlnzE78Gb2zr1xpyBOqEoirg53+5dBkuyyxX9zAw3ti8KrWaNQ8rze2yjf+NHv+RnkQGUmyl8knucGpsh2y4gupgLn561+epKaG1u5/S4qZ4gZXsN7omgQaoajdi5ryU01T5Kzp5wkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667756; c=relaxed/simple;
-	bh=y7Ly/NvURIpTUkKnIbKBaBm9o9ja1yxb4RRz6Zk0jKM=;
+	s=arc-20240116; t=1784667758; c=relaxed/simple;
+	bh=fgKE6XM6r7mh3qWeTDi6g+5WQ2NcpfyrlJOXn2lD9/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CPQb4CMpi+VF2k94qmXyreGwlsa9pi7ZhZWgkLcnNmHwJm7rieiI811RgnMDxXBoC97kxg11MX2I1OUiw8bPp4vmrTfkydlfbxASM0ZWqHNUHWhHw5KPBpvEDVieaGZTzEKFH85Tjmyx8pNa8KuxecN7J44Z8QFHTkudXp8wjA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHyP5dOY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p8B1JK/vp6iG36Y18uGALwdjmUfag9AgvLCEICizU7skVq6wJPI5fl2VIKAyuSeKYagqNnZXgZi+9aoKjH7YyoIQ5UBJ8tYrbGeKzFBO4I9Sj/zxVF5NirVEjJyV2kH0LaXmNFZeO2b+hwJp09I4rimTT1k/PMe3wEBAHKWDfHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDYzY7Sa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHyP5dOY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C791F00A3F;
-	Tue, 21 Jul 2026 21:02:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDYzY7Sa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D381F000E9;
+	Tue, 21 Jul 2026 21:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667750;
-	bh=WGc8Q6gwguRVygkmGlRn2odcwpsxOhSLMIiSxBc52Iw=;
+	s=korg; t=1784667752;
+	bh=bKs1Jbq1aAb6nVWqjCPlqrDEYWkYIp1asMuLaw1j2xQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DHyP5dOY+CvGEBZmPmaAMM4UZSbf+rc2itU0++3gei1ykbHFfJPSqPQwVtTW+PuYk
-	 r0fuszibh2ne9PO+V55BUShnAhUvwJElhxWxpPJdMQ+pHO7Ph9Z3b3KJTre3ZftbFg
-	 UWVCKDqZOw+qh4NC3zyjUcIpbubCYKsX2JBDM+Rs=
+	b=mDYzY7Saqld8Apv8gNGhLRbd120Ef7NtLveiL7Bvlg83+7RKS7KDjfJGeLFhWt9eu
+	 uAlHbfGVwvSyS/TRmIyK16nPPR/C+FRa9M/+VElbIr7KRW+jBmQL81g5edkqL/1lSo
+	 BykKpJ0oL5EgXE9SI1PoIf41M/DYaHoCA/9bQeGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Nikolay Kulikov <nikolayof23@gmail.com>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1152/1266] ACPI: bus: Introduce devm_acpi_install_notify_handler()
-Date: Tue, 21 Jul 2026 17:26:29 +0200
-Message-ID: <20260721152507.560637553@linuxfoundation.org>
+Subject: [PATCH 6.6 1179/1266] staging: rtl8723bs: fix spaces around binary operators
+Date: Tue, 21 Jul 2026 17:26:56 +0200
+Message-ID: <20260721152508.176716846@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,124 +51,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Nikolay Kulikov <nikolayof23@gmail.com>
 
-[ Upstream commit ca70ce555a1eb8edf5fb1d5575f1fe19c9ae17f4 ]
+[ Upstream commit 0c9d1b56f9af0762a5be5118e1bb962f23784dc4 ]
 
-Introduce devm_acpi_install_notify_handler() for installing an ACPI
-notify handler managed by devres that will be removed automatically on
-driver detach.
+Add missing spaces and fix line length to comply with kernel coding
+style.
 
-It installs the notify handler on the device object in the ACPI
-namespace that corresponds to the owner device's ACPI companion, if
-present (an error is returned if the owner device doesn't have an ACPI
-companion).
-
-Currently, there is no way to manually remove the notify handler
-installed by it because none of its users brought on subsequently
-will need to do that.
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-[ rjw: Kerneldoc comment refinement ]
-Link: https://patch.msgid.link/2268031.irdbgypaU6@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 18a00ed0e718 ("ACPI: NFIT: core: Fix possible deadlock and missing notifications")
+Signed-off-by: Nikolay Kulikov <nikolayof23@gmail.com>
+Reviewed-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Link: https://patch.msgid.link/20260221172751.52329-1-nikolayof23@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 1463ca3ec660 ("staging: rtl8723bs: fix OOB reads in rtw_get_sec_ie(), rtw_get_wapi_ie(), and rtw_get_wps_attr()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/bus.c      |   70 ++++++++++++++++++++++++++++++++++++++++++++++++
- include/acpi/acpi_bus.h |    2 +
- 2 files changed, 72 insertions(+)
+ drivers/staging/rtl8723bs/core/rtw_ieee80211.c |   78 +++++++++++++------------
+ 1 file changed, 42 insertions(+), 36 deletions(-)
 
---- a/drivers/acpi/bus.c
-+++ b/drivers/acpi/bus.c
-@@ -578,6 +578,76 @@ void acpi_dev_remove_notify_handler(stru
+--- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
++++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
+@@ -455,10 +455,10 @@ int rtw_parse_wpa_ie(u8 *wpa_ie, int wpa
+ 		return _FAIL;
+ 	}
+ 
+-	if ((*wpa_ie != WLAN_EID_VENDOR_SPECIFIC) || (*(wpa_ie+1) != (u8)(wpa_ie_len - 2)) ||
+-	   (memcmp(wpa_ie+2, RTW_WPA_OUI_TYPE, WPA_SELECTOR_LEN))) {
++	if ((*wpa_ie != WLAN_EID_VENDOR_SPECIFIC) ||
++	    (*(wpa_ie + 1) != (u8)(wpa_ie_len - 2)) ||
++	    (memcmp(wpa_ie + 2, RTW_WPA_OUI_TYPE, WPA_SELECTOR_LEN)))
+ 		return _FAIL;
+-	}
+ 
+ 	pos = wpa_ie;
+ 
+@@ -518,7 +518,7 @@ int rtw_parse_wpa2_ie(u8 *rsn_ie, int rs
+ 		return _FAIL;
+ 	}
+ 
+-	if ((*rsn_ie != WLAN_EID_RSN) || (*(rsn_ie+1) != (u8)(rsn_ie_len - 2)))
++	if ((*rsn_ie != WLAN_EID_RSN) || (*(rsn_ie + 1) != (u8)(rsn_ie_len - 2)))
+ 		return _FAIL;
+ 
+ 	pos = rsn_ie;
+@@ -586,18 +586,18 @@ int rtw_get_wapi_ie(u8 *in_ie, uint in_l
+ 	while (cnt < in_len) {
+ 		authmode = in_ie[cnt];
+ 
+-		/* if (authmode == WLAN_EID_BSS_AC_ACCESS_DELAY) */
+-		if (authmode == WLAN_EID_BSS_AC_ACCESS_DELAY && (!memcmp(&in_ie[cnt+6], wapi_oui1, 4) ||
+-					!memcmp(&in_ie[cnt+6], wapi_oui2, 4))) {
++		if (authmode == WLAN_EID_BSS_AC_ACCESS_DELAY &&
++		    (!memcmp(&in_ie[cnt + 6], wapi_oui1, 4) ||
++		     !memcmp(&in_ie[cnt + 6], wapi_oui2, 4))) {
+ 			if (wapi_ie)
+-				memcpy(wapi_ie, &in_ie[cnt], in_ie[cnt+1]+2);
++				memcpy(wapi_ie, &in_ie[cnt], in_ie[cnt + 1] + 2);
+ 
+ 			if (wapi_len)
+-				*wapi_len = in_ie[cnt+1]+2;
++				*wapi_len = in_ie[cnt + 1] + 2;
+ 
+-			cnt += in_ie[cnt+1]+2;  /* get next */
++			cnt += in_ie[cnt + 1] + 2;  /* get next */
+ 		} else {
+-			cnt += in_ie[cnt+1]+2;   /* get next */
++			cnt += in_ie[cnt + 1] + 2;   /* get next */
+ 		}
+ 	}
+ 
+@@ -621,9 +621,10 @@ void rtw_get_sec_ie(u8 *in_ie, uint in_l
+ 	while (cnt < in_len) {
+ 		authmode = in_ie[cnt];
+ 
+-		if ((authmode == WLAN_EID_VENDOR_SPECIFIC) && (!memcmp(&in_ie[cnt+2], &wpa_oui[0], 4))) {
++		if ((authmode == WLAN_EID_VENDOR_SPECIFIC) &&
++		    (!memcmp(&in_ie[cnt + 2], &wpa_oui[0], 4))) {
+ 			if (wpa_ie)
+-				memcpy(wpa_ie, &in_ie[cnt], in_ie[cnt+1]+2);
++				memcpy(wpa_ie, &in_ie[cnt], in_ie[cnt + 1] + 2);
+ 
+ 			*wpa_len = in_ie[cnt + 1] + 2;
+ 			cnt += in_ie[cnt + 1] + 2;  /* get next */
+@@ -632,10 +633,10 @@ void rtw_get_sec_ie(u8 *in_ie, uint in_l
+ 				if (rsn_ie)
+ 					memcpy(rsn_ie, &in_ie[cnt], in_ie[cnt + 1] + 2);
+ 
+-				*rsn_len = in_ie[cnt+1]+2;
+-				cnt += in_ie[cnt+1]+2;  /* get next */
++				*rsn_len = in_ie[cnt + 1] + 2;
++				cnt += in_ie[cnt + 1] + 2;  /* get next */
+ 			} else {
+-				cnt += in_ie[cnt+1]+2;   /* get next */
++				cnt += in_ie[cnt + 1] + 2;   /* get next */
+ 			}
+ 		}
+ 	}
+@@ -667,20 +668,20 @@ u8 *rtw_get_wps_ie(u8 *in_ie, uint in_le
+ 	while (cnt < in_len) {
+ 		eid = in_ie[cnt];
+ 
+-		if ((eid == WLAN_EID_VENDOR_SPECIFIC) && (!memcmp(&in_ie[cnt+2], wps_oui, 4))) {
++		if ((eid == WLAN_EID_VENDOR_SPECIFIC) && (!memcmp(&in_ie[cnt + 2], wps_oui, 4))) {
+ 			wpsie_ptr = &in_ie[cnt];
+ 
+ 			if (wps_ie)
+-				memcpy(wps_ie, &in_ie[cnt], in_ie[cnt+1]+2);
++				memcpy(wps_ie, &in_ie[cnt], in_ie[cnt + 1] + 2);
+ 
+ 			if (wps_ielen)
+-				*wps_ielen = in_ie[cnt+1]+2;
++				*wps_ielen = in_ie[cnt + 1] + 2;
+ 
+-			cnt += in_ie[cnt+1]+2;
++			cnt += in_ie[cnt + 1] + 2;
+ 
+ 			break;
+ 		}
+-		cnt += in_ie[cnt+1]+2; /* goto next */
++		cnt += in_ie[cnt + 1] + 2; /* goto next */
+ 	}
+ 
+ 	return wpsie_ptr;
+@@ -758,12 +759,12 @@ u8 *rtw_get_wps_attr_content(u8 *wps_ie,
+ 
+ 	if (attr_ptr && attr_len) {
+ 		if (buf_content)
+-			memcpy(buf_content, attr_ptr+4, attr_len-4);
++			memcpy(buf_content, attr_ptr + 4, attr_len - 4);
+ 
+ 		if (len_content)
+-			*len_content = attr_len-4;
++			*len_content = attr_len - 4;
+ 
+-		return attr_ptr+4;
++		return attr_ptr + 4;
+ 	}
+ 
+ 	return NULL;
+@@ -1009,20 +1010,25 @@ static int rtw_get_cipher_info(struct wl
+ 	int group_cipher = 0, pairwise_cipher = 0, is8021x = 0;
+ 	int ret = _FAIL;
+ 
+-	pbuf = rtw_get_wpa_ie(&pnetwork->network.ies[12], &wpa_ielen, pnetwork->network.ie_length-12);
++	pbuf = rtw_get_wpa_ie(&pnetwork->network.ies[12],
++			      &wpa_ielen,
++			      pnetwork->network.ie_length - 12);
+ 
+ 	if (pbuf && (wpa_ielen > 0)) {
+-		if (rtw_parse_wpa_ie(pbuf, wpa_ielen+2, &group_cipher, &pairwise_cipher, &is8021x) == _SUCCESS) {
++		if (rtw_parse_wpa_ie(pbuf, wpa_ielen + 2, &group_cipher,
++				     &pairwise_cipher, &is8021x) == _SUCCESS) {
+ 			pnetwork->bcn_info.pairwise_cipher = pairwise_cipher;
+ 			pnetwork->bcn_info.group_cipher = group_cipher;
+ 			pnetwork->bcn_info.is_8021x = is8021x;
+ 			ret = _SUCCESS;
+ 		}
+ 	} else {
+-		pbuf = rtw_get_wpa2_ie(&pnetwork->network.ies[12], &wpa_ielen, pnetwork->network.ie_length-12);
++		pbuf = rtw_get_wpa2_ie(&pnetwork->network.ies[12], &wpa_ielen,
++				       pnetwork->network.ie_length - 12);
+ 
+ 		if (pbuf && (wpa_ielen > 0)) {
+-			if (rtw_parse_wpa2_ie(pbuf, wpa_ielen+2, &group_cipher, &pairwise_cipher, &is8021x) == _SUCCESS) {
++			if (rtw_parse_wpa2_ie(pbuf, wpa_ielen + 2, &group_cipher,
++					      &pairwise_cipher, &is8021x) == _SUCCESS) {
+ 				pnetwork->bcn_info.pairwise_cipher = pairwise_cipher;
+ 				pnetwork->bcn_info.group_cipher = group_cipher;
+ 				pnetwork->bcn_info.is_8021x = is8021x;
+@@ -1091,21 +1097,21 @@ u16 rtw_mcs_rate(u8 bw_40MHz, u8 short_G
+ 	u16 max_rate = 0;
+ 
+ 	if (MCS_rate[0] & BIT(7))
+-		max_rate = (bw_40MHz) ? ((short_GI)?1500:1350):((short_GI)?722:650);
++		max_rate = (bw_40MHz) ? ((short_GI) ? 1500 : 1350) : ((short_GI) ? 722 : 650);
+ 	else if (MCS_rate[0] & BIT(6))
+-		max_rate = (bw_40MHz) ? ((short_GI)?1350:1215):((short_GI)?650:585);
++		max_rate = (bw_40MHz) ? ((short_GI) ? 1350 : 1215) : ((short_GI) ? 650 : 585);
+ 	else if (MCS_rate[0] & BIT(5))
+-		max_rate = (bw_40MHz) ? ((short_GI)?1200:1080):((short_GI)?578:520);
++		max_rate = (bw_40MHz) ? ((short_GI) ? 1200 : 1080) : ((short_GI) ? 578 : 520);
+ 	else if (MCS_rate[0] & BIT(4))
+-		max_rate = (bw_40MHz) ? ((short_GI)?900:810):((short_GI)?433:390);
++		max_rate = (bw_40MHz) ? ((short_GI) ? 900 : 810) : ((short_GI) ? 433 : 390);
+ 	else if (MCS_rate[0] & BIT(3))
+-		max_rate = (bw_40MHz) ? ((short_GI)?600:540):((short_GI)?289:260);
++		max_rate = (bw_40MHz) ? ((short_GI) ? 600 : 540) : ((short_GI) ? 289 : 260);
+ 	else if (MCS_rate[0] & BIT(2))
+-		max_rate = (bw_40MHz) ? ((short_GI)?450:405):((short_GI)?217:195);
++		max_rate = (bw_40MHz) ? ((short_GI) ? 450 : 405) : ((short_GI) ? 217 : 195);
+ 	else if (MCS_rate[0] & BIT(1))
+-		max_rate = (bw_40MHz) ? ((short_GI)?300:270):((short_GI)?144:130);
++		max_rate = (bw_40MHz) ? ((short_GI) ? 300 : 270) : ((short_GI) ? 144 : 130);
+ 	else if (MCS_rate[0] & BIT(0))
+-		max_rate = (bw_40MHz) ? ((short_GI)?150:135):((short_GI)?72:65);
++		max_rate = (bw_40MHz) ? ((short_GI) ? 150 : 135) : ((short_GI) ? 72 : 65);
+ 
+ 	return max_rate;
  }
- EXPORT_SYMBOL_GPL(acpi_dev_remove_notify_handler);
- 
-+struct acpi_notify_handler_devres {
-+	acpi_notify_handler handler;
-+	u32 handler_type;
-+	struct acpi_device *adev;
-+};
-+
-+static void devm_acpi_notify_handler_release(struct device *dev, void *res)
-+{
-+	struct acpi_notify_handler_devres *dr = res;
-+
-+	acpi_dev_remove_notify_handler(dr->adev, dr->handler_type,
-+				       dr->handler);
-+}
-+
-+/**
-+ * devm_acpi_install_notify_handler - Install an ACPI notify handler for a
-+ * 				      managed device
-+ * @dev: Device to install a notify handler for
-+ * @handler_type: Type of the notify handler
-+ * @handler: Handler function to install
-+ *
-+ * This function performs the same function as acpi_dev_install_notify_handler()
-+ * called for the ACPI companion of @dev with the same @handler_type and
-+ * @handler arguments, but the ACPI notify handler installed by it will be
-+ * automatically removed on driver detach.
-+ *
-+ * Callers should ensure that all resources used by @handler have been allocated
-+ * prior to invoking this function, in which case those resources should be
-+ * devres-managed so that they won't be released before the notify handler
-+ * removal.  Otherwise, special synchronization between @handler and the
-+ * management of those resources is required.
-+ *
-+ * When the request fails, an error message is printed.  Don't add extra error
-+ * messages at the call sites.
-+ *
-+ * Return: 0 on success or a negative error number.
-+ */
-+int devm_acpi_install_notify_handler(struct device *dev, u32 handler_type,
-+				     acpi_notify_handler handler)
-+{
-+	struct acpi_notify_handler_devres *dr;
-+	struct acpi_device *adev;
-+	int ret;
-+
-+	adev = ACPI_COMPANION(dev);
-+	if (!adev && dev->bus == &acpi_bus_type)
-+		adev = to_acpi_device(dev);
-+
-+	if (!adev)
-+		return dev_err_probe(dev, -ENODEV, "No ACPI companion in %s()\n", __func__);
-+
-+	dr = devres_alloc(devm_acpi_notify_handler_release, sizeof(*dr), GFP_KERNEL);
-+	if (!dr)
-+		return -ENOMEM;
-+
-+	ret = acpi_dev_install_notify_handler(adev, handler_type, handler);
-+	if (ret) {
-+		devres_free(dr);
-+		return dev_err_probe(dev, ret, "Failed to install an ACPI notify handler\n");
-+	}
-+
-+	dr->handler = handler;
-+	dr->handler_type = handler_type;
-+	dr->adev = adev;
-+	devres_add(dev, dr);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(devm_acpi_install_notify_handler);
-+
- /* Handle events targeting \_SB device (at present only graceful shutdown) */
- 
- #define ACPI_SB_NOTIFY_SHUTDOWN_REQUEST 0x81
---- a/include/acpi/acpi_bus.h
-+++ b/include/acpi/acpi_bus.h
-@@ -521,6 +521,8 @@ int acpi_dev_install_notify_handler(stru
- void acpi_dev_remove_notify_handler(struct acpi_device *adev,
- 				    u32 handler_type,
- 				    acpi_notify_handler handler);
-+int devm_acpi_install_notify_handler(struct device *dev, u32 handler_type,
-+				     acpi_notify_handler handler);
- extern int acpi_notifier_call_chain(struct acpi_device *, u32, u32);
- extern int register_acpi_notifier(struct notifier_block *);
- extern int unregister_acpi_notifier(struct notifier_block *);
 
 
