@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B288A314D34;
-	Tue, 21 Jul 2026 17:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402C5314D34;
+	Tue, 21 Jul 2026 17:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653477; cv=none; b=lxSbwCvBZc7WnCWbW6/BTPrmr4dIxORo5+rLjXyA4iSHgA7kXR6KbkcZQ6IVel3SEPEsLroue0oc/ejATKO1XrUI4Vm7XpNvLWX8alKj92bOP2EVcQ/5Gs4Gxl74yATLmNrDRstoqYkSbAzCaW+gXuGK5YIvMilNn+QPaMcWEMg=
+	t=1784653479; cv=none; b=JlZfT36HWeBfXKq0/renL25NhEgrvSZogu/v5j3+ifYI5FMn/KN0dC2CEdiw35gCK4pPHqGFIOrry/kPZR7EMFps+j4NrWOTa2HfE5nkik0/KvX1/mgbysXz1ongzg8oLnxcU43/HlgvJyP6m/fDeWxxO9wsc/P+DbG6YQ6rUBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653477; c=relaxed/simple;
-	bh=yq9CsD67EzWjHw1443Q6vH4dVnNarPDrFiDVmFh5bFk=;
+	s=arc-20240116; t=1784653479; c=relaxed/simple;
+	bh=STWDvox20QmSNRec9hOZWkWxZppDJIiACXvtlnO7wtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pU0u2aOz2vCyKrZLa+kg2cfyZuJbl20YzWPHTW3LoxNWxQmRcLOJkW4IDkOisoJganQJrpV9OKzQZ6fcyenQ0j0d45GMpWajL/+o+lTn6wHONPBwhOmMOqo19gNyGQmzo+Oim/fR3tg10BS+jsg6jlt4BOF6JMrcsuoSC0WYjUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2sV6/pZv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JUGwuqHUfV4KlGTnu9PSklNRrJRvF5kvg2G2dMg87xpd5LRrgB9Wo69JD6UtJYuuKz5O0LnVJRYmx9vUIRqklrkzHDE9QDb+4RTKrolVQn9SS3UI99aAME1Xeiiown5fZWMHRTtmXXkLg2msfJboNH2e4egvO6PKg5P6QAfX0EY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fq1/x8X7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2sV6/pZv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE5AF1F000E9;
-	Tue, 21 Jul 2026 17:04:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fq1/x8X7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F1A1F000E9;
+	Tue, 21 Jul 2026 17:04:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653475;
-	bh=1ayT0uama+QPr0/ImO7PrfySUDQ4hEcd+T8rmxwFd9o=;
+	s=korg; t=1784653478;
+	bh=u85SESYFYeG4/oRVGczsKavp/lJaDd3Iju/E5bZLY0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2sV6/pZvIAdhycY2ADhjvjp8iTh/gDK05LZ4n27NyL/h4SPKujG4Lu8EotAzhX9TM
-	 tmW5jLU8T3pCWbgqGyqX7tMexkHxKJO+0WzDU9N+5jLNb26aQZYypPrerryzeAfL89
-	 viBBJyLAm3WB1bCkA9esfbHMpn5IhzCaMDKm5H0o=
+	b=Fq1/x8X7Zo9KJ2I4V7V95PSaPRhwKm8Hqtcx4N/bGQYFjVD5RIal+rlsqc6SfOfQC
+	 I7c8QENeSoZD7DewYoTeob6K2h1P0PoVMlB40y5Hrk0HYkKO9K0tJqMd9eITHZjnYi
+	 HS6W5Y492lLmPEyyrvGJ70s4Ky3VyGUMyKteIEqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20 ?= <Yeking@Red54.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1297/2077] tipc: Store struct sock in struct udp_bearer.
-Date: Tue, 21 Jul 2026 17:16:10 +0200
-Message-ID: <20260721152623.413568113@linuxfoundation.org>
+Subject: [PATCH 7.1 1288/2077] LoongArch: Move struct kimage forward declaration before use
+Date: Tue, 21 Jul 2026 17:16:01 +0200
+Message-ID: <20260721152623.198868038@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,166 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
 
-[ Upstream commit 1ae552c7b6658c23fba8e964e687785297078880 ]
+[ Upstream commit d4e58d2c21d94282d512979dfa7e045c5034b0be ]
 
-tipc udp_bearer does not need to access struct socket itself in
-the fast path; it only reads struct sock, and struct socket is
-only used for tunnel setup and teardown.
+arch_kimage_file_post_load_cleanup() and load_other_segments(), both
+inside the CONFIG_KEXEC_FILE block, take a struct kimage pointer before
+the forward declaration appears. Move the forward declaration above so
+it precedes its first use instead of relying on a transitive include.
 
-Let's store struct sock directly in struct udp_bearer.
-
-Note that cleanup_bearer() calls synchronize_net() after
-udp_tunnel_sock_release(), so udp_bearer is not freed until
-inflight fast paths finish.
-
-Note also that synchronize_rcu() is added in the error path
-of tipc_udp_enable() since udp_bearer will be kfree()d
-immediately once we remove synchronize_rcu() in
-udp_tunnel_sock_release().
-
-This can be later converted to kfree_rcu().
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260502031401.3557229-15-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: c1481c94e74c ("tipc: avoid busy looping in tipc_exit_net()")
+Fixes: d162feec6b6e ("LoongArch: Add preparatory infrastructure for kexec_file")
+Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/udp_media.c | 32 ++++++++++++++++++--------------
- 1 file changed, 18 insertions(+), 14 deletions(-)
+ arch/loongarch/include/asm/kexec.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
-index 0db172f1a41aa7..988b8a7f953ad6 100644
---- a/net/tipc/udp_media.c
-+++ b/net/tipc/udp_media.c
-@@ -89,14 +89,14 @@ struct udp_replicast {
- /**
-  * struct udp_bearer - ip/udp bearer data structure
-  * @bearer:	associated generic tipc bearer
-- * @ubsock:	bearer associated socket
-+ * @sk:		bearer associated socket
-  * @ifindex:	local address scope
-  * @work:	used to schedule deferred work on a bearer
-  * @rcast:	associated udp_replicast container
-  */
- struct udp_bearer {
- 	struct tipc_bearer __rcu *bearer;
--	struct socket *ubsock;
-+	struct sock *sk;
- 	u32 ifindex;
- 	struct work_struct work;
- 	struct udp_replicast rcast;
-@@ -194,7 +194,7 @@ static int tipc_udp_xmit(struct net *net, struct sk_buff *skb,
- 		}
+diff --git a/arch/loongarch/include/asm/kexec.h b/arch/loongarch/include/asm/kexec.h
+index 209fa43222e1c0..6be136e9f0a06b 100644
+--- a/arch/loongarch/include/asm/kexec.h
++++ b/arch/loongarch/include/asm/kexec.h
+@@ -41,6 +41,8 @@ struct kimage_arch {
+ 	unsigned long systable_ptr;
+ };
  
- 		ttl = ip4_dst_hoplimit(&rt->dst);
--		udp_tunnel_xmit_skb(rt, ub->ubsock->sk, skb, src->ipv4.s_addr,
-+		udp_tunnel_xmit_skb(rt, ub->sk, skb, src->ipv4.s_addr,
- 				    dst->ipv4.s_addr, 0, ttl, 0, src->port,
- 				    dst->port, false, true, 0);
- #if IS_ENABLED(CONFIG_IPV6)
-@@ -206,7 +206,7 @@ static int tipc_udp_xmit(struct net *net, struct sk_buff *skb,
- 				.saddr = src->ipv6,
- 				.flowi6_proto = IPPROTO_UDP
- 			};
--			ndst = ip6_dst_lookup_flow(net, ub->ubsock->sk,
-+			ndst = ip6_dst_lookup_flow(net, ub->sk,
- 						   &fl6, NULL);
- 			if (IS_ERR(ndst)) {
- 				err = PTR_ERR(ndst);
-@@ -215,7 +215,7 @@ static int tipc_udp_xmit(struct net *net, struct sk_buff *skb,
- 			dst_cache_set_ip6(cache, ndst, &fl6.saddr);
- 		}
- 		ttl = ip6_dst_hoplimit(ndst);
--		udp_tunnel6_xmit_skb(ndst, ub->ubsock->sk, skb, NULL,
-+		udp_tunnel6_xmit_skb(ndst, ub->sk, skb, NULL,
- 				     &src->ipv6, &dst->ipv6, 0, ttl, 0,
- 				     src->port, dst->port, false, 0);
- #endif
-@@ -405,9 +405,9 @@ static int tipc_udp_recv(struct sock *sk, struct sk_buff *skb)
- 
- static int enable_mcast(struct udp_bearer *ub, struct udp_media_addr *remote)
- {
--	int err = 0;
-+	struct sock *sk = ub->sk;
- 	struct ip_mreqn mreqn;
--	struct sock *sk = ub->ubsock->sk;
-+	int err = 0;
- 
- 	if (ntohs(remote->proto) == ETH_P_IP) {
- 		mreqn.imr_multiaddr = remote->ipv4;
-@@ -670,6 +670,7 @@ static int tipc_udp_enable(struct net *net, struct tipc_bearer *b,
- 	struct nlattr *opts[TIPC_NLA_UDP_MAX + 1];
- 	u8 node_id[NODE_ID_LEN] = {0,};
- 	struct net_device *dev;
-+	struct socket *sock;
- 	int rmcast = 0;
- 
- 	ub = kzalloc_obj(*ub, GFP_ATOMIC);
-@@ -764,14 +765,16 @@ static int tipc_udp_enable(struct net *net, struct tipc_bearer *b,
- 		goto err;
- 	}
- 	udp_conf.local_udp_port = local.port;
--	err = udp_sock_create(net, &udp_conf, &ub->ubsock);
-+	err = udp_sock_create(net, &udp_conf, &sock);
- 	if (err)
- 		goto err;
++struct kimage;
 +
-+	ub->sk = sock->sk;
- 	tuncfg.sk_user_data = ub;
- 	tuncfg.encap_type = 1;
- 	tuncfg.encap_rcv = tipc_udp_recv;
- 	tuncfg.encap_destroy = NULL;
--	setup_udp_tunnel_sock(net, ub->ubsock->sk, &tuncfg);
-+	setup_udp_tunnel_sock(net, ub->sk, &tuncfg);
+ #ifdef CONFIG_KEXEC_FILE
+ extern const struct kexec_file_ops kexec_efi_ops;
+ extern const struct kexec_file_ops kexec_elf_ops;
+@@ -59,7 +61,6 @@ typedef void (*do_kexec_t)(unsigned long efi_boot,
+ 			   unsigned long start_addr,
+ 			   unsigned long first_ind_entry);
  
- 	err = dst_cache_init(&ub->rcast.dst_cache, GFP_ATOMIC);
- 	if (err)
-@@ -793,7 +796,8 @@ static int tipc_udp_enable(struct net *net, struct tipc_bearer *b,
- 
- free:
- 	dst_cache_destroy(&ub->rcast.dst_cache);
--	udp_tunnel_sock_release(ub->ubsock->sk);
-+	udp_tunnel_sock_release(ub->sk);
-+	synchronize_rcu();
- err:
- 	kfree(ub);
- 	return err;
-@@ -812,10 +816,10 @@ static void cleanup_bearer(struct work_struct *work)
- 		kfree_rcu(rcast, rcu);
- 	}
- 
--	tn = tipc_net(sock_net(ub->ubsock->sk));
-+	tn = tipc_net(sock_net(ub->sk));
- 
- 	dst_cache_destroy(&ub->rcast.dst_cache);
--	udp_tunnel_sock_release(ub->ubsock->sk);
-+	udp_tunnel_sock_release(ub->sk);
- 
- 	/* Note: could use a call_rcu() to avoid another synchronize_net() */
- 	synchronize_net();
-@@ -833,11 +837,11 @@ static void tipc_udp_disable(struct tipc_bearer *b)
- 		pr_err("UDP bearer instance not found\n");
- 		return;
- 	}
--	sock_set_flag(ub->ubsock->sk, SOCK_DEAD);
-+	sock_set_flag(ub->sk, SOCK_DEAD);
- 	RCU_INIT_POINTER(ub->bearer, NULL);
- 
- 	/* sock_release need to be done outside of rtnl lock */
--	atomic_inc(&tipc_net(sock_net(ub->ubsock->sk))->wq_count);
-+	atomic_inc(&tipc_net(sock_net(ub->sk))->wq_count);
- 	INIT_WORK(&ub->work, cleanup_bearer);
- 	schedule_work(&ub->work);
- }
+-struct kimage;
+ extern const unsigned char relocate_new_kernel[];
+ extern const size_t relocate_new_kernel_size;
+ extern void kexec_reboot(void);
 -- 
 2.53.0
 
