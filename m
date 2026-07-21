@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE264415F38;
-	Tue, 21 Jul 2026 17:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4225415F3F;
+	Tue, 21 Jul 2026 17:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656329; cv=none; b=usqdg+FEuRrDqaJY7qWmLl38q0boW6M7Uz8HZW4bkkbAvTIOlp5vnTrDU1hgGtokuGm1CoO8xGIDs23GjbIZ5Ak3w+iadoFuKi3dXK7gk65w/pEP+XFpwD5vypVjDQMBp3FfMKa+HR/b7LQrSlRi7mbVpDxVOYIxaLxlRSmIBo4=
+	t=1784656332; cv=none; b=mriBPfFuio1w4wgn8NyBlhFWEU/1Ea7F4KTlFV+wkLR15Ixdzue0X7t+2SJ4A9mcP90ue2AKn2U1fTwLCJvWuIAme5U15mmdmQI3pTMEC7Uz+1dYBPoREXYrIsE2aCms65Do7MWCy1nQJAbzsaaJfrpngDUAqBTVO1IMSYrFQt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656329; c=relaxed/simple;
-	bh=kFtimvM9dHinxGdf9mlNGzYIXCw4Ht4AG4LXng2tQmI=;
+	s=arc-20240116; t=1784656332; c=relaxed/simple;
+	bh=3MPDorpbRB0VsOAsOsAUPyPRQ0ko6+5e66qrZ6MO05I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uqjHTVhFDP6aYJVR7mrmrpE8Fp9rupd68MyLH6U8s7HfmHD8hJhvEfmenTc1qzg/F3ZlZ2/GDgZJ9+ts8W+4kHImJsnAwS7q08esi/s8tJENEuwPLrnP5yGjiVrcVDAXhl4DN2NPBZxcPV2RrVb5qaLmGsq7Afxtq0yvTyWS1Ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/ZncEfJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dYqHuXxP3LjzTvO6c9ZVZPycCmZ9oysHqNDy7uRMXyduQzmScspbC2REUZvwOimrgtl03M6+t7w0qCI62JXVOjDW1CJInurwRLHyrMJVbo6Yjl4VLw41uGHyt4wDgiN6aG4g5gx5tVtRtncdHkf9NVqdfKIhQL+H7LQ+b5R0bOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IlAPr+Ed; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/ZncEfJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B6421F000E9;
-	Tue, 21 Jul 2026 17:52:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IlAPr+Ed"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1A51F000E9;
+	Tue, 21 Jul 2026 17:52:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656328;
-	bh=22WW78VvTEQv1ovmyYjNGamp+PwzqBMZbm5HRZr/QqQ=;
+	s=korg; t=1784656331;
+	bh=XOhV0Wvob9r/trM1MNfWBJNzKqdopa8WxtVFSTEgx3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X/ZncEfJbIAeeUF/VwJqV7J/2lnVHFf5+pD6Qg+cPy+lUeW+QcLIbCMjftrKct1GU
-	 t0x9r0yInMpVeuXamEvu9FeoKeLlc8V3YZO1k9deAZnc8Dj8WLMCB2DLV86yoA4aRD
-	 RxHZ79EXweEEpLzq9PjW30P1Y7iTM4W3TKp10xtI=
+	b=IlAPr+EdTDDY4HZ8iKCY8TkIxwYsbuEkjNJ1Xy2xjQhJFxmG6tYal9yghcLJVLnRE
+	 46BiXaSZvZu4SlmH3WCuCJz5tEp2hGfPp8wlUgazLysSuD0QzW3CgqJ9YJIaMSXUS7
+	 BZT1sKg9x2ME60jMZ60NszKRwNTFBmS2VWSPzuYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Junxiao Chang <junxiao.chang@intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Nikolay Borisov <nik.borisov@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0346/1611] ALSA: usb-audio: qcom: Initialize offload control return value
-Date: Tue, 21 Jul 2026 17:07:42 +0200
-Message-ID: <20260721152522.907748087@linuxfoundation.org>
+Subject: [PATCH 6.18 0347/1611] x86/cpu: Remove obsolete aperfmperf_get_khz() declaration
+Date: Tue, 21 Jul 2026 17:07:43 +0200
+Message-ID: <20260721152522.929356239@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -45,51 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Junxiao Chang <junxiao.chang@intel.com>
 
-[ Upstream commit 2b5632d72fca0841bea283da2e3a478d24118508 ]
+[ Upstream commit a5f28da54f36f1a8b289d9bdd3e780b2ede0da6f ]
 
-snd_usb_offload_create_ctl() returns ret after walking the USB PCM list,
-but ret is only assigned after a playback stream passes the endpoint and
-PCM-index filters.
+aperfmperf_get_khz() was replaced by arch_freq_get_on_cpu().
+The remaining declaration in the header file is no longer used
+and should be removed.
 
-If all playback streams are skipped, for example because there is no
-playback endpoint or because all PCM indexes exceed the 0xff control
-range, the function returns an uninitialized stack value.
-
-Initialize ret to 0 so the no-control-created path returns deterministic
-success, while preserving the existing negative error return when
-snd_ctl_add() fails.
-
-Fixes: a67656f011d1 ("ALSA: usb-audio: qcom: Add USB offload route kcontrol")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260605-alsa-usb-qcom-offload-ret-init-v1-1-dc72fcc4bd3b@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: f3eca381bd49 ("x86/aperfmperf: Replace arch_freq_get_on_cpu()")
+Signed-off-by: Junxiao Chang <junxiao.chang@intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
+Link: https://patch.msgid.link/20260606021514.1433619-1-junxiao.chang@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/qcom/mixer_usb_offload.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/cpu/cpu.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/sound/usb/qcom/mixer_usb_offload.c b/sound/usb/qcom/mixer_usb_offload.c
-index 2adeb64f4d33f4..005138714f7249 100644
---- a/sound/usb/qcom/mixer_usb_offload.c
-+++ b/sound/usb/qcom/mixer_usb_offload.c
-@@ -113,7 +113,7 @@ int snd_usb_offload_create_ctl(struct snd_usb_audio *chip, struct device *bedev)
- 	struct snd_usb_substream *subs;
- 	struct snd_usb_stream *as;
- 	char ctl_name[48];
--	int ret;
-+	int ret = 0;
+diff --git a/arch/x86/kernel/cpu/cpu.h b/arch/x86/kernel/cpu/cpu.h
+index bc38b2d56f26af..92032422a8298d 100644
+--- a/arch/x86/kernel/cpu/cpu.h
++++ b/arch/x86/kernel/cpu/cpu.h
+@@ -84,7 +84,6 @@ static inline struct amd_northbridge *amd_init_l3_cache(int index)
+ }
+ #endif
  
- 	list_for_each_entry(as, &chip->pcm_list, list) {
- 		subs = &as->substream[SNDRV_PCM_STREAM_PLAYBACK];
+-unsigned int aperfmperf_get_khz(int cpu);
+ void cpu_select_mitigations(void);
+ 
+ extern void x86_spec_ctrl_setup_ap(void);
 -- 
 2.53.0
 
