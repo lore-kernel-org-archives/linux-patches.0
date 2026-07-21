@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2638D3B6C17;
-	Tue, 21 Jul 2026 22:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1EF37E310;
+	Tue, 21 Jul 2026 22:40:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673644; cv=none; b=kVVIMA5sTJXWf9Plk9FYbBw7rv2xhncwcTkDvqiPvpKHJuB4hRKnUjsp1hY0Rue6JP0m3CIu6z+4W49zyovhkrnkHG08En0lLqMeekfJ4PxOs4frae1wBaO+CfV+T3TNfuGKPnmKsUytdXXh2Jutygko7kvIym+CHNP1Rrg+m9k=
+	t=1784673646; cv=none; b=TxAe43JDXfdJU+zm7WlqGmc7q//bZxLtzussiXzGm+oBXiVIv4iuvyIztqhnJDPtLcziWVICIKdfZ8yjrzZ4j3Vp0ckI6ScBwiXYhDR9beq1ev45SxeCOV+TjAdt7DU3kFLdpy9/nKWP5tXxUJnHCIgoovGgIks8moNoeo78a84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673644; c=relaxed/simple;
-	bh=/Jx5Zn1MfKJ2StLbWcuw1OOv06074Fuc7f+tAws1iJo=;
+	s=arc-20240116; t=1784673646; c=relaxed/simple;
+	bh=RMmX9bKnoJ7SbPc5qwBfSUfSnP6qb/VG06aifmNlJyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XLVpAR0YuVcc7z8EDVWdf+jaj0RxrQxp4XLa+LNS3yFv0iQ31hoFYUT5M+tDER8Gh2jPwCwimhj4DKw+Gnc2MShczAk3PZBCRaN7b3SluPs5V6ZEJsSTMr9oyH261YWMPH0Pzg0lU4mzWtEd04Rv/WyX+FfX5Bi2x2k0UZN4iHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JURHuxKN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k0zbdjW92ZGZVNIrG97STG1YFyddltVep74IwvA5XR63JnAGSpEtWEnw/0D+lrDQFe6Fs3zog0UTOX/73sPMPjjqRPmhG04VeZl0LOyRI41QuaqtXbTLcFGUN4OX3Lg4ZeDlwkCcBDBq5sycYCwbeyqnRisfV6M8v58EgcLob0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=irRxNlI1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JURHuxKN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC4F1F000E9;
-	Tue, 21 Jul 2026 22:40:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="irRxNlI1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 300531F000E9;
+	Tue, 21 Jul 2026 22:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673643;
-	bh=qWx5A8pnmR5LkdjtuoO2LGtrozeC1aar1DJIpgrbwms=;
+	s=korg; t=1784673645;
+	bh=NDgkhkD+BbY9yjNPnyoQskrya0dyajxw2Dinw7yBf1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JURHuxKNvzE0sdxjLJq97yvZGuwF8QlzKuYnZbD2dbrqAUutJOiHQ7rMSYclPfBp+
-	 ffnhSxwqOHZpcUQS60Eq7bBiqzHIeRg9XwujMiZlQPmfCB8LZOk/O8cbCs/XWCnmBy
-	 GDbENLx65zEsc4O5o1WuV8/uJY0ILbCv7MEZcu6Y=
+	b=irRxNlI1nQhdFAMhaYtn/5yRZ1WvfYQuqGXdOl09OhLaFnWPq2dMjdQnc7Dq03t2g
+	 KVrqQdrY+4hCA8laKC3Mz6fI76z9aEo8dWhteHQ8uli82lUrS59Mta3/byp/FB2XTj
+	 qine2U34V1dumWKbT/zVgG/8CuU04FsUv/wu6X9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+e70e4c6f6eee43357ba7@syzkaller.appspotmail.com,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 240/699] spi: ep93xx: fix double-free of zeropage on DMA setup failure
-Date: Tue, 21 Jul 2026 17:19:59 +0200
-Message-ID: <20260721152401.111126692@linuxfoundation.org>
+Subject: [PATCH 5.10 241/699] firmware_loader: Fix recursive lock in device_cache_fw_images()
+Date: Tue, 21 Jul 2026 17:20:00 +0200
+Message-ID: <20260721152401.134781985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,39 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Dmitry Vyukov <dvyukov@google.com>
 
-[ Upstream commit 7886054b06f762f62054957a8f6de0f14e6b7541 ]
+[ Upstream commit d3ec78f8f8d48a04a9fac38d47275c34645e5103 ]
 
-If DMA setup fails after allocating the zeropage, the error path frees
-the page but leaves espi->zeropage dangling. A subsequent call to
-ep93xx_spi_release_dma() sees the non-NULL pointer and frees the page
-again.
+A recursive locking deadlock can occur in the firmware loader's power
+management notification handler.
 
-Clear the pointer after freeing in the error path of
-ep93xx_spi_setup_dma().
+During system suspend or hibernation preparation, fw_pm_notify() calls
+device_cache_fw_images(). This function acquires fw_lock to set the
+firmware cache state to FW_LOADER_START_CACHE and then iterates over all
+devices using dpm_for_each_dev() while still holding the lock.
 
-Fixes: 626a96db1169 ("spi/ep93xx: add DMA support")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260529-ep93xx-v1-1-9185070ca1fc@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+For each device, dev_cache_fw_image() schedules asynchronous work to cache
+the firmware. If memory allocation for the async work entry fails (e.g., in
+out-of-memory conditions), async_schedule_node_domain() falls back to
+executing the work function synchronously in the current thread.
+
+The synchronous execution path (__async_dev_cache_fw_image() ->
+cache_firmware() -> request_firmware() -> assign_fw()) attempts to acquire
+fw_lock again. Since the current thread already holds fw_lock, this results
+in a recursive locking deadlock.
+
+Fix this by releasing fw_lock immediately after updating the cache state
+and before calling dpm_for_each_dev(). The lock is only needed to protect
+the state update. Concurrent firmware requests will correctly see the
+FW_LOADER_START_CACHE state and use the piggyback mechanism, which is
+independently protected by its own fwc->name_lock.
+
+Fixes: ac39b3ea73aa ("firmware loader: let caching firmware piggyback on loading firmware")
+Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
+Reported-by: syzbot+e70e4c6f6eee43357ba7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e70e4c6f6eee43357ba7
+Link: https://syzkaller.appspot.com/ai_job?id=8b4af9fd-24af-423f-8acb-1159fd34c1a5
+Signed-off-by: Dmitry Vyukov <dvyukov@google.com>
+Link: https://patch.msgid.link/48b092a5-f49d-48a4-95f4-f65bebfc6bc3@mail.kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-ep93xx.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/base/firmware_loader/main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-ep93xx.c b/drivers/spi/spi-ep93xx.c
-index aa676559d2738b..b78495f4020960 100644
---- a/drivers/spi/spi-ep93xx.c
-+++ b/drivers/spi/spi-ep93xx.c
-@@ -625,6 +625,7 @@ static int ep93xx_spi_setup_dma(struct ep93xx_spi *espi)
- 	espi->dma_rx = NULL;
- fail_free_page:
- 	free_page((unsigned long)espi->zeropage);
-+	espi->zeropage = NULL;
+diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
+index a83bf68450ed08..97853c7ea33f43 100644
+--- a/drivers/base/firmware_loader/main.c
++++ b/drivers/base/firmware_loader/main.c
+@@ -1442,9 +1442,10 @@ static void device_cache_fw_images(void)
  
- 	return ret;
- }
+ 	mutex_lock(&fw_lock);
+ 	fwc->state = FW_LOADER_START_CACHE;
+-	dpm_for_each_dev(NULL, dev_cache_fw_image);
+ 	mutex_unlock(&fw_lock);
+ 
++	dpm_for_each_dev(NULL, dev_cache_fw_image);
++
+ 	/* wait for completion of caching firmware for all devices */
+ 	async_synchronize_full_domain(&fw_cache_domain);
+ 
 -- 
 2.53.0
 
