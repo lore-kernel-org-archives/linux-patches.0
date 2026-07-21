@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D1D437111;
-	Tue, 21 Jul 2026 21:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2118244AB62;
+	Tue, 21 Jul 2026 21:49:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670574; cv=none; b=qMw6fY2JYAK9shCab0+eh51WwVVJTtXp8Jzsmu3cNmL1e8b4dCzrDcpQjYJKY5LXMQl59E0muBi70P4a+fui3vuGzKvHphKjaLytg/gfAJwN2o/QjhuSXOYUxaBRnDorTLlR5OnSqOaX80GW75PhobrkhtiSERAaXgvHtfMeChk=
+	t=1784670575; cv=none; b=CH6pXOJcq8QOX3LawyFiSuA0cNGPWcBW7y2Owj382ylPorzOu+tHVWK00dyO1Ly+rvysixtw9EPfUKI8dhebDooZGC0pQ8FTPvD00ha7KsLP78lhZeAO2kgHjP0MqXE32GIx3DuCwZ2DL/m8k8hGuJ/EAftl2+gyhmf5ccZsvIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670574; c=relaxed/simple;
-	bh=hxxDHuYv6W/t3p835qq9kqD2x4jVG7P1fwh+y4X/8+E=;
+	s=arc-20240116; t=1784670575; c=relaxed/simple;
+	bh=2uH/c8ZcXcvu2KexFWwtP+QYuUwJE50e45WORf74OjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=itGegW/ALOqcyxldhl16sCGcvakj9KsfGRay2gGzXX6oKySZ7E+bIruXaPPgo1sOoEkFjSBbQcH94B8sfJDD/FCsUnaP8FduW0dMr1b1cQ3FFSQ4RpWEp7m0FyKNh6JvSI6D155zFI94KmzlDNshdSMuUxe+RqoPfJbNM6D81hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQr4oXwT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SPucwcNWvqRPvc9wX1So71XKnq/2lpkbZvAJZRwTiUbd98Q+nlhtSz+5aEkIJnbQo8NaX3anqJSLNDAdU2lRlmD7o48c/MWEeX9VzVm/sP6pbkrh/vTvcpAHo/NsR4JVfaWU5xA7V38LnePzl7RGNVTCenuk6lvYdHk+Epwa+5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2EFx0d5S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQr4oXwT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A7E1F000E9;
-	Tue, 21 Jul 2026 21:49:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2EFx0d5S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B57E1F00A3A;
+	Tue, 21 Jul 2026 21:49:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670571;
-	bh=dM7UL2chsRPmoPXI6Ot+F85A2C54HMYbfSHOuLr//TA=;
+	s=korg; t=1784670573;
+	bh=KcUvXt0HEnBKN4RncwVBcAoYxOpWH5CsXBQ6ldaJIYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AQr4oXwTYtWvEWNuoDuxWAY6i5yP6ROBrnZWVYosA/FlImfUkmGeSHaHwMsZWKOUM
-	 VZF4y9JTzfi3ZbVOmouhrkPLsuGWAXvCT1ZmXCnuUAH8TppGYHJNqtgAGfiKlOQh7k
-	 AI+7kbQ2/DoppmVNLsPCGfcWXzj9REQNrYH6jFV8=
+	b=2EFx0d5SDSc2d7gTbfXMJ1IBMANRFw3KKcwtzkp8QDluuyyvFw9D7uV12yzLNN/NT
+	 ilRhfTOJtASVkybDtJVMQSDKwlBJutVhVxhEiY85hhhkYaljlm1Hwv5WM6xVZVAQ3R
+	 bc4w/JPzbrlEP8nnOry/WjJasjnevrK2MIoz5MK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Beims <rafael.beims@toradex.com>,
-	Jeff Chen <jeff.chen_1@nxp.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 0931/1067] wifi: mwifiex: fix permanently busy scans after multiple roam iterations
-Date: Tue, 21 Jul 2026 17:25:32 +0200
-Message-ID: <20260721152445.358113083@linuxfoundation.org>
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Zenghui Yu <zenghui.yu@linux.dev>,
+	Nhat Pham <nphamcs@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
+	Qi Zheng <qi.zheng@linux.dev>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Dave Chinner <david@fromorbit.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0977/1067] mm/shrinker: do not hold RCU lock in shrinker_debugfs_count_show()
+Date: Tue, 21 Jul 2026 17:26:18 +0200
+Message-ID: <20260721152446.406628669@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,87 +58,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael Beims <rafael.beims@toradex.com>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-commit d78a407bad6f500884a8606aea1a5a9207be4030 upstream.
+[ Upstream commit b902890c62d200b3509cb5e09cf1e0a66553c128 ]
 
-In order for the firmware to sleep, the driver has to confirm a
-previously received sleep request. The normal sequence of evets goes
-like this:
-EVENT_SLEEP -> adapter->ps_state = PS_STATE_PRE_SLEEP -> sleep-confirm
--> SLEEP -> EVENT_AWAKE -> AWAKE.
-Before sending the sleep-confirm command, the driver must make sure
-there are no commands either running or waiting to be completed.
+Reading the debugfs "count" file of a memcg-aware shrinker can sleep
+inside an RCU read-side critical section:
 
-mwifiex_ret_802_11_associate() unconditionally sets
-ps_state = PS_STATE_AWAKE when it processes the association command
-response, outside of the normal powersave management flow. If
-EVENT_SLEEP arrives while the association command is in flight,
-ps_state is PRE_SLEEP when the association command response is parsed,
-and the forced AWAKE overwrites it. The deferred sleep-confirm is
-never sent.
+  BUG: sleeping function called from invalid context at kernel/cgroup/rstat.c:421
+  RCU nest depth: 1, expected: 0
+   css_rstat_flush
+   mem_cgroup_flush_stats
+   zswap_shrinker_count
+   shrinker_debugfs_count_show
 
-A subsequent scan_start command is correctly acknowledged, but the
-firmware doesn't generate scan_result events. The scan request never
-finishes, and additional requests from userspace fail with -EBUSY.
+shrinker_debugfs_count_show() invokes the ->count_objects() callback under
+rcu_read_lock().  The zswap callback flushes memcg stats via
+css_rstat_flush(), which may sleep, so it must not run under RCU.
 
-After testing on both IW412 and W8997, I could only trigger the bug on
-the IW412 and observed the firmwares behave differently. On the IW412
-the firmware still sends EVENT_SLEEP while the authentication /
-association process is ongoing. A W8997 under the same
-conditions seems to suppress power-save for the duration of the
-association, so PRE_SLEEP never coincided with the association response
-even after extended periods of testing using the loops
-described below (>12hours).
+The RCU lock is not needed here.  mem_cgroup_iter() takes RCU internally
+and returns a memcg holding a css reference (dropped on the next iteration
+or by mem_cgroup_iter_break()), so the memcg stays alive without it.  The
+shrinker is kept alive by the open debugfs file: shrinker_free() removes
+the debugfs entries via debugfs_remove_recursive(), which waits for
+in-flight readers to drain, before call_rcu(..., shrinker_free_rcu_cb).
+The sibling "scan" handler already invokes the sleeping ->scan_objects()
+callback with no RCU section.
 
-On the IW412, the delay between commands that triggers an EVENT_SLEEP
-was empirically determined to be ~20ms. This delay can naturally occur
-when the driver is outputting debugging information
-(debug_mask = 0x00000037), in which situation the busy scans issue is
-repeatable while running "test 1)" as described below. If the delay
-between commands is less than ~20ms, the firmware stays awake and
-the issue was not reproducible running the same test.
+Drop the rcu_read_lock()/rcu_read_unlock().
 
-The host_mlme=false path also behaves differently. In this case, the
-entire authentication / association transaction is executed by one
-command (HostCmd_CMD_802_11_ASSOCIATE), and the firmware doesn't emit
-EVENT_SLEEP while the command is running.
-
-Remove the assignment so the ps_state is only manipulated in the paths
-that are related to powersave event handling and on the main workqueue
-for correct sleep confirmation.
-
-The following loop tests were performed (with debugging output enabled):
-1) force roaming between two AP's, one 5GHz and one 2.4GHz, same
-SSID. Use wpa_cli to trigger the roaming behavior, sleep 2s
-between iterations.
-2) force a disconnection to AP 1 and a connection to AP 2, test
-scan. Use wpa_cli to trigger the connection changes, sleep 2s
-between iterations.
-
-Each test ran in each device for at least 3 hours.
-
-Fixes: 5e6e3a92b9a4 ("wireless: mwifiex: initial commit for Marvell mwifiex driver")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Rafael Beims <rafael.beims@toradex.com>
-Reviewed-by: Jeff Chen <jeff.chen_1@nxp.com>
-Link: https://patch.msgid.link/20260612122547.1586872-2-rafael@beims.me
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://lore.kernel.org/20260610232048.62930-1-shakeel.butt@linux.dev
+Fixes: 5035ebc644ae ("mm: shrinkers: introduce debugfs interface for memory shrinkers")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Reported-by: Zenghui Yu <zenghui.yu@linux.dev>
+Closes: https://lore.kernel.org/all/c052a064-cddb-494f-a0d8-f8a10b4b1c4d@linux.dev/
+Suggested-by: Nhat Pham <nphamcs@gmail.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: Qi Zheng <qi.zheng@linux.dev>
+Tested-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+Reviewed-by: Nhat Pham <nphamcs@gmail.com>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/join.c |    1 -
- 1 file changed, 1 deletion(-)
+ mm/shrinker_debug.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/join.c
-+++ b/drivers/net/wireless/marvell/mwifiex/join.c
-@@ -690,7 +690,6 @@ int mwifiex_ret_802_11_associate(struct
- 	/* Send a Media Connected event, according to the Spec */
- 	priv->media_connected = true;
+--- a/mm/shrinker_debug.c
++++ b/mm/shrinker_debug.c
+@@ -55,8 +55,6 @@ static int shrinker_debugfs_count_show(s
+ 	if (!count_per_node)
+ 		return -ENOMEM;
  
--	priv->adapter->ps_state = PS_STATE_AWAKE;
- 	priv->adapter->pps_uapsd_mode = false;
- 	priv->adapter->tx_lock_flag = false;
+-	rcu_read_lock();
+-
+ 	memcg_aware = shrinker->flags & SHRINKER_MEMCG_AWARE;
  
+ 	memcg = mem_cgroup_iter(NULL, NULL, NULL);
+@@ -86,8 +84,6 @@ static int shrinker_debugfs_count_show(s
+ 		}
+ 	} while ((memcg = mem_cgroup_iter(NULL, memcg, NULL)) != NULL);
+ 
+-	rcu_read_unlock();
+-
+ 	kfree(count_per_node);
+ 	return ret;
+ }
 
 
