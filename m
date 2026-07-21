@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD553D1CCA;
-	Tue, 21 Jul 2026 18:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFA846F488;
+	Tue, 21 Jul 2026 18:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657003; cv=none; b=cx3e1253aD+GY5CJWB5eNDqQfZIA/5UpE889GEXsmOJnCiXyTCdUmOyvW4l1etZTnhafYGHRCnar5tzGHcKCpCtnRSpLVhtxm6LIy//Cb0VX0PFpUBiDXk1W89bzV8f5XkBP7LBgNLlQJaLdt6AnQU3yvaSG7PJ64rUE4MIdFAM=
+	t=1784657006; cv=none; b=QgrxgKgIC7bW7Gs4HHfNJLSf4/2oAQYiYfaWG96mT2AqxalDMrRjtctkD59VRs7C5TsgHjUn8LCJPDjplyLtN31Y4FAvh8cqZhQBxQovFYEnzrUkzJOxyvwwiTnlVC2uM5rOOCf5jj6gXFNpN2S91RIs6lDtz/OOTcxY8tv8WyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657003; c=relaxed/simple;
-	bh=B1/nubmE6PAolc3DHUughWRrDRo71b4o7NGCyFHpqfE=;
+	s=arc-20240116; t=1784657006; c=relaxed/simple;
+	bh=Lyeu2TLg5hpvN+AoUgNxLmuisnK0e/Byq9xj7fkUWgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eCinJcOx1SwrEYlQ+jKoA3dHphQ2bzjb+F5nHG6qG4xSKt+6xJzoHOSsQ28r94lHzdK6hFN4HIXftkATb19Ch3s1HyK5jBTQ4bLNC3D/mJX0rYxg3LgjEg5l+tJ8fa9Skprhr1N9BEMqg7ZtF+29ccq2vFHd1aAHTdK3OOiUweM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsxewkYx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oE3tz9YtgXpAadxVGhjDceCBJ/kxEIb6n40mecgZqW0xaF0+yjrKYvZeUEqUAqemScSL9tmc0e1ib77IUpEcMAVI/hR0uRRW6OAQQOecRo7BjJNN7wbebAZnWgYyDkTRqk92194wZbBw5nyQvObEomkJFiBe6QbZzooGIIKmWpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5XbRPOq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsxewkYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BFC1F000E9;
-	Tue, 21 Jul 2026 18:03:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5XbRPOq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3FD1F000E9;
+	Tue, 21 Jul 2026 18:03:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657002;
-	bh=6OlCpPDj2Q5MqvqkD8KBfpPv6xmWJcvduU6wpONRIng=;
+	s=korg; t=1784657005;
+	bh=PJBE1jwQSWb5wAIYxyvICYwYcNO3+GbjYCKXBetRyTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nsxewkYxqSDgAYi9ba88KNrvDm704FzWSMgqbEwBR47UZDgTvbK6RRZPNAkkfHf/a
-	 woYq10GVfxK9HCMWataiAdUGd+2PalTfNuOfp1cDKTPly3jV3LcdlH8njSHFqDpsWT
-	 8cq7gVumh7HFms5V1ybF4TMgRRXc8Kow6q0+q4bk=
+	b=y5XbRPOq6Yq7SJbVIwJzURhprim6tFxrSZXOuZPCGbs+0XCRSUJ6plwk7PiZfjaxa
+	 dOLYZTYYqWEatgDlb1MijCD9SRzVArC9QzTpvnrCLZ2q/QeATevsXCEYAU2kIl1vzr
+	 fUYWmFlr43Sx4uOaFKPs9EeKVNkqA5C9qOoX5tUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mihai Sain <mihai.sain@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Simon Trimmer <simont@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0598/1611] clk: at91: sam9x7: Fix gmac_gclk clock definition
-Date: Tue, 21 Jul 2026 17:11:54 +0200
-Message-ID: <20260721152528.836200665@linuxfoundation.org>
+Subject: [PATCH 6.18 0599/1611] soundwire: intel_ace2x: release bpt_stream when close it
+Date: Tue, 21 Jul 2026 17:11:55 +0200
+Message-ID: <20260721152528.859278290@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,62 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mihai Sain <mihai.sain@microchip.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit b6f6ebb0fb57ae6da622fb8fd4ebdc9ba1ae5756 ]
+[ Upstream commit 8a7fe10eec64bfb7cf4091bca540de4c55d56bfa ]
 
-According to the datasheet (see link section), table 12.1, instance ID 24
-is used for the GMAC generic clock, while instance ID 67 is reserved. Add
-the correct gmac_gclk entry at ID 24, aligned with the SoC clock layout,
-and remove the old misplaced entry at ID 67.
+The BPT stream was allocated in intel_ace2x_bpt_open_stream(), we need
+to free it in intel_ace2x_bpt_close_stream().
 
-Link: https://ww1.microchip.com/downloads/aemDocuments/documents/MPU32/ProductDocuments/DataSheets/SAM9X75-SIP-Series-Data-Sheet-DS60001827.pdf
-Fixes: 33013b43e271 ("clk: at91: sam9x7: add sam9x7 pmc driver")
-Signed-off-by: Mihai Sain <mihai.sain@microchip.com>
-Link: https://lore.kernel.org/r/20260309075329.1528-4-mihai.sain@microchip.com
-[claudiu.beznea: massaged the patch description]
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Fixes: 4c1ce9f37d8a8 ("soundwire: intel_ace2x: add BPT send_async/wait callbacks")
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Simon Trimmer <simont@opensource.cirrus.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Link: https://patch.msgid.link/20260514141625.1834216-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/at91/sam9x7.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/soundwire/intel_ace2x.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/at91/sam9x7.c b/drivers/clk/at91/sam9x7.c
-index 89868a0aeaba93..6b330c3e6bca84 100644
---- a/drivers/clk/at91/sam9x7.c
-+++ b/drivers/clk/at91/sam9x7.c
-@@ -569,6 +569,15 @@ static const struct {
- 		.pp_chg_id = INT_MIN,
- 	},
+diff --git a/drivers/soundwire/intel_ace2x.c b/drivers/soundwire/intel_ace2x.c
+index 5b73bbb73be6e0..63aef983614675 100644
+--- a/drivers/soundwire/intel_ace2x.c
++++ b/drivers/soundwire/intel_ace2x.c
+@@ -248,6 +248,7 @@ static void intel_ace2x_bpt_close_stream(struct sdw_intel *sdw, struct sdw_slave
+ 		dev_err(cdns->dev, "%s: remove slave failed: %d\n",
+ 			__func__, ret);
  
-+	{
-+		.n = "gmac_gclk",
-+		.id = 24,
-+		.pp = { "audiopll_divpmcck", "plla_div2pmcck", },
-+		.pp_mux_table = { 6, 8, },
-+		.pp_count = 2,
-+		.pp_chg_id = INT_MIN,
-+	},
-+
- 	{
- 		.n = "lcd_gclk",
- 		.id = 25,
-@@ -702,15 +711,6 @@ static const struct {
- 		.pp_count = 1,
- 		.pp_chg_id = INT_MIN,
- 	},
--
--	{
--		.n = "gmac_gclk",
--		.id = 67,
--		.pp = { "audiopll_divpmcck", "plla_div2pmcck", },
--		.pp_mux_table = { 6, 8, },
--		.pp_count = 2,
--		.pp_chg_id = INT_MIN,
--	},
- };
++	sdw_release_stream(cdns->bus.bpt_stream);
+ 	cdns->bus.bpt_stream = NULL;
+ }
  
- static void __init sam9x7_pmc_setup(struct device_node *np)
 -- 
 2.53.0
 
