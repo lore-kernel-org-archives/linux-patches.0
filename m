@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FA335C697;
-	Tue, 21 Jul 2026 21:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E181A2641CA;
+	Tue, 21 Jul 2026 21:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669104; cv=none; b=EN7IUn1dbzcnyq9DuQ7RIqWfXcBgqHN6Fp7ERuWbKOe/oXC3pJE6vVPsjiL7SFaREiqwh2w/cT+jcljDyNuB7+TSXRw40MLktmnpq9v1UUPXtG9nk0gqcYQSM7XH09hL9lin/A81re9fGtQmzUVS8Afhbao6pOjXWqVqC6p7DAc=
+	t=1784669107; cv=none; b=QOFXQeRT6zPd9fPVc72rBQevlcajTkVVv8mDuh8tfmK8q38kbSAMZOFP0hVfvNDQUgRNFFz6d+Eq5tjO3v+ljjgcoJoLvbX6z7mWGyu89+J4J167B/TJwNLYB+K3TsP/KL25vWzJQoHr3PPVAptQvKCOGzmFsEq5QRAuH9R1WGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669104; c=relaxed/simple;
-	bh=sfALCflVWgsmYUIcMoOqF450U5au/6MGQVa7wzljAug=;
+	s=arc-20240116; t=1784669107; c=relaxed/simple;
+	bh=qwUDlihVa0Y9xWXYy3Fi3zsFpEKFfJKn47RcVUWYQ54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LFGtff2z4siYp4c16kb4pd7/eOpogdouHkxBc5SX9dXMY3hCOaps5wtrsK0siEG0M5k1q2vKpk1uDX4VW9nS1BbSKFDeln0j1olBJAfvlAELJ5qJ1q6m0yG42IwgEGDbtbZC3c4vr3hVxFlk0jcve4QLsyUu5RJbegI70YZRTeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDkETIAT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xj43duvz6a6iWgKxdUoQa8gS/AlygDKP2yTCFvVLc6HMHNScNqT7p8pWKJ5+1uFXUeVoPdP/TcInS5dchQ2IFwSqg2jXuHyBFVn6JAwexAaWGyS+4kAWwfQ6QoPY8mM2xqouJEc3BijKwY99hQUQBZmI59iZw5OcFKrZeLiNCBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPCy7HBf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDkETIAT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F461F000E9;
-	Tue, 21 Jul 2026 21:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPCy7HBf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515921F000E9;
+	Tue, 21 Jul 2026 21:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669103;
-	bh=oInSeW7UPJOmOGtGNUUePWBGOu0sLvZCwnUcIiVIrEA=;
+	s=korg; t=1784669105;
+	bh=KmzCZe6Fkc5ZKRRMa0OUOUa8PzLPasu0S2it29/ad5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KDkETIATblBeaVctxiBASTlN9OGxLVxovS/XRlJrkgsFhzKqA24d4HLmsE04CzALc
-	 Niz18YgNNv/TV64g0rVkbaPOcLELoBrbqOVGjd1+XECiYIYkuUGdQHKrBHzWndK6gA
-	 ysvVUz8BavialSIVEVVclATCbGWBYaBY/B04YkTg=
+	b=BPCy7HBfpPVDylcR8gOoswfhv6h4N7fFiehHMCgoF0ghDcf+itHuXMXQJPoBHTqfA
+	 R2fMAZDVPRH0ra0hVyDK7gqMArJQip+SIVsvAvsX+s7Cz+ephykI6xSNEb7YmmstLW
+	 HSR8Z7x6+OFdzzn7QIjJi36XuM8cCdLecaNMhVJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0385/1067] RDMA/irdma: Fix OOB read during CQ MR registration
-Date: Tue, 21 Jul 2026 17:16:26 +0200
-Message-ID: <20260721152433.243596317@linuxfoundation.org>
+Subject: [PATCH 6.1 0376/1067] ocfs2: rebase copied fsdlm LVB pointers in locking_state
+Date: Tue, 21 Jul 2026 17:16:17 +0200
+Message-ID: <20260721152433.038228971@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,75 +58,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit 4385ddd654d90245eeb83b3cb539670ab5c85ba4 ]
+[ Upstream commit 93612d48fa42b3d1a637eb9279e15281c611c000 ]
 
-Sashiko pointed out an unrelated bug during a previous patch:
-https://sashiko.dev/#/patchset/20260512183852.614045-1-jmoroni%40google.com
+The locking_state debugfs iterator snapshots struct ocfs2_lock_res by
+value under ocfs2_dlm_tracking_lock and later formats that copy in
+ocfs2_dlm_seq_show().  That is fine for the inline fields, but the
+userspace fsdlm stack stores the LVB through lksb_fsdlm.sb_lvbptr.  Once
+the iterator drops the tracking lock, a copied non-NULL sb_lvbptr still
+points into the original lockres owner, so teardown can free that
+container before the debugfs dump walks the raw LVB bytes.
 
-This change fixes the bug by eliminating the cqmr->split field which
-was not being set properly and instead just checks the CQ resize
-feature flag directly.
+Rebase the copied sb_lvbptr to the copied l_lksb before dumping the raw
+LVB.  The seq snapshot already carries the inline LVB storage reserved in
+struct ocfs2_dlm_lksb, so the debugfs reader can dump the copied bytes
+without borrowing the original lockres lifetime.
 
-The cqmr->split field essentially tracks whether IRDMA_FEATURE_CQ_RESIZE
-is set, but it was not being set until CQ creation time, which is _after_
-CQ memory registration (the only other place where it is referenced).
+The buggy scenario involves two paths, with each column showing the order
+within that path:
 
-As a result, it would always be false during MR registration and would
-therefore cause irdma_handle_q_mem to populate cqmr->shadow even for GEN_2
-HW and beyond:
+locking_state reader:                  lockres teardown:
+1. ocfs2_dlm_seq_start()/next()        1. file release or another owner
+   copies struct ocfs2_lock_res           teardown reaches
+2. ocfs2_dlm_seq_show() formats           ocfs2_lock_res_free()
+   the copied row                      2. the lockres is removed from the
+3. ocfs2_dlm_lvb() follows the            tracking list
+   copied sb_lvbptr                   3. the owner frees the original
+                                          lockres container
 
-    cqmr->shadow = (dma_addr_t)arr[req->cq_pages];
+Validation reproduced this kernel report:
+KASAN slab-use-after-free in ocfs2_dlm_seq_show+0x1bd/0x430
+RIP: 0033:0x7f8ec4b1e29d
+The buggy address belongs to the object at ffff88810a1e0800 which belongs
+to the cache kmalloc-1k of size 1024
+The buggy address is located 368 bytes inside of freed 1024-byte region
+[ffff88810a1e0800, ffff88810a1e0c00)
+Read of size 1
+Call trace:
+  dump_stack_lvl+0x66/0xa0
+  print_report+0xce/0x630
+  ocfs2_dlm_seq_show+0x1bd/0x430 (fs/ocfs2/dlmglue.c:3137)
+  srso_alias_return_thunk+0x5/0xfbef5
+  __virt_addr_valid+0x19f/0x330
+  kasan_report+0xe0/0x110
+  seq_read_iter+0x29d/0x790
+  seq_read+0x20a/0x280
+  find_held_lock+0x2b/0x80
+  rcu_read_unlock+0x18/0x70
+  full_proxy_read+0x9e/0xd0
+  vfs_read+0x12c/0x590
+  ksys_read+0xd2/0x170
+  do_user_addr_fault+0x65a/0x890
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Allocated by task stack:
+  kasan_save_stack+0x33/0x60
+  kasan_save_track+0x14/0x30
+  __kasan_kmalloc+0xaa/0xb0
+  ocfs2_file_open+0x13e/0x300
+  do_dentry_open+0x233/0x7f0
+  vfs_open+0x5a/0x1b0
+  path_openat+0x66d/0x1540
+  do_file_open+0x186/0x2b0
+  do_sys_openat2+0xce/0x150
+  __x64_sys_openat+0xd0/0x140
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Freed by task stack:
+  kasan_save_stack+0x33/0x60
+  kasan_save_track+0x14/0x30
+  kasan_save_free_info+0x3b/0x60
+  __kasan_slab_free+0x5f/0x80
+  kfree+0x313/0x590
+  ocfs2_file_release+0x138/0x260
+  __fput+0x1df/0x4b0
+  fput_close_sync+0xd2/0x170
+  __x64_sys_close+0x55/0x90
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-The issue is that for GEN_2 and beyond, req->cq_pages may be exactly equal
-to iwmr->page_cnt and therefore equal to the size of arr, which would cause
-an OOB read by one.
-
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Link: https://patch.msgid.link/r/20260602214423.1315105-2-jmoroni@google.com
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/20260525041726.4112882-1-rollkingzzc@gmail.com
+Fixes: cf4d8d75d8ab ("ocfs2: add fsdlm to stackglue")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 4 ++--
- drivers/infiniband/hw/irdma/verbs.h | 1 -
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ fs/ocfs2/dlmglue.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 8258bb2218df6f..b43ce455050c66 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -2106,7 +2106,6 @@ static int irdma_create_cq(struct ib_cq *ibcq,
- 			}
- 			cqmr_shadow = &iwpbl_shadow->cq_mr;
- 			info.shadow_area_pa = cqmr_shadow->cq_pbl.addr;
--			cqmr->split = true;
- 		} else {
- 			info.shadow_area_pa = cqmr->shadow;
- 		}
-@@ -2480,7 +2479,8 @@ static int irdma_handle_q_mem(struct irdma_device *iwdev,
- 	case IRDMA_MEMREG_TYPE_CQ:
- 		hmc_p = &cqmr->cq_pbl;
+diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
+index d96cacf31f53d7..8fcf85e7eb924e 100644
+--- a/fs/ocfs2/dlmglue.c
++++ b/fs/ocfs2/dlmglue.c
+@@ -3133,6 +3133,22 @@ static void *ocfs2_dlm_seq_next(struct seq_file *m, void *v, loff_t *pos)
+  *	- Add last pr/ex unlock times and first lock wait time in usecs
+  */
+ #define OCFS2_DLM_DEBUG_STR_VERSION 4
++
++/*
++ * The debug iterator snapshots lockres by value, so a userspace-stack LVB
++ * pointer copied from the original lockres must be rebased to the copied
++ * lksb before the dump walks the raw bytes.
++ */
++static void ocfs2_dlm_seq_rebase_lvb(struct ocfs2_lock_res *lockres)
++{
++	if (!ocfs2_stack_supports_plocks())
++		return;
++
++	if (lockres->l_lksb.lksb_fsdlm.sb_lvbptr)
++		lockres->l_lksb.lksb_fsdlm.sb_lvbptr =
++			(char *)&lockres->l_lksb + sizeof(struct dlm_lksb);
++}
++
+ static int ocfs2_dlm_seq_show(struct seq_file *m, void *v)
+ {
+ 	int i;
+@@ -3193,6 +3209,7 @@ static int ocfs2_dlm_seq_show(struct seq_file *m, void *v)
+ 		   lockres->l_blocking);
  
--		if (!cqmr->split)
-+		if (!(iwdev->rf->sc_dev.hw_attrs.uk_attrs.feature_flags &
-+		      IRDMA_FEATURE_CQ_RESIZE))
- 			cqmr->shadow = (dma_addr_t)arr[req->cq_pages];
- 
- 		if (use_pbles)
-diff --git a/drivers/infiniband/hw/irdma/verbs.h b/drivers/infiniband/hw/irdma/verbs.h
-index 8809465020e135..ece2d66fd077af 100644
---- a/drivers/infiniband/hw/irdma/verbs.h
-+++ b/drivers/infiniband/hw/irdma/verbs.h
-@@ -62,7 +62,6 @@ struct irdma_hmc_pble {
- struct irdma_cq_mr {
- 	struct irdma_hmc_pble cq_pbl;
- 	dma_addr_t shadow;
--	bool split;
- };
- 
- struct irdma_qp_mr {
+ 	/* Dump the raw LVB */
++	ocfs2_dlm_seq_rebase_lvb(lockres);
+ 	lvb = ocfs2_dlm_lvb(&lockres->l_lksb);
+ 	for(i = 0; i < DLM_LVB_LEN; i++)
+ 		seq_printf(m, "0x%x\t", lvb[i]);
 -- 
 2.53.0
 
