@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFC443B48C;
-	Tue, 21 Jul 2026 21:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C19D3C0A02;
+	Tue, 21 Jul 2026 21:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670557; cv=none; b=TxLsW3Mcry8bFfrGDg9UfTaI0WPUlVVTh3BkYLoyts/fjipUb2te0VPveM8pwanhtDs5IE0RpJI3kQgn1VI36XWhYNsqC20OkjQupPJWqZcEGxwhAmyzfZGKgK+wnbjToxCGEJxUWhIy4PPp811YjRRpHq2DEaN/ACQ6T+SudM8=
+	t=1784670559; cv=none; b=QGavXLZmlEobfj5kh+Bak031RKEZsOxdGf/YyTZXV2vFEDAjpZQ7MN4deKFH7QSEPCRW16oVVl2GZRdEzhWVXsWOXrDFjQ04srP4YSeRtMPNFDCotnrMWbRdy0p3hzG5RLqz9OMVL0tWEpWsueWrAzjZ3g9wkJiB9jDGDyS9X+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670557; c=relaxed/simple;
-	bh=ttaNS0Ji27DCoLZqBNw9cLoDTpIR1P+qtsvFDHXTW90=;
+	s=arc-20240116; t=1784670559; c=relaxed/simple;
+	bh=Zs1xOHAHWrlhH2s+afMoGnKOVIzlVC1gRao1m8YdH2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Chdj4RbLPc9I1iCYs9P4jy3thJpA9GHT8ijBYMCW8Y+zgrwox6SUT2aaezCFC/FtbKe4i6R8N0+JIN+wKj+9TFfZTB5hVFraGciCLo0bNnw6BHJRkbLek9zIdflpyXloGTrWEByNGt7RdV3cV+q8HmmhfyoqtJ8VMNTsmKJTNqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1a1Ay8Cc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eiQTPOnXqvGOI+KZagPN1VQipp6+PN0U1Lr/EO5n8CYAvzzSHt7caLrpsFYNlXKWqfF0+7pOf8ymvC3xHMLdF55ZjDZCiNAnGKrGbgQ7UX4CIWMzaASFFm6TRSAyB6DYGeSXQkd/fCmdB1/Nz6v+yMJY5/xsn5CoIlHlUDzxZwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuHomw4R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1a1Ay8Cc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14BF71F00A3D;
-	Tue, 21 Jul 2026 21:49:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuHomw4R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8241F000E9;
+	Tue, 21 Jul 2026 21:49:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670555;
-	bh=dhs+yi2B7Jy/Ea+GxaL4gAVXYOzyC1cg7ZJGK6JixHg=;
+	s=korg; t=1784670558;
+	bh=UG9H2F73gdLbeOS7/y3lQ1stQ5aM/uFgMByisRF4WDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1a1Ay8CcF5myjMkwNBzWdtDY331ZYvkkfJD3yfX2RlmECjJv8GWMcR0935WhhXVxP
-	 i4AVc1rNxrsc7Qd8dv9W5tebTVoL2D/OLCCdYqg/zaltu94tF8T+Y6dA3MwL1Ls6E3
-	 R7WHqj0x6RL2WeFuFlfR5wOlqqnt5FV9VyRb8T/g=
+	b=vuHomw4Rt7RdoEzmu8HqZD5hHT4W6UVMr8/UX1XgZ+w/mBHqHV4h1Rbp6vIlUhpnS
+	 7T+be8es1Qe4HBHYaMCcmmph3rIRT8QRt6qlTchbOWIIIwbt97K+Yh27EmrG0awz0R
+	 ESFBRINYwnwi/4tZQRwd+LlRGkCicrIHhEJvAZsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Nenciarini <mnencia@kcore.it>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0975/1067] PCI: Skip Resizable BAR restore on read error
-Date: Tue, 21 Jul 2026 17:26:16 +0200
-Message-ID: <20260721152446.358747619@linuxfoundation.org>
+	Vladimir Zapolskiy <vz@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.1 0936/1067] mtd: rawnand: lpc32xx_mlc: fail DMA transfers on timeout
+Date: Tue, 21 Jul 2026 17:25:37 +0200
+Message-ID: <20260721152445.473070506@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,58 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Nenciarini <mnencia@kcore.it>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit ee7471fe968d210939be9046089a924cd23c8c3b ]
+commit dbf590b662695b16fbf5917ef129697be4410ea9 upstream.
 
-pci_restore_rebar_state() uses the Resizable BAR Control register to decide
-how many BARs to restore (nbars) and which BAR each iteration addresses
-(bar_idx).
+lpc32xx_xmit_dma() starts a DMA transfer and waits up to one second
+for its completion, but it ignores the wait result and returns success
+after unmapping the buffer.
 
-When a device does not respond, config reads typically return
-PCI_ERROR_RESPONSE (~0).  Both fields are 3 bits wide, so nbars and bar_idx
-both evaluate to 7, past the spec's valid ranges for both fields.
-pci_resource_n() then returns an unrelated resource slot, whose size is
-used to derive a nonsensical value written back to the Resizable BAR
-Control register.
+A timed out read can therefore return success with incomplete data, and
+a timed out write can continue the NAND operation without proof that the
+DMA payload reached the controller.
 
-Bail out if any Resizable BAR Control read returns PCI_ERROR_RESPONSE. No
-further BARs are touched, which is safe because a config read that returns
-PCI_ERROR_RESPONSE indicates the device is unreachable and restoration is
-pointless.
+Terminate the DMA channel on timeout, unmap the scatterlist through the
+existing cleanup path, and return -ETIMEDOUT to the NAND read/write
+callers. Initialize the shared cleanup-path result before using it for
+dmaengine_prep_slave_sg() failures.
 
-Fixes: d3252ace0bc6 ("PCI: Restore resized BAR state on resume")
-Signed-off-by: Marco Nenciarini <mnencia@kcore.it>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: 70f7cb78ec53 ("mtd: add LPC32xx MLC NAND driver")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/666cac19b5daa0ab0e0ab64454e76b4d24465dbd.1776429882.git.mnencia@kcore.it
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/rebar.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/mtd/nand/raw/lpc32xx_mlc.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/rebar.c
-+++ b/drivers/pci/rebar.c
-@@ -131,6 +131,9 @@ void pci_restore_rebar_state(struct pci_
- 		return;
+--- a/drivers/mtd/nand/raw/lpc32xx_mlc.c
++++ b/drivers/mtd/nand/raw/lpc32xx_mlc.c
+@@ -396,6 +396,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
+ 	struct lpc32xx_nand_host *host = nand_get_controller_data(chip);
+ 	struct dma_async_tx_descriptor *desc;
+ 	int flags = DMA_CTRL_ACK | DMA_PREP_INTERRUPT;
++	unsigned long time_left;
+ 	int res;
  
- 	pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
-+	if (PCI_POSSIBLE_ERROR(ctrl))
-+		return;
-+
- 	nbars = FIELD_GET(PCI_REBAR_CTRL_NBAR_MASK, ctrl);
+ 	sg_init_one(&host->sgl, mem, len);
+@@ -410,6 +411,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
+ 				       flags);
+ 	if (!desc) {
+ 		dev_err(mtd->dev.parent, "Failed to prepare slave sg\n");
++		res = -ENXIO;
+ 		goto out1;
+ 	}
  
- 	for (i = 0; i < nbars; i++, pos += 8) {
-@@ -138,6 +141,9 @@ void pci_restore_rebar_state(struct pci_
- 		int bar_idx, size;
+@@ -420,7 +422,13 @@ static int lpc32xx_xmit_dma(struct mtd_i
+ 	dmaengine_submit(desc);
+ 	dma_async_issue_pending(host->dma_chan);
  
- 		pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
-+		if (PCI_POSSIBLE_ERROR(ctrl))
-+			return;
-+
- 		bar_idx = ctrl & PCI_REBAR_CTRL_BAR_IDX;
- 		res = pci_resource_n(pdev, bar_idx);
- 		size = pci_rebar_bytes_to_size(resource_size(res));
+-	wait_for_completion_timeout(&host->comp_dma, msecs_to_jiffies(1000));
++	time_left = wait_for_completion_timeout(&host->comp_dma,
++						msecs_to_jiffies(1000));
++	if (!time_left) {
++		dmaengine_terminate_sync(host->dma_chan);
++		res = -ETIMEDOUT;
++		goto out1;
++	}
+ 
+ 	dma_unmap_sg(host->dma_chan->device->dev, &host->sgl, 1,
+ 		     DMA_BIDIRECTIONAL);
+@@ -428,7 +436,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
+ out1:
+ 	dma_unmap_sg(host->dma_chan->device->dev, &host->sgl, 1,
+ 		     DMA_BIDIRECTIONAL);
+-	return -ENXIO;
++	return res;
+ }
+ 
+ static int lpc32xx_read_page(struct nand_chip *chip, uint8_t *buf,
 
 
