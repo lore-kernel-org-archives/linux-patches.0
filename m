@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BEB35C6AC;
-	Tue, 21 Jul 2026 22:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA9744AB6A;
+	Tue, 21 Jul 2026 22:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673254; cv=none; b=i1gsWmi5A59JjuhdbXPEyoC1cWkkM/KpP4I957VJUXLZszCMg1vS03QSJ3fHbnP0rqMY+oC2fAXDEsbC9No3+OvDseFgzg+GtffE81JspSDmngVdasYIj5ENOiZort0e3lNyCEUwwLIjSb5IkNOBMfNqAd2I6u8EpcXMfanWxuA=
+	t=1784673257; cv=none; b=WMrRQHFnOdHVjCeOgNds3sw4THCcPfGLyK5U9+yikWF3gIAf9sIe1Ifu0R9kslNUTUXn7vPhSa52nAMw4hpR8jroGa5KZtMlYTfglMzGOSERoIrwI3KvjUrdP3kx103lEtTzsmtgFN20E4X4pHs0kPT4wjKXSR/iQS4zjDKS4Xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673254; c=relaxed/simple;
-	bh=ehDeAC+4T5KF81KrpRWSfgKfskoB0/ZSyc0um+ENS2U=;
+	s=arc-20240116; t=1784673257; c=relaxed/simple;
+	bh=A1t2HRifadxlxeQz190Du1Ipih6QO4bqBLBL5nucvgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FkZNNHr4JrL6ufHCLdrVTbrq7udmFS44B8VwmWbc1wLnN/QI8/uDjmWhsphiaGHw7l9LcHX4GLCYLq5Fn792TW3K5SbvJMqOUjGb7aZe3sX4+aSNjQlyoz6nSbcr+dBKXgtXruiFFALsMHUHcooBRfZN9shu8hGvpXD24gB4KEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B5IolPnd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f7rKznfPmiSILfkAjyGPFM4tUF6/VKDWv1XaADKn9/ctNxJzHkHksr0FSfxaie0jbjFrKvULoDRkqa3wwN/1gczirIfDRNxu/R2qug0+kUtS63cv9ZT9VKWrU7yKif1Oxsuz4D9OWgjSiCnBHRHyBbZoOfVBaCW4O53+oI+cnJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwqWqD7q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5IolPnd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189FF1F000E9;
-	Tue, 21 Jul 2026 22:34:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwqWqD7q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DB31F000E9;
+	Tue, 21 Jul 2026 22:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673253;
-	bh=vS95PIo93TcAd9lnpPZ/LYjItsfZ82aIW5RHgPoaxu4=;
+	s=korg; t=1784673256;
+	bh=qOoQ8nrP2MowJ6LL71Vp9/aymzbb+FwN/NWn0ju8X20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B5IolPndQkb5rtIiz9gBLSLmpqpngSZ9W6rSgmtv2fAgV1DbJaf5uk966JBYfMIMq
-	 x2M/JNvAKpxGIlCaaY9DADZ9BXNeSKEpqkkki6JgEZCqjyzycznMmQyYbR0Ih1iGgS
-	 rf4dJz02z7lPY3byBoJs+JHSapQBkTWU305HKhfQ=
+	b=pwqWqD7q8/G3MNDX4x5g4f0Oqgup1D6HpjySLeYzdcLKHW/zTuakb0v1jIFeyRFy/
+	 hkZPOjYblDz7HxEs5ySKXllb2H3aSbJVATZVPZk6dah6ZHYPwJT0T99i0clfWloDLC
+	 Hmvv1VtV0OVNRn+RtznXPjAvluQpAPLGFwGOOed4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+217eb327242d08197efb@syzkaller.appspotmail.com,
-	Tristan Madani <tristan@talencesecurity.com>,
+	syzbot+62f0f99d2f2bb8e3bbd7@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
 	Viacheslav Dubeyko <slava@dubeyko.com>
-Subject: [PATCH 5.10 094/699] hfs/hfsplus: zero-initialize buffer in hfs_bnode_read
-Date: Tue, 21 Jul 2026 17:17:33 +0200
-Message-ID: <20260721152357.822746676@linuxfoundation.org>
+Subject: [PATCH 5.10 095/699] nilfs2: reject CLEAN_SEGMENTS ioctl with out-of-range segment numbers
+Date: Tue, 21 Jul 2026 17:17:34 +0200
+Message-ID: <20260721152357.844711723@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,58 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit d67aadee19ffdf3cc8520c5a4f4d5b2916d30baf upstream.
+commit 0e7a690fe435f8d5ea3feb7c1d8d73ba7e8b8aa9 upstream.
 
-hfs_bnode_read() can return early without writing to the output buffer
-when is_bnode_offset_valid() fails or when check_and_correct_requested_
-length() corrects the length to zero.  Callers such as hfs_bnode_read_
-u16() and hfs_bnode_read_u8() pass stack-allocated buffers and use the
-result unconditionally, leading to KMSAN uninit-value reports.
+Syzbot reported a hung task in nilfs_transaction_begin() where multiple
+tasks performing chmod() on a nilfs2 mount blocked for over 143 seconds
+waiting to acquire ns_segctor_sem for read:
 
-Rather than initializing at each individual call site, zero the buffer
-at the start of hfs_bnode_read() before any validation checks.  This
-ensures all callers in both hfs and hfsplus get a deterministic zero
-value regardless of which early-return path is taken.
+  INFO: task syz.0.17:5918 blocked for more than 143 seconds.
+  Call Trace:
+   schedule+0x164/0x360
+   rwsem_down_read_slowpath+0x6d9/0x940
+   down_read+0x99/0x2e0
+   nilfs_transaction_begin+0x364/0x710 fs/nilfs2/segment.c:221
+   nilfs_setattr+0x124/0x2c0 fs/nilfs2/inode.c:921
+   notify_change+0xc1a/0xf40
+   chmod_common+0x273/0x4a0
+   do_fchmodat+0x12d/0x230
 
-Reported-by: syzbot+217eb327242d08197efb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=217eb327242d08197efb
-Tested-by: syzbot+217eb327242d08197efb@syzkaller.appspotmail.com
-Fixes: a431930c9bac ("hfs: fix slab-out-of-bounds in hfs_bnode_read()")
+The writer holding ns_segctor_sem was a concurrent
+NILFS_IOCTL_CLEAN_SEGMENTS caller, stuck inside printk while emitting
+per-element warnings from nilfs_sufile_updatev():
+
+   __nilfs_msg+0x373/0x450 fs/nilfs2/super.c:78
+   nilfs_sufile_updatev+0x21c/0x6d0 fs/nilfs2/sufile.c:186
+   nilfs_sufile_freev fs/nilfs2/sufile.h:93 [inline]
+   nilfs_free_segments fs/nilfs2/segment.c:1140 [inline]
+   nilfs_segctor_collect_blocks fs/nilfs2/segment.c:1261 [inline]
+   nilfs_segctor_do_construct+0x1f55/0x76c0
+   nilfs_clean_segments+0x3bd/0xa50
+   nilfs_ioctl_clean_segments fs/nilfs2/ioctl.c:922 [inline]
+   nilfs_ioctl+0x261f/0x2780
+
+The root cause is that user-supplied segment numbers are not validated
+before nilfs_clean_segments() begins doing work; the range check on
+each segnum is performed deep inside the call chain by
+nilfs_sufile_updatev(), which emits a nilfs_warn() per invalid entry
+while still holding the segctor lock and the sufile mi_sem.  Under load
+(repeated invocations across multiple mounts saturating the global
+printk path), the cumulative printk latency keeps ns_segctor_sem held
+long enough to trip the hung_task watchdog, blocking concurrent
+operations such as chmod() that need ns_segctor_sem for read.
+
+Fix by validating the contents of kbufs[4] in nilfs_clean_segments()
+immediately after acquiring ns_segctor_sem via nilfs_transaction_lock().
+Holding ns_segctor_sem serializes the check against
+nilfs_ioctl_resize(), which can modify ns_nsegments, so the validation
+uses a consistent value.  Out-of-range segment numbers are rejected
+with -EINVAL before any segment-cleaning work begins, so the bad
+entries never reach the per-element diagnostic path inside
+nilfs_sufile_updatev().
+
+Reported-by: syzbot+62f0f99d2f2bb8e3bbd7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=62f0f99d2f2bb8e3bbd7
+Tested-by: syzbot+62f0f99d2f2bb8e3bbd7@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20260505111300.3592757-3-tristmd@gmail.com
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Fixes: 071cb4b81987 ("nilfs2: eliminate removal list of segments")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfs/bnode.c     |    2 ++
- fs/hfsplus/bnode.c |    2 ++
- 2 files changed, 4 insertions(+)
+ fs/nilfs2/segment.c |   22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
---- a/fs/hfs/bnode.c
-+++ b/fs/hfs/bnode.c
-@@ -65,6 +65,8 @@ void hfs_bnode_read(struct hfs_bnode *no
- 	int bytes_to_read;
- 	void *vaddr;
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2505,12 +2505,33 @@ int nilfs_clean_segments(struct super_bl
+ 	struct nilfs_sc_info *sci = nilfs->ns_writer;
+ 	struct nilfs_transaction_info ti;
+ 	int err;
++	size_t i, nfreesegs = argv[4].v_nmembs;
++	__u64 *segnumv = kbufs[4];
  
-+	memset(buf, 0, len);
+ 	if (unlikely(!sci))
+ 		return -EROFS;
+ 
+ 	nilfs_transaction_lock(sb, &ti, 1);
+ 
++	/*
++	 * Validate segment numbers under ns_segctor_sem (held for write
++	 * by nilfs_transaction_lock above) so the check is serialized
++	 * against nilfs_ioctl_resize(), which can modify ns_nsegments.
++	 * Rejecting bad input here, before any segment-cleaning work
++	 * begins, avoids the per-element diagnostic path inside
++	 * nilfs_sufile_updatev() that would otherwise run under this
++	 * same lock and stall concurrent readers.
++	 */
++	for (i = 0; i < nfreesegs; i++) {
++		if (segnumv[i] >= nilfs->ns_nsegments) {
++			nilfs_err(sb,
++				 "Segment number %llu to be freed is out of range",
++				 (unsigned long long)segnumv[i]);
++			err = -EINVAL;
++			goto bail_unlock;
++		}
++	}
 +
- 	if (!is_bnode_offset_valid(node, off))
- 		return;
- 
---- a/fs/hfsplus/bnode.c
-+++ b/fs/hfsplus/bnode.c
-@@ -25,6 +25,8 @@ void hfs_bnode_read(struct hfs_bnode *no
- 	struct page **pagep;
- 	int l;
- 
-+	memset(buf, 0, len);
-+
- 	if (!is_bnode_offset_valid(node, off))
- 		return;
- 
+ 	err = nilfs_mdt_save_to_shadow_map(nilfs->ns_dat);
+ 	if (unlikely(err))
+ 		goto out_unlock;
+@@ -2551,6 +2572,7 @@ int nilfs_clean_segments(struct super_bl
+ 	sci->sc_freesegs = NULL;
+ 	sci->sc_nfreesegs = 0;
+ 	nilfs_mdt_clear_shadow_map(nilfs->ns_dat);
++ bail_unlock:
+ 	nilfs_transaction_unlock(sb);
+ 	return err;
+ }
 
 
