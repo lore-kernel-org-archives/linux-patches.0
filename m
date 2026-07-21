@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ADB946D543;
-	Tue, 21 Jul 2026 15:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533CB44607D;
+	Tue, 21 Jul 2026 15:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648856; cv=none; b=pv4An46vv46BUI4uV4ZXYl7m5l7okpkl5om/EkuCjY1G2FyngI1GmHHlLz6HhIb9z+AMZVtngHiP0bUzHnf4g5d1ZBExa2ZQZ4o7Paj4WJKmKDUYXTz2HuBi5jLRllDF/VFyFyd8c28pBVsbGyoSh9gEKVtAtYzp2H2P73VgqJQ=
+	t=1784648859; cv=none; b=PE5BZO0NDu0jX75vCRe/HXkp94E+Psj3ypNsd77zG7whtWks9n1jPB/GCVZOvwmbQlk2gTzZqoBmzAxtqdEpFBvyjNOOJUARcNY7g+AdSonf2yhTcMH1yAfFJvHM/CUKA4CMwbl4bTtTkZ0ezC+pEdCMLWw9zmunR/nW0MbmyXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648856; c=relaxed/simple;
-	bh=B9E1zDZjlV4bSMrX8zZ+6GAwFUrlPXrjOOZTOBL8cJk=;
+	s=arc-20240116; t=1784648859; c=relaxed/simple;
+	bh=UthCMxpUDtMxFfjGiyGSzDf34qc4mplL/4S9Ac5wHtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j3S8cpdv8+6tbNnCnSLXzy0A0LvZUAdO5qSBIw0USqVT0JZVnlkEyHm9SE4fonfxI2Gk2cPZMcujMhczCcKXk+U5YkRkDMP25PtIyaYZqUSz/HsGJZz+gowjyHpg4qQ8RR9IKc4zO64E3G7WtgOOlC1f+6g5bMWQ66IVxXGQCis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/uRYiQP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LlVWrNlO1yOjaxvbYN10cIx9c/Y953F9nMYjEe8Q7U6s2CxPVSedfVciaNJ8uyWxt57iwXRqMZW+zxmdGX0RD2XKdQf26+qzc4Fs2VEjVao5BBjbkEiFjgLd3/RYsZqekY9ibHk8SYq0KAcj4rPYWYcQM8YMgZlg1rbcgbzevG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7D+zIpc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/uRYiQP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73E91F000E9;
-	Tue, 21 Jul 2026 15:47:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7D+zIpc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71ECF1F000E9;
+	Tue, 21 Jul 2026 15:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648855;
-	bh=OcX5F4oxKqc6do81ZIy1NZCqF+avaMU3QBrjy5aae5A=;
+	s=korg; t=1784648857;
+	bh=HNqr9Zm6OdGyzKpPI6eI2UzlEjo8hDCyyn+vRaswvPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k/uRYiQPc1ixtSrL63QBoS5XGTBWu0yWAsVPg2Q/Y5PjS0rXGrZdsY9D7CP5RK7zI
-	 epZnpcF8Lm53m4qRCjzIhyzS/eyPhx8W3vOlJ1vmrFyDulSi10OjhXD5fxtDaIOJl3
-	 DD3QsD1R7+DDWpqNqZKU5ERaHXQjneBi7x6QOjfc=
+	b=Z7D+zIpciW0wWPFx59Gyk6Ctgl6rDQV4Bx7XpUQ6aEXDTLGUAHLaHU7qYorEX8eTu
+	 zQrfEEwBrNb9EkL2+Q3lBt2nfxc27z7IdWEVG06rmjzbCJoeLOaA2u84MI/1FksBHT
+	 4m5hafrNTNE+dmeKgrs4mkbAJIOkaZ2UnuouyDwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Thierry Reding <treding@nvidia.com>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Eliot Courtney <ecourtney@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0355/2077] arm64: tegra: Add #{address,size}-cells to Chromium-based /firmware
-Date: Tue, 21 Jul 2026 17:00:28 +0200
-Message-ID: <20260721152601.063083667@linuxfoundation.org>
+Subject: [PATCH 7.1 0356/2077] rust: devres: add static bound to Devres<T>
+Date: Tue, 21 Jul 2026 17:00:29 +0200
+Message-ID: <20260721152601.085977397@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,91 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Norris <briannorris@chromium.org>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit f0fbedccae9e16624977cca02216ab2399f5a3ab ]
+[ Upstream commit 016267b521b18529c977c9eca9597a1669c3d73c ]
 
-Chromium/Depthcharge bootloaders may dynamically add a few device nodes
-to a system's DTB under a /firmware node. A typical DT looks something
-like the following:
+Devres::new() registers a callback with the C devres subsystem via
+devres_node_add(). If the Devres is leaked (e.g. via
+core::mem::forget(), which is safe), its Drop impl never runs, and the
+devres release callback will revoke the inner Revocable on device
+unbind, which drops T in place. If T contains non-'static references,
+those may be dangling by that point.
 
-/ {
-        firmware {
-                ranges;
+Add a 'static bound to prevent storing types with borrowed data in
+Devres.
 
-                coreboot {
-                        compatible = "coreboot";
-                        reg = <...>;
-                        ...;
-                };
-        };
-};
-
-Notably, the /firmware node has an empty 'ranges', but does not have
-address/size-cells.
-
-Commit 6e5773d52f4a ("of/address: Fix WARN when attempting translating
-non-translatable addresses") started requiring #address-cells for a
-device's parent if we want to use the reg resource in a device node.
-This leads to errors like the following:
-
-[    7.763870] coreboot_table firmware:coreboot: probe with driver coreboot_table failed with error -22
-
-Add appropriate #{address,size}-cells to work around the problem.
-
-Note that Google has also patched the Depthcharge bootloader source to
-add {address,size}-cells [1], but bootloader updates are typically
-delivered only via Google OS updates. Not all users install Google
-software updates, and even if they do, Google may not produce updated
-binaries for all/older devices.
-
-[1] https://lore.kernel.org/all/20241209092809.GA3246424@google.com/
-    https://crrev.com/c/6051580 ("coreboot: Insert #address-cells and
-    #size-cells for firmware node")
-
-Closes: https://lore.kernel.org/all/aeKlYzTiL0OB1y3g@google.com/
-Fixes: 6e5773d52f4a ("of/address: Fix WARN when attempting translating non-translatable addresses")
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: 76c01ded724b ("rust: add devres abstraction")
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Reviewed-by: Eliot Courtney <ecourtney@nvidia.com>
+Link: https://patch.msgid.link/20260526000447.350558-1-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra132-norrin.dts | 5 +++++
- arch/arm64/boot/dts/nvidia/tegra210-smaug.dts  | 5 +++++
- 2 files changed, 10 insertions(+)
+ rust/kernel/devres.rs | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra132-norrin.dts b/arch/arm64/boot/dts/nvidia/tegra132-norrin.dts
-index 683ac124523b3b..1f5222d43e62c1 100644
---- a/arch/arm64/boot/dts/nvidia/tegra132-norrin.dts
-+++ b/arch/arm64/boot/dts/nvidia/tegra132-norrin.dts
-@@ -18,6 +18,11 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
+diff --git a/rust/kernel/devres.rs b/rust/kernel/devres.rs
+index 9e5f93aed20cf1..2e258d31a45cac 100644
+--- a/rust/kernel/devres.rs
++++ b/rust/kernel/devres.rs
+@@ -122,7 +122,7 @@ struct Inner<T> {
+ /// # Ok(())
+ /// # }
+ /// ```
+-pub struct Devres<T: Send> {
++pub struct Devres<T: Send + 'static> {
+     dev: ARef<Device>,
+     inner: Arc<Inner<T>>,
+ }
+@@ -184,7 +184,7 @@ mod base {
+     }
+ }
  
-+	firmware {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+	};
-+
- 	memory@80000000 {
- 		device_type = "memory";
- 		reg = <0x0 0x80000000 0x0 0x80000000>;
-diff --git a/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts b/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
-index f0b8c2c80aa502..a6d31650245d32 100644
---- a/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
-+++ b/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
-@@ -25,6 +25,11 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
+-impl<T: Send> Devres<T> {
++impl<T: Send + 'static> Devres<T> {
+     /// Creates a new [`Devres`] instance of the given `data`.
+     ///
+     /// The `data` encapsulated within the returned `Devres` instance' `data` will be
+@@ -349,7 +349,7 @@ unsafe impl<T: Send> Send for Devres<T> {}
+ // SAFETY: `Devres` can be shared with any task, if `T: Sync`.
+ unsafe impl<T: Send + Sync> Sync for Devres<T> {}
  
-+	firmware {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+	};
-+
- 	memory@80000000 {
- 		device_type = "memory";
- 		reg = <0x0 0x80000000 0x0 0xc0000000>;
+-impl<T: Send> Drop for Devres<T> {
++impl<T: Send + 'static> Drop for Devres<T> {
+     fn drop(&mut self) {
+         // SAFETY: When `drop` runs, it is guaranteed that nobody is accessing the revocable data
+         // anymore, hence it is safe not to wait for the grace period to finish.
 -- 
 2.53.0
 
