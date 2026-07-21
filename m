@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71805470120;
-	Tue, 21 Jul 2026 18:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7AE46D0A0;
+	Tue, 21 Jul 2026 18:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657027; cv=none; b=aTMF/YvKgme4P1BE08ky3UlF5ytQ85kZd+D4YS+6r8DEZ64Ro2fkRKN5v7NemzT4b7jqSFnMWNuue4HlKesR48x1WsXyvmdfYfxYEzxgLMtjdAEpzVg0Jm0ecLjJgqJJCoifFs1MM4mxZazU02cslEClQlspY9Q+v2r30zncX0c=
+	t=1784657030; cv=none; b=Y5UCJHGqgHJ02MJof5Rkky+ymX0iJjnX3JNT0dK8Z5G8NsHpWIv2R03Ef4evTpk2XCv2Q6rtw+xzuJ9JDIOTzdj7i+xHszjwsSEAfxKGW5KHkLKT36nhvqWDHV6t6zj0srCaD54oTLThI7MoySdW42iw9Vc0IoNBo7scY3PR0ZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657027; c=relaxed/simple;
-	bh=1eR53WbTuvQErwrI9POVW++mg79THPN+VI9MwzOxQnQ=;
+	s=arc-20240116; t=1784657030; c=relaxed/simple;
+	bh=4MsnCrgTK9WTDY20AAt6vfLre9bEe67sHj6uQF2siHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s1k0Zz+NqBKIW8Midx38lsTtoIgxEBaGWhnu3YJHXRz/gKFajRUkBy8Pm/tidKehf62LMtSdMXj6cpbZAJ5r1z2j3E0P1bYy9A0a9plqFznS6fyI5+T7EAcO+bryBsT3UT6un6z0vGYCFKFM3LZ3oQTMo/Lo2JAGdYFBCRMJHH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=He5wqujy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kBt1yz2pK8ngDCAOCuYrAgTkRr3oGta2KJ5FyJHFjW26P2V4+7YT6jxIRxUxAEvAB4mlOFIBIqUepdNZP8xdDeXYRVJzlvfEAiLNyI6NSEOL8aGd2eqKUUG8L+ixHCVTO64DLfETLsMLguFiGYLycop6dxVeJpGF3fzhX+fH4N4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Clw1EWny; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="He5wqujy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5571F00A3A;
-	Tue, 21 Jul 2026 18:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Clw1EWny"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0391F000E9;
+	Tue, 21 Jul 2026 18:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657026;
-	bh=hjAPi66d16LR3vkcB6yQsLoSImwoKJX3QUGnQLTzfaM=;
+	s=korg; t=1784657029;
+	bh=2bWa2YklDbgnvG98jIVEtCX6cEHkZIdYtLEOYmjDJPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=He5wqujyfsegurlHjvegTadlbKxoTTDi+GcVJikUC/g+g5GU1hhe2Bz8owS9Ip8Eh
-	 Ihhp/zRov/LE9EK+0t41g9IdmGC4ViaxFhNK/1nmvmdcN8TikOrBs7aECxfpcy0rMW
-	 g019luDcrB3xqlxPr4EJ/aMP5xiJilRv7yxnyXLM=
+	b=Clw1EWnyJNzeGHI6t990/vBvengU513d3wkNA0GOL2Y9VJiraq/+6gI/CgYzmxlGQ
+	 RfgQwv5NtZoX5h2edCMCNCvK9icHk5u/5qVUDNbnM9YNYXz59Tp9L1BvqH9xBRCduC
+	 rVx9ihT9UvWdT7H2Ijhdq8M/Cz5Cw7eDk0fIAMq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0566/1611] net/9p: fix race condition on rdma->state in trans_rdma.c
-Date: Tue, 21 Jul 2026 17:11:22 +0200
-Message-ID: <20260721152528.110762155@linuxfoundation.org>
+Subject: [PATCH 6.18 0557/1611] RDMA/bnxt_re: Free SRQ toggle page after firmware teardown
+Date: Tue, 21 Jul 2026 17:11:13 +0200
+Message-ID: <20260721152527.907160158@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -56,121 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit 7d54894a1ee265a72d70f7cae1da6cc774cccc71 ]
+[ Upstream commit 131e2918b9b0529687e67e2e58047304027f095a ]
 
-The rdma->state field is modified without holding req_lock in both
-recv_done() and p9_cm_event_handler(), while rdma_request() accesses
-the same field under the req_lock spinlock. This inconsistent locking
-creates a race condition:
+Free the toggle page only after firmware teardown completes so that
+an NQ interrupt arriving during bnxt_qplib_destroy_srq() won't write
+the toggle values to an already-freed page. Move free_page() after
+bnxt_qplib_destroy_srq().
 
-- recv_done() running in softirq completion context sets
-  rdma->state = P9_RDMA_FLUSHING without acquiring req_lock
-
-- p9_cm_event_handler() modifies rdma->state at multiple points
-  (ADDR_RESOLVED, ROUTE_RESOLVED, ESTABLISHED, CLOSED) without
-  req_lock
-
-- rdma_request() uses spin_lock_irqsave(&rdma->req_lock, flags) to
-  protect the read-modify-write of rdma->state
-
-The race can cause lost state transitions: recv_done() or the CM
-event handler could set state to FLUSHING/CLOSED while rdma_request()
-is concurrently checking or modifying state under the lock, leading to
-the FLUSHING transition being silently overwritten by CLOSING. This
-corrupts the connection state machine and can cause use-after-free on
-RDMA request objects during teardown.
-
-Fix by adding req_lock protection to all rdma->state modifications in
-recv_done() and p9_cm_event_handler(), matching the pattern already
-used in rdma_request(). Use spin_lock_irqsave/spin_unlock_irqrestore
-in the CM event handler since it can race with recv_done() which runs
-in softirq context.
-
-Tested with a kernel module that races two threads (simulating
-rdma_request and recv_done/CM handler) on rdma->state with proper
-locking: 5.5M+ FLUSHING writes over 27M iterations with 0 lost
-transitions.
-
-Fixes: 473c7dd1d7b5 ("9p/rdma: remove useless check in cm_event_handler")
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: GLM:GLM-5.1
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Message-ID: <20260529073933.77315-1-zhaoyz24@mails.tsinghua.edu.cn>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: 181028a0d84c ("RDMA/bnxt_re: Share a page to expose per SRQ info with userspace")
+Link: https://patch.msgid.link/r/20260615224751.232802-3-selvin.xavier@broadcom.com
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_rdma.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/9p/trans_rdma.c b/net/9p/trans_rdma.c
-index b84748baf9cbe3..d9f53f1da2c21a 100644
---- a/net/9p/trans_rdma.c
-+++ b/net/9p/trans_rdma.c
-@@ -240,25 +240,36 @@ p9_cm_event_handler(struct rdma_cm_id *id, struct rdma_cm_event *event)
- {
- 	struct p9_client *c = id->context;
- 	struct p9_trans_rdma *rdma = c->trans;
-+	unsigned long flags;
-+
- 	switch (event->event) {
- 	case RDMA_CM_EVENT_ADDR_RESOLVED:
-+		spin_lock_irqsave(&rdma->req_lock, flags);
- 		BUG_ON(rdma->state != P9_RDMA_INIT);
- 		rdma->state = P9_RDMA_ADDR_RESOLVED;
-+		spin_unlock_irqrestore(&rdma->req_lock, flags);
- 		break;
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index c1645de495a725..36b64e1cc0b0c2 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -1826,11 +1826,11 @@ int bnxt_re_destroy_srq(struct ib_srq *ib_srq, struct ib_udata *udata)
+ 	struct bnxt_re_dev *rdev = srq->rdev;
+ 	struct bnxt_qplib_srq *qplib_srq = &srq->qplib_srq;
  
- 	case RDMA_CM_EVENT_ROUTE_RESOLVED:
-+		spin_lock_irqsave(&rdma->req_lock, flags);
- 		BUG_ON(rdma->state != P9_RDMA_ADDR_RESOLVED);
- 		rdma->state = P9_RDMA_ROUTE_RESOLVED;
-+		spin_unlock_irqrestore(&rdma->req_lock, flags);
- 		break;
- 
- 	case RDMA_CM_EVENT_ESTABLISHED:
-+		spin_lock_irqsave(&rdma->req_lock, flags);
- 		BUG_ON(rdma->state != P9_RDMA_ROUTE_RESOLVED);
- 		rdma->state = P9_RDMA_CONNECTED;
-+		spin_unlock_irqrestore(&rdma->req_lock, flags);
- 		break;
- 
- 	case RDMA_CM_EVENT_DISCONNECTED:
--		if (rdma)
-+		if (rdma) {
-+			spin_lock_irqsave(&rdma->req_lock, flags);
- 			rdma->state = P9_RDMA_CLOSED;
-+			spin_unlock_irqrestore(&rdma->req_lock, flags);
-+		}
- 		c->status = Disconnected;
- 		break;
- 
-@@ -296,6 +307,7 @@ recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 	struct p9_req_t *req;
- 	int err = 0;
- 	int16_t tag;
-+	unsigned long flags;
- 
- 	req = NULL;
- 	ib_dma_unmap_single(rdma->cm_id->device, c->busa, client->msize,
-@@ -332,7 +344,10 @@ recv_done(struct ib_cq *cq, struct ib_wc *wc)
-  err_out:
- 	p9_debug(P9_DEBUG_ERROR, "req %p err %d status %d\n",
- 			req, err, wc->status);
--	rdma->state = P9_RDMA_FLUSHING;
-+	spin_lock_irqsave(&rdma->req_lock, flags);
-+	if (rdma->state < P9_RDMA_FLUSHING)
-+		rdma->state = P9_RDMA_FLUSHING;
-+	spin_unlock_irqrestore(&rdma->req_lock, flags);
- 	client->status = Disconnected;
- 	goto out;
- }
+-	if (rdev->chip_ctx->modes.toggle_bits & BNXT_QPLIB_SRQ_TOGGLE_BIT) {
+-		free_page((unsigned long)srq->uctx_srq_page);
++	if (rdev->chip_ctx->modes.toggle_bits & BNXT_QPLIB_SRQ_TOGGLE_BIT)
+ 		hash_del(&srq->hash_entry);
+-	}
+ 	bnxt_qplib_destroy_srq(&rdev->qplib_res, qplib_srq);
++	if (rdev->chip_ctx->modes.toggle_bits & BNXT_QPLIB_SRQ_TOGGLE_BIT)
++		free_page((unsigned long)srq->uctx_srq_page);
+ 	ib_umem_release(srq->umem);
+ 	atomic_dec(&rdev->stats.res.srq_count);
+ 	return 0;
 -- 
 2.53.0
 
