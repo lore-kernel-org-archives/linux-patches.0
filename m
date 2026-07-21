@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7963227BB5;
-	Tue, 21 Jul 2026 18:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB73227BB5;
+	Tue, 21 Jul 2026 18:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658022; cv=none; b=Na4ncMOb6QTGs6f4G25GESfAbXohfrJ0pk1p0YadvnSJvexy76elne6p6h394+HDcnJwwRxd2Nl021idZFCY0W7DbuPVHCTjPr2ncupy+DTDr7qIt2GxL7hJ5SAi84MB7hjSg2jdyb5UXGYIYXdCzWXVV+d22/0vnooYKPLaTIw=
+	t=1784658025; cv=none; b=JHWb6eHlIZTxgSCb/B9jSz1cUeggQnYLGLEdmh89M2NlgLtbXqkEXbe+7Rk/ePXcyffGeVu6OeLOHhoyTCRkdiPdHBIdxhD8iHPKMf7bq4UWzumEST2OX1yiQbI5ZRCpmcQK6hEHT6wDrX4MlNZVEKXka7bnzZYhSZCRqI0pQ/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658022; c=relaxed/simple;
-	bh=g9ZfaopfQI/axJvqIADcjxFmBufHqqm9fs4QmTZQKB4=;
+	s=arc-20240116; t=1784658025; c=relaxed/simple;
+	bh=wVD7L/nddYAgHzNilHKM9ZL/hGJTwzrAqxIH6YgWyU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I+n3yOBQ/IrNO46R+/A/GGMMHkWukxo63P6Ej5BuPiZLTTFCiVSBcf8GN1a2B5l27mQKc9L/CpTR6gWELUVcaOues6+CTd3b1z0Dy4MBMkvpLg7DHdQXAVJIx6FZg+dUbxvoSRT7c97ZVH/bLqDoi3Es0D7Cm55Cj29Wrq1rlfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fO3nKUv3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JmSIh/QjDVYIlxCTNApvv90TO7ZdwUjDV6SBwYmlxbDXQLoD0M2GiJ02DDBN6uy7t+gaBsmAlHdoGR4sR9p1PDcnO3KUU/1kTVcQtKHdYq/GCAe2BpRwF5RD/9FNJGyvhQpdCv5n+QQd4eEnjVf8DWripT49bVlV0Sjp9IbZKIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ob1W1Pan; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fO3nKUv3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198001F000E9;
-	Tue, 21 Jul 2026 18:20:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ob1W1Pan"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B368F1F000E9;
+	Tue, 21 Jul 2026 18:20:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658021;
-	bh=OA4NcvBn0eh8ezpjj+68qLnm3Chh5OCdnTC3LhZA4Us=;
+	s=korg; t=1784658024;
+	bh=2qOk9T8oDjFwOi/r3vNFcuwTvDxqTZgnK1GfbZwx9Vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fO3nKUv385yrKGO6TyUhpWcmqGYhHPsPaw4nI67ufiXQJlJmZFhgqj5LecsTfsxGz
-	 hm6nfLInSB08M1Ecxc7Xdg9HGH5NwRGmL9Xag4qxIfpcVkTfMwqf+DDpm7U3b2k3ah
-	 Q2/q18WhkUEdLFt+evJZc9oXy3BzTEjd/d9KbFbw=
+	b=ob1W1PanCA1IjJuuPaKcAJhFGWKQPzerf3nMrj4W/wg+nIOt1vZnHHFA5+t7N6xq7
+	 ZQWYq/FD/h/3sVEfYv0OCLLcmLWL2IBA2L/rtNmKosW7RJvl3dlw3WFUtEzfORnVI7
+	 QLuxVhnfspltyjuymFxl61g+D4ZZ58cIbZn/IYrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Xin Long <lucien.xin@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Longjun Tang <tanglongjun@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0987/1611] sctp: fix addr_wq_timer race in sctp_free_addr_wq()
-Date: Tue, 21 Jul 2026 17:18:23 +0200
-Message-ID: <20260721152537.592745518@linuxfoundation.org>
+Subject: [PATCH 6.18 0988/1611] virtio_net: disable cb when NAPI is busy-polled
+Date: Tue, 21 Jul 2026 17:18:24 +0200
+Message-ID: <20260721152537.615832118@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,47 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Longjun Tang <tanglongjun@kylinos.cn>
 
-[ Upstream commit 976c19de0f22a857ba0112f39635f8fd7a257568 ]
+[ Upstream commit 1eb8fc67ca41db71c90866ff76c990d85247daef ]
 
-sctp_free_addr_wq() previously removed addr_wq_timer using timer_delete()
-while holding addr_wq_lock. However, timer_delete() does not guarantee that
-a currently running timer handler has completed.
+When busy-poll is active, napi_schedule_prep() returns false in
+virtqueue_napi_schedule(), so virtqueue_disable_cb() is skipped.
+The device may keep firing irqs until reaches virtqueue_napi_complete().
+Under load (received == budget), it will lead to a large number
+of spurious interrupts.
 
-This allows a race with sctp_addr_wq_timeout_handler(), where the handler
-may still run after addr_waitq has been freed, acquire addr_wq_lock, and
-access freed memory, leading to a use-after-free.
+Fix it by disabling the callback at the virtnet_poll() entry.
+This keeps the callback off while we poll and it is re-enabled by
+virtqueue_napi_complete() when going idle.
 
-Fix this by calling timer_shutdown_sync() before taking addr_wq_lock.  This
-guarantees that any in-flight timer handler has finished and prevents the
-timer from being re-armed during teardown, making subsequent cleanup safe.
-
-Fixes: 4db67e808640 ("sctp: Make the address lists per network namespace")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/5dc95f295bdb5c3f60e880dd9aa5112dc5c071cc.1782757874.git.lucien.xin@gmail.com
+Fixes: ceef438d613f ("virtio_net: remove custom busy_poll")
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Longjun Tang <tanglongjun@kylinos.cn>
+Link: https://patch.msgid.link/20260629024230.37325-1-lange_tang@163.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/protocol.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/virtio_net.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/sctp/protocol.c b/net/sctp/protocol.c
-index 6ce58fc95ef512..bbeff25185b176 100644
---- a/net/sctp/protocol.c
-+++ b/net/sctp/protocol.c
-@@ -695,8 +695,9 @@ static void sctp_free_addr_wq(struct net *net)
- 	struct sctp_sockaddr_entry *addrw;
- 	struct sctp_sockaddr_entry *temp;
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index dbdba0a42efe9d..d2fe26bfaccd0a 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3128,6 +3128,9 @@ static int virtnet_poll(struct napi_struct *napi, int budget)
+ 	unsigned int xdp_xmit = 0;
+ 	bool napi_complete;
  
-+	timer_shutdown_sync(&net->sctp.addr_wq_timer);
++	if (budget)
++		virtqueue_disable_cb(rq->vq);
 +
- 	spin_lock_bh(&net->sctp.addr_wq_lock);
--	timer_delete(&net->sctp.addr_wq_timer);
- 	list_for_each_entry_safe(addrw, temp, &net->sctp.addr_waitq, list) {
- 		list_del(&addrw->list);
- 		kfree(addrw);
+ 	virtnet_poll_cleantx(rq, budget);
+ 
+ 	received = virtnet_receive(rq, budget, &xdp_xmit);
 -- 
 2.53.0
 
