@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AD82DC76A;
-	Tue, 21 Jul 2026 16:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55AE22DC76A;
+	Tue, 21 Jul 2026 16:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649626; cv=none; b=GHLIMxjyB56HXJqXoYtHt2h92ovf5pD+FWZB3aPSISWNWwOkzqxDq9uN8avK0oFtAdgR/dujqKyD5jjQ39lnzzdsA4fX9tVoGOdyhzpyOHLvC2XFnYeysH52Apt81kaYTy6CRRG7ITyulZiIHH595Daq0QpsKPchGSOVBGslVAU=
+	t=1784649629; cv=none; b=r8CsDlVy1VCv70NaZUA87ZHg5QjbxU2bIfzB87NSzmCl836aEppINMYhP8+hqvjmM5zVKllKcwZn2yMVQBAZiRF6thQEFc2jqz3cAGfaF+xZ/8qBX9lj1aoCGZFnMrS5JKnry9MHRoLKPkqPdPkSiLvfIJtHGyPyqpARWbY7l54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649626; c=relaxed/simple;
-	bh=mGafDrVEKjcbyXxYdbjqBvE85G+7mjY9GuolC7ZjnmY=;
+	s=arc-20240116; t=1784649629; c=relaxed/simple;
+	bh=gd+ZT1YXa9aykUs5HcdDaokPJCVlqhaL7LefBps58LY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mgefo6em3zNnXMLA3ukiWYLZYwSJr9cw4lCdeUmu6uINHHS4FLp7GxOZpXPSEVVtaYvMkUEIJxME4cOM49NvXtTMoTiQ640DNeUo3GVYr3/Nh2bbcVZE6XW67DqxhukKi8HGzW+Tka8uFlrt2dTIxFqaF1KgIOvaGq8gkbIsRJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+wj7Zhx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j324FyqAHpIboQUycD6ppMQ/RVozoj45Lf+GDA9JXqO4zZvj5tt5Qa/Wc6M25jAZQhA8VThbFAVehx/gjXuQoSUcuvlJF2If+WLjtYwfS1J/nYHi8iHIofvgg9YsyGZMNGW1H+BrNPHimMUqmrx30OdARVLQ3kD7bGQgImG9sg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hp04eDch; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+wj7Zhx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241141F000E9;
-	Tue, 21 Jul 2026 16:00:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hp04eDch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD5E1F000E9;
+	Tue, 21 Jul 2026 16:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649625;
-	bh=E9txtRjRAj6R8GGLoYuzyexwwhJDXqto2jkpIGyYskM=;
+	s=korg; t=1784649628;
+	bh=ajkKO+qAEa2Q7BdbdR6tvBYMnxXjeVpb6+vLDBmOAvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n+wj7ZhxVW8ZdqZkXCbUau1+4TaUrahTX3HYYxlt+CpiQ41A4Mcbtj3Vdzvx7hPVX
-	 l7OV+2/Q/EpiU/acjk4QffDoMC0fxsYd3VpNtpYk92fDxsrKCpI53HS+YLvT9DyjK3
-	 ZCrOpWFwfv+R8p7g0ZnW/IdXyEkbbGQI1rhFc4UY=
+	b=Hp04eDchGVjTJ3GfJNCE7MouLrK0rUjMs6X9J5jUZi+10kGKCYb2O/cgn2MtcA/lT
+	 q8ZYCmIEddweJut44A1ix88QOk4TOD1Rx/pyDvn046EqOb3j3UbwLTaPQRan4OHHKz
+	 ZOb7ZrUupxJKVdZMec8SfKal+P36AKA82usx7eB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Louis Scalbert <louis.scalbert@6wind.com>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0641/2077] ASoC: cs35l56: Cleanup if component_probe fails
-Date: Tue, 21 Jul 2026 17:05:14 +0200
-Message-ID: <20260721152607.926526706@linuxfoundation.org>
+Subject: [PATCH 7.1 0650/2077] bonding: 3ad: fix carrier when no usable slaves
+Date: Tue, 21 Jul 2026 17:05:23 +0200
+Message-ID: <20260721152608.140226570@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,82 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Louis Scalbert <louis.scalbert@6wind.com>
 
-[ Upstream commit a0df7522dfb098d56b42560247082d6f5a8581dd ]
+[ Upstream commit 0bd695db23c6262e9cb980017a6273925172ec5b ]
 
-If cs35l56_component_probe() fails, call cs35l56_component_remove() to
-clean up.
+Apply the "lacp_strict" configuration from the previous commit.
 
-All the cleanup in cs35l56_component_remove() is the same cleanup that
-would need to be done (at least partially) if cs35l56_component_probe()
-fails. So calling cs35l56_component_remove() avoids convoluted cleanup
-gotos and duplicated code in cs35l56_component_probe().
+"lacp_strict" mode "on" asserts that the bonding master carrier is up
+only when at least 'min_links' slaves are in the Collecting_Distributing
+state.
 
-The only action in cs35l56_component_remove() that is nominally
-dependent on having completed the component_probe() action is the call
-to wm_adsp2_component_remove(). Though it is currently safe to call that
-even if wm_adsp2_component_probe() was not called. However,
-wm_adsp2_component_probe() has been trivially updated to check itself
-whether it needs to cleanup.
-
-Fixes: e49611252900 ("ASoC: cs35l56: Add driver for Cirrus Logic CS35L56")
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260610093432.557375-4-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 655f8919d549 ("bonding: add min links parameter to 802.3ad")
+Signed-off-by: Louis Scalbert <louis.scalbert@6wind.com>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20260603150331.1919611-5-louis.scalbert@6wind.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l56.c | 13 ++++++++++++-
- sound/soc/codecs/wm_adsp.c |  7 +++++++
- 2 files changed, 19 insertions(+), 1 deletion(-)
+ drivers/net/bonding/bond_3ad.c     | 26 +++++++++++++++++++++++---
+ drivers/net/bonding/bond_options.c |  1 +
+ 2 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
-index 3ab5395f15bb25..3641ac1378c7c2 100644
---- a/sound/soc/codecs/cs35l56.c
-+++ b/sound/soc/codecs/cs35l56.c
-@@ -1326,7 +1326,7 @@ VISIBLE_IF_KUNIT int cs35l56_set_fw_name(struct snd_soc_component *component)
- }
- EXPORT_SYMBOL_IF_KUNIT(cs35l56_set_fw_name);
- 
--static int cs35l56_component_probe(struct snd_soc_component *component)
-+static int _cs35l56_component_probe(struct snd_soc_component *component)
- {
- 	struct snd_soc_dapm_context *dapm = snd_soc_component_to_dapm(component);
- 	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(component);
-@@ -1426,6 +1426,17 @@ static void cs35l56_component_remove(struct snd_soc_component *component)
- 	cs35l56->component = NULL;
+diff --git a/drivers/net/bonding/bond_3ad.c b/drivers/net/bonding/bond_3ad.c
+index 985ef66dc3331e..51d86e3d34db87 100644
+--- a/drivers/net/bonding/bond_3ad.c
++++ b/drivers/net/bonding/bond_3ad.c
+@@ -745,6 +745,21 @@ static void __set_agg_ports_ready(struct aggregator *aggregator, int val)
+ 	}
  }
  
-+static int cs35l56_component_probe(struct snd_soc_component *component)
++static int __agg_usable_ports(struct aggregator *agg)
 +{
-+	int ret;
++	struct port *port;
++	int valid = 0;
 +
-+	ret = _cs35l56_component_probe(component);
-+	if (ret < 0)
-+		cs35l56_component_remove(component);
++	for (port = agg->lag_ports; port;
++	     port = port->next_port_in_aggregator) {
++		if (port->actor_oper_port_state & LACP_STATE_COLLECTING &&
++		    port->actor_oper_port_state & LACP_STATE_DISTRIBUTING)
++			valid++;
++	}
 +
-+	return ret;
++	return valid;
 +}
 +
- static int cs35l56_set_bias_level(struct snd_soc_component *component,
- 				  enum snd_soc_bias_level level)
+ static int __agg_active_ports(struct aggregator *agg)
  {
-diff --git a/sound/soc/codecs/wm_adsp.c b/sound/soc/codecs/wm_adsp.c
-index ca630c9948e49a..baa75e7ff53ba9 100644
---- a/sound/soc/codecs/wm_adsp.c
-+++ b/sound/soc/codecs/wm_adsp.c
-@@ -1170,7 +1170,14 @@ EXPORT_SYMBOL_GPL(wm_adsp2_component_probe);
- 
- int wm_adsp2_component_remove(struct wm_adsp *dsp, struct snd_soc_component *component)
- {
-+	if (!dsp)
-+		return 0;
-+
-+	if (!dsp->component)
-+		return 0;
-+
- 	cs_dsp_cleanup_debugfs(&dsp->cs_dsp);
-+	dsp->component = NULL;
+ 	struct port *port;
+@@ -1179,10 +1194,10 @@ static void ad_mux_machine(struct port *port, bool *update_slave_arr)
+ 		switch (port->sm_mux_state) {
+ 		case AD_MUX_DETACHED:
+ 			port->actor_oper_port_state &= ~LACP_STATE_SYNCHRONIZATION;
+-			ad_disable_collecting_distributing(port,
+-							   update_slave_arr);
+ 			port->actor_oper_port_state &= ~LACP_STATE_COLLECTING;
+ 			port->actor_oper_port_state &= ~LACP_STATE_DISTRIBUTING;
++			ad_disable_collecting_distributing(port,
++							   update_slave_arr);
+ 			port->ntt = true;
+ 			break;
+ 		case AD_MUX_WAITING:
+@@ -2107,6 +2122,7 @@ static void ad_disable_distributing(struct port *port, bool *update_slave_arr)
+ 			  port->actor_port_number,
+ 			  aggregator->aggregator_identifier);
+ 		__disable_distributing_port(port);
++		bond_3ad_set_carrier(port->slave->bond);
+ 		/* Slave array needs an update */
+ 		*update_slave_arr = true;
+ 	}
+@@ -2130,6 +2146,7 @@ static void ad_enable_collecting_distributing(struct port *port,
+ 			  port->actor_port_number,
+ 			  aggregator->aggregator_identifier);
+ 		__enable_port(port);
++		bond_3ad_set_carrier(port->slave->bond);
+ 		/* Slave array needs update */
+ 		*update_slave_arr = true;
+ 		/* Should notify peers if possible */
+@@ -2153,6 +2170,7 @@ static void ad_disable_collecting_distributing(struct port *port,
+ 			  port->actor_port_number,
+ 			  aggregator->aggregator_identifier);
+ 		__disable_port(port);
++		bond_3ad_set_carrier(port->slave->bond);
+ 		/* Slave array needs an update */
+ 		*update_slave_arr = true;
+ 	}
+@@ -2832,7 +2850,9 @@ int bond_3ad_set_carrier(struct bonding *bond)
+ 	active = __get_active_agg(&(SLAVE_AD_INFO(first_slave)->aggregator));
+ 	if (active) {
+ 		/* are enough slaves available to consider link up? */
+-		if (__agg_active_ports(active) < bond->params.min_links) {
++		if ((bond->params.lacp_strict ? __agg_usable_ports(active)
++					: __agg_active_ports(active)) <
++		    bond->params.min_links) {
+ 			if (netif_carrier_ok(bond->dev)) {
+ 				netif_carrier_off(bond->dev);
+ 				goto out;
+diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
+index d358b831df7730..94b7b0851f16ae 100644
+--- a/drivers/net/bonding/bond_options.c
++++ b/drivers/net/bonding/bond_options.c
+@@ -1706,6 +1706,7 @@ static int bond_option_lacp_strict_set(struct bonding *bond,
+ 	netdev_dbg(bond->dev, "Setting LACP fallback to %s (%llu)\n",
+ 		   newval->string, newval->value);
+ 	bond->params.lacp_strict = newval->value;
++	bond_3ad_set_carrier(bond);
  
  	return 0;
  }
