@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C1D3ED3B2;
-	Tue, 21 Jul 2026 18:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4A83EEAE2;
+	Tue, 21 Jul 2026 18:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659890; cv=none; b=q5jToKJoW2+LqUPWIg4h67mPvIzBUCkO3AC0uSZlKKVoZjJW6ua5vMtKRFkuyUjGBhavPh3lkPkWs2ovfl97PrNahN41LtpJ0VvgfuKGl6BlHLvZ9o9j1gZ5wYlzL7UkEox8FTUaZKmHpV/2/XkXe9lk1B7ErjQyA1XEDAsZZ3c=
+	t=1784659891; cv=none; b=aPhQV7vhpXnqTY30U46BkOBksK++Hp0BtutIY5MN8NHSPNNi/fo/T7axvKiiGd7K8ymMqVAuRhuaguG56DjotmQAfib/2vXBLsE1Fl+ATQsLmCbObyFhFfV94l8AnlmBInHUxQT6iRy/lkpAuq8yfmNgPta4la2CIcUala6eUJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659890; c=relaxed/simple;
-	bh=dDwQyHnPzh9BRIU1SEP7FfEoRrgFPgvTQkT2HGG/hGE=;
+	s=arc-20240116; t=1784659891; c=relaxed/simple;
+	bh=wlBrpe0m5IVdOqC58T4QjuShcAaPM/MPcY7CcU4lf84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4Lhr4dfp5QjkiW6yIhXfBti5veNXfmS9GTew4AzMkxc3UOWWqlT393lAyFwpJU169YQOc81wiYN9tiI7UIvtuiTyd4lEdLrRA+TL0/38eqc5bE8wJXu2+r77fJCmq08d2Tc/pnfNp+OjpEqQbkBeslZJCJC1Cukw6N4C6LBEJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=liGVlzwZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VjOi69/y4f6P3MAV2Ms1hgi5by98eAHQfSojayKC1a9T9RUT5kWWojID1K+pZeBWjcN6I/Cj3K+6U+gM0dASyzt0Ab5lUa+HbuDEGGKMEbv5Sb9jv7cJkfyJ1+y7jWLUmYLJpWIe1fAvZNxHYpMdgWEvX9N9H2cvvxYEKajNH2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nddy0cMP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="liGVlzwZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43821F000E9;
-	Tue, 21 Jul 2026 18:51:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nddy0cMP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB1B1F00A3D;
+	Tue, 21 Jul 2026 18:51:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659884;
-	bh=2+Oo1CVAWbapx5BoKJs509Mwll1IgLluXQkAIl9cTUs=;
+	s=korg; t=1784659889;
+	bh=pzRMluXAYM/7UNyPtruDC/Icon6rAd88ArK6gr8kPU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=liGVlzwZ+f5Io5aszpNatuKnX+w8M++wVm0tQZxfvIbAfEKJNfP3TgW4GnLAwFF+v
-	 aN9exGJjgTrh2I3/oJdpFSj9Cpa9CcU7yDGVybho46ODTBUT7R5FM/HmlFyDiLCwES
-	 lD5sx4yV4fp5tqVLlhIdB/gh1Bw1O1ryCmOCtO/I=
+	b=nddy0cMPW0fcLD7F5rQ6qDBrJrCoPiyYoldjGg+DByq9eMzYI7Xbu397cXQ0Y71yL
+	 HQy/JvYJp0xoBjDqUhcVGz9Y8YJfObjVQ+UmUfwg1skEq6hj2fs8DEl8CNpwvMbZzJ
+	 pTnsKoXcNnVHlMHHnAz4+kspG77iuSUrBeeAM/7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0769/2077] kcm: use WRITE_ONCE() when changing lower socket callbacks
-Date: Tue, 21 Jul 2026 17:07:22 +0200
-Message-ID: <20260721152610.933285157@linuxfoundation.org>
+Subject: [PATCH 7.1 0771/2077] ALSA: seq: avoid stale FIFO cells during resize
+Date: Tue, 21 Jul 2026 17:07:24 +0200
+Message-ID: <20260721152610.980301280@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,59 +51,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 47186409c092cd7dd70350999186c700233e854d ]
+[ Upstream commit e546128291f8d688dcb931827e2efd2aa6c0734d ]
 
-kcm_attach() replaces a live lower TCP socket's sk_data_ready and
-sk_write_space callbacks with KCM handlers, and kcm_unattach() restores
-them later. Those callback-pointer updates are still plain stores even
-though the same fields can be read and invoked concurrently on other
-CPUs.
+snd_seq_fifo_resize() still needs to publish the replacement pool
+before it waits for FIFO users. A blocking snd_seq_read() holds
+f->use_lock while it sleeps, so concurrent senders must be able to
+queue to the new pool and wake that reader instead of failing against a
+closing old pool.
 
-If another CPU observes an older callback snapshot after the live field
-has already been restored, callback execution can run with a mismatched
-target and sk_user_data state, leading to stale or misdirected wakeups.
+However, snd_seq_fifo_event_in() duplicates an event before it takes
+f->lock, and snd_seq_read() can dequeue a cell and later call
+snd_seq_fifo_cell_putback() if copy_to_user() or
+snd_seq_expand_var_event() fails. If resize swaps f->pool and detaches
+oldhead in between, either path can relink an old-pool cell after the
+snapshot. That stale cell sits outside the drained oldhead list, keeps
+oldpool->counter elevated, and can leave snd_seq_pool_delete() waiting
+for the retired pool to drain.
 
-Use WRITE_ONCE() for the callback replacement and restore operations so
-these shared callback fields follow the same visibility contract already
-established by the earlier 4022 fixes.
+Keep the existing swap-before-wait ordering in snd_seq_fifo_resize(),
+but reject stale cells before any FIFO relink. Revalidate event-in cells
+under f->lock and retry them against the published replacement pool, and
+free stale putback cells instead of linking them back into the FIFO.
 
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260611053543.2429462-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The buggy scenario involves two paths, with each column showing the
+order within that path:
+
+resize path:                    relink path:
+1. Allocate newpool.             1. Take f->use_lock.
+2. Swap f->pool to newpool and   2. Duplicate or dequeue an old-pool
+   detach oldhead.                  cell before oldpool closes.
+3. Mark oldpool closing and      3. Reach a later relink point after
+   wait for FIFO users.             resize published newpool.
+4. Free oldhead and delete       4. Relink the old-pool cell after
+   oldpool.                         resize detached oldhead.
+                                 5. Drop f->use_lock.
+
+The reproducer reports a resize ioctl blocked in the expected pool
+teardown path:
+
+signal: resize iteration=98 target_pool=4 exceeded 250ms
+        (elapsed=251ms)
+diagnostic: resize_tid=651 wchan=snd_seq_pool_done
+diagnostic: resize_tid=651 stack=
+  snd_seq_pool_done+0x5b/0x140
+  snd_seq_pool_delete+0x7a/0x90
+  snd_seq_fifo_resize+0x193/0x1e0
+  snd_seq_ioctl_set_client_pool+0x214/0x260
+  snd_seq_ioctl+0x119/0x540
+  __x64_sys_ioctl+0xd1/0x120
+  do_syscall_64+0xbb/0x2f0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+A second run with larger pools hit the same target path:
+
+signal: resize iteration=32 target_pool=64 exceeded 250ms
+        (elapsed=251ms)
+diagnostic: resize_tid=663 wchan=snd_seq_pool_done
+diagnostic: resize_tid=663 stack=
+  snd_seq_pool_done+0x5b/0x140
+  snd_seq_pool_delete+0x7a/0x90
+  snd_seq_fifo_resize+0x193/0x1e0
+  snd_seq_ioctl_set_client_pool+0x214/0x260
+  snd_seq_ioctl+0x119/0x540
+  __x64_sys_ioctl+0xd1/0x120
+  do_syscall_64+0xbb/0x2f0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 2d7d54002e39 ("ALSA: seq: Fix race during FIFO resize")
+
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20260614004801.3507773-2-zzzccc427@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/kcm/kcmsock.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/core/seq/seq_fifo.c | 52 ++++++++++++++++++++++++++++-----------
+ 1 file changed, 37 insertions(+), 15 deletions(-)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index 3912e75079f5eb..a998336840c335 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -1304,8 +1304,8 @@ static int kcm_attach(struct socket *sock, struct socket *csock,
- 	psock->save_write_space = csk->sk_write_space;
- 	psock->save_state_change = csk->sk_state_change;
- 	csk->sk_user_data = psock;
--	csk->sk_data_ready = psock_data_ready;
--	csk->sk_write_space = psock_write_space;
-+	WRITE_ONCE(csk->sk_data_ready, psock_data_ready);
-+	WRITE_ONCE(csk->sk_write_space, psock_write_space);
- 	csk->sk_state_change = psock_state_change;
+diff --git a/sound/core/seq/seq_fifo.c b/sound/core/seq/seq_fifo.c
+index ebe1394c18a964..cffa8d43037476 100644
+--- a/sound/core/seq/seq_fifo.c
++++ b/sound/core/seq/seq_fifo.c
+@@ -101,13 +101,17 @@ int snd_seq_fifo_event_in(struct snd_seq_fifo *f,
+ 			  struct snd_seq_event *event)
+ {
+ 	struct snd_seq_event_cell *cell;
++	struct snd_seq_pool *pool;
++	bool linked;
+ 	int err;
  
- 	write_unlock_bh(&csk->sk_callback_lock);
-@@ -1381,8 +1381,8 @@ static void kcm_unattach(struct kcm_psock *psock)
- 	 */
- 	write_lock_bh(&csk->sk_callback_lock);
- 	csk->sk_user_data = NULL;
--	csk->sk_data_ready = psock->save_data_ready;
--	csk->sk_write_space = psock->save_write_space;
-+	WRITE_ONCE(csk->sk_data_ready, psock->save_data_ready);
-+	WRITE_ONCE(csk->sk_write_space, psock->save_write_space);
- 	csk->sk_state_change = psock->save_state_change;
- 	strp_stop(&psock->strp);
+ 	if (snd_BUG_ON(!f))
+ 		return -EINVAL;
  
+ 	guard(snd_seq_fifo)(f);
+-	err = snd_seq_event_dup(f->pool, event, &cell, 1, NULL, NULL); /* always non-blocking */
++retry:
++	pool = READ_ONCE(f->pool);
++	err = snd_seq_event_dup(pool, event, &cell, 1, NULL, NULL); /* always non-blocking */
+ 	if (err < 0) {
+ 		if ((err == -ENOMEM) || (err == -EAGAIN))
+ 			atomic_inc(&f->overflow);
+@@ -115,14 +119,24 @@ int snd_seq_fifo_event_in(struct snd_seq_fifo *f,
+ 	}
+ 		
+ 	/* append new cells to fifo */
++	linked = false;
+ 	scoped_guard(spinlock_irqsave, &f->lock) {
+-		if (f->tail != NULL)
+-			f->tail->next = cell;
+-		f->tail = cell;
+-		if (f->head == NULL)
+-			f->head = cell;
+-		cell->next = NULL;
+-		f->cells++;
++		if (cell->pool == f->pool) {
++			if (f->tail)
++				f->tail->next = cell;
++			f->tail = cell;
++			if (!f->head)
++				f->head = cell;
++			cell->next = NULL;
++			f->cells++;
++			linked = true;
++		}
++	}
++
++	if (!linked) {
++		/* Retry against the replacement pool after resize publishes it. */
++		snd_seq_cell_free(cell);
++		goto retry;
+ 	}
+ 
+ 	/* wakeup client */
+@@ -194,13 +208,21 @@ int snd_seq_fifo_cell_out(struct snd_seq_fifo *f,
+ void snd_seq_fifo_cell_putback(struct snd_seq_fifo *f,
+ 			       struct snd_seq_event_cell *cell)
+ {
++	bool linked = false;
++
+ 	if (cell) {
+-		guard(spinlock_irqsave)(&f->lock);
+-		cell->next = f->head;
+-		f->head = cell;
+-		if (!f->tail)
+-			f->tail = cell;
+-		f->cells++;
++		scoped_guard(spinlock_irqsave, &f->lock) {
++			if (cell->pool == f->pool) {
++				cell->next = f->head;
++				f->head = cell;
++				if (!f->tail)
++					f->tail = cell;
++				f->cells++;
++				linked = true;
++			}
++		}
++		if (!linked)
++			snd_seq_cell_free(cell);
+ 	}
+ }
+ 
+@@ -237,7 +259,7 @@ int snd_seq_fifo_resize(struct snd_seq_fifo *f, int poolsize)
+ 		oldpool = f->pool;
+ 		oldhead = f->head;
+ 		/* exchange pools */
+-		f->pool = newpool;
++		WRITE_ONCE(f->pool, newpool);
+ 		f->head = NULL;
+ 		f->tail = NULL;
+ 		f->cells = 0;
 -- 
 2.53.0
 
