@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0595746AA62;
-	Tue, 21 Jul 2026 15:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B648546AA62;
+	Tue, 21 Jul 2026 15:34:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648051; cv=none; b=UKG0kfjYB48V8RwTl4a5H29olACvgTfMXbAYCWTpgxxrOfF7Qj2cpTkQ48Gb1tkWZ7dj4nSYT/ix76L+DKs9JtWU/9aPdlDilTSsw8utSShOWUgr4J0xG8goN5Hce55S238OJTpbMUEbpPgZVsB8CTcX8zBB6HmFFsvzjl/qCng=
+	t=1784648053; cv=none; b=jyeztq8pQcrH0k04XqMxjg8j5VpY+n67tHFYhWQy51spzKPPs0WoQb9yIsSWQUgMbBiKqvjRxyXDJ4cBpUV4vSUrO17ocSRNloQbbi6vN18YE313FrriqjuS2wjr3PhFu3Te0SiXsmQEpCWXAlna+6ohReuyJk6oJVMjDK1NZH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648051; c=relaxed/simple;
-	bh=RgtY+I59kHmtnKRgafbmvh0ilz4JPXSOg8JwOPMuwOk=;
+	s=arc-20240116; t=1784648053; c=relaxed/simple;
+	bh=msernDiRv/RVx0dxTRzkHRRnl/vuE6qd96VVk23vwSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lgJNGCgD64RfjU9UCuXmM8ts/Wzjc47Q/PjzISQuAsnXmzFeIEqnO3DWR/TvDSVc69dx1Z3CXlU57t2zY9AodN/LfEyr2VLDOreJcBYUfUPHVsPKj4c8ZDz/cO2XhhW9CKVZx+VcY1ndVw88igYMUAxxjWETZAc348yWSAoHn1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpp8JZQU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RDDH1d1M8OEv7Uxi9pCmqJ9Lwf3JmUR33M8SjwH9w9j3C5/aEmb6ozO1xenjYW7u1K93MVzZGWhfvtYH/ePLN260w9W2riZZm8+8MCrgdEmv9gLdivd7jHGu2NgTiNLyh4PvATNySDO3wgerPTGG3TC7C+SF8fzffLKFbnAYuHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0n79zz7W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpp8JZQU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660CC1F000E9;
-	Tue, 21 Jul 2026 15:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0n79zz7W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277CD1F00A3A;
+	Tue, 21 Jul 2026 15:34:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648049;
-	bh=VrMRBy0hxZPuSYtszIlKHmE6ip/RAOcEJWQvawiO1mo=;
+	s=korg; t=1784648052;
+	bh=F8tM3J8beHWN+y/Gullitl4l2Ydbzla6Bl8cwEpCauM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cpp8JZQUCyK4BRYkPQVuTSGt9vhqM00kMPpwyLxQrRKvlGhoVWH7gpC9FXycDvBy+
-	 RuqkUXKxew1n979NE5kJM7oL6OpMmiMPPAJszJimVz8gDgCxckdEOml6mjgK7cvkT4
-	 XI46Z5oQGmMxuPkoSjCjOZs8KZKO56yTOslb4Kno=
+	b=0n79zz7WFeJw28zJu/UJBgR5BF56s06Lhia7K15Mv4wSD8pibGkWE4go3kdwz/Avu
+	 eH0W5nE7Lw09fybrxJ6VqVlFVtfKWvTMdLoXu75eQbLA1zrFL0n/+kcOWUjqOEP41D
+	 Dg3llGiUr9xd7nB84jGM8NYYkVid+FhQS9GzC4QQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Wendy Liang <wendy.liang@amd.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0054/2077] accel/amdxdna: Fix iommu_map_sgtable() return value handling
-Date: Tue, 21 Jul 2026 16:55:27 +0200
-Message-ID: <20260721152553.967362326@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Li Daming <d4n.for.sec@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org
+Subject: [PATCH 7.1 0037/2077] afs: Fix further netns teardown to cancel the preallocation charger
+Date: Tue, 21 Jul 2026 16:55:10 +0200
+Message-ID: <20260721152553.564959111@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,59 +57,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 1bcfa4c4e88a554d1b6f98f4e3f886288581cbb4 ]
+commit 2daf8ac812c3d78c642fe7652f62e29df5e3da20 upstream.
 
-iommu_map_sgtable() returns negative error codes on failure, but the
-result is stored in an unsigned variable. This prevents proper error
-detection.
+When an afs network namespace is torn down, it cancels and waits for the
+work item that keeps the preallocated rxrpc call/conn/peer queue charged
+before disabling incoming (i.e. listen 0), but there's a small window in
+which it can be requeued by an incoming call wending through the I/O
+thread.
 
-Change the variable type to ssize_t so negative error values can be
-handled correctly.
+Fix this by cancelling the charger work item again after reducing the
+listen backlog to zero.
 
-Fixes: ece3e8980907 ("accel/amdxdna: Allow forcing IOVA-based DMA via module parameter")
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/all/adk7kOUBwIyYnX1M@stanley.mountain/
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Wendy Liang <wendy.liang@amd.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260413180238.668441-1-lizhi.hou@amd.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 47694fbc9d24 ("afs: Fix netns teardown to cancel the preallocation charger")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://sashiko.dev/#/patchset/20260609140911.838677-1-dhowells%40redhat.com
+cc: Li Daming <d4n.for.sec@gmail.com>
+cc: Ren Wei <n05ec@lzu.edu.cn>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260624163819.3017002-5-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/amdxdna/amdxdna_iommu.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/afs/rxrpc.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_iommu.c b/drivers/accel/amdxdna/amdxdna_iommu.c
-index 4626434d4180cf..2676cfcfabee0d 100644
---- a/drivers/accel/amdxdna/amdxdna_iommu.c
-+++ b/drivers/accel/amdxdna/amdxdna_iommu.c
-@@ -40,7 +40,7 @@ int amdxdna_iommu_map_bo(struct amdxdna_dev *xdna, struct amdxdna_gem_obj *abo)
- 	struct sg_table *sgt;
- 	dma_addr_t dma_addr;
- 	struct iova *iova;
--	size_t size;
-+	ssize_t size;
+--- a/fs/afs/rxrpc.c
++++ b/fs/afs/rxrpc.c
+@@ -128,8 +128,13 @@ void afs_close_socket(struct afs_net *ne
+ 	_enter("");
  
- 	if (abo->type != AMDXDNA_BO_DEV_HEAP && abo->type != AMDXDNA_BO_SHMEM)
- 		return 0;
-@@ -65,7 +65,14 @@ int amdxdna_iommu_map_bo(struct amdxdna_dev *xdna, struct amdxdna_gem_obj *abo)
- 
- 	size = iommu_map_sgtable(xdna->domain, dma_addr, sgt,
- 				 IOMMU_READ | IOMMU_WRITE);
-+	if (size < 0) {
-+		XDNA_ERR(xdna, "iommu_map_sgtable failed: %zd", size);
-+		__free_iova(&xdna->iovad, iova);
-+		return size;
-+	}
+ 	cancel_work_sync(&net->charge_preallocation_work);
++	/* Future work items should now see ->live is false. */
 +
- 	if (size < abo->mem.size) {
-+		iommu_unmap(xdna->domain, dma_addr, size);
- 		__free_iova(&xdna->iovad, iova);
- 		return -ENXIO;
- 	}
--- 
-2.53.0
-
+ 	kernel_listen(net->socket, 0);
++
++	/* Make sure work items are no longer running. */
+ 	flush_workqueue(afs_async_calls);
++	cancel_work_sync(&net->charge_preallocation_work);
+ 
+ 	if (net->spare_incoming_call) {
+ 		afs_put_call(net->spare_incoming_call);
 
 
