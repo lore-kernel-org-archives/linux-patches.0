@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A31A395243;
-	Tue, 21 Jul 2026 20:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86093B7770;
+	Tue, 21 Jul 2026 20:45:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666711; cv=none; b=MjQnUvZNlN8xOmMeUl9ccs60/0LB9LZbIu2Fhxq2El50PbSoYcWG/vPquFpJyqQ1sUXEvkWMFqod0Z1SSrA7jjTKX6a0L+HWu88XpPcOnjpwq4q91C1JElSyTIxNoAyObyndcCuaJJH36Wne0TXc7bY0CnoSdFVIBNWfgSraLMU=
+	t=1784666714; cv=none; b=TXsI4DgGXYophMwhi8hbv1AdDSDouzACOG/oE8ETHXpXCILq2KV9O8Qbmfh69nJvPdW4eU6Zp60l2X9YbpuJostLctePHqPmJWKn2IodAcSgMDflAaLEuZGNgYEHoNqajmqOcPR8GHkb+mT3JoOG4dvTv0IhMHrpZLHhg/1FiKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666711; c=relaxed/simple;
-	bh=7WDnCwz7GBhDEnVAS9bMyZSfOGzadxFFGjUBW/804B0=;
+	s=arc-20240116; t=1784666714; c=relaxed/simple;
+	bh=w5Kle2xsuMKvOmdBw3sCJOLI/EfHXFGBzTc/tXCJvAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BY67mteKB8zlaOXaYQ0Kt0UJ2g/vHLy4dAx06Yx58H+lMxchaQRawC4n8VfEZy5Xt+ROs3YBROdM5i9TtwFw9uxDM4ZGUx0AQXDAOhbhpGx54oFX59Ctsf+jttsvdrl9NCpW3+yro0hgjmswydLHeABv0VWSqgTDicCp9cahpH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXFIfSXT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hTqpi+8YsAYkCTLYUAjTLjEU25eCUay5cxHzaudEQEYIpk5zfLwAC0FZv/cJdddf1a0PqqyYQ5rAgjhtMh7o2wmmmSQfgI65Tte7a+b5eet+7voBdkvfDNwAnJcxr8C0SZBGMYebCOo1Loc2DZbTzsXK8+YRjhbbGflOABQe+LA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFYGqJLW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXFIfSXT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8E31F000E9;
-	Tue, 21 Jul 2026 20:45:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFYGqJLW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E5A1F000E9;
+	Tue, 21 Jul 2026 20:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666710;
-	bh=0LGx2NrUaKPefyp0QCO9l4of7V98BxRFkLvrG0cjHAE=;
+	s=korg; t=1784666712;
+	bh=0sr9evsethMrLcl2yTZ6LZeYnpvyNvk0B9rAgU/yElM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TXFIfSXThi/4Jg8H5PCN9S/e0vAuGrUDqs5R5sBGy0FUz/5m4wMheW1Yn+8yv+Hpa
-	 8jTluK6lD3r/6iOEJTM1eldaguD21QHzXtL2DRQtjfzUwsZgSGv1yxIq1lQU0OWOAC
-	 I8ufl9P/WLz8LLi9a7yXDvAN9qMA1GUuhcC+nLBk=
+	b=xFYGqJLWdv/TmXGv8N2uQ747b1S6M57tMNnPg9ZTS6pkhERr0FrFcp2ZhYYbN5rs3
+	 EeBscwwll2muZ8/LiMtN1LgqUHt2WO9FO5MVCYxxlpHzUPNGjPl6R6bbkiiIIccQLx
+	 DKd7Dj8QQ0tMG7n00SY5/yHBej7zp46qYDPeyLxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Breno Leitao <leitao@debian.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0743/1266] netfilter: ipset: Dont use test_bit() in lockless RCU readers in hash types
-Date: Tue, 21 Jul 2026 17:19:40 +0200
-Message-ID: <20260721152458.498170804@linuxfoundation.org>
+Subject: [PATCH 6.6 0734/1266] arm64/hw_breakpoint: reject unaligned watchpoints that would truncate BAS
+Date: Tue, 21 Jul 2026 17:19:31 +0200
+Message-ID: <20260721152458.298764239@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,77 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jozsef Kadlecsik <kadlec@netfilter.org>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit e4b4984e28c16406ecb318444dea4a8bf47def3e ]
+[ Upstream commit 4cc70f75853bebac022334b6a86b953348072f74 ]
 
-Sashiko pointed out that there are a few lockless RCU readers
-using test_bit() which is a relaxed atomic operation and
-provides no memory barrier guarantees. Use test_bit_acquire()
-instead where the operation may run parallel with add/del/gc,
-i.e. is not one from the next cases
+hw_breakpoint_arch_parse() positions the BAS bit pattern in
+hw->ctrl.len with
 
-- protected by region lock
-- in a set destroy phase
-- in a new/temporary set creation phase
+	offset = hw->address & alignment_mask;	/* 0..7 */
+	hw->ctrl.len <<= offset;
 
-Fixes: 18f84d41d34f ("netfilter: ipset: Introduce RCU locking in hash:* types")
-Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+ctrl.len is an 8-bit bitfield (struct arch_hw_breakpoint_ctrl::len is
+u32 :8), so the shift silently drops any bits past bit 7.  For
+non-compat AArch64 watchpoints the offset is unbounded relative to
+ctrl.len: a perf_event_open(PERF_TYPE_BREAKPOINT) caller asking for
+HW_BREAKPOINT_W with bp_addr=page+1 and bp_len=HW_BREAKPOINT_LEN_8
+ends up with 0xff << 1 = 0x1fe, stored as 0xfe.  The kernel programs
+WCR.BAS=0xfe and the hardware watches bytes [1..7] instead of the
+requested [1..8] -- the eighth byte is silently dropped.  The
+syscall still returns success, leaving userspace to discover the
+gap by empirical probing.
+
+The same class affects HW_BREAKPOINT_LEN_{2,4} when offset pushes the
+high BAS bit past bit 7 (e.g. LEN_4 with offset=5 yields 0xe0
+instead of 0x1e0).  No memory-safety impact -- the value is masked
+into 8 bits before encoding -- but debuggers and perf users observe
+missed events on bytes they thought they were watching.
+
+The AArch32 branch immediately above already rejects unrepresentable
+(offset, len) combinations via an explicit switch.  Mirror that for
+the non-compat branch by checking that the shifted pattern fits in
+the BAS field, returning -EINVAL when it does not.
+
+GDB and similar debuggers are unaffected by the stricter check.
+aarch64_linux_set_debug_regs() already treats EINVAL on
+NT_ARM_HW_WATCH as a downgrade signal: it clears
+kernel_supports_any_contiguous_range, calls aarch64_downgrade_regs()
+to round the BAS up to a legacy 0x01/03/0f/ff mask with an aligned
+base, and retries -- the same fallback path that PR-20207 introduced.
+The new -EINVAL is therefore reachable only from a raw
+perf_event_open() that pairs an unaligned base with an oversized
+bp_len, which is precisely the bug.
+
+Reproducer:
+
+  struct perf_event_attr a = {
+      .type = PERF_TYPE_BREAKPOINT, .size = sizeof(a),
+      .bp_type = HW_BREAKPOINT_W,
+      .bp_addr = (uintptr_t)(buf + 1),
+      .bp_len = HW_BREAKPOINT_LEN_8,
+      .exclude_kernel = 1, .exclude_hv = 1,
+  };
+  int fd = perf_event_open(&a, 0, -1, -1, 0);
+  /* before this fix: succeeds, watches 7 bytes (buf+1..buf+7)   */
+  /* after  this fix: fails with EINVAL                          */
+
+Fixes: b08fb180bb88 ("arm64: Allow hw watchpoint at varied offset from base address")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_hash_gen.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/arm64/kernel/hw_breakpoint.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
-index 3ed883b4be54b4..ad2ff9cc0b58d9 100644
---- a/net/netfilter/ipset/ip_set_hash_gen.h
-+++ b/net/netfilter/ipset/ip_set_hash_gen.h
-@@ -688,7 +688,7 @@ mtype_resize(struct ip_set *set, bool retried)
- 				continue;
- 			pos = smp_load_acquire(&n->pos);
- 			for (j = 0; j < pos; j++) {
--				if (!test_bit(j, n->used))
-+				if (!test_bit_acquire(j, n->used))
- 					continue;
- 				data = ahash_data(n, j, dsize);
- 				if (SET_ELEM_EXPIRED(set, data))
-@@ -825,7 +825,7 @@ mtype_ext_size(struct ip_set *set, u32 *elements, size_t *ext_size)
- 				continue;
- 			pos = smp_load_acquire(&n->pos);
- 			for (j = 0; j < pos; j++) {
--				if (!test_bit(j, n->used))
-+				if (!test_bit_acquire(j, n->used))
- 					continue;
- 				data = ahash_data(n, j, set->dsize);
- 				if (!SET_ELEM_EXPIRED(set, data))
-@@ -1201,7 +1201,7 @@ mtype_test_cidrs(struct ip_set *set, struct mtype_elem *d,
- 			continue;
- 		pos = smp_load_acquire(&n->pos);
- 		for (i = 0; i < pos; i++) {
--			if (!test_bit(i, n->used))
-+			if (!test_bit_acquire(i, n->used))
- 				continue;
- 			data = ahash_data(n, i, set->dsize);
- 			if (!mtype_data_equal(data, d, &multi))
-@@ -1259,7 +1259,7 @@ mtype_test(struct ip_set *set, void *value, const struct ip_set_ext *ext,
+diff --git a/arch/arm64/kernel/hw_breakpoint.c b/arch/arm64/kernel/hw_breakpoint.c
+index 35225632d70ad3..c94dcffb7e83d0 100644
+--- a/arch/arm64/kernel/hw_breakpoint.c
++++ b/arch/arm64/kernel/hw_breakpoint.c
+@@ -557,6 +557,15 @@ int hw_breakpoint_arch_parse(struct perf_event *bp,
+ 		else
+ 			alignment_mask = 0x7;
+ 		offset = hw->address & alignment_mask;
++
++		/*
++		 * BAS is an 8-bit field in WCR/BCR; the shift below would
++		 * silently drop the high bits of ctrl.len when offset + len
++		 * exceeds 8, programming hardware to watch fewer bytes than
++		 * the user requested.
++		 */
++		if (((u32)hw->ctrl.len << offset) > ARM_BREAKPOINT_LEN_8)
++			return -EINVAL;
  	}
- 	pos = smp_load_acquire(&n->pos);
- 	for (i = 0; i < pos; i++) {
--		if (!test_bit(i, n->used))
-+		if (!test_bit_acquire(i, n->used))
- 			continue;
- 		data = ahash_data(n, i, set->dsize);
- 		if (!mtype_data_equal(data, d, &multi))
-@@ -1396,7 +1396,7 @@ mtype_list(const struct ip_set *set,
- 			continue;
- 		pos = smp_load_acquire(&n->pos);
- 		for (i = 0; i < pos; i++) {
--			if (!test_bit(i, n->used))
-+			if (!test_bit_acquire(i, n->used))
- 				continue;
- 			e = ahash_data(n, i, set->dsize);
- 			if (SET_ELEM_EXPIRED(set, e))
+ 
+ 	hw->address &= ~alignment_mask;
 -- 
 2.53.0
 
