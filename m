@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F8046D082;
-	Tue, 21 Jul 2026 17:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A6446E005;
+	Tue, 21 Jul 2026 17:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656177; cv=none; b=WqgkKARkXFhcnLhYCI5FrnzVtUeswykyW2Sw4RTFXyfKLUfn6bzbz51mIXgMYrgJK9jWeGEfePEOLy9ZSa6qM+bMHjcJG4WlooupJO75oNZQh8hi6vIHxVi9TbYPzXX76bwanD0EyExxgOHNYr6mFVD3xgL5yVSJoEgyFHeIuJg=
+	t=1784656179; cv=none; b=epejVpEBc3ytgBjFFNMWH3TfsbXZA9MN+QMS0XiXGIfnDohuyHdQ9p57mLOrTIlOUk4Fc0L7JbVVES21NWkiB66FmGfXKabb3Agc5/C9sp/QxtcxZZ53hF6dt+wwWc30SuZkobICPpmtYdz8Q6VwgwbZXmQ55bpY0UULgbXqc2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656177; c=relaxed/simple;
-	bh=9aPpvn8VbN+9V7AmWHOqOtdGteEGlWZ4uawz7aGs6VI=;
+	s=arc-20240116; t=1784656179; c=relaxed/simple;
+	bh=fgy73uReUS0Rzu4PhIjC8EJTYK+nyRSaOejBprEE4xM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=twG2R7yenrg/PJzgOlHv8okI3tvKBTz9iGtIJd2ujkjRQeBDfp2nTN+sagt+rFiXh0WdEq1fa1NrKcmPXB0OercRXNKnyNkUFsSPN5EM5EUd7dv88h+0PUm7+l4tVim4Wn2GVfXh7tZsJYlFDseNDpVgoAnrag8jz3fJJEX+9+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yu55AOBd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WaaeHBMcpY6RRFi2SDEeQa3kvnyv1NBbzMeIL9Uybauh2Gb22DZOVP3X+gIfvSLU3HvUpz6Osbn5alxmbDH5O2Q8uq0GkXhmrv+cak+C700bH4LfOF/CWGI3yI5Jr2qwhZV/YgWJXmCEdf5MOeQc27+O1m2YA5tx1YWc5pBuyMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyspVRoK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yu55AOBd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D351F000E9;
-	Tue, 21 Jul 2026 17:49:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyspVRoK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5531F000E9;
+	Tue, 21 Jul 2026 17:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656175;
-	bh=LGVYVsQxjjn8zwchSool2+m1dptS6WUytcSSzymOtro=;
+	s=korg; t=1784656178;
+	bh=XYfAZu2m3XAafBT0OHdVXExd8b+qyGnWn1e3A/zv5iY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yu55AOBdzkHLMOeqkxEm1b5D+SsyNej9TvOoFPb630+LaTjndy3QI5bFHtstuxPp7
-	 dc1gorzI8vHyP1Ke76rYBy7US1HXt2IJ+FJIa22b9vDRWENPbAmLTIoxk0JB85fCtn
-	 sW3IEXa0eLlV8ZATG3u7gzp7UgDFUNvM0lGBvRRA=
+	b=jyspVRoKutlkaSBusEAw8eiwJfmh+Gu7RvHWJi1WKF/MFfaZRFmSYM1ZIcxFSRq+l
+	 xQclYJQVJR+vKj+kpvhjylvCszf4e3P8t+xjyEfNuCiSHYxpx797ajFZwd+Nk/dLrq
+	 k2VkEYxPwfJuMuzTj4U/J7LgkZGUV3ZzNJSVi02w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0281/1611] Drivers: hv: vmbus: use generic driver_override infrastructure
-Date: Tue, 21 Jul 2026 17:06:37 +0200
-Message-ID: <20260721152521.377017931@linuxfoundation.org>
+Subject: [PATCH 6.18 0290/1611] spi: atmel: fix DMA channel and bounce buffer leaks
+Date: Tue, 21 Jul 2026 17:06:46 +0200
+Message-ID: <20260721152521.586425016@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,134 +51,230 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 331d8900121a1d74ecd45cd2db742ddcb5a0a565 ]
+[ Upstream commit bd7e9843ec95bffe2643c901dd625f0bab32e639 ]
 
-When a driver is probed through __driver_attach(), the bus' match()
-callback is called without the device lock held, thus accessing the
-driver_override field without a lock, which can cause a UAF.
+The original code set use_dma to false when dma_alloc_coherent() for
+bounce buffers failed, but DMA channels acquired earlier via
+atmel_spi_configure_dma() were never freed.
 
-Fix this by using the driver-core driver_override infrastructure taking
-care of proper locking internally.
+When devm_request_irq() or clk_prepare_enable() failed later in probe,
+the driver also did not release DMA channels or bounce buffers already
+allocated.
 
-Note that calling match() from __driver_attach() without the device lock
-held is intentional. [1]
+The out_free_dma error path released DMA channels but did not free the
+bounce buffers.
 
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
-Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
-Fixes: d765edbb301c ("vmbus: add driver_override support")
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20260505133935.3772495-4-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fix by moving bounce buffer allocation into atmel_spi_configure_dma()
+and registering the devres cleanup for DMA channels and bounce buffers.
+
+Fixes: a9889ed62d06 ("spi: atmel: Implements transfers with bounce buffer")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260522-atmel-v3-1-23f8c6e6aa43@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/vmbus_drv.c | 43 ++++++++++--------------------------------
- include/linux/hyperv.h |  5 -----
- 2 files changed, 10 insertions(+), 38 deletions(-)
+ drivers/spi/spi-atmel.c | 133 ++++++++++++++++++++--------------------
+ 1 file changed, 68 insertions(+), 65 deletions(-)
 
-diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index 137cf82e2292ec..1a0e350c19404d 100644
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -550,34 +550,6 @@ static ssize_t device_show(struct device *dev,
+diff --git a/drivers/spi/spi-atmel.c b/drivers/spi/spi-atmel.c
+index 586e2fd357ed9d..a9499b51b8cc23 100644
+--- a/drivers/spi/spi-atmel.c
++++ b/drivers/spi/spi-atmel.c
+@@ -559,6 +559,38 @@ static int atmel_spi_dma_slave_config(struct atmel_spi *as, u8 bits_per_word)
+ 	return err;
  }
- static DEVICE_ATTR_RO(device);
  
--static ssize_t driver_override_store(struct device *dev,
--				     struct device_attribute *attr,
--				     const char *buf, size_t count)
--{
--	struct hv_device *hv_dev = device_to_hv_device(dev);
--	int ret;
--
--	ret = driver_set_override(dev, &hv_dev->driver_override, buf, count);
--	if (ret)
--		return ret;
--
--	return count;
--}
--
--static ssize_t driver_override_show(struct device *dev,
--				    struct device_attribute *attr, char *buf)
--{
--	struct hv_device *hv_dev = device_to_hv_device(dev);
--	ssize_t len;
--
--	device_lock(dev);
--	len = sysfs_emit(buf, "%s\n", hv_dev->driver_override);
--	device_unlock(dev);
--
--	return len;
--}
--static DEVICE_ATTR_RW(driver_override);
--
- /* Set up per device attributes in /sys/bus/vmbus/devices/<bus device> */
- static struct attribute *vmbus_dev_attrs[] = {
- 	&dev_attr_id.attr,
-@@ -608,7 +580,6 @@ static struct attribute *vmbus_dev_attrs[] = {
- 	&dev_attr_channel_vp_mapping.attr,
- 	&dev_attr_vendor.attr,
- 	&dev_attr_device.attr,
--	&dev_attr_driver_override.attr,
- 	NULL,
- };
- 
-@@ -720,9 +691,11 @@ static const struct hv_vmbus_device_id *hv_vmbus_get_id(const struct hv_driver *
++static void atmel_spi_release_dma(void *data)
++{
++	struct spi_controller *host = data;
++	struct atmel_spi *as = spi_controller_get_devdata(host);
++	struct device *dev = &as->pdev->dev;
++
++	if (host->dma_tx) {
++		dma_release_channel(host->dma_tx);
++		host->dma_tx = NULL;
++	}
++
++	if (host->dma_rx) {
++		dma_release_channel(host->dma_rx);
++		host->dma_rx = NULL;
++	}
++
++	if (IS_ENABLED(CONFIG_SOC_SAM_V4_V5)) {
++		if (as->addr_tx_bbuf) {
++			dma_free_coherent(dev, SPI_MAX_DMA_XFER,
++					  as->addr_tx_bbuf,
++					  as->dma_addr_tx_bbuf);
++			as->addr_tx_bbuf = NULL;
++		}
++		if (as->addr_rx_bbuf) {
++			dma_free_coherent(dev, SPI_MAX_DMA_XFER,
++					  as->addr_rx_bbuf,
++					  as->dma_addr_rx_bbuf);
++			as->addr_rx_bbuf = NULL;
++		}
++	}
++}
++
+ static int atmel_spi_configure_dma(struct spi_controller *host,
+ 				   struct atmel_spi *as)
  {
- 	const guid_t *guid = &dev->dev_type;
- 	const struct hv_vmbus_device_id *id;
-+	int ret;
+@@ -569,7 +601,8 @@ static int atmel_spi_configure_dma(struct spi_controller *host,
+ 	if (IS_ERR(host->dma_tx)) {
+ 		err = PTR_ERR(host->dma_tx);
+ 		dev_dbg(dev, "No TX DMA channel, DMA is disabled\n");
+-		goto error_clear;
++		host->dma_tx = NULL;
++		return err;
+ 	}
  
--	/* When driver_override is set, only bind to the matching driver */
--	if (dev->driver_override && strcmp(dev->driver_override, drv->name))
-+	/* If a driver override is set, only bind to the matching driver */
-+	ret = device_match_driver_override(&dev->device, &drv->driver);
-+	if (ret == 0)
- 		return NULL;
+ 	host->dma_rx = dma_request_chan(dev, "rx");
+@@ -580,26 +613,45 @@ static int atmel_spi_configure_dma(struct spi_controller *host,
+ 		 * requested tx channel.
+ 		 */
+ 		dev_dbg(dev, "No RX DMA channel, DMA is disabled\n");
+-		goto error;
++		host->dma_rx = NULL;
++		goto err_release_dma;
+ 	}
  
- 	/* Look at the dynamic ids first, before the static ones */
-@@ -730,8 +703,11 @@ static const struct hv_vmbus_device_id *hv_vmbus_get_id(const struct hv_driver *
- 	if (!id)
- 		id = hv_vmbus_dev_match(drv->id_table, guid);
+ 	err = atmel_spi_dma_slave_config(as, 8);
+ 	if (err)
+-		goto error;
++		goto err_release_dma;
++
++	if (IS_ENABLED(CONFIG_SOC_SAM_V4_V5)) {
++		as->addr_tx_bbuf = dma_alloc_coherent(dev, SPI_MAX_DMA_XFER,
++						      &as->dma_addr_tx_bbuf,
++						      GFP_KERNEL | GFP_DMA);
++		if (!as->addr_tx_bbuf) {
++			err = -ENOMEM;
++			goto err_release_dma;
++		}
++
++		as->addr_rx_bbuf = dma_alloc_coherent(dev, SPI_MAX_DMA_XFER,
++						      &as->dma_addr_rx_bbuf,
++						      GFP_KERNEL | GFP_DMA);
++		if (!as->addr_rx_bbuf) {
++			err = -ENOMEM;
++			goto err_release_dma;
++		}
++	}
++
++	err = devm_add_action_or_reset(dev, atmel_spi_release_dma, host);
++	if (err)
++		return err;
  
--	/* driver_override will always match, send a dummy id */
--	if (!id && dev->driver_override)
-+	/*
-+	 * If there's a matching driver override, this function should succeed,
-+	 * thus return a dummy device ID if no matching ID is found.
-+	 */
-+	if (!id && ret > 0)
- 		id = &vmbus_device_null;
+ 	dev_info(&as->pdev->dev,
+-			"Using %s (tx) and %s (rx) for DMA transfers\n",
+-			dma_chan_name(host->dma_tx),
+-			dma_chan_name(host->dma_rx));
++		 "Using %s (tx) and %s (rx) for DMA transfers\n",
++		 dma_chan_name(host->dma_tx), dma_chan_name(host->dma_rx));
  
- 	return id;
-@@ -1033,6 +1009,7 @@ static const struct dev_pm_ops vmbus_pm = {
- /* The one and only one */
- static const struct bus_type  hv_bus = {
- 	.name =		"vmbus",
-+	.driver_override =	true,
- 	.match =		vmbus_match,
- 	.shutdown =		vmbus_shutdown,
- 	.remove =		vmbus_remove,
-diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
-index b0502a336eb3a5..be9946a2cff2ad 100644
---- a/include/linux/hyperv.h
-+++ b/include/linux/hyperv.h
-@@ -1272,11 +1272,6 @@ struct hv_device {
- 	u16 device_id;
+ 	return 0;
+-error:
+-	if (!IS_ERR(host->dma_rx))
+-		dma_release_channel(host->dma_rx);
+-	if (!IS_ERR(host->dma_tx))
+-		dma_release_channel(host->dma_tx);
+-error_clear:
+-	host->dma_tx = host->dma_rx = NULL;
++
++err_release_dma:
++	atmel_spi_release_dma(host);
++
+ 	return err;
+ }
  
- 	struct device device;
--	/*
--	 * Driver name to force a match.  Do not set directly, because core
--	 * frees it.  Use driver_set_override() to set or clear it.
--	 */
--	const char *driver_override;
+@@ -611,18 +663,6 @@ static void atmel_spi_stop_dma(struct spi_controller *host)
+ 		dmaengine_terminate_all(host->dma_tx);
+ }
  
- 	struct vmbus_channel *channel;
- 	struct kset	     *channels_kset;
+-static void atmel_spi_release_dma(struct spi_controller *host)
+-{
+-	if (host->dma_rx) {
+-		dma_release_channel(host->dma_rx);
+-		host->dma_rx = NULL;
+-	}
+-	if (host->dma_tx) {
+-		dma_release_channel(host->dma_tx);
+-		host->dma_tx = NULL;
+-	}
+-}
+-
+ /* This function is called by the DMA driver from tasklet context */
+ static void dma_callback(void *data)
+ {
+@@ -1586,30 +1626,6 @@ static int atmel_spi_probe(struct platform_device *pdev)
+ 		as->use_pdc = true;
+ 	}
+ 
+-	if (IS_ENABLED(CONFIG_SOC_SAM_V4_V5)) {
+-		as->addr_rx_bbuf = dma_alloc_coherent(&pdev->dev,
+-						      SPI_MAX_DMA_XFER,
+-						      &as->dma_addr_rx_bbuf,
+-						      GFP_KERNEL | GFP_DMA);
+-		if (!as->addr_rx_bbuf) {
+-			as->use_dma = false;
+-		} else {
+-			as->addr_tx_bbuf = dma_alloc_coherent(&pdev->dev,
+-					SPI_MAX_DMA_XFER,
+-					&as->dma_addr_tx_bbuf,
+-					GFP_KERNEL | GFP_DMA);
+-			if (!as->addr_tx_bbuf) {
+-				as->use_dma = false;
+-				dma_free_coherent(&pdev->dev, SPI_MAX_DMA_XFER,
+-						  as->addr_rx_bbuf,
+-						  as->dma_addr_rx_bbuf);
+-			}
+-		}
+-		if (!as->use_dma)
+-			dev_info(host->dev.parent,
+-				 "  can not allocate dma coherent memory\n");
+-	}
+-
+ 	if (as->caps.has_dma_support && !as->use_dma)
+ 		dev_info(&pdev->dev, "Atmel SPI Controller using PIO only\n");
+ 
+@@ -1669,13 +1685,10 @@ static int atmel_spi_probe(struct platform_device *pdev)
+ out_free_dma:
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
+-
+-	if (as->use_dma)
+-		atmel_spi_release_dma(host);
+-
+ 	spi_writel(as, CR, SPI_BIT(SWRST));
+ 	spi_writel(as, CR, SPI_BIT(SWRST)); /* AT91SAM9263 Rev B workaround */
+-	clk_disable_unprepare(as->gclk);
++	if (as->gclk)
++		clk_disable_unprepare(as->gclk);
+ out_disable_clk:
+ 	clk_disable_unprepare(clk);
+ out_free_irq:
+@@ -1696,18 +1709,8 @@ static void atmel_spi_remove(struct platform_device *pdev)
+ 	spi_unregister_controller(host);
+ 
+ 	/* reset the hardware and block queue progress */
+-	if (as->use_dma) {
++	if (as->use_dma)
+ 		atmel_spi_stop_dma(host);
+-		atmel_spi_release_dma(host);
+-		if (IS_ENABLED(CONFIG_SOC_SAM_V4_V5)) {
+-			dma_free_coherent(&pdev->dev, SPI_MAX_DMA_XFER,
+-					  as->addr_tx_bbuf,
+-					  as->dma_addr_tx_bbuf);
+-			dma_free_coherent(&pdev->dev, SPI_MAX_DMA_XFER,
+-					  as->addr_rx_bbuf,
+-					  as->dma_addr_rx_bbuf);
+-		}
+-	}
+ 
+ 	spin_lock_irq(&as->lock);
+ 	spi_writel(as, CR, SPI_BIT(SWRST));
 -- 
 2.53.0
 
