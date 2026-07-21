@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356B9415F0C;
-	Tue, 21 Jul 2026 22:55:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A526E39733E;
+	Tue, 21 Jul 2026 22:55:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674531; cv=none; b=LgAVfbzXtjR/l/htLP+IRn9TprKKQYxb/rxGESwSURnS1VKsgP82VyRtMIu1WSiyNGIBsVPNZuYjj9lAzq3ch5prpRecqOGuH+FLn5HHseq2ckzNjRf+41ka7UArvEihWpRiPkvs+niUYjrK10x9QZBNWY/vMY/V78V0Nv1c0zE=
+	t=1784674533; cv=none; b=pGB0afJo3ElWxFl//F+/r0wvAk/gIUPBk+/BOxpcVxEareyI/mMWpFEAH8qohpRkjKWwNX8Ty6Vc9ouUanRI3doQRun3VVlJ9pfIz7Wv57oW30nakVxqVT+DmdrbvM4fhuJ1J7P2Up+YB9hq4fsEXjK23oUN3EfilHTfRpOmmXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674531; c=relaxed/simple;
-	bh=naAw2lHS2v1HqoGGqHWHeA6+NN3N7iqTXH3eK7Jbs/Q=;
+	s=arc-20240116; t=1784674533; c=relaxed/simple;
+	bh=4KwhFP9ttPIVDw0Eez24nLP7FxgCR9KhvokURJkeDNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E3cav3bGR3hmbHKztdr9wEJRLbhirFodqKXL+ja2/ie2gQOUuSJja3kMvC3HJPTSmZNcfPcKanyPrb55w7Z1YjZP0UMWoIrkmO8Ch6fCiZ3ejPUKNIJQoIJ+64Ox1EmUFX/UrFciAFjwGGNlrjYNH3LXhCTKZ7I/agADqVUwApE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUliBfvI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J0TzdVv/Zbm28mDQJHUP76BPQqKPTtDzq5nhKF9R9HD8bDk3tWrQxG3YO4xzz27xO3Al2ye3+tR76ZPgTyDww7rmEmw2M6fnpnTq7JjTFrGcKIBBjp9sgHzvW5qMwUAI6hcyIXN2fgwTlYpdKjcTWvEB2BjzMhfP3QsiTcEmOoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6LXYutD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUliBfvI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5756B1F000E9;
-	Tue, 21 Jul 2026 22:55:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6LXYutD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D291F000E9;
+	Tue, 21 Jul 2026 22:55:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674529;
-	bh=J/gH7/+Ny2+bNQNVKRaPTFJlPJvLroBwZBvDhEA/UQ4=;
+	s=korg; t=1784674532;
+	bh=VvEcfmay6ev9/jV7eMQqJ8zVX9AsS7WlYmMmjP1OXAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IUliBfvIu6TCQ3AdovnPYmDSt3EV/2GtYH5jnxgp8OWnKSjg2aePM8cJzDzBaJGvv
-	 t4xFANWd129LOfIrBZ0SFRtIImR0qfjln3uweVZPhuReHuSnCM++Pfd9ivWQFJ0Xs7
-	 9YNiNasPrwbU65KwfXbeQWjNVvMGgS0TDSOlWSjE=
+	b=r6LXYutDUdeOuBPi6Zi+LZiwUza/DjzOw25PQO6cC//CYQvz0p1j6Cmb3e9a75FFa
+	 GcMGfk+IBYJQdlaWNs2PIb/mFRNJa77P2H9VTMlUYL5oje74/Ar5zh/b01ekqvPkda
+	 Lxh4wPu5XDiIAaSq/Wv9Q5inh1sgkCYKRKh3YOC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vladimir Zapolskiy <vz@kernel.org>,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.10 575/699] mtd: rawnand: lpc32xx_mlc: fail DMA transfers on timeout
-Date: Tue, 21 Jul 2026 17:25:34 +0200
-Message-ID: <20260721152408.679861562@linuxfoundation.org>
+Subject: [PATCH 5.10 576/699] mtd: rawnand: lpc32xx_slc: fail DMA transfer on completion timeout
+Date: Tue, 21 Jul 2026 17:25:35 +0200
+Message-ID: <20260721152408.703318997@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,72 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit dbf590b662695b16fbf5917ef129697be4410ea9 upstream.
+commit 17a8ce84964f243c8f89dc7353ac7e8d3137bc74 upstream.
 
-lpc32xx_xmit_dma() starts a DMA transfer and waits up to one second
-for its completion, but it ignores the wait result and returns success
-after unmapping the buffer.
+lpc32xx_xmit_dma() waits for the DMA completion callback but ignores
+wait_for_completion_timeout(). A timed out DMA transfer is therefore
+unmapped and reported as successful to the NAND read/write path.
 
-A timed out read can therefore return success with incomplete data, and
-a timed out write can continue the NAND operation without proof that the
-DMA payload reached the controller.
+Return -ETIMEDOUT when the completion wait expires. Terminate the DMA
+channel before unmapping the scatterlist so the timed out transfer cannot
+continue to access the buffer after the error is returned.
 
-Terminate the DMA channel on timeout, unmap the scatterlist through the
-existing cleanup path, and return -ETIMEDOUT to the NAND read/write
-callers. Initialize the shared cleanup-path result before using it for
-dmaengine_prep_slave_sg() failures.
-
-Fixes: 70f7cb78ec53 ("mtd: add LPC32xx MLC NAND driver")
+Fixes: 2944a44da09e ("mtd: add LPC32xx SLC NAND driver")
 Cc: stable@vger.kernel.org
 Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/lpc32xx_mlc.c |   12 ++++++++++--
+ drivers/mtd/nand/raw/lpc32xx_slc.c |   12 ++++++++++--
  1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/mtd/nand/raw/lpc32xx_mlc.c
-+++ b/drivers/mtd/nand/raw/lpc32xx_mlc.c
-@@ -397,6 +397,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
- 	struct lpc32xx_nand_host *host = nand_get_controller_data(chip);
+--- a/drivers/mtd/nand/raw/lpc32xx_slc.c
++++ b/drivers/mtd/nand/raw/lpc32xx_slc.c
+@@ -432,6 +432,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
  	struct dma_async_tx_descriptor *desc;
  	int flags = DMA_CTRL_ACK | DMA_PREP_INTERRUPT;
-+	unsigned long time_left;
  	int res;
++	unsigned long time_left;
  
- 	sg_init_one(&host->sgl, mem, len);
-@@ -411,6 +412,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
- 				       flags);
- 	if (!desc) {
- 		dev_err(mtd->dev.parent, "Failed to prepare slave sg\n");
-+		res = -ENXIO;
- 		goto out1;
- 	}
- 
-@@ -421,7 +423,13 @@ static int lpc32xx_xmit_dma(struct mtd_i
+ 	host->dma_slave_config.direction = dir;
+ 	host->dma_slave_config.src_addr = dma;
+@@ -469,12 +470,19 @@ static int lpc32xx_xmit_dma(struct mtd_i
  	dmaengine_submit(desc);
  	dma_async_issue_pending(host->dma_chan);
  
--	wait_for_completion_timeout(&host->comp_dma, msecs_to_jiffies(1000));
-+	time_left = wait_for_completion_timeout(&host->comp_dma,
+-	wait_for_completion_timeout(&host->comp, msecs_to_jiffies(1000));
++	time_left = wait_for_completion_timeout(&host->comp,
 +						msecs_to_jiffies(1000));
 +	if (!time_left) {
 +		dmaengine_terminate_sync(host->dma_chan);
 +		res = -ETIMEDOUT;
-+		goto out1;
++	} else {
++		res = 0;
 +	}
  
  	dma_unmap_sg(host->dma_chan->device->dev, &host->sgl, 1,
  		     DMA_BIDIRECTIONAL);
-@@ -429,7 +437,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
+ 
+-	return 0;
++	return res;
  out1:
  	dma_unmap_sg(host->dma_chan->device->dev, &host->sgl, 1,
  		     DMA_BIDIRECTIONAL);
--	return -ENXIO;
-+	return res;
- }
- 
- static int lpc32xx_read_page(struct nand_chip *chip, uint8_t *buf,
 
 
