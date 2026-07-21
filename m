@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4662747126F;
-	Tue, 21 Jul 2026 17:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED38D47125C;
+	Tue, 21 Jul 2026 17:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656496; cv=none; b=dF5nq5h/YJwdv+1BmzzLWEpmuhNXZ3c33DGr8OyxbM1wGmoInoPKMeEjuFZMXgtSb2YonYCFnWPzoAM/XbygVBM0lDjT3jfP/6dI7Ah7ZB6WzcVSgew119cTNXEQi0l0FgMvfQAje4u87UP5M9cuklu9GyDXuXf1htHrIPLL+WU=
+	t=1784656499; cv=none; b=f9z4UIrd5tlZmbrzAmhNgHAnv+T5MbSE6tqiQvUQXMORT914lMzKI/2Hme1ASqW6N+xgjxEeZBgAAq6ESCUv8yIgGpKaFhv53rJxRFIErITPvp0xgshm0arTEjDx1WwhRVT5ww4gaU1MINlIewqM/HwPt2/6Z4qsD8Fum6D6QFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656496; c=relaxed/simple;
-	bh=IWL4AYEOdedMZ70/Z/+IZT37Bf5+nPHwfocBlC2NH28=;
+	s=arc-20240116; t=1784656499; c=relaxed/simple;
+	bh=EQfeJPuxScLx31ugXC2d/YHj3ooQafOSnXeV12fVHJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=suUKbG+Jmw0yNFvAIGlFl3s+fEKiDxQ1nANmfMNW/UY60JoRqDA7HR4frYtqO5Z9+9KSUXR7vbyI0BV/ryghiRlvWxoe0Sb+kDlORZxgAKrrmcBsN6jdCFR59EDWIkIh0Mn90iPLhZ6IVsFI7NKGHQlcNVOP7yaa/knhjg74p4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dZNeuWHm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OLDwB+ZpR5qVIJV44x7m4fIPH++kf074uCjIST6OkBQJnDRfT2EnQlYicup7hux5KET+29yJmaMlJaYGAvAbm/y6uRB4eEZoBoTdZOSS6kOn5Q65GYJdOkynOvNwnERy9NPEb0t2Sknge27slThIko/g2jUX6UySc0+hW8NBHec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Do53A0+D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZNeuWHm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC56F1F000E9;
-	Tue, 21 Jul 2026 17:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Do53A0+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5611F1F000E9;
+	Tue, 21 Jul 2026 17:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656495;
-	bh=GYU7qdianG+8BGsxnAfroDoAwNERTktAllIQ6XK+lWY=;
+	s=korg; t=1784656497;
+	bh=Q3o2bGz4h3Huqve/Obph6Que17J+vuHTfbKfMs1vA50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dZNeuWHmZ7zOdBQfjBzozrq7RTPmhI9xqB7dlj8yPozj3AOKC6aNnTTheQoWUxAMF
-	 dtqNJAkFL3tTKn/4r3H0Z7i1llIN3ea8oilKyP8jwAJ+VsVdqctP6Pr56zB18DRzhP
-	 3XNGNzCsTtL2+ZVYIL4bYEVIK72WCDMe72yb73AY=
+	b=Do53A0+D1diho1dkcjtPXmAZnlTLh48aOoa2nOch44suKo0rGAzwwi3uwnPUBHzoX
+	 MQkY+p9ZB1VAV+zPdQ6uSZlWcQCyHV+VwFRz1WPhD8DT1v0RN2d8xQxHA+5zWoC5dk
+	 5/5UOImrTEjI0axO4RnTPP5gOD4zIicD3DFy+W8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0408/1611] wifi: mt76: mt7996: Fix possible NULL pointer dereference in mt7996_mac_write_txwi_80211()
-Date: Tue, 21 Jul 2026 17:08:44 +0200
-Message-ID: <20260721152524.424959936@linuxfoundation.org>
+Subject: [PATCH 6.18 0409/1611] wifi: mt76: mt7996: fix reading zeroed info->control.flags after mt76_tx_status_skb_add()
+Date: Tue, 21 Jul 2026 17:08:45 +0200
+Message-ID: <20260721152524.450219435@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,59 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 61370e6674b5253de5686813ceeceebc35a7d3e5 ]
+[ Upstream commit 729c83a3330c0a56662cd0d8e40db96d41c00a54 ]
 
-For injected frames (e.g. via radiotap), mac80211 can pass
-info->control.vif = NULL, as explicitly noted in struct ieee80211_tx_info.
-Check vif pointer before executing ieee80211_vif_is_mld() in
-mt7996_mac_write_txwi_80211 routine in order to avoid a possible NULL
-pointer dereference.
+mt76_tx_status_skb_add() zeroes the mt76_tx_cb struct stored at
+info->status.status_driver_data via memset(). Since info->control and
+info->status are members of the same union in ieee80211_tx_info,
+this overwrites info->control.flags.
+In mt7996_tx_prepare_skb(), mt76_tx_status_skb_add() is called before
+mt7996_mac_write_txwi(), which re-reads info->control.flags to extract
+IEEE80211_TX_CTRL_MLO_LINK. Because the field has been zeroed, the
+link_id always resolves to 0 for frames using global_wcid, leading to
+incorrect TXWI configuration.
+Fix this by passing link_id as an explicit parameter to
+mt7996_mac_write_txwi(). In mt7996_tx_prepare_skb(), the link_id is
+already extracted from info->control.flags before the destructive
+mt76_tx_status_skb_add() call. For the beacon and inband discovery
+callers in mcu.c, use link_conf->link_id directly.
 
 Fixes: f0b0b239b8f36 ("wifi: mt76: mt7996: rework mt7996_mac_write_txwi() for MLO support")
 Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260531-mt7996_mac_write_txwi_80211-null-ptr-deref-v1-1-6dd38e1d3422@kernel.org
+Link: https://patch.msgid.link/20260531-mt76_tx_status_skb_add-overwrite-fix-v2-1-b73c4b4a9798@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c    | 14 ++++----------
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c    |  5 +++--
+ drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h |  3 ++-
+ 3 files changed, 9 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index 989cf23f11142a..907e312562ab73 100644
+index 907e312562ab73..57f3f358393aa2 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -796,6 +796,7 @@ mt7996_mac_write_txwi_80211(struct mt7996_dev *dev, __le32 *txwi,
- 	bool multicast = is_multicast_ether_addr(hdr->addr1);
- 	u8 tid = skb->priority & IEEE80211_QOS_CTL_TID_MASK;
- 	__le16 fc = hdr->frame_control, sc = hdr->seq_ctrl;
-+	struct ieee80211_vif *vif = info->control.vif;
- 	u16 seqno = le16_to_cpu(sc);
- 	bool hw_bigtk = false;
- 	u8 fc_type, fc_stype;
-@@ -858,7 +859,7 @@ mt7996_mac_write_txwi_80211(struct mt7996_dev *dev, __le32 *txwi,
- 		txwi[3] |= cpu_to_le32(MT_TXD3_REM_TX_COUNT);
+@@ -896,7 +896,8 @@ mt7996_mac_write_txwi_80211(struct mt7996_dev *dev, __le32 *txwi,
+ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
+ 			   struct sk_buff *skb, struct mt76_wcid *wcid,
+ 			   struct ieee80211_key_conf *key, int pid,
+-			   enum mt76_txq_id qid, u32 changed)
++			   enum mt76_txq_id qid, u32 changed,
++			   unsigned int link_id)
+ {
+ 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
+ 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
+@@ -906,7 +907,6 @@ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
+ 	bool is_8023 = info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP;
+ 	struct mt76_vif_link *mlink = NULL;
+ 	struct mt7996_vif *mvif;
+-	unsigned int link_id;
+ 	u16 tx_count = 15;
+ 	u32 val;
+ 	bool inband_disc = !!(changed & (BSS_CHANGED_UNSOL_BCAST_PROBE_RESP |
+@@ -914,17 +914,11 @@ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
+ 	bool beacon = !!(changed & (BSS_CHANGED_BEACON |
+ 				    BSS_CHANGED_BEACON_ENABLED)) && (!inband_disc);
+ 
+-	if (wcid != &dev->mt76.global_wcid)
+-		link_id = wcid->link_id;
+-	else
+-		link_id = u32_get_bits(info->control.flags,
+-				       IEEE80211_TX_CTRL_MLO_LINK);
+-
+ 	mvif = vif ? (struct mt7996_vif *)vif->drv_priv : NULL;
+ 	if (mvif) {
+ 		if (wcid->offchannel)
+ 			mlink = rcu_dereference(mvif->mt76.offchannel_link);
+-		if (!mlink)
++		if (!mlink && link_id != IEEE80211_LINK_UNSPECIFIED)
+ 			mlink = rcu_dereference(mvif->mt76.link[link_id]);
  	}
  
--	if (multicast && ieee80211_vif_is_mld(info->control.vif)) {
-+	if (multicast && vif && ieee80211_vif_is_mld(vif)) {
- 		val = MT_TXD3_SN_VALID |
- 		      FIELD_PREP(MT_TXD3_SEQ, IEEE80211_SEQ_TO_SN(seqno));
- 		txwi[3] |= cpu_to_le32(val);
-@@ -878,12 +879,12 @@ mt7996_mac_write_txwi_80211(struct mt7996_dev *dev, __le32 *txwi,
- 		txwi[3] &= ~cpu_to_le32(MT_TXD3_HW_AMSDU);
- 	}
+@@ -1136,7 +1130,7 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
+ 	/* Transmit non qos data by 802.11 header and need to fill txd by host*/
+ 	if (!is_8023 || pid >= MT_PACKET_ID_FIRST)
+ 		mt7996_mac_write_txwi(dev, txwi_ptr, tx_info->skb, wcid, key,
+-				      pid, qid, 0);
++				      pid, qid, 0, link_id);
  
--	if (ieee80211_vif_is_mld(info->control.vif) &&
-+	if (vif && ieee80211_vif_is_mld(vif) &&
- 	    (multicast || unlikely(skb->protocol == cpu_to_be16(ETH_P_PAE))))
- 		txwi[5] |= cpu_to_le32(MT_TXD5_FL);
+ 	/* MT7996 and MT7992 require driver to provide the MAC TXP for AddBA
+ 	 * req
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index 38b8743409a0cf..a3f813be107df7 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -2763,7 +2763,7 @@ mt7996_mcu_beacon_cont(struct mt7996_dev *dev,
  
- 	if (ieee80211_is_nullfunc(fc) && ieee80211_has_a4(fc) &&
--	    ieee80211_vif_is_mld(info->control.vif)) {
-+	    vif && ieee80211_vif_is_mld(vif)) {
- 		txwi[5] |= cpu_to_le32(MT_TXD5_FL);
- 		txwi[6] |= cpu_to_le32(MT_TXD6_DIS_MAT);
- 	}
+ 	buf = (u8 *)bcn + sizeof(*bcn);
+ 	mt7996_mac_write_txwi(dev, (__le32 *)buf, skb, wcid, NULL, 0, 0,
+-			      BSS_CHANGED_BEACON);
++			      BSS_CHANGED_BEACON, link_conf->link_id);
+ 
+ 	memcpy(buf + MT_TXD_SIZE, skb->data, skb->len);
+ }
+@@ -2906,7 +2906,8 @@ int mt7996_mcu_beacon_inband_discov(struct mt7996_dev *dev,
+ 
+ 	buf = (u8 *)tlv + sizeof(*discov);
+ 
+-	mt7996_mac_write_txwi(dev, (__le32 *)buf, skb, wcid, NULL, 0, 0, changed);
++	mt7996_mac_write_txwi(dev, (__le32 *)buf, skb, wcid, NULL, 0, 0,
++			      changed, link_conf->link_id);
+ 
+ 	memcpy(buf + MT_TXD_SIZE, skb->data, skb->len);
+ 
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
+index 6793161ed198cb..b8ffa42c5a1da7 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
+@@ -813,7 +813,8 @@ void mt7996_mac_enable_nf(struct mt7996_dev *dev, u8 band);
+ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
+ 			   struct sk_buff *skb, struct mt76_wcid *wcid,
+ 			   struct ieee80211_key_conf *key, int pid,
+-			   enum mt76_txq_id qid, u32 changed);
++			   enum mt76_txq_id qid, u32 changed,
++			   unsigned int link_id);
+ void mt7996_mac_update_beacons(struct mt7996_phy *phy);
+ void mt7996_mac_set_coverage_class(struct mt7996_phy *phy);
+ void mt7996_mac_work(struct work_struct *work);
 -- 
 2.53.0
 
