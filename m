@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6087F46AA92;
-	Tue, 21 Jul 2026 15:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02CA46C4B1;
+	Tue, 21 Jul 2026 15:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649523; cv=none; b=N3wEAFBDsVU9nCjZNBMOTLveD3+W0FaA+H7T90fuJ7/lBuX3dW2rIWOjoKZuvoolZp6obfqWE1VCiayD9Yu2RxKc6UYd/GO1BhbHWn5uISs0FdVQWZjDOVK0C81iV8bxzkxq/Ib3bZUwRqChiSzCE9gncrV4oXoSylqkA6Jnn/A=
+	t=1784649525; cv=none; b=hWUafQlru0zhxMgpyHSOkldnbOeA76Orh+vo04MUCuszEjUYN2x51xllvvr6Pc8AoQUBXR/3g9ls2oLrCRw2AlSg/oUg2cP6ivTB0pkrCiUmN5yeKRF5H+VEOB3qBLDT7Un9XvVFUE+M9ZeuOYAqHuu0rsvmSuSui5V+gr9ZBi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649523; c=relaxed/simple;
-	bh=cB0O6JmhM9sNnptKEa0xRqO08RIaZSXIFmR5ikoGvlI=;
+	s=arc-20240116; t=1784649525; c=relaxed/simple;
+	bh=GAqyCWVPAfYqj9HWQpXVtRpTx0yPZgU+6vVv7BhPdoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ll6zXvdV7mzwPQJrZSuIfhmRcE3OgSMVr5ECzm/xXxwtl66MT8T79hXH+nRC6DZb2A/TnYyr0gApmX1ShdrbVZ6V+EsihvUgY7My6S2Sz6wOk35mhK1rE4l4cI1bvefmkTHTW3qLTv0jjxVINmvmgPiFjbd6t+heVp9PQEavkN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Peu2qk6E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t66zwxeoUmGT2QZqJ2MnRDGv7dnZilLVyYxsiixJCN5b0DENSa7VbZPm/8mmpnHf2AY/UXeToGmUjYsojVIHLPP7KPQdyvqqRXNcz0rdkC/6/VFQFakNdceWiAK0Aoz9G3QizvHehnHSU6pIVOunSOVqhsfWF0X3iLPUZFmel1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uO41b5Gd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Peu2qk6E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827351F000E9;
-	Tue, 21 Jul 2026 15:58:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uO41b5Gd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E2F1F000E9;
+	Tue, 21 Jul 2026 15:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649522;
-	bh=v05gezc2m467qFuKxcghkhBUJfkrGlG+IIodFolMCuw=;
+	s=korg; t=1784649524;
+	bh=LcOnss7LEtSb7qxmR0gcEayh1X5afoQcv9/5uh1Rhrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Peu2qk6E4H891g5RPYSCiMiYWNH3jA9fSFtZ/DSxSG1Oi0MYG4eS8UohVlQU/T2Mj
-	 EFL76K4w/Nco2cRHp1ICM3iskEnzaE/OzaSpwyZNqoUL3jBSRUpPnXmFR767paLgvf
-	 QlQJMdGUIdTucFrubmklfW1bT9Q7mhkNt5Bxz+H4=
+	b=uO41b5GdR0Cp9iMJgBtV9E1tURusonTelaAYCEe0Gxo0eC7rw4PMSigyu4UWN7qx/
+	 vqpZeasx8gA/SW9AvtueoA7moUafhiRDGTuUYQjHpGDLHIROwSwMuF+PoeXsYgcCTT
+	 SL2DUo4eCLmFcIqm55xoy9vVlpQB/DM34+0wE7DU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0611/2077] btrfs: zoned: always set max_active_zones for zoned devices
-Date: Tue, 21 Jul 2026 17:04:44 +0200
-Message-ID: <20260721152607.217508086@linuxfoundation.org>
+Subject: [PATCH 7.1 0612/2077] btrfs: annotate lockless read of defrag_bytes in should_nocow()
+Date: Tue, 21 Jul 2026 17:04:45 +0200
+Message-ID: <20260721152607.240840374@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,136 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 21a3533b99b8a53a026cc9f5041b10795c1f3ae8 ]
+[ Upstream commit 89c0dc3de7a73e8aba5e9bfef543eee047a3d0d2 ]
 
-When a block device does not report a maximum number of open or active
-zones,  currently assign BTRFS_DEFAULT_MAX_ACTIVE_ZONES (128) to
-the internal limit, if the device has more than
-BTRFS_DEFAULT_MAX_ACTIVE_ZONES zones.
+should_nocow() reads inode->defrag_bytes without holding inode->lock,
+while btrfs_set_delalloc_extent() and btrfs_clear_delalloc_extent()
+update it under that spinlock.
 
-But if the device has less than BTRFS_DEFAULT_MAX_ACTIVE_ZONES the
-internal max_active_zones limit will stay at 0, even if the device has
-zone resource limits. Furthermore, if the device has a total number of
-zones that is less than BTRFS_DEFAULT_MAX_ACTIVE_ZONE, max_active_zones
-should be set to at most the number of zones.
+This is a data race.  The read is a quick check used to decide whether
+to fall back to COW for a NOCOW inode: if defrag_bytes is non-zero and
+the range is tagged EXTENT_DEFRAG, we force COW so that defragmentation
+can rewrite the extent.  Reading a stale value is harmless because:
 
-Also move the max_active_zone calculation and setting into a dedicated
-helper, to shrink btrfs_get_dev_zone_info().
+  - A missed increment may skip COW once, but the defrag pass will
+    redo the extent later.
+  - A stale non-zero may force an unnecessary COW, which is a minor
+    efficiency loss, not a correctness issue.
 
-Fixes: 04147d8394e8 ("btrfs: zoned: limit active zones to max_open_zones")
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+On 64-bit platforms an aligned u64 load is naturally atomic so tearing
+cannot happen.  On 32-bit platforms u64 may tear, but we only test for
+zero vs non-zero, so the heuristic stays correct regardless.  Use
+data_race() annotation.
+
+Fixes: 47059d930f0e ("Btrfs: make defragment work with nodatacow option")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+[ Use data_race() instead of READ_ONCXE() ]
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/zoned.c | 64 +++++++++++++++++++++++++++++-------------------
- 1 file changed, 39 insertions(+), 25 deletions(-)
+ fs/btrfs/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index 16dd87aa06f20c..0d590e81f3259b 100644
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -354,12 +354,33 @@ int btrfs_get_dev_zone_info_all_devices(struct btrfs_fs_info *fs_info)
- 	return ret;
- }
- 
-+static int btrfs_get_max_active_zones(struct btrfs_device *device,
-+				      struct btrfs_zoned_device_info *zone_info)
-+{
-+	struct block_device *bdev = device->bdev;
-+	int max_active_zones;
-+
-+	if (unlikely(zone_info->nr_zones < BTRFS_MIN_ACTIVE_ZONES)) {
-+		btrfs_err(device->fs_info, "zoned: not enough zones to mount filesystem: %u < %d",
-+			  zone_info->nr_zones, BTRFS_MIN_ACTIVE_ZONES);
-+		return -EINVAL;
-+	}
-+
-+	max_active_zones = min_not_zero(bdev_max_active_zones(bdev),
-+					bdev_max_open_zones(bdev));
-+	if (max_active_zones == 0)
-+		max_active_zones = min(zone_info->nr_zones / 4,
-+				       BTRFS_DEFAULT_MAX_ACTIVE_ZONES);
-+
-+	zone_info->max_active_zones = max(max_active_zones, BTRFS_MIN_ACTIVE_ZONES);
-+	return 0;
-+}
-+
- int btrfs_get_dev_zone_info(struct btrfs_device *device, bool populate_cache)
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index f1f7ac8684735d..dc5148f176e77c 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -2317,7 +2317,7 @@ static noinline int run_delalloc_nocow(struct btrfs_inode *inode,
+ static bool should_nocow(struct btrfs_inode *inode, u64 start, u64 end)
  {
- 	struct btrfs_fs_info *fs_info = device->fs_info;
- 	struct btrfs_zoned_device_info *zone_info = NULL;
- 	struct block_device *bdev = device->bdev;
--	unsigned int max_active_zones;
- 	unsigned int nactive;
- 	sector_t nr_sectors;
- 	sector_t sector = 0;
-@@ -424,19 +445,9 @@ int btrfs_get_dev_zone_info(struct btrfs_device *device, bool populate_cache)
- 	if (!IS_ALIGNED(nr_sectors, zone_sectors))
- 		zone_info->nr_zones++;
- 
--	max_active_zones = min_not_zero(bdev_max_active_zones(bdev),
--					bdev_max_open_zones(bdev));
--	if (!max_active_zones && zone_info->nr_zones > BTRFS_DEFAULT_MAX_ACTIVE_ZONES)
--		max_active_zones = BTRFS_DEFAULT_MAX_ACTIVE_ZONES;
--	if (max_active_zones && max_active_zones < BTRFS_MIN_ACTIVE_ZONES) {
--		btrfs_err(fs_info,
--"zoned: %s: max active zones %u is too small, need at least %u active zones",
--				 rcu_dereference(device->name), max_active_zones,
--				 BTRFS_MIN_ACTIVE_ZONES);
--		ret = -EINVAL;
-+	ret = btrfs_get_max_active_zones(device, zone_info);
-+	if (ret)
- 		goto out;
--	}
--	zone_info->max_active_zones = max_active_zones;
- 
- 	zone_info->seq_zones = bitmap_zalloc(zone_info->nr_zones, GFP_KERNEL);
- 	if (!zone_info->seq_zones) {
-@@ -517,26 +528,29 @@ int btrfs_get_dev_zone_info(struct btrfs_device *device, bool populate_cache)
- 		goto out;
- 	}
- 
--	if (max_active_zones) {
--		if (unlikely(nactive > max_active_zones)) {
--			if (bdev_max_active_zones(bdev) == 0) {
--				max_active_zones = 0;
--				zone_info->max_active_zones = 0;
--				goto validate;
--			}
-+	if (unlikely(nactive > zone_info->max_active_zones)) {
-+		if (bdev_max_active_zones(bdev) > 0) {
- 			btrfs_err(device->fs_info,
--			"zoned: %u active zones on %s exceeds max_active_zones %u",
--					 nactive, rcu_dereference(device->name),
--					 max_active_zones);
-+					"zoned: %u active zones on %s exceeds max_active_zones %u",
-+					nactive, rcu_dereference(device->name),
-+					zone_info->max_active_zones);
- 			ret = -EIO;
- 			goto out;
- 		}
-+
-+		/*
-+		 * This is for backward compatibility with old filesystems that
-+		 * have a lot of active zones because the device doesn't report
-+		 * a maximum number of zones and we previously didn't care for
-+		 * the limit.
-+		 */
-+		zone_info->max_active_zones = 0;
-+	} else {
- 		atomic_set(&zone_info->active_zones_left,
--			   max_active_zones - nactive);
-+				zone_info->max_active_zones - nactive);
- 		set_bit(BTRFS_FS_ACTIVE_ZONE_TRACKING, &fs_info->flags);
- 	}
- 
--validate:
- 	/* Validate superblock log */
- 	nr_zones = BTRFS_NR_SB_LOG_ZONES;
- 	for (i = 0; i < BTRFS_SUPER_MIRROR_MAX; i++) {
+ 	if (inode->flags & (BTRFS_INODE_NODATACOW | BTRFS_INODE_PREALLOC)) {
+-		if (inode->defrag_bytes &&
++		if (data_race(inode->defrag_bytes) &&
+ 		    btrfs_test_range_bit_exists(&inode->io_tree, start, end, EXTENT_DEFRAG))
+ 			return false;
+ 		return true;
 -- 
 2.53.0
 
