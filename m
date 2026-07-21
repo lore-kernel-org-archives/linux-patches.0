@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8552F3B47E2;
-	Tue, 21 Jul 2026 20:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103333B774D;
+	Tue, 21 Jul 2026 20:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666700; cv=none; b=LnSvIG+g7KbOZs+5JBN8qn3YaOa3JD74CIdIrxzd2wICSgoQyV6pwKx3mQkbPmIi31KglGnTvXaV6OJ6mJ4F601yPT0pNJ2g5JzuPNBrKD1yEke42mRNbQBW6kAjhdYiBvJDXEgWMtdI2wlRHNCIUrzBwFqNnovCUfpERv7cKYw=
+	t=1784666703; cv=none; b=dx9pR6ZyL8Hyw3C7U0tC1q7qELvgDupnBE6iE4pTbjGYOvYVpIB3KXsDe2Nnb6tm72qLbsZyWf6uCoi7vhou0GKzfdFyCFGSQ0s0K8Oqd1/nTUQ+8eniCWr/pm5MjwBttLwuYu2PKkIHKT0c8YxyVX1WqSTXkWOUPRJPNEYW7Kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666700; c=relaxed/simple;
-	bh=48RROYUQm6M7savw4BSRbrQ+Fu+z1volxP/7ZgOJmyg=;
+	s=arc-20240116; t=1784666703; c=relaxed/simple;
+	bh=ngQdpQfks6c7KOvSFCSm9qxxoQ57M43Q8Ov8d54n7Jw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BuwzyOsm8Vwb1sDSWPZtjqsVEx4f2joLwt0bAjJlk8pEZX0+x7xLwIUj6ttRE1UydohMv6JXiF5RFJDa43g/U2MB3cefdnyJs0v92A/EHZobQ2DyTsiRbgO0p7KAGQrM/hT0keL9uup4CuuUP+BfjKLFnN7U8DkiD9vTfbdPx8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTyCouwn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Etn3rXXuj+uCspUA8t7uIetXpdIoD0uvBPpUTvbU9cJCdDerUwMesQEk+QQPIzEnTnEdfluHSpr2u9X5rq/KXgDo/toXtq0wn70p0mNUNOAPUrITwGWhy8QEd4HD47kyTfo5tPubH/SkW25kMpnH6am0N5rNrdYKQNnlj2iRfAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3c79DUo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTyCouwn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA32E1F000E9;
-	Tue, 21 Jul 2026 20:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3c79DUo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C01B1F000E9;
+	Tue, 21 Jul 2026 20:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666699;
-	bh=sJwn9e2KbSGJXDgGGNqQNDhZCaUUtP2Lcz28ux60EMY=;
+	s=korg; t=1784666702;
+	bh=nC84FbfXhhzMNj1+xGf7WghI5AiVOeMbQTjLB+mi8hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xTyCouwn1CGHawv+CJosYB41vuE34g+Dmh+WgKbEynSKIuhf11+KXiT+gAd8VKRt+
-	 j+SztvFJk54deVP36FqKJydJnpAbjweLFSMkWmMgR9R42shkYZGzTvjG0yN6es4noI
-	 zXT7LRkY+68QeigczjZWWk/0wHNQmkQrcLAyGG/Y=
+	b=r3c79DUo7Fmyrj6K0ZrC6aTli9elmrTp14tVBlabqQlPloUgYUmIHO8rC3QsAB0BL
+	 gDocJQIMaz244g81RRA1WC28e58M7Pg0cAuzqrfa3OOadkHOO/bpIDwjCfW2MUdvg7
+	 vj41t/Vat8p6F03Vv7dZd65mGIzeBSHGX07z/lNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+346474e3bf0b26bd3090@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0739/1266] ieee802154: fix kernel-infoleak in dgram_recvmsg()
-Date: Tue, 21 Jul 2026 17:19:36 +0200
-Message-ID: <20260721152458.409419800@linuxfoundation.org>
+Subject: [PATCH 6.6 0740/1266] md/raid1: free r1_bio when REQ_NOWAIT is set and read would block on retry
+Date: Tue, 21 Jul 2026 17:19:37 +0200
+Message-ID: <20260721152458.432178778@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,83 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 
-[ Upstream commit 4db86f8ab11b5a41bfc36680be837e6ac1375ec6 ]
+[ Upstream commit 69ad6ce47f9bf2b9fe0ed69b042db993d33bbf12 ]
 
-KMSAN reported a kernel-infoleak in move_addr_to_user():
+When a read is retried, raid1_read_request() may be called with a
+pre-allocated r1_bio. If wait_read_barrier() fails for a REQ_NOWAIT
+read, the bio is completed and the function returns immediately. In this
+case the existing r1_bio is leaked.
 
-BUG: KMSAN: kernel-infoleak in instrument_copy_to_user
-include/linux/instrumented.h:131 [inline]
-BUG: KMSAN: kernel-infoleak in _inline_copy_to_user
-include/linux/uaccess.h:205 [inline]
-BUG: KMSAN: kernel-infoleak in _copy_to_user+0xcc/0x120
-lib/usercopy.c:26
- instrument_copy_to_user include/linux/instrumented.h:131 [inline]
- _inline_copy_to_user include/linux/uaccess.h:205 [inline]
- _copy_to_user+0xcc/0x120 lib/usercopy.c:26
- copy_to_user include/linux/uaccess.h:236 [inline]
- move_addr_to_user+0x2e7/0x440 net/socket.c:302
- ____sys_recvmsg+0x232/0x610 net/socket.c:2925
- ...
- Uninit was stored to memory at:
- ieee802154_addr_to_sa include/net/ieee802154_netdev.h:369 [inline]
- dgram_recvmsg+0xa09/0xbe0 net/ieee802154/socket.c:739
+This fixes a leak of pre-allocated r1_bio structures for retried reads.
 
-The issue occurs because the `pan_id` field of `struct ieee802154_addr`
-is left uninitialized when the address mode is `IEEE802154_ADDR_NONE`.
-The execution flow is as follows:
-
-1. `__ieee802154_rx_handle_packet()` declares a local `struct
-ieee802154_hdr hdr` on the stack.
-2. `ieee802154_hdr_pull()` calls `ieee802154_hdr_get_addr()` to parse
-the source and destination addresses into this structure.
-3. If the address mode is `IEEE802154_ADDR_NONE`,
-`ieee802154_hdr_get_addr()` previously only set the `mode` field,
-leaving the `pan_id` field containing uninitialized stack memory.
-4. This uninitialized `pan_id` is later copied into a `struct
-sockaddr_ieee802154` in `dgram_recvmsg()` via `ieee802154_addr_to_sa()`.
-5. Finally, `move_addr_to_user()` copies the socket address structure to
-user space, leaking the uninitialized bytes.
-
-Fix this by using `memset` to zero out the address structure in
-`ieee802154_hdr_get_addr()` when the mode is `IEEE802154_ADDR_NONE`.
-
-Fixes: 94b4f6c21cf5 ("ieee802154: add header structs with endiannes and operations")
-Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
-Reported-by: syzbot+346474e3bf0b26bd3090@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=346474e3bf0b26bd3090
-Link: https://syzkaller.appspot.com/ai_job?id=a507a109-d683-4a2c-bc03-93394f491b17
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/62795fd9-fc0c-48eb-bb82-05ffc5a57104@mail.kernel.org
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Fixes: 5aa705039c4f ("md: raid1 add nowait support")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260611083514.754922-1-abd.masalkhi@gmail.com?part=1
+Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+Link: https://patch.msgid.link/20260611101350.759154-1-abd.masalkhi@gmail.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ieee802154/header_ops.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/md/raid1.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/ieee802154/header_ops.c b/net/ieee802154/header_ops.c
-index 41a556be101790..a9f0c8df5ae4ac 100644
---- a/net/ieee802154/header_ops.c
-+++ b/net/ieee802154/header_ops.c
-@@ -173,10 +173,13 @@ ieee802154_hdr_get_addr(const u8 *buf, int mode, bool omit_pan,
- {
- 	int pos = 0;
- 
--	addr->mode = mode;
--
--	if (mode == IEEE802154_ADDR_NONE)
-+	if (mode == IEEE802154_ADDR_NONE) {
-+		memset(addr, 0, sizeof(*addr));
-+		addr->mode = IEEE802154_ADDR_NONE;
- 		return 0;
-+	}
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index 259cc8a97348bf..836123f2929a58 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -1245,6 +1245,12 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
+ 	if (!wait_read_barrier(conf, bio->bi_iter.bi_sector,
+ 				bio->bi_opf & REQ_NOWAIT)) {
+ 		bio_wouldblock_error(bio);
 +
-+	addr->mode = mode;
++		if (r1bio_existed) {
++			set_bit(R1BIO_Returned, &r1_bio->state);
++			raid_end_bio_io(r1_bio);
++		}
++
+ 		return;
+ 	}
  
- 	if (!omit_pan) {
- 		memcpy(&addr->pan_id, buf + pos, 2);
 -- 
 2.53.0
 
