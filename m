@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D19744AB68;
-	Tue, 21 Jul 2026 21:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFD535C6BD;
+	Tue, 21 Jul 2026 21:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669138; cv=none; b=HNTRymy5ws2I95gBqNSpp34Wnol49oWqq5yV23tStB8v6iimydqrbjT2vpQdye4LGGvL0vvq/gUyl34/rZq+kODTJTWmfPLwBu/l0/ouEiIncSn2C8nOIvfbOoNTlkyQ/49h51tVRWPaM3h8erl1W5t9SSZxKN6bBBInPCuxLvI=
+	t=1784669141; cv=none; b=DWw/jVvbzu15LqYAR7usmlwHoecIxOnPNS0ilwxSuare03w0QO43h1G5p08NtCWHxfSkr0wjaMEN+CHWH8/NrErZoik62JuC/Q5WLoWjX7qhzxi/Am7s0T79IYo5lI5w1z9efdGIVlt2Kcgnyo7M4VR8fJP02qUDBS2C2fG030s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669138; c=relaxed/simple;
-	bh=ZHquuAa2dYmpNLJsJnWQT0Mdq5PnXJgPm7MzYvxlcyQ=;
+	s=arc-20240116; t=1784669141; c=relaxed/simple;
+	bh=QEerb/O024KoZW/mOxMehL/D68aEn5jC8qK8iE2Swyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iilwviRqnyW51JD/27Oc3B6BRwH20VDPvs1OoZUvlNwGa0C0B+6nDZGzmTo+rM86UjmGGhK24TJ/JfX8T3ibgdLn9Eit/u/GwFiaFz9NVGvic9pkiahVRuZLGIRA2Qpb4DzbIctDbzkJGRPa/ag1pw8zqirAigLh1MFMlw+RjUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSvzHyhH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O0VMehTjkgxlhbNjZV8XW2jOAWy71GYz0CMxzeS5LaT5uZqQgB1gA7zD5COZEaA2dUsV/TQk4aSdPGueTnscznQHF4lnl/FaFgt/GhRywd8AuQ/WdKxIVwTxsudjHogdZ0oKShXcpaWHSo5aMs1DQ1yyv4AuxX7yHJ01NHc2y0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZcZ9NHa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSvzHyhH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F0A1F00A3F;
-	Tue, 21 Jul 2026 21:25:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZcZ9NHa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3181F000E9;
+	Tue, 21 Jul 2026 21:25:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669137;
-	bh=IJiyhgc1RbrhLrO93+7DYhkQPKvS7AGFfkuuzC7YvY0=;
+	s=korg; t=1784669139;
+	bh=uufOSNkS26Ao6jrbCkZH9rQw9AoEs9CwulSJ7dCJUbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FSvzHyhHV9DV+BM0kNboULSJdSIgWMY1kI0x8X6s7sAZb3ChaOXNQ0TIRcPPqJKI0
-	 p88ZndtvJGGg+vfJsoZG+VXxK6+UbWhPWDGtXevkqdH9yvMYzwSJg7MjHQ4uihP/V9
-	 +QqgH4clBl+P2nPjhZcgTMsDNMKnhVEkRMYQKlrE=
+	b=FZcZ9NHaeQqJ7Pr9SRmO62gsp55/4r6TsQ2MNEiNJmmSTbaZ5WyIvB2vHFr0twjhf
+	 rGNT62qwnmP1e3gEo3S7SVYwW/gmu/Su/tTGI+3rECzvzN15c9LtDc6uUPwmWi6pgb
+	 CU3/J49/AyFTVmPk1Hol3D32fQ060odCIy5AXd0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0424/1067] Bluetooth: hci: validate codec capability element length
-Date: Tue, 21 Jul 2026 17:17:05 +0200
-Message-ID: <20260721152434.106982154@linuxfoundation.org>
+Subject: [PATCH 6.1 0442/1067] crypto: cavium/cpt - fix DMA cleanup using wrong loop index
+Date: Tue, 21 Jul 2026 17:17:23 +0200
+Message-ID: <20260721152434.504102083@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,47 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit c38fbcdc407925c7088f7e5f11c1fff73d2d35a2 ]
+[ Upstream commit 9dbf173bd32d5f81b005008b682bfb50aa093455 ]
 
-Read Local Codec Capabilities returns a sequence of capability elements.
-Each element starts with a one-byte length followed by that many payload
-bytes.
+The sg_cleanup error path used list[i] instead of list[j] when unmapping
+DMA buffers, leaking successfully mapped entries and repeatedly unmapping
+the failed one.
 
-hci_read_codec_capabilities() checks that the skb contains the length
-byte, but then validates only caps->len against the remaining skb
-length.  A malformed controller response with one remaining byte and
-caps->len set to one passes that check even though the element needs two
-bytes.  The parser then records a two-byte capability and copies one
-byte beyond the advertised response payload into the codec list.
-
-Validate the full element size, including the length byte, before adding
-it to the accumulated capability length.  This preserves all well-formed
-capability elements and drops only truncated controller responses.
-
-Fixes: 8961987f3f5f ("Bluetooth: Enumerate local supported codec and cache details")
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: c694b233295b ("crypto: cavium - Add the Virtual Function driver for CPT")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_codec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/cavium/cpt/cptvf_reqmanager.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_codec.c b/net/bluetooth/hci_codec.c
-index 3cc135bb1d30ca..5bc5003c387c66 100644
---- a/net/bluetooth/hci_codec.c
-+++ b/net/bluetooth/hci_codec.c
-@@ -100,7 +100,7 @@ static void hci_read_codec_capabilities(struct hci_dev *hdev, __u8 transport,
- 				caps = (void *)skb->data;
- 				if (skb->len < sizeof(*caps))
- 					goto error;
--				if (skb->len < caps->len)
-+				if (skb->len < sizeof(caps->len) + caps->len)
- 					goto error;
- 				len += sizeof(caps->len) + caps->len;
- 				skb_pull(skb,  sizeof(caps->len) + caps->len);
+diff --git a/drivers/crypto/cavium/cpt/cptvf_reqmanager.c b/drivers/crypto/cavium/cpt/cptvf_reqmanager.c
+index 153004bdfb5cde..753bdb2ae33f8d 100644
+--- a/drivers/crypto/cavium/cpt/cptvf_reqmanager.c
++++ b/drivers/crypto/cavium/cpt/cptvf_reqmanager.c
+@@ -108,8 +108,8 @@ static int setup_sgio_components(struct cpt_vf *cptvf, struct buf_ptr *list,
+ sg_cleanup:
+ 	for (j = 0; j < i; j++) {
+ 		if (list[j].dma_addr) {
+-			dma_unmap_single(&pdev->dev, list[i].dma_addr,
+-					 list[i].size, DMA_BIDIRECTIONAL);
++			dma_unmap_single(&pdev->dev, list[j].dma_addr,
++					 list[j].size, DMA_BIDIRECTIONAL);
+ 		}
+ 
+ 		list[j].dma_addr = 0;
 -- 
 2.53.0
 
