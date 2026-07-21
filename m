@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832F1348C4A;
-	Tue, 21 Jul 2026 20:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27215348C4A;
+	Tue, 21 Jul 2026 20:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664254; cv=none; b=HicG+hEoqcptBysKR/LtUG2nKiFNhi/kESyCI16QUQx5t2Tg81HxxV1GQ+iy5AzdNHq+Z49gLseGePvWwnseKJKqU1HYx3ChyUXEzEN/VbfrAh82fr1eCH9MXvVKXl+XydpBpA9D5f30vo9dGZ5Celbr82XlGKBdAvgzdpmp9Zg=
+	t=1784664256; cv=none; b=eNSEx0WYTfYqeXRsY35b7m7IjvloES2j0ulo8VZAJv17UkTTLIFV7H6iQkxdHSLyMjNBITiatsAZypd9rzpQuqhIlnjePSy5bwH4uiuASWO6tB/Jgip+CIPopxmPbYU9etatWTqBsRW4U5nRmFTWjsBTFW9BfuXaQqn3Czf1fQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664254; c=relaxed/simple;
-	bh=F85yRmB/a8nIQsKJbYDymSpY3gnKxd/3WHhr67tSN+o=;
+	s=arc-20240116; t=1784664256; c=relaxed/simple;
+	bh=22ufjDlLGFBKuDvsRrSsJ4Wv7GVePUSxCry6VTJJuQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QAH/FMn0DujQPzwmjS4wctnD48Thy1rxtnOaLsQ8Dks1t+chEWqJuNswQAZOa6LQo78hu7ZMsBK7LWE9h5qoQ4KCOZS9UkS/YIl4xh+uMKTku5S/b7XgyzEoLtFWPrH05Ye5HO5hg6MeDoY5Q4HiVGWnclbefgE6SeU3sxwKC9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b7I+4Q0P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q4lKFT0qfATp/l/P1y2sUyTOfKTzAjgBCO0sCZLB7MLfsXGVXRhD+o444/lbz64/sQ07Do8hUFVCrXSc1xaKIxNzxN0bTHhBi1es3mYdlXdwIxjJosfkBxzq05UAkqBBolXoTZz5X+93RlY0tqg//V4tXmbGg8psoI/t25u3RVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C17lUZBn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b7I+4Q0P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E869F1F000E9;
-	Tue, 21 Jul 2026 20:04:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C17lUZBn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9160C1F000E9;
+	Tue, 21 Jul 2026 20:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664252;
-	bh=SHPUW5W+dPLmINFo4arrG9Ugn0KtuSkJZ7QyVZRn+ig=;
+	s=korg; t=1784664255;
+	bh=Ct4YI6U4I//9GoMifx9i5HeHU+n5ZScNdbjUqPYPkEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b7I+4Q0P5SOemAFeKdeu9dvmi2hkWw7aEQkDnKOlK/0G+JAg1vweMD3QrjhYjUX9k
-	 OyfepKX1YFPFsLng8FmebSKgw/2Dbgw7gXmBxY/6nE8AlILabfT37AUzo94rrwxJrZ
-	 TU+rZBI+wL9m1Q6Z7CrCHLmkOdgCDPzC3Ycb8rKc=
+	b=C17lUZBndOTj8jhggh9qmWmMpYiTDy/v2u2j4hQJ5BkLDFmtHu/fs8NaouldDOIMr
+	 mNMXzPqHUUXNbctzAW8CTx6Y3OBf038YH9NfLIWPX4H/PZhNwOnLYqUVudjTBgoBnI
+	 F6JXcu90nNi0K1WvSChw5oP38aP//SMEyG54x91I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@auroraos.dev>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.12 1130/1276] mmc: sdhci-of-dwcmshc: check bus clock enable result in the probe() method
-Date: Tue, 21 Jul 2026 17:26:13 +0200
-Message-ID: <20260721152511.281002015@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Haoze Xie <royenheart@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 1131/1276] rust: block: fix GenDisk cleanup paths
+Date: Tue, 21 Jul 2026 17:26:14 +0200
+Message-ID: <20260721152511.304114262@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,77 +56,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@auroraos.dev>
+From: Haoze Xie <royenheart@gmail.com>
 
-commit 521f39ca93cc43ce1b3eae8d44201f8f55dd9151 upstream.
+[ Upstream commit 2957771379fa335103a4b539db57bb2271e12142 ]
 
-In the driver's probe() method, clk_disable_unprepare() for the bus clock
-is called on the error path even if the prior clk_prepare_enable() call has
-failed (and the same thing happens in the remove() method as well) -- that
-would cause the prepare/enable counter imbalance.  Also, the same problem
-can happen in the driver's suspend() method; note that the resume() method
-does check the clk_prepare_enable()'s result -- let's be consistent and do
-that in probe() method as well.  BTW, I don't know for sure what does the
-bus clock control -- if it affects the register accesses, the driver will
-likely cause (e.g. on ARM) a kernel oops if it fails to prepare/enable the
-bus clock in the probe() method...
+GenDiskBuilder::build() still has fallible work after
+__blk_mq_alloc_disk(), but its error path only recovers the
+foreign queue data. That leaks the temporary gendisk and
+request_queue until later teardown. If the caller moved the last
+Arc<TagSet<T>> into build(), the leaked queue can retain blk-mq
+state after the tag set is dropped.
 
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
+Fix the pre-registration failure path by dropping the temporary
+gendisk reference with put_disk() before recovering queue_data,
+so disk_release() can tear down the owned queue.
 
-Fixes: e438cf49b305 ("mmc: sdhci-of-dwcmshc: add SDHCI OF Synopsys DWC MSHC driver")
-Fixes: bccce2ec7790 ("mmc: sdhci-of-dwcmshc: add suspend/resume support")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@auroraos.dev>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Also pair GenDisk::drop() with put_disk() after del_gendisk().
+Once a Rust GenDisk has been added with device_add_disk(),
+del_gendisk() only unregisters it; the final gendisk reference
+still has to be dropped to complete the release path.
+
+Fixes: 3253aba3408a ("rust: block: introduce `kernel::block::mq` module")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Reviewed-by: Andreas Hindborg <a.hindborg@kernel.org>
+Signed-off-by: Haoze Xie <royenheart@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Link: https://patch.msgid.link/b70aff9a920cc42110fe5cf454c3099561863519.1780063368.git.royenheart@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ no queue-data recovery or recover_data.dismiss() in 6.12 ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-of-dwcmshc.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ rust/kernel/block/mq/gen_disk.rs |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci-of-dwcmshc.c
-+++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
-@@ -1464,13 +1464,16 @@ static int dwcmshc_probe(struct platform
- 			goto free_pltfm;
+--- a/rust/kernel/block/mq/gen_disk.rs
++++ b/rust/kernel/block/mq/gen_disk.rs
+@@ -6,7 +6,7 @@
+ //! C header: [`include/linux/blk-mq.h`](srctree/include/linux/blk-mq.h)
  
- 		priv->bus_clk = devm_clk_get(dev, "bus");
--		if (!IS_ERR(priv->bus_clk))
--			clk_prepare_enable(priv->bus_clk);
-+		if (!IS_ERR(priv->bus_clk)) {
-+			err = clk_prepare_enable(priv->bus_clk);
-+			if (err)
-+				goto err_clk;
-+		}
- 	}
+ use crate::block::mq::{raw_writer::RawWriter, Operations, TagSet};
+-use crate::{bindings, error::from_err_ptr, error::Result, sync::Arc};
++use crate::{bindings, error::from_err_ptr, error::Result, sync::Arc, types::ScopeGuard};
+ use crate::{error, static_lock_class};
+ use core::fmt::{self, Write};
  
- 	err = mmc_of_parse(host->mmc);
- 	if (err)
--		goto err_clk;
-+		goto err_bus_clk;
+@@ -139,6 +139,12 @@ impl GenDiskBuilder {
+         // SAFETY: `gendisk` is a valid pointer as we initialized it above
+         unsafe { (*gendisk).fops = &TABLE };
  
- 	sdhci_get_of_property(pdev);
++        let cleanup_failure = ScopeGuard::new_with_data(gendisk, |gendisk| {
++            // SAFETY: `gendisk` came from `__blk_mq_alloc_disk()` above and
++            // has not been added to the VFS on this cleanup path.
++            unsafe { bindings::put_disk(gendisk) };
++        });
++
+         let mut raw_writer = RawWriter::from_array(
+             // SAFETY: `gendisk` points to a valid and initialized instance. We
+             // have exclusive access, since the disk is not added to the VFS
+@@ -161,6 +167,8 @@ impl GenDiskBuilder {
+             },
+         )?;
  
-@@ -1484,7 +1487,7 @@ static int dwcmshc_probe(struct platform
- 	if (pltfm_data->init) {
- 		err = pltfm_data->init(&pdev->dev, host, priv);
- 		if (err)
--			goto err_clk;
-+			goto err_bus_clk;
- 	}
- 
- #ifdef CONFIG_ACPI
-@@ -1530,9 +1533,10 @@ err_setup_host:
- err_rpm:
- 	pm_runtime_disable(dev);
- 	pm_runtime_put_noidle(dev);
-+err_bus_clk:
-+	clk_disable_unprepare(priv->bus_clk);
- err_clk:
- 	clk_disable_unprepare(pltfm_host->clk);
--	clk_disable_unprepare(priv->bus_clk);
- 	clk_bulk_disable_unprepare(priv->num_other_clks, priv->other_clks);
- free_pltfm:
- 	sdhci_pltfm_free(pdev);
++        cleanup_failure.dismiss();
++
+         // INVARIANT: `gendisk` was initialized above.
+         // INVARIANT: `gendisk` was added to the VFS via `device_add_disk` above.
+         Ok(GenDisk {
+@@ -192,5 +200,10 @@ impl<T: Operations> Drop for GenDisk<T>
+         // initialized instance of `struct gendisk`, and it was previously added
+         // to the VFS.
+         unsafe { bindings::del_gendisk(self.gendisk) };
++
++        // SAFETY: By type invariant, `self.gendisk` was added to the VFS, so
++        // `put_disk()` must follow `del_gendisk()` to drop the final gendisk
++        // reference and trigger the remaining release path.
++        unsafe { bindings::put_disk(self.gendisk) };
+     }
+ }
 
 
