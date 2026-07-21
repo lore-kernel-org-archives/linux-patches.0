@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC77418A48;
-	Tue, 21 Jul 2026 21:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD95E44AB91;
+	Tue, 21 Jul 2026 21:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670270; cv=none; b=XJbHyko8PPP+1ljaO09fW8w7h9CCuHiBr3uBWsmUzc3LE2zE7fkGhsMGWqzRDPkmIM793n6FDajQQM3MZ4jwZVaYrXwIMtHnGFInRixBLnefNye9mban+s+60BEutDnTjt0HZan4CytAQ7XEG/JmRpGYthKGEQAjOWFpa7dwnlw=
+	t=1784670271; cv=none; b=hZ0mHk1a1OGjfT5DjgeH0+lG6cTnwFYMBgpRRNaaa3zGgxgporLXBeTTUCkWmWA3ZgSwmXlq6Z7M/H9FrciKgoWDAjGauPovfnY98iYPsIn6ls98HNCgobH8QZxRODCUxwij/zcfDtO0RWNmuD2s9Hu1l9P0BdJbTLP326nOgLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670270; c=relaxed/simple;
-	bh=zyEFauH9JYmatEY1NdehdwtdIrGYI++2l4jIbdye9Ak=;
+	s=arc-20240116; t=1784670271; c=relaxed/simple;
+	bh=usFptnymv2/Na59sG9OSMaSLrEgPEEdWL9H85IXEA2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cGrUe+PCWcL0P1/JoqmLiuHljzkz2dSF4e6W6v/KBru/BOAbqNFmW/0Cdnl3FT6gpYDEdiqQuAkdfoEH9lMLU9XtQLxKKHTeACKtBr9h3nMqS3Lsf4sWucPHYd/xVfZ+9KIuuYzVWcAEy+mHE7HZl7pnK6frO34bJsJXSGSef8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z0AMngGG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kc1S63amO0Ha1eCmg9CfMnnYaj3Y2JCVXBaw49mbjp7eRvxDjoGHmoBl+O4qIvsdd9sMvO+2GELOZQ6LJ8Zd7ov2zrVaQaNR4BKzgUkXS+IwqqvEl6DmUNW3egP9Tn5/UuymUGNvi5kavb6lYPJWkNwRxG79+5avrvV/XW01VWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CqHOoy+P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z0AMngGG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 807F71F00A3D;
-	Tue, 21 Jul 2026 21:44:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CqHOoy+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C7C1F000E9;
+	Tue, 21 Jul 2026 21:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670267;
-	bh=Pwx6yJaCiHfR6Z+jCdoXEnDu6pYNzj1dTXY3VGp+2kY=;
+	s=korg; t=1784670269;
+	bh=gshUN5gm45tV6hcFeHZJj6bB9P8jH9du4f+CWlEoh2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z0AMngGGlrUO1eY4QuNf4lB8M8rYbIieEhQqx4iHBYXp1ONOKA7uxceFz8QvwqFR0
-	 K4O4ZJ7/Cgk0GK5RaSMen/uxc4lEzepSkgHcN4g77LBg38U5HK7KVqAxT5b8aWoPnI
-	 Y5gzrVZwPADVsPSsvR4Ko3S22aprN8TRmEj7EMPU=
+	b=CqHOoy+P49DmXDGDxynu+fNU8eb/Q2XsPU+oqF0K9PdUN2vwldHxJL3Pt3m82Yg5i
+	 ws/2pZZTRvOwq/MHPrM8dNBzov1BsDZNcQhetExkU0Zxzmnx3/GDu0lpCKL9kUee4C
+	 u7ooRnZDgzNnQYL+qIgQri0+jca7aAjAvhPxm9HU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 0841/1067] net: sparx5: unregister blocking notifier on init failure
-Date: Tue, 21 Jul 2026 17:24:02 +0200
-Message-ID: <20260721152443.362752673@linuxfoundation.org>
+	Sashiko bot <sashiko-bot@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 0868/1067] Input: ims-pcu - fix race condition in reset_device sysfs callback
+Date: Tue, 21 Jul 2026 17:24:29 +0200
+Message-ID: <20260721152443.955845527@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,45 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 483be61b4a9a6df3b7cb277e8f189e082dee4cb8 upstream.
+commit 411b8c4b274737c3bf08e1e025801161603cfffc upstream.
 
-sparx5_register_notifier_blocks() registers the switchdev blocking
-notifier before allocating the ordered workqueue. If the workqueue
-allocation fails, the error path unregisters the switchdev and netdevice
-notifiers, but leaves the blocking notifier registered.
+The ims_pcu_reset_device() sysfs callback calls ims_pcu_execute_command()
+without acquiring pcu->cmd_mutex. This can lead to data races and
+corruption of the shared command buffer if triggered concurrently with
+other commands.
 
-Add a separate error label for the workqueue allocation failure path and
-unregister the switchdev blocking notifier there.
+Acquire pcu->cmd_mutex before calling ims_pcu_execute_command().
 
-Fixes: d6fce5141929 ("net: sparx5: add switching support")
+Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260623115714.2192074-1-haoxiang_li2024@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Sashiko bot <sashiko-bot@kernel.org>
+Assisted-by: Gemini:gemini-3.1-pro
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/input/misc/ims-pcu.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c
-@@ -740,11 +740,13 @@ int sparx5_register_notifier_blocks(stru
- 	sparx5_owq = alloc_ordered_workqueue("sparx5_order", 0);
- 	if (!sparx5_owq) {
- 		err = -ENOMEM;
--		goto err_switchdev_blocking_nb;
-+		goto err_alloc_workqueue;
- 	}
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -1173,6 +1173,8 @@ static ssize_t ims_pcu_reset_device(stru
  
- 	return 0;
+ 	dev_info(pcu->dev, "Attempting to reset device\n");
  
-+err_alloc_workqueue:
-+	unregister_switchdev_blocking_notifier(&s5->switchdev_blocking_nb);
- err_switchdev_blocking_nb:
- 	unregister_switchdev_notifier(&s5->switchdev_nb);
- err_switchdev_nb:
++	guard(mutex)(&pcu->cmd_mutex);
++
+ 	error = ims_pcu_execute_command(pcu, PCU_RESET, &reset_byte, 1);
+ 	if (error) {
+ 		dev_info(pcu->dev,
 
 
