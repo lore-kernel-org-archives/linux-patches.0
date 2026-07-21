@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05AF63E49F5;
-	Tue, 21 Jul 2026 22:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CFC43B48C;
+	Tue, 21 Jul 2026 22:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674338; cv=none; b=ULAfwv51nlr6LlfH3AZ0pAcGrlPC0fGylohsfQl7VA2zoT5JbobBtNQrW7TrwlQ4EUfueksW52vBxBzujXItsZXcFrHvfTCaurxjA2qzyOwELHBGQ5LEQkp/TRPk+n+IHSqE3VaW0ajim308NUqhmmDIECgZ2SPwQKvnkmRXIQM=
+	t=1784674341; cv=none; b=U6AcyxJbnwhzCWRfdXQC5w2/irwEgA8pH4Tt/CsEk7TgAf4nCG/3hlyfWGbuCHSEMbv45OBezfUeS07LkGL1roex9Lr8murnxs6VnuBMasn+JqewXfzXqJ6xF9/V+nd8Hxs83kfBjMmWBB4LUqJADHf/OvpYkhyXy+i5V59bMe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674338; c=relaxed/simple;
-	bh=JmaUDif9Ralx3WrogGl233gyINEUq7FaOmDhv/K/f0U=;
+	s=arc-20240116; t=1784674341; c=relaxed/simple;
+	bh=swBlEhIct1eyRW2UnxNGQCb0fHppgwmR41rhWaSM9jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RMiTll+RWgTKOJ0Cuh+b4T+WLDHIY7S/IQYcW+mPB3zv+CyVtjVpTfQEv0p7H82OiIgfVuuBdju9HcDXOwyVxLWRtlXeC5GJy7TXz89U6HjSwxRg2V2KYOFwrUnX9B0B8XL9p1aQP40l5YfTei01FzrLO8qvzJHLv6DTmvPNpgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xzUBSlGg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mL82ISQuaZOH2iXGhMuL6y4ZXxAnH6p5JRivb5EMWTEIwOhQ+SNkONZ9EoP3Z+xXNZJgvfNSNsWPgyD9g4zu27CrDeLQ2S5bCTzR1iZMCrWUWxukA0gi/d1r1hGS2Zaleq1l50+9nZhUpdiaxzVx1RjY+ikP7aHUQx4JmaOaxpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKuYo1Ge; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzUBSlGg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F56D1F000E9;
-	Tue, 21 Jul 2026 22:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKuYo1Ge"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE7F1F000E9;
+	Tue, 21 Jul 2026 22:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674336;
-	bh=NBU5YzOuueGXPOwS7nDO1c1AtPafQ4AcFx0PKgf1Rao=;
+	s=korg; t=1784674339;
+	bh=xWveeECUA4n9D+k+jGi1xFtPPSl7nXPpHtU16DZvVZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xzUBSlGgmMPCpnF7busKZHnVWCpz3RLi6EOK/GyLBkmcoAXwgyYVBduYKGZkdC8zQ
-	 T8n2gTcOaWOQnppa5LA8NJvne0FejJQVAbiJI26xh5UCUEnk6IBP+tqbeheURZhpy0
-	 nNetqvb06A5kT5uxCGtLqjwjA+skdnYvoZaxq+90=
+	b=yKuYo1GeZdx/zyqYNsWiFRn8uqc7JMsBmhpYC3wInqTmKXTavOgNNF7uVNnoh7KsO
+	 IWxTdVEh0nrmWUFGWzbN0jjDV00iuXuieZrBMIKV06zun9giHvQJY8tGWv+768jZxu
+	 GLHSNYV3wqCtPQfZcqVQd4f4A/8wc0CdxpwqDIHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Liang <shaw.leon@gmail.com>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 496/699] xfrm: xfrm_interface: require CAP_NET_ADMIN in the device netns for changelink
-Date: Tue, 21 Jul 2026 17:24:15 +0200
-Message-ID: <20260721152406.882691953@linuxfoundation.org>
+	sashiko-reviews@lists.linux.dev,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.10 505/699] can: bcm: add missing rcu list annotations and operations
+Date: Tue, 21 Jul 2026 17:24:24 +0200
+Message-ID: <20260721152407.087390506@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,44 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit 095515d89b19b6cc19dfcdc846f97403ed1ebce3 upstream.
+commit 7b2c3eabc4dafc062a25e10711154f2107526a78 upstream.
 
-xfrmi_changelink() operates on at most two netns, dev_net(dev) and the
-interface link netns xi->net. They differ once the device is created in
-or moved to a netns other than the one the request runs in. The rtnl
-changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
-caller privileged there but not in xi->net can rewrite an interface that
-lives in xi->net.
+sashiko-bot remarked the missing use of list_add_rcu() in
+bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
+when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
 
-Gate xfrmi_changelink() on rtnl_dev_link_net_capable() at its top,
-before any attribute is parsed.
+To cover all initial settings of the bcm_op's the list_add_rcu() calls
+are moved to the end of the setup code.
 
-Reported-by: Xiao Liang <shaw.leon@gmail.com>
-Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
-Fixes: f203b76d7809 ("xfrm: Add virtual xfrm interfaces")
-Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260612085941.3158249-8-maoyixie.tju@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+While at it, also fix the mirroring removal side: bcm_release() called
+bcm_remove_op() - which frees the op via call_rcu() - on ops that were
+still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
+Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
+matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
+
+Reported-by: sashiko-reviews@lists.linux.dev
+Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
+Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-5-562f7e3e42da@hartkopp.net
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_interface_core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/can/bcm.c |   25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
---- a/net/xfrm/xfrm_interface_core.c
-+++ b/net/xfrm/xfrm_interface_core.c
-@@ -726,6 +726,9 @@ static int xfrmi_changelink(struct net_d
- 	struct net *net = xi->net;
- 	struct xfrm_if_parms p = {};
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -244,7 +244,7 @@ static int bcm_proc_show(struct seq_file
+ 			   (reduction == 100) ? "near " : "", reduction);
+ 	}
  
-+	if (!rtnl_dev_link_net_capable(dev, net))
-+		return -EPERM;
+-	list_for_each_entry(op, &bo->tx_ops, list) {
++	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
+ 
+ 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
+ 			   bcm_proc_getifname(net, ifname, op->ifindex));
+@@ -877,6 +877,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 	struct bcm_sock *bo = bcm_sk(sk);
+ 	struct bcm_op *op;
+ 	struct canfd_frame *cf;
++	bool add_op_to_list = false;
+ 	unsigned int i;
+ 	int err;
+ 
+@@ -1018,8 +1019,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 		hrtimer_init(&op->thrtimer, CLOCK_MONOTONIC,
+ 			     HRTIMER_MODE_REL_SOFT);
+ 
+-		/* add this bcm_op to the list of the tx_ops */
+-		list_add(&op->list, &bo->tx_ops);
++		add_op_to_list = true;
+ 
+ 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
+ 
+@@ -1041,6 +1041,10 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 		op->flags |= TX_ANNOUNCE;
+ 	}
+ 
++	/* add this bcm_op to the list of the tx_ops? */
++	if (add_op_to_list)
++		list_add_rcu(&op->list, &bo->tx_ops);
 +
- 	xfrmi_netlink_parms(data, &p);
- 	if (!p.if_id) {
- 		NL_SET_ERR_MSG(extack, "if_id must be non zero");
+ 	if (op->flags & TX_ANNOUNCE)
+ 		bcm_can_tx(op);
+ 
+@@ -1183,9 +1187,6 @@ static int bcm_rx_setup(struct bcm_msg_h
+ 			     HRTIMER_MODE_REL_SOFT);
+ 		op->thrtimer.function = bcm_rx_thr_handler;
+ 
+-		/* add this bcm_op to the list of the rx_ops */
+-		list_add(&op->list, &bo->rx_ops);
+-
+ 		/* call can_rx_register() */
+ 		do_rx_register = 1;
+ 
+@@ -1264,10 +1265,12 @@ static int bcm_rx_setup(struct bcm_msg_h
+ 					      bcm_rx_handler, op, "bcm", sk);
+ 		if (err) {
+ 			/* this bcm rx op is broken -> remove it */
+-			list_del_rcu(&op->list);
+ 			bcm_remove_op(op);
+ 			return err;
+ 		}
++
++		/* add this bcm_op to the list of the rx_ops */
++		list_add_rcu(&op->list, &bo->rx_ops);
+ 	}
+ 
+ 	return msg_head->nframes * op->cfsiz + MHSIZ;
+@@ -1597,8 +1600,10 @@ static int bcm_release(struct socket *so
+ 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
+ #endif /* CONFIG_PROC_FS */
+ 
+-	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
++	}
+ 
+ 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
+ 		/*
+@@ -1629,8 +1634,10 @@ static int bcm_release(struct socket *so
+ 
+ 	synchronize_rcu();
+ 
+-	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
++	}
+ 
+ 	/* remove device reference */
+ 	if (bo->bound) {
 
 
