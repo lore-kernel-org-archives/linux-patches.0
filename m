@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0553F40759D;
-	Tue, 21 Jul 2026 15:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66BC3BCD0D;
+	Tue, 21 Jul 2026 15:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648713; cv=none; b=sFbABQQUz2+7TTpqsU0EfjhlFSfhkSaMeVdSPPdtZwZog2eGM3zvmhnZf25cEXJ3rtUpvLvEn9n1DweSUTGFBkEwJZQhJPQyTU/1eaEyBjVbqllf1XtmrD/Yn+Cd8k50J6KTR6NxsWiz61P7GNVdbCdv8fO76ZpuwspVD14b46I=
+	t=1784648715; cv=none; b=JZAZoaYZUk0Vn1ETsQ07G/pZcIOxFVdKDWshqDnO1tSFuX1jcgOdcW3bnJNl3SUJYXYjTzmlou1AeyMh+HRDdZXZYiub+dS2iLnDofR3bfhinYNb8IMHGOxtGRBYMzTebhpgTnIbAb7S0xIeObx2I8zVhzNnIX9JxwghFjTh3N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648713; c=relaxed/simple;
-	bh=WRE4CcNawixX7tEdPeRS2xct7BXboZR5aNg7VAx6Snw=;
+	s=arc-20240116; t=1784648715; c=relaxed/simple;
+	bh=EuJWSl4FlxNzrdpUnZkwEYc0VehdGQPpcPGNwjix+68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u2R/2jBw136K9sjdRzL+eumvctX7cLP0tGlYQ7Q+DmropLrvbBnmUeSzdzAqZbyZ+5fBCHv0UwnUmysh0VqChiGslGk9ZvQjtj1shFZ0SO7LeVz/L+D7GlqsisRTZf931AkSX6T7wCNmi+PV/OCbXj0Il0lgtIRMpFCA54huLTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpObRpi8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T1nYwtZ46mONnsSACRAoPIktOc38R7mO2WlQihdgFf5CuKoor0Z9TlmEURdIF6V/sBMeJgn5Otjxczm/FKWE3fKbveac+zKnD+SEj/TWIVJye0I2nwtZqb8E+J9nqHbW3XPA0/cThUx53hp+fHKw95ePWiGQ6URfahq64sut/SA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2X6twO0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpObRpi8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B8D61F000E9;
-	Tue, 21 Jul 2026 15:45:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2X6twO0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166451F00A3A;
+	Tue, 21 Jul 2026 15:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648711;
-	bh=VKCpPeOM1edqMsmotQbVQSnBR88kimXAN92GBqvRpUQ=;
+	s=korg; t=1784648714;
+	bh=ryrPt/D/ZI4c/uNCePUdUxJpl0vWSXmAdwJHfC6FAas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xpObRpi8XUaPsj6qCyvsmFAe/zmOrreg05MtvBxfIm/uW1PcHOkm1fErUx0R0QA+Q
-	 cyPQ5gdD7NKyeKaPD6YfavEOk2W4btDDpUycMPG7QWgB1XT6zEUegau0+fGcrLyxTt
-	 Q7mkDXIVDI046X7KAb0QdqHRa+Wm/G8ZQnBVXt50=
+	b=f2X6twO0njzXYMvmZJEOxT2+l2hbh4tJmwzFLNRTg8uI8tzBomBI0AMHE8CjeB4zY
+	 WSyOuLp4MVvSrH4ojBpnMYn4sRJB+b5I0QApIUbA+NZ6JD0rkjhVc7djBIZSst0NOW
+	 HPQ0eiKHejEL275YZBrSy/jzVdkv7LR8gxhWo41s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eliot Courtney <ecourtney@nvidia.com>,
 	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0302/2077] gpu: nova-core: vbios: use checked access in `FwSecBiosImage::header`
-Date: Tue, 21 Jul 2026 16:59:35 +0200
-Message-ID: <20260721152559.802721606@linuxfoundation.org>
+Subject: [PATCH 7.1 0303/2077] gpu: nova-core: vbios: use checked accesses in `setup_falcon_data`
+Date: Tue, 21 Jul 2026 16:59:36 +0200
+Message-ID: <20260721152559.825283608@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -55,51 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Eliot Courtney <ecourtney@nvidia.com>
 
-[ Upstream commit 25ad950b4ee37f7b42e006f508a793b7c38fcc12 ]
+[ Upstream commit 051ae1b21ff7a3cc27522b0b3b56e277b62c1207 ]
 
-Use checked access in `FwSecBiosImage::header` for getting the header
-version since the value is firmware derived.
+Use checked arithmetic for `ucode_offset` in `setup_falcon_data`. This
+prevents a malformed firmware from causing a panic.
 
-Fixes: 47c4846e4319 ("gpu: nova-core: vbios: Add support for FWSEC ucode extraction")
+Fixes: dc70c6ae2441 ("gpu: nova-core: vbios: Add support to look up PMU table in FWSEC")
 Reviewed-by: Joel Fernandes <joelagnelf@nvidia.com>
 Reviewed-by: John Hubbard <jhubbard@nvidia.com>
 Signed-off-by: Eliot Courtney <ecourtney@nvidia.com>
-Link: https://patch.msgid.link/20260525-fix-vbios-v5-6-e5e455251537@nvidia.com
+Link: https://patch.msgid.link/20260525-fix-vbios-v5-7-e5e455251537@nvidia.com
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/nova-core/vbios.rs | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ drivers/gpu/nova-core/vbios.rs | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/gpu/nova-core/vbios.rs b/drivers/gpu/nova-core/vbios.rs
-index 10f812714e4dcd..394877d5b2eae1 100644
+index 394877d5b2eae1..19361104a4cd3d 100644
 --- a/drivers/gpu/nova-core/vbios.rs
 +++ b/drivers/gpu/nova-core/vbios.rs
-@@ -994,17 +994,14 @@ impl FwSecBiosBuilder {
- impl FwSecBiosImage {
-     /// Get the FwSec header ([`FalconUCodeDesc`]).
-     pub(crate) fn header(&self) -> Result<FalconUCodeDesc> {
--        // Get the falcon ucode offset that was found in setup_falcon_data.
--        let falcon_ucode_offset = self.falcon_ucode_offset;
--
--        // Read the first 4 bytes to get the version.
--        let hdr_bytes: [u8; 4] = self.base.data[falcon_ucode_offset..falcon_ucode_offset + 4]
--            .try_into()
--            .map_err(|_| EINVAL)?;
--        let hdr = u32::from_le_bytes(hdr_bytes);
--        let ver = (hdr & 0xff00) >> 8;
-+        let data = self
-+            .base
-+            .data
-+            .get(self.falcon_ucode_offset..)
-+            .ok_or(EINVAL)?;
- 
--        let data = self.base.data.get(falcon_ucode_offset..).ok_or(EINVAL)?;
-+        // Read the version byte from the header.
-+        let ver = data.get(1).copied().ok_or(EINVAL)?;
-         match ver {
-             2 => {
-                 let v2 = FalconUCodeDescV2::from_bytes_copy_prefix(data)
+@@ -953,14 +953,15 @@ impl FwSecBiosBuilder {
+             .find_entry_by_type(FALCON_UCODE_ENTRY_APPID_FWSEC_PROD)
+         {
+             Ok(entry) => {
+-                let mut ucode_offset = usize::from_safe_cast(entry.data);
+-                ucode_offset -= pci_at_image.base.data.len();
+-                if ucode_offset < first_fwsec.base.data.len() {
+-                    dev_err!(self.base.dev, "Falcon Ucode offset not in second Fwsec.\n");
+-                    return Err(EINVAL);
+-                }
+-                ucode_offset -= first_fwsec.base.data.len();
+-                self.falcon_ucode_offset = Some(ucode_offset);
++                self.falcon_ucode_offset = Some(
++                    usize::from_safe_cast(entry.data)
++                        .checked_sub(pci_at_image.base.data.len())
++                        .and_then(|o| o.checked_sub(first_fwsec.base.data.len()))
++                        .ok_or(EINVAL)
++                        .inspect_err(|_| {
++                            dev_err!(self.base.dev, "Falcon Ucode offset not in second Fwsec.\n");
++                        })?,
++                );
+             }
+             Err(e) => {
+                 dev_err!(
 -- 
 2.53.0
 
