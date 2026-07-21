@@ -1,40 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6B83B9930;
-	Tue, 21 Jul 2026 21:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A563C1098;
+	Tue, 21 Jul 2026 21:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670395; cv=none; b=fT2OWPwEExsBlZ5nJ9pphITpwLJg7FSjSgmZzCatUB9YMa44S/QQ6Yn61bUug7ya9B4cwkAlrwIdfe1Bw1r5FNgk38YCltiI3Hc4cqP9o4gppgJOG6bFAqTIzYySNClusRY+icsCqO/HxoUAoDfSh5nX4kxnUySLritdtKiOPbM=
+	t=1784670398; cv=none; b=BSEcfXDKbMpoGBgGAhxXbQfYNOqLSUPbrVv+kpCClKPNmAEoCKKPPQ58VS2RvvIQWvXpvYgMXTEnog/vGvTtb9rm/vIpSbc6Lcj8Qts9Nz1CjQmpsaay/R/hVJZg/dHWZnckpU1/clQSlRb3cyvrI1VMAkIqEGmezEd29/3bywQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670395; c=relaxed/simple;
-	bh=LLd7Vv21R5KV59lyYudosS1mk3zQScy3xbUU70OEhMQ=;
+	s=arc-20240116; t=1784670398; c=relaxed/simple;
+	bh=Akq3crhJvLv3n04Bd7ggK/1avKCcO+pWSD2qbmKu420=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gcQd2r2Wb2YjV3KkTzwKWwd6ADNEL8x9rxyr7WpIuF3lrbn3qPTWVT8A/wHLXOOl3isfshNqMWXULA3gpwnwZYRpEBHKsfQBA7RMmdX2COD2ctNOir1d8NG97OQencxQyBf8HTaB3Qi0HT20d8JgEp/QMy2QRGTzFpvK8fiDhvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xGuCOaha; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uWgX85If1IYBXiRhUp/eNo0ekWLLwBf6oLnHHOhVb81WfaRH1iij3fpB2gd1UnGFgOoJXgHQ85qizvlX9gUmMPMl5JNJbnddC59RwXfNQYshe/sEyYAJjkEITeopIZ+CPiqKi0pe8dSwQ4GMbBQjCkRUEV7NBBMT2iopcsCIASI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cTJqwqOf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xGuCOaha"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FBBC1F000E9;
-	Tue, 21 Jul 2026 21:46:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cTJqwqOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BF51F000E9;
+	Tue, 21 Jul 2026 21:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670394;
-	bh=IvTMjvPryn9pHfzaNvtOKZOZ8QXlS5uWvqgnOyZdRoQ=;
+	s=korg; t=1784670396;
+	bh=AzXQYKgwhLqdoOPWKmLofvp7VLN4qQSh2rxGrNCpu4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xGuCOahaGezpICpyC5fCSENCZed6Jqo6PUDptfp77vaIGXdfetRhMliSeX8B2vBl/
-	 T9LzhGV87wFDQmNX8npk8qCHVuGRf5Y70y2VZ8DjiWHPoJW/RPVomi7xVyy3uqCaHT
-	 xu8zRKqi4jOfRrNy8S954vp9dKrZJxh7Hiw2K5oY=
+	b=cTJqwqOfXOFU27Mdwj+E13BnfSarLDwjEEx2qHypDA3xKybbXuIgTmTZot/uoLD7R
+	 4dkg0+At7PFlVEjcsb7pKIsf926Tny3lh5hRYK5ND74CdUB8ovc1ezHiQURWGwC9/W
+	 otf4stH8fKuxqt7Z1mIvEyXGcCUsbXSB5jnXFoTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baoquan He <bhe@redhat.com>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Nutty Liu <nutty.liu@hotmail.com>,
-	Tao Liu <ltao@redhat.com>,
-	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 6.1 0915/1067] riscv: Prevent NULL pointer dereference in machine_kexec_prepare()
-Date: Tue, 21 Jul 2026 17:25:16 +0200
-Message-ID: <20260721152445.004214524@linuxfoundation.org>
+	Gregory Price <gourry@gourry.net>,
+	Waiman Long <longman@redhat.com>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Alistair Popple <apopple@nvidia.com>,
+	Byungchul Park <byungchul@sk.com>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Zi Yan <ziy@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
+	Ridong Chen <ridong.chen@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>
+Subject: [PATCH 6.1 0916/1067] cgroup/cpuset: rebind mm mempolicy to effective_mems, not mems_allowed
+Date: Tue, 21 Jul 2026 17:25:17 +0200
+Message-ID: <20260721152445.026995825@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -47,59 +59,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tao Liu <ltao@redhat.com>
+From: Farhad Alemi <farhad.alemi@berkeley.edu>
 
-commit 81bbcff0c053c4f5c711c31a9b72fc492bd96c3f upstream.
+commit b983c56426383e4a06fa5970c4e33cee879b1482 upstream.
 
-A NULL pointer dereference issue is noticed in riscv's
-machine_kexec_prepare(), where image->segment[i].buf might be NULL and
-copied unchecked.
+Creating a child cpuset where cpuset.mems is never set leads to a div/0
+when a VMA mempolicy with MPOL_F_RELATIVE_NODES rebinds in response to a
+CPU hotplug event.
 
-The NULL buf comes from ima_add_kexec_buffer(), where kbuf is added by
-kexec_add_buffer(), but kbuf.buffer is NULL, then it is copied without
-a check in machine_kexec_prepare():
+Reproduction steps:
+ 1) Create a cgroup w/ cpuset controls (do not set cpuset.mems)
+ 2) Move the task into the child cpuset
+ 3) Create a VMA mempolicy for that task with MPOL_F_RELATIVE_NODES
+ 4) unplug and hotplug a cpu
+      echo 0 > /sys/devices/system/cpu/cpu1/online
+      echo 1 > /sys/devices/system/cpu/cpu1/online
+ 5) mempolicy rebind does a div/0 in mpol_relative_nodemask on the
+    call to __nodes_fold()
 
-  kexec_file_load
-    -> kimage_file_alloc_init()
-       -> kimage_file_prepare_segments()
-          -> ima_add_kexec_buffer()
-             -> kexec_add_buffer()
-    -> machine_kexec_prepare()
-       -> memcpy()
+The cpuset code passes (cs->mems_allowed) which is not guaranteed to have
+nodes to the rebind routine.  Use cs->effective_mems instead, which is
+guaranteed to have a non-empty nodemask once we reach that code path.
 
-Address this by adding a check before the data copy attempt.
-
-Fixes: b7fb4d78a6ad ("RISC-V: use memcpy for kexec_file mode")
-Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/kexec/CAO7dBbVftLUhd2qrh7hmijTB3PEPfZAhykCGqEfrPoOcSrrj-w@mail.gmail.com/
-Acked-by: Baoquan He <bhe@redhat.com>
-Acked-by: Pratyush Yadav <pratyush@kernel.org>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Signed-off-by: Tao Liu <ltao@redhat.com>
-Link: https://patch.msgid.link/20260705232706.30265-2-ltao@redhat.com
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Link: https://lore.kernel.org/all/CA+0ovCiEz6SP_sn3kN4Tb+_oC=eHMXy_Ffj=usV3wREdQrUtww@mail.gmail.com/
+Fixes: ae1c802382f7 ("cpuset: apply cs->effective_{cpus,mems}")
+Closes: https://lore.kernel.org/linux-mm/CA+0ovCgxbZkXa+OU8w3s84R3KNPNxxRfmsNR-udh+afQBbGNmw@mail.gmail.com/
+Suggested-by: Gregory Price <gourry@gourry.net>
+Suggested-by: Waiman Long <longman@redhat.com>
+Acked-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: Gregory Price <gourry@gourry.net>
+Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Ridong Chen <ridong.chen@linux.dev>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: "Michal Koutný" <mkoutny@suse.com>
+Cc: <stable@vger.kernel.org>
+[ david: add a comment, slightly rephrase description ]
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/machine_kexec.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/cgroup/cpuset.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/kernel/machine_kexec.c
-+++ b/arch/riscv/kernel/machine_kexec.c
-@@ -67,6 +67,9 @@ machine_kexec_prepare(struct kimage *ima
- 		if (image->segment[i].memsz <= sizeof(fdt))
- 			continue;
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -2051,7 +2051,12 @@ static void update_tasks_nodemask(struct
  
-+		if (!image->segment[i].buf)
-+			continue;
-+
- 		if (image->file_mode)
- 			memcpy(&fdt, image->segment[i].buf, sizeof(fdt));
- 		else if (copy_from_user(&fdt, image->segment[i].buf, sizeof(fdt)))
+ 		migrate = is_memory_migrate(cs);
+ 
+-		mpol_rebind_mm(mm, &cs->mems_allowed);
++		/*
++		 * For v1 we can have empty effective_mems, but we cannot
++		 * attach any tasks (see cpuset_can_attach_check()). For v2,
++		 * effective_mems is guaranteed to not be empty.
++		 */
++		mpol_rebind_mm(mm, &cs->effective_mems);
+ 		if (migrate)
+ 			cpuset_migrate_mm(mm, &cs->old_mems_allowed, &newmems);
+ 		else
 
 
