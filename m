@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513EB3D1CCA;
-	Tue, 21 Jul 2026 18:03:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10AF8415F3F;
+	Tue, 21 Jul 2026 18:03:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656990; cv=none; b=W3ZhnMJ25hPw4HUwJEaC0BUHrkKADDqM1puQKVb05hjsM8V9MYBBRa50SUiT7n/GpfZKd60fWPnolKfCDYYvis66Xa5aIDthb3/RnKCmcfojP+qAbrEH98k9TVyxmUJd/dU2xaM6Eio+Gj7FewSUkwt8t0h+SfYxxwEnNQYWrcc=
+	t=1784656993; cv=none; b=cw2mK0slsk1BGGiuXKS/SE89fIpfE6EKnCCNWqFVWlXUfPspIQ9go41kBeTwt3EEaL58CINi8nnBD1l2SM/v9m6/OCvhmrBF2+0Pf2N7JAarjYkT/3OcvHFgg9m8j62bHnD8Ji/DzOkuMOyCknZtbTnEGuPRl0wwdtqECNFH2Ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656990; c=relaxed/simple;
-	bh=+AHlcmZfuwdY5p8JIYPlWkVCexAP594Lh0WW6oWIo8M=;
+	s=arc-20240116; t=1784656993; c=relaxed/simple;
+	bh=1tG8Orz9OQC58UJv3Df8rT/QdFNvoyBK6iSbPiNa+uY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HTOkAVL12H3L/NELbZwvnDCQlVHciD6By2vGNRsPnoK/GSAks/oOI8evonKofKmOD/pF5VeIPGmjyYYC6AqvSGk4RuRbDj1t+3Emj04CMGJQdQFxRMR3MVBGG3WIh/TbskbIXFbhr2IPbvLV6Bu18sroITFXfKeBIOyf5bnQLwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUNJLLPi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MsLDa1Hz+kT1rWJhqJV/xYyjn+sh18FakDnrPzBblqkRpdFcR7z3i2TgJmFfxtGmZFGkxFSAjASn2qUrrOoqfe3DRy3g3m0JQaIuUcev41/aoaiZI+BowKUvJxJvrNPGN+2NQ52AR/zJrBsA7DTHS8e00T7hqqIJAhvXCMOkxVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UF5xJo0r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUNJLLPi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDE41F000E9;
-	Tue, 21 Jul 2026 18:03:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UF5xJo0r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70CEC1F000E9;
+	Tue, 21 Jul 2026 18:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656989;
-	bh=EXyrfwuOhdjqjYmU1S4VhMDo5UDK+OPloh1obE4OyRc=;
+	s=korg; t=1784656992;
+	bh=lTa9z1sEIGwa38vNttPYNnZKI9kU0cNM/raC9+J53mE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vUNJLLPih/eWSc+DG/+gRar4B8ASNwIZmUwN8/jo6RzhTbz0nJ63yzoDHGiEWeibK
-	 viazxbXyPuKyzKtSLw7IStLRL2TXrNjcGxhJmdTZv18++yHzM3Z5pEOYCioZ0wbC+8
-	 o30TI5LTLLivE7XVQUvSFPmtqnEA6/v7TEMk8IVw=
+	b=UF5xJo0robdBTWH6vHelO5vS4FUrY1Nd1cHkSuASivt0J4dLeqq42uLTLr9ZPjdAM
+	 jX2zOC5dkNr9aAq9csbXnCDzkhw7LUZ65DxVjaduabxcOTrhx9q4nuJKkVrAKqXoic
+	 oafwwH/EYWg/b9y3ZYI5AIY3VxqQcVgsfZzj9dUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Richard Cheng <icheng@nvidia.com>,
-	Jie Gan <jie.gan@oss.qualcomm.com>,
-	Leo Yan <leo.yan@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Luo Jie <jie.luo@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	George Moussalem <george.moussalem@outlook.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0594/1611] coresight: fix missing error code when trace ID is invalid
-Date: Tue, 21 Jul 2026 17:11:50 +0200
-Message-ID: <20260721152528.745658514@linuxfoundation.org>
+Subject: [PATCH 6.18 0595/1611] clk: qcom: cmnpll: Account for reference clock divider
+Date: Tue, 21 Jul 2026 17:11:51 +0200
+Message-ID: <20260721152528.768598543@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,127 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Gan <jie.gan@oss.qualcomm.com>
+From: Luo Jie <jie.luo@oss.qualcomm.com>
 
-[ Upstream commit f4526ffee6ff9f5845b430957417149eded74bf3 ]
+[ Upstream commit 88c543fff756450bcd04ec4560c4440be36c9e75 ]
 
-When coresight_path_assign_trace_id() cannot assign a valid trace ID,
-coresight_enable_sysfs() takes the err_path goto with ret still 0,
-returning success to the caller despite no trace session being started.
+The clk_cmn_pll_recalc_rate() function must account for the reference clock
+divider programmed in CMN_PLL_REFCLK_CONFIG. Without this fix, platforms
+with a reference divider other than 1 calculate incorrect CMN PLL rates.
+For example, on IPQ5332 where the reference divider is 2, the computed rate
+becomes twice the actual output.
 
-Change coresight_path_assign_trace_id() to return int, moving the
-IS_VALID_CS_TRACE_ID() check inside it so it returns -EINVAL on failure
-and 0 on success. Update both callers to propagate this return value
-directly instead of inspecting path->trace_id after the call.
+Read CMN_PLL_REFCLK_DIV and divide the parent rate by this value before
+applying the 2 * FACTOR scaling. This yields the correct rate calculation:
+rate = (parent_rate / ref_div) * 2 * factor.
 
-Fixes: d87d76d823d1 ("Coresight: Allocate trace ID after building the path")
-Reviewed-by: James Clark <james.clark@linaro.org>
-Reviewed-by: Richard Cheng <icheng@nvidia.com>
-Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260512-fix-trace-id-error-v4-1-eb3de789767a@oss.qualcomm.com
+Maintain backward compatibility with earlier platforms (e.g. IPQ9574,
+IPQ5424, IPQ5018) that use ref_div = 1.
+
+Fixes: f81715a4c87c ("clk: qcom: Add CMN PLL clock controller driver for IPQ SoC")
+Signed-off-by: Luo Jie <jie.luo@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Tested-by: George Moussalem <george.moussalem@outlook.com>
+Link: https://lore.kernel.org/r/20260106-qcom_ipq5332_cmnpll-v2-1-f9f7e4efbd79@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-core.c  | 23 +++++++++++--------
- .../hwtracing/coresight/coresight-etm-perf.c  |  5 ++--
- drivers/hwtracing/coresight/coresight-priv.h  |  2 +-
- drivers/hwtracing/coresight/coresight-sysfs.c |  4 ++--
- 4 files changed, 19 insertions(+), 15 deletions(-)
+ drivers/clk/qcom/ipq-cmn-pll.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
-index 3267192f0c1c66..911a7b6d4867b7 100644
---- a/drivers/hwtracing/coresight/coresight-core.c
-+++ b/drivers/hwtracing/coresight/coresight-core.c
-@@ -732,8 +732,8 @@ static int coresight_get_trace_id(struct coresight_device *csdev,
-  * Call this after creating the path and before enabling it. This leaves
-  * the trace ID set on the path, or it remains 0 if it couldn't be assigned.
-  */
--void coresight_path_assign_trace_id(struct coresight_path *path,
--				    enum cs_mode mode)
-+int coresight_path_assign_trace_id(struct coresight_path *path,
-+				   enum cs_mode mode)
+diff --git a/drivers/clk/qcom/ipq-cmn-pll.c b/drivers/clk/qcom/ipq-cmn-pll.c
+index dafbf57320480c..369798d1ce4279 100644
+--- a/drivers/clk/qcom/ipq-cmn-pll.c
++++ b/drivers/clk/qcom/ipq-cmn-pll.c
+@@ -185,7 +185,7 @@ static unsigned long clk_cmn_pll_recalc_rate(struct clk_hw *hw,
+ 					     unsigned long parent_rate)
  {
- 	struct coresight_device *sink = coresight_get_sink(path);
- 	struct coresight_node *nd;
-@@ -743,15 +743,18 @@ void coresight_path_assign_trace_id(struct coresight_path *path,
- 		/* Assign a trace ID to the path for the first device that wants to do it */
- 		trace_id = coresight_get_trace_id(nd->csdev, mode, sink);
+ 	struct clk_cmn_pll *cmn_pll = to_clk_cmn_pll(hw);
+-	u32 val, factor;
++	u32 val, factor, ref_div;
  
--		/*
--		 * 0 in this context is that it didn't want to assign so keep searching.
--		 * Non 0 is either success or fail.
--		 */
--		if (trace_id != 0) {
--			path->trace_id = trace_id;
--			return;
--		}
-+		/* 0 means the device has no ID assignment, so keep searching */
-+		if (trace_id == 0)
-+			continue;
+ 	/*
+ 	 * The value of CMN_PLL_DIVIDER_CTRL_FACTOR is automatically adjusted
+@@ -193,8 +193,15 @@ static unsigned long clk_cmn_pll_recalc_rate(struct clk_hw *hw,
+ 	 */
+ 	regmap_read(cmn_pll->regmap, CMN_PLL_DIVIDER_CTRL, &val);
+ 	factor = FIELD_GET(CMN_PLL_DIVIDER_CTRL_FACTOR, val);
++	if (WARN_ON(factor == 0))
++		factor = 1;
+ 
+-	return parent_rate * 2 * factor;
++	regmap_read(cmn_pll->regmap, CMN_PLL_REFCLK_CONFIG, &val);
++	ref_div = FIELD_GET(CMN_PLL_REFCLK_DIV, val);
++	if (WARN_ON(ref_div == 0))
++		ref_div = 1;
 +
-+		if (!IS_VALID_CS_TRACE_ID(trace_id))
-+			return -EINVAL;
-+
-+		path->trace_id = trace_id;
-+		return 0;
- 	}
-+
-+	return -EINVAL;
++	return div_u64((u64)parent_rate * 2 * factor, ref_div);
  }
  
- /**
-diff --git a/drivers/hwtracing/coresight/coresight-etm-perf.c b/drivers/hwtracing/coresight/coresight-etm-perf.c
-index 5c256af6e54af0..accf101779de83 100644
---- a/drivers/hwtracing/coresight/coresight-etm-perf.c
-+++ b/drivers/hwtracing/coresight/coresight-etm-perf.c
-@@ -321,6 +321,7 @@ static void *etm_setup_aux(struct perf_event *event, void **pages,
- 	struct coresight_device *sink = NULL;
- 	struct coresight_device *user_sink = NULL, *last_sink = NULL;
- 	struct etm_event_data *event_data = NULL;
-+	int ret;
- 
- 	event_data = alloc_event_data(cpu);
- 	if (!event_data)
-@@ -418,8 +419,8 @@ static void *etm_setup_aux(struct perf_event *event, void **pages,
- 		}
- 
- 		/* ensure we can allocate a trace ID for this CPU */
--		coresight_path_assign_trace_id(path, CS_MODE_PERF);
--		if (!IS_VALID_CS_TRACE_ID(path->trace_id)) {
-+		ret = coresight_path_assign_trace_id(path, CS_MODE_PERF);
-+		if (ret) {
- 			cpumask_clear_cpu(cpu, mask);
- 			coresight_release_path(path);
- 			continue;
-diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/hwtracing/coresight/coresight-priv.h
-index 33e22b1ba04326..bcc5db0d9c3c22 100644
---- a/drivers/hwtracing/coresight/coresight-priv.h
-+++ b/drivers/hwtracing/coresight/coresight-priv.h
-@@ -154,7 +154,7 @@ int coresight_make_links(struct coresight_device *orig,
- void coresight_remove_links(struct coresight_device *orig,
- 			    struct coresight_connection *conn);
- u32 coresight_get_sink_id(struct coresight_device *csdev);
--void coresight_path_assign_trace_id(struct coresight_path *path,
-+int coresight_path_assign_trace_id(struct coresight_path *path,
- 				   enum cs_mode mode);
- 
- #if IS_ENABLED(CONFIG_CORESIGHT_SOURCE_ETM3X)
-diff --git a/drivers/hwtracing/coresight/coresight-sysfs.c b/drivers/hwtracing/coresight/coresight-sysfs.c
-index 5e52324aa9ac7b..c5f3fc2b5135fb 100644
---- a/drivers/hwtracing/coresight/coresight-sysfs.c
-+++ b/drivers/hwtracing/coresight/coresight-sysfs.c
-@@ -211,8 +211,8 @@ int coresight_enable_sysfs(struct coresight_device *csdev)
- 		goto out;
- 	}
- 
--	coresight_path_assign_trace_id(path, CS_MODE_SYSFS);
--	if (!IS_VALID_CS_TRACE_ID(path->trace_id))
-+	ret = coresight_path_assign_trace_id(path, CS_MODE_SYSFS);
-+	if (ret)
- 		goto err_path;
- 
- 	ret = coresight_enable_path(path, CS_MODE_SYSFS, NULL);
+ static int clk_cmn_pll_determine_rate(struct clk_hw *hw,
 -- 
 2.53.0
 
