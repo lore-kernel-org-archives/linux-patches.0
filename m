@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887D243E066;
-	Tue, 21 Jul 2026 22:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F63543D502;
+	Tue, 21 Jul 2026 22:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672842; cv=none; b=lcw+oJIGPjVS+VwGbbGf0dMZQXHPy3QGx5gUwiA8H3yiJflLg5RSPWywzK0YHUjmtVpD4VbdI0QEWWwC0u+NtPG/JMBQCcsNg6zgJF2rDRuGFlyviIy4muqNBmNFk58oS0+x/MmpmkYe4901en+SiOFNbVWjuvF5QHc9TK+7jrU=
+	t=1784672845; cv=none; b=AdT/UPVk2eh7khuEAzJh1ZW4zTyzI4rtwGHMjXs238hi7LEiRRqpI4DPslzmOqL3aV8BfN2GDaL1e84gExUXyS7jZGNZvl12DORtVCc4/cHc/VTTHcGvXtcA623ctW7kHsBcOotz+tycc4FoYWZw2pN/g/SgDZR0wKUdvbNqRSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672842; c=relaxed/simple;
-	bh=1ipKSzo9m4KF9k9pjdci+MSArptwjVBuMl0wC7/DME8=;
+	s=arc-20240116; t=1784672845; c=relaxed/simple;
+	bh=RXJ0oFgfNMOXKZB7ZJ9TFRt78k9704Nt6ljYlGVSLOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HPXsBbqq/VqsXmiVt+TYV1rDM1YP9ECQyq+mgjT8uR/cvgGOnEiz1ZV8901JkLs6EhYO7nGW70RsioYZUfVtN6tVcGAlEamjqb34TE+JAcdagrxBsCUOg2clEy55l8lY+kr+moGqKMm78x7el4zM0ellVQgtmJKFjkUBX6TwEAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FCaPM2DG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QwozwMXdCCIiCPtbgz7Y1tgee6n9JaKNWkTBAxTxAmcZo0OxrUMGNRml1WusaxHDjt7xJ7vbXQaSrjXBc7gGAEhwER+7vXLUICtvdL+XQUyVAWqi+FGlZ8/t3osfHMe+8w0J5/KBLCEdp93cJ6/UPYxRhPCZiC/D2529xso3u4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6/Negca; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FCaPM2DG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76E61F000E9;
-	Tue, 21 Jul 2026 22:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6/Negca"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494FE1F000E9;
+	Tue, 21 Jul 2026 22:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672841;
-	bh=srMXHurondJ33cMHjXJ1bjwBpelMYrZjizOEBrn8sJY=;
+	s=korg; t=1784672843;
+	bh=ePyK8UG3ha7VwJI12FTSrodw25EhXf3YtVCJ2OZ9mYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FCaPM2DGpWn7ksNklD8yfM6R5d6lE2yvUJAg4SFrRM04nln5qU3nQCa8LaznNdPZL
-	 TqEI/tH+4N3f69rSsLLdgHIHQ9I/yoW3k714cbnBqvrhuPnf93LRPGVT+nVuFIl42i
-	 FZB0aJaiOG03thJUyFRhhHZcuH6DKZHdhQZTmTOs=
+	b=b6/Negca+T84GJtyb76m7b1FKr1dbKfEQG1CIiLYLeVIZB7T8UCJguNUbE6Pns1H6
+	 qabRJNTmahqRBlkOkakOh8SOdjpLz38yLM86d35YBmvjvW0v6/AAwrX4YMW1S2803c
+	 fZ1Thm96Avq0mt+sEh58uUYMMPbuXmb37zI/g3SU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Nenciarini <mnencia@kcore.it>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 770/843] PCI: Skip Resizable BAR restore on read error
-Date: Tue, 21 Jul 2026 17:26:45 +0200
-Message-ID: <20260721152423.373754937@linuxfoundation.org>
+Subject: [PATCH 5.15 779/843] smb: client: Fix next buffer leak in receive_encrypted_standard()
+Date: Tue, 21 Jul 2026 17:26:54 +0200
+Message-ID: <20260721152423.578591667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,58 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Nenciarini <mnencia@kcore.it>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit ee7471fe968d210939be9046089a924cd23c8c3b ]
+[ Upstream commit 1c6267a1d5cf4c73b656f8181b310cbbb3e4767b ]
 
-pci_restore_rebar_state() uses the Resizable BAR Control register to decide
-how many BARs to restore (nbars) and which BAR each iteration addresses
-(bar_idx).
+receive_encrypted_standard() allocates next_buffer before checking
+whether the number of compound PDUs already reached MAX_COMPOUND. If
+the limit check fails, the function returns immediately and the newly
+allocated next_buffer is not assigned to server->smallbuf/server->bigbuf,
+making it leaked.
 
-When a device does not respond, config reads typically return
-PCI_ERROR_RESPONSE (~0).  Both fields are 3 bits wide, so nbars and bar_idx
-both evaluate to 7, past the spec's valid ranges for both fields.
-pci_resource_n() then returns an unrelated resource slot, whose size is
-used to derive a nonsensical value written back to the Resizable BAR
-Control register.
+Move the MAX_COMPOUND check before allocating next_buffer.
 
-Bail out if any Resizable BAR Control read returns PCI_ERROR_RESPONSE. No
-further BARs are touched, which is safe because a config read that returns
-PCI_ERROR_RESPONSE indicates the device is unreachable and restoration is
-pointless.
-
-Fixes: d3252ace0bc6 ("PCI: Restore resized BAR state on resume")
-Signed-off-by: Marco Nenciarini <mnencia@kcore.it>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: b24df3e30cbf ("cifs: update receive_encrypted_standard to handle compounded responses")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/666cac19b5daa0ab0e0ab64454e76b4d24465dbd.1776429882.git.mnencia@kcore.it
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/rebar.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/cifs/smb2ops.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/pci/rebar.c
-+++ b/drivers/pci/rebar.c
-@@ -131,6 +131,9 @@ void pci_restore_rebar_state(struct pci_
- 		return;
- 
- 	pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
-+	if (PCI_POSSIBLE_ERROR(ctrl))
-+		return;
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -5211,6 +5211,12 @@ receive_encrypted_standard(struct TCP_Se
+ one_more:
+ 	shdr = (struct smb2_hdr *)buf;
+ 	next_cmd = le32_to_cpu(shdr->NextCommand);
 +
- 	nbars = FIELD_GET(PCI_REBAR_CTRL_NBAR_MASK, ctrl);
- 
- 	for (i = 0; i < nbars; i++, pos += 8) {
-@@ -138,6 +141,9 @@ void pci_restore_rebar_state(struct pci_
- 		int bar_idx, size;
- 
- 		pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
-+		if (PCI_POSSIBLE_ERROR(ctrl))
-+			return;
++	if (*num_mids >= MAX_COMPOUND) {
++		cifs_server_dbg(VFS, "too many PDUs in compound\n");
++		return -1;
++	}
 +
- 		bar_idx = ctrl & PCI_REBAR_CTRL_BAR_IDX;
- 		res = pdev->resource + bar_idx;
- 		size = pci_rebar_bytes_to_size(resource_size(res));
+ 	if (next_cmd) {
+ 		if (WARN_ON_ONCE(next_cmd > pdu_length))
+ 			return -1;
+@@ -5234,10 +5240,6 @@ one_more:
+ 		mid_entry->resp_buf_size = server->pdu_size;
+ 	}
+ 
+-	if (*num_mids >= MAX_COMPOUND) {
+-		cifs_server_dbg(VFS, "too many PDUs in compound\n");
+-		return -1;
+-	}
+ 	bufs[*num_mids] = buf;
+ 	mids[(*num_mids)++] = mid_entry;
+ 
 
 
