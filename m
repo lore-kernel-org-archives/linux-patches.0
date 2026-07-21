@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E57146D0A9;
-	Tue, 21 Jul 2026 17:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1909F46F494;
+	Tue, 21 Jul 2026 17:34:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655286; cv=none; b=sjwzmCI61wjyEHW8a+duNzRG5Cf+IEU2oG3+dOJrZsvQ4T3kO6iG345thELc77aIwsq+wIs+MgAq+oPTSn5wrOEyX9MPO34U9nPoj57KqELX7lxS1eWf1IoefV285ic21TJ+USBtzs+s4gaV4DNabK0XdE7O36ZZFtHBNf4ULvo=
+	t=1784655289; cv=none; b=HfUxw/w3T6B6dqtf0iaxVb8Wvb27L7xhXSXQw7dZTsfCAcks4btesvGpGfPM2AJfvSG4yBGcvpa8cemPT1wH4T2psq5jgSNTesmaAgqBiBEfSE+KdYN62T4EnmDtBGCZH7OUkoDKRfTrAziqXYYb0eU0bVFi/XiLSYDLwsTyYbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655286; c=relaxed/simple;
-	bh=rarum0omLNjyLr0QPTIUtTMyCXfZCaMtBPMv7PRAY6Q=;
+	s=arc-20240116; t=1784655289; c=relaxed/simple;
+	bh=2k/yxko7QTvD3PTl5pxsmab3uON5XkEtT7VWkOJ8Yuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uhUiojdbQLiPMJSmdsnb8pQntFG2snVkj1hpz5w7nA3GdHEqYIdNpYw3dni6TBMeBOBS2qgrOgVJTSR3S/LOMzs8qAZTKtvCb2+6DB4JzsHcFa5YdQEEMHZ3b/gXbxYCBJ1VNTHnDxMTi6z+SKS/UWLL3FjbOmuiqM0s4ofzG4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXDl1TC7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DiagQOIYXb6D9gbwZTZNFc6tli6mdHbb1SdUh7k4O7+cRs1m1J5xxxg3Y4Ij2GNJFZm7edDNpYoudmai2vI32jUkyTY27pviZU8hiFrvgG1YWYDsWEijtQAfgG784u++aRuBv2VwX96TKDSnD78IxFuVh7ybI2UW2uWTfZxNGwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3qhva8P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXDl1TC7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC69C1F000E9;
-	Tue, 21 Jul 2026 17:34:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3qhva8P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E5E31F00A3A;
+	Tue, 21 Jul 2026 17:34:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655285;
-	bh=XWoTZgNcF0mWu+uCayhj+bFF4wd+ZiAJCgjttMoFees=;
+	s=korg; t=1784655288;
+	bh=55vqm9iyz2V/wtSVDOfsbrEWpRSILXVJsHb5q3wt3nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OXDl1TC7MGOb8yunWjV9cYNK5Xgcyz34muvAIvSFvdrd+VfRPQRX89ASvznItGwJp
-	 y1mToLApVPqDmObSjn5uNKfcqYOLMUFNPl3rav5w6DPlwezku7pPWY2hA4AckUMGin
-	 e/OFV5iMtiuWfWWFuRTGXAkSXROmaCAjV8s506z4=
+	b=R3qhva8P9A9fDrI7xPGrMXFELymNbqtpIaqakz77lIAv0HWwL5BfPo35lobFv7o3Q
+	 QbnrLgeiIXf/iyLucgYItRc9mGXHLZiK1cOHDNCjsKPUrzMjqb7yDDkZacA+DEIJb4
+	 6x9pzVU1x9dxijqna6SihYALUTjpKyAPLXrSuOrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Zhiling Zou <roxy520tt@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
+	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.1 2024/2077] wifi: mac80211: free ack status frame on TX header build failure
-Date: Tue, 21 Jul 2026 17:28:17 +0200
-Message-ID: <20260721152640.438021418@linuxfoundation.org>
+Subject: [PATCH 7.1 2025/2077] wifi: mac80211: validate extension-frame layout before RX
+Date: Tue, 21 Jul 2026 17:28:18 +0200
+Message-ID: <20260721152640.460650952@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -55,78 +50,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <roxy520tt@gmail.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit 2c51457d930f723e5f2903af90f5847f7df53f42 upstream.
+commit 57d503ce32eccfa7650065ca4c560f7e29a2e676 upstream.
 
-ieee80211_build_hdr() stores an ACK status frame before it has
-finished all validation and header construction. If a later error path
-is taken, the transmit skb is freed but the stored ACK status frame
-remains in local->ack_status_frames.
+Extension frames only have the extension header at the regular 802.11
+header offset. The generic RX path can still reach helpers and interface
+dispatch code that read regular header address fields before unsupported
+extension subtypes are dropped.
 
-This can happen for control port frames when the requested MLO link ID
-does not match the link selected for a non-MLO station. Repeated
-failures can fill the ACK status IDR and leave pending ACK frames until
-hardware teardown.
+mac80211 currently only handles S1G beacon extension frames. Drop other
+extension subtypes before they can reach regular-header RX processing.
+For S1G beacons, linearize the SKB with the management-frame path and
+require the fixed S1G beacon header, including optional fixed fields
+indicated by frame control, before generic RX dispatch.
 
-Remove any stored ACK status frame before returning an error after it
-has been inserted into the IDR.
+Route S1G beacons through the station/default-link RX path without
+regular-header station lookup. Avoid regular-header address reads in the
+mac80211 RX paths that process S1G extension beacons, including
+accept-frame, duplicate-detection, address-copy, and MLO
+address-translation paths.
 
-Fixes: a729cff8ad51 ("mac80211: implement wifi TX status")
+Also make ieee80211_get_bssid() length-safe before returning the S1G
+source-address pointer.
+
+Fixes: 09a740ce352e ("mac80211: receive and process S1G beacons")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/9de0423da840e92084915b8f92e66a421245c4b8.1782462409.git.roxy520tt@gmail.com
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260611161943.91069-5-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/tx.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ net/mac80211/rx.c   |   34 ++++++++++++++++++++++++++++++++--
+ net/mac80211/util.c |    3 +++
+ 2 files changed, 35 insertions(+), 2 deletions(-)
 
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -2597,6 +2597,18 @@ static u16 ieee80211_store_ack_skb(struc
- 	return info_id;
- }
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -1526,6 +1526,9 @@ ieee80211_rx_h_check_dup(struct ieee8021
+ 	if (status->flag & RX_FLAG_DUP_VALIDATED)
+ 		return RX_CONTINUE;
  
-+static void ieee80211_remove_ack_skb(struct ieee80211_local *local, u16 info_id)
-+{
-+	struct sk_buff *ack_skb;
-+	unsigned long flags;
++	if (ieee80211_is_ext(hdr->frame_control))
++		return RX_CONTINUE;
 +
-+	spin_lock_irqsave(&local->ack_status_lock, flags);
-+	ack_skb = idr_remove(&local->ack_status_frames, info_id);
-+	spin_unlock_irqrestore(&local->ack_status_lock, flags);
+ 	/*
+ 	 * Drop duplicate 802.11 retransmissions
+ 	 * (IEEE 802.11-2012: 9.3.2.10 "Duplicate detection and recovery")
+@@ -4487,12 +4490,16 @@ static bool ieee80211_accept_frame(struc
+ 	struct ieee80211_hdr *hdr = (void *)skb->data;
+ 	struct ieee80211_rx_status *status = IEEE80211_SKB_RXCB(skb);
+ 	u8 *bssid = ieee80211_get_bssid(hdr, skb->len, sdata->vif.type);
+-	bool multicast = is_multicast_ether_addr(hdr->addr1) ||
+-			 ieee80211_is_s1g_beacon(hdr->frame_control);
++	bool multicast;
+ 	static const u8 nan_network_id[ETH_ALEN] __aligned(2) = {
+ 		0x51, 0x6F, 0x9A, 0x01, 0x00, 0x00
+ 	};
+ 
++	if (ieee80211_is_s1g_beacon(hdr->frame_control))
++		return sdata->vif.type == NL80211_IFTYPE_STATION && bssid;
 +
-+	kfree_skb(ack_skb);
-+}
++	multicast = is_multicast_ether_addr(hdr->addr1);
 +
- /**
-  * ieee80211_build_hdr - build 802.11 header in the given frame
-  * @sdata: virtual interface to build the header for
-@@ -2972,7 +2984,8 @@ static struct sk_buff *ieee80211_build_h
- 		if (ieee80211_skb_resize(sdata, skb, head_need, ENCRYPT_DATA)) {
- 			ieee80211_free_txskb(&local->hw, skb);
- 			skb = NULL;
--			return ERR_PTR(-ENOMEM);
-+			ret = -ENOMEM;
-+			goto free;
- 		}
+ 	switch (sdata->vif.type) {
+ 	case NL80211_IFTYPE_STATION:
+ 		if (!bssid && !sdata->u.mgd.use_4addr)
+@@ -5174,6 +5181,11 @@ static bool ieee80211_prepare_and_rx_han
+ 		hdr = (struct ieee80211_hdr *)rx->skb->data;
  	}
  
-@@ -3040,6 +3053,8 @@ static struct sk_buff *ieee80211_build_h
++	if (ieee80211_is_s1g_beacon(hdr->frame_control)) {
++		ieee80211_invoke_rx_handlers(rx);
++		return true;
++	}
++
+ 	/* Store a copy of the pre-translated link addresses for SW crypto */
+ 	if (unlikely(is_unicast_ether_addr(hdr->addr1) &&
+ 		     !ieee80211_is_data(hdr->frame_control)))
+@@ -5263,6 +5275,13 @@ static bool ieee80211_rx_for_interface(s
+ 	struct sta_info *sta;
+ 	int link_id = -1;
  
- 	return skb;
-  free:
-+	if (info_id)
-+		ieee80211_remove_ack_skb(local, info_id);
- 	kfree_skb(skb);
- 	return ERR_PTR(ret);
- }
++	if (ieee80211_is_s1g_beacon(hdr->frame_control)) {
++		if (!ieee80211_rx_data_set_sta(rx, NULL, -1))
++			return false;
++
++		return ieee80211_prepare_and_rx_handle(rx, skb, consume);
++	}
++
+ 	/*
+ 	 * Look up link station first, in case there's a
+ 	 * chance that they might have a link address that
+@@ -5338,6 +5357,17 @@ static void __ieee80211_rx_handle_packet
+ 			err = -ENOBUFS;
+ 		else
+ 			err = skb_linearize(skb);
++	} else if (ieee80211_is_s1g_beacon(fc)) {
++		size_t s1g_hdr_len = offsetof(struct ieee80211_ext,
++					      u.s1g_beacon.variable) +
++				     ieee80211_s1g_optional_len(fc);
++
++		if (skb->len < s1g_hdr_len)
++			err = -ENOBUFS;
++		else
++			err = skb_linearize(skb);
++	} else if (ieee80211_is_ext(fc)) {
++		err = -EINVAL;
+ 	} else {
+ 		err = !pskb_may_pull(skb, ieee80211_hdrlen(fc));
+ 	}
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -73,6 +73,9 @@ u8 *ieee80211_get_bssid(struct ieee80211
+ 	if (ieee80211_is_s1g_beacon(fc)) {
+ 		struct ieee80211_ext *ext = (void *) hdr;
+ 
++		if (len < offsetofend(struct ieee80211_ext, u.s1g_beacon.sa))
++			return NULL;
++
+ 		return ext->u.s1g_beacon.sa;
+ 	}
+ 
 
 
