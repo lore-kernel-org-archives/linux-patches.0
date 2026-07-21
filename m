@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5905B3B52FF;
-	Tue, 21 Jul 2026 22:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F177D3B47E3;
+	Tue, 21 Jul 2026 22:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672918; cv=none; b=QhkIr44Mp+2neM839PRAZ6gfrxNpY0lj5X8aYxCGw/HHNrqlT9cW/IQy7pGs8JJd8eC1MZkhSUFlVxkKBAR6SQ8W258vL+i/2QhSPZAtLDgZAdbaHXn8E8eY/XuJ7Kyt31c9N7P9oRX/ERci9+5nvlOleB9AQ2PpXtELciLfZXY=
+	t=1784672918; cv=none; b=hBJVq0NyvZMIVlTGNjbIgapXV2c5PHDfteKa7guTmzm4dtmu7kUBAy20mQbHkApYLf61k5YqIqVuikJKFTY+4Yw0N1HBZy2/hpfPNuaJinBo6x9nh3iRLtm2YZqYXjVAeywWHxkdJvGZqXqdFBGFOdr/kreEZv2PIYdFdJIJqpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784672918; c=relaxed/simple;
-	bh=o0k05xFScDdFKI0JIkrZ+k+FJBrXNQYASB/jYHC1qMc=;
+	bh=HKNbiOCOQIsLxrw0z2BmtLjf3SF+6W9gWNMiuHdzb5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s7hQSwyp1MyqxR/B4l9o7oB+jae6Qjtd1RbRrDFWEfqsHdSmLBmlTF+FRATFqzxxpXj3vkS5uNjDVRPVOSqPXJWDQhOjO3pv1xSRxnzxiDKmyV/2ro0FFVAAaczU18lNaIl2tu9KmfEEnLTrW7Zwnsr7JlL0AbrX6IGDygpq3G8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yr/3eLzn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DZkNcBjt4EDRrf5Xmy26BFP5n3moMKZfrgj77+cFlb4BSn9AbZbel3heh8waA0fGAhnocCTXwjCF1xmkPLhE+xr+v+/ZJib8OHlZu4o4I3EPSJsP3LpcIIaxXI9/RuNQafFnZwVeYtfaQop3JqsaXPjYoKl8SyRUNTY//XgN6+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=htyUFbyW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yr/3eLzn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 317C81F000E9;
-	Tue, 21 Jul 2026 22:28:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="htyUFbyW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF971F00A3A;
+	Tue, 21 Jul 2026 22:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672909;
-	bh=i4F+LfBinJ18GaWlMR+7iHc2xJ2yOUk5ira43YeY5kw=;
+	s=korg; t=1784672912;
+	bh=LIjzmqNibaZcw6z7w+ZnUcT6g85OnEcLZ6cwIlfBI54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yr/3eLznusgF0ugROCGjwtee2zfPtwo0WVybMdjDHyWbR+lxfdbRmaLH/AT37wDHv
-	 i23P2Yewif9tq6cltO6hh+FdsXq8ypvX9zE7uxOTosQxmXLeSqQSocvgm4iwp5l4pL
-	 1oIPDOU7o1j6nY9Y286ScrExW6cbH8OQMgRYox0A=
+	b=htyUFbyWpxms++T0EtyWlU5n/yaAYXotSJkTmnkYF5hdoRuSRpDgZTNdxOfEzXXsC
+	 SnQG/jVpkL5SEcUPatYGPkgJo/AP/c3vKzi4jHHN+TVezcQ/hn3h5M/PT7SRTx9W3R
+	 7c2YXJc2CTT3gZkVZjtjfV+c13UBG3aBJXhNG4ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	micas-opensource <zjianan156@gmail.com>,
-	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Abaci Robot <abaci@linux.alibaba.com>,
+	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 802/843] serial: 8250_mid: Disable DMA for selected platforms
-Date: Tue, 21 Jul 2026 17:27:17 +0200
-Message-ID: <20260721152424.107089189@linuxfoundation.org>
+Subject: [PATCH 5.15 803/843] xfs: Remove redundant assignment of mp
+Date: Tue, 21 Jul 2026 17:27:18 +0200
+Message-ID: <20260721152424.129379074@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,61 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
 
-[ Upstream commit b1b4efea05a56c0995e4702a86d6624b4fdff32f ]
+[ Upstream commit f4901a182d33d05a3b7020e2af97c635f6c47959 ]
 
-In accordance with Errata (specification updates)
-HSUART May Stop Functioning when DMA is Active.
+mp is being initialized to log->l_mp but this is never read
+as record is overwritten later on. Remove the redundant
+assignment.
 
-- Denverton document #572409, rev 3.4, DNV60
-- Ice Lake Xeon D document #714070, ICXD65
-- Snowridge document #731931, SNR44
+Cleans up the following clang-analyzer warning:
 
-For a quick fix just disable the respective callbacks during the device probe.
-Depending on the future development we might remove them completely.
+fs/xfs/xfs_log_recover.c:3543:20: warning: Value stored to 'mp' during
+its initialization is never read [clang-analyzer-deadcode.DeadStores].
 
-Reported-by: micas-opensource <zjianan156@gmail.com>
-Closes: https://lore.kernel.org/linux-serial/20250625031409.2404219-1-opensource@ruijie.com.cn/
-Fixes: 6ede6dcd87aa ("serial: 8250_mid: add support for DMA engine handling from UART MMIO")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260626094937.561776-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Stable-dep-of: cc9af5e461ea ("xfs: use null daddr for unset first bad log block")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_mid.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_log_recover.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_mid.c
-+++ b/drivers/tty/serial/8250/8250_mid.c
-@@ -10,6 +10,7 @@
- #include <linux/module.h>
- #include <linux/pci.h>
- #include <linux/rational.h>
-+#include <linux/util_macros.h>
+--- a/fs/xfs/xfs_log_recover.c
++++ b/fs/xfs/xfs_log_recover.c
+@@ -3579,8 +3579,6 @@ xlog_recover_check_summary(
+ 	uint64_t		ifree;
+ 	int			error;
  
- #include <linux/dma/hsu.h>
- 
-@@ -371,8 +372,16 @@ static const struct mid8250_board dnv_bo
- 	.freq = 133333333,
- 	.base_baud = 115200,
- 	.bar = 1,
--	.setup = dnv_setup,
--	.exit = dnv_exit,
-+	/*
-+	 * Errata:
-+	 * HSUART May Stop Functioning when DMA is Active.
-+	 *
-+	 * - Denverton document #572409, rev 3.4, DNV60
-+	 * - Ice Lake Xeon D document #714070, ICXD65
-+	 * - Snowridge document #731931, SNR44
-+	 */
-+	.setup = PTR_IF(false, dnv_setup),
-+	.exit = PTR_IF(false, dnv_exit),
- };
- 
- #define MID_DEVICE(id, board) { PCI_VDEVICE(INTEL, id), (kernel_ulong_t)&board }
+-	mp = log->l_mp;
+-
+ 	freeblks = 0LL;
+ 	itotal = 0LL;
+ 	ifree = 0LL;
 
 
