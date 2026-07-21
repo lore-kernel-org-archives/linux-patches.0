@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C024D46C4DE;
-	Tue, 21 Jul 2026 18:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670D539A7FD;
+	Tue, 21 Jul 2026 18:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658564; cv=none; b=o5XYJb+pRPo3s0s5MOGqgEDBhfQQTBuyx4EGTv2DJNf/Tty1mtYjGfpgrqDIERNC3+uet6/D9UcC91NAnRiQmSlW8n1MKRop+W+Ds2CK5A/9Y+4JAmgk/zvnoCyBY2z9o2ah3n4cz6AtFSs/J/uEYD428ThtaWSpHLayXaUm7Io=
+	t=1784658568; cv=none; b=U0eCw9VOH4vY1inOD+66+VI3xn6qAYq9U0ozS4IxIlyplnm8O1JuXaIdK6G/zIh54/VlmrnUeMKCcBIuVGv9mHbZeKRdJJxCaOb2kutoaWWBJghIJkeHY6+bfrDHr+Q3uoknQoQF8/okb1JEsbAQWdB++Qb0R3cTjqi89fp2Cq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658564; c=relaxed/simple;
-	bh=7mwc0784+sxsShXTiye3ztgP0o2cGe2p3senDCFZgsI=;
+	s=arc-20240116; t=1784658568; c=relaxed/simple;
+	bh=0mITuGnIW2cxh4iSM1NITfN1JbIuSDbtcFCXs2vzgXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=earyeobj2azzsQpn5XSKsWab6Cz30xjQtMnOiGATpPwOm6LO5m4K9WeZlq0EV7IaYK28tpQTUzODINg/Fw6EEOMa/ls+lBXM2Dn88IUw6VuvSSL7mbTi8/gld5Y/KHfKwJ593fta0vgSeJLPJFQt7d7DoLKc/4eFptmxLEffASE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SeXEpNx9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bNNXIiCCgtcqbZoePzkf8GCLyIzb6IH0eWDn7nlsbGlq8DV6nA2SUVxiXJPyuUvH6hJJfXw+aO8fRblYtJuywyxYDo2iu4UVaTsd/NlX/XdOTVpEXuuXT/8eFufHT3f9+YnXaDHlTqAMmjmPXDGk3EVvpXKSsRnLT7zzuglri10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhGdOJ9l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SeXEpNx9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312C71F000E9;
-	Tue, 21 Jul 2026 18:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhGdOJ9l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC8C1F00A3A;
+	Tue, 21 Jul 2026 18:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658563;
-	bh=w0xfB6tclmDNrW18TWCsDcOYK3FEIscyGWQv/mLzXGo=;
+	s=korg; t=1784658566;
+	bh=yAGzQ3+duL7fMlozm9AkHaXdvavY23Gv8LTTCrFwQug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SeXEpNx9EBTpWld8vjo4gtXEIPDyCSKUm0i6almIXCcmHZ2hbUovTKUAATbh3bpNy
-	 UrX5zHBg2P17/t3VeaiR9XlKkGiobOxaBrdfm+Z5GvWt/YEh7aFUwYq0R7/DG1/Anx
-	 Vr+ElL1AgtJSJHaXY43hFQ6NYEjESfePiO8Redcw=
+	b=uhGdOJ9lfCScpG02x1KfzU318+l7Mqa+sTgJXfSgF14QzfprHzSQuX98LK5b9LuhH
+	 gXmX1P9++rqaI1AyvKM70+xk2y/DwZoJZXucs99eLRSreflGmID2TCtKM+R8iEXkrT
+	 tK/EL+WWpw06b4G7mg0BbCrNpxWWkEC3VRMk2npo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 6.18 1190/1611] perf/x86/amd/lbr: Fix kernel address leakage
-Date: Tue, 21 Jul 2026 17:21:46 +0200
-Message-ID: <20260721152542.198793733@linuxfoundation.org>
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Hongyan Xia <hongyan.xia@transsion.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.18 1191/1611] cpufreq: schedutil: Fix uncleared need_freq_update on the .adjust_perf() path
+Date: Tue, 21 Jul 2026 17:21:47 +0200
+Message-ID: <20260721152542.222568905@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,63 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
 
-commit 2a892294b83f541115c94b0bb637f39bef187657 upstream.
+commit 9ef450ca74e43dacf9a2a15db7a851052c78dcf0 upstream.
 
-A user-only branch stack can contain branches that originate from
-the kernel. As a result, kernel addresses are exposed to user space
-even when PERF_SAMPLE_BRANCH_USER is requested. On AMD processors
-supporting X86_FEATURE_AMD_LBR_V2, perf can still report SYSRET/ERET
-entries for which the branch-from addresses are in the kernel.
+The need_freq_update flag makes sugov_should_update_freq() return true
+regardless of the rate_limit_us throttling, and is cleared in
+sugov_update_next_freq(). sugov_update_single_freq() and
+sugov_update_shared() go through that helper, so the flag does not
+persist there.
 
-E.g.
+However, sugov_update_single_perf(), used by drivers implementing the
+.adjust_perf() callback (e.g. intel_pstate or amd-pstate in passive
+mode) calls cpufreq_driver_adjust_perf() directly and never goes through
+sugov_update_next_freq(), so the need_freq_update flag is not cleared in
+that path.
 
-  $ perf record -e cycles -o - -j any,save_type,u -- \
-        perf bench syscall basic --loop 1000 | \
-        perf script -i - -F brstack|tr ' ' '\n'| \
-        grep -E '0x[89a-f][0-9a-f]{15}'
+Before commit 75da043d8f88 ("cpufreq/sched: Set need_freq_update in
+ignore_dl_rate_limit()"), this was effectively harmless because
+sugov_should_update_freq() still honored the rate limit even when
+need_freq_update was set. After that change, the flag forces
+sugov_should_update_freq() to always return true, so once set, it
+stays effective indefinitely on the .adjust_perf() path.
 
-  ...
-  0xffffffff81001268/0x717a90a38f1a/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a39157/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a2c628/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a41b60/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a260db/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a260db/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a8bef1c30/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a8e4d3c90/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  ...
+As a result, cpufreq_driver_adjust_perf() gets called on every scheduler
+utilization update (with the runqueue lock held) rather than being
+throttled by rate_limit_us, even if the driver itself may skip redundant
+hardware updates.
 
-The reason is that the hardware filter only considers the privilege
-level applicable to the branch target. Extend software filtering to
-also validate the branch-from addresses against br_sel, so that any
-branch record whose branch-from address is in the kernel is dropped
-when PERF_SAMPLE_BRANCH_USER is requested.
+Clear need_freq_update at the end of the adjust_perf path as well.
 
-Fixes: f4f925dae741 ("perf/x86/amd/lbr: Add LbrExtV2 hardware branch filter support")
-Reported-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: stable@vger.kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://patch.msgid.link/a898a29725f6b2f30518354cdc2e432db66c43cf.1783680119.git.sandipan.das@amd.com
+Fixes: 75da043d8f88 ("cpufreq/sched: Set need_freq_update in ignore_dl_rate_limit()")
+Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Reviewed-by: Hongyan Xia <hongyan.xia@transsion.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Cc: All applicable <stable@vger.kernel.org>
+[ rjw: Subject and changelog edits ]
+Link: https://patch.msgid.link/20260616154733.2405236-1-zhongqiu.han@oss.qualcomm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/amd/lbr.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/sched/cpufreq_schedutil.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/events/amd/lbr.c
-+++ b/arch/x86/events/amd/lbr.c
-@@ -125,7 +125,8 @@ static void amd_pmu_lbr_filter(void)
- 		}
+--- a/kernel/sched/cpufreq_schedutil.c
++++ b/kernel/sched/cpufreq_schedutil.c
+@@ -486,6 +486,7 @@ static void sugov_update_single_perf(str
+ 	cpufreq_driver_adjust_perf(sg_policy->policy, sg_cpu->bw_min,
+ 				   sg_cpu->util, max_cap);
  
- 		/* If type does not correspond, then discard */
--		if (type == X86_BR_NONE || (br_sel & type) != type) {
-+		if (type == X86_BR_NONE || (br_sel & type) != type ||
-+		    (!(br_sel & X86_BR_KERNEL) && kernel_ip(cpuc->lbr_entries[i].from))) {
- 			cpuc->lbr_entries[i].from = 0;	/* mark invalid */
- 			compress = true;
- 		}
++	sg_policy->need_freq_update = false;
+ 	sg_policy->last_freq_update_time = time;
+ }
+ 
 
 
