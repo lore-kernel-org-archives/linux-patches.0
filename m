@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C553330EF9A;
-	Tue, 21 Jul 2026 19:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2593730EF9A;
+	Tue, 21 Jul 2026 19:36:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662558; cv=none; b=MoM0LGMnKYr+LFd75QP2Ua26CLGkd+d4baV80vjiA/edjFKK7ZO8u2vEbIpGjVsuX7yHDHGsX88A/QMHPIoU6aOWPpfNwrbPy2vkQlWaN7YZJvYRcy8tCPVlP0NUqant7sxCBUvZ8HqmNJyBperVYQoIIZoSzNdCyu0wUJLAxoU=
+	t=1784662561; cv=none; b=SCLSNmM3prPZhcy5BOT3n/nUsWHVO0ooWw5VzphVqtpDDZri1wXpN6Jfs4TPjPzK1oWU5YDTKPrupxT0z32qBQLf85yWg6URLo60oBGP9yu1yJAAi94YUmihVW2iuOkrxICG37GgC9VRt9mc2NvIYiauMZSyCd+MuyrMTMM8PRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662558; c=relaxed/simple;
-	bh=iwFE9zOsQmO/8uwlFtOTyiyVjBN/VqogKkXUN7PBN7w=;
+	s=arc-20240116; t=1784662561; c=relaxed/simple;
+	bh=qTTwK7majxEndC0zyJslpC6J4Qw5dI/qQOFFq/bpyfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FanonuBGGXdA0qKz5E1VdK+XjO0iilED1RUR9F2wfY/O+2VCbBhmYqIAJJ/QAt2Sy/CW+k9A8pDiqRZb7qJlxJoS2G003SpZ+b65YC1K72zZcHrA9KmvhkF+NrbKS/CScQx5IBVsbV/XexRJOfsBC/KXWriw7AhcMKG9enU84lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQx9Zogu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fmOafEROKaZ4h3PAe6OcpD+BbTP5rD/xWxLXNrgTyu/blFukUlQgHyaR3cDHctGKhermZrzOxl7IznP3fCk+W4eTbGwwqHKM9EUSl0VMbgysxVangkGVLLDTpGrigNCwUktDf0cRS66HpQXrzuxpeZarchwf+uBajhgRB94YNx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2OZ6e/YP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQx9Zogu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87B81F000E9;
-	Tue, 21 Jul 2026 19:35:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OZ6e/YP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBDF1F000E9;
+	Tue, 21 Jul 2026 19:35:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662557;
-	bh=0YisRL3kvSFImzgTLQzDtfVGaAHSnaw0UOfFXIDGbtY=;
+	s=korg; t=1784662560;
+	bh=iR6OqWOqIGIUPUKo5EbKSFwOZFqRdmQD29ZHNyxSGkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JQx9ZoguetdZW5q1VIM9chgHiQvDDBqWUtvVNxY5wvusOTTb+Ah92UsCIWSc7MzqF
-	 Pmndda8JET/Pbpy/oLhybETW9izCXScKl+jB9PkEa24OzRWCh9cAB5iizqEU/FaFDY
-	 DMsDe0FIIrnoJaDrxv28MWTW6glPAYmmjnQtbVg4=
+	b=2OZ6e/YPo07xcratQbZI7kEqVJqN+agObidHIVGZxa8K5dVn/kR1fhP6v5Tkb29Ll
+	 iJSUkaOxG84swfneMVuRT3eyLUTBSPiasq6vsq5pGXv4prlFBhZ59gziujDpOz0AlE
+	 262lYnF+r0E1AOi9WRHxXoJOIHLzLDCiRHszd4Y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Clark Wang <xiaoning.wang@nxp.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0489/1276] nfs: keep PG_UPTODATE clear after read errors in page groups
-Date: Tue, 21 Jul 2026 17:15:32 +0200
-Message-ID: <20260721152457.044379054@linuxfoundation.org>
+Subject: [PATCH 6.12 0490/1276] NFSv4/flexfiles: honor FF_FLAGS_NO_IO_THRU_MDS on fatal DS connect errors
+Date: Tue, 21 Jul 2026 17:15:33 +0200
+Message-ID: <20260721152457.068390009@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -45,100 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Clark Wang <xiaoning.wang@nxp.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-[ Upstream commit 3ff72e1cdf5c337b6acfcf3fcef748c5b9a5316b ]
+[ Upstream commit 7a375cafc14ed151508f908ea5681caf0a9cc1d6 ]
 
-When a read request is split into multiple subrequests, earlier
-completions may advance PG_UPTODATE state for the page group once
-their bytes fall within hdr->good_bytes. If a later subrequest in
-the same group then completes with NFS_IOHDR_ERROR, the read path
-needs to clear any accumulated PG_UPTODATE state and keep later
-completions from rebuilding it.
+Commit f06bedfa62d5 ("pNFS/flexfiles: don't attempt pnfs on fatal DS
+errors") teaches ff_layout_{read,write}_pagelist() to return
+PNFS_NOT_ATTEMPTED when nfs4_ff_layout_prepare_ds() fails with a
+nfs_error_is_fatal() errno (e.g. -ETIMEDOUT from a SOFTCONN connect
+deadline, -ENOMEM, -ERESTARTSYS), so that the client gives up instead
+of spinning.  pnfs_do_{read,write}() then dispatches the I/O through
+pnfs_{read,write}_through_mds() → nfs_pageio_reset_{read,write}_mds().
 
-Otherwise, a subsequent successful subrequest can re-enter
-nfs_page_group_set_uptodate(), restore the page-group sync state,
-and leave stale PG_UPTODATE behind for nfs_page_group_destroy()
-to trip over in nfs_free_request().
+That fallback is unconditional and silently violates FF_FLAGS_NO_IO_THRU_MDS:
+when the layout segment carries the flag (typically single-mirror
+appliance layouts where MDS I/O is explicitly forbidden), the
+out_failed: path's \`&& !ds_fatal_error\` clause overrides the flag's
+short-circuit through ff_layout_avoid_mds_available_ds() and routes
+the I/O to the MDS file handle anyway.
 
-Add a sticky page-group read-failed flag. Once any subrequest in
-the group is known to be bad, mark the group failed, clear any
-accumulated PG_UPTODATE state, and refuse further PG_UPTODATE
-synchronization for the rest of the completion walk.
+This is reachable in practice during a data-server restart: SOFTCONN
+exhaustion produces -ETIMEDOUT, which is fatal per nfs_error_is_fatal(),
+which triggers PNFS_NOT_ATTEMPTED, which silently goes to MDS.
 
-Fixes: 67d0338edd71 ("nfs: page group syncing in read path")
-Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
+Preserve the upstream "don't spin on fatal errors" intent for layouts
+that permit MDS fallback.  For layouts with FF_FLAGS_NO_IO_THRU_MDS
+set, mark the layout for return and request PNFS_TRY_AGAIN instead;
+if the server cannot supply a usable layout the failure now surfaces
+cleanly via pnfs_update_layout(), rather than via silent MDS I/O that
+contradicts the flag.
+
+Fixes: f06bedfa62d5 ("pNFS/flexfiles: don't attempt pnfs on fatal DS errors")
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/read.c            | 25 ++++++++++++++++++++++++-
- include/linux/nfs_page.h |  1 +
- 2 files changed, 25 insertions(+), 1 deletion(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/fs/nfs/read.c b/fs/nfs/read.c
-index 3c1fa320b3f1bd..fe41e42729944c 100644
---- a/fs/nfs/read.c
-+++ b/fs/nfs/read.c
-@@ -132,10 +132,32 @@ static void nfs_readpage_release(struct nfs_page *req, int error)
- 
- static void nfs_page_group_set_uptodate(struct nfs_page *req)
- {
--	if (nfs_page_group_sync_on_bit(req, PG_UPTODATE))
-+	bool uptodate = false;
-+
-+	nfs_page_group_lock(req);
-+	if (!test_bit(PG_READ_FAILED, &req->wb_head->wb_flags) &&
-+	    nfs_page_group_sync_on_bit_locked(req, PG_UPTODATE))
-+		uptodate = true;
-+	nfs_page_group_unlock(req);
-+
-+	if (uptodate)
- 		folio_mark_uptodate(nfs_page_to_folio(req));
- }
- 
-+static void nfs_page_group_mark_read_failed(struct nfs_page *req)
-+{
-+	struct nfs_page *tmp;
-+
-+	nfs_page_group_lock(req);
-+	set_bit(PG_READ_FAILED, &req->wb_head->wb_flags);
-+	tmp = req;
-+	do {
-+		clear_bit(PG_UPTODATE, &tmp->wb_flags);
-+		tmp = tmp->wb_this_page;
-+	} while (tmp != req);
-+	nfs_page_group_unlock(req);
-+}
-+
- static void nfs_read_completion(struct nfs_pgio_header *hdr)
- {
- 	unsigned long bytes = 0;
-@@ -172,6 +194,7 @@ static void nfs_read_completion(struct nfs_pgio_header *hdr)
- 			if (bytes <= hdr->good_bytes)
- 				nfs_page_group_set_uptodate(req);
- 			else {
-+				nfs_page_group_mark_read_failed(req);
- 				error = hdr->error;
- 				xchg(&nfs_req_openctx(req)->error, error);
- 			}
-diff --git a/include/linux/nfs_page.h b/include/linux/nfs_page.h
-index 9aed39abc94bc3..cf085f7f65cddd 100644
---- a/include/linux/nfs_page.h
-+++ b/include/linux/nfs_page.h
-@@ -33,6 +33,7 @@ enum {
- 	PG_TEARDOWN,		/* page group sync for destroy */
- 	PG_UNLOCKPAGE,		/* page group sync bit in read path */
- 	PG_UPTODATE,		/* page group sync bit in read path */
-+	PG_READ_FAILED,		/* page group saw a read error */
- 	PG_WB_END,		/* page group sync bit in write path */
- 	PG_REMOVE,		/* page group sync bit in write path */
- 	PG_CONTENDED1,		/* Is someone waiting for a lock? */
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index 7e1494cc116b29..afdd49dff60538 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -1937,6 +1937,14 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
+ out_failed:
+ 	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
+ 		return PNFS_TRY_AGAIN;
++	if (ff_layout_no_fallback_to_mds(lseg)) {
++		/*
++		 * FF_FLAGS_NO_IO_THRU_MDS: force fresh LAYOUTGET,
++		 * never fall through to MDS I/O.
++		 */
++		pnfs_error_mark_layout_for_return(hdr->inode, lseg);
++		return PNFS_TRY_AGAIN;
++	}
+ 	trace_pnfs_mds_fallback_read_pagelist(hdr->inode,
+ 			hdr->args.offset, hdr->args.count,
+ 			IOMODE_READ, NFS_I(hdr->inode)->layout, lseg);
+@@ -2017,6 +2025,14 @@ ff_layout_write_pagelist(struct nfs_pgio_header *hdr, int sync)
+ out_failed:
+ 	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
+ 		return PNFS_TRY_AGAIN;
++	if (ff_layout_no_fallback_to_mds(lseg)) {
++		/*
++		 * FF_FLAGS_NO_IO_THRU_MDS: force fresh LAYOUTGET,
++		 * never fall through to MDS I/O.
++		 */
++		pnfs_error_mark_layout_for_return(hdr->inode, lseg);
++		return PNFS_TRY_AGAIN;
++	}
+ 	trace_pnfs_mds_fallback_write_pagelist(hdr->inode,
+ 			hdr->args.offset, hdr->args.count,
+ 			IOMODE_RW, NFS_I(hdr->inode)->layout, lseg);
 -- 
 2.53.0
 
