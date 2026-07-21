@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBCB343B48C;
-	Tue, 21 Jul 2026 22:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5641D431A4E;
+	Tue, 21 Jul 2026 22:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674759; cv=none; b=JsZqVDE4jf6Xm07uG8gJKwVK37mRk/7Z2YKXB618dooHgLiCEfegPstUnIdjWUwfvL5jPqZc6fXhMN7To0m9j879K8107jHZuhjSO95Um+s10KAqXmjRfWpUna19Vzqu5wh9X0ocFKrSe1k+aFMz6AJMVnN5Q2lyvfwk+7xwRfQ=
+	t=1784674762; cv=none; b=B4dFb7fwn52kKUAdaYT4aQgJ88o8MPvu4MJq9xE3sCY//8kM/Yf5CSBvYTI2K672F3w8vzooF1fXj07Jg5BIiRDWOjxHczsl8/PS5o6ptfdc3PyimmY6w6jQ8150N2ZEgN+TeuIJdDK7LKKsDDAuooQRbBQ3BhZsLryliksZchk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674759; c=relaxed/simple;
-	bh=R6tLd5JNfrIx+1Humz6xzfCzsNchAiSJPF3moOFgY2w=;
+	s=arc-20240116; t=1784674762; c=relaxed/simple;
+	bh=QcEeTrv+VK2Aa5t0/XXDDuzYuvq0YPwBG29q+OfNG2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n+/NEN3+iHnMVbU49mhSux26vzTuDlZHO5N4EAiR0niVv4+cAajKkxaSWJFJnXvZ6JOKwdkOk/ZlhvWZRJ5ETferQ2T3qcopDl3S2RlwoBJQrYpOBm5fPRGteD9XnQwTRzPRr9oOKZ3Qk2D1CLUGFJjT0rz1Y3Ceik4BmTqFBfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOigC1VZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MWblNOzLL4zlhf8uyORKhHUi7F2IQHXewmCP4HDl8XIF7T5JbPTzkKr4WEvoBPfa7ujT0eKZMfrfEr5SMAD7SxqplVZIAe8K0jCJIJ/ymOC1OISTgf3TdCbDhvheu0SQOf7cuSbdop7fgKkoXFZd0FKuWTgDVmE5em1zJNaPlG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FkgdsFdn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOigC1VZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248401F00A3A;
-	Tue, 21 Jul 2026 22:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FkgdsFdn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCC761F000E9;
+	Tue, 21 Jul 2026 22:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674758;
-	bh=EPn45WiADoJIBR48ycykBTczOCw6rLxKcI0bYOSxGxo=;
+	s=korg; t=1784674761;
+	bh=8ac2bZir+r7i0WHZoACeArFSn/WHqpSHloAFY6Ie5Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hOigC1VZWF70cvuD3geYgLW8BeHSvKlpgaoycDawVC5vMkT4gX2Jnq7bHKY/tqNUN
-	 r8WDQ1b94NB9rAdkkoSay4eg+pfPiJ3rz7rQBbf8tMuW6j80O18P5xeEumthB2muXc
-	 kjK7sy2EG41hp/T1T3h2xAQhra6rUxM4TEGYVLgM=
+	b=FkgdsFdnk5IwPIJUE7I4cByWfFJkLBy9BND6uuDlrQ3G8pLqt7ifPPyAF0TLXRklF
+	 B7aeollU4TLQx0fvRQOmzbXrwTcscSz/Buiu4UMp67t+nA9ciob4QykLYgvK42wGV0
+	 8ZnNLWhb2cYjlcNePk/9Mon+AKMwTyKSGvIdHrgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Nenciarini <mnencia@kcore.it>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	syzbot+6df204b70bf3261691c5@syzkaller.appspotmail.com,
+	syzbot+e76bf3d19b85350571ac@syzkaller.appspotmail.com,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 635/699] PCI: Skip Resizable BAR restore on read error
-Date: Tue, 21 Jul 2026 17:26:34 +0200
-Message-ID: <20260721152410.074417570@linuxfoundation.org>
+Subject: [PATCH 5.10 662/699] hfs/hfsplus: fix u32 overflow in check_and_correct_requested_length
+Date: Tue, 21 Jul 2026 17:27:01 +0200
+Message-ID: <20260721152410.700122662@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,58 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Nenciarini <mnencia@kcore.it>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit ee7471fe968d210939be9046089a924cd23c8c3b ]
+[ Upstream commit 966cb76fb2857a4242cab6ea2ea17acf818a3da7 ]
 
-pci_restore_rebar_state() uses the Resizable BAR Control register to decide
-how many BARs to restore (nbars) and which BAR each iteration addresses
-(bar_idx).
+check_and_correct_requested_length() compares (off + len) against
+node_size using u32 arithmetic.  When the caller passes a large len
+value (e.g. from an underflowed subtraction in hfs_brec_remove()),
+off + len can wrap past 2^32 and produce a small result, causing the
+bounds check to pass when it should fail.
 
-When a device does not respond, config reads typically return
-PCI_ERROR_RESPONSE (~0).  Both fields are 3 bits wide, so nbars and bar_idx
-both evaluate to 7, past the spec's valid ranges for both fields.
-pci_resource_n() then returns an unrelated resource slot, whose size is
-used to derive a nonsensical value written back to the Resizable BAR
-Control register.
+For example, with off=14 and len=0xFFFFFFF2 (underflowed from
+data_off - keyoffset - size in hfs_brec_remove), off + len wraps to 6,
+which is less than a typical node_size of 512, so the check passes and
+the subsequent memmove reads ~4GB past the node buffer.
 
-Bail out if any Resizable BAR Control read returns PCI_ERROR_RESPONSE. No
-further BARs are touched, which is safe because a config read that returns
-PCI_ERROR_RESPONSE indicates the device is unreachable and restoration is
-pointless.
+Fix this by widening the addition to u64 before comparing against
+node_size.  This prevents the u32 wrap while keeping the logic
+straightforward.
 
-Fixes: d3252ace0bc6 ("PCI: Restore resized BAR state on resume")
-Signed-off-by: Marco Nenciarini <mnencia@kcore.it>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reported-by: syzbot+6df204b70bf3261691c5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6df204b70bf3261691c5
+Tested-by: syzbot+6df204b70bf3261691c5@syzkaller.appspotmail.com
+Reported-by: syzbot+e76bf3d19b85350571ac@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e76bf3d19b85350571ac
+Tested-by: syzbot+e76bf3d19b85350571ac@syzkaller.appspotmail.com
+Fixes: a431930c9bac ("hfs: fix slab-out-of-bounds in hfs_bnode_read()")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/666cac19b5daa0ab0e0ab64454e76b4d24465dbd.1776429882.git.mnencia@kcore.it
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20260505111300.3592757-2-tristmd@gmail.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/rebar.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/hfs/bnode.c          |    2 +-
+ fs/hfsplus/hfsplus_fs.h |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/rebar.c
-+++ b/drivers/pci/rebar.c
-@@ -130,6 +130,9 @@ void pci_restore_rebar_state(struct pci_
- 		return;
+--- a/fs/hfs/bnode.c
++++ b/fs/hfs/bnode.c
+@@ -41,7 +41,7 @@ u32 check_and_correct_requested_length(s
  
- 	pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
-+	if (PCI_POSSIBLE_ERROR(ctrl))
-+		return;
-+
- 	nbars = FIELD_GET(PCI_REBAR_CTRL_NBAR_MASK, ctrl);
+ 	node_size = node->tree->node_size;
  
- 	for (i = 0; i < nbars; i++, pos += 8) {
-@@ -137,6 +140,9 @@ void pci_restore_rebar_state(struct pci_
- 		int bar_idx, size;
+-	if ((off + len) > node_size) {
++	if ((u64)off + len > node_size) {
+ 		u32 new_len = node_size - off;
  
- 		pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
-+		if (PCI_POSSIBLE_ERROR(ctrl))
-+			return;
-+
- 		bar_idx = ctrl & PCI_REBAR_CTRL_BAR_IDX;
- 		res = pdev->resource + bar_idx;
- 		size = ilog2(resource_size(res)) - 20;
+ 		pr_err("requested length has been corrected: "
+--- a/fs/hfsplus/hfsplus_fs.h
++++ b/fs/hfsplus/hfsplus_fs.h
+@@ -614,7 +614,7 @@ u32 check_and_correct_requested_length(s
+ 
+ 	node_size = node->tree->node_size;
+ 
+-	if ((off + len) > node_size) {
++	if ((u64)off + len > node_size) {
+ 		u32 new_len = node_size - off;
+ 
+ 		pr_err("requested length has been corrected: "
 
 
