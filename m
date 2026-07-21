@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E781D19049B;
-	Tue, 21 Jul 2026 17:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9DA375AC3;
+	Tue, 21 Jul 2026 17:21:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654480; cv=none; b=KNu+Aqx+xKBD6XTzOqikl1oxdqkBYDlbGY6uapjDk6pK1uJw9sHWzitZzn5SSZmEFtzFD/XT1cBogHZY4NP17jiXaVHvajuOgrsSawQWfU1HtPuRaatEAQE9Q02ZPWFaciyFL5UKlVznd83dib+O7vLRsqAtVbZ0QXiAE1fSAfY=
+	t=1784654482; cv=none; b=JULwEtSfkA8b7Z70baaqGKS5LdS3f+tS1+1dyywCaCBvpn+WtVP2N4OQ48Vbq4M+P9FLnEOIT8Vpz63A2toNUAZaclV+ZhHbQGNzPh7lXNNcQYKbkZVW4ULBjdxto3LlUEcr2y/h1EZtCYySSu4j8Qf+zn8M0NF9rOnNeLu3+oM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654480; c=relaxed/simple;
-	bh=hIZt7Q+KZ1t9Ogoz+z0UxSzFTIScH8q9mp0DK0yvyqw=;
+	s=arc-20240116; t=1784654482; c=relaxed/simple;
+	bh=ipZLbL2cUadWfQxaJeR3nty9Nl8OU49JqOz3W5z3/Zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ttf2S7PKMAkhrGlVpVkHkS46XSVcSPh+PwS9GGsRdTTqeS0SWI17ZvP22oXVetTsTbYZEuW9B3wxC8o8uQt9wNDR93H0Nl49fzCMm44GBY1DCZgx0ec2J6haumKyw7YHTf0N0u1KV9vvAyI0FAgsAUnfe42Y/whGugzF52a7zXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HylQqrvU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N/8aePYWtBOQeQHn4f+t7rino5TjnZTqod8biGGorJCyraDeJzWJCSl0Wr1j25aLGGMFjDwusDvJF0EagPeMHVfLohIUOc3kjQqp+bYQ+dU4ppi+Tmcjpxq4sI783zgcZ4bvu3MWUI75sYcE3VvoJ5eUGMXDMGMs9gCZ0ldKOjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUzceEap; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HylQqrvU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC721F000E9;
-	Tue, 21 Jul 2026 17:21:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUzceEap"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0190A1F000E9;
+	Tue, 21 Jul 2026 17:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654478;
-	bh=uId+APd1eWe6l9KVkpMQnya3fDE10ZNbVFvrbIY5B+o=;
+	s=korg; t=1784654481;
+	bh=eLJeLJHTObEQ4nAtVENIEPpjpTBxMExBY5JaO8wm9xY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HylQqrvUWI4XeB931K+Va86XsDfkDCKwlesG1GBGi7NfppC/njyQ/OfL7oxfg1tPA
-	 b3sCAUbu+l4pQ8WNtZ1CHRbufJMpgSoFhWYVbZEbEJodrsDAYYdjJnhBXbFQvB3wUX
-	 EPepoIh94V0OBx7HkfQAc/0qmis3UqPKL8udNV1c=
+	b=fUzceEapkjYn5xgV2PbAhVrwTHpWTClw6ZwHVZ1FI1g/af8rGvIWxuqUHMprhX6f3
+	 pzAWwUunmk3AjIYGINtTELK7olmwMNbMN61CoJqik+cXScmHya+WkotT5A7mUiXJnq
+	 o+qdZOATBGNdl8gmKv8D4s6zXnHh/CSAUoMi/WMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 7.1 1721/2077] selftests/landlock: Test SCOPE_SIGNAL on the SIGIO/fowner pgid path
-Date: Tue, 21 Jul 2026 17:23:14 +0200
-Message-ID: <20260721152633.345929211@linuxfoundation.org>
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 7.1 1722/2077] mips: sched: Fix CPUMASK_OFFSTACK memory corruption
+Date: Tue, 21 Jul 2026 17:23:15 +0200
+Message-ID: <20260721152633.368638024@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,235 +44,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Aaron Tomlin <atomlin@atomlin.com>
 
-commit 76579d09beedaffe7fe76e9c05644f73983e1ceb upstream.
+commit 98e37db4a34d3af3fb2f4648295c25b5e40b20e3 upstream.
 
-Add regression tests for the LANDLOCK_SCOPE_SIGNAL handling of the
-asynchronous SIGIO delivery path (fcntl(F_SETOWN)) with a process-group
-owner.
+This patch addresses a critical memory management flaw. When
+CONFIG_CPUMASK_OFFSTACK is enabled, cpumask_var_t is a pointer.
+Consequently, sizeof(new_mask) evaluates to the pointer size, causing
+copy_from_user() to clobber the mask pointer. Furthermore, the old
+logic performed copy_from_user() before allocating the mask.
 
-sigio_to_pgid_members covers the bypass: a sandboxed process at the head
-of its process group's PGID hlist (the default after fork()) arms
-F_SETOWN(-pgrp) + O_ASYNC and triggers the fan-out; the in-domain owner
-must be signaled (proving the trigger fired) while the non-sandboxed
-member of the group, outside the domain, must not.
+Fix this by allocating new_mask first. To handle variable-sized user
+masks correctly, use cpumask_size() to truncate overly large user masks
+or pad undersized masks with zeros before copying the data directly into
+the allocated buffer.
 
-sigio_to_pgid_self covers the same-process guarantee: the owner is
-registered from a sandboxed non-leader thread, whose domain differs from
-the thread-group leader the kernel signals for a process-group owner.
-That leader belongs to the owner's own process and must still be
-signaled.
-
-Without the fix the first test sees the out-of-domain member signaled
-and the second sees the owner's own leader denied.
-
+Fixes: 295cbf6d63165 ("[MIPS] Move FPU affinity code into separate file.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Günther Noack <gnoack3000@gmail.com>
-Link: https://patch.msgid.link/43370e89f7a896a583bf33d1cd171d02630e61bf.1780614610.git.hexlabsecurity@proton.me
-[mic: Fix comment]
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Signed-off-by: Aaron Tomlin <atomlin@atomlin.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/landlock/scoped_signal_test.c |  182 ++++++++++++++++++
- 1 file changed, 182 insertions(+)
+ arch/mips/kernel/mips-mt-fpaff.c |   28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
---- a/tools/testing/selftests/landlock/scoped_signal_test.c
-+++ b/tools/testing/selftests/landlock/scoped_signal_test.c
-@@ -559,4 +559,186 @@ TEST_F(fown, sigurg_socket)
- 		_metadata->exit_code = KSFT_FAIL;
+--- a/arch/mips/kernel/mips-mt-fpaff.c
++++ b/arch/mips/kernel/mips-mt-fpaff.c
+@@ -71,11 +71,16 @@ asmlinkage long mipsmt_sys_sched_setaffi
+ 	struct task_struct *p;
+ 	int retval;
+ 
+-	if (len < sizeof(new_mask))
+-		return -EINVAL;
+-
+-	if (copy_from_user(&new_mask, user_mask_ptr, sizeof(new_mask)))
+-		return -EFAULT;
++	if (!alloc_cpumask_var(&new_mask, GFP_KERNEL))
++		return -ENOMEM;
++	if (len < cpumask_size())
++		cpumask_clear(new_mask);
++	else if (len > cpumask_size())
++		len = cpumask_size();
++	if (copy_from_user(new_mask, user_mask_ptr, len)) {
++		retval = -EFAULT;
++		goto out_free_new_mask;
++	}
+ 
+ 	cpus_read_lock();
+ 	rcu_read_lock();
+@@ -84,7 +89,8 @@ asmlinkage long mipsmt_sys_sched_setaffi
+ 	if (!p) {
+ 		rcu_read_unlock();
+ 		cpus_read_unlock();
+-		return -ESRCH;
++		retval = -ESRCH;
++		goto out_free_new_mask;
+ 	}
+ 
+ 	/* Prevent p going away */
+@@ -95,13 +101,9 @@ asmlinkage long mipsmt_sys_sched_setaffi
+ 		retval = -ENOMEM;
+ 		goto out_put_task;
+ 	}
+-	if (!alloc_cpumask_var(&new_mask, GFP_KERNEL)) {
+-		retval = -ENOMEM;
+-		goto out_free_cpus_allowed;
+-	}
+ 	if (!alloc_cpumask_var(&effective_mask, GFP_KERNEL)) {
+ 		retval = -ENOMEM;
+-		goto out_free_new_mask;
++		goto out_free_cpus_allowed;
+ 	}
+ 	if (!check_same_owner(p) && !capable(CAP_SYS_NICE)) {
+ 		retval = -EPERM;
+@@ -142,13 +144,13 @@ asmlinkage long mipsmt_sys_sched_setaffi
+ 	}
+ out_unlock:
+ 	free_cpumask_var(effective_mask);
+-out_free_new_mask:
+-	free_cpumask_var(new_mask);
+ out_free_cpus_allowed:
+ 	free_cpumask_var(cpus_allowed);
+ out_put_task:
+ 	put_task_struct(p);
+ 	cpus_read_unlock();
++out_free_new_mask:
++	free_cpumask_var(new_mask);
+ 	return retval;
  }
  
-+/*
-+ * Checks that LANDLOCK_SCOPE_SIGNAL is enforced on the asynchronous SIGIO
-+ * delivery path (fcntl(F_SETOWN)) when the file owner is a process group.
-+ *
-+ * A sandboxed process sitting at the head of its process group's PID hlist (the
-+ * default position right after fork()) used to escape the fcntl(F_SETOWN,
-+ * -pgrp) domain recording: pid_task(pgrp, PIDTYPE_PGID) resolved to the process
-+ * itself, so the same-thread-group exemption skipped recording its Landlock
-+ * domain.  At SIGIO time that domain was then unset and the signal fanned out
-+ * to every group member, including non-sandboxed processes outside the domain.
-+ */
-+TEST(sigio_to_pgid_members)
-+{
-+	int trigger[2], sync_child[2];
-+	char buf;
-+	pid_t child;
-+	int status, i;
-+
-+	drop_caps(_metadata);
-+
-+	/*
-+	 * Isolates the test in its own process group so the SIGIO fan-out stays
-+	 * bounded to this parent and the child forked below.
-+	 */
-+	ASSERT_EQ(0, setpgid(0, 0));
-+
-+	/* The non-sandboxed parent is the protected (out-of-domain) target. */
-+	ASSERT_EQ(0, setup_signal_handler(SIGURG));
-+	signal_received = 0;
-+
-+	ASSERT_EQ(0, pipe2(trigger, O_CLOEXEC));
-+	ASSERT_EQ(0, pipe2(sync_child, O_CLOEXEC));
-+
-+	child = fork();
-+	ASSERT_LE(0, child);
-+	if (child == 0) {
-+		/*
-+		 * The child inherits the parent's new process group and, just
-+		 * attached with hlist_add_head_rcu(), is now the head of the
-+		 * pgid hlist: this is the case that used to skip the recording.
-+		 */
-+		EXPECT_EQ(0, close(sync_child[0]));
-+
-+		/* In-domain positive control: the child must be signaled. */
-+		ASSERT_EQ(0, setup_signal_handler(SIGURG));
-+		signal_received = 0;
-+
-+		create_scoped_domain(_metadata, LANDLOCK_SCOPE_SIGNAL);
-+
-+		/* Owns the SIGIO source for the whole process group. */
-+		ASSERT_EQ(0, fcntl(trigger[0], F_SETSIG, SIGURG));
-+		ASSERT_EQ(0, fcntl(trigger[0], F_SETOWN, -getpgrp()));
-+		ASSERT_EQ(0, fcntl(trigger[0], F_SETFL, O_ASYNC));
-+
-+		/* Fans SIGURG out to every member of the process group. */
-+		ASSERT_EQ(1, write(trigger[1], ".", 1));
-+
-+		/*
-+		 * The sandboxed child is in its own domain and must always be
-+		 * signaled: this proves the SIGIO actually fired.
-+		 */
-+		for (i = 0; i < 1000 && !signal_received; i++)
-+			usleep(1000);
-+		EXPECT_EQ(1, signal_received);
-+
-+		ASSERT_EQ(1, write(sync_child[1], ".", 1));
-+		EXPECT_EQ(0, close(sync_child[1]));
-+
-+		_exit(_metadata->exit_code);
-+		return;
-+	}
-+	EXPECT_EQ(0, close(sync_child[1]));
-+	EXPECT_EQ(0, close(trigger[0]));
-+	EXPECT_EQ(0, close(trigger[1]));
-+
-+	/* Waits for the child to generate the SIGIO. */
-+	ASSERT_EQ(1, read(sync_child[0], &buf, 1));
-+	EXPECT_EQ(0, close(sync_child[0]));
-+
-+	/* Lets a delivered-but-pending signal run our handler, if any. */
-+	for (i = 0; i < 100 && !signal_received; i++)
-+		usleep(1000);
-+
-+	/*
-+	 * SCOPE_SIGNAL must block the fan-out to this non-sandboxed parent,
-+	 * which is outside the child's Landlock domain.  Before the fix the
-+	 * parent was signaled here.
-+	 */
-+	EXPECT_EQ(0, signal_received);
-+
-+	ASSERT_EQ(child, waitpid(child, &status, 0));
-+	if (WIFSIGNALED(status) || !WIFEXITED(status) ||
-+	    WEXITSTATUS(status) != EXIT_SUCCESS)
-+		_metadata->exit_code = KSFT_FAIL;
-+}
-+
-+static void *thread_setown_scoped(void *arg)
-+{
-+	const int fd = *(int *)arg;
-+	int ruleset_fd;
-+	const struct landlock_ruleset_attr ruleset_attr = {
-+		.scoped = LANDLOCK_SCOPE_SIGNAL,
-+	};
-+
-+	/* Sandboxes only this non-leader thread (no thread syncing). */
-+	ruleset_fd =
-+		landlock_create_ruleset(&ruleset_attr, sizeof(ruleset_attr), 0);
-+	if (ruleset_fd < 0)
-+		return (void *)THREAD_ERROR;
-+	if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0) ||
-+	    landlock_restrict_self(ruleset_fd, 0)) {
-+		close(ruleset_fd);
-+		return (void *)THREAD_ERROR;
-+	}
-+	close(ruleset_fd);
-+
-+	/* Makes this process group own the SIGIO source. */
-+	if (fcntl(fd, F_SETSIG, SIGURG) || fcntl(fd, F_SETOWN, -getpgrp()) ||
-+	    fcntl(fd, F_SETFL, O_ASYNC))
-+		return (void *)THREAD_ERROR;
-+
-+	return (void *)THREAD_SUCCESS;
-+}
-+
-+/*
-+ * Checks that the SIGIO fan-out is still delivered to the file owner's own
-+ * process when fcntl(F_SETOWN, -pgrp) was issued from a sandboxed non-leader
-+ * thread.
-+ *
-+ * The Landlock domain is recorded for a process-group owner (so out-of-domain
-+ * members stay blocked, see sigio_to_pgid_members), but the kernel signals a
-+ * process group through its members' thread-group leaders.  Here the leader is
-+ * not sandboxed and thus has a different domain than the registering thread, so
-+ * the registration-time check cannot tell that it belongs to the owner's own
-+ * process.  hook_file_send_sigiotask() must recognize it through the recorded
-+ * thread group and allow the delivery, matching the same-process guarantee of
-+ * commit 18eb75f3af40.  Without that exemption the leader is wrongly denied and
-+ * never signaled.
-+ */
-+TEST(sigio_to_pgid_self)
-+{
-+	int trigger[2];
-+	pthread_t thread;
-+	enum thread_return ret = THREAD_INVALID;
-+	int i;
-+
-+	drop_caps(_metadata);
-+
-+	/* Bounds the SIGIO fan-out to this process. */
-+	ASSERT_EQ(0, setpgid(0, 0));
-+
-+	/* The non-sandboxed thread-group leader is the SIGIO target. */
-+	ASSERT_EQ(0, setup_signal_handler(SIGURG));
-+	signal_received = 0;
-+
-+	ASSERT_EQ(0, pipe2(trigger, O_CLOEXEC));
-+
-+	/*
-+	 * Registers the process-group fowner from a sibling thread that
-+	 * sandboxes only itself, so its domain differs from the leader's.
-+	 */
-+	ASSERT_EQ(0, pthread_create(&thread, NULL, thread_setown_scoped,
-+				    &trigger[0]));
-+	ASSERT_EQ(0, pthread_join(thread, (void **)&ret));
-+	ASSERT_EQ(THREAD_SUCCESS, ret);
-+
-+	/* Fans SIGURG out to the process group. */
-+	ASSERT_EQ(1, write(trigger[1], ".", 1));
-+
-+	for (i = 0; i < 1000 && !signal_received; i++)
-+		usleep(1000);
-+
-+	/*
-+	 * Same-process delivery must always be allowed, even though the owner
-+	 * was registered from a sandboxed sibling thread.
-+	 */
-+	EXPECT_EQ(1, signal_received);
-+
-+	EXPECT_EQ(0, close(trigger[0]));
-+	EXPECT_EQ(0, close(trigger[1]));
-+}
-+
- TEST_HARNESS_MAIN
 
 
