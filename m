@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF4946D2D5;
-	Tue, 21 Jul 2026 18:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CE046D2CC;
+	Tue, 21 Jul 2026 18:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659653; cv=none; b=fFRJYYvjvRp4BJW/iIyAnwPAzYQCh0HJwqPzoSP9VWNpxLbFRnrDJP9VnFD1y7k+AdCBftp0celc+PGsCd8iSQtJUWPl5Nwm15WRafmRAargS6ZVfrlhHNbgbHHsrsEBaNY0A0bOENuKFuxUcrMCYxdZkZkbIpWm8rwf8YFCVWY=
+	t=1784659655; cv=none; b=R5VoQzbHSekeXGQgTEJTDy/QVbCGrKBEh8BctQbHHQXUWWfcx9DYyTCtJUzaT6P9WMYTdegQRdtBdzZnYRAjBQBoOPB/C5ARtom+UB/rA6nO6k7w5Ue33hYkKfGf2qQOwPHOf6qvTOjKMjS/EdyArlOpK6dqKKWqFAp4od8Z76w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659653; c=relaxed/simple;
-	bh=jZYdqOEzf7eZ/tc0DOnVj+7iQb9M5kKuNuWvySeSE3s=;
+	s=arc-20240116; t=1784659655; c=relaxed/simple;
+	bh=0ZIjyHi5uxTih6eyUkskUNHKGw+OXXnA0sCt3pmQlyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lRbM3nI5dsyptwpDNa543GJoJqdtKRuMk4iDaL1JFQLD9NCW90kBavCrYthSRyPa9eBcSWNnjHMD87SbtxTAHNwA+CPp9Z6BokUewgiEobEDLRxpI57+IrddJNkJC+J6+dyX583jJpUhFOC3ZfG4RigcibS//TtYW9k3jIPXKKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fpHw6SDD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A/YDmK4E1WnKGp9eGRXJkf2j8ewD7nFrLa6FGxvpLQDEFddx1tI5JNORH7IJAFmV1OHzt4QvukETtp0XI5JhnF/4RrQlllOn5pCu+GAK7Gpg3sZ4Id7W9fsfDpRMGD+B7qy/l0L4bu9XDvKIQ5+/OeQeweYHAfAz+iqUFYfC+pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvz2C5Bj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fpHw6SDD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E551F000E9;
-	Tue, 21 Jul 2026 18:47:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvz2C5Bj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7F71F00A3A;
+	Tue, 21 Jul 2026 18:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659651;
-	bh=Iw/yx13ixDklXES9HUI4OzoRSZVoxGWl4/jA7djAuIM=;
+	s=korg; t=1784659653;
+	bh=LvJgQK0MrHsg6qtf8MGl2Ens7MkkbCL4mUgc/IhMKas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fpHw6SDDyGlHBY8TmM42EDoKBiJY1P62yTjlNMIKWLUCjm9fEYkAUqZ7xprtv7DDI
-	 5eNccRVdbeWH8g/UhArZGLw2whg3MikSpujYccXzlqqZ1N9cFmUso+G6dOI5FmBMDF
-	 KheOhh9MmYhI2Z0Pz/P0B8d0AOFPuzhha5X0OFhc=
+	b=fvz2C5BjdvPg/FWcFm7GjpgfvBw3wbIrICGG29IyKgRFaTzpcynvWf6pyqbJDH429
+	 YccW6h7r/igiW32AKi8uAqoEwJyx3f8DeZDvfXScstUDJ+N4M1ys0l49Oy4mdpp4HU
+	 gcyoj+JGEWpdQY4GGAaXhEI532WQWjnbFT3yrG18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	oxsignal <awo@kakao.com>,
-	Matt Bobrowski <mattbobrowski@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Amery Hung <ameryhung@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1601/1611] bpf: Reject BPF_MAP_TYPE_INODE_STORAGE creation if BPF LSM is uninitialized
-Date: Tue, 21 Jul 2026 17:28:37 +0200
-Message-ID: <20260721152551.487375329@linuxfoundation.org>
+	Chukun Pan <amadeus@jmu.edu.cn>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.18 1602/1611] pinctrl: airoha: fix pinctrl function mismatch issue
+Date: Tue, 21 Jul 2026 17:28:38 +0200
+Message-ID: <20260721152551.510089369@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,112 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Bobrowski <mattbobrowski@google.com>
+From: Chukun Pan <amadeus@jmu.edu.cn>
 
-[ Upstream commit a6f0643e4f63cfaa0d5d4a69de4f132eac4b8fe4 ]
+commit f2bd5a0f59d052d16749bccf637690e51947a5d6 upstream.
 
-When CONFIG_BPF_LSM=y is set, BPF inode storage maps
-(BPF_MAP_TYPE_INODE_STORAGE) are compiled into the kernel. However,
-if the BPF LSM is not explicitly enabled at boot time (e.g. omitted
-from the "lsm=" boot parameter), lsm_prepare() is never executed for
-the BPF LSM.
+The blamed commit made the following changes:
 
-Consequently, the BPF inode security blob offset
-(bpf_lsm_blob_sizes.lbs_inode) is never initialized and remains at
-its default compiled size of 8 bytes instead of being updated to a
-valid offset past the reserved struct rcu_head (typically 16 bytes
-or more).
+-#define PINCTRL_FUNC_DESC(id)...
+-		.desc = PINCTRL_PINFUNCTION(#id, ...
++#define PINCTRL_FUNC_DESC(id, table)...
++		.desc = PINCTRL_PINFUNCTION(#id, ...
 
-When a privileged user creates and updates a BPF_MAP_TYPE_INODE_STORAGE
-map, bpf_inode() evaluates inode->i_security + 8. This erroneously
-aliases the struct rcu_head.func callback pointer at the beginning
-of the inode->i_security blob. During subsequent map element cleanup
-or inode destruction, writing NULL to owner_storage clears the queued
-RCU callback pointer. When rcu_do_batch() later executes the queued
-callback, it attempts an instruction fetch at address 0x0, triggering
-an immediate kernel panic.
+-	PINCTRL_FUNC_DESC(pon)...
++	PINCTRL_FUNC_DESC("pon", pon)...
 
-Fix this by introducing a global bpf_lsm_initialized boolean flag
-marked with __ro_after_init. Set this flag to true inside bpf_lsm_init()
-when the LSM framework successfully registers the BPF LSM. Gate map
-allocation in inode_storage_map_alloc() on this flag, returning
--EOPNOTSUPP if the BPF LSM is in turn uninitialized.
+It's clear that the id of funcs doesn't match the definition.
+Remove redundant #string from the definition to fix this issue:
+pinctrl-airoha ...: invalid function mdio in map table
 
-This fail-fast approach prevents userspace from allocating inode
-storage maps when the supporting BPF LSM infrastructure is absent,
-avoiding zombie map states.
-
-Fixes: 8ea636848aca ("bpf: Implement bpf_local_storage for inodes")
-Reported-by: oxsignal <awo@kakao.com>
-Signed-off-by: Matt Bobrowski <mattbobrowski@google.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Amery Hung <ameryhung@gmail.com>
-Link: https://lore.kernel.org/bpf/20260628201103.3624525-1-mattbobrowski@google.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4043b0c45f85 ("pinctrl: airoha: generalize pins/group/function/confs handling")
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+Acked-by: Christian Marangi <ansuelsmth@gmail.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bpf_lsm.h        |    4 ++++
- kernel/bpf/bpf_inode_storage.c |    9 +++++++++
- security/bpf/hooks.c           |    3 +++
- 3 files changed, 16 insertions(+)
+ drivers/pinctrl/mediatek/pinctrl-airoha.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/bpf_lsm.h
-+++ b/include/linux/bpf_lsm.h
-@@ -14,6 +14,8 @@
+--- a/drivers/pinctrl/mediatek/pinctrl-airoha.c
++++ b/drivers/pinctrl/mediatek/pinctrl-airoha.c
+@@ -35,7 +35,7 @@
  
- #ifdef CONFIG_BPF_LSM
- 
-+extern bool bpf_lsm_initialized __ro_after_init;
-+
- #define LSM_HOOK(RET, DEFAULT, NAME, ...) \
- 	RET bpf_lsm_##NAME(__VA_ARGS__);
- #include <linux/lsm_hook_defs.h>
-@@ -56,6 +58,8 @@ bool bpf_lsm_hook_returns_errno(u32 btf_
- 
- #else /* !CONFIG_BPF_LSM */
- 
-+#define bpf_lsm_initialized false
-+
- static inline bool bpf_lsm_is_sleepable_hook(u32 btf_id)
- {
- 	return false;
---- a/kernel/bpf/bpf_inode_storage.c
-+++ b/kernel/bpf/bpf_inode_storage.c
-@@ -181,6 +181,15 @@ static int notsupp_get_next_key(struct b
- 
- static struct bpf_map *inode_storage_map_alloc(union bpf_attr *attr)
- {
-+	/*
-+	 * Do not allow allocation of BPF_MAP_TYPE_INODE_STORAGE if the BPF LSM
-+	 * was not initialized by the LSM framework at boot. Without proper
-+	 * initialization, the BPF inode security blob offset remains unprepared,
-+	 * causing bpf_inode() to calculate an invalid memory offset and corrupt
-+	 * inode->i_security.
-+	 */
-+	if (!bpf_lsm_initialized)
-+		return ERR_PTR(-EOPNOTSUPP);
- 	return bpf_local_storage_map_alloc(attr, &inode_cache, false);
- }
- 
---- a/security/bpf/hooks.c
-+++ b/security/bpf/hooks.c
-@@ -7,6 +7,8 @@
- #include <linux/bpf_lsm.h>
- #include <uapi/linux/lsm.h>
- 
-+bool bpf_lsm_initialized __ro_after_init;
-+
- static struct security_hook_list bpf_lsm_hooks[] __ro_after_init = {
- 	#define LSM_HOOK(RET, DEFAULT, NAME, ...) \
- 	LSM_HOOK_INIT(NAME, bpf_lsm_##NAME),
-@@ -24,6 +26,7 @@ static int __init bpf_lsm_init(void)
- {
- 	security_add_hooks(bpf_lsm_hooks, ARRAY_SIZE(bpf_lsm_hooks),
- 			   &bpf_lsmid);
-+	bpf_lsm_initialized = true;
- 	pr_info("LSM support for eBPF active\n");
- 	return 0;
- }
+ #define PINCTRL_FUNC_DESC(id, table)					\
+ 	{								\
+-		.desc = PINCTRL_PINFUNCTION(#id, table##_groups,	\
++		.desc = PINCTRL_PINFUNCTION(id, table##_groups,	\
+ 					    ARRAY_SIZE(table##_groups)),\
+ 		.groups = table##_func_group,				\
+ 		.group_size = ARRAY_SIZE(table##_func_group),		\
 
 
