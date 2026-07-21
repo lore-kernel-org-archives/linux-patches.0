@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74223E49C7;
-	Tue, 21 Jul 2026 17:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CBEA3DC4C2;
+	Tue, 21 Jul 2026 17:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653612; cv=none; b=Ki20r/lv+lp5uWH0XxEWQ13K8aMsfab+bTvruOo9Cxrjz54vlvY8GJc7JBqApsUqEvzoTWxM2JgwXLxUCZUIRCoy36/4NYFJK3TEBUOR3+XZz2/qPzd5LNvaoicNcS/OHPgc6NnNx4yDB2wdejXyeI/3ShDRB9bzyNTevlj3OxI=
+	t=1784653614; cv=none; b=fFOy6Lx+02GFwVcvM0bkoydsdsGJdV1dN0RCtCyYMSKFs0dPtujy1lVvXt+AeaQlBe8/0HbTtll/1ItfkjT5PJQkWDxo0LnkNmq87e0d0XrqfY8czNfETYCaJWWYocu3JBOzXQaSiU6AuWVqDf8e+0tnR3t+A7CPc4D2iE3D3js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653612; c=relaxed/simple;
-	bh=YjK3jdh1zskuv6cFNFBzyM4Xdw1pohkb2J/dD/S6BlI=;
+	s=arc-20240116; t=1784653614; c=relaxed/simple;
+	bh=BFE1gAXaPo8JI/KId75ykKp2KaDRmF+tdJH8A61At38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WT4KAlOgi7c64uJPIHAA1VlGTjQUQpDaA779q7d6/0crr1x9Y9sr6vXpxpFwr2OAWWFtmOrGU7sEAPuQhSoB5514SKsN6AjhvGEkyQee2FbfnAUXERjUZ++Qf7zbD6zxCFiZjz+/MxkDvbYa+CWf5UQQQ7cxZqvCGFVfKcwRJeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkVgpjhk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sWwm83EoT33Wz8ct/nmvVgD77oHPJxTtWTtAKy8Q8wpYrp6fqGw4BWd6r2AbkIBCh87KQU9bcOyGo8yVOhHAKdr4Y3S+KVeqvd2uS9UhqpqTTWtxVybcdUDjGDPcA31L+IqJivuDpuA3QEyCpXunxB0bkQMG1UgmoyyIMZIvOPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2cDYB5tv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkVgpjhk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15DFD1F000E9;
-	Tue, 21 Jul 2026 17:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2cDYB5tv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B701F000E9;
+	Tue, 21 Jul 2026 17:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653610;
-	bh=1H6ZCyMLxCcLVaLs3rR5EsZRP0gZ4PiYGyDmPfLxvJE=;
+	s=korg; t=1784653613;
+	bh=uUEqXC/orzMfDDBSKoJJHHTAn3wGjUx1gzHPN3e2r0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xkVgpjhkLw6DGiMS+w+sC0T5b9PPlHp2JVUr6Yi/Oi1hfARcIzXEWGCLXJyZbFfNh
-	 5iBxZsCC14MzyVwQk0WR5VBQK6/gpf/asjTUeTuCMafv/DVDnyq4W4/1Bj1QAZ6/9u
-	 KHyCxwvoV1acpWON5vFK8+zOiv8LjibVgCGbXx1w=
+	b=2cDYB5tvAL1BolgheLphRgWx2e9XwPCYsnNiE47T8gJHVQiJoz2VV6948APBWgRTb
+	 Bq46AqLsOqhWv7dmY08TfPCTy6Eaty5gjB2ej66Ab1090RPmmamMhnShyB7neMM+Xs
+	 Y+70QfKXk6+rpDpgKQ1veAIhW3gOORQOkWQ81uAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Howells <dhowells@redhat.com>,
 	Paulo Alcantara <pc@manguebit.org>,
+	NeilBrown <neil@brown.name>,
 	netfs@lists.linux.dev,
 	linux-fsdevel@vger.kernel.org,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1393/2077] netfs: Fix netfs_create_write_req() to handle async cache object creation
-Date: Tue, 21 Jul 2026 17:17:46 +0200
-Message-ID: <20260721152625.669618181@linuxfoundation.org>
+Subject: [PATCH 7.1 1394/2077] cachefiles: Fix file burial to take lock when unsetting S_KERNEL_FILE
+Date: Tue, 21 Jul 2026 17:17:47 +0200
+Message-ID: <20260721152625.693043388@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -56,42 +57,38 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit dbd6f56d975b23241b7bbb11bb8f562af548a0aa ]
+[ Upstream commit 511a018ed2afd8d415edd307ce7ad2048506f6a1 ]
 
-netfs_create_write_req() will skip caching if the fscache cookie is
-disabled, but this is a problem because async cache object creation might
-not have got far enough yet that has been enabled - thereby causing the
-call to fscache_begin_write_operation() to be skipped.
+Fix cachefiles_bury_object() to lock the inode of the file being buried
+whilst it unsets the S_KERNEL_FILE flag.
 
-Fix this by removing the checks on the cookie and delegating this to
-fscache_begin_write_operation().
-
-Fixes: 7b589a9b45ae ("netfs: Fix handling of USE_PGPRIV2 and WRITE_TO_CACHE flags")
-Closes: https://sashiko.dev/#/patchset/20260624115737.2964520-1-dhowells%40redhat.com
+Fixes: 07a90e97400c ("cachefiles: Implement culling daemon commands")
+Closes: https://sashiko.dev/#/patchset/20260616100821.2062304-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260625140640.3116900-3-dhowells@redhat.com
+Link: https://patch.msgid.link/20260625140640.3116900-5-dhowells@redhat.com
 cc: Paulo Alcantara <pc@manguebit.org>
+cc: NeilBrown <neil@brown.name>
 cc: netfs@lists.linux.dev
 cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/write_issue.c | 2 +-
+ fs/cachefiles/namei.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/netfs/write_issue.c b/fs/netfs/write_issue.c
-index c03c7cc45e4716..4f55228f0fd497 100644
---- a/fs/netfs/write_issue.c
-+++ b/fs/netfs/write_issue.c
-@@ -106,7 +106,7 @@ struct netfs_io_request *netfs_create_write_req(struct address_space *mapping,
- 	_enter("R=%x", wreq->debug_id);
+diff --git a/fs/cachefiles/namei.c b/fs/cachefiles/namei.c
+index 2c46f0decb02e4..90200410dcfd40 100644
+--- a/fs/cachefiles/namei.c
++++ b/fs/cachefiles/namei.c
+@@ -374,7 +374,7 @@ int cachefiles_bury_object(struct cachefiles_cache *cache,
+ 					    "Rename failed with error %d", ret);
+ 	}
  
- 	ictx = netfs_inode(wreq->inode);
--	if (is_cacheable && netfs_is_cache_enabled(ictx))
-+	if (is_cacheable)
- 		fscache_begin_write_operation(&wreq->cache_resources, netfs_i_cookie(ictx));
- 	if (rolling_buffer_init(&wreq->buffer, wreq->debug_id, ITER_SOURCE) < 0)
- 		goto nomem;
+-	__cachefiles_unmark_inode_in_use(object, d_inode(rep));
++	cachefiles_do_unmark_inode_in_use(object, d_inode(rep));
+ 	end_renaming(&rd);
+ 	_leave(" = 0");
+ 	return 0;
 -- 
 2.53.0
 
