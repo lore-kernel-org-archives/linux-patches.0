@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE8246C4C0;
-	Tue, 21 Jul 2026 18:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3664C471271;
+	Tue, 21 Jul 2026 18:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657721; cv=none; b=seFbogO0Gtp7K5Qx6Z0iRUBmKTl3qnKG2yo8asP6rY60SXzWHpMlh0ntkX8mCyLVtFhaLzt4Dv8iChif6DXxSGATl0BIWCRAEj2Jsz4YHwnRqeLptYIipwlsgod5vIDOUl4qKJbq/sdtjqiFBUI6mJw3fnlBUduRhYq9+Je3Lb4=
+	t=1784657724; cv=none; b=CIO5GSmTXiEqdo5flSPsE2Jz3b0zqslziXt9r8DtQzK1NaYsSekHfuJ/NjkBs8aJcAL5sYPMalu/Yv1QnLQ/V5WO6pyRv+AqBaaYgRPWbBGLqBcezi/bw+LdOmH5Ll5sddiRfH1Bm1ihCv3AIJ7LXcevdzEOJpBBO0O3gMSIK4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657721; c=relaxed/simple;
-	bh=i8dX51NzbN4u+6FCvuSZJBvxUlmZIRYelLo1YFeeE90=;
+	s=arc-20240116; t=1784657724; c=relaxed/simple;
+	bh=217PbT4W9uLr7HGBHW24G5G2nFTUR3lgnW20TbSw6/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kjgWrxeSos26DoPMVzM0EurOIHWyjg2stkVNtJ4EDWyssKTwAHeS8keDl9Uy6GX0rlgLot53moxVwhhrF7IUPj8CzuLzYPeP6a+ymVZZMZFzhi5L50JrRcRpw6gavFKJkOAHTitB16FeWbbJth0hUYJed2pcRSR22R/W3SYUgow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u2ozXL/S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DZkrysH60r+y1UENRixjCjVyDOLSG1NeMqBsQ48Y8vMrofVT5tNyErKQmCeG+DrQHvYiR8bGSC61XDSdjjL75ygXpWUj4WkbjhBz9rNhFuvnR/7PVOHa54F2QHuNSQ5KlKmyaSI3PYlIfWqkFf7e6QkkIUHM6Y6scXT/Uf8DnLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=itNzFAYN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2ozXL/S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFF311F000E9;
-	Tue, 21 Jul 2026 18:15:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itNzFAYN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE461F000E9;
+	Tue, 21 Jul 2026 18:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657720;
-	bh=hEjAii3xMciVLNx/DmV9MA4krFcILTKB+aqWRwVm2+Y=;
+	s=korg; t=1784657723;
+	bh=fAzSA+nQ+OIkA2fhQUH/5DB7sho499Gi9Fhk6ablpBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u2ozXL/SOVu5VZJrJvPAeezEiUxg4BhqX+VGbs3AR1PaiZp7QTp/TRAhOGcaM6sJR
-	 g3TXzRF1QsDxGvv2rXkDljYrpJlWuw8wOlHXkc/6vQfnMYOAlLk6hOQnzGNb06RDJq
-	 rxZ03hOwCuiKjxfuWBcHGWAOKTJM2VWuh/yqbKcY=
+	b=itNzFAYNcrkaPEWzKAYUXNKd0yXZItZaOXgRlPq8Px+tkASu1KWaGa9MW5CzRX28D
+	 ve7SRGqOf1n93x8A6K7jiG6KGvk3mwvW2/t9EjesgYKwDSECj4IMruIFHtS1EuGeWJ
+	 DNXzCjTf8M0runMiTeY0KjB83vLohm1SnVaoy0V0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
 	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Justin Iurman <justin.iurman@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0871/1611] ipv6: ndisc: fix NULL deref in accept_untracked_na()
-Date: Tue, 21 Jul 2026 17:16:27 +0200
-Message-ID: <20260721152534.982910683@linuxfoundation.org>
+Subject: [PATCH 6.18 0872/1611] ipv6: ioam: fix type confusion of dst_entry
+Date: Tue, 21 Jul 2026 17:16:28 +0200
+Message-ID: <20260721152535.005160857@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,85 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit d186e942365acece7c56d39da05dd63bf95b280a ]
+[ Upstream commit 9ed19e11d2146076d117d51a940643990118449b ]
 
-accept_untracked_na() re-fetches the inet6_dev with __in6_dev_get(dev)
-and dereferences idev->cnf.accept_untracked_na without a NULL check,
-even though its only caller ndisc_recv_na() already fetched and
-NULL-checked idev for the same device.
+IOAM uses a dummy dst_entry(null_dst) to mark that the destination should
+not be changed after the transformation. This dst is stored in the IOAM lwt
+state and may be passed to dst_cache_set_ip6().
 
-Both reads of dev->ip6_ptr run in the same RCU read-side critical
-section, but a concurrent addrconf_ifdown() can clear dev->ip6_ptr
-between them: lowering the MTU below IPV6_MIN_MTU calls addrconf_ifdown()
-without the synchronize_net() that orders the unregister path, so the
-re-fetch returns NULL and oopses:
+However, the IPv6 dst cache path eventually calls rt6_get_cookie(), which
+treats the dst_entry as part of a struct rt6_info. Since the null_dst was
+embedded directly as a struct dst_entry in struct ioam6_lwt, this resulted
+in an invalid cast and rt6_get_cookie() reading fields from the wrong
+object.
 
- BUG: KASAN: null-ptr-deref in ndisc_recv_na (net/ipv6/ndisc.c:974)
- Read of size 4 at addr 0000000000000364
- Call Trace:
-  <IRQ>
-  ndisc_recv_na (net/ipv6/ndisc.c:974)
-  icmpv6_rcv (net/ipv6/icmp.c:1193)
-  ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:479)
-  ip6_input_finish (net/ipv6/ip6_input.c:534)
-  ip6_input (net/ipv6/ip6_input.c:545)
-  ip6_mc_input (net/ipv6/ip6_input.c:635)
-  ipv6_rcv (net/ipv6/ip6_input.c:351)
-  </IRQ>
+In practice, the wrong cookie is not used while dst->obsolete is zero, but
+rt6_get_cookie() may also access per-cpu value when rt->sernum is
+zero. In this case, rt->sernum aliases ioam6_lwt::cache::reset_ts, which
+can become zero, making this a potential invalid pointer access.
 
-It is reachable by an unprivileged user via a network namespace.
+Fix this by embedding a full struct rt6_info for the dummy IPv6 route and
+passing its dst member to the dst APIs.
 
-Pass the caller's already validated idev instead of re-fetching it; the
-idev stays alive for the whole RCU critical section, so it is safe even
-after dev->ip6_ptr has been cleared.
-
-Fixes: aaa5f515b16b ("net: ipv6: new accept_untracked_na option to accept na only if in-network")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260617065512.2529757-2-bestswngs@gmail.com
+Fixes: 47ce7c854563 ("net: ipv6: ioam6: fix double reallocation")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
+Link: https://patch.msgid.link/20260618104336.48934-1-jiayuan.chen@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ndisc.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ net/ipv6/ioam6_iptunnel.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
-index ded2d3a0660c3e..9df1fba967c6e8 100644
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -966,10 +966,8 @@ static enum skb_drop_reason ndisc_recv_ns(struct sk_buff *skb)
- 	return reason;
- }
+diff --git a/net/ipv6/ioam6_iptunnel.c b/net/ipv6/ioam6_iptunnel.c
+index b9f6d892a566c0..cfb2c41634a0b0 100644
+--- a/net/ipv6/ioam6_iptunnel.c
++++ b/net/ipv6/ioam6_iptunnel.c
+@@ -35,7 +35,7 @@ struct ioam6_lwt_freq {
+ };
  
--static int accept_untracked_na(struct net_device *dev, struct in6_addr *saddr)
-+static int accept_untracked_na(struct inet6_dev *idev, struct in6_addr *saddr)
- {
--	struct inet6_dev *idev = __in6_dev_get(dev);
--
- 	switch (READ_ONCE(idev->cnf.accept_untracked_na)) {
- 	case 0: /* Don't accept untracked na (absent in neighbor cache) */
- 		return 0;
-@@ -979,7 +977,7 @@ static int accept_untracked_na(struct net_device *dev, struct in6_addr *saddr)
- 		 * same subnet as an address configured on the interface that
- 		 * received the na
- 		 */
--		return !!ipv6_chk_prefix(saddr, dev);
-+		return !!ipv6_chk_prefix(saddr, idev->dev);
- 	default:
- 		return 0;
- 	}
-@@ -1077,7 +1075,7 @@ static enum skb_drop_reason ndisc_recv_na(struct sk_buff *skb)
+ struct ioam6_lwt {
+-	struct dst_entry null_dst;
++	struct rt6_info null_rt;
+ 	struct dst_cache cache;
+ 	struct ioam6_lwt_freq freq;
+ 	atomic_t pkt_cnt;
+@@ -176,7 +176,7 @@ static int ioam6_build_state(struct net *net, struct nlattr *nla,
+ 	 * it is stored in the cache. Then, +1/-1 each time we read the cache
+ 	 * and release it. Long story short, we're fine.
  	 */
- 	new_state = msg->icmph.icmp6_solicited ? NUD_REACHABLE : NUD_STALE;
- 	if (!neigh && lladdr && idev && READ_ONCE(idev->cnf.forwarding)) {
--		if (accept_untracked_na(dev, saddr)) {
-+		if (accept_untracked_na(idev, saddr)) {
- 			neigh = neigh_create(&nd_tbl, &msg->target, dev);
- 			new_state = NUD_STALE;
- 		}
+-	dst_init(&ilwt->null_dst, NULL, NULL, DST_OBSOLETE_NONE, DST_NOCOUNT);
++	dst_init(&ilwt->null_rt.dst, NULL, NULL, DST_OBSOLETE_NONE, DST_NOCOUNT);
+ 
+ 	atomic_set(&ilwt->pkt_cnt, 0);
+ 	ilwt->freq.k = freq_k;
+@@ -360,7 +360,7 @@ static int ioam6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 	/* This is how we notify that the destination does not change after
+ 	 * transformation and that we need to use orig_dst instead of the cache
+ 	 */
+-	if (dst == &ilwt->null_dst) {
++	if (dst == &ilwt->null_rt.dst) {
+ 		dst_release(dst);
+ 
+ 		dst = orig_dst;
+@@ -429,7 +429,7 @@ static int ioam6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 		local_bh_disable();
+ 		if (orig_dst->lwtstate == dst->lwtstate)
+ 			dst_cache_set_ip6(&ilwt->cache,
+-					  &ilwt->null_dst, &fl6.saddr);
++					  &ilwt->null_rt.dst, &fl6.saddr);
+ 		else
+ 			dst_cache_set_ip6(&ilwt->cache, dst, &fl6.saddr);
+ 		local_bh_enable();
 -- 
 2.53.0
 
