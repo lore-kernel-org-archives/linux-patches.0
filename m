@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD54470111;
-	Tue, 21 Jul 2026 19:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099E835C1A6;
+	Tue, 21 Jul 2026 19:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662970; cv=none; b=Q4IUmEL7aoR+/BHWO4B5KPgfwy/36M1KJbksQ/OOH9V530cjUU6G+rxRk8d8l5JdTTUZUyjoFXMcUrqdtWh4TjmTuzfI8wOhZ97CP7ZUmssAe0X/ItDXYLymyG0lb7kOuKrOVIQe2ptuGiLxKwPTwDuGdbk14W8gTvYPM6jN/HI=
+	t=1784662973; cv=none; b=Oc6gY9627rc2XeVxxpoaQZcYHdjzz7nX+W8awiW5q7ILAsePTenRY8uVUBTcgDCKL/SFOs3B5wFiaCcdSAWNrQ/qTMuIDVjedg6prDvwep8bi12tu/Z+K0mXhYz+PwdTIJv1GTmK/pxZT9cJRFjeDRei8ScQ917ZTq5qeFbz8+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662970; c=relaxed/simple;
-	bh=23WDIQcYwJE6XOe75dJpLavAlVjD8hZ7P1UkqDVESLA=;
+	s=arc-20240116; t=1784662973; c=relaxed/simple;
+	bh=trd4HD80PSHahcLHgla24fOw7ZCPD+czst0O69lI4I8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fCP9kjJj/GbahCtD3G4TZORQCLEQ4z7iWl811gcdnZHSPWy1SucLVHdBrVXWiYj5BX6TD0k8rTPwHpI47mnrP8hnomF1C6mQp/Ssv1n2NHhdXo/9nA1pzQhvhN1lf7kMDqUqNqHhklHUAAdO3qpz0LA3mKg/3Ek706U0+wP1MuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=upuR8R8P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AkReoX49PPHkotBERXfG4tppx8uQRRYlFAErk5GeGcUMcI74Ygse1BNbto4fdc2Sb8i+YgT35evRLsev92pAKF7gjTziXciqAhZiCGdPQStejstIX7nsaEeqBH1/kHE95wF6HArkiH3z5lzAT1D48NjadoEuUyCksjBRp+7edzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j88VcU/4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="upuR8R8P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 076631F000E9;
-	Tue, 21 Jul 2026 19:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j88VcU/4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A371F000E9;
+	Tue, 21 Jul 2026 19:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662969;
-	bh=it73y35nK1MBRZLo6dZ94tQriu6XIAt5xPBsyIYUjsY=;
+	s=korg; t=1784662971;
+	bh=uA7F4kdoGOi41eNrwpUrq2N41JQuPbiXo4KLsjm3bwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=upuR8R8PIa5TB2ZoWylBzm9W1gVLPFCExWx4TsZ/et0APz/LGiRaB0fVqk5VkSexi
-	 mTMG2NXB9Ppw1goOcDblMSPpjqoZzl2igpcLiAvv1txhUix7qxr1Nj8eHkKPo0wzpF
-	 ATUhWF381ex9Z5rW1aDqeBmyLILT1nh5gt9Hrd5c=
+	b=j88VcU/4g0xniDekPqYS3xFKJo/CSIn3PIHoldUMuBuSe7TC7EMxH7g/YcftVCmp7
+	 4RTzSrKldwOp8BJiIWz0CefZYhx0TVSKN2/zOb6vrEOuGHJIwjnSjO04Vtnpr/X6U0
+	 7eDEgsOp4DXBuXtZXv/3w2JxYBo+3eYGxtiKUCtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -40,9 +40,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0603/1276] selftests/mm: ensure destination is hugetlb-backed in hugetlb-mremap
-Date: Tue, 21 Jul 2026 17:17:26 +0200
-Message-ID: <20260721152459.606142874@linuxfoundation.org>
+Subject: [PATCH 6.12 0604/1276] selftests/mm: clarify alternate unmapping in compaction_test
+Date: Tue, 21 Jul 2026 17:17:27 +0200
+Message-ID: <20260721152459.627900149@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -63,31 +63,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Sayali Patil <sayalip@linux.ibm.com>
 
-[ Upstream commit f20ca8972e83f111c4300c60d74314568c8964bc ]
+[ Upstream commit 69ba1d76d93ab818245333cf400928477ba72053 ]
 
-The hugetlb-mremap selftest reserves the destination address using a
-anonymous base-page mapping before calling mremap() with MREMAP_FIXED,
-while the source region is hugetlb-backed.
+Add a comment explaining that every other entry in the list is unmapped to
+intentionally create fragmentation with locked pages before invoking
+check_compaction().
 
-When remapping a hugetlb mapping into a base-page VMA may fail with:
-
-    mremap: Device or resource busy
-
-This is observed on powerpc hash MMU systems where slice constraints and
-page size incompatibilities prevent the remap.
-
-Ensure the destination region is created using MAP_HUGETLB so that both
-source and destination VMAs are hugetlb-backed and compatible.
-
-Update the FLAGS macro to include MAP_HUGETLB | MAP_SHARED so that both
-mappings are hugetlb-backed and compatible.  Also use the macro for the
-mmap() calls to avoid repeating the flag combination.
-
-This ensures the test reliably exercises hugetlb mremap instead of failing
-due to VMA type mismatch.
-
-Link: https://lore.kernel.org/367644df45c65098f23e3945c6a80f4b8a8964a6.1779296493.git.sayalip@linux.ibm.com
-Fixes: 12b613206474 ("mm, hugepages: add hugetlb vma mremap() test")
+Link: https://lore.kernel.org/da5e0a8d5152e54152c0d2f456aac2fac35af291.1779296493.git.sayalip@linux.ibm.com
+Fixes: bd67d5c15cc1 ("Test compaction of mlocked memory")
 Signed-off-by: Sayali Patil <sayalip@linux.ibm.com>
 Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
 Cc: David Hildenbrand (Arm) <david@kernel.org>
@@ -102,49 +85,23 @@ Cc: Zi Yan <ziy@nvidia.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/hugepage-mremap.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ tools/testing/selftests/mm/compaction_test.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/mm/hugepage-mremap.c b/tools/testing/selftests/mm/hugepage-mremap.c
-index 72200f6dc61750..3070484f9ed0a0 100644
---- a/tools/testing/selftests/mm/hugepage-mremap.c
-+++ b/tools/testing/selftests/mm/hugepage-mremap.c
-@@ -31,7 +31,7 @@
- #define MB_TO_BYTES(x) (x * 1024 * 1024)
+diff --git a/tools/testing/selftests/mm/compaction_test.c b/tools/testing/selftests/mm/compaction_test.c
+index 9bc4591c7b1699..be226ead936fd5 100644
+--- a/tools/testing/selftests/mm/compaction_test.c
++++ b/tools/testing/selftests/mm/compaction_test.c
+@@ -261,6 +261,9 @@ int main(int argc, char **argv)
+ 		mem_fragmentable_MB -= MAP_SIZE_MB;
+ 	}
  
- #define PROTECTION (PROT_READ | PROT_WRITE | PROT_EXEC)
--#define FLAGS (MAP_SHARED | MAP_ANONYMOUS)
-+#define FLAGS (MAP_HUGETLB | MAP_SHARED)
- 
- static void check_bytes(char *addr)
- {
-@@ -111,23 +111,20 @@ int main(int argc, char *argv[])
- 
- 	/* mmap to a PUD aligned address to hopefully trigger pmd sharing. */
- 	unsigned long suggested_addr = 0x7eaa40000000;
--	void *haddr = mmap((void *)suggested_addr, length, PROTECTION,
--			   MAP_HUGETLB | MAP_SHARED | MAP_POPULATE, fd, 0);
-+	void *haddr = mmap((void *)suggested_addr, length, PROTECTION, FLAGS, fd, 0);
- 	ksft_print_msg("Map haddr: Returned address is %p\n", haddr);
- 	if (haddr == MAP_FAILED)
- 		ksft_exit_fail_msg("mmap1: %s\n", strerror(errno));
- 
- 	/* mmap again to a dummy address to hopefully trigger pmd sharing. */
- 	suggested_addr = 0x7daa40000000;
--	void *daddr = mmap((void *)suggested_addr, length, PROTECTION,
--			   MAP_HUGETLB | MAP_SHARED | MAP_POPULATE, fd, 0);
-+	void *daddr = mmap((void *)suggested_addr, length, PROTECTION, FLAGS, fd, 0);
- 	ksft_print_msg("Map daddr: Returned address is %p\n", daddr);
- 	if (daddr == MAP_FAILED)
- 		ksft_exit_fail_msg("mmap3: %s\n", strerror(errno));
- 
- 	suggested_addr = 0x7faa40000000;
--	void *vaddr =
--		mmap((void *)suggested_addr, length, PROTECTION, FLAGS, -1, 0);
-+	void *vaddr = mmap((void *)suggested_addr, length, PROTECTION, FLAGS, fd, 0);
- 	ksft_print_msg("Map vaddr: Returned address is %p\n", vaddr);
- 	if (vaddr == MAP_FAILED)
- 		ksft_exit_fail_msg("mmap2: %s\n", strerror(errno));
++	/* Unmap every other entry in the list to create fragmentation with
++	 * locked pages before invoking check_compaction().
++	 */
+ 	for (entry = list; entry != NULL; entry = entry->next) {
+ 		munmap(entry->map, MAP_SIZE);
+ 		if (!entry->next)
 -- 
 2.53.0
 
