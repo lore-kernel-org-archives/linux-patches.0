@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D3B43CEC8;
-	Tue, 21 Jul 2026 20:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BC63B2FE4;
+	Tue, 21 Jul 2026 20:48:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666935; cv=none; b=GlP6zAFvYwzPEU3pBzVcDlQGQgweR89N23Xjn5nkJSZwx9SHsXIwCMaJNr7G3OO8OtI8GSZuXRJtsUQQsHbes+JPkV086wvebdi+mQaqc7UsBraGe7Q0PSzBcD7XBR+LxFRNNnICvefSYXNvhRE2PcqbQPTLyF6VAONUz8bhKFo=
+	t=1784666936; cv=none; b=Y2TbuGi4m7aXHjebMPQmdozjFSTfPL4z36iyn3CVQIEgTWZyfeYrzl2gGm/fheZesy71+dfWdBTp+dZEviCBEtUqOli44eycyt2+5018F44d3A4AveEqUYZmJPYJGQfN5pKTCWtnjhlgLXKgFstWgzDCKZVJK8jlUt1x1y1bAQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666935; c=relaxed/simple;
-	bh=dmBDhAgWWtBWVA/0CMUSA4i4ElAFEHsIlz6VsHPTjXs=;
+	s=arc-20240116; t=1784666936; c=relaxed/simple;
+	bh=gp9LezZy/is5na8lpry85WqmMkIJCUqQB+Kx62vvAj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iWPZJWKriKIptIthp1qrYDiTddGxZ2ju5GcwPgo7xuz3vrlfACZFu/3Wdc4jNb36Ca08KWxtb0/vCdaaJ/sQTyGRmXN32TkE8ThcqAoKteU5yOsHRl2V2rYf3SUf0brUXfNpbHwgj/i5ZKWr/XU4fWUAkeKtkNYjHjn87UBYSZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8hFXiOq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PoHgV7DhygW43ASgWzXlCNEOGL270LC9tnMOjI2DBhhIwE491NK+iRBqhrREG6DY44Ag66YDIQiJn3W4oS4GbW9XcyDhUM7VhlEh09mlUj3x99QewdmkOCrLeOiZjmJMRA1PUiDGOclDumUMFF85Et9HWRaszPthhXuzXwNHESI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGHEI7rb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8hFXiOq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FCC11F000E9;
-	Tue, 21 Jul 2026 20:48:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGHEI7rb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCDC71F00A3A;
+	Tue, 21 Jul 2026 20:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666932;
-	bh=9IL8YnCx/OfEQ3O7wj60WvD4W27+goJb2a3Jg0Up3oc=;
+	s=korg; t=1784666935;
+	bh=Mi7w7SkiXIapJzLr2fX/ZvohxgTRfG2a4CVYQLutmUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F8hFXiOqecKGLfzEYeKOHMPp5wZIx/riZR0mVZJGJHUFZ+GQabbEHD74W2AcAuitF
-	 AaN63+DHBEc8FQJjsgtqQtCQBx/ixpfAhWY5fw8p3+o8HuD6Y2VCQ/kLbdSdBkwpVo
-	 By+n/UaaK6Elv3nuYQBbvQ8ahW7sN3xuUbC62ZXI=
+	b=lGHEI7rb1iGlHEYqfOq2DxFev98qlDumRbEItOSvJ2tpvT868N9Lwc7s1ba9Vu+Rf
+	 CPjqumdbKrnpCQewUCE3yoY9kTGQSmepzDRX/f++2MZppvflSsDzs2XG9QuK2X/4TZ
+	 FqWe92GX5aR2+2KwE1aDMi+Fcy/vlidr0V5ShMhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Enrico Pozzobon <enrico.pozzobon@dissecto.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0868/1266] net: usb: lan78xx: move functions to avoid forward definitions
-Date: Tue, 21 Jul 2026 17:21:45 +0200
-Message-ID: <20260721152501.270870994@linuxfoundation.org>
+Subject: [PATCH 6.6 0869/1266] net: usb: lan78xx: disable VLAN filter in promiscuous mode
+Date: Tue, 21 Jul 2026 17:21:46 +0200
+Message-ID: <20260721152501.292768619@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,353 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Enrico Pozzobon <enrico.pozzobon@dissecto.com>
 
-[ Upstream commit 39aa1d620d10cdd276f4728da50f136dbe939643 ]
+[ Upstream commit 60444706aa17616efc03190d099ac347e28b3d0a ]
 
-Move following functions to avoid forward declarations in the code:
-- lan78xx_start_hw()
-- lan78xx_stop_hw()
-- lan78xx_flush_fifo()
-- lan78xx_start_tx_path()
-- lan78xx_stop_tx_path()
-- lan78xx_flush_tx_fifo()
-- lan78xx_start_rx_path()
-- lan78xx_stop_rx_path()
-- lan78xx_flush_rx_fifo()
+The hardware VLAN filter (RFE_CTL_VLAN_FILTER_) drops VLAN-tagged frames
+whose VID has not been registered via lan78xx_vlan_rx_add_vid(). It is
+left enabled in promiscuous mode, so packet capture (e.g. tcpdump or
+Wireshark) does not see tagged frames for unregistered VIDs.
 
-These functions will be used in an upcoming PHYlink migration patch.
+Clear the filter while the interface is promiscuous and restore it from
+NETIF_F_HW_VLAN_CTAG_FILTER otherwise. Enforce the same condition in
+lan78xx_set_features() so netdev_update_features() cannot re-enable the
+filter while promiscuous.
 
-No modifications to the functionality of the code are made.
-
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20241204084142.1152696-4-o.rempel@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 60444706aa17 ("net: usb: lan78xx: disable VLAN filter in promiscuous mode")
+Fixes: 55d7de9de6c3 ("Microchip's LAN7800 family USB 2/3 to 10/100/1000 Ethernet device driver")
+Signed-off-by: Enrico Pozzobon <enrico.pozzobon@dissecto.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20260701-lan78xx-vlan-promisc-v3-1-232266d32743@dissecto.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 300 +++++++++++++++++++-------------------
- 1 file changed, 150 insertions(+), 150 deletions(-)
+ drivers/net/usb/lan78xx.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index f5bcf150fd9ed3..36a7ece093ae23 100644
+index 36a7ece093ae23..cc9fa1ae7c1c19 100644
 --- a/drivers/net/usb/lan78xx.c
 +++ b/drivers/net/usb/lan78xx.c
-@@ -817,6 +817,156 @@ static void lan78xx_update_stats(struct lan78xx_net *dev)
- 	usb_autopm_put_interface(dev->intf);
+@@ -1418,6 +1418,17 @@ static void lan78xx_deferred_multicast_write(struct work_struct *param)
+ 	lan78xx_write_reg(dev, RFE_CTL, pdata->rfe_ctl);
  }
  
-+static int lan78xx_start_hw(struct lan78xx_net *dev, u32 reg, u32 hw_enable)
++static void lan78xx_update_vlan_filter(struct lan78xx_priv *pdata,
++				       struct net_device *netdev,
++				       netdev_features_t features)
 +{
-+	return lan78xx_update_reg(dev, reg, hw_enable, hw_enable);
++	if ((features & NETIF_F_HW_VLAN_CTAG_FILTER) &&
++	    !(netdev->flags & IFF_PROMISC))
++		pdata->rfe_ctl |= RFE_CTL_VLAN_FILTER_;
++	else
++		pdata->rfe_ctl &= ~RFE_CTL_VLAN_FILTER_;
 +}
 +
-+static int lan78xx_stop_hw(struct lan78xx_net *dev, u32 reg, u32 hw_enabled,
-+			   u32 hw_disabled)
-+{
-+	unsigned long timeout;
-+	bool stopped = true;
-+	int ret;
-+	u32 buf;
-+
-+	/* Stop the h/w block (if not already stopped) */
-+
-+	ret = lan78xx_read_reg(dev, reg, &buf);
-+	if (ret < 0)
-+		return ret;
-+
-+	if (buf & hw_enabled) {
-+		buf &= ~hw_enabled;
-+
-+		ret = lan78xx_write_reg(dev, reg, buf);
-+		if (ret < 0)
-+			return ret;
-+
-+		stopped = false;
-+		timeout = jiffies + HW_DISABLE_TIMEOUT;
-+		do  {
-+			ret = lan78xx_read_reg(dev, reg, &buf);
-+			if (ret < 0)
-+				return ret;
-+
-+			if (buf & hw_disabled)
-+				stopped = true;
-+			else
-+				msleep(HW_DISABLE_DELAY_MS);
-+		} while (!stopped && !time_after(jiffies, timeout));
-+	}
-+
-+	ret = stopped ? 0 : -ETIME;
-+
-+	return ret;
-+}
-+
-+static int lan78xx_flush_fifo(struct lan78xx_net *dev, u32 reg, u32 fifo_flush)
-+{
-+	return lan78xx_update_reg(dev, reg, fifo_flush, fifo_flush);
-+}
-+
-+static int lan78xx_start_tx_path(struct lan78xx_net *dev)
-+{
-+	int ret;
-+
-+	netif_dbg(dev, drv, dev->net, "start tx path");
-+
-+	/* Start the MAC transmitter */
-+
-+	ret = lan78xx_start_hw(dev, MAC_TX, MAC_TX_TXEN_);
-+	if (ret < 0)
-+		return ret;
-+
-+	/* Start the Tx FIFO */
-+
-+	ret = lan78xx_start_hw(dev, FCT_TX_CTL, FCT_TX_CTL_EN_);
-+	if (ret < 0)
-+		return ret;
-+
-+	return 0;
-+}
-+
-+static int lan78xx_stop_tx_path(struct lan78xx_net *dev)
-+{
-+	int ret;
-+
-+	netif_dbg(dev, drv, dev->net, "stop tx path");
-+
-+	/* Stop the Tx FIFO */
-+
-+	ret = lan78xx_stop_hw(dev, FCT_TX_CTL, FCT_TX_CTL_EN_, FCT_TX_CTL_DIS_);
-+	if (ret < 0)
-+		return ret;
-+
-+	/* Stop the MAC transmitter */
-+
-+	ret = lan78xx_stop_hw(dev, MAC_TX, MAC_TX_TXEN_, MAC_TX_TXD_);
-+	if (ret < 0)
-+		return ret;
-+
-+	return 0;
-+}
-+
-+/* The caller must ensure the Tx path is stopped before calling
-+ * lan78xx_flush_tx_fifo().
-+ */
-+static int lan78xx_flush_tx_fifo(struct lan78xx_net *dev)
-+{
-+	return lan78xx_flush_fifo(dev, FCT_TX_CTL, FCT_TX_CTL_RST_);
-+}
-+
-+static int lan78xx_start_rx_path(struct lan78xx_net *dev)
-+{
-+	int ret;
-+
-+	netif_dbg(dev, drv, dev->net, "start rx path");
-+
-+	/* Start the Rx FIFO */
-+
-+	ret = lan78xx_start_hw(dev, FCT_RX_CTL, FCT_RX_CTL_EN_);
-+	if (ret < 0)
-+		return ret;
-+
-+	/* Start the MAC receiver*/
-+
-+	ret = lan78xx_start_hw(dev, MAC_RX, MAC_RX_RXEN_);
-+	if (ret < 0)
-+		return ret;
-+
-+	return 0;
-+}
-+
-+static int lan78xx_stop_rx_path(struct lan78xx_net *dev)
-+{
-+	int ret;
-+
-+	netif_dbg(dev, drv, dev->net, "stop rx path");
-+
-+	/* Stop the MAC receiver */
-+
-+	ret = lan78xx_stop_hw(dev, MAC_RX, MAC_RX_RXEN_, MAC_RX_RXD_);
-+	if (ret < 0)
-+		return ret;
-+
-+	/* Stop the Rx FIFO */
-+
-+	ret = lan78xx_stop_hw(dev, FCT_RX_CTL, FCT_RX_CTL_EN_, FCT_RX_CTL_DIS_);
-+	if (ret < 0)
-+		return ret;
-+
-+	return 0;
-+}
-+
-+/* The caller must ensure the Rx path is stopped before calling
-+ * lan78xx_flush_rx_fifo().
-+ */
-+static int lan78xx_flush_rx_fifo(struct lan78xx_net *dev)
-+{
-+	return lan78xx_flush_fifo(dev, FCT_RX_CTL, FCT_RX_CTL_RST_);
-+}
-+
- /* Loop until the read is completed with timeout called with phy_mutex held */
- static int lan78xx_phy_wait_not_busy(struct lan78xx_net *dev)
+ static void lan78xx_set_multicast(struct net_device *netdev)
  {
-@@ -2747,156 +2897,6 @@ static int lan78xx_urb_config_init(struct lan78xx_net *dev)
- 	return result;
- }
+ 	struct lan78xx_net *dev = netdev_priv(netdev);
+@@ -1452,6 +1463,8 @@ static void lan78xx_set_multicast(struct net_device *netdev)
+ 		}
+ 	}
  
--static int lan78xx_start_hw(struct lan78xx_net *dev, u32 reg, u32 hw_enable)
--{
--	return lan78xx_update_reg(dev, reg, hw_enable, hw_enable);
--}
--
--static int lan78xx_stop_hw(struct lan78xx_net *dev, u32 reg, u32 hw_enabled,
--			   u32 hw_disabled)
--{
--	unsigned long timeout;
--	bool stopped = true;
--	int ret;
--	u32 buf;
--
--	/* Stop the h/w block (if not already stopped) */
--
--	ret = lan78xx_read_reg(dev, reg, &buf);
--	if (ret < 0)
--		return ret;
--
--	if (buf & hw_enabled) {
--		buf &= ~hw_enabled;
--
--		ret = lan78xx_write_reg(dev, reg, buf);
--		if (ret < 0)
--			return ret;
--
--		stopped = false;
--		timeout = jiffies + HW_DISABLE_TIMEOUT;
--		do  {
--			ret = lan78xx_read_reg(dev, reg, &buf);
--			if (ret < 0)
--				return ret;
--
--			if (buf & hw_disabled)
--				stopped = true;
--			else
--				msleep(HW_DISABLE_DELAY_MS);
--		} while (!stopped && !time_after(jiffies, timeout));
--	}
--
--	ret = stopped ? 0 : -ETIME;
--
--	return ret;
--}
--
--static int lan78xx_flush_fifo(struct lan78xx_net *dev, u32 reg, u32 fifo_flush)
--{
--	return lan78xx_update_reg(dev, reg, fifo_flush, fifo_flush);
--}
--
--static int lan78xx_start_tx_path(struct lan78xx_net *dev)
--{
--	int ret;
--
--	netif_dbg(dev, drv, dev->net, "start tx path");
--
--	/* Start the MAC transmitter */
--
--	ret = lan78xx_start_hw(dev, MAC_TX, MAC_TX_TXEN_);
--	if (ret < 0)
--		return ret;
--
--	/* Start the Tx FIFO */
--
--	ret = lan78xx_start_hw(dev, FCT_TX_CTL, FCT_TX_CTL_EN_);
--	if (ret < 0)
--		return ret;
--
--	return 0;
--}
--
--static int lan78xx_stop_tx_path(struct lan78xx_net *dev)
--{
--	int ret;
--
--	netif_dbg(dev, drv, dev->net, "stop tx path");
--
--	/* Stop the Tx FIFO */
--
--	ret = lan78xx_stop_hw(dev, FCT_TX_CTL, FCT_TX_CTL_EN_, FCT_TX_CTL_DIS_);
--	if (ret < 0)
--		return ret;
--
--	/* Stop the MAC transmitter */
--
--	ret = lan78xx_stop_hw(dev, MAC_TX, MAC_TX_TXEN_, MAC_TX_TXD_);
--	if (ret < 0)
--		return ret;
--
--	return 0;
--}
--
--/* The caller must ensure the Tx path is stopped before calling
-- * lan78xx_flush_tx_fifo().
-- */
--static int lan78xx_flush_tx_fifo(struct lan78xx_net *dev)
--{
--	return lan78xx_flush_fifo(dev, FCT_TX_CTL, FCT_TX_CTL_RST_);
--}
--
--static int lan78xx_start_rx_path(struct lan78xx_net *dev)
--{
--	int ret;
--
--	netif_dbg(dev, drv, dev->net, "start rx path");
--
--	/* Start the Rx FIFO */
--
--	ret = lan78xx_start_hw(dev, FCT_RX_CTL, FCT_RX_CTL_EN_);
--	if (ret < 0)
--		return ret;
--
--	/* Start the MAC receiver*/
--
--	ret = lan78xx_start_hw(dev, MAC_RX, MAC_RX_RXEN_);
--	if (ret < 0)
--		return ret;
--
--	return 0;
--}
--
--static int lan78xx_stop_rx_path(struct lan78xx_net *dev)
--{
--	int ret;
--
--	netif_dbg(dev, drv, dev->net, "stop rx path");
--
--	/* Stop the MAC receiver */
--
--	ret = lan78xx_stop_hw(dev, MAC_RX, MAC_RX_RXEN_, MAC_RX_RXD_);
--	if (ret < 0)
--		return ret;
--
--	/* Stop the Rx FIFO */
--
--	ret = lan78xx_stop_hw(dev, FCT_RX_CTL, FCT_RX_CTL_EN_, FCT_RX_CTL_DIS_);
--	if (ret < 0)
--		return ret;
--
--	return 0;
--}
--
--/* The caller must ensure the Rx path is stopped before calling
-- * lan78xx_flush_rx_fifo().
-- */
--static int lan78xx_flush_rx_fifo(struct lan78xx_net *dev)
--{
--	return lan78xx_flush_fifo(dev, FCT_RX_CTL, FCT_RX_CTL_RST_);
--}
--
- static int lan78xx_reset(struct lan78xx_net *dev)
- {
- 	struct lan78xx_priv *pdata = (struct lan78xx_priv *)(dev->data[0]);
++	lan78xx_update_vlan_filter(pdata, dev->net, dev->net->features);
++
+ 	if (netdev_mc_count(dev->net)) {
+ 		struct netdev_hw_addr *ha;
+ 		int i;
+@@ -2756,10 +2769,7 @@ static int lan78xx_set_features(struct net_device *netdev,
+ 	else
+ 		pdata->rfe_ctl &= ~RFE_CTL_VLAN_STRIP_;
+ 
+-	if (features & NETIF_F_HW_VLAN_CTAG_FILTER)
+-		pdata->rfe_ctl |= RFE_CTL_VLAN_FILTER_;
+-	else
+-		pdata->rfe_ctl &= ~RFE_CTL_VLAN_FILTER_;
++	lan78xx_update_vlan_filter(pdata, netdev, features);
+ 
+ 	spin_unlock_irqrestore(&pdata->rfe_ctl_lock, flags);
+ 
 -- 
 2.53.0
 
