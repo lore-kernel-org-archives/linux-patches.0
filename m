@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4DCC40860A;
-	Tue, 21 Jul 2026 18:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8674A46F4BE;
+	Tue, 21 Jul 2026 18:48:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659711; cv=none; b=tOToyvTpWWVuH4/5mjWuVCFGEeo7T5llQ8pFx+AzB9dECCHBIHBSnn9rQR4ExjaQNZcAal34w+PgyqlIrVRNw9jM1QG0gcCAECAJn0ZSGze7iVM6zx43rXw19x87zrSZOoeJ5lsmPpfe4h9XZ1bkezESpsf0hzqGDeFvyOZhkvc=
+	t=1784659713; cv=none; b=Otb9YttHJfzkHSBZKdQ+Yp3rI1ykjw9UY/b8x0w4csJC2ss01U7DLaSZ7FUnKcWK7z5q2h0RrZ3212rnYrYbDHf+CmOjwPnR2mhQTGoTspH7HGWtLhVlv6Ja+i+LQ4TOS5pgp+g0RPTbISzg1oRo7mvSKkIgQ0KVagSCrQ6MnNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659711; c=relaxed/simple;
-	bh=XSpB7APv6IlrOhj1eQ6SsKj9nDQfXlT1JW9XRh5kLB8=;
+	s=arc-20240116; t=1784659713; c=relaxed/simple;
+	bh=xLw41/9t1kQsTiJyiV2hRNvu5NSrMZm8YNO20hvAcpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XTCL0iuQpj56gOx7KTUPY5yEcqG/mrUgTvauJH/bp3PormYMqDJXpSZv7QSMdq9PXsipfkmwW1bfJPYPTZhWc+Ptmm1CEuoEVHuF5BVieRLUulmV6Ngb4hLxxw6WIT/YZiXSrs2f230LxEeYkEU7lRJgYjQwpVV1xKTV2/vI8JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JAgq1nvW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=as+xi0pIPA7rBA3PO9fZQcjaOd653SCa9AYyZaKyOy7/07O5K8xzuucN9M/qobmTXcg/3+1qokG0N71Cu4/kQBmEMokUy+1R6R9Lm1AWI16ASfga9CKl/PRcCzjrLNn6Tcc+29aHzP6BZ5C8vUH9CIuldEr4tHp302PuGDR8FUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKF1Jde5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JAgq1nvW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142C71F000E9;
-	Tue, 21 Jul 2026 18:48:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKF1Jde5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B582E1F000E9;
+	Tue, 21 Jul 2026 18:48:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659709;
-	bh=NPzbj3XWGYXCUu4A4Hk8avMLuhCdVUq3lNHrnAB7FRw=;
+	s=korg; t=1784659712;
+	bh=jXHY+OpX6vJL4u2YudaBR7usYB5z+Qqi20SKSwQlMAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JAgq1nvWd+xeMY+7fgVji/OwCdFdtX5Q5BP+e4u7hCs2H+FXaUIElKHDsKDsIvfu2
-	 GpTeO1JfAhuc6OlVa3JzW0vaR2LW97LAyXUD+vT94LnduY7J47y04pqDSHYDiAnI3u
-	 M+IZXg4n1tO/dXKZAAfLPcF64YFPLB1Zo3SJr36k=
+	b=PKF1Jde5uvFhFOdxSrzRtgPX1zwgOuktULPDVE3xyo1sSsbhA4i88Bq6IVTNLe5k8
+	 1UbIqJmHao9lW6AolANvc6t2U/bvzOLggl+lEa1bDwMdhStV/g27y57dnfN8SCxQjA
+	 DG84ZHGxrUbSGcmBLD9+yWDKoA8O2F0qgpp9pYVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0705/2077] ASoC: fsl: fsl_audmix: Validate written enum values
-Date: Tue, 21 Jul 2026 17:06:18 +0200
-Message-ID: <20260721152609.422089192@linuxfoundation.org>
+Subject: [PATCH 7.1 0688/2077] RDMA/core: Fix skipped usage for driver built FRMR key
+Date: Tue, 21 Jul 2026 17:06:01 +0200
+Message-ID: <20260721152609.021622091@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,55 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Michael Guralnik <michaelgur@nvidia.com>
 
-[ Upstream commit 3cd17e4e2871114d5579fa7bc8da66faf7fc1930 ]
+[ Upstream commit 3d7fd88aeff73f25ee740b3a65a3b4dd38ad7783 ]
 
-fsl_audmix_put_mix_clk_src() and fsl_audmix_put_out_src()
-convert the user-provided enum item with snd_soc_enum_item_to_val()
-before checking whether the item is within the enum's item count.
+When creating FRMR handles following a netlink command to pin handles,
+use the key after driver callback instead of using the key passed directly
+from user.
 
-The generic snd_soc_put_enum_double() helper performs that
-validation, but these callbacks use the converted value first: the
-clock-source path tests it with BIT(), and the output-source path
-indexes the prms transition table with it.
-
-Reject out-of-range enum items before converting them.
-
-Fixes: be1df61cf06e ("ASoC: fsl: Add Audio Mixer CPU DAI driver")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20260609124317.38046-4-sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 020d189d16a6 ("RDMA/core: Add pinned handles to FRMR pools")
+Link: https://patch.msgid.link/r/20260610000145.820592-4-michaelgur@nvidia.com
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_audmix.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/infiniband/core/frmr_pools.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/fsl_audmix.c b/sound/soc/fsl/fsl_audmix.c
-index 40a3b743217442..f819f33ec46b84 100644
---- a/sound/soc/fsl/fsl_audmix.c
-+++ b/sound/soc/fsl/fsl_audmix.c
-@@ -117,6 +117,9 @@ static int fsl_audmix_put_mix_clk_src(struct snd_kcontrol *kcontrol,
- 	unsigned int *item = ucontrol->value.enumerated.item;
- 	unsigned int reg_val, val, mix_clk;
+diff --git a/drivers/infiniband/core/frmr_pools.c b/drivers/infiniband/core/frmr_pools.c
+index 5e992ff3d7cffd..6170466ea9581a 100644
+--- a/drivers/infiniband/core/frmr_pools.c
++++ b/drivers/infiniband/core/frmr_pools.c
+@@ -426,7 +426,7 @@ int ib_frmr_pools_set_pinned(struct ib_device *device, struct ib_frmr_key *key,
+ 	if (!handles)
+ 		return -ENOMEM;
  
-+	if (item[0] >= e->items)
-+		return -EINVAL;
-+
- 	/* Get current state */
- 	reg_val = snd_soc_component_read(comp, FSL_AUDMIX_CTR);
- 	mix_clk = ((reg_val & FSL_AUDMIX_CTR_MIXCLK_MASK)
-@@ -157,6 +160,9 @@ static int fsl_audmix_put_out_src(struct snd_kcontrol *kcontrol,
- 	unsigned int reg_val, val, mask = 0, ctr = 0;
- 	int ret;
- 
-+	if (item[0] >= e->items)
-+		return -EINVAL;
-+
- 	/* Get current state */
- 	reg_val = snd_soc_component_read(comp, FSL_AUDMIX_CTR);
- 
+-	ret = pools->pool_ops->create_frmrs(device, key, handles,
++	ret = pools->pool_ops->create_frmrs(device, &driver_key, handles,
+ 					    needed_handles);
+ 	if (ret) {
+ 		kfree(handles);
 -- 
 2.53.0
 
