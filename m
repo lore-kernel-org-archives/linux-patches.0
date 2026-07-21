@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAAE3FE356;
-	Tue, 21 Jul 2026 19:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03AD415F14;
+	Tue, 21 Jul 2026 19:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661580; cv=none; b=TDhGY15TfY/q/eQ9duLMPZd6xAzCJlj6QKeYJFsgRltslrwUv9v9m8gsMix1O1jXnMENjvvF2K/t6VWLwZjlTAu02Do1Y/UCGXb/MyberbIsfzkQdcaV6JrKMaUH/dUEFt32XuiOVSATk0l+64O2pAf7Wbe0Zezux1DK/TI3BnI=
+	t=1784661585; cv=none; b=a73TjsO2idUg9d/fUCGMqmQfEnsnwuDLEZ7WI6O37YToIzCiabjBKU5rPzzmNdFBUK1B86xTx3/RPr+DXYl9RY3K+hbFztkeUWTxVS179uHFL1S5aY74soIPMhyqL4M3ZuG3IRAQcIrNSFg+HdFecyObOctIcbaCJcpwWP4KDvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661580; c=relaxed/simple;
-	bh=XDxMluJEfQTY/9ieXe9BEm/xG1uyRm9VnHCnNQN9Ca4=;
+	s=arc-20240116; t=1784661585; c=relaxed/simple;
+	bh=qvnUA+wPAGABT8EQCWbO81Qfhn77I7T4p55aG+uzVjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kpS0b0AOznDHxNJkI6EcxZvaoLfEiOH6wEOu2RBOcrhfwJ3SbutLQsrOZKmlfRqItr7/szb0NX3tjH356oxTRm3LEVDXUkmR3Wdd6KKVU9eTsNsg/cJBk9fx2UB1uPpQMVQxfRml3qTq56bOz+8Nj2s6zkmp8XH1Pr5v91u8Duc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsGqlxYa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kZRx6DVD1FfM2XWnH5zOZWzEvg++e+U0728elxyAFN3aPMuqgd3KnFW0sgpHHMotGmNemxLUlBp4zBtk0kveI46xhooF9f1lhQassZoZq83boukJJS9RjdjuMpgaC1rjzjOw7bccaH8d0uc6/uYbgDBo8x0emCQouVndNO0C8y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BhCBd1S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsGqlxYa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28101F000E9;
-	Tue, 21 Jul 2026 19:19:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BhCBd1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4305E1F00A3A;
+	Tue, 21 Jul 2026 19:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661579;
-	bh=AvJ5Su/5tIrMH5AZucxREApVDxR5Rz2iYmIq5r6NAc0=;
+	s=korg; t=1784661584;
+	bh=3g14ArYF0A7Y9DblgPs9tPDxuxAMh/X0Tr9oDFKICRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SsGqlxYaQvJoWYjZ57040+1WqZBsSIcCHDGy4kwvELriU6ByPNwvEocz4pHyB1JKc
-	 OXu8ORVq+xV+yiH1V67wn3z7U7Cx4S/8u1wkU3Arx1LOoQ/AWMqw8/ev00kGoIKFtP
-	 Z2UOa3uY1wgsjDAlhj1r0YuXcPGVRABwP5nv5NF0=
+	b=2BhCBd1SG0cbBhhydkBAOxgKrFJtXTFQCeFqpyHmQVX/vhMsn11yFDn1R5GufIfY0
+	 pdpSqEfCTIE3PYT+bnNi3cgowPg+YLVT30hg0JkfTbDpHM3QoboLXHbl/AqyGIN0H/
+	 qiYdnqv/lzDxawbgLkYOmiGax2BSS1QWpP1f4Q7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0119/1276] net/sched: sch_htb: annotate data-races (I)
-Date: Tue, 21 Jul 2026 17:09:22 +0200
-Message-ID: <20260721152448.765077533@linuxfoundation.org>
+Subject: [PATCH 6.12 0121/1276] IB/mlx5: Fix transport-domain rollback and initialize lb mutex earlier
+Date: Tue, 21 Jul 2026 17:09:24 +0200
+Message-ID: <20260721152448.811713255@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,61 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
 
-[ Upstream commit e54c33503bf7cebb1c1790251ce90f1252678081 ]
+[ Upstream commit e79389115b9d27287ff6230a9750675106ed7668 ]
 
-htb_dump() runs without holding qdisc spinlock.
+mlx5_ib_alloc_transport_domain() allocates a transport domain and then
+may fail in mlx5_ib_enable_lb(). In that case, the allocated TD is leaked.
 
-Add missing READ_ONCE()/WRITE_ONCE() annotations around
-q->overlimits and q->direct_pkts.
+Fix this by deallocating the TD when mlx5_ib_enable_lb() returns an
+error. Also return 0 explicitly in the no-loopback-capability success
+branch, and move dev->lb.mutex initialization to mlx5_ib_stage_init_init().
 
-Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260514095935.3926276-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 146d2f1af324 ("IB/mlx5: Allocate a Transport Domain for each ucontext")
+Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_htb.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/mlx5/main.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
-index f43f6ae8469235..49f4599be14b6a 100644
---- a/net/sched/sch_htb.c
-+++ b/net/sched/sch_htb.c
-@@ -568,7 +568,7 @@ htb_change_class_mode(struct htb_sched *q, struct htb_class *cl, s64 *diff)
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index b0a0e11ef721f9..3f5d0eb60db2a4 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -1915,9 +1915,13 @@ static int mlx5_ib_alloc_transport_domain(struct mlx5_ib_dev *dev, u32 *tdn,
+ 	if ((MLX5_CAP_GEN(dev->mdev, port_type) != MLX5_CAP_PORT_TYPE_ETH) ||
+ 	    (!MLX5_CAP_GEN(dev->mdev, disable_local_lb_uc) &&
+ 	     !MLX5_CAP_GEN(dev->mdev, disable_local_lb_mc)))
+-		return err;
++		return 0;
++
++	err = mlx5_ib_enable_lb(dev, true, false);
++	if (err)
++		mlx5_cmd_dealloc_transport_domain(dev->mdev, *tdn, uid);
  
- 	if (new_mode == HTB_CANT_SEND) {
- 		cl->overlimits++;
--		q->overlimits++;
-+		WRITE_ONCE(q->overlimits, q->overlimits + 1);
+-	return mlx5_ib_enable_lb(dev, true, false);
++	return err;
+ }
+ 
+ static void mlx5_ib_dealloc_transport_domain(struct mlx5_ib_dev *dev, u32 tdn,
+@@ -4164,6 +4168,8 @@ static int mlx5_ib_stage_init_init(struct mlx5_ib_dev *dev)
+ 		dev->port[i].roce.last_port_state = IB_PORT_DOWN;
  	}
  
- 	if (cl->prio_activity) {	/* not necessary: speed optimization */
-@@ -628,7 +628,7 @@ static int htb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		/* enqueue to helper queue */
- 		if (q->direct_queue.qlen < q->direct_qlen) {
- 			__qdisc_enqueue_tail(skb, &q->direct_queue);
--			q->direct_pkts++;
-+			WRITE_ONCE(q->direct_pkts, q->direct_pkts + 1);
- 		} else {
- 			return qdisc_drop(skb, sch, to_free);
- 		}
-@@ -1209,12 +1209,12 @@ static int htb_dump(struct Qdisc *sch, struct sk_buff *skb)
- 	struct nlattr *nest;
- 	struct tc_htb_glob gopt;
++	mutex_init(&dev->lb.mutex);
++
+ 	err = mlx5r_cmd_query_special_mkeys(dev);
+ 	if (err)
+ 		return err;
+@@ -4378,11 +4384,6 @@ static int mlx5_ib_stage_caps_init(struct mlx5_ib_dev *dev)
+ 	if (err)
+ 		return err;
  
--	sch->qstats.overlimits = q->overlimits;
-+	sch->qstats.overlimits = READ_ONCE(q->overlimits);
- 	/* Its safe to not acquire qdisc lock. As we hold RTNL,
- 	 * no change can happen on the qdisc parameters.
- 	 */
- 
--	gopt.direct_pkts = q->direct_pkts;
-+	gopt.direct_pkts = READ_ONCE(q->direct_pkts);
- 	gopt.version = HTB_VER;
- 	gopt.rate2quantum = q->rate2quantum;
- 	gopt.defcls = q->defcls;
+-	if ((MLX5_CAP_GEN(dev->mdev, port_type) == MLX5_CAP_PORT_TYPE_ETH) &&
+-	    (MLX5_CAP_GEN(dev->mdev, disable_local_lb_uc) ||
+-	     MLX5_CAP_GEN(dev->mdev, disable_local_lb_mc)))
+-		mutex_init(&dev->lb.mutex);
+-
+ 	if (MLX5_CAP_GEN_64(dev->mdev, general_obj_types) &
+ 			MLX5_GENERAL_OBJ_TYPES_CAP_VIRTIO_NET_Q) {
+ 		err = mlx5_ib_init_var_table(dev);
 -- 
 2.53.0
 
