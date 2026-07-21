@@ -1,97 +1,161 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9492335DA77
-	for <patches@lists.linux.dev>; Tue, 21 Jul 2026 02:00:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1473367B60;
+	Tue, 21 Jul 2026 15:29:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784599230; cv=none; b=tcXYdMmcrcklfTNGuW7x/s/iTuzmsFo/bbQOQ+SnnRslIZ5/Kw3oM+OESmNr/bNCJomgYPOyuidp0+FbRL+N6CZAoGPv9h5uTAKzGipvsKKSQKj0HqPKX+8Ym3kbXc0s8VdNJjkHMyDlfsXYBfsOzp6qZ+Z2Pel4D6HwifBVzic=
+	t=1784647762; cv=none; b=bmiBNFOBYLTmUrOxCd6giNkTTTS6kOfFU3JPWnvYTUr00oTGxB7gbG9kwuo0FkM+qTGjgtTLcV+Kcln3WuMCswJIguk5vqn4Yv8TziA8xagOj7Lw5jrgGv4uYrXUHils/dsx8k8lFo+tXYiUjtZ36KqzTjsBk0ZlBtrrDJOvB3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784599230; c=relaxed/simple;
-	bh=4z4pEhkzhd8PPkfvthIdarxBnEKuefevRkRx3XYfNAk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OK99rk2mQxKgE4cDm4UFIKgx2HJV2RYGhpf+ihUbk1wVpaIsa4rz7jDrqytKqpPtst1Exglv826L4+dKcX6qTmm19yLwaGgET4h49+FZXEt3odthcterpWJUk/dfC6GbWdAJvs5V9/WCqdTFoaJOLVWHgQfyLjZFMMRUik/hpuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=D4ca6Z1S; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	s=arc-20240116; t=1784647762; c=relaxed/simple;
+	bh=Od7zGve5y9S/a3+qTltfCxsLsMyGeygowvt2PcYPUTk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ZGtexQx2KHkZsXFLwIhGZ415FTAE+vW5PULqukjSBMYeyIgGngfLr8SGMAxliGrroOQfsEQ/X/IP6njGK0JrMRP7OQYLGN+QUxs20ig7s04xzVXdmm5NUNQd4G4/T+jU1UlXjJ0egUozupCDzarm2TKtJV3hT/7tYlGeM5jYE5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P6Eof9az; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="D4ca6Z1S"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 5316D40E00E6;
-	Tue, 21 Jul 2026 02:00:26 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id ZeZhYkjDvbXk; Tue, 21 Jul 2026 02:00:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1784599219; bh=bL/dZY2U0rKEklKQIV3GypOp98VrOV9hdHOJVBv5Bwk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=D4ca6Z1Sdvge0WW5PEzfN7OyoZgHeSVOg+ovgQk0uI4gR+G5JRY3WwucP8XHefWUk
-	 XVlxVg5E/efvS9qeDxMlFO4bzxRvvIi8eO2dSYx7CAtQPpjinpO3BiqhMu2d6Pxsfm
-	 p6jpkHIc2lrw/8GeCo59mZiD7AxPrBpfqn6uc1tWBuNSPipiHs4Mn017gCPLcHTH+0
-	 fX09K3e6ZlClM4fAlTwtXpBpcp9cVC+xxV+LFxrFXJXYRdzC+Aquk+xWDR/BqLo8Ml
-	 g2Ogdew6A2UrdHgXzKX40HUavlJbBJfKax6HYaR90CNXO6NRlrXvbz7e1v0aENE+aA
-	 FrdY8XI2pgOM9Fr6Vi9596Mkro0LXm6FPcEs1iYu/yiLl3T1LkM6r+aVyQjupc/Rrx
-	 b1d5FjdoC1YmC+MH2yr/5KdN0WVKmVuVgapyTPg5sfeMUKyJFWCowemTH0Tc5ayERb
-	 GqFABWwdVM6oSne/UqKp+kCcSRiJGvc0SutUS1eSyx9SxibFgkcxUuRfrYd9m8gmTk
-	 MumCPd4TrcpvR13ufetSQTW6imNImcme4SAm3t0NhWrWnm6h2lUg2rhlatkwMyCU4w
-	 fiYdId8pAiSpwD7+gXgewSkzICrMmRBYnXxOuwJg5e+s4mBKbVJbXfiaBCqQA8V97X
-	 OBNda1pv7QF8OdUFI8xD+umg=
-Received: from stx.tnic (unknown [IPv6:2600:1700:38ca:c00::40])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id B454740E00DC;
-	Tue, 21 Jul 2026 02:00:02 +0000 (UTC)
-Date: Mon, 20 Jul 2026 18:59:59 -0700
-From: Borislav Petkov <bp@alien8.de>
-To: Reinette Chatre <reinette.chatre@intel.com>
-Cc: tony.luck@intel.com, james.morse@arm.com, Dave.Martin@arm.com,
-	babu.moger@amd.com, tglx@linutronix.de, dave.hansen@linux.intel.com,
-	x86@kernel.org, hpa@zytor.com, ben.horgan@arm.com,
-	fustini@kernel.org, fenghuay@nvidia.com, peternewman@google.com,
-	yu.c.chen@intel.com, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v5 02/10] x86/resctrl: Protect against bad shift
-Message-ID: <20260721015959.GEal7SnxxR8D3801cr@fat_crate.local>
-References: <cover.1782857711.git.reinette.chatre@intel.com>
- <bc6ec5102227b4617265e015ce84335a8e902bc6.1782857711.git.reinette.chatre@intel.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P6Eof9az"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC5891F00A3F;
+	Tue, 21 Jul 2026 15:29:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1784647760;
+	bh=uIZeSf3/WdCo0q8Gp5wnShdm38N7vZcnRrvzwDjx6Kw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=P6Eof9azgbevwjA8dkJEaah9aA1F28qyQ+NkOw8mnbHC4tSNDWS7T8LgvMDHtZG6n
+	 YJw3p6kIqhgIKh3yDkbbymCJQBHk7sNNXB4Dri8ZbbrJ23eGq2jQowsghLb5nceHZ5
+	 S6HIEDGECtKwgNDG/qJT8o60kUzzOMuYOzbm5ygI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Shivam Kumar <skumar47@syr.edu>,
+	Shivam Kumar <kumar.shivam43666@gmail.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Philo Lu <lulie@linux.alibaba.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 001/699] nvmet-tcp: fix race between ICReq handling and queue teardown
+Date: Tue, 21 Jul 2026 17:16:00 +0200
+Message-ID: <20260721152355.706200271@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
+References: <20260721152355.667394603@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <bc6ec5102227b4617265e015ce84335a8e902bc6.1782857711.git.reinette.chatre@intel.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jun 30, 2026 at 09:27:02PM -0700, Reinette Chatre wrote:
-> diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-> index bca782050198..9b9495174041 100644
-> --- a/arch/x86/kernel/cpu/resctrl/core.c
-> +++ b/arch/x86/kernel/cpu/resctrl/core.c
-> @@ -247,7 +247,11 @@ static __init bool __rdt_get_mem_config_amd(struct rdt_resource *r)
->  
->  	cpuid_count(0x80000020, subleaf, &eax, &ebx, &ecx, &edx);
->  	hw_res->num_closid = edx + 1;
-> -	r->membw.max_bw = 1 << eax;
-> +	if (BITS_PER_TYPE(r->membw.max_bw) <= eax) {
-> +		pr_warn("Unable to support hardware's maximum bandwidth\n");
-> +		return false;
-> +	}
-> +	r->membw.max_bw = BIT(eax);
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
-Why?
+------------------
 
-Why go all the effort if the field can be 64 bits?
+From: Chaitanya Kulkarni <kch@nvidia.com>
 
-Why not make max_bw u64 and handle *all* possible values naturally?
+commit 5293a8882c549fab4a878bc76b0b6c951f980a61 upstream.
 
+nvmet_tcp_handle_icreq() updates queue->state after sending an
+Initialization Connection Response (ICResp), but it does so without
+serializing against target-side queue teardown.
+
+If an NVMe/TCP host sends an Initialization Connection Request
+(ICReq) and immediately closes the connection, target-side teardown
+may start in softirq context before io_work drains the already
+buffered ICReq. In that case, nvmet_tcp_schedule_release_queue()
+sets queue->state to NVMET_TCP_Q_DISCONNECTING and drops the queue
+reference under state_lock.
+
+If io_work later processes that ICReq, nvmet_tcp_handle_icreq() can
+still overwrite the state back to NVMET_TCP_Q_LIVE. That defeats the
+DISCONNECTING-state guard in nvmet_tcp_schedule_release_queue() and
+allows a later socket state change to re-enter teardown and issue a
+second kref_put() on an already released queue.
+
+The ICResp send failure path has the same problem. If teardown has
+already moved the queue to DISCONNECTING, a send error can still
+overwrite the state with NVMET_TCP_Q_FAILED, again reopening the
+window for a second teardown path to drop the queue reference.
+
+Fix this by serializing both post-send state transitions with
+state_lock and bailing out if teardown has already started.
+
+Use -ESHUTDOWN as an internal sentinel for that bail-out path rather
+than propagating it as a transport error like -ECONNRESET. Keep
+nvmet_tcp_socket_error() setting rcv_state to NVMET_TCP_RECV_ERR before
+honoring that sentinel so receive-side parsing stays quiesced until the
+existing release path completes.
+
+Fixes: c46a6465bac2 ("nvmet-tcp: add NVMe over TCP target driver")
+Cc: stable@vger.kernel.org
+Reported-by: Shivam Kumar <skumar47@syr.edu>
+Tested-by: Shivam Kumar <kumar.shivam43666@gmail.com>
+Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[ context diff adaptation: drop `queue->state = NVMET_TCP_Q_FAILED` since
+ the enum introduced in 6.7, 675b453e0241 ("nvmet-tcp: enable TLS handshake
+ upcall" ]
+Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/nvme/target/tcp.c | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index edcc0662c3e571..4bd82e9b113ff5 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -345,6 +345,19 @@ static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
+ 
+ static void nvmet_tcp_fatal_error(struct nvmet_tcp_queue *queue)
+ {
++	/*
++	 * Keep rcv_state at RECV_ERR even for the internal -ESHUTDOWN path.
++	 * nvmet_tcp_handle_icreq() can return -ESHUTDOWN after the ICReq has
++	 * already been consumed and queue teardown has started.
++	 *
++	 * If nvmet_tcp_data_ready() or nvmet_tcp_write_space() queues
++	 * nvmet_tcp_io_work() again before nvmet_tcp_release_queue_work()
++	 * cancels it, the queue must not keep that old receive state.
++	 * Otherwise the next nvmet_tcp_io_work() run can reach
++	 * nvmet_tcp_done_recv_pdu() and try to handle the same ICReq again.
++	 *
++	 * That is why queue->rcv_state needs to be updated before we return.
++	 */
+ 	queue->rcv_state = NVMET_TCP_RECV_ERR;
+ 	if (queue->nvme_sq.ctrl)
+ 		nvmet_ctrl_fatal_error(queue->nvme_sq.ctrl);
+@@ -888,10 +901,24 @@ static int nvmet_tcp_handle_icreq(struct nvmet_tcp_queue *queue)
+ 	iov.iov_base = icresp;
+ 	iov.iov_len = sizeof(*icresp);
+ 	ret = kernel_sendmsg(queue->sock, &msg, &iov, 1, iov.iov_len);
+-	if (ret < 0)
++	if (ret < 0) {
++		spin_lock_bh(&queue->state_lock);
++		if (queue->state == NVMET_TCP_Q_DISCONNECTING) {
++			spin_unlock_bh(&queue->state_lock);
++			return -ESHUTDOWN;
++		}
++		spin_unlock_bh(&queue->state_lock);
+ 		return ret; /* queue removal will cleanup */
++	}
+ 
++	spin_lock_bh(&queue->state_lock);
++	if (queue->state == NVMET_TCP_Q_DISCONNECTING) {
++		spin_unlock_bh(&queue->state_lock);
++		/* Tell nvmet_tcp_socket_error() teardown is in progress. */
++		return -ESHUTDOWN;
++	}
+ 	queue->state = NVMET_TCP_Q_LIVE;
++	spin_unlock_bh(&queue->state_lock);
+ 	nvmet_prepare_receive_pdu(queue);
+ 	return 0;
+ }
 -- 
-Regards/Gruss,
-    Boris.
+2.53.0
 
-https://people.kernel.org/tglx/notes-about-netiquette
+
+
