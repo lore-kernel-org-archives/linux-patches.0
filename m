@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBB54189DA;
-	Tue, 21 Jul 2026 21:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A1143C05F;
+	Tue, 21 Jul 2026 21:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670938; cv=none; b=PpgGHTFO0OhBiq9mMFQzqhLBtkP054Wk/1smLphvPRVzTCV7eJRkcXSITOUbnwoZlwUKDQx6cxKw8TsJkStSR0tG4sLDS6ijpS6q9PMme6xXs+YNRVP2tpEBAOOjX9VH8hYUMmEtbZ6exUC8yWeG9Mneigo57ueSQVU+MwqiSlU=
+	t=1784670941; cv=none; b=lstfmLN2hVaoKv1AXvRbgU1umLqDC8d3lFHcb8oxCs0i8zsneTD5aOKUVRE/+AYS1eV93j5Ii9JJGugA/8yfNHyo/DdMnV2GHuVy8eXL8ac7K/ZEsIpsTjqXIBT1ZODbwKNZTg70Ymv479EYmBLa3bxnej+eYtp39oEmo6PJ7v8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670938; c=relaxed/simple;
-	bh=E4UnOFUmQNQGbkZEKMcnTx7rfZa0MKJ3DMuTYpDLHT8=;
+	s=arc-20240116; t=1784670941; c=relaxed/simple;
+	bh=K/BL/amJtpw+wcWNE2Kh11IvsHueDpOe97z877Un1AQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WAPTVNIat/TEKXscw1fPQC6U55osEnWtvETTrXddgUqaXsYXPZ0JDfAAflzTO47MP6hNmvGSxamkxX1h75sPMhkta5m0Tqj0hhx4sBLxVkXHUhEeFw8E+U1b59KoE9cdQmSz8pfGuCAgZvvpzIeEyckzBscwNGPeIH5DHSzJojw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BhL2WX9Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rY+hJtXpFfVjGsA6cigmlEdbAHLmmZvmtztWlXmDyGu+3Ngs1VTI8WMgdh4njrnvzCQ88fEl059MinB/fMU0X6geKtyVB4m5F4QdgHiL74ADHYCUmESkr123qNSo29og4CiVHNyJD6CmlaZEO1ke6OhhoG0nwvc5uGHrcRYZbKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VY0tH79a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BhL2WX9Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E136E1F00A3A;
-	Tue, 21 Jul 2026 21:55:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VY0tH79a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E02A1F000E9;
+	Tue, 21 Jul 2026 21:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670937;
-	bh=WvV5wqkP+GV0QUBPKrocutW3mtqeJ+6vowPgcJL3Gt0=;
+	s=korg; t=1784670940;
+	bh=gU3fHQ4i+5ZdB6ES/y3hmNNdy1np4o7mrNLUJUEGft0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BhL2WX9Y+nasseAsh5/osG/RzzF7+q5kLyH0ERjeoL+uT8g6IbWGs33XD7QKV5eSG
-	 RmIHmIJulX5THfIL3Mwa34jbhPjOMH2IC/twhDdO9Xf3CAXb8GeCAxccWYWQGDmy17
-	 HoVvKYGkmPAVdh0dSWejN1XbSIYgt/qoj+wqV/1I=
+	b=VY0tH79aeuhonQVHXIIx7FONcDzFLbrXb4Wu9pJCinxAwvG04iU2sCo6S5DCbBZMJ
+	 B4I8cxZyrIJVrAgiD7feZkz1N2AIwITca3sUest56ctjZcEDhJrn6D7SFvIsTvmrXT
+	 Yy93XJuT1KO+m2syc7yfglQIPsr22BxKuC5qznv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Andreas Kempe <andreas.kempe@actia.se>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 5.15 057/843] iio: imu: bmi160: add IRQF_NO_THREAD to data-ready trigger IRQ
-Date: Tue, 21 Jul 2026 17:14:52 +0200
-Message-ID: <20260721152407.266848037@linuxfoundation.org>
+Subject: [PATCH 5.15 058/843] iio: imu: st_lsm6dsx: deselect shub page before reading whoami
+Date: Tue, 21 Jul 2026 17:14:53 +0200
+Message-ID: <20260721152407.291348958@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,45 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Andreas Kempe <andreas.kempe@actia.se>
 
-commit cd5a6a5096b246e10600da3ac47a1274ce9573c8 upstream.
+commit aede83625ff5d9539508582036df30c809d51058 upstream.
 
-bmi160_probe_trigger() registers iio_trigger_generic_data_rdy_poll()
-through devm_request_irq(), but it passes only irq_type and does not add
-IRQF_NO_THREAD.
+As part of driver initialization, e.g. st_lsm6dsx_init_shub() selects
+the shub register page using st_lsm6dsx_set_page(). Selecting the shub
+register page shadows the regular register space so whoami, among other
+registers, is no longer accessible.
 
-When the kernel is booted with forced IRQ threading, the parent IRQ can
-otherwise be threaded by the IRQ core and the subsequent IIO trigger
-child IRQ is dispatched from irq/... thread context instead of hardirq
-context. Because the handler immediately pushes the event into
-iio_trigger_poll(), this violates the hardirq-only IIO trigger helper
-contract and can drive downstream trigger consumers through the wrong
-execution context.
+In applications where the IMU is permanently powered separately from the
+processor, there is a window where a reset of the CPU leaves the IMU in
+the shub register page. Once this occurs, any subsequent probe attempt
+fails because of the register shadowing.
 
-Add IRQF_NO_THREAD on top of irq_type when registering the BMI160 data-
-ready trigger handler.
+Using the ism330dlc, the error typically looks like
 
-Fixes: 895bf81e6bbf ("iio:bmi160: add drdy interrupt support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+    st_lsm6dsx_i2c 3-006a: unsupported whoami [10]
+
+with the unknown whoami read from a reserved register in the shub page.
+
+The reset register is also shadowed by the page select, preventing a
+reset from recovering the chip.
+
+Unconditionally clear the shub page before the whoami readout to ensure
+normal register access and allow the initialization to proceed.
+
+Place the fix in st_lsm6dsx_check_whoami() before the whoami check
+because hw->settings, which st_lsm6dsx_set_page() relies on, is first
+assigned in that function.
+
+Placing the fix in a more logical place than the whoami check would
+require a bigger restructuring of the code.
+
+Fixes: c91c1c844ebd ("iio: imu: st_lsm6dsx: add i2c embedded controller support")
+Signed-off-by: Andreas Kempe <andreas.kempe@actia.se>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/bmi160/bmi160_core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c |   21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/imu/bmi160/bmi160_core.c
-+++ b/drivers/iio/imu/bmi160/bmi160_core.c
-@@ -801,7 +801,8 @@ int bmi160_probe_trigger(struct iio_dev
+--- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
++++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
+@@ -1203,6 +1203,26 @@ static int st_lsm6dsx_check_whoami(struc
+ 		return -ENODEV;
+ 	}
  
- 	ret = devm_request_irq(&indio_dev->dev, irq,
- 			       &iio_trigger_generic_data_rdy_poll,
--			       irq_type, "bmi160", data->trig);
-+			       irq_type | IRQF_NO_THREAD,
-+			       "bmi160", data->trig);
- 	if (ret)
- 		return ret;
++	hw->settings = &st_lsm6dsx_sensor_settings[i];
++
++	if (hw->settings->shub_settings.page_mux.addr) {
++		/*
++		 * If the IMU has the shub page selected on init, for example
++		 * after a CPU watchdog reset while the page is selected, the
++		 * regular register space is shadowed. While the regular
++		 * register space is shadowed, the registers needed for
++		 * initializing the IMU are not available.
++		 *
++		 * Unconditionally clear the shub page selection to ensure
++		 * normal register access.
++		 */
++		err = st_lsm6dsx_set_page(hw, false);
++		if (err < 0) {
++			dev_err(hw->dev, "failed to clear shub page\n");
++			return err;
++		}
++	}
++
+ 	err = regmap_read(hw->regmap, ST_LSM6DSX_REG_WHOAMI_ADDR, &data);
+ 	if (err < 0) {
+ 		dev_err(hw->dev, "failed to read whoami register\n");
+@@ -1215,7 +1235,6 @@ static int st_lsm6dsx_check_whoami(struc
+ 	}
  
+ 	*name = st_lsm6dsx_sensor_settings[i].id[j].name;
+-	hw->settings = &st_lsm6dsx_sensor_settings[i];
+ 
+ 	return 0;
+ }
 
 
