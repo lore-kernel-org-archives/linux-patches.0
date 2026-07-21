@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71CDC408039;
-	Tue, 21 Jul 2026 19:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69C741A547;
+	Tue, 21 Jul 2026 19:27:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662028; cv=none; b=WziiBMF62yc9DG03WveLxpEYs0m8OJNiTVzlZrqGSFy6DwF0Us3VI8TpL2Ld67sPN5FhqgvjZOnW8FEGNBAeu6LoSNRyta+Ge4TJyPoTtpnWYqDlAF3zdA367KIrnr089jOBeNuVqE6gqOLB9NVNTmMB7yfT3KdS3UQDRtgL25s=
+	t=1784662031; cv=none; b=ZDKS1GSxmc3RUuXFgNRE+rJquQQi7PQ1NcnlgNdEejMj2divaapJ4dASt8vKMSqOAOsCgnZlKJbtXdSGeSeHUrLF98APx9H5mM27Q5scGVUIEJ/V0VgcbJATh9mAiu7Or5kK5r2ZByndjq3yl5zdbwX749Pgu6vime0kePca+4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662028; c=relaxed/simple;
-	bh=ptOf3Kzz+4JRqG0n6vlurL2+URMZXld03mhuthN4IiA=;
+	s=arc-20240116; t=1784662031; c=relaxed/simple;
+	bh=TLADmBmCCHPJNGxhAdIcHYPl3JgiKFmXDDFDHfVK7Pc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wsmf3JM+otKDkFlyaXUuI7LggVogQXV47EF5wmRQMFVKNP0JzFzufln68BToMhkhY8QIs2EOquetHW1JWIKXfz5qeJ2B5yJNX2+q73ptLsuGa4CPbeW1Ra3OtOl+n4YArkrXEbEj8hBxua2w9OJ66t/OrmMtDbEzBEe/A7d8pvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TqB0+uUI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FIqSiONPaZm0ULSoiLMEISWy6EWN67rhWia6oVsm0uSKDty3TjiFMiqEFQmmN7zc7uBq/J7EboGMct1xJ4qCupEmzvZdSCEPJEFa17jmoiYXHnAoMIlzYKjYrhHerh4Vx+3RZIk9pO2MqXK/a2o1sgPEpBviEW0KlyJBuBh2c6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMDVFXXj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TqB0+uUI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B901F000E9;
-	Tue, 21 Jul 2026 19:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMDVFXXj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267551F000E9;
+	Tue, 21 Jul 2026 19:27:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662027;
-	bh=hKESCMf8o0x8VtBQ6JoNET9DWvDQgCstMUUwqJAuiL8=;
+	s=korg; t=1784662029;
+	bh=rVrYyJmLdZUxWckmjc8Mm1cGDO9r5oe26CU6IjAAklY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TqB0+uUIa41p5sARK31FG4ZrcpbOsZUO3nKQHwblD7oAa6MatE+K7QapXyQYbxQlJ
-	 2sOvInEtvJj+TPw0IlSKFu4PpgHmne/UnD+1NY/qWWNmFv0nfNH2b5iRgeWMZ8C95B
-	 FbzU+fYtf/4G2rF0wojJD0i/aWTMkyVGa/DeZ+qg=
+	b=aMDVFXXje0a/IIFhH6keC4lXG8uPBRoK3sDBGMSse9ziqqzj3Cnv8A/f7oN30Zp7B
+	 kuPsI4f7OkySnez9CEi7UdoYuifBy4k3leAwEpIODy5NAGYkwMOQBGeZL8886BhVgs
+	 F+0S0dMlVxpvJckdTeLQixpQr1BmaaJVGHCPoQ/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0290/1276] fbdev: sm501fb: Fix buffer errors in OF binding code
-Date: Tue, 21 Jul 2026 17:12:13 +0200
-Message-ID: <20260721152452.574735162@linuxfoundation.org>
+Subject: [PATCH 6.12 0291/1276] hwmon: (it87) Clamp negative values to zero in set_fan()
+Date: Tue, 21 Jul 2026 17:12:14 +0200
+Message-ID: <20260721152452.599158887@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,91 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Laight <david.laight.linux@gmail.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit d8421e09382cfe0bd2a044c8b0a822f64855dd4e ]
+[ Upstream commit 7f8581c70a3bd50a932d3d2d253e99c5ec3eda74 ]
 
-The code that gets the frame buffer mode from OF has 'use after free',
-'buffer overrun' and memory leaks.
+set_fan() parses user input with kstrtol() and passes the resulting
+value to FAN16_TO_REG() on chips with 16-bit fan support.
 
-info->edid_data isn't free if the probe functions fail or if
-pd->def_mode is set.
+Negative fan speeds are not meaningful and should be rejected before
+conversion. Worst scenario, one may be able to abuse undefined
+behaviour of signed overflow to possibly induce rpm * 2 == 0 in
+FAN16_TO_REG(), thus causing a division by zero.
 
-If both the CRT and PANEL are enabled info->edid_data is used after
-being freed and is freed twice.
+Instead, clamp val < 0 to zero and keep the conversion in its valid
+input domain, avoiding unsafe arithmetic in the register conversion
+path.
 
-The string returned by of_get_property(np, "mode", &len) is just
-written over either the static "640x480-16@60" or the module parameter
-string without any regard for the length (which is most likely longer).
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-Use kstrump() for the OF mode and free everything before freeing 'info.
-
-Fixes: 4295f9bf74a88 ("video, sm501: add OF binding to support SM501")
-Signed-off-by: David Laight <david.laight.linux@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 17d648bf5786 ("it87: Add support for the IT8716F")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://lore.kernel.org/r/20260529141839.1639287-1-n.zhandarovich@fintech.ru
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sm501fb.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/hwmon/it87.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/video/fbdev/sm501fb.c b/drivers/video/fbdev/sm501fb.c
-index 2eb27ebf822e80..571530bacbd913 100644
---- a/drivers/video/fbdev/sm501fb.c
-+++ b/drivers/video/fbdev/sm501fb.c
-@@ -95,6 +95,7 @@ struct sm501fb_info {
- 	void __iomem		*fbmem;		/* remapped framebuffer */
- 	size_t			 fbmem_len;	/* length of remapped region */
- 	u8 *edid_data;
-+	char *fb_mode;
- };
+diff --git a/drivers/hwmon/it87.c b/drivers/hwmon/it87.c
+index 5cfb98a0512f00..c0c9826d44a2e5 100644
+--- a/drivers/hwmon/it87.c
++++ b/drivers/hwmon/it87.c
+@@ -1401,6 +1401,9 @@ static ssize_t set_fan(struct device *dev, struct device_attribute *attr,
+ 	if (kstrtol(buf, 10, &val) < 0)
+ 		return -EINVAL;
  
- /* per-framebuffer private data */
-@@ -1792,12 +1793,11 @@ static int sm501fb_init_fb(struct fb_info *fb, enum sm501_controller head,
- 			fb->var.yres_virtual = fb->var.yres;
- 		} else {
- 			if (info->edid_data) {
--				ret = fb_find_mode(&fb->var, fb, fb_mode,
-+				ret = fb_find_mode(&fb->var, fb,
-+					info->fb_mode ?: fb_mode,
- 					fb->monspecs.modedb,
- 					fb->monspecs.modedb_len,
- 					&sm501_default_mode, default_bpp);
--				/* edid_data is no longer needed, free it */
--				kfree(info->edid_data);
- 			} else {
- 				ret = fb_find_mode(&fb->var, fb,
- 					   NULL, NULL, 0, NULL, 8);
-@@ -1973,7 +1973,7 @@ static int sm501fb_probe(struct platform_device *pdev)
- 			/* Get EDID */
- 			cp = of_get_property(np, "mode", &len);
- 			if (cp)
--				strcpy(fb_mode, cp);
-+				info->fb_mode = kstrdup(cp, GFP_KERNEL);
- 			prop = of_get_property(np, "edid", &len);
- 			if (prop && len == EDID_LENGTH) {
- 				info->edid_data = kmemdup(prop, EDID_LENGTH,
-@@ -2030,6 +2030,12 @@ static int sm501fb_probe(struct platform_device *pdev)
- 		goto err_started_crt;
- 	}
- 
-+	/* These aren't needed any more */
-+	kfree(info->edid_data);
-+	kfree(info->fb_mode);
-+	info->edid_data = NULL;
-+	info->fb_mode = NULL;
++	if (val < 0)
++		val = 0;
 +
- 	/* we registered, return ok */
- 	return 0;
- 
-@@ -2047,6 +2053,8 @@ static int sm501fb_probe(struct platform_device *pdev)
- 	framebuffer_release(info->fb[HEAD_CRT]);
- 
- err_alloc:
-+	kfree(info->edid_data);
-+	kfree(info->fb_mode);
- 	kfree(info);
- 
- 	return ret;
+ 	err = it87_lock(data);
+ 	if (err)
+ 		return err;
 -- 
 2.53.0
 
