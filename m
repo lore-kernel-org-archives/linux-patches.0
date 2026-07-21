@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F83A44607D;
-	Tue, 21 Jul 2026 15:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C004D434E2C;
+	Tue, 21 Jul 2026 15:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648758; cv=none; b=T7/kK0RBx8/o0UfqXRo2xMamzvmcLldYO9qo2TcvzxLkF2we3ebj3HHXcbISK1zNTCmYlB92Y1MiZLmvFQ+gBVE5iII34/fm1XOEMqmB/Iiao9pEaLxv+/bsTjtVbT23HAxFHakZuBsZ5AG0UzBlquclURsISMlBSeNAmpq84oM=
+	t=1784648761; cv=none; b=UbT6su6OWHVd7cqDCYtuyRlTvzBwBaB86YEWPTMY34lggeH+lD3HbpLpEsATHco6IjNRWj432zbmuGs+UKNOVUS2o/exAxMlKV3kEtJB3vpKxVTKdRIPpl5CNOR5lH/56/CZjvAVuj7NXwBtVPv77W0d6DLGPMRZlTKRRhqltI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648758; c=relaxed/simple;
-	bh=fO5L0ZTq8j+/RaoDdcB7xgpeo/xg3W9O4v/+/mnA27I=;
+	s=arc-20240116; t=1784648761; c=relaxed/simple;
+	bh=rsUG+jyyBLngdPoLfggU8/D8iiYSFeC8l3osbiAs72U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ND7259ufyFtxHaEMqx6H+DHMP6PEDN4soUOe2F+H5NGs911XQsjOaS5WWGAfBZfQynaIqy3HH/qwNIxKZq/KWMpq520SaFmj9C5mfyQgylmOS/3dirQDfFD7b6wgi1uF3HF5AcvGsdFB3aQeg6tz8HfnDAbpQgOIkixUzkLA/dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mf1F+IqZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fRE8t8sFaYOOkjIg7hG4+YhU3yElzOjImvI3zpHsdJlfRmT7Xp22ZUeDQKQ+H4IYGU7+1mH8G5C6tc59BFl+o5Tug08364vaQb4P14R2vSP0oZZy17CFQLWuK07tCE9DTJLtaMIACaxrZ4CSQbML/FxOSfmEkUbzIFXBzd/H1us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n3kX+Zgo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mf1F+IqZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C41D1F000E9;
-	Tue, 21 Jul 2026 15:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n3kX+Zgo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DA61F000E9;
+	Tue, 21 Jul 2026 15:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648757;
-	bh=DsFHB7/5lvjJU5sZHU1UDtvkIEczuO9XH7aoGO9+/T4=;
+	s=korg; t=1784648759;
+	bh=VXqaa3Eu12ttq4gRF5CbnVYTrti7rRUiOQNfGBAbbNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mf1F+IqZSFYOxiwmKetEIEi5+Xu3jjXRkhvEt4bRMTnfuhzxDsIHi9rTDoha1dqeh
-	 75yJzLh6K2nKMwx0HAFFrjVBF/XkbUyvTMIQsxMskENe+HGNb5TyjbDJ3NGk9hfjaf
-	 +nN/7DE1h2Nb2AyIUDGQC0huSGzgAPzPwN9kbQ4w=
+	b=n3kX+Zgok3wGaubfYR/jB59kyDeecHd3RnE9qDN/2dkuwE4C9OTomQC+0ZnlT+aWV
+	 vBITuyNKUbz3nvkujNBI4qcHa3ag3EJMS2qELEm3luMTSKGTFUB2FiPzcv8N3It8yL
+	 1JuTkUIWrzedNI6AyKGMxB9sMXyxvzkj5Q/NkOxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Tejun Heo <tj@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
+	Harshal Dev <harshal.dev@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0277/2077] writeback: drop now-unnecessary rcu_barrier() in cgroup_writeback_umount()
-Date: Tue, 21 Jul 2026 16:59:10 +0200
-Message-ID: <20260721152559.216863453@linuxfoundation.org>
+Subject: [PATCH 7.1 0268/2077] arm64: dts: qcom: kodiak: Add power-domain and iface clk for ice node
+Date: Tue, 21 Jul 2026 16:59:01 +0200
+Message-ID: <20260721152558.997210630@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,45 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Harshal Dev <harshal.dev@oss.qualcomm.com>
 
-[ Upstream commit e90a6d668e26e00a72df2d09c173b563468f09c9 ]
+[ Upstream commit cca53c338ad87edc4b46d2d82730fd8ca01a164f ]
 
-Commit e1b849cfa6b6 ("writeback: Avoid contention on wb->list_lock when
-switching inodes") replaced the queue_rcu_work() based scheduling of
-inode wb switches with a plain queue_work().  Since then no switcher
-goes through call_rcu(), so rcu_barrier() in cgroup_writeback_umount()
-has no callbacks of its own to wait for.  It still drains unrelated
-call_rcu() callbacks from other subsystems on busy systems, which
-incidentally slows umount down; drop it.
+Qualcomm in-line crypto engine (ICE) platform driver specifies and votes
+for its own resources. Before accessing ICE hardware during probe, to
+avoid potential unclocked register access issues (when clk_ignore_unused
+is not passed on the kernel command line), in addition to the 'core' clock
+the 'iface' clock should also be turned on by the driver. This can only be
+done if the GCC_UFS_PHY_GDSC power domain is enabled. Specify both the
+GCC_UFS_PHY_GDSC power domain and the 'iface' clock in the ICE node for
+kodiak.
 
-Fixes: e1b849cfa6b6 ("writeback: Avoid contention on wb->list_lock when switching inodes")
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Link: https://patch.msgid.link/20260521095016.2791354-3-libaokun@linux.alibaba.com
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: dfd5ee7b34bb7 ("arm64: dts: qcom: sc7280: Add inline crypto engine")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Tested-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260416-qcom_ice_power_and_clk_vote-v5-7-5ccf5d7e2846@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c | 5 -----
- 1 file changed, 5 deletions(-)
+ arch/arm64/boot/dts/qcom/kodiak.dtsi | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index 6766de9f9d75b3..325a30cc35bfb8 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -1248,11 +1248,6 @@ void cgroup_writeback_umount(struct super_block *sb)
- 		 * will then drain it.
- 		 */
- 		synchronize_rcu();
--		/*
--		 * Use rcu_barrier() to wait for all pending callbacks to
--		 * ensure that all in-flight wb switches are in the workqueue.
--		 */
--		rcu_barrier();
- 		flush_workqueue(isw_wq);
- 	}
- }
+diff --git a/arch/arm64/boot/dts/qcom/kodiak.dtsi b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+index fdde9f065199ee..522b2b61ce7d20 100644
+--- a/arch/arm64/boot/dts/qcom/kodiak.dtsi
++++ b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+@@ -2579,7 +2579,11 @@ ice: crypto@1d88000 {
+ 			compatible = "qcom,sc7280-inline-crypto-engine",
+ 				     "qcom,inline-crypto-engine";
+ 			reg = <0 0x01d88000 0 0x18000>;
+-			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
++			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
++				 <&gcc GCC_UFS_PHY_AHB_CLK>;
++			clock-names = "core",
++				      "iface";
++			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
+ 		};
+ 
+ 		cryptobam: dma-controller@1dc4000 {
 -- 
 2.53.0
 
