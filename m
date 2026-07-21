@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A80411661;
-	Tue, 21 Jul 2026 19:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9A3388E40;
+	Tue, 21 Jul 2026 19:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661088; cv=none; b=tW+vjjDTtcjFZZN4USoxzjlGUwJlcwDUBB5DoPMcoyzSCcnDXk1nFv0oL9aFQ68TZHiwgMyh9X6FGm6IFeQQhIO7AdpSbEnUjUBkjEvH2r0wVsnVxqJZw0H64fiDqBuDv7a5qbqdmQzMfKZh6wdWB0HzZFBJKvT1h4yE21RzEQ0=
+	t=1784661091; cv=none; b=jH74aXOP9maHFdLQrX7nZ0BWe5eeTDn0lYlceIwcHBrtyMp5sMtq4dRFRxG4pG6CS+TKW9QNSAqRc1hKBekAyU9TZBIc7QiYPHGm2ff8QHfpVwGxiQzuZM6YPajsDxkQJCcxAor5JQQdENAM8Ub1aFhRywC9v+KeldXOWtqB9Q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661088; c=relaxed/simple;
-	bh=VtLLtVdTbUu5s7e4IHJTffGf9u309Gceor8NfUlN/xY=;
+	s=arc-20240116; t=1784661091; c=relaxed/simple;
+	bh=i9rOWvpr0jD8ZXw7yUbTJ6jVj3p4VpCtQEtPZJpHoEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OcVBfrs4xfSGUByu1WfTT4inBrsEzmwDcbILqIPEVABSqgPdjiOe5tdAX0C+szL6fz5GENtAi76TI3CueGgG8POxhSpbgk005jstQtc7MNzg7YZErYz0w10hr3eI/1DcX2v6AR9yz2g5zLWkAf2Oim4S+7qIMSvK3B5U1Cu7e5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pb3paObe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=E0PE/H9wosNk32u5xB0Izo1EB9+FfuX5PyVdGe+KNiQ974YCJwuvkeAub7CPvcVU5kM9qVXXMcz5sx4AruQivt6kp1k3yteQekKE3SvDKG2I+t+6g++Ow62AlqhggbnerJFJ+nLhIMEvwbUw475FdGrcD5gIv1kBSuH4jQyLV1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mef9RHb0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pb3paObe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035771F000E9;
-	Tue, 21 Jul 2026 19:11:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mef9RHb0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7CE91F000E9;
+	Tue, 21 Jul 2026 19:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661087;
-	bh=h6AMgbkWNzu2DTCp3b3eRQoIMXrR8YpSohhmAixjHeo=;
+	s=korg; t=1784661090;
+	bh=15PDAKTvtbF3h/mmUh6H3jc8RS05ViAnhsMHHnKpux4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pb3paObefaMNrCppBSjMTjpzVqBNE7ObMHsJT70Wzx3UfP/au5YcmS06f1K4aiXNB
-	 ZM8oXsC3QCyqHb4SOPJMvhBY6jOqFx1EJIDaeYDLyXMXJa/6wcVhN0H8+7O57Doc5r
-	 EousH93eNfCyD+cz5RvGxmD6yAmjJGN0kzD7IplM=
+	b=mef9RHb09F6g5oDaaNHjbSuwlk/ULNKIZKstfk1JxUxwLtEncJVRSEqcbuSuQ3uIW
+	 lor9FSbDelP6yFZ+IrCWxuI6B+YQpIMf2jNKOfCowY0zVOd1GHRngJniOYRtxy05q6
+	 BHmNI4YzwN0P7Xn0QliB0DpUUYn+xBsICgMZxQkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <include@grrlz.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Mathias Krause <minipli@grsecurity.net>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1225/2077] bpf: Disable xfrm_decode_session hook attachment
-Date: Tue, 21 Jul 2026 17:14:58 +0200
-Message-ID: <20260721152621.706914466@linuxfoundation.org>
+Subject: [PATCH 7.1 1226/2077] netfilter: nf_nat: avoid invalid nat_net pointer use on failed nf_nat_init()
+Date: Tue, 21 Jul 2026 17:14:59 +0200
+Message-ID: <20260721152621.729879112@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,46 +45,151 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bradley Morgan <include@grrlz.net>
+From: Mathias Krause <minipli@grsecurity.net>
 
-[ Upstream commit 12091470c6b4c1c14b2de12dcbae2ada6cb6d20b ]
+[ Upstream commit 069cfe3de2a5e16069485893cd04665ab769c1d8 ]
 
-BPF LSM programs can currently attach to xfrm_decode_session(). That
-hook may return an error, but security_skb_classify_flow() calls it
-from a void path and triggers BUG_ON() if an error is returned.
+We ran into below KASAN splat, which is mostly uninteresting, beside
+for having nf_nat_register_fn() in the call chain as a cause for the
+offending access:
 
-Disable BPF attachment to the hook to prevent a BPF LSM program from
-turning packet classification into a full panic.
+==================================================================
+BUG: KASAN: slab-out-of-bounds in nf_nat_register_fn+0x5f9/0x640
+Read of size 8 at addr ffff890031e54c20 by task iptables/9510
 
-Fixes: 9e4e01dfd325 ("bpf: lsm: Implement attach, detach and execution")
-Signed-off-by: Bradley Morgan <include@grrlz.net>
-Link: https://lore.kernel.org/r/20260619130305.27779-1-include@grrlz.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+CPU: 0 UID: 0 PID: 9510 Comm: iptables Not tainted 6.18.18-grsec-full-20260320181326 #1 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Call Trace:
+ <TASK>
+ […] dump_stack_lvl+0xee/0x160 ffff88004117eeb8
+ […] print_report+0x6e/0x640 ffff88004117eee0
+ […] ? __phys_addr+0x8e/0x140 ffff88004117eef0
+ […] ? kasan_addr_to_slab+0x51/0xe0 ffff88004117ef08
+ […] ? complete_report_info+0xec/0x1c0 ffff88004117ef20
+ […] ? nf_nat_register_fn+0x5f9/0x640 ffff88004117ef48
+ […] kasan_report+0xbc/0x140 ffff88004117ef50
+ […] ? nf_nat_register_fn+0x5f9/0x640 ffff88004117ef90
+ […] nf_nat_register_fn+0x5f9/0x640 ffff88004117eff8
+ […] ? nf_nat_icmp_reply_translation+0x6e0/0x6e0 ffff88004117f070
+ […] nf_tables_register_hook.part.0+0xa0/0x220 ffff88004117f080
+ […] nf_tables_addchain.constprop.0+0x1054/0x1fc0 ffff88004117f0b8
+ […] ? nft_chain_lookup.part.0+0x4ce/0xac0 ffff88004117f130
+ […] ? nf_tables_abort+0x3d80/0x3d80 ffff88004117f190
+ […] ? nf_tables_dumpreset_obj+0x100/0x100 ffff88004117f1c8
+ […] ? nft_table_lookup.part.0+0x255/0x300 ffff88004117f310
+ […] ? nf_tables_newchain+0x21a4/0x2fa0 ffff88004117f358
+ […] nf_tables_newchain+0x21a4/0x2fa0 ffff88004117f360
+ […] ? nf_tables_addchain.constprop.0+0x1fc0/0x1fc0 ffff88004117f458
+ […] ? nla_get_range_signed+0x4a0/0x4a0 ffff88004117f488
+ […] ? lock_acquire+0x16f/0x320 ffff88004117f490
+ […] ? find_held_lock+0x3b/0xe0 ffff88004117f4b0
+ […] ? __nla_parse+0x45/0x80 ffff88004117f500
+ […] nfnetlink_rcv_batch+0xbca/0x19a0 ffff88004117f550
+ […] ? nfnetlink_net_exit_batch+0x120/0x120 ffff88004117f618
+ […] ? __sanitizer_cov_trace_switch+0x63/0xe0 ffff88004117f720
+ […] ? gr_acl_handle_mmap+0x1c4/0x320 ffff88004117f7c0
+ […] ? nla_get_range_signed+0x4a0/0x4a0 ffff88004117f7e8
+ […] ? gr_is_capable+0x6f/0xe0 ffff88004117f830
+ […] ? __nla_parse+0x45/0x80 ffff88004117f860
+ […] ? skb_pull+0x103/0x1a0 ffff88004117f880
+ […] nfnetlink_rcv+0x3db/0x4a0 ffff88004117f8b0
+ […] ? nfnetlink_rcv_batch+0x19a0/0x19a0 ffff88004117f8d8
+ […] ? netlink_lookup+0xe2/0x240 ffff88004117f900
+ […] netlink_unicast+0x74b/0xb00 ffff88004117f930
+ […] ? netlink_attachskb+0xb20/0xb20 ffff88004117f980
+ […] ? __check_object_size+0x3e/0xaa0 ffff88004117f998
+ […] ? security_netlink_send+0x51/0x160 ffff88004117f9c8
+ […] netlink_sendmsg+0xa03/0x1200 ffff88004117f9f8
+ […] ? netlink_unicast+0xb00/0xb00 ffff88004117fa70
+ […] ? netlink_unicast+0xb00/0xb00 ffff88004117fac8
+ […] ? ____sys_sendmsg+0xe2a/0x1040 ffff88004117faf8
+ […] ____sys_sendmsg+0xe2a/0x1040 ffff88004117fb00
+ […] ? kernel_recvmsg+0x300/0x300 ffff88004117fb60
+ […] ? reacquire_held_locks+0xe9/0x260 ffff88004117fbc8
+ […] ___sys_sendmsg+0x138/0x200 ffff88004117fbf8
+ […] ? do_recvmmsg+0x7e0/0x7e0 ffff88004117fc30
+ […] ? lockdep_hardirqs_on_prepare+0x101/0x1e0 ffff88004117fc50
+ […] ? lock_acquire+0x16f/0x320 ffff88004117fd20
+ […] ? lock_acquire+0x16f/0x320 ffff88004117fd58
+ […] ? find_held_lock+0x3b/0xe0 ffff88004117fd70
+ […] __sys_sendmsg+0x17a/0x260 ffff88004117fdc8
+ […] ? __sys_sendmsg_sock+0x80/0x80 ffff88004117fdf0
+ […] ? syscall_trace_enter+0x15e/0x2c0 ffff88004117fe98
+ […] do_syscall_64+0x7d/0x400 ffff88004117fec8
+ […] entry_SYSCALL_64_safe_stack+0x4a/0x60 ffff88004117fef8
+ </TASK>
+==================================================================
+
+The out-of-bounds report, though, is a red herring as it is for an
+access that shouldn't have happened in the first place.
+
+When nf_nat_init() fails to register its BPF kfuncs, it'll unwind and,
+among others, call unregister_pernet_subsys() to deregister its per-net
+ops. This makes the previously allocated net id available for reuse by
+the next caller of register_pernet_subsys(), in our case, synproxy.
+However, 'nat_net_id' will still hold the previously allocated value.
+
+If nf_nat.o gets build as a module, all this doesn't matter. A failed
+initialization routine makes the module fail to load and any dependent
+module won't be able to load either. However, if nf_nat.o is built-in,
+a failing init won't /completely/ make its functionality unavailable to
+dependent modules, namely the code and static data is still there, free
+to be called by modules like nft_chain_nat.ko.
+
+Case in point, nft_chain_nat registers hooks that'll call into nf_nat
+which, in our case, failed to initialize and therefore won't have a
+valid net id nor related net_nat object any more.
+
+Code in nf_nat, namely nf_nat_register_fn() and nf_nat_unregister_fn(),
+still making use of the reallocated net id, lead to a type confusion as
+the call to net_generic() will no longer return memory belonging to an
+object suited to fit 'struct nat_net' but 'struct synproxy_net' instead.
+The latter is only 24 bytes on 64-bit systems, much smaller than struct
+nat_net which is 176 bytes, perfectly explaining the OOB KASAN report.
+
+Detect and handle a failed nf_nat_init() by testing the 'nf_nat_hook'
+pointer which will be reset to NULL on initialization errors to prevent
+the usage of an invalid nat_net pointer.
+
+As this check is only needed when nf_nat.o is built-in, guard it by
+'#ifndef MODULE...'.
+
+Fixes: cbc1dd5b659f ("netfilter: nf_nat: Fix possible memory leak in nf_nat_init()")
+Signed-off-by: Mathias Krause <minipli@grsecurity.net>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_lsm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/netfilter/nf_nat_core.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
-index 564071a92d7d20..1433809bb166a3 100644
---- a/kernel/bpf/bpf_lsm.c
-+++ b/kernel/bpf/bpf_lsm.c
-@@ -51,6 +51,9 @@ BTF_ID(func, bpf_lsm_key_getsecurity)
- #ifdef CONFIG_AUDIT
- BTF_ID(func, bpf_lsm_audit_rule_match)
- #endif
-+#ifdef CONFIG_SECURITY_NETWORK_XFRM
-+BTF_ID(func, bpf_lsm_xfrm_decode_session)
+diff --git a/net/netfilter/nf_nat_core.c b/net/netfilter/nf_nat_core.c
+index 2bbf5163c0e273..63ff6b4d5d214a 100644
+--- a/net/netfilter/nf_nat_core.c
++++ b/net/netfilter/nf_nat_core.c
+@@ -1181,6 +1181,16 @@ int nf_nat_register_fn(struct net *net, u8 pf, const struct nf_hook_ops *ops,
+ 	struct nf_hook_ops *nat_ops;
+ 	int i, ret;
+ 
++#ifndef MODULE
++	/* If nf_nat_core is built-in and nf_nat_init() fails, dependent
++	 * modules like nft_chain_nat.ko may still call this function.
++	 * However, nat_net would be invalid, likely pointing to some other
++	 * per-net structure.
++	 */
++	if (WARN_ON_ONCE(!nf_nat_hook))
++		return -EOPNOTSUPP;
 +#endif
- BTF_ID(func, bpf_lsm_ismaclabel)
- BTF_ID(func, bpf_lsm_file_alloc_security)
- BTF_SET_END(bpf_lsm_disabled_hooks)
++
+ 	if (WARN_ON_ONCE(pf >= ARRAY_SIZE(nat_net->nat_proto_net)))
+ 		return -EINVAL;
+ 
 -- 
 2.53.0
 
