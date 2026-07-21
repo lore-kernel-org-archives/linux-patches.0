@@ -1,48 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8B62EBB8D;
-	Tue, 21 Jul 2026 20:31:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7BE199920;
+	Tue, 21 Jul 2026 20:31:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665891; cv=none; b=I9nn2GK9aNBE3ZtK+cRb2V6JT5X7Dhe+J+pdmA+k7ZXLym7GfGgq8oVx6GLg3HkE258CdIta55cnwlxKpTr+SzkZ9SbJiuVsLXWEUhObCdPHjBxUMfaiPFnWhv1dgj6S4ZODDwBre/rcGI2GgTfsYAlRzB2cLMYoNOH/7pBcn/s=
+	t=1784665894; cv=none; b=dGaXkfnFUdbcJmKgeZxyNPpauYbjUiLgD+oaHA4wcobLl+5B2lIsQm+d7twtaubKGe47e4a7fqmDCKIaEHeXwBbagx3hWep2DeOx0G28tcfnN+FRYTg3WFUj66tcYrTcoUcmpKsa4rDMAoYKUYmSt57G6fEx3L9qs5V9RjTIXgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665891; c=relaxed/simple;
-	bh=n2EVFdzSNTSaefPVTN3VDcZ1/E/KJ1kj+pi2/LslLOk=;
+	s=arc-20240116; t=1784665894; c=relaxed/simple;
+	bh=pcEurd5858hBN1GM/Ii6HGPM07DeMDqcq+zWHBWwk5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ISBgXunmWbMcCMpPGfHth9tlpcpehyrv2x2jmesZjec6imi+ooRXiHSXzRlCD6oWii7KjqOfmq+4izrsZ/MFNgGQvESlW17hiIuWHhZ2H1hTbFLd121s3P6c9f126YglSsjy9/hG8np43jqBKUS+UcI1pukMRqp6vAVBj1iDWiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0IA+gf6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M9Z5gtxQCUt8XyB0K+WXsvPUY3TaPDTIQKiGTQ9JbwvKbwJyobTAXG2vgNL4X/nuI2oY2GFyCliKvio+bIoL2naM2VZavPIkf4YTyhzt5jGDRwLCukzMLiIZCo20kUhB9m0Gqihu9jJ3GIaT246+qiheIsrYzNqCatANOMfT5iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSPu2A/h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0IA+gf6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0221F00A3A;
-	Tue, 21 Jul 2026 20:31:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSPu2A/h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E681F000E9;
+	Tue, 21 Jul 2026 20:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665890;
-	bh=QlSAX7Pr73qTNvc6j5tyAZAKYwI71rz3ZKY5wZJbi98=;
+	s=korg; t=1784665893;
+	bh=xyYmNlTqD88UnwmmKoR7eZsG2t1WO3UsNJA5URn9XOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t0IA+gf6A1bPI2b/9dIyzJbgWiFhaIeLdn4YKQUV6Us4nWlZMHBtIzA3QjZoRp3I/
-	 kTDA0u/kx8kU+HUwlV/JYsKUTLGnSZv/R91FkW8jmqHBA209G0p8MEuVhfRpyT7cA2
-	 z3vWQ69K6R8PQZQjS1Hc54Fpy1GMfJcmXKyC9LH8=
+	b=OSPu2A/hyA77N8eUPoYdnZT+EykxQcOMoOUhMoj/zOjsJ1e4qAwM/KD5s1vZBv56A
+	 ARj5Sbt5vv+tZFS3xOH2gQ/zeOIilekmYhO50Ij47atTtYok2Nnple8NPfdKoLWBpD
+	 EUYt/+L30e7V6k8xxNWdNd/x/lFwOtE3Hzhb4hCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Wilck <martin.wilck@suse.com>,
-	Don Brace <don.brace@microchip.com>,
-	storagedev@microchip.com,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Sumit Saxena <sumit.saxena@broadcom.com>,
-	mpi3mr-linuxdrv.pdl@broadcom.com,
-	MPT-FusionLinux.pdl@broadcom.com,
-	Yihang Li <liyihang9@h-partners.c>,
-	Christoph Hellwig <hch@lst.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0476/1266] scsi: Revert "scsi: Fix sas_user_scan() to handle wildcard and multi-channel scans"
-Date: Tue, 21 Jul 2026 17:15:13 +0200
-Message-ID: <20260721152452.487889896@linuxfoundation.org>
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Val Packett <val@packett.cool>,
+	Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Subject: [PATCH 6.6 0459/1266] drm/msm/dp: fix HPD state status bit shift value
+Date: Tue, 21 Jul 2026 17:14:56 +0200
+Message-ID: <20260721152452.104909065@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -61,145 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Wilck <martin.wilck@suse.com>
+From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
 
-[ Upstream commit 8c292e89bd831c8a13e92f3429ef66bbe0b83677 ]
+[ Upstream commit 2e6c2e81d81251623c458a60e2a57447dcbc988e ]
 
-This reverts commit 37c4e72b0651e7697eb338cd1fb09feef472cc1a.
+The HPD state status is the 3 most significant bits, not 4 bits of the
+HPD_INT_STATUS register.
 
-Said commit causes excessive resource usage and even system freeze with
-some controllers, e.g. smartpqi and hisi_sas. The justification provided
-by the patch authors [1] was supporting a special mode of the mpi3mr and
-mpt3sas, so-called "Tri-mode", in which NVMe drives are exposed as SCSI
-devices on a separate channel. While that's useful for these drivers, it
-seems wrong to cause major breakage for other drivers for the sake of
-this feature.
+Fix the bit shift macro so that the correct bits are returned in
+msm_dp_aux_is_link_connected().
 
-[1] https://lore.kernel.org/linux-scsi/CAFdVvOwjy+2ORJ6uJkspiLTPF05481U7gcS4QohFOFGPqAs8ig@mail.gmail.com/
-
-Fixes: 37c4e72b0651 ("scsi: Fix sas_user_scan() to handle wildcard and multi-channel scans")
-Signed-off-by: Martin Wilck <martin.wilck@suse.com>
-Cc: Don Brace <don.brace@microchip.com>
-Cc: storagedev@microchip.com
-Cc: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Cc: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
-Cc: Kashyap Desai <kashyap.desai@broadcom.com>
-Cc: Sumit Saxena <sumit.saxena@broadcom.com>
-Cc: mpi3mr-linuxdrv.pdl@broadcom.com
-Cc: MPT-FusionLinux.pdl@broadcom.com
-Cc: Yihang Li <liyihang9@h-partners.c>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260513174236.430465-3-mwilck@suse.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 19e52bcb27c2 ("drm/msm/dp: return correct connection status after suspend")
+Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Tested-by: Val Packett <val@packett.cool> # x1e80100-dell-latitude-7455
+Tested-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com> # Hamoa IOT EVK, QCS8300 Ride
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/727611/
+Link: https://lore.kernel.org/r/20260524-hpd-refactor-v6-1-cf3ab488dd7b@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_scan.c          |  2 +-
- drivers/scsi/scsi_transport_sas.c | 60 +++++++------------------------
- 2 files changed, 13 insertions(+), 49 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_reg.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
-index 083bf3386c6b3b..d3795db86b326b 100644
---- a/drivers/scsi/scsi_scan.c
-+++ b/drivers/scsi/scsi_scan.c
-@@ -1848,7 +1848,7 @@ int scsi_scan_host_selected(struct Scsi_Host *shost, unsigned int channel,
+diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
+index 78785ed4b40c49..df9df1250a7e5d 100644
+--- a/drivers/gpu/drm/msm/dp/dp_reg.h
++++ b/drivers/gpu/drm/msm/dp/dp_reg.h
+@@ -46,8 +46,8 @@
+ #define DP_DP_IRQ_HPD_INT_ACK			(0x00000002)
+ #define DP_DP_HPD_REPLUG_INT_ACK		(0x00000004)
+ #define DP_DP_HPD_UNPLUG_INT_ACK		(0x00000008)
+-#define DP_DP_HPD_STATE_STATUS_BITS_MASK	(0x0000000F)
+-#define DP_DP_HPD_STATE_STATUS_BITS_SHIFT	(0x1C)
++#define DP_DP_HPD_STATE_STATUS_BITS_MASK	(0x00000007)
++#define DP_DP_HPD_STATE_STATUS_BITS_SHIFT	(0x1D)
  
- 	return 0;
- }
--EXPORT_SYMBOL(scsi_scan_host_selected);
-+
- static void scsi_sysfs_add_devices(struct Scsi_Host *shost)
- {
- 	struct scsi_device *sdev;
-diff --git a/drivers/scsi/scsi_transport_sas.c b/drivers/scsi/scsi_transport_sas.c
-index a9eb548c0de9f5..7fdd2b61fe855e 100644
---- a/drivers/scsi/scsi_transport_sas.c
-+++ b/drivers/scsi/scsi_transport_sas.c
-@@ -40,8 +40,6 @@
- #include <scsi/scsi_transport_sas.h>
- 
- #include "scsi_sas_internal.h"
--#include "scsi_priv.h"
--
- struct sas_host_attrs {
- 	struct list_head rphy_list;
- 	struct mutex lock;
-@@ -1683,22 +1681,6 @@ int scsi_is_sas_rphy(const struct device *dev)
- }
- EXPORT_SYMBOL(scsi_is_sas_rphy);
- 
--static void scan_channel_zero(struct Scsi_Host *shost, uint id, u64 lun)
--{
--	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
--	struct sas_rphy *rphy;
--
--	list_for_each_entry(rphy, &sas_host->rphy_list, list) {
--		if (rphy->identify.device_type != SAS_END_DEVICE ||
--		    rphy->scsi_target_id == -1)
--			continue;
--
--		if (id == SCAN_WILD_CARD || id == rphy->scsi_target_id) {
--			scsi_scan_target(&rphy->dev, 0, rphy->scsi_target_id,
--					 lun, SCSI_SCAN_MANUAL);
--		}
--	}
--}
- 
- /*
-  * SCSI scan helper
-@@ -1708,41 +1690,23 @@ static int sas_user_scan(struct Scsi_Host *shost, uint channel,
- 		uint id, u64 lun)
- {
- 	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
--	int res = 0;
--	int i;
--
--	switch (channel) {
--	case 0:
--		mutex_lock(&sas_host->lock);
--		scan_channel_zero(shost, id, lun);
--		mutex_unlock(&sas_host->lock);
--		break;
--
--	case SCAN_WILD_CARD:
--		mutex_lock(&sas_host->lock);
--		scan_channel_zero(shost, id, lun);
--		mutex_unlock(&sas_host->lock);
-+	struct sas_rphy *rphy;
- 
--		for (i = 1; i <= shost->max_channel; i++) {
--			res = scsi_scan_host_selected(shost, i, id, lun,
--						      SCSI_SCAN_MANUAL);
--			if (res)
--				goto exit_scan;
--		}
--		break;
-+	mutex_lock(&sas_host->lock);
-+	list_for_each_entry(rphy, &sas_host->rphy_list, list) {
-+		if (rphy->identify.device_type != SAS_END_DEVICE ||
-+		    rphy->scsi_target_id == -1)
-+			continue;
- 
--	default:
--		if (channel <= shost->max_channel) {
--			res = scsi_scan_host_selected(shost, channel, id, lun,
--						      SCSI_SCAN_MANUAL);
--		} else {
--			res = -EINVAL;
-+		if ((channel == SCAN_WILD_CARD || channel == 0) &&
-+		    (id == SCAN_WILD_CARD || id == rphy->scsi_target_id)) {
-+			scsi_scan_target(&rphy->dev, 0, rphy->scsi_target_id,
-+					 lun, SCSI_SCAN_MANUAL);
- 		}
--		break;
- 	}
-+	mutex_unlock(&sas_host->lock);
- 
--exit_scan:
--	return res;
-+	return 0;
- }
- 
- 
+ #define REG_DP_DP_HPD_INT_MASK			(0x0000000C)
+ #define DP_DP_HPD_PLUG_INT_MASK			(0x00000001)
 -- 
 2.53.0
 
