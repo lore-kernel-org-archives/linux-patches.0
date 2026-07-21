@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE7346AA71;
-	Tue, 21 Jul 2026 15:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E66646AA60;
+	Tue, 21 Jul 2026 15:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648117; cv=none; b=rv7v1I+aqIZ8H7Cc/flI6F95oin8vRr/QQEHm+8X4QoL8T0DHPkkhepgBgWB0c7ckPnG+Cm84P1cIfkyZV2yMuqvEiu/zqM+AeUj71VKM7OfQoSglKqyaaGTyDD4iLVu+UNjg44wAxTvUAqH/sbSOdoMNL5tb3gDV90HliqAOrE=
+	t=1784648120; cv=none; b=cKfgMMIW1rR02HtmnwAfZ5zyAuApkScl9Pe5wmcKIoYGgWJfwLciMemoSWIBVl+U/nPGWpH17aLAmFIRKWZ+xgItrGNugjcEYOiuAzG912tTf+PyTc2kZ61sTiQTRAsDhcQK0xZe4PvMoXWumiCU0kqSfdE2BEoOU+mTbDvpKos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648117; c=relaxed/simple;
-	bh=/JmJJDuwTWNOqjfBGdOjozG1POTtvPMkqn5x5yEC5lg=;
+	s=arc-20240116; t=1784648120; c=relaxed/simple;
+	bh=BgyQxV2rkv+Rf/x0nTNev9Uyuy5bh2gT61yDPsQXQqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QU/RgSMtGhP/KpuqCQPiEjyHuffNhOliSBAk4z3sTTtJHo9pK+xP8VK5bkSbuqS2s/S6CdG40US9OjymoXDJrEuZzIOhmHieotMIGb4ucswkefEVSmAYivY7oUOznX18zk3WNUeF6CWpQDrj/j2a7SkhCnfGfyRyzLrTXtcqCBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/TQVPgL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hh2wHHMLiAhhIxOSR7J8bCzjn4L4HecNCGBHmV2sjiYTm173GzP+1WQIlIMDwhs11rz7PjRgNINqQsX/cSRBnh1ftMYJLAM+09E1BBkqtpit7ANvWSm5ucz07ssG9sFMEV9BTdfNkPGAv3UQGgy3Pg709lo/ZknPMnlHc1QNkrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9UF49HQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/TQVPgL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABEBE1F00A3A;
-	Tue, 21 Jul 2026 15:35:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9UF49HQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575B31F000E9;
+	Tue, 21 Jul 2026 15:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648116;
-	bh=sDJRFdsR8xXiJTPaFlQwumQi9OPw4zDZ+g7seYf6icE=;
+	s=korg; t=1784648118;
+	bh=okGVN/0PTE3uOkLIYbMORkay35hLJS0FFw9MYUPjT+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s/TQVPgLx4KF0W8gw6l9e9ZfOMBDdBcjSM0rprkBxQrVT1tJzEtQ3veLXEYv75VzT
-	 juDlzxRMHW9JdDV/BIo6LDQU0tBGPS/Sr2y39pVSthX4DDrVhC6d+xyA1XDG9E6zVJ
-	 olv5wFszln0lDA6LYLNQySKohohi4NhXBLVGGfGQ=
+	b=D9UF49HQC2Z77VvqFg8+emaqhGVtA2C1GRTIlnXie2JbDoN3XyX+8zNavq/g9P09f
+	 1IKyuZTx1xW7slW+lHjLBL+pupkMe12brdIsP7ukbcUJhjU9EjHsjChogbhE/0WvYy
+	 EY7QATXlVUf3Jnt18btrkb8u424YhjwTsrCjQSRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0076/2077] arm64: dts: rockchip: Update vdec register blocks order on RK3588
-Date: Tue, 21 Jul 2026 16:55:49 +0200
-Message-ID: <20260721152554.486247901@linuxfoundation.org>
+Subject: [PATCH 7.1 0077/2077] arm64: dts: rockchip: fix Ethernet PHY not found on PX30 Cobra
+Date: Tue, 21 Jul 2026 16:55:50 +0200
+Message-ID: <20260721152554.509380649@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,67 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Quentin Schulz <quentin.schulz@cherry.de>
 
-[ Upstream commit b481c11cd20a114c4df35f3b1ecd28b05e622067 ]
+[ Upstream commit 6598ed3586a4b1cc79423666e66b9861631a6c7e ]
 
-With the introduction of the RK3588 SoC, three register blocks have been
-provided for the video decoder unit instead of just one, which are
-further referenced in the vendor's datasheet by 'link table', 'function'
-and 'cache'.  The former is present at the top of the listing, starting
-at video decoder unit base address, but the binding got this wrong
-initially, i.e. the 'function' block got listed before the 'link' one.
+When not passing the PHY ID with an ethernet-phy-idX.Y compatible
+property, the MDIO bus will attempt to auto-detect the PHY by reading
+its registers and then probing the appropriate driver. For this to work,
+the PHY needs to be in a working state.
 
-Since the video decoder support for the aforementioned SoC in mainline
-driver and devicetrees hasn't been released yet (just landed in
-v7.0-rc1), address the problem by providing the register blocks for
-vdec0 & vdec1 nodes using the 'link,function,cache' listing, which
-ensures the unit address points to the primary register range.
+Unfortunately, the net subsystem doesn't control the PHY reset GPIO when
+attempting to auto-detect the PHY. This means the PHY needs to be in a
+working state when entering the Linux kernel. This historically has been
+the case for this device, but only because the bootloader was taking
+care of initializing the Ethernet controller even when not using it.
+We're attempting to support the removal of the network stack in the
+bootloader, which means the Linux kernel will be entered with the PHY
+still in reset and now Ethernet doesn't work anymore.
 
-This aligns with a similar fix for RK3576, where DTC also complained
-about the bus address format.
+The devices in the field only ever had a TI DP83825, so let's simply
+bypass the auto-detection mechanism entirely by passing the appropriate
+PHY IDs via the compatible.
 
-Fixes: f61731bd6062 ("arm64: dts: rockchip: Add the vdpu381 Video Decoders on RK3588")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20260304-vdec-reg-order-rk3576-v5-4-7006fad42c3a@collabora.com
+Fixes: bb510ddc9d3e ("arm64: dts: rockchip: add px30-cobra base dtsi and board variants")
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Link: https://patch.msgid.link/20260421-px30-eth-phy-v2-1-68c375b120fd@cherry.de
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588-base.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/rockchip/px30-cobra.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi b/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi
-index 4fb8888c281c8c..d4dc057e31f0e3 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi
-@@ -1355,10 +1355,10 @@ vepu121_3_mmu: iommu@fdbac800 {
+diff --git a/arch/arm64/boot/dts/rockchip/px30-cobra.dtsi b/arch/arm64/boot/dts/rockchip/px30-cobra.dtsi
+index b7e669d8ba4d14..add917af5de783 100644
+--- a/arch/arm64/boot/dts/rockchip/px30-cobra.dtsi
++++ b/arch/arm64/boot/dts/rockchip/px30-cobra.dtsi
+@@ -397,7 +397,7 @@ &io_domains {
  
- 	vdec0: video-codec@fdc38000 {
- 		compatible = "rockchip,rk3588-vdec";
--		reg = <0x0 0xfdc38100 0x0 0x500>,
--		      <0x0 0xfdc38000 0x0 0x100>,
-+		reg = <0x0 0xfdc38000 0x0 0x100>,
-+		      <0x0 0xfdc38100 0x0 0x500>,
- 		      <0x0 0xfdc38600 0x0 0x100>;
--		reg-names = "function", "link", "cache";
-+		reg-names = "link", "function", "cache";
- 		interrupts = <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH 0>;
- 		clocks = <&cru ACLK_RKVDEC0>, <&cru HCLK_RKVDEC0>, <&cru CLK_RKVDEC0_CA>,
- 			 <&cru CLK_RKVDEC0_CORE>, <&cru CLK_RKVDEC0_HEVC_CA>;
-@@ -1387,10 +1387,10 @@ vdec0_mmu: iommu@fdc38700 {
- 
- 	vdec1: video-codec@fdc40000 {
- 		compatible = "rockchip,rk3588-vdec";
--		reg = <0x0 0xfdc40100 0x0 0x500>,
--		      <0x0 0xfdc40000 0x0 0x100>,
-+		reg = <0x0 0xfdc40000 0x0 0x100>,
-+		      <0x0 0xfdc40100 0x0 0x500>,
- 		      <0x0 0xfdc40600 0x0 0x100>;
--		reg-names = "function", "link", "cache";
-+		reg-names = "link", "function", "cache";
- 		interrupts = <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH 0>;
- 		clocks = <&cru ACLK_RKVDEC1>, <&cru HCLK_RKVDEC1>, <&cru CLK_RKVDEC1_CA>,
- 			 <&cru CLK_RKVDEC1_CORE>, <&cru CLK_RKVDEC1_HEVC_CA>;
+ &mdio {
+ 	dp83825: ethernet-phy@0 {
+-		compatible = "ethernet-phy-ieee802.3-c22";
++		compatible = "ethernet-phy-id2000.a140";
+ 		reg = <0x0>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&phy_rst>;
 -- 
 2.53.0
 
