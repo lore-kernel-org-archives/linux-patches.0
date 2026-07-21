@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C05336888;
-	Tue, 21 Jul 2026 17:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACD6401A18;
+	Tue, 21 Jul 2026 17:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653648; cv=none; b=IcUtEEn6fXjSMpZakeAs8W7uBL/5JsBSATFlLaCzzl6+KNKJrSjp3CTSnImoLp9i3viNb71ksq3jzPb5pDM5SvnvMLtsVKD+OaazcH0fAdF3opkwPNxu2eAXIH5PZ1BOXZHjIMYYiWtJT78EgGqCJgUyEckEyA4I9xBj+ai58BI=
+	t=1784653651; cv=none; b=I6PxCZD3ngMFxRKyFVc00ZH17fahqKHACDq6GoCMSwUlA3aPXPd04CtTpw0Q1d1sRa1Tp8CJvTxh3uJmUDe+aWHi1Lw791M+bqpfiNTtzbS+l/1xu+a3MKH1SEkwSJ+Ap1YaT0CnX5WQsquswQuHZ5RJVbbB4z50vENrtjfZxV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653648; c=relaxed/simple;
-	bh=JlcYEW+WQXUQ/M14MFVyF6E+86FU+7r/E6e0m2dYCbA=;
+	s=arc-20240116; t=1784653651; c=relaxed/simple;
+	bh=atn8DtlFd77CFOrD6ByvpYKKCFiY5wuUEiwvMVhQIac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4fobFoH+0crgRp5G3PavgPBOiiPv7WRK+Q5JWni+m50JzoeztNbvedcyYIDWDuob3fMiN6CyDR6y1hHVgw36SG8n+O0qpDpd18bwTAFxs5K81Pxe4mhe8hc1AQcFCcgGH8UNtoRsswVEl6KAofgw1Qij2TBQBnyS3jWknNy9qI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bf/Xq5EC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KkMKvXCMJ42LpuYXoZNY3+QBPS+GTjtQNVBJgZwyaZQvf1QivLfX9SBRp+JtpxQhPjlVgEoo6dwE76+Zt4vYMVzGIQhWORz4vUxGCEG6HeFh7HmJQC3j3ny8qAGXmKvq71V3eZv9+7bqd0mCaK/T4cQIdlBoGGE3ZlBV97b6cno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kA6Cddhp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bf/Xq5EC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034441F000E9;
-	Tue, 21 Jul 2026 17:07:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kA6Cddhp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50EB1F000E9;
+	Tue, 21 Jul 2026 17:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653647;
-	bh=G+6wZ2AtY4Q88NcJk84BITQO4mjEcYZ//m8SAxSqS5A=;
+	s=korg; t=1784653650;
+	bh=NAO/jbe/i/9k3393SfOzO6gPfCX8JW9yfp7V0yoGRw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bf/Xq5EC0/wx1pzFj1xy+wEeN/eBqX8RSusi3QGLqmGrLRDpOLgiaizP3oprixrMm
-	 EJ7Oh+4h8VCBO8upNQ0fG7Lf3wPAbVj+TXZDfnz7++C6THIIrQxYYwQMImrG2iHv7J
-	 /EmpJ5fcvzKUW9DBBXQxisjNCkskFJ5Bi7uqs+Yg=
+	b=kA6CddhpAMHk5Ej7E+pOUAQvkIT1p9RYRgTRlUm+BMM9BGcRyh7z1RhAWEoU8r/Y8
+	 S6UsnxZVlwxfdmYaWr0PjGSOLJQC9EHJdbDM+gcicrvBhVviwDzAM2UM7e5syEThvP
+	 MBBLBX4VNQT0k/snwKtBsMNXuanVg2flf3KwmvRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Windsor <dwindsor@gmail.com>,
+	syzbot+61ce80689253f42e6d80@syzkaller.appspotmail.com,
+	Jiri Olsa <jolsa@kernel.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Oleg Nesterov <oleg@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1406/2077] x86/uprobes: Keep shadow stack in sync for emulated CALLs
-Date: Tue, 21 Jul 2026 17:17:59 +0200
-Message-ID: <20260721152625.971305914@linuxfoundation.org>
+Subject: [PATCH 7.1 1407/2077] uprobes/x86: Use proper mm_struct in __in_uprobe_trampoline
+Date: Tue, 21 Jul 2026 17:18:00 +0200
+Message-ID: <20260721152625.994502138@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,61 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Windsor <dwindsor@gmail.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit abf08854d224085e2ebb3ba660e7995909f47d6a ]
+[ Upstream commit 169328645663bae30e9abad4012d52441e085a71 ]
 
-Uprobe CALL emulation updates the normal user stack, but not the CET user
-shadow stack. The subsequent RET then sees a stale shadow stack entry and
-raises #CP.
+In the unregister path we use __in_uprobe_trampoline check with
+current->mm for the VMA lookup, which is wrong, because we are
+in the tracer context, not the traced process.
 
-Update the relative CALL emulation and XOL CALL fixup paths to keep the
-shadow stack in sync.
+Add mm_struct pointer argument to __in_uprobe_trampoline and
+changing related callers to pass proper mm_struct pointer.
 
-Fixes: 488af8ea7131 ("x86/shstk: Wire in shadow stack interface")
-Signed-off-by: David Windsor <dwindsor@gmail.com>
+Fixes: ba2bfc97b462 ("uprobes/x86: Add support to optimize uprobes")
+Reported-by: syzbot+61ce80689253f42e6d80@syzkaller.appspotmail.com
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Tested-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://patch.msgid.link/8b5b1c7407b98f31664ad7b6a6faf20d2d4a6cad.1782777969.git.dwindsor@gmail.com
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Tested-by: syzbot+61ce80689253f42e6d80@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20260701111337.53943-2-jolsa@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/uprobes.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ arch/x86/kernel/uprobes.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/arch/x86/kernel/uprobes.c b/arch/x86/kernel/uprobes.c
-index ebb1baf1eb1d02..d74bb54543b608 100644
+index d74bb54543b608..3af979fb41d38d 100644
 --- a/arch/x86/kernel/uprobes.c
 +++ b/arch/x86/kernel/uprobes.c
-@@ -1246,9 +1246,15 @@ static int default_post_xol_op(struct arch_uprobe *auprobe, struct pt_regs *regs
- 		long correction = utask->vaddr - utask->xol_vaddr;
- 		regs->ip += correction;
- 	} else if (auprobe->defparam.fixups & UPROBE_FIX_CALL) {
-+		unsigned long retaddr = utask->vaddr + auprobe->defparam.ilen;
-+		int err;
-+
- 		regs->sp += sizeof_long(regs); /* Pop incorrect return address */
--		if (emulate_push_stack(regs, utask->vaddr + auprobe->defparam.ilen))
-+		if (emulate_push_stack(regs, retaddr))
- 			return -ERESTART;
-+		err = shstk_update_last_frame(retaddr);
-+		if (err)
-+			return err;
+@@ -761,9 +761,9 @@ void arch_uprobe_clear_state(struct mm_struct *mm)
+ 		destroy_uprobe_trampoline(tramp);
+ }
+ 
+-static bool __in_uprobe_trampoline(unsigned long ip)
++static bool __in_uprobe_trampoline(struct mm_struct *mm, unsigned long ip)
+ {
+-	struct vm_area_struct *vma = vma_lookup(current->mm, ip);
++	struct vm_area_struct *vma = vma_lookup(mm, ip);
+ 
+ 	return vma && vma_is_special_mapping(vma, &tramp_mapping);
+ }
+@@ -776,14 +776,14 @@ static bool in_uprobe_trampoline(unsigned long ip)
+ 
+ 	rcu_read_lock();
+ 	if (mmap_lock_speculate_try_begin(mm, &seq)) {
+-		found = __in_uprobe_trampoline(ip);
++		found = __in_uprobe_trampoline(mm, ip);
+ 		retry = mmap_lock_speculate_retry(mm, seq);
  	}
- 	/* popf; tell the caller to not touch TF */
- 	if (auprobe->defparam.fixups & UPROBE_FIX_SETF)
-@@ -1338,6 +1344,10 @@ static bool branch_emulate_op(struct arch_uprobe *auprobe, struct pt_regs *regs)
- 		 */
- 		if (emulate_push_stack(regs, new_ip))
- 			return false;
-+		if (shstk_push(new_ip) == -EFAULT) {
-+			regs->sp += sizeof_long(regs);
-+			return false;
-+		}
- 	} else if (!check_jmp_cond(auprobe, regs)) {
- 		offs = 0;
+ 	rcu_read_unlock();
+ 
+ 	if (retry) {
+ 		mmap_read_lock(mm);
+-		found = __in_uprobe_trampoline(ip);
++		found = __in_uprobe_trampoline(mm, ip);
+ 		mmap_read_unlock(mm);
  	}
+ 	return found;
+@@ -1044,7 +1044,7 @@ static int copy_from_vaddr(struct mm_struct *mm, unsigned long vaddr, void *dst,
+ 	return 0;
+ }
+ 
+-static bool __is_optimized(uprobe_opcode_t *insn, unsigned long vaddr)
++static bool __is_optimized(struct mm_struct *mm, uprobe_opcode_t *insn, unsigned long vaddr)
+ {
+ 	struct __packed __arch_relative_insn {
+ 		u8 op;
+@@ -1053,7 +1053,7 @@ static bool __is_optimized(uprobe_opcode_t *insn, unsigned long vaddr)
+ 
+ 	if (!is_call_insn(insn))
+ 		return false;
+-	return __in_uprobe_trampoline(vaddr + 5 + call->raddr);
++	return __in_uprobe_trampoline(mm, vaddr + 5 + call->raddr);
+ }
+ 
+ static int is_optimized(struct mm_struct *mm, unsigned long vaddr)
+@@ -1064,7 +1064,7 @@ static int is_optimized(struct mm_struct *mm, unsigned long vaddr)
+ 	err = copy_from_vaddr(mm, vaddr, &insn, 5);
+ 	if (err)
+ 		return err;
+-	return __is_optimized((uprobe_opcode_t *)&insn, vaddr);
++	return __is_optimized(mm, (uprobe_opcode_t *)&insn, vaddr);
+ }
+ 
+ static bool should_optimize(struct arch_uprobe *auprobe)
 -- 
 2.53.0
 
