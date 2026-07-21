@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7C5415F20;
-	Tue, 21 Jul 2026 18:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55225415F38;
+	Tue, 21 Jul 2026 18:05:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657108; cv=none; b=a0NxuyKRtc0U75Y9u0CgOo2TlLBfyiHrU5YYqYKFe3gWlUZXVciAMIXU1eQv2APrEHueLGCEeXnamYgZa2yA7pztJhK2nFJwyuTuxLYrpxVXagGCVgGstQq8UeaPEAo6YCZAjChiBsfNKn6Ar+hqVy0u3lvTUefy4wSRbG9q81E=
+	t=1784657111; cv=none; b=qVVnZlyTZs/bteOcszUuTN4Um8bvwXpwpDl1kQwLgd+CRBkiLY/nNonwow4rn3cWpGyP04jK5UsvDRHAabftqSj/gJprTBWtItGCs9SqWGx3m6JXhZZQGCqwMinHMmk4qVz9SLIxYgrh2JA7SxAan2vDJQ8PwG1/ildV9BVAW8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657108; c=relaxed/simple;
-	bh=MgeytNKK7ENJgdpYIPvYFj0ftBeTbu4w5U/c0pH6WJI=;
+	s=arc-20240116; t=1784657111; c=relaxed/simple;
+	bh=ogbh43wwtsjw3RDG8LUE3FohGp70t8+YZjSRiYEQZY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FJtvPSq+cmkSB5KccD81CVHiVir9drtxjLErnFxApJLBit+FRKY4sJkAlaA1MDznUZrlD/hmFkMLQgDvvWNQ4cVRGd+8hfkdQnvj9UcwnpoPBSpHfQh2cpZ79UJ45+VU55AVQZxbNbt1qclLskpyjzIE15a6XEspPQ6ia5NrXV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gO5N01tU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mizi09oi9dVT7+mcobtgnhVoeiI/BVzRJP8ndQP/Qla0ovE6Q6Wp6FmX8bjz2wVDr6tnGpppbSBNf+Uz9haX/TYjDTTgFhq3u756JxKlIpM0+L7r0jKDCE4nFejgya5kxvNzsfeRcjAY71Pw3OiXCzxHl0hoZD0hbzb2SNDbk40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6VXbzme; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gO5N01tU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 202181F00A3A;
-	Tue, 21 Jul 2026 18:05:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6VXbzme"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB6A41F000E9;
+	Tue, 21 Jul 2026 18:05:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657107;
-	bh=sRrvg4dylwq2I9dCFlt9RJ06lzfoJsWqLd7BUCp7iM0=;
+	s=korg; t=1784657110;
+	bh=YRWgpqbTn2vwDxTZmabQoRhsTq8BWrQULFYMSwIWWp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gO5N01tUAzURSN6rbz7hl3YAy6HI1/z4XaGdNRowaPComPxOLmXjLh6RHBQWzzoBG
-	 wKdpSVLAOMNDq1wuxCxUSE/c7Uxja9eVZoyuflt62QYgFcNz+wafXDM8ikm+4XQnkg
-	 ZAFGNnQEiaiDKbvGahJ+17FW+ONWJd3vmrOaCous=
+	b=U6VXbzmeUrAHaOYhTvYiXGvqOtVlqOGxCkM9+xQwn26KxOpxz0CjP8voLYJF6e59Z
+	 vYVoOHFWT4kNf2NbqLlYv9C1m2ERJDFaSjBjAfDdPRClnF5OzDFRHOo+WqKTu2ucKx
+	 EgWJgvxuyj7f7Ib43dhhFA+t2tMM6tbFBeByDils=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0639/1611] perf sched: Fix NULL dereference in latency_runtime_event
-Date: Tue, 21 Jul 2026 17:12:35 +0200
-Message-ID: <20260721152529.763883966@linuxfoundation.org>
+Subject: [PATCH 6.18 0640/1611] perf tools: Add bounds check to cpu__get_node()
+Date: Tue, 21 Jul 2026 17:12:36 +0200
+Message-ID: <20260721152529.786055002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -45,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -54,52 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 8cbca8a480e15f6326ce94287570993f27a4b2d5 ]
+[ Upstream commit 1e7921d7227de5da0dfc167943092c823ec7e49b ]
 
-latency_runtime_event() passes the return value of
-machine__findnew_thread() directly to thread_atoms_search() at line
-1216, before checking for NULL at line 1220.  thread_atoms_search()
-calls pid_cmp() which dereferences the thread pointer via
-thread__tid(), causing a NULL pointer dereference if the allocation
-fails.
+cpu__get_node() accesses cpunode_map[cpu.cpu] without checking against
+max_cpu_num, the allocation size of cpunode_map.  Callers such as
+builtin-kmem.c:evsel__process_alloc_event() pass sample->cpu from
+perf.data events, which may exceed the host's CPU count when analyzing
+cross-machine recordings.
 
-All other callers of thread_atoms_search() in this file
-(latency_switch_event, latency_wakeup_event,
-latency_migrate_task_event) correctly check for NULL first.
+Add a bounds check against max_cpu_num before indexing, returning -1
+for out-of-range values.  This is a central fix that protects all
+callers.
 
-Move the atoms assignment after the NULL check to match the pattern
-used by the other callers.
-
-Fixes: b91fc39f4ad7 ("perf machine: Protect the machine->threads with a rwlock")
+Fixes: 86895b480a2f ("perf stat: Add --per-node agregation support")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/perf/util/cpumap.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 1181a2afd273a3..273a7eadfa8528 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -1209,13 +1209,15 @@ static int latency_runtime_event(struct perf_sched *sched,
- 	const u32 pid	   = evsel__intval(evsel, sample, "pid");
- 	const u64 runtime  = evsel__intval(evsel, sample, "runtime");
- 	struct thread *thread = machine__findnew_thread(machine, -1, pid);
--	struct work_atoms *atoms = thread_atoms_search(&sched->atom_root, thread, &sched->cmp_pid);
-+	struct work_atoms *atoms;
- 	u64 timestamp = sample->time;
- 	int cpu = sample->cpu, err = -1;
- 
- 	if (thread == NULL)
+diff --git a/tools/perf/util/cpumap.c b/tools/perf/util/cpumap.c
+index 89570397a4b350..0b419783c9dd08 100644
+--- a/tools/perf/util/cpumap.c
++++ b/tools/perf/util/cpumap.c
+@@ -548,6 +548,10 @@ int cpu__get_node(struct perf_cpu cpu)
  		return -1;
+ 	}
  
-+	atoms = thread_atoms_search(&sched->atom_root, thread, &sched->cmp_pid);
++	/* cpunode_map allocated for max_cpu_num entries; input may be untrusted */
++	if (cpu.cpu < 0 || cpu.cpu >= max_cpu_num.cpu)
++		return -1;
 +
- 	/* perf.data is untrusted input — CPU may be absent or corrupted */
- 	if (cpu >= MAX_CPUS || cpu < 0) {
- 		pr_warning("WARNING: at offset %#" PRIx64 ": out-of-bound sample CPU %d, skipping sample\n",
+ 	return cpunode_map[cpu.cpu];
+ }
+ 
 -- 
 2.53.0
 
