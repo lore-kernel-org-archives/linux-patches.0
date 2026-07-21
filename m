@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E01A3CAE7F;
-	Tue, 21 Jul 2026 22:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D9544AB91;
+	Tue, 21 Jul 2026 22:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674042; cv=none; b=VajMgiVnpWy/XNl2wnmrDfFhbM5nv4G1fZMB+KxCUmaksGtxpxaDinCEZTJY141E84Yfg4nV2Artg4or81z8WBbhTltc9Bp3cXPjvtNVdvWHAXBAEFz6fFsQoToHCVn7N7ZSz2NkjCaUzjLkTpoQMCjObW0HoSjSegLWdqe/338=
+	t=1784674044; cv=none; b=rVfRpKHLQgVxBVorDvYkmOur5JwHbHPhFZfEdOdXDP4biOGT80SMkqxsiIiMpKvvrWJT0fiwxDpki9Mze/iEf3TOltcWqMpib/K8DCBUg2FPLiQjHJ5fWn4cWQ2TFNBGeayd2RMZEgRz9zexQ50LKiobfpYip99W7h7uIFgJHv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674042; c=relaxed/simple;
-	bh=2I1PXucVHLPmdhXOwQin1vQ1mw9lYs7dSigHeNFg0fE=;
+	s=arc-20240116; t=1784674044; c=relaxed/simple;
+	bh=2MAJCVRj0NpAjZNg0JRodIvh3uVnkgAYbJvrS1LQIVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cN6NHl9w7lnQ7vK4R6F3JRChTZ8uclWTK0tmT88X7ujCA+RIlCDfCPwhLAdb3ZXMFHGByboHptuilWfhCtVXK7U2pLhjL0IvxrQ2S8Ew3VtUJhcaXboLkm6Sm+9MM/LH01jhsYBQyeblJBNToE9nWZnJyzSGoNHsXrAiFrU/JX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WI6ufbQX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TLV+Uz6bMDOleKNFz6YBScHnMgwe5Sz4raTlhJl8OfDxA7JG6gkQwIFqQYGRZzJOI6zozjS4ErPuzk8YFwG+So3mLcoRwbEd/GAwSDaAgG9erE7PAFV6xdktYhX5g1E6mYQgBivD6v+8UnwFoyHIwGlC2/+i5wzzZgykj/7Wbe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPUr8BnJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WI6ufbQX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 737451F00A3A;
-	Tue, 21 Jul 2026 22:47:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPUr8BnJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A891F000E9;
+	Tue, 21 Jul 2026 22:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674041;
-	bh=gW3WQynEnGRntxcTWgIkUBIgmp0m6tTaC113ax/SwaQ=;
+	s=korg; t=1784674043;
+	bh=LfZHP/B9YS/8dRekIC0KGyTYUu6MCmMmw1O42THrsAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WI6ufbQX3huEbMGaMUCwDyLt0oxh4FaGzKGLMszEr3XFLYkEX4felzDRTXPNdxtVR
-	 pfpva7eyCYM9KlwgNYe6Bocmztz5XfebSl9l8S6zscWIz8cFNkDyhN7jBBkzOyvcsB
-	 gsfo5Fepl6g8hlgenVR6v3GzUrOGOPO89wJxXDR8=
+	b=IPUr8BnJ9tCiw75qXn4p3lTKGP0PtJBDzPDChe3IzvYbA24Dd4XDVlBcc6qNdXoMc
+	 tIV487EDnNHGv8GcP+7Qar81ElTqRBpbngbiyVDSOfeTcchSd+ykAmehhTpg+nhysG
+	 gyKYZBOhvL+EcxOGjmpWhJnvzZJ79Gex4qZAPloc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Jiri Kosina <jkosina@suse.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 390/699] HID: core: Fix OOB read in hid_get_report for numbered reports
-Date: Tue, 21 Jul 2026 17:22:29 +0200
-Message-ID: <20260721152404.489634027@linuxfoundation.org>
+Subject: [PATCH 5.10 391/699] net: usb: net1080: validate packet_len before pad-byte access in rx_fixup
+Date: Tue, 21 Jul 2026 17:22:30 +0200
+Message-ID: <20260721152404.512658603@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,48 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit af1a9b65ebe8a948eda805c14b78d4d0767cb1b5 ]
+[ Upstream commit 03f384bc0cb8d4a1301d4f5b0baef2d980258383 ]
 
-When a caller passes a size of 0 to hid_report_raw_event() for a
-numbered report, the function originally called hid_get_report() before
-performing any size validation.
+For an even packet_len, net1080_rx_fixup() reads the pad byte at
+skb->data[packet_len] before the skb->len != packet_len check further
+down, and packet_len is only bounded against NC_MAX_PACKET. A malicious
+NetChip 1080 device can send a short frame advertising a large even
+packet_len (e.g. 0x4000), so the pad-byte read lands past the end of the
+skb:
 
-Inside hid_get_report(), if the report is numbered (report_enum->numbered
-is true), it unconditionally dereferences data[0] to extract the report ID.
-With a size of 0, this results in an out-of-bounds read or kernel panic.
+  BUG: KASAN: slab-out-of-bounds in net1080_rx_fixup
+  Read of size 1 at addr ffff8880106c83c6 by task ksoftirqd/0/14
+   ...
+   net1080_rx_fixup (drivers/net/usb/net1080.c:384)
+   usbnet_bh (drivers/net/usb/usbnet.c:1589)
+   process_one_work (kernel/workqueue.c:3322)
+   bh_worker (kernel/workqueue.c:3708)
+   tasklet_action (kernel/softirq.c:965)
+   handle_softirqs (kernel/softirq.c:622)
+   ...
 
-Fix this by moving the numbered report size validation check before the
-call to hid_get_report(), ensuring that size is at least 1 before
-dereferencing the data pointer.
+Reject the frame when packet_len >= skb->len before reading.
 
-Fixes: 2c85c61d1332 ("HID: pass the buffer size to hid_report_raw_event")
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 904813cd8a0b ("[PATCH] USB: usbnet (4/9) module for net1080 cables")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260630045121.1565324-1-xmei5@asu.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/usb/net1080.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 918c66d5bc93f6..5acb893ecff683 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -1788,6 +1788,13 @@ int hid_report_raw_event(struct hid_device *hid, int type, u8 *data,
- 	u8 *cdata = data;
- 	int ret = 0;
+diff --git a/drivers/net/usb/net1080.c b/drivers/net/usb/net1080.c
+index b0c0c9dd6a028d..8a66549cefa7df 100644
+--- a/drivers/net/usb/net1080.c
++++ b/drivers/net/usb/net1080.c
+@@ -381,7 +381,7 @@ static int net1080_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 	skb_trim(skb, skb->len - sizeof *trailer);
  
-+	if (report_enum->numbered && (size < 1 || bufsize < 1)) {
-+		hid_warn_ratelimited(hid,
-+				     "Event data for numbered report is too short (%d vs %zu)\n",
-+				     size, bufsize);
-+		return -EINVAL;
-+	}
-+
- 	report = hid_get_report(report_enum, data);
- 	if (!report)
- 		return 0;
+ 	if ((packet_len & 0x01) == 0) {
+-		if (skb->data [packet_len] != PAD_BYTE) {
++		if (packet_len >= skb->len || skb->data[packet_len] != PAD_BYTE) {
+ 			dev->net->stats.rx_frame_errors++;
+ 			netdev_dbg(dev->net, "bad pad\n");
+ 			return 0;
 -- 
 2.53.0
 
