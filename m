@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F4C46D565;
-	Tue, 21 Jul 2026 18:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A82D47125C;
+	Tue, 21 Jul 2026 18:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657980; cv=none; b=BWwEWyj/FjKmoteJ/sPUXRmq6wA4QZ7hofXGsiU2Pv6DQNCmGqyYqk7D+4Se0r3VubqNWiAmDwh+Xod1XqJOgFkoByyAa/wQSDP5X4uDhMZ4pw3YUB+OUec3WSRmRCJwaayraG6RfDxvsONjmOYT1kMssQ8R+T8L92+yq4mOrbA=
+	t=1784657983; cv=none; b=ZB0vGe9f7J72jLAE3QzJSIhREvfAAdJidZN7QeGpLnFI+5ANy0AuXhxC5tmoaxev2oKSRnZqyHaGkHd/T2BQZaWsFbD89WIjtQ43nZz1VWJnXOXaYZWoU5Wqk7WD5RVdXFqW+lq0B15xcEY7r4fxcblq+mrd8L8hSWi+1Sp01Xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657980; c=relaxed/simple;
-	bh=JmsHUxDSNmTT3G5XUNHk7SafE41xNJ2latmhp/SL9ic=;
+	s=arc-20240116; t=1784657983; c=relaxed/simple;
+	bh=2mejnOaXe5oelPieX/6fjfgi5J19C76vQ0Qc5VgytkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ta7axAVC5Su1NNpMZ1H4d1WXAhEXqjZTiZTRRzPPsZm0KxrYeMnuoL8iuJhJ5ALtA39/hKhvucR7DZF+fz8qZlem5sorPLwxOrOwyJYKgwSmbKYpC6vgKzj4edMECgtnpkcz+JdqkKl2f41KV/x+mVjsYRZiSecgB2yrGFWYpmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xSQcpS2J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZwfzoocnSu1WSuO7oWSCdR5PSpKtYFBIzjfdZjf3cl93v2ELfcdMVoj4NPcEwNvlS2JoRBhHVPbm/ebq0+B96gIhZYp/TiyxtBQBWn+oT1Yu/ZTePmSZ37jQgnV7U5H/Vg8q9k+iMy4zTgqOSUlh/p1l9HRXNYbcSIPp4BaJqzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/XEqwoE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xSQcpS2J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A40FC1F00A3A;
-	Tue, 21 Jul 2026 18:19:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/XEqwoE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52BCF1F000E9;
+	Tue, 21 Jul 2026 18:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657979;
-	bh=UqLceB/JxaV6bv6+9cjO1sWdn7lrpqt0B6Bg8CT/ONQ=;
+	s=korg; t=1784657981;
+	bh=UFHuYfA9FcZreN/8qXj3RM07avFYh5Sod6yC3hnXZl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xSQcpS2JDm6XnidL27p7wLgDHUtIAKtjtjzCqceoakHMEmIRkERYBMxsEUskRRYca
-	 hMEzKTVRCW8D/cmczmEagGHB4dtxDvyEAGGZmz/YJPuALHhsq02Um6XIJaEZCP9TwJ
-	 eJaoRPobRMRpwYD1Ld5f/6icra18Ir7O4WnSLdnY=
+	b=Y/XEqwoERaQZ1kZbvFBRwdJYAaNWG8jvPGoCpnbG/JV2U4uWOwqI4BRf9PXDgaopA
+	 qcUCnBmUonstu9ekYLhhJADrXoZuFTI/3KHdy5KuwTLyXBnpmQd3VCVZc5ZhuyMxGF
+	 sOvPDyjNcMq3/ut4JFoesTZGWOn2c5ZSQFHu05K8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Zhang <zhangfeionline@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0968/1611] ipv6: fib6: fix NULL deref in fib6_walk_continue() on multi-batch dump
-Date: Tue, 21 Jul 2026 17:18:04 +0200
-Message-ID: <20260721152537.168129565@linuxfoundation.org>
+Subject: [PATCH 6.18 0969/1611] usbnet: gl620a: fix out-of-bounds read in genelink_rx_fixup()
+Date: Tue, 21 Jul 2026 17:18:05 +0200
+Message-ID: <20260721152537.190029154@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,93 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengfei Zhang <zhangfeionline@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 9facb861dc6b9b9ea9793ef5032a9a826f7a4229 ]
+[ Upstream commit 8ff7f2a6da4fccaa5cc9be7251a24e71e29fbd1a ]
 
-inet6_dump_fib() saves its progress in cb->args[1] as a positional
-index within the current hash chain.  Between batches, a concurrent
-fib6_new_table() can insert a new table at the chain head, shifting
-all existing entries.  The saved index then lands on a different
-table, causing fib6_dump_table() to set w->root to the wrong table
-while w->node still points into the previous one.
-fib6_walk_continue() dereferences w->node->parent (NULL) and panics:
+genelink_rx_fixup() splits an aggregated RX frame into its individual
+packets, using a per-packet length taken from device-supplied data. That
+length is only bounded by GL_MAX_PACKET_LEN (1514); it is never compared
+against how many bytes were actually received.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000008
-  RIP: 0010:fib6_walk_continue+0x6e/0x170
+A malicious GeneLink (GL620A) device can therefore send a short URB whose
+header claims packet_count > 1 and a first packet of up to 1514 bytes.
+
+	skb_put_data(gl_skb, packet->packet_data, size);
+
+then copies past the end of the receive buffer and hands the adjacent slab
+contents up the network stack, an out-of-bounds read that leaks kernel heap.
+No privilege is required: the path runs in the usbnet RX softirq as soon as
+the interface is up.
+
+  BUG: KASAN: slab-out-of-bounds in genelink_rx_fixup (drivers/net/usb/gl620a.c:112)
+  Read of size 1514 at addr ffff888011309708 by task ksoftirqd/0/14
   Call Trace:
-   <TASK>
-   fib6_dump_table.isra.0+0xc5/0x240
-   inet6_dump_fib+0xf6/0x420
-   rtnl_dumpit+0x30/0xa0
-   netlink_dump+0x15b/0x460
-   netlink_recvmsg+0x1d6/0x2a0
-   ____sys_recvmsg+0x17a/0x190
+    ...
+    __asan_memcpy (mm/kasan/shadow.c:105)
+    genelink_rx_fixup (include/linux/skbuff.h:2814 drivers/net/usb/gl620a.c:112)
+    usbnet_bh (drivers/net/usb/usbnet.c:572 drivers/net/usb/usbnet.c:1589)
+    process_one_work (kernel/workqueue.c:3322)
+    bh_worker (kernel/workqueue.c:3405)
+    tasklet_action (kernel/softirq.c:965)
+    handle_softirqs (kernel/softirq.c:622)
+    run_ksoftirqd (kernel/softirq.c:1076)
+    ...
 
-Fix by storing tb->tb6_id in cb->args[1] instead of a positional
-index.  On resume, skip entries until the id matches; a concurrent
-head-insert can never match the saved id, so the walker always
-resumes on the correct table.
+skb_pull() already verifies that the requested length fits the buffer and
+returns NULL otherwise. Move it ahead of the copy and check its result, so
+a packet that overruns the received data is rejected before it is read.
+Well-formed frames, whose packets are fully present, are unaffected.
 
-Fixes: 1b43af5480c3 ("[IPV6]: Increase number of possible routing tables to 2^32")
-Signed-off-by: Pengfei Zhang <zhangfeionline@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260625070517.965597-1-zhangfeionline@gmail.com
+Fixes: 47ee3051c856 ("[PATCH] USB: usbnet (5/9) module for genesys gl620a cables")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260627205353.4000788-1-xmei5@asu.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_fib.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/net/usb/gl620a.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
-index ffa77335983334..940aae3d10be0e 100644
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -634,12 +634,12 @@ static int inet6_dump_fib(struct sk_buff *skb, struct netlink_callback *cb)
- 	};
- 	const struct nlmsghdr *nlh = cb->nlh;
- 	struct net *net = sock_net(skb->sk);
--	unsigned int e = 0, s_e;
- 	struct hlist_head *head;
- 	struct fib6_walker *w;
- 	struct fib6_table *tb;
- 	unsigned int h, s_h;
- 	int err = 0;
-+	u32 s_id;
- 
- 	rcu_read_lock();
- 	if (cb->strict_check) {
-@@ -699,23 +699,22 @@ static int inet6_dump_fib(struct sk_buff *skb, struct netlink_callback *cb)
- 	}
- 
- 	s_h = cb->args[0];
--	s_e = cb->args[1];
-+	s_id = cb->args[1];
- 
--	for (h = s_h; h < FIB6_TABLE_HASHSZ; h++, s_e = 0) {
--		e = 0;
-+	for (h = s_h; h < FIB6_TABLE_HASHSZ; h++, s_id = 0) {
- 		head = &net->ipv6.fib_table_hash[h];
- 		hlist_for_each_entry_rcu(tb, head, tb6_hlist) {
--			if (e < s_e)
--				goto next;
-+			if (s_id && tb->tb6_id != s_id)
-+				continue;
-+
-+			s_id = 0;
-+			cb->args[1] = tb->tb6_id;
- 			err = fib6_dump_table(tb, skb, cb);
- 			if (err != 0)
- 				goto out;
--next:
--			e++;
+diff --git a/drivers/net/usb/gl620a.c b/drivers/net/usb/gl620a.c
+index 0bfa37c1405918..09afd137b64e15 100644
+--- a/drivers/net/usb/gl620a.c
++++ b/drivers/net/usb/gl620a.c
+@@ -104,6 +104,9 @@ static int genelink_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 			return 0;
  		}
- 	}
- out:
--	cb->args[1] = e;
- 	cb->args[0] = h;
  
- unlock:
++		if (!skb_pull(skb, size + 4))
++			return 0;
++
+ 		// allocate the skb for the individual packet
+ 		gl_skb = alloc_skb(size, GFP_ATOMIC);
+ 		if (gl_skb) {
+@@ -116,9 +119,6 @@ static int genelink_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 		// advance to the next packet
+ 		packet = (struct gl_packet *)&packet->packet_data[size];
+ 		count--;
+-
+-		// shift the data pointer to the next gl_packet
+-		skb_pull(skb, size + 4);
+ 	}
+ 
+ 	// skip the packet length field 4 bytes
 -- 
 2.53.0
 
