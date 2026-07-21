@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF599471267;
-	Tue, 21 Jul 2026 18:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638D3471279;
+	Tue, 21 Jul 2026 18:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657225; cv=none; b=JHeYEtAfCrCbqaDR3xlVtf1QM/u2kiesWxh75HgawZUrNRyvb+09qZj4mciabA0O3TeTjHqR6gGmROtA0jxKv4ij8S9ksFgwbpLJIO7UmA9lo4vuXOeO+0MbC0K0i+KqFe3rxMJ8K111ScyWxR0LhwCTxVXrdzaYmmm2SGCCUmM=
+	t=1784657227; cv=none; b=rdaKKQZzDsQstWtW4gZtoHJknev3+9zwvhOX1vKi4vPJ73Rpn57uRp3hJc8q16jK9wdpEYEcouxi+8d9EmSlTw2Ei0qlwbpPFM2DbQ70Yb0VMNmh4O/ERAMdEs7jBu2UVbQz0KLln1vssimWqhn+4on8fQzcW3bATlxC/xiq0mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657225; c=relaxed/simple;
-	bh=PvnhfOEL5CZRgr38eDsZ8Vuy5ytY4PM+q6yTTfo9Oy0=;
+	s=arc-20240116; t=1784657227; c=relaxed/simple;
+	bh=iZXo7Y94hvEXDopPP0jmqUoJ3zKnqH4orEI6kYsE3Ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GTNbqd8F2SykdFaUs9MG0ElHhviRNk//vh/UPWu3hkAvqrnFqepZlV4hM1QAYYZunCFybMOFxqh1af7zVPwmMNIQoR8VyScveMYc9HsPE/Rf/ejZAq1jQuva7YxzmOOepAiMM9Hsyo1yFG/ep8ItSeWKs6sZc9Cw4l1uFeUFaU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iR/fzBlV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=P4VeK5wNogzgdyjU2IU8f6EYwKzPOOZ2CyRg2agFOSX6twUkREOG8r1VlYEwzw4S/JRPyKIvJHQ7qV38Tob50okMh7wExjZpQdKUDrp3lw+LlKsaLj17APKagnvwHRiaI9rFFnz48iSQiTo6NK7U0lDXlcbdSU9qCzNbPvrgQE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f1jRobPp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iR/fzBlV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BE21F000E9;
-	Tue, 21 Jul 2026 18:07:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f1jRobPp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A701F000E9;
+	Tue, 21 Jul 2026 18:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657223;
-	bh=1qyhfIlF9IRsb8Ni2PiAzPLivAQC6nUuWawQeKJulms=;
+	s=korg; t=1784657226;
+	bh=mPaYylXL07tj4UYTJVpXytqL4yf+c34+lJWuSVhj5VY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iR/fzBlV0YHmzHcTlJosxKefxz3y+wQEv11UD1JniJZ8Afi1jtJEYNudu2YWhTsKx
-	 pVBPEng+keQ2Jh9sORrHgDL49COmWqV6P4i7WWqx3Qh91wurnEza3W43JJxcfux9Iy
-	 vThWOI6n58QLnSl3+O9emrLnoIVo89DPoV2oCDk4=
+	b=f1jRobPpYlTY3mvjOt5iphxB+6TpD78B9mtG0lHUgWphBopJJmVQPRiruA7hiCDjm
+	 MXH2WiiZ+InJw84eCC/MbC7oX/nmBc2ecz+7ZNiCAgOpbf7wgJDKV7UmxfVN3CA7Ql
+	 XgFnTqT8gmIyQ8diYlv9HdSdOqPLXt+RMC3uXQZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
+	"David E. Box" <david.e.box@linux.intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0683/1611] platform/x86/intel/vsec: correct kernel-doc comments
-Date: Tue, 21 Jul 2026 17:13:19 +0200
-Message-ID: <20260721152530.744784812@linuxfoundation.org>
+Subject: [PATCH 6.18 0684/1611] platform/x86/intel/vsec: Decouple add/link helpers from PCI
+Date: Tue, 21 Jul 2026 17:13:20 +0200
+Message-ID: <20260721152530.767987415@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,77 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: David E. Box <david.e.box@linux.intel.com>
 
-[ Upstream commit 20e20b147cf7cb6780a5b95da2a0e37c52cd1015 ]
+[ Upstream commit c62fd96a04e4a7b847448f97ecfe9f3fe706e7b3 ]
 
-Fix kernel-doc warnings in intel_vsec.h to eliminate all kernel-doc
-warnings:
+This refactor prepares for adding ACPI-enumerated PMT endpoints. While
+intel_vsec is bound to PCI today, some helpers are used by code that will
+also register PMT endpoints from non-PCI (ACPI) paths. Clean up
+PCI-specific plumbing where it isn’t strictly required and rely on generic
+struct device where possible.
 
-Warning: include/linux/intel_vsec.h:92 struct member 'read_telem' not
- described in 'pmt_callbacks'
-Warning: include/linux/intel_vsec.h:146 expecting prototype for struct
- intel_sec_device.  Prototype was for struct intel_vsec_device instead
-Warning: include/linux/intel_vsec.h:146 struct member 'priv_data_size'
- not described in 'intel_vsec_device'
-
-In struct pmt_callbacks, correct the kernel-doc for @read_telem.
-kernel-doc doesn't support documenting callback function parameters,
-so drop the '@' signs on those and use "* *" to make them somewhat
-readable in the produced documentation output.
-
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://patch.msgid.link/20251216063801.2896495-1-rdunlap@infradead.org
+Signed-off-by: David E. Box <david.e.box@linux.intel.com>
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
+Link: https://patch.msgid.link/20260313015202.3660072-4-david.e.box@linux.intel.com
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Stable-dep-of: 375bbbbd112a ("platform/x86/intel/vsec: Restore BAR fallback for header walk")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/intel_vsec.h | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/platform/x86/intel/vsec.c      | 13 +++++++++----
+ drivers/platform/x86/intel/vsec_tpmi.c |  2 +-
+ include/linux/intel_vsec.h             |  2 +-
+ 3 files changed, 11 insertions(+), 6 deletions(-)
 
+diff --git a/drivers/platform/x86/intel/vsec.c b/drivers/platform/x86/intel/vsec.c
+index 96fc27d88fbf32..cf1fc63ab6df2e 100644
+--- a/drivers/platform/x86/intel/vsec.c
++++ b/drivers/platform/x86/intel/vsec.c
+@@ -158,18 +158,23 @@ static bool vsec_driver_present(int cap_id)
+  */
+ static const struct pci_device_id intel_vsec_pci_ids[];
+ 
+-static int intel_vsec_link_devices(struct pci_dev *pdev, struct device *dev,
++static int intel_vsec_link_devices(struct device *parent, struct device *dev,
+ 				   int consumer_id)
+ {
+ 	const struct vsec_feature_dependency *deps;
+ 	enum vsec_device_state *state;
+ 	struct device **suppliers;
+ 	struct vsec_priv *priv;
++	struct pci_dev *pdev;
+ 	int supplier_id;
+ 
+ 	if (!consumer_id)
+ 		return 0;
+ 
++	if (!dev_is_pci(parent))
++		return 0;
++
++	pdev = to_pci_dev(parent);
+ 	if (!pci_match_id(intel_vsec_pci_ids, pdev))
+ 		return 0;
+ 
+@@ -204,7 +209,7 @@ static int intel_vsec_link_devices(struct pci_dev *pdev, struct device *dev,
+ 	return 0;
+ }
+ 
+-int intel_vsec_add_aux(struct pci_dev *pdev, struct device *parent,
++int intel_vsec_add_aux(struct device *parent,
+ 		       struct intel_vsec_device *intel_vsec_dev,
+ 		       const char *name)
+ {
+@@ -252,7 +257,7 @@ int intel_vsec_add_aux(struct pci_dev *pdev, struct device *parent,
+ 	if (ret)
+ 		goto cleanup_aux;
+ 
+-	ret = intel_vsec_link_devices(pdev, &auxdev->dev, intel_vsec_dev->cap_id);
++	ret = intel_vsec_link_devices(parent, &auxdev->dev, intel_vsec_dev->cap_id);
+ 	if (ret)
+ 		goto cleanup_aux;
+ 
+@@ -343,7 +348,7 @@ static int intel_vsec_add_dev(struct pci_dev *pdev, struct intel_vsec_header *he
+ 	 * Pass the ownership of intel_vsec_dev and resource within it to
+ 	 * intel_vsec_add_aux()
+ 	 */
+-	return intel_vsec_add_aux(pdev, parent, no_free_ptr(intel_vsec_dev),
++	return intel_vsec_add_aux(parent, no_free_ptr(intel_vsec_dev),
+ 				  intel_vsec_name(header->id));
+ }
+ 
+diff --git a/drivers/platform/x86/intel/vsec_tpmi.c b/drivers/platform/x86/intel/vsec_tpmi.c
+index a8ccdd801ddd4c..7eb0f86469cd01 100644
+--- a/drivers/platform/x86/intel/vsec_tpmi.c
++++ b/drivers/platform/x86/intel/vsec_tpmi.c
+@@ -655,7 +655,7 @@ static int tpmi_create_device(struct intel_tpmi_info *tpmi_info,
+ 	 * feature_vsec_dev and res memory are also freed as part of
+ 	 * device deletion.
+ 	 */
+-	return intel_vsec_add_aux(vsec_dev->pcidev, &vsec_dev->auxdev.dev,
++	return intel_vsec_add_aux(&vsec_dev->auxdev.dev,
+ 				  feature_vsec_dev, feature_id_name);
+ }
+ 
 diff --git a/include/linux/intel_vsec.h b/include/linux/intel_vsec.h
-index d7f1f531660a8d..d551174b004916 100644
+index d551174b004916..49a746ec012890 100644
 --- a/include/linux/intel_vsec.h
 +++ b/include/linux/intel_vsec.h
-@@ -80,13 +80,13 @@ enum intel_vsec_quirks {
- 
- /**
-  * struct pmt_callbacks - Callback infrastructure for PMT devices
-- * ->read_telem() when specified, called by client driver to access PMT data (instead
-- * of direct copy).
-- * @pdev:  PCI device reference for the callback's use
-- * @guid:  ID of data to acccss
-- * @data:  buffer for the data to be copied
-- * @off:   offset into the requested buffer
-- * @count: size of buffer
-+ * @read_telem: when specified, called by client driver to access PMT
-+ * data (instead of direct copy).
-+ * * pdev:  PCI device reference for the callback's use
-+ * * guid:  ID of data to acccss
-+ * * data:  buffer for the data to be copied
-+ * * off:   offset into the requested buffer
-+ * * count: size of buffer
-  */
- struct pmt_callbacks {
- 	int (*read_telem)(struct pci_dev *pdev, u32 guid, u64 *data, loff_t off, u32 count);
-@@ -120,7 +120,7 @@ struct intel_vsec_platform_info {
+@@ -184,7 +184,7 @@ struct pmt_feature_group {
+ 	struct telemetry_region	regions[];
  };
  
- /**
-- * struct intel_sec_device - Auxbus specific device information
-+ * struct intel_vsec_device - Auxbus specific device information
-  * @auxdev:        auxbus device struct for auxbus access
-  * @pcidev:        pci device associated with the device
-  * @resource:      any resources shared by the parent
-@@ -128,6 +128,7 @@ struct intel_vsec_platform_info {
-  * @num_resources: number of resources
-  * @id:            xarray id
-  * @priv_data:     any private data needed
-+ * @priv_data_size: size of private data area
-  * @quirks:        specified quirks
-  * @base_addr:     base address of entries (if specified)
-  * @cap_id:        the enumerated id of the vsec feature
+-int intel_vsec_add_aux(struct pci_dev *pdev, struct device *parent,
++int intel_vsec_add_aux(struct device *parent,
+ 		       struct intel_vsec_device *intel_vsec_dev,
+ 		       const char *name);
+ 
 -- 
 2.53.0
 
