@@ -1,51 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BC8403AF7;
-	Tue, 21 Jul 2026 17:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD0A4028F7;
+	Tue, 21 Jul 2026 17:19:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654366; cv=none; b=s2FZnebb0wKDH+FLGMlIfs0St8nGZcW1nzwtx64zj0h52xizyAc+iauAhKtN6GnoXSzc83cSMmFmFW3FNgSQgE9RABGppIn6VAdWV5j2n3QYWdOs87R7sIjr1ixNtXK99ISb4ESi18X2+HYhKnBNBfofanRLD1C13WR304TaU/I=
+	t=1784654369; cv=none; b=BNJmWjgYdk9el/T5Q7pWZLBYOxF4UZuzBCzbLJyMCn9Yi7DNoBAUGYgVdudjE/DTuyHpBJ44x/bA2H0CsibI7Ic1AKjq+o2746eNkMUFm/k8hyWHjqtFChjp3V/QrOW9WdiWZB16GpIFWnBtqOSS4FLhYiemidrvcwes2UPKDTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654366; c=relaxed/simple;
-	bh=UcII3p7MGdN77l8T62fAeMEUqdgYAK+5vVaWby6MrEc=;
+	s=arc-20240116; t=1784654369; c=relaxed/simple;
+	bh=+WAjHOhg0NEmtv4x4f3N4SBrGMC/rDFb6cVhE7DFySM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KUeZdm17AOWvUvFbiJRtPkhMz4rqrIVXBMB9qohBUggdItCQMYyuQvzI5ebhXT66zGVmAtALKYVP2ceIX4NTrF4dONiUYnW3Gm73UM3OnCHhZyaufPRWlAapzA9PBsnFMHCyTvvplI8Ai0PfXauI2UFKDgw76Z9d5OZh4hyn6po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZfaNdIS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EMeuBo4/vdkYkQTJYQsCBBgriNGPpoey/luMSbgtwyuiM38OnsPYXzWYE8IG7gc9Ex2h31hthLSfND2c2GtnKjqzNVFDy5yu92v2LVN9/iqkQvkTpHUt2RRPkxPM5cm2V8Szai8BBKbjDHkdNSuBDR6Xia2735N53h5nAIdQ20s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVYNWXY3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZfaNdIS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FEE81F000E9;
-	Tue, 21 Jul 2026 17:19:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVYNWXY3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 501671F000E9;
+	Tue, 21 Jul 2026 17:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654365;
-	bh=SEZ7ed+DGDBZkLhYimEr8NUZGuG9aVseLzLrF8vhQ6M=;
+	s=korg; t=1784654367;
+	bh=WHVqbW3HAsEz4mR0ItR8f0gzNYauvQ0vEiwJjXH7cxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iZfaNdIS8hz4/bLcb6Xbz8hYOOqreQ8lcXDefRxmLyrXdKROx0oythJ91drRQFZt9
-	 aPdFTSSW4xNrsjY0zl+bNtALbzs7HUPfdecC5LpOzbfBlNYl7HsjLBRT6JD3b2gZkq
-	 5rjeIffaaqPEmINjl7DtS9BT9W59aqj7+YYYMZN0=
+	b=AVYNWXY365eKBD/AKLUyxvD2cJ0Ro107wMzYpVuLJokcGhV6ZPeCzwhLeHtuUKTKm
+	 +VpIlnLGb79Ak7CIjwFSiN59Fy8HhIl3H0MbRTTb8vLeD0FyYoMNYvEbMXcxodtgIT
+	 EQ+nXs0EdlmVstXPU6pdgBZCowJ4YksDMKXHJYnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Georgi Djakov <georgi.djakov@oss.qualcomm.com>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Michal Hocko <mhocko@suse.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 1678/2077] mm/memory_hotplug: fix incorrect altmap passing in error path
-Date: Tue, 21 Jul 2026 17:22:31 +0200
-Message-ID: <20260721152632.325096318@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 7.1 1661/2077] sunrpc: pin svc_xprt across the asynchronous TLS handshake callback
+Date: Tue, 21 Jul 2026 17:22:14 +0200
+Message-ID: <20260721152631.922646003@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -64,61 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Chris Mason <clm@meta.com>
 
-commit 2fac4afa0e2e68841334c78c1821e49f74fbc66a upstream.
+commit 4f988f3a2808fb659f3880c282041ff067acad78 upstream.
 
-In create_altmaps_and_memory_blocks(), when arch_add_memory() succeeds
-with memmap_on_memory enabled, the vmemmap pages are allocated from
-params.altmap.  If create_memory_block_devices() subsequently fails, the
-error path calls arch_remove_memory() with a NULL altmap instead of
-params.altmap.
+svc_tcp_handshake() stores the raw svc_xprt pointer in
+tls_handshake_args.ta_data and submits the request through
+tls_server_hello_x509(). The handshake core takes only
+sock_hold(req->hr_sk); nothing references the embedding struct
+svc_sock that svc_tcp_handshake_done() reaches via container_of().
 
-This is a bug that could lead to memory corruption.  Since altmap is NULL,
-vmemmap_free() falls back to freeing the vmemmap pages into the system
-buddy allocator via free_pages() instead of the altmap.
-arch_remove_memory() then immediately destroys the physical linear mapping
-for this memory.  This injects unowned pages into the buddy allocator,
-causing machine checks or memory corruption if the system later attempts
-to allocate and use those freed pages.
+Two close races leave the in-flight callback writing through a freed
+svc_sock. svc_sock_free() calls tls_handshake_cancel() and discards
+its return value: a false return means handshake_complete() has
+already set HANDSHAKE_F_REQ_COMPLETED but hp_done() may not have
+finished, yet svc_sock_free() proceeds to kfree(svsk). The
+cancel-loser fall-through inside svc_tcp_handshake() itself produces
+the same window: when wait_for_completion_interruptible_timeout()
+returns <= 0 (timeout or signal) and tls_handshake_cancel() returns
+false, the function does not drain, returns, and svc_handle_xprt()
+calls svc_xprt_received(), which clears XPT_BUSY and can drop the
+last reference. A concurrent close then runs svc_sock_free() while
+svc_tcp_handshake_done() is still updating xpt_flags and walking
+svsk->sk_handshake_done.
 
-Fix this by passing params.altmap to arch_remove_memory() in the error
-path.
+The corruption surfaces as set_bit/clear_bit RMW into the freed
+xpt_flags slab slot and as complete_all() walking and writing the
+freed wait_queue_head_t list embedded in sk_handshake_done -- a
+slab-corruption primitive, not a benign read. The path is reachable
+on any TLS-enabled NFS server whenever a connection close overlaps
+the tlshd downcall delivery window; the interruptible wait means
+signal delivery suffices, not just SVC_HANDSHAKE_TO expiry.
 
-Link: https://lore.kernel.org/20260428081855.1249045-3-songmuchun@bytedance.com
-Fixes: 6b8f0798b85a ("mm/memory_hotplug: split memmap_on_memory requests across memblocks")
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Liam R. Howlett <liam@infradead.org>
-Reviewed-by: Georgi Djakov <georgi.djakov@oss.qualcomm.com>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
-Cc: Joao Martins <joao.m.martins@oracle.com>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Take svc_xprt_get(xprt) immediately before tls_server_hello_x509()
+so the in-flight callback owns its own reference. Release it on the
+two edges where the callback is guaranteed not to fire -- submission
+failure from tls_server_hello_x509() and a successful
+tls_handshake_cancel() -- and at the tail of
+svc_tcp_handshake_done() after complete_all().
+
+Fixes: b3cbf98e2fdf ("SUNRPC: Support TLS handshake in the server-side TCP socket code")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chris Mason <clm@meta.com>
+Assisted-by: kres (claude-opus-4-7)
+[cel: rewrote commit message to describe the actual change]
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory_hotplug.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sunrpc/svcsock.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -1470,7 +1470,7 @@ static int create_altmaps_and_memory_blo
- 		ret = create_memory_block_devices(cur_start, memblock_size, nid,
- 						  params.altmap, group);
- 		if (ret) {
--			arch_remove_memory(cur_start, memblock_size, NULL);
-+			arch_remove_memory(cur_start, memblock_size, params.altmap);
- 			kfree(params.altmap);
- 			goto out;
+--- a/net/sunrpc/svcsock.c
++++ b/net/sunrpc/svcsock.c
+@@ -471,6 +471,7 @@ static void svc_tcp_handshake_done(void
+ 	}
+ 	clear_bit(XPT_HANDSHAKE, &xprt->xpt_flags);
+ 	complete_all(&svsk->sk_handshake_done);
++	svc_xprt_put(xprt);
+ }
+ 
+ /**
+@@ -494,9 +495,13 @@ static void svc_tcp_handshake(struct svc
+ 	clear_bit(XPT_TLS_SESSION, &xprt->xpt_flags);
+ 	init_completion(&svsk->sk_handshake_done);
+ 
++	/* Pin the transport across the asynchronous handshake callback. */
++	svc_xprt_get(xprt);
++
+ 	ret = tls_server_hello_x509(&args, GFP_KERNEL);
+ 	if (ret) {
+ 		trace_svc_tls_not_started(xprt);
++		svc_xprt_put(xprt);
+ 		goto out_failed;
+ 	}
+ 
+@@ -505,6 +510,7 @@ static void svc_tcp_handshake(struct svc
+ 	if (ret <= 0) {
+ 		if (tls_handshake_cancel(sk)) {
+ 			trace_svc_tls_timed_out(xprt);
++			svc_xprt_put(xprt);
+ 			goto out_close;
  		}
+ 	}
 
 
