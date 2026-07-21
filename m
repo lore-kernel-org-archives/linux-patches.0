@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDA23DEFE7;
-	Tue, 21 Jul 2026 22:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892743B6C17;
+	Tue, 21 Jul 2026 22:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673726; cv=none; b=TMJ6Q8klJPWxsWyfBQHHu0DmhgMNLiE7eZdJhQNUHs+l6TDdrjHj8yPuoycx0IMArfA895+OIUcgusdBmdvm9oWPYJPqXxbctjxlrsX1Is4Dfo/jSmYxPeq5oXrKhPgwwHDYEq4CUwiV0aQqkVwDquRBqG56juMm8RovFtJlFXQ=
+	t=1784673728; cv=none; b=Yt2V62SGLdLernqqHFsnn25+MYQVtzzVqIQ7CkSqWIfIQT9BHCZ5wMZwD81S4mO3UxeV+o9TBu5VgXrLraAfDRIjd97nkkg2cIGmPz/2HNxlpxcCb5q1UyylJr5J+e1EPEtrSpxnQCl+y41fpjEq93l2DdIh8Ja0SJJaj/JvQ3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673726; c=relaxed/simple;
-	bh=9LZx/RYlqKonl1Bq1VufbaMRAgICZRfCH0JCUnTYf30=;
+	s=arc-20240116; t=1784673728; c=relaxed/simple;
+	bh=IFnbiG7Z+0NmCfvLe20iKT1p958DfvjYcoF7PXw5Z2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DB5uh/B3cNyOUTQ25s9D+1rfsDv0sXd/GOoMFgaXj6nFA+HyyMSm9kIM2mHQdYlIVsWXi74tJz0JLU3SwfV3XdJup9ad7A43ln0hT5MwJyd598Ni9oYRyWfF6pnQEuXbtmjRe4DpxbAZIeFgppJBGH1tV0gHTt5FksUeTM4iXkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0hQ9x4V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=itp7hCxrtp5BMgTZsz8dgTy5t03ynt5wQ88laHkW/A75gP3rCxKo5QBLtFucbVlrF4PxLGdOC+4reDDVt/hyLmDScx/mVx+a0X6UiYxFaJt47sgzkhenmlQwKZz8gra9vbSTfg/eOfn6wDnUtohWfjybRAX++R6Wsr0yoVgYOCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSN2wpTr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0hQ9x4V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A541F000E9;
-	Tue, 21 Jul 2026 22:42:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSN2wpTr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED86C1F000E9;
+	Tue, 21 Jul 2026 22:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673724;
-	bh=NOeZTH0o5HkiLMbTf6iuZBhQt5o+N3cqB7nh6C1sqqk=;
+	s=korg; t=1784673727;
+	bh=2bY4C+vEiZsoGEWJNnry1c8H2iTaZfPtJkFsEH/uvPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S0hQ9x4VTllnCgsYHwQjIVO+v0rjgDPw/MuKGjiZnvI21iMpZr1OV5gpAXvxImpvo
-	 By/YS3Bt1BM+vfmjfmlpzWWBJzuKr2MO/6bDIQoCRovD0yF7kVKwP6BsvcZ7K9hgMl
-	 mtRGkm8pTKElk30VMq9Q5AUbeevChzSjo9Kz7LHQ=
+	b=JSN2wpTr1z1FP3Jb1hujoJJxWV5pHKDYKyWozuHxgBao57uUkcXsELaDRx8AUL8uL
+	 8X8Z9Xlk7tCmOWavlpZMS/2II4uJwgoDMVXdP63RvRNLGVND0FhgyOfMU7pfeOFUwv
+	 3AuiWIIxPqLZ9MBMTkb+J0S3xaCaWLzCFZhPwAbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	syzbot+caacd220635a9cc3bac9@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 228/699] ocfs2: fix buffer head management in ocfs2_read_blocks()
-Date: Tue, 21 Jul 2026 17:19:47 +0200
-Message-ID: <20260721152400.842060820@linuxfoundation.org>
+Subject: [PATCH 5.10 219/699] ARM: imx3: Fix CCM node reference leak
+Date: Tue, 21 Jul 2026 17:19:38 +0200
+Message-ID: <20260721152400.641595928@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -59,63 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 6371a07148ee979af22a9d6f4c277462953a9a4a ]
+[ Upstream commit 36d46348eb5fc4bc505cd2290ddd70c25fbe6bb3 ]
 
-In ocfs2_read_blocks(), caller should't assume that buffer head returned
-by 'sb_getblk()' is exclusively owned and so 'put_bh()' always drops
-b_count from 1 to 0.  If it is not so, buffer head remains on hold and
-likely to be returned by the next call to 'sb_getblk()' unchanged - that
-is, with BH_Uptodate bit set even if it has failed validation previously,
-thus allowing to insert that buffer head into OCFS2 metadata cache and
-submit it to upper layers.  To avoid such a scenario, BH_Uptodate should
-be cleared immediately after 'validate()' callback has detected some data
-inconsistency.
+of_find_compatible_node() returns a referenced device node. The i.MX31
+and i.MX35 early init paths use the node to map the CCM registers with
+of_iomap(), but never drop the node reference.
 
-Link: https://lore.kernel.org/20260529094128.494293-1-dmantipov@yandex.ru
-Fixes: cf76c78595ca ("ocfs2: don't put and assigning null to bh allocated outside")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Reported-by: syzbot+caacd220635a9cc3bac9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=caacd220635a9cc3bac9
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Release the node after the mapping is created.
+
+Fixes: 2cf98d12958c ("ARM: imx3: Retrieve the CCM base address from devicetree")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/buffer_head_io.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/arm/mach-imx/mm-imx3.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ocfs2/buffer_head_io.c b/fs/ocfs2/buffer_head_io.c
-index c8a6e3480be1cb..86cd20ff9e44e2 100644
---- a/fs/ocfs2/buffer_head_io.c
-+++ b/fs/ocfs2/buffer_head_io.c
-@@ -352,8 +352,6 @@ int ocfs2_read_blocks(struct ocfs2_caching_info *ci, u64 block, int nr,
- 						wait_on_buffer(bh);
- 					put_bh(bh);
- 					bhs[i] = NULL;
--				} else if (bh && buffer_uptodate(bh)) {
--					clear_buffer_uptodate(bh);
- 				}
- 				continue;
- 			}
-@@ -382,8 +380,11 @@ int ocfs2_read_blocks(struct ocfs2_caching_info *ci, u64 block, int nr,
- 				BUG_ON(buffer_jbd(bh));
- 				clear_buffer_needs_validate(bh);
- 				status = validate(sb, bh);
--				if (status)
-+				if (status) {
-+					if (buffer_uptodate(bh))
-+						clear_buffer_uptodate(bh);
- 					goto read_failure;
-+				}
- 			}
- 		}
+diff --git a/arch/arm/mach-imx/mm-imx3.c b/arch/arm/mach-imx/mm-imx3.c
+index 5056438e5b4276..02d056ff73e63c 100644
+--- a/arch/arm/mach-imx/mm-imx3.c
++++ b/arch/arm/mach-imx/mm-imx3.c
+@@ -107,6 +107,7 @@ void __init imx31_init_early(void)
+ 	arm_pm_idle = imx31_idle;
+ 	np = of_find_compatible_node(NULL, NULL, "fsl,imx31-ccm");
+ 	mx3_ccm_base = of_iomap(np, 0);
++	of_node_put(np);
+ 	BUG_ON(!mx3_ccm_base);
+ }
+ 
+@@ -156,6 +157,7 @@ void __init imx35_init_early(void)
+ 	arch_ioremap_caller = imx3_ioremap_caller;
+ 	np = of_find_compatible_node(NULL, NULL, "fsl,imx35-ccm");
+ 	mx3_ccm_base = of_iomap(np, 0);
++	of_node_put(np);
+ 	BUG_ON(!mx3_ccm_base);
+ }
  
 -- 
 2.53.0
