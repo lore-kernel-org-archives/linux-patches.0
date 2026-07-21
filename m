@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE42237180;
-	Tue, 21 Jul 2026 20:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCECC386C1C;
+	Tue, 21 Jul 2026 20:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666006; cv=none; b=aMEfeW+aicN8G2sQzYgFSYI4Q1dveiQxaPhGPI6D0YI3rkgWPeUvfkuSUCmu3vZJZ8i0BVWSXE3x9I5ouappfOJjCeax4q6j0UWFOzBhYmnddyM2L5TB8hGcE+fygcHXSSbWYpdKlJXFyOodcNcCvFk0vl34RM+tVSEgab1AfwQ=
+	t=1784666009; cv=none; b=D6PV/RliNP9v+ElR5w0RGeK40VAoQHnvvHvEsdwnDYhim+nPght+WuoWYcb1d8oxpMi+OjBH9M3XcTTnkp8b6hzloswsjoVmGkIXb8uZYJ+BJPu5av4VVyp9m/FHJm4vPCvK5rpUPXwTcPSrfaEeo6NNp2Wke3Y0crWRgRyMuoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666006; c=relaxed/simple;
-	bh=pBPJX4cEmBDdSQIrUEGcC13iLGpEI2yXxPZpk1eTLfM=;
+	s=arc-20240116; t=1784666009; c=relaxed/simple;
+	bh=kWcP8b8vtd2+Ik8CZzBvAie+0UWeGpX/cj2TMDYvo/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sSkPMDWx/9A10xnJsOm2S+xy7NfR8yw2DNRDCsg8Xiw9M53QbCn5uXQT2NdWAp2q3FsjURMA7O5glwIj+5xObH/WOaewVuz9n7XNITHqCBrbRZpcoUiIbdpQlxvzYz+G82XI5EkEk1LRiBuUUb4sVmiZ8lnGYQ+sGAO6rtNxdtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IfqH/Bjb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sAihcv627MEMAkN5Dr6I55Xh1rfscr8XvXRX+Y9t1Q1wRcwvUFxKcMcyVlXkFg5akm1SG7QUHeu3u6bDz1ETXnPPQzs8fr9/Q7bfSMrdpC2WkJLS3W6Vd2bnut+BewRqDz7YkgxbsfCqHOb6wNCwgrHIIEHi4FZtbu5IbH2nYYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZh9dNi0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IfqH/Bjb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F89E1F000E9;
-	Tue, 21 Jul 2026 20:33:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZh9dNi0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1B01F000E9;
+	Tue, 21 Jul 2026 20:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666005;
-	bh=MB6qDQEKOdaJfYDVmS2P0mfjKM/gIlTluzL+pBHLIAg=;
+	s=korg; t=1784666008;
+	bh=zvHI0mBhv4Z1t+2ZPkZ1oXFNFPoKAyt4+HwZdus8ANI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IfqH/Bjb+6pi2Krmw5aFQwRd6ewNAn55iFyeg1Q09rr9cNrWH1hGV9TAwSscp6YWL
-	 Iw64w4+lMpSkFhPckKRL53GX+0QUwzXK3rONLNWseIevAsdw9YcsYQTYPlhCu/mnAw
-	 JUgbprxCNElr/1FBDPwTGlu3xbs6tyGlcv3t0ucA=
+	b=sZh9dNi0EcI80cie+m9VugS0xsaAXwDFA5S2+7iresVWgJ2yUjVZZx3Ke31v8bsR1
+	 iLMdcTFXu1WZtYbNGGaGVgAzox9N9YESN7FlsQSkyBmwTQN9h6H2qwrLAkQMvNY1Sj
+	 Zvj8bcK7r/VSxZGCU5CFBZJIfPjZSUU5ncE0rmuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Leonardo Scorcia <l.scorcia@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Hui Zhu <zhuhui@kylinos.cn>,
+	Dev Jain <dev.jain@arm.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0520/1266] pinctrl: mediatek: mt8167: Fix Schmitt trigger register offset of pins 34-39
-Date: Tue, 21 Jul 2026 17:15:57 +0200
-Message-ID: <20260721152453.488905764@linuxfoundation.org>
+Subject: [PATCH 6.6 0521/1266] vmalloc: fix NULL pointer dereference in is_vm_area_hugepages()
+Date: Tue, 21 Jul 2026 17:15:58 +0200
+Message-ID: <20260721152453.511845624@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,34 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
+From: Hui Zhu <zhuhui@kylinos.cn>
 
-[ Upstream commit 439bc91d20188901dac698bed4921caac76d9074 ]
+[ Upstream commit c55dd3b46c1208d6d2ea737a8aefef4aa4c70cb8 ]
 
-The correct Schmitt trigger register offset for pins 34-39 is 0xA00. Value
-was verified with SoC data sheet.
+find_vm_area() can return NULL if the given address is not a valid vmalloc
+area.  Check the return value before dereferencing it to avoid a kernel
+crash.
 
-Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
-Fixes: 82d70627e94a ("pinctrl: mediatek: Add MT8167 Pinctrl driver")
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://lore.kernel.org/20260529014130.671291-1-hui.zhu@linux.dev
+Fixes: 121e6f3258fe ("mm/vmalloc: hugepage vmalloc mappings")
+Signed-off-by: Hui Zhu <zhuhui@kylinos.cn>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-mt8167.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/vmalloc.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-mt8167.c b/drivers/pinctrl/mediatek/pinctrl-mt8167.c
-index ba7f30c3296fec..07148f4a8c008b 100644
---- a/drivers/pinctrl/mediatek/pinctrl-mt8167.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-mt8167.c
-@@ -244,7 +244,7 @@ static const struct mtk_pin_ies_smt_set mt8167_smt_set[] = {
- 	MTK_PIN_IES_SMT_SPEC(24, 25, 0xA00, 12),
- 	MTK_PIN_IES_SMT_SPEC(26, 30, 0xA00, 0),
- 	MTK_PIN_IES_SMT_SPEC(31, 33, 0xA00, 1),
--	MTK_PIN_IES_SMT_SPEC(34, 39, 0xA900, 2),
-+	MTK_PIN_IES_SMT_SPEC(34, 39, 0xA00, 2),
- 	MTK_PIN_IES_SMT_SPEC(40, 40, 0xA10, 11),
- 	MTK_PIN_IES_SMT_SPEC(41, 43, 0xA00, 10),
- 	MTK_PIN_IES_SMT_SPEC(44, 47, 0xA00, 11),
+diff --git a/include/linux/vmalloc.h b/include/linux/vmalloc.h
+index 897f2109f6ada8..5a6ef0ae032a7f 100644
+--- a/include/linux/vmalloc.h
++++ b/include/linux/vmalloc.h
+@@ -209,7 +209,9 @@ static inline bool is_vm_area_hugepages(const void *addr)
+ 	 * allocated in the vmalloc layer.
+ 	 */
+ #ifdef CONFIG_HAVE_ARCH_HUGE_VMALLOC
+-	return find_vm_area(addr)->page_order > 0;
++	struct vm_struct *area = find_vm_area(addr);
++
++	return area && area->page_order > 0;
+ #else
+ 	return false;
+ #endif
 -- 
 2.53.0
 
