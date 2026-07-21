@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D0F44AB9E;
-	Tue, 21 Jul 2026 21:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B939A439904;
+	Tue, 21 Jul 2026 21:37:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669837; cv=none; b=ZoaxYsnqLdbC54xHHPscckR/4MzCiRGLrQVbHaHDXv/e8QgAJKiYgPdOViBsRR/2Ag3NG2Vyqgh9gxPAFo/kgJWYoSewvHOP98xabK2C9Ko9vD47p3y7yyX31Hny3GupzxufdNvP/pBSLoMC3KZW+lOW8ss6/Ex3U4FwvXG4glw=
+	t=1784669839; cv=none; b=TUwpC3T9ntAP6CEeFUolwF6hQxCn19yMiDjH6VWfnqVqVm1XOjOuYSn/9dSy+jwWpqQWo8h+FHJQntYzLKVCP7BSdGjG+DDsSlBdo8IUFIP7SQpLzXuGQ595UGtsHjunwYo1ZFCyWfr4hglskG2Xsx9T8BCadOMPhmvWVB4kLUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669837; c=relaxed/simple;
-	bh=lExaHB0M9naTKkBj7WYCcp3eZh0LbY1fwy+GTDwxh/0=;
+	s=arc-20240116; t=1784669839; c=relaxed/simple;
+	bh=R70M+7hROGWE80VO19ird05N8CneNZ+U/TWv7PJa2NA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J0jY+4/l5XgsPNkkMZan0yYylMsPvxZCsMzmKryUfMLZc5AtA7yIg/7/DTWW1Tnu495vBiMHHFEljkGOZgPQ/qp+fEMLT0n//3ED24otB+W2SrVDxWno1sQ/t1yEsQpkPSJ3R8fBzrCyEabdW7OQ6j0Ro+5bbKy+wXMgCTWJqg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Syg6XNqt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eiQr56TaDbYwfK4VAekCXgsTJde5n0DnYunXWzipGHK6cmlIryQWyUnZq3pH25MMRFkUXMniKXLqMEMHBOJmFdIOtc+sktb0EzsFm1b6Pjz0XtGf978C/sCB7PPDG8gPOuqjFRfSowtckMQcAoyoc029q5g2nlb0fkH7J2I+xQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GmIqz3lW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Syg6XNqt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5FF1F000E9;
-	Tue, 21 Jul 2026 21:37:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GmIqz3lW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C0181F000E9;
+	Tue, 21 Jul 2026 21:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669836;
-	bh=YZX863FdP2+wfLNZc6liUBSC0XMacvE6UGyBKuQv6Aw=;
+	s=korg; t=1784669838;
+	bh=AjRj0UsncLgp9hfqhsnI7/4OsmefDksff94QNK8hafg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Syg6XNqtww855VgHL578DxTUcMBYHgGuHxP5GZEDxsvlbWb4QsvxsynHwTBh14NWf
-	 MH7m0iZrSFJsSgLXYTryBRhEeksmHDnlEX4sqbsbZUUHkS2zQlfc9L6AyzCvlJr8AL
-	 U4/M2Q6p/Ksu8WnvB03VsyG1zdP8Nn/Fep6nw+bQ=
+	b=GmIqz3lWsLT7DdewDS5y+YIuZIAIWp2JuJH+piOZthg9Uru9tqZ5OGBjdiYWzI/IJ
+	 GiOzyRJbkM4Ed34UTXzP7QR4KsBrvNDTDJDAyxFnf3Gh/bnKFt1/LRCd2J5O7+AjnL
+	 QWyJLNBwLVLpeaT335JTLhWl5iQ7wYwnBczIZkSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Wei Fang <wei.fang@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0662/1067] irqchip/gic-v3-its: Fix OF node reference leak
-Date: Tue, 21 Jul 2026 17:21:03 +0200
-Message-ID: <20260721152439.404471542@linuxfoundation.org>
+Subject: [PATCH 6.1 0653/1067] net: enetc: check the number of BDs needed for xdp_frame
+Date: Tue, 21 Jul 2026 17:20:54 +0200
+Message-ID: <20260721152439.200277036@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,46 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 2e1368a9d61bdf5502ddade004f223a5831c5b8c ]
+[ Upstream commit 555c5475e787802eeae0d2b91c2f66c330db2767 ]
 
-of_get_cpu_node() returns a referenced device node. In
-its_cpu_init_collection(), the Cavium 23144 workaround only uses the
-node to compare the CPU NUMA node, but the reference is never dropped.
+The size of xdp_redirect_arr array is ENETC_MAX_SKB_FRAGS. However, the
+number of fragments contained in xdp_frame may be greater than or equal
+to ENETC_MAX_SKB_FRAGS, which will cause the access to xdp_redirect_arr
+to be out of bounds.
 
-Use the device_node cleanup helper for the CPU node reference so it is
-released when leaving the workaround block, including the NUMA mismatch
-return path.
-
-Fixes: fbf8f40e1658 ("irqchip/gicv3-its: numa: Enable workaround for Cavium thunderx erratum 23144")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
-Acked-by: Marc Zyngier <maz@kernel.org>
+Fixes: 9d2b68cc108d ("net: enetc: add support for XDP_REDIRECT")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20260626073244.2168214-1-wei.fang@oss.nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 43209758e83284..f031cef97f69de 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -3198,11 +3198,9 @@ static void its_cpu_init_collection(struct its_node *its)
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index a0177130dc37ac..80eec93f998701 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -1400,6 +1400,7 @@ int enetc_xdp_xmit(struct net_device *ndev, int num_frames,
+ {
+ 	struct enetc_tx_swbd xdp_redirect_arr[ENETC_MAX_SKB_FRAGS] = {0};
+ 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
++	struct skb_shared_info *shinfo;
+ 	struct enetc_bdr *tx_ring;
+ 	int xdp_tx_bd_cnt, i, k;
+ 	int xdp_tx_frm_cnt = 0;
+@@ -1411,6 +1412,12 @@ int enetc_xdp_xmit(struct net_device *ndev, int num_frames,
+ 	prefetchw(ENETC_TXBD(*tx_ring, tx_ring->next_to_use));
  
- 	/* avoid cross node collections and its mapping */
- 	if (its->flags & ITS_FLAGS_WORKAROUND_CAVIUM_23144) {
--		struct device_node *cpu_node;
-+		struct device_node *cpu_node __free(device_node) = of_get_cpu_node(cpu, NULL);
- 
--		cpu_node = of_get_cpu_node(cpu, NULL);
--		if (its->numa_node != NUMA_NO_NODE &&
--			its->numa_node != of_node_to_nid(cpu_node))
-+		if (its->numa_node != NUMA_NO_NODE && its->numa_node != of_node_to_nid(cpu_node))
- 			return;
- 	}
- 
+ 	for (k = 0; k < num_frames; k++) {
++		if (xdp_frame_has_frags(frames[k])) {
++			shinfo = xdp_get_shared_info_from_frame(frames[k]);
++			if (unlikely((shinfo->nr_frags + 1) > ENETC_MAX_SKB_FRAGS))
++				break;
++		}
++
+ 		xdp_tx_bd_cnt = enetc_xdp_frame_to_xdp_tx_swbd(tx_ring,
+ 							       xdp_redirect_arr,
+ 							       frames[k]);
 -- 
 2.53.0
 
