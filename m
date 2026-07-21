@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382C746EF95;
-	Tue, 21 Jul 2026 20:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DC046F49E;
+	Tue, 21 Jul 2026 20:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665619; cv=none; b=QIkZexjFBLkvEPstdPgwDSxzIPrgEPtLZ90dYkn6XxzRstim7fyAvTyE2nWQeTw8lvfNA7NpVPHhMJJElgrZhx4YreVr2bR4ACFJWZKuq8IKwErjemI29gNRKGPCH4q6SHDRGfyinMi7rOrzJq8T2GKh3vMv4w3XTKfQmj6gsb4=
+	t=1784665622; cv=none; b=igk99VyFV8egx6i+XKqoUixuJdLLH+g++1hgqRgoFs/hIT8mZoUjRqdWsWPFt+w8X4NXM6DydLujiUY/KAaEI0rOB3RccE95O0RNEMKAi8ns2dz0ICQEzGaxWd89XKmCS9ea2+8YMS+LzTuTduNOs8uHtESQ7xknH5wo0liLWuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665619; c=relaxed/simple;
-	bh=jUGL8lMHPnZ0MIYRSKluJDYg8Yoe2LzoEbNXUSTDK8w=;
+	s=arc-20240116; t=1784665622; c=relaxed/simple;
+	bh=d4A3PIbbR2Gv52oY8s+l+2+kYfaOXcLNAqHILv+oklo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PbdpOn/DVcM62ooXuMtSBna0Pkp8xEQqAQZYLEDjjcixXXZ6cQ6g6lf37pm0dKOAXRhj7Dpnp4pGq2OXIjkEh1KPgmc6i+/cDgqsPvq2OZfJu5RdwGtlpQbnrOWVWqTRzktKBlNVpP4kwVNBdGUfSwxcLFpzsYdUwZurn3xV1Dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vz5nHgGe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DbGeQp9H5QiEGWuVC844PPG6AEbERqmCg1nZ42Ua2IZeUaFZTOQjgZd4TqRpR+j4hLwPXiyDc7OurI9x9Ej8nciagwtcQfAED9pHBj4guuXD/gxp8Nggg9FaBFSuhjBibF09TBRnq+Fq9P9xwCCqqfO7DirZRjlD4b5r8v4C/KA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHyysDP6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vz5nHgGe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5C71F000E9;
-	Tue, 21 Jul 2026 20:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHyysDP6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4402B1F00A3D;
+	Tue, 21 Jul 2026 20:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665618;
-	bh=a2icXd2nBuNBxQc5LCaNFDQKnNCLu81uPBw0llEMarc=;
+	s=korg; t=1784665620;
+	bh=DjNhaEFShLy8BSzWrjj7z6W8YjRR7fKP/DN2wT4MmdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vz5nHgGeMy2JknKh09UytPN2tWyN/+vgzF24jTf4PmgY2sZrLDyUfj0EPryMULWBV
-	 eWsaaFV7tnVZ7J1nLuov4H0irRL00uG6cngWMZousC7x9TliidZBDJmFhULO56bWZ1
-	 D2Gce8yuWFk33uL7SMQrj465IV+6IEHs9JdgN1Vc=
+	b=FHyysDP6dd5N86yk4Fka4gOAhODHVM7wVufc8lb7jc0LoQyLRDGLd0KMyLwSxOSrL
+	 NEH/K0aUSFVsiqUlJVBFK54V9gBYDdIZtMv5V7ba4P4En8p77TnB5/R5eudaS3C8oj
+	 9y0Ix11C9Y8rDl5RlWHKZu/nvfjEyYzFKMa3sUao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Liu <liubaolin@kylinos.cn>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0365/1266] Documentation: proc: fix section numbering in table of contents
-Date: Tue, 21 Jul 2026 17:13:22 +0200
-Message-ID: <20260721152449.994552113@linuxfoundation.org>
+Subject: [PATCH 6.6 0374/1266] wifi: rtw88: fix OOB read from firmware RX descriptor exceeding DMA buffer
+Date: Tue, 21 Jul 2026 17:13:31 +0200
+Message-ID: <20260721152450.194518457@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,50 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baolin Liu <liubaolin@kylinos.cn>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 97a7bd8c2c58a6d820df563d1d0f68aafec45477 ]
+[ Upstream commit 6e76e9ed273dfb4b3333a5ebbb94958cc5752ab6 ]
 
-Commit e24ccaaf7ec4 ("block: remove last remaining traces of IDE
-documentation") removed the IDE section but left its table of
-contents entry behind.
-Fix the stale entry and renumber the following sections.
+In rtw_pci_rx_napi(), new_len is computed as the sum of pkt_len (14-bit
+descriptor field, max 16383) and pkt_offset (drv_info_sz + shift, both
+firmware-controlled). The result can exceed RTK_PCI_RX_BUF_SIZE (11478),
+causing an out-of-bounds read from the pre-allocated DMA buffer when
+skb_put_data copies new_len bytes. The USB transport already validates
+this (rtw_usb_rx_data_put checks against RTW_USB_MAX_RECVBUF_SZ); the
+PCIe path does not.
 
-Fixes: e24ccaaf7ec4 ("block: remove last remaining traces of IDE documentation")
-Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Message-ID: <20260424090654.19229-1-liubaolin12138@163.com>
+Add a check that new_len does not exceed the DMA buffer size.
+
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260421111434.3389674-1-tristmd@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/filesystems/proc.rst | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/wireless/realtek/rtw88/pci.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/Documentation/filesystems/proc.rst b/Documentation/filesystems/proc.rst
-index 2b59cff8be1798..0a186efa0cec53 100644
---- a/Documentation/filesystems/proc.rst
-+++ b/Documentation/filesystems/proc.rst
-@@ -23,13 +23,13 @@ fixes/update part 1.1  Stefani Seibold <stefani@seibold.net>    June 9 2009
-   1	Collecting System Information
-   1.1	Process-Specific Subdirectories
-   1.2	Kernel data
--  1.3	IDE devices in /proc/ide
--  1.4	Networking info in /proc/net
--  1.5	SCSI info
--  1.6	Parallel port info in /proc/parport
--  1.7	TTY info in /proc/tty
--  1.8	Miscellaneous kernel statistics in /proc/stat
--  1.9	Ext4 file system parameters
-+  1.3	Networking info in /proc/net
-+  1.4	SCSI info
-+  1.5	Parallel port info in /proc/parport
-+  1.6	TTY info in /proc/tty
-+  1.7	Miscellaneous kernel statistics in /proc/stat
-+  1.8	Ext4 file system parameters
-+  1.9	/proc/consoles - Shows registered system consoles
- 
-   2	Modifying System Parameters
- 
+diff --git a/drivers/net/wireless/realtek/rtw88/pci.c b/drivers/net/wireless/realtek/rtw88/pci.c
+index bd6d8b2af2420e..1da0bc436d8f8a 100644
+--- a/drivers/net/wireless/realtek/rtw88/pci.c
++++ b/drivers/net/wireless/realtek/rtw88/pci.c
+@@ -1074,6 +1074,11 @@ static u32 rtw_pci_rx_napi(struct rtw_dev *rtwdev, struct rtw_pci *rtwpci,
+ 		 * discard the frame if none available
+ 		 */
+ 		new_len = pkt_stat.pkt_len + pkt_offset;
++		if (unlikely(new_len > RTK_PCI_RX_BUF_SIZE)) {
++			rtw_dbg(rtwdev, RTW_DBG_RX,
++				"oversized RX packet: %u\n", new_len);
++			goto next_rp;
++		}
+ 		new = dev_alloc_skb(new_len);
+ 		if (WARN_ONCE(!new, "rx routine starvation\n"))
+ 			goto next_rp;
 -- 
 2.53.0
 
