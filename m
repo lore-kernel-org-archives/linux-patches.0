@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456F83D6CCA;
-	Tue, 21 Jul 2026 22:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF15639768C;
+	Tue, 21 Jul 2026 22:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673448; cv=none; b=fdot1Vi3UPHzyLFRlVVDsXzUYobz8ZlqFh0G1kXGX1wMjHiO5+oUdxbLTYi/bM4NBA7VGcCohJRX/LA9xQbUNIoKJMxrD/cpiExctPYvHtKAPRX7ue5j8JEOM+TkPX7C2sR3P6SB1o13Exud9Kh7neAcbZNhO4A0ZkBg4Lh6bO4=
+	t=1784673451; cv=none; b=mNVqS6LVqhQxb+AZHvRoANTcQuOUkuPGuDmNKnyU/3HSgUVhmKwX/Bxjf9xISPB0ysB5UDElsce67qseap4ln8+0MwShyA8abu6pHGRz/3d1tr3+6etTy6tA6fL+cKP06nywrhFPEMP/kqay5NIl2WDkFsWLdWuFF37cKm34WbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673448; c=relaxed/simple;
-	bh=phzhqetDq7c7kwI1U/ShScdfSkRvIaOCJdZuupXUL1E=;
+	s=arc-20240116; t=1784673451; c=relaxed/simple;
+	bh=YUN6R7jo5zaTGoVorrtujUSC0eSs/E1EOreevTusaak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BVRNF3KH5dacYjKXqweEl4LS6gZgNZP9fo4lN7QPltzKu8Dvf/8UT4vSPF+mRbrBztN0GVy6WEtjz/OpjmOuF33aCmZutFv92Wfe8lnk8V/69EnKvSGRY+yoYONe3ax0Cj07graGe/qYYmv9I5mzYLu/OmP3aQVDINXOpF12vsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYYAj+cS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UoULipcntDrfFAcE78OuvhsZT+HO1f4Fgr0u8sJAmcuijVxbAvniy0oJEmfgzDpa4BqPiFxSi6xSezftukaue8L5aD/HXTl//9GGnWsoG2MVJL0BPid3FWCv52ePZHtoZKpVyeEdE3nQjc5OeqFFP2BB8a1W8RN/crx80H7MNAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0mQ91xg8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYYAj+cS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1DC31F000E9;
-	Tue, 21 Jul 2026 22:37:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0mQ91xg8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45AF71F00A3A;
+	Tue, 21 Jul 2026 22:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673447;
-	bh=39puYlK6ZgheWA7aW3wNiq/G/r0TESB7USkYISwIiCE=;
+	s=korg; t=1784673449;
+	bh=+qcxWSfQu2Oe2gUNCOaHsmsMyYPsdCDJ277fzJabNoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UYYAj+cSdLg1tJDZ9Z68CultV9tyjvTnmqs3+iSr7YKhNRXZa4H9TO5yynB5KLKxk
-	 Sdt3qzGtWAOlotU9G1LVYGJYbby99KcdPTtYpG0ahZshc4rsawOIjLWGt6Ayl7DjD3
-	 FD9JsE5OSH+dQTP9GTOQ40hn1NLsh2JYi+/2V5Z0=
+	b=0mQ91xg8h9UTP4pHGfnM32QJyt/CEg403zCF3Swh1e/sAZ2ZNz84eA7rSezdEwsiX
+	 SCw5smPy2iq/9xr0mrOUVhuyXcgi0jLCVkSP0n0To+rWaNXOxiR0azlnLGbDRa1gZ5
+	 2d8vW2TET+ENjfl7Ryfw8hKUVl57KnGAzHqvYyxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Matthias Feser <mfe@KBSgmbhfr.onmicrosoft.com>,
-	Moteen Shah <m-shah@ti.com>
-Subject: [PATCH 5.10 165/699] serial: 8250_omap: clear rx_running on zero-length DMA completes
-Date: Tue, 21 Jul 2026 17:18:44 +0200
-Message-ID: <20260721152359.426384122@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ruijie Li <ruijieli51@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.10 130/699] crypto: pcrypt - restore callback for non-parallel fallback
+Date: Tue, 21 Jul 2026 17:18:09 +0200
+Message-ID: <20260721152358.641830942@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,50 +57,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Feser <mfe@KBSgmbhfr.onmicrosoft.com>
+From: Ruijie Li <ruijieli51@gmail.com>
 
-commit 061b627ba534230a18ec4d7251562af12325d06a upstream.
+commit ed459fe319376e876de433d12b6c6772e612ca36 upstream.
 
-On AM33xx RX DMA only triggers when the FIFO reaches the
-configured threshold (typically 48 bytes). For smaller bursts
-no DMA request is issued and the FIFO is drained by RX timeout.
+pcrypt installs pcrypt_aead_done() on the child AEAD request before
+trying to submit it through padata.  If padata_do_parallel() returns
+-EBUSY, pcrypt falls back to calling the child AEAD directly.
 
-In this case __dma_rx_do_complete() can legitimately see count == 0.
+That fallback must not keep the padata completion callback.  Otherwise
+an asynchronous completion runs pcrypt_aead_done() even though the
+request was never enrolled in padata.
 
-The current code exits early in this case and does not clear
-dma->rx_running, leaving the DMA state inconsistent. This can
-prevent RX DMA from restarting and may cause
-omap_8250_rx_dma_flush() to fail, marking DMA as broken.
+Restore the original request callback and callback data before calling
+the child AEAD directly.  This keeps the fallback path aligned with a
+direct AEAD request while leaving the parallel path unchanged.
 
-Fix this by clearing dma->rx_running once the DMA transfer has
-completed or been terminated, even if no data was transferred.
-
-Fixes: a5fd8945a478 ("serial: 8250: 8250_omap.c: Clear DMA RX running status only after DMA termination is done")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Matthias Feser <mfe@KBSgmbhfr.onmicrosoft.com>
-Reviewed-by: Moteen Shah <m-shah@ti.com>
-Link: https://patch.msgid.link/BE3P281MB55155F2F5795E411F5A65282EE0B2@BE3P281MB5515.DEUP281.PROD.OUTLOOK.COM
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 662f2f13e66d ("crypto: pcrypt - Call crypto layer directly when padata_do_parallel() return -EBUSY")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Ruijie Li <ruijieli51@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_omap.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ crypto/pcrypt.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -883,11 +883,12 @@ static void __dma_rx_do_complete(struct
- 				dev_err(p->port.dev, "teardown incomplete\n");
- 		}
+--- a/crypto/pcrypt.c
++++ b/crypto/pcrypt.c
+@@ -122,6 +122,8 @@ static int pcrypt_aead_encrypt(struct ae
+ 		return -EINPROGRESS;
+ 	if (err == -EBUSY) {
+ 		/* try non-parallel mode */
++		aead_request_set_callback(creq, flags, req->base.complete,
++					  req->base.data);
+ 		return crypto_aead_encrypt(creq);
  	}
-+
-+	dma->rx_running = 0;
- 	if (!count)
- 		goto out;
- 	ret = tty_insert_flip_string(tty_port, dma->rx_buf, count);
  
--	dma->rx_running = 0;
- 	p->port.icount.rx += ret;
- 	p->port.icount.buf_overrun += count - ret;
- out:
+@@ -173,6 +175,8 @@ static int pcrypt_aead_decrypt(struct ae
+ 		return -EINPROGRESS;
+ 	if (err == -EBUSY) {
+ 		/* try non-parallel mode */
++		aead_request_set_callback(creq, flags, req->base.complete,
++					  req->base.data);
+ 		return crypto_aead_decrypt(creq);
+ 	}
+ 
 
 
