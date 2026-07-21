@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919DA33689F;
-	Tue, 21 Jul 2026 17:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD3E38399A;
+	Tue, 21 Jul 2026 17:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654066; cv=none; b=J2A9XhVLQV7iK3/w98Grw/ecp7ySldmPi2FpidVm4AQzuSkwBBrrs/aZmIUMw3Z1zWlRzeGgqwoLJ/GinbNYIqwalss+7W6eaeEd/jgl04zZQmV51M/LnIywy4ALWjUT9nuNr8YReKIBu7uFiLxk/BzbOek2Bm9YJ10WsodjAxo=
+	t=1784654069; cv=none; b=PTG+/9QKmmm2eQf/Z9mi8kk5FjMp5JhES6Lu1qFBa3tzp8tuLb6VfH05eSCdpcuk1YzaTsU6xTg7juwqlu6TJasHuG+hKy+CfA8SWvc+IqlLZcLPRso9ngNynH3m6o5nsM4szUSHwHvmW5j+1rMpleYU/dP2+NL8O2po4eQzaDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654066; c=relaxed/simple;
-	bh=cqtqk5m4PSm7aep9j2lqQUHhATzRNZz6w3gC0bLEUGI=;
+	s=arc-20240116; t=1784654069; c=relaxed/simple;
+	bh=Wv6JrHJ1TbQ2B/Vt4GMk1BZCEmX/tDdylK0GZrV++7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CuGPlbEXt3ZEUT6KOuU3lcHuNv+6xYLE5NPiaDd7Vw+EPaI2T1cXn3cZyhkVCvHHP40+BfDZ0LDcqTrxzmeA+zu1efsVH5j1qdkuLOlMjBqUF5GgAiiAPW8hFaVQ1Em9kIcKtL+rMvU5Gr08Df58DA3KDrNfA63xq+JFDgeZiBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qQscXDVR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tLQRiaUCyyaThR5MXGCUBDCbhC5xTvzjGeFXRtC1Wf+WW7mi7jUFi+8B0T46cI03QI9KHw+HyWsUKQnao1S7srilXUmKhHh1+lm3L8MroQ5egK1VG/rtt28+wodDOmxBMzPN3FGNpMP2TJvxf7Hlm4nI194RAS0dACT1yJnljIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kmrc/AkP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qQscXDVR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04AD51F000E9;
-	Tue, 21 Jul 2026 17:14:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kmrc/AkP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A235D1F000E9;
+	Tue, 21 Jul 2026 17:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654065;
-	bh=fxvLfpHVFcoiAUWa9bEr6RkOGQiX0vgBnfWD8GHmjRo=;
+	s=korg; t=1784654068;
+	bh=c7PWxh0zyY41uDf1xXa670eWlgJae+eecHpBlM7c6iE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qQscXDVR9/cSV0/QMYCbAy0U9dTfGxM8fOF34Picu0aOS6uudwR6Dsqh0E5dicN8O
-	 jJXd8fBfWg29dCinPJ9IET4xPP+0j/5NkwXYH63JvBOwwP7isHl9+iU5YBAWzeacIn
-	 6E8WDjmytfi7ROR3QGg30W8PyrLHWbU9omwaya74=
+	b=Kmrc/AkPO/2kbh4/A47+ELlK3pwpIx+b+mnYOBrFS7KJfj4IQX0JC8LQSHZhBcxwq
+	 xP0I1Iir1TMz5l1sNTjh0BObJa982p3K9PuQw8fFO0qqnz35lbF34WzHWJIeRWSR2A
+	 AOj2Il58Rv2eCnI7pmayKOfwincPFRr+TlKYGRGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.1 1562/2077] KVM: nVMX: Move vTPR vs. TPR Threshold consistency check into "normal" checks
-Date: Tue, 21 Jul 2026 17:20:35 +0200
-Message-ID: <20260721152629.623245451@linuxfoundation.org>
+	Farhan Ali <alifm@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PATCH 7.1 1563/2077] KVM: s390: pci: Fix handling of AIF enable without AISB
+Date: Tue, 21 Jul 2026 17:20:36 +0200
+Message-ID: <20260721152629.646084348@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -49,136 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
 
-commit ebdac7554abb347ca4197be241116842161acd9b upstream.
+commit 3e3aa6da87d30a0064a17b836685cd43c90a3572 upstream.
 
-Move the off-by-default consistency check for vmcs12.tpr_threshold vs.
-the virtual APIC vTPR into the "normal" controls checks, as waiting until
-KVM has loaded some amount of state is unnecessary and actively dangerous.
-Specifically, failure to unwind vmcs01.GUEST_CR3 to KVM's value when EPT
-is disabled results in KVM running L1 with an L1-controlled CR3, not with
-KVM's CR3!
+When a guest seeks to register IRQs without a summary bit specified,
+ensure that the associated GAITE then stores 0 for the guest AISB
+location instead of virt_to_phys(page_address(NULL)).
 
-Alternatively, KVM could simply reset the MMU to force a reload of
-vmcs01.GUEST_CR3, but the _only_ reason the check was shoved into a "late"
-flow was to wait until the vmcs12 pages were retrieved.  Rather than build
-up more crusty code, simply access vTPR using a regular guest memory access
-(performance isn't a concern).  To circumvent the restrictions that led to
-KVM deferring nested_get_vmcs12_pages(), (a) use a VM-scoped API to read
-guest memory so that it always hits non-SMM memslots (for RSM), and (b)
-skip the check (since its off-by-default anyways) when the vCPU doesn't
-want to run, i.e. when userspace is restoring/stuffing state.
-
-If reading guest memory fails, simply skip the consistency check, as KVM's
-de facto ABI is that VMX instruction accesses to non-existent memory get
-PCI Bus Error semantics, where reads return 0xFFs.  And if vTPR=0xFF, then
-the vTPR is guaranteed to be greater than or equal to TPR_THRESHOLD.
-
-Fixes: 1100e4910ad2 ("KVM: nVMX: Add an off-by-default module param to WARN on missed consistency checks")
+Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260612145642.452392-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |   66 ++++++++++++++++++++--------------------------
- 1 file changed, 29 insertions(+), 37 deletions(-)
+ arch/s390/kvm/pci.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -553,6 +553,9 @@ static int nested_vmx_check_msr_bitmap_c
- static int nested_vmx_check_tpr_shadow_controls(struct kvm_vcpu *vcpu,
- 						struct vmcs12 *vmcs12)
- {
-+	gpa_t vtpr_gpa = vmcs12->virtual_apic_page_addr + APIC_TASKPRI;
-+	u32 vtpr;
-+
- 	if (!nested_cpu_has(vmcs12, CPU_BASED_TPR_SHADOW))
- 		return 0;
+--- a/arch/s390/kvm/pci.c
++++ b/arch/s390/kvm/pci.c
+@@ -300,9 +300,14 @@ static int kvm_s390_pci_aif_enable(struc
  
-@@ -562,6 +565,32 @@ static int nested_vmx_check_tpr_shadow_c
- 	if (CC(!nested_cpu_has_vid(vmcs12) && vmcs12->tpr_threshold >> 4))
- 		return -EINVAL;
+ 	gaite->gisc = fib->fmt0.isc;
+ 	gaite->count++;
+-	gaite->aisbo = fib->fmt0.aisbo;
+-	gaite->aisb = virt_to_phys(page_address(aisb_page) + (fib->fmt0.aisb &
+-							      ~PAGE_MASK));
++	if (fib->fmt0.sum == 1) {
++		gaite->aisbo = fib->fmt0.aisbo;
++		gaite->aisb = virt_to_phys(page_address(aisb_page) +
++					   (fib->fmt0.aisb & ~PAGE_MASK));
++	} else {
++		gaite->aisbo = 0;
++		gaite->aisb = 0;
++	}
+ 	aift->kzdev[zdev->aisb] = zdev->kzdev;
+ 	spin_unlock_irq(&aift->gait_lock);
  
-+	/*
-+	 * Do the illegal vTPR vs. TPR Threshold consistency check if and only
-+	 * if KVM is configured to WARN on missed consistency checks, otherwise
-+	 * it's a waste of time.  KVM needs to rely on hardware to fully detect
-+	 * an illegal combination due to the vTPR being writable by L1 at all
-+	 * times (it's an in-memory value, not a VMCS field).  I.e. even if the
-+	 * check passes now, it might fail at the actual VM-Enter.
-+	 *
-+	 * If reading guest memory fails, skip the check as KVM's de facto ABI
-+	 * for VMX instruction accesses to non-existent memory is to provide
-+	 * PCI Bus Error semantics (reads return 0xFFs), in which case the vTPR
-+	 * is guaranteed to greater than or equal to the threshold.
-+	 *
-+	 * Note!  Deliberately use the VM-scoped API when reading guest memory,
-+	 * to ensure the read doesn't hit SMRAM when restoring L2 state on RSM,
-+	 * and only perform the check when in KVM_RUN, to avoid a false failure
-+	 * if userspace hasn't yet configured memslots during state restore.
-+	 */
-+	if (warn_on_missed_cc && vcpu->wants_to_run &&
-+	    nested_cpu_has(vmcs12, CPU_BASED_TPR_SHADOW) &&
-+	    !nested_cpu_has_vid(vmcs12) &&
-+	    !nested_cpu_has2(vmcs12, SECONDARY_EXEC_VIRTUALIZE_APIC_ACCESSES) &&
-+	    !kvm_read_guest(vcpu->kvm, vtpr_gpa, &vtpr, sizeof(vtpr)) &&
-+	    CC((vmcs12->tpr_threshold & GENMASK(3, 0)) > ((vtpr >> 4) & GENMASK(3, 0))))
-+		return -EINVAL;
-+
- 	return 0;
- }
- 
-@@ -3085,38 +3114,6 @@ static int nested_vmx_check_controls(str
- 	return 0;
- }
- 
--static int nested_vmx_check_controls_late(struct kvm_vcpu *vcpu,
--					  struct vmcs12 *vmcs12)
--{
--	void *vapic = to_vmx(vcpu)->nested.virtual_apic_map.hva;
--	u32 vtpr = vapic ? (*(u32 *)(vapic + APIC_TASKPRI)) >> 4 : 0;
--
--	/*
--	 * Don't bother with the consistency checks if KVM isn't configured to
--	 * WARN on missed consistency checks, as KVM needs to rely on hardware
--	 * to fully detect an illegal vTPR vs. TRP Threshold combination due to
--	 * the vTPR being writable by L1 at all times (it's an in-memory value,
--	 * not a VMCS field).  I.e. even if the check passes now, it might fail
--	 * at the actual VM-Enter.
--	 *
--	 * Keying off the module param also allows treating an invalid vAPIC
--	 * mapping as a consistency check failure without increasing the risk
--	 * of breaking a "real" VM.
--	 */
--	if (!warn_on_missed_cc)
--		return 0;
--
--	if ((exec_controls_get(to_vmx(vcpu)) & CPU_BASED_TPR_SHADOW) &&
--	    nested_cpu_has(vmcs12, CPU_BASED_TPR_SHADOW) &&
--	    !nested_cpu_has_vid(vmcs12) &&
--	    !nested_cpu_has2(vmcs12, SECONDARY_EXEC_VIRTUALIZE_APIC_ACCESSES) &&
--	    (CC(!vapic) ||
--	     CC((vmcs12->tpr_threshold & GENMASK(3, 0)) > (vtpr & GENMASK(3, 0)))))
--		return -EINVAL;
--
--	return 0;
--}
--
- static int nested_vmx_check_address_space_size(struct kvm_vcpu *vcpu,
- 				       struct vmcs12 *vmcs12)
- {
-@@ -3666,11 +3663,6 @@ enum nvmx_vmentry_status nested_vmx_ente
- 			return NVMX_VMENTRY_KVM_INTERNAL_ERROR;
- 		}
- 
--		if (nested_vmx_check_controls_late(vcpu, vmcs12)) {
--			vmx_switch_vmcs(vcpu, &vmx->vmcs01);
--			return NVMX_VMENTRY_VMFAIL;
--		}
--
- 		if (nested_vmx_check_guest_state(vcpu, vmcs12,
- 						 &entry_failure_code)) {
- 			exit_reason.basic = EXIT_REASON_INVALID_STATE;
 
 
