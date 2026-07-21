@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBCF345BD4E;
-	Tue, 21 Jul 2026 15:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF1745BD4E;
+	Tue, 21 Jul 2026 15:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649043; cv=none; b=s6vlksQciTlgp/oCJzErGxD3EL8fbHVUELg55oKZwpufkMI36tmwzM86078a9/VqbtfakteavrH0zcXw+uqGJSrk2dQgHWM3zqDgN8xVUpUrfotmF9aGRY5iylXf8NEPcQoAFrgA0GhKRcLE5RGbf8rUH88YNZnkmgGTD3SjI24=
+	t=1784649045; cv=none; b=bUH88dT2v9yqVGVToyqZa4b7EcQNPSGCXmP3QNEwfI3NbyEnNx32bd231e0jm3irGPrRmszZwjRh6xJ+A1kIG6U1/VnKMWbg47ukjv5pqqMrntbnM+nmh/XDLs+MKU4sGM7Dkmda7tZDa+x1dnqTuDkU4xoVUHLmjiCUeZkxvcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649043; c=relaxed/simple;
-	bh=X72ze8KtJ4WLt5CWs/1wxx73n2dxYBI+i7vHQG6HVX4=;
+	s=arc-20240116; t=1784649045; c=relaxed/simple;
+	bh=aN2X2vYWXPpGfCRVs5AuZwgKJGeyUX3uls6UWBOXgik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ayQC2fYSELo27YVa8KEhgE+Q7vo4k8WER/Ap6/whZRT+OzRNCbhLfqzkH4OEPWKAZAdCX6mk+jLOPqNrz0w7qEqvBRm8ETxTlv00CJk4AB09r/2UDxZJyoiKiNm6A/NdqsSMhHd1gIQNuYTvnBgVUxBMpIbNobgrooFwWt71LMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tFl0dCpA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U2eTt6+3dETEQ52laaBGO5qz69gR9JhIkMOSGGYSG45EcfEO9gJGuwLE7c3u2f/6DvVQsC98CGH3bdoKTOT2VJ+wunvZ04ttMQhJymzQU3iQwKYY7KJU+441VmLb9+x/go3nJZIsFHJOo0yt/xgF/xgCHwZr54d/2Op4xx1Zsus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwaxYqVn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tFl0dCpA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32BE51F000E9;
-	Tue, 21 Jul 2026 15:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwaxYqVn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3E71F000E9;
+	Tue, 21 Jul 2026 15:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649041;
-	bh=BBKcyJW9+dnetrKYVkH8WBJPqgxb6EjaoK+y4O2prEo=;
+	s=korg; t=1784649044;
+	bh=87bKEDZxHSylky/QZvnzqshyj4X7NhI+YpjZj6Ii4po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tFl0dCpAnSqnzz36bfJUdO/43Ttafxm2g00BEfYAlpezAeB21UhG+dKr1ORZn6zxI
-	 OVl0A+Rg+Y3BjvLzBK3vGhhDpF34XaEMT3y1F07uIoOkEapUyGw9rrvZuF9JAV/OTg
-	 dj7O07xqfDDUPwypXiA051/H98S8V2JFRfk5WpXM=
+	b=zwaxYqVnfIUzta2IuoFnQr7McRLEtL4Z7oQ9nCWSGFlsc8xYt4wUpTDt2JbeySmj5
+	 F58yppRNgwSGhzk9jxIIyU2lCb4lF7xnOUKnyrlE3wr0Zv2lRYjhxo5spKYpMNHocI
+	 TbFsPzdt3z4Zx1/WPhJFEeXtmYzOyFU9gVbVy+is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Wilck <martin.wilck@suse.com>,
-	Don Brace <don.brace@microchip.com>,
-	storagedev@microchip.com,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Sumit Saxena <sumit.saxena@broadcom.com>,
-	mpi3mr-linuxdrv.pdl@broadcom.com,
-	MPT-FusionLinux.pdl@broadcom.com,
-	Yihang Li <liyihang9@h-partners.c>,
-	Christoph Hellwig <hch@lst.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	sashiko <sashiko@sashiko.dev>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0428/2077] scsi: Revert "scsi: Fix sas_user_scan() to handle wildcard and multi-channel scans"
-Date: Tue, 21 Jul 2026 17:01:41 +0200
-Message-ID: <20260721152602.840345424@linuxfoundation.org>
+Subject: [PATCH 7.1 0429/2077] bpf: Reject exclusive maps as inner maps in map-in-map
+Date: Tue, 21 Jul 2026 17:01:42 +0200
+Message-ID: <20260721152602.865043531@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -61,145 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Wilck <martin.wilck@suse.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 8c292e89bd831c8a13e92f3429ef66bbe0b83677 ]
+[ Upstream commit 9a3c3c49c333760c8944dadacbe114c1884546ef ]
 
-This reverts commit 37c4e72b0651e7697eb338cd1fb09feef472cc1a.
+An exclusive map (created with excl_prog_hash) is bound to a single
+program by hash: check_map_prog_compatibility() refuses to load any
+program whose digest does not match map->excl_prog_sha. That check
+only runs for maps a program references directly, i.e. its used_maps.
+A map reached at runtime through a map-of-maps is never in used_maps,
+and bpf_map_meta_equal() does not consider excl_prog_sha, so an
+exclusive map can be inserted into a non-exclusive outer map and
+then looked up and mutated by an unrelated program, bypassing the
+exclusivity guarantee.
 
-Said commit causes excessive resource usage and even system freeze with
-some controllers, e.g. smartpqi and hisi_sas. The justification provided
-by the patch authors [1] was supporting a special mode of the mpi3mr and
-mpt3sas, so-called "Tri-mode", in which NVMe drives are exposed as SCSI
-devices on a separate channel. While that's useful for these drivers, it
-seems wrong to cause major breakage for other drivers for the sake of
-this feature.
+For the signed loader this defeats the metadata map exclusivity check
+added in the signed loader: the cached map->sha[] is validated against
+the signed hash while another program on a hostile host rewrites the
+frozen map's contents through the outer map.
 
-[1] https://lore.kernel.org/linux-scsi/CAFdVvOwjy+2ORJ6uJkspiLTPF05481U7gcS4QohFOFGPqAs8ig@mail.gmail.com/
-
-Fixes: 37c4e72b0651 ("scsi: Fix sas_user_scan() to handle wildcard and multi-channel scans")
-Signed-off-by: Martin Wilck <martin.wilck@suse.com>
-Cc: Don Brace <don.brace@microchip.com>
-Cc: storagedev@microchip.com
-Cc: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Cc: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
-Cc: Kashyap Desai <kashyap.desai@broadcom.com>
-Cc: Sumit Saxena <sumit.saxena@broadcom.com>
-Cc: mpi3mr-linuxdrv.pdl@broadcom.com
-Cc: MPT-FusionLinux.pdl@broadcom.com
-Cc: Yihang Li <liyihang9@h-partners.c>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260513174236.430465-3-mwilck@suse.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: baefdbdf6812 ("bpf: Implement exclusive map creation")
+Reported-by: sashiko <sashiko@sashiko.dev>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260601150248.394863-2-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_scan.c          |  2 +-
- drivers/scsi/scsi_transport_sas.c | 60 +++++++------------------------
- 2 files changed, 13 insertions(+), 49 deletions(-)
+ kernel/bpf/map_in_map.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
-index ef22a4228b8550..b118ed0bf53f81 100644
---- a/drivers/scsi/scsi_scan.c
-+++ b/drivers/scsi/scsi_scan.c
-@@ -1910,7 +1910,7 @@ int scsi_scan_host_selected(struct Scsi_Host *shost, unsigned int channel,
- 
- 	return 0;
- }
--EXPORT_SYMBOL(scsi_scan_host_selected);
-+
- static void scsi_sysfs_add_devices(struct Scsi_Host *shost)
- {
- 	struct scsi_device *sdev;
-diff --git a/drivers/scsi/scsi_transport_sas.c b/drivers/scsi/scsi_transport_sas.c
-index 13412702188e44..d8f2377b017fe4 100644
---- a/drivers/scsi/scsi_transport_sas.c
-+++ b/drivers/scsi/scsi_transport_sas.c
-@@ -40,8 +40,6 @@
- #include <scsi/scsi_transport_sas.h>
- 
- #include "scsi_sas_internal.h"
--#include "scsi_priv.h"
+diff --git a/kernel/bpf/map_in_map.c b/kernel/bpf/map_in_map.c
+index 645bd30bc9a9d5..d2cbab4bdf644a 100644
+--- a/kernel/bpf/map_in_map.c
++++ b/kernel/bpf/map_in_map.c
+@@ -20,7 +20,8 @@ struct bpf_map *bpf_map_meta_alloc(int inner_map_ufd)
+ 	/* Does not support >1 level map-in-map */
+ 	if (inner_map->inner_map_meta)
+ 		return ERR_PTR(-EINVAL);
 -
- struct sas_host_attrs {
- 	struct list_head rphy_list;
- 	struct mutex lock;
-@@ -1685,22 +1683,6 @@ int scsi_is_sas_rphy(const struct device *dev)
- }
- EXPORT_SYMBOL(scsi_is_sas_rphy);
++	if (inner_map->excl_prog_sha)
++		return ERR_PTR(-ENOTSUPP);
+ 	if (!inner_map->ops->map_meta_equal)
+ 		return ERR_PTR(-ENOTSUPP);
  
--static void scan_channel_zero(struct Scsi_Host *shost, uint id, u64 lun)
--{
--	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
--	struct sas_rphy *rphy;
--
--	list_for_each_entry(rphy, &sas_host->rphy_list, list) {
--		if (rphy->identify.device_type != SAS_END_DEVICE ||
--		    rphy->scsi_target_id == -1)
--			continue;
--
--		if (id == SCAN_WILD_CARD || id == rphy->scsi_target_id) {
--			scsi_scan_target(&rphy->dev, 0, rphy->scsi_target_id,
--					 lun, SCSI_SCAN_MANUAL);
--		}
--	}
--}
+@@ -101,6 +102,8 @@ void *bpf_map_fd_get_ptr(struct bpf_map *map,
+ 	inner_map = __bpf_map_get(f);
+ 	if (IS_ERR(inner_map))
+ 		return inner_map;
++	if (inner_map->excl_prog_sha)
++		return ERR_PTR(-ENOTSUPP);
  
- /*
-  * SCSI scan helper
-@@ -1710,41 +1692,23 @@ static int sas_user_scan(struct Scsi_Host *shost, uint channel,
- 		uint id, u64 lun)
- {
- 	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
--	int res = 0;
--	int i;
--
--	switch (channel) {
--	case 0:
--		mutex_lock(&sas_host->lock);
--		scan_channel_zero(shost, id, lun);
--		mutex_unlock(&sas_host->lock);
--		break;
--
--	case SCAN_WILD_CARD:
--		mutex_lock(&sas_host->lock);
--		scan_channel_zero(shost, id, lun);
--		mutex_unlock(&sas_host->lock);
-+	struct sas_rphy *rphy;
- 
--		for (i = 1; i <= shost->max_channel; i++) {
--			res = scsi_scan_host_selected(shost, i, id, lun,
--						      SCSI_SCAN_MANUAL);
--			if (res)
--				goto exit_scan;
--		}
--		break;
-+	mutex_lock(&sas_host->lock);
-+	list_for_each_entry(rphy, &sas_host->rphy_list, list) {
-+		if (rphy->identify.device_type != SAS_END_DEVICE ||
-+		    rphy->scsi_target_id == -1)
-+			continue;
- 
--	default:
--		if (channel <= shost->max_channel) {
--			res = scsi_scan_host_selected(shost, channel, id, lun,
--						      SCSI_SCAN_MANUAL);
--		} else {
--			res = -EINVAL;
-+		if ((channel == SCAN_WILD_CARD || channel == 0) &&
-+		    (id == SCAN_WILD_CARD || id == rphy->scsi_target_id)) {
-+			scsi_scan_target(&rphy->dev, 0, rphy->scsi_target_id,
-+					 lun, SCSI_SCAN_MANUAL);
- 		}
--		break;
- 	}
-+	mutex_unlock(&sas_host->lock);
- 
--exit_scan:
--	return res;
-+	return 0;
- }
- 
- 
+ 	inner_map_meta = map->inner_map_meta;
+ 	if (inner_map_meta->ops->map_meta_equal(inner_map_meta, inner_map))
 -- 
 2.53.0
 
