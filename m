@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7C333A9D6;
-	Tue, 21 Jul 2026 20:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EAD3845A7;
+	Tue, 21 Jul 2026 20:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664921; cv=none; b=V5YaYohHlZDmu5EFcYNlDbGJtr6C8PgNymMc5QGXAv8YxN6CSM07GfxNe/a5KqsNWCSc1K5dz/jISoxWe7n+oPEWVOTUe+ouXdn39g07AFMEesdK7+Hz90vRJG97vPxx76jA+vvc9PLK6jISAABoAv972xEvR7NJ7/vgumB3CMo=
+	t=1784664924; cv=none; b=P9Q/P4jxmCG29+BTm+eQX6bYa58dTW07yHPnDhPwWn7GS1Hn7mf77pCTEsDYiwec/Hi6rGiWlGxXD/gl/gcFSmltMt2ay/DnhUhPj5cD6Z6X4QV6Qa2eKEI5eC7Ba/X9ZcmEBMHY5XkxsJdI4IX8q2HI6S+NOOXHc3j3r2CiPLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664921; c=relaxed/simple;
-	bh=9baZOSdqa5fGkYcQ+bGnMiZ/zNLvBjHe+EETa2vxfOE=;
+	s=arc-20240116; t=1784664924; c=relaxed/simple;
+	bh=8DrVneJwTo2C98fts3/Tu6LTGT02uRAYgXpCvu1wcJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e1uMwP1muAS3Dh+oRCRooAg+qtd5TS+49KicQcj9r7otaXM6zMXzMPDl6Poswa5i3s95lwPnP3cUFE+MgB/jbIzBcnkxW31FZqSODdNt3N/B7moJHrWOg5MwkYezbinuyNezuSbA4Bg8UTvNMqWk+csqjtYOoIi80WBO5C34NHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O9GKJSvS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tQM865UqmL4639jOnrUWv9CECAAaVIutNolBnL2J62mm9uyUohB0buNJh68gHkUdcMcUOeH4qqNBEdkV/MoZexpsD/Nx07Ni4gko9C4wq8DAp/y1gKjN7CT8HME7rIw/NqzCfaPrpBCtDW+/RLac991a1XjW6Z79UKD4vlyr218=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3Z81v+i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O9GKJSvS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFA71F000E9;
-	Tue, 21 Jul 2026 20:15:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3Z81v+i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D051F000E9;
+	Tue, 21 Jul 2026 20:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664920;
-	bh=kT50HIL5ZrSEEqwnFxFtz1bWrWU1wh8ckewJ70U1l0g=;
+	s=korg; t=1784664923;
+	bh=X5EeOWIpcFQAOWGkYMrItjUjsp5qkpkfUgdSB0nn1XI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O9GKJSvSaLGJneLuQwOUB2DGfv6FITk4nUQV12J5IHZ+U047bfGH7aFO9fdjlqFzz
-	 TGR7TEEXYHv120v0fQpiqYmu5MWUu5/q251h8a/9PwKIF2PQZxL4+FuGdCyRL3adDS
-	 eijh8nIVCzmk6IJpi4Q9bBb1FlWtXn/c5p6qxj/I=
+	b=L3Z81v+ifFjWpE3s3P8SmWLDm6c9Tqs8VzykxqJD4nZquZ5/oYeIri4ppsfHanGBO
+	 lz5rii4DDlh4HRLhhlgAk8amxRDwOEFfUPGKHyeQZy2S6fgPxxevUm/heYz9lXD4EF
+	 9zNAiPd+8Wq3eAC5PCNI7DB0kSqxlAhsYegMTjaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Dongdong <zhaodongdong@kylinos.cn>,
+	HyeongJun An <sammiee5311@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 0109/1266] ALSA: ice1712: check snd_ctl_new1() return value
-Date: Tue, 21 Jul 2026 17:09:06 +0200
-Message-ID: <20260721152444.239019341@linuxfoundation.org>
+Subject: [PATCH 6.6 0110/1266] ALSA: seq: Fix uninitialised heap leak in snd_seq_event_dup()
+Date: Tue, 21 Jul 2026 17:09:07 +0200
+Message-ID: <20260721152444.262842104@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,98 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Dongdong <zhaodongdong@kylinos.cn>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit 2b929b91b0f3bc6de8a844370049cd99ee8e31ff upstream.
+commit 435990e25bf1f4af3e6df12a6fbfd1f7ba4a97d4 upstream.
 
-snd_ctl_new1() can return NULL when memory allocation fails. The
-ice1712 driver calls snd_ctl_new1() without checking the return value
-before dereferencing the pointer in multiple places (ice1712.c,
-ice1724.c, aureon.c), which can lead to NULL pointer dereferences.
+snd_seq_event_dup() copies an incoming event into a pool cell and, in
+the UMP-enabled build, clears the trailing cell->ump.raw.extra word that
+the memcpy() did not cover.  The guard deciding whether to clear it
+compares the copied size against sizeof(cell->event):
 
-Add NULL checks after snd_ctl_new1() calls and return -ENOMEM if any
-fails.
+	memcpy(&cell->ump, event, size);
+	if (size < sizeof(cell->event))
+		cell->ump.raw.extra = 0;
 
-Assisted-by: Opencode:DeepSeek-V4-Flash
+For a legacy (non-UMP) event, size == sizeof(struct snd_seq_event) ==
+sizeof(cell->event), so the condition is false and the extra word keeps
+stale data.  The cell pool is allocated with kvmalloc() (not zeroed) and
+cells are reused via a free list, so that word holds uninitialised heap
+or leftover event data.
+
+When such a cell is delivered to a UMP client (client->midi_version > 0)
+that set SNDRV_SEQ_FILTER_NO_CONVERT -- so the legacy event reaches it
+unconverted -- snd_seq_read() reads it out as the larger struct
+snd_seq_ump_event and copies the stale word to user space, a 4-byte
+kernel heap infoleak to an unprivileged /dev/snd/seq client.
+
+Compare against sizeof(cell->ump) instead, so the trailing word is zeroed
+for every event shorter than the UMP cell.
+
+Fixes: 46397622a3fa ("ALSA: seq: Add UMP support")
 Cc: stable@vger.kernel.org
-Fixes: b9a4efd61b6b ("ALSA: ice1712,ice1724: fix the kcontrol->id initialization")
-Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
-Link: https://patch.msgid.link/tencent_42E5E2AB1B6A5101F7EE8C2117F1F687BB07@qq.com
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260623233841.853326-1-sammiee5311@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ice1712/aureon.c  |    2 ++
- sound/pci/ice1712/ice1712.c |    8 ++++++++
- sound/pci/ice1712/ice1724.c |    6 ++++++
- 3 files changed, 16 insertions(+)
+ sound/core/seq/seq_memory.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/ice1712/aureon.c
-+++ b/sound/pci/ice1712/aureon.c
-@@ -1900,6 +1900,8 @@ static int aureon_add_controls(struct sn
- 			for (i = 0; i < ARRAY_SIZE(cs8415_controls); i++) {
- 				struct snd_kcontrol *kctl;
- 				kctl = snd_ctl_new1(&cs8415_controls[i], ice);
-+				if (!kctl)
-+					return -ENOMEM;
- 				if (i > 1)
- 					kctl->id.device = ice->pcm->device;
- 				err = snd_ctl_add(ice->card, kctl);
---- a/sound/pci/ice1712/ice1712.c
-+++ b/sound/pci/ice1712/ice1712.c
-@@ -2372,21 +2372,29 @@ int snd_ice1712_spdif_build_controls(str
- 	if (snd_BUG_ON(!ice->pcm_pro))
- 		return -EIO;
- 	kctl = snd_ctl_new1(&snd_ice1712_spdif_default, ice);
-+	if (!kctl)
-+		return -ENOMEM;
- 	kctl->id.device = ice->pcm_pro->device;
- 	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
- 	kctl = snd_ctl_new1(&snd_ice1712_spdif_maskc, ice);
-+	if (!kctl)
-+		return -ENOMEM;
- 	kctl->id.device = ice->pcm_pro->device;
- 	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
- 	kctl = snd_ctl_new1(&snd_ice1712_spdif_maskp, ice);
-+	if (!kctl)
-+		return -ENOMEM;
- 	kctl->id.device = ice->pcm_pro->device;
- 	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
- 	kctl = snd_ctl_new1(&snd_ice1712_spdif_stream, ice);
-+	if (!kctl)
-+		return -ENOMEM;
- 	kctl->id.device = ice->pcm_pro->device;
- 	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
---- a/sound/pci/ice1712/ice1724.c
-+++ b/sound/pci/ice1712/ice1724.c
-@@ -2393,16 +2393,22 @@ static int snd_vt1724_spdif_build_contro
- 		return err;
+--- a/sound/core/seq/seq_memory.c
++++ b/sound/core/seq/seq_memory.c
+@@ -366,7 +366,7 @@ int snd_seq_event_dup(struct snd_seq_poo
+ 	size = snd_seq_event_packet_size(event);
+ 	memcpy(&cell->ump, event, size);
+ #if IS_ENABLED(CONFIG_SND_SEQ_UMP)
+-	if (size < sizeof(cell->event))
++	if (size < sizeof(cell->ump))
+ 		cell->ump.raw.extra = 0;
+ #endif
  
- 	kctl = snd_ctl_new1(&snd_vt1724_spdif_default, ice);
-+	if (!kctl)
-+		return -ENOMEM;
- 	kctl->id.device = ice->pcm->device;
- 	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
- 	kctl = snd_ctl_new1(&snd_vt1724_spdif_maskc, ice);
-+	if (!kctl)
-+		return -ENOMEM;
- 	kctl->id.device = ice->pcm->device;
- 	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
- 	kctl = snd_ctl_new1(&snd_vt1724_spdif_maskp, ice);
-+	if (!kctl)
-+		return -ENOMEM;
- 	kctl->id.device = ice->pcm->device;
- 	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
 
 
