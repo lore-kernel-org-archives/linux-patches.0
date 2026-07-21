@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6E03B52E7;
-	Tue, 21 Jul 2026 22:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328A73B42CB;
+	Tue, 21 Jul 2026 22:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672077; cv=none; b=hKGSU94QIB9Kz7KS7ZJVayuR86SrCrBLqT4zw/EEX56sDWf/7qentF1BAQp/UlVL42O9jYGnk6eiggmW0AyIr+twQFJGYoiCN+nvwMFoAw0TXcrMYHuChRJWBGD5UmpyV4bOXllhtRNTb21BdWcCptMYs2cx2nHsv/EgTl5Di8Y=
+	t=1784672080; cv=none; b=Mj9cqL8UlLusr0pMErLoDZjhADz7ppO+b8ev5VKUC4my2lmX73Ulu387C1R7BVLebYa4XRN7BzVDJtNJXNG6tctjvDP2iT6F5Lb7aW3bxFJ0KgIJQ2OnrFmxfj+imTHMZEORvpue/O+yn19tW2qtAuQjRwNr2Lg2X7xqFIGqjGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672077; c=relaxed/simple;
-	bh=KBthC1cPhkuq4KphNsjzR3bwylCDcSGbPnHjO2ffHV0=;
+	s=arc-20240116; t=1784672080; c=relaxed/simple;
+	bh=vYlRTg0pobgbHcgX4h+ab/4ZjGGGIRvUzIMzmGVmPaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RznX8bbEHKtaDdFu/pIH/402WwEHUBbaWDggSbTSjRAKuM+UN4biecXUh9PYsANt8//4a3LRLWvTMJFyicMKnEu4gZjhPCi8ujXp0JVwh65icXKe5w9EhC+JK9sliSr0fwK2rA/edQ+W45aCJ2y6gBydTVUCE70t14PxR9EN874=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOYjCSTH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sEIma5kzeTiLsf/zySjKCwdFn4Tay24ccI+2ad5M6eaGOVORqkwMIBu1eGzZgjLnCppcg34XH7ZsYfn0IFNNvAIEyM4QJ3NfklSTwbufXN3yC8H4U6aV/tO32XsiWGuP+Xr819zasZbc7sJ+2B7WooawXvXxKLgdMGbqF0hbRvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPJZkWjG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOYjCSTH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39D61F000E9;
-	Tue, 21 Jul 2026 22:14:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPJZkWjG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 984D81F000E9;
+	Tue, 21 Jul 2026 22:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672076;
-	bh=vYqjHg0lypATLwDFU8O32S+hVKkiaP+xrwCky6WbP5I=;
+	s=korg; t=1784672079;
+	bh=xbpRUPiYR5iFt+0fLoXz1nkrSfyQI/qZr6huikeNwck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BOYjCSTH+ARFOYzWNuW36QmNjxSNgWT80GJySUiNxZZlpL7w7HP7xvv4nMQkYgkvT
-	 p03X3qh6VSTlTjIKXitJ14FfbrRS6W5/vQllI0UT4F55+ONBhMBrHzmcdZTjnA27Ox
-	 wUQA/AqGEQZAk2SjCtNVDLXw2NqnPVVxkI9s0jR8=
+	b=CPJZkWjGbnkydGyi0daEMJDixg6YiRmGx8JHtoeW0pnDcec1xXq7sqjlCAlybz+ye
+	 6OeVH2xwk+OUa6rtIJMpTA9sripAmyJopUnq10Gbx+iO0/QGcLdHWwXW0f1c+c8T4I
+	 DfiSpy5OH4/a+Vwe8Y65cb4JkXccZ1OuLSHP04PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 451/843] netfilter: nf_reject: skip iphdr options when looking for icmp header
-Date: Tue, 21 Jul 2026 17:21:26 +0200
-Message-ID: <20260721152416.173707870@linuxfoundation.org>
+Subject: [PATCH 5.15 487/843] gpio: mvebu: fail probe if gpiochip registration fails
+Date: Tue, 21 Jul 2026 17:22:02 +0200
+Message-ID: <20260721152416.985233818@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,35 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit af8d6ae09c0a5f8b8a0d5680203c74b3c1daa85b ]
+[ Upstream commit 479e91fc92416a4d54d2b3150aa1e4550d9cc759 ]
 
-Not a big deal but this hould have used the real ip header length and not the
-base header size.  As-is, if there are options then
-nf_skb_is_icmp_unreach() result will be random.
+mvebu_gpio_probe() registers the GPIO chip with
+devm_gpiochip_add_data() but ignores the return value. If registration
+fails, probe continues and leaves later code operating on a GPIO chip
+that was never published to gpiolib.
 
-Fixes: db99b2f2b3e2 ("netfilter: nf_reject: don't reply to icmp error messages")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Return the registration error so the device fails probe cleanly.
+
+Fixes: fefe7b092345 ("gpio: introduce gpio-mvebu driver for Marvell SoCs")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260624131645.86884-1-pengpeng@iscas.ac.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_reject_ipv4.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-mvebu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index 4d16d49b430e9a..fbd264aa0a7ec0 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -80,7 +80,7 @@ static bool nf_skb_is_icmp_unreach(const struct sk_buff *skb)
- 	if (iph->protocol != IPPROTO_ICMP)
- 		return false;
+diff --git a/drivers/gpio/gpio-mvebu.c b/drivers/gpio/gpio-mvebu.c
+index b965513f44fea1..db32f5b4a46cdc 100644
+--- a/drivers/gpio/gpio-mvebu.c
++++ b/drivers/gpio/gpio-mvebu.c
+@@ -1233,7 +1233,10 @@ static int mvebu_gpio_probe(struct platform_device *pdev)
+ 		BUG();
+ 	}
  
--	thoff = skb_network_offset(skb) + sizeof(*iph);
-+	thoff = skb_network_offset(skb) + ip_hdrlen(skb);
+-	devm_gpiochip_add_data(&pdev->dev, &mvchip->chip, mvchip);
++	err = devm_gpiochip_add_data(&pdev->dev, &mvchip->chip, mvchip);
++	if (err)
++		return dev_err_probe(&pdev->dev, err,
++				     "failed to register gpiochip\n");
  
- 	tp = skb_header_pointer(skb,
- 				thoff + offsetof(struct icmphdr, type),
+ 	/* Some MVEBU SoCs have simple PWM support for GPIO lines */
+ 	if (IS_ENABLED(CONFIG_PWM)) {
 -- 
 2.53.0
 
