@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B514246D56A;
-	Tue, 21 Jul 2026 19:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F362385D67;
+	Tue, 21 Jul 2026 19:41:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662878; cv=none; b=RG8kPHEbLxbqNdHYfmhCgUKXuLYheK2UM79BMqVeOPY/cr3HDwNTPcjXU6+0JV5UITNeWIXxC3PrFEcq4DjZcU3/6S84DFtYFWqsLp9BuEv7GYvN8jX9ZeLF/bKLwcKGMb+n64FrtGalLdzsLjoEWy445En8L2SbhXynZe1jhug=
+	t=1784662881; cv=none; b=QY8t7SoRDfxL2jtRuSxWkll68ScWXX8AYLkvwWv02Pccn5QwxymSTCOlMz0JlmwUbHSTGRJWcFvNwypI61MiyRrFF42sG7kazGOz9QfBRIrLfOJVKHSXWepZWJz2wWp9icJFVysIh8WVQEajmqtu+htAKaBloKf1EvGKxGd92Us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662878; c=relaxed/simple;
-	bh=8ciax9MvdAIDGod0O48nOGV1a0L2hwW8fYdv6hY1YeI=;
+	s=arc-20240116; t=1784662881; c=relaxed/simple;
+	bh=syOqBsvhLUTaXZDNrhHdXDpCl8Afu1y2AcLCJy4y0P8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g89jdq0oKS3giXbWhBOblGmEhV3ZyAwX6OLG+Jt/a5avgTuiuzPoIhcGLogAbLVmNvhGOld5wUoZTHsLHtQHwvlOO8YVdklczccG6FpgefB8eYf1ckH6K2krMqeu6KyWhNcTdtKKV7O3ePY1l7Ds+Jb8n7jMnSuK+oe5INPx1mQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CuITTjda; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YBJCEeBMHkaro2+uANnNABbcoZzF7L+WzHgblu494msWvkYEMN0tXiFaKC/P44iaP+P5OhAe7CTBjOW0lTO8U9EGGNUNfn+PkkQ18dJ/ax+JCiVY4xtO7E9y4TO01VRQ/MIRPyL75oepNvZ5uuq3bsuofwL8X7K6cp9IfmquP9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAiBe+1G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuITTjda"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278D11F000E9;
-	Tue, 21 Jul 2026 19:41:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAiBe+1G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3EF21F000E9;
+	Tue, 21 Jul 2026 19:41:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662877;
-	bh=doBYobZplIMdk/xJQGZo7FXDegAYW1HItYdrO9IGxLQ=;
+	s=korg; t=1784662880;
+	bh=tB5xhDmNsogjh8Pbc356/56yIp5RdLYJS2IwHBsFcSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CuITTjda4A480r8sWswluOlaCDSxOgT+nqFVQ2G0mSZqjntq2bvu2UtIwacCTnWkP
-	 ozaxwyfW7jaRMj1AGKgLqFQ6KYGF4o36aI2DHFOOmT4RID8vQIQmuaTceg7/jnsRXK
-	 nrYfFHWukD7QZqHoxKp7S2IGaicInQHN1Wvv219Q=
+	b=wAiBe+1Gpg9XZ+z6ko0CnlRHP7QonNdnw70dei07MPcvuX6LqPXLqtLcuZZVgERZQ
+	 gSZgW19StYA6+cAdC/HwkTdh+Sz1b+Sq84HjZbN9YJMiEy9lh+2a3Gk7LbUmss58X4
+	 BUO16zQh0wixHDRokyPKCSX5LKJEBhVyAP4HSZ7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geetha sowjanya <gakula@marvell.com>,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0612/1276] octeontx2-pf: mcs: Fix mcs resources free on PF shutdown
-Date: Tue, 21 Jul 2026 17:17:35 +0200
-Message-ID: <20260721152459.803208137@linuxfoundation.org>
+Subject: [PATCH 6.12 0613/1276] net/sched: act_ct: fix nf_connlabels leak on two error paths
+Date: Tue, 21 Jul 2026 17:17:36 +0200
+Message-ID: <20260721152459.826604671@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,48 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geetha sowjanya <gakula@marvell.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 450d0e90b10393bd9f50c127875a9fdd4cc81c30 ]
+[ Upstream commit 16e088016f38cf728a0de709c3335cc5a3850476 ]
 
-On PF shutdown, the current driver free mcs hardware
-resources though mcs resources are not allocated to it.
-This patch checks the mcs resources status and if resources
-are allocated then only sends mailbox message to free them.
+tcf_ct_fill_params() calls nf_connlabels_get() (setting put_labels) when
+TCA_CT_LABELS is present, but two later error sites use a bare return
+instead of "goto err", skipping the err: nf_connlabels_put() cleanup.
+They also precede the "p->put_labels = put_labels" assignment, so the
+tcf_ct_params_free() fallback does not release the count either. Each
+failed RTM_NEWACTION on these paths leaks one nf_connlabels reference:
+net->ct.labels_used is incremented and never released. The action is
+reachable with CAP_NET_ADMIN over the netns, i.e. from an unprivileged
+user namespace on default-userns kernels.
 
-Fixes: c54ffc73601c ("octeontx2-pf: mcs: Introduce MACSEC hardware offloading")
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Link: https://patch.msgid.link/1781636420-19816-3-git-send-email-sbhatta@marvell.com
+Impact: an unprivileged user with CAP_NET_ADMIN over a network namespace
+(e.g. via user namespaces) leaks one nf_connlabels reference per failed
+RTM_NEWACTION on the two error paths; net->ct.labels_used is never
+released.
+
+The err: label is safe to reach from both sites: p->tmpl is still NULL
+there (kzalloc'd, not yet assigned) and nf_ct_put(NULL) is a no-op, so
+no inline release is needed.
+
+Fixes: 70f06c115bcc ("sched: act_ct: switch to per-action label counting")
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260617215708.1115818-1-michael.bommarito@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c    | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/sched/act_ct.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-index b288edd9e22db0..8f07d19819cec8 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-@@ -1808,11 +1808,16 @@ int cn10k_mcs_init(struct otx2_nic *pfvf)
+diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
+index c82755749211c8..fc71cc407bc8bc 100644
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -1294,7 +1294,8 @@ static int tcf_ct_fill_params(struct net *net,
+ 	if (tb[TCA_CT_ZONE]) {
+ 		if (!IS_ENABLED(CONFIG_NF_CONNTRACK_ZONES)) {
+ 			NL_SET_ERR_MSG_MOD(extack, "Conntrack zones isn't enabled.");
+-			return -EOPNOTSUPP;
++			err = -EOPNOTSUPP;
++			goto err;
+ 		}
  
- void cn10k_mcs_free(struct otx2_nic *pfvf)
- {
-+	struct cn10k_mcs_cfg *cfg = pfvf->macsec_cfg;
-+
- 	if (!test_bit(CN10K_HW_MACSEC, &pfvf->hw.cap_flag))
- 		return;
- 
--	cn10k_mcs_free_rsrc(pfvf, MCS_TX, MCS_RSRC_TYPE_SECY, 0, true);
--	cn10k_mcs_free_rsrc(pfvf, MCS_RX, MCS_RSRC_TYPE_SECY, 0, true);
-+	if (!list_empty(&cfg->txsc_list)) {
-+		cn10k_mcs_free_rsrc(pfvf, MCS_TX, MCS_RSRC_TYPE_SECY, 0, true);
-+		cn10k_mcs_free_rsrc(pfvf, MCS_RX, MCS_RSRC_TYPE_SECY, 0, true);
-+	}
-+
- 	kfree(pfvf->macsec_cfg);
- 	pfvf->macsec_cfg = NULL;
- }
+ 		tcf_ct_set_key_val(tb,
+@@ -1307,7 +1308,8 @@ static int tcf_ct_fill_params(struct net *net,
+ 	tmpl = nf_ct_tmpl_alloc(net, &zone, GFP_KERNEL);
+ 	if (!tmpl) {
+ 		NL_SET_ERR_MSG_MOD(extack, "Failed to allocate conntrack template");
+-		return -ENOMEM;
++		err = -ENOMEM;
++		goto err;
+ 	}
+ 	p->tmpl = tmpl;
+ 	if (tb[TCA_CT_HELPER_NAME]) {
 -- 
 2.53.0
 
