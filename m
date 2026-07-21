@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C0A35C6A7;
-	Tue, 21 Jul 2026 21:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CFB35C6A7;
+	Tue, 21 Jul 2026 21:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668683; cv=none; b=Ib3u1skEj7J3lxARwHjW/VfW6DM7OHb2QLLM9YYJGbA24UJkz841SW1fyE0lwa+zPdmSDU9raWewIANLG7Ue2XP0fQY1Jr3OnGnOEapspj4PM3HAHXf6g5mNmPaSbxrvpZej8Dxah/DyySGvCYVCAklXTPOT4wvcQurwIle93DA=
+	t=1784668687; cv=none; b=Wx0OkSNmWJSB9JdYbgKVn9MGk56ZajJs5aky2j7f26jlx+9tfWY7wui7CnQparyBOcvDjvjzp7aK7zt3SfoAFT0eMHLl9A06iVhMFrpXANuIyDvvNKH0qEYBckbC4Bq5PR+YxqGRPY1db5sxuYdxdLj9C95mLzgt/vNO9mQtcUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668683; c=relaxed/simple;
-	bh=9kG1Y17N9JJXQy56bwcwd4/1/OIfOfGobXVzyiQabZ8=;
+	s=arc-20240116; t=1784668687; c=relaxed/simple;
+	bh=CO5cdSicEOCYN84ogxcT6YhFJ5OFtdhWa6YFz0rLdUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SnzdrOSCbr03o5IpDqJeMT08Ejz4z83O1K69mwBw6HFg5aqpKgRLq36UK7YScodLUh+acUmS6bl2D8N9cGerjn4jh24k5Uhxd/w+ZTkNQTirRsxs2zcccY4f4D9db3sk60p/OgMF7APe3XgcBU+jpa7BlhxzeYhNz/awWLqgKqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rccV++e/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j+FhfVlPaXzCHtnJMih7jz72pZLz1Zbo1yLGPuDHoCA3niBysZTWCxvrrWcCprLnWU2vQFW2XHuBaBn9lstOoBZdnnui60QBDFDWxSzgsgdweyyuuqkkzClOmmdaVoggQVtSgH6tda47qi1TWyEfcysq7ND6nRUgu+Ptq1dzXro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjmoY0Sr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rccV++e/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F991F000E9;
-	Tue, 21 Jul 2026 21:18:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjmoY0Sr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39181F000E9;
+	Tue, 21 Jul 2026 21:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668681;
-	bh=LfBGn/5OZc1CuMvBGE80i650RP3ABFyJKk54dX5DirY=;
+	s=korg; t=1784668684;
+	bh=IKeeVvOi0k/c64POZeDY61QvPgVN5F8/V1L576OHD0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rccV++e/EeLKNNMf+4FMUh/7VuN+zif/ruXyMNF2UqHUCrAYRVGSudobX9ycofd8Y
-	 f5BQd1UV/l/5XXuI0xrwhJNbAHKelCgQcjtqlkB5L0fA8c70BdO9zQ0JEYV0+z9SZZ
-	 /0tU9JFSeVJhovA0LtQronJ8XYOH7wrmN4xjuSbI=
+	b=GjmoY0Srs8R08Uu9rrzth9E0yvlSstLL1lYKayHtxETC1U6PI7wxCW+Nt6NB/VqGM
+	 wxTrx5W8LTCb005DvQaiUx43xi+vzgO+jTZ78NJbKxalNFXBaF13QNoX389AQoKw4u
+	 /fHDG9oKTjj7nmGPYH2fK2BAvqPkGnb8UDKbzbkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fuchs <fuchsfl@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 0241/1067] Input: maplemouse - fix NULL pointer dereference in open()
-Date: Tue, 21 Jul 2026 17:14:02 +0200
-Message-ID: <20260721152429.993131773@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.1 0268/1067] media: uvcvideo: Avoid partial metadata buffers
+Date: Tue, 21 Jul 2026 17:14:29 +0200
+Message-ID: <20260721152430.589587221@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,62 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fuchs <fuchsfl@gmail.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit ee89db004238bd0b034f2a6176e175561658750b upstream.
+commit a15b773fe4ffa450b56347cc506b2d1405600f5d upstream.
 
-Commit 555c765b0cc2 ("Input: mouse - drop unnecessary calls to
-input_set_drvdata") dropped the input_set_drvdata() call in probe
-because the data appeared to be unused. However, dc_mouse_open() and
-dc_mouse_close() were using maple_get_drvdata(to_maple_dev(&dev->dev)).
-This appears to be accessing the data attached to an instance of
-maple_device structure, while in reality this actually retrieves driver
-data from the input device's embedded struct device (doing invalid
-conversion of input device structure to maple device). After
-input_set_drvdata() was removed, that lookup started returning NULL and
-opening the input device dereferences mse->mdev.
+If the metadata queue that is empty receives a new buffer while we are
+in the middle of processing a frame, the first metadata buffer will
+contain partial information.
 
-Restore input_set_drvdata() and convert open() and close() to use
-input_get_drvdata() so the dependency is no longer hidden.
+Avoid this by tracking the state of the metadata buffer and making sure
+that it is in sync with the data buffer.
 
-Fixes: 6b3480855aad ("maple: input: fix up maple mouse driver")
-Fixes: 555c765b0cc2 ("Input: mouse - drop unnecessary calls to input_set_drvdata")
-Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
-Link: https://patch.msgid.link/20260628230715.2982552-1-fuchsfl@gmail.com
+Now that we are at it, make sure that we skip buffers of size 1 or 0.
+They are not allowed by the spec... but it is a simple check to add and
+better be safe than sorry.
+
+Fixes: 088ead255245 ("media: uvcvideo: Add a metadata device node")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://patch.msgid.link/20260417-uvc-meta-partial-v2-2-31d274af7d2d@chromium.org
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/maplemouse.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/media/usb/uvc/uvc_video.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/input/mouse/maplemouse.c
-+++ b/drivers/input/mouse/maplemouse.c
-@@ -48,7 +48,7 @@ static void dc_mouse_callback(struct map
- 
- static int dc_mouse_open(struct input_dev *dev)
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -1085,7 +1085,9 @@ static void uvc_video_stats_stop(struct
+  * uvc_video_decode_end will never be called with a NULL buffer.
+  */
+ static int uvc_video_decode_start(struct uvc_streaming *stream,
+-		struct uvc_buffer *buf, const u8 *data, int len)
++				  struct uvc_buffer *buf,
++				  struct uvc_buffer *meta_buf,
++				  const u8 *data, int len)
  {
--	struct dc_mouse *mse = maple_get_drvdata(to_maple_dev(&dev->dev));
-+	struct dc_mouse *mse = input_get_drvdata(dev);
+ 	u8 fid;
  
- 	maple_getcond_callback(mse->mdev, dc_mouse_callback, HZ/50,
- 		MAPLE_FUNC_MOUSE);
-@@ -58,7 +58,7 @@ static int dc_mouse_open(struct input_de
+@@ -1156,6 +1158,8 @@ static int uvc_video_decode_start(struct
  
- static void dc_mouse_close(struct input_dev *dev)
- {
--	struct dc_mouse *mse = maple_get_drvdata(to_maple_dev(&dev->dev));
-+	struct dc_mouse *mse = input_get_drvdata(dev);
+ 		/* TODO: Handle PTS and SCR. */
+ 		buf->state = UVC_BUF_STATE_ACTIVE;
++		if (meta_buf)
++			meta_buf->state = UVC_BUF_STATE_ACTIVE;
+ 	}
  
- 	maple_getcond_callback(mse->mdev, dc_mouse_callback, 0,
- 		MAPLE_FUNC_MOUSE);
-@@ -88,6 +88,7 @@ static int probe_maple_mouse(struct devi
- 	mse->dev = input_dev;
- 	mse->mdev = mdev;
+ 	/*
+@@ -1350,7 +1354,7 @@ static void uvc_video_decode_meta(struct
+ 	ktime_t time;
+ 	const u8 *scr;
  
-+	input_set_drvdata(input_dev, mse);
- 	input_dev->evbit[0] = BIT_MASK(EV_KEY) | BIT_MASK(EV_REL);
- 	input_dev->keybit[BIT_WORD(BTN_MOUSE)] = BIT_MASK(BTN_LEFT) |
- 		BIT_MASK(BTN_RIGHT) | BIT_MASK(BTN_MIDDLE);
+-	if (!meta_buf || length == 2)
++	if (length <= 2 || !meta_buf || meta_buf->state != UVC_BUF_STATE_ACTIVE)
+ 		return;
+ 
+ 	has_pts = mem[1] & UVC_STREAM_PTS;
+@@ -1467,7 +1471,7 @@ static void uvc_video_decode_isoc(struct
+ 		/* Decode the payload header. */
+ 		mem = urb->transfer_buffer + urb->iso_frame_desc[i].offset;
+ 		do {
+-			ret = uvc_video_decode_start(stream, buf, mem,
++			ret = uvc_video_decode_start(stream, buf, meta_buf, mem,
+ 				urb->iso_frame_desc[i].actual_length);
+ 			if (ret == -EAGAIN)
+ 				uvc_video_next_buffers(stream, &buf, &meta_buf);
+@@ -1516,7 +1520,8 @@ static void uvc_video_decode_bulk(struct
+ 	 */
+ 	if (stream->bulk.header_size == 0 && !stream->bulk.skip_payload) {
+ 		do {
+-			ret = uvc_video_decode_start(stream, buf, mem, len);
++			ret = uvc_video_decode_start(stream, buf, meta_buf, mem,
++						     len);
+ 			if (ret == -EAGAIN)
+ 				uvc_video_next_buffers(stream, &buf, &meta_buf);
+ 		} while (ret == -EAGAIN);
 
 
