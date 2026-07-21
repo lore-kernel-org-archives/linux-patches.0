@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117FB3B83FE;
-	Tue, 21 Jul 2026 20:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04CC3B8124;
+	Tue, 21 Jul 2026 20:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666955; cv=none; b=c+nFRr7IBntLwtAj7B0x1J2BvOi2rpQ0HyueTik2SBKyFtXJwGCIwj1HtXDUSpaYhIvmxIXCnW6EfDTenZ7p9OV4cCKulwOjZGUCe+4Ei648LQvHastQ5+dYfSw8koSBEPJcRdinVG2eYnRUnYqKMr+WSnvDIFHzOMgxWtP1mZo=
+	t=1784666958; cv=none; b=UqI1Tu2SJ4WnNJwzhFa0b8zT2XyK+5M/J4biPrmICHPY8UG/AtAr5L6t6+1ds7zyENcmOfEn67uJHb9LORNqIQ5w+9Nab+cPYpcwbvIE5Q7cI6QGyZ11kf9rkcUMxR9HCidrh4nhrYwENq63UymcFffkF7GUvtwN7KwK+XFhrFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666955; c=relaxed/simple;
-	bh=DkMTmqA8ORPKg87EKvAfBD1eqbfEkNMYu3iqolywhyw=;
+	s=arc-20240116; t=1784666958; c=relaxed/simple;
+	bh=UJXf8UM6+9PT0B562tx+dduEXVYgH3Yl18a1mG/+mTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MsFlYQd8eFL+bxhyjsiFtA836khRqFP86oBJdZCXw+P20YCBOywxXM37jUCe3y+R9q0fqjqPKV2jy0Z9FA4+4jpe5hkrt7GIkGSOkk4ggIIZbXbxkod5FY3obCCIrIGq/9XfOvQ6NZqzN5ZpSx5TABLCjGBfaVKbnPRQpAGocs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HEdCtI96; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lTCiqH3M6UY4DEx/5gONwAUmIs2icrGlcLb/+W152PnhF/q2BANKp6iH+9V9rJmA0hk3yQF8G3fTxP2Xtpr9uBQSwMwJoB9ORGLglhg5cWZkmsRgAP7/1VvX5NRlRdK8ib1ElNCD7EoEA6h4WWTfJX5tC8ZznR7cY9IZAsH3pCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7qTEza8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HEdCtI96"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778331F000E9;
-	Tue, 21 Jul 2026 20:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7qTEza8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2591F000E9;
+	Tue, 21 Jul 2026 20:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666954;
-	bh=kdNRe2KPMHVkh/tKPHJhU3LttQNnMutDbnQSYPu3wNA=;
+	s=korg; t=1784666956;
+	bh=7zi/htRKxTI9IwAJ1e1MmJvAjmDJUqHGghhGZaithgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HEdCtI96hdPXWiRUTlHTif2FZGtFrOWgB1FUwdoe97nY56MnMd9PxUZa7gClxOCWC
-	 uiPpWqAR1xCQa4mnrzK6su/nBiDeTOQb1DzqSyOl64ejpHMsaUezxsg4ShCkcJ/322
-	 7P9JE8ThXvpBQJndndQhA0wj+pu485AqisSXKqBA=
+	b=G7qTEza8QoJvaN8Yobll0/mIJeqGj0nj5YRBIziWJ+mk7m5iSrQly+HIvc8u5WkTQ
+	 5khIF+5kf03UkKX0Ye8eTViildSOy9W3/r3t5fBl09NPwFbsO9N9Qx21Gt98NTJFB9
+	 7cydJpNhc6SQdXhOvWW3bLpy1AzSLBhRYLEFpCBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Viacheslav Bocharov <v@baodeep.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0835/1266] minix: avoid overflow in bitmap block count calculation
-Date: Tue, 21 Jul 2026 17:21:12 +0200
-Message-ID: <20260721152500.540667267@linuxfoundation.org>
+Subject: [PATCH 6.6 0826/1266] pinctrl: meson: restore non-sleeping GPIO access
+Date: Tue, 21 Jul 2026 17:21:03 +0200
+Message-ID: <20260721152500.338755825@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,56 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Viacheslav Bocharov <v@baodeep.com>
 
-[ Upstream commit fb3e566cafc38fe3ba35e6843a2d529a3748870c ]
+[ Upstream commit 9777530157e7b82fd994327ff878c4245dadc931 ]
 
-minix_check_superblock() uses minix_blocks_needed() to verify that the
-on-disk imap and zmap block counts are large enough for the advertised
-inode and zone counts.
+Commit 28f240683871 ("pinctrl: meson: mark the GPIO controller as
+sleeping") set gpio_chip.can_sleep = true to work around
+gpio-shared-proxy holding a spinlock across a sleeping pinctrl config
+path. That locking bug is now fixed in the shared-proxy itself ("gpio:
+shared-proxy: always serialize with a sleeping mutex"), so the
+controller-wide workaround is no longer needed; the meson GPIO
+controller does not sleep.
 
-The helper currently performs DIV_ROUND_UP() in unsigned int arithmetic.
-A Minix v3 image can set s_ninodes or s_zones near UINT_MAX so the
-addition inside DIV_ROUND_UP() wraps to zero. That makes a zero imap/zmap
-block count look valid, after which minix_fill_super() can dereference
-s_imap[0] or s_zmap[0] even though no bitmap buffers were allocated.
+meson_gpio_get/set/direction_* access MMIO through regmap. The
+regmap_mmio bus uses fast I/O (spinlock) locking, so these value
+callbacks do not contain sleeping operations. Since gpio_chip.can_sleep
+describes the get/set value path, restore can_sleep = false.
 
-Impact: mounting a crafted Minix v3 image whose s_ninodes or s_zones is
-near UINT_MAX makes minix_check_superblock() accept a zero bitmap-block
-count and minix_fill_super() dereference s_imap[0]/s_zmap[0], panicking
-the kernel.
+Marking the controller sleeping also broke atomic value consumers such
+as w1-gpio (1-Wire bitbang): w1_io.c runs its read time slot under
+local_irq_save() and uses the non-cansleep gpiod_set_value() /
+gpiod_get_value(), which with can_sleep=true trigger WARN_ON(can_sleep)
+in gpiolib on every transferred bit (from w1_gpio_write_bit() /
+w1_gpio_read_bit() via w1_reset_bus() and w1_search()). The printk and
+stack dump inside the IRQs-off, microsecond-scale time slot destroy the
+bit timing, so reset/presence detection and ROM search fail: the bus
+master registers but w1_master_slave_count stays at 0 and no devices
+are found. Verified on an Amlogic A113X board (DS18B20 on GPIOA_14):
+with can_sleep restored to false the warnings are gone and the sensor
+is detected and read again.
 
-The divisor is the bitmap capacity in bits, blocksize * 8, which is
-always a power of two: minix_fill_super() obtains the block size through
-sb_set_blocksize(), and blk_validate_block_size() rejects any size that
-is not a power of two. Use DIV_ROUND_UP_POW2(), which divides before
-adding the round-up term and so cannot overflow for a power-of-two
-divisor.
+This must not be applied or backported without the shared-proxy locking
+fix above; otherwise the original Khadas VIM3 splat returns on boards
+that genuinely share a meson GPIO.
 
-Fixes: 8c97a6ddc956 ("minix: Add required sanity checking to minix_check_superblock()")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260618143922.3066874-1-michael.bommarito@gmail.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 28f240683871 ("pinctrl: meson: mark the GPIO controller as sleeping")
+Link: https://lore.kernel.org/all/20260105150509.56537-1-bartosz.golaszewski@oss.qualcomm.com/
+Signed-off-by: Viacheslav Bocharov <v@baodeep.com>
+Acked-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260625115718.1678991-3-v@baodeep.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/minix/minix.h | 2 +-
+ drivers/pinctrl/meson/pinctrl-meson.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/minix/minix.h b/fs/minix/minix.h
-index d493507c064f67..aee0ff9e5623d4 100644
---- a/fs/minix/minix.h
-+++ b/fs/minix/minix.h
-@@ -91,7 +91,7 @@ static inline struct minix_inode_info *minix_i(struct inode *inode)
+diff --git a/drivers/pinctrl/meson/pinctrl-meson.c b/drivers/pinctrl/meson/pinctrl-meson.c
+index 4f613f9082083f..5cc00fdc48d840 100644
+--- a/drivers/pinctrl/meson/pinctrl-meson.c
++++ b/drivers/pinctrl/meson/pinctrl-meson.c
+@@ -618,7 +618,7 @@ static int meson_gpiolib_register(struct meson_pinctrl *pc)
+ 	pc->chip.set = meson_gpio_set;
+ 	pc->chip.base = -1;
+ 	pc->chip.ngpio = pc->data->num_pins;
+-	pc->chip.can_sleep = true;
++	pc->chip.can_sleep = false;
  
- static inline unsigned minix_blocks_needed(unsigned bits, unsigned blocksize)
- {
--	return DIV_ROUND_UP(bits, blocksize * 8);
-+	return DIV_ROUND_UP_POW2(bits, blocksize * 8);
- }
- 
- #if defined(CONFIG_MINIX_FS_NATIVE_ENDIAN) && \
+ 	ret = gpiochip_add_data(&pc->chip, pc);
+ 	if (ret) {
 -- 
 2.53.0
 
