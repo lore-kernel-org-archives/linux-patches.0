@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70BA3B637C;
-	Tue, 21 Jul 2026 20:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A2E3B6BF4;
+	Tue, 21 Jul 2026 20:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665991; cv=none; b=YmW/oRQqMxT2zAF57eQa9/SXWtNEpHQqbKvPP43TfeLVL4GkoDUR76n5UralPmx/nLGeVduSNTl9WdIJ0t5OqE0JDtsX89SiqEJZFl/zMxxZxXVdYf4enoHLzDU6BRRouYRqyBKhBSp9Hd5Sr3Vp1vA7eRqWArFsPAM7ciKT1dk=
+	t=1784665993; cv=none; b=O2XNfga1wLRB3M6+GZ0lI2avsirdHxfiXmTyiBOgIg8WOoMdenWA7y75xR2lA5YrWFLUM2Ff+1T7eDgvWGBqBdpJX8gNElVmCiVZN5MpdSns37dxIYbkCk2ueTzW8PfnClmVfMwPEmIAHsd+8NOo94S7j3dcdC3LuNwOgXR0p3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665991; c=relaxed/simple;
-	bh=ytXeL0Xmw79kLp9l9XqVWaChUSvKe5UCj+PQFjZOnus=;
+	s=arc-20240116; t=1784665993; c=relaxed/simple;
+	bh=rmBH8pPC8Tr8bsVPBBkwwSKH0WkQir/tlfeOKyJ+ZE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KMjMdtKD2zZxQxQ7/n3jcD+MQHclHjZlQzaLbwPcvu9aXNEQoz2lgbKAeEjnWSDJMsZ/8zqe65N93XMTj0Ajrh1uzILgzHKXGcCx/OCWKPMWrR+ZjUUBIFxsFh2PcRcTaH+63jvLdrvwWKLogwwpzlnTUDOT+9TW2nrzGnKXc6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nu77+Dyl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JmP6plifnn4Eo3MLzc0AEYm8+7OSgqHeh9lhVKisqfyoMUZJXjjN7g+I2NBsJfwraxuAPTlRj5QR5QG+kiAn2xrIElz9RZru40Lf+pryu0o7Ogl6DkXKTgIL0vm3S/5bHYeKlAJYDURvBUQTZEkRQtTR3sHR3EXEoQ6V76Q9yC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5f/yZq7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nu77+Dyl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588481F000E9;
-	Tue, 21 Jul 2026 20:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5f/yZq7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010B71F000E9;
+	Tue, 21 Jul 2026 20:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665989;
-	bh=sjJd+s4KOwYjO6fdoK4lznDbuSkOl8hpNCG9vjiawUI=;
+	s=korg; t=1784665992;
+	bh=VM+x3tDeXUvvIPczeCunb3bASCxlv2UjUNfrgg3oa7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nu77+Dyl6q9xl64buroESeEXmKB7K80Ksj++nC9xpQQXUDGNbOQV5hmW0nXtceBP/
-	 ve2aB+RksnCNEx5xLVYTvQKXnJPypHNajEBllJDWhBNmsZbCyNE9ISzpbDSXU8XLda
-	 9rWEfOUhPUfkwCKO289f+VdtSEuAn6nY3VoyGMdI=
+	b=w5f/yZq7cCtWt8d2nAsDTtsCld0GliCqI751ixiffYhwwmQChtVmjRjblJV45aS2j
+	 C982H5UrLn+VzYi2RMkSDzQuPMywB+X92TDUg7pzmTRIqnOQWKFcpx2o6iCwDUJUUs
+	 y4HJjt9kWkjRYocmsohIIxWp76BhtBLuOocRUsKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e70e4c6f6eee43357ba7@syzkaller.appspotmail.com,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0514/1266] firmware_loader: Fix recursive lock in device_cache_fw_images()
-Date: Tue, 21 Jul 2026 17:15:51 +0200
-Message-ID: <20260721152453.351008202@linuxfoundation.org>
+Subject: [PATCH 6.6 0515/1266] configfs: fix lockless traversals of ->s_children
+Date: Tue, 21 Jul 2026 17:15:52 +0200
+Message-ID: <20260721152453.373520529@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,63 +51,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Vyukov <dvyukov@google.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit d3ec78f8f8d48a04a9fac38d47275c34645e5103 ]
+[ Upstream commit 9b9e8bb81c41fd27e7b57a1c936fde140548535f ]
 
-A recursive locking deadlock can occur in the firmware loader's power
-management notification handler.
+Having the parent directory locked protects entries from removal
+by another thread, but it does *not* protect cursors from being
+moved around by lseek() - or freed, for that matter.
 
-During system suspend or hibernation preparation, fw_pm_notify() calls
-device_cache_fw_images(). This function acquires fw_lock to set the
-firmware cache state to FW_LOADER_START_CACHE and then iterates over all
-devices using dpm_for_each_dev() while still holding the lock.
-
-For each device, dev_cache_fw_image() schedules asynchronous work to cache
-the firmware. If memory allocation for the async work entry fails (e.g., in
-out-of-memory conditions), async_schedule_node_domain() falls back to
-executing the work function synchronously in the current thread.
-
-The synchronous execution path (__async_dev_cache_fw_image() ->
-cache_firmware() -> request_firmware() -> assign_fw()) attempts to acquire
-fw_lock again. Since the current thread already holds fw_lock, this results
-in a recursive locking deadlock.
-
-Fix this by releasing fw_lock immediately after updating the cache state
-and before calling dpm_for_each_dev(). The lock is only needed to protect
-the state update. Concurrent firmware requests will correctly see the
-FW_LOADER_START_CACHE state and use the piggyback mechanism, which is
-independently protected by its own fwc->name_lock.
-
-Fixes: ac39b3ea73aa ("firmware loader: let caching firmware piggyback on loading firmware")
-Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
-Reported-by: syzbot+e70e4c6f6eee43357ba7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e70e4c6f6eee43357ba7
-Link: https://syzkaller.appspot.com/ai_job?id=8b4af9fd-24af-423f-8acb-1159fd34c1a5
-Signed-off-by: Dmitry Vyukov <dvyukov@google.com>
-Link: https://patch.msgid.link/48b092a5-f49d-48a4-95f4-f65bebfc6bc3@mail.kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: 6f6107640625 ("configfs: Introduce configfs_dirent_lock")
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/firmware_loader/main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/configfs/dir.c | 54 +++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 41 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index f3133ba831c5e0..4f4614811d0952 100644
---- a/drivers/base/firmware_loader/main.c
-+++ b/drivers/base/firmware_loader/main.c
-@@ -1506,9 +1506,10 @@ static void device_cache_fw_images(void)
+diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
+index c3fac94f66f212..972fb89ad22140 100644
+--- a/fs/configfs/dir.c
++++ b/fs/configfs/dir.c
+@@ -225,15 +225,16 @@ static int configfs_dirent_exists(struct configfs_dirent *parent_sd,
+ {
+ 	struct configfs_dirent * sd;
  
- 	mutex_lock(&fw_lock);
- 	fwc->state = FW_LOADER_START_CACHE;
--	dpm_for_each_dev(NULL, dev_cache_fw_image);
- 	mutex_unlock(&fw_lock);
++	spin_lock(&configfs_dirent_lock);
+ 	list_for_each_entry(sd, &parent_sd->s_children, s_sibling) {
+ 		if (sd->s_element) {
+-			const unsigned char *existing = configfs_get_name(sd);
+-			if (strcmp(existing, new))
+-				continue;
+-			else
++			if (strcmp(configfs_get_name(sd), new) == 0) {
++				spin_unlock(&configfs_dirent_lock);
+ 				return -EEXIST;
++			}
+ 		}
+ 	}
++	spin_unlock(&configfs_dirent_lock);
  
-+	dpm_for_each_dev(NULL, dev_cache_fw_image);
+ 	return 0;
+ }
+@@ -551,11 +552,28 @@ static void configfs_detach_rollback(struct dentry *dentry)
+ 			configfs_detach_rollback(sd->s_dentry);
+ }
+ 
++/*
++ * Find the next non-cursor.  configfs_dirent_lock held by caller.
++ */
++static struct configfs_dirent *next_dirent(struct configfs_dirent *parent,
++					   struct configfs_dirent *last)
++{
++	struct configfs_dirent *s;
 +
- 	/* wait for completion of caching firmware for all devices */
- 	async_synchronize_full_domain(&fw_cache_domain);
++	s = list_prepare_entry(last, &parent->s_children, s_sibling);
++
++	list_for_each_entry_continue(s, &parent->s_children, s_sibling) {
++		if (s->s_element)
++			return s;
++	}
++	return NULL;
++}
++
+ static void detach_attrs(struct config_item * item)
+ {
+ 	struct dentry * dentry = dget(item->ci_dentry);
+-	struct configfs_dirent * parent_sd;
+-	struct configfs_dirent * sd, * tmp;
++	struct configfs_dirent *parent_sd;
++	struct configfs_dirent *sd, *next;
  
+ 	if (!dentry)
+ 		return;
+@@ -564,15 +582,19 @@ static void detach_attrs(struct config_item * item)
+ 		 dentry->d_name.name);
+ 
+ 	parent_sd = dentry->d_fsdata;
+-	list_for_each_entry_safe(sd, tmp, &parent_sd->s_children, s_sibling) {
+-		if (!sd->s_element || !(sd->s_type & CONFIGFS_NOT_PINNED))
++
++	spin_lock(&configfs_dirent_lock);
++	for (sd = next_dirent(parent_sd, NULL); sd; sd = next) {
++		next = next_dirent(parent_sd, sd);
++		if (!(sd->s_type & CONFIGFS_NOT_PINNED))
+ 			continue;
+-		spin_lock(&configfs_dirent_lock);
+ 		list_del_init(&sd->s_sibling);
+ 		spin_unlock(&configfs_dirent_lock);
+ 		configfs_drop_dentry(sd, dentry);
+ 		configfs_put(sd);
++		spin_lock(&configfs_dirent_lock);
+ 	}
++	spin_unlock(&configfs_dirent_lock);
+ 
+ 	/**
+ 	 * Drop reference from dget() on entrance.
+@@ -621,18 +643,20 @@ static void detach_groups(struct config_group *group)
+ 	struct dentry * dentry = dget(group->cg_item.ci_dentry);
+ 	struct dentry *child;
+ 	struct configfs_dirent *parent_sd;
+-	struct configfs_dirent *sd, *tmp;
++	struct configfs_dirent *sd, *next;
+ 
+ 	if (!dentry)
+ 		return;
+ 
+ 	parent_sd = dentry->d_fsdata;
+-	list_for_each_entry_safe(sd, tmp, &parent_sd->s_children, s_sibling) {
+-		if (!sd->s_element ||
+-		    !(sd->s_type & CONFIGFS_USET_DEFAULT))
++	spin_lock(&configfs_dirent_lock);
++	for (sd = next_dirent(parent_sd, NULL); sd; sd = next) {
++		next = next_dirent(parent_sd, sd);
++		if (!(sd->s_type & CONFIGFS_USET_DEFAULT))
+ 			continue;
+ 
+ 		child = sd->s_dentry;
++		spin_unlock(&configfs_dirent_lock);
+ 
+ 		inode_lock(d_inode(child));
+ 
+@@ -644,7 +668,9 @@ static void detach_groups(struct config_group *group)
+ 
+ 		d_delete(child);
+ 		dput(child);
++		spin_lock(&configfs_dirent_lock);
+ 	}
++	spin_unlock(&configfs_dirent_lock);
+ 
+ 	/**
+ 	 * Drop reference from dget() on entrance.
+@@ -1096,6 +1122,7 @@ configfs_find_subsys_dentry(struct configfs_dirent *root_sd,
+ 	struct configfs_dirent *p;
+ 	struct configfs_dirent *ret = NULL;
+ 
++	spin_lock(&configfs_dirent_lock);
+ 	list_for_each_entry(p, &root_sd->s_children, s_sibling) {
+ 		if (p->s_type & CONFIGFS_DIR &&
+ 		    p->s_element == subsys_item) {
+@@ -1103,6 +1130,7 @@ configfs_find_subsys_dentry(struct configfs_dirent *root_sd,
+ 			break;
+ 		}
+ 	}
++	spin_unlock(&configfs_dirent_lock);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
