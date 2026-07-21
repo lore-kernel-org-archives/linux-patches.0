@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642284D90D6;
-	Tue, 21 Jul 2026 15:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51ED046AA77;
+	Tue, 21 Jul 2026 15:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649127; cv=none; b=DzK2QfqT03GcMbSf8t/n85sypImDybMbDprUJ7rxgr8+x8hb2ic/ksnIywjNtxO63LG6MJCVVc5EOm+8YosGzI9+WSUUKISDkmvJvZvMghgb54MeoQwqnygoHli2LMzuLcE4X0WOK6sUambv4lcEiP6qb81gNmgqcdz42tvDvEw=
+	t=1784649130; cv=none; b=mAyqglNEYg2NsxSt3/zxE5HlJmQiO/XEFT+4/2QldHgt2Xog4TX/rEtO+phYhnOPgMXZlJQHWMcj6kbpI2IHcp4XygmcF/gFXiNgsQJCnYFYC+n2MxUtUcUwI75XPi3UI5JcCT51H7Owrx4UxGKyp5foR/IOclEJCVrk9zq6yJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649127; c=relaxed/simple;
-	bh=57l3EEtfyslBOeNBhiY8nzOTsi9/x0xGepqreu06d/E=;
+	s=arc-20240116; t=1784649130; c=relaxed/simple;
+	bh=iFbBaWozj6A5opoACUEnviERo89L3CsNwrR3rcsER0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mBoGFgWPNPUP5SLZ+ppqlMa1r1Ciqr9sW5Ou4Fm8aPBl/95/rsrvd2x+FF4qTHGM5+4QfGda9epladcB3CiqjT10DEmlS4oI2b9FmHQIJFOblCHkPy2v0mZ68i2L1bjGlCqML29zgygT67kL3E+BBEZCkkgKSU2+yqo1lwHxZi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CvFb056; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PrWbLWuM+O5XnymRXBWmGbtiCXmNgrLHkhk8reyLiUExnoFPOaC25ZUIOl2J8cC6j4RMMiRdjndeto3GTxrFMHPUBAlXKyTjLJcluytXxLjSKKO8S7pWudrJKhc652zS5zA3QWOEuC+7DWTndoFptp2NJMuazR1Hm6GvHdr2Rtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=csCbG2Sc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CvFb056"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0281F000E9;
-	Tue, 21 Jul 2026 15:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="csCbG2Sc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 739B51F00A3A;
+	Tue, 21 Jul 2026 15:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649126;
-	bh=rf5G+qyDwIJrkN7Y4pqT6NFhb/v+UKv0SqG8kA/JMDU=;
+	s=korg; t=1784649129;
+	bh=oojAkQy0Y9W1wLlFes69/52pIjpT9u1kC66Mj449tx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1CvFb056CVQvfGQoCOA7xGJksjtlqGNbJgDt/QVaMj8lZ9EZnIXjgFBV+vXd8Wqbc
-	 QeTm2TIfLRZhEbqlzHlDzRIzDjh+jlnbHMhcpgRGpOBPCYIQKgczaTLZjbo4w9RAzw
-	 XRrWFukkfch6P6Gi9ppkurpNPTiPnGDZGf92W5RM=
+	b=csCbG2ScbQfaBfsCWgkvh5qM1daa92xv0RdwZfUAdFc3425W9lSoCjn8hCkjUk+Xp
+	 I1tuviX+/kqoSFsd54YjOtUWEKzCZseRXpHx7dcTSruKFJaH0685N/LbNGK81AVqg/
+	 J4eyvMNkFsSUAUoDpJe2eKdE86PU+HtmyM253tsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Oskar Gerlicz Kowalczuk <oskar@gerlicz.space>,
+	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0416/2077] ARM: imx3: Fix CCM node reference leak
-Date: Tue, 21 Jul 2026 17:01:29 +0200
-Message-ID: <20260721152602.547043789@linuxfoundation.org>
+Subject: [PATCH 7.1 0407/2077] liveupdate: skip serialization for context-preserving kexec
+Date: Tue, 21 Jul 2026 17:01:20 +0200
+Message-ID: <20260721152602.320045858@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,44 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Pasha Tatashin <pasha.tatashin@soleen.com>
 
-[ Upstream commit 36d46348eb5fc4bc505cd2290ddd70c25fbe6bb3 ]
+[ Upstream commit 5eff62b051fbdb686e885c1468301d964f2e3d66 ]
 
-of_find_compatible_node() returns a referenced device node. The i.MX31
-and i.MX35 early init paths use the node to map the CCM registers with
-of_iomap(), but never drop the node reference.
+A preserve_context kexec returns to the current kernel, which is
+unrelated to live update where the state is passed to the next kernel.
+Skip liveupdate_reboot() in this case to avoid serialization and prevent
+sessions from being left in a frozen state upon return.
 
-Release the node after the mapping is created.
-
-Fixes: 2cf98d12958c ("ARM: imx3: Retrieve the CCM base address from devicetree")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: db8bed8082dc ("kexec: call liveupdate_reboot() before kexec")
+Reported-by: Oskar Gerlicz Kowalczuk <oskar@gerlicz.space>
+Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Signed-off-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+Link: https://patch.msgid.link/20260527202737.1345192-2-pasha.tatashin@soleen.com
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-imx/mm-imx3.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/kexec_core.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/mach-imx/mm-imx3.c b/arch/arm/mach-imx/mm-imx3.c
-index 0788c5cc7f9e64..9b0b014d7fe276 100644
---- a/arch/arm/mach-imx/mm-imx3.c
-+++ b/arch/arm/mach-imx/mm-imx3.c
-@@ -106,6 +106,7 @@ void __init imx31_init_early(void)
- 	arm_pm_idle = imx31_idle;
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx31-ccm");
- 	mx3_ccm_base = of_iomap(np, 0);
-+	of_node_put(np);
- 	BUG_ON(!mx3_ccm_base);
- }
- #endif /* ifdef CONFIG_SOC_IMX31 */
-@@ -143,6 +144,7 @@ void __init imx35_init_early(void)
- 	arch_ioremap_caller = imx3_ioremap_caller;
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx35-ccm");
- 	mx3_ccm_base = of_iomap(np, 0);
-+	of_node_put(np);
- 	BUG_ON(!mx3_ccm_base);
- }
- #endif /* ifdef CONFIG_SOC_IMX35 */
+diff --git a/kernel/kexec_core.c b/kernel/kexec_core.c
+index a43d2da0fe3e70..dc770b9a6d0539 100644
+--- a/kernel/kexec_core.c
++++ b/kernel/kexec_core.c
+@@ -1146,9 +1146,11 @@ int kernel_kexec(void)
+ 		goto Unlock;
+ 	}
+ 
+-	error = liveupdate_reboot();
+-	if (error)
+-		goto Unlock;
++	if (!kexec_image->preserve_context) {
++		error = liveupdate_reboot();
++		if (error)
++			goto Unlock;
++	}
+ 
+ #ifdef CONFIG_KEXEC_JUMP
+ 	if (kexec_image->preserve_context) {
 -- 
 2.53.0
 
