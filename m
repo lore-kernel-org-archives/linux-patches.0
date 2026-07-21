@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7C446A60E;
-	Tue, 21 Jul 2026 19:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C34C46EC75;
+	Tue, 21 Jul 2026 19:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661628; cv=none; b=snwpAIL8pXB9kZjfKH/V5l26tTWMs+m+BWTQKZuMBlbsCEDP21vC4993rhzoncFGYAvAsr/axZHzW1YEkTUoJw6WlKd11U+8vKSxe/VpfPZjY9ZTu5+7iS/evUgXuhg10uU/cp8RiOlSai4WlcN2jJMgoSddw/QOcVggjRFikpg=
+	t=1784661631; cv=none; b=VhyVXj0OSerJk2jlOTTrUiAE14PPeQMI8+PhTtKNDL1093P185X/XuSB7n/+07D+y2PgSIIT2juo4aaR1BfjkQczwTR/aSzw4ne8H586SW+h5cetKKhMCoNwL3LVNv1RQAtpRTxnSPy7qkSH+UPwt/xg3FTs+T8DXKBI/6iojDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661628; c=relaxed/simple;
-	bh=CybnVnIGUbvVLXabbSoo7laq/kVAGwsTgNguGLv0oRw=;
+	s=arc-20240116; t=1784661631; c=relaxed/simple;
+	bh=K7/GJajnyLw02TsgMtpK3eflpgE2g/JD9uWlJ6aECqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ve/OijTX/hcLM3PYSpRTKM3e38Cgi0MhvvP8j3qhzVOcBvGJMgJmPUBJpjgzmrdWZZLWZ4Uh3A3J8zHDJo3dQ8UrGSjG2TUNOmoAu4Tsfv9zXQ/uI0JX1UAbqGg0Ijoj/OpdZKhU2pQwu/zhgtkTtFIDXuGSL0azg4hn4vRJ1po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8HP5iRl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PKbg5GPewY7k1D9uIB25a8Fvjzx5ADsraj8Qwfr1bGkrjpLLI6iw+YeLC9U47lwjR4OzEnyM3blSWfMX7a6I6i8OCUECbqMdXB98Qx40KVdjL2jKg4DZAjtewsEFlI/wOZEARw/sP+faBH1aQcEaB5grEvDj479/+QLu4KEpjaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSfxbo6h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8HP5iRl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F04DE1F000E9;
-	Tue, 21 Jul 2026 19:20:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSfxbo6h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC13D1F000E9;
+	Tue, 21 Jul 2026 19:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661627;
-	bh=fJvGSsva1USLiw+3OTZcOYbKh9h+07/RXDXUbediwQQ=;
+	s=korg; t=1784661630;
+	bh=C5LQAWC7QJepXxcYk64Qi5W2SjIipBhisttlHcEe9dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n8HP5iRlZzmVWzYCW6wY+kvlHe9y3IDjTRT2j5bCaSqC7x8vKVvHAsbdOySXZOsnr
-	 Of4pzr2gp4qp5AKOTKrtO0GQyT7YjcTAtb33qGdgqnJ2XU/rU3BwfuOqYKS3N7OhiN
-	 Y2PANgN0+g1+Hbz0lJGPe987JP+xCp0dBZLPYBkw=
+	b=VSfxbo6hyAe2aha/91DWGpdNgAtx8G12kTd+e92wZheCXjhEAGhuHyBytZPKiaCqL
+	 ZDldjBdVMtOv3NrQT8S/9bvxOZfCmkRmGly07R7ol6NyLt8mYBMXMw/KvCyXx8+8x1
+	 7JebxdKAAZSgvX/h3KonTra0IVwb8Np/49wnwonM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Tycho Andersen (AMD)" <tycho@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0095/1276] vxlan: Fix potential null-ptr-deref in vxlan_gro_prepare_receive().
-Date: Tue, 21 Jul 2026 17:08:58 +0200
-Message-ID: <20260721152448.220278217@linuxfoundation.org>
+Subject: [PATCH 6.12 0096/1276] crypto: ccp - Fix snp_filter_reserved_mem_regions() off-by-one
+Date: Tue, 21 Jul 2026 17:08:59 +0200
+Message-ID: <20260721152448.242848512@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,50 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Tycho Andersen (AMD) <tycho@kernel.org>
 
-[ Upstream commit 30a45c0bffdd62350261e2f2689fdba426a33578 ]
+[ Upstream commit 1b864b6cb213bbd7b406e9b2e98c962077f300df ]
 
-udp_tunnel_sock_release() could set sk->sk_user_data to NULL
-while vxlan_gro_prepare_receive() is running.
+Sashiko notes:
 
-Let's check if rcu_dereference_sk_user_data() is NULL after
-skb_gro_remcsum_init().
+> regarding the bounds check in snp_filter_reserved_mem_regions()
+> called via walk_iomem_res_desc(): does the check
+> if ((range_list->num_elements * 16 + 8) > PAGE_SIZE)
+> allow an off-by-one heap buffer overflow?
+>
+> If range_list->num_elements is 255, 255 * 16 + 8 = 4088, which is <= 4096.
+> Writing range->base (8 bytes) fills 4088-4095, but writing range->page_count
+> (4 bytes) would write to 4096-4099, overflowing the kzalloc-allocated
+> PAGE_SIZE buffer.
 
-Fixes: 5602c48cf875 ("vxlan: change vxlan to use UDP socket GRO")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260502031401.3557229-7-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by accounting for the entry about to be written to, in addition to
+the entries that are already allocated.
+
+Fixes: 1ca5614b84ee ("crypto: ccp: Add support to initialize the AMD-SP for SEV-SNP")
+Reported-by: Sashiko
+Assisted-by: Gemini:gemini-3.1-pro-preview
+Link: https://sashiko.dev/#/patchset/20260324161301.1353976-1-tycho%40kernel.org
+Signed-off-by: Tycho Andersen (AMD) <tycho@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/crypto/ccp/sev-dev.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 765d25eee2fe48..596efc51cac77b 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -679,14 +679,18 @@ static struct vxlanhdr *vxlan_gro_prepare_receive(struct sock *sk,
- 						  struct sk_buff *skb,
- 						  struct gro_remcsum *grc)
- {
--	struct sk_buff *p;
- 	struct vxlanhdr *vh, *vh2;
- 	unsigned int hlen, off_vx;
--	struct vxlan_sock *vs = rcu_dereference_sk_user_data(sk);
-+	struct vxlan_sock *vs;
-+	struct sk_buff *p;
- 	__be32 flags;
+diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
+index 2258337f1ea44b..106a59c3794bfd 100644
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -1066,10 +1066,11 @@ static int snp_filter_reserved_mem_regions(struct resource *rs, void *arg)
+ 	size_t size;
  
- 	skb_gro_remcsum_init(grc);
+ 	/*
+-	 * Ensure the list of HV_FIXED pages that will be passed to firmware
+-	 * do not exceed the page-sized argument buffer.
++	 * Ensure the list of HV_FIXED pages passed to the firmware including
++	 * the one about to be written to do not exceed the page-sized argument
++	 * buffer.
+ 	 */
+-	if ((range_list->num_elements * sizeof(struct sev_data_range) +
++	if (((range_list->num_elements + 1) * sizeof(struct sev_data_range) +
+ 	     sizeof(struct sev_data_range_list)) > PAGE_SIZE)
+ 		return -E2BIG;
  
-+	vs = rcu_dereference_sk_user_data(sk);
-+	if (!vs)
-+		return NULL;
-+
- 	off_vx = skb_gro_offset(skb);
- 	hlen = off_vx + sizeof(*vh);
- 	vh = skb_gro_header(skb, hlen, off_vx);
 -- 
 2.53.0
 
