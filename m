@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE6840803B;
-	Tue, 21 Jul 2026 19:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824DD2DEA74;
+	Tue, 21 Jul 2026 19:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660496; cv=none; b=cmVMz4Phq0RdZSyHX3cGBd6jMhDC9t+SyBgjwvTC3Q8sKDjphq2JyxER9gm1FCRNcKafeOjkZ02bjRVkQ/zldWsZ5qI8DodoD0rPVgAGPjlRhO0ot5K4QsGGMO3ezzjsYQnb12HRTBH6pcLBXKqRiE8WMazkk1HMaxya9An8JSY=
+	t=1784660496; cv=none; b=kbFvucbTjJNExLwmhqbEpvofsrryNnhzs6wUFdaRTtUwcs+AZKz36dPjH0F+TXytDpAybv7++IbhbMYuEAvwS5mQ8SNc+F6hUDvO5SmDNB06DlI4z5+rJCdOivqIAp2DSxe6YN0iIdYVpunVyJu5TdQYDlEFyxRLemsvLMR0JME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784660496; c=relaxed/simple;
-	bh=hG8mrKTUYjrDfDYa0+BukB2HdYJxEcEIjw9R8ruZSJE=;
+	bh=e+XcJfipoQiLz8VUM1A3kSvXNtcQB5tTRIFRbZLH6AU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DfhixIoKVmXm1gsrQX4vXfjnU8b7/jh4Pla4G1CyndpTYeS1X8vO0fbUZA+x2ip0E2pWVgX6D6+jfji4Cpk1l5h5ERcZJBF1/Os/Ij+Dvw8IvFC7EPZL8g0gu3b5xvctebyInQsPNTUjjw5C9VMCCWWIgHfF0tDA/N862mvMfVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQjZ5usv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=R8MKFCpZ/SoOoOvd3j8XHMTz7h3nf+eYaLr77HATeSmuT7czHYLfS25lS/qdo0nyWv0UWVNMsMFyNrQ6WW4YAqGFQFmMkF4xI3AC8DtDBwaVQIbQSrbOygMZI9lmfr/zVCbM08zrGw8qllPlF+joJIszYtkEXVuhPUVJYgb0bHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vlbx58HC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQjZ5usv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7778D1F01563;
-	Tue, 21 Jul 2026 19:01:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vlbx58HC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78581F0155D;
+	Tue, 21 Jul 2026 19:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660481;
-	bh=Hh62pCiJYJtoPXRluHvgCggnlPhkiHvKCWCf0S/WrdU=;
+	s=korg; t=1784660454;
+	bh=ispYcrCURyHE72BeNa2gYJSjoCQFeO/v04lwDh3+1cg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uQjZ5usvbt7XPvKdNazdV8g1zfNN3d3xLhaqzTlKire0N4Y33uq+J3QydahMEnbYN
-	 elURloMZeQVD+7ZT9Iacm6tbErhMi0GrEoXsItdLp1CJzHsWz0+c2OLlsFfpOZ1WUX
-	 wK+hbJPnBazQNN4C2iSZerKKrYR7ZV/5Cnvuhp68=
+	b=Vlbx58HCjFwPRnqccALmSy4xbJCFkIx2cu8jE7XfDxB+cILPgKfhl54OUwugfXrL6
+	 zIu89onNLqS48QLJBzw7zr9GIB1Q1khO+DlOwlGxqKLt3FMFTW0ugNsUC6tMOFEl4X
+	 I9AiO/lkKfdkfmfDg1gTpQykAw3A0AvSXyjFhmIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Yang Jihong <yangjihong@bytedance.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0995/2077] xprtrdma: Document and assert reply-handler invariants
-Date: Tue, 21 Jul 2026 17:11:08 +0200
-Message-ID: <20260721152616.285827274@linuxfoundation.org>
+Subject: [PATCH 7.1 0986/2077] perf sched: Bounds-check prio before test_bit() in timehist
+Date: Tue, 21 Jul 2026 17:10:59 +0200
+Message-ID: <20260721152616.072253068@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,219 +47,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 797943e8bd1ffcc63bfe79d24faad9a77054ec40 ]
+[ Upstream commit 4477dc01fcfc7f404772a67e0c1e056541ceb61d ]
 
-The xprtrdma reply path has been the subject of recurring
-LLM-driven review claims that 'an RPC can complete while
-receive buffers are still DMA-mapped' or that 'the req can be
-freed while the HCA still owns the send buffer.'  No runtime
-reproducer has surfaced, but the absence of a written-down
-invariant set lets each pass of automated review reach the
-same hypothetical conclusion.  Subsequent fixes against
-ce2f9a4d9ccc ('xprtrdma: Decouple req recycling from RPC
-completion') closed the underlying races but did not document
-the closure where future readers will look for it.
+timehist_skip_sample() reads prio from untrusted tracepoint data via
+perf_sample__intval(sample, "prev_prio") without bounds validation.
+A crafted perf.data with prev_prio >= MAX_PRIO (140) causes test_bit()
+to read past the end of the prio_bitmap, which is only MAX_PRIO bits.
 
-State the invariants explicitly in a comment above
-rpcrdma_reply_handler() and back four of them with
-WARN_ON_ONCE() probes positioned where each invariant is
-locally checkable on the previous patch's cleaned-up
-ownership state:
+Add a prio >= 0 guard before the test_bit() call and skip out-of-range
+values (>= MAX_PRIO) that can never match the user's filter set.
 
-- I1 (Receive WR ownership): WARN at rpcrdma_post_recvs() that
-  a rep pulled from rb_free_reps carries rr_rqst == NULL.
+The original prio != -1 already let all negatives other than -1 through
+(after an undefined-behavior bitmap read); the new prio >= 0 guard
+preserves that pass-through behavior — negative means "no priority
+info", so the event is shown unfiltered — while fixing the OOB.
+Values >= MAX_PRIO are skipped because they cannot be represented in
+the filter bitmap.
 
-- I2 (rep attachment): WARN at rpcrdma_reply_put() that
-  req->rl_reply was NULLed before the matching rep_put.
-
-- I3 (Registered-MR fence): WARN at rpcrdma_complete_rqst()
-  that req->rl_registered is empty.  Strong send-queue
-  ordering of the LocalInv WR chain makes the last
-  completion observe the ib_dma_unmap_sg() of every earlier
-  MR, so 'list empty' implies 'all MRs unmapped'.
-
-- I4 (Send-buffer release): WARN at rpcrdma_req_release()
-  that req->rl_sendctx is NULL.  Reaching the kref release
-  callback requires both the RPC-layer and Send-side
-  references to have dropped; the Send-side drop runs in
-  rpcrdma_sendctx_unmap(), which clears rl_sendctx
-  (previous patch).  A non-NULL rl_sendctx here would mean
-  the Send-side owner had not run -- a contradiction.
-
-The XXX comment in xprt_rdma_free() about signal-driven
-release racing the Send completion described the pre-decouple
-state.  Replace it with a one-line note pointing at the
-invariant set, since the kref scheme now holds the req across
-the in-flight Send regardless of which path released the
-rpc_task.
-
-I5 (req lifecycle) is stated in the comment but not probed:
-making it locally assertible would require moving kref_init
-out of rpcrdma_req_release(), which in turn requires adding
-kref_init to the bc_pa_list and backlog-wake reuse paths.
-That restructuring is deferred -- the invariant is unchanged
-either way.
-
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
-Stable-dep-of: 234c0ff695ef ("xprtrdma: Resize reply buffers before reposting receives")
+Fixes: 9b3a48bbe20d9692 ("perf sched timehist: Add --prio option")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Yang Jihong <yangjihong@bytedance.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/rpc_rdma.c  | 69 +++++++++++++++++++++++++++++++++
- net/sunrpc/xprtrdma/transport.c | 13 +++++--
- net/sunrpc/xprtrdma/verbs.c     |  6 +++
- 3 files changed, 84 insertions(+), 4 deletions(-)
+ tools/perf/builtin-sched.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
-index 69380f9dfa499d..8121069472af22 100644
---- a/net/sunrpc/xprtrdma/rpc_rdma.c
-+++ b/net/sunrpc/xprtrdma/rpc_rdma.c
-@@ -1332,6 +1332,11 @@ void rpcrdma_complete_rqst(struct rpcrdma_rep *rep)
- 	struct rpc_rqst *rqst = rep->rr_rqst;
- 	int status;
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index defbf8dc26073c..6cf034f60c6667 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -2647,7 +2647,9 @@ static bool timehist_skip_sample(struct perf_sched *sched,
+ 		else if (evsel__name_is(evsel, "sched:sched_switch"))
+ 			prio = evsel__intval(evsel, sample, "prev_prio");
  
-+	/* I3: every registered MR has been invalidated and
-+	 * ib_dma_unmap_sg()'d before complete_rqst runs.
-+	 */
-+	WARN_ON_ONCE(!list_empty(&rpcr_to_rdmar(rqst)->rl_registered));
-+
- 	switch (rep->rr_proc) {
- 	case rdma_msg:
- 		status = rpcrdma_decode_msg(r_xprt, rep, rqst);
-@@ -1363,6 +1368,70 @@ void rpcrdma_complete_rqst(struct rpcrdma_rep *rep)
- 	goto out;
- }
- 
-+/* Reply-side ownership invariants
-+ *
-+ * I1 (Receive WR ownership).  A struct rpcrdma_rep is owned by the
-+ *    HCA between ib_post_recv() and the matching Receive completion.
-+ *    After ib_dma_sync_single_for_cpu() in rpcrdma_wc_receive() it is
-+ *    owned by the CPU until rpcrdma_rep_put() returns it to
-+ *    rb_free_reps; a rep on rb_free_reps is not re-posted until
-+ *    rpcrdma_post_recvs() pulls it off.  Asserted: rpcrdma_post_recvs()
-+ *    WARNs that a pulled rep has rr_rqst == NULL.
-+ *
-+ * I2 (rep attachment).  While req->rl_reply == rep, the rep cannot be
-+ *    re-posted.  rpcrdma_reply_put() NULLs req->rl_reply before handing
-+ *    the rep to rpcrdma_rep_put().  Asserted: rpcrdma_reply_put() WARNs
-+ *    that rl_reply is NULL after the put.
-+ *
-+ * I3 (Registered-MR fence).  On entry to rpcrdma_complete_rqst() every
-+ *    MR that was on req->rl_registered has had its rkey invalidated
-+ *    (remotely via IB_WC_WITH_INVALIDATE or locally via IB_WR_LOCAL_INV)
-+ *    and its pages ib_dma_unmap_sg()'d.  The LocalInv chain is posted
-+ *    on a single QP; strong send-queue ordering makes the last
-+ *    completion (frwr_wc_localinv_done) observe the
-+ *    ib_dma_unmap_sg() that ran from each earlier completion's
-+ *    frwr_mr_put() before complete_rqst is called.  The inline
-+ *    frwr_reminv() path unmaps its one MR synchronously before
-+ *    rpcrdma_reply_handler() reaches complete_rqst.  Asserted:
-+ *    rpcrdma_complete_rqst() WARNs that rl_registered is empty.
-+ *
-+ * I4 (Send-buffer release).  req->rl_kref carries two unconditional
-+ *    owners while a Send is outstanding: the RPC-layer reference (set
-+ *    at xprt_rdma_alloc_slot / xprt_rdma_bc_rqst_get / rpcrdma_req_release
-+ *    pool-entry) and the Send-side reference (kref_get() in
-+ *    rpcrdma_prepare_send_sges()).  rpcrdma_req_release() runs only
-+ *    after both have dropped, so the req does not return to its free
-+ *    pool until rpcrdma_sendctx_unmap() has fired -- the HCA has
-+ *    released the send buffer before the req can be reused.  Asserted:
-+ *    rpcrdma_req_release() WARNs that rl_sendctx is NULL.
-+ *
-+ * I5 (req lifecycle).  A req is owned by the RPC layer between slot
-+ *    acquisition and the matching xprt_rdma_free_slot() (or, for the
-+ *    backchannel, xprt_rdma_bc_free_rqst()).  While owned, rl_kref >= 1.
-+ *    The pools (rb_send_bufs, bc_pa_list, backlog wake target) never
-+ *    contain a req with outstanding Send-side or Reply-side work.
-+ *
-+ * Non-hazards.  The following claims have been raised by adversarial
-+ * review and are each closed by the invariants above:
-+ *
-+ *   * "Reply completes the RPC while the HCA still holds the send
-+ *     buffer" -- excluded by I4.  The Send-side kref reference is held
-+ *     until rpcrdma_sendctx_unmap() runs from Send completion.
-+ *
-+ *   * "Signal-driven release races the in-flight Send" -- same
-+ *     resolution.  xprt_rdma_free() does not touch rl_kref; the
-+ *     Send-side reference keeps the req out of its pool until Send
-+ *     completion fires.
-+ *
-+ *   * "Receive completion races rep reuse" -- excluded by I1.  A rep
-+ *     is on rb_free_reps only after rpcrdma_rep_put() has been called
-+ *     and rpcrdma_post_recvs() owns the next transition back to the HCA.
-+ *
-+ *   * "Pages still DMA-mapped when call_decode reads them" -- excluded
-+ *     by I3.  The matching ib_dma_unmap_sg() for every MR has run on
-+ *     the same CPU thread that calls rpcrdma_complete_rqst().
-+ */
-+
- /**
-  * rpcrdma_reply_handler - Process received RPC/RDMA messages
-  * @rep: Incoming rpcrdma_rep object to process
-diff --git a/net/sunrpc/xprtrdma/transport.c b/net/sunrpc/xprtrdma/transport.c
-index 5569f17fdd9b59..5ff8e5126a6c2b 100644
---- a/net/sunrpc/xprtrdma/transport.c
-+++ b/net/sunrpc/xprtrdma/transport.c
-@@ -509,6 +509,11 @@ static void rpcrdma_req_release(struct kref *kref)
- 	struct rpc_xprt *xprt = rqst->rq_xprt;
- 	struct rpcrdma_xprt *r_xprt;
- 
-+	/* I4: both the RPC-layer and Send-side owners have dropped,
-+	 * so rpcrdma_sendctx_unmap() has cleared rl_sendctx.
-+	 */
-+	WARN_ON_ONCE(req->rl_sendctx);
-+
- 	kref_init(&req->rl_kref);
- 
- #if defined(CONFIG_SUNRPC_BACKCHANNEL)
-@@ -652,10 +657,10 @@ xprt_rdma_free(struct rpc_task *task)
- 		frwr_unmap_sync(rpcx_to_rdmax(rqst->rq_xprt), req);
- 	}
- 
--	/* XXX: If the RPC is completing because of a signal and
--	 * not because a reply was received, we ought to ensure
--	 * that the Send completion has fired, so that memory
--	 * involved with the Send is not still visible to the NIC.
-+	/* The Send-side rl_kref owner keeps req out of its free pool
-+	 * until rpcrdma_sendctx_unmap() has fired -- see I4 above
-+	 * rpcrdma_reply_handler() -- so signal-driven release here
-+	 * does not let the HCA touch a recycled send buffer.
- 	 */
- }
- 
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index d48d681bb49f44..ee6c4b18105ba1 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -1250,6 +1250,10 @@ void rpcrdma_reply_put(struct rpcrdma_buffer *buffers, struct rpcrdma_req *req)
- 		rpcrdma_rep_put(buffers, req->rl_reply);
- 		req->rl_reply = NULL;
- 	}
-+	/* I2: rl_reply NULL after the put closes the
-+	 * 'rep on rb_free_reps still referenced by req' window.
-+	 */
-+	WARN_ON_ONCE(req->rl_reply);
- }
- 
- /**
-@@ -1426,6 +1430,8 @@ void rpcrdma_post_recvs(struct rpcrdma_xprt *r_xprt, int needed)
- 			rep = rpcrdma_rep_create(r_xprt);
- 		if (!rep)
- 			break;
-+		/* I1: a rep on rb_free_reps must carry no rqst pointer. */
-+		WARN_ON_ONCE(rep->rr_rqst);
- 		if (!rpcrdma_regbuf_dma_map(r_xprt, rep->rr_rdmabuf)) {
- 			rpcrdma_rep_put(buf, rep);
- 			break;
+-		if (prio != -1 && !test_bit(prio, sched->prio_bitmap)) {
++		/* negative prio means no info; out-of-range prio can't match the filter */
++		if (prio >= 0 &&
++		    (prio >= MAX_PRIO || !test_bit(prio, sched->prio_bitmap))) {
+ 			rc = true;
+ 			sched->skipped_samples++;
+ 		}
 -- 
 2.53.0
 
