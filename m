@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDB946D09E;
-	Tue, 21 Jul 2026 17:36:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D400E46D09E;
+	Tue, 21 Jul 2026 17:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655368; cv=none; b=Vt98Wd2Avbs5EamnEmexzM4nPx8oJf1ee47M3ZMfXRhNaf06FSk2zgnv4zduagjVfctEv0t3dDsfwBHGHZ4qSeZ5ZmYGABjZ1AHCUYSsGc9zNS4YWXu+QZj0PP9DRMnFi4LViEGyoSBXYb7ub7hT6IHCKmxhWg84EfohsM67qBo=
+	t=1784655370; cv=none; b=GhkR9ixsBo3WVTH1JFhiOqsMPnp0Bcx0H3UGUqFvAmd/vWKvLOwRjGEq81r5O8bEG0pVQ/3wzZrwnuoP6mUWvxL6S+2sCGn8Xw8KYucmAd2IZAkOSHIjfCJ7Ue4IoVOK9W9DaH+yOB5/r/eA49ArXnGkjjQq2ZaVPsKdDT7RzYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655368; c=relaxed/simple;
-	bh=fuRhX/Zjsa/qRjjfu9cyPSvsT8xL2qYPCR0JjdhyJ3Q=;
+	s=arc-20240116; t=1784655370; c=relaxed/simple;
+	bh=XMv6ZReD3UF4LL8j1I7jH0x6D5rvYMsKNvagf8RTo6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=olG5JbtoO4jo0CAVB6sDDcwMpYCeI9renvps0VPVCccIgf6QyGxkL9mPdKvgOqQRp2bKFreDITWUFD3c0232Ymowa7v/jkEL3iBicwEXQ61RmxtsYWxQeexL6MIkbpHNql3AsHxcmSVanHl/wL0vFB4gRYC5E9YMlqjYNiqClTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhKmm0VM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gWjk7Dy/aPNSdMNJnr+PgF9pMMKWqi7dopO51iicYyaiDrEnVEv3ljMIDZIp4wWo3dWScNdsHwH/1ZW4rztU763nc+rovbckPgfEklzzhxRcmgcFYtU8Co64EflQpOj2N7qP4M5YMc8s17qNi8SyzBc4lAJ9oZQkJfpUP3jRneY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S962Cfrs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhKmm0VM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A21D91F000E9;
-	Tue, 21 Jul 2026 17:36:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S962Cfrs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4764B1F000E9;
+	Tue, 21 Jul 2026 17:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655367;
-	bh=mSC6OCpKq6gZ+hDVTn1N1/XFR7gjUnYLpDMxyxmazAs=;
+	s=korg; t=1784655369;
+	bh=yeBBP54lPiUWPlyluxqEqDcuZyO82w4lDB044LgWr0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lhKmm0VMuzKAtdVuk2ggEvZ2YeySKJGUnTj3anaKer3UGRl93vHzAOZo/pEs6ROaB
-	 FGwIQ7oARM6IP/nqXgT983VGJrpuuPdblqo2cVb3FUwtsLReYJ8L3e5LVGK1iQ7wNF
-	 mvvIfP2qSOGC2IAFRMQSqWugS/9AEMj+Ins1zYAc=
+	b=S962Cfrs6v0ZYmzO0L8y91L8pMSA42FIMtme3ssgqAWaxentqRdQ8pkuUA/Dgb5E2
+	 4OW6o5+IIZvt77pcBaYlue4MeIZcL+Xeoi7Yop3/HUy4cDq+LwMXIa05rasDdJ3Nst
+	 b/I3M6kWOcUQUh8vTBtu7v/4UXgushbdr9xxL1KY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Chris Mason <clm@meta.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 2057/2077] binder: cache secctx size before release zeroes it
-Date: Tue, 21 Jul 2026 17:28:50 +0200
-Message-ID: <20260721152641.217395239@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 7.1 2031/2077] mtd: rawnand: fsl_ifc: return errors for failed page reads
+Date: Tue, 21 Jul 2026 17:28:24 +0200
+Message-ID: <20260721152640.601523437@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,102 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit b34826e55aad3520ec813f1f367c11b24b29dc9f ]
+commit f9a13e05a327080c3a1c8165adf9e678fb68fef2 upstream.
 
-binder_transaction() bounds the scatter-gather buffer area with
-sg_buf_end_offset and subtracts the aligned LSM context size because
-the secctx is written at the tail of that area.  The subtraction reads
-lsmctx.len, but that field has already been cleared by the time the
-line runs:
+fsl_ifc_run_command() logs controller timeout and other non-OPC
+completion states in ctrl->nand_stat. fsl_ifc_read_page() then only
+increments the ECC failure counter for non-OPC status and still returns
+max_bitflips, which can be zero.
 
-    security_secid_to_secctx(secid, &lsmctx)   /* lsmctx.len set */
-    lsmctx_aligned_size = ALIGN(lsmctx.len, sizeof(u64))
-    extra_buffers_size += lsmctx_aligned_size
-    ...
-    security_release_secctx(&lsmctx)            /* memset zeroes len */
-    ...
-    sg_buf_end_offset = sg_buf_offset + extra_buffers_size
-                        - ALIGN(lsmctx.len, sizeof(u64)) /* ALIGN(0,8) */
+Return -ETIMEDOUT when the command did not complete at all and -EIO for
+other non-OPC read completions so the NAND core does not treat a failed
+page read as a clean page.
 
-security_release_secctx() does memset(cp, 0, sizeof(*cp)), so lsmctx.len
-reads back as 0 and the subtraction contributes nothing, leaving
-sg_buf_end_offset too large by the aligned secctx size on every
-transaction to a txn_security_ctx node.
-
-Each BINDER_TYPE_PTR object then derives buf_left = sg_buf_end_offset -
-sg_buf_offset as the sole upper bound on its copy, so the inflated end
-offset lets the copy run into the bytes that already hold the secctx.
-
-The aligned size must therefore be cached before release rather than
-re-read from the now-cleared field.  Fix by caching it in
-lsmctx_aligned_size at function scope when it is first computed and
-subtracting lsmctx_aligned_size instead of re-reading lsmctx.len after
-release.  Reuse the same value for the earlier buf_offset computation.
-
-Fixes: 6fba89813ccf ("lsm: ensure the correct LSM context releaser")
-Cc: stable <stable@kernel.org>
-Assisted-by: kres:claude-opus-4-8
-Signed-off-by: Chris Mason <clm@meta.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Acked-by: Carlos Llamas <cmllamas@google.com>
-Link: https://patch.msgid.link/20260603174506.1957278-1-clm@meta.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 82771882d960 ("NAND Machine support for Integrated Flash Controller")
+Cc: stable@vger.kernel.org
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/mtd/nand/raw/fsl_ifc_nand.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -3097,6 +3097,7 @@ static void binder_transaction(struct bi
- 	int t_debug_id = atomic_inc_return(&binder_last_id);
- 	ktime_t t_start_time = ktime_get();
- 	struct lsm_context lsmctx = { };
-+	size_t lsmctx_aligned_size = 0;
- 	LIST_HEAD(sgc_head);
- 	LIST_HEAD(pf_head);
- 	const void __user *user_buffer = (const void __user *)
-@@ -3363,7 +3364,6 @@ static void binder_transaction(struct bi
+--- a/drivers/mtd/nand/raw/fsl_ifc_nand.c
++++ b/drivers/mtd/nand/raw/fsl_ifc_nand.c
+@@ -684,8 +684,15 @@ static int fsl_ifc_read_page(struct nand
+ 		return check_erased_page(chip, buf);
+ 	}
  
- 	if (target_node && target_node->txn_security_ctx) {
- 		u32 secid;
--		size_t added_size;
+-	if (ctrl->nand_stat != IFC_NAND_EVTER_STAT_OPC)
++	if (!ctrl->nand_stat) {
+ 		mtd->ecc_stats.failed++;
++		return -ETIMEDOUT;
++	}
++
++	if (ctrl->nand_stat != IFC_NAND_EVTER_STAT_OPC) {
++		mtd->ecc_stats.failed++;
++		return -EIO;
++	}
  
- 		security_cred_getsecid(proc->cred, &secid);
- 		ret = security_secid_to_secctx(secid, &lsmctx);
-@@ -3375,9 +3375,9 @@ static void binder_transaction(struct bi
- 			return_error_line = __LINE__;
- 			goto err_get_secctx_failed;
- 		}
--		added_size = ALIGN(lsmctx.len, sizeof(u64));
--		extra_buffers_size += added_size;
--		if (extra_buffers_size < added_size) {
-+		lsmctx_aligned_size = ALIGN(lsmctx.len, sizeof(u64));
-+		extra_buffers_size += lsmctx_aligned_size;
-+		if (extra_buffers_size < lsmctx_aligned_size) {
- 			binder_txn_error("%d:%d integer overflow of extra_buffers_size\n",
- 				thread->pid, proc->pid);
- 			return_error = BR_FAILED_REPLY;
-@@ -3414,7 +3414,7 @@ static void binder_transaction(struct bi
- 		size_t buf_offset = ALIGN(tr->data_size, sizeof(void *)) +
- 				    ALIGN(tr->offsets_size, sizeof(void *)) +
- 				    ALIGN(extra_buffers_size, sizeof(void *)) -
--				    ALIGN(lsmctx.len, sizeof(u64));
-+				    lsmctx_aligned_size;
- 
- 		t->security_ctx = t->buffer->user_data + buf_offset;
- 		err = binder_alloc_copy_to_buffer(&target_proc->alloc,
-@@ -3469,7 +3469,7 @@ static void binder_transaction(struct bi
- 	off_end_offset = off_start_offset + tr->offsets_size;
- 	sg_buf_offset = ALIGN(off_end_offset, sizeof(void *));
- 	sg_buf_end_offset = sg_buf_offset + extra_buffers_size -
--		ALIGN(lsmctx.len, sizeof(u64));
-+		lsmctx_aligned_size;
- 	off_min = 0;
- 	for (buffer_offset = off_start_offset; buffer_offset < off_end_offset;
- 	     buffer_offset += sizeof(binder_size_t)) {
+ 	return nctrl->max_bitflips;
+ }
 
 
