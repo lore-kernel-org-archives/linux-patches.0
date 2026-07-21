@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47B9298CC4;
-	Tue, 21 Jul 2026 22:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8920142EEB8;
+	Tue, 21 Jul 2026 22:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671476; cv=none; b=QLB/5DnwkUcAakr6xzGD/Pb3cik6/4i8VWWkXzG/ARXOqlmMvNETpOX52EXHUg1oElEiAZeQCq3ejGQ6yvDYyqkge34Rfcx5g3qXyPxhRZWzz8EXdya39PFv/qV67XClZBumRGGq0GYPOx3MmK2hBzvolmVmpklmdFrJ8noTO7o=
+	t=1784671478; cv=none; b=iiueP2zNiAp7y3sRbrgX0dZU1LuZBVKxMIEvjT9c+LCOYt36EzoPlJ7lssWNsEY/Py9iYzwSogrFaSAwuX/o+f9Ur+0PKUzDRR4ZU/csTixT6vsgmE7y+/1R18gQvZTZp0GDQBzjUTXaby788cviqPemThUa91I9J1rzEnbWK1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671476; c=relaxed/simple;
-	bh=DG6lCxASk6es4yx+iihzSInrT0XP+88rP4z5++ztekQ=;
+	s=arc-20240116; t=1784671478; c=relaxed/simple;
+	bh=O594E1yJQNO5JNx1+ka0za3C7CBMaurgDwMOVWi0VHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K3ZhrDxSk8MwnW2xW0yOPV+e+bQk21R6a9jszujjto17ASTGWxr8oLMntOuBX/vz7V4tcfg2Hpm0EPy55oYsnxIxvIYYsQJd+gwKMx/fyEdvAJILa15KlYnkesKMVn8sJoYZ/vJA5Up6swrLGuSiUj41mvhOpy6NrTBxvQ3s3x0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9rmncW9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i7ofnzQU7ur3WzWYM+Xgesz8dUXQS72Yz6CuLM4b6vXXVtHOg3r90RZg5Xun9gFBc3uZwHDkL3yj7I4hHZtJ3di9Ssyc+L2ElwjASAwvMvWVDFQpAHiYHt5Em7D6Ct6zGvwkdr/rkhw7xHjLRNyTldA2bdRjRoWNVwIFpNyaEKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZOB6r4n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9rmncW9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563561F000E9;
-	Tue, 21 Jul 2026 22:04:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZOB6r4n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF5061F000E9;
+	Tue, 21 Jul 2026 22:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671474;
-	bh=vdQSWtWBoE5s+lvipf00z0219KtJzoO/lI7f9xV69bo=;
+	s=korg; t=1784671477;
+	bh=pX2rALyXk4+brN0Slk7oE7JntAmqs7rTvDDYmp+dbLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u9rmncW98KSPYV85NA0gGxY7ZJHkAIRAav1hUOybYs0GI4d8+RBXspYeH8Rv9HnI+
-	 DFt3VELsHeE/Vi3r8/IIr9kavYuphZpFVbZKXSGlm3Va6BJ5zrzTFUYHkm4DUo1UMJ
-	 TezvaTqa/eBipKYPbFaV527U96ftsA2U/rHVBN9I=
+	b=CZOB6r4n5F7Pk9pK2/P1GEG6zCbGN+UWGOLq6omy/pFYHDJsA29aM8GyRnTCN5i20
+	 IXIOseF6iJ7bHt4v+gKCkRSyTT99G0BscaZ/d/VVN8fypl1sVWGbVd3wp6LbrVzQrJ
+	 MMnUOHImlqwMSrKhMSodj1G5vfTvE76kvaXxu568=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lianfa Weng <wenglianfa@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Jiakai Xu <xujiakai24@mails.ucas.ac.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 258/843] RDMA/hns: Fix warning in poll cq direct mode
-Date: Tue, 21 Jul 2026 17:18:13 +0200
-Message-ID: <20260721152411.832203875@linuxfoundation.org>
+Subject: [PATCH 5.15 259/843] PM: sleep: Use complete() in device_pm_sleep_init()
+Date: Tue, 21 Jul 2026 17:18:14 +0200
+Message-ID: <20260721152411.854577244@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,54 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lianfa Weng <wenglianfa@huawei.com>
+From: Jiakai Xu <xujiakai24@mails.ucas.ac.cn>
 
-[ Upstream commit 3f19c2a3852e6ba75f3e92dd5edc4e07f3d07f4a ]
+[ Upstream commit 3855941f1e4069182c895d5093c5fa589f5b38bd ]
 
-CQs allocated by ib_alloc_cq() always have a comp_handler. Though
-in direct mode this handler is never expected to be called, it
-is still called when the driver is reset, triggering the following
-WARN_ONCE():
+Replace complete_all() with complete() in device_pm_sleep_init() to allow
+it to be called in atomic contexts without triggering a false-positive
+WARNING from lockdep_assert_RT_in_threaded_ctx() when
+CONFIG_PROVE_RAW_LOCK_NESTING is enabled.
 
-Call trace:
-ib_cq_completion_direct+0x38/0x60
-hns_roce_cq_completion+0x54/0x90 (hns_roce_hw_v2]
-hns_roce_handle_device_err+Ox1c8/0x340 [hns_roce_hw_v2]
-hns_roce_hw_v2_uninit_instance.constprop.0+0x34/0x70 [hns_roce_hw_v2]
-hns_roce_hw_v2_reset_notify+0xc4/0xe0 [hns_roce_hw_v2]
-hclge_notify_roce_client+0x60/0xbc [hclge]
-hclge_reset_rebuild+0x48/0x34c [hclge]
-hclge_reset_subtask+0xcc/0xec [hclge]
-hclge_reset_service_task+0x80/0x160 [hclge]
-hclge_service_task+0x50/0x80 (hclge]
-process_one_work+0x1cc/0x4d0
-worker_thread+0x154/0x414
-kthread+0x104/0x144
-ret_from_fork+0x10/0x18
+device_pm_sleep_init() may be called during device initialization while
+holding a raw_spinlock (e.g., from within device_initialize()), and
+complete_all() is unsafe in atomic contexts on PREEMPT_RT kernels.
+complete(), which is safe to call from any context, is sufficient here.
 
-Fixes: f295e4cece5c ("RDMA/hns: Delete unnecessary callback functions for cq")
-Link: https://patch.msgid.link/r/20260520055759.2354037-3-huangjunxian6@hisilicon.com
-Signed-off-by: Lianfa Weng <wenglianfa@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+complete_all() sets the completion count to UINT_MAX/2 (permanently
+signaled), while complete() increments it by 1. Since no threads can be
+waiting during device initialization, both are functionally equivalent.
+The completion is always reinitialized via reinit_completion() in
+dpm_clear_async_state() before each suspend/resume cycle.
+
+However, changing to complete() introduces a potential deadlock for
+devices with no PM support (dev->power.no_pm = true). Such devices are
+never added to the dpm_list and never go through dpm_clear_async_state(),
+so their completion is never reinitialized. A parent device waiting on a
+no_pm child across multiple suspend phases would consume the single-use
+token in the first phase and block forever in the second.
+
+Fix this by adding an early return in dpm_wait() when dev->power.no_pm is
+set, since no_pm devices do not participate in system suspend/resume.
+
+Fixes: 152e1d592071 ("PM: Prevent waiting forever on asynchronous resume after failing suspend")
+Signed-off-by: Jiakai Xu <xujiakai24@mails.ucas.ac.cn>
+[ rjw: Subject adjustment ]
+Link: https://patch.msgid.link/20260523022314.2657232-1-xujiakai24@mails.ucas.ac.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/power/main.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
-index 5bafd451ca8daf..02b053acc827cd 100644
---- a/drivers/infiniband/hw/hns/hns_roce_main.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_main.c
-@@ -784,7 +784,7 @@ static void check_and_get_armed_cq(struct list_head *cq_list, struct ib_cq *cq)
- 	unsigned long flags;
+diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
+index 9cd0a837af4259..3d3e710f71733c 100644
+--- a/drivers/base/power/main.c
++++ b/drivers/base/power/main.c
+@@ -102,7 +102,7 @@ void device_pm_sleep_init(struct device *dev)
+ 	dev->power.is_noirq_suspended = false;
+ 	dev->power.is_late_suspended = false;
+ 	init_completion(&dev->power.completion);
+-	complete_all(&dev->power.completion);
++	complete(&dev->power.completion);
+ 	dev->power.wakeup = NULL;
+ 	INIT_LIST_HEAD(&dev->power.entry);
+ }
+@@ -239,6 +239,10 @@ static void dpm_wait(struct device *dev, bool async)
+ 	if (!dev)
+ 		return;
  
- 	spin_lock_irqsave(&hr_cq->lock, flags);
--	if (cq->comp_handler) {
-+	if (cq->comp_handler && hr_cq->ib_cq.poll_ctx != IB_POLL_DIRECT) {
- 		if (!hr_cq->is_armed) {
- 			hr_cq->is_armed = 1;
- 			list_add_tail(&hr_cq->node, cq_list);
++	/* Devices with no PM support don't use the completion. */
++	if (dev->power.no_pm)
++		return;
++
+ 	if (async || (pm_async_enabled && dev->power.async_suspend))
+ 		wait_for_completion(&dev->power.completion);
+ }
 -- 
 2.53.0
 
