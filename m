@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A6F3EBF23;
-	Tue, 21 Jul 2026 17:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D543E49CA;
+	Tue, 21 Jul 2026 17:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653905; cv=none; b=uS6h5/M3HlW0wD9CgnU3RoUoSf10oOT8YxKFrovndmME8JlLPXh4191TgrbXgBhWItrCXI9fvJfQ60jW0p05Vux1z+xtDjnBQ+JI1FdhP9lfH8pMHqsjzPGpxVGEbu1SxEU4J8v072rjqQiqDave9SrT9arpFDgG7GxeW6ikkBE=
+	t=1784653906; cv=none; b=rVvVl5xUNK9l7vQNVhMoMtB/SpiSA+klH0ypkqaChoM4GEfcLCk8BHyRvnTa7BuYCwn3AfPsPaD7HIw2r9B2OawToGHPy8Xpfo9Eb3ebSaqzA4lNStumkj1Civa477g6RV5wwLEbEojRHd9TtW7LbNxheXzV8iYuvvtDomfzPTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653905; c=relaxed/simple;
-	bh=0lwHBqTgU3AYsO41Zqnsl6QQrQTh4qI3dNqi8Fl68K0=;
+	s=arc-20240116; t=1784653906; c=relaxed/simple;
+	bh=2KyM70sbw6ZnoMxWpPLF7YNO174bD9tw7aLENASs7sM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rMBzMeA+p7emzMBcR8JqRvymFwh7/kODbwTYxWkJS+cexPlYDpqzzabrch913W+4j9Wg3WQ/melFz0cRZuI9hxCd4rpYMexxjrUarWAQaqDS7Gja/THR1ArApqJ9vLW9vMMsSwDqaIKjh8oLiLJgAVr309yKiA2RdtEmT6C5mRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ysp0nNVI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JLm0gNO9uyvx9oW5pHBOsRkdmaUKwg2yrBGm7/F7K8WuIQIt3uAiY5d4+dIbMM+SI1FhE1onigkrx2MQb0DGplw1BKbU9232L0AZbF+89PW4Ype98FVHu452Q0FkV/Xtbwhk0cxWMx1hsOSg7ngic1DTBR2lR+DFMjOuhtdyvXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ire/TJ5N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ysp0nNVI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D92D1F00A3E;
-	Tue, 21 Jul 2026 17:11:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ire/TJ5N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C925E1F00A3A;
+	Tue, 21 Jul 2026 17:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653903;
-	bh=szn59mvPT9Xp0zdHp4hBuBANCWxbrxBlUQCCcm6iZ0A=;
+	s=korg; t=1784653901;
+	bh=DRH04uPNxGAnY9PehHVskjX//T9a8qi8g4nzMe8V9BA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ysp0nNVIC9FFOcKH3e+tkYqgcDwhr5LEz16nZ1RICWf0mP5hwZksGKc6855jJkwb7
-	 Qt12UQRI42jBqwLEjnmY6Hgw93TG2oWR+bW8DiwzBurtKCLUkDunmkljG4U/R8la+o
-	 ubBxZBOiLTiZL0uxll7RMV6PlLyZdBbMNl6M/FIs=
+	b=Ire/TJ5NxUOSPiFuJ2gbGMlft5RGqPCMeCqvsOpTpsAO11Gy4rX8DklJcbozcq4xe
+	 jgJZKdaMDYAYluNS4n49+eX9kcYKRxhqTl6g7vRwW6bCCwH3hIbTKw34nAtyNyugq/
+	 WvrPvJct0Iwn6j0cA/P3vgZu0qRQr6Qe2CEEfWiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Mader <robert.mader@collabora.com>,
-	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
-	Melissa Wen <mwen@igalia.com>,
-	Maarten Lankhorst <dev@lankhorst.se>,
+	Timur Tabi <ttabi@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1476/2077] drm: Guard DRM_CLIENT_CAP_PLANE_COLOR_PIPELINE
-Date: Tue, 21 Jul 2026 17:19:09 +0200
-Message-ID: <20260721152627.608734786@linuxfoundation.org>
+Subject: [PATCH 7.1 1502/2077] regulator: core: regulator_lock_two() should test for EDEADLK not EDEADLOCK
+Date: Tue, 21 Jul 2026 17:19:35 +0200
+Message-ID: <20260721152628.212492998@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,72 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Mader <robert.mader@collabora.com>
+From: Timur Tabi <ttabi@nvidia.com>
 
-[ Upstream commit ac7c6b4308c5e757eb278d47b9c0761c31ac9d6b ]
+[ Upstream commit d38f8bd771c4999b797d7074b348cf201414bd34 ]
 
-The client cap is currently advertised unconditionally, even for drivers
-that do not support plane color pipelines. If clients supporting the latter,
-like Wayland compositors or tools like drm_info, enable the client cap on
-such drivers they will be left without both color pipeline and the legacy
-properties COLOR_ENCODING and COLOR_RANGE, effectively breaking YUV->RGB
-conversion support.
+Compare against -EDEADLK, which is what ww_mutex_lock() actually
+returns and what every other deadlock check in this file already uses.
 
-Prevent that by only marking the cap supported if there are actually planes
-with color pipelines.
+Function regulator_lock_two() acquires two regulators via
+regulator_lock_nested() -> ww_mutex_lock().  On contention,
+ww_mutex_lock() returns -EDEADLK, which is the caller's signal to drop
+the lock it holds and retry the acquisition in the canonical order.
 
-Note: while the color pipeline replacement for the legacy properties is
-still under review (1), we can assume that it will work as a drop-in
-replacement. That means any plane on any hardware currently supporting
-the legacy properties will be able to offer a functionally equal color
-pipeline and there will be no technical reason keep using the legacy
-properties if both the driver and the client support the new API.
+However, regulator_lock_two() tests the return value against -EDEADLOCK
+rather than -EDEADLK.  On most architectures, EDEADLK and EDEADLOCK are
+the same value, so the comparison happens to be correct and the bug is
+invisible.  But on MIPS, SPARC, and PowerPC, those two errors have
+different values.  The test is wrong: a genuine -EDEADLK backoff no
+longer matches -EDEADLOCK, so instead of unlocking and retrying, the
+code falls into WARN_ON(ret) and returns with only one of the two
+regulators locked.
 
-[1] https://lore.kernel.org/dri-devel/20260623164812.81110-1-harry.wentland@amd.com/
+In practice, this is a bug only on MIPS, because the regulator core is
+not built or used on the other two platforms.
 
-Signed-off-by: Robert Mader <robert.mader@collabora.com>
-Reviewed-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Reviewed-by: Melissa Wen <mwen@igalia.com>
-Fixes: 179ab8e7d7b3 ("drm/colorop: Introduce DRM_CLIENT_CAP_PLANE_COLOR_PIPELINE")
-Link: https://patch.msgid.link/20260703073230.19982-1-robert.mader@collabora.com
-Suggested-by: Maarten Lankhorst <dev@lankhorst.se>
-Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
+In general, EDEADLK is preferred over EDEADLOCK for new code.
+
+Fixes: cba6cfdc7c3f ("regulator: core: Avoid lockdep reports when resolving supplies")
+Signed-off-by: Timur Tabi <ttabi@nvidia.com>
+Link: https://patch.msgid.link/20260708235722.2953579-1-ttabi@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_ioctl.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/regulator/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_ioctl.c b/drivers/gpu/drm/drm_ioctl.c
-index e2df4becce629a..9039a39c43243a 100644
---- a/drivers/gpu/drm/drm_ioctl.c
-+++ b/drivers/gpu/drm/drm_ioctl.c
-@@ -373,13 +373,25 @@ drm_setclientcap(struct drm_device *dev, void *data, struct drm_file *file_priv)
- 			return -EINVAL;
- 		file_priv->supports_virtualized_cursor_plane = req->value;
- 		break;
--	case DRM_CLIENT_CAP_PLANE_COLOR_PIPELINE:
-+	case DRM_CLIENT_CAP_PLANE_COLOR_PIPELINE: {
-+		struct drm_plane *plane;
-+		bool has_plane_with_color_pipeline = false;
-+
- 		if (!file_priv->atomic)
- 			return -EINVAL;
- 		if (req->value > 1)
- 			return -EINVAL;
-+		drm_for_each_plane(plane, dev) {
-+			if (plane->color_pipeline_property) {
-+				has_plane_with_color_pipeline = true;
-+				break;
-+			}
-+		}
-+		if (!has_plane_with_color_pipeline)
-+			return -EOPNOTSUPP;
- 		file_priv->plane_color_pipeline = req->value;
- 		break;
-+	}
- 	default:
- 		return -EINVAL;
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index dc5d67767336e0..1797929dfe5663 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -248,7 +248,7 @@ static void regulator_lock_two(struct regulator_dev *rdev1,
+ 	ret = regulator_lock_nested(rdev1, ww_ctx);
+ 	WARN_ON(ret);
+ 	ret = regulator_lock_nested(rdev2, ww_ctx);
+-	if (ret != -EDEADLOCK) {
++	if (ret != -EDEADLK) {
+ 		WARN_ON(ret);
+ 		goto exit;
  	}
+@@ -264,7 +264,7 @@ static void regulator_lock_two(struct regulator_dev *rdev1,
+ 		swap(held, contended);
+ 		ret = regulator_lock_nested(contended, ww_ctx);
+ 
+-		if (ret != -EDEADLOCK) {
++		if (ret != -EDEADLK) {
+ 			WARN_ON(ret);
+ 			break;
+ 		}
 -- 
 2.53.0
 
