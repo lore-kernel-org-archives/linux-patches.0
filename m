@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0163B3C15;
-	Tue, 21 Jul 2026 20:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D4D3B47E5;
+	Tue, 21 Jul 2026 20:36:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666182; cv=none; b=gOUwlWuVBnPcGvVJ11Sybg9eOJ2vstYGKN9Pm030Sr21idwQs3Sr1DjgpkWnKzAjR+AtgLVduuwQgwbuOH24j2oL0YSERqB27qShlRQDY1uLDHLzvbgThyYwsLctt5YhvZBFqamC0YjMChj0JIa582TJ8FTTvdprZyGcZwf9UCU=
+	t=1784666184; cv=none; b=bDGyHD4n27sd1A60F5bSIxGehudV9psv3+D9mn614KCPnC6Xb1VegqDWLgmrtTz0yZsTVEQPkMnDOgV5lWHlktH+R6BTzTTHDymkdqDmvDFZ5GJSkAnpj4vQvYVf1jcd4GAmmblvcq5pIM1ydZOZ9hsgOIFREubKsYhTK4oNMx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666182; c=relaxed/simple;
-	bh=AjlZzvGZIn0clQ0EudJugUNHzQKN8J/pIX3Fv01UYOg=;
+	s=arc-20240116; t=1784666184; c=relaxed/simple;
+	bh=CfqjFdYrR83mxeXpgaQgXdYRDuzwGQTsdNOcq3Rkxfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TfJTB2HMtfnLfpFDrLI30e+yV3MRncgcOXxOZ/bor4NoiYe79/+T653S4UCi9rFqokyBJgqFWMBk2xnyHJ/E4KvRLwzSTyd+ISROpESqhGJNv/RN+76tNZ9x77w7UCtqJFStbKduQNlNjgSfP6mzoWBeNCZdAS7WqgOyAJoDz30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N0bAR0Rq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hTlNr+faqvzNMewO66pYt1IqUlKWRZuwr9lxRYhKUfjeEoLoeQ4Z/omJt+dJxfiTON/UTs1QcU+7vdd9z2u7Pkvxpkr0HnqItP5M987WsfIvaI078M7hsdqf1cb6cnZyVsUvMapiu3iz0rL8siMhXnJA01BG7a0JJEAAInnkMf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0CJ6GBn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N0bAR0Rq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD94D1F000E9;
-	Tue, 21 Jul 2026 20:36:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0CJ6GBn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D751F000E9;
+	Tue, 21 Jul 2026 20:36:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666180;
-	bh=xccaUWX7JJfzANskAbELS5ho97JeQJn87vosq4sTJ0M=;
+	s=korg; t=1784666182;
+	bh=8MyTRGmF10W1rjmdcnFPUI1DYQg3+OPpm6qfxVrPIRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N0bAR0RqtCPSmxpDduS/3aNkXp4D3+Guz3PHjGfhs3EAmqYcqdd4hUqgE9CJolgB8
-	 9TO3OgVxuPvMp2T4Zoo4wuZ/curcaIb8jY989Db8ezocokCZ6i+ynHNpca941+bjak
-	 kbNjG+n52D0E2Lr7g1Ogto24fXbKu9q2RdEAJw8A=
+	b=K0CJ6GBnTyYjs1MNdaoJNgirn4AAeLWzFiFO+1ngKl+O0pUXHgxm7BpaWVmh1NTA9
+	 DiH9LSi5Z5qa0pyVARrK7sECBabtAI3//nTI5WrpO6d96Ym4YxeL3yYJKWGc7nzUHK
+	 fGA/fvis83x5lOmjgn58p0pdJjxAxgVwlg5zgz9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	WenTao Liang <vulab@iscas.ac.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0584/1266] netfilter: nf_conncount: callers must hold rcu read lock
-Date: Tue, 21 Jul 2026 17:17:01 +0200
-Message-ID: <20260721152454.934277265@linuxfoundation.org>
+Subject: [PATCH 6.6 0585/1266] ALSA: core: Fix unintuitive behavior of snd_power_ref_and_wait()
+Date: Tue, 21 Jul 2026 17:17:02 +0200
+Message-ID: <20260721152454.956078266@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,71 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 64d7d5abe2160bba369b4a8f06bdf5630573bab0 ]
+[ Upstream commit b113a891252c3fa4fab11ec8c2894a22ecaf278c ]
 
-rcu_derefence_raw() should not have been used here, it concealed this bug.
-Its used because struct rb_node lacks __rcu annotated pointers, so plain
-rcu_derefence causes sparse warnings.
+snd_power_ref_and_wait() takes the power refcount and doesn't leave it
+no matter whether it returns an error or not.  However, the majority
+of callers don't expect but just returns without unreferencing in the
+caller side upon errors.
 
-The major tradeoff is that rcu_derefence_raw() doesn't warn when the caller
-isn't in a rcu read section.
+For addressing the potential refcount unbalance, rather correct the
+behavior of snd_power_ref_wait() to unreference upon returning an
+error.
 
-Extend the rcu read lock scope accordingly and cause sparse warnings,
-those warnings are the lesser evil.
+Note that the problem above is likely negligible; the function returns
+an error only when the sound card is being shutdown, hence it doesn't
+matter about the power refcount any longer at such a state.
 
-Fixes: 11efd5cb04a1 ("openvswitch: Support conntrack zone limit")
-Closes: https://sashiko.dev/#/patchset/20260603230610.7900-1-fw%40strlen.de
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: e94fdbd7b25d ("ALSA: control: Track in-flight control read/write/tlv accesses")
+Reported-by: WenTao Liang <vulab@iscas.ac.cn>
+Closes: https://lore.kernel.org/20260612022121.14329-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/20260614090507.772540-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conncount.c | 6 +++---
- net/openvswitch/conntrack.c  | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ sound/core/init.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
-index ae9ad439449fa5..b9265a8cdb2bc4 100644
---- a/net/netfilter/nf_conncount.c
-+++ b/net/netfilter/nf_conncount.c
-@@ -499,7 +499,7 @@ count_tree(struct net *net,
- 	hash = jhash2(key, data->keylen, conncount_rnd) % CONNCOUNT_SLOTS;
- 	root = &data->root[hash];
+diff --git a/sound/core/init.c b/sound/core/init.c
+index 81186af3ac625c..0dc1d25be18404 100644
+--- a/sound/core/init.c
++++ b/sound/core/init.c
+@@ -1154,7 +1154,7 @@ EXPORT_SYMBOL(snd_card_file_remove);
+  * typically around calling control ops.
+  *
+  * The caller needs to pull down the refcount via snd_power_unref() later
+- * no matter whether the error is returned from this function or not.
++ * when this function returns 0.
+  *
+  * Return: Zero if successful, or a negative error code.
+  */
+@@ -1167,7 +1167,11 @@ int snd_power_ref_and_wait(struct snd_card *card)
+ 		       card->shutdown ||
+ 		       snd_power_get_state(card) == SNDRV_CTL_POWER_D0,
+ 		       snd_power_unref(card), snd_power_ref(card));
+-	return card->shutdown ? -ENODEV : 0;
++	if (card->shutdown) {
++		snd_power_unref(card);
++		return  -ENODEV;
++	}
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(snd_power_ref_and_wait);
  
--	parent = rcu_dereference_raw(root->rb_node);
-+	parent = rcu_dereference(root->rb_node);
- 	while (parent) {
- 		int diff;
+@@ -1184,7 +1188,8 @@ int snd_power_wait(struct snd_card *card)
+ 	int ret;
  
-@@ -507,9 +507,9 @@ count_tree(struct net *net,
- 
- 		diff = key_diff(key, rbconn->key, data->keylen);
- 		if (diff < 0) {
--			parent = rcu_dereference_raw(parent->rb_left);
-+			parent = rcu_dereference(parent->rb_left);
- 		} else if (diff > 0) {
--			parent = rcu_dereference_raw(parent->rb_right);
-+			parent = rcu_dereference(parent->rb_right);
- 		} else {
- 			int ret;
- 
-diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
-index 32485b36773755..82ffb1ac86b0cb 100644
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -1774,10 +1774,10 @@ static int ovs_ct_limit_get_zone_limit(struct net *net,
- 		} else {
- 			rcu_read_lock();
- 			limit = ct_limit_get(info, zone);
--			rcu_read_unlock();
- 
- 			err = __ovs_ct_limit_get_zone_limit(
- 				net, info->data, zone, limit, reply);
-+			rcu_read_unlock();
- 			if (err)
- 				return err;
- 		}
+ 	ret = snd_power_ref_and_wait(card);
+-	snd_power_unref(card);
++	if (!ret)
++		snd_power_unref(card);
+ 	return ret;
+ }
+ EXPORT_SYMBOL(snd_power_wait);
 -- 
 2.53.0
 
