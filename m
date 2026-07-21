@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368DC2D7DF1;
-	Tue, 21 Jul 2026 22:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCBD44AB6A;
+	Tue, 21 Jul 2026 22:59:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674770; cv=none; b=jqp8dpF4eM1f/NIStmoYne2DjuSk3EolqG3AbATMCkmxTRaLST5BiH+jC9iUKZGL/qofwGMuAXaD+HQgt6ow1zxJRDlfSz5mPSoHZPfyS8n2x6yGHP9mq8tH/oTBqXH3tp8LR8k8DPvcfJaOUTtV06G9ZHweOzbj2dUWhD2gifU=
+	t=1784674773; cv=none; b=QYJUlvvVf00k3vB50Cadx7JFUldIHvQbu01ISdcLnJvgc4y96cvm26WKmFqF/BX4Za3HINSeoIGEDh2ADx2NRsPIMOaULB7ttv4oKoYnxJ3bQJWJ+aLGR/viPQdQfVjwj9dN8VRJ6utcP1O3A/QldPzofaeLAcGfGJgySZKEJKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674770; c=relaxed/simple;
-	bh=ACRR2x5qUl6jRps6WrXEpxCDn/Yy4MVhLBaVNDKWZnU=;
+	s=arc-20240116; t=1784674773; c=relaxed/simple;
+	bh=6U7KzBKwvk3DnP/rDvja20XuYz2KQnCM+fuUsc7G4+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NjPqYNOGHeJBQC22XJV4sUKW5rFFB/hIBqvtADgh+GNNQVFA5N4oO7NTEVFSLVzhk6EQvmWG4eQ1upotH20Mey+xwBhKP5R3Qru+e2+uH33NrV6leRKbD5ST9vSMcUVyKqaagu5wKTCpVNyj5vIRGkczLoKIlRZFewwtR+oFseQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Dett3u3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VCsEHG22SIdvJyjsAz7teloSusrplc0trtaNpMF7D3Xv8VnTp6y+5kel/pQbVshjJz71sfGcmGfFPA8mf3RWpF4jMc2E3UDhPS6/8lBrQhMaqYhFwJcwudWPQMQGsnFTVDjVhK6SnBHxeLFHnuF3LcwUq0EJdf1IQHSp3r+Ilvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=On7m18BW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Dett3u3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9791F000E9;
-	Tue, 21 Jul 2026 22:59:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="On7m18BW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555F51F000E9;
+	Tue, 21 Jul 2026 22:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674769;
-	bh=aRTr0mtzYV0XphfjwN6GeZYdKxBISPLs1mvxEpBTuEI=;
+	s=korg; t=1784674771;
+	bh=m3Etx6ZZFBlZY0SbR1+Xnoplq3ZzmX2+aDGNXFqpgvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Dett3u3E+hxOOvpWn+rKFjEcWm1qwe7lW1uDOgeCZxHc943NHg0YPglEu3MPL+Vi
-	 wFhHjaP/T36lz8LQfshes7aCMmTa1UocdWKwCWOvGvRS0z/XE/jpecwcNkq6dTsk3B
-	 uHGfO8eLZat4RVIipOb0HHoMBk/oSWX2A5S5SIec=
+	b=On7m18BWRXludgxgYu6ThEq/SFRtW6WIaFIdh5XAWX+TEdWVWj5uCxk+HpWzfWypI
+	 jcXDCtodD4YiNergMsTF/XZocyzTEmhp49zb8fVuYg4Xe9q7N7caUYD5dFIbqY6cnv
+	 J1dzzanQnR4znA294Zxzfn/ab9QOUrsYJIjohgeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Oliver Neukum <oneukum@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 665/699] usb: free iso schedules on failed submit
-Date: Tue, 21 Jul 2026 17:27:04 +0200
-Message-ID: <20260721152410.764663682@linuxfoundation.org>
+Subject: [PATCH 5.10 666/699] usb: iowarrior: remove inherent race with minor number
+Date: Tue, 21 Jul 2026 17:27:05 +0200
+Message-ID: <20260721152410.788982129@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,107 +50,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit b9399d25fbb34a05bbe76eeedd730f62ff2670e9 ]
+[ Upstream commit 56dd29088c9d9510c48a8ebad2465248fde36551 ]
 
-EHCI and FOTG210 isochronous submits build an ehci_iso_sched before
-linking the URB to the endpoint queue, and keep the staged schedule in
-urb->hcpriv until iso_stream_schedule() and the link helpers consume it.
-If the controller is no longer accessible, or usb_hcd_link_urb_to_ep()
-fails, submit jumps to done_not_linked before that handoff happens and
-leaks the staged schedule still attached to urb->hcpriv.
+The driver saves the minor number it gets upon registration
+in its descriptor for debugging purposes. However, there is
+inevitably a window between registration and saving the correct
+minor in a descriptor. During this window the debugging output
+will be wrong.
+As wrong debug output is worse than no debug output, just
+remove it.
 
-Free the staged schedule from done_not_linked when submit fails before
-the URB is linked and clear urb->hcpriv after the free.
-
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still
-present in v7.1.1.
-
-An x86_64 allyesconfig build showed no new warnings. As we do not have an
-EHCI host controller with a USB isochronous device to test with, no
-runtime testing was able to be performed.
-
-Fixes: 8de98402652c ("[PATCH] USB: Fix USB suspend/resume crasher (#2)")
-Fixes: e9df41c5c589 ("USB: make HCDs responsible for managing endpoint queues")
-Fixes: 7d50195f6c50 ("usb: host: Faraday fotg210-hcd driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260630071419.349161-1-dawei.feng@seu.edu.cn
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://patch.msgid.link/20260312094619.1590556-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: c602254ba4c1 ("USB: iowarrior: fix use-after-free on disconnect race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ehci-sched.c  |   11 +++++++++--
- drivers/usb/host/fotg210-hcd.c |    6 ++++--
- 2 files changed, 13 insertions(+), 4 deletions(-)
+ drivers/usb/misc/iowarrior.c |   17 +++--------------
+ 1 file changed, 3 insertions(+), 14 deletions(-)
 
---- a/drivers/usb/host/ehci-sched.c
-+++ b/drivers/usb/host/ehci-sched.c
-@@ -1613,6 +1613,7 @@ iso_stream_schedule(
- 			status = 1;	/* and give it back immediately */
- 			iso_sched_free(stream, sched);
- 			sched = NULL;
-+			urb->hcpriv = NULL;
- 		}
+--- a/drivers/usb/misc/iowarrior.c
++++ b/drivers/usb/misc/iowarrior.c
+@@ -74,7 +74,6 @@ struct iowarrior {
+ 	struct mutex mutex;			/* locks this structure */
+ 	struct usb_device *udev;		/* save off the usb device pointer */
+ 	struct usb_interface *interface;	/* the interface for this device */
+-	unsigned char minor;			/* the starting minor number for this device */
+ 	struct usb_endpoint_descriptor *int_out_endpoint;	/* endpoint for reading (needed for IOW56 only) */
+ 	struct usb_endpoint_descriptor *int_in_endpoint;	/* endpoint for reading */
+ 	struct urb *int_in_urb;		/* the urb for reading data */
+@@ -246,7 +245,6 @@ static void iowarrior_write_callback(str
+  */
+ static inline void iowarrior_delete(struct iowarrior *dev)
+ {
+-	dev_dbg(&dev->interface->dev, "minor %d\n", dev->minor);
+ 	kfree(dev->int_in_buffer);
+ 	usb_free_urb(dev->int_in_urb);
+ 	kfree(dev->read_queue);
+@@ -297,9 +295,6 @@ static ssize_t iowarrior_read(struct fil
+ 		goto exit;
  	}
- 	urb->error_count = skip / period;
-@@ -1643,8 +1644,6 @@ iso_stream_schedule(
- 	return status;
  
-  fail:
--	iso_sched_free(stream, sched);
--	urb->hcpriv = NULL;
- 	return status;
- }
- 
-@@ -1956,6 +1955,10 @@ static int itd_submit(struct ehci_hcd *e
- 		usb_hcd_unlink_urb_from_ep(ehci_to_hcd(ehci), urb);
+-	dev_dbg(&dev->interface->dev, "minor %d, count = %zd\n",
+-		dev->minor, count);
+-
+ 	/* read count must be packet size (+ time stamp) */
+ 	if ((count != dev->report_size)
+ 	    && (count != (dev->report_size + 1))) {
+@@ -379,8 +374,6 @@ static ssize_t iowarrior_write(struct fi
+ 		retval = -ENODEV;
+ 		goto exit;
  	}
-  done_not_linked:
-+	if (status < 0) {
-+		iso_sched_free(stream, urb->hcpriv);
-+		urb->hcpriv = NULL;
-+	}
- 	spin_unlock_irqrestore(&ehci->lock, flags);
-  done:
- 	return status;
-@@ -2333,6 +2336,10 @@ static int sitd_submit(struct ehci_hcd *
- 		usb_hcd_unlink_urb_from_ep(ehci_to_hcd(ehci), urb);
+-	dev_dbg(&dev->interface->dev, "minor %d, count = %zd\n",
+-		dev->minor, count);
+ 	/* if count is 0 we're already done */
+ 	if (count == 0) {
+ 		retval = 0;
+@@ -526,9 +519,6 @@ static long iowarrior_ioctl(struct file
+ 		goto error_out;
  	}
-  done_not_linked:
-+	if (status < 0) {
-+		iso_sched_free(stream, urb->hcpriv);
-+		urb->hcpriv = NULL;
-+	}
- 	spin_unlock_irqrestore(&ehci->lock, flags);
-  done:
- 	return status;
---- a/drivers/usb/host/fotg210-hcd.c
-+++ b/drivers/usb/host/fotg210-hcd.c
-@@ -4271,8 +4271,6 @@ static int iso_stream_schedule(struct fo
- 	return 0;
  
- fail:
--	iso_sched_free(stream, sched);
--	urb->hcpriv = NULL;
- 	return status;
- }
+-	dev_dbg(&dev->interface->dev, "minor %d, cmd 0x%.4x, arg %ld\n",
+-		dev->minor, cmd, arg);
+-
+ 	retval = 0;
+ 	io_res = 0;
+ 	switch (cmd) {
+@@ -675,8 +665,6 @@ static int iowarrior_release(struct inod
+ 	if (!dev)
+ 		return -ENODEV;
  
-@@ -4566,6 +4564,10 @@ static int itd_submit(struct fotg210_hcd
- 	else
- 		usb_hcd_unlink_urb_from_ep(fotg210_to_hcd(fotg210), urb);
- done_not_linked:
-+	if (status < 0) {
-+		iso_sched_free(stream, urb->hcpriv);
-+		urb->hcpriv = NULL;
-+	}
- 	spin_unlock_irqrestore(&fotg210->lock, flags);
- done:
- 	return status;
+-	dev_dbg(&dev->interface->dev, "minor %d\n", dev->minor);
+-
+ 	/* lock our device */
+ 	mutex_lock(&dev->mutex);
+ 
+@@ -779,6 +767,7 @@ static int iowarrior_probe(struct usb_in
+ 	struct usb_host_interface *iface_desc;
+ 	int retval = -ENOMEM;
+ 	int res;
++	int minor;
+ 
+ 	/* allocate memory for our device state and initialize it */
+ 	dev = kzalloc(sizeof(struct iowarrior), GFP_KERNEL);
+@@ -894,12 +883,12 @@ static int iowarrior_probe(struct usb_in
+ 		goto error;
+ 	}
+ 
+-	dev->minor = interface->minor;
++	minor = interface->minor;
+ 
+ 	/* let the user know what node this device is now attached to */
+ 	dev_info(&interface->dev, "IOWarrior product=0x%x, serial=%s interface=%d "
+ 		 "now attached to iowarrior%d\n", dev->product_id, dev->chip_serial,
+-		 iface_desc->desc.bInterfaceNumber, dev->minor - IOWARRIOR_MINOR_BASE);
++		 iface_desc->desc.bInterfaceNumber, minor - IOWARRIOR_MINOR_BASE);
+ 	return retval;
+ 
+ error:
 
 
