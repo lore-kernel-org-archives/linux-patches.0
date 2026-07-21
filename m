@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF74D395243;
-	Tue, 21 Jul 2026 20:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551D1356A12;
+	Tue, 21 Jul 2026 20:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666745; cv=none; b=hLdHwKGUMiIb7TVZMZ96L6My9+f1zd4/1sL4oibHCXXIWWyqxHZGCy57Xn85TM+M5t/XTXOukMgo2WvBW8zWAmLlh0Wy4AZ7M/XAamhBlMuXj8ILyPUEVXHfJcTcKdxtI74WjlbYbNqAQeKU3FsPWGm9SXnCkHsauFKQlPt1pcA=
+	t=1784666748; cv=none; b=f9A0YNQQr22KEUqxZvdB6Zh7Tl+CGxb7/GMWkNVkPnlyrfsWeNRaOtWG6zR0MBbZZ122ab1JPe+FSVUGJ9bLNDYvUFmLWxq+3MkS14vIvav7OExNkoIUpciY0tmd9yud2gZt1gnCT0xmiu6oTW/sgnkFKn7j3pUh8L6JU2QZUeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666745; c=relaxed/simple;
-	bh=3AnFQymOK4aY40N4gMDS0/4W1g5iqCaFEnNZ24UDPvE=;
+	s=arc-20240116; t=1784666748; c=relaxed/simple;
+	bh=AvXYS6J09uXclDyTZdc1KRMLUyRCKyTgWNKLVI8MNjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bZgb6t9Kt+3if06AAgjA7xyc5RmqYcBU60sfD1jxzL0Dmq/RLM9Ev8Tv75MsN/Ap3Csp7D4BTGdAsxGlYOPPzbipfLaMixtR9q11U5bLEm83/2P8Kvv5C310P/H/CSn5q8X6PnQeDzBZAcZPY3Z52bf1Ls2y7UGUyZDD1MaoK/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihPY/SB1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gGHvOQWBLEwkd+no2wZjuygYTejYF8DYMhZmgDOC84q9YEb1P9m8BJ7M6T1zTPnCdxRYyIN7iqEFYMh9t2SqbkukMtus/OYA39WOoxo1PsmnrMlPImfE5JtRFcuCyQMjGWcxWuAHuxyNqbRt17bSxmacrtgNkyHl/Of4jSuAhmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IgkJYGxT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihPY/SB1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B851F000E9;
-	Tue, 21 Jul 2026 20:45:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IgkJYGxT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9C31F000E9;
+	Tue, 21 Jul 2026 20:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666744;
-	bh=Pf07zGkf2ZVgpY5r15k+w6DNW9iWlsd+Dp0McZvcvY0=;
+	s=korg; t=1784666747;
+	bh=VaNVtKFuHjcL38djw52qMXCm7raGCYhwZtcv8T8wMs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ihPY/SB18T4rp0TRh6T1A6x+qr5XeRBTdc1tivVlqGX5L48JyfMAtYO24ZnSaVT1a
-	 WYSrfJWs4dBoVjQZS7o8U3BH1IaiNQst7OzKcBUxYy76c9cxyVLTuVBbqfY7gnleOp
-	 Ph8quydY2fvMv1IhpQX8PILHfmw5fb4k0/Duj58I=
+	b=IgkJYGxTBssx2KCaccLnIplh5C703oat0Dj4rO73GGtPZPe1Tkdn9DyFDpT7uW5bm
+	 Pqul4QRPa5uW4RoF3hHQNfmSEvrUJ4Cx3US3T2CHHbdEdGhBcu9MBeSKHTzVlsQo9+
+	 1RUC4DvXTQbn8pMNzWhskBmyZcTPx9vZFxK7DGOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Magnus Lindholm <linmag7@gmail.com>,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0782/1266] alpha/PCI: Fix __pci_mmap_fits() overflow for zero-length BARs
-Date: Tue, 21 Jul 2026 17:20:19 +0200
-Message-ID: <20260721152459.360546776@linuxfoundation.org>
+Subject: [PATCH 6.6 0800/1266] spi: sh-msiof: abort transfers when reset times out
+Date: Tue, 21 Jul 2026 17:20:37 +0200
+Message-ID: <20260721152459.760460637@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -48,58 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 802a3b3f470b9bc1148f26e01fc9cbfeb4dfcb57 ]
+[ Upstream commit 6dbaa4d288432c697cea47028480481b8b29bd6a ]
 
-Currently, __pci_mmap_fits() computes the BAR size using
-"pci_resource_len() - 1", which wraps to a large value when the BAR length
-is zero, causing the bounds check to incorrectly succeed.
+sh_msiof_spi_reset_regs() asserts TX/RX reset and polls until the reset
+bits clear, but the poll result is ignored. sh_msiof_transfer_one() can
+therefore continue programming a transfer after the controller did not
+leave reset.
 
-Add an early return for empty resources.
+Return the reset poll result from the helper and abort the transfer on
+timeout, matching the existing transfer path's error-return style.
 
-Fixes: 10a0ef39fbd1 ("PCI/alpha: pci sysfs resources")
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Tested-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Acked-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://patch.msgid.link/20260508043543.217179-15-kwilczynski@kernel.org
+Fixes: fedd6940682a ("spi: sh-msiof: Add reset of registers before starting transfer")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260623135834.55442-1-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/kernel/pci-sysfs.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/spi/spi-sh-msiof.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/arch/alpha/kernel/pci-sysfs.c b/arch/alpha/kernel/pci-sysfs.c
-index 80a5fd642e7f32..22187531abb9a3 100644
---- a/arch/alpha/kernel/pci-sysfs.c
-+++ b/arch/alpha/kernel/pci-sysfs.c
-@@ -37,12 +37,16 @@ static int hose_mmap_page_range(struct pci_controller *hose,
- static int __pci_mmap_fits(struct pci_dev *pdev, int num,
- 			   struct vm_area_struct *vma, int sparse)
+diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
+index 65c11909659c6b..6d0376b6e53234 100644
+--- a/drivers/spi/spi-sh-msiof.c
++++ b/drivers/spi/spi-sh-msiof.c
+@@ -242,7 +242,7 @@ static irqreturn_t sh_msiof_spi_irq(int irq, void *data)
+ 	return IRQ_HANDLED;
+ }
+ 
+-static void sh_msiof_spi_reset_regs(struct sh_msiof_spi_priv *p)
++static int sh_msiof_spi_reset_regs(struct sh_msiof_spi_priv *p)
  {
-+	resource_size_t len = pci_resource_len(pdev, num);
- 	unsigned long nr, start, size;
- 	int shift = sparse ? 5 : 0;
+ 	u32 mask = SICTR_TXRST | SICTR_RXRST;
+ 	u32 data;
+@@ -251,8 +251,8 @@ static void sh_msiof_spi_reset_regs(struct sh_msiof_spi_priv *p)
+ 	data |= mask;
+ 	sh_msiof_write(p, SICTR, data);
  
-+	if (!len)
-+		return 0;
-+
- 	nr = vma_pages(vma);
- 	start = vma->vm_pgoff;
--	size = ((pci_resource_len(pdev, num) - 1) >> (PAGE_SHIFT - shift)) + 1;
-+	size = ((len - 1) >> (PAGE_SHIFT - shift)) + 1;
+-	readl_poll_timeout_atomic(p->mapbase + SICTR, data, !(data & mask), 1,
+-				  100);
++	return readl_poll_timeout_atomic(p->mapbase + SICTR, data,
++					 !(data & mask), 1, 100);
+ }
  
- 	if (start < size && size - start >= nr)
- 		return 1;
+ static const u32 sh_msiof_spi_div_array[] = {
+@@ -926,7 +926,9 @@ static int sh_msiof_transfer_one(struct spi_controller *ctlr,
+ 	int ret;
+ 
+ 	/* reset registers */
+-	sh_msiof_spi_reset_regs(p);
++	ret = sh_msiof_spi_reset_regs(p);
++	if (ret)
++		return ret;
+ 
+ 	/* setup clocks (clock already enabled in chipselect()) */
+ 	if (!spi_controller_is_target(p->ctlr))
 -- 
 2.53.0
 
