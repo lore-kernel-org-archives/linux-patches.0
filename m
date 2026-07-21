@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD543F12CE;
-	Tue, 21 Jul 2026 17:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9482E736D;
+	Tue, 21 Jul 2026 17:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654589; cv=none; b=mpZI7hHZLGzbBDhXb1ReRUDceEqRmbSY8GhTTLTg6IdYacJo7EAoBmcLTesyatlxYyb6oEFlIkoTbaC/9YfpQAei2Qo6zuSh2PRiZnQoLle49xG1eTQBSQ+QDxRf7bE54P4hFasA8JCDNs2kEiGJs8QWJvYop5HNYXNva5Ohe5I=
+	t=1784654592; cv=none; b=IzM36h4encxO5xZwdMZ0RtK0puUrqInE1QsbeBxhp05Nl2glyWvPF7lPxHRRk16h3I3MCho3J1tsHp0KlnLzJPgSlvuOVLSIiet22cBcGKcmMkBRjYQl7A76aXLIrbpF4iGDWpErBHMQqXExFLeykUjPYGCVBwDqc/TFSKmsvNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654589; c=relaxed/simple;
-	bh=wmNyT2sh+HF3xz/vki+bVHTmAhgDlNEA87jGFDGKzFM=;
+	s=arc-20240116; t=1784654592; c=relaxed/simple;
+	bh=iV9Re+wn29smm6Z/23lUfnAmxZ2Tt7m1Nq/kZ32S7/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NlLiPcU8FmOR1SgnDc29jEOJKS8cB1EPrSBOvyPWqMxPrExiJWQ3PvHPw61voPNuwj9+z8SSFbOgCYHzB6dUTtn75DPaXoc2nxa60/Z/pzPnX3hcS9854vxMOgdQjLvVq9iTEr4Fl0Wk/7quedw3CFKoRYizVBXNaFnx7YSuCbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1as7zymk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fDErpcUlXBR8t4h5Vfk2Hs9zG+kLx2h7lSRMyWrXJHlsUKTvVD3eylIB5STIojLgz6QJM/lVvgdWzVc/CI0pdsh3RwphNMV9NQ6ixqhtZEHq5hcey7GzrDi7vNgfG1y6FeDeNKxfOCYDQWwB3ABdyRccdBHPThXh0uo3ZCr4wng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxmQfMUL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1as7zymk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F04F1F000E9;
-	Tue, 21 Jul 2026 17:23:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxmQfMUL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA12A1F000E9;
+	Tue, 21 Jul 2026 17:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654588;
-	bh=1DR49gD/pVofUpG146dy6ulqEft5xVY38Uc/1UdwbsA=;
+	s=korg; t=1784654591;
+	bh=SPcwSE3u4wrljB2Y5xOvNskGn7hLRg6eqBRD9vzPiAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1as7zymkDWFvQelZqPpe6NvBLRJgWcex11Zr6APCr7o9wOE1wAYucozc8RjLNNxOf
-	 dHG1eXscTipeYmCw8I21MKx6HSFg7lF1ECCtBIvRYKl+ze68aWVzgUIwSEkSX6Y6jg
-	 kK1WkiJstqyF75EAAPCP3RSZQ2adu9Zj8M+MVq/Y=
+	b=bxmQfMULjTz1HDDUr4d/XfcZR4LcfMEDnCm1qetfYImv4fy4WxuugopFCA3GkpSs1
+	 tJP6yfTL4L3DuYm5eXSENKL8Xq8yN7GKO9+/CkjHVpFqBFb0Zin36IAXg+v83CWv8i
+	 vFLzjb3s8vzkp5X4oYrmcOa7GAc19fZ4B5JOAH24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Pratyush Yadav <pratyush@kernel.org>
-Subject: [PATCH 7.1 1763/2077] mtd: spi-nor: swp: Improve locking user experience
-Date: Tue, 21 Jul 2026 17:23:56 +0200
-Message-ID: <20260721152634.329082386@linuxfoundation.org>
+	Takahiro Kuwano <takahiro.kuwano@infineon.com>,
+	Michael Walle <mwalle@kernel.org>
+Subject: [PATCH 7.1 1764/2077] mtd: spi-nor: spansion: use die erase for multi-die devices only
+Date: Tue, 21 Jul 2026 17:23:57 +0200
+Message-ID: <20260721152634.351797117@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,57 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Takahiro Kuwano <takahiro.kuwano@infineon.com>
 
-commit e1d456b26bf23e30db305a6184e8abd9ab68bbf2 upstream.
+commit 306e443156b82a2a14a3f33da908c303be45529c upstream.
 
-In the case of the first block being locked (or the few first blocks),
-if the user want to fully unlock the device it has two possibilities:
-- either it asks to unlock the entire device, and this works;
-- or it asks to unlock just the block(s) that are currently locked,
-  which fails.
+Die erase opcode is supported in multi-die devices only. For single die
+devices, default chip erase opcode must be used.
 
-It fails because the conditions "can_be_top" and "can_be_bottom" are
-true. Indeed, in this case, we unlock everything, so the TB bit does not
-matter. However in the current implementation, use_top would be true (as
-this is the favourite option) and lock_len, which in practice should be
-reduced down to 0, is set to "nor->params->size - (ofs + len)" which is
-a positive number. This is wrong.
+In s25hx_t_late_init(), die erase opcode is set only when the device is
+multi-die.
 
-An easy way is to simply add an extra condition. In the unlock() path,
-if we can achieve the same result from both sides, it means we unlock
-everything and lock_len must simply be 0. A comment is added to clarify
-that logic.
-
-Fixes: 3dd8012a8eeb ("mtd: spi-nor: add TB (Top/Bottom) protect support")
+Fixes: 461d0babb544 ("mtd: spi-nor: spansion: enable die erase for multi die flashes")
 Cc: stable@kernel.org
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Takahiro Kuwano <takahiro.kuwano@infineon.com>
 Reviewed-by: Michael Walle <mwalle@kernel.org>
 Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/swp.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/mtd/spi-nor/spansion.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/spi-nor/swp.c
-+++ b/drivers/mtd/spi-nor/swp.c
-@@ -282,8 +282,15 @@ static int spi_nor_sr_unlock(struct spi_
- 	/* Prefer top, if both are valid */
- 	use_top = can_be_top;
+--- a/drivers/mtd/spi-nor/spansion.c
++++ b/drivers/mtd/spi-nor/spansion.c
+@@ -674,7 +674,9 @@ static int s25hx_t_late_init(struct spi_
+ 	params->ready = cypress_nor_sr_ready_and_clear;
+ 	cypress_nor_ecc_init(nor);
  
--	/* lock_len: length of region that should remain locked */
--	if (use_top)
-+	/*
-+	 * lock_len: length of region that should remain locked.
-+	 *
-+	 * When can_be_top and can_be_bottom booleans are true, both adjacent
-+	 * regions are unlocked, thus the entire flash can be unlocked.
-+	 */
-+	if (can_be_top && can_be_bottom)
-+		lock_len = 0;
-+	else if (use_top)
- 		lock_len = nor->params->size - (ofs + len);
- 	else
- 		lock_len = ofs;
+-	params->die_erase_opcode = SPINOR_OP_CYPRESS_DIE_ERASE;
++	if (params->n_dice > 1)
++		params->die_erase_opcode = SPINOR_OP_CYPRESS_DIE_ERASE;
++
+ 	return 0;
+ }
+ 
 
 
