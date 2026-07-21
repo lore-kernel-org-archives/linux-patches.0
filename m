@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A932135AD;
-	Tue, 21 Jul 2026 18:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AED547125D;
+	Tue, 21 Jul 2026 18:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659214; cv=none; b=JsBdtz0MK47oz5JJgve3TN58mMp3Hssx6QKZql8+QVjwd02bsDB10fxktmIJvoCf8wpOQCvDwsw2dEcn7JdOVnULO7CxCTOqgP74LHsNNwmpRbbWV1SuNDzlA+Ov02W7z7ZoEcC7XcOqFtmajFev6W4k887Bo2elSkhXUstEdC4=
+	t=1784659217; cv=none; b=NjIiHSxWzxfMo5lZ3LeRUuQ9ZZCb0iHePV2S6esXEua7v7GMEPYcSt0DsNpYGpNi5NPp9bkcbHy6SxeXGprcJt3mnBSZYY2uXUt1PXww/dAf9JByM/7yO6vDEERZxLNaK2BornYMZpgcmsykyORIXBvGaeoIcyTr3/8spnN2jTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659214; c=relaxed/simple;
-	bh=KHtEE7EWbsmorqM/mWjiMOAVTLwFS4I6xHXIwSy6+rE=;
+	s=arc-20240116; t=1784659217; c=relaxed/simple;
+	bh=ByFFD8V3XabK3B2XZUOye1kNZKrpvihxWKrQVwsXEIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fm4yohsTQLkM8ShTiljc4L0pfzXlGs6oIj1VNsuiVfXBNXXazx7bD9/8mi9KT4ThmhrJDzj2/tqxgDnPzIcjcB9z+BX1isA+YySkgFz2BJiaHY6N1JjTEmxeWB4U/6P2VLBI4e70rGA5cqhENssZXNl+9gNjS40jDbDkQa6QFQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AMdzRSgL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BHGEL5W7xtECEx9WWDGluYgT6FN5D/a2ULSNv5m4HPpwU2Ttr0tW9O7DoT3sUpSbRtAKzqO9RyaORN+ENDvCcmWf8RDNvSJxyh0k9ml93gLzhvh0lC8DDO/NOUY196uyClF03psyoKZCx7V0e00KiLuUDkGERUYLS6moayQZo+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxkBhKhV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AMdzRSgL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF971F000E9;
-	Tue, 21 Jul 2026 18:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxkBhKhV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3C11F000E9;
+	Tue, 21 Jul 2026 18:40:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659213;
-	bh=04F0zilJH1ExSi8/5IXaqQqu7obaJuZO8V5cnRcXwWc=;
+	s=korg; t=1784659216;
+	bh=GhLD3IhBDX10GOTcxvDr6rQZ/5rko0E5/Ur6i8o0NuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AMdzRSgLRRmFECRQoXhSd2zx/YnMpWywgbXGIQm6K2hu59i+trSxgc+RlRSzBfZDp
-	 rms6gwFMJ0YmyfjctEV9qVk2T5u6IYrTsL1KZujEn956DiBGEpboQMXelgTV0QHbN7
-	 Mu6L2z45X7Nod58G9NVZfDSClxPoOkr+kG3D9fAs=
+	b=HxkBhKhV4xd19BpogQ6bcwWQA3nRGhIYix7REK6ZgyyuoV595/kssRFdYdcp7/AlG
+	 6Ea+buoc6+pCbRvr3gY6VbFOlkZiHL8t0t/1UpQR4SoSN4L6AX4fGoI5Ba25GDTG1B
+	 v7O63Uyy3JsxvERHux+RCMITr/raszznc4T/ICtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 1434/1611] hwmon: (occ) unregister sysfs devices outside occ lock
-Date: Tue, 21 Jul 2026 17:25:50 +0200
-Message-ID: <20260721152547.697634614@linuxfoundation.org>
+	stable@kernel.org,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Breno Leitao <leitao@debian.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 1435/1611] fsl/fman: Free init resources on KeyGen failure in fman_init()
+Date: Tue, 21 Jul 2026 17:25:51 +0200
+Message-ID: <20260721152547.719566712@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,163 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit e31408734332b8cc611342cdaaab6ba492180156 upstream.
+commit d288efa2b94abc2e45a061fceb156b4f4e5b37be upstream.
 
-occ_active(false) and occ_shutdown() unregister sysfs-backed devices while
-occ->lock is held.  hwmon_device_unregister() and sysfs_remove_group() can
-wait for active sysfs callbacks to drain, and those callbacks can enter the
-OCC update path and try to take occ->lock again.  That gives the unregister
-paths the lock ordering occ->lock -> sysfs callback drain, while a callback
-has the opposite edge sysfs callback -> occ->lock.
+fman_muram_alloc() allocates initialization resources before
+initializing the KeyGen block. If keygen_init() fails, the
+function returns -EINVAL directly and leaves those resources
+allocated. Free the initialization resources before returning
+from the KeyGen failure path.
 
-This issue was found by our static analysis tool and then manually
-reviewed against the current tree.
-
-The grounded PoC kept the real unregister and callback carrier:
-
-  occ_shutdown()
-  hwmon_device_unregister()
-  occ_show_temp_1()
-  occ_update_response()
-
-Lockdep reported the circular dependency with occ_shutdown() already
-holding the OCC mutex and hwmon_device_unregister() waiting on the sysfs
-side:
-
-  WARNING: possible circular locking dependency detected
-  ... (sysfs_lock) ... at: hwmon_device_unregister+0x12/0x30 [vuln_msv]
-  ... (&test_occ.lock) ... at: occ_shutdown.constprop.0+0xe/0x40 [vuln_msv]
-  occ_update_response.isra.0+0xb/0x20 [vuln_msv]
-  occ_show_temp_1.constprop.0.isra.0+0x23/0x40 [vuln_msv]
-  *** DEADLOCK ***
-
-Serialize hwmon registration and removal with a separate hwmon_lock.
-Under that lock, detach occ->hwmon and update occ->active while occ->lock
-is held so concurrent OCC state changes still see a stable state, then
-drop occ->lock before calling hwmon_device_unregister().  Remove the
-driver sysfs group before taking occ->lock in occ_shutdown(), so draining
-the driver attributes cannot wait while the OCC mutex is held.  Also make
-OCC update callbacks return -ENODEV after deactivation, so callbacks that
-already passed sysfs active protection do not poll the hardware after
-teardown has detached the hwmon device.
-
-Fixes: 849b0156d996 ("hwmon: (occ) Delay hwmon registration until user request")
-Fixes: ac6888ac5a11 ("hwmon: (occ) Lock mutex in shutdown to prevent race with occ_active")
-Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://lore.kernel.org/r/20260619015938.494464-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 7472f4f281d0 ("fsl/fman: enable FMan Keygen")
+Cc: stable@kernel.org
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260625004834.3394389-1-haoxiang_li2024@163.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/occ/common.c |   34 ++++++++++++++++++++++++++++------
- drivers/hwmon/occ/common.h |    1 +
- 2 files changed, 29 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/freescale/fman/fman.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/hwmon/occ/common.c
-+++ b/drivers/hwmon/occ/common.c
-@@ -214,6 +214,11 @@ int occ_update_response(struct occ *occ)
- 	if (rc)
- 		return rc;
+--- a/drivers/net/ethernet/freescale/fman/fman.c
++++ b/drivers/net/ethernet/freescale/fman/fman.c
+@@ -1995,8 +1995,10 @@ static int fman_init(struct fman *fman)
  
-+	if (!occ->active) {
-+		rc = -ENODEV;
-+		goto unlock;
+ 	/* Init KeyGen */
+ 	fman->keygen = keygen_init(fman->kg_regs);
+-	if (!fman->keygen)
++	if (!fman->keygen) {
++		free_init_resources(fman);
+ 		return -EINVAL;
 +	}
-+
- 	/* limit the maximum rate of polling the OCC */
- 	if (time_after(jiffies, occ->next_update)) {
- 		rc = occ_poll(occ);
-@@ -222,6 +227,7 @@ int occ_update_response(struct occ *occ)
- 		rc = occ->last_error;
- 	}
  
-+unlock:
- 	mutex_unlock(&occ->lock);
- 	return rc;
- }
-@@ -1105,11 +1111,16 @@ static void occ_parse_poll_response(stru
- 
- int occ_active(struct occ *occ, bool active)
- {
--	int rc = mutex_lock_interruptible(&occ->lock);
-+	struct device *hwmon = NULL;
-+	int rc = mutex_lock_interruptible(&occ->hwmon_lock);
- 
- 	if (rc)
- 		return rc;
- 
-+	rc = mutex_lock_interruptible(&occ->lock);
-+	if (rc)
-+		goto unlock_hwmon;
-+
- 	if (active) {
- 		if (occ->active) {
- 			rc = -EALREADY;
-@@ -1154,14 +1165,17 @@ int occ_active(struct occ *occ, bool act
- 			goto unlock;
- 		}
- 
--		if (occ->hwmon)
--			hwmon_device_unregister(occ->hwmon);
-+		hwmon = occ->hwmon;
- 		occ->active = false;
- 		occ->hwmon = NULL;
- 	}
- 
- unlock:
- 	mutex_unlock(&occ->lock);
-+	if (hwmon)
-+		hwmon_device_unregister(hwmon);
-+unlock_hwmon:
-+	mutex_unlock(&occ->hwmon_lock);
- 	return rc;
- }
- 
-@@ -1170,6 +1184,7 @@ int occ_setup(struct occ *occ)
- 	int rc;
- 
- 	mutex_init(&occ->lock);
-+	mutex_init(&occ->hwmon_lock);
- 	occ->groups[0] = &occ->group;
- 
- 	rc = occ_setup_sysfs(occ);
-@@ -1190,15 +1205,22 @@ EXPORT_SYMBOL_GPL(occ_setup);
- 
- void occ_shutdown(struct occ *occ)
- {
--	mutex_lock(&occ->lock);
-+	struct device *hwmon;
- 
- 	occ_shutdown_sysfs(occ);
- 
--	if (occ->hwmon)
--		hwmon_device_unregister(occ->hwmon);
-+	mutex_lock(&occ->hwmon_lock);
-+	mutex_lock(&occ->lock);
-+
-+	hwmon = occ->hwmon;
-+	occ->active = false;
- 	occ->hwmon = NULL;
- 
- 	mutex_unlock(&occ->lock);
-+
-+	if (hwmon)
-+		hwmon_device_unregister(hwmon);
-+	mutex_unlock(&occ->hwmon_lock);
- }
- EXPORT_SYMBOL_GPL(occ_shutdown);
- 
---- a/drivers/hwmon/occ/common.h
-+++ b/drivers/hwmon/occ/common.h
-@@ -101,6 +101,7 @@ struct occ {
- 
- 	unsigned long next_update;
- 	struct mutex lock;		/* lock OCC access */
-+	struct mutex hwmon_lock;		/* serialize hwmon registration/removal */
- 
- 	struct device *hwmon;
- 	struct occ_attribute *attrs;
+ 	err = enable(fman, cfg);
+ 	if (err != 0)
 
 
