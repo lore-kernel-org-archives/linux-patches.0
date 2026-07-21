@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F6346E00C;
-	Tue, 21 Jul 2026 19:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990CF368D40;
+	Tue, 21 Jul 2026 19:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662110; cv=none; b=m4+yts8hDw9VDs8yrGDH5/p/ZbgTditERtKKb37Gr5jqApTwHpxGMviw0wAl98Jf5OuijZZqF4qK88PJSVMR1FfWA011wrQufkNzg2+8YEr++1rcaKZ7ZjqELv/OTDww/qN/5CnOBpFdBSNzMOhZCYm7MeOrOsmGVIMWM+K+f94=
+	t=1784662112; cv=none; b=p2pwf/8lfhHKxbkki/2qui0AaxEBA8Qfkxks8xYubSfacqYv6dXuGmwFiSvZfLfDiJSq0i+e4b+S+sL72eKTcL/EgE/CvYb8cwWvxlCgiYy8PjSfvCKgN2YK/hhWZDbqQ6ZFkrGTf9JcNbaKmVVUekCPoBAp1gVnsYIY/yDRe7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662110; c=relaxed/simple;
-	bh=vMTdwi1Y5QeZo+u6/fl+3CkYDNOXYdB6QdnzXQMirZ4=;
+	s=arc-20240116; t=1784662112; c=relaxed/simple;
+	bh=GGzHSKlPR2vwWUXFOoGs6WEIc8cdJkwwo21HUZ6cKhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NSY8Y+ZznCHMYmTVgdSvofLcaQa6r7EBngEdK04cE5V4V9dlhRKuj/pu9iIaJQO3wPsJngPdjood5ohLognt6XkoJGqDDyim8RFCAFlJFvr+XL1dEfQclpHL+lIC4HBN7keuE4NxPK1SFe4w2IG3uhToT3eWTI79TNuXUk87TQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bnnc1Cet; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K1rGsrIb4pZ5PDJ1daCTnXB29qKYnX1I3uLrxkkoNwoj3/D5K42aRvkWU5nTYdqiwocrqrt259w4lTsOxoalJhOiakYaCm/d7xbslK9FA71W4K2+Mm0Fis/Ds24e3QJgmz2bQwXHQoQg1CJsInD5RtJuGEy5iLXL8rOm49H6gs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icNL6rGT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bnnc1Cet"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21BFB1F000E9;
-	Tue, 21 Jul 2026 19:28:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icNL6rGT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE9F1F00A3A;
+	Tue, 21 Jul 2026 19:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662108;
-	bh=rCyKityF2XAF2nJ4mJRXa7GaBfn0Xxtw8qDYjzyraq0=;
+	s=korg; t=1784662111;
+	bh=Rjg4R6+WN4D1BBp1ddTS/fF3fAGxnS7MBf5W/5YUQa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bnnc1CetBDIs+bnGvR50CnFaUWRgyQFFtvYxkTqvobn4Dw9kbopVRcx9J6+gvHkpv
-	 1s1BnKiJQZX3MFjXxjpXYIybgvhVPGWmV3U7OSJ7y/jTahlxepAk0Ff6Gn12M8drOP
-	 OSVq3MPFfZc8rdMeKmmBcAwWj6+YvISNRB5QAuOE=
+	b=icNL6rGTKTOSs4wKk7zI4FP2Q8KURsinYd2nuG50Xdp1EV6h/ABxFzD/qCpi9lqeB
+	 8Qj+MJmdMW9LKXhvkG902gP52Jey9GRDqMliMPNGKgy8A2s+mzgRT+G0Y694LkrHnw
+	 mlkj/y7U36/H/DJuah8OBijqUb3NqjPs/TqMgg3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0318/1276] Bluetooth: hci_qca: fix NULL pointer dereference in qca_dmp_hdr() for non-serdev device
-Date: Tue, 21 Jul 2026 17:12:41 +0200
-Message-ID: <20260721152453.215228636@linuxfoundation.org>
+Subject: [PATCH 6.12 0319/1276] Bluetooth: eir: Fix stack OOB write when prepending the Flags AD
+Date: Tue, 21 Jul 2026 17:12:42 +0200
+Message-ID: <20260721152453.236161655@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,38 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 6b8cbcf08de0db62254d1981f83db0f94681ccd9 ]
+[ Upstream commit 6f5fb689fdf80bdd143f22a502f9eb1f3c85e286 ]
 
-hu->serdev is NULL for hci_uart attached via non-serdev paths, but
-qca_dmp_hdr() unconditionally dereferences hu->serdev->dev.driver->name,
-causing a NULL pointer dereference.
+eir_create_adv_data() builds the advertising data into a fixed-size
+buffer ("size", 31 for the legacy path). It may prepend a 3-byte "Flags"
+AD structure (LE_AD_NO_BREDR on an LE-only controller) and then copies
+the per-instance data without checking that it still fits:
 
-Fix by guarding the dereference with a NULL check and falling back to
-"hci_ldisc_qca" for the non-serdev case.
+	memcpy(ptr, adv->adv_data, adv->adv_data_len);
 
-Fixes: 06d3fdfcdf5c ("Bluetooth: hci_qca: Add qcom devcoredump support")
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
+tlv_data_max_len() only reserves those 3 bytes when the user-supplied
+flags carry a managed-flags bit, so an instance added with flags == 0 is
+accepted with adv_data_len up to the full buffer. At advertise time the
+flags are still prepended, and the memcpy() writes 3 + adv_data_len
+bytes into the size-byte buffer:
+
+  BUG: KASAN: stack-out-of-bounds in eir_create_adv_data (net/bluetooth/eir.c:301)
+  Write of size 31 at addr ffff88800a547bdc by task kworker/u9:0/65
+  Workqueue: hci0 hci_cmd_sync_work
+   __asan_memcpy (mm/kasan/shadow.c:106)
+   eir_create_adv_data (net/bluetooth/eir.c:301)
+   hci_update_adv_data_sync (net/bluetooth/hci_sync.c:1310)
+   hci_schedule_adv_instance_sync (net/bluetooth/hci_sync.c:1817)
+   hci_cmd_sync_work (net/bluetooth/hci_sync.c:332)
+  This frame has 1 object:
+   [32, 64) 'cp'
+
+The "Flags" structure is added by the kernel, not requested by
+userspace, so only prepend it when it fits together with the instance
+advertising data; when there is no room for both, drop the flags rather
+than the user-provided data.
+
+Reachable by a local user with CAP_NET_ADMIN owning an LE-only
+controller on the legacy advertising path.
+
+Fixes: b44133ff03be ("Bluetooth: Support the "discoverable" adv flag")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reported-by: Xiang Mei <xmei5@asu.edu>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_qca.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/eir.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 7897307a7fe294..de9fd0e77d398a 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1010,7 +1010,7 @@ static void qca_dmp_hdr(struct hci_dev *hdev, struct sk_buff *skb)
- 	skb_put_data(skb, buf, strlen(buf));
+diff --git a/net/bluetooth/eir.c b/net/bluetooth/eir.c
+index 3f72111ba651f9..1de5f9df6eec00 100644
+--- a/net/bluetooth/eir.c
++++ b/net/bluetooth/eir.c
+@@ -283,10 +283,12 @@ u8 eir_create_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr, u8 size)
+ 		if (!flags)
+ 			flags |= mgmt_get_adv_discov_flags(hdev);
  
- 	snprintf(buf, sizeof(buf), "Driver: %s\n",
--		hu->serdev->dev.driver->name);
-+		 hu->serdev ? hu->serdev->dev.driver->name : "hci_ldisc_qca");
- 	skb_put_data(skb, buf, strlen(buf));
- }
- 
+-		/* If flags would still be empty, then there is no need to
+-		 * include the "Flags" AD field".
++		/* Only add the "Flags" if it fits together with the instance
++		 * advertising data; drop it rather than overflow the buffer.
+ 		 */
+-		if (flags && (ad_len + eir_precalc_len(1) <= size)) {
++		if (flags &&
++		    (ad_len + eir_precalc_len(1) +
++		     (adv ? adv->adv_data_len : 0) <= size)) {
+ 			ptr[0] = 0x02;
+ 			ptr[1] = EIR_FLAGS;
+ 			ptr[2] = flags;
 -- 
 2.53.0
 
