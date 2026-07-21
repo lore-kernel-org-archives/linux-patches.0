@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37ABA42DA53;
-	Tue, 21 Jul 2026 19:26:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C11415F0E;
+	Tue, 21 Jul 2026 19:26:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661973; cv=none; b=Vkzvcuu1MU0ue5nbApUKjRhOJV4S3eChvFz7k3AoC02jyBgwZH9ZTNP98v37uM+hPSUxi9PylcEy7QNeVikPnRCuSbjrH+ELhUn+oRSm5lU56/lhantroqELj3xobjKqzEkQ+DuxUq2CeCkBp5N72XZN3zev2MSy78d4X9bysVY=
+	t=1784661975; cv=none; b=dltb9MzO6S925f0FKXilV/v1P5ALB466CdH5cRbJfrCYhUN/wSBb5p3L3gNZtmlxpHFE5s1ny8oN8rrGiQLK61KvAi6jCLhh+DBn9qRNqb6/Rk1jV/GEZO4pa62oUfkUj3L6b/LgAi6zmafYZNj0FX/tzNSwY7YtH6p9SnJzlWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661973; c=relaxed/simple;
-	bh=nABuHb51QYaRa9moUJZjfGyAcq4zDQXcSjTzIMTS3g4=;
+	s=arc-20240116; t=1784661975; c=relaxed/simple;
+	bh=H1gRY7Fr3V+xRc62xIHzwERh9pAtC73TW4XSChbMaAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m4UKLcMT1X1G2j6GgGdNyWCiqYT7/daR3j0l7TJKn9uy1WlYgi+/CRc4ipII//QAWQ0y0c1m32uJBiyAgydpVdwAaVxvbgmBiJm2ZbTpit8QHVnXyFxO8upL/w9G/B6R2ljrENO09W7CJ2UT11/WiEISQ75LP3BMPcl1QQ2BCJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLidsoIX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p9Q7q1LsW0VObtV9zvLKFCdxRTKgGtt2uxQ4wwV7L2qMWPteXHyd2AExAe2vTY2FS2wWsOhbMlSoIZ+9SCCKt02tgTXL832qor9wGxVrAm3w964h5Qy34aA105oAFx8vpfkL2BiFiHQs8X4LzSumLXWi75/CBTY1kjAhaUAecwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvvKvnq2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLidsoIX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0591F000E9;
-	Tue, 21 Jul 2026 19:26:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvvKvnq2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457161F000E9;
+	Tue, 21 Jul 2026 19:26:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661972;
-	bh=bWaANWsJG8YCATF2sfYnRpzoV7n4OL7L5ShsdLxB0H4=;
+	s=korg; t=1784661974;
+	bh=ifMj90iF8a/RZr87w3gHXhDWx//cLVVbbThN5vFlXtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lLidsoIXtmMTl6k8wS6MIlZVpxBj2ai5L9fiJ11kM3FLqlZsAdNIycKXTvAWhtLks
-	 KGMRUAdb9GH1HPr5rmtDnnofG/1/ppudxtdonkn3UkGZp9Rm3Xqo3X9P1KGfkH4qQC
-	 hwHcbf6GHf7ydvg2Xe5gXTkzIJ2t4p1J4ngIJym4=
+	b=KvvKvnq2uUvXDDg/jmbK7heLbPnlE+ytadZGj36B9ObKdUJR36DMWbBZCO6GZ9rho
+	 cJpuQL+wPrLci6MYz6bet3NrkhUogLbXynekk2eAkaHHZPPopyEUqkP2jFKZgZbZDo
+	 rHqk662U2Iz4QYh+2tHaUq6vcXshNBwYldNOwqIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Sandipan Das <sandipan.das@amd.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0267/1276] IB/mlx5: Properly support implicit ODP rereg_mr
-Date: Tue, 21 Jul 2026 17:11:50 +0200
-Message-ID: <20260721152452.055642817@linuxfoundation.org>
+Subject: [PATCH 6.12 0232/1276] perf/x86/amd/uncore: Use Node ID to identify DF and UMC domains
+Date: Tue, 21 Jul 2026 17:11:15 +0200
+Message-ID: <20260721152451.282819331@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,54 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Sandipan Das <sandipan.das@amd.com>
 
-[ Upstream commit ee7a8335069150c3f1893a697ab30bbeca00d796 ]
+[ Upstream commit 67d27727854def4a7e2b386429941f5c4741ccc4 ]
 
-Due to all the child mkeys in the implicit ODP configuration we cannot
-change anything in place for the parent mkey. Instead the whole thing
-needs to be rebuilt if any change is requested. If the user does not
-specify a translation then force the implicit values which will then fall
-through the logic into mlx5_ib_reg_user_mr() to allocate a completely new
-MR.
+For DF and UMC PMUs, a single context is shared across all CPUs that
+are connected to the same Data Fabric (DF) instance. Currently, the
+Package ID, which also happens to be the Socket ID, is used to identify
+DF instances. This approach works for configurations having a single IO
+Die (IOD) but fails in the following cases.
+  * Older Zen 1 processors, where each chiplet has its own DF instance.
+  * Any configurations with multiple DF instances or multiple IODs in
+    the same package.
 
-Since implicit children were also touching the mr->pd, this removes
-another case where the access was racy.
+The correct way to identify DF instances is through the Node ID (not to
+be confused with NUMA Node ID). This is available in ECX[7:0] of CPUID
+leaf 0x8000001e and returned via topology_amd_node_id(). Hence, replace
+usage of topology_logical_package_id() with topology_amd_node_id().
 
-Fixes: ef3642c4f54d ("RDMA/mlx5: Fix error unwinds for rereg_mr")
-Link: https://sashiko.dev/#/patchset/20260427-security-bug-fixes-v3-0-4621fa52de0e%40nvidia.com?part=4
-Link: https://patch.msgid.link/r/3-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 07888daa056e ("perf/x86/amd/uncore: Move discovery and registration")
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/e7a71a727c6a7b118c23d3e469929c538c4665aa.1780315832.git.sandipan.das@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/mr.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ arch/x86/events/amd/uncore.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
-index 25079fa7a8c5be..76d2238ea5e7dd 100644
---- a/drivers/infiniband/hw/mlx5/mr.c
-+++ b/drivers/infiniband/hw/mlx5/mr.c
-@@ -1838,6 +1838,21 @@ struct ib_mr *mlx5_ib_rereg_user_mr(struct ib_mr *ib_mr, int flags, u64 start,
- 	if (!(flags & IB_MR_REREG_PD))
- 		new_pd = ib_mr->pd;
+diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
+index 0bb60fde1f4fce..cad240e88b4ff2 100644
+--- a/arch/x86/events/amd/uncore.c
++++ b/arch/x86/events/amd/uncore.c
+@@ -639,7 +639,7 @@ void amd_uncore_df_ctx_scan(struct amd_uncore *uncore, unsigned int cpu)
+ 	info.split.aux_data = 0;
+ 	info.split.num_pmcs = NUM_COUNTERS_NB;
+ 	info.split.gid = 0;
+-	info.split.cid = topology_logical_package_id(cpu);
++	info.split.cid = topology_amd_node_id(cpu);
  
-+	if (mr->is_odp_implicit && !(flags & IB_MR_REREG_TRANS)) {
-+		if (!(new_access_flags & IB_ACCESS_ON_DEMAND))
-+			return ERR_PTR(-EOPNOTSUPP);
-+
-+		/*
-+		 * Due to all the child mkeys we cannot actually change an
-+		 * implicit MR in place. If the user did not specify a new
-+		 * translation then force the fixed implicit MR values.
-+		 */
-+		start = 0;
-+		iova = 0;
-+		length = U64_MAX;
-+		flags |= IB_MR_REREG_TRANS;
-+	}
-+
- 	if (!(flags & IB_MR_REREG_TRANS)) {
- 		struct ib_umem *umem;
+ 	if (pmu_version >= 2) {
+ 		ebx.full = cpuid_ebx(EXT_PERFMON_DEBUG_FEATURES);
+@@ -932,8 +932,8 @@ void amd_uncore_umc_ctx_scan(struct amd_uncore *uncore, unsigned int cpu)
+ 	cpuid(EXT_PERFMON_DEBUG_FEATURES, &eax, &ebx.full, &ecx, &edx);
+ 	info.split.aux_data = ecx;	/* stash active mask */
+ 	info.split.num_pmcs = ebx.split.num_umc_pmc;
+-	info.split.gid = topology_logical_package_id(cpu);
+-	info.split.cid = topology_logical_package_id(cpu);
++	info.split.gid = topology_amd_node_id(cpu);
++	info.split.cid = topology_amd_node_id(cpu);
+ 	*per_cpu_ptr(uncore->info, cpu) = info;
+ }
  
 -- 
 2.53.0
