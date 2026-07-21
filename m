@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD87746D088;
-	Tue, 21 Jul 2026 18:45:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536D946DFFD;
+	Tue, 21 Jul 2026 18:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659537; cv=none; b=r8hqCEInbXbm+JHVjNKkpE9Ni49WbaQcsIe9uJsNzNv+qFVWNCQPCe8JNWhFxy5zpb70kJ09nq35Dl18taJo8CtznduXMtJOfa1CUp1Y/lg2UF1JC5C3mwUO9aAM7rvrmDe0A9Q2p4Xfkl6JaDh2guGVuGMhQvqsBXwXPIE9qgw=
+	t=1784659540; cv=none; b=tG7lY9fyF0WWG0sGAOukJwSbPKOhdcCBZ/VpjbqnEJ0qRor1FqWe5RsQVVdmS1XiLIU4XApipfMhER9vD7V2pX2agFZ+Y0/T5F/gdgWTC+J2BIKO4peEkJ2FI3xYIrrvsl5IOs8xARp+gmYJBTT6FZYIidk6I3fRXJDIvIbCIqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659537; c=relaxed/simple;
-	bh=WEIKI+CVuxpl8pEdKT2c6tK1ZBmuFN7nlGWtX/n6lzc=;
+	s=arc-20240116; t=1784659540; c=relaxed/simple;
+	bh=FqceqGLmtZahYV8EGp0abUKzxuv+iJKTjvJA7A//KuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=npm3fZHYBwy4dwzicP/nmUHpj3Z2WxU9C7arKkp0h95Lkuz0Nk4Eo8t176bUgvaMCPVuNaGh2yj5u0ZrJ3HAWcbuvDvjPj3sONhjE54kMdvch7nCDDJanD+J41GZ6Z4DPlYBvB324iN1paMBj1Dy2mZ7jKkTAvwbL8X6rclXXZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbObD8NU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pJa/tPWSl7sW4WBn6RRDxltGmhSDTqbsQQkd5u9eE5NbwC3NuxcVS7gNnzLJUABdZ0d5PSbsDmejffUG4B0LSxNfVn4YGXm4b2TUSystPG0GogL5QSx6XaoHm5M2elyZZ5Cl9QeaaQZ8u4Ns7j/JJSU4kyv6zpgmv7UpD3VDlVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hy+Gj36n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbObD8NU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0AA1F000E9;
-	Tue, 21 Jul 2026 18:45:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hy+Gj36n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DE31F000E9;
+	Tue, 21 Jul 2026 18:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659536;
-	bh=uNJuqi3zZ6JUo57sgNgj3AgbAhy3clZyTaGyD3q9Yf4=;
+	s=korg; t=1784659539;
+	bh=GO8DdoUnPGNWce3H+Aya5ktrQc0uZjlWRgIwI8fsHpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NbObD8NUAycmQ/5Olg8BkpnUs0eIoVmE3X3FbFBmpZzCsA7RK8x32r0p5o2PaR4m8
-	 5Y63nIftFrlql75MjH4kUQRE0LV68tGQYZ8wBcJ1NzeXz/c/e5tlxYsb0nMooCJdKo
-	 r15+kAePQw8BZu+qomnO1OIun8FX6SF7imXeuMTk=
+	b=Hy+Gj36nhZylwnaCU9T4aTc1MBNqPBO9l16SLVup+YeBX/zLDl8WDzeeeURMGP0iA
+	 a4Yj4jUEjffOHSwXTTCM1ClClvAGxXtMwN80VQ1kdJPUTBSgtRhlqN9r7sr8coCQ6+
+	 K3+QYwBmWEOwJp/SQkzOyn9/W5NPKmZTINFvrdxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Sasha Levin <sashal@kernel.org>,
-	=?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 6.18 1531/1611] PCI/IOV: Adjust ->barsz[] when changing BAR size
-Date: Tue, 21 Jul 2026 17:27:27 +0200
-Message-ID: <20260721152549.882854358@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 1558/1611] proc: protect ptrace_may_access() with exec_update_lock (FD links)
+Date: Tue, 21 Jul 2026 17:27:54 +0200
+Message-ID: <20260721152550.501819540@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -46,145 +45,277 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 4687b3315a3f76647746f5b7f92684cf1045b085 ]
+[ Upstream commit 6255da28d4bb5349fe18e84cb043ccd394eba75d ]
 
-pci_rebar_set_size() adjusts BAR size for both normal and IOV BARs. The
-struct pci_sriov keeps a cached copy of BAR size in ->barsz[] which is not
-adjusted by pci_rebar_set_size() but by pci_iov_resource_set_size().
-pci_iov_resource_set_size() is called also from
-pci_resize_resource_set_size().
+proc_pid_get_link() and proc_pid_readlink() currently look up the task from
+the pid once, then do the ptrace access check on that task, then look up
+the task from the pid a second time to do the actual access.
+That's racy in several ways.
 
-The current arrangement is problematic once BAR resize algorithm starts to
-roll back changes properly in case of a failure. The normal resource
-fitting algorithm rolls back resource size using the struct
-pci_dev_resource easily but also calling pci_resize_resource_set_size() or
-pci_iov_resource_set_size() to roll back BAR size would be an extra burden,
-whereas combining ->barsz[] update with pci_rebar_set_size() naturally
-rolls back it when restoring the old BAR size on a different layer of the
-BAR resize operation.
+To fix it, pass the task to the ->proc_get_link() handler, and instead of
+proc_fd_access_allowed(), introduce a new helper call_proc_get_link() that
+looks up and locks the task, does the access check, and calls
+->proc_get_link().
 
-Thus, rework pci_rebar_set_size() to also update ->barsz[].
-
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Alex Bennée <alex.bennee@linaro.org> # AVA, AMD GPU
-Link: https://patch.msgid.link/20251113162628.5946-3-ilpo.jarvinen@linux.intel.com
-Stable-dep-of: ee7471fe968d ("PCI: Skip Resizable BAR restore on read error")
+Fixes: 778c1144771f ("[PATCH] proc: Use sane permission checks on the /proc/<pid>/fd/ symlinks")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://patch.msgid.link/20260518-procfs-lockfix-part1-v1-2-5c3d20e0ac33@google.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/iov.c       |   15 ++++-----------
- drivers/pci/pci.c       |    4 ++++
- drivers/pci/pci.h       |    5 ++---
- drivers/pci/setup-res.c |   10 ++++------
- 4 files changed, 14 insertions(+), 20 deletions(-)
+ fs/proc/base.c     |  119 ++++++++++++++++++++---------------------------------
+ fs/proc/fd.c       |   25 ++++-------
+ fs/proc/internal.h |    2 
+ 3 files changed, 58 insertions(+), 88 deletions(-)
 
---- a/drivers/pci/iov.c
-+++ b/drivers/pci/iov.c
-@@ -158,8 +158,7 @@ resource_size_t pci_iov_resource_size(st
- 	return dev->sriov->barsz[pci_resource_num_to_vf_bar(resno)];
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -218,33 +218,24 @@ static int get_task_root(struct task_str
+ 	return result;
  }
  
--void pci_iov_resource_set_size(struct pci_dev *dev, int resno,
--			       resource_size_t size)
-+void pci_iov_resource_set_size(struct pci_dev *dev, int resno, int size)
+-static int proc_cwd_link(struct dentry *dentry, struct path *path)
++static int proc_cwd_link(struct dentry *dentry, struct path *path,
++			 struct task_struct *task)
  {
- 	if (!pci_resource_is_iov(resno)) {
- 		pci_warn(dev, "%s is not an IOV resource\n",
-@@ -167,7 +166,8 @@ void pci_iov_resource_set_size(struct pc
- 		return;
+-	struct task_struct *task = get_proc_task(d_inode(dentry));
+ 	int result = -ENOENT;
+ 
+-	if (task) {
+-		task_lock(task);
+-		if (task->fs) {
+-			get_fs_pwd(task->fs, path);
+-			result = 0;
+-		}
+-		task_unlock(task);
+-		put_task_struct(task);
++	task_lock(task);
++	if (task->fs) {
++		get_fs_pwd(task->fs, path);
++		result = 0;
+ 	}
++	task_unlock(task);
+ 	return result;
+ }
+ 
+-static int proc_root_link(struct dentry *dentry, struct path *path)
++static int proc_root_link(struct dentry *dentry, struct path *path,
++			  struct task_struct *task)
+ {
+-	struct task_struct *task = get_proc_task(d_inode(dentry));
+-	int result = -ENOENT;
+-
+-	if (task) {
+-		result = get_task_root(task, path);
+-		put_task_struct(task);
+-	}
+-	return result;
++	return get_task_root(task, path);
+ }
+ 
+ /*
+@@ -704,23 +695,6 @@ static int proc_pid_syscall(struct seq_f
+ /*                       Here the fs part begins                        */
+ /************************************************************************/
+ 
+-/* permission checks */
+-static bool proc_fd_access_allowed(struct inode *inode)
+-{
+-	struct task_struct *task;
+-	bool allowed = false;
+-	/* Allow access to a task's file descriptors if it is us or we
+-	 * may use ptrace attach to the process and find out that
+-	 * information.
+-	 */
+-	task = get_proc_task(inode);
+-	if (task) {
+-		allowed = ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS);
+-		put_task_struct(task);
+-	}
+-	return allowed;
+-}
+-
+ int proc_nochmod_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 		 struct iattr *attr)
+ {
+@@ -1777,16 +1751,12 @@ static const struct file_operations proc
+ 	.release	= single_release,
+ };
+ 
+-static int proc_exe_link(struct dentry *dentry, struct path *exe_path)
++static int proc_exe_link(struct dentry *dentry, struct path *exe_path,
++			 struct task_struct *task)
+ {
+-	struct task_struct *task;
+ 	struct file *exe_file;
+ 
+-	task = get_proc_task(d_inode(dentry));
+-	if (!task)
+-		return -ENOENT;
+ 	exe_file = get_task_exe_file(task);
+-	put_task_struct(task);
+ 	if (exe_file) {
+ 		*exe_path = exe_file->f_path;
+ 		path_get(&exe_file->f_path);
+@@ -1796,26 +1766,42 @@ static int proc_exe_link(struct dentry *
+ 		return -ENOENT;
+ }
+ 
++static int call_proc_get_link(struct dentry *dentry, struct inode *inode, struct path *path_out)
++{
++	struct task_struct *task;
++	int ret;
++
++	task = get_proc_task(inode);
++	if (!task)
++		return -ENOENT;
++	ret = down_read_killable(&task->signal->exec_update_lock);
++	if (ret)
++		goto out_put_task;
++	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS)) {
++		ret = -EACCES;
++		goto out;
++	}
++	ret = PROC_I(inode)->op.proc_get_link(dentry, path_out, task);
++
++out:
++	up_read(&task->signal->exec_update_lock);
++out_put_task:
++	put_task_struct(task);
++	return ret;
++}
++
+ static const char *proc_pid_get_link(struct dentry *dentry,
+ 				     struct inode *inode,
+ 				     struct delayed_call *done)
+ {
+ 	struct path path;
+-	int error = -EACCES;
++	int error;
+ 
+ 	if (!dentry)
+ 		return ERR_PTR(-ECHILD);
+-
+-	/* Are we allowed to snoop on the tasks file descriptors? */
+-	if (!proc_fd_access_allowed(inode))
+-		goto out;
+-
+-	error = PROC_I(inode)->op.proc_get_link(dentry, &path);
+-	if (error)
+-		goto out;
+-
+-	error = nd_jump_link(&path);
+-out:
++	error = call_proc_get_link(dentry, inode, &path);
++	if (!error)
++		error = nd_jump_link(&path);
+ 	return ERR_PTR(error);
+ }
+ 
+@@ -1849,17 +1835,11 @@ static int proc_pid_readlink(struct dent
+ 	struct inode *inode = d_inode(dentry);
+ 	struct path path;
+ 
+-	/* Are we allowed to snoop on the tasks file descriptors? */
+-	if (!proc_fd_access_allowed(inode))
+-		goto out;
+-
+-	error = PROC_I(inode)->op.proc_get_link(dentry, &path);
+-	if (error)
+-		goto out;
+-
+-	error = do_proc_readlink(&path, buffer, buflen);
+-	path_put(&path);
+-out:
++	error = call_proc_get_link(dentry, inode, &path);
++	if (!error) {
++		error = do_proc_readlink(&path, buffer, buflen);
++		path_put(&path);
++	}
+ 	return error;
+ }
+ 
+@@ -2250,21 +2230,16 @@ static const struct dentry_operations ti
+ 	.d_delete	= pid_delete_dentry,
+ };
+ 
+-static int map_files_get_link(struct dentry *dentry, struct path *path)
++static int map_files_get_link(struct dentry *dentry, struct path *path,
++			      struct task_struct *task)
+ {
+ 	unsigned long vm_start, vm_end;
+ 	struct vm_area_struct *vma;
+-	struct task_struct *task;
+ 	struct mm_struct *mm;
+ 	int rc;
+ 
+ 	rc = -ENOENT;
+-	task = get_proc_task(d_inode(dentry));
+-	if (!task)
+-		goto out;
+-
+ 	mm = get_task_mm(task);
+-	put_task_struct(task);
+ 	if (!mm)
+ 		goto out;
+ 
+--- a/fs/proc/fd.c
++++ b/fs/proc/fd.c
+@@ -171,24 +171,19 @@ static const struct dentry_operations ti
+ 	.d_delete	= pid_delete_dentry,
+ };
+ 
+-static int proc_fd_link(struct dentry *dentry, struct path *path)
++static int proc_fd_link(struct dentry *dentry, struct path *path,
++			struct task_struct *task)
+ {
+-	struct task_struct *task;
+ 	int ret = -ENOENT;
++	unsigned int fd = proc_fd(d_inode(dentry));
++	struct file *fd_file;
+ 
+-	task = get_proc_task(d_inode(dentry));
+-	if (task) {
+-		unsigned int fd = proc_fd(d_inode(dentry));
+-		struct file *fd_file;
+-
+-		fd_file = fget_task(task, fd);
+-		if (fd_file) {
+-			*path = fd_file->f_path;
+-			path_get(&fd_file->f_path);
+-			ret = 0;
+-			fput(fd_file);
+-		}
+-		put_task_struct(task);
++	fd_file = fget_task(task, fd);
++	if (fd_file) {
++		*path = fd_file->f_path;
++		path_get(&fd_file->f_path);
++		ret = 0;
++		fput(fd_file);
  	}
  
--	dev->sriov->barsz[pci_resource_num_to_vf_bar(resno)] = size;
-+	resno = pci_resource_num_to_vf_bar(resno);
-+	dev->sriov->barsz[resno] = pci_rebar_size_to_bytes(size);
- }
+ 	return ret;
+--- a/fs/proc/internal.h
++++ b/fs/proc/internal.h
+@@ -107,7 +107,7 @@ extern struct kmem_cache *proc_dir_entry
+ void pde_free(struct proc_dir_entry *pde);
  
- bool pci_iov_is_memory_decoding_enabled(struct pci_dev *dev)
-@@ -1345,7 +1345,6 @@ EXPORT_SYMBOL_GPL(pci_sriov_configure_si
- int pci_iov_vf_bar_set_size(struct pci_dev *dev, int resno, int size)
- {
- 	u32 sizes;
--	int ret;
- 
- 	if (!pci_resource_is_iov(resno))
- 		return -EINVAL;
-@@ -1360,13 +1359,7 @@ int pci_iov_vf_bar_set_size(struct pci_d
- 	if (!(sizes & BIT(size)))
- 		return -EINVAL;
- 
--	ret = pci_rebar_set_size(dev, resno, size);
--	if (ret)
--		return ret;
--
--	pci_iov_resource_set_size(dev, resno, pci_rebar_size_to_bytes(size));
--
--	return 0;
-+	return pci_rebar_set_size(dev, resno, size);
- }
- EXPORT_SYMBOL_GPL(pci_iov_vf_bar_set_size);
- 
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -3797,6 +3797,10 @@ int pci_rebar_set_size(struct pci_dev *p
- 	ctrl &= ~PCI_REBAR_CTRL_BAR_SIZE;
- 	ctrl |= FIELD_PREP(PCI_REBAR_CTRL_BAR_SIZE, size);
- 	pci_write_config_dword(pdev, pos + PCI_REBAR_CTRL, ctrl);
-+
-+	if (pci_resource_is_iov(bar))
-+		pci_iov_resource_set_size(pdev, bar, size);
-+
- 	return 0;
- }
- 
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -826,8 +826,7 @@ void pci_iov_update_resource(struct pci_
- resource_size_t pci_sriov_resource_alignment(struct pci_dev *dev, int resno);
- void pci_restore_iov_state(struct pci_dev *dev);
- int pci_iov_bus_range(struct pci_bus *bus);
--void pci_iov_resource_set_size(struct pci_dev *dev, int resno,
--			       resource_size_t size);
-+void pci_iov_resource_set_size(struct pci_dev *dev, int resno, int size);
- bool pci_iov_is_memory_decoding_enabled(struct pci_dev *dev);
- static inline u16 pci_iov_vf_rebar_cap(struct pci_dev *dev)
- {
-@@ -869,7 +868,7 @@ static inline int pci_iov_bus_range(stru
- 	return 0;
- }
- static inline void pci_iov_resource_set_size(struct pci_dev *dev, int resno,
--					     resource_size_t size) { }
-+					     int size) { }
- static inline bool pci_iov_is_memory_decoding_enabled(struct pci_dev *dev)
- {
- 	return false;
---- a/drivers/pci/setup-res.c
-+++ b/drivers/pci/setup-res.c
-@@ -452,12 +452,10 @@ static void pci_resize_resource_set_size
- 	resource_size_t res_size = pci_rebar_size_to_bytes(size);
- 	struct resource *res = pci_resource_n(dev, resno);
- 
--	if (!pci_resource_is_iov(resno)) {
--		resource_set_size(res, res_size);
--	} else {
--		resource_set_size(res, res_size * pci_sriov_get_totalvfs(dev));
--		pci_iov_resource_set_size(dev, resno, res_size);
--	}
-+	if (pci_resource_is_iov(resno))
-+		res_size *= pci_sriov_get_totalvfs(dev);
-+
-+	resource_set_size(res, res_size);
- }
- 
- int pci_resize_resource(struct pci_dev *dev, int resno, int size)
+ union proc_op {
+-	int (*proc_get_link)(struct dentry *, struct path *);
++	int (*proc_get_link)(struct dentry *, struct path *, struct task_struct *);
+ 	int (*proc_show)(struct seq_file *m,
+ 		struct pid_namespace *ns, struct pid *pid,
+ 		struct task_struct *task);
 
 
