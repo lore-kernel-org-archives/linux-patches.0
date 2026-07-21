@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7BD432E9C;
-	Tue, 21 Jul 2026 19:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2158F3644B3;
+	Tue, 21 Jul 2026 19:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663272; cv=none; b=les1t7g2Zwp/6YsXLw3mHyR+EJTJeb3O+vRddqc35jTsi7QMpjBtxmHJZqHFUDdZETuGn7R0GH7KVLw3AULz+8CE3ansHv+ubLxRxce2m6/E3Krw9/ZhWpQhzUKApedsuKnzKF/AId5TY6EBIKPYmdTXN1jUPE9qXsgVxz6bmyg=
+	t=1784663275; cv=none; b=WWzEc4TgX2TlLFFuISIYihnIxLjuCa50uAxNwDDCb31i2uTk/03tuo48vmNq2yEktFSczpZpkE1k0YnhmQYbxQTv5RnX0BDajUPspPSFLRRiJg5//QqlEyfGi4RL4Kwn4wkdEnbcu2f+rdSFfaa/omrTFXoj8ibnvqpDSQ0XzIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663272; c=relaxed/simple;
-	bh=04a9HBTp8yNx3LzEJQCU/vSCT/wjREC+DJRH3A2BT8I=;
+	s=arc-20240116; t=1784663275; c=relaxed/simple;
+	bh=EWaQLKoIVa8RhzlK1lZKvkRWwxUdzwWmIAZQS6FcE24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QQQuzmmKraP6h3aUYBoGPEHVAq9AWDWO/yAvvSLC7bSXE/KOIx+tChlxctx9obb3nG9dQ7PejmGjtdSgZ3c51nLzND7MRXx5W4L1yJAmCdxdFcVe85G4xgLa6h7r8XRvfXhp3nUNqalgLKUlt6ecyersiAQibpv5UIZ0wAx6fHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IahE03oa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eOLyD38RcvrLwFQv3OL/ImjQi6Lo/C/TiVQk/B6b/hMAoAdoJtNF3s+Gqk+3vGDoouG42z6HOvYul4Qr35ioLTZTcCfsxHSQrlQlOQNhtSvOm7qlUoMBbcYKsWkbGNH1GonzIUJxQ3e6gly4KSbzkENvsPBzIQcJZPwegy4EymY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebw9M42W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IahE03oa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA2F1F000E9;
-	Tue, 21 Jul 2026 19:47:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebw9M42W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA851F000E9;
+	Tue, 21 Jul 2026 19:47:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663271;
-	bh=tGujV7fOhemNJPg6pHB/OM9VbhN2os9Fd6e8ENosMjk=;
+	s=korg; t=1784663274;
+	bh=KXxAoefucgZz9ASzpsf8YhDZbXQ6jiCgtOujdmBroJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IahE03oadyNmTyTETVuUQla2Q8JhB8VebDXhc/NygqosQsIHPVHSacKtrZ8EuXY27
-	 hajwVBfgfxjVTI1BfBPStRL2RKY73r9GAqs4YsLdc466+x/O1+oOdgDZFU8m26ZcOq
-	 XD8y3iaKs2Uf86fSiAFc525jIyLRZ0/B253Kdyd4=
+	b=ebw9M42WJrUwUQEIR/9PSqMt7wWDM0bgZylAtDiBRsD+6OuslUOBRKjgUM/BXmg3+
+	 jy0//1UzDM5P1g7kZQGd+G88d4bJh7id0ppMsnsxGbf9YqwyfdZUWuEQ9DPIGuEwa2
+	 +ZD/9TDN6Icytb3bVfT+X522EuhYpO8Z1nJEYYF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qihang <q.h.hack.winter@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Wyatt Feng <bronzed_45_vested@icloud.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0760/1276] gue: validate REMCSUM private option length
-Date: Tue, 21 Jul 2026 17:20:03 +0200
-Message-ID: <20260721152503.083948343@linuxfoundation.org>
+Subject: [PATCH 6.12 0761/1276] netfilter: xt_u32: reject invalid shift counts
+Date: Tue, 21 Jul 2026 17:20:04 +0200
+Message-ID: <20260721152503.106648753@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,44 +57,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qihang <q.h.hack.winter@gmail.com>
+From: Wyatt Feng <bronzed_45_vested@icloud.com>
 
-[ Upstream commit d335dcc6f521571d57117b8deeebc940836e5450 ]
+[ Upstream commit 64cdf7d30ac18e43df6c48004435febb965809a8 ]
 
-GUE private flags can indicate that remote checksum offload metadata is
-present. The private flags field itself is accounted for by
-guehdr_flags_len(), but guehdr_priv_flags_len() currently returns 0 even
-when GUE_PFLAG_REMCSUM is set.
+u32_match_it() executes rule-supplied shift operands on a 32-bit
+value. A malformed u32 rule can provide a shift count of 32 or more,
+triggering an undefined shift out-of-bounds during packet evaluation.
 
-This lets a packet with only the private flags field pass
-validate_gue_flags(), after which gue_remcsum() and gue_gro_remcsum()
-read the missing REMCSUM start/offset fields from the following bytes.
+Validate XT_U32_LEFTSH and XT_U32_RIGHTSH operands in
+u32_mt_checkentry() and reject malformed rules before they reach the
+packet path.
 
-Account for GUE_PLEN_REMCSUM when GUE_PFLAG_REMCSUM is present so that
-malformed packets are rejected during option validation.
-
-Fixes: c1aa8347e73e ("gue: Protocol constants for remote checksum offload")
-Signed-off-by: Qihang <q.h.hack.winter@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1b50b8a371e9 ("[NETFILTER]: Add u32 match")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/gue.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/xt_u32.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/gue.h b/include/net/gue.h
-index dfca298bec9ccd..caefd6da86939b 100644
---- a/include/net/gue.h
-+++ b/include/net/gue.h
-@@ -80,7 +80,7 @@ static inline size_t guehdr_flags_len(__be16 flags)
- 
- static inline size_t guehdr_priv_flags_len(__be32 flags)
+diff --git a/net/netfilter/xt_u32.c b/net/netfilter/xt_u32.c
+index 1ae7f926b0df73..dabbaa742874cb 100644
+--- a/net/netfilter/xt_u32.c
++++ b/net/netfilter/xt_u32.c
+@@ -106,7 +106,7 @@ static int u32_mt_checkentry(const struct xt_mtchk_param *par)
  {
--	return 0;
-+	return (flags & GUE_PFLAG_REMCSUM) ? GUE_PLEN_REMCSUM : 0;
- }
+ 	const struct xt_u32 *data = par->matchinfo;
+ 	const struct xt_u32_test *ct;
+-	unsigned int i;
++	unsigned int i, j;
  
- /* Validate standard and private flags. Returns non-zero (meaning invalid)
+ 	if (data->ntests > ARRAY_SIZE(data->tests))
+ 		return -EINVAL;
+@@ -117,6 +117,16 @@ static int u32_mt_checkentry(const struct xt_mtchk_param *par)
+ 		if (ct->nnums > ARRAY_SIZE(ct->location) ||
+ 		    ct->nvalues > ARRAY_SIZE(ct->value))
+ 			return -EINVAL;
++
++		for (j = 1; j < ct->nnums; ++j) {
++			switch (ct->location[j].nextop) {
++			case XT_U32_LEFTSH:
++			case XT_U32_RIGHTSH:
++				if (ct->location[j].number >= 32)
++					return -EINVAL;
++				break;
++			}
++		}
+ 	}
+ 
+ 	return 0;
 -- 
 2.53.0
 
