@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A220332913;
-	Tue, 21 Jul 2026 19:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1954D471243;
+	Tue, 21 Jul 2026 19:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660799; cv=none; b=DCeUfdDaEmnfkZKzqNsgWN25HuTlCpwvhYBUygrFLG+QqQ/nrCMCXfVqbMjPakDN6s3fjHF9QQugWSbk6TRHzQ49iYGzHByv8OXCmeJW0horiorl3lNdrL9jeKSczt1Hoit7y9FZ5SDeYEc860tkjtkGKejjgMLkTYw0ArLGNB4=
+	t=1784660802; cv=none; b=bmcqyanDN2IKVBPwGSdhmV+OdfGauqx2RPQrhH8STDS5velR9/cfCcigrxEiw4dAP5wIHqbXiX5EFj3ryf2bVGs4UcfKiW4CggnbFO08vZsD0PoDE6L+b89PGQ3fRkFtIWbxtfLBY93/ujhr9C1Bj83m/7hBBerYdZW8bkh/xCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660799; c=relaxed/simple;
-	bh=0sOdpsRMz3IHP3tHcPJy+NmRn00hr5VicNKxU738NeE=;
+	s=arc-20240116; t=1784660802; c=relaxed/simple;
+	bh=Q6v84aocTTj5Zldy24ct0XR/vUWtZvUaw1FGeHMAxqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hmGgqZpEj0ZqcIRtk1hTgCabTQhbJ1pcWy99R4U86Num+tdJhUM11+yEmVvTpg20VEcExZq2e21gXRd/q2MfqdA31b4wwSizVQl9lreTA7CbJCfGI5YfNG7mdRZxNQzIt+dHCjO9gEnD+whsAn/0qqrySLbaBvlo/pV+IdeMs54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gtD/nIfK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Frp3zAWrKl5YAUffuUAIn+RsN0Cv5q2L8ErVoS4Gkr4o/ETNZE3oVp2BIN7V6A4RvRwCqBf5AROqIe63EeixLuaf4+kzPkmE1rvkh+Z8bzesXz4iAaxK4o7u5Sa05XtyObrZFHl9Ez4MPiYyOlUxe7frrFa4JNe9OgFt+t15HOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Evmorpve; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtD/nIfK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F131F000E9;
-	Tue, 21 Jul 2026 19:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Evmorpve"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1B01F000E9;
+	Tue, 21 Jul 2026 19:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660798;
-	bh=tb9H2kM4IbdD5xudZQBhW/2LvMP4nOojghGZ5701tBk=;
+	s=korg; t=1784660801;
+	bh=xWTdY6gNwZCZBcLXVES0xA4vrCq7Vg/rFKXJyjmQHBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gtD/nIfK+25oWXsXZdqF4EUhb3AhkNYQNFFqeE7bqbUxij7cm5VdBt2FUX239n6BX
-	 btMLQhHZmYQUCjz4hKLzUoPCVPLQXlp8e2UDX5LYa5TS7Cp0m0RSup1Y60PXtQJqqF
-	 +QuyCBA8CNoguTxloxqKXUEJypxPQm9JHrmsnalc=
+	b=Evmorpve6WoIu54YBKIQfmIVWnhoXjP0OdDotK63Eu3dEZl3L9nCtwJWWPk9m33NJ
+	 +tVQuP8a8zaEnJJtoamIai2NS5OqftouQRbzaCOGMRtQARyd77cWiHbgL6cvxNuFHq
+	 NNFhqL0R3nzKNmrgS0+7431IdMmeySNQPZPW2rnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Ray Jui <ray.jui@broadcom.com>,
+	Quang Nguyen <quang.nguyen.wx@renesas.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1117/2077] PCI: iproc: Restore .map_irq() for the platform bus driver
-Date: Tue, 21 Jul 2026 17:13:10 +0200
-Message-ID: <20260721152619.165960600@linuxfoundation.org>
+Subject: [PATCH 7.1 1118/2077] spi: rpc-if: Use correct device for hardware reinitialization on resume
+Date: Tue, 21 Jul 2026 17:13:11 +0200
+Message-ID: <20260721152619.190483273@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,101 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+From: Quang Nguyen <quang.nguyen.wx@renesas.com>
 
-[ Upstream commit 3c2e6cc6affa8acdb99a580be1f8f297edf54204 ]
+[ Upstream commit 7b25dbafa2fce50b1a48c1d057adb35da3563f9b ]
 
-Commit b64aa11eb2dd ("PCI: Set bridge map_irq and swizzle_irq to default
-functions") moved the assignment of default .map_irq() callback to
-devm_of_pci_bridge_init() and removed the initialization of
-'iproc_pcie::map_irq' in platform bus driver.  This led to the callback
-getting assigned the NULL pointer for platform bus driver, thereby breaking
-the INTx functionality, since 'iproc_pcie::map_irq' overrides the
-'pci_host_bridge::map_irq' callback in iproc_pcie_setup().
+rpcif_spi_resume() currently passes the SPI controller device to
+rpcif_hw_init(), but the function should be called with the RPC
+interface device.
 
-This issue only affected the iproc platform bus driver as this driver
-relies on the default callback for non-PAXC controllers. iproc-brcm driver
-was already providing the custom mapping function, so it was unaffected.
+Retrieve the rpcif private data from the SPI controller and pass
+rpc->dev instead. Also propagate the return value of rpcif_hw_init() so
+that a failure during resume is properly reported rather than silently
+ignored.
 
-Restore the original (and intended) behaviour to use the default map_irq
-function by removing the local 'iproc_pcie::map_irq' pointer and directly
-assigning the 'pci_host_bridge::map_irq' callback in iproc-bcma driver.
-This ensures that the default 'map_irq' callback is used for platform bus
-driver and only iproc-brcm driver overrides it with a custom one.
-
-Fixes: b64aa11eb2dd ("PCI: Set bridge map_irq and swizzle_irq to default functions")
-Signed-off-by: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
-[mani: commit log]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Ray Jui <ray.jui@broadcom.com>
-Link: https://patch.msgid.link/20260430021628.1343154-1-mark.tomlinson@alliedtelesis.co.nz
+Fixes: ad4728740bd6 ("spi: rpc-if: Add resume support for RZ/G3E")
+Signed-off-by: Quang Nguyen <quang.nguyen.wx@renesas.com>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260618081932.172168-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-iproc-bcma.c     | 2 +-
- drivers/pci/controller/pcie-iproc-platform.c | 2 +-
- drivers/pci/controller/pcie-iproc.c          | 1 -
- drivers/pci/controller/pcie-iproc.h          | 2 --
- 4 files changed, 2 insertions(+), 5 deletions(-)
+ drivers/spi/spi-rpc-if.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pcie-iproc-bcma.c b/drivers/pci/controller/pcie-iproc-bcma.c
-index 99a99900444de1..593418c2bc3aa6 100644
---- a/drivers/pci/controller/pcie-iproc-bcma.c
-+++ b/drivers/pci/controller/pcie-iproc-bcma.c
-@@ -64,7 +64,7 @@ static int iproc_bcma_pcie_probe(struct bcma_device *bdev)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/spi/spi-rpc-if.c b/drivers/spi/spi-rpc-if.c
+index 6edc0c4db854db..c2f9c86c1d8d4f 100644
+--- a/drivers/spi/spi-rpc-if.c
++++ b/drivers/spi/spi-rpc-if.c
+@@ -206,8 +206,12 @@ static int rpcif_spi_suspend(struct device *dev)
+ static int rpcif_spi_resume(struct device *dev)
+ {
+ 	struct spi_controller *ctlr = dev_get_drvdata(dev);
++	struct rpcif *rpc = spi_controller_get_devdata(ctlr);
++	int ret;
  
--	pcie->map_irq = iproc_bcma_pcie_map_irq;
-+	bridge->map_irq = iproc_bcma_pcie_map_irq;
+-	rpcif_hw_init(dev, false);
++	ret = rpcif_hw_init(rpc->dev, false);
++	if (ret)
++		return ret;
  
- 	bcma_set_drvdata(bdev, pcie);
- 
-diff --git a/drivers/pci/controller/pcie-iproc-platform.c b/drivers/pci/controller/pcie-iproc-platform.c
-index 0cb78c583c7ea4..4c9a0c4bb923e6 100644
---- a/drivers/pci/controller/pcie-iproc-platform.c
-+++ b/drivers/pci/controller/pcie-iproc-platform.c
-@@ -98,7 +98,7 @@ static int iproc_pltfm_pcie_probe(struct platform_device *pdev)
- 	switch (pcie->type) {
- 	case IPROC_PCIE_PAXC:
- 	case IPROC_PCIE_PAXC_V2:
--		pcie->map_irq = NULL;
-+		bridge->map_irq = NULL;
- 		break;
- 	default:
- 		break;
-diff --git a/drivers/pci/controller/pcie-iproc.c b/drivers/pci/controller/pcie-iproc.c
-index ccf71993ea3595..c22d0aecaaac55 100644
---- a/drivers/pci/controller/pcie-iproc.c
-+++ b/drivers/pci/controller/pcie-iproc.c
-@@ -1502,7 +1502,6 @@ int iproc_pcie_setup(struct iproc_pcie *pcie, struct list_head *res)
- 
- 	host->ops = &iproc_pcie_ops;
- 	host->sysdata = pcie;
--	host->map_irq = pcie->map_irq;
- 
- 	ret = pci_host_probe(host);
- 	if (ret < 0) {
-diff --git a/drivers/pci/controller/pcie-iproc.h b/drivers/pci/controller/pcie-iproc.h
-index 969ded03b8c2da..c4443f236ca3bb 100644
---- a/drivers/pci/controller/pcie-iproc.h
-+++ b/drivers/pci/controller/pcie-iproc.h
-@@ -61,7 +61,6 @@ struct iproc_msi;
-  * @base_addr: PCIe host controller register base physical address
-  * @mem: host bridge memory window resource
-  * @phy: optional PHY device that controls the Serdes
-- * @map_irq: function callback to map interrupts
-  * @ep_is_internal: indicates an internal emulated endpoint device is connected
-  * @iproc_cfg_read: indicates the iProc config read function should be used
-  * @rej_unconfig_pf: indicates the root complex needs to detect and reject
-@@ -91,7 +90,6 @@ struct iproc_pcie {
- 	phys_addr_t base_addr;
- 	struct resource mem;
- 	struct phy *phy;
--	int (*map_irq)(const struct pci_dev *, u8, u8);
- 	bool ep_is_internal;
- 	bool iproc_cfg_read;
- 	bool rej_unconfig_pf;
+ 	return spi_controller_resume(ctlr);
+ }
 -- 
 2.53.0
 
