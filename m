@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2853D3321;
-	Tue, 21 Jul 2026 17:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E113D1CCA;
+	Tue, 21 Jul 2026 17:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653497; cv=none; b=b+fx5rwpKQZ5ZjaZcYP4wXGVg2BWIfqWotD9IpOuP5k4beLJIolHgLcGRZxb/9/q4EpdMoO9NUBb0zw3R1C9SNNNxkppC35HOMkVdpstIXNVj1ppkMI4Xeoq1U3NZkN5o6l7xqhuhtu77f4ic0UOP8Yer7qt6Ft/BoAk3P1KRhU=
+	t=1784653500; cv=none; b=Xl1bf4ahOBTKfvq9rj7MzuapefKWb0g3bsqcxZOv2pN5U3z9RVw+wooCN3oPVPapIIGVw5eX/kPYVcEd1mvvahBhufbyU3arEt3GFMFu76Ip26JDWulpL44IqNxmBUyYab4tg1WH8agrSeYzR3gnQKktY7EMgBh23mvwgqplTOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653497; c=relaxed/simple;
-	bh=kkNy6p05vOtyu+0fj+3ljuc68SDksMtXS3nMcLy076c=;
+	s=arc-20240116; t=1784653500; c=relaxed/simple;
+	bh=KSwHGE6nwo2Ke2kMqWpVHlxqmOlvONHj16AAJsPZZjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E+eG+HqUDBv12zsq8rszMR2MaXBtfVnhlGFoSTRhJBFC+wnQJ7G1e1frKe8VVxZzI4tMi9YexkpwYH7ujG+tjUMzdlShNet5a1pp4x0I+cVyVtVnlvCl54ldcY9oxQVEJwab5BCffV3ahWmHgIDJD9ItoN6sYpxBo3KmrQ0C1xE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZCBcomR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CUisCYvshR7zhrQm049GJQTMNZSUcsFsg49epVLCG6yS/zeRovGfVzermNLBuRGquUcTPsQ9Mo9QwsI7IAk4e6Ymm/xQrj1xIiv5obUppIfelkKnDqh9QSfMQUGn7yeLdcQ/Rq3VEHZWPvaN3PTKbqYZ+nhXkOb1tOpBn/AkdOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VfP+Mv5c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZCBcomR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36D51F000E9;
-	Tue, 21 Jul 2026 17:04:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VfP+Mv5c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5631F000E9;
+	Tue, 21 Jul 2026 17:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653496;
-	bh=hCBDDB7Lsn/QnwinTtKReWrhX4uQCck8omQBduomMSQ=;
+	s=korg; t=1784653499;
+	bh=iJX0B1xaZ5U90iPiLr945d+omiWOprEaRqC8FqTOoP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GZCBcomRt6r+Q2JEKRsdumiQo16mx7mEu2NWceikVQ7oddsezHPWoB7ODo/K4qI44
-	 DtSBWLxSUXDUGtqbKv/9aUXjZkhvFI8D+ntgqNhNt1p7DJO43lu6200ldbwX4mMtp8
-	 x//TbpxCXpNKYKaCDv0pqLhq6Y6FJSZD3S5sL7D8=
+	b=VfP+Mv5cj6Hnvss9H1vUGtd1NrfowbvSRpsASA7mJcrnVehzpvqYJDsgGrjvTx2rz
+	 z7Onyk/L2F01u+MUec9N3/e/QmyANeUxii8KE7yZL7l5sh8JGPo5LLMdV+RJ9eHiwb
+	 0Vsm2Fu0HqRG3qyA7SKzNypkMZUWa1uXG4dErEXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Martin Kaiser <martin@kaiser.cx>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1350/2077] tracing/events: Fix to check the simple_tsk_fn creation
-Date: Tue, 21 Jul 2026 17:17:03 +0200
-Message-ID: <20260721152624.657554230@linuxfoundation.org>
+Subject: [PATCH 7.1 1351/2077] tracing: eprobe: read the complete FILTER_PTR_STRING pointer
+Date: Tue, 21 Jul 2026 17:17:04 +0200
+Message-ID: <20260721152624.683581921@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,41 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Martin Kaiser <martin@kaiser.cx>
 
-[ Upstream commit cda1fbfc5313bb90daa271d45eea4a8d317a8544 ]
+[ Upstream commit 206b25c09080cc20fd4c2bea12d59df4b7ba2121 ]
 
-Sashiko pointed that this sample code does not correctly handle the
-failure of thread creation because kthread_run() can return -errno.
+For a char * element in an event, the FILTER_PTR_STRING filter type is
+used. When the event occurs, a pointer is stored in the ringbuffer.
 
-Check the simple_tsk_fn is correctly initialized (created) or not.
+If an eprobe references such a char * element of a "base event", the
+stored pointer is truncated when it's read from the ringbuffer.
 
-Link: https://lore.kernel.org/all/178165817322.269421.3992299509400184196.stgit@devnote2/
+$ cd /sys/kernel/tracing
+$ echo 'e rcu.rcu_utilization $s:x64 $s:string' > dynamic_events
+$ echo 1 > tracing_on
+$ echo 1 > events/eprobes/enable
+$ sleep 1
+$ echo 0 > events/eprobes/enable
+$ cat trace
+   <idle>-0  ...: (rcu.rcu_utilization) arg1=0x4f arg2=(fault)
+   <idle>-0  ...: (rcu.rcu_utilization) arg1=0x2 arg2=(fault)
 
-Link: https://sashiko.dev/#/patchset/178092865666.163648.10457567771536160909.stgit%40devnote2
+The problem is in get_event_field
 
-Fixes: 9cfe06f8cd5c ("tracing/events: add trace-events-sample")
+	val = (unsigned long)(*(char *)addr);
+
+addr points to the position in the ringbuffer where the pointer was
+stored. The assignment reads only the lowest byte of the pointer.
+
+Fix the cast to read the whole pointer. The output of the test above
+is now
+
+<idle>-0 ... arg1=0xffffffff81c7d3f3 arg2="Start scheduler-tick"
+<idle>-0 ... arg1=0xffffffff81c57340 arg2="End scheduler-tick"
+
+Link: https://lore.kernel.org/all/20260620145339.3234726-1-martin@kaiser.cx/
+
+Fixes: f04dec93466a ("tracing/eprobes: Fix reading of string fields")
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/trace_events/trace-events-sample.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/trace/trace_eprobe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/samples/trace_events/trace-events-sample.c b/samples/trace_events/trace-events-sample.c
-index ecc7db237f2eff..0b7a6efdb247a8 100644
---- a/samples/trace_events/trace-events-sample.c
-+++ b/samples/trace_events/trace-events-sample.c
-@@ -107,6 +107,10 @@ int foo_bar_reg(void)
- 	 * for consistency sake, we still take the thread_mutex.
- 	 */
- 	simple_tsk_fn = kthread_run(simple_thread_fn, NULL, "event-sample-fn");
-+	if (IS_ERR_OR_NULL(simple_tsk_fn)) {
-+		pr_err("Failed to create simple_thread_fn\n");
-+		simple_tsk_fn = NULL;
-+	}
-  out:
- 	mutex_unlock(&thread_mutex);
- 	return 0;
+diff --git a/kernel/trace/trace_eprobe.c b/kernel/trace/trace_eprobe.c
+index b66d6196338d09..50518b07141441 100644
+--- a/kernel/trace/trace_eprobe.c
++++ b/kernel/trace/trace_eprobe.c
+@@ -315,7 +315,7 @@ get_event_field(struct fetch_insn *code, void *rec)
+ 			val = (unsigned long)addr;
+ 			break;
+ 		case FILTER_PTR_STRING:
+-			val = (unsigned long)(*(char *)addr);
++			val = *(unsigned long *)addr;
+ 			break;
+ 		default:
+ 			WARN_ON_ONCE(1);
 -- 
 2.53.0
 
