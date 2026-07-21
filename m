@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0213C449B0B;
-	Tue, 21 Jul 2026 15:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E163955F4;
+	Tue, 21 Jul 2026 16:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649600; cv=none; b=jCMqhtWnNTd4561koCoEe4zi0JP3JzNse3FKF1/llCdaavY9XDatf5VyYb/m9tpqByvW9/F8WQxqsJNGTgkiML0WWCUHomGzkMIR0tkuTnLVbf0wqQ6qg1gBolOAAQLXG6Re0uoKY5UpycI9SmGiLFe/suOMrBUH2YN8NVH78os=
+	t=1784649605; cv=none; b=eIyfFd4zqMOIvW5FHd4zu9IeE41a9TLPJvcX9XcF84k9BfNJfUDbjqEm0I1XvPOi+SFl1xPhAsERoNdk2mWzVk00dUHrlE0/mibdxvGddfKLqJQi2Yi1QH3diMEgf9qsFeDgJIX3CD7jxaQj0b9v+liWhShzb4u8/C8lksLaMLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649600; c=relaxed/simple;
-	bh=axYp4v0jf9DTHF0/aXHqo/6C3XjXypP7/nqZ+e55fNc=;
+	s=arc-20240116; t=1784649605; c=relaxed/simple;
+	bh=hqKnZkPb6NXoFO/0Cj3t0/h+HQ6oDbMUbLhRsLKV0GY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CJjsbP2kUSt3w6LdcCP8K2LZI6qR/mU3PNh4rg+28O8eKtIs0kWQLfCO0meCt4PoPbMeAEiipoweGyFWaOuqI0CQYT7z/+j4oad9GKU+ZXhBUOI0rszPK3YAxpbw0IK4kGbjxqbOw0ljtLOaslkSQK6IkTJnR5EtWbVc824OxbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ol0939eC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oJQnsj7e0Mvl6EKXRrZJD1NYQ3io5zKbA5hnsaqMyep4JOTatZH85umqpAslHeCzK5aDyftT7Jo/KTdOx2zhLaOxaj7Oaft0GYn7oR6gEj70kMPE/7BZ9151q1m0mlQ2YWQQIjenXa4inwxoJPdWtLm9qTqolmHN9sLt/ZA9LcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UnoPDhA3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ol0939eC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9351F000E9;
-	Tue, 21 Jul 2026 15:59:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UnoPDhA3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C161F000E9;
+	Tue, 21 Jul 2026 16:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649598;
-	bh=WRpYNKSwA2aUTTij0gjASiAa0JyOWXQ2z6XiC1F9aZs=;
+	s=korg; t=1784649604;
+	bh=pzeNj6QVi/TjqaD3kJcjxBDvDB9fj3m3GVLI3YnVs1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ol0939eC1NCYtHauZMdEJcTz1xo79uySgJmGNlgCVTmxxj10jc5dcuIuIJ1jrZt2f
-	 REenSoBNtfTC9oKNlSb7yccBBmPMWFHkYhD88pGQSB1Bm/TWHRb6QrG5OBx+QmR4Ar
-	 xg3nWrUk2qbTh3Q1L8LVFqo8tpLc3d9BvuiLPTAw=
+	b=UnoPDhA3WJZzI/q+oJF5B2FqyTZyqFwMBxW0aR6qW2wnOe0jONpknkA72D54yhoee
+	 a3LGLh2xOBE5++B1rs7EEWNvG93Axanv7p9d3ZEEQGVBYPADFvEk0qQSewen9g/qqU
+	 GLEGjgV3c0TG0Fg+ZikuWNv0d47i5vVAefXjbECE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srujana Challa <schalla@marvell.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0637/2077] vdpa/octeon_ep: fix IRQ-to-ring mapping in interrupt handler
-Date: Tue, 21 Jul 2026 17:05:10 +0200
-Message-ID: <20260721152607.832534741@linuxfoundation.org>
+Subject: [PATCH 7.1 0638/2077] iomap: pass the correct len to fserror_report_io in __iomap_write_begin
+Date: Tue, 21 Jul 2026 17:05:11 +0200
+Message-ID: <20260721152607.855421480@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,54 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srujana Challa <schalla@marvell.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 0d21a1d6375a05274291e32c1ab7cd57dbb69513 ]
+[ Upstream commit de654d66ff30e75d9308fd4d4f1627addef7923e ]
 
-Look up the IRQ index in oct_hw->irqs instead of assuming
-irq - irqs[0]. This supports non-contiguous IRQ numbers and
-avoids incorrect ring indexing when irqs[0] is not the base.
+len is size of the (larger) write request, plen is the range for which
+the read failed here.
 
-Fixes: 26f8ce06af64 ("vdpa/octeon_ep: enable support for multiple interrupts per device")
-Signed-off-by: Srujana Challa <schalla@marvell.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260224095226.1001151-5-schalla@marvell.com>
+Fixes: a9d573ee88af ("iomap: report file I/O errors to the VFS")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260610050642.1906695-1-hch@lst.de
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/octeon_ep/octep_vdpa_main.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/iomap/buffered-io.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/vdpa/octeon_ep/octep_vdpa_main.c b/drivers/vdpa/octeon_ep/octep_vdpa_main.c
-index 9946480ee70460..df8af6c1454cce 100644
---- a/drivers/vdpa/octeon_ep/octep_vdpa_main.c
-+++ b/drivers/vdpa/octeon_ep/octep_vdpa_main.c
-@@ -48,7 +48,7 @@ static struct octep_hw *vdpa_to_octep_hw(struct vdpa_device *vdpa_dev)
- static irqreturn_t octep_vdpa_intr_handler(int irq, void *data)
- {
- 	struct octep_hw *oct_hw = data;
--	int i;
-+	int i, start_ring_idx = -1;
- 
- 	/* Each device has multiple interrupts (nb_irqs) shared among rings
- 	 * (nr_vring). Device interrupts are mapped to the rings in a
-@@ -61,7 +61,16 @@ static irqreturn_t octep_vdpa_intr_handler(int irq, void *data)
- 	 * 7 -> 7, 15, 23, 31, 39, 47, 55, 63;
- 	 */
- 
--	for (i = irq - oct_hw->irqs[0]; i < oct_hw->nr_vring; i += oct_hw->nb_irqs) {
-+	for (i = 0; i < oct_hw->nb_irqs; i++) {
-+		if (oct_hw->irqs[i] == irq) {
-+			start_ring_idx = i;
-+			break;
-+		}
-+	}
-+	if (start_ring_idx == -1)
-+		return IRQ_NONE;
-+
-+	for (i = start_ring_idx; i < oct_hw->nr_vring; i += oct_hw->nb_irqs) {
- 		if (ioread8(oct_hw->vqs[i].cb_notify_addr)) {
- 			/* Acknowledge the per ring notification to the device */
- 			iowrite8(0, oct_hw->vqs[i].cb_notify_addr);
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index d55b936e698628..5fa9a2c7e30eb8 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -850,7 +850,7 @@ static int __iomap_write_begin(const struct iomap_iter *iter,
+ 			if (status < 0)
+ 				fserror_report_io(iter->inode,
+ 						  FSERR_BUFFERED_READ, pos,
+-						  len, status, GFP_NOFS);
++						  plen, status, GFP_NOFS);
+ 			if (status)
+ 				return status;
+ 		}
 -- 
 2.53.0
 
