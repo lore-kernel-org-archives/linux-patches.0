@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C752DBF75;
-	Tue, 21 Jul 2026 18:57:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BB5471250;
+	Tue, 21 Jul 2026 18:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660241; cv=none; b=FT/WeLFBD0gNTqLjljm+PEgN3hlGkv/NqKBzYRdItLE/k8O3hUU7n6f4I27FVuP0SvmPabSlgmKNk2I8QrOGQx7XFh3q/QGqlQ+fEp4aZ7lqNyWyTK0Bj6a/Uv8olCaekO9OtAU2xV8vrIwkzigvhh1GgmHiZb8/kUpFRFyg4Ps=
+	t=1784660243; cv=none; b=CRvohqUYRuKMuo8zQC33vt7F7YT1bJTo6/rtAxkD4E/nAlrJN5Cw3rtXZ4thw6WK9olEidmJueM0efOOsZ1ljAcFQxi+u6uh9xPhIfl7PbsG03Afa2XxbOPv6XfEfEBg3RMTOvSW2EPO+bQul2q/Q7O+Nu/9tEMYUZSYzBu0JZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660241; c=relaxed/simple;
-	bh=5iQNuWyC9sndJ51d8JEJ91a4Y4K5ACtgjf603pclFcU=;
+	s=arc-20240116; t=1784660243; c=relaxed/simple;
+	bh=7Pt2MlDi2yyWffHwJeKyISQ9sAtyAp/iS4ehtKDnKSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=suB7fr3u/fL7zorj6SDcb/N2qzFba9vyjNAMCy81fq2MKSu6qR24A6FWG3B0OpAgTdMRkShdyOeP/peBgRvZBSTHI8+AtWi/7jev9yD8oTmac4/hJDNccym+mW7W+Rwf49N70fIwXpk0buzYTYkuszHgVzs/rQhTnJ6tDD4wcWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3PoScjL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HPbfQtQaru5AVrq/YLpi8dLJjsd6FyJqMQ2vc3U3jALkgWytVnH7JoKudS9gZ6ZT1d1HP/PQKMqIbZ5lC3BIwuQUlWZoWpCDUjOzyxXOv0nthGitLlrcSq0Vv2qtLoZ6hYVBv/DMRGJYI/ACwEby9bPIFYIOnO5B0IMqDy3q8po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bqjvl1m4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3PoScjL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ABE11F000E9;
-	Tue, 21 Jul 2026 18:57:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bqjvl1m4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B43E1F000E9;
+	Tue, 21 Jul 2026 18:57:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660239;
-	bh=Hmsx/OnhjxHxBR0DD94wsOxZsiWJCygZ5iLc4eNiH2A=;
+	s=korg; t=1784660242;
+	bh=njJUcDIip+aGP2kMMhYbeEn14DkghDAy1uDm3YC1llc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G3PoScjL5lMTOdaEIpkmpQhz0d1gJLK7bOP1N8yRoqAXnRzKKduZBTRfHS5VgxoRk
-	 sUA46/5ShVLgmhIHAaL8DLfhRuSApFGR9Q6KvTWCIfs6nbnvBootXvLdEJ7i7Ov0Nj
-	 3l4yb04nvhLBOhXF7K4Oe6Dp09c1gV7dJ5iMxC0Q=
+	b=Bqjvl1m4ou5SXvUOdV03dskss2l8ftL5s+UuHtoIhO6fRY9d9sNDWjDTTouIbUVF4
+	 k+/lqFKveqqQ1cFH0uGCdLX/3UeWVSINmV9UNN+EqJhoICWR+/LVqahOLvkAkFolUT
+	 sTbSxPb3OjQ5W4P7TSw4Dji9mLiDY5NPjphql9iA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,13 +30,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Jiri Olsa <jolsa@kernel.org>,
 	Namhyung Kim <namhyung@kernel.org>,
-	Wang Nan <wangnan0@huawei.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
 	sashiko-bot@kernel.org
-Subject: [PATCH 7.1 0904/2077] perf header: Sanity check HEADER_EVENT_DESC attr.size before swap
-Date: Tue, 21 Jul 2026 17:09:37 +0200
-Message-ID: <20260721152614.140505826@linuxfoundation.org>
+Subject: [PATCH 7.1 0905/2077] perf header: Validate bitmap size before allocating in do_read_bitmap()
+Date: Tue, 21 Jul 2026 17:09:38 +0200
+Message-ID: <20260721152614.165580928@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -49,7 +48,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
@@ -58,133 +56,127 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 944f65c8b8231d26d4db6be67bcb641142603cb4 ]
+[ Upstream commit 3669697bda41c562d90eb38f54881cc02ef3d51c ]
 
-read_event_desc() reads nre (event count), sz (attr size), and nr
-(IDs per event) from the file and uses them to control allocations
-and loops without validating them against the section size.
+do_read_bitmap() reads a u64 bit count from the file and passes it
+to bitmap_zalloc() without checking it against the remaining section
+size. A crafted perf.data could trigger a large allocation that would
+only fail later when the per-element reads exceed section bounds.
 
-A crafted perf.data could trigger large allocations or many loop
-iterations before __do_read() eventually rejects the reads.
+Additionally, bitmap_zalloc() takes an int parameter, so a crafted
+size with bits set above bit 31 (e.g. 0x100000040) would pass the
+section bounds check but truncate when passed to bitmap_zalloc(),
+allocating a much smaller buffer than the subsequent read loop
+expects.
 
-Add bounds checks in read_event_desc():
-- Reject sz smaller than PERF_ATTR_SIZE_VER0.
-- Require at least one event (nre > 0).
-- Check that nre events fit in the remaining section, using the
-  minimum per-event footprint of sz + sizeof(u32).
-- Pre-swap attr->size to native byte order, then reject values
-  below PERF_ATTR_SIZE_VER0 or above sz before calling
-  perf_event__attr_swap() to prevent heap out-of-bounds access.
-- Handle ABI0 (attr.size == 0): substitute PERF_ATTR_SIZE_VER0,
-  and on native-endian files write the value back so
-  free_event_desc() does not treat the zero as its end-of-array
-  sentinel (it iterates while attr.size != 0).  The swap path
-  skips the write-back — perf_event__attr_swap() has its own
-  ABI0 fallback that sets VER0 after swapping.
-- Check that nr IDs fit in the remaining section before allocating.
+Reject size values that exceed INT_MAX, and check that the data
+needed (BITS_TO_U64(size) u64 values) fits in the remaining section
+before allocating.  Switch from bitmap_zalloc() to calloc() of u64
+units so the allocation size matches the u64 read/write granularity
+and avoids unsigned long vs u64 mismatch on 32-bit architectures.
 
-Fixes: b30b61729246 ("perf tools: Fix a problem when opening old perf.data with different byte order")
+Fix do_write_bitmap() to use memcpy to read u64-sized chunks from
+the unsigned long bitmap, preventing out-of-bounds reads on 32-bit
+systems where sizeof(unsigned long) is 4 but the bitmap is stored
+in u64 units.
+
+Fix process_mem_topology() minimum section size: the check used
+nr * 2 * sizeof(u64) per node, but do_read_bitmap() reads an
+additional u64 for the bitmap size, so the minimum is 3 * sizeof(u64).
+
+Fix memory leak in process_mem_topology() error paths: replace
+free(nodes) with memory_node__delete_nodes() to free per-node
+bitmaps allocated by do_read_bitmap().
+
+Currently used by process_mem_topology() for HEADER_MEM_TOPOLOGY.
+
+Fixes: a881fc56038a ("perf header: Sanity check HEADER_MEM_TOPOLOGY")
+Closes: https://lore.kernel.org/linux-perf-users/20260414224622.2AE69C19425@smtp.kernel.org/
+Closes: https://lore.kernel.org/linux-perf-users/20260410223242.DD76FC19421@smtp.kernel.org/
 Reported-by: sashiko-bot@kernel.org # Running on a local machine
 Reviewed-by: Ian Rogers <irogers@google.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
 Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Wang Nan <wangnan0@huawei.com>
 Assisted-by: Claude:claude-opus-4.6-1m
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/header.c | 54 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+ tools/perf/util/header.c | 34 +++++++++++++++++++++++++++++-----
+ 1 file changed, 29 insertions(+), 5 deletions(-)
 
 diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
-index f30e48eb3fc32d..30e5e50ab98b8b 100644
+index 30e5e50ab98b8b..7b641a569af139 100644
 --- a/tools/perf/util/header.c
 +++ b/tools/perf/util/header.c
-@@ -2135,9 +2135,28 @@ static struct evsel *read_event_desc(struct feat_fd *ff)
- 	if (do_read_u32(ff, &nre))
- 		goto error;
+@@ -158,15 +158,25 @@ int do_write(struct feat_fd *ff, const void *buf, size_t size)
+ /* Return: 0 if succeeded, -ERR if failed. */
+ static int do_write_bitmap(struct feat_fd *ff, unsigned long *set, u64 size)
+ {
+-	u64 *p = (u64 *) set;
++	size_t byte_size = BITS_TO_LONGS(size) * sizeof(unsigned long);
+ 	int i, ret;
  
-+	/* Size of each of the nre attributes. */
- 	if (do_read_u32(ff, &sz))
- 		goto error;
+ 	ret = do_write(ff, &size, sizeof(size));
+ 	if (ret < 0)
+ 		return ret;
  
 +	/*
-+	 * Require at least one event with an attr no smaller than the
-+	 * first published struct, and reject sz values where
-+	 * sz + sizeof(u32) would overflow size_t (possible on 32-bit)
-+	 * or nre == UINT32_MAX where nre + 1 wraps to 0 in the calloc.
-+	 *
-+	 * The minimum section footprint per event is sz bytes for the
-+	 * attr plus a u32 for the id count, check that nre events fit.
++	 * The on-disk format uses u64 elements, but the in-memory bitmap
++	 * uses unsigned long, which is only 4 bytes on 32-bit architectures.
++	 * Copy with bounded size so the last element doesn't read past the
++	 * bitmap allocation when BITS_TO_LONGS(size) is odd.
 +	 */
-+	if (!nre || sz < PERF_ATTR_SIZE_VER0 ||
-+	    sz > ff->size || (size_t)sz > SIZE_MAX - sizeof(u32) ||
-+	    nre == UINT32_MAX ||
-+	    nre > (ff->size - ff->offset) / (sz + sizeof(u32))) {
-+		pr_err("Invalid HEADER_EVENT_DESC: nre=%u sz=%u (min %d)\n",
-+		       nre, sz, PERF_ATTR_SIZE_VER0);
-+		goto error;
+ 	for (i = 0; (u64) i < BITS_TO_U64(size); i++) {
+-		ret = do_write(ff, p + i, sizeof(*p));
++		u64 val = 0;
++		size_t off = i * sizeof(val);
++
++		memcpy(&val, (char *)set + off, min(sizeof(val), byte_size - off));
++		ret = do_write(ff, &val, sizeof(val));
+ 		if (ret < 0)
+ 			return ret;
+ 	}
+@@ -297,7 +307,20 @@ static int do_read_bitmap(struct feat_fd *ff, unsigned long **pset, u64 *psize)
+ 	if (ret)
+ 		return ret;
+ 
+-	set = bitmap_zalloc(size);
++	/* Bitmap APIs use int for nbits; reject u64 values that truncate. */
++	if (size > INT_MAX ||
++	    BITS_TO_U64(size) > (ff->size - ff->offset) / sizeof(u64)) {
++		pr_debug("do_read_bitmap: size %" PRIu64 " exceeds section bounds\n", size);
++		return -1;
 +	}
 +
- 	/* buffer to hold on file attr struct */
- 	buf = malloc(sz);
- 	if (!buf)
-@@ -2153,6 +2172,9 @@ static struct evsel *read_event_desc(struct feat_fd *ff)
- 		msz = sz;
++	/*
++	 * bitmap_zalloc() allocates in unsigned long units, which are only
++	 * 4 bytes on 32-bit architectures. The read loop below casts the
++	 * buffer to u64 * and writes 8-byte elements, so allocate in u64
++	 * units to ensure the buffer is large enough.
++	 */
++	set = calloc(BITS_TO_U64(size), sizeof(u64));
+ 	if (!set)
+ 		return -ENOMEM;
  
- 	for (i = 0, evsel = events; i < nre; evsel++, i++) {
-+		struct perf_event_attr *attr = buf;
-+		u32 attr_size;
-+
- 		evsel->core.idx = i;
+@@ -3411,7 +3434,8 @@ static int process_mem_topology(struct feat_fd *ff,
+ 		return -1;
+ 	}
  
- 		/*
-@@ -2162,6 +2184,32 @@ static struct evsel *read_event_desc(struct feat_fd *ff)
- 		if (__do_read(ff, buf, sz))
- 			goto error;
+-	if (ff->size < 3 * sizeof(u64) + nr * 2 * sizeof(u64)) {
++	/* Per node: node_id(u64) + mem_size(u64) + bitmap_nr_bits(u64) */
++	if (ff->size < 3 * sizeof(u64) + nr * 3 * sizeof(u64)) {
+ 		pr_err("Invalid HEADER_MEM_TOPOLOGY: section too small (%zu) for %llu nodes\n",
+ 		       ff->size, (unsigned long long)nr);
+ 		return -1;
+@@ -3446,7 +3470,7 @@ static int process_mem_topology(struct feat_fd *ff,
  
-+		/* Reject before attr_swap to prevent OOB via bswap_safe() */
-+		attr_size = ff->ph->needs_swap ? bswap_32(attr->size) : attr->size;
-+		/* ABI0: size == 0 means the producer didn't set it */
-+		if (!attr_size) {
-+			attr_size = PERF_ATTR_SIZE_VER0;
-+			/*
-+			 * Write back so free_event_desc() doesn't
-+			 * treat this event as the end-of-array sentinel
-+			 * (it iterates while attr.size != 0).
-+			 *
-+			 * Only for native — the swap path must NOT
-+			 * write native-endian VER0 here because
-+			 * perf_event__attr_swap() would re-swap it
-+			 * to 0x40000000, defeating bswap_safe() bounds.
-+			 * perf_event__attr_swap() has its own ABI0
-+			 * fallback that sets VER0 after swapping.
-+			 */
-+			if (!ff->ph->needs_swap)
-+				attr->size = attr_size;
-+		}
-+		if (attr_size < PERF_ATTR_SIZE_VER0 || attr_size > sz) {
-+			pr_err("Event %d attr.size (%u) invalid (min: %d, max: %u)\n",
-+			       i, attr_size, PERF_ATTR_SIZE_VER0, sz);
-+			goto error;
-+		}
-+
- 		if (ff->ph->needs_swap)
- 			perf_event__attr_swap(buf);
+ out:
+ 	if (ret)
+-		free(nodes);
++		memory_node__delete_nodes(nodes, nr);
+ 	return ret;
+ }
  
-@@ -2183,6 +2231,12 @@ static struct evsel *read_event_desc(struct feat_fd *ff)
- 		if (!nr)
- 			continue;
- 
-+		/* Prevent oversized allocation from crafted nr */
-+		if (nr > (ff->size - ff->offset) / sizeof(*id)) {
-+			pr_err("Event %d: id count %u exceeds remaining section\n", i, nr);
-+			goto error;
-+		}
-+
- 		id = calloc(nr, sizeof(*id));
- 		if (!id)
- 			goto error;
 -- 
 2.53.0
 
