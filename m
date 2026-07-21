@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFE23B995D;
-	Tue, 21 Jul 2026 20:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD7D3B47E2;
+	Tue, 21 Jul 2026 20:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666902; cv=none; b=qj8X8W0RqJCytBP5YixFggSShvwGRcwtid53+/e7XJkWieeDqUngZ/rJ9cmm9K/TLE75v2+ofDpcAFaGndlXvxFtGzw9lTKRe3jf11E7roUH5IKMBBr19HJiHqg/CSrDo5Le+Gncvuj9JryDPnsJpYsJcTHmoT4m1IPT5EhKB1s=
+	t=1784666905; cv=none; b=a9WfOk4ffrK0sgUM/aGbpcON7zMTs0Z0PJCCYppbVX4PS0YzIwLkr7Bt0XxkzInaUm/m1WN6Xfd/5kr2/eQqGos4agymHOdJXG+oQVA070UY6nlRvQUTEy93HpWOoG7zscAHC+zMPqrhmiKxgNFlihkOWypwDUzCyiypwnY2XkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666902; c=relaxed/simple;
-	bh=UkbunVjx8c1oMTkOR0XTEy1xEbQRiyXDIwXgIV7GKUU=;
+	s=arc-20240116; t=1784666905; c=relaxed/simple;
+	bh=DFcDsqUpu+JlMEmoLBtj+v2Ip8FJFQd9ztL28SFPj0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ey7ZsSmrsdsXAjDUq2mwdHpzYsCngDe0Jebm1P9g93/hO2rRunfmm20F5LOZJ5BEPKSJY4CXpgPFkKuPj1MFxMVTRthXC5SUDRzzWLT5qrDaYZfUZ/0oiN/umLBizLOpSgQHp21jKfwE5bYOsS8y/3OeFAOyQ7bbkKvweFgHuLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SbcJJEX1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A4FgCg/Dznh0r0O3joXRtAwfeX4v3WaAafsYqF5HfRhZq7b007rDJ9memU4V+KYgrVO99o9jDF5ahZOh355QMVeP6HDKh1HOf8i72OJyRV4DHH2yTBTvFeWca4cO7VduFiqzI8mg+y9JXYNWrV+2P9mjoNlKooFnEApK2XZb4Uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iSDwvpqO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SbcJJEX1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5012E1F00A3D;
-	Tue, 21 Jul 2026 20:48:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iSDwvpqO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07CB71F00A3A;
+	Tue, 21 Jul 2026 20:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666900;
-	bh=T95Tspt3EumRlIMQQwmykf0uYQtg0umKFDYzxjLzoqo=;
+	s=korg; t=1784666903;
+	bh=VqBeGDO+R7GYcBcXu/2euJANwKhixu6gZFET7kklZlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SbcJJEX1r59BagxtsF/m8179zsr8M7ItMvLRwR2OnN98twasX+Uw3lwJun9hsri65
-	 dpfgYYmOgTSDQxdOFdMEJ8hpnYdKTfI7opePIalBGHqIXEg9d1NSkvNAxlMJCvfUGs
-	 vQW5FfdhpM64ujv7TbcNXgwfXrRyCfwZwd+a2s0E=
+	b=iSDwvpqOFo47xOjeHZGpDE7JyIhJTZGdVjLjIaP38NoceFiSTUXrvnrJQCsjOqYyS
+	 NQ+aeT2sgW+y4DbAxw1WwrGTxHbvA2/38xddRIBLKbRIxyi9ODLk9Ku41crBQtqHeD
+	 ushdc+oAyzPQMqBb6jugyu5/7aiMukAw3EZjOjJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Jamie Bainbridge <jamie.bainbridge@gmail.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>,
+	Xiang Mei <xmei5@asu.edu>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0857/1266] qede: fix off-by-one in BD ring consumption on build_skb failure
-Date: Tue, 21 Jul 2026 17:21:34 +0200
-Message-ID: <20260721152501.031541806@linuxfoundation.org>
+Subject: [PATCH 6.6 0858/1266] net: qualcomm: rmnet: validate MAP frame length before ingress parsing
+Date: Tue, 21 Jul 2026 17:21:35 +0200
+Message-ID: <20260721152501.053172341@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,61 +53,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit a0a558ca7e75b49e71f8c545c30e8c005e6e4e2f ]
+[ Upstream commit f0f1887a9e30712a1df03e152dce6fb91344b1f3 ]
 
-qede_rx_build_skb() and qede_tpa_rx_build_skb() do not check for a
-NULL return from qede_build_skb(). When it returns NULL under memory
-pressure, the functions still consume a BD from the ring before
-returning NULL. The callers then recycle additional BDs, resulting in
-one extra BD being consumed (off-by-one). This desynchronizes the BD
-ring, which can corrupt DMA page reference counts and lead to SLUB
-freelist corruption.
+When ingress deaggregation is disabled, rmnet_map_ingress_handler() passes
+the skb straight to __rmnet_map_ingress_handler(), skipping the length
+validation that rmnet_map_deaggregate() performs on the aggregated path.
+The parser then dereferences the MAP header and csum header/trailer based on
+the on-wire pkt_len without checking skb->len, so a short frame is read out
+of bounds:
 
-Commit 4e910dbe3650 ("qede: confirm skb is allocated before using")
-added a NULL check inside qede_build_skb() to prevent a NULL pointer
-dereference, but did not address the missing NULL checks in the
-callers, making this off-by-one reachable.
+  BUG: KASAN: slab-out-of-bounds in rmnet_map_checksum_downlink_packet
+  Read of size 1 at addr ffff88801118ed00 by task exploit/147
+  Call Trace:
+   ...
+   rmnet_map_checksum_downlink_packet (drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c:413)
+   __rmnet_map_ingress_handler (drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c:96)
+   rmnet_rx_handler (drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c:129)
+   __netif_receive_skb_core.constprop.0 (net/core/dev.c:6089)
+   netif_receive_skb (net/core/dev.c:6460)
+   tun_get_user (drivers/net/tun.c:1955)
+   tun_chr_write_iter (drivers/net/tun.c:2001)
+   vfs_write (fs/read_write.c:688)
+   ksys_write (fs/read_write.c:740)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+   ...
 
-Fix this by adding NULL checks for the return value of
-qede_build_skb() in both qede_rx_build_skb() and
-qede_tpa_rx_build_skb(), returning NULL immediately before any BD ring
-manipulation.
+Factor that validation out of rmnet_map_deaggregate() into
+rmnet_map_validate_packet_len() and run it on the no-aggregation path too.
+The MAP header is bounds-checked first, since this path can receive a frame
+shorter than the header.
 
-Fixes: 8a8633978b84 ("qede: Add build_skb() support.")
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Jamie Bainbridge <jamie.bainbridge@gmail.com>
-Link: https://patch.msgid.link/20260630164623.3152625-1-syoshida@redhat.com
+Fixes: ceed73a2cf4a ("drivers: net: ethernet: qualcomm: rmnet: Initial implementation")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Suggested-by: Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260630174110.2003121-1-xmei5@asu.edu
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_fp.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ .../ethernet/qualcomm/rmnet/rmnet_handlers.c  |  5 +-
+ .../net/ethernet/qualcomm/rmnet/rmnet_map.h   |  1 +
+ .../ethernet/qualcomm/rmnet/rmnet_map_data.c  | 72 ++++++++++---------
+ 3 files changed, 45 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qede/qede_fp.c b/drivers/net/ethernet/qlogic/qede/qede_fp.c
-index 1de8611a27f238..51affa97aab401 100644
---- a/drivers/net/ethernet/qlogic/qede/qede_fp.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_fp.c
-@@ -765,6 +765,9 @@ qede_tpa_rx_build_skb(struct qede_dev *edev,
- 	struct sk_buff *skb;
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c
+index 9f3479500f85a1..d055a2628d8c9d 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c
+@@ -126,7 +126,10 @@ rmnet_map_ingress_handler(struct sk_buff *skb,
  
- 	skb = qede_build_skb(rxq, bd, len, pad);
-+	if (unlikely(!skb))
-+		return NULL;
+ 		consume_skb(skb);
+ 	} else {
+-		__rmnet_map_ingress_handler(skb, port);
++		if (rmnet_map_validate_packet_len(skb, port))
++			__rmnet_map_ingress_handler(skb, port);
++		else
++			kfree_skb(skb);
+ 	}
+ }
+ 
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map.h b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map.h
+index b70284095568ce..60ca8b780c88ad 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map.h
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map.h
+@@ -59,5 +59,6 @@ void rmnet_map_tx_aggregate_init(struct rmnet_port *port);
+ void rmnet_map_tx_aggregate_exit(struct rmnet_port *port);
+ void rmnet_map_update_ul_agg_config(struct rmnet_port *port, u32 size,
+ 				    u32 count, u32 time);
++u32 rmnet_map_validate_packet_len(struct sk_buff *skb, struct rmnet_port *port);
+ 
+ #endif /* _RMNET_MAP_H_ */
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
+index a5e3d1a88305ec..8471157a431beb 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
+@@ -333,54 +333,62 @@ struct rmnet_map_header *rmnet_map_add_map_header(struct sk_buff *skb,
+ 	return map_header;
+ }
+ 
+-/* Deaggregates a single packet
+- * A whole new buffer is allocated for each portion of an aggregated frame.
+- * Caller should keep calling deaggregate() on the source skb until 0 is
+- * returned, indicating that there are no more packets to deaggregate. Caller
+- * is responsible for freeing the original skb.
+- */
+-struct sk_buff *rmnet_map_deaggregate(struct sk_buff *skb,
+-				      struct rmnet_port *port)
++u32 rmnet_map_validate_packet_len(struct sk_buff *skb, struct rmnet_port *port)
+ {
+ 	struct rmnet_map_v5_csum_header *next_hdr = NULL;
+ 	struct rmnet_map_header *maph;
+ 	void *data = skb->data;
+-	struct sk_buff *skbn;
+-	u8 nexthdr_type;
+ 	u32 packet_len;
+ 
+-	if (skb->len == 0)
+-		return NULL;
++	if (skb->len < sizeof(*maph))
++		return 0;
+ 
+ 	maph = (struct rmnet_map_header *)skb->data;
 +
- 	bd->page_offset += rxq->rx_buf_seg_size;
++	/* Some hardware can send us empty frames. Catch them */
++	if (!maph->pkt_len)
++		return 0;
++
+ 	packet_len = ntohs(maph->pkt_len) + sizeof(*maph);
  
- 	if (bd->page_offset == PAGE_SIZE) {
-@@ -812,6 +815,8 @@ qede_rx_build_skb(struct qede_dev *edev,
+ 	if (port->data_format & RMNET_FLAGS_INGRESS_MAP_CKSUMV4) {
+ 		packet_len += sizeof(struct rmnet_map_dl_csum_trailer);
+-	} else if (port->data_format & RMNET_FLAGS_INGRESS_MAP_CKSUMV5) {
+-		if (!(maph->flags & MAP_CMD_FLAG)) {
+-			packet_len += sizeof(*next_hdr);
+-			if (maph->flags & MAP_NEXT_HEADER_FLAG)
+-				next_hdr = data + sizeof(*maph);
+-			else
+-				/* Mapv5 data pkt without csum hdr is invalid */
+-				return NULL;
+-		}
++	} else if ((port->data_format & RMNET_FLAGS_INGRESS_MAP_CKSUMV5) &&
++		   !(maph->flags & MAP_CMD_FLAG)) {
++		/* Mapv5 data pkt without csum hdr is invalid */
++		if (!(maph->flags & MAP_NEXT_HEADER_FLAG))
++			return 0;
++
++		packet_len += sizeof(*next_hdr);
++		next_hdr = data + sizeof(*maph);
  	}
  
- 	skb = qede_build_skb(rxq, bd, len, pad);
-+	if (unlikely(!skb))
+-	if (((int)skb->len - (int)packet_len) < 0)
+-		return NULL;
++	if (skb->len < packet_len)
++		return 0;
+ 
+-	/* Some hardware can send us empty frames. Catch them */
+-	if (!maph->pkt_len)
+-		return NULL;
++	if (next_hdr &&
++	    u8_get_bits(next_hdr->header_info, MAPV5_HDRINFO_HDR_TYPE_FMASK) !=
++	    RMNET_MAP_HEADER_TYPE_CSUM_OFFLOAD)
++		return 0;
+ 
+-	if (next_hdr) {
+-		nexthdr_type = u8_get_bits(next_hdr->header_info,
+-					   MAPV5_HDRINFO_HDR_TYPE_FMASK);
+-		if (nexthdr_type != RMNET_MAP_HEADER_TYPE_CSUM_OFFLOAD)
+-			return NULL;
+-	}
++	return packet_len;
++}
++
++/* Deaggregates a single packet
++ * A whole new buffer is allocated for each portion of an aggregated frame.
++ * Caller should keep calling deaggregate() on the source skb until 0 is
++ * returned, indicating that there are no more packets to deaggregate. Caller
++ * is responsible for freeing the original skb.
++ */
++struct sk_buff *rmnet_map_deaggregate(struct sk_buff *skb,
++				      struct rmnet_port *port)
++{
++	struct sk_buff *skbn;
++	u32 packet_len;
++
++	packet_len = rmnet_map_validate_packet_len(skb, port);
++	if (!packet_len)
 +		return NULL;
  
- 	if (unlikely(qede_realloc_rx_buffer(rxq, bd))) {
- 		/* Incr page ref count to reuse on allocation failure so
+ 	skbn = alloc_skb(packet_len + RMNET_MAP_DEAGGR_SPACING, GFP_ATOMIC);
+ 	if (!skbn)
 -- 
 2.53.0
 
