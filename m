@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE35E46AA69;
-	Tue, 21 Jul 2026 15:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262F4402442;
+	Tue, 21 Jul 2026 15:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648008; cv=none; b=ltbylQK+QivKpHJMvetw1IPIoEIJ1rA0k1c3JyLq6zkxe6L3NZFHpkQcc5qGlNbKsyegMmgVzLuiOgrKBUjd9X9YL8ludIjeW87ZoSM8GnXUTjIwV7RyJujCHN0T7mhvcURSNiaoOareZv36Fvj3PqwiMY6eevbmbiM2bWEV5/o=
+	t=1784648011; cv=none; b=lKoraLWR+a4Ea4P/wLnHQ1wbSnWqgs6/0o8oXl6q53LfQoUF7pP5Vs1/TW3PB1swP5fOLuqFw/9qX3CyH/+D1lARweBiWBjgcxe/kZgv4UoMozoi2OECxUuZkuYRIB5EDt888b5Qc5Ps5N8uVTukljsFDZUoWct9vA887cX5yss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648008; c=relaxed/simple;
-	bh=ehzTYaWAi2ODCUMfca3OA6uyVvf1WS/WB2LjqKE9Ijo=;
+	s=arc-20240116; t=1784648011; c=relaxed/simple;
+	bh=8lDe93F8SCfeUHfzmZZZoWbdmpzEPHz/iWeV7TTqp4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D91soFw4MgenXs/M0IF0baY4RCwcRBnfNfmRrnSZQFKBUY4oT4ImWduDiOxJ8JPxOvfiO+nmQ0VEcldK2SK4LnEvAROy9+GwbNLd+1VIekEOlhRZOVEWx4EldrN6vkhB3vQR9E6wzW2SMZqJpgiHIW8GiUv5lggNzQXLSS5SMEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oB6W/XiZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s1QOkp7+nMrKwJgG8JsPKuKhrEzBWSis4rc3ZCbblvLt5s7GBd5pfw8E1ukoD9Mq6EhTecIoWShRclSNyp717cRj6XeyAKeU4797iG7+vBxm5JElKATLav+3z/iYiWdtTPt+btuuqkL+DcRsLZ9L7AnW+8FyJOj9nMLnEWZw/fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjVkAB5q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oB6W/XiZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12001F00A3A;
-	Tue, 21 Jul 2026 15:33:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjVkAB5q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7AF1F000E9;
+	Tue, 21 Jul 2026 15:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648007;
-	bh=QefEtPEAmHth8oh5E/YHD1Yj9whMd9ILXfRzFHwNa00=;
+	s=korg; t=1784648010;
+	bh=5tR/aapMYsZjWlVeGxUIufqlihTPUyTArhvDjR0wsOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oB6W/XiZ1eVtTYJe+y9zAoIKjFCA+F06EZTrGsc6SdJDCVBpcZFbWudSseKMzmAxd
-	 jgqkTFDWiGJyxV6jWtHcbrLYd1yjjSpzqqbINPWM0DtSmO1antBaugE4ESY6IbpA2j
-	 z9pyzVW8m9kHI5MwzEEJ/dDyv6Al7FBSTS2oD5Xg=
+	b=xjVkAB5qyRcn6gLH5xbqZC0fk0uCS8PSHM3DE4sVW6N8Iu2RtYEM/CGPSn3XGn3qN
+	 eHvthXP0TORkSR9maCQyn9RpWTXJXAbDRGRivWB8Q1UJJi8ibKHghprLxkZYTR7gwn
+	 WPGDIQjYVKQ2Gi+auL7MOogo45b/cx6Qyy24m7pU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Yunke Cao <yunkec@google.com>,
 	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 0009/2077] media: uvcvideo: Use hw timestaming if the clock buffer is full
-Date: Tue, 21 Jul 2026 16:54:42 +0200
-Message-ID: <20260721152552.884575293@linuxfoundation.org>
+Subject: [PATCH 7.1 0010/2077] media: uvcvideo: Avoid partial metadata buffers
+Date: Tue, 21 Jul 2026 16:54:43 +0200
+Message-ID: <20260721152552.907418757@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,58 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit ede7de6e6b3db552d10ac50557d69c50d1b08486 upstream.
+commit a15b773fe4ffa450b56347cc506b2d1405600f5d upstream.
 
-In some situations, even with a full clock buffer, it does not contain
-250msec of data. This results in the driver jumping back from software
-to hardware timestapsing creating a nasty artifact in the video.
+If the metadata queue that is empty receives a new buffer while we are
+in the middle of processing a frame, the first metadata buffer will
+contain partial information.
 
-If the clock buffer is full, use it to calculate the timestamp instead
-of defaulting to software stamps, the reduced accuracy is less visible
-than jumping from one timestamping mechanism to the other.
+Avoid this by tracking the state of the metadata buffer and making sure
+that it is in sync with the data buffer.
 
-Fixes: 6243c83be6ee8 ("media: uvcvideo: Allow hw clock updates with buffers not full")
+Now that we are at it, make sure that we skip buffers of size 1 or 0.
+They are not allowed by the spec... but it is a simple check to add and
+better be safe than sorry.
+
+Fixes: 088ead255245 ("media: uvcvideo: Add a metadata device node")
 Cc: stable@vger.kernel.org
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Tested-by: Yunke Cao <yunkec@google.com>
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://patch.msgid.link/20260513-uvc-hwtimestamp-v3-2-7a64838b0b02@chromium.org
+Link: https://patch.msgid.link/20260417-uvc-meta-partial-v2-2-31d274af7d2d@chromium.org
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
 Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_video.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/media/usb/uvc/uvc_video.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
 --- a/drivers/media/usb/uvc/uvc_video.c
 +++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -833,15 +833,22 @@ void uvc_video_clock_update(struct uvc_s
- 		y2 += 2048 << 16;
+@@ -1156,7 +1156,9 @@ static void uvc_video_stats_stop(struct
+  * uvc_video_decode_end will never be called with a NULL buffer.
+  */
+ static int uvc_video_decode_start(struct uvc_streaming *stream,
+-		struct uvc_buffer *buf, const u8 *data, int len)
++				  struct uvc_buffer *buf,
++				  struct uvc_buffer *meta_buf,
++				  const u8 *data, int len)
+ {
+ 	u8 header_len;
+ 	u8 fid;
+@@ -1229,6 +1231,8 @@ static int uvc_video_decode_start(struct
+ 
+ 		/* TODO: Handle PTS and SCR. */
+ 		buf->state = UVC_BUF_STATE_ACTIVE;
++		if (meta_buf)
++			meta_buf->state = UVC_BUF_STATE_ACTIVE;
+ 	}
  
  	/*
--	 * Have at least 1/4 of a second of timestamps before we
--	 * try to do any calculation. Otherwise we do not have enough
--	 * precision. This value was determined by running Android CTS
--	 * on different devices.
-+	 * If the buffer is not full, we want to gather at least 1/4th of
-+	 * timestamps before using HW timestamping. We do this to avoid jitter
-+	 * on the initial frames.
-+	 *
-+	 * If the buffer is full we would use it regardless of how much data
-+	 * it represents. This could be solved with an infinite big circular
-+	 * buffer, but RAM is expensive these days, specially the infinitely
-+	 * big.
-+	 *
-+	 * The value of 1/4th of a second was determined by running Android's
-+	 * CTS on different devices.
- 	 *
- 	 * dev_sof runs at 1KHz, and we have a fixed point precision of
- 	 * 16 bits.
- 	 */
--	if ((y2 - y1) < ((1000 / 4) << 16))
-+	if (clock->size != clock->count && (y2 - y1) < ((1000 / 4) << 16))
- 		goto done;
+@@ -1431,7 +1435,7 @@ static void uvc_video_decode_meta(struct
+ 	ktime_t time;
+ 	const u8 *scr;
  
- 	y = (u64)(y2 - y1) * (1ULL << 31) + (u64)y1 * (u64)x2
+-	if (!meta_buf || length == 2)
++	if (length <= 2 || !meta_buf || meta_buf->state != UVC_BUF_STATE_ACTIVE)
+ 		return;
+ 
+ 	has_pts = mem[1] & UVC_STREAM_PTS;
+@@ -1548,7 +1552,7 @@ static void uvc_video_decode_isoc(struct
+ 		/* Decode the payload header. */
+ 		mem = urb->transfer_buffer + urb->iso_frame_desc[i].offset;
+ 		do {
+-			ret = uvc_video_decode_start(stream, buf, mem,
++			ret = uvc_video_decode_start(stream, buf, meta_buf, mem,
+ 				urb->iso_frame_desc[i].actual_length);
+ 			if (ret == -EAGAIN)
+ 				uvc_video_next_buffers(stream, &buf, &meta_buf);
+@@ -1597,7 +1601,8 @@ static void uvc_video_decode_bulk(struct
+ 	 */
+ 	if (stream->bulk.header_size == 0 && !stream->bulk.skip_payload) {
+ 		do {
+-			ret = uvc_video_decode_start(stream, buf, mem, len);
++			ret = uvc_video_decode_start(stream, buf, meta_buf, mem,
++						     len);
+ 			if (ret == -EAGAIN)
+ 				uvc_video_next_buffers(stream, &buf, &meta_buf);
+ 		} while (ret == -EAGAIN);
 
 
