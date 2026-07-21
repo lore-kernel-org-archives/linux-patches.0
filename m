@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45BB3430CDC;
-	Tue, 21 Jul 2026 19:48:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F388356746;
+	Tue, 21 Jul 2026 19:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663283; cv=none; b=iVC9MnOqzNtwicXq1BSzONyy5c0HEn/HmMEcZxQxOwg+d+a/UTc4h6LVsAQYPhdHdHrZdSmFXzPmHz67bN7CL+/ZMHOnemEt2n0zXHxCiIs4jPfJpPmi3Xa7JgIyLqgwB9LamuVAd90R04tADKECSFteWtESaCpHBgULnokl2Gk=
+	t=1784663286; cv=none; b=lLR1f1Jnd4EiCNPQIDsG5bjZbgI33TdR7b0tHEe3tVINwwyZ9H3o8xAqWCWp+aRPr7To26tBeBtPWsJvjE2floszEGSDfShUkOJ71BD59dbahbY+HnD8Xo53nXrcwkrfnmdV6IegkZeN39IvpQdYP0r9LF5GfciVlh4d8RF4Cd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663283; c=relaxed/simple;
-	bh=3KKQ24mlbJINcNRTtXlXucfvfg2YRVykwkpggjctiIU=;
+	s=arc-20240116; t=1784663286; c=relaxed/simple;
+	bh=Nf+5SHZ3FITjDQwatFg2ljuH+f1tk5KY7k2tip+VPEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eQvfyXYkMXpdvTF5/4WJ9LYZvWdFJx2Ek2h7XQIOWA+EJrpQyyBvcHHjfQLe6YgUfgaTFh9jTZabCiZCYbPQYGzTu0OfXbr8Ea0Cuj4uYqRMgI87MoqLnQkVU7PgzxGA/w4LgNWHq2VZ6WW9g5UwDSZ47n9k7ok4zDu8L+BPPU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRO7V3N+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jfo6k5jFWUy9HDSdcMbu5uW0LZZQVfl9JzkzW7gIYbJFRVADWotNKhPSs4F8mDs9PaB8sD99N1argH5mDaBuQRN770OZ06zAUZ/IO2AgldwKEWnAAdOW2tpTslMhtbWxz9tbvaMLFMAC8jdlbQxFTQbgqcUcyLLfSpj0CKlOxB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2MJtHn5b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRO7V3N+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B9461F000E9;
-	Tue, 21 Jul 2026 19:48:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2MJtHn5b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE351F000E9;
+	Tue, 21 Jul 2026 19:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663281;
-	bh=cpG/aQvLZIgMWPlcnpASLdZeyrHFuhO6HPxp0R0CN2I=;
+	s=korg; t=1784663284;
+	bh=52ZUXm1+C/fqCv94OfQXy/NYyIfn1ZO4qwd/KzMeKEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aRO7V3N+af9hZwprUDHwX6vqIlnoCJZHWaSU+pOG9TZpaLFOrF/b9Az9xSk5JxLUi
-	 nSJ7wJOY2U7ijmvp10Ma8MjVXmWFnqO5FQYI6xc3VFD321nJo/8RYhzTncysEjePy9
-	 l+Aw6/xOkCW1ipTDB+/4lFfIUS4Mfq4GRBVikpXA=
+	b=2MJtHn5bUHHVZ/lkslQ843l3OmLA/eG3Qvp6WVGBk9h7DidCOGuCIEpZLPBiEgL98
+	 5gp1KN8ndLwD1AKp9Lz3mFnlM6p5wIrZhGAJRBz4Qgn5+Ts7k+C1Svf2iPVzpDAY/0
+	 dFc55eKuSYAxhlE32jNiz4vt2w9TRCPlvXD435nQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <dstsmallbird@foxmail.com>,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Phil Sutter <phil@nwl.cc>,
-	Florian Westphal <fw@strlen.de>,
+	Shay Drory <shayd@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0764/1276] netfilter: xt_connmark: reject invalid shift parameters
-Date: Tue, 21 Jul 2026 17:20:07 +0200
-Message-ID: <20260721152503.172765817@linuxfoundation.org>
+Subject: [PATCH 6.12 0765/1276] net/mlx5: LAG, MPESW, Fix missing complete() on devcom error
+Date: Tue, 21 Jul 2026 17:20:08 +0200
+Message-ID: <20260721152503.195287019@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -56,75 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wyatt Feng <bronzed_45_vested@icloud.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 1b47026fb4b35bac850ad6e8a4ad7fc018e09ebc ]
+[ Upstream commit d4b85f9a668b9c44216bb78daf4ec1a915cc92d1 ]
 
-Revision 2 of the CONNMARK target accepts user-controlled shift
-parameters and applies them to 32-bit mark values in
-connmark_tg_shift().
+mlx5_mpesw_work() returned without calling complete() when
+mlx5_lag_get_devcom_comp() returned NULL. A caller that queued the
+work and waited on mpesww->comp would block indefinitely.
 
-A shift_bits value of 32 or more triggers an undefined-shift bug when
-the rule is evaluated. Invalid shift_dir values are also accepted and
-silently fall back to the left-shift path.
+Funnel the early-return path through a new "complete" label so the
+waiter is always woken.
 
-Reject invalid revision-2 shift parameters in connmark_tg_check() so
-malformed rules fail at installation time, before they can reach the
-packet path.
-
-Fixes: 472a73e00757 ("netfilter: xt_conntrack: Support bit-shifting for CONNMARK & MARK targets.")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <dstsmallbird@foxmail.com>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
-Reviewed-by: Ren Wei <enjou1224z@gmail.com>
-Reviewed-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: b430c1b4f63b ("net/mlx5: Replace global mlx5_intf_lock with HCA devcom component lock")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260630112917.698313-3-tariqt@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_connmark.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/xt_connmark.c b/net/netfilter/xt_connmark.c
-index 4277084de2e70c..2cf27f7d59b95f 100644
---- a/net/netfilter/xt_connmark.c
-+++ b/net/netfilter/xt_connmark.c
-@@ -112,6 +112,16 @@ static int connmark_tg_check(const struct xt_tgchk_param *par)
- 	return ret;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
+index 2381a0eec19006..c433d29a62f25a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
+@@ -134,8 +134,10 @@ static void mlx5_mpesw_work(struct work_struct *work)
+ 	struct mlx5_lag *ldev = mpesww->lag;
+ 
+ 	devcom = mlx5_lag_get_devcom_comp(ldev);
+-	if (!devcom)
+-		return;
++	if (!devcom) {
++		mpesww->result = -ENODEV;
++		goto complete;
++	}
+ 
+ 	mlx5_devcom_comp_lock(devcom);
+ 	mutex_lock(&ldev->lock);
+@@ -151,6 +153,7 @@ static void mlx5_mpesw_work(struct work_struct *work)
+ unlock:
+ 	mutex_unlock(&ldev->lock);
+ 	mlx5_devcom_comp_unlock(devcom);
++complete:
+ 	complete(&mpesww->comp);
  }
  
-+static int connmark_tg_check_v2(const struct xt_tgchk_param *par)
-+{
-+	const struct xt_connmark_tginfo2 *info = par->targinfo;
-+
-+	if (info->shift_dir > D_SHIFT_RIGHT || info->shift_bits >= 32)
-+		return -EINVAL;
-+
-+	return connmark_tg_check(par);
-+}
-+
- static void connmark_tg_destroy(const struct xt_tgdtor_param *par)
- {
- 	nf_ct_netns_put(par->net, par->family);
-@@ -162,7 +172,7 @@ static struct xt_target connmark_tg_reg[] __read_mostly = {
- 		.name           = "CONNMARK",
- 		.revision       = 2,
- 		.family         = NFPROTO_IPV4,
--		.checkentry     = connmark_tg_check,
-+		.checkentry     = connmark_tg_check_v2,
- 		.target         = connmark_tg_v2,
- 		.targetsize     = sizeof(struct xt_connmark_tginfo2),
- 		.destroy        = connmark_tg_destroy,
-@@ -183,7 +193,7 @@ static struct xt_target connmark_tg_reg[] __read_mostly = {
- 		.name           = "CONNMARK",
- 		.revision       = 2,
- 		.family         = NFPROTO_IPV6,
--		.checkentry     = connmark_tg_check,
-+		.checkentry     = connmark_tg_check_v2,
- 		.target         = connmark_tg_v2,
- 		.targetsize     = sizeof(struct xt_connmark_tginfo2),
- 		.destroy        = connmark_tg_destroy,
 -- 
 2.53.0
 
