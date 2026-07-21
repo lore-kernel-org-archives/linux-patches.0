@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF604400DFC;
-	Tue, 21 Jul 2026 20:01:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD6D433042;
+	Tue, 21 Jul 2026 20:01:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664083; cv=none; b=Ic+XcKSPYmG6V0MAFahAzOTxBmck+1gsIbQMzNMzxKXorsBU4bQpK+lu6JFyGBrq4qX856Q/dYZGtw70MPe4v6oe2negEVN43V8hjtoU2SMjqkMLO1xEahhOYUePzf/b3h9gxARt0ej/RzUtd5/sIUpAR2wxapProHELSKilqTQ=
+	t=1784664086; cv=none; b=UPqHraC/WTWVVzo14kJlRWsqs0PMA+WGy/P6A1BeT7++ONfghMRtVsLKnyt7QoOnUDhiYIp+4QHVjmpIK8I3LtGTSvNRNab45XvYy3LHYsj1RNanNHfrTE4C+LKs7h1GBTJCLy6hOhiC69Cv+WZ/p/Efvy0iXUeaQ9LQtXUhC8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664083; c=relaxed/simple;
-	bh=3HFjdPW7ftBUDdMrn7tjA0C29FpqDkyKvURuX8g4XyY=;
+	s=arc-20240116; t=1784664086; c=relaxed/simple;
+	bh=B/OuEV8vp9nYGRp5nn/d5pAIJvieZr65NxUtFYRg3to=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NfUabG4q27ENeG+7KDhXetnPmYBsmaWB6SLvyOZ44NHkLYUgg/FntRVjhaT1TuWDdNrwQztf4CYuPUMYyPJm1sMnIC0aOCsggP+vdiAuv3ptRA2np5yZ7pbmKk1GBRtj2YeWu7cVAuFFGpPPq9Qiu4LUXwRgqytG/1RF8Ai6QTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xhjzfwEG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YKVXiNsZXNC1oiqnnoxlm1yN0U6Bo3BW7RHrGs0W2aEthGVMkT6OpchNa33GagUA3+47KZZhxZ2mwaIT0tobgoS7jy7lpMd1mGkuHNKSuNAc6yRpHYMP0ZLF15bCRz58Qnhgbe13RrU8sd3uq0Cq4YfPh6nheWUYZebAzknjTnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IDjfGloT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xhjzfwEG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322FA1F000E9;
-	Tue, 21 Jul 2026 20:01:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IDjfGloT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8FF1F000E9;
+	Tue, 21 Jul 2026 20:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664082;
-	bh=iXMd3Ep3jl/EcYeDidmOTh+sjGY5O96lBO41Wk1kWrE=;
+	s=korg; t=1784664085;
+	bh=av9+wuAJzCbnpHBMWRvYpmwaBA0vZ0FDW/TDR+7w9fU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xhjzfwEGTnWaX53nHmnJ9p+aaqp6aeGcwQDOqagv/l9jWhBo+XifICPdFebpjOxrS
-	 FLee+47tCuWD1Y24DgYrnTxV71YWg/j4IwmHGMPa9o6HhYI7cQ09d5XJFfSf2I5gJG
-	 DBpte8pN0eYX+M9mck6p1c04AZyyqAA5MT7EgsnY=
+	b=IDjfGloTgV9xhrrbEqG/T8EGHQ3p94ZMWMbAFNSdENqaOI9S8n5+N218WgS9m9v1P
+	 uV/zS3D8gXzlKg58jUC6kimkUuuo048ldJ6a+1eMH8gkqMI1eBNYcYM/dUVZpfGoWT
+	 kds3L5nRIUugKPwvB75BkVa7S2w8kVB3knTw/8XI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	John Garry <john.g.garry@oracle.com>,
-	David Disseldorp <ddiss@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 1022/1276] scsi: target: core: Fix iSCSI ISID use-after-free in REGISTER AND MOVE
-Date: Tue, 21 Jul 2026 17:24:25 +0200
-Message-ID: <20260721152508.868636969@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.12 1013/1276] dm-verity: increase sprintf buffer size
+Date: Tue, 21 Jul 2026 17:24:16 +0200
+Message-ID: <20260721152508.673483373@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,69 +49,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit fda6a1f3c3d7047b5ce5654487649c2daa738bfc upstream.
+commit 88dd117c92a142253fb7a17e791773902b3babc6 upstream.
 
-core_scsi3_emulate_pro_register_and_move() maps the PERSISTENT RESERVE OUT
-parameter list with transport_kmap_data_sg() and parses the destination
-TransportID with target_parse_pr_out_transport_id(). For an iSCSI
-TransportID (FORMAT CODE 01b), iscsi_parse_pr_out_transport_id() returns
-the ISID in iport_ptr as a raw pointer into that mapped buffer.
+The prefix "DM_VERITY_ERR_BLOCK_NR" is 22 chars. Add '=', one digit for
+type, ',', up to 20 digits for a u64 block number, and a NUL terminator:
+that's 46 bytes. The buffer is 42 bytes. For block numbers >= 16 decimal
+digits (devices larger than ~16 EB with 4K blocks), snprintf silently
+truncates the uevent environment variable.
 
-The function then unmaps the buffer with transport_kunmap_data_sg() before
-dereferencing iport_ptr in strcmp(), __core_scsi3_locate_pr_reg() and
-core_scsi3_alloc_registration(). When the parameter list spans more than
-one page (PARAMETER LIST LENGTH > 4096), transport_kmap_data_sg() uses
-vmap() and transport_kunmap_data_sg() does vunmap(), so the kernel virtual
-address backing iport_ptr is torn down and every subsequent dereference is
-a use-after-free read of the unmapped region.
-
-Keep the parameter list mapped until iport_ptr is no longer needed: drop
-the early transport_kunmap_data_sg() and unmap once on the success path,
-right before returning. The error paths already unmap through the existing
-"if (buf) transport_kunmap_data_sg(cmd)" at the out: label, which now runs
-on every post-map error exit because buf is no longer cleared early. Only
-reads of the mapping happen while spinlocks are held; the map and unmap
-calls remain outside any lock. The sibling caller
-core_scsi3_decode_spec_i_port() already uses the buffer before unmapping it
-and is left unchanged.
-
-Fixes: 4949314c7283 ("target: Allow control CDBs with data > 1 page")
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: Claude:claude-opus-4.6
+Fixes: 65ff5b7ddf05 ("dm verity: add error handling modes for corrupted blocks")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: David Disseldorp <ddiss@suse.de>
-Link: https://patch.msgid.link/20260610042245.35473-1-hexlabsecurity@proton.me
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/target_core_pr.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/md/dm-verity-target.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/target/target_core_pr.c
-+++ b/drivers/target/target_core_pr.c
-@@ -3289,9 +3289,6 @@ core_scsi3_emulate_pro_register_and_move
- 		goto out;
- 	}
+--- a/drivers/md/dm-verity-target.c
++++ b/drivers/md/dm-verity-target.c
+@@ -26,7 +26,7 @@
  
--	transport_kunmap_data_sg(cmd);
--	buf = NULL;
--
- 	pr_debug("SPC-3 PR [%s] Extracted initiator %s identifier: %s"
- 		" %s\n", dest_tf_ops->fabric_name, (iport_ptr != NULL) ?
- 		"port" : "device", initiator_str, (iport_ptr != NULL) ?
-@@ -3528,6 +3525,11 @@ after_iport_check:
- 	core_scsi3_update_and_write_aptpl(cmd->se_dev, aptpl);
+ #define DM_MSG_PREFIX			"verity"
  
- 	core_scsi3_put_pr_reg(dest_pr_reg);
-+	/*
-+	 * iport_ptr aliases the PR-OUT parameter list mapped above, so the
-+	 * buffer is unmapped only here on success (and at out: on error).
-+	 */
-+	transport_kunmap_data_sg(cmd);
- 	return 0;
- out:
- 	if (buf)
+-#define DM_VERITY_ENV_LENGTH		42
++#define DM_VERITY_ENV_LENGTH		46
+ #define DM_VERITY_ENV_VAR_NAME		"DM_VERITY_ERR_BLOCK_NR"
+ 
+ #define DM_VERITY_DEFAULT_PREFETCH_SIZE	262144
 
 
