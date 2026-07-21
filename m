@@ -1,48 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE1346D090;
-	Tue, 21 Jul 2026 18:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3EC46D2A2;
+	Tue, 21 Jul 2026 18:05:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657145; cv=none; b=jTDSupsOUqgGoEOM/iq0/kwScD9P0+hqJ1/y5i7WBImbYYRW0dI488Dh7iqt6S2r2zBwAlf2XIHdq90drA8bJ8uQ8jc43oj/3d6cYklwDfj8jjTIJkg9Qia04n0nikuqqe2qsZrXjKgzqNT1nm/WBKl1EtQ1k2y0hZC4QoXlKQI=
+	t=1784657148; cv=none; b=qvK77Vt0/W3bWaPK/MdjAjh5FqRwUbMC24PJ333qFJDkOOOKKjPOPcjbzGGErKhx/IdYQOUktV7guczkLStCSlBZzkYednJO/S2fpRzGlX4tY13ZwWJRHyInp0AwxJbds92FjrX9rhdHUuTtfSSAnq82XuC5A3vHpfzWD6WaX3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657145; c=relaxed/simple;
-	bh=QkI9wiEQ1D9N6X+FIStoy48I1XAW1lmLVMVW93C0qVI=;
+	s=arc-20240116; t=1784657148; c=relaxed/simple;
+	bh=SuI3wolHTQBMejH+P34gNDCVbp6HV50C2OaOnVJQUlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fygatwV6e+Krk5coosLeSWGt1sdm5j5vvT4clR8Xo5YI/UL1MRK8fEKZnVHzouJ1K+TSu00bHDzsz0vEYJ0UxTKmpD7JZa+YuAbYaCpoaG6DgSsxukKxTbJIg1L1KvMq3qOe2GLFVY/77hZgTQJuOUuHOhtNxtUP3ay0vpZoGKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YK6vHwEQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K99/sh+qVCbvBZ8QCVwEsE1nIoETYfvle0EzO32z+BjjXtQl6os1CtYXNPBKzqiSpQtbWcKk3XotRIZxcPxriFxHpgiobefvNP0GvC0NstAy/9GZniJVG9DLiWA8WdC23z9arW80TWSfZE4sVSC9/02u5ICCbejRVJEMJiCe9qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2o0o3JgT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YK6vHwEQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03FC91F000E9;
-	Tue, 21 Jul 2026 18:05:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2o0o3JgT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9587A1F000E9;
+	Tue, 21 Jul 2026 18:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657144;
-	bh=868EZkbX7QM0o7YBU2FS+fakq8CVjR+OTtaa7Ld+gJI=;
+	s=korg; t=1784657147;
+	bh=evwkD4BMTAYyWAiaehcXvaYLGaUPsBorNmwV+PxJ7OM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YK6vHwEQAg5sNwLY2gEgZHydmLu5N44IqYSLY95D3RqtPAxIuIsgT/BQaQjvhQ81T
-	 rVa3FqNxSQNorqqXkfRsBPdAg4gKNkwZ5AjuVUYHBz8CGuOAtKISh/XJrxDnT+FrI5
-	 g82ScKI3Gr2CSYcULZ95uR9gl7eOdqicwWAoNtCI=
+	b=2o0o3JgT8rpcsub3i/nDNj2J3L0cE1X4KOfP1bvY4QwaBcQhNL88qVxbY8sDLOjuX
+	 2qXjmnj9b44RwBqq4oI/gYO6JT6Ax+IbFuWCnZcv2An0WPw2z3QZF1NjD/oyfRx4VQ
+	 jU4GkBZoQvJ1DvQ3VZ20x9/qHoSQBDHOWseVArpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Ananth Narayan <ananth.narayan@amd.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Manali Shukla <manali.shukla@amd.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Santosh Shukla <santosh.shukla@amd.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Dave Penkler <dpenkler@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0611/1611] perf test amd ibs: Fix incorrect kernel version check
-Date: Tue, 21 Jul 2026 17:12:07 +0200
-Message-ID: <20260721152529.129061158@linuxfoundation.org>
+Subject: [PATCH 6.18 0612/1611] gpib: Fix inappropriate ioctl error return
+Date: Tue, 21 Jul 2026 17:12:08 +0200
+Message-ID: <20260721152529.151043140@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -61,45 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravi Bangoria <ravi.bangoria@amd.com>
+From: Dave Penkler <dpenkler@gmail.com>
 
-[ Upstream commit 0b97e92393a178765ee1ea01fe5087efece2c425 ]
+[ Upstream commit 70ea440324e8c1a10837f721352f5bd469c85007 ]
 
-"AMD IBS sample period" unit test is getting skipped on kernel v7.x. Fix
-the kernel version >= v6.15 check.
+The driver was returning -ENOTTY in the case the ioctl command
+was not recognised. Change it to -EBADRQC.
 
-Fixes: 21fb366b2f457611 ("perf test amd: Skip amd-ibs-period test on kernel < v6.15")
-Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Ananth Narayan <ananth.narayan@amd.com>
-Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Manali Shukla <manali.shukla@amd.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Sandipan Das <sandipan.das@amd.com>
-Cc: Santosh Shukla <santosh.shukla@amd.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 9dde4559e939 ("staging: gpib: Add GPIB common core driver")
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
+Link: https://patch.msgid.link/20260411102025.2000-3-dpenkler@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/arch/x86/tests/amd-ibs-period.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/gpib/common/gpib_os.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/tools/perf/arch/x86/tests/amd-ibs-period.c b/tools/perf/arch/x86/tests/amd-ibs-period.c
-index 223e059e04deb0..986ac34d218fb7 100644
---- a/tools/perf/arch/x86/tests/amd-ibs-period.c
-+++ b/tools/perf/arch/x86/tests/amd-ibs-period.c
-@@ -933,7 +933,7 @@ static bool kernel_v6_15_or_newer(void)
- 	endptr++;
- 	minor = strtol(endptr, NULL, 10);
+diff --git a/drivers/staging/gpib/common/gpib_os.c b/drivers/staging/gpib/common/gpib_os.c
+index baa2fea5ebf7e1..6bae025434e5cf 100644
+--- a/drivers/staging/gpib/common/gpib_os.c
++++ b/drivers/staging/gpib/common/gpib_os.c
+@@ -613,7 +613,7 @@ long ibioctl(struct file *filep, unsigned int cmd, unsigned long arg)
+ 	unsigned int minor = iminor(file_inode(filep));
+ 	struct gpib_board *board;
+ 	struct gpib_file_private *file_priv = filep->private_data;
+-	long retval = -ENOTTY;
++	long retval = -EBADRQC;
  
--	return major >= 6 && minor >= 15;
-+	return major > 6 || (major == 6 && minor >= 15);
- }
+ 	if (minor >= GPIB_MAX_NUM_BOARDS) {
+ 		pr_err("gpib: invalid minor number of device file\n");
+@@ -806,7 +806,6 @@ long ibioctl(struct file *filep, unsigned int cmd, unsigned long arg)
+ 		mutex_unlock(&board->big_gpib_mutex);
+ 		return write_ioctl(file_priv, board, arg);
+ 	default:
+-		retval = -ENOTTY;
+ 		goto done;
+ 	}
  
- int test__amd_ibs_period(struct test_suite *test __maybe_unused,
 -- 
 2.53.0
 
