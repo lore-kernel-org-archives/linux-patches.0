@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9BA2641CA;
-	Tue, 21 Jul 2026 21:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC9444AB60;
+	Tue, 21 Jul 2026 21:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669014; cv=none; b=oRt7JgkPpbbUBWb7R1WMe5MZNRC+xkdVM4Z4gB4FeyWA6aS+iqYkIG+HJOyQDXusqSYZLFDYfPc8SRa17g4OUpJxnuAVp5pB3P11dOpAd+2ccqgbn9Oeio3Ef5rsaD6BrsqpOQ7d2QeQ2poj+qkF6/Srbge23GsiO8qIcWx1W7A=
+	t=1784669017; cv=none; b=eQhnyg4MikVQHIpY06eyPcvzETxwLqd7T+sThKTvbEPzm25Ga6rRsqZoWgUD0YPQqf++CGQcOmBpuTnykslCx6T2/5uNbqhGB2J3+pntqZd3MMQ5ireM1hzZT83f78LxZACLCYPk9hekOpuFZj/tZU4vNfXZGtTEBZiRyhE9ECg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669014; c=relaxed/simple;
-	bh=0juzCm4LG05OrIog3HbpNA+1xYKf+1TYMdY4zqfsRvs=;
+	s=arc-20240116; t=1784669017; c=relaxed/simple;
+	bh=YzgDBxG5M0YJS6KkO/deVzwZYNmedk/cUy6/WBb2uXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SkZyuza6CRv5g+6KSdhYH4WQxcA59N9DTULXBgUDDXXpBUWVprTFQOOOaSGhOE6Fd8RfKG1gP70Uo6l7hsG7wknRQRaNFdpZ2BRnx341SS1n4uvMXCJYF0nHdyjPH2tZevf57FBNjc7Jql1tO7pNE3fyY9oC7ZoPJL1bQekYc2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kgTmvd9M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OLeKo7LGRvS9Iga0FRfnrn9++4JOsVXJOqDelFxynLE2nEUtxoaOn3wYxRcNlI3Jwmm+2dvuqJP5+4zBwVuOlV8MtlsBgqLntAVhzqip8cmoEHu07fdG7ONWsQ7FaskxROhYydL6lMZUjMpmYVO4AxaJfBVBoJo15skYroRQApo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLnDgvf9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kgTmvd9M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32271F000E9;
-	Tue, 21 Jul 2026 21:23:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLnDgvf9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532C61F000E9;
+	Tue, 21 Jul 2026 21:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669013;
-	bh=ItMiiBIvQg5UBE2+2u9+Fo5PVHkKcnUk6IYRKd18dGU=;
+	s=korg; t=1784669015;
+	bh=9g1wRQpvScS0UbbUrkewMZDPcydA40a9lJ307J0u87c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kgTmvd9M2BcEXgM3lqqNc3gZD5fOG6sHpVShWIwyqfkZQrqfFKbZsFyRFEKlGZBr6
-	 WgQyKj4vmfNqdWwIPLzBlXPOLEVWhemTWQHSOotxAqsUVaY6ptPd1u7chelcRBerOT
-	 JcgweB5jmDi0/oPCM0r9LZ+68FWxEewtQHz6ykJg=
+	b=rLnDgvf93aJNBZJtNcInhvfmWGU2URHL8b0C1bZDYhxTBex1ZWh1iKoXg0j3ZSKhv
+	 DWvLIIMQYQ3zhAKQexB/e/VRg7046q+GrbhFMzysYPQr5PeRCR+SldNECtfg5BY0pO
+	 AgMqfLTJ/O7Tix2chARIE5sSzc0qAat6Jroh63GA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0395/1067] ACPI: IPMI: Fix message kref handling on dead device
-Date: Tue, 21 Jul 2026 17:16:36 +0200
-Message-ID: <20260721152433.467776481@linuxfoundation.org>
+Subject: [PATCH 6.1 0378/1067] ocfs2: reject FITRIM ranges shorter than a cluster
+Date: Tue, 21 Jul 2026 17:16:19 +0200
+Message-ID: <20260721152433.082542881@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,53 +58,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit 63320db6a5d84ec3fed8b3d36ba5244d07ddd108 ]
+[ Upstream commit ca1afd88f5eaaff9168e1466e5401385edf59543 ]
 
-acpi_ipmi_space_handler() takes an extra reference on tx_msg before
-checking whether the selected IPMI device is dead. The reference
-belongs to the tx_msg_list entry and is normally dropped by
-ipmi_cancel_tx_msg() or ipmi_flush_tx_msg() after the message is removed
-from the list.
+ocfs2_trim_mainbm() trims the global bitmap in cluster units, but its
+too-short range validation only checks sb->s_blocksize.
 
-On the dead-device path, the message has not been queued yet, but the
-error path still calls ipmi_msg_release() directly. That bypasses
-kref_put() and frees tx_msg while the queued-message reference is still
-recorded in the kref count.
+On filesystems with a cluster size larger than the block size, a FITRIM
+range that is at least one block but shorter than one cluster is accepted
+and shifted down to len == 0.  The later start + len - 1 and len -= ...
+arithmetic then underflows and can drive trimming past the requested
+range.
 
-Take the queued-message reference only after the dead-device check
-succeeds, immediately before adding tx_msg to the list.
+Reject ranges shorter than s_clustersize instead.  That preserves the
+existing -EINVAL behavior for requests that cannot discard even one
+allocation unit and keeps zero-cluster trims out of the group walk.
 
-Fixes: 7b9844772237 ("ACPI / IPMI: Add reference counting for ACPI IPMI transfers")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260603163108.2149359-1-dbgh9129@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/20260528151247.361854-1-rollkingzzc@gmail.com
+Fixes: aa89762c5480 ("ocfs2: return EINVAL if the given range to discard is less than block size")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_ipmi.c | 2 +-
+ fs/ocfs2/alloc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpi_ipmi.c b/drivers/acpi/acpi_ipmi.c
-index 0555f68c2dfd68..148d9486106cad 100644
---- a/drivers/acpi/acpi_ipmi.c
-+++ b/drivers/acpi/acpi_ipmi.c
-@@ -545,7 +545,6 @@ acpi_ipmi_space_handler(u32 function, acpi_physical_address address,
- 		return AE_TYPE;
- 	}
+diff --git a/fs/ocfs2/alloc.c b/fs/ocfs2/alloc.c
+index fa5223b05fad70..b8b9f8c7d28936 100644
+--- a/fs/ocfs2/alloc.c
++++ b/fs/ocfs2/alloc.c
+@@ -7546,7 +7546,7 @@ int ocfs2_trim_mainbm(struct super_block *sb, struct fstrim_range *range)
+ 	len = range->len >> osb->s_clustersize_bits;
+ 	minlen = range->minlen >> osb->s_clustersize_bits;
  
--	acpi_ipmi_msg_get(tx_msg);
- 	mutex_lock(&driver_data.ipmi_lock);
- 	/* Do not add a tx_msg that can not be flushed. */
- 	if (ipmi_device->dead) {
-@@ -553,6 +552,7 @@ acpi_ipmi_space_handler(u32 function, acpi_physical_address address,
- 		ipmi_msg_release(tx_msg);
- 		return AE_NOT_EXIST;
- 	}
-+	acpi_ipmi_msg_get(tx_msg);
- 	spin_lock_irqsave(&ipmi_device->tx_msg_lock, flags);
- 	list_add_tail(&tx_msg->head, &ipmi_device->tx_msg_list);
- 	spin_unlock_irqrestore(&ipmi_device->tx_msg_lock, flags);
+-	if (minlen >= osb->bitmap_cpg || range->len < sb->s_blocksize)
++	if (minlen >= osb->bitmap_cpg || range->len < osb->s_clustersize)
+ 		return -EINVAL;
+ 
+ 	trace_ocfs2_trim_mainbm(start, len, minlen);
 -- 
 2.53.0
 
