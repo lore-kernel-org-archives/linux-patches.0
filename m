@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A45F2DBF75;
-	Tue, 21 Jul 2026 18:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C890B46D2C2;
+	Tue, 21 Jul 2026 18:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660136; cv=none; b=KtdrZcTgbCFm52ncS9o4bn+L/J0YH7zDxCrD8zwCjxACAAFkxOKbqtnTHjLzGOTzegytb4Z4E8CrquVGT/kG9qTdnJlbCJKDoFhSek2hrB6NUmrJ9G277tARE1DV42SwQ/TnuwvwUM5XcX9BAQYwEqkqfdSFHwqs6BtCqyNkueM=
+	t=1784660139; cv=none; b=hTjzhhkANcIMtCU+Fh1zpVxEBLWEAnNjlPUfAldxI0wDGN+EeX1ARDpMgJ9qqw9wRs/n5Q9K2OcYOFJGplcmtjnzw9LK5BDwrrVMoyX5VhMd6KIB6kMozkCjewYZsGf8JsGMuQi2u5qyfwcHLPz2EV+o/avPU4gJbTqinXtu1pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660136; c=relaxed/simple;
-	bh=JlKIXoleCEPuMDwnN4dOqDfdBtI7SOjtO8d+AKGgZYk=;
+	s=arc-20240116; t=1784660139; c=relaxed/simple;
+	bh=f9m0nhC75GyNV/gqPWTSLy9Zo9NKWBJwQfDXc2qi1aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pbl9lfRx3R7cjh/lSiiBrgBWN5bdyyvAcymm0zIIAIDWA6vTt/s6cOI8rwU2Cc8Tb60Vry+0JEJNpdD9k1P4emjMh5PhRS4I2hBc6S4JfpT9fGknTmQCgPO8ZuLwLYQxOyuO1Qh3Yr5WLneMAwTv9cfEv4eGVXT2Oy9d6uNWo9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qP3+Jmad; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mwfKzPVGq+XSroz9FtRMceUgdtdYMUAr17FsUaZJOF3oE/lULWzolGEEczgGbsZx6ITK/Wog6OOdOkRR9cGArciS44UcFLe8N0mET5IWQIbBoad3//s9MZnw37qyvIiyoBWkFBt5C9G+uqTC7mlkvWFXn4xftY97QJ+/iMh5m24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ScFxrexX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qP3+Jmad"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F97F1F000E9;
-	Tue, 21 Jul 2026 18:55:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ScFxrexX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396921F000E9;
+	Tue, 21 Jul 2026 18:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660135;
-	bh=um6nWQzxtUQJ4qwt5gdZyAIE0HpG/0w3K0rxjTjy/z0=;
+	s=korg; t=1784660137;
+	bh=UUedz2jBgiWyzTkLClHCmCP+GePk5vYMD7kY2XoMUhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qP3+JmadGbustZJgcB5sKX0apPg303lsUmHvDSVZ8PU6rHq5TAy+zmyl92eV+xzN4
-	 VX4Ir2eAibsxs0mFaHTGfP1ci7+hwJCvKmoQqIYI3rBvGcvGXlhXwtQqKrlFSy1StI
-	 cDBMwo7MIHgCa7R7kP+IZQUp0YnupGXg9VMrznwM=
+	b=ScFxrexXl/oM6e4zyz472dqPnWLfuEk3WWaLfo5cpLSSJ/UhWLzlYPtp/LKPsFOO/
+	 bHS2NkPjW3nbg4/SNmz4RqJV7Jg4xSS4gOVxTwLWfv4piFKEm3ewOMHnN4MGu4+vQR
+	 tyK4yxZ3WkDE+1XrtYNltiRCegjzwL+CBKZj/RDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Biswapriyo Nath <nathbappai@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0864/2077] dt-bindings: clock: qcom,sm6125-dispcc: reference qcom,gcc.yaml
-Date: Tue, 21 Jul 2026 17:08:57 +0200
-Message-ID: <20260721152613.169998500@linuxfoundation.org>
+Subject: [PATCH 7.1 0829/2077] eventpoll: rename epi->next and txlist for clarity
+Date: Tue, 21 Jul 2026 17:08:22 +0200
+Message-ID: <20260721152612.340996468@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,75 +50,270 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biswapriyo Nath <nathbappai@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit dbabf6a32ffb69a604f966ec01a20a060836939d ]
+[ Upstream commit f38567bb63ae029e3b63fcb99b6a2dcc6f421e69 ]
 
-Just like most of Qualcomm clock controllers, we can reference common
-qcom,gcc.yaml schema to unify the common parts of the binding. This
-also adds the '#reset-cells' property which is permitted for the
-SM6125 SoC clock controllers, but not listed as a valid property.
+Two list-related names were confusing in isolation:
 
-Fixes: bb4d28e377cf ("arm64: dts: qcom: sm6125: Add missing MDSS core reset")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202603150629.GYoouFwZ-lkp@intel.com/
-Signed-off-by: Biswapriyo Nath <nathbappai@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260330-ginkgo-add-usb-ir-vib-v3-2-c4b778b0d7f8@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+  struct epitem::next
+    A singly-linked link slot used only when an epi is queued on
+    ep->ovflist during an ep_start_scan/ep_done_scan window. The
+    bare name "next" suggests a generic list link and doesn't say
+    which list it belongs to.
+
+  txlist
+    The caller-local list_head used by ep_send_events() and
+    __ep_eventpoll_poll() to hold the batch of items stolen from
+    ep->rdllist for the current scan. "txlist" ("transmission
+    list") is abbreviated and overloaded: it doesn't distinguish
+    itself from ep->rdllist or ep->ovflist at a glance.
+
+Rename for what each actually is:
+
+  struct epitem::next   -> struct epitem::ovflist_next
+  local txlist          -> scan_batch
+
+With these in place:
+  - epi->ovflist_next reads as "this is the ep->ovflist link slot",
+    matching the rdllink pattern above it.
+  - scan_batch reads as "the batch currently being scanned", clearly
+    distinct from rdllist (canonical ready list) and ovflist
+    (scan-window overflow).
+
+ep->rdllist and ep->ovflist struct field names are preserved -- they
+are long-standing interface-facing identifiers, and the new inline
+helpers (ep_is_scanning, epi_on_ovflist, ...) already hide the
+sentinel semantics at call sites.
+
+No functional change.
+
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Link: https://patch.msgid.link/20260424-work-epoll-rework-v1-15-249ed00a20f3@kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 0c4aefe3c2d0 ("eventpoll: Fix epoll_wait() report false negative")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/clock/qcom,dispcc-sm6125.yaml      | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ fs/eventpoll.c | 62 ++++++++++++++++++++++++++------------------------
+ 1 file changed, 32 insertions(+), 30 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
-index ef2b1e2044309a..a177a1934b19f9 100644
---- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
-@@ -42,12 +42,6 @@ properties:
-       - const: cfg_ahb_clk
-       - const: gcc_disp_gpll0_div_clk_src
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index 9cd6b3511f065a..c2f97187f9db41 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -142,15 +142,15 @@
+  *   NULL            - scan active, no spill yet.
+  *   pointer to epi  - scan active with spilled items (LIFO).
+  *
+- * Encoded in epi->next:
++ * Encoded in epi->ovflist_next:
+  *   EP_UNACTIVE_PTR - epi is not on ovflist.
+  *   otherwise       - next epi on ovflist (NULL at tail).
+  *
+  * ep_start_scan() flips "not scanning" to "scanning" and splices
+- * rdllist into a caller-local txlist. ep_done_scan() drains ovflist
++ * rdllist into a caller-local scan_batch. ep_done_scan() drains ovflist
+  * back to rdllist (list_add head-insert reverses LIFO to FIFO),
+  * flips back to "not scanning", and re-splices any items the caller
+- * left in txlist (e.g., level-triggered re-queues).
++ * left in scan_batch (e.g., level-triggered re-queues).
+  *
+  *
+  * Removal paths
+@@ -261,14 +261,16 @@ struct epitem {
+ 		struct rcu_head rcu;
+ 	};
  
--  '#clock-cells':
--    const: 1
--
--  '#power-domain-cells':
--    const: 1
--
-   power-domains:
-     description:
-       A phandle and PM domain specifier for the CX power domain.
-@@ -58,18 +52,16 @@ properties:
-       A phandle to an OPP node describing the power domain's performance point.
-     maxItems: 1
+-	/* List header used to link this structure to the eventpoll ready list */
++	/* Link on the owning eventpoll's ready list (ep->rdllist). */
+ 	struct list_head rdllink;
  
--  reg:
--    maxItems: 1
--
- required:
-   - compatible
--  - reg
-   - clocks
-   - clock-names
--  - '#clock-cells'
-   - '#power-domain-cells'
+ 	/*
+-	 * Works together "struct eventpoll"->ovflist in keeping the
+-	 * single linked chain of items.
++	 * Link on the owning eventpoll's scan-overflow list (ep->ovflist),
++	 * EP_UNACTIVE_PTR when not linked. See epi_on_ovflist() /
++	 * epi_clear_ovflist() and the "Ready-list state machine" section
++	 * in the top-of-file banner.
+ 	 */
+-	struct epitem *next;
++	struct epitem *ovflist_next;
  
--additionalProperties: false
-+allOf:
-+  - $ref: qcom,gcc.yaml#
-+
-+unevaluatedProperties: false
+ 	/* The file descriptor information this item refers to */
+ 	struct epoll_filefd ffd;
+@@ -525,13 +527,13 @@ static inline void ep_exit_scan(struct eventpoll *ep)
+ /* True iff @epi is currently linked on its ep's ovflist. */
+ static inline bool epi_on_ovflist(const struct epitem *epi)
+ {
+-	return epi->next != EP_UNACTIVE_PTR;
++	return epi->ovflist_next != EP_UNACTIVE_PTR;
+ }
  
- examples:
-   - |
-@@ -101,6 +93,7 @@ examples:
-       power-domains = <&rpmpd SM6125_VDDCX>;
+ /* Mark @epi as not on any ovflist (init and post-drain). */
+ static inline void epi_clear_ovflist(struct epitem *epi)
+ {
+-	epi->next = EP_UNACTIVE_PTR;
++	epi->ovflist_next = EP_UNACTIVE_PTR;
+ }
  
-       #clock-cells = <1>;
-+      #reset-cells = <1>;
-       #power-domain-cells = <1>;
-     };
- ...
+ /**
+@@ -884,7 +886,7 @@ static inline void ep_pm_stay_awake_rcu(struct epitem *epi)
+  * ep->mutex needs to be held because we could be hit by
+  * eventpoll_release_file() and epoll_ctl().
+  */
+-static void ep_start_scan(struct eventpoll *ep, struct list_head *txlist)
++static void ep_start_scan(struct eventpoll *ep, struct list_head *scan_batch)
+ {
+ 	/*
+ 	 * Steal the ready list, and re-init the original one to the
+@@ -896,13 +898,13 @@ static void ep_start_scan(struct eventpoll *ep, struct list_head *txlist)
+ 	 */
+ 	lockdep_assert_irqs_enabled();
+ 	spin_lock_irq(&ep->lock);
+-	list_splice_init(&ep->rdllist, txlist);
++	list_splice_init(&ep->rdllist, scan_batch);
+ 	ep_enter_scan(ep);
+ 	spin_unlock_irq(&ep->lock);
+ }
+ 
+ static void ep_done_scan(struct eventpoll *ep,
+-			 struct list_head *txlist)
++			 struct list_head *scan_batch)
+ {
+ 	struct epitem *epi, *nepi;
+ 
+@@ -913,10 +915,10 @@ static void ep_done_scan(struct eventpoll *ep,
+ 	 * We re-insert them inside the main ready-list here.
+ 	 */
+ 	for (nepi = READ_ONCE(ep->ovflist); (epi = nepi) != NULL; ) {
+-		nepi = epi->next;
++		nepi = epi->ovflist_next;
+ 		epi_clear_ovflist(epi);
+ 		/*
+-		 * Skip items that the caller already returned via @txlist
++		 * Skip items that the caller already returned via @scan_batch
+ 		 * -- the list_splice() below takes care of those.
+ 		 */
+ 		if (!ep_is_linked(epi)) {
+@@ -932,9 +934,9 @@ static void ep_done_scan(struct eventpoll *ep,
+ 	ep_exit_scan(ep);
+ 
+ 	/*
+-	 * Quickly re-inject items left on "txlist".
++	 * Quickly re-inject items left on "scan_batch".
+ 	 */
+-	list_splice(txlist, &ep->rdllist);
++	list_splice(scan_batch, &ep->rdllist);
+ 	__pm_relax(ep->ws);
+ 
+ 	if (!list_empty(&ep->rdllist)) {
+@@ -1155,7 +1157,7 @@ static __poll_t ep_item_poll(const struct epitem *epi, poll_table *pt, int depth
+ static __poll_t __ep_eventpoll_poll(struct file *file, poll_table *wait, int depth)
+ {
+ 	struct eventpoll *ep = file->private_data;
+-	LIST_HEAD(txlist);
++	LIST_HEAD(scan_batch);
+ 	struct epitem *epi, *tmp;
+ 	poll_table pt;
+ 	__poll_t res = 0;
+@@ -1170,8 +1172,8 @@ static __poll_t __ep_eventpoll_poll(struct file *file, poll_table *wait, int dep
+ 	 * the ready list.
+ 	 */
+ 	mutex_lock_nested(&ep->mtx, depth);
+-	ep_start_scan(ep, &txlist);
+-	list_for_each_entry_safe(epi, tmp, &txlist, rdllink) {
++	ep_start_scan(ep, &scan_batch);
++	list_for_each_entry_safe(epi, tmp, &scan_batch, rdllink) {
+ 		if (ep_item_poll(epi, &pt, depth + 1)) {
+ 			res = EPOLLIN | EPOLLRDNORM;
+ 			break;
+@@ -1185,7 +1187,7 @@ static __poll_t __ep_eventpoll_poll(struct file *file, poll_table *wait, int dep
+ 			list_del_init(&epi->rdllink);
+ 		}
+ 	}
+-	ep_done_scan(ep, &txlist);
++	ep_done_scan(ep, &scan_batch);
+ 	mutex_unlock(&ep->mtx);
+ 	return res;
+ }
+@@ -1441,7 +1443,7 @@ static int ep_poll_callback(wait_queue_entry_t *wait, unsigned mode, int sync, v
+ 	 */
+ 	if (ep_is_scanning(ep)) {
+ 		if (!epi_on_ovflist(epi)) {
+-			epi->next = READ_ONCE(ep->ovflist);
++			epi->ovflist_next = READ_ONCE(ep->ovflist);
+ 			WRITE_ONCE(ep->ovflist, epi);
+ 			ep_pm_stay_awake_rcu(epi);
+ 		}
+@@ -1962,7 +1964,7 @@ static int ep_modify(struct eventpoll *ep, struct epitem *epi,
+  * next slot), 0 if the re-poll reported no caller-requested events
+  * (@epi drops out of the ready list; a future callback will re-add
+  * it), or -EFAULT if copy_to_user() faulted (in which case @epi is
+- * re-inserted at the head of @txlist so ep_done_scan() merges it
++ * re-inserted at the head of @scan_batch so ep_done_scan() merges it
+  * back to rdllist for the next attempt).
+  *
+  * PM bookkeeping and level-triggered re-queue are handled here.
+@@ -1971,7 +1973,7 @@ static int ep_modify(struct eventpoll *ep, struct epitem *epi,
+ static int ep_deliver_event(struct eventpoll *ep, struct epitem *epi,
+ 			    poll_table *pt,
+ 			    struct epoll_event __user **uevents,
+-			    struct list_head *txlist)
++			    struct list_head *scan_batch)
+ {
+ 	struct epoll_event __user *next;
+ 	struct wakeup_source *ws;
+@@ -2009,7 +2011,7 @@ static int ep_deliver_event(struct eventpoll *ep, struct epitem *epi,
+ 		 * ep_done_scan() splices it onto rdllist for the next
+ 		 * attempt.
+ 		 */
+-		list_add(&epi->rdllink, txlist);
++		list_add(&epi->rdllink, scan_batch);
+ 		ep_pm_stay_awake(epi);
+ 		return -EFAULT;
+ 	}
+@@ -2035,7 +2037,7 @@ static int ep_send_events(struct eventpoll *ep,
+ 			  struct epoll_event __user *events, int maxevents)
+ {
+ 	struct epitem *epi, *tmp;
+-	LIST_HEAD(txlist);
++	LIST_HEAD(scan_batch);
+ 	poll_table pt;
+ 	int res = 0;
+ 
+@@ -2050,19 +2052,19 @@ static int ep_send_events(struct eventpoll *ep,
+ 	init_poll_funcptr(&pt, NULL);
+ 
+ 	mutex_lock(&ep->mtx);
+-	ep_start_scan(ep, &txlist);
++	ep_start_scan(ep, &scan_batch);
+ 
+ 	/*
+ 	 * We can loop without lock because we are passed a task-private
+-	 * txlist; items cannot vanish while we hold ep->mtx.
++	 * scan_batch; items cannot vanish while we hold ep->mtx.
+ 	 */
+-	list_for_each_entry_safe(epi, tmp, &txlist, rdllink) {
++	list_for_each_entry_safe(epi, tmp, &scan_batch, rdllink) {
+ 		int delivered;
+ 
+ 		if (res >= maxevents)
+ 			break;
+ 
+-		delivered = ep_deliver_event(ep, epi, &pt, &events, &txlist);
++		delivered = ep_deliver_event(ep, epi, &pt, &events, &scan_batch);
+ 		if (delivered < 0) {
+ 			if (!res)
+ 				res = delivered;
+@@ -2071,7 +2073,7 @@ static int ep_send_events(struct eventpoll *ep,
+ 		res += delivered;
+ 	}
+ 
+-	ep_done_scan(ep, &txlist);
++	ep_done_scan(ep, &scan_batch);
+ 	mutex_unlock(&ep->mtx);
+ 
+ 	return res;
 -- 
 2.53.0
 
