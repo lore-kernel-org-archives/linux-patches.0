@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA6E3CB2E0;
-	Tue, 21 Jul 2026 22:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8821224B05;
+	Tue, 21 Jul 2026 22:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673926; cv=none; b=H4nWHYcaYtDLG+9f7901vtez/WL9A4CKEEVFay+fJqG9pjBbBuvLPm/HoZJItr9zH07J9NMccArWJ1pDEkL/ufZmfJSUoVxakDJwMWbLkIiL50nbLpTuB0HJm8HhVHxHhAJbNN7xUCufSzv2yTTvMAxq/3QHgV5G16X12JlUrWM=
+	t=1784673928; cv=none; b=IQAjdos6JhDnszTDuYzYTsuBUO/iVeQ/TuVpFjEOUyyZ+Mn+e5NetdOs6kGvUA8YZCiTyevPjOb/DZHPMuNGKfgOPSF0XYs/GIV2u6lOBq9egxIntWdWz3k/3FykhsAndoDdUUawShSymPob1O+xWAfpoE9otZLPBtOSsBnh8M0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673926; c=relaxed/simple;
-	bh=McYG6mNh+TgmgaHpv3TsXtyhXSe2UBj/lpleVufFRSA=;
+	s=arc-20240116; t=1784673928; c=relaxed/simple;
+	bh=RKdc7GjPkkaTe3kfUMIZAYqBA07psQHEdcHzwtvcTTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pzF8yoSBkyBnGzykIboBKGf8yeGGSKO7/HGkoAMAVP2OCiN0rne1mT0C6tlshcxhVohs4xM2v8wTrbIYSstt3CMxvr8082P+PEt0Rs+6U/Ja2Vd+zMsYtKDY+Jk74cYga0HujtNO797xlmMLE88RUls/+zkCQXorj9IgtPS/mng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TIKOy/CM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CO2BKb6DfG5ZHbmoSP5cd7a8CPZeyl1BeOOf5ToYgyLnkKLiPNpJwiHJiA+O4Zdz/M/vWc31t4woZ2LsxqxUvzQCdmOhoTyJooBPf06Awka5QXK/d9WO3TxHUGxHu+L68N0wkK+YRtJy3UCAv41Xdc5BcKKiOt/4hUap8kR/QI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBx4/dJy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TIKOy/CM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66941F000E9;
-	Tue, 21 Jul 2026 22:45:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBx4/dJy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9571F000E9;
+	Tue, 21 Jul 2026 22:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673925;
-	bh=tVxq7mlpLMaP+9i9cKujJzAVrhlcYpWSRRBve2R3N6s=;
+	s=korg; t=1784673927;
+	bh=H399XBvKqR5Hd1wJkhEWpqwSGPkoj2tLqs5xWrVJgUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TIKOy/CMSWwl4rywCUdcSWuIMDROEMj2gwX/KnzW86vtj0GR3QXw6FTFNIKN/Cfv0
-	 +Ef7AMafTmnGKb+b4IICLpUPzfKVSUnoprOq4WSsRyLcFC9Aq6APHfMNtFCGupJUli
-	 s2YTQ1HCGNWtJp7UoXB3RNp8QKek20DfBErPcdI8=
+	b=ZBx4/dJyab5e8PD1pxAMmTLI2XDNVGOKDeHykL+JILBbKUV/QqKcgwvjEXUuOWtgC
+	 2ZLJjU6arbZXoJkVJ6mMyKY6sTdInBDAJIwhgALyckeK18CdNbRShfLpf16oXTa03T
+	 xa7VXPctMeQqEnP2LNY4BNh3NjoMyym4Qs1XpL54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+346474e3bf0b26bd3090@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 346/699] ieee802154: fix kernel-infoleak in dgram_recvmsg()
-Date: Tue, 21 Jul 2026 17:21:45 +0200
-Message-ID: <20260721152403.496683817@linuxfoundation.org>
+Subject: [PATCH 5.10 347/699] netfilter: ipset: fix order of kfree_rcu() and rcu_assign_pointer()
+Date: Tue, 21 Jul 2026 17:21:46 +0200
+Message-ID: <20260721152403.519577768@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,83 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-[ Upstream commit 4db86f8ab11b5a41bfc36680be837e6ac1375ec6 ]
+[ Upstream commit 3ca9982a8882470aa0ac4e8bb9a552b181d1efcd ]
 
-KMSAN reported a kernel-infoleak in move_addr_to_user():
+Sashiko pointed out that kfree_rcu() was called before
+rcu_assign_pointer() in handling the comment extension.
+Fix the order so that rcu_assign_pointer() called first.
 
-BUG: KMSAN: kernel-infoleak in instrument_copy_to_user
-include/linux/instrumented.h:131 [inline]
-BUG: KMSAN: kernel-infoleak in _inline_copy_to_user
-include/linux/uaccess.h:205 [inline]
-BUG: KMSAN: kernel-infoleak in _copy_to_user+0xcc/0x120
-lib/usercopy.c:26
- instrument_copy_to_user include/linux/instrumented.h:131 [inline]
- _inline_copy_to_user include/linux/uaccess.h:205 [inline]
- _copy_to_user+0xcc/0x120 lib/usercopy.c:26
- copy_to_user include/linux/uaccess.h:236 [inline]
- move_addr_to_user+0x2e7/0x440 net/socket.c:302
- ____sys_recvmsg+0x232/0x610 net/socket.c:2925
- ...
- Uninit was stored to memory at:
- ieee802154_addr_to_sa include/net/ieee802154_netdev.h:369 [inline]
- dgram_recvmsg+0xa09/0xbe0 net/ieee802154/socket.c:739
-
-The issue occurs because the `pan_id` field of `struct ieee802154_addr`
-is left uninitialized when the address mode is `IEEE802154_ADDR_NONE`.
-The execution flow is as follows:
-
-1. `__ieee802154_rx_handle_packet()` declares a local `struct
-ieee802154_hdr hdr` on the stack.
-2. `ieee802154_hdr_pull()` calls `ieee802154_hdr_get_addr()` to parse
-the source and destination addresses into this structure.
-3. If the address mode is `IEEE802154_ADDR_NONE`,
-`ieee802154_hdr_get_addr()` previously only set the `mode` field,
-leaving the `pan_id` field containing uninitialized stack memory.
-4. This uninitialized `pan_id` is later copied into a `struct
-sockaddr_ieee802154` in `dgram_recvmsg()` via `ieee802154_addr_to_sa()`.
-5. Finally, `move_addr_to_user()` copies the socket address structure to
-user space, leaking the uninitialized bytes.
-
-Fix this by using `memset` to zero out the address structure in
-`ieee802154_hdr_get_addr()` when the mode is `IEEE802154_ADDR_NONE`.
-
-Fixes: 94b4f6c21cf5 ("ieee802154: add header structs with endiannes and operations")
-Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
-Reported-by: syzbot+346474e3bf0b26bd3090@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=346474e3bf0b26bd3090
-Link: https://syzkaller.appspot.com/ai_job?id=a507a109-d683-4a2c-bc03-93394f491b17
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/62795fd9-fc0c-48eb-bb82-05ffc5a57104@mail.kernel.org
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Fixes: b57b2d1fa53f ("netfilter: ipset: Prepare the ipset core to use RCU at set level")
+Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ieee802154/header_ops.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/netfilter/ipset/ip_set_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ieee802154/header_ops.c b/net/ieee802154/header_ops.c
-index af337cf627643e..0687a4bded50c9 100644
---- a/net/ieee802154/header_ops.c
-+++ b/net/ieee802154/header_ops.c
-@@ -126,10 +126,13 @@ ieee802154_hdr_get_addr(const u8 *buf, int mode, bool omit_pan,
- {
- 	int pos = 0;
+diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
+index d66a6fb2e448b3..11e5536d8b2637 100644
+--- a/net/netfilter/ipset/ip_set_core.c
++++ b/net/netfilter/ipset/ip_set_core.c
+@@ -351,8 +351,8 @@ ip_set_init_comment(struct ip_set *set, struct ip_set_comment *comment,
  
--	addr->mode = mode;
--
--	if (mode == IEEE802154_ADDR_NONE)
-+	if (mode == IEEE802154_ADDR_NONE) {
-+		memset(addr, 0, sizeof(*addr));
-+		addr->mode = IEEE802154_ADDR_NONE;
- 		return 0;
-+	}
-+
-+	addr->mode = mode;
+ 	if (unlikely(c)) {
+ 		set->ext_size -= sizeof(*c) + strlen(c->str) + 1;
+-		kfree_rcu(c, rcu);
+ 		rcu_assign_pointer(comment->c, NULL);
++		kfree_rcu(c, rcu);
+ 	}
+ 	if (!len)
+ 		return;
+@@ -393,8 +393,8 @@ ip_set_comment_free(struct ip_set *set, void *ptr)
+ 	if (unlikely(!c))
+ 		return;
+ 	set->ext_size -= sizeof(*c) + strlen(c->str) + 1;
+-	kfree_rcu(c, rcu);
+ 	rcu_assign_pointer(comment->c, NULL);
++	kfree_rcu(c, rcu);
+ }
  
- 	if (!omit_pan) {
- 		memcpy(&addr->pan_id, buf + pos, 2);
+ typedef void (*destroyer)(struct ip_set *, void *);
 -- 
 2.53.0
 
