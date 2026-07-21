@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8683E0C55;
-	Tue, 21 Jul 2026 17:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC28A3E0C55;
+	Tue, 21 Jul 2026 17:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653926; cv=none; b=kN4Z89j/5mWOHMSs19cvT/kI8xUo0RscQdwAJc4li8+fGzG8zNcGyvGKGhYjiqR5jnfVNPtp0gzlD2bj/olzLwBUCNSE0KaAjh8n4aOzJNXv29wFxMT1lLZv1zh2S1kKs8aPGFCPjhig7ZxEDY1hKSje/JSr2z3HaN+nDoqM97Y=
+	t=1784653929; cv=none; b=RNOYPSy6bOvaDtHyjalIPGpnDv+glaNEhkIf0yGeM6tPXIGbU+sPlGhXz/FAFmzduQTj6H4RtXWLLW5o3qAONWJXV5NFTnzTZWq79C65WfSpT12vBwjbwPPYXMQAN31AKPTCsxHXOeNLI3r1EMWgclOw46v7dIc1UDQJzK6nV9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653926; c=relaxed/simple;
-	bh=zjfn+Wg+3VLzOstSVu1KA2RpKvPb29zBUklscpJnosg=;
+	s=arc-20240116; t=1784653929; c=relaxed/simple;
+	bh=oHGs111zDIa87basBovZI9xnyARSgeqco49kXzwK2eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iubO48u6vp0khEVpB0DnhAuWlQphLQxBqEXSd0CST8Z8jNflw8dZ9YZZizKjVzpUBm3RPmgTBidiHf/qMsytJE5T7PeNLn4vjnaZGqDNW5myHujjn3m3v8pk2/NJyXSfQMmlo3kdPqf17dSEljMXnp6AxV1zmI43twEuxCeraVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eEPOgR2+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FL8A6R6A8KeSDEylTtp8SPCt6uF3La8adhWj+zsCFnNt4FRaMhnWjdLY+c/rdSyVnxV/ac1n6Haq8JLMtUpq6lU/fph6Gkcu6hBuW3SeB6iBWB23fla09PqqqGqNmRSGceQ43Ca4DLArL+nZq0hnyZB65u7cuxMgufW1Moblu/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uppKoko8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eEPOgR2+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93811F000E9;
-	Tue, 21 Jul 2026 17:12:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uppKoko8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0E11F000E9;
+	Tue, 21 Jul 2026 17:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653925;
-	bh=QUe00Ba7acPs0QJvnx4N5iglpmiYMBYFIc6JDCtKelI=;
+	s=korg; t=1784653927;
+	bh=/vUMUn1xj81rV2UhUlCrRcEMBwBKUQsuZoNUUjR9u5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eEPOgR2+lTeXBbqDq6NpmDG74X0/fkBimSf2o/ioXqiVic1oHgi6TEeYRB5ZVNTDM
-	 T7M+axkqyBpqX2aRHb1tROsdkMW2Zr2rgCoszKsLOr5S/7XH7lN04b5FTnqPDiv5I+
-	 l0AtVnFputVbzYZD/grt9dUOXhCTUFAXn06lHQhw=
+	b=uppKoko8++G/Vgwtsmu2teCdmAl66J3TJzk3PF2Ei4m1xZHcY6ChBTi0Auy9ypS66
+	 IN9Wf2lQmJg36OJXrmQb3WdvIxJ+1/4mbf0RG8cZfE5aWCWHb/ErIrP09gsHi4B+AW
+	 4SmDJxn8pI6JuBKdLB2zYuR4Rq5kHOzVhFjodLKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
+	Alessio Belle <alessio.belle@imgtec.com>,
+	Ben Dooks <ben.dooks@codethink.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1510/2077] smb: client: fix overflow in passthrough ioctl bounds check
-Date: Tue, 21 Jul 2026 17:19:43 +0200
-Message-ID: <20260721152628.399504130@linuxfoundation.org>
+Subject: [PATCH 7.1 1511/2077] drm/imagination: make pvr_fw_trace_init_mask_ops static
+Date: Tue, 21 Jul 2026 17:19:44 +0200
+Message-ID: <20260721152628.422926763@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,48 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-[ Upstream commit a4f27ad055392fa164f5649e89a3637b033c5fcc ]
+[ Upstream commit c804aadc4ce3dcb34d6f2ecc9a159c148210805a ]
 
-smb2_ioctl_query_info() validates the PASSTHRU_FSCTL response payload
-before copying it to userspace.
+The pvr_fw_trace_init_mask_ops is not used outside pvr_fw_trace.c
+so make it static to avoid the following sparse warning:
 
-The payload offset and length both come from 32-bit fields. The bounds
-check currently adds OutputOffset and qi.input_buffer_length directly, so
-the addition can wrap in 32-bit arithmetic before the result is compared
-against the response buffer length.
+drivers/gpu/drm/imagination/pvr_fw_trace.c:74:31: warning: symbol 'pvr_fw_trace_init_mask_ops' was not declared. Should it be static?
 
-A malicious server can use a large OutputOffset and a small OutputCount
-to make the wrapped sum pass the bounds check. The later copy_to_user()
-then reads from io_rsp + OutputOffset, outside the response buffer.
-
-Use size_add() for the offset plus length check so overflow is treated as
-out of bounds.
-
-Fixes: 2b1116bbe898 ("CIFS: Use common error handling code in smb2_ioctl_query_info()")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: c6978643ea1c ("drm/imagination: Validate fw trace group_mask")
+Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+Link: https://patch.msgid.link/20260703162338.2848039-1-ben.dooks@codethink.co.uk
+Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/imagination/pvr_fw_trace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 10664380f351aa..15cfb513238f6c 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -1772,8 +1772,8 @@ smb2_ioctl_query_info(const unsigned int xid,
- 		if (le32_to_cpu(io_rsp->OutputCount) < qi.input_buffer_length)
- 			qi.input_buffer_length = le32_to_cpu(io_rsp->OutputCount);
- 		if (qi.input_buffer_length > 0 &&
--		    le32_to_cpu(io_rsp->OutputOffset) + qi.input_buffer_length
--		    > rsp_iov[1].iov_len) {
-+		     size_add(le32_to_cpu(io_rsp->OutputOffset),
-+			     qi.input_buffer_length) > rsp_iov[1].iov_len) {
- 			rc = -EFAULT;
- 			goto out;
- 		}
+diff --git a/drivers/gpu/drm/imagination/pvr_fw_trace.c b/drivers/gpu/drm/imagination/pvr_fw_trace.c
+index 6193811ef7bebb..5b2218a7cd663b 100644
+--- a/drivers/gpu/drm/imagination/pvr_fw_trace.c
++++ b/drivers/gpu/drm/imagination/pvr_fw_trace.c
+@@ -71,7 +71,7 @@ pvr_fw_trace_init_mask_set(const char *val, const struct kernel_param *kp)
+ 	return 0;
+ }
+ 
+-const struct kernel_param_ops pvr_fw_trace_init_mask_ops = {
++static const struct kernel_param_ops pvr_fw_trace_init_mask_ops = {
+ 	.set = pvr_fw_trace_init_mask_set,
+ 	.get = param_get_hexint,
+ };
 -- 
 2.53.0
 
