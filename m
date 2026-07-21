@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E06471262;
-	Tue, 21 Jul 2026 18:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E41F3998AF;
+	Tue, 21 Jul 2026 18:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659333; cv=none; b=OH9SAlSGwgGQkhFic9mEnDWlfrkqwfTIef39G4wLaAirc5k0gxPCPNcoTFPWMOi0pjGHfYFw3DEtP4n86ae+EKWlv1a1AbvCFT0OHxdo8YKowffalCetyCYuL7eriE6sK0aX+tyDvOonk8d4qins3au5zZ1ltk8VxjlC4CZ2bwU=
+	t=1784659336; cv=none; b=JUrtoz0L2Tm4ydv2bWVVEse6U6hsBt/BI+J65ZEHrl/d93XBOg+nfN1rfMcbtkOxnD5ylsbAmZFDFzYDyvKzy56hHaLRSPqyyG1mcQYqNM7pG2Iuw9PWYCR0CDohrsR+kkUh08lDn3Essq0Y0B11CdQsMBT1E1Rc4+L3b94buqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659333; c=relaxed/simple;
-	bh=Mkn7bU2WLEGDZTyeFeWUVVwrPIjHej5Xtky5kxrBm9k=;
+	s=arc-20240116; t=1784659336; c=relaxed/simple;
+	bh=OgvPGozRZGMeigYaseoGnlGLqb5UyHBrtTS1nZsM+o0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g6fv5cp1DUKgIE5eKY7P0K2nWKBws2LkS/QmgdVUw57KuGaFD7lInYYJKDTN4SbA1PyR6kYVHIxdu+CJ49RmOQDwUxTkosyOd6CmM7NxzDd6Rx7p5iMMDMDV0nzDxvrlarxEbzfXLxtezaHX0Y5FUvv+0mgyqH5ghCb+AmLnjfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mXUgXmsz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=taTNxb3xYsKtoPeDHEoNTxkHKEFDrVpxxY/YJHtngyyIZhBNXCd4wkOeHgtq95TJl0G5PdYDeLRyVzJBZagRqJ0JHd7eJLzfrmHArUoOpuXiH0ezVbQhpEgolM6rOPIT3Iht9phUR1jWQCVUa9gikoIo3xN38Y+jNaI2fDM0AAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G2mRpALr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mXUgXmsz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFFC1F000E9;
-	Tue, 21 Jul 2026 18:42:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G2mRpALr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C404F1F000E9;
+	Tue, 21 Jul 2026 18:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659332;
-	bh=l2L0smBdygEonleqEsaHXfhYtSikWDHI1m13/l2q/+I=;
+	s=korg; t=1784659335;
+	bh=h/vsOw6eCp/55aMweqrUa6gG53VE76jPVPqyNIpHhMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mXUgXmszxQ2ZYHKb41xe7SUebp9mQb1PqVNqTgHMd5BHrIe+26K/YOL9QWUDRME24
-	 bCXMOC03nthxhqPRrokqUM943vP1Yu41iOHMU3d+OfY747a7f5r0bHompSNDzeFS+u
-	 Hg52XfvsEWFLOdLas+RNSzZUs3lXcCkWzwT7hmzg=
+	b=G2mRpALrb/J70GlRtFheH0rfvKqtvI4JmbfVUwShTPjJG2B7DE5rVEE8XHYLupw5u
+	 vd4y5+sX3g/TJLGCwem+Dq0aqvPpuJ9rJD7RMw48aM3aYqG2b0DhaXSzbF8LIuGhPY
+	 Dum21dZ74dpowIEznceHXUZgKb3wlmslSwmiYu7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Gur <michaelgur@nvidia.com>,
-	Zhiping Zhang <zhipingz@meta.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 1479/1611] net/mlx5: free mlx5_st_idx_data on final dealloc
-Date: Tue, 21 Jul 2026 17:26:35 +0200
-Message-ID: <20260721152548.713141869@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 1480/1611] wifi: rt2x00: avoid full teardown before work setup in probe
+Date: Tue, 21 Jul 2026 17:26:36 +0200
+Message-ID: <20260721152548.734916410@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,44 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiping Zhang <zhipingz@meta.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit df6134b527a88b3e65ba6ae5073664af091d5fd2 upstream.
+commit 536fb3d739d75a03cb318c0c6fe799425cfea501 upstream.
 
-Workloads that repeatedly allocate and release mkeys carrying TPH
-steering-tag hints (e.g. churning RDMA MRs) leak one
-struct mlx5_st_idx_data per cycle; kmemleak flags it as unreferenced
-and the kmalloc slab grows over time.
+rt2x00lib_probe_dev() uses the full rt2x00lib_remove_dev() teardown for
+all probe failures. However, drv_data allocation and workqueue allocation
+can fail before intf_work, autowakeup_work and sleep_work have been
+initialized.
 
-When the last reference to an ST table entry is dropped,
-mlx5_st_dealloc_index() removed the entry from idx_xa but the backing
-mlx5_st_idx_data allocation was never freed.
+Do not enter the full remove path until the probe has reached the point
+where those work items are set up. Return directly for drv_data allocation
+failure, and use a small early cleanup path for workqueue allocation
+failure.
 
-Free idx_data after the xa_erase() so the lifetime of the bookkeeping
-struct matches the lifetime of the ST entry it tracks.
+This issue was found by our static analysis tool and then confirmed by
+manual review of rt2x00lib_probe_dev() and rt2x00lib_remove_dev(). The
+early probe exits should not call a common teardown path that assumes the
+later work setup has already completed.
 
+A QEMU PoC forced alloc_ordered_workqueue() to fail before the work
+initializers are reached. The resulting fail path entered
+rt2x00lib_remove_dev(), and DEBUG_OBJECTS reported invalid work drains with
+rt2x00lib_probe_dev() and rt2x00lib_remove_dev() in the stack.
+
+Fixes: 1ebbc48520a0 ("rt2x00: Introduce concept of driver data in struct rt2x00_dev.")
+Fixes: 0439f5367c8d ("rt2x00: Move TX/RX work into dedicated workqueue")
 Cc: stable@vger.kernel.org
-Fixes: 888a7776f4fb ("net/mlx5: Add support for device steering tag")
-Reviewed-by: Michael Gur <michaelgur@nvidia.com>
-Signed-off-by: Zhiping Zhang <zhipingz@meta.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260702222507.1234467-1-zhipingz@meta.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260619073104.1809161-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/st.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ralink/rt2x00/rt2x00dev.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/st.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/st.c
-@@ -154,6 +154,7 @@ int mlx5_st_dealloc_index(struct mlx5_co
- 
- 	if (refcount_dec_and_test(&idx_data->usecount)) {
- 		xa_erase(&st->idx_xa, st_index);
-+		kfree(idx_data);
- 		/* We leave PCI config space as was before, no mkey will refer to it */
+--- a/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
+@@ -1382,7 +1382,7 @@ int rt2x00lib_probe_dev(struct rt2x00_de
+ 			                      GFP_KERNEL);
+ 		if (!rt2x00dev->drv_data) {
+ 			retval = -ENOMEM;
+-			goto exit;
++			return retval;
+ 		}
  	}
+ 
+@@ -1416,7 +1416,7 @@ int rt2x00lib_probe_dev(struct rt2x00_de
+ 	    alloc_ordered_workqueue("%s", 0, wiphy_name(rt2x00dev->hw->wiphy));
+ 	if (!rt2x00dev->workqueue) {
+ 		retval = -ENOMEM;
+-		goto exit;
++		goto exit_free_drv_data;
+ 	}
+ 
+ 	INIT_WORK(&rt2x00dev->intf_work, rt2x00lib_intf_scheduled);
+@@ -1489,6 +1489,14 @@ exit:
+ 	rt2x00lib_remove_dev(rt2x00dev);
+ 
+ 	return retval;
++
++exit_free_drv_data:
++	clear_bit(DEVICE_STATE_PRESENT, &rt2x00dev->flags);
++
++	kfree(rt2x00dev->drv_data);
++	rt2x00dev->drv_data = NULL;
++
++	return retval;
+ }
+ EXPORT_SYMBOL_GPL(rt2x00lib_probe_dev);
  
 
 
