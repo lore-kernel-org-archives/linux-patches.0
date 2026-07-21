@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A8946EF8C;
-	Tue, 21 Jul 2026 20:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06ADC46EF8C;
+	Tue, 21 Jul 2026 20:04:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664290; cv=none; b=l7IPB10eFDr1hNqH2dVJIpndtcevG3wdYeamZ7ABjOFKVmIFZBTmABgHqAC5+RORAVP40+05H3Wj+Ug6o4i2wilRRiEq+FmUhy1NafdqTLr12CZHZTsuI4WoH2DhvN0zfrDvIjy4QC57m3hKoPPpjCqArTFEyWi5sEt8gwysv/g=
+	t=1784664293; cv=none; b=uM/9LpOaALUyasd4DyCUBGeevV4+EMiuNlz9/trqsCz5Hmy/z7ZqBNBtZ03m3uM88G5EI8nEnW+Hkin9vEq1TzbA+jBWD1XakgNuJHBS/SHb+RjdQNDLYoqYlwSze8G208ZAhN2eoTdKx5dlof8Zo5g37GJCjSqhHfxHrNmUYY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664290; c=relaxed/simple;
-	bh=D4dB6ZbylyPC9NbxPqjPGx5zVDcFszmsdqvjuEIEo7U=;
+	s=arc-20240116; t=1784664293; c=relaxed/simple;
+	bh=EPexasjA2Eei+WqTi/0aMCY5QKCb1vYUAREOF1CAbiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nPL7n83EczyWLDZ0lHPhze6ylcnH78wrhB/dbCuYEnsnX51kUSTBhqkzIlbhL+BYemoiqFDAND0dKHg/1QeCbikq1fCUhmVjzbdIRAgLogDMpDvjoElO1vli0W3RdWC5Q4Ud2rQuipE35dU9S+ASSWTFXYGlR+ttOsPf1Tp9wic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xq6uJKLJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BWRqFUDuohFG+mTp9Ygtr/HMtGNWFs4UN2ZmyZrnwPqn+YJjpzixMJiuqO2HTCRyRyAITJQQsA4NXYHq7+5N3k2BQSG8I6TgEc+q6YpHJtaUAS+AxJy+eJLQK5VCLSYtAPhXfV7Bq7BT0G+2KJIUHR8BLdGkB6y/GF0DBnWidPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWO92LqL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xq6uJKLJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5BDF1F000E9;
-	Tue, 21 Jul 2026 20:04:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWO92LqL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3BD1F000E9;
+	Tue, 21 Jul 2026 20:04:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664289;
-	bh=LhyiF/I5sjkbR9N27VPn4Ohm+IkzQIckp5nj3vkyoKo=;
+	s=korg; t=1784664291;
+	bh=Nr7HGupeq8s4V+94ZHtTf+ldZFUfrAMs/PWnQT9jwiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xq6uJKLJzhY2Sqe2Kj2wuJMd8k1npxqMbLm5hA1qxvq390KyMlazlYtA3TAXFNEjS
-	 CxuQkxuwteaCVpuyQcae6Nix7mTFAk2DkbVmaQZAEovLWvud8KZSvc587+iwgmwlko
-	 bCrpCBlGIUUk7UUZwvnA5yjpjd9nRhAcEWDWkI2w=
+	b=dWO92LqL/H6yupHLoSbobUeLT9nm21/UNeHe9N1FbjjXF5x8+nZxwGqU5LCXAKqX1
+	 YYDmgH0w/Wh29sgCs8EIOykehgvi6KbBFfYYPFVSFjbHJkboXPodifiJgOLGZ8sopj
+	 qlxyqXfESAE28MMCxRJBUVFTBHalxaehUvb42ZDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Geoffrey D. Bennett" <g@b4.vu>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1143/1276] ALSA: scarlett2: Allow selecting config_set by firmware version
-Date: Tue, 21 Jul 2026 17:26:26 +0200
-Message-ID: <20260721152511.583444030@linuxfoundation.org>
+Subject: [PATCH 6.12 1144/1276] ALSA: scarlett2: Update offsets for 2i2 Gen 4 firmware 2417
+Date: Tue, 21 Jul 2026 17:26:27 +0200
+Message-ID: <20260721152511.605765802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,335 +53,98 @@ Content-Transfer-Encoding: 8bit
 
 From: "Geoffrey D. Bennett" <g@b4.vu>
 
-[ Upstream commit 732a6397a526c025cd29c3c9309b0db6a2c08837 ]
+[ Upstream commit 3ca15754b561483aa7a1bce51677d6389f8ff5bb ]
 
-The Scarlett 2i2 Gen 4 firmware 2417 moved the direct monitor gain
-parameters, so we now need to allow each device to list multiple
-scarlett2_config_set entries, one per applicable firmware version
-range, and pick the matching one at probe time.
+Firmware 2417 for the Scarlett 4th Gen 2i2 moved the direct monitor gain
+parameters, so add a second config_set with the shifted offset and
+select it for firmware versions >= 2417.
 
-No functional change yet: each device gets a single config_sets
-entry whose from_firmware_version matches the existing
-min_firmware_version (0 where none was set). This both prepares for
-selection and lets a follow-up commit remove the now-redundant
-min_firmware_version field.
-
-scarlett2_count_io() depends on the resolved config_set so it moves
-out of scarlett2_init_private() into snd_scarlett2_controls_create()
-after the firmware version has been read.
-
+Fixes: 4e809a299677 ("ALSA: scarlett2: Add support for Solo, 2i2, and 4i4 Gen 4")
+Cc: stable@vger.kernel.org # ALSA: scarlett2: Allow selecting config_set by firmware version
+Cc: stable@vger.kernel.org # ALSA: scarlett2: Fold min_firmware_version into config_sets
+Cc: stable@vger.kernel.org
 Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/ae1695b4c4825f365b4c86b22174035f742807e3.1777151532.git.g@b4.vu
-Stable-dep-of: 3ca15754b561 ("ALSA: scarlett2: Update offsets for 2i2 Gen 4 firmware 2417")
+Link: https://patch.msgid.link/ad0fc5a131e76eb656a24e0e198382f7134068fe.1777151532.git.g@b4.vu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_scarlett2.c |  143 +++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 121 insertions(+), 22 deletions(-)
+ sound/usb/mixer_scarlett2.c |   58 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 58 insertions(+)
 
 --- a/sound/usb/mixer_scarlett2.c
 +++ b/sound/usb/mixer_scarlett2.c
-@@ -588,6 +588,20 @@ struct scarlett2_config_set {
- 	const struct scarlett2_config items[SCARLETT2_CONFIG_COUNT];
+@@ -910,6 +910,63 @@ static const struct scarlett2_config_set
+ 	}
  };
  
-+/* Map firmware versions to config sets per-device.
++/* 2i2 Gen 4, firmware version 2417 and above
 + *
-+ * Each device lists one or more entries, sorted in ascending order of
-+ * from_firmware_version. At probe time the running firmware version
-+ * is looked up against this list and the last entry whose
-+ * from_firmware_version is <= the running version is selected.
-+ *
-+ * The list is terminated by a sentinel entry with config_set == NULL.
++ * Firmware 2417 shifted DIRECT_MONITOR_GAIN by 4 bytes; all other
++ * offsets are unchanged from scarlett2_config_set_gen4_2i2.
 + */
-+struct scarlett2_config_set_entry {
-+	u16 from_firmware_version;
-+	const struct scarlett2_config_set *config_set;
++static const struct scarlett2_config_set scarlett2_config_set_gen4_2i2_2417 = {
++	.notifications = scarlett4_2i2_notifications,
++	.param_buf_addr = 0xfc,
++	.input_gain_tlv = db_scale_gen4_gain,
++	.autogain_status_texts = scarlett2_autogain_status_gen4,
++	.items = {
++		[SCARLETT2_CONFIG_MSD_SWITCH] = {
++			.offset = 0x49, .size = 8, .activate = 4 },
++
++		[SCARLETT2_CONFIG_DIRECT_MONITOR] = {
++			.offset = 0x14a, .size = 8, .activate = 16, .pbuf = 1 },
++
++		[SCARLETT2_CONFIG_AUTOGAIN_SWITCH] = {
++			.offset = 0x135, .size = 8, .activate = 10, .pbuf = 1 },
++
++		[SCARLETT2_CONFIG_AUTOGAIN_STATUS] = {
++			.offset = 0x137, .size = 8 },
++
++		[SCARLETT2_CONFIG_AG_MEAN_TARGET] = {
++			.offset = 0x131, .size = 8, .activate = 29, .pbuf = 1 },
++
++		[SCARLETT2_CONFIG_AG_PEAK_TARGET] = {
++			.offset = 0x132, .size = 8, .activate = 30, .pbuf = 1 },
++
++		[SCARLETT2_CONFIG_PHANTOM_SWITCH] = {
++			.offset = 0x48, .size = 8, .activate = 11, .pbuf = 1,
++			.mute = 1 },
++
++		[SCARLETT2_CONFIG_INPUT_GAIN] = {
++			.offset = 0x4b, .size = 8, .activate = 12, .pbuf = 1 },
++
++		[SCARLETT2_CONFIG_LEVEL_SWITCH] = {
++			.offset = 0x3c, .size = 8, .activate = 13, .pbuf = 1,
++			.mute = 1 },
++
++		[SCARLETT2_CONFIG_SAFE_SWITCH] = {
++			.offset = 0x147, .size = 8, .activate = 14, .pbuf = 1 },
++
++		[SCARLETT2_CONFIG_AIR_SWITCH] = {
++			.offset = 0x3e, .size = 8, .activate = 15, .pbuf = 1 },
++
++		[SCARLETT2_CONFIG_INPUT_SELECT_SWITCH] = {
++			.offset = 0x14b, .size = 8, .activate = 17, .pbuf = 1 },
++
++		[SCARLETT2_CONFIG_INPUT_LINK_SWITCH] = {
++			.offset = 0x14e, .size = 8, .activate = 18, .pbuf = 1 },
++
++		[SCARLETT2_CONFIG_DIRECT_MONITOR_GAIN] = {
++			.offset = 0x2a4, .size = 16, .activate = 36 }
++	}
 +};
 +
- /* Input gain TLV dB ranges */
- 
- static const DECLARE_TLV_DB_MINMAX(
-@@ -1073,8 +1087,8 @@ struct scarlett2_meter_entry {
- };
- 
- struct scarlett2_device_info {
--	/* which set of configuration parameters the device uses */
--	const struct scarlett2_config_set *config_set;
-+	/* which sets of configuration parameters the device uses */
-+	const struct scarlett2_config_set_entry *config_sets;
- 
- 	/* minimum firmware version required */
- 	u16 min_firmware_version;
-@@ -1309,7 +1323,10 @@ struct scarlett2_data {
- /*** Model-specific data ***/
- 
- static const struct scarlett2_device_info s6i6_gen2_info = {
--	.config_set = &scarlett2_config_set_gen2a,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 0, &scarlett2_config_set_gen2a },
-+		{ }
-+	},
- 	.level_input_count = 2,
- 	.pad_input_count = 2,
- 
-@@ -1359,7 +1376,10 @@ static const struct scarlett2_device_inf
- };
- 
- static const struct scarlett2_device_info s18i8_gen2_info = {
--	.config_set = &scarlett2_config_set_gen2a,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 0, &scarlett2_config_set_gen2a },
-+		{ }
-+	},
- 	.level_input_count = 2,
- 	.pad_input_count = 4,
- 
-@@ -1412,7 +1432,10 @@ static const struct scarlett2_device_inf
- };
- 
- static const struct scarlett2_device_info s18i20_gen2_info = {
--	.config_set = &scarlett2_config_set_gen2b,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 0, &scarlett2_config_set_gen2b },
-+		{ }
-+	},
- 
- 	.line_out_descrs = {
- 		"Monitor L",
-@@ -1469,7 +1492,10 @@ static const struct scarlett2_device_inf
- };
- 
- static const struct scarlett2_device_info solo_gen3_info = {
--	.config_set = &scarlett2_config_set_gen3a,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 0, &scarlett2_config_set_gen3a },
-+		{ }
-+	},
- 	.level_input_count = 1,
- 	.level_input_first = 1,
- 	.air_input_count = 1,
-@@ -1479,7 +1505,10 @@ static const struct scarlett2_device_inf
- };
- 
- static const struct scarlett2_device_info s2i2_gen3_info = {
--	.config_set = &scarlett2_config_set_gen3a,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 0, &scarlett2_config_set_gen3a },
-+		{ }
-+	},
- 	.level_input_count = 2,
- 	.air_input_count = 2,
- 	.phantom_count = 1,
-@@ -1488,7 +1517,10 @@ static const struct scarlett2_device_inf
- };
- 
- static const struct scarlett2_device_info s4i4_gen3_info = {
--	.config_set = &scarlett2_config_set_gen3b,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 0, &scarlett2_config_set_gen3b },
-+		{ }
-+	},
- 	.level_input_count = 2,
- 	.pad_input_count = 2,
- 	.air_input_count = 2,
-@@ -1537,7 +1569,10 @@ static const struct scarlett2_device_inf
- };
- 
- static const struct scarlett2_device_info s8i6_gen3_info = {
--	.config_set = &scarlett2_config_set_gen3b,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 0, &scarlett2_config_set_gen3b },
-+		{ }
-+	},
- 	.level_input_count = 2,
- 	.pad_input_count = 2,
- 	.air_input_count = 2,
-@@ -1603,7 +1638,10 @@ static const char * const scarlett2_spdi
- };
- 
- static const struct scarlett2_device_info s18i8_gen3_info = {
--	.config_set = &scarlett2_config_set_gen3c,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 0, &scarlett2_config_set_gen3c },
-+		{ }
-+	},
- 	.has_speaker_switching = 1,
- 	.level_input_count = 2,
- 	.pad_input_count = 4,
-@@ -1695,7 +1733,10 @@ static const char * const scarlett2_spdi
- };
- 
- static const struct scarlett2_device_info s18i20_gen3_info = {
--	.config_set = &scarlett2_config_set_gen3c,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 0, &scarlett2_config_set_gen3c },
-+		{ }
-+	},
- 	.has_speaker_switching = 1,
- 	.has_talkback = 1,
- 	.level_input_count = 2,
-@@ -1769,7 +1810,10 @@ static const struct scarlett2_device_inf
- };
- 
- static const struct scarlett2_device_info vocaster_one_info = {
--	.config_set = &scarlett2_config_set_vocaster,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 1769, &scarlett2_config_set_vocaster },
-+		{ }
-+	},
- 	.min_firmware_version = 1769,
- 
- 	.phantom_count = 1,
-@@ -1811,7 +1855,10 @@ static const struct scarlett2_device_inf
- };
- 
- static const struct scarlett2_device_info vocaster_two_info = {
--	.config_set = &scarlett2_config_set_vocaster,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 1769, &scarlett2_config_set_vocaster },
-+		{ }
-+	},
- 	.min_firmware_version = 1769,
- 
- 	.phantom_count = 2,
-@@ -1854,7 +1901,10 @@ static const struct scarlett2_device_inf
- };
- 
- static const struct scarlett2_device_info solo_gen4_info = {
--	.config_set = &scarlett2_config_set_gen4_solo,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 2115, &scarlett2_config_set_gen4_solo },
-+		{ }
-+	},
- 	.min_firmware_version = 2115,
- 
- 	.level_input_count = 1,
-@@ -1908,7 +1958,10 @@ static const struct scarlett2_device_inf
- };
- 
+ /* 4i4 Gen 4 */
+ static const struct scarlett2_config_set scarlett2_config_set_gen4_4i4 = {
+ 	.notifications = scarlett4_4i4_notifications,
+@@ -1960,6 +2017,7 @@ static const struct scarlett2_device_inf
  static const struct scarlett2_device_info s2i2_gen4_info = {
--	.config_set = &scarlett2_config_set_gen4_2i2,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 2115, &scarlett2_config_set_gen4_2i2 },
-+		{ }
-+	},
+ 	.config_sets = (const struct scarlett2_config_set_entry[]) {
+ 		{ 2115, &scarlett2_config_set_gen4_2i2 },
++		{ 2417, &scarlett2_config_set_gen4_2i2_2417 },
+ 		{ }
+ 	},
  	.min_firmware_version = 2115,
- 
- 	.level_input_count = 2,
-@@ -1962,7 +2015,10 @@ static const struct scarlett2_device_inf
- };
- 
- static const struct scarlett2_device_info s4i4_gen4_info = {
--	.config_set = &scarlett2_config_set_gen4_4i4,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 2089, &scarlett2_config_set_gen4_4i4 },
-+		{ }
-+	},
- 	.min_firmware_version = 2089,
- 
- 	.level_input_count = 2,
-@@ -2010,7 +2066,10 @@ static const struct scarlett2_device_inf
- };
- 
- static const struct scarlett2_device_info clarett_2pre_info = {
--	.config_set = &scarlett2_config_set_clarett,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 0, &scarlett2_config_set_clarett },
-+		{ }
-+	},
- 	.level_input_count = 2,
- 	.air_input_count = 2,
- 
-@@ -2066,7 +2125,10 @@ static const char * const scarlett2_spdi
- };
- 
- static const struct scarlett2_device_info clarett_4pre_info = {
--	.config_set = &scarlett2_config_set_clarett,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 0, &scarlett2_config_set_clarett },
-+		{ }
-+	},
- 	.level_input_count = 2,
- 	.air_input_count = 4,
- 
-@@ -2122,7 +2184,10 @@ static const struct scarlett2_device_inf
- };
- 
- static const struct scarlett2_device_info clarett_8pre_info = {
--	.config_set = &scarlett2_config_set_clarett,
-+	.config_sets = (const struct scarlett2_config_set_entry[]) {
-+		{ 0, &scarlett2_config_set_clarett },
-+		{ }
-+	},
- 	.level_input_count = 2,
- 	.air_input_count = 8,
- 
-@@ -8539,10 +8604,32 @@ static void scarlett2_private_suspend(st
- 
- /*** Initialisation ***/
- 
-+/* Select the config_set matching the running firmware version.
-+ *
-+ * The device info's config_sets array is ordered by ascending
-+ * from_firmware_version; pick the last entry whose version is <= the
-+ * running firmware version. If the running firmware is older than the
-+ * first entry's from_firmware_version (i.e. older than the driver's
-+ * minimum supported version for this device), the first entry's
-+ * config_set is selected anyway so firmware updates can still be done
-+ * (requires only the ACK handler), but the usual mixer controls
-+ * aren't created.
-+ */
-+static void scarlett2_resolve_config_set(struct scarlett2_data *private)
-+{
-+	const struct scarlett2_config_set_entry *entry =
-+		private->info->config_sets;
-+
-+	private->config_set = entry->config_set;
-+	for (entry++; entry->config_set; entry++)
-+		if (entry->from_firmware_version <= private->firmware_version)
-+			private->config_set = entry->config_set;
-+}
-+
- static void scarlett2_count_io(struct scarlett2_data *private)
- {
- 	const struct scarlett2_device_info *info = private->info;
--	const struct scarlett2_config_set *config_set = info->config_set;
-+	const struct scarlett2_config_set *config_set = private->config_set;
- 	const int (*port_count)[SCARLETT2_PORT_DIRNS] = info->port_count;
- 	int port_type, srcs = 0, dsts = 0, i;
- 
-@@ -8640,9 +8727,14 @@ static int scarlett2_init_private(struct
- 	mixer->private_suspend = scarlett2_private_suspend;
- 
- 	private->info = entry->info;
--	private->config_set = entry->info->config_set;
-+
-+	/* Set config_set to the first entry's config_set so the
-+	 * notify handler has a valid pointer while USB init runs; it
-+	 * is re-resolved once the firmware version has been read.
-+	 */
-+	private->config_set = entry->info->config_sets[0].config_set;
-+
- 	private->series_name = entry->series_name;
--	scarlett2_count_io(private);
- 	private->scarlett2_seq = 0;
- 	private->mixer = mixer;
- 
-@@ -9046,6 +9138,13 @@ static int snd_scarlett2_controls_create
- 	if (err < 0)
- 		return err;
- 
-+	/* Now that the firmware version is known, pick the matching
-+	 * config_set
-+	 */
-+	scarlett2_resolve_config_set(private);
-+
-+	scarlett2_count_io(private);
-+
- 	/* Get the upgrade & settings flash segment numbers */
- 	err = scarlett2_get_flash_segment_nums(mixer);
- 	if (err < 0)
 
 
