@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B49647127E;
-	Tue, 21 Jul 2026 18:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD11B47125C;
+	Tue, 21 Jul 2026 18:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657761; cv=none; b=EQwzjXigYP17HVGoxknp8brWy3cXQT6/MUv9KCt1vOQiVn7uvjdAwOKkWy+W/hQ5ZVm+Lp8wzBPsHTMzxWlJq3OR/kLu27Kcr0p5LF3fBUFc+C2VNEItsWXUura6g+q4qw1CjtNSve6ygcWOew9IrCFuTUGJq3ZrAjcyZVTvHjY=
+	t=1784657763; cv=none; b=GU4+8VQEPo1TXj6tLvdrJDdmEYLqs+W4BW4KZpM4S7QDoSmW/qPMndnBbCzH2qWyhx0VoYG6LAYgMolBjGZ+hcfcqznMUNWWEA5CgNbGraM1LWolwUp9T7rTtXKql2R+cOY9L3O0XhcpQ9nT6YAvgNbIZSlpOw+evw1Ay09YTtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657761; c=relaxed/simple;
-	bh=UwG644ELWXt6CNfVKVykSuAZM9z2kj/Pyn0BE0svO9g=;
+	s=arc-20240116; t=1784657763; c=relaxed/simple;
+	bh=Lv9jvYJggOJ00VERSG9FCwluF7aj8dPyiOixK90OSQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nd0ADercydoUbV6sdI1CYiv+mH92YjyM6/rB6GttXFsc6fdsJ/B8Qt2FLIDewZo+glKcpUFZ2T4Llzaw5GYEuxjs4q5VAofy8C1/k9wTNg6W8YxH74C52SRIc4OgNjoPEyFy0DtU67vc++7XAekJlOC4MLmZNF/kgUIiMqlgAcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIdNOGFQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=HkZwfutJHnxm/AYIzu0mRMF9KdfLw3bsNoJxbKxQMzWylvC236tEvBYfmNIVgF2GM2Vg4leA3sPEkZj8bic+nrsmNe31cIbNucXjowjoUql2vp/jtOHObiBz6GS2ZWIMjqlQx6BXjXhZmEloXROG6EruLcGmejI4iVRiD0n2OMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvJpPI0U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIdNOGFQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CEB91F00A3E;
-	Tue, 21 Jul 2026 18:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvJpPI0U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E06C1F00A3A;
+	Tue, 21 Jul 2026 18:16:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657759;
-	bh=DtbuP2xuY5YJp60a6uODOXNtrp4YqaFzou4Att2N5uY=;
+	s=korg; t=1784657762;
+	bh=EGjpzUbZJ2Q1P+MK0OZBrJxGbDjCy4oPmnKeO34oACE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qIdNOGFQ8QTFwEf8k9vFTVFjTVmvktfM3wIyPvA2VJSCdb1MrxZP0x3wDZgRaA5GH
-	 airPMeRgc8wj8jsJ5gD2sja+GH9z1hrIur3RCdMJ+EVYhybqzSHFvuGQc56Tey6YVX
-	 6w665mJkR1xxDyE+8uANHG4N5AXdce6LpotH+19M=
+	b=fvJpPI0UmFeF6OdACnv0LKLEegddPSBPtehtwElGYMyuqRxjIewLlKP4PFCCZUcW9
+	 Oht4DVIJgHsArdf0PlbxZAOQgqNeYOM2orDErh2yimHbx+u7kuKAYHnDenMNTlJvvL
+	 Rjz3JdUZn4NDM+xSaZGOD66XKd8HcWzg4rC+tDzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0835/1611] md/raid1: free r1_bio when REQ_NOWAIT is set and read would block on retry
-Date: Tue, 21 Jul 2026 17:15:51 +0200
-Message-ID: <20260721152534.170293428@linuxfoundation.org>
+Subject: [PATCH 6.18 0881/1611] gpiolib: initialize return value in gpiochip_set_multiple()
+Date: Tue, 21 Jul 2026 17:16:37 +0200
+Message-ID: <20260721152535.207581774@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -46,50 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 69ad6ce47f9bf2b9fe0ed69b042db993d33bbf12 ]
+[ Upstream commit 99dfa46baba29513d1094c8f30bc86c6ef88543a ]
 
-When a read is retried, raid1_read_request() may be called with a
-pre-allocated r1_bio. If wait_read_barrier() fails for a REQ_NOWAIT
-read, the bio is completed and the function returns immediately. In this
-case the existing r1_bio is leaked.
+gpiochip_set_multiple() falls back to setting lines one by one when the
+chip does not provide set_multiple(). If the fallback path receives an
+empty mask, the loop is skipped and ret is returned without being
+initialized.
 
-This fixes a leak of pre-allocated r1_bio structures for retried reads.
+Initialize ret to 0 so an empty mask is treated as a successful no-op.
 
-Fixes: 5aa705039c4f ("md: raid1 add nowait support")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260611083514.754922-1-abd.masalkhi@gmail.com?part=1
-Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-Link: https://patch.msgid.link/20260611101350.759154-1-abd.masalkhi@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 9b407312755f ("gpiolib: rework the wrapper around gpio_chip::set_multiple()")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/20260620155319.79994-1-ruoyuw560@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpio/gpiolib.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index cc057ef1829ac1..16625b79788bdd 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -1334,6 +1334,12 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
- 	 */
- 	if (!wait_read_barrier(conf, bio->bi_iter.bi_sector, nowait)) {
- 		bio_wouldblock_error(bio);
-+
-+		if (r1bio_existed) {
-+			set_bit(R1BIO_Returned, &r1_bio->state);
-+			raid_end_bio_io(r1_bio);
-+		}
-+
- 		return;
- 	}
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 67f362d53d53f5..9d3c33e1c9f995 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -3657,7 +3657,7 @@ static int gpiochip_set_multiple(struct gpio_chip *gc,
+ 				 unsigned long *mask, unsigned long *bits)
+ {
+ 	unsigned int i;
+-	int ret;
++	int ret = 0;
+ 
+ 	lockdep_assert_held(&gc->gpiodev->srcu);
  
 -- 
 2.53.0
