@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067B53B637C;
-	Tue, 21 Jul 2026 21:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE833B6BEB;
+	Tue, 21 Jul 2026 21:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668598; cv=none; b=d3fjzjnFtSNwO/MbiM5OvBCfd+rPpbV0utzCuLTewEURkRbGlj9P0s5SS9zbLx6CuWoJXVMyaPh24/f67bhQKGrPVo+xGBDowxi6cgmO96Ma2vBTwPeWoQrK53SbArsHu31msvznRqIv0pMDbSHvV1BxDDLjXftpR7ylRVPg3UA=
+	t=1784668600; cv=none; b=rgDVhohZ3it2xDFGJfi27W2hmwUcXzSxbyWS0LWV8niXWW2mLuD8L4BL4JRAEmyd9U4pHaWX/ct3KmTTIJOCtAL+3vHTSK6nv8NwIcOdJX/IWhOeX2l198mfB5YusJ/WAZEQLis8seLee64j03/Go6dgGmdstF5j/9EhbduT/c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668598; c=relaxed/simple;
-	bh=jCoNHxxMqtHKgJvDG9KN6Wq24Z6Q++LpzH7Rmgozm/w=;
+	s=arc-20240116; t=1784668600; c=relaxed/simple;
+	bh=qcjbKIdlYY3pJpEyvjYJNkYUGfebMTguG+0/QXQANPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hgDCmFrG1i/bXOMCQDaQk8VTSaKdTGGV0CKEPgQ5dGmhDZDb6mxudNrFfpt6lr/PPw6S68mHXVNXWC5oZcKP+nK/CnyeMLJiBC2eNaxPuv7KtnqSJ7/vMmYuFj8dg31M+xQLlMtphF2bp3YB5okyVYqOAhO9E9pkR9I9c4Asjeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SPvYW3Aj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T7wfvaIsp9pGvm/nU0yooPISmKKFtj6VoBl52lm9H+GtM2xy9JaP6b5EVzlD0IrTXMD55+qup7Inu1JTpizjDFHrPr12mvGSSdfmhitZtoCVOreNPcC294UMI6tdz8D6gfKa5Qu7VAZ0lsp4pF2ooWNoWqLbufNy27ygRXYOlsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KyObp9ay; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SPvYW3Aj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF771F000E9;
-	Tue, 21 Jul 2026 21:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KyObp9ay"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1169A1F000E9;
+	Tue, 21 Jul 2026 21:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668596;
-	bh=2pvNQKplLXeDP4+QT5ZL1R4kVhuFmfrGHD1iCkincug=;
+	s=korg; t=1784668599;
+	bh=qbDwPgy1FyWDQwqHNe3yaGKS8N4p6YoC31i4xJKuKck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SPvYW3Aj6f7GyfnbXumyslGr9qSpK5inuFoR1KXIM2sG8F7L+3h6GZlQeH+N1DmBj
-	 LKxfbfXgjJsfgUM0UebTMASG2IocNmpbm0zYKd6CGERbPpISny4k58mSXQoh3aIogv
-	 ot7XGNzhSATCoFN5kTxdQfZ9vesI2S+DdlZVeaFg=
+	b=KyObp9ayP9RpZDd1mmRZbajJ7vWfmNoYQPYz+n5LTrg8p8Cdg+Tm18OFQVmZ8oTYV
+	 KraYI4dtam3bvHs0T88qHLBufi4elCDcDwRJe5XZEnFfWZRPe46AawaKpxlkOzrDSH
+	 uO6r/CPlxryvChMbMzoNds64eezfror+VCf5L4M8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 0234/1067] Input: synaptics-rmi4 - unregister function handlers on physical driver registration failure
-Date: Tue, 21 Jul 2026 17:13:55 +0200
-Message-ID: <20260721152429.835825047@linuxfoundation.org>
+Subject: [PATCH 6.1 0235/1067] Input: synaptics-rmi4 - bound the F3A keymap to the GPIO count
+Date: Tue, 21 Jul 2026 17:13:56 +0200
+Message-ID: <20260721152429.856560660@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,43 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 6251f7d3472c0409e30f8d6a24f10d33d12e3f9a upstream.
+commit 57c10915f2c16c90e0d46ad00876bf39ece40fc2 upstream.
 
-If rmi_register_physical_driver() fails, the current error path
-unregisters only the RMI bus. The function handlers registered
-earlier remain registered with the driver core.
+rmi_f3a_initialize() takes the GPIO count from the device query register
+(f3a->gpio_count = buf & RMI_F3A_GPIO_COUNT, range 0..127).
+rmi_f3a_map_gpios() then allocates gpio_key_map with
+min(gpio_count, TRACKSTICK_RANGE_END) == at most 6 entries, but
+rmi_f3a_attention() iterates the full gpio_count and dereferences
+gpio_key_map[i], and input->keycodemax is set to the full gpio_count
+while input->keycode points at the 6-entry allocation.
 
-Add a separate error path to unregister the function handlers
-before unregistering the bus in this failure case.
+A device that reports gpio_count > 6 therefore causes an out-of-bounds
+read of gpio_key_map[] on every attention interrupt, and out-of-bounds
+accesses through the input core's default keymap ioctls: EVIOCGKEYCODE
+reads past the buffer (leaking adjacent slab memory to user space) and
+EVIOCSKEYCODE writes a caller-controlled value past it, for any process
+able to open the evdev node, since input_default_getkeycode() and
+input_default_setkeycode() only bound the index against keycodemax.
 
-Fixes: 2b6a321da9a2 ("Input: synaptics-rmi4 - add support for Synaptics RMI4 devices")
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Size the keymap for the full gpio_count. The mapping loop is unchanged:
+it still assigns only the first min(gpio_count, TRACKSTICK_RANGE_END)
+entries; the remaining slots stay KEY_RESERVED (devm_kcalloc zero-fills)
+and are skipped when reporting.
+
+Fixes: 9e4c596bfd00 ("Input: synaptics-rmi4 - add support for F3A")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260610064633.2837084-1-haoxiang_li2024@163.com
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260614-b4-disp-818d6bda-v1-1-cf39a3615085@proton.me
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/rmi4/rmi_bus.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/input/rmi4/rmi_f3a.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/rmi4/rmi_bus.c
-+++ b/drivers/input/rmi4/rmi_bus.c
-@@ -448,11 +448,13 @@ static int __init rmi_bus_init(void)
- 	if (error) {
- 		pr_err("%s: error registering the RMI physical driver: %d\n",
- 			__func__, error);
--		goto err_unregister_bus;
-+		goto err_unregister_function_handlers;
- 	}
+--- a/drivers/input/rmi4/rmi_f3a.c
++++ b/drivers/input/rmi4/rmi_f3a.c
+@@ -132,7 +132,7 @@ static int rmi_f3a_map_gpios(struct rmi_
+ 	int button_count = min_t(u8, f3a->gpio_count, TRACKSTICK_RANGE_END);
  
- 	return 0;
- 
-+err_unregister_function_handlers:
-+	rmi_unregister_function_handlers();
- err_unregister_bus:
- 	bus_unregister(&rmi_bus_type);
- 	return error;
+ 	f3a->gpio_key_map = devm_kcalloc(&fn->dev,
+-						button_count,
++						f3a->gpio_count,
+ 						sizeof(f3a->gpio_key_map[0]),
+ 						GFP_KERNEL);
+ 	if (!f3a->gpio_key_map) {
 
 
