@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC76E3D16EF;
-	Tue, 21 Jul 2026 22:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFF33CAE7F;
+	Tue, 21 Jul 2026 22:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673151; cv=none; b=Q4jH9aI39s2JTfy4tCcm3idESmfNiA4aRWz72XmV/8B8ufKCyuSqD/GlqICs6nKlys/wIaqXnn8EvjK6YWSrFvOtCmzCpfjPd+MZbV+V4zHLcFXGCQLuFv8MVCSwIKS8lY0SHl55h+HsQMlTMR7FuBz80VcZmpBY1VmITDnFVsU=
+	t=1784673154; cv=none; b=gNQqV9jKlEyrniFjdGcpp3AloCW7no6xatkaMmnP6kA/DnPmVDwg+3bH5NhfPsjkipw6v6LY6k3Ktj0/dzC0/rnwYBIb29XO3W0fADj8CHYMV/24ysauX5TbOwKZjnzG6zZYsyP4spXbH6HMg5VMn91OIlcGxbgAhtnvLk0Xsso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673151; c=relaxed/simple;
-	bh=rbv+uXqpFCGTBw/JHkJdYB2teoVxj3xIS5tfya0PnAQ=;
+	s=arc-20240116; t=1784673154; c=relaxed/simple;
+	bh=PzdNHpiYUjKvd5r/ju6ai+WDka8mZsWXRZsYEUb0wU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NwYBgZXQASMGgvecaigEByS5gixwbZLXbxk4bAFYBk7QluvNg9R6FGKr+p+fye72ac81szblwH8HO5ob3oulz0sq4B1DC0tCdikU41QECsW1b6j5yl0ZWB6EoLrK1V9UUj6XS2JVZ/twuRkV+Z2zD+/BHJbCn4EiPPIkRlcr+V4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7OjHBVg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Y5E1Dypj2+XMREHUWJZWW/I4d/p0AmL0TkP8eXyMm5wn+0VUclCvtPnGjIsqp3LgdIFP9Dt/Fob7VdMUOPrPvfWVlImdgyvEk7Zk4FHa2NBMrqpue7Q+5LhoVbV09gREhrupb1OokFQt7kC9oeszhhDQ3EIn9TxJsMR1b1NpFhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQvtSRY2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7OjHBVg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F0921F00A3A;
-	Tue, 21 Jul 2026 22:32:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQvtSRY2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A811F000E9;
+	Tue, 21 Jul 2026 22:32:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673150;
-	bh=OaqxxJMhyAZQGaZnp3TrFmJR3B2tGMqBpUbPvVjRinc=;
+	s=korg; t=1784673153;
+	bh=EPRqpPAoD8BBymzBjPy+6ezduV/R5/CxPu7vHrGr27Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O7OjHBVghdx77o818SdCvzNUrT2A0UTMRS7zTFJ8631YXONl3nqL13Kg7KTnW4RRe
-	 QWA0eE0g7ENPa+9oB0GsppEwBmCopcqFslt8kFQFgvvBi3/1b5DaCYw2rxN2WiIMnZ
-	 x+SbekZDW8VOVd2E+yLf+nFH/QfG1nsRGTQXKKtA=
+	b=lQvtSRY2+pcFONt3XPPU1xknqd+FDjRgygw9MIMUyKfk/fHtJacJ9MzmvEgs8fXDH
+	 etrLVvbmwUNgEaX5z8YrRhzJvVZCejC8QgvJbDwpR0Pq58taHYAVqzlyeM0iPWWCsa
+	 lS6FjZ4cu4suY6TdUjpSeEypyD2+M1UI2QyRzDk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Darvell Long <contact@darvell.me>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 054/699] ALSA: usb-audio: avoid kobject path lookup in DualSense match
-Date: Tue, 21 Jul 2026 17:16:53 +0200
-Message-ID: <20260721152356.928598487@linuxfoundation.org>
+Subject: [PATCH 5.10 055/699] ALSA: usb-audio: Propagate errors in scarlett_ctl_enum_put()
+Date: Tue, 21 Jul 2026 17:16:54 +0200
+Message-ID: <20260721152356.950740289@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -44,112 +44,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Darvell Long <contact@darvell.me>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 7693c0cc415f3a16a7a3355f245474a5e661be4e upstream.
+commit 0f25cf1f02e3dba626791d949c759a48c0a44996 upstream.
 
-The DualSense jack-detection input handler verifies that a matching input
-device belongs to the same physical controller by building kobject path
-strings for both the input device and the USB audio device, then comparing
-the path prefix.
+scarlett_ctl_enum_put() ignores the return value from
+snd_usb_set_cur_mix_value() and reports success whenever the
+requested enum value differs from the current one.
 
-This was observed when a weak physical connection caused the controller
-to rapidly disconnect and reconnect. During that repeated hotplug,
-snd_dualsense_ih_match() can run while the controller's USB device is
-being disconnected. kobject_get_path() walks ancestor kobjects and
-dereferences their names; if the USB device kobject name is no longer
-valid, this can fault in strlen():
+If the SET_CUR request fails, the callback still returns success even
+though neither the hardware state nor the cached mixer value changed.
 
-  RIP: 0010:strlen+0x10/0x30
-  Call Trace:
-   kobject_get_path+0x34/0x150
-   snd_dualsense_ih_match+0x49/0xd0 [snd_usb_audio]
-   input_register_device+0x566/0x6a0
-   ps_probe+0xb89/0x1590 [hid_playstation]
-
-The same ownership check can be done without building kobject path
-strings. The input device is parented below the HID device, USB interface
-and USB device, so walking the input device parent chain and comparing
-against the mixer USB device preserves the check without dereferencing
-kobject names during disconnect.
-
-Fixes: 79d561c4ec04 ("ALSA: usb-audio: Add mixer quirk for Sony DualSense PS5")
-Cc: <stable@vger.kernel.org>
-Assisted-by: Cute:gpt-5.5
-Signed-off-by: Darvell Long <contact@darvell.me>
-Link: https://patch.msgid.link/20260624143723.2986353-1-contact@darvell.me
+Fixes: 76b188c4b370 ("ALSA: usb-audio: Scarlett mixer interface for 6i6, 18i6, 18i8 and 18i20")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-2-5a3bd4a673ae@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_quirks.c |   40 ++++++++++++----------------------------
- 1 file changed, 12 insertions(+), 28 deletions(-)
+ sound/usb/mixer_scarlett.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -573,46 +573,30 @@ static bool snd_dualsense_ih_match(struc
- {
- 	struct dualsense_mixer_elem_info *mei;
- 	struct usb_device *snd_dev;
--	char *input_dev_path, *usb_dev_path;
--	size_t usb_dev_path_len;
--	bool match = false;
-+	struct device *parent;
- 
- 	mei = container_of(handler, struct dualsense_mixer_elem_info, ih);
- 	snd_dev = mei->info.head.mixer->chip->dev;
- 
--	input_dev_path = kobject_get_path(&dev->dev.kobj, GFP_KERNEL);
--	if (!input_dev_path) {
--		dev_warn(&snd_dev->dev, "Failed to get input dev path\n");
--		return false;
--	}
--
--	usb_dev_path = kobject_get_path(&snd_dev->dev.kobj, GFP_KERNEL);
--	if (!usb_dev_path) {
--		dev_warn(&snd_dev->dev, "Failed to get USB dev path\n");
--		goto free_paths;
--	}
--
- 	/*
- 	 * Ensure the VID:PID matched input device supposedly owned by the
- 	 * hid-playstation driver belongs to the actual hardware handled by
--	 * the current USB audio device, which implies input_dev_path being
--	 * a subpath of usb_dev_path.
-+	 * the current USB audio device.
- 	 *
- 	 * This verification is necessary when there is more than one identical
- 	 * controller attached to the host system.
-+	 *
-+	 * The input device is registered below the HID device, USB interface and
-+	 * USB device, so compare the parent chain directly instead of building
-+	 * kobject path strings. This avoids dereferencing kobject names while the
-+	 * USB device hierarchy is being torn down during disconnect.
- 	 */
--	usb_dev_path_len = strlen(usb_dev_path);
--	if (usb_dev_path_len >= strlen(input_dev_path))
--		goto free_paths;
--
--	usb_dev_path[usb_dev_path_len] = '/';
--	match = !memcmp(input_dev_path, usb_dev_path, usb_dev_path_len + 1);
--
--free_paths:
--	kfree(input_dev_path);
--	kfree(usb_dev_path);
-+	for (parent = dev->dev.parent; parent; parent = parent->parent) {
-+		if (parent == &snd_dev->dev)
-+			return true;
-+	}
- 
--	return match;
-+	return false;
- }
- 
- static int snd_dualsense_ih_connect(struct input_handler *handler,
+--- a/sound/usb/mixer_scarlett.c
++++ b/sound/usb/mixer_scarlett.c
+@@ -438,7 +438,9 @@ static int scarlett_ctl_enum_put(struct
+ 	val = ucontrol->value.integer.value[0];
+ 	val = val + opt->start;
+ 	if (val != oval) {
+-		snd_usb_set_cur_mix_value(elem, 0, 0, val);
++		err = snd_usb_set_cur_mix_value(elem, 0, 0, val);
++		if (err < 0)
++			return err;
+ 		return 1;
+ 	}
+ 	return 0;
 
 
