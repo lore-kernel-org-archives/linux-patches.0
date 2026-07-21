@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553E846EC8F;
-	Tue, 21 Jul 2026 17:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154CB46EC94;
+	Tue, 21 Jul 2026 17:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656340; cv=none; b=rYENG1TKMQEhENQRy3oEV4rnvD/iiHyViuv3cr9BgQYgT4OqvBigtd9VWTKpTiloWa92jMI2MWvqFBmjetClTDT7xMzZlB6rytTM23YeCjaTR44yhYU+OGWa1JXHN1kSwIFrLUcpr32DzRrPu0dR7tYhwoNCpwhYTsewrGI1jQc=
+	t=1784656343; cv=none; b=FWoz09kSBr8BdMmGz6wYLDcCV9CBQt1A4SZEbBTLUlELnYvz5jhZI8SIkXFhUCaPWeW7F/G0zUbexTJBV1kfpjXNZvfkDx/liKzMuUAS6XDZmhx86ilI30W7r4vJQ+c7D6gP0mJAmBQGQGE8AdvAx44llMzNUvSKTIWaIoWS84E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656340; c=relaxed/simple;
-	bh=rsIJO9UQWkREE3FOGEy3VH6QfIYLfqzjxoQOSrFpeAY=;
+	s=arc-20240116; t=1784656343; c=relaxed/simple;
+	bh=w5TqPrz9NibWzcq8bPEVDoHMjXhJo9SP6UeBhO2TCsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t7VXF+A0GTFTQqYs8tkVvEhACBkggk7sOhgKV4YXCUnY4fmpoMdAxeYQOiz360Fi4DmMW/LMbKUYotv7OSCYpNrSd4gcMlw3BjHjEPSx1rHknnuaYRF6RzPoMZ7d4JsPFx54lRaaT/nW0L4YSLh+nDvVgA+ULQSgq5K5wYyZPx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yFBH9EOD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LFdeI1XUpL3Ui0D4Tn5Bv4evMkx0xnLx+U+XU+KStd8TclNqGfxabBp6ZBKTxmqv/X1mkIGFYT1V0IAQ9tnro375qQhC3Kx4rfHLr1JGb826/OQKplG5r8lEvkpeJRevWQcad47JbrimFeOx3CuHaw7y5ExrlDWcgSaJm8H2j64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8asG0/j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yFBH9EOD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB9F1F000E9;
-	Tue, 21 Jul 2026 17:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8asG0/j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 761691F000E9;
+	Tue, 21 Jul 2026 17:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656339;
-	bh=RLLvveSI6OtrfmCVUng8morODRB/Mvn1fReaz18kDdo=;
+	s=korg; t=1784656342;
+	bh=45+rYdVdFyeic2PCfohv4rORxGq/tvkqoLn9PUexjok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yFBH9EOD1muxmO/KIksLph6ydz012AdRZkMsNSBP0ZQ7Z7vOPAz8+JVR3z2+qTw9w
-	 TxjEG+2Ngcye5MHka+Lmfh/oi2IgW98vENouY8w/SVRP8UV0tmBwQASIhlFB3zEpnL
-	 2X/8Ciy9XesHL9VbA2D16Op6Ld9USh5mceVjGuJw=
+	b=d8asG0/jIJtItcp32exr/YaRAsM7GqhSh5SQu/coA0Qgsv5+CA6kCq9om2knyYw16
+	 v/4tk29AGGJ8ffeT76DclJAYIB1JyYHYrziSbNLiDG9hGI6qyjwlZuzNMpUfMR5ZvI
+	 zGTY3KpTCJs5jBIWZXgJp28YItmdpDEDpHxAxOlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Kees Cook <kees@kernel.org>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0350/1611] RDMA/hfi1: Open-code rvt_set_ibdev_name()
-Date: Tue, 21 Jul 2026 17:07:46 +0200
-Message-ID: <20260721152523.006644209@linuxfoundation.org>
+Subject: [PATCH 6.18 0351/1611] IB/cm: Fix av cm device leak on an error path in cm_init_av_by_path()
+Date: Tue, 21 Jul 2026 17:07:47 +0200
+Message-ID: <20260721152523.030066411@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,98 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 0ee8ac903e5aa100a70bef8d0afc19a336ffa775 ]
+[ Upstream commit 9b2207bc5cdb955bdae34b3eec80f04979e17081 ]
 
-clang warns about a function missing a printf attribute:
+Codex pointed out that cm_init_av_by_path() can call cm_set_av_port()
+which takes a reference on the cm device, but then can immediately return
+error if ib_init_ah_attr_from_path() fails.
 
-include/rdma/rdma_vt.h:457:47: error: diagnostic behavior may be improved by adding the 'format(printf, 2, 3)' attribute to the declaration of 'rvt_set_ibdev_name' [-Werror,-Wmissing-format-attribute]
-  447 | static inline void rvt_set_ibdev_name(struct rvt_dev_info *rdi,
-      | __attribute__((format(printf, 2, 3)))
-  448 |                                       const char *fmt, const char *name,
-  449 |                                       const int unit)
+Since callers like ib_send_cm_req() put the av on the stack this leaks
+that cm device reference.
 
-The helper was originally added as an abstraction for the hfi1 and
-qib drivers needing the same thing, but now qib is gone, and hfi1
-is the only remaining user of rdma_vt.
+Re-order cm_init_av_by_path() so it doesn't touch the av until it has done
+all its failable work, and then update the av in one shot so it is either
+left alone or fully init'd.
 
-Avoid the warning and allow the compiler to check the format string by
-open-coding the helper and directly assigning the device name.
+Sashiko also pointed out that the cm_destroy_av() prior to
+cm_init_av_by_path() is harmful as it leaves the AV broken in the error
+case and thus the REJ won't send. Since cm_init_av_by_path() is now atomic
+it is safe to delete the cm_destroy_av(). On succees the av from
+cm_init_av_for_response() is cleaned up by cm_init_av_by_path(), on
+failure the 'goto rejected' guarentees the av is destroyed during
+ib_destroy_cm_id().
 
-Fixes: 5084c8ff21f2 ("IB/{rdmavt, hfi1, qib}: Self determine driver name")
-Link: https://patch.msgid.link/r/20260602140453.3542427-1-arnd@kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Kees Cook <kees@kernel.org>
+Fixes: 76039ac9095f ("IB/cm: Protect cm_dev, cm_ports and mad_agent with kref and lock")
+Link: https://patch.msgid.link/r/0-v1-38292501f539+14f-ib_cm_av_leak_jgg@nvidia.com
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/init.c | 13 ++++++++++++-
- include/rdma/rdma_vt.h            | 20 --------------------
- 2 files changed, 12 insertions(+), 21 deletions(-)
+ drivers/infiniband/core/cm.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/init.c b/drivers/infiniband/hw/hfi1/init.c
-index b35f92e7d865f0..7e0298c62882e0 100644
---- a/drivers/infiniband/hw/hfi1/init.c
-+++ b/drivers/infiniband/hw/hfi1/init.c
-@@ -1208,6 +1208,7 @@ static struct hfi1_devdata *hfi1_alloc_devdata(struct pci_dev *pdev,
- 					       size_t extra)
- {
- 	struct hfi1_devdata *dd;
-+	struct ib_device *ibdev;
- 	int ret, nports;
+diff --git a/drivers/infiniband/core/cm.c b/drivers/infiniband/core/cm.c
+index 01bede8ba10553..11a34230828627 100644
+--- a/drivers/infiniband/core/cm.c
++++ b/drivers/infiniband/core/cm.c
+@@ -531,6 +531,7 @@ static int cm_init_av_by_path(struct sa_path_rec *path,
+ 	struct rdma_ah_attr new_ah_attr;
+ 	struct cm_device *cm_dev;
+ 	struct cm_port *port;
++	u16 pkey_index;
+ 	int ret;
  
- 	/* extra is * number of ports */
-@@ -1229,7 +1230,17 @@ static struct hfi1_devdata *hfi1_alloc_devdata(struct pci_dev *pdev,
- 			"Could not allocate unit ID: error %d\n", -ret);
- 		goto bail;
- 	}
--	rvt_set_ibdev_name(&dd->verbs_dev.rdi, "%s_%d", class_name(), dd->unit);
-+
-+	/*
-+	 * FIXME: rvt and its users want to touch the ibdev before
-+	 * registration and have things like the name work. We don't have the
-+	 * infrastructure in the core to support this directly today, hack it
-+	 * to work by setting the name manually here.
-+	 */
-+	ibdev = &dd->verbs_dev.rdi.ibdev;
-+	dev_set_name(&ibdev->dev, "%s_%d", class_name(), dd->unit);
-+	strscpy(ibdev->name, dev_name(&ibdev->dev), IB_DEVICE_NAME_MAX);
-+
- 	/*
- 	 * If the BIOS does not have the NUMA node information set, select
- 	 * NUMA 0 so we get consistent performance.
-diff --git a/include/rdma/rdma_vt.h b/include/rdma/rdma_vt.h
-index c429d6ddb1292e..d69df6ebc80a74 100644
---- a/include/rdma/rdma_vt.h
-+++ b/include/rdma/rdma_vt.h
-@@ -428,26 +428,6 @@ struct rvt_dev_info {
- 	struct rvt_wss *wss;
- };
+ 	port = get_cm_port_from_path(path, sgid_attr);
+@@ -539,12 +540,10 @@ static int cm_init_av_by_path(struct sa_path_rec *path,
+ 	cm_dev = port->cm_dev;
  
--/**
-- * rvt_set_ibdev_name - Craft an IB device name from client info
-- * @rdi: pointer to the client rvt_dev_info structure
-- * @name: client specific name
-- * @unit: client specific unit number.
-- */
--static inline void rvt_set_ibdev_name(struct rvt_dev_info *rdi,
--				      const char *fmt, const char *name,
--				      const int unit)
--{
--	/*
--	 * FIXME: rvt and its users want to touch the ibdev before
--	 * registration and have things like the name work. We don't have the
--	 * infrastructure in the core to support this directly today, hack it
--	 * to work by setting the name manually here.
--	 */
--	dev_set_name(&rdi->ibdev.dev, fmt, name, unit);
--	strscpy(rdi->ibdev.name, dev_name(&rdi->ibdev.dev), IB_DEVICE_NAME_MAX);
--}
+ 	ret = ib_find_cached_pkey(cm_dev->ib_device, port->port_num,
+-				  be16_to_cpu(path->pkey), &av->pkey_index);
++				  be16_to_cpu(path->pkey), &pkey_index);
+ 	if (ret)
+ 		return ret;
+ 
+-	cm_set_av_port(av, port);
 -
- /**
-  * rvt_get_ibdev_name - return the IB name
-  * @rdi: rdmavt device
+ 	/*
+ 	 * av->ah_attr might be initialized based on wc or during
+ 	 * request processing time which might have reference to sgid_attr.
+@@ -559,6 +558,8 @@ static int cm_init_av_by_path(struct sa_path_rec *path,
+ 	if (ret)
+ 		return ret;
+ 
++	av->pkey_index = pkey_index;
++	cm_set_av_port(av, port);
+ 	av->timeout = path->packet_life_time + 1;
+ 	rdma_move_ah_attr(&av->ah_attr, &new_ah_attr);
+ 	return 0;
+@@ -2185,8 +2186,10 @@ static int cm_req_handler(struct cm_work *work)
+ 				 cm_id_priv->av.ah_attr.roce.dmac);
+ 	work->path[0].hop_limit = grh->hop_limit;
+ 
+-	/* This destroy call is needed to pair with cm_init_av_for_response */
+-	cm_destroy_av(&cm_id_priv->av);
++	/*
++	 * cm_init_av_by_path() will internally pair with the above
++	 * cm_init_av_for_response() if it succeeds.
++	 */
+ 	ret = cm_init_av_by_path(&work->path[0], gid_attr, &cm_id_priv->av);
+ 	if (ret) {
+ 		int err;
 -- 
 2.53.0
 
