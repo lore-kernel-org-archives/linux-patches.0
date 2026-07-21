@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1428337DE8D;
-	Tue, 21 Jul 2026 20:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDA43AFB0C;
+	Tue, 21 Jul 2026 20:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665168; cv=none; b=X7WEYckrWgRu2qDkU6aVWqPPSGwAhJLxy+K6Uj842bRXca8X2uZ4nIHPo4ka28mwAG9XStCu04u1P76xPQhJBRm2Mw+6g8+rywm2zy1ukB3bo0k/cj2yIfSXZFQfmGbrV571XDPAM5MxqhJw5vG+cC2cbk+aWnS9311tZ8eE5DY=
+	t=1784665171; cv=none; b=lxGroLu1LINWmTiI9Q4pAR3H0qIhKAHGlj9H870Rkn5xPvG3+Rkeq7vXvmeGWCIdz6GfjxNk4TDrjMMFcbEXYUJb4xb+x9fOTG16NtA0fLUvvRmpAiEJ6ZkYNjSYvGT8YMpa6ve0XRGwnLb1Od229BdHSFxjiGeuRTepTBPUmpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665168; c=relaxed/simple;
-	bh=yn1el+j8198a7vlpQnFcwspD4aSyyQnQGEYL1JANDjo=;
+	s=arc-20240116; t=1784665171; c=relaxed/simple;
+	bh=aj685BPejluLPqXSNQBuM2oIQZFfMViMdam3hpWbwjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJn75u8hcCGZItckzPBaEyUcwbt+/p7IVqj1K1t8HNK7o1of3q+6PrV3pOqzTelRkkyNwgWIEmSmBXxc0uN0w0JyGAgX78ktyJyNVajlZfQ1XanlbnMMHzxq/wns/zlsPtoCRjD20urj90jXUjVFh+aYdnvd5p5bkxv8ij+pAx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f44JmvF5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hzPX1gWhLYUWJ0/34z/nQXzV8uyUOAk7hnTVPRDd4CHNc9aNNn365nrLvISBt4+x0k7I+ci3f8yPRudy1BDOuFPWKLg/4PjLqoCISJy3kn7vlPLmWD0JyvpkNn/bPzJU+0T+hoYTMraLRXtwxGep0lnYE/J3z8LS8hQE+tWvHCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KhGzTD69; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f44JmvF5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7985A1F000E9;
-	Tue, 21 Jul 2026 20:19:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KhGzTD69"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 216AF1F000E9;
+	Tue, 21 Jul 2026 20:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665167;
-	bh=oLqO8FJZLhh4uBZ4n4HQ14t7Cp4UGMv/xOZWBqzGqms=;
+	s=korg; t=1784665169;
+	bh=RWNuSZTOy7F7D3eW1s2DpoueRRMLJ2yVOFZ65Zma0mM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f44JmvF5uy2vu9C2SE6ZatbRbgpgnBrZon86nzk2o2Xx86kJd4SE3KM+qpX5pVctD
-	 9Kwhkb7UHee7qylcJSl1ZGhr/t1PNtBB1PxLlrqCUGzgxNL6KkMlmcqTbjV9NtaRQi
-	 CcgofRSusUjeImKPvSfdZxr+xxsKDVFxBeuOqeBw=
+	b=KhGzTD69tDo9c6nWpimPZhMTMFKqQoA+PcSJBaIa8fvjSSYCE7r9B45fdqtzlW8fl
+	 yvUkcLRGvlpYGPWd84C3f/rDe5isHAR47sTmMyEB86krLz6WwQaxRM0srS8S8+9xDo
+	 BoGe6qSR0t16TyQKfmHkdghjWfPBkN16UfpE84O0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Viresh Kumar <viresh.kumar@linaro.org>
-Subject: [PATCH 6.6 0202/1266] OPP: of: Fix potential memory leak in opp_parse_supplies()
-Date: Tue, 21 Jul 2026 17:10:39 +0200
-Message-ID: <20260721152446.328287890@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.6 0203/1266] firmware_loader: fix device reference leak in firmware_upload_register()
+Date: Tue, 21 Jul 2026 17:10:40 +0200
+Message-ID: <20260721152446.351156443@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,41 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 69f888381d2ecbe18ed9f112c096f8fd3623db98 upstream.
+commit 896df22ee57648b0c505bd76ddbc6b2341834696 upstream.
 
-The memory allocated for microvolt, microamp and microwatt is not freed
-in one of the paths in opp_parse_supplies() which returns directly.
-Fix that by adding a goto to the error unwind ladder.
+firmware_upload_register()
+  -> fw_create_instance()
+     -> device_initialize()
 
-Fixes: 2eedf62e66c2 ("OPP: decouple dt properties in opp_parse_supplies()")
+After fw_create_instance() succeeds, the lifetime of the embedded struct
+device is expected to be managed through the device core reference
+counting, since fw_create_instance() has already called
+device_initialize().
+
+In firmware_upload_register(), if alloc_lookup_fw_priv() fails after
+fw_create_instance() succeeds, the code reaches free_fw_sysfs and frees
+fw_sysfs directly instead of releasing the device reference with
+put_device(). This may leave the reference count of the embedded struct
+device unbalanced, resulting in a refcount leak.
+
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review. Fix this by using put_device(fw_dev) in the
+failure path and letting fw_dev_release() handle the final cleanup,
+instead of freeing the instance directly from the error path.
+
+Fixes: 97730bbb242c ("firmware_loader: Add firmware-upload support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260505091231.607089-1-lgs201920130244@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/opp/of.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/base/firmware_loader/sysfs_upload.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/drivers/opp/of.c
-+++ b/drivers/opp/of.c
-@@ -710,7 +710,7 @@ static int opp_parse_supplies(struct dev
- 	 */
- 	if (unlikely(opp_table->regulator_count == -1)) {
- 		opp_table->regulator_count = 0;
--		return 0;
-+		goto free_microwatt;
+--- a/drivers/base/firmware_loader/sysfs_upload.c
++++ b/drivers/base/firmware_loader/sysfs_upload.c
+@@ -340,7 +340,6 @@ firmware_upload_register(struct module *
+ 		goto free_fw_upload_priv;
  	}
+ 	fw_upload->priv = fw_sysfs;
+-	fw_sysfs->fw_upload_priv = fw_upload_priv;
+ 	fw_dev = &fw_sysfs->dev;
  
- 	for (i = 0, j = 0; i < opp_table->regulator_count; i++) {
-@@ -733,6 +733,7 @@ static int opp_parse_supplies(struct dev
- 			opp->supplies[i].u_watt = microwatt[i];
+ 	ret = alloc_lookup_fw_priv(name, &fw_cache, &fw_priv,  NULL, 0, 0,
+@@ -348,10 +347,12 @@ firmware_upload_register(struct module *
+ 	if (ret != 0) {
+ 		if (ret > 0)
+ 			ret = -EINVAL;
+-		goto free_fw_sysfs;
++		put_device(fw_dev);
++		goto free_fw_upload_priv;
  	}
+ 	fw_priv->is_paged_buf = true;
+ 	fw_sysfs->fw_priv = fw_priv;
++	fw_sysfs->fw_upload_priv = fw_upload_priv;
  
-+free_microwatt:
- 	kfree(microwatt);
- free_microamp:
- 	kfree(microamp);
+ 	ret = device_add(fw_dev);
+ 	if (ret) {
+@@ -362,9 +363,6 @@ firmware_upload_register(struct module *
+ 
+ 	return fw_upload;
+ 
+-free_fw_sysfs:
+-	kfree(fw_sysfs);
+-
+ free_fw_upload_priv:
+ 	kfree(fw_upload_priv);
+ 
 
 
