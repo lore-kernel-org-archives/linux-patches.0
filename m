@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8548E3B2FE4;
-	Tue, 21 Jul 2026 20:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529263B2FE4;
+	Tue, 21 Jul 2026 20:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665878; cv=none; b=CSfnevLE3qVuCjlR7skbSsvDmMJwpRoPHZCBHQub4zHl4s0UaWJ2RvzhpD64Zg0xt/U9eszFMUA1d2lwwFLQ2ATJkwSRU4QiAzXFc4dGtIELls6litSUatToRqseZ6kV6mD1jNQqsISQ3x71DJ7KG1i8qRoxJw9/KJ5W+S8GtEk=
+	t=1784665881; cv=none; b=oqgnywxqYWNS4Oqtb8KYoJ3vim6+dDKXl0k4TSrSIjGR6klzQZbJrVzLsz2g0+XtwXSjeydb0Rdclfnmy5YhH9hsFQgbzUDRwPw1Osj5MMKZk4ocRMtwYGiK90w7M8qrzUIJUFchMSRQf+CvjB1tcpT0HAKkHVNq+W/Q+Zu4FjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665878; c=relaxed/simple;
-	bh=I4c3EUoZF8rDxO+cLiKV9E+c6L3e6CE+ZHn4pn1KF+8=;
+	s=arc-20240116; t=1784665881; c=relaxed/simple;
+	bh=DYV87I1sY4GY4m43IsxhvnDaD3q9DMLRaLSuIuMUth0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BewMeuNKWhdXF1ELxH1NWdKwqxkJeHa7McHid+miLgZV+SnzsFCT8qdxdZrZWgtKZaXb1TlnS1JvVmtKdfPXXunP1VDOVlEh88IIn2Fqzlp08vHDWKRAA2NYxPRxwJdc6GvF9hq+0zX5lalXO1hbbWJBlsfM54nTyH9IQc60sgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADQiHcUA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=khdS+0UalGtP7D0ntZ10SV8SR6u1VmN8CJ3RvSVV+pGPXMhbFOnwp0VUKLflxQEJgODR3/dgCNstps2B5o2xKfTzUDNC6fNa2sY1MGus4lGbMmraiqPNTGPN6Uyeoxkh+/rSnF6u74hCdMlb4Cj84AIRbPbZgLv8+AU64obrNrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2hdT/jlv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADQiHcUA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18D41F000E9;
-	Tue, 21 Jul 2026 20:31:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2hdT/jlv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8759A1F000E9;
+	Tue, 21 Jul 2026 20:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665877;
-	bh=vI8Cc7ujf2VcUyG94K8Unyoptv5y4obMvhR49qRBGRg=;
+	s=korg; t=1784665880;
+	bh=/415MUBfk/W83MjioHocE2TTKpmVpRBx7zTU3/idHN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ADQiHcUA8QZGKmubmHQ+HhqMWxxQFne44GDGX6xQtH2kYBdFwiJ8ZOs25cHl4F5Sy
-	 Bg3DG8jIfWiZUgMKavpeprVM6FLCMUDqgSZvye4mRGr/LwclTYh0PUVio/874f3btq
-	 XcjqM8byu1zY4RT0mYkLzGLYtbDCT/RDDUES0t2Q=
+	b=2hdT/jlvUw+tpvJa3AEUeOQnO5kRpbE1uNy9hKbmQ1FDRSH6GYUTMGuvcJ1eB2DnC
+	 YRIE+cus2xjdV9PO+pqJUAm8IGIkWwszjTapvvir5fOtETolZg7wKmdbUnycponjIf
+	 HXWayhDCTUFeUlh5JhUuA4/BSxVGe9LBTw93QfJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	David Rheinsberg <david@readahead.eu>,
+	"=?UTF-8?q?J . =20Neusch=C3=A4fer?=" <j.ne@posteo.net>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0471/1266] ARM: imx3: Fix CCM node reference leak
-Date: Tue, 21 Jul 2026 17:15:08 +0200
-Message-ID: <20260721152452.373180114@linuxfoundation.org>
+Subject: [PATCH 6.6 0472/1266] HID: wiimote: Fix table layout and whitespace errors
+Date: Tue, 21 Jul 2026 17:15:09 +0200
+Message-ID: <20260721152452.397314886@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -45,50 +46,163 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: J. Neuschäfer <j.ne@posteo.net>
 
-[ Upstream commit 36d46348eb5fc4bc505cd2290ddd70c25fbe6bb3 ]
+[ Upstream commit 12b7731995ca577d86e02196e99ba9c126f47282 ]
 
-of_find_compatible_node() returns a referenced device node. The i.MX31
-and i.MX35 early init paths use the node to map the CCM registers with
-of_iomap(), but never drop the node reference.
+Some tab characters snuck into the data layout table for turntable
+extensions, which resulted in the table only looking right at a tabstop
+of 4, which is uncommon in the kernel. Change them to the equivalent
+amount of spaces, which should look correct in any editor.
 
-Release the node after the mapping is created.
+While at it, also fix the other whitespace errors (trailing spaces at
+end of line) introduced in the same commit.
 
-Fixes: 2cf98d12958c ("ARM: imx3: Retrieve the CCM base address from devicetree")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 05086f3db530b3 ("HID: wiimote: Add support for the DJ Hero turntable")
+Reviewed-by: David Rheinsberg <david@readahead.eu>
+Signed-off-by: J. Neuschäfer <j.ne@posteo.net>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-imx/mm-imx3.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/hid-wiimote-modules.c | 58 +++++++++++++++----------------
+ 1 file changed, 29 insertions(+), 29 deletions(-)
 
-diff --git a/arch/arm/mach-imx/mm-imx3.c b/arch/arm/mach-imx/mm-imx3.c
-index 0788c5cc7f9e64..9b0b014d7fe276 100644
---- a/arch/arm/mach-imx/mm-imx3.c
-+++ b/arch/arm/mach-imx/mm-imx3.c
-@@ -106,6 +106,7 @@ void __init imx31_init_early(void)
- 	arm_pm_idle = imx31_idle;
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx31-ccm");
- 	mx3_ccm_base = of_iomap(np, 0);
-+	of_node_put(np);
- 	BUG_ON(!mx3_ccm_base);
- }
- #endif /* ifdef CONFIG_SOC_IMX31 */
-@@ -143,6 +144,7 @@ void __init imx35_init_early(void)
- 	arch_ioremap_caller = imx3_ioremap_caller;
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx35-ccm");
- 	mx3_ccm_base = of_iomap(np, 0);
-+	of_node_put(np);
- 	BUG_ON(!mx3_ccm_base);
- }
- #endif /* ifdef CONFIG_SOC_IMX35 */
+diff --git a/drivers/hid/hid-wiimote-modules.c b/drivers/hid/hid-wiimote-modules.c
+index dbccdfa6391672..dccb78bb3afd61 100644
+--- a/drivers/hid/hid-wiimote-modules.c
++++ b/drivers/hid/hid-wiimote-modules.c
+@@ -2403,7 +2403,7 @@ static const struct wiimod_ops wiimod_guitar = {
+ 	.in_ext = wiimod_guitar_in_ext,
+ };
+ 
+-/* 
++/*
+  * Turntable
+  * DJ Hero came with a Turntable Controller that was plugged in
+  * as an extension.
+@@ -2439,15 +2439,15 @@ static const __u16 wiimod_turntable_map[] = {
+ static void wiimod_turntable_in_ext(struct wiimote_data *wdata, const __u8 *ext)
+ {
+ 	__u8 be, cs, sx, sy, ed, rtt, rbg, rbr, rbb, ltt, lbg, lbr, lbb, bp, bm;
+-	/* 
++	/*
+ 	 * Byte |  7   |  6  |  5  |  4  |  3  |  2   |  1   |  0     |
+ 	 *------+------+-----+-----+-----+-----+------+------+--------+
+-	 *   0  | RTT<4:3>   | 		      	  SX <5:0> 			      |
+-	 *   1  | RTT<2:1>   |				  SY <5:0>			      |
++	 *   0  | RTT<4:3>   |                SX <5:0>                |
++	 *   1  | RTT<2:1>   |                SY <5:0>                |
+ 	 *------+------+-----+-----+-----+-----+------+------+--------+
+ 	 *   2  |RTT<0>|  ED<4:3>  |          CS<3:0>        | RTT<5> |
+ 	 *------+------+-----+-----+-----+-----+------+------+--------+
+-	 *   3  |     ED<2:0> 	   | 			 LTT<4:0>			  |
++	 *   3  |     ED<2:0>      |             LTT<4:0>             |
+ 	 *------+------+-----+-----+-----+-----+------+------+--------+
+ 	 *   4  |  0   |  0  | LBR |  B- |  0  |  B+  |  RBR | LTT<5> |
+ 	 *------+------+-----+-----+-----+-----+------+------+--------+
+@@ -2458,20 +2458,20 @@ static void wiimod_turntable_in_ext(struct wiimote_data *wdata, const __u8 *ext)
+ 	 * With Motion+ enabled, it will look like this:
+ 	 * Byte |  8   |  7  |  6  |  5  |  4  |  3   |  2   |  1     |
+ 	 *------+------+-----+-----+-----+-----+------+------+--------+
+-	 *   1  | RTT<4:3>   | 		      	  SX <5:1> 		 |	  0   |
+-	 *   2  | RTT<2:1>   |				  SY <5:1>		 |	  0   |
++	 *   1  | RTT<4:3>   |                SX <5:1>       |    0   |
++	 *   2  | RTT<2:1>   |                SY <5:1>       |    0   |
+ 	 *------+------+-----+-----+-----+-----+------+------+--------+
+ 	 *   3  |RTT<0>|  ED<4:3>  |          CS<3:0>        | RTT<5> |
+ 	 *------+------+-----+-----+-----+-----+------+------+--------+
+-	 *   4  |     ED<2:0> 	   | 			 LTT<4:0>			  |
++	 *   4  |     ED<2:0>      |             LTT<4:0>             |
+ 	 *------+------+-----+-----+-----+-----+------+------+--------+
+ 	 *   5  |  0   |  0  | LBR |  B- |  0  |  B+  | RBR  |  XXXX  |
+ 	 *------+------+-----+-----+-----+-----+------+------+--------+
+ 	 *   6  | LBB  |  0  | RBG |  BE | LBG | RBB  | XXXX |  XXXX  |
+ 	 *------+------+-----+-----+-----+-----+------+------+--------+
+ 	 */
+-	
+-	be = !(ext[5] & 0x10); 
++
++	be = !(ext[5] & 0x10);
+ 	cs = ((ext[2] & 0x1e));
+ 	sx = ext[0] & 0x3f;
+ 	sy = ext[1] & 0x3f;
+@@ -2499,32 +2499,32 @@ static void wiimod_turntable_in_ext(struct wiimote_data *wdata, const __u8 *ext)
+ 	input_report_abs(wdata->extension.input, ABS_HAT1X, ltt);
+ 	input_report_abs(wdata->extension.input, ABS_HAT2X, cs);
+ 	input_report_abs(wdata->extension.input, ABS_HAT3X, ed);
+-	input_report_key(wdata->extension.input, 
+-					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_G_RIGHT], 
++	input_report_key(wdata->extension.input,
++					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_G_RIGHT],
+ 					rbg);
+ 	input_report_key(wdata->extension.input,
+ 					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_R_RIGHT],
+ 					rbr);
+-	input_report_key(wdata->extension.input, 
+-					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_B_RIGHT], 
++	input_report_key(wdata->extension.input,
++					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_B_RIGHT],
+ 					rbb);
+-	input_report_key(wdata->extension.input, 
+-					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_G_LEFT], 
++	input_report_key(wdata->extension.input,
++					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_G_LEFT],
+ 					lbg);
+-	input_report_key(wdata->extension.input, 
+-					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_R_LEFT], 
++	input_report_key(wdata->extension.input,
++					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_R_LEFT],
+ 					lbr);
+-	input_report_key(wdata->extension.input, 
+-					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_B_LEFT], 
++	input_report_key(wdata->extension.input,
++					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_B_LEFT],
+ 					lbb);
+-	input_report_key(wdata->extension.input, 
+-					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_EUPHORIA], 
++	input_report_key(wdata->extension.input,
++					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_EUPHORIA],
+ 					be);
+-	input_report_key(wdata->extension.input, 
+-					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_PLUS], 
++	input_report_key(wdata->extension.input,
++					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_PLUS],
+ 					bp);
+-	input_report_key(wdata->extension.input, 
+-					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_MINUS], 
++	input_report_key(wdata->extension.input,
++					wiimod_turntable_map[WIIMOD_TURNTABLE_KEY_MINUS],
+ 					bm);
+ 
+ 	input_sync(wdata->extension.input);
+@@ -2557,7 +2557,7 @@ static void wiimod_turntable_close(struct input_dev *dev)
+ static int wiimod_turntable_probe(const struct wiimod_ops *ops,
+ 			       struct wiimote_data *wdata)
+ {
+- 	int ret, i;
++	int ret, i;
+ 
+ 	wdata->extension.input = input_allocate_device();
+ 	if (!wdata->extension.input)
+@@ -2594,9 +2594,9 @@ static int wiimod_turntable_probe(const struct wiimod_ops *ops,
+ 	input_set_abs_params(wdata->extension.input,
+ 			     ABS_HAT1X, -8, 8, 0, 0);
+ 	input_set_abs_params(wdata->extension.input,
+-			     ABS_HAT2X, 0, 31, 1, 1);	
++			     ABS_HAT2X, 0, 31, 1, 1);
+ 	input_set_abs_params(wdata->extension.input,
+-			     ABS_HAT3X, 0, 7, 0, 0);	 
++			     ABS_HAT3X, 0, 7, 0, 0);
+ 	ret = input_register_device(wdata->extension.input);
+ 	if (ret)
+ 		goto err_free;
 -- 
 2.53.0
 
