@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45E446EF9C;
-	Tue, 21 Jul 2026 20:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C632C395D8E;
+	Tue, 21 Jul 2026 20:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664566; cv=none; b=TuUwZ9MHEvRvWsG5RF5WztJBW5Dc0tVJbc4AtzwlIzkHYhw4289BFvjosyfsmEheyVjvJevSIcW6uuEU37jnrCfuzMNcSXF7DRbjXIlOBp2aoBCoYUdFPMXP7QvTq02CJlJRXgcEiIIscSsYo4BOn3t8D5/GE8Ed6WXD2dBAaSI=
+	t=1784664569; cv=none; b=rq0dOy2FTd3Zxcn6H3K6mHjtouixhgtNzvIBwuLvTSrw/BLLAoB5kEeWfOCECt2u8RF2DL3GNrSqCP4ZiPt2vp3v3MWWgjzCco8LxbilcYvQFRpnLhOlXbo0gxd8bmzNflpi27VxCI+Os4lLHIqcsNCahDl49BFq7qRMGIkSwIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664566; c=relaxed/simple;
-	bh=XMj89E+/0Igm5i02+rPqpGqo3/XPoDp42as1usVVwBE=;
+	s=arc-20240116; t=1784664569; c=relaxed/simple;
+	bh=j0kJTWjkNycqnHUMn4v/BEonDgGrrxQ8qv+tAPAxg3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jNY+pb6LnS9hTu0IM4+zqWIUCOsuWlrbg4JNgkrEfQLvbKCr9XxrxOPmrgYG/463zT6t5+OH2wcaekr2eFkftuFPHhzEinOz0TzT4ueutZwycVkmXWykiIAUGiYFtprGOcO+2d5UKbn0T8Lxu7KUtm0mdS3lQbzi72ZOvJCZA4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fkCshjTZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wehqk71YbPMpqWflSLk+HyaX8uEKwy4hIoVhpSmV2k4XRDbqga36ySlcr2GlCHBWJJ3fKJtiJvz0xB0TI0ntqhgJf4nMJaByMdCA98iY0I/J3FokMlK+e+A+FCDAQW7SOiZVYw/RqS3dcQsd3c8dSO5Cg0XAesnNLBDHUFSeQvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=puujK2oG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkCshjTZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44AC21F000E9;
-	Tue, 21 Jul 2026 20:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="puujK2oG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0651F000E9;
+	Tue, 21 Jul 2026 20:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664564;
-	bh=6hqO3I3iIty5Wj6RlTVUfKspAPirek6amfih1SFY8YM=;
+	s=korg; t=1784664567;
+	bh=aV3ygJY4zRpqM3GcXyiDLlC7B3QRXlScvQVtSi0GJE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fkCshjTZ7Q0LdtDTRgx79xErnFXadX7WdcOsFy3tezlaWDgnXuZNEjAx04iQjDIRh
-	 NyJ50/xdqXMf+0oVeBYrM+nA54WZCitsGkfhUIemfnZNxUlwy5sc867bvBi1kOOP54
-	 fEBjW40jnduthvZb7p838Kkoq+yI8QsMdXR3M6rY=
+	b=puujK2oG/RpQlIGDx8jGUeodGAi3udzToYOvKk7YultS22+Mzze8tYTWALlq099+7
+	 w2Kwm4FXCrxK1LQ1fU6Ik+Fgz8zsIFbVogl0KQFQK5QSoQBJn0FjcNCgNRU6+01k13
+	 s32XAPZaOvxvf5kG+bj+4zuVW+xYZZwFREq7YjDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Poenaru <vlad.wing@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1205/1276] bpf: Allow LPM map access from sleepable BPF programs
-Date: Tue, 21 Jul 2026 17:27:28 +0200
-Message-ID: <20260721152513.032145225@linuxfoundation.org>
+Subject: [PATCH 6.12 1206/1276] usb: iowarrior: remove inherent race with minor number
+Date: Tue, 21 Jul 2026 17:27:29 +0200
+Message-ID: <20260721152513.055237382@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,115 +50,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlad Poenaru <vlad.wing@gmail.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 2f884d371fafea137afea504d49ee4a7c8d7985b ]
+[ Upstream commit 56dd29088c9d9510c48a8ebad2465248fde36551 ]
 
-trie_lookup_elem() annotates its rcu_dereference_check() walks with
-only rcu_read_lock_bh_held().  Because rcu_dereference_check(p, c)
-resolves to "c || rcu_read_lock_held()", this passes for XDP/NAPI and
-classic RCU readers but fails for sleepable BPF programs, which enter
-via __bpf_prog_enter_sleepable() and hold only rcu_read_lock_trace().
+The driver saves the minor number it gets upon registration
+in its descriptor for debugging purposes. However, there is
+inevitably a window between registration and saving the correct
+minor in a descriptor. During this window the debugging output
+will be wrong.
+As wrong debug output is worse than no debug output, just
+remove it.
 
-trie_update_elem() and trie_delete_elem() have the same problem in a
-different form: they walk the trie with plain rcu_dereference(), which
-asserts rcu_read_lock_held() unconditionally.  Both are reachable from
-sleepable BPF programs via the bpf_map_update_elem / bpf_map_delete_elem
-helpers, and from the syscall path under classic rcu_read_lock().  In
-the writer paths the trie is actually protected by trie->lock (an
-rqspinlock taken across the walk); we never relied on the RCU read-side
-lock to keep nodes alive there.
-
-A sleepable LSM hook that ends up touching an LPM trie therefore
-triggers lockdep on debug kernels:
-
-  =============================
-  WARNING: suspicious RCU usage
-  7.1.0-... Tainted: G            E
-  -----------------------------
-  kernel/bpf/lpm_trie.c:249 suspicious rcu_dereference_check() usage!
-  1 lock held by net_tests/540:
-   #0: (rcu_tasks_trace_srcu_struct){....}-{0:0},
-       at: __bpf_prog_enter_sleepable+0x26/0x280
-  Call Trace:
-   dump_stack_lvl
-   lockdep_rcu_suspicious
-   trie_lookup_elem
-   bpf_prog_..._enforce_security_socket_connect
-   bpf_trampoline_...
-   security_socket_connect
-   __sys_connect
-   do_syscall_64
-
-This is lockdep-only -- no UAF, since Tasks Trace RCU does serialize
-against the trie's reclaim path -- but it spams the console once per
-distinct callsite on every debug kernel running a sleepable BPF LSM
-that touches an LPM trie, which is increasingly common.
-
-For the lookup path, switch the rcu_dereference_check() annotation
-from rcu_read_lock_bh_held() to bpf_rcu_lock_held(), which accepts all
-three contexts (classic, BH, Tasks Trace).  Other map types already
-follow this convention.
-
-For trie_update_elem() and trie_delete_elem(), annotate the walks as
-rcu_dereference_protected(*p, 1) -- matching trie_free() in the same
-file -- since trie->lock is held across the walk.  rqspinlock has no
-lockdep_map, so the predicate degenerates to '1' rather than
-lockdep_is_held(&trie->lock); the protection is real but not
-machine-verifiable.  trie_get_next_key() also uses bare
-rcu_dereference() but is reachable only from the BPF syscall, which
-holds classic rcu_read_lock() before dispatching, so it is left
-untouched.
-
-Fixes: 694cea395fde ("bpf: Allow RCU-protected lookups to happen from bh context")
-Cc: stable@vger.kernel.org
-Signed-off-by: Vlad Poenaru <vlad.wing@gmail.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/r/20260609135558.193287-2-vlad.wing@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://patch.msgid.link/20260312094619.1590556-1-oneukum@suse.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: c602254ba4c1 ("USB: iowarrior: fix use-after-free on disconnect race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/lpm_trie.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/misc/iowarrior.c |   17 +++--------------
+ 1 file changed, 3 insertions(+), 14 deletions(-)
 
---- a/kernel/bpf/lpm_trie.c
-+++ b/kernel/bpf/lpm_trie.c
-@@ -245,7 +245,7 @@ static void *trie_lookup_elem(struct bpf
- 
- 	/* Start walking the trie from the root node ... */
- 
--	for (node = rcu_dereference_check(trie->root, rcu_read_lock_bh_held());
-+	for (node = rcu_dereference_check(trie->root, bpf_rcu_lock_held());
- 	     node;) {
- 		unsigned int next_bit;
- 		size_t matchlen;
-@@ -279,7 +279,7 @@ static void *trie_lookup_elem(struct bpf
- 		 */
- 		next_bit = extract_bit(key->data, node->prefixlen);
- 		node = rcu_dereference_check(node->child[next_bit],
--					     rcu_read_lock_bh_held());
-+					     bpf_rcu_lock_held());
+--- a/drivers/usb/misc/iowarrior.c
++++ b/drivers/usb/misc/iowarrior.c
+@@ -74,7 +74,6 @@ struct iowarrior {
+ 	struct mutex mutex;			/* locks this structure */
+ 	struct usb_device *udev;		/* save off the usb device pointer */
+ 	struct usb_interface *interface;	/* the interface for this device */
+-	unsigned char minor;			/* the starting minor number for this device */
+ 	struct usb_endpoint_descriptor *int_out_endpoint;	/* endpoint for reading (needed for IOW56 only) */
+ 	struct usb_endpoint_descriptor *int_in_endpoint;	/* endpoint for reading */
+ 	struct urb *int_in_urb;		/* the urb for reading data */
+@@ -246,7 +245,6 @@ static void iowarrior_write_callback(str
+  */
+ static inline void iowarrior_delete(struct iowarrior *dev)
+ {
+-	dev_dbg(&dev->interface->dev, "minor %d\n", dev->minor);
+ 	kfree(dev->int_in_buffer);
+ 	usb_free_urb(dev->int_in_urb);
+ 	kfree(dev->read_queue);
+@@ -297,9 +295,6 @@ static ssize_t iowarrior_read(struct fil
+ 		goto exit;
  	}
  
- 	if (!found)
-@@ -362,7 +362,7 @@ static long trie_update_elem(struct bpf_
- 	 */
- 	slot = &trie->root;
+-	dev_dbg(&dev->interface->dev, "minor %d, count = %zd\n",
+-		dev->minor, count);
+-
+ 	/* read count must be packet size (+ time stamp) */
+ 	if ((count != dev->report_size)
+ 	    && (count != (dev->report_size + 1))) {
+@@ -379,8 +374,6 @@ static ssize_t iowarrior_write(struct fi
+ 		retval = -ENODEV;
+ 		goto exit;
+ 	}
+-	dev_dbg(&dev->interface->dev, "minor %d, count = %zd\n",
+-		dev->minor, count);
+ 	/* if count is 0 we're already done */
+ 	if (count == 0) {
+ 		retval = 0;
+@@ -523,9 +516,6 @@ static long iowarrior_ioctl(struct file
+ 		goto error_out;
+ 	}
  
--	while ((node = rcu_dereference(*slot))) {
-+	while ((node = rcu_dereference_protected(*slot, 1))) {
- 		matchlen = longest_prefix_match(trie, node, key);
+-	dev_dbg(&dev->interface->dev, "minor %d, cmd 0x%.4x, arg %ld\n",
+-		dev->minor, cmd, arg);
+-
+ 	retval = 0;
+ 	switch (cmd) {
+ 	case IOW_WRITE:
+@@ -671,8 +661,6 @@ static int iowarrior_release(struct inod
+ 	if (!dev)
+ 		return -ENODEV;
  
- 		if (node->prefixlen != matchlen ||
-@@ -483,7 +483,7 @@ static long trie_delete_elem(struct bpf_
- 	trim = &trie->root;
- 	trim2 = trim;
- 	parent = NULL;
--	while ((node = rcu_dereference(*trim))) {
-+	while ((node = rcu_dereference_protected(*trim, 1))) {
- 		matchlen = longest_prefix_match(trie, node, key);
+-	dev_dbg(&dev->interface->dev, "minor %d\n", dev->minor);
+-
+ 	/* lock our device */
+ 	mutex_lock(&dev->mutex);
  
- 		if (node->prefixlen != matchlen ||
+@@ -775,6 +763,7 @@ static int iowarrior_probe(struct usb_in
+ 	struct usb_host_interface *iface_desc;
+ 	int retval = -ENOMEM;
+ 	int res;
++	int minor;
+ 
+ 	/* allocate memory for our device state and initialize it */
+ 	dev = kzalloc(sizeof(struct iowarrior), GFP_KERNEL);
+@@ -890,12 +879,12 @@ static int iowarrior_probe(struct usb_in
+ 		goto error;
+ 	}
+ 
+-	dev->minor = interface->minor;
++	minor = interface->minor;
+ 
+ 	/* let the user know what node this device is now attached to */
+ 	dev_info(&interface->dev, "IOWarrior product=0x%x, serial=%s interface=%d "
+ 		 "now attached to iowarrior%d\n", dev->product_id, dev->chip_serial,
+-		 iface_desc->desc.bInterfaceNumber, dev->minor - IOWARRIOR_MINOR_BASE);
++		 iface_desc->desc.bInterfaceNumber, minor - IOWARRIOR_MINOR_BASE);
+ 	return retval;
+ 
+ error:
 
 
