@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1959646D2DD;
-	Tue, 21 Jul 2026 18:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71D146D2D1;
+	Tue, 21 Jul 2026 18:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657271; cv=none; b=CURIC0MPKsXLPo+tYPjP/UL34jLbDMvL09+RSF9wR0YZ76hgzrSDM0B5ocELXPXuBYeFkcfnRz9j57ZaZAiKjx9+wo/QxP+FYpYjMYXrLz+Tfxztlgd0eqJgq5vsQxAkP19JjXqPCrAAY2fLJyvs/tdxflX98ofT3Dss2mEqMic=
+	t=1784657273; cv=none; b=e2GK1vB2iNLY3UsfyYrKGgXqTGHB1SCm0P5WgzEQdeixjSrd2I83px7v4/HW4s4GCiO4IoRnu9H7sZdtfhUaA2VKHDrJHCviPTqahp2dDS6NNaIcbzZgHlNejs5t1MsojSHYjNKxAUe8IxHYch390cpzpdfTMEuLU1EMZEI7WeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657271; c=relaxed/simple;
-	bh=wU8HUHeKVUYejpLR1rg9QSYe+iMZT8j6eB+hhd5qrIg=;
+	s=arc-20240116; t=1784657273; c=relaxed/simple;
+	bh=fU1z0li/o6ly3Nrrrnb7r1A05q0+TuC3SKj6jkvp3JM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c2/WOXCE3oI16nsAmpDb3hryep5HkDHXDT3cyx5LqP6VUtTTVPbYAvI2NLTkCfQEt/1YivqHuHmCG14uycjcdG2XfGJdc+lygWBSzsxtrlu7J8vRO7ok2nza+wMoPjLsRAbwAUp3rZp69pP3fCA6vjCQeK82vhMAwSEfwm3U4U4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dlto/W3C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kj0Z/QA3Ysy0HGgihz4RfPWufE6cBE1jG7CRmo7CdIBdflQnjk6ZxMw0zjBnyXc2JcD34yxHc8KxvQJhXvt0yUwU4UEjThe6qPfQCe1R1PzDeapbp4ftc7O2mmZ3QjRgJfaCkLTlfkTbHgFjNZkTKYuvk+rugAELHbkj2Dco9j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BA9iueYx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dlto/W3C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D2F51F000E9;
-	Tue, 21 Jul 2026 18:07:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BA9iueYx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F6F1F00A3F;
+	Tue, 21 Jul 2026 18:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657269;
-	bh=aCtit741rUS3CVw9IuS1jAaOccfXEwlAlfJiuONcnU4=;
+	s=korg; t=1784657271;
+	bh=omWrXdZL9lqsnFCKK56bR7cZSA3LmMsnfxVugzGnEus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dlto/W3CAdYUrIE4MdlxhsV6jNbhXIqdu6adps7YKg62pLKXHg5RI+xvaWdGLCzCt
-	 dQt+QizDXXruaER7K/RYHfrMEYXAQuoJvPF8L+lXEmU0HWDy8PSIMJO8FWZCZ8y1TE
-	 +DDA9XoZ8HTuO6Fi1kp8AUshpnN8iHIR11TNvQ5E=
+	b=BA9iueYxBYnx8KKWw98v7vJy9cBB7LqWTQaa/K0S1plouhIiwC/ZxKwfaIsIPMXKI
+	 tRAaE53AE34ZL9J0h8OdWdprGqyvPxTJRGLt5NPoGd7Ly0aqCLkqT7XHn+cvfHdpzj
+	 bcWVHxj9I0u/RMlBHLweQXwmAv613ehX6T66X6KY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0657/1611] mshv: add bounds check on vp_index in mshv_intercept_isr()
-Date: Tue, 21 Jul 2026 17:12:53 +0200
-Message-ID: <20260721152530.163524667@linuxfoundation.org>
+Subject: [PATCH 6.18 0658/1611] dmaengine: qcom: gpi: set DMA_PRIVATE capability
+Date: Tue, 21 Jul 2026 17:12:54 +0200
+Message-ID: <20260721152530.185948302@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,43 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
 
-[ Upstream commit a4ffc59238be84dd1c26bf1c001543e832674fc6 ]
+[ Upstream commit 4e351f408743354d54ee1af5193fc78234f2044e ]
 
-mshv_intercept_isr() extracts vp_index from the hypervisor message
-payload and uses it directly to index into pt_vp_array without
-validation. handle_bitset_message() and handle_pair_message() already
-validate vp_index against MSHV_MAX_VPS before array access.
+The GPI DMA controller is only responsible for QUP peripherals, and
+cannot work as a general-purpose DMA accelerator.
 
-Add the same MSHV_MAX_VPS bounds check for consistency with the other
-message handlers.
+Set DMA_PRIVATE capability for it.
 
-Fixes: 621191d709b1 ("Drivers: hv: Introduce mshv_root module to expose /dev/mshv to VMMs")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+This fixes error messages about GPI being shown when an async-tx
+consumer is loaded.
+
+Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
+Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260602070344.3707256-1-zhengxingda@iscas.ac.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/mshv_synic.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/dma/qcom/gpi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hv/mshv_synic.c b/drivers/hv/mshv_synic.c
-index e6b6381b7c369d..1a822beae2390a 100644
---- a/drivers/hv/mshv_synic.c
-+++ b/drivers/hv/mshv_synic.c
-@@ -375,6 +375,11 @@ mshv_intercept_isr(struct hv_message *msg)
- 	 */
- 	vp_index =
- 	       ((struct hv_opaque_intercept_message *)msg->u.payload)->vp_index;
-+	/* This shouldn't happen, but just in case. */
-+	if (unlikely(vp_index >= MSHV_MAX_VPS)) {
-+		pr_debug("VP index %u out of bounds\n", vp_index);
-+		goto unlock_out;
-+	}
- 	vp = partition->pt_vp_array[vp_index];
- 	if (unlikely(!vp)) {
- 		pr_debug("failed to find VP %u\n", vp_index);
+diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+index 8908b7c7190074..51d52a140c1b3a 100644
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -2253,6 +2253,7 @@ static int gpi_probe(struct platform_device *pdev)
+ 	/* clear and Set capabilities */
+ 	dma_cap_zero(gpi_dev->dma_device.cap_mask);
+ 	dma_cap_set(DMA_SLAVE, gpi_dev->dma_device.cap_mask);
++	dma_cap_set(DMA_PRIVATE, gpi_dev->dma_device.cap_mask);
+ 
+ 	/* configure dmaengine apis */
+ 	gpi_dev->dma_device.directions = BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO_DEV);
 -- 
 2.53.0
 
