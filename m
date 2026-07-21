@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537EF3B42F9;
-	Tue, 21 Jul 2026 20:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928653B7B70;
+	Tue, 21 Jul 2026 20:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666529; cv=none; b=jeKY7/BQsWnFWEqAEqNP3LBK1mkk0waDlIwZbk9zEAXTRE5ps/tTS561XidCn9QrUQP2lj2AX13FFiuF0D7MdtySGi/7jOKbHReLStpzO7Iy/7JiYn/qEjdVx4C6jQ+ijNTwQPQe8cGV+ufIphmX6RDgGg36XKYe7eRzh6HjH+g=
+	t=1784666531; cv=none; b=NcgJJ8FcfnaMI2HqZW+NU/Oi8joWzGezcSembVt1RLiIbyqThAjjxzD/euDqhHeTnm/yOZrlFj6WJWqiOLGvcrPBscf8ZA4NJ16xShvmlO/f60Vq4LgHYJgysKJUPggH4mjJwpsFiapKKHjjZ/2Sc7EWM7WQHQpIxs/K2I3uYT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666529; c=relaxed/simple;
-	bh=+0ZUGMICtJ3fWvGvCZCCeykrZno3m22/NibFVciCRkc=;
+	s=arc-20240116; t=1784666531; c=relaxed/simple;
+	bh=/ATYRqJf345FgIgbmFR/ROF0sWu5rCLR8Yca+NXlKns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GS3L0Z4cuf0r5BGiJfcrhl6PVk0N5X8QZHSm1utH8DdbOd5gme0SIaM1OheemSzki156XP/Q30lWxEhRkI2yTWpZbVO2NTOzk5jqqT1E7Mwp452oGah/rL0+eQ8Kr97Dtf24g5BXur6DYwNOEf54ERE+VqoJWxba6D1fYQVCyCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XcuFN5HJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hFpIRFOpcEYKK9n1+A4drVowag5+o04CiCZll5GbsQWspRIS2PBXwTMHDYbHgMrpz46eeKjr5XvIHQWX/KXzk2tDa4VT9I562P3ZsCwEXE4mh9ePe1dgddx5e4xUA2bYRRZQQyTvMluHzfjoo1OEhIL1SSl8xXjYRfo2CTI7Qp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1s94H0+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XcuFN5HJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6001C1F00A3A;
-	Tue, 21 Jul 2026 20:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1s94H0+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 049F11F000E9;
+	Tue, 21 Jul 2026 20:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666527;
-	bh=ysFXWLsoFJRuKlMSRQzx0TTauWkAm7o0apLl0NoQMCY=;
+	s=korg; t=1784666530;
+	bh=V2cAsw7vIWfbF63+A+gSe515DhxQqzYOhOEpo2wQABo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XcuFN5HJfSTn08zFVsX2W1FCJpR0HbmN4z5vdwjzJFuMcxetD08W6mlF1c/w/Y6Gj
-	 z8Ea6uH2Cs+kAiMZNMlnL+T9kqlt8cIBa5mQekEU1sNwREWDyz5i8VKaweH03AfIFA
-	 A8HYXQV5fLVKEwnGxvp1lU8h5ersDIuofBfWZjuo=
+	b=w1s94H0+OYDD4MCSkL6oBOA1fF55546dghV3Ef9VrI2HiBCbrPjDDMWqpHV87EPsz
+	 bZs74NdO83HXF0CJohuOAMl4S7ggdPRBRgyILeYcUBiZ24E+8/y+F0rVUEvB4FgafQ
+	 /3BDDTHU+6Ior8imNASvw2AHKNPKld8Zb09AuNcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	"Zhang, Yanmin" <yanmin_zhang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0717/1266] perf machine: Use snprintf() for guestmount path construction
-Date: Tue, 21 Jul 2026 17:19:14 +0200
-Message-ID: <20260721152457.912209757@linuxfoundation.org>
+Subject: [PATCH 6.6 0691/1266] perf symbols: Add bounds checks to elf_read_build_id() note iteration
+Date: Tue, 21 Jul 2026 17:18:48 +0200
+Message-ID: <20260721152457.317184455@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -54,53 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit fe63d3bca288c5bb983304efd5fc3a5ff3183403 ]
+[ Upstream commit acc56d3941fc2997a5a21ea9233a8ac3d87c4f2f ]
 
-machines__findnew() and machines__create_guest_kernel_maps() use
-sprintf() to build paths by prepending symbol_conf.guestmount.
-Both write into PATH_MAX stack buffers, but guestmount comes from
-user configuration and is not length-checked.  A guestmount path
-at or near PATH_MAX causes a stack buffer overflow.
+elf_read_build_id() iterates ELF notes using pointer arithmetic
+driven by n_namesz and n_descsz from the note headers.  Neither
+the note header read nor the subsequent name/desc advances are
+checked against the section boundary.  A malformed ELF file with
+oversized note sizes causes out-of-bounds reads past the section
+data buffer.
 
-Switch to snprintf() with sizeof() to prevent overflow.  The
-subsequent access()/fopen() calls will fail on a truncated path.
+Add two bounds checks: verify the note header fits within the
+remaining section data, and verify that namesz + descsz (after
+alignment) fits before advancing the pointer.
 
-Fixes: a1645ce12adb6c9c ("perf: 'perf kvm' tool for monitoring guest performance from host")
+Fixes: fd7a346ea292074e ("perf symbols: Filename__read_build_id should look at .notes section too")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Zhang, Yanmin <yanmin_zhang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/perf/util/symbol-elf.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index 2f5a5245483ede..9e462ebdaca686 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -369,7 +369,7 @@ struct machine *machines__findnew(struct machines *machines, pid_t pid)
- 	if ((pid != HOST_KERNEL_ID) &&
- 	    (pid != DEFAULT_GUEST_KERNEL_ID) &&
- 	    (symbol_conf.guestmount)) {
--		sprintf(path, "%s/%d", symbol_conf.guestmount, pid);
-+		snprintf(path, sizeof(path), "%s/%d", symbol_conf.guestmount, pid);
- 		if (access(path, R_OK)) {
- 			static struct strlist *seen;
+diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
+index 4a2fb6e3d4ef38..96bb84a8c5c2ed 100644
+--- a/tools/perf/util/symbol-elf.c
++++ b/tools/perf/util/symbol-elf.c
+@@ -908,10 +908,24 @@ static int elf_read_build_id(Elf *elf, void *bf, size_t size)
+ 	ptr = data->d_buf;
+ 	while (ptr < (data->d_buf + data->d_size)) {
+ 		GElf_Nhdr *nhdr = ptr;
+-		size_t namesz = NOTE_ALIGN(nhdr->n_namesz),
+-		       descsz = NOTE_ALIGN(nhdr->n_descsz);
++		size_t namesz, descsz, remaining;
+ 		const char *name;
  
-@@ -1415,9 +1415,9 @@ int machines__create_guest_kernel_maps(struct machines *machines)
- 					 namelist[i]->d_name);
- 				continue;
- 			}
--			sprintf(path, "%s/%s/proc/kallsyms",
--				symbol_conf.guestmount,
--				namelist[i]->d_name);
-+			snprintf(path, sizeof(path), "%s/%s/proc/kallsyms",
-+				 symbol_conf.guestmount,
-+				 namelist[i]->d_name);
- 			ret = access(path, R_OK);
- 			if (ret) {
- 				pr_debug("Can't access file %s\n", path);
++		/* ensure the note header fits within the section */
++		if (ptr + sizeof(*nhdr) > data->d_buf + data->d_size)
++			break;
++
++		namesz = NOTE_ALIGN(nhdr->n_namesz);
++		descsz = NOTE_ALIGN(nhdr->n_descsz);
++
++		/* validate individually to avoid size_t overflow on 32-bit */
++		remaining = data->d_buf + data->d_size - ptr - sizeof(*nhdr);
++		if (namesz > remaining || descsz > remaining - namesz) {
++			pr_warning("%s: oversized note: n_namesz=%u, n_descsz=%u\n",
++				   __func__, nhdr->n_namesz, nhdr->n_descsz);
++			break;
++		}
++
+ 		ptr += sizeof(*nhdr);
+ 		name = ptr;
+ 		ptr += namesz;
 -- 
 2.53.0
 
