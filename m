@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C858D44AB9A;
-	Tue, 21 Jul 2026 21:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEC1404BF6;
+	Tue, 21 Jul 2026 21:36:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669786; cv=none; b=Ct2HIJNHnJ0qApHDgR1z7EkOAThOlbp9EPWF5cRh81bzxCd3Lg2G8uLQtvXMIrQ9ZV7hXdfpJ5oaa0+c0PT2BnJhCzcRlz5tisF5iPYXVkrZjA+zxDdvyfxAa2ywlfjTrbWF03smehQEZRZNOXJSr8z7z8mSD75qkBYY94GiP6o=
+	t=1784669789; cv=none; b=KSHmWyX74LbM7W8SQ0+YntCnJgt9b7L3yG5fG4s3RlyycRfGMvsU0cktY0UUi6objN06woWl7VPi5a19BT8va7QESBXeKDdqjWlDhwUwaZVApC+/OfX01rKP2h8QYrsFa8NWJ03av+I/8s3wXzz1T/PgibEAxcR61CdZva9I5D8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669786; c=relaxed/simple;
-	bh=6y0ofn0rWl8hOwhacHv9Q0xJ+2rvqDwpXQVR4zaEV9U=;
+	s=arc-20240116; t=1784669789; c=relaxed/simple;
+	bh=1opCgE+CyCLPOcPXBnTCQccquNDd6gdnN+IwVwIB97Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QBqsAWUVZFMwCUuI0iO+je37mugw190UI3o+HZC/Q+Va1y6iM07q7cCnFfstrhwU3q/Cdf2mZ5sNWeiZRujLOwBPSzZuIEzcUYAmUrp7jVgmww9Yf2j1qUUDFdspTIlgQV4davDjRN7mmNFCbauoggNKaSTBdKU5GmNedGmPnkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTDJak9/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GSQd2bMHTYIxAk5LPauU81Q0zGvvgY3jQnvAxxH5Mqk4rUwSMDL9h3G97g5iP4t9oB6BEw2MUoU6wHQEltg9EDpty9m3S5qFfXajZiUSAdu3lZ3SAoTDi/jtHHvhHN0tUS5sGX2TYiyyg48j0KTGcLCS+D6tv/A6frHzM3wOiIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sbowEgLp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTDJak9/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34BE61F000E9;
-	Tue, 21 Jul 2026 21:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sbowEgLp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B931F000E9;
+	Tue, 21 Jul 2026 21:36:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669785;
-	bh=E85urc6veYcrnIhcWF1A3fsoz3Qf9lB6DEMUsbDNLt0=;
+	s=korg; t=1784669788;
+	bh=s0kqsqobDtA46ap07VH1wbHNK2z06S4pSIDUcAxnivU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dTDJak9/66mVaWcUgYGhIONJ0Q2L3WFraIl3rqSoXigd9VPeCbqvLAj4CTu+aOMbK
-	 48kf7Cd4pSaM+EbscWTEnce+L8JuuyjJMAdnrXb8p6oRRm0aWjPJ8WS7+DSxaeiozI
-	 xeQOm4N88hqAAHTJycViysbgOu6dFF0r6YR2A364=
+	b=sbowEgLpiIoIulqCU4E6cD61gUtuVIxO5IV/t4/CfdOn4vu9z/HOAxdux8JIvOmoK
+	 8tMdueOBkEcXU88PjHUtlsKBpxKdC93dhjx1NvOzxQ3I/0ojINwaApstZXi3A8habm
+	 9TXh/qdKe8dv+i7zdROe35WmRaj/YKMyi9xztqD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhixing Chen <running910@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <dstsmallbird@foxmail.com>,
+	Wyatt Feng <bronzed_45_vested@icloud.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Phil Sutter <phil@nwl.cc>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0685/1067] netfilter: ip6tables: mark malformed IPv6 extension headers for hotdrop
-Date: Tue, 21 Jul 2026 17:21:26 +0200
-Message-ID: <20260721152439.922891058@linuxfoundation.org>
+Subject: [PATCH 6.1 0686/1067] netfilter: xt_connmark: reject invalid shift parameters
+Date: Tue, 21 Jul 2026 17:21:27 +0200
+Message-ID: <20260721152439.944115825@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,75 +56,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhixing Chen <running910@gmail.com>
+From: Wyatt Feng <bronzed_45_vested@icloud.com>
 
-[ Upstream commit 43ccc20b5a733226417832cf16ef45322e594990 ]
+[ Upstream commit 1b47026fb4b35bac850ad6e8a4ad7fc018e09ebc ]
 
-The ah, hbh and rt matches check that the fixed extension header is
-present, then use the header length field to derive the advertised
-extension header length for matching.
+Revision 2 of the CONNMARK target accepts user-controlled shift
+parameters and applies them to 32-bit mark values in
+connmark_tg_shift().
 
-For the ah match, add the missing advertised-length check. For hbh
-and rt, update the existing advertised-length checks. In all three
-cases, set hotdrop to true before returning false when the advertised
-extension header length exceeds the available skb data.
+A shift_bits value of 32 or more triggers an undefined-shift bug when
+the rule is evaluated. Invalid shift_dir values are also accepted and
+silently fall back to the left-shift path.
 
-Returning false treats the packet as a rule mismatch. Set hotdrop to
-true and drop malformed packets so they cannot bypass rules intended
-to drop packets with these IPv6 extension headers.
+Reject invalid revision-2 shift parameters in connmark_tg_check() so
+malformed rules fail at installation time, before they can reach the
+packet path.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Zhixing Chen <running910@gmail.com>
+Fixes: 472a73e00757 ("netfilter: xt_conntrack: Support bit-shifting for CONNMARK & MARK targets.")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <dstsmallbird@foxmail.com>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
+Reviewed-by: Ren Wei <enjou1224z@gmail.com>
+Reviewed-by: Phil Sutter <phil@nwl.cc>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/netfilter/ip6t_ah.c  | 5 +++++
- net/ipv6/netfilter/ip6t_hbh.c | 1 +
- net/ipv6/netfilter/ip6t_rt.c  | 3 ++-
- 3 files changed, 8 insertions(+), 1 deletion(-)
+ net/netfilter/xt_connmark.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/netfilter/ip6t_ah.c b/net/ipv6/netfilter/ip6t_ah.c
-index 70da2f2ce064ca..1258783ed87629 100644
---- a/net/ipv6/netfilter/ip6t_ah.c
-+++ b/net/ipv6/netfilter/ip6t_ah.c
-@@ -56,6 +56,11 @@ static bool ah_mt6(const struct sk_buff *skb, struct xt_action_param *par)
- 	}
+diff --git a/net/netfilter/xt_connmark.c b/net/netfilter/xt_connmark.c
+index 4277084de2e70c..2cf27f7d59b95f 100644
+--- a/net/netfilter/xt_connmark.c
++++ b/net/netfilter/xt_connmark.c
+@@ -112,6 +112,16 @@ static int connmark_tg_check(const struct xt_tgchk_param *par)
+ 	return ret;
+ }
  
- 	hdrlen = ipv6_authlen(ah);
-+	if (skb->len - ptr < hdrlen) {
-+		/* Packet smaller than its length field */
-+		par->hotdrop = true;
-+		return false;
-+	}
- 
- 	pr_debug("IPv6 AH LEN %u %u ", hdrlen, ah->hdrlen);
- 	pr_debug("RES %04X ", ah->reserved);
-diff --git a/net/ipv6/netfilter/ip6t_hbh.c b/net/ipv6/netfilter/ip6t_hbh.c
-index 450dd53846a2f7..6d1a5d2026a678 100644
---- a/net/ipv6/netfilter/ip6t_hbh.c
-+++ b/net/ipv6/netfilter/ip6t_hbh.c
-@@ -75,6 +75,7 @@ hbh_mt6(const struct sk_buff *skb, struct xt_action_param *par)
- 	hdrlen = ipv6_optlen(oh);
- 	if (skb->len - ptr < hdrlen) {
- 		/* Packet smaller than it's length field */
-+		par->hotdrop = true;
- 		return false;
- 	}
- 
-diff --git a/net/ipv6/netfilter/ip6t_rt.c b/net/ipv6/netfilter/ip6t_rt.c
-index 5561bd9cea8185..278b52752f3645 100644
---- a/net/ipv6/netfilter/ip6t_rt.c
-+++ b/net/ipv6/netfilter/ip6t_rt.c
-@@ -56,7 +56,8 @@ static bool rt_mt6(const struct sk_buff *skb, struct xt_action_param *par)
- 
- 	hdrlen = ipv6_optlen(rh);
- 	if (skb->len - ptr < hdrlen) {
--		/* Pcket smaller than its length field */
-+		/* Packet smaller than its length field */
-+		par->hotdrop = true;
- 		return false;
- 	}
- 
++static int connmark_tg_check_v2(const struct xt_tgchk_param *par)
++{
++	const struct xt_connmark_tginfo2 *info = par->targinfo;
++
++	if (info->shift_dir > D_SHIFT_RIGHT || info->shift_bits >= 32)
++		return -EINVAL;
++
++	return connmark_tg_check(par);
++}
++
+ static void connmark_tg_destroy(const struct xt_tgdtor_param *par)
+ {
+ 	nf_ct_netns_put(par->net, par->family);
+@@ -162,7 +172,7 @@ static struct xt_target connmark_tg_reg[] __read_mostly = {
+ 		.name           = "CONNMARK",
+ 		.revision       = 2,
+ 		.family         = NFPROTO_IPV4,
+-		.checkentry     = connmark_tg_check,
++		.checkentry     = connmark_tg_check_v2,
+ 		.target         = connmark_tg_v2,
+ 		.targetsize     = sizeof(struct xt_connmark_tginfo2),
+ 		.destroy        = connmark_tg_destroy,
+@@ -183,7 +193,7 @@ static struct xt_target connmark_tg_reg[] __read_mostly = {
+ 		.name           = "CONNMARK",
+ 		.revision       = 2,
+ 		.family         = NFPROTO_IPV6,
+-		.checkentry     = connmark_tg_check,
++		.checkentry     = connmark_tg_check_v2,
+ 		.target         = connmark_tg_v2,
+ 		.targetsize     = sizeof(struct xt_connmark_tginfo2),
+ 		.destroy        = connmark_tg_destroy,
 -- 
 2.53.0
 
