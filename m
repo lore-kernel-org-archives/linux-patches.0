@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B8946C4C0;
-	Tue, 21 Jul 2026 18:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093C13909A9;
+	Tue, 21 Jul 2026 18:24:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658244; cv=none; b=YZGpcmqAMTVqFjxzF1SUaDdPIB6BSsAuJXOOLLFf1NV4K4dIz1t2Qn+vEYpuwarRlOxcUVJWXRx0aTbxXMWfRo8QO8a44CtOCOox784tidGyM5Jkf8ImPys5ZfDXgL9BewyLaymi+YYusM0uQwiAjTRjR8XquJiogyPZN85V1rs=
+	t=1784658247; cv=none; b=PAYiXVW2iVj8EB7e5A5N8Ti3I7aqk/RWLjvXuIIrRCbZPEpqXq2aBocsLaGXSCP+boxkR1Bfk3YZ2Q1UbgSOBQQbtZUQuKPDkCnjkisABSniA6p2OPVXejemd4SQVUYw7f6ETkGgylnzBX73GdK6KOGrbUqdCs7s/jeyoecb+Pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658244; c=relaxed/simple;
-	bh=C7E9qxVsI794Ylxb7Mi4lD5uP1jZqzETMgXeNoKAroQ=;
+	s=arc-20240116; t=1784658247; c=relaxed/simple;
+	bh=qXUaJqXCMtUUEAH+VWkSVERYBqmESEKvyVvX8fo3Afg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e8lNPcsUD/cKL7VMACNMdt7jtrf5452KqWzG9913OkAe4fdnLh0YPrjiDxmxcvDXi+2VZMytw8421iuujHh0aUSgNacfOyD/qiW7sQOt+4iGChDCOExD/qBoSpxNwxAvxXW0PMLUo/umkgtd+L+HzMULSlMUob3cczzDBG+sJ/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=APem7OUE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BaNkRAoz2Oriau6eqhhHsBy6R63/I9lc5bdgBy9+F4SGTrQO8Awyiuxd93nEel0uuTQbky2suVGCBa6ey8phN5B9pFkhmzJcOKXSxAx543M9Ey8d4MVPX3zFX1Q3fluq4bEWaLWZ/fqnK5qM7xOQjoWyP05wYkSybQVYwyBeSrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLGGTxbS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="APem7OUE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4FD11F000E9;
-	Tue, 21 Jul 2026 18:24:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLGGTxbS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F4221F000E9;
+	Tue, 21 Jul 2026 18:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658243;
-	bh=Ax0BGvHkPyZdMa3MxmYwOQbDhBex799kzFc3ALjeE+c=;
+	s=korg; t=1784658245;
+	bh=rayQBOE54Go6d/2ClfK7bdUoPomv0sKBp2FOFEpkA/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=APem7OUE2sdRgjGZMU8VAxIZUWgSYuZSAtFm/hbGFs+P24qEW3/sWUbUQn9UF2i59
-	 6MB3AWiduMj1CVZYNXz2+F+kKdi441H5Y6dC23YclQBz2I/CJ5jdsrJDAoNfvhBcvk
-	 IXjDE8EQ6oMrw8RHXoSFoQQh/5P0BoZvlZJonUHg=
+	b=WLGGTxbS8UKQPAzG15m3a5UW7TOtQBS9h2HxtGXjhNbpZUh2YDPO7XmQwd+unDkkm
+	 C0QQLdzmaF5TCNe/Ov/xcJD8d5Zs9Vq67vacoRKAa6zT/gGoceljZnAeVp38WR8kH3
+	 YnehZTHEDX8KJCMZ/Zealk6kzaub0p1PMp26yR6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
+	Karuna Ramkumar <rkaruna@google.com>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1027/1611] ata: sata_gemini: unwind clocks on IDE pinctrl errors
-Date: Tue, 21 Jul 2026 17:19:03 +0200
-Message-ID: <20260721152538.495557864@linuxfoundation.org>
+Subject: [PATCH 6.18 1028/1611] ata: libata-scsi: limit simulated SCSI command copy to response length
+Date: Tue, 21 Jul 2026 17:19:04 +0200
+Message-ID: <20260721152538.520182640@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,45 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Karuna Ramkumar <rkaruna@google.com>
 
-[ Upstream commit c0ace4130e813acbabdfaa28d4e94a849c2ffdd7 ]
+[ Upstream commit cd64be0ecd399fa2b1ab60b3aaf2b2b744243467 ]
 
-gemini_sata_bridge_init() prepares and enables both SATA PCLKs, then
-disables them again while keeping the clocks prepared for later bridge
-start and stop operations. If gemini_setup_ide_pins() fails after that,
-gemini_sata_probe() returns directly and skips the existing
-out_unprep_clk unwind path.
+The function ata_scsi_rbuf_fill() is used to copy the response of
+emulated SCSI commands from ata_scsi_rbuf to the SCSI command's
+scatterlist.
 
-Route the IDE pinctrl failure through out_unprep_clk so the clocks
-prepared by gemini_sata_bridge_init() are unprepared before probe
-fails.
+Currently, sg_copy_from_buffer() is called with the size argument
+set to ATA_SCSI_RBUF_SIZE (2048 bytes). Since ata_scsi_rbuf is
+zeroed out before the simulation actor is invoked, copying the
+full buffer size causes the remainder of the SCSI command's
+transfer buffer (beyond the actual response length 'len') to be
+overwritten with zeroes. This clobbers any pre-existing sentinel
+values or data in the caller's buffer tail, even though the
+correct residual count is reported via scsi_set_resid().
 
-Fixes: d872ced29d5f ("ata: sata_gemini: Introduce explicit IDE pin control")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
+Fix this by passing the actual response length 'len' as the copy
+size to sg_copy_from_buffer(), ensuring that the tail of the
+caller's buffer remains untouched. Also, add a defensive check
+to ensure that the actor does not return a length exceeding the
+static buffer capacity. If this occurs, trigger a WARN_ON(),
+fail the command with an aborted command error, and return
+immediately without copying any data.
+
+The fix was tested by invoking an SCSI SG_IO INQUIRY on
+an ATA disk on vanilla build, and build with the fix. Confirmed
+that the input buffer's tail end remains unmodified with the fix.
+
+Fixes: 5251ae224d8d ("ata: libata-scsi: Return residual for emulated SCSI commands")
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Karuna Ramkumar <rkaruna@google.com>
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_gemini.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/libata-scsi.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ata/sata_gemini.c b/drivers/ata/sata_gemini.c
-index 530ee26b301210..56ae2820df5888 100644
---- a/drivers/ata/sata_gemini.c
-+++ b/drivers/ata/sata_gemini.c
-@@ -353,7 +353,7 @@ static int gemini_sata_probe(struct platform_device *pdev)
- 	if (sg->ide_pins) {
- 		ret = gemini_setup_ide_pins(dev);
- 		if (ret)
--			return ret;
-+			goto out_unprep_clk;
- 	}
- 
- 	dev_info(dev, "set up the Gemini IDE/SATA nexus\n");
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index c7d2addf348743..46ef1ef6f81282 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -1930,8 +1930,13 @@ static void ata_scsi_rbuf_fill(struct ata_device *dev, struct scsi_cmnd *cmd,
+ 	memset(ata_scsi_rbuf, 0, ATA_SCSI_RBUF_SIZE);
+ 	len = actor(dev, cmd, ata_scsi_rbuf);
+ 	if (len) {
++		if (WARN_ON(len > ATA_SCSI_RBUF_SIZE)) {
++			ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0, 0);
++			spin_unlock_irqrestore(&ata_scsi_rbuf_lock, flags);
++			return;
++		}
+ 		sg_copy_from_buffer(scsi_sglist(cmd), scsi_sg_count(cmd),
+-				    ata_scsi_rbuf, ATA_SCSI_RBUF_SIZE);
++				    ata_scsi_rbuf, len);
+ 		cmd->result = SAM_STAT_GOOD;
+ 		if (scsi_bufflen(cmd) > len)
+ 			scsi_set_resid(cmd, scsi_bufflen(cmd) - len);
 -- 
 2.53.0
 
