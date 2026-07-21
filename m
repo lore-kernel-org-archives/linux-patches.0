@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84999356746;
-	Tue, 21 Jul 2026 19:56:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69AC3644B3;
+	Tue, 21 Jul 2026 19:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663804; cv=none; b=kZE7jx5jr6afZEiY3AIGR5/gRLIJzSipbpnWXkq9Vt7Ab8EIR/hkkGuNLqIVFRIQTfE7aK+Q6FrtMm8L3J0ILdQbVXdLKnUSp3qweGLjTqRrVxzyOMkP7hqlMXlpwCL8XwMUI6xXZbu/pFoHx5NOiJdlHkt7W+KcKHf4mjIfswE=
+	t=1784663806; cv=none; b=Z/yEgYIm4AobeeUAz+0LZvjAxzOaiVW4TsVtLrLjfEH41RwheXJF6VrQIEatqPHbcl4DiyG5vdwQfSlCA1PUzvOnPNTvIjpbPIH0d+7OTiBa3p2bdtMt1ZIAmS9UAOsrfu/wr6Ox7uuUpsuNupS9yfcGFFNddbClEE9cvqaWHaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663804; c=relaxed/simple;
-	bh=jP2T4aL8OKumVsX8+1oK0to4lkPCZhP4c0gv/C50+P8=;
+	s=arc-20240116; t=1784663806; c=relaxed/simple;
+	bh=3vJFsilgP4Of5w0tz+xSbvRueHOyxUrSxoxwC8gBKC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X4Rz2kJqCgdBAw58nZbb6GBUjqzuIjOKD2QvLECIR2air+rbUZ2A2QbmCsVkPI5HmQPxzp1LrxpH4GLQAzSHSPhvk4pCymU9VK9RvsY4M9xoKOwdiIPQxGXDVbq5sb+S6GqZhtza+vpew1ONU5gxSCnwR9KQn3bMiajFqatoPCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wc4w+zBL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m0RtNee4bVMAfjc4p4x/sdapJv4cJi4VO8uJ3n+ufbCKyovdeWu67xZemNTjQuUMVbUOdJfeA5Xd0Y1Y1DJRf/HmIlegzMI06MrkYowRXtwJ47PI+doUjQgUPLJUs/yuIUwhc7bmInhTfeUT/Aatq4qgS2P9E1h8jfR9jmuWkek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JrAQKVDn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wc4w+zBL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C3B1F000E9;
-	Tue, 21 Jul 2026 19:56:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrAQKVDn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5881D1F00A3F;
+	Tue, 21 Jul 2026 19:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663803;
-	bh=S0oFxWeGLsvLqoQNBhCo/hvmh243bL4T4mSihpUVf9Y=;
+	s=korg; t=1784663805;
+	bh=UYwRXP1GSZTrAqBVOyhRst2wOkMarBFTZYRq7fXbL6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wc4w+zBLviC2ix0xLFNd4uBaJfqMfvNmlmEc4nRqVFTdoXNOT9F8g5Z10Oved0IH/
-	 Pk87oMk8XJuSutbzw0aWee3NopWvodOCjHkDL9QorSq66fNiqOKLfcDXJN5rPuq1H/
-	 cE/zyluUppzdChs36N3mBPDam/mBf+1yJtn/cc+A=
+	b=JrAQKVDnZz6EnO+rIQUgWVPn41225V/haQ+Ad4K57jMKOtZwf8r9yt8sEfWhg+kLg
+	 KCRRrH84LBHUkGWf+VjYEK11MOrTSD+0doog8UyfgtV/lzVp31hyBinlmBce8b+uGa
+	 hDaQlnhupfppgttFh5h3YDXhFlsPrYjAydBFMgi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fuchs <fuchsfl@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.12 0960/1276] mtd: maps: vmu-flash: fix NULL pointer dereference in initialization
-Date: Tue, 21 Jul 2026 17:23:23 +0200
-Message-ID: <20260721152507.509708060@linuxfoundation.org>
+	syzbot+39b2fb0f2638669008ec@syzkaller.appspotmail.com,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.12 0925/1276] ntfs3: fix out-of-bounds read in decompress_lznt
+Date: Tue, 21 Jul 2026 17:22:48 +0200
+Message-ID: <20260721152506.732216482@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,32 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fuchs <fuchsfl@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit 357e3b8e3a8769ba36eb8ec5e053e4825f1a9329 upstream.
+commit 7160a57192fb16d7a6fa9b7f5c7ac341d2444a89 upstream.
 
-The mtd_info contains a struct device, which must be linked to its
-parent. Without this, the initialization of the MTD fails with a NULL
-pointer dereference.
+decompress_lznt() does not validate array index bounds before accessing
+the decompression table. A corrupted NTFS3 image with invalid compressed
+data can trigger an out-of-bounds read.
 
-Fixes: 47a72688fae7 ("mtd: flash mapping support for Dreamcast VMU.")
+Add index bounds checking to prevent the OOB access.
+
+Reported-by: syzbot+39b2fb0f2638669008ec@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/maps/vmu-flash.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ntfs3/lznt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mtd/maps/vmu-flash.c
-+++ b/drivers/mtd/maps/vmu-flash.c
-@@ -547,6 +547,7 @@ static void vmu_queryblocks(struct maple
- 	mpart->partition = card->partition;
- 	mtd_cur->priv = mpart;
- 	mtd_cur->owner = THIS_MODULE;
-+	mtd_cur->dev.parent = &mdev->dev;
+--- a/fs/ntfs3/lznt.c
++++ b/fs/ntfs3/lznt.c
+@@ -240,7 +240,7 @@ static inline ssize_t decompress_chunk(u
+ 		if (up - unc > LZNT_CHUNK_SIZE)
+ 			return -EINVAL;
+ 		/* Correct index */
+-		while (unc + s_max_off[index] < up)
++		while (index < ARRAY_SIZE(s_max_off) - 1 && unc + s_max_off[index] < up)
+ 			index += 1;
  
- 	pcache = kzalloc(sizeof(struct vmu_cache), GFP_KERNEL);
- 	if (!pcache)
+ 		/* Check the current flag for zero. */
 
 
