@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1EB43B6C01;
-	Tue, 21 Jul 2026 20:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6227D3B7770;
+	Tue, 21 Jul 2026 20:32:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665972; cv=none; b=SjPn7VpOgYMz+Ye4IdZEBdv5HIv276JFwMMT7Qz1gzzPml5EqibhG563OGQuwMEB9pdBYSKiHTBKyl2rlMGUvzpf6yxoK/hd7exhnHeCUam5nSjbgEoeN8onW3l+haTnbXBxhcmzdScIywCkaHrDvQd0ZnPnYo6tLdQeGTPJmI0=
+	t=1784665975; cv=none; b=Dw7VXFMIzm2POWv4QeFn3Qpzpxqw9JaUS/nJxmhnrrsCqtWYtAUfdJKT/5cWcBE9Lt7IlCpMRMz/zBrEAZPqqaPPruq650YXSw7/8o+Fm033Uy7tT6Y/A7w+cDo4UW+A1Ca7xygRUGYrJOYr8qm5S3AD4kWpnmb+MZvSh7D2anM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665972; c=relaxed/simple;
-	bh=B+3PzwfyIohbUBQpmCX3R605+1XL5ZbXSkMGMq2Gcqc=;
+	s=arc-20240116; t=1784665975; c=relaxed/simple;
+	bh=w/B5bqKtBxdTK8he4dBuVdOZQZWVIlrTiavFBi2HzIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NcsTJoUtFxUXTZWD0x+VUyGIqTWmtPCll101mP9NZMTqERQ3JMXfsgKXiBNzZlLBBRlakLz5Gk6Oe8NhGrzfrvs3hxpIyfdRxwQOXSfPu57XwJr4EYRiShw9JzxArVxGlCVSCjGWNV58/P4l/+io+9VitxLeIVivW/d3162Vjx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+4GgXRA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sKje7BjGowmE74B0bgbzBeAdqxGE0dh3gwEkoRJlqX1rztsPvwgUVtriLBzYtIOUPuMrxiSnAl5w2AU0kKevuz4s4LFOswl6XFdjV1YFtvJZVDoTqtKaYgT3iq+kVE65zcLtCyntuAyFpi/fiA0gQgmNbDPkOdo2hbPm4FLL5bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+dXD6pz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+4GgXRA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2480B1F000E9;
-	Tue, 21 Jul 2026 20:32:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+dXD6pz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE50F1F00A3A;
+	Tue, 21 Jul 2026 20:32:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665971;
-	bh=pDFc+OElMv7WAjguRsBjDxH7ggIrcBA94EVnCncIYL0=;
+	s=korg; t=1784665974;
+	bh=MErmtOkD1HHZYHUlbUEJ+avMvF+veQ/CcLnjAqNUIFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c+4GgXRANXA8DnI74tHhf9dT7c4K+CaWDB9E0h9v4IiZ6Xu3Z+ogD2lKMabOJkIwg
-	 S+hmV6KKblxSaltotWTKWIRD2PrC+2lzPYgtxU2pdGYrZ8+lpnyQoOatAsvL3N+WHc
-	 4RqlYNZjKMFNaqyvGynd8uCVnBWpfIs7EpxxxRDE=
+	b=o+dXD6pz+BZQPm+Tf/5AKOBFrfF2W1Et8QmIubiCGSNfIZ2oSBiy9Bh5xEq+/Ennr
+	 7ebhq8WwoEuIPm7p0hb2K3B2mDmMoKiCw47qhrpuHKIJltX/YVNKq4GQsmxcco1JxL
+	 79xM11E3sj5I1yueNpJLKjwSTkVoXA7frsYLF0c8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Renjiang Han <renjiang.han@oss.qualcomm.com>,
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0463/1266] RDMA/rxe: Copy WQE to local buffer in non-SRQ receive path
-Date: Tue, 21 Jul 2026 17:15:00 +0200
-Message-ID: <20260721152452.194943774@linuxfoundation.org>
+Subject: [PATCH 6.6 0464/1266] media: qcom: venus: drop extra padding in NV12 raw size calculation
+Date: Tue, 21 Jul 2026 17:15:01 +0200
+Message-ID: <20260721152452.217251946@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,76 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristmd@gmail.com>
+From: Renjiang Han <renjiang.han@oss.qualcomm.com>
 
-[ Upstream commit d6ab440240a04b8737ee4c7bb21af9182e451733 ]
+[ Upstream commit e1c9adabb268cc5d56723b7df1da49e59070f309 ]
 
-For non-SRQ QPs, the responder reads WQE fields directly from the
-shared queue buffer mapped into userspace. This allows a malicious
-user to modify fields like num_sge or sge entries while the kernel
-is processing the WQE, leading to out-of-bounds reads in
-rxe_resp_check_length() and copy_data().
+get_framesize_raw_nv12() currently adds SZ_4K to the UV plane size and an
+additional SZ_8K to the total buffer size. This inflates the calculated
+sizeimage and leads userspace to over-allocate buffers without a clear
+requirement.
 
-Introduce get_recv_wqe() that validates num_sge and copies the WQE
-to a kernel-local buffer before processing, matching the approach
-already used for SRQ WQEs in get_srq_wqe(). The srq_wqe buffer is
-reused since SRQ and non-SRQ paths are mutually exclusive per QP.
+Remove the extra SZ_4K/SZ_8K padding and compute the NV12 size as the sum
+of Y and UV planes, keeping the final ALIGN(size, SZ_4K) intact.
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Link: https://patch.msgid.link/r/20260518215040.1598586-3-tristan@talencesecurity.com
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: e1cb72de702ad ("media: venus: helpers: move frame size calculations on common place")
+Signed-off-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
+Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_resp.c | 27 ++++++++++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/venus/helpers.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
-index c7bdc3d22053eb..539a30ec98219a 100644
---- a/drivers/infiniband/sw/rxe/rxe_resp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_resp.c
-@@ -319,6 +319,29 @@ static enum resp_states get_srq_wqe(struct rxe_qp *qp)
- 	return RESPST_CHK_LENGTH;
+diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+index 8295542e1a7c8c..d6984129c2f361 100644
+--- a/drivers/media/platform/qcom/venus/helpers.c
++++ b/drivers/media/platform/qcom/venus/helpers.c
+@@ -954,8 +954,8 @@ static u32 get_framesize_raw_nv12(u32 width, u32 height)
+ 	uv_sclines = ALIGN(((height + 1) >> 1), 16);
+ 
+ 	y_plane = y_stride * y_sclines;
+-	uv_plane = uv_stride * uv_sclines + SZ_4K;
+-	size = y_plane + uv_plane + SZ_8K;
++	uv_plane = uv_stride * uv_sclines;
++	size = y_plane + uv_plane;
+ 
+ 	return ALIGN(size, SZ_4K);
  }
- 
-+static enum resp_states rxe_get_recv_wqe(struct rxe_qp *qp)
-+{
-+	struct rxe_queue *q = qp->rq.queue;
-+	struct rxe_recv_wqe *wqe;
-+	unsigned int num_sge;
-+	size_t size;
-+
-+	wqe = queue_head(q, QUEUE_TYPE_FROM_CLIENT);
-+	if (!wqe)
-+		return RESPST_ERR_RNR;
-+
-+	num_sge = wqe->dma.num_sge;
-+	if (unlikely(num_sge > qp->rq.max_sge)) {
-+		rxe_dbg_qp(qp, "invalid num_sge in recv WQE\n");
-+		return RESPST_ERR_MALFORMED_WQE;
-+	}
-+	size = sizeof(*wqe) + num_sge * sizeof(struct rxe_sge);
-+	memcpy(&qp->resp.srq_wqe, wqe, size);
-+
-+	qp->resp.wqe = &qp->resp.srq_wqe.wqe;
-+	return RESPST_CHK_LENGTH;
-+}
-+
- static enum resp_states check_resource(struct rxe_qp *qp,
- 				       struct rxe_pkt_info *pkt)
- {
-@@ -339,9 +362,7 @@ static enum resp_states check_resource(struct rxe_qp *qp,
- 		if (srq)
- 			return get_srq_wqe(qp);
- 
--		qp->resp.wqe = queue_head(qp->rq.queue,
--				QUEUE_TYPE_FROM_CLIENT);
--		return (qp->resp.wqe) ? RESPST_CHK_LENGTH : RESPST_ERR_RNR;
-+		return rxe_get_recv_wqe(qp);
- 	}
- 
- 	return RESPST_CHK_LENGTH;
 -- 
 2.53.0
 
