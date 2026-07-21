@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B775C42A7B5;
-	Tue, 21 Jul 2026 19:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594D842CAF1;
+	Tue, 21 Jul 2026 19:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662746; cv=none; b=QZwQc2JQOXIjHlo76AWNvYkPx3ENA75dU6Ohux0UDKQywpfK9LDRGPbDFLmom0CKbTo9C9bhXiGa/+lP7hk+lA+YkOtf/4Yd6H1texpJvHtm5xNiVAD3QvQMfpfuZpHCTsHYWUOR6W9BtVIVsoOGCop+M5HH5ou8Dt5jmI7LvZA=
+	t=1784662749; cv=none; b=m+PJpHo+Hx8T3qw3ruGZTsO9PyucGpceMmA5bh/ISaeUsSzmRMhCVzMlMGD/W1YF8Nm7eDM9VwJHu+UGOg6lveIjPRMoYySele/WWOzNHetHPKD6lkTwdXKQqXtlPunQlmEel5ZxuJY2LvIlAp1QJVfzQz65XfPWfTa+EvcfMdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662746; c=relaxed/simple;
-	bh=KHFA2CEGp3ZevF5FEc1Egrj8Fr+5o5cz8e0C01md67s=;
+	s=arc-20240116; t=1784662749; c=relaxed/simple;
+	bh=7HycQ+sMclDOb9dNIEpGTSEtKqezfWNz0apqmTLY7N8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=byPExf2w9sWM6YZzMAtEf8U0WZazXYzpSTIV4roVDN3HqdtR30IQor+lGNqOXoLdhbeFlMxalqZqXpUYqQEYQHUw3E8EI6gB0mgb87/ZRLAdIpzfR7/u8P5UQjwaDEpPcSFTeHKH/z7UZ3Cn1AnOUZ9aht08mTG4UX6t+Wiwyd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOmGTXc0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gMF+5vrC8YmTami8l79HPQqTtqJRtzKUDTNidtT0JgSk4XCfOtfOpLm/SIioVE2OvryFILuA05V9WeWugXxWD5G2yrbPfNcW6UTytZ7YrdOprjuxcy8o5aQ3ZdkacGqddZrcKiwDXNCdJrh3e+qAfMH3avTUHZuo/WvJ0744zlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VECNcicC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOmGTXc0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 288641F000E9;
-	Tue, 21 Jul 2026 19:39:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VECNcicC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C063D1F00A3D;
+	Tue, 21 Jul 2026 19:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662745;
-	bh=aBuZGBwtVhpoGRsW1YumtSDXYNjAWXvIeJdeR3OCP7o=;
+	s=korg; t=1784662748;
+	bh=R6LQiLHfrgezREpfC1gwPltC0LOPYKJZyfnsTzrCLUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wOmGTXc0xUy38Fxi7sVkkB3K67a2ac8NmwUXE0/T9GvFNC8TkyCHbmdIn+5FJsVBQ
-	 z6Bzp2vH/D3Nt+QgjYvz4F+NsOVSCbn9FISu4YiWlgCUN/Gt2FMPP5aMr+gls6DWe0
-	 j9M9wOzRYteCDqcThWGVcJTErHLzhLYdIfex68W0=
+	b=VECNcicCmt46lJTIqB5ZNkTtpMDKDuif5dpypH1kHxWZDcK//DhG6nesIbk6Ct+e9
+	 9e0ly3xkowGo7/pqntlpK9nKSSoxRY/dLVmkHK7rC7579uJ/MGR3TuIAQhtm33vW5l
+	 itvZZ37+yX0GWW2vG7vIauGg/qLykr1NnU7ogSEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Simon Horman <horms@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0562/1276] spi: dw: fix wrong BAUDR setting after resume
-Date: Tue, 21 Jul 2026 17:16:45 +0200
-Message-ID: <20260721152458.695904750@linuxfoundation.org>
+Subject: [PATCH 6.12 0563/1276] xfrm: Fix xfrm state cache insertion race
+Date: Tue, 21 Jul 2026 17:16:46 +0200
+Message-ID: <20260721152458.718611129@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,46 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 66b6605bcea7af7aca3d1d858b9c5f14903f9f9a ]
+[ Upstream commit ddd3d0132920319ac426e12456013eadbae67e15 ]
 
-After resuming from suspend to ram, spi transfer stops working. Further
-debugging shows that the BAUDR register isn't correctly set, this is
-due to dws->current_freq doesn't match the HW BAUDR setting,
-specifically, the dws->current_freq equals to speed_hz, but BAUDR is 0.
-so the dw_spi_set_clk() in below code won't be called:
+The xfrm input state cache insertion code checks the validity of
+the state before acquiring the global xfrm_state_lock.  Thus it's
+possible for someone else to kill the state after it passed the
+validity check, and then the insertion will add the dead state
+to the cache.
 
-        if (dws->current_freq != speed_hz) {
-                dw_spi_set_clk(dws, clk_div);
-                dws->current_freq = speed_hz;
-        }
+Fix this by moving the validity check inside the lock.
 
-The mismatch comes from dw_spi_shutdown_chip() when suspending.
-Fix this mismatch by setting dws->current_freq to 0 as well when
-clearing BAUDR reg in dw_spi_shutdown_chip().
+This entire function is called on the input path, where BH must
+be off (e.g., the caller of this function xfrm_input acquires
+its spinlocks without disabling BH).
 
-Fixes: e24c74527207 ("spi: controller driver for Designware SPI core")
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Link: https://patch.msgid.link/20260612002835.5240-1-jszhang@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+So there is no need to disable BH here or take the RCU read lock.
+Remove both and replace them with an assertion that trips if BH
+is accidentally enabled on some future calling path.
+
+Fixes: 81a331a0e72d ("xfrm: Add an inbound percpu state cache.")
+Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-dw.h | 1 +
- 1 file changed, 1 insertion(+)
+ net/xfrm/xfrm_state.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/spi/spi-dw.h b/drivers/spi/spi-dw.h
-index fc267c6437ae09..8a3c085c85e078 100644
---- a/drivers/spi/spi-dw.h
-+++ b/drivers/spi/spi-dw.h
-@@ -282,6 +282,7 @@ static inline void dw_spi_shutdown_chip(struct dw_spi *dws)
- {
- 	dw_spi_enable_chip(dws, 0);
- 	dw_spi_set_clk(dws, 0);
-+	dws->current_freq = 0;
- }
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index c39f91b858c815..12df6870f306c3 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -1144,9 +1144,11 @@ struct xfrm_state *xfrm_input_state_lookup(struct net *net, u32 mark,
+ 	struct hlist_head *state_cache_input;
+ 	struct xfrm_state *x = NULL;
  
- extern void dw_spi_set_cs(struct spi_device *spi, bool enable);
++	/* BH is always disabled on the input path. */
++	lockdep_assert_in_softirq();
++
+ 	state_cache_input = raw_cpu_ptr(net->xfrm.state_cache_input);
+ 
+-	rcu_read_lock();
+ 	hlist_for_each_entry_rcu(x, state_cache_input, state_cache_input) {
+ 		if (x->props.family != family ||
+ 		    x->id.spi       != spi ||
+@@ -1164,20 +1166,25 @@ struct xfrm_state *xfrm_input_state_lookup(struct net *net, u32 mark,
+ 	xfrm_hash_ptrs_get(net, &state_ptrs);
+ 
+ 	x = __xfrm_state_lookup(&state_ptrs, mark, daddr, spi, proto, family);
+-
+-	if (x && x->km.state == XFRM_STATE_VALID) {
+-		spin_lock_bh(&net->xfrm.xfrm_state_lock);
+-		if (hlist_unhashed(&x->state_cache_input)) {
++	if (x) {
++		spin_lock(&net->xfrm.xfrm_state_lock);
++		if (x->km.state != XFRM_STATE_VALID) {
++			/*
++			 * The state is about to be destroyed.
++			 *
++			 * Don't add it to the cache but still
++			 * return it to the caller.
++			 */
++		} else if (hlist_unhashed(&x->state_cache_input)) {
+ 			hlist_add_head_rcu(&x->state_cache_input, state_cache_input);
+ 		} else {
+ 			hlist_del_rcu(&x->state_cache_input);
+ 			hlist_add_head_rcu(&x->state_cache_input, state_cache_input);
+ 		}
+-		spin_unlock_bh(&net->xfrm.xfrm_state_lock);
++		spin_unlock(&net->xfrm.xfrm_state_lock);
+ 	}
+ 
+ out:
+-	rcu_read_unlock();
+ 	return x;
+ }
+ EXPORT_SYMBOL(xfrm_input_state_lookup);
 -- 
 2.53.0
 
