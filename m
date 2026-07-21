@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5063B3C15;
-	Tue, 21 Jul 2026 20:43:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43B63B6BE3;
+	Tue, 21 Jul 2026 20:43:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666637; cv=none; b=ZqqN5xfVoU6cs54NcKkQpBdAyVZdyxWYuUXJ0n4h6D+ttV01+dCO2CJz+m/PvsQ97F0t2EX7v6zR9Wp4tAHHLbUQL51iUWjmc7WzRnSmD6g3eyzyxbZlMNwDRJEXl1q5Q7QpB0Z4hitC1RL3T1VPKOopfmDi1ggydNRuUmVD/Mg=
+	t=1784666639; cv=none; b=OqrxSkeompFXdt5b4gtgB8se8PVOBNK9zuARqikO44irpVwRq+CF4+qZ1IT1YmYLWuinCK8ByBZ+IUjhuWReiII/V6rjnH1ZBIFlSqCeKvQWtFIgoxlfwKg4Gywurr5/uOAhgCNzu5UBO6Fa2vw+GHP0/Zs+l5VVbVLxlXy5rJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666637; c=relaxed/simple;
-	bh=kkv1PPCZ9siY+lJhPeeIdCFCVnDe8t/phmmg40wdxuY=;
+	s=arc-20240116; t=1784666639; c=relaxed/simple;
+	bh=qDJVftTHYgY2CSy5qMFKSdAs2pNEPLwcf5NGaEkng2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kt/2OnES4o8kzh6XkMXe5i4FjS9T1mr8o4GmpQYVWEvhIO8CZINkJt+FeBfnmno9YyEggSwD+e1f9ggtyuaz4QfTU9DLvRDjDsSn4POP5FEaeQmLH39I87JDu8F2tM+tx9XhNm4of5l/VmxruER11Sax2E8ldoTbfPv3YEIz6WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0f9O9mH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t28vkkgLLmj5j6aJ3TXtcW0E6YBXvUhZwMt1p8rVin4CEKHWcO7Bu3BH/n54oa3msKUPW3vz2Q2t43z44VHlVod/TS78FVfGAsXyVn0pcAB5QgENdS68jatJCTiy0cO0cPZVWjn2CHtWPgi4+Ue7TguNgAZA4GVjEoj4mMNruPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbmZbvFL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0f9O9mH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C5DA1F000E9;
-	Tue, 21 Jul 2026 20:43:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbmZbvFL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1D81F000E9;
+	Tue, 21 Jul 2026 20:43:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666636;
-	bh=49ig9ppCZ75zkj43Ty4+CsNGLHQ1FCzx52P6GFeBq2s=;
+	s=korg; t=1784666638;
+	bh=vZaQvJ5JLPM11iLLF2393UZcM2OV7g9SWnqe3oXY7u8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m0f9O9mHS0GZydpGX3RB5/kj8+jmlJHKhOlmwKZz9HnM8KeixkrjUyPL86juo5AkF
-	 dgxdf0xyfZAOe1IDa9A9TThBrcp0FcxjAw89ZVBMsLQGiuG38ZOyAkrsSS7sL6TJMI
-	 guAzYw3AzcdCujdiPmTaxKfAYn/BlPrWHRkUbdNs=
+	b=TbmZbvFLidfFXSzaWas9q+WznaqLzlc5IFmlbtkklocWlukHpRt4+5ZRvyOzJ6HAu
+	 alA1Y4L0H/ZSkWfsrIRtLxRyYZ/2Ceuyr6JBDSaM8XhlGnZHz6+6sc2B2vD0cmpgbH
+	 B0sRKJyFJ/CfAdeujn7zbUPNxAJ3EOcSfpGD9ln0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronan Dalton <ronan.dalton@alliedtelesis.co.nz>,
-	linux-rtc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Tyler Hicks <code@tyhicks.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Meagan Lloyd <meaganlloyd@linux.microsoft.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Chris Packham <chris.packham@alliedtelesis.co.nz>
-Subject: [PATCH 6.6 0758/1266] rtc: ds1307: handle oscillator stop flag for ds1337/ds1339/ds3231
-Date: Tue, 21 Jul 2026 17:19:55 +0200
-Message-ID: <20260721152458.829247330@linuxfoundation.org>
+	Luis Gerhorst <luis.gerhorst@fau.de>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0759/1266] bpf: Fix stack slot index in nospec checks
+Date: Tue, 21 Jul 2026 17:19:56 +0200
+Message-ID: <20260721152458.851787039@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -57,117 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ronan Dalton <ronan.dalton@alliedtelesis.co.nz>
+From: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
 
-[ Upstream commit a091e1ba3b68cabc9caedafc6f81d9fe9b3b2200 ]
+[ Upstream commit d1d53aa30ab3b5ae89161c9cc840b3f7489ad386 ]
 
-Prior to commit 48458654659c ("rtc: ds1307: remove clear of oscillator
-stop flag (OSF) in probe"), the oscillator stop flag (OSF) bit was
-checked during device probe for the ds1337, ds1339, ds1341, and ds3231
-chips; if it was set, it would be cleared and a warning would be logged
-saying "SET TIME!". Since that commit, the OSF bit is no longer cleared,
-but the warning is still printed.
+check_stack_write_fixed_off() computes the byte slot for a fixed-offset
+stack write as -off - 1, and records each written byte in slot_type[] with
+(slot - i) % BPF_REG_SIZE.
 
-Directly following that commit, there was no way to get rid of this
-warning because nothing cleared the OSF bit on these chips.
+The Spectre v4 sanitization pre-check uses slot_type[i] instead. For a
+4-byte write at fp-8 after the lower half of fp-8 has been zeroed, the
+pre-check scans bytes 0..3 and sees STACK_ZERO while the actual write updates
+bytes 7..4. That can leave the second half-slot write without nospec_result
+even though the bytes being overwritten still require sanitization.
 
-The commit associated with the previous commit, 523923cfd5d6 ("rtc:
-ds1307: handle oscillator stop flag (OSF) for ds1341"), made proper use
-of the OSF when getting and setting the time in the RTC. However, the
-other RTC variants ds1337, ds1339 and ds3231 didn't have a corresponding
-change made.
+Use the same slot index in the sanitization pre-check that the write path uses
+when updating slot_type[].
 
-Given that the OSF bit is no longer cleared at probe time when it is
-set, the remaining three chips should have the same handling as the
-ds1341 chip has for the OSF bit.
-
-Fix the issue on the ds1337, ds1339 and ds3231 chips by applying the
-same logic as the ds1341 has to these chips.
-
-Note that any devices brought up between the first referenced commit and
-this one may begin mistrusting the time reported by the RTC until it is
-set again, if the bit was never explicitly cleared.
-
-Note that only the ds1339 was tested with this change, but the
-datasheets for the other chips contain essentially identical
-descriptions of the OSF bit so the same change should work.
-
-Signed-off-by: Ronan Dalton <ronan.dalton@alliedtelesis.co.nz>
-Cc: linux-rtc@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Cc: Tyler Hicks <code@tyhicks.com>
-Cc: Sasha Levin <sashal@kernel.org>
-Cc: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
-Cc: Rodolfo Giometti <giometti@enneenne.com>
-Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>
-Fixes: 48458654659c ("rtc: ds1307: remove clear of oscillator stop flag (OSF) in probe")
-Reviewed-by: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
-Reviewed-by: Tyler Hicks <code@tyhicks.com>
-Link: https://patch.msgid.link/20260508032518.3696705-2-ronan.dalton@alliedtelesis.co.nz
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 2039f26f3aca ("bpf: Fix leakage due to insufficient speculative store bypass mitigation")
+Acked-by: Luis Gerhorst <luis.gerhorst@fau.de>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Signed-off-by: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
+Link: https://lore.kernel.org/r/20260618-f01-11-stack-nospec-slot-index-v3-1-780297041721@mails.tsinghua.edu.cn
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ds1307.c | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ kernel/bpf/verifier.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
-index 74aad2b12460c3..26b63cd0929154 100644
---- a/drivers/rtc/rtc-ds1307.c
-+++ b/drivers/rtc/rtc-ds1307.c
-@@ -264,6 +264,16 @@ static int ds1307_get_time(struct device *dev, struct rtc_time *t)
- 		if (tmp & DS1338_BIT_OSF)
- 			return -EINVAL;
- 		break;
-+	case ds_1337:
-+	case ds_1339:
-+	case ds_1341:
-+	case ds_3231:
-+		ret = regmap_read(ds1307->regmap, DS1337_REG_STATUS, &tmp);
-+		if (ret)
-+			return ret;
-+		if (tmp & DS1337_BIT_OSF)
-+			return -EINVAL;
-+		break;
- 	case ds_1340:
- 		if (tmp & DS1340_BIT_nEOSC)
- 			return -EINVAL;
-@@ -274,13 +284,6 @@ static int ds1307_get_time(struct device *dev, struct rtc_time *t)
- 		if (tmp & DS1340_BIT_OSF)
- 			return -EINVAL;
- 		break;
--	case ds_1341:
--		ret = regmap_read(ds1307->regmap, DS1337_REG_STATUS, &tmp);
--		if (ret)
--			return ret;
--		if (tmp & DS1337_BIT_OSF)
--			return -EINVAL;
--		break;
- 	case ds_1388:
- 		ret = regmap_read(ds1307->regmap, DS1388_REG_FLAG, &tmp);
- 		if (ret)
-@@ -375,14 +378,17 @@ static int ds1307_set_time(struct device *dev, struct rtc_time *t)
- 		regmap_update_bits(ds1307->regmap, DS1307_REG_CONTROL,
- 				   DS1338_BIT_OSF, 0);
- 		break;
--	case ds_1340:
--		regmap_update_bits(ds1307->regmap, DS1340_REG_FLAG,
--				   DS1340_BIT_OSF, 0);
--		break;
-+	case ds_1337:
-+	case ds_1339:
- 	case ds_1341:
-+	case ds_3231:
- 		regmap_update_bits(ds1307->regmap, DS1337_REG_STATUS,
- 				   DS1337_BIT_OSF, 0);
- 		break;
-+	case ds_1340:
-+		regmap_update_bits(ds1307->regmap, DS1340_REG_FLAG,
-+				   DS1340_BIT_OSF, 0);
-+		break;
- 	case ds_1388:
- 		regmap_update_bits(ds1307->regmap, DS1388_REG_FLAG,
- 				   DS1388_BIT_OSF, 0);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index f638b2d3a42fbc..1da0092122c1db 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -4672,7 +4672,8 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
+ 		bool sanitize = reg && is_spillable_regtype(reg->type);
+ 
+ 		for (i = 0; i < size; i++) {
+-			u8 type = state->stack[spi].slot_type[i];
++			u8 type = state->stack[spi].slot_type[(slot - i) %
++							      BPF_REG_SIZE];
+ 
+ 			if (type != STACK_MISC && type != STACK_ZERO) {
+ 				sanitize = true;
 -- 
 2.53.0
 
