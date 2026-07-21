@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B97C4343F1;
-	Tue, 21 Jul 2026 19:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F021470435;
+	Tue, 21 Jul 2026 19:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663492; cv=none; b=ukMH+TgsivKitC8NZya08iby1C2eFeSpJI10kT/WPuiV48eUJuwVELi7v1VsgGN6G1CgPLvh6WCrnkBBGg15JW8dtLciSajtebznH9AL4GAN7gSviUJfF1f4VmoS6/DmBQ7hJmlA8yr5feOpVAclxEe8mfzuOsqXXsV54UQEVfM=
+	t=1784663495; cv=none; b=QGOYEKftzODs9r95X30Caj+lTDYzGnh4qNK3gaX0iQYcBnRGd9Ebg460aLbzW1VjVk57L7ItttuS3U7jgXnnA1EppdazxxeMuO6CsQ6jbRTezbSUD92p1AW66oGnJbHY6SiCIepolncM7uMheZlhSCW4oxdjXkwD/Yp9V0SCTLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663492; c=relaxed/simple;
-	bh=7mBe5xqlv6jA9l2d/sJfO1C2i75qGs+2YzmQc9zN4l0=;
+	s=arc-20240116; t=1784663495; c=relaxed/simple;
+	bh=O2a90vGqamHqLQIFlKm8Pp84ciPFdu5sPoKX53EhkGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YBWNr3u1h6wkJa9dH28wc1dn2ZafliOCWAsRkAuKCa1AEdWHcRVFoVe0mLT19pB9UmsW0pXZlD1NmQENSV2mfBO0kcdDQ9ywKoRF+RBejWbypiZiXcVR7y6aJQwbbhxUx4VPCabUUdbH027EBNgFJix4bwm1OJmQCG8RXVkcQOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=euztCCAJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k89qtObC4RoLnDvaCJElfslGUmIKbb9NkqtDsWDLMOn7yj7I+LJXOvwRhwentL9BeKZOkvTJ284T9lDCa1pvl8NcoaYxbIUsWSaSo/sX/e2OZnN22OVS3jGaEp6NET1PAWYPjmE2tFDckCuQrszIVExDdHQTvQbJ3r2dK30/vFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pweyZPQG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="euztCCAJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 844CE1F000E9;
-	Tue, 21 Jul 2026 19:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pweyZPQG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 320AB1F000E9;
+	Tue, 21 Jul 2026 19:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663491;
-	bh=f/2QBA4MWQ8ksSelT6tB6vgDaPcxZOxP81EA1f/FgA4=;
+	s=korg; t=1784663493;
+	bh=mUJYc1VWXkWijIQrdMphwQwp13k4PdPVUcKKw8h1klQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=euztCCAJ/9JIDX6t87y7DAkFBRtAGvEXfAACO6gxh5EIdF/nSlKYIPRkHTfh3XmxY
-	 3K4fMrnXM67SqeYU7n4eA7TDHUCZEmch6z9cx1ZlTtKD32az9V3KVWFHJ+Tpv/VfFu
-	 uT0i79Jt74SjAiveDRHV9Y4c6C/3N34CnFzO15WE=
+	b=pweyZPQGaWhqf3hPkS0YdUqIW8sUZ0JpRJEfC257qHcNmIgPmSDFFPO+FMP9O5zp8
+	 4T2NSq27WqJck6/sWvKpaULBsbnJ1iLZu8C/4z+UBX/1dax257DLdUeTPEMhEVJGLK
+	 RIt+6Ontro0pqTxmfL1SaME6RbPLtidhI8j8Y3fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 0844/1276] fbdev: i740fb: fix potential memory leak in i740fb_probe()
-Date: Tue, 21 Jul 2026 17:21:27 +0200
-Message-ID: <20260721152504.942554425@linuxfoundation.org>
+Subject: [PATCH 6.12 0845/1276] fbdev: s3fb: fix potential memory leak in s3_pci_probe()
+Date: Tue, 21 Jul 2026 17:21:28 +0200
+Message-ID: <20260721152504.964274404@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,30 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 5936063409af230a2c88b8700c47b89a19fd70b5 upstream.
+commit 3b0ed04bc852887a9164e1bbf521652e8ef3eb92 upstream.
 
-In i740fb_probe(), the memory allocated in fb_videomode_to_modelist()
-for modelist is not freed in the error paths. Fix that by calling
-fb_destroy_modelist().
+In s3_pci_probe(), the memory allocated for modelist using
+fb_videomode_to_modelist() is not freed in subsequent error paths.
+Fix that by calling fb_destroy_modelist()
 
-Fixes: 5350c65f4f15 ("Resurrect Intel740 driver: i740fb")
+Fixes: 86c0f043a737 ("s3fb: add DDC support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/i740fb.c |    1 +
+ drivers/video/fbdev/s3fb.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/video/fbdev/i740fb.c
-+++ b/drivers/video/fbdev/i740fb.c
-@@ -1152,6 +1152,7 @@ err_reg_framebuffer:
- 	fb_dealloc_cmap(&info->cmap);
+--- a/drivers/video/fbdev/s3fb.c
++++ b/drivers/video/fbdev/s3fb.c
+@@ -1382,6 +1382,7 @@ err_reg_fb:
  err_alloc_cmap:
  err_find_mode:
+ #ifdef CONFIG_FB_S3_DDC
 +	fb_destroy_modelist(&info->modelist);
  	if (par->ddc_registered)
  		i2c_del_adapter(&par->ddc_adapter);
- 	pci_iounmap(dev, par->regs);
+ 	if (par->mmio)
 
 
