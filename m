@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB3C43E079;
-	Tue, 21 Jul 2026 22:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0067D44AB91;
+	Tue, 21 Jul 2026 22:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674148; cv=none; b=TzDhti8T8r51YIqaEgBvylB4cPDgBAuX8xzM3bVWl3abcRGFVvw+dJdllJkS9sJ6MhiF03Cr+ehGLUK5FFsqhk6JalYjHb1ZdTm93RvDMIaxghaNH3zJ9BwGGfcYyidQEOdGaqjSQjzOGikE1BSjLxbNdQWmX64Hp+TkPBjs+OM=
+	t=1784674151; cv=none; b=HM7e9jhXkFDjDLq4eHeZS8xJIr4dkTj14aTDtEsDl6fOFIRcY6105VjtrRDxfL4FMUGMKu8gNDSU94vrPaxF3upxnApCfAzTYDsdfaF8UewZiONgtTwIjTvsbFwyaIcgZ7m6gF0kOCAntRAZVXJiP3Payf9BBYKIlGMeblVpmGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674148; c=relaxed/simple;
-	bh=PgT/viyDa94XO/wkQU3DNV2JgtRQl3xFoMcXkqnA96w=;
+	s=arc-20240116; t=1784674151; c=relaxed/simple;
+	bh=2iXXpV3fLX0C3cFcutkTYA+yx3mG2X/TVPLzRJw4WLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lPEnyMt9EgskHPhpT59zptvdENwiyN4EDglndXSbYzAnkA2se89M2PYjH4N0Hgl5TAP0jHBfk78zLErOI9yverwSHIK98AGsttwnJi9KnC75UTUiZ2l5TCkmVnTcvhbB6tED3Ve1pww6FeFwHEOuISz/I077qW/UfPCFnVtkVIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0p38mH2q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i61sZQZH4Dpk48S2KdQEdKU8xB0ofZtHwyxRtj2eQjgTAiX/d0NM42Bz+zakZkgUwyYLO6ENUvS1J0I21pBUMpev+tmp8UuB2k6NEqkKUVw1kQi6XmKP3lxP5j3XRFGwmf3pdZC3ULGsiWxfqqLfgUQGbI7PZBlOPFrm4dPFeSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xN/XxMzx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0p38mH2q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2AA1F000E9;
-	Tue, 21 Jul 2026 22:49:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xN/XxMzx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DB61F000E9;
+	Tue, 21 Jul 2026 22:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674146;
-	bh=RjwbcoHJKB0yvKRN30YfJko93gqqEclOR+vZnuVl8cg=;
+	s=korg; t=1784674149;
+	bh=AjIZVbdrs2kMx2f1dx20US83PU6FQ1liNJh1t4GP+P8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0p38mH2qE5r2gVjhSV800NJKnBDY/e36NMbR/K7WI5xUeAyvYPV8CwsYCBKrcSBq7
-	 ZtNM+iOKQ9v8H2XTbOO/3IW2y22n+bXQvHsRxfC4DkzTdY3EfczMEGwEkVTtLmCgGq
-	 jtB+YrFuSuGHrSH1fQKdjujxxeU4NWI84oqg9Z8k=
+	b=xN/XxMzxEwST2bW8px4y5l82QnjbhwqeV/JWc6k/dRBIFzecuTCn+SvrW5ymQNJzv
+	 V+Xd6TiqN13Kp10UwgQVDwOIN7/ODwsnpmcaD7HgeZSSw3nJIScKcIk2J6m1QV3X5q
+	 FkPFoxYObLWj8+jBvoEdqH48rkA8Mt0Ww3H80FlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yuan Tan <yuantan098@gmail.com>,
 	Xin Liu <bird@lzu.edu.cn>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Yong Wang <edragain@163.com>,
 	Ren Wei <n05ec@lzu.edu.cn>,
-	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 431/699] net: atm: reject out-of-range traffic classes in QoS validation
-Date: Tue, 21 Jul 2026 17:23:10 +0200
-Message-ID: <20260721152405.414392652@linuxfoundation.org>
+Subject: [PATCH 5.10 432/699] net: ife: require ETH_HLEN to be pullable in ife_decode()
+Date: Tue, 21 Jul 2026 17:23:11 +0200
+Message-ID: <20260721152405.438199351@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -54,46 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Yong Wang <edragain@163.com>
 
-commit cdf19f380e46192e7084be559638aab1f6ed86a2 upstream.
+commit 9406f6012b7343661efb516a11c62d4db2b62f75 upstream.
 
-Reject ATM traffic classes above ATM_ANYCLASS in check_tp().
-SO_ATMQOS stores the supplied QoS after check_qos() succeeds, so
-accepting larger values leaves invalid traffic_class values in
-vcc->qos.
+ife decode may return after making only the outer IFE header and
+metadata pullable. The caller then passes the decapsulated packet to
+eth_type_trans(), which expects the inner Ethernet header to be
+accessible from the linear data area.
 
-That bad state later reaches pvc_info(), which indexes class_name[]
-with vcc->qos.{rx,tp}.traffic_class. Values above ATM_ANYCLASS cause
-an out-of-bounds read when /proc/net/atm/pvc is read.
+With a malformed IFE frame, the inner Ethernet header may still be
+shorter than ETH_HLEN in the linear area, which can lead to a crash in
+the original code.
 
-Tighten the existing QoS validation so invalid traffic_class values
-are rejected at the point where user supplied QoS is accepted.
+Fix this by extending the pull check in ife_decode() so that the inner
+Ethernet header is also guaranteed to be pullable before returning.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: ef6980b6becb ("introduce IFE action")
 Cc: stable@vger.kernel.org
 Reported-by: Yuan Tan <yuantan098@gmail.com>
 Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Yong Wang <edragain@163.com>
 Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/58f02c6f73d9818fd5d2022e1116759fdde6116b.1780965530.git.zcliangcn@gmail.com
+Link: https://patch.msgid.link/20260610183814.1648888-2-n05ec@lzu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/atm/common.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/ife/ife.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/atm/common.c
-+++ b/net/atm/common.c
-@@ -720,6 +720,8 @@ static int atm_change_qos(struct atm_vcc
- static int check_tp(const struct atm_trafprm *tp)
- {
- 	/* @@@ Should be merged with adjust_tp */
-+	if (tp->traffic_class > ATM_ANYCLASS)
-+		return -EINVAL;
- 	if (!tp->traffic_class || tp->traffic_class == ATM_ANYCLASS)
- 		return 0;
- 	if (tp->traffic_class != ATM_UBR && !tp->min_pcr && !tp->pcr &&
+--- a/net/ife/ife.c
++++ b/net/ife/ife.c
+@@ -79,7 +79,7 @@ void *ife_decode(struct sk_buff *skb, u1
+ 	if (unlikely(ifehdrln < 2))
+ 		return NULL;
+ 
+-	if (unlikely(!pskb_may_pull(skb, total_pull)))
++	if (unlikely(!pskb_may_pull(skb, total_pull + ETH_HLEN)))
+ 		return NULL;
+ 
+ 	ifehdr = (struct ifeheadr *)(skb->data + skb->dev->hard_header_len);
 
 
