@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14DE4EA395;
-	Tue, 21 Jul 2026 17:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9BA4F7971;
+	Tue, 21 Jul 2026 17:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656275; cv=none; b=HNZScouw2TVOukXEhnKTDWfCfE2rry96FRQhbMiNoofhYPcjxTsDarMmfGzeBa9wb4bYVrG6ef4k90JPKr8XzQTprR+Wjv3rrIURmSdaOq/Di7d7V5dLKCL24N6n2g4qHI4eoAc6Uq8hHCxyb1Mey+rzvr4McxgtwwHx6p26IYo=
+	t=1784656277; cv=none; b=VKBW/A1CE9TmINXtwrfY4Cd0hQRLx1s5BqW5KoztAq6eUdA/52QVzt2sH99xXKia898EHM+wunhb1Ni3HDLVEN3oKp/MzXOzXElDP5coeXfP5FR5KUus4h60sHzPVUQC3pPfJCntCtD0i5IwmouhavCg3cW7VE4mqZ6fRm1FoqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656275; c=relaxed/simple;
-	bh=7NN5Ci7FSzpM00Umg/XcsEBe9ZwHL0L5rFD5GxOuGz0=;
+	s=arc-20240116; t=1784656277; c=relaxed/simple;
+	bh=m0QnFr/tAEjPifvopfEYb8AnKowitBPDun9sRzaK4lI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LHtzLB+SI+I0yU6cO+X9xUlwm6glIZT2x25PhZYfcb7+NPuBj9MD3DX+5EQt/u1cKHxo8Ame7BjLPcDhNfoRd+4q2WzFx84oZxYa1+4ea72/q3s7vaxLhLIixRo1YNwZRroamsaCYFC8Y5dZlb6qAP9lM0EVxXCUD2y0+D79QJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RakMirr4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UDfCd8QXEffamx26Wb7HX9PzpB757vkoGeUb+4s3usoLCmaSUcKEkHAwi1HBuz/1vmlNjq9TJFmpMf1v0zmz9iH1Jy88Wb6At457wmvIl1aGBj0Wbzg4ss6HIgc5t8QKcH0WNc0n7geEnsUpo9QUpH2znC4pNgPGKco7L1yp/9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wIai+4G7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RakMirr4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33E11F00A3D;
-	Tue, 21 Jul 2026 17:51:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wIai+4G7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2271F000E9;
+	Tue, 21 Jul 2026 17:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656273;
-	bh=Qz3gbDhrpRJ8aAuoxE9jZwPfIv2EIJO7BWi/LEUHceg=;
+	s=korg; t=1784656276;
+	bh=nflj2bOt0H6wXM/xIzX0lkzdw4HKVNHgGqychZGVufs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RakMirr4QbWLz7gDAYox0BAEc7EBO9jgUpuRNxG0aLhCaA2c16ll1SE5k+9ZsLY3F
-	 BEXMDS3nFDoLZWiEK1OKDlxQsGAmdM70tcqDjFM6pkUPsIvwDFWOQzp2dBUvLL/O6r
-	 G5XNCKIaVAvvi4q+YTLfe2mTdQKFBFzwvNOuXAXY=
+	b=wIai+4G7a0TgmlvH+nd+ABXST/lvyzBmpVureKq9CwojYjg/dsaWRcqKgOqebu3sZ
+	 EHfJftwAHeAgL2u/b6XZdMDgNNYcpFUR9nt42Lp93Txbh4I7IILF1T2rKv95yiSQd9
+	 dD+IZc42Vu3EoTkycQb36bCIGcvlvvQDMV68j6N0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunxiang Li <Yunxiang.Li@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Woojin Ji <random6.xyz@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Leon Hwang <leon.hwang@linux.dev>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Quentin Monnet <qmo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0323/1611] drm/amdgpu: set sub_block_index for mca ras sub-blocks
-Date: Tue, 21 Jul 2026 17:07:19 +0200
-Message-ID: <20260721152522.353145798@linuxfoundation.org>
+Subject: [PATCH 6.18 0324/1611] bpftool: Use libbpf error code for flow dissector query
+Date: Tue, 21 Jul 2026 17:07:20 +0200
+Message-ID: <20260721152522.377638516@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,74 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunxiang Li <Yunxiang.Li@amd.com>
+From: Woojin Ji <random6.xyz@gmail.com>
 
-[ Upstream commit baa286df5fb366e4aee5b747443dfc7194fdaa59 ]
+[ Upstream commit 8a7f2bff2165e53595d1e91c160b340f978c0ab7 ]
 
-The mca ras sub-blocks (mp0, mp1, mpio) all share the
-AMDGPU_RAS_BLOCK__MCA block id and are distinguished only by
-sub_block_index. The ras manager object for an mca block is selected
-with:
+bpf_prog_query() returns a negative errno on failure.
+query_flow_dissector() currently closes the namespace fd and then reads
+errno to decide whether -EINVAL means that the running kernel does not
+support flow dissector queries.
 
-	con->objs[AMDGPU_RAS_BLOCK__LAST + head->sub_block_index]
+That errno check controls behavior, not just diagnostics: -EINVAL is
+handled as a non-fatal old-kernel case, while any other error makes bpftool
+net fail.
 
-Since the rework in commit 7f544c5488cf ("drm/amdgpu: Rework mca ras
-sw_init") moved the ras_comm setup into amdgpu_mca_mp*_ras_sw_init() but
-left sub_block_index unset, mp0/mp1/mpio all default to index 0 and
-collide on the same object slot. mp0 grabs the slot and creates its
-sysfs node first; mp1 (and mpio) then find the slot already in use, so
-amdgpu_ras_block_late_init() -> amdgpu_ras_sysfs_create() returns
--EINVAL:
+The namespace fd is opened read-only, so close() is not expected to
+commonly fail in normal use. Still, the BPF_PROG_QUERY error is already
+available in err, and reading errno after an intervening close() is
+fragile. If close() does change errno, the compatibility branch may be
+based on close()'s error instead of the BPF_PROG_QUERY result.
 
-  amdgpu: mca.mp1 failed to execute ras_block_late_init_default! ret:-22
-  amdgpu: amdgpu_ras_late_init failed -22
-  amdgpu: amdgpu_device_ip_late_init failed
-  amdgpu: Fatal error during GPU init
+This was reproduced with an LD_PRELOAD fault injector that forced
+BPF_PROG_QUERY for BPF_FLOW_DISSECTOR to fail with EINVAL and then
+forced close() on the netns fd to fail with EIO. The unpatched bpftool
+reported "can't query prog: Input/output error". With this change, the
+same injected failure is handled as the intended non-fatal EINVAL
+compatibility case.
 
-The error is currently masked because amdgpu_ras_late_init() does not
-check the return value of amdgpu_ras_block_late_init_default(), but it
-already leaves mp1/mpio without their sysfs nodes and becomes a fatal
-init failure as soon as that return value is honored.
+Use the libbpf-returned error code instead. Keep the existing errno reset
+in the non-fatal path to preserve batch mode behavior. The success path
+is unchanged.
 
-Restore the per-sub-block sub_block_index assignment so each mca
-sub-block maps to its own object slot.
+Fixes: 7f0c57fec80f ("bpftool: show flow_dissector attachment status")
+Signed-off-by: Woojin Ji <random6.xyz@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Leon Hwang <leon.hwang@linux.dev>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/bpf/20260603003339.33791-1-random6.xyz@gmail.com
 
-Fixes: 7f544c5488cf ("drm/amdgpu: Rework mca ras sw_init")
-Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Assisted-by: ChatGPT:gpt-5.5
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/bpf/bpftool/net.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c
-index 3ca03b5e0f9139..e1e4a61b1301c6 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c
-@@ -99,6 +99,7 @@ int amdgpu_mca_mp0_ras_sw_init(struct amdgpu_device *adev)
- 
- 	strcpy(ras->ras_block.ras_comm.name, "mca.mp0");
- 	ras->ras_block.ras_comm.block = AMDGPU_RAS_BLOCK__MCA;
-+	ras->ras_block.ras_comm.sub_block_index = AMDGPU_RAS_MCA_BLOCK__MP0;
- 	ras->ras_block.ras_comm.type = AMDGPU_RAS_ERROR__MULTI_UNCORRECTABLE;
- 	adev->mca.mp0.ras_if = &ras->ras_block.ras_comm;
- 
-@@ -123,6 +124,7 @@ int amdgpu_mca_mp1_ras_sw_init(struct amdgpu_device *adev)
- 
- 	strcpy(ras->ras_block.ras_comm.name, "mca.mp1");
- 	ras->ras_block.ras_comm.block = AMDGPU_RAS_BLOCK__MCA;
-+	ras->ras_block.ras_comm.sub_block_index = AMDGPU_RAS_MCA_BLOCK__MP1;
- 	ras->ras_block.ras_comm.type = AMDGPU_RAS_ERROR__MULTI_UNCORRECTABLE;
- 	adev->mca.mp1.ras_if = &ras->ras_block.ras_comm;
- 
-@@ -147,6 +149,7 @@ int amdgpu_mca_mpio_ras_sw_init(struct amdgpu_device *adev)
- 
- 	strcpy(ras->ras_block.ras_comm.name, "mca.mpio");
- 	ras->ras_block.ras_comm.block = AMDGPU_RAS_BLOCK__MCA;
-+	ras->ras_block.ras_comm.sub_block_index = AMDGPU_RAS_MCA_BLOCK__MPIO;
- 	ras->ras_block.ras_comm.type = AMDGPU_RAS_ERROR__MULTI_UNCORRECTABLE;
- 	adev->mca.mpio.ras_if = &ras->ras_block.ras_comm;
+diff --git a/tools/bpf/bpftool/net.c b/tools/bpf/bpftool/net.c
+index 1a06b0b5eef350..f669716a588b4a 100644
+--- a/tools/bpf/bpftool/net.c
++++ b/tools/bpf/bpftool/net.c
+@@ -603,14 +603,14 @@ static int query_flow_dissector(struct bpf_attach_info *attach_info)
+ 			     &attach_flags, prog_ids, &prog_cnt);
+ 	close(fd);
+ 	if (err) {
+-		if (errno == EINVAL) {
++		if (err == -EINVAL) {
+ 			/* Older kernel's don't support querying
+ 			 * flow dissector programs.
+ 			 */
+ 			errno = 0;
+ 			return 0;
+ 		}
+-		p_err("can't query prog: %s", strerror(errno));
++		p_err("can't query prog: %s", strerror(-err));
+ 		return -1;
+ 	}
  
 -- 
 2.53.0
