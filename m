@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279EE2DA76C;
-	Tue, 21 Jul 2026 20:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B667C415F15;
+	Tue, 21 Jul 2026 20:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665049; cv=none; b=IFeCL1S74IijhibU/Mba0qxzxiCDs62DoUBBCW7pXqZba4bZrl2U8Sm63ASePNHY2i2Gj+WgWe1y35TtyjqEDYSjQtFI1nmHo+MapaKoI42vlaoAE1cvL2VVZiN29b9qdwXlUFE89LOTa8Ixf+hxwliQbo/RjtR0xyUZZRPL6IQ=
+	t=1784665051; cv=none; b=nNHmfww42+7ZYRlBgOJvSimDIboBT+D8eekO7NcQxNTAte9+mMKCAGxica1BUPTxcjHsvqW1snHta8O63zYwkKK5EmYbigzxkLFtyUK0vD7uIyZEhJbrrXFMJ3S6U2kRoQDNVjCpYd2mb+YC/A729BQdgmbx2z77iUuM0VcruNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665049; c=relaxed/simple;
-	bh=APsNarybvXEY6+v8k61iYmHz8/6e3kYgicg4nEnUmmA=;
+	s=arc-20240116; t=1784665051; c=relaxed/simple;
+	bh=1kyMuGWSt71zCUdrcxACbfjBIHY2XP/cwMjr84Slr2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hLSbLtsYtM2pLnXsPpUObxY8hC0HHAB6jnKi9DPDNKY9BPF5A0OphJus01ZarW5TMwhZS3Cy0+N1eTSfFvR8Y/UAcXsoXt0DCl9IqjQxsavux6gFVxC2qghnOD23yrnGiQCT7btG8ow1WMctl2pyVc/oq7eI2Cx+CP9svdWV1sE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1esVFSX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QXv2VlsY03ce59zcOKsipT8YX9CsQ+Gt7ZeN1AmiomrP7kZ9mCvjaTqCqv7QcYTvJvgY+4/CKi+DMscxzM2HoGfSX4ZzYbMcMD4t8oJOo0Gn6/pekcYVfHvE8BwHXvHrjAVeiZvlKENVbmzEC/6Q2rbkVEp3kuQvrCrz1JcBiVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlYjsiI+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1esVFSX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8469E1F000E9;
-	Tue, 21 Jul 2026 20:17:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlYjsiI+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E871F000E9;
+	Tue, 21 Jul 2026 20:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665048;
-	bh=SlIMCubnUCl9TnuSzospI4PKIJ/QuxXVHOQVcyrzIhc=;
+	s=korg; t=1784665050;
+	bh=tVRYyQPGackecCEU278e4GBtu5cR3krCtch2zc8QfmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k1esVFSXd9jqQOQDLDuUD4TPwZyauSieIa/iIV7KsnTqCMA6tWBX4n/PFe/3M7aQA
-	 nbZ55A6a1W2A4t8Nq6h7BRKVBhkXsfPDoh2M9CPXkGxUGPLy1EkXpHopiX2yIPEg2B
-	 LgDVKXWOb2kXCyTS+fBh3advtmsnkKJRmACwc9VQ=
+	b=mlYjsiI+Z01z7dn1WXFseXx9dEca65ODcwLbWbRWJD924bK4lPH5QV7pTHW4P9PhP
+	 mk5PV/bCAHH/WVXwclQCLIzupGjY/90vZHHJoBg30XELTdBEedd4ew7ez4Fip7Uv/5
+	 FIfs5uvufQ66zHAT68Ms89WfCqVXoEk+BOo0upM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Page <sam@bynar.io>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 0157/1266] Bluetooth: MGMT: Fix UAF of hci_conn_params in add_device_complete
-Date: Tue, 21 Jul 2026 17:09:54 +0200
-Message-ID: <20260721152445.318813985@linuxfoundation.org>
+	syzbot+5e8dda76ca21dae314b6@syzkaller.appspotmail.com,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.6 0158/1266] debugobjects: Plug race against a concurrent OOM disable
+Date: Tue, 21 Jul 2026 17:09:55 +0200
+Message-ID: <20260721152445.339904240@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,148 +50,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Page <sam@bynar.io>
+From: Thomas Gleixner <tglx@kernel.org>
 
-commit fa85d985f614bc3feb343000f14a1072e99b0df1 upstream.
+commit b81dde13cc163450dcb402dcc915ef13ba241e01 upstream.
 
-add_device_complete() runs from the hci_cmd_sync_work kworker, which
-holds only hci_req_sync_lock and *not* hci_dev_lock.  It calls
-hci_conn_params_lookup() and then dereferences the returned object
-(params->flags) without taking hci_dev_lock:
+syzbot reported a puzzling splat:
 
-	params = hci_conn_params_lookup(hdev, &cp->addr.bdaddr,
-					le_addr_type(cp->addr.type));
-	...
-	device_flags_changed(NULL, hdev, &cp->addr.bdaddr,
-			     cp->addr.type, hdev->conn_flags,
-			     params ? params->flags : 0);
+   WARNING: kernel/time/hrtimer.c:443 at stub_timer+0xa/0x20
 
-hci_conn_params_lookup() walks hdev->le_conn_params and is documented to
-require hdev->lock.  A concurrent MGMT_OP_REMOVE_DEVICE
-(remove_device()), which does run under hci_dev_lock, can call
-hci_conn_params_free() to list_del() and kfree() the very object the
-lookup returned, so the subsequent params->flags read touches freed
-memory [0].
+stub_timer() is installed as timer callback function in
+hrtimer_fixup_assert_init(), which is invoked when
+debug_object_assert_init() can't find a shadow object. In that case debug
+objects emits a warning about it before invoking the fixup.
 
-Hold hci_dev_lock() across the hci_conn_params_lookup() and the read of
-params->flags (and the matching event emission) so the lookup result
-cannot be freed by a concurrent remove_device() before it is used,
-honouring the locking contract of hci_conn_params_lookup().
+Though the provided console log lacks this warning and instead has the
+following a few seconds before the splat:
 
-[0]: (trailing page/memory-state dump trimmed)
-BUG: KASAN: slab-use-after-free in add_device_complete+0x358/0x3d8 net/bluetooth/mgmt.c:7671
-Read of size 1 at addr ffff000017ab26c1 by task kworker/u9:8/388
+     ODEBUG: Out of memory. ODEBUG disabled
 
-CPU: 1 UID: 0 PID: 388 Comm: kworker/u9:8 Not tainted 7.0.11 #20 PREEMPT
-Hardware name: linux,dummy-virt (DT)
-Workqueue: hci0 hci_cmd_sync_work
-Call trace:
- show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:499 (C)
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xb4/0xd4 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0x118/0x5d8 mm/kasan/report.c:482
- kasan_report+0xb0/0xf4 mm/kasan/report.c:595
- __asan_report_load1_noabort+0x20/0x2c mm/kasan/report_generic.c:378
- add_device_complete+0x358/0x3d8 net/bluetooth/mgmt.c:7671
- hci_cmd_sync_work+0x14c/0x240 net/bluetooth/hci_sync.c:334
- process_one_work+0x628/0xd38 kernel/workqueue.c:3289
- process_scheduled_works kernel/workqueue.c:3372 [inline]
- worker_thread+0x7a8/0xac0 kernel/workqueue.c:3453
- kthread+0x39c/0x444 kernel/kthread.c:436
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:860
+So the object was looked up in debug_object_assert_init() and the lookup
+failed due a concurrent out of memory situation which disabled debug
+objects and freed the shadow objects:
 
-Allocated by task 3401:
- kasan_save_stack+0x3c/0x64 mm/kasan/common.c:57
- kasan_save_track+0x20/0x3c mm/kasan/common.c:78
- kasan_save_alloc_info+0x40/0x54 mm/kasan/generic.c:570
- poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
- __kasan_kmalloc+0xd4/0xd8 mm/kasan/common.c:415
- kasan_kmalloc include/linux/kasan.h:263 [inline]
- __kmalloc_cache_noprof+0x1b0/0x458 mm/slub.c:5385
- kmalloc_noprof include/linux/slab.h:950 [inline]
- kzalloc_noprof include/linux/slab.h:1188 [inline]
- hci_conn_params_add+0x10c/0x4b0 net/bluetooth/hci_core.c:2279
- hci_conn_params_set net/bluetooth/mgmt.c:5162 [inline]
- add_device+0x5b4/0xa54 net/bluetooth/mgmt.c:7755
- hci_mgmt_cmd net/bluetooth/hci_sock.c:1721 [inline]
- hci_sock_sendmsg+0x10b4/0x1dd0 net/bluetooth/hci_sock.c:1841
- sock_sendmsg_nosec net/socket.c:727 [inline]
- __sock_sendmsg+0xe0/0x128 net/socket.c:742
- sock_write_iter+0x250/0x390 net/socket.c:1195
- new_sync_write fs/read_write.c:595 [inline]
- vfs_write+0x66c/0xab0 fs/read_write.c:688
- ksys_write+0x1fc/0x24c fs/read_write.c:740
- __do_sys_write fs/read_write.c:751 [inline]
- __se_sys_write fs/read_write.c:748 [inline]
- __arm64_sys_write+0x70/0xa4 fs/read_write.c:748
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x84/0x2a8 arch/arm64/kernel/syscall.c:49
- el0_svc_common.constprop.0+0xe4/0x294 arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x44/0x5c arch/arm64/kernel/syscall.c:151
- el0_svc+0x38/0xac arch/arm64/kernel/entry-common.c:724
- el0t_64_sync_handler+0xa0/0xe4 arch/arm64/kernel/entry-common.c:743
- el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:596
+debug_object_assert_init()
+        if (!debug_objects_enabled)
+        	return;                         obj = alloc();
+                				if (!obj) {
+							// Out of memory
+                                                	debug_objects_enabled = false;
+                                                        free_objects();
+        obj = lookup_or_alloc();
 
-Freed by task 3740:
- kasan_save_stack+0x3c/0x64 mm/kasan/common.c:57
- kasan_save_track+0x20/0x3c mm/kasan/common.c:78
- kasan_save_free_info+0x4c/0x74 mm/kasan/generic.c:584
- poison_slab_object mm/kasan/common.c:253 [inline]
- __kasan_slab_free+0x88/0xb8 mm/kasan/common.c:285
- kasan_slab_free include/linux/kasan.h:235 [inline]
- slab_free_hook mm/slub.c:2685 [inline]
- slab_free mm/slub.c:6170 [inline]
- kfree+0x14c/0x458 mm/slub.c:6488
- hci_conn_params_free+0x288/0x484 net/bluetooth/hci_core.c:2312
- remove_device+0x4b0/0x968 net/bluetooth/mgmt.c:7919
- hci_mgmt_cmd net/bluetooth/hci_sock.c:1721 [inline]
- hci_sock_sendmsg+0x10b4/0x1dd0 net/bluetooth/hci_sock.c:1841
- sock_sendmsg_nosec net/socket.c:727 [inline]
- __sock_sendmsg+0xe0/0x128 net/socket.c:742
- sock_write_iter+0x250/0x390 net/socket.c:1195
- new_sync_write fs/read_write.c:595 [inline]
- vfs_write+0x66c/0xab0 fs/read_write.c:688
- ksys_write+0x1fc/0x24c fs/read_write.c:740
- __do_sys_write fs/read_write.c:751 [inline]
- __se_sys_write fs/read_write.c:748 [inline]
- __arm64_sys_write+0x70/0xa4 fs/read_write.c:748
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x84/0x2a8 arch/arm64/kernel/syscall.c:49
- el0_svc_common.constprop.0+0xe4/0x294 arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x44/0x5c arch/arm64/kernel/syscall.c:151
- el0_svc+0x38/0xac arch/arm64/kernel/entry-common.c:724
- el0t_64_sync_handler+0xa0/0xe4 arch/arm64/kernel/entry-common.c:743
- el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:596
+        // The lookup failed because the other side
+        // removed the objects, so this returns
+        // an error code as the object in question
+        // is not statically initialized
 
-Fixes: 1e2e3044c1bc ("Bluetooth: MGMT: Fix MGMT_OP_ADD_DEVICE invalid device flags")
+	if (!IS_ERR_OR_NULL(obj))
+        	return;
+        if (!obj) {
+        	debug_oom();
+                return;
+        }
+
+        print(...)
+           if (!debug_objects_enabled)
+                return;
+
+        fixup(...)
+
+The debug object splat is skipped because debug_objects_enabled is false,
+but the fixup callback is invoked unconditionally, which makes the timer
+disfunctional.
+
+This is only a problem in debug_object_assert_init() and
+debug_object_activate() as both have to handle statically initialized
+objects and therefore must handle the error pointer return case
+gracefully. All other places only handle the found/not found case and the
+NULL pointer return is a signal for OOM. Otherwise they get a valid shadow
+object.
+
+Plug the hole by checking whether debug objects are still enabled before
+invoking the print and fixup function in those two places.
+
+Fixes: b84d435cc228 ("debugobjects: Extend to assert that an object is initialized")
+Reported-by: syzbot+5e8dda76ca21dae314b6@syzkaller.appspotmail.com
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Assisted-by: Bynario AI
-Signed-off-by: Samuel Page <sam@bynar.io>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://patch.msgid.link/874iiwlzlb.ffs@fw13
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/mgmt.c |    3 +++
- 1 file changed, 3 insertions(+)
+ lib/debugobjects.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -7732,6 +7732,8 @@ static void add_device_complete(struct h
- 	if (!err) {
- 		struct hci_conn_params *params;
- 
-+		hci_dev_lock(hdev);
-+
- 		params = hci_conn_params_lookup(hdev, &cp->addr.bdaddr,
- 						le_addr_type(cp->addr.type));
- 
-@@ -7740,6 +7742,7 @@ static void add_device_complete(struct h
- 		device_flags_changed(NULL, hdev, &cp->addr.bdaddr,
- 				     cp->addr.type, hdev->conn_flags,
- 				     params ? params->flags : 0);
-+		hci_dev_unlock(hdev);
+--- a/lib/debugobjects.c
++++ b/lib/debugobjects.c
+@@ -768,6 +768,14 @@ int debug_object_activate(void *addr, co
  	}
  
- 	mgmt_cmd_complete(cmd->sk, hdev->id, MGMT_OP_ADD_DEVICE,
+ 	raw_spin_unlock_irqrestore(&db->lock, flags);
++
++	/*
++	 * lookup_object_or_alloc() might have raced with a concurrent
++	 * allocation failure which disabled debug objects.
++	 */
++	if (!debug_objects_enabled)
++		return 0;
++
+ 	debug_print_object(&o, "activate");
+ 
+ 	switch (o.state) {
+@@ -945,6 +953,15 @@ void debug_object_assert_init(void *addr
+ 		return;
+ 	}
+ 
++	/*
++	 * lookup_object_or_alloc() might have raced with a concurrent
++	 * allocation failure which disabled debug objects. Don't run the fixup
++	 * as it might turn a valid object useless. See for example
++	 * hrtimer_fixup_assert_init().
++	 */
++	if (!debug_objects_enabled)
++		return;
++
+ 	/* Object is neither tracked nor static. It's not initialized. */
+ 	debug_print_object(&o, "assert_init");
+ 	debug_object_fixup(descr->fixup_assert_init, addr, ODEBUG_STATE_NOTAVAILABLE);
 
 
