@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5513637647B;
-	Tue, 21 Jul 2026 17:23:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11E8372B5E;
+	Tue, 21 Jul 2026 17:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654621; cv=none; b=jRP4W1RasWA4WRoV9xx2mVSM+13gvnUaApWLrzRWW+mnPhF4c6dEgt06sz7MkBtxtVzIJDIQ+H1uB0ZGsgXpzPorDoWCzZgBQE0L12ufvt+UKAh5Y6LL5CWNoN0LyvWgtjxHeOc8uRSj0vxZ4KjqkyxP3vZHvk5V0AygbrdyHtM=
+	t=1784654624; cv=none; b=BUCh+1DcPO+ZsO367nlCyS0RYa1OXQ5FLvuKHdu/pj7unAooh91PGtW8yuWxKavXTZTINjRcawOihL2Yth2hvK8I1k1UOvicpUVEJqK6sz+gvfe9im3kEeM5U2u7sOCYLbwGWuEnrIxWW+89JXTwi+LLjetFIs/fHi4ysrvNt1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654621; c=relaxed/simple;
-	bh=I6DY7lUq0MVIPX61Vhm/RUdLjsNP/TAv/JeCwdxt3Xo=;
+	s=arc-20240116; t=1784654624; c=relaxed/simple;
+	bh=gnyjL6imtLr7HlOWQtPQtj4kg1FVXLlL/+kIeXQQB5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uT/2AZG9odJE8t7TlVIvFER2HXSE7AT9XBw5JxgGsf6xg4wrlBRv94y1hRXfD3HMsMjdv8s830HxKd1JHdFELlqR2vmMMQzdgUIK2LOmyNEkqpKpo2PTg0F+jAlueubvFrCE4MWz7sUy5DKHmz2sc/wOxAD/jRS4Z/Wfm3bM9as=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvdXtBtk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pt+YS2Cv5uqG0BcwnbKxNKK14v8FwOpvjvr/NxDptcnc+p0VmIW9O1fBJKEQmEbbrD7xkKdTzjAyBn9vNhVAO24vEaZeSgIaMJTolpi9h51iwI5w+nZX1ilbjCJ7eYYJPyuVB2hRHiRAWY6ql3QImsyk4dW6XwkQBnlJbeAVWwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QrvD19ly; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvdXtBtk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3A01F000E9;
-	Tue, 21 Jul 2026 17:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QrvD19ly"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E0D1F000E9;
+	Tue, 21 Jul 2026 17:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654620;
-	bh=bUDKwJCXMkU+69xDCQb6eKfOfUIgiRgUhKS12oEQ6wA=;
+	s=korg; t=1784654622;
+	bh=RWsCpt2Rmf91uHSw/2qBMVgILvDCgAEmXBLvMPMjmcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cvdXtBtkpV8MYUSY30nFmKxFTTcPInaYF53HqUdwSaWkpcKsGUVnkv5gg91PZ78WQ
-	 A0/74K6Y/gGcbmx0K6+3UiG+yNKVvsYEkXf7R4jrMrSQv5wzlVbrtdr7axxe/nwuDx
-	 4+nKxzlxeJPwGwOOuLuY1k3YEI/EYDNse0IxysLI=
+	b=QrvD19ly744w1xTdrQz9mK9F2KsbWQpTOD8kMGqKyoVnkVuofKaa+/FwM9dvcc2BE
+	 mARu4Sz9cv0Rc/5vQLvIgk8Jhc5an5gX5Cyc7JQPkbq2utBfJ3HAYYlZUDJg9PW+Xo
+	 CuXCyXpDFfN03SwMxuLoQzBkT9hSUSCUI/eUCm88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kartik Rajput <kkartik@nvidia.com>,
 	Frank Li <Frank.Li@nxp.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
+	Koichiro Den <den@valinux.co.jp>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 7.1 1774/2077] dmaengine: tegra: Fix burst size calculation
-Date: Tue, 21 Jul 2026 17:24:07 +0200
-Message-ID: <20260721152634.594697982@linuxfoundation.org>
+Subject: [PATCH 7.1 1775/2077] dmaengine: dw-edma: Add spinlock to protect DONE_INT_MASK and ABORT_INT_MASK
+Date: Tue, 21 Jul 2026 17:24:08 +0200
+Message-ID: <20260721152634.617453996@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,51 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kartik Rajput <kkartik@nvidia.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit 4651df83b6c796daead3447e8fd874322918ee4f upstream.
+commit 8ffba0171c6bbce5f093c6dba5a02c0805b31203 upstream.
 
-Currently, the Tegra GPC DMA hardware requires the transfer length to
-be a multiple of the max burst size configured for the channel. When a
-client requests a transfer where the length is not evenly divisible by
-the configured max burst size, the DMA hangs with partial burst at
-the end.
+The DONE_INT_MASK and ABORT_INT_MASK registers are shared by all DMA
+channels, and modifying them requires a read-modify-write sequence.
+Because this operation is not atomic, concurrent calls to
+dw_edma_v0_core_start() can introduce race conditions if two channels
+update these registers simultaneously.
 
-Fix this by reducing the burst size to the largest power-of-2 value
-that evenly divides the transfer length. For example, a 40-byte
-transfer with a 16-byte max burst will now use an 8-byte burst
-(40 / 8 = 5 complete bursts) instead of causing a hang.
+Add a spinlock to serialize access to these registers and prevent race
+conditions.
 
-This issue was observed with the PL011 UART driver where TX DMA
-transfers of arbitrary lengths were stuck.
-
-Fixes: ee17028009d4 ("dmaengine: tegra: Add tegra gpcdma driver")
+Fixes: 7e4b8a4fbe2c ("dmaengine: Add Synopsys eDMA IP version 0 support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260422064134.1323610-1-kkartik@nvidia.com
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+[den: update dw_edma.lock comment]
+Link: https://lore.kernel.org/dmaengine/20260109-edma_ll-v2-1-5c0b27b2c664@nxp.com/
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Link: https://patch.msgid.link/20260521142153.2957432-5-den@valinux.co.jp
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/tegra186-gpc-dma.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/dma/dw-edma/dw-edma-core.h    |    2 +-
+ drivers/dma/dw-edma/dw-edma-v0-core.c |    6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/dma/tegra186-gpc-dma.c
-+++ b/drivers/dma/tegra186-gpc-dma.c
-@@ -825,6 +825,13 @@ static unsigned int get_burst_size(struc
- 	 * len to calculate the optimum burst size
- 	 */
- 	burst_byte = burst_size ? burst_size * slave_bw : len;
-+
-+	/*
-+	 * Find the largest burst size that evenly divides the transfer length.
-+	 * The hardware requires the transfer length to be a multiple of the
-+	 * burst size - partial bursts are not supported.
-+	 */
-+	burst_byte = min(burst_byte, 1U << __ffs(len));
- 	burst_mmio_width = burst_byte / 4;
+--- a/drivers/dma/dw-edma/dw-edma-core.h
++++ b/drivers/dma/dw-edma/dw-edma-core.h
+@@ -109,7 +109,7 @@ struct dw_edma {
  
- 	if (burst_mmio_width < TEGRA_GPCDMA_MMIOSEQ_BURST_MIN)
+ 	struct dw_edma_chan		*chan;
+ 
+-	raw_spinlock_t			lock;		/* Only for legacy */
++	raw_spinlock_t			lock;		/* Protect v0 shared registers */
+ 
+ 	struct dw_edma_chip             *chip;
+ 
+--- a/drivers/dma/dw-edma/dw-edma-v0-core.c
++++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
+@@ -364,6 +364,7 @@ static void dw_edma_v0_core_start(struct
+ {
+ 	struct dw_edma_chan *chan = chunk->chan;
+ 	struct dw_edma *dw = chan->dw;
++	unsigned long flags;
+ 	u32 tmp;
+ 
+ 	dw_edma_v0_core_write_chunk(chunk);
+@@ -408,6 +409,8 @@ static void dw_edma_v0_core_start(struct
+ 			}
+ 		}
+ 		/* Interrupt unmask - done, abort */
++		raw_spin_lock_irqsave(&dw->lock, flags);
++
+ 		tmp = GET_RW_32(dw, chan->dir, int_mask);
+ 		tmp &= ~FIELD_PREP(EDMA_V0_DONE_INT_MASK, BIT(chan->id));
+ 		tmp &= ~FIELD_PREP(EDMA_V0_ABORT_INT_MASK, BIT(chan->id));
+@@ -416,6 +419,9 @@ static void dw_edma_v0_core_start(struct
+ 		tmp = GET_RW_32(dw, chan->dir, linked_list_err_en);
+ 		tmp |= FIELD_PREP(EDMA_V0_LINKED_LIST_ERR_MASK, BIT(chan->id));
+ 		SET_RW_32(dw, chan->dir, linked_list_err_en, tmp);
++
++		raw_spin_unlock_irqrestore(&dw->lock, flags);
++
+ 		/* Channel control */
+ 		SET_CH_32(dw, chan->dir, chan->id, ch_control1,
+ 			  (DW_EDMA_V0_CCS | DW_EDMA_V0_LLE));
 
 
