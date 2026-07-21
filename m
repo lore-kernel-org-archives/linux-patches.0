@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039DF3382C7;
-	Tue, 21 Jul 2026 17:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E71470433;
+	Tue, 21 Jul 2026 17:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656243; cv=none; b=u5KiKgC6xjryzT9FvoJmYZgLbl/0qMuu798N6hyZna7JSsiI+vGau3nPHTH8hJ4jtLBA90ROPlDLB2MXMfxYb7kWhvylVacbaF7XOUVAFK7Ml5osNu1MB9Y9k2xH5QoQQ3UXoeDQMZrxzwKR8izTm97HNR+f1iqW7nldqC8lngg=
+	t=1784656245; cv=none; b=g5Ymm5GxG99LY5E50IHlu5ITWzsdlC7CD6z3YSgGXiBX+T54Iug6EQ8UpEdfxC6/gvi6FOqHuPAD0VdtAwpHLhsxmfOBUcwnjH6pMKqBGkWenQJFgH7TI0+eDNwCtDCUJhkdKkVKPN7q144x0pXz6JT/4JtWPATqJmTBsCZ0P7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656243; c=relaxed/simple;
-	bh=iQidMVk7pvaAZzrfvFMOSamHydfs3XxaaUqu1w29ldg=;
+	s=arc-20240116; t=1784656245; c=relaxed/simple;
+	bh=VXK8Z5zwE2zwepdsCgxYPuBmWqheR9fyXQTBtAy5hs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TEygKBvgEdGRmuBRIG9Z7Dro3rkST/TSFEDl9f+8lNDu7vP6DPKuvKbRFCNaPnftvITf8MFabOkQzzbC8WY3h6gSFKTA8hnt4p1Fj4mI6eLk77jEQKzPEY6znXTzNtxNiFLlKTuh2iDs9oqJS9DDJUH/DF8yKd+rii8ARNcjymk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/7vyVtG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QLMckva9ZFJbIiHRDGSPm7BRdUy4e1j/qL5ZU/Kn6lxjvtB4ltM+n3XTvOjQpTBv7NkiNF9QiKidbXZ57FmmXZnjIZ/JirxbG4sfdyKB6QWvbHJKuffCF0bgTtl4Qcl257rQv9cTMIlWRJbtxq98KaGZKSipJBcvFtaTP0QVpto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fq+6yngq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/7vyVtG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203A51F000E9;
-	Tue, 21 Jul 2026 17:50:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fq+6yngq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81391F000E9;
+	Tue, 21 Jul 2026 17:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656241;
-	bh=qrRirkQzkMUVzIuTUCr9VAycYsNqFuZOfBD6tzaTuv8=;
+	s=korg; t=1784656244;
+	bh=HfOJ81Z7+pbDZiyDB8miF1qIBqbRENCu5r+IduxmBxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1/7vyVtGxrsHapKBhnod+IgFF/jyq6uGha5O60bPcuZBWXGmyij1yLJvaUCVW1vmH
-	 uWpSJWDd66jZwwqGsriRULb5AEWlcqbiDAtoPX/W1lOEBed5iS5bHyPtY1dlFbUKTa
-	 LED22/YvMm7WPv59nD8YfbMXcMBlfLn9Ozi6fzjM=
+	b=fq+6yngqo3JC8DbXtS7cKWerY3rx46jscEjgDqAeva+s39w2n13MGSgFkiSW/xOE3
+	 qdx9W8dNAJ++4ElQ2q9nu/+VwfP/hk4vjk7YsMifkxA7qyFIoF1vwrOvFEQxJMJtpq
+	 +ScRTvkfHhlsaA9h5nfDtZgrHNlyrNkb+aeT/SDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nitesh Shetty <nj.shetty@samsung.com>,
-	Christoph Hellwig <hch@lst.de>,
-	liuxixin <gliuxen@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0312/1611] nvme: fix FDP fdpcidx bounds check
-Date: Tue, 21 Jul 2026 17:07:08 +0200
-Message-ID: <20260721152522.097014217@linuxfoundation.org>
+Subject: [PATCH 6.18 0313/1611] driver core: Use system_percpu_wq instead of system_wq
+Date: Tue, 21 Jul 2026 17:07:09 +0200
+Message-ID: <20260721152522.119260215@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,36 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: liuxixin <gliuxen@gmail.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 0967074f6830718fd2597404ef119bddd0dbfd00 ]
+[ Upstream commit fda8355f13ea3c0f9499acdeff3024995b474948 ]
 
-The fdpcidx bounds check sets n = NUMFDPC + 1 but used > instead of >=,
-incorrectly accepting fdp_idx when it equals n (i.e. NUMFDPC + 1).
+Commit 1137838865bf ("driver core: Use mod_delayed_work to prevent lost
+deferred probe work") added a use of system_wq, which is deprecated in
+favor of system_percpu_wq added by commit 128ea9f6ccfb ("workqueue: Add
+system_percpu_wq and system_dfl_wq"). An upcoming warning in the
+workqueue tree flags this with:
 
-Fixes: 30b5f20bb2dd ("nvme: register fdp parameters with the block layer")
-Reviewed-by: Nitesh Shetty <nj.shetty@samsung.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: liuxixin <gliuxen@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+  workqueue: work func deferred_probe_timeout_work_func enqueued on deprecated workqueue. Use system_{percpu|dfl}_wq instead.
+
+Switch to system_percpu_wq to clear up the warning.
+
+Fixes: 1137838865bf ("driver core: Use mod_delayed_work to prevent lost deferred probe work")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Link: https://patch.msgid.link/20260601-driver-core-fix-system_wq-warning-v1-1-f9001a70ee25@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 2 +-
+ drivers/base/dd.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 7b6b42b20641b0..24a5ca35aeb255 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2229,7 +2229,7 @@ static int nvme_query_fdp_granularity(struct nvme_ctrl *ctrl,
- 	}
- 
- 	n = le16_to_cpu(h->numfdpc) + 1;
--	if (fdp_idx > n) {
-+	if (fdp_idx >= n) {
- 		dev_warn(ctrl->device, "FDP index:%d out of range:%d\n",
- 			 fdp_idx, n);
- 		/* Proceed without registering FDP streams */
+diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+index 1ba53078703e49..dabdfc088f3f63 100644
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -328,7 +328,7 @@ void deferred_probe_extend_timeout(void)
+ 	 * start a new one.
+ 	 */
+ 	if (delayed_work_pending(&deferred_probe_timeout_work) &&
+-	    mod_delayed_work(system_wq, &deferred_probe_timeout_work,
++	    mod_delayed_work(system_percpu_wq, &deferred_probe_timeout_work,
+ 			     secs_to_jiffies(driver_deferred_probe_timeout)))
+ 		pr_debug("Extended deferred probe timeout by %d secs\n",
+ 					driver_deferred_probe_timeout);
 -- 
 2.53.0
 
