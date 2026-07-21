@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F1B9366DA5;
-	Tue, 21 Jul 2026 15:49:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C3335A393;
+	Tue, 21 Jul 2026 15:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648979; cv=none; b=buojfMsAsUDhi1tQZ5xprMCIKdzXBsqp1eV86IL62CFI/Wn4bEMUvIOZI6xEg8WEQmxEGtvnx/ohzWM28/0bwPjaL5C2EBeDzF9b6+4hUWdsaXvuDVs4Cwirb1sqyc4iBFaHkAdSNKWEYxtUtqXmWrE7x9lTWb1ImwRsZZM9D3I=
+	t=1784648982; cv=none; b=txB4TOZi4JijGYsrvD4V6nXIEQROfsAwPftK/TgQ4yNWoZ52h4iKy6X8BwQEVV4hjTkURgyaOYRSWSlvXW3TsSGomXBP/dZsSwbQ6mto3PmUQVo7mKpAZTm4skGys0N7ESX+L6qmH0SVsQgBKzOziFDYTLVe8GUjwJJOknF5IXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648979; c=relaxed/simple;
-	bh=Hz4PsGCx3S+ke8EYKgQ3tXvRNuEb1iMnGBjSOLZrIHg=;
+	s=arc-20240116; t=1784648982; c=relaxed/simple;
+	bh=NvTyUkTX7vyVqP+3OsACvHi8hEXMbW5xodLsDWumLC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qgtk2P0HDHLnQzvCa4fxsymo9E7foo+5/kq0iIqIf7P7P+aTkmrmevUxCJzILCo1bqhQjq08WqzwCIuhVIuqpsMQ7lsgLLinTYgswDK4XriNQx71TANPFWz08h1kSTsPBuv3uK/QbqrqOVTqqhn8GRLdaCzrvTpW0xFD0gYu9DE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Adw6kSc6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OV1BT/yS2U2FOt5QtUt66i239sOnftqGIjG11IzVccQyi5EGFzmmEI3ZRUcSQGFIl06+lrCnHSVLEzr8vnu+2sniG/kzbQ8yzbvNMItkTbx7u6dK6L7kDcd37C4tqPLk2AHQSxfUJrqB/prf8NhPUrXEvTBd6DcpK5CkeoKqeps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zh6nARlG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Adw6kSc6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43B61F000E9;
-	Tue, 21 Jul 2026 15:49:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zh6nARlG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A05B1F00A3A;
+	Tue, 21 Jul 2026 15:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648978;
-	bh=HGbZBRlHt5dCinDauWKMb0l4pFDbwau1Ysm6UHRka4Q=;
+	s=korg; t=1784648980;
+	bh=TT0j2L+QjwjiJbqWJ183QONFRDw9jU2AlJjCdOwPfj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Adw6kSc6Jm8wu1t2KKB7vA/TwNO6h+zwAdeH/svonrEUTSYQ7rQJXvj7JJvRE6jk9
-	 L5+iwfFsw3dLjXONKKdkZjP8m4igEQN8fwgViF0VcRe0PbzGHyztEH7i4Bwls0ql9v
-	 ibMSzT8VZstvbjcUjiNCQHjvzcB5wxBVnkSiN4kc=
+	b=Zh6nARlGIhc2Vm20HDc3aEOlNc1AczYbl3PT+hbuae+pnBuyt6qdOYz4rsIn6aZZk
+	 L6iiSUaZl0QOmbI2EB98RFL2Wcqvowris+6ewwutu3ewLrqCo7OscZzyoOmgJMxOWx
+	 CSwn+MALf4hFnSf2yud9WdOnSi2+/acVBsUdllkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
-	Lorenzo Colitti <lorenzo@google.com>,
-	Yuyang Huang <yuyanghuang@google.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	David Matlack <dmatlack@google.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0402/2077] selftests/bpf: add verification for BPF_PROG_QUERY attr size boundaries
-Date: Tue, 21 Jul 2026 17:01:15 +0200
-Message-ID: <20260721152602.200349156@linuxfoundation.org>
+Subject: [PATCH 7.1 0403/2077] liveupdate: Use refcount_t for FLB reference counts
+Date: Tue, 21 Jul 2026 17:01:16 +0200
+Message-ID: <20260721152602.222841854@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -47,114 +47,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuyang Huang <yuyanghuang@google.com>
+From: David Matlack <dmatlack@google.com>
 
-[ Upstream commit 5add3a4ad1a3bc15404e8bd338813ed0a636f5c9 ]
+[ Upstream commit d2850ff2f8c5acda4c1097aa53c006a75b091f2c ]
 
-Add a new selftest to verify that the BPF syscall (specifically
-BPF_PROG_QUERY) correctly handles different user-declared attribute sizes.
+Use refcount_t instead of a raw integer to keep track of references on
+incoming and outgoing FLBs. Using refcount_t provides protection from
+overflow, underflow, and other issues.
 
-Specifically, verify that:
-- For cgroup queries, a query with a size that covers 'prog_cnt' but is
-  smaller than 'revision' (OLD_QUERY_SIZE) succeeds, but does not write
-  to 'revision' (verifying backward compatibility).
-- A query with full size (FULL_QUERY_SIZE) succeeds and writes both
-  'prog_cnt' and 'revision'.
-
-Fixes: 120933984460 ("bpf: Implement mprog API on top of existing cgroup progs")
-Cc: Maciej Żenczykowski <maze@google.com>
-Cc: Lorenzo Colitti <lorenzo@google.com>
-Signed-off-by: Yuyang Huang <yuyanghuang@google.com>
-Link: https://lore.kernel.org/r/20260531075600.4058207-3-yuyanghuang@google.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: cab056f2aae7 ("liveupdate: luo_flb: introduce File-Lifecycle-Bound global state")
+Signed-off-by: David Matlack <dmatlack@google.com>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+Link: https://lore.kernel.org/r/20260423174032.3140399-2-dmatlack@google.com
+Signed-off-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/bpf_attr_size.c  | 69 +++++++++++++++++++
- 1 file changed, 69 insertions(+)
- create mode 100644 tools/testing/selftests/bpf/prog_tests/bpf_attr_size.c
+ include/linux/liveupdate.h  |  3 ++-
+ kernel/liveupdate/luo_flb.c | 22 ++++++++++------------
+ 2 files changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_attr_size.c b/tools/testing/selftests/bpf/prog_tests/bpf_attr_size.c
-new file mode 100644
-index 00000000000000..32159dc64da8b0
---- /dev/null
-+++ b/tools/testing/selftests/bpf/prog_tests/bpf_attr_size.c
-@@ -0,0 +1,69 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/* Copyright (c) 2026 Google LLC */
-+#include <linux/bpf.h>
-+#include <unistd.h>
-+#include <sys/syscall.h>
-+#include <test_progs.h>
-+#include <cgroup_helpers.h>
-+#include "cgroup_skb_direct_packet_access.skel.h"
-+
-+#define OLD_QUERY_SIZE		offsetofend(union bpf_attr, query.prog_cnt)
-+#define FULL_QUERY_SIZE		offsetofend(union bpf_attr, query.revision)
-+
-+static void test_query_size_boundaries(void)
-+{
-+	struct cgroup_skb_direct_packet_access *skel;
-+	struct bpf_link *link = NULL;
-+	union bpf_attr attr;
-+	int cg_fd = -1;
-+	int err;
-+
-+	skel = cgroup_skb_direct_packet_access__open_and_load();
-+	if (!ASSERT_OK_PTR(skel, "skel_load"))
-+		return;
-+
-+	cg_fd = test__join_cgroup("/attr_size_cg");
-+	if (!ASSERT_GE(cg_fd, 0, "join_cgroup"))
-+		goto cleanup;
-+
-+	link = bpf_program__attach_cgroup(skel->progs.direct_packet_access,
-+					  cg_fd);
-+	if (!ASSERT_OK_PTR(link, "cg_attach"))
-+		goto cleanup;
-+
-+	memset(&attr, 0, sizeof(attr));
-+	attr.query.target_fd = cg_fd;
-+	attr.query.attach_type = BPF_CGROUP_INET_INGRESS;
-+	attr.query.revision = 0xdeadbeefdeadbeefULL;
-+
-+	err = syscall(__NR_bpf, BPF_PROG_QUERY, &attr, OLD_QUERY_SIZE);
-+	if (ASSERT_OK(err, "query_old_size")) {
-+		ASSERT_EQ(attr.query.prog_cnt, 1, "prog_cnt_written_old");
-+		ASSERT_EQ(attr.query.revision, 0xdeadbeefdeadbeefULL,
-+			  "revision_not_written_old");
-+	}
-+
-+	memset(&attr, 0, sizeof(attr));
-+	attr.query.target_fd = cg_fd;
-+	attr.query.attach_type = BPF_CGROUP_INET_INGRESS;
-+
-+	err = syscall(__NR_bpf, BPF_PROG_QUERY, &attr, FULL_QUERY_SIZE);
-+	if (!ASSERT_OK(err, "query_full_size"))
-+		goto cleanup;
-+
-+	ASSERT_EQ(attr.query.prog_cnt, 1, "prog_cnt_written");
-+	ASSERT_GT(attr.query.revision, 0, "revision_written");
-+
-+cleanup:
-+	if (link)
-+		bpf_link__destroy(link);
-+	if (cg_fd >= 0)
-+		close(cg_fd);
-+	cgroup_skb_direct_packet_access__destroy(skel);
-+}
-+
-+void test_bpf_attr_size(void)
-+{
-+	if (test__start_subtest("query_size_boundaries"))
-+		test_query_size_boundaries();
-+}
+diff --git a/include/linux/liveupdate.h b/include/linux/liveupdate.h
+index 30c5a39ff9e9c2..8d3bbc35c828b8 100644
+--- a/include/linux/liveupdate.h
++++ b/include/linux/liveupdate.h
+@@ -12,6 +12,7 @@
+ #include <linux/kho/abi/luo.h>
+ #include <linux/list.h>
+ #include <linux/mutex.h>
++#include <linux/refcount.h>
+ #include <linux/rwsem.h>
+ #include <linux/types.h>
+ #include <uapi/linux/liveupdate.h>
+@@ -175,7 +176,7 @@ struct liveupdate_flb_ops {
+  * @retrieved: True once the FLB's retrieve() callback has run.
+  */
+ struct luo_flb_private_state {
+-	long count;
++	refcount_t count;
+ 	u64 data;
+ 	void *obj;
+ 	struct mutex lock;
+diff --git a/kernel/liveupdate/luo_flb.c b/kernel/liveupdate/luo_flb.c
+index 00f5494812c4ab..59c5f31ab76740 100644
+--- a/kernel/liveupdate/luo_flb.c
++++ b/kernel/liveupdate/luo_flb.c
+@@ -111,7 +111,7 @@ static int luo_flb_file_preserve_one(struct liveupdate_flb *flb)
+ 	struct luo_flb_private *private = luo_flb_get_private(flb);
+ 
+ 	scoped_guard(mutex, &private->outgoing.lock) {
+-		if (!private->outgoing.count) {
++		if (!refcount_read(&private->outgoing.count)) {
+ 			struct liveupdate_flb_op_args args = {0};
+ 			int err;
+ 
+@@ -126,8 +126,10 @@ static int luo_flb_file_preserve_one(struct liveupdate_flb *flb)
+ 			}
+ 			private->outgoing.data = args.data;
+ 			private->outgoing.obj = args.obj;
++			refcount_set(&private->outgoing.count, 1);
++		} else {
++			refcount_inc(&private->outgoing.count);
+ 		}
+-		private->outgoing.count++;
+ 	}
+ 
+ 	return 0;
+@@ -138,8 +140,7 @@ static void luo_flb_file_unpreserve_one(struct liveupdate_flb *flb)
+ 	struct luo_flb_private *private = luo_flb_get_private(flb);
+ 
+ 	scoped_guard(mutex, &private->outgoing.lock) {
+-		private->outgoing.count--;
+-		if (!private->outgoing.count) {
++		if (refcount_dec_and_test(&private->outgoing.count)) {
+ 			struct liveupdate_flb_op_args args = {0};
+ 
+ 			args.flb = flb;
+@@ -178,7 +179,7 @@ static int luo_flb_retrieve_one(struct liveupdate_flb *flb)
+ 	for (int i = 0; i < fh->header_ser->count; i++) {
+ 		if (!strcmp(fh->ser[i].name, flb->compatible)) {
+ 			private->incoming.data = fh->ser[i].data;
+-			private->incoming.count = fh->ser[i].count;
++			refcount_set(&private->incoming.count, fh->ser[i].count);
+ 			found = true;
+ 			break;
+ 		}
+@@ -208,12 +209,8 @@ static int luo_flb_retrieve_one(struct liveupdate_flb *flb)
+ static void luo_flb_file_finish_one(struct liveupdate_flb *flb)
+ {
+ 	struct luo_flb_private *private = luo_flb_get_private(flb);
+-	u64 count;
+ 
+-	scoped_guard(mutex, &private->incoming.lock)
+-		count = --private->incoming.count;
+-
+-	if (!count) {
++	if (refcount_dec_and_test(&private->incoming.count)) {
+ 		struct liveupdate_flb_op_args args = {0};
+ 
+ 		if (!private->incoming.retrieved) {
+@@ -652,12 +649,13 @@ void luo_flb_serialize(void)
+ 	guard(rwsem_read)(&luo_register_rwlock);
+ 	list_private_for_each_entry(gflb, &luo_flb_global.list, private.list) {
+ 		struct luo_flb_private *private = luo_flb_get_private(gflb);
++		long count = refcount_read(&private->outgoing.count);
+ 
+-		if (private->outgoing.count > 0) {
++		if (count > 0) {
+ 			strscpy(fh->ser[i].name, gflb->compatible,
+ 				sizeof(fh->ser[i].name));
+ 			fh->ser[i].data = private->outgoing.data;
+-			fh->ser[i].count = private->outgoing.count;
++			fh->ser[i].count = count;
+ 			i++;
+ 		}
+ 	}
 -- 
 2.53.0
 
