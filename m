@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7453344607D;
-	Tue, 21 Jul 2026 19:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D21244607D;
+	Tue, 21 Jul 2026 19:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661191; cv=none; b=rITBSxN5GeQzak9PGmoc39Quc2v/Ehu5PDb26zOBb9sTNUNIAVczVtcTA19AFmHcaazqUp/fSe8Ic5FDQPgZET4Yq1fNs7C8AesogMzNSiGCOGt2AMu8x3G/SqOjdqjoOCOIvAldj7gzQUVjPLDCoU5MGCMQqd43eBSJ+Bj1/8c=
+	t=1784661194; cv=none; b=rqpEIksAEDZRmj2eFUFprOWVGrBj7zjaUVkE3fHNF9sssxiMV+E/B4F7SABi+NHW3R7/xWHnEjNb9ZofnH7GYzyuPo/WNLCRTiFkmwKQl0CWM9ukQMAAJXfFi0+p1wFLjjBYI+VzzQy2UGZm4R4mfOn5XizfDYakw7kSlO2Xby0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661191; c=relaxed/simple;
-	bh=tL9OAwJfQrq4Q1sac+04WpAn5lLxzhMMwYbjo/nD6os=;
+	s=arc-20240116; t=1784661194; c=relaxed/simple;
+	bh=0MPw6MVH1wtwz/g+EGp++9pyC+/7/sUml5pDnXXNYhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VyUreNR90DryGHWff0o0inBdGMkPPaEFhngaharo19NvJl751cR85WYRDlfNGVoy9leOX1D07c0u7SEvFkX2NB6WD4VJ4XKyJdCM960IZEGqd2jZquC/JXqNgvZht0nvl1F6FsJeQ6wBcnNfZJ5d/M3PMZAgDh0Iq4D01WlBEkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MtRRfNPW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qSKrYMB+QW3PUBLN+tAUYofurKn+4jlpU8had2o9h0OPAav3xN1AVmSDotcDYZsApWq/9tTwXXmtYzARQGnCrrRytdR1NTIFP5wmXlKU8cPGj2SrhR0jnyte8qtSv4b/NOqlTTX/3fAmHMlkUlOeRsCcEo6mAZ/kX/xCJr1Zsuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpHtpr/G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MtRRfNPW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2D51F000E9;
-	Tue, 21 Jul 2026 19:13:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpHtpr/G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8343C1F000E9;
+	Tue, 21 Jul 2026 19:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661190;
-	bh=n3qUre83o/Vvwo3wCT077VfFap6MJNY2qt1k0E8jFCM=;
+	s=korg; t=1784661193;
+	bh=/zxaoj7h8htKOkGhG6sFMAt1mYr3d+BcRgHuIq3mMuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MtRRfNPWoKLoQ+i9PGdLvqNP0ehbxUA/UknVvJrz0sO93l9JI+HwaReup9ZDJzEjZ
-	 KVFT4AvsY9MAb/ya0S4YPxWIhcD4Zj9UWriH2Rbvebb0iUry74aBpmRxkyEDnesns9
-	 VoV7JKmJXfljXgOVypR98RVkYV9CeLiUOZxBWlnA=
+	b=MpHtpr/GrGS53jN10enkVYJEPxrIpwczJSzRhG8OgDbnsuRyVUSJ1E35o+OBXsIUp
+	 GOS+Nz0bgSecE3caedWLiBgq+Hsyka2fpUBvR8Z54q/Zwb6XBTQKFsY2fRH6M554mO
+	 NcO7qzQheNCm6mwHixfiMCLA+q8SHlq8Z/+8rLuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1265/2077] eth: fbnic: fix ordering of heartbeat vs ownership
-Date: Tue, 21 Jul 2026 17:15:38 +0200
-Message-ID: <20260721152622.653431558@linuxfoundation.org>
+Subject: [PATCH 7.1 1266/2077] s390/mm: Fix handling of _PAGE_UNUSED pte bit
+Date: Tue, 21 Jul 2026 17:15:39 +0200
+Message-ID: <20260721152622.677528252@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,78 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-[ Upstream commit d87363b0edfc7504ff2b144fe4cdd8154f90f42e ]
+[ Upstream commit d4bb00704a66024502261fa7a523c07420249fea ]
 
-When requesting ownership of the NIC (MAC/PHY control), we set up
-the heartbeat to look stale:
+The _PAGE_UNUSED softbit should not really be lying around. Its sole
+purpose is to signal to try_to_unmap_one() and try_to_migrate_one()
+that the page can be discarded instead of being moved / swapped.
 
-  /* Initialize heartbeat, set last response to 1 second in the past
-   * so that we will trigger a timeout if the firmware doesn't respond
-   */
-  fbd->last_heartbeat_response = req_time - HZ;
-  fbd->last_heartbeat_request = req_time;
+KVM has no way to know why a page is being unmapped, so it sets the bit
+on userspace ptes corresponding to unused guest pages every time they
+get unmapped. KVM has no reasonable way to clear the bit once the page
+is in use again.
 
-The response handler then sets:
+While set_ptes() checks and clears the bit, other paths that set new
+ptes did not. This led to used pages being thrown out as if they were
+unused, causing guest corruption.
 
-  fbd->last_heartbeat_response = jiffies;
+Fix the issue by clearing the _PAGE_UNUSED bit for present ptes in
+set_pte(), i.e. whenever a present pte is getting set. The check in
+set_ptes() is then redundant and can be removed.
 
-for which we wait via:
+Also fix gmap_helper_try_set_pte_unused() to only set the bit if the
+pte is present; the _PAGE_UNUSED bit is only defined for present ptes
+and thus should not be set for non-present ptes.
 
-  fbnic_fw_init_heartbeat() -> fbnic_fw_heartbeat_current()
-
-The scheme is a bit odd, but it should work in principle.
-
-Fix the ordering of operations. We have to set up the stale heartbeat
-before we send the message. Otherwise if the response is very fast
-we will override it. This triggers on QEMU if we run on the core
-that handles the IRQ, and results in ndo_open failing with ETIMEDOUT.
-
-The change in ordering doesn't impact releasing the ownership.
-Both ndo_stop and heartbeat check are under rtnl_lock.
-
-Fixes: 20d2e88cc746 ("eth: fbnic: Add initial messaging to notify FW of our presence")
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://patch.msgid.link/20260622154753.827506-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c98175b7917f ("KVM: s390: Add gmap_helper_set_unused()")
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-ID: <20260623153331.233784-2-imbrenda@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_fw.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ arch/s390/include/asm/pgtable.h | 4 ++--
+ arch/s390/mm/gmap_helpers.c     | 3 ++-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-index 0c6812fcf18515..283d25fae79e78 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-@@ -526,15 +526,10 @@ int fbnic_fw_xmit_ownership_msg(struct fbnic_dev *fbd, bool take_ownership)
- 			goto free_message;
- 	}
+diff --git a/arch/s390/include/asm/pgtable.h b/arch/s390/include/asm/pgtable.h
+index 2c6cee8241e044..4740c75649ebb5 100644
+--- a/arch/s390/include/asm/pgtable.h
++++ b/arch/s390/include/asm/pgtable.h
+@@ -980,6 +980,8 @@ static inline void set_pmd(pmd_t *pmdp, pmd_t pmd)
  
--	err = fbnic_mbx_map_tlv_msg(fbd, msg);
--	if (err)
--		goto free_message;
--
- 	/* Initialize heartbeat, set last response to 1 second in the past
- 	 * so that we will trigger a timeout if the firmware doesn't respond
- 	 */
- 	fbd->last_heartbeat_response = req_time - HZ;
--
- 	fbd->last_heartbeat_request = req_time;
+ static inline void set_pte(pte_t *ptep, pte_t pte)
+ {
++	if (pte_present(pte))
++		pte = clear_pte_bit(pte, __pgprot(_PAGE_UNUSED));
+ 	WRITE_ONCE(*ptep, pte);
+ }
  
- 	/* Set prev_firmware_time to 0 to avoid triggering firmware crash
-@@ -542,6 +537,10 @@ int fbnic_fw_xmit_ownership_msg(struct fbnic_dev *fbd, bool take_ownership)
- 	 */
- 	fbd->prev_firmware_time = 0;
+@@ -1332,8 +1334,6 @@ pgprot_t pgprot_writecombine(pgprot_t prot);
+ static inline void set_ptes(struct mm_struct *mm, unsigned long addr,
+ 			      pte_t *ptep, pte_t entry, unsigned int nr)
+ {
+-	if (pte_present(entry))
+-		entry = clear_pte_bit(entry, __pgprot(_PAGE_UNUSED));
+ 	page_table_check_ptes_set(mm, addr, ptep, entry, nr);
+ 	for (;;) {
+ 		set_pte(ptep, entry);
+diff --git a/arch/s390/mm/gmap_helpers.c b/arch/s390/mm/gmap_helpers.c
+index 1cfe4724fbe2a6..60023b6fdcb138 100644
+--- a/arch/s390/mm/gmap_helpers.c
++++ b/arch/s390/mm/gmap_helpers.c
+@@ -181,7 +181,8 @@ void gmap_helper_try_set_pte_unused(struct mm_struct *mm, unsigned long vmaddr)
+ 	if (IS_ERR_OR_NULL(ptep))
+ 		return;
  
-+	err = fbnic_mbx_map_tlv_msg(fbd, msg);
-+	if (err)
-+		goto free_message;
-+
- 	/* Set heartbeat detection based on if we are taking ownership */
- 	fbd->fw_heartbeat_enabled = take_ownership;
- 
+-	__atomic64_or(_PAGE_UNUSED, (long *)ptep);
++	if (pte_present(*ptep))
++		__atomic64_or(_PAGE_UNUSED, (long *)ptep);
+ 	pte_unmap_unlock(ptep, ptl);
+ }
+ EXPORT_SYMBOL_GPL(gmap_helper_try_set_pte_unused);
 -- 
 2.53.0
 
