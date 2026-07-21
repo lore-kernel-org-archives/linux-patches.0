@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593773D3321;
-	Tue, 21 Jul 2026 17:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CB037647B;
+	Tue, 21 Jul 2026 17:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654734; cv=none; b=tE5HuqdeX7to3OvuVz0dxLme+kTCqq2FEgHT78R+aplkmewF9erEdcBt0aX1lUyb8fhD6CghtaXemAADRMGUdK/whpQb4HWMbMp+2s1SYIGbmkuh35svTUp+sPrA0K+emAT6bsKtoF1HAADRGlhCTzu/1Ji6sZQs9GaD2W/op/o=
+	t=1784654737; cv=none; b=T5wTKHm58N0SqTE9QUU+fqp4RA3mViKY3wccP0FiX0Yzd71YLPYz/i2wVS7zIo5XH8g4um6V7rNZSULHkbICM6ErLhs04oWPKNsRcfjnxhG33vf7/OQHb+Qqi7TE6hqRhcbdf52nIC7iog+lghF4S9eQ0/7suuHMjKPg2ZyEM8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654734; c=relaxed/simple;
-	bh=VilFUno4bLgeaypHjmYEKcsGvyNewgZhGyeNWtJVlas=;
+	s=arc-20240116; t=1784654737; c=relaxed/simple;
+	bh=DHtC8Ii96dA2QONmtOF+wuLzxUw+nSdOKmQxf0KvxlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aJjyJAshZRoCKcPlMJlLt3CZjTuzHxKOm5CFHsCryZR4pdm8+rLc+eDg5Mnd3HteyWogC9aHIlgQ0LTy9xlzGcKCWDsTKM3AgJ0WZiTa22QH5F9SVCkbrqdoxh2ezvwur2xWEWLv8UItaJwApmSr+os457gqz3BJhMaTZovSTkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tp9L45Tw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=i06io+0/9oSdnT59ld/jVW6cIHEiI24Td1TahljckAlqaBi/QL4QXikYuIJ2Fzu0e2Zgx2tuPADu8E7WfqyEALiIqzQncQFlTJCPoX61U8j/p4p9SmSeNmHrd7ceOUj1/5HmoibY7wResfLdh9JeHBGobesLXEoCTerr06DkQVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7+Ov8Ww; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tp9L45Tw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC951F000E9;
-	Tue, 21 Jul 2026 17:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7+Ov8Ww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 661E11F000E9;
+	Tue, 21 Jul 2026 17:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654733;
-	bh=ompKkpgKhFI7+Sb0gzQ526vqL/vG8DjX69j2oIyThQg=;
+	s=korg; t=1784654735;
+	bh=BNVft/NLW2OxTRQjzbjk/TmZPExjRzgSuwkynSLw08w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tp9L45Tw31UV0r3Oo8jo0VERwmCQqwGdoZScMeQVSZLGzeqxaLd4nU7zOjHCAlxdt
-	 axox50Yht1hSWpRArQa2ejJTz5WPSW4KE6TEXH2HP9efbWFHKRFcOGpuLdsRXIeMKS
-	 HtievhJu0MyNTn5GQPqRl4770h2fII3Jq7m6s0xk=
+	b=n7+Ov8WwMS8M2yW5/+epjufNexe7sDJufelPXMavFjiMb/D9en0scUqf32y7wlWLo
+	 eS31P7zYOGe+w7onfNqYCexbT2KWSow3zDT5MTAL4SEOf3EPpfrQTwjKocw4ACirzm
+	 oBe+5+N5aSw69StKXPO46KwBo0XDRev/bW4TuFA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Joe Damato <joe@dama.to>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 1817/2077] netdev-genl: report NAPI thread PID in the callers pid namespace
-Date: Tue, 21 Jul 2026 17:24:50 +0200
-Message-ID: <20260721152635.602966580@linuxfoundation.org>
+	Souvik Banerjee <souvik@amlalabs.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.1 1818/2077] ovl: use linked upper dentry in copy-up tmpfile
+Date: Tue, 21 Jul 2026 17:24:51 +0200
+Message-ID: <20260721152635.626198347@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,61 +46,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Souvik Banerjee <souvik@amlalabs.com>
 
-commit 1f24c0d01db214c9e661915e9972404c96ca73c0 upstream.
+commit e348eecd4d8fa8d18a5157ff59f7be1dc59c5928 upstream.
 
-netdev_nl_napi_fill_one() reports the NAPI kthread PID in NETDEV_A_NAPI_PID
-using task_pid_nr(), which returns the PID in the initial pid namespace.
+ovl_copy_up_tmpfile() stores the disconnected O_TMPFILE dentry as the
+overlay's upper dentry reference via ovl_inode_update().  vfs_tmpfile()
+allocated this dentry via d_alloc(parentpath->dentry, &slash_name), so
+d_name is "/" and d_parent is c->workdir.  Local upper filesystems
+(ext4, btrfs, xfs, ...) immediately rename it to "#<inum>" via
+d_mark_tmpfile() inside their ->tmpfile() op; FUSE and virtiofs do
+not, so both fields stay that way.  Neither identifies the destination
+directory and filename where ovl_do_link() actually linked the file.
 
-NETDEV_CMD_NAPI_GET does not have GENL_ADMIN_PERM and the netdev genl family
-is netnsok, so a caller in a child pid namespace can issue it. That caller
-then sees the kthread's global PID, even though the kthread is not visible
-in its pid namespace, where the value should be 0.
+When the upper filesystem implements ->d_revalidate() (e.g. FUSE or
+virtiofs), ovl_revalidate_real() calls it with the dentry's parent
+inode and a snapshot of d_name.  The server tries to look up "/" inside
+c->workdir, fails, and overlayfs reports -ESTALE.
 
-Translate the PID through the caller's pid namespace, the same way commit
-3799c2570982 ("io_uring/fdinfo: translate SqThread PID through caller's
-pid_ns") did for the io_uring SQPOLL thread. The doit and dumpit paths both
-run synchronously in the caller's context, so task_active_pid_ns(current) is
-the caller's pid namespace.
+This causes persistent ESTALE errors for any file that was copied up via
+the tmpfile path, breaking dpkg, apt, and other tools that do
+rename-over-existing on overlayfs with a FUSE/virtiofs upper.
 
-Fixes: db4704f4e4df ("netdev-genl: Add PID for the NAPI thread")
-Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Joe Damato <joe@dama.to>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Link: https://patch.msgid.link/20260615171736.1709318-1-maoyixie.tju@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Before commit 6b52243f633e ("ovl: fold copy-up helpers into callers"),
+the tmpfile copy-up path used a dedicated helper ovl_link_tmpfile()
+that captured the linked destination dentry returned by ovl_do_link():
+
+    err = ovl_do_link(temp, udir, upper);
+    ...
+    if (!err)
+        *newdentry = dget(upper);
+
+and published it via ovl_inode_update(d_inode(c->dentry), newdentry).
+The fold inlined ovl_do_link() into ovl_copy_up_tmpfile() but dropped
+the dget(upper) capture, and rewrote the publish line as
+ovl_inode_update(d_inode(c->dentry), dget(temp)) — where temp is the
+disconnected O_TMPFILE dentry.
+
+Fix by keeping a reference to the linked destination dentry after
+ovl_do_link() succeeds, and publishing that dentry at the existing
+ovl_inode_update() call site.  The non-tmpfile/workdir path continues to
+publish the renamed temporary dentry.
+
+Reproducer:
+  - Mount overlayfs with virtiofs (or a FUSE fs whose server advertises
+    FUSE_TMPFILE) as upper
+  - Run: dpkg -i <any .deb>
+  - Observe: "error installing new file '...': Stale file handle"
+
+Fixes: 6b52243f633e ("ovl: fold copy-up helpers into callers")
+Cc: stable@vger.kernel.org # v4.20+
+Signed-off-by: Souvik Banerjee <souvik@amlalabs.com>
+Link: https://patch.msgid.link/20260501232735.2610824-1-souvik@amlalabs.com
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Reviewed-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/netdev-genl.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/overlayfs/copy_up.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/net/core/netdev-genl.c
-+++ b/net/core/netdev-genl.c
-@@ -2,6 +2,7 @@
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -853,7 +853,7 @@ static int ovl_copy_up_tmpfile(struct ov
+ {
+ 	struct ovl_fs *ofs = OVL_FS(c->dentry->d_sb);
+ 	struct inode *udir = d_inode(c->destdir);
+-	struct dentry *temp, *upper;
++	struct dentry *temp, *upper, *newdentry = NULL;
+ 	struct file *tmpfile;
+ 	int err;
  
- #include <linux/netdevice.h>
- #include <linux/notifier.h>
-+#include <linux/pid_namespace.h>
- #include <linux/rtnetlink.h>
- #include <net/busy_poll.h>
- #include <net/net_namespace.h>
-@@ -189,7 +190,8 @@ netdev_nl_napi_fill_one(struct sk_buff *
- 		goto nla_put_failure;
- 
- 	if (napi->thread) {
--		pid = task_pid_nr(napi->thread);
-+		pid = task_pid_nr_ns(napi->thread,
-+				     task_active_pid_ns(current));
- 		if (nla_put_u32(rsp, NETDEV_A_NAPI_PID, pid))
- 			goto nla_put_failure;
+@@ -889,6 +889,14 @@ static int ovl_copy_up_tmpfile(struct ov
+ 	err = PTR_ERR(upper);
+ 	if (!IS_ERR(upper)) {
+ 		err = ovl_do_link(ofs, temp, udir, upper);
++		if (!err) {
++			/*
++			 * Record the linked dentry -- not the disconnected
++			 * O_TMPFILE dentry -- so that ->d_revalidate() on
++			 * the upper fs sees the real parent/name.
++			 */
++			newdentry = dget(upper);
++		}
+ 		end_creating(upper);
  	}
+ 
+@@ -903,7 +911,7 @@ static int ovl_copy_up_tmpfile(struct ov
+ 
+ 	if (!c->metacopy)
+ 		ovl_set_upperdata(d_inode(c->dentry));
+-	ovl_inode_update(d_inode(c->dentry), dget(temp));
++	ovl_inode_update(d_inode(c->dentry), newdentry);
+ 
+ out:
+ 	ovl_end_write(c->dentry);
 
 
