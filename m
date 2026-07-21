@@ -1,36 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25DE46D2A4;
-	Tue, 21 Jul 2026 17:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F831F3D56;
+	Tue, 21 Jul 2026 17:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654050; cv=none; b=aaqTvCqnHG6b7yjz3gJP7MJSfDZt2or5xhjDqSv2idhXQRXLi91K54v0mrfYQPV/Ht+GgZCKnwKj/TdAW7Zp6MjPf6RaU0MLqBZtiPm8i3a8KBR4tx1fKbCgM4bcgZQb3dCIpWD1qgUOujBf0lVx6ZyI2ChtEm3m6l6ZR7j7EV4=
+	t=1784654053; cv=none; b=XIEy+o4djQHEyTOm4EI12eGj6kpnPPw1E42Dcj6EODLVsEZvR3qcFIXQF0N36dRsZUN4fU+E/P+oSBfk9z16oxayHGwILSXsymU7yfRxtS5gWaYGlHMS1f9mgTxBjgoECuUEd7kCkFfKyfq43Zz577lGs+zINcDJyBEVOFLZbiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654050; c=relaxed/simple;
-	bh=05xHX1PBL2Qzz8+g3VYUG7F9yilJH7KbR1Des/EAens=;
+	s=arc-20240116; t=1784654053; c=relaxed/simple;
+	bh=FRSgZVAL/xQDfWQwASGRoXkg5a3CP+eJTYFmYpYb43o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E3Skte62XN1RGgytL/WidUwHh+dHk18xyk+4NClQkNn2YO5a/hDGyrZABmJy/AXpx6GL6lcTZ/yRZx/IoCaiZeNPim/5adnsHc+WJID7PGJfq1D2loMju+Sf2Jn1zTGCJpm/9zDknAmWbXtkAujdbpIZvEoF053Yaidgx+xgiJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b4n1EaCw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SDeULiesIOoihVPdZ748rq/P6Vw708Y/jlquqrKviwFtK1z1f/jqZKVm6kUQmxtcuVUoV19L8QulZjHN1poevlo3KYTQXbxYfWb+nWJ7PybthBYPGGgfEgP0eJbn1n7bqY1jeYP5j2kFM81+FY5bGeCMl3NCKyzPCyveaktDHmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wYerNHcy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4n1EaCw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 347121F000E9;
-	Tue, 21 Jul 2026 17:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wYerNHcy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C9A1F000E9;
+	Tue, 21 Jul 2026 17:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654049;
-	bh=vC5vDrPL+bmUq0X61WQ7z4n822cNHgM8J8/sIL6px+s=;
+	s=korg; t=1784654052;
+	bh=KMpVbFad3zMoviteLegjA3z+W1t4ZelN1FlMJsHKJtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b4n1EaCwwJw90G2qxz0jd6PnWWyXkuHmiBCL1PNO0xb68PKZEs/nGLPXMLDNPzCh7
-	 42S4PuKxvoEZ/akxWNKRgpmP2vhLjZJi3kTfg04hA2cFQjYVzb13CZxX7z/mcl9LHA
-	 Bqwgxz3Z4lbWFUVag6bJpcU6oK3AUDU8ETvePnZY=
+	b=wYerNHcyG2S6uH41jzFV0ZSYL6JJ6AXw2ISXbs4I3E5DewA0VBZia1T4vlbRvfZHi
+	 Bgmdw04KDKccyreqp+3hhkXIHOw2XpnQzRnZ4czL7kvkC7QVVq7Df5JFQsrh50RbNk
+	 Ymb+UOi4jNbmGyW+a3TMCPHOarHR1mkZrfUcjdrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 7.1 1557/2077] KVM: s390: Fix unlikely race in try_get_locked_pte()
-Date: Tue, 21 Jul 2026 17:20:30 +0200
-Message-ID: <20260721152629.505622699@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Harsh Prateek Bora <harshpb@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Gautam Menghani <gautam@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 7.1 1558/2077] powerpc/pseries/Kconfig: Enable CONFIG_VPA_PMU to be used with KVM
+Date: Tue, 21 Jul 2026 17:20:31 +0200
+Message-ID: <20260721152629.529543049@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -49,48 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudio Imbrenda <imbrenda@linux.ibm.com>
+From: Gautam Menghani <gautam@linux.ibm.com>
 
-commit 5670b7f927f8d98685f3f5873dbf9f8d7a5a63f3 upstream.
+commit fe179677b6dcb4b658586038a811f87265e97777 upstream.
 
-Fix an unlikely race in try_get_locked_pte(), which could have happened
-if puds or pmds get unmapped between the p?dp_get() and p?d_offset()
-functions.
+Currently, CONFIG_VPA_PMU is not enabled by default, and consequently
+cannot be used for KVM guests at all, unless explicitly enabled on
+host kernel.
 
-Fixes: 89fa757931dc ("KVM: s390: Avoid potentially sleeping while atomic when zapping pages")
-CC: stable@vger.kernel.org # 7.1
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260611104850.110313-3-imbrenda@linux.ibm.com>
+Mark CONFIG_VPA_PMU as "default m" to ensure it is available when KVM is
+being used.
+
+Cc: stable@vger.kernel.org # v6.13+
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+[Maddy: Changed tag order]
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260615091120.84169-1-gautam@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/mm/gmap_helpers.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/powerpc/platforms/pseries/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/s390/mm/gmap_helpers.c b/arch/s390/mm/gmap_helpers.c
-index 1cfe4724fbe2..ee3f37af8aee 100644
---- a/arch/s390/mm/gmap_helpers.c
-+++ b/arch/s390/mm/gmap_helpers.c
-@@ -51,15 +51,15 @@ pte_t *try_get_locked_pte(struct mm_struct *mm, unsigned long vmaddr, spinlock_t
- 	pgd = pgdp_get(pgdp);
- 	if (pgd_none(pgd) || !pgd_present(pgd))
- 		return NULL;
--	p4dp = p4d_offset(pgdp, vmaddr);
-+	p4dp = p4d_offset_lockless(pgdp, pgd, vmaddr);
- 	p4d = p4dp_get(p4dp);
- 	if (p4d_none(p4d) || !p4d_present(p4d))
- 		return NULL;
--	pudp = pud_offset(p4dp, vmaddr);
-+	pudp = pud_offset_lockless(p4dp, p4d, vmaddr);
- 	pud = pudp_get(pudp);
- 	if (pud_none(pud) || pud_leaf(pud) || !pud_present(pud))
- 		return NULL;
--	pmdp = pmd_offset(pudp, vmaddr);
-+	pmdp = pmd_offset_lockless(pudp, pud, vmaddr);
- 	pmd = pmdp_get_lockless(pmdp);
- 	if (pmd_none(pmd) || pmd_leaf(pmd) || !pmd_present(pmd))
- 		return NULL;
--- 
-2.55.0
-
+--- a/arch/powerpc/platforms/pseries/Kconfig
++++ b/arch/powerpc/platforms/pseries/Kconfig
+@@ -154,6 +154,7 @@ config HV_PERF_CTRS
+ config VPA_PMU
+ 	tristate "VPA PMU events"
+ 	depends on KVM_BOOK3S_64_HV && HV_PERF_CTRS
++	default m
+ 	help
+ 	  Enable access to the VPA PMU counters via perf. This enables
+ 	  code that support measurement for KVM on PowerVM(KoP) feature.
 
 
