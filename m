@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87E73B8120;
-	Tue, 21 Jul 2026 22:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DAC34B1A6;
+	Tue, 21 Jul 2026 22:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673180; cv=none; b=g7sc/43cHZvEr2IVeasUE1K6knW+zaBp6EgS08d4Rinv/oldUo7Mu6eMVgKmoscZ3t9usUJBR6TeICr8iAnkidUvKy92av7UeuHETET29RcnQnQfsJE/Hvgb8u7XbCNlHYqhrb7pDNtoKPHRnCa5XwBKJhEm+H3tGwqxBSP6zsY=
+	t=1784673183; cv=none; b=iNE4I5BQxR7v5Ft8uS3P0l9HZ9O3cg4nkOs2fqMRqbI9/VnQPjnDROmYIZTKzGdUMoGJFzk1MUfciezMgxnZH/MqnhQQFqcex02M9n37QUB6aAAQvemOlUScCcasdZPbhB6+D0oNc0noYyuhWZQJDhl6JoKYPXpmTuHP/I6Ui1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673180; c=relaxed/simple;
-	bh=UsrzREJ11E1LczdY7itPEPZ1LqmQKIF42AVoUTj7yVw=;
+	s=arc-20240116; t=1784673183; c=relaxed/simple;
+	bh=mcAxhEmYuxj/VmD2gHwTbkDfaFs5MHNmB18wdh2J5zw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=exSBW17+FUZ3RCotrBCNVxn+ss9Zwc94L47g+8OieOSyHDMMjnPN92Ca7GwF6ipkpgHJMWnmDJN3f2ssj5LD5jfbxj0leUmdZBILs/SX52xnJ2mEQieseCXz6pNa1KmFwsbhmzXenU8eW1jzsUcVjtHqQ0v+iqje/mgiJ3B+pDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dU6DOrQd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LUcKB2RnWx4j+YAWKMbpRrsBAYX+lqB5fq2M1dpBYpwFjJ0gTN2x+qyVYcwxUEULO9zvbF6MavJMPNGwTao3cj7I1ngL9k9g7ec8lhzF0HTVNbriMkfAD3oXnb8f/InmvXoL88ytBLqRdbIp/INw5E4FbDkW03lFHQcB3EjL8yI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhA/aE4j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dU6DOrQd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D7A1F000E9;
-	Tue, 21 Jul 2026 22:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhA/aE4j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB411F000E9;
+	Tue, 21 Jul 2026 22:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673179;
-	bh=O3wbflLc9IqXuSgH56bUXJ8l6ZipglV13Esm/x6C/6E=;
+	s=korg; t=1784673182;
+	bh=c/BqYN1XI1nE2AsuFpnXFhAjvcReljV34JWgvJqoAkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dU6DOrQdN6SjpgqcfPTHkccyolcv7M6l1V/SLV4mOWLMG9N8uL9mE03C8VECujkRs
-	 eeCIRT9+E9FiJyq+9WyQB0s52PgjdmC15Htp4Tx8DBDLbInGOLH0KuGryUxE6XyJSq
-	 2DC8ALVCcegOOuxuxKuhAD331jP8O/VaEUhS5+3U=
+	b=UhA/aE4jVzPbA/FJoJLcFugD5CCGNYpX7QsmYhzwDDSZQfZv7zzJjsKEhnLaufElm
+	 lLc9MO3+GKA9dwJru2FBSPHnd0PyQ6vivFI/wpNYV2JiuWpkfjUWYz0VjUe9usyAGB
+	 aCNfRKvYNiPCHUhvMmu3LLj7/3ed7FqQlggdi4xI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Vidya Sagar <vidyas@nvidia.com>
-Subject: [PATCH 5.10 064/699] PCI: host-common: Request bus reassignment when not probe-only
-Date: Tue, 21 Jul 2026 17:17:03 +0200
-Message-ID: <20260721152357.145256729@linuxfoundation.org>
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 5.10 065/699] netfilter: ipset: fix race between dump and ip_set_list resize
+Date: Tue, 21 Jul 2026 17:17:04 +0200
+Message-ID: <20260721152357.167366913@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,47 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit fda8749ba73638f5bbca3ffb39bc6861eb3b23fa upstream.
+commit 7cd9103283b26b917360ec99d7d2f2d761bcf1ab upstream.
 
-pci_host_common_init() is used by several generic ECAM host drivers.
-After PCI core changes around pci_flags and preserve_config, these hosts
-no longer opted into full bus number reassignment the way they did
-before, which broke enumeration of devices on a Marvell CN106XX board.
+The release path of ip_set_dump_do() and ip_set_dump_done() read
+inst->ip_set_list via ip_set_ref_netlink(), a plain rcu_dereference_raw()
+of the array pointer. These run from netlink_recvmsg() without the nfnl
+mutex and without an RCU read-side critical section.
 
-When PCI_PROBE_ONLY is not set, add PCI_REASSIGN_ALL_BUS so
-pci_scan_bridge_extend() takes the reassignment path: bus numbers can be
-assigned from firmware EA data (e.g. pci_ea_fixed_busnrs()). Skip the
-flag in probe-only mode so existing assignments are not overridden.
+A concurrent ip_set_create() can grow the array: it publishes the new
+array, calls synchronize_net() and then kvfree()s the old one. Since the
+dump paths read the array outside any RCU reader, synchronize_net() does
+not wait for them and the old array can be freed while they still index
+into it, causing a use-after-free.
 
-Fixes: 7246a4520b4b ("PCI: Use preserve_config in place of pci_flags")
-Closes: https://lore.kernel.org/all/abkqm_LCd9zAM8cW@rkannoth-OptiPlex-7090/
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-[mani: added stable tag]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-[bhelgaas: add problem report link]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+The dumped set itself stays pinned via set->ref_netlink, so only the
+array load needs protecting. Take rcu_read_lock() around it, matching
+ip_set_get_byname() and __ip_set_put_byindex().
+
+  BUG: KASAN: slab-use-after-free in ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1697)
+  Read of size 8 at addr ffff88800b5c4018 by task exploit/150
+  Call Trace:
+   ...
+   kasan_report (mm/kasan/report.c:595)
+   ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1697)
+   netlink_dump (net/netlink/af_netlink.c:2325)
+   netlink_recvmsg (net/netlink/af_netlink.c:1976)
+   sock_recvmsg (net/socket.c:1159)
+   __sys_recvfrom (net/socket.c:2315)
+   ...
+  Oops: general protection fault, probably for non-canonical address ... KASAN NOPTI
+  KASAN: maybe wild-memory-access in range [0x02d6...d0-0x02d6...d7]
+  RIP: 0010:ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1698)
+  Kernel panic - not syncing: Fatal exception
+
+Fixes: 8a02bdd50b2e ("netfilter: ipset: Fix calling ip_set() macro at dumping")
 Cc: stable@vger.kernel.org
-Cc: Vidya Sagar <vidyas@nvidia.com>
-Link: https://patch.msgid.link/20260414081730.3864372-1-rkannoth@marvell.com
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-host-common.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/netfilter/ipset/ip_set_core.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/controller/pci-host-common.c
-+++ b/drivers/pci/controller/pci-host-common.c
-@@ -75,6 +75,10 @@ int pci_host_common_probe(struct platfor
- 	if (!pci_has_flag(PCI_PROBE_ONLY))
- 		pci_add_flags(PCI_REASSIGN_ALL_BUS);
- 
-+	/* Do not reassign bus numbers if probe only */
-+	if (!pci_has_flag(PCI_PROBE_ONLY))
-+		pci_add_flags(PCI_REASSIGN_ALL_BUS);
+--- a/net/netfilter/ipset/ip_set_core.c
++++ b/net/netfilter/ipset/ip_set_core.c
+@@ -1490,7 +1490,11 @@ ip_set_dump_done(struct netlink_callback
+ 		struct ip_set_net *inst =
+ 			(struct ip_set_net *)cb->args[IPSET_CB_NET];
+ 		ip_set_id_t index = (ip_set_id_t)cb->args[IPSET_CB_INDEX];
+-		struct ip_set *set = ip_set_ref_netlink(inst, index);
++		struct ip_set *set;
 +
- 	bridge->sysdata = cfg;
- 	bridge->ops = (struct pci_ops *)&ops->pci_ops;
++		rcu_read_lock();
++		set = ip_set_ref_netlink(inst, index);
++		rcu_read_unlock();
  
+ 		if (set->variant->uref)
+ 			set->variant->uref(set, cb, false);
+@@ -1695,7 +1699,9 @@ next_set:
+ release_refcount:
+ 	/* If there was an error or set is done, release set */
+ 	if (ret || !cb->args[IPSET_CB_ARG0]) {
++		rcu_read_lock();
+ 		set = ip_set_ref_netlink(inst, index);
++		rcu_read_unlock();
+ 		if (set->variant->uref)
+ 			set->variant->uref(set, cb, false);
+ 		pr_debug("release set %s\n", set->name);
 
 
