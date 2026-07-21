@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A97414A27;
-	Tue, 21 Jul 2026 20:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A769471265;
+	Tue, 21 Jul 2026 20:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664399; cv=none; b=ElCrrt9r+YTHwptUFpJacslgy25A4mW/H016oSEor260GF9LcaQ+yPgB21F62q1PY+fUvtePbCZmxS78Zgs80lywiCpWWS83UgBFc9ElRqzjpnqyG2dG6a9fOjwIgglqROwKg3/a57pL+cagbz+jEB14yANR1O+LKujmvJ3C+zU=
+	t=1784664401; cv=none; b=mDzghQbzNg/gAj1Lhkgf6aNY4plrCNH8+s1cTT8JjD38IBc6tT9mFCZndK7EkCpFFQT8bSikWiqX1Y2qz8wu2lHOze08DuSxKU0SCST0X6pJOr7oiftx9lIQXDEidypkTEpEbjnFX+jNLCBin/mKuMtq412RiM1XYAaP4nOjMhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664399; c=relaxed/simple;
-	bh=CTjpixd3maLs8NhL/mBN1e+FDcvBG0x3wtdwGETXsgs=;
+	s=arc-20240116; t=1784664401; c=relaxed/simple;
+	bh=L4tJQeEeA0xlET0g1YAtLc9wcIqmQWHBrK/S1twbOV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ad/Wd0rHmlxKTTPWWFcwkZTsS4TKTdRXETfy7sdXIvqndgGv6O3aRBQ7EIN6JM9Nwak6fQYxITGbKPY1akCv29iTkE6BeBa4ZEY29fGrF4l1/Si3VrsdbQMpU/iiBUn91vNmPM4euiWM6VZTLtdX3BuCT+aMzmoSosV674adK+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwXNmFBT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ffk9wUHHQXmzcqFXjo4i2JXpFrlJyuzm0QVrKwPgziXhEv58OfIw1L4t/7LKip5DCUP+RnUrKmYPVOsM9f7PBOjIUzx+8biJccyCCLqRDcFgUNoJmZSEvmIa6n5HRIP85M8T2PMkzxLFpsnphnI6Z7LnrFJBHrE1Qsy0CqCuLXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCsabTM5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwXNmFBT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172231F000E9;
-	Tue, 21 Jul 2026 20:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCsabTM5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07101F000E9;
+	Tue, 21 Jul 2026 20:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664397;
-	bh=vFKj5p0o1TTqDiNSQyqslfYehqGtKTzx67Tm0Mo/B3s=;
+	s=korg; t=1784664400;
+	bh=WIHvMSz4t7hjZFlika+3pi+c3ihNXf6tUJxSMpnibZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KwXNmFBTeJGv87jtdYVK9phlu7SlUz7SKHkMoGSS8arVE/S/bJ1prRgcNgluln1Db
-	 6Fr/2gPotcB+6eCPunkw5NzTE9R+LnWZCWPBWjZ/S9Sj0xWXCVhIiHgmW7ODpYogQM
-	 3uE5RfgakfSXxJ+JByJX/gBRq7uZE9roXOyXveEU=
+	b=sCsabTM5dahL/HJE51bdctnwHHN7Ew98u9+Ar8cR6tQElCUAcm5qvFwab8evyoanX
+	 0aQQSOZFR8xcNYgBQdaKMXG/8s58IZxa6hyM6AC9yLG0WlVCh9pmp7M7+Qx+MslCcD
+	 xLlrXyCg76uMei82MkDc6If4kq01o7SDFDAtsZ/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
+	Musaab Khan <musaab.khan@protonmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1184/1276] ksmbd: centralize ksmbd_conn final release to plug transport leak
-Date: Tue, 21 Jul 2026 17:27:07 +0200
-Message-ID: <20260721152512.534823805@linuxfoundation.org>
+Subject: [PATCH 6.12 1185/1276] ksmbd: track the connection owning a byte-range lock
+Date: Tue, 21 Jul 2026 17:27:08 +0200
+Message-ID: <20260721152512.558341051@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,454 +52,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit b1f1e80620deb49daf63c2e677046599b693dc1f ]
+[ Upstream commit c1016dd1d8b2bcd1158bbaabe94a31bb7e7431fb ]
 
-ksmbd_conn_free() is one of four sites that can observe the last
-refcount drop of a struct ksmbd_conn.  The other three
+SMB2_LOCK adds each granted byte-range lock to both the file lock list
+and the lock list of the connection which handled the request.  The
+final close and durable handle paths, however, remove the connection
+list entry while holding fp->conn->llist_lock.
 
-    fs/smb/server/connection.c    ksmbd_conn_r_count_dec()
-    fs/smb/server/oplock.c        __free_opinfo()
-    fs/smb/server/vfs_cache.c     session_fd_check()
+With SMB3 multichannel, the connection handling the LOCK request can be
+different from the connection which opened the file.  The entry can
+therefore be removed under a different spinlock from the one protecting
+the list it belongs to.  A concurrent traversal can then access freed
+struct ksmbd_lock and struct file_lock objects.
 
-end the conn with a bare kfree(), skipping
-ida_destroy(&conn->async_ida) and
-conn->transport->ops->free_transport(conn->transport).  Whenever one
-of them is the last putter, the embedded async_ida and the entire
-transport struct leak -- for TCP, that is also the struct socket and
-the kvec iov.
+Record the connection owning each lock's clist entry and hold a
+reference to it while the entry is linked.  Use that connection and its
+llist_lock for unlock, rollback, close, and durable preserve.  Durable
+reconnect assigns the new connection as the owner when publishing the
+locks again.
 
-__free_opinfo() being a final putter is not theoretical.  opinfo_put()
-queues the callback via call_rcu(&opinfo->rcu, free_opinfo_rcu), so
-ksmbd_server_terminate_conn() can deposit N opinfo releases in RCU and
-have ksmbd_conn_free() run in the handler thread before any of them
-fire.  ksmbd_conn_free() then observes refcnt > 0 and short-circuits;
-the last RCU-delivered __free_opinfo() falls onto its bare kfree(conn)
-branch and the transport is lost.
-
-A/B validation in a QEMU/virtme guest, mounting //127.0.0.1/testshare:
-each iteration holds 8 files open via sleep processes, force-closes
-TCP with "ss -K sport = :445", kills the holders, lazy-umounts;
-repeated 10 times, then ksmbd shutdown and kmemleak scan.
-
-    state         conn_alloc  conn_free  tcp_free  opi_rcu  kmemleak
-    ----------    ----------  ---------  --------  -------  --------
-    pre-patch         20          20        10       160        7
-    with patch        20          20        20       160        0
-
-Pre-patch conn_free=20 with tcp_free=10 directly demonstrates the
-bare-kfree paths skipping transport cleanup; kmemleak backtraces point
-into struct tcp_transport / iov.  With this patch tcp_free matches
-conn_free at 20/20 and kmemleak is clean.
-
-Move the per-struct final release into __ksmbd_conn_release_work() and
-route the three bare-kfree final-put sites through a new
-ksmbd_conn_put().  Those sites now pair ida_destroy() and
-free_transport() with kfree(conn) regardless of which holder happens
-to release the last reference.  stop_sessions() only triggers the
-transport shutdown and does not itself drop the last conn reference,
-so it is unaffected.
-
-The centralized release reaches sock_release() -> tcp_close() ->
-lock_sock_nested() (might_sleep) from every final putter, including
-__free_opinfo() invoked from an RCU softirq callback, which trips
-CONFIG_DEBUG_ATOMIC_SLEEP.  Defer the release to a dedicated
-ksmbd_conn_wq workqueue so ksmbd_conn_put() is safe from any
-non-sleeping context.
-
-Make ksmbd_file own a strong connection reference while fp->conn is
-non-NULL so durable-preserve and final-close paths cannot dereference
-a stale connection.  ksmbd_open_fd() and ksmbd_reopen_durable_fd()
-take the reference via ksmbd_conn_get() (the latter also reorders the
-fp->conn / fp->tcon assignments before __open_id() so the published fp
-is never observed with fp->conn == NULL); session_fd_check() and
-__ksmbd_close_fd() drop it via ksmbd_conn_put().  With that invariant,
-session_fd_check() can take a local conn pointer once and use it
-across the m_op_list and lock_list iterations even though op->conn
-puts may otherwise drop the last reference.
-
-At module exit the workqueue is flushed and destroyed after
-rcu_barrier(), so any release queued by a trailing RCU callback is
-drained before the inode hash and module text go away.
-
-Fixes: ee426bfb9d09 ("ksmbd: add refcnt to ksmbd_conn struct")
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
+Cc: stable@vger.kernel.org
+Reported-by: Musaab Khan <musaab.khan@protonmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: c1016dd1d8b2 ("ksmbd: track the connection owning a byte-range lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/connection.c |  101 ++++++++++++++++++++++++++++++++++++++-------
- fs/smb/server/connection.h |    6 ++
- fs/smb/server/oplock.c     |    7 ---
- fs/smb/server/server.c     |   12 +++++
- fs/smb/server/vfs_cache.c  |   60 ++++++++++++++++++++++----
- 5 files changed, 156 insertions(+), 30 deletions(-)
+ fs/smb/server/smb2pdu.c   |   10 ++++++++--
+ fs/smb/server/vfs_cache.c |   23 +++++++++++++++++------
+ fs/smb/server/vfs_cache.h |    1 +
+ 3 files changed, 26 insertions(+), 8 deletions(-)
 
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -22,6 +22,81 @@ static struct ksmbd_conn_ops default_con
- DEFINE_HASHTABLE(conn_list, CONN_HASH_BITS);
- DECLARE_RWSEM(conn_list_lock);
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -7602,9 +7602,11 @@ int smb2_lock(struct ksmbd_work *work)
+ 						nolock = 0;
+ 						list_del(&cmp_lock->flist);
+ 						list_del(&cmp_lock->clist);
++						cmp_lock->conn = NULL;
+ 						spin_unlock(&conn->llist_lock);
+ 						up_read(&conn_list_lock);
  
-+static struct workqueue_struct *ksmbd_conn_wq;
-+
-+int ksmbd_conn_wq_init(void)
-+{
-+	ksmbd_conn_wq = alloc_workqueue("ksmbd-conn-release",
-+					WQ_UNBOUND | WQ_MEM_RECLAIM, 0);
-+	if (!ksmbd_conn_wq)
-+		return -ENOMEM;
-+	return 0;
-+}
-+
-+void ksmbd_conn_wq_destroy(void)
-+{
-+	if (ksmbd_conn_wq) {
-+		destroy_workqueue(ksmbd_conn_wq);
-+		ksmbd_conn_wq = NULL;
-+	}
-+}
-+
-+/*
-+ * __ksmbd_conn_release_work() - perform the final, once-per-struct cleanup
-+ * of a ksmbd_conn whose refcount has just dropped to zero.
-+ *
-+ * This is the common release path used by ksmbd_conn_put() for the embedded
-+ * state that outlives the connection thread: async_ida and the attached
-+ * transport (which owns the socket and iov for TCP).  Called from a workqueue
-+ * so that sleep-allowed teardown (sock_release -> tcp_close ->
-+ * lock_sock_nested) never runs from an RCU softirq callback (free_opinfo_rcu)
-+ * or any other non-sleeping putter context.
-+ */
-+static void __ksmbd_conn_release_work(struct work_struct *work)
-+{
-+	struct ksmbd_conn *conn =
-+		container_of(work, struct ksmbd_conn, release_work);
-+
-+	ida_destroy(&conn->async_ida);
-+	conn->transport->ops->free_transport(conn->transport);
-+	kfree(conn);
-+}
-+
-+/**
-+ * ksmbd_conn_get() - take a reference on @conn and return it.
-+ *
-+ * Returns @conn unchanged so callers can write
-+ * "fp->conn = ksmbd_conn_get(work->conn);" in one expression.  Returns NULL
-+ * if @conn is NULL.
-+ */
-+struct ksmbd_conn *ksmbd_conn_get(struct ksmbd_conn *conn)
-+{
-+	if (!conn)
-+		return NULL;
-+
-+	atomic_inc(&conn->refcnt);
-+	return conn;
-+}
-+
-+/**
-+ * ksmbd_conn_put() - drop a reference and, if it was the last, queue the
-+ * release onto ksmbd_conn_wq so it runs from process context.
-+ *
-+ * Callable from any context including RCU softirq callbacks and non-sleeping
-+ * locks; the actual release is deferred to the workqueue.  ksmbd_conn_wq is
-+ * created in ksmbd_server_init() before any conn can be allocated and is
-+ * destroyed in ksmbd_server_exit() after rcu_barrier(), so it is always
-+ * non-NULL while a conn reference is held.
-+ */
-+void ksmbd_conn_put(struct ksmbd_conn *conn)
-+{
-+	if (!conn)
-+		return;
-+
-+	if (atomic_dec_and_test(&conn->refcnt))
-+		queue_work(ksmbd_conn_wq, &conn->release_work);
-+}
-+
- /**
-  * ksmbd_conn_free() - free resources of the connection instance
-  *
-@@ -36,23 +111,19 @@ void ksmbd_conn_free(struct ksmbd_conn *
- 	hash_del(&conn->hlist);
- 	up_write(&conn_list_lock);
++						ksmbd_conn_put(conn);
+ 						locks_free_lock(cmp_lock->fl);
+ 						kfree(cmp_lock);
+ 						goto out_check_cl;
+@@ -7739,6 +7741,7 @@ skip:
+ 				goto out2;
+ 			} else if (!rc) {
+ 				list_add(&smb_lock->llist, &rollback_list);
++				smb_lock->conn = ksmbd_conn_get(work->conn);
+ 				spin_lock(&work->conn->llist_lock);
+ 				list_add_tail(&smb_lock->clist,
+ 					      &work->conn->lock_list);
+@@ -7793,11 +7796,14 @@ out:
+ 		}
  
-+	/*
-+	 * request_buf / preauth_info / mechToken are only ever accessed by the
-+	 * connection handler thread that owns @conn.  ksmbd_conn_free() is
-+	 * called from the transport free_transport() path when that thread is
-+	 * exiting, so it is safe to release them unconditionally even when
-+	 * ksmbd_conn_put() below is not the final putter (oplock / ksmbd_file
-+	 * holders only retain the conn pointer, not these per-thread buffers).
-+	 */
- 	xa_destroy(&conn->sessions);
- 	kvfree(conn->request_buf);
- 	kfree(conn->preauth_info);
- 	kfree(conn->mechToken);
--	if (atomic_dec_and_test(&conn->refcnt)) {
--		/*
--		 * async_ida is embedded in struct ksmbd_conn, so pair
--		 * ida_destroy() with the final kfree() rather than with
--		 * the unconditional field teardown above.  This keeps
--		 * the IDA valid for the entire lifetime of the struct,
--		 * even while other refcount holders (oplock / vfs
--		 * durable handles) still reference the connection.
--		 */
--		ida_destroy(&conn->async_ida);
--		conn->transport->ops->free_transport(conn->transport);
--		kfree(conn);
--	}
-+	ksmbd_conn_put(conn);
- }
+ 		list_del(&smb_lock->llist);
+-		spin_lock(&work->conn->llist_lock);
++		conn = smb_lock->conn;
++		spin_lock(&conn->llist_lock);
+ 		if (!list_empty(&smb_lock->flist))
+ 			list_del(&smb_lock->flist);
+ 		list_del(&smb_lock->clist);
+-		spin_unlock(&work->conn->llist_lock);
++		smb_lock->conn = NULL;
++		spin_unlock(&conn->llist_lock);
++		ksmbd_conn_put(conn);
  
- /**
-@@ -79,6 +150,7 @@ struct ksmbd_conn *ksmbd_conn_alloc(void
- 		conn->um = ERR_PTR(-EOPNOTSUPP);
- 	if (IS_ERR(conn->um))
- 		conn->um = NULL;
-+	INIT_WORK(&conn->release_work, __ksmbd_conn_release_work);
- 	atomic_set(&conn->req_running, 0);
- 	atomic_set(&conn->r_count, 0);
- 	atomic_set(&conn->refcnt, 1);
-@@ -457,8 +529,7 @@ void ksmbd_conn_r_count_dec(struct ksmbd
- 	if (!atomic_dec_return(&conn->r_count) && waitqueue_active(&conn->r_count_q))
- 		wake_up(&conn->r_count_q);
- 
--	if (atomic_dec_and_test(&conn->refcnt))
--		kfree(conn);
-+	ksmbd_conn_put(conn);
- }
- 
- int ksmbd_conn_transport_init(void)
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -15,6 +15,7 @@
- #include <linux/kthread.h>
- #include <linux/nls.h>
- #include <linux/unicode.h>
-+#include <linux/workqueue.h>
- 
- #include "smb_common.h"
- #include "ksmbd_work.h"
-@@ -117,6 +118,7 @@ struct ksmbd_conn {
- 	bool				binding;
- 	atomic_t			refcnt;
- 	bool				is_aapl;
-+	struct work_struct		release_work;
- };
- 
- struct ksmbd_conn_ops {
-@@ -162,6 +164,10 @@ void ksmbd_conn_wait_idle(struct ksmbd_c
- int ksmbd_conn_wait_idle_sess_id(struct ksmbd_conn *curr_conn, u64 sess_id);
- struct ksmbd_conn *ksmbd_conn_alloc(void);
- void ksmbd_conn_free(struct ksmbd_conn *conn);
-+struct ksmbd_conn *ksmbd_conn_get(struct ksmbd_conn *conn);
-+void ksmbd_conn_put(struct ksmbd_conn *conn);
-+int ksmbd_conn_wq_init(void);
-+void ksmbd_conn_wq_destroy(void);
- bool ksmbd_conn_lookup_dialect(struct ksmbd_conn *c);
- int ksmbd_conn_write(struct ksmbd_work *work);
- int ksmbd_conn_rdma_read(struct ksmbd_conn *conn,
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -30,7 +30,6 @@ static DEFINE_RWLOCK(lease_list_lock);
- static struct oplock_info *alloc_opinfo(struct ksmbd_work *work,
- 					u64 id, __u16 Tid)
- {
--	struct ksmbd_conn *conn = work->conn;
- 	struct ksmbd_session *sess = work->sess;
- 	struct oplock_info *opinfo;
- 
-@@ -39,7 +38,7 @@ static struct oplock_info *alloc_opinfo(
- 		return NULL;
- 
- 	opinfo->sess = sess;
--	opinfo->conn = conn;
-+	opinfo->conn = ksmbd_conn_get(work->conn);
- 	opinfo->level = SMB2_OPLOCK_LEVEL_NONE;
- 	opinfo->op_state = OPLOCK_STATE_NONE;
- 	opinfo->pending_break = 0;
-@@ -50,7 +49,6 @@ static struct oplock_info *alloc_opinfo(
- 	init_waitqueue_head(&opinfo->oplock_brk);
- 	atomic_set(&opinfo->refcount, 1);
- 	atomic_set(&opinfo->breaking_cnt, 0);
--	atomic_inc(&opinfo->conn->refcnt);
- 
- 	return opinfo;
- }
-@@ -132,8 +130,7 @@ static void __free_opinfo(struct oplock_
- {
- 	if (opinfo->is_lease)
- 		free_lease(opinfo);
--	if (opinfo->conn && atomic_dec_and_test(&opinfo->conn->refcnt))
--		kfree(opinfo->conn);
-+	ksmbd_conn_put(opinfo->conn);
- 	kfree(opinfo);
- }
- 
---- a/fs/smb/server/server.c
-+++ b/fs/smb/server/server.c
-@@ -587,8 +587,14 @@ static int __init ksmbd_server_init(void
- 	if (ret)
- 		goto err_crypto_destroy;
- 
-+	ret = ksmbd_conn_wq_init();
-+	if (ret)
-+		goto err_workqueue_destroy;
-+
- 	return 0;
- 
-+err_workqueue_destroy:
-+	ksmbd_workqueue_destroy();
- err_crypto_destroy:
- 	ksmbd_crypto_destroy();
- err_release_inode_hash:
-@@ -614,6 +620,12 @@ static void __exit ksmbd_server_exit(voi
- {
- 	ksmbd_server_shutdown();
- 	rcu_barrier();
-+	/*
-+	 * ksmbd_conn_put() defers the final release onto ksmbd_conn_wq,
-+	 * so drain it after rcu_barrier() has fired any pending RCU
-+	 * callbacks that may have queued a release.
-+	 */
-+	ksmbd_conn_wq_destroy();
- 	ksmbd_release_inode_hash();
- }
- 
+ 		locks_free_lock(smb_lock->fl);
+ 		if (rlock)
 --- a/fs/smb/server/vfs_cache.c
 +++ b/fs/smb/server/vfs_cache.c
-@@ -402,6 +402,17 @@ static void __ksmbd_close_fd(struct ksmb
- 		kfree(smb_lock);
- 	}
- 
-+	/*
-+	 * Drop fp's strong reference on conn (taken in ksmbd_open_fd() /
-+	 * ksmbd_reopen_durable_fd()).  Durable fps that reached the
-+	 * scavenger have already had fp->conn cleared by session_fd_check(),
-+	 * in which case there is nothing to drop here.
-+	 */
-+	if (fp->conn) {
-+		ksmbd_conn_put(fp->conn);
-+		fp->conn = NULL;
-+	}
+@@ -391,10 +391,14 @@ static void __ksmbd_close_fd(struct ksmb
+ 	 * there are not accesses to fp->lock_list.
+ 	 */
+ 	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
+-		if (!list_empty(&smb_lock->clist) && fp->conn) {
+-			spin_lock(&fp->conn->llist_lock);
+-			list_del(&smb_lock->clist);
+-			spin_unlock(&fp->conn->llist_lock);
++		struct ksmbd_conn *conn = smb_lock->conn;
 +
- 	if (ksmbd_stream_fd(fp))
- 		kfree(fp->stream.name);
- 	kfree(fp->owner.name);
-@@ -694,7 +705,14 @@ struct ksmbd_file *ksmbd_open_fd(struct
- 	atomic_set(&fp->refcount, 1);
++		if (conn) {
++			spin_lock(&conn->llist_lock);
++			list_del_init(&smb_lock->clist);
++			smb_lock->conn = NULL;
++			spin_unlock(&conn->llist_lock);
++			ksmbd_conn_put(conn);
+ 		}
  
- 	fp->filp		= filp;
--	fp->conn		= work->conn;
-+	/*
-+	 * fp owns a strong reference on fp->conn for as long as fp->conn is
-+	 * non-NULL, so session_fd_check() and __ksmbd_close_fd() never
-+	 * dereference a dangling pointer.  Paired with ksmbd_conn_put() in
-+	 * session_fd_check() (durable preserve), in __ksmbd_close_fd()
-+	 * (final close), and on the error paths below.
-+	 */
-+	fp->conn		= ksmbd_conn_get(work->conn);
- 	fp->tcon		= work->tcon;
- 	fp->volatile_id		= KSMBD_NO_FID;
- 	fp->persistent_id	= KSMBD_NO_FID;
-@@ -716,6 +734,8 @@ struct ksmbd_file *ksmbd_open_fd(struct
- 	return fp;
- 
- err_out:
-+	/* fp->conn was set and refcounted before every branch here. */
-+	ksmbd_conn_put(fp->conn);
- 	kmem_cache_free(filp_cache, fp);
- 	return ERR_PTR(ret);
- }
-@@ -1043,25 +1063,32 @@ static bool session_fd_check(struct ksmb
- 	if (!is_reconnectable(fp))
- 		return false;
- 
-+	if (WARN_ON_ONCE(!fp->conn))
-+		return false;
-+
- 	if (ksmbd_vfs_copy_durable_owner(fp, user))
- 		return false;
- 
-+	/*
-+	 * fp owns a strong reference on fp->conn (taken in ksmbd_open_fd()
-+	 * / ksmbd_reopen_durable_fd()), so conn stays valid for the whole
-+	 * body of this function regardless of any op->conn puts below.
-+	 */
- 	conn = fp->conn;
- 	ci = fp->f_ci;
- 	down_write(&ci->m_lock);
- 	list_for_each_entry_rcu(op, &ci->m_op_list, op_entry) {
- 		if (op->conn != conn)
- 			continue;
--		if (op->conn && atomic_dec_and_test(&op->conn->refcnt))
--			kfree(op->conn);
-+		ksmbd_conn_put(op->conn);
- 		op->conn = NULL;
- 	}
+ 		list_del(&smb_lock->flist);
+@@ -1086,9 +1090,15 @@ static bool session_fd_check(struct ksmb
  	up_write(&ci->m_lock);
  
  	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
--		spin_lock(&fp->conn->llist_lock);
-+		spin_lock(&conn->llist_lock);
+-		spin_lock(&conn->llist_lock);
++		struct ksmbd_conn *lock_conn = smb_lock->conn;
++
++		if (!lock_conn)
++			continue;
++		spin_lock(&lock_conn->llist_lock);
  		list_del_init(&smb_lock->clist);
--		spin_unlock(&fp->conn->llist_lock);
-+		spin_unlock(&conn->llist_lock);
+-		spin_unlock(&conn->llist_lock);
++		smb_lock->conn = NULL;
++		spin_unlock(&lock_conn->llist_lock);
++		ksmbd_conn_put(lock_conn);
  	}
  
  	fp->conn = NULL;
-@@ -1072,6 +1099,8 @@ static bool session_fd_check(struct ksmb
- 		fp->durable_scavenger_timeout =
- 			jiffies_to_msecs(jiffies) + fp->durable_timeout;
- 
-+	/* Drop fp's own reference on conn. */
-+	ksmbd_conn_put(conn);
- 	return true;
- }
- 
-@@ -1158,15 +1187,27 @@ int ksmbd_reopen_durable_fd(struct ksmbd
- 
- 	old_f_state = fp->f_state;
- 	fp->f_state = FP_NEW;
-+
-+	/*
-+	 * Initialize fp's connection binding before publishing fp into the
-+	 * session's file table.  If __open_id() is ordered first, a
-+	 * concurrent teardown that iterates the table can observe a valid
-+	 * volatile_id with fp->conn == NULL and preserve a
-+	 * partially-initialized fp.  fp owns a strong reference on the new
-+	 * conn (see ksmbd_open_fd()); undo it on __open_id() failure.
-+	 */
-+	fp->conn = ksmbd_conn_get(conn);
-+	fp->tcon = work->tcon;
-+
- 	__open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
- 	if (!has_file_id(fp->volatile_id)) {
-+		fp->conn = NULL;
-+		fp->tcon = NULL;
-+		ksmbd_conn_put(conn);
- 		fp->f_state = old_f_state;
- 		return -EBADF;
+@@ -1209,6 +1219,7 @@ int ksmbd_reopen_durable_fd(struct ksmbd
  	}
  
--	fp->conn = conn;
--	fp->tcon = work->tcon;
--
  	list_for_each_entry(smb_lock, &fp->lock_list, flist) {
++		smb_lock->conn = ksmbd_conn_get(conn);
  		spin_lock(&conn->llist_lock);
  		list_add_tail(&smb_lock->clist, &conn->lock_list);
-@@ -1178,8 +1219,7 @@ int ksmbd_reopen_durable_fd(struct ksmbd
- 	list_for_each_entry_rcu(op, &ci->m_op_list, op_entry) {
- 		if (op->conn)
- 			continue;
--		op->conn = fp->conn;
--		atomic_inc(&op->conn->refcnt);
-+		op->conn = ksmbd_conn_get(fp->conn);
- 	}
- 	up_write(&ci->m_lock);
+ 		spin_unlock(&conn->llist_lock);
+--- a/fs/smb/server/vfs_cache.h
++++ b/fs/smb/server/vfs_cache.h
+@@ -32,6 +32,7 @@ struct ksmbd_session;
  
+ struct ksmbd_lock {
+ 	struct file_lock *fl;
++	struct ksmbd_conn *conn;
+ 	struct list_head clist;
+ 	struct list_head flist;
+ 	struct list_head llist;
 
 
