@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502F33E49E7;
-	Tue, 21 Jul 2026 17:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C502E736D;
+	Tue, 21 Jul 2026 17:20:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654412; cv=none; b=lMrwlLTFj8RuN4Qw3viTD8zr6wKqaNxw/i8qsIc7tQC1RLUJbKV3zuzKasjfb1oeqZaA7TVaV/wskqjUNsozgiaCTLpryCzlSGAST8W97vFvA2Yy/O00s/jrhcWDBBQKuW0Kpg6VHAstauLovpWbcnlTgmw5YpacLrWEBF7wzJU=
+	t=1784654414; cv=none; b=AsNix8FVVzDJ54lQqfequuVg2qmy3/YJY593F9b2zq8fmOGDI42YPoNFwrTo5NZqEr/EV8/Bu0nR/2BmwV4Z+VFId7IFkQZ3akQi0Hvd7VQDfjPh92rGH/YGTR05f45G/S4H4pCGRJ8A0HJJzOflMPXdwSpKQTpUtmxaERXm91A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654412; c=relaxed/simple;
-	bh=Egv38UMkeKG7pCvUkACOSd2kj6m8m+8ZQm2PiDmxSy4=;
+	s=arc-20240116; t=1784654414; c=relaxed/simple;
+	bh=Xy7viGINIHTqhTkxRNxKJwW5jXV+UviiCtMggln2Tls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MTLVN5oFuLmHawe0QG+/nUeBmnrE2SltM84mGfLWuJwxEHA9hSpnswTOWRyznHdK52yrIEg3d4nJHoQ9RjeooqDd2xBN0ltU2Jlc1anw1SmDlgTcTP0a/yIGtDXUP4OCNGHjlPuqTBCSptqCJ2jNHsQapRrD5RhqepR1E2u36ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvJ4EgyG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gqu7NglV7UAFOrut8lpJ4eNjH6tY0BewEr1GEmEOzp8rmGbcXI/DsaTPHHg5q0vW2k2u9upvNhYJ7XC24Ccq1YTtAvBA2fbXTDLMZzvoRgyVZcZlI1xVWuIV3Yr2ApFddh1Koq13B8Dtdv4W8eWLX5FPghQ5jCAC10ccy7nDtwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npOAVJmI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvJ4EgyG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A7D1F000E9;
-	Tue, 21 Jul 2026 17:20:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npOAVJmI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61EFD1F000E9;
+	Tue, 21 Jul 2026 17:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654410;
-	bh=ZRQ2tyQC1wcazn+7aos6t/YWJzlP0OQTG+bBOTlq4E4=;
+	s=korg; t=1784654412;
+	bh=ARCP0IXjNPilsAG3fGz6jfXwsz+E4z66SSmdDdF/rak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TvJ4EgyGJhXo9K1PupVq0QaF87qeA/EOQ2B89ndQSdtqnhfjMbJ+FOxBry/8GutB+
-	 O5hl7TaOYjdc6JPtZUqpL6rlHxUhpATwOEZ7uZzka1prdJQFmeH/LGlw0y510VquS0
-	 tOlzQLmR0dBLA2qRf4IS6TwnTIK6Ht8LNQVbsfvM=
+	b=npOAVJmIGi0QVdtg0JxKQkGHeTPuQAfYiow7QDF4Am6qUlB4h7++qpeTmtNTcQy/v
+	 hr8teF9cegxDbX0a4YcVjdpfHCZc4XRadfE/BnCwIML8q9lQBJR/Hiq5jd6lyMQsE1
+	 3wW37YMLERr3agnRsN8532s1FRsAL+N17vEikm1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	DaeMyung Kang <charsyam@gmail.com>,
-	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.1 1693/2077] ntfs: only alias volume $UpCase to default on exact match
-Date: Tue, 21 Jul 2026 17:22:46 +0200
-Message-ID: <20260721152632.688520234@linuxfoundation.org>
+Subject: [PATCH 7.1 1694/2077] ntfs: avoid heap allocation for free-cluster readahead state
+Date: Tue, 21 Jul 2026 17:22:47 +0200
+Message-ID: <20260721152632.713328106@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,62 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 From: DaeMyung Kang <charsyam@gmail.com>
 
-commit 8f4b6e8bda121ae3d4d8e332b789664604d3e9d2 upstream.
+commit c05132077df57a384919f61d7f8a8e76d748a6d4 upstream.
 
-load_and_init_upcase() currently aliases vol->upcase to the global
-default upcase whenever the shared prefix matches, and then truncates
-vol->upcase_len to that shorter prefix.  The result is correct only by
-accident: upcase[] accesses in name collation are gated by upcase_len,
-so the prefix-equality alias produces the same fold output as keeping
-the volume's own shorter table.
+get_nr_free_clusters() allocates a temporary file_ra_state before it
+publishes the precomputed free cluster count, sets NVolFreeClusterKnown(),
+and wakes vol->free_waitq. If that allocation fails, the worker returns
+without setting the flag or waking waiters, so callers waiting for the free
+count can block indefinitely.
 
-Still, prefix equality is not equality: the volume table is logically
-distinct from the default and should not be replaced by it unless they
-are byte-for-byte identical.  Use memcmp() to compare the complete table
-in one expression and drop the now-redundant upcase_len rewrite.
+The readahead state is only used synchronously while scanning the bitmap.
+Keep it on the stack and pass it by address to the readahead helper. This
+eliminates the early allocation failure path instead of adding a special
+case that publishes a conservative count and wakes the waitqueue.
+Zero-initialize the on-stack state because file_ra_state_init() only sets
+ra_pages and prev_pos.
 
-No user-visible change is expected for compliant volumes whose $UpCase
-has exactly default_upcase_len entries; shorter volume tables are no
-longer aliased to the default.
+Apply the same treatment to __get_nr_free_mft_records(), which scans the
+MFT bitmap with the same short-lived readahead state.
 
 Cc: stable@vger.kernel.org # v7.1
 Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
-Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs/super.c |   12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ fs/ntfs/super.c |   22 ++++++----------------
+ 1 file changed, 6 insertions(+), 16 deletions(-)
 
 --- a/fs/ntfs/super.c
 +++ b/fs/ntfs/super.c
-@@ -1329,7 +1329,6 @@ static bool load_and_init_upcase(struct
- 	u8 *addr;
+@@ -1955,7 +1955,7 @@ s64 get_nr_free_clusters(struct ntfs_vol
+ 	struct address_space *mapping = vol->lcnbmp_ino->i_mapping;
+ 	struct folio *folio;
  	pgoff_t index, max_index;
- 	unsigned int size;
--	int i, max;
+-	struct file_ra_state *ra;
++	struct file_ra_state ra = { 0 };
  
  	ntfs_debug("Entering.");
- 	/* Read upcase table and setup vol->upcase and vol->upcase_len. */
-@@ -1380,16 +1379,11 @@ read_partial_upcase_page:
- 		mutex_unlock(&ntfs_lock);
- 		return true;
- 	}
--	max = default_upcase_len;
--	if (max > vol->upcase_len)
--		max = vol->upcase_len;
--	for (i = 0; i < max; i++)
--		if (vol->upcase[i] != default_upcase[i])
--			break;
--	if (i == max) {
-+	if (default_upcase_len == vol->upcase_len &&
-+	    !memcmp(vol->upcase, default_upcase,
-+		    default_upcase_len * sizeof(*default_upcase))) {
- 		kvfree(vol->upcase);
- 		vol->upcase = default_upcase;
--		vol->upcase_len = max;
- 		ntfs_nr_upcase_users++;
- 		mutex_unlock(&ntfs_lock);
- 		ntfs_debug("Volume specified $UpCase matches default. Using default.");
+ 	/* Serialize accesses to the cluster bitmap. */
+@@ -1963,11 +1963,7 @@ s64 get_nr_free_clusters(struct ntfs_vol
+ 	if (NVolFreeClusterKnown(vol))
+ 		return atomic64_read(&vol->free_clusters);
+ 
+-	ra = kzalloc(sizeof(*ra), GFP_NOFS);
+-	if (!ra)
+-		return 0;
+-
+-	file_ra_state_init(ra, mapping);
++	file_ra_state_init(&ra, mapping);
+ 
+ 	/*
+ 	 * Convert the number of bits into bytes rounded up, then convert into
+@@ -1986,7 +1982,7 @@ s64 get_nr_free_clusters(struct ntfs_vol
+ 		 * Get folio from page cache, getting it from backing store
+ 		 * if necessary, and increment the use count.
+ 		 */
+-		folio = ntfs_get_locked_folio(mapping, index, max_index, ra);
++		folio = ntfs_get_locked_folio(mapping, index, max_index, &ra);
+ 
+ 		/* Ignore pages which errored synchronously. */
+ 		if (IS_ERR(folio)) {
+@@ -2025,7 +2021,6 @@ s64 get_nr_free_clusters(struct ntfs_vol
+ 	else
+ 		atomic64_set(&vol->free_clusters, nr_free);
+ 
+-	kfree(ra);
+ 	NVolSetFreeClusterKnown(vol);
+ 	wake_up_all(&vol->free_waitq);
+ 	ntfs_debug("Exiting.");
+@@ -2080,15 +2075,11 @@ static unsigned long __get_nr_free_mft_r
+ 	struct address_space *mapping = vol->mftbmp_ino->i_mapping;
+ 	struct folio *folio;
+ 	pgoff_t index;
+-	struct file_ra_state *ra;
++	struct file_ra_state ra = { 0 };
+ 
+ 	ntfs_debug("Entering.");
+ 
+-	ra = kzalloc(sizeof(*ra), GFP_NOFS);
+-	if (!ra)
+-		return 0;
+-
+-	file_ra_state_init(ra, mapping);
++	file_ra_state_init(&ra, mapping);
+ 
+ 	/* Use multiples of 4 bytes, thus max_size is PAGE_SIZE / 4. */
+ 	ntfs_debug("Reading $MFT/$BITMAP, max_index = 0x%lx, max_size = 0x%lx.",
+@@ -2100,7 +2091,7 @@ static unsigned long __get_nr_free_mft_r
+ 		 * Get folio from page cache, getting it from backing store
+ 		 * if necessary, and increment the use count.
+ 		 */
+-		folio = ntfs_get_locked_folio(mapping, index, max_index, ra);
++		folio = ntfs_get_locked_folio(mapping, index, max_index, &ra);
+ 
+ 		/* Ignore pages which errored synchronously. */
+ 		if (IS_ERR(folio)) {
+@@ -2132,7 +2123,6 @@ static unsigned long __get_nr_free_mft_r
+ 	else
+ 		atomic64_set(&vol->free_mft_records, nr_free);
+ 
+-	kfree(ra);
+ 	ntfs_debug("Exiting.");
+ 	return nr_free;
+ }
 
 
