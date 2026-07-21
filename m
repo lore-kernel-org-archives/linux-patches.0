@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C2E38910F;
-	Tue, 21 Jul 2026 18:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32AE622B8DF;
+	Tue, 21 Jul 2026 18:58:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660311; cv=none; b=AeQpx4JmpQsiWsYedKgHKK9MnBuAP8WD+MXFFOfIJyOSNFAxzsXz9g5hRtSM7/eW4QsJd1FJdoK7FvnwXvZIBZrEpuelpKjt0y+WOFCQascny/CMBtkfP5RJACpQIko6CT90Gl6Jqk0zW2Ah+nTTE0VfbV1hxDsf4IoAdv6UUYE=
+	t=1784660312; cv=none; b=enz5oJIKvRVNo25kkQBIHDALFieBj0Jnx/VInVfsDvhdFV2vsHItpA48knX7p0pRfPl/euAxoEUVNc4VDBHmevVyyOy3QkmGmNi/0w4VQbp/oYZ5j1jOJAs2oQ1nA/2lZTFAUCBiaoiDCxE+HyTKyzmZYqj7gMWjb0RbQFZhViI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660311; c=relaxed/simple;
-	bh=l1QPfibLV6gqgL0tZlpv2duz9s3qvijCMSkbfAj4cic=;
+	s=arc-20240116; t=1784660312; c=relaxed/simple;
+	bh=jKRhPa8PjKPMO+jfcw7eN1d5vygtDPxW0aXqHRlc2nE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dbu074YbiKveI9R/J4uOiEJ+jZi6y/L8vVv/pO8++gD3qg1juaCUg+3mQdTtJx558qAtwNTwi/+6Pz2v2l5RS7/Ulyc1N2z9KqlGr1/umiJ8H/PheWCEa6YcKFXp/hxknml1IG8rdxlBZx7hbIxg9WRX2rUz6Cy69Zzg5oa4mcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jXMtP0j+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=G5gXknUoG39zIC4b//ShLzGIh+pMiJxRoFNk3NVY235M3jNrFjugOEgXGPYxO2l5zVmsROX5fWLa9GdZRJaLmnYKRdO8fsIUaVnL3VWppJUHFMZztZeB91UuPdd7kUdRihnV5VbX3zWXzdVbGQGDYv/0FJpGjbmPw5i+eXhmoDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6oNEh0a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jXMtP0j+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0016D1F000E9;
-	Tue, 21 Jul 2026 18:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6oNEh0a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 991CF1F00A3A;
+	Tue, 21 Jul 2026 18:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660308;
-	bh=pnUXI+AFeBltInu0c8UCjfdykoaQVXKf5oOP0B7XNqI=;
+	s=korg; t=1784660311;
+	bh=OS2OJ+agxnwuvj6jvcT3+/AIehPHH8FFz1bMVxBnvYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jXMtP0j+1+V9YEWIZeCfaNP2sUr4Ml3Z2HNVkuIhGkcMIDBUNytAAc0LwVCnTG0rq
-	 srvmX9wWmVb5x35FTiQiUKYer2CU+ik/snMRpbGPgPpe38j5tpGQAh/hJtSZEOrZXk
-	 3qY+QGqMN/f2QsE1aAcAEd5BZRw6tzy38cUDvmC8=
+	b=d6oNEh0a79LSfn0HGsjkXhpMhPTGmdMPVtxh3CCGRItcbVz0mdxlseMumZKXdGel7
+	 YF+64cZ2F4p2Wq9McUJYsSV5ftk1lyvElYXEDRIKmYheEwSSc2bHR8iaUQZ8u4g1P9
+	 djYkzE9iYFsgoYKcDKHLA/0puv8fXGHChYPphkMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0932/2077] perf sched: Fix NULL dereference in latency_runtime_event
-Date: Tue, 21 Jul 2026 17:10:05 +0200
-Message-ID: <20260721152614.800943065@linuxfoundation.org>
+Subject: [PATCH 7.1 0933/2077] perf sched: Fix comp_cpus heap overflow with cross-machine recordings
+Date: Tue, 21 Jul 2026 17:10:06 +0200
+Message-ID: <20260721152614.824009354@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,52 +55,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 8cbca8a480e15f6326ce94287570993f27a4b2d5 ]
+[ Upstream commit c8b04142078a9ccb9e402ab7c38de7123256f4a5 ]
 
-latency_runtime_event() passes the return value of
-machine__findnew_thread() directly to thread_atoms_search() at line
-1216, before checking for NULL at line 1220.  thread_atoms_search()
-calls pid_cmp() which dereferences the thread pointer via
-thread__tid(), causing a NULL pointer dereference if the allocation
-fails.
+setup_map_cpus() allocates comp_cpus based on
+sysconf(_SC_NPROCESSORS_CONF), the host machine's CPU count.  But
+map_switch_event() indexes comp_cpus using cpus_nr derived from
+bitmap_weight(comp_cpus_mask, MAX_CPUS), where comp_cpus_mask is
+declared as DECLARE_BITMAP(..., MAX_CPUS) with MAX_CPUS=4096.
 
-All other callers of thread_atoms_search() in this file
-(latency_switch_event, latency_wakeup_event,
-latency_migrate_task_event) correctly check for NULL first.
+When analyzing a perf.data recording from a machine with more CPUs
+than the analysis host (e.g. 128-CPU server recording analyzed on an
+8-CPU laptop), cpus_nr exceeds the allocation size, causing a heap
+buffer overflow.
 
-Move the atoms assignment after the NULL check to match the pattern
-used by the other callers.
+Also fix a type mismatch: comp_cpus is 'struct perf_cpu *' (2 bytes
+per element) but was allocated with sizeof(int) (4 bytes per element).
 
-Fixes: b91fc39f4ad7 ("perf machine: Protect the machine->threads with a rwlock")
+Allocate comp_cpus with MAX_CPUS entries using the correct element
+size, matching the comp_cpus_mask bitmap bounds.  Remove the
+sysconf(_SC_NPROCESSORS_CONF) initialization of max_cpu — its only
+consumer was the comp_cpus allocation, and max_cpu is dynamically
+updated from the recording's events during processing.  Fix the
+non-compact path to use max_cpu.cpu + 1 as cpus_nr, converting from
+0-based index to count — sysconf() returned a count which masked
+this off-by-one.
+
+Fixes: 99623c628f54 ("perf sched: Add compact display option")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/perf/builtin-sched.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index adff5d40a15c95..13d9a15a553ec9 100644
+index 13d9a15a553ec9..6f5d5f3ce715c7 100644
 --- a/tools/perf/builtin-sched.c
 +++ b/tools/perf/builtin-sched.c
-@@ -1216,13 +1216,15 @@ static int latency_runtime_event(struct perf_sched *sched,
- 	const u32 pid	   = evsel__intval(evsel, sample, "pid");
- 	const u64 runtime  = evsel__intval(evsel, sample, "runtime");
- 	struct thread *thread = machine__findnew_thread(machine, -1, pid);
--	struct work_atoms *atoms = thread_atoms_search(&sched->atom_root, thread, &sched->cmp_pid);
-+	struct work_atoms *atoms;
- 	u64 timestamp = sample->time;
- 	int cpu = sample->cpu, err = -1;
+@@ -1677,7 +1677,7 @@ static int map_switch_event(struct perf_sched *sched, struct evsel *evsel,
+ 			new_cpu = true;
+ 		}
+ 	} else
+-		cpus_nr = sched->max_cpu.cpu;
++		cpus_nr = sched->max_cpu.cpu + 1;
  
- 	if (thread == NULL)
- 		return -1;
+ 	timestamp0 = sched->cpu_last_switched[this_cpu.cpu];
+ 	sched->cpu_last_switched[this_cpu.cpu] = timestamp;
+@@ -3577,10 +3577,8 @@ static int perf_sched__lat(struct perf_sched *sched)
  
-+	atoms = thread_atoms_search(&sched->atom_root, thread, &sched->cmp_pid);
-+
- 	/* perf.data is untrusted input — CPU may be absent or corrupted */
- 	if (cpu >= MAX_CPUS || cpu < 0) {
- 		pr_warning("WARNING: at offset %#" PRIx64 ": out-of-bound sample CPU %d, skipping sample\n",
+ static int setup_map_cpus(struct perf_sched *sched)
+ {
+-	sched->max_cpu.cpu  = sysconf(_SC_NPROCESSORS_CONF);
+-
+ 	if (sched->map.comp) {
+-		sched->map.comp_cpus = calloc(sched->max_cpu.cpu, sizeof(int));
++		sched->map.comp_cpus = calloc(MAX_CPUS, sizeof(*sched->map.comp_cpus));
+ 		if (!sched->map.comp_cpus)
+ 			return -1;
+ 	}
 -- 
 2.53.0
 
