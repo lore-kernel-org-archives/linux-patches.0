@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065563EEAC7;
-	Tue, 21 Jul 2026 19:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D3A415F0E;
+	Tue, 21 Jul 2026 19:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661456; cv=none; b=SYJyWsQDyOsjngbvKNoclPHXsqZs6kyMGsdfVJD9dNEtZVpmiFEVlLgeWv/mFeOqpaYvPKNMFEuvVj49wBXxoyYVk7dVBgCkg87ByYsb06zafsk5Z/pWld1ZyPg5NH6ZwHUN7HceM9DBRlVYcjp816IrY584GkPkIq0PHhv0pxY=
+	t=1784661458; cv=none; b=SIsOEW7IqdTs1j6UPF3oPpodo4IKOlBOb9FjI9iyf4QPL2Nq3JBbkyMHs42de4MqPQ354IPp8Zht3wXeVlL/G0l9N/csN7XWvzuNY2YkTkS9peNOAZuiJDVlHeeW00CRwVO6Ua9K77VxxP1a6jiapkQuG/DoLkFIuJaWXd/h2x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661456; c=relaxed/simple;
-	bh=kHNFUYDliL9gCncmhhlS2M/Aoa+RS8sRR/Ml0wljwdY=;
+	s=arc-20240116; t=1784661458; c=relaxed/simple;
+	bh=IXzLoEiYjz5JdoBf0GFjpAY+84FwNtgW0H6WThSkI4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hyty++UHIw1Ypcb7yXi79Km0JTYHMRO7d0RuRoBmEkGF9J0A5qZ8yBf1B6enNSs1/DSMDSCjGcfOlmDh5IGC31p1Ur/CRvWNmrY9YWJkc2snskWVeJv0I/vtmnsP7ruCPrmH/bHIU/5a1IbWKlwwO+X86UxmsIR9Rkfu0jE8Ygc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qWWL/W1l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dUbpycRML6lzVLjlf76qrI0AEgFPr4KsPfmgqkVX6NCY1ydjgkvVHYSwrGzAuBPip6HBUdEBPsbmxMl6gFnjlfHuks9dGYQ9VdkprAvvX3+2ShD/sRRtAFl1cMDptUJbOZv9SIFZkXnIA/tgWnR0RPLzKAFzf6HmtzpMwg0xX2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EaxhZN65; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qWWL/W1l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6AA1F00A3A;
-	Tue, 21 Jul 2026 19:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EaxhZN65"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D7C1F000E9;
+	Tue, 21 Jul 2026 19:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661454;
-	bh=VMYzuYzyG2k80OEQQ4GzFASTOICosOiKbTmSIE4cu9I=;
+	s=korg; t=1784661457;
+	bh=zQZNNYRN4HREL1oO8V/gMXCCpjBncDsbpM9m73IKirA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qWWL/W1lRTjAr+utl2byS/9wmP3qLFf95jglzpKfX/fTufl4CHR0KKT8LO9xzxRfX
-	 chEAsjmLcDJEFXG2B/+bfXLPJnUegZ/USMh6t7LxtVl6++lCZHY0uC+PgtWbBBBc3b
-	 /dwrKO8K9FjejrxqqH+nitI0isRoivHzp4fxryrM=
+	b=EaxhZN65XMVwwZIbSVIQm5rKCHg9Wg0AyE694BtDQ9frRSycBnDEwkoeen9pEtCuZ
+	 h/OoJUOEqTeElgGYE0Sm0ho8sO45SMTGNBooRyJQGp5SDQqWkA8bMKCSJima588tGH
+	 ne5tBGKnKtE4u9PtHAbk1IlEmgrBlQPKICnlf1pQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	David Heidelberg <david@ixit.cz>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Louis Kotze <loukot@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0072/1276] arm64: dts: qcom: sdm845-mezzanine: Fix camss ports unit_address_vs_reg warning
-Date: Tue, 21 Jul 2026 17:08:35 +0200
-Message-ID: <20260721152447.703743418@linuxfoundation.org>
+Subject: [PATCH 6.12 0073/1276] wifi: cfg80211: fix grammar in MLO group key error message
+Date: Tue, 21 Jul 2026 17:08:36 +0200
+Message-ID: <20260721152447.727205932@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,43 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Louis Kotze <loukot@gmail.com>
 
-[ Upstream commit f20a82aacd7f381084391a8d1f0f58defa91974c ]
+[ Upstream commit 9dcc1af3bbf5441f71a1e51b8d81bdf38a249607 ]
 
-Add necessary properties for ports node in SDM845 DB845c Navigation
-mezzanine overlay to fix W=1 DTC warning:
+The error message emitted by nl80211_validate_key_link_id() when a group
+key install on an MLO wdev is missing the link ID reads "link ID must
+for MLO group key", which is missing the words "be set". This makes the
+error harder to grep and parse in userspace logs, and is reported
+verbatim by wpa_supplicant via its nl80211 extack relay, e.g.:
 
-sdm845-db845c-navigation-mezzanine.dtso:19.10-24.5: Warning (unit_address_vs_reg): /fragment@0/__overlay__/ports/port@0: node has a unit name, but no reg or ranges property
+  wpa_supplicant: nl80211: kernel reports: link ID must for MLO group key
 
-Fixes: 30df676a31b7 ("arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: Convert mezzanine riser to dtso")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: David Heidelberg <david@ixit.cz>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260405-dts-qcom-w-1-fixes-v2-5-1f2c7b74a93f@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+The sibling error strings in the same helper already use grammatical
+phrasing ("link ID not allowed for pairwise key", "invalid link ID for
+MLO group key", "link ID not allowed for non-MLO group key"). Fix this
+one to match.
+
+No functional change.
+
+Fixes: e7a7b84e3317 ("wifi: cfg80211: Add link_id parameter to various key operations for MLO")
+Signed-off-by: Louis Kotze <loukot@gmail.com>
+Link: https://patch.msgid.link/20260414122728.92234-1-loukot@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso    | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/wireless/nl80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-index 51f1a4883ab8f0..df1907560c525c 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-@@ -16,7 +16,12 @@
- 	status = "okay";
- 
- 	ports {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
- 		port@0 {
-+			reg = <0>;
-+
- 			csiphy0_ep: endpoint {
- 				data-lanes = <0 1 2 3>;
- 				remote-endpoint = <&ov8856_ep>;
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index dc862ca02e4367..15a8237f79bffa 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -4571,7 +4571,7 @@ static int nl80211_validate_key_link_id(struct genl_info *info,
+ 	if (wdev->valid_links) {
+ 		if (link_id == -1) {
+ 			GENL_SET_ERR_MSG(info,
+-					 "link ID must for MLO group key");
++					 "link ID must be set for MLO group key");
+ 			return -EINVAL;
+ 		}
+ 		if (!(wdev->valid_links & BIT(link_id))) {
 -- 
 2.53.0
 
