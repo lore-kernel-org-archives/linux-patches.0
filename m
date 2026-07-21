@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC28344AB8D;
-	Tue, 21 Jul 2026 21:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4B13B8BA4;
+	Tue, 21 Jul 2026 21:30:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669452; cv=none; b=u/oP+KSQhXc3sjfw0g5WtgLZ70m51DxOZm2Y3dZcRzTlnRxMx/nc5asuO1SUbg6uy77oOYiYTbfAIQ3Bo/9V3S+K/5HS1JPCBlm1E+ddhq8CdoFyqb5xtbfFOa6MpG+OGgtJczCK4qnA2GD9BeG61Q/+HUdL4m9alewXMW45dKQ=
+	t=1784669455; cv=none; b=p+8OvHcMmJ4hnudgMqEJ071CjGuCq8B68KBHaWE4+bxXLOQszK2/if320sEZwEFKXNLSA7Ph0zlKQk4b37QQ3YTaN7AlWDdHOx3shX8FS3i/xnIWXZWzrHMdaf2ESK9DkmDFnhSJWbGlM6+/a5dLFowDObRg01KmiujQ5gV4Tek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669452; c=relaxed/simple;
-	bh=DvAOtcphiZ9qN8U4wIMsQogTliTgOiJ3rfTsMYPfHcI=;
+	s=arc-20240116; t=1784669455; c=relaxed/simple;
+	bh=x2eiAUt+OQUpJeygWEBzUY1fYyvkIgIdz/CVThN5Aq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OUm+lWY0taiL0smbDTMWD7r/NrpxfHUKUS0Q7zWD7EXyzlr1zvEXt5Wg6bofwkuNtzHgQszM7XiIKWzGIufi6b7VIZB11Upp6EQjfD1igvXtm5Hl34odjVqgsMiLrBeEjc7vJ8XlRoEXBBQWwFNMHmePlLnAP3NAug7tjsI232E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PuKvIKc+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QD92GG7yl+xPpvVAHtWOVp4KVY/sVfh63Ubf0u5kIbCMphhlIKtVplrK5DL9e9FWp2lX3Jk77YK9Qt2EADnLfxW+XTZ3SFruNCIeH/E6bObBWxU7Ga9899cN1lcpKuu9QwB4jkLsMYA32LcVG5CFP+pcXk43+rc1HXWgajd7rXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCSORTQL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PuKvIKc+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ABF81F000E9;
-	Tue, 21 Jul 2026 21:30:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCSORTQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4FE01F000E9;
+	Tue, 21 Jul 2026 21:30:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669451;
-	bh=y6OExukkeeou15iUQ3p4NXJGA8bbmHC5r4rTWqShER0=;
+	s=korg; t=1784669454;
+	bh=ma3dJtl2AqgGV90wi2th08plWEdpbMyIj2EBwUCD4Z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PuKvIKc+tv4cO1WQUWESNU56Ap0kEoIVZaEqZvNbYgVm4u+EElDEVTwceH4hCwAeP
-	 ZykJoakhA5E/MGBMysifcKANmRZ2fe8BivJsPfIGzpI1N2udJT2CBv/uIM8uEvkh+Q
-	 qrS4trs3g7ZQsinfiODVl04+wsdojtEgNGrHqiYw=
+	b=tCSORTQL20OXNUdV2llXYpggwk7K5ludplDEatcmKh/OOhR/m2na7K/Hu8xaBvilU
+	 MkJ/AEie8A6GUV5ImqswHrtBmuIiQ6BHQGSjQ+V+JEJVaH2N7K5MRx55L1rO+H1IOP
+	 ZwKYvOJrC+E1zyq09pAoiG6N2UDZAbWE5q09AK34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zygmunt Krynicki <me@zygoon.pl>,
-	John Johansen <john.johansen@canonical.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0558/1067] apparmor: put secmark label after secid lookup
-Date: Tue, 21 Jul 2026 17:19:19 +0200
-Message-ID: <20260721152437.089482768@linuxfoundation.org>
+Subject: [PATCH 6.1 0559/1067] i3c: master: Prevent reuse of dynamic address on device add failure
+Date: Tue, 21 Jul 2026 17:19:20 +0200
+Message-ID: <20260721152437.111396508@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,34 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zygmunt Krynicki <me@zygoon.pl>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 340372688bb87da45ff8d4e2f82ccfd1b64c65ff ]
+[ Upstream commit b3ba8383da4d0cff15810e32ea785eceb0a80813 ]
 
-apparmor_secmark_init() parses a configured secmark label to obtain its
-secid.  aa_label_strn_parse() returns a refcounted label, but the success
-path kept that reference after copying the secid.
+i3c_master_add_i3c_dev_locked() is called after a device has already
+been assigned a dynamic address.  If the function fails, the address
+remains marked as free and may be reallocated to another device,
+leading to address conflicts on the bus.
 
-Fixes: ab9f2115081a ("apparmor: Allow filtering based on secmark policy")
-Signed-off-by: Zygmunt Krynicki <me@zygoon.pl>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Ensure the address is not marked as free on failure, by updating the
+address slot state to prevent the address from being re-used.
+
+Emit an error message to inform of the failure.
+
+Opportunistically remove the !master check because it is impossible.
+
+Note, directly resetting the device's dynamic address is no longer
+an option, since Direct RSTDAA was deprecated from I3C starting from
+version 1.1 and v1.1 (or later) target devices are meant to NACK it.
+
+Fixes: 3a379bbcea0af ("i3c: Add core I3C infrastructure")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260612080107.11606-4-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/net.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/i3c/master.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/security/apparmor/net.c b/security/apparmor/net.c
-index a7fe1167e0cd29..308c9656bfd73a 100644
---- a/security/apparmor/net.c
-+++ b/security/apparmor/net.c
-@@ -210,6 +210,7 @@ static int apparmor_secmark_init(struct aa_secmark *secmark)
- 		return PTR_ERR(label);
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index 74138c499642e7..09d7b707c7b186 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2009,12 +2009,11 @@ int i3c_master_add_i3c_dev_locked(struct i3c_master_controller *master,
+ 	bool enable_ibi = false;
+ 	int ret;
  
- 	secmark->secid = label->secid;
-+	aa_put_label(label);
+-	if (!master)
+-		return -EINVAL;
+-
+ 	newdev = i3c_master_alloc_i3c_dev(master, &info);
+-	if (IS_ERR(newdev))
+-		return PTR_ERR(newdev);
++	if (IS_ERR(newdev)) {
++		ret = PTR_ERR(newdev);
++		goto err_prevent_addr_reuse;
++	}
  
- 	return 0;
+ 	ret = i3c_master_attach_i3c_dev(master, newdev);
+ 	if (ret)
+@@ -2136,6 +2135,16 @@ int i3c_master_add_i3c_dev_locked(struct i3c_master_controller *master,
+ err_free_dev:
+ 	i3c_master_free_i3c_dev(newdev);
+ 
++err_prevent_addr_reuse:
++	/*
++	 * Although the device has not been added, the address has been
++	 * assigned. Prevent the address from being used again.
++	 */
++	if (i3c_bus_get_addr_slot_status(&master->bus, addr) == I3C_ADDR_SLOT_FREE)
++		i3c_bus_set_addr_slot_status(&master->bus, addr, I3C_ADDR_SLOT_I3C_DEV);
++
++	dev_err(&master->dev, "Failed to add I3C device at address %u, error %d\n", addr, ret);
++
+ 	return ret;
  }
+ EXPORT_SYMBOL_GPL(i3c_master_add_i3c_dev_locked);
 -- 
 2.53.0
 
