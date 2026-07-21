@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282253E49F0;
-	Tue, 21 Jul 2026 17:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E2B1F3D56;
+	Tue, 21 Jul 2026 17:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653815; cv=none; b=ggAbo/dJQiJFFbXzARhn6HQAGt4nAGNjwXVTVozBCtjdZcg34jz1TvrT8qvmpjxvbUw2QhzLs6qADYze9z1B5Xjs7eTlH8k7KrG3Iu8s73MlteVSb9cXjspA8F0zX4RybdJcwJb8WmIvck08juF0NUKQ+41Sz/S4PbuS1U5M76g=
+	t=1784653818; cv=none; b=BxR7e+JmUTEiL5G2CDCS3ObrVC9ZYOHkQKy0Ii4w65GAGOtvHukPEcMEV7+JzfgqOBvKwJ3hnZx2CrDjNy19j4hZw9lugIsL1ptIdpTujy5QZSAahb6Q2UbC73gvUDvG4VkbbtcjOrlhUDifT+sSbpgBACCj5w5o/hwQUVRQpB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653815; c=relaxed/simple;
-	bh=IF788PcsNwi6IUxY2g/iSmBa4ydOpDHEFFK+PR/VbtA=;
+	s=arc-20240116; t=1784653818; c=relaxed/simple;
+	bh=oLFlwiEwY44OoS8kZK71LpVKBdCawkPazrxzYndfw9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZgE5RTnk0wWAMiFcbkyXUnRcos+iElQbbOMuQfXjpyseevbE3myOXDJbi48gzv57dQLPOZPJASwZMadpH8bdUMkecC6BTguCpbimzFF8JBZpDgaOUX4ZjbWz5ySfIXflPkZcQLOsHUXEHIRCjbo9ogjcT0pdUsTfxkmn5lV6xT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2AO9c6F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Whm06N28HZ+LoszXGhL8TVJzhyV5hIWKYCbEYgQqfumNloWZ0Hs6KtsCocATwI1tvXxSlh1P6CDbrs33U7ZGoNf6e5pQ5diwtr2L+VU0VABp0MJUHadlitvcQhw9k6SlfoHn7Db/gNaCkIeSrIOgltjkIA9x56p2ePICplHC5aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmyLVSVO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2AO9c6F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785BF1F00A3A;
-	Tue, 21 Jul 2026 17:10:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmyLVSVO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 306361F000E9;
+	Tue, 21 Jul 2026 17:10:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653814;
-	bh=ft5AOVIm+36GcPYcAJLC7+X40zSdebgVytF93naFSBE=;
+	s=korg; t=1784653816;
+	bh=VNTpzKlsxkRfXsiwHlVL5hL/33WSTp7SZ7mIhGPPUPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F2AO9c6F+FIVPYFRYAFb4/KUZUbpUIFMV1L1SETi7juh4ugNhyEkijoqfwWnwuGAA
-	 giGpvAxWBZ0Niws+yRUgO6bt9v/ZjM0ICB7twqV/YMszVcR2S5ybDN6GKgTB3iSXFF
-	 R6CsH3xVW8He17AcQGOr+2dQUGgJICMzN4JUfr9M=
+	b=jmyLVSVOHjXyQ3urXGm6YnH6Ez95+KzAReqRTZcE4gwCJb3CYSJWKtDLok3UCNRSV
+	 xfvPw/hrubHPK3tEJz85+zG4uxKU0zeKMQIZIKorVEnwA8G2Xk3Fcc0Ean0dxQc1gT
+	 FDo6la9yoKMwrJqyTqVrY/ZZjoKZS7VWdR6MajWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Wang <hui.wang@canonical.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Max Zhen <max.zhen@amd.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1467/2077] ring-buffer: Fix event length with forced 8-byte alignment
-Date: Tue, 21 Jul 2026 17:19:00 +0200
-Message-ID: <20260721152627.398185257@linuxfoundation.org>
+Subject: [PATCH 7.1 1468/2077] accel/amdxdna: Prevent PM resume deadlock in hwctx_sync_debug_bo()
+Date: Tue, 21 Jul 2026 17:19:01 +0200
+Message-ID: <20260721152627.420367440@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,65 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Wang <hui.wang@canonical.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit c37e0a4b79a6bbb96ce5ffe279d7c001e20529e0 ]
+[ Upstream commit e35c9cf5512814fb04f369f2eada64f0a7164609 ]
 
-When RB_FORCE_8BYTE_ALIGNMENT is true, rb_calculate_event_length()
-reserves the space of event->array[0] for placing the data length and
-rb_update_event() stores the data length in event->array[0]
-accordingly. As a result the whole event length will add extra 4 bytes
-for sizeof(event.array[0]) unconditionally.
+amdxdna_hwctx_sync_debug_bo() invokes the hardware hwctx_sync_debug_bo()
+callback while holding xdna->dev_lock.
 
-But ring_buffer_event_length() only subtracts the
-sizeof(event->array[0]) for events larger than RB_MAX_SMALL_DATA +
-sizeof(event->array[0]). As a result, small events on architectures
-with RB_FORCE_8BYTE_ALIGNMENT=true report a data length that is 4
-bytes larger than expected.
+The callback may call amdxdna_cmd_submit(), which in turn calls
+amdxdna_pm_resume_get(). If the device is suspended,
+amdxdna_pm_resume_get() may synchronously execute amdxdna_pm_resume(),
+which also acquires xdna->dev_lock, resulting in a deadlock.
 
-To fix it, add the RB_FORCE_8BYTE_ALIGNMENT as a condition to subtract
-the size of that length field whenever RB_FORCE_8BYTE_ALIGNMENT is
-true.
+Avoid the deadlock by calling amdxdna_pm_resume_get() before holding
+xdna->dev_lock in both amdxdna_hwctx_sync_debug_bo() and
+amdxdna_drm_config_hwctx_ioctl()
 
-This issue is observed in a riscv64 kernel with
-CONFIG_HAVE_64BIT_ALIGNED_ACCESS set to y, when we run ftrace selftest
-trace_marker_raw.tc, we get the weird log: for cases where the id is
-1..100, the number of data field is 8*N, but once id exceeds 100, the
-number of data field becomes 8*N+4:
- # 1 buf: 58 00 00 00 80 5e d1 63 (number of data field is 8*1)
- ...
- # a buf: 58 ...                  (number of data field is 8*2)
- ...
- # 64 buf: 58 ...                 (number of data field is 8*13)
- # 65 buf: 58 ...                 (number of data field is 8*13+4)
-
-After applying this change, the number of data field keeps being 8*N+4
-consistently.
-
-Link: https://patch.msgid.link/20260607072431.125633-2-hui.wang@canonical.com
-Fixes: 2271048d1b3b ("ring-buffer: Do 8 byte alignment for 64 bit that can not handle 4 byte align")
-Signed-off-by: Hui Wang <hui.wang@canonical.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 7ea046838021 ("accel/amdxdna: Support firmware debug buffer")
+Reviewed-by: Max Zhen <max.zhen@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260616212429.3620645-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/accel/amdxdna/aie2_ctx.c    |  2 +-
+ drivers/accel/amdxdna/amdxdna_ctx.c | 26 ++++++++++++++++++++++----
+ 2 files changed, 23 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 7b07d2004cc6f0..fcaa3761ef3eb3 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -266,7 +266,8 @@ unsigned ring_buffer_event_length(struct ring_buffer_event *event)
- 	if (event->type_len > RINGBUF_TYPE_DATA_TYPE_LEN_MAX)
- 		return length;
- 	length -= RB_EVNT_HDR_SIZE;
--	if (length > RB_MAX_SMALL_DATA + sizeof(event->array[0]))
-+	if (length > RB_MAX_SMALL_DATA + sizeof(event->array[0]) ||
-+	    RB_FORCE_8BYTE_ALIGNMENT)
-                 length -= sizeof(event->array[0]);
- 	return length;
- }
+diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
+index 93535806e72a1b..f5d247d65cb065 100644
+--- a/drivers/accel/amdxdna/aie2_ctx.c
++++ b/drivers/accel/amdxdna/aie2_ctx.c
+@@ -815,7 +815,7 @@ static int aie2_hwctx_cu_config(struct amdxdna_hwctx *hwctx, void *buf, u32 size
+ 	if (!hwctx->cus)
+ 		return -ENOMEM;
+ 
+-	ret = amdxdna_pm_resume_get_locked(xdna);
++	ret = amdxdna_pm_resume_get(xdna);
+ 	if (ret)
+ 		goto free_cus;
+ 
+diff --git a/drivers/accel/amdxdna/amdxdna_ctx.c b/drivers/accel/amdxdna/amdxdna_ctx.c
+index ff6c3e8e5a15b8..2ab4443e709462 100644
+--- a/drivers/accel/amdxdna/amdxdna_ctx.c
++++ b/drivers/accel/amdxdna/amdxdna_ctx.c
+@@ -356,16 +356,25 @@ int amdxdna_drm_config_hwctx_ioctl(struct drm_device *dev, void *data, struct dr
+ 		return -EINVAL;
+ 	}
+ 
+-	guard(mutex)(&xdna->dev_lock);
++	ret = amdxdna_pm_resume_get(xdna);
++	if (ret) {
++		XDNA_ERR(xdna, "Resume failed, ret %d", ret);
++		goto free_buf;
++	}
++
++	mutex_lock(&xdna->dev_lock);
+ 	hwctx = xa_load(&client->hwctx_xa, args->handle);
+ 	if (!hwctx) {
+ 		XDNA_DBG(xdna, "PID %d failed to get hwctx %d", client->pid, args->handle);
+ 		ret = -EINVAL;
+-		goto free_buf;
++		goto unlock;
+ 	}
+ 
+ 	ret = xdna->dev_info->ops->hwctx_config(hwctx, args->param_type, val, buf, buf_size);
+ 
++unlock:
++	mutex_unlock(&xdna->dev_lock);
++	amdxdna_pm_suspend_put(xdna);
+ free_buf:
+ 	kfree(buf);
+ 	return ret;
+@@ -386,16 +395,25 @@ int amdxdna_hwctx_sync_debug_bo(struct amdxdna_client *client, u32 debug_bo_hdl)
+ 	if (!gobj)
+ 		return -EINVAL;
+ 
++	ret = amdxdna_pm_resume_get(xdna);
++	if (ret) {
++		XDNA_ERR(xdna, "Resume failed, ret %d", ret);
++		goto put_obj;
++	}
++
+ 	abo = to_xdna_obj(gobj);
+-	guard(mutex)(&xdna->dev_lock);
++	mutex_lock(&xdna->dev_lock);
+ 	hwctx = xa_load(&client->hwctx_xa, abo->assigned_hwctx);
+ 	if (!hwctx) {
+ 		ret = -EINVAL;
+-		goto put_obj;
++		goto unlock;
+ 	}
+ 
+ 	ret = xdna->dev_info->ops->hwctx_sync_debug_bo(hwctx, debug_bo_hdl);
+ 
++unlock:
++	mutex_unlock(&xdna->dev_lock);
++	amdxdna_pm_suspend_put(xdna);
+ put_obj:
+ 	drm_gem_object_put(gobj);
+ 	return ret;
 -- 
 2.53.0
 
