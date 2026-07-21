@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F76D388E40;
-	Tue, 21 Jul 2026 19:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C8E388E40;
+	Tue, 21 Jul 2026 19:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660874; cv=none; b=Hl/quD25WVLG5uW/hgLJzYq72B8zBh8F9OBbQYutmx2GcEfnkc00d6qMfS1DOTtKwKwwlPIXdz15K3jLxqrs1CF+tCjW2jzlrs7r6O/lSfCOJkYKYFvklnXhp+LOBjhNAyJrPqNfmbOHxip5wx13qbvcDdgRIW6FWW939r1kS2I=
+	t=1784660876; cv=none; b=LOu2WHkPREqFovH/DNCMrPI3oz6UYNgk8DAu4M5ZlKCBzGmb7RgaQJYhlYiKT95x9ibk92TQ8siHOtJRaONBnNnifDFoGWYuHcAmx6vryAt5dO1uvGrUQ/MdQXbdThJYcOXuu7LM3JTcWnX2Q4bjkEFs/w2FGykP/flgDeSefK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660874; c=relaxed/simple;
-	bh=gjbOnlAYTlSZaxcjxd08TOP6C1MCLqdkA6uAqVgWTz8=;
+	s=arc-20240116; t=1784660876; c=relaxed/simple;
+	bh=3IYq8KRIkcj9pVL/+hO1pXFw9403xak1m857hsljHes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=guNa5WpPgrkSKbKWgRRJydmCgoWFoD4dmUH6wgwBo20Y3i3f3SRn2mT6uUaOKama2fPM/+u09Awoo2RYQ8Wfojno/eAVZQ6KdgvPzPmadrtey8Ttn7VD5xMYR/hT27wL+Z4+1bWv8OtSCX9OysLvW90bC7gtQk1HBh+A+9hDnpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2SiSbSu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sTHOpTyz0r59jGNZOdVpORt8E+Ajok1Q7yA0qZ++xNrDJdThDbIssady8GpqWKzBZFhfMtQLsvGWXc3TJSE/BE1sfNrwNVFB+Bz/XI5Z3WZXzO6Yi7LK9Eb9WxI2YSftU+bdlbbhcVt2pjllRAKePAFtEjbpOk9TUKR+mHB9LAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2bX+YJ2M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2SiSbSu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51D21F000E9;
-	Tue, 21 Jul 2026 19:07:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bX+YJ2M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9981F00A3A;
+	Tue, 21 Jul 2026 19:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660872;
-	bh=ofpQiHRfx1v/fPVb3ol+H5TAXJL3eaiHi5S75l4fOTY=;
+	s=korg; t=1784660874;
+	bh=LOSwzCMEcR8SM5sEeLKM9qL8mAIeQH5qFf1vlP06Wwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e2SiSbSuvRRxDYpB7KVdhxqMe8RUxzAtER5DeDgnLU/qLA4D8p5OP/SAQfMBWWcCp
-	 5umFjF+gnkgV8XkJStm623o+NgNwvsgAPJv4/vJDGwkIuRzHpnEaukPSPLijnGOiMR
-	 UvSMVklnQmv2DC/6bNf8rD2QlzI4J0Lgd3XFUehU=
+	b=2bX+YJ2MH+MmaYjtBvE93z2uV36MBgg9aKXBDdqi8XrxBPiv3UkzsXBnHzoSoCUR3
+	 K4DfyVtq767amLb4dNrk9x7GS+BbQFLTIxpc7O0rjeL9BP+nxFIAfz5l7YvXNWiQyb
+	 TSdx/W+9RmsBNxN9welQAeVRGwSR5qSlN4uwxTSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1107/2077] drm/amdkfd: fix list_del corruption in kfd_criu_resume_svm
-Date: Tue, 21 Jul 2026 17:13:00 +0200
-Message-ID: <20260721152618.931255018@linuxfoundation.org>
+Subject: [PATCH 7.1 1143/2077] md/raid10: fix writes_pending and barrier reference leaks on discard failures
+Date: Tue, 21 Jul 2026 17:13:36 +0200
+Message-ID: <20260721152619.781493123@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,45 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 
-[ Upstream commit 8fa5655da368d0306c03e9dc9cda8ae2a7840926 ]
+[ Upstream commit 393d687131d8aa8c7e4de2cb494438e145d20fc2 ]
 
-The cleanup tail of kfd_criu_resume_svm() walks
-svms->criu_svm_metadata_list and kfree()s each struct criu_svm_metadata
-without removing it from the list. The list head is left pointing at
-freed kmalloc-96 objects.
+raid10_make_request() acquires a writes_pending reference with
+md_write_start() before calling raid10_handle_discard(). Several failure
+paths in raid10_handle_discard() complete the bio and return without
+releasing the corresponding reference, causing md_write_end() to be
+skipped.
 
-A second AMDKFD_IOC_CRIU_OP from the same process re-enters: list_empty()
-reads the dangling ->next (use-after-free), the loop walks freed entries,
-and each is kfree()'d again (double-free). This is reachable by an
-unprivileged render-group user via /dev/kfd with no capabilities required.
+Call md_write_end() before returning from these failure paths to keep
+writes_pending accounting balanced.
 
-Add list_del() before the kfree() so the list is properly emptied. The
-list_for_each_entry_safe() iterator already caches the next pointer, so
-unlinking during the walk is safe.
+Additionally, discard split allocation failures can occur after
+wait_barrier() succeeds. Those paths return without calling
+allow_barrier(), leaking the associated barrier reference.
 
-Fixes: 2a909ae71871 ("drm/amdkfd: CRIU resume shared virtual memory ranges")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6322d278a298e2c1430b9d2697743d3a04b788b1)
+Release the barrier before returning from those paths.
+
+Fixes: c9aa889b035f ("md: raid10 add nowait support")
+Fixes: 4cf58d952909 ("md/raid10: Handle bio_split() errors")
+Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+Link: https://patch.msgid.link/20260613182810.1317258-4-abd.masalkhi@gmail.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/raid10.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-index 3841943da5ece6..0b54ad8036b641 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -4115,6 +4115,7 @@ int kfd_criu_resume_svm(struct kfd_process *p)
- 	list_for_each_entry_safe(criu_svm_md, next, &svms->criu_svm_metadata_list, list) {
- 		pr_debug("freeing criu_svm_md[]\n\tstart: 0x%llx\n",
- 						criu_svm_md->data.start_addr);
-+		list_del(&criu_svm_md->list);
- 		kfree(criu_svm_md);
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 5ad1b0c6207a72..aacf160ee9f209 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -1639,6 +1639,7 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
+ 
+ 	if (!wait_barrier(conf, bio->bi_opf & REQ_NOWAIT)) {
+ 		bio_wouldblock_error(bio);
++		md_write_end(mddev);
+ 		return 0;
  	}
+ 
+@@ -1681,6 +1682,8 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
+ 		if (IS_ERR(split)) {
+ 			bio->bi_status = errno_to_blk_status(PTR_ERR(split));
+ 			bio_endio(bio);
++			md_write_end(mddev);
++			allow_barrier(conf);
+ 			return 0;
+ 		}
+ 
+@@ -1698,6 +1701,8 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
+ 		if (IS_ERR(split)) {
+ 			bio->bi_status = errno_to_blk_status(PTR_ERR(split));
+ 			bio_endio(bio);
++			md_write_end(mddev);
++			allow_barrier(conf);
+ 			return 0;
+ 		}
  
 -- 
 2.53.0
