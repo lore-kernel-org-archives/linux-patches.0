@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F51946C4A0;
-	Tue, 21 Jul 2026 15:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F38E46C4A9;
+	Tue, 21 Jul 2026 15:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648556; cv=none; b=NV6QZ+q2LjYjYB+d6oPvcjJ+BCHuhZ8D7Oc1dXEFB5XORbrMRJP/ZZqxMDATc6yRMG6ZR7i01Pqe5c8jGrJYUqqoVoyLtMWdRs3NAOFDHkMbTIavwKlPiYxYz155yLDMXtnHwVMnJ8Dz9fBq4PPeG8hi1uJfh8kdfEwXI902ht4=
+	t=1784648559; cv=none; b=chK/ijDBhKyvMtbbvhxZe7TUqIVNVPhMDo6nkdQamCJdJzL/hpynxaQN9d1CmBB2wfjD+OWDmDZHZyR2TpsxxB+6LMEVXdS1FlXrDMQPTxXQCczTRt/SGbvkSEJ0VdNhUbheYy9NnaO2+E0eajyhjBn4nPRGgD6ykXl1or/2y2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648556; c=relaxed/simple;
-	bh=4AQdCVtjB6OH5g2y2d5lQAgzzCVnyS0ikmuugYQU0xA=;
+	s=arc-20240116; t=1784648559; c=relaxed/simple;
+	bh=HIQrZ3S1JPe8nIlNjnSaQ/AP8jPGyZBS1ii/UXki2Ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aeqBCsAyu1mclTF4MB498q8Ly4WKsRirHw2pG9BZuPYGLUTv8SmvaOH4y3x6W/quuBxCZT82wZY4+Epl+ceU4taC8s1GxZSll9leM/+He4J6p9dJaz0xrG2PhJbH3g4u31I8sdAr+RuJMLw01PPxd4PlXjIGNloik1EKfjkORIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3eHbrxq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c1HddPhqP30m751M+6JNpgvink82yUt2MMeiE9aw6l3uPn6/mACHOOrn5PRyjsvCJQgQ4WLiHGs5aB3ew7RJvxZpGipN5cfhHi3Z6BQvTst342aLrR/05VIQg6zHqJprtwgn7NTrQEsmDB9m3JciVvRLW7i+FWJOqsqhZm5O11c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlWwiFbX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3eHbrxq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30831F000E9;
-	Tue, 21 Jul 2026 15:42:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlWwiFbX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9A31F000E9;
+	Tue, 21 Jul 2026 15:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648555;
-	bh=/6EjtKb4MmPEec4TkZ+/IMSbieLNbkXA0I8V5gFGPbA=;
+	s=korg; t=1784648558;
+	bh=sjaurf/ZWxPzzXZu/guzJZmIz6RRQFPtbw5zOTLEUSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M3eHbrxqPJSf89P0SHXq5blN9MTKVfbvb/ZdjQAaAK5lUswPN+cO5Bwvlt118/QmY
-	 +NLVpjtK/u+hpmpo1SQQHvgwdAgQRAJdVhv9sqYwaq9TY2Ox4R0ZcZ2OYnSlwFwu5h
-	 Wq5GiZVA+rS+eyUymFWJPYCX0DpLSkA9QzclGo9A=
+	b=LlWwiFbX8gNAC1ooDIyQhXXuNM4TFL2r4q+O3Pj0pI1sn8xlXQjUexl0pscfGMeSh
+	 fIUssg7LMPkPLfxOWGyQy1/gpmf1BXmnLMg/V+oP4Ibf+Y+b5IMQkweYjddjdfzaHH
+	 ZJ4jo71JANMkDjDHe2Y49T03oFy4WocfMnTW06nU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Dan Carpenter <error27@gmail.com>,
+	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0244/2077] media: atomisp: gc2235: fix UAF and memory leak
-Date: Tue, 21 Jul 2026 16:58:37 +0200
-Message-ID: <20260721152558.431966668@linuxfoundation.org>
+Subject: [PATCH 7.1 0245/2077] staging: media: atomisp: fix loop shadowing in ia_css_stream_destroy()
+Date: Tue, 21 Jul 2026 16:58:38 +0200
+Message-ID: <20260721152558.456864655@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,100 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Jose A. Perez de Azpillaga <azpijr@gmail.com>
 
-[ Upstream commit 628f763aee0047ff44974388d6f70f75a763026b ]
+[ Upstream commit 9087395a383212ab1beaefcbe3b57ed131c7823d ]
 
-gc2235_probe() handles its error paths incorrectly.
+The nested loop inside the IS_ISP2401 block incorrectly uses the same
+variable 'i' as the outer loop. This shadows the outer loop variable
+and causes premature termination or skipped array elements.
 
-If media_entity_pads_init() fails, gc2235_remove() is called, which
-tears down the subdev and frees dev, but then still falls through to
-atomisp_register_i2c_module(). This results in use-after-free.
+Change the inner loop to use a new variable 'j' to prevent this.
 
-If atomisp_register_i2c_module() fails, the media entity and control
-handler are left initialized and dev is leaked.
-
-gc2235_remove() unconditionally calls media_entity_cleanup() and
-v4l2_ctrl_handler_free(), but these are not initialized at every
-error path in gc2235_probe().
-
-Replace gc2235_remove() calls in the probe error paths with explicit
-unwind labels that free only the resources initialized at each point
-of failure, in reverse order of initialization.
-
-Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
+Fixes: 113401c67386 ("media: atomisp: sh_css: Removed #ifdef ISP2401 to make code generic")
+Signed-off-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/atomisp/i2c/atomisp-gc2235.c        | 29 ++++++++++++-------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ drivers/staging/media/atomisp/pci/sh_css.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/staging/media/atomisp/i2c/atomisp-gc2235.c b/drivers/staging/media/atomisp/i2c/atomisp-gc2235.c
-index d3414312e1de27..998c9f46bd0684 100644
---- a/drivers/staging/media/atomisp/i2c/atomisp-gc2235.c
-+++ b/drivers/staging/media/atomisp/i2c/atomisp-gc2235.c
-@@ -809,7 +809,7 @@ static int gc2235_probe(struct i2c_client *client)
+diff --git a/drivers/staging/media/atomisp/pci/sh_css.c b/drivers/staging/media/atomisp/pci/sh_css.c
+index 584751516b6969..3d1903a9880486 100644
+--- a/drivers/staging/media/atomisp/pci/sh_css.c
++++ b/drivers/staging/media/atomisp/pci/sh_css.c
+@@ -8192,7 +8192,7 @@ ia_css_stream_create(const struct ia_css_stream_config *stream_config,
+ int
+ ia_css_stream_destroy(struct ia_css_stream *stream)
+ {
+-	int i;
++	int i, j;
+ 	int err = 0;
  
- 	ret = gc2235_s_config(&dev->sd, client->irq, gcpdev);
- 	if (ret)
--		goto out_free;
-+		goto err_unregister_subdev;
+ 	IA_CSS_ENTER_PRIVATE("stream = %p", stream);
+@@ -8223,10 +8223,10 @@ ia_css_stream_destroy(struct ia_css_stream *stream)
+ 					sp_pipeline_input_terminal =
+ 						&sh_css_sp_group.pipe_io[sp_thread_id].input;
  
- 	dev->sd.flags |= V4L2_SUBDEV_FL_HAS_DEVNODE;
- 	dev->pad.flags = MEDIA_PAD_FL_SOURCE;
-@@ -818,18 +818,16 @@ static int gc2235_probe(struct i2c_client *client)
- 	ret =
- 	    v4l2_ctrl_handler_init(&dev->ctrl_handler,
- 				   ARRAY_SIZE(gc2235_controls));
--	if (ret) {
--		gc2235_remove(client);
--		return ret;
--	}
-+	if (ret)
-+		goto err_csi_cfg;
- 
- 	for (i = 0; i < ARRAY_SIZE(gc2235_controls); i++)
- 		v4l2_ctrl_new_custom(&dev->ctrl_handler, &gc2235_controls[i],
- 				     NULL);
- 
- 	if (dev->ctrl_handler.error) {
--		gc2235_remove(client);
--		return dev->ctrl_handler.error;
-+		ret = dev->ctrl_handler.error;
-+		goto err_ctrl_handler;
- 	}
- 
- 	/* Use same lock for controls as for everything else. */
-@@ -838,14 +836,23 @@ static int gc2235_probe(struct i2c_client *client)
- 
- 	ret = media_entity_pads_init(&dev->sd.entity, 1, &dev->pad);
- 	if (ret)
--		gc2235_remove(client);
-+		goto err_ctrl_handler;
-+
-+	ret = atomisp_register_i2c_module(&dev->sd, gcpdev);
-+	if (ret)
-+		goto err_media_cleanup;
- 
--	return atomisp_register_i2c_module(&dev->sd, gcpdev);
-+	return 0;
- 
--out_free:
-+err_media_cleanup:
-+	media_entity_cleanup(&dev->sd.entity);
-+err_ctrl_handler:
-+	v4l2_ctrl_handler_free(&dev->ctrl_handler);
-+err_csi_cfg:
-+	dev->platform_data->csi_cfg(&dev->sd, 0);
-+err_unregister_subdev:
- 	v4l2_device_unregister_subdev(&dev->sd);
- 	kfree(dev);
--
- 	return ret;
- }
- 
+-					for (i = 0; i < IA_CSS_STREAM_MAX_ISYS_STREAM_PER_CH; i++) {
++					for (j = 0; j < IA_CSS_STREAM_MAX_ISYS_STREAM_PER_CH; j++) {
+ 						ia_css_isys_stream_h isys_stream =
+-							&sp_pipeline_input_terminal->context.virtual_input_system_stream[i];
+-						if (stream->config.isys_config[i].valid && isys_stream->valid)
++							&sp_pipeline_input_terminal->context.virtual_input_system_stream[j];
++						if (stream->config.isys_config[j].valid && isys_stream->valid)
+ 							ia_css_isys_stream_destroy(isys_stream);
+ 					}
+ 				}
 -- 
 2.53.0
 
