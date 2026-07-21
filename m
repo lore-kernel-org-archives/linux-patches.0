@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8736446D56D;
-	Tue, 21 Jul 2026 20:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23993471268;
+	Tue, 21 Jul 2026 20:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664518; cv=none; b=gPx3EqzHnAUJXK12MX63xcadURmbyJkMGnD/tZKQNujqmUkIxP40Hb/GW95y8B4e6A4EXaEpd0unZZZNYohuLKklCE3hnVYEpimmhqQotjALuart+xsPWutIF6Y1yynyxaJ99zrb8zabCo/s2r2UTx0H7McLG4TOGM12LwxQjp0=
+	t=1784664521; cv=none; b=o8qWRfPjUPQNFKr9D+BjGwpMH57/SFToo20XukHn+nivvcCl7eRseNxpt8fja4olUD1OgpflK955aZjYPwOyJ41DaLSE9+BU9N97adM3fNR4ZdGJYwhKk9XRCVohJnoBY5J5Sjn5anlRvURcvKImF+hD5GIDt5dio0uBF0A0TPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664518; c=relaxed/simple;
-	bh=194NSjAvXkER6Xtp0NrqYpMwDwR4vNlcM4+ouY4mwuI=;
+	s=arc-20240116; t=1784664521; c=relaxed/simple;
+	bh=q7cK+90wrtVOxDyEaW6nbimo1fuZPhG1fAQfu+qDRmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VPZffLPReDgPk3lUV8Ng/iyWgUqRju/6f8qkIgVUW2li15mScgHLT/cVgs123gud/na5PCMXjEqZTKTvxigo44lhVWSnp3fzWVcWXxR+oD2idlJwTFwl4B2VL1LONmUhauF6PviXww/jLcMDpt7zG6fVMvk2Vb05LyiGXSqjypA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wMSJqzwE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H+P/BCGlcLXddMUD4n6at4Ai/XLSk+75233nSaWlgGgSsLbvEelvCndjoMCGtN3BVbqEZ7sgGHxFg91eC1eLh+HsUgYkU1QyQf72qobPS/D7sLf3SFMUSCU+h8yz5+PZGEa6YfL2DQVkuQAURUvXTTBJozVX5De6H0Ds2dzeb2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=waew4HYD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wMSJqzwE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78E81F000E9;
-	Tue, 21 Jul 2026 20:08:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="waew4HYD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D5F1F000E9;
+	Tue, 21 Jul 2026 20:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664517;
-	bh=Nwwnrzs1jJda084nF3deyoE/MwHao0x1yiwT2uxgmeI=;
+	s=korg; t=1784664519;
+	bh=QAtkasyqAHlxw77FGCu9M4Imo+24CahFOHOYhDMnXNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wMSJqzwEJApiXR4YA16ya+n4Plk0quJYemGUybEQ+cjhdFvvAkcaplLcY1xa5JzQg
-	 zROs7Ps4/MKPUS+APYLMA49SEJ2sWfacbx1TB0gmSDrQk/wlnNrEAbNd0yykvC7aDB
-	 Yai5PgtIBfZLRoQPoUzq6m1oedGeYa/rUV0R+1b4=
+	b=waew4HYDyfqDusQIZyJMvD/w5K57+HSJV1FoemONb+LxE2JSJK+rn66BmEl1hjlW6
+	 lh+QJLGQVZTShK5WAzeaDrIXQYwY1iDEC5hneqHGLRYLkmSQBk8yuS+5Vj+jf9A3qr
+	 Qqk14pekiS4G4G0cdCrzI0ee99K3+hEqc1u77kpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Aoyama Wataru <wataru.aoyama@sony.com>,
-	Daniel Palmer <daniel.palmer@sony.com>,
+	Chi Zhiling <chizhiling@kylinos.cn>,
 	Sungjong Seo <sj1557.seo@samsung.com>,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1229/1276] exfat: move exfat_chain_set() out of __exfat_resolve_path()
-Date: Tue, 21 Jul 2026 17:27:52 +0200
-Message-ID: <20260721152513.585676317@linuxfoundation.org>
+Subject: [PATCH 6.12 1230/1276] exfat: fix incorrect directory checksum after rename to shorter name
+Date: Tue, 21 Jul 2026 17:27:53 +0200
+Message-ID: <20260721152513.609549807@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -54,214 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: Chi Zhiling <chizhiling@kylinos.cn>
 
-[ Upstream commit 0891c7313d87a1b6baf7162bc2f0d755ce70383f ]
+[ Upstream commit ff37797badd831797b8a27830fe5046d7e23fdc3 ]
 
-__exfat_resolve_path() mixes two functions. The first one is to
-resolve and check if the path is valid. The second one is to output
-the cluster assigned to the directory.
+When renaming a file in-place to a shorter name, exfat_remove_entries
+marks excess entries as DELETED, but es->num_entries is not updated
+accordingly. As a result, exfat_update_dir_chksum iterates over the
+deleted entries and computes an incorrect checksum.
 
-The second one is only needed when need to traverse the directory
-entries, and calling exfat_chain_set() so early causes p_dir to be
-passed as an argument multiple times, increasing the complexity of
-the code.
+This does not lead to persistent corruption because mark_inode_dirty()
+is called afterward, and __exfat_write_inode later recomputes the
+checksum using the correct num_entries value.
 
-This commit moves the call to exfat_chain_set() before traversing
-directory entries.
+Fix by setting es->num_entries = num_entries in exfat_init_ext_entry.
 
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Reviewed-by: Aoyama Wataru <wataru.aoyama@sony.com>
-Reviewed-by: Daniel Palmer <daniel.palmer@sony.com>
+Signed-off-by: Chi Zhiling <chizhiling@kylinos.cn>
 Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Reviewed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Stable-dep-of: 942296784b2a ("exfat: preserve benign secondary entries during rename and move")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/namei.c |   60 +++++++++++++++++++++++--------------------------------
- 1 file changed, 26 insertions(+), 34 deletions(-)
+ fs/exfat/dir.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/exfat/namei.c
-+++ b/fs/exfat/namei.c
-@@ -311,6 +311,9 @@ static int exfat_find_empty_entry(struct
- 		ei->hint_femp.eidx = EXFAT_HINT_NONE;
- 	}
+--- a/fs/exfat/dir.c
++++ b/fs/exfat/dir.c
+@@ -507,6 +507,7 @@ void exfat_init_ext_entry(struct exfat_e
+ 	unsigned short *uniname = p_uniname->name;
+ 	struct exfat_dentry *ep;
  
-+	exfat_chain_set(p_dir, ei->start_clu,
-+			EXFAT_B_TO_CLU(i_size_read(inode), sbi), ei->flags);
-+
- 	while ((dentry = exfat_search_empty_slot(sb, &hint_femp, p_dir,
- 					num_entries, es)) < 0) {
- 		if (dentry == -EIO)
-@@ -386,14 +389,11 @@ static int exfat_find_empty_entry(struct
-  * Zero if it was successful; otherwise nonzero.
-  */
- static int __exfat_resolve_path(struct inode *inode, const unsigned char *path,
--		struct exfat_chain *p_dir, struct exfat_uni_name *p_uniname,
--		int lookup)
-+		struct exfat_uni_name *p_uniname, int lookup)
- {
- 	int namelen;
- 	int lossy = NLS_NAME_NO_LOSSY;
- 	struct super_block *sb = inode->i_sb;
--	struct exfat_sb_info *sbi = EXFAT_SB(sb);
--	struct exfat_inode_info *ei = EXFAT_I(inode);
- 	int pathlen = strlen(path);
++	es->num_entries = num_entries;
+ 	ep = exfat_get_dentry_cached(es, ES_IDX_FILE);
+ 	ep->dentry.file.num_ext = (unsigned char)(num_entries - 1);
  
- 	/*
-@@ -432,24 +432,19 @@ static int __exfat_resolve_path(struct i
- 	if ((lossy && !lookup) || !namelen)
- 		return (lossy & NLS_NAME_OVERLEN) ? -ENAMETOOLONG : -EINVAL;
- 
--	exfat_chain_set(p_dir, ei->start_clu,
--		EXFAT_B_TO_CLU(i_size_read(inode), sbi), ei->flags);
--
- 	return 0;
- }
- 
- static inline int exfat_resolve_path(struct inode *inode,
--		const unsigned char *path, struct exfat_chain *dir,
--		struct exfat_uni_name *uni)
-+		const unsigned char *path, struct exfat_uni_name *uni)
- {
--	return __exfat_resolve_path(inode, path, dir, uni, 0);
-+	return __exfat_resolve_path(inode, path, uni, 0);
- }
- 
- static inline int exfat_resolve_path_for_lookup(struct inode *inode,
--		const unsigned char *path, struct exfat_chain *dir,
--		struct exfat_uni_name *uni)
-+		const unsigned char *path, struct exfat_uni_name *uni)
- {
--	return __exfat_resolve_path(inode, path, dir, uni, 1);
-+	return __exfat_resolve_path(inode, path, uni, 1);
- }
- 
- static inline loff_t exfat_make_i_pos(struct exfat_dir_entry *info)
-@@ -471,7 +466,7 @@ static int exfat_add_entry(struct inode
- 	int clu_size = 0;
- 	unsigned int start_clu = EXFAT_FREE_CLUSTER;
- 
--	ret = exfat_resolve_path(inode, path, p_dir, &uniname);
-+	ret = exfat_resolve_path(inode, path, &uniname);
- 	if (ret)
- 		goto out;
- 
-@@ -602,10 +597,13 @@ static int exfat_find(struct inode *dir,
- 		return -ENOENT;
- 
- 	/* check the validity of directory name in the given pathname */
--	ret = exfat_resolve_path_for_lookup(dir, qname->name, &cdir, &uni_name);
-+	ret = exfat_resolve_path_for_lookup(dir, qname->name, &uni_name);
- 	if (ret)
- 		return ret;
- 
-+	exfat_chain_set(&cdir, ei->start_clu,
-+		EXFAT_B_TO_CLU(i_size_read(dir), sbi), ei->flags);
-+
- 	/* check the validation of hint_stat and initialize it if required */
- 	if (ei->version != (inode_peek_iversion_raw(dir) & 0xffffffff)) {
- 		ei->hint_stat.clu = cdir.dir;
-@@ -1004,8 +1002,7 @@ unlock:
- }
- 
- static int exfat_rename_file(struct inode *parent_inode,
--		struct exfat_chain *p_dir, struct exfat_uni_name *p_uniname,
--		struct exfat_inode_info *ei)
-+		struct exfat_uni_name *p_uniname, struct exfat_inode_info *ei)
- {
- 	int ret, num_new_entries;
- 	struct exfat_dentry *epold, *epnew;
-@@ -1030,9 +1027,10 @@ static int exfat_rename_file(struct inod
- 
- 	if (old_es.num_entries < num_new_entries) {
- 		int newentry;
-+		struct exfat_chain dir;
- 
--		newentry = exfat_find_empty_entry(parent_inode, p_dir, num_new_entries,
--				&new_es);
-+		newentry = exfat_find_empty_entry(parent_inode, &dir,
-+				num_new_entries, &new_es);
- 		if (newentry < 0) {
- 			ret = newentry; /* -EIO or -ENOSPC */
- 			goto put_old_es;
-@@ -1056,7 +1054,7 @@ static int exfat_rename_file(struct inod
- 			goto put_old_es;
- 
- 		exfat_remove_entries(parent_inode, &old_es, ES_IDX_FILE);
--		ei->dir = *p_dir;
-+		ei->dir = dir;
- 		ei->entry = newentry;
- 	} else {
- 		if (exfat_get_entry_type(epold) == TYPE_FILE) {
-@@ -1075,12 +1073,12 @@ put_old_es:
- }
- 
- static int exfat_move_file(struct inode *parent_inode,
--		struct exfat_chain *p_newdir, struct exfat_uni_name *p_uniname,
--		struct exfat_inode_info *ei)
-+		struct exfat_uni_name *p_uniname, struct exfat_inode_info *ei)
- {
- 	int ret, newentry, num_new_entries;
- 	struct exfat_dentry *epmov, *epnew;
- 	struct exfat_entry_set_cache mov_es, new_es;
-+	struct exfat_chain newdir;
- 
- 	num_new_entries = exfat_calc_num_entries(p_uniname);
- 	if (num_new_entries < 0)
-@@ -1090,8 +1088,8 @@ static int exfat_move_file(struct inode
- 	if (ret)
- 		return -EIO;
- 
--	newentry = exfat_find_empty_entry(parent_inode, p_newdir, num_new_entries,
--			&new_es);
-+	newentry = exfat_find_empty_entry(parent_inode, &newdir,
-+			num_new_entries, &new_es);
- 	if (newentry < 0) {
- 		ret = newentry; /* -EIO or -ENOSPC */
- 		goto put_mov_es;
-@@ -1112,9 +1110,7 @@ static int exfat_move_file(struct inode
- 	exfat_init_ext_entry(&new_es, num_new_entries, p_uniname);
- 	exfat_remove_entries(parent_inode, &mov_es, ES_IDX_FILE);
- 
--	exfat_chain_set(&ei->dir, p_newdir->dir, p_newdir->size,
--		p_newdir->flags);
--
-+	ei->dir = newdir;
- 	ei->entry = newentry;
- 
- 	ret = exfat_put_dentry_set(&new_es, IS_DIRSYNC(parent_inode));
-@@ -1135,7 +1131,6 @@ static int __exfat_rename(struct inode *
- 		struct dentry *new_dentry)
- {
- 	int ret;
--	struct exfat_chain newdir;
- 	struct exfat_uni_name uni_name;
- 	struct super_block *sb = old_parent_inode->i_sb;
- 	struct exfat_sb_info *sbi = EXFAT_SB(sb);
-@@ -1179,19 +1174,16 @@ static int __exfat_rename(struct inode *
- 	}
- 
- 	/* check the validity of directory name in the given new pathname */
--	ret = exfat_resolve_path(new_parent_inode, new_path, &newdir,
--			&uni_name);
-+	ret = exfat_resolve_path(new_parent_inode, new_path, &uni_name);
- 	if (ret)
- 		goto out;
- 
- 	exfat_set_volume_dirty(sb);
- 
- 	if (new_parent_inode == old_parent_inode)
--		ret = exfat_rename_file(new_parent_inode, &newdir,
--				&uni_name, ei);
-+		ret = exfat_rename_file(new_parent_inode, &uni_name, ei);
- 	else
--		ret = exfat_move_file(new_parent_inode, &newdir,
--				&uni_name, ei);
-+		ret = exfat_move_file(new_parent_inode, &uni_name, ei);
- 
- 	if (!ret && new_inode) {
- 		struct exfat_entry_set_cache es;
 
 
