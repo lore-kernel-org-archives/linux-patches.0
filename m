@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8821224B05;
-	Tue, 21 Jul 2026 22:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E76E44AB60;
+	Tue, 21 Jul 2026 22:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673928; cv=none; b=IQAjdos6JhDnszTDuYzYTsuBUO/iVeQ/TuVpFjEOUyyZ+Mn+e5NetdOs6kGvUA8YZCiTyevPjOb/DZHPMuNGKfgOPSF0XYs/GIV2u6lOBq9egxIntWdWz3k/3FykhsAndoDdUUawShSymPob1O+xWAfpoE9otZLPBtOSsBnh8M0=
+	t=1784673931; cv=none; b=KrhRV5S0nhe9AM56myk6KeT1A1kIcOQRjxd3TFv2FA+SbyEpZqLzoakb6pfD1cCbPssWd14IQrIOsqukE+IlLxDM2sOBNcapEq8gFlTvNQ6j+t7RUreOyDfyqPeKiMNXcJ8Q+YW6pkkqwurAj86RXZO8Oe2k33ZVvZFIvYKfYA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673928; c=relaxed/simple;
-	bh=RKdc7GjPkkaTe3kfUMIZAYqBA07psQHEdcHzwtvcTTE=;
+	s=arc-20240116; t=1784673931; c=relaxed/simple;
+	bh=n7Qo5DimPybSp4h+sVqj7OsZ6Wg0EizQdBd8SKHJ8fY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CO2BKb6DfG5ZHbmoSP5cd7a8CPZeyl1BeOOf5ToYgyLnkKLiPNpJwiHJiA+O4Zdz/M/vWc31t4woZ2LsxqxUvzQCdmOhoTyJooBPf06Awka5QXK/d9WO3TxHUGxHu+L68N0wkK+YRtJy3UCAv41Xdc5BcKKiOt/4hUap8kR/QI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBx4/dJy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HJoyrNx08HTcE3w7MLLZC8C+s84tW5YSeu21oL8w342ww6pD4IF26QHRueSHiBujCHvfGJtSCrjWT85+ktGjlzhbB+gJhpRAC7o3lTV86RI4zrfcxlHeGcmnOvXZIc82mVkGmlB7jYxVdZMowd1Gp5Ppi3J7coLwF1oBqUhaKyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pi2W+55+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBx4/dJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9571F000E9;
-	Tue, 21 Jul 2026 22:45:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pi2W+55+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 022B51F000E9;
+	Tue, 21 Jul 2026 22:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673927;
-	bh=H399XBvKqR5Hd1wJkhEWpqwSGPkoj2tLqs5xWrVJgUM=;
+	s=korg; t=1784673930;
+	bh=STVijmyOaTDt6v0SXZt5JyPq7N16t7aWYKEppO5KOMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZBx4/dJyab5e8PD1pxAMmTLI2XDNVGOKDeHykL+JILBbKUV/QqKcgwvjEXUuOWtgC
-	 2ZLJjU6arbZXoJkVJ6mMyKY6sTdInBDAJIwhgALyckeK18CdNbRShfLpf16oXTa03T
-	 xa7VXPctMeQqEnP2LNY4BNh3NjoMyym4Qs1XpL54=
+	b=pi2W+55+WUIV9eKjWj2GmxaMGTdAbaYxBzQKDK1sdwI7ou18U8QsjlHK4yf5QTWcx
+	 Mrmciu+jamxmBbTmTsGmSXWN9DmQgmvQjEDzrqKNLxN7jXNFuQO4/JEe9zRRLP4UOS
+	 9DY2g7FBAplFx2JVHICeC49uJBLq0YlbXYaQSPi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 347/699] netfilter: ipset: fix order of kfree_rcu() and rcu_assign_pointer()
-Date: Tue, 21 Jul 2026 17:21:46 +0200
-Message-ID: <20260721152403.519577768@linuxfoundation.org>
+Subject: [PATCH 5.10 348/699] netfilter: nft_meta_bridge: fix NFT_META_BRI_IIFPVID stack leak
+Date: Tue, 21 Jul 2026 17:21:47 +0200
+Message-ID: <20260721152403.542160111@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,46 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jozsef Kadlecsik <kadlec@netfilter.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 3ca9982a8882470aa0ac4e8bb9a552b181d1efcd ]
+[ Upstream commit 27dd2997746d54ebc079bb13161cc1bdd401d4a6 ]
 
-Sashiko pointed out that kfree_rcu() was called before
-rcu_assign_pointer() in handling the comment extension.
-Fix the order so that rcu_assign_pointer() called first.
+This needs to test for nonzero retval.
 
-Fixes: b57b2d1fa53f ("netfilter: ipset: Prepare the ipset core to use RCU at set level")
-Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Fixes: c54c7c685494 ("netfilter: nft_meta_bridge: add NFT_META_BRI_IIFPVID support")
+Closes: https://sashiko.dev/#/patchset/20260618061631.21919-1-fw%40strlen.de
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bridge/netfilter/nft_meta_bridge.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
-index d66a6fb2e448b3..11e5536d8b2637 100644
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -351,8 +351,8 @@ ip_set_init_comment(struct ip_set *set, struct ip_set_comment *comment,
+diff --git a/net/bridge/netfilter/nft_meta_bridge.c b/net/bridge/netfilter/nft_meta_bridge.c
+index 97805ec424c199..5ebcf5001dfd28 100644
+--- a/net/bridge/netfilter/nft_meta_bridge.c
++++ b/net/bridge/netfilter/nft_meta_bridge.c
+@@ -41,7 +41,9 @@ static void nft_meta_bridge_get_eval(const struct nft_expr *expr,
+ 		if (!br_dev || !br_vlan_enabled(br_dev))
+ 			goto err;
  
- 	if (unlikely(c)) {
- 		set->ext_size -= sizeof(*c) + strlen(c->str) + 1;
--		kfree_rcu(c, rcu);
- 		rcu_assign_pointer(comment->c, NULL);
-+		kfree_rcu(c, rcu);
+-		br_vlan_get_pvid_rcu(in, &p_pvid);
++		if (br_vlan_get_pvid_rcu(in, &p_pvid))
++			goto err;
++
+ 		nft_reg_store16(dest, p_pvid);
+ 		return;
  	}
- 	if (!len)
- 		return;
-@@ -393,8 +393,8 @@ ip_set_comment_free(struct ip_set *set, void *ptr)
- 	if (unlikely(!c))
- 		return;
- 	set->ext_size -= sizeof(*c) + strlen(c->str) + 1;
--	kfree_rcu(c, rcu);
- 	rcu_assign_pointer(comment->c, NULL);
-+	kfree_rcu(c, rcu);
- }
- 
- typedef void (*destroyer)(struct ip_set *, void *);
 -- 
 2.53.0
 
