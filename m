@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DCF46EF9C;
-	Tue, 21 Jul 2026 20:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A81414A27;
+	Tue, 21 Jul 2026 20:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664689; cv=none; b=H7bBOFBE6O1Nj8f2/Q68iK/S1CQQrgKfMmz3t8DNdn6BEFzOgsKzW+2GLHcjLA5H4W8pUEG5Nfkdz0744RU8eL+3lPFoqvbzTYMkcS6TxFgZzqteVzdJs0YmdJUT78BxwpDB4ZaBQVfDuARKUWUmdsDb1ZtBrWr3arkA9zeiXlU=
+	t=1784664692; cv=none; b=pQ6IwcPpFoNuZrkQ0+4J5Bh03UZs5y0GGXXigs0C/RJD9ASFOqUHcznxTOM4/AQG/z52oNauYjZIVCC7km5ZML8KY1UdwNh1++LyWUfXvoZo9ds3qX1C4mQXaCCp0dX7pagjW3oyK1HNm8fFsIlHG5SIIJJErzrakkEQRf78s04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664689; c=relaxed/simple;
-	bh=4GpvGS3LXlzTUPRnQ94+KgVWdOB8Y3qCgwrjfMqROLY=;
+	s=arc-20240116; t=1784664692; c=relaxed/simple;
+	bh=IWwsFIGLuq0LdUFFmMimbsO0doJ9pKuJiQt+rDcsYXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B6DHeiol+5rOFimt4q1UnyxL4A2ayQUCpzdA3OI8pu7L5m8QDRKh5xLK4EyvXN/87ECoZtvWBzuNOmdopaMUR0kTXbKR+5k/+hNmWUgaArv15L821op/6AIgn7EmRpnP0/0t8JkVjKkSshQX4GkmPJCuRnVbpCQap1K/4hKxXrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfxQ7HIM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qxB5OogJ4YBN7QPGDSdrOXEbpUBJQj994h1LXjCnMZwdSW+ZCMbTsKAMqzrjQTSVSu/NhvH6wmNt5ToTgzkFFKKNzeUxw/m3y53J2C8ef63DzwZo7ZCSlGCYpRM4gN3Sa3Yu/x5l8nQ+PPDsTP4UrKth4NRhVkTk9YrGM2iR72I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwFboxS5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfxQ7HIM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C281F1F00A3A;
-	Tue, 21 Jul 2026 20:11:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwFboxS5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726681F000E9;
+	Tue, 21 Jul 2026 20:11:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664688;
-	bh=chKB0RenNI+xz79lMD05zMGk7wrqp6vCepAy0M6rJTE=;
+	s=korg; t=1784664690;
+	bh=Yotbll1DZ7ykUzK6oYyqfcVTh5HJ5QPtWhse/1hMiHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jfxQ7HIMZaVKMPwryaDUjxlmYE9da9YfyPdp1dwWW11Iu+QBOUsPCtJrPIJYqynZZ
-	 QczAQPHpuYo0+TO8HLhq5t558NifAeateBobkM2M9S2cvtYX0bgf5wzjZ13mBpySPS
-	 55wCR1zfWpDlWqODdAtgVXmGX+H6Ob+GjxwCiw9k=
+	b=rwFboxS5gMCmPtxfXkpHRNGtgb7Mt4bYSKDJ8VqJfWTixkQVM+ssOo7t4Ye9EFUsJ
+	 Oqpk/9jEL5AJPPcmanNnxqNqujNhhfQlmr/Zemz6GiIMUlZt1QJa/AdrbhWg8a/Sng
+	 1RlZulWqAVzCzmOj07bmYLI/BkWmDXzYi7wTDgt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Liang <shaw.leon@gmail.com>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0022/1266] net: ip_gre: require CAP_NET_ADMIN in the device netns for changelink
-Date: Tue, 21 Jul 2026 17:07:39 +0200
-Message-ID: <20260721152442.284717718@linuxfoundation.org>
+Subject: [PATCH 6.6 0005/1266] LoongArch: Report dying CPU to RCU in stop_this_cpu()
+Date: Tue, 21 Jul 2026 17:07:22 +0200
+Message-ID: <20260721152441.912571268@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,96 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 8165f7ff57d9667d2bb477ef6af83ede7fed4ad7 ]
+commit f2539c56c74691e7a88af6372ba2b48c06ed2fe4 upstream.
 
-A tunnel changelink() operates on at most two netns, dev_net(dev) and
-the tunnel link netns t->net. They differ once the device is created in
-or moved to a netns other than the one the request runs in. The rtnl
-changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
-caller privileged there but not in t->net can rewrite a tunnel that
-lives in t->net.
+This is a port of MIPS commit 9f3f3bdc6d9dac1 ("MIPS: smp: report dying
+CPU to RCU in stop_this_cpu()"). smp_send_stop() parks all secondary
+CPUs in stop_this_cpu(). And the function marks the CPU offline for the
+scheduler via set_cpu_online(false) but never informs RCU, so RCU keeps
+expecting a quiescent state from CPUs that are now spinning forever with
+interrupts disabled.
 
-Add rtnl_dev_link_net_capable() next to rtnl_get_net_ns_capable() in
-net/core/rtnetlink.c. It requires CAP_NET_ADMIN in the link netns and is
-skipped when the link netns is dev_net(dev), where the rtnl path already
-checked it. The other patches in this series use the same helper.
+As long as nothing waits for an RCU grace period after smp_send_stop()
+this is harmless, which is why it went unnoticed. However, since commit
+91840be8f710370 ("irq_work: Fix use-after-free in irq_work_single() on
+PREEMPT_RT"), irq_work_sync() calls synchronize_rcu() on architectures
+without an irq_work self-IPI, i.e. where arch_irq_work_has_interrupt()
+returns false. Any irq_work_sync() issued in the reboot/shutdown/halt
+path after smp_send_stop() then blocks on a grace period that can never
+complete, hanging the reboot:
 
-Gate ipgre_changelink() and erspan_changelink() with it, at the top of
-the op before any attribute is parsed, because the parsers update live
-tunnel fields first. ipgre_netlink_parms() sets t->collect_md before
-ip_tunnel_changelink() runs.
+  WARNING: CPU: 0 PID: 15 at kernel/irq_work.c:144 irq_work_queue_on
+  ...
+  rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
+  rcu: Offline CPU 1 blocking current GP.
+  rcu: Offline CPU 2 blocking current GP.
+  rcu: Offline CPU 3 blocking current GP.
 
-Commit 8b484efd5cb4 ("ip6: vti: Use ip6_tnl.net in
-vti6_siocdevprivate().") added the same check on the ioctl path. This
-adds it on RTM_NEWLINK.
+This issue needs some hacks to reproduce, and it was not noticed on
+LoongArch because arch_irq_work_has_interrupt() usually returns true.
 
-Reported-by: Xiao Liang <shaw.leon@gmail.com>
-Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
-Fixes: b57708add314 ("gre: add x-netns support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260612085941.3158249-2-maoyixie.tju@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Call rcutree_report_cpu_dead() once interrupts are disabled, mirroring
+the generic CPU-hotplug offline path, so RCU stops waiting on the parked
+CPUs and grace periods can still complete. LoongArch shuts down all CPUs
+here without going through the CPU-hotplug mechanism, so this report is
+not otherwise issued.
+
+Cc: <stable@vger.kernel.org>
+Fixes: 91840be8f710 ("irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT")
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/rtnetlink.h |    2 ++
- net/core/rtnetlink.c    |    8 ++++++++
- net/ipv4/ip_gre.c       |    6 ++++++
- 3 files changed, 16 insertions(+)
+ arch/loongarch/kernel/smp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/net/rtnetlink.h
-+++ b/include/net/rtnetlink.h
-@@ -211,6 +211,8 @@ int rtnl_configure_link(struct net_devic
- int rtnl_nla_parse_ifinfomsg(struct nlattr **tb, const struct nlattr *nla_peer,
- 			     struct netlink_ext_ack *exterr);
- struct net *rtnl_get_net_ns_capable(struct sock *sk, int netnsid);
-+bool rtnl_dev_link_net_capable(const struct net_device *dev,
-+			       const struct net *link_net);
- 
- #define MODULE_ALIAS_RTNL_LINK(kind) MODULE_ALIAS("rtnl-link-" kind)
- 
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -2157,6 +2157,14 @@ struct net *rtnl_get_net_ns_capable(stru
+diff --git a/arch/loongarch/kernel/smp.c b/arch/loongarch/kernel/smp.c
+index ed67629454374f..d3fafa5cdf6bc8 100644
+--- a/arch/loongarch/kernel/smp.c
++++ b/arch/loongarch/kernel/smp.c
+@@ -613,6 +613,7 @@ static void stop_this_cpu(void *dummy)
+ 	set_cpu_online(smp_processor_id(), false);
+ 	calculate_cpu_foreign_map();
+ 	local_irq_disable();
++	rcu_report_dead(smp_processor_id());
+ 	while (true);
  }
- EXPORT_SYMBOL_GPL(rtnl_get_net_ns_capable);
  
-+bool rtnl_dev_link_net_capable(const struct net_device *dev,
-+			       const struct net *link_net)
-+{
-+	return net_eq(link_net, dev_net(dev)) ||
-+	       ns_capable(link_net->user_ns, CAP_NET_ADMIN);
-+}
-+EXPORT_SYMBOL_GPL(rtnl_dev_link_net_capable);
-+
- static int rtnl_valid_dump_ifinfo_req(const struct nlmsghdr *nlh,
- 				      bool strict_check, struct nlattr **tb,
- 				      struct netlink_ext_ack *extack)
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -1412,6 +1412,9 @@ static int ipgre_changelink(struct net_d
- 	struct ip_tunnel_parm p;
- 	int err;
- 
-+	if (!rtnl_dev_link_net_capable(dev, t->net))
-+		return -EPERM;
-+
- 	err = ipgre_newlink_encap_setup(dev, data);
- 	if (err)
- 		return err;
-@@ -1441,6 +1444,9 @@ static int erspan_changelink(struct net_
- 	struct ip_tunnel_parm p;
- 	int err;
- 
-+	if (!rtnl_dev_link_net_capable(dev, t->net))
-+		return -EPERM;
-+
- 	err = ipgre_newlink_encap_setup(dev, data);
- 	if (err)
- 		return err;
+-- 
+2.53.0
+
 
 
