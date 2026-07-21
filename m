@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B162C231829;
-	Tue, 21 Jul 2026 19:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E2246EC9D;
+	Tue, 21 Jul 2026 19:02:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660563; cv=none; b=TLfe5A3/7AZBdCSY4tRt7Ger4JTLvuTHb7rnxG+7JA1B7F+oPDLZClrVCalgTOEn9O3ddMByH6PGUdUgYYMSPyhv9000Ts+c/DcXy4dAN7mu/NTwTjeDsrrqR34Nw7SKv4fadHULLifI8tMGz30C+74mPptGYNS744Lho1XaC+k=
+	t=1784660565; cv=none; b=Gkx9CwcfZxoK2dz0ghJBHVB/Y/4VnqaVFNKFGXEcvAXgj++y0Qze+35UtESllkijcZK8PghfA9p9mt5oJR4gJhDmhtW+ze0HEJOGgPdHu2bWRe7ZclQHYhlSPR/Y5gQEHB2TxYJyLWBBD5hZwZUm8GncvPW3NWvkhpopc9QUr68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660563; c=relaxed/simple;
-	bh=nqy2TwDIWGQmD33kqM528yvWzCllsPcBm4pE6CrIXtc=;
+	s=arc-20240116; t=1784660565; c=relaxed/simple;
+	bh=eHP/V2K36EdwxRwx6etqRU8a4ASxsP6Fuy75GVx/Hio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3581gthv6nO+J7LnT2013uGXmQ8P8FO4xbkdviyDniC76t3e/RAKYrTzEk8Zdebn7Kkfb+qyxKYt44Z4AOU9Ok6qC/eFDrAP1v00D5VKrnj8Qt/yyPOeWW8hsF/Iaf55Gm8CxvgMiP1CWnAHSbvI7pkF6kxsWsirRgpGGW4qS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2qpz+hwT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uqrju6I6+MApas9doARr/eFOhnoUudIqj0zN8lvECE/0tJ986dLKLjoT/OXC+LtjhjMBQCYFcjRFKDwnttt84WodKqqNzdc+l/iJFrIuqIkMJs7l5LV8u+KOI1KAdlahWamuPXBIuxrKDQwbXY+RXp70lEdJdwg9leUTxTfFvV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSVGO6cX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qpz+hwT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025031F000E9;
-	Tue, 21 Jul 2026 19:02:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSVGO6cX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C331F00A3A;
+	Tue, 21 Jul 2026 19:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660560;
-	bh=xE/oVsbPMJ3Xvs2iewlDZmfbzOhjSEmRcANQrZJ+FRQ=;
+	s=korg; t=1784660563;
+	bh=FLRuIbPzizWWbYsgXZDifwXbn31cf9H2gYlZnaMQg/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2qpz+hwTb/ljJTUt+F0vN2AADr5nY1ZxC5M6Vne6i/6P1cK8AM6v9qII9pmpC+s8S
-	 CCdDAZi3r4A45OkIFvf7EvYCfo0ExUdC41LVFZ+BH/yBPfbMChbijRJ7AvBHKrpo7B
-	 m+hQcyCsVQo9TET7BuWqNefmaW0TYITVcHT1QelM=
+	b=tSVGO6cXYoBpc2eBVtFeshSpI7LzkIbB5GgRjwd27rF45aVlxFx2WzHLvyuoxc8fW
+	 wsfGhaJaw8ZYrOYfgGogGdrlVsXpPXWNPSPufpimYLBMibICib+638yVl3J3vSmjdY
+	 Bf+yMeHFU7myXRARU9H4DzPEFGIuevrVjMC5gY+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Caleb James DeLisle <cjd@cjdns.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1027/2077] dt-bindings: phy: sc8280xp-qmp-pcie: Disallow bifurcation register on Purwa
-Date: Tue, 21 Jul 2026 17:11:40 +0200
-Message-ID: <20260721152617.042606022@linuxfoundation.org>
+Subject: [PATCH 7.1 1028/2077] PCI: mediatek: Use actual physical address instead of virt_to_phys()
+Date: Tue, 21 Jul 2026 17:11:41 +0200
+Message-ID: <20260721152617.065896167@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,60 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit b3ee497970c63cea37976aeaa84bac39611fe0eb ]
+[ Upstream commit ebc1d9906894703286d12306a6f242d90cfb49e8 ]
 
-Neither of the two Gen4x4 PHYs found on Purwa supports bifurcation.
-The PHY is however physically laid out as if it were to, since there
-are two separate ports (A/B).
+The driver previously used virt_to_phys() on the ioremapped register base
+(port->base) to compute the MSI message address. Using virt_to_phys() on an
+IO mapped address is incorrect because it expects a kernel virtual address.
 
-Split out a new if-then block to un-require the bifurcation register
-handle to squash this warning:
+To fix it, store the physical start of the I/O register region in
+mtk_pcie_port->phys_base and use it to build the MSI address. This replaces
+the incorrect virt_to_phys() usage and ensures MSI addresses are generated
+correctly.
 
-purwa-iot-evk.dtb: phy@1bd4000 (qcom,x1p42100-qmp-gen4x4-pcie-phy): 'qcom,4ln-config-sel' is a required property
-
-Fixes: 2e1ffd4c1805 ("dt-bindings: phy: qcom,qmp-pcie: Add X1P42100 PCIe Gen4x4 PHY")
-Reported-by: Rob Herring <robh@kernel.org>
-Closes: https://lore.kernel.org/linux-arm-msm/176857775469.1631885.16133311938753588148.robh@kernel.org/
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-Link: https://patch.msgid.link/20260610-topic-purwa_phy_shutup_warning-v2-1-951c1fbfe9b2@oss.qualcomm.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 43e6409db64d ("PCI: mediatek: Add MSI support for MT2712 and MT7622")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Tested-by: Caleb James DeLisle <cjd@cjdns.fr>
+Link: https://patch.msgid.link/20260521171951.1495781-2-cjd@cjdns.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml    | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pcie-mediatek.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-index 3a35120a77ec0c..431e8cb5df84e9 100644
---- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-@@ -136,13 +136,22 @@ allOf:
-           items:
-             - description: port a
-             - description: port b
--      required:
--        - qcom,4ln-config-sel
-     else:
-       properties:
-         reg:
-           maxItems: 1
+diff --git a/drivers/pci/controller/pcie-mediatek.c b/drivers/pci/controller/pcie-mediatek.c
+index f34d91e495bc11..1bb8839c3cb0f4 100644
+--- a/drivers/pci/controller/pcie-mediatek.c
++++ b/drivers/pci/controller/pcie-mediatek.c
+@@ -176,6 +176,7 @@ struct mtk_pcie_soc {
+ /**
+  * struct mtk_pcie_port - PCIe port information
+  * @base: IO mapped register base
++ * @phys_base: Physical address of the I/O register base region
+  * @list: port list
+  * @pcie: pointer to PCIe host info
+  * @reset: pointer to port reset control
+@@ -197,6 +198,7 @@ struct mtk_pcie_soc {
+  */
+ struct mtk_pcie_port {
+ 	void __iomem *base;
++	phys_addr_t phys_base;
+ 	struct list_head list;
+ 	struct mtk_pcie *pcie;
+ 	struct reset_control *reset;
+@@ -406,7 +408,7 @@ static void mtk_compose_msi_msg(struct irq_data *data, struct msi_msg *msg)
+ 	phys_addr_t addr;
  
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,sc8280xp-qmp-gen3x4-pcie-phy
-+              - qcom,x1e80100-qmp-gen4x4-pcie-phy
-+    then:
-+      required:
-+        - qcom,4ln-config-sel
+ 	/* MT2712/MT7622 only support 32-bit MSI addresses */
+-	addr = virt_to_phys(port->base + PCIE_MSI_VECTOR);
++	addr = port->phys_base + PCIE_MSI_VECTOR;
+ 	msg->address_hi = 0;
+ 	msg->address_lo = lower_32_bits(addr);
+ 
+@@ -521,7 +523,7 @@ static void mtk_pcie_enable_msi(struct mtk_pcie_port *port)
+ 	u32 val;
+ 	phys_addr_t msg_addr;
+ 
+-	msg_addr = virt_to_phys(port->base + PCIE_MSI_VECTOR);
++	msg_addr = port->phys_base + PCIE_MSI_VECTOR;
+ 	val = lower_32_bits(msg_addr);
+ 	writel(val, port->base + PCIE_IMSI_ADDR);
+ 
+@@ -962,6 +964,7 @@ static int mtk_pcie_parse_port(struct mtk_pcie *pcie,
+ 	struct mtk_pcie_port *port;
+ 	struct device *dev = pcie->dev;
+ 	struct platform_device *pdev = to_platform_device(dev);
++	struct resource *res;
+ 	char name[20];
+ 	int err;
+ 
+@@ -970,7 +973,14 @@ static int mtk_pcie_parse_port(struct mtk_pcie *pcie,
+ 		return -ENOMEM;
+ 
+ 	snprintf(name, sizeof(name), "port%d", slot);
+-	port->base = devm_platform_ioremap_resource_byname(pdev, name);
++	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
++	if (!res) {
++		dev_err(dev, "failed to get port%d base\n", slot);
++		return -EINVAL;
++	}
 +
-   - if:
-       properties:
-         compatible:
++	port->phys_base = res->start;
++	port->base = devm_ioremap_resource(&pdev->dev, res);
+ 	if (IS_ERR(port->base)) {
+ 		dev_err(dev, "failed to map port%d base\n", slot);
+ 		return PTR_ERR(port->base);
 -- 
 2.53.0
 
