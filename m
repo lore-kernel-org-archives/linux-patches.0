@@ -1,52 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A447A4582C1;
-	Tue, 21 Jul 2026 22:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E35B3E121A;
+	Tue, 21 Jul 2026 22:24:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672664; cv=none; b=lhVEHk2LOIsksj0oXQoyEEBe+qT72BYj3yKseuLTmipYW47KFdvdbRVK46NBY/tgFGZWtQJon+qTcSJesbeuAHJFTspSOYoRgqfh/gCnQ1kvIIfXovbfYkB8icuek4nuh6bU01f5e15ZJX70S4vkhcPQk5THRH0g/oY2pK0eENc=
+	t=1784672667; cv=none; b=VC9WGDD/d9WM5L6SYUGt8ug+q1ZwLucdnu56nHwdSMC/XRwUmck9ukOX4jT6HeVoJKTz/bQ2bknu4wrPdZ3muKuIGBJkg3BjHvorqk5gIlKm5NiGIaxjSM7nZR4X2oKBy/kzw+zHQXrD+9BCVBZkq52iB90DukXR9moWxNJ/dT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672664; c=relaxed/simple;
-	bh=3wItF5Bnl7gZdaycHKJWXH28pKnsnqoLqxvJlYlsUT8=;
+	s=arc-20240116; t=1784672667; c=relaxed/simple;
+	bh=Hsh6QmmpN11u4dl5Srlp7Pud+ckjkjJCXowrn5nOMDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K9CUo+MMqDFI6Nx5XoXVg/HWHqfWhiVMGEqTBmcltk96V4FizE28L2+2JalGNzAREggXDuz8i91gk6rYzd4UqcIAkwRKptyjSe1Fle4/xRZYbbiSVSinqib4/Nv9mA8dlPJ88wEre0G+bNvzFasd5wKQjGGpyjc1rC5ziHQtcC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCNPprQG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kCr09pLCpXugpZiHxOUdyH4woaW/3hvjxqdp345tcZ2AFc8u73T5giAzJNbipNpfj0yY4gp5qtc/keJbHR4nSL53TapmUE9bXQkGfyrDSmQfHZmJHNpHeO26SK3mEFQfgZf0puqM7A3A5MYeLrr99IE7GKGBvcbGxnBCUqiSBAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xyA1/H2J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCNPprQG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6901F000E9;
-	Tue, 21 Jul 2026 22:24:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xyA1/H2J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36081F000E9;
+	Tue, 21 Jul 2026 22:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672663;
-	bh=5y+sEdMrN5ZdC5bQ/iTQpvaj4cMGWNwts/cfz9FjoBc=;
+	s=korg; t=1784672666;
+	bh=n5btOHSZ1BQsdKE0Vl3jdlOcN6d7luNFR9+dyCbO97o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CCNPprQGp878C0sIewo5Ke4HIsTYcIyw9gNCb4ER1XbGasApRp2hJIXrKlMh0rjOq
-	 n0lsxQhDM6YAnvRpH/rg44Srxa1M6aArEwvR0pyKgRLuAYohK5HEMUn31YJNjDi+/1
-	 iin4cTMazvqL0EVPHiip9VFzsswrmgJd4DbOAqHQ=
+	b=xyA1/H2JVDZkzinvChzMhVkj1ddZU/nfXcmjSOLmM5Te56qh4Z9v1Wc2CaBD7eUyN
+	 6qdWB1TDfK2Hgc1ebJNmjrpbfzNzGg2ZMonr3DsoAsLHSJ13H3dkwesX+T9L1yL6qb
+	 Ez+zgrsM1dHJZ8SyMPFRXPBhuuvD5oLvks9xNBs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gourry@gourry.net>,
-	Waiman Long <longman@redhat.com>,
-	Farhad Alemi <farhad.alemi@berkeley.edu>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Alistair Popple <apopple@nvidia.com>,
-	Byungchul Park <byungchul@sk.com>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Zi Yan <ziy@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
-	Ridong Chen <ridong.chen@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>
-Subject: [PATCH 5.15 709/843] cgroup/cpuset: rebind mm mempolicy to effective_mems, not mems_allowed
-Date: Tue, 21 Jul 2026 17:25:44 +0200
-Message-ID: <20260721152421.999810886@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.15 710/843] wifi: rt2x00: avoid full teardown before work setup in probe
+Date: Tue, 21 Jul 2026 17:25:45 +0200
+Message-ID: <20260721152422.021884245@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -59,80 +44,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Farhad Alemi <farhad.alemi@berkeley.edu>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit b983c56426383e4a06fa5970c4e33cee879b1482 upstream.
+commit 536fb3d739d75a03cb318c0c6fe799425cfea501 upstream.
 
-Creating a child cpuset where cpuset.mems is never set leads to a div/0
-when a VMA mempolicy with MPOL_F_RELATIVE_NODES rebinds in response to a
-CPU hotplug event.
+rt2x00lib_probe_dev() uses the full rt2x00lib_remove_dev() teardown for
+all probe failures. However, drv_data allocation and workqueue allocation
+can fail before intf_work, autowakeup_work and sleep_work have been
+initialized.
 
-Reproduction steps:
- 1) Create a cgroup w/ cpuset controls (do not set cpuset.mems)
- 2) Move the task into the child cpuset
- 3) Create a VMA mempolicy for that task with MPOL_F_RELATIVE_NODES
- 4) unplug and hotplug a cpu
-      echo 0 > /sys/devices/system/cpu/cpu1/online
-      echo 1 > /sys/devices/system/cpu/cpu1/online
- 5) mempolicy rebind does a div/0 in mpol_relative_nodemask on the
-    call to __nodes_fold()
+Do not enter the full remove path until the probe has reached the point
+where those work items are set up. Return directly for drv_data allocation
+failure, and use a small early cleanup path for workqueue allocation
+failure.
 
-The cpuset code passes (cs->mems_allowed) which is not guaranteed to have
-nodes to the rebind routine.  Use cs->effective_mems instead, which is
-guaranteed to have a non-empty nodemask once we reach that code path.
+This issue was found by our static analysis tool and then confirmed by
+manual review of rt2x00lib_probe_dev() and rt2x00lib_remove_dev(). The
+early probe exits should not call a common teardown path that assumes the
+later work setup has already completed.
 
-Link: https://lore.kernel.org/all/CA+0ovCiEz6SP_sn3kN4Tb+_oC=eHMXy_Ffj=usV3wREdQrUtww@mail.gmail.com/
-Fixes: ae1c802382f7 ("cpuset: apply cs->effective_{cpus,mems}")
-Closes: https://lore.kernel.org/linux-mm/CA+0ovCgxbZkXa+OU8w3s84R3KNPNxxRfmsNR-udh+afQBbGNmw@mail.gmail.com/
-Suggested-by: Gregory Price <gourry@gourry.net>
-Suggested-by: Waiman Long <longman@redhat.com>
-Acked-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Farhad Alemi <farhad.alemi@berkeley.edu>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Ridong Chen <ridong.chen@linux.dev>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: "Michal Koutný" <mkoutny@suse.com>
-Cc: <stable@vger.kernel.org>
-[ david: add a comment, slightly rephrase description ]
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+A QEMU PoC forced alloc_ordered_workqueue() to fail before the work
+initializers are reached. The resulting fail path entered
+rt2x00lib_remove_dev(), and DEBUG_OBJECTS reported invalid work drains with
+rt2x00lib_probe_dev() and rt2x00lib_remove_dev() in the stack.
+
+Fixes: 1ebbc48520a0 ("rt2x00: Introduce concept of driver data in struct rt2x00_dev.")
+Fixes: 0439f5367c8d ("rt2x00: Move TX/RX work into dedicated workqueue")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260619073104.1809161-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ralink/rt2x00/rt2x00dev.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1805,7 +1805,12 @@ static void update_tasks_nodemask(struct
+--- a/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
+@@ -1364,7 +1364,7 @@ int rt2x00lib_probe_dev(struct rt2x00_de
+ 			                      GFP_KERNEL);
+ 		if (!rt2x00dev->drv_data) {
+ 			retval = -ENOMEM;
+-			goto exit;
++			return retval;
+ 		}
+ 	}
  
- 		migrate = is_memory_migrate(cs);
+@@ -1398,7 +1398,7 @@ int rt2x00lib_probe_dev(struct rt2x00_de
+ 	    alloc_ordered_workqueue("%s", 0, wiphy_name(rt2x00dev->hw->wiphy));
+ 	if (!rt2x00dev->workqueue) {
+ 		retval = -ENOMEM;
+-		goto exit;
++		goto exit_free_drv_data;
+ 	}
  
--		mpol_rebind_mm(mm, &cs->mems_allowed);
-+		/*
-+		 * For v1 we can have empty effective_mems, but we cannot
-+		 * attach any tasks (see cpuset_can_attach_check()). For v2,
-+		 * effective_mems is guaranteed to not be empty.
-+		 */
-+		mpol_rebind_mm(mm, &cs->effective_mems);
- 		if (migrate)
- 			cpuset_migrate_mm(mm, &cs->old_mems_allowed, &newmems);
- 		else
+ 	INIT_WORK(&rt2x00dev->intf_work, rt2x00lib_intf_scheduled);
+@@ -1471,6 +1471,14 @@ exit:
+ 	rt2x00lib_remove_dev(rt2x00dev);
+ 
+ 	return retval;
++
++exit_free_drv_data:
++	clear_bit(DEVICE_STATE_PRESENT, &rt2x00dev->flags);
++
++	kfree(rt2x00dev->drv_data);
++	rt2x00dev->drv_data = NULL;
++
++	return retval;
+ }
+ EXPORT_SYMBOL_GPL(rt2x00lib_probe_dev);
+ 
 
 
