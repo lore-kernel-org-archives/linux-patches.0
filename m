@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E7146A5FD;
-	Tue, 21 Jul 2026 15:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F6044607D;
+	Tue, 21 Jul 2026 15:53:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649195; cv=none; b=EGtlKsNlNWGV7OlnR8fMGPUQdDRE4GNmn6Gl25IaIZNf3I/vQXzTOD+QrhXZSIql1+YMlwSqBVOo7WrWgfP3W9POMTjuwYjOpz+c5MAO+FKGqH71vtTvG5D/KDf1AXEvOGGzL4pYmEFgwjGSF0/5+8EV7RpI38DaCn3nzp0sVto=
+	t=1784649198; cv=none; b=n3eozp0ZnESxREZPc/YrzcyqUZdubTd9fLFl2vd7xLBBfr8z52PxI+OoKsOeJWOIIYPFTTtrJXQr2WWlP9xzN8jngY2y/toFDWu22zts0Y/rVgLzj/Uk+G9IdWmeVhNAOKbLXL9DWsrrqrxy5ZGTXWjNu0QXOyIfftkH35UK7zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649195; c=relaxed/simple;
-	bh=U/uL6f+t96L2t6LEvfUBLA57LNQImSONMWLbnluwZ+g=;
+	s=arc-20240116; t=1784649198; c=relaxed/simple;
+	bh=zDaquvUTueeSUvQZLUZf+1d3v+YfQvCpEHd/KZjub3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YIMi2EE+D+MAFfZK/Z/Ny2LNJMhqw9NEnLVxjguxnj/sIl4QQzyVflEsvttESLAVyDHoMcaz1Kjc4tbL4sDMJpJuglDzudyH1vd5qb3Jh1wVjyjsJnfzHMBiispc9N4Y0FSjVheEaj4HWGoz20SW9Mt/G7gcdwXYvgSEAo2dR4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVGDPmYL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SHH/xTQaUFvOmgE5cJXlgf7w7pLLUnXXZM4eAXSTyYdkY7YesUZhvOGH7B3Cw348XqxJmMaiVxTN1wcUqBkkLnFmblePp8ZwHUauCFF9byibDxmu6hvGBYSVd5qS8PQ0zqe+czFNvqvgFGU/492My6zYfUSXANOaECfEd8JwsVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qq1p7IZR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVGDPmYL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACEA01F00A3A;
-	Tue, 21 Jul 2026 15:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qq1p7IZR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 579721F000E9;
+	Tue, 21 Jul 2026 15:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649194;
-	bh=2ODq4HHAxYgkTeMZcsNhAecg9ERpxcbdHMa3qcKWIhM=;
+	s=korg; t=1784649196;
+	bh=LuVir7Sx5t5VAIOdV4LTSrTku6lEbisqiGWXmuOF0wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xVGDPmYLVpOeM5ZmVpMWeoHPFw36kLIkw6Vx9ngXmVCYTF5bs9RcjOw52bcYpXQ0d
-	 cvgv91uLzp3+EuLHYyrbN7JrTBQGWteSJGcbo7ic+TcRz8bjsC+cPU2smhNg1G1har
-	 iCeQGUfz9nLgtiP/ADYqFpNu/criSIuIomqJJitQ=
+	b=qq1p7IZRBcVGJNVMKPmPNfDaZtcNiKg5CmAPq1fZSvEHkyfoL4wd0h8s1RgTHzd90
+	 4S+J/s5Gl+VOXJ4Jr+VzwcaX9S85X2quZ3RX3mBRbDvYu9oFszawJamR1WOUs1Fnp1
+	 9Vb6Tqeg2L3gpZ/0JWm2drueMDjlBG12RrwkYinM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0485/2077] netfilter: nfnetlink_cthelper: use {READ,WRITE}_ONCE for accessing helper flags
-Date: Tue, 21 Jul 2026 17:02:38 +0200
-Message-ID: <20260721152604.249372759@linuxfoundation.org>
+Subject: [PATCH 7.1 0486/2077] netfilter: synproxy: drop packets if timestamp adjustment fails
+Date: Tue, 21 Jul 2026 17:02:39 +0200
+Message-ID: <20260721152604.272653409@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,125 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit f8bf5edf7157984bb8e288c8b04fdb041223b80c ]
+[ Upstream commit 63d29ee95c4ab5976d660182d2e4733bb4a091d8 ]
 
-Conntrack helper flags are accessed from packet and netlink dump path.
-Concurrent update of userspace helper flags is not possible, because the
-nfnl_mutex in held on updates. These flags are only used by userspace
-helpers. Use {READ,WRITE}_ONCE() to access this flags from lockless
-paths.
+If a packet was malformed or if skb_ensure_writable() failed, the
+synproxy_tstamp_adjust() function returned 0 indicating an error but it
+was ignored on the callers.
 
-Fixes: 12f7a505331e ("netfilter: add user-space connection tracking helper infrastructure")
+Make the function return a boolean instead to clarify the result and
+drop the packet if synproxy_tstamp_adjust() failed due to ENOMEM from
+skb_ensure_writable(). In addition, if there are malformed options, skip
+the tstamp update but do not drop the packet as that should be done by
+the policy directly.
+
+Fixes: 48b1de4c110a ("netfilter: add SYNPROXY core/target")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_core.c  |  4 +++-
- net/netfilter/nfnetlink_cthelper.c | 20 +++++++++++++-------
- 2 files changed, 16 insertions(+), 8 deletions(-)
+ net/netfilter/nf_synproxy_core.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
-index b521b5ebd66449..c072a14a306afe 100644
---- a/net/netfilter/nf_conntrack_core.c
-+++ b/net/netfilter/nf_conntrack_core.c
-@@ -2213,6 +2213,7 @@ static int nf_confirm_cthelper(struct sk_buff *skb, struct nf_conn *ct,
- {
- 	const struct nf_conntrack_helper *helper;
- 	const struct nf_conn_help *help;
-+	unsigned int helper_flags;
- 	int protoff;
+diff --git a/net/netfilter/nf_synproxy_core.c b/net/netfilter/nf_synproxy_core.c
+index ed00114f65f392..f99c22f57b7e52 100644
+--- a/net/netfilter/nf_synproxy_core.c
++++ b/net/netfilter/nf_synproxy_core.c
+@@ -184,7 +184,7 @@ synproxy_check_timestamp_cookie(struct synproxy_options *opts)
+ 	opts->options |= opts->tsecr & (1 << 5) ? NF_SYNPROXY_OPT_ECN : 0;
+ }
  
- 	help = nfct_help(ct);
-@@ -2223,7 +2224,8 @@ static int nf_confirm_cthelper(struct sk_buff *skb, struct nf_conn *ct,
- 	if (!helper)
- 		return NF_ACCEPT;
+-static unsigned int
++static bool
+ synproxy_tstamp_adjust(struct sk_buff *skb, unsigned int protoff,
+ 		       struct tcphdr *th, struct nf_conn *ct,
+ 		       enum ip_conntrack_info ctinfo,
+@@ -194,13 +194,13 @@ synproxy_tstamp_adjust(struct sk_buff *skb, unsigned int protoff,
+ 	__be32 *ptr, old;
  
--	if (!(helper->flags & NF_CT_HELPER_F_USERSPACE))
-+	helper_flags = READ_ONCE(helper->flags);
-+	if (!(helper_flags & NF_CT_HELPER_F_USERSPACE))
- 		return NF_ACCEPT;
+ 	if (synproxy->tsoff == 0)
+-		return 1;
++		return true;
  
- 	switch (nf_ct_l3num(ct)) {
-diff --git a/net/netfilter/nfnetlink_cthelper.c b/net/netfilter/nfnetlink_cthelper.c
-index 0d16ad82d70c01..61a2407b53bd36 100644
---- a/net/netfilter/nfnetlink_cthelper.c
-+++ b/net/netfilter/nfnetlink_cthelper.c
-@@ -41,8 +41,9 @@ static int
- nfnl_userspace_cthelper(struct sk_buff *skb, unsigned int protoff,
- 			struct nf_conn *ct, enum ip_conntrack_info ctinfo)
- {
--	const struct nf_conn_help *help;
- 	struct nf_conntrack_helper *helper;
-+	const struct nf_conn_help *help;
-+	unsigned int helper_flags;
+ 	optoff = protoff + sizeof(struct tcphdr);
+ 	optend = protoff + th->doff * 4;
  
- 	help = nfct_help(ct);
- 	if (help == NULL)
-@@ -53,8 +54,10 @@ nfnl_userspace_cthelper(struct sk_buff *skb, unsigned int protoff,
- 	if (helper == NULL)
- 		return NF_DROP;
+ 	if (skb_ensure_writable(skb, optend))
+-		return 0;
++		return false;
  
-+	helper_flags = READ_ONCE(helper->flags);
-+
- 	/* This is a user-space helper not yet configured, skip. */
--	if ((helper->flags &
-+	if ((helper_flags &
- 	    (NF_CT_HELPER_F_USERSPACE | NF_CT_HELPER_F_CONFIGURED)) ==
- 	     NF_CT_HELPER_F_USERSPACE)
- 		return NF_ACCEPT;
-@@ -404,10 +407,10 @@ nfnl_cthelper_update(const struct nlattr * const tb[],
+ 	th = (struct tcphdr *)(skb->data + protoff);
  
- 		switch(status) {
- 		case NFCT_HELPER_STATUS_ENABLED:
--			helper->flags |= NF_CT_HELPER_F_CONFIGURED;
-+			WRITE_ONCE(helper->flags, helper->flags | NF_CT_HELPER_F_CONFIGURED);
- 			break;
- 		case NFCT_HELPER_STATUS_DISABLED:
--			helper->flags &= ~NF_CT_HELPER_F_CONFIGURED;
-+			WRITE_ONCE(helper->flags, helper->flags & ~NF_CT_HELPER_F_CONFIGURED);
- 			break;
+@@ -209,7 +209,7 @@ synproxy_tstamp_adjust(struct sk_buff *skb, unsigned int protoff,
+ 
+ 		switch (op[0]) {
+ 		case TCPOPT_EOL:
+-			return 1;
++			return true;
+ 		case TCPOPT_NOP:
+ 			optoff++;
+ 			continue;
+@@ -217,7 +217,7 @@ synproxy_tstamp_adjust(struct sk_buff *skb, unsigned int protoff,
+ 			if (optoff + 1 == optend ||
+ 			    optoff + op[1] > optend ||
+ 			    op[1] < 2)
+-				return 0;
++				return true;
+ 			if (op[0] == TCPOPT_TIMESTAMP &&
+ 			    op[1] == TCPOLEN_TIMESTAMP) {
+ 				if (CTINFO2DIR(ctinfo) == IP_CT_DIR_REPLY) {
+@@ -233,12 +233,12 @@ synproxy_tstamp_adjust(struct sk_buff *skb, unsigned int protoff,
+ 				}
+ 				inet_proto_csum_replace4(&th->check, skb,
+ 							 old, *ptr, false);
+-				return 1;
++				return true;
+ 			}
+ 			optoff += op[1];
  		}
  	}
-@@ -529,8 +532,8 @@ static int
- nfnl_cthelper_fill_info(struct sk_buff *skb, u32 portid, u32 seq, u32 type,
- 			int event, struct nf_conntrack_helper *helper)
- {
--	struct nlmsghdr *nlh;
- 	unsigned int flags = portid ? NLM_F_MULTI : 0;
-+	struct nlmsghdr *nlh;
- 	int status;
+-	return 1;
++	return true;
+ }
  
- 	event = nfnl_msg_type(NFNL_SUBSYS_CTHELPER, event);
-@@ -554,7 +557,7 @@ nfnl_cthelper_fill_info(struct sk_buff *skb, u32 portid, u32 seq, u32 type,
- 	if (nla_put_be32(skb, NFCTH_PRIV_DATA_LEN, htonl(helper->data_len)))
- 		goto nla_put_failure;
+ #ifdef CONFIG_PROC_FS
+@@ -749,7 +749,9 @@ ipv4_synproxy_hook(void *priv, struct sk_buff *skb,
+ 		break;
+ 	}
  
--	if (helper->flags & NF_CT_HELPER_F_CONFIGURED)
-+	if (READ_ONCE(helper->flags) & NF_CT_HELPER_F_CONFIGURED)
- 		status = NFCT_HELPER_STATUS_ENABLED;
- 	else
- 		status = NFCT_HELPER_STATUS_DISABLED;
-@@ -575,6 +578,7 @@ static int
- nfnl_cthelper_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- {
- 	struct nf_conntrack_helper *cur, *last;
-+	unsigned int helper_flags;
- 
- 	rcu_read_lock();
- 	last = (struct nf_conntrack_helper *)cb->args[1];
-@@ -583,8 +587,10 @@ nfnl_cthelper_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- 		hlist_for_each_entry_rcu(cur,
- 				&nf_ct_helper_hash[cb->args[0]], hnode) {
- 
-+			helper_flags = READ_ONCE(cur->flags);
+-	synproxy_tstamp_adjust(skb, thoff, th, ct, ctinfo, synproxy);
++	if (!synproxy_tstamp_adjust(skb, thoff, th, ct, ctinfo, synproxy))
++		return NF_DROP_REASON(skb, SKB_DROP_REASON_NETFILTER_DROP, ENOMEM);
 +
- 			/* skip non-userspace conntrack helpers. */
--			if (!(cur->flags & NF_CT_HELPER_F_USERSPACE))
-+			if (!(helper_flags & NF_CT_HELPER_F_USERSPACE))
- 				continue;
+ 	return NF_ACCEPT;
+ }
+ EXPORT_SYMBOL_GPL(ipv4_synproxy_hook);
+@@ -1177,7 +1179,9 @@ ipv6_synproxy_hook(void *priv, struct sk_buff *skb,
+ 		break;
+ 	}
  
- 			if (cb->args[1]) {
+-	synproxy_tstamp_adjust(skb, thoff, th, ct, ctinfo, synproxy);
++	if (!synproxy_tstamp_adjust(skb, thoff, th, ct, ctinfo, synproxy))
++		return NF_DROP_REASON(skb, SKB_DROP_REASON_NETFILTER_DROP, ENOMEM);
++
+ 	return NF_ACCEPT;
+ }
+ EXPORT_SYMBOL_GPL(ipv6_synproxy_hook);
 -- 
 2.53.0
 
