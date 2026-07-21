@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1FF369D71;
-	Tue, 21 Jul 2026 17:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1BE326D44;
+	Tue, 21 Jul 2026 17:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655658; cv=none; b=BcI9XsSFs9XHj9HxCMd4lWP4c35aktGU/0lyLQFI0LwsqYF8K1gziNFecUIg186OE6L+juolh8XHLWigajYaPOrBEknQSLzTiaDQ6JGCS2G2DJ3FRDmyDeYSTKZAKqwP0dSDJmjK43Yj3UwCWwBGKzjaBPCmxUv66oTiZbAQjbY=
+	t=1784655661; cv=none; b=ZAj8y7s0+lLKnnJT9Sx9kPdxS7DDiKrUQvs/qF/aF82cLrGT5Hm+KUKQdeGKuHZPkhhwGejERUZkE6rWczdSXwLncbNS15GvKIuVWPxEXt6apNJH1qdoEYr4LaIL0RzMfMmjvl47fnO/r3WG9v+DaDveEhaRcU+klJJZkh5M5Nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655658; c=relaxed/simple;
-	bh=nDwZFccglUamHQWB68Hf6pk8EiaHZnmSTnVp7tYpR38=;
+	s=arc-20240116; t=1784655661; c=relaxed/simple;
+	bh=HnwIk+sulbHSRJ+bG8uV2BRGHgAz73yZNscmb3sjVfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LrmgftGlfb5T2o34CKIFUnNO5Y0I8eHnuwJQS16iwWBTYt/3QkriRDgBDB5cM1hUkWJmG2ktRnSWfHcLtf2PpwXnK6ELdNAY2lTzmkQ7SOuO/AWllNsd1VcBmF1z+oNn4BMkUfWHGZg8+5hPTkItCab6d3JeXikWbxnMrC5h7mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zX1PwubN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gu1RFJQVGzCMZSR97IXu35g0YDFI9eGIn/awVSMi/yuc8Cb6fiuTnObaza/oDC/Pyq+ZPzA/9GSDI9F9k1LV0f6JqERDGwDSqgXA3OAKiQcBGGWEzLri7SK9kNWeiSxlfBSwEzC8pBKdgn0tqk6Gf+sVmr4mKP4+Xmo29MS6xsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yD4TRYzT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zX1PwubN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D493E1F000E9;
-	Tue, 21 Jul 2026 17:40:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yD4TRYzT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED781F000E9;
+	Tue, 21 Jul 2026 17:40:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655657;
-	bh=Cilg4TKWLWA2z59Ok6+RFrLrX9YdHDJ4VBAoNOp0jik=;
+	s=korg; t=1784655660;
+	bh=Sq6cW405k2XOgcvkEdc45k6tmM7sUJyBuSpx+h6/LR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zX1PwubNhDaK2MtCrDEO7fF+2ezSz/WQGoNVM7nfBTKRQuJwKDWIqHncr3tOYVb7A
-	 reCHfT/ycv6wVoBJaoo6iFETGNuiP+2A3AQwmDk2lORYpdaT4hpjRG7vq7E2iz9RCS
-	 9iCQzAoeT0uUHjoJwYcEkCqsvgpto7Hls1eod+wI=
+	b=yD4TRYzTFha4S/Mnvw0AClvSamzc5mgdkjBkjKsusSHO4x4iJK6nyw9Pgfb/+yMNu
+	 9RvukeYeroQzxhhqXgjI7XLPi5JgDvo1V7EgjwxN6j3icwrF77sFRJkSqCF+8wUwLX
+	 IX6rssuos0HAMSiRIwlFC+lzXB7RHVRZe61GaeY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Xingjing Deng <micro6947@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0090/1611] wifi: rtw89: add bounds check on firmware mac_id in link lookup
-Date: Tue, 21 Jul 2026 17:03:26 +0200
-Message-ID: <20260721152516.870156724@linuxfoundation.org>
+Subject: [PATCH 6.18 0091/1611] kconfig: fix potential NULL pointer dereference in conf_askvalue
+Date: Tue, 21 Jul 2026 17:03:27 +0200
+Message-ID: <20260721152516.892290614@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,41 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Xingjing Deng <micro6947@gmail.com>
 
-[ Upstream commit 6d88244bb129755acca696f9227200f4a2d106a6 ]
+[ Upstream commit b9d21c32dca2167a614e66c9e27999b9e1c33d55 ]
 
-The mac_id field in RX descriptors is 8 bits wide (0-255), but
-assoc_link_on_macid[] has only RTW89_MAX_MAC_ID_NUM (128) entries.
-While the driver currently assigns mac_id values below 128, the
-descriptor value comes from firmware and is not validated before use
-as an array index. Add a defensive bounds check in
-rtw89_assoc_link_rcu_dereference() to guard against out-of-range
-firmware values.
+In conf_askvalue(), the 'def' argument (retrieved via sym_get_string_value)
+can be NULL. While current call sites ensure that 'def' is valid,
+calling printf("%s\n", def) is technically undefined behavior and could
+lead to a segmentation fault on certain libc implementations if the
+function were called with a NULL pointer in the future.
 
-Fixes: 144c6cd24b35 ("wifi: rtw89: 8922a: configure AP_LINK_PS if FW supports")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260421111442.3395411-1-tristmd@gmail.com
+Improve the robustness of conf_askvalue() by providing an empty string
+as a fallback.
+
+Additionally, remove the redundant re-initialization of the 'line'
+buffer inside the !sym_is_changeable(sym) block, as it is already
+properly initialized at the function entry.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Xingjing Deng <micro6947@gmail.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20260306021709.27068-1-micro6947@gmail.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.h | 3 +++
- 1 file changed, 3 insertions(+)
+ scripts/kconfig/conf.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.h b/drivers/net/wireless/realtek/rtw89/core.h
-index c3839d49f4420a..e146fd082f21a7 100644
---- a/drivers/net/wireless/realtek/rtw89/core.h
-+++ b/drivers/net/wireless/realtek/rtw89/core.h
-@@ -6254,6 +6254,9 @@ static inline void rtw89_assoc_link_clr(struct rtw89_sta_link *rtwsta_link)
- static inline struct rtw89_sta_link *
- rtw89_assoc_link_rcu_dereference(struct rtw89_dev *rtwdev, u8 macid)
- {
-+	if (unlikely(macid >= RTW89_MAX_MAC_ID_NUM))
-+		return NULL;
-+
- 	return rcu_dereference(rtwdev->assoc_link_on_macid[macid]);
- }
+diff --git a/scripts/kconfig/conf.c b/scripts/kconfig/conf.c
+index a7b44cd8ae1408..c368bec5ab6016 100644
+--- a/scripts/kconfig/conf.c
++++ b/scripts/kconfig/conf.c
+@@ -297,9 +297,7 @@ static int conf_askvalue(struct symbol *sym, const char *def)
+ 	line[1] = 0;
  
+ 	if (!sym_is_changeable(sym)) {
+-		printf("%s\n", def);
+-		line[0] = '\n';
+-		line[1] = 0;
++		printf("%s\n", def ?: "");
+ 		return 0;
+ 	}
+ 
+@@ -307,7 +305,7 @@ static int conf_askvalue(struct symbol *sym, const char *def)
+ 	case oldconfig:
+ 	case syncconfig:
+ 		if (sym_has_value(sym)) {
+-			printf("%s\n", def);
++			printf("%s\n", def ?: "");
+ 			return 0;
+ 		}
+ 		/* fall through */
 -- 
 2.53.0
 
