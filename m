@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1212746C4AC;
-	Tue, 21 Jul 2026 17:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039DF3382C7;
+	Tue, 21 Jul 2026 17:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656240; cv=none; b=lX8082TZP99BdJGWZuaGxoG3hp1SpiXnOn52nL/GaSl4HkPJYFPGmBLalk2jBQ1FuZgy3luzc+WfUPFcMOvjk5JFAkpsizHWWns9neaQYKnSsDGvnato7yIeUkY7CT1DvLGWq6gWM5/PxRdfk5QEsKzuy9SS3rz2Nty5ci///VU=
+	t=1784656243; cv=none; b=u5KiKgC6xjryzT9FvoJmYZgLbl/0qMuu798N6hyZna7JSsiI+vGau3nPHTH8hJ4jtLBA90ROPlDLB2MXMfxYb7kWhvylVacbaF7XOUVAFK7Ml5osNu1MB9Y9k2xH5QoQQ3UXoeDQMZrxzwKR8izTm97HNR+f1iqW7nldqC8lngg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656240; c=relaxed/simple;
-	bh=rUrxzw01EXlVN74pj4RnwYwIzQ7dJIBg2Y9fUbyMzMA=;
+	s=arc-20240116; t=1784656243; c=relaxed/simple;
+	bh=iQidMVk7pvaAZzrfvFMOSamHydfs3XxaaUqu1w29ldg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IvzBiwP+OXOa5MKqCZ1BDCYs8R/eX5j9G7yhaTyjiaJjGiZkGmz4AKjgwYjApV80XnbWX9i3sjdxjjGm3eEU6Kmr2HAXEvU1zOosJFKjyoSx0Fhu/AWGS/SbqCAa0ZBqqFRlGHoG/1+dHbG+Rn1eWH4MA58rOax1SQzombDbx4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBhAG9a/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TEygKBvgEdGRmuBRIG9Z7Dro3rkST/TSFEDl9f+8lNDu7vP6DPKuvKbRFCNaPnftvITf8MFabOkQzzbC8WY3h6gSFKTA8hnt4p1Fj4mI6eLk77jEQKzPEY6znXTzNtxNiFLlKTuh2iDs9oqJS9DDJUH/DF8yKd+rii8ARNcjymk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/7vyVtG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBhAG9a/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7746D1F000E9;
-	Tue, 21 Jul 2026 17:50:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/7vyVtG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203A51F000E9;
+	Tue, 21 Jul 2026 17:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656239;
-	bh=ihsM3WVBRt0SZoPiT3QdT/FOAC1O+oT6FHyQKm8yvDg=;
+	s=korg; t=1784656241;
+	bh=qrRirkQzkMUVzIuTUCr9VAycYsNqFuZOfBD6tzaTuv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cBhAG9a/sz+w0J+k7Nc6wg6w6hY0rfpfqLGD8wJ4PdMYouHzepHuq/8j/5y2vGArz
-	 mWSxtMZ9MDN+WAAftn+7aSy1/l6m2E85fRkgevqzXpqvsSOonSiyTRz7h+EyJdFhfz
-	 iHdYXbE1UDOKY16dSxKPiwm33XRphFvfXNmJV6eY=
+	b=1/7vyVtGxrsHapKBhnod+IgFF/jyq6uGha5O60bPcuZBWXGmyij1yLJvaUCVW1vmH
+	 uWpSJWDd66jZwwqGsriRULb5AEWlcqbiDAtoPX/W1lOEBed5iS5bHyPtY1dlFbUKTa
+	 LED22/YvMm7WPv59nD8YfbMXcMBlfLn9Ozi6fzjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Qiaoting.Lin" <linqiaoting@xiaomi.com>,
-	"Guanyou.Chen" <chenguanyou@xiaomi.com>,
-	"Chunhui.Li" <chunhui.li@mediatek.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Nitesh Shetty <nj.shetty@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
+	liuxixin <gliuxen@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0311/1611] sched: restore timer_slack_ns when resetting RT policy on fork
-Date: Tue, 21 Jul 2026 17:07:07 +0200
-Message-ID: <20260721152522.071573547@linuxfoundation.org>
+Subject: [PATCH 6.18 0312/1611] nvme: fix FDP fdpcidx bounds check
+Date: Tue, 21 Jul 2026 17:07:08 +0200
+Message-ID: <20260721152522.097014217@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,48 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanyou.Chen <chenguanyou9338@gmail.com>
+From: liuxixin <gliuxen@gmail.com>
 
-[ Upstream commit 63c1a12bc0e09af7dee919c4fb4a300a719d5125 ]
+[ Upstream commit 0967074f6830718fd2597404ef119bddd0dbfd00 ]
 
-Commit ed4fb6d7ef68 ("hrtimer: Use and report correct timerslack values
-for realtime tasks") sets timer_slack_ns to 0 for RT tasks in
-__setscheduler_params(). However, when an RT task with SCHED_RESET_ON_FORK
-creates child threads, the children inherit timer_slack_ns=0 from the
-parent. sched_fork() resets the child's policy to SCHED_NORMAL but does
-not restore timer_slack_ns, leaving the child permanently running with
-zero slack.
+The fdpcidx bounds check sets n = NUMFDPC + 1 but used > instead of >=,
+incorrectly accepting fdp_idx when it equals n (i.e. NUMFDPC + 1).
 
-Fix this by restoring timer_slack_ns from default_timer_slack_ns in
-sched_fork() when resetting from RT/DL to NORMAL policy, matching the
-existing behavior in __setscheduler_params().
-
-Note: this fix alone requires a correct default_timer_slack_ns to be
-effective. See the following patch for that fix.
-
-Fixes: ed4fb6d7ef68 ("hrtimer: Use and report correct timerslack values for realtime tasks")
-Reported-by: Qiaoting.Lin <linqiaoting@xiaomi.com>
-Signed-off-by: Guanyou.Chen <chenguanyou@xiaomi.com>
-Signed-off-by: Chunhui.Li <chunhui.li@mediatek.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260522131000.1664983-2-chenguanyou@xiaomi.com
+Fixes: 30b5f20bb2dd ("nvme: register fdp parameters with the block layer")
+Reviewed-by: Nitesh Shetty <nj.shetty@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: liuxixin <gliuxen@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/host/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index d089b1f2115560..b5b5897b595b4c 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -4706,6 +4706,7 @@ int sched_fork(u64 clone_flags, struct task_struct *p)
- 			p->policy = SCHED_NORMAL;
- 			p->static_prio = NICE_TO_PRIO(0);
- 			p->rt_priority = 0;
-+			p->timer_slack_ns = p->default_timer_slack_ns;
- 		} else if (PRIO_TO_NICE(p->static_prio) < 0)
- 			p->static_prio = NICE_TO_PRIO(0);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 7b6b42b20641b0..24a5ca35aeb255 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -2229,7 +2229,7 @@ static int nvme_query_fdp_granularity(struct nvme_ctrl *ctrl,
+ 	}
  
+ 	n = le16_to_cpu(h->numfdpc) + 1;
+-	if (fdp_idx > n) {
++	if (fdp_idx >= n) {
+ 		dev_warn(ctrl->device, "FDP index:%d out of range:%d\n",
+ 			 fdp_idx, n);
+ 		/* Proceed without registering FDP streams */
 -- 
 2.53.0
 
