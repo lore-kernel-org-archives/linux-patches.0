@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449F338910F;
-	Tue, 21 Jul 2026 19:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5F7430CDC;
+	Tue, 21 Jul 2026 19:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663675; cv=none; b=OKxl+MFRTVNkxQ4rfKHbxtnasW5t0IAAANqMMa9D82Q1sk3xNadQKgp4XD61KtzPq72v84U3n4N35ot4YP2HEmTQn9tSuDEKR5GT67KuJxdvg9C/GprjcSSeM7aQg241DlSwRm5eyd5AtMPaHJ74S0psdeYxSzWKQdaXTyLFq2Y=
+	t=1784663678; cv=none; b=KbPwCgp4sQghHsttxxIoQNd3Q2HPwhg0GNPSSyY1Rq7qbJbfd9SfOjK6t4tch0lQMRgHOPD1BrUSJaG+k0fL2QMPAYXAkDaHpUjEJorGOt5BRkpo3qzWWa3w1QZp/Ymu8l73ie3Z5ryhJCuJprCIwbK3aIh9z7jQeMKCqXW77h4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663675; c=relaxed/simple;
-	bh=wTeF378VA1GNopS/aTS9XxbAuP/GQ5uggaLzpV612uw=;
+	s=arc-20240116; t=1784663678; c=relaxed/simple;
+	bh=2NtXjB4spBh3oJB97Aj36rsOwGyR+ST79Tp6csLHt6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sfi+nSYRNcn/J9JZM2rpzSQPhUD14UmdysalEGE9ii2G5eH8vSoRYVyEBVF1KLAILCdiJ7XZS2sxFHQnQUyoQyA6yxnja/nHVVq06d3IErSCoLietcGTz6w58TTFveoVudbBj8lT8WjZ7srSSwKf+YtQ1M+IrsHC5Aavq7rwVKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPoRKmdk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JTgsAYtgWMPq//v72WiDf/XO3KEqmpfHMlTaPwvZjFqsikL/m0GwkXvh7SYJWyTv85mCtRo6fEOpW2x7MZX3WqgwBwUs2OZA7OZxfJ2JehNw2GtXycnKPkrp0HdHQnmFvWssp8MVdMPJdvr3RGnRHYBBsnhkoUrBxesSkoBXGvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VfSEJKn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPoRKmdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D781F000E9;
-	Tue, 21 Jul 2026 19:54:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VfSEJKn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CC01F000E9;
+	Tue, 21 Jul 2026 19:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663674;
-	bh=FfxOD60iit5in7PYof+vVV23escgqWeFSiL3y27828U=;
+	s=korg; t=1784663676;
+	bh=Tx7WFcWJBC2jVTJZDlSYRRQ6TC0bIQUPE56dUOja2EA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WPoRKmdkHM0gIlsm/fxDvPWrdwImdfzDBSd/L0ykOViup7pqFZ+gl10aJkH+8NTou
-	 CvoX2Qw3xCNysQySLX6rLDIezNd+qSuVX+18rAokE3TI/m7bL3JPEwPxO9hiLxKBgz
-	 Wm+xRZm5NquCh63YK5HFmIYcHoycBAujJNr1zIgI=
+	b=1VfSEJKnVgNRCM2lyeEnCvL2MRGcigcY+JeOCQ53Y+dPksVh8UURDJfnp0Q+X1743
+	 goR61o5v0sz8oVKXL+I0NVX8RDHsDFSTCtCisInKRRMbF4XJPtehcxftPVoxqprlSM
+	 EcZOdZCmkGmw9t2yRFyE5ly5TZCEbfjNKI6zi844=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.12 0911/1276] MIPS: DEC: Ensure 32-bit stack location for o32 prom_printf()
-Date: Tue, 21 Jul 2026 17:22:34 +0200
-Message-ID: <20260721152506.421468789@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.12 0912/1276] power: supply: cpcap-battery: Fix missing nvmem_device_put() causing reference leak
+Date: Tue, 21 Jul 2026 17:22:35 +0200
+Message-ID: <20260721152506.444280967@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -44,129 +44,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 5ff79e8bdc75db51e30298a75939e2308e7658e0 upstream.
+commit a2c14ff63e0e02e3c832385e523e9cc81301171c upstream.
 
-In 64-bit configurations calling any firmware entry points from a kernel
-thread other than the initial one will result in a situation where the
-stack has been placed in the XKPHYS 64-bit memory segment.
+In cpcap_battery_detect_battery_type(), the reference to an nvmem
+device obtained via nvmem_device_find() is not released with
+nvmem_device_put() on the success or read-failure paths, causing a
+permanent reference leak. The driver’s retry logic on subsequent
+battery property reads can compound this leak, preventing the nvmem
+device from ever being freed.
 
-Consequently the stack pointer is no longer a 32-bit value and when the
-32-bit firmware code called uses 32-bit ALU operations to manipulate the
-stack pointer, the calculated result is incorrect (in fact in the 64-bit
-MIPS ISA almost all 32-bit ALU operations will produce an unpredictable
-result when executed on 64-bit data) and control goes astray.
+Found by code review.
 
-This may happen when no final console driver has been enabled in the
-configuration and consequently the initial console continues being used
-late into bootstrap, or with an upcoming change that will switch the zs
-driver to use a platform device, which in turn will make the console
-handover happen only after other kernel threads have already been
-started, and the kernel will hang at:
-
-  pid_max: default: 32768 minimum: 301
-
-or somewhat later, but always before:
-
-  cblist_init_generic: Setting adjustable number of callback queues.
-
-has been printed.
-
-It seems that only the prom_printf() entry point is affected.  Of all
-the other entry points wired only rex_slot_address() and rex_gettcinfo()
-are called from a kernel thread other than the initial one, specifically
-kernel_init(), and they are leaf functions that do no business with the
-stack, having worked with no issue ever since 64-bit support was added
-for the platform back in 2002.
-
-To address this issue then, arrange for the stack to be switched in the
-o32 wrapper as required for prom_printf() only, by supplying call_o32()
-with a pointer to a chunk of initdata space, which is placed in the
-CKSEG0 32-bit compatibility segment, observing that prom_printf() is
-only called from console output handler and therefore with the console
-lock held, implying no need for this code to be reentrant.
-
-Other firmware entry points may be called with interrupts enabled and no
-lock held, and may therefore require that call_o32() be reentrant.  They
-trigger no issue at this point and "if it ain't broke, don't fix it," so
-just leave them alone.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # v2.6.12+
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Cc: stable@vger.kernel.org
+Fixes: fd46821e85de ("power: supply: cpcap-battery: Add battery type auto detection for mapphone devices")
+Link: https://patch.msgid.link/20260424011013.879639-1-make24@iscas.ac.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/dec/prom/init.c        |    6 +++++-
- arch/mips/include/asm/dec/prom.h |   15 +++++++++++++--
- 2 files changed, 18 insertions(+), 3 deletions(-)
+ drivers/power/supply/cpcap-battery.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/arch/mips/dec/prom/init.c
-+++ b/arch/mips/dec/prom/init.c
-@@ -3,7 +3,7 @@
-  * init.c: PROM library initialisation code.
-  *
-  * Copyright (C) 1998 Harald Koerfgen
-- * Copyright (C) 2002, 2004  Maciej W. Rozycki
-+ * Copyright (C) 2002, 2004, 2026  Maciej W. Rozycki
-  */
- #include <linux/init.h>
- #include <linux/kernel.h>
-@@ -20,6 +20,10 @@
- #include <asm/dec/prom.h>
+--- a/drivers/power/supply/cpcap-battery.c
++++ b/drivers/power/supply/cpcap-battery.c
+@@ -415,10 +415,13 @@ static void cpcap_battery_detect_battery
+ 	if (IS_ERR_OR_NULL(nvmem)) {
+ 		ddata->check_nvmem = true;
+ 		dev_info_once(ddata->dev, "Can not find battery nvmem device. Assuming generic lipo battery\n");
+-	} else if (nvmem_device_read(nvmem, 2, 1, &battery_id) < 0) {
+-		battery_id = 0;
+-		ddata->check_nvmem = true;
+-		dev_warn(ddata->dev, "Can not read battery nvmem device. Assuming generic lipo battery\n");
++	} else {
++		if (nvmem_device_read(nvmem, 2, 1, &battery_id) < 0) {
++			battery_id = 0;
++			ddata->check_nvmem = true;
++			dev_warn(ddata->dev, "Can not read battery nvmem device. Assuming generic lipo battery\n");
++		}
++		nvmem_device_put(nvmem);
+ 	}
  
- 
-+#ifdef CONFIG_64BIT
-+unsigned long o32_stk[O32_STK_SIZE] __initdata = { 0 };
-+#endif
-+
- int (*__rex_bootinit)(void);
- int (*__rex_bootread)(void);
- int (*__rex_getbitmap)(memmap *);
---- a/arch/mips/include/asm/dec/prom.h
-+++ b/arch/mips/include/asm/dec/prom.h
-@@ -4,7 +4,7 @@
-  *
-  *	DECstation PROM interface.
-  *
-- *	Copyright (C) 2002  Maciej W. Rozycki
-+ *	Copyright (C) 2002, 2026  Maciej W. Rozycki
-  *
-  *	Based on arch/mips/dec/prom/prom.h by the Anonymous.
-  */
-@@ -97,6 +97,17 @@ extern int (*__pmax_close)(int);
- 
- #ifdef CONFIG_64BIT
- 
-+#define O32_STK_SIZE 512
-+extern unsigned long o32_stk[];
-+
-+/* Switch the stack if outside the 32-bit address space.  */
-+static inline unsigned long *o32_get_stk(void)
-+{
-+	long fp = (long)__builtin_frame_address(0);
-+
-+	return fp != (int)fp ? o32_stk + O32_STK_SIZE : NULL;
-+}
-+
- /*
-  * On MIPS64 we have to call PROM functions via a helper
-  * dispatcher to accommodate ABI incompatibilities.
-@@ -128,7 +139,7 @@ int __DEC_PROM_O32(_prom_printf, (int (*
- 
- #define prom_getchar()		_prom_getchar(__prom_getchar, NULL)
- #define prom_getenv(x)		_prom_getenv(__prom_getenv, NULL, x)
--#define prom_printf(x...)	_prom_printf(__prom_printf, NULL, x)
-+#define prom_printf(x...)	_prom_printf(__prom_printf, o32_get_stk(), x)
- 
- #else /* !CONFIG_64BIT */
- 
+ 	switch (battery_id) {
 
 
