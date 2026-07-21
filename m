@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A8F438FEE;
-	Tue, 21 Jul 2026 21:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4EF439325;
+	Tue, 21 Jul 2026 21:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670191; cv=none; b=egDUUoRz4EBcCDlWalHIllMQhDGak+lXloHOOpgytU4dEhGHb+cyV1vpX93FpT2B2PFAQ2rWhG10eqWs+vyGa09bR70Zh/cR73aQUEjXNhsIRnlR516aeT/LT0YiKaS8g4tOf0AHFgl3y+RUKGfW4ePxcz8W4TDvmuJbb9KHkQY=
+	t=1784670194; cv=none; b=a9jaaNdM2UCQB8hhzPjBg2+3zRfBMLoPkl9rwuvS/wr+34e7p9GYgYqcrrmcdEZDs142dpo8AkvJeUfu4qMhc3Dz0x7dMvgNQaGZrSt5ZBxGzo/du5bDqfEEp3GDJGzb503yvqxDHJMWJ5tqMsDeuykeKKBoJz+KLVkAZnV5q60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670191; c=relaxed/simple;
-	bh=PGB1BOgR+SnY7q3GLT/RAKF3VvvYzSjPkJcolRle8Z4=;
+	s=arc-20240116; t=1784670194; c=relaxed/simple;
+	bh=Qm+WJb+lNv/M829Q8gJ3br34qEfWVp6Kd9EFgK7bT3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t7WFZdMat9YPMwP5yt3+danjvf1zoc/Pcw6+Sck304FeDp6Yb7039HuuCPivUm3SC1JIVaFlwjRAN2d6Ss6M6321UeCWJ+0DVwYX+wHdyLhrRD3XsbBnzu1Htoi8moieRHyN9dk4pIsv1xIUkDMLB6ZBHFjVVFUR3I9CjoQAYuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNlbbO1x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mB262ZxloR1nbtHakDAU19Lyiyqj5K2SljnP1LXYgxajojj73jKLPjGVcJuTSyQxBhDRK297ReVBr16XKbYynNpgcAq/DwrGpSNMB4Vj9dWeX6+4MLJt3+rdIpk8wLWM+CdtdIvL40+hHWn9iKip1tMnrsoY37Tuxv1lQMwE/Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWpPGZVI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNlbbO1x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B031F000E9;
-	Tue, 21 Jul 2026 21:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWpPGZVI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5050E1F000E9;
+	Tue, 21 Jul 2026 21:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670190;
-	bh=ZAlSHqyavt+O+3NERJuFJoPTmlss6pvelRTQ2Jr78P4=;
+	s=korg; t=1784670192;
+	bh=g2FIFvPz8Tm5ZF+iJ5pygEVn65xka4JfLWsRENmGFbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VNlbbO1xmhMxSEv9kFi2KWxKypRnLp0yh7Xx/QREFQKG+R1ncVDTMZKAOqciIEXQo
-	 YmFya5/oV+3GwtaxrarcqMsg5Mg2I53xeDhhAMZcGeScissHzOBmI9BHtI3C7dnLPv
-	 yj9/FDzoCbtmJHUBZZCuI+SIco3JrEziwQOq0goA=
+	b=vWpPGZVI2V+uBQSCC3LDmsA8v8vVkxtI70TjPtoNlZak16a8WRCmYloHKVq2AHGXk
+	 v1O8eRF8iPynC6AWIuJA2vqSUzu/Ge8rJ48U3qE01To6j7SMEM+vLgjR1JKoPAPRTZ
+	 OMsRXlR//fYRb/9RdfHvIIRhMRG+xOlwhZ75NvjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Xue <feng.xue@outlook.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Lee Jones <lee@kernel.org>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.1 0837/1067] can: bcm: defer rx_op deallocation to workqueue to fix thrtimer UAF
-Date: Tue, 21 Jul 2026 17:23:58 +0200
-Message-ID: <20260721152443.274380287@linuxfoundation.org>
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.1 0797/1067] mips: sched: Fix CPUMASK_OFFSTACK memory corruption
+Date: Tue, 21 Jul 2026 17:23:18 +0200
+Message-ID: <20260721152442.390536504@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,169 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Aaron Tomlin <atomlin@atomlin.com>
 
-commit 68973f9db76144825e4f35dfdc80fb8279eb2d57 upstream.
+commit 98e37db4a34d3af3fb2f4648295c25b5e40b20e3 upstream.
 
-Commit f1b4e32aca08 ("can: bcm: use call_rcu() instead of costly
-synchronize_rcu()") replaced synchronize_rcu() in bcm_delete_rx_op()
-with call_rcu() and introduced the RX_NO_AUTOTIMER flag.
+This patch addresses a critical memory management flaw. When
+CONFIG_CPUMASK_OFFSTACK is enabled, cpumask_var_t is a pointer.
+Consequently, sizeof(new_mask) evaluates to the pointer size, causing
+copy_from_user() to clobber the mask pointer. Furthermore, the old
+logic performed copy_from_user() before allocating the mask.
 
-However, this flag check was omitted for thrtimer in the packet rx
-fast-path. During BCM RX operation teardown, a concurrent RCU reader
-(bcm_rx_handler) can race and re-arm thrtimer via
-bcm_rx_update_and_send() after call_rcu() has been scheduled.  Once
-the RCU grace period elapses, bcm_op is freed.  The subsequently
-firing thrtimer then dereferences the deallocated op, causing a UAF.
+Fix this by allocating new_mask first. To handle variable-sized user
+masks correctly, use cpumask_size() to truncate overly large user masks
+or pad undersized masks with zeros before copying the data directly into
+the allocated buffer.
 
-Adding flag checks to the rx fast-path (bcm_rx_update_and_send) does not
-fully close the TOCTOU race and introduces latency for every CAN frame.
-Conversely, calling hrtimer_cancel() directly inside the RCU callback
-(softirq context) is fatal as hrtimer_cancel() can sleep, triggering
-a "scheduling while atomic" panic.
-
-Resolve this by deferring the timer cancellation and memory free to a
-dedicated unbound workqueue (bcm_wq).  The RCU callback now queues a
-work item to bcm_wq, which safely cancels both timers and deallocates
-memory in sleepable process context.  A dedicated workqueue is used to
-prevent system-wide WQ saturation and is cleanly flushed/destroyed
-on module unload to avoid rmmod page faults.
-
-Since the deferred work can now outlive the calling context by an
-unbounded amount, also take a reference on op->sk when it is assigned
-and drop it only once the deferred work has cancelled both timers, so a
-socket can no longer be freed out from under a still-armed timer whose
-callback (bcm_send_to_user()) dereferences op->sk.
-
-Fixes: f1b4e32aca08 ("can: bcm: use call_rcu() instead of costly synchronize_rcu()")
-Tested-by: Feng Xue <feng.xue@outlook.com>
-Tested-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260714-bcm_fixes-v15-1-562f7e3e42da@hartkopp.net
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 295cbf6d63165 ("[MIPS] Move FPU affinity code into separate file.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Aaron Tomlin <atomlin@atomlin.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/bcm.c |   37 ++++++++++++++++++++++++++++++++++---
- 1 file changed, 34 insertions(+), 3 deletions(-)
+ arch/mips/kernel/mips-mt-fpaff.c |   28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -58,6 +58,7 @@
- #include <linux/can/skb.h>
- #include <linux/can/bcm.h>
- #include <linux/slab.h>
-+#include <linux/workqueue.h>
- #include <linux/spinlock.h>
- #include <net/sock.h>
- #include <net/net_namespace.h>
-@@ -89,6 +90,8 @@ MODULE_ALIAS("can-proto-2");
+--- a/arch/mips/kernel/mips-mt-fpaff.c
++++ b/arch/mips/kernel/mips-mt-fpaff.c
+@@ -70,11 +70,16 @@ asmlinkage long mipsmt_sys_sched_setaffi
+ 	struct task_struct *p;
+ 	int retval;
  
- #define BCM_MIN_NAMELEN CAN_REQUIRED_SIZE(struct sockaddr_can, can_ifindex)
- 
-+static struct workqueue_struct *bcm_wq;
-+
- /*
-  * easy access to the first 64 bit of can(fd)_frame payload. cp->data is
-  * 64 bit aligned so the offset has to be multiples of 8 which is ensured
-@@ -102,6 +105,7 @@ static inline u64 get_u64(const struct c
- struct bcm_op {
- 	struct list_head list;
- 	struct rcu_head rcu;
-+	struct work_struct work;
- 	int ifindex;
- 	canid_t can_id;
- 	u32 flags;
-@@ -745,9 +749,12 @@ static struct bcm_op *bcm_find_op(struct
- 	return NULL;
- }
- 
--static void bcm_free_op_rcu(struct rcu_head *rcu_head)
-+static void bcm_free_op_work(struct work_struct *work)
- {
--	struct bcm_op *op = container_of(rcu_head, struct bcm_op, rcu);
-+	struct bcm_op *op = container_of(work, struct bcm_op, work);
-+
-+	hrtimer_cancel(&op->timer);
-+	hrtimer_cancel(&op->thrtimer);
- 
- 	if ((op->frames) && (op->frames != &op->sframe))
- 		kfree(op->frames);
-@@ -755,9 +762,23 @@ static void bcm_free_op_rcu(struct rcu_h
- 	if ((op->last_frames) && (op->last_frames != &op->last_sframe))
- 		kfree(op->last_frames);
- 
-+	/* the last possible access to op->timer/op->thrtimer has now
-+	 * happened above via hrtimer_cancel() - op->sk is no longer
-+	 * needed by any pending timer callback, so drop our reference
-+	 */
-+	sock_put(op->sk);
-+
- 	kfree(op);
- }
- 
-+static void bcm_free_op_rcu(struct rcu_head *rcu_head)
-+{
-+	struct bcm_op *op = container_of(rcu_head, struct bcm_op, rcu);
-+
-+	INIT_WORK(&op->work, bcm_free_op_work);
-+	queue_work(bcm_wq, &op->work);
-+}
-+
- static void bcm_remove_op(struct bcm_op *op)
- {
- 	hrtimer_cancel(&op->timer);
-@@ -1012,6 +1033,7 @@ static int bcm_tx_setup(struct bcm_msg_h
- 
- 		/* bcm_can_tx / bcm_tx_timeout_handler needs this */
- 		op->sk = sk;
-+		sock_hold(sk);
- 		op->ifindex = ifindex;
- 
- 		/* initialize uninitialized (kzalloc) structure */
-@@ -1174,6 +1196,7 @@ static int bcm_rx_setup(struct bcm_msg_h
- 
- 		/* bcm_can_tx / bcm_tx_timeout_handler needs this */
- 		op->sk = sk;
-+		sock_hold(sk);
- 		op->ifindex = ifindex;
- 
- 		/* ifindex for timeout events w/o previous frame reception */
-@@ -1788,11 +1811,15 @@ static int __init bcm_module_init(void)
- {
- 	int err;
- 
-+	bcm_wq = alloc_workqueue("can-bcm-wq", WQ_UNBOUND, 0);
-+	if (!bcm_wq)
+-	if (len < sizeof(new_mask))
+-		return -EINVAL;
+-
+-	if (copy_from_user(&new_mask, user_mask_ptr, sizeof(new_mask)))
+-		return -EFAULT;
++	if (!alloc_cpumask_var(&new_mask, GFP_KERNEL))
 +		return -ENOMEM;
-+
- 	pr_info("can: broadcast manager protocol\n");
++	if (len < cpumask_size())
++		cpumask_clear(new_mask);
++	else if (len > cpumask_size())
++		len = cpumask_size();
++	if (copy_from_user(new_mask, user_mask_ptr, len)) {
++		retval = -EFAULT;
++		goto out_free_new_mask;
++	}
  
- 	err = register_pernet_subsys(&canbcm_pernet_ops);
- 	if (err)
--		return err;
-+		goto register_pernet_failed;
+ 	cpus_read_lock();
+ 	rcu_read_lock();
+@@ -83,7 +88,8 @@ asmlinkage long mipsmt_sys_sched_setaffi
+ 	if (!p) {
+ 		rcu_read_unlock();
+ 		cpus_read_unlock();
+-		return -ESRCH;
++		retval = -ESRCH;
++		goto out_free_new_mask;
+ 	}
  
- 	err = register_netdevice_notifier(&canbcm_notifier);
- 	if (err)
-@@ -1810,6 +1837,8 @@ register_proto_failed:
- 	unregister_netdevice_notifier(&canbcm_notifier);
- register_notifier_failed:
- 	unregister_pernet_subsys(&canbcm_pernet_ops);
-+register_pernet_failed:
-+	destroy_workqueue(bcm_wq);
- 	return err;
+ 	/* Prevent p going away */
+@@ -94,13 +100,9 @@ asmlinkage long mipsmt_sys_sched_setaffi
+ 		retval = -ENOMEM;
+ 		goto out_put_task;
+ 	}
+-	if (!alloc_cpumask_var(&new_mask, GFP_KERNEL)) {
+-		retval = -ENOMEM;
+-		goto out_free_cpus_allowed;
+-	}
+ 	if (!alloc_cpumask_var(&effective_mask, GFP_KERNEL)) {
+ 		retval = -ENOMEM;
+-		goto out_free_new_mask;
++		goto out_free_cpus_allowed;
+ 	}
+ 	if (!check_same_owner(p) && !capable(CAP_SYS_NICE)) {
+ 		retval = -EPERM;
+@@ -141,13 +143,13 @@ asmlinkage long mipsmt_sys_sched_setaffi
+ 	}
+ out_unlock:
+ 	free_cpumask_var(effective_mask);
+-out_free_new_mask:
+-	free_cpumask_var(new_mask);
+ out_free_cpus_allowed:
+ 	free_cpumask_var(cpus_allowed);
+ out_put_task:
+ 	put_task_struct(p);
+ 	cpus_read_unlock();
++out_free_new_mask:
++	free_cpumask_var(new_mask);
+ 	return retval;
  }
  
-@@ -1818,6 +1847,8 @@ static void __exit bcm_module_exit(void)
- 	can_proto_unregister(&bcm_can_proto);
- 	unregister_netdevice_notifier(&canbcm_notifier);
- 	unregister_pernet_subsys(&canbcm_pernet_ops);
-+	rcu_barrier();
-+	destroy_workqueue(bcm_wq);
- }
- 
- module_init(bcm_module_init);
 
 
