@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E0A46DFFB;
-	Tue, 21 Jul 2026 17:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F844028D9;
+	Tue, 21 Jul 2026 17:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656680; cv=none; b=gtwWawhtnnNNveY6oPVaTigwKxIldgJEcrGqgqOPVYE7nM3mNqnouuGvnSk2p8zkNAMc5SSGFhKvxUspxH65NXWz/MrnfAURoOGZ9gdxkRshIFr+Eq06DtjGTQng4tBCFfGcyhRnqv5slSK104jQQ0mNBjtgFZluWB3ijbvYQoE=
+	t=1784656683; cv=none; b=vCngVOG7E8vbCLPWqE9AbmWINFx5WBV6s5bU6Ax+cPhoNp5/W0Qx1WL1jR7+Z3Dns3c7u53s5aNhNGQMMcydBQp+GZor4TyrsILMCPrkDDuRin1mY/27jr4fCp6csxo6qY8edo9pCzeH211s8YkpX8v3jGBk3vienTqhQyEumNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656680; c=relaxed/simple;
-	bh=Eq/NkkDwBR+r/kFRZOEfMMmlCgO7edlUsQv3us+Ryco=;
+	s=arc-20240116; t=1784656683; c=relaxed/simple;
+	bh=z1T1L78D+lcpFPDOIH3W+RNfGxlbX7mcf3U454ZeE+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bGBvH9tPp0rMcqI0vfCjaY23X2jFlEuD1DBbcoeVivgiULZObi34vhYkL97OEel1+wb0YOKoJCMMuIRN8jpZ0Rg19dyheGy9kgNVIuyiWA+ZB6TNkYJqWSXi8OieOYUZwAEUMSW6gMLnJubJh3nUwfwWUJYZFwwXvZlX1jpTZMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xch8Ouxq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C9SkDKfPbt4bQ0G7HbXPiiw7/I/HRiNR4NuOl4ROnolfDXwm6UNKv+KbKL3xzbUFQlAqluYZooP5e9fy4QeUkLoD//wOWaInmJvjxeRLQGLoiyAPffMysHzZoKLwZAvnbnPcvqDBB5rsd7sLrcAVzPwpLYI0fV4x5DpA3Sm+SgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KnQchCXW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xch8Ouxq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055071F00A3D;
-	Tue, 21 Jul 2026 17:57:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KnQchCXW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C69B1F00A3A;
+	Tue, 21 Jul 2026 17:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656676;
-	bh=3qvHQ/Gt9WoVG617PZn1AobvUPHCrb0mktM4OOQySsY=;
+	s=korg; t=1784656679;
+	bh=N4DqzfX8qvEuqwtRQshl4erxSxsTKrUxiJQOSkZFIwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xch8Ouxq+ZSq4aOcH+rRHj4Rn1S9S0+CwNknGFaEloMcZjASmP9a3tOnh5b319pkU
-	 6bqZf43ezJRkXPSsJV0yxqXdtMdvHjG5rvHBdZwWq85rAfghnqCdlNVPOmG+c83+9P
-	 WqZpbfuMW51k1Yl4lx6RNFanM4N9bK2pnFg7AFS0=
+	b=KnQchCXW3PKz15CSRaxCA0Mulcg1uBrdzWdJ+JCYkH1S2QSDquXATO2CKPXfQT1Lj
+	 9evUbDusBpZ7lL6pvD9/RGSkVD6KDIH7E8rLQwA+/bPIuJwYeEosVkhHdrF7o5aymC
+	 Z6vw0mf8yHFyOPmLtmJWeK85NCDmMSsF6nQv4RIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	HyeongJun An <sammiee5311@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0478/1611] ASoC: codecs: hdac_hdmi: Validate written enum value
-Date: Tue, 21 Jul 2026 17:09:54 +0200
-Message-ID: <20260721152526.080482608@linuxfoundation.org>
+Subject: [PATCH 6.18 0479/1611] ASoC: fsl: fsl_audmix: Validate written enum values
+Date: Tue, 21 Jul 2026 17:09:55 +0200
+Message-ID: <20260721152526.103716899@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,45 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 0b08baeccdcf52fad328ad645f5b4fbee04eea34 ]
+[ Upstream commit 3cd17e4e2871114d5579fa7bc8da66faf7fc1930 ]
 
-hdac_hdmi_set_pin_port_mux() uses the written enum value to index the
-texts array before calling snd_soc_dapm_put_enum_double(), which validates
-that the value is within the enum item range.
+fsl_audmix_put_mix_clk_src() and fsl_audmix_put_out_src()
+convert the user-provided enum item with snd_soc_enum_item_to_val()
+before checking whether the item is within the enum's item count.
 
-An out-of-range value can therefore make the driver read past the texts
-array before the helper rejects the write. Move the lookup after the helper
-has accepted the value.
+The generic snd_soc_put_enum_double() helper performs that
+validation, but these callbacks use the converted value first: the
+clock-source path tests it with BIT(), and the output-source path
+indexes the prms transition table with it.
 
-Fixes: 4a3478debf36 ("ASoC: hdac_hdmi: Add jack reporting")
+Reject out-of-range enum items before converting them.
+
+Fixes: be1df61cf06e ("ASoC: fsl: Add Audio Mixer CPU DAI driver")
 Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20260609124317.38046-2-sammiee5311@gmail.com
+Link: https://patch.msgid.link/20260609124317.38046-4-sammiee5311@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hdmi.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/fsl/fsl_audmix.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
-index e50afd0bfcecc7..2385e18127a338 100644
---- a/sound/soc/codecs/hdac_hdmi.c
-+++ b/sound/soc/codecs/hdac_hdmi.c
-@@ -907,12 +907,14 @@ static int hdac_hdmi_set_pin_port_mux(struct snd_kcontrol *kcontrol,
- 	struct hdac_device *hdev = dev_to_hdac_dev(dapm->dev);
- 	struct hdac_hdmi_priv *hdmi = hdev_to_hdmi_priv(hdev);
- 	struct hdac_hdmi_pcm *pcm;
--	const char *cvt_name =  e->texts[ucontrol->value.enumerated.item[0]];
-+	const char *cvt_name;
+diff --git a/sound/soc/fsl/fsl_audmix.c b/sound/soc/fsl/fsl_audmix.c
+index 7981d598ba139b..d9b0bd61755d56 100644
+--- a/sound/soc/fsl/fsl_audmix.c
++++ b/sound/soc/fsl/fsl_audmix.c
+@@ -117,6 +117,9 @@ static int fsl_audmix_put_mix_clk_src(struct snd_kcontrol *kcontrol,
+ 	unsigned int *item = ucontrol->value.enumerated.item;
+ 	unsigned int reg_val, val, mix_clk;
  
- 	ret = snd_soc_dapm_put_enum_double(kcontrol, ucontrol);
- 	if (ret < 0)
- 		return ret;
- 
-+	cvt_name = e->texts[ucontrol->value.enumerated.item[0]];
++	if (item[0] >= e->items)
++		return -EINVAL;
 +
- 	if (port == NULL)
- 		return -EINVAL;
+ 	/* Get current state */
+ 	reg_val = snd_soc_component_read(comp, FSL_AUDMIX_CTR);
+ 	mix_clk = ((reg_val & FSL_AUDMIX_CTR_MIXCLK_MASK)
+@@ -157,6 +160,9 @@ static int fsl_audmix_put_out_src(struct snd_kcontrol *kcontrol,
+ 	unsigned int reg_val, val, mask = 0, ctr = 0;
+ 	int ret;
+ 
++	if (item[0] >= e->items)
++		return -EINVAL;
++
+ 	/* Get current state */
+ 	reg_val = snd_soc_component_read(comp, FSL_AUDMIX_CTR);
  
 -- 
 2.53.0
