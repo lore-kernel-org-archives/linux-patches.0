@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A568146E004;
-	Tue, 21 Jul 2026 18:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508432DBF75;
+	Tue, 21 Jul 2026 18:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660028; cv=none; b=QMvX42M4rEyPQCxsTNhEeFJqBFcawoQwO67jJQjBazddbw20jEISjrILZ+ZLDoODBqq60yKa+YSMzUBMTv/uUfXasXua1tEfYOgNyrfxQmcnRFclyW0FMLye0gaDLOxCIOV61jVEevYrwK56T2Qp6JA0KqJ5YghgoRz3VMTfOvM=
+	t=1784660031; cv=none; b=mILpH7KoLi7Ezw2IGZyEczB06cW4MFic6OqZT9nuX1TxnrQxULIrbAxI9n3GlwwIcCUhGMl6Dwjpcx/cOSz8c/uMvLZhz5XpAALzJ2sBFvsaT9TvmKN5JuXbmEC7Cbfk66gDuAzE3o9SHoAq6pK1hMYuMs6NynAZs+oXxkQ4SwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660028; c=relaxed/simple;
-	bh=MZUamJN+mE7R1B6LPR6rjsEkxxUcbEAzUSfRtrc9eYc=;
+	s=arc-20240116; t=1784660031; c=relaxed/simple;
+	bh=30xXOzS8+k0VsULdPAkCBI5bXXAqNJOqNTX9axRV/Ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iftkGduQ/GwaU1Hkl0Kh8sOhquG0TVjiYQBqQWF/NjRZ2nZjpWpNhmBuUufYZlbEug4z6cKfwUjDTKfiUYvPLxrBi8WTJWXNg2GfQ29BqSNv+e6LMkm+NKSzTFWQytFc816ipxgCusL54QpPhiShv8DI5MBuxpU8p0t65FnMLv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IfG7L99Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fwa4agczdsg+f+2SZzlH6oL7JloxsLFRgIaObNKcbB3d7e9shuqHQwCJ4kfZzRA5V/6HP3c4Pd9g3Yi5XJZ9W+BO4+wSzOlSkbwZRvSvA0dEhVSGgrLzuTZIsCKkhDYodpdBmoqJRj6Yc/eE9gRvsRCjfcE5tcSPfUKqBrOqd70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZhMaq9s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IfG7L99Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1769E1F000E9;
-	Tue, 21 Jul 2026 18:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZhMaq9s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5AEA1F000E9;
+	Tue, 21 Jul 2026 18:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660027;
-	bh=T00cVvxcqFjcWYyZuVhIofHzrH3PgSaA0PFgSIoH77Y=;
+	s=korg; t=1784660030;
+	bh=JAQZJ79hSf6N4u67RthSbv52lzihxOwckJMnyQ1V5f0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IfG7L99Q5wxnA4veQ5SM1xlHTyhaF9mQN6ajW4TfqmiPrfwUqQo1mrN67oJooXqYw
-	 zem7Sjnp8AgJDBYESRTOmu36gUcRdFkO4BZz7xqNO9MQhIjZqvP5NsVY5TAaCSccJN
-	 aTBWXAEUrnlKXb44WSDG7ReF7TaSW6I2iDx0sNIw=
+	b=OZhMaq9s4RJGS43jLm21/1k5V3tbEauqCeyTSKG3jfvm3EesksfarBAPQbt2KfUd2
+	 AeQ9l9a91I1xsG6Qn8u1iZXYbMvrnd2VB8mQO9gnbEn3V1RaWSJW9KPrkItfNl40DM
+	 Z/QIKDsiF/D/QFVCTBa78tNaTyB9p96VrW4eLY50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Bystrin <dev.mbstr@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0822/2077] mfd: rsmu: Fix page register setup
-Date: Tue, 21 Jul 2026 17:08:15 +0200
-Message-ID: <20260721152612.176638746@linuxfoundation.org>
+Subject: [PATCH 7.1 0823/2077] mfd: cs42l43: Sanity check firmware size
+Date: Tue, 21 Jul 2026 17:08:16 +0200
+Message-ID: <20260721152612.200243472@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,67 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Bystrin <dev.mbstr@gmail.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 6bc38f26ed07197b11a2b588edf1f43bfbc81d76 ]
+[ Upstream commit b6ef1a74b3ec254f87a6a3c554fe8f8083ebd37c ]
 
-Fix writes to page register in 8A3400x family (Clock Matrix).
+Currently the code checks if a firmware was received, however it does
+not verify that the firmware size is larger than the firmware header. As
+the firmware pointer is dereferenced as a pointer to the header
+structure this could lead to an out of bounds memory access. Add the
+missing check.
 
-All calls to rsmu_write_page_register() (both in i2c and spi) have
-resulted in early return, because all addresses in
-include/linux/mfd/idt8a340_reg.h are less than RSMU_CM_SCSR_BASE.
-
-There were 2 separate patch series which have to be merged in one time:
-mfd and ptp. The latter have been merged, the former[1] have not.
-
-Link: https://lore.kernel.org/netdev/LV3P220MB1202F8E2FCCFBA2519B4966EA0192@LV3P220MB1202.NAMP220.PROD.OUTLOOK.COM/
-Fixes: 67d6c76fc815 ("mfd: rsmu: Support 32-bit address space")
-Signed-off-by: Matthew Bystrin <dev.mbstr@gmail.com>
-Link: https://patch.msgid.link/20260429072047.1111427-2-dev.mbstr@gmail.com
+Fixes: ace6d1448138 ("mfd: cs42l43: Add support for cs42l43 core driver")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260508134804.1787461-1-ckeepax@opensource.cirrus.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/rsmu_i2c.c | 6 +-----
- drivers/mfd/rsmu_spi.c | 5 +----
- 2 files changed, 2 insertions(+), 9 deletions(-)
+ drivers/mfd/cs42l43.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/rsmu_i2c.c b/drivers/mfd/rsmu_i2c.c
-index cba64f107a2fd1..9e5fc8259eec2e 100644
---- a/drivers/mfd/rsmu_i2c.c
-+++ b/drivers/mfd/rsmu_i2c.c
-@@ -134,14 +134,10 @@ static int rsmu_i2c_write_device(struct rsmu_ddata *rsmu, u8 reg, u8 *buf, u8 by
- static int rsmu_write_page_register(struct rsmu_ddata *rsmu, u32 reg,
- 				    rsmu_rw_device rsmu_write_device)
- {
--	u32 page = reg & RSMU_CM_PAGE_MASK;
-+	u32 page = (reg | RSMU_CM_SCSR_BASE) & RSMU_CM_PAGE_MASK;
- 	u8 buf[4];
- 	int err;
+diff --git a/drivers/mfd/cs42l43.c b/drivers/mfd/cs42l43.c
+index 166881751e698a..ed6d93893de04d 100644
+--- a/drivers/mfd/cs42l43.c
++++ b/drivers/mfd/cs42l43.c
+@@ -722,7 +722,7 @@ static void cs42l43_mcu_load_firmware(const struct firmware *firmware, void *con
+ 	unsigned int loadaddr, val;
+ 	int ret;
  
--	/* Do not modify offset register for none-scsr registers */
--	if (reg < RSMU_CM_SCSR_BASE)
--		return 0;
--
- 	/* Simply return if we are on the same page */
- 	if (rsmu->page == page)
- 		return 0;
-diff --git a/drivers/mfd/rsmu_spi.c b/drivers/mfd/rsmu_spi.c
-index 39d9be1e141fb6..c931d8cea0a1a9 100644
---- a/drivers/mfd/rsmu_spi.c
-+++ b/drivers/mfd/rsmu_spi.c
-@@ -101,11 +101,8 @@ static int rsmu_write_page_register(struct rsmu_ddata *rsmu, u32 reg)
- 
- 	switch (rsmu->type) {
- 	case RSMU_CM:
--		/* Do not modify page register for none-scsr registers */
--		if (reg < RSMU_CM_SCSR_BASE)
--			return 0;
- 		page_reg = RSMU_CM_PAGE_ADDR;
--		page = reg & RSMU_PAGE_MASK;
-+		page = (reg | RSMU_CM_SCSR_BASE) & RSMU_PAGE_MASK;
- 		buf[0] = (u8)(page & 0xFF);
- 		buf[1] = (u8)((page >> 8) & 0xFF);
- 		buf[2] = (u8)((page >> 16) & 0xFF);
+-	if (!firmware) {
++	if (!firmware || firmware->size < sizeof(*hdr)) {
+ 		dev_err(cs42l43->dev, "Failed to load firmware\n");
+ 		cs42l43->firmware_error = -ENODEV;
+ 		goto err;
 -- 
 2.53.0
 
