@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D48B46D556;
-	Tue, 21 Jul 2026 15:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1A946D541;
+	Tue, 21 Jul 2026 15:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648596; cv=none; b=sjY8D1UF6fMeOTYFD2KfjCmD4C7HkJh23CfLznlUzLzxeerpPudeLai3Rgvk789JinNSM34PaBHDGeI6JYmW9GTyxpyz8EWIKpZQLiekAbgD/T5WlhOpPWvj3rJgaRKt7+6WHZwjMHNn/om0PQ/UCMZRkjFcSkpz6K/BJWKuRuo=
+	t=1784648599; cv=none; b=JLbo+3WxgQ7EAUAcqVZvGz44ndi6d78AOpOihXQbWuPR5TeSV0Ftqg/QOYBAp/tWoI3aJgniykmc70uG8draeF7MMy1NDuheKTquRiw/vjsCjD53uiTuaME8Z7mkRKikp+cBYmaadWMXF8zxtQZsY7AgYGbY4i9EmxdnrIkD8s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648596; c=relaxed/simple;
-	bh=KxZ4MbX+Upbq7YrFM1sp7gLcc3zuTmkJ9ftEjHTcXJQ=;
+	s=arc-20240116; t=1784648599; c=relaxed/simple;
+	bh=lBCMpwjHJtj3ooPO3cD7XvheuHnkSqr/1Z4EK0BopFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iYTvBazgPV1h9PK1wntwm3LVCbL5QI7gV/6tVp5NSyDuHp0fpj7k+pKL6Nfc7I7AF+nvsnzDU6OH7Xa9eTZxruBp09XOstVQmHyk8NIDv7mK0yA6EkJC8MxSVnbSZIl58e5sTfy1oaV+fQNKF/EOgGlI0YSdQEW+9V7xv7rzRHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rsfCHiVQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RnHp/niU1EPO3/Z+Vgr7aGxHBKtFKBW+IzjNZaOJ/00oLJIt9XO81n0yDdffuz2sqQ6/ueqwOnur8hbdJYVPAIFV4sLEM4VbzVa1h5lUTVy+2Wdsu6zWdkXLx4EjU2lx8e9sSXsixJpHq0XfLYbVwWsoVrs6GDOKmM7RAgrfv6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiEFJXFZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsfCHiVQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B581F000E9;
-	Tue, 21 Jul 2026 15:43:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiEFJXFZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5921F000E9;
+	Tue, 21 Jul 2026 15:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648595;
-	bh=xA+DC18BTAw60aBeLigR8XGnTseKxgmNyytKVXCM9hQ=;
+	s=korg; t=1784648598;
+	bh=/D0gTo13Qo0YRJ8WP0X8eQJ3Hu6CpnAyepxNv1NkwLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rsfCHiVQKw6b/I+afLj+wDO2pzEamZ5XB2WnmelbvmDSmuO4kPBeHictxD4RmRfsG
-	 ePYVDowrE8io7yCwock8hFaes1lmIVF5jLhNkH8+NWMtFaVog1JHSE6+ZTHPW5+rx5
-	 M35uLG4oCFLewr5is4vv+3qxG38TsTiG0U5pqtVQ=
+	b=UiEFJXFZy7xA5QVDKpkAUZ4xYTSU4PxGPSQxWmFoTwvtXfIByZSyQSSA8Nur5gZbS
+	 qBRRHCqxjQ55BfCUZLTjKU5t/kygUuCroPWJapdVA9kc3HwrgrhK0iQzy9ZAA8tXCf
+	 nFNcV5ySEEULeqVQrNYbywyhEUtHCAhm+UJZejGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	GuoHan Zhao <zhaoguohan@kylinos.cn>,
-	Kevin Tian <kevin.tian@intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
-	Alex Williamson <alex@shazbot.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0258/2077] vfio/xe: avoid duplicate reset in xe_vfio_pci_reset_done
-Date: Tue, 21 Jul 2026 16:58:51 +0200
-Message-ID: <20260721152558.765018257@linuxfoundation.org>
+Subject: [PATCH 7.1 0259/2077] net/sched: sch_drr: annotate data-races around cl->deficit
+Date: Tue, 21 Jul 2026 16:58:52 +0200
+Message-ID: <20260721152558.788846469@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -47,49 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b9285405c5f6144f4444f97bf3048d865e11cc1d ]
+[ Upstream commit c67b104fd7982162885c5e43057ca761006748e2 ]
 
-xe_vfio_pci_reset_done() sets deferred_reset and, when it manages to
-acquire state_mutex itself, hands the cleanup off to
-xe_vfio_pci_state_mutex_unlock().
+drr_dump_class_stats() runs without qdisc spinlock held.
 
-That helper already clears deferred_reset and runs xe_vfio_pci_reset()
-before dropping the mutex. Calling xe_vfio_pci_reset() again right
-afterwards repeats the reset handling unnecessarily.
+Add missing READ_ONCE()/WRITE_ONCE() annotations around cl->deficit.
 
-Fixes: 1f5556ec8b9e ("vfio/xe: Add device specific vfio_pci driver variant for Intel graphics")
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Acked-by: Michał Winiarski <michal.winiarski@intel.com>
-Link: https://lore.kernel.org/r/20260427012128.117051-1-zhaoguohan@kylinos.cn
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260519094618.2632073-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/xe/main.c | 2 --
- 1 file changed, 2 deletions(-)
+ net/sched/sch_drr.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/vfio/pci/xe/main.c b/drivers/vfio/pci/xe/main.c
-index 4ecadbbfd86ec7..cbff5af385ef53 100644
---- a/drivers/vfio/pci/xe/main.c
-+++ b/drivers/vfio/pci/xe/main.c
-@@ -135,8 +135,6 @@ static void xe_vfio_pci_reset_done(struct pci_dev *pdev)
- 	}
- 	spin_unlock(&xe_vdev->reset_lock);
- 	xe_vfio_pci_state_mutex_unlock(xe_vdev);
--
--	xe_vfio_pci_reset(xe_vdev);
- }
+diff --git a/net/sched/sch_drr.c b/net/sched/sch_drr.c
+index 925fa0cfd730ce..2eedd3a4322ad5 100644
+--- a/net/sched/sch_drr.c
++++ b/net/sched/sch_drr.c
+@@ -270,7 +270,7 @@ static int drr_dump_class_stats(struct Qdisc *sch, unsigned long arg,
  
- static const struct pci_error_handlers xe_vfio_pci_err_handlers = {
+ 	memset(&xstats, 0, sizeof(xstats));
+ 	if (qlen)
+-		xstats.deficit = cl->deficit;
++		xstats.deficit = READ_ONCE(cl->deficit);
+ 
+ 	if (gnet_stats_copy_basic(d, NULL, &cl->bstats, true) < 0 ||
+ 	    gnet_stats_copy_rate_est(d, &cl->rate_est) < 0 ||
+@@ -362,7 +362,7 @@ static int drr_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 
+ 	if (!cl_is_active(cl)) {
+ 		list_add_tail(&cl->alist, &q->active);
+-		cl->deficit = cl->quantum;
++		WRITE_ONCE(cl->deficit, cl->quantum);
+ 	}
+ 
+ 	sch->qstats.backlog += len;
+@@ -389,7 +389,7 @@ static struct sk_buff *drr_dequeue(struct Qdisc *sch)
+ 
+ 		len = qdisc_pkt_len(skb);
+ 		if (len <= cl->deficit) {
+-			cl->deficit -= len;
++			WRITE_ONCE(cl->deficit, cl->deficit - len);
+ 			skb = qdisc_dequeue_peeked(cl->qdisc);
+ 			if (unlikely(skb == NULL))
+ 				goto out;
+@@ -403,7 +403,7 @@ static struct sk_buff *drr_dequeue(struct Qdisc *sch)
+ 			return skb;
+ 		}
+ 
+-		cl->deficit += cl->quantum;
++		WRITE_ONCE(cl->deficit, cl->deficit + cl->quantum);
+ 		list_move_tail(&cl->alist, &q->active);
+ 	}
+ out:
 -- 
 2.53.0
 
