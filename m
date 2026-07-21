@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D63537E310;
-	Tue, 21 Jul 2026 21:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9030439359;
+	Tue, 21 Jul 2026 21:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668475; cv=none; b=DqBR8RQLxwtoWAE8mC29XNKqSKm7FOf6YOXak/sReeLQ4RWZ7Y8KW7HDzgAGllVAREEitphyV/D4vm4yggcePMa87wlR2N5gGQxOE8bYzf3/rVtCGtkq7FPERl4EcZClJeZLQ0tEH+pGapDmEKzOba83Ph86bWmjT3Uum3YYWFs=
+	t=1784668477; cv=none; b=cgJ9tGJ3Thw4Coo/oO11e/gE5F/vn9lSmts0+TC7bbFx5a0uQR609wlxu2Ps6pQ1tDSpCjcuL88kVtktUeqNAEfVPX3lwU9QR8+4A1L96T8IalZXq8r58etAwMxlIFRReugox8ckdlYOlPNUJi8JdgHbCTyTQXHOB/EKLOJKxHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668475; c=relaxed/simple;
-	bh=VDAY799u/T8Ch09AkYNNwCn/Cn/T45hp/3bNnhVfiWw=;
+	s=arc-20240116; t=1784668477; c=relaxed/simple;
+	bh=BdeftU3xLHYRR0GRYVyWMD7hI1/h+NRZh1wEjURx62o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ByskfyytOsHe7VA0O62slvBvI4l+SGrwqsEti1/i21LSi/a0epgNGDamO0HFd5tbna9JUE/m2jEEd/YXEEFLacZJW5sz/pxlF73Hpv/h7pxbI5IXUXcBAWmRBA98tmwZ2A11Vu3L+K0YVVApayO4sqAppfr2SP/+IjCf7Qj2ul8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaGuorcO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RZP8ufvYMJ05GaGLHgpfY7gOdYc9DYq9NKUsQYE+PkfnkT88QjLBycUJidenCjjvnWuV/YXfeK+Yx76NuTjfsSGpVq5+9xpy0AzzDP2L52/GVE2XMZlqCOaAs1MbQVgXGfVF1ziwVmS7gvXWWpjqBX4+8FMhZkBwA0IS4z/DgmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sw4PyKw9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaGuorcO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E93B1F000E9;
-	Tue, 21 Jul 2026 21:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sw4PyKw9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3431F00A3A;
+	Tue, 21 Jul 2026 21:14:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668470;
-	bh=6V0D+UhtyDg6K8yiyCNVayAOTm6YdbJshBkx62Oq4/E=;
+	s=korg; t=1784668475;
+	bh=/Voq5/K9Gk/lC6N3rI96RUxCKOXlmxDazZfTco7CcC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WaGuorcOWjxY1Gv6WCW4FqhmFyvS9WpWLs0G1s7eAX5PzHvRAyHJmJyEmJHo/rlXG
-	 By+a2cG3+3jRmPB5kx5BunHqLDn3ebugw9nVhT0/zpybZWQkIi8H3Ur6EhxsN1s8uc
-	 aEKgjKqPrcxQgsMy+Appt8//2Vrr1fEI3DrjXXgA=
+	b=Sw4PyKw94I81KgJc6CWMwYTAbr3Pt48TxBNZToER4TliyTTjXkjlkQd+2ThBXKtA7
+	 khV0KruoJqMnpVNHXWzUR3HWrEBr9868kukzseVc7XR339yY+yMdpJcv+/70g9DwOn
+	 InVv/IZrJyWegH/5SSxw/NeV+UXp4sN4FDeD+rUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 0186/1067] USB: ulpi: fix memory leak on registration failure
-Date: Tue, 21 Jul 2026 17:13:07 +0200
-Message-ID: <20260721152428.755583973@linuxfoundation.org>
+	Yichong Chen <chenyichong@uniontech.com>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.1 0188/1067] usbip: tools: support SuperSpeedPlus devices
+Date: Tue, 21 Jul 2026 17:13:09 +0200
+Message-ID: <20260721152428.800244503@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,76 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-commit 8af6812795869a66e9b26044f455b13deecdb69c upstream.
+commit 195e667c8719480c320cd48ac0fbf1cb81d6ffe0 upstream.
 
-The allocated device name is never freed on early ULPI device
-registration failures.
+USB devices running at SuperSpeedPlus report "10000" or "20000" in
+their sysfs speed attribute. usbip currently maps only "5000" to
+USB_SPEED_SUPER, so a SuperSpeedPlus device is imported as
+USB_SPEED_UNKNOWN.
 
-Fix this by initialising the device structure earlier and releasing the
-initial reference whenever registration fails.
+The attach request is then rejected by vhci_hcd:
 
-Fixes: 289fcff4bcdb ("usb: add bus type for USB ULPI")
+  vhci_hcd: Failed attach request for unsupported USB speed: UNKNOWN
+
+Map the SuperSpeedPlus sysfs speed values to USB_SPEED_SUPER_PLUS, use
+the SuperSpeed VHCI hub for SuperSpeedPlus devices, and recognize the
+gadget current_speed string used by the kernel.
+
+Fixes: b2316645ca5e ("usb: show speed "10000" in sysfs for USB 3.1 SuperSpeedPlus devices")
 Cc: stable <stable@kernel.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260608145803.69360-1-johan@kernel.org
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://patch.msgid.link/00C828F338E43447+20260617020613.199086-1-chenyichong@uniontech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/common/ulpi.c |   23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ tools/usb/usbip/libsrc/usbip_common.c        |    2 ++
+ tools/usb/usbip/libsrc/usbip_device_driver.c |    4 ++++
+ tools/usb/usbip/libsrc/vhci_driver.c         |    1 +
+ 3 files changed, 7 insertions(+)
 
---- a/drivers/usb/common/ulpi.c
-+++ b/drivers/usb/common/ulpi.c
-@@ -281,28 +281,24 @@ static int ulpi_register(struct device *
- 	ulpi->dev.parent = dev; /* needed early for ops */
- 	ulpi->dev.bus = &ulpi_bus;
- 	ulpi->dev.type = &ulpi_dev_type;
-+
-+	device_initialize(&ulpi->dev);
-+
- 	dev_set_name(&ulpi->dev, "%s.ulpi", dev_name(dev));
+--- a/tools/usb/usbip/libsrc/usbip_common.c
++++ b/tools/usb/usbip/libsrc/usbip_common.c
+@@ -29,6 +29,8 @@ static const struct speed_string speed_s
+ 	{ USB_SPEED_HIGH, "480", "High Speed(480Mbps)" },
+ 	{ USB_SPEED_WIRELESS, "53.3-480", "Wireless"},
+ 	{ USB_SPEED_SUPER, "5000", "Super Speed(5000Mbps)" },
++	{ USB_SPEED_SUPER_PLUS, "10000", "Super Speed Plus(10000Mbps)" },
++	{ USB_SPEED_SUPER_PLUS, "20000", "Super Speed Plus(20000Mbps)" },
+ 	{ 0, NULL, NULL }
+ };
  
- 	ACPI_COMPANION_SET(&ulpi->dev, ACPI_COMPANION(dev));
+--- a/tools/usb/usbip/libsrc/usbip_device_driver.c
++++ b/tools/usb/usbip/libsrc/usbip_device_driver.c
+@@ -57,6 +57,10 @@ static struct {
+ 		.speed = USB_SPEED_SUPER,
+ 		.name = "super-speed",
+ 	},
++	{
++		.speed = USB_SPEED_SUPER_PLUS,
++		.name = "super-speed-plus",
++	},
+ };
  
- 	ret = ulpi_of_register(ulpi);
--	if (ret) {
--		kfree(ulpi);
-+	if (ret)
- 		return ret;
--	}
+ static
+--- a/tools/usb/usbip/libsrc/vhci_driver.c
++++ b/tools/usb/usbip/libsrc/vhci_driver.c
+@@ -338,6 +338,7 @@ int usbip_vhci_get_free_port(uint32_t sp
  
- 	ret = ulpi_read_id(ulpi);
--	if (ret) {
--		of_node_put(ulpi->dev.of_node);
--		kfree(ulpi);
-+	if (ret)
- 		return ret;
--	}
- 
--	ret = device_register(&ulpi->dev);
--	if (ret) {
--		put_device(&ulpi->dev);
-+	ret = device_add(&ulpi->dev);
-+	if (ret)
- 		return ret;
--	}
- 
- 	root = debugfs_create_dir(dev_name(&ulpi->dev), ulpi_root);
- 	debugfs_create_file("regs", 0444, root, ulpi, &ulpi_regs_fops);
-@@ -334,9 +330,10 @@ struct ulpi *ulpi_register_interface(str
- 	ulpi->ops = ops;
- 
- 	ret = ulpi_register(dev, ulpi);
--	if (ret)
-+	if (ret) {
-+		put_device(&ulpi->dev);
- 		return ERR_PTR(ret);
--
-+	}
- 
- 	return ulpi;
- }
+ 		switch (speed) {
+ 		case	USB_SPEED_SUPER:
++		case	USB_SPEED_SUPER_PLUS:
+ 			if (vhci_driver->idev[i].hub != HUB_SPEED_SUPER)
+ 				continue;
+ 		break;
 
 
