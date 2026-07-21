@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA9E46EC87;
-	Tue, 21 Jul 2026 18:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E11246EC99;
+	Tue, 21 Jul 2026 18:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658289; cv=none; b=Y1+GzVaWJHOgwwDz7Qbh68IvKYLkAbKVsFLH4DI1ekwsdLRk9CN0YQF6Mz0MzTrgyG7L8s1wROpF2+E/RFIbufHoY1bQStW+E8APF3oU3AIU6uP4+00pOfSQpk4o0gG4511Dlv51y+ji6V78RpduO9BimmLOjOO8FmnSvtZxGQk=
+	t=1784658292; cv=none; b=P6DCFPcodqaegHhTO9nqPf/ClqV5VzN+EVI8PKYRSNA/ztXTJyq0ONdNaN8szvGiKM+jULTuU8gBkzHBbcPeSYhXEZg8FdRy4jz7DumytVqNvOeqkp1IevkrgiYjkSLa9JC9ks0scLVn9Ihu1+sQ5yVSF/8jHWVaoTXaLBi+100=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658289; c=relaxed/simple;
-	bh=F1UYOPBAqo0HX5oNZ55rT5xLcpqoAIVXzVA2BZk6L7E=;
+	s=arc-20240116; t=1784658292; c=relaxed/simple;
+	bh=KvJfTE1HSrSbdUrGybEwTcmTO0LLhFs0YyxeQipkanA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XD2ujFCKg7zwsS33VGN4FcCHrDj3PFEoFywhRDL0eoo3podKcPUsh+U6gvKd+5VxNPpktQvP3fIp3bcRQ+JnVlpc0mSmFVz8LOciv6IuSxzRrxdbFJd6C/psIcJ0jb/ofsNr96T+lN3DS+XSsudGpgrvk9nYyEmXhVPJz7ujKQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N74Smgjt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OiM8zW1TtgdyGma9oOffzIqetbqUHBAJlB3iJFZv4jB59suPGk1hCKizYSrtYSg97PkIYLyrmUA/UYZMwKEr9/EDZUteDYVQXx4vj7JvoqBzIxhcKg0IM1aHvoWvx8wmKhHVpVh2GqaipjMI7pB+KpVK5JxEo8zNMcPrhsSolCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ShQdjL1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N74Smgjt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95CD21F00A3D;
-	Tue, 21 Jul 2026 18:24:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ShQdjL1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FCCD1F000E9;
+	Tue, 21 Jul 2026 18:24:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658288;
-	bh=ED6H/6Hv7Rrjsto+xy0qjuAN3TFMIW9l8tsdvwGhU+g=;
+	s=korg; t=1784658290;
+	bh=kilyrZ/fQcnHj5ZbbBCXd442vk1cLxgPSUHw4o0P6WM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N74Smgjty/WzHjO5fxGbbR6WzFZcoe4w4dVsIFMQXP4MUyuJPqHM2eSKhzZInd2EG
-	 vm3Hkwf/vjBDUEKc/x56nOmFvpB+itxXBf25nb6c1UBxYoouuq87bYJ0f5DVx8WYTR
-	 5T/48Px4YBfR2GS4w5CD+YcoGMt7mrfpiR7+J/sw=
+	b=1ShQdjL14R+xcyHKrWCF0nKhuVoXQ+gd15Esy+rfn9NVWtmxCQ1rfNKST67letTGf
+	 0VtI4ypBbL0U8tnfmaGyMsT+DbEL+xI7D6aiTlPrC63by3R6MMxQe3z2qcn0AwdEV6
+	 sqfJqEF1olD2nLQXMnK/9RWeLyVDZn9e8h2RTvBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Nemanov <michael.nemanov@vastdata.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Cao Guanghui <caoguanghui@kylinos.cn>,
+	Su Yue <glass.su@suse.com>,
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1087/1611] SUNRPC: pin upper rpc_clnt across the TLS connect_worker
-Date: Tue, 21 Jul 2026 17:20:03 +0200
-Message-ID: <20260721152539.861267373@linuxfoundation.org>
+Subject: [PATCH 6.18 1088/1611] dm era: fix NULL pointer dereference in metadata_open()
+Date: Tue, 21 Jul 2026 17:20:04 +0200
+Message-ID: <20260721152539.884806181@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,129 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Cao Guanghui <caoguanghui@kylinos.cn>
 
-[ Upstream commit 46bc86c833956219bbfd246c1ffd832a479c5199 ]
+[ Upstream commit 9ae672606c17891d90b282e3490b817620549599 ]
 
-The TLS connect path has a use-after-free: nothing pins the
-upper rpc_clnt across the delayed connect_worker. xs_connect()
-stores task->tk_client in sock_xprt::clnt as a raw pointer
-and queues the worker; for TLS-secured transports that worker
-is xs_tcp_tls_setup_socket(), which reads several fields out
-of the saved pointer (cl_timeout, cl_program, cl_prog,
-cl_vers, cl_cred, cl_stats) to construct the args for the
-inner handshake rpc_clnt.
+metadata_open() returns NULL when kzalloc_obj() fails, but the
+caller era_ctr() only checks IS_ERR(md).  Since IS_ERR(NULL)
+returns false, the NULL pointer is treated as a valid result
+and later assigned to era->md, leading to a NULL pointer
+dereference when the metadata is accessed.
 
-The xprt does not reference the rpc_clnt; the rpc_clnt
-references the xprt. xs_destroy() does cancel the
-connect_worker, but it runs only when the xprt's refcount
-drops to zero, which cannot happen until the rpc_clnt
-releases its cl_xprt reference in rpc_free_client_work().
-When a TLS handshake fails fatally (for example, an mTLS
-mount whose client cert does not match the server), the
-connecting task is woken with -EACCES and exits, the mount
-caller invokes rpc_shutdown_client(), and the upper rpc_clnt
-is freed before the queued connect_worker fires.
-xs_tcp_tls_setup_socket() then dereferences the freed clnt,
-producing the refcount_t underflow Michael Nemanov reported.
+Fix this by returning ERR_PTR(-ENOMEM) on allocation failure,
+consistent with dm-cache-metadata.c, dm-thin-metadata.c, and
+dm-clone-metadata.c which all use ERR_PTR(-ENOMEM) for the
+same pattern.
 
-Take a reference on the upper rpc_clnt in xs_connect() for
-TLS transports via a new rpc_hold_client() helper, and drop
-it in the connect_worker's exit path with rpc_release_client().
-The xprt_lock_connect() / xprt_unlock_connect() pairing
-already serialises xs_connect() with xs_tcp_tls_setup_socket(),
-so the take and release are balanced one-for-one.
-
-The non-TLS connect worker (xs_tcp_setup_socket) never reads
-sock_xprt::clnt, so leave that path alone and avoid the
-clnt-holds-xprt-holds-clnt cycle that would otherwise prevent
-xprt destruction.
-
-Reported-by: Michael Nemanov <michael.nemanov@vastdata.com>
-Closes: https://lore.kernel.org/linux-nfs/40e3d522-dfcf-4fc1-9c55-b5e81f1536d5@vastdata.com/
-Fixes: 75eb6af7acdf ("SUNRPC: Add a TCP-with-TLS RPC transport class")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Tested-by: Michael Nemanov <michael.nemanov@vastdata.com>
-Reviewed-by: Michael Nemanov <michael.nemanov@vastdata.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Fixes: eec40579d848 ("dm: add era target")
+Signed-off-by: Cao Guanghui <caoguanghui@kylinos.cn>
+Reviewed-by: Su Yue <glass.su@suse.com>
+Reviewed-by: Ming-Hung Tsai <mtsai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sunrpc/clnt.h |  1 +
- net/sunrpc/clnt.c           | 19 +++++++++++++++++--
- net/sunrpc/xprtsock.c       | 11 ++++++++++-
- 3 files changed, 28 insertions(+), 3 deletions(-)
+ drivers/md/dm-era-target.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/sunrpc/clnt.h b/include/linux/sunrpc/clnt.h
-index f8b406b0a1af5d..3c2b8c355ab3a8 100644
---- a/include/linux/sunrpc/clnt.h
-+++ b/include/linux/sunrpc/clnt.h
-@@ -190,6 +190,7 @@ int		rpc_switch_client_transport(struct rpc_clnt *,
- 				const struct rpc_timeout *);
+diff --git a/drivers/md/dm-era-target.c b/drivers/md/dm-era-target.c
+index 9c84e9d13eca6d..5cc71dbc7e039c 100644
+--- a/drivers/md/dm-era-target.c
++++ b/drivers/md/dm-era-target.c
+@@ -810,8 +810,10 @@ static struct era_metadata *metadata_open(struct block_device *bdev,
+ 	int r;
+ 	struct era_metadata *md = kzalloc(sizeof(*md), GFP_KERNEL);
  
- void		rpc_shutdown_client(struct rpc_clnt *);
-+void		rpc_hold_client(struct rpc_clnt *);
- void		rpc_release_client(struct rpc_clnt *);
- void		rpc_task_release_transport(struct rpc_task *);
- void		rpc_task_release_client(struct rpc_task *);
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index 8ca354ecfd02aa..a142e20ce7e7c4 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -1026,8 +1026,23 @@ rpc_free_auth(struct rpc_clnt *clnt)
- 	return NULL;
- }
- 
--/*
-- * Release reference to the RPC client
-+/**
-+ * rpc_hold_client - acquire a reference on an rpc_clnt
-+ * @clnt: rpc_clnt to pin
-+ *
-+ * Pairs with rpc_release_client().
-+ */
-+void rpc_hold_client(struct rpc_clnt *clnt)
-+{
-+	refcount_inc(&clnt->cl_count);
-+}
-+
-+/**
-+ * rpc_release_client - release a reference on an rpc_clnt
-+ * @clnt: rpc_clnt to release
-+ *
-+ * Pairs with rpc_hold_client(). The rpc_clnt's resources are
-+ * freed once its reference count drops to zero.
-  */
- void
- rpc_release_client(struct rpc_clnt *clnt)
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index 310f8952018e50..6b64c6c4949417 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -2760,6 +2760,7 @@ static void xs_tcp_tls_setup_socket(struct work_struct *work)
- out_unlock:
- 	current_restore_flags(pflags, PF_MEMALLOC);
- 	upper_transport->clnt = NULL;
-+	rpc_release_client(upper_clnt);
- 	xprt_unlock_connect(upper_xprt, upper_transport);
- 	return;
- 
-@@ -2807,7 +2808,15 @@ static void xs_connect(struct rpc_xprt *xprt, struct rpc_task *task)
- 	} else
- 		dprintk("RPC:       xs_connect scheduled xprt %p\n", xprt);
- 
--	transport->clnt = task->tk_client;
-+	/*
-+	 * Only the TLS connect_worker reads transport->clnt; pinning
-+	 * the upper rpc_clnt unconditionally would form a cycle with
-+	 * cl_xprt and prevent xprt destruction.
-+	 */
-+	if (xprt->xprtsec.policy != RPC_XPRTSEC_NONE) {
-+		rpc_hold_client(task->tk_client);
-+		transport->clnt = task->tk_client;
+-	if (!md)
+-		return NULL;
++	if (!md) {
++		DMERR("could not allocate metadata struct");
++		return ERR_PTR(-ENOMEM);
 +	}
- 	queue_delayed_work(xprtiod_workqueue,
- 			&transport->connect_worker,
- 			delay);
+ 
+ 	md->bdev = bdev;
+ 	md->block_size = block_size;
 -- 
 2.53.0
 
