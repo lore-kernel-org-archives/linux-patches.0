@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741D93B9D9D;
-	Tue, 21 Jul 2026 21:32:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625D53B9950;
+	Tue, 21 Jul 2026 21:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669540; cv=none; b=dW4PwOaEK5KXzgTjfpBCJwZV25S1U9N5CAvVBZehcmfA4w8uqqfbsq95gF9Vk4serNjD3tnLN9j6oThH7uZT7PnTBcUo1HFeWAEWnAyPoeMJ8C5elYhoS8x1F2d3LZMIS+AWqclCobMEm9BviYx3HPBhcGpj9b8OdTwo0Y5ihV4=
+	t=1784669543; cv=none; b=a01CbvBfjdQeg1XR980QRmgxj01NzH1DbzQcpMpM3dEH15LWWcek0aH0pxRfCGoI5Px30krMUChtoA24BIJ/9/BJZi+rDC5GkKW4agsclwAQrmeLXavoOrwXYGSga9TnR4qEhNhXaLLqPuXwcmHNmIkdY41vZhdhpwFjqzhkieM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669540; c=relaxed/simple;
-	bh=VFiCika2OTRJ4XH76lOMcsxLgkaua1DxlR2MMdkF/UI=;
+	s=arc-20240116; t=1784669543; c=relaxed/simple;
+	bh=Lt2RK6v+BWaajki26dRRWyDBPylcqBDEWPHzy+FtYK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=neyy0Phyvx8sUX9Fzsp5MjaW/VYW9RfhscX6VLZYW6Pw6Mm94UZOCy35gUgxSzPcds0uVRTgCvflRco1Nihh3lEuTkLfQF3lkrBco2/DrD5UDppksijOlSauVGxoX55VL/gYD74WBN2s7RNn1uk5WbIcO5A8bsZxm1ztM8vffMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MfOaW6vz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KMWnzP9FhkBlkLgqVWxVK5N1T/rVtUO8T7h3yxHbfqSshKlgyWPOuAvLXUQD2/bPsPiAEJbIniAlMYPikf8eC6ubDyoOOv0Ud8GqeNiL7s8gRkyF2q7KBJ/HCsHRHnc9rf6FdIow3Sg4eeIEmZSbl4tp7wVrgPl8DV/7Qh9FiZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lieolyIo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MfOaW6vz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0791F000E9;
-	Tue, 21 Jul 2026 21:32:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lieolyIo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801301F000E9;
+	Tue, 21 Jul 2026 21:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669539;
-	bh=JLJr6+II+GnI9bXmLdlQ8fj2vqsizZa9C9F1Fzwai60=;
+	s=korg; t=1784669542;
+	bh=l2NNzkKmAhzOkg1zW6z+HMalpgJ1eVKHQmg7hJgATJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MfOaW6vzfKRge6SfIyrWOh4TDkbrb8R9aJpuywz9TQRqtd5I0IQnoQCpDTnYx9Gwt
-	 NG1SJlH3ALH1EUZtOyTZV0MlBhrhltmJLydIp8D+tsIhNEBT3xFeS6w7fCQnX0h2zT
-	 Uv2SgNfWexSDaPzhaJ4jTOEU9k4GaOrhNzZ85GvA=
+	b=lieolyIoZhsvOL12f1BGjhY71SkOzLCvgMyOMQ+oP4DA0mXNzUo4ZiqFQGLPHxp1X
+	 aMi4ufru5AWat1bg8Y9WTJgLkuEY1opQGxKb24OTHAFw4S7eKenzxx4EkrtuLXIZZP
+	 XK40v+Vh9MaTC/J/E/t+kLPUO24/hnNEl/nAeXwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+346474e3bf0b26bd3090@syzkaller.appspotmail.com,
+	Aleksandr Nogikh <nogikh@google.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Ivan Abramov <i.abramov@mt-integration.ru>,
 	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0592/1067] ieee802154: Remove WARN_ON() in cfg802154_pernet_exit()
-Date: Tue, 21 Jul 2026 17:19:53 +0200
-Message-ID: <20260721152437.847847947@linuxfoundation.org>
+Subject: [PATCH 6.1 0593/1067] ieee802154: fix kernel-infoleak in dgram_recvmsg()
+Date: Tue, 21 Jul 2026 17:19:54 +0200
+Message-ID: <20260721152437.869913475@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,39 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Abramov <i.abramov@mt-integration.ru>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-[ Upstream commit e69ed6fc9fb3b386b5fcdb9f51623f122cee2ebd ]
+[ Upstream commit 4db86f8ab11b5a41bfc36680be837e6ac1375ec6 ]
 
-There's no need to call WARN_ON() in cfg802154_pernet_exit(), since
-every point of failure in cfg802154_switch_netns() is covered with
-WARN_ON(), so remove it.
+KMSAN reported a kernel-infoleak in move_addr_to_user():
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+BUG: KMSAN: kernel-infoleak in instrument_copy_to_user
+include/linux/instrumented.h:131 [inline]
+BUG: KMSAN: kernel-infoleak in _inline_copy_to_user
+include/linux/uaccess.h:205 [inline]
+BUG: KMSAN: kernel-infoleak in _copy_to_user+0xcc/0x120
+lib/usercopy.c:26
+ instrument_copy_to_user include/linux/instrumented.h:131 [inline]
+ _inline_copy_to_user include/linux/uaccess.h:205 [inline]
+ _copy_to_user+0xcc/0x120 lib/usercopy.c:26
+ copy_to_user include/linux/uaccess.h:236 [inline]
+ move_addr_to_user+0x2e7/0x440 net/socket.c:302
+ ____sys_recvmsg+0x232/0x610 net/socket.c:2925
+ ...
+ Uninit was stored to memory at:
+ ieee802154_addr_to_sa include/net/ieee802154_netdev.h:369 [inline]
+ dgram_recvmsg+0xa09/0xbe0 net/ieee802154/socket.c:739
 
-Fixes: 66e5c2672cd1 ("ieee802154: add netns support")
+The issue occurs because the `pan_id` field of `struct ieee802154_addr`
+is left uninitialized when the address mode is `IEEE802154_ADDR_NONE`.
+The execution flow is as follows:
+
+1. `__ieee802154_rx_handle_packet()` declares a local `struct
+ieee802154_hdr hdr` on the stack.
+2. `ieee802154_hdr_pull()` calls `ieee802154_hdr_get_addr()` to parse
+the source and destination addresses into this structure.
+3. If the address mode is `IEEE802154_ADDR_NONE`,
+`ieee802154_hdr_get_addr()` previously only set the `mode` field,
+leaving the `pan_id` field containing uninitialized stack memory.
+4. This uninitialized `pan_id` is later copied into a `struct
+sockaddr_ieee802154` in `dgram_recvmsg()` via `ieee802154_addr_to_sa()`.
+5. Finally, `move_addr_to_user()` copies the socket address structure to
+user space, leaking the uninitialized bytes.
+
+Fix this by using `memset` to zero out the address structure in
+`ieee802154_hdr_get_addr()` when the mode is `IEEE802154_ADDR_NONE`.
+
+Fixes: 94b4f6c21cf5 ("ieee802154: add header structs with endiannes and operations")
+Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
+Reported-by: syzbot+346474e3bf0b26bd3090@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=346474e3bf0b26bd3090
+Link: https://syzkaller.appspot.com/ai_job?id=a507a109-d683-4a2c-bc03-93394f491b17
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
 Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
-Link: https://lore.kernel.org/20250403101935.991385-4-i.abramov@mt-integration.ru
+Link: https://lore.kernel.org/62795fd9-fc0c-48eb-bb82-05ffc5a57104@mail.kernel.org
 Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ieee802154/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ieee802154/header_ops.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/ieee802154/core.c b/net/ieee802154/core.c
-index de259b5170ab17..b3b89a1cd2a4c1 100644
---- a/net/ieee802154/core.c
-+++ b/net/ieee802154/core.c
-@@ -324,7 +324,7 @@ static void __net_exit cfg802154_pernet_exit(struct net *net)
- 	rtnl_lock();
- 	list_for_each_entry(rdev, &cfg802154_rdev_list, list) {
- 		if (net_eq(wpan_phy_net(&rdev->wpan_phy), net))
--			WARN_ON(cfg802154_switch_netns(rdev, &init_net));
-+			cfg802154_switch_netns(rdev, &init_net);
- 	}
- 	rtnl_unlock();
- }
+diff --git a/net/ieee802154/header_ops.c b/net/ieee802154/header_ops.c
+index af337cf627643e..0687a4bded50c9 100644
+--- a/net/ieee802154/header_ops.c
++++ b/net/ieee802154/header_ops.c
+@@ -126,10 +126,13 @@ ieee802154_hdr_get_addr(const u8 *buf, int mode, bool omit_pan,
+ {
+ 	int pos = 0;
+ 
+-	addr->mode = mode;
+-
+-	if (mode == IEEE802154_ADDR_NONE)
++	if (mode == IEEE802154_ADDR_NONE) {
++		memset(addr, 0, sizeof(*addr));
++		addr->mode = IEEE802154_ADDR_NONE;
+ 		return 0;
++	}
++
++	addr->mode = mode;
+ 
+ 	if (!omit_pan) {
+ 		memcpy(&addr->pan_id, buf + pos, 2);
 -- 
 2.53.0
 
