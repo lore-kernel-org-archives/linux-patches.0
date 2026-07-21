@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953A543B490;
-	Tue, 21 Jul 2026 22:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DCC435532;
+	Tue, 21 Jul 2026 22:07:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671636; cv=none; b=nml4aParInvIH2Bi3bvu4OFror2kbx2h/2ej3f46OCgeO9udsA+le6Sk+oHmz0S5cntI4d1TKMHQtyUILhpgWf6uMzgur++qIhQFMAG5u7QotBa2V/tyjKFR/kskxRHogKkP1AHR2woBI9e9mn6EE7HBfUtTrRe3QFk79EhUj18=
+	t=1784671639; cv=none; b=dQeg0WmuHApAbqYsTrIPd0ABftU6FO2lFz4R99hL+a5Nz6yyyBiGsjlySIS3rzPm7I6QsIHgftJv408Hjglxr4ex49Y9jyMCfo846AdohZ0B4R8g9N/ShQtwddAVQVRUXbb1LU2YgGnt16tERXgWxPXcK5CXAsL9MURszGylm0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671636; c=relaxed/simple;
-	bh=vd+bXtWQsw92cM0fjtPnvlhpZD3eOZk/DMX8AfcQjiU=;
+	s=arc-20240116; t=1784671639; c=relaxed/simple;
+	bh=WsdNRuzl0IdPXwY3ICIrtpvnJ59aygE1a6ofzBpkC9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jajArQ4qaZMc/PhLpMD+iE+6cParkcPbMpZF0FZBI5L4x6XNVe8YfNpFCVE4VVub/r6DddCGxggf7qywWXoAa1LUA6ycHCMe3x7HdG1KKdS6LkrJjQaLxykkW2mXkLVWabgtFOxiZzRYjW72iPB+6bHlC2PB8FEm4GAQPXLkDCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZA1Rduvt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YK096DF7L/jMREp4+rPfsD3KJKyBhRjyoYROZ65dyltAk0jOeW6sT6UmEzqfA0NOkXCfFMe+zvZ8UBDl8Xlh5y0ad07GvIOKCFoPWQq7cCuGsECJDfftjw3jjaeVdUczeYna5k6UKDUTb1npuVz68Ni3cvNOL+z02ddvFANLKVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=12ONMys8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZA1Rduvt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1021F000E9;
-	Tue, 21 Jul 2026 22:07:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="12ONMys8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A42861F000E9;
+	Tue, 21 Jul 2026 22:07:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671635;
-	bh=U1bPBcv45DkdcU8DsHoIQ2r6O7cNUyaNz60Bh8Rg3D4=;
+	s=korg; t=1784671638;
+	bh=BDFSobXXD0wzh5L8iE2kFq5GcinFjMQC4+GbP5FZYOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZA1Rduvt7Ag8t9O2uZkP2eSRazGVcDT1iXXSOfX1rAYS3URrU3+9ayWvpW8DNGbs3
-	 Avi8DwbBaj8//O8H7KQA24At7SinOPYVIFmpSc3trSeKbuhbfSi1LLJcorvBNsRH4G
-	 6HLK5PASatxGMIM2uQG0+PTE0zNSM1v/3KNGDtx0=
+	b=12ONMys8cWKp0IklasYEJbg5PG7Cs8mbwfpo3OHbjZQKOxaoFMeYdz1oind87o4Lr
+	 eNFMhkUIBgVTGS4gknTSyaCn1zz3WjcFfWhcz0x0/YRxmgMLwd6x3oOIhkQ9OjK9E1
+	 SDCXt7v1y3Q1Oe4vsKU2VyvEFBx0YB12Ri4oJ8Kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Zhu <zhuhui@kylinos.cn>,
-	Dev Jain <dev.jain@arm.com>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 322/843] vmalloc: fix NULL pointer dereference in is_vm_area_hugepages()
-Date: Tue, 21 Jul 2026 17:19:17 +0200
-Message-ID: <20260721152413.263994204@linuxfoundation.org>
+Subject: [PATCH 5.15 323/843] hwspinlock: qcom: avoid uninitialized struct members
+Date: Tue, 21 Jul 2026 17:19:18 +0200
+Message-ID: <20260721152413.286136236@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -54,41 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Zhu <zhuhui@kylinos.cn>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit c55dd3b46c1208d6d2ea737a8aefef4aa4c70cb8 ]
+[ Upstream commit 8752c396ce3b2136b3d4c906fe103f6efb6782d9 ]
 
-find_vm_area() can return NULL if the given address is not a valid vmalloc
-area.  Check the return value before dereferencing it to avoid a kernel
-crash.
+The reg_field is allocated on stack, so using the REG_FIELD macro will
+ensure that unused members do not have uninitialized values.
 
-Link: https://lore.kernel.org/20260529014130.671291-1-hui.zhu@linux.dev
-Fixes: 121e6f3258fe ("mm/vmalloc: hugepage vmalloc mappings")
-Signed-off-by: Hui Zhu <zhuhui@kylinos.cn>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 19a0f61224d2 ("hwspinlock: qcom: Add support for Qualcomm HW Mutex block")
+Link: https://sashiko.dev/#/patchset/20260319105947.6237-1-wsa%2Brenesas%40sang-engineering.com
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260512091339.31085-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/vmalloc.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hwspinlock/qcom_hwspinlock.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/include/linux/vmalloc.h b/include/linux/vmalloc.h
-index 9efcd95339c279..5fa4ffefb0394c 100644
---- a/include/linux/vmalloc.h
-+++ b/include/linux/vmalloc.h
-@@ -214,7 +214,9 @@ static inline bool is_vm_area_hugepages(const void *addr)
- 	 * allocated in the vmalloc layer.
- 	 */
- #ifdef CONFIG_HAVE_ARCH_HUGE_VMALLOC
--	return find_vm_area(addr)->page_order > 0;
-+	struct vm_struct *area = find_vm_area(addr);
-+
-+	return area && area->page_order > 0;
- #else
- 	return false;
- #endif
+diff --git a/drivers/hwspinlock/qcom_hwspinlock.c b/drivers/hwspinlock/qcom_hwspinlock.c
+index e4991466486397..6a2a2f3e618554 100644
+--- a/drivers/hwspinlock/qcom_hwspinlock.c
++++ b/drivers/hwspinlock/qcom_hwspinlock.c
+@@ -129,7 +129,6 @@ static struct regmap *qcom_hwspinlock_probe_mmio(struct platform_device *pdev,
+ static int qcom_hwspinlock_probe(struct platform_device *pdev)
+ {
+ 	struct hwspinlock_device *bank;
+-	struct reg_field field;
+ 	struct regmap *regmap;
+ 	size_t array_size;
+ 	u32 stride;
+@@ -151,9 +150,7 @@ static int qcom_hwspinlock_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, bank);
+ 
+ 	for (i = 0; i < QCOM_MUTEX_NUM_LOCKS; i++) {
+-		field.reg = base + i * stride;
+-		field.lsb = 0;
+-		field.msb = 31;
++		struct reg_field field = REG_FIELD(base + i * stride, 0, 31);
+ 
+ 		bank->lock[i].priv = devm_regmap_field_alloc(&pdev->dev,
+ 							     regmap, field);
 -- 
 2.53.0
 
