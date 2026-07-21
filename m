@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A285433BCA;
-	Tue, 21 Jul 2026 22:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A005437111;
+	Tue, 21 Jul 2026 22:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671950; cv=none; b=R44MkseX2/Iu6VO+pTbspRTi4Xy7bc0pd1KSAqJblP/ZX6w68rzvUP7eDDqJ+vhaENb7T6SGX6ifv1+E4/6J2rea2cGC0jkugVWG00UynvUf+L7tfcpf9Lamzu0w4nbIgpGuwgnEkNklLogIrqfg6fnCuGX0MN8VpMhh5hfLhuo=
+	t=1784671953; cv=none; b=NPIddWL3ALGJgZi5HlfxWet0qxN9ctdw3EplVANf7xegKM32TSSuz0TpEfs/N/hzJJRTCWTuLxfz2yaUrdAIb6xL9mPoJgV8GO3WIx/5jpJdTLhdk+UPiTHIs6Y2M5Uvn0utWTaS0jJEZRhXiGy/llxAtC9td1vYU1UTn5rryGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671950; c=relaxed/simple;
-	bh=vtkBzkRbU/ZQH2D0WAWuZpVaQbi88b77GJ6PX9g0ERI=;
+	s=arc-20240116; t=1784671953; c=relaxed/simple;
+	bh=gM+8T1K3Ajs1oQppqyGL0Q9132hAXIrOTZcm5egRGNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dSIuxsWXAMwuxag+XskcXtgqBe1TrQcrmhe7PwVzhrk5aKWyJdH3q6JlMS79f12G7dt78y2RBNCqvrXcGPM4UgQwxnZiIhM7iaWqw38Xy/HyV41ExhkPZ6P0CT02ai0dYt1PSysqdduk1lh095PgFs1q7buU1ZtZsQTTNwcG1Cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPlgP2A8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cleervQliZ9lIuozNDoB4YC9uw02dw+C7NK+EK99t/sVw4IYW8xKx98up6P6L84jGyC2DYlcVj9ZJ8cCQSCmm4d2U63n8t5agtOLJcdzVNbCDA/lFLkANAnf9lKvvQ77HsoSULaNcg+S8JPdTQGd9lMUMx7Ol2/BA4tVi8eyhME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5kczycX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPlgP2A8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87B81F000E9;
-	Tue, 21 Jul 2026 22:12:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5kczycX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921841F000E9;
+	Tue, 21 Jul 2026 22:12:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671949;
-	bh=uiu2KbBxXrDFRWncJk7v7fhjuniM8DSpcYKHWY7Sznw=;
+	s=korg; t=1784671952;
+	bh=9ybsKbi54/Min/R7n2mY9gccs0MCmZic4GJqup4t8FE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XPlgP2A8pld+Q+ta9EulNeupqJvf1BOrkoY18YP3maka9BO30zc5ST1lJPAkjAPZB
-	 TWlWMv6I29GA3v23dmWYQ8w3Sl4m3S610ffuvfTlXngYzcGinq0LVQP76UDdNmv0d/
-	 AF1G/r4RRZ0kPbf0kjrRX4294tSOk1/xOfSIntdw=
+	b=q5kczycXEzyXT3fzrNL0NrfZ5ENOQSu0kNAWp9P5zcRv360NKhpF2DVIuejHDWryA
+	 6jhA7bOAY/Vzlem31hyyix95E1BAMtjMB2u1qvhCr7Cf8tHkhc2iuSvs6N9pydPiig
+	 euG9J1eJ+Vpn/29SV4QfxLM8ACqoF/+xfFkKkwAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9383b1ff0df4b29ca5e6@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	"Zhang, Yanmin" <yanmin_zhang@linux.intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 439/843] xfrm: validate selector family and prefixlen during match
-Date: Tue, 21 Jul 2026 17:21:14 +0200
-Message-ID: <20260721152415.906007867@linuxfoundation.org>
+Subject: [PATCH 5.15 440/843] perf machine: Use snprintf() for guestmount path construction
+Date: Tue, 21 Jul 2026 17:21:15 +0200
+Message-ID: <20260721152415.928025703@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,70 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 40f0b1047918539f0b0f795ac65e35336b4c2c78 ]
+[ Upstream commit fe63d3bca288c5bb983304efd5fc3a5ff3183403 ]
 
-syzbot reported a shift-out-of-bounds in xfrm_selector_match()
-due to AF_UNSPEC selector with large prefixlen (e.g. 128) matched
-against IPv4 flow (when XFRM_STATE_AF_UNSPEC is set).
+machines__findnew() and machines__create_guest_kernel_maps() use
+sprintf() to build paths by prepending symbol_conf.guestmount.
+Both write into PATH_MAX stack buffers, but guestmount comes from
+user configuration and is not length-checked.  A guestmount path
+at or near PATH_MAX causes a stack buffer overflow.
 
-Fix this by:
+Switch to snprintf() with sizeof() to prevent overflow.  The
+subsequent access()/fopen() calls will fail on a truncated path.
 
-- Rejecting mismatched families in xfrm_selector_match.
-- Returning false in addr4_match if prefixlen > 32.
-- Returning false in addr_match if prefixlen > 128 (prevents overflow).
-
-Fixes: 3f0ab59e6537 ("xfrm: validate new SA's prefixlen using SA family when sel.family is unset")
-Reported-by: syzbot+9383b1ff0df4b29ca5e6@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a2fbe35.be3f099c.2836ae.0018.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: a1645ce12adb6c9c ("perf: 'perf kvm' tool for monitoring guest performance from host")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Zhang, Yanmin <yanmin_zhang@linux.intel.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xfrm.h     | 7 +++++++
- net/xfrm/xfrm_policy.c | 3 +++
- 2 files changed, 10 insertions(+)
+ tools/perf/util/machine.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/xfrm.h b/include/net/xfrm.h
-index a042f130f99b6e..e94009c632dfae 100644
---- a/include/net/xfrm.h
-+++ b/include/net/xfrm.h
-@@ -812,6 +812,9 @@ static inline bool addr_match(const void *token1, const void *token2,
- 	unsigned int pdw;
- 	unsigned int pbi;
+diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
+index 7e7c63fcd14068..9a78261cffec9b 100644
+--- a/tools/perf/util/machine.c
++++ b/tools/perf/util/machine.c
+@@ -348,7 +348,7 @@ struct machine *machines__findnew(struct machines *machines, pid_t pid)
+ 	if ((pid != HOST_KERNEL_ID) &&
+ 	    (pid != DEFAULT_GUEST_KERNEL_ID) &&
+ 	    (symbol_conf.guestmount)) {
+-		sprintf(path, "%s/%d", symbol_conf.guestmount, pid);
++		snprintf(path, sizeof(path), "%s/%d", symbol_conf.guestmount, pid);
+ 		if (access(path, R_OK)) {
+ 			static struct strlist *seen;
  
-+	if (prefixlen > 128)
-+		return false;
-+
- 	pdw = prefixlen >> 5;	  /* num of whole u32 in prefix */
- 	pbi = prefixlen &  0x1f;  /* num of bits in incomplete u32 in prefix */
- 
-@@ -836,6 +839,10 @@ static inline bool addr4_match(__be32 a1, __be32 a2, u8 prefixlen)
- 	/* C99 6.5.7 (3): u32 << 32 is undefined behaviour */
- 	if (sizeof(long) == 4 && prefixlen == 0)
- 		return true;
-+
-+	if (prefixlen > 32)
-+		return false;
-+
- 	return !((a1 ^ a2) & htonl(~0UL << (32 - prefixlen)));
- }
- 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index d8348730e2d0e6..cec66c74e1d22a 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -223,6 +223,9 @@ __xfrm6_selector_match(const struct xfrm_selector *sel, const struct flowi *fl)
- bool xfrm_selector_match(const struct xfrm_selector *sel, const struct flowi *fl,
- 			 unsigned short family)
- {
-+	if (family != sel->family && sel->family != AF_UNSPEC)
-+		return false;
-+
- 	switch (family) {
- 	case AF_INET:
- 		return __xfrm4_selector_match(sel, fl);
+@@ -1260,9 +1260,9 @@ int machines__create_guest_kernel_maps(struct machines *machines)
+ 					 namelist[i]->d_name);
+ 				continue;
+ 			}
+-			sprintf(path, "%s/%s/proc/kallsyms",
+-				symbol_conf.guestmount,
+-				namelist[i]->d_name);
++			snprintf(path, sizeof(path), "%s/%s/proc/kallsyms",
++				 symbol_conf.guestmount,
++				 namelist[i]->d_name);
+ 			ret = access(path, R_OK);
+ 			if (ret) {
+ 				pr_debug("Can't access file %s\n", path);
 -- 
 2.53.0
 
