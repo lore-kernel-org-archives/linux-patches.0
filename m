@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A793C10A7;
-	Tue, 21 Jul 2026 21:34:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F6843303D;
+	Tue, 21 Jul 2026 21:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669691; cv=none; b=nzmjd8i6hBfM2WnEMieeGurOCC9aUxyupnVUC328QLY8rfBlRtKm+Hag/O1PqdmnGmD+VOFI6juQyMlmtZ2Aarc//u7vk3fzqkv60zn7KHoPDpT7HoEWqbeni6HLEsfymxS/m/w6GUaCD0oMkIjgE8sxggzxJM+oG8bdXOgPUkg=
+	t=1784669692; cv=none; b=EhATkMxTSbGPFmfx7eQNcwhjrCi4fe2Jf9gaUmqvWXxXobXPtO2A6zXp69DytideAC0ZAX/rZqffHA2gpVwx4/SHfClUGHJk/wA6kQxonjwtAf5BVfQWUfBvFQLgC56rrhxqG/ibTuSYq0gpUDTbtJFHeg31Y89DtQSU21n6vow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669691; c=relaxed/simple;
-	bh=EkNbdte4UWbQQ4b06AlfaS6v4A7snTlqlvsLULgy6qA=;
+	s=arc-20240116; t=1784669692; c=relaxed/simple;
+	bh=mlNAhmF4JSOE/A4x9/nKJ+WUGZnmYm99nkGRkqNIxb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uXKcSZKIXy768h1+xbtO/09gzwLUM36HvcThgnodzJNqIh3VmFvWNSpwvP8GXjm92+PUB4JnBa6uurh0YFCsWsFvYYYHEO3TK21oudW+6vgbOqatrHKOTM2dHMPhTYW0CxEy2snSBz6Gq/0y7SaLsT9bBDx8mxuMhTRKfzceAmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SA0c9Lr2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MI01p50jeQLFQIKgTUz/o/TZCJmUVYwu36mDpC2kma129HC+uOLphc3C8wcVhgIOSyUL6eJ9dHGO11PyE3ZG18mXT9La2w5haerr2D2IKHrCAv/mfFl459E6Vm6Iqc7medhbdrFe4g7/7169r5D03RM6okPN+d6MlWZWIy59dfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hLkScKhG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SA0c9Lr2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149CB1F000E9;
-	Tue, 21 Jul 2026 21:34:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hLkScKhG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAEE01F00A3A;
+	Tue, 21 Jul 2026 21:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669687;
-	bh=5agEpWOOWZ/ZfDOv35jm/13UnsZ65lycpDd5/6OtbAQ=;
+	s=korg; t=1784669690;
+	bh=CeDOkGjcZFk/8vfEpgJUIlXfeMHADloJfSQviHgR+Fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SA0c9Lr2O+ftn+w+DQ+tHboGRAW9SwzCry7fRizMT5cbb2dpB0tjtI3JRfkNdHXFA
-	 A6JE3llVtzEMCERUWCvLs2u/t8frU1XbnH6n1lP2+ebVapeVKkuSMMgxY40cdrSUCI
-	 8U/ZKLdk43xIKJXOyPANMqyHv/ydhmtwacWwdtNU=
+	b=hLkScKhGDAn4HQ5d76O4MnCGW/rbu43ps+pWd0UkuZxWuUMY+qrFDtBYqR6CbeQ+u
+	 FT9IsnKI5MqVN9SE11UHgPc4sEPpJSejI4x7VOLnbfnh4mZuMSbHDlkgAPCyg6w48V
+	 +wlxEb1wPvjQvYPfz2b0HzTiNg3gPdegXLVsqP1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0647/1067] tracing: probes: fix typo in a log message
-Date: Tue, 21 Jul 2026 17:20:48 +0200
-Message-ID: <20260721152439.066273895@linuxfoundation.org>
+Subject: [PATCH 6.1 0648/1067] spi: sh-msiof: abort transfers when reset times out
+Date: Tue, 21 Jul 2026 17:20:49 +0200
+Message-ID: <20260721152439.087655697@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,35 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 72c8646956ffc8050bb8be5988a0f28fc37e1ac4 ]
+[ Upstream commit 6dbaa4d288432c697cea47028480481b8b29bd6a ]
 
-Fix a typo ("Invalid $-variable") in a log message.
+sh_msiof_spi_reset_regs() asserts TX/RX reset and polls until the reset
+bits clear, but the poll result is ignored. sh_msiof_transfer_one() can
+therefore continue programming a transfer after the controller did not
+leave reset.
 
-Link: https://lore.kernel.org/all/20260507081041.885781-4-martin@kaiser.cx/
+Return the reset poll result from the helper and abort the transfer on
+timeout, matching the existing transfer path's error-return style.
 
-Fixes: ab105a4fb894 ("tracing: Use tracing error_log with probe events")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: fedd6940682a ("spi: sh-msiof: Add reset of registers before starting transfer")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260623135834.55442-1-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_probe.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-sh-msiof.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/trace/trace_probe.h b/kernel/trace/trace_probe.h
-index eef819796fceb5..aef19096b4dd03 100644
---- a/kernel/trace/trace_probe.h
-+++ b/kernel/trace/trace_probe.h
-@@ -423,7 +423,7 @@ extern int traceprobe_define_arg_fields(struct trace_event_call *event_call,
- 	C(RETVAL_ON_PROBE,	"$retval is not available on probe"),	\
- 	C(BAD_STACK_NUM,	"Invalid stack number"),		\
- 	C(BAD_ARG_NUM,		"Invalid argument number"),		\
--	C(BAD_VAR,		"Invalid $-valiable specified"),	\
-+	C(BAD_VAR,		"Invalid $-variable specified"),	\
- 	C(BAD_REG_NAME,		"Invalid register name"),		\
- 	C(BAD_MEM_ADDR,		"Invalid memory address"),		\
- 	C(BAD_IMM,		"Invalid immediate value"),		\
+diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
+index 374697b2d60611..94f2e07065b70d 100644
+--- a/drivers/spi/spi-sh-msiof.c
++++ b/drivers/spi/spi-sh-msiof.c
+@@ -243,7 +243,7 @@ static irqreturn_t sh_msiof_spi_irq(int irq, void *data)
+ 	return IRQ_HANDLED;
+ }
+ 
+-static void sh_msiof_spi_reset_regs(struct sh_msiof_spi_priv *p)
++static int sh_msiof_spi_reset_regs(struct sh_msiof_spi_priv *p)
+ {
+ 	u32 mask = SICTR_TXRST | SICTR_RXRST;
+ 	u32 data;
+@@ -252,8 +252,8 @@ static void sh_msiof_spi_reset_regs(struct sh_msiof_spi_priv *p)
+ 	data |= mask;
+ 	sh_msiof_write(p, SICTR, data);
+ 
+-	readl_poll_timeout_atomic(p->mapbase + SICTR, data, !(data & mask), 1,
+-				  100);
++	return readl_poll_timeout_atomic(p->mapbase + SICTR, data,
++					 !(data & mask), 1, 100);
+ }
+ 
+ static const u32 sh_msiof_spi_div_array[] = {
+@@ -927,7 +927,9 @@ static int sh_msiof_transfer_one(struct spi_controller *ctlr,
+ 	int ret;
+ 
+ 	/* reset registers */
+-	sh_msiof_spi_reset_regs(p);
++	ret = sh_msiof_spi_reset_regs(p);
++	if (ret)
++		return ret;
+ 
+ 	/* setup clocks (clock already enabled in chipselect()) */
+ 	if (!spi_controller_is_slave(p->ctlr))
 -- 
 2.53.0
 
