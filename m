@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10AF8415F3F;
-	Tue, 21 Jul 2026 18:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F043B46E01C;
+	Tue, 21 Jul 2026 18:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656993; cv=none; b=cw2mK0slsk1BGGiuXKS/SE89fIpfE6EKnCCNWqFVWlXUfPspIQ9go41kBeTwt3EEaL58CINi8nnBD1l2SM/v9m6/OCvhmrBF2+0Pf2N7JAarjYkT/3OcvHFgg9m8j62bHnD8Ji/DzOkuMOyCknZtbTnEGuPRl0wwdtqECNFH2Ms=
+	t=1784656996; cv=none; b=BXl7vX0STF3weY3dEGoA/aobE7gMDUvjbq38fUmYu953s1P9MaP/eufH9FR8D77KMymfxkAd36hMU1ci4Dzx6AbCJ/PvaWC180EHvRSaTiHpFLrug+bE2jvDCFPD+u3emB4AWGGBEkX3H3n40r2EW8skahycvkiq5cBoFXcZ33U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656993; c=relaxed/simple;
-	bh=1tG8Orz9OQC58UJv3Df8rT/QdFNvoyBK6iSbPiNa+uY=;
+	s=arc-20240116; t=1784656996; c=relaxed/simple;
+	bh=rj5Zk0UQtpQP/wnTUr/wiC5OIrUTjiNDS29T2FurIqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MsLDa1Hz+kT1rWJhqJV/xYyjn+sh18FakDnrPzBblqkRpdFcR7z3i2TgJmFfxtGmZFGkxFSAjASn2qUrrOoqfe3DRy3g3m0JQaIuUcev41/aoaiZI+BowKUvJxJvrNPGN+2NQ52AR/zJrBsA7DTHS8e00T7hqqIJAhvXCMOkxVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UF5xJo0r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dWlLttsI8GS03TNDs1ZkECO/U7H2Z3IaLl9fVAwdu87sQiC3ocph0V5YdW0OpPjGxORhGnuVc/45smf/GLBZFCkiwsTPTHxfS5pZm9E27MxiV3wXiV4CMDQ8rI0N4PboYVYF61fkZaOsChFXN8Ju9bMtH0NwKtDY4PgBCS9WM/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rjXpY8oF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UF5xJo0r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70CEC1F000E9;
-	Tue, 21 Jul 2026 18:03:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rjXpY8oF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C551F000E9;
+	Tue, 21 Jul 2026 18:03:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656992;
-	bh=lTa9z1sEIGwa38vNttPYNnZKI9kU0cNM/raC9+J53mE=;
+	s=korg; t=1784656994;
+	bh=YmIkCupa40mPalB1PoDm7tkDod0RoKPvbXwjEbuEoAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UF5xJo0robdBTWH6vHelO5vS4FUrY1Nd1cHkSuASivt0J4dLeqq42uLTLr9ZPjdAM
-	 jX2zOC5dkNr9aAq9csbXnCDzkhw7LUZ65DxVjaduabxcOTrhx9q4nuJKkVrAKqXoic
-	 oafwwH/EYWg/b9y3ZYI5AIY3VxqQcVgsfZzj9dUw=
+	b=rjXpY8oFwYc2O1nDimeGVkxRE5YUP3mgUx4E12znPDSN6U2+nDQKkYLMRf4k7Utac
+	 7Xjtc0cla3T1aznXRgPzAD2mbjNDrglZBmym9hpkcYURKCk5GDF9IsjZ/1yobZfj2x
+	 UIxb6JtKJQcge5H5soNvTYwXjCWPALGRMbpLpBRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Jie <jie.luo@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	George Moussalem <george.moussalem@outlook.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0595/1611] clk: qcom: cmnpll: Account for reference clock divider
-Date: Tue, 21 Jul 2026 17:11:51 +0200
-Message-ID: <20260721152528.768598543@linuxfoundation.org>
+Subject: [PATCH 6.18 0596/1611] phy: phy-can-transceiver: Check driver match and driver data against NULL
+Date: Tue, 21 Jul 2026 17:11:52 +0200
+Message-ID: <20260721152528.792188277@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,64 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luo Jie <jie.luo@oss.qualcomm.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 88c543fff756450bcd04ec4560c4440be36c9e75 ]
+[ Upstream commit ebee9004cc0200b2b708ebf7ac625d35c71c049f ]
 
-The clk_cmn_pll_recalc_rate() function must account for the reference clock
-divider programmed in CMN_PLL_REFCLK_CONFIG. Without this fix, platforms
-with a reference divider other than 1 calculate incorrect CMN PLL rates.
-For example, on IPQ5332 where the reference divider is 2, the computed rate
-becomes twice the actual output.
+Every platform driver can be forced to match a device that doesn't
+match its list of device IDs because of device_match_driver_override()
+so platform drivers that rely on the existence of a device's driver
+data need to verify its presence.
 
-Read CMN_PLL_REFCLK_DIV and divide the parent rate by this value before
-applying the 2 * FACTOR scaling. This yields the correct rate calculation:
-rate = (parent_rate / ref_div) * 2 * factor.
+Accordingly, add requisite match and driver data checks against NULL
+to the driver where they are missing.
 
-Maintain backward compatibility with earlier platforms (e.g. IPQ9574,
-IPQ5424, IPQ5018) that use ref_div = 1.
-
-Fixes: f81715a4c87c ("clk: qcom: Add CMN PLL clock controller driver for IPQ SoC")
-Signed-off-by: Luo Jie <jie.luo@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Tested-by: George Moussalem <george.moussalem@outlook.com>
-Link: https://lore.kernel.org/r/20260106-qcom_ipq5332_cmnpll-v2-1-f9f7e4efbd79@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: a4a86d273ff1 ("phy: phy-can-transceiver: Add support for generic CAN transceiver driver")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20260513220336.369628-2-andriy.shevchenko@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/ipq-cmn-pll.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/phy/phy-can-transceiver.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/clk/qcom/ipq-cmn-pll.c b/drivers/clk/qcom/ipq-cmn-pll.c
-index dafbf57320480c..369798d1ce4279 100644
---- a/drivers/clk/qcom/ipq-cmn-pll.c
-+++ b/drivers/clk/qcom/ipq-cmn-pll.c
-@@ -185,7 +185,7 @@ static unsigned long clk_cmn_pll_recalc_rate(struct clk_hw *hw,
- 					     unsigned long parent_rate)
- {
- 	struct clk_cmn_pll *cmn_pll = to_clk_cmn_pll(hw);
--	u32 val, factor;
-+	u32 val, factor, ref_div;
+diff --git a/drivers/phy/phy-can-transceiver.c b/drivers/phy/phy-can-transceiver.c
+index f59caff4b3d4c2..e09ce1a86f5a4e 100644
+--- a/drivers/phy/phy-can-transceiver.c
++++ b/drivers/phy/phy-can-transceiver.c
+@@ -122,6 +122,9 @@ static int can_transceiver_phy_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
  
- 	/*
- 	 * The value of CMN_PLL_DIVIDER_CTRL_FACTOR is automatically adjusted
-@@ -193,8 +193,15 @@ static unsigned long clk_cmn_pll_recalc_rate(struct clk_hw *hw,
- 	 */
- 	regmap_read(cmn_pll->regmap, CMN_PLL_DIVIDER_CTRL, &val);
- 	factor = FIELD_GET(CMN_PLL_DIVIDER_CTRL_FACTOR, val);
-+	if (WARN_ON(factor == 0))
-+		factor = 1;
- 
--	return parent_rate * 2 * factor;
-+	regmap_read(cmn_pll->regmap, CMN_PLL_REFCLK_CONFIG, &val);
-+	ref_div = FIELD_GET(CMN_PLL_REFCLK_DIV, val);
-+	if (WARN_ON(ref_div == 0))
-+		ref_div = 1;
+ 	match = of_match_node(can_transceiver_phy_ids, pdev->dev.of_node);
++	if (!match || !match->data)
++		return -ENODEV;
 +
-+	return div_u64((u64)parent_rate * 2 * factor, ref_div);
- }
+ 	drvdata = match->data;
  
- static int clk_cmn_pll_determine_rate(struct clk_hw *hw,
+ 	mux_state = devm_mux_state_get_optional(dev, NULL);
 -- 
 2.53.0
 
