@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483623EEAC7;
-	Tue, 21 Jul 2026 19:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952313EEAC7;
+	Tue, 21 Jul 2026 19:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661411; cv=none; b=R9OqQaXlWRPfLcnYbatCGpjgND7u7ne4RgE3L8w5EVBNCEPyAyiYNIEOo1sGgZMoHWMkt0bTDMG8g5G36lQWxo+7ochIwdjUKrctrut4T6CAgal2nbU69hbanGmTHrIpTkenCjLSxZgAj0qI6E4t+3EDvd1VeNYbhEfdsQax6ZE=
+	t=1784661413; cv=none; b=BlNy064brLcCNktGmlgA114Z1VQ/9cx3t/iqRFyTwqRw512c3KdqtScc764nTA0CJmo7aZDiTMLjfP8CYUpYCSxiYyqDhhZ2R0OHiS62Hobgqetmyi8b0wmi56wCbyho1ug5n9hyQHtcBaciXkX1cjLO9oV5OgtgAIwhU9r2ijE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661411; c=relaxed/simple;
-	bh=72KcrDte+CIFcvGSxP0EhSawHLrq6HFw5psQYjx+sxY=;
+	s=arc-20240116; t=1784661413; c=relaxed/simple;
+	bh=5BvU8D8HJw/b4z3AxvQw35SofNl3+Uy8lqQhqnbilcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pCraj5+8mcC9h5QO2Vpjo00x3hXYm7a/AtDN3C5g6pVOspHEWqDq9Wq6gvJA80+g3KPwmxDW1RvTGwnk7hbCD66fQ/VcVdqP55sNhIb+uHhkQ/RebvpiQFHyMxWOmBfalxUceNpBet0jdRPwsim1pXJ2bMY87chfF4hcv/f4RHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vkxED4mY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lPgyIO+3aIi1JvZIMT6dYvK7QqhkXXdAdFGxV6rhf0HUEIzOsuOfmBXeD8/yBGGAgoj4XCeDTUBMirNjrI+ov8DsuXNSeANz9tSqNvTN0Htpd1UaAWLWPCXE+aroTCO7CaQb3wrmDUmfSrCI700orpaAd53h/HpQgtkhEG1a+qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LgWvpV7E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vkxED4mY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5293A1F00A3A;
-	Tue, 21 Jul 2026 19:16:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LgWvpV7E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFFD51F000E9;
+	Tue, 21 Jul 2026 19:16:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661409;
-	bh=cHAd9Nfw/CEkfg1hgS4462q+HY7YMGxPJU6OprQSX8k=;
+	s=korg; t=1784661412;
+	bh=sGy4nuZ+SE41+QyRchlhu8DH64adHvT5VB/1M6Rsm2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vkxED4mYFiSCWQwGP4rubRrdx24adl1TlnHqoKvpsNiRcm56sohvqV9x8/5Y6kVrf
-	 ruMH/MAh6ptS6/m2ilroSGw13JWIidcmPd0wNxljXsFGZxu4vRw7biEixRvXIf5PX9
-	 yB+aWMcg5Me4qRrhzk7tT2M5JcQU/LhB+MmLTxJg=
+	b=LgWvpV7E7CI/hXCVoRaJ8SOY9iMeMMXaMuJHqqH56xdLy3mY//QMqZALz9SUcrBid
+	 nbt3CqFZOrI04REOsa8ZTYt0ZmvN6hFKC/yNDVLIRz1KHkNbQyi+0SnAqGA058F4lA
+	 MyhlEpoOZaGPIMyVqPGOZOitVbvm//aiogZI4T10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+42525d636f430fd5d983@syzkaller.appspotmail.com,
-	Ian Bridges <icb@fastmail.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 0057/1276] fbcon: fix NULL pointer dereference for a console without vc_data
-Date: Tue, 21 Jul 2026 17:08:20 +0200
-Message-ID: <20260721152447.359445911@linuxfoundation.org>
+	Chen Ni <nichen@iscas.ac.cn>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0058/1276] clocksource/drivers/sun5i: Handle error returns from devm_reset_control_get_optional_exclusive()
+Date: Tue, 21 Jul 2026 17:08:21 +0200
+Message-ID: <20260721152447.381350127@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,61 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-commit 5fae9a928482d4845bca169a3a098789203a1ca4 upstream.
+[ Upstream commit fed9f727cc3f91dde8278961269419083502b40e ]
 
-fbcon_new_modelist() runs when a framebuffer's modelist changes. For each
-console mapped to it with fb_display[i].mode set, it reads vc_cons[i].d and
-passes the vc_num to fbcon_set_disp(). This assumes a console with a mode
-set has a vc_data, but it can be NULL. fbcon_set_disp() sets
-fb_display[i].mode before it checks vc_data, and fbcon_deinit() leaves the
-mode set after the vc_data is freed. fbcon_new_modelist() then dereferences
-the NULL vc_data.
+The devm_reset_control_get_optional_exclusive() function may return an
+ERR_PTR in case of genuine reset control acquisition errors, not just
+NULL which indicates the legitimate absence of an optional reset.
 
-Keep fb_display[i].mode set only while the console has a vc_data. Check
-vc_data before setting the mode in fbcon_set_disp(), and clear the mode in
-fbcon_deinit(). The existing mode check in fbcon_new_modelist() then skips
-such consoles.
+Add an IS_ERR() check after the call in sun5i_timer_probe(). On error,
+return the error code to ensure proper failure handling rather than
+proceeding with invalid pointers.
 
-Reported-by: syzbot+42525d636f430fd5d983@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=42525d636f430fd5d983
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7e5bac610d2f ("clocksource/drivers/sun5i: Convert to platform device driver")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Acked-by: Chen-Yu Tsai <wens@kernel.org>
+Link: https://patch.msgid.link/20260205084037.3661261-1-nichen@iscas.ac.cn
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbcon.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/clocksource/timer-sun5i.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -1201,6 +1201,7 @@ static void fbcon_deinit(struct vc_data
- 	int idx;
+diff --git a/drivers/clocksource/timer-sun5i.c b/drivers/clocksource/timer-sun5i.c
+index 0d229a9058dad8..706a12a5759829 100644
+--- a/drivers/clocksource/timer-sun5i.c
++++ b/drivers/clocksource/timer-sun5i.c
+@@ -284,6 +284,9 @@ static int sun5i_timer_probe(struct platform_device *pdev)
+ 	}
  
- 	fbcon_free_font(p);
-+	p->mode = NULL;
- 	idx = con2fb_map[vc->vc_num];
+ 	rstc = devm_reset_control_get_optional_exclusive(dev, NULL);
++	if (IS_ERR(rstc))
++		return dev_err_probe(dev, PTR_ERR(rstc),
++				     "failed to get reset\n");
+ 	if (rstc)
+ 		reset_control_deassert(rstc);
  
- 	if (idx == -1)
-@@ -1371,14 +1372,14 @@ static void fbcon_set_disp(struct fb_inf
- 
- 	p = &fb_display[unit];
- 
--	if (var_to_display(p, var, info))
--		return;
--
- 	vc = vc_cons[unit].d;
- 
- 	if (!vc)
- 		return;
- 
-+	if (var_to_display(p, var, info))
-+		return;
-+
- 	default_mode = vc->vc_display_fg;
- 	svc = *default_mode;
- 	t = &fb_display[svc->vc_num];
+-- 
+2.53.0
+
 
 
