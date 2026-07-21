@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9692D3B47E5;
-	Tue, 21 Jul 2026 20:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECB63B2FC0;
+	Tue, 21 Jul 2026 20:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665980; cv=none; b=RB6XQi8o4pBbRCrPxsnEyeMzAuE/D4eMntr9vmms73u3XKPwJoF/0dR+Xl+SsGY/Ub50FeG7CopEyRs2EOTUyVI+PeolNCCyPMxoA3ROWSpK7QbWOUMykOFerV9bDxYuDMnqPcQceT6+wjwDkO+EMBp/ZaDfoRBVjuKFGxL98zQ=
+	t=1784665983; cv=none; b=Izogd4mKGqVDdpGpJChiOcz3coCkSIfsxTBy/TXqcRRGPPOa1R9D3TRzlBJZvPVbY7QqTkZ+rJrI8hECKUgYVuD2a4hOwGyz2Uej8AzlOHI74G2mW1wmbmafNQ2JJue5hvi7lxUN3NktNywIC2VhOe0ohF13te2p8GK0u4PCZUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665980; c=relaxed/simple;
-	bh=lyatyY0YHpDAUNl0AgYWy5k+mO6SMgs7MPE6yzJ6pks=;
+	s=arc-20240116; t=1784665983; c=relaxed/simple;
+	bh=+hVd6tJ1grhqkAP3f0BOVnvskNjfstDXfCusfwpNJ2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MRZSUufYeFNMmO9q2B1XGSNyyzcddIr0ZZYYwLgLDHzb5tV3vykluTYY55Zn/YNT3R7ay6kbsexwYtuDZWlkyduXAhvMgRVkQDDDZ4DvedwTuNXn+w207mNuT1j/dA7AJnE2zu4N/k+XbwbyKrsiTaOZsTMVoA4CoxpPhyhJyPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P2EWrXRB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CPM6iwEgKvzSEMeAzrdFdEpqn47jUDtS21cYRegU7qB3jmCBhcXuIqjypFOUj3OMa+9HenqlafJ0YeEozqoekak3t9kV2m2rZ6VozVvCvt/fZlftPmY0sr9zLqS9NxlLudomVgke72tWDuezeE8ouPVGzDEj3+hcHBpaU1D4LYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2kdkNp6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2EWrXRB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081E81F000E9;
-	Tue, 21 Jul 2026 20:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2kdkNp6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C06B1F000E9;
+	Tue, 21 Jul 2026 20:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665979;
-	bh=o2ELDb3MPUl8zAd90FNYSQL+iAkU4dcM8stOQCAjyLo=;
+	s=korg; t=1784665982;
+	bh=K7Ug9gB79yulnpLCizYZEsQM3zAvN7+hJ+nug+zvVUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P2EWrXRBt/ONr4SHDBf2oOD+j04y0tr0nQ5MZGh2b2UJSvZIBQdU/IKXG4p9k3JDv
-	 +aBx9Uf/59U2YfHg1MnDVREg3BHbBZ+8YC3YQYExz3PguSmAFaBaEPWf/IKgFDWfvb
-	 EWWF8ENTEa5biSgojxl33lSQfcJpz6ZeGGgxPXrs=
+	b=d2kdkNp6dIRwrWeyhmvA/TOWeOzGSxAXZY+egUywzvwdPKqHOnP803QA9hujv7gr5
+	 23IL08OxxStwRo6Gjt3XGcYtHYPPEzMHNo4WfONPqcA1r3LS3Cxs+WkDUEJ2Z01KKf
+	 2gI2it+EPCbwddrEDIm/csBiW0iVp0tN2bTkh0Ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Renjiang Han <renjiang.han@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0466/1266] media: qcom: venus: relax encoder frame/blur step size on v6
-Date: Tue, 21 Jul 2026 17:15:03 +0200
-Message-ID: <20260721152452.262444003@linuxfoundation.org>
+Subject: [PATCH 6.6 0457/1266] ocfs2: kill osb->system_file_mutex lock
+Date: Tue, 21 Jul 2026 17:14:54 +0200
+Message-ID: <20260721152452.061777729@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,73 +58,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Renjiang Han <renjiang.han@oss.qualcomm.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit c53e0550288b2e08b984b24035c471941b7820c7 ]
+[ Upstream commit f5b1910e23f1233c8d4185268b2e659df2bc5dbf ]
 
-Encoder HFI capabilities on v6 enforce a 16-pixel step for frame and blur
-dimensions, which does not reflect actual hardware requirements and can
-reject valid userspace configurations.
+Commit 43b10a20372d ("ocfs2: avoid system inode ref confusion by adding
+mutex lock") tried to avoid a refcount leak caused by allowing multiple
+threads to call igrab(inode).  But addition of osb->system_file_mutex made
+locking dependency complicated and is causing lockdep to warn about
+possibility of AB-BA deadlock.
 
-Relax the step size to 1 while leaving min/max limits unchanged.
+Since _ocfs2_get_system_file_inode() returns the same inode for the same
+input arguments, we don't need to serialize
+_ocfs2_get_system_file_inode().  What we need to make sure is that
+igrab(inode) is called for only once().  Therefore, replace
+osb->system_file_mutex with cmpxchg()-based locking.
 
-Fixes: 869d77e706290 ("media: venus: hfi_plat_v6: Populate capabilities for v6")
-Signed-off-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Link: https://lore.kernel.org/fea8d1fd-afb0-4302-a560-c202e2ef7afd@I-love.SAKURA.ne.jp
+Fixes: 43b10a20372d ("ocfs2: avoid system inode ref confusion by adding mutex lock")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Acked-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/qcom/venus/hfi_platform_v6.c  | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ fs/ocfs2/ocfs2.h   | 2 --
+ fs/ocfs2/super.c   | 2 --
+ fs/ocfs2/sysfile.c | 9 +++------
+ 3 files changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v6.c b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-index 4e8af645f8b95b..b5b769d735c1e7 100644
---- a/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-+++ b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-@@ -172,8 +172,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.codec = HFI_VIDEO_CODEC_HEVC,
- 	.domain = VIDC_SESSION_TYPE_ENC,
- 	.cap_bufs_mode_dynamic = true,
--	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 8192, 16},
--	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 8192, 16},
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 8192, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 8192, 1},
- 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 138240, 1},
- 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 160000000, 1},
- 	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
-@@ -194,8 +194,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.caps[19] = {HFI_CAPABILITY_RATE_CONTROL_MODES, 0x1000001, 0x1000005, 1},
- 	.caps[20] = {HFI_CAPABILITY_COLOR_SPACE_CONVERSION, 0, 2, 1},
- 	.caps[21] = {HFI_CAPABILITY_ROTATION, 1, 4, 90},
--	.caps[22] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 16},
--	.caps[23] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 16},
-+	.caps[22] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 1},
-+	.caps[23] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 1},
- 	.num_caps = 24,
- 	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_6 | HFI_HEVC_TIER_HIGH0},
- 	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_6 | HFI_HEVC_TIER_HIGH0},
-@@ -209,8 +209,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.codec = HFI_VIDEO_CODEC_VP8,
- 	.domain = VIDC_SESSION_TYPE_ENC,
- 	.cap_bufs_mode_dynamic = true,
--	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 4096, 16},
--	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 4096, 16},
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 4096, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 4096, 1},
- 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 36864, 1},
- 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 74000000, 1},
- 	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
-@@ -228,8 +228,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.caps[16] = {HFI_CAPABILITY_P_FRAME_QP, 0, 127, 1},
- 	.caps[17] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 2, 1},
- 	.caps[18] = {HFI_CAPABILITY_RATE_CONTROL_MODES, 0x1000001, 0x1000005, 1},
--	.caps[19] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 16},
--	.caps[20] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 16},
-+	.caps[19] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 1},
-+	.caps[20] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 1},
- 	.caps[21] = {HFI_CAPABILITY_COLOR_SPACE_CONVERSION, 0, 2, 1},
- 	.caps[22] = {HFI_CAPABILITY_ROTATION, 1, 4, 90},
- 	.num_caps = 23,
+diff --git a/fs/ocfs2/ocfs2.h b/fs/ocfs2/ocfs2.h
+index 5e3ebbab698ad1..e8b8262026c8a1 100644
+--- a/fs/ocfs2/ocfs2.h
++++ b/fs/ocfs2/ocfs2.h
+@@ -494,8 +494,6 @@ struct ocfs2_super
+ 	struct rb_root	osb_rf_lock_tree;
+ 	struct ocfs2_refcount_tree *osb_ref_tree_lru;
+ 
+-	struct mutex system_file_mutex;
+-
+ 	/*
+ 	 * OCFS2 needs to schedule several different types of work which
+ 	 * require cluster locking, disk I/O, recovery waits, etc. Since these
+diff --git a/fs/ocfs2/super.c b/fs/ocfs2/super.c
+index 18dba873a1633f..cc4bba65f15275 100644
+--- a/fs/ocfs2/super.c
++++ b/fs/ocfs2/super.c
+@@ -2053,8 +2053,6 @@ static int ocfs2_initialize_super(struct super_block *sb,
+ 	spin_lock_init(&osb->osb_xattr_lock);
+ 	ocfs2_init_steal_slots(osb);
+ 
+-	mutex_init(&osb->system_file_mutex);
+-
+ 	atomic_set(&osb->alloc_stats.moves, 0);
+ 	atomic_set(&osb->alloc_stats.local_data, 0);
+ 	atomic_set(&osb->alloc_stats.bitmap_data, 0);
+diff --git a/fs/ocfs2/sysfile.c b/fs/ocfs2/sysfile.c
+index 53a945da873bc0..b63af8d64904a2 100644
+--- a/fs/ocfs2/sysfile.c
++++ b/fs/ocfs2/sysfile.c
+@@ -98,11 +98,9 @@ struct inode *ocfs2_get_system_file_inode(struct ocfs2_super *osb,
+ 	} else
+ 		arr = get_local_system_inode(osb, type, slot);
+ 
+-	mutex_lock(&osb->system_file_mutex);
+ 	if (arr && ((inode = *arr) != NULL)) {
+ 		/* get a ref in addition to the array ref */
+ 		inode = igrab(inode);
+-		mutex_unlock(&osb->system_file_mutex);
+ 		BUG_ON(!inode);
+ 
+ 		return inode;
+@@ -112,11 +110,10 @@ struct inode *ocfs2_get_system_file_inode(struct ocfs2_super *osb,
+ 	inode = _ocfs2_get_system_file_inode(osb, type, slot);
+ 
+ 	/* add one more if putting into array for first time */
+-	if (arr && inode) {
+-		*arr = igrab(inode);
+-		BUG_ON(!*arr);
++	if (inode && arr && !*arr && !cmpxchg(&(*arr), NULL, inode)) {
++		inode = igrab(inode);
++		BUG_ON(!inode);
+ 	}
+-	mutex_unlock(&osb->system_file_mutex);
+ 	return inode;
+ }
+ 
 -- 
 2.53.0
 
