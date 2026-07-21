@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DC846A5E3;
-	Tue, 21 Jul 2026 15:51:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9FB366DA5;
+	Tue, 21 Jul 2026 15:51:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649116; cv=none; b=Qr3wdaYf+WVKELJb/cant2QtnzLQQHbgnoIIexGs7lgdnDoiJ2amEVFTs4Zu6i9BORbcEgiA+BhD8DanT036lrI05Xwfw8q/V/TCqMDLFhlqGk/SMqzlVZO4ZZoSrTmEYYVCzZJxLGi1lo+4K0mQcb1WgFQ+aw1qexaQAarLc6A=
+	t=1784649118; cv=none; b=EZTaUURZv59qcF+vnR4OCJcmr59BGzQjbYUE8BvdU/GEIup6Rhc37jtMEdEYTJQs4zrx2Yaze2EnXi1xmYeqiHRhokyt0XK9saaPS9jKeM0PFkB+mC7X6VA9FGghFn4xiKXH9aHlrOSwyfci82PBeUBzRCotNOTnYYUwyP0KMzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649116; c=relaxed/simple;
-	bh=ZDFdAnDE1iYzjAtTRo6SyidAu/0dq2hM40JZPHNgnek=;
+	s=arc-20240116; t=1784649118; c=relaxed/simple;
+	bh=EwQoE9kn3+sZmH9oAQ33gsIo6xrk5PUOpv6fyGSEJOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lMxyccVspLvNpW+F+MEg8aZMDGwvZmP/I+d8Z+xMPHk+zIRrbrSKWom8NRExSjngRvNgOphvVzFgdUOiEL/rrkbPEJZ7IEnE7NrLFTHZd+rlBCOx3DaB+gWc0kPVoKIsgmmTxYr/6HdwEWOoaUWd/sFWsSSO8bprHxdVSUbGpd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SWIRNmsQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZJ67oqPbutxBq+Oj0fz6soAIuGyKzParQsUBgbzd2EBDt7/ruwB+YKtiplG1wo48SoWAuolWExJMQW6Z0Ydo0OlZjFvf20c/O2vMLjyM1hM3h3gcNVO23A0uoqFDw3bczUP7NPfXHc+XRMGSz5pdrCudxEV0DaCQJ7szWV3Kyrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjATB22E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SWIRNmsQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE8951F000E9;
-	Tue, 21 Jul 2026 15:51:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjATB22E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554D41F00A3A;
+	Tue, 21 Jul 2026 15:51:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649113;
-	bh=liGxpdogfxNXuluJgSZADDv0mn6+5MFzeRk6UgURCvQ=;
+	s=korg; t=1784649115;
+	bh=mZAqdnmM72Ullz7iIGJRT64Z6bPjYwqAyg7fYChDl2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SWIRNmsQ9SRv+Ksx4rwo1Ia+TUGTpl/AHvdi2tAla5keUOPE6ghfl8q8NIA+TVfl4
-	 sO+PhOnZESSuTt2Sbc+Nw47e7S9DRFKjOP662sff+VNjhPd89UByDy5SXnmd80OI5J
-	 vhPUuqLIg2V6f5Qn37zx35GH4i9zy4Uknbr0YhRg=
+	b=JjATB22E0qbdYTChH5N+sffrNngtdPNljnlIqYOsJcnR12E5tib9DxKxeBay6RBkG
+	 TlcpAaipqH08bxLE6BE3WB8NHkkrva0p3Gs00UVq/JQYCrrBuBErJbWzvdkgWVErq4
+	 C5EGFomZFhuvh3g3+4WLIaueSuo5pb3QvwaG8zUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunxiang Li <Yunxiang.Li@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0453/2077] drm/amdgpu: set sub_block_index for mca ras sub-blocks
-Date: Tue, 21 Jul 2026 17:02:06 +0200
-Message-ID: <20260721152603.469488122@linuxfoundation.org>
+Subject: [PATCH 7.1 0412/2077] spi: atmel: fix DMA channel and bounce buffer leaks
+Date: Tue, 21 Jul 2026 17:01:25 +0200
+Message-ID: <20260721152602.451751934@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,75 +51,230 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunxiang Li <Yunxiang.Li@amd.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit baa286df5fb366e4aee5b747443dfc7194fdaa59 ]
+[ Upstream commit bd7e9843ec95bffe2643c901dd625f0bab32e639 ]
 
-The mca ras sub-blocks (mp0, mp1, mpio) all share the
-AMDGPU_RAS_BLOCK__MCA block id and are distinguished only by
-sub_block_index. The ras manager object for an mca block is selected
-with:
+The original code set use_dma to false when dma_alloc_coherent() for
+bounce buffers failed, but DMA channels acquired earlier via
+atmel_spi_configure_dma() were never freed.
 
-	con->objs[AMDGPU_RAS_BLOCK__LAST + head->sub_block_index]
+When devm_request_irq() or clk_prepare_enable() failed later in probe,
+the driver also did not release DMA channels or bounce buffers already
+allocated.
 
-Since the rework in commit 7f544c5488cf ("drm/amdgpu: Rework mca ras
-sw_init") moved the ras_comm setup into amdgpu_mca_mp*_ras_sw_init() but
-left sub_block_index unset, mp0/mp1/mpio all default to index 0 and
-collide on the same object slot. mp0 grabs the slot and creates its
-sysfs node first; mp1 (and mpio) then find the slot already in use, so
-amdgpu_ras_block_late_init() -> amdgpu_ras_sysfs_create() returns
--EINVAL:
+The out_free_dma error path released DMA channels but did not free the
+bounce buffers.
 
-  amdgpu: mca.mp1 failed to execute ras_block_late_init_default! ret:-22
-  amdgpu: amdgpu_ras_late_init failed -22
-  amdgpu: amdgpu_device_ip_late_init failed
-  amdgpu: Fatal error during GPU init
+Fix by moving bounce buffer allocation into atmel_spi_configure_dma()
+and registering the devres cleanup for DMA channels and bounce buffers.
 
-The error is currently masked because amdgpu_ras_late_init() does not
-check the return value of amdgpu_ras_block_late_init_default(), but it
-already leaves mp1/mpio without their sysfs nodes and becomes a fatal
-init failure as soon as that return value is honored.
-
-Restore the per-sub-block sub_block_index assignment so each mca
-sub-block maps to its own object slot.
-
-Fixes: 7f544c5488cf ("drm/amdgpu: Rework mca ras sw_init")
-Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: a9889ed62d06 ("spi: atmel: Implements transfers with bounce buffer")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260522-atmel-v3-1-23f8c6e6aa43@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spi-atmel.c | 133 ++++++++++++++++++++--------------------
+ 1 file changed, 68 insertions(+), 65 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c
-index 823ba17e32af4d..cc6d1a4e4c3afd 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c
-@@ -99,6 +99,7 @@ int amdgpu_mca_mp0_ras_sw_init(struct amdgpu_device *adev)
+diff --git a/drivers/spi/spi-atmel.c b/drivers/spi/spi-atmel.c
+index 42db85d7ff8e13..397bc819e7161e 100644
+--- a/drivers/spi/spi-atmel.c
++++ b/drivers/spi/spi-atmel.c
+@@ -559,6 +559,38 @@ static int atmel_spi_dma_slave_config(struct atmel_spi *as, u8 bits_per_word)
+ 	return err;
+ }
  
- 	strcpy(ras->ras_block.ras_comm.name, "mca.mp0");
- 	ras->ras_block.ras_comm.block = AMDGPU_RAS_BLOCK__MCA;
-+	ras->ras_block.ras_comm.sub_block_index = AMDGPU_RAS_MCA_BLOCK__MP0;
- 	ras->ras_block.ras_comm.type = AMDGPU_RAS_ERROR__MULTI_UNCORRECTABLE;
- 	adev->mca.mp0.ras_if = &ras->ras_block.ras_comm;
++static void atmel_spi_release_dma(void *data)
++{
++	struct spi_controller *host = data;
++	struct atmel_spi *as = spi_controller_get_devdata(host);
++	struct device *dev = &as->pdev->dev;
++
++	if (host->dma_tx) {
++		dma_release_channel(host->dma_tx);
++		host->dma_tx = NULL;
++	}
++
++	if (host->dma_rx) {
++		dma_release_channel(host->dma_rx);
++		host->dma_rx = NULL;
++	}
++
++	if (IS_ENABLED(CONFIG_SOC_SAM_V4_V5)) {
++		if (as->addr_tx_bbuf) {
++			dma_free_coherent(dev, SPI_MAX_DMA_XFER,
++					  as->addr_tx_bbuf,
++					  as->dma_addr_tx_bbuf);
++			as->addr_tx_bbuf = NULL;
++		}
++		if (as->addr_rx_bbuf) {
++			dma_free_coherent(dev, SPI_MAX_DMA_XFER,
++					  as->addr_rx_bbuf,
++					  as->dma_addr_rx_bbuf);
++			as->addr_rx_bbuf = NULL;
++		}
++	}
++}
++
+ static int atmel_spi_configure_dma(struct spi_controller *host,
+ 				   struct atmel_spi *as)
+ {
+@@ -569,7 +601,8 @@ static int atmel_spi_configure_dma(struct spi_controller *host,
+ 	if (IS_ERR(host->dma_tx)) {
+ 		err = PTR_ERR(host->dma_tx);
+ 		dev_dbg(dev, "No TX DMA channel, DMA is disabled\n");
+-		goto error_clear;
++		host->dma_tx = NULL;
++		return err;
+ 	}
  
-@@ -123,6 +124,7 @@ int amdgpu_mca_mp1_ras_sw_init(struct amdgpu_device *adev)
+ 	host->dma_rx = dma_request_chan(dev, "rx");
+@@ -580,26 +613,45 @@ static int atmel_spi_configure_dma(struct spi_controller *host,
+ 		 * requested tx channel.
+ 		 */
+ 		dev_dbg(dev, "No RX DMA channel, DMA is disabled\n");
+-		goto error;
++		host->dma_rx = NULL;
++		goto err_release_dma;
+ 	}
  
- 	strcpy(ras->ras_block.ras_comm.name, "mca.mp1");
- 	ras->ras_block.ras_comm.block = AMDGPU_RAS_BLOCK__MCA;
-+	ras->ras_block.ras_comm.sub_block_index = AMDGPU_RAS_MCA_BLOCK__MP1;
- 	ras->ras_block.ras_comm.type = AMDGPU_RAS_ERROR__MULTI_UNCORRECTABLE;
- 	adev->mca.mp1.ras_if = &ras->ras_block.ras_comm;
+ 	err = atmel_spi_dma_slave_config(as, 8);
+ 	if (err)
+-		goto error;
++		goto err_release_dma;
++
++	if (IS_ENABLED(CONFIG_SOC_SAM_V4_V5)) {
++		as->addr_tx_bbuf = dma_alloc_coherent(dev, SPI_MAX_DMA_XFER,
++						      &as->dma_addr_tx_bbuf,
++						      GFP_KERNEL | GFP_DMA);
++		if (!as->addr_tx_bbuf) {
++			err = -ENOMEM;
++			goto err_release_dma;
++		}
++
++		as->addr_rx_bbuf = dma_alloc_coherent(dev, SPI_MAX_DMA_XFER,
++						      &as->dma_addr_rx_bbuf,
++						      GFP_KERNEL | GFP_DMA);
++		if (!as->addr_rx_bbuf) {
++			err = -ENOMEM;
++			goto err_release_dma;
++		}
++	}
++
++	err = devm_add_action_or_reset(dev, atmel_spi_release_dma, host);
++	if (err)
++		return err;
  
-@@ -147,6 +149,7 @@ int amdgpu_mca_mpio_ras_sw_init(struct amdgpu_device *adev)
+ 	dev_info(&as->pdev->dev,
+-			"Using %s (tx) and %s (rx) for DMA transfers\n",
+-			dma_chan_name(host->dma_tx),
+-			dma_chan_name(host->dma_rx));
++		 "Using %s (tx) and %s (rx) for DMA transfers\n",
++		 dma_chan_name(host->dma_tx), dma_chan_name(host->dma_rx));
  
- 	strcpy(ras->ras_block.ras_comm.name, "mca.mpio");
- 	ras->ras_block.ras_comm.block = AMDGPU_RAS_BLOCK__MCA;
-+	ras->ras_block.ras_comm.sub_block_index = AMDGPU_RAS_MCA_BLOCK__MPIO;
- 	ras->ras_block.ras_comm.type = AMDGPU_RAS_ERROR__MULTI_UNCORRECTABLE;
- 	adev->mca.mpio.ras_if = &ras->ras_block.ras_comm;
+ 	return 0;
+-error:
+-	if (!IS_ERR(host->dma_rx))
+-		dma_release_channel(host->dma_rx);
+-	if (!IS_ERR(host->dma_tx))
+-		dma_release_channel(host->dma_tx);
+-error_clear:
+-	host->dma_tx = host->dma_rx = NULL;
++
++err_release_dma:
++	atmel_spi_release_dma(host);
++
+ 	return err;
+ }
  
+@@ -611,18 +663,6 @@ static void atmel_spi_stop_dma(struct spi_controller *host)
+ 		dmaengine_terminate_all(host->dma_tx);
+ }
+ 
+-static void atmel_spi_release_dma(struct spi_controller *host)
+-{
+-	if (host->dma_rx) {
+-		dma_release_channel(host->dma_rx);
+-		host->dma_rx = NULL;
+-	}
+-	if (host->dma_tx) {
+-		dma_release_channel(host->dma_tx);
+-		host->dma_tx = NULL;
+-	}
+-}
+-
+ /* This function is called by the DMA driver from tasklet context */
+ static void dma_callback(void *data)
+ {
+@@ -1585,30 +1625,6 @@ static int atmel_spi_probe(struct platform_device *pdev)
+ 		as->use_pdc = true;
+ 	}
+ 
+-	if (IS_ENABLED(CONFIG_SOC_SAM_V4_V5)) {
+-		as->addr_rx_bbuf = dma_alloc_coherent(&pdev->dev,
+-						      SPI_MAX_DMA_XFER,
+-						      &as->dma_addr_rx_bbuf,
+-						      GFP_KERNEL | GFP_DMA);
+-		if (!as->addr_rx_bbuf) {
+-			as->use_dma = false;
+-		} else {
+-			as->addr_tx_bbuf = dma_alloc_coherent(&pdev->dev,
+-					SPI_MAX_DMA_XFER,
+-					&as->dma_addr_tx_bbuf,
+-					GFP_KERNEL | GFP_DMA);
+-			if (!as->addr_tx_bbuf) {
+-				as->use_dma = false;
+-				dma_free_coherent(&pdev->dev, SPI_MAX_DMA_XFER,
+-						  as->addr_rx_bbuf,
+-						  as->dma_addr_rx_bbuf);
+-			}
+-		}
+-		if (!as->use_dma)
+-			dev_info(host->dev.parent,
+-				 "  can not allocate dma coherent memory\n");
+-	}
+-
+ 	if (as->caps.has_dma_support && !as->use_dma)
+ 		dev_info(&pdev->dev, "Atmel SPI Controller using PIO only\n");
+ 
+@@ -1668,13 +1684,10 @@ static int atmel_spi_probe(struct platform_device *pdev)
+ out_free_dma:
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
+-
+-	if (as->use_dma)
+-		atmel_spi_release_dma(host);
+-
+ 	spi_writel(as, CR, SPI_BIT(SWRST));
+ 	spi_writel(as, CR, SPI_BIT(SWRST)); /* AT91SAM9263 Rev B workaround */
+-	clk_disable_unprepare(as->gclk);
++	if (as->gclk)
++		clk_disable_unprepare(as->gclk);
+ out_disable_clk:
+ 	clk_disable_unprepare(clk);
+ out_free_irq:
+@@ -1695,18 +1708,8 @@ static void atmel_spi_remove(struct platform_device *pdev)
+ 	spi_unregister_controller(host);
+ 
+ 	/* reset the hardware and block queue progress */
+-	if (as->use_dma) {
++	if (as->use_dma)
+ 		atmel_spi_stop_dma(host);
+-		atmel_spi_release_dma(host);
+-		if (IS_ENABLED(CONFIG_SOC_SAM_V4_V5)) {
+-			dma_free_coherent(&pdev->dev, SPI_MAX_DMA_XFER,
+-					  as->addr_tx_bbuf,
+-					  as->dma_addr_tx_bbuf);
+-			dma_free_coherent(&pdev->dev, SPI_MAX_DMA_XFER,
+-					  as->addr_rx_bbuf,
+-					  as->dma_addr_rx_bbuf);
+-		}
+-	}
+ 
+ 	spin_lock_irq(&as->lock);
+ 	spi_writel(as, CR, SPI_BIT(SWRST));
 -- 
 2.53.0
 
