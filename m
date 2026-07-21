@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44353E3DB4;
-	Tue, 21 Jul 2026 17:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771E140244F;
+	Tue, 21 Jul 2026 17:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653936; cv=none; b=lQrigCmNf9BQW3PK7DvHNo1bkIn3+DB2HcSA6/aVyoRWuz2TKD0gDK7X2x/mn4gCwCIsTcdAPuTODWdsD3SnB54W8N3l0taqpAJ4i6UKWUBYSzdUUn610KfiLlVwJ7BgRIL0jWr5ir+6xMMa88nfHiB4pqj7/abwXGhxYPczKCU=
+	t=1784653939; cv=none; b=rlXRf2/bggJ/gosEyLjxNvUX91CSdk5THVX7GK45wDnW+XmJ14U3q6SseZprnmONqnSKT0c4HzcHyFrMLOcYsg+fkEYE+1ez0LqvFilnX05Ou56noZjnpQqU6j7aH7odo6lCa4ralXgE1EIeaBZIoqvjkri6hiI8nLnxvpi+OF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653936; c=relaxed/simple;
-	bh=ztATlJ3tw/HAnLGQovu4NJqhNL0H89YRvLNxyhSEinA=;
+	s=arc-20240116; t=1784653939; c=relaxed/simple;
+	bh=9iPSevNYP/RFZwm0snt9x9EDyZwovUDav0q6k5cPNAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HfcRAffhOTOpzYekx+bc+RZT68Z3qiaGd2tUWVr0ymO1+H8nW5aH6GcFOy6F5kwrR+vTHg8W3rjrAQYnBXGbyZaZMB1dnK5mQ8Uqj4fUBXWO7A7R4vj83ZVjtNo41Pa+KkQQy8eLEJOFLZWuXTG1rnqfxub4PfPrkpE7dBDTfs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e0a8KXhe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rnxsm+0VakXW+qGF+Du3HZoQGSpJIhj73EtPfoodoX7m7xzbDhVD7nUV58upvdzH+8oyBWPkNKmpbxsLeLhfRbOjrTBCASd7I5PyEwjGGAKPIjoYZpden0f3ZBswgieHms04zmbGtsPbaiPtp6p8opfY/1WExoKT1jYMNx5TQ1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gE7PnDfo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e0a8KXhe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F6A1F000E9;
-	Tue, 21 Jul 2026 17:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gE7PnDfo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0DF1F000E9;
+	Tue, 21 Jul 2026 17:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653935;
-	bh=OztLS0rAj7uG6zPgKO79TVf2qUM6PDYP4PIVzgvokY0=;
+	s=korg; t=1784653938;
+	bh=G/LgwS791/8jaaaWSRDfabPaDVmWUEODygDUa+Jh6qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e0a8KXhe6zQDNwO7M3l9Ao88T9yn+fhIU+UDmbTEkrBzjD04rZAuSmGfAZiV5Uma2
-	 AqRW1gt5KuKB5Hc5ggjMbJGKn2YX+Ijj39NjUsQlY8juMyCanS45K2YpXQ1tqGfSS0
-	 aTS37ABm/yTw8rntwrvi7r4c3gQIzWW61p9awi1k=
+	b=gE7PnDfodhqVIR3A5NHpoRvZUR1Y7ERh09JoHsvoLtEpwQw2bymIg8ezT1P5Zxj4b
+	 yzrm0FUSo1pDZ6668G9Lrm4/cJpLEgVYfcb0O7Dl1O105JR6aPP4+tqMbYFIf01TA8
+	 jKm2siFEf9fCIDnc1wHi11UFev0+UgYQiWmnyS9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vincent Donnefort <vdonnefort@google.com>,
 	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1513/2077] tracing/remotes: Fix struct_len in trace_remote_alloc_buffer()
-Date: Tue, 21 Jul 2026 17:19:46 +0200
-Message-ID: <20260721152628.468669105@linuxfoundation.org>
+Subject: [PATCH 7.1 1514/2077] ring-buffer: Allow sparse CPU masks in ring_buffer_desc()
+Date: Tue, 21 Jul 2026 17:19:47 +0200
+Message-ID: <20260721152628.493457167@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,68 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Vincent Donnefort <vdonnefort@google.com>
 
-[ Upstream commit d471d4f86e8689ad15309e49da8e5e4e9bb9ce87 ]
+[ Upstream commit 601ddaceb861be7eb557278109966320a6f3478c ]
 
-Pre-calculate desc->struct_len up-front in trace_remote_alloc_buffer()
-with trace_buffer_desc_size() to fix double-counting.
+No user currently relies on sparse CPU masks, but the descriptor logic already
+supports them via linear fallback. Remove the arbitrary limitation.
 
-While at it, use the accessor __first_ring_buffer_desc().
-
-Link: https://patch.msgid.link/20260709160017.1729517-3-vdonnefort@google.com
-Fixes: 96e43537af54 ("tracing: Introduce trace remotes")
+Link: https://patch.msgid.link/20260709160017.1729517-4-vdonnefort@google.com
+Fixes: 2e67fabd8b77 ("ring-buffer: Introduce ring-buffer remotes")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
 Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_remote.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ kernel/trace/ring_buffer.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/kernel/trace/trace_remote.c b/kernel/trace/trace_remote.c
-index 4895241bf8ff0c..6dde6bdcbde702 100644
---- a/kernel/trace/trace_remote.c
-+++ b/kernel/trace/trace_remote.c
-@@ -979,27 +979,22 @@ EXPORT_SYMBOL_GPL(trace_remote_free_buffer);
- int trace_remote_alloc_buffer(struct trace_buffer_desc *desc, size_t desc_size, size_t buffer_size,
- 			      const struct cpumask *cpumask)
- {
-+	size_t min_desc_size = trace_buffer_desc_size(buffer_size, cpumask_weight(cpumask));
- 	unsigned int nr_pages = max(DIV_ROUND_UP(buffer_size, PAGE_SIZE), 2UL) + 1;
--	void *desc_end = desc + desc_size;
- 	struct ring_buffer_desc *rb_desc;
- 	int cpu, ret = -ENOMEM;
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index fcaa3761ef3eb3..da9339466bddd6 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2220,10 +2220,7 @@ static struct ring_buffer_desc *ring_buffer_desc(struct trace_buffer_desc *trace
+ 	size_t len;
+ 	int i;
  
--	if (desc_size < struct_size(desc, __data, 0))
-+	if (desc_size < min_desc_size)
- 		return -EINVAL;
- 
- 	desc->nr_cpus = 0;
--	desc->struct_len = struct_size(desc, __data, 0);
-+	desc->struct_len = min_desc_size;
- 
--	rb_desc = (struct ring_buffer_desc *)&desc->__data[0];
-+	rb_desc = __first_ring_buffer_desc(desc);
- 
- 	for_each_cpu(cpu, cpumask) {
- 		unsigned int id;
- 
--		if ((void *)rb_desc + struct_size(rb_desc, page_va, nr_pages) > desc_end) {
--			ret = -EINVAL;
--			goto err;
--		}
+-	if (!trace_desc)
+-		return NULL;
 -
- 		rb_desc->cpu = cpu;
- 		rb_desc->nr_page_va = 0;
- 		rb_desc->meta_va = (unsigned long)__get_free_page(GFP_KERNEL);
-@@ -1015,8 +1010,6 @@ int trace_remote_alloc_buffer(struct trace_buffer_desc *desc, size_t desc_size,
+-	if (cpu >= trace_desc->nr_cpus)
++	if (!trace_desc || !trace_desc->nr_cpus)
+ 		return NULL;
  
- 			rb_desc->nr_page_va++;
- 		}
--		desc->struct_len += offsetof(struct ring_buffer_desc, page_va);
--		desc->struct_len += struct_size(rb_desc, page_va, rb_desc->nr_page_va);
- 		rb_desc = __next_ring_buffer_desc(rb_desc);
- 	}
- 
+ 	end = (struct ring_buffer_desc *)((void *)trace_desc + trace_desc->struct_len);
 -- 
 2.53.0
 
