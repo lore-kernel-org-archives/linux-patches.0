@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17DF046D56D;
-	Tue, 21 Jul 2026 20:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69F846EF9C;
+	Tue, 21 Jul 2026 20:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664335; cv=none; b=KGRJJhnxus6g1bEEhxbbk5Ww8sgfvKhO4yxykD6T8zPib4rsS4ektkeFg7bXllnL28iAJCFEtqLE6BrdbchTUYg2Pe7D+4wJOENqEzlZf3NbYx+nc7W7WnrMNGRGDgO6/AwfALi7bncfauW4bXF8iBB10W8zp8SrrdprtIB3bVQ=
+	t=1784664338; cv=none; b=rJR5g+QK5aUz+WwlyDBMf2sT2r8+QcE4ZYPGyMC30wJ8NeUnvB84W0PWsMkw0BNVP5Rgd7hSiejUmZTgwOWQcS5vp8G2baNtK1J2bU0OcS6FOeYB4tQWv3RPkm15D1ICuRWUrgUz5GmdEL7IUITkrW4z8Zs8UOLhOdQHJDKqFsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664335; c=relaxed/simple;
-	bh=oyit0uYcOvwbQvZpEi5V19g3+95ETxs8BsWokOBu35U=;
+	s=arc-20240116; t=1784664338; c=relaxed/simple;
+	bh=mmAE+NJXGe1PSbCeVY4+YfO9IC7zmD9RJlc+3gmj+/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W5NV8YhJnOESBvp7MdYUjVrsy0nReTkdNbw1lBCBivmtT+qrhkMg0Z2ZLbwbEhs5ZxS2rfqnRlZF563SgXt+tpd8YlPtQjD+juQJFF52j2ggfLzV9najE2OYP9f4L/zi3T54EtL3aEqtVTkbdHki0cpe1QdhYBM9kctKSIoj4PM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5BVAi5m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OP5htvuJ/s6qlx+0QdeFudenGEBLaLN2OdOu/0pQ3M/nt2pICfI8dAxF2KDZrWT718hgm9XNUSz9ieyAtUGecs4gSbeYXCbpWgATk3vGOlfvz/qn1dwJvs3ZuFkMuIJnMdSQHyZtecJAfCMjSIQxltFQmzMI8ZIaRPKg401BIdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJXMZith; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5BVAi5m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CAD91F000E9;
-	Tue, 21 Jul 2026 20:05:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJXMZith"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278FD1F000E9;
+	Tue, 21 Jul 2026 20:05:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664334;
-	bh=iruQ88MIW5bTKp7qrGPktFDKvSeaYZpmrqTPoDYihZA=;
+	s=korg; t=1784664336;
+	bh=4mS7Iw0dikl/HjBHwAOCWdqoTz4kXKCX3wPEaG7Z5gE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N5BVAi5msUkAHTH85xyiRKLU5WF2eoAyXNIr7oSEt3PU+e6E4RENgu++FFxaXUSjy
-	 R/BVuUkp2IiWNOr3sutdVWuszorP6tMVxxdRLucnz0/4JZrmLtx4pkqKmbD6353jNK
-	 h/DBte+6NgZUuSCWvG4tn62hv3PhiEGagxePjl/k=
+	b=uJXMZithU2ODKPsZv5w/KOPk3ooOd7USLMuKzLNHeJAzy7msys/LM7rU2FZGTia/3
+	 203wGNqn/Ita7LV4dur8duIfUN7lTk9TFtmi7W+3NjJY/07TT7lEMXKUYZd81Og89z
+	 DaWgW7iQHATJDjk9Nxc2P5TfI/dzxP6IVbHVYw7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siwei Zhang <oss@fourdim.xyz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Marco Elver <elver@google.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1162/1276] Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref
-Date: Tue, 21 Jul 2026 17:26:45 +0200
-Message-ID: <20260721152512.022919873@linuxfoundation.org>
+Subject: [PATCH 6.12 1163/1276] gpio: sch: use raw_spinlock_t in the irq startup path
+Date: Tue, 21 Jul 2026 17:26:46 +0200
+Message-ID: <20260721152512.045462235@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,243 +53,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit b66774b48dd98f07254951f74ea6f513efe7ff8b ]
+[ Upstream commit 286533cb14a3c8a8bd39ff64ea2fc8e1aa0f638b ]
 
-l2cap_chan_timeout() runs asynchronously and accesses chan->conn. If
-the connection is torn down while the timer is running or pending,
-chan->conn can be freed, leading to a use-after-free when the timer
-worker attempts to lock conn->lock:
+sch_irq_unmask() enables the GPIO IRQ and then updates the controller
+state through sch_irq_mask_unmask(), which takes sch->lock with
+spin_lock_irqsave().  The callback can be reached from irq_startup()
+while setting up a requested IRQ.  That path is not sleepable, but on
+PREEMPT_RT a regular spinlock_t becomes a sleeping lock.
 
-| BUG: KASAN: slab-use-after-free in instrument_atomic_read_write include/linux/instrumented.h:112 [inline]
-| BUG: KASAN: slab-use-after-free in atomic_long_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:4456 [inline]
-| BUG: KASAN: slab-use-after-free in __mutex_trylock_fast kernel/locking/mutex.c:161 [inline]
-| BUG: KASAN: slab-use-after-free in mutex_lock+0x4f/0xa0 kernel/locking/mutex.c:318
-| Write of size 8 at addr ffff8881298d9550 by task kworker/2:1/83
-|
-| CPU: 2 UID: 0 PID: 83 Comm: kworker/2:1 Not tainted 7.1.0-rc6-next-20260601-dirty #6 PREEMPT(full)
-| Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-| Workqueue: events l2cap_chan_timeout
-| Call Trace:
-|  <TASK>
-|  instrument_atomic_read_write include/linux/instrumented.h:112 [inline]
-|  atomic_long_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:4456 [inline]
-|  __mutex_trylock_fast kernel/locking/mutex.c:161 [inline]
-|  mutex_lock+0x4f/0xa0 kernel/locking/mutex.c:318
-|  l2cap_chan_timeout+0x5d/0x1b0 net/bluetooth/l2cap_core.c:422
-|  process_one_work kernel/workqueue.c:3326 [inline]
-|  process_scheduled_works+0x7c8/0xfb0 kernel/workqueue.c:3409
-|  worker_thread+0x8a9/0xcf0 kernel/workqueue.c:3490
-|  kthread+0x346/0x430 kernel/kthread.c:436
-|  ret_from_fork+0x1a3/0x470 arch/x86/kernel/process.c:158
-|  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-|  </TASK>
-|
-| Allocated by task 320:
-|  l2cap_conn_add+0xa7/0x820 net/bluetooth/l2cap_core.c:7075
-|  l2cap_connect_cfm+0xdb/0xd70 net/bluetooth/l2cap_core.c:7452
-|  hci_connect_cfm include/net/bluetooth/hci_core.h:2139 [inline]
-|  hci_remote_features_evt+0x52f/0x9f0 net/bluetooth/hci_event.c:3760
-|  hci_event_func net/bluetooth/hci_event.c:7796 [inline]
-|  hci_event_packet+0x561/0xa70 net/bluetooth/hci_event.c:7847
-|  hci_rx_work+0x370/0x890 net/bluetooth/hci_core.c:4040
-|  process_one_work kernel/workqueue.c:3326 [inline]
-|  process_scheduled_works+0x7c8/0xfb0 kernel/workqueue.c:3409
-|  worker_thread+0x8a9/0xcf0 kernel/workqueue.c:3490
-|  kthread+0x346/0x430 kernel/kthread.c:436
-|  ret_from_fork+0x1a3/0x470 arch/x86/kernel/process.c:158
-|  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-|
-| Freed by task 322:
-|  hci_disconn_cfm include/net/bluetooth/hci_core.h:2154 [inline]
-|  hci_conn_hash_flush+0x101/0x1f0 net/bluetooth/hci_conn.c:2736
-|  hci_dev_close_sync+0x889/0xde0 net/bluetooth/hci_sync.c:5405
-|  hci_dev_do_close net/bluetooth/hci_core.c:502 [inline]
-|  hci_unregister_dev+0x1f7/0x370 net/bluetooth/hci_core.c:2679
-|  vhci_release+0x12a/0x180 drivers/bluetooth/hci_vhci.c:690
-|  __fput+0x369/0x890 fs/file_table.c:510
-|  task_work_run+0x160/0x1d0 kernel/task_work.c:233
-|  get_signal+0xf5b/0x1120 kernel/signal.c:2810
-|  arch_do_signal_or_restart+0x4d/0x600 arch/x86/kernel/signal.c:337
-|  __exit_to_user_mode_loop kernel/entry/common.c:64 [inline]
-|  exit_to_user_mode_loop+0x85/0x510 kernel/entry/common.c:98
-|  do_syscall_64+0x263/0x3d0 arch/x86/entry/syscall_64.c:100
-|  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-|
-| The buggy address belongs to the object at ffff8881298d9400
-|  which belongs to the cache kmalloc-512 of size 512
-| The buggy address is located 336 bytes inside of
-|  freed 512-byte region [ffff8881298d9400, ffff8881298d9600)
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
 
-Fix it by having chan->conn hold a reference to l2cap_conn (via
-l2cap_conn_get) when the channel is added to the connection, and
-releasing it in the channel destructor. This ensures the l2cap_conn
-remains alive as long as the channel exists.
+The grounded PoC kept the request_threaded_irq() -> __setup_irq() ->
+irq_startup() -> sch_irq_unmask() -> sch_irq_mask_unmask() carrier and
+used the original spin_lock_irqsave(&sch->lock) edge.  Lockdep reported:
 
-A new FLAG_DEL channel flag is introduced to indicate that the channel
-has been deleted from its connection. l2cap_chan_del() atomically sets
-this flag using test_and_set_bit() instead of setting chan->conn to
-NULL. All asynchronous workers (l2cap_chan_timeout, l2cap_ack_timeout,
-l2cap_monitor_timeout, l2cap_retrans_timeout) and l2cap_chan_send()
-check FLAG_DEL to determine whether the channel has been torn down,
-rather than testing chan->conn for NULL.
+  BUG: sleeping function called from invalid context
+  hardirqs last disabled at ... __setup_irq.constprop.0 ... [vuln_msv]
+  sch_rt_spin_lock_irqsave+0x1c/0x30 [vuln_msv]
+  sch_irq_mask_unmask.constprop.0+0x31/0x70 [vuln_msv]
+  __setup_irq.constprop.0+0xd/0x30 [vuln_msv]
 
-Fixes: 8c8e620467a7 ("Bluetooth: L2CAP: use chan timer to close channels in cleanup_listen()")
-Cc: <stable@vger.kernel.org>
-Cc: Siwei Zhang <oss@fourdim.xyz>
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Assisted-by: Gemini:gemini-3.1-pro-preview
-Reported-by: https://sashiko.dev/#/patchset/20260521021249.3258069-1-oss%40fourdim.xyz
-Signed-off-by: Marco Elver <elver@google.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Convert the SCH controller lock to raw_spinlock_t.  The same lock is
+also used by the GPIO direction and value callbacks, but those critical
+sections only update MMIO-backed GPIO registers and do not contain
+sleepable operations.  Keeping this register lock non-sleeping is
+therefore appropriate for the irqchip callbacks and does not change the
+GPIO-side locking contract.
+
+Fixes: 7a81638485c1 ("gpio: sch: Add edge event support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Link: https://patch.msgid.link/20260617154035.1199948-2-runyu.xiao@seu.edu.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+[ dropped the `return 0;` and kept sch_gpio_set()'s void signature since 6.12 lacks the GPIO setter-return-value conversion ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/l2cap.h |    1 +
- net/bluetooth/l2cap_core.c    |   34 ++++++++++++++++++++--------------
- 2 files changed, 21 insertions(+), 14 deletions(-)
+ drivers/gpio/gpio-sch.c |   32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -748,6 +748,7 @@ enum {
- 	FLAG_ECRED_CONN_REQ_SENT,
- 	FLAG_PENDING_SECURITY,
- 	FLAG_HOLD_HCI_CONN,
-+	FLAG_DEL,
- };
+--- a/drivers/gpio/gpio-sch.c
++++ b/drivers/gpio/gpio-sch.c
+@@ -39,7 +39,7 @@
+ struct sch_gpio {
+ 	struct gpio_chip chip;
+ 	void __iomem *regs;
+-	spinlock_t lock;
++	raw_spinlock_t lock;
+ 	unsigned short resume_base;
  
- /* Lock nesting levels for L2CAP channels. We need these because lockdep
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -411,7 +411,7 @@ static void l2cap_chan_timeout(struct wo
+ 	/* GPE handling */
+@@ -104,9 +104,9 @@ static int sch_gpio_direction_in(struct
+ 	struct sch_gpio *sch = gpiochip_get_data(gc);
+ 	unsigned long flags;
  
- 	BT_DBG("chan %p state %s", chan, state_to_string(chan->state));
- 
--	if (!conn) {
-+	if (test_bit(FLAG_DEL, &chan->flags)) {
- 		l2cap_chan_put(chan);
- 		return;
- 	}
-@@ -422,6 +422,9 @@ static void l2cap_chan_timeout(struct wo
- 	 */
- 	l2cap_chan_lock(chan);
- 
-+	if (test_bit(FLAG_DEL, &chan->flags))
-+		goto unlock;
-+
- 	if (chan->state == BT_CONNECTED || chan->state == BT_CONFIG)
- 		reason = ECONNREFUSED;
- 	else if (chan->state == BT_CONNECT &&
-@@ -434,10 +437,10 @@ static void l2cap_chan_timeout(struct wo
- 
- 	chan->ops->close(chan);
- 
-+unlock:
- 	l2cap_chan_unlock(chan);
--	l2cap_chan_put(chan);
--
- 	mutex_unlock(&conn->lock);
-+	l2cap_chan_put(chan);
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 	sch_gpio_reg_set(sch, gpio_num, GIO, 1);
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
+ 	return 0;
  }
  
- struct l2cap_chan *l2cap_chan_create(void)
-@@ -490,6 +493,9 @@ static void l2cap_chan_destroy(struct kr
- 	list_del(&chan->global_l);
- 	write_unlock(&chan_list_lock);
+@@ -122,9 +122,9 @@ static void sch_gpio_set(struct gpio_chi
+ 	struct sch_gpio *sch = gpiochip_get_data(gc);
+ 	unsigned long flags;
  
-+	if (chan->conn)
-+		l2cap_conn_put(chan->conn);
-+
- 	kfree(chan);
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 	sch_gpio_reg_set(sch, gpio_num, GLV, val);
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
  }
  
-@@ -593,7 +599,7 @@ void __l2cap_chan_add(struct l2cap_conn
+ static int sch_gpio_direction_out(struct gpio_chip *gc, unsigned int gpio_num,
+@@ -133,9 +133,9 @@ static int sch_gpio_direction_out(struct
+ 	struct sch_gpio *sch = gpiochip_get_data(gc);
+ 	unsigned long flags;
  
- 	conn->disc_reason = HCI_ERROR_REMOTE_USER_TERM;
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 	sch_gpio_reg_set(sch, gpio_num, GIO, 0);
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
  
--	chan->conn = conn;
-+	chan->conn = l2cap_conn_get(conn);
- 
- 	switch (chan->chan_type) {
- 	case L2CAP_CHAN_CONN_ORIENTED:
-@@ -648,30 +654,26 @@ void l2cap_chan_add(struct l2cap_conn *c
- 
- void l2cap_chan_del(struct l2cap_chan *chan, int err)
- {
--	struct l2cap_conn *conn = chan->conn;
--
- 	__clear_chan_timer(chan);
- 
--	BT_DBG("chan %p, conn %p, err %d, state %s", chan, conn, err,
-+	BT_DBG("chan %p, err %d, state %s", chan, err,
- 	       state_to_string(chan->state));
- 
- 	chan->ops->teardown(chan, err);
- 
--	if (conn) {
-+	if (!test_and_set_bit(FLAG_DEL, &chan->flags)) {
- 		/* Delete from channel list */
- 		list_del(&chan->list);
- 
- 		l2cap_chan_put(chan);
- 
--		chan->conn = NULL;
--
- 		/* Reference was only held for non-fixed channels or
- 		 * fixed channels that explicitly requested it using the
- 		 * FLAG_HOLD_HCI_CONN flag.
- 		 */
- 		if (chan->chan_type != L2CAP_CHAN_FIXED ||
- 		    test_bit(FLAG_HOLD_HCI_CONN, &chan->flags))
--			hci_conn_drop(conn->hcon);
-+			hci_conn_drop(chan->conn->hcon);
+ 	/*
+ 	 * according to the datasheet, writing to the level register has no
+@@ -195,14 +195,14 @@ static int sch_irq_type(struct irq_data
+ 		return -EINVAL;
  	}
  
- 	if (test_bit(CONF_NOT_COMPLETE, &chan->conf_state))
-@@ -1886,7 +1888,7 @@ static void l2cap_monitor_timeout(struct
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
  
- 	l2cap_chan_lock(chan);
+ 	sch_gpio_reg_set(sch, gpio_num, GTPE, rising);
+ 	sch_gpio_reg_set(sch, gpio_num, GTNE, falling);
  
--	if (!chan->conn) {
-+	if (test_bit(FLAG_DEL, &chan->flags)) {
- 		l2cap_chan_unlock(chan);
- 		l2cap_chan_put(chan);
- 		return;
-@@ -1907,7 +1909,7 @@ static void l2cap_retrans_timeout(struct
+ 	irq_set_handler_locked(d, handle_edge_irq);
  
- 	l2cap_chan_lock(chan);
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
  
--	if (!chan->conn) {
-+	if (test_bit(FLAG_DEL, &chan->flags)) {
- 		l2cap_chan_unlock(chan);
- 		l2cap_chan_put(chan);
- 		return;
-@@ -2522,7 +2524,7 @@ int l2cap_chan_send(struct l2cap_chan *c
- 	int err;
- 	struct sk_buff_head seg_queue;
- 
--	if (!chan->conn)
-+	if (test_bit(FLAG_DEL, &chan->flags))
- 		return -ENOTCONN;
- 
- 	/* Connectionless channel */
-@@ -3119,12 +3121,16 @@ static void l2cap_ack_timeout(struct wor
- 
- 	l2cap_chan_lock(chan);
- 
-+	if (test_bit(FLAG_DEL, &chan->flags))
-+		goto unlock;
-+
- 	frames_to_ack = __seq_offset(chan, chan->buffer_seq,
- 				     chan->last_acked_seq);
- 
- 	if (frames_to_ack)
- 		l2cap_send_rr_or_rnr(chan, 0);
- 
-+unlock:
- 	l2cap_chan_unlock(chan);
- 	l2cap_chan_put(chan);
+ 	return 0;
  }
+@@ -214,9 +214,9 @@ static void sch_irq_ack(struct irq_data
+ 	irq_hw_number_t gpio_num = irqd_to_hwirq(d);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 	sch_gpio_reg_set(sch, gpio_num, GTS, 1);
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
+ }
+ 
+ static void sch_irq_mask_unmask(struct gpio_chip *gc, irq_hw_number_t gpio_num, int val)
+@@ -224,9 +224,9 @@ static void sch_irq_mask_unmask(struct g
+ 	struct sch_gpio *sch = gpiochip_get_data(gc);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 	sch_gpio_reg_set(sch, gpio_num, GGPE, val);
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
+ }
+ 
+ static void sch_irq_mask(struct irq_data *d)
+@@ -267,12 +267,12 @@ static u32 sch_gpio_gpe_handler(acpi_han
+ 	int offset;
+ 	u32 ret;
+ 
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 
+ 	core_status = ioread32(sch->regs + CORE_BANK_OFFSET + GTS);
+ 	resume_status = ioread32(sch->regs + RESUME_BANK_OFFSET + GTS);
+ 
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
+ 
+ 	pending = (resume_status << sch->resume_base) | core_status;
+ 	for_each_set_bit(offset, &pending, sch->chip.ngpio)
+@@ -342,7 +342,7 @@ static int sch_gpio_probe(struct platfor
+ 
+ 	sch->regs = regs;
+ 
+-	spin_lock_init(&sch->lock);
++	raw_spin_lock_init(&sch->lock);
+ 	sch->chip = sch_gpio_chip;
+ 	sch->chip.label = dev_name(dev);
+ 	sch->chip.parent = dev;
 
 
