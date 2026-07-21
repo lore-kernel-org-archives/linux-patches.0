@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2EA246AA6B;
-	Tue, 21 Jul 2026 15:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D8D46AA71;
+	Tue, 21 Jul 2026 15:38:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648311; cv=none; b=qsN55EYspx6OL3ghFWokbwj0TgZExX0mmUUWb8pC5kJwiRTyGfvySIiZ6Fyyl8qYWg6E6jcmbYwSOdIbQObKoi83GgbuOljiS3lRaaY0mDbR81AGOpDbj10csuBAIBMsgH62cRWuJ6xZVXkJK2SBSEEdGmIVQsOdOroTO8jSOjc=
+	t=1784648314; cv=none; b=GlDW7QaKbaIbiNYUxLgQKN5+T7YzrKx6PjRaVOqUj5e2GXGIU78j3YtUw8r0QLZVEyW1GiA4fN11PnZ143Qd2ww8bTFuChfaqSdPBAF2aiUPliue9+3DKTri5zFVaAsS24WE5N4nnGYGkazWZAjyoSzXHwI+f1pRkZcccBksdM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648311; c=relaxed/simple;
-	bh=43pA45Eda+CWffh1/AtWeG/AP4KXBOIjUW7D3p90WM8=;
+	s=arc-20240116; t=1784648314; c=relaxed/simple;
+	bh=7pVcMuUCp6Vp9E3LHfp7PfhWyla7QfHX44dPpSPlBDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tEitDkqJ9HGqb/9dXOJIX39cmKteFZTQOCLMtvWWEbcJuL+YkmKFPuemAF6Fz2ynqGgDcH18PEpG5Jr9ENKwCMI/xMUzoVl+O2+VVzpN/Z6i4MLJ/NScZCG9BF9Jus/FVV3aAUp8vRAgf6NDJDOEw1nL35EofFgnmxcVV9RGPAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=klGG09Rb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SmBeLWm8baEx5+4Xkf4h1hOYKJJckx59txaScVEgEc0xKsboKafQvzQc2Dhx+Vt3kiqPjExVfWIdzlb0YIyswxZjcVnphZ7YjlhU2c90sJyarir1FmyhUaKMGT5kAuHjmCT2EQ4d/9NVentuJ7Vn9vxhESXqTalrrffRuDKtocA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vw1JlKz2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klGG09Rb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555DD1F000E9;
-	Tue, 21 Jul 2026 15:38:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vw1JlKz2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F15B1F000E9;
+	Tue, 21 Jul 2026 15:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648309;
-	bh=5gg7PGosjfbOgtfe37xZYLoQ1j1N2No07IZD/e7fWc8=;
+	s=korg; t=1784648312;
+	bh=FljWTCEpanh7FRphxa7BsVDrJnMDz0M81RsH+ViuxG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=klGG09RbJHVFnQRCHzCg+RIpGTt8rhcsAGKmNVMwcjaqPGwqD2uCTi14MPESCSvTE
-	 /jBlJ7E7ijKteChGJ7s/k+7TJ86JWho61suvRoWIsi7/vB2Jha6wovEhxAm+MoALkF
-	 B8AZN+iUOqHU/c2LO8k8hRkHgwD9Ab6tkTsDJbhs=
+	b=vw1JlKz2sEWNAksRAkfT33MhE0SU23GO/oekyQwvb4RIUZ0bXlEkBeaA/zBQQpo89
+	 ikXu0MbemPUp6wGESzCwrAelA9qP7e94yn8Erxj+qtauHQt35BlSvMYvAx3jvLbP1J
+	 QQETw5yLpnv0IZCAPvwp/tj+ekr5BdvU8zn2eOB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Marek Vasut <marex@nabladev.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0151/2077] arm64: dts: imx8x-colibri: Correct SODIMM PAD settings
-Date: Tue, 21 Jul 2026 16:57:04 +0200
-Message-ID: <20260721152556.247156439@linuxfoundation.org>
+Subject: [PATCH 7.1 0152/2077] arm64: dts: imx8mn-vhip4-evalboard-v1: Correct interrupt flags
+Date: Tue, 21 Jul 2026 16:57:05 +0200
+Message-ID: <20260721152556.269500064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,41 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 0a03ee38a262cab0d9754e9947d565e089a9f7a5 ]
+[ Upstream commit 895e7756cdc1ba6467eb37eba31c1358243f6ad9 ]
 
-SION is BIT(30), not BIT(26). Correct it.
+GPIO_ACTIVE_x flags are not correct in the context of interrupt flags.
+These are simple defines so they could be used in DTS but they will not
+have the same meaning:
+1. GPIO_ACTIVE_HIGH = 0 => IRQ_TYPE_NONE
+2. GPIO_ACTIVE_LOW  = 1 => IRQ_TYPE_EDGE_RISING
 
-Fixes: 7ece3cbc8b1ef ("arm64: dts: colibri-imx8x: Add atmel pinctrl groups")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Correct the interrupt flags, assuming the author of the code wanted the
+same logical behavior behind the name "ACTIVE_xxx", this is:
+ACTIVE_LOW  => IRQ_TYPE_LEVEL_LOW
+
+Fixes: 5eb7405db99b ("arm64: dts: imx8mn: Add ifm VHIP4 EvalBoard v1 and v2")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Marek Vasut <marex@nabladev.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8x-colibri.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mn-vhip4-evalboard-v1.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8x-colibri.dtsi b/arch/arm64/boot/dts/freescale/imx8x-colibri.dtsi
-index 47895ff8cb244e..2415487d3a5dea 100644
---- a/arch/arm64/boot/dts/freescale/imx8x-colibri.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8x-colibri.dtsi
-@@ -631,12 +631,12 @@ pinctrl_adc0: adc0grp {
- 	 */
- 	pinctrl_atmel_adap: atmeladaptergrp {
- 		fsl,pins = <IMX8QXP_UART1_RX_LSIO_GPIO0_IO22			0x21>,		/* SODIMM  30 */
--			   <IMX8QXP_UART1_TX_LSIO_GPIO0_IO21			0x4000021>;	/* SODIMM  28 */
-+			   <IMX8QXP_UART1_TX_LSIO_GPIO0_IO21			0x40000021>;	/* SODIMM  28 */
- 	};
+diff --git a/arch/arm64/boot/dts/freescale/imx8mn-vhip4-evalboard-v1.dts b/arch/arm64/boot/dts/freescale/imx8mn-vhip4-evalboard-v1.dts
+index 5f37065bf43f38..a8f7c226a61f86 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mn-vhip4-evalboard-v1.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mn-vhip4-evalboard-v1.dts
+@@ -112,7 +112,7 @@ &i2c3 {
  
- 	/* Atmel MXT touchsceen + boards with built-in Capacitive Touch Connector */
- 	pinctrl_atmel_conn: atmelconnectorgrp {
--		fsl,pins = <IMX8QXP_QSPI0B_DATA2_LSIO_GPIO3_IO20		0x4000021>,	/* SODIMM 107 */
-+		fsl,pins = <IMX8QXP_QSPI0B_DATA2_LSIO_GPIO3_IO20		0x40000021>,	/* SODIMM 107 */
- 			   <IMX8QXP_QSPI0B_SS1_B_LSIO_GPIO3_IO24		0x21>;		/* SODIMM 106 */
- 	};
+ &ifm_pmic {
+ 	interrupt-parent = <&gpio2>;
+-	interrupts = <0 GPIO_ACTIVE_LOW>;
++	interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
+ };
  
+ &iomuxc {
 -- 
 2.53.0
 
