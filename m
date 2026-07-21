@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17C93B1034;
-	Tue, 21 Jul 2026 20:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697F73B47D3;
+	Tue, 21 Jul 2026 20:31:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665912; cv=none; b=AWfG50ZLMMPhpI8DFEtfRib3YQf3poh+0zMsfyW9jqpUyppxZ/3ThbAoSQVbjbYyWDUpzISJl3LslF55vyzR6YEnujwucMFrjofL7GkkiiwZmL2TjIg5PwcrZAi6sBVNgvA1OKnv2gCy94Xt3JrJH+rl29aG91oEWTgNfJ6c5dE=
+	t=1784665915; cv=none; b=hXEVSJkFtjLxcFHIMnlSKCXhq5OS4hLvKRW0mxU038ZF5hvvrFFDUAuD6DrJr8sgR0KTVceZPuEHIfPXT6ktY1Qakqngh+GPSRCl6fPc45WVm7wHR34NmOVrLcZL4j8IOiylcltrCSLJJwxc++Wmrf13YgX0/Zoed+3UdoZ2Quw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665912; c=relaxed/simple;
-	bh=3vWo4lnh4bxQh0I8G4ceUtyJ89iVaulSZXmT3L1XqiU=;
+	s=arc-20240116; t=1784665915; c=relaxed/simple;
+	bh=eVPreAiMHKkksRRBTPh9buvU8w6mHAE8MQS28oNRMe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j/lVNS6NLU7SffRKgnrQfjGVytGXPuyTdGNSLuxYor8w+wvuELh2JK2dvzRihJj2Y/ZC5zWESOLA4yEL9X6J8Ph0TpnYS3ePKhuQy1wVYTLK4jpuexyrF8MNKmnRvLhmOgXOuSaJFcBv5iuSw98WCjsg6Wi5+Mt4+MpfOV0nhpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XQRbVzFu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bmyf5JGZ2EIM8Y329FZ8bAh6uLJc0E+md3iNsDe1wSuTXwqeCZGeUN4jXpFaEs9aymAc7B/JG/s1gSgeoEE6PQsvLHJLMlJeaRmNq1tHanuGJcK/1C/ggdsC/gHIhjQqGBBZZzC84va/J4gsIkBFrt+yDqg7aDzHKPM8Gw7eYPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wO73JYn9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQRbVzFu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322C91F00A3A;
-	Tue, 21 Jul 2026 20:31:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wO73JYn9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF2B1F000E9;
+	Tue, 21 Jul 2026 20:31:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665911;
-	bh=HIyoMBnP7rq8Tre+os8mm1o90EOXj1+V8B65iWlb/rU=;
+	s=korg; t=1784665914;
+	bh=oIA/QCQ6Al1GXWfo1KAH8mW3bqM2FmSB1aWbOslTsis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XQRbVzFudVX/rjoW+GSC9zcBZr2t6l4arXB5xpROgJJHJA23y3fFboUJqIViOmYtH
-	 wjMctV6o1FK7G5l0YaEJ1HrB3ecfXs1+czVUdP63QPEy6ZCi8Upbb0BajvLDdF6EKd
-	 aT7YS5Jba/fpv7uO4oeiVdtdIcj856NVzJiyEFEs=
+	b=wO73JYn9lHpyj+xJiY82KWj2QyoRt1oS8+Rt1ATh7ieUaw+GfqBxLGXQ6jWW+oWjC
+	 rpT018stvVRrDJQxR9VosHhsmwDXBmGI3COQVoUo7lLEGu2CDEzuP7NJfwarFCC21x
+	 RCtfPIWbNyvUS+CN73s4I+zqrGguAtmlNrOCCE+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jan Kara <jack@suse.cz>,
+	Breno Leitao <leitao@debian.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0483/1266] lib/test_meminit: use && for bools
-Date: Tue, 21 Jul 2026 17:15:20 +0200
-Message-ID: <20260721152452.647164153@linuxfoundation.org>
+Subject: [PATCH 6.6 0484/1266] configfs_lookup(): dont leave ->s_dentry dangling on failure
+Date: Tue, 21 Jul 2026 17:15:21 +0200
+Message-ID: <20260721152452.671615480@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,39 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Potapenko <glider@google.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 8e0c2085c978ed6d9764d79fc785920360096f21 ]
+[ Upstream commit 10da12d352b7b2bb330a8609fdda9a58bf0e9856 ]
 
-As pointed out by Dan Carpenter, test_kmemcache() was using a bitwise AND
-on two bools instead of a boolean AND.  Fix this for the sake of code
-cleanliness.
+Normally ->s_dentry is cleared when dentry it's pointing to becomes
+negative (on eviction, realistically).  However, that only happens
+if dentry gets to be positive in the first place; in case of inode
+allocation failure dentry never becomes positive, so ->d_iput()
+is not called at all.
 
-Link: https://lore.kernel.org/20260504100637.1535762-1-glider@google.com
-Fixes: 5015a300a522 ("lib: introduce test_meminit module")
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/kernel-janitors/afOcIan1ap9kD26M@stanley.mountain/
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+We do part of what normally would've been done by configfs_d_iput()
+(dropping the reference to configfs_dirent) manually, but we do
+not clear ->s_dentry there.  Sloppy as it is, it does not matter in
+case of configfs_create_{dir,link}() - there configfs_dirent does
+not survive dropping the sole reference to it.
+
+However, for configfs_lookup() it *does* survive, with a dangling
+pointer to soon to be freed dentry sitting it its ->s_dentry.
+
+Subsequent getdents(2) in that directory will end up dereferencing
+that pointer in order to pick the inode number.  Use after free...
+
+This is the minimal fix; the right approach is to set the linkage
+between dentry and configfs_dirent only after we know that we have
+an inode, but that takes more surgery and the bug had been there
+since 2006, so...
+
+Fixes: 3d0f89bb1694 ("configfs: Add permission and ownership to configfs objects") # 2.6.16-rc3
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_meminit.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/configfs/dir.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/lib/test_meminit.c b/lib/test_meminit.c
-index 0dc173849a5420..d0aa0acd4e0109 100644
---- a/lib/test_meminit.c
-+++ b/lib/test_meminit.c
-@@ -387,7 +387,7 @@ static int __init test_kmemcache(int *total_failures)
- 			ctor = flags & 1;
- 			rcu = flags & 2;
- 			zero = flags & 4;
--			if (ctor & zero)
-+			if (ctor && zero)
- 				continue;
- 			num_tests += do_kmem_cache_size(size, ctor, rcu, zero,
- 							&failures);
+diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
+index 2df99cd1034d4e..c3fac94f66f212 100644
+--- a/fs/configfs/dir.c
++++ b/fs/configfs/dir.c
+@@ -462,6 +462,9 @@ static struct dentry * configfs_lookup(struct inode *dir,
+ 
+ 			inode = configfs_create(dentry, mode);
+ 			if (IS_ERR(inode)) {
++				spin_lock(&configfs_dirent_lock);
++				sd->s_dentry = NULL;
++				spin_unlock(&configfs_dirent_lock);
+ 				configfs_put(sd);
+ 				return ERR_CAST(inode);
+ 			}
 -- 
 2.53.0
 
