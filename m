@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A962D3B6BE5;
-	Tue, 21 Jul 2026 22:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A650413D69;
+	Tue, 21 Jul 2026 22:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672876; cv=none; b=NFKhoCrrWWhJFq+ZF2YJ3xgYtZCEVeGOTsYN/YC5uOcGFCSPn39uK9f59Ii9kkuCo7Qu4t1C3UsuvW6fspnRPmtpcVyFA8pvDO2Ez6HNJK/wjbCIQpIH4R8+G3qG+vPh4oJtjb6CKn3HeAEpFl4y3FawnupGywWrl+Wx+y2AsJk=
+	t=1784672879; cv=none; b=Fglr21bXAlYvGIdGM4Rc7XnlhkvFKid6UFl/Q2rqUKUTC0TgCdDeQ5EsGWAdscQi+moK27o4ighrZXw0rHOM//j7KONVxkg++ukQXfP71z86uE7IK0Hv8AO7dpW+j6aCJg5FLo8+faeldsSLQYbMmz04dvJTpvcQvi8J0YVyP28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672876; c=relaxed/simple;
-	bh=gw+fX9XAD2PWwocg4UOGWXeQD5QZxUqmu9R4D3YnE/M=;
+	s=arc-20240116; t=1784672879; c=relaxed/simple;
+	bh=lc47eLAJRXjDBeAEvq6rB5W5kbeeUM784bn7/CvAUoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PiT2/vVM/7G8MFGvbZdNtQFniKid1IruSXQCmP1WghycNZ/tMU37ePXHKej9yerSQeGp68paPE7tHjPUMuCbOG3TuwOuVi/JXW213+RwHmwOa6hSYjKw0Swu88TbP/wGMKFFCJkW9PWvL/VP4dZzPn9gCuR9Uzazfr/DcIAdFpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TkIYFVMC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LiOVZrz8cEnydFpR7KBjxRAW3gLiNxyhR1gOrqHSq2gfyazelU8P3xT8fpcT6k2285/UJRxoQs+muuyR+hifqcsncqwU0HDwdNBY6HMKzrVjg2pdLN05e2Mgde99RKMv7mqw4Isz7VDXN1Na2sCko0HgG5oXki9JlWcmYHZK7No=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWvPc8uJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TkIYFVMC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E27CA1F000E9;
-	Tue, 21 Jul 2026 22:27:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWvPc8uJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B411F000E9;
+	Tue, 21 Jul 2026 22:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672875;
-	bh=V42MvAplSdlbHKLEzjbET/eIELplZthYakb7dx9Ufdk=;
+	s=korg; t=1784672878;
+	bh=fLiMO4zvieuynJExcPaaEn6hiwxF2f/T/GwVR8wuIAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TkIYFVMCj32xsoI/0cPXMDkA/R6VFhJ6AiFziMqcBGB0xlYuW2XfFIND8jwAdcJtM
-	 O07/VtOM0M+35aIn+dWqLbZtzE/5S3syFFtaNcEwm2HYrOI/LDPSIOiTXzG9LrvfVP
-	 qrHbvwnQ4kcmifZwKemdkknIdUngQblsOQ2HXeXQ=
+	b=MWvPc8uJAMltn/FqXv2b7BrdodJj+AhDO3dLyaFq7bZprvLSNntOAVzINVF3KOBg7
+	 tP/tUFa8FN/pU0KSvPMnsMFBJsGIwp3pI60ooSn+VIzlGnGHn1H5obUowK63jF43y/
+	 foltoWHU1rhn04AfQnkINzBs41fUpFBDvNpGJ1fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zide Chen <zide.chen@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	Ignat Korchagin <ignat@linux.win>,
+	Alistair Francis <alistair.francis@wdc.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 790/843] perf/x86/intel/uncore: Defer ADL global PMON enable to enable_box()
-Date: Tue, 21 Jul 2026 17:27:05 +0200
-Message-ID: <20260721152423.832980443@linuxfoundation.org>
+Subject: [PATCH 5.15 791/843] X.509: Fix validation of ASN.1 certificate header
+Date: Tue, 21 Jul 2026 17:27:06 +0200
+Message-ID: <20260721152423.855229937@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,54 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zide Chen <zide.chen@intel.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 9a0bb848a37150aeccc10088e141339917d995dc ]
+[ Upstream commit 3b626ba431c4501512ad07549310685e07fe4706 ]
 
-On some Raptor Cove CPUs, enabling uncore PMON globally at driver init
-may increase power consumption even when no perf events are in use.
+x509_load_certificate_list() seeks to enforce that a certificate starts
+with 0x30 0x82 (ASN.1 SEQUENCE tag followed by a length of more than 256
+and less than 65535 bytes).
 
-Drop adl_uncore_msr_init_box() and defer programming the global control
-register to enable_box(), so it is only set when a box is actually used.
+But it only enforces that *either* of those two byte values are present,
+instead of checking for the *conjunction* of the two values.  Fix it.
 
-IMC and IMC freerunning counters use a separate control path and are
-unaffected.
-
-Fixes: 772ed05f3c5c ("perf/x86/intel/uncore: Add Alder Lake support")
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260602144908.263680-5-zide.chen@intel.com
-[ deleted adl_uncore_msr_init_box() in its 6.12 wrmsrl() spelling since the tree predates the wrmsrq() rename ]
+Fixes: 631cc66eb9ea ("MODSIGN: Provide module signing public keys to the kernel")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/r/20260508033917.B5873C2BCB0@smtp.kernel.org/
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org # v3.7+
+Reviewed-by: Ignat Korchagin <ignat@linux.win>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/uncore_snb.c |    7 -------
- 1 file changed, 7 deletions(-)
+ certs/common.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/events/intel/uncore_snb.c
-+++ b/arch/x86/events/intel/uncore_snb.c
-@@ -445,12 +445,6 @@ void tgl_uncore_cpu_init(void)
- 	skl_uncore_msr_ops.init_box = rkl_uncore_msr_init_box;
- }
- 
--static void adl_uncore_msr_init_box(struct intel_uncore_box *box)
--{
--	if (box->pmu->pmu_idx == 0)
--		wrmsrl(ADL_UNC_PERF_GLOBAL_CTL, SNB_UNC_GLOBAL_CTL_EN);
--}
--
- static void adl_uncore_msr_enable_box(struct intel_uncore_box *box)
- {
- 	wrmsrl(ADL_UNC_PERF_GLOBAL_CTL, SNB_UNC_GLOBAL_CTL_EN);
-@@ -469,7 +463,6 @@ static void adl_uncore_msr_exit_box(stru
- }
- 
- static struct intel_uncore_ops adl_uncore_msr_ops = {
--	.init_box	= adl_uncore_msr_init_box,
- 	.enable_box	= adl_uncore_msr_enable_box,
- 	.disable_box	= adl_uncore_msr_disable_box,
- 	.exit_box	= adl_uncore_msr_exit_box,
+--- a/certs/common.c
++++ b/certs/common.c
+@@ -20,7 +20,7 @@ int load_certificate_list(const u8 cert_
+ 		 */
+ 		if (end - p < 4)
+ 			goto dodgy_cert;
+-		if (p[0] != 0x30 &&
++		if (p[0] != 0x30 ||
+ 		    p[1] != 0x82)
+ 			goto dodgy_cert;
+ 		plen = (p[2] << 8) | p[3];
 
 
