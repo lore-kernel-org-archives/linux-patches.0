@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5314D46D2A1;
-	Tue, 21 Jul 2026 19:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14627388E40;
+	Tue, 21 Jul 2026 19:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661064; cv=none; b=Zyl6MBpyx86N2oqCRXkMa0RYrhYJlp+CYy9/yztfCRcoKUbeP54tCNv3QbSjAptrQJ8gRfN7OBovTX8/+rduWmOeZMzKkuOTS4H64RCELAsYN7G/BW4IyRhWc7uw0Th/ID63nmVgGY7GXCIybP+tXUWEq2/Gm6GF9kFvyamoeic=
+	t=1784661067; cv=none; b=uM8XbZ59tJkDDM7CEVnDn/V3xa7Crf6dxjaffva5MVUG5T91wveWu3luAAWlUILdk+pOvr0OlDisxtq7MuUa/xUbTuiVlN27u3ES4Oz6RjZSsMYq92GpxREcFqmuyptdpEFRvanMdVSrt6+DyyCtZ4qbtYN+Yz+mHx09bx5lHro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661064; c=relaxed/simple;
-	bh=6WNQXpferA6sHOz0ybD2+YncdVEdfZU3T9fG6+oFDwM=;
+	s=arc-20240116; t=1784661067; c=relaxed/simple;
+	bh=GyoJpHbC/xnWzEWnzW1diIp0+2bUox3uKWIwcqq3zZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=simCVsiP/apk/I6RDRzkT8UEyOoLneNDY0KdGXtplCRhBCgqr85u2e3GvJ5u/ElSL1tcxdV2x6KY6IIkvyfaeaI6PKfS90l0rB7pIchpa+57HxkdJTz5pLIeK5ltplyZLNiKjJf6a29xQzlykViWZBilNOWZmMcHr3tAwP1ePFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmgROYXx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kYDrB/0IQNFaRG31G6OkkArhOVCCa0GiJwybxQdlZp2IthXHB35iktLJI/XHITB+AK4tE13Nw3BSCkvrtqd/5gQ0GllprVSBsnon82w6EbJNM5OjaGm+IhI5MjI7aTA7z9b88H81pHu9ZbaT0hqSJJb7cu0KQv95pbd2+uROyxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2p0jNMi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmgROYXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF581F000E9;
-	Tue, 21 Jul 2026 19:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2p0jNMi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B691F000E9;
+	Tue, 21 Jul 2026 19:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661063;
-	bh=+pB0h77+s8Eg6GbZHrL3D6b//Vc6Iz7d1QJrtpHIruk=;
+	s=korg; t=1784661066;
+	bh=yrWFyfAbF2c+FZ+xY4UY3+IoVt8JNJDK40ril23b1KQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EmgROYXx/W4LxB18cvcRoZrBDuMdGwaAb/8bVXgifgyU4YM65P02+FqNOWEXmozoJ
-	 e57WxvevK09ceaxkcy0FhhPQhyuTwT5urLIFUKFmsokanhB/RMpTqovkA7FkNRgJnB
-	 AbKR/wTilQ9QV8fleqMwHQuyQ7zYnNlL9UEbqT00=
+	b=w2p0jNMikm94N+hkCGuJo5ROJV4gPCzf9IvWVYL9JzC6JS0Mu1yX5ggSLbGEDdvGZ
+	 6WovjNrbiEfi34Oqi2ZJ+Hn+Rj6YuM52EPxARycYTV4we/heYum6wkvzTfT3nLe3cp
+	 Vajb0iI/16+4nTdnF0beZOgo4ASXTzs0IttiPVjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1217/2077] bpf: Guard conntrack opts error writes
-Date: Tue, 21 Jul 2026 17:14:50 +0200
-Message-ID: <20260721152621.520906028@linuxfoundation.org>
+Subject: [PATCH 7.1 1218/2077] selftests/bpf: Cover small conntrack opts error writes
+Date: Tue, 21 Jul 2026 17:14:51 +0200
+Message-ID: <20260721152621.543916994@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,106 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
 
-[ Upstream commit 6f6183a39533d727deaa5061cadae6dd9e6744d0 ]
+[ Upstream commit 38ba6d43af3844ae502092ee9dcc47214e82acb8 ]
 
-The conntrack lookup and allocation kfuncs take an opts pointer
-together with an opts__sz argument. The verifier checks only the memory
-range described by opts__sz, but the wrappers unconditionally write
-opts->error whenever the internal lookup or allocation helper returns an
-error.
+Add a conntrack kfunc regression check for opts__sz values that do not
+cover opts->error. The BPF program initializes opts->error with a guard
+value, calls the lookup and allocation kfuncs with opts__sz set to
+sizeof(opts->netns_id), and verifies that the guard is still intact
+after the kfunc returns NULL.
 
-For an invalid size smaller than the end of opts->error, that write can
-land outside the verifier-checked range. Keep returning NULL for invalid
-arguments, but only report the error through opts->error when the
-supplied size includes the field.
-
-This preserves error reporting for the supported 12-byte and 16-byte
-layouts, and for other invalid sizes that still include opts->error.
+Without the conntrack wrapper guard, the kfunc error path overwrites
+that guard with -EINVAL even though the verifier checked only the first
+four bytes of the options object.
 
 Fixes: b4c2b9593a1c ("net/netfilter: Add unstable CT lookup helpers for XDP and TC-BPF")
 Fixes: d7e79c97c00c ("net: netfilter: Add kfuncs to allocate and insert CT")
 Signed-off-by: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
-Link: https://lore.kernel.org/r/9535e781fe14449b1d4e9bbc3baa7566a93bf512.1781765747.git.chenyy23@mails.tsinghua.edu.cn
+Link: https://lore.kernel.org/r/007dfd0341cd84560e4795a2a951cc56d4adff1d.1781765747.git.chenyy23@mails.tsinghua.edu.cn
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_bpf.c | 35 ++++++++++++--------------------
- 1 file changed, 13 insertions(+), 22 deletions(-)
+ .../testing/selftests/bpf/prog_tests/bpf_nf.c |  6 +++++
+ .../testing/selftests/bpf/progs/test_bpf_nf.c | 26 +++++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/net/netfilter/nf_conntrack_bpf.c b/net/netfilter/nf_conntrack_bpf.c
-index 40c261cd0af380..f98d1d4b42c3d6 100644
---- a/net/netfilter/nf_conntrack_bpf.c
-+++ b/net/netfilter/nf_conntrack_bpf.c
-@@ -65,6 +65,15 @@ enum {
- 	NF_BPF_CT_OPTS_SZ = 16,
- };
+diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
+index 215878ea04deec..4b06a549071449 100644
+--- a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
++++ b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
+@@ -5,6 +5,8 @@
+ #include "test_bpf_nf.skel.h"
+ #include "test_bpf_nf_fail.skel.h"
  
-+static void *bpf_ct_opts_result(struct bpf_ct_opts *opts, u32 opts__sz, void *ret)
-+{
-+	if (!IS_ERR(ret))
-+		return ret;
-+	if (opts__sz >= offsetofend(struct bpf_ct_opts, error))
-+		opts->error = PTR_ERR(ret);
-+	return NULL;
-+}
++#define CT_OPTS_ERROR_GUARD 0x12345678
 +
- static int bpf_nf_ct_tuple_parse(struct bpf_sock_tuple *bpf_tuple,
- 				 u32 tuple_len, u8 protonum, u8 dir,
- 				 struct nf_conntrack_tuple *tuple)
-@@ -297,12 +306,7 @@ bpf_xdp_ct_alloc(struct xdp_md *xdp_ctx, struct bpf_sock_tuple *bpf_tuple,
+ static char log_buf[1024 * 1024];
  
- 	nfct = __bpf_nf_ct_alloc_entry(dev_net(ctx->rxq->dev), bpf_tuple, tuple__sz,
- 				       opts, opts__sz, 10);
--	if (IS_ERR(nfct)) {
--		opts->error = PTR_ERR(nfct);
--		return NULL;
--	}
--
--	return (struct nf_conn___init *)nfct;
-+	return (struct nf_conn___init *)bpf_ct_opts_result(opts, opts__sz, nfct);
- }
+ struct {
+@@ -119,6 +121,10 @@ static void test_bpf_nf_ct(int mode)
+ 	ASSERT_EQ(skel->bss->test_einval_reserved_new, -EINVAL, "Test EINVAL for reserved in new struct not set to 0");
+ 	ASSERT_EQ(skel->bss->test_einval_netns_id, -EINVAL, "Test EINVAL for netns_id < -1");
+ 	ASSERT_EQ(skel->bss->test_einval_len_opts, -EINVAL, "Test EINVAL for len__opts != NF_BPF_CT_OPTS_SZ");
++	ASSERT_EQ(skel->bss->test_einval_len_opts_small_lookup, CT_OPTS_ERROR_GUARD,
++		  "Test no error write for lookup opts__sz before error field");
++	ASSERT_EQ(skel->bss->test_einval_len_opts_small_alloc, CT_OPTS_ERROR_GUARD,
++		  "Test no error write for alloc opts__sz before error field");
+ 	ASSERT_EQ(skel->bss->test_eproto_l4proto, -EPROTO, "Test EPROTO for l4proto != TCP or UDP");
+ 	ASSERT_EQ(skel->bss->test_enonet_netns_id, -ENONET, "Test ENONET for bad but valid netns_id");
+ 	ASSERT_EQ(skel->bss->test_enoent_lookup, -ENOENT, "Test ENOENT for failed lookup");
+diff --git a/tools/testing/selftests/bpf/progs/test_bpf_nf.c b/tools/testing/selftests/bpf/progs/test_bpf_nf.c
+index 076fbf03a1268f..df43649ecb7854 100644
+--- a/tools/testing/selftests/bpf/progs/test_bpf_nf.c
++++ b/tools/testing/selftests/bpf/progs/test_bpf_nf.c
+@@ -10,6 +10,8 @@
+ #define EINVAL 22
+ #define ENOENT 2
  
- /* bpf_xdp_ct_lookup - Lookup CT entry for the given tuple, and acquire a
-@@ -331,11 +335,7 @@ bpf_xdp_ct_lookup(struct xdp_md *xdp_ctx, struct bpf_sock_tuple *bpf_tuple,
++#define CT_OPTS_ERROR_GUARD 0x12345678
++
+ #define NF_CT_ZONE_DIR_ORIG (1 << IP_CT_DIR_ORIGINAL)
+ #define NF_CT_ZONE_DIR_REPL (1 << IP_CT_DIR_REPLY)
  
- 	caller_net = dev_net(ctx->rxq->dev);
- 	nfct = __bpf_nf_ct_lookup(caller_net, bpf_tuple, tuple__sz, opts, opts__sz);
--	if (IS_ERR(nfct)) {
--		opts->error = PTR_ERR(nfct);
--		return NULL;
--	}
--	return nfct;
-+	return bpf_ct_opts_result(opts, opts__sz, nfct);
- }
+@@ -19,6 +21,8 @@ int test_einval_reserved = 0;
+ int test_einval_reserved_new = 0;
+ int test_einval_netns_id = 0;
+ int test_einval_len_opts = 0;
++int test_einval_len_opts_small_lookup = 0;
++int test_einval_len_opts_small_alloc = 0;
+ int test_eproto_l4proto = 0;
+ int test_enonet_netns_id = 0;
+ int test_enoent_lookup = 0;
+@@ -124,6 +128,28 @@ nf_ct_test(struct nf_conn *(*lookup_fn)(void *, struct bpf_sock_tuple *, u32,
+ 	else
+ 		test_einval_len_opts = opts_def.error;
  
- /* bpf_skb_ct_alloc - Allocate a new CT entry
-@@ -363,12 +363,7 @@ bpf_skb_ct_alloc(struct __sk_buff *skb_ctx, struct bpf_sock_tuple *bpf_tuple,
- 
- 	net = skb->dev ? dev_net(skb->dev) : sock_net(skb->sk);
- 	nfct = __bpf_nf_ct_alloc_entry(net, bpf_tuple, tuple__sz, opts, opts__sz, 10);
--	if (IS_ERR(nfct)) {
--		opts->error = PTR_ERR(nfct);
--		return NULL;
--	}
--
--	return (struct nf_conn___init *)nfct;
-+	return (struct nf_conn___init *)bpf_ct_opts_result(opts, opts__sz, nfct);
- }
- 
- /* bpf_skb_ct_lookup - Lookup CT entry for the given tuple, and acquire a
-@@ -397,11 +392,7 @@ bpf_skb_ct_lookup(struct __sk_buff *skb_ctx, struct bpf_sock_tuple *bpf_tuple,
- 
- 	caller_net = skb->dev ? dev_net(skb->dev) : sock_net(skb->sk);
- 	nfct = __bpf_nf_ct_lookup(caller_net, bpf_tuple, tuple__sz, opts, opts__sz);
--	if (IS_ERR(nfct)) {
--		opts->error = PTR_ERR(nfct);
--		return NULL;
--	}
--	return nfct;
-+	return bpf_ct_opts_result(opts, opts__sz, nfct);
- }
- 
- /* bpf_ct_insert_entry - Add the provided entry into a CT map
++	opts_def.error = CT_OPTS_ERROR_GUARD;
++	ct = lookup_fn(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def,
++		       sizeof(opts_def.netns_id));
++	if (ct) {
++		bpf_ct_release(ct);
++		test_einval_len_opts_small_lookup = -EINVAL;
++	} else {
++		test_einval_len_opts_small_lookup = opts_def.error;
++	}
++
++	opts_def.error = CT_OPTS_ERROR_GUARD;
++	ct = alloc_fn(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def,
++		      sizeof(opts_def.netns_id));
++	if (ct) {
++		ct = bpf_ct_insert_entry(ct);
++		if (ct)
++			bpf_ct_release(ct);
++		test_einval_len_opts_small_alloc = -EINVAL;
++	} else {
++		test_einval_len_opts_small_alloc = opts_def.error;
++	}
++
+ 	opts_def.l4proto = IPPROTO_ICMP;
+ 	ct = lookup_fn(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def,
+ 		       sizeof(opts_def));
 -- 
 2.53.0
 
