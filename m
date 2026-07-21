@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AF639733E;
-	Tue, 21 Jul 2026 22:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9982D7DF1;
+	Tue, 21 Jul 2026 22:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674571; cv=none; b=n6Lq+04dKN/FhHu0lfz/ohjOLej+KXE24rc92yZ25k0yKNb8a4IYF+CIUozgFch8EUiKj0akbOOJvvukCDtEqTp82RcJH542OuQr/oQikW7OGwUOe7Lk2tPWjpuqEstLwyqOPct9buajL2Er6ykpEp2CX4yjbsxXgmZQyzB3KQM=
+	t=1784674574; cv=none; b=ovm4s+wkPxWZsFtdgh7ROx/WYMC1JT+zWxawtBEhZxms/3O9fOJn8mP4BVWQ4ocTd1jperoTTlIQnurxqwsu3ngOgGZAzmwUhuRGC2bdgmFiZHVRIYvb8aKX/o5Npi4TS7ZxRYPUmN/ViH8K9QCzSjaX17CHIupvh7Mht+wVRho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674571; c=relaxed/simple;
-	bh=M8UC74cdDkyMm2IdL/0jsZD8Q+RZ02x0OoDDWVNmkfI=;
+	s=arc-20240116; t=1784674574; c=relaxed/simple;
+	bh=/IGrye15/YdCBQ1VYcfF8YP53C9WBd4622uVo7FrhBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GssmcZInRGtvxKlo3OaQqFjb9NEoJMC0FBJrrVTd0K5XxXWVt7qEtrlSaLIl1mBpfUklWgj9L0Sqod7tHRJPdkDWFG7OzC9r9jDOpAKIsr0s2tX+9tu55dPYL+xXeTrkz2CVIaQ0ehClqJDLn9prXFOzeDSS1xqgUzI5nly9uYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5Co1TgA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XRr/7gFYlpqtga4YEFFcYl9P+mU6BpQrOB3B+QaaOyvvYVV6A9U1cX2qjEWHNnRuXLZqRCe3EhHZx4WckLXkHcoG/497U46oNesXQKloljU2dyoDkpupRyk+bjOAMPDpd5JxFZiPg7Udb9JL6jAyA/iF5SVNFFFemjhnfqqlxYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0CS74WXg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5Co1TgA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C532E1F000E9;
-	Tue, 21 Jul 2026 22:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0CS74WXg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712421F000E9;
+	Tue, 21 Jul 2026 22:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674570;
-	bh=7TOtKCS8P0YalpfwdD3rfRntBo51DgpkKJlRR/0OOms=;
+	s=korg; t=1784674572;
+	bh=cQ4XmnTus2sW+wt78x4YcuuWLf8/2IBfwhdnZ7M4MrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e5Co1TgAloy6jr+ur4PXyhXcs0s81Y5bbEqMif+z6Z80KgU1py2CJXubosoPLHAQB
-	 fi2e10QMvB34emykbDZvPj5R+DD+wYVki/NoYpdN53zMqP8y0ladV/S6Ntrw1MXu+d
-	 lyq6umfFs03UktM7u+R4ld457IxCYzVnK0OPe5F8=
+	b=0CS74WXgfFhKaBhSx2TGHSAzm4oYorllBA+TyTOJi+1mBFar9cdELk+MOKVk6okeS
+	 ykZ7aH2uO5C6TAUZeYHbDZMbWWbrm3DOkDADcnW9xqcWaX2hTkRu8kKPA/rnmekX/u
+	 1wcqqCwDkj7SMmw+Gt5UdRWBnLLh6E1fMGMA/pkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 5.10 548/699] tracing/probes: Fix double addition of offset for @+FOFFSET
-Date: Tue, 21 Jul 2026 17:25:07 +0200
-Message-ID: <20260721152408.064004832@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 5.10 549/699] orangefs: keep the readdir entry size 64-bit in fill_from_part()
+Date: Tue, 21 Jul 2026 17:25:08 +0200
+Message-ID: <20260721152408.086055558@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -49,34 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 9a667b7750dda88cbf1cca96a53a2163b2ee71f7 upstream.
+commit 18227a6bc98bd0ba96ed3ce9d5b28776a5a28dfc upstream.
 
-Since commit 533059281ee5 ("tracing: probeevent: Introduce new argument
- fetching code") wrongly use @offset local variable during the parsing,
-the offset value is added twice when dereferencing.
-Reset the @offset after setting it in FETCH_OP_FOFFS.
+fill_from_part() computes the size of a directory entry in size_t but
+stores it in a __u32. An entry length near U32_MAX wraps it to a small
+value, bypasses the bounds check, and is then used to index the entry,
+reading far past the directory part -- an out-of-bounds read that oopses
+the kernel.
 
-Link: https://lore.kernel.org/all/178217905962.643090.1978577464942171332.stgit@devnote2/
+Compute the size as a u64 so it cannot truncate; the bounds check then
+rejects the entry. The trailer is supplied by the userspace client.
 
-Fixes: 533059281ee5 ("tracing: probeevent: Introduce new argument fetching code")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 480e3e532e31 ("orangefs: support very large directories")
 Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260619-b4-disp-50d2bd59-v1-1-ce332969b4a2@proton.me
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/orangefs/dir.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -401,6 +401,7 @@ parse_probe_arg(char *arg, const struct
- 
- 			code->op = FETCH_OP_FOFFS;
- 			code->immediate = (unsigned long)offset;  // imm64?
-+			offset = 0;
- 		} else {
- 			/* uprobes don't support symbols */
- 			if (!(flags & TPARG_FL_KERNEL)) {
+--- a/fs/orangefs/dir.c
++++ b/fs/orangefs/dir.c
+@@ -191,7 +191,8 @@ static int fill_from_part(struct orangef
+ {
+ 	const int offset = sizeof(struct orangefs_readdir_response_s);
+ 	struct orangefs_khandle *khandle;
+-	__u32 *len, padlen;
++	__u32 *len;
++	u64 padlen;
+ 	loff_t i;
+ 	char *s;
+ 	i = ctx->pos & ~PART_MASK;
+@@ -215,8 +216,8 @@ static int fill_from_part(struct orangef
+ 		 * len is the size of the string itself.  padlen is the
+ 		 * total size of the encoded string.
+ 		 */
+-		padlen = (sizeof *len + *len + 1) +
+-		    (8 - (sizeof *len + *len + 1)%8)%8;
++		padlen = (u64)sizeof *len + *len + 1;
++		padlen += (8 - padlen % 8) % 8;
+ 		if (part->len < i + padlen + sizeof *khandle)
+ 			goto next;
+ 		s = (void *)part + offset + i + sizeof *len;
 
 
