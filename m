@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32E346EF84;
-	Tue, 21 Jul 2026 19:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AEA42DA53;
+	Tue, 21 Jul 2026 19:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662708; cv=none; b=K3QiUduYOAzhsvFOmyCH3JCn1cc8/fEUesLa5ZIdHJr1csHMCj6cGyA12gVuBq6+a5Jy2EKsUUV/HbeovVCbCXGI++XXxXR8nhRZlEQ1kywt/GALe3KsIMXBp1AzTY9yBVdlS3jzb2UAya2GcmJ0DsEy+ZzkN+E8JhyG+zFo3Vs=
+	t=1784662709; cv=none; b=UoH5cnr8/2byopDwGuyj4NkHZ8KdLf2OkZvrLJGod7QSWhAyidlB/emSCGYSZNbtMv+lhDJxLAypY0KveVZcyZMoWivpCZ1fDiWjUxLjAZHSvLDHqUvPcWOD91+vFW+aGzYPwKl+aJb2aYPQkgcLmqYGvDexPpelwxlpBZTJkvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662708; c=relaxed/simple;
-	bh=goTWlyWET0RJ8ZelxEuMDMAsP0Io96WzOz6kxXtbGj4=;
+	s=arc-20240116; t=1784662709; c=relaxed/simple;
+	bh=01mFnvo6QdWH+w+I/EODR/NENZwerQNvHCa+h7ZoM1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D9hMx33ZpoEa7SRXQ4uXj1wfGTa7WX3/FsTcTiy4BBrORy/pCOJrwY0gJqec89SqYXq213aDsWeO9AVQ6ieS+8fF5vZb5qhv05+Ln2nZ8CZfeOac0ootXkcER7O8hhNcAYY7Z3qsgUo1Z4Rq2ORkFI7aevBPYfZtadnqR5sKOis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UtbDokWq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kq2NHXPm75hGdOSxtQIY0vF5wbnT1ccQQMT4X6AcOrIS+wpQ9rA1p+iHL9TxToNDJulsn7NJqwVs98DvOLXItTkBMGF4ZA7uqk/WirkWv0vUPEkvrl+8tdXMC9oF1uHipviO/r4WwAV/t8mEAQhCOELRWcZ2hvPnhvi5qFJYilk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCM0BxMW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UtbDokWq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5101F00AC4;
-	Tue, 21 Jul 2026 19:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCM0BxMW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE781F000E9;
+	Tue, 21 Jul 2026 19:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662705;
-	bh=d7wRmTeBL4j8uR9X5i4PWF3jztdtXTAVB+GhjOQ+ILY=;
+	s=korg; t=1784662708;
+	bh=1+oCtCGlZ+4b2lzjGi7UGHU6nze4Cb+A1jUW1ZhapWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UtbDokWqV8ng1In3dTmqFDejMDpKinwOjKjergH6LcxyHjIBMh5bEZr5ZSVGRakBs
-	 LLuJu5hWX6qz5Bd5wqQi0XCxBlU1xWQD3iRjMBbSe6kotAEP660V0p+EE0tJDu1Dw0
-	 xwWNDAQb2Ni8Co8pPjMKlOnBce8AtxG9TjZRaa0I=
+	b=MCM0BxMW1RhsyZkgMb77nhNaFgHT9kDZ/TynhpDPvIi65UIYq6i3PgQmTDhnPdTxC
+	 zUUuT6crXE3vJe774xwEoxSQ07Ph+MLkdfrMNRw4jBvAmUC1aUoNboiHdWYBHHT1O7
+	 9zUxGPrNmgibi2E1fhTOSxHsSxWjOmSBDEQxRJKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Tejun Heo <tj@kernel.org>,
+	Marco Crivellari <marco.crivellari@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0509/1276] xprtrdma: Resize reply buffers before reposting receives
-Date: Tue, 21 Jul 2026 17:15:52 +0200
-Message-ID: <20260721152457.500043449@linuxfoundation.org>
+Subject: [PATCH 6.12 0545/1276] workqueue: Add new WQ_PERCPU flag
+Date: Tue, 21 Jul 2026 17:16:28 +0200
+Message-ID: <20260721152458.315954875@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,121 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Marco Crivellari <marco.crivellari@suse.com>
 
-[ Upstream commit 234c0ff695ef3ffb656931000e6b823d0c2f30fd ]
+[ Upstream commit 930c2ea566aff59e962c50b2421d5fcc3b98b8be ]
 
-Commit 0e13dd9ea8be ("xprtrdma: Remove temp allocation of
-rpcrdma_rep objects") made rpcrdma_rep objects survive disconnects.
-That is normally fine, but it also means their receive regbufs keep
-the size they had when they were first allocated.
+Currently if a user enqueue a work item using schedule_delayed_work() the
+used wq is "system_wq" (per-cpu wq) while queue_delayed_work() use
+WORK_CPU_UNBOUND (used when a cpu is not specified). The same applies to
+schedule_work() that is using system_wq and queue_work(), that makes use
+again of WORK_CPU_UNBOUND.
+This lack of consistentcy cannot be addressed without refactoring the API.
 
-Each rep's receive buffer is sized to ep->re_inline_recv when the rep
-is created. rpcrdma_ep_create() resets that threshold to the
-rdma_max_inline_read ceiling for every new endpoint, and the connect
-handshake then shrinks it to the peer's advertised inline send size.
-A rep allocated under a smaller negotiated threshold keeps that size:
-on disconnect, rpcrdma_xprt_disconnect() drains and DMA-unmaps the
-surviving reps but does not free or resize them.
+This patch adds a new WQ_PERCPU flag to explicitly request the use of
+the per-CPU behavior. Both flags coexist for one release cycle to allow
+callers to transition their calls.
 
-The threshold can come back larger on the next connection. The first
-peer may supply no RPC-over-RDMA CM private data, defaulting its send
-size to 1024, while the reconnect target is an ordinary server
-offering 4096; or, with rdma_max_inline_read raised above its default,
-the reconnect target may advertise a larger svcrdma_max_req_size than
-the first. rpcrdma_post_recvs() then reposts a surviving rep whose SGE
-length is still the old, smaller value, and a larger inline Reply hits
-a receive length error and forces another disconnect.
+Once migration is complete, WQ_UNBOUND can be removed and unbound will
+become the implicit default.
 
-The undersized rep returns to the free list when its failed Receive
-flushes, so the following reconnect reposts the same rep and fails the
-same way. The transport flaps without making forward progress for as
-long as the peer keeps advertising the larger inline size.
+tj: Merged doc patch.
 
-This is local/admin-triggerable rather than remote-triggerable: a local
-administrator must create and maintain the NFS/RDMA mount, while the
-server or reconnect target has to advertise a larger inline send size
-and return a reply that uses it.
-
-Fix this by checking each rep before it is reposted. If the receive
-regbuf is smaller than the current endpoint's inline receive size,
-reallocate it on the current RDMA device's NUMA node and reinitialize
-the rep's xdr_buf before DMA-mapping and posting the Receive WR.
-
-Fixes: 0e13dd9ea8be ("xprtrdma: Remove temp allocation of rpcrdma_rep objects")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Suggested-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 527756cb9ebb ("i3c: master: Make hot-join workqueue freezable to block hot-join during suspend")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/verbs.c | 31 ++++++++++++++++++++++++++++++-
- 1 file changed, 30 insertions(+), 1 deletion(-)
+ Documentation/core-api/workqueue.rst | 6 ++++++
+ include/linux/workqueue.h            | 1 +
+ 2 files changed, 7 insertions(+)
 
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index 6f3e967b3ad097..24bf170720fc8a 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -81,6 +81,8 @@ rpcrdma_regbuf_alloc_node(size_t size, enum dma_data_direction direction,
- 			  int node);
- static struct rpcrdma_regbuf *
- rpcrdma_regbuf_alloc(size_t size, enum dma_data_direction direction);
-+static bool rpcrdma_regbuf_realloc_node(struct rpcrdma_regbuf *rb,
-+					size_t size, gfp_t flags, int node);
- static void rpcrdma_regbuf_dma_unmap(struct rpcrdma_regbuf *rb);
- static void rpcrdma_regbuf_free(struct rpcrdma_regbuf *rb);
+diff --git a/Documentation/core-api/workqueue.rst b/Documentation/core-api/workqueue.rst
+index 16f861c9791e4a..6597577f8c48b8 100644
+--- a/Documentation/core-api/workqueue.rst
++++ b/Documentation/core-api/workqueue.rst
+@@ -183,6 +183,12 @@ resources, scheduled and executed.
+   BH work items cannot sleep. All other features such as delayed queueing,
+   flushing and canceling are supported.
  
-@@ -1319,10 +1321,16 @@ rpcrdma_regbuf_alloc(size_t size, enum dma_data_direction direction)
-  * returned, @rb is left untouched.
-  */
- bool rpcrdma_regbuf_realloc(struct rpcrdma_regbuf *rb, size_t size, gfp_t flags)
-+{
-+	return rpcrdma_regbuf_realloc_node(rb, size, flags, NUMA_NO_NODE);
-+}
++``WQ_PERCPU``
++  Work items queued to a per-cpu wq are bound to a specific CPU.
++  This flag is the right choice when cpu locality is important.
 +
-+static bool rpcrdma_regbuf_realloc_node(struct rpcrdma_regbuf *rb,
-+					size_t size, gfp_t flags, int node)
- {
- 	void *buf;
++  This flag is the complement of ``WQ_UNBOUND``.
++
+ ``WQ_UNBOUND``
+   Work items queued to an unbound wq are served by the special
+   worker-pools which host workers which are not bound to any
+diff --git a/include/linux/workqueue.h b/include/linux/workqueue.h
+index 23642bb1a103cf..c75327e31e6a0e 100644
+--- a/include/linux/workqueue.h
++++ b/include/linux/workqueue.h
+@@ -401,6 +401,7 @@ enum wq_flags {
+ 	 * http://thread.gmane.org/gmane.linux.kernel/1480396
+ 	 */
+ 	WQ_POWER_EFFICIENT	= 1 << 7,
++	WQ_PERCPU		= 1 << 8, /* bound to a specific cpu */
  
--	buf = kmalloc(size, flags);
-+	buf = kmalloc_node(size, flags, node);
- 	if (!buf)
- 		return false;
- 
-@@ -1334,6 +1342,23 @@ bool rpcrdma_regbuf_realloc(struct rpcrdma_regbuf *rb, size_t size, gfp_t flags)
- 	return true;
- }
- 
-+static bool rpcrdma_rep_resize(struct rpcrdma_xprt *r_xprt,
-+			       struct rpcrdma_rep *rep)
-+{
-+	struct rpcrdma_regbuf *rb = rep->rr_rdmabuf;
-+	struct rpcrdma_ep *ep = r_xprt->rx_ep;
-+	size_t size = ep->re_inline_recv;
-+
-+	if (likely(rdmab_length(rb) >= size))
-+		return true;
-+	if (!rpcrdma_regbuf_realloc_node(rb, size, XPRTRDMA_GFP_FLAGS,
-+					 ibdev_to_node(ep->re_id->device)))
-+		return false;
-+
-+	xdr_buf_init(&rep->rr_hdrbuf, rdmab_data(rb), rdmab_length(rb));
-+	return true;
-+}
-+
- /**
-  * __rpcrdma_regbuf_dma_map - DMA-map a regbuf
-  * @r_xprt: controlling transport instance
-@@ -1417,6 +1442,10 @@ void rpcrdma_post_recvs(struct rpcrdma_xprt *r_xprt, int needed)
- 			break;
- 		/* I1: a rep on rb_free_reps must carry no rqst pointer. */
- 		WARN_ON_ONCE(rep->rr_rqst);
-+		if (!rpcrdma_rep_resize(r_xprt, rep)) {
-+			rpcrdma_rep_put(buf, rep);
-+			break;
-+		}
- 		if (!rpcrdma_regbuf_dma_map(r_xprt, rep->rr_rdmabuf)) {
- 			rpcrdma_rep_put(buf, rep);
- 			break;
+ 	__WQ_DESTROYING		= 1 << 15, /* internal: workqueue is destroying */
+ 	__WQ_DRAINING		= 1 << 16, /* internal: workqueue is draining */
 -- 
 2.53.0
 
