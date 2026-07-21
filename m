@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CCA9385D67;
-	Tue, 21 Jul 2026 19:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0125386C39;
+	Tue, 21 Jul 2026 19:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660839; cv=none; b=oNXF2o/BkspGpy//1zA2hdrnv/cWtYu8+2xVGKtVjoYKC3huTKBno+SQev/Lfbxc1lKh4TFNexHwhTQxKWRrzk444TJ+C1jjTECnKrkw1bgpjKofMMQzyFMwk037UtGsnnlnjiyQWDm/pI/nChWkALLQGZwkHj5uBlp8jNo1gic=
+	t=1784660841; cv=none; b=OHu9LgS6IlXzYVc6H91hXURG74zDs9URTuEIMWcFhJsSuweHGsbSu3JuJ0RsW8Nrjx6VLIi+pecp3cBZN0bYaKvEv/SXfSIds/w9WTSHg6orDhMzJeVoQDu4jDBhQN09j2ZFNP4Ay+9OnmrlAuSU5XIhRTr4hSDjwZop0djtxjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660839; c=relaxed/simple;
-	bh=LRl9IaMh2KIp1v5GaY6LTwnzQe+BOfTzNinXBZ4MD5s=;
+	s=arc-20240116; t=1784660841; c=relaxed/simple;
+	bh=SlHk0YK4SttIgQirtcmhWwCjuFWrAJESs3aTR6hgZmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oJw7PjhrtqW4CWpJ1MvNPPu/nifu+g0Em5Hylx8Ms4u2vnSkBhoVXTB95NKaOfZGG3gkgTqrnMXXVbdZ1HvnslbGaXYh7lRdz3RPsdih1vMAy20/YyAF0rfLnzG/YKhTY5GolmlPuQeT5YS9VCpsLAJSOWi7AdN5VModzFfpy7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MD2DplDB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ae7QC0Ew4c332A1nM/+2UxMgMG2p+UL2hVkJfkM0hXyyu0M/DD3koBSnNv4Uhz3WNWs4nxGADo+MyWElXZjHDqlJK7Y8UKivnM+ltJl4dVz6IKz7f7SI5PlxK3ZiJ4OJO4CtCCDOsmISugKO6f/Stxe+3Y3O85aj+QHfSQMjX8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOmLD99l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MD2DplDB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CA41F000E9;
-	Tue, 21 Jul 2026 19:07:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOmLD99l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC081F000E9;
+	Tue, 21 Jul 2026 19:07:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660838;
-	bh=ZC1aAkG0fgKOKU99bUQ2lDL/OPTfMJE3UDf/c+9gaSU=;
+	s=korg; t=1784660840;
+	bh=IOhdMXWMgvRwnRWkNgllZEPnxCaJk0fX+nq3qG6H+G4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MD2DplDBtnyV2Us059M34AlH5nYI7eZxZYBrnGqhCvFbO6QEwvFrnG/OI+XSypJW7
-	 KcKDFPW6HYrEI9AvbuSSfQeRn17UsggPqzjXdhbvobcxNha6oAkvOzZBkzZXaMzfpH
-	 yGAxetNJjGPqQkGytN/PSLp0zyKbphljiHnEf7uk=
+	b=eOmLD99lcz6xIYPJuc6dUJJgfoIdulOA0qrox4YvuuyvoOOkWPIy1+ZM8HRZz3iXZ
+	 abERk/3QdqoaC24kaGmKdu8nQg098Lo0xallDTEs/RPc06DlKQ9vpTTLEjzi5eRaqS
+	 Z5QVY/FZwtq+teMRyJpe088JMO0Sl9CrnnhbxAOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	Breno Leitao <leitao@debian.org>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1131/2077] arm64: static_call: include asm/insns.h
-Date: Tue, 21 Jul 2026 17:13:24 +0200
-Message-ID: <20260721152619.495700021@linuxfoundation.org>
+Subject: [PATCH 7.1 1132/2077] arm64/hw_breakpoint: reject unaligned watchpoints that would truncate BAS
+Date: Tue, 21 Jul 2026 17:13:25 +0200
+Message-ID: <20260721152619.519737777@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,40 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 998d4d789d2d625e1d8c77c1b6c3951e30e81bb0 ]
+[ Upstream commit 4cc70f75853bebac022334b6a86b953348072f74 ]
 
-I came a cross a missing declaration in a randconfig build:
+hw_breakpoint_arch_parse() positions the BAS bit pattern in
+hw->ctrl.len with
 
-arch/arm64/kernel/static_call.c:16:5: error: call to undeclared function 'aarch64_insn_adrp_get_offset'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-   16 |                   aarch64_insn_adrp_get_offset(le32_to_cpup(tramp + 4)) +
-      |                   ^
+	offset = hw->address & alignment_mask;	/* 0..7 */
+	hw->ctrl.len <<= offset;
 
-Include the header that contains this definition explicitly,
-rather than relying on it to come indirectly through another
-header.
+ctrl.len is an 8-bit bitfield (struct arch_hw_breakpoint_ctrl::len is
+u32 :8), so the shift silently drops any bits past bit 7.  For
+non-compat AArch64 watchpoints the offset is unbounded relative to
+ctrl.len: a perf_event_open(PERF_TYPE_BREAKPOINT) caller asking for
+HW_BREAKPOINT_W with bp_addr=page+1 and bp_len=HW_BREAKPOINT_LEN_8
+ends up with 0xff << 1 = 0x1fe, stored as 0xfe.  The kernel programs
+WCR.BAS=0xfe and the hardware watches bytes [1..7] instead of the
+requested [1..8] -- the eighth byte is silently dropped.  The
+syscall still returns success, leaving userspace to discover the
+gap by empirical probing.
 
-Fixes: 54ac9ff8f119 ("arm64: Use static call trampolines when kCFI is enabled")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+The same class affects HW_BREAKPOINT_LEN_{2,4} when offset pushes the
+high BAS bit past bit 7 (e.g. LEN_4 with offset=5 yields 0xe0
+instead of 0x1e0).  No memory-safety impact -- the value is masked
+into 8 bits before encoding -- but debuggers and perf users observe
+missed events on bytes they thought they were watching.
+
+The AArch32 branch immediately above already rejects unrepresentable
+(offset, len) combinations via an explicit switch.  Mirror that for
+the non-compat branch by checking that the shifted pattern fits in
+the BAS field, returning -EINVAL when it does not.
+
+GDB and similar debuggers are unaffected by the stricter check.
+aarch64_linux_set_debug_regs() already treats EINVAL on
+NT_ARM_HW_WATCH as a downgrade signal: it clears
+kernel_supports_any_contiguous_range, calls aarch64_downgrade_regs()
+to round the BAS up to a legacy 0x01/03/0f/ff mask with an aligned
+base, and retries -- the same fallback path that PR-20207 introduced.
+The new -EINVAL is therefore reachable only from a raw
+perf_event_open() that pairs an unaligned base with an oversized
+bp_len, which is precisely the bug.
+
+Reproducer:
+
+  struct perf_event_attr a = {
+      .type = PERF_TYPE_BREAKPOINT, .size = sizeof(a),
+      .bp_type = HW_BREAKPOINT_W,
+      .bp_addr = (uintptr_t)(buf + 1),
+      .bp_len = HW_BREAKPOINT_LEN_8,
+      .exclude_kernel = 1, .exclude_hv = 1,
+  };
+  int fd = perf_event_open(&a, 0, -1, -1, 0);
+  /* before this fix: succeeds, watches 7 bytes (buf+1..buf+7)   */
+  /* after  this fix: fails with EINVAL                          */
+
+Fixes: b08fb180bb88 ("arm64: Allow hw watchpoint at varied offset from base address")
+Signed-off-by: Breno Leitao <leitao@debian.org>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/static_call.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/kernel/hw_breakpoint.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/arm64/kernel/static_call.c b/arch/arm64/kernel/static_call.c
-index 8b3a19e108713e..c126edced022f4 100644
---- a/arch/arm64/kernel/static_call.c
-+++ b/arch/arm64/kernel/static_call.c
-@@ -2,6 +2,7 @@
- #include <linux/static_call.h>
- #include <linux/memory.h>
- #include <asm/text-patching.h>
-+#include <asm/insn.h>
+diff --git a/arch/arm64/kernel/hw_breakpoint.c b/arch/arm64/kernel/hw_breakpoint.c
+index ab76b36dce820b..73cce8ac836817 100644
+--- a/arch/arm64/kernel/hw_breakpoint.c
++++ b/arch/arm64/kernel/hw_breakpoint.c
+@@ -559,6 +559,15 @@ int hw_breakpoint_arch_parse(struct perf_event *bp,
+ 		else
+ 			alignment_mask = 0x7;
+ 		offset = hw->address & alignment_mask;
++
++		/*
++		 * BAS is an 8-bit field in WCR/BCR; the shift below would
++		 * silently drop the high bits of ctrl.len when offset + len
++		 * exceeds 8, programming hardware to watch fewer bytes than
++		 * the user requested.
++		 */
++		if (((u32)hw->ctrl.len << offset) > ARM_BREAKPOINT_LEN_8)
++			return -EINVAL;
+ 	}
  
- void arch_static_call_transform(void *site, void *tramp, void *func, bool tail)
- {
+ 	hw->address &= ~alignment_mask;
 -- 
 2.53.0
 
