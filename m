@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779F238399A;
-	Tue, 21 Jul 2026 17:09:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D411938399A;
+	Tue, 21 Jul 2026 17:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653784; cv=none; b=YmiGxh1wsI2C6AwEiGBxbPFJZ4gV6EdviEcBBGb5GuLsVptw49OX8TYK3B7Eq8mSsPd6/Mi64SawlT3H9Lx9QaXNF098n4iM+2JKC6EZtm7FzrFkqIfmkSpngzrPnDhAGoiEx6GwFRQ0Sst4gcsbnGg5v4f/bymu+a/Sz5SNVnw=
+	t=1784653786; cv=none; b=N1h37G6UPf+1wRJoLNVKIDQS2D+TJQGEewKo0fE1/sbmqa+DOe3RzsE1qGlU8iyC20YirDEfjf+T93E45s/2ecfANmGcLXdC/ONiZTEGLvHXBumHkZjOtwNKchB7trRXdL3xqGFwGlOGvQPwq/kPYFlD5Tse9cHbVDB3Zw68fDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653784; c=relaxed/simple;
-	bh=09xn4fp0FYkrRCUJaoSiPa9oz5Ec4dqoiuAjbV9vuUc=;
+	s=arc-20240116; t=1784653786; c=relaxed/simple;
+	bh=puvIYwrM1bfxOzawFriJTTqIhNvCS68QMjKiW5565JI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VJzpOEWMYDVuigjn+HP5WXZukjd95sW/iiOPpPYT0PhlqI2tzPFnYje3zVCqUPjfpNqi+e4uXn40LhhWdJh84IW1bwJIf4RrpWf3Ba0cmcyWR2Fz52/wDt5n+P/Ba8t+JMwrI7kWoUpsvQEvoPLvXIXMIKzRfgURpQ8o4ZrnkXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvVoVGr+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=norOTdkJZpdk66z93aDWpixnpL83axlDYfmkmUHdjGaPnPlogCAc6T0i5m9b6V3xqsGVv/96dx53lQYkTlVXO7MKzpvFVbs/HWfAcpfg14L50Y4M4Wyfx5uNTcOu5SWDIaAuJMPkdmLcZ7XJlyp1X/6HKiflV1WXcg8rvxbmA5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kL5viPaq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvVoVGr+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D3AE1F000E9;
-	Tue, 21 Jul 2026 17:09:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kL5viPaq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460951F00A3A;
+	Tue, 21 Jul 2026 17:09:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653782;
-	bh=yBz1v+Oemp/tyC+ArVXqoREDdHU2Sk95ZN5oVSRY/z8=;
+	s=korg; t=1784653784;
+	bh=5gvTsIkVfnWvSxX2VXacXpFDM7atxZWQOJLnmIommCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EvVoVGr+FWOW7zSjIdVX+jFB9xCNWM+Ab/9MxSt2Q0i6ymFupCjCNbTrYrFtzsGyN
-	 k199rJYmnUoTeN9Sq1usOz5GNlhqmDRr3RKHawNEZNDFq0QXjuX3oT+psVfhjfhJvw
-	 v5GbM/0m63dxAGVus1RlXvaCNjTLwqd94kb+82w0=
+	b=kL5viPaqnnMwqZ9pfk9R++HrTfe+zOqgcQDoAFjdPmtdvGHKE2Ga3ZqStSrxZml63
+	 eBicqVLVGGqktoTx3NZNw7P7ADHSiloCUan4bW7h+pnGDpBUpRuIJHYSjEXiyE1Y7t
+	 bYp7g4XADxaxx1Hkw3+VzeBLksG3XUM4seeeklrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	Mingyou Chen <qby140326@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1430/2077] platform/x86: bitland-mifs-wmi: Fix NULL pointer dereference during suspend/resume
-Date: Tue, 21 Jul 2026 17:18:23 +0200
-Message-ID: <20260721152626.536743586@linuxfoundation.org>
+Subject: [PATCH 7.1 1457/2077] Bluetooth: MGMT: Fix adv monitor add failure cleanup
+Date: Tue, 21 Jul 2026 17:18:50 +0200
+Message-ID: <20260721152627.165471232@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,72 +45,146 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mingyou Chen <qby140326@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit d3666875c75eb1bc8090343fa0d6fc8fb7924356 ]
+[ Upstream commit 384a4b2fef9ffe5e270ee5558975c0504881c5fb ]
 
-The driver registers two distinct WMI devices: a control device
-(BITLAND_WMI_CONTROL) and an event device (BITLAND_WMI_EVENT). During
-the probe phase, the event device handling path returns early before
-initializing the platform profile device (data->pp_dev), leaving it
-NULL.
+hci_add_adv_monitor() publishes a new adv_monitor in
+hdev->adv_monitors_idr before the powered MSFT setup step. The MSFT
+offload add path can then fail either locally before the controller add
+command completes, or in the MSFT add callback. In the current queued
+management add flow, hci_cmd_sync_work() still invokes
+mgmt_add_adv_patterns_monitor_complete() with the original pending command
+after msft_add_monitor_pattern() returns.
 
-However, the PM sleep operations are registered globally for the WMI
-driver and are triggered for both devices. When entering suspend, the
-event device invokes bitland_mifs_wmi_suspend(), which passes the
-uninitialized data->pp_dev (NULL) into laptop_profile_get(). This leads
-to a NULL pointer dereference inside dev_get_drvdata(), causing a
-kernel Oops and halting the suspend sequence.
+The buggy scenario involves two paths, with each column showing the order
+within that path:
 
-Fix this by adding a validity check for data->pp_dev in both the suspend
-and resume callbacks, safely skipping profile operations for the event
-device.
+MSFT add handling                  MGMT completion
+1. insert monitor and handle       1. receive sync error
+2. send MSFT add command           2. call add-monitor completion
+3. callback sees bad response      3. load cmd->user_data
+4. callback frees monitor          4. read monitor->handle
 
-Fixes: dc1ec4fa86b2 ("platform/x86: bitland-mifs-wmi: Add new Bitland MIFS WMI driver")
-Reviewed-by: Armin Wolf <W_Armin@gmx.de>
-Signed-off-by: Mingyou Chen <qby140326@gmail.com>
-Reviewed-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20260701120140.430659-1-qby140326@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Local MSFT setup failures have the other half of the same ownership bug:
+they return an error after the IDR insertion, but no later code removes the
+failed monitor from the IDR.
+
+Keep ownership with the pending management command until its completion.
+For normal management adds, the MSFT add callback now records successful
+controller state and returns errors to its caller. The management
+completion frees the monitor on non-success after copying the response
+handle, while resume/reregister callback-error cleanup remains in the
+MSFT callback. The success path keeps the existing bookkeeping.
+
+Validation reproduced this kernel report:
+BUG: KASAN: slab-use-after-free in mgmt_add_adv_patterns_monitor_complete+0xfb/0x260 [bluetooth]
+
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x66/0xa0
+ print_report+0xce/0x5f0
+ ? mgmt_add_adv_patterns_monitor_complete+0xfb/0x260 [bluetooth]
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __virt_addr_valid+0x19f/0x330
+ ? mgmt_add_adv_patterns_monitor_complete+0xfb/0x260 [bluetooth]
+ kasan_report+0xe0/0x110
+ ? mgmt_add_adv_patterns_monitor_complete+0xfb/0x260 [bluetooth]
+ mgmt_add_adv_patterns_monitor_complete+0xfb/0x260 [bluetooth]
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? 0xffffffffc00d00da
+ ? __pfx_mgmt_add_adv_patterns_monitor_complete+0x10/0x10 [bluetooth]
+ ? __pfx_mgmt_add_adv_patterns_monitor_complete+0x10/0x10 [bluetooth]
+ ? hci_cmd_sync_work+0x1ab/0x210 [bluetooth]
+ hci_cmd_sync_work+0x1c0/0x210 [bluetooth]
+ ? __pfx_mgmt_add_adv_patterns_monitor_complete+0x10/0x10 [bluetooth]
+ process_one_work+0x4fd/0xbc0
+ ? __pfx_process_one_work+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __list_add_valid_or_report+0x37/0xf0
+ ? __pfx_hci_cmd_sync_work+0x10/0x10 [bluetooth]
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ worker_thread+0x2d8/0x570
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x1ad/0x1f0
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x3c9/0x540
+ ? __pfx_ret_from_fork+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __switch_to+0x2e9/0x730
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+Allocated by task 471 on cpu 3 at 285.205389s:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x17/0x60
+ __kasan_kmalloc+0xaa/0xb0
+ add_adv_patterns_monitor_rssi+0xd5/0x230 [bluetooth]
+ hci_sock_sendmsg+0x96b/0xf80 [bluetooth]
+ __sys_sendto+0x2bc/0x2d0
+ __x64_sys_sendto+0x76/0x90
+ do_syscall_64+0x115/0x6a0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Freed by task 454 on cpu 2 at 285.217112s:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x17/0x60
+ kasan_save_free_info+0x3b/0x60
+ __kasan_slab_free+0x5f/0x80
+ kfree+0x313/0x590
+ msft_add_monitor_sync+0x54a/0x570 [bluetooth]
+ hci_add_adv_monitor+0x133/0x180 [bluetooth]
+ hci_cmd_sync_work+0x187/0x210 [bluetooth]
+ process_one_work+0x4fd/0xbc0
+ worker_thread+0x2d8/0x570
+ kthread+0x1ad/0x1f0
+ ret_from_fork+0x3c9/0x540
+ ret_from_fork_asm+0x1a/0x30
+
+Fixes: a2a4dedf88ab ("Bluetooth: advmon offload MSFT add monitor")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/bitland-mifs-wmi.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/bluetooth/mgmt.c | 2 ++
+ net/bluetooth/msft.c | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/bitland-mifs-wmi.c b/drivers/platform/x86/bitland-mifs-wmi.c
-index b0d06a80e89ef0..3a373184519da4 100644
---- a/drivers/platform/x86/bitland-mifs-wmi.c
-+++ b/drivers/platform/x86/bitland-mifs-wmi.c
-@@ -300,6 +300,10 @@ static int bitland_mifs_wmi_suspend(struct device *dev)
- 	enum platform_profile_option profile;
- 	int ret;
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 7c164a17ef59e2..e8544194a52424 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -5378,6 +5378,8 @@ static void mgmt_add_adv_patterns_monitor_complete(struct hci_dev *hdev,
+ 		if (monitor->state == ADV_MONITOR_STATE_NOT_REGISTERED)
+ 			monitor->state = ADV_MONITOR_STATE_REGISTERED;
+ 		hci_update_passive_scan(hdev);
++	} else {
++		hci_free_adv_monitor(hdev, monitor);
+ 	}
  
-+	/* Skip event device */
-+	if (!data->pp_dev)
-+		return 0;
-+
- 	ret = laptop_profile_get(data->pp_dev, &profile);
- 	if (ret == 0)
- 		data->saved_profile = profile;
-@@ -311,6 +315,10 @@ static int bitland_mifs_wmi_resume(struct device *dev)
- {
- 	struct bitland_mifs_wmi_data *data = dev_get_drvdata(dev);
+ 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode,
+diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
+index 2f008167cbaa2b..d7badce8746ca3 100644
+--- a/net/bluetooth/msft.c
++++ b/net/bluetooth/msft.c
+@@ -291,7 +291,7 @@ static int msft_le_monitor_advertisement_cb(struct hci_dev *hdev, u16 opcode,
+ 	monitor->state = ADV_MONITOR_STATE_OFFLOADED;
  
-+	/* Skip event device */
-+	if (!data->pp_dev)
-+		return 0;
-+
- 	dev_dbg(dev, "Resuming, restoring profile %d\n", data->saved_profile);
- 	return laptop_profile_set(dev, data->saved_profile);
- }
+ unlock:
+-	if (status)
++	if (status && msft->resuming)
+ 		hci_free_adv_monitor(hdev, monitor);
+ 
+ 	hci_dev_unlock(hdev);
 -- 
 2.53.0
 
