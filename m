@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D8743F4BA;
-	Tue, 21 Jul 2026 22:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC3F43C7AE;
+	Tue, 21 Jul 2026 22:17:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672228; cv=none; b=bucgvF2tEP8HblkOnkq0gExbUcjtlIrGjFIiuf2iQpYnNvVuMx+coNkzHEQ3j9G2sC1yA2RvdITS1q3XNLv7JToOmQTMe6mdhPoNcY4uUHU0Xv4JjOTDBeAfWUMzGZzfHKX7x60nue6XE7UDhXyTQu03GwYb/3ezHxVeqc0enjc=
+	t=1784672231; cv=none; b=GGTMC1FULQ95PObna1PEalzj12FvdLnvsh0vpIJTujtCRnty4Ro+IBrSYwYRJrGrJ/5INLvTd1doR5LB9ChotOz+g+4dGsEmwUCzoVjb0wUtseBi4YoG/tbGmZ91OdSaHq+4mdn/17PDXeHK+ofQ5YukKz0bvnHnE5jbIG9inYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672228; c=relaxed/simple;
-	bh=zQvoFvgHz407i4BoTEGOYOqebs9Db474u+NSRiCQDjE=;
+	s=arc-20240116; t=1784672231; c=relaxed/simple;
+	bh=8peXXaK36/oTran+kE1Yw51sFHAtGAZHqdC21CoHxCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bg7e0ogjE1PqHVBnxmHWFPG1+aOofzx3+y4wurroohWfDX7MnMfdKtGcs8dNu+02agYxnGmxKZKh6MnY1ng8zH/ecHhxd4h8rkyyOk41YWxLALdwnvpgs2UO+kwqWBDnyhSD0bOAUjg/DiuAahe5lwYrJvgRPGL+AUzsl2LcB44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSLyrlMa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lf8kSBqILrVlrl7NF0lTVxi6j15QZqdAHc7MItqR+E3V4W1KqMzpRa2iDroii4YR14VCYlx2XdgdNDqbi4KLACs7iWIVEiYs+PeU4t8SYb17lQLWrWSnrTp+u5cyWyr1UXIXti2YX1QC28dY5nJ4kVPk3suvTyhrabyMiKlJMtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QwSsE4qb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSLyrlMa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A74FF1F000E9;
-	Tue, 21 Jul 2026 22:17:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwSsE4qb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50FDD1F000E9;
+	Tue, 21 Jul 2026 22:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672227;
-	bh=miO4WVkrnRMdyBpkfV0c9OWeleEumu9V0ud2gyc3JCo=;
+	s=korg; t=1784672229;
+	bh=dCr3ZKh/0Ku4MD/eVp2Nyu+J9v5wERImEimxR7Qvr3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mSLyrlManTvAZ7zShvq5cU1pqKdH8FXBXrS+dvhVfmoBXzOztccO0AnH+8fHRjt+z
-	 9fDnS2AYFWoMP591/uRRzMJb6XIcquZjbYO8DdVdcZUYamX8FwfsjOPUmzGO3Pv0ti
-	 u6067QjZrVu7zX2vAagEHjJBu9OGvoyk9LhUXtTU=
+	b=QwSsE4qbgE72z/6fKoBFvkEjCmZSReA16GJeEjCI4mPQTVFA5bY1qeoIBcOuz75w0
+	 BV+xlwBB2tcy8zyW/s+gKXMm8wF4LAZmPqTtSuLRCdPhsMeh7NLnSt5k4c71mI3aHc
+	 htD80/jJoTWUw3Ryc9IhuRNiw7vsp9Dhl0WN+iAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Suman Ghosh <sumang@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 492/843] rtnetlink: change nlk->cb_mutex role
-Date: Tue, 21 Jul 2026 17:22:07 +0200
-Message-ID: <20260721152417.098485322@linuxfoundation.org>
+Subject: [PATCH 5.15 539/843] octeontx2-af: Allow mkex profile without DMAC and add L2M/L2B header extraction support
+Date: Tue, 21 Jul 2026 17:22:54 +0200
+Message-ID: <20260721152418.160642441@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,150 +51,239 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Suman Ghosh <sumang@marvell.com>
 
-[ Upstream commit e39951d965bf58b5aba7f61dc1140dcb8271af22 ]
+[ Upstream commit 2cee6401c4eaa562abc1d437d5d03e80bbee79c1 ]
 
-In commit af65bdfce98d ("[NETLINK]: Switch cb_lock spinlock
-to mutex and allow to override it"), Patrick McHardy used
-a common mutex to protect both nlk->cb and the dump() operations.
+1. It is possible to have custom mkex profiles which do not extract
+DMAC at all into the key. Hence allow mkex profiles which do not
+have DMAC to be loaded into MCAM hardware. This patch also adds
+debugging prints needed to identify profiles with wrong
+configuration.
 
-The override is used for rtnl dumps, registered with
-rntl_register() and rntl_register_module().
+2. If a mkex profile set "l2l3mb" field for Rx interface,
+then Rx multicast and broadcast entry should be configured.
 
-We want to be able to opt-out some dump() operations
-to not acquire RTNL, so we need to protect nlk->cb
-with a per socket mutex.
-
-This patch renames nlk->cb_def_mutex to nlk->nl_cb_mutex
-
-The optional pointer to the mutex used to protect dump()
-call is stored in nlk->dump_cb_mutex
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 9facb861dc6b ("ipv6: fib6: fix NULL deref in fib6_walk_continue() on multi-batch dump")
+Signed-off-by: Suman Ghosh <sumang@marvell.com>
+Link: https://lore.kernel.org/r/20221031090856.1404303-1-sumang@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 235acadd3105 ("octeontx2-pf: check DMAC extraction support before filtering")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 32 ++++++++++++++++++--------------
- net/netlink/af_netlink.h |  5 +++--
- 2 files changed, 21 insertions(+), 16 deletions(-)
+ .../net/ethernet/marvell/octeontx2/af/npc.h   |  1 +
+ .../marvell/octeontx2/af/rvu_debugfs.c        |  6 ++
+ .../marvell/octeontx2/af/rvu_npc_fs.c         | 81 ++++++++++++++-----
+ 3 files changed, 70 insertions(+), 18 deletions(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 731c53178eb559..2b9dbf003abd11 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -618,7 +618,7 @@ static struct proto netlink_proto = {
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/npc.h b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
+index 2662a46857ef9c..7505252c34fdb1 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/npc.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
+@@ -627,6 +627,7 @@ struct rvu_npc_mcam_rule {
+ 	bool vfvlan_cfg;
+ 	u16 chan;
+ 	u16 chan_mask;
++	u8 lxmb;
  };
  
- static int __netlink_create(struct net *net, struct socket *sock,
--			    struct mutex *cb_mutex, int protocol,
-+			    struct mutex *dump_cb_mutex, int protocol,
- 			    int kern)
- {
- 	struct sock *sk;
-@@ -633,15 +633,11 @@ static int __netlink_create(struct net *net, struct socket *sock,
- 	sock_init_data(sock, sk);
+ #endif /* NPC_H */
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+index a3dcb013f22de8..a65ffa0d3d6efa 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+@@ -2317,6 +2317,12 @@ static void rvu_dbg_npc_mcam_show_flows(struct seq_file *s,
+ 	for_each_set_bit(bit, (unsigned long *)&rule->features, 64) {
+ 		seq_printf(s, "\t%s  ", npc_get_field_name(bit));
+ 		switch (bit) {
++		case NPC_LXMB:
++			if (rule->lxmb == 1)
++				seq_puts(s, "\tL2M nibble is set\n");
++			else
++				seq_puts(s, "\tL2B nibble is set\n");
++			break;
+ 		case NPC_DMAC:
+ 			seq_printf(s, "%pM ", rule->packet.dmac);
+ 			seq_printf(s, "mask %pM\n", rule->mask.dmac);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
+index 7c4e1acd0f77b4..50d3994efa97af 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
+@@ -43,6 +43,7 @@ static const char * const npc_flow_names[] = {
+ 	[NPC_DPORT_UDP]	= "udp destination port",
+ 	[NPC_SPORT_SCTP] = "sctp source port",
+ 	[NPC_DPORT_SCTP] = "sctp destination port",
++	[NPC_LXMB]	= "Mcast/Bcast header ",
+ 	[NPC_UNKNOWN]	= "unknown",
+ };
  
- 	nlk = nlk_sk(sk);
--	if (cb_mutex) {
--		nlk->cb_mutex = cb_mutex;
--	} else {
--		nlk->cb_mutex = &nlk->cb_def_mutex;
--		mutex_init(nlk->cb_mutex);
--		lockdep_set_class_and_name(nlk->cb_mutex,
-+	mutex_init(&nlk->nl_cb_mutex);
-+	lockdep_set_class_and_name(&nlk->nl_cb_mutex,
- 					   nlk_cb_mutex_keys + protocol,
- 					   nlk_cb_mutex_key_strings[protocol]);
--	}
-+	nlk->dump_cb_mutex = dump_cb_mutex;
- 	init_waitqueue_head(&nlk->wait);
+@@ -340,8 +341,10 @@ static void npc_handle_multi_layer_fields(struct rvu *rvu, int blkaddr, u8 intf)
+ 	vlan_tag2 = &key_fields[NPC_VLAN_TAG2];
  
- 	sk->sk_destruct = netlink_sock_destruct;
-@@ -2228,7 +2224,7 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
- 	int alloc_size;
+ 	/* if key profile programmed does not extract Ethertype at all */
+-	if (!etype_ether->nr_kws && !etype_tag1->nr_kws && !etype_tag2->nr_kws)
++	if (!etype_ether->nr_kws && !etype_tag1->nr_kws && !etype_tag2->nr_kws) {
++		dev_err(rvu->dev, "mkex: Ethertype is not extracted.\n");
+ 		goto vlan_tci;
++	}
  
- 	if (!lock_taken)
--		mutex_lock(nlk->cb_mutex);
-+		mutex_lock(&nlk->nl_cb_mutex);
- 	if (!nlk->cb_running) {
- 		err = -EINVAL;
- 		goto errout_skb;
-@@ -2284,14 +2280,22 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
- 	netlink_skb_set_owner_r(skb, sk);
- 
- 	if (nlk->dump_done_errno > 0) {
-+		struct mutex *extra_mutex = nlk->dump_cb_mutex;
-+
- 		cb->extack = &extack;
-+
-+		if (extra_mutex)
-+			mutex_lock(extra_mutex);
- 		nlk->dump_done_errno = cb->dump(skb, cb);
-+		if (extra_mutex)
-+			mutex_unlock(extra_mutex);
-+
- 		cb->extack = NULL;
+ 	/* if key profile programmed extracts Ethertype from one layer */
+ 	if (etype_ether->nr_kws && !etype_tag1->nr_kws && !etype_tag2->nr_kws)
+@@ -354,35 +357,45 @@ static void npc_handle_multi_layer_fields(struct rvu *rvu, int blkaddr, u8 intf)
+ 	/* if key profile programmed extracts Ethertype from multiple layers */
+ 	if (etype_ether->nr_kws && etype_tag1->nr_kws) {
+ 		for (i = 0; i < NPC_MAX_KWS_IN_KEY; i++) {
+-			if (etype_ether->kw_mask[i] != etype_tag1->kw_mask[i])
++			if (etype_ether->kw_mask[i] != etype_tag1->kw_mask[i]) {
++				dev_err(rvu->dev, "mkex: Etype pos is different for untagged and tagged pkts.\n");
+ 				goto vlan_tci;
++			}
+ 		}
+ 		key_fields[NPC_ETYPE] = *etype_tag1;
+ 	}
+ 	if (etype_ether->nr_kws && etype_tag2->nr_kws) {
+ 		for (i = 0; i < NPC_MAX_KWS_IN_KEY; i++) {
+-			if (etype_ether->kw_mask[i] != etype_tag2->kw_mask[i])
++			if (etype_ether->kw_mask[i] != etype_tag2->kw_mask[i]) {
++				dev_err(rvu->dev, "mkex: Etype pos is different for untagged and double tagged pkts.\n");
+ 				goto vlan_tci;
++			}
+ 		}
+ 		key_fields[NPC_ETYPE] = *etype_tag2;
+ 	}
+ 	if (etype_tag1->nr_kws && etype_tag2->nr_kws) {
+ 		for (i = 0; i < NPC_MAX_KWS_IN_KEY; i++) {
+-			if (etype_tag1->kw_mask[i] != etype_tag2->kw_mask[i])
++			if (etype_tag1->kw_mask[i] != etype_tag2->kw_mask[i]) {
++				dev_err(rvu->dev, "mkex: Etype pos is different for tagged and double tagged pkts.\n");
+ 				goto vlan_tci;
++			}
+ 		}
+ 		key_fields[NPC_ETYPE] = *etype_tag2;
  	}
  
- 	if (nlk->dump_done_errno > 0 ||
- 	    skb_tailroom(skb) < nlmsg_total_size(sizeof(nlk->dump_done_errno))) {
--		mutex_unlock(nlk->cb_mutex);
-+		mutex_unlock(&nlk->nl_cb_mutex);
+ 	/* check none of higher layers overwrite Ethertype */
+ 	start_lid = key_fields[NPC_ETYPE].layer_mdata.lid + 1;
+-	if (npc_check_overlap(rvu, blkaddr, NPC_ETYPE, start_lid, intf))
++	if (npc_check_overlap(rvu, blkaddr, NPC_ETYPE, start_lid, intf)) {
++		dev_err(rvu->dev, "mkex: Ethertype is overwritten by higher layers.\n");
+ 		goto vlan_tci;
++	}
+ 	*features |= BIT_ULL(NPC_ETYPE);
+ vlan_tci:
+ 	/* if key profile does not extract outer vlan tci at all */
+-	if (!vlan_tag1->nr_kws && !vlan_tag2->nr_kws)
++	if (!vlan_tag1->nr_kws && !vlan_tag2->nr_kws) {
++		dev_err(rvu->dev, "mkex: Outer vlan tci is not extracted.\n");
+ 		goto done;
++	}
  
- 		if (sk_filter(sk, skb))
- 			kfree_skb(skb);
-@@ -2325,13 +2329,13 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
- 	WRITE_ONCE(nlk->cb_running, false);
- 	module = cb->module;
- 	skb = cb->skb;
--	mutex_unlock(nlk->cb_mutex);
-+	mutex_unlock(&nlk->nl_cb_mutex);
- 	module_put(module);
- 	consume_skb(skb);
- 	return 0;
- 
- errout_skb:
--	mutex_unlock(nlk->cb_mutex);
-+	mutex_unlock(&nlk->nl_cb_mutex);
- 	kfree_skb(skb);
- 	return err;
+ 	/* if key profile extracts outer vlan tci from one layer */
+ 	if (vlan_tag1->nr_kws && !vlan_tag2->nr_kws)
+@@ -393,15 +406,19 @@ static void npc_handle_multi_layer_fields(struct rvu *rvu, int blkaddr, u8 intf)
+ 	/* if key profile extracts outer vlan tci from multiple layers */
+ 	if (vlan_tag1->nr_kws && vlan_tag2->nr_kws) {
+ 		for (i = 0; i < NPC_MAX_KWS_IN_KEY; i++) {
+-			if (vlan_tag1->kw_mask[i] != vlan_tag2->kw_mask[i])
++			if (vlan_tag1->kw_mask[i] != vlan_tag2->kw_mask[i]) {
++				dev_err(rvu->dev, "mkex: Out vlan tci pos is different for tagged and double tagged pkts.\n");
+ 				goto done;
++			}
+ 		}
+ 		key_fields[NPC_OUTER_VID] = *vlan_tag2;
+ 	}
+ 	/* check none of higher layers overwrite outer vlan tci */
+ 	start_lid = key_fields[NPC_OUTER_VID].layer_mdata.lid + 1;
+-	if (npc_check_overlap(rvu, blkaddr, NPC_OUTER_VID, start_lid, intf))
++	if (npc_check_overlap(rvu, blkaddr, NPC_OUTER_VID, start_lid, intf)) {
++		dev_err(rvu->dev, "mkex: Outer vlan tci is overwritten by higher layers.\n");
+ 		goto done;
++	}
+ 	*features |= BIT_ULL(NPC_OUTER_VID);
+ done:
+ 	return;
+@@ -522,6 +539,10 @@ static void npc_set_features(struct rvu *rvu, int blkaddr, u8 intf)
+ 	if (npc_check_field(rvu, blkaddr, NPC_LB, intf))
+ 		*features |= BIT_ULL(NPC_VLAN_ETYPE_CTAG) |
+ 			     BIT_ULL(NPC_VLAN_ETYPE_STAG);
++
++	/* for L2M/L2B/L3M/L3B, check if the type is present in the key */
++	if (npc_check_field(rvu, blkaddr, NPC_LXMB, intf))
++		*features |= BIT_ULL(NPC_LXMB);
  }
-@@ -2354,7 +2358,7 @@ int __netlink_dump_start(struct sock *ssk, struct sk_buff *skb,
- 	}
  
- 	nlk = nlk_sk(sk);
--	mutex_lock(nlk->cb_mutex);
-+	mutex_lock(&nlk->nl_cb_mutex);
- 	/* A dump is in progress... */
- 	if (nlk->cb_running) {
- 		ret = -EBUSY;
-@@ -2404,7 +2408,7 @@ int __netlink_dump_start(struct sock *ssk, struct sk_buff *skb,
- 	module_put(control->module);
- error_unlock:
- 	sock_put(sk);
--	mutex_unlock(nlk->cb_mutex);
-+	mutex_unlock(&nlk->nl_cb_mutex);
- error_free:
- 	kfree_skb(skb);
- 	return ret;
-diff --git a/net/netlink/af_netlink.h b/net/netlink/af_netlink.h
-index fca9556848885e..9e65f47bc30788 100644
---- a/net/netlink/af_netlink.h
-+++ b/net/netlink/af_netlink.h
-@@ -36,8 +36,9 @@ struct netlink_sock {
- 	bool			cb_running;
- 	int			dump_done_errno;
- 	struct netlink_callback	cb;
--	struct mutex		*cb_mutex;
--	struct mutex		cb_def_mutex;
-+	struct mutex		nl_cb_mutex;
+ /* Scan key extraction profile and record how fields of our interest
+@@ -599,16 +620,6 @@ static int npc_scan_verify_kex(struct rvu *rvu, int blkaddr)
+ 		dev_err(rvu->dev, "Channel cannot be overwritten\n");
+ 		return -EINVAL;
+ 	}
+-	/* DMAC should be present in key for unicast filter to work */
+-	if (!npc_is_field_present(rvu, NPC_DMAC, NIX_INTF_RX)) {
+-		dev_err(rvu->dev, "DMAC not present in Key\n");
+-		return -EINVAL;
+-	}
+-	/* check that none of the fields overwrite DMAC */
+-	if (npc_check_overlap(rvu, blkaddr, NPC_DMAC, 0, NIX_INTF_RX)) {
+-		dev_err(rvu->dev, "DMAC cannot be overwritten\n");
+-		return -EINVAL;
+-	}
+ 
+ 	npc_set_features(rvu, blkaddr, NIX_INTF_TX);
+ 	npc_set_features(rvu, blkaddr, NIX_INTF_RX);
+@@ -851,6 +862,11 @@ static void npc_update_flow(struct rvu *rvu, struct mcam_entry *entry,
+ 		npc_update_entry(rvu, NPC_LE, entry, NPC_LT_LE_ESP,
+ 				 0, ~0ULL, 0, intf);
+ 
++	if (features & BIT_ULL(NPC_LXMB)) {
++		output->lxmb = is_broadcast_ether_addr(pkt->dmac) ? 2 : 1;
++		npc_update_entry(rvu, NPC_LXMB, entry, output->lxmb, 0,
++				 output->lxmb, 0, intf);
++	}
+ #define NPC_WRITE_FLOW(field, member, val_lo, val_hi, mask_lo, mask_hi)	      \
+ do {									      \
+ 	if (features & BIT_ULL((field))) {				      \
+@@ -1153,6 +1169,7 @@ static int npc_install_flow(struct rvu *rvu, int blkaddr, u16 target,
+ 	rule->chan_mask = write_req.entry_data.kw_mask[0] & NPC_KEX_CHAN_MASK;
+ 	rule->chan = write_req.entry_data.kw[0] & NPC_KEX_CHAN_MASK;
+ 	rule->chan &= rule->chan_mask;
++	rule->lxmb = dummy.lxmb;
+ 	if (is_npc_intf_tx(req->intf))
+ 		rule->intf = pfvf->nix_tx_intf;
+ 	else
+@@ -1215,6 +1232,34 @@ int rvu_mbox_handler_npc_install_flow(struct rvu *rvu,
+ 	if (!is_npc_interface_valid(rvu, req->intf))
+ 		return NPC_FLOW_INTF_INVALID;
+ 
++	/* If DMAC is not extracted in MKEX, rules installed by AF
++	 * can rely on L2MB bit set by hardware protocol checker for
++	 * broadcast and multicast addresses.
++	 */
++	if (npc_check_field(rvu, blkaddr, NPC_DMAC, req->intf))
++		goto process_flow;
 +
-+	struct mutex		*dump_cb_mutex;
- 	void			(*netlink_rcv)(struct sk_buff *skb);
- 	int			(*netlink_bind)(struct net *net, int group);
- 	void			(*netlink_unbind)(struct net *net, int group);
++	if (is_pffunc_af(req->hdr.pcifunc)) {
++		if (is_unicast_ether_addr(req->packet.dmac)) {
++			dev_err(rvu->dev,
++				"%s: mkex profile does not support ucast flow\n",
++				__func__);
++			return NPC_FLOW_NOT_SUPPORTED;
++		}
++
++		if (!npc_is_field_present(rvu, NPC_LXMB, req->intf)) {
++			dev_err(rvu->dev,
++				"%s: mkex profile does not support bcast/mcast flow",
++				__func__);
++			return NPC_FLOW_NOT_SUPPORTED;
++		}
++
++		/* Modify feature to use LXMB instead of DMAC */
++		req->features &= ~BIT_ULL(NPC_DMAC);
++		req->features |= BIT_ULL(NPC_LXMB);
++	}
++
++process_flow:
+ 	if (from_vf && req->default_rule)
+ 		return NPC_FLOW_VF_PERM_DENIED;
+ 
 -- 
 2.53.0
 
