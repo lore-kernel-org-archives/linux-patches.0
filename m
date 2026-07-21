@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4AA44AB62;
-	Tue, 21 Jul 2026 21:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88243C1081;
+	Tue, 21 Jul 2026 21:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670872; cv=none; b=IAwcIA9HBt4eG4L+nvX10D2Q3O2dQ7PJcUCOTSqd4oQiYbMxAzusiF1WWXaRnkmrU1P8yV0tneeWwKRSaK7sG6yyLym0/+vW99fLNXjvNSMfcDTGzU9yritDEjCIQVsyt7CQdIetYDxLzFwkBFAKM4ngv0vjM9NTe8zU0U9/+3U=
+	t=1784670874; cv=none; b=SqM06kPIC6UJFmCRpfErOzcGpi+c4N4sb+XN766b5P04xzZd8dsW4Z6vbEgVhbWyO4ZKNNpVdI8T7MTHLxXZzC33B1lomZWXXmvS03C/dtFrv+JHeYyBr4X/Hmilm6V4cznNQvYFpsadI89rxWe8iF4yvcOVQYPCaTFHygWBoUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670872; c=relaxed/simple;
-	bh=q4JNjy7Lu1/NG+fsRpPEe40I+EqdAuAV+yllek1dB3Q=;
+	s=arc-20240116; t=1784670874; c=relaxed/simple;
+	bh=61gMhbYKOWxFxxMuT4GdG/Gr9l5BR4hptPZ4LA4uURU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgSgr6JWMSBwqM6zJ8b4RKn8aAkUc0+0jBACURozx3Vxep3IVl6qPIOWtN6Xzt+6LzIz6toofTCUsR640IHBilpUM1rE4HgY5LZ8zTWUXRdZ8DmuYewxq+297JkqEyrUwHiqPgnOWwKk0VKZwUiKiGjKMJdgelSCsb0GFrGOYgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXhW45OT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YBxPFHHtEUHn8cFLxezgIaQWK/9HneX0wVei4XleupWkXuXDd/l7WPohmNiOO5o3qJwHJewuZZDAU4EV2tkeposs0Yap0g6aLfgqUmBD6vo13aaKmUBmpQbOoN08rv0arSQnMT2qvtzCSsawdlfhUvI/3wXW1wcB0ExjWQ8Y5xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGyWiw/3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXhW45OT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747B81F000E9;
-	Tue, 21 Jul 2026 21:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGyWiw/3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB151F000E9;
+	Tue, 21 Jul 2026 21:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670871;
-	bh=vZaTxxZ+2VViJRzPihH4fFOhxJXEx+jvMQ0oRZxs//U=;
+	s=korg; t=1784670873;
+	bh=g8aFS4e9o0ys1carscQiK7uoS9NweHIayDU4RNqOnYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eXhW45OTJVpIaOLzwEfA2yWtWoBu6OHdTDy+ojnkAGOYMF/AY9wTU8hwGVREzETkU
-	 f3ppXA6cvJtlmXKzgZF+s46BWYc5lRUrSKSJZFpKNoQLXe1NC1/0cDlBah4RcdZYAW
-	 CDY6QKWoEY08JIbhOiCJd6vr6SC8cQPHwnHDnvCo=
+	b=BGyWiw/33sQUPcvjnJKcSj6l0blaz4IJL7mUOVSasI17lBNBTe72vu6vfHORtHoUv
+	 ZUnX6k5Hg0CkddvxiL+4hdZQkQpVWxWKHF6W0xTkU7DKBa0VrKtdKOJdjCdxkQggfr
+	 iu9gvUaWjVtZqh2BFdB5rB9iL+p6Seix7OeLLKi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 007/843] net/sched: act_pedit: use NLA_POLICY for parsing ex keys
-Date: Tue, 21 Jul 2026 17:14:02 +0200
-Message-ID: <20260721152406.119982809@linuxfoundation.org>
+Subject: [PATCH 5.15 008/843] dma-buf: remove unused dma-fence-unwrap.c (stable/linux-5.15.y only)
+Date: Tue, 21 Jul 2026 17:14:03 +0200
+Message-ID: <20260721152406.142805683@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -46,56 +44,220 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-[ Upstream commit 5036034572b79daa6d6600338e8e8229e2a44b09 ]
+The file drivers/dma-buf/dma-fence-unwrap.c was incorrectly added to
+the 5.15.y stable branch in commit 4e82b9c11d3c ("dma-buf: add
+dma_fence_timestamp helper") as a new file, but it was never enabled in
+the Makefile, and its header include/linux/dma-fence-unwrap.h was not
+present, making it uncompilable.
 
-Transform two checks in the 'ex' key parsing into netlink policies
-removing extra if checks.
+A full revert of commit 4e82b9c11d3c ("dma-buf: add dma_fence_timestamp
+helper") is not desirable because that commit also introduced the valid
+dma_fence_timestamp() helper and fixed legitimate timestamp race
+windows in drivers/dma-buf/sync_file.c and
+drivers/gpu/drm/scheduler/sched_main.c.
 
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Since there are no users of dma-fence-unwrap in the 5.15.y branch,
+remove the unused file to clean up the tree and avoid confusion.
+
+Fixes: 4e82b9c11d3c ("dma-buf: add dma_fence_timestamp helper")
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_pedit.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/dma-buf/dma-fence-unwrap.c | 176 -----------------------------
+ 1 file changed, 176 deletions(-)
+ delete mode 100644 drivers/dma-buf/dma-fence-unwrap.c
 
-diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
-index efcbca97bf2eda..a987f60d202826 100644
---- a/net/sched/act_pedit.c
-+++ b/net/sched/act_pedit.c
-@@ -35,8 +35,9 @@ static const struct nla_policy pedit_policy[TCA_PEDIT_MAX + 1] = {
- };
- 
- static const struct nla_policy pedit_key_ex_policy[TCA_PEDIT_KEY_EX_MAX + 1] = {
--	[TCA_PEDIT_KEY_EX_HTYPE]  = { .type = NLA_U16 },
--	[TCA_PEDIT_KEY_EX_CMD]	  = { .type = NLA_U16 },
-+	[TCA_PEDIT_KEY_EX_HTYPE] =
-+		NLA_POLICY_MAX(NLA_U16, TCA_PEDIT_HDR_TYPE_MAX),
-+	[TCA_PEDIT_KEY_EX_CMD] = NLA_POLICY_MAX(NLA_U16, TCA_PEDIT_CMD_MAX),
- };
- 
- static struct tcf_pedit_key_ex *tcf_pedit_keys_ex_parse(struct nlattr *nla,
-@@ -86,12 +87,6 @@ static struct tcf_pedit_key_ex *tcf_pedit_keys_ex_parse(struct nlattr *nla,
- 		k->htype = nla_get_u16(tb[TCA_PEDIT_KEY_EX_HTYPE]);
- 		k->cmd = nla_get_u16(tb[TCA_PEDIT_KEY_EX_CMD]);
- 
--		if (k->htype > TCA_PEDIT_HDR_TYPE_MAX ||
--		    k->cmd > TCA_PEDIT_CMD_MAX) {
--			err = -EINVAL;
--			goto err_out;
+diff --git a/drivers/dma-buf/dma-fence-unwrap.c b/drivers/dma-buf/dma-fence-unwrap.c
+deleted file mode 100644
+index 628af51c81af3d..00000000000000
+--- a/drivers/dma-buf/dma-fence-unwrap.c
++++ /dev/null
+@@ -1,176 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * dma-fence-util: misc functions for dma_fence objects
+- *
+- * Copyright (C) 2022 Advanced Micro Devices, Inc.
+- * Authors:
+- *	Christian König <christian.koenig@amd.com>
+- */
+-
+-#include <linux/dma-fence.h>
+-#include <linux/dma-fence-array.h>
+-#include <linux/dma-fence-chain.h>
+-#include <linux/dma-fence-unwrap.h>
+-#include <linux/slab.h>
+-
+-/* Internal helper to start new array iteration, don't use directly */
+-static struct dma_fence *
+-__dma_fence_unwrap_array(struct dma_fence_unwrap *cursor)
+-{
+-	cursor->array = dma_fence_chain_contained(cursor->chain);
+-	cursor->index = 0;
+-	return dma_fence_array_first(cursor->array);
+-}
+-
+-/**
+- * dma_fence_unwrap_first - return the first fence from fence containers
+- * @head: the entrypoint into the containers
+- * @cursor: current position inside the containers
+- *
+- * Unwraps potential dma_fence_chain/dma_fence_array containers and return the
+- * first fence.
+- */
+-struct dma_fence *dma_fence_unwrap_first(struct dma_fence *head,
+-					 struct dma_fence_unwrap *cursor)
+-{
+-	cursor->chain = dma_fence_get(head);
+-	return __dma_fence_unwrap_array(cursor);
+-}
+-EXPORT_SYMBOL_GPL(dma_fence_unwrap_first);
+-
+-/**
+- * dma_fence_unwrap_next - return the next fence from a fence containers
+- * @cursor: current position inside the containers
+- *
+- * Continue unwrapping the dma_fence_chain/dma_fence_array containers and return
+- * the next fence from them.
+- */
+-struct dma_fence *dma_fence_unwrap_next(struct dma_fence_unwrap *cursor)
+-{
+-	struct dma_fence *tmp;
+-
+-	++cursor->index;
+-	tmp = dma_fence_array_next(cursor->array, cursor->index);
+-	if (tmp)
+-		return tmp;
+-
+-	cursor->chain = dma_fence_chain_walk(cursor->chain);
+-	return __dma_fence_unwrap_array(cursor);
+-}
+-EXPORT_SYMBOL_GPL(dma_fence_unwrap_next);
+-
+-/* Implementation for the dma_fence_merge() marco, don't use directly */
+-struct dma_fence *__dma_fence_unwrap_merge(unsigned int num_fences,
+-					   struct dma_fence **fences,
+-					   struct dma_fence_unwrap *iter)
+-{
+-	struct dma_fence_array *result;
+-	struct dma_fence *tmp, **array;
+-	ktime_t timestamp;
+-	unsigned int i;
+-	size_t count;
+-
+-	count = 0;
+-	timestamp = ns_to_ktime(0);
+-	for (i = 0; i < num_fences; ++i) {
+-		dma_fence_unwrap_for_each(tmp, &iter[i], fences[i]) {
+-			if (!dma_fence_is_signaled(tmp)) {
+-				++count;
+-			} else {
+-				ktime_t t = dma_fence_timestamp(tmp);
+-
+-				if (ktime_after(t, timestamp))
+-					timestamp = t;
+-			}
+-		}
+-	}
+-
+-	/*
+-	 * If we couldn't find a pending fence just return a private signaled
+-	 * fence with the timestamp of the last signaled one.
+-	 */
+-	if (count == 0)
+-		return dma_fence_allocate_private_stub(timestamp);
+-
+-	array = kmalloc_array(count, sizeof(*array), GFP_KERNEL);
+-	if (!array)
+-		return NULL;
+-
+-	/*
+-	 * This trashes the input fence array and uses it as position for the
+-	 * following merge loop. This works because the dma_fence_merge()
+-	 * wrapper macro is creating this temporary array on the stack together
+-	 * with the iterators.
+-	 */
+-	for (i = 0; i < num_fences; ++i)
+-		fences[i] = dma_fence_unwrap_first(fences[i], &iter[i]);
+-
+-	count = 0;
+-	do {
+-		unsigned int sel;
+-
+-restart:
+-		tmp = NULL;
+-		for (i = 0; i < num_fences; ++i) {
+-			struct dma_fence *next;
+-
+-			while (fences[i] && dma_fence_is_signaled(fences[i]))
+-				fences[i] = dma_fence_unwrap_next(&iter[i]);
+-
+-			next = fences[i];
+-			if (!next)
+-				continue;
+-
+-			/*
+-			 * We can't guarantee that inpute fences are ordered by
+-			 * context, but it is still quite likely when this
+-			 * function is used multiple times. So attempt to order
+-			 * the fences by context as we pass over them and merge
+-			 * fences with the same context.
+-			 */
+-			if (!tmp || tmp->context > next->context) {
+-				tmp = next;
+-				sel = i;
+-
+-			} else if (tmp->context < next->context) {
+-				continue;
+-
+-			} else if (dma_fence_is_later(tmp, next)) {
+-				fences[i] = dma_fence_unwrap_next(&iter[i]);
+-				goto restart;
+-			} else {
+-				fences[sel] = dma_fence_unwrap_next(&iter[sel]);
+-				goto restart;
+-			}
 -		}
 -
- 		k++;
- 	}
- 
+-		if (tmp) {
+-			array[count++] = dma_fence_get(tmp);
+-			fences[sel] = dma_fence_unwrap_next(&iter[sel]);
+-		}
+-	} while (tmp);
+-
+-	if (count == 0) {
+-		tmp = dma_fence_allocate_private_stub(ktime_get());
+-		goto return_tmp;
+-	}
+-
+-	if (count == 1) {
+-		tmp = array[0];
+-		goto return_tmp;
+-	}
+-
+-	result = dma_fence_array_create(count, array,
+-					dma_fence_context_alloc(1),
+-					1, false);
+-	if (!result) {
+-		tmp = NULL;
+-		goto return_tmp;
+-	}
+-	return &result->base;
+-
+-return_tmp:
+-	kfree(array);
+-	return tmp;
+-}
+-EXPORT_SYMBOL_GPL(__dma_fence_unwrap_merge);
 -- 
 2.53.0
 
