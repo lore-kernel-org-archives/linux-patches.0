@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF552471257;
-	Tue, 21 Jul 2026 18:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8022B47125A;
+	Tue, 21 Jul 2026 18:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657644; cv=none; b=IE0R89Nga2yVqNObnTMl11rAZbrEpbODwYESHtsN/C0LozlJBUds9rQ6SgwRp3ze+3LuEMHOnplHq6rBjL+9fl/ODz7Tt2BLBa4g54ssyq4hOGfRAZR+jydrWiTjws2fREyLNo4VletqJDF2fKWpUixL7g3U3UsFk5OQnySJ0JE=
+	t=1784657646; cv=none; b=K74sOOmO3wy8ZnBLMMpLRy69mhfh1oAN++lmQ2cA9CGl2g9u9nUQg7rINls6A1bMcckvX67Z8fBQIOQFVc96RemQRBP1WZCupB+iex7t73qh/mQoPNHa2QNfiQa1kzwJ4i4+G0HhaHf2s2X3b8EhBakGUYa/oLLb1jRLejwp4WU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657644; c=relaxed/simple;
-	bh=vuQs5haASml9BEGlsxgt3G2QS2pGfArBsxXHCXn1lIU=;
+	s=arc-20240116; t=1784657646; c=relaxed/simple;
+	bh=GlypB/m1JDsBNUfVgS9mKp345zcSucTv2WqJTGcGUto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T5XnEhKrqHHrSBvSQq66sTB9K7oL9H1dy+eykW8B4Kn0Eou6nXBILe4m+qTv/wTMxSl1dyuTlrweg9Uf57t4xeoEofXv/P9TlJwL3JT5zcHjHzAIhIECFtRK3yARRFXzLEP888FSwdUfhjEjj/6Sch5RpgvpHFk20MHGBEtD70c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JWa82VO+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kicnufYGgutwjSnRNozvBKzT3SKogTXKIn7q0EBtuQ9YCoGAx+7UHaB9V/At8OJDcZAHzzXUD8eeaaDic+atGcrnWYJVPsKyzo1bsBoyFjgvSDhcuYPoqrelTWWl19mBnfH7F1e8A9mQXPCs3MeHphDr0bht818BNf3cHemrJM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/g4hW2S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JWa82VO+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509E31F000E9;
-	Tue, 21 Jul 2026 18:14:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/g4hW2S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF0E1F000E9;
+	Tue, 21 Jul 2026 18:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657642;
-	bh=xPcezCXNu5Th1mRMdU5/Eo7ipVf0dsQt76SZY/WPqN8=;
+	s=korg; t=1784657645;
+	bh=ZH4gVzo4JnY5rRHV38HnjBiWbcoK8iehCCF3WrpjgXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JWa82VO+QsGxx1V0OxhQkO+37LwEJ+mMVe7KeA03i8lze68fCG7s+BTc2IXLGOMaH
-	 JhOzASBjTCOFhfE34g1DflUimXwYXhWtWifnhGSJ1qIHdiKvRMyqnzln7Is8uhreSS
-	 rA9QIt2o2vwmdpE4lphuHHdAYpqJiHKUH8y4Z8iw=
+	b=g/g4hW2StvpNs05tLCGr5QmrSXtfLyq2h92efQ1GFj4SSMmjjb9GtH/8EHswE+KdJ
+	 YwSEw+IOt0dFGC4gShqNI7jlD6J/XBaHfTyVa0E2ovtfcRRK29vDnZ+ST35jXwmj7f
+	 0RGAsupq1hKp38pQCGPUC0dfytW+m2wq8OF0go88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+786c889f046e8b003ca6@syzkaller.appspotmail.com,
+	syzbot+1da17e4b41d795df059e@syzkaller.appspotmail.com,
+	syzbot+421c5f3ff8e9493084d9@syzkaller.appspotmail.com,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0788/1611] spi: dw: fix wrong BAUDR setting after resume
-Date: Tue, 21 Jul 2026 17:15:04 +0200
-Message-ID: <20260721152533.114188067@linuxfoundation.org>
+Subject: [PATCH 6.18 0836/1611] netfilter: ipset: Fix data race between add and dump in all hash types
+Date: Tue, 21 Jul 2026 17:15:52 +0200
+Message-ID: <20260721152534.191766266@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,46 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-[ Upstream commit 66b6605bcea7af7aca3d1d858b9c5f14903f9f9a ]
+[ Upstream commit 2358f7427ccd6ec8867a48205d8fcec973683a3f ]
 
-After resuming from suspend to ram, spi transfer stops working. Further
-debugging shows that the BAUDR register isn't correctly set, this is
-due to dws->current_freq doesn't match the HW BAUDR setting,
-specifically, the dws->current_freq equals to speed_hz, but BAUDR is 0.
-so the dw_spi_set_clk() in below code won't be called:
+When adding a new entry to the next position in the existing hash bucket,
+the position index was incremented too early and parallel dump could
+read it before the entry was populated with the value. Move the setting
+of the position index after populating the entry.
 
-        if (dws->current_freq != speed_hz) {
-                dw_spi_set_clk(dws, clk_div);
-                dws->current_freq = speed_hz;
-        }
+v2: Position counting fixed, noticed by Florian Westphal.
 
-The mismatch comes from dw_spi_shutdown_chip() when suspending.
-Fix this mismatch by setting dws->current_freq to 0 as well when
-clearing BAUDR reg in dw_spi_shutdown_chip().
-
-Fixes: e24c74527207 ("spi: controller driver for Designware SPI core")
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Link: https://patch.msgid.link/20260612002835.5240-1-jszhang@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 18f84d41d34f ("netfilter: ipset: Introduce RCU locking in hash:* types")
+Reported-by: syzbot+786c889f046e8b003ca6@syzkaller.appspotmail.com
+Reported-by: syzbot+1da17e4b41d795df059e@syzkaller.appspotmail.com
+Reported-by: syzbot+421c5f3ff8e9493084d9@syzkaller.appspotmail.com
+Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: e4b4984e28c1 ("netfilter: ipset: Don't use test_bit() in lockless RCU readers in hash types")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-dw.h | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/ipset/ip_set_hash_gen.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-dw.h b/drivers/spi/spi-dw.h
-index fc267c6437ae09..8a3c085c85e078 100644
---- a/drivers/spi/spi-dw.h
-+++ b/drivers/spi/spi-dw.h
-@@ -282,6 +282,7 @@ static inline void dw_spi_shutdown_chip(struct dw_spi *dws)
- {
- 	dw_spi_enable_chip(dws, 0);
- 	dw_spi_set_clk(dws, 0);
-+	dws->current_freq = 0;
- }
+diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
+index 4e56269efef28e..5f493124c15903 100644
+--- a/net/netfilter/ipset/ip_set_hash_gen.h
++++ b/net/netfilter/ipset/ip_set_hash_gen.h
+@@ -844,7 +844,7 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
+ 	const struct mtype_elem *d = value;
+ 	struct mtype_elem *data;
+ 	struct hbucket *n, *old = ERR_PTR(-ENOENT);
+-	int i, j = -1, ret;
++	int i, j = -1, npos = 0, ret;
+ 	bool flag_exist = flags & IPSET_FLAG_EXIST;
+ 	bool deleted = false, forceadd = false, reuse = false;
+ 	u32 r, key, multi = 0, elements, maxelem;
+@@ -889,6 +889,7 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
+ 			ext_size(AHASH_INIT_SIZE, set->dsize);
+ 		goto copy_elem;
+ 	}
++	npos = n->pos;
+ 	for (i = 0; i < n->pos; i++) {
+ 		if (!test_bit(i, n->used)) {
+ 			/* Reuse first deleted entry */
+@@ -962,7 +963,8 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
+ 	}
  
- extern void dw_spi_set_cs(struct spi_device *spi, bool enable);
+ copy_elem:
+-	j = n->pos++;
++	j = npos;
++	npos = n->pos + 1;
+ 	data = ahash_data(n, j, set->dsize);
+ copy_data:
+ 	t->hregion[r].elements++;
+@@ -985,6 +987,7 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
+ 	if (SET_WITH_TIMEOUT(set))
+ 		ip_set_timeout_set(ext_timeout(data, set), ext->timeout);
+ 	smp_mb__before_atomic();
++	n->pos = npos;
+ 	set_bit(j, n->used);
+ 	if (old != ERR_PTR(-ENOENT)) {
+ 		rcu_assign_pointer(hbucket(t, key), n);
 -- 
 2.53.0
 
