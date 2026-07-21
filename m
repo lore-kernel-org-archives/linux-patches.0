@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEA6425863;
-	Tue, 21 Jul 2026 19:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70AB63A874B;
+	Tue, 21 Jul 2026 19:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662431; cv=none; b=JjyCA2EMKLwoXrvQi7lC52FNJZFeSXVZ0k79iG2WdSR7MjlSRJvlKXKSUX9AXjxosXAVqJ7KuEnk7JM/SwZhGfvtnHsAOMgePS19e572ak/fFV6TOw/w0ANM26qzaAQ4cDmBEbK1p4imnSCutm3K5dlhtqKgyJSdI71yPWQGJjo=
+	t=1784662434; cv=none; b=rveAwngbq2aUIKEb1hbMpKbTvPJ+Y3VRxybWAMoi5whB+D09U9mQweaAyTb3aNycdzesIiUCZAngTgczbgKnU7/ysm3nnkZWliR9/ZGyQzsvwNYWoTS5fuYamlzSoVvs/2SBBpRfDfSGpK3dF60mTh6rSemNK4dCQFnyM6qRhTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662431; c=relaxed/simple;
-	bh=G6rIHKqkBWLFuF/WUJN4dyT6t8/NVmjK1yepu+bR2YE=;
+	s=arc-20240116; t=1784662434; c=relaxed/simple;
+	bh=95wBRCxfFMqJjx00aw6RyY7+zcn2d9kfA6APHHM9PX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WZ1CFkNfXPphGWuki+NDY2E56V1fPtDMijkd42wssvDIx/FdmpXqRooNbkMEUirACveBtB2hcjx8EnJiBjjM0WLxWStEwFs3RWhNlms29RRTC+q5ZAI+fJ5eYXkZFHqG8TQXuEM6I5k9NpddwOX+RgKrZ79NfSdeREm/Qmr5Fg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lx/Rx539; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FpHm+JmxEI4T141esKu79W+qbnYTvROpYUK9/gIzgFeOA/hkG7I3s7dnNPAQWXxre1NpkcujtzqxKzDpSgoVMIvYtwHMhZAI9jKwxatSKyotceRGT1SQiJarK2RPq/5SlIMoM1DjJoQkPowmSNQXaSDkJOzGJX8AE8bJskLArBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBmk1nK4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lx/Rx539"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38AC41F000E9;
-	Tue, 21 Jul 2026 19:33:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBmk1nK4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74D51F000E9;
+	Tue, 21 Jul 2026 19:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662430;
-	bh=gm5en09o9kmiTt4mq2imauKGEtp7ZeaI7jiuopMSx94=;
+	s=korg; t=1784662433;
+	bh=/wfaaILbTUeLPdeUJmOqocVXHZrnye/PQyRNhl0TbFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lx/Rx539F3TSvWzcRQLXpk64K22QI9DZijovr/ZSPOIGgklKJjwfz3l0NM5UHdhxx
-	 MZcVETwwA6tlaXNghy1qF2ztNJ+fSJg3CuxMOjryleeI5mMMQSG8dgzLJDHKpy9qlV
-	 czTFXDO3i59ajMAylKZbuMQO3mtV1Ur6m60Dttno=
+	b=LBmk1nK4Fn3ECYk/APDqDZvLlsTzSb0jyZaOewp2jFxUmCzQ8z9H35+jeCHV/obFc
+	 fp2mebLgl6+NhVjhTHx93YiFBkgh+bdvUWfCMwnHIDyKGBOU8phiN9XvbQ9rrzVsJ2
+	 kBoH+gCqV+7RYMz32lHDEdNhuwAkN488pbb9+hLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Leo Yan <leo.yan@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0442/1276] PCI: qcom: Disable ASPM L0s for SA8775P
-Date: Tue, 21 Jul 2026 17:14:45 +0200
-Message-ID: <20260721152455.992549035@linuxfoundation.org>
+Subject: [PATCH 6.12 0416/1276] coresight: etm4x: Correct TRCVMIDCCTLR1 save and restore
+Date: Tue, 21 Jul 2026 17:14:19 +0200
+Message-ID: <20260721152455.408061389@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,51 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 29f692985819f4089f02a86e151a72f6d4cdd90d ]
+[ Upstream commit 0ec0a8785d21f63db520bd9d2a67c55e855d36a8 ]
 
-Due to a hardware issue, L0s is not properly supported by the PCIe
-controller on the SA8775p SoC. If enabled, the L0s to L0 transition
-triggers below correctable AER errors and may also affect link stability:
+It is a typo to use trcvmidcctlr0 to save and restore TRCVMIDCCTLR1.
+Use trcvmidcctlr1 instead.
 
-  pcieport 0000:00:00.0: PME: Signaling with IRQ 332
-  pcieport 0000:00:00.0: AER: enabled with IRQ 332
-  pcieport 0000:00:00.0: AER: Correctable error message received from 0000:01:00.0
-  pci 0000:01:00.0: PCIe Bus Error: severity=Correctable, type=Data Link Layer, (Transmitter ID)
-  pci 0000:01:00.0:   device [17cb:1103] error status/mask=00001000/0000e000
-  pci 0000:01:00.0:    [12] Timeout
-  pcieport 0000:00:00.0: AER: Multiple Correctable error message received from 0000:01:00.0
-  pcieport 0000:00:00.0: PCIe Bus Error: severity=Correctable, type=Data Link Layer, (Transmitter ID)
-  pcieport 0000:00:00.0:   device [17cb:0115] error status/mask=00001000/0000e000
-  pcieport 0000:00:00.0:    [12] Timeout
-
-Hence, disable L0s for the SA8775p SoC to allow it to properly function
-by sacrificing a little bit of power saving.
-
-Fixes: 58d0d3e032b3 ("PCI: qcom-ep: Add support for SA8775P SOC")
-Assisted-by: Claude:claude-4-6-sonnet
-Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-[mani: commit log, corrected fixes tag]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260419093934.1223027-1-shengchao.guo@oss.qualcomm.com
+Fixes: f5bd523690d2 ("coresight: etm4x: Convert all register accesses")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260408-arm_cs_fix_trcvmidcctlr1_typo-v1-1-6a5695363b46@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 533782940f2e21..81ba04cedc72ab 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1385,6 +1385,7 @@ static const struct qcom_pcie_cfg cfg_1_9_0 = {
- static const struct qcom_pcie_cfg cfg_1_34_0 = {
- 	.ops = &ops_1_9_0,
- 	.override_no_snoop = true,
-+	.no_l0s = true,
- };
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index 730ba893bf4cd3..05958827b3bbc3 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -1876,7 +1876,7 @@ static int __etm4_cpu_save(struct etmv4_drvdata *drvdata)
  
- static const struct qcom_pcie_cfg cfg_2_1_0 = {
+ 	state->trcvmidcctlr0 = etm4x_read32(csa, TRCVMIDCCTLR0);
+ 	if (drvdata->numvmidc > 4)
+-		state->trcvmidcctlr0 = etm4x_read32(csa, TRCVMIDCCTLR1);
++		state->trcvmidcctlr1 = etm4x_read32(csa, TRCVMIDCCTLR1);
+ 
+ 	state->trcclaimset = etm4x_read32(csa, TRCCLAIMCLR);
+ 
+@@ -2002,7 +2002,7 @@ static void __etm4_cpu_restore(struct etmv4_drvdata *drvdata)
+ 
+ 	etm4x_relaxed_write32(csa, state->trcvmidcctlr0, TRCVMIDCCTLR0);
+ 	if (drvdata->numvmidc > 4)
+-		etm4x_relaxed_write32(csa, state->trcvmidcctlr0, TRCVMIDCCTLR1);
++		etm4x_relaxed_write32(csa, state->trcvmidcctlr1, TRCVMIDCCTLR1);
+ 
+ 	etm4x_relaxed_write32(csa, state->trcclaimset, TRCCLAIMSET);
+ 
 -- 
 2.53.0
 
