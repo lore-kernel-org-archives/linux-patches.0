@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1EB46A5FD;
-	Tue, 21 Jul 2026 15:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA6E46A604;
+	Tue, 21 Jul 2026 15:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649032; cv=none; b=AjJooYhrl4M3AIBTQD6+UtcjCp/b4pbbR7iTNBtlIHIzZms9j33PNVudIwud/rDK8bp3Lw6DGkbGIz6pTZKgnDrTAw86JEC8Gl/9zkvyY7rfyjYkTKNJhrNru1T/rTmCcNoOKsjPD/1nXpg4ept7kG7Gry+XM3xWE/WjT9mppuY=
+	t=1784649035; cv=none; b=AGnw6mMVO8oW5kCPX/HC6C9iYP0WPGcQCfZWVXT31FngZH0ez28ttZGyM19OwW66rZe1OHMxG9TG2QL+VxJxUH3BfpDGsULSXcyENDsmpwEDhLj+VHWZ/NH5VlsUb2OkW1IPdUpzKKostNxoK71JIG6+yxnWfnuyLsLoctazNdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649032; c=relaxed/simple;
-	bh=dzkvdaRoUj9/4/kj128+hqYUCq8nKiQ0nk1IlFWPdt0=;
+	s=arc-20240116; t=1784649035; c=relaxed/simple;
+	bh=TG6FW4PTMao4TeYeqf+xBj2DpKoxLt7/kyyl30G+wNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jE82OoT4ALApxA84HtPX5wtMA6EMYxdlZ9ZT1Tgsw7n3FV9VjEQqaRKRFoE1xroDrsvyaTq1IBJtMPQU6DrttqLsbXecGPqs+LIBiMCzNITMNkLXMOqTnWn55lR6SYIED2PuUT41hwy1hfeVCBnSWji+aqRulZaj0FS/Rq8GWzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=weZXjywL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XfNCN+Ddij2Cnn2yZpEpuiBUQxkP4wWbdOPX14FQ1WestoE9lPiFyS9OoeaZxpRlVPyciJnJSkm2Tc+iaqmKZbxSo3ardozyyKYH5Qj39watiqgU+rIpEUE3Y1yQX57kg+bmSGfLsimlPNuKvHJObSDtd115HpIdHWiugB4+lUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ubl+yH6s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="weZXjywL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA591F000E9;
-	Tue, 21 Jul 2026 15:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ubl+yH6s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705A11F000E9;
+	Tue, 21 Jul 2026 15:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649031;
-	bh=Nr0xZTfzBedn/wJmLECOGArrBmO6NKGBVBj04+LmyCU=;
+	s=korg; t=1784649033;
+	bh=svWx2XfZuXq0lZMnoWxGG3KkCVwc1691Ynr0HL8mH7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=weZXjywL85dyM2JBbDL4knWVVPA3JfjIr/n3ErOnf0CMd0bjtajx/d61VgZwbicZc
-	 OPOc853sOfdNUTohY0a6cHx+NYdG1gRvBJ4g+fMXdGn2wULUaX8PiJwz5xMIpxnbxX
-	 CmYlVJfacMmWk4FL2UKR3jFxNRddjK1YLenncz7c=
+	b=Ubl+yH6sZ8AL8yGPmwohCqfzZ5NIw1xsAiEdRHT3uvi/Tb7tdOnLCOwhkx8IIec5o
+	 tf+aosx89NBqXhOur34ZTXj5P6ZWxTHpFdJXmM8ve6W80yuPUqnF8YOEnbK7fwk5YL
+	 Arf2Vux2Qj0GSEEbvAMTqF1enxFDTx9LZpgmdQ7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0425/2077] x86/cpu: Keep the PROCESSOR_SELECT menu together
-Date: Tue, 21 Jul 2026 17:01:38 +0200
-Message-ID: <20260721152602.765686888@linuxfoundation.org>
+Subject: [PATCH 7.1 0426/2077] nvdimm/btt: Handle preemption in BTT lane acquisition
+Date: Tue, 21 Jul 2026 17:01:39 +0200
+Message-ID: <20260721152602.789190914@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,49 +53,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit 1df61a8b2d01c560822a0421f2a76af7fda34c1f ]
+[ Upstream commit 8d4b989d9c9afe5f185aa5853b666fc4617afe9e ]
 
-Having a stray kconfig symbol in the middle of the PROCESSOR_SELECT menu
-(this symbol plus its dependent symbols) causes the menu dependencies
-not to be displayed correctly in "make {menu,n,g,x}config".
+BTT lanes serialize access to per-lane metadata and workspace state
+during BTT I/O. The btt-check unit test reports data mismatches during
+BTT writes due to a race in lane acquisition that can lead to silent
+data corruption.
 
-Move the BROADCAST_TLB_FLUSH symbol away from the PROCESSOR_SELECT menu
-so that the list of processors is displayed correctly.
+The existing lane model uses a spinlock together with a per-CPU
+recursion count. That recursion model stopped being valid after BTT
+lanes became preemptible: another task can run on the same CPU,
+observe a non-zero recursion count, bypass locking, and use the same
+lane concurrently.
 
-Fixes: 767ae437a32d ("x86/mm: Add INVLPGB feature and Kconfig entry")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://patch.msgid.link/20260519173526.10985-1-rdunlap@infradead.org
+BTT lanes are also held across arena_write_bytes() calls. That path
+reaches nsio_rw_bytes(), which flushes writes with nvdimm_flush().
+Some provider flush callbacks can sleep, making a spinlock the wrong
+primitive for the lane lifetime.
+
+Replace the spinlock-based recursion model with a dynamically
+allocated per-lane mutex array and take the lane lock
+unconditionally.
+
+Add might_sleep() to catch any future atomic-context caller.
+
+Found with the ndctl unit test btt-check.sh.
+
+Fixes: 36c75ce3bd29 ("nd_btt: Make BTT lanes preemptible")
+Assisted-by: Claude-Sonnet:4.5
+Tested-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260528021625.618462-1-alison.schofield@intel.com
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/Kconfig.cpu | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/driver-api/nvdimm/btt.rst |  5 +-
+ drivers/nvdimm/nd.h                     | 11 ++---
+ drivers/nvdimm/region_devs.c            | 66 +++++++++----------------
+ 3 files changed, 29 insertions(+), 53 deletions(-)
 
-diff --git a/arch/x86/Kconfig.cpu b/arch/x86/Kconfig.cpu
-index d7ba9219cb47dc..df003a42d25a6d 100644
---- a/arch/x86/Kconfig.cpu
-+++ b/arch/x86/Kconfig.cpu
-@@ -334,10 +334,6 @@ menuconfig PROCESSOR_SELECT
- 	  This lets you choose what x86 vendor support code your kernel
- 	  will include.
+diff --git a/Documentation/driver-api/nvdimm/btt.rst b/Documentation/driver-api/nvdimm/btt.rst
+index 2d8269f834bd60..d29fab95f14942 100644
+--- a/Documentation/driver-api/nvdimm/btt.rst
++++ b/Documentation/driver-api/nvdimm/btt.rst
+@@ -161,9 +161,8 @@ process::
+ 	nlanes = min(nfree, num_cpus)
  
--config BROADCAST_TLB_FLUSH
--	def_bool y
--	depends on CPU_SUP_AMD && 64BIT
+ A lane number is obtained at the start of any IO, and is used for indexing into
+-all the on-disk and in-memory data structures for the duration of the IO. If
+-there are more CPUs than the max number of available lanes, than lanes are
+-protected by spinlocks.
++all the on-disk and in-memory data structures for the duration of the IO. Lanes
++are protected by mutexes.
+ 
+ 
+ d. In-memory data structure: Read Tracking Table (RTT)
+diff --git a/drivers/nvdimm/nd.h b/drivers/nvdimm/nd.h
+index b199eea3260ef6..197e5368c0a46b 100644
+--- a/drivers/nvdimm/nd.h
++++ b/drivers/nvdimm/nd.h
+@@ -365,11 +365,6 @@ unsigned sizeof_namespace_label(struct nvdimm_drvdata *ndd);
+ 	for (res = (ndd)->dpa.child, next = res ? res->sibling : NULL; \
+ 			res; res = next, next = next ? next->sibling : NULL)
+ 
+-struct nd_percpu_lane {
+-	int count;
+-	spinlock_t lock;
+-};
 -
- config CPU_SUP_INTEL
- 	default y
- 	bool "Support Intel processors" if PROCESSOR_SELECT
-@@ -458,3 +454,7 @@ config CPU_SUP_VORTEX_32
- 	  makes the kernel a tiny bit smaller.
+ enum nd_label_flags {
+ 	ND_LABEL_REAP,
+ };
+@@ -400,6 +395,10 @@ struct nd_mapping {
+ 	struct nvdimm_drvdata *ndd;
+ };
  
- 	  If unsure, say N.
++struct nd_lane {
++	struct mutex lock; /* serialize lane access */
++} ____cacheline_aligned_in_smp;
 +
-+config BROADCAST_TLB_FLUSH
-+	def_bool y
-+	depends on CPU_SUP_AMD && 64BIT
+ struct nd_region {
+ 	struct device dev;
+ 	struct ida ns_ida;
+@@ -420,7 +419,7 @@ struct nd_region {
+ 	struct kernfs_node *bb_state;
+ 	struct badblocks bb;
+ 	struct nd_interleave_set *nd_set;
+-	struct nd_percpu_lane __percpu *lane;
++	struct nd_lane *lane;
+ 	int (*flush)(struct nd_region *nd_region, struct bio *bio);
+ 	struct nd_mapping mapping[] __counted_by(ndr_mappings);
+ };
+diff --git a/drivers/nvdimm/region_devs.c b/drivers/nvdimm/region_devs.c
+index e35c2e18518f0c..5e079d61cbaa32 100644
+--- a/drivers/nvdimm/region_devs.c
++++ b/drivers/nvdimm/region_devs.c
+@@ -192,7 +192,9 @@ static void nd_region_release(struct device *dev)
+ 
+ 		put_device(&nvdimm->dev);
+ 	}
+-	free_percpu(nd_region->lane);
++	for (i = 0; i < nd_region->num_lanes; i++)
++		mutex_destroy(&nd_region->lane[i].lock);
++	kfree(nd_region->lane);
+ 	if (!test_bit(ND_REGION_CXL, &nd_region->flags))
+ 		memregion_free(nd_region->id);
+ 	kfree(nd_region);
+@@ -904,52 +906,30 @@ void nd_region_advance_seeds(struct nd_region *nd_region, struct device *dev)
+  * nd_region_acquire_lane - allocate and lock a lane
+  * @nd_region: region id and number of lanes possible
+  *
+- * A lane correlates to a BLK-data-window and/or a log slot in the BTT.
+- * We optimize for the common case where there are 256 lanes, one
+- * per-cpu.  For larger systems we need to lock to share lanes.  For now
+- * this implementation assumes the cost of maintaining an allocator for
+- * free lanes is on the order of the lock hold time, so it implements a
+- * static lane = cpu % num_lanes mapping.
++ * A lane correlates to a log slot in the BTT. Lanes are shared across
++ * CPUs using a static lane = cpu % num_lanes mapping, with a per-lane
++ * mutex to serialize access.
+  *
+- * In the case of a BTT instance on top of a BLK namespace a lane may be
+- * acquired recursively.  We lock on the first instance.
+- *
+- * In the case of a BTT instance on top of PMEM, we only acquire a lane
+- * for the BTT metadata updates.
++ * Callers must be in sleepable context. The only in-tree caller is
++ * BTT's ->submit_bio handler (btt_read_pg / btt_write_pg).
+  */
+ unsigned int nd_region_acquire_lane(struct nd_region *nd_region)
++	__acquires(&nd_region->lane[lane].lock)
+ {
+-	unsigned int cpu, lane;
+-
+-	migrate_disable();
+-	cpu = smp_processor_id();
+-	if (nd_region->num_lanes < nr_cpu_ids) {
+-		struct nd_percpu_lane *ndl_lock, *ndl_count;
++	unsigned int lane;
+ 
+-		lane = cpu % nd_region->num_lanes;
+-		ndl_count = per_cpu_ptr(nd_region->lane, cpu);
+-		ndl_lock = per_cpu_ptr(nd_region->lane, lane);
+-		if (ndl_count->count++ == 0)
+-			spin_lock(&ndl_lock->lock);
+-	} else
+-		lane = cpu;
++	might_sleep();
+ 
++	lane = raw_smp_processor_id() % nd_region->num_lanes;
++	mutex_lock(&nd_region->lane[lane].lock);
+ 	return lane;
+ }
+ EXPORT_SYMBOL(nd_region_acquire_lane);
+ 
+ void nd_region_release_lane(struct nd_region *nd_region, unsigned int lane)
++	__releases(&nd_region->lane[lane].lock)
+ {
+-	if (nd_region->num_lanes < nr_cpu_ids) {
+-		unsigned int cpu = smp_processor_id();
+-		struct nd_percpu_lane *ndl_lock, *ndl_count;
+-
+-		ndl_count = per_cpu_ptr(nd_region->lane, cpu);
+-		ndl_lock = per_cpu_ptr(nd_region->lane, lane);
+-		if (--ndl_count->count == 0)
+-			spin_unlock(&ndl_lock->lock);
+-	}
+-	migrate_enable();
++	mutex_unlock(&nd_region->lane[lane].lock);
+ }
+ EXPORT_SYMBOL(nd_region_release_lane);
+ 
+@@ -1019,17 +999,16 @@ static struct nd_region *nd_region_create(struct nvdimm_bus *nvdimm_bus,
+ 			goto err_id;
+ 	}
+ 
+-	nd_region->lane = alloc_percpu(struct nd_percpu_lane);
++	nd_region->num_lanes = ndr_desc->num_lanes;
++	if (!nd_region->num_lanes)
++		goto err_percpu;
++	nd_region->lane = kcalloc(nd_region->num_lanes,
++				  sizeof(*nd_region->lane), GFP_KERNEL);
+ 	if (!nd_region->lane)
+ 		goto err_percpu;
+ 
+-        for (i = 0; i < nr_cpu_ids; i++) {
+-		struct nd_percpu_lane *ndl;
+-
+-		ndl = per_cpu_ptr(nd_region->lane, i);
+-		spin_lock_init(&ndl->lock);
+-		ndl->count = 0;
+-	}
++	for (i = 0; i < nd_region->num_lanes; i++)
++		mutex_init(&nd_region->lane[i].lock);
+ 
+ 	for (i = 0; i < ndr_desc->num_mappings; i++) {
+ 		struct nd_mapping_desc *mapping = &ndr_desc->mapping[i];
+@@ -1046,7 +1025,6 @@ static struct nd_region *nd_region_create(struct nvdimm_bus *nvdimm_bus,
+ 	}
+ 	nd_region->provider_data = ndr_desc->provider_data;
+ 	nd_region->nd_set = ndr_desc->nd_set;
+-	nd_region->num_lanes = ndr_desc->num_lanes;
+ 	nd_region->flags = ndr_desc->flags;
+ 	nd_region->ro = ro;
+ 	nd_region->numa_node = ndr_desc->numa_node;
 -- 
 2.53.0
 
