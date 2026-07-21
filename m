@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35928376A0B;
-	Tue, 21 Jul 2026 21:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7A03B8120;
+	Tue, 21 Jul 2026 21:28:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669298; cv=none; b=SG9e4VGF1VnqtYixY9L4KjzACxXICj88dKhZnsrsfVTMBhlnwZ/npmdbbXJloo3mjSbN0ceP4XjKpPtVrlce6XqTnSGr6W/58f3BKdM5J6pI6feWjWzb/T9Xm9knUAyi3WnUTK4sX29YGTzewiyvsoZ79eUFJSiWAkQgM1bpqPs=
+	t=1784669299; cv=none; b=Y/wfLgl5ZIFO7PS4SBJPwX0NN6VY85hVlL4YymLunOcHO6Ju+49XyYqMPo5ZrnXNCSMqMFl+2W/PKPUSBDU4BPIJlNl7GkFrNw2Z3YD5hEeEvAr5dwOSwY4N3xFwGQVholLdBEA+oZDzkYgLZOR0rnJWMG5af7icMnteW0Ts8DE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669298; c=relaxed/simple;
-	bh=OHAV/zKOLXwcf1SIIlD1eYBuytWT4keziATZzAuuybQ=;
+	s=arc-20240116; t=1784669299; c=relaxed/simple;
+	bh=efULEeOknT7KxLtoWDiUtnvh9ughKqH9a4EISvCKPl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sW0ykHKmf1UTJRWllnpxtoPuZ6sWRUNAG1uoa4UzJbIBLKZL+jklU2Ziaq1sdCCSmJMPuKZ6YKzjTNQTOEnEW6bvxf/f0G+b0vuqcPCWDUkSXcilE0uul69mnkdULDeGtVKHkl+t2Zm9gzvOCOSsdtT+Y2/yVlzlWjM15k+PbRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJdDRdXW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Aq/UFcQSapJDhdBDCd39z0gXNzVlZmZy77ylb6cjmv+hyTBLtjq3nk5pp5UE+ozoavJS8F5BAkWQ7TZJP9s7pFRCk1dtuepVN6aVU0xM4vrQXKfYuju+qHpO0jJZc3ElSWPY+JP01QMDRKBrZWbonnJM/zvPkbafiGmHKTq/WwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BwOQDqWw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJdDRdXW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F0C1F00A3D;
-	Tue, 21 Jul 2026 21:28:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BwOQDqWw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623A61F000E9;
+	Tue, 21 Jul 2026 21:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669287;
-	bh=AcHtB7jtWpxjXWOfCME2074Qbdx9LTtz2Hjq1dsAo3M=;
+	s=korg; t=1784669284;
+	bh=ULasPxjoyfucC3ZPds1F4QyWB/nqUh5Acgq2IIBYXjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nJdDRdXWVLz2mlXH60joYYTpYyt8oexRb/3wiRk/EbGJ3H6espOYoDRp0oo8msBAy
-	 iaq9tZ3ZB+gCj8if74d64v8zAjvDiY/GZqiw3+h+nRjnGiMeLDM4KyWTRdrsV0GvBF
-	 0U0cQnD1+ge7x1MD9JXFHnh4w94dHuoziR6RARhw=
+	b=BwOQDqWwHDhlwMw+NAzk790HGPKbTLMT3hP/uVP2JmI8TQA4pzNXh8kihG9/ehxXn
+	 smhzlmOuaMF/F7mKTRNdkmjzNOOHohoxBAni8Q5COaLYgUoBxY22mIXLJW5d57bFX1
+	 C+zHAFJ6A/bccY5E5IKqYhqWlGwpY/Bbt62BZ0U8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Jaeyeong Lee <lee@jaeyeong.cc>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0471/1067] net/9p: fix race condition on rdma->state in trans_rdma.c
-Date: Tue, 21 Jul 2026 17:17:52 +0200
-Message-ID: <20260721152435.152109117@linuxfoundation.org>
+Subject: [PATCH 6.1 0497/1067] fs/ntfs3: add bounds check to run_get_highest_vcn()
+Date: Tue, 21 Jul 2026 17:18:18 +0200
+Message-ID: <20260721152435.732212908@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -56,121 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 7d54894a1ee265a72d70f7cae1da6cc774cccc71 ]
+[ Upstream commit bb11485a87fbb2254b62cfed630b699d50e57da8 ]
 
-The rdma->state field is modified without holding req_lock in both
-recv_done() and p9_cm_event_handler(), while rdma_request() accesses
-the same field under the req_lock spinlock. This inconsistent locking
-creates a race condition:
+run_get_highest_vcn() parses a packed NTFS mapping-pairs buffer without
+any length bound, relying solely on a 0x00 terminator to stop.  A
+crafted $LogFile UpdateMappingPairs record whose embedded attribute
+contains mapping-pairs runs without a terminator causes the function to
+read past the slab allocation, triggering a KASAN slab-out-of-bounds
+read on mount.
 
-- recv_done() running in softirq completion context sets
-  rdma->state = P9_RDMA_FLUSHING without acquiring req_lock
+The sibling function run_unpack() received an analogous bounds-check in
+commit b62567bca474 ("ntfs3: add buffer boundary checks to run_unpack()"),
+but run_get_highest_vcn() was missed.
 
-- p9_cm_event_handler() modifies rdma->state at multiple points
-  (ADDR_RESOLVED, ROUTE_RESOLVED, ESTABLISHED, CLOSED) without
-  req_lock
+Take a run_buf_size parameter and reject any run header whose payload
+would extend past the buffer end, mirroring the pattern used by
+run_unpack().  The caller in fslog.c passes the remaining attribute
+bytes after the mapping-pairs offset.
 
-- rdma_request() uses spin_lock_irqsave(&rdma->req_lock, flags) to
-  protect the read-modify-write of rdma->state
+KASAN report (on mainline v7.1 merge window HEAD):
 
-The race can cause lost state transitions: recv_done() or the CM
-event handler could set state to FLUSHING/CLOSED while rdma_request()
-is concurrently checking or modifying state under the lock, leading to
-the FLUSHING transition being silently overwritten by CLOSING. This
-corrupts the connection state machine and can cause use-after-free on
-RDMA request objects during teardown.
+  BUG: KASAN: slab-out-of-bounds in run_get_highest_vcn+0x3c0/0x410
+  Read of size 1 at addr ffff88800e2d5400 by task mount/72
+  Call Trace:
+   run_get_highest_vcn+0x3c0/0x410
+   do_action.isra.0+0x3ba8/0x7b50
+   log_replay+0x9ddd/0x10200
+   ntfs_loadlog_and_replay+0x4ad/0x610
+   ntfs_fill_super+0x214a/0x4540
 
-Fix by adding req_lock protection to all rdma->state modifications in
-recv_done() and p9_cm_event_handler(), matching the pattern already
-used in rdma_request(). Use spin_lock_irqsave/spin_unlock_irqrestore
-in the CM event handler since it can race with recv_done() which runs
-in softirq context.
-
-Tested with a kernel module that races two threads (simulating
-rdma_request and recv_done/CM handler) on rdma->state with proper
-locking: 5.5M+ FLUSHING writes over 27M iterations with 0 lost
-transitions.
-
-Fixes: 473c7dd1d7b5 ("9p/rdma: remove useless check in cm_event_handler")
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: GLM:GLM-5.1
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Message-ID: <20260529073933.77315-1-zhaoyz24@mails.tsinghua.edu.cn>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: b62567bca474 ("ntfs3: add buffer boundary checks to run_unpack()")
+Signed-off-by: Jaeyeong Lee <lee@jaeyeong.cc>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_rdma.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ fs/ntfs3/fslog.c   | 5 ++++-
+ fs/ntfs3/ntfs_fs.h | 3 ++-
+ fs/ntfs3/run.c     | 9 +++++++--
+ 3 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/net/9p/trans_rdma.c b/net/9p/trans_rdma.c
-index 29a9292303ea30..e3ee21bbe389a5 100644
---- a/net/9p/trans_rdma.c
-+++ b/net/9p/trans_rdma.c
-@@ -241,25 +241,36 @@ p9_cm_event_handler(struct rdma_cm_id *id, struct rdma_cm_event *event)
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 412d6a3bfaee43..993c771a9790bd 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -3367,7 +3367,10 @@ static int do_action(struct ntfs_log *log, struct OPEN_ATTR_ENRTY *oe,
+ 		memmove(Add2Ptr(attr, aoff), data, dlen);
+ 
+ 		if (run_get_highest_vcn(le64_to_cpu(attr->nres.svcn),
+-					attr_run(attr), &t64)) {
++					attr_run(attr),
++				        le32_to_cpu(attr->size) - 
++				                le16_to_cpu(attr->nres.run_off),	
++					&t64)) {
+ 			goto dirty_vol;
+ 		}
+ 
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index c93217ed3f6c12..482958c0164449 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -809,7 +809,8 @@ int run_unpack_ex(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
+ #else
+ #define run_unpack_ex run_unpack
+ #endif
+-int run_get_highest_vcn(CLST vcn, const u8 *run_buf, u64 *highest_vcn);
++int run_get_highest_vcn(CLST vcn, const u8 *run_buf, size_t run_buf_size, 
++		       u64 *highest_vcn);
+ int run_clone(const struct runs_tree *run, struct runs_tree *new_run);
+ 
+ /* Globals from super.c */
+diff --git a/fs/ntfs3/run.c b/fs/ntfs3/run.c
+index 311ac60a7ad1f7..c6eee7875c0003 100644
+--- a/fs/ntfs3/run.c
++++ b/fs/ntfs3/run.c
+@@ -1152,18 +1152,23 @@ int run_unpack_ex(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
+  * Return the highest vcn from a mapping pairs array
+  * it used while replaying log file.
+  */
+-int run_get_highest_vcn(CLST vcn, const u8 *run_buf, u64 *highest_vcn)
++int run_get_highest_vcn(CLST vcn, const u8 *run_buf, size_t run_buf_size, 
++		       u64 *highest_vcn)
  {
- 	struct p9_client *c = id->context;
- 	struct p9_trans_rdma *rdma = c->trans;
-+	unsigned long flags;
++	const u8 *run_last = run_buf + run_buf_size;
+ 	u64 vcn64 = vcn;
+ 	u8 size_size;
+ 
+-	while ((size_size = *run_buf & 0xF)) {
++	while (run_buf < run_last && (size_size = *run_buf & 0xF)) {
+ 		u8 offset_size = *run_buf++ >> 4;
+ 		u64 len;
+ 
+ 		if (size_size > 8 || offset_size > 8)
+ 			return -EINVAL;
+ 
++		if (run_buf + size_size + offset_size > run_last) 
++			return -EINVAL;
 +
- 	switch (event->event) {
- 	case RDMA_CM_EVENT_ADDR_RESOLVED:
-+		spin_lock_irqsave(&rdma->req_lock, flags);
- 		BUG_ON(rdma->state != P9_RDMA_INIT);
- 		rdma->state = P9_RDMA_ADDR_RESOLVED;
-+		spin_unlock_irqrestore(&rdma->req_lock, flags);
- 		break;
- 
- 	case RDMA_CM_EVENT_ROUTE_RESOLVED:
-+		spin_lock_irqsave(&rdma->req_lock, flags);
- 		BUG_ON(rdma->state != P9_RDMA_ADDR_RESOLVED);
- 		rdma->state = P9_RDMA_ROUTE_RESOLVED;
-+		spin_unlock_irqrestore(&rdma->req_lock, flags);
- 		break;
- 
- 	case RDMA_CM_EVENT_ESTABLISHED:
-+		spin_lock_irqsave(&rdma->req_lock, flags);
- 		BUG_ON(rdma->state != P9_RDMA_ROUTE_RESOLVED);
- 		rdma->state = P9_RDMA_CONNECTED;
-+		spin_unlock_irqrestore(&rdma->req_lock, flags);
- 		break;
- 
- 	case RDMA_CM_EVENT_DISCONNECTED:
--		if (rdma)
-+		if (rdma) {
-+			spin_lock_irqsave(&rdma->req_lock, flags);
- 			rdma->state = P9_RDMA_CLOSED;
-+			spin_unlock_irqrestore(&rdma->req_lock, flags);
-+		}
- 		c->status = Disconnected;
- 		break;
- 
-@@ -297,6 +308,7 @@ recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 	struct p9_req_t *req;
- 	int err = 0;
- 	int16_t tag;
-+	unsigned long flags;
- 
- 	req = NULL;
- 	ib_dma_unmap_single(rdma->cm_id->device, c->busa, client->msize,
-@@ -333,7 +345,10 @@ recv_done(struct ib_cq *cq, struct ib_wc *wc)
-  err_out:
- 	p9_debug(P9_DEBUG_ERROR, "req %p err %d status %d\n",
- 			req, err, wc->status);
--	rdma->state = P9_RDMA_FLUSHING;
-+	spin_lock_irqsave(&rdma->req_lock, flags);
-+	if (rdma->state < P9_RDMA_FLUSHING)
-+		rdma->state = P9_RDMA_FLUSHING;
-+	spin_unlock_irqrestore(&rdma->req_lock, flags);
- 	client->status = Disconnected;
- 	goto out;
- }
+ 		len = run_unpack_s64(run_buf, size_size, 0);
+ 		if (!len)
+ 			return -EINVAL;
 -- 
 2.53.0
 
