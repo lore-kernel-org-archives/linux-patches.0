@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA1D442118;
-	Tue, 21 Jul 2026 22:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6E544AB8E;
+	Tue, 21 Jul 2026 22:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672744; cv=none; b=lrxOwVPhuy12X1snzZbwQC41b9I+xagt8N3m0YV2UlxrzOSCsy2MrHd/aCxxzSxIYJavphfasti7LyI6cCXBQZWuA8y1SpX3rLQmc5DnXsuFMvhueuFlR4A7a0M5mSnq/LKEjaggL5XUieLRIVO3jlRLxwR+jt0Js+Qzo2B8K5w=
+	t=1784672747; cv=none; b=jJ1kLDDiHNNNhLoTvdh4kvg5kmvadjFykxvWiUrVmotnjsVx6hIv5/ti386Vzg+KEda/zpUNM2JOH1L1jXxYqQqhrzjq3Le1+mZe8NmprSNFPwRS/6tsEq6WLD6OEQIakynoN4nNd++QZEkBVSlrKJ4gd9V/wu4XS8BMiMki7/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672744; c=relaxed/simple;
-	bh=awItKM6ZpQIwPJSmM6nvoHnB0r4Bz3Gp+CllEPA9lQ0=;
+	s=arc-20240116; t=1784672747; c=relaxed/simple;
+	bh=uwBpCaavtGPRN6jndkMz1OBionHHyimQEjCX9dDgZRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0CjqNTtN4TY+EapZHoRHkdbzysq2MovHMB+GE6y8iIwVJff5TfgTqiuDOxyc+1St+JJGXO8pH+/0qAQlbXuXlTldSejQI1jiWg80Kz8J+SXfzmxnP54uF/AnHLK3COybOtaW0toN+Z9goKICzWkWQ8tIcLBbsHLnmp584CEppo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z3dBsLNQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MYM3BqgnTtuqhcq2L0YQ6m70h8UiORMGicHWflFu5aimGcQVGx6B/h/fg6B7HB240pbjCQPui4AQDJilSKG4LR79ODylyXlvG3xGPW3wLLJcamkMqPRSxzTF2cO/jWt5N+CCj2Ddt/gtNdtOZTowYledb6c2VUCe/U83KMNKSDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IfUwix6B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z3dBsLNQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94ECF1F000E9;
-	Tue, 21 Jul 2026 22:25:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IfUwix6B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A8F1F000E9;
+	Tue, 21 Jul 2026 22:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672743;
-	bh=4VjYzxl+rYv4jz1/4w8Y0xrt13jPd7uuIsWeV055O9Y=;
+	s=korg; t=1784672745;
+	bh=q+OUaYy8Eu5zgZwLgmryiVJtNaHzhUUkHNYKJeKIRHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z3dBsLNQ+2T3n3FXAQsYVAc8/zp/97F5aqI7/qaYxcWohDsN1p0u/m3VrbUAISVNF
-	 gjHKpG8n4PYHoCOzQlVdlq/5KaSkxwgERIPw/sl+K6PtZYps4Xk4MBSDmVdXaK97rA
-	 fgyRpQQSPHiVj8rqtEfHgfx6loE81j9Wu2Uxe/4g=
+	b=IfUwix6BD3EDIME7nAwkc6AFAwUD2MeRdh+C2fPdfFtxIEDt07I56lW5M97RijtUF
+	 AirEV9GEVNE8boJCcMQtY/Zu5ghRHV85ycyYP5xoMEH+8FfaO/jMEmebGV5IyGzcqI
+	 pvYDXy2fcktFTZqVH135GGLLeaRMWIaPSznEqpw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Yury Norov <yury.norov@gmail.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 741/843] iio: imu: inv_icm42600: fix timestamping by limiting FIFO reading
-Date: Tue, 21 Jul 2026 17:26:16 +0200
-Message-ID: <20260721152422.717096195@linuxfoundation.org>
+Subject: [PATCH 5.15 742/843] bitops: make BYTES_TO_BITS() treewide-available
+Date: Tue, 21 Jul 2026 17:26:17 +0200
+Message-ID: <20260721152422.739258949@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,69 +54,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Alexander Lobakin <aleksander.lobakin@intel.com>
 
-[ Upstream commit affe3f077d7a4eeb25937f5323ff059a54b4712c ]
+[ Upstream commit 7d8296b250f2eed73f1758607926d4d258dea5d4 ]
 
-Timestamps are made by measuring the chip clock using the watermark
-interrupts. If we read more than watermark samples as done today, we
-are reducing the period between interrupts and distort the time
-measurement. Fix that by reading only watermark samples in the
-interrupt case.
+Avoid open-coding that simple expression each time by moving
+BYTES_TO_BITS() from the probes code to <linux/bitops.h> to export
+it to the rest of the kernel.
+Simplify the macro while at it. `BITS_PER_LONG / sizeof(long)` always
+equals to %BITS_PER_BYTE, regardless of the target architecture.
+Do the same for the tools ecosystem as well (incl. its version of
+bitops.h). The previous implementation had its implicit type of long,
+while the new one is int, so adjust the format literal accordingly in
+the perf code.
 
-Fixes: 7f85e42a6c54 ("iio: imu: inv_icm42600: add buffer support in iio devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Acked-by: Yury Norov <yury.norov@gmail.com>
+Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 55052184ac90 ("iio: common: st_sensors: honour channel endianness in read_axis_data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c |    9 +++++----
- drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.h |    1 +
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ include/linux/bitops.h         |    2 ++
+ kernel/trace/trace_probe.c     |    2 --
+ tools/include/linux/bitops.h   |    2 ++
+ tools/perf/util/probe-finder.c |    4 +---
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-@@ -257,6 +257,7 @@ int inv_icm42600_buffer_update_watermark
+--- a/include/linux/bitops.h
++++ b/include/linux/bitops.h
+@@ -21,6 +21,8 @@
+ #define BITS_TO_U32(nr)		__KERNEL_DIV_ROUND_UP(nr, BITS_PER_TYPE(u32))
+ #define BITS_TO_BYTES(nr)	__KERNEL_DIV_ROUND_UP(nr, BITS_PER_TYPE(char))
  
- 	/* compute watermark value in bytes */
- 	wm_size = watermark * packet_size;
-+	st->fifo.watermark.value = watermark;
++#define BYTES_TO_BITS(nb)	((nb) * BITS_PER_BYTE)
++
+ extern unsigned int __sw_hweight8(unsigned int w);
+ extern unsigned int __sw_hweight16(unsigned int w);
+ extern unsigned int __sw_hweight32(unsigned int w);
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -531,8 +531,6 @@ parse_probe_arg(char *arg, const struct
+ 	return ret;
+ }
  
- 	/* changing FIFO watermark requires to turn off watermark interrupt */
- 	ret = regmap_update_bits_check(st->map, INV_ICM42600_REG_INT_SOURCE0,
-@@ -476,11 +477,10 @@ int inv_icm42600_buffer_fifo_read(struct
- 	st->fifo.nb.accel = 0;
- 	st->fifo.nb.total = 0;
+-#define BYTES_TO_BITS(nb)	((BITS_PER_LONG * (nb)) / sizeof(long))
+-
+ /* Bitfield type needs to be parsed into a fetch function */
+ static int __parse_bitfield_probe_arg(const char *bf,
+ 				      const struct fetch_type *t,
+--- a/tools/include/linux/bitops.h
++++ b/tools/include/linux/bitops.h
+@@ -20,6 +20,8 @@
+ #define BITS_TO_U32(nr)		DIV_ROUND_UP(nr, BITS_PER_TYPE(u32))
+ #define BITS_TO_BYTES(nr)	DIV_ROUND_UP(nr, BITS_PER_TYPE(char))
  
--	/* compute maximum FIFO read size */
-+	/* compute maximum FIFO read size (watermark for max = 0 interrupt case) */
- 	if (max == 0)
--		max_count = sizeof(st->fifo.data);
--	else
--		max_count = max * inv_icm42600_get_packet_size(st->fifo.en);
-+		max = st->fifo.watermark.value;
-+	max_count = max * inv_icm42600_get_packet_size(st->fifo.en);
++#define BYTES_TO_BITS(nb)	((nb) * BITS_PER_BYTE)
++
+ extern unsigned int __sw_hweight8(unsigned int w);
+ extern unsigned int __sw_hweight16(unsigned int w);
+ extern unsigned int __sw_hweight32(unsigned int w);
+--- a/tools/perf/util/probe-finder.c
++++ b/tools/perf/util/probe-finder.c
+@@ -304,8 +304,6 @@ static_var:
+ 	return ret2;
+ }
  
- 	/* read FIFO count value */
- 	raw_fifo_count = (__be16 *)st->buffer;
-@@ -592,6 +592,7 @@ int inv_icm42600_buffer_init(struct inv_
- 
- 	st->fifo.watermark.eff_gyro = 1;
- 	st->fifo.watermark.eff_accel = 1;
-+	st->fifo.watermark.value = 1;
- 
- 	/*
- 	 * Default FIFO configuration (bits 7 to 5)
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.h
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.h
-@@ -34,6 +34,7 @@ struct inv_icm42600_fifo {
- 		unsigned int accel;
- 		unsigned int eff_gyro;
- 		unsigned int eff_accel;
-+		unsigned int value;
- 	} watermark;
- 	size_t count;
- 	struct {
+-#define BYTES_TO_BITS(nb)	((nb) * BITS_PER_LONG / sizeof(long))
+-
+ static int convert_variable_type(Dwarf_Die *vr_die,
+ 				 struct probe_trace_arg *tvar,
+ 				 const char *cast, bool user_access)
+@@ -335,7 +333,7 @@ static int convert_variable_type(Dwarf_D
+ 		total = dwarf_bytesize(vr_die);
+ 		if (boffs < 0 || total < 0)
+ 			return -ENOENT;
+-		ret = snprintf(buf, 16, "b%d@%d/%zd", bsize, boffs,
++		ret = snprintf(buf, 16, "b%d@%d/%d", bsize, boffs,
+ 				BYTES_TO_BITS(total));
+ 		goto formatted;
+ 	}
 
 
