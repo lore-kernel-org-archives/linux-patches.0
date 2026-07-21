@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3379F3AFAEC;
-	Tue, 21 Jul 2026 20:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8453BA225;
+	Tue, 21 Jul 2026 20:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667050; cv=none; b=IS0NqqxPdpqOnLxeRtEy1kx0sey4ibX4u+RlY2Ytiu0wqTtpkdUFFbQJrV0rXPwa2oXDpYkc69Q9GgvSBhjyKjNgMnvM5z3kWR4aiajmxKcbkHk21Em//h5v2vAR+2PE33UJQ39kkKRwSQVjCKmJIHiEB833nyN08MbQuX6IbK8=
+	t=1784667052; cv=none; b=pDYqEkWVHoUb2ZbXNDJuZrqNI65094JVX8k/Dvd8L0k1ofjGUAfQbpJfjBhZ2rkun68DwV2BxLBECCRI6WHTJ6w12PXTgbN5PNNTWiwMal4WAgtZydwdvQANMNOo98uDDS1uunNV5uIU8pMnEnPaRrLRdSq4X+K+HI9FIJrt8Dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667050; c=relaxed/simple;
-	bh=DN3cogYXeSuzEbLTcv6nerbhbriI5uRSLqtC4L/OC5Y=;
+	s=arc-20240116; t=1784667052; c=relaxed/simple;
+	bh=RVHLZi7xVwsAaeKQSzq31CEikKnOX08C4t1K+po7CLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oPp2R0k7Cj2CMlOd0gWBOCcBuEgqbPIVpBAMDeCYE0BuYhcz5u7jNFi1cGXFGbFTSRlWkFxFMkJhuUdN3IC6SIh63/ceEzq2llRiAvWwFoSrhEy09EdlAl0txf2N1dijx18MKulRjPZkDIsEgQX5o85Q1qOHXj6PvlHNXSquX4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQt08syg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hESR/QnCIcun2VsjmagCDtG4jDHEyXwOvBTlXUttPgRB1Yr+uVYHV4OlqMsWfnGVWZRe/LsV+vrykaNu/MoMfAZQb2xTBOKyhh4nmfZr+MweZRm6pdM1rqG3MgMpFTUt0xl8y6nMnpPah67TDceDWCqqBYmF1XazbmuIIEXp/A0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcuIJPsl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQt08syg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9910C1F000E9;
-	Tue, 21 Jul 2026 20:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcuIJPsl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3D11F000E9;
+	Tue, 21 Jul 2026 20:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667049;
-	bh=CeDqCzPIGLUCddq+7qFxsN+XuLn4ynY+UALtQeSWb1A=;
+	s=korg; t=1784667051;
+	bh=TYIef3G1C3PK/J6IISmfJzEbcFoIOxsZU5vT2Fm8a5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EQt08sygIe5mvgeGAIQWOx+doK3GJ9huN8+LYi+ECXrWuJTN6UV1pBIo1T/tkZOI9
-	 p1GdvxtLMPh4QeppCD0oSTMD+gpvGHjBd7T/6Z1IfbNEc3IPcnUA2N6OSG+2kB4odi
-	 sYkvSGDrP41ZaQISXRLMhYixN6uJHxwz8CcstPik=
+	b=kcuIJPslYrTRAyH1jjG+mZC+2TGMkGXh0VP2Iv7RVR1bx1Cjpd0qBLZMuhHrDehAg
+	 mJgSKbWCHTXuYURC4iWoWxxG7y+lB7bQZQ3aUDV31/ltOU/MhQ7PQlrxmPBC2u1Ljq
+	 SnidKoxgJmnBiFfyYu9YIkdvhUCbzRkqgz96TUAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 0912/1266] fbdev: uvesafb: fix potential memory leak in uvesafb_probe()
-Date: Tue, 21 Jul 2026 17:22:29 +0200
-Message-ID: <20260721152502.253605711@linuxfoundation.org>
+Subject: [PATCH 6.6 0913/1266] fbdev: tdfxfb: fix potential memory leak in tdfxfb_probe()
+Date: Tue, 21 Jul 2026 17:22:30 +0200
+Message-ID: <20260721152502.275342806@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,39 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 033e56fed09047ee63072e9f58789f40c1c7079d upstream.
+commit bb019d755366cc3e777a12d4bf457ff289837370 upstream.
 
-Due to an incorrect goto label, memory allocated for modedb and modelist
-in uvesafb_vbe_init() is not freed in some error paths. Fix this by
-updating the goto label.
+In tdfxfb_probe(), the memory allocated for modelist using
+fb_videomode_to_modelist() when CONFIG_FB_3DFX_I2C is defined, is not
+freed in the subsequent error paths.
+Fix that by calling fb_destroy_modelist().
 
-Fixes: 8bdb3a2d7df4 ("uvesafb: the driver core")
+Fixes: 215059d2421f ("tdfxfb: make use of DDC information about connected monitor")
 Cc: stable@vger.kernel.org
 Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/uvesafb.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/tdfxfb.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/video/fbdev/uvesafb.c
-+++ b/drivers/video/fbdev/uvesafb.c
-@@ -1697,14 +1697,14 @@ static int uvesafb_probe(struct platform
- 	i = uvesafb_vbe_init_mode(info);
- 	if (i < 0) {
- 		err = -EINVAL;
--		goto out;
-+		goto out_mode;
- 	} else {
- 		mode = &par->vbe_modes[i];
- 	}
+--- a/drivers/video/fbdev/tdfxfb.c
++++ b/drivers/video/fbdev/tdfxfb.c
+@@ -1551,6 +1551,7 @@ static int tdfxfb_probe(struct pci_dev *
  
- 	if (fb_alloc_cmap(&info->cmap, 256, 0) < 0) {
- 		err = -ENXIO;
--		goto out;
-+		goto out_mode;
- 	}
- 
- 	uvesafb_init_info(info, mode);
+ out_err_iobase:
+ #ifdef CONFIG_FB_3DFX_I2C
++	fb_destroy_modelist(&info->modelist);
+ 	tdfxfb_delete_i2c_busses(default_par);
+ #endif
+ 	arch_phys_wc_del(default_par->wc_cookie);
 
 
