@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779DB39733E;
-	Tue, 21 Jul 2026 22:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297603C73F6;
+	Tue, 21 Jul 2026 22:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674544; cv=none; b=FsaEoRsKC7ob+hCyeAfc+ZrLzhrsby3xoPWtxb83PAib7fr7heOUvZwV+5ZLGPmChSx/tGpLIFM3W7qPnbkPpJN7uy3DTEI4ZQHSs91+Bbd+VLju6WCUyGQvaS/j3ywRthNo52CVZ/2jZ1ZPBWHRRIG7Vxu3MstredfBWc4c7WE=
+	t=1784674547; cv=none; b=DdB5MeIGFJlWKJfQSKRPFAhleLUicKr7B09A/PSGfHRiiaH0Lw4VS896cCwzUbl6MSLquRQQIXa641Q0j3TZV6mAJlNZ3BftIXYAWVRhij5Q0aT6psBvkpMG/pO6PetxRjcF8TX2lVRfKcjV+IyEWMxQivco6Rf/m7Tr2YJD404=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674544; c=relaxed/simple;
-	bh=/z6Ic6GmKEIB4FDIHJpiCPqoZo7yvUD4AEdi21ngcUg=;
+	s=arc-20240116; t=1784674547; c=relaxed/simple;
+	bh=me4oRe6MlN79j/NpU43B88umsCjEPysErRshpw7vN6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m2M6Ie3mc2Ih8zlASAv436AEsr1aviU3jzW+pQXQb8tDjySVAL9rWMc0eltW/KFCI0SGrD0veOlLdjHRjRXEsO/JB/unGSP19wOSiedQKZ1Pk5EszeXmkHzjIrDKboLR0ruVV1NgmHFtI+vDsF9xF0UovP0JNVWDEfxYPRm73n0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZf3Othx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UavUx2D/M46gKJRSz6lRIpaiuJirrWl6Bq8vFAfl4EeQMSt3jHJ5rU5Tnz0VvIsDlAd9ReqRctNSN5XKzvUx0qyuk6l6tOJ2G9iMxUhuKsc2vsJLvat92KQBQ6vgw15/QprDjrhSUQZbFtwHcaOxg4rDPvE4Fk3tYeE1J4JdvMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehBBkAjz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZf3Othx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF44A1F000E9;
-	Tue, 21 Jul 2026 22:55:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehBBkAjz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F1A1F000E9;
+	Tue, 21 Jul 2026 22:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674543;
-	bh=rbbemDJiCGz6qvNygWOsnGsamdNC0mUi0Zkgk/I0biY=;
+	s=korg; t=1784674546;
+	bh=okZ9+lQNhKQk0jFLaAQjT80FsETfbDyEAX+k6YKyGSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cZf3OthxcSmrLV2bv1PXYEd69ZLPSaE72V840owSHCgQwLCb4mAVS6it5z7hCfkNY
-	 4hxIS9PLsTf5pmmA+CCi7LhW+YXeAi/K32XDKujJ1mXETeqXEWC8SKvJ3fP5qQzKxu
-	 WnjpiLNzQ3TAB4npnS/wSC1hX6wzmpfFDCsOe6nQ=
+	b=ehBBkAjzAnANmk3nQoUAR4ZxYo5wGfYxwwrBGNfSP2mYkUsBT62CcOGYrw2QYfQWy
+	 OLDn6UGh+QlvPTooFTbaSo9ZTQXGZ5/JvKxNvs/Q9Tc7CqbiqR7QL+v0fk0AgAfKNu
+	 vMJMRucePWoJDq1wiuCZZ/ZSt25APApxvIDGVDJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 5.10 580/699] batman-adv: clean untagged VLAN on netdev registration failure
-Date: Tue, 21 Jul 2026 17:25:39 +0200
-Message-ID: <20260721152408.798767377@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 545/699] net: liquidio: fix BAR resource leak on PF number failure
+Date: Tue, 21 Jul 2026 17:25:04 +0200
+Message-ID: <20260721152407.996228850@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -49,133 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 8669a550c752d86baebc5fdc83b8ff35c4372c0e upstream.
+commit c63ee62a3c4ac1a1542f4c1a4b87e2f41df5a496 upstream.
 
-When an mesh interface is registered, it creates an untagged struct
-batadv_meshif_vlan on top of it via the NETDEV_REGISTER notifier. But in
-this process, another receiver of this notification can veto the
-registration. The netdev registration will be aborted because of this veto.
+If cn23xx_get_pf_num() fails, the function returns without
+unmapping either BAR. Unmap both BARs before returning from
+the error path.
 
-The register_netdevice() call will try to clean up the net_device using
-unregister_netdevice_queue() - which only uses the .priv_destructor to
-free private resources. In this situation, .dellink will not be called.
+Found by manual code review.
 
-The cleanup of the untagged batadv_meshif_vlan must thefore be done in the
-destructor to avoid a leak of this object.
-
+Fixes: 0c45d7fe12c7 ("liquidio: fix use of pf in pass-through mode in a virtual machine")
 Cc: stable@vger.kernel.org
-Fixes: 5d2c05b21337 ("batman-adv: add per VLAN interface attribute framework")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-[ switch to old "mesh_iface" name "soft_iface", Context, keep early
-  batadv_softif_destroy_netlink() cleanup in case sysfs support is active,
-  only run destructor VLAN code on non-softif_destroy context ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Link: https://patch.msgid.link/20260624064013.2809570-1-haoxiang_li2024@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/main.c           |   17 +++++++++++++++++
- net/batman-adv/soft-interface.c |    7 +++++--
- net/batman-adv/soft-interface.h |    2 ++
- net/batman-adv/types.h          |    7 +++++++
- 4 files changed, 31 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/cavium/liquidio/cn23xx_pf_device.c |   18 ++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/net/batman-adv/main.c
-+++ b/net/batman-adv/main.c
-@@ -265,6 +265,7 @@ err_orig:
- void batadv_mesh_free(struct net_device *soft_iface)
- {
- 	struct batadv_priv *bat_priv = netdev_priv(soft_iface);
-+	struct batadv_softif_vlan *vlan;
- 
- 	atomic_set(&bat_priv->mesh_state, BATADV_MESH_DEACTIVATING);
- 
-@@ -280,6 +281,22 @@ void batadv_mesh_free(struct net_device
- 
- 	batadv_mcast_free(bat_priv);
- 
-+	/* destroy the "untagged" VLAN in case of an register_netdevice() error.
-+	 *
-+	 * It will be handled normally by batadv_softif_destroy_netlink() and
-+	 * batadv_softif_destroy_sysfs() before they call batadv_sysfs_del_meshif().
-+	 *
-+	 * But when a veto was received during the registration, the VLAN has to
-+	 * be cleaned up in the destructor.
-+	 */
-+	if (!bat_priv->softif_destroy) {
-+		vlan = batadv_softif_vlan_get(bat_priv, BATADV_NO_FLAGS);
-+		if (vlan) {
-+			batadv_softif_destroy_vlan(bat_priv, vlan);
-+			batadv_softif_vlan_put(vlan);
-+		}
-+	}
-+
- 	/* Free the TT and the originator tables only after having terminated
- 	 * all the other depending components which may use these structures for
- 	 * their purposes.
---- a/net/batman-adv/soft-interface.c
-+++ b/net/batman-adv/soft-interface.c
-@@ -629,8 +629,8 @@ int batadv_softif_create_vlan(struct bat
-  * @bat_priv: the bat priv with all the soft interface information
-  * @vlan: the object to remove
-  */
--static void batadv_softif_destroy_vlan(struct batadv_priv *bat_priv,
--				       struct batadv_softif_vlan *vlan)
-+void batadv_softif_destroy_vlan(struct batadv_priv *bat_priv,
-+				struct batadv_softif_vlan *vlan)
- {
- 	/* explicitly remove the associated TT local entry because it is marked
- 	 * with the NOPURGE flag
-@@ -834,6 +834,7 @@ static int batadv_softif_init_late(struc
- 	bat_priv->tt.last_changeset_len = 0;
- 	bat_priv->isolation_mark = 0;
- 	bat_priv->isolation_mark_mask = 0;
-+	bat_priv->softif_destroy = false;
- 
- 	/* randomize initial seqno to avoid collision */
- 	get_random_bytes(&random_seqno, sizeof(random_seqno));
-@@ -1121,6 +1122,7 @@ void batadv_softif_destroy_sysfs(struct
- 		batadv_softif_vlan_put(vlan);
+--- a/drivers/net/ethernet/cavium/liquidio/cn23xx_pf_device.c
++++ b/drivers/net/ethernet/cavium/liquidio/cn23xx_pf_device.c
+@@ -1334,18 +1334,14 @@ int setup_cn23xx_octeon_pf_device(struct
+ 	if (octeon_map_pci_barx(oct, 1, MAX_BAR1_IOREMAP_SIZE)) {
+ 		dev_err(&oct->pci_dev->dev, "%s CN23XX BAR1 map failed\n",
+ 			__func__);
+-		octeon_unmap_pci_barx(oct, 0);
+-		return 1;
++		goto err_unmap_bar0;
  	}
  
-+	bat_priv->softif_destroy = true;
- 	batadv_sysfs_del_meshif(soft_iface);
- 	unregister_netdevice(soft_iface);
- }
-@@ -1151,6 +1153,7 @@ static void batadv_softif_destroy_netlin
- 		batadv_softif_vlan_put(vlan);
- 	}
+ 	if (cn23xx_get_pf_num(oct) != 0)
+-		return 1;
++		goto err_unmap_bar1;
  
-+	bat_priv->softif_destroy = true;
- 	batadv_sysfs_del_meshif(soft_iface);
- 	unregister_netdevice_queue(soft_iface, head);
- }
---- a/net/batman-adv/soft-interface.h
-+++ b/net/batman-adv/soft-interface.h
-@@ -25,6 +25,8 @@ void batadv_softif_destroy_sysfs(struct
- bool batadv_softif_is_valid(const struct net_device *net_dev);
- extern struct rtnl_link_ops batadv_link_ops;
- int batadv_softif_create_vlan(struct batadv_priv *bat_priv, unsigned short vid);
-+void batadv_softif_destroy_vlan(struct batadv_priv *bat_priv,
-+				struct batadv_softif_vlan *vlan);
- void batadv_softif_vlan_release(struct kref *ref);
- struct batadv_softif_vlan *batadv_softif_vlan_get(struct batadv_priv *bat_priv,
- 						  unsigned short vid);
---- a/net/batman-adv/types.h
-+++ b/net/batman-adv/types.h
-@@ -1791,6 +1791,13 @@ struct batadv_priv {
- 	/** @bat_v: B.A.T.M.A.N. V per soft-interface private data */
- 	struct batadv_priv_bat_v bat_v;
- #endif
+-	if (cn23xx_sriov_config(oct)) {
+-		octeon_unmap_pci_barx(oct, 0);
+-		octeon_unmap_pci_barx(oct, 1);
+-		return 1;
+-	}
++	if (cn23xx_sriov_config(oct))
++		goto err_unmap_bar1;
+ 
+ 	octeon_write_csr64(oct, CN23XX_SLI_MAC_CREDIT_CNT, 0x3F802080802080ULL);
+ 
+@@ -1376,6 +1372,12 @@ int setup_cn23xx_octeon_pf_device(struct
+ 	oct->coproc_clock_rate = 1000000ULL * cn23xx_coprocessor_clock(oct);
+ 
+ 	return 0;
 +
-+	/**
-+	 * @softif_destroy: whether the mesh_free() is called via the
-+	 *  batadv_softif_destroy_sysfs() or batadv_softif_destroy_netlink()
-+	 *  codepath and doesn't have to clean up the untagged VLAN (sysfs)
-+	 */
-+	bool softif_destroy:1;
- };
++err_unmap_bar1:
++	octeon_unmap_pci_barx(oct, 1);
++err_unmap_bar0:
++	octeon_unmap_pci_barx(oct, 0);
++	return 1;
+ }
  
- /**
+ int validate_cn23xx_pf_config_info(struct octeon_device *oct,
 
 
