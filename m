@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB7C403AE9;
-	Tue, 21 Jul 2026 22:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1ADA430CE3;
+	Tue, 21 Jul 2026 22:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674243; cv=none; b=sFetZvDUrCrq+GrFivUXYqJQ3vP6l6cRyMWjEc56GC7x03YNLpYW/azDlJut786gh9ciKmYarZLWOuBWxeso7V0Tv+ygLAyH7htQF+QJewbTPQ3Da/5Fs1+/pZuJ+nau9VQ6cssNZPrY8J+oSzaNQQ2RhBRt9trZtQKnNuClTcU=
+	t=1784674246; cv=none; b=Gg5zDOvj855u8PkyAYokdU2P/9M5MdL0OZ6en5M8Wfp3uJcWMlZnO4XVNfLOTe1MaXgWFJKvGNSgqzsJbUQm7aX86OlFLwGxq5lXMk5MHnIPbxvTuqH/E9cJw1L67kO0LpfQtyuZRXKPXjQ1On8vQv35WwkHS21AJD5AH1ZvSWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674243; c=relaxed/simple;
-	bh=Nc8S8WAVtjFihE9XfRKrEY008EicjAdSLR+OZ01bUhs=;
+	s=arc-20240116; t=1784674246; c=relaxed/simple;
+	bh=HaFNHDOv6XTZoIKyzJDqMGNoACvSYKCVr4ZFz6s3hLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jpsiIeknCgEj+QchOSqwkHVXncHxbpRo+wVAqLQ9w3S87FqXR7Uyx2L9fockCbqQq3twzkp1cROfy7HzRSiOJ12wAydhIWAt42H1ztlMNxUrU5VPW3lVE+Kb1/sUvFSebmhsX6H4k9COeZf2tOZnFSZtCY9cQPA79gk1j9D7Cqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1OltAds1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QoclYminchUhcDZgkaiqY7R58LEuAz/aXbD5CWA2c5e7WDtaf/WBFr3pnM+CKN+j370yJmLzpI1Dwj+2fdKkRjJrKpmEOdm2zBYpLniLoU4/TKPd11UAzeCUUU3cmm8eFK/IPI2BD0UVuwwQLEgZYyDsPOaoWtULzaYkHOs3+2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCFagsq7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1OltAds1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C381F00A3A;
-	Tue, 21 Jul 2026 22:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCFagsq7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425AB1F00A3E;
+	Tue, 21 Jul 2026 22:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674242;
-	bh=rjiLdg9N5GbvFpSgwo6WZkVuEw0cnCw9BcKi3E0ZoxI=;
+	s=korg; t=1784674244;
+	bh=Ovjfu1yEhzbShDJm2T/HmqZmC/cBsSJlXCcFAjcVFsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1OltAds1SvL9xnhsBLWf0E55TFEtEu6dF5ofbir5jzHb1l4s+QgXM8miXS5fQb8sX
-	 BgyKJWpfViOcV2kJF7fTrIzT0XlEfwQX74oDjPU+YL3t9oAVq4qPw0XrTBg9b7IOm8
-	 1ZvjX46w+7BckfBpyN8TzPuStakmoRrRoiEblGAc=
+	b=GCFagsq7G0hsTk3B30RqF5/pY6DWCMy7PESnWYKAr2aOtXtIYXUd/2xAaxFMzPWnn
+	 vaP/JbHzMlShElVEvxxm646Tp5DzBTovORu/eBlRVqPRA/lJ6cNo4k1/TReGWq/bIs
+	 gbHENBxWhMOnu6R+BNh2e8an7PZHgcG1STvclgm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 5.10 468/699] batman-adv: frag: fix primary_if leak on failed linearization
-Date: Tue, 21 Jul 2026 17:23:47 +0200
-Message-ID: <20260721152406.253933772@linuxfoundation.org>
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 5.10 451/699] netfilter: bridge: fix stale prevhdr pointer in br_ip6_fragment()
+Date: Tue, 21 Jul 2026 17:23:30 +0200
+Message-ID: <20260721152405.876905339@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,33 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-commit 353d2c1d5492e53ae34f490a84494124dc3d3531 upstream.
+commit 86f3ce81dd2b4b0aa2c3016c989a943e4b1b643d upstream.
 
-If the skb has a frag_list, it must be linearized before it can be split
-using skb_split(). But when this step failed, it must not only free the skb
-but also take care of the reference to the already found primary_if.
+br_ip6_fragment() gets prevhdr, a pointer into the skb head, from
+ip6_find_1stfragopt(), then calls skb_checksum_help().  For a cloned skb
+skb_checksum_help() reallocates the head via pskb_expand_head(), leaving
+prevhdr dangling.  It is later dereferenced in ip6_frag_next(), causing a
+use-after-free write.
 
+Save prevhdr's offset before skb_checksum_help() and recompute it after,
+like commit ef0efcd3bd3f ("ipv6: Fix dangling pointer when ipv6
+fragment").
+
+  BUG: KASAN: slab-use-after-free in ip6_frag_next (net/ipv6/ip6_output.c:857)
+  Write of size 1 at addr ffff888013ff5016 by task exploit/141
+  Call Trace:
+   ...
+   kasan_report (mm/kasan/report.c:595)
+   ip6_frag_next (net/ipv6/ip6_output.c:857)
+   br_ip6_fragment (net/ipv6/netfilter.c:212)
+   nf_ct_bridge_post (net/bridge/netfilter/nf_conntrack_bridge.c:407)
+   nf_hook_slow (net/netfilter/core.c:619)
+   br_forward_finish (net/bridge/br_forward.c:66)
+   __br_forward (net/bridge/br_forward.c:115)
+   maybe_deliver (net/bridge/br_forward.c:191)
+   br_flood (net/bridge/br_forward.c:245)
+   br_handle_frame_finish (net/bridge/br_input.c:229)
+   br_handle_frame (net/bridge/br_input.c:442)
+   ...
+   packet_sendmsg (net/packet/af_packet.c:3114)
+   ...
+   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+Fixes: 764dd163ac92 ("netfilter: nf_conntrack_bridge: add support for IPv6")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: a063f2fba3fa ("batman-adv: Don't skb_split skbuffs with frag_list")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/fragmentation.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/netfilter.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/batman-adv/fragmentation.c
-+++ b/net/batman-adv/fragmentation.c
-@@ -554,7 +554,7 @@ int batadv_frag_send_packet(struct sk_bu
- 	 */
- 	if (skb_has_frag_list(skb) && __skb_linearize(skb)) {
- 		ret = -ENOMEM;
--		goto free_skb;
-+		goto put_primary_if;
- 	}
+--- a/net/ipv6/netfilter.c
++++ b/net/ipv6/netfilter.c
+@@ -122,7 +122,7 @@ int br_ip6_fragment(struct net *net, str
+ 	ktime_t tstamp = skb->tstamp;
+ 	struct ip6_frag_state state;
+ 	u8 *prevhdr, nexthdr = 0;
+-	unsigned int mtu, hlen;
++	unsigned int mtu, hlen, nexthdr_offset;
+ 	int hroom, err = 0;
+ 	__be32 frag_id;
  
- 	/* Create one header to be copied to all fragments */
+@@ -131,6 +131,7 @@ int br_ip6_fragment(struct net *net, str
+ 		goto blackhole;
+ 	hlen = err;
+ 	nexthdr = *prevhdr;
++	nexthdr_offset = prevhdr - skb_network_header(skb);
+ 
+ 	mtu = skb->dev->mtu;
+ 	if (frag_max_size > mtu ||
+@@ -149,6 +150,7 @@ int br_ip6_fragment(struct net *net, str
+ 	    (err = skb_checksum_help(skb)))
+ 		goto blackhole;
+ 
++	prevhdr = skb_network_header(skb) + nexthdr_offset;
+ 	hroom = LL_RESERVED_SPACE(skb->dev);
+ 	if (skb_has_frag_list(skb)) {
+ 		unsigned int first_len = skb_pagelen(skb);
 
 
