@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240A046A5FF;
-	Tue, 21 Jul 2026 15:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6716146A600;
+	Tue, 21 Jul 2026 15:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784647840; cv=none; b=qs01HextG842Wg20xQQr6OrAHke2RlRoor9swI/QoLxNlKk+RtcreKf7AgxIVyGtl/6a+DNOpYmLEZPDesYNodb9zMaYNP5BTEbemRrnT40ZTvDkIJziyXCLLIdRDfhr1cVooXdScqq+tDHI+f8rDCwZ9R0QHls/Fb4y90tKaXo=
+	t=1784647842; cv=none; b=uO+KWTncEc+sl2toOZ14HenGW5U1sZVUsZrtYm0Tegv85j0jU+Vrr9pYZNy5FAsn14v/mqwJzSr6f4qsPAibocg0vnYL5GSNnaJ6FsNfmXLr6VUj7/5vtl2yPdMfJDdO3rvkj4+3TDYIngJVSwb/TJl1D2v1HJTsITo62oByWY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784647840; c=relaxed/simple;
-	bh=mhTJOfkEyUoH0MZdWjqW1box7cHWKm6MiEVVv0fZ1/w=;
+	s=arc-20240116; t=1784647842; c=relaxed/simple;
+	bh=zxNkTr0uTJMjRtDBhKO7Zl5d5eZiO97LwPV660zZaXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hIAYMmWkZOo3AODJeojhyCcVEmXvFUSdGbPFKrHBcYVNQ9jJp+CZF1IpDmfv2MRKolSBnQqmQtXG44kHhd2ZqgjFxRQhkqucUxPm1Am8dnjcpUAx5uwXoqLR7eO1y6cPCNtzZc6OCvFtvUaXY8OauP8SA4cQbQMLXHIDV7DNaLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZWlYwBD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WJgBzU8zNhybld46uC98d9/mXL0A0wA2J42gV34DC0d9jY6FAQd5htAt3D5miPm2kHaPBFgUB44xquZAkaddXQBwHLPkHQ6hRizTdbg5/F5Ta1kuivJJajFZ3hR7ISfgHz3gmug1XS8GjVp+U45rNVw9RO1ZLXLg8GCxjR4cPio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPxwxXmn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZWlYwBD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5CE81F000E9;
-	Tue, 21 Jul 2026 15:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPxwxXmn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 713B91F00A3A;
+	Tue, 21 Jul 2026 15:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784647836;
-	bh=7tHtyXXNxmo8IkNAmv2sr3rc4eKQOZDS9S5+QLoFNG0=;
+	s=korg; t=1784647838;
+	bh=xheaRMu4ZyZHaEg/u3ggqbXPGdX0q0L7QF7oSqcAQtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aZWlYwBDyh+oF9wA4ZUipfLXAqGLo1chtUawQVwIyVl2l7QD5xQ/8lEhEPSOHkt/L
-	 6paF1AB9ZqVjgLaFWZpXAixN/9WoRgrQQGMsIjcAGhVkMXXh8Fgk5XawCH7uNdpOWJ
-	 SuZ0EQ9XSy2fRK2aFhkY7lI0LWpmT/YmpzuCNU58=
+	b=rPxwxXmnhinxwM4DUqLvfEHxaIHbZ/6KWf76LKdm47/nPfEgEgSlfL+lQ9Tn31aQk
+	 HWhTet3oUlthwXXi5iQR/vAJwqN1xF+UMTsuqUonTNHVQ7ZdMlgqI527qqWLOe54NT
+	 l6fY8FfUtAUspFy4gJmL3gx4TPEPRjmyRQ3tZnGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Chuck Lever <cel@kernel.org>,
+	Dmytro Maluka <dmaluka@chromium.org>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
+	Konstantin Andreev <andreev@swemel.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0002/1266] nfsd: release layout stid on setlease failure
-Date: Tue, 21 Jul 2026 17:07:19 +0200
-Message-ID: <20260721152441.848556668@linuxfoundation.org>
+Subject: [PATCH 6.12 0002/1276] iommu/vt-d: Clear Present bit before tearing down context entry
+Date: Tue, 21 Jul 2026 17:07:25 +0200
+Message-ID: <20260721152446.127179303@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
-References: <20260721152441.786066624@linuxfoundation.org>
+In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
+References: <20260721152446.065700225@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,79 +49,131 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-commit 30d55c8aabb261bc3f427d6b9aae7ef6206063f9 upstream.
+[ Upstream commit c1e4f1dccbe9d7656d1c6872ebeadb5992d0aaa2 ]
 
-nfs4_alloc_stid() publishes the new stid into cl->cl_stateids via
-idr_alloc_cyclic() under cl_lock before returning to
-nfsd4_alloc_layout_stateid(). When nfsd4_layout_setlease() then
-fails, the error path frees the layout stateid directly with
-kmem_cache_free() without ever calling idr_remove(), leaving the
-IDR slot pointing at freed slab memory. Any subsequent IDR walker
-(states_show, client teardown) dereferences the dangling pointer.
+When tearing down a context entry, the current implementation zeros the
+entire 128-bit entry using multiple 64-bit writes. This creates a window
+where the hardware can fetch a "torn" entry — where some fields are
+already zeroed while the 'Present' bit is still set — leading to
+unpredictable behavior or spurious faults.
 
-The correct teardown for an IDR-published stid is nfs4_put_stid(),
-which removes the IDR slot under cl_lock, dispatches sc_free
-(nfsd4_free_layout_stateid) to release ls->ls_file via
-nfsd4_close_layout(), and drops the nfs4_file reference in its
-tail.
+While x86 provides strong write ordering, the compiler may reorder writes
+to the two 64-bit halves of the context entry. Even without compiler
+reordering, the hardware fetch is not guaranteed to be atomic with
+respect to multiple CPU writes.
 
-A second issue blocks that switch: nfsd4_free_layout_stateid()
-unconditionally inspects ls->ls_fence_work via
-delayed_work_pending() under ls_lock, but
-INIT_DELAYED_WORK(&ls->ls_fence_work, ...) currently runs only
-after the setlease call. On the setlease-failure path the
-destructor would touch an uninitialized delayed_work.
+Align with the "Guidance to Software for Invalidations" in the VT-d spec
+(Section 6.5.3.3) by implementing the recommended ownership handshake:
 
-    nfsd4_alloc_layout_stateid()
-      nfs4_alloc_stid()           /* idr_alloc_cyclic under cl_lock */
-      nfsd4_layout_setlease()     /* fails */
-        nfs4_put_stid()
-          nfsd4_free_layout_stateid()
-            delayed_work_pending(&ls->ls_fence_work)  /* needs INIT */
-            nfsd4_close_layout()  /* nfsd_file_put(ls->ls_file) */
-          put_nfs4_file()
+1. Clear only the 'Present' (P) bit of the context entry first to
+   signal the transition of ownership from hardware to software.
+2. Use dma_wmb() to ensure the cleared bit is visible to the IOMMU.
+3. Perform the required cache and context-cache invalidation to ensure
+   hardware no longer has cached references to the entry.
+4. Fully zero out the entry only after the invalidation is complete.
 
-Fix by hoisting the ls_fenced / ls_fence_delay / INIT_DELAYED_WORK
-initialization above the nfsd4_layout_setlease() call, and replace
-the manual nfsd_file_put + put_nfs4_file + kmem_cache_free cleanup
-with a single nfs4_put_stid(stp).
+Also, add a dma_wmb() to context_set_present() to ensure the entry
+is fully initialized before the 'Present' bit becomes visible.
 
-Fixes: c5c707f96fc9 ("nfsd: implement pNFS layout recalls")
-Cc: stable@vger.kernel.org
-Assisted-by: kres (claude-opus-4-7)
-Signed-off-by: Chris Mason <clm@meta.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ cel: no ls_fence_work in 6.6.y; dropped INIT_DELAYED_WORK hunk ]
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Fixes: ba39592764ed2 ("Intel IOMMU: Intel IOMMU driver")
+Reported-by: Dmytro Maluka <dmaluka@chromium.org>
+Closes: https://lore.kernel.org/all/aTG7gc7I5wExai3S@google.com/
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Dmytro Maluka <dmaluka@chromium.org>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20260120061816.2132558-3-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4layouts.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/iommu/intel/iommu.c |  4 +++-
+ drivers/iommu/intel/iommu.h | 21 ++++++++++++++++++++-
+ drivers/iommu/intel/pasid.c |  5 ++++-
+ 3 files changed, 27 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfsd/nfs4layouts.c b/fs/nfsd/nfs4layouts.c
-index 308214378fd352..84bb200e24adea 100644
---- a/fs/nfsd/nfs4layouts.c
-+++ b/fs/nfsd/nfs4layouts.c
-@@ -242,9 +242,7 @@ nfsd4_alloc_layout_stateid(struct nfsd4_compound_state *cstate,
- 	BUG_ON(!ls->ls_file);
- 
- 	if (nfsd4_layout_setlease(ls)) {
--		nfsd_file_put(ls->ls_file);
--		put_nfs4_file(fp);
--		kmem_cache_free(nfs4_layout_stateid_cache, ls);
-+		nfs4_put_stid(stp);
- 		return NULL;
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index cce5a19b5d330e..18022d17c492b6 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -1914,10 +1914,12 @@ static void domain_context_clear_one(struct device_domain_info *info, u8 bus, u8
  	}
  
+ 	did = context_domain_id(context);
+-	context_clear_entry(context);
++	context_clear_present(context);
+ 	__iommu_flush_cache(iommu, context, sizeof(*context));
+ 	spin_unlock(&iommu->lock);
+ 	intel_context_flush_present(info, context, did, true);
++	context_clear_entry(context);
++	__iommu_flush_cache(iommu, context, sizeof(*context));
+ }
+ 
+ static int domain_setup_first_level(struct intel_iommu *iommu,
+diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
+index b33d8888d7ebd7..e46eb1d3fba29d 100644
+--- a/drivers/iommu/intel/iommu.h
++++ b/drivers/iommu/intel/iommu.h
+@@ -958,7 +958,26 @@ static inline unsigned long virt_to_dma_pfn(void *p)
+ 
+ static inline void context_set_present(struct context_entry *context)
+ {
+-	context->lo |= 1;
++	u64 val;
++
++	dma_wmb();
++	val = READ_ONCE(context->lo) | 1;
++	WRITE_ONCE(context->lo, val);
++}
++
++/*
++ * Clear the Present (P) bit (bit 0) of a context table entry. This initiates
++ * the transition of the entry's ownership from hardware to software. The
++ * caller is responsible for fulfilling the invalidation handshake recommended
++ * by the VT-d spec, Section 6.5.3.3 (Guidance to Software for Invalidations).
++ */
++static inline void context_clear_present(struct context_entry *context)
++{
++	u64 val;
++
++	val = READ_ONCE(context->lo) & GENMASK_ULL(63, 1);
++	WRITE_ONCE(context->lo, val);
++	dma_wmb();
+ }
+ 
+ static inline void context_set_fault_enable(struct context_entry *context)
+diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
+index 74be6b547fc0c2..5e63b5d4577f75 100644
+--- a/drivers/iommu/intel/pasid.c
++++ b/drivers/iommu/intel/pasid.c
+@@ -804,7 +804,7 @@ static int device_pasid_table_setup(struct device *dev, u8 bus, u8 devfn)
+ 	}
+ 
+ 	if (context_copied(iommu, bus, devfn)) {
+-		context_clear_entry(context);
++		context_clear_present(context);
+ 		__iommu_flush_cache(iommu, context, sizeof(*context));
+ 
+ 		/*
+@@ -824,6 +824,9 @@ static int device_pasid_table_setup(struct device *dev, u8 bus, u8 devfn)
+ 		iommu->flush.flush_iotlb(iommu, 0, 0, 0, DMA_TLB_GLOBAL_FLUSH);
+ 		devtlb_invalidation_with_pasid(iommu, dev, IOMMU_NO_PASID);
+ 
++		context_clear_entry(context);
++		__iommu_flush_cache(iommu, context, sizeof(*context));
++
+ 		/*
+ 		 * At this point, the device is supposed to finish reset at
+ 		 * its driver probe stage, so no in-flight DMA will exist,
 -- 
 2.53.0
 
