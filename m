@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E40395D8E;
-	Tue, 21 Jul 2026 20:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5BA432E9C;
+	Tue, 21 Jul 2026 20:07:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664460; cv=none; b=cWIFmX9h8fWeUsgjQh3SsveC7NOwNenQ6acgCpZBnAoSmaoxvg/Xfkz//mJ1rGt7OODujUkL7Ix82cVi7O2Z0hRjU27WUdgYvxnDzDApjabWytZr2+igzu+QSwEct2ij17fx1h5ZeSR/U3Ogg8DpOwfQ3z2M1azyqz78UPQXTAk=
+	t=1784664463; cv=none; b=rl6KFH4KzpKF/tztocfS3REheRbrz9ajSxcZJRnk+kXGTqFlBbe1vt+fwPl5+XY8baDm/61mx2HwUtHNolHgWDuly1Nw0B7/JZj0cBjPUTy6P1+ZgSafrisBdyTp6wkN8gm9ZzyROm0cKa5G2EA0Rd/AnbOFychkeH02uSNjCDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664460; c=relaxed/simple;
-	bh=4PaArK7DdzgLalcp3/gwDPoGH/4Gm2ldgWL0rTEMzbo=;
+	s=arc-20240116; t=1784664463; c=relaxed/simple;
+	bh=vFl/ChY6dm1/PyhZZiOxt/mP01VAkgnbXYb4y8wXhnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qEk8d2csPwvfpohIMU9480oEc0LjoCbD/7x/FZ+O36CFV1GM2D9hXTfV/JrKiXbafaJbzvxMbGQcegoSstet5Cs9RUItfMFyqf6bFX2cfM019lhZyu+ORSk08MYnjhr1zVCb7ul+RGY7WvXt9Gw7jEg87uwbZ669u3WxW9fMi6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJnzsCQp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DgwlSuo2ulcekD/VyXJnMAo2f1hhbFf8xt5qfrEiaxX5AwBgiGmOeTfbJ26oE8XAArBVzPJzt0z3NyfQG1A9lmZqv1FlVGL5EhvYBbhIT1HmzIDqfjZE/hCPzCKhECNuJuRWu6gajeiSiL+dPV/oH97FFA5ajVhrygaVlTn1pWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InKoDGzi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJnzsCQp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7351F000E9;
-	Tue, 21 Jul 2026 20:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InKoDGzi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F92D1F000E9;
+	Tue, 21 Jul 2026 20:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664459;
-	bh=bq/W5pHFwpEL9I6+gbf83hz4eBDILf0nq7/cM24Khoo=;
+	s=korg; t=1784664461;
+	bh=qTGCP7hiiPx4AO6fONc8fQj/mUgpOqoZ85IEs+YdGCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NJnzsCQp89AP3/vdVLOF42M2nexxNHUIEXeRCQEG1gDzg9e4H91RAa8U5FSIRdiMq
-	 zSKgi8OVXg5ax1p4bxRa7mlcBazagnDdkw8/CBBH7vsEurCK/g5zpbGs1wrYSIYFGH
-	 GxhZezQ5joXdjqd7z/VGTTxSn+Aw9ViumUEzMlt4=
+	b=InKoDGzi7qqQ6Axh2PkliKm/81zoIaGrA9ns2yvznuzbtJF893/mMxoDo1fiXzL5t
+	 pb3iAIzjSpDRVcnEwPrtPWFkKmu6U9yvETMkI44banF1fifPyRaOhYgkEGMcRAIv2C
+	 mW7Inw9OLghhvvSgkRa6GHNWtgyQT1JXM39i9giU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1209/1276] crypto: atmel - Drop explicit initialization of struct i2c_device_id::driver_data to 0
-Date: Tue, 21 Jul 2026 17:27:32 +0200
-Message-ID: <20260721152513.121746164@linuxfoundation.org>
+Subject: [PATCH 6.12 1210/1276] crypto: atmel-sha204a - drop hwrng quality reduction for ATSHA204A
+Date: Tue, 21 Jul 2026 17:27:33 +0200
+Message-ID: <20260721152513.145242989@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -45,57 +46,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit d86ad3911a5d4549297ed810ee450e5772fd665f ]
+[ Upstream commit ea5e57cc97185329dcc5ebdcaae7e1500bf0ad0b ]
 
-These drivers don't use the driver_data member of struct i2c_device_id,
-so don't explicitly initialize this member.
+Commit 8006aff15516 ("crypto: atmel-sha204a - Set hwrng quality to
+lowest possible") reduced the hwrng quality to 1 based on a review by
+Bill Cox [1]. However, despite its title, the review only tested the
+ATSHA204, not the ATSHA204A.
 
-This prepares putting driver_data in an anonymous union which requires
-either no initialization or named designators. But it's also a nice
-cleanup on its own.
+In the same thread, Atmel engineer Landon Cox wrote "this behavior has
+been eliminated entirely"[2] in the ATSHA204A and "this problem does not
+affect the ATECC108 or the ATECC108A (or the ATSHA204A)"[3].
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+According to the official ATSHA204A datasheet [4], the device contains a
+high-quality hardware RNG that combines its output with an internal seed
+value stored in EEPROM or SRAM to generate random numbers. The device
+also implements all security functions using SHA-256, and the driver
+uses the chip's Random command in seed-update mode.
+
+Keep 'quality = 1' for ATSHA204, but drop the explicit hwrng quality
+reduction for ATSHA204A and fall back to the hwrng core default.
+
+[1] https://www.metzdowd.com/pipermail/cryptography/2014-December/023858.html
+[2] https://www.metzdowd.com/pipermail/cryptography/2014-December/023852.html
+[3] https://www.metzdowd.com/pipermail/cryptography/2014-December/023886.html
+[4] https://ww1.microchip.com/downloads/en/DeviceDoc/ATSHA204A-Data-Sheet-40002025A.pdf
+
+Fixes: 8006aff15516 ("crypto: atmel-sha204a - Set hwrng quality to lowest possible")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: ea5e57cc9718 ("crypto: atmel-sha204a - drop hwrng quality reduction for ATSHA204A")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-ecc.c     |    2 +-
- drivers/crypto/atmel-sha204a.c |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/crypto/atmel-sha204a.c |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---- a/drivers/crypto/atmel-ecc.c
-+++ b/drivers/crypto/atmel-ecc.c
-@@ -380,7 +380,7 @@ MODULE_DEVICE_TABLE(of, atmel_ecc_dt_ids
- #endif
- 
- static const struct i2c_device_id atmel_ecc_id[] = {
--	{ "atecc508a", 0 },
-+	{ "atecc508a" },
- 	{ }
- };
- MODULE_DEVICE_TABLE(i2c, atmel_ecc_id);
 --- a/drivers/crypto/atmel-sha204a.c
 +++ b/drivers/crypto/atmel-sha204a.c
-@@ -214,8 +214,8 @@ static const struct of_device_id atmel_s
+@@ -19,6 +19,12 @@
+ #include <linux/workqueue.h>
+ #include "atmel-i2c.h"
+ 
++/*
++ * According to review by Bill Cox [1], the ATSHA204 has very low entropy.
++ * [1] https://www.metzdowd.com/pipermail/cryptography/2014-December/023858.html
++ */
++static const unsigned short atsha204_quality = 1;
++
+ static void atmel_sha204a_rng_done(struct atmel_i2c_work_data *work_data,
+ 				   void *areq, int status)
+ {
+@@ -158,6 +164,7 @@ static const struct attribute_group atme
+ static int atmel_sha204a_probe(struct i2c_client *client)
+ {
+ 	struct atmel_i2c_client_priv *i2c_priv;
++	const unsigned short *quality;
+ 	int ret;
+ 
+ 	ret = atmel_i2c_probe(client);
+@@ -171,11 +178,9 @@ static int atmel_sha204a_probe(struct i2
+ 	i2c_priv->hwrng.name = dev_name(&client->dev);
+ 	i2c_priv->hwrng.read = atmel_sha204a_rng_read;
+ 
+-	/*
+-	 * According to review by Bill Cox [1], this HWRNG has very low entropy.
+-	 * [1] https://www.metzdowd.com/pipermail/cryptography/2014-December/023858.html
+-	 */
+-	i2c_priv->hwrng.quality = 1;
++	quality = i2c_get_match_data(client);
++	if (quality)
++		i2c_priv->hwrng.quality = *quality;
+ 
+ 	ret = devm_hwrng_register(&client->dev, &i2c_priv->hwrng);
+ 	if (ret)
+@@ -207,14 +212,14 @@ static void atmel_sha204a_remove(struct
+ }
+ 
+ static const struct of_device_id atmel_sha204a_dt_ids[] __maybe_unused = {
+-	{ .compatible = "atmel,atsha204", },
++	{ .compatible = "atmel,atsha204", .data = &atsha204_quality },
+ 	{ .compatible = "atmel,atsha204a", },
+ 	{ /* sentinel */ }
+ };
  MODULE_DEVICE_TABLE(of, atmel_sha204a_dt_ids);
  
  static const struct i2c_device_id atmel_sha204a_id[] = {
--	{ "atsha204", 0 },
--	{ "atsha204a", 0 },
-+	{ "atsha204" },
-+	{ "atsha204a" },
+-	{ "atsha204" },
++	{ "atsha204", (kernel_ulong_t)&atsha204_quality },
+ 	{ "atsha204a" },
  	{ /* sentinel */ }
  };
- MODULE_DEVICE_TABLE(i2c, atmel_sha204a_id);
 
 
