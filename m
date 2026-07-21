@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA16433BC0;
-	Tue, 21 Jul 2026 19:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A1F42CAF1;
+	Tue, 21 Jul 2026 19:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662593; cv=none; b=Z6RLNwsSy+jQSscpI1RgflaCKGwdIzvOLuzNl6iB5RRCcxnQDTalIZ9NzEeOsMuPPcMZqktATaYnI7J4C6w6D8t/tk/6UHdcYaBkpJqLFlhJ+MQx7Lm0xbAT0H0sD2i+jnw67CXGOg4Ybiv6hoZ/jVgdlPDaPBHbAz8+mKkNi90=
+	t=1784662595; cv=none; b=LoQQlkZigocuvMCM+TFkbvRRREdPxfHDWVSX2hTeihevORrf4q8XEw3W8xmYS9/TfAvfDJNQxE2rnuTp/GOUe7GDKBT6CBEbkM4p/1EHliPfN/xJ611wwXXsxZQfRm+wdBENjs918rpz9IHiERaMCc0BcDixZCs7G6O17sLH5ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662593; c=relaxed/simple;
-	bh=sc6mYILdUB59gVQl+x2tyP/5OMbLdlt+0bXUXmZPwGM=;
+	s=arc-20240116; t=1784662595; c=relaxed/simple;
+	bh=LPLY+9+iv2yIZo8NUd7Qr5ToUHcDdn+RhFLYhpj+n6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I3sLAwEEwfpB7TT0c0SrsTq9cj6jQ6KWxfpSR5owfB3o3cTYH3fjuWH/lRx+uR/3mw7zpiQCl16swXFXG/rFi7J6lD+yTlFM9v7br7OuU/6D3X4YI1ZlXk2vXjVftN1fcXYGkho0xh+5ETItRhCQ2wdJgSt7eUnzO0a8POcwuP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyMOUhgu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=o5DniG0u/GxhTqn2J7yUf2L6XHrziHy5hyC3tuIjf7EKeBQq3/OJjk+FFB4nR0IqF3KDlKapm3EBPReF5Q/FBex0BfN4/0K8dW4ZVQ+yaX9biAAh3Cbvo1ArIjEL82yFJ6RbQh0yYkJ0NmlMyxWCnPseyymRTsjKLHVoDkN8HR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nc1zlhd+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyMOUhgu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A291F000E9;
-	Tue, 21 Jul 2026 19:36:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nc1zlhd+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB2E1F000E9;
+	Tue, 21 Jul 2026 19:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662591;
-	bh=NT3GizsijI0rKihSuNqJ2UBsm1FMektDTuHPvpoaXw4=;
+	s=korg; t=1784662594;
+	bh=ykBmsCvzMNFv1tdeZyAGhjJBAGb6aLunapGIiREivTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zyMOUhgu9tO2T+3ZZmwhJnCUxZHs9mG4MQkUq/Gue6cOT9ECO32dnbkfxklOOXJgk
-	 BK9kxKT+sWsrJ7f/85/U6tCzgEGdzryMr+b4JsxBSlHuhexrD4ouh4PO9QIB4WHwQV
-	 v/sPfO3FQh61ImEqu6TkUjlYMh7nmmvI2vRJ7Lj0=
+	b=nc1zlhd+uCKcbw60YogyUdNTu9z9QnQABvjkBrGRopJ8KFfGfA21FnmHl3g6yqqPg
+	 e1C49os7n0DcMf8Tn2z/OhmGla66EQSvpbkXpj0RWnuqkYJGzwstMjlSkQQLEBQSEc
+	 WIQnMvuiBjynI3t/29c8yfYxerRSK1SXvlvi1B/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Ian Rogers <irogers@google.com>,
-	Yang Jihong <yangjihong@bytedance.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0501/1276] perf sched: Bounds-check prio before test_bit() in timehist
-Date: Tue, 21 Jul 2026 17:15:44 +0200
-Message-ID: <20260721152457.316941741@linuxfoundation.org>
+Subject: [PATCH 6.12 0502/1276] perf sched: Fix idle-hist callchain display using wrong rb_first variant
+Date: Tue, 21 Jul 2026 17:15:45 +0200
+Message-ID: <20260721152457.338898135@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -56,49 +57,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 4477dc01fcfc7f404772a67e0c1e056541ceb61d ]
+[ Upstream commit d9b99dc8148e0c1f5da3942131b47e0d21187a32 ]
 
-timehist_skip_sample() reads prio from untrusted tracepoint data via
-perf_sample__intval(sample, "prev_prio") without bounds validation.
-A crafted perf.data with prev_prio >= MAX_PRIO (140) causes test_bit()
-to read past the end of the prio_bitmap, which is only MAX_PRIO bits.
+timehist_print_idlehist_callchain() calls rb_first_cached() on
+sorted_root, but the sort function (callchain_param.sort) populates it
+via rb_insert_color() on the plain rb_root member — not the cached
+variant.  This means rb_leftmost is never set, so rb_first_cached()
+always returns NULL and the entire callchain summary is silently
+dropped from --idle-hist output.
 
-Add a prio >= 0 guard before the test_bit() call and skip out-of-range
-values (>= MAX_PRIO) that can never match the user's filter set.
+The original code in ba957ebb54893aca ("perf sched timehist: Show
+callchains for idle stat") was correct — it used struct rb_root and
+rb_first().  The bug was introduced when sorted_root was converted to
+rb_root_cached without converting the sort insertion path to use
+rb_insert_color_cached().
 
-The original prio != -1 already let all negatives other than -1 through
-(after an undefined-behavior bitmap read); the new prio >= 0 guard
-preserves that pass-through behavior — negative means "no priority
-info", so the event is shown unfiltered — while fixing the OOB.
-Values >= MAX_PRIO are skipped because they cannot be represented in
-the filter bitmap.
+Use rb_first(&root->rb_root) to match how the tree was populated.
 
-Fixes: 9b3a48bbe20d9692 ("perf sched timehist: Add --prio option")
+Fixes: cb4c13a5137766c3 ("perf sched: Use cached rbtrees")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Yang Jihong <yangjihong@bytedance.com>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Acked-by: Ian Rogers <irogers@google.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/perf/builtin-sched.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index d599ad421df108..7cf56e271a993a 100644
+index 7cf56e271a993a..0741d926590468 100644
 --- a/tools/perf/builtin-sched.c
 +++ b/tools/perf/builtin-sched.c
-@@ -2646,7 +2646,9 @@ static bool timehist_skip_sample(struct perf_sched *sched,
- 		else if (evsel__name_is(evsel, "sched:sched_switch"))
- 			prio = evsel__intval(evsel, sample, "prev_prio");
+@@ -3126,7 +3126,8 @@ static size_t timehist_print_idlehist_callchain(struct rb_root_cached *root)
+ 	size_t ret = 0;
+ 	FILE *fp = stdout;
+ 	struct callchain_node *chain;
+-	struct rb_node *rb_node = rb_first_cached(root);
++	/* sort() uses rb_insert_color() on rb_root, not rb_root_cached */
++	struct rb_node *rb_node = rb_first(&root->rb_root);
  
--		if (prio != -1 && !test_bit(prio, sched->prio_bitmap)) {
-+		/* negative prio means no info; out-of-range prio can't match the filter */
-+		if (prio >= 0 &&
-+		    (prio >= MAX_PRIO || !test_bit(prio, sched->prio_bitmap))) {
- 			rc = true;
- 			sched->skipped_samples++;
- 		}
+ 	printf("  %16s  %8s  %s\n", "Idle time (msec)", "Count", "Callchains");
+ 	printf("  %.16s  %.8s  %.50s\n", graph_dotted_line, graph_dotted_line,
 -- 
 2.53.0
 
