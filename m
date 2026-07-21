@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B49E44607D;
-	Tue, 21 Jul 2026 15:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A2C46A610;
+	Tue, 21 Jul 2026 15:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648893; cv=none; b=mXK8lWLhs9fhpP/3NKz8bh86MVnauNwfNlOAN6O3KXEomHppadtDT/qxW/FKRwiqjfVE/Gm2sGOjRewdlj5jw+21Rnr3uem6dUmfCK4KdUdWcwCW70+0zM+Cp9NnoBMmuBrEVZqljsopkjx3haTE4R0i6IVT0K6yF0wQY68q+nA=
+	t=1784648896; cv=none; b=H6nNmWR1JbzOFg7EtfE+9zBLPb4bvulEQzNvzD5GxXEvQS1i7STfu7KmgBnGj7j2B2inC0tuFDXgiRM2dT/dgTR8W7aitQm8ZLudwLFFZuVtgJshMW335IAC3wGzsPWk81HT1GcFSAN1GYeB4N3hgRfpkOlC80+4AMIbIx3gge8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648893; c=relaxed/simple;
-	bh=pYhS6EIVWqsVlCF47RjYSSpvEmxzN0DKPFqII9Pfv+8=;
+	s=arc-20240116; t=1784648896; c=relaxed/simple;
+	bh=1XjgAPAKVgMaIl95IBGNsNtW8JGHaH8fVOhdZlTg73w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQ4BZqcW5Ha8RucKcmb3gVy8etv+667t7ShhiOEy3QOi5JSxwJHpIxsaTuwAwF5em0Q2CJddk6Lpuh242d481JffP3VKp2V4JAKS0Z1+V5Hl+RqwqtoZlqhBURrhU4vIn+h/J0jKyMobOyt6Ip+21Bt9vz43+GPatxqVGJj5CGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rgcbQ4Ko; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QzZhMwA2AUuAf6a3WZPOaDhid5/bqLT8iT1iD8KWCSeoF/mCtmOFtScTsjhMQHed57UwArgXJvQhgR6iq5zGKdK8nZjH4r1cWwRICory+J/duyFZRb6iQs6CBtq97anI1ZGLN4cWaxCkaZmeGB9sib523eaTjqHF016Qn1lKlzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JaXYhlbY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rgcbQ4Ko"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1852C1F00A3A;
-	Tue, 21 Jul 2026 15:48:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JaXYhlbY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2721F000E9;
+	Tue, 21 Jul 2026 15:48:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648886;
-	bh=A22w0IOE8zlkfE3DVjwkotETU7v0r4lADzouL5zowhI=;
+	s=korg; t=1784648889;
+	bh=b/L91PoJ3AdHHt1m0pH/r3eG+Kz4dsZlh/co1AHE77M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rgcbQ4Ko3QPbXRq7wyPsWToI1AgYKi2cNvKqE6Oc4+k8JxByMpmRjeQXMEGnZWKz3
-	 RnKp4hw1fsYhiTVORVHhQCw6krgAI3NDSQRlMPTpoAyBqS6g43EBVeuDodereex0y/
-	 rpkA/kd52W4GFZIX9+y4N1tk6iSFbwB69A073Su4=
+	b=JaXYhlbYaEiyNbCo5GhaHStpRu+EJkbgIYcNepm5aTxQybS7lv6tJBM1SMSmZIpo3
+	 t7Qc5IcG7rQATmjmSC9YEemGcTmtLsmFKDhO1EFdA3Ixr+H4Ldd/2K+/z5wMBrekSD
+	 wTfoafgTswhKJDeskudMcXWxBr8kFosGbvF5fq8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Chul Kim <chul.kim@idt.com>,
-	Matt Porter <mporter@kernel.crashing.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0362/2077] rapidio/tsi721: prevent a bad dereference in tsi721_db_dpc()
-Date: Tue, 21 Jul 2026 17:00:35 +0200
-Message-ID: <20260721152601.225894899@linuxfoundation.org>
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Val Packett <val@packett.cool>,
+	Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Subject: [PATCH 7.1 0371/2077] drm/msm/dp: fix HPD state status bit shift value
+Date: Tue, 21 Jul 2026 17:00:44 +0200
+Message-ID: <20260721152601.439126922@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,56 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
 
-[ Upstream commit fc15e3a30ddd950f009c76765331783b9af94a87 ]
+[ Upstream commit 2e6c2e81d81251623c458a60e2a57447dcbc988e ]
 
-With a list_for_each() loop, if we don't find the item we are looking for
-in the list, then the loop exits with the iterator, which is "dbell" in
-this loop, pointing to invalid memory.
+The HPD state status is the 3 most significant bits, not 4 bits of the
+HPD_INT_STATUS register.
 
-This code uses the "found" variable to determine if we have found the
-doorbell we are looking for or not.  However, the problem that the "found"
-variable needs to be set to false at the start of each iteration,
-otherwise after the first correct doorbell, then everything is marked as
-found.
+Fix the bit shift macro so that the correct bits are returned in
+msm_dp_aux_is_link_connected().
 
-Reset the "found" to false at the start of the iteration and move the
-variable inside the loop.
-
-Link: https://lore.kernel.org/af2WHMZiqMwdYveO@stanley.mountain
-Fixes: 48618fb4e522 ("RapidIO: add mport driver for Tsi721 bridge")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Chul Kim <chul.kim@idt.com>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 19e52bcb27c2 ("drm/msm/dp: return correct connection status after suspend")
+Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Tested-by: Val Packett <val@packett.cool> # x1e80100-dell-latitude-7455
+Tested-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com> # Hamoa IOT EVK, QCS8300 Ride
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/727611/
+Link: https://lore.kernel.org/r/20260524-hpd-refactor-v6-1-cf3ab488dd7b@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rapidio/devices/tsi721.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dp/dp_reg.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rapidio/devices/tsi721.c b/drivers/rapidio/devices/tsi721.c
-index 66331e67cf4efc..71b87bf8c31d85 100644
---- a/drivers/rapidio/devices/tsi721.c
-+++ b/drivers/rapidio/devices/tsi721.c
-@@ -394,7 +394,6 @@ static void tsi721_db_dpc(struct work_struct *work)
- 						    idb_work);
- 	struct rio_mport *mport;
- 	struct rio_dbell *dbell;
--	int found = 0;
- 	u32 wr_ptr, rd_ptr;
- 	u64 *idb_entry;
- 	u32 regval;
-@@ -412,6 +411,8 @@ static void tsi721_db_dpc(struct work_struct *work)
- 	rd_ptr = ioread32(priv->regs + TSI721_IDQ_RP(IDB_QUEUE)) % IDB_QSIZE;
+diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
+index 7c44d4e2cf1396..3689642b7fc061 100644
+--- a/drivers/gpu/drm/msm/dp/dp_reg.h
++++ b/drivers/gpu/drm/msm/dp/dp_reg.h
+@@ -68,8 +68,8 @@
+ #define DP_DP_IRQ_HPD_INT_ACK			(0x00000002)
+ #define DP_DP_HPD_REPLUG_INT_ACK		(0x00000004)
+ #define DP_DP_HPD_UNPLUG_INT_ACK		(0x00000008)
+-#define DP_DP_HPD_STATE_STATUS_BITS_MASK	(0x0000000F)
+-#define DP_DP_HPD_STATE_STATUS_BITS_SHIFT	(0x1C)
++#define DP_DP_HPD_STATE_STATUS_BITS_MASK	(0x00000007)
++#define DP_DP_HPD_STATE_STATUS_BITS_SHIFT	(0x1D)
  
- 	while (wr_ptr != rd_ptr) {
-+		int found = 0;
-+
- 		idb_entry = (u64 *)(priv->idb_base +
- 					(TSI721_IDB_ENTRY_SIZE * rd_ptr));
- 		rd_ptr++;
+ #define REG_DP_DP_HPD_INT_MASK			(0x0000000C)
+ #define DP_DP_HPD_PLUG_INT_MASK			(0x00000001)
 -- 
 2.53.0
 
