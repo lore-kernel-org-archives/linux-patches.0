@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6611B2DBF75;
-	Tue, 21 Jul 2026 18:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BBD415F27;
+	Tue, 21 Jul 2026 18:09:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657352; cv=none; b=daeULX+9AkCWIhgpiJsd7Qleou7J1uP8Fe8QCGLKVTmTLCSRCXdk6Caj8ECsZ61qOnUVj48XGZTYM93gOn28igvFsvWyu6Qz1YDF4RZ+YTtnKH+X1sULSJV7VzXX16Wy14kSeTj429i913TmM/xYw7f7mHrh1WEHpj0AOjdfBp0=
+	t=1784657355; cv=none; b=DKWIDgP2lA+Ugg/dCplfz3/OlvSu1YTFhWDH1T/BG1dBENqGNdVKGC+WmWnMjLtUtrCwK7HK5Y+ITb8KBJwyTbuGnu5QXl8QelhFRemiqY5pteUZZMJxpgUqlDlMsQd93EbRDc/DHajU4+PndubFdvpiEH2jqpannEVuLwqyaR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657352; c=relaxed/simple;
-	bh=OI38GYRUFTVL+L29G3zLkgm34X4Suib8tvKr8HQH6Y0=;
+	s=arc-20240116; t=1784657355; c=relaxed/simple;
+	bh=UBh+orc3BLPvCjQG+v0fUoFpLVr2N1QyezrVE/sELU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nnByRkfkSH6iGTw89stWxpQ8fGpnO0SuEM4ywH0VE55n7ShbbQMnnNwUrjLeStfNeff9XiSRsd0QO8WUYiqJzMYOJnDi6YH7MXkRrqATX/UftKERQ8Is7yO7IN0d4mGW7Q5XCRltQkmZ9cBDEKLyre4Gb+g3p8fK9AhHasrbiVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcZwyFbB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M+O69zxuWyCrI/ZJcqQz5T2NHrU7pTP0X3N8oAGJtXKbgB8fsy7HEW50NpjSjkfmNEBtzgrz0k/DXGUvXcu+lNvpWBihVdLhZ5xZdzHbQ0sLYnPdD02h0nhDnmCdyp/AEUrObTxeDKf72hZghp2YyM5balK1xyJTfvLdvqrhDMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=akeYajt5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcZwyFbB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB5B91F000E9;
-	Tue, 21 Jul 2026 18:09:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="akeYajt5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE5F1F000E9;
+	Tue, 21 Jul 2026 18:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657351;
-	bh=r5L25XZfI0nSGH534CmwJ7qN91ANg+jSeCvwgUV0M4Y=;
+	s=korg; t=1784657353;
+	bh=rrC10OpGNyHgKjBXji7rbYR0Ix0EL2GY5tF47X6DdA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kcZwyFbBr0qsQTQnonn0nfoBPWrX7uv+yb5pPCTIgGp+vBwlqnPpVSle/UntGdI9z
-	 SzBmPRdZurrkqPJLWgfNyQ0nqPFWRoCt+Cl5FSHk82zqNfrg8c0WJKbTxLY4SX9uku
-	 SGXFeix/l1WkluV9Zq/savVPgRCjL/EGee80jW7E=
+	b=akeYajt5ccTAxsDZZ3JExhjwVwHOS6tVszZtwmaijYSUBPB6OG7Vjgv+YSF0cjOab
+	 1LgXy+7sx3ZqD2B8OuTeZrqo/NuCJ9pWcOmTUwaE5hc/EdU8ulrugCdENlePa/qruc
+	 49+nU6M/Z8aYt/vWQuiW6e5aVlu7Nc7/X6gks0bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuvam Pandey <shuvampandey1@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Yuanhe Shu <xiangzao@linux.alibaba.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0731/1611] PCI: dwc: Avoid dwc_pcie_rasdes_debugfs_deinit() NULL dereference when no RAS DES capability
-Date: Tue, 21 Jul 2026 17:14:07 +0200
-Message-ID: <20260721152531.822510713@linuxfoundation.org>
+Subject: [PATCH 6.18 0732/1611] Revert "PCI/MSI: Unmap MSI-X region on error"
+Date: Tue, 21 Jul 2026 17:14:08 +0200
+Message-ID: <20260721152531.845811043@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,43 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuvam Pandey <shuvampandey1@gmail.com>
+From: Yuanhe Shu <xiangzao@linux.alibaba.com>
 
-[ Upstream commit 26b67fa10ef84ea667942491b50e6261a45f098d ]
+[ Upstream commit f64e03da0d83cb173743888bff4a7e61476a8fc2 ]
 
-dwc_pcie_rasdes_debugfs_init() returns success when the controller has no
-RAS DES capability, leaving pci->debugfs->rasdes_info unset. The common
-debugfs teardown path still calls dwc_pcie_rasdes_debugfs_deinit(), which
-dereferences rasdes_info unconditionally.
+This reverts commit 1a8d4c6ecb4c81261bcdf13556abd4a958eca202.
 
-Return early when no RAS DES state was allocated. In that case no RAS DES
-mutex was initialized, so there is nothing to destroy.
+Commit 1a8d4c6ecb4c ("PCI/MSI: Unmap MSI-X region on error") added an
+iounmap(dev->msix_base) on the error path of msix_capability_init() to
+release the MSI-X region when msix_setup_interrupts() fails.
 
-Fixes: 4fbfa17f9a07 ("PCI: dwc: Add debugfs based Silicon Debug support for DWC")
-Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
-[mani: reworded subject]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/0f97352506d8d813f70f441de4d63fcd5b7d1c3e.1779123847.git.shuvampandey1@gmail.com
+When msix_setup_interrupts() fails, the call chain is:
+
+  msix_setup_interrupts()
+    -> __msix_setup_interrupts()
+         struct pci_dev *dev __free(free_msi_irqs) = __dev;
+         ...
+         return ret;  // __free cleanup fires on error
+
+The __free(free_msi_irqs) cleanup calls pci_free_msi_irqs(), which
+already handles the unmap:
+
+  void pci_free_msi_irqs(struct pci_dev *dev)
+  {
+      pci_msi_teardown_msi_irqs(dev);
+      if (dev->msix_base) {
+          iounmap(dev->msix_base);   // already unmapped here
+          dev->msix_base = NULL;     // and set to NULL
+      }
+  }
+
+So dev->msix_base is unmapped and set to NULL before
+msix_setup_interrupts() returns to msix_capability_init(). The
+"goto out_unmap" introduced by commit 1a8d4c6ecb4c ("PCI/MSI: Unmap
+MSI-X region on error") then calls iounmap() a second time on a NULL
+pointer.
+
+This was reproduced on Intel Emerald Rapids (192 CPUs) while
+running tools/testing/selftests/kexec/test_kexec_jump.sh:
+
+  WARNING: CPU#44 at iounmap+0x2a/0xe0
+  RIP: 0010:iounmap+0x2a/0xe0
+  RDI: 0000000000000000
+  Call Trace:
+   msix_capability_init+0x317/0x3f0
+   __pci_enable_msix_range+0x21d/0x2c0
+   pci_alloc_irq_vectors_affinity+0xa9/0x130
+   nvme_setup_io_queues+0x2a8/0x420 [nvme]
+   nvme_reset_work+0x151/0x340 [nvme]
+   ...
+
+RDI=0 confirms iounmap() is called with NULL.
+
+Restore the original "goto out_disable" and leave the unmap to the
+existing __free(free_msi_irqs) cleanup.
+
+Fixes: 1a8d4c6ecb4c ("PCI/MSI: Unmap MSI-X region on error")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Yuanhe Shu <xiangzao@linux.alibaba.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://lore.kernel.org/all/20260610194406.GA380991@bhelgaas/
+Link: https://patch.msgid.link/20260611025901.1105209-1-xiangzao@linux.alibaba.com
+Closes: https://lore.kernel.org/all/4fc6208d-513b-4f41-a13a-4a0829ab50ad@roeck-us.net/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-debugfs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pci/msi/msi.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-debugfs.c b/drivers/pci/controller/dwc/pcie-designware-debugfs.c
-index bc741d2261fbbb..0c81058e32fc9f 100644
---- a/drivers/pci/controller/dwc/pcie-designware-debugfs.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-debugfs.c
-@@ -560,6 +560,9 @@ static void dwc_pcie_rasdes_debugfs_deinit(struct dw_pcie *pci)
- {
- 	struct dwc_pcie_rasdes_info *rinfo = pci->debugfs->rasdes_info;
+diff --git a/drivers/pci/msi/msi.c b/drivers/pci/msi/msi.c
+index e010ecd9f90dde..34d664139f48fc 100644
+--- a/drivers/pci/msi/msi.c
++++ b/drivers/pci/msi/msi.c
+@@ -737,7 +737,7 @@ static int msix_capability_init(struct pci_dev *dev, struct msix_entry *entries,
  
-+	if (!rinfo)
-+		return;
-+
- 	mutex_destroy(&rinfo->reg_event_lock);
- }
+ 	ret = msix_setup_interrupts(dev, entries, nvec, affd);
+ 	if (ret)
+-		goto out_unmap;
++		goto out_disable;
  
+ 	/* Disable INTX */
+ 	pci_intx_for_msi(dev, 0);
+@@ -758,8 +758,6 @@ static int msix_capability_init(struct pci_dev *dev, struct msix_entry *entries,
+ 	pcibios_free_irq(dev);
+ 	return 0;
+ 
+-out_unmap:
+-	iounmap(dev->msix_base);
+ out_disable:
+ 	dev->msix_enabled = 0;
+ 	pci_msix_clear_and_set_ctrl(dev, PCI_MSIX_FLAGS_MASKALL | PCI_MSIX_FLAGS_ENABLE, 0);
 -- 
 2.53.0
 
