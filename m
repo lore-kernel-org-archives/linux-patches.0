@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26E3223708;
-	Tue, 21 Jul 2026 17:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A0C404BE9;
+	Tue, 21 Jul 2026 17:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654842; cv=none; b=qk6OMKJ4ZGri2T0I0HPSc9eablMaRgKb2A8OVn3sk28gwTf7wr0qFqCFVVP2ioYbXvgIPGF5+0L0d10MQ9XhXtoQ8FabifQdbhEl9wMt7xcDBHWhvLmC51K208HgSQ7zVBlEShskt6pNsIisR58Dl7gC1OHNrM7+QLBXb2QTwTY=
+	t=1784654845; cv=none; b=sCKYEl5RNKPn29w6jeabwqaiQHGiZo8KYjobbNyD+IzNEAW/4wb6UwrGltdmClJ8387VMPZDnlas7VuztcM/2qNbX+VsLuM+nYn2Gj+beqJX2KMXVmtYa4Ox4Ip9yox60DDhGf5KnHYF3YZYA4QEEPEjU9F9vkIAJZAR+U4wm4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654842; c=relaxed/simple;
-	bh=9hy3XDSlnu801GXRa9o1nIFWYUvVa6LIf00VYhIz9nA=;
+	s=arc-20240116; t=1784654845; c=relaxed/simple;
+	bh=zrj1spPutFlBauGQ9Uo6W8QRMsBQGitLqMt7VzC43dI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uD2scVETboX1P92E+PCrhY2JAWqkzAGHsbhC5aC9hiZ72lHCwk7uLpfDEwsA9VNA9nbMxmD1A03h5uLsV0eWkCOM/dN+E7AHNJ9pw8jPOrBTcOqrRrwvZrXOt8xqwGddSMsZQmg5XFwut1xDPNxs1B05yMD/qwsc8Xd88E2ybO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lnkI9Zdn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SLLC5e4NpGFeBxQNL297KGs7Sx3DBXDBegdA9B7k5vLNYJv6pgNkiszBlI5IgqdHIBgti/Yi68kS6CWTUy+y/1fkNdFnLFSqWL9Zu2Ao4z16VMJMdEMh3My3t45Jcmn8D0fWekC7B5ikN5DySImmWfo1SrdAwvjC8nc1DgWJuQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbD4/EY8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lnkI9Zdn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081741F000E9;
-	Tue, 21 Jul 2026 17:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbD4/EY8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2AC81F00A3A;
+	Tue, 21 Jul 2026 17:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654841;
-	bh=Vj3bzX1jG3wCJzSqQB6hgfB8Urkzbx4sTLUAMhjbBJI=;
+	s=korg; t=1784654844;
+	bh=Pl+vcJVLLRZPwWC1HwODVudXvjp93pbYQ5wRcRYskvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lnkI9ZdnyJemFcaVyoPuKV9314Ga4KpCBt5ylNh/nwmGdy2PTj7vxLKDFrmJyc8gF
-	 yq4bP7SHzbfa8T09arzDvUgfr9g4qiYvD2/VifSFH3xjZvEBYZ1cuJC/1SYmSZRmfk
-	 ARfXINUwo0DF+NHERfcFgt4DU8rph4aC/UI8w4yQ=
+	b=AbD4/EY87BZRhKZ+/VSqLpAgRsGoUX3oXqHo8mWIri0WBYstznlqeFEnyFZ5CdE0u
+	 d6JAJos2lTrABG9lddsqQlMxbxdVo2qDkOQIUmBYyhjRwwxNXxs8quVTmj16DPFazO
+	 kNg8NKFAzCYV5ZmYDom9u2RP8WHUFvYgGgbSCar8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.1 1859/2077] dm-verity: fix a possible NULL pointer dereference
-Date: Tue, 21 Jul 2026 17:25:32 +0200
-Message-ID: <20260721152636.582637952@linuxfoundation.org>
+Subject: [PATCH 7.1 1860/2077] dm-verity: increase sprintf buffer size
+Date: Tue, 21 Jul 2026 17:25:33 +0200
+Message-ID: <20260721152636.605366183@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,30 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit e72b793ae440f6900fb17a4b8518c707b5cd3e17 upstream.
+commit 88dd117c92a142253fb7a17e791773902b3babc6 upstream.
 
-Fix a possible NULL pointer dereference dm_verity_loadpin_is_bdev_trusted
-if the device has no table.
+The prefix "DM_VERITY_ERR_BLOCK_NR" is 22 chars. Add '=', one digit for
+type, ',', up to 20 digits for a u64 block number, and a NUL terminator:
+that's 46 bytes. The buffer is 42 bytes. For block numbers >= 16 decimal
+digits (devices larger than ~16 EB with 4K blocks), snprintf silently
+truncates the uevent environment variable.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-4-6
-Fixes: b6c1c5745ccc ("dm: Add verity helpers for LoadPin")
+Assisted-by: Claude:claude-opus-4.6
+Fixes: 65ff5b7ddf05 ("dm verity: add error handling modes for corrupted blocks")
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-loadpin.c |    2 +-
+ drivers/md/dm-verity-target.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-verity-loadpin.c
-+++ b/drivers/md/dm-verity-loadpin.c
-@@ -70,7 +70,7 @@ bool dm_verity_loadpin_is_bdev_trusted(s
+--- a/drivers/md/dm-verity-target.c
++++ b/drivers/md/dm-verity-target.c
+@@ -26,7 +26,7 @@
  
- 	table = dm_get_live_table(md, &srcu_idx);
+ #define DM_MSG_PREFIX			"verity"
  
--	if (table->num_targets != 1)
-+	if (!table || table->num_targets != 1)
- 		goto out;
+-#define DM_VERITY_ENV_LENGTH		42
++#define DM_VERITY_ENV_LENGTH		46
+ #define DM_VERITY_ENV_VAR_NAME		"DM_VERITY_ERR_BLOCK_NR"
  
- 	ti = dm_table_get_target(table, 0);
+ #define DM_VERITY_DEFAULT_PREFETCH_SIZE	262144
 
 
