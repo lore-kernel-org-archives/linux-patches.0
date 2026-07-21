@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D8444AB99;
-	Tue, 21 Jul 2026 21:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A9144AB7F;
+	Tue, 21 Jul 2026 21:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668954; cv=none; b=YKlJ/u1AKAsFEy4H4gteC2Pl1Neyg6v0Yqk/L+JJa4gXLz/uFjKr/cfxiPk8ZEhEE7bsq1eX1ZQWE5EYYghSromBzvVrfZ3kJmQsduWMzvcEPtDjWtgA2ZuGM88Z8uYXWxQZMX3S7c3VaejwdJm8n1Tgv1Rx22EyWna87HcfOt8=
+	t=1784668957; cv=none; b=cKFe3JEq12cKGkGzP/TJP2ljsk52KxlhWYzzpw3uh1oVhXaZWMFFznFOVhi5bTJBkbehmHyOVp/LBD0HAJNGFeOqhbOEDYqmgFQDLR61haoM+OSvq8+6bG+trvq4vgZcEszxg5KPpXtuvpwosAmskagaDYyZ18jQnC2jww1b8G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668954; c=relaxed/simple;
-	bh=GsTFt81D0/e6syTmSqyUJp1Jbh3gpK79ObYD/seMoLA=;
+	s=arc-20240116; t=1784668957; c=relaxed/simple;
+	bh=mFw53dNRkYyYaxWhgHGIamROmzNjq60ytTetZnJweJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j5RiZFQ+T6bs7nasJa3K2yFz3OXoyOe7KjL5FKS6uzJby6ZN4GSWA8jDv03y7Fd1zbzPXOk5fEumM5MMNIS9yfrHtNuumdnxlTgGkPscSyW/gO7SCYmo6oimrikRFWsiSSASg34ECgrUGH3uNjP5gaacuemhapWNeRJdgvYyOj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MiZd/7cQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ficb/0FtbBpBg/es7YNNp9ZHQUXTb5CBluPnjxduDE9DY5oxo6DSH/vptVvd5afF/dRqgMnPOSDFknvvUgRQMd0a562dUg+lM2nHqNUtkB9UrVohm39827BCQmNXaoRocTSY9lY2xjGLyFpu35N1/G1MdHCv4TVj/e5Q42T8XlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZWXYbTf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MiZd/7cQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F1B81F000E9;
-	Tue, 21 Jul 2026 21:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZWXYbTf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3071F000E9;
+	Tue, 21 Jul 2026 21:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668952;
-	bh=5lhXWT5xVycKC9GIZ6vjRELUpDTTuA72ruF2ecDHJWE=;
+	s=korg; t=1784668955;
+	bh=JNaN3B6ZhBqb8n8rcndH6AVjkuvkQWRuGGfsD+o1Mm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MiZd/7cQhZ9ZXfh3XfkbsedgUEj2cTY0Wh+CYm/TRiG9VlUY50c+y1n2N65pyTiSp
-	 RD/tSrKh1sdBPDVwquQHUzdQFzkp8EtVheT+pRCGd/LdOhbD7QY51rPH4sM7+GrQjX
-	 k9JRixHDCUbWeFRKluq+Ibgm8pv5OD9MRnASupX8=
+	b=sZWXYbTf0Zau2CYj1ReexlReZnyz4SoVY2AD7CS0BNpbWzZyN+1WCY8L8lM+A8Y5A
+	 dfSNwZvfta11l7hpJmva6P093k6nOVj98i8I8qaI0u8kzBLbiiyacQgMCExa/39uru
+	 wH4t/zO/zQMZqDBpo8tCBbX+NbEwfH22IoR94j1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Rosen Penev <rosenp@gmail.com>,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Sang-Heon Jeon <ekffu200098@gmail.com>,
+	Donghyeon Lee <asd142513@gmail.com>,
+	Munhui Chae <mochae@student.42seoul.kr>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0334/1067] mips: ralink: mt7621: add missing __iomem
-Date: Tue, 21 Jul 2026 17:15:35 +0200
-Message-ID: <20260721152432.068347163@linuxfoundation.org>
+Subject: [PATCH 6.1 0370/1067] mm/fake-numa: fix under-allocation detection in uniform split
+Date: Tue, 21 Jul 2026 17:16:11 +0200
+Message-ID: <20260721152432.898440312@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,36 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
 
-[ Upstream commit 4ddaf88aadd3bd09c2eb3734c53d2864af6b144e ]
+[ Upstream commit 3a3fc1dfd6a958615ebaab8fb251e89fc2b3f2f2 ]
 
-raw_readl and writel calls expect pointers annotated with __iomem.
+When splitting NUMA node uniformly, split_nodes_size_interleave_uniform()
+returns the next absolute node ID, not the number of nodes created.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild/202211060456.cnV6IK6G-lkp@intel.com/
-Fixes: cc19db8b312a ("MIPS: ralink: mt7621: do memory detection on KSEG1")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+The existing under-allocation detection logic compares next absolute node
+ID (ret) and request count (n), which only works when nid starts at 0.
+
+For example, on a system with 2 physical NUMA nodes (node 0: 2GB, node
+1: 128MB) and numa=fake=8U, 8 fake nodes are successfully created from
+node 0 and split_nodes_size_interleave_uniform() returns 8. For node 1,
+fake node nid starts at 8, but only 4 fake nodes are created due to
+current FAKE_NODE_MIN_SIZE being 32MB, and
+split_nodes_size_interleave_uniform() returns 12. By existing
+under-allocation detection logic, "ret < n" (12 < 8) is false, so the
+under-allocation will not be detected.
+
+Fix under-allocation detection logic to compare the number of actually
+created nodes (ret - nid) against the request count (n). Also skip
+under-allocation detection logic for memoryless physical nodes where no
+fake nodes are created.
+
+Also, fix the outdated comment describing
+split_nodes_size_interleave_uniform() to match the actual return value.
+
+Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+Reported-by: Donghyeon Lee <asd142513@gmail.com>
+Reported-by: Munhui Chae <mochae@student.42seoul.kr>
+Fixes: cc9aec03e58f ("x86/numa_emulation: Introduce uniform split capability") # 4.19
+Link: https://patch.msgid.link/20260417135805.1758378-1-ekffu200098@gmail.com
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/ralink/mt7621.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/mm/numa_emulation.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/arch/mips/ralink/mt7621.c b/arch/mips/ralink/mt7621.c
-index bbf5811afbf2c0..efa430dbe15241 100644
---- a/arch/mips/ralink/mt7621.c
-+++ b/arch/mips/ralink/mt7621.c
-@@ -63,7 +63,7 @@ phys_addr_t mips_cpc_default_phys_base(void)
+diff --git a/arch/x86/mm/numa_emulation.c b/arch/x86/mm/numa_emulation.c
+index 9a9305367fdd16..b8ae605537145e 100644
+--- a/arch/x86/mm/numa_emulation.c
++++ b/arch/x86/mm/numa_emulation.c
+@@ -211,7 +211,7 @@ static u64 uniform_size(u64 max_addr, u64 base, u64 hole, int nr_nodes)
+  * Sets up fake nodes of `size' interleaved over physical nodes ranging from
+  * `addr' to `max_addr'.
+  *
+- * Returns zero on success or negative on error.
++ * Returns node ID of the next node on success or negative error code.
+  */
+ static int __init split_nodes_size_interleave_uniform(struct numa_meminfo *ei,
+ 					      struct numa_meminfo *pi,
+@@ -395,7 +395,7 @@ void __init numa_emulation(struct numa_meminfo *numa_meminfo, int numa_dist_cnt)
+ 	if (strchr(emu_cmdline, 'U')) {
+ 		nodemask_t physnode_mask = numa_nodes_parsed;
+ 		unsigned long n;
+-		int nid = 0;
++		int nid = 0, nr_created;
  
- static bool __init mt7621_addr_wraparound_test(phys_addr_t size)
- {
--	void *dm = (void *)KSEG1ADDR(&detect_magic);
-+	void __iomem *dm = (void __iomem *)KSEG1ADDR(&detect_magic);
- 
- 	if (CPHYSADDR(dm + size) >= MT7621_LOWMEM_MAX_SIZE)
- 		return true;
+ 		n = simple_strtoul(emu_cmdline, &emu_cmdline, 0);
+ 		ret = -1;
+@@ -413,9 +413,18 @@ void __init numa_emulation(struct numa_meminfo *numa_meminfo, int numa_dist_cnt)
+ 					n, &pi.blk[0], nid);
+ 			if (ret < 0)
+ 				break;
+-			if (ret < n) {
++
++			/*
++			 * If no memory was found for this physical node,
++			 * skip the under-allocation check.
++			 */
++			if (ret == nid)
++				continue;
++
++			nr_created = ret - nid;
++			if (nr_created < n) {
+ 				pr_info("%s: phys: %d only got %d of %ld nodes, failing\n",
+-						__func__, i, ret, n);
++						__func__, i, nr_created, n);
+ 				ret = -1;
+ 				break;
+ 			}
 -- 
 2.53.0
 
