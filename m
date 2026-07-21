@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DD5471262;
-	Tue, 21 Jul 2026 18:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80692DF3EA;
+	Tue, 21 Jul 2026 18:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659408; cv=none; b=rdVmD0k08So06bQMgc3MPMW4UYnXetj/mQ1xzgVob/3Kp1279whfCCcNgNFJen+Eq937Roa+OtDifsj/wRW0Lc+bHgKknjdPaopxgz/oKYAP1/7YdxZN4oaxOGFHv4juup8qcsK0DDYJnVsv+zKQ2z+7FBWInqgj8ZXl8akdQSc=
+	t=1784659410; cv=none; b=jyV6ZgditfKXg+YWzPUonj8c0fsSlrdExo+gq+KO8f/vyAxp9PTUHjNoJXse1AA8n7v+hNjZCq3estMIOkSJucJPQW8S9E9pD6VtxyYbSUNBGDN32eCPeRm+rJT/yS6GTGNhR07XldqKLlxg867H0JRvnwuxjHmEvQYpK+v44bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659408; c=relaxed/simple;
-	bh=tYmtemzoAJpP3C0gr0JGtl7hbneEAzhjy5k/S9nGahs=;
+	s=arc-20240116; t=1784659410; c=relaxed/simple;
+	bh=6MQEcUtBW0hCfE+wyC9mhxSnsFI2Y9MeF+dhTMp0mG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yvu26Jprchk96qXGe1Db6y3nFHcXMZ4IWwxp/s5yF1mPtVXHulcse/tPMOyt8fUqCcba9Oz4lVq6EiklhA9VlupIhi6olx5H1gj7QmATV6xO/m0VvAUiWfWEpC62nMpEF/7fKbXcCyYxqvXNG2hyvIS+9MZC7MLYdMg3UaAYwr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJwCkd3H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MgWv8UEBaMONy2Z6fFYudqSH0l8xyH10YiMQdQ9f6A+xcV0RtgWx78jDyvFxrv60M+khM9UbHNgX818Sa8EPDhlmLvTJt9C62YcTwnRoL6HhrwgVocFxyd1kMWEO5VIhtIoWkEv1ajv4bZtbc1ex9J9smSwX8Yitv+EY0QJyRRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pda7gFIF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJwCkd3H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 799711F000E9;
-	Tue, 21 Jul 2026 18:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pda7gFIF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351B71F000E9;
+	Tue, 21 Jul 2026 18:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659407;
-	bh=6S0Ik92Ox2DQSSpwHf/Tuk3EtsgDTAk1T+KOI3AhXi8=;
+	s=korg; t=1784659409;
+	bh=+0o/crtzENms4MiE9iR4auksm8iDR+oS6O89fr1jcB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OJwCkd3HRDzXzekD2nMaVcKURmxiQq/wlkcu3Mnlc0sdic0TWdu+luHD3rLzWPzZA
-	 85H+jASAYMgLn9GOOMHCDkvGKJej5cvg84TDj/UvXcWbMoVzplcgjY+NBNxVl+EP5A
-	 P0FduxwC4e1PgsNbaZg1O/acz9Ts5dfSBbb0xMqg=
+	b=Pda7gFIFGJhS5/4XgIag6m1dhVekdTcEhKgvvCQFfSspQRy/e5tmYTlZ/kOWofUVk
+	 a6eSKmY/Njl1kzmt152b5lB7N1/4vIlceqqEd+J7+0oZM7E+0JK1jnJ/jOe+Eb22y2
+	 iHp6MGp/ekWQqFynpFlY19FCIpRqgsy/jWUs7A4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Frank Li <Frank.Li@nxp.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
 	Luke Wang <ziniu.wang_1@nxp.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 1509/1611] mmc: sdhci-esdhc-imx: restore DLL override for DDR modes on resume
-Date: Tue, 21 Jul 2026 17:27:05 +0200
-Message-ID: <20260721152549.383385548@linuxfoundation.org>
+Subject: [PATCH 6.18 1510/1611] mmc: sdhci-esdhc-imx: fix esdhc_change_pinstate() to allow default state restore
+Date: Tue, 21 Jul 2026 17:27:06 +0200
+Message-ID: <20260721152549.405588722@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,99 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Luke Wang <ziniu.wang_1@nxp.com>
 
-commit 2439becd91bad6883b135044f85f83a0538b96a6 upstream.
+commit 5adc14cd4b905629d5b9163b3a416dcab24c7ce2 upstream.
 
-sdhci_esdhc_imx_hwinit() unconditionally clears ESDHC_DLL_CTRL by
-writing zero. For SDIO devices that keep power during system suspend
-and operate in DDR mode, the card remains in DDR timing while the host
-DLL override configuration is lost.
+esdhc_change_pinstate() checks for pins_100mhz and pins_200mhz at the
+top of the function and returns -EINVAL if either is not defined. This
+prevents the default case from ever being reached, which means devices
+with a sleep pinctrl state but without high-speed pin states (100mhz/
+200mhz) can never restore their default pin configuration.
 
-Extract the DLL override setup from esdhc_set_uhs_signaling() into
-a helper esdhc_set_dll_override(), and call it on the resume path
-when the card kept power and is using a DDR timing mode.
+Move the IS_ERR checks for pins_100mhz and pins_200mhz into their
+respective switch cases.
 
 Fixes: 676a83855614 ("mmc: host: sdhci-esdhc-imx: refactor the system PM logic")
 Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
 Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c |   39 ++++++++++++++++++++++++++-----------
- 1 file changed, 28 insertions(+), 11 deletions(-)
+ drivers/mmc/host/sdhci-esdhc-imx.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 --- a/drivers/mmc/host/sdhci-esdhc-imx.c
 +++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -1338,6 +1338,23 @@ static int esdhc_change_pinstate(struct
- 	return pinctrl_select_state(imx_data->pinctrl, pinctrl);
- }
+@@ -1315,19 +1315,21 @@ static int esdhc_change_pinstate(struct
  
-+static void esdhc_set_dll_override(struct sdhci_host *host)
-+{
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
-+	struct esdhc_platform_data *boarddata = &imx_data->boarddata;
-+	u32 v;
-+
-+	if (!boarddata->delay_line)
-+		return;
-+
-+	v = boarddata->delay_line << ESDHC_DLL_OVERRIDE_VAL_SHIFT |
-+	    (1 << ESDHC_DLL_OVERRIDE_EN_SHIFT);
-+	if (is_imx53_esdhc(imx_data))
-+		v <<= 1;
-+	writel(v, host->ioaddr + ESDHC_DLL_CTRL);
-+}
-+
- /*
-  * For HS400 eMMC, there is a data_strobe line. This signal is generated
-  * by the device and used for data output and CRC status response output
-@@ -1393,7 +1410,6 @@ static void esdhc_set_uhs_signaling(stru
- 	u32 m;
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
--	struct esdhc_platform_data *boarddata = &imx_data->boarddata;
+ 	dev_dbg(mmc_dev(host->mmc), "change pinctrl state for uhs %d\n", uhs);
  
- 	/* disable ddr mode and disable HS400 mode */
- 	m = readl(host->ioaddr + ESDHC_MIX_CTRL);
-@@ -1414,15 +1430,7 @@ static void esdhc_set_uhs_signaling(stru
- 		m |= ESDHC_MIX_CTRL_DDREN;
- 		writel(m, host->ioaddr + ESDHC_MIX_CTRL);
- 		imx_data->is_ddr = 1;
--		if (boarddata->delay_line) {
--			u32 v;
--			v = boarddata->delay_line <<
--				ESDHC_DLL_OVERRIDE_VAL_SHIFT |
--				(1 << ESDHC_DLL_OVERRIDE_EN_SHIFT);
--			if (is_imx53_esdhc(imx_data))
--				v <<= 1;
--			writel(v, host->ioaddr + ESDHC_DLL_CTRL);
--		}
-+		esdhc_set_dll_override(host);
+-	if (IS_ERR(imx_data->pinctrl) ||
+-		IS_ERR(imx_data->pins_100mhz) ||
+-		IS_ERR(imx_data->pins_200mhz))
++	if (IS_ERR(imx_data->pinctrl))
+ 		return -EINVAL;
+ 
+ 	switch (uhs) {
+ 	case MMC_TIMING_UHS_SDR50:
+ 	case MMC_TIMING_UHS_DDR50:
++		if (IS_ERR(imx_data->pins_100mhz))
++			return -EINVAL;
+ 		pinctrl = imx_data->pins_100mhz;
  		break;
+ 	case MMC_TIMING_UHS_SDR104:
+ 	case MMC_TIMING_MMC_HS200:
  	case MMC_TIMING_MMC_HS400:
- 		m |= ESDHC_MIX_CTRL_DDREN | ESDHC_MIX_CTRL_HS400_EN;
-@@ -2106,9 +2114,18 @@ static int sdhci_esdhc_resume(struct dev
- 	 * restore the saved tuning delay value for the device which keep
- 	 * power during system PM.
- 	 */
--	if (mmc_card_keep_power(host->mmc) && esdhc_is_usdhc(imx_data))
-+	if (mmc_card_keep_power(host->mmc) && esdhc_is_usdhc(imx_data)) {
- 		sdhc_esdhc_tuning_restore(host);
- 
-+		/*
-+		 * Restore DLL override for DDR modes. hwinit unconditionally
-+		 * clears ESDHC_DLL_CTRL, but the card is still in DDR mode.
-+		 */
-+		if (host->timing == MMC_TIMING_UHS_DDR50 ||
-+		    host->timing == MMC_TIMING_MMC_DDR52)
-+			esdhc_set_dll_override(host);
-+	}
-+
- 	pm_runtime_put_autosuspend(dev);
- 
- 	return ret;
++		if (IS_ERR(imx_data->pins_200mhz))
++			return -EINVAL;
+ 		pinctrl = imx_data->pins_200mhz;
+ 		break;
+ 	default:
 
 
