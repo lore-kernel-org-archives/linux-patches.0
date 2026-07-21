@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671BC24A078;
-	Tue, 21 Jul 2026 20:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF4524A078;
+	Tue, 21 Jul 2026 20:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664551; cv=none; b=A55aYTCkhtKPh1fXmWFCDzgIFh0Sag11rwRkY8U1uzpJirvkcDP/tPp/C+Ych25EUmHh4O/wB4/LvYlBdDzB3KDKVk/2MYqVIit6WoXiZVjKYjEW2/RhyyfSeh490Q+wE2Ey5QfwmW7tA+jbzDzJStM5EUeJr+I1gx4w9yGSqNk=
+	t=1784664553; cv=none; b=ohoURcP8cpn1DDaJKj6TwLILMOv5cq4Oi2msQI5LWxjl8uFarq0Z6NCbnC2FGe1kMqOg6m85RSg9NX8CamoqVGqdClf/hUPvVgxeTnFr+0c2tS1gBGNveYcxyijnTkGUkFkSxBDlrA1zogXZUz8W8nLn2JgyZQL3tIdhjqi/5Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664551; c=relaxed/simple;
-	bh=QPJI6aTgLvyqC1r2AHH7nubc4UpIqpvSlagKjwU5W+U=;
+	s=arc-20240116; t=1784664553; c=relaxed/simple;
+	bh=NSS7n7qPUyb2eAXng7uFn2R/oZmmjaW+Pz5/Dkiwk+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kr4EvAezxqE39fNuokiYo1fMNQzQD5lNia1MCzoANuI/bmqeUFcO26/MHYzmwhwkQJxcWayqQ060YOl6F65x6bQkAAp/olHBot7eIVzUvG/XAPAE7rp1V+9NjoF8libyDy+leDQPb1GfKTOMrhfPacsx252W6XlGrMfu4SsLwJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=He7ylj8P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B6PGQj/V5tGxY923mCCmpDWrJqukf9Yl9Zvi/U4GNDiF69JAVsdRVqcIf7vRXXBX5hpMSEx1SCQiBJqoXE2o0aPdxuYxpI1aFAE8bRn+oZBOdZOSwF5sD/ol2EIXjUuNg3c7QHZEXZTdFXZtUOUxMQpps+j6YFbNoOmgIpUXARU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hCGHoUG4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="He7ylj8P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D1B1F000E9;
-	Tue, 21 Jul 2026 20:09:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hCGHoUG4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6981F000E9;
+	Tue, 21 Jul 2026 20:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664549;
-	bh=vaySXHpOYZYM/8Nsp041X238CO679eziZbQTGdcCl8M=;
+	s=korg; t=1784664551;
+	bh=4iJRO/tfBvl602LeXWqN5EgKieRKZUhVtMMOxqWnwSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=He7ylj8P0JuyowyR38kdZFcVpz0wxYnaKNoh3T4lae5vZZWzKHlT8/rOQBuL5/8TZ
-	 RVBkB7PgOzLsDNCOYwRzmjm/dTTowqZ/r/6qFvmIcUQhEJtTwWkmTts+tAbsaLSfy9
-	 WchXFTh7EnRzVU+UdWkD3c96wubaSPHCZB9jdWPE=
+	b=hCGHoUG4XYF/PUgFPvIIHvk4MUlfS8cp+dt4fdUuXU3fcEzpFghx9FfIgW6VunUOt
+	 zFSL1ih4FIVQenkcacKOOokIEW3bubTBkzivnDbg5Yc2zi5V0ilH/WPeddBJFx40uc
+	 CeOKpAx+KQp6PCQdA2vbuQOwKjuXCf5ahDlngcYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f55b043dacf43776b50c@syzkaller.appspotmail.com,
-	Mohammed EL Kadiri <med08elkadiri@gmail.com>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.12 1240/1276] fscrypt: Replace mk_users keyring with simple list
-Date: Tue, 21 Jul 2026 17:28:03 +0200
-Message-ID: <20260721152513.842314869@linuxfoundation.org>
+	John Hubbard <jhubbard@nvidia.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>
+Subject: [PATCH 6.12 1241/1276] selftests/fs/statmount: build with tools include dir
+Date: Tue, 21 Jul 2026 17:28:04 +0200
+Message-ID: <20260721152513.865931323@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,451 +52,372 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit 696c030e1e3438955aba443b308ee8b6faa3983e upstream.
+commit b13fb4ee46472d7f7fc3e2172c08c06ed8b3f31c upstream.
 
-Change mk_users (the set of user claims to an fscrypt master key) from a
-'struct key' keyring to a simple linked list.
+Copy the required headers files (mount.h, nsfs.h) to the tools
+include dir and define the statmount/listmount syscall numbers
+to decouple dependency with headers_install for the common cases.
 
-It's still a collection of 'struct key' for quota tracking.  It was
-originally thought to be natural that a collection of 'struct key'
-should be held in a 'struct key' keyring.  In reality, it's just been
-causing problems, similar to how using 'struct key' for the filesystem
-keyring caused problems and was removed in commit d7e7b9af104c
-("fscrypt: stop using keyrings subsystem for fscrypt_master_key").
-
-Commit d3a7bd420076 ("fscrypt: clear keyring before calling key_put()")
-fixed mk_users cleanup to be synchronous.  But that apparently wasn't
-enough: the keyring subsystem's redundant locking is still generating
-lockdep false positives due to the interaction with filesystem reclaim.
-
-With the simple list, the redundant locking and lockdep issue goes away.
-
-Of course, searching a linked list is linear-time whereas the
-'struct key' keyring used a fancy constant-time associative array.  But
-that's fine here, since in practice there's just one entry in the list.
-In fact the new code is much faster in practice, since it's much smaller
-and doesn't have to convert the kuid_t into a string to search for it.
-
-Reported-by: syzbot+f55b043dacf43776b50c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f55b043dacf43776b50c
-Reported-by: Mohammed EL Kadiri <med08elkadiri@gmail.com>
-Closes: https://lore.kernel.org/keyrings/20260614150041.21172-1-med08elkadiri@gmail.com/
-Fixes: 23c688b54016 ("fscrypt: allow unprivileged users to add/remove keys for v2 policies")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260618221921.87896-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: John Hubbard <jhubbard@nvidia.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://lore.kernel.org/20250509133240.529330-3-amir73il@gmail.com
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+[florian: resolved conflict in statmount/Makefile]
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/crypto/fscrypt_private.h |   36 ++++---
- fs/crypto/keyring.c         |  220 ++++++++++++++++++--------------------------
- 2 files changed, 117 insertions(+), 139 deletions(-)
+ tools/include/uapi/linux/mount.h                          |  235 ++++++++++++++
+ tools/include/uapi/linux/nsfs.h                           |   45 ++
+ tools/testing/selftests/filesystems/statmount/Makefile    |    3 
+ tools/testing/selftests/filesystems/statmount/statmount.h |   36 ++
+ 4 files changed, 318 insertions(+), 1 deletion(-)
+ create mode 100644 tools/include/uapi/linux/mount.h
+ create mode 100644 tools/include/uapi/linux/nsfs.h
 
---- a/fs/crypto/fscrypt_private.h
-+++ b/fs/crypto/fscrypt_private.h
-@@ -472,6 +472,19 @@ fscrypt_is_key_prepared(const struct fsc
- /* keyring.c */
- 
- /*
-+ * fscrypt_master_key_user - a user's claim to a master key
+--- /dev/null
++++ b/tools/include/uapi/linux/mount.h
+@@ -0,0 +1,235 @@
++#ifndef _UAPI_LINUX_MOUNT_H
++#define _UAPI_LINUX_MOUNT_H
++
++#include <linux/types.h>
++
++/*
++ * These are the fs-independent mount-flags: up to 32 flags are supported
++ *
++ * Usage of these is restricted within the kernel to core mount(2) code and
++ * callers of sys_mount() only.  Filesystems should be using the SB_*
++ * equivalent instead.
 + */
-+struct fscrypt_master_key_user {
-+	struct list_head link;
-+	kuid_t uid;
-+	/*
-+	 * This 'struct key' contains no secret.  It exists solely to charge the
-+	 * appropriate user's key quota.
-+	 */
-+	struct key *quota_key;
++#define MS_RDONLY	 1	/* Mount read-only */
++#define MS_NOSUID	 2	/* Ignore suid and sgid bits */
++#define MS_NODEV	 4	/* Disallow access to device special files */
++#define MS_NOEXEC	 8	/* Disallow program execution */
++#define MS_SYNCHRONOUS	16	/* Writes are synced at once */
++#define MS_REMOUNT	32	/* Alter flags of a mounted FS */
++#define MS_MANDLOCK	64	/* Allow mandatory locks on an FS */
++#define MS_DIRSYNC	128	/* Directory modifications are synchronous */
++#define MS_NOSYMFOLLOW	256	/* Do not follow symlinks */
++#define MS_NOATIME	1024	/* Do not update access times. */
++#define MS_NODIRATIME	2048	/* Do not update directory access times */
++#define MS_BIND		4096
++#define MS_MOVE		8192
++#define MS_REC		16384
++#define MS_VERBOSE	32768	/* War is peace. Verbosity is silence.
++				   MS_VERBOSE is deprecated. */
++#define MS_SILENT	32768
++#define MS_POSIXACL	(1<<16)	/* VFS does not apply the umask */
++#define MS_UNBINDABLE	(1<<17)	/* change to unbindable */
++#define MS_PRIVATE	(1<<18)	/* change to private */
++#define MS_SLAVE	(1<<19)	/* change to slave */
++#define MS_SHARED	(1<<20)	/* change to shared */
++#define MS_RELATIME	(1<<21)	/* Update atime relative to mtime/ctime. */
++#define MS_KERNMOUNT	(1<<22) /* this is a kern_mount call */
++#define MS_I_VERSION	(1<<23) /* Update inode I_version field */
++#define MS_STRICTATIME	(1<<24) /* Always perform atime updates */
++#define MS_LAZYTIME	(1<<25) /* Update the on-disk [acm]times lazily */
++
++/* These sb flags are internal to the kernel */
++#define MS_SUBMOUNT     (1<<26)
++#define MS_NOREMOTELOCK	(1<<27)
++#define MS_NOSEC	(1<<28)
++#define MS_BORN		(1<<29)
++#define MS_ACTIVE	(1<<30)
++#define MS_NOUSER	(1<<31)
++
++/*
++ * Superblock flags that can be altered by MS_REMOUNT
++ */
++#define MS_RMT_MASK	(MS_RDONLY|MS_SYNCHRONOUS|MS_MANDLOCK|MS_I_VERSION|\
++			 MS_LAZYTIME)
++
++/*
++ * Old magic mount flag and mask
++ */
++#define MS_MGC_VAL 0xC0ED0000
++#define MS_MGC_MSK 0xffff0000
++
++/*
++ * open_tree() flags.
++ */
++#define OPEN_TREE_CLONE		1		/* Clone the target tree and attach the clone */
++#define OPEN_TREE_CLOEXEC	O_CLOEXEC	/* Close the file on execve() */
++
++/*
++ * move_mount() flags.
++ */
++#define MOVE_MOUNT_F_SYMLINKS		0x00000001 /* Follow symlinks on from path */
++#define MOVE_MOUNT_F_AUTOMOUNTS		0x00000002 /* Follow automounts on from path */
++#define MOVE_MOUNT_F_EMPTY_PATH		0x00000004 /* Empty from path permitted */
++#define MOVE_MOUNT_T_SYMLINKS		0x00000010 /* Follow symlinks on to path */
++#define MOVE_MOUNT_T_AUTOMOUNTS		0x00000020 /* Follow automounts on to path */
++#define MOVE_MOUNT_T_EMPTY_PATH		0x00000040 /* Empty to path permitted */
++#define MOVE_MOUNT_SET_GROUP		0x00000100 /* Set sharing group instead */
++#define MOVE_MOUNT_BENEATH		0x00000200 /* Mount beneath top mount */
++#define MOVE_MOUNT__MASK		0x00000377
++
++/*
++ * fsopen() flags.
++ */
++#define FSOPEN_CLOEXEC		0x00000001
++
++/*
++ * fspick() flags.
++ */
++#define FSPICK_CLOEXEC		0x00000001
++#define FSPICK_SYMLINK_NOFOLLOW	0x00000002
++#define FSPICK_NO_AUTOMOUNT	0x00000004
++#define FSPICK_EMPTY_PATH	0x00000008
++
++/*
++ * The type of fsconfig() call made.
++ */
++enum fsconfig_command {
++	FSCONFIG_SET_FLAG	= 0,	/* Set parameter, supplying no value */
++	FSCONFIG_SET_STRING	= 1,	/* Set parameter, supplying a string value */
++	FSCONFIG_SET_BINARY	= 2,	/* Set parameter, supplying a binary blob value */
++	FSCONFIG_SET_PATH	= 3,	/* Set parameter, supplying an object by path */
++	FSCONFIG_SET_PATH_EMPTY	= 4,	/* Set parameter, supplying an object by (empty) path */
++	FSCONFIG_SET_FD		= 5,	/* Set parameter, supplying an object by fd */
++	FSCONFIG_CMD_CREATE	= 6,	/* Create new or reuse existing superblock */
++	FSCONFIG_CMD_RECONFIGURE = 7,	/* Invoke superblock reconfiguration */
++	FSCONFIG_CMD_CREATE_EXCL = 8,	/* Create new superblock, fail if reusing existing superblock */
 +};
 +
 +/*
-  * fscrypt_master_key_secret - secret key material of an in-use master key
-  */
- struct fscrypt_master_key_secret {
-@@ -568,19 +581,18 @@ struct fscrypt_master_key {
- 	struct fscrypt_key_specifier		mk_spec;
- 
- 	/*
--	 * Keyring which contains a key of type 'key_type_fscrypt_user' for each
--	 * user who has added this key.  Normally each key will be added by just
--	 * one user, but it's possible that multiple users share a key, and in
--	 * that case we need to keep track of those users so that one user can't
--	 * remove the key before the others want it removed too.
--	 *
--	 * This is NULL for v1 policy keys; those can only be added by root.
--	 *
--	 * Locking: protected by ->mk_sem.  (We don't just rely on the keyrings
--	 * subsystem semaphore ->mk_users->sem, as we need support for atomic
--	 * search+insert along with proper synchronization with other fields.)
-+	 * List of user claims to this key (struct fscrypt_master_key_user).
-+	 * Normally each key will be added by just one user, but it's possible
-+	 * that multiple users share a key, and in that case we need to keep
-+	 * track of those users so that one user can't remove the key before the
-+	 * others want it removed too.
-+	 *
-+	 * Used only for v2 policy keys.  v1 policy keys can be added only by
-+	 * root, so user tracking doesn't apply to them.
-+	 *
-+	 * Locking: protected by ->mk_sem.
- 	 */
--	struct key		*mk_users;
-+	struct list_head	mk_users;
- 
- 	/*
- 	 * List of inodes that were unlocked using this key.  This allows the
---- a/fs/crypto/keyring.c
-+++ b/fs/crypto/keyring.c
-@@ -64,22 +64,19 @@ static void fscrypt_free_master_key(stru
- 	kfree_sensitive(mk);
- }
- 
-+static void clear_mk_users(struct fscrypt_master_key *mk);
-+
- void fscrypt_put_master_key(struct fscrypt_master_key *mk)
- {
- 	if (!refcount_dec_and_test(&mk->mk_struct_refs))
- 		return;
- 	/*
--	 * No structural references left, so free ->mk_users, and also free the
-+	 * No structural references left, so clear ->mk_users, and also free the
- 	 * fscrypt_master_key struct itself after an RCU grace period ensures
- 	 * that concurrent keyring lookups can no longer find it.
- 	 */
- 	WARN_ON_ONCE(refcount_read(&mk->mk_active_refs) != 0);
--	if (mk->mk_users) {
--		/* Clear the keyring so the quota gets released right away. */
--		keyring_clear(mk->mk_users);
--		key_put(mk->mk_users);
--		mk->mk_users = NULL;
--	}
-+	clear_mk_users(mk);
- 	call_rcu(&mk->mk_rcu_head, fscrypt_free_master_key);
- }
- 
-@@ -164,8 +161,8 @@ static void fscrypt_user_key_describe(co
- }
- 
- /*
-- * Type of key in ->mk_users.  Each key of this type represents a particular
-- * user who has added a particular master key.
-+ * Type of fscrypt_master_key_user::quota_key.  This contains no secret; it
-+ * exists solely to charge a user's key quota.
-  *
-  * Note that the name of this key type really should be something like
-  * ".fscrypt-user" instead of simply ".fscrypt".  But the shorter name is chosen
-@@ -179,30 +176,9 @@ static struct key_type key_type_fscrypt_
- 	.describe		= fscrypt_user_key_describe,
- };
- 
--#define FSCRYPT_MK_USERS_DESCRIPTION_SIZE	\
--	(CONST_STRLEN("fscrypt-") + 2 * FSCRYPT_KEY_IDENTIFIER_SIZE + \
--	 CONST_STRLEN("-users") + 1)
--
- #define FSCRYPT_MK_USER_DESCRIPTION_SIZE	\
- 	(2 * FSCRYPT_KEY_IDENTIFIER_SIZE + CONST_STRLEN(".uid.") + 10 + 1)
- 
--static void format_mk_users_keyring_description(
--			char description[FSCRYPT_MK_USERS_DESCRIPTION_SIZE],
--			const u8 mk_identifier[FSCRYPT_KEY_IDENTIFIER_SIZE])
--{
--	sprintf(description, "fscrypt-%*phN-users",
--		FSCRYPT_KEY_IDENTIFIER_SIZE, mk_identifier);
--}
--
--static void format_mk_user_description(
--			char description[FSCRYPT_MK_USER_DESCRIPTION_SIZE],
--			const u8 mk_identifier[FSCRYPT_KEY_IDENTIFIER_SIZE])
--{
--
--	sprintf(description, "%*phN.uid.%u", FSCRYPT_KEY_IDENTIFIER_SIZE,
--		mk_identifier, __kuid_val(current_fsuid()));
--}
--
- /* Create ->s_master_keys if needed.  Synchronized by fscrypt_add_key_mutex. */
- static int allocate_filesystem_keyring(struct super_block *sb)
- {
-@@ -337,91 +313,94 @@ out:
- 	return mk;
- }
- 
--static int allocate_master_key_users_keyring(struct fscrypt_master_key *mk)
--{
--	char description[FSCRYPT_MK_USERS_DESCRIPTION_SIZE];
--	struct key *keyring;
--
--	format_mk_users_keyring_description(description,
--					    mk->mk_spec.u.identifier);
--	keyring = keyring_alloc(description, GLOBAL_ROOT_UID, GLOBAL_ROOT_GID,
--				current_cred(), KEY_POS_SEARCH |
--				  KEY_USR_SEARCH | KEY_USR_READ | KEY_USR_VIEW,
--				KEY_ALLOC_NOT_IN_QUOTA, NULL, NULL);
--	if (IS_ERR(keyring))
--		return PTR_ERR(keyring);
--
--	mk->mk_users = keyring;
--	return 0;
--}
--
--/*
-- * Find the current user's "key" in the master key's ->mk_users.
-- * Returns ERR_PTR(-ENOKEY) if not found.
-- */
--static struct key *find_master_key_user(struct fscrypt_master_key *mk)
--{
--	char description[FSCRYPT_MK_USER_DESCRIPTION_SIZE];
--	key_ref_t keyref;
--
--	format_mk_user_description(description, mk->mk_spec.u.identifier);
--
--	/*
--	 * We need to mark the keyring reference as "possessed" so that we
--	 * acquire permission to search it, via the KEY_POS_SEARCH permission.
--	 */
--	keyref = keyring_search(make_key_ref(mk->mk_users, true /*possessed*/),
--				&key_type_fscrypt_user, description, false);
--	if (IS_ERR(keyref)) {
--		if (PTR_ERR(keyref) == -EAGAIN || /* not found */
--		    PTR_ERR(keyref) == -EKEYREVOKED) /* recently invalidated */
--			keyref = ERR_PTR(-ENOKEY);
--		return ERR_CAST(keyref);
-+/* Find the current user's claim in ->mk_users.  ->mk_sem must be held. */
-+static struct fscrypt_master_key_user *
-+find_master_key_user(struct fscrypt_master_key *mk)
-+{
-+	struct fscrypt_master_key_user *mk_user;
-+	kuid_t uid = current_fsuid();
-+
-+	list_for_each_entry(mk_user, &mk->mk_users, link) {
-+		if (uid_eq(mk_user->uid, uid))
-+			return mk_user;
- 	}
--	return key_ref_to_ptr(keyref);
-+	return NULL;
- }
- 
- /*
-- * Give the current user a "key" in ->mk_users.  This charges the user's quota
-+ * Give the current user a claim in ->mk_users.  This charges the user's quota
-  * and marks the master key as added by the current user, so that it cannot be
-  * removed by another user with the key.  Either ->mk_sem must be held for
-  * write, or the master key must be still undergoing initialization.
-  */
- static int add_master_key_user(struct fscrypt_master_key *mk)
- {
-+	kuid_t uid = current_fsuid();
- 	char description[FSCRYPT_MK_USER_DESCRIPTION_SIZE];
--	struct key *mk_user;
-+	struct key *quota_key;
-+	struct fscrypt_master_key_user *mk_user;
- 	int err;
- 
--	format_mk_user_description(description, mk->mk_spec.u.identifier);
--	mk_user = key_alloc(&key_type_fscrypt_user, description,
--			    current_fsuid(), current_gid(), current_cred(),
--			    KEY_POS_SEARCH | KEY_USR_VIEW, 0, NULL);
--	if (IS_ERR(mk_user))
--		return PTR_ERR(mk_user);
-+	snprintf(description, sizeof(description), "%*phN.uid.%u",
-+		 FSCRYPT_KEY_IDENTIFIER_SIZE, mk->mk_spec.u.identifier,
-+		 __kuid_val(uid));
-+	quota_key = key_alloc(&key_type_fscrypt_user, description, uid,
-+			      current_gid(), current_cred(),
-+			      KEY_POS_SEARCH | KEY_USR_VIEW, 0, NULL);
-+	if (IS_ERR(quota_key))
-+		return PTR_ERR(quota_key);
-+
-+	err = key_instantiate_and_link(quota_key, NULL, 0, NULL, NULL);
-+	if (err) {
-+		key_put(quota_key);
-+		return err;
-+	}
-+
-+	mk_user = kzalloc_obj(*mk_user);
-+	if (!mk_user) {
-+		key_put(quota_key);
-+		return -ENOMEM;
-+	}
-+	mk_user->uid = uid;
-+	mk_user->quota_key = quota_key;
-+	list_add(&mk_user->link, &mk->mk_users);
-+	return 0;
-+}
- 
--	err = key_instantiate_and_link(mk_user, NULL, 0, mk->mk_users, NULL);
--	key_put(mk_user);
--	return err;
-+static void unlink_and_free_mk_user(struct fscrypt_master_key_user *mk_user)
-+{
-+	list_del(&mk_user->link);
-+	key_put(mk_user->quota_key);
-+	kfree(mk_user);
- }
- 
- /*
-- * Remove the current user's "key" from ->mk_users.
-+ * Remove the current user's claim from ->mk_users.
-  * ->mk_sem must be held for write.
-  *
-- * Returns 0 if removed, -ENOKEY if not found, or another -errno code.
-+ * Returns 0 if removed or -ENOKEY if not found.
-  */
- static int remove_master_key_user(struct fscrypt_master_key *mk)
- {
--	struct key *mk_user;
--	int err;
-+	struct fscrypt_master_key_user *mk_user;
- 
- 	mk_user = find_master_key_user(mk);
--	if (IS_ERR(mk_user))
--		return PTR_ERR(mk_user);
--	err = key_unlink(mk->mk_users, mk_user);
--	key_put(mk_user);
--	return err;
-+	if (!mk_user)
-+		return -ENOKEY;
-+	unlink_and_free_mk_user(mk_user);
-+	return 0;
-+}
++ * fsmount() flags.
++ */
++#define FSMOUNT_CLOEXEC		0x00000001
 +
 +/*
-+ * Clear ->mk_users.  Either ->mk_sem must be held for write, or 'mk' must have
-+ * no structural references left.
++ * Mount attributes.
 + */
-+static void clear_mk_users(struct fscrypt_master_key *mk)
-+{
-+	struct fscrypt_master_key_user *mk_user, *tmp;
++#define MOUNT_ATTR_RDONLY	0x00000001 /* Mount read-only */
++#define MOUNT_ATTR_NOSUID	0x00000002 /* Ignore suid and sgid bits */
++#define MOUNT_ATTR_NODEV	0x00000004 /* Disallow access to device special files */
++#define MOUNT_ATTR_NOEXEC	0x00000008 /* Disallow program execution */
++#define MOUNT_ATTR__ATIME	0x00000070 /* Setting on how atime should be updated */
++#define MOUNT_ATTR_RELATIME	0x00000000 /* - Update atime relative to mtime/ctime. */
++#define MOUNT_ATTR_NOATIME	0x00000010 /* - Do not update access times. */
++#define MOUNT_ATTR_STRICTATIME	0x00000020 /* - Always perform atime updates */
++#define MOUNT_ATTR_NODIRATIME	0x00000080 /* Do not update directory access times */
++#define MOUNT_ATTR_IDMAP	0x00100000 /* Idmap mount to @userns_fd in struct mount_attr. */
++#define MOUNT_ATTR_NOSYMFOLLOW	0x00200000 /* Do not follow symlinks */
 +
-+	list_for_each_entry_safe(mk_user, tmp, &mk->mk_users, link)
-+		unlink_and_free_mk_user(mk_user);
- }
- 
- /*
-@@ -444,15 +423,14 @@ static int add_new_master_key(struct sup
- 	refcount_set(&mk->mk_struct_refs, 1);
- 	mk->mk_spec = *mk_spec;
- 
-+	INIT_LIST_HEAD(&mk->mk_users);
++/*
++ * mount_setattr()
++ */
++struct mount_attr {
++	__u64 attr_set;
++	__u64 attr_clr;
++	__u64 propagation;
++	__u64 userns_fd;
++};
 +
- 	INIT_LIST_HEAD(&mk->mk_decrypted_inodes);
- 	spin_lock_init(&mk->mk_decrypted_inodes_lock);
++/* List of all mount_attr versions. */
++#define MOUNT_ATTR_SIZE_VER0	32 /* sizeof first published struct */
++
++
++/*
++ * Structure for getting mount/superblock/filesystem info with statmount(2).
++ *
++ * The interface is similar to statx(2): individual fields or groups can be
++ * selected with the @mask argument of statmount().  Kernel will set the @mask
++ * field according to the supported fields.
++ *
++ * If string fields are selected, then the caller needs to pass a buffer that
++ * has space after the fixed part of the structure.  Nul terminated strings are
++ * copied there and offsets relative to @str are stored in the relevant fields.
++ * If the buffer is too small, then EOVERFLOW is returned.  The actually used
++ * size is returned in @size.
++ */
++struct statmount {
++	__u32 size;		/* Total size, including strings */
++	__u32 mnt_opts;		/* [str] Options (comma separated, escaped) */
++	__u64 mask;		/* What results were written */
++	__u32 sb_dev_major;	/* Device ID */
++	__u32 sb_dev_minor;
++	__u64 sb_magic;		/* ..._SUPER_MAGIC */
++	__u32 sb_flags;		/* SB_{RDONLY,SYNCHRONOUS,DIRSYNC,LAZYTIME} */
++	__u32 fs_type;		/* [str] Filesystem type */
++	__u64 mnt_id;		/* Unique ID of mount */
++	__u64 mnt_parent_id;	/* Unique ID of parent (for root == mnt_id) */
++	__u32 mnt_id_old;	/* Reused IDs used in proc/.../mountinfo */
++	__u32 mnt_parent_id_old;
++	__u64 mnt_attr;		/* MOUNT_ATTR_... */
++	__u64 mnt_propagation;	/* MS_{SHARED,SLAVE,PRIVATE,UNBINDABLE} */
++	__u64 mnt_peer_group;	/* ID of shared peer group */
++	__u64 mnt_master;	/* Mount receives propagation from this ID */
++	__u64 propagate_from;	/* Propagation from in current namespace */
++	__u32 mnt_root;		/* [str] Root of mount relative to root of fs */
++	__u32 mnt_point;	/* [str] Mountpoint relative to current root */
++	__u64 mnt_ns_id;	/* ID of the mount namespace */
++	__u32 fs_subtype;	/* [str] Subtype of fs_type (if any) */
++	__u32 sb_source;	/* [str] Source string of the mount */
++	__u32 opt_num;		/* Number of fs options */
++	__u32 opt_array;	/* [str] Array of nul terminated fs options */
++	__u32 opt_sec_num;	/* Number of security options */
++	__u32 opt_sec_array;	/* [str] Array of nul terminated security options */
++	__u64 supported_mask;	/* Mask flags that this kernel supports */
++	__u32 mnt_uidmap_num;	/* Number of uid mappings */
++	__u32 mnt_uidmap;	/* [str] Array of uid mappings (as seen from callers namespace) */
++	__u32 mnt_gidmap_num;	/* Number of gid mappings */
++	__u32 mnt_gidmap;	/* [str] Array of gid mappings (as seen from callers namespace) */
++	__u64 __spare2[43];
++	char str[];		/* Variable size part containing strings */
++};
++
++/*
++ * Structure for passing mount ID and miscellaneous parameters to statmount(2)
++ * and listmount(2).
++ *
++ * For statmount(2) @param represents the request mask.
++ * For listmount(2) @param represents the last listed mount id (or zero).
++ */
++struct mnt_id_req {
++	__u32 size;
++	__u32 spare;
++	__u64 mnt_id;
++	__u64 param;
++	__u64 mnt_ns_id;
++};
++
++/* List of all mnt_id_req versions. */
++#define MNT_ID_REQ_SIZE_VER0	24 /* sizeof first published struct */
++#define MNT_ID_REQ_SIZE_VER1	32 /* sizeof second published struct */
++
++/*
++ * @mask bits for statmount(2)
++ */
++#define STATMOUNT_SB_BASIC		0x00000001U     /* Want/got sb_... */
++#define STATMOUNT_MNT_BASIC		0x00000002U	/* Want/got mnt_... */
++#define STATMOUNT_PROPAGATE_FROM	0x00000004U	/* Want/got propagate_from */
++#define STATMOUNT_MNT_ROOT		0x00000008U	/* Want/got mnt_root  */
++#define STATMOUNT_MNT_POINT		0x00000010U	/* Want/got mnt_point */
++#define STATMOUNT_FS_TYPE		0x00000020U	/* Want/got fs_type */
++#define STATMOUNT_MNT_NS_ID		0x00000040U	/* Want/got mnt_ns_id */
++#define STATMOUNT_MNT_OPTS		0x00000080U	/* Want/got mnt_opts */
++#define STATMOUNT_FS_SUBTYPE		0x00000100U	/* Want/got fs_subtype */
++#define STATMOUNT_SB_SOURCE		0x00000200U	/* Want/got sb_source */
++#define STATMOUNT_OPT_ARRAY		0x00000400U	/* Want/got opt_... */
++#define STATMOUNT_OPT_SEC_ARRAY		0x00000800U	/* Want/got opt_sec... */
++#define STATMOUNT_SUPPORTED_MASK	0x00001000U	/* Want/got supported mask flags */
++#define STATMOUNT_MNT_UIDMAP		0x00002000U	/* Want/got uidmap... */
++#define STATMOUNT_MNT_GIDMAP		0x00004000U	/* Want/got gidmap... */
++
++/*
++ * Special @mnt_id values that can be passed to listmount
++ */
++#define LSMT_ROOT		0xffffffffffffffff	/* root mount */
++#define LISTMOUNT_REVERSE	(1 << 0) /* List later mounts first */
++
++#endif /* _UAPI_LINUX_MOUNT_H */
+--- /dev/null
++++ b/tools/include/uapi/linux/nsfs.h
+@@ -0,0 +1,45 @@
++/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
++#ifndef __LINUX_NSFS_H
++#define __LINUX_NSFS_H
++
++#include <linux/ioctl.h>
++#include <linux/types.h>
++
++#define NSIO	0xb7
++
++/* Returns a file descriptor that refers to an owning user namespace */
++#define NS_GET_USERNS		_IO(NSIO, 0x1)
++/* Returns a file descriptor that refers to a parent namespace */
++#define NS_GET_PARENT		_IO(NSIO, 0x2)
++/* Returns the type of namespace (CLONE_NEW* value) referred to by
++   file descriptor */
++#define NS_GET_NSTYPE		_IO(NSIO, 0x3)
++/* Get owner UID (in the caller's user namespace) for a user namespace */
++#define NS_GET_OWNER_UID	_IO(NSIO, 0x4)
++/* Get the id for a mount namespace */
++#define NS_GET_MNTNS_ID		_IOR(NSIO, 0x5, __u64)
++/* Translate pid from target pid namespace into the caller's pid namespace. */
++#define NS_GET_PID_FROM_PIDNS	_IOR(NSIO, 0x6, int)
++/* Return thread-group leader id of pid in the callers pid namespace. */
++#define NS_GET_TGID_FROM_PIDNS	_IOR(NSIO, 0x7, int)
++/* Translate pid from caller's pid namespace into a target pid namespace. */
++#define NS_GET_PID_IN_PIDNS	_IOR(NSIO, 0x8, int)
++/* Return thread-group leader id of pid in the target pid namespace. */
++#define NS_GET_TGID_IN_PIDNS	_IOR(NSIO, 0x9, int)
++
++struct mnt_ns_info {
++	__u32 size;
++	__u32 nr_mounts;
++	__u64 mnt_ns_id;
++};
++
++#define MNT_NS_INFO_SIZE_VER0 16 /* size of first published struct */
++
++/* Get information about namespace. */
++#define NS_MNT_GET_INFO		_IOR(NSIO, 10, struct mnt_ns_info)
++/* Get next namespace. */
++#define NS_MNT_GET_NEXT		_IOR(NSIO, 11, struct mnt_ns_info)
++/* Get previous namespace. */
++#define NS_MNT_GET_PREV		_IOR(NSIO, 12, struct mnt_ns_info)
++
++#endif /* __LINUX_NSFS_H */
+--- a/tools/testing/selftests/filesystems/statmount/Makefile
++++ b/tools/testing/selftests/filesystems/statmount/Makefile
+@@ -1,6 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
- 	INIT_LIST_HEAD(&mk->mk_mode_keys);
+-CFLAGS += -Wall -O2 -g $(KHDR_INCLUDES)
++CFLAGS += -Wall -O2 -g $(KHDR_INCLUDES) $(TOOLS_INCLUDES)
++
+ TEST_GEN_PROGS := statmount_test statmount_test_ns
  
- 	if (mk_spec->type == FSCRYPT_KEY_SPEC_TYPE_IDENTIFIER) {
--		err = allocate_master_key_users_keyring(mk);
--		if (err)
--			goto out_put;
- 		err = add_master_key_user(mk);
- 		if (err)
- 			goto out_put;
-@@ -481,19 +459,13 @@ static int add_existing_master_key(struc
- 	int err;
+ include ../../lib.mk
+--- a/tools/testing/selftests/filesystems/statmount/statmount.h
++++ b/tools/testing/selftests/filesystems/statmount/statmount.h
+@@ -7,6 +7,42 @@
+ #include <linux/mount.h>
+ #include <asm/unistd.h>
  
- 	/*
--	 * If the current user is already in ->mk_users, then there's nothing to
--	 * do.  Otherwise, we need to add the user to ->mk_users.  (Neither is
--	 * applicable for v1 policy keys, which have NULL ->mk_users.)
-+	 * For v2 policy keys (FSCRYPT_KEY_SPEC_TYPE_IDENTIFIER): If the current
-+	 * user is already in ->mk_users, then there's nothing to do.
-+	 * Otherwise, add the user to ->mk_users.
- 	 */
--	if (mk->mk_users) {
--		struct key *mk_user = find_master_key_user(mk);
--
--		if (mk_user != ERR_PTR(-ENOKEY)) {
--			if (IS_ERR(mk_user))
--				return PTR_ERR(mk_user);
--			key_put(mk_user);
-+	if (mk->mk_spec.type == FSCRYPT_KEY_SPEC_TYPE_IDENTIFIER) {
-+		if (find_master_key_user(mk) != NULL)
- 			return 0;
--		}
- 		err = add_master_key_user(mk);
- 		if (err)
- 			return err;
-@@ -847,7 +819,6 @@ int fscrypt_verify_key_added(struct supe
- {
- 	struct fscrypt_key_specifier mk_spec;
- 	struct fscrypt_master_key *mk;
--	struct key *mk_user;
- 	int err;
- 
- 	mk_spec.type = FSCRYPT_KEY_SPEC_TYPE_IDENTIFIER;
-@@ -859,13 +830,10 @@ int fscrypt_verify_key_added(struct supe
- 		goto out;
- 	}
- 	down_read(&mk->mk_sem);
--	mk_user = find_master_key_user(mk);
--	if (IS_ERR(mk_user)) {
--		err = PTR_ERR(mk_user);
--	} else {
--		key_put(mk_user);
-+	if (find_master_key_user(mk) != NULL)
- 		err = 0;
--	}
-+	else
-+		err = -ENOKEY;
- 	up_read(&mk->mk_sem);
- 	fscrypt_put_master_key(mk);
- out:
-@@ -1057,16 +1025,18 @@ static int do_remove_key(struct file *fi
- 	down_write(&mk->mk_sem);
- 
- 	/* If relevant, remove current user's (or all users) claim to the key */
--	if (mk->mk_users && mk->mk_users->keys.nr_leaves_on_tree != 0) {
--		if (all_users)
--			err = keyring_clear(mk->mk_users);
--		else
-+	if (!list_empty(&mk->mk_users)) {
-+		if (all_users) {
-+			clear_mk_users(mk);
-+			err = 0;
-+		} else {
- 			err = remove_master_key_user(mk);
-+		}
- 		if (err) {
- 			up_write(&mk->mk_sem);
- 			goto out_put_key;
- 		}
--		if (mk->mk_users->keys.nr_leaves_on_tree != 0) {
-+		if (!list_empty(&mk->mk_users)) {
- 			/*
- 			 * Other users have still added the key too.  We removed
- 			 * the current user's claim to the key, but we still
-@@ -1152,6 +1122,8 @@ int fscrypt_ioctl_get_key_status(struct
- 	struct super_block *sb = file_inode(filp)->i_sb;
- 	struct fscrypt_get_key_status_arg arg;
- 	struct fscrypt_master_key *mk;
-+	kuid_t uid;
-+	const struct fscrypt_master_key_user *mk_user;
- 	int err;
- 
- 	if (copy_from_user(&arg, uarg, sizeof(arg)))
-@@ -1184,19 +1156,13 @@ int fscrypt_ioctl_get_key_status(struct
- 	}
- 
- 	arg.status = FSCRYPT_KEY_STATUS_PRESENT;
--	if (mk->mk_users) {
--		struct key *mk_user;
- 
--		arg.user_count = mk->mk_users->keys.nr_leaves_on_tree;
--		mk_user = find_master_key_user(mk);
--		if (!IS_ERR(mk_user)) {
-+	uid = current_fsuid();
-+	list_for_each_entry(mk_user, &mk->mk_users, link) {
-+		arg.user_count++;
-+		if (uid_eq(mk_user->uid, uid))
- 			arg.status_flags |=
- 				FSCRYPT_KEY_STATUS_FLAG_ADDED_BY_SELF;
--			key_put(mk_user);
--		} else if (mk_user != ERR_PTR(-ENOKEY)) {
--			err = PTR_ERR(mk_user);
--			goto out_release_key;
--		}
- 	}
- 	err = 0;
- out_release_key:
++#ifndef __NR_statmount
++	#if defined __alpha__
++		#define __NR_statmount 567
++	#elif defined _MIPS_SIM
++		#if _MIPS_SIM == _MIPS_SIM_ABI32	/* o32 */
++			#define __NR_statmount 4457
++		#endif
++		#if _MIPS_SIM == _MIPS_SIM_NABI32	/* n32 */
++			#define __NR_statmount 6457
++		#endif
++		#if _MIPS_SIM == _MIPS_SIM_ABI64	/* n64 */
++			#define __NR_statmount 5457
++		#endif
++	#else
++		#define __NR_statmount 457
++	#endif
++#endif
++
++#ifndef __NR_listmount
++	#if defined __alpha__
++		#define __NR_listmount 568
++	#elif defined _MIPS_SIM
++		#if _MIPS_SIM == _MIPS_SIM_ABI32	/* o32 */
++			#define __NR_listmount 4458
++		#endif
++		#if _MIPS_SIM == _MIPS_SIM_NABI32	/* n32 */
++			#define __NR_listmount 6458
++		#endif
++		#if _MIPS_SIM == _MIPS_SIM_ABI64	/* n64 */
++			#define __NR_listmount 5458
++		#endif
++	#else
++		#define __NR_listmount 458
++	#endif
++#endif
++
+ static inline int statmount(uint64_t mnt_id, uint64_t mnt_ns_id, uint64_t mask,
+ 			    struct statmount *buf, size_t bufsize,
+ 			    unsigned int flags)
 
 
