@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4E743B48C;
-	Tue, 21 Jul 2026 22:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147BA347BC6;
+	Tue, 21 Jul 2026 22:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674288; cv=none; b=CPnS2HP6JaMaPPoSa7+LFhE5G+r+s0LdlLZjythnXBJQWyv65TcmTxjzTKNwCPCHBl5daq4H1rgBe12s+On/m9xOWj4B8bN4VxA8JarYAPQ2ne8OBLVRcUWz+zIu1hlR/lMzTj2e7Y5Pp68895kIzBRwdvSl3SfsDzzO2BLDi0c=
+	t=1784674291; cv=none; b=frNhdyPmRMRCb+mggeFL98h03url1wsyiEEC5+JHiMm4S85xzXxRIOKGQLkFDOCLaxv6dxCd1qdbxisqI2au6ibuqX2SmdcJ1gSxIsfQnIpyriaNYLh4KIwqNMxQ1jTfF49NBf3AiCFR0OzKYu6nnHdyC92MWHSLRNiLaA3xnBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674288; c=relaxed/simple;
-	bh=zUeO54JuZTTeTq3+z0rnEnWwEqMImahPUCmq4bOhI4I=;
+	s=arc-20240116; t=1784674291; c=relaxed/simple;
+	bh=zwU7VgUON4zqUV6LoJTSiZvxmlfUJCNpBt4nEBkb5ME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NRH+1nm+7n0iCykJyYiTkDUQHyUSycfemRe4LCpnqrTd4lfr4FtGXtayMi7d7JVkszAulzmfaYIf6MqFvqtlgkaEjfBfPi6G0Yd4BhgBxb88dCFg1NyBiI6NidwkCIuBaq8voQtKz8KlJa6cx1yZUD3Yz/yMx2rjPjzVeRzDwX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqZhvJ0x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C74zqDIUfz+DXFvD8YrsxV3lsiH642LisGk6dbc7HD1zLN2VCIaKDAUeT+/0BXwuHSw4AaDaB6Q3uEDMo+U04bZ5q2TmDQOu2ST+WFt+wdwRpsxfGcX8apjvoAj00lqjASIqr1V2cAsngvXdwCQYrxoodh2Xs8Qnq02xRUD+eLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zsqq00jQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqZhvJ0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8960E1F000E9;
-	Tue, 21 Jul 2026 22:51:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zsqq00jQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298D71F000E9;
+	Tue, 21 Jul 2026 22:51:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674287;
-	bh=MA1XuoCVgz7s4B1QRW87iErP7T5PWMrMRa1vgC/uVDo=;
+	s=korg; t=1784674289;
+	bh=7/dpPW6cBYglwGh2TmqC4T3ixHuJSKWAU+KfUi39LQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nqZhvJ0xm+I+MdDS2e1etmWdl8fr9tFS8eOvqa+TleMRBoX4jIoFdW9RAACca3NQ4
-	 pTA83TAMEpyi/KxSNu+qpb9Mly8juptM7zwiop/jKZPIOiS55u4zcDLML1QYCxWIYk
-	 1CIdA/7+cqB7G8srrQUaH3K+B4W7mDejkfCocoOI=
+	b=zsqq00jQ53vB67liA7woEXKrJTPUw9atHC8yTF+N+9hVTpRXUu6q072O9Fl/90EFv
+	 qXqxjsRA+OUUt8Y+xNUJYWvKw6J4i1PBPX4KMih+7mSZxgeEfa0fihT6Rh3Y2b4hgn
+	 VFp40QGZPAPwI/DlBi5fSVPqxqAWOh8wwwZ53B1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7ea0b96c4ddb49fd1a70@syzkaller.appspotmail.com,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 483/699] ocfs2: use kzalloc for quota recovery bitmap allocation
-Date: Tue, 21 Jul 2026 17:24:02 +0200
-Message-ID: <20260721152406.596965621@linuxfoundation.org>
+	Arseniy Krasnov <avkrasnov@rulkc.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.10 484/699] mtd: rawnand: fix condition in nand_select_target()
+Date: Tue, 21 Jul 2026 17:24:03 +0200
+Message-ID: <20260721152406.620807793@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -58,43 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Arseniy Krasnov <avkrasnov@rulkc.org>
 
-commit 93c8c6ea90be9e9df8fe14048ad4e3caad0770a6 upstream.
+commit 8507c2cc9e4fa402401819f44d1e8a5ef4d11d8b upstream.
 
-ocfs2 quota recovery allocates a bitmap buffer with kmalloc and does not
-fully initialize it.  This can lead to use of uninitialized bits during
-quota recovery from a corrupted filesystem image.
+'cs' here must be in range [0:nanddev_ntargets[.
 
-Use kzalloc instead to ensure the bitmap is zero-initialized.
-
-Link: https://lore.kernel.org/20260418131048.1052507-1-tristmd@gmail.com
-Reported-by: syzbot+7ea0b96c4ddb49fd1a70@syzkaller.appspotmail.com
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 32813e288414 ("mtd: rawnand: Get rid of chip->numchips")
+Signed-off-by: Arseniy Krasnov <avkrasnov@rulkc.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/quota_local.c |    2 +-
+ drivers/mtd/nand/raw/nand_base.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ocfs2/quota_local.c
-+++ b/fs/ocfs2/quota_local.c
-@@ -302,7 +302,7 @@ static int ocfs2_add_recovery_chunk(stru
- 	if (!rc)
- 		return -ENOMEM;
- 	rc->rc_chunk = chunk;
--	rc->rc_bitmap = kmalloc(sb->s_blocksize, GFP_NOFS);
-+	rc->rc_bitmap = kzalloc(sb->s_blocksize, GFP_NOFS);
- 	if (!rc->rc_bitmap) {
- 		kfree(rc);
- 		return -ENOMEM;
+--- a/drivers/mtd/nand/raw/nand_base.c
++++ b/drivers/mtd/nand/raw/nand_base.c
+@@ -174,7 +174,7 @@ void nand_select_target(struct nand_chip
+ 	 * cs should always lie between 0 and nanddev_ntargets(), when that's
+ 	 * not the case it's a bug and the caller should be fixed.
+ 	 */
+-	if (WARN_ON(cs > nanddev_ntargets(&chip->base)))
++	if (WARN_ON(cs >= nanddev_ntargets(&chip->base)))
+ 		return;
+ 
+ 	chip->cur_cs = cs;
 
 
