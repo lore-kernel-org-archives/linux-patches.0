@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B4246D2C9;
-	Tue, 21 Jul 2026 18:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD90B47124F;
+	Tue, 21 Jul 2026 18:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658305; cv=none; b=SMp3Wk9E7JSNSyst7jLxOegk+boYOs2ExLcvNpQcO+QeB6djF5bgGVmipo4onc/IAhBCDUN76vgzHZBpsrUsah2fHxpgdKXKp8pe9AUK0K/93C0nnkXGyUTLjJjl2gwRaStZiMjGLaIq0FWyMzx02OqltFqq167bMA/LH+g+rD0=
+	t=1784658307; cv=none; b=dtKmyFfqaHVMt44zUGgwh5Sp9aKoBkDm5DTsp/nwvl/3FWGXHmoOxVQrjDRzjRLrFeVYLNNoUkwpQzdrZQAEHAkxgsbEmc1vOFrd+fDRFJMdIayoaiZj+l644KneY1KSG2kOgO23MRGJk1/L00NJWjyk2eO5O/WQ5BnD/+IyfIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658305; c=relaxed/simple;
-	bh=GSYgNzshE1ThI3ZkiSe9QYkdbARNzHYaORGc5MKUeOI=;
+	s=arc-20240116; t=1784658307; c=relaxed/simple;
+	bh=qQ7TzBA6B3RwctKalI4n3+GoQmR5IZlDXPeiMY83fNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g1cj+oZt45FYQFRrhKbLB28pS1MTREtDOndjleXLl2fz8OIUH1UjXRfkKJWGdwnKSTT3JjkbOa9+7TX7pRACaXSn1RSOQIeI+L7jyb3UWpuIrHcOrN16X6PY7IfunG72sVribnD2qjbZsOrNiVfGcTX/2Zq0FAjrxfkgGzNtXRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fooV9SPt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OvkhH4iGAmY+zFSJ+z4JTCjAQdimZ/Za8ncWDT0+MHM/po5JMoUz7DdUkp08eiXgLdouVPOv5WLqTudLWddN1VePmczxQ45Iy9R9tDzUSP+UQ5azWV/x5gbeAlyLcVS3qpP0JXGmT8XZxKQjFs7P2inPJJ8no0+0Q0tdgc/GqKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IpdGeIxm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fooV9SPt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970101F00A3A;
-	Tue, 21 Jul 2026 18:25:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IpdGeIxm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D581F00A3A;
+	Tue, 21 Jul 2026 18:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658303;
-	bh=4TxGrVltiBU61CK0ydbQo/fDWWowb9RpviJ3wFo+D04=;
+	s=korg; t=1784658306;
+	bh=ELbTu1Za3whJJon7AM8yLaIV0Rq4SYN7keNOfIsrbxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fooV9SPtpxsbGWFG7rcPxilNSJyuMt11ga5sRMkzLeYeIOiMqxmIXay3AOx+C6Lzd
-	 PqM6FLas1UnrCgwRVPSolBJ/ETNnYLZcpEL4S4fee5vRPF4JrQaddbeWnJ8W9Yz4mA
-	 MyDwEi0ZsT/kKfGbFJG6SILgnR7ie1UY0fvOxiX0=
+	b=IpdGeIxmrv9UaSpEsDGbL+YrTgyMvZAeImtOn43oKuSjUsRfIIuUKJcXSl0442Q8Z
+	 pB9G6PVCwqKS9S7d7GdYpWVsEysFoDbmR/Hwrx+9QSSGHRZGmAKgVMpJ9s2NDDS6J6
+	 IVsVEkFS2O4F0+niN2UpMiUnaTZNWfN+HCADRArA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anas Khan <anxkhn28@gmail.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1093/1611] drm/xe: remove duplicate <kunit/test-bug.h> include
-Date: Tue, 21 Jul 2026 17:20:09 +0200
-Message-ID: <20260721152540.002171836@linuxfoundation.org>
+Subject: [PATCH 6.18 1094/1611] smb: client: fix overflow in passthrough ioctl bounds check
+Date: Tue, 21 Jul 2026 17:20:10 +0200
+Message-ID: <20260721152540.025045326@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -46,44 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anas Khan <anxkhn28@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 91426ce50d14a49bde53b3ad1e48393556ba92cd ]
+[ Upstream commit a4f27ad055392fa164f5649e89a3637b033c5fcc ]
 
-xe_pci.c includes <kunit/test-bug.h> twice, separated only by the
-<kunit/test.h> include. Drop the redundant second include; this is a
-non-functional cleanup flagged by scripts/checkincludes.pl.
+smb2_ioctl_query_info() validates the PASSTHRU_FSCTL response payload
+before copying it to userspace.
 
-Fixes: 6cad22853cb8 ("drm/xe/kunit: Add stub to read_gmdid")
-Signed-off-by: Anas Khan <anxkhn28@gmail.com>
-Link: https://patch.msgid.link/20260702112820.34675-1-anxkhn28@gmail.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit 84ed5b0a925721aaf069d36e18a99db966ff4e80)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+The payload offset and length both come from 32-bit fields. The bounds
+check currently adds OutputOffset and qi.input_buffer_length directly, so
+the addition can wrap in 32-bit arithmetic before the result is compared
+against the response buffer length.
+
+A malicious server can use a large OutputOffset and a small OutputCount
+to make the wrapped sum pass the bounds check. The later copy_to_user()
+then reads from io_rsp + OutputOffset, outside the response buffer.
+
+Use size_add() for the offset plus length check so overflow is treated as
+out of bounds.
+
+Fixes: 2b1116bbe898 ("CIFS: Use common error handling code in smb2_ioctl_query_info()")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/tests/xe_pci.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/smb/client/smb2ops.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/tests/xe_pci.c b/drivers/gpu/drm/xe/tests/xe_pci.c
-index 663a79ec960d9f..b607d9422ef8d0 100644
---- a/drivers/gpu/drm/xe/tests/xe_pci.c
-+++ b/drivers/gpu/drm/xe/tests/xe_pci.c
-@@ -9,7 +9,6 @@
- 
- #include <kunit/test-bug.h>
- #include <kunit/test.h>
--#include <kunit/test-bug.h>
- #include <kunit/visibility.h>
- 
- #define PLATFORM_CASE(platform__, graphics_step__)					\
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index f714ded6b4ffc2..d4095710948e45 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -1764,8 +1764,8 @@ smb2_ioctl_query_info(const unsigned int xid,
+ 		if (le32_to_cpu(io_rsp->OutputCount) < qi.input_buffer_length)
+ 			qi.input_buffer_length = le32_to_cpu(io_rsp->OutputCount);
+ 		if (qi.input_buffer_length > 0 &&
+-		    le32_to_cpu(io_rsp->OutputOffset) + qi.input_buffer_length
+-		    > rsp_iov[1].iov_len) {
++		     size_add(le32_to_cpu(io_rsp->OutputOffset),
++			     qi.input_buffer_length) > rsp_iov[1].iov_len) {
+ 			rc = -EFAULT;
+ 			goto out;
+ 		}
 -- 
 2.53.0
 
