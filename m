@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D758A403AFB;
-	Tue, 21 Jul 2026 17:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D083368B8;
+	Tue, 21 Jul 2026 17:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655809; cv=none; b=UOK3ZbuxPUvCm0nPJ4gkBbZrjHaboz+MiUpKjLddKDNcOvsD8UA3kW2lJM2d3e47Z15v2Htr+rJx0c00jAl3hBUqjGHm5aMlOsncMQjQ806SUynGJiL/zxoGAPwNDPR9A1ee6gJn/pXxYtBZorumBK2okybvb9siBWWNCF69oZc=
+	t=1784655811; cv=none; b=txlFxwrEYPqxWOEjAHmLqNAL7Ix5xD5o3eCtEhKtTTBIkS9RkrJvo3ttCnwoLTOMMzM50gLsvTUJw+CfhyZmGKQy564ucq2Bm6/2G7GvWzh3Do84x9phZ5WYO9B+EYbPGKZJdj1q4eJXhv/SI45eriXQxx1BWksZ2166XQOeG5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655809; c=relaxed/simple;
-	bh=TgYRk8F8H6/9VOEACpGdmDfu288nb4Ib+oqHZ35xnww=;
+	s=arc-20240116; t=1784655811; c=relaxed/simple;
+	bh=9VPK1CZkYI0rQJVoMIxj7HUu1D9g1NgpJU66B88c338=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uwed/uGdzW964Bn82/qXpIekfL5SLrXmqOGJ3dpzNBA0Q0Ps9e/mN6XH31avRP7bZytnxRZA5VOnDOPt8QRlEgA/Djv6e163nD2EPhhY55MDgsFp12m79WpkF3HjS1GYsXQ2OWQM44BRXoG2+Ew+8sTvcqzycCIe1UWp1O7J/58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LprfG9B0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rg0NgNRuOGxPSHO0BNliIzkJ+KdaYKuvBm08h2SX2kbfcainlpAPa4Rk9NBC3Xy8OaA2sTPZSRvQG5ux5c53T+ft7OGbGSYRQKNKGci9xWeTE2JfWRT1ugxd5SgdNRaTFjlBKMjF9i7jQeYjLGpajS5SCM+3Fj+eCrZV8xzDR14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGLMu+Nr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LprfG9B0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419E01F000E9;
-	Tue, 21 Jul 2026 17:43:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGLMu+Nr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEFF01F000E9;
+	Tue, 21 Jul 2026 17:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655807;
-	bh=A6NQBYPvKgUMBQStkCT+Gou3l3gMXRoMIL8atm8eciI=;
+	s=korg; t=1784655810;
+	bh=P04ICVEAdbKQda8DwjPA1M4QMrsSu5Z1Kx+01lXbbUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LprfG9B06Z4DYxIDNixjK0HDC3nQdK+jYqMF7F4DVVSRZuf9JlEUUomMB72sQrsiN
-	 qnXuZVsRB6c5L6YbNa1gavBBt8iBMIVYoGQDxiQd+kkKSq2mgBe/jndYJXx1Wvy/3o
-	 +DD3ULTXMhG83x6TWKno/qUZH0103eGTh/qq4D7g=
+	b=jGLMu+NrMwRZYLqXOM8qN02XWJ/x+iy15S39Qaa7zqZmEgeaWXtQDo91e5QCahRwh
+	 JXd3hFgjOYpQ7EEEiWrTz+FTN3DMsohMK1WAXCAfFdFSpMty7FCfY5c+Um0J9OH6HK
+	 ZTBi8QZTbN3pwsM5h5kKl1j8c5pQggg42yG/nzg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin He <helin52@huawei.com>,
-	Yongbang Shi <shiyongbang@huawei.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0142/1611] drm/hisilicon/hibmc: move display contrl config to hibmc_probe()
-Date: Tue, 21 Jul 2026 17:04:18 +0200
-Message-ID: <20260721152518.069245937@linuxfoundation.org>
+Subject: [PATCH 6.18 0151/1611] net/sched: sch_htb: do not change sch->flags in htb_dump()
+Date: Tue, 21 Jul 2026 17:04:27 +0200
+Message-ID: <20260721152518.275615597@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,98 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin He <helin52@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit de2a56c71f9b223922ea8fe0192d3c1fa2954608 ]
+[ Upstream commit 9b949fa69129e4b694ed11ee3be6d6edd4a9b8f4 ]
 
-If there's no VGA output, this encoder modeset won't be called, which
-will cause displaying data from GPU being cut off. It's actually a
-common display config for DP and VGA, so move the vdac encoder modeset
-to driver load stage.
+htb_dump() runs without holding qdisc spinlock.
 
-Removed invalid bit configurations from `hibmc_display_ctrl`
+It is illegal to touch sch->flags with non locked RMW,
+as concurrent readers might see intermediate wrong values.
 
-Fixes: 5294967f4ae4 ("drm/hisilicon/hibmc: Add support for VDAC")
-Signed-off-by: Lin He <helin52@huawei.com>
-Signed-off-by: Yongbang Shi <shiyongbang@huawei.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260509032302.2057227-4-shiyongbang@huawei.com
+Set TCQ_F_OFFLOADED in control path (htb_init()) instead.
+
+Fixes: d03b195b5aa0 ("sch_htb: Hierarchical QoS hardware offload")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260514095935.3926276-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c   | 11 ++++++++++
- .../gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c  | 22 -------------------
- 2 files changed, 11 insertions(+), 22 deletions(-)
+ net/sched/sch_htb.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
-index 481e5e62c30bf1..99b36de1fe1370 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
-+++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
-@@ -215,6 +215,15 @@ void hibmc_set_current_gate(struct hibmc_drm_private *priv, unsigned int gate)
- 	writel(gate, mmio + gate_reg);
+diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
+index b5e40c51655a73..1dc8570aa77768 100644
+--- a/net/sched/sch_htb.c
++++ b/net/sched/sch_htb.c
+@@ -1148,6 +1148,7 @@ static int htb_init(struct Qdisc *sch, struct nlattr *opt,
+ 	 * parts (especially calling ndo_setup_tc) on errors.
+ 	 */
+ 	q->offload = true;
++	sch->flags |= TCQ_F_OFFLOADED;
+ 
+ 	return 0;
  }
+@@ -1208,11 +1209,6 @@ static int htb_dump(struct Qdisc *sch, struct sk_buff *skb)
+ 	struct nlattr *nest;
+ 	struct tc_htb_glob gopt;
  
-+static void hibmc_display_ctrl(struct hibmc_drm_private *priv)
-+{
-+	u32 reg;
-+
-+	reg = readl(priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
-+	reg |= HIBMC_DISPLAY_CONTROL_PANELDATE(1);
-+	writel(reg, priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
-+}
-+
- static void hibmc_hw_config(struct hibmc_drm_private *priv)
- {
- 	u32 reg;
-@@ -246,6 +255,8 @@ static void hibmc_hw_config(struct hibmc_drm_private *priv)
- 	reg |= HIBMC_MSCCTL_LOCALMEM_RESET(1);
- 
- 	writel(reg, priv->mmio + HIBMC_MISC_CTRL);
-+
-+	hibmc_display_ctrl(priv);
- }
- 
- static int hibmc_hw_map(struct hibmc_drm_private *priv)
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
-index 2fcfa3246fd124..b9bd6d33fb0f7b 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
-+++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
-@@ -88,26 +88,6 @@ static const struct drm_connector_funcs hibmc_connector_funcs = {
- 	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
- };
- 
--static void hibmc_encoder_mode_set(struct drm_encoder *encoder,
--				   struct drm_display_mode *mode,
--				   struct drm_display_mode *adj_mode)
--{
--	u32 reg;
--	struct drm_device *dev = encoder->dev;
--	struct hibmc_drm_private *priv = to_hibmc_drm_private(dev);
+-	if (q->offload)
+-		sch->flags |= TCQ_F_OFFLOADED;
+-	else
+-		sch->flags &= ~TCQ_F_OFFLOADED;
 -
--	reg = readl(priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
--	reg |= HIBMC_DISPLAY_CONTROL_FPVDDEN(1);
--	reg |= HIBMC_DISPLAY_CONTROL_PANELDATE(1);
--	reg |= HIBMC_DISPLAY_CONTROL_FPEN(1);
--	reg |= HIBMC_DISPLAY_CONTROL_VBIASEN(1);
--	writel(reg, priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
--}
--
--static const struct drm_encoder_helper_funcs hibmc_encoder_helper_funcs = {
--	.mode_set = hibmc_encoder_mode_set,
--};
--
- int hibmc_vdac_init(struct hibmc_drm_private *priv)
- {
- 	struct drm_device *dev = &priv->dev;
-@@ -130,8 +110,6 @@ int hibmc_vdac_init(struct hibmc_drm_private *priv)
- 		goto err;
- 	}
- 
--	drm_encoder_helper_add(encoder, &hibmc_encoder_helper_funcs);
--
- 	ret = drm_connector_init_with_ddc(dev, connector,
- 					  &hibmc_connector_funcs,
- 					  DRM_MODE_CONNECTOR_VGA,
+ 	sch->qstats.overlimits = q->overlimits;
+ 	/* Its safe to not acquire qdisc lock. As we hold RTNL,
+ 	 * no change can happen on the qdisc parameters.
 -- 
 2.53.0
 
