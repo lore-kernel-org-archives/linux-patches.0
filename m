@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B136A46A5E7;
-	Tue, 21 Jul 2026 17:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE4D46AA9C;
+	Tue, 21 Jul 2026 17:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654898; cv=none; b=pMmb/sgpJLDqUkQECnd2BmJ9YF5RP5UwLxQ6MVqlUWq7vA1ZENd6xfKl3jRgpafoe/SvfPqwE+1TqnGamqYIXrcSUgEiOWWGfV3gMB3Ewvkd0IEPb5PuBqlYuf/BGwexWgn/k6/H9Xa9FjPSctTFERWJVzo0eMCZNmHWCx7oAbM=
+	t=1784654899; cv=none; b=hNI1DiphK4Wt7frvDBopGR8z59czyeDUjJLvu87ONmkkfqzwerEpez48Y7msn3zAj0MkQpAKTABe+96LfSJsXUiZOu+B2EHBDNrWw6m+WZl7reznzM/7KAmqa9pcGXNXy37Q5LVkXxJtJIiRi2Q4rOikWGqQoaxRw9FHknt083g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654898; c=relaxed/simple;
-	bh=2JyHpuxAe8dQFF5Nd7J59FUj8JuQaoHNoHybLGcbQmk=;
+	s=arc-20240116; t=1784654899; c=relaxed/simple;
+	bh=j3MYI0jQQ2WDqAPUH4WkFP+Fvr9ubcYN/bdUSC/qleM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SCCozFr1K7yQTzRaNmYLxBddf76kYddTgFqi7af+qpe8o4szqkEyHrhmZQFgOUnnbTjxDt1HXua7GNw6YY5EH0wBzAmPWmJTPgzBZSlF8ja81d/tAlnGO2KehLvjVbOF1MdIJWH2DjiuARWOjTty3juqzN+laW7tSm1CWC0TNm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYpfrL8J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PJPm/hyQK0KQOt92GrKfGx5rRNP1PpektDalsYb3han1xBPsn8sbXrhuIpdDinIine3Mdsn/OrvppvSz34+vXuKb49gUUa0GSlBuAiBEB8hoGt9M7O/POm4odp6eZPk51Cj9oxwXoPeGTQVtFfoCC9NGeOHWfs7b5JnoO5Cxapg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k7+RDRNC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYpfrL8J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0AB81F000E9;
-	Tue, 21 Jul 2026 17:28:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k7+RDRNC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F131F00A3F;
+	Tue, 21 Jul 2026 17:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654894;
-	bh=52L0JpzafYZUzTEidnGPb8/1vJ+GMJ7R2S1EnoElbTE=;
+	s=korg; t=1784654891;
+	bh=0SFJqtOitvV1F5bDY8ui+XXgQP3pRkJwgMUejQfatI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TYpfrL8JY3wqys0UO8vu3fkvIwmUw8wUhNVyJiK0PUZ6DftHT6H4awyOiBD2sSzKz
-	 TAwDL9XjSwTTisLK8avnCfyjsoyecaZs4ZGhZO89E4Y1Jm/zw4GiaL8CuT0D2DMcYX
-	 nABz/sgE+i4lKCYcYQLQTCOL4L+c3E18UFHwU1QY=
+	b=k7+RDRNC7N2TY/w0XinBSQek9PiIcY2EH5h1Ip1In4dGHY+zMUejJq/4VVMwBAOZz
+	 iHcIBOO02hytsqSMJXeu7bJl6RBwTVgoVvWZ2Py3w5Xa/Q23C/mAH51LPxi2wVginM
+	 R/wYbVMupiepT56DvfiIqed46OO4mmYp5slzKsEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
-	Daniel Wagner <dwagner@suse.de>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	John Garry <john.g.garry@oracle.com>,
+	David Disseldorp <ddiss@suse.de>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 7.1 1877/2077] scsi: elx: efct: Fix refcount leak in efct_hw_io_abort()
-Date: Tue, 21 Jul 2026 17:25:50 +0200
-Message-ID: <20260721152637.000804361@linuxfoundation.org>
+Subject: [PATCH 7.1 1876/2077] scsi: target: core: Fix iSCSI ISID use-after-free in REGISTER AND MOVE
+Date: Tue, 21 Jul 2026 17:25:49 +0200
+Message-ID: <20260721152636.978456850@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,46 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 2c007acf7b31c39c08ce4959451ad00b19be4c1f upstream.
+commit fda6a1f3c3d7047b5ce5654487649c2daa738bfc upstream.
 
-When efct_hw_reqtag_alloc() fails in efct_hw_io_abort(), the error path
-returns -ENOSPC without releasing the reference obtained via
-kref_get_unless_zero() earlier in the function. All other error paths
-correctly drop the reference. This causes a permanent reference leak on the
-io_to_abort object.
+core_scsi3_emulate_pro_register_and_move() maps the PERSISTENT RESERVE OUT
+parameter list with transport_kmap_data_sg() and parses the destination
+TransportID with target_parse_pr_out_transport_id(). For an iSCSI
+TransportID (FORMAT CODE 01b), iscsi_parse_pr_out_transport_id() returns
+the ISID in iport_ptr as a raw pointer into that mapped buffer.
 
-Additionally, the abort_in_progress flag is left set to true on this path,
-which means future abort attempts for the same I/O will immediately return
--EINPROGRESS even though the abort was never submitted, effectively
-blocking recovery.
+The function then unmaps the buffer with transport_kunmap_data_sg() before
+dereferencing iport_ptr in strcmp(), __core_scsi3_locate_pr_reg() and
+core_scsi3_alloc_registration(). When the parameter list spans more than
+one page (PARAMETER LIST LENGTH > 4096), transport_kmap_data_sg() uses
+vmap() and transport_kunmap_data_sg() does vunmap(), so the kernel virtual
+address backing iport_ptr is torn down and every subsequent dereference is
+a use-after-free read of the unmapped region.
 
-Fix this by adding the missing kref_put() call and reset abort_in_progress
-to false, matching the cleanup done in the efct_hw_wq_write() failure path
-below.
+Keep the parameter list mapped until iport_ptr is no longer needed: drop
+the early transport_kunmap_data_sg() and unmap once on the success path,
+right before returning. The error paths already unmap through the existing
+"if (buf) transport_kunmap_data_sg(cmd)" at the out: label, which now runs
+on every post-map error exit because buf is no longer cleared early. Only
+reads of the mapping happen while spinlocks are held; the map and unmap
+calls remain outside any lock. The sibling caller
+core_scsi3_decode_spec_i_port() already uses the buffer before unmapping it
+and is left unchanged.
 
+Fixes: 4949314c7283 ("target: Allow control CDBs with data > 1 page")
 Cc: stable@vger.kernel.org
-Fixes: 63de51327a64 ("scsi: elx: efct: Hardware I/O and SGL initialization")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Link: https://patch.msgid.link/20260611053037.63756-1-vulab@iscas.ac.cn
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: David Disseldorp <ddiss@suse.de>
+Link: https://patch.msgid.link/20260610042245.35473-1-hexlabsecurity@proton.me
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/elx/efct/efct_hw.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/target/target_core_pr.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/scsi/elx/efct/efct_hw.c
-+++ b/drivers/scsi/elx/efct/efct_hw.c
-@@ -1997,6 +1997,8 @@ efct_hw_io_abort(struct efct_hw *hw, str
- 	wqcb = efct_hw_reqtag_alloc(hw, efct_hw_wq_process_abort, io_to_abort);
- 	if (!wqcb) {
- 		efc_log_err(hw->os, "can't allocate request tag\n");
-+		io_to_abort->abort_in_progress = false;
-+		kref_put(&io_to_abort->ref, io_to_abort->release);
- 		return -ENOSPC;
+--- a/drivers/target/target_core_pr.c
++++ b/drivers/target/target_core_pr.c
+@@ -3293,9 +3293,6 @@ core_scsi3_emulate_pro_register_and_move
+ 		goto out;
  	}
  
+-	transport_kunmap_data_sg(cmd);
+-	buf = NULL;
+-
+ 	pr_debug("SPC-3 PR [%s] Extracted initiator %s identifier: %s"
+ 		" %s\n", dest_tf_ops->fabric_name, (iport_ptr != NULL) ?
+ 		"port" : "device", initiator_str, (iport_ptr != NULL) ?
+@@ -3532,6 +3529,11 @@ after_iport_check:
+ 	core_scsi3_update_and_write_aptpl(cmd->se_dev, aptpl);
+ 
+ 	core_scsi3_put_pr_reg(dest_pr_reg);
++	/*
++	 * iport_ptr aliases the PR-OUT parameter list mapped above, so the
++	 * buffer is unmapped only here on success (and at out: on error).
++	 */
++	transport_kunmap_data_sg(cmd);
+ 	return 0;
+ out:
+ 	if (buf)
 
 
