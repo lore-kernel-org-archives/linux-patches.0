@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A87833A9FC;
-	Tue, 21 Jul 2026 22:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08E844AB6A;
+	Tue, 21 Jul 2026 22:33:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673199; cv=none; b=tYkI4fbMrcFRpnfl6cVrxWtGe/tV2aty/zbX3mN/JwiEQer28vnH/UZE8yJ8gH6IK7wK45D3Dw+HMOvDUu3JzRGNaRV2A35TaA6xKErHdtw9K5SGvNqm4xKriMwwhI+X55Q848H4DAOVFKUj1aJqL6pL9ALFUQ5QeytG8/ZmSGI=
+	t=1784673202; cv=none; b=A0Eny3iq4rjcQePlfMomBz7GZ+aEa7Q+lGoT8uNroKPzn0MFpUjSsefuulEArYuXuEUr9JvFVzgOHNSfZxYtXVTi2dPGM69bRZCeQxxhAYstTC/DxdnpG3LcXYDZeKY2Zz9D74xuA9+jB5R355QxZcXANymf4xZn/s3+OgqPYS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673199; c=relaxed/simple;
-	bh=l2NNq/ZgAnHzJxeXoCXIskU3tlR7EPwQ+M9LaxZma/w=;
+	s=arc-20240116; t=1784673202; c=relaxed/simple;
+	bh=FBM9keP7+owqZM1g0oHoRPaHePHgnKdpY6YahJqDVEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c90OELfYyY2HK0bswG3jA45vLDuWwwvX+Bl+EL1xioKUYgoOr5hvnAFLR1YaBA/KYNrCDHYuJtsRKwe6OEK96uWEBorMkgtvQ9Ecko8xVCjMf/Y2EBD9dK/rGIjxnmksajsQ9SYqcnNrHXRwXwZ7dwcgyHG3VxjkGWTtRPapmJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gRNt/24X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=frgMzD+8OzB9P5SyGzValdaq8bZbYictLJDH1fg5nRKXKaiQebECjbUM4QQmT+z7evIn5CrdIx1yINRTiAdQ75oCmNNOIwrjAtcovK65RzPzWc81USew5qEaZ93WLk8yWTcda9kYeQPrQ7HTj19EsT3r8Wx4XtpKBlfkFXC+MdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbpKFdT2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gRNt/24X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13DD1F000E9;
-	Tue, 21 Jul 2026 22:33:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbpKFdT2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6347E1F000E9;
+	Tue, 21 Jul 2026 22:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673198;
-	bh=PuXQSpMKt8POg8MRTLfPTlxAoZ4IYGPaecefYaCYefI=;
+	s=korg; t=1784673200;
+	bh=a40KuLE4rU+zDec+gIhb4oH+6AHOqvoFZjG507bj1YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gRNt/24XMcnvXaoFgSQ4iZz7vOJ6jQQbKU+IUn6A0o9wuVgfFZWDRkGj3qhCPdSXH
-	 0e8VSGzynC/czK1x+8e9GAexTWUImnsLztSvhGnqSEDoQUfARD2w+ZQO7N+vA+/0Vq
-	 Aj6Agcg/MrRN9rKwJykqhoRUkoAdWUvUYEvl3EJc=
+	b=NbpKFdT2vVs5jUfFuq7A6a8TdgFVVv4XVnC/v2DstU5UpMjjzmxMJBJJY0g1OQCDk
+	 oCeyUgeRsy7MVJOV01USh3pbd6Njef5lnalcK9K4I+3Srr5M5r+add2JT0FmdBAS5e
+	 jmU0ASfAI3WvnuH82qk1QpC7sOz+5gAiXcKfzxrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.10 071/699] media: staging: ipu3-imgu: Add range check for imgu_css_cfg_acc_stripe
-Date: Tue, 21 Jul 2026 17:17:10 +0200
-Message-ID: <20260721152357.306291687@linuxfoundation.org>
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.10 072/699] crypto: amlogic - avoid double cleanup in meson_crypto_probe()
+Date: Tue, 21 Jul 2026 17:17:11 +0200
+Message-ID: <20260721152357.328253870@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,48 +51,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit c32fe4c4918c9aa49f61359e3b42619c4d8686de upstream.
+commit 6d827ade51a24e18d81afb9f32756d339520a14c upstream.
 
-If the driver's stripe information is invalid it can result in an integer
-underflow. Add a range check to avoid this kind of error.
+When meson_allocate_chanlist() fails after a partial allocation, it already
+unwinds the allocated chanlist state through its local error path.
+meson_crypto_probe() then jump to error_flow and calls
+meson_free_chanlist() again, causing the same per-flow resources to be torn
+down twice. In the reproduced failure path, the second teardown
+re-entered crypto_engine_exit() on an already destroyed worker and KASAN
+reported a slab-use-after-free in kthread_destroy_worker().
 
-This patch fixes the following smatch error:
-drivers/staging/media/ipu3/ipu3-css-params.c:1792 imgu_css_cfg_acc_stripe() warn: 'acc->stripe.bds_out_stripes[0]->width - 2 * f' 4294967168 can't fit into 65535 'acc->stripe.bds_out_stripes[1]->offset'
+Prevent double-free by handling partial allocation failures locally within
+meson_allocate_chanlist() and skipping the outer cleanup path.
 
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available.
+
+The bug was reproduced in a QEMU x86_64 guest booted with KASAN on v7.1,
+using the reproducer under tools/testing/meson_crypto_probe. The reproducer
+forces the second dma_alloc_attrs() call in the gxl-crypto probe path to
+return NULL, making meson_allocate_chanlist() fail after partial
+initialization. On the unpatched kernel this reliably triggered a
+slab-use-after-free. With this fix applied, the same reproducer no longer
+emits any KASAN report and the probe fails cleanly with -ENOMEM.
+
+    ==================================================================
+    BUG: KASAN: slab-use-after-free in kthread_destroy_worker+0xb2/0xd0
+    Read of size 8 at addr ff1100010c057a68 by task insmod/265
+
+    CPU: 1 UID: 0 PID: 265 Comm: insmod Tainted: G           O        7.1.0-rc2-00376-g810af9adc907-dirty #10 PREEMPT(lazy)
+    Tainted: [O]=OOT_MODULE
+    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x68/0xa0
+     print_report+0xcb/0x5e0
+     ? __virt_addr_valid+0x21d/0x3f0
+     ? kthread_destroy_worker+0xb2/0xd0
+     ? kthread_destroy_worker+0xb2/0xd0
+     kasan_report+0xca/0x100
+     ? kthread_destroy_worker+0xb2/0xd0
+     kthread_destroy_worker+0xb2/0xd0
+     meson_crypto_probe+0x4d0/0xc10 [amlogic_gxl_crypto]
+     platform_probe+0x99/0x140
+     really_probe+0x1c6/0x6a0
+     ? __pfx___device_attach_driver+0x10/0x10
+     __driver_probe_device+0x248/0x310
+     ? acpi_driver_match_device+0xb0/0x100
+     driver_probe_device+0x48/0x210
+     ? __pfx___device_attach_driver+0x10/0x10
+     __device_attach_driver+0x160/0x320
+     bus_for_each_drv+0x104/0x190
+     ? __pfx_bus_for_each_drv+0x10/0x10
+     ? _raw_spin_unlock_irqrestore+0x2c/0x50
+     __device_attach+0x19d/0x3b0
+     ? __pfx___device_attach+0x10/0x10
+     ? do_raw_spin_unlock+0x53/0x220
+     device_initial_probe+0x78/0xa0
+     bus_probe_device+0x5b/0x130
+     device_add+0xcfd/0x1430
+     ? __pfx_device_add+0x10/0x10
+     ? insert_resource+0x34/0x50
+     ? lock_release+0xc9/0x290
+     platform_device_add+0x24e/0x590
+     ? __pfx_meson_crypto_probe_repro_init+0x10/0x10 [meson_crypto_probe_repro]
+     meson_crypto_probe_repro_init+0x330/0xff0 [meson_crypto_probe_repro]
+     do_one_initcall+0xc0/0x450
+     ? __pfx_do_one_initcall+0x10/0x10
+     ? _raw_spin_unlock_irqrestore+0x2c/0x50
+     ? __create_object+0x59/0x80
+     ? kasan_unpoison+0x27/0x60
+     do_init_module+0x27b/0x7d0
+     ? __pfx_do_init_module+0x10/0x10
+     ? kasan_quarantine_put+0x84/0x1d0
+     ? kfree+0x32c/0x510
+     ? load_module+0x561e/0x5ff0
+     load_module+0x54fe/0x5ff0
+     ? __pfx_load_module+0x10/0x10
+     ? security_file_permission+0x20/0x40
+     ? kernel_read_file+0x23d/0x6e0
+     ? mmap_region+0x235/0x4a0
+     ? __pfx_kernel_read_file+0x10/0x10
+     ? __file_has_perm+0x2c0/0x3e0
+     init_module_from_file+0x158/0x180
+     ? __pfx_init_module_from_file+0x10/0x10
+     ? __lock_acquire+0x45a/0x1ba0
+     ? idempotent_init_module+0x315/0x610
+     ? lock_release+0xc9/0x290
+     ? lockdep_init_map_type+0x4b/0x220
+     ? do_raw_spin_unlock+0x53/0x220
+     idempotent_init_module+0x330/0x610
+     ? __pfx_idempotent_init_module+0x10/0x10
+     ? __pfx_cred_has_capability.isra.0+0x10/0x10
+     ? ksys_mmap_pgoff+0x385/0x520
+     __x64_sys_finit_module+0xbe/0x120
+     do_syscall_64+0x115/0x690
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    RIP: 0033:0x7f7d6d31690d
+    Code: 5b 41 5c c3 66 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d f3 b4 0f 00 f7 d8 >
+    RSP: 002b:00007fffc027ac68 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
+    RAX: ffffffffffffffda RBX: 000055f7b81967c0 RCX: 00007f7d6d31690d
+    RDX: 0000000000000000 RSI: 000055f79a0d6cd2 RDI: 0000000000000003
+    RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+    R10: 0000000000000003 R11: 0000000000000246 R12: 000055f79a0d6cd2
+    R13: 000055f7b8196790 R14: 000055f79a0d5888 R15: 000055f7b81968e0
+     </TASK>
+
+Fixes: 48fe583fe541 ("crypto: amlogic - Add crypto accelerator for amlogic GXL")
 Cc: stable@vger.kernel.org
-Fixes: e11110a5b744 ("media: staging/intel-ipu3: css: Compute and program ccs")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/ipu3/ipu3-css-params.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/crypto/amlogic/amlogic-gxl-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/staging/media/ipu3/ipu3-css-params.c
-+++ b/drivers/staging/media/ipu3/ipu3-css-params.c
-@@ -1773,6 +1773,8 @@ static int imgu_css_cfg_acc_stripe(struc
- 		acc->stripe.bds_out_stripes[0].width =
- 			ALIGN(css_pipe->rect[IPU3_CSS_RECT_BDS].width, f);
- 	} else {
-+		u32 offset;
-+
- 		/* Image processing is divided into two stripes */
- 		acc->stripe.bds_out_stripes[0].width =
- 			acc->stripe.bds_out_stripes[1].width =
-@@ -1791,8 +1793,10 @@ static int imgu_css_cfg_acc_stripe(struc
- 			acc->stripe.bds_out_stripes[1].width += f;
- 		}
- 		/* Overlap between stripes is IPU3_UAPI_ISP_VEC_ELEMS * 4 */
--		acc->stripe.bds_out_stripes[1].offset =
--			acc->stripe.bds_out_stripes[0].width - 2 * f;
-+		offset = acc->stripe.bds_out_stripes[0].width - 2 * f;
-+		if (offset > 65535)
-+			return -EINVAL;
-+		acc->stripe.bds_out_stripes[1].offset = offset;
- 	}
- 
- 	acc->stripe.effective_stripes[0].height =
+--- a/drivers/crypto/amlogic/amlogic-gxl-core.c
++++ b/drivers/crypto/amlogic/amlogic-gxl-core.c
+@@ -275,8 +275,8 @@ static int meson_crypto_probe(struct pla
+ 	return 0;
+ error_alg:
+ 	meson_unregister_algs(mc);
+-error_flow:
+ 	meson_free_chanlist(mc, MAXFLOW - 1);
++error_flow:
+ 	clk_disable_unprepare(mc->busclk);
+ 	return err;
+ }
 
 
