@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37508434E5D;
-	Tue, 21 Jul 2026 20:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF5C47141E;
+	Tue, 21 Jul 2026 20:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665460; cv=none; b=tJVFN3NeULMamWnBE3geI13FtDBVzGJhGMuHYS6lilrXJAn9eYJadm1MBzlxI0YspUJCECg6BzYsHO7qvvT76FQ3nq14u0eOUX6TuWWiHJUBwsrI4nIYFNhmCx7PM65WfWe+fjegP/zGypc+FhikqGTr1p5/0etud+f+HWrjFyQ=
+	t=1784665462; cv=none; b=TBL6j88UKcBIVXirXqkevQsij+mqwX8fMsIU0H6t5NDu+fl9oRuH/pIaJvOxGb6WD64PsHD+xlt0l4wmJV24TL/FPEyh8NnYSaFUuQecLjgLETQbFzKWgmld8vnYip2p/MacucWYBtM8egxBpkFIHdKAivviPELgnoHvKIb7iog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665460; c=relaxed/simple;
-	bh=FFMeKgFTZ297sgJiGFGVCoGNZ+1zC2Wd4k/At+u+qrQ=;
+	s=arc-20240116; t=1784665462; c=relaxed/simple;
+	bh=oh5XayQFmeS79XjW5MlGVPqqsJs2ePNQdDmnyUwNGHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4bMrCWSEQOSLY+v4b2E+8ITLJzLe3Hsm6XWWqW/ckTNHciI5KRTYkWFfmU7QqjsPALYOHV1EkCgbQ5KJW2G54MuNFjPgclxHBjrWsT5d3UQqOFVoLuB2sEVqDSg+wQwXl3Qq2Z61pkITjxJhlYi5qeOHx9Bz6hoLWIEo6nZYVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Hr4U5Xm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YX5Sv49O5ooQmGRnfsfvQXiC1zTFrsoDIikv+Qk0khH4hLlqDcJRVAmatKEMor1hc/nuhJod2GiYaPeOBwBhhZHhZ4bKsf+GS14qBcHU2Yxg32h2JNEY2uz1HIS2WCXm6CxKfmtwdkGPp9SJlwgFeEcmBkCwDb1gXRoJDGLPv4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K2tcOYYT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Hr4U5Xm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D2621F000E9;
-	Tue, 21 Jul 2026 20:24:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K2tcOYYT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AC21F000E9;
+	Tue, 21 Jul 2026 20:24:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665459;
-	bh=gkbut8xx7NLKR8jAixdDwdSVjwvJqxF11dKk58KIslI=;
+	s=korg; t=1784665461;
+	bh=BZbRwcmWgNPijVPADA8S+YJ8H11ZNf7YQUXCTyx/Gog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Hr4U5Xm52V5I03ouw79CvdiNc9PuCJKPR9qDYng/JWJc1CcEZ7xIl0I/xshZu/Uf
-	 eojKqqDri4w4D/3fFR6aOGPkpPk/4wa9VTjfw4et6lYm0qWgFCek5qWGBVfAwyH+im
-	 PLV0K7xYQyvsl0pgahr7O5kYACWa8LN1HbyIX4A0=
+	b=K2tcOYYTEvx3fQiz1pLUvq8Y8G50/Wp/BD4pPyQaO2RYC7nY2nDJSfxOgwUQnS93M
+	 VooPW4qjItfL41Ri94ghY6NUnrOa8fXM/BjxPM0nBxdfy3w0UbmaOD5xg9+xrNUbb5
+	 G6jvlAdb9qQvTzDgrqtd0JnhOav0T2R/we8P+jmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 0311/1266] Input: mms114 - fix touch indexing for MMS134S and MMS136
-Date: Tue, 21 Jul 2026 17:12:28 +0200
-Message-ID: <20260721152448.792651843@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.6 0276/1266] crypto: drbg - Fix the fips_enabled priority boost
+Date: Tue, 21 Jul 2026 17:11:53 +0200
+Message-ID: <20260721152448.000367567@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,85 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit a6ac4e24c1a8a533bb61035184fdcc7eede4cc8d upstream.
+commit a8a1f93080efc83a9ff8452954429ae379e9e614 upstream.
 
-The MMS134S and MMS136 touch controllers have an event size of 6 bytes
-rather than 8 bytes. When __mms114_read_reg() reads the touch data
-packet from the device into the touch buffer, the events are packed
-tightly at 6-byte intervals. However, the driver iterates through the
-events using standard C array indexing (touch[index]), where each
-element is sizeof(struct mms114_touch) (8 bytes) apart. As a result, any
-touch events beyond the first one are read from incorrect offsets and
-parsed improperly.
+When fips_enabled=1, it seems to have been intended for one of the
+algorithms defined in crypto/drbg.c to be the highest priority "stdrng"
+algorithm, so that it is what is used by "stdrng" users.
 
-Fix this by explicitly calculating the byte offset for each touch event
-based on the device's specific event size.
+However, the code only boosts the priority to 400, which is less than
+the priority 500 used in drivers/crypto/caam/caamprng.c.  Thus, the CAAM
+RNG could be used instead.
 
-Fixes: 53fefdd1d3a3 ("Input: mms114 - support MMS136")
-Fixes: ab108678195f ("Input: mms114 - support MMS134S")
-Reported-by: sashiko-bot@kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Reviewed-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260616050912.1531241-1-dmitry.torokhov@gmail.com
+Fix this by boosting the priority by 2000 instead of 200.
+
+Fixes: 541af946fe13 ("crypto: drbg - SP800-90A Deterministic Random Bit Generator")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/mms114.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ crypto/drbg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/touchscreen/mms114.c
-+++ b/drivers/input/touchscreen/mms114.c
-@@ -218,7 +218,9 @@ static irqreturn_t mms114_interrupt(int
- 	struct i2c_client *client = data->client;
- 	struct input_dev *input_dev = data->input_dev;
- 	struct mms114_touch touch[MMS114_MAX_TOUCH];
-+	struct mms114_touch *t;
- 	int packet_size;
-+	int event_size;
- 	int touch_size;
- 	int index;
- 	int error;
-@@ -236,9 +238,11 @@ static irqreturn_t mms114_interrupt(int
+--- a/crypto/drbg.c
++++ b/crypto/drbg.c
+@@ -2095,7 +2095,7 @@ static inline void __init drbg_fill_arra
+ 	 * it is selected.
+ 	 */
+ 	if (fips_enabled)
+-		alg->base.cra_priority += 200;
++		alg->base.cra_priority += 2000;
  
- 	/* MMS136 has slightly different event size */
- 	if (data->type == TYPE_MMS134S || data->type == TYPE_MMS136)
--		touch_size = packet_size / MMS136_EVENT_SIZE;
-+		event_size = MMS136_EVENT_SIZE;
- 	else
--		touch_size = packet_size / MMS114_EVENT_SIZE;
-+		event_size = MMS114_EVENT_SIZE;
-+
-+	touch_size = packet_size / event_size;
- 
- 	error = __mms114_read_reg(data, MMS114_INFORMATION, packet_size,
- 			(u8 *)touch);
-@@ -246,18 +250,20 @@ static irqreturn_t mms114_interrupt(int
- 		goto out;
- 
- 	for (index = 0; index < touch_size; index++) {
--		switch (touch[index].type) {
-+		t = (struct mms114_touch *)((u8 *)touch + index * event_size);
-+
-+		switch (t->type) {
- 		case MMS114_TYPE_TOUCHSCREEN:
--			mms114_process_mt(data, touch + index);
-+			mms114_process_mt(data, t);
- 			break;
- 
- 		case MMS114_TYPE_TOUCHKEY:
--			mms114_process_touchkey(data, touch + index);
-+			mms114_process_touchkey(data, t);
- 			break;
- 
- 		default:
- 			dev_err(&client->dev, "Wrong touch type (%d)\n",
--				touch[index].type);
-+				t->type);
- 			break;
- 		}
- 	}
+ 	alg->base.cra_ctxsize 	= sizeof(struct drbg_state);
+ 	alg->base.cra_module	= THIS_MODULE;
 
 
