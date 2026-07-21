@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D713B52E7;
-	Tue, 21 Jul 2026 22:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7441A3B6BF0;
+	Tue, 21 Jul 2026 22:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672096; cv=none; b=IeVITswePonrYu1w/B9Ckq1LzaLG1I79bQ89ro71lynf3aG6rwmAXKNIi0b5XlsaZJp5WqwY0Y1CvjD1+1jLh/Y/QE63p+RRwYZyqt2sqjJ21vha91+OpV49Kd+Lego0tPnE66OCfsIJ6uCLcFmBKByp8mxy80bNtNOMJ5naKqY=
+	t=1784672098; cv=none; b=mnE16RqBlWAjpzNjPuh4n8d+GxOC/PLc0+cLOhtOKZyRN3AzkMEt+V33Y3pMiGgzaBYN+aIRSCfluIxC95Y/rD11UgQfwYi26kUB1PravsyBOL3oZUQfH5iugyNC9zyabUUpeJR7scyS0ADQpPWhznOqNlY8RyN3gNvCWMqJn5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672096; c=relaxed/simple;
-	bh=a41dpg+5lXLY1DoocpSPvzvxgSBEq9S5xjF+8qqYbMs=;
+	s=arc-20240116; t=1784672098; c=relaxed/simple;
+	bh=mNICrveGqoUVPr+dZSbhlXaRIrhGSzlhtRVz3OiMgxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HCTygbuQN2AooCZBRwOJjvwybvKTL4ZUIlG2nSXhx+2V1ACgWftst2eqG+WivhX9WTAnOZqijd8aN2PaxkhR8SLK8YYQV2x2GWoAaNNBe4ItgQ+ICBmZehik4UM3t3TAISpDd5I/Oh9HThNAWOuWXC6g35wsB1mrtTXzGovFE+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CS0oTlWq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=InL4yZfx6kkzpjneuhEQVUP193ubYruZz7EqeEwWJUjzJcxTaTXaq9acCvLkngljdM/UgfJJwEYLb9peJ9EPrBbQKdaFG6pLGL6RlhlCCyCKYYBvpGCD+Vyo+Ub6633OrpB9DaxS6xxkCQpiph/qCPcXRFpvfr6qIfV9WxBtSMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtHeIfSp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CS0oTlWq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65ECF1F000E9;
-	Tue, 21 Jul 2026 22:14:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtHeIfSp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71481F000E9;
+	Tue, 21 Jul 2026 22:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672094;
-	bh=UiqP+HaqoX33ao40iydf/itj1SB3dehn3F271Kwv13o=;
+	s=korg; t=1784672097;
+	bh=MidGQrZb2/Aw5LP5jFWx9oqt65DgDI0imyJkyP+MAXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CS0oTlWqfu8JtIFBHPj4BVDyTfyDzY4Em8f7/C4YqweFQ0TW8/F29dRKT0mgJkAFF
-	 jeQ7AtWXwKi6qMOORWFd0Nem0/UUEDsuSSR8Cm+fYd9Estw2PH91F2knsbJMnachun
-	 IqqbDh5qx4/wL+VG22uKEgK/bNR6xV4P7bJNwrHs=
+	b=TtHeIfSpvSSIi6DzTxDK3cw9gghOLmA7lWrbXdzZsxUkNz9OTsvgqRr544mXxZD+9
+	 sjD5b1U5tUewU/fiv1pXqem9eFn7ToJSNpUG4AV3cgGanrcY4SLi/5bvBPuIfmc/Xx
+	 kIgtlr+OeZhguR4SOdLmK6JFvbarJi1eH37WS4fY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bhargav Joshi <j.bhargav.u@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Sayali Patil <sayalip@linux.ibm.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Michal Hocko <mhocko@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 453/843] irqchip/crossbar: Fix parent domain resource leak
-Date: Tue, 21 Jul 2026 17:21:28 +0200
-Message-ID: <20260721152416.218305455@linuxfoundation.org>
+Subject: [PATCH 5.15 454/843] selftests/mm: clarify alternate unmapping in compaction_test
+Date: Tue, 21 Jul 2026 17:21:29 +0200
+Message-ID: <20260721152416.241113697@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,37 +61,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bhargav Joshi <j.bhargav.u@gmail.com>
+From: Sayali Patil <sayalip@linux.ibm.com>
 
-[ Upstream commit a1074dd62faa6572921d387e8a21589ccea00efc ]
+[ Upstream commit 69ba1d76d93ab818245333cf400928477ba72053 ]
 
-irq_domain_alloc_irqs_parent() is called in allocate_gic_irq() but
-irq_domain_free_irqs_parent() is never called which causes a resource leak.
+Add a comment explaining that every other entry in the list is unmapped to
+intentionally create fragmentation with locked pages before invoking
+check_compaction().
 
-Fix this by calling irq_domain_free_irqs_parent() in
-crossbar_domain_free().
-
-Fixes: 783d31863fb82 ("irqchip: crossbar: Convert dra7 crossbar to stacked domains")
-Signed-off-by: Bhargav Joshi <j.bhargav.u@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260620-irq-crossbar-fix-v2-2-b8e8499f468a@gmail.com
+Link: https://lore.kernel.org/da5e0a8d5152e54152c0d2f456aac2fac35af291.1779296493.git.sayalip@linux.ibm.com
+Fixes: bd67d5c15cc1 ("Test compaction of mlocked memory")
+Signed-off-by: Sayali Patil <sayalip@linux.ibm.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Cc: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-crossbar.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/vm/compaction_test.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/irqchip/irq-crossbar.c b/drivers/irqchip/irq-crossbar.c
-index a05a7501e10790..729492772ff46e 100644
---- a/drivers/irqchip/irq-crossbar.c
-+++ b/drivers/irqchip/irq-crossbar.c
-@@ -163,6 +163,7 @@ static void crossbar_domain_free(struct irq_domain *domain, unsigned int virq,
- 		cb->write(d->hwirq, cb->safe_map);
+diff --git a/tools/testing/selftests/vm/compaction_test.c b/tools/testing/selftests/vm/compaction_test.c
+index 00ebd9d508ffdf..442960f3381dbc 100644
+--- a/tools/testing/selftests/vm/compaction_test.c
++++ b/tools/testing/selftests/vm/compaction_test.c
+@@ -231,6 +231,9 @@ int main(int argc, char **argv)
+ 		mem_fragmentable_MB -= MAP_SIZE_MB;
  	}
- 	raw_spin_unlock(&cb->lock);
-+	irq_domain_free_irqs_parent(domain, virq, nr_irqs);
- }
  
- static int crossbar_domain_translate(struct irq_domain *d,
++	/* Unmap every other entry in the list to create fragmentation with
++	 * locked pages before invoking check_compaction().
++	 */
+ 	for (entry = list; entry != NULL; entry = entry->next) {
+ 		munmap(entry->map, MAP_SIZE);
+ 		if (!entry->next)
 -- 
 2.53.0
 
