@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B8F46A5FB;
-	Tue, 21 Jul 2026 16:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5442040B119;
+	Tue, 21 Jul 2026 16:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649749; cv=none; b=B6iEKASzZ1B6AJrgfhuMF2aw1Nw5ZXao+z1tiXygoy1LUxJCg8GQuMSHz+JUt2q1OmZdc75lEK7rwUZ0OzlokdqIKgDup7SUjOw1xZg9v4nyHaOd1Ym/hCFH9tyF/TwkifkzUxIkDeQQMTc8LH8wHAbRAcnB9CoUIMS7t31iFZQ=
+	t=1784649752; cv=none; b=IbG9PTdfAGV2hmlfNBlKlTCf0RQ/Arl9C5DBkDMLXDl5T7YIc6PCoVGqj+gTf+G48jaSORnTWq95nnXI0G+shQ8RywPHbUXqKnHz8eF2xDRQgTi0R83UyMI8ygp3Bf9VtsfjbtFiuhBk7idqNpKY1M1FtAP+07HfPyVnxC53k2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649749; c=relaxed/simple;
-	bh=vCDbfxIXF06l5x6uS1Uw+51ZF0F9CULZhPI2VFidfB8=;
+	s=arc-20240116; t=1784649752; c=relaxed/simple;
+	bh=e0d+yGf3nkX/CxTJmxZuYJez7gJkgtIpqFeYMvB/kxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oFgixbpZMcRad2KvV6uMurT5EvLEZ7vVRhb26EM96T3fjfw/V47UUQdTZghb/u99+D0pu4X/nDi2WSDpYkcYGTXqSnwSLAbwsxH99V35nR+WETjtgm/WFTh6QoZAMCBXVDc5nR1g05Xy8YhoQE9oJlApPoO8CxX0LIJcg2y2nMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPSQ9poy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dOmmG5I7pJ32abdH/+tvgO9MkxAjgCm6+2ait1S9Oz4Mh69J1KMm9AmeJNhq8dz0S8SmxSyrTX9F8CzncAjNCCp7pRZOAbdcAVt7/n5e9CfIuj1CVOMLK1E76qrKio+dKeLm+eMxT1ChKmqDC76KXlGmI7tl+GLmqctxUZnAn2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFB+b/bN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPSQ9poy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB5E1F000E9;
-	Tue, 21 Jul 2026 16:02:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFB+b/bN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669981F000E9;
+	Tue, 21 Jul 2026 16:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649748;
-	bh=FiDykgD3F+6IMzPNpdTivCybUkLi6pmBfig0lyVObzY=;
+	s=korg; t=1784649750;
+	bh=LPt5LFL3xaqN/CegsMRYmHZcrCygaZkNyBFKH4e5ZFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TPSQ9poyyRGKX9hnYxcWo/nT8Q0KAS8R0Z81w6W76zSF3fDaYElR0oeqv0k1FPxuX
-	 t5TgH9358qizLLNAJIYuUzh/NnPk3h1lTe6oIv8eCosq0Zeqr+0EcTTrUOkJXtHQp5
-	 e/vwNuc/zVtF7xsFxwrCKD6kyGrdI+8bqvWfKD4g=
+	b=QFB+b/bNOryuCdW8XBy3JrlD5/p0Vz9UKGZW1ASrl2ERPznaU2oG0ebmafuce6fYE
+	 QCYyZMvPZ96ZyMROMqZF3SN0nqlhjyy0ITe8QsrW6f9tw51Y510YcPuOYbeLGZyVEt
+	 rjJvLa8TFo6TX77UXARvWL4o45jqPGig0XcJ0t9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis Scalbert <louis.scalbert@6wind.com>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	sashiko <sashiko@sashiko.dev>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0649/2077] bonding: 3ad: add lacp_strict configuration knob
-Date: Tue, 21 Jul 2026 17:05:22 +0200
-Message-ID: <20260721152608.115517297@linuxfoundation.org>
+Subject: [PATCH 7.1 0640/2077] ASoC: cs35l56: Prevent double-free of debugfs
+Date: Tue, 21 Jul 2026 17:05:13 +0200
+Message-ID: <20260721152607.904601539@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,259 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Louis Scalbert <louis.scalbert@6wind.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 32b0b8953343eaceaa816a9ead3b6bb66355c64e ]
+[ Upstream commit 344a12ca7ba6e10f9779476780afe9d977d47322 ]
 
-When an 802.3ad (LACP) bonding interface has no slaves in the
-collecting/distributing state, the bonding master still reports
-carrier as up as long as at least 'min_links' slaves have carrier.
+Invalidate the debugfs pointer after debugfs_remove_recursive() in
+cs35l56_remove_cal_debugfs(). This prevents a double-free situation when
+a future commit adds proper failure cleanup in cs35l56_component_probe().
 
-In this situation, only one slave is effectively used for TX/RX,
-while traffic received on other slaves is dropped. Upper-layer
-daemons therefore consider the interface operational, even though
-traffic may be blackholed if the lack of LACP negotiation means
-the partner is not ready to deal with traffic.
+As described by Sashiko (including the future cs35l56_component_probe()
+cleanup commit):
 
-Introduce a configuration knob to control this behavior. It allows
-the bonding master to assert carrier only when at least 'min_links'
-slaves are in Collecting_Distributing state.
+During a normal component unbind, cs35l56_component_remove() calls
+cs35l56_remove_cal_debugfs() which removes the directory but leaves
+a dangling pointer.
 
-The default mode preserves the existing behavior. This patch only
-introduces the knob; its behavior is implemented in the subsequent
-commit.
+If the component is later bound again, but _cs35l56_component_probe()
+fails early (for example, if the init_completion times out), this new
+error path will call cs35l56_component_remove(). This causes
+cs35l56_remove_cal_debugfs() to be called again with the dangling
+cs35l56_base->debugfs pointer from the previous lifecycle, resulting in
+a use-after-free in debugfs_remove_recursive().
 
-Fixes: 655f8919d549 ("bonding: add min links parameter to 802.3ad")
-Signed-off-by: Louis Scalbert <louis.scalbert@6wind.com>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20260603150331.1919611-4-louis.scalbert@6wind.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f7097161e94c ("ASoC: cs35l56: Add common code for factory calibration")
+Reported-by: sashiko <sashiko@sashiko.dev>
+Link: https://sashiko.dev/#/patchset/20260609120738.284770-1-rf%40opensource.cirrus.com
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260610093432.557375-3-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/netlink/specs/rt-link.yaml |  3 +++
- Documentation/networking/bonding.rst     | 23 +++++++++++++++++++++
- drivers/net/bonding/bond_main.c          |  1 +
- drivers/net/bonding/bond_netlink.c       | 16 +++++++++++++++
- drivers/net/bonding/bond_options.c       | 26 ++++++++++++++++++++++++
- include/net/bond_options.h               |  1 +
- include/net/bonding.h                    |  1 +
- include/uapi/linux/if_link.h             |  1 +
- tools/include/uapi/linux/if_link.h       |  1 +
- 9 files changed, 73 insertions(+)
+ sound/soc/codecs/cs35l56-shared.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/netlink/specs/rt-link.yaml b/Documentation/netlink/specs/rt-link.yaml
-index 484e0a97b653a1..644a8bd7b93c34 100644
---- a/Documentation/netlink/specs/rt-link.yaml
-+++ b/Documentation/netlink/specs/rt-link.yaml
-@@ -1354,6 +1354,9 @@ attribute-sets:
-       -
-         name: broadcast-neigh
-         type: u8
-+      -
-+        name: lacp-strict
-+        type: u8
-   -
-     name: bond-ad-info-attrs
-     name-prefix: ifla-bond-ad-info-
-diff --git a/Documentation/networking/bonding.rst b/Documentation/networking/bonding.rst
-index e700bf1d095c35..33ca5afafdf6dd 100644
---- a/Documentation/networking/bonding.rst
-+++ b/Documentation/networking/bonding.rst
-@@ -619,6 +619,29 @@ min_links
- 	aggregator cannot be active without at least one available link,
- 	setting this option to 0 or to 1 has the exact same effect.
- 
-+lacp_strict
-+
-+	Specifies the fallback behavior of a bonding when LACP negotiation
-+	fails on all slave links, i.e. when no slave is in the
-+	Collecting_Distributing state, while at least `min_links` link still
-+	reports carrier up.
-+
-+	This option is only applicable to 802.3ad mode (mode 4).
-+
-+	Valid values are:
-+
-+	off or 0
-+		One interface of the bond is selected to be active, in order to
-+		facilitate communication with peer devices that do not implement
-+		LACP.
-+
-+	on or 1
-+		Interfaces are only permitted to be made active if they have an
-+		active LACP partner and have successfully reached
-+		Collecting_Distributing state.
-+
-+	The default value is 0 (off).
-+
- mode
- 
- 	Specifies one of the bonding policies. The default is
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 8e75453ce0efd1..cd9b0a6d652174 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -6446,6 +6446,7 @@ static int __init bond_check_params(struct bond_params *params)
- 	params->ad_user_port_key = ad_user_port_key;
- 	params->coupled_control = 1;
- 	params->broadcast_neighbor = 0;
-+	params->lacp_strict = 0;
- 	if (packets_per_slave > 0) {
- 		params->reciprocal_packets_per_slave =
- 			reciprocal_value(packets_per_slave);
-diff --git a/drivers/net/bonding/bond_netlink.c b/drivers/net/bonding/bond_netlink.c
-index 90365d3f7ebff7..4a11572f663d31 100644
---- a/drivers/net/bonding/bond_netlink.c
-+++ b/drivers/net/bonding/bond_netlink.c
-@@ -143,6 +143,7 @@ static const struct nla_policy bond_policy[IFLA_BOND_MAX + 1] = {
- 	[IFLA_BOND_NS_IP6_TARGET]	= { .type = NLA_NESTED },
- 	[IFLA_BOND_COUPLED_CONTROL]	= { .type = NLA_U8 },
- 	[IFLA_BOND_BROADCAST_NEIGH]	= { .type = NLA_U8 },
-+	[IFLA_BOND_LACP_STRICT]		= { .type = NLA_U8 },
- };
- 
- static const struct nla_policy bond_slave_policy[IFLA_BOND_SLAVE_MAX + 1] = {
-@@ -599,6 +600,16 @@ static int bond_changelink(struct net_device *bond_dev, struct nlattr *tb[],
- 			return err;
- 	}
- 
-+	if (data[IFLA_BOND_LACP_STRICT]) {
-+		int fallback_mode = nla_get_u8(data[IFLA_BOND_LACP_STRICT]);
-+
-+		bond_opt_initval(&newval, fallback_mode);
-+		err = __bond_opt_set(bond, BOND_OPT_LACP_STRICT, &newval,
-+				     data[IFLA_BOND_LACP_STRICT], extack);
-+		if (err)
-+			return err;
-+	}
-+
- 	return 0;
- }
- 
-@@ -671,6 +682,7 @@ static size_t bond_get_size(const struct net_device *bond_dev)
- 		nla_total_size(sizeof(struct in6_addr)) * BOND_MAX_NS_TARGETS +
- 		nla_total_size(sizeof(u8)) +	/* IFLA_BOND_COUPLED_CONTROL */
- 		nla_total_size(sizeof(u8)) +	/* IFLA_BOND_BROADCAST_NEIGH */
-+		nla_total_size(sizeof(u8)) +	/* IFLA_BOND_LACP_STRICT */
- 		0;
- }
- 
-@@ -838,6 +850,10 @@ static int bond_fill_info(struct sk_buff *skb,
- 		       bond->params.broadcast_neighbor))
- 		goto nla_put_failure;
- 
-+	if (nla_put_u8(skb, IFLA_BOND_LACP_STRICT,
-+		       bond->params.lacp_strict))
-+		goto nla_put_failure;
-+
- 	if (BOND_MODE(bond) == BOND_MODE_8023AD) {
- 		struct ad_info info;
- 
-diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
-index 7380cc4ee75a90..d358b831df7730 100644
---- a/drivers/net/bonding/bond_options.c
-+++ b/drivers/net/bonding/bond_options.c
-@@ -68,6 +68,8 @@ static int bond_option_lacp_active_set(struct bonding *bond,
- 				       const struct bond_opt_value *newval);
- static int bond_option_lacp_rate_set(struct bonding *bond,
- 				     const struct bond_opt_value *newval);
-+static int bond_option_lacp_strict_set(struct bonding *bond,
-+				       const struct bond_opt_value *newval);
- static int bond_option_ad_select_set(struct bonding *bond,
- 				     const struct bond_opt_value *newval);
- static int bond_option_queue_id_set(struct bonding *bond,
-@@ -162,6 +164,12 @@ static const struct bond_opt_value bond_lacp_rate_tbl[] = {
- 	{ NULL,   -1,           0},
- };
- 
-+static const struct bond_opt_value bond_lacp_strict_tbl[] = {
-+	{ "off", 0, BOND_VALFLAG_DEFAULT},
-+	{ "on",  1, 0},
-+	{ NULL, -1, 0 }
-+};
-+
- static const struct bond_opt_value bond_ad_select_tbl[] = {
- 	{ "stable",          BOND_AD_STABLE,    BOND_VALFLAG_DEFAULT},
- 	{ "bandwidth",       BOND_AD_BANDWIDTH, 0},
-@@ -363,6 +371,14 @@ static const struct bond_option bond_opts[BOND_OPT_LAST] = {
- 		.values = bond_lacp_rate_tbl,
- 		.set = bond_option_lacp_rate_set
- 	},
-+	[BOND_OPT_LACP_STRICT] = {
-+		.id = BOND_OPT_LACP_STRICT,
-+		.name = "lacp_strict",
-+		.desc = "Define the LACP fallback mode when no slaves have negotiated",
-+		.unsuppmodes = BOND_MODE_ALL_EX(BIT(BOND_MODE_8023AD)),
-+		.values = bond_lacp_strict_tbl,
-+		.set = bond_option_lacp_strict_set
-+	},
- 	[BOND_OPT_MINLINKS] = {
- 		.id = BOND_OPT_MINLINKS,
- 		.name = "min_links",
-@@ -1684,6 +1700,16 @@ static int bond_option_lacp_rate_set(struct bonding *bond,
- 	return 0;
- }
- 
-+static int bond_option_lacp_strict_set(struct bonding *bond,
-+				       const struct bond_opt_value *newval)
-+{
-+	netdev_dbg(bond->dev, "Setting LACP fallback to %s (%llu)\n",
-+		   newval->string, newval->value);
-+	bond->params.lacp_strict = newval->value;
-+
-+	return 0;
-+}
-+
- static int bond_option_ad_select_set(struct bonding *bond,
- 				     const struct bond_opt_value *newval)
+diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
+index 795e2764d67ec8..e04b114a32b7f2 100644
+--- a/sound/soc/codecs/cs35l56-shared.c
++++ b/sound/soc/codecs/cs35l56-shared.c
+@@ -1293,6 +1293,7 @@ EXPORT_SYMBOL_NS_GPL(cs35l56_create_cal_debugfs, "SND_SOC_CS35L56_SHARED");
+ void cs35l56_remove_cal_debugfs(struct cs35l56_base *cs35l56_base)
  {
-diff --git a/include/net/bond_options.h b/include/net/bond_options.h
-index e6eedf23aea1a3..52b966e927938a 100644
---- a/include/net/bond_options.h
-+++ b/include/net/bond_options.h
-@@ -79,6 +79,7 @@ enum {
- 	BOND_OPT_COUPLED_CONTROL,
- 	BOND_OPT_BROADCAST_NEIGH,
- 	BOND_OPT_ACTOR_PORT_PRIO,
-+	BOND_OPT_LACP_STRICT,
- 	BOND_OPT_LAST
- };
- 
-diff --git a/include/net/bonding.h b/include/net/bonding.h
-index edd1942dcd736d..2c54a36a8477b9 100644
---- a/include/net/bonding.h
-+++ b/include/net/bonding.h
-@@ -129,6 +129,7 @@ struct bond_params {
- 	int peer_notif_delay;
- 	int lacp_active;
- 	int lacp_fast;
-+	int lacp_strict;
- 	unsigned int min_links;
- 	int ad_select;
- 	char primary[IFNAMSIZ];
-diff --git a/include/uapi/linux/if_link.h b/include/uapi/linux/if_link.h
-index 79ce4bc24cba6b..9ef5784e78e830 100644
---- a/include/uapi/linux/if_link.h
-+++ b/include/uapi/linux/if_link.h
-@@ -1584,6 +1584,7 @@ enum {
- 	IFLA_BOND_NS_IP6_TARGET,
- 	IFLA_BOND_COUPLED_CONTROL,
- 	IFLA_BOND_BROADCAST_NEIGH,
-+	IFLA_BOND_LACP_STRICT,
- 	__IFLA_BOND_MAX,
- };
- 
-diff --git a/tools/include/uapi/linux/if_link.h b/tools/include/uapi/linux/if_link.h
-index 97a2d4411534ae..757ce5e9426e92 100644
---- a/tools/include/uapi/linux/if_link.h
-+++ b/tools/include/uapi/linux/if_link.h
-@@ -1527,6 +1527,7 @@ enum {
- 	IFLA_BOND_NS_IP6_TARGET,
- 	IFLA_BOND_COUPLED_CONTROL,
- 	IFLA_BOND_BROADCAST_NEIGH,
-+	IFLA_BOND_LACP_STRICT,
- 	__IFLA_BOND_MAX,
- };
+ 	debugfs_remove_recursive(cs35l56_base->debugfs);
++	cs35l56_base->debugfs = ERR_PTR(-ENOENT);
+ }
+ EXPORT_SYMBOL_NS_GPL(cs35l56_remove_cal_debugfs, "SND_SOC_CS35L56_SHARED");
  
 -- 
 2.53.0
