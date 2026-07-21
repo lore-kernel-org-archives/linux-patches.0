@@ -1,50 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECDA40315F;
-	Tue, 21 Jul 2026 17:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1A1403E88;
+	Tue, 21 Jul 2026 17:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654345; cv=none; b=mzEAJEKwhJdtdsyKRUZzqT5I6k1SGJMHcH+/og5FqdkuhXJQrEOT+Cni+wNg3hvdADBLIdqjqAMGJ+QH/yax+5VUkELWfT6IBmi+mLcAre7xPO9CDSQFf5DcLPpRHTMD79yeADAijPnNvuDNEyf7CZuiPLYR9nMYN+bnp4GcaVY=
+	t=1784654346; cv=none; b=ZbSagfWxWYyjhUb4TnKEnEqfWHZOUz6JEcq9fbT9/21e2EB6SGjraR4MHukUrt00pvqA5xp1nZHtVtpwIZ8kksQpRHoOBcMGt6mccwdu27vFI1wO+CG+XwJj2ZhIsNCbeifk+NakhlHq9Ow1QFTkKEDBpa48xc5seuZIAcrAaZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654345; c=relaxed/simple;
-	bh=ZidBhrI814+9ahJathURXh4B3P6o/gBCERg9x88xC3Q=;
+	s=arc-20240116; t=1784654346; c=relaxed/simple;
+	bh=S8np4x8do1pL5hC9r+TRZH+TswDJaIxUYMYrpQVU49s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VzCLsIN6Utsn+68TQf4kQe35rxEmUEP0pBtuH6CtvGSNzjb+yOEbf2Wuqsf+hmcYddXFMLjUEogC0lmRAcFuMN0IOOcTQlknl69EvA1ss6IY/zRH3tdV5Wul9YkeHJt/skO5CJnwgiTblWaLLMZNAXA2/OFTO+Z+77uA6efhWqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6nfyQ/c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YaLMUcRsn58dOL0NgnmlUlmlsM3+NZuEe86e3lakgxxrtGKaNE0JTbqdsQeIy+zDc5NSljFbkHkYqt0Vta6ElCYpHovAm3zDIZdN9gTZEE8X+gST/kBCj8GCpoTD72ERZzxOTADUiZ+/KM0JVRHvX9aNeBBWKk9HNKVVvcLosJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeI9OS8r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6nfyQ/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0D11F00A3E;
-	Tue, 21 Jul 2026 17:19:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeI9OS8r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60BA61F000E9;
+	Tue, 21 Jul 2026 17:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654341;
-	bh=gas2Q6wwtxXMLqDD+VNh+kch3MG8YR5PFpAkM1AXMks=;
+	s=korg; t=1784654343;
+	bh=d4qXHLsJW0Gcjl3b1wW3rdPEZlS8FFSObXwdRwsgu8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d6nfyQ/cLTUU8Lvbj2LFpZNFF6RmDAd9J/hnyPAZMTLSG8jqGKCWd7Myu6/Ru854u
-	 0ktaGHHQkabUs5/obwoO1iMN+e8L4JsNuILhMzqyz14si7Or1gewEP0CUAkMmUKI1l
-	 pJ7G2h4YAuENrgCphCk/uLSv3WkYONtwB1VwxBUo=
+	b=IeI9OS8r55GzhEBGtyGOvaDw73tmQT3+aOZfsp15RrtYNI5fNowoXTQZ/DPJB6mbR
+	 WWHZucWGcS7AwSEBCyrBIxl7KlDvDZLhsVv9BRC2pbIMiiSkAKPCC1yYaNiCPrZnQr
+	 wkGVkZrpg85FN2ObdXPH3fzTkHIpZAG/5acOz/Fo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Michal Hocko <mhocko@suse.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 1669/2077] mm/sparse-vmemmap: fix vmemmap accounting underflow
-Date: Tue, 21 Jul 2026 17:22:22 +0200
-Message-ID: <20260721152632.109693569@linuxfoundation.org>
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 7.1 1670/2077] MIPS: ip22-gio: fix gio device memory leak
+Date: Tue, 21 Jul 2026 17:22:23 +0200
+Message-ID: <20260721152632.132815722@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -63,137 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit c373f7f98e6ad591c85d40548cf8b6443be69311 upstream.
+commit 7de9a1b45f5a95b58145653c525c8fb80292d9ab upstream.
 
-Patch series "mm: Fix vmemmap optimization accounting and initialization",
-v8.
+The gio device release callback was never wired up so gio devices are
+not freed when the last reference is dropped.
 
-The series fixes several bugs in vmemmap optimization, mainly around
-incorrect page accounting and memmap initialization in DAX and memory
-hotplug paths.  It also fixes pageblock migratetype initialization and
-struct page initialization for ZONE_DEVICE compound pages.
-
-Patches 1-4 fix vmemmap accounting issues.  Patch 1 fixes an accounting
-underflow in the section activation failure path by moving vmemmap page
-accounting into the lower-level allocation and freeing helpers.  Patch 2
-fixes incorrect altmap passing in the memory hotplug error path.  Patch 3
-passes pgmap through memory deactivation paths so the teardown side can
-determine whether vmemmap optimization was in effect.  Patch 4 uses that
-information to account the optimized DAX vmemmap size correctly.
-
-Patches 5-6 fix initialization issues in mm/mm_init.  One makes sure all
-pageblocks in ZONE_DEVICE compound pages get their migratetype
-initialized.  The other fixes a case where DAX memory hotplug reuses an
-unoptimized early-section memmap while compound_nr_pages() still assumes
-vmemmap optimization, leaving tail struct pages uninitialized.
-
-
-This patch (of 6):
-
-In section_activate(), if populate_section_memmap() fails, the error
-handling path calls section_deactivate() to roll back the state.  This
-causes a vmemmap accounting imbalance.
-
-Since commit c3576889d87b ("mm: fix accounting of memmap pages"), memmap
-pages are accounted for only after populate_section_memmap() succeeds.
-However, the failure path unconditionally calls section_deactivate(),
-which decreases the vmemmap count.  Consequently, a failure in
-populate_section_memmap() leads to an accounting underflow, incorrectly
-reducing the system's tracked vmemmap usage.
-
-Fix this more thoroughly by moving all accounting calls into the lower
-level functions that actually perform the vmemmap allocation and freeing:
-
-  - populate_section_memmap() accounts for newly allocated vmemmap pages -
-depopulate_section_memmap() unaccounts when vmemmap is freed
-
-This ensures proper accounting in all code paths, including error handling
-and early section cases.
-
-Link: https://lore.kernel.org/20260428081855.1249045-1-songmuchun@bytedance.com
-Link: https://lore.kernel.org/20260428081855.1249045-2-songmuchun@bytedance.com
-Fixes: c3576889d87b ("mm: fix accounting of memmap pages")
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Liam R. Howlett <liam@infradead.org>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
-Cc: Joao Martins <joao.m.martins@oracle.com>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: e84de0c61905 ("MIPS: GIO bus support for SGI IP22/28")
+Cc: stable@vger.kernel.org	# 3.3
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/sparse-vmemmap.c |   20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ arch/mips/sgi-ip22/ip22-gio.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/sparse-vmemmap.c
-+++ b/mm/sparse-vmemmap.c
-@@ -656,7 +656,12 @@ static struct page * __meminit populate_
- 		unsigned long nr_pages, int nid, struct vmem_altmap *altmap,
- 		struct dev_pagemap *pgmap)
+--- a/arch/mips/sgi-ip22/ip22-gio.c
++++ b/arch/mips/sgi-ip22/ip22-gio.c
+@@ -101,6 +101,8 @@ int gio_device_register(struct gio_devic
  {
--	return __populate_section_memmap(pfn, nr_pages, nid, altmap, pgmap);
-+	struct page *page = __populate_section_memmap(pfn, nr_pages, nid, altmap,
-+						      pgmap);
+ 	giodev->dev.bus = &gio_bus_type;
+ 	giodev->dev.parent = &gio_bus;
++	giodev->dev.release = gio_release_dev;
 +
-+	memmap_pages_add(DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE));
-+
-+	return page;
+ 	return device_register(&giodev->dev);
  }
- 
- static void depopulate_section_memmap(unsigned long pfn, unsigned long nr_pages,
-@@ -665,13 +670,17 @@ static void depopulate_section_memmap(un
- 	unsigned long start = (unsigned long) pfn_to_page(pfn);
- 	unsigned long end = start + nr_pages * sizeof(struct page);
- 
-+	memmap_pages_add(-1L * (DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE)));
- 	vmemmap_free(start, end, altmap);
- }
-+
- static void free_map_bootmem(struct page *memmap)
- {
- 	unsigned long start = (unsigned long)memmap;
- 	unsigned long end = (unsigned long)(memmap + PAGES_PER_SECTION);
- 
-+	memmap_boot_pages_add(-1L * (DIV_ROUND_UP(PAGES_PER_SECTION * sizeof(struct page),
-+						  PAGE_SIZE)));
- 	vmemmap_free(start, end, NULL);
- }
- 
-@@ -774,14 +783,10 @@ static void section_deactivate(unsigned
- 	 * The memmap of early sections is always fully populated. See
- 	 * section_activate() and pfn_valid() .
- 	 */
--	if (!section_is_early) {
--		memmap_pages_add(-1L * (DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE)));
-+	if (!section_is_early)
- 		depopulate_section_memmap(pfn, nr_pages, altmap);
--	} else if (memmap) {
--		memmap_boot_pages_add(-1L * (DIV_ROUND_UP(nr_pages * sizeof(struct page),
--							  PAGE_SIZE)));
-+	else if (memmap)
- 		free_map_bootmem(memmap);
--	}
- 
- 	if (empty)
- 		ms->section_mem_map = (unsigned long)NULL;
-@@ -826,7 +831,6 @@ static struct page * __meminit section_a
- 		section_deactivate(pfn, nr_pages, altmap);
- 		return ERR_PTR(-ENOMEM);
- 	}
--	memmap_pages_add(DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE));
- 
- 	return memmap;
- }
+ EXPORT_SYMBOL_GPL(gio_device_register);
 
 
