@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D837B403AFB;
-	Tue, 21 Jul 2026 17:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2E2403AEA;
+	Tue, 21 Jul 2026 17:30:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655011; cv=none; b=P/ix9EiZF6H93WZf7Qijy2vK43VMhIvhBFKnaD/yHpvxrrs4VqwMcMLPTrO9KcBB0Cee8UH5wudPb8DWmYpUlIDTX29l2mpD2vAW6y1tPk+tAX3LpjDA01v9rImA8Sx6aAm62VdpikO7jJLgzh8p21AXK/cftk8bppXY6rfVhVc=
+	t=1784655015; cv=none; b=O+wbAM+gyeTcCPuN77Y4dMROPgh9Rl5SSJwYJh54F1mnvmtkMvz1tUnQHNc/nZ2fc7bd/k70CYU9Nk4G9le2Y9hEwpqdLkxxrGFwSmC5tlbaMvaeoeL+q2mT2udO3tVAnBHY/LqHaKr3690hH1rOxRNZIt+B2MWxJF0OYU1G4rU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655011; c=relaxed/simple;
-	bh=Wv6MGKxkWZetKFl5Mh6Gs+/z1KlUVEv7rrpS9aSLvN4=;
+	s=arc-20240116; t=1784655015; c=relaxed/simple;
+	bh=/+L64kwTZo5MRBWCN/Q9i2WWAWahgErt+fRZNfgNQec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xdev2l8p76Ppn9dtNJf7b6goX2BrQJF0wwkq6OhC4jtsiOzA21FHHnfo3nJGTSw2QXDuAg8vobILZ8LNJzGJ/AHkR3wW+ZzVx4ekPLlnwFri+fkO9tRJJUKZVjpmKR5ds8Mc3NXdFbST4B3gdq0xRI3Rk0hnum/3iw5uCHR91N8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qct+JQ5s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XWrEkw2J+AZD/v4StQkdiCQd8B+ByaImaaF/PJkovQZMGA0Ey2upbkZ5Qog2ZjDvilJamJwpgM3GwtfVi2Wgf2z3y8ibTPP9B0GmyLMNK+rO3L98uduAxyFmH4+aDBQBYouwcRsP2+Dw13tEdDxY4eVs/l0y9RQr9HTNLyBedag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVoOi2ES; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qct+JQ5s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A75F1F000E9;
-	Tue, 21 Jul 2026 17:30:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVoOi2ES"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36891F000E9;
+	Tue, 21 Jul 2026 17:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655010;
-	bh=jQ1ITtdprS8TQ4q2BJbciMdmEspTnWy3H9/qFMhcpSk=;
+	s=korg; t=1784655013;
+	bh=RVOs7tQCJLUgYmV70fjgEMOATySf0sauzioerUnJbr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qct+JQ5slok7oJa2w5+aPdnMrg8hQa/LteS/ht60N9dDUEKntHl9BDIb06gafbbtg
-	 flzW66hL7+9oAuMhUh111w7Kl9xoSplItPbvErU+YE8chu0hwnFMGsMDW33Cmb/cLg
-	 Rlsi1YK2K957y7l9evvqej2eGVL8QwSxsMPPnCK0=
+	b=mVoOi2ES64GbMkn9zdUsFLJ6bkIlPd1JaytiwL/NJ+XE42sX+UwHZ8F6DZa+O5kwo
+	 +pI/hJuTVnivNzZuzgqhlPHlKaZXwKDeYvQfEXD62kcNsaAosUQq9H3hxJSkNBEQWK
+	 MqeMRwH5ZdPkB8culG22RTm7AYY8W3aW+X3goz4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 1921/2077] octeontx2-af: Free BPID bitmap on setup failure
-Date: Tue, 21 Jul 2026 17:26:34 +0200
-Message-ID: <20260721152638.023546217@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>
+Subject: [PATCH 7.1 1922/2077] ieee802154: admin-gate legacy LLSEC dump operations
+Date: Tue, 21 Jul 2026 17:26:35 +0200
+Message-ID: <20260721152638.046429992@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,55 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 36323f54cd323122a1be89ab2c316a6e55a94e30 upstream.
+commit 9c1e0b6d49471a712511d23fc9d06901561135e8 upstream.
 
-nix_setup_bpids() allocates bp->bpids with rvu_alloc_bitmap(), which uses
-a plain kcalloc(). If any of the following devm_kcalloc() allocations for
-the BPID mapping arrays fails, the function returns without freeing the
-bitmap. Free the BPID bitmap before returning from those error paths.
+In net/ieee802154/netlink.c, the legacy IEEE802154_NL family ops table
+builds the LLSEC dump entries (LLSEC_LIST_KEY, LLSEC_LIST_DEV,
+LLSEC_LIST_DEVKEY, LLSEC_LIST_SECLEVEL) with IEEE802154_DUMP() which
+sets no .flags, so generic netlink runs them ungated. The modern
+nl802154 family admin-gates the equivalent reads via
+NL802154_CMD_GET_SEC_KEY and friends with .flags = GENL_ADMIN_PERM.
 
-Fixes: d6212d2e41a0 ("octeontx2-af: Create BPIDs free pool")
+Any local uid that can open AF_NETLINK / NETLINK_GENERIC can resolve
+the "802.15.4 MAC" family and dump LLSEC_LIST_KEY on any wpan netdev
+that has an LLSEC key installed; the dump handler writes the raw
+16-byte AES-128 key bytes (IEEE802154_ATTR_LLSEC_KEY_BYTES, copied
+verbatim from struct ieee802154_llsec_key.key) into the reply.
+Recovering the AES key compromises 802.15.4 LLSEC link confidentiality
+and authenticity, since LLSEC uses CCM* and the same key authenticates
+and encrypts frames.
+
+Impact: any local uid with no capabilities can read the raw 16-byte
+AES-128 LLSEC key from the kernel keytable on any wpan netdev that has
+an administrator-installed LLSEC key, by issuing an LLSEC_LIST_KEY
+dump on the legacy IEEE802154_NL generic-netlink family.
+
+Introduce IEEE802154_DUMP_PRIV() mirroring IEEE802154_DUMP() but
+setting .flags = GENL_ADMIN_PERM, and use it for the four LLSEC dump
+entries. LIST_PHY and LIST_IFACE retain IEEE802154_DUMP() because the
+modern nl802154 family exposes their equivalents to unprivileged
+readers by design (NL802154_CMD_GET_WPAN_PHY and
+NL802154_CMD_GET_INTERFACE carry "can be retrieved by unprivileged
+users" annotations).
+
+Fixes: 3e9c156e2c21 ("ieee802154: add netlink interfaces for llsec")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260623114316.2182271-1-haoxiang_li2024@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://lore.kernel.org/20260520141640.1149513-2-michael.bommarito@gmail.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/ieee802154/ieee802154.h |    8 ++++++++
+ net/ieee802154/netlink.c    |   16 ++++++++--------
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -527,19 +527,24 @@ static int nix_setup_bpids(struct rvu *r
- 	bp->fn_map = devm_kcalloc(rvu->dev, bp->bpids.max,
- 				  sizeof(u16), GFP_KERNEL);
- 	if (!bp->fn_map)
--		return -ENOMEM;
-+		goto free_bpids;
+--- a/net/ieee802154/ieee802154.h
++++ b/net/ieee802154/ieee802154.h
+@@ -23,6 +23,14 @@ void ieee802154_nl_exit(void);
+ 		.dumpit	= _dump,			\
+ 	}
  
- 	bp->intf_map = devm_kcalloc(rvu->dev, bp->bpids.max,
- 				    sizeof(u8), GFP_KERNEL);
- 	if (!bp->intf_map)
--		return -ENOMEM;
-+		goto free_bpids;
- 
- 	bp->ref_cnt = devm_kcalloc(rvu->dev, bp->bpids.max,
- 				   sizeof(u8), GFP_KERNEL);
- 	if (!bp->ref_cnt)
--		return -ENOMEM;
-+		goto free_bpids;
- 
- 	return 0;
++#define IEEE802154_DUMP_PRIV(_cmd, _func, _dump)	\
++	{						\
++		.cmd	= _cmd,				\
++		.doit	= _func,			\
++		.dumpit	= _dump,			\
++		.flags	= GENL_ADMIN_PERM,		\
++	}
 +
-+free_bpids:
-+	rvu_free_bitmap(&bp->bpids);
-+	bp->bpids.bmap = NULL;
-+	return -ENOMEM;
- }
+ struct genl_info;
  
- void rvu_nix_flr_free_bpids(struct rvu *rvu, u16 pcifunc)
+ struct sk_buff *ieee802154_nl_create(int flags, u8 req);
+--- a/net/ieee802154/netlink.c
++++ b/net/ieee802154/netlink.c
+@@ -98,20 +98,20 @@ static const struct genl_small_ops ieee8
+ 	IEEE802154_OP(IEEE802154_SET_MACPARAMS, ieee802154_set_macparams),
+ 	IEEE802154_OP(IEEE802154_LLSEC_GETPARAMS, ieee802154_llsec_getparams),
+ 	IEEE802154_OP(IEEE802154_LLSEC_SETPARAMS, ieee802154_llsec_setparams),
+-	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_KEY, NULL,
+-			ieee802154_llsec_dump_keys),
++	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_KEY, NULL,
++			     ieee802154_llsec_dump_keys),
+ 	IEEE802154_OP(IEEE802154_LLSEC_ADD_KEY, ieee802154_llsec_add_key),
+ 	IEEE802154_OP(IEEE802154_LLSEC_DEL_KEY, ieee802154_llsec_del_key),
+-	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_DEV, NULL,
+-			ieee802154_llsec_dump_devs),
++	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_DEV, NULL,
++			     ieee802154_llsec_dump_devs),
+ 	IEEE802154_OP(IEEE802154_LLSEC_ADD_DEV, ieee802154_llsec_add_dev),
+ 	IEEE802154_OP(IEEE802154_LLSEC_DEL_DEV, ieee802154_llsec_del_dev),
+-	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_DEVKEY, NULL,
+-			ieee802154_llsec_dump_devkeys),
++	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_DEVKEY, NULL,
++			     ieee802154_llsec_dump_devkeys),
+ 	IEEE802154_OP(IEEE802154_LLSEC_ADD_DEVKEY, ieee802154_llsec_add_devkey),
+ 	IEEE802154_OP(IEEE802154_LLSEC_DEL_DEVKEY, ieee802154_llsec_del_devkey),
+-	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_SECLEVEL, NULL,
+-			ieee802154_llsec_dump_seclevels),
++	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_SECLEVEL, NULL,
++			     ieee802154_llsec_dump_seclevels),
+ 	IEEE802154_OP(IEEE802154_LLSEC_ADD_SECLEVEL,
+ 		      ieee802154_llsec_add_seclevel),
+ 	IEEE802154_OP(IEEE802154_LLSEC_DEL_SECLEVEL,
 
 
