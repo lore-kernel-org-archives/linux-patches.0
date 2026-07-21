@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35380403AFB;
-	Tue, 21 Jul 2026 17:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEE03E7141;
+	Tue, 21 Jul 2026 17:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655231; cv=none; b=Zh3lecMXjD3lUe8oX/NZYL7tvMiWl2QhT/lhkdqvbO7Fj2dOjKuRfqD1D821gQuRYF8oBNnw8K+PnYgDwFW0S0ZcL2BDuczWNgLVeBYaJ3v0ERZFrtXDqj2xrLUd2A14XnqiMfLF5Qv5uzBcUtqUd1kvhhKmkmMOoKownbE86hA=
+	t=1784655234; cv=none; b=VnnuFhhPgVf5z30OD93FL2so3t1nWHG4jd2LzFvkyGZeGfWR9A4xA3oK1F8BxsSpzF0y75pks2CpSby5fD/zjdZulQZ2MTO6zgY9BCtjpjIhVMXBrBtycnW2M1XdMYFNJT9VtiDXdV39QLgSRze4m8LYme5WJjJijMo6ktReGF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655231; c=relaxed/simple;
-	bh=L3hou97p4E6vUW/DRDvehwjcNAxXcO3vYc11Xt/dvSw=;
+	s=arc-20240116; t=1784655234; c=relaxed/simple;
+	bh=M6QeezxVFi34pm1s36pm+5kNP+eCpr0Li/hebKfdFyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qDErIzjzZ6GsermjJG6Gb+6X48r8VbKU+R6EIpESIoTr9m/xMyt+wuc4FCe9OIxhb8FQqpFasHlmxAXIhrIaqbXHISlhK/W21QTT3RJdPFn+VTt/fkw71xoE0QU0LCyBCdzsJ38xS00IW81D5vP9M+StJ1ReOo0Q+ASpzlDxQVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4ffpF6C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VDvElxIVt4Ae6sqvpMlyqzlxbPuYayhIfeusPABCiXV3X3SKbtiXiRY/8HrXFPXnLo9nSKorUj1soyFymyKQxSvIUf6lcEu+uNHToJBQyAKb+0/uk2zE0NbY+twmVam2RYvu4r9iTyCgZE9xGbTfJ5390QllrbTSrBHy+RWKM/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGxIBn6r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4ffpF6C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D31F1F000E9;
-	Tue, 21 Jul 2026 17:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGxIBn6r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F9B1F000E9;
+	Tue, 21 Jul 2026 17:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655230;
-	bh=utR5mbpg7YRFkHjJAOLEo+OML5WPtU0X/WR76CSAUyQ=;
+	s=korg; t=1784655232;
+	bh=aMEygpz6ZOVHGW1kEj5nNIuwIBu0TUV3qtT7vSDNleA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H4ffpF6CE3npfH7KbzG7ekA1nk9ruV1z8K7XopjoJ1YPHDi0AFTGZ6U/rWxff64gc
-	 gyPZJDAOTD4buz1cCzZOQAJ+1U9P1+lzpVv1NDHRiNkHE5bjCYMVfEqSqzhyXNm2/H
-	 7NSjQrZfkbjpC6pOkCJ0ntFZy4KBog5Hqm0NmdqY=
+	b=GGxIBn6rWSnidD3myRtRgXRkscuIshMyY2yItTPpEOWQw3Nykos466drItauk4tK9
+	 e1D3NziCifa1J0y+riu/+TmkhKLzOuPGBvbnJTAdOdATk3L7FYhEg1mklcGdhq47s4
+	 KgO3rm+E41BvE0TF7v4OEodEq93p89bZB210Ef6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Kaixuan Li <kaixuan.li@ntu.edu.sg>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.1 2005/2077] wifi: mac80211: fix memory leak in ieee80211_register_hw()
-Date: Tue, 21 Jul 2026 17:27:58 +0200
-Message-ID: <20260721152640.001857113@linuxfoundation.org>
+Subject: [PATCH 7.1 2006/2077] wifi: brcmfmac: cyw: fix heap overflow on a short auth frame
+Date: Tue, 21 Jul 2026 17:27:59 +0200
+Message-ID: <20260721152640.025175280@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,56 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit 95fc02722edde02946d0d475221f2b2054d3d8ba upstream.
+commit 240c8d2c717b3f8153e7e877b22a82518d78dbdc upstream.
 
-If kmemdup() fails while copying supported band structures, the error
-path jumps to fail_rate. This skips rate_control_deinitialize() and
-leaks the initialized local->rate_ctrl.
+brcmf_notify_auth_frame_rx() takes the frame length from the firmware
+event and copies the frame body with the management header offset
+subtracted:
 
-Fix this by adding a fail_band label that shares the rate-control cleanup
-path before falling through to the remaining teardown.
+	u32 mgmt_frame_len = e->datalen - sizeof(struct brcmf_rx_mgmt_data);
+	...
+	memcpy(&mgmt_frame->u, frame,
+	       mgmt_frame_len - offsetof(struct ieee80211_mgmt, u));
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still present in
-v7.1-rc7.
+The only length check is e->datalen >= sizeof(*rxframe), so mgmt_frame_len
+can be anything from 0 up. offsetof(struct ieee80211_mgmt, u) is 24. When
+mgmt_frame_len is below that, the subtraction wraps as an unsigned value to
+a huge length. The memcpy then runs far past the kzalloc'd buffer. A
+malicious or malfunctioning AP can make the frame short during the
+external SAE auth exchange, so this is a remotely triggered heap overflow.
 
-An x86_64 allyesconfig build showed no new warnings. As we do not have a
-suitable mac80211 device/driver combination to test with, no runtime
-testing was able to be performed.
+Reject frames shorter than the management header offset before the copy.
 
-Fixes: 09b4a4faf9d0 ("mac80211: introduce capability flags for VHT EXT NSS support")
+Fixes: 66f909308a7c ("wifi: brcmfmac: cyw: support external SAE authentication in station mode")
+Link: https://lore.kernel.org/r/178214417708.2368577.16740907093694208834@maoyixie.com
 Cc: stable@vger.kernel.org
-Reviewed-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Link: https://patch.msgid.link/20260706143507.146131-1-dawei.feng@seu.edu.cn
+Co-developed-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+Signed-off-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260627131313.3878893-1-maoyixie.tju@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/main.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/mac80211/main.c
-+++ b/net/mac80211/main.c
-@@ -1599,7 +1599,7 @@ int ieee80211_register_hw(struct ieee802
- 		sband = kmemdup(sband, sizeof(*sband), GFP_KERNEL);
- 		if (!sband) {
- 			result = -ENOMEM;
--			goto fail_rate;
-+			goto fail_band;
- 		}
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+@@ -293,6 +293,12 @@ brcmf_notify_auth_frame_rx(struct brcmf_
+ 		return -EINVAL;
+ 	}
  
- 		wiphy_dbg(hw->wiphy, "copying sband (band %d) due to VHT EXT NSS BW flag\n",
-@@ -1675,6 +1675,7 @@ int ieee80211_register_hw(struct ieee802
- #endif
- 	wiphy_unregister(local->hw.wiphy);
-  fail_wiphy_register:
-+ fail_band:
- 	rtnl_lock();
- 	rate_control_deinitialize(local);
- 	ieee80211_remove_interfaces(local);
++	if (mgmt_frame_len < offsetof(struct ieee80211_mgmt, u)) {
++		bphy_err(drvr, "Event %s (%d) frame too small. Ignore\n",
++			 brcmf_fweh_event_name(e->event_code), e->event_code);
++		return -EINVAL;
++	}
++
+ 	wdev = &ifp->vif->wdev;
+ 	WARN_ON(!wdev);
+ 
 
 
