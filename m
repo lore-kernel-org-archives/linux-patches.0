@@ -1,47 +1,46 @@
-Received: from bregans-1.gladserv.net (bregans-1.gladserv.net [185.128.211.58])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D9B445AED;
-	Tue, 21 Jul 2026 22:21:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.211.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D839472F98;
+	Tue, 21 Jul 2026 22:21:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672485; cv=none; b=i+zo2rwZSN2lzZIdGZiQ/EJTRlt9q35vCiGn6P5viU/ZqGZf5w4aIpZRozTGoS4Vvnowh4g6pgg6AuQdwo4r/aBiHsevo3cOsJQRLHM5fi35hUOWgKV5Wb3OBZvDJyjNEtXX4MrppGXk0XaFBv9J5LQ7ry6qd2ypMYqYJ8kdBwg=
+	t=1784672487; cv=none; b=kBvooajn8erVEM6Ts/HLOen85NEmCRFUur0mDpoeb+pLcT1ZKACC3Z/YtAUld58jP+bLvCpycmltTKHWKxZbNSTnaMf6VrpgFjH7wPhV77p7CtbPdwAhHPp1gBr98AiBSi8oYPhr2pN0KXhqUR36iNZGNxxWjwFqRirpLsRYU9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672485; c=relaxed/simple;
-	bh=jfthUt3yl3hPYzX5TSi9ryPWAyqLls2KhbdlO9xwTn0=;
+	s=arc-20240116; t=1784672487; c=relaxed/simple;
+	bh=aTEW04Nid5CpY8Ch76cIJ8WQw6Kmpza/b8SCJZjFYoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=epgdJWXJDUqCco5Gn5f8m+tHXuJn3Pq2oq4Rgiz64iSg87pOQPosOF68ar0UDt+fKnUHDjHW/If9G5LyDHSFz4CdPfnQK88KbhV0J7XNztIzQYPLZKyfOJX1wYnqHXPLITcA3xoSs1VhpfN9hqW3P/O0kDPiclxq7PZZovrcKvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.211.58
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
-From: Brett A C Sheffield <bacs@librecast.net>
-To: gregkh@linuxfoundation.org
-Cc: stable@vger.kernel.org,
+	 MIME-Version; b=co/6+5JezWKfDEkiaRbtw4LonzpCd7NZagpIIz9iVugZyjPzop2vUDGReWfWjuzlU28AeJbeSS9TpO2RBRe3gO+xcY8gvK61J1OCgOitp4EkEWhwip3sj0vZTZjGeq+GBCcJ/N8MFDejj9jJn0RYAWwFyYVLUZmr4lYLwCnuHSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwwC0fX8; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwwC0fX8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E80B1F000E9;
+	Tue, 21 Jul 2026 22:21:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1784672486;
+	bh=BKMYoQ7krk8uH8k8Ne6EL3vShu11472kPA459DDiPK0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=MwwC0fX8oOgiyReLdgg0kenREyFAZEwrvNfpVxreW0mMSb/G2s2RWEYK7Sm6G3Npl
+	 LL5RRVjGuLYMss/BiVGEU0mSQo2nGGLt0FyGCL713et3JPzNafiJ/tRHS3vfa7XVQv
+	 ecTZ+6yEeZt8mHt8sHXoO3y4wjSZxvJ3EdOHP6Ko=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com,
-	Brett A C Sheffield <bacs@librecast.net>
-Subject: Re: [PATCH 6.6 0000/1266] 6.6.145-rc1 review
-Date: Tue, 21 Jul 2026 22:21:08 +0000
-Message-ID: <20260721222111.46884-1-bacs@librecast.net>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
-References: <20260721152441.786066624@linuxfoundation.org>
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	Kyungwook Boo <bookyungwook@gmail.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 644/843] spi: uniphier: Fix completion initialization order before devm_request_irq()
+Date: Tue, 21 Jul 2026 17:24:39 +0200
+Message-ID: <20260721152420.555113376@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
+References: <20260721152405.946368001@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,12 +49,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-# Librecast Test Results
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
-020/020 [ OK ] liblcrq
-010/010 [ OK ] libmld
-120/120 [ OK ] liblibrecast
+------------------
 
-CPU/kernel: Linux auntie 6.6.145-rc1-g5b1c90a58c89 #1 SMP PREEMPT_DYNAMIC Tue Jul 21 20:42:54 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-Tested-by: Brett A C Sheffield <bacs@librecast.net>
+commit f3ad1c87d8201e54b66bd6072442f0b5d5a308ee upstream.
+
+The driver calls devm_request_irq() before initializing the completion
+used by the interrupt handler. Because the interrupt may occur immediately
+after devm_request_irq(), the handler may execute before init_completion().
+
+This may result in calling complete() on an uninitialized completion,
+causing undefined behavior. This has been observed with KASAN.
+
+Fix this by initializing the completion before registering the IRQ.
+
+Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
+Fixes: 5ba155a4d4cc ("spi: add SPI controller driver for UniPhier SoC")
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://patch.msgid.link/20260616011223.201357-1-hayashi.kunihiko@socionext.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/spi/spi-uniphier.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+--- a/drivers/spi/spi-uniphier.c
++++ b/drivers/spi/spi-uniphier.c
+@@ -659,6 +659,8 @@ static int uniphier_spi_probe(struct pla
+ 	priv->master = master;
+ 	priv->is_save_param = false;
+ 
++	init_completion(&priv->xfer_done);
++
+ 	priv->base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+ 	if (IS_ERR(priv->base)) {
+ 		ret = PTR_ERR(priv->base);
+@@ -690,8 +692,6 @@ static int uniphier_spi_probe(struct pla
+ 		goto out_disable_clk;
+ 	}
+ 
+-	init_completion(&priv->xfer_done);
+-
+ 	clk_rate = clk_get_rate(priv->clk);
+ 
+ 	master->max_speed_hz = DIV_ROUND_UP(clk_rate, SSI_MIN_CLK_DIVIDER);
+
+
