@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCCA46EF6A;
-	Tue, 21 Jul 2026 18:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA4D38910F;
+	Tue, 21 Jul 2026 18:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659599; cv=none; b=h3H++L8aTbBD6rSidHU1R9kPKUOY5k+x4lUqABPFK9vs59OyOEw/tRJBugba7c9ntJULZR5cJgk/Ad7A/r2dkIhwxHYtPYQ4IyeUSzwDW1dzc/1bYEjM8LTPhtqWEt0neWFVy0drG75awVNosq1+uNx7Gy6aMVP3bsmI8IPTA24=
+	t=1784659602; cv=none; b=ib+XRyzKu8NVG/jofZfxPSOAbXmkXQ/CbwzOOX96SFMoyGva7/wP7RjeHwLDg9Yg4waJep/QzcNn086TCa6ZwPFa0An3Sr6IbkHbqtkavTewcjbusqZhvV5pbS2JkZKLvILlvtOl0sCiWtffU1r7SNr3onqYPkwCcQvROYD43r0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659599; c=relaxed/simple;
-	bh=Hv9CICndU/iIGDrhJ6VqGDLFxeqsdBwHvDJmijIEIM4=;
+	s=arc-20240116; t=1784659602; c=relaxed/simple;
+	bh=qI4nxyc4ChhnAQrV7Sgr7bx+5ihhGdrC11S8Si5q6QI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lm+z3L6JGr1XQR8aI4dG38/a88ExtJmYn3KxK2mPxn2kTog/ZfAA1yAaUaoChf9Z5tvJapQ/diu6j+zOI3rAKhjQx7cNuM3P/SzMTxijWS4RBjwuQwqdXWoDmo4Us4Tc6G1+WWqboNlm6mG73u/zO3ZU78KHZs4lGzA3mTxtoec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lceEOlTd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jwb4Emo00zXafNilLsIFoHceV6xe9En/WQt9I51WxaSF9OHxCJdBJCiB0o/oW06WtExjs0Z/1FbpFyg4o9rvNfk7C+OjQLrwz+WTZ4CtbglLpp/wyR+lOQe2ScitqZOsqNjvJDxRHuvWKPySE0RoWESK4UZuexrY0/zba19g8lU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o49atV4R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lceEOlTd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774011F000E9;
-	Tue, 21 Jul 2026 18:46:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o49atV4R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5841F000E9;
+	Tue, 21 Jul 2026 18:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659598;
-	bh=fta0P+IQ21X2KzbpUulSE8gQ4eVGSzSbCcreNawEE/k=;
+	s=korg; t=1784659600;
+	bh=A1dm0oBbZ5FlEFdG34RjRcUZhdTa2Fz5IQ6/loVopPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lceEOlTdWFeiEqKsCcDtuuAdtqHqHg56Z5IMKpWktH0S2EPTNUraHlAlWra7xcqix
-	 nY6sSF2RQKDC04I4j9OppvOsG+S7u4bGyVmNRlmd32XjmJEn4YrbimJjUQHCELkbuw
-	 otd6QCD2En7Un14F3kAVbEvB0aRLsNsZh8S//+f0=
+	b=o49atV4RAnPh36Deez0IxvreSBSjacy3caJKHrf+k9CalOHuR1Iu0L9qtP+T8toMC
+	 Mx7oHv/kv7b7EJEwdmtny9TSd8sbbvPISB2B4tYPYlnKtdE0uCoEtqLCiodBYnRvnp
+	 DRHrsOYxSgM+2bwalsFsD5a/zOIAiZQgo1XTl2Vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Chris Mason <clm@meta.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>,
+	Mauricio Faria de Oliveira <mfo@igalia.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1528/1611] binder: cache secctx size before release zeroes it
-Date: Tue, 21 Jul 2026 17:27:24 +0200
-Message-ID: <20260721152549.814920539@linuxfoundation.org>
+Subject: [PATCH 6.18 1575/1611] usb: atm: ueagle-atm: use dev_dbg() for device found message
+Date: Tue, 21 Jul 2026 17:28:11 +0200
+Message-ID: <20260721152550.895433341@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,102 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Mauricio Faria de Oliveira <mfo@igalia.com>
 
-[ Upstream commit b34826e55aad3520ec813f1f367c11b24b29dc9f ]
+[ Upstream commit 05c5075c3115010f97434c53d353d9a0d4b0e64e ]
 
-binder_transaction() bounds the scatter-gather buffer area with
-sg_buf_end_offset and subtracts the aligned LSM context size because
-the secctx is written at the tail of that area.  The subtraction reads
-lsmctx.len, but that field has already been cleared by the time the
-line runs:
+Convert dev_info() to dev_dbg().
 
-    security_secid_to_secctx(secid, &lsmctx)   /* lsmctx.len set */
-    lsmctx_aligned_size = ALIGN(lsmctx.len, sizeof(u64))
-    extra_buffers_size += lsmctx_aligned_size
-    ...
-    security_release_secctx(&lsmctx)            /* memset zeroes len */
-    ...
-    sg_buf_end_offset = sg_buf_offset + extra_buffers_size
-                        - ALIGN(lsmctx.len, sizeof(u64)) /* ALIGN(0,8) */
+Per 'Documentation/process/coding-style.rst':
 
-security_release_secctx() does memset(cp, 0, sizeof(*cp)), so lsmctx.len
-reads back as 0 and the subtraction contributes nothing, leaving
-sg_buf_end_offset too large by the aligned secctx size on every
-transaction to a txn_security_ctx node.
+  13) Printing kernel messages
 
-Each BINDER_TYPE_PTR object then derives buf_left = sg_buf_end_offset -
-sg_buf_offset as the sole upper bound on its copy, so the inflated end
-offset lets the copy run into the bytes that already hold the secctx.
+  ...  When drivers are working properly they are quiet,
+  so prefer to use dev_dbg/pr_debug unless something is wrong.
 
-The aligned size must therefore be cached before release rather than
-re-read from the now-cleared field.  Fix by caching it in
-lsmctx_aligned_size at function scope when it is first computed and
-subtracting lsmctx_aligned_size instead of re-reading lsmctx.len after
-release.  Reuse the same value for the earlier buf_offset computation.
+While in there, correct the verb form and add 'with' for clarity.
 
-Fixes: 6fba89813ccf ("lsm: ensure the correct LSM context releaser")
-Cc: stable <stable@kernel.org>
-Assisted-by: kres:claude-opus-4-8
-Signed-off-by: Chris Mason <clm@meta.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Acked-by: Carlos Llamas <cmllamas@google.com>
-Link: https://patch.msgid.link/20260603174506.1957278-1-clm@meta.com
+Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/all/2026051628-squatter-stature-c0e0@gregkh/
+Signed-off-by: Mauricio Faria de Oliveira <mfo@igalia.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260520-ueagle-atm-cleanup-v1-1-010c8bc7b214@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: e2674dfbed8a ("usb: atm: ueagle-atm: wait for pre-firmware load in .disconnect()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/usb/atm/ueagle-atm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -3097,6 +3097,7 @@ static void binder_transaction(struct bi
- 	int t_debug_id = atomic_inc_return(&binder_last_id);
- 	ktime_t t_start_time = ktime_get();
- 	struct lsm_context lsmctx = { };
-+	size_t lsmctx_aligned_size = 0;
- 	LIST_HEAD(sgc_head);
- 	LIST_HEAD(pf_head);
- 	const void __user *user_buffer = (const void __user *)
-@@ -3363,7 +3364,6 @@ static void binder_transaction(struct bi
+--- a/drivers/usb/atm/ueagle-atm.c
++++ b/drivers/usb/atm/ueagle-atm.c
+@@ -2589,7 +2589,7 @@ static int uea_probe(struct usb_interfac
+ 	int ret;
  
- 	if (target_node && target_node->txn_security_ctx) {
- 		u32 secid;
--		size_t added_size;
- 
- 		security_cred_getsecid(proc->cred, &secid);
- 		ret = security_secid_to_secctx(secid, &lsmctx);
-@@ -3375,9 +3375,9 @@ static void binder_transaction(struct bi
- 			return_error_line = __LINE__;
- 			goto err_get_secctx_failed;
- 		}
--		added_size = ALIGN(lsmctx.len, sizeof(u64));
--		extra_buffers_size += added_size;
--		if (extra_buffers_size < added_size) {
-+		lsmctx_aligned_size = ALIGN(lsmctx.len, sizeof(u64));
-+		extra_buffers_size += lsmctx_aligned_size;
-+		if (extra_buffers_size < lsmctx_aligned_size) {
- 			binder_txn_error("%d:%d integer overflow of extra_buffers_size\n",
- 				thread->pid, proc->pid);
- 			return_error = BR_FAILED_REPLY;
-@@ -3414,7 +3414,7 @@ static void binder_transaction(struct bi
- 		size_t buf_offset = ALIGN(tr->data_size, sizeof(void *)) +
- 				    ALIGN(tr->offsets_size, sizeof(void *)) +
- 				    ALIGN(extra_buffers_size, sizeof(void *)) -
--				    ALIGN(lsmctx.len, sizeof(u64));
-+				    lsmctx_aligned_size;
- 
- 		t->security_ctx = t->buffer->user_data + buf_offset;
- 		err = binder_alloc_copy_to_buffer(&target_proc->alloc,
-@@ -3469,7 +3469,7 @@ static void binder_transaction(struct bi
- 	off_end_offset = off_start_offset + tr->offsets_size;
- 	sg_buf_offset = ALIGN(off_end_offset, sizeof(void *));
- 	sg_buf_end_offset = sg_buf_offset + extra_buffers_size -
--		ALIGN(lsmctx.len, sizeof(u64));
-+		lsmctx_aligned_size;
- 	off_min = 0;
- 	for (buffer_offset = off_start_offset; buffer_offset < off_end_offset;
- 	     buffer_offset += sizeof(binder_size_t)) {
+ 	uea_enters(usb);
+-	uea_info(usb, "ADSL device founded vid (%#X) pid (%#X) Rev (%#X): %s\n",
++	uea_dbg(usb, "ADSL device found with vid (%#X) pid (%#X) Rev (%#X): %s\n",
+ 		le16_to_cpu(usb->descriptor.idVendor),
+ 		le16_to_cpu(usb->descriptor.idProduct),
+ 		le16_to_cpu(usb->descriptor.bcdDevice),
 
 
