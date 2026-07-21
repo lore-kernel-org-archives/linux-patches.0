@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBCE46EF9C;
-	Tue, 21 Jul 2026 20:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9BC471425;
+	Tue, 21 Jul 2026 20:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664511; cv=none; b=s7IGzQZqpaS6gImaqml2WYB4we6DGx+Qum9QKp6K+w5i1ZB1sh3tym14F8ZfZtg8Efdq0ZQrXK+meywpTmAoKw55/bCEsH/zi9vzztNQKLVKeSuMVoft2nKOJN5VL6eh4bddcu7cAhV78xSWMQ6CRU8YmUgTjqBCAORUF04k+3Q=
+	t=1784664513; cv=none; b=n+dXrcoy3kBNqe5lWpO0jh9WNtPlGcvT29jJxtHyk2zIIh9ELbsY+71ShTbKtJXlCfjFnLW2n5WhibqwVMl4Kvjd92WQRlAN2Big5polh03oatmpgASHHTWn71EkO3CBlL4MXjoy9QnNmj4BqVLbrOzotZqgHBQ9Qlp80AdwZkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664511; c=relaxed/simple;
-	bh=TYvnqe7g4+/WmuI/WAqzDLfOnh8Gvmd4mOCs8OnlMkQ=;
+	s=arc-20240116; t=1784664513; c=relaxed/simple;
+	bh=vHHiOh88gYNAKonTnmRLzlRBhAkojp2vVmTzWJzfu1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U6UWGhAcv4YSUjDQbt59eTroB+30REH3ZeNn0b7YjiU9oH8ZC6nusFTgzytmXT5AAezyHvCLkknl2JyN+mRjWLvgtDGiP4AKYcFu941K6APkKOn11L0pq5toFulGJqXEWMQKmeNAbv4VPz8kwl0ljj4LEuRBbuVWOnURi1OJoow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFWesvxg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RKOcrFuk6SPQXUL8cawt8SooadI0gl1K+XueBAM58gdiVW9JMu3pAC48XPQB2sgW8Ky0zu9+iiF78+2kjZWBIHKa8560NMhZASwBuYa5cDqqp9IRQcBo4mtk8tI1UnkcbDY3BwY/oCYZuJffwXSrixq737ZL4RfIV/zInrH1ulw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QiVS1lqI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFWesvxg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C342C1F000E9;
-	Tue, 21 Jul 2026 20:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QiVS1lqI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A3E11F000E9;
+	Tue, 21 Jul 2026 20:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664509;
-	bh=75vWgFimrTYTifNJvj6TP7tY9pSIsm9dqUwI2dScoqE=;
+	s=korg; t=1784664511;
+	bh=E35nhVgCNc2JM5CAG16wY21nmVOetbBGWx7rzLX8cIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TFWesvxgSQkLVQNAOUi+wRNZpxFm4eL937al3MMyQIv4DZXtTcy5AW3u5cTKZBXXn
-	 i1KXZGriuDqomLh+Y5xyyjbVJNcz+7W7UFU2ZnkYeU7jzkGShdiNzEWDpAhym7SRpC
-	 iVTgAuV1kD0Ulk1V9+PyjbPVQOPVjeXhDnRYs4xY=
+	b=QiVS1lqIr+i887CF1NGM/djhYHJY6ewkWnq2+ip6QhwTxQRw/xTs7SKyupH7u6JNi
+	 dpjuvLYNq1DaWjkkiFZd8J8rJet4iSOXIPIb31Io2pNNHKQDz91Dzi7ewjU4R7XJS5
+	 5in9nhZf1SFEnITbiH8VkQiCbbW/fOIVz2I3pqcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	syzbot+6df204b70bf3261691c5@syzkaller.appspotmail.com,
+	syzbot+e76bf3d19b85350571ac@syzkaller.appspotmail.com,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1227/1276] exfat: rename argument name for exfat_move_file and exfat_rename_file
-Date: Tue, 21 Jul 2026 17:27:50 +0200
-Message-ID: <20260721152513.538677220@linuxfoundation.org>
+Subject: [PATCH 6.12 1201/1276] hfs/hfsplus: fix u32 overflow in check_and_correct_requested_length
+Date: Tue, 21 Jul 2026 17:27:24 +0200
+Message-ID: <20260721152512.940185107@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,124 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 06a2b0b3b490a6103376652c01c3ac6e8e22e654 ]
+[ Upstream commit 966cb76fb2857a4242cab6ea2ea17acf818a3da7 ]
 
-In this exfat implementation, the relationship between inode and ei
-is ei=EXFAT_I(inode). However, in the arguments of exfat_move_file()
-and exfat_rename_file(), argument 'inode' indicates the parent
-directory, but argument 'ei' indicates the target file to be renamed.
-They do not have the above relationship, which is not friendly to code
-readers.
+check_and_correct_requested_length() compares (off + len) against
+node_size using u32 arithmetic.  When the caller passes a large len
+value (e.g. from an underflowed subtraction in hfs_brec_remove()),
+off + len can wrap past 2^32 and produce a small result, causing the
+bounds check to pass when it should fail.
 
-So this commit renames 'inode' to 'parent_inode', making the argument
-name match its role.
+For example, with off=14 and len=0xFFFFFFF2 (underflowed from
+data_off - keyoffset - size in hfs_brec_remove), off + len wraps to 6,
+which is less than a typical node_size of 512, so the check passes and
+the subsequent memmove reads ~4GB past the node buffer.
 
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Stable-dep-of: 942296784b2a ("exfat: preserve benign secondary entries during rename and move")
+Fix this by widening the addition to u64 before comparing against
+node_size.  This prevents the u32 wrap while keeping the logic
+straightforward.
+
+Reported-by: syzbot+6df204b70bf3261691c5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6df204b70bf3261691c5
+Tested-by: syzbot+6df204b70bf3261691c5@syzkaller.appspotmail.com
+Reported-by: syzbot+e76bf3d19b85350571ac@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e76bf3d19b85350571ac
+Tested-by: syzbot+e76bf3d19b85350571ac@syzkaller.appspotmail.com
+Fixes: a431930c9bac ("hfs: fix slab-out-of-bounds in hfs_bnode_read()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20260505111300.3592757-2-tristmd@gmail.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/namei.c |   24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ fs/hfs/bnode.c          |    2 +-
+ fs/hfsplus/hfsplus_fs.h |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/exfat/namei.c
-+++ b/fs/exfat/namei.c
-@@ -1009,15 +1009,15 @@ unlock:
- 	return err;
- }
+--- a/fs/hfs/bnode.c
++++ b/fs/hfs/bnode.c
+@@ -41,7 +41,7 @@ u32 check_and_correct_requested_length(s
  
--static int exfat_rename_file(struct inode *inode, struct exfat_chain *p_dir,
-+static int exfat_rename_file(struct inode *parent_inode, struct exfat_chain *p_dir,
- 		int oldentry, struct exfat_uni_name *p_uniname,
- 		struct exfat_inode_info *ei)
- {
- 	int ret, num_new_entries;
- 	struct exfat_dentry *epold, *epnew;
--	struct super_block *sb = inode->i_sb;
-+	struct super_block *sb = parent_inode->i_sb;
- 	struct exfat_entry_set_cache old_es, new_es;
--	int sync = IS_DIRSYNC(inode);
-+	int sync = IS_DIRSYNC(parent_inode);
+ 	node_size = node->tree->node_size;
  
- 	if (unlikely(exfat_forced_shutdown(sb)))
- 		return -EIO;
-@@ -1037,7 +1037,7 @@ static int exfat_rename_file(struct inod
- 	if (old_es.num_entries < num_new_entries) {
- 		int newentry;
+-	if ((off + len) > node_size) {
++	if ((u64)off + len > node_size) {
+ 		u32 new_len = node_size - off;
  
--		newentry = exfat_find_empty_entry(inode, p_dir, num_new_entries,
-+		newentry = exfat_find_empty_entry(parent_inode, p_dir, num_new_entries,
- 				&new_es);
- 		if (newentry < 0) {
- 			ret = newentry; /* -EIO or -ENOSPC */
-@@ -1061,7 +1061,7 @@ static int exfat_rename_file(struct inod
- 		if (ret)
- 			goto put_old_es;
+ 		pr_err("requested length has been corrected: "
+--- a/fs/hfsplus/hfsplus_fs.h
++++ b/fs/hfsplus/hfsplus_fs.h
+@@ -614,7 +614,7 @@ u32 check_and_correct_requested_length(s
  
--		exfat_remove_entries(inode, &old_es, ES_IDX_FILE);
-+		exfat_remove_entries(parent_inode, &old_es, ES_IDX_FILE);
- 		ei->dir = *p_dir;
- 		ei->entry = newentry;
- 	} else {
-@@ -1070,7 +1070,7 @@ static int exfat_rename_file(struct inod
- 			ei->attr |= EXFAT_ATTR_ARCHIVE;
- 		}
+ 	node_size = node->tree->node_size;
  
--		exfat_remove_entries(inode, &old_es, ES_IDX_FIRST_FILENAME + 1);
-+		exfat_remove_entries(parent_inode, &old_es, ES_IDX_FIRST_FILENAME + 1);
- 		exfat_init_ext_entry(&old_es, num_new_entries, p_uniname);
- 	}
- 	return exfat_put_dentry_set(&old_es, sync);
-@@ -1080,13 +1080,13 @@ put_old_es:
- 	return ret;
- }
+-	if ((off + len) > node_size) {
++	if ((u64)off + len > node_size) {
+ 		u32 new_len = node_size - off;
  
--static int exfat_move_file(struct inode *inode, struct exfat_chain *p_olddir,
-+static int exfat_move_file(struct inode *parent_inode, struct exfat_chain *p_olddir,
- 		int oldentry, struct exfat_chain *p_newdir,
- 		struct exfat_uni_name *p_uniname, struct exfat_inode_info *ei)
- {
- 	int ret, newentry, num_new_entries;
- 	struct exfat_dentry *epmov, *epnew;
--	struct super_block *sb = inode->i_sb;
-+	struct super_block *sb = parent_inode->i_sb;
- 	struct exfat_entry_set_cache mov_es, new_es;
- 
- 	num_new_entries = exfat_calc_num_entries(p_uniname);
-@@ -1098,7 +1098,7 @@ static int exfat_move_file(struct inode
- 	if (ret)
- 		return -EIO;
- 
--	newentry = exfat_find_empty_entry(inode, p_newdir, num_new_entries,
-+	newentry = exfat_find_empty_entry(parent_inode, p_newdir, num_new_entries,
- 			&new_es);
- 	if (newentry < 0) {
- 		ret = newentry; /* -EIO or -ENOSPC */
-@@ -1118,18 +1118,18 @@ static int exfat_move_file(struct inode
- 	*epnew = *epmov;
- 
- 	exfat_init_ext_entry(&new_es, num_new_entries, p_uniname);
--	exfat_remove_entries(inode, &mov_es, ES_IDX_FILE);
-+	exfat_remove_entries(parent_inode, &mov_es, ES_IDX_FILE);
- 
- 	exfat_chain_set(&ei->dir, p_newdir->dir, p_newdir->size,
- 		p_newdir->flags);
- 
- 	ei->entry = newentry;
- 
--	ret = exfat_put_dentry_set(&new_es, IS_DIRSYNC(inode));
-+	ret = exfat_put_dentry_set(&new_es, IS_DIRSYNC(parent_inode));
- 	if (ret)
- 		goto put_mov_es;
- 
--	return exfat_put_dentry_set(&mov_es, IS_DIRSYNC(inode));
-+	return exfat_put_dentry_set(&mov_es, IS_DIRSYNC(parent_inode));
- 
- put_mov_es:
- 	exfat_put_dentry_set(&mov_es, false);
+ 		pr_err("requested length has been corrected: "
 
 
