@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49CC2471414;
-	Tue, 21 Jul 2026 20:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37D4434E2C;
+	Tue, 21 Jul 2026 20:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664618; cv=none; b=uFvF85ZToeyOtk24ShkIjIgOsoO2qnObSF667ICa1j7XKgTEINX0+m2A/dRIT6G2TjqnGIna+Q/8R2AUMA7Jw+wzHJkEUQvUOiFfpClieFUzv2LV9UJREKPKyyRxCRrUYwr8SeUEVI0a+BI5z1ifHwWVDsEbiMTQss+ZwvHxGno=
+	t=1784664621; cv=none; b=tUp1abCzZ2afDnfZkA76jIMUIQUmAw/3CaQ+c7CN7RrkDmDT3m0Z1AMibYfjREJHTOiv2muSd0DMRupTQcSKPuuwYOWvospIe0g8I08KAVsMCfghTfLdUODKDpdj3bQBRNuq8LcrZiCHSEz3tDFYEc63Gx5L5u29zo9zndUkFBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664618; c=relaxed/simple;
-	bh=eIDzOL6rhKwJIokxyN4gYh7GGmtdSXpNuBWhASH60lw=;
+	s=arc-20240116; t=1784664621; c=relaxed/simple;
+	bh=ars0G0h1IldXweqgEZ5c0pyvzXcqUS6ciM+Yh8/Vw6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d9yBNqpvfpDT5/gvKRv7CdLosF89POYVo6UGtcx41VFE8KEkA2sXHxZjU7sEh2UrIfpueh44lIIDouV01MyBntpdVPe8ow7kXyDCGaIInMo4RlJmdKz0qR2WN+PESmJ9kfAM5KofwmGxF+W1fJZZo5uXqEzJuqFnqh3NL78Tu6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdEkRM5q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KpHus+hghSQScu6VUyq2/t3a9OJnt+1pyrfuquJFrKcNCI60sidH8vo+5YYz6NoZ2t+qLJ5ZcAi3dMghMy0tki4KQnBq305f+1kHDTwYLeU8VQC+X8z6Ef2SMq90GVGZ03XB63C13EXDDm54c9tFjEKNuULpz5OAQti2kx/mKzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6JQOaD8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdEkRM5q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4931F00A3A;
-	Tue, 21 Jul 2026 20:10:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6JQOaD8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 551E91F000E9;
+	Tue, 21 Jul 2026 20:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664617;
-	bh=U+H+vQmv0WdIKX686lTf+t6TmB2OuTupo3Egk1olwyo=;
+	s=korg; t=1784664619;
+	bh=aNie2vYY7XxRZFOs0IjK4SFTmzwBWmzb+wxA2i9zWhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fdEkRM5qrtLYuZdKj1RPzT32cXgctY5LdNZgfSXWf6DspkPGcw+epCwYQTRjy2hjw
-	 Gx8njy6e9/3fj3shy+OhEA1Hf3t8Fi4N1ZGwJlHzz+0EvDKtZCST3Qmq0DrsjmZ8eJ
-	 F77Q2EbjYEiAOyAdRXPuyaDE8zy3afDYgXeT2Bb8=
+	b=O6JQOaD8elwTvebc3ZeRLqvNCriZqMY84oAFf/XQpQxYdP+2b9WgVtTbEX1Szmuc8
+	 FJQ8fFFBYsAoEnaTdPRFFQ6qHKbsCc0rlnKXxdZ9NsYzYRgjOvFEp1bsXtlb8vlYBf
+	 XAHztH09D6pZSnRVByBDTLdK/vlXbd9Pb3y373LQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mohammad Heib <mheib@redhat.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.12 1268/1276] i40e: drop udp_tunnel_get_rx_info() call from i40e_open()
-Date: Tue, 21 Jul 2026 17:28:31 +0200
-Message-ID: <20260721152514.464403866@linuxfoundation.org>
+Subject: [PATCH 6.12 1269/1276] ice: drop udp_tunnel_get_rx_info() call from ndo_open()
+Date: Tue, 21 Jul 2026 17:28:32 +0200
+Message-ID: <20260721152514.488392148@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -55,9 +54,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Mohammad Heib <mheib@redhat.com>
 
-commit 40857194956dcaf3d2b66d6bd113d844c93bef54 upstream.
+commit 234e615bfece9e3e91c50fe49ab9e68ee37c791a upstream.
 
-The i40e driver calls udp_tunnel_get_rx_info() during i40e_open().
+The ice driver calls udp_tunnel_get_rx_info() during ice_open_internal().
 This is redundant because UDP tunnel RX offload state is preserved
 across device down/up cycles. The udp_tunnel core handles
 synchronization automatically when required.
@@ -67,43 +66,44 @@ querying RX info while holding the udp_tunnel lock. Calling it
 directly from the ndo_open path violates this requirement,
 triggering the following lockdep warning:
 
-  Call Trace:
-   <TASK>
-   ? __udp_tunnel_nic_assert_locked+0x39/0x40 [udp_tunnel]
-   i40e_open+0x135/0x14f [i40e]
-   __dev_open+0x121/0x2e0
-   __dev_change_flags+0x227/0x270
-   dev_change_flags+0x3d/0xb0
-   devinet_ioctl+0x56f/0x860
-   sock_do_ioctl+0x7b/0x130
-   __x64_sys_ioctl+0x91/0xd0
-   do_syscall_64+0x90/0x170
-   ...
-   </TASK>
+Call Trace:
+  <TASK>
+  ice_open_internal+0x253/0x350 [ice]
+  __udp_tunnel_nic_assert_locked+0x86/0xb0 [udp_tunnel]
+  __dev_open+0x2f5/0x880
+  __dev_change_flags+0x44c/0x660
+  netif_change_flags+0x80/0x160
+  devinet_ioctl+0xd21/0x15f0
+  inet_ioctl+0x311/0x350
+  sock_ioctl+0x114/0x220
+  __x64_sys_ioctl+0x131/0x1a0
+  ...
+  </TASK>
 
 Remove the redundant and unsafe call to udp_tunnel_get_rx_info() from
-i40e_open() resolve the locking violation.
+ice_open_internal() to resolve the locking violation
 
 Fixes: 1ead7501094c ("udp_tunnel: remove rtnl_lock dependency")
 Signed-off-by: Mohammad Heib <mheib@redhat.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_main.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -9110,7 +9110,6 @@ int i40e_open(struct net_device *netdev)
- 						       TCP_FLAG_FIN |
- 						       TCP_FLAG_CWR) >> 16);
- 	wr32(&pf->hw, I40E_GLLAN_TSOMSK_L, be32_to_cpu(TCP_FLAG_CWR) >> 16);
--	udp_tunnel_get_rx_info(netdev);
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -9574,9 +9574,6 @@ int ice_open_internal(struct net_device
+ 		netdev_err(netdev, "Failed to open VSI 0x%04X on switch 0x%04X\n",
+ 			   vsi->vsi_num, vsi->vsw->sw_id);
  
- 	return 0;
+-	/* Update existing tunnels information */
+-	udp_tunnel_get_rx_info(netdev);
+-
+ 	return err;
  }
+ 
 
 
