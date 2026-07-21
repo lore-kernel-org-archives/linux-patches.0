@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E239A3C9ED9;
-	Tue, 21 Jul 2026 18:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838DD2DBF75;
+	Tue, 21 Jul 2026 18:51:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659907; cv=none; b=ndjtpX7qXGsht/gtRaSCukSq+997BAryBmx2ZG4qO6cD1NqqSLVZiGBMBs9SB4ZJf/KCxrHQwLn+D39xsMLUyMCxHdx/quHOh2/Lc1d0dTQGgKpdGbaI+ZQMS/oFyMVGCgzG543YDSVkEb0adJk7642B8kfDMWBU0s+Owe4OXk0=
+	t=1784659909; cv=none; b=iC3jrq3jTmXtB7U9c8CDZmOfIm6Mp83qFTrUpLiMOW8ieb9m4EiktqV4i4FFvwGkyNI1XHF6feqgv4cqGjXJBvCtdLzgF3cqKwnTPB/ljubH0M+g0ecsHSgOrGNBFolSaMofM5M2e6m+S2pDmu6gBH4/YR777sGfut2mRGqsT7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659907; c=relaxed/simple;
-	bh=Kc96MytVSOHX+LVjdUqqHlqX0jYEn3B5FEytTP2rVEg=;
+	s=arc-20240116; t=1784659909; c=relaxed/simple;
+	bh=nhkcZYjtFzee47wNsLFqd3V73uuLEFtLj+WAK5np9Is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rfI6cX/iTXv4DgUStDVh/ShFoewu8FTxGkHNd8HaCAgol8GjhQy/6gwhI0SSKkVs/ImRCvnUHgHb/uSIuKGKMR6uPjWbpDjfdKTGps3MO2+v94vEcGaFB3mjSsByLv/fnRqYqPJzDYv1kf2oM+HkUT4Kte07MhQhFFCc8HsdmhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THy9KO6V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NfBdMhrAoUyKP7f8OM+oiVqq2R2I/wL46WHLtpvAZtPuEP5Yadx8KRowFHM8fwYq5NN3jU6ErPXR/mZlrzVz+LcCmFdy8FieSUQlaE2xvRiQkpP26c8aQVfGa7cBCKgD6xqRlOt9AWBKtuB4LkjdtIqp7vWOnwE58vsnR7xiJZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQnjkIQy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THy9KO6V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A191F00A3A;
-	Tue, 21 Jul 2026 18:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQnjkIQy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EADD11F000E9;
+	Tue, 21 Jul 2026 18:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659905;
-	bh=mFieBKsLpdguzy3PzCf3WTkAer6G/CYoD1sgSVJ3cMo=;
+	s=korg; t=1784659908;
+	bh=5iZr5vdTsEetZwe/jidW7IOGl+Fy9ZgFQf70S4qNfSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=THy9KO6VSk4cYclmcb2cbuV0H+4elT4z3kypNSsqY1CKCZBt1yMppKzHxtkiHwz0i
-	 SW1NQ/pGOrkscTnb1AJYFcWDi5g8xd6CO+TGKWrgnPk/VmUDkUoB/C1a4uvk9WLkI3
-	 lM9EjYo7Pi6G0IWjCgRyHO7f4sma2kCkoe7DKTnM=
+	b=fQnjkIQyfxOOsrLPXI5UO+/6OUEGCj36FxX7/TfeDVIgsfIPxBIGQ6xvZeWO4oBEH
+	 6WuhRj4uruu/SW9yx38RWTa5poYuPkodl1/7lJ74FYAlqyPI201LH/KugqRLDhKEHT
+	 /BRU6J+pYh8V+pYrQl5ASbbL/fnjFRpJuS0zIgJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henrique Carvalho <henrique.carvalho@suse.com>,
+	Jian Zhang <zhangjian496@huawei.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0776/2077] smb: client: fix conflicting option validation for new mount API
-Date: Tue, 21 Jul 2026 17:07:29 +0200
-Message-ID: <20260721152611.101139514@linuxfoundation.org>
+Subject: [PATCH 7.1 0777/2077] cifs: remove all cifs files before kill super
+Date: Tue, 21 Jul 2026 17:07:30 +0200
+Message-ID: <20260721152611.124874436@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,188 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
+From: Jian Zhang <zhangjian496@huawei.com>
 
-[ Upstream commit 10ce03879f935f756bc8a386b3fa3a1c7264d950 ]
+[ Upstream commit 6d9a4aaaa8b2612b5ef9d581e2f286a458b71ee1 ]
 
-Apply conflicting option validation consistently across all the new
-mount API paths, for both mount and remount.
+Cifs files may be put into fileinfo_put_wq during umounting cifs.
+After umount done, cifsFileInfo_put_final is called, which cause
+following BUG:
 
-Some checks were only applied during initial mount validation, while
-others were handled during option parsing, causing mount and
-remount/reconfigure to behave differently.
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+...
+[  134.222152]  list_lru_add+0x64/0x1a0
+[  134.222399]  ? cifs_put_tcon+0x171/0x340 [cifs]
+[  134.222772]  d_lru_add+0x44/0x60
+[  134.222997]  dput+0x1fc/0x210
+[  134.223213]  cifsFileInfo_put_final+0x11a/0x140 [cifs]
+[  134.223576]  process_one_work+0x17c/0x320
+[  134.223843]  worker_thread+0x188/0x280
+[  134.224084]  ? __pfx_worker_thread+0x10/0x10
+[  134.224366]  kthread+0xcc/0x100
+[  134.224576]  ? __pfx_kthread+0x10/0x10
+[  134.224827]  ret_from_fork+0x30/0x50
+[  134.225063]  ? __pfx_kthread+0x10/0x10
+[  134.225328]  ret_from_fork_asm+0x1b/0x30
 
-Move the conflicting option checks into smb3_handle_conflicting_options()
-and call it from the common validation paths, including for
-multichannel/max_channels handling.
+This can be reproduce by following:
+unshare -n bash -c "
+mkdir -p ${CIFS_MNT}
+ip netns attach root 1
+ip link add eth0 type veth peer veth0 netns root
+ip link set eth0 up
+ip -n root link set veth0 up
+ip addr add 192.168.0.2/24 dev eth0
+ip -n root addr add 192.168.0.1/24 dev veth0
+ip route add default via 192.168.0.1 dev eth0
+ip netns exec root sysctl net.ipv4.ip_forward=1
+ip netns exec root iptables -t nat -A POSTROUTING -s 192.168.0.2 -o
+${DEV} -j MASQUERADE
+mount -t cifs ${CIFS_PATH} ${CIFS_MNT} -o
+vers=3.0,sec=ntlmssp,credentials=${CIFS_CRED},rsize=65536,wsize=65536,cache=none,echo_interval=1
+touch ${CIFS_MNT}/a.txt
+ip netns exec root iptables -t nat -D POSTROUTING -s 192.168.0.2 -o
+${DEV} -j MASQUERADE
+"
+umount ${CIFS_MNT}
 
-Fixes: 24e0a1eff9e2 ("cifs: switch to new mount api")
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
+Fixes: 340cea84f691 ("cifs: open files should not hold ref on superblock")
+
+Signed-off-by: Jian Zhang <zhangjian496@huawei.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/fs_context.c | 102 +++++++++++++++++++------------------
- 1 file changed, 53 insertions(+), 49 deletions(-)
+ fs/smb/client/connect.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
-index 2f86158f85d7b6..fd4b13cd654d90 100644
---- a/fs/smb/client/fs_context.c
-+++ b/fs/smb/client/fs_context.c
-@@ -693,6 +693,41 @@ static int smb3_handle_conflicting_options(struct fs_context *fc)
- {
- 	struct smb3_fs_context *ctx = smb3_fc2context(fc);
- 
-+	if (ctx->rdma && ctx->vals->protocol_id < SMB30_PROT_ID) {
-+		cifs_errorf(fc, "SMB Direct requires Version >=3.0\n");
-+		return -EOPNOTSUPP;
-+	}
-+
-+	if (ctx->multiuser && !IS_ENABLED(CONFIG_KEYS)) {
-+		cifs_errorf(fc, "Multiuser mounts require kernels with CONFIG_KEYS enabled\n");
-+		return -EOPNOTSUPP;
-+	}
-+
-+	if (ctx->multiuser && ctx->upcall_target == UPTARGET_MOUNT) {
-+		cifs_errorf(fc, "multiuser mount option not supported with upcalltarget set as 'mount'\n");
-+		return -EINVAL;
-+	}
-+
-+	if (ctx->uid_specified && !ctx->forceuid_specified) {
-+		ctx->override_uid = 1;
-+		pr_notice("enabling forceuid mount option implicitly because uid= option is specified\n");
-+	}
-+
-+	if (ctx->gid_specified && !ctx->forcegid_specified) {
-+		ctx->override_gid = 1;
-+		pr_notice("enabling forcegid mount option implicitly because gid= option is specified\n");
-+	}
-+
-+	if (ctx->override_uid && !ctx->uid_specified) {
-+		ctx->override_uid = 0;
-+		pr_notice("ignoring forceuid mount option specified with no uid= option\n");
-+	}
-+
-+	if (ctx->override_gid && !ctx->gid_specified) {
-+		ctx->override_gid = 0;
-+		pr_notice("ignoring forcegid mount option specified with no gid= option\n");
-+	}
-+
- 	if (ctx->multichannel_specified) {
- 		if (ctx->multichannel) {
- 			if (!ctx->max_channels_specified) {
-@@ -711,19 +746,14 @@ static int smb3_handle_conflicting_options(struct fs_context *fc)
- 				return -EINVAL;
- 			}
- 		}
--	} else {
--		if (ctx->max_channels_specified) {
--			if (ctx->max_channels > 1)
--				ctx->multichannel = true;
--			else
--				ctx->multichannel = false;
--		} else {
-+	} else if (ctx->max_channels_specified) {
-+		if (ctx->max_channels > 1)
-+			ctx->multichannel = true;
-+		else
- 			ctx->multichannel = false;
--			ctx->max_channels = 1;
--		}
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index dcde25da468dfb..cbeb5637eeb925 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -3996,6 +3996,9 @@ cifs_umount(struct cifs_sb_info *cifs_sb)
  	}
+ 	spin_unlock(&cifs_sb->tlink_tree_lock);
  
--	//resetting default values as remount doesn't initialize fs_context again
-+	/* clear parse-time latches so they don't persist across remounts */
- 	ctx->multichannel_specified = false;
- 	ctx->max_channels_specified = false;
- 
-@@ -804,28 +834,23 @@ static int smb3_fs_context_parse_monolithic(struct fs_context *fc,
- 		if (ret < 0)
- 			break;
- 	}
--	return ret ?: smb3_handle_conflicting_options(fc);
-+	return ret;
++	flush_workqueue(serverclose_wq);
++	flush_workqueue(fileinfo_put_wq);
++
+ 	kfree(cifs_sb->prepath);
+ 	call_rcu(&cifs_sb->rcu, delayed_free);
  }
- 
- /*
-- * Validate the preparsed information in the config.
-+ * smb3_fs_context_validate - check initial-mount-only constraints:
-+ * UNC presence, address resolution, dialect warnings
-+ *
-+ * @fc: generic mount context
-  */
- static int smb3_fs_context_validate(struct fs_context *fc)
- {
- 	struct smb3_fs_context *ctx = smb3_fc2context(fc);
-+	int rc;
- 
--	if (ctx->rdma && ctx->vals->protocol_id < SMB30_PROT_ID) {
--		cifs_errorf(fc, "SMB Direct requires Version >=3.0\n");
--		return -EOPNOTSUPP;
--	}
--
--#ifndef CONFIG_KEYS
--	/* Muliuser mounts require CONFIG_KEYS support */
--	if (ctx->multiuser) {
--		cifs_errorf(fc, "Multiuser mounts require kernels with CONFIG_KEYS enabled\n");
--		return -1;
--	}
--#endif
-+	rc = smb3_handle_conflicting_options(fc);
-+	if (rc)
-+		return rc;
- 
- 	if (ctx->got_version == false)
- 		pr_warn_once("No dialect specified on mount. Default has changed to a more secure dialect, SMB2.1 or later (e.g. SMB3.1.1), from CIFS (SMB1). To use the less secure SMB1 dialect to access old servers which do not support SMB3.1.1 (or even SMB3 or SMB2.1) specify vers=1.0 on mount.\n");
-@@ -860,26 +885,6 @@ static int smb3_fs_context_validate(struct fs_context *fc)
- 	/* set the port that we got earlier */
- 	cifs_set_port((struct sockaddr *)&ctx->dstaddr, ctx->port);
- 
--	if (ctx->uid_specified && !ctx->forceuid_specified) {
--		ctx->override_uid = 1;
--		pr_notice("enabling forceuid mount option implicitly because uid= option is specified\n");
--	}
--
--	if (ctx->gid_specified && !ctx->forcegid_specified) {
--		ctx->override_gid = 1;
--		pr_notice("enabling forcegid mount option implicitly because gid= option is specified\n");
--	}
--
--	if (ctx->override_uid && !ctx->uid_specified) {
--		ctx->override_uid = 0;
--		pr_notice("ignoring forceuid mount option specified with no uid= option\n");
--	}
--
--	if (ctx->override_gid && !ctx->gid_specified) {
--		ctx->override_gid = 0;
--		pr_notice("ignoring forcegid mount option specified with no gid= option\n");
--	}
--
- 	return 0;
- }
- 
-@@ -1078,6 +1083,10 @@ static int smb3_reconfigure(struct fs_context *fc)
- 	if (rc)
- 		return rc;
- 
-+	rc = smb3_handle_conflicting_options(fc);
-+	if (rc)
-+		return rc;
-+
- 	old_ctx = kzalloc_obj(*old_ctx);
- 	if (!old_ctx)
- 		return -ENOMEM;
-@@ -1933,11 +1942,6 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
- 	}
- 	/* case Opt_ignore: - is ignored as expected ... */
- 
--	if (ctx->multiuser && ctx->upcall_target == UPTARGET_MOUNT) {
--		cifs_errorf(fc, "multiuser mount option not supported with upcalltarget set as 'mount'\n");
--		goto cifs_parse_mount_err;
--	}
--
- 	return 0;
- 
-  cifs_parse_mount_err:
 -- 
 2.53.0
 
