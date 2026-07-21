@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150B2431A5C;
-	Tue, 21 Jul 2026 19:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D35F46EC9B;
+	Tue, 21 Jul 2026 19:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661731; cv=none; b=d0cz3GpirSlZidIW5kP1OsMwLlwXhxmpd7bqWkKo+sN6c/sBBwYII5w1Y7lfdfrWjfnLvMI2apWpG9cGgFvgKXJTeDJHhT59jk/A95AW2hOyTJK/mbwm5tCgh+PM9FowU++81FIMOVUdT53q4MVnx0sfTg3ZGtCRUYO6MS7CPWw=
+	t=1784661732; cv=none; b=DDLkq1ER+3lZiFPx8M0CkMIgBGaplgriN/Kd0roT+Objzp14ZK/+OlR8fm5Ag8h+led9eHVU29P6LjucYwCSJPTTz5Yp62oSkUo7cwWt5WxVQwKvq/T1lal98XDdebquQkNPP/V/caIMKzzM098kWUXm4ne/lzJYXEY6OUIsvZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661731; c=relaxed/simple;
-	bh=rTSFhI1y2Im9VEUR7TmwHpHI8m6I8EtNkac8WOxxk9Q=;
+	s=arc-20240116; t=1784661732; c=relaxed/simple;
+	bh=+yzHlCnjAFh+rB3quGUxXw4I9Ho/p1sfZwQ4y7ZQBIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aBEsxWi3qF1yjkepv5EjewoD8pL7RoJXdj7+jY/bJODjRVnKZX80kFRrqKFgVn7RLqN0mQTGuaefeRXVG/378cS6pkeNheyx4tVattb3c5ln47j/Br6V+O7nz2kTLTKYhNsAPZ4GqYoGd+6ZyYXYY0OZXrNGHQQVj2iVs1ulsvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDqCT2+0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LQdg/vFBti5DaBWXfrF9m1SXkT4vDtfgL4RLYeI0f/UA9ORwGuj6xOcZoUEpAm5mPPCCOUQl/7b7xSgZTKSonHxlIU6DINYCIgxtcrOsdY9t7Wk50trHednpvdZ5TiZJ5NpI6x7GvtPFv1xhOpBHlIwoPkQWJ3aD2i+eL+eHnXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bp+hg1V4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDqCT2+0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334F71F000E9;
-	Tue, 21 Jul 2026 19:22:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bp+hg1V4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27491F00A3A;
+	Tue, 21 Jul 2026 19:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661728;
-	bh=rF4K00/zXX2H13lMISOnAklRF5yoF0uSp4jkK3QEqgg=;
+	s=korg; t=1784661731;
+	bh=V2YydgXdBItqyfaNWhZnwXAHdb+bC4adBbv0szJ8Y84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KDqCT2+0z5ckfZXF/jgkeQG1MM+q4/CC7eDlZrxCzvc6W3BQCUBGkmAeGfdkKDzLL
-	 PoFW6hYm8Caa0NWTPBS3e6RiWG9CoF4wbC3rbyVuqX9Oj3FJ4p+ptgyzoTOyOVhASV
-	 EqwnjdZ1z1D55CHjxmSVXdTd3gNpBedu4ArTAX/s=
+	b=bp+hg1V4B+7AwaB4FWMj8W5QxjhoXm/py8sj58fHPuZIu4aUIqGbgN9RsBGYlr6wK
+	 +JNM7ocjMSvH9Tdgta8KT2O3DOxWBqp50I+ktkAGz1o7tCvkaHUL26KaRyOTyKK/Zy
+	 qQulWtbeTBKFEhoCkxLD2kM3AqpPummNPwlHCAfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-	Harshal Dev <harshal.dev@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0139/1276] arm64: dts: qcom: sc7180: Add power-domain and iface clk for ice node
-Date: Tue, 21 Jul 2026 17:09:42 +0200
-Message-ID: <20260721152449.211750681@linuxfoundation.org>
+Subject: [PATCH 6.12 0175/1276] net/sched: cls_bpf: prevent unbounded recursion in offload rollback
+Date: Tue, 21 Jul 2026 17:10:18 +0200
+Message-ID: <20260721152450.012575898@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,46 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshal Dev <harshal.dev@oss.qualcomm.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 7cd7271ac525e4eadd22734f418219f247638f43 ]
+[ Upstream commit 27db54b90bcc7c37867fe664107fa25ea6a116e4 ]
 
-Qualcomm in-line crypto engine (ICE) platform driver specifies and votes
-for its own resources. Before accessing ICE hardware during probe, to
-avoid potential unclocked register access issues (when clk_ignore_unused
-is not passed on the kernel command line), in addition to the 'core' clock
-the 'iface' clock should also be turned on by the driver. This can only be
-done if the UFS_PHY_GDSC power domain is enabled. Specify both the
-UFS_PHY_GDSC power domain and the 'iface' clock in the ICE node for sc7180.
+Quan Sun reported [1] a stack overflow in cls_bpf_offload_cmd().
 
-Fixes: 858536d9dc946 ("arm64: dts: qcom: sc7180: Add UFS nodes")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260416-qcom_ice_power_and_clk_vote-v5-6-5ccf5d7e2846@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Reproducer on netdevsim: add a skip_sw cls_bpf filter, set the
+bpf_tc_accept debugfs knob to 0, then `tc filter replace`. The replace
+calls tc_setup_cb_replace() which fails. cls_bpf_offload_cmd() then
+swaps prog/oldprog and recursively calls itself to roll back. But
+bpf_tc_accept=0 makes the rollback fail too, which triggers yet another
+rollback frame with the same arguments, and so on until the stack is
+exhausted.
+
+bpf_tc_accept is just a convenient knob for the reproducer. Any driver
+whose tc_setup_cb_replace() fails twice in a row can hit the same loop,
+so this is not a netdevsim-only issue.
+
+Two ways to fix it:
+
+  1) Have the rollback call tc_setup_cb_add() on oldprog instead of
+     re-entering cls_bpf_offload_cmd().
+  2) Mark the rollback frame with a flag and skip a second-level
+     rollback from inside it.
+
+Go with (2). It is the smaller change and keeps the original behaviour:
+the rollback still goes through tc_setup_cb_replace(), so the driver
+gets one real chance to restore its state. If that attempt also fails,
+we just return the original error instead of recursing.
+
+[1]: https://lore.kernel.org/bpf/ce5a6005-3c5e-4696-9e05-eba9461dc860@std.uestc.edu.cn/T/#u
+
+Fixes: 102740bd9436 ("cls_bpf: fix offload assumptions after callback conversion")
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260526025529.24382-1-jiayuan.chen@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/sched/cls_bpf.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 6ae5ca00c7187a..e52d938df1bece 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1601,7 +1601,11 @@ ice: crypto@1d90000 {
- 			compatible = "qcom,sc7180-inline-crypto-engine",
- 				     "qcom,inline-crypto-engine";
- 			reg = <0 0x01d90000 0 0x8000>;
--			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-+			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
-+				 <&gcc GCC_UFS_PHY_AHB_CLK>;
-+			clock-names = "core",
-+				      "iface";
-+			power-domains = <&gcc UFS_PHY_GDSC>;
- 		};
+diff --git a/net/sched/cls_bpf.c b/net/sched/cls_bpf.c
+index a32754a2658bb7..e888d0aa9f21a0 100644
+--- a/net/sched/cls_bpf.c
++++ b/net/sched/cls_bpf.c
+@@ -142,7 +142,8 @@ static bool cls_bpf_is_ebpf(const struct cls_bpf_prog *prog)
  
- 		ipa: ipa@1e40000 {
+ static int cls_bpf_offload_cmd(struct tcf_proto *tp, struct cls_bpf_prog *prog,
+ 			       struct cls_bpf_prog *oldprog,
+-			       struct netlink_ext_ack *extack)
++			       struct netlink_ext_ack *extack,
++			       bool is_rollback)
+ {
+ 	struct tcf_block *block = tp->chain->block;
+ 	struct tc_cls_bpf_offload cls_bpf = {};
+@@ -177,7 +178,8 @@ static int cls_bpf_offload_cmd(struct tcf_proto *tp, struct cls_bpf_prog *prog,
+ 					  &oldprog->in_hw_count, true);
+ 
+ 	if (prog && err) {
+-		cls_bpf_offload_cmd(tp, oldprog, prog, extack);
++		if (!is_rollback)
++			cls_bpf_offload_cmd(tp, oldprog, prog, extack, true);
+ 		return err;
+ 	}
+ 
+@@ -208,7 +210,7 @@ static int cls_bpf_offload(struct tcf_proto *tp, struct cls_bpf_prog *prog,
+ 	if (!prog && !oldprog)
+ 		return 0;
+ 
+-	return cls_bpf_offload_cmd(tp, prog, oldprog, extack);
++	return cls_bpf_offload_cmd(tp, prog, oldprog, extack, false);
+ }
+ 
+ static void cls_bpf_stop_offload(struct tcf_proto *tp,
+@@ -217,7 +219,7 @@ static void cls_bpf_stop_offload(struct tcf_proto *tp,
+ {
+ 	int err;
+ 
+-	err = cls_bpf_offload_cmd(tp, NULL, prog, extack);
++	err = cls_bpf_offload_cmd(tp, NULL, prog, extack, false);
+ 	if (err)
+ 		pr_err("Stopping hardware offload failed: %d\n", err);
+ }
 -- 
 2.53.0
 
