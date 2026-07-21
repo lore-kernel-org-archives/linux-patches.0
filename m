@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFD545A29F;
-	Tue, 21 Jul 2026 21:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61CD414A1C;
+	Tue, 21 Jul 2026 21:57:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671077; cv=none; b=KD7R3j7+jNTTtBP8NuwsMkXIHHqgkPPaFJaCrHyPUcMxMKIDOfHFV2Ro2aD85BxUmqSG8jE8zyNu3XyylY/8aB9gt28+z9jYn+n30bC1O2aRz4xlRkDIahQXQoYNMWyvLrNt3RtpTtbNNWOoUhh+ZrcpVEPjwRXdfo4Uf8pLtBc=
+	t=1784671079; cv=none; b=SEmOWFzBdf1IL3qdukqMk5x0pXKx4YzuwXCHWBGMVbC4SAlnAkfZTI151sfDRthMMC/KpFy8J7YwTm4J+0F3Ye23tyGro29kkGqGfdIhKKIyGOaKHzZgA4VuscXdjycf/94YY8R1tBPcBrtTv+SjzrKJ/s3CabbosM91HJO0Ayo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671077; c=relaxed/simple;
-	bh=blJxiBtVv1Q/fNTjA4FxdaSKuDUhckkZAwSifGjL49c=;
+	s=arc-20240116; t=1784671079; c=relaxed/simple;
+	bh=jXDxcxofp1N+ILvmBKN8MyI42eZNjuszoUefD0EZA8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oktA7GqmMx5tpJxKXflx1eFAeAB/eqRzkSMTG0f38nMRtkFd2As2/6LSgB15PRHtr9EaMXkWVWoxcu5LfvbFroADGH20Mzd0Mh3KsAKMrTaGSU5HF3f1ABRziWaCI6Y9Ud4uvbXRGj7v5IgkXheuiJO/Ww+RxJ6MRzlhHImH5zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GP4LKJiH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H3JU5RCAX+SlEUxFWGpKYo61ylMzhRfg8Ca6ppoCtYyBypk5thpu6GBRX2s0ef+lhAJay7IvoDfTSCjRFeI42c7LNDxTvv3OAgNQr9Dp//s2ED2254GkdmDmwy6apOGtsyLw86f6a6GozCUugi69aDp/B9EhxNUaIBDxx4sKLEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JgEX5N1g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GP4LKJiH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F031F000E9;
-	Tue, 21 Jul 2026 21:57:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JgEX5N1g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEDB21F00A3A;
+	Tue, 21 Jul 2026 21:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671071;
-	bh=HCaKnJfQn4+0DzWaENf5BftJOJJK+nZyRGOpMfUKLOM=;
+	s=korg; t=1784671074;
+	bh=m09QX0vi3fFQTJef6Sc7DoldeJrMcyRGg6tTQR90+CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GP4LKJiHZvuf1feWDs0paaDhTnnGgB3FYJUXjLzXj87GGM0tQQNCkl/D8bMt0XmVE
-	 Z8PJnDZJ7P22Cp61mS5lq+ms7mBtRsnFbL8k6s4hcCAVo7QjPgxkRcdmx6j4ra0ObS
-	 Qj7ICGjIyDJWuL/GWJYpdceFwOjricKR1QubOc1M=
+	b=JgEX5N1gK8XxGxiW2OeBIr0rXmOlfsEvb0oxX0/3lVUlvXP2oSf3cv2TJZUqGmVRN
+	 kn7np88YZY18vaX+K4z/0JBjFk71whTqhJ8P59IHZhk/SwQBB8Ne+9bfhGS0il+uw3
+	 icLOdEgztWBZ2MBQZOy4DMP32mUSOcfd2sBZrlFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Lianqin Hu <hulianqin@vivo.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.15 081/843] usb: xhci: Fix sleep in atomic context in xhci_free_streams()
-Date: Tue, 21 Jul 2026 17:15:16 +0200
-Message-ID: <20260721152407.822019781@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Eric Dumazet <edumazet@google.com>,
+	Wyatt Feng <bronzed_45_vested@icloud.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 108/843] net: ipv4: bound TCP reordering sysctl writes and MTU probe sizes
+Date: Tue, 21 Jul 2026 17:15:43 +0200
+Message-ID: <20260721152408.431688939@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -45,93 +49,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: 胡连勤 <hulianqin@vivo.com>
+From: Wyatt Feng <bronzed_45_vested@icloud.com>
 
-commit 42c37c4b75d38b51d84f31a8e29427f5e06a7c2a upstream.
+commit efb8763d7bbb40cff4cc55a6b62c3095a038149c upstream.
 
-When a USB device with active stream endpoints is disconnected,
-xhci_free_streams() is called from the hub_event workqueue to
-free the stream resources.  It calls xhci_free_stream_info()
-while holding xhci->lock with irqs disabled.
+Reject invalid `net.ipv4.tcp_reordering` values before they reach TCP
+socket state. The sysctl is stored as an `int` but copied into the
+`u32` `tp->reordering` field for new sockets, so negative writes wrap
+to large values.
 
-xhci_free_stream_info() invokes xhci_free_stream_ctx(), which
-calls dma_free_coherent() for large stream context arrays.
+With `tcp_mtu_probing=2`, the wrapped value can overflow the
+`tcp_mtu_probe()` size calculation and drive the MTU probing path into
+an out-of-bounds read. Route `tcp_reordering` writes through
+`proc_dointvec_minmax()` and require it to be at least 1. Also require
+`tcp_max_reordering` to be at least 1 so the configured maximum cannot
+become negative either.
 
-dma_free_coherent() can sleep (e.g. via vunmap), triggering
-a BUG when called from atomic context.
+When registering the table for a non-init network namespace, relocate
+`extra2` pointers that refer into `init_net.ipv4` so the
+`tcp_reordering` upper bound follows that namespace's
+`tcp_max_reordering`.
 
-Call trace:
- dma_free_attrs+0x174/0x220
- xhci_free_stream_info+0xd0/0x11c
- xhci_free_streams+0x278/0x37c
- usb_free_streams+0x98/0xc0
- usb_unbind_interface+0x1b8/0x2f8
- device_release_driver_internal+0x1d4/0x2cc
- device_release_driver+0x18/0x28
- bus_remove_device+0x160/0x1a4
- device_del+0x1ec/0x350
- usb_disable_device+0x98/0x214
- usb_disconnect+0xf0/0x35c
- hub_event+0xab4/0x19ec
- process_one_work+0x278/0x63c
+Harden `tcp_mtu_probe()` itself by computing `size_needed` as `u64`.
+This keeps the send queue and window checks from being bypassed through
+signed integer overflow.
 
-Fix this by saving the stream_info pointers and clearing the
-ep references under the lock, then calling xhci_free_stream_info()
-outside the lock where sleeping is allowed.
-
-Fixes: 8df75f42f8e6 ("USB: xhci: Add memory allocation for USB3 bulk streams.")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260703144033.483286-3-mathias.nyman@linux.intel.com
+Fixes: 91cc17c0e5e5 ("[TCP]: MTUprobe: receiver window & data available checks fixed")
+Cc: stable@vger.kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/1a5b7e1ef4d70fbad8c8ee0b82d8405f3c964a3d.1781395200.git.bronzed_45_vested@icloud.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ net/ipv4/sysctl_net_ipv4.c |   10 ++++++++--
+ net/ipv4/tcp_output.c      |    4 ++--
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -3710,6 +3710,7 @@ static int xhci_free_streams(struct usb_
- 	struct xhci_virt_device *vdev;
- 	struct xhci_command *command;
- 	struct xhci_input_control_ctx *ctrl_ctx;
-+	struct xhci_stream_info *stream_info[EP_CTX_PER_DEV];
- 	unsigned int ep_index;
- 	unsigned long flags;
- 	u32 changed_ep_bitmask;
-@@ -3770,10 +3771,15 @@ static int xhci_free_streams(struct usb_
- 	if (ret < 0)
- 		return ret;
- 
-+	/*
-+	 * dma_free_coherent() called by xhci_free_stream_info() may sleep,
-+	 * so save stream_info pointers and clear references under lock,
-+	 * then free the memory outside lock.
-+	 */
- 	spin_lock_irqsave(&xhci->lock, flags);
- 	for (i = 0; i < num_eps; i++) {
- 		ep_index = xhci_get_endpoint_index(&eps[i]->desc);
--		xhci_free_stream_info(xhci, vdev->eps[ep_index].stream_info);
-+		stream_info[i] = vdev->eps[ep_index].stream_info;
- 		vdev->eps[ep_index].stream_info = NULL;
- 		/* FIXME Unset maxPstreams in endpoint context and
- 		 * update deq ptr to point to normal string ring.
-@@ -3783,6 +3789,9 @@ static int xhci_free_streams(struct usb_
+--- a/net/ipv4/sysctl_net_ipv4.c
++++ b/net/ipv4/sysctl_net_ipv4.c
+@@ -928,7 +928,9 @@ static struct ctl_table ipv4_net_table[]
+ 		.data		= &init_net.ipv4.sysctl_tcp_reordering,
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+-		.proc_handler	= proc_dointvec
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= SYSCTL_ONE,
++		.extra2		= &init_net.ipv4.sysctl_tcp_max_reordering,
+ 	},
+ 	{
+ 		.procname	= "tcp_retries1",
+@@ -1154,7 +1156,8 @@ static struct ctl_table ipv4_net_table[]
+ 		.data		= &init_net.ipv4.sysctl_tcp_max_reordering,
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+-		.proc_handler	= proc_dointvec
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= SYSCTL_ONE,
+ 	},
+ 	{
+ 		.procname	= "tcp_dsack",
+@@ -1389,6 +1392,9 @@ static __net_init int ipv4_sysctl_init_n
+ 				 */
+ 				table[i].mode &= ~0222;
+ 			}
++			if (table[i].extra2 >= (void *)&init_net.ipv4 &&
++			    table[i].extra2 < (void *)(&init_net.ipv4 + 1))
++				table[i].extra2 += (void *)net - (void *)&init_net;
+ 		}
  	}
- 	spin_unlock_irqrestore(&xhci->lock, flags);
  
-+	for (i = 0; i < num_eps; i++)
-+		xhci_free_stream_info(xhci, stream_info[i]);
-+
- 	return 0;
- }
- 
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -2346,7 +2346,7 @@ static int tcp_mtu_probe(struct sock *sk
+ 	struct sk_buff *skb, *nskb, *next;
+ 	struct net *net = sock_net(sk);
+ 	int probe_size;
+-	int size_needed;
++	u64 size_needed;
+ 	int copy, len;
+ 	int mss_now;
+ 	int interval;
+@@ -2370,7 +2370,7 @@ static int tcp_mtu_probe(struct sock *sk
+ 	mss_now = tcp_current_mss(sk);
+ 	probe_size = tcp_mtu_to_mss(sk, (icsk->icsk_mtup.search_high +
+ 				    icsk->icsk_mtup.search_low) >> 1);
+-	size_needed = probe_size + (tp->reordering + 1) * tp->mss_cache;
++	size_needed = probe_size + (tp->reordering + 1) * (u64)tp->mss_cache;
+ 	interval = icsk->icsk_mtup.search_high - icsk->icsk_mtup.search_low;
+ 	/* When misfortune happens, we are reprobing actively,
+ 	 * and then reprobe timer has expired. We stick with current
 
 
