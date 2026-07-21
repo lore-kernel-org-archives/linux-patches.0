@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBB44195C9;
-	Tue, 21 Jul 2026 20:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4AB3BA225;
+	Tue, 21 Jul 2026 20:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667046; cv=none; b=dNPNJrNUWboQGK5beG8L3IQRgaoLZfQ1zsZmd8OR6LrVnKV+2iPi3lSBHDUuKH73cXk7pDwyHk/EcCMoBSd8VwiPYL/17+ZKecuTUBOxbjevdfgaI0Uuhw2ogVb0iSppZ5R5uXS0UO8QdYzHIZz5tPlkmHqtQ0QIkwau0W0sLSI=
+	t=1784667047; cv=none; b=twRvPPYek7hWi9lVI4g62/rMqyu4nnlMIhknuXHQiCUizgES/s9ZF6+3a54e2KpN3DYEOUrkIx4lkSnZmEwGz93iGEP4qF39h8af/6VzWYPH2ACmp0CvOIsfSh6SFeDV/hhv8kcdQBNyI4N0FtqfsDr874p1yJaG+x1psxcDHOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667046; c=relaxed/simple;
-	bh=6flZKGriRDzqaa/5Pnce8rzlVoPgW/KR4JgGv9j8h9o=;
+	s=arc-20240116; t=1784667047; c=relaxed/simple;
+	bh=Lt94pT0D73kg+TQCHg1pHoZY1efk4h0ERbAvzTHSEgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dpbl5kxQwpm9AEkl4Z4Zw+YvUeNf7kcYO34TOHoG3bvcH1wOhEWI39BmiauvIOVrGnSvQtleddfjsNyMlw57GQ6DfM5W5Lun+WGqRiuwYqvkij2Fadh+9VzjipKdYPjAt3gFR7i8rsZOP1c9ujaDdiPWh+iHFIOO6JAKd0bTxns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXGy3yhK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KsBByWA9sEh5at89EkUZVxx/gjY9S2eiMB60DjOVXLeTeEGYw38BbKl7OQU3jF16AxjkBGnK4V49CRsThMYotDCStWfMAbtjEwILOranHv5i30pHOX574MLDz+AxN4fzABITgzuAmXUenGruvhs6OZnzq8igcIY/TYlTctVE5MA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDZIS76y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXGy3yhK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15101F000E9;
-	Tue, 21 Jul 2026 20:50:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDZIS76y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050EC1F00A3A;
+	Tue, 21 Jul 2026 20:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667041;
-	bh=uq1KrzHhacyrcx0JmIXIGoTQck/EfQ7CX+Og94W8zxU=;
+	s=korg; t=1784667046;
+	bh=DBNQXFVUyXYC/tkxXIJVHCy5cAXCqvdpzPFcXvULjK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aXGy3yhKIqbqrPYJBcAK+eufHnzyFoG6vjLKLRsgvpd3Rlb0DGNV1v5Tqr4BGClHZ
-	 dbGa3ezpIHdANvYeNUHd+yLicYK33ctmnnpLLO5BXsKBBXb2ngIElTHyeQf+rYXY7U
-	 n7S31jKxwR9DNekQ+mVbVLg0+YIgZ5GLdQ5alApM=
+	b=iDZIS76ypPOQh1xeuB+u6+nPRm0vu6gvCbSSyoBUScP9ZG+A9DK/ktAqi1Pxc4XVs
+	 cGhm3/5ry2Vcv5nGTl+cGXQiyLuGNMarK6218AkNs4qvIFvWRIw7iHqhvZ85KPuFKH
+	 mWHHUi66UY1SqBkdDlPkaL+INeMlSo81MazJC9Wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 0910/1266] fbdev: i740fb: fix potential memory leak in i740fb_probe()
-Date: Tue, 21 Jul 2026 17:22:27 +0200
-Message-ID: <20260721152502.207733053@linuxfoundation.org>
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0876/1266] ipvs: use parsed transport offset in TCP state lookup
+Date: Tue, 21 Jul 2026 17:21:53 +0200
+Message-ID: <20260721152501.451188816@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,32 +57,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-commit 5936063409af230a2c88b8700c47b89a19fd70b5 upstream.
+[ Upstream commit 2500fa3958b1ba51c2b065e39db1b04dfa7e23a2 ]
 
-In i740fb_probe(), the memory allocated in fb_videomode_to_modelist()
-for modelist is not freed in the error paths. Fix that by calling
-fb_destroy_modelist().
+TCP state handling reparses the skb to find the TCP header. For IPv6 it
+uses sizeof(struct ipv6hdr), while the surrounding IPVS code already
+parsed the packet with ip_vs_fill_iph_skb() and has the real
+transport-header offset in iph.len.
 
-Fixes: 5350c65f4f15 ("Resurrect Intel740 driver: i740fb")
-Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This makes TCP state handling look at the wrong bytes when an IPv6
+packet carries extension headers. Use the parsed transport offset passed
+down from ip_vs_set_state() when reading the TCP header.
+
+For IPv4 and for IPv6 packets without extension headers, the passed
+offset matches the previous value.
+
+Fixes: 0bbdd42b7efa6 ("IPVS: Extend protocol DNAT/SNAT and state handlers")
+Link: https://lore.kernel.org/netdev/20260705125659.37744-1-zhaoyz24@mails.tsinghua.edu.cn/
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: Claude Code:GLM-5.2
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/i740fb.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/ipvs/ip_vs_proto_tcp.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/drivers/video/fbdev/i740fb.c
-+++ b/drivers/video/fbdev/i740fb.c
-@@ -1153,6 +1153,7 @@ err_reg_framebuffer:
- 	fb_dealloc_cmap(&info->cmap);
- err_alloc_cmap:
- err_find_mode:
-+	fb_destroy_modelist(&info->modelist);
- 	if (par->ddc_registered)
- 		i2c_del_adapter(&par->ddc_adapter);
- 	pci_iounmap(dev, par->regs);
+diff --git a/net/netfilter/ipvs/ip_vs_proto_tcp.c b/net/netfilter/ipvs/ip_vs_proto_tcp.c
+index dc8394383c148e..b382810156b2c6 100644
+--- a/net/netfilter/ipvs/ip_vs_proto_tcp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_tcp.c
+@@ -585,13 +585,7 @@ tcp_state_transition(struct ip_vs_conn *cp, int direction,
+ {
+ 	struct tcphdr _tcph, *th;
+ 
+-#ifdef CONFIG_IP_VS_IPV6
+-	int ihl = cp->af == AF_INET ? ip_hdrlen(skb) : sizeof(struct ipv6hdr);
+-#else
+-	int ihl = ip_hdrlen(skb);
+-#endif
+-
+-	th = skb_header_pointer(skb, ihl, sizeof(_tcph), &_tcph);
++	th = skb_header_pointer(skb, iph_len, sizeof(_tcph), &_tcph);
+ 	if (th == NULL)
+ 		return;
+ 
+-- 
+2.53.0
+
 
 
