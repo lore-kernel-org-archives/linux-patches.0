@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34DF37DE97;
-	Tue, 21 Jul 2026 18:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D26A415F09;
+	Tue, 21 Jul 2026 18:17:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657863; cv=none; b=WRhTO8uWjP8Y7aMGcnkr18yJVRNzpgZtCkE05k0ABt5XlU073kC+oaP18Zjv8pF9tGCkOq4ZRaXeZREEOCWDKJDK4CgGUOTsTFDX17dwWELdbZnovzNWlUovcFEJtgGvSXQv0e/zPwfcrw/MhSpmqYMax3q6sb2xV2teNyYTmgo=
+	t=1784657867; cv=none; b=UkkZadcOSZA9qCL6KAXE5vJes0y0DR4od+TVZrytBZ/wEV6kynhLQex8eBHxHLAWXQpbbyGyNDGafbHl67bPBVLPW5wlU4qLg+pb7NPdLO+6JtMTf5iGSv0VL7qK6WlJ/aDGmASy1GqEPoXCuplIo3Yjtht32q//H6TdM5JiTOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657863; c=relaxed/simple;
-	bh=zF6DTxdngKXw6I5gEjz768H7jQCRvVrvppxtEgL4bpA=;
+	s=arc-20240116; t=1784657867; c=relaxed/simple;
+	bh=F2JpMCTfL/QL5XR2+vdZCJaG5id3AomrrgyAdGHx9EM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rrmf9C2ePyazonUe8Rw/dA2qxp79H4oEpaByh/2mGi/bNeAQ63cAwsYhhuRNqfAKgr4w54jmSuC2gnPfFuwFw4Fk2N61Q37CVnUoBgNUOefgGSyq0NKkTNRPVtHmARQm/sQKvMaMkN+DI7y90xR6MMWaKvTMgvDqQGx7Wjenk84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKb7f1Em; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LzsDvygSX5ZvM5HbCqcf9ZGIaaooFVDzYKKHbPpgDU0E+1vmwZMKd3A1CYdoWzDHVHV+5+zncZ4FSPGLfMgZ6aQW1cXMuVxjxsFupVhMbE1QqmsXlcGaY06+B9Oc4G3SIawa2Pk0dEyUXI/TzkLBV1DCs8aJc8vEyBayeZ6wnPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTARAtR3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKb7f1Em"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D781F000E9;
-	Tue, 21 Jul 2026 18:17:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTARAtR3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38881F000E9;
+	Tue, 21 Jul 2026 18:17:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657862;
-	bh=cxHXujeO1bYe69OwR/rqW0EpLJ9xqHKkf5oijUXNZBA=;
+	s=korg; t=1784657865;
+	bh=8+4bQGgPsX42OIV4GcaqwZvZOMDHKbF8uxanZFxzrvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oKb7f1EmRwRL0DXE7YUUiGjoYN7Xzako6xHHrsuro3Hk+4YhIiw8DiulgPDbAWTCv
-	 l2oVZgO5oyfxQZkRhqvSUluUrUho+3BX00VPbOk13Tz782O9S0YmsZgVBp18/rITfI
-	 ClIrOwy7YJWo2vVoA0BZ2b967RDG/MhNToeILHPc=
+	b=fTARAtR3ZyrMjEGAEcXjE1HmF6ZaJ9KBnGovXd//sHEY+C2IYsTiqj2ad0EwKvCT3
+	 +quQWd2f8/v5uhyoKcHP1xwf2yR8GIoSAWszB8NWljj6z7HSecu0xJE+8aVJE5PRp3
+	 vBw7wkv4TUkHKvi1f0b0DaYy1xBgxc7JURofI0HU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0924/1611] eth: fbnic: fix ordering of heartbeat vs ownership
-Date: Tue, 21 Jul 2026 17:17:20 +0200
-Message-ID: <20260721152536.170578144@linuxfoundation.org>
+Subject: [PATCH 6.18 0925/1611] thermal: testing: zone: Flush work items during cleanup
+Date: Tue, 21 Jul 2026 17:17:21 +0200
+Message-ID: <20260721152536.193249310@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,78 +50,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit d87363b0edfc7504ff2b144fe4cdd8154f90f42e ]
+[ Upstream commit fb1a5dfe86d3af1e1c3ce168cf0d8d43897e0f77 ]
 
-When requesting ownership of the NIC (MAC/PHY control), we set up
-the heartbeat to look stale:
+To prevent freed module code from being executed during the thermal
+testing module unload, make it add a dedicated workqueue for thermal
+testing work items and flush it in thermal_testing_exit().
 
-  /* Initialize heartbeat, set last response to 1 second in the past
-   * so that we will trigger a timeout if the firmware doesn't respond
-   */
-  fbd->last_heartbeat_response = req_time - HZ;
-  fbd->last_heartbeat_request = req_time;
-
-The response handler then sets:
-
-  fbd->last_heartbeat_response = jiffies;
-
-for which we wait via:
-
-  fbnic_fw_init_heartbeat() -> fbnic_fw_heartbeat_current()
-
-The scheme is a bit odd, but it should work in principle.
-
-Fix the ordering of operations. We have to set up the stale heartbeat
-before we send the message. Otherwise if the response is very fast
-we will override it. This triggers on QEMU if we run on the core
-that handles the IRQ, and results in ndo_open failing with ETIMEDOUT.
-
-The change in ordering doesn't impact releasing the ownership.
-Both ndo_stop and heartbeat check are under rtnl_lock.
-
-Fixes: 20d2e88cc746 ("eth: fbnic: Add initial messaging to notify FW of our presence")
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://patch.msgid.link/20260622154753.827506-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f6a034f2df42 ("thermal: Introduce a debugfs-based testing facility")
+Link: https://sashiko.dev/#/patchset/20260605185212.2491144-1-sam.moelius%40trailofbits.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/1959388.tdWV9SEqCh@rafael.j.wysocki
+[ rjw: Make variable d_command static ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_fw.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/thermal/testing/command.c         | 36 ++++++++++++++++++++---
+ drivers/thermal/testing/thermal_testing.h |  8 +++++
+ drivers/thermal/testing/zone.c            |  7 ++---
+ 3 files changed, 43 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-index fcd9912e7ad3bd..1204c12ea0fa24 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-@@ -484,15 +484,10 @@ int fbnic_fw_xmit_ownership_msg(struct fbnic_dev *fbd, bool take_ownership)
- 			goto free_message;
- 	}
+diff --git a/drivers/thermal/testing/command.c b/drivers/thermal/testing/command.c
+index fbf7ab9729b5a5..90e06c5933278a 100644
+--- a/drivers/thermal/testing/command.c
++++ b/drivers/thermal/testing/command.c
+@@ -86,7 +86,10 @@
  
--	err = fbnic_mbx_map_tlv_msg(fbd, msg);
--	if (err)
--		goto free_message;
--
- 	/* Initialize heartbeat, set last response to 1 second in the past
- 	 * so that we will trigger a timeout if the firmware doesn't respond
- 	 */
- 	fbd->last_heartbeat_response = req_time - HZ;
--
- 	fbd->last_heartbeat_request = req_time;
+ #include "thermal_testing.h"
  
- 	/* Set prev_firmware_time to 0 to avoid triggering firmware crash
-@@ -500,6 +495,10 @@ int fbnic_fw_xmit_ownership_msg(struct fbnic_dev *fbd, bool take_ownership)
- 	 */
- 	fbd->prev_firmware_time = 0;
- 
-+	err = fbnic_mbx_map_tlv_msg(fbd, msg);
-+	if (err)
-+		goto free_message;
+-struct dentry *d_testing;
++struct workqueue_struct *tt_wq __ro_after_init;
 +
- 	/* Set heartbeat detection based on if we are taking ownership */
- 	fbd->fw_heartbeat_enabled = take_ownership;
++struct dentry *d_testing __ro_after_init;
++static struct dentry *d_command __ro_after_init;
  
+ #define TT_COMMAND_SIZE		16
+ 
+@@ -203,17 +206,42 @@ static const struct file_operations tt_command_fops = {
+ 
+ static int __init thermal_testing_init(void)
+ {
++	int error;
++
++	tt_wq = alloc_workqueue("thermal_testing", WQ_UNBOUND, 0);
++	if (!tt_wq)
++		return -ENOMEM;
++
+ 	d_testing = debugfs_create_dir("thermal-testing", NULL);
+-	if (!IS_ERR(d_testing))
+-		debugfs_create_file("command", 0200, d_testing, NULL,
+-				    &tt_command_fops);
++	if (IS_ERR(d_testing)) {
++		error = PTR_ERR(d_testing);
++		goto destroy_wq;
++	}
++
++	d_command = debugfs_create_file("command", 0200, d_testing, NULL, &tt_command_fops);
++	if (IS_ERR(d_command)) {
++		error = PTR_ERR(d_command);
++		goto remove_d_testing;
++	}
+ 
+ 	return 0;
++
++remove_d_testing:
++	debugfs_remove(d_testing);
++destroy_wq:
++	destroy_workqueue(tt_wq);
++	return error;
+ }
+ module_init(thermal_testing_init);
+ 
+ static void __exit thermal_testing_exit(void)
+ {
++	/* First, prevent new commands from being entered. */
++	debugfs_remove(d_command);
++	/* Flush commands in progress (if any). */
++	flush_workqueue(tt_wq);
++	destroy_workqueue(tt_wq);
++	/* Remove the directory structure and clean up. */
+ 	debugfs_remove(d_testing);
+ 	tt_zone_cleanup();
+ }
+diff --git a/drivers/thermal/testing/thermal_testing.h b/drivers/thermal/testing/thermal_testing.h
+index c790a32aae4ed7..5880c9a63dba99 100644
+--- a/drivers/thermal/testing/thermal_testing.h
++++ b/drivers/thermal/testing/thermal_testing.h
+@@ -1,4 +1,12 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
++#include <linux/workqueue.h>
++
++extern struct workqueue_struct *tt_wq;
++
++static inline void tt_queue_work(struct work_struct *work)
++{
++	queue_work(tt_wq, work);
++}
+ 
+ extern struct dentry *d_testing;
+ 
+diff --git a/drivers/thermal/testing/zone.c b/drivers/thermal/testing/zone.c
+index c12c405225bbcc..aa61e34e30c852 100644
+--- a/drivers/thermal/testing/zone.c
++++ b/drivers/thermal/testing/zone.c
+@@ -13,7 +13,6 @@
+ #include <linux/idr.h>
+ #include <linux/list.h>
+ #include <linux/thermal.h>
+-#include <linux/workqueue.h>
+ 
+ #include "thermal_testing.h"
+ 
+@@ -208,7 +207,7 @@ int tt_add_tz(void)
+ 
+ 	INIT_WORK(&tt_work->work, tt_add_tz_work_fn);
+ 	tt_work->tt_zone = no_free_ptr(tt_zone);
+-	schedule_work(&(no_free_ptr(tt_work)->work));
++	tt_queue_work(&(no_free_ptr(tt_work)->work));
+ 
+ 	return 0;
+ }
+@@ -270,7 +269,7 @@ int tt_del_tz(const char *arg)
+ 
+ 	INIT_WORK(&tt_work->work, tt_del_tz_work_fn);
+ 	tt_work->tt_zone = tt_zone;
+-	schedule_work(&(no_free_ptr(tt_work)->work));
++	tt_queue_work(&(no_free_ptr(tt_work)->work));
+ 
+ 	return 0;
+ }
+@@ -359,7 +358,7 @@ int tt_zone_add_trip(const char *arg)
+ 	INIT_WORK(&tt_work->work, tt_zone_add_trip_work_fn);
+ 	tt_work->tt_zone = no_free_ptr(tt_zone);
+ 	tt_work->tt_trip = no_free_ptr(tt_trip);
+-	schedule_work(&(no_free_ptr(tt_work)->work));
++	tt_queue_work(&(no_free_ptr(tt_work)->work));
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
