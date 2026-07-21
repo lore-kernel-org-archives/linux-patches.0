@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E257332913;
-	Tue, 21 Jul 2026 19:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB11471246;
+	Tue, 21 Jul 2026 19:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660765; cv=none; b=j/YwPfWRhgY7iPLBA1eMmViXnoBO6qhG2HY42pb1xbIsuXA3EnHoYs8omPMCQgZiQUGqsPFfYo+TBoKZr8myqRLvmlOOBTgoODMiah64yVtf2f86NJiLdLqBEz7h5BmhBroKtPuA2E9nWwTLMfdOx0YzFavvbfrke9kSlUnVzcg=
+	t=1784660767; cv=none; b=XgeIA2+ZydzEAFM48Kr0bg58sDwwWq35KYIFZWufFEefSNX3RkGlS4oBZbBlS0o96rJckTyJRe6Y8arvHxZf7GJWanNVN023HPBcqe2E4Uur2l1LbZPvp+mT8O0Els3kkdCK57e4gmwOyOD60Wd0IY8hp+kXBWYg/pFNggrGmdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660765; c=relaxed/simple;
-	bh=jQM79zNu1gB4Trr/tMwaJslkcYHToAw9NXDWF7INMC4=;
+	s=arc-20240116; t=1784660767; c=relaxed/simple;
+	bh=YQBBoVLlj6OvLI6DD5aY6O4hn0qCAOeYOewHF5WgYH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SvQGozOxmtISfpgmrWwUa2rC73C6sNe7t5Gp7ua5UPCLp0ojmLVz5KntEZDj79NsnJ5U95MHkg0UTq/zNgsAk7WT2N1Xpa1CF931/VaJdU/fTDOKfEC+cEZxVuO5HQmgIIvVouIlBLazhjC/P9zV7SuVNvDCN6e0IH69KDe7Efs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4OoJs67; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qkcfLlcE6CH6HfkvFCIKVJnz1M2PsW+ka5aDBTbebx4zWVBAbw1oXPcQMqxhi6CAWi3VJzwfuoIMnQ/0Nib5fhBs39V0CvXgW6LW/SFu9EGtt43w3BfFjNPVCN70gFVb6xl0RlcFvE7S9SS8HBY/ytDxx268EzQKwFBxhDJG6Q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UR2XD3Jk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4OoJs67"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94DF71F000E9;
-	Tue, 21 Jul 2026 19:06:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UR2XD3Jk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3854C1F000E9;
+	Tue, 21 Jul 2026 19:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660764;
-	bh=JXjdgee49WHRKg/3l6PpS+v5D1HwaoaZBVF8ljpVpk0=;
+	s=korg; t=1784660766;
+	bh=QAFjje+QQEO3BCpFbqygXJYz8CTAU0eQCwbwyY3B4Tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C4OoJs67Sn9oeG9sUbDiz5qoqJUNfUH0b0PO4+hrfla1bZe2AOC/paKJCczrCuizb
-	 0VBV8CHEw81OnH3EZK8/HtDnVv5pkiUAtuHk0+juSTznMGC2Ec72peywlwlW5vw09z
-	 zOTU8Z10boAJcn4ffO5HrUTg1VmiSqf/+zXf5lRo=
+	b=UR2XD3JkGFFbt2GoNmYDZHsLMV0FFPJGEMIoCU218RFkHbM69Fxyixck55aHntV3Q
+	 rAb0tRC6je1aR78RZGJwxrCnvH6YXZcneqt8G0rML7RZS257+MpkXk3y5vUGqbvuw9
+	 GrLlt3nRoqiPPUryP/pApy/gkMjEpA85eq2Ld/FY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Mir Jeffres <m-jeffres@ti.com>,
+	Sen Wang <sen@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1101/2077] perf dso: Set standard errno on decompression failure
-Date: Tue, 21 Jul 2026 17:12:54 +0200
-Message-ID: <20260721152618.786954040@linuxfoundation.org>
+Subject: [PATCH 7.1 1102/2077] ASoC: tlv320aic3x: restrict CLKDIV bypass Q values in dual-rate mode
+Date: Tue, 21 Jul 2026 17:12:55 +0200
+Message-ID: <20260721152618.811040579@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,52 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Sen Wang <sen@ti.com>
 
-[ Upstream commit 1a5f9334a45a6b0c1cd7341cc72a3b87adad1d27 ]
+[ Upstream commit fdf043f5f3bae150b678feae3d7bb1beed87ec14 ]
 
-dso__get_filename() sets errno to a negative custom DSO_LOAD_ERRNO
-value when kernel module decompression fails:
+The datasheet documents that when the PLL is disabled and dual-rate mode
+is enabled, only Q values {4, 8, 9, 12, 16} are valid for the CLKDIV
+bypass path; all other Q values produce invalid bitclock output.
 
-  errno = *dso__load_errno(dso);  /* e.g. -9996 */
+The existing loop iterates Q from 2 to 17 without this restriction,
+causing silent audio failure when an out-of-spec Q is picked.
 
-The caller __open_dso() then computes fd = -errno, producing a large
-positive value (9996) that looks like a valid file descriptor.  This
-can cause close_data_fd() to close an unrelated fd used by another
-subsystem.
+Restrict the Q search to the allowed set in dual-rate mode.
 
-Set errno to EIO instead.  The detailed error code is already stored
-in dso__load_errno(dso) for diagnostic messages.
-
-Fixes: 1d6b3c9ba756a513 ("perf tools: Decompress kernel module when reading DSO data")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 4f9c16ccfa26 ("[ALSA] soc - tlv320aic3x - revisit clock setup")
+Suggested-by: Mir Jeffres <m-jeffres@ti.com>
+Signed-off-by: Sen Wang <sen@ti.com>
+Link: https://patch.msgid.link/20260616233322.873081-1-sen@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dso.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ sound/soc/codecs/tlv320aic3x.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
-index 3547cbd5ca8d23..170637a9b8e0ab 100644
---- a/tools/perf/util/dso.c
-+++ b/tools/perf/util/dso.c
-@@ -600,7 +600,13 @@ static char *dso__get_filename(struct dso *dso, const char *root_dir,
- 		size_t len = sizeof(newpath);
+diff --git a/sound/soc/codecs/tlv320aic3x.c b/sound/soc/codecs/tlv320aic3x.c
+index ce22298b43efc1..f8e847d28258b7 100644
+--- a/sound/soc/codecs/tlv320aic3x.c
++++ b/sound/soc/codecs/tlv320aic3x.c
+@@ -1049,11 +1049,13 @@ static int aic3x_hw_params(struct snd_pcm_substream *substream,
+ 			   struct snd_pcm_hw_params *params,
+ 			   struct snd_soc_dai *dai)
+ {
++	static const u8 dual_rate_q[] = {4, 8, 9, 12, 16};
+ 	struct snd_soc_component *component = dai->component;
+ 	struct aic3x_priv *aic3x = snd_soc_component_get_drvdata(component);
+ 	int codec_clk = 0, bypass_pll = 0, fsref, last_clk = 0;
+ 	u8 data, j, r, p, pll_q, pll_p = 1, pll_r = 1, pll_j = 1;
+ 	u16 d, pll_d = 1;
++	bool dual_rate;
+ 	int clk;
+ 	int width = aic3x->slot_width;
  
- 		if (dso__decompress_kmodule_path(dso, name, newpath, len) < 0) {
--			errno = *dso__load_errno(dso);
-+			/*
-+			 * Use a standard errno value, not the negative custom
-+			 * DSO_LOAD_ERRNO stored in dso__load_errno(dso):
-+			 * __open_dso() computes fd = -errno, so a negative
-+			 * errno produces a positive fd that looks valid.
-+			 */
-+			errno = EIO;
- 			goto out;
+@@ -1079,14 +1081,25 @@ static int aic3x_hw_params(struct snd_pcm_substream *substream,
+ 
+ 	/* Fsref can be 44100 or 48000 */
+ 	fsref = (params_rate(params) % 11025 == 0) ? 44100 : 48000;
++	dual_rate = params_rate(params) >= 64000;
+ 
+ 	/* Try to find a value for Q which allows us to bypass the PLL and
+ 	 * generate CODEC_CLK directly. */
+-	for (pll_q = 2; pll_q < 18; pll_q++)
+-		if (aic3x->sysclk / (128 * pll_q) == fsref) {
+-			bypass_pll = 1;
+-			break;
++	if (dual_rate) {
++		for (int i = 0; i < ARRAY_SIZE(dual_rate_q); i++) {
++			pll_q = dual_rate_q[i];
++			if (aic3x->sysclk / (128 * pll_q) == fsref) {
++				bypass_pll = 1;
++				break;
++			}
  		}
++	} else {
++		for (pll_q = 2; pll_q < 18; pll_q++)
++			if (aic3x->sysclk / (128 * pll_q) == fsref) {
++				bypass_pll = 1;
++				break;
++			}
++	}
  
+ 	if (bypass_pll) {
+ 		pll_q &= 0xf;
+@@ -1106,13 +1119,13 @@ static int aic3x_hw_params(struct snd_pcm_substream *substream,
+ 	 * right DAC to right channel input */
+ 	data = (LDAC2LCH | RDAC2RCH);
+ 	data |= (fsref == 44100) ? FSREF_44100 : FSREF_48000;
+-	if (params_rate(params) >= 64000)
++	if (dual_rate)
+ 		data |= DUAL_RATE_MODE;
+ 	snd_soc_component_write(component, AIC3X_CODEC_DATAPATH_REG, data);
+ 
+ 	/* codec sample rate select */
+ 	data = (fsref * 20) / params_rate(params);
+-	if (params_rate(params) < 64000)
++	if (!dual_rate)
+ 		data /= 2;
+ 	data /= 5;
+ 	data -= 2;
 -- 
 2.53.0
 
