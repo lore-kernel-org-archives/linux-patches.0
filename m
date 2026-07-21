@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0984472531;
-	Tue, 21 Jul 2026 20:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5164847141E;
+	Tue, 21 Jul 2026 20:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665296; cv=none; b=P/GSJ8hpmU2Tek4JjZvW9ZXen0HRdT9aOt9VdlGeZgCO43ZC5GpuqB2F8t5vYy1W3PwlTR2l0kFRxhju0tJ76DtA+Prt19IJB5+pOguqUitROW2rwxvgsr/e9cM74H5NTf7pup0J4iMCEevC0l15TnyN3MpW2hydeSJpRuDN8Cg=
+	t=1784665298; cv=none; b=tAs+jWIwQ6i+Hxgxgg2BM6Z8FZmIZvqIFM77KCK5x7Y936ysY9gnN46gFHZoBoQYlnH4PwU3n9Xa4Qov8u/8nb6Y55XXPAH9Kdf30YD5fk6+OuqyxSu9QWjn0zca7/ZaPmokQBTYsE7mFxsZx7B3LlG8ZDp9QHluJD97bz31r7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665296; c=relaxed/simple;
-	bh=7cvjiMaLROYVWnPn5PQVYlZqB8pmKx+PvPOYKuJB+co=;
+	s=arc-20240116; t=1784665298; c=relaxed/simple;
+	bh=X1iEaL/lVgCdJNUbLXxUKuH6sTVsBuDwEbKZASART2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uS7zCsRY+LBKMy28Scn3CljJHgJAuG1Z1Sc2qldFbTT+gM4cDaRKWMfOR/RksH7+dUMvDU8iAmXpbCyTGHYsz/pVPFpzv/yna4fUmcGJuQi5lbBG+4UjWW1JfJMiZQvBDS26fh77KCyD9bdZoh1DE7PG3wSgS28QF3s98gyCXDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zLFhf4/y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fjayn+r38erC5Oexreq2Vz1h/5iiTSbyZldhWofehUOp8AyIvut9ccN3ROYkYWsr1OfiWNb9EpGSyDz0jKUeO3kTgJVgdUD8pLBkBS+TD2S2Hx8zTwiyWhSeFDFEP9bLa1mMTLGS2YzUpaQWwL8cJpec1kWg8MnMcc2b8/mvzEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DWangQ6U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zLFhf4/y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B46E1F000E9;
-	Tue, 21 Jul 2026 20:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DWangQ6U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B689D1F000E9;
+	Tue, 21 Jul 2026 20:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665294;
-	bh=8IppM5pqw6Ssr4w0mZZG8Eyk+7qEXEWz7k3qkN9YYtM=;
+	s=korg; t=1784665297;
+	bh=QZhchE2E6dcsb7P4UsIWQurUSy7szBq0Zc2KRnD6uN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zLFhf4/yicsdra0flhAy91Byd1oVEQyEVZMUVX/kHia5H1fWDIg/uEQ678xhbe1f+
-	 jf14Mdw6a0hpKMvlPL8T/tac+Z56cTGpBRXsLZ+3R89Fb24I6OK+0FZEZQgUaKQ45V
-	 YV1j5WW3cLS1PkUTn7SXKP85x/3hFSQ4VcDcB6OA=
+	b=DWangQ6UTKzbvs57Zg4+b7F58nVXcKvDiGd6j8W1dfQGCcGk1ApdwCWmeDacY9aXG
+	 n2jSmDCq9Vw1z4svXJnR9EuFh6XTUmCYP1Qt/JD8iRckBWYya1O+i4b9XCIBIbBGV+
+	 Ml2ce4Qt/PwSqs7G4jvi2H+k51CYYLSzKjl6XgGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Igor Kotrasinski <i.kotrasinsk@samsung.com>,
-	Sam Day <me@samcday.com>
-Subject: [PATCH 6.6 0250/1266] usbip: vudc: fix NULL deref in vep_dequeue()
-Date: Tue, 21 Jul 2026 17:11:27 +0200
-Message-ID: <20260721152447.408378459@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.6 0251/1266] usb: typec: anx7411: use devm_pm_runtime_enable()
+Date: Tue, 21 Jul 2026 17:11:28 +0200
+Message-ID: <20260721152447.429760862@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,76 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Day <me@samcday.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit c5371e0b91b24159a3ebaa61e70b0980bcf03c0a upstream.
+commit 0ef7cc27da8b9e315a4a5a665c68c44206f5e559 upstream.
 
-vep_alloc_request() wasn't initializing vrequest->udc, so cancellations
-on the FunctionFS AIO path were arriving in vep_dequeue without a valid
-UDC reference.
+anx7411_i2c_probe() enables runtime PM before returning successfully, but
+anx7411_i2c_remove() tears down the Type-C partner state, workqueue, dummy
+I2C device, mux, switch and port without disabling runtime PM.
 
-Since vrequest->udc is never actually properly used anywhere, we opt to
-remove it, and update vep_dequeue to obtain a reference to the udc with
-ep_to_vudc(), consistent with the other vep_ ops.
+Use devm_pm_runtime_enable() so runtime PM is disabled automatically on
+driver detach. Since devres action registration can fail, route that
+failure through the existing probe unwind path.
 
-AFAICT this bug has existed for ~10 years. Seems that nobody has really
-stressed the FunctionFS AIO path on usbip's vudc.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-I tested this fix in a QEMU aarch64 guest driving FunctionFS endpoints
-via AIO. Before the fix, running `usbip attach` from the host would
-cause the guest to oops with the following backtrace:
-
-Call trace:
- vep_dequeue+0x1c/0xe4 (P)
- usb_ep_dequeue+0x14/0x20
- ffs_aio_cancel+0x24/0x34
- __arm64_sys_io_cancel+0xb0/0x124
- do_el0_svc+0x68/0x100
- el0_svc+0x18/0x5c
- el0t_64_sync_handler+0x98/0xdc
- el0t_64_sync+0x154/0x158
-
-Assisted-by: opencode:openai/gpt-5.5
+Fixes: fe6d8a9c8e64 ("usb: typec: anx7411: Add Analogix PD ANX7411 support")
 Cc: stable <stable@kernel.org>
-Fixes: b6a0ca111867 ("usbip: vudc: Add UDC specific ops")
-Reviewed-by: Igor Kotrasinski <i.kotrasinsk@samsung.com>
-Signed-off-by: Sam Day <me@samcday.com>
-Link: https://patch.msgid.link/20260626-usbip-vudc-deque-fix-v3-1-98c2dc4d6a48@samcday.com
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260701114006.75738-1-mhun512@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/usbip/vudc.h     |    1 -
- drivers/usb/usbip/vudc_dev.c |    4 +---
- 2 files changed, 1 insertion(+), 4 deletions(-)
+ drivers/usb/typec/anx7411.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/usbip/vudc.h
-+++ b/drivers/usb/usbip/vudc.h
-@@ -38,7 +38,6 @@ struct vep {
+--- a/drivers/usb/typec/anx7411.c
++++ b/drivers/usb/typec/anx7411.c
+@@ -1542,7 +1542,9 @@ static int anx7411_i2c_probe(struct i2c_
+ 	if (anx7411_typec_check_connection(plat))
+ 		dev_err(dev, "check status\n");
  
- struct vrequest {
- 	struct usb_request req;
--	struct vudc *udc;
- 	struct list_head req_entry; /* Request queue */
- };
+-	pm_runtime_enable(dev);
++	ret = devm_pm_runtime_enable(dev);
++	if (ret)
++		goto free_wq;
  
---- a/drivers/usb/usbip/vudc_dev.c
-+++ b/drivers/usb/usbip/vudc_dev.c
-@@ -333,7 +333,6 @@ static int vep_queue(struct usb_ep *_ep,
- static int vep_dequeue(struct usb_ep *_ep, struct usb_request *_req)
- {
- 	struct vep *ep;
--	struct vrequest *req;
- 	struct vudc *udc;
- 	struct vrequest *lst;
- 	unsigned long flags;
-@@ -343,8 +342,7 @@ static int vep_dequeue(struct usb_ep *_e
- 		return ret;
+ 	return 0;
  
- 	ep = to_vep(_ep);
--	req = to_vrequest(_req);
--	udc = req->udc;
-+	udc = ep_to_vudc(ep);
- 
- 	if (!udc->driver)
- 		return -ESHUTDOWN;
 
 
