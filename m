@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D6640683D;
-	Tue, 21 Jul 2026 19:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476BC40683D;
+	Tue, 21 Jul 2026 19:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660693; cv=none; b=H4wzZI0X7J2+VrEqBd9mjsqGI/ASvCggIkuGxhWE55r/nhTF0lhI2a+pMMY9jrtr65539ocohk4RS5HZw8lbD+OCQ0mqzG4ROOupwotghvDUOv2h389iTMgpwcwdJELSefcLxUyCFvUVu1vYHeFIdYFIMHt5fg3nRn/gIkyTJro=
+	t=1784660696; cv=none; b=oJcPAQgu/u2IFT8SNTPHZhuJ2L5bKkLb3GJZaAaxr4mn85swnRM2vBTu+2voEO7P0jYB29jwzIazoOJ9VND9d+yD93JXVoiXQgdHQhY8P2UbFcL/k2GOaG/Zyl0InNmExwarRQtW67jhgiuD0wg1dUrfxAsDNoVSh7nTvHPyAHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660693; c=relaxed/simple;
-	bh=CnFtYguolLU55ujFJtjZ0QUguo8T3OntwGrOG/jbfmI=;
+	s=arc-20240116; t=1784660696; c=relaxed/simple;
+	bh=2GwIg2i1cCsb97qEiS5mVDaNntA0x9pkuodXGbYqmK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n34GQha4fQEOCUpeLOYTD5JdCgmdM0ICx8t6i0mC32JkFPID3ZZWPQX3Xlh2215Efr7oo0s4adx19h1x6BAoWRH59d4h5quoPztzGMowbq4OP6uXk/HInQv1DG5FR9fwfhjmY+7r3Hi7lmo1GvcwSDthw5pqjaWAOL6gnOPMFpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyR1EPu8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d657YAZoykEHbyiY2SE6swuemxdbF6gp+qyWua1nqFxrCR96dsjapg4b8F1lRkZpDFIUEl5xLF8etvQ97YdhnAjFV6SXS1+2A6/w7VK56MJq1pCLPhBH3EMnQ0bWwqONl7NIG3LMDJUp+UU43lpWYnMhzem/lQnF3i7BAbuu/PI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVzT0A9B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyR1EPu8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103F51F000E9;
-	Tue, 21 Jul 2026 19:04:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVzT0A9B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB2C1F000E9;
+	Tue, 21 Jul 2026 19:04:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660692;
-	bh=pzsFuJ8FnHVmAqbEoYHyHaFSaAJrcH7vhuPuJgd8dQM=;
+	s=korg; t=1784660695;
+	bh=KCSTBImZgclWMuBAoFxtoVZZEYYzh04Xf4OqLtwYeoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jyR1EPu85vVD+U6gZcoJO02JXAvoE6YPnYECO2k/Bw94v803FIloYYVe1dRAeTAx8
-	 FaoQyZlPdT4Dw/SU6RxMLn2pcbl/27dbnP/P3dDBZee7eXrVYDNCwSD7U8PjP2V1xD
-	 w277BByaHBZmt8KvNv7rQUYnwZks16p9xvIfq32s=
+	b=GVzT0A9Bib4ufNaqsdyq7cgwHupDHzSrtTQPegLcTZ0VJ/fQskdFS6Z8YwIYSGkuJ
+	 gesQZyf2gn1noGGKvK8ABXY85+MuzryDq0mDYiwSMasF6zIIwH80wmIHQiedzhrVSb
+	 t/gCJGeX/Hr3BBiYFSzQUbz8If0BJddIj0OUCfaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Song Liu <songliubraving@fb.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1059/2077] i3c: master: Serialize i3c_set_hotjoin() with the maintenance lock
-Date: Tue, 21 Jul 2026 17:12:12 +0200
-Message-ID: <20260721152617.798887045@linuxfoundation.org>
+Subject: [PATCH 7.1 1077/2077] perf bpf: Validate func_info_rec_size and sub_id in synthesize_bpf_prog_name()
+Date: Tue, 21 Jul 2026 17:12:30 +0200
+Message-ID: <20260721152618.224983458@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,60 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 5b130aadc36b6a935b90937dcd67b8ed4ba57831 ]
+[ Upstream commit 10b3c3d63ecc17c6acb855bac5f40367f1115765 ]
 
-i3c_set_hotjoin() dispatches the controller's enable_hotjoin() or
-disable_hotjoin() op and updates master->hotjoin under
-i3c_bus_normaluse_lock(). That lock is a read-side acquisition of
-bus->lock (down_read()), so it does not exclude concurrent callers.
+synthesize_bpf_prog_name() computes a pointer into the func_info array
+using sub_id * info->func_info_rec_size without validating either value.
+Both come from perf.data and are untrusted:
 
-The hotjoin sysfs attribute can be opened multiple times, and writes
-through different opens are not serialized.  Two concurrent writers
-to "hotjoin" can therefore race in i3c_set_hotjoin(), with the
-controller op and the master->hotjoin store from one call interleaving
-with the other.  The hardware enable/disable state and the value reported
-by hotjoin_show() can end up out of sync.
+- A func_info_rec_size smaller than sizeof(struct bpf_func_info) means
+  the finfo pointer would reference a truncated entry, reading past it
+  into adjacent data.
 
-Take i3c_bus_maintenance_lock() instead. Toggling Hot Join enable
-changes bus state and is conceptually a maintenance operation, so the
-write-side acquisition of bus->lock is the appropriate lock and
-serializes concurrent callers against each other and against other
-maintenance operations.
+- A sub_id >= nr_func_info computes an offset past the func_info buffer,
+  causing an out-of-bounds read.
 
-Fixes: 317bacf960a48 ("i3c: master: add enable(disable) hot join in sys entry")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260608054312.10604-3-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Add bounds checks for both values before computing the pointer offset.
+When validation fails, fall through to the non-BTF name path instead
+of reading garbage.
+
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Fixes: 7b612e291a5affb1 ("perf tools: Synthesize PERF_RECORD_* for loaded BPF programs")
+Cc: Song Liu <songliubraving@fb.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/bpf-event.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index ab11e2d79aabb4..38ffc87131678a 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -649,7 +649,7 @@ static int i3c_set_hotjoin(struct i3c_master_controller *master, bool enable)
- 			return ret;
- 	}
- 
--	i3c_bus_normaluse_lock(&master->bus);
-+	i3c_bus_maintenance_lock(&master->bus);
- 
- 	if (enable)
- 		ret = master->ops->enable_hotjoin(master);
-@@ -659,7 +659,7 @@ static int i3c_set_hotjoin(struct i3c_master_controller *master, bool enable)
- 	if (!ret)
- 		master->hotjoin = enable;
- 
--	i3c_bus_normaluse_unlock(&master->bus);
-+	i3c_bus_maintenance_unlock(&master->bus);
- 
- 	if ((enable && ret) || (!enable && !ret) || master->rpm_ibi_allowed)
- 		i3c_master_rpm_put(master);
+diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
+index c4594969d76772..fe6fbca508c513 100644
+--- a/tools/perf/util/bpf-event.c
++++ b/tools/perf/util/bpf-event.c
+@@ -143,7 +143,9 @@ static int synthesize_bpf_prog_name(char *buf, int size,
+ 	name_len = scnprintf(buf, size, "bpf_prog_");
+ 	name_len += snprintf_hex(buf + name_len, size - name_len,
+ 				 prog_tags[sub_id], BPF_TAG_SIZE);
+-	if (btf) {
++	if (btf &&
++	    info->func_info_rec_size >= sizeof(*finfo) &&
++	    sub_id < info->nr_func_info) {
+ 		finfo = func_infos + sub_id * info->func_info_rec_size;
+ 		t = btf__type_by_id(btf, finfo->type_id);
+ 		if (t)
 -- 
 2.53.0
 
