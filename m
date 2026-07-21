@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B09438399A;
-	Tue, 21 Jul 2026 17:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C3C399892;
+	Tue, 21 Jul 2026 17:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654306; cv=none; b=EJQlSUIVnpWS8hD9wD6yxxcT1ghcsUmvUtTt4L4tvffWOM3pa16jWVltaNkdNwo2y4miqf7WSeJjaQZ1vwRgVa/LKCbZmCLQpy2Sx+NSCg67hoGPoR8j0GjWBnDbbxDQWBzK/kQGnOakl1x54vLCJcayQaaj4pdOptZjuWIQn6U=
+	t=1784654308; cv=none; b=gKTYPrYYvrLjTUWiEnvgh9vabfmJiknyOpvxhwTmPa3x+ksgWTNxafVTGPKDVnykzflAw7Ya4VlCnjc6/PULl39U2vakcH4Qc6iGAIZDBwp5QCaeWyJ6hOx1UpnzpY9B0fGzAw8HjaYMqmGutEfUhaLImbpmc8ASrt+664rVm3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654306; c=relaxed/simple;
-	bh=QXSqCTr+qIBcZRhcgU+H4qm7yHfKDjiQu/UiUOqR7zI=;
+	s=arc-20240116; t=1784654308; c=relaxed/simple;
+	bh=Oiv6GJwMkfAQGAGqcOTujPNaKa+wjaL96hDXMATHKgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M5tlGz6jsNeIRh+LXxHNiZUHBM6kI5zE2XAyFP4qYgop26unAxzU1+ubpS/Vgke8AUXodD8VCkYlzejcd6cZmPRJC7fP1hOaJfARjvbkFtIdlyAgTyZSOHVj5JE/D3NWD64lJ/6ClTibE1lp+OgBUT3Z5923z9aZE5vmoqJ1P8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfETv3Og; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kvIMXGDd+CUjOzFH2K2HlAnWsburZHyZpPe/qNG1+gx2uNobACP74tGoSu6LP+tZqLqh7pHsZKP1XvbwiamcBL2T1Xpy+72B5+sX6NVxSsnvgs5MCExMa7ZjY+SOf0/S3rs6IYTL+h+5IveS4N22eA9bk2LbiL+HeH4IBoHTgPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QjeTQOLL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfETv3Og"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922D21F000E9;
-	Tue, 21 Jul 2026 17:18:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QjeTQOLL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BFBF1F000E9;
+	Tue, 21 Jul 2026 17:18:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654304;
-	bh=LoDzIp2Nx3skatf0nbyEJXIWiYFI6gWC9q2GpD+YjBM=;
+	s=korg; t=1784654306;
+	bh=l0xA3ZLRv8GaLrHEcteLSlt/EzdS0LSFax5gFzJ2MLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UfETv3OgiI6EWSEz3KqSBwFPOwoAXCsDFYrwAah6Df4IcgaRE/JXTLbQdvEjXB83C
-	 aUAPIJNLpeRUrvfsZX4UMGtB9YSQcZK6/pNWYsXC0m7YBEaruuhYe78hUXECgABT/8
-	 pI3TD1ylQ3RaoqhlYCironqbEQJPF6Kb6/ixxYP0=
+	b=QjeTQOLLwaIDrYiKX/i88sAClXIC60GfQYutGBgRQHw2rLgohhAB0b5GRwexZ97k4
+	 WN+zF2X+TA+jrIF8nOaaIfc+Symt3psuGMnp7hAfGDWS3B1lkhIp8esAbtPcGYSoFr
+	 cLKXWuDe1cj3kjYQm1jYfRfyhlaDRt6qXI3oKPos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 7.1 1652/2077] batman-adv: tt: prevent TVLV OOB check overflow
-Date: Tue, 21 Jul 2026 17:22:05 +0200
-Message-ID: <20260721152631.713571426@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 7.1 1653/2077] cifs: invalidate cfid on unlink/rename/rmdir
+Date: Tue, 21 Jul 2026 17:22:06 +0200
+Message-ID: <20260721152631.737365126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -49,38 +50,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-commit 7a581d9aaba8c82bd6177fa36b2588eea77f6e2b upstream.
+commit f71d68d2b473e47db260c27c98212829590d8bae upstream.
 
-A TT unicast TVLV contains the number of VLANs stored in it. This number is
-an u16 and gets multiplied by the size of the struct
-batadv_tvlv_tt_vlan_data (8 bytes). The size can therefore overflow the u16
-used to store the tt_vlan_len. All additional safety checks to prevent
-out-of-bounds access of the TVLV buffer are invalid due to this overflow.
+Today we do not invalidate the cached_dirent or the entire
+parent cfid when a dentry in a dir has been removed/moved.
 
-Using size_t prevents this overflow and ensures that the safety checks
-compare against the actual buffer requirements.
+This change invalidates the parent cfid so that we don't serve
+directory contents from the cache.
 
-Cc: stable@vger.kernel.org
-Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/translation-table.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/smb/client/inode.c |   30 +++++++++++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
 
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -4025,7 +4025,8 @@ static int batadv_tt_tvlv_unicast_handle
- 					     u16 tvlv_value_len)
- {
- 	struct batadv_tvlv_tt_data *tt_data;
--	u16 tt_vlan_len, tt_num_entries;
-+	u16 tt_num_entries;
-+	size_t tt_vlan_len;
- 	char tt_flag;
- 	bool ret;
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -28,6 +28,23 @@
+ #include "cached_dir.h"
+ #include "reparse.h"
  
++static void cifs_invalidate_cached_dir(struct cifs_tcon *tcon,
++				       struct dentry *parent)
++{
++	struct cached_fid *parent_cfid = NULL;
++
++	if (!tcon || !parent)
++		return;
++
++	if (!open_cached_dir_by_dentry(tcon, parent, &parent_cfid)) {
++		mutex_lock(&parent_cfid->dirents.de_mutex);
++		parent_cfid->dirents.is_valid = false;
++		parent_cfid->dirents.is_failed = true;
++		mutex_unlock(&parent_cfid->dirents.de_mutex);
++		close_cached_dir(parent_cfid);
++	}
++}
++
+ /*
+  * Set parameters for the netfs library
+  */
+@@ -2067,6 +2084,9 @@ psx_del_no_retry:
+ 		cifs_set_file_info(inode, attrs, xid, full_path, origattr);
+ 
+ out_reval:
++	if (!rc && dentry->d_parent)
++		cifs_invalidate_cached_dir(tcon, dentry->d_parent);
++
+ 	if (inode) {
+ 		cifs_inode = CIFS_I(inode);
+ 		cifs_inode->time = 0;	/* will force revalidate to get info
+@@ -2378,7 +2398,6 @@ int cifs_rmdir(struct inode *inode, stru
+ 	}
+ 
+ 	rc = server->ops->rmdir(xid, tcon, full_path, cifs_sb);
+-	cifs_put_tlink(tlink);
+ 
+ 	cifsInode = CIFS_I(d_inode(direntry));
+ 
+@@ -2388,6 +2407,8 @@ int cifs_rmdir(struct inode *inode, stru
+ 		i_size_write(d_inode(direntry), 0);
+ 		clear_nlink(d_inode(direntry));
+ 		spin_unlock(&d_inode(direntry)->i_lock);
++		if (direntry->d_parent)
++			cifs_invalidate_cached_dir(tcon, direntry->d_parent);
+ 	}
+ 
+ 	/* force revalidate to go get info when needed */
+@@ -2402,6 +2423,7 @@ int cifs_rmdir(struct inode *inode, stru
+ 
+ 	inode_set_ctime_current(d_inode(direntry));
+ 	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
++	cifs_put_tlink(tlink);
+ 
+ rmdir_exit:
+ 	free_dentry_path(page);
+@@ -2668,6 +2690,12 @@ unlink_target:
+ 	}
+ 
+ 	/* force revalidate to go get info when needed */
++	if (!rc) {
++		cifs_invalidate_cached_dir(tcon, source_dentry->d_parent);
++		if (target_dentry->d_parent != source_dentry->d_parent)
++			cifs_invalidate_cached_dir(tcon, target_dentry->d_parent);
++	}
++
+ 	CIFS_I(source_dir)->time = CIFS_I(target_dir)->time = 0;
+ 
+ cifs_rename_exit:
 
 
