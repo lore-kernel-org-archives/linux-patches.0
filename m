@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D6C46D2DA;
-	Tue, 21 Jul 2026 17:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42E146D0B9;
+	Tue, 21 Jul 2026 17:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655458; cv=none; b=rmuhNKM0xo4c4X6Lj4Qd1V5Xk12jTwGvC1qaDILkf66Jue6+tDyA22Y4FHpJP3yxuGJFLb41bqL7mVRiJORtavnzTaiGOSFKaRkxRPsYjpebuZcXw/Yf97os64zUA1DsYBVT5mkoiQrTWKsT3tQI/1CJCWpTl5yurgZDclu+9zc=
+	t=1784655461; cv=none; b=Ih9YFo06gE1jM0mvdzeDG9iLkW33nwPrYZha6p5Y8zpGhKPYFfyqXqbM25KriV+Qt66rWY86xxfmvxi6HAKWa8ZTJLTILsiX5O0Xg628uzm95Lrqy1cGFyzkrKiUnPjSbU3ODJHZGH7ZZ6m60IFf4AWS5A8D6aLKH9s37pmfruY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655458; c=relaxed/simple;
-	bh=AqLISb0BB9YfbuCRCH/n1COJhGYPrGSIJ6dFlNcFH2I=;
+	s=arc-20240116; t=1784655461; c=relaxed/simple;
+	bh=6vTC+8ARdyk0nCNYqgI/iZCHzRc69xAhIC8OjiY7NOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A/TUIU5J+Bs68Qz4b27Ys48Wj+GJqkX0ZuDlctFY+HQVK3kDi7tY2GOeJc06GaaXPUaSPhgdrc+jg/xwY49/QMei2Lu4hxPjSeDVP7SaQK9hWKea6SNfbNL3MRjSHBIPz65SRfYerB3EEb6D8FyqXIsPyzajm5OkGEa4+zs1sVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MbKj/Ox0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aVeLX4tKa5FhJs9wa6KJ/NWVFg7Sedd/qeMbnVRDhdtacxBjH6zmB4cPZ/r1CgLnVBTrzg7eE2P7rUOtg9I4iPIGIZBUBu9ThwYyC8Q9bN3PmeqIXdiRkfTfGFR9pGGrpecz8NvvhsMlMP/CessF4GElRV5/+xC1fu/3IFhRpbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNFa5kLk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MbKj/Ox0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4E41F000E9;
-	Tue, 21 Jul 2026 17:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNFa5kLk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8341F000E9;
+	Tue, 21 Jul 2026 17:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655457;
-	bh=LVkQQLb4/MR9G+A3oKCPzP6gIbDNPsIlQy8L7Zyna4E=;
+	s=korg; t=1784655459;
+	bh=4LGjnfm5wLlL7rNRMHKRqiMe2bpVwhhl55ZrB1jfnZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MbKj/Ox08KC38H+aRQGQhtMRTO3g7guhdL6hi25eVuOXhO10e2VtpTKcLyOBjQAZ0
-	 ESYHSpTlRx4G6hjJqCLgUHgAp1SqfgCEfbcMqi5msRZ7WRgDO0LcxoAnNxoHS9kjYw
-	 GU2ygbFstpCTttdwEvCPq9wW0R+V+dbn6ft4I1RM=
+	b=nNFa5kLksfQZUPFy7X2B2FOe7PAslAqDKDazbWcor56/Bq8sH+05/1tfjFA0PeLwJ
+	 6GFPIptXqUdLeh8GSDDpM87eCFUYZg7xzKHSNH14tIdZU88aEhcrTOdtg3MZJfutoS
+	 KpT275m47QcATgsXfWeWzOKNw92aIcCl/VIH5Gs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rochan Avlur <rochan.avlur@gmail.com>,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Borislav Petkov <bp@alien8.de>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0017/1611] exfat: preserve benign secondary entries during rename and move
-Date: Tue, 21 Jul 2026 17:02:13 +0200
-Message-ID: <20260721152515.181346382@linuxfoundation.org>
+Subject: [PATCH 6.18 0018/1611] iommu/amd: Use maximum Event log buffer size when SNP is enabled on Family 0x19
+Date: Tue, 21 Jul 2026 17:02:14 +0200
+Message-ID: <20260721152515.205759931@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,345 +54,313 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rochan Avlur <rochan.avlur@gmail.com>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-[ Upstream commit 942296784b2a9439651750c42f540bf2579b330f ]
+[ Upstream commit 58c0ac6125d89bf6ec65a521eaeb52a0e8e20a9f ]
 
-Commit 8258ef28001a ("exfat: handle unreconized benign secondary
-entries") added cluster freeing for benign secondary entries inside
-exfat_remove_entries().  However, exfat_remove_entries() is also called
-from the rename and move paths (exfat_rename_file and exfat_move_file),
-where the old entry set is being relocated rather than deleted.  This
-causes benign secondary entries such as vendor extension entries to be
-silently destroyed on rename or cross-directory move, violating the
-exFAT spec requirement (section 8.2) that implementations preserve
-unrecognized benign secondary entries.
+Due to CVE-2023-20585, the Event log buffer must use the maximum supported
+size (512K) on Milan/Genoa (Family 0x19) systems when SNP is enabled,
+to mitigate a potential security vulnerability. All other systems continue to
+use the default Event log buffer size (8K).
 
-Fix this by adding a free_benign parameter to exfat_remove_entries()
-so callers can suppress cluster freeing during relocation, and
-extending exfat_init_ext_entry() to copy trailing benign secondary
-entries from the old entry set into the new one internally.  Also
-clean up the error paths to delete newly allocated entries on failure.
+Apply the errata fix by making the following changes:
 
-Fixes: 8258ef28001a ("exfat: handle unreconized benign secondary entries")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-fsdevel/CAG7tbBV--waov7XVu2FHQEc6paR92dufS=em9DW5Kzsrpu3iQg@mail.gmail.com/
-Signed-off-by: Rochan Avlur <rochan.avlur@gmail.com>
-Reviewed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Rochan Avlur <rochan.avlur@gmail.com>
+* Introduce new global variable (amd_iommu_evtlog_size) to have event log
+  buffer size. Adjust variable size for family 0x19.
+
+* Since 'iommu_snp_enable()' must be called after the core IOMMU subsystem
+  is initialized, it cannot be moved to the early init stage. The SNP errata
+  must also be applied after the 'iommu_snp_enable()' check. Therefore,
+  'alloc_event_buffer()' and 'iommu_enable_event_buffer()' are now called
+  in the IOMMU_ENABLED state, after the errata is applied.
+
+* Adjust alloc_event_buffer() and iommu_enable_event_buffer() to handle
+  all IOMMU instances.
+
+* Also rename EVT_* macros to make it more readable.
+
+Link: https://www.amd.com/en/resources/product-security/bulletin/amd-sb-3016.html
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Cc: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Tested-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/dir.c      | 49 ++++++++++++++++++++++---
- fs/exfat/exfat_fs.h |  5 ++-
- fs/exfat/namei.c    | 89 +++++++++++++++++++++++++++++++++++----------
- 3 files changed, 116 insertions(+), 27 deletions(-)
+ drivers/iommu/amd/amd_iommu.h       |   2 +
+ drivers/iommu/amd/amd_iommu_types.h |  10 ++-
+ drivers/iommu/amd/init.c            | 110 +++++++++++++++++++---------
+ drivers/iommu/amd/iommu.c           |   2 +-
+ 4 files changed, 86 insertions(+), 38 deletions(-)
 
-diff --git a/fs/exfat/dir.c b/fs/exfat/dir.c
-index e1b28c1a7e8576..1f6cb533a48d18 100644
---- a/fs/exfat/dir.c
-+++ b/fs/exfat/dir.c
-@@ -481,31 +481,70 @@ static void exfat_free_benign_secondary_clusters(struct inode *inode,
- 	exfat_free_cluster(inode, &dir);
+diff --git a/drivers/iommu/amd/amd_iommu.h b/drivers/iommu/amd/amd_iommu.h
+index bf77fdf5529f48..57d7f3faa98c6e 100644
+--- a/drivers/iommu/amd/amd_iommu.h
++++ b/drivers/iommu/amd/amd_iommu.h
+@@ -11,6 +11,8 @@
+ 
+ #include "amd_iommu_types.h"
+ 
++extern int amd_iommu_evtlog_size;
++
+ irqreturn_t amd_iommu_int_thread(int irq, void *data);
+ irqreturn_t amd_iommu_int_thread_evtlog(int irq, void *data);
+ irqreturn_t amd_iommu_int_thread_pprlog(int irq, void *data);
+diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
+index b0d919cd1a8fb1..bdd6c38ddfec9b 100644
+--- a/drivers/iommu/amd/amd_iommu_types.h
++++ b/drivers/iommu/amd/amd_iommu_types.h
+@@ -15,6 +15,7 @@
+ #include <linux/mutex.h>
+ #include <linux/msi.h>
+ #include <linux/list.h>
++#include <linux/sizes.h>
+ #include <linux/spinlock.h>
+ #include <linux/pci.h>
+ #include <linux/irqreturn.h>
+@@ -136,7 +137,6 @@
+ #define MMIO_STATUS_GALOG_INT_MASK		BIT(10)
+ 
+ /* event logging constants */
+-#define EVENT_ENTRY_SIZE	0x10
+ #define EVENT_TYPE_SHIFT	28
+ #define EVENT_TYPE_MASK		0xf
+ #define EVENT_TYPE_ILL_DEV	0x1
+@@ -249,8 +249,12 @@
+ #define MMIO_CMD_SIZE_512 (0x9ULL << MMIO_CMD_SIZE_SHIFT)
+ 
+ /* constants for event buffer handling */
+-#define EVT_BUFFER_SIZE		8192 /* 512 entries */
+-#define EVT_LEN_MASK		(0x9ULL << 56)
++#define EVTLOG_ENTRY_SIZE	0x10
++#define EVTLOG_SIZE_SHIFT	56
++#define EVTLOG_SIZE_DEF		SZ_8K /* 512 entries */
++#define EVTLOG_LEN_MASK_DEF	(0x9ULL << EVTLOG_SIZE_SHIFT)
++#define EVTLOG_SIZE_MAX		SZ_512K /* 32K entries */
++#define EVTLOG_LEN_MASK_MAX	(0xFULL << EVTLOG_SIZE_SHIFT)
+ 
+ /* Constants for PPR Log handling */
+ #define PPR_LOG_ENTRIES		512
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 76efd74124b33c..64964bb5ce0d36 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -132,6 +132,8 @@ struct ivhd_entry {
+ 	u8 uid;
+ } __attribute__((packed));
+ 
++int amd_iommu_evtlog_size = EVTLOG_SIZE_DEF;
++
+ /*
+  * An AMD IOMMU memory definition structure. It defines things like exclusion
+  * ranges for devices and regions that should be unity mapped.
+@@ -867,35 +869,47 @@ void *__init iommu_alloc_4k_pages(struct amd_iommu *iommu, gfp_t gfp,
  }
  
-+/*
-+ * exfat_init_ext_entry - initialize extension entries in a directory entry set
-+ * @es:          target entry set
-+ * @num_entries: number of entries excluding benign secondary entries
-+ * @p_uniname:   filename to store
-+ * @old_es:      optional source entry set with benign secondary entries, or NULL
-+ * @num_extra:   number of benign secondary entries to copy from @old_es
-+ *
-+ * Set up the file, stream extension, and filename entries in @es, optionally
-+ * preserving @num_extra benign secondary entries from @old_es.  @es and @old_es
-+ * may refer to the same entry set; excess entries are marked as deleted.
-+ */
- void exfat_init_ext_entry(struct exfat_entry_set_cache *es, int num_entries,
--		struct exfat_uni_name *p_uniname)
-+		struct exfat_uni_name *p_uniname,
-+		struct exfat_entry_set_cache *old_es, int num_extra)
+ /* allocates the memory where the IOMMU will log its events to */
+-static int __init alloc_event_buffer(struct amd_iommu *iommu)
++static int __init alloc_event_buffer(void)
  {
--	int i;
-+	int i, src_start = 0, old_num;
- 	unsigned short *uniname = p_uniname->name;
- 	struct exfat_dentry *ep;
+-	iommu->evt_buf = iommu_alloc_4k_pages(iommu, GFP_KERNEL,
+-					      EVT_BUFFER_SIZE);
++	struct amd_iommu *iommu;
  
-+	if (WARN_ON(num_extra < 0 || (num_extra && (!old_es ||
-+		    old_es->num_entries < ES_IDX_FIRST_FILENAME + num_extra))))
-+		num_extra = 0;
-+
-+	/*
-+	 * Save old entry count and source position before modifying
-+	 * es->num_entries, since old_es and es may point to the same
-+	 * entry set.
-+	 */
-+	old_num = es->num_entries;
-+	if (old_es && num_extra > 0)
-+		src_start = old_es->num_entries - num_extra;
-+
-+	es->num_entries = num_entries + num_extra;
- 	ep = exfat_get_dentry_cached(es, ES_IDX_FILE);
--	ep->dentry.file.num_ext = (unsigned char)(num_entries - 1);
-+	ep->dentry.file.num_ext = (unsigned char)(num_entries - 1 + num_extra);
- 
- 	ep = exfat_get_dentry_cached(es, ES_IDX_STREAM);
- 	ep->dentry.stream.name_len = p_uniname->name_len;
- 	ep->dentry.stream.name_hash = cpu_to_le16(p_uniname->name_hash);
- 
-+	if (old_es && num_extra > 0) {
-+		for (i = 0; i < num_extra; i++)
-+			*exfat_get_dentry_cached(es, num_entries + i) =
-+				*exfat_get_dentry_cached(old_es, src_start + i);
+-	return iommu->evt_buf ? 0 : -ENOMEM;
++	for_each_iommu(iommu) {
++		iommu->evt_buf = iommu_alloc_4k_pages(iommu, GFP_KERNEL,
++						      amd_iommu_evtlog_size);
++		if (!iommu->evt_buf)
++			return -ENOMEM;
 +	}
 +
- 	for (i = ES_IDX_FIRST_FILENAME; i < num_entries; i++) {
- 		ep = exfat_get_dentry_cached(es, i);
- 		exfat_init_name_entry(ep, uniname);
- 		uniname += EXFAT_FILE_NAME_LEN;
++	return 0;
+ }
+ 
+-static void iommu_enable_event_buffer(struct amd_iommu *iommu)
++static void iommu_enable_event_buffer(void)
+ {
++	struct amd_iommu *iommu;
+ 	u64 entry;
+ 
+-	BUG_ON(iommu->evt_buf == NULL);
++	for_each_iommu(iommu) {
++		BUG_ON(iommu->evt_buf == NULL);
+ 
+-	if (!is_kdump_kernel()) {
+-		/*
+-		 * Event buffer is re-used for kdump kernel and setting
+-		 * of MMIO register is not required.
+-		 */
+-		entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
+-		memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
+-			    &entry, sizeof(entry));
+-	}
++		if (!is_kdump_kernel()) {
++			/*
++			 * Event buffer is re-used for kdump kernel and setting
++			 * of MMIO register is not required.
++			 */
++			entry = iommu_virt_to_phys(iommu->evt_buf);
++			entry |= (amd_iommu_evtlog_size == EVTLOG_SIZE_DEF) ?
++				EVTLOG_LEN_MASK_DEF : EVTLOG_LEN_MASK_MAX;
++
++			memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
++				    &entry, sizeof(entry));
++		}
+ 
+-	/* set head and tail to zero manually */
+-	writel(0x00, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
+-	writel(0x00, iommu->mmio_base + MMIO_EVT_TAIL_OFFSET);
++		/* set head and tail to zero manually */
++		writel(0x00, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
++		writel(0x00, iommu->mmio_base + MMIO_EVT_TAIL_OFFSET);
+ 
+-	iommu_feature_enable(iommu, CONTROL_EVT_LOG_EN);
++		iommu_feature_enable(iommu, CONTROL_EVT_LOG_EN);
++	}
+ }
+ 
+ /*
+@@ -984,15 +998,20 @@ static int __init alloc_cwwb_sem(struct amd_iommu *iommu)
+ 	return 0;
+ }
+ 
+-static int __init remap_event_buffer(struct amd_iommu *iommu)
++static int __init remap_event_buffer(void)
+ {
++	struct amd_iommu *iommu;
+ 	u64 paddr;
+ 
+ 	pr_info_once("Re-using event buffer from the previous kernel\n");
+-	paddr = readq(iommu->mmio_base + MMIO_EVT_BUF_OFFSET) & PM_ADDR_MASK;
+-	iommu->evt_buf = iommu_memremap(paddr, EVT_BUFFER_SIZE);
++	for_each_iommu(iommu) {
++		paddr = readq(iommu->mmio_base + MMIO_EVT_BUF_OFFSET) & PM_ADDR_MASK;
++		iommu->evt_buf = iommu_memremap(paddr, amd_iommu_evtlog_size);
++		if (!iommu->evt_buf)
++			return -ENOMEM;
++	}
+ 
+-	return iommu->evt_buf ? 0 : -ENOMEM;
++	return 0;
+ }
+ 
+ static int __init remap_command_buffer(struct amd_iommu *iommu)
+@@ -1044,10 +1063,6 @@ static int __init alloc_iommu_buffers(struct amd_iommu *iommu)
+ 		ret = remap_command_buffer(iommu);
+ 		if (ret)
+ 			return ret;
+-
+-		ret = remap_event_buffer(iommu);
+-		if (ret)
+-			return ret;
+ 	} else {
+ 		ret = alloc_cwwb_sem(iommu);
+ 		if (ret)
+@@ -1056,10 +1071,6 @@ static int __init alloc_iommu_buffers(struct amd_iommu *iommu)
+ 		ret = alloc_command_buffer(iommu);
+ 		if (ret)
+ 			return ret;
+-
+-		ret = alloc_event_buffer(iommu);
+-		if (ret)
+-			return ret;
  	}
  
-+	/* Mark excess old entries as deleted (in-place shrink) */
-+	for (i = num_entries + num_extra; i < old_num; i++) {
-+		ep = exfat_get_dentry_cached(es, i);
-+		exfat_set_entry_type(ep, TYPE_DELETED);
-+	}
-+
- 	exfat_update_dir_chksum(es);
+ 	return 0;
+@@ -2884,7 +2895,6 @@ static void early_enable_iommu(struct amd_iommu *iommu)
+ 	iommu_init_flags(iommu);
+ 	iommu_set_device_table(iommu);
+ 	iommu_enable_command_buffer(iommu);
+-	iommu_enable_event_buffer(iommu);
+ 	iommu_set_exclusion_range(iommu);
+ 	iommu_enable_gt(iommu);
+ 	iommu_enable_ga(iommu);
+@@ -2948,7 +2958,6 @@ static void early_enable_iommus(void)
+ 			iommu_disable_event_buffer(iommu);
+ 			iommu_disable_irtcachedis(iommu);
+ 			iommu_enable_command_buffer(iommu);
+-			iommu_enable_event_buffer(iommu);
+ 			iommu_enable_ga(iommu);
+ 			iommu_enable_xt(iommu);
+ 			iommu_enable_irtcachedis(iommu);
+@@ -3061,6 +3070,7 @@ static void amd_iommu_resume(void)
+ 	for_each_iommu(iommu)
+ 		early_enable_iommu(iommu);
+ 
++	iommu_enable_event_buffer();
+ 	amd_iommu_enable_interrupts();
  }
  
- void exfat_remove_entries(struct inode *inode, struct exfat_entry_set_cache *es,
--		int order)
-+		int order, bool free_benign)
- {
- 	int i;
- 	struct exfat_dentry *ep;
-@@ -513,7 +552,7 @@ void exfat_remove_entries(struct inode *inode, struct exfat_entry_set_cache *es,
- 	for (i = order; i < es->num_entries; i++) {
- 		ep = exfat_get_dentry_cached(es, i);
- 
--		if (exfat_get_entry_type(ep) & TYPE_BENIGN_SEC)
-+		if (free_benign && (exfat_get_entry_type(ep) & TYPE_BENIGN_SEC))
- 			exfat_free_benign_secondary_clusters(inode, ep);
- 
- 		exfat_set_entry_type(ep, TYPE_DELETED);
-diff --git a/fs/exfat/exfat_fs.h b/fs/exfat/exfat_fs.h
-index 38210fb6901c09..9a85270f8493f9 100644
---- a/fs/exfat/exfat_fs.h
-+++ b/fs/exfat/exfat_fs.h
-@@ -496,9 +496,10 @@ void exfat_init_dir_entry(struct exfat_entry_set_cache *es,
- 		unsigned int type, unsigned int start_clu,
- 		unsigned long long size, struct timespec64 *ts);
- void exfat_init_ext_entry(struct exfat_entry_set_cache *es, int num_entries,
--		struct exfat_uni_name *p_uniname);
-+		struct exfat_uni_name *p_uniname,
-+		struct exfat_entry_set_cache *old_es, int num_extra);
- void exfat_remove_entries(struct inode *inode, struct exfat_entry_set_cache *es,
--		int order);
-+		int order, bool free_benign);
- void exfat_update_dir_chksum(struct exfat_entry_set_cache *es);
- int exfat_calc_num_entries(struct exfat_uni_name *p_uniname);
- int exfat_find_dir_entry(struct super_block *sb, struct exfat_inode_info *ei,
-diff --git a/fs/exfat/namei.c b/fs/exfat/namei.c
-index dfe957493d49ee..6b544df0a03a68 100644
---- a/fs/exfat/namei.c
-+++ b/fs/exfat/namei.c
-@@ -509,7 +509,7 @@ static int exfat_add_entry(struct inode *inode, const char *path,
- 	 * the first cluster is not determined yet. (0)
- 	 */
- 	exfat_init_dir_entry(&es, type, start_clu, clu_size, &ts);
--	exfat_init_ext_entry(&es, num_entries, &uniname);
-+	exfat_init_ext_entry(&es, num_entries, &uniname, NULL, 0);
- 
- 	ret = exfat_put_dentry_set(&es, IS_DIRSYNC(inode));
- 	if (ret)
-@@ -820,7 +820,7 @@ static int exfat_unlink(struct inode *dir, struct dentry *dentry)
- 	exfat_set_volume_dirty(sb);
- 
- 	/* update the directory entry */
--	exfat_remove_entries(inode, &es, ES_IDX_FILE);
-+	exfat_remove_entries(inode, &es, ES_IDX_FILE, true);
- 
- 	err = exfat_put_dentry_set(&es, IS_DIRSYNC(inode));
- 	if (err)
-@@ -981,7 +981,7 @@ static int exfat_rmdir(struct inode *dir, struct dentry *dentry)
- 
- 	exfat_set_volume_dirty(sb);
- 
--	exfat_remove_entries(inode, &es, ES_IDX_FILE);
-+	exfat_remove_entries(inode, &es, ES_IDX_FILE, true);
- 
- 	err = exfat_put_dentry_set(&es, IS_DIRSYNC(dir));
- 	if (err)
-@@ -1008,6 +1008,23 @@ static int exfat_rmdir(struct inode *dir, struct dentry *dentry)
- 	return err;
+@@ -3387,6 +3397,23 @@ static __init void iommu_snp_enable(void)
+ #endif
  }
  
-+/*
-+ * Count benign secondary entries beyond the filename entries.
-+ * Returns the count, or -EIO if the entry set is inconsistent.
-+ */
-+static int exfat_count_extra_entries(struct exfat_entry_set_cache *es)
++static void amd_iommu_apply_erratum_snp(void)
 +{
-+	struct exfat_dentry *stream;
-+	unsigned int name_entries;
-+	int extra;
++#ifdef CONFIG_KVM_AMD_SEV
++	if (!amd_iommu_snp_en)
++		return;
 +
-+	stream = exfat_get_dentry_cached(es, ES_IDX_STREAM);
-+	name_entries = EXFAT_FILENAME_ENTRY_NUM(stream->dentry.stream.name_len);
-+	extra = es->num_entries - (ES_IDX_FIRST_FILENAME + name_entries);
++	/* Errata fix for Family 0x19 */
++	if (boot_cpu_data.x86 != 0x19)
++		return;
 +
-+	return extra >= 0 ? extra : -EIO;
++	/* Set event log buffer size to max */
++	amd_iommu_evtlog_size = EVTLOG_SIZE_MAX;
++	pr_info("Applying erratum: Increase Event log size to 0x%x\n",
++		amd_iommu_evtlog_size);
++#endif
 +}
 +
- static int exfat_rename_file(struct inode *parent_inode,
- 		struct exfat_uni_name *p_uniname, struct exfat_inode_info *ei)
- {
-@@ -1016,6 +1033,7 @@ static int exfat_rename_file(struct inode *parent_inode,
- 	struct super_block *sb = parent_inode->i_sb;
- 	struct exfat_entry_set_cache old_es, new_es;
- 	int sync = IS_DIRSYNC(parent_inode);
-+	unsigned int num_extra_entries, num_total_entries;
- 
- 	if (unlikely(exfat_forced_shutdown(sb)))
- 		return -EIO;
-@@ -1025,19 +1043,23 @@ static int exfat_rename_file(struct inode *parent_inode,
- 		return num_new_entries;
- 
- 	ret = exfat_get_dentry_set_by_ei(&old_es, sb, ei);
--	if (ret) {
--		ret = -EIO;
--		return ret;
--	}
-+	if (ret)
-+		return -EIO;
- 
- 	epold = exfat_get_dentry_cached(&old_es, ES_IDX_FILE);
- 
--	if (old_es.num_entries < num_new_entries) {
-+	ret = exfat_count_extra_entries(&old_es);
-+	if (ret < 0)
-+		goto put_old_es;
-+	num_extra_entries = ret;
-+	num_total_entries = num_new_entries + num_extra_entries;
+ /****************************************************************************
+  *
+  * AMD IOMMU Initialization State Machine
+@@ -3423,6 +3450,21 @@ static int __init state_next(void)
+ 	case IOMMU_ENABLED:
+ 		register_syscore_ops(&amd_iommu_syscore_ops);
+ 		iommu_snp_enable();
 +
-+	if (old_es.num_entries < num_total_entries) {
- 		int newentry;
- 		struct exfat_chain dir;
- 
- 		newentry = exfat_find_empty_entry(parent_inode, &dir,
--				num_new_entries, &new_es);
-+				num_total_entries, &new_es);
- 		if (newentry < 0) {
- 			ret = newentry; /* -EIO or -ENOSPC */
- 			goto put_old_es;
-@@ -1054,13 +1076,23 @@ static int exfat_rename_file(struct inode *parent_inode,
- 		epnew = exfat_get_dentry_cached(&new_es, ES_IDX_STREAM);
- 		*epnew = *epold;
- 
--		exfat_init_ext_entry(&new_es, num_new_entries, p_uniname);
-+		exfat_init_ext_entry(&new_es, num_new_entries, p_uniname,
-+				     &old_es, num_extra_entries);
- 
- 		ret = exfat_put_dentry_set(&new_es, sync);
--		if (ret)
++		amd_iommu_apply_erratum_snp();
++
++		/* Allocate/enable event log buffer */
++		if (is_kdump_kernel())
++			ret = remap_event_buffer();
++		else
++			ret = alloc_event_buffer();
++
 +		if (ret) {
-+			/* Best-effort delete to avoid duplicate entries */
-+			if (!exfat_get_dentry_set(&new_es, sb,
-+						  &dir, newentry,
-+						  ES_ALL_ENTRIES)) {
-+				exfat_remove_entries(parent_inode, &new_es,
-+						    ES_IDX_FILE, false);
-+				exfat_put_dentry_set(&new_es, false);
-+			}
- 			goto put_old_es;
++			init_state = IOMMU_INIT_ERROR;
++			break;
 +		}
- 
--		exfat_remove_entries(parent_inode, &old_es, ES_IDX_FILE);
-+		exfat_remove_entries(parent_inode, &old_es, ES_IDX_FILE, false);
- 		ei->dir = dir;
- 		ei->entry = newentry;
- 	} else {
-@@ -1069,8 +1101,8 @@ static int exfat_rename_file(struct inode *parent_inode,
- 			ei->attr |= EXFAT_ATTR_ARCHIVE;
- 		}
- 
--		exfat_remove_entries(parent_inode, &old_es, ES_IDX_FIRST_FILENAME + 1);
--		exfat_init_ext_entry(&old_es, num_new_entries, p_uniname);
-+		exfat_init_ext_entry(&old_es, num_new_entries, p_uniname,
-+				     &old_es, num_extra_entries);
- 	}
- 	return exfat_put_dentry_set(&old_es, sync);
- 
-@@ -1086,6 +1118,7 @@ static int exfat_move_file(struct inode *parent_inode,
- 	struct exfat_dentry *epmov, *epnew;
- 	struct exfat_entry_set_cache mov_es, new_es;
- 	struct exfat_chain newdir;
-+	unsigned int num_extra_entries, num_total_entries;
- 
- 	num_new_entries = exfat_calc_num_entries(p_uniname);
- 	if (num_new_entries < 0)
-@@ -1095,8 +1128,14 @@ static int exfat_move_file(struct inode *parent_inode,
- 	if (ret)
- 		return -EIO;
- 
-+	ret = exfat_count_extra_entries(&mov_es);
-+	if (ret < 0)
-+		goto put_mov_es;
-+	num_extra_entries = ret;
-+	num_total_entries = num_new_entries + num_extra_entries;
++		iommu_enable_event_buffer();
 +
- 	newentry = exfat_find_empty_entry(parent_inode, &newdir,
--			num_new_entries, &new_es);
-+			num_total_entries, &new_es);
- 	if (newentry < 0) {
- 		ret = newentry; /* -EIO or -ENOSPC */
- 		goto put_mov_es;
-@@ -1114,21 +1153,31 @@ static int exfat_move_file(struct inode *parent_inode,
- 	epnew = exfat_get_dentry_cached(&new_es, ES_IDX_STREAM);
- 	*epnew = *epmov;
+ 		ret = amd_iommu_init_pci();
+ 		init_state = ret ? IOMMU_INIT_ERROR : IOMMU_PCI_INIT;
+ 		break;
+@@ -4025,7 +4067,7 @@ int amd_iommu_snp_disable(void)
+ 		return 0;
  
--	exfat_init_ext_entry(&new_es, num_new_entries, p_uniname);
--	exfat_remove_entries(parent_inode, &mov_es, ES_IDX_FILE);
-+	exfat_init_ext_entry(&new_es, num_new_entries, p_uniname,
-+			     &mov_es, num_extra_entries);
-+
-+	exfat_remove_entries(parent_inode, &mov_es, ES_IDX_FILE, false);
- 
- 	ei->dir = newdir;
- 	ei->entry = newentry;
- 
- 	ret = exfat_put_dentry_set(&new_es, IS_DIRSYNC(parent_inode));
--	if (ret)
-+	if (ret) {
-+		/* Best-effort delete to avoid duplicate entries */
-+		if (!exfat_get_dentry_set(&new_es, parent_inode->i_sb,
-+					  &newdir, newentry,
-+					  ES_ALL_ENTRIES)) {
-+			exfat_remove_entries(parent_inode, &new_es,
-+					    ES_IDX_FILE, false);
-+			exfat_put_dentry_set(&new_es, false);
-+		}
- 		goto put_mov_es;
-+	}
- 
- 	return exfat_put_dentry_set(&mov_es, IS_DIRSYNC(parent_inode));
- 
- put_mov_es:
- 	exfat_put_dentry_set(&mov_es, false);
--
- 	return ret;
- }
- 
-@@ -1202,7 +1251,7 @@ static int __exfat_rename(struct inode *old_parent_inode,
- 			goto del_out;
- 		}
- 
--		exfat_remove_entries(new_inode, &es, ES_IDX_FILE);
-+		exfat_remove_entries(new_inode, &es, ES_IDX_FILE, true);
- 
- 		ret = exfat_put_dentry_set(&es, IS_DIRSYNC(new_inode));
+ 	for_each_iommu(iommu) {
+-		ret = iommu_make_shared(iommu->evt_buf, EVT_BUFFER_SIZE);
++		ret = iommu_make_shared(iommu->evt_buf, amd_iommu_evtlog_size);
  		if (ret)
+ 			return ret;
+ 
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 5fef68797fdab9..c458eec8a5bba8 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -992,7 +992,7 @@ static void iommu_poll_events(struct amd_iommu *iommu)
+ 		iommu_print_event(iommu, iommu->evt_buf + head);
+ 
+ 		/* Update head pointer of hardware ring-buffer */
+-		head = (head + EVENT_ENTRY_SIZE) % EVT_BUFFER_SIZE;
++		head = (head + EVTLOG_ENTRY_SIZE) % amd_iommu_evtlog_size;
+ 		writel(head, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
+ 	}
+ 
 -- 
 2.53.0
 
