@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D053B6352;
-	Tue, 21 Jul 2026 18:09:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4163C6A57;
+	Tue, 21 Jul 2026 18:09:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657347; cv=none; b=rBAJLaHAvP90FCCiqCnvXGxh3uR9UR5PJekHH12BOUMy66+lWorU29sx1ed0jumERSjDshHHdU60iG6rGUQpUZOsi+FwYj9ufWGxXQfX/3aFU01RNwCBgE36RdXR5oUUsXXn0h2BcX27SGiPNK0TqFGjxajnyYkYdxK1BYsuCB0=
+	t=1784657349; cv=none; b=XHF5xacd/bj49oozvzM2maUnrlblM04nuVwqXFWJognxtt3UYh/rYpLxoQKbMTyl/syHcPae8Ga/AJHv/0EDpXit8Az7/KI3mkj6ToNZeUgzq5bUxD+DJYLlTkCfgUKNWLsCf0e88RQEmGPH9XIo/kvZStrNJA1+8g0W5S4luYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657347; c=relaxed/simple;
-	bh=qlu2Q4GJsQZNZNJNB6bbbH8XLwwFxEIe0W7mvC9shdY=;
+	s=arc-20240116; t=1784657349; c=relaxed/simple;
+	bh=+PMKb5WaJughbzmwl4qQDvi26mu06Ij9k2O/ogX7kZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Isv36b0TjwtsMKLNsIl64Dn5fxunbF1NlsD66Ef1WU0Dm2vbKG8gH8MZn09LGKj+9gn4WzfI5lhPQI+35/03ecATMOQFBaMg+P1EHJy0lLYkxzKnSOXu2kVTVlpQ2Mc2R4iLzfNnCNhUIGFmxKSmpgRtH2FyTrvlzvb4vV5rz8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wC4ie74Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iYouB8H4yh95AMUfzSszQdfpCF4EiQtgs2M96F9xPCoD0g5bytzqnwC1AqATg+HEQC5t/JqA0Sk+mZ+x8SGIEwdmhdNMYFKr0FJTNFGC4iCKffoZL2R1os034j0gCZlnusOJqgSJFlYbYadUY/FrbgQc8R/sHbOYCMeDwlKmu68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZAyIIBT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wC4ie74Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854571F000E9;
-	Tue, 21 Jul 2026 18:09:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZAyIIBT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5891F00A3D;
+	Tue, 21 Jul 2026 18:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657346;
-	bh=OVEaS0I0Rv/BhnuKoqU2/asR5+7CRg+VF/q49whgvfg=;
+	s=korg; t=1784657348;
+	bh=nyqK03g4Ro2utYqpaMZjciRuNKqPCyUEmwE0ZbzMBEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wC4ie74ZlBJEsExL+6ZnTLBkeYUoBSCUMWMHMQvIuJwJe+RhlKRSExOrEauXh5xUk
-	 AU5mA+pE20t8hO/F/ss1W4LGgl+SvQhwo0fgd0MmaIsnWujyApLLdREXacrT4lwN5O
-	 X11JiTyJmykHfSw2DQTuJBCc4Gv8rWvZVXuI6xHA=
+	b=MZAyIIBTm3rul3zZu8pgbIzHzmoiG8ecqh9Duobgmr104HptZDYqyloSW8X6v3pwR
+	 GzDRfG5Ek+2KQdhSdxehtjvTRvxDVSgfbaDvKdseJFtGDzJuG1qQhLo4ddobHI6DHa
+	 N3HK1oHOmZroX268lZzrUJzP+MSdJWF9YmwWNlNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Caleb James DeLisle <cjd@cjdns.fr>,
+	Liu Ying <victor.liu@nxp.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0729/1611] PCI: mediatek: Use actual physical address instead of virt_to_phys()
-Date: Tue, 21 Jul 2026 17:14:05 +0200
-Message-ID: <20260721152531.778442122@linuxfoundation.org>
+Subject: [PATCH 6.18 0730/1611] phy: freescale: phy-fsl-imx8qm-lvds-phy: Fix missing pm_runtime_disable() on probe error path
+Date: Tue, 21 Jul 2026 17:14:06 +0200
+Message-ID: <20260721152531.800705436@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,91 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit ebc1d9906894703286d12306a6f242d90cfb49e8 ]
+[ Upstream commit 799e7cf2f0b50b34660b5ffce0f7d8dec376a0d5 ]
 
-The driver previously used virt_to_phys() on the ioremapped register base
-(port->base) to compute the MSI message address. Using virt_to_phys() on an
-IO mapped address is incorrect because it expects a kernel virtual address.
+If mixel_lvds_phy_reset() fails in probe after pm_runtime_enable(),
+the function returns directly without calling pm_runtime_disable(),
+leaving runtime PM permanently enabled for the device.
 
-To fix it, store the physical start of the I/O register region in
-mtk_pcie_port->phys_base and use it to build the MSI address. This replaces
-the incorrect virt_to_phys() usage and ensures MSI addresses are generated
-correctly.
+Fix this by using devm_pm_runtime_enable() so that cleanup is
+automatic on any probe failure or driver unbind. This also allows
+removing the manual err label and the .remove callback.
 
-Fixes: 43e6409db64d ("PCI: mediatek: Add MSI support for MT2712 and MT7622")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Tested-by: Caleb James DeLisle <cjd@cjdns.fr>
-Link: https://patch.msgid.link/20260521171951.1495781-2-cjd@cjdns.fr
+Fixes: 06ff622d61d2 ("phy: freescale: Add i.MX8qm Mixel LVDS PHY support")
+Acked-by: Liu Ying <victor.liu@nxp.com>
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260605-lvds-v2-1-3ce7539d1104@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-mediatek.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ .../phy/freescale/phy-fsl-imx8qm-lvds-phy.c   | 24 ++++++-------------
+ 1 file changed, 7 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-mediatek.c b/drivers/pci/controller/pcie-mediatek.c
-index cd4be8ec0d03a3..6afce031523bd6 100644
---- a/drivers/pci/controller/pcie-mediatek.c
-+++ b/drivers/pci/controller/pcie-mediatek.c
-@@ -166,6 +166,7 @@ struct mtk_pcie_soc {
- /**
-  * struct mtk_pcie_port - PCIe port information
-  * @base: IO mapped register base
-+ * @phys_base: Physical address of the I/O register base region
-  * @list: port list
-  * @pcie: pointer to PCIe host info
-  * @reset: pointer to port reset control
-@@ -187,6 +188,7 @@ struct mtk_pcie_soc {
-  */
- struct mtk_pcie_port {
- 	void __iomem *base;
-+	phys_addr_t phys_base;
- 	struct list_head list;
- 	struct mtk_pcie *pcie;
- 	struct reset_control *reset;
-@@ -396,7 +398,7 @@ static void mtk_compose_msi_msg(struct irq_data *data, struct msi_msg *msg)
- 	phys_addr_t addr;
+diff --git a/drivers/phy/freescale/phy-fsl-imx8qm-lvds-phy.c b/drivers/phy/freescale/phy-fsl-imx8qm-lvds-phy.c
+index 7aef2f59e8eb4a..c366d765d6508e 100644
+--- a/drivers/phy/freescale/phy-fsl-imx8qm-lvds-phy.c
++++ b/drivers/phy/freescale/phy-fsl-imx8qm-lvds-phy.c
+@@ -347,7 +347,9 @@ static int mixel_lvds_phy_probe(struct platform_device *pdev)
  
- 	/* MT2712/MT7622 only support 32-bit MSI addresses */
--	addr = virt_to_phys(port->base + PCIE_MSI_VECTOR);
-+	addr = port->phys_base + PCIE_MSI_VECTOR;
- 	msg->address_hi = 0;
- 	msg->address_lo = lower_32_bits(addr);
+ 	dev_set_drvdata(dev, priv);
  
-@@ -511,7 +513,7 @@ static void mtk_pcie_enable_msi(struct mtk_pcie_port *port)
- 	u32 val;
- 	phys_addr_t msg_addr;
+-	pm_runtime_enable(dev);
++	ret = devm_pm_runtime_enable(dev);
++	if (ret)
++		return ret;
  
--	msg_addr = virt_to_phys(port->base + PCIE_MSI_VECTOR);
-+	msg_addr = port->phys_base + PCIE_MSI_VECTOR;
- 	val = lower_32_bits(msg_addr);
- 	writel(val, port->base + PCIE_IMSI_ADDR);
+ 	ret = mixel_lvds_phy_reset(dev);
+ 	if (ret) {
+@@ -357,17 +359,15 @@ static int mixel_lvds_phy_probe(struct platform_device *pdev)
  
-@@ -920,6 +922,7 @@ static int mtk_pcie_parse_port(struct mtk_pcie *pcie,
- 	struct mtk_pcie_port *port;
- 	struct device *dev = pcie->dev;
- 	struct platform_device *pdev = to_platform_device(dev);
-+	struct resource *res;
- 	char name[20];
- 	int err;
+ 	for (i = 0; i < PHY_NUM; i++) {
+ 		lvds_phy = devm_kzalloc(dev, sizeof(*lvds_phy), GFP_KERNEL);
+-		if (!lvds_phy) {
+-			ret = -ENOMEM;
+-			goto err;
+-		}
++		if (!lvds_phy)
++			return -ENOMEM;
  
-@@ -928,7 +931,14 @@ static int mtk_pcie_parse_port(struct mtk_pcie *pcie,
- 		return -ENOMEM;
+ 		phy = devm_phy_create(dev, NULL, &mixel_lvds_phy_ops);
+ 		if (IS_ERR(phy)) {
+ 			ret = PTR_ERR(phy);
+ 			dev_err(dev, "failed to create PHY for channel%d: %d\n",
+ 				i, ret);
+-			goto err;
++			return ret;
+ 		}
  
- 	snprintf(name, sizeof(name), "port%d", slot);
--	port->base = devm_platform_ioremap_resource_byname(pdev, name);
-+	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
-+	if (!res) {
-+		dev_err(dev, "failed to get port%d base\n", slot);
-+		return -EINVAL;
-+	}
-+
-+	port->phys_base = res->start;
-+	port->base = devm_ioremap_resource(&pdev->dev, res);
- 	if (IS_ERR(port->base)) {
- 		dev_err(dev, "failed to map port%d base\n", slot);
- 		return PTR_ERR(port->base);
+ 		lvds_phy->phy = phy;
+@@ -381,19 +381,10 @@ static int mixel_lvds_phy_probe(struct platform_device *pdev)
+ 	if (IS_ERR(phy_provider)) {
+ 		ret = PTR_ERR(phy_provider);
+ 		dev_err(dev, "failed to register PHY provider: %d\n", ret);
+-		goto err;
++		return ret;
+ 	}
+ 
+ 	return 0;
+-err:
+-	pm_runtime_disable(dev);
+-
+-	return ret;
+-}
+-
+-static void mixel_lvds_phy_remove(struct platform_device *pdev)
+-{
+-	pm_runtime_disable(&pdev->dev);
+ }
+ 
+ static int __maybe_unused mixel_lvds_phy_runtime_suspend(struct device *dev)
+@@ -434,7 +425,6 @@ MODULE_DEVICE_TABLE(of, mixel_lvds_phy_of_match);
+ 
+ static struct platform_driver mixel_lvds_phy_driver = {
+ 	.probe = mixel_lvds_phy_probe,
+-	.remove = mixel_lvds_phy_remove,
+ 	.driver = {
+ 		.pm = &mixel_lvds_phy_pm_ops,
+ 		.name = "mixel-lvds-phy",
 -- 
 2.53.0
 
