@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEDF46C4BB;
-	Tue, 21 Jul 2026 15:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DA946C4DC;
+	Tue, 21 Jul 2026 15:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649495; cv=none; b=dwwM9PLbsMdXAkPBEVCqW4xSjI8eAUzx6+nJRiINh216L1W8Fa7EtZRODvT0dy+hAm9HX6oTgnkb/Ic/UsCoKlanqt2h7nJYxYffoCBAriOBeyzKrrUD6qsVLUcvXNjF8QkVEfyWztrUOlp0f090+SZ9JNfkXUOPmmPea8X7UJY=
+	t=1784649497; cv=none; b=Q8CNKckjaRvPGsF8YmEXZZOignWQFZxKwCOhXQyApy3u+WaWGBw102mPRc01VkM1X3b5hMgcY/PdeKfZChVdR2bYEmZ5PyEHpKsHHw5oJkImahhWKFZmT9k/9yIBxBcSu8oiFWXulTddrO+uk4dJjZzDLN1jGfxLf5rQTpIxJgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649495; c=relaxed/simple;
-	bh=zJxnNfHLiiIIQpZS4ICttpnjwMJX8b5tjJtTu3dI7MM=;
+	s=arc-20240116; t=1784649497; c=relaxed/simple;
+	bh=NticZMIKztRxJPpeDkHhWjSTUpENgyUFfKxNVnL03Ww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VjeZceHfgtDV1u6KLNfUPUMBQienMbl56izDGlhy03A8i4qLhcgGIujuT+ikLsgGXZ+k5VdjPYVAOeKwoD9pci++VL/lp3HBey8oFm52WB959ZSsn/ALnSzrICcslynv1byJW9Wei5fw8hvVa8yFOZ/iqDZ7m50vHmIqPzjZfiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hm0CAr/7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uPJlNQp1Scs5iw2YLQTVaHzVjIAfgAh7h+f7vmkL6zfr2PkwmGpYDoow2+N61HsDAiH5ZCQI90SfLi3JfZT1h896xz8G/mMzouPGI07z8P0CCvTE6YI+ZVbYJbHx8PGObB957+e/pOiu/2WM42GySNSrBN+/Otci1fiOXnf9XgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBjFLxBJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hm0CAr/7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545FF1F000E9;
-	Tue, 21 Jul 2026 15:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBjFLxBJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB65A1F00A3A;
+	Tue, 21 Jul 2026 15:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649492;
-	bh=6T+XJSISRHlu+O0txJbj72hN+K3So8ED17VFHVoywQw=;
+	s=korg; t=1784649495;
+	bh=BB6llS/o/ut4LzAQpJcYbjCQlGi3/N+lwcnn4Jd8Bdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hm0CAr/7MiGxw39yzsDMh1Bj31TDiNQRRNNDqPrg70S0x1utfZNqujD5ZSghOrFga
-	 zwYxfk4NGT6YW71t53WQ/5u5bX7ikG9rCRnsH6rI9X6DPXShslxrHNtSTnzJGqjEvk
-	 ctlC/7kYUUZ5SOUyyOSyoKAo4VHaRVrlyLXAeMJc=
+	b=XBjFLxBJDtMyfgfHVl1AHUrZVTg2eMzxN6E0mnPmjSOF+w2LcwGHoT2juSDp60h2J
+	 J0ec50t+Sya8K/mgyToYHsRhR1J8l/Sa2UGLZXiWV/OiZcacDHvPdTgDLFieAOdrSk
+	 wM3o6sK7XYccluIEqGS1bpAvx9ZX5v5RxQbvBMhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0555/2077] spi: ep93xx: fix double-free of zeropage on DMA setup failure
-Date: Tue, 21 Jul 2026 17:03:48 +0200
-Message-ID: <20260721152605.900928210@linuxfoundation.org>
+Subject: [PATCH 7.1 0546/2077] ntfs: bound the look-ahead attribute-list entry in ntfs_external_attr_find()
+Date: Tue, 21 Jul 2026 17:03:39 +0200
+Message-ID: <20260721152605.690756808@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,39 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 7886054b06f762f62054957a8f6de0f14e6b7541 ]
+[ Upstream commit 344b18f389f9934d59c7b0cf3d20541ea2e0da58 ]
 
-If DMA setup fails after allocating the zeropage, the error path frees
-the page but leaves espi->zeropage dangling. A subsequent call to
-ep93xx_spi_release_dma() sees the non-NULL pointer and frees the page
-again.
+When resolving an attribute lookup with a non-zero @lowest_vcn,
+ntfs_external_attr_find() peeks at the next $ATTRIBUTE_LIST entry to
+decide whether to keep searching, but bounds that not-yet-validated
+entry only with "(u8 *)next_al_entry + 6 < al_end" (which proves just
+bytes 0..6 are in range) and "(u8 *)next_al_entry + length <= al_end"
+with an attacker-controlled, non-8-aligned length. It then reads
+next_al_entry->lowest_vcn (an __le64 at offset 8) and the name at
+next_al_entry->name_offset, both of which can lie past al_end -- the
+exact end of the kvmalloc'd attribute-list buffer (allocated at the
+on-disk attr_list_size, no rounding). A crafted on-disk $ATTRIBUTE_LIST
+whose last entry sits a few bytes before al_end therefore yields a slab
+out-of-bounds read when the inode is read.
 
-Clear the pointer after freeing in the error path of
-ep93xx_spi_setup_dma().
+Validate the look-ahead entry with ntfs_attr_list_entry_is_valid() (added
+in patch 1/3) before dereferencing lowest_vcn and the name, so the same
+fixed-header, length and name bounds the main attribute-list walk uses now
+guard this read too.
 
-Fixes: 626a96db1169 ("spi/ep93xx: add DMA support")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260529-ep93xx-v1-1-9185070ca1fc@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 1e9ea7e04472 ("Revert "fs: Remove NTFS classic"")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-ep93xx.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ntfs/attrib.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-ep93xx.c b/drivers/spi/spi-ep93xx.c
-index f716c9607be4af..4cab0d97a68afc 100644
---- a/drivers/spi/spi-ep93xx.c
-+++ b/drivers/spi/spi-ep93xx.c
-@@ -600,6 +600,7 @@ static int ep93xx_spi_setup_dma(struct device *dev, struct ep93xx_spi *espi)
- 	espi->dma_rx = NULL;
- fail_free_page:
- 	free_page((unsigned long)espi->zeropage);
-+	espi->zeropage = NULL;
- 
- 	return ret;
- }
+diff --git a/fs/ntfs/attrib.c b/fs/ntfs/attrib.c
+index abc0add6f0c446..e425c8d074c58a 100644
+--- a/fs/ntfs/attrib.c
++++ b/fs/ntfs/attrib.c
+@@ -1185,9 +1185,8 @@ static int ntfs_external_attr_find(const __le32 type,
+ 		 * we have reached the right one or the search has failed.
+ 		 */
+ 		if (lowest_vcn && (u8 *)next_al_entry >= al_start &&
+-				(u8 *)next_al_entry + 6 < al_end &&
+-				(u8 *)next_al_entry + le16_to_cpu(
+-					next_al_entry->length) <= al_end &&
++				ntfs_attr_list_entry_is_valid(next_al_entry,
++							      al_end) &&
+ 				le64_to_cpu(next_al_entry->lowest_vcn) <=
+ 					lowest_vcn &&
+ 				next_al_entry->type == al_entry->type &&
 -- 
 2.53.0
 
