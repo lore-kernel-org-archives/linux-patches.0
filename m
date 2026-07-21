@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48BF41A239A;
-	Tue, 21 Jul 2026 15:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AEA31F99C;
+	Tue, 21 Jul 2026 15:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648718; cv=none; b=GHZlDyPhfkSdV3WxLbh9s7+gh9DWYzAkL0QEiml/lRIiYO+IMIl5y6Q1RBx+61AIEHTqH3hWgwr0iYKqjPlIDCRc/D0aGo9K2q0mnCmcDeHR8oVYDoBP5rhKBHDB9smZ5o7TIklgCiq+HsJE2RpzTkQmxJJqBbQdodIVObht43o=
+	t=1784648721; cv=none; b=TFAF2M44XbRBd4s5o7Ux+u1TrG9mGeSm0wl2KThOuh2XXik11u9lPl7X+KLU/1jV360S0QV/nolc2D3BX8KeNKAEyyIRE1Y7EdTBVc/7MbdiyM+ftS86LZsJiK3cHZR0FjTLVnjNMqcczT0XPz0TLPLZCABRAEloh1PtvU29m9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648718; c=relaxed/simple;
-	bh=RgG4Eh6iICww7oX+mtcKtByAVu94mtV2xntvg6ea5tw=;
+	s=arc-20240116; t=1784648721; c=relaxed/simple;
+	bh=tmOZrSVQAAcDlumOl5SSSKCyFQbQ5DF9llk9jp+eK7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ddX+xUQcJ9e0B0VVFXqot2mc5LGnYYAHEUHa1Sov219cSjaTIKPACfb2CdA6NMxGK1m2pYSaJ5anyC+OhyjfYgMD8DuOQaqbHTJ/2GowucrzbSprXd4ZcwbmggedeeUbX9YihWPc+tFOsVu5Rr926BhIUS22NM4LGliR8AB6/CQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0zw9/r94; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cpO4/vVR9QXhH/q+nMwS2S93uZXVxek/w/prLAm4DTbYS7YEzruxUUSoVZ2Dji1lhEO0XEFmp0ezvBdCZLWZOdDNgQOBFZUYZtCvj+vzOq4QMjL6xqEuj3mvOtjmZMEngWsa125Gaj7HC0wV0fW6eiMvTph+wIxxP8P/bv69Cfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8nucq7/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0zw9/r94"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF99C1F000E9;
-	Tue, 21 Jul 2026 15:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8nucq7/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676D41F000E9;
+	Tue, 21 Jul 2026 15:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648717;
-	bh=QIJBCA37JMe5zmrT8guvfyd/zbuVpgPQULycY94hufU=;
+	s=korg; t=1784648719;
+	bh=M7LvgCEwAxE2CFQv2dyh+Nph3OG9Cukws1SgoIBtPMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0zw9/r94e9b80CnrqHuF2JvVwU1h7RDFsu0oOg0uzawXsITeM4UH9lprz6YVAG0nv
-	 JooPtSxaVQbX1x4ps5oNfueUqlKQt6JyurWEzj2mmdnsIwfrBSsSw6/gdJcvoIJ9mI
-	 d2LHWLjhSvRV9SWBQ9PSqDhuhNXRmfWmV0sUXASY=
+	b=Q8nucq7/JN7STQN2ceWRO5pe/Cn4erxYzDTIJotBvdyi5fhdrZXmEG3K/3L8vBIZB
+	 8pA7edPLbYMDHDGbrLnVVXc8UBNxw7iSaaWBqSCqni/kZxfzsuMbFqXGjBsmslshw6
+	 ICs9wzd5ds9sVk3FNgOfUMfgEfDTTKnGv38Esm/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0304/2077] RDMA/hns: Fix warning in poll cq direct mode
-Date: Tue, 21 Jul 2026 16:59:37 +0200
-Message-ID: <20260721152559.849144329@linuxfoundation.org>
+Subject: [PATCH 7.1 0305/2077] RDMA/hns: Fix log flood after cmd_mbox failure
+Date: Tue, 21 Jul 2026 16:59:38 +0200
+Message-ID: <20260721152559.873028484@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,52 +54,134 @@ Content-Transfer-Encoding: 8bit
 
 From: Lianfa Weng <wenglianfa@huawei.com>
 
-[ Upstream commit 3f19c2a3852e6ba75f3e92dd5edc4e07f3d07f4a ]
+[ Upstream commit bbd97d71e53e551890e4115ad9de46b5f2ac0858 ]
 
-CQs allocated by ib_alloc_cq() always have a comp_handler. Though
-in direct mode this handler is never expected to be called, it
-is still called when the driver is reset, triggering the following
-WARN_ONCE():
+hns_roce_cmd_mbox() is the command interface between driver and
+hardware. When hardware is abnormal, the unlimited error printings
+after hns_roce_cmd_mbox() failure will cause log flood and even
+system crash.
 
-Call trace:
-ib_cq_completion_direct+0x38/0x60
-hns_roce_cq_completion+0x54/0x90 (hns_roce_hw_v2]
-hns_roce_handle_device_err+Ox1c8/0x340 [hns_roce_hw_v2]
-hns_roce_hw_v2_uninit_instance.constprop.0+0x34/0x70 [hns_roce_hw_v2]
-hns_roce_hw_v2_reset_notify+0xc4/0xe0 [hns_roce_hw_v2]
-hclge_notify_roce_client+0x60/0xbc [hclge]
-hclge_reset_rebuild+0x48/0x34c [hclge]
-hclge_reset_subtask+0xcc/0xec [hclge]
-hclge_reset_service_task+0x80/0x160 [hclge]
-hclge_service_task+0x50/0x80 (hclge]
-process_one_work+0x1cc/0x4d0
-worker_thread+0x154/0x414
-kthread+0x104/0x144
-ret_from_fork+0x10/0x18
+Replace ibdev_err() and ibdev_warn() with their ratelimited versions
+in the error handling path after hns_roce_cmd_mbox() (and its wrappers
+hns_roce_create_hw_ctx/hns_roce_destroy_hw_ctx) fails.
 
-Fixes: f295e4cece5c ("RDMA/hns: Delete unnecessary callback functions for cq")
-Link: https://patch.msgid.link/r/20260520055759.2354037-3-huangjunxian6@hisilicon.com
+Fixes: 9a4435375cd1 ("IB/hns: Add driver files for hns RoCE driver")
+Link: https://patch.msgid.link/r/20260520055759.2354037-4-huangjunxian6@hisilicon.com
 Signed-off-by: Lianfa Weng <wenglianfa@huawei.com>
 Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/hns/hns_roce_cq.c    |  6 +++---
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 18 +++++++++---------
+ drivers/infiniband/hw/hns/hns_roce_mr.c    |  6 +++---
+ drivers/infiniband/hw/hns/hns_roce_srq.c   |  2 +-
+ 4 files changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
-index 0dbe99aab6ad21..1e54710354542e 100644
---- a/drivers/infiniband/hw/hns/hns_roce_main.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_main.c
-@@ -1113,7 +1113,7 @@ static void check_and_get_armed_cq(struct list_head *cq_list, struct ib_cq *cq)
- 	unsigned long flags;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_cq.c b/drivers/infiniband/hw/hns/hns_roce_cq.c
+index 621568e114054b..f7e220ab421981 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_cq.c
++++ b/drivers/infiniband/hw/hns/hns_roce_cq.c
+@@ -174,9 +174,9 @@ static int hns_roce_create_cqc(struct hns_roce_dev *hr_dev,
+ 	ret = hns_roce_create_hw_ctx(hr_dev, mailbox, HNS_ROCE_CMD_CREATE_CQC,
+ 				     hr_cq->cqn);
+ 	if (ret)
+-		ibdev_err(ibdev,
+-			  "failed to send create cmd for CQ(0x%lx), ret = %d.\n",
+-			  hr_cq->cqn, ret);
++		ibdev_err_ratelimited(ibdev,
++				      "failed to send create cmd for CQ(0x%lx), ret = %d.\n",
++				      hr_cq->cqn, ret);
  
- 	spin_lock_irqsave(&hr_cq->lock, flags);
--	if (cq->comp_handler) {
-+	if (cq->comp_handler && hr_cq->ib_cq.poll_ctx != IB_POLL_DIRECT) {
- 		if (!hr_cq->is_armed) {
- 			hr_cq->is_armed = 1;
- 			list_add_tail(&hr_cq->node, cq_list);
+ 	hns_roce_free_cmd_mailbox(hr_dev, mailbox);
+ 
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index fa36700d0db2b6..8810fa0b659731 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -6192,9 +6192,9 @@ static int hns_roce_v2_modify_srq(struct ib_srq *ibsrq,
+ 					HNS_ROCE_CMD_MODIFY_SRQC, srq->srqn);
+ 		hns_roce_free_cmd_mailbox(hr_dev, mailbox);
+ 		if (ret)
+-			ibdev_err(&hr_dev->ib_dev,
+-				  "failed to handle cmd of modifying SRQ, ret = %d.\n",
+-				  ret);
++			ibdev_err_ratelimited(&hr_dev->ib_dev,
++					      "failed to handle cmd of modifying SRQ, ret = %d.\n",
++					      ret);
+ 	}
+ 
+ out:
+@@ -6220,9 +6220,9 @@ static int hns_roce_v2_query_srq(struct ib_srq *ibsrq, struct ib_srq_attr *attr)
+ 	ret = hns_roce_cmd_mbox(hr_dev, 0, mailbox->dma,
+ 				HNS_ROCE_CMD_QUERY_SRQC, srq->srqn);
+ 	if (ret) {
+-		ibdev_err(&hr_dev->ib_dev,
+-			  "failed to process cmd of querying SRQ, ret = %d.\n",
+-			  ret);
++		ibdev_err_ratelimited(&hr_dev->ib_dev,
++				      "failed to process cmd of querying SRQ, ret = %d.\n",
++				      ret);
+ 		goto out;
+ 	}
+ 
+@@ -6328,9 +6328,9 @@ static int hns_roce_v2_query_mpt(struct hns_roce_dev *hr_dev, u32 key,
+ 	ret = hns_roce_cmd_mbox(hr_dev, 0, mailbox->dma, HNS_ROCE_CMD_QUERY_MPT,
+ 				key_to_hw_index(key));
+ 	if (ret) {
+-		ibdev_err(&hr_dev->ib_dev,
+-			  "failed to process cmd when querying MPT, ret = %d.\n",
+-			  ret);
++		ibdev_err_ratelimited(&hr_dev->ib_dev,
++				      "failed to process cmd when querying MPT, ret = %d.\n",
++				      ret);
+ 		goto err_mailbox;
+ 	}
+ 
+diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
+index 25bfd3970f5b6e..c13d29cd0897bf 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_mr.c
++++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
+@@ -173,7 +173,7 @@ static int hns_roce_mr_enable(struct hns_roce_dev *hr_dev,
+ 	ret = hns_roce_create_hw_ctx(hr_dev, mailbox, HNS_ROCE_CMD_CREATE_MPT,
+ 				     mtpt_idx & (hr_dev->caps.num_mtpts - 1));
+ 	if (ret) {
+-		dev_err(dev, "failed to create mpt, ret = %d.\n", ret);
++		dev_err_ratelimited(dev, "failed to create mpt, ret = %d.\n", ret);
+ 		goto err_page;
+ 	}
+ 
+@@ -319,7 +319,7 @@ struct ib_mr *hns_roce_rereg_user_mr(struct ib_mr *ibmr, int flags, u64 start,
+ 	ret = hns_roce_destroy_hw_ctx(hr_dev, HNS_ROCE_CMD_DESTROY_MPT,
+ 				      mtpt_idx);
+ 	if (ret)
+-		ibdev_warn(ib_dev, "failed to destroy MPT, ret = %d.\n", ret);
++		ibdev_warn_ratelimited(ib_dev, "failed to destroy MPT, ret = %d.\n", ret);
+ 
+ 	mr->enabled = 0;
+ 	mr->iova = virt_addr;
+@@ -350,7 +350,7 @@ struct ib_mr *hns_roce_rereg_user_mr(struct ib_mr *ibmr, int flags, u64 start,
+ 	ret = hns_roce_create_hw_ctx(hr_dev, mailbox, HNS_ROCE_CMD_CREATE_MPT,
+ 				     mtpt_idx);
+ 	if (ret) {
+-		ibdev_err(ib_dev, "failed to create MPT, ret = %d.\n", ret);
++		ibdev_err_ratelimited(ib_dev, "failed to create MPT, ret = %d.\n", ret);
+ 		goto free_cmd_mbox;
+ 	}
+ 
+diff --git a/drivers/infiniband/hw/hns/hns_roce_srq.c b/drivers/infiniband/hw/hns/hns_roce_srq.c
+index 8b94cbdfa54dfa..8feb5851067d82 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_srq.c
++++ b/drivers/infiniband/hw/hns/hns_roce_srq.c
+@@ -103,7 +103,7 @@ static int hns_roce_create_srqc(struct hns_roce_dev *hr_dev,
+ 	ret = hns_roce_create_hw_ctx(hr_dev, mailbox, HNS_ROCE_CMD_CREATE_SRQ,
+ 				     srq->srqn);
+ 	if (ret)
+-		ibdev_err(ibdev, "failed to config SRQC, ret = %d.\n", ret);
++		ibdev_err_ratelimited(ibdev, "failed to config SRQC, ret = %d.\n", ret);
+ 
+ err_mbox:
+ 	hns_roce_free_cmd_mailbox(hr_dev, mailbox);
 -- 
 2.53.0
 
