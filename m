@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C7047045C;
-	Tue, 21 Jul 2026 19:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DF547012C;
+	Tue, 21 Jul 2026 19:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663399; cv=none; b=DlXgdSFq7FYBTvFh05veQcI+MTbYUbDYoWF+nDDu0s6gjy37HzAFLVuCkc9FKjpD2icVsh2uaR5h4yzgTha2Rc6uIlPVKIh4FwUcRPKBvs8vdpYBc+YY6fjB62AJldRvvI/qOTivb3VeEDZ8CmRHCFzb14nygbkNeZgF9cKKkrw=
+	t=1784663402; cv=none; b=X2vbgbTORnFcQrvnCydZr3fbP1LE0FSCo3R3q+zKqd3wiVq+enNbVrveOZIhmAOVQFCDcx2pHvYmsqjIHMemz150pEYQCAA9ZO4mFn0fl0h8Gh05Y++aCPyaxhbeoaOZgk8r6aFJI96aBleYKb0Zv+ynTf8GjHaewvFSMPEiVyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663399; c=relaxed/simple;
-	bh=W9TNkhUhRsNCQrrsrq81vI95jx70zUj7vgEqZHNMVQY=;
+	s=arc-20240116; t=1784663402; c=relaxed/simple;
+	bh=Xmz1Egt+InC9Y26mm/9XGBz7/msnosakY3NvTRSqx68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m6Y4ZOBMq44pJkHHnabKhqCa8IyE2/C6Z5sXTyGaNTid/yN+7TImXE4job8YZEfNqsn5Wt8Ht4+59QvPNEsWpakWRvdV50/MofuGKNTpzUsq69sP5t4L4GzQb9piCPHRkwgn5uHnsSitbAIDslh8SHEAdcDpPIEXRz7J6UiYlws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HLs1kNEK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RahhuwfVeKeKlnqM1yoR5IS4apnTTjwZ/XKaPbtRfGL1Nt35dhPDMoFw3bakUfwpwFYZUSqGc9dTuZgocwtEuQC3Xzkcegp7K83wGDrzUNbW0u0kT+kE94gnjkHofqr3emrYYgrwmb/Vjs2Bx0E/ol3VeIAjNiG/gHPPm7T/fS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYAUCYQX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HLs1kNEK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E985E1F000E9;
-	Tue, 21 Jul 2026 19:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYAUCYQX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6FA71F000E9;
+	Tue, 21 Jul 2026 19:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663398;
-	bh=/HD4yAOK2jw//8nsd1r/rnDHM3dP+Na6WusOhjbUsRs=;
+	s=korg; t=1784663401;
+	bh=K/EmlUPdOhvFOB3/ORB3j1jC/Jd/H5G/nLTTkBZs86w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HLs1kNEKZDWXFMjSgVTzyu4fHUXMGGw6RyeTJLxOxp/LfxFVk89pfpG/E42cAg20J
-	 JDCltFpopTvepvhrEXpOkqL421OsSDjc79Gizk/3cvy/6jKa1PN+HTmPanUeyK90en
-	 kInNppKZ8OnDIlQo9dwN8BonQ1qhy3j52fMEdA0g=
+	b=cYAUCYQXw6pJmKDdBBZY6Q2sp6/k1d6hqQTs+4KaX2L8ARfPz4CLcPmRiNlkQE49J
+	 vCzLAsnp34Ac64LT/tBziQbelitFbB2BNMYVVjNtB7EcugUVXtVhAx3XA3u40q/WtM
+	 JhjK2d1njYzhSKEOCN2WsJWLpVYQWMlGCcuwUFQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Tianci <zhangtianci.1997@bytedance.com>,
-	Xie Yongji <xieyongji@bytedance.com>,
-	Jason Wang <jasowang@redhat.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.12 0808/1276] vduse: Fix race in vduse_dev_msg_sync and vduse_dev_read_iter
-Date: Tue, 21 Jul 2026 17:20:51 +0200
-Message-ID: <20260721152504.150907645@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 0809/1276] ASoC: SOF: ipc4-control: Fix TOCTOU in sof_ipc4_bytes_put
+Date: Tue, 21 Jul 2026 17:20:52 +0200
+Message-ID: <20260721152504.172356117@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -47,112 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Tianci <zhangtianci.1997@bytedance.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit ae9c13b6fd79087cc5a216ee1649b6f012c2a238 upstream.
+commit 3ad673e7139cf214afd24321a829aad6575f4163 upstream.
 
-There is one race case in vduse_dev_msg_sync and vduse_dev_read_iter:
+In sof_ipc4_bytes_put(), the copy size is derived from the old
+data->size in the buffer rather than the incoming new data's size
+field from ucontrol. If the new data has a different size, the copy
+uses the wrong length: it may truncate valid data or copy stale bytes.
 
-vduse_dev_read_iter():
-    lock(msg_lock);
-    dequeue_msg(send_list);
-    unlock(msg_lock);
-vduse_dev_msg_sync():
-    wait_timeout() finish
-    lock(msg_lock);
-    check msg->complete is false
-        list_del(msg);   <- double list_del() crash!
+Fix by validating and using the incoming data's sof_abi_hdr.size from
+ucontrol before copying.
 
-To fix this case, we shall ensure vduse_msg is on send_list or recv_list
-outside the msg_lock critical section.
-
-Fixes: c8a6153b6c59 ("vduse: Introduce VDUSE - vDPA Device in Userspace")
+Fixes: a062c8899fed ("ASoC: SOF: ipc4-control: Add support for bytes control get and put")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
-Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260226115550.1814-3-zhangtianci.1997@bytedance.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20260609083458.31193-2-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/vdpa_user/vduse_dev.c |   37 +++++++++++++++++++++++++++----------
- 1 file changed, 27 insertions(+), 10 deletions(-)
+ sound/soc/sof/ipc4-control.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/vdpa/vdpa_user/vduse_dev.c
-+++ b/drivers/vdpa/vdpa_user/vduse_dev.c
-@@ -330,6 +330,7 @@ static ssize_t vduse_dev_read_iter(struc
- 	struct file *file = iocb->ki_filp;
- 	struct vduse_dev *dev = file->private_data;
- 	struct vduse_dev_msg *msg;
-+	struct vduse_dev_request req;
- 	int size = sizeof(struct vduse_dev_request);
- 	ssize_t ret;
+--- a/sound/soc/sof/ipc4-control.c
++++ b/sound/soc/sof/ipc4-control.c
+@@ -455,6 +455,8 @@ static int sof_ipc4_bytes_put(struct snd
+ 	struct snd_soc_component *scomp = scontrol->scomp;
+ 	struct snd_sof_dev *sdev = snd_soc_component_get_drvdata(scomp);
+ 	struct sof_abi_hdr *data = cdata->data;
++	const struct sof_abi_hdr *new_hdr =
++		(const struct sof_abi_hdr *)ucontrol->value.bytes.data;
+ 	size_t size;
+ 	int ret;
  
-@@ -341,12 +342,11 @@ static ssize_t vduse_dev_read_iter(struc
- 		msg = vduse_dequeue_msg(&dev->send_list);
- 		if (msg)
- 			break;
-+		spin_unlock(&dev->msg_lock);
- 
--		ret = -EAGAIN;
- 		if (file->f_flags & O_NONBLOCK)
--			goto unlock;
-+			return -EAGAIN;
- 
--		spin_unlock(&dev->msg_lock);
- 		ret = wait_event_interruptible_exclusive(dev->waitq,
- 					!list_empty(&dev->send_list));
- 		if (ret)
-@@ -354,17 +354,34 @@ static ssize_t vduse_dev_read_iter(struc
- 
- 		spin_lock(&dev->msg_lock);
+@@ -465,15 +467,16 @@ static int sof_ipc4_bytes_put(struct snd
+ 		return -EINVAL;
  	}
-+
-+	memcpy(&req, &msg->req, sizeof(req));
-+	/*
-+	 * We must ensure vduse_msg is on send_list or recv_list before unlock
-+	 * dev->msg_lock. Because vduse_dev_msg_sync() may be timeout when we
-+	 * copy data to userspace, and will call list_del() for this msg.
-+	 */
-+	vduse_enqueue_msg(&dev->recv_list, msg);
- 	spin_unlock(&dev->msg_lock);
--	ret = copy_to_iter(&msg->req, size, to);
--	spin_lock(&dev->msg_lock);
-+
-+	ret = copy_to_iter(&req, size, to);
- 	if (ret != size) {
-+		/*
-+		 * Roll back: move msg back to send_list if still pending.
-+		 *
-+		 * NOTE:
-+		 * vduse_find_msg() must use req.request_id instead of `msg`.
-+		 * A malicious userspace may reply to this request, and wake up
-+		 * the caller, after which `msg` will have already been freed.
-+		 * And here vduse_find_msg() will return NULL then do nothing.
-+		 */
-+		spin_lock(&dev->msg_lock);
-+		msg = vduse_find_msg(&dev->recv_list, req.request_id);
-+		if (msg)
-+			vduse_enqueue_msg_head(&dev->send_list, msg);
-+		spin_unlock(&dev->msg_lock);
- 		ret = -EFAULT;
--		vduse_enqueue_msg_head(&dev->send_list, msg);
--		goto unlock;
- 	}
--	vduse_enqueue_msg(&dev->recv_list, msg);
--unlock:
--	spin_unlock(&dev->msg_lock);
  
- 	return ret;
- }
+-	/* scontrol->max_size has been verified to be >= sizeof(struct sof_abi_hdr) */
+-	if (data->size > scontrol->max_size - sizeof(*data)) {
++	/* Validate the new data's size, not the old one */
++	if (new_hdr->size > scontrol->max_size - sizeof(*new_hdr)) {
+ 		dev_err_ratelimited(scomp->dev,
+ 				    "data size too big %u bytes max is %zu\n",
+-				    data->size, scontrol->max_size - sizeof(*data));
++				    new_hdr->size,
++				    scontrol->max_size - sizeof(*new_hdr));
+ 		return -EINVAL;
+ 	}
+ 
+-	size = data->size + sizeof(*data);
++	size = new_hdr->size + sizeof(*new_hdr);
+ 
+ 	/* copy from kcontrol */
+ 	memcpy(data, ucontrol->value.bytes.data, size);
 
 
