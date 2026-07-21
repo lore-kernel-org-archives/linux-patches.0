@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ACB23C1F22;
-	Tue, 21 Jul 2026 22:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AF744AB91;
+	Tue, 21 Jul 2026 22:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674137; cv=none; b=IALZkkxD3X+NX4IPet9qP+N1h/dOa5EU9z35CjrCxN/1PMC7CfhWIUtB0hhz+MPJD+R4gc0bmco75hbJ1Uk7Y5KsMabpcDUfadd3lqnc31xQvaYqMmxM5+opMkn/QhDyemWcnvLFAIDwaubRNx9UySlzRtgylbRcfM8DjaZwI+I=
+	t=1784674140; cv=none; b=ZybM7fmvC9uCNKrlp+975xs7i5CFIrqU6oo2EZxwiIfC8CN011VtuHzOqE3k6QGbV/4x2PJTYRVY7TLgWIjndGQ9uxceNIKVyd0E5IgfCrPsuqotzxhD3azd4cTkluRXlk4Gt/O/ix28/ls0guebGgwzLTVHSEZ5WZTaJFb9pLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674137; c=relaxed/simple;
-	bh=qE/mG/aaD5JaR922boBX0rRDPUsbj3a9cyY4Ol3A+aw=;
+	s=arc-20240116; t=1784674140; c=relaxed/simple;
+	bh=mTsSGsxf7CMQ6K9rqXKnqrrV1O5B+pyS60EE2Cy6lB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y2qW0Aslir9f2jcZ1Pnx7VC2TO4sr9ZXbLUb+JUQQlFofoFW5TZitUeEAjOQ0DmvJ9tPGmAy6KQzajOINGL1d4/En8+gB/OtZ81N921EWdR4qHoo1gqz6ga1KWvp7prpArs1lVdoWJUm2hKlhyzFQBiqZc7gLhyGBrOTx//24Jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgreKiun; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C9+tWu9r2kDWgK4JUgNO1e5nzJQc5gdvvD11zmbc78DSV8H0EVsT4PWcIhgnq1LpuAFyAMq8FjfFa3RKYN6FvhVo3Px1QUAs01UjlagMVn440wk9nQFVtNCCz+8RK6wCxWgkUZdsc+o+dLbnFpA+UAzVl+ehHYrzI4k8dkGgTLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UM7wCe7F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgreKiun"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01FB1F000E9;
-	Tue, 21 Jul 2026 22:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UM7wCe7F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8498D1F000E9;
+	Tue, 21 Jul 2026 22:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674136;
-	bh=zzE49wu/UTVhyFJaWyEUI9+ehVmx75adzVOFuw5Xo4o=;
+	s=korg; t=1784674139;
+	bh=dvFX/x+FZ0fHsdEFMVEFOC8SgjGYcFtFbUU6oLMWizc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RgreKiun2ymDAW5OtYCStnOlqv7H26dpelWKp7LfskAmjzychLKCjG3NrZokvY8Uo
-	 W67AryDAMMoT15s9LEqnP7quES7G0Kzc72gqNExgZrOZT81tTU6EdvvcPFX0lCK9oO
-	 nRGqYBx0pKzOmzqWv7LGlOnfkGulkFL2xgYw5Vxc=
+	b=UM7wCe7FD2nJ1U19IFb7qLkUFTerKowdZ3Uu83aJDukjuMaDC0Fetx38VEuelp522
+	 ZyR2sizRApQaFDAd0UT7NVq55O6Gcb0s4IZyVE4caWOY8I7EsuSHJGvVQmiqGWo9Ag
+	 N+oFJ7wVD23PR10sfurDe1cBHavwcHZQjmQDj/tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Simon Horman <horms@kernel.org>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 427/699] net/mlx5: Fix L3 tunnel entropy refcount leak
-Date: Tue, 21 Jul 2026 17:23:06 +0200
-Message-ID: <20260721152405.325028548@linuxfoundation.org>
+Subject: [PATCH 5.10 428/699] smb: client: fix overflow in passthrough ioctl bounds check
+Date: Tue, 21 Jul 2026 17:23:07 +0200
+Message-ID: <20260721152405.346336589@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,44 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit c914307e1d41c2cb7bcdcbfde4cd2f214f6aa027 ]
+[ Upstream commit a4f27ad055392fa164f5649e89a3637b033c5fcc ]
 
-mlx5_tun_entropy_refcount_inc() counts both VXLAN and L2-to-L3
-tunnel reformat entries as entropy-enabling users. The matching
-decrement path only handled VXLAN, leaving L2-to-L3 tunnel entries
-counted after release.
+smb2_ioctl_query_info() validates the PASSTHRU_FSCTL response payload
+before copying it to userspace.
 
-Handle MLX5_REFORMAT_TYPE_L2_TO_L3_TUNNEL in
-mlx5_tun_entropy_refcount_dec() as well so the enabling entry
-refcount remains balanced.
+The payload offset and length both come from 32-bit fields. The bounds
+check currently adds OutputOffset and qi.input_buffer_length directly, so
+the addition can wrap in 32-bit arithmetic before the result is compared
+against the response buffer length.
 
-Fixes: f828ca6a2fb6 ("net/mlx5e: Add support for hw encapsulation of MPLS over UDP")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260703141423.1723-1-lirongqing@baidu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+A malicious server can use a large OutputOffset and a small OutputCount
+to make the wrapped sum pass the bounds check. The later copy_to_user()
+then reads from io_rsp + OutputOffset, outside the response buffer.
+
+Use size_add() for the offset plus length check so overflow is treated as
+out of bounds.
+
+Fixes: 2b1116bbe898 ("CIFS: Use common error handling code in smb2_ioctl_query_info()")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/cifs/smb2ops.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c
-index e042e092407939..1642ff7915ff84 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c
-@@ -177,7 +177,8 @@ void mlx5_tun_entropy_refcount_dec(struct mlx5_tun_entropy *tun_entropy,
- 				   int reformat_type)
- {
- 	mutex_lock(&tun_entropy->lock);
--	if (reformat_type == MLX5_REFORMAT_TYPE_L2_TO_VXLAN)
-+	if (reformat_type == MLX5_REFORMAT_TYPE_L2_TO_VXLAN ||
-+	    reformat_type == MLX5_REFORMAT_TYPE_L2_TO_L3_TUNNEL)
- 		tun_entropy->num_enabling_entries--;
- 	else if (reformat_type == MLX5_REFORMAT_TYPE_L2_TO_NVGRE &&
- 		 --tun_entropy->num_disabling_entries == 0)
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index 032799e25d9f03..8f320a9d59f665 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -1698,8 +1698,8 @@ smb2_ioctl_query_info(const unsigned int xid,
+ 		if (le32_to_cpu(io_rsp->OutputCount) < qi.input_buffer_length)
+ 			qi.input_buffer_length = le32_to_cpu(io_rsp->OutputCount);
+ 		if (qi.input_buffer_length > 0 &&
+-		    le32_to_cpu(io_rsp->OutputOffset) + qi.input_buffer_length
+-		    > rsp_iov[1].iov_len) {
++		     size_add(le32_to_cpu(io_rsp->OutputOffset),
++			     qi.input_buffer_length) > rsp_iov[1].iov_len) {
+ 			rc = -EFAULT;
+ 			goto out;
+ 		}
 -- 
 2.53.0
 
