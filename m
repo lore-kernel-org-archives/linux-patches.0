@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DDEC2DECDF;
-	Tue, 21 Jul 2026 19:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3434E3EEAC7;
+	Tue, 21 Jul 2026 19:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661636; cv=none; b=tHAWpgQrR/qu1uWCW//ISgdY/kc3LYdO6bLDF5GJSE23ocQzmEU6aVXxKyg4TkOqaRlVvFzjM/iFyZ5YoIJKSqrC/d2EqwY2Qy0otRYWFrYVvL92u6GFNvT0rIgVniOGYNIGFNkW4e4zcTxYKvtrKtqDVylpdmbYwvGZAEUiac0=
+	t=1784661639; cv=none; b=c+s23bi5zqlVIHkQ5Fzg+QNWlN0rKBR518I6a0ypK0MmMT+OrLOCGcFpuEAC7IN9pG8m3p30tKOZ0wHzlYZGimm8NZ+ryng3tMXWubzXLDcojtfIKWy/TE1ezgiZ7gr2UzpaagTXS7fzabSGgOYIS7JUdmDWlST71UO0Ay7MMdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661636; c=relaxed/simple;
-	bh=8uuoTeJ+qnUeFz+ZowfPxlbofdhwm43YWDQQgsHD5jY=;
+	s=arc-20240116; t=1784661639; c=relaxed/simple;
+	bh=11uKoWHwvTjjDHGpO3gTLvVyVewTQbaIuINsLnOrPXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OJ35GZXQ6IYcKC+VOL+1UcxThMfM7SsQuQkSEkbLaYU2eklKZAwLvm1a/MkKJwp4ieMmZIH/Bxwz3Jij2f45A/08jGkWtDkW9Puyg+6APT8hGH0YuEt3h84c3sBRnmDyU4EHMJrEIRYloVITEHxiy15QrLf/C3K8et9T5g+YbGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgOcD9rd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jz7vyLFMKfPpZVjGGSmMh92ezM1+/PEhIEuyjwbVLB3VC7ZpeA78jmKIecg59yE5pbhqQDhqzUr6jJjO9mgDX94+bxXLIltE2Cl741vr6MI/nrZeLMwGdOpHzTJoGKS5Zq/kaT6Nu3YfBlg260WeTUPg1bPibMWWxKhDgFarJIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUI7O1FU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgOcD9rd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 009C51F000E9;
-	Tue, 21 Jul 2026 19:20:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUI7O1FU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA251F000E9;
+	Tue, 21 Jul 2026 19:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661635;
-	bh=syYAb7TPQ37IqL8xGRDECJq7X2XpcT2dFfSe/16BpuQ=;
+	s=korg; t=1784661638;
+	bh=JGywkNRYDiCX1AxttgmtdLM/ZxhiIn/8s4Azo6H7ziU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tgOcD9rdgDJO/pInn7NLNn4X8GfD74ZBVQiK+2wIwiG44obciXoQueTCLNEGu1CCE
-	 bSpxZxY0ZJeTrXdsSROFEOiukpcpUgnlvbhpJiZ2yyKk2tQXjPB/fVzuzFuQmiGv6z
-	 4JJjYb4JPSgWjLsfHb29+jFhvp4bkDcFEBuUg8ZM=
+	b=PUI7O1FUfe+v0nSTxEVMnG8hPLBoP4iPHf1Je8TURTFl65ZHsWA7Wb5WIKJcJpKDq
+	 d2dRSqMzDcPU7ucaNHFkwVausfQbtlUn2eqlRUWG8/Vv3iXjWiy8EARqrTAhySkAJh
+	 fpgbRAiIyrPPn3ri/8Gzhv6mKZc1AbqqXlJeTpaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Lukas Wunner <lukas@wunner.de>,
-	Vitaly Chikunov <vt@altlinux.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ashish Mhetre <amhetre@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0098/1276] crypto: ecrdsa - fix unknown OID check in ecrdsa_param_curve
-Date: Tue, 21 Jul 2026 17:09:01 +0200
-Message-ID: <20260721152448.288924495@linuxfoundation.org>
+Subject: [PATCH 6.12 0089/1276] memory: tegra: Wire up system sleep PM ops
+Date: Tue, 21 Jul 2026 17:08:52 +0200
+Message-ID: <20260721152448.087255837@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,38 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Ashish Mhetre <amhetre@nvidia.com>
 
-[ Upstream commit 2d7b2cfc59998baf5e8622a24dc28f69a5212e06 ]
+[ Upstream commit 2411c8d1e3e09910e94bab0d0a2c071fbc8a9e7b ]
 
-The ->curve_oid check in ecrdsa_param_curve() rejects the valid enum
-value 0 (OID_id_dsa_with_sha1), but look_up_OID() returns OID__NR on
-lookup failure. Compare ->curve_oid with OID__NR instead to ensure that
-only unknown OIDs return -EINVAL.
+The tegra-mc platform driver does not register any dev_pm_ops, so the
+SoC-specific ->resume() is never invoked (e.g. tegra186_mc_resume) on
+system wake. On Tegra186 and later this means MC client Stream-ID
+override registers are not reprogrammed, and clients behind the ARM
+SMMU fault on the first DMA after resume.
 
-Fixes: 0d7a78643f69 ("crypto: ecrdsa - add EC-RDSA (GOST 34.10) algorithm")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Vitaly Chikunov <vt@altlinux.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Register a dev_pm_ops on the tegra-mc driver and route the system
+resume callback into mc->soc->ops->resume() so the existing SID
+restore path runs again on wake.
+
+No suspend callback is needed as the resume path reprograms all MC
+state from the static SoC tables, so there is nothing to save.
+
+Fixes: fe3b082a6eb8 ("memory: tegra: Add SID override programming for MC clients")
+Signed-off-by: Ashish Mhetre <amhetre@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260430095202.1167651-3-amhetre@nvidia.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/ecrdsa.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/memory/tegra/mc.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/crypto/ecrdsa.c b/crypto/ecrdsa.c
-index 3811f3805b5d88..38271526d1f8d8 100644
---- a/crypto/ecrdsa.c
-+++ b/crypto/ecrdsa.c
-@@ -153,7 +153,7 @@ int ecrdsa_param_curve(void *context, size_t hdrlen, unsigned char tag,
- 	struct ecrdsa_ctx *ctx = context;
+diff --git a/drivers/memory/tegra/mc.c b/drivers/memory/tegra/mc.c
+index bd5b58f1fd4294..7a18d6e3b36871 100644
+--- a/drivers/memory/tegra/mc.c
++++ b/drivers/memory/tegra/mc.c
+@@ -13,6 +13,7 @@
+ #include <linux/of.h>
+ #include <linux/of_platform.h>
+ #include <linux/platform_device.h>
++#include <linux/pm.h>
+ #include <linux/slab.h>
+ #include <linux/sort.h>
+ #include <linux/tegra-icc.h>
+@@ -986,10 +987,23 @@ static void tegra_mc_sync_state(struct device *dev)
+ 		icc_sync_state(dev);
+ }
  
- 	ctx->curve_oid = look_up_OID(value, vlen);
--	if (!ctx->curve_oid)
-+	if (ctx->curve_oid == OID__NR)
- 		return -EINVAL;
- 	ctx->curve = get_curve_by_oid(ctx->curve_oid);
- 	return 0;
++static int tegra_mc_resume(struct device *dev)
++{
++	struct tegra_mc *mc = dev_get_drvdata(dev);
++
++	if (mc->soc->ops && mc->soc->ops->resume)
++		mc->soc->ops->resume(mc);
++
++	return 0;
++}
++
++static DEFINE_SIMPLE_DEV_PM_OPS(tegra_mc_pm_ops, NULL, tegra_mc_resume);
++
+ static struct platform_driver tegra_mc_driver = {
+ 	.driver = {
+ 		.name = "tegra-mc",
+ 		.of_match_table = tegra_mc_of_match,
++		.pm = pm_sleep_ptr(&tegra_mc_pm_ops),
+ 		.suppress_bind_attrs = true,
+ 		.sync_state = tegra_mc_sync_state,
+ 	},
 -- 
 2.53.0
 
