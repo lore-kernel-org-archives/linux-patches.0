@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F23A46DFF5;
-	Tue, 21 Jul 2026 18:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370E62DECDF;
+	Tue, 21 Jul 2026 18:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659845; cv=none; b=fsxAqmiQIN2GmQp+7KTOphzmyLLy2upzAfA9ndHckY2Q79LLzi40GVpP0i83InH/LqiOJ7UwSd+6h4nMbQ5BCk7qI8EZUpf9g5w8WgPtiy2+CmO/e7HdT9eoGE+1C7Sh2TxXvgeIrp/U2z06K8J3EIV1niEjSGTQGu0VlYuOoz0=
+	t=1784659848; cv=none; b=oJPdYHm8bHbMiTu+GlAS/u7TRkE0GxjuiIYKggKzZMG9GBSiQTQEp7ym43ax59YKI2cfgtuesuEcLCcB8pOiiOMwO5O4xNLOte+J+ky8mpbWSlsVXEWzwA41R9t3580jyEoJ3zUHbi5x4bI83EcwTV3I9zYlvCnEBakD47XK4bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659845; c=relaxed/simple;
-	bh=fC/sAYyVOn/XBG4JAUDwV4VC8/G+lqmQOmQ9BxLBKSs=;
+	s=arc-20240116; t=1784659848; c=relaxed/simple;
+	bh=mmiPr5TuLiByP1cJYCztrnaOnDN40GqAW0uB3Ft43ZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aa9uNW67dbxStZmz8/2gehJt4zuAANRHISXHtpcE3T1vm3RROjRH+UmbTBgTCo1J8IxAj18lWSuwxM+tzPX5XoEjAauWvmIa2Buaurj/RorjEMMQyiSzTPblQe5C7qThWj+CjPi+sUCuSc35xxb2MQP1+zfVfeNHY8Ic0g5VTLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zc9idSLS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sOspDzTmH1lsnrVMaeyIZH6EaRzW8UnROwweSYbCDp3fkMV45K/+TT2umqL0d7hAhEP5RnoFqcgLf3yLOy8tHyjsyOM6Ib8r1TKcaqOIx2MO1PjwnkQ7xixpVPpOV0V++jvsq5cbrngWjvhB5J6L4CfOArytyKeHXe4JNXqZmxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5e6XNSu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zc9idSLS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6D81F000E9;
-	Tue, 21 Jul 2026 18:50:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5e6XNSu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED501F000E9;
+	Tue, 21 Jul 2026 18:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659844;
-	bh=Fw8ZGEz0nsh1Ms4E+spXpiLCEKqUSD6/CEbMxVxsmtM=;
+	s=korg; t=1784659847;
+	bh=T3D6xhKyV4e2Lz63uH9qx71WmUniyfCeyMc+XDegtJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zc9idSLST/wUmE+iSjCIHxWfPuDv2nDx6xaDUJ0bXMUKKQKnQn6Ox02LFoGElo0ax
-	 67G9Z1hGaQZ7XSBdBBitjUOsCjoURRRcuW959CbPCHocNq+V3GwWbcwLtzUVTfabMh
-	 93otLoCyvg6wYacRHs1CdMqyr8yplghy0i7+VDPs=
+	b=p5e6XNSu/hT2BzFrHL/Srx10xT7xA3cGsijd4qXnYrZscC6nbxZRA2NAXCtSftc3X
+	 RH/eRBdb1bxsJfZSIiXHGo3vZN5euvcvnBEAsgezSjlUfF6RJoZem0de/sJIV1WJE9
+	 OBOf4Vd9YNfRG43XSXFeJfyqVU8NvQ7C2f4SCr/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Wayen.Yan" <win847@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0755/2077] octeontx2-af: npc: Fix size of entry2cntr_map
-Date: Tue, 21 Jul 2026 17:07:08 +0200
-Message-ID: <20260721152610.595594019@linuxfoundation.org>
+Subject: [PATCH 7.1 0756/2077] net: airoha: Fix error handling in airoha_ppe_flush_sram_entries()
+Date: Tue, 21 Jul 2026 17:07:09 +0200
+Message-ID: <20260721152610.622088921@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,146 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Wayen.Yan <win847@gmail.com>
 
-[ Upstream commit f9cd6fabe0e7c7f6fc30c6c192c7ed72aba37232 ]
+[ Upstream commit d7d81b00301398fcd38cf5b5869f0fdb674472ef ]
 
-KASAN prints below splat. This is caused by allocating counter for
-reserved mcam entry for cpt 2nd pass entry. But mcam->entry2cntr_map
-is not allocated for reserved entries.
+In airoha_ppe_flush_sram_entries(), the outer "err" variable was never
+updated when the inner loop variable shadowed it, causing the function
+to always return 0 even when airoha_ppe_foe_commit_sram_entry() fails.
 
-BUG: KASAN: slab-out-of-bounds in npc_map_mcam_entry_and_cntr+0xb0/0x1a0
-Write of size 2 at addr ffff0001033e7ffe by task kworker/0:1/14
+Drop the outer "err" variable and return directly on error, propagating
+the error code from airoha_ppe_foe_commit_sram_entry() correctly.
 
-CPU: 0 PID: 14 Comm: kworker/0:1 Not tainted 6.1.67 #1
-Hardware name: Marvell CN106XX board (DT)
-Workqueue: events work_for_cpu_fn
-Call trace:
- dump_backtrace.part.0+0xe4/0xf0
- show_stack+0x18/0x30
- dump_stack_lvl+0x88/0xb4
- print_report+0x154/0x458
- kasan_report+0xb8/0x194
- __asan_store2+0x7c/0xa0
- npc_map_mcam_entry_and_cntr+0xb0/0x1a0
- rvu_mbox_handler_npc_mcam_write_entry+0x268/0x280
- npc_install_flow+0x840/0xfe0
- rvu_npc_install_cpt_pass2_entry+0x138/0x190
- rvu_nix_init+0x148c/0x2880
- rvu_probe+0x1800/0x30b0
- local_pci_probe+0x78/0xe0
- work_for_cpu_fn+0x30/0x50
- process_one_work+0x4cc/0x97c
- worker_thread+0x360/0x630
- kthread+0x1a0/0x1b0
- ret_from_fork+0x10/0x20
-
-Fixes: 55307fcb9258 ("octeontx2-af: Add mbox messages to install and delete MCAM rules")
-Cc: Subbaraya Sundeep <sbhatta@marvell.com>
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Link: https://patch.msgid.link/20260610022344.969774-1-rkannoth@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 620d7b91aadb ("net: airoha: ppe: Flush PPE SRAM table during PPE setup")
+Link: https://lore.kernel.org/netdev/6a2b40e4.4dd82583.3a5c46.e52f@mx.google.com/
+Signed-off-by: Wayen.Yan <win847@gmail.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/6a2bd37a.4034e349.1b41bb.1caf@mx.google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/af/rvu_npc.c   | 40 +++++++------------
- 1 file changed, 15 insertions(+), 25 deletions(-)
+ drivers/net/ethernet/airoha/airoha_ppe.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-index d301a3f0f87a86..4994385a822b72 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-@@ -2181,7 +2181,7 @@ int npc_mcam_rsrcs_init(struct rvu *rvu, int blkaddr)
- 	/* Alloc memory for MCAM entry to counter mapping and for tracking
- 	 * counter's reference count.
- 	 */
--	mcam->entry2cntr_map = kcalloc(mcam->bmap_entries, sizeof(u16),
-+	mcam->entry2cntr_map = kcalloc(mcam->total_entries, sizeof(u16),
- 				       GFP_KERNEL);
- 	if (!mcam->entry2cntr_map)
- 		goto free_cntr_map;
-@@ -2197,10 +2197,11 @@ int npc_mcam_rsrcs_init(struct rvu *rvu, int blkaddr)
- 	if (!mcam->entry2target_pffunc)
- 		goto free_cntr_refcnt;
- 
--	for (index = 0; index < mcam->bmap_entries; index++) {
-+	for (index = 0; index < mcam->bmap_entries; index++)
- 		mcam->entry2pfvf_map[index] = NPC_MCAM_INVALID_MAP;
-+
-+	for (index = 0; index < mcam->total_entries; index++)
- 		mcam->entry2cntr_map[index] = NPC_MCAM_INVALID_MAP;
--	}
- 
- 	for (cntr = 0; cntr < mcam->counters.max; cntr++)
- 		mcam->cntr2pfvf_map[cntr] = NPC_MCAM_INVALID_MAP;
-@@ -3531,7 +3532,7 @@ static int __npc_mcam_free_counter(struct rvu *rvu,
- 				   struct msg_rsp *rsp)
+diff --git a/drivers/net/ethernet/airoha/airoha_ppe.c b/drivers/net/ethernet/airoha/airoha_ppe.c
+index 5c9dff6bccd1e3..a124f15345a916 100644
+--- a/drivers/net/ethernet/airoha/airoha_ppe.c
++++ b/drivers/net/ethernet/airoha/airoha_ppe.c
+@@ -1330,7 +1330,7 @@ static int airoha_ppe_flush_sram_entries(struct airoha_ppe *ppe)
  {
- 	struct npc_mcam *mcam = &rvu->hw->mcam;
--	u16 index, entry = 0;
-+	u16 index;
- 	int blkaddr, err;
+ 	u32 sram_num_entries = airoha_ppe_get_total_sram_num_entries(ppe);
+ 	struct airoha_foe_entry *hwe = ppe->foe;
+-	int i, err = 0;
++	int i;
  
- 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
-@@ -3547,20 +3548,16 @@ static int __npc_mcam_free_counter(struct rvu *rvu,
- 	mcam->cntr2pfvf_map[req->cntr] = NPC_MCAM_INVALID_MAP;
- 	rvu_free_rsrc(&mcam->counters, req->cntr);
- 
--	/* Disable all MCAM entry's stats which are using this counter */
--	while (entry < mcam->bmap_entries) {
-+	/* Disable all MCAM entry's stats which are using this counter.
-+	 * Scan the full MCAM index range: AF-reserved rules (e.g. CPT pass-2)
-+	 */
-+	for (index = 0; index < mcam->total_entries; index++) {
- 		if (!mcam->cntr_refcnt[req->cntr])
- 			break;
--
--		index = find_next_bit(mcam->bmap, mcam->bmap_entries, entry);
--		if (index >= mcam->bmap_entries)
+ 	for (i = 0; i < sram_num_entries; i++) {
+ 		int err;
+@@ -1338,10 +1338,10 @@ static int airoha_ppe_flush_sram_entries(struct airoha_ppe *ppe)
+ 		memset(&hwe[i], 0, sizeof(*hwe));
+ 		err = airoha_ppe_foe_commit_sram_entry(ppe, i);
+ 		if (err)
 -			break;
--		entry = index + 1;
- 		if (mcam->entry2cntr_map[index] != req->cntr)
- 			continue;
--
--		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr,
--					      index, req->cntr);
-+		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr, index,
-+					      req->cntr);
++			return err;
  	}
  
- 	return 0;
-@@ -3631,7 +3628,7 @@ int rvu_mbox_handler_npc_mcam_unmap_counter(struct rvu *rvu,
- 		struct npc_mcam_unmap_counter_req *req, struct msg_rsp *rsp)
- {
- 	struct npc_mcam *mcam = &rvu->hw->mcam;
--	u16 index, entry = 0;
-+	u16 index;
- 	int blkaddr, rc;
+-	return err;
++	return 0;
+ }
  
- 	/* Counter is not supported for CN20K */
-@@ -3658,20 +3655,13 @@ int rvu_mbox_handler_npc_mcam_unmap_counter(struct rvu *rvu,
- 	}
- 
- 	/* Disable all MCAM entry's stats which are using this counter */
--	while (entry < mcam->bmap_entries) {
-+	for (index = 0; index < mcam->total_entries; index++) {
- 		if (!mcam->cntr_refcnt[req->cntr])
- 			break;
--
--		index = find_next_bit(mcam->bmap, mcam->bmap_entries, entry);
--		if (index >= mcam->bmap_entries)
--			break;
--		entry = index + 1;
--
- 		if (mcam->entry2cntr_map[index] != req->cntr)
- 			continue;
--
--		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr,
--					      index, req->cntr);
-+		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr, index,
-+					      req->cntr);
- 	}
- exit:
- 	mutex_unlock(&mcam->lock);
+ static struct airoha_npu *airoha_ppe_npu_get(struct airoha_eth *eth)
 -- 
 2.53.0
 
