@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A5046DFFF;
-	Tue, 21 Jul 2026 18:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513EB3D1CCA;
+	Tue, 21 Jul 2026 18:03:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656987; cv=none; b=ZvG/x2E60hpU9u+Qvw7Oe17jKp26Olnn6LkJo4eOJKhMPXaS9MhsjD8aJ79iE1NHjCXREQJ3gq/cRlM4k2fHUsnA0STcMDT2UQYYdvqPX1GYFC/E9F6Yy1AU7GgoHlv3c+9k3sMTAnpHQX2oVM3p6yOT494JCpxEkQtUyMAIUMk=
+	t=1784656990; cv=none; b=W3ZhnMJ25hPw4HUwJEaC0BUHrkKADDqM1puQKVb05hjsM8V9MYBBRa50SUiT7n/GpfZKd60fWPnolKfCDYYvis66Xa5aIDthb3/RnKCmcfojP+qAbrEH98k9TVyxmUJd/dU2xaM6Eio+Gj7FewSUkwt8t0h+SfYxxwEnNQYWrcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656987; c=relaxed/simple;
-	bh=9SGPmyd1PFXBkRHxNV4fgiWonJf1W8CY9baNl+RmuEY=;
+	s=arc-20240116; t=1784656990; c=relaxed/simple;
+	bh=+AHlcmZfuwdY5p8JIYPlWkVCexAP594Lh0WW6oWIo8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uHH7tPPMCmzGDHPQxz8mPWeSnecnlOYCBSwTKxz9y9fxyOul7ICBDzOx69O9mnX3wmN+81bE/geqXR3MPzM2X0LY0NutEPajwBUfCAXumEshfkO/7pFP6ousjmrLnkNltV72+FJKWn5ulyOsAd70jFmzMKcsKzF7goAYJKEutlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8NWnnd6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HTOkAVL12H3L/NELbZwvnDCQlVHciD6By2vGNRsPnoK/GSAks/oOI8evonKofKmOD/pF5VeIPGmjyYYC6AqvSGk4RuRbDj1t+3Emj04CMGJQdQFxRMR3MVBGG3WIh/TbskbIXFbhr2IPbvLV6Bu18sroITFXfKeBIOyf5bnQLwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUNJLLPi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8NWnnd6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EEFC1F000E9;
-	Tue, 21 Jul 2026 18:03:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUNJLLPi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDE41F000E9;
+	Tue, 21 Jul 2026 18:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656986;
-	bh=5QhDuo3pTeRl+AelqMlB351hhuuHJ7iCVYLqKe9x2Xk=;
+	s=korg; t=1784656989;
+	bh=EXyrfwuOhdjqjYmU1S4VhMDo5UDK+OPloh1obE4OyRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U8NWnnd6pnBBtSgX7OneTJIlX5ZaTnvVsQItTNoyzxD5Q1XFVFN0dCkCP+6jMn9k1
-	 7Dw4VzO0uDDT+e4sCav71ffHUoopOvkO/zfXu9evGr5hsrnvaYuObIhk3lCEaY+pCe
-	 5PLJbaZ1NvgcVrueac/H0xz7gKmx8UOkjSMNdxMo=
+	b=vUNJLLPih/eWSc+DG/+gRar4B8ASNwIZmUwN8/jo6RzhTbz0nJ63yzoDHGiEWeibK
+	 viazxbXyPuKyzKtSLw7IStLRL2TXrNjcGxhJmdTZv18++yHzM3Z5pEOYCioZ0wbC+8
+	 o30TI5LTLLivE7XVQUvSFPmtqnEA6/v7TEMk8IVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Kumar <sumit.kumar@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	James Clark <james.clark@linaro.org>,
+	Richard Cheng <icheng@nvidia.com>,
+	Jie Gan <jie.gan@oss.qualcomm.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0593/1611] bus: mhi: ep: Fix potential deadlock in mhi_ep_reset_worker()
-Date: Tue, 21 Jul 2026 17:11:49 +0200
-Message-ID: <20260721152528.724091904@linuxfoundation.org>
+Subject: [PATCH 6.18 0594/1611] coresight: fix missing error code when trace ID is invalid
+Date: Tue, 21 Jul 2026 17:11:50 +0200
+Message-ID: <20260721152528.745658514@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,60 +54,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
+From: Jie Gan <jie.gan@oss.qualcomm.com>
 
-[ Upstream commit 9dece4435d396e9877e27483552b910ba8654169 ]
+[ Upstream commit f4526ffee6ff9f5845b430957417149eded74bf3 ]
 
-There is a potential deadlock scenario in mhi_ep_reset_worker() where
-the state_lock mutex is acquired twice in the same call chain:
+When coresight_path_assign_trace_id() cannot assign a valid trace ID,
+coresight_enable_sysfs() takes the err_path goto with ret still 0,
+returning success to the caller despite no trace session being started.
 
-mhi_ep_reset_worker()
-  mutex_lock(&mhi_cntrl->state_lock)
-    mhi_ep_power_up()
-      mhi_ep_set_ready_state()
-        mutex_lock(&mhi_cntrl->state_lock)  <- Deadlock
+Change coresight_path_assign_trace_id() to return int, moving the
+IS_VALID_CS_TRACE_ID() check inside it so it returns -EINVAL on failure
+and 0 on success. Update both callers to propagate this return value
+directly instead of inspecting path->trace_id after the call.
 
-Fix this by releasing the state_lock before calling mhi_ep_power_up().
-The lock is only needed to protect current MHI state read operation. The
-lock can be safely released before proceeding with the power up sequence.
-
-Fixes: 7a97b6b47353 ("bus: mhi: ep: Add support for handling MHI_RESET")
-Signed-off-by: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260414-reset_worker_deadlock-v2-1-42fd682b45db@oss.qualcomm.com
+Fixes: d87d76d823d1 ("Coresight: Allocate trace ID after building the path")
+Reviewed-by: James Clark <james.clark@linaro.org>
+Reviewed-by: Richard Cheng <icheng@nvidia.com>
+Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260512-fix-trace-id-error-v4-1-eb3de789767a@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/ep/main.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/hwtracing/coresight/coresight-core.c  | 23 +++++++++++--------
+ .../hwtracing/coresight/coresight-etm-perf.c  |  5 ++--
+ drivers/hwtracing/coresight/coresight-priv.h  |  2 +-
+ drivers/hwtracing/coresight/coresight-sysfs.c |  4 ++--
+ 4 files changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index cdea24e9291959..4bb007d1933315 100644
---- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -1087,11 +1087,12 @@ static void mhi_ep_reset_worker(struct work_struct *work)
+diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
+index 3267192f0c1c66..911a7b6d4867b7 100644
+--- a/drivers/hwtracing/coresight/coresight-core.c
++++ b/drivers/hwtracing/coresight/coresight-core.c
+@@ -732,8 +732,8 @@ static int coresight_get_trace_id(struct coresight_device *csdev,
+  * Call this after creating the path and before enabling it. This leaves
+  * the trace ID set on the path, or it remains 0 if it couldn't be assigned.
+  */
+-void coresight_path_assign_trace_id(struct coresight_path *path,
+-				    enum cs_mode mode)
++int coresight_path_assign_trace_id(struct coresight_path *path,
++				   enum cs_mode mode)
+ {
+ 	struct coresight_device *sink = coresight_get_sink(path);
+ 	struct coresight_node *nd;
+@@ -743,15 +743,18 @@ void coresight_path_assign_trace_id(struct coresight_path *path,
+ 		/* Assign a trace ID to the path for the first device that wants to do it */
+ 		trace_id = coresight_get_trace_id(nd->csdev, mode, sink);
  
- 	mhi_ep_power_down(mhi_cntrl);
- 
--	mutex_lock(&mhi_cntrl->state_lock);
--
- 	/* Reset MMIO to signal host that the MHI_RESET is completed in endpoint */
- 	mhi_ep_mmio_reset(mhi_cntrl);
+-		/*
+-		 * 0 in this context is that it didn't want to assign so keep searching.
+-		 * Non 0 is either success or fail.
+-		 */
+-		if (trace_id != 0) {
+-			path->trace_id = trace_id;
+-			return;
+-		}
++		/* 0 means the device has no ID assignment, so keep searching */
++		if (trace_id == 0)
++			continue;
 +
-+	mutex_lock(&mhi_cntrl->state_lock);
- 	cur_state = mhi_cntrl->mhi_state;
-+	mutex_unlock(&mhi_cntrl->state_lock);
- 
- 	/*
- 	 * Only proceed further if the reset is due to SYS_ERR. The host will
-@@ -1100,8 +1101,6 @@ static void mhi_ep_reset_worker(struct work_struct *work)
- 	 */
- 	if (cur_state == MHI_STATE_SYS_ERR)
- 		mhi_ep_power_up(mhi_cntrl);
--
--	mutex_unlock(&mhi_cntrl->state_lock);
++		if (!IS_VALID_CS_TRACE_ID(trace_id))
++			return -EINVAL;
++
++		path->trace_id = trace_id;
++		return 0;
+ 	}
++
++	return -EINVAL;
  }
  
- /*
+ /**
+diff --git a/drivers/hwtracing/coresight/coresight-etm-perf.c b/drivers/hwtracing/coresight/coresight-etm-perf.c
+index 5c256af6e54af0..accf101779de83 100644
+--- a/drivers/hwtracing/coresight/coresight-etm-perf.c
++++ b/drivers/hwtracing/coresight/coresight-etm-perf.c
+@@ -321,6 +321,7 @@ static void *etm_setup_aux(struct perf_event *event, void **pages,
+ 	struct coresight_device *sink = NULL;
+ 	struct coresight_device *user_sink = NULL, *last_sink = NULL;
+ 	struct etm_event_data *event_data = NULL;
++	int ret;
+ 
+ 	event_data = alloc_event_data(cpu);
+ 	if (!event_data)
+@@ -418,8 +419,8 @@ static void *etm_setup_aux(struct perf_event *event, void **pages,
+ 		}
+ 
+ 		/* ensure we can allocate a trace ID for this CPU */
+-		coresight_path_assign_trace_id(path, CS_MODE_PERF);
+-		if (!IS_VALID_CS_TRACE_ID(path->trace_id)) {
++		ret = coresight_path_assign_trace_id(path, CS_MODE_PERF);
++		if (ret) {
+ 			cpumask_clear_cpu(cpu, mask);
+ 			coresight_release_path(path);
+ 			continue;
+diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/hwtracing/coresight/coresight-priv.h
+index 33e22b1ba04326..bcc5db0d9c3c22 100644
+--- a/drivers/hwtracing/coresight/coresight-priv.h
++++ b/drivers/hwtracing/coresight/coresight-priv.h
+@@ -154,7 +154,7 @@ int coresight_make_links(struct coresight_device *orig,
+ void coresight_remove_links(struct coresight_device *orig,
+ 			    struct coresight_connection *conn);
+ u32 coresight_get_sink_id(struct coresight_device *csdev);
+-void coresight_path_assign_trace_id(struct coresight_path *path,
++int coresight_path_assign_trace_id(struct coresight_path *path,
+ 				   enum cs_mode mode);
+ 
+ #if IS_ENABLED(CONFIG_CORESIGHT_SOURCE_ETM3X)
+diff --git a/drivers/hwtracing/coresight/coresight-sysfs.c b/drivers/hwtracing/coresight/coresight-sysfs.c
+index 5e52324aa9ac7b..c5f3fc2b5135fb 100644
+--- a/drivers/hwtracing/coresight/coresight-sysfs.c
++++ b/drivers/hwtracing/coresight/coresight-sysfs.c
+@@ -211,8 +211,8 @@ int coresight_enable_sysfs(struct coresight_device *csdev)
+ 		goto out;
+ 	}
+ 
+-	coresight_path_assign_trace_id(path, CS_MODE_SYSFS);
+-	if (!IS_VALID_CS_TRACE_ID(path->trace_id))
++	ret = coresight_path_assign_trace_id(path, CS_MODE_SYSFS);
++	if (ret)
+ 		goto err_path;
+ 
+ 	ret = coresight_enable_path(path, CS_MODE_SYSFS, NULL);
 -- 
 2.53.0
 
