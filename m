@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2BAA434E5D;
-	Tue, 21 Jul 2026 20:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF35400DFC;
+	Tue, 21 Jul 2026 20:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664038; cv=none; b=MktfOvPhUZdKHKEZWW/KhA1SywzA4XcC80AW+oDqQZz/QC44cLsJj9tLwxNKY4vETySRZPi5K8CFZVnluB2fymqj5GBXO5G+UTE2HEAw4bkebJ/kvckVKy3lRmeMAuH9zY4KmFqWtmp9exvLLkHx6zfFDSTpwcS5ViuhaNLanOA=
+	t=1784664041; cv=none; b=gzh5IFEIRevLfnGZEwj3CuDPREzQwP1n+VYS2+s/n++BT08lLAx8GIG4jbM5GzySotXhT3HEtMsCniyXPegHYnLk4jf7zX8E7kYcKeJ1YzHB+1BMg+eO6S+lQ1g49LjjVhFQl+bZl9QtDiVGmAsd4sla29jiYgg1SudRC/0hB7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664038; c=relaxed/simple;
-	bh=B23UITkSMUGZUhY8FLmabrLodmIV40A3b3Eff02yg4c=;
+	s=arc-20240116; t=1784664041; c=relaxed/simple;
+	bh=h0nzPOH+tBv2GdfTFhZkCDhm3Z639BB/1wU75j+fr0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W8SZj5Q0PqRThGnoGDjgKSYViDeZencGw3up+yVl3zU/Ei/zG3oG62F+m+1JwO0D8ZobaP4aWEKPiWSz0qIaeoFBa+jx5LIpjmH0pLyN4CLNYmO3jlCJogji+l8OzOUJ97EsYvxDxVM6OxuiFIqdOqctlAEA/409PEmWssSDzEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBNw2Pcw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=am519bn09t2DSnylgzdLZuHdnVHW8syO7LQocrb80HYkIBKMz2GM4cJILEAxKaEFOt/h5d2i7euW/evr3UtombMOWt4Q+N10h0TX6RI/VO1UcpiPXG7SR7vys7gJKzJRb4663UB2NUUK+jaUjfwCa9ObcoQlkrKn9ltFZxI7Gcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lIox14+n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBNw2Pcw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329D01F000E9;
-	Tue, 21 Jul 2026 20:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIox14+n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C87E21F000E9;
+	Tue, 21 Jul 2026 20:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664037;
-	bh=a05XnPOcuKt0lxCMvkwTVJXA3cqCGJ+68Bnoe+FDBmY=;
+	s=korg; t=1784664040;
+	bh=M1d5pke9maFiiTMIhXV0PTfwdekWI6Hkxq+Xt/V/iJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xBNw2PcwIG9zoVt76r9Vyzk4NAWzd/kMoZ2XSAZ/j2VX4iAn+3IEqWQ3sMZu7Yalm
-	 o9kjE+NDzxTUJN+kGJIB+Yp3nXPaizjWVo7MpFgI1AxyS6YXJNoPwCw82bsH9Jn3y7
-	 vvVIuqURiXm+JKjqrfY0mlgBBZcljhXNOr1YH2vc=
+	b=lIox14+n77FW8P513kU8Im0wZHLvAhk3XqjKvx3MMRhSq1idAdkEQ5K7ydLFae/32
+	 /TrFItc/6hnvtZY555H9LlVmUMOMfPyGnN8S09XK9Rlhp2CxYxalLmMnHxJBua5yNK
+	 /HJAD7PEjI9wK8nMX4NfPPKY05L5GSDq1jnIFzKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Zihan Xi <xizh2024@lzu.edu.cn>,
-	Ren Wei <n05ec@lzu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Arthur Kiyanovski <akiyano@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 1048/1276] net/sched: act_ct: preserve tc_skb_cb across defragmentation
-Date: Tue, 21 Jul 2026 17:24:51 +0200
-Message-ID: <20260721152509.440712577@linuxfoundation.org>
+Subject: [PATCH 6.12 1049/1276] net: ena: clean up XDP TX queues when regular TX setup fails
+Date: Tue, 21 Jul 2026 17:24:52 +0200
+Message-ID: <20260721152509.464289192@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -55,64 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <xizh2024@lzu.edu.cn>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 9092e15defbe6c7bc241c306093ca9d358a578e7 upstream.
+commit 1bd6676254b4ab6acd44b662b5e92822c036463a upstream.
 
-tcf_ct_handle_fragments() calls nf_ct_handle_fragments() without saving
-and restoring skb->cb. The defrag helper clears IPCB/IP6CB, which aliases
-the tc_skb_cb/qdisc_skb_cb control buffer. Fragmented traffic through
-act_ct therefore loses qdisc metadata such as pkt_segs and can trigger
-WARN_ON_ONCE() in qdisc_pkt_segs() when panic_on_warn is enabled.
+create_queues_with_size_backoff() creates XDP TX queues before setting
+up the regular TX path. If the subsequent allocation or creation of
+regular TX queues fails, the error handling paths omit the teardown of the
+XDP TX queues, leading to a resource leak.
 
-Save and restore the full tc_skb_cb around nf_ct_handle_fragments(),
-matching the pattern used by ovs_ct_handle_fragments().
+Fix this by explicitly destroying the XDP TX queue subset at the two
+missing failure points.
 
-Fixes: ec624fe740b4 ("net/sched: Extend qdisc control block with tc control block")
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1-rc7.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have
+an ENA device to test with, no runtime testing was able to be performed.
+
+Fixes: 548c4940b9f1 ("net: ena: Implement XDP_TX action")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Zihan Xi <xizh2024@lzu.edu.cn>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/510c51217fd7aaf29c6dc298bab8d643fe229b1c.1781358692.git.xizh2024@lzu.edu.cn
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Arthur Kiyanovski <akiyano@amazon.com>
+Tested-by: Arthur Kiyanovski <akiyano@amazon.com>
+Link: https://patch.msgid.link/20260616142424.4005130-1-dawei.feng@seu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_ct.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c |   23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -842,11 +842,11 @@ static int tcf_ct_handle_fragments(struc
- 				   u8 family, u16 zone, bool *defrag)
- {
- 	enum ip_conntrack_info ctinfo;
-+	struct tc_skb_cb cb;
- 	struct nf_conn *ct;
- 	int err = 0;
- 	bool frag;
- 	u8 proto;
--	u16 mru;
- 
- 	/* Previously seen (loopback)? Ignore. */
- 	ct = nf_ct_get(skb, &ctinfo);
-@@ -860,12 +860,13 @@ static int tcf_ct_handle_fragments(struc
- 	if (err || !frag)
- 		return err;
- 
--	err = nf_ct_handle_fragments(net, skb, zone, family, &proto, &mru);
-+	cb = *tc_skb_cb(skb);
-+	err = nf_ct_handle_fragments(net, skb, zone, family, &proto, &cb.mru);
- 	if (err)
- 		return err;
- 
- 	*defrag = true;
--	tc_skb_cb(skb)->mru = mru;
-+	*tc_skb_cb(skb) = cb;
- 
- 	return 0;
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -775,6 +775,18 @@ static void ena_destroy_all_tx_queues(st
+ 	}
  }
+ 
++static void ena_destroy_xdp_tx_queues(struct ena_adapter *adapter)
++{
++	u16 ena_qid;
++	int i;
++
++	for (i = adapter->xdp_first_ring;
++	     i < adapter->xdp_first_ring + adapter->xdp_num_queues; i++) {
++		ena_qid = ENA_IO_TXQ_IDX(i);
++		ena_com_destroy_io_queue(adapter->ena_dev, ena_qid);
++	}
++}
++
+ static void ena_destroy_all_rx_queues(struct ena_adapter *adapter)
+ {
+ 	u16 ena_qid;
+@@ -2074,14 +2086,21 @@ static int create_queues_with_size_backo
+ 		rc = ena_setup_tx_resources_in_range(adapter,
+ 						     0,
+ 						     adapter->num_io_queues);
+-		if (rc)
++		if (rc) {
++			ena_destroy_xdp_tx_queues(adapter);
++			ena_free_all_io_tx_resources_in_range(adapter,
++							      adapter->xdp_first_ring,
++							      adapter->xdp_num_queues);
+ 			goto err_setup_tx;
++		}
+ 
+ 		rc = ena_create_io_tx_queues_in_range(adapter,
+ 						      0,
+ 						      adapter->num_io_queues);
+-		if (rc)
++		if (rc) {
++			ena_destroy_xdp_tx_queues(adapter);
+ 			goto err_create_tx_queues;
++		}
+ 
+ 		rc = ena_setup_all_rx_resources(adapter);
+ 		if (rc)
 
 
