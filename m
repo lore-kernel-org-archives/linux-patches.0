@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55AE22DC76A;
-	Tue, 21 Jul 2026 16:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015AA2D839C;
+	Tue, 21 Jul 2026 16:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649629; cv=none; b=r8CsDlVy1VCv70NaZUA87ZHg5QjbxU2bIfzB87NSzmCl836aEppINMYhP8+hqvjmM5zVKllKcwZn2yMVQBAZiRF6thQEFc2jqz3cAGfaF+xZ/8qBX9lj1aoCGZFnMrS5JKnry9MHRoLKPkqPdPkSiLvfIJtHGyPyqpARWbY7l54=
+	t=1784649632; cv=none; b=e0O2nHbjGkEVo17YXmij9aSBqrWqItHOnQtXfmk1SRzZY3/i2Sxt0Rypjh+EaK6vwlF33WdONWZywPARMl3sdVx2bVr/V+umBW0u2N0FOolEVkhGmsNzexYlQU7E3rFSbvYQIcNj8cQrN4E7O+edALF6QuIhUPG0XARtOyvu2yM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649629; c=relaxed/simple;
-	bh=gd+ZT1YXa9aykUs5HcdDaokPJCVlqhaL7LefBps58LY=;
+	s=arc-20240116; t=1784649632; c=relaxed/simple;
+	bh=x3owP5LsCHOcbuIAtfrjSYk9P+BaVCxcnVWEkIj2144=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j324FyqAHpIboQUycD6ppMQ/RVozoj45Lf+GDA9JXqO4zZvj5tt5Qa/Wc6M25jAZQhA8VThbFAVehx/gjXuQoSUcuvlJF2If+WLjtYwfS1J/nYHi8iHIofvgg9YsyGZMNGW1H+BrNPHimMUqmrx30OdARVLQ3kD7bGQgImG9sg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hp04eDch; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nYwgkDNnxSZwxCDRx+fqikO5kGE3U1oS7NWIMXEfGjmJvDGyU32ZyQsuf8QEydC+qq5DuaUvJ+VsIaJG1OecGwfJnsEjJgkE4lPwC76qUzfoksaXMuBLUq66ZUJ6MoUpbEuuAkDHttsLPPT6JF930vz52p5IF2xuCyUxTDt1UGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eH3DfMXB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hp04eDch"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD5E1F000E9;
-	Tue, 21 Jul 2026 16:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eH3DfMXB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650E21F000E9;
+	Tue, 21 Jul 2026 16:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649628;
-	bh=ajkKO+qAEa2Q7BdbdR6tvBYMnxXjeVpb6+vLDBmOAvU=;
+	s=korg; t=1784649630;
+	bh=hYVVt+/0O2CI1MCNkgRG4XVIjMFXT1f+Yoq0kAE3H3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hp04eDchGVjTJ3GfJNCE7MouLrK0rUjMs6X9J5jUZi+10kGKCYb2O/cgn2MtcA/lT
-	 q8ZYCmIEddweJut44A1ix88QOk4TOD1Rx/pyDvn046EqOb3j3UbwLTaPQRan4OHHKz
-	 ZOb7ZrUupxJKVdZMec8SfKal+P36AKA82usx7eB8=
+	b=eH3DfMXBCenzkvq3W15gl5oBCbALZPahcy6iQeemNuyRULxq8Aia5EU1+d+vRMYuK
+	 2fj06zzQjfr4AUrNg6LmDN7z0JyI5DSeC3wgkZxFa5Az1nORylWhGxbJ3M6RB81xn4
+	 l30XrttPSEOU/5vhEA7CRRPj97diFlM/Sw2Aqm6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jay Vosburgh <jv@jvosburgh.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0650/2077] bonding: 3ad: fix carrier when no usable slaves
-Date: Tue, 21 Jul 2026 17:05:23 +0200
-Message-ID: <20260721152608.140226570@linuxfoundation.org>
+Subject: [PATCH 7.1 0651/2077] bonding: 3ad: fix mux port state on oper down
+Date: Tue, 21 Jul 2026 17:05:24 +0200
+Message-ID: <20260721152608.162972949@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,111 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Louis Scalbert <louis.scalbert@6wind.com>
 
-[ Upstream commit 0bd695db23c6262e9cb980017a6273925172ec5b ]
+[ Upstream commit 807afc7544b865d4d09068a415fd5b71bf5665cc ]
 
-Apply the "lacp_strict" configuration from the previous commit.
+When the bonding interface has carrier down due to the absence of
+usable slaves and a slave transitions from down to up, the bonding
+interface briefly goes carrier up, then down again, and finally up
+once LACP negotiates collecting and distributing on the port.
 
-"lacp_strict" mode "on" asserts that the bonding master carrier is up
-only when at least 'min_links' slaves are in the Collecting_Distributing
-state.
+When lacp_strict mode is on, the interface should not transition to
+carrier up until LACP negotiation is complete.
+
+This happens because the actor and partner port states remain in
+Collecting_Distributing when the port goes down. When the port
+comes back up, it temporarily remains in this state until LACP
+renegotiation occurs.
+
+Previously this was mostly cosmetic, but since the bonding carrier
+state may depend on the LACP negotiation state, it causes the
+interface to flap.
+
+According to IEEE 802.3ad-2000 and IEEE 802.1ax-2014, Collecting and
+Distributing should be reset when a port goes down:
+- In the Receive state machine, port_enabled == FALSE causes a
+  transition to the PORT_DISABLED state, which is expected to clear
+  Partner_Oper_Port_State.Synchronization.
+- In the Mux state machine, Partner_Oper_Port_State.Synchronization ==
+  FALSE causes a transition to the ATTACHED state, which disables
+  Collecting and Distributing.
+
+However, Partner_Oper_Port_State.Synchronization is not cleared in the
+PORT_DISABLED state.
+
+Clear Partner_Oper_Port_State.Synchronization in the Receive
+PORT_DISABLED state.
 
 Fixes: 655f8919d549 ("bonding: add min links parameter to 802.3ad")
 Signed-off-by: Louis Scalbert <louis.scalbert@6wind.com>
 Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20260603150331.1919611-5-louis.scalbert@6wind.com
+Link: https://patch.msgid.link/20260603150331.1919611-6-louis.scalbert@6wind.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_3ad.c     | 26 +++++++++++++++++++++++---
- drivers/net/bonding/bond_options.c |  1 +
- 2 files changed, 24 insertions(+), 3 deletions(-)
+ drivers/net/bonding/bond_3ad.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/net/bonding/bond_3ad.c b/drivers/net/bonding/bond_3ad.c
-index 985ef66dc3331e..51d86e3d34db87 100644
+index 51d86e3d34db87..acbba08dbdfada 100644
 --- a/drivers/net/bonding/bond_3ad.c
 +++ b/drivers/net/bonding/bond_3ad.c
-@@ -745,6 +745,21 @@ static void __set_agg_ports_ready(struct aggregator *aggregator, int val)
- 	}
- }
- 
-+static int __agg_usable_ports(struct aggregator *agg)
-+{
-+	struct port *port;
-+	int valid = 0;
-+
-+	for (port = agg->lag_ports; port;
-+	     port = port->next_port_in_aggregator) {
-+		if (port->actor_oper_port_state & LACP_STATE_COLLECTING &&
-+		    port->actor_oper_port_state & LACP_STATE_DISTRIBUTING)
-+			valid++;
-+	}
-+
-+	return valid;
-+}
-+
- static int __agg_active_ports(struct aggregator *agg)
- {
- 	struct port *port;
-@@ -1179,10 +1194,10 @@ static void ad_mux_machine(struct port *port, bool *update_slave_arr)
- 		switch (port->sm_mux_state) {
- 		case AD_MUX_DETACHED:
- 			port->actor_oper_port_state &= ~LACP_STATE_SYNCHRONIZATION;
--			ad_disable_collecting_distributing(port,
--							   update_slave_arr);
- 			port->actor_oper_port_state &= ~LACP_STATE_COLLECTING;
- 			port->actor_oper_port_state &= ~LACP_STATE_DISTRIBUTING;
-+			ad_disable_collecting_distributing(port,
-+							   update_slave_arr);
- 			port->ntt = true;
+@@ -1337,6 +1337,7 @@ static void ad_rx_machine(struct lacpdu *lacpdu, struct port *port)
+ 			fallthrough;
+ 		case AD_RX_PORT_DISABLED:
+ 			port->sm_vars &= ~AD_PORT_MATCHED;
++			port->partner_oper.port_state &= ~LACP_STATE_SYNCHRONIZATION;
  			break;
- 		case AD_MUX_WAITING:
-@@ -2107,6 +2122,7 @@ static void ad_disable_distributing(struct port *port, bool *update_slave_arr)
- 			  port->actor_port_number,
- 			  aggregator->aggregator_identifier);
- 		__disable_distributing_port(port);
-+		bond_3ad_set_carrier(port->slave->bond);
- 		/* Slave array needs an update */
- 		*update_slave_arr = true;
- 	}
-@@ -2130,6 +2146,7 @@ static void ad_enable_collecting_distributing(struct port *port,
- 			  port->actor_port_number,
- 			  aggregator->aggregator_identifier);
- 		__enable_port(port);
-+		bond_3ad_set_carrier(port->slave->bond);
- 		/* Slave array needs update */
- 		*update_slave_arr = true;
- 		/* Should notify peers if possible */
-@@ -2153,6 +2170,7 @@ static void ad_disable_collecting_distributing(struct port *port,
- 			  port->actor_port_number,
- 			  aggregator->aggregator_identifier);
- 		__disable_port(port);
-+		bond_3ad_set_carrier(port->slave->bond);
- 		/* Slave array needs an update */
- 		*update_slave_arr = true;
- 	}
-@@ -2832,7 +2850,9 @@ int bond_3ad_set_carrier(struct bonding *bond)
- 	active = __get_active_agg(&(SLAVE_AD_INFO(first_slave)->aggregator));
- 	if (active) {
- 		/* are enough slaves available to consider link up? */
--		if (__agg_active_ports(active) < bond->params.min_links) {
-+		if ((bond->params.lacp_strict ? __agg_usable_ports(active)
-+					: __agg_active_ports(active)) <
-+		    bond->params.min_links) {
- 			if (netif_carrier_ok(bond->dev)) {
- 				netif_carrier_off(bond->dev);
- 				goto out;
-diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
-index d358b831df7730..94b7b0851f16ae 100644
---- a/drivers/net/bonding/bond_options.c
-+++ b/drivers/net/bonding/bond_options.c
-@@ -1706,6 +1706,7 @@ static int bond_option_lacp_strict_set(struct bonding *bond,
- 	netdev_dbg(bond->dev, "Setting LACP fallback to %s (%llu)\n",
- 		   newval->string, newval->value);
- 	bond->params.lacp_strict = newval->value;
-+	bond_3ad_set_carrier(bond);
- 
- 	return 0;
- }
+ 		case AD_RX_LACP_DISABLED:
+ 			port->sm_vars &= ~AD_PORT_SELECTED;
 -- 
 2.53.0
 
