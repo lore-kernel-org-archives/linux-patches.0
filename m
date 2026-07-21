@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EA4417D67;
-	Tue, 21 Jul 2026 19:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A793EEAC7;
+	Tue, 21 Jul 2026 19:14:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661241; cv=none; b=e/waZIiilj6ev1AQVbQjwCL6/i/PUWQAR8CpedQqvd2Mr9DEUHlOFE3pGia2H8HuuTNGBxWZlVo/WHzoVracoVOqwYwxCp/nzVdtb7PLUR52ihjlqf65kJmVmW9jrCmK9eWfeN4jl3eZwOYE69AbzKNkQPebWb9iQYdXQVzSw4k=
+	t=1784661244; cv=none; b=YVmx3uNJ2LLlKF56zdKmDY7KFNKJATSkamB7Q/QFoId8i2wr1sIb+rx5FTx0XJEr76XklW7Y97PGTvLawyLnF8EiyeQq7A6IVRIcc5xC3a9UUshlKrZbO9K/K18t5HPDKHZNjVfw/hn9MJs9aJDdl5n4M7amcucuJK9ZNv9uFUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661241; c=relaxed/simple;
-	bh=1z+8X/Bfi/hTgkelSUnWVMSY0jZfFSbkjabbw5xuvQM=;
+	s=arc-20240116; t=1784661244; c=relaxed/simple;
+	bh=hYiR0Q5IOKB4ErYoVdSm5gls6N1ffnleLK8WD97OiVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l/RVEy1eFKIJ0scAfHutGf7F6VZoQ4e45Lco8emqqBcNP0zWbQPlAYJw+dR0XQf3TPvSP9vOTZY+ArMSg1WCbn/L/41K6EZQzoKTYltDdX+ILN8b1N1PQg/Xn8A24WGrpR5vknZRQm78SrONareQDyTIaRVmuDbOU/uU/4BZbV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8zO2F+4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sj+HkIZqPnIkldQ7rRAK6mrSXNY50NXDmi7WSQkLL760mcR1QEbNBLsrKus5wGqchkDpmFTRVEiupHRUgesmSmd7VRcxVTMFmmffBqmLi9YlAuF+j+5it7VFkYJkFCS24bBIYisYONovUslppza9khmG6+ZPt5UdX+UlOkadUX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNjjrU4S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8zO2F+4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB7231F000E9;
-	Tue, 21 Jul 2026 19:13:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNjjrU4S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4B01F000E9;
+	Tue, 21 Jul 2026 19:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661240;
-	bh=24iEizFDyiBdr1uPf0tfcHpnPk2wLgdUtegjzs4zWnI=;
+	s=korg; t=1784661243;
+	bh=SplqD2BGNprd8YoI7+wT8cIKFZlUbaGXtqVKNnTRWCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F8zO2F+4aJSYUCfoh5g0xNPMpU57PMJk1uPQSLEGl6DyVxBk1pAFtALUNeHHpobBW
-	 gAj2Anp06xddBeagORehbL1XSJ35oPtas9CDWb6iRNEFQazqGaH1FWGws9+1SudXim
-	 U4KcTYRki0uUOrOoiylR5AZ0wn/IKEcMZfHb1niU=
+	b=bNjjrU4STuzgRBeKVvvux7LjeA7R/tenoX1ir5q4iPvrpQF2JZx070ebcRqBxpxtg
+	 Gy00fVdTemtPOZ2ynJSZh45QA+UCJNzrQOtGwsbzBLDz3WCSvXdpFe5DKZ3EFYq/g9
+	 joDm1Nql5tRCwn3NUix6dXw0PcVPen7vown62AhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Xiang Mei <xmei5@asu.edu>,
+	Greg Thelen <gthelen@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Weiming Shi <bestswngs@gmail.com>
-Subject: [PATCH 7.1 1282/2077] geneve: validate inner network offset in geneve_gro_complete()
-Date: Tue, 21 Jul 2026 17:15:55 +0200
-Message-ID: <20260721152623.054061662@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 1283/2077] tools: ynl: build archives with $(AR)
+Date: Tue, 21 Jul 2026 17:15:56 +0200
+Message-ID: <20260721152623.079272869@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,67 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Greg Thelen <gthelen@google.com>
 
-[ Upstream commit cbb0d30a1ad6fc9439b1dc9b4f5a7a9140d3b11f ]
+[ Upstream commit 8c37e76f960b7a201556e954b987b431820995ee ]
 
-Even with both paths gated on gs->gro_hint, geneve_gro_complete()
-re-derives the inner dispatch type and length from the packet and the
-current gs->gro_hint, independently of geneve_gro_receive(). The two can
-disagree if gs->gro_hint flips under a concurrent geneve_quiesce()/
-geneve_unquiesce() (sk_user_data is NULL across a synchronize_net()), or if
-the re-read option bytes differ from the ones receive parsed.
+Use $(AR) to allow build system to override the archiver tool (e.g.,
+when cross-compiling for a different architecture) by setting the AR
+environment variable.
 
-geneve_gro_receive() already records the inner network header position in
-NAPI_GRO_CB()->inner_network_offset. Have geneve_gro_complete() compute the
-offset it is about to dispatch at, adding ETH_HLEN in the ETH_P_TEB case
-where eth_gro_complete() steps over the inner MAC header, and bail out if
-it lands past inner_network_offset.
+GNU Make defaults AR to ar, so this change will not break existing build
+environments that do not explicitly set AR.
 
-Use a lower bound rather than exact equality: between gh_len and the inner
-L3 header, geneve_gro_receive() may also have pulled an inner VLAN tag
-(vlan_gro_receive() advances the recorded offset past it), which only moves
-inner_network_offset further out. A valid frame therefore always satisfies
-inner_nh <= inner_network_offset, while a gh_len inflated by a hint
-gro_receive() did not honour dispatches past the validated inner header,
-i.e. the out-of-bounds completion. Only the latter is rejected.
-
-Fixes: fd0dd796576e ("geneve: use GRO hint option in the RX path")
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Co-developed-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260618032622.484720-2-xmei5@asu.edu
+Fixes: 07c3cc51a085 ("tools: net: package libynl for use in selftests")
+Fixes: 86878f14d71a ("tools: ynl: user space helpers")
+Signed-off-by: Greg Thelen <gthelen@google.com>
+Link: https://patch.msgid.link/20260622161659.145047-1-gthelen@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/geneve.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ tools/net/ynl/Makefile           | 2 +-
+ tools/net/ynl/generated/Makefile | 2 +-
+ tools/net/ynl/lib/Makefile       | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
-index a48f6c52f12695..c760c0655c8a16 100644
---- a/drivers/net/geneve.c
-+++ b/drivers/net/geneve.c
-@@ -956,6 +956,20 @@ static int geneve_gro_complete(struct sock *sk, struct sk_buff *skb,
- 	type = gh->proto_type;
- 	geneve_sk_gro_hint_off(sk, gh, &type, &gh_len);
+diff --git a/tools/net/ynl/Makefile b/tools/net/ynl/Makefile
+index d514a48dae270d..3cefe4ed96cb92 100644
+--- a/tools/net/ynl/Makefile
++++ b/tools/net/ynl/Makefile
+@@ -22,7 +22,7 @@ tests: | lib generated libynl.a
+ ynltool: | lib generated libynl.a
+ libynl.a: | lib generated
+ 	@echo -e "\tAR $@"
+-	@ar rcs $@ lib/ynl.o generated/*-user.o
++	@$(AR) rcs $@ lib/ynl.o generated/*-user.o
  
-+	/* Bail out if we are about to dispatch past the inner network header
-+	 * gro_receive() validated. An inner VLAN tag only pushes
-+	 * inner_network_offset out, so use a lower bound.
-+	 */
-+	if (skb->encapsulation) {
-+		unsigned int inner_nh = nhoff + gh_len;
-+
-+		if (type == htons(ETH_P_TEB))
-+			inner_nh += ETH_HLEN;
-+
-+		if (unlikely(inner_nh > NAPI_GRO_CB(skb)->inner_network_offset))
-+			return -EINVAL;
-+	}
-+
- 	/* since skb->encapsulation is set, eth_gro_complete() sets the inner mac header */
- 	if (likely(type == htons(ETH_P_TEB)))
- 		return eth_gro_complete(skb, nhoff + gh_len);
+ $(SUBDIRS):
+ 	@if [ -f "$@/Makefile" ] ; then \
+diff --git a/tools/net/ynl/generated/Makefile b/tools/net/ynl/generated/Makefile
+index 86e1e4a959a751..ea4128f612d6c7 100644
+--- a/tools/net/ynl/generated/Makefile
++++ b/tools/net/ynl/generated/Makefile
+@@ -37,7 +37,7 @@ all: protos.a $(HDRS) $(SRCS) $(KHDRS) $(KSRCS) $(UAPI) $(RSTS)
+ 
+ protos.a: $(OBJS)
+ 	@echo -e "\tAR $@"
+-	@ar rcs $@ $(OBJS)
++	@$(AR) rcs $@ $(OBJS)
+ 
+ %-user.h: $(SPECS_DIR)/%.yaml $(TOOL)
+ 	@echo -e "\tGEN $@"
+diff --git a/tools/net/ynl/lib/Makefile b/tools/net/ynl/lib/Makefile
+index 4b2b98704ff9ba..9b98c059960003 100644
+--- a/tools/net/ynl/lib/Makefile
++++ b/tools/net/ynl/lib/Makefile
+@@ -15,7 +15,7 @@ all: ynl.a
+ 
+ ynl.a: $(OBJS)
+ 	@echo -e "\tAR $@"
+-	@ar rcs $@ $(OBJS)
++	@$(AR) rcs $@ $(OBJS)
+ 
+ clean:
+ 	rm -f *.o *.d *~
 -- 
 2.53.0
 
