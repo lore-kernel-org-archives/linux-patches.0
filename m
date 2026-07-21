@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9308403AFB;
-	Tue, 21 Jul 2026 17:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF15326D44;
+	Tue, 21 Jul 2026 17:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655856; cv=none; b=PvLagLki101S5AO5Xct8gKpQXCLqXOXoG5ZmaTi+8Jq4qkCkwZ2p8c2GWKVaLKYcRIsmWl9NIGnvKLe0tkv+qOPgkymTxcl3bwblzyud/oHeoRweDtPPrcl52y3O0KbrhajsJuh8solC6p1UFAJVHs8IZGkS7yqq/gCHfbjQwwA=
+	t=1784655859; cv=none; b=n/Q53F1y4zrzqFQCDuLZ9pAYN1NT3SdETkEeFOc9GHyZYf3CJr78IoocGs7PVueUKNTjT3GdPL6WDlcLqvLSoA8PpN9jstZxQ5Y0lzHiMy0VafzdyS9FajnQDyop0Dez/PPu/3sT0uMcaXgLdr8eU1guoqZ7z36AlfbJczKdKc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655856; c=relaxed/simple;
-	bh=AIt+As1c1LehXycTR6MhQIs2toWTct4DADdvJeW3AqA=;
+	s=arc-20240116; t=1784655859; c=relaxed/simple;
+	bh=eukcXXfe3Lqu5Nc+nwsh2aqvROS9hHz0wcvGC4WrkJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T3ZNh/VzuZGHAdi8d9sSA/9CwLFSx8YcvvZoZRDmEUifQmV8a3Uyjw0wsufMsZ7MAG4XoTTVpdCTvjq+6QxF34oPp6LcRPZim4mQ0nPc+AC3Fcice/ZCx3tOSlDFuRQPYM7ZV89LmlLsT1HqD5BeHg5xdb6bWSDCgNWWxJZQNJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xK0/uaBW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UZrNzMf3lE8Sa3+NBhTPs2n1QVyhElLPuacAZZOBUunCwmjkWuskJ6yOh+Emhoa3Ydr2qxSS6ttlr6LixvQBfP/q4Uoa7PQfrq0L4f5ipqIMY7UalLk8w3j1mvqhpASCwWANdyUGvQniciJPN4tQF9NkkJpu0KrKSd8MdFcrAo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y2BdV4Kp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xK0/uaBW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDA81F00A3A;
-	Tue, 21 Jul 2026 17:44:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y2BdV4Kp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48451F000E9;
+	Tue, 21 Jul 2026 17:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655855;
-	bh=cTuw+jMmmDClz40HFrIjlMTZTFNmnHc4zvOeGaBliPE=;
+	s=korg; t=1784655858;
+	bh=FcrelptLZXvPEVcj1Z6ge+G4tsTcHhQKQdeWwUn2jwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xK0/uaBWxUnZcMLsrYUvptWt7ehyoiruis0qFcL6RBgAjMavFuNIcjBQSMQ2KmHWL
-	 pldTkJUE3VbJ4xn8HE5lkh1pdv/+lajoP3l6SvWtkGxVvr/qNtB/4D3GHyCbdGmSjN
-	 Y5IZNcUzSENbLuVQkhHTiam83jO0795wbpY7+YPc=
+	b=Y2BdV4KpPg3O/2f2502bkX25bPZBfTB12Wu8slfh5o1zi1hKWHcT5i501JHfQH3XW
+	 fGQeerIYeDLcBpsyS801eqf/6ikbPKX8t46D3ktTtv4JwrzxcnvIRbQE2GdSQzuILX
+	 VMXRF4b6MnkPWZQTxuON/qqsqumvptx4Cscn2jd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Richard Zhu <hongxing.zhu@nxp.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0167/1611] arm64: dts: imx8qxp-mek: Remove unnecessary PCIe EP vpcie-supply
-Date: Tue, 21 Jul 2026 17:04:43 +0200
-Message-ID: <20260721152518.645213744@linuxfoundation.org>
+Subject: [PATCH 6.18 0168/1611] arm64: dts: imx95-19x19-evk: Fix PCIe EP vpcie-supply
+Date: Tue, 21 Jul 2026 17:04:44 +0200
+Message-ID: <20260721152518.671077219@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,31 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit b5ba136d535f1060322af31c0cf74d85ea19892d ]
+[ Upstream commit 596d0f9f4fefffbf783ab26cfa90cf50f5dd6bb0 ]
 
-For PCIe endpoint mode, only M.2 power supply needs to be ensured.
-On imx8qxp-mek, the M.2 power is always on and cannot be controlled,
-while reg_pcieb only controls the M.2 W_DISABLE1# signal. Remove the
-unnecessary vpcie-supply property from pcie0_ep node.
+The vpcie-supply property should reference the regulator that controls
+the actual M.2 power supply, not the W_DISABLE1# signal.
+On imx95-19x19-evk:
+- reg_pcie0 controls M.2 W_DISABLE1# signal
+- reg_m2_pwr controls the actual M.2 power supply
 
-Fixes: 1c9b0c6044c2 ("arm64: dts: imx8: use common imx-pcie0-ep.dtso to enable PCI ep function")
+Fix the vpcie-supply to use reg_m2_pwr for proper power control in
+PCIe endpoint mode.
+
+Fixes: 58bea81052d0 ("arm64: dts: imx95: add pcie1 ep overlay file and create pcie-ep dtb files")
 Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
 Reviewed-by: Richard Zhu <hongxing.zhu@nxp.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8qxp-mek.dts | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx95-19x19-evk.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts b/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts
-index ea78e843415235..eb869770408797 100644
---- a/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts
-@@ -647,7 +647,6 @@ &pcie0_ep {
- 	phy-names = "pcie-phy";
- 	pinctrl-0 = <&pinctrl_pcieb>;
+diff --git a/arch/arm64/boot/dts/freescale/imx95-19x19-evk.dts b/arch/arm64/boot/dts/freescale/imx95-19x19-evk.dts
+index 9f968feccef67c..513c52901e6cfe 100644
+--- a/arch/arm64/boot/dts/freescale/imx95-19x19-evk.dts
++++ b/arch/arm64/boot/dts/freescale/imx95-19x19-evk.dts
+@@ -548,7 +548,7 @@ &pcie0 {
+ &pcie0_ep {
+ 	pinctrl-0 = <&pinctrl_pcie0>;
  	pinctrl-names = "default";
--	vpcie-supply = <&reg_pcieb>;
+-	vpcie-supply = <&reg_pcie0>;
++	vpcie-supply = <&reg_m2_pwr>;
  	status = "disabled";
  };
  
