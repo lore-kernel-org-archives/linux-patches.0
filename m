@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B13E46D088;
-	Tue, 21 Jul 2026 17:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FB946D096;
+	Tue, 21 Jul 2026 17:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656085; cv=none; b=cyqbVsW5qv7LhF2BWEopGI4g5713hP0ul1+zwsrTSoKNWyEw8f29+9CTds+ymqyG1WwqR00AEl67nfRzaZCPJT6zVUrl+TSnJQLZ98GVIIiqMaHD2+itWQpQIxt2BxaHq5qZ5NcZlbS5RprjlSPyclB89JVR4JfCHfSrXBZFCEk=
+	t=1784656085; cv=none; b=jw9/3q8U04mutBroQLwiLvcWhBmMq4yIeFHoLaPTa9Ej36Ym2vKYegBv2Je6Hcq7iuwjYHOEIuitC5pfha33tvoXvVGJe8U+wDp3Jn4VvAqXJfwrbY4++8vj7NNh1VmvpJnyGxG9iWBHFaMhZILNvK5qqwSbPWdMKtG00P4dE3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784656085; c=relaxed/simple;
-	bh=7G04rZNwHy/heUNGzSpEDhQk4YMVEQTzi766h51kSgo=;
+	bh=ZP0tvIVIs4uAcN4Yj6Kf+im2w3PyaOaaG+21InABXqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=evKW2Jb/yuMtIrUtLnKvq9sALIWrHmpwy3DzrmfHhByEz9zXB7+HS169odLYSUjcHvZ9BRmrsIwGsHhhBGhPuz+wL5z6CdD1qW8sOHP7nWKJO8CHPCNuT8USGjJPXZ68B/+O6/JHugLp4r1w5dmH8ANbFzvthOtOEqpYG4Qb2h8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlVsZZA8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HuhcyLdWBn4AwOq++3bbr1cuQwQju6/u1+SrhlY2bgW7w6QUD1QqmB7J/gmg4zu4AXYY0UXwxoZsO+J6p1fGnFcIY00kHxLohtykGwj694b44+UwvWvEOhfutUFh40C3U4+89FNBOBIlkWCHvp+3zvU7P4DOu3qWgNDRy/rCXrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rKR8D9yK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlVsZZA8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9107E1F00A3D;
-	Tue, 21 Jul 2026 17:48:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rKR8D9yK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6DC01F000E9;
+	Tue, 21 Jul 2026 17:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656080;
-	bh=W1K1qH026qTnBeYGLjW6TL2w5Od2Mt8JTFYtaWCbeEI=;
+	s=korg; t=1784656078;
+	bh=6SaAmPU4awrgUi06PLV/MSQfIzzCd2Oxjz9Gyz68bOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vlVsZZA8Bkj+lxbxMeBZ4QOj2NNOggCpEz9gWysdB7vkZ9jcQmZtN89da14u8nBcX
-	 bn1nX9VmaIy376KWwpaX9MNcC0qQ+3KltqDg/FNoTPqVxiCeBiBFq//h3YwWV1reqI
-	 23qJdVf1Nl2Ng6ZmGpejNSoRZOiUhlfZP2whayyk=
+	b=rKR8D9yKchr7H39d7UcKyuWlQzyE024poFPjFU5rVD4cfW03fTQ/7obOL0kZA7yVg
+	 x6pOkEJYMPTCHyTMnNBh4JJuApf0IMAon14zKUO2PuKhBV9Q4WSpJUunJ7aRvyuXDC
+	 /qjj/H5Fcd0WKxMfKWdKXQJKgJPUpusKwl0Gsiu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	Timur Tabi <ttabi@nvidia.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0253/1611] libbpf: Harden parse_vma_segs() path parsing
-Date: Tue, 21 Jul 2026 17:06:09 +0200
-Message-ID: <20260721152520.730658578@linuxfoundation.org>
+Subject: [PATCH 6.18 0252/1611] drm/nouveau/bios: specify correct display fuse register for Ampere and Ada
+Date: Tue, 21 Jul 2026 17:06:08 +0200
+Message-ID: <20260721152520.706095715@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,84 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Timur Tabi <ttabi@nvidia.com>
 
-[ Upstream commit fee9a38174f4c6454fb1fbaf2b9b5a1cca9070d0 ]
+[ Upstream commit c1cf2d5db80ce91a85855bbaf4da85ff603e089a ]
 
-parse_vma_segs() in tools/lib/bpf/usdt.c parses /proc/<pid>/maps
-with two widthless scansets, "%s" into mode[16] and "%[^\n]"
-into line[4096]. A VMA name in maps is not limited to that local
-buffer; a deeply nested backing path can produce a maps record long
-enough to overflow the stack buffer.
+The NV_FUSE_STATUS_OPT_DISPLAY register is used to determine whether
+the GPU has display hardware.  The current code that normally reads
+this register is instead hard-coded to check for GA100 vs later GPUs.
+Since this function is called only on pre-Hopper GPUs, and this
+if-statement applies only to GA100 and later, the check works
+because GA100 is the only non-display Ampere and Ada GPU.
 
-Bound both scansets to the declared buffer sizes ("%15s" for mode[16]
-and "%4095[^\n]" for line[4096]) and drain any residue past line[4094]
-with "%*[^\n]" before the trailing "\n". Without the drain, the residue
-of an over-long record would stay in the stream and break the next
-"%zx-%zx" parse, so the loop would exit early and silently skip later
-maps records.
+However, there actually is a register that can be read, so we should
+use it.
 
-Also stop using sscanf(..., "%s") to peel the /proc/<pid>/root prefix
-from lib_path. Parse the pid and prefix length with "%n", check for the
-following slash, and copy the remainder with libbpf_strlcpy(). That
-removes a second unbounded stack write and preserves paths containing
-spaces.
-
-Fixes: 74cc6311cec9 ("libbpf: Add USDT notes parsing and resolution logic")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/20260522201353.1454653-1-michael.bommarito@gmail.com
+Fixes: a34632482f1e ("drm/nouveau/bios/ga10[024]: initial support")
+Signed-off-by: Timur Tabi <ttabi@nvidia.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260430223838.2530778-8-ttabi@nvidia.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/usdt.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowramin.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/usdt.c b/tools/lib/bpf/usdt.c
-index c174b40866738a..63d628029ad4ea 100644
---- a/tools/lib/bpf/usdt.c
-+++ b/tools/lib/bpf/usdt.c
-@@ -460,10 +460,10 @@ static int parse_elf_segs(Elf *elf, const char *path, struct elf_seg **segs, siz
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowramin.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowramin.c
+index 023ddc7c5399a4..a295e94e4cb88d 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowramin.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowramin.c
+@@ -65,13 +65,14 @@ pramin_init(struct nvkm_bios *bios, const char *name)
  
- static int parse_vma_segs(int pid, const char *lib_path, struct elf_seg **segs, size_t *seg_cnt)
- {
--	char path[PATH_MAX], line[PATH_MAX], mode[16];
-+	char path[PATH_MAX], line[4096], mode[16];
- 	size_t seg_start, seg_end, seg_off;
- 	struct elf_seg *seg;
--	int tmp_pid, i, err;
-+	int tmp_pid, n, i, err;
- 	FILE *f;
- 
- 	*seg_cnt = 0;
-@@ -472,8 +472,13 @@ static int parse_vma_segs(int pid, const char *lib_path, struct elf_seg **segs,
- 	 * /proc/<pid>/root/<path>. They will be reported as just /<path> in
- 	 * /proc/<pid>/maps.
- 	 */
--	if (sscanf(lib_path, "/proc/%d/root%s", &tmp_pid, path) == 2 && pid == tmp_pid)
-+	/* %n is not counted in sscanf() return value, so initialize it. */
-+	n = 0;
-+	if (sscanf(lib_path, "/proc/%d/root%n", &tmp_pid, &n) == 1 &&
-+	    n > 0 && pid == tmp_pid && lib_path[n] == '/') {
-+		libbpf_strlcpy(path, lib_path + n, sizeof(path));
- 		goto proceed;
-+	}
- 
- 	if (!realpath(lib_path, path)) {
- 		pr_warn("usdt: failed to get absolute path of '%s' (err %s), using path as is...\n",
-@@ -496,8 +501,11 @@ static int parse_vma_segs(int pid, const char *lib_path, struct elf_seg **segs,
- 	 * 7f5c6f5d1000-7f5c6f5d3000 rw-p 001c7000 08:04 21238613      /usr/lib64/libc-2.17.so
- 	 * 7f5c6f5d3000-7f5c6f5d8000 rw-p 00000000 00:00 0
- 	 * 7f5c6f5d8000-7f5c6f5d9000 r-xp 00000000 103:01 362990598    /data/users/andriin/linux/tools/bpf/usdt/libhello_usdt.so
-+	 *
-+	 * Some VMA names can be longer than the local buffer. Bound the
-+	 * writes, but still consume the rest of the line.
- 	 */
--	while (fscanf(f, "%zx-%zx %s %zx %*s %*d%[^\n]\n",
-+	while (fscanf(f, "%zx-%zx %15s %zx %*s %*d%4095[^\n]%*[^\n]\n",
- 		      &seg_start, &seg_end, mode, &seg_off, line) == 5) {
- 		void *tmp;
- 
+ 	/* we can't get the bios image pointer without PDISP */
+ 	if (device->card_type >= GA100)
+-		addr = device->chipset == 0x170; /*XXX: find the fuse reg for this */
++		addr = nvkm_rd32(device, 0x820c04);
+ 	else
+ 	if (device->card_type >= GM100)
+ 		addr = nvkm_rd32(device, 0x021c04);
+ 	else
+ 	if (device->card_type >= NV_C0)
+ 		addr = nvkm_rd32(device, 0x022500);
++
+ 	if (addr & 0x00000001) {
+ 		nvkm_debug(subdev, "... display disabled\n");
+ 		return ERR_PTR(-ENODEV);
 -- 
 2.53.0
 
