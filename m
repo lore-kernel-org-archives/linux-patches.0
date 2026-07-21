@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04CC3B8124;
-	Tue, 21 Jul 2026 20:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EA73B83FE;
+	Tue, 21 Jul 2026 20:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666958; cv=none; b=UqI1Tu2SJ4WnNJwzhFa0b8zT2XyK+5M/J4biPrmICHPY8UG/AtAr5L6t6+1ds7zyENcmOfEn67uJHb9LORNqIQ5w+9Nab+cPYpcwbvIE5Q7cI6QGyZ11kf9rkcUMxR9HCidrh4nhrYwENq63UymcFffkF7GUvtwN7KwK+XFhrFE=
+	t=1784666961; cv=none; b=U08ItGboGA3GMEF6U6tZwtfMcFU/sqVX9Nw8mQKREX2zHQh669nuL8pa8qvGYMlTeD/pG47MLBEfuC0FL+6xuVkXMp01hrxWv+YsZ/4f14IfdnpgYNZz/dUu9yD3s2hmPrcb6I3QSZDaJ2hKXiueufPBNpUAF7kLFfUJyfllyBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666958; c=relaxed/simple;
-	bh=UJXf8UM6+9PT0B562tx+dduEXVYgH3Yl18a1mG/+mTo=;
+	s=arc-20240116; t=1784666961; c=relaxed/simple;
+	bh=w+++W7ZDyO3d40yw0DY58jMunG+4BXSTuz9rZXFzco0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lTCiqH3M6UY4DEx/5gONwAUmIs2icrGlcLb/+W152PnhF/q2BANKp6iH+9V9rJmA0hk3yQF8G3fTxP2Xtpr9uBQSwMwJoB9ORGLglhg5cWZkmsRgAP7/1VvX5NRlRdK8ib1ElNCD7EoEA6h4WWTfJX5tC8ZznR7cY9IZAsH3pCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7qTEza8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nv4egM+/fXH6Hxs8OG93iTTd6v3yU+Fvz58747Ih2pc22jNAMrcGB1jZ65FHciwMHZa2lBxVNDYNqPq2dgFIdVEdzxLTZdxhEZdwheoNQ4Ea9pK7bS/Xzbfm5tM2sMYlJ405Sd4w1ZOIxrH1toc9y1NYPvjeoV7BpW81VkwY6oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ae92XLvf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7qTEza8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2591F000E9;
-	Tue, 21 Jul 2026 20:49:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ae92XLvf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64BD1F000E9;
+	Tue, 21 Jul 2026 20:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666956;
-	bh=7zi/htRKxTI9IwAJ1e1MmJvAjmDJUqHGghhGZaithgk=;
+	s=korg; t=1784666959;
+	bh=O7MD7+B2LNOxLPAdaxIJ9s7wmwo18RmPv4o8eKYfGEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G7qTEza8QoJvaN8Yobll0/mIJeqGj0nj5YRBIziWJ+mk7m5iSrQly+HIvc8u5WkTQ
-	 5khIF+5kf03UkKX0Ye8eTViildSOy9W3/r3t5fBl09NPwFbsO9N9Qx21Gt98NTJFB9
-	 7cydJpNhc6SQdXhOvWW3bLpy1AzSLBhRYLEFpCBc=
+	b=Ae92XLvfnBpfxN1IMiiIC4Zohx/ci2OGSfg7nAPe/ev7dGIBeJRab2b7IweODIEl7
+	 XWXSS6+SPXWw5z1CK3syLaraedcftgbQC0ieW5jHlUv2zEAc2RWk5QJPgc/qZWg7sC
+	 qxJEyJ8fHnOwpBuv9wnHrdOUGF6I2jMjzGQVaCLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Bocharov <v@baodeep.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0826/1266] pinctrl: meson: restore non-sleeping GPIO access
-Date: Tue, 21 Jul 2026 17:21:03 +0200
-Message-ID: <20260721152500.338755825@linuxfoundation.org>
+Subject: [PATCH 6.6 0873/1266] ipv6: mcast: Replace locking comments with lockdep annotations.
+Date: Tue, 21 Jul 2026 17:21:50 +0200
+Message-ID: <20260721152501.385834336@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,64 +52,492 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Bocharov <v@baodeep.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 9777530157e7b82fd994327ff878c4245dadc931 ]
+[ Upstream commit 818ae1a5ecb41d82ad180a99c39111f051894d90 ]
 
-Commit 28f240683871 ("pinctrl: meson: mark the GPIO controller as
-sleeping") set gpio_chip.can_sleep = true to work around
-gpio-shared-proxy holding a spinlock across a sleeping pinctrl config
-path. That locking bug is now fixed in the shared-proxy itself ("gpio:
-shared-proxy: always serialize with a sleeping mutex"), so the
-controller-wide workaround is no longer needed; the meson GPIO
-controller does not sleep.
+Commit 63ed8de4be81 ("mld: add mc_lock for protecting per-interface
+mld data") added the same comments regarding locking to many functions.
 
-meson_gpio_get/set/direction_* access MMIO through regmap. The
-regmap_mmio bus uses fast I/O (spinlock) locking, so these value
-callbacks do not contain sleeping operations. Since gpio_chip.can_sleep
-describes the get/set value path, restore can_sleep = false.
+Let's replace the comments with lockdep annotation, which is more helpful.
 
-Marking the controller sleeping also broke atomic value consumers such
-as w1-gpio (1-Wire bitbang): w1_io.c runs its read time slot under
-local_irq_save() and uses the non-cansleep gpiod_set_value() /
-gpiod_get_value(), which with can_sleep=true trigger WARN_ON(can_sleep)
-in gpiolib on every transferred bit (from w1_gpio_write_bit() /
-w1_gpio_read_bit() via w1_reset_bus() and w1_search()). The printk and
-stack dump inside the IRQs-off, microsecond-scale time slot destroy the
-bit timing, so reset/presence detection and ROM search fail: the bus
-master registers but w1_master_slave_count stays at 0 and no devices
-are found. Verified on an Amlogic A113X board (DS18B20 on GPIOA_14):
-with can_sleep restored to false the warnings are gone and the sensor
-is detected and read again.
+Note that we just remove the comment for mld_clear_zeros() and
+mld_send_cr(), where mc_dereference() is used in the entry of the
+function.
 
-This must not be applied or backported without the shared-proxy locking
-fix above; otherwise the original Khadas VIM3 splat returns on boards
-that genuinely share a meson GPIO.
+While at it, a comment for __ipv6_sock_mc_join() is moved back to the
+correct place.
 
-Fixes: 28f240683871 ("pinctrl: meson: mark the GPIO controller as sleeping")
-Link: https://lore.kernel.org/all/20260105150509.56537-1-bartosz.golaszewski@oss.qualcomm.com/
-Signed-off-by: Viacheslav Bocharov <v@baodeep.com>
-Acked-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260625115718.1678991-3-v@baodeep.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250702230210.3115355-3-kuni1840@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 9b26518b6896 ("ipv6: mcast: Fix potential UAF in MLD delayed work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/meson/pinctrl-meson.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/mcast.c | 125 +++++++++++++++++++++++++++--------------------
+ 1 file changed, 71 insertions(+), 54 deletions(-)
 
-diff --git a/drivers/pinctrl/meson/pinctrl-meson.c b/drivers/pinctrl/meson/pinctrl-meson.c
-index 4f613f9082083f..5cc00fdc48d840 100644
---- a/drivers/pinctrl/meson/pinctrl-meson.c
-+++ b/drivers/pinctrl/meson/pinctrl-meson.c
-@@ -618,7 +618,7 @@ static int meson_gpiolib_register(struct meson_pinctrl *pc)
- 	pc->chip.set = meson_gpio_set;
- 	pc->chip.base = -1;
- 	pc->chip.ngpio = pc->data->num_pins;
--	pc->chip.can_sleep = true;
-+	pc->chip.can_sleep = false;
+diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
+index 5bd96298d3bb42..ddc2453a14b365 100644
+--- a/net/ipv6/mcast.c
++++ b/net/ipv6/mcast.c
+@@ -105,9 +105,9 @@ static int __ipv6_dev_mc_inc(struct net_device *dev,
+ int sysctl_mld_max_msf __read_mostly = IPV6_MLD_MAX_MSF;
+ int sysctl_mld_qrv __read_mostly = MLD_QRV_DEFAULT;
  
- 	ret = gpiochip_add_data(&pc->chip, pc);
- 	if (ret) {
+-/*
+- *	socket join on multicast group
+- */
++#define mc_assert_locked(idev)			\
++	lockdep_assert_held(&(idev)->mc_lock)
++
+ #define mc_dereference(e, idev) \
+ 	rcu_dereference_protected(e, lockdep_is_held(&(idev)->mc_lock))
+ 
+@@ -166,6 +166,9 @@ static int unsolicited_report_interval(struct inet6_dev *idev)
+ 	return iv > 0 ? iv : 1;
+ }
+ 
++/*
++ *	socket join on multicast group
++ */
+ static int __ipv6_sock_mc_join(struct sock *sk, int ifindex,
+ 			       const struct in6_addr *addr, unsigned int mode)
+ {
+@@ -664,12 +667,13 @@ bool inet6_mc_check(const struct sock *sk, const struct in6_addr *mc_addr,
+ 	return rv;
+ }
+ 
+-/* called with mc_lock */
+ static void igmp6_group_added(struct ifmcaddr6 *mc)
+ {
+ 	struct net_device *dev = mc->idev->dev;
+ 	char buf[MAX_ADDR_LEN];
+ 
++	mc_assert_locked(mc->idev);
++
+ 	if (IPV6_ADDR_MC_SCOPE(&mc->mca_addr) <
+ 	    IPV6_ADDR_SCOPE_LINKLOCAL)
+ 		return;
+@@ -699,12 +703,13 @@ static void igmp6_group_added(struct ifmcaddr6 *mc)
+ 	mld_ifc_event(mc->idev);
+ }
+ 
+-/* called with mc_lock */
+ static void igmp6_group_dropped(struct ifmcaddr6 *mc)
+ {
+ 	struct net_device *dev = mc->idev->dev;
+ 	char buf[MAX_ADDR_LEN];
+ 
++	mc_assert_locked(mc->idev);
++
+ 	if (IPV6_ADDR_MC_SCOPE(&mc->mca_addr) <
+ 	    IPV6_ADDR_SCOPE_LINKLOCAL)
+ 		return;
+@@ -725,14 +730,13 @@ static void igmp6_group_dropped(struct ifmcaddr6 *mc)
+ 		refcount_dec(&mc->mca_refcnt);
+ }
+ 
+-/*
+- * deleted ifmcaddr6 manipulation
+- * called with mc_lock
+- */
++/* deleted ifmcaddr6 manipulation */
+ static void mld_add_delrec(struct inet6_dev *idev, struct ifmcaddr6 *im)
+ {
+ 	struct ifmcaddr6 *pmc;
+ 
++	mc_assert_locked(idev);
++
+ 	/* this is an "ifmcaddr6" for convenience; only the fields below
+ 	 * are actually used. In particular, the refcnt and users are not
+ 	 * used for management of the delete list. Using the same structure
+@@ -766,13 +770,14 @@ static void mld_add_delrec(struct inet6_dev *idev, struct ifmcaddr6 *im)
+ 	rcu_assign_pointer(idev->mc_tomb, pmc);
+ }
+ 
+-/* called with mc_lock */
+ static void mld_del_delrec(struct inet6_dev *idev, struct ifmcaddr6 *im)
+ {
+ 	struct ip6_sf_list *psf, *sources, *tomb;
+ 	struct in6_addr *pmca = &im->mca_addr;
+ 	struct ifmcaddr6 *pmc, *pmc_prev;
+ 
++	mc_assert_locked(idev);
++
+ 	pmc_prev = NULL;
+ 	for_each_mc_tomb(idev, pmc) {
+ 		if (ipv6_addr_equal(&pmc->mca_addr, pmca))
+@@ -809,11 +814,12 @@ static void mld_del_delrec(struct inet6_dev *idev, struct ifmcaddr6 *im)
+ 	}
+ }
+ 
+-/* called with mc_lock */
+ static void mld_clear_delrec(struct inet6_dev *idev)
+ {
+ 	struct ifmcaddr6 *pmc, *nextpmc;
+ 
++	mc_assert_locked(idev);
++
+ 	pmc = mc_dereference(idev->mc_tomb, idev);
+ 	RCU_INIT_POINTER(idev->mc_tomb, NULL);
+ 
+@@ -870,13 +876,14 @@ static void ma_put(struct ifmcaddr6 *mc)
+ 	}
+ }
+ 
+-/* called with mc_lock */
+ static struct ifmcaddr6 *mca_alloc(struct inet6_dev *idev,
+ 				   const struct in6_addr *addr,
+ 				   unsigned int mode)
+ {
+ 	struct ifmcaddr6 *mc;
+ 
++	mc_assert_locked(idev);
++
+ 	mc = kzalloc(sizeof(*mc), GFP_KERNEL);
+ 	if (!mc)
+ 		return NULL;
+@@ -1046,46 +1053,51 @@ bool ipv6_chk_mcast_addr(struct net_device *dev, const struct in6_addr *group,
+ 	return rv;
+ }
+ 
+-/* called with mc_lock */
+ static void mld_gq_start_work(struct inet6_dev *idev)
+ {
+ 	unsigned long tv = get_random_u32_below(idev->mc_maxdelay);
+ 
++	mc_assert_locked(idev);
++
+ 	idev->mc_gq_running = 1;
+ 	if (!mod_delayed_work(mld_wq, &idev->mc_gq_work, tv + 2))
+ 		in6_dev_hold(idev);
+ }
+ 
+-/* called with mc_lock */
+ static void mld_gq_stop_work(struct inet6_dev *idev)
+ {
++	mc_assert_locked(idev);
++
+ 	idev->mc_gq_running = 0;
+ 	if (cancel_delayed_work(&idev->mc_gq_work))
+ 		__in6_dev_put(idev);
+ }
+ 
+-/* called with mc_lock */
+ static void mld_ifc_start_work(struct inet6_dev *idev, unsigned long delay)
+ {
+ 	unsigned long tv = get_random_u32_below(delay);
+ 
++	mc_assert_locked(idev);
++
+ 	if (!mod_delayed_work(mld_wq, &idev->mc_ifc_work, tv + 2))
+ 		in6_dev_hold(idev);
+ }
+ 
+-/* called with mc_lock */
+ static void mld_ifc_stop_work(struct inet6_dev *idev)
+ {
++	mc_assert_locked(idev);
++
+ 	idev->mc_ifc_count = 0;
+ 	if (cancel_delayed_work(&idev->mc_ifc_work))
+ 		__in6_dev_put(idev);
+ }
+ 
+-/* called with mc_lock */
+ static void mld_dad_start_work(struct inet6_dev *idev, unsigned long delay)
+ {
+ 	unsigned long tv = get_random_u32_below(delay);
+ 
++	mc_assert_locked(idev);
++
+ 	if (!mod_delayed_work(mld_wq, &idev->mc_dad_work, tv + 2))
+ 		in6_dev_hold(idev);
+ }
+@@ -1110,14 +1122,13 @@ static void mld_report_stop_work(struct inet6_dev *idev)
+ 		__in6_dev_put(idev);
+ }
+ 
+-/*
+- * IGMP handling (alias multicast ICMPv6 messages)
+- * called with mc_lock
+- */
++/* IGMP handling (alias multicast ICMPv6 messages) */
+ static void igmp6_group_queried(struct ifmcaddr6 *ma, unsigned long resptime)
+ {
+ 	unsigned long delay = resptime;
+ 
++	mc_assert_locked(ma->idev);
++
+ 	/* Do not start work for these addresses */
+ 	if (ipv6_addr_is_ll_all_nodes(&ma->mca_addr) ||
+ 	    IPV6_ADDR_MC_SCOPE(&ma->mca_addr) < IPV6_ADDR_SCOPE_LINKLOCAL)
+@@ -1136,15 +1147,15 @@ static void igmp6_group_queried(struct ifmcaddr6 *ma, unsigned long resptime)
+ 	ma->mca_flags |= MAF_TIMER_RUNNING;
+ }
+ 
+-/* mark EXCLUDE-mode sources
+- * called with mc_lock
+- */
++/* mark EXCLUDE-mode sources */
+ static bool mld_xmarksources(struct ifmcaddr6 *pmc, int nsrcs,
+ 			     const struct in6_addr *srcs)
+ {
+ 	struct ip6_sf_list *psf;
+ 	int i, scount;
+ 
++	mc_assert_locked(pmc->idev);
++
+ 	scount = 0;
+ 	for_each_psf_mclock(pmc, psf) {
+ 		if (scount == nsrcs)
+@@ -1167,13 +1178,14 @@ static bool mld_xmarksources(struct ifmcaddr6 *pmc, int nsrcs,
+ 	return true;
+ }
+ 
+-/* called with mc_lock */
+ static bool mld_marksources(struct ifmcaddr6 *pmc, int nsrcs,
+ 			    const struct in6_addr *srcs)
+ {
+ 	struct ip6_sf_list *psf;
+ 	int i, scount;
+ 
++	mc_assert_locked(pmc->idev);
++
+ 	if (pmc->mca_sfmode == MCAST_EXCLUDE)
+ 		return mld_xmarksources(pmc, nsrcs, srcs);
+ 
+@@ -1868,7 +1880,6 @@ static struct sk_buff *add_grhead(struct sk_buff *skb, struct ifmcaddr6 *pmc,
+ 
+ #define AVAILABLE(skb)	((skb) ? skb_availroom(skb) : 0)
+ 
+-/* called with mc_lock */
+ static struct sk_buff *add_grec(struct sk_buff *skb, struct ifmcaddr6 *pmc,
+ 				int type, int gdeleted, int sdeleted,
+ 				int crsend)
+@@ -1882,6 +1893,8 @@ static struct sk_buff *add_grec(struct sk_buff *skb, struct ifmcaddr6 *pmc,
+ 	struct mld2_report *pmr;
+ 	unsigned int mtu;
+ 
++	mc_assert_locked(idev);
++
+ 	if (pmc->mca_flags & MAF_NOREPORT)
+ 		return skb;
+ 
+@@ -2000,12 +2013,13 @@ static struct sk_buff *add_grec(struct sk_buff *skb, struct ifmcaddr6 *pmc,
+ 	return skb;
+ }
+ 
+-/* called with mc_lock */
+ static void mld_send_report(struct inet6_dev *idev, struct ifmcaddr6 *pmc)
+ {
+ 	struct sk_buff *skb = NULL;
+ 	int type;
+ 
++	mc_assert_locked(idev);
++
+ 	if (!pmc) {
+ 		for_each_mc_mclock(idev, pmc) {
+ 			if (pmc->mca_flags & MAF_NOREPORT)
+@@ -2027,10 +2041,7 @@ static void mld_send_report(struct inet6_dev *idev, struct ifmcaddr6 *pmc)
+ 		mld_sendpack(skb);
+ }
+ 
+-/*
+- * remove zero-count source records from a source filter list
+- * called with mc_lock
+- */
++/* remove zero-count source records from a source filter list */
+ static void mld_clear_zeros(struct ip6_sf_list __rcu **ppsf, struct inet6_dev *idev)
+ {
+ 	struct ip6_sf_list *psf_prev, *psf_next, *psf;
+@@ -2054,7 +2065,6 @@ static void mld_clear_zeros(struct ip6_sf_list __rcu **ppsf, struct inet6_dev *i
+ 	}
+ }
+ 
+-/* called with mc_lock */
+ static void mld_send_cr(struct inet6_dev *idev)
+ {
+ 	struct ifmcaddr6 *pmc, *pmc_prev, *pmc_next;
+@@ -2218,13 +2228,14 @@ static void igmp6_send(struct in6_addr *addr, struct net_device *dev, int type)
+ 	goto out;
+ }
+ 
+-/* called with mc_lock */
+ static void mld_send_initial_cr(struct inet6_dev *idev)
+ {
+-	struct sk_buff *skb;
+ 	struct ifmcaddr6 *pmc;
++	struct sk_buff *skb;
+ 	int type;
+ 
++	mc_assert_locked(idev);
++
+ 	if (mld_in_v1_mode(idev))
+ 		return;
+ 
+@@ -2271,13 +2282,14 @@ static void mld_dad_work(struct work_struct *work)
+ 	in6_dev_put(idev);
+ }
+ 
+-/* called with mc_lock */
+ static int ip6_mc_del1_src(struct ifmcaddr6 *pmc, int sfmode,
+-	const struct in6_addr *psfsrc)
++			   const struct in6_addr *psfsrc)
+ {
+ 	struct ip6_sf_list *psf, *psf_prev;
+ 	int rv = 0;
+ 
++	mc_assert_locked(pmc->idev);
++
+ 	psf_prev = NULL;
+ 	for_each_psf_mclock(pmc, psf) {
+ 		if (ipv6_addr_equal(&psf->sf_addr, psfsrc))
+@@ -2314,7 +2326,6 @@ static int ip6_mc_del1_src(struct ifmcaddr6 *pmc, int sfmode,
+ 	return rv;
+ }
+ 
+-/* called with mc_lock */
+ static int ip6_mc_del_src(struct inet6_dev *idev, const struct in6_addr *pmca,
+ 			  int sfmode, int sfcount, const struct in6_addr *psfsrc,
+ 			  int delta)
+@@ -2326,6 +2337,8 @@ static int ip6_mc_del_src(struct inet6_dev *idev, const struct in6_addr *pmca,
+ 	if (!idev)
+ 		return -ENODEV;
+ 
++	mc_assert_locked(idev);
++
+ 	for_each_mc_mclock(idev, pmc) {
+ 		if (ipv6_addr_equal(pmca, &pmc->mca_addr))
+ 			break;
+@@ -2367,15 +2380,14 @@ static int ip6_mc_del_src(struct inet6_dev *idev, const struct in6_addr *pmca,
+ 	return err;
+ }
+ 
+-/*
+- * Add multicast single-source filter to the interface list
+- * called with mc_lock
+- */
++/* Add multicast single-source filter to the interface list */
+ static int ip6_mc_add1_src(struct ifmcaddr6 *pmc, int sfmode,
+-	const struct in6_addr *psfsrc)
++			   const struct in6_addr *psfsrc)
+ {
+ 	struct ip6_sf_list *psf, *psf_prev;
+ 
++	mc_assert_locked(pmc->idev);
++
+ 	psf_prev = NULL;
+ 	for_each_psf_mclock(pmc, psf) {
+ 		if (ipv6_addr_equal(&psf->sf_addr, psfsrc))
+@@ -2398,11 +2410,12 @@ static int ip6_mc_add1_src(struct ifmcaddr6 *pmc, int sfmode,
+ 	return 0;
+ }
+ 
+-/* called with mc_lock */
+ static void sf_markstate(struct ifmcaddr6 *pmc)
+ {
+-	struct ip6_sf_list *psf;
+ 	int mca_xcount = pmc->mca_sfcount[MCAST_EXCLUDE];
++	struct ip6_sf_list *psf;
++
++	mc_assert_locked(pmc->idev);
+ 
+ 	for_each_psf_mclock(pmc, psf) {
+ 		if (pmc->mca_sfcount[MCAST_EXCLUDE]) {
+@@ -2415,14 +2428,15 @@ static void sf_markstate(struct ifmcaddr6 *pmc)
+ 	}
+ }
+ 
+-/* called with mc_lock */
+ static int sf_setstate(struct ifmcaddr6 *pmc)
+ {
+-	struct ip6_sf_list *psf, *dpsf;
+ 	int mca_xcount = pmc->mca_sfcount[MCAST_EXCLUDE];
++	struct ip6_sf_list *psf, *dpsf;
+ 	int qrv = pmc->idev->mc_qrv;
+ 	int new_in, rv;
+ 
++	mc_assert_locked(pmc->idev);
++
+ 	rv = 0;
+ 	for_each_psf_mclock(pmc, psf) {
+ 		if (pmc->mca_sfcount[MCAST_EXCLUDE]) {
+@@ -2481,10 +2495,7 @@ static int sf_setstate(struct ifmcaddr6 *pmc)
+ 	return rv;
+ }
+ 
+-/*
+- * Add multicast source filter list to the interface list
+- * called with mc_lock
+- */
++/* Add multicast source filter list to the interface list */
+ static int ip6_mc_add_src(struct inet6_dev *idev, const struct in6_addr *pmca,
+ 			  int sfmode, int sfcount, const struct in6_addr *psfsrc,
+ 			  int delta)
+@@ -2496,6 +2507,8 @@ static int ip6_mc_add_src(struct inet6_dev *idev, const struct in6_addr *pmca,
+ 	if (!idev)
+ 		return -ENODEV;
+ 
++	mc_assert_locked(idev);
++
+ 	for_each_mc_mclock(idev, pmc) {
+ 		if (ipv6_addr_equal(pmca, &pmc->mca_addr))
+ 			break;
+@@ -2541,11 +2554,12 @@ static int ip6_mc_add_src(struct inet6_dev *idev, const struct in6_addr *pmca,
+ 	return err;
+ }
+ 
+-/* called with mc_lock */
+ static void ip6_mc_clear_src(struct ifmcaddr6 *pmc)
+ {
+ 	struct ip6_sf_list *psf, *nextpsf;
+ 
++	mc_assert_locked(pmc->idev);
++
+ 	for (psf = mc_dereference(pmc->mca_tomb, pmc->idev);
+ 	     psf;
+ 	     psf = nextpsf) {
+@@ -2565,11 +2579,12 @@ static void ip6_mc_clear_src(struct ifmcaddr6 *pmc)
+ 	pmc->mca_sfcount[MCAST_EXCLUDE] = 1;
+ }
+ 
+-/* called with mc_lock */
+ static void igmp6_join_group(struct ifmcaddr6 *ma)
+ {
+ 	unsigned long delay;
+ 
++	mc_assert_locked(ma->idev);
++
+ 	if (ma->mca_flags & MAF_NOREPORT)
+ 		return;
+ 
+@@ -2616,9 +2631,10 @@ static int ip6_mc_leave_src(struct sock *sk, struct ipv6_mc_socklist *iml,
+ 	return err;
+ }
+ 
+-/* called with mc_lock */
+ static void igmp6_leave_group(struct ifmcaddr6 *ma)
+ {
++	mc_assert_locked(ma->idev);
++
+ 	if (mld_in_v1_mode(ma->idev)) {
+ 		if (ma->mca_flags & MAF_LAST_REPORTER) {
+ 			igmp6_send(&ma->mca_addr, ma->idev->dev,
+@@ -2663,9 +2679,10 @@ static void mld_ifc_work(struct work_struct *work)
+ 	in6_dev_put(idev);
+ }
+ 
+-/* called with mc_lock */
+ static void mld_ifc_event(struct inet6_dev *idev)
+ {
++	mc_assert_locked(idev);
++
+ 	if (mld_in_v1_mode(idev))
+ 		return;
+ 
 -- 
 2.53.0
 
