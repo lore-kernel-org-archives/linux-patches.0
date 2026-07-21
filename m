@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C726B403AEA;
-	Tue, 21 Jul 2026 17:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712CD40587A;
+	Tue, 21 Jul 2026 17:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655040; cv=none; b=QK3CtNLECumL7tANvCohNq6KB/TXGtuWGqGXAYJyrJhVE/+i12swP1AzQIl8jNtrxWfkuznHyTgrCDQyyyQLlLSxygPFVLhkHs3oYrhFDnpdwAVwpVAH068kjesKuCEQFkSzbIzyLqucHe1qEIOjJJlx9CCebikmHFE7NQSypg8=
+	t=1784655043; cv=none; b=CnV7U25UkbJlGYkX9eZ9B4/eUNmVnNkSrBlHa+YssZTou3WFwF8mHTwdjQEOXqEFCg/4XQGwSiAEC5Hyu8/YQNoIG/pOJ1pEn5meeopTrDpONt6jT7AZZ208K5t1LFT3kwvzDo3l31b+n+PKgzDeS9Zv4MgZbqZefC33cIQAcE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655040; c=relaxed/simple;
-	bh=f6MoXAmXzrgMP7fyvdJ/Z+p+QI3jB8ftWkYULrP0DGk=;
+	s=arc-20240116; t=1784655043; c=relaxed/simple;
+	bh=XIyDUDJ9Byi24m06+ICrBw8dpr8ensAebLOUl0knh1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l1dTdo6Fibz8bvG7imDqH16kkBkl6/O1JVI/HIa4TMggSvQ2l6MdT0ndPbvhV7UNECFleMaN/VXjJPym0NlfIA2IKy9u+kX6ONIQuGR8ajtw5vnGvw1FdvPN3HF9bkkltlbmHmQvEfqhskluswc5cvYjD+iVo9aH6hJdCgCPPkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VzGI94zK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZTs7h/2Kfz/P4zBFAsMSlwi1dCNQCLLJBf35rvbwN0jmS3iIOLk3JW8THReqIG7pmhW1GDO5w+KgXLQDmmPc3RHjum9wscuIOZb+EJ+JcfW2DwYxxbsubnCj17CvtNqH+x/rPun72arFdfWDpDiNMQLHSVVsazBEE2VZ5nCW578=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GvYFAzFv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VzGI94zK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38AEA1F000E9;
-	Tue, 21 Jul 2026 17:30:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GvYFAzFv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D77321F000E9;
+	Tue, 21 Jul 2026 17:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655039;
-	bh=D4Ofz7Gq5W2rk67dRP8uFdSaJBW3LdJ/uX7zUWUG/N0=;
+	s=korg; t=1784655042;
+	bh=Q01HYeeHqc3+D2VxxbG1/UapwcX0JylZterTAZbJGF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VzGI94zKKk4CyUP1v/tMyP4w/3DgOzfzg7ayc/5qTuU59ga+Qrf9jyNoAZ/E5pYWB
-	 rbeOoQiTXswvJ8ZyHSD05Me5YteMymfMSxhzxMGskNyGMQq0K08L/NZQtsdGqrcvup
-	 xoOx19JVajM1zqRhIS18f2VtX/58mlw3o8ksRAAI=
+	b=GvYFAzFvP1egb3jwsg2y8If1l44Ypr7VewH6AzexDs82MYRklgSs9UBgdoClVwmvK
+	 HhnFS0HjtdoeIJAlI3FmkT/e6GG5sjoJBAayrRgDRhRNHZA3ip+CG+/dFyxV8F4y1b
+	 q6ZQ6f8kbQdmvPQLkDCpebTKMLFjGlQxCMOCPXIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.1 1931/2077] net/sched: sch_teql: move rcu_read_lock()/spin_lock() from _bh variants
-Date: Tue, 21 Jul 2026 17:26:44 +0200
-Message-ID: <20260721152638.255891389@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 7.1 1932/2077] ACPICA: Define acpi_ut_safe_strncpy() as strscpy_pad() alias
+Date: Tue, 21 Jul 2026 17:26:45 +0200
+Message-ID: <20260721152638.278462155@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,118 +49,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 6301f6a34ed86fe6f3b7b3211ea069f3677fc559 upstream.
+commit 9825cf2cb59fac7480e7fac9eee13ab9af3f1ea8 upstream.
 
-This is a followup based on sashiko comments [1] on commit e5b811fe7931
-("net/sched: sch_teql: Introduce slaves_lock to avoid race condition and UAF")
+Commit 292db66afd20 ("ACPICA: Unbreak tools build after switching over
+to strscpy_pad()") added an #ifdef based on a __KERNEL__ check which is
+sort of nasty to the acpi_ut_safe_strncpy() definition to unbreak ACPICA
+tools builds broken by commit 97f7d3f9c9ac ("ACPICA: Replace strncpy()
+with strscpy_pad() in acpi_ut_safe_strncpy()").  However, that #ifdef
+effectively produces dead code when tools are built because they don't
+call acpi_ut_safe_strncpy().
 
-Use plain rcu_read_lock()/spin_lock() in teql_master_xmit() instead of the
-_bh variants, since ndo_start_xmit is already invoked with BH disabled
-by the core stack and the _bh primitives can warn in_hardirq() when xmit
-is reached through netpoll or a softirq xmit path with hard IRQs disabled.
+Accordingly, drop the existing definition of acpi_ut_safe_strncpy() and
+define it as a strscpy_pad() alias.
 
-Moves rcu_read_lock() after restart: label + adds rcu_read_unlock() before
-goto restart (fixes the unbounded RCU hold across retries)
-
-[1] https://sashiko.dev/#/patchset/20260628111229.669751-1-jhs%40mojatatu.com
-
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Fixes: e5b811fe7931 ("net/sched: sch_teql: Introduce slaves_lock to avoid race condition and UAF")
-Link: https://patch.msgid.link/20260630150922.238714-1-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 292db66afd20 ("ACPICA: Unbreak tools build after switching over to strscpy_pad()")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[ rjw: Tweak the changelog ]
+Link: https://patch.msgid.link/12941764.O9o76ZdvQC@rafael.j.wysocki
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_teql.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ drivers/acpi/acpica/acutils.h     |    2 --
+ drivers/acpi/acpica/utnonansi.c   |   16 ----------------
+ include/acpi/platform/aclinuxex.h |    1 +
+ 3 files changed, 1 insertion(+), 18 deletions(-)
 
---- a/net/sched/sch_teql.c
-+++ b/net/sched/sch_teql.c
-@@ -311,14 +311,14 @@ static netdev_tx_t teql_master_xmit(stru
- 	int subq = skb_get_queue_mapping(skb);
- 	struct sk_buff *skb_res = NULL;
+--- a/drivers/acpi/acpica/acutils.h
++++ b/drivers/acpi/acpica/acutils.h
+@@ -626,8 +626,6 @@ void acpi_ut_repair_name(char *name);
+ #if defined (ACPI_DEBUGGER) || defined (ACPI_APPLICATION) || defined (ACPI_DEBUG_OUTPUT)
+ u8 acpi_ut_safe_strcpy(char *dest, acpi_size dest_size, char *source);
  
--	rcu_read_lock_bh();
+-void acpi_ut_safe_strncpy(char *dest, char *source, acpi_size dest_size);
 -
--	start = rcu_dereference_bh(master->slaves);
--
- restart:
- 	nores = 0;
- 	busy = 0;
+ u8 acpi_ut_safe_strcat(char *dest, acpi_size dest_size, char *source);
  
-+	rcu_read_lock();
-+
-+	start = rcu_dereference(master->slaves);
-+
- 	q = start;
- 	if (!q)
- 		goto drop;
-@@ -345,17 +345,17 @@ restart:
- 				    netdev_start_xmit(skb, slave, slave_txq, false) ==
- 				    NETDEV_TX_OK) {
- 					__netif_tx_unlock(slave_txq);
--					spin_lock_bh(&master->slaves_lock);
-+					spin_lock(&master->slaves_lock);
- 					if (rcu_dereference_protected(master->slaves,
- 								      lockdep_is_held(&master->slaves_lock)) == q)
- 						rcu_assign_pointer(master->slaves,
- 								   rcu_dereference_protected(NEXT_SLAVE(q),
- 											     lockdep_is_held(&master->slaves_lock)));
--					spin_unlock_bh(&master->slaves_lock);
-+					spin_unlock(&master->slaves_lock);
- 					netif_wake_queue(dev);
- 					master->tx_packets++;
- 					master->tx_bytes += length;
--					rcu_read_unlock_bh();
-+					rcu_read_unlock();
- 					return NETDEV_TX_OK;
- 				}
- 				__netif_tx_unlock(slave_txq);
-@@ -364,37 +364,38 @@ restart:
- 				busy = 1;
- 			break;
- 		case 1:
--			spin_lock_bh(&master->slaves_lock);
-+			spin_lock(&master->slaves_lock);
- 			if (rcu_dereference_protected(master->slaves,
- 						      lockdep_is_held(&master->slaves_lock)) == q)
- 				rcu_assign_pointer(master->slaves,
- 						   rcu_dereference_protected(NEXT_SLAVE(q),
- 									     lockdep_is_held(&master->slaves_lock)));
--			spin_unlock_bh(&master->slaves_lock);
--			rcu_read_unlock_bh();
-+			spin_unlock(&master->slaves_lock);
-+			rcu_read_unlock();
- 			return NETDEV_TX_OK;
- 		default:
- 			nores = 1;
- 			break;
- 		}
- 		__skb_pull(skb, skb_network_offset(skb));
--	} while ((q = rcu_dereference_bh(NEXT_SLAVE(q))) != start);
-+	} while ((q = rcu_dereference(NEXT_SLAVE(q))) != start);
- 
- 	if (nores && skb_res == NULL) {
- 		skb_res = skb;
-+		rcu_read_unlock();
- 		goto restart;
- 	}
- 
- 	if (busy) {
- 		netif_stop_queue(dev);
--		rcu_read_unlock_bh();
-+		rcu_read_unlock();
- 		return NETDEV_TX_BUSY;
- 	}
- 	master->tx_errors++;
- 
- drop:
- 	master->tx_dropped++;
--	rcu_read_unlock_bh();
-+	rcu_read_unlock();
- 	dev_kfree_skb(skb);
- 	return NETDEV_TX_OK;
+ u8
+--- a/drivers/acpi/acpica/utnonansi.c
++++ b/drivers/acpi/acpica/utnonansi.c
+@@ -164,20 +164,4 @@ acpi_ut_safe_strncat(char *dest,
+ 	return (FALSE);
  }
+ 
+-void acpi_ut_safe_strncpy(char *dest, char *source, acpi_size dest_size)
+-{
+-	/* Always terminate destination string */
+-
+-#ifdef __KERNEL__
+-	strscpy_pad(dest, source, dest_size);
+-#else
+-	/*
+-	 * strscpy_pad() is not defined in ACPICA tools builds, so use strncpy()
+-	 * and directly NUL-terminate the destination string in that case.
+-	 */
+-	strncpy(dest, source, dest_size);
+-	dest[dest_size - 1] = 0;
+-#endif
+-}
+-
+ #endif
+--- a/include/acpi/platform/aclinuxex.h
++++ b/include/acpi/platform/aclinuxex.h
+@@ -134,6 +134,7 @@ static inline void acpi_os_terminate_deb
+ /*
+  * OSL interfaces added by Linux
+  */
++#define acpi_ut_safe_strncpy	strscpy_pad
+ 
+ #endif				/* __KERNEL__ */
+ 
 
 
