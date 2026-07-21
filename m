@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0112E3B6C17;
-	Tue, 21 Jul 2026 22:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0DE404BF6;
+	Tue, 21 Jul 2026 22:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673760; cv=none; b=dg2mu+MrJLFPIDdoDZdn4IlTCg7rHUYyy1Hv9sRd+6Ri6+UFafZaqCpLjJlrzkTQeKedD1hMmUBXvZ3h2hhci35Rp5MK8/o7is796bepY6Sq2HcBn2Va25+e/gtAbgZD1KrH3d1Bv6DNCCLv3Of1srpwyNZeOU/rBfg6EXAkiQ8=
+	t=1784673762; cv=none; b=CNVjNOyudJQ2au6CGaM0WTw9GSQZyyIcpLXYDd0FzuMhaI5K881Hw7gM221L5VevIEVcTpCQuFEPTJt891Eoszcmm6Rri50HzZy5tiUQ5MGmyGIkuNvQlTRdT4H569UKcb+CzdHzHMP4lji9WMPgDskjgE6nwNMmRdKy05v10+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673760; c=relaxed/simple;
-	bh=IlK1l8bEMZjlUAL/xbbnurjFW+MnAxCZgXCu0KQ7DrU=;
+	s=arc-20240116; t=1784673762; c=relaxed/simple;
+	bh=MZae47QFM21FpDC/ZaLliq3xoG65OEbaiWe26tNMqKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DdYYvALk7At8mDsipbagJattySyzzJDvC/KRU7NbpR95Fwouc643chgXjae8sJIu8lrFNVWPYLRBK1DEHscgsR2GzuSNTCXoP1kCfG4AZaH2whsnJPUlzPrMsr97r6xgMbd6Bi+/uk662aOLUUdqA03WHj5MPWSOp9Lh/8P0S68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nyTCch74; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GNiCWHUENUf/sYXEE4ihgR81SNEOAeg8wimkzJQq8avJzFSlIWUhj/NEVNQ2JTEMTLvUuRTRD1OW0GmvpDQ1SqFsWR1KX0GVPLHAHP00qBRvpwnLeSy+8lRwXxYMOaolBMYaH3UgyUZGTr9W5WL06PiJ3DfXXFFG83uX4NcXAV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnTwRJQK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nyTCch74"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619FA1F000E9;
-	Tue, 21 Jul 2026 22:42:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnTwRJQK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE2F1F00A3A;
+	Tue, 21 Jul 2026 22:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673758;
-	bh=3X43Yae0/89OWrK2KcjxKcN+VRQqDilHtN/cWQcwMis=;
+	s=korg; t=1784673761;
+	bh=qs1x3t0bpXV1jVvSYVuIup7EZ3uceq4ULDi8MHtiUmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nyTCch74JN/d6gMhpRX5xsYHkzKOXVO2PMgbGEg/dw/S6hjK+p5G+mPdiPKGUfMtS
-	 sRj71J1qZAF22qgHrBi8xPRVdpIbWtDuJHSgyqL1WnYJuPNXU0kdTWcgVV/U6aWYIZ
-	 ov1nsC9OzaO5BxC9LAsNFQ5O6LR6nCWWDMMX4K7c=
+	b=EnTwRJQKr2MJE5IusitJkYM/CBovh6MFF4LvxbJCh0EWN1GrUhY5/mO1Dv06s/roV
+	 Qg9WSWtSDHy4ftjsk5P0R9gTXbN6BUEY62zbYYBr1DrAQ6dDr6D156aMKQNO0E5BHb
+	 Cj5KC+x7UM38fAmp5DePoBs6bZeVjsGYBadAk8QM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 267/699] kcm: use WRITE_ONCE() when changing lower socket callbacks
-Date: Tue, 21 Jul 2026 17:20:26 +0200
-Message-ID: <20260721152401.725615069@linuxfoundation.org>
+Subject: [PATCH 5.10 285/699] staging: most: video: avoid double free on video register failure
+Date: Tue, 21 Jul 2026 17:20:44 +0200
+Message-ID: <20260721152402.130540457@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,59 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 47186409c092cd7dd70350999186c700233e854d ]
+[ Upstream commit 7cb1c5b32a2bfde961fff8d5204526b609bcb30a ]
 
-kcm_attach() replaces a live lower TCP socket's sk_data_ready and
-sk_write_space callbacks with KCM handlers, and kcm_unattach() restores
-them later. Those callback-pointer updates are still plain stores even
-though the same fields can be read and invoked concurrently on other
-CPUs.
+comp_register_videodev() allocates a video_device with
+video_device_alloc() and releases it if video_register_device() fails.
 
-If another CPU observes an older callback snapshot after the live field
-has already been restored, callback execution can run with a mismatched
-target and sk_user_data state, leading to stale or misdirected wakeups.
+This can double free the video_device when __video_register_device()
+reaches device_register() and that call fails:
 
-Use WRITE_ONCE() for the callback replacement and restore operations so
-these shared callback fields follow the same visibility contract already
-established by the earlier 4022 fixes.
+  video_register_device()
+    -> __video_register_device()
+       -> device_register() fails
+          -> put_device(&vdev->dev)
+             -> v4l2_device_release()
+                -> vdev->release(vdev)
+                   -> video_device_release(vdev)
 
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260611053543.2429462-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  comp_register_videodev()
+    -> video_device_release(mdev->vdev)
+
+Use video_device_release_empty() while registering the device so that
+registration failure paths do not free mdev->vdev through vdev->release().
+comp_register_videodev() then releases mdev->vdev exactly once on failure.
+Restore video_device_release() after successful registration so the
+registered device keeps its normal lifetime handling.
+
+This issue was found by a static analysis tool I am developing.
+
+Fixes: eab231c0398a ("staging: most: v4l2-aim: remove unnecessary label err_vbi_dev")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260517111218.945796-1-lgs201920130244@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/kcm/kcmsock.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/staging/most/video/video.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index 2f2840aa4a8129..df3ca6a9791e6c 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -1404,8 +1404,8 @@ static int kcm_attach(struct socket *sock, struct socket *csock,
- 	psock->save_write_space = csk->sk_write_space;
- 	psock->save_state_change = csk->sk_state_change;
- 	csk->sk_user_data = psock;
--	csk->sk_data_ready = psock_data_ready;
--	csk->sk_write_space = psock_write_space;
-+	WRITE_ONCE(csk->sk_data_ready, psock_data_ready);
-+	WRITE_ONCE(csk->sk_write_space, psock_write_space);
- 	csk->sk_state_change = psock_state_change;
+diff --git a/drivers/staging/most/video/video.c b/drivers/staging/most/video/video.c
+index 829df899b99303..f239c9a57d855a 100644
+--- a/drivers/staging/most/video/video.c
++++ b/drivers/staging/most/video/video.c
+@@ -416,6 +416,7 @@ static int comp_register_videodev(struct most_video_dev *mdev)
  
- 	write_unlock_bh(&csk->sk_callback_lock);
-@@ -1481,8 +1481,8 @@ static void kcm_unattach(struct kcm_psock *psock)
- 	 */
- 	write_lock_bh(&csk->sk_callback_lock);
- 	csk->sk_user_data = NULL;
--	csk->sk_data_ready = psock->save_data_ready;
--	csk->sk_write_space = psock->save_write_space;
-+	WRITE_ONCE(csk->sk_data_ready, psock->save_data_ready);
-+	WRITE_ONCE(csk->sk_write_space, psock->save_write_space);
- 	csk->sk_state_change = psock->save_state_change;
- 	strp_stop(&psock->strp);
+ 	/* Fill the video capture device struct */
+ 	*mdev->vdev = comp_videodev_template;
++	mdev->vdev->release = video_device_release_empty;
+ 	mdev->vdev->v4l2_dev = &mdev->v4l2_dev;
+ 	mdev->vdev->lock = &mdev->lock;
+ 	snprintf(mdev->vdev->name, sizeof(mdev->vdev->name), "MOST: %s",
+@@ -428,9 +429,13 @@ static int comp_register_videodev(struct most_video_dev *mdev)
+ 		v4l2_err(&mdev->v4l2_dev, "video_register_device failed (%d)\n",
+ 			 ret);
+ 		video_device_release(mdev->vdev);
++		return ret;
+ 	}
  
+-	return ret;
++	mdev->vdev->release = video_device_release;
++
++	return 0;
++
+ }
+ 
+ static void comp_unregister_videodev(struct most_video_dev *mdev)
 -- 
 2.53.0
 
