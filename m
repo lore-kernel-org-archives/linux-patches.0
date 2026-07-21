@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E3344607D;
-	Tue, 21 Jul 2026 15:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3978937DABD;
+	Tue, 21 Jul 2026 15:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649200; cv=none; b=HHLMrx2/ZeLQk0WafH0SZTr9ttXbsvXHF+1PYtknN7UXhhcYwgZCKYE/9A7WSvl6btqZ1g/j6/e1LumiTQfZp2Q2PklxjWXasiOg48oI/0Hjlm8tz3d0YHSE61BhewJ6DzSoo2KIUdiWvX7UPYwc8JEPGTbLJvJ61skypV5O2aM=
+	t=1784649203; cv=none; b=t4JvVHyDt4B13P84Ve9U71pI/2RnCSAonNBCORO4YUzZ7fL9e5KRyF5YZoDY+19WjgqMak9ABYRG3eM/Bt86sHpt2RX2gVrvPfM/N7BSmf3DcSAihShwrtR8dmcINVJfGfFQAlEeN8ex6QhrT9mYjnNWfQDHuB4CMJ0vts2GW7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649200; c=relaxed/simple;
-	bh=7MLVN6kQqGGL1qI3TvgshsrmCoE+A3ZoNH3oDVBn/Lc=;
+	s=arc-20240116; t=1784649203; c=relaxed/simple;
+	bh=0JckWERO9q33k5PP4lZomIX/GxxMXYfS5OqNY0gAwok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JqnpCQSujclsQtPWLz6W8D1PyusR7DGnvTDaF//DFwRXJ2PUHHA1DMussNsN9a/VnwrqM6senxe57rrmMtY27c3CGrO7KZUA2hZbF3eBvzFnsLza9hce1QZWNxsY1bVKmWU77AEtBx2j8oLq5C2a6fpbuXqFNr2vDuZlUuYItSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0zPkGWv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SDIemLeCd17ou6nzgEbhNOSRElRtXd0k3VAcy4EN44jfFohdRzStiI2CCCJjcA9x1cTWrrubdVOx/+H27rUP7IVeksSN4uZGsP9uVtd6oxhYrFWFX439ksVQmUmOcjdTn0S5x73i/KtkakLII7iDvZPSoaGBR0e+72HcvKTndVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8pkelHN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0zPkGWv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9C41F00A3A;
-	Tue, 21 Jul 2026 15:53:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8pkelHN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962C71F000E9;
+	Tue, 21 Jul 2026 15:53:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649199;
-	bh=Yqjfxu6fCMljDtXnVOaiqc/wPpfF0y5DmXTPOWEE4fA=;
+	s=korg; t=1784649202;
+	bh=ZNxvhWnbscvxGUR1HyCNo+ro5TMzxDHynD2eTZ/jb8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M0zPkGWv5QLroJFTRs0TYBi7da7V/5sBq4tJKiwSSHhdzpBFT85MayclOeZLFm3ip
-	 mrsJt5nVhSQ4DA4n6Hwi0/oWFT0qRn8HDnERS3EzvC/8dqyooVWEa5Df2XngdiigqM
-	 0lVExHnIJic5iwQmOMFy4OswOgYgjKWRJqhxLA5I=
+	b=u8pkelHNkyfn1+Kt2nMz0P70aTr7eROHMBuG18ocwRgnOnISEzSBBpagcSK5lzFfg
+	 AQnSxLkjzRUJThPxFn9/FVzHQ8XQrSbItwAJutwSxHVii5R2BZzbQnBsGZCrQhhQe1
+	 HcCfQWyW6jUfWMZ5YBxfhM24/T25wQzCpYHL1YLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0487/2077] netfilter: synproxy: adjust duplicate timestamp options
-Date: Tue, 21 Jul 2026 17:02:40 +0200
-Message-ID: <20260721152604.296130144@linuxfoundation.org>
+Subject: [PATCH 7.1 0488/2077] netfilter: synproxy: fix unaligned memory access in timestamp adjustment
+Date: Tue, 21 Jul 2026 17:02:41 +0200
+Message-ID: <20260721152604.318328962@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,35 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 22bb132cfb9b94847d52d73614284b8c5ea8d36e ]
+[ Upstream commit 992c20bc8a4aba220c8b95b467d049289778dad6 ]
 
-RFC 9293 does not mention anything about duplicated options and each
-networking stack handles it in their own way. Currently, Linux kernel is
-processing options sequentially and in case of duplicated timestamp
-options, the value from the latest one overrides the others.
+Use get_unaligned_be32() and put_unaligned_be32() to safely read and
+write the timestamp fields. This prevents performance degradation due to
+unaligned memory access or even a crash on strict alignment
+architectures.
 
-As SYNPROXY is modifying only the first timestamp option found, a packet
-can reach the backend server and it might parse the wrong timestamp
-value. Let's just continue parsing the following options and in case a
-duplicated timestamp is found, adjust it too.
+This follows the implementation of timestamp parsing in the networking
+stack at tcp_parse_options() and synproxy_parse_options().
 
 Fixes: 48b1de4c110a ("netfilter: add SYNPROXY core/target")
 Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_synproxy_core.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/netfilter/nf_synproxy_core.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
 diff --git a/net/netfilter/nf_synproxy_core.c b/net/netfilter/nf_synproxy_core.c
-index f99c22f57b7e52..a0bcf188810d13 100644
+index a0bcf188810d13..acd360515972f7 100644
 --- a/net/netfilter/nf_synproxy_core.c
 +++ b/net/netfilter/nf_synproxy_core.c
-@@ -233,7 +233,6 @@ synproxy_tstamp_adjust(struct sk_buff *skb, unsigned int protoff,
+@@ -191,7 +191,7 @@ synproxy_tstamp_adjust(struct sk_buff *skb, unsigned int protoff,
+ 		       const struct nf_conn_synproxy *synproxy)
+ {
+ 	unsigned int optoff, optend;
+-	__be32 *ptr, old;
++	u32 new, old;
+ 
+ 	if (synproxy->tsoff == 0)
+ 		return true;
+@@ -221,18 +221,17 @@ synproxy_tstamp_adjust(struct sk_buff *skb, unsigned int protoff,
+ 			if (op[0] == TCPOPT_TIMESTAMP &&
+ 			    op[1] == TCPOLEN_TIMESTAMP) {
+ 				if (CTINFO2DIR(ctinfo) == IP_CT_DIR_REPLY) {
+-					ptr = (__be32 *)&op[2];
+-					old = *ptr;
+-					*ptr = htonl(ntohl(*ptr) -
+-						     synproxy->tsoff);
++					old = get_unaligned_be32(&op[2]);
++					new = old - synproxy->tsoff;
++					put_unaligned_be32(new, &op[2]);
+ 				} else {
+-					ptr = (__be32 *)&op[6];
+-					old = *ptr;
+-					*ptr = htonl(ntohl(*ptr) +
+-						     synproxy->tsoff);
++					old = get_unaligned_be32(&op[6]);
++					new = old + synproxy->tsoff;
++					put_unaligned_be32(new, &op[6]);
  				}
  				inet_proto_csum_replace4(&th->check, skb,
- 							 old, *ptr, false);
--				return true;
+-							 old, *ptr, false);
++							 cpu_to_be32(old),
++							 cpu_to_be32(new), false);
  			}
  			optoff += op[1];
  		}
