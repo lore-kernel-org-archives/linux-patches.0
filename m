@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529173998AF;
-	Tue, 21 Jul 2026 17:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15F03E49C8;
+	Tue, 21 Jul 2026 17:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653828; cv=none; b=sGWbouOz1AOKmRvM7wLta7M5fa70HOE+ThMXbgzN3hXiuII0wF1PXrOcaJGENzDlH9GTOvsynud1Hl+dhswTZyv9npYB7cbvhNfq9hyspAZvE9XRUBeXYZNYNuG3Vq2VI28OmGoaiNXiF0mrKJWGlj1VQ3DguAuyrjLy1RSbxb4=
+	t=1784653831; cv=none; b=gVJ1SEHTzINY+5OVbz8Ikh8j5mhzri0alsGgLi8spLwVDIh2ebW1NNpxlYEjNSRaeo8smlf+j6VM5Wok5phNzmfDNK7Ap5OXk/GHnFpl+JFKKBAIWLmiuc62VfpNmFvPHGOtnOfb5dqS6VE7KEuNvlSqTAMLYbv3AfYKU06UiSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653828; c=relaxed/simple;
-	bh=Kpl9q/htFh6vKadiW22GJVwW3Sd6sge61XR10QtXRFg=;
+	s=arc-20240116; t=1784653831; c=relaxed/simple;
+	bh=iF9LUp0J3joizkGpKen3pSPJKEUkfrZi1ozMQuRqmg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YynTav+3XFqpTyoT+QtLhXy2feU/xcukeHBuSa9o8U8dl5e3XWHMT1CToo6/BYPhM5p2+fBUUyJrT5Cbhq1DITsgvEvuJoCI0jhefSulffHEFJMeiT/tyrxoaN2Dc1jkaUKqtnUEiT48oQqsRYHYxtg1Zkd9RjGixEhHfxLwFFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhMaVRCH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ODGxWpfEotXWyLn/XHegs69LArH/jIU+cQ3YeAloCDE/nidHa1dxpfi6oa/n2bOi8zTfrmU1sRJr/RrBEeS+wZrEmRzAG8ZqXzzG2qLWTcBZDKwmg9x+rpWXMZyCrJuSiv/M4engYplLSgnDyht0Ej67fSqEHSyIOQuRzZ1d/hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBmXqBD7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhMaVRCH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99681F000E9;
-	Tue, 21 Jul 2026 17:10:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBmXqBD7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B851F000E9;
+	Tue, 21 Jul 2026 17:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653827;
-	bh=YGdOZKn5irVs04QtYUZJwDpwrRpWj+3FZx7C4ilgok8=;
+	s=korg; t=1784653829;
+	bh=p+8zp+bgQ4LUow3cJeiySEiomcl6gltibEZg4MA2vME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nhMaVRCHDgDrNwpPsj1jsUSVbgdRZBuNUI+1NQK+0VYRiQGYGNK9yGudoydc1Z6lc
-	 9aSfBE4IPrAHq2eWlFPqxJF5N894/KnTNjzY4C+Drs17pwMEiCLe9V4t3Ek37g/d5b
-	 j+ZVi34NvezJtxu+eifvAFYvjfFbLyWQHkhNCYC8=
+	b=wBmXqBD71wyT9W0wg0Xi2EsOc1EqF1uJSKHd909u9COVlYEpxyT+54QsjhBwtTsi1
+	 1rRLLe20EbGGmyUmnD5vJF03ragRWmYm7ecNrO0Ev5/0ObhtJ3Muv0w5yfeC6RPsb1
+	 b8ndRoigaQMUMm0/lgvCOOJc/TSZ5jC/gRN3zYc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dong Yibo <dong100@mucse.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1472/2077] net: rnpgbe: fix mailbox endianness and remove pointer casts
-Date: Tue, 21 Jul 2026 17:19:05 +0200
-Message-ID: <20260721152627.513273356@linuxfoundation.org>
+Subject: [PATCH 7.1 1432/2077] net/mlx5: E-Switch, add representor lifecycle lock
+Date: Tue, 21 Jul 2026 17:18:25 +0200
+Message-ID: <20260721152626.583067301@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,317 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dong Yibo <dong100@mucse.com>
+From: Mark Bloch <mbloch@nvidia.com>
 
-[ Upstream commit d9d6d67f4c0877fde783c9d5beee013bcf1b1e85 ]
+[ Upstream commit 9b8468f001e46c4ffcbbeb2050aabf80e1ed7960 ]
 
-The rnpgbe mailbox exchanges data through 32-bit MMIO registers in
-little-endian wire format. The original code had two problems:
+Add a per-E-Switch mutex for serializing representor lifecycle work and
+provide small helpers for taking and dropping it. Initialize and destroy
+the mutex with the E-Switch offloads state.
 
-  1. FW structs (with __le16/__le32 fields) were cast to (u32 *)
-     before reaching the mailbox transport, hiding the endian
-     annotations from sparse.
+Add the lock and helper API first. Follow-up patches will take the lock in
+the individual representor lifecycle components. This keeps the functional
+changes split by component and leaves this patch without intended behavior
+change, making the series easier to review and bisectable.
 
-  2. No cpu_to_le32()/le32_to_cpu() conversion was done between
-     CPU-endian MMIO values and the little-endian payload, causing
-     data corruption on big-endian systems.
-
-Fix by adding the missing byte-order conversions in the transport
-layer and introducing union wrappers (mbx_fw_cmd_req_u,
-mbx_fw_cmd_reply_u) that overlay each FW struct with a __le32
-dwords[] array. Callers fill named fields using cpu_to_le16/32(),
-then pass dwords[] to the transport, which now takes explicit
-__le32 * instead of u32 *. This eliminates all pointer casts on
-the mailbox data path and lets sparse verify the conversions.
-
-Fixes: 4543534c3ef5 ("net: rnpgbe: Add basic mbx ops support")
-Signed-off-by: Dong Yibo <dong100@mucse.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260701032208.1843156-2-dong100@mucse.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260503202726.266415-4-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 0f0e4ae6975c ("net/mlx5: LAG, Fix off-by-one in single-FDB error rollback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mucse/rnpgbe/rnpgbe_mbx.c    | 26 ++++--
- .../net/ethernet/mucse/rnpgbe/rnpgbe_mbx.h    |  5 +-
- .../net/ethernet/mucse/rnpgbe/rnpgbe_mbx_fw.c | 82 ++++++++++---------
- .../net/ethernet/mucse/rnpgbe/rnpgbe_mbx_fw.h | 14 ++++
- 4 files changed, 80 insertions(+), 47 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/eswitch.h    |  6 ++++++
+ .../ethernet/mellanox/mlx5/core/eswitch_offloads.c   | 12 ++++++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/drivers/net/ethernet/mucse/rnpgbe/rnpgbe_mbx.c b/drivers/net/ethernet/mucse/rnpgbe/rnpgbe_mbx.c
-index de5e29230b3c8d..c4640869826325 100644
---- a/drivers/net/ethernet/mucse/rnpgbe/rnpgbe_mbx.c
-+++ b/drivers/net/ethernet/mucse/rnpgbe/rnpgbe_mbx.c
-@@ -166,18 +166,23 @@ static void mucse_mbx_inc_pf_ack(struct mucse_hw *hw)
-  *
-  * Return: 0 on success, negative errno on failure
-  **/
--static int mucse_read_mbx_pf(struct mucse_hw *hw, u32 *msg, u16 size)
-+static int mucse_read_mbx_pf(struct mucse_hw *hw, __le32 *msg, u16 size)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+index e9cf7c592ce9e1..0b107c2ddbfa62 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+@@ -316,6 +316,7 @@ struct mlx5_esw_offload {
+ 	DECLARE_HASHTABLE(termtbl_tbl, 8);
+ 	struct mutex termtbl_mutex; /* protects termtbl hash */
+ 	struct xarray vhca_map;
++	struct mutex reps_lock; /* protects representor load/unload/register */
+ 	const struct mlx5_eswitch_rep_ops *rep_ops[NUM_REP_TYPES];
+ 	u8 inline_mode;
+ 	atomic64_t num_flows;
+@@ -949,6 +950,8 @@ mlx5_esw_lag_demux_fg_create(struct mlx5_eswitch *esw,
+ struct mlx5_flow_handle *
+ mlx5_esw_lag_demux_rule_create(struct mlx5_eswitch *esw, u16 vport_num,
+ 			       struct mlx5_flow_table *lag_ft);
++void mlx5_esw_reps_block(struct mlx5_eswitch *esw);
++void mlx5_esw_reps_unblock(struct mlx5_eswitch *esw);
+ #else  /* CONFIG_MLX5_ESWITCH */
+ /* eswitch API stubs */
+ static inline int  mlx5_eswitch_init(struct mlx5_core_dev *dev) { return 0; }
+@@ -1026,6 +1029,9 @@ mlx5_esw_host_functions_enabled(const struct mlx5_core_dev *dev)
+ 	return true;
+ }
+ 
++static inline void mlx5_esw_reps_block(struct mlx5_eswitch *esw) {}
++static inline void mlx5_esw_reps_unblock(struct mlx5_eswitch *esw) {}
++
+ static inline bool
+ mlx5_esw_vport_vhca_id(struct mlx5_eswitch *esw, u16 vportn, u16 *vhca_id)
  {
--	const int size_in_words = size / sizeof(u32);
-+	const int size_in_words = size / sizeof(__le32);
- 	struct mucse_mbx_info *mbx = &hw->mbx;
-+	int off = MUCSE_MBX_FWPF_SHM;
- 	int err;
- 
- 	err = mucse_obtain_mbx_lock_pf(hw);
- 	if (err)
- 		return err;
- 
-+	/* memcpy_fromio() is unsuitable: the mailbox uses 32-bit MMIO
-+	 * registers, not byte-addressable RAM. readl() guarantees
-+	 * the required 32-bit access width.
-+	 */
- 	for (int i = 0; i < size_in_words; i++)
--		msg[i] = mbx_data_rd32(mbx, MUCSE_MBX_FWPF_SHM + 4 * i);
-+		msg[i] = cpu_to_le32(mbx_data_rd32(mbx, off + 4 * i));
- 	/* Hw needs write data_reg at last */
- 	mbx_data_wr32(mbx, MUCSE_MBX_FWPF_SHM, 0);
- 	/* flush reqs as we have read this request data */
-@@ -236,7 +241,7 @@ static int mucse_poll_for_msg(struct mucse_hw *hw)
-  * Return: 0 if it successfully received a message notification and
-  * copied it into the receive buffer, negative errno on failure
-  **/
--int mucse_poll_and_read_mbx(struct mucse_hw *hw, u32 *msg, u16 size)
-+int mucse_poll_and_read_mbx(struct mucse_hw *hw, __le32 *msg, u16 size)
- {
- 	int err;
- 
-@@ -290,9 +295,9 @@ static void mucse_mbx_inc_pf_req(struct mucse_hw *hw)
-  * Return: 0 if it successfully copied message into the buffer,
-  * negative errno on failure
-  **/
--static int mucse_write_mbx_pf(struct mucse_hw *hw, u32 *msg, u16 size)
-+static int mucse_write_mbx_pf(struct mucse_hw *hw, const __le32 *msg, u16 size)
- {
--	const int size_in_words = size / sizeof(u32);
-+	const int size_in_words = size / sizeof(__le32);
- 	struct mucse_mbx_info *mbx = &hw->mbx;
- 	int err;
- 
-@@ -300,8 +305,12 @@ static int mucse_write_mbx_pf(struct mucse_hw *hw, u32 *msg, u16 size)
- 	if (err)
- 		return err;
- 
-+	/* memcpy_toio() would decompose into arbitrary-width accesses;
-+	 * the mailbox requires 32-bit MMIO writes via writel().
-+	 */
- 	for (int i = 0; i < size_in_words; i++)
--		mbx_data_wr32(mbx, MUCSE_MBX_FWPF_SHM + i * 4, msg[i]);
-+		mbx_data_wr32(mbx, MUCSE_MBX_FWPF_SHM + i * 4,
-+			      le32_to_cpu(msg[i]));
- 
- 	/* flush acks as we are overwriting the message buffer */
- 	hw->mbx.fw_ack = mucse_mbx_get_fwack(mbx);
-@@ -360,7 +369,8 @@ static int mucse_poll_for_ack(struct mucse_hw *hw)
-  * Return: 0 if it successfully copied message into the buffer and
-  * received an ack to that message within delay * timeout_cnt period
-  **/
--int mucse_write_and_wait_ack_mbx(struct mucse_hw *hw, u32 *msg, u16 size)
-+int mucse_write_and_wait_ack_mbx(struct mucse_hw *hw, const __le32 *msg,
-+				 u16 size)
- {
- 	int err;
- 
-diff --git a/drivers/net/ethernet/mucse/rnpgbe/rnpgbe_mbx.h b/drivers/net/ethernet/mucse/rnpgbe/rnpgbe_mbx.h
-index e6fcc8d1d3ca72..75b88b18b04d34 100644
---- a/drivers/net/ethernet/mucse/rnpgbe/rnpgbe_mbx.h
-+++ b/drivers/net/ethernet/mucse/rnpgbe/rnpgbe_mbx.h
-@@ -14,7 +14,8 @@
- #define MUCSE_MBX_REQ             BIT(0) /* Request a req to mailbox */
- #define MUCSE_MBX_PFU             BIT(3) /* PF owns the mailbox buffer */
- 
--int mucse_write_and_wait_ack_mbx(struct mucse_hw *hw, u32 *msg, u16 size);
-+int mucse_write_and_wait_ack_mbx(struct mucse_hw *hw,
-+				 const __le32 *msg, u16 size);
- void mucse_init_mbx_params_pf(struct mucse_hw *hw);
--int mucse_poll_and_read_mbx(struct mucse_hw *hw, u32 *msg, u16 size);
-+int mucse_poll_and_read_mbx(struct mucse_hw *hw, __le32 *msg, u16 size);
- #endif /* _RNPGBE_MBX_H */
-diff --git a/drivers/net/ethernet/mucse/rnpgbe/rnpgbe_mbx_fw.c b/drivers/net/ethernet/mucse/rnpgbe/rnpgbe_mbx_fw.c
-index 8c8bd5e8e1db10..5ba74997beacf2 100644
---- a/drivers/net/ethernet/mucse/rnpgbe/rnpgbe_mbx_fw.c
-+++ b/drivers/net/ethernet/mucse/rnpgbe/rnpgbe_mbx_fw.c
-@@ -20,32 +20,32 @@
-  * Return: 0 on success, negative errno on failure
-  **/
- static int mucse_fw_send_cmd_wait_resp(struct mucse_hw *hw,
--				       struct mbx_fw_cmd_req *req,
--				       struct mbx_fw_cmd_reply *reply)
-+				       union mbx_fw_cmd_req_u *req,
-+				       union mbx_fw_cmd_reply_u *reply)
- {
--	int len = le16_to_cpu(req->datalen);
-+	int len = le16_to_cpu(req->r.datalen);
- 	int retry_cnt = 3;
- 	int err;
- 
- 	mutex_lock(&hw->mbx.lock);
--	err = mucse_write_and_wait_ack_mbx(hw, (u32 *)req, len);
-+	err = mucse_write_and_wait_ack_mbx(hw, req->dwords, len);
- 	if (err)
- 		goto out;
- 	do {
--		err = mucse_poll_and_read_mbx(hw, (u32 *)reply,
--					      sizeof(*reply));
-+		err = mucse_poll_and_read_mbx(hw, reply->dwords,
-+					      sizeof(reply->r));
- 		if (err)
- 			goto out;
- 		/* mucse_write_and_wait_ack_mbx return 0 means fw has
- 		 * received request, wait for the expect opcode
- 		 * reply with 'retry_cnt' times.
- 		 */
--	} while (--retry_cnt >= 0 && reply->opcode != req->opcode);
-+	} while (--retry_cnt >= 0 && reply->r.opcode != req->r.opcode);
- out:
- 	mutex_unlock(&hw->mbx.lock);
- 	if (!err && retry_cnt < 0)
- 		return -ETIMEDOUT;
--	if (!err && reply->error_code)
-+	if (!err && reply->r.error_code)
- 		return -EIO;
- 
- 	return err;
-@@ -61,17 +61,19 @@ static int mucse_fw_send_cmd_wait_resp(struct mucse_hw *hw,
-  **/
- static int mucse_mbx_get_info(struct mucse_hw *hw)
- {
--	struct mbx_fw_cmd_req req = {
--		.datalen = cpu_to_le16(MUCSE_MBX_REQ_HDR_LEN),
--		.opcode  = cpu_to_le16(GET_HW_INFO),
-+	union mbx_fw_cmd_req_u req = {
-+		.r = {
-+			.datalen = cpu_to_le16(MUCSE_MBX_REQ_HDR_LEN),
-+			.opcode  = cpu_to_le16(GET_HW_INFO),
-+		},
- 	};
--	struct mbx_fw_cmd_reply reply = {};
-+	union mbx_fw_cmd_reply_u reply = {};
- 	int err;
- 
- 	err = mucse_fw_send_cmd_wait_resp(hw, &req, &reply);
- 	if (!err)
- 		hw->pfvfnum = FIELD_GET(GENMASK_U16(7, 0),
--					le16_to_cpu(reply.hw_info.pfnum));
-+					le16_to_cpu(reply.r.hw_info.pfnum));
- 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index a078d06f456739..41d65f2bf87dd8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -2410,6 +2410,16 @@ static int esw_create_restore_table(struct mlx5_eswitch *esw)
  	return err;
  }
-@@ -111,21 +113,23 @@ int mucse_mbx_sync_fw(struct mucse_hw *hw)
-  **/
- int mucse_mbx_powerup(struct mucse_hw *hw, bool is_powerup)
+ 
++void mlx5_esw_reps_block(struct mlx5_eswitch *esw)
++{
++	mutex_lock(&esw->offloads.reps_lock);
++}
++
++void mlx5_esw_reps_unblock(struct mlx5_eswitch *esw)
++{
++	mutex_unlock(&esw->offloads.reps_lock);
++}
++
+ static void esw_mode_change(struct mlx5_eswitch *esw, u16 mode)
  {
--	struct mbx_fw_cmd_req req = {
--		.datalen = cpu_to_le16(sizeof(req.powerup) +
--				       MUCSE_MBX_REQ_HDR_LEN),
--		.opcode  = cpu_to_le16(POWER_UP),
--		.powerup = {
--			/* fw needs this to reply correct cmd */
--			.version = cpu_to_le32(GENMASK_U32(31, 0)),
--			.status  = cpu_to_le32(is_powerup ? 1 : 0),
-+	union mbx_fw_cmd_req_u req = {
-+		.r = {
-+			.datalen = cpu_to_le16(sizeof(req.r.powerup) +
-+					       MUCSE_MBX_REQ_HDR_LEN),
-+			.opcode  = cpu_to_le16(POWER_UP),
-+			.powerup = {
-+				/* fw needs this to reply correct cmd */
-+				.version = cpu_to_le32(GENMASK_U32(31, 0)),
-+				.status  = cpu_to_le32(is_powerup ? 1 : 0),
-+			},
- 		},
- 	};
- 	int len, err;
- 
--	len = le16_to_cpu(req.datalen);
-+	len = le16_to_cpu(req.r.datalen);
- 	mutex_lock(&hw->mbx.lock);
--	err = mucse_write_and_wait_ack_mbx(hw, (u32 *)&req, len);
-+	err = mucse_write_and_wait_ack_mbx(hw, req.dwords, len);
- 	mutex_unlock(&hw->mbx.lock);
- 
- 	return err;
-@@ -142,11 +146,13 @@ int mucse_mbx_powerup(struct mucse_hw *hw, bool is_powerup)
-  **/
- int mucse_mbx_reset_hw(struct mucse_hw *hw)
- {
--	struct mbx_fw_cmd_req req = {
--		.datalen = cpu_to_le16(MUCSE_MBX_REQ_HDR_LEN),
--		.opcode  = cpu_to_le16(RESET_HW),
-+	union mbx_fw_cmd_req_u req = {
-+		.r = {
-+			.datalen = cpu_to_le16(MUCSE_MBX_REQ_HDR_LEN),
-+			.opcode  = cpu_to_le16(RESET_HW),
-+		},
- 	};
--	struct mbx_fw_cmd_reply reply = {};
-+	union mbx_fw_cmd_reply_u reply = {};
- 
- 	return mucse_fw_send_cmd_wait_resp(hw, &req, &reply);
+ 	mlx5_devcom_comp_lock(esw->dev->priv.hca_devcom_comp);
+@@ -2642,6 +2652,7 @@ static void esw_offloads_cleanup_reps(struct mlx5_eswitch *esw)
+ 	mlx5_esw_for_each_rep(esw, i, rep)
+ 		mlx5_esw_offloads_rep_cleanup(esw, rep);
+ 	xa_destroy(&esw->offloads.vport_reps);
++	mutex_destroy(&esw->offloads.reps_lock);
  }
-@@ -166,24 +172,26 @@ int mucse_mbx_get_macaddr(struct mucse_hw *hw, int pfvfnum,
- 			  u8 *mac_addr,
- 			  int port)
- {
--	struct mbx_fw_cmd_req req = {
--		.datalen      = cpu_to_le16(sizeof(req.get_mac_addr) +
--					    MUCSE_MBX_REQ_HDR_LEN),
--		.opcode       = cpu_to_le16(GET_MAC_ADDRESS),
--		.get_mac_addr = {
--			.port_mask = cpu_to_le32(BIT(port)),
--			.pfvf_num  = cpu_to_le32(pfvfnum),
-+	union mbx_fw_cmd_req_u req = {
-+		.r = {
-+			.datalen      = cpu_to_le16(sizeof(req.r.get_mac_addr) +
-+						    MUCSE_MBX_REQ_HDR_LEN),
-+			.opcode       = cpu_to_le16(GET_MAC_ADDRESS),
-+			.get_mac_addr = {
-+				.port_mask = cpu_to_le32(BIT(port)),
-+				.pfvf_num  = cpu_to_le32(pfvfnum),
-+			},
- 		},
- 	};
--	struct mbx_fw_cmd_reply reply = {};
-+	union mbx_fw_cmd_reply_u reply = {};
+ 
+ static int esw_offloads_init_reps(struct mlx5_eswitch *esw)
+@@ -2651,6 +2662,7 @@ static int esw_offloads_init_reps(struct mlx5_eswitch *esw)
  	int err;
  
- 	err = mucse_fw_send_cmd_wait_resp(hw, &req, &reply);
- 	if (err)
- 		return err;
+ 	xa_init(&esw->offloads.vport_reps);
++	mutex_init(&esw->offloads.reps_lock);
  
--	if (le32_to_cpu(reply.mac_addr.ports) & BIT(port))
--		memcpy(mac_addr, reply.mac_addr.addrs[port].mac, ETH_ALEN);
-+	if (le32_to_cpu(reply.r.mac_addr.ports) & BIT(port))
-+		memcpy(mac_addr, reply.r.mac_addr.addrs[port].mac, ETH_ALEN);
- 	else
- 		return -ENODATA;
- 
-diff --git a/drivers/net/ethernet/mucse/rnpgbe/rnpgbe_mbx_fw.h b/drivers/net/ethernet/mucse/rnpgbe/rnpgbe_mbx_fw.h
-index fb24fc12b61393..fe996aeffc4de7 100644
---- a/drivers/net/ethernet/mucse/rnpgbe/rnpgbe_mbx_fw.h
-+++ b/drivers/net/ethernet/mucse/rnpgbe/rnpgbe_mbx_fw.h
-@@ -80,6 +80,20 @@ struct mbx_fw_cmd_reply {
- 	};
- } __packed;
- 
-+/* Union wrappers to expose struct as __le32 dword array for mailbox
-+ * transport, eliminating the need for pointer casts.  The __packed
-+ * structs have no padding, so dwords[] overlays the fields exactly.
-+ */
-+union mbx_fw_cmd_req_u {
-+	struct mbx_fw_cmd_req r;
-+	__le32 dwords[sizeof(struct mbx_fw_cmd_req) / sizeof(__le32)];
-+};
-+
-+union mbx_fw_cmd_reply_u {
-+	struct mbx_fw_cmd_reply r;
-+	__le32 dwords[sizeof(struct mbx_fw_cmd_reply) / sizeof(__le32)];
-+};
-+
- int mucse_mbx_sync_fw(struct mucse_hw *hw);
- int mucse_mbx_powerup(struct mucse_hw *hw, bool is_powerup);
- int mucse_mbx_reset_hw(struct mucse_hw *hw);
+ 	mlx5_esw_for_each_vport(esw, i, vport) {
+ 		err = mlx5_esw_offloads_rep_add(esw, vport);
 -- 
 2.53.0
 
