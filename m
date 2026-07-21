@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D738E256C84;
-	Tue, 21 Jul 2026 15:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812E2449B0B;
+	Tue, 21 Jul 2026 15:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649399; cv=none; b=OnBBhnJe+8sMFkZqoqB4WqqlZBDbu7/QGCUQxgbjlzKfcqTIuIA4GBQrHZdBsNMp+yKfOD8KWurI5nE7GyLaWFPai26OT7av3JiDP170v/Qqxo7GWarJ3OeiqGFR1sRtnB0t5TgU10MK+YLNq8NP8+Y5A6nV8IF2O2dYnAvN7y0=
+	t=1784649401; cv=none; b=SHGy/yhP4lEd/ODpkLrsOtVFx132mWPetdnbg/wu4gje7L74SYZUamZPj8w7wfcSsDR0GK4iXQlw/YAEUcu2AAs1hqwpNRq/YpR7EdgJ0jvCTg6RhgutLukZzM7C+5qP7qsMM1/al2ab/U1GE2EohEpiiumnwVAubB375j/CmrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649399; c=relaxed/simple;
-	bh=49cSJvGN+7/FA9yrz5JTauKG543qzjBvxQOuoym808E=;
+	s=arc-20240116; t=1784649401; c=relaxed/simple;
+	bh=NmuQBBFQKgBjA0TDrcMzOUV2C+W14FXDiIuDrWcr+JQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KmeJQ/Gmb7iSuTOf4FOVoy7+WedUlnErRHOVHPWxVECw5n15ke9yEJ31PmqK9X99Z2Z2AXabObwOasd8FK5zSQpHEdhurYD68OPFaZcRG1RvA37tzfXQ9pCy5bulmupLxyNVEEGCtlHVrrkHydyxS36LRjI/DiVk5aCUZRSxnwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTBax+yg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eelP7nbrSZ1Oo/KDI/M1XeE53iGJc/XnRyBM+Kjj1MRe4nKRLDLQIVzTE02NCkuU7+SoXzlQ5FNTgPknXw/JNJ6K91I/3hv0hsUX4CRbdptywYkBkMsKxa9CGjJRV3v/YULdzjwAg6nnbwlt6kcgyeQ95KBE+zrnlBqqBGP1E88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OeAMmVxj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTBax+yg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43FD81F000E9;
-	Tue, 21 Jul 2026 15:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OeAMmVxj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64861F000E9;
+	Tue, 21 Jul 2026 15:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649397;
-	bh=AvizGeBWvq19jLrmkXDh1jNZT8k8+ZrWDwV/g2nD+OE=;
+	s=korg; t=1784649400;
+	bh=GQyc38FH001XpbByqw6DqMYxkC1M0fGtQVlc0FhUK0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YTBax+ygE/50hbXyK2JP/3yXshcugpcCppDgUyzbwQ70d5rEpJZaHQttH8PV5pp4y
-	 4n2k7BRnA/DOL4u3ziIBTuCGRDkvAiVaMxgkGcDR+qQByesXPkXaMnwDlGCTl3hyps
-	 bvd6wx36yD0jZXfH3Ne/yoSJfLKZNjICC/RxW9Hg=
+	b=OeAMmVxjDxAYZt5eOkMx/1ODG+ng+ON1QoDCnO5MT4UR8XtUbaLu686WryuoScYei
+	 PvLHs6jT6OXBP2KSQiN2phpa+7VZOQ1AsXj9SLFnuvKSvmZYex/FzGdE+TyEEDy9vo
+	 5U8fdgSn/8/eznton8Q3l9YN9hIYpe+uJyNVxFBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Luca Leonardo Scorcia <l.scorcia@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0564/2077] scsi: target: Remove tcm_loop target reset handling
-Date: Tue, 21 Jul 2026 17:03:57 +0200
-Message-ID: <20260721152606.115273092@linuxfoundation.org>
+Subject: [PATCH 7.1 0565/2077] pinctrl: mediatek: mt8516: Fix Schmitt trigger register offset of pins 34-39
+Date: Tue, 21 Jul 2026 17:03:58 +0200
+Message-ID: <20260721152606.138141214@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,117 +45,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
 
-[ Upstream commit 7c08d430835a90414cd962e3a9602e5b002dee3b ]
+[ Upstream commit 1c3044cab23a056ea28da47da1cdd667a39df0b8 ]
 
-tcm_loop_target_reset is supposed to handle all the LUNs on a target but
-it's only doing a TMR_LUN_RESET so only that one LUN is handled.  This
-will cause us to return early while IOs to other LUNs are still hung in
-lower layers. This just removes the target reset handler for the driver
-because LIO doesn't support target resets and for the common case where
-this is run from the scsi-ml error hamdler we have already tried an
-abort and lun reset so waiting again is most likely useless.
+The correct Schmitt trigger register offset for pins 34-39 is 0xA00.
 
-Fixes: 1333eee56cdf ("scsi: target: tcm_loop: Drain commands in target_reset handler")
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260530052349.5134-1-michael.christie@oracle.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
+Fixes: 264667112ef0 ("pinctrl: mediatek: Add MT8516 Pinctrl driver")
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/loopback/tcm_loop.c | 64 ------------------------------
- 1 file changed, 64 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-mt8516.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/target/loopback/tcm_loop.c b/drivers/target/loopback/tcm_loop.c
-index 11029734575134..d29830b951f753 100644
---- a/drivers/target/loopback/tcm_loop.c
-+++ b/drivers/target/loopback/tcm_loop.c
-@@ -270,69 +270,6 @@ static int tcm_loop_device_reset(struct scsi_cmnd *sc)
- 	return (ret == TMR_FUNCTION_COMPLETE) ? SUCCESS : FAILED;
- }
- 
--static bool tcm_loop_flush_work_iter(struct request *rq, void *data)
--{
--	struct scsi_cmnd *sc = blk_mq_rq_to_pdu(rq);
--	struct tcm_loop_cmd *tl_cmd = scsi_cmd_priv(sc);
--	struct se_cmd *se_cmd = &tl_cmd->tl_se_cmd;
--
--	flush_work(&se_cmd->work);
--	return true;
--}
--
--static int tcm_loop_target_reset(struct scsi_cmnd *sc)
--{
--	struct tcm_loop_hba *tl_hba;
--	struct tcm_loop_tpg *tl_tpg;
--	struct Scsi_Host *sh = sc->device->host;
--	int ret;
--
--	/*
--	 * Locate the tcm_loop_hba_t pointer
--	 */
--	tl_hba = *(struct tcm_loop_hba **)shost_priv(sh);
--	if (!tl_hba) {
--		pr_err("Unable to perform device reset without active I_T Nexus\n");
--		return FAILED;
--	}
--	/*
--	 * Locate the tl_tpg pointer from TargetID in sc->device->id
--	 */
--	tl_tpg = &tl_hba->tl_hba_tpgs[sc->device->id];
--	if (!tl_tpg)
--		return FAILED;
--
--	/*
--	 * Issue a LUN_RESET to drain all commands that the target core
--	 * knows about.  This handles commands not yet marked CMD_T_COMPLETE.
--	 */
--	ret = tcm_loop_issue_tmr(tl_tpg, sc->device->lun, 0, TMR_LUN_RESET);
--	if (ret != TMR_FUNCTION_COMPLETE)
--		return FAILED;
--
--	/*
--	 * Flush any deferred target core completion work that may still be
--	 * queued.  Commands that already had CMD_T_COMPLETE set before the TMR
--	 * are skipped by the TMR drain, but their async completion work
--	 * (transport_lun_remove_cmd → percpu_ref_put, release_cmd → scsi_done)
--	 * may still be pending in target_completion_wq.
--	 *
--	 * The SCSI EH will reuse in-flight scsi_cmnd structures for recovery
--	 * commands (e.g. TUR) immediately after this handler returns SUCCESS —
--	 * if deferred work is still pending, the memset in queuecommand would
--	 * zero the se_cmd while the work accesses it, leaking the LUN
--	 * percpu_ref and hanging configfs unlink forever.
--	 *
--	 * Use blk_mq_tagset_busy_iter() to find all started requests and
--	 * flush_work() on each — the same pattern used by mpi3mr, scsi_debug,
--	 * and other SCSI drivers to drain outstanding commands during reset.
--	 */
--	blk_mq_tagset_busy_iter(&sh->tag_set, tcm_loop_flush_work_iter, NULL);
--
--	tl_tpg->tl_transport_status = TCM_TRANSPORT_ONLINE;
--	return SUCCESS;
--}
--
- static const struct scsi_host_template tcm_loop_driver_template = {
- 	.show_info		= tcm_loop_show_info,
- 	.proc_name		= "tcm_loopback",
-@@ -341,7 +278,6 @@ static const struct scsi_host_template tcm_loop_driver_template = {
- 	.change_queue_depth	= scsi_change_queue_depth,
- 	.eh_abort_handler = tcm_loop_abort_task,
- 	.eh_device_reset_handler = tcm_loop_device_reset,
--	.eh_target_reset_handler = tcm_loop_target_reset,
- 	.this_id		= -1,
- 	.sg_tablesize		= 256,
- 	.max_sectors		= 0xFFFF,
+diff --git a/drivers/pinctrl/mediatek/pinctrl-mt8516.c b/drivers/pinctrl/mediatek/pinctrl-mt8516.c
+index abda75d4354e28..68d6638e7f4b18 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-mt8516.c
++++ b/drivers/pinctrl/mediatek/pinctrl-mt8516.c
+@@ -244,7 +244,7 @@ static const struct mtk_pin_ies_smt_set mt8516_smt_set[] = {
+ 	MTK_PIN_IES_SMT_SPEC(24, 25, 0xA00, 12),
+ 	MTK_PIN_IES_SMT_SPEC(26, 30, 0xA00, 0),
+ 	MTK_PIN_IES_SMT_SPEC(31, 33, 0xA00, 1),
+-	MTK_PIN_IES_SMT_SPEC(34, 39, 0xA900, 2),
++	MTK_PIN_IES_SMT_SPEC(34, 39, 0xA00, 2),
+ 	MTK_PIN_IES_SMT_SPEC(40, 40, 0xA10, 11),
+ 	MTK_PIN_IES_SMT_SPEC(41, 43, 0xA00, 10),
+ 	MTK_PIN_IES_SMT_SPEC(44, 47, 0xA00, 11),
 -- 
 2.53.0
 
