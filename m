@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843243AA4F9;
-	Tue, 21 Jul 2026 22:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E7C35C69E;
+	Tue, 21 Jul 2026 22:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673886; cv=none; b=RsU6YvjxLIus64S14LT4yX2npe95MlcC9OMRaEpKtiMQQye30ZsvQGRCmIE1ZB6INZ3krCRGQagFEGbMtYKzwHKsdb7LP9or1OPSWJiMBDd2BczOuSrJM9QYkCi1eG8/2+BRcLejAmEWi+kdVlaG70oWW4QYkCoIU8LAPp0RHZs=
+	t=1784673889; cv=none; b=ZEEFKp7TB1mZYTzSiuGgISOMakvZUauvmDlH9baCcbB6emzCbHsyehFYEcp2XhvhV3Ts9vN21ioUKaHd0JYcst5546B9C323GNTf1Ffi0gbgYnX+nsXh14zQhYv9riTfOCv8AB+g6vUHi7cwt19eOX90ShoGub44cXvj24NJ8fU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673886; c=relaxed/simple;
-	bh=5YCM3sgnso3UhA+GhwioAi+7+TtNnI64GZFM6MI7Hqs=;
+	s=arc-20240116; t=1784673889; c=relaxed/simple;
+	bh=yLjQR9s43SX6iAmWyouxvQzNwVdOIfE/8kerAbhjWgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FPnpGomrcP5M5M4pivcvm4sBK1IIJpc5yv9rXrcEEdFZ7uMhe7h5dR7Alok29UxpIxEQaqLqBgAowI53iLC7XA0G3U8LfhBKrn+ONAbMUSGvtEvfvains3xH2LlKT/oU9EBRE3XplS7TKs9DbL8XI3TaEt9qdDzvKjBlvdxIJqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mWTjqILx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WK/bgzb3wj1Pp2iFZweOwqWlmKwuSjGtu1fwc6y5lmndBEPvvj0nvJiD/MJ2jtNwgBWT2V8mIr5wuLFEthILICtOmr5hKowa4xS7aF9qg4u3jgyAmSbCjBk1Jk7foJrnDwLymQVdjB875uzLYkJNISJ5mf8oB7UYnSZTxButM04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=abpucEPD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mWTjqILx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7B01F000E9;
-	Tue, 21 Jul 2026 22:44:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="abpucEPD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CC91F000E9;
+	Tue, 21 Jul 2026 22:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673885;
-	bh=P5bFx6b9yp4nMpj3fuLWHHsQ6cgLZGXSoZyGfMWrWfQ=;
+	s=korg; t=1784673888;
+	bh=9SDD+bvA7/zKCZPwxIsYbHV58Ciz80XTKGVVRPh/SJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mWTjqILxs+MWV14DqAsBL1+V8R5SnoUjXgu6CUdA9+N3YO3Nl7UYzv27xZN8mTEFN
-	 5N7dPd4EM/4fEj5TkyNO/KrzUqC5cR6ki73oxblkzC9TTPCV1Ps/oW6ajUfRhACZ5Q
-	 kMzQDZZ0K+W0lkqpU6zqEBSeyWZ29FzDvb2X907w=
+	b=abpucEPDPVHso6ze/tgCZS/92iIKaob4paJqqBb1jFj9coUCfsB0OLOynBaa2oXJM
+	 VkNf5vApXQRHFYHSx9OEjHugSSOmdDK9iwd11OB7IwdL49T2TRBAl3JNewIvFjF5rZ
+	 DjTmUXfaE19aqwnbG5peyt7277J+Dcx6xgfuHyjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 332/699] apparmor: fix label can not be immediately before a declaration
-Date: Tue, 21 Jul 2026 17:21:31 +0200
-Message-ID: <20260721152403.181400240@linuxfoundation.org>
+Subject: [PATCH 5.10 333/699] sparc: led: avoid trimming a newline from empty writes
+Date: Tue, 21 Jul 2026 17:21:32 +0200
+Message-ID: <20260721152403.204469884@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,45 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 1ed40bd525c00d22af666016af9aef7167f8085f ]
+[ Upstream commit 7eb475e8a738ee6fd1260aa59ddccb610fdd4300 ]
 
-Fix error reported by kernel test robot
+led_proc_write() duplicates up to LED_MAX_LENGTH bytes with
+memdup_user_nul() and then unconditionally inspects buf[count - 1] to
+strip a trailing newline. A zero-length write therefore reads one byte
+before the duplicated buffer.
 
-security/apparmor/policy.c:1381:2: error: a label can only be part of
-a statement and a declaration is not a statement
+The previous version rejected empty writes, but empty input already falls
+through to the existing default case and turns the LED off like any other
+unrecognized string. Preserve that behavior and only skip the newline
+trim when there is no input byte to inspect.
 
-All errors (new ones prefixed by >>):
-
-   security/apparmor/policy.c: In function 'aa_replace_profiles':
->> security/apparmor/policy.c:1381:2: error: a label can only be part
-   of a statement and a declaration is not a statement
-     ssize_t udata_sz = udata->size;
-     ^~~~~
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202606150525.npax8WiH-lkp@intel.com/
-Fixes: 7b42f95813dc9 ("apparmor: fix potential UAF in aa_replace_profiles")
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Fixes: ee1858d3122d ("[SPARC]: Add sun4m LED driver.")
+Suggested-by: Andreas Larsson <andreas@gaisler.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/sparc/kernel/led.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -1107,9 +1107,10 @@ ssize_t aa_replace_profiles(struct aa_ns
- 	mutex_unlock(&ns->lock);
+diff --git a/arch/sparc/kernel/led.c b/arch/sparc/kernel/led.c
+index 3a66e62eb2a0e6..9d1e93d25f6cc0 100644
+--- a/arch/sparc/kernel/led.c
++++ b/arch/sparc/kernel/led.c
+@@ -78,7 +78,7 @@ static ssize_t led_proc_write(struct file *file, const char __user *buffer,
+ 		return PTR_ERR(buf);
  
- out:
-+	aa_put_ns(ns);
-+
- 	udata_sz = udata->size;
+ 	/* work around \n when echo'ing into proc */
+-	if (buf[count - 1] == '\n')
++	if (count > 0 && buf[count - 1] == '\n')
+ 		buf[count - 1] = '\0';
  
--	aa_put_ns(ns);
- 	aa_put_profile_loaddata(udata);
- 	kfree(ns_name);
- 
+ 	/* before we change anything we want to stop any running timers,
+-- 
+2.53.0
+
 
 
