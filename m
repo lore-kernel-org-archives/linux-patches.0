@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB17146D2C7;
-	Tue, 21 Jul 2026 17:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB1246D2C7;
+	Tue, 21 Jul 2026 17:17:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654241; cv=none; b=Fi3B53g6mkGtWw52nUo5uid1kaeWaiRH8GhlMVnc/CJfWWQMCPGV0iIBqbaub6FRsy8Z7NXbabFNc5O7DkV8v2kJZFogUCg8hE9FYDFY3nN7UEO1bHTJvugDqMbiqX7w64KC7ynmMX/M5yhNMBRCZImZAreI7yOHDEde1V89aPE=
+	t=1784654245; cv=none; b=qGbBEGQYHfBsRFqOQ4aa1qzusAJI/7uRI3lxO97c2wDDSNrpAz2jISxTpNmfKpzaIkQnoY3flIFhmGIzShSwami74jsiCrdBpUgtIe7Wg5ccvPqp9ljYF5VSKV0nvCWQEyGAqyad94WWv5MmxMTj1snokCmNnXiBeMAd72fbtBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654241; c=relaxed/simple;
-	bh=MTkkwMMx76qyG9PjYgJ8hbMjKdrdwfkpEQqmHLyrMmo=;
+	s=arc-20240116; t=1784654245; c=relaxed/simple;
+	bh=B+/aYw3vFgh0T6h2ZfQcHK4c/NkBM1JiRkcpvUNiGUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VSJeFtoqoxWf/Y8cy1pYI92/PchWfKRvTHLFwEyUdAxIrxmPnBWa1pyc9/cUGveVZkmRMX9W1H7CnOLBRTjbVrbuVhf9fQqNePu4lBssutkxKhnGdwGje6fmnsiaFVukhcSD8+pTq+gDvFlN6iwvIp1ENWbBp3fePgvS+rto/BE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SV+moQLN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ne5fzFWX6BLb96RvBgp9jVEgrRMBV09K7NORjccGJyEK8S2A0n5aycb8hbygAbpoEYpYhXb/GYJs88cYkAXF3rqoVZNPlchxUq17lj+Z8j/ubNBgBfu6PEhzZyWh7/DvSt2EbBBkvtNzn2/nW/4JfYoH7P3FoZ2sykXfTvf+Pec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3uNcokE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SV+moQLN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF621F000E9;
-	Tue, 21 Jul 2026 17:17:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3uNcokE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3EFA1F000E9;
+	Tue, 21 Jul 2026 17:17:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654240;
-	bh=cRLXS3P50KgaHc6LvU2h39JVvp0XZWP7lStffRgyNGM=;
+	s=korg; t=1784654243;
+	bh=iPVpd1aYjEZhjQ3WenZiMPe39WYg5SXrQYpPS2LiUdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SV+moQLNQYwUMIBEIBI9K9ZgpJft+iOeBDKRdmA2vO4+m4FF+mCNDc6GhJ8ROlV/d
-	 lkcW9CoocXuw0z46ULBB7bZouelVOVJytOIRXyY5cKfkInGeo8zX5STua4u5aI4luJ
-	 kewnt8JZ32c0K8w1r0bthhMXoK75tc7DhvOiCv4Q=
+	b=O3uNcokEipPWwDtN5ipFphkrRV0yil2n1CD0DJgywt198C1xGOGqx5lZ0ZdtczOHX
+	 Qmgm/gjP1QsfleNTAlOJVr4nqFD3zGdo9/0SJDvGURfkTZVQIszOKapoGWPAoX+tGN
+	 kDaZ9h3QG/uoDuG8FUAebX/lSYTgd7MqPf2mbydY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Ingo Molnar <mingo@kernel.org>,
-	"H. Peter Anvin" <hpa@zytor.com>
-Subject: [PATCH 7.1 1631/2077] x86/boot: Validate console=uart8250 baud rate to fix early boot hang
-Date: Tue, 21 Jul 2026 17:21:44 +0200
-Message-ID: <20260721152631.224299871@linuxfoundation.org>
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 7.1 1614/2077] netfilter: ecache: fix inverted time_after() check
+Date: Tue, 21 Jul 2026 17:21:27 +0200
+Message-ID: <20260721152630.830833962@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,55 +55,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-commit ffa0aa5b625fe0bed7463ac613f8b06676ff4542 upstream.
+commit b06163ce52ec0561f202fbfb9b08090cb61f512e upstream.
 
-When the baud rate is empty, 0, invalid, or overflows to 0 when stored
-as an int, the system will hang during early boot because of a division
-by zero in early_serial_init().
+ecache_work_evict_list() redelivers DESTROY events for conntracks that
+were moved to the per-netns dying_list after event delivery failed.  It
+sets a 10ms deadline:
 
-Fall back to DEFAULT_BAUD when the resulting baud rate is 0 to prevent
-an early system hang.
+    stop = jiffies + ECACHE_MAX_JIFFIES
 
-Fixes: ce0aa5dd20e4 ("x86, setup: Make the setup code also accept console=uart8250")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
+but then tests:
+
+    time_after(stop, jiffies)
+
+This condition is true while the deadline is still in the future, so the
+worker returns STATE_RESTART after the first successful redelivery in the
+usual case.  ecache_work() maps STATE_RESTART to delay 0, which turns the
+redelivery path into one dying conntrack per workqueue dispatch and makes
+the sent > 16 batching/cond_resched() path effectively unreachable.
+
+A conntrack netlink listener whose receive queue is congested can make
+DESTROY event delivery fail with -ENOBUFS.  With sustained conntrack
+churn, entries then accumulate on the dying_list and are only drained at
+the degraded one-entry-per-dispatch rate once delivery succeeds again,
+wasting CPU on back-to-back workqueue reschedules and prolonging
+conntrack memory/resource pressure.
+
+In a KASAN QEMU test with CONFIG_NF_CONNTRACK_EVENTS=y and
+nf_conntrack.enable_hooks=1, a congested DESTROY listener caused 8192
+nf_ct_delete() calls to return false and move entries to the dying_list.
+After closing the listener, the unfixed kernel needed 7670 ecache_work()
+entries to destroy 7669 conntracks.  With this change, the same 8192
+entries were destroyed by 2 ecache_work() entries.
+
+Swap the comparison so the worker restarts only after the deadline has
+expired.
+
+Fixes: 2ed3bf188b33 ("netfilter: ecache: use dedicated list for event redelivery")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260713194924.126472-3-thorsten.blum@linux.dev
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: Claude-Code:GLM-5.2
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/early_serial_console.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/netfilter/nf_conntrack_ecache.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/boot/early_serial_console.c
-+++ b/arch/x86/boot/early_serial_console.c
-@@ -117,7 +117,7 @@ static unsigned int probe_baud(int port)
- static void parse_console_uart8250(void)
- {
- 	char optstr[64], *options;
--	int baud = DEFAULT_BAUD;
-+	int baud;
- 	int port = 0;
+--- a/net/netfilter/nf_conntrack_ecache.c
++++ b/net/netfilter/nf_conntrack_ecache.c
+@@ -77,7 +77,7 @@ next:
+ 		hlist_nulls_del_rcu(&ct->tuplehash[IP_CT_DIR_ORIGINAL].hnnode);
+ 		hlist_nulls_add_head(&ct->tuplehash[IP_CT_DIR_REPLY].hnnode, &evicted_list);
  
- 	/*
-@@ -136,10 +136,13 @@ static void parse_console_uart8250(void)
- 	else
- 		return;
- 
--	if (options && (options[0] == ','))
--		baud = simple_strtoull(options + 1, &options, 0);
--	else
-+	if (options && (options[0] == ',')) {
-+		baud = simple_strtoull(options + 1, NULL, 0);
-+		if (!baud)
-+			baud = DEFAULT_BAUD;
-+	} else {
- 		baud = probe_baud(port);
-+	}
- 
- 	if (port)
- 		early_serial_init(port, baud);
+-		if (time_after(stop, jiffies)) {
++		if (time_after(jiffies, stop)) {
+ 			ret = STATE_RESTART;
+ 			break;
+ 		}
 
 
