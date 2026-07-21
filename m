@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDE937647B;
-	Tue, 21 Jul 2026 20:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2681318ED6;
+	Tue, 21 Jul 2026 20:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665577; cv=none; b=V7rRM0kGcOG0lh92IqPKDdKURD7dXIvpAvnQv2tCmBHEVyw92iUjx9JzYDNKjvO1YNkojlwcGWoRdqq+oAzsU2UfiVK/hdAa//M4JJk4D6qIvuc3VkHOP4dHJ7frPTIZSTgRJict0L33Arzrdi8cjoPajw1v8ndWpw3occ+U+6k=
+	t=1784665579; cv=none; b=EaD+qtpcsn+qlhua+rzc3NALGTPCBLlaFPorOfFP+zRL7572NFOGOHNGkV/hz3KDhcFUDMdO42mRNyJe05JMeHHVY6w9d29Sd36qE516jm4RGPhWJUo0Q/ySyKJceGR3ydBZyx8i7IAJRIr2r9+YIGxQa/Ylt98zeC2Lcj2cuhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665577; c=relaxed/simple;
-	bh=JYv3dYw1yyjaRhc2K9hliSf7bo/4nu1Tq+PValdUSqY=;
+	s=arc-20240116; t=1784665579; c=relaxed/simple;
+	bh=9Jf2XecW/HmB3Rz8kdr8TiiWMrNJcVZULCTBuVFe5ww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mtr+UYl4ZnvL0pXWwuTLbYJtjuF6qthiHCqlKDCSFVi7L4T8JSDf+p76JoyRi3nNhXYzqDPpx5KnXVwOXYZ3pYgUqsY/yMYNpTjG13mrdPhU3PPtGbOOe75jWn4uoGILiDHk/jUwMUu0W69/yeNSGnNCG0+CpWXcw6JxcX9l9/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nnQuGH4X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tlQ4pu5HdlnOeCn2NHifv9QnvavZqZ0qwy4WdFwz7i5/yNwQP+ZgAS6GSfc6vASckwLMPWBqaAe12uum7KQXwCR86z9kewV8Fc8AgHxgvWHShNAjyrTKzyJihuPVRDMVgsPURVruDlDs4/cPaA+jx5yFy16ThA9Tp5PNk2Tb/Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vb/CFFN6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nnQuGH4X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B3711F00A3A;
-	Tue, 21 Jul 2026 20:26:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vb/CFFN6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D377F1F000E9;
+	Tue, 21 Jul 2026 20:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665575;
-	bh=tirfryqdPPLlNkB1NRGogGHj70IayO7cC7bXOpIaMi4=;
+	s=korg; t=1784665578;
+	bh=gp3LDmT0e9SKLKn3R3cteFggPS+F+wh3sp/gxfnHGmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nnQuGH4XHx+Fb4YydDHYQ3EAe+C1jG3LRiifC2nOUnuh7SOa5yi15QgLWLZez0cFA
-	 k4DhLDGJtsGfUbI6gNZgClGqii7GQC1spHlbTU9Zwi3NcBZpNtzTYgEwexbEDmGLtc
-	 VZQBUkpLNEYAaKfmTJXJu5OXc+HLS5XQ3DPMbizo=
+	b=Vb/CFFN6QIAG0S7DRnoHzbLSko6cAqDQJ/6ZH+xiROmEfRUfLjGo/gsjJCKdiUb43
+	 5i4OHGbwwtYCgu25VwECwUz4LK/UqI6MOWTQ8uDapu4jvdIVgR0YTPJ34MhFzVI2I2
+	 aOTXafzh1f7ae5VVKs61ryTPkmTpo6OR+AzU62PU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matvey Kovalev <matvey.kovalev@ispras.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
 	David Howells <dhowells@redhat.com>,
+	Li Daming <d4n.for.sec@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
 	linux-afs@lists.infradead.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.6 0355/1266] afs: fix NULL pointer dereference in afs_get_tree()
-Date: Tue, 21 Jul 2026 17:13:12 +0200
-Message-ID: <20260721152449.774999009@linuxfoundation.org>
+	stable@kernel.org
+Subject: [PATCH 6.6 0356/1266] afs: Fix further netns teardown to cancel the preallocation charger
+Date: Tue, 21 Jul 2026 17:13:13 +0200
+Message-ID: <20260721152449.796566520@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,62 +57,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matvey Kovalev <matvey.kovalev@ispras.ru>
+From: David Howells <dhowells@redhat.com>
 
-commit 0b70716081c6462be9b2928ad736d0d527b09678 upstream.
+commit 2daf8ac812c3d78c642fe7652f62e29df5e3da20 upstream.
 
-afs_alloc_sbi() uses kzalloc for memory allocation. And, if
-ctx->dyn_root is not null, as->cell and as->volume are null.
-In trace_afs_get_tree() they are dereferenced.
+When an afs network namespace is torn down, it cancels and waits for the
+work item that keeps the preallocated rxrpc call/conn/peer queue charged
+before disabling incoming (i.e. listen 0), but there's a small window in
+which it can be requeued by an incoming call wending through the I/O
+thread.
 
-KASAN error message:
+Fix this by cancelling the charger work item again after reducing the
+listen backlog to zero.
 
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 2 PID: 18478 Comm: syz-executor.7 Not tainted 5.10.246-syzkaller #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1
-04/01/2014
-RIP: 0010:perf_trace_afs_get_tree+0x1d9/0x550
-include/trace/events/afs.h:1365
-
-Call Trace:
-trace_afs_get_tree include/trace/events/afs.h:1365 [inline]
-afs_get_tree+0x922/0x1350 fs/afs/super.c:599
-vfs_get_tree+0x8e/0x300 fs/super.c:1572
-do_new_mount fs/namespace.c:3011 [inline]
-path_mount+0x14a5/0x2220 fs/namespace.c:3341
-do_mount fs/namespace.c:3354 [inline]
-__do_sys_mount fs/namespace.c:3562 [inline]
-__se_sys_mount fs/namespace.c:3539 [inline]
-__x64_sys_mount+0x283/0x300 fs/namespace.c:3539
- do_syscall_64+0x33/0x50 arch/x86/entry/common.c:46
-entry_SYSCALL_64_after_hwframe+0x67/0xd1
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 80548b03991f5 ("afs: Add more tracepoints")
-Cc: stable@vger.kernel.org
-Signed-off-by: Matvey Kovalev <matvey.kovalev@ispras.ru>
+Fixes: 47694fbc9d24 ("afs: Fix netns teardown to cancel the preallocation charger")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260622090856.2746629-4-dhowells@redhat.com
+Link: https://sashiko.dev/#/patchset/20260609140911.838677-1-dhowells%40redhat.com
+cc: Li Daming <d4n.for.sec@gmail.com>
+cc: Ren Wei <n05ec@lzu.edu.cn>
 cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260624163819.3017002-5-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/super.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/afs/rxrpc.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/afs/super.c
-+++ b/fs/afs/super.c
-@@ -597,7 +597,8 @@ static int afs_get_tree(struct fs_contex
- 	}
+--- a/fs/afs/rxrpc.c
++++ b/fs/afs/rxrpc.c
+@@ -110,8 +110,13 @@ void afs_close_socket(struct afs_net *ne
+ 	_enter("");
  
- 	fc->root = dget(sb->s_root);
--	trace_afs_get_tree(as->cell, as->volume);
-+	if (!ctx->dyn_root)
-+		trace_afs_get_tree(as->cell, as->volume);
- 	_leave(" = 0 [%p]", sb);
- 	return 0;
+ 	cancel_work_sync(&net->charge_preallocation_work);
++	/* Future work items should now see ->live is false. */
++
+ 	kernel_listen(net->socket, 0);
++
++	/* Make sure work items are no longer running. */
+ 	flush_workqueue(afs_async_calls);
++	cancel_work_sync(&net->charge_preallocation_work);
  
+ 	if (net->spare_incoming_call) {
+ 		afs_put_call(net->spare_incoming_call);
 
 
