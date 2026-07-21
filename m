@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EEB3644B3;
-	Tue, 21 Jul 2026 19:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B047348C70;
+	Tue, 21 Jul 2026 19:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663899; cv=none; b=rrK2qLebYtpZ8OkNX6WEN98H3aoIm//HwUBZj0VNSfNkmSd0YivDx4KigSjbyoTUJSZMF14rG0LprZgGMIBqr5krHSnfgdwRB3yuUfE+1sskN0vmk1pP2tghGUyzacG1XULxcJIx+h64VcO3i6hOTU1WDXZDU4Pkej/g4lDk9HA=
+	t=1784663903; cv=none; b=ek95kORvF08Z6ifjbFhZ8ZngnAWgnG7fOOyg4qfQYtzx7htfe2HQq34MeGUX58B5dcDLvTq+jhkRojtxUgL9iTT8OuI2KNszpocEpOWmp0+H/gFHbx/D6+SNgEKZh86V+0PUYlz3Hhq65mjcZs2tSg1gt8bcLkMZ2yAHdJsgtxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663899; c=relaxed/simple;
-	bh=uNesEji4Yy/Pp7XZkK5GsWFe0zsdTVqrR3LyNC6SBsY=;
+	s=arc-20240116; t=1784663903; c=relaxed/simple;
+	bh=dRD5HdbkgbujoFsndpX96+t1dyftClPWBU2i4sRmS/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f5m+Iqy3YjrCjiw8jbMUK8WnDDkYzF/GbRHzjf57BcQUmdOmq4I1EsHEKTuw35rkgXoxtH5GY4X3ydheyclQPWx0UXVfHm52PM7mVY19KShFf37Hh5m6lNZ2Tplj5qQOnzgy+VPC3+QV4YRUnKm8WcZoZEDOAlFsuNG6Q+kOGCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGrr20mZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bz24qj3qWspUHanRv3peYCyVIkmYkoXncofj4+XH7W6fsy4jf+bC+sQz81D+XKckzjPcz+iQOqOnpoMskBXxpSMY9OF/4PWtmW6kTWMcimcaapZZL46XEz1t1vk5SM3FLZU2ei4XW+loZ6WhyMaglcSoHavkPURu8ymkgjjf9y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jw5GFfjW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGrr20mZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1FAD1F000E9;
-	Tue, 21 Jul 2026 19:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jw5GFfjW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788E61F000E9;
+	Tue, 21 Jul 2026 19:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663898;
-	bh=OxdqFmg103cFVx0ErvfpmzhHh7TqxxkvytaFMhadAw8=;
+	s=korg; t=1784663901;
+	bh=NauZ0uMEoBSh94MJBjjv5v2Gr1uvCXujbH+UvXEiKEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sGrr20mZ5CC5JE/GdFAEyFOxN1aQ/GU5lFS+0iIWaeoVPKYf3GsriiIhKEiOYkl17
-	 Q0/P/PifL0Fn6AaEzv0RmCMz4m9T/uhfuwnXM1Zz5ww16YHjqTg47svwG1ED8f4wbP
-	 56PoCsdhWLzhyuI3JkZIdudg4xZML1BkpHwOoFLI=
+	b=Jw5GFfjWOmhgfK6/fpnWx7IEVE91bLEKTDr4SjjtStQKmakfhLAq6BB5wqIV4WCnL
+	 DO8YOxmOdS+yVxG1ajjdzMXkDzSEUUruOFhLyFiXBcxTXDjcoX8RdB/HW2GWjhq2SG
+	 w8xPON8sURtqj16nnoDXuY6k1GDTJtyJvvJ7ZzG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Daniel Gibson <daniel@gibson.sh>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.12 0970/1276] platform/x86/amd/pmc: Add delay_suspend module parameter
-Date: Tue, 21 Jul 2026 17:23:33 +0200
-Message-ID: <20260721152507.727818510@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.12 0997/1276] bpf: Add missing access_ok call to copy_user_syms
+Date: Tue, 21 Jul 2026 17:24:00 +0200
+Message-ID: <20260721152508.322391765@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -45,97 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Gibson <daniel@gibson.sh>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit 428b9fd2dce50b4dc5cd9ade10b92efcf57ce7aa upstream.
+commit d5dc200c3a3f217de072af269dd90adddf90e48d upstream.
 
-Enabling the new delay_suspend module parameter delays suspend for
-2.5 seconds which is known to help for some AMD-based Lenovo Laptops
-that otherwise failed to send/receive events for key presses or the
-lid switch after s2idle. Apparently the EC needs to do some things
-in the background before suspend or it gets into a bad state.
+As reported by sashiko we use __get_user without prior access_ok call on the
+user space pointer. Adding the missing call for the whole pointer array.
 
-There are many reports of AMD-based laptops (mostly but not exclusively
-IdeaPads) about similar issues on the web; this parameter gives
-affected users an easy way to try out if their issues have the same
-root cause and to work around them until their specific device is added
-to the quirks list.
+Plus removing the err check in the error path, because it's not needed and
+also we can return -ENOMEM directly from the first kvmalloc_array fail path.
 
-The parameter description has a note encouraging users to report
-their device so it can be added to the quirks list, inspired by a
-similar request in parameter descriptions of the ideapad-laptop module.
-
-The module parameter can be set to "1" to explicitly enable it,
-"0" to disable it even on devices that are assumed to be affected,
-or -1 (the default) to enable it if the device is assumed to be affected
-(according to fwbug_list[])
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221383
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Daniel Gibson <daniel@gibson.sh>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260611150426.3683372-4-daniel@gibson.sh
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+[1] https://lore.kernel.org/bpf/20260611115503.AC16D1F00893@smtp.kernel.org/
+Fixes: 0236fec57a15 ("bpf: Resolve symbols with ftrace_lookup_symbols for kprobe multi link")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/bpf/20260611115503.AC16D1F00893@smtp.kernel.org/
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/r/20260616083056.405652-1-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmc/pmc.c |   25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+ kernel/trace/bpf_trace.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/platform/x86/amd/pmc/pmc.c
-+++ b/drivers/platform/x86/amd/pmc/pmc.c
-@@ -16,6 +16,7 @@
- #include <linux/bits.h>
- #include <linux/debugfs.h>
- #include <linux/delay.h>
-+#include <linux/dmi.h>
- #include <linux/io.h>
- #include <linux/iopoll.h>
- #include <linux/limits.h>
-@@ -161,6 +162,11 @@ static bool dump_custom_stb;
- module_param(dump_custom_stb, bool, 0644);
- MODULE_PARM_DESC(dump_custom_stb, "Enable to dump full STB buffer");
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -2559,9 +2559,12 @@ static int copy_user_syms(struct user_sy
+ 	int err = -ENOMEM;
+ 	unsigned int i;
  
-+static int delay_suspend = -1;
-+module_param(delay_suspend, int, 0644);
-+MODULE_PARM_DESC(delay_suspend,
-+		 "Delays s2idle by 2.5 seconds to work around buggy ECs, often causing keyboard issues after suspend. 0: don't delay, 1: do delay, -1 (default): let amd_pmc decide. If you need this please report this to: platform-driver-x86@vger.kernel.org");
++	if (!access_ok(usyms, cnt * sizeof(*usyms)))
++		return -EFAULT;
 +
- static struct amd_pmc_dev pmc;
- static int amd_pmc_send_cmd(struct amd_pmc_dev *dev, u32 arg, u32 *data, u8 msg, bool ret);
- static int amd_pmc_read_stb(struct amd_pmc_dev *dev, u32 *buf);
-@@ -886,8 +892,23 @@ static bool amd_pmc_want_suspend_delay(s
- 	 *
- 	 * See https://bugzilla.kernel.org/show_bug.cgi?id=221383
- 	 */
--	if (!disable_workarounds && amd_pmc_quirk_need_suspend_delay(pdev)) {
--		dev_info(pdev->dev, "Delaying suspend by 2.5s to avoid platform bug\n");
-+	if (amd_pmc_quirk_need_suspend_delay(pdev)) {
-+		/*
-+		 * delay_suspend=1 force-enables this, otherwise it can be
-+		 * disabled with disable_workarounds or delay_suspend=0
-+		 */
-+		if (delay_suspend == 1 || (delay_suspend == -1 && !disable_workarounds)) {
-+			dev_info(pdev->dev, "Delaying suspend by 2.5s to avoid platform bug\n");
-+			return true;
-+		}
-+		dev_info(pdev->dev, "Not delaying suspend because of module parameter, even though your device is assumed to need it!\n");
-+	} else if (delay_suspend == 1) {
-+		dev_info(pdev->dev, "Delaying suspend by 2.5s because delay_suspend=1. If this solves problems on your machine, please report this whole line to: platform-driver-x86@vger.kernel.org so it can be automatically detected as affected in the future. System Vendor: \"%s\" Product Name: \"%s\" Product Family: \"%s\" Board Vendor: \"%s\" Board Name: \"%s\"\n",
-+			 dmi_get_system_info(DMI_SYS_VENDOR),
-+			 dmi_get_system_info(DMI_PRODUCT_NAME),
-+			 dmi_get_system_info(DMI_PRODUCT_FAMILY),
-+			 dmi_get_system_info(DMI_BOARD_VENDOR),
-+			 dmi_get_system_info(DMI_BOARD_NAME));
- 		return true;
- 	}
- 	return false;
+ 	syms = kvmalloc_array(cnt, sizeof(*syms), GFP_KERNEL);
+ 	if (!syms)
+-		goto error;
++		return -ENOMEM;
+ 
+ 	buf = kvmalloc_array(cnt, KSYM_NAME_LEN, GFP_KERNEL);
+ 	if (!buf)
+@@ -2586,10 +2589,8 @@ static int copy_user_syms(struct user_sy
+ 	return 0;
+ 
+ error:
+-	if (err) {
+-		kvfree(syms);
+-		kvfree(buf);
+-	}
++	kvfree(syms);
++	kvfree(buf);
+ 	return err;
+ }
+ 
 
 
