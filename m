@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC913BB138;
-	Tue, 21 Jul 2026 21:31:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1102A3BCD04;
+	Tue, 21 Jul 2026 21:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669471; cv=none; b=PMgNQAQ9nBlgLTHX3ax+kAkDd2uFO16L9yDmUpqb3qRfcJyQwr/e73xMnHKxFEVH4CU2Z7J0yw8CyjFDek+E/8ntkvbyofBdapSxZKrta+N6xDZTSUT+gmIc9DUrNDx5/aOXE+9k5QOAXFugIxTFDqksiGWWF1PpmV0RMGCDr9g=
+	t=1784669474; cv=none; b=D5lwnc4lKYGSs7t6yx1lvJjoYIv5fvHvNswpbBd7eej1Sm1upJzKEcCSBZypHYbUiNWk2LtgDRlf6eeMmz93jVf/xvnXLbUvYvGTbNPzDpde00oUm+/Q8Sg/R93vEmfDKlyujay7Cf5OZW6Qny1YL870sK+VkVjxEkkQ1kAgCDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669471; c=relaxed/simple;
-	bh=zLGY2fZnrWzDqUqP7XLnuyHAbWWLAkHrVeDftaLB20w=;
+	s=arc-20240116; t=1784669474; c=relaxed/simple;
+	bh=0nb91AiPl4FJVfO6tGWmd4qSECHg9sPWNF43mMa1pNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mb0uiDNZIm1oza+w+pJmQIpO9V+5Z+R73Uj5wIiPQw/PbmL45tMsB3YBZSvCsg7gRH6kcES0F1ivt43GfHIxGUFOZTRhV5Y2xfLZSiqgS3DGNO3bmazlQawT6vUrrWnpSn1EwdJ+VL9rD5tTjvwkcUqVn9s/jlPhol5oQMmoQ/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvIeEgOX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vj9Y6ZdaZ6JSkjZLtfdCf+5SSWRIkC0yZ0Yziz711l+XOkW3UZASfM+RPrCJFrzmh4tm+1rdLrRvU2B4l41AWUCtQt4P5W6Mnenp8MhQsm/Fdwq/vfDTX6gAtgSY6+05oMn9l2vak+iiaJsmiQK5kRnmt1cXOp6RJQXd1h8IOc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgxntcTX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvIeEgOX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35881F000E9;
-	Tue, 21 Jul 2026 21:31:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgxntcTX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776B91F000E9;
+	Tue, 21 Jul 2026 21:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669470;
-	bh=ZBHktKjscZyvqTP2lgDgrh5NRkjbKAicRtS5/AtyBeA=;
+	s=korg; t=1784669473;
+	bh=y13/j7LsTiTyCymnCwjp67aDmN2ZxNm1e97r80qhIts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dvIeEgOXg4GfCr+/gsS0W+a0Watez14f/52PTqDjSPM1l2/JwAgb1SRNBdEi4Juuf
-	 s3Y8nD0TnRb9EVO65Vlof9RLyKGiVj9iapWUwRYu7YjXe1LdugFAOupG0/lOgqbWrh
-	 vAP3swoMEy/6XxwcnuxnBpisFes0e57gnEgyRgag=
+	b=ZgxntcTXrGCuCB1MnZguc2HBuZrbsAVatbERn6zM1yr3Yt6O1ulzMSGhmwNyfQp69
+	 u6zFtsztdxC40Zg3oPbJ0r4QGHzUZCa+8VLzZQB3oDCPH7sgsEVXIMdaJuDgxvTmaZ
+	 VH1gmAthQbGRfis+/LZ0V+IIQ/61ByIIabzjmVkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Kan Liang <kan.liang@intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0524/1067] perf tools: Use perf_env__get_cpu_topology() in machine__resolve()
-Date: Tue, 21 Jul 2026 17:18:45 +0200
-Message-ID: <20260721152436.332905862@linuxfoundation.org>
+Subject: [PATCH 6.1 0515/1067] xprtrdma: Close lost-wakeup race in xprt_rdma_alloc_slot
+Date: Tue, 21 Jul 2026 17:18:36 +0200
+Message-ID: <20260721152436.131799207@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,66 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 5484b43a0ec8231c36fba6ead654cb72dbba8b8f ]
+[ Upstream commit 765bde47fe7f197dabeb12da76831f40d0b20377 ]
 
-machine__resolve() accesses env->cpu[al->cpu].socket_id after checking
-al->cpu >= 0 and env->cpu != NULL, but without validating al->cpu
-against env->nr_cpus_avail.  Since al->cpu comes from the untrusted
-perf.data sample, a crafted file with a large CPU index causes an
-out-of-bounds heap read.
+xprt_rdma_alloc_slot() and xprt_rdma_free_slot() lack serialization
+between the buffer pool and the backlog queue.  A buffer freed
+after rpcrdma_buffer_get() finds the pool empty but before
+rpc_sleep_on() places the task on the backlog is returned to the
+pool with no waiter to wake, leaving the task stuck on the backlog
+indefinitely.
 
-Use perf_env__get_cpu_topology() which validates both NULL and bounds.
-Also bounds-check al->cpu before the cast to struct perf_cpu (int16_t):
-without this, values like 65536 silently truncate to 0, bypassing the
-accessor's internal check and returning CPU 0's topology.
+After joining the backlog, re-check the pool and route any
+recovered buffer through xprt_wake_up_backlog(), whose queue lock
+serializes with concurrent wakeups and avoids double-assignment
+of slots.
 
-Fixes: 0c4c4debb0adda4c ("perf tools: Add processor socket info to hist_entry and addr_location")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Kan Liang <kan.liang@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Because xprt_rdma_free_slot() does not hold reserve_lock, the
+XPRT_CONGESTED double-check in xprt_throttle_congested() is
+ineffective: a task can join the backlog through that path after
+free_slot has already found it empty and cleared the bit.  Avoid
+this by using xprt_add_backlog_noncongested(), which queues the
+task without setting XPRT_CONGESTED, so every allocation reaches
+xprt_rdma_alloc_slot() and its post-sleep re-check.
+
+Fixes: edb41e61a54e ("xprtrdma: Make rpc_rqst part of rpcrdma_req")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Stable-dep-of: e786233d2e0b ("xprtrdma: Decouple req recycling from RPC completion")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/event.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ include/linux/sunrpc/xprt.h     |  2 ++
+ net/sunrpc/xprt.c               | 16 ++++++++++++++++
+ net/sunrpc/xprtrdma/transport.c | 15 ++++++++++++++-
+ 3 files changed, 32 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/event.c b/tools/perf/util/event.c
-index 1fa14598b91669..d4d2c2141b8554 100644
---- a/tools/perf/util/event.c
-+++ b/tools/perf/util/event.c
-@@ -12,6 +12,7 @@
- #include <linux/zalloc.h>
- #include "cpumap.h"
- #include "dso.h"
-+#include "env.h"
- #include "event.h"
- #include "debug.h"
- #include "hist.h"
-@@ -710,8 +711,18 @@ int machine__resolve(struct machine *machine, struct addr_location *al,
- 	if (al->cpu >= 0) {
- 		struct perf_env *env = machine->env;
+diff --git a/include/linux/sunrpc/xprt.h b/include/linux/sunrpc/xprt.h
+index b9f59aabee53bf..3a50fdbb024d00 100644
+--- a/include/linux/sunrpc/xprt.h
++++ b/include/linux/sunrpc/xprt.h
+@@ -378,6 +378,8 @@ struct rpc_xprt *	xprt_alloc(struct net *net, size_t size,
+ 				unsigned int max_req);
+ void			xprt_free(struct rpc_xprt *);
+ void			xprt_add_backlog(struct rpc_xprt *xprt, struct rpc_task *task);
++void			xprt_add_backlog_noncongested(struct rpc_xprt *xprt,
++					struct rpc_task *task);
+ bool			xprt_wake_up_backlog(struct rpc_xprt *xprt, struct rpc_rqst *req);
+ void			xprt_cleanup_ids(void);
  
--		if (env && env->cpu)
--			al->socket = env->cpu[al->cpu].socket_id;
-+		/*
-+		 * Bounds-check al->cpu (s32) before casting to struct perf_cpu
-+		 * (int16_t): without this, e.g. 65536 truncates to 0 and silently
-+		 * returns CPU 0's topology.  Can go once perf_cpu.cpu is widened.
-+		 */
-+		if (env && al->cpu < env->nr_cpus_avail) {
-+			struct cpu_topology_map *topo;
+diff --git a/net/sunrpc/xprt.c b/net/sunrpc/xprt.c
+index ab453ede54f0cd..562aa8beae0ecb 100644
+--- a/net/sunrpc/xprt.c
++++ b/net/sunrpc/xprt.c
+@@ -1651,6 +1651,22 @@ void xprt_add_backlog(struct rpc_xprt *xprt, struct rpc_task *task)
+ }
+ EXPORT_SYMBOL_GPL(xprt_add_backlog);
+ 
++/**
++ * xprt_add_backlog_noncongested - queue task on backlog
++ * @xprt: transport whose backlog queue receives the task
++ * @task: task to queue
++ *
++ * Like xprt_add_backlog, but does not set XPRT_CONGESTED.
++ * For transports whose free_slot path does not synchronize
++ * with xprt_throttle_congested via reserve_lock.
++ */
++void xprt_add_backlog_noncongested(struct rpc_xprt *xprt,
++				   struct rpc_task *task)
++{
++	rpc_sleep_on(&xprt->backlog, task, xprt_complete_request_init);
++}
++EXPORT_SYMBOL_GPL(xprt_add_backlog_noncongested);
 +
-+			topo = perf_env__get_cpu_topology(env, (struct perf_cpu){ al->cpu });
-+			if (topo)
-+				al->socket = topo->socket_id;
-+		}
- 	}
+ static bool __xprt_set_rq(struct rpc_task *task, void *data)
+ {
+ 	struct rpc_rqst *req = data;
+diff --git a/net/sunrpc/xprtrdma/transport.c b/net/sunrpc/xprtrdma/transport.c
+index 80731cbb1365ee..44e7cd14af70b5 100644
+--- a/net/sunrpc/xprtrdma/transport.c
++++ b/net/sunrpc/xprtrdma/transport.c
+@@ -521,7 +521,20 @@ xprt_rdma_alloc_slot(struct rpc_xprt *xprt, struct rpc_task *task)
  
- 	if (al->map) {
+ out_sleep:
+ 	task->tk_status = -EAGAIN;
+-	xprt_add_backlog(xprt, task);
++	xprt_add_backlog_noncongested(xprt, task);
++	/* A buffer freed between buffer_get and rpc_sleep_on
++	 * goes back to the pool with no waiter to wake.
++	 * Re-check after joining the backlog to close that gap.
++	 */
++	req = rpcrdma_buffer_get(&r_xprt->rx_buf);
++	if (req) {
++		struct rpc_rqst *rqst = &req->rl_slot;
++
++		if (!xprt_wake_up_backlog(xprt, rqst)) {
++			memset(rqst, 0, sizeof(*rqst));
++			rpcrdma_buffer_put(&r_xprt->rx_buf, req);
++		}
++	}
+ }
+ 
+ /**
 -- 
 2.53.0
 
