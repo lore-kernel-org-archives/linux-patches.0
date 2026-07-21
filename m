@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C9446EC68;
-	Tue, 21 Jul 2026 19:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6067339A7FD;
+	Tue, 21 Jul 2026 19:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661053; cv=none; b=KWq2wmHkXAQ1MvvHAEieukUT4gO7DquDYQs3BuG8YyKfNbGEFPyDTWyMAkm/WlwEHUKpyGp3Rt1qfblw+IlF+qppKXIiEMl/YjUYUdQ4Im8WGwVeqN02+Eay7TwfHUabqd//bo0Lc51woLtKir+bEZw5XN4UhBTgCjfvqT6g5lo=
+	t=1784661056; cv=none; b=kcjeUG4SnCsnSMqHHUBbPe29gTO8cSS7vhmUlyKj+l2I94pYMHoZlACwTGL9g8CXTj99hjGrrY/pwH53AiFnmuMAh7y0BTW4kYZYE6mKgj675YrzxqXhjhQKAuNoasf79ejTcgQsG19kDruLJs+0U6HD0JPm0rtMUfLzdjPH1rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661053; c=relaxed/simple;
-	bh=8lPwSyx8xHaBzHy9bOnlvSs4e6/lw6TUFCXquax+VJY=;
+	s=arc-20240116; t=1784661056; c=relaxed/simple;
+	bh=nK6HX+S9605Z18pgCDMtzbFPHWxg4KLYdIL+qZOhsS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OguiAW9PCSFVKqHGew2VqEOSI9e4JWVaN3oP77IG0Vl9s10O9U/kVqsgzud+cwu3uKw2D+VJtPJ7zLCKFDkc0AZTfR5tJngXid3hdlHx9bGar1dCykvSVrqmC0i8cXeoGry5Vfq8bIOnY4OVVhUtFTB4tvVWwB2RrUlQJPJcAJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zByRQaog; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FQWtbBFvo6RY4iVK7ByLJQ3Qc5TkJKkIh9AiTOfNyx0uIi58URlDmNGroNqRPB0mEFZMRXizxqr8RN97TSSQ4mpYNu0Sw0bjMwwy5Xy/xB+piJVJ2RO0/q9pm9/AhwurlqgI7v8O3IZZ40D32SDZvEe7Oq8gsrP2KQjQwtvNjDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ikph/B8d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zByRQaog"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322481F00A3A;
-	Tue, 21 Jul 2026 19:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ikph/B8d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F7D1F000E9;
+	Tue, 21 Jul 2026 19:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661052;
-	bh=IwTkWMHmQ3bYPSmrN1oAkh7PnRXgGBmQ2C3h07ZznWg=;
+	s=korg; t=1784661055;
+	bh=gNTAmwBDtT0I4xU8+zfOdG+XMGjrppzEhu/b1+tckao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zByRQaog5rzOVmIB0Iz3oY6T9+8QZ9brP/IzH7jZfQ4TYZt/jVkd6Ra982NniUw4C
-	 lndDqI2kDeJALX6Xpc+6uzYwizyC3EOvL86zfRCPcFcz+8Jm6/RrpKyJN7v14WXhDH
-	 cptFUYe5KWPF/y7LJomYa8VorI1uIlUQsvlw13+k=
+	b=Ikph/B8dzJhjcL1phdQu0UphypYuhSGOYfvQh0xs89zH0QNXrJAUJWIG0P6DBlv0b
+	 ebWaDePs5lqaaPQTptcwQVLgMxlIOq1f+9uKC50hCx92I4l0Jrm09M3GOIBsV3uTfM
+	 OzxOc0o/rUI2MwsFqkiRkLWtpC/7jv/X/C+QI0lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Khalfella <mkhalfella@purestorage.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Alexander Nowlin <alexander.nowlin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1214/2077] i40e: Fix i40e_debug() to use struct i40e_hw argument
-Date: Tue, 21 Jul 2026 17:14:47 +0200
-Message-ID: <20260721152621.449974232@linuxfoundation.org>
+Subject: [PATCH 7.1 1197/2077] power: sequencing: fix ABBA deadlock in pwrseq_device_unregister()
+Date: Tue, 21 Jul 2026 17:14:30 +0200
+Message-ID: <20260721152621.046144979@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,39 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-[ Upstream commit 798f94603eb0737033861efd320a9159f382a7c5 ]
+[ Upstream commit 2d5a7d406ecece5837af1e278ffbbf6c0315560a ]
 
-i40e_debug() macro takes struct i40e_hw *h as first argument. But the
-macro body uses hw instead of h. This has been working so far because hw
-happens to be the name of the variable in the context where the macro is
-expanded. Fix the macro to use the passed argument.
+The pwrseq core takes three locks in consistent order everywhere:
 
-Fixes: 5dfd37c37a44 ("i40e: Split i40e_osdep.h")
-Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+  pwrseq_sem -> pwrseq->rw_lock -> pwrseq->state_lock
+
+pwrseq_get() -> pwrseq_match_device() takes pwrseq_sem for reading, then
+rw_lock for reading. pwrseq_power_on()/pwrseq_power_off() take rw_lock
+for reading and then state_lock.
+
+pwrseq_device_unregister() is the only exception, it takes: state_lock,
+then rw_lock for writing and finally pwrseq_sem for writing. This created
+two potential ABBA deadlock situations that sashiko pointed out.
+
+  - pwrseq_power_on/off() take rw_lock for reading then state_lock, while
+    pwrseq_unregister() takes state_lock then rw_lock for writing
+  - pwrseq_get() takes pwrseq_sem for reading then rw_lock for reading,
+    while pwrseq_unregister() takes rw_lock for writing then pwrseq_sem
+    for writing
+
+Reorder the unregister path to taking pwrseq_sem for writing -> rw_lock
+for writing and drop the state_lock entirely. This is safe as
+enable_count is only ever written under rw_lock held for read (via
+pwrseq_unit_enable()/disable(), reached only from pwrseq_power_on/off()),
+so holding rw_lock for writing already excludes every other writer and
+reader and the active-users WARN() stays race-free without state_lock.
+
+Fixes: 249ebf3f65f8 ("power: sequencing: implement the pwrseq core")
+Closes: https://sashiko.dev/#/patchset/20260616151049.1705503-1-vulab%40iscas.ac.cn
+Link: https://patch.msgid.link/20260618-pwrseq-abba-deadlock-v1-1-943a3fd81c06@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_debug.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/sequencing/core.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_debug.h b/drivers/net/ethernet/intel/i40e/i40e_debug.h
-index e9871dfb32bd44..01fd70db908666 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_debug.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e_debug.h
-@@ -42,7 +42,7 @@ struct device *i40e_hw_to_dev(struct i40e_hw *hw);
- #define i40e_debug(h, m, s, ...)				\
- do {								\
- 	if (((m) & (h)->debug_mask))				\
--		dev_info(i40e_hw_to_dev(hw), s, ##__VA_ARGS__);	\
-+		dev_info(i40e_hw_to_dev(h), s, ##__VA_ARGS__);	\
- } while (0)
+diff --git a/drivers/power/sequencing/core.c b/drivers/power/sequencing/core.c
+index 9b512a055b5a4b..c12aa494698a6d 100644
+--- a/drivers/power/sequencing/core.c
++++ b/drivers/power/sequencing/core.c
+@@ -543,15 +543,18 @@ void pwrseq_device_unregister(struct pwrseq_device *pwrseq)
+ 	struct device *dev = &pwrseq->dev;
+ 	struct pwrseq_target *target;
  
- #endif /* _I40E_DEBUG_H_ */
+-	scoped_guard(mutex, &pwrseq->state_lock) {
++	scoped_guard(rwsem_write, &pwrseq_sem) {
+ 		guard(rwsem_write)(&pwrseq->rw_lock);
+ 
++		/*
++		 * Holding rw_lock for write excludes all power on/off callers
++		 * (they hold it for read), so it's safe to read enable_count
++		 * here without taking the state_lock.
++		 */
+ 		list_for_each_entry(target, &pwrseq->targets, list)
+ 			WARN(target->unit->enable_count,
+ 			     "REMOVING POWER SEQUENCER WITH ACTIVE USERS\n");
+ 
+-		guard(rwsem_write)(&pwrseq_sem);
+-
+ 		device_del(dev);
+ 	}
+ 
 -- 
 2.53.0
 
