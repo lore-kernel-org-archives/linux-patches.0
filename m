@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0E8356A12;
-	Tue, 21 Jul 2026 19:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8747542CAF1;
+	Tue, 21 Jul 2026 19:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662371; cv=none; b=fyn1JeyukKrQYKbrTZtB6KrSaDSPulLeefJJJsPjaOWqm4MqwpS8qJGpXWLArWRy7DHxgi1QXQ3RxikrU3j434+u0PIgE2mn0XrOTQH5GghP21+H/rMvTUh9LM6sDStXzSNyYeSj70GXoCAZCTAffhVSFrd6C7s2SLB5wbSQQcU=
+	t=1784662374; cv=none; b=rcIrkOB//whJio5aISsT4JsSidOWDQFp+FYeXRM4jtiZFh5LV4IE8VUEk9yMop8oFls1U13kj9g9k0WJRsbKuu7cv5H5pitRPpJXe/Nu6ooAAy7hXgmo28it62wwY3+p9sB+XlyTYRvXTYr3fATuPtTiRs6A6HLkGVYzaSScXoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662371; c=relaxed/simple;
-	bh=HGv64MDL+qwib93r0h9h/DvjIm1leildIk5ybLW8R2w=;
+	s=arc-20240116; t=1784662374; c=relaxed/simple;
+	bh=SgfpCspOpnUt2jcYAEMG+cmr0oK9baZ3JtATWWcaUSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qBc8FZE5ozhbcBVoOVntTTp7Q5gKX4FviSh+ZIJAv4YKwKrXO/VWZTNjyJFfZ78fS4CtPQqPbEQ5rGj5ZjEVgKHTyeY3VcO5hd6FGA2EkM/xG/hf5j9Jrh6ZbPpTw5gK/E7qZemzRo+CkTB+wJ9d1XrkOCBRPNK8edSMfr7r6CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEHWmUUh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NqpCAkpU0uUFr3z7BctMnfJzl/Q4HXX1nKTPpZ+qf8/sLLMTgd30FuCfivvyIPSdTylYzgtV1aqNVBIvj9nYd6iHdP+IfYp/X3z++Mfcj098czdbrDv3foRW9w5pwbQ9W7cfaOl9G0cLaktE7O0G+K4QHT9U5vJvOMcWuGTT/cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Po1TajeF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEHWmUUh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E77E1F000E9;
-	Tue, 21 Jul 2026 19:32:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Po1TajeF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70E51F000E9;
+	Tue, 21 Jul 2026 19:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662370;
-	bh=dKiT6SyKNggCYNRTavx8LI80Y08q+mH2kJi6L4W3YbA=;
+	s=korg; t=1784662373;
+	bh=2iv4MkNtTuznfP1DuNjT2L+fWfIj0l+pCYfxZWdsliE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JEHWmUUh1D1PDldOsBb41Lgg2D1rY0tLZRqNQfybLSYORY0oGf1FE7JQV8Vo3qh+u
-	 zO5B0PVcVoLrAJfJEPqA1LzkeCrS7dN3sMih/+EtMUeFqM+wwyUs0jftOeEl+84o46
-	 oXDk/Rv0SlsNi3B9NHg8MUXnnuk1doyQ1NZQ4UwU=
+	b=Po1TajeFfUb/8NDkOhQ89B9XgqRbyJbUW/SKAy40mWcPMmHL7MNCJ+laUPVeYhX5t
+	 Z41f7WgHwtFj4dCBSOwhYYVDY14Mrez+xEDzaxiYFCztB9ye4/VKEc6sOHHZoTdlK1
+	 olExvu7+bB6CddZjUzFJxZ9xxz+KayD3JXciToCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0375/1276] kcm: use WRITE_ONCE() when changing lower socket callbacks
-Date: Tue, 21 Jul 2026 17:13:38 +0200
-Message-ID: <20260721152454.497711297@linuxfoundation.org>
+Subject: [PATCH 6.12 0366/1276] dpll: Support dynamic pin index allocation
+Date: Tue, 21 Jul 2026 17:13:29 +0200
+Message-ID: <20260721152454.297967787@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,59 +53,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 47186409c092cd7dd70350999186c700233e854d ]
+[ Upstream commit 711696b3e168cea4165e7b7f051f3f442a347430 ]
 
-kcm_attach() replaces a live lower TCP socket's sk_data_ready and
-sk_write_space callbacks with KCM handlers, and kcm_unattach() restores
-them later. Those callback-pointer updates are still plain stores even
-though the same fields can be read and invoked concurrently on other
-CPUs.
+Allow drivers to register DPLL pins without manually specifying a pin
+index.
 
-If another CPU observes an older callback snapshot after the live field
-has already been restored, callback execution can run with a mismatched
-target and sk_user_data state, leading to stale or misdirected wakeups.
+Currently, drivers must provide a unique pin index when calling
+dpll_pin_get(). This works well for hardware-mapped pins but creates
+friction for drivers handling virtual pins or those without a strict
+hardware indexing scheme.
 
-Use WRITE_ONCE() for the callback replacement and restore operations so
-these shared callback fields follow the same visibility contract already
-established by the earlier 4022 fixes.
+Introduce DPLL_PIN_IDX_UNSPEC (U32_MAX). When a driver passes this
+value as the pin index:
+1. The core allocates a unique index using an IDA
+2. The allocated index is mapped to a range starting above `INT_MAX`
 
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260611053543.2429462-1-runyu.xiao@seu.edu.cn
+This separation ensures that dynamically allocated indices never collide
+with standard driver-provided hardware indices, which are assumed to be
+within the `0` to `INT_MAX` range. The index is automatically freed when
+the pin is released in dpll_pin_put().
+
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Link: https://patch.msgid.link/20260203174002.705176-5-ivecera@redhat.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 32239d600236 ("dpll: fix stale iteration in dpll_pin_on_pin_unregister()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/kcm/kcmsock.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/dpll/dpll_core.c | 48 ++++++++++++++++++++++++++++++++++++++--
+ include/linux/dpll.h     |  2 ++
+ 2 files changed, 48 insertions(+), 2 deletions(-)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index 4e34311b27b187..5736f06d814323 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -1299,8 +1299,8 @@ static int kcm_attach(struct socket *sock, struct socket *csock,
- 	psock->save_write_space = csk->sk_write_space;
- 	psock->save_state_change = csk->sk_state_change;
- 	csk->sk_user_data = psock;
--	csk->sk_data_ready = psock_data_ready;
--	csk->sk_write_space = psock_write_space;
-+	WRITE_ONCE(csk->sk_data_ready, psock_data_ready);
-+	WRITE_ONCE(csk->sk_write_space, psock_write_space);
- 	csk->sk_state_change = psock_state_change;
+diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
+index b05fe2ba46d910..59081cf2c73ae0 100644
+--- a/drivers/dpll/dpll_core.c
++++ b/drivers/dpll/dpll_core.c
+@@ -10,6 +10,7 @@
  
- 	write_unlock_bh(&csk->sk_callback_lock);
-@@ -1376,8 +1376,8 @@ static void kcm_unattach(struct kcm_psock *psock)
- 	 */
- 	write_lock_bh(&csk->sk_callback_lock);
- 	csk->sk_user_data = NULL;
--	csk->sk_data_ready = psock->save_data_ready;
--	csk->sk_write_space = psock->save_write_space;
-+	WRITE_ONCE(csk->sk_data_ready, psock->save_data_ready);
-+	WRITE_ONCE(csk->sk_write_space, psock->save_write_space);
- 	csk->sk_state_change = psock->save_state_change;
- 	strp_stop(&psock->strp);
+ #include <linux/device.h>
+ #include <linux/err.h>
++#include <linux/idr.h>
+ #include <linux/property.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+@@ -24,6 +25,7 @@ DEFINE_XARRAY_FLAGS(dpll_device_xa, XA_FLAGS_ALLOC);
+ DEFINE_XARRAY_FLAGS(dpll_pin_xa, XA_FLAGS_ALLOC);
  
+ static RAW_NOTIFIER_HEAD(dpll_notifier_chain);
++static DEFINE_IDA(dpll_pin_idx_ida);
+ 
+ static u32 dpll_device_xa_id;
+ static u32 dpll_pin_xa_id;
+@@ -464,6 +466,36 @@ void dpll_device_unregister(struct dpll_device *dpll,
+ }
+ EXPORT_SYMBOL_GPL(dpll_device_unregister);
+ 
++static int dpll_pin_idx_alloc(u32 *pin_idx)
++{
++	int ret;
++
++	if (!pin_idx)
++		return -EINVAL;
++
++	/* Alloc unique number from IDA. Number belongs to <0, INT_MAX> range */
++	ret = ida_alloc(&dpll_pin_idx_ida, GFP_KERNEL);
++	if (ret < 0)
++		return ret;
++
++	/* Map the value to dynamic pin index range <INT_MAX+1, U32_MAX> */
++	*pin_idx = (u32)ret + INT_MAX + 1;
++
++	return 0;
++}
++
++static void dpll_pin_idx_free(u32 pin_idx)
++{
++	if (pin_idx <= INT_MAX)
++		return; /* Not a dynamic pin index */
++
++	/* Map the index value from dynamic pin index range to IDA range and
++	 * free it.
++	 */
++	pin_idx -= (u32)INT_MAX + 1;
++	ida_free(&dpll_pin_idx_ida, pin_idx);
++}
++
+ static void dpll_pin_prop_free(struct dpll_pin_properties *prop)
+ {
+ 	kfree(prop->package_label);
+@@ -521,9 +553,18 @@ dpll_pin_alloc(u64 clock_id, u32 pin_idx, struct module *module,
+ 	struct dpll_pin *pin;
+ 	int ret;
+ 
++	if (pin_idx == DPLL_PIN_IDX_UNSPEC) {
++		ret = dpll_pin_idx_alloc(&pin_idx);
++		if (ret)
++			return ERR_PTR(ret);
++	} else if (pin_idx > INT_MAX) {
++		return ERR_PTR(-EINVAL);
++	}
+ 	pin = kzalloc(sizeof(*pin), GFP_KERNEL);
+-	if (!pin)
+-		return ERR_PTR(-ENOMEM);
++	if (!pin) {
++		ret = -ENOMEM;
++		goto err_pin_alloc;
++	}
+ 	pin->pin_idx = pin_idx;
+ 	pin->clock_id = clock_id;
+ 	pin->module = module;
+@@ -551,6 +592,8 @@ dpll_pin_alloc(u64 clock_id, u32 pin_idx, struct module *module,
+ 	dpll_pin_prop_free(&pin->prop);
+ err_pin_prop:
+ 	kfree(pin);
++err_pin_alloc:
++	dpll_pin_idx_free(pin_idx);
+ 	return ERR_PTR(ret);
+ }
+ 
+@@ -654,6 +697,7 @@ void dpll_pin_put(struct dpll_pin *pin)
+ 		xa_destroy(&pin->ref_sync_pins);
+ 		dpll_pin_prop_free(&pin->prop);
+ 		fwnode_handle_put(pin->fwnode);
++		dpll_pin_idx_free(pin->pin_idx);
+ 		kfree_rcu(pin, rcu);
+ 	}
+ 	mutex_unlock(&dpll_lock);
+diff --git a/include/linux/dpll.h b/include/linux/dpll.h
+index 627c8524c58830..3c03b19d939070 100644
+--- a/include/linux/dpll.h
++++ b/include/linux/dpll.h
+@@ -216,6 +216,8 @@ int dpll_device_register(struct dpll_device *dpll, enum dpll_type type,
+ void dpll_device_unregister(struct dpll_device *dpll,
+ 			    const struct dpll_device_ops *ops, void *priv);
+ 
++#define DPLL_PIN_IDX_UNSPEC	U32_MAX
++
+ struct dpll_pin *
+ dpll_pin_get(u64 clock_id, u32 dev_driver_id, struct module *module,
+ 	     const struct dpll_pin_properties *prop);
 -- 
 2.53.0
 
