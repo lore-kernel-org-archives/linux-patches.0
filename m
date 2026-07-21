@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4A2471250;
-	Tue, 21 Jul 2026 18:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4106C471264;
+	Tue, 21 Jul 2026 18:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659275; cv=none; b=mlfX3uHPQjvF8JnLtcP3wmuTjgzoRPahqI8yzS1Ve/F7Lv7db+td3wMfHwzsktVCNiFCtXKGevcktNlr+oNXjJJDLTP+lVGJrUTia4MBlmX4EacBI/Iv+W09WvyPWyhS+f3mqfyr7ml87x0vUWmrTJMxAZMzRer5Y5dT8OSeDvU=
+	t=1784659278; cv=none; b=aErRknebCW/XwPmPwKX+suMkY8Xu1MjRv9AKasna4SYlatxTntpLFsBGkjBIOV1qX8FCyk6/zYPfxOHIgYpDWqIxAovcF26/zARbhINQieatpOW1e9zvolrlxIHuKmSIoURPcxswOyM44m7BmVDRFAYXJumbmYkfaYzPC+y7ijI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659275; c=relaxed/simple;
-	bh=J4H9kWHJGo2BmS4VGoIsqtVgJvsMfzz0iXEpAZP8WMg=;
+	s=arc-20240116; t=1784659278; c=relaxed/simple;
+	bh=IsJfSH686NCm5AknF/D13U6NnTO9TANBrLS9xgGdvhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RiHqQau4SOqKP6y9UPJfufpQ78GYIvlECufWav8KnbssePNz1AD07cnLEutBN9Un2LOoWbG0zlDFz+oT+tkvzx+EAzmnBLj6kRBR25TnvwYcMRS3sNUG2iKMlnchjw+0T2GRpwr1iC507S2ppuABkjMrzIMPKmOQMBilCJVKBaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C1hauXCb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BBltdklLSSTTXsqtahODrpmdc3P/1+Qy/VgLE7Ef3+pWeTH04EUEBFyzRE14fd+nnBwxa7Z9Xwtppltp7sVGSUZePfyq+rrFr4vz1ny2Dbpxyi9gpTkRQMx26vMevgu9psqQpvY4fW5H1tmay/yUZ+dCS+Ou1bUbOU91ke7nIr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lEc/mkIw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C1hauXCb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F5261F000E9;
-	Tue, 21 Jul 2026 18:41:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lEc/mkIw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78561F000E9;
+	Tue, 21 Jul 2026 18:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659274;
-	bh=0yFa2toWeW4cqslCSz9why6T+Wzt+l9B4Kblpb6r0bc=;
+	s=korg; t=1784659277;
+	bh=51xjTiTgNkAgXh9aCUr3fDpLLbt0KzEn+kI3YozKgAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C1hauXCbbt1wGFKpip8tilMFC6UCOT5NRkCOGNZPy9WubnfR5ORtxJka/IESQCRLr
-	 JrqA5szb5GhhRTGNqXMi5GycD1G+IDaC4dbULeS5xs5jxeid47Qd77xYG+UWkaZ7UD
-	 tmFGn/vxFTInMI6AhURIUTM8W5vYXIJZzK3pp2qA=
+	b=lEc/mkIwDX1iuhh2sOjaKIVeSaYAQbhDba9p0JFFKgiCombNoavZNBQAOYMncA3MX
+	 IDQU49jNNEE9y0AyKRcLdACnr/DJuav2CKGm79UyfMDhtEW7PdNAkWST9ZpuF++jL2
+	 ei7UagcrbvOrL70GlzEmmXqrjyjuLUD9IFwl++Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 1459/1611] net: macb: drop in-flight Tx SKBs on close
-Date: Tue, 21 Jul 2026 17:26:15 +0200
-Message-ID: <20260721152548.264149823@linuxfoundation.org>
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	James Morse <james.morse@arm.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.18 1460/1611] arm64: smp: Fix hot-unplug tearing by forcing unregistration
+Date: Tue, 21 Jul 2026 17:26:16 +0200
+Message-ID: <20260721152548.285892877@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -45,65 +47,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Théo Lebrun <theo.lebrun@bootlin.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit 27f575836cfebbf872dec020428742b10650a955 upstream.
+commit 18a4e5cf633fad5c40ac9d936c51bf38db68796d upstream.
 
-The MACB driver has since forever leaked the outgoing SKBs that
-have not yet been marked as completed. They live in queue->tx_skb
-which gets freed without remorse nor checking.
+Sashiko review pointed out the following issue[1].
 
-macb_free_consistent() gets called in a few codepaths, but only close will
-trigger the added expressions. In macb_open() and macb_alloc_consistent()
-failure cases, queues' tx_skb just got allocated and are empty.
+Commit eba4675008a6 ("arm64: arch_register_cpu() variant to check if
+an ACPI handle is now available.") introduced architectural safety
+blocks inside arch_unregister_cpu(). If a hot-unplug operation is
+determined to be a physical hardware removal (where _STA evaluates to
+!ACPI_STA_DEVICE_PRESENT), or if firmware evaluation fails, it aborts
+the unregistration transaction early to protect unreadied arm64
+infrastructure.
 
-Fixes: 89e5785fc8a6 ("[PATCH] Atmel MACB ethernet driver")
+However, returning early from arch_unregister_cpu() causes a catastrophic
+state tearing because the generic ACPI layer (acpi_processor_post_eject())
+unconditionally continues its cleanup flow. This leaves the stale sysfs
+device leaked in the memory, deadlocking any subsequent hot-add attempts
+on the same CPU.
+
+Fix it by simplifying arch_unregister_cpu() to always proceed with
+the unregistration, as a pr_err_once() warning is sufficient to make
+it more visible for currently not supported physical CPU removal.
+Also remove the redundant NULL check on acpi_handle as it cannot be
+NULL when calling arch_unregister_cpu().
+
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Jonathan Cameron <jic23@kernel.org>
+Cc: James Morse <james.morse@arm.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Signed-off-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Link: https://patch.msgid.link/20260702-macb-drop-tx-v4-1-1c833eebdbc8@bootlin.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://sashiko.dev/#/patchset/20260520022023.126670-1-ruanjinjie@huawei.com [1]
+Fixes: eba4675008a6 ("arm64: arch_register_cpu() variant to check if an ACPI handle is now available.")
+Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c |   21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ arch/arm64/kernel/smp.c |   16 +++-------------
+ 1 file changed, 3 insertions(+), 13 deletions(-)
 
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -2589,8 +2589,25 @@ static void macb_free_consistent(struct
- 	dma_free_coherent(dev, size, bp->queues[0].rx_ring, bp->queues[0].rx_ring_dma);
+--- a/arch/arm64/kernel/smp.c
++++ b/arch/arm64/kernel/smp.c
+@@ -535,23 +535,13 @@ void arch_unregister_cpu(int cpu)
+ {
+ 	acpi_handle acpi_handle = acpi_get_processor_handle(cpu);
+ 	struct cpu *c = &per_cpu(cpu_devices, cpu);
+-	acpi_status status;
+ 	unsigned long long sta;
+-
+-	if (!acpi_handle) {
+-		pr_err_once("Removing a CPU without associated ACPI handle\n");
+-		return;
+-	}
++	acpi_status status;
  
- 	for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue) {
--		kfree(queue->tx_skb);
--		queue->tx_skb = NULL;
-+		if (queue->tx_skb) {
-+			unsigned int dropped = 0, tail;
-+
-+			for (tail = queue->tx_tail; tail != queue->tx_head;
-+			     tail++) {
-+				if (macb_tx_skb(queue, tail)->skb)
-+					dropped++;
-+				macb_tx_unmap(bp, macb_tx_skb(queue, tail), 0);
-+			}
-+
-+			queue->stats.tx_dropped += dropped;
-+			bp->dev->stats.tx_dropped += dropped;
-+
-+			kfree(queue->tx_skb);
-+			queue->tx_skb = NULL;
-+		}
-+
-+		queue->tx_head = 0;
-+		queue->tx_tail = 0;
- 		queue->tx_ring = NULL;
- 		queue->rx_ring = NULL;
- 	}
+ 	status = acpi_evaluate_integer(acpi_handle, "_STA", NULL, &sta);
+-	if (ACPI_FAILURE(status))
+-		return;
+-
+-	/* For now do not allow anything that looks like physical CPU HP */
+-	if (cpu_present(cpu) && !(sta & ACPI_STA_DEVICE_PRESENT)) {
++	if (!ACPI_FAILURE(status) &&
++	    cpu_present(cpu) && !(sta & ACPI_STA_DEVICE_PRESENT))
+ 		pr_err_once("Changing CPU present bit is not supported\n");
+-		return;
+-	}
+ 
+ 	unregister_cpu(c);
+ }
 
 
