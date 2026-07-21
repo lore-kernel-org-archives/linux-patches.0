@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E9645A282;
-	Tue, 21 Jul 2026 21:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D18E473C9C;
+	Tue, 21 Jul 2026 21:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667873; cv=none; b=Nskyl4b7o9KTm0InT6PrP02mue93Okowl0W5Ebzp3NONoqCxrib6poz6Q356K4FNLVIn2oDmcZ16EsBJWCYfWBYx6lw7W9GWePLJPk4qXA2Gqw4TiYb+h/DDgRFkTVTFusfxMKog/YdIwjgIfQTWZZU9ong7rXvE7wmtD2/FFf8=
+	t=1784667875; cv=none; b=br/qlnAZWzCJ4kQ07lqM8qxiRaH+3bY7J9yIxY5DfSE7il+2/A16Fjww5Wbd6kW901rPXgi2ijtdU5Nsp+SM0Zn09lYifOGyldyVJKjY3sQP16WwYir9CPBXkdtjM3rkMGgssi4oYj8YLGZ+l5TsdZ+Tc+u6F31v0N7zmrsqPtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667873; c=relaxed/simple;
-	bh=+Zf+D00CblcCIW97+Qfu5jHvuC/oduAO+No2WycFPZg=;
+	s=arc-20240116; t=1784667875; c=relaxed/simple;
+	bh=6AwbrpY1MjEOSPPyCvbI6M0/me0rjjyhLpX8ytOorVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e+Z7brmpbdTn4OrkzoF9JLRux0IKp6FlFSM9vX43rdmfjBL2VCiI6Iq77AaQaHPE5+vxOsYTw8EEH7/RzNXIpTkdFqmVLPSObwOATf5BBNLZX9Jma3G+AbCQfCDsFmzzS3moOxzK6vvM10eK3cGU3Xe9k2Qd0DyUzU/NGJwLnQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MshwqGxR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P/NfUzXo/YHQj0T8H+/Vk0tDgzn9HAqxGZWZs5TaMzJE+DA7Fqxi1oSZVGWUn6/G357G/4PnTC9Ah4RpwNlpaaVzxmt6d1rMlLHLipGIs0lRBQkQWontDnOkc2Yi2qkhmTPd6bpEVfxKzikpf56WFibGW4eZaj+K1Ti7dIKFPN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEJnb4M0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MshwqGxR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469861F000E9;
-	Tue, 21 Jul 2026 21:04:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEJnb4M0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E649B1F00A3A;
+	Tue, 21 Jul 2026 21:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667869;
-	bh=+h3f6K8A9jwZgt3KThD9DwXA49G+t/+AmKP70fgTrBE=;
+	s=korg; t=1784667872;
+	bh=gc2Kh+kup8JNtuvUocVsEF/9zp+GF4hjgUsAWhmV3GA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MshwqGxROTXI3g/ElGKnckAyEBJdJjUF5XKCQGzmMsNKvZ90qFXb9tM+xdoggpQPS
-	 ouEed5t3DyJXKs/4vgYeCyFPn+3e0MeVbzALkQuNetb1nf+ehjAZd4AOnClZEujizV
-	 oVmODuwMY5PRDlP8gKOSHx0yvNuRqd9DuWU375ME=
+	b=aEJnb4M0vqirSfrReeZYeNndbyUtBW8a+cT6vzBH7Qu5ssuoYp0Jet5Sp6glK/+Ap
+	 K3Quszc3gD1ChZp3U5FCSf3xABoWC2xvK8qewD3sYvNY8zQ5Kda6exOuod2hFC1SGU
+	 6ybrw+hM0PbnobQIN/3/6rL0D3OfU21tk9EswwTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Musaab Khan <musaab.khan@protonmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	stable <stable@kernel.org>,
+	Andy Yan <andyshrk@163.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1197/1266] ksmbd: use opener credentials for FSCTL mutations
-Date: Tue, 21 Jul 2026 17:27:14 +0200
-Message-ID: <20260721152508.580862624@linuxfoundation.org>
+Subject: [PATCH 6.6 1224/1266] usb: typec: tcpm: Fix VDM type for Enter Mode commands
+Date: Tue, 21 Jul 2026 17:27:41 +0200
+Message-ID: <20260721152509.194669559@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,83 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Andy Yan <andyshrk@163.com>
 
-[ Upstream commit c6394bcaf254c5baf9aff43376020be5db6d3316 ]
+[ Upstream commit 9cff680e47632b7723cb19f9c5e63669063c3417 ]
 
-SET_SPARSE, SET_ZERO_DATA and SET_COMPRESSION operate on an open SMB
-handle but call VFS xattr, fallocate or fileattr helpers with the current
-ksmbd worker credentials. Those helpers can revalidate inode permissions,
-ownership and LSM policy independently of the SMB handle access mask.
+VDO() second parameter is VDM type (bit 15): 1 for SVDM, 0 for UVDM.
+Using 'vdo ? 2 : 1' corrupts SVID low bit when vdo is non-NULL
+(2 << 15 = BIT(16)). Enter Mode is always SVDM, hardcode to 1.
 
-Run each operation with the credentials captured in the target file when
-the handle was opened. Keep credential handling local to these single-file
-FSCTLs rather than applying session credentials to the complete IOCTL
-handler, which also contains handle-less and multi-handle operations.
-
-Cc: stable@vger.kernel.org
-Reported-by: Musaab Khan <musaab.khan@protonmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 8face9aa57c8 ("usb: typec: Add parameter for the VDO to typec_altmode_enter()")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Andy Yan <andyshrk@163.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260604105059.18750-1-andyshrk@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    3 +++
- fs/smb/server/vfs.c     |   20 +++++++++++++-------
- 2 files changed, 16 insertions(+), 7 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -8194,6 +8194,7 @@ static inline int fsctl_set_sparse(struc
- 	if (fp->f_ci->m_fattr != old_fattr &&
- 	    test_share_config_flag(work->tcon->share_conf,
- 				   KSMBD_SHARE_FLAG_STORE_DOS_ATTRS)) {
-+		const struct cred *saved_cred;
- 		struct xattr_dos_attrib da;
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -2237,7 +2237,7 @@ static int tcpm_altmode_enter(struct typ
+ 	if (svdm_version < 0)
+ 		return svdm_version;
  
- 		ret = ksmbd_vfs_get_dos_attrib_xattr(idmap,
-@@ -8202,9 +8203,11 @@ static inline int fsctl_set_sparse(struc
- 			goto out;
+-	header = VDO(altmode->svid, vdo ? 2 : 1, svdm_version, CMD_ENTER_MODE);
++	header = VDO(altmode->svid, 1, svdm_version, CMD_ENTER_MODE);
+ 	header |= VDO_OPOS(altmode->mode);
  
- 		da.attr = le32_to_cpu(fp->f_ci->m_fattr);
-+		saved_cred = override_creds(fp->filp->f_cred);
- 		ret = ksmbd_vfs_set_dos_attrib_xattr(idmap,
- 						     &fp->filp->f_path,
- 						     &da, true);
-+		revert_creds(saved_cred);
- 		if (ret)
- 			fp->f_ci->m_fattr = old_fattr;
- 	}
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -994,15 +994,21 @@ void ksmbd_vfs_set_fadvise(struct file *
- int ksmbd_vfs_zero_data(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			loff_t off, loff_t len)
- {
-+	const struct cred *saved_cred;
-+	int err;
-+
- 	smb_break_all_levII_oplock(work, fp, 1);
-+	saved_cred = override_creds(fp->filp->f_cred);
- 	if (fp->f_ci->m_fattr & FILE_ATTRIBUTE_SPARSE_FILE_LE)
--		return vfs_fallocate(fp->filp,
--				     FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
--				     off, len);
--
--	return vfs_fallocate(fp->filp,
--			     FALLOC_FL_ZERO_RANGE | FALLOC_FL_KEEP_SIZE,
--			     off, len);
-+		err = vfs_fallocate(fp->filp,
-+				    FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
-+				    off, len);
-+	else
-+		err = vfs_fallocate(fp->filp,
-+				    FALLOC_FL_ZERO_RANGE | FALLOC_FL_KEEP_SIZE,
-+				    off, len);
-+	revert_creds(saved_cred);
-+	return err;
- }
- 
- int ksmbd_vfs_fqar_lseek(struct ksmbd_file *fp, loff_t start, loff_t length,
+ 	tcpm_queue_vdm_unlocked(port, header, vdo, vdo ? 1 : 0);
 
 
