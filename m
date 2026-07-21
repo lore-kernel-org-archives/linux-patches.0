@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59CAA3B635A;
-	Tue, 21 Jul 2026 15:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDCC039EF16;
+	Tue, 21 Jul 2026 15:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648727; cv=none; b=URJ3Jv/sJMzT88Tg27gsl5VObcQZj420HxwwGNo8XsghbhaI2Xq8W6moMC2XzgpjDQzcBcvAPb3Ejm6OjlFld0YewALHLVqAmKd/pI0Zg8NPZfo8FKBefdLR9WCQarMdFpm549xNo8a6S5wNICoa1IWe5vwsZifcMIvp2eCH45I=
+	t=1784648730; cv=none; b=d7UaC8b4IqGeeucJoKFAtYte3TOkZPscRMDavWGi9aHSUpSdAvu4CxxXcE40jnlOa7vQD2BCOBHop/5RCivZqF4pxIuBFhWexjXKDQJsEyOiGpZk9vSSD8enqkaGt2QzEYyzTlnroEY/StH/4Vtd/++HOl6//l1PBsQ8ApNWU48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648727; c=relaxed/simple;
-	bh=egOE1el0elvPCWp0d8qf+ymFDH/WHCk/KMt16JIcPCc=;
+	s=arc-20240116; t=1784648730; c=relaxed/simple;
+	bh=z435Fd573FWjw6lHVg9Cp4ZLZNmPLHHFOHCW885UQlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nJzxCoiibxNhY84h+0bxn+1RLicfKa5UfWBvomIKWAINRLtoLFfzl2/J+QZ1jPrcEcJKVymGLr9wCRUL+GWTIBm/76ZKvWRgpmbquyHQeeRqhEUEVCpyubBG5rygoZ96HJ56rOXOYbDrQ/njUyMr4kUF0BURrK1kNZWttGehaks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BmqaWNcy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WnW/fnEAD9vvXz1qNdwhIkUvzCCsF5Lc+zxyZZsiPKDZ5HRf1CYjiSU+fW3Z1aFVAFrN+V8xzIFrPP/L/ZN8If+o92bqhrzDyqs0nJ42sm1/iPMcUbJ3usmxK4kJJYohWs74+YsEtDXOONAGp9kh8bwc/C86UGEiBGwd5M1lOx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyMa88L7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BmqaWNcy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B58001F000E9;
-	Tue, 21 Jul 2026 15:45:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyMa88L7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F0EE1F00A3A;
+	Tue, 21 Jul 2026 15:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648725;
-	bh=gs3wK9udExQdY7BKSmRHiFzvwjxdQdmiZl3JBsPkEkA=;
+	s=korg; t=1784648727;
+	bh=QhFJZvSLNts/UQEAUwy78GbVEyjOnR+ZENmZNnBOiSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BmqaWNcySj5eQ0SuH0NHJdPGJyl4Utti200p3YGzw9/MMXi2YuWdYH9yKhuUEG8Nw
-	 l/CMfeLe6VDJpMsn8CM33OsKA5KiYkonm9BkF2jBSV9A0RYWrp8MKfxVmitOCqOSTw
-	 F7S1IOBbv/YuqneWuC1vpjFpajL1ZNI4tysGqX4M=
+	b=WyMa88L7D2BqFFLGMGYmL/9i+EVbCnfFhud8dWcJ9Re5kXghmoW4BjoAqJxYlepNi
+	 obLXNoKz/QwCWrsn3pTnMmBMWoUIoV6MTEShm0KJHXO0/nLPRTb83d4Xehx5HsrwHN
+	 pOqOmw7Ur/fxf1DWePUPlVxrUkH8c81JsqcHagW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Cui <cuitao@kylinos.cn>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
+	Harshal Dev <harshal.dev@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0307/2077] RDMA/counter: Fix incorrect port index in rdma_counter_init() error cleanup
-Date: Tue, 21 Jul 2026 16:59:40 +0200
-Message-ID: <20260721152559.919913561@linuxfoundation.org>
+Subject: [PATCH 7.1 0272/2077] arm64: dts: qcom: sm8750: Add power-domain and iface clk for ice node
+Date: Tue, 21 Jul 2026 16:59:05 +0200
+Message-ID: <20260721152559.094361273@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,37 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Cui <cuitao@kylinos.cn>
+From: Harshal Dev <harshal.dev@oss.qualcomm.com>
 
-[ Upstream commit b86fd95805a7bd4c5b9465c9e7f75e45bbe7eb6f ]
+[ Upstream commit 081ac792f0ea6d27a4b130c70cfd7544efee8137 ]
 
-The error cleanup loop in rdma_counter_init() iterates with variable
-'i' but accesses dev->port_data[port] instead of dev->port_data[i].
-This causes the failed port's hstats to be freed multiple times while
-leaking hstats of previously initialized ports.
+Qualcomm in-line crypto engine (ICE) platform driver specifies and votes
+for its own resources. Before accessing ICE hardware during probe, to
+avoid potential unclocked register access issues (when clk_ignore_unused
+is not passed on the kernel command line), in addition to the 'core' clock
+the 'iface' clock should also be turned on by the driver. This can only be
+done if the GCC_UFS_PHY_GDSC power domain is enabled. Specify both the
+GCC_UFS_PHY_GDSC power domain and the 'iface' clock in the ICE node for
+sm8750.
 
-Fixes: 56594ae1d250 ("RDMA/core: Annotate destroy of mutex to ensure that it is released as unlocked")
-Link: https://patch.msgid.link/r/20260520104546.1776253-3-cuitao@kylinos.cn
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: b1dac789c650a ("arm64: dts: qcom: sm8750: Add ICE nodes")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260416-qcom_ice_power_and_clk_vote-v5-11-5ccf5d7e2846@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/counters.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8750.dtsi | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/counters.c b/drivers/infiniband/core/counters.c
-index c3aa6d7fc66b6e..5dad5d77ce2747 100644
---- a/drivers/infiniband/core/counters.c
-+++ b/drivers/infiniband/core/counters.c
-@@ -661,7 +661,7 @@ void rdma_counter_init(struct ib_device *dev)
+diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+index 320aec62e462d2..2d2f029c2d6fe8 100644
+--- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+@@ -2086,7 +2086,11 @@ ice: crypto@1d88000 {
+ 				     "qcom,inline-crypto-engine";
+ 			reg = <0x0 0x01d88000 0x0 0x18000>;
  
- fail:
- 	for (i = port; i >= rdma_start_port(dev); i--) {
--		port_counter = &dev->port_data[port].port_counter;
-+		port_counter = &dev->port_data[i].port_counter;
- 		rdma_free_hw_stats_struct(port_counter->hstats);
- 		port_counter->hstats = NULL;
- 		mutex_destroy(&port_counter->lock);
+-			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
++			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
++				 <&gcc GCC_UFS_PHY_AHB_CLK>;
++			clock-names = "core",
++				      "iface";
++			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
+ 		};
+ 
+ 		cryptobam: dma-controller@1dc4000 {
 -- 
 2.53.0
 
