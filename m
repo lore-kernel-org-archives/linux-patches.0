@@ -1,47 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F49444102D;
-	Tue, 21 Jul 2026 21:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E289343F4AF;
+	Tue, 21 Jul 2026 21:06:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668008; cv=none; b=Itx5utTY2GUm6B1zfXmgr4NzPwrcK+pJC8PCj5XQucocynhp8kgtWQ+fXRXQ8El03Ti+sn/Dl7JEG2BVdHuVKupX6dzX12ZjaEpPqGl6kIIQp63HabMS/smNCTJ7ty0TZG5EGcPcAAmhEcpbWWSnDv9Ejk09dJR4Tx5Kal3xqAA=
+	t=1784668011; cv=none; b=Q5EiEX1pSFQMxz9AcduNjfW1R7tFCPXbhftKyCdbdh5Hv2imyH9zR6yt7Je8Xl96rYdVasVUNRn5/2nna/eswNX1LorxdiMJdzU/iODz3BrqgkwAFS6GlJ2uwVh1dkK8z+8PB7E+I7aR1n9mYhbLposTelpuF4OqvAt0p3lN2Q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668008; c=relaxed/simple;
-	bh=2IrrQYhuj3z0KpRoYhDZtLvOnvaEeROiz2vjlT7odRU=;
+	s=arc-20240116; t=1784668011; c=relaxed/simple;
+	bh=tp+suwTJjxXY3q7OZdYtFf0rCmsV4COKaxK+HpwG4SE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hj8Z1da5nLUbnRkvbYig/1oF5PUkuo1f3t8DJgK5obsecoNVE3SZLkBYrfBt6WXxNBzMhNnF0+SUFX/sFh49jSjGs3Yhk5hEotXhHiWyP+n0qO5IPHwzP4ZTZC58arFIYZ0qPKXMxc5dNJCwPaOVXBQF5vIjptXh6r/yRz2LZPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAkja1pQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S2TQ7IWYP6o1jSUnHaCUb9a8kAVm1A9QtaMUP8dNyUQmWilrtT9RegQtHQOs5Ul277m4hBI0BpZ9L0PEJPXS0Boudej/hmWkvu4DX4IV+TFYmX3+TC+gHwWUKN4gp2E3JyTU2d5UT63B59yp5/P2dRh+F1XIca91n+HGLDzEG2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alWqaWJ+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAkja1pQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A46701F000E9;
-	Tue, 21 Jul 2026 21:06:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alWqaWJ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 525F41F000E9;
+	Tue, 21 Jul 2026 21:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668007;
-	bh=Wx6s6y34FvKN3tnJ+veSYUCifzJoDfYW63Kf/LAunqQ=;
+	s=korg; t=1784668009;
+	bh=mwcAOCGVa4LTbEaP1Fm87hY7vw5Gr4BBH2zr0n8CnFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pAkja1pQ1tlAltAEXzjbkEPjm6Tzx5/HPkzp2mcgPGAXQ+AbtF7X0sOsmj41A/bly
-	 2lLthYYehZKLWugJ6AJsNmfazwL6ikPk6eORSa5IOJCJJzQSla9CLqVVxA4c+C35p2
-	 FPZcR7YfCrot7LpIdBNnVhCNJdI1daIK1R+DEfoI=
+	b=alWqaWJ+8r0lkeaTJGnAuoENciAX7WEZ1hj9m+XaUiX7EWhkTcSzki6iCN9sxutJ5
+	 PAwXnmn487CRUVHNJgSWOsaUiSf/mzr6UeLPHbxjKDpzDB+ejxxrSerV17xdaAD2Qg
+	 BOctiIVSn7reBWUccn/GhCGuH0tCaOJgaxQ6wjKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Sashiko AI review <sashiko-bot@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Peter Xu <peterx@redhat.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0006/1067] userfaultfd: gate must_wait writability check on pte_present()
-Date: Tue, 21 Jul 2026 17:10:07 +0200
-Message-ID: <20260721152424.674896796@linuxfoundation.org>
+Subject: [PATCH 6.1 0015/1067] f2fs: keep atomic write retry from zeroing original data
+Date: Tue, 21 Jul 2026 17:10:16 +0200
+Message-ID: <20260721152424.872744913@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -60,88 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau <kas@kernel.org>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-[ Upstream commit 8e80af52db652fbc41320eee45a4f73bc029faf2 ]
+[ Upstream commit 6d874b65aadce56ac78f76129dbcfc2599b638f8 ]
 
-userfaultfd_must_wait() and userfaultfd_huge_must_wait() read the PTE
-without taking the page table lock and then apply pte_write() /
-huge_pte_write() to it.  Those accessors decode bits from the present
-encoding only; on a swap or migration entry they read the offset bits that
-happen to share the same position and return an undefined result.
+A partial atomic write reserves a block in the COW inode before reading the
+original data page for the untouched bytes in that page.
 
-The intent of the check is "is this fault still WP-blocked?".  A
-non-marker swap entry means the page is in transit -- the userfault
-context the original fault delivered against is no longer the same, and
-the swap-in or migration completion path will re-deliver a fresh fault if
-userspace still needs to handle it.  Worst case under the current code the
-garbage write bit says "wait", and the thread stays asleep until a
-UFFDIO_WAKE that may never arrive.
+If that read fails, write_begin returns an error but leaves the COW inode
+entry as NEW_ADDR. A retry of the same partial write then finds the COW
+entry, treats it as existing COW data, and f2fs_write_begin() zeroes the
+whole folio because blkaddr is NEW_ADDR.
 
-Gate the writability check on pte_present() so the lockless re-check only
-inspects present-PTE bits when the entry is actually present.  The
-non-present, non-marker case returns "don't wait" and lets the fault path
-retry.
+If the retry is committed, the bytes outside the retried write range are
+committed as zeroes instead of preserving the original file contents.
 
-Link: https://lore.kernel.org/20260529172331.356655-6-kas@kernel.org
-Fixes: 369cd2121be4 ("userfaultfd: hugetlbfs: userfaultfd_huge_must_wait for hugepmd ranges")
-Fixes: 63b2d4174c4a ("userfaultfd: wp: add the writeprotect API to userfaultfd ioctl")
-Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Balbir Singh <balbirs@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Only use the COW inode as the read source when it already has a real data
+block. If the COW entry is still NEW_ADDR, treat it as a reservation to
+reuse: keep reading the old data from the original inode and avoid
+reserving or accounting the same atomic block again.
 
-[ kas: apply to fs/userfaultfd.c and fold the pte_present()/
-  huge_pte_present() gate into the existing writability checks; this tree
-  predates the marker/return-style refactor of these functions ]
-Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
+Cc: stable@kernel.org
+Fixes: 3db1de0e582c ("f2fs: change the current atomic write way")
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/userfaultfd.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ fs/f2fs/data.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/fs/userfaultfd.c b/fs/userfaultfd.c
-index 7f8b397597b0d1..6ebee2b3a5a83e 100644
---- a/fs/userfaultfd.c
-+++ b/fs/userfaultfd.c
-@@ -273,7 +273,12 @@ static inline bool userfaultfd_huge_must_wait(struct userfaultfd_ctx *ctx,
- 	 */
- 	if (huge_pte_none_mostly(pte))
- 		ret = true;
--	if (!huge_pte_write(pte) && (reason & VM_UFFD_WP))
-+	/*
-+	 * Gate the writability check on pte_present(): huge_pte_write() on a
-+	 * non-present migration entry decodes random offset bits. The
-+	 * migration completion path re-delivers the fault if still needed.
-+	 */
-+	if (pte_present(pte) && !huge_pte_write(pte) && (reason & VM_UFFD_WP))
- 		ret = true;
- out:
- 	return ret;
-@@ -355,7 +360,12 @@ static inline bool userfaultfd_must_wait(struct userfaultfd_ctx *ctx,
- 	 */
- 	if (pte_none_mostly(*pte))
- 		ret = true;
--	if (!pte_write(*pte) && (reason & VM_UFFD_WP))
-+	/*
-+	 * Gate the writability check on pte_present(): pte_write() on a
-+	 * non-present swap/migration entry decodes random offset bits. The
-+	 * page-in path re-delivers the fault if it still needs userspace.
-+	 */
-+	if (pte_present(*pte) && !pte_write(*pte) && (reason & VM_UFFD_WP))
- 		ret = true;
- 	pte_unmap(pte);
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -3561,6 +3561,7 @@ static int prepare_atomic_write_begin(st
+ 	pgoff_t index = page->index;
+ 	int err = 0;
+ 	block_t ori_blk_addr = NULL_ADDR;
++	bool cow_has_reserved_block = false;
  
--- 
-2.53.0
-
+ 	/* If pos is beyond the end of file, reserve a new block in COW inode */
+ 	if ((pos & PAGE_MASK) >= i_size_read(inode))
+@@ -3570,8 +3571,10 @@ static int prepare_atomic_write_begin(st
+ 	err = __find_data_block(cow_inode, index, blk_addr);
+ 	if (err)
+ 		return err;
+-	else if (*blk_addr != NULL_ADDR)
++	else if (__is_valid_data_blkaddr(*blk_addr))
+ 		return 0;
++	else if (*blk_addr == NEW_ADDR)
++		cow_has_reserved_block = true;
+ 
+ 	/* Look for the block in the original inode */
+ 	err = __find_data_block(inode, index, &ori_blk_addr);
+@@ -3580,10 +3583,13 @@ static int prepare_atomic_write_begin(st
+ 
+ reserve_block:
+ 	/* Finally, we should reserve a new block in COW inode for the update */
+-	err = __reserve_data_block(cow_inode, index, blk_addr, node_changed);
+-	if (err)
+-		return err;
+-	inc_atomic_write_cnt(inode);
++	if (!cow_has_reserved_block) {
++		err = __reserve_data_block(cow_inode, index, blk_addr,
++					   node_changed);
++		if (err)
++			return err;
++		inc_atomic_write_cnt(inode);
++	}
+ 
+ 	if (ori_blk_addr != NULL_ADDR)
+ 		*blk_addr = ori_blk_addr;
 
 
