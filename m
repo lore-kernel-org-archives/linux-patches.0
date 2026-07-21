@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DA322B8DF;
-	Tue, 21 Jul 2026 18:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8531B40803B;
+	Tue, 21 Jul 2026 18:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660172; cv=none; b=UPy3/hBZBSwhhWi9ytlmULU/aSwpC2fsJeiLwuZx6dk4uE97d57e+fVgdIE4p+T3bjlTyk2Mug6t6YsZdb43AUTjsF91CwE/9ixmjTUhcJSVTdfCfCMLekPFXgfiGRtyHO2D2TQhyovW2tHT/3c+HaSp2HNkmwsqxhCvWxPdSAw=
+	t=1784660175; cv=none; b=EJkaRA9m4SMsVH3Qu7j7/RDqEHOs7LxXQM3db0rPR4Gm39tpEFtQO7tF3oaSwMMEfMthuYZ+OjTgG28yuOG24VVxEk6Epu7YX4wmR1DOJgB3Aug2OePF1R2Jop5LO/haTGU6Jgo0IZoHxufdfOYsyLFJGwrPaN3b9HXleQ8e49U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660172; c=relaxed/simple;
-	bh=h7t7TgaIeuRSdqG4+84HAqw6PT/eoCKjvtlZ/tzjrK4=;
+	s=arc-20240116; t=1784660175; c=relaxed/simple;
+	bh=YMN+/xI6optYt5kv3hKwrpY1kuxByCWh+0bzgy0WixA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rQO7qm6y5FXlotZYfasnpuZHRC+5QRzdv9WoM2FViLkI8BikebUy5bHHQw3bz64IToBOyzSzK0o/1t0100KwJeWU6ZBbFkQ5bF4FJbu58e9eNJsWw2jKImLV0UuZImWiZUKsEpYUuoidc43v4cNYAQXk6xYPDkVGYnOQwa6+DoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7/fAmvi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G7TMs4x3UNbRlpV52f4lVyM8PR1W+QxpoOHGyx2jYrFSbM1uV3PdYEbZJHc9Pceo2sqEGK06TOSv13/JhIKXm4i9qWYdHM09drfpqNSx+Dz+Qx+oxYM1IkCNfnhRdTDxCGY8rVYeDqwepYNt3x2EP2ltoPIlx8vKsU6uxSnPXWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KctNSuGL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7/fAmvi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 549861F000E9;
-	Tue, 21 Jul 2026 18:56:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KctNSuGL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC46F1F000E9;
+	Tue, 21 Jul 2026 18:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660171;
-	bh=DTsGWoVKDLLHeyEbcY7mICw8s9NtQhjlFHFJEPLu6Jk=;
+	s=korg; t=1784660174;
+	bh=rKAslWbsyAli1O0+s5XB+4rG7P013D+KKRowfEkZt7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t7/fAmviCwUzBEvI29LG3du77mzIVK/c0wEd54hmJzIJFqGKKxoSPPUA3JfDxbsGV
-	 ZCRDP07//sWLvPKi0J7haUNCvOkw5VoSxvml2Vhq4iw3Pr2yyaTt6yE/HHjLyJ05ZL
-	 WyONrmORq3oOfbWE7vWS5w+C9vOl0z/byvOHxt2w=
+	b=KctNSuGL04kFDA8S0JYDTGa7//EONIStasqWkfmJS9sGtJ1sOXrktLlgjbUcpxPQ/
+	 IKaQAMqUeXrlniFU5d+90fxTgUttTWYCtD6LXoIjtrNjlYOjiiq8vvT4EkpamUo7Kr
+	 vlShL57xAgwmrmhqnI7PEB8i/rVLLnDrMxF6oIg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Jie Gan <jie.gan@oss.qualcomm.com>,
+	James Clark <james.clark@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0872/2077] iio: light: acpi-als: Check ACPI_COMPANION() against NULL
-Date: Tue, 21 Jul 2026 17:09:05 +0200
-Message-ID: <20260721152613.358948811@linuxfoundation.org>
+Subject: [PATCH 7.1 0881/2077] coresight: platform: defer connection counter increment until alloc succeeds
+Date: Tue, 21 Jul 2026 17:09:14 +0200
+Message-ID: <20260721152613.579994904@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,48 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Jie Gan <jie.gan@oss.qualcomm.com>
 
-[ Upstream commit ff29241030eb6f4505d903d87c29f51c1866a95d ]
+[ Upstream commit 1563ae33dc4f5ebac96b93af2ef72e72aaaa31ae ]
 
-Every platform driver can be forced to match a device that doesn't match
-its list of device IDs because of device_match_driver_override(), so
-platform drivers that rely on the existence of a device's ACPI companion
-object need to verify its presence.
+coresight_add_out_conn() increments nr_outconns before calling
+devm_krealloc_array() and again before devm_kmalloc(). If either
+allocation fails, the counter is already bumped while the corresponding
+array entry is NULL or uninitialized garbage.
 
-Accordingly, add a requisite ACPI_COMPANION() check against NULL to the
-acpi-als IIO driver.
+coresight_add_in_conn() has the same problem with nr_inconns and
+devm_krealloc_array().
 
-Fixes: d4243cb08a27 ("iio: light: acpi-als: Convert ACPI driver to a platform one")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+In both cases the probe returns -ENOMEM, which causes
+coresight_get_platform_data() to call coresight_release_platform_data()
+for cleanup. That function iterates up to nr_outconns (or nr_inconns)
+entries and dereferences each pointer unconditionally, hitting the NULL
+or garbage entry and panicking instead of failing gracefully.
+
+Fix by moving the counter increments to after all allocations succeed,
+so the struct is always consistent on any error path.
+
+Fixes: 3d4ff657e454 ("coresight: Dynamically add connections")
+Fixes: e3f4e68797a9 ("coresight: Store in-connections as well as out-connections")
+Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260511-fix-ref-count-issue-v1-1-99d647810d3c@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/acpi-als.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/hwtracing/coresight/coresight-platform.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iio/light/acpi-als.c b/drivers/iio/light/acpi-als.c
-index ab229318dce94c..1983a7f17aa930 100644
---- a/drivers/iio/light/acpi-als.c
-+++ b/drivers/iio/light/acpi-als.c
-@@ -179,11 +179,15 @@ static irqreturn_t acpi_als_trigger_handler(int irq, void *p)
- static int acpi_als_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	struct acpi_device *device = ACPI_COMPANION(dev);
-+	struct acpi_device *device;
- 	struct iio_dev *indio_dev;
- 	struct acpi_als *als;
- 	int ret;
+diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
+index e337b6e2bf327c..93c2d075cad66f 100644
+--- a/drivers/hwtracing/coresight/coresight-platform.c
++++ b/drivers/hwtracing/coresight/coresight-platform.c
+@@ -45,9 +45,8 @@ coresight_add_out_conn(struct device *dev,
+ 		}
+ 	}
  
-+	device = ACPI_COMPANION(dev);
-+	if (!device)
-+		return -ENODEV;
-+
- 	indio_dev = devm_iio_device_alloc(dev, sizeof(*als));
- 	if (!indio_dev)
+-	pdata->nr_outconns++;
+ 	pdata->out_conns =
+-		devm_krealloc_array(dev, pdata->out_conns, pdata->nr_outconns,
++		devm_krealloc_array(dev, pdata->out_conns, pdata->nr_outconns + 1,
+ 				    sizeof(*pdata->out_conns), GFP_KERNEL);
+ 	if (!pdata->out_conns)
+ 		return ERR_PTR(-ENOMEM);
+@@ -63,7 +62,8 @@ coresight_add_out_conn(struct device *dev,
+ 	 * used right away.
+ 	 */
+ 	*conn = *new_conn;
+-	pdata->out_conns[pdata->nr_outconns - 1] = conn;
++	pdata->out_conns[pdata->nr_outconns] = conn;
++	pdata->nr_outconns++;
+ 	return conn;
+ }
+ EXPORT_SYMBOL_GPL(coresight_add_out_conn);
+@@ -86,13 +86,13 @@ int coresight_add_in_conn(struct coresight_connection *out_conn)
+ 			return 0;
+ 		}
+ 
+-	pdata->nr_inconns++;
+ 	pdata->in_conns =
+-		devm_krealloc_array(dev, pdata->in_conns, pdata->nr_inconns,
++		devm_krealloc_array(dev, pdata->in_conns, pdata->nr_inconns + 1,
+ 				    sizeof(*pdata->in_conns), GFP_KERNEL);
+ 	if (!pdata->in_conns)
  		return -ENOMEM;
+-	pdata->in_conns[pdata->nr_inconns - 1] = out_conn;
++	pdata->in_conns[pdata->nr_inconns] = out_conn;
++	pdata->nr_inconns++;
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(coresight_add_in_conn);
 -- 
 2.53.0
 
