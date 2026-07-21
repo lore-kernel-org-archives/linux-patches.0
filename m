@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D4C375AC3;
-	Tue, 21 Jul 2026 17:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208BD336888;
+	Tue, 21 Jul 2026 17:09:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653802; cv=none; b=mJnSiwHmktqoXsxZTr1/3SNm6+btoxHl1ITscgQCrEmMk0RANBtSdQd1fPnA0GEt7VImMRQfMbbAG/xHC+4Zz3pUFI3kj/8qRUsqBIvRveVoCpqh3h9Zb3BsgsjvN39OsF3IRB695mFB/dHwc1UGYStIJqTbatBayTBTIz1a5nU=
+	t=1784653803; cv=none; b=LP3xTZUuwE0Vvclds8yAQy0mEPfvOOs3gD61q5Zwf/f4BBVucv/Flhi6WZQiidpZ6bRHvstHN4KvIWkiLQScX6L8DSb/0SMb8cJJxxaJx5nm4LjQ3xvLaKKDm3AAxkSTIL8+a7QdsCrNV0C8vawJVwUVkY7SgRDmd+GFUVs0bws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653802; c=relaxed/simple;
-	bh=IUFruknAli6BVFAsvFwOov7PbEjp95xLXru59VDyjkg=;
+	s=arc-20240116; t=1784653803; c=relaxed/simple;
+	bh=QwTzEV/H/PSt+8NIMlrnNRcwJAZ31xg+9I9wV2Ij7Ck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OH1g3rKtJSUzP3AUEdqux67dj3QMdW/XOUAqwlaPui+RwdWw8+sOnjN9eXXEjZ4o7PAh8zBHdXi4i9BkmqBKTArnjABB0S+KY/eBxiE6ZHLNhGgj06zZ2ZGvZeNV9LtwE7Twqi+HzGMzneuAcWtQOnS2hPTZA6phAYRMATRsPr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ntRO61gt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VG1F4UGhcl3X5eXTH3I1+N3dB9m+nNZqdWCpd92cPdGQDV6fM99ys/z0K0QK0jQ23EEl5OuDAaPKVowTVhVkfTcdYGsIC40MC/+yyjVXNU7Zcjby2MWiTmml1KwA39Gtf1613mg3rKEua0NH77swhqq1EqZbXSGzT4WT1nQ//sU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QRzHdr/r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ntRO61gt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 101031F00A3D;
-	Tue, 21 Jul 2026 17:09:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRzHdr/r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8021F000E9;
+	Tue, 21 Jul 2026 17:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653800;
-	bh=dHvlid/U+CsuxOYE+eEVULOqPNEc+5kwErZ9sJcXICE=;
+	s=korg; t=1784653797;
+	bh=uNOrx8/LvgPowhYCa9z9xQuJUhIR8hv+xLQmMk5H9Bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ntRO61gtyXjBMMqsOacoXldxpFT3r23xzmaflngjPDX/DpTVLf4DmBPwkU0Y3y9BZ
-	 y1AUsvY0ve3p+QcEmjADZSy8kKuU2ympWZDyI0ua1AsLeOgv0lEFj8kh5LLQUkTgek
-	 4u7f06Ni3UMzXwBZ3yjBeajcR62oSLgd1rwzR83g=
+	b=QRzHdr/rq6lqpK9wc4NsK2R3C/Gm3BKGCVgCb8/Pdaws3UMpEFUy32dA0hE5241/2
+	 Gxe8bEhzvPExOZamddVM9UM06tEuxhw7viLPsOkdQCT2P8CqyG/Kjc2swx5/GtXxuL
+	 2imgpTHInAP/PZ5RaUzuiI3SYhD9yr0oVdOa6LAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	Kiran K <kiran.k@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1463/2077] Bluetooth: ISO: fix malformed ISO_END/CONT handling
-Date: Tue, 21 Jul 2026 17:18:56 +0200
-Message-ID: <20260721152627.304860302@linuxfoundation.org>
+Subject: [PATCH 7.1 1462/2077] Bluetooth: btintel_pcie: Refactor FLR to use device_reprobe()
+Date: Tue, 21 Jul 2026 17:18:55 +0200
+Message-ID: <20260721152627.281660563@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,101 +51,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Kiran K <kiran.k@intel.com>
 
-[ Upstream commit e054c1a6ae7310d2815778fddb87da616e11c255 ]
+[ Upstream commit 9c36951474d8e1127f4946f39cb874a200f34e9f ]
 
-Core specification (Part C vol 4 sec 5.4.5) does not exclude empty
-ISO_CONT, ISO_END packets.  We currently reject them if they are last.
+The FLR branch in btintel_pcie_reset_work() open-coded the entire
+re-init sequence: btintel_pcie_release_hdev() (hci_unregister_dev +
+hci_free_dev), pci_try_reset_function(), enable_interrupts /
+config_msix / enable_bt / reset_ia / start_rx, then
+btintel_pcie_setup_hdev() (hci_alloc_dev_priv + hci_register_dev).
+Every probe() init step had to be kept in sync with this second
+copy in the reset path, and any failure mid-sequence left state to
+unwind by hand.
 
-If controller sends malformed sequence
+The PLDR path already delegates teardown and re-init to the PCI
+core via device_reprobe(): .remove() destroys data through devres
+and unregisters hdev, then .probe() rebuilds everything from
+scratch. Apply the same model to FLR.
 
-    ISO_START -> rx_len = 4, ISO_CONT skb->len 4, ISO_START
+Introduce btintel_pcie_perform_flr() mirroring perform_pldr(). It
+runs pci_try_reset_function() (required to avoid the device_lock
+ABBA against btintel_pcie_remove(), which calls
+disable_work_sync(&reset_work) while holding device_lock) followed
+by device_reprobe(). On success, data is destroyed and a fresh
+probe re-INIT_WORKs coredump_work with disable count 0, so
+enable_work() must not be called; on failure, data is still alive
+and the caller balances the earlier disable_work_sync(). The
+contract is documented on the helper and reiterated at the
+reset_work() call site.
 
-that ends payload in ISO_CONT, we leak conn->rx_skb. If controller sends
-too long ISO_END, we panic on skb_put. If controller sends too short
-ISO_END we accept it.
+reset_work() shrinks to interrupt/worker drain, dispatch on
+reset_type, and the single asymmetry between the two paths. The
+out_enable label, the manual unregister/register pair, and the
+forward declaration of btintel_pcie_setup_hdev() are dropped.
 
-Fix by marking unfinished ISO_START via conn->rx_skb != NULL.  Check
-skb->len properly before skb_put.  Combine the ISO_CONT/END code paths
-as they require the same initial checks. Reject too short ISO_END
-packets.
+No intended functional change; FLR and PLDR now share one
+teardown contract.
 
-Fixes: 84c24fb151fc ("Bluetooth: ISO: drop ISO_END frames received without prior ISO_START")
-Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Fixes: 256ab9520d15 ("Bluetooth: btintel_pcie: Support Function level reset")
+Assisted-by: GitHub-Copilot:claude-4.7-opus
+Signed-off-by: Kiran K <kiran.k@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ drivers/bluetooth/btintel_pcie.c | 102 ++++++++++++++++---------------
+ 1 file changed, 52 insertions(+), 50 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 7186e8d88c757a..1d5ce87e6496ef 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -2539,7 +2539,7 @@ int iso_recv(struct hci_dev *hdev, u16 handle, struct sk_buff *skb, u16 flags)
- 	switch (pb) {
- 	case ISO_START:
- 	case ISO_SINGLE:
--		if (conn->rx_len) {
-+		if (conn->rx_skb || conn->rx_len) {
- 			BT_ERR("Unexpected start frame (len %d)", skb->len);
- 			kfree_skb(conn->rx_skb);
- 			conn->rx_skb = NULL;
-@@ -2620,12 +2620,14 @@ int iso_recv(struct hci_dev *hdev, u16 handle, struct sk_buff *skb, u16 flags)
- 		break;
+diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+index fd1b2045aa2c7b..be9348960348fd 100644
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -2114,6 +2114,9 @@ static int btintel_pcie_send_frame(struct hci_dev *hdev,
+ 	if (test_bit(BTINTEL_PCIE_CORE_HALTED, &data->flags))
+ 		return -ENODEV;
  
- 	case ISO_CONT:
--		BT_DBG("Cont: frag len %d (expecting %d)", skb->len,
-+	case ISO_END:
-+		BT_DBG("%s: frag len %d (expecting %d)",
-+		       (pb == ISO_END) ? "End" : "Cont", skb->len,
- 		       conn->rx_len);
- 
--		if (!conn->rx_len) {
--			BT_ERR("Unexpected continuation frame (len %d)",
--			       skb->len);
-+		if (!conn->rx_skb) {
-+			BT_ERR("Unexpected ISO %s frame (len %d)",
-+			       (pb == ISO_END) ? "End" : "Cont", skb->len);
- 			goto drop;
- 		}
- 
-@@ -2641,17 +2643,9 @@ int iso_recv(struct hci_dev *hdev, u16 handle, struct sk_buff *skb, u16 flags)
- 		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
- 					  skb->len);
- 		conn->rx_len -= skb->len;
--		break;
- 
--	case ISO_END:
--		if (!conn->rx_len) {
--			BT_ERR("Unexpected end frame (len %d)", skb->len);
--			goto drop;
--		}
--
--		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
--					  skb->len);
--		conn->rx_len -= skb->len;
-+		if (pb == ISO_CONT)
-+			break;
- 
- 		if (!conn->rx_len) {
- 			struct sk_buff *rx_skb = conn->rx_skb;
-@@ -2662,6 +2656,13 @@ int iso_recv(struct hci_dev *hdev, u16 handle, struct sk_buff *skb, u16 flags)
- 			 */
- 			conn->rx_skb = NULL;
- 			iso_recv_frame(conn, rx_skb);
-+		} else {
-+			BT_ERR("ISO fragment incomplete (len %d, expected %d)",
-+			       skb->len, conn->rx_len);
-+			kfree_skb(conn->rx_skb);
-+			conn->rx_skb = NULL;
-+			conn->rx_len = 0;
-+			goto drop;
- 		}
- 		break;
++	if (test_bit(BTINTEL_PCIE_RECOVERY_IN_PROGRESS, &data->flags))
++		return -ENODEV;
++
+ 	/* Due to the fw limitation, the type header of the packet should be
+ 	 * 4 bytes unlike 1 byte for UART. In UART, the firmware can read
+ 	 * the first byte to get the packet type and redirect the rest of data
+@@ -2472,7 +2475,6 @@ static void btintel_pcie_inc_recovery_count(struct pci_dev *pdev,
  	}
+ }
+ 
+-static int btintel_pcie_setup_hdev(struct btintel_pcie_data *data);
+ static void btintel_pcie_reset(struct hci_dev *hdev);
+ 
+ static int btintel_pcie_acpi_reset_method(struct btintel_pcie_data *data)
+@@ -2583,12 +2585,45 @@ static void btintel_pcie_perform_pldr(struct btintel_pcie_data *data)
+ 	}
+ }
+ 
++/*
++ * Issue a Function Level Reset and hand teardown/re-init off to the PCI
++ * core via device_reprobe(), mirroring the PLDR path's contract.
++ *
++ * Caller must hold pci_lock_rescan_remove() and must have already
++ * disabled interrupts and drained both rx_work and coredump_work.
++ */
++static int btintel_pcie_perform_flr(struct btintel_pcie_data *data)
++{
++	struct pci_dev *pdev = data->pdev;
++	int err;
++
++	/* pci_try_reset_function() avoids the device_lock ABBA against
++	 * btintel_pcie_remove(): .remove() runs with device_lock held and
++	 * then waits for this work via disable_work_sync(); the blocking
++	 * pci_reset_function() would deadlock by trying to re-acquire
++	 * device_lock here.
++	 */
++	err = pci_try_reset_function(pdev);
++	if (err) {
++		BT_ERR("Failed resetting the pcie device (%d)", err);
++		return err;
++	}
++
++	/* device_reprobe() always detaches the driver first (running
++	 * .remove(), which frees 'data'); any re-probe failure leaves the
++	 * device unbound but 'data' is already gone, so just log it.
++	 */
++	if (device_reprobe(&pdev->dev))
++		BT_ERR("BT reprobe failed for BDF:%s", pci_name(pdev));
++
++	return 0;
++}
++
+ static void btintel_pcie_reset_work(struct work_struct *wk)
+ {
+ 	struct btintel_pcie_data *data =
+ 		container_of(wk, struct btintel_pcie_data, reset_work);
+ 	struct pci_dev *pdev = data->pdev;
+-	int err;
+ 
+ 	pci_lock_rescan_remove();
+ 
+@@ -2608,60 +2643,27 @@ static void btintel_pcie_reset_work(struct work_struct *wk)
+ 	disable_work_sync(&data->coredump_work);
+ 
+ 	bt_dev_dbg(data->hdev, "Release bluetooth interface");
++
++	/* Both reset paths follow the same contract: on success they
++	 * destroy 'data' via device_reprobe() (a fresh probe re-INIT_WORKs
++	 * the coredump_work with disable count 0), so enable_work() must
++	 * NOT be called on the success path. Only the FLR path can fail
++	 * with 'data' still alive, in which case we balance the
++	 * disable_work_sync() above so a later successful reset is not
++	 * permanently blocked.
++	 *
++	 * pci_lock_rescan_remove() (held above) serializes against PCI
++	 * device addition/removal (hotplug), so no device can be added to
++	 * or removed from the bus list while this code runs.
++	 */
+ 	if (data->reset_type == BTINTEL_PCIE_IOSF_PRR_PLDR) {
+-		/* This function holds pci_lock_rescan_remove(), which acquires
+-		 * pci_rescan_remove_lock. This mutex serializes against PCI device
+-		 * addition/removal (hotplug), so no device can be added to or
+-		 * removed from the bus list while this code runs.
+-		 *
+-		 * device_reprobe() inside btintel_pcie_perform_pldr() destroys
+-		 * 'data' via .remove(); a fresh probe re-INIT_WORKs the
+-		 * coredump_work with disable count 0, so we must not call
+-		 * enable_work() on this path.
+-		 */
+ 		btintel_pcie_perform_pldr(data);
+ 		goto out;
+ 	}
+-	btintel_pcie_release_hdev(data);
+-
+-	/* Use pci_try_reset_function() rather than pci_reset_function() to
+-	 * avoid an ABBA deadlock against btintel_pcie_remove(): the PCI core
+-	 * calls .remove() with device_lock held, and remove() then waits for
+-	 * this work via cancel_work_sync(); pci_reset_function() would in
+-	 * turn try to acquire the same device_lock, deadlocking both paths.
+-	 */
+-	err = pci_try_reset_function(pdev);
+-	if (err) {
+-		BT_ERR("Failed resetting the pcie device (%d)", err);
+-		goto out_enable;
+-	}
+ 
+-	btintel_pcie_enable_interrupts(data);
+-	btintel_pcie_config_msix(data);
+-
+-	err = btintel_pcie_enable_bt(data);
+-	if (err) {
+-		BT_ERR("Failed to enable bluetooth hardware after reset (%d)",
+-		       err);
+-		goto out_enable;
+-	}
+-
+-	btintel_pcie_reset_ia(data);
+-	btintel_pcie_start_rx(data);
+-	data->flags = 0;
++	if (btintel_pcie_perform_flr(data))
++		enable_work(&data->coredump_work);
+ 
+-	err = btintel_pcie_setup_hdev(data);
+-	if (err) {
+-		BT_ERR("Failed registering hdev (%d)", err);
+-		goto out_enable;
+-	}
+-
+-out_enable:
+-	/* Balance disable_work_sync() above on every exit. Leaving the
+-	 * counter incremented on a failed reset would permanently disable
+-	 * coredump_work even after a later successful reset.
+-	 */
+-	enable_work(&data->coredump_work);
+ out:
+ 	pci_dev_put(pdev);
+ 	pci_unlock_rescan_remove();
 -- 
 2.53.0
 
