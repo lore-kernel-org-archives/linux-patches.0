@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B31947141F;
-	Tue, 21 Jul 2026 20:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7C2471438;
+	Tue, 21 Jul 2026 20:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664797; cv=none; b=N7lK1xd1nTWQvEZmkVJNIG6wzyh4hyw2THY/8STbOZ6oWn7ehAqCICUsUnDIP4zd4AQrhI4ckqrk6TjnS46cZkU4fEweUTjhNdrlVclGgLX+iJ9MuHz/8TttAAYzXBymoZX+O6LXdXMp0Wz6P4JegqiM66jypRpfKlk8qWCaPI0=
+	t=1784664801; cv=none; b=kpC+l7fN9XnkrYZJ8pfR1LyFfRGSJcJXdX3CXm5GMc2EPK/rzVnxmDPG5wPLx1Yrnl3N87m0mhBzMKxhDBW1M2uQQjxfY5sgoqTKY2UxtTjLiGlXHn+vBcpYbnJ6G31DFu3TvhuBfNZwRQt+jdkcIV0CRplhohXQoZF+V25tLoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664797; c=relaxed/simple;
-	bh=47ssRt/tHxGPxzAErY2/p5y8tJOM8Su6P3dRnpuLja8=;
+	s=arc-20240116; t=1784664801; c=relaxed/simple;
+	bh=bEKFMoMICID7D8Cur7SKLIs0so9FKQqwr61DGTZnP3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F4K71ufLcdHQc65qq4B4epjaCVetXLpYJN5qLM5L1iENa5/sZ7M/YtdAbRLUHU2Zl0byHJFMSO+Oax+gEf5q2aZiBnzWD2ZmJnKtVUf50Ucb0QDuciDP1cojgBCuEaNCVthpnP9Kvug1ywhDRTgwHxhNW62voIZSZNCg9t2VB4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sigPimQr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aYygN0YetHQuO5Oya1zmyqFpSua/YWvmN4Aa/LT9WP/sWC17qBLsFf3CQh/Uvdzwrd7ym1V3Y3VxxfDdGoqUyq/HMb3dVarTTGWObqzDJVP67M0FN3F0UojnyT2YV8mz08yI19+YiIWEmx524tO2D+vTY6cd0uYW282OeBkAvVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BphUZ1p1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sigPimQr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8671F000E9;
-	Tue, 21 Jul 2026 20:13:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BphUZ1p1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E1AC1F000E9;
+	Tue, 21 Jul 2026 20:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664796;
-	bh=Xi6L6yp1LkSwqJLcYmnHqc2ODWFbIkHgmi242ko8Wac=;
+	s=korg; t=1784664799;
+	bh=l6AJ/ejvmuSK6IQ46zto1VzDyR8i+1lFLQow28Y/Xeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sigPimQrOTlVqtl0L+b/3mc2QnYqAG/WyKDlUaIoZrqhIwnVPz5dkQkT1+FkImU8g
-	 WRkvuiAbH6rYd6DLvxupA3nLxHGDT//esAR3bh/Ew8ZWcn/DxOpryxmkwfBunX2h7N
-	 FlBHcLCpcZANkeX4R5tgcss7kzbOjMYETAAEr5PM=
+	b=BphUZ1p1WzawlREnoZhOE2UnjIT10T0VI0tOv1Opn1NwghEKVXh5KRFkohu0yxNx0
+	 LGztP+9wXvQvvXHngDljqjDO+4xdqxy9XSAGdsz5R6bDae/YpFsQg8o2DyoAy27B9B
+	 hr7kfcZCoUKLRAmb5Y4a5rc2bbpMezJO2PCfLlO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 6.6 0062/1266] ACPI: NFIT: core: Fix possible NULL pointer dereference
-Date: Tue, 21 Jul 2026 17:08:19 +0200
-Message-ID: <20260721152443.190328131@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.6 0063/1266] rust: Kbuild: set frame-pointer llvm module flag for CONFIG_FRAME_POINTER
+Date: Tue, 21 Jul 2026 17:08:20 +0200
+Message-ID: <20260721152443.212105076@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,43 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit 027e128abb82788189d6d45b68e3e8e7329b67be upstream.
+commit 191f49f1e38b1c10eb44b0f967c6175c884ef7db upstream.
 
-After commit 9b311b7313d6 ("ACPI: NFIT: Install Notify() handler before
-getting NFIT table"), acpi_nfit_probe() installs an ACPI notify handler
-for the NFIT device before checking the presence of the NFIT table.  If
-that table is not there, 0 is returned without allocating the acpi_desc
-object and setting the driver data pointer of the NFIT device.  If the
-platform firmware triggers an NFIT_NOTIFY_UC_MEMORY_ERROR notification
-on the NFIT device at that point, acpi_nfit_uc_error_notify() will
-dereference a NULL pointer.
+Due to a rustc bug, the -Cforce-frame-pointers=y flag only emits the
+frame-pointer annotation for functions, but not for the module. This
+means that functions generated by the LLVM backend such as
+'asan.module_ctor' do not receive the frame-pointer annotation.
 
-Prevent that from occurring by adding an acpi_desc check against NULL
-to acpi_nfit_uc_error_notify().
+This is likely to lead to broken backtraces and may also cause issues
+with ftrace if these features are used with functions generated by the
+LLVM backend.
 
-Fixes: 9b311b7313d6 ("ACPI: NFIT: Install Notify() handler before getting NFIT table")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: All applicable <stable@vger.kernel.org>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/2418508.ElGaqSPkdT@rafael.j.wysocki
+Thus, use -Zllvm_module_flag to work around this rustc bug if using a
+rustc without the fix.
+
+[ The fix [1] has landed for Rust 1.98.0 (expected release on
+  2026-08-20). - Miguel ]
+
+Cc: stable@vger.kernel.org # 6.12.y and later (flag not available in pinned Rust in older LTSs).
+Fixes: 2f7ab1267dc9 ("Kbuild: add Rust support")
+Link: https://github.com/rust-lang/rust/pull/156980 [1]
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20260616-frame-ptr-fix-v1-1-dc6b29a631d9@google.com
+[ - Adjusted Cc: stable@ as discussed.
+  - Added comment with link to the PR, similar to what we did in commit
+    ac35b5580ace ("rust: arm64: set uwtable llvm module flag for
+    CONFIG_UNWIND_TABLES").
+    - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/nfit/core.c |    3 +++
+ Makefile |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/drivers/acpi/nfit/core.c
-+++ b/drivers/acpi/nfit/core.c
-@@ -3453,6 +3453,9 @@ static void acpi_nfit_uc_error_notify(st
- {
- 	struct acpi_nfit_desc *acpi_desc = dev_get_drvdata(dev);
- 
-+	if (!acpi_desc)
-+		return;
-+
- 	if (acpi_desc->scrub_mode == HW_ERROR_SCRUB_ON)
- 		acpi_nfit_ars_rescan(acpi_desc, ARS_REQ_LONG);
- 	else
+--- a/Makefile
++++ b/Makefile
+@@ -857,6 +857,9 @@ KBUILD_RUSTFLAGS += $(KBUILD_RUSTFLAGS-y
+ ifdef CONFIG_FRAME_POINTER
+ KBUILD_CFLAGS	+= -fno-omit-frame-pointer -fno-optimize-sibling-calls
+ KBUILD_RUSTFLAGS += -Cforce-frame-pointers=y
++# Work around rustc bug on compilers without
++# https://github.com/rust-lang/rust/pull/156980.
++KBUILD_RUSTFLAGS += $(if $(call rustc-min-version,109800),,-Zllvm_module_flag=frame-pointer:u32:2:max)
+ else
+ # Some targets (ARM with Thumb2, for example), can't be built with frame
+ # pointers.  For those, we don't have FUNCTION_TRACER automatically
 
 
