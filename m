@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F242F46A5F3;
-	Tue, 21 Jul 2026 15:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FC31A239A;
+	Tue, 21 Jul 2026 15:50:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649038; cv=none; b=ILWXDtzn01J6wA0xtwZVKImJHuzq6gGhRdJWtDCgTGYYEiEsXPE6j9wxPjyYIFLIsUj0PVGOtYSnHBRdxw39AHXv8E+ukqhgFLAVsD0zK1IF7NJ/f6uz8mHCy52+1L/mD5vCL/NI7bXtjIp97rlCvFIchz6+LVnG0guHnuWHwFM=
+	t=1784649042; cv=none; b=Gq2fBkxjI/CSDMQCmLd9GYuwkqoZIJ9VQ3t0tsVrwAcH2E3VEYB9pGyLqR7fiIbhYYAOreuTXonl2FhdNUacFx2xpUAd87/P9XPofgU6RDIsR5GpmFocISPYaMjVj17Jejzs7CV1RKcLpJLzPYkD6IyxtVeP4+7Cf35WDKO6wSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649038; c=relaxed/simple;
-	bh=Y5XtoKWBOEH3hSQvzz64+zN/U6lWrgNWzHEWKctJ7xk=;
+	s=arc-20240116; t=1784649042; c=relaxed/simple;
+	bh=FrxOqrMFpFtElnsW4zcqQLb0otvyMdHbZY7Py4GQNyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TOcS0NgPdiVqnaIhtbjawZ52QeZuTDF/q7Ogbh77qSFS6vlar8O3OQcZhmtnU1t3FLpkII7vfaE+rHaqU1mH1nePAt35iyyrxO9oquprxHuHfPfHkccZOJ8Zr4pJuJD8H4Ndq/G7dSBHUemEW17TVsY3AT+FhCatOnBsf9iF/o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boLirXae; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nnoOGNlbGWVr2oOAtgmXCEhHe6YbDTB5Te63kWc5Vu/fmszKGXrYKE5GtFz/2J5TlYrBZ7k3PzL6Z8sbF2ezfkjPi6SaKhxA4EWOvOarAX0CF0XZa/58jbJII6IB4Z2ztNya1I8FQImjgniKS7GhtsDX3n2vgYUKUjzRXlVX7xU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0WJ8Gkok; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boLirXae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195121F000E9;
-	Tue, 21 Jul 2026 15:50:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0WJ8Gkok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57461F00A3A;
+	Tue, 21 Jul 2026 15:50:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649036;
-	bh=4WZ6MpriXiY4QcknE7Ioi2fNqtX/g1Soj5SMa4U+5bA=;
+	s=korg; t=1784649039;
+	bh=YtJG/+RF+WhBk5z9plxWbEfuaQEOpgJYXii0RT/10nE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=boLirXae8Y/kLHCuKdMa+VJGrWUcrotI9SSwexLleb2VfsaplzmX4/tcT8E8MDt9J
-	 uHloQ3NlsANbrM5u5FNJ978fmjZUc86+LNsY51CURFiiP75FMpjofg5Qlp/TRkeCbw
-	 NSaeL0rblnWhH0SqgA0kEDlpg/5E6icHFQzIW2C0=
+	b=0WJ8GkokXVNaRgHhgVKLqLTwz7U6Dr/EN1g3x5nFt7LH0Ha6ZMrgcW0c+/n8xN1WA
+	 cvVIcXlBA5RZQ4ufIdeW6slmkL1dQENhM8D5JYmkZD9fdhLOdg0cZwl+DR2yTj1lvf
+	 WheU7OPBEMCYV2i4iVg3uvddpA+JVDKzwYv4aVbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oskar Gerlicz Kowalczuk <oskar@gerlicz.space>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
+	Neal Cardwell <ncardwell@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Van Jacobson <vanj@google.com>,
+	Soheil Hassas Yeganeh <soheil@google.com>,
+	Tim Bird <tim.bird@sony.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0409/2077] liveupdate: block session mutations during reboot
-Date: Tue, 21 Jul 2026 17:01:22 +0200
-Message-ID: <20260721152602.379416613@linuxfoundation.org>
+Subject: [PATCH 7.1 0427/2077] tcp_bbr: fix SPDX-License-Identifier to be GPL-2.0 OR BSD-3-Clause
+Date: Tue, 21 Jul 2026 17:01:40 +0200
+Message-ID: <20260721152602.815457473@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,165 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pasha Tatashin <pasha.tatashin@soleen.com>
+From: Neal Cardwell <ncardwell@google.com>
 
-[ Upstream commit bb1328be35bf43c88288c5c31ceb45181b574c0c ]
+[ Upstream commit 4490516d2109e105daf732681435c5c075b5d61b ]
 
-During the reboot() syscall, user processes may still be running
-concurrently and attempting to mutate sessions (e.g., creating,
-retrieving, or releasing sessions). To prevent this, introduce
-luo_session_serialize_rwsem to synchronize mutations with the
-serialization process.
+Since TCP BBR congestion control was introduced in
+commit 0f8782ea1497 ("tcp_bbr: add BBR congestion control")
+it has always been offered as "Dual BSD/GPL":
 
-All session mutation operations (create, retrieve, release, ioctl) take
-the read lock. The serialization process (luo_session_serialize) takes
-the write lock and holds it indefinitely on success. This effectively
-freezes the LUO session subsystem during the transition to the new
-kernel. If serialization fails, the lock is released to allow recovery.
+  MODULE_LICENSE("Dual BSD/GPL");
 
-Fixes: 0153094d03df ("liveupdate: luo_session: add sessions support")
-Reported-by: Oskar Gerlicz Kowalczuk <oskar@gerlicz.space>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Pasha Tatashin <pasha.tatashin@soleen.com>
-Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-Link: https://patch.msgid.link/20260527202737.1345192-4-pasha.tatashin@soleen.com
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+A GPL-2.0-only SPDX header was erroneously added in the recent
+commit 2ed4b46b4fc7 ("net: Add SPDX ids to some source files").
+
+This commit revises the tcp_bbr.c SPDX-License-Identifier to note that
+this file is licensed as "GPL-2.0 OR BSD-3-Clause".
+
+Fixes: 2ed4b46b4fc7 ("net: Add SPDX ids to some source files")
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Cc: Yuchung Cheng <ycheng@google.com>
+Cc: Van Jacobson <vanj@google.com>
+Cc: Soheil Hassas Yeganeh <soheil@google.com>
+Reviewed-by: Tim Bird <tim.bird@sony.com>
+Link: https://patch.msgid.link/20260531183558.2337381-1-ncardwell.sw@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/liveupdate/luo_session.c | 51 +++++++++++++++++++++++++++++++--
- 1 file changed, 48 insertions(+), 3 deletions(-)
+ net/ipv4/tcp_bbr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/liveupdate/luo_session.c b/kernel/liveupdate/luo_session.c
-index 85af0963d66ae0..5486e834c4514c 100644
---- a/kernel/liveupdate/luo_session.c
-+++ b/kernel/liveupdate/luo_session.c
-@@ -46,6 +46,38 @@
-  * 4.  Retrieval: A userspace agent in the new kernel can then call
-  *     `luo_session_retrieve()` with a session name to get a new file
-  *     descriptor and access the preserved state.
-+ *
-+ * Locking:
-+ *
-+ * The LUO session subsystem uses a three-tier locking hierarchy to ensure thread
-+ * safety and prevent deadlocks during concurrent session mutations and kexec
-+ * serialization:
-+ *
-+ * 1. `luo_session_serialize_rwsem` (global rwsem):
-+ *    Protects session mutations (creation, retrieval, release, and ioctls)
-+ *    against the serialization process during reboot.
-+ *
-+ *    - Readers: Taken by any path modifying or accessing session state (e.g.,
-+ *      `luo_session_create()`, `luo_session_retrieve()`, `luo_session_release()`,
-+ *      and `luo_session_ioctl()`).
-+ *    - Writer: Taken by the serialization process (`luo_session_serialize()`)
-+ *      during reboot. On success, the write lock is held indefinitely to freeze
-+ *      the subsystem. On failure, it is released to allow recovery.
-+ *
-+ * 2. `luo_session_header->rwsem` (per-list rwsem):
-+ *    Synchronizes list-level operations for the incoming and outgoing session headers.
-+ *
-+ *    - Writer: Taken during list mutation operations (inserting or removing a
-+ *      session from the list).
-+ *    - Reader: Taken when traversing the list (e.g., retrieving a session by name).
-+ *
-+ * 3. `luo_session->mutex` (per-session mutex):
-+ *    Protects the internal state and file sets of an individual session. It is
-+ *    acquired during per-session operations such as preserving, retrieving,
-+ *    or freezing files.
-+ *
-+ * Lock Hierarchy:
-+ *   `luo_session_serialize_rwsem` -> `luo_session_header->rwsem` -> `luo_session->mutex`
-  */
- 
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-@@ -75,6 +107,8 @@
- 		sizeof(struct luo_session_header_ser)) /		\
- 		sizeof(struct luo_session_ser))
- 
-+static DECLARE_RWSEM(luo_session_serialize_rwsem);
-+
- /**
-  * struct luo_session_header - Header struct for managing LUO sessions.
-  * @count:      The number of sessions currently tracked in the @list.
-@@ -205,6 +239,7 @@ static int luo_session_release(struct inode *inodep, struct file *filep)
- 	struct luo_session *session = filep->private_data;
- 	struct luo_session_header *sh;
- 
-+	guard(rwsem_read)(&luo_session_serialize_rwsem);
- 	/* If retrieved is set, it means this session is from incoming list */
- 	if (session->retrieved) {
- 		int err = luo_session_finish_one(session);
-@@ -354,6 +389,7 @@ static long luo_session_ioctl(struct file *filep, unsigned int cmd,
- 	if (ret)
- 		return ret;
- 
-+	guard(rwsem_read)(&luo_session_serialize_rwsem);
- 	return op->execute(session, &ucmd);
- }
- 
-@@ -393,14 +429,17 @@ int luo_session_create(const char *name, struct file **filep)
- 	if (IS_ERR(session))
- 		return PTR_ERR(session);
- 
-+	down_read(&luo_session_serialize_rwsem);
- 	err = luo_session_insert(&luo_session_global.outgoing, session);
- 	if (err)
- 		goto err_free;
- 
--	scoped_guard(mutex, &session->mutex)
--		err = luo_session_getfile(session, filep);
-+	mutex_lock(&session->mutex);
-+	err = luo_session_getfile(session, filep);
-+	mutex_unlock(&session->mutex);
- 	if (err)
- 		goto err_remove;
-+	up_read(&luo_session_serialize_rwsem);
- 
- 	return 0;
- 
-@@ -408,6 +447,7 @@ int luo_session_create(const char *name, struct file **filep)
- 	luo_session_remove(&luo_session_global.outgoing, session);
- err_free:
- 	luo_session_free(session);
-+	up_read(&luo_session_serialize_rwsem);
- 
- 	return err;
- }
-@@ -419,6 +459,7 @@ int luo_session_retrieve(const char *name, struct file **filep)
- 	struct luo_session *it;
- 	int err;
- 
-+	guard(rwsem_read)(&luo_session_serialize_rwsem);
- 	guard(rwsem_read)(&sh->rwsem);
- 	list_for_each_entry(it, &sh->list, list) {
- 		if (!strncmp(it->name, name, sizeof(it->name))) {
-@@ -591,7 +632,8 @@ int luo_session_serialize(void)
- 	int i = 0;
- 	int err;
- 
--	guard(rwsem_write)(&sh->rwsem);
-+	down_write(&luo_session_serialize_rwsem);
-+	down_write(&sh->rwsem);
- 	list_for_each_entry(session, &sh->list, list) {
- 		err = luo_session_freeze_one(session, &sh->ser[i]);
- 		if (err)
-@@ -602,6 +644,7 @@ int luo_session_serialize(void)
- 		i++;
- 	}
- 	sh->header_ser->count = sh->count;
-+	up_write(&sh->rwsem);
- 
- 	return 0;
- 
-@@ -611,6 +654,8 @@ int luo_session_serialize(void)
- 		luo_session_unfreeze_one(session, &sh->ser[i]);
- 		memset(sh->ser[i].name, 0, sizeof(sh->ser[i].name));
- 	}
-+	up_write(&sh->rwsem);
-+	up_write(&luo_session_serialize_rwsem);
- 
- 	return err;
- }
+diff --git a/net/ipv4/tcp_bbr.c b/net/ipv4/tcp_bbr.c
+index aec7805b1d3763..82378a2bfd1e19 100644
+--- a/net/ipv4/tcp_bbr.c
++++ b/net/ipv4/tcp_bbr.c
+@@ -1,4 +1,4 @@
+-// SPDX-License-Identifier: GPL-2.0
++// SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /* Bottleneck Bandwidth and RTT (BBR) congestion control
+  *
+  * BBR congestion control computes the sending rate based on the delivery
 -- 
 2.53.0
 
