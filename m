@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CA344AB60;
-	Tue, 21 Jul 2026 21:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0D044AB60;
+	Tue, 21 Jul 2026 21:18:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668712; cv=none; b=KdDazMFXN8xiIyKhrWNFFLNcKOfQ5eORNrYeXlkFX/1hUHvrmXuZ53tZYbmZbPimDHts/XS0iOk/MD0l1GL3eY4C+orvkit62Hwjd+PtFyDidTjetYy5GfRGWLgDN4aB/9YamlTtDUDNrUVqmZqYjyjXtLYNSKlj4r2xluCj4SU=
+	t=1784668714; cv=none; b=IUOqTxas9Czkid5aVwi8fXFs1aPTFfqXloHlfwmHfDPN74ocDlQzdtU/qupp/RfeY/if4u/77gl82npKfRJruXlcZoa2n/tgTfmw006PoxisasJoJWrZEjV4VBGeK4ar2u9U/pw2EFz7ItljrCnpriOej1beiw9d/BJHFccSB1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668712; c=relaxed/simple;
-	bh=7rVQIMS8SUW6BT7Np1pRwFGumC+PhkoltbYM54w3Bd4=;
+	s=arc-20240116; t=1784668714; c=relaxed/simple;
+	bh=y4nshLJy8rcxW1FZM7xwi4kt41a8w+2+bR0zwCRbfGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GsjR6K00qL4R0BdabxruRjGO1Fi+z1402kWbYEbHpGSZujc6+enTsJZ5ciW5MCzWo6hjHUHKBPfq1FNNMqpG8vMfP/SOkVlCIZ2wpuq80Wvqv7v0Sp+mjMHg5wM7izfVc14kuJw2Vvo6lA8EHc2wqI16iCWQCgK2s3ossXVNQ1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zap06yV2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VO8USXbHGNrBZ0md01+tVGe70GHpieDdWhLkctL+14w2PBfMVx2ufhVS9sooHn7b3kfYOHLNDd2cu8hZtvoh/oVhp0fWBMbxJqQ9GbivlAjW8wFucjjjoecnwm0QQTiqDWQ0O3kJ0CrQlxmvz6+F4skVVW4xFB8umX8CI9EQVxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8lcBwmN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zap06yV2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ACED1F000E9;
-	Tue, 21 Jul 2026 21:18:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8lcBwmN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B314B1F000E9;
+	Tue, 21 Jul 2026 21:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668710;
-	bh=zdXadwuzdo7dc+XMW37QryNoeQdv8KnthlX5qo2jkow=;
+	s=korg; t=1784668713;
+	bh=wZ42epoMS3ZhC6rwSQqaeYE7rqQTmJuuTBojfpAiacU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zap06yV2BYmfzVjl0cNAkKUtscRwhE0D/Nfskyc4CoFL10hw9X6mrzpGwzyrD1frD
-	 R2PlD6B2wIxfLLAaxLr+o0srUKAW/pVwoRpXq+JiPIcph/t7qq3tzUMTzaqvbZLYns
-	 eqdvBNQSVOk2OE5pdAXQKpr3s8mlbx/OmflLzeJE=
+	b=c8lcBwmNN1WpYbzCPnnXddef5DKCmWv4R0CZsbdWCNFuUvz1xUdM2a7+JwThusNvo
+	 O0OAs5VENqDDEwqaicEDWzRRUha/0lP7s0+reTXXjrgmqygluV7t8KLiRBvibVorOB
+	 kqN2+fCJLN7ukroIoZoiHjj+yBGq0oUvgz7IJWy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 0242/1067] Input: mms114 - fix multi-touch slot corruption
-Date: Tue, 21 Jul 2026 17:14:03 +0200
-Message-ID: <20260721152430.015682138@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0278/1067] drm/tidss: Drop extra drm_mode_config_reset() call
+Date: Tue, 21 Jul 2026 17:14:39 +0200
+Message-ID: <20260721152430.818572643@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,41 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-commit adea84ee6cdea611146c4251d3c1616f5a09feca upstream.
+[ Upstream commit f468fef38716f667e805e0fa2c497c6b9c325bb9 ]
 
-If the touchscreen controller reports a touch ID of 0, the driver
-calculates the slot ID as touch->id - 1, which underflows to UINT_MAX.
-This is passed to input_mt_slot() as -1.
+We are calling drm_mode_config_reset() twice at probe time. There's no
+reason for this and the second call can be removed, reducing work at
+probe time slightly.
 
-Since the input core ignores negative slot values, the active slot remains
-unchanged. The driver then reports the touch coordinates for the previously
-active slot, corrupting its state.
-
-Fix this by rejecting touch reports with ID 0.
-
-Fixes: 07b8481d4aff ("Input: add MELFAS mms114 touchscreen driver")
-Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot@kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Link: https://patch.msgid.link/20260704060115.353049-1-dmitry.torokhov@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patch.msgid.link/20260311-tidss-minor-fixes-v2-1-cb4479784458@ideasonboard.com
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/touchscreen/mms114.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/tidss/tidss_kms.c | 2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/input/touchscreen/mms114.c
-+++ b/drivers/input/touchscreen/mms114.c
-@@ -162,7 +162,7 @@ static void mms114_process_mt(struct mms
- 	unsigned int x;
- 	unsigned int y;
+diff --git a/drivers/gpu/drm/tidss/tidss_kms.c b/drivers/gpu/drm/tidss/tidss_kms.c
+index 995bac488392ae..6fc7a664918ba6 100644
+--- a/drivers/gpu/drm/tidss/tidss_kms.c
++++ b/drivers/gpu/drm/tidss/tidss_kms.c
+@@ -274,8 +274,6 @@ int tidss_modeset_init(struct tidss_device *tidss)
+ 	if (ret)
+ 		return ret;
  
--	if (touch->id > MMS114_MAX_TOUCH) {
-+	if (touch->id == 0 || touch->id > MMS114_MAX_TOUCH) {
- 		dev_err(&client->dev, "Wrong touch id (%d)\n", touch->id);
- 		return;
- 	}
+-	drm_mode_config_reset(ddev);
+-
+ 	dev_dbg(tidss->dev, "%s done\n", __func__);
+ 
+ 	return 0;
+-- 
+2.53.0
+
 
 
