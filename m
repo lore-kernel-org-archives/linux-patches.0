@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD778171BB;
-	Tue, 21 Jul 2026 21:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D9924A078;
+	Tue, 21 Jul 2026 21:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668835; cv=none; b=AfItw49Y1gHvyafPm8lOuN6UnERsHsYcDwDJp8LIIn7OG42AeiKpik6YOWze5G4gmKHDy2k22Mqa5Hi81a3Q8W2mou4Rwf6Hggq8rufClXdwcsyqNH5a29ai8/7Uni8zdzchLFuASFE7kLr6z2Fu7/qXYTVsnyUofObab/2pIFI=
+	t=1784668838; cv=none; b=pX3NFqvK9F9yJmK+Ghso+sE0WM7hP2sOev9GDrvTIBFtx9VJ8U4goSmDKp7eVUY3Ebgo9IBlFD3zZ3fbQLsfShF3eSSKt8sh0g42ik24guGULOOpTuQ+zQGKkSDuPuRLFYIIzdqntcg4UDiqUm2FuxOx/ufJlFSt10jlIIcIaHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668835; c=relaxed/simple;
-	bh=8yDB7MrMCj0NiUZQVRptgbotdp6qlyz3NbAJJbDI1FI=;
+	s=arc-20240116; t=1784668838; c=relaxed/simple;
+	bh=2uqwCMLqj230L0m37I/JRYSd+4EUBNKxtKS+5EfKYAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=clIder2FBLLOxBuw6VEpeMkxk76wpPMUhWzAXN5WlIw5yRL7aWvLiIV7JNSIGmMNiIhxStMk28KqYbKTE6jwmPt4xPR3PxUWSBhn/KfAROWeIOASkrzhbw6XvhEVs5gshn0BunTC8yog63lIhS4JYUT3i4ZGuTpnr0Qu0iq9buY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1NcT9O3V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NlaBcLTF9UM5SQ53nVzXbF/l+n6M0oK3bkjlwBwenPjUhYgIYaUsb7PbTcZOKJvzdRuR4OGazAsA9tTAqBBYZ+hbLUf5ZuJz93Cy4ZbuHh3nFPQjl4/QVCGVFxgM0e5W0K9AjeWSuWJFJPCdczmfn97pFVIqbTc+nPoNq8jCd/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUQ+jiuj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1NcT9O3V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5F81F000E9;
-	Tue, 21 Jul 2026 21:20:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUQ+jiuj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C9E1F00A3A;
+	Tue, 21 Jul 2026 21:20:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668834;
-	bh=jOAgWcVWyOjncDQb23kTVDOgeDldcTcFBCsDeIisqVc=;
+	s=korg; t=1784668837;
+	bh=DhBGX/8Kf4ezsj8+xm9P9ixdbFImaUuaqwtCjspKlOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1NcT9O3VGg5sZYjTTIlYhNRPFPWBN6s8cZHyi8izFo6AvSXqy+sK65XHYHye1APsn
-	 v+/0123t4kf6b1UAwuswal7XncB/Qfjp5MmqEDSHOYwzDC19gMAR5qRX2W73GfgHbU
-	 GNHEZGeNVlnUXPd3mElbI4VIwCdkQO8W62OC5dkE=
+	b=OUQ+jiujM9dT4asAdJ4Q11Cih1h9f70dW40rnNeC/hODsgV57/4n8ieoMVicWDG+T
+	 J7rAsgoKJKI5b9e8I7YdHWmlncRF4B30RoTJBbjrcnH0Aq35aFw5O3tqyKaU/SzSkJ
+	 C6l/TkHR4IHTsL/miANtyb3MWiRgDyybPiFN4XHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ronaldo Nunez <rnunez@baylibre.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0324/1067] cpufreq: conservative: Simplify frequency limit handling
-Date: Tue, 21 Jul 2026 17:15:25 +0200
-Message-ID: <20260721152431.840018145@linuxfoundation.org>
+Subject: [PATCH 6.1 0325/1067] pwm: imx27: Fix variable truncation in .apply()
+Date: Tue, 21 Jul 2026 17:15:26 +0200
+Message-ID: <20260721152431.861747178@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -47,71 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lifeng Zheng <zhenglifeng1@huawei.com>
+From: Ronaldo Nunez <rnunez@baylibre.com>
 
-[ Upstream commit 3494dff89779b73a6c70481c982e0e96d336454a ]
+[ Upstream commit dc9e08fdbcc3eb08a1d2b868b535081c44425e27 ]
 
-cs_dbs_update() performs explicit checks against policy->min/max
-before updating the target frequency. These checks are redundant as
-__cpufreq_driver_target() already clamps the requested frequency to
-the valid policy limits.
+Fix a variable truncation when calculating period in microseconds as
+part of the solution for the ERR051198 in .apply() callback.
 
-Remove the unnecessary boundary checks and simplify the update logic.
+Example scenario:
+ - Period of 3us (PWMPR = 196 and prescaler = 1)
+ - Expected value in tmp: 198000000000 (NSEC_PER_SEC * (196 + 2) * 1)
+ - Actual value is 431504384 (truncation to u32)
 
-This also fixes an issue introduced by commit 00bfe05889e9 ("cpufreq:
-conservative: Decrease frequency faster for deferred updates"), where
-stale target comparisons could cause frequency updates to be skipped
-entirely after deferred adjustments.
-
-Closes: https://lore.kernel.org/all/20260421123545.1745998-1-zhenglifeng1@huawei.com/
-Fixes: 00bfe05889e9 ("cpufreq: conservative: Decrease frequency faster for deferred updates")
-Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Co-developed-by: Viresh Kumar <viresh.kumar@linaro.org>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Link: https://patch.msgid.link/292e6d937890f135e30ec0d2107eaad47cb9a976.1779423281.git.viresh.kumar@linaro.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Ronaldo Nunez <rnunez@baylibre.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260522191348.6227-1-rnunez@baylibre.com
+Fixes: a25351e4c774 ("pwm: imx27: Workaround of the pwm output bug when decrease the duty cycle")
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq_conservative.c | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ drivers/pwm/pwm-imx27.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/cpufreq_conservative.c b/drivers/cpufreq/cpufreq_conservative.c
-index efdcc4ab43340a..24fbb7313c9500 100644
---- a/drivers/cpufreq/cpufreq_conservative.c
-+++ b/drivers/cpufreq/cpufreq_conservative.c
-@@ -103,10 +103,6 @@ static unsigned int cs_dbs_update(struct cpufreq_policy *policy)
- 	if (load > dbs_data->up_threshold) {
- 		dbs_info->down_skip = 0;
+diff --git a/drivers/pwm/pwm-imx27.c b/drivers/pwm/pwm-imx27.c
+index 0cd42ae5c0a4c9..dfbc99227e8970 100644
+--- a/drivers/pwm/pwm-imx27.c
++++ b/drivers/pwm/pwm-imx27.c
+@@ -218,7 +218,7 @@ static void pwm_imx27_wait_fifo_slot(struct pwm_chip *chip,
+ static int pwm_imx27_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 			   const struct pwm_state *state)
+ {
+-	unsigned long period_cycles, duty_cycles, prescale, period_us, tmp;
++	unsigned long period_cycles, duty_cycles, prescale, period_us;
+ 	struct pwm_imx27_chip *imx = to_pwm_imx27_chip(chip);
+ 	struct pwm_state cstate;
+ 	unsigned long long c;
+@@ -227,6 +227,7 @@ static int pwm_imx27_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	int val;
+ 	int ret;
+ 	u32 cr;
++	u64 tmp;
  
--		/* if we are already at full speed then break out early */
--		if (requested_freq == policy->max)
--			goto out;
--
- 		requested_freq += freq_step;
- 		if (requested_freq > policy->max)
- 			requested_freq = policy->max;
-@@ -124,13 +120,7 @@ static unsigned int cs_dbs_update(struct cpufreq_policy *policy)
+ 	pwm_get_state(pwm, &cstate);
  
- 	/* Check for frequency decrease */
- 	if (load < cs_tuners->down_threshold) {
--		/*
--		 * if we cannot reduce the frequency anymore, break out early
--		 */
--		if (requested_freq == policy->min)
--			goto out;
--
--		if (requested_freq > freq_step)
-+		if (requested_freq > policy->min + freq_step)
- 			requested_freq -= freq_step;
- 		else
- 			requested_freq = policy->min;
+@@ -270,6 +271,11 @@ static int pwm_imx27_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	val = readl(imx->mmio_base + MX3_PWMPR);
+ 	val = val >= MX3_PWMPR_MAX ? MX3_PWMPR_MAX : val;
+ 	cr = readl(imx->mmio_base + MX3_PWMCR);
++
++	/*
++	 * tmp stores period in nanoseconds. Result fits in u64 since
++	 * val <= 0xfffe and prescaler in [1, 0x1000].
++	 */
+ 	tmp = NSEC_PER_SEC * (u64)(val + 2) * MX3_PWMCR_PRESCALER_GET(cr);
+ 	tmp = DIV_ROUND_UP_ULL(tmp, clkrate);
+ 	period_us = DIV_ROUND_UP_ULL(tmp, 1000);
 -- 
 2.53.0
 
