@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BBE47143C;
-	Tue, 21 Jul 2026 20:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10D147010D;
+	Tue, 21 Jul 2026 20:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665431; cv=none; b=BF2rjlooYUbt3CnI0GsdRu32wHI/WqbQ1Yi0LCsTXgg4D5Es3SyZL8RFmqqIfJYOqoosPVo1ny6OqZfli32sGK92AMlLj9iZN8/blbkMjByw9qiRLDNOCj902jJVs7saBHRLn76s+Ut5w7mlD4iOghKZXGJycv6B6ox7kKoZ4jM=
+	t=1784665433; cv=none; b=A4SoHYWL9aWUoDznMapoA2OR+SxgOeMDfQS9gdpaA9KRrti93nk+OGoMUGSYR57EAXnarP2DZAoSeFVx3pDYzaQ5+HWxHdNaPoHc9RjMw3dupf2B9k+nGFnFs+i/fhZNNl2zKUJ2feR4+auj96YK7z7c1YsdU5To3D8SmvvIFsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665431; c=relaxed/simple;
-	bh=aLbuMZXVR7aO7IQSEWfaUNoMLFvNQ+FB/uFGZPysTaI=;
+	s=arc-20240116; t=1784665433; c=relaxed/simple;
+	bh=3/aN/ZkEL5DLUoHDNVHTKhbk5KodtDRTraJefrCQ8lw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VK+ht64z69BkZcgFqovUQOft7+h7DKNVR9Bf2BXbCVD7yp66Weq2IlbJDU9Oknx/7rVQ8TbDuSF8iwxISk9O4bqHP6RYQi6UubohI/yo7A6+EkeoyTjGUddPYQpvRyKn7/t9LU2vdy831rlkZSr05h8hyzoq2zX4MVgOKaUjyYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Be+BagDR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cQ0d1UQwPlDNhFgQPR3Su5J2ahFYejQ5veLIPe7UuCffARmeEAiq1ZqK08d+c8Ux4QUhlWnqPKDRLqzEuGQ5re/jFehNQdFFMj1mefXUxE05zjzCE8Sb+YQRKuJyzOAcbw4qZ9CR/63x3m3exOmR3yXmQ4F25Sz0DtHxihIsjHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+1dhaL8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Be+BagDR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF031F000E9;
-	Tue, 21 Jul 2026 20:23:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+1dhaL8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133001F000E9;
+	Tue, 21 Jul 2026 20:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665429;
-	bh=N/NopVovgaTD11nPZfShR4odDbVqb7qa/o1AN3fyAkQ=;
+	s=korg; t=1784665432;
+	bh=pqtciEkaVoRHdoXd0MECVRO/yLODODsIFoNpCqMO33s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Be+BagDRGoe2eQfbjVgN1e3sspp9skEhuX/bQQtzuLOhw70YlacS3p4ImErA7PvU7
-	 vgysPpr1/S82OLu6NzUg+BJgYwW0ROPxjf5AZSZDiuEdcsXVGmyO9Bcw53EmqvlJ3z
-	 hL63ttXaiEp/8MhOx/KIgQlbHOROR1AB6vmi+TPY=
+	b=b+1dhaL8QpKrj2NWsHks/rGd/2vRYoHT59axZ7aiUb4nToRVrV+Y/uVL9Hl37tFEx
+	 9Yh47c+jRBMOrxCmDRKuUB5aoAJnvZAdgKa1aUQbFsahuHvPaPGg5bcV4OaHkq5kiK
+	 DuIrH8kH+jU5XNHVn+gBG1lyBJ/Xs7OHJy5gosJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Vivek Kasireddy <vivek.kasireddy@intel.com>
-Subject: [PATCH 6.6 0301/1266] udmabuf: fix DMA direction mismatch in release_udmabuf()
-Date: Tue, 21 Jul 2026 17:12:18 +0200
-Message-ID: <20260721152448.562855875@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.6 0275/1266] crypto: drbg - Fix drbg_max_addtl() on 64-bit kernels
+Date: Tue, 21 Jul 2026 17:11:52 +0200
+Message-ID: <20260721152447.976795109@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,70 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit fb7b1a0ab25a6077d26cb3829e31743972d4f31d upstream.
+commit 6f49f00c981bbb9ef602966f19bfdbef46b681d2 upstream.
 
-begin_cpu_udmabuf() maps the sg_table with the caller-provided direction
-(e.g., DMA_TO_DEVICE for a write-only sync), and caches it in ubuf->sg
-for reuse.  However, release_udmabuf() always unmaps this sg_table with
-a hardcoded DMA_BIDIRECTIONAL, regardless of the direction that was
-originally used for the mapping.
+On 64-bit kernels, drbg_max_addtl() returns 2**35 bytes.  That's too
+large, for two reasons:
 
-With CONFIG_DMA_API_DEBUG=y this produces:
+1. SP800-90A says the maximum limit is 2**35 *bits*, not 2**35 bytes.
+   So the implemented limit has confused bits and bytes.
 
-  DMA-API: misc udmabuf: device driver frees DMA memory with different
-  direction [device address=0x000000044a123000] [size=4096 bytes]
-  [mapped with DMA_TO_DEVICE] [unmapped with DMA_BIDIRECTIONAL]
+2. When drbg_kcapi_hash() calls crypto_shash_update() on the additional
+   information string, the length is implicitly cast to 'unsigned int'.
+   That truncates the additional information string to U32_MAX bytes.
 
-The issue was found during video playback when GStreamer performed a
-write-only DMA_BUF_IOCTL_SYNC on a udmabuf.  It can be reproduced
-with CONFIG_DMA_API_DEBUG=y by creating a udmabuf from a memfd,
-performing a write-only sync (DMA_BUF_SYNC_WRITE without
-DMA_BUF_SYNC_READ), and closing the file descriptor.
+Fix the maximum additional information string length to always be
+U32_MAX - 1, causing an error to be returned for any longer lengths.
 
-Fix this by storing the DMA direction used when the sg_table is first
-created in begin_cpu_udmabuf(), and passing that same direction to
-put_sg_table() in release_udmabuf().
-
-Fixes: 284562e1f348 ("udmabuf: implement begin_cpu_access/end_cpu_access hooks")
+Fixes: 541af946fe13 ("crypto: drbg - SP800-90A Deterministic Random Bit Generator")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Reviewed-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Link: https://patch.msgid.link/20260314232722.15555-1-mikhail.v.gavrilov@gmail.com
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/udmabuf.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/crypto/drbg.h |   18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
---- a/drivers/dma-buf/udmabuf.c
-+++ b/drivers/dma-buf/udmabuf.c
-@@ -27,6 +27,7 @@ struct udmabuf {
- 	pgoff_t pagecount;
- 	struct page **pages;
- 	struct sg_table *sg;
-+	enum dma_data_direction sg_dir;
- 	struct miscdevice *device;
- };
+--- a/include/crypto/drbg.h
++++ b/include/crypto/drbg.h
+@@ -171,19 +171,15 @@ static inline size_t drbg_max_request_by
+ 	return (1 << 16);
+ }
  
-@@ -139,7 +140,7 @@ static void release_udmabuf(struct dma_b
- 	pgoff_t pg;
++/*
++ * SP800-90A allows implementations to support additional info / personalization
++ * strings of up to 2**35 bits.  Implementations can have a smaller maximum.  We
++ * use 2**35 - 16 bits == U32_MAX - 1 bytes so that the max + 1 always fits in a
++ * size_t, allowing drbg_healthcheck_sanity() to verify its enforcement.
++ */
+ static inline size_t drbg_max_addtl(struct drbg_state *drbg)
+ {
+-	/* SP800-90A requires 2**35 bytes additional info str / pers str */
+-#if (__BITS_PER_LONG == 32)
+-	/*
+-	 * SP800-90A allows smaller maximum numbers to be returned -- we
+-	 * return SIZE_MAX - 1 to allow the verification of the enforcement
+-	 * of this value in drbg_healthcheck_sanity.
+-	 */
+-	return (SIZE_MAX - 1);
+-#else
+-	return (1UL<<35);
+-#endif
++	return U32_MAX - 1;
+ }
  
- 	if (ubuf->sg)
--		put_sg_table(dev, ubuf->sg, DMA_BIDIRECTIONAL);
-+		put_sg_table(dev, ubuf->sg, ubuf->sg_dir);
- 
- 	for (pg = 0; pg < ubuf->pagecount; pg++)
- 		put_page(ubuf->pages[pg]);
-@@ -159,6 +160,8 @@ static int begin_cpu_udmabuf(struct dma_
- 		if (IS_ERR(ubuf->sg)) {
- 			ret = PTR_ERR(ubuf->sg);
- 			ubuf->sg = NULL;
-+		} else {
-+			ubuf->sg_dir = direction;
- 		}
- 	} else {
- 		dma_sync_sgtable_for_cpu(dev, ubuf->sg, direction);
+ static inline size_t drbg_max_requests(struct drbg_state *drbg)
 
 
