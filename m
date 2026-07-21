@@ -1,124 +1,96 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7315439B4A2
-	for <patches@lists.linux.dev>; Tue, 21 Jul 2026 17:39:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97583CF1E0;
+	Tue, 21 Jul 2026 17:39:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655575; cv=none; b=CGibxTn0LnedZWEpWbDSCbFuW+FJEWmIlixv94iLDP+cAfasWfxaapC11wMxd+Zfv0EyMneCl8L09SbGmj1L3FlX1CmQJE78swU/An7kg6RvJJ8LJ9gCIY8Nv8s/3J480oitCP8JWWfcdS/zYpKueyJgnfVkrJgX86vPP3xunZw=
+	t=1784655576; cv=none; b=r+zcD1SrH0Ne4NFpvgWfoYB8O9rIISgPu09fCWz2cCEjnYKJSfJzg7x2Kru7ZcRbBNRvYxtyYPq+klZv2QCZgBR6rIhyMGxWgGYRK43Vc9woBHSODepdfJONhmxQutQOA3QIGDIUKu0XOL77q2ASfObiys431VNuthjK0sG5cg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655575; c=relaxed/simple;
-	bh=567FUSF9RxKPwJn3OMgp3UXkfaatoI2Ifw9prZyPpg4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CpIZClmrWxU8OGqLQcsN2DHiWNxDSTZ6ofBXX4Vrg+Neg/Deo6HVPAVn1Tzh7sIFBab2/8wi4WlSCtK+kPn2fWXBYqN/eOPgxtmq324GHp02MSOEAdqZSwgd/xmWuLDKCxGb5hCWBu0pGkaxueIgngzEuueVLCeE803NFIJ+riw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=soTc/OTR; arc=none smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784655576; c=relaxed/simple;
+	bh=AYZvqUwgQY8ZN+lqu3HUoOBc7rgIGkLte51T+MkjxTY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ElZ4qyVb6G0mtee0wyqueQaj/Wt/gllelWUuJjDFl9uThp16CRmoOQGw7/tMFjTcN42KY1GG0c2UNMyLEeQDN/ChbJALvC3Jrl2qHy+guVih5KJLwZ6bC0lS5ZM0YfJ9yB1lSHWLHdti1YYSdVJdI3QZOfNS3vKfqFNg+vmnlEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jpa9fVRZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="soTc/OTR"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-81ec29f1d07so97468037b3.1
-        for <patches@lists.linux.dev>; Tue, 21 Jul 2026 10:39:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784655573; x=1785260373; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=kgI0wIx/qxQMjezAbCjjgaXBjZwYeNpqJNQzjszKLEM=;
-        b=soTc/OTRXG/T/eoc6oMWaDA97ywqQXVJMDKGpg0ke9T+d1apuLhunWZ4Xalrg1C98b
-         DCqQDhKtzB68mfrfnz1jMZnUpGBR4Y/nmdTGGhi//jEnT1yzAd0f3HgpVTtmskkkgZLW
-         kVJfNk5g25X4m35k5Di2WFAEHEwoVB594XAE0jQ27u538vDS5seorqy6gnj/cYECSRL2
-         c1ylLL5j9o5iTjchftq0fWGTiPfUiaqvCLRHkcPSleChV891PzDLb31uVO1Z0pGi0wtx
-         JAWK1vvnP+jRvsyqSH1nRPK4E885tq+RVilWINlAR/vliZICL7eVdPUt9VNBhGqGmR7G
-         Z5rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784655573; x=1785260373;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=kgI0wIx/qxQMjezAbCjjgaXBjZwYeNpqJNQzjszKLEM=;
-        b=ao25ZhsnoCYIpA1igJcdDnHVr8u5yog7kPyTLLs9bmIdgJD+Q3uOPCBjoTgDr4d1fR
-         u9fV0AI6rP2D/lXJw1ccVyG1AT9cU49IsCLBkWd3qXllo23qybNS3zgDAvfLcKzsBJxh
-         clJ/wA+kF2iK4OxB+OS2e3ldXD/QuGWWi0AFF1BYBwszXoaaw7K5dasZtEMRT5gXsbMb
-         zy77agyWvaHPab6ZJ1fVkWdfbMJQz+EMQeKycbh5mBUtk4SyfK+IlSU6lShTjBgcelTW
-         btYGP+4fYcfB6yt/ztk46FYiMC+rBwNn0g3hxMWx5mBzdHzcyC0Mdrcn+2CE4qlv3kcf
-         ES+w==
-X-Gm-Message-State: AOJu0Yzxf+omOupU15mZGQ1vjBQZqD00ZYMm4V6mxdcRKG3ylWksTnqS
-	QnpJ4lSgxqDp+iD98pU8BUi/BNhdtsxTmDaMCrHPEBWlupWQEQe+yiQ8
-X-Gm-Gg: AR+sD13SBElSpoN5O06byndcswSAjZctX9mBFETpTpPEgHuM+zDZ8ET/o27vb3e8QQr
-	YGKZLMp5X3GZ3gCOaGDp5wej3WS/uWCFy7JJZHSnIy9D64z4xgXHSpU2FKXubNp2jfnir+xGflI
-	TWF9dhOPYG/uAkzolq1U9xHGmjPf+iDW6Vl0giuH3Uvzr3O18XPzIJ2jx+7aHSgV9Xr31mIs5pp
-	XCjvVsxIZrYKYGLxVfW1LNLNH//go2sRXwo6R4tFHs+8DuOc02HozigbBfmx4jDuAnDiBTcl7ar
-	NFJMjeY+Q2uAUfZHXesxA6BsfgZHzcvKtiwWYZ4MFNXoG1aXB6mdwhO1jlsm5p6Dbg48kSRijia
-	HlvgftOdxt3RAKiORd/RUAwEEnlG7AJ6vggrsAXb/81uD7/maeYK12R4eYFR671zsVphmAm/JVz
-	SxcRuttINLIfEzToAJ+unl+CogCXVk
-X-Received: by 2002:a05:690c:c1c:b0:81e:6bd6:39a5 with SMTP id 00721157ae682-81ef25a4655mr59727667b3.1.1784655573234;
-        Tue, 21 Jul 2026 10:39:33 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-81f33ef0a40sm1429877b3.39.2026.07.21.10.39.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Jul 2026 10:39:32 -0700 (PDT)
-Message-ID: <94ebc599-4310-46f1-8167-b356dfa2e555@gmail.com>
-Date: Tue, 21 Jul 2026 10:39:29 -0700
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jpa9fVRZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23ACE1F00A3A;
+	Tue, 21 Jul 2026 17:39:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1784655575;
+	bh=GlbGvjMibPj32McD7/YiBxAzyx1fK+eJ0ZlcnZttDtE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=jpa9fVRZoiSxyLGWA1YCtu9pTtihfQhJuOJYt1ZtqJndj3hQr6qdeRdP0TajYRTcq
+	 N3Oug4GXQuvjOPgnU3pKUCjdteGcTSSHS/2TxcvpadQrJZhT7TIkfaIlcBtN7aiY8N
+	 2botSi4qp7jS8e8W1stNPL4Rys6rEXskhUzm1qLQ=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Sandy Huang <hjc@rock-chips.com>,
+	=?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	linux-rockchip@lists.infradead.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 0062/1611] drm/rockchip: Test for imported buffers with drm_gem_is_imported()
+Date: Tue, 21 Jul 2026 17:02:58 +0200
+Message-ID: <20260721152516.225613125@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
+References: <20260721152514.750365251@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 0000/1276] 6.12.97-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260721152446.065700225@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 7/21/26 08:07, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.97 release.
-> There are 1276 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 23 Jul 2026 15:23:00 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.97-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-perf fails to build with the following build error:
+------------------
 
-In file included from tests/vmlinux-kallsyms.c:8:
-util/dso.h:664:6: warning: no previous prototype for 'dso__put' 
-[-Wmissing-prototypes]
-  void dso__put(struct dso *dso) LOCKS_EXCLUDED(_dso__data_open_lock);
-       ^~~~~~~~
-util/dso.h: In function 'dso__put':
-util/dso.h:664:32: error: expected declaration specifiers before 
-'LOCKS_EXCLUDED'
-  void dso__put(struct dso *dso) LOCKS_EXCLUDED(_dso__data_open_lock);
-                                 ^~~~~~~~~~~~~~
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-this is caused by commit 3e2cea6464884252284765fb48b00e56449ed63d ("perf 
-dso: Use lock annotations to fix asan deadlock") we also need to 
-backport c5ebf3a26601c833a3ea8c6035d4318445a7e3a5 ("perf mutex: Add 
-annotations for LOCKS_EXCLUDED and LOCKS_RETURNED") here.
+[ Upstream commit 9fc0da81916250f343599a4dd259f097196bf0fb ]
+
+Instead of testing import_attach for imported GEM buffers, invoke
+drm_gem_is_imported() to do the test. The test itself does not change.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Sandy Huang <hjc@rock-chips.com>
+Cc: Heiko Stübner <heiko@sntech.de>
+Cc: Andy Yan <andy.yan@rock-chips.com>
+Cc: linux-rockchip@lists.infradead.org
+Fixes: b57aa47d39e9 ("drm/gem: Test for imported GEM buffers with helper")
+Closes: https://lore.kernel.org/dri-devel/38d09d34.4354.196379aa560.Coremail.andyshrk@163.com/
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260227133113.235940-11-tzimmermann@suse.de
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/rockchip/rockchip_drm_gem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+index 6330b883efc35d..e44396d46dc1f6 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+@@ -332,7 +332,7 @@ void rockchip_gem_free_object(struct drm_gem_object *obj)
+ 	struct rockchip_drm_private *private = drm->dev_private;
+ 	struct rockchip_gem_object *rk_obj = to_rockchip_obj(obj);
+ 
+-	if (obj->import_attach) {
++	if (drm_gem_is_imported(obj)) {
+ 		if (private->domain) {
+ 			rockchip_gem_iommu_unmap(rk_obj);
+ 		} else {
 -- 
-Florian
+2.53.0
+
+
+
