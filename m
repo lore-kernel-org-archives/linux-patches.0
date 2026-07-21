@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4908E411661;
-	Tue, 21 Jul 2026 19:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22244471246;
+	Tue, 21 Jul 2026 19:09:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660993; cv=none; b=lD5maeMl1Dz0VkdCf+4h7lqIWRDKkkPWiLnarMBhFZy4hOvdtqHd8FpuPNTBrWTl9FQTPjNU+PuTauZLtyv/dCAsOnvS324PWnXaddPaeKkcrGAt3rPnutqUG7qnIlWZOd7SjqHaRl3u4p2hf2ogYJ/MshNRBvKRTAekfMP4HuY=
+	t=1784660996; cv=none; b=PFxIKhjXvp9+FaIZEBdMgtc/uUsi/MjEXdMAa71OJcdQscZLBpcRwPSpggicWqcacVcMAjNq2IzhIgiTckBIdoWKWlH/5rM2o0gRNZdC4DCF0AbekO9UmID1foKxDKaBjc8GMrc1I7hbGYwolPNWxVXT2TptP7yiMQUoUYSfmFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660993; c=relaxed/simple;
-	bh=nhIvYLgskoTpvg0BdNaB52g/RE2537syE5cY/dmzpMI=;
+	s=arc-20240116; t=1784660996; c=relaxed/simple;
+	bh=Et7lTbflh4FdAyVM0uhq59+pi+Xc5SOFWLQmWUtzu8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dw8lVvBR+KBFU5IWAkqe6OC3VBkceUk6LSiEYuSn2jdIDqAM1ka9me1u7nAD/793aYkzGvPMFgVQDoYNStWWs6S2HJe3b3mhXIi9Cf8EbDnQ3BwhMFBUsu/DzCDd+6tLnvozLDthD5FLw+F7L2teyYPrWsfE5iwattCAucb+iW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QdI7BMC9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QBYZ0TEs6YI7jT7KaBTl1XfsUjxBiS3Pn8Jd3QddyD1wskWqJWLk8Tcs+v4KzchpIugmiPK6Cm63Q1qjBSWr66bmiqyfPMdvc9kHVyBelgSeNz3fKcVwB2+5bzwb9x7G3g0SdkcGYZaDoMZButQvEn4WcH4msXElk9zRCsEXdPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NFJBd1EY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdI7BMC9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93E51F000E9;
-	Tue, 21 Jul 2026 19:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NFJBd1EY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5971F000E9;
+	Tue, 21 Jul 2026 19:09:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660992;
-	bh=WCm0qWZ7s7WMQG2AJldL/2hKfqDKShk/Ggk7QtSQoY4=;
+	s=korg; t=1784660994;
+	bh=2ZR/ir/MW8Lj124ypkgVeZBraLftUm6//dalXaY8myY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QdI7BMC9nJnFRfbxELSDaVVb0GMR/skrGDqBpHVlHYleskrslzXpQ6e2sDyB76oZ8
-	 0HAAnWyRw9IZxPzmUT6ARAra9azUCgefgg4PYxzWVG5iw90bmoIBSssYROjO1qf1F8
-	 mz0oCjKfrEdbohMdOjK70AVHyAgeIGogArlr4u4k=
+	b=NFJBd1EYZ+dk2Qj8XXDItkL2PI3aBBsVvBzgJh5AUbiVNe81Waepff6bPLFARAiSE
+	 n9HVL/gbaAX0Ye0jpZYZ73SOVF4SyvhSeIxspQauYaoLhMxcWJZjhSstZ8fsPgdeKO
+	 1lw6DdKoPGr9vcToS/ccjTO3iX5+KidHTkttX7fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoni Pokusinski <apokusinski01@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1189/2077] rtc: abx80x: fix the RTC_VL_CLR clearing all status flags
-Date: Tue, 21 Jul 2026 17:14:22 +0200
-Message-ID: <20260721152620.862854558@linuxfoundation.org>
+Subject: [PATCH 7.1 1154/2077] netfilter: nft_meta_bridge: fix NFT_META_BRI_IIFPVID stack leak
+Date: Tue, 21 Jul 2026 17:13:47 +0200
+Message-ID: <20260721152620.041935470@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,40 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoni Pokusinski <apokusinski01@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 419719c514252a2dbb2e2976f564c83417dd6d0a ]
+[ Upstream commit 27dd2997746d54ebc079bb13161cc1bdd401d4a6 ]
 
-The RTC_VL_CLR ioctl intends to clear only the battery low flag (BLF),
-however the current implementation writes 0 to the status register,
-clearing all status bits.
+This needs to test for nonzero retval.
 
-Fix this by writing back the masked status value so that only BLF is
-cleared, preserving other status flags.
-
-Fixes: ffe1c5a2d427 ("rtc: abx80x: Implement RTC_VL_READ,CLR ioctls")
-Signed-off-by: Antoni Pokusinski <apokusinski01@gmail.com>
-Link: https://patch.msgid.link/20260415160610.127155-2-apokusinski01@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: c54c7c685494 ("netfilter: nft_meta_bridge: add NFT_META_BRI_IIFPVID support")
+Closes: https://sashiko.dev/#/patchset/20260618061631.21919-1-fw%40strlen.de
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-abx80x.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bridge/netfilter/nft_meta_bridge.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
-index 00d7de64ed3e72..008a70baa69fea 100644
---- a/drivers/rtc/rtc-abx80x.c
-+++ b/drivers/rtc/rtc-abx80x.c
-@@ -545,7 +545,8 @@ static int abx80x_ioctl(struct device *dev, unsigned int cmd, unsigned long arg)
+diff --git a/net/bridge/netfilter/nft_meta_bridge.c b/net/bridge/netfilter/nft_meta_bridge.c
+index 3d95f68e0906ab..e4c9aa1f64e25f 100644
+--- a/net/bridge/netfilter/nft_meta_bridge.c
++++ b/net/bridge/netfilter/nft_meta_bridge.c
+@@ -44,7 +44,9 @@ static void nft_meta_bridge_get_eval(const struct nft_expr *expr,
+ 		if (!br_dev || !br_vlan_enabled(br_dev))
+ 			goto err;
  
- 		status &= ~ABX8XX_STATUS_BLF;
- 
--		tmp = i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS, 0);
-+		tmp = i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS,
-+						status);
- 		if (tmp < 0)
- 			return tmp;
- 
+-		br_vlan_get_pvid_rcu(in, &p_pvid);
++		if (br_vlan_get_pvid_rcu(in, &p_pvid))
++			goto err;
++
+ 		nft_reg_store16(dest, p_pvid);
+ 		return;
+ 	}
 -- 
 2.53.0
 
