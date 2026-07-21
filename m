@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAABD44AB61;
-	Tue, 21 Jul 2026 21:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF3E44AB61;
+	Tue, 21 Jul 2026 21:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669120; cv=none; b=SMzAml3f56fF06VTfFH090WfXGTFCqJ3hJ+9XYaP4bVm/c+5XsenXG+JSFS73KbtP+HcWF3VIQwGC2vX0bp6PFFtBtDWH1sY4GmGCz+BMz6icCcmvcfupCVXXaP9X6Fm653px6EZdcQGP2PT7ukFVRPt1JaMJCszQWb1s/KuLEY=
+	t=1784669122; cv=none; b=kHDQkp8yLWS03iOo9sIhY6aIQUkG5RKs7CVp0h6D5p5yoGnDfJCHH5402qohzElUs+ROSMQmPSPw+EsHx0zbG+46zfvf2PZ9tjza+KFHj7x7z3FHC8sPqoYQ3zbXzcEEoqYqOKW58Ciw3C1TrOHkLQLCo92EzXOT7wLMEK1GXgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669120; c=relaxed/simple;
-	bh=g3rJ+82NldUbM2CD1iKkwIB0KFVpRJc3unXlkgwV9pc=;
+	s=arc-20240116; t=1784669122; c=relaxed/simple;
+	bh=rTXcka0EB8xXXcGkBDtDhJgLxMdAuylnjaOKEysiV9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tMwOrES5lPYlRKeJI9Y8RA0kJyUk/v4THpFJtmz1i3zcUFG2u/NSgJMX4M9nVjQikpFAvuXKrn7gAyCcWtH2qqYkgbaSb55TK03yRXkanvgmYOAsSBjzO40mHGAM9Z3I4ob/IcuFj1mfcEgvt/w+J8Yb2Hy+l9Nf067lC8XaJ38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTO+3wqN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZGRyS1QPKJZJenqUYvPYaz+JFldCe5ilurabofmaMWNg8fA5v91qNlc3gArnUl+k/zP7X+jQt/dnaYAsf2k8yHVtDWa/FW5DheRs6ky3MN9vSrhs8avWs6fAVtvFUjoU/9LE8eFe4x2AMkc2NwS/VRibJARNjXShZQqbmyuUTXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2K47vnVs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTO+3wqN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1ED1F000E9;
-	Tue, 21 Jul 2026 21:25:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2K47vnVs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F2F1F000E9;
+	Tue, 21 Jul 2026 21:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669118;
-	bh=x0YpwzPJRKNyUCC9wKKlF3vVGyMHF1gSap/2/kZFMiY=;
+	s=korg; t=1784669121;
+	bh=PKer9scXP1VXZMGfu0YkFEAs2ckEuqeTalCL6WF42VU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rTO+3wqNHqw5zl0kuAJf724OrR37EesFZbOr0c3ipo0bmch0lnc8UWqhKghoY9EHX
-	 RtfXR35aqMusv+vOKx3fY5i87o82PS8YbKB+S91khcF+osq9GkdhgN+1RGZWVAATb4
-	 JjoI4/fBoLPS1CYQ5FqXV+gXJcxFYvXHUDA3IEnQ=
+	b=2K47vnVs66s3YdqPqxOIk8p7+NY7JZl5R7oZ6kPnOlqvETuLr5T7uzbnZ9KzV7VBD
+	 POBywOsmx6KG1vH6FqnGXrC4XyM17cIkHx8xdIMsOTRFb/uVS7xBtEY4Bs65FVg7LY
+	 q3efoLin1BA1HFQs8A51toaX/3KvE3vu5O5kVaVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko <sashiko-bot@kernel.org>,
-	Xin Long <lucien.xin@gmail.com>,
+	Anirudh Gupta <anirudhrudr@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0435/1067] sctp: validate embedded address parameter length
-Date: Tue, 21 Jul 2026 17:17:16 +0200
-Message-ID: <20260721152434.346822808@linuxfoundation.org>
+Subject: [PATCH 6.1 0436/1067] net/sched: sch_hfsc: Dont make class passive twice
+Date: Tue, 21 Jul 2026 17:17:17 +0200
+Message-ID: <20260721152434.368934465@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,74 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit e9361d0ca55c4af12aac09e2572852fa91046229 ]
+[ Upstream commit 90b662ea25f5e83bb3b8ccec5b93ced810b92fb8 ]
 
-sctp_verify_asconf() and sctp_verify_param() only validate ADD_IP, DEL_IP,
-and SET_PRIMARY parameters against a fixed minimum size of sizeof(struct
-sctp_addip_param) + sizeof(struct sctp_paramhdr). This ensures the outer
-parameter is large enough to contain an embedded address parameter header,
-but does not verify that the embedded address parameter's declared length
-fits within the bounds of the outer parameter.
+update_vf() is called from two places for the same class during a single
+dequeue when the class's child qdisc (e.g. codel/fq_codel) drops its last
+packets while dequeuing:
 
-Later, sctp_process_param() and sctp_process_asconf_param() extract the
-embedded address parameter and pass it to af->from_addr_param(), which uses
-the address parameter length to parse the variable-length address payload.
-A malformed peer can therefore advertise an embedded address parameter
-length that exceeds the remaining bytes in the enclosing parameter.
+1. The child calls qdisc_tree_reduce_backlog(), which, now that the child
+   is empty, invokes hfsc_qlen_notify() -> update_vf(cl, 0, 0) and turns
+   the class passive (cl_nactive is decremented up the hierarchy).
 
-Validate that addr_param->p.length does not exceed the space available
-after the sctp_addip_param header before processing the embedded address
-parameter. Reject malformed parameters when the embedded address length
-extends beyond the enclosing parameter bounds.
+2. hfsc_dequeue() then calls update_vf(cl, qdisc_pkt_len(skb), cur_time)
+   to charge the dequeued bytes.
 
-This prevents out-of-bounds reads when parsing malformed parameters carried
-in INIT or ASCONF processing paths.
+On the second call the class is already passive, but its child qdisc is
+still empty, so update_vf() arms go_passive again:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/7838b86b69f52add28808fb59034c8f992e97b2d.1781043268.git.lucien.xin@gmail.com
+      if (cl->qdisc->q.qlen == 0 && cl->cl_flags & HFSC_FSC)
+              go_passive = 1;
+
+The leaf is then skipped by the cl_nactive == 0 check inside the loop,
+which does not clear go_passive, so the stale go_passive propagates to the
+parent and decrements its cl_nactive a second time. A parent that still
+has other active children is driven to cl_nactive == 0 and removed from
+the vttree, even though those siblings are still backlogged. They are
+never dequeued again and the qdisc stalls.
+
+Fix this by only arming go_passive when the class is actually active, so an
+already-passive class no longer triggers a second passive transition. The
+byte accounting (cl->cl_total += len) still runs for every ancestor, so
+dequeued bytes continue to be counted exactly once.
+
+Fixes: 51eb3b65544c ("sch_hfsc: make hfsc_qlen_notify() idempotent")
+Reported-by: Anirudh Gupta <anirudhrudr@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAN2cbVe79oj0O9==m4+4x3v+O+qzRagA=2=wkrp9i9=CqYvyZA@mail.gmail.com/
+Tested-by: Anirudh Gupta <anirudhrudr@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260610132824.3027549-1-victor@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_make_chunk.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/sched/sch_hfsc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
-index 088764ba47a173..3089d5e577584f 100644
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -2670,6 +2670,9 @@ static int sctp_process_param(struct sctp_association *asoc,
- 			goto fall_through;
+diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
+index 80acdec16d2f67..2d6baf7d7b0366 100644
+--- a/net/sched/sch_hfsc.c
++++ b/net/sched/sch_hfsc.c
+@@ -754,7 +754,7 @@ update_vf(struct hfsc_class *cl, unsigned int len, u64 cur_time)
+ 	u64 f; /* , myf_bound, delta; */
+ 	int go_passive = 0;
  
- 		addr_param = param.v + sizeof(struct sctp_addip_param);
-+		if (ntohs(addr_param->p.length) >
-+		    ntohs(param.p->length) - sizeof(struct sctp_addip_param))
-+			break;
+-	if (cl->qdisc->q.qlen == 0 && cl->cl_flags & HFSC_FSC)
++	if (cl->qdisc->q.qlen == 0 && cl->cl_flags & HFSC_FSC && cl->cl_nactive)
+ 		go_passive = 1;
  
- 		af = sctp_get_af_specific(param_type2af(addr_param->p.type));
- 		if (!af)
-@@ -3068,13 +3071,16 @@ static __be16 sctp_process_asconf_param(struct sctp_association *asoc,
- 	union sctp_addr	addr;
- 	struct sctp_af *af;
- 
--	addr_param = (void *)asconf_param + sizeof(*asconf_param);
--
- 	if (asconf_param->param_hdr.type != SCTP_PARAM_ADD_IP &&
- 	    asconf_param->param_hdr.type != SCTP_PARAM_DEL_IP &&
- 	    asconf_param->param_hdr.type != SCTP_PARAM_SET_PRIMARY)
- 		return SCTP_ERROR_UNKNOWN_PARAM;
- 
-+	addr_param = (void *)asconf_param + sizeof(*asconf_param);
-+	if (ntohs(addr_param->p.length) >
-+	    ntohs(asconf_param->param_hdr.length) - sizeof(*asconf_param))
-+		return SCTP_ERROR_PROTO_VIOLATION;
-+
- 	switch (addr_param->p.type) {
- 	case SCTP_PARAM_IPV6_ADDRESS:
- 		if (!asoc->peer.ipv6_address)
+ 	for (; cl->cl_parent != NULL; cl = cl->cl_parent) {
 -- 
 2.53.0
 
