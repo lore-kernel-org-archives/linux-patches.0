@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACEE546EF86;
-	Tue, 21 Jul 2026 18:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CD846EF79;
+	Tue, 21 Jul 2026 18:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659494; cv=none; b=Wv0btL63VUtriaZ/QLQK1I24Muf7/b3KCAldMNc67tiJ1zFE8CqeJKlCeTVmFFanHk4k/EUk/L+8oKT68aGmCzlhgwrnM/x20OH3rQn6n9WDfQYGqlyUvGNVP+tZRjLLsfpdv5gar3WnS3G8/EracUdYbNUaZ6aPnv36L3aGoWc=
+	t=1784659495; cv=none; b=Jn7ZE4Gu77mWfUdxVK5BZ40xoAk8bVjITxjUY0twV/RSs/Ek59IDy/oKuK+d5ulqzb/QHFUJ4IXaI2WQg2X0M074A8Mx1BaCkSdthskK6HvvqmXpABG5xJQB5aIWc9jezr07Ut/ExhNjfzZhGjI7OWvf4XtWeFYT2mj6LwXk4HA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659494; c=relaxed/simple;
-	bh=g5y+6DqmL2+rEJwAojtim7+p8uglC4N4/8toLR/TnoQ=;
+	s=arc-20240116; t=1784659495; c=relaxed/simple;
+	bh=ZpymR5YEKn+NWsOJplksr0gMHK3udy+1VJXjlinzgBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pvTwQjlGigl67ZY24LB4jH4iyxEbm0jAQvqFAdtvmXXFtcsiEvYrR5C7byi45P0vyBXFJ2IbTMgnqDT6t7NP+D3nBA0mckQPIOxlwFAacAQ3qijD4g1HrUNVjr9hLfyeBFhX6MdRKUu1g+5XvEM//cfJW09NwOHHD2NWMxXJu6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YT2M7ZPb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KYAfxJqS0RgKJSC1btz77a9YMyTTRj5NRFE2ch8WgrgnWQ1WOs6E4fI3v304d3GogWdjNkLLzE7xoX3DaJy/BhIDj7JQrx38bgnaTUOl4SmT+9b/oZ+GjyjZuZ4KUMu3RSPaqK8ezeW2xrCxekaOwhIAPY2vswfM7iZOUa1oeNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=clVJhP1W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YT2M7ZPb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EBB71F000E9;
-	Tue, 21 Jul 2026 18:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="clVJhP1W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBFBE1F00A3A;
+	Tue, 21 Jul 2026 18:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659491;
-	bh=3LuxnupTwIk7hjh+ddTma0BMWmZVzfUUYlKmm7q9gzQ=;
+	s=korg; t=1784659494;
+	bh=bvHrvbGJNW572a4UfcTfvcP+2Igsq0D/jUAOk639qsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YT2M7ZPbXxwSZP4drxGMPzlbUkFZD2h8we0MMXV9n0as2QPUEAozgnvG7Ym/BLlqB
-	 tPmLjCHsHncdkgt/UMfC6bNvFHxbemsrd19N9GOhbgX7eJ2gcMJaboQhQxPEHVSDW2
-	 YgmFSC2wKboSVWcvXD1nhgtlLeod6H6b9a248sL8=
+	b=clVJhP1WtWCpJlboWbJj8gINiemw/X+2woQRIfwXIdkzoqmiycdFO6KnRlUOH0rla
+	 pe4NNskKfOnmQN2qgJya2dNZJNQS+RvJLrYFrqBEzPU0UhOAe7kzrrG6bcvMehUPQd
+	 Ywa22fvry4KW5o4LcmSeFWUJmZ6a0Aspoj3WMS8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Frank Li <Frank.Li@nxp.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1542/1611] crypto: qat - fix VF2PF work teardown race in adf_disable_sriov()
-Date: Tue, 21 Jul 2026 17:27:38 +0200
-Message-ID: <20260721152550.131485929@linuxfoundation.org>
+Subject: [PATCH 6.18 1543/1611] media: nxp: imx8-isi: use devm_pm_runtime_enable() to simplify code
+Date: Tue, 21 Jul 2026 17:27:39 +0200
+Message-ID: <20260721152550.153870756@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,215 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit 277281c10c63791067d24d421f7c43a15faa9096 ]
+[ Upstream commit 078161dd44d6f848a62a473206d69025607736ec ]
 
-The VF2PF interrupt handler queues PF-side response work that stores a
-raw pointer to per-VF state (struct adf_accel_vf_info). Currently,
-adf_disable_sriov() destroys per-VF mutexes and frees vf_info without
-stopping new VF2PF work or waiting for in-flight workers to complete. A
-concurrently scheduled or already queued worker can then dereference
-freed memory.
+Use devm_pm_runtime_enable() to simplify code. Change to use
+dev_err_probe() because previous goto change to return.
 
-This manifests as a use-after-free when KASAN is enabled:
+No functional change.
 
-  BUG: KASAN: null-ptr-deref in mutex_lock+0x76/0xe0
-  Write of size 8 at addr 0000000000000260 by task kworker/24:2/...
-  Workqueue: qat_pf2vf_resp_wq adf_iov_send_resp [intel_qat]
-  Call Trace:
-    kasan_report+0x119/0x140
-    mutex_lock+0x76/0xe0
-    adf_gen4_pfvf_send+0xd4/0x1f0 [intel_qat]
-    adf_recv_and_handle_vf2pf_msg+0x290/0x360 [intel_qat]
-    adf_iov_send_resp+0x8c/0xe0 [intel_qat]
-    process_one_work+0x6ac/0xfd0
-    worker_thread+0x4dd/0xd30
-    kthread+0x326/0x410
-    ret_from_fork+0x33b/0x670
-
-Add a PF-local flag, vf2pf_disabled, that gates work queueing, worker
-processing, and interrupt re-enabling during teardown. Set this flag
-atomically with the hardware interrupt mask inside
-adf_disable_all_vf2pf_interrupts(). After masking, synchronize the AE
-cluster MSI-X interrupt and flush the PF response workqueue before
-tearing down per-VF locks and state so all in-flight work completes
-before vf_info is destroyed.
-
-Introduce adf_enable_all_vf2pf_interrupts() to clear the flag and
-unmask all VF2PF interrupts under the same lock when SR-IOV is
-re-enabled. This ensures the software flag and hardware state transition
-atomically on both the enable and disable paths.
-
-Cc: stable@vger.kernel.org
-Fixes: ed8ccaef52fa ("crypto: qat - Add support for SRIOV")
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://patch.msgid.link/20260116-cam_cleanup-v4-2-29ce01640443@nxp.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Stable-dep-of: b670bf89824e ("media: nxp: imx8-isi: Fix use-after-free on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_accel_devices.h |    2 
- drivers/crypto/intel/qat/qat_common/adf_common_drv.h    |    2 
- drivers/crypto/intel/qat/qat_common/adf_isr.c           |   39 ++++++++++++++++
- drivers/crypto/intel/qat/qat_common/adf_sriov.c         |   20 +++++++-
- 4 files changed, 61 insertions(+), 2 deletions(-)
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-core.c |   16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
---- a/drivers/crypto/intel/qat/qat_common/adf_accel_devices.h
-+++ b/drivers/crypto/intel/qat/qat_common/adf_accel_devices.h
-@@ -472,6 +472,8 @@ struct adf_accel_dev {
- 		struct {
- 			/* protects VF2PF interrupts access */
- 			spinlock_t vf2pf_ints_lock;
-+			/* prevents VF2PF handling from racing with VF state teardown */
-+			bool vf2pf_disabled;
- 			/* vf_info is non-zero when SR-IOV is init'ed */
- 			struct adf_accel_vf_info *vf_info;
- 		} pf;
---- a/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
-+++ b/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
-@@ -118,6 +118,7 @@ void qat_comp_alg_callback(void *resp);
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-core.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-core.c
+@@ -488,13 +488,14 @@ static int mxc_isi_probe(struct platform
+ 	dma_size = isi->pdata->has_36bit_dma ? 36 : 32;
+ 	dma_set_mask_and_coherent(dev, DMA_BIT_MASK(dma_size));
  
- int adf_isr_resource_alloc(struct adf_accel_dev *accel_dev);
- void adf_isr_resource_free(struct adf_accel_dev *accel_dev);
-+void adf_isr_sync_ae_cluster(struct adf_accel_dev *accel_dev);
- int adf_vf_isr_resource_alloc(struct adf_accel_dev *accel_dev);
- void adf_vf_isr_resource_free(struct adf_accel_dev *accel_dev);
+-	pm_runtime_enable(dev);
++	ret = devm_pm_runtime_enable(dev);
++	if (ret)
++		return ret;
  
-@@ -191,6 +192,7 @@ int adf_sriov_configure(struct pci_dev *
- void adf_disable_sriov(struct adf_accel_dev *accel_dev);
- void adf_reenable_sriov(struct adf_accel_dev *accel_dev);
- void adf_enable_vf2pf_interrupts(struct adf_accel_dev *accel_dev, u32 vf_mask);
-+void adf_enable_all_vf2pf_interrupts(struct adf_accel_dev *accel_dev, u32 num_vfs);
- void adf_disable_all_vf2pf_interrupts(struct adf_accel_dev *accel_dev);
- bool adf_recv_and_handle_pf2vf_msg(struct adf_accel_dev *accel_dev);
- bool adf_recv_and_handle_vf2pf_msg(struct adf_accel_dev *accel_dev, u32 vf_nr);
---- a/drivers/crypto/intel/qat/qat_common/adf_isr.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_isr.c
-@@ -62,6 +62,23 @@ void adf_enable_vf2pf_interrupts(struct
- 	unsigned long flags;
+ 	ret = mxc_isi_crossbar_init(isi);
+-	if (ret) {
+-		dev_err(dev, "Failed to initialize crossbar: %d\n", ret);
+-		goto err_pm;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret,
++				     "Failed to initialize crossbar\n");
  
- 	spin_lock_irqsave(&accel_dev->pf.vf2pf_ints_lock, flags);
-+	if (!READ_ONCE(accel_dev->pf.vf2pf_disabled))
-+		GET_PFVF_OPS(accel_dev)->enable_vf2pf_interrupts(pmisc_addr, vf_mask);
-+	spin_unlock_irqrestore(&accel_dev->pf.vf2pf_ints_lock, flags);
-+}
+ 	for (i = 0; i < isi->pdata->num_channels; ++i) {
+ 		ret = mxc_isi_pipe_init(isi, i);
+@@ -517,8 +518,7 @@ static int mxc_isi_probe(struct platform
+ 
+ err_xbar:
+ 	mxc_isi_crossbar_cleanup(&isi->crossbar);
+-err_pm:
+-	pm_runtime_disable(isi->dev);
 +
-+void adf_enable_all_vf2pf_interrupts(struct adf_accel_dev *accel_dev, u32 num_vfs)
-+{
-+	void __iomem *pmisc_addr = adf_get_pmisc_base(accel_dev);
-+	unsigned long flags;
-+	u32 vf_mask;
-+
-+	vf_mask = BIT_ULL(num_vfs) - 1;
-+	if (!vf_mask)
-+		return;
-+
-+	spin_lock_irqsave(&accel_dev->pf.vf2pf_ints_lock, flags);
-+	WRITE_ONCE(accel_dev->pf.vf2pf_disabled, false);
- 	GET_PFVF_OPS(accel_dev)->enable_vf2pf_interrupts(pmisc_addr, vf_mask);
- 	spin_unlock_irqrestore(&accel_dev->pf.vf2pf_ints_lock, flags);
- }
-@@ -72,6 +89,7 @@ void adf_disable_all_vf2pf_interrupts(st
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&accel_dev->pf.vf2pf_ints_lock, flags);
-+	WRITE_ONCE(accel_dev->pf.vf2pf_disabled, true);
- 	GET_PFVF_OPS(accel_dev)->disable_all_vf2pf_interrupts(pmisc_addr);
- 	spin_unlock_irqrestore(&accel_dev->pf.vf2pf_ints_lock, flags);
- }
-@@ -174,6 +192,27 @@ static irqreturn_t adf_msix_isr_ae(int i
- 	return IRQ_NONE;
+ 	return ret;
  }
  
-+void adf_isr_sync_ae_cluster(struct adf_accel_dev *accel_dev)
-+{
-+	struct adf_accel_pci *pci_dev_info = &accel_dev->accel_pci_dev;
-+	struct adf_hw_device_data *hw_data = GET_HW_DATA(accel_dev);
-+	u32 num_entries = pci_dev_info->msix_entries.num_entries;
-+	struct adf_irq *irqs = pci_dev_info->msix_entries.irqs;
-+	u32 irq_idx;
-+	int irq;
-+
-+	if (!test_bit(ADF_STATUS_IRQ_ALLOCATED, &accel_dev->status) || !irqs)
-+		return;
-+
-+	irq_idx = num_entries > 1 ? hw_data->num_banks : 0;
-+	if (irq_idx >= num_entries || !irqs[irq_idx].enabled)
-+		return;
-+
-+	irq = pci_irq_vector(pci_dev_info->pci_dev, hw_data->num_banks);
-+	if (irq > 0)
-+		synchronize_irq(irq);
-+}
-+
- static void adf_free_irqs(struct adf_accel_dev *accel_dev)
- {
- 	struct adf_accel_pci *pci_dev_info = &accel_dev->accel_pci_dev;
---- a/drivers/crypto/intel/qat/qat_common/adf_sriov.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_sriov.c
-@@ -26,6 +26,9 @@ static void adf_iov_send_resp(struct wor
- 	u32 vf_nr = vf_info->vf_nr;
- 	bool ret;
+@@ -537,8 +537,6 @@ static void mxc_isi_remove(struct platfo
  
-+	if (READ_ONCE(accel_dev->pf.vf2pf_disabled))
-+		goto out;
-+
- 	mutex_lock(&vf_info->pfvf_mig_lock);
- 	ret = adf_recv_and_handle_vf2pf_msg(accel_dev, vf_nr);
- 	if (ret)
-@@ -33,13 +36,18 @@ static void adf_iov_send_resp(struct wor
- 		adf_enable_vf2pf_interrupts(accel_dev, 1 << vf_nr);
- 	mutex_unlock(&vf_info->pfvf_mig_lock);
- 
-+out:
- 	kfree(pf2vf_resp);
+ 	mxc_isi_crossbar_cleanup(&isi->crossbar);
+ 	mxc_isi_v4l2_cleanup(isi);
+-
+-	pm_runtime_disable(isi->dev);
  }
  
- void adf_schedule_vf2pf_handler(struct adf_accel_vf_info *vf_info)
- {
-+	struct adf_accel_dev *accel_dev = vf_info->accel_dev;
- 	struct adf_pf2vf_resp *pf2vf_resp;
- 
-+	if (READ_ONCE(accel_dev->pf.vf2pf_disabled))
-+		return;
-+
- 	pf2vf_resp = kzalloc(sizeof(*pf2vf_resp), GFP_ATOMIC);
- 	if (!pf2vf_resp)
- 		return;
-@@ -49,6 +57,12 @@ void adf_schedule_vf2pf_handler(struct a
- 	queue_work(pf2vf_resp_wq, &pf2vf_resp->pf2vf_resp_work);
- }
- 
-+static void adf_flush_pf2vf_resp_wq(void)
-+{
-+	if (pf2vf_resp_wq)
-+		flush_workqueue(pf2vf_resp_wq);
-+}
-+
- static int adf_enable_sriov(struct adf_accel_dev *accel_dev)
- {
- 	struct pci_dev *pdev = accel_to_pci_dev(accel_dev);
-@@ -75,7 +89,7 @@ static int adf_enable_sriov(struct adf_a
- 		hw_data->configure_iov_threads(accel_dev, true);
- 
- 	/* Enable VF to PF interrupts for all VFs */
--	adf_enable_vf2pf_interrupts(accel_dev, BIT_ULL(totalvfs) - 1);
-+	adf_enable_all_vf2pf_interrupts(accel_dev, totalvfs);
- 
- 	/* Do not enable SR-IOV if already enabled */
- 	if (pci_num_vf(pdev))
-@@ -259,8 +273,10 @@ void adf_disable_sriov(struct adf_accel_
- 	if (!test_bit(ADF_STATUS_RESTARTING, &accel_dev->status))
- 		pci_disable_sriov(accel_to_pci_dev(accel_dev));
- 
--	/* Disable VF to PF interrupts */
-+	/* Block VF2PF work and disable VF to PF interrupts */
- 	adf_disable_all_vf2pf_interrupts(accel_dev);
-+	adf_isr_sync_ae_cluster(accel_dev);
-+	adf_flush_pf2vf_resp_wq();
- 
- 	/* Clear Valid bits in AE Thread to PCIe Function Mapping */
- 	if (hw_data->configure_iov_threads)
+ static const struct of_device_id mxc_isi_of_match[] = {
 
 
