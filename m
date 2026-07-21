@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071604307AD;
-	Tue, 21 Jul 2026 20:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44E0415F04;
+	Tue, 21 Jul 2026 20:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664359; cv=none; b=OMa5+naVQaBbGIESC3LKmYnMgHAutTv3L1gXV/zYM5Ydtfd7KdzfoB/xjk1D/oldOOcAQm88pGPu3xFmojBYWVrfIJc1z2VQ5yv9gJ9qVG/FUg6hIfN0gtOBC/fubS++q8eYSAaeeYACRtJbvFRpc/OReEokfNGYSAJbrh4W76k=
+	t=1784664361; cv=none; b=OKloT5lr3XtJN4JT6BC0XBU7h0wtlbCV1dPOgxnPJEawZ/2bG+VJQqxUr5oef6V2N55zHQTFPGoFhzdKFEvxOxBLlxQKi40lxwYlRaW1IUC0tL1SzCNv42ieZafu+VViLiWT5BXi1hinaXizkrnsQbvS8suHvGZanKJz5qhMdeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664359; c=relaxed/simple;
-	bh=35U13Wa77gfnMQVovKYw2XaMj170q9ahrrMIBd0o1ys=;
+	s=arc-20240116; t=1784664361; c=relaxed/simple;
+	bh=EggdhOXJu2DvEVRRgacslUYbIxqqE60F9bSmtQHztNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=unU+A8L1qoMboOqUBlABQ3tvt0XJ0Ka+RDHdRyV2qMav9qaPoXn9T6nIH5kl5NT1WBxBBT8h8S5K/O8GtSce6GK5Tcz46JWPlMveprkc3q6qOJUUTMu51JXTwXlU283qNxvc2hzqvpNyYetRQIWbpfHCC5UsFh18Xe3Qd6cl2wY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyEDEtvR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uPSsQGZ9hf1Q1G+/JKmRvKGULBl2Bmqw9B4ttOG4s0Le/PZoOdTajcAV8D2UEV/I8h29w1Udk2Y6i6OOv1A/umZcdbf+cOVKTWsSBVuRQPHHKNpDokhlwCRxMqLNUMPs1hpulFDJOfPRnbjVBPjacKvJB/P1PYQRKC1+S3YEgx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMRtzF/4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyEDEtvR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF591F000E9;
-	Tue, 21 Jul 2026 20:05:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMRtzF/4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129071F000E9;
+	Tue, 21 Jul 2026 20:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664357;
-	bh=G/6d0Z4MXHhPj6ZCgfZOLgiR9FLcSYcYwXG7Cw1fPEY=;
+	s=korg; t=1784664360;
+	bh=U9GIEInVub23f/bG9qj1zdDJjUnU+3HLl3nkSUJikaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jyEDEtvRQpIL+0lNJp/ZQHD6qfo0S9Rbswi3KoqU7ddlDBxTZetTl9BPmMfxILlCd
-	 LxK7tOxNuIMeltsJJViUnl+6mdTENpnboFASyNdnB4hqYj4Bimn0sYWHjsLV25URQ8
-	 m42zSt6IO4bcAUOCmkPKKAK6Hs6g6kpb1F/vkaU8=
+	b=KMRtzF/4FxUDhsaOBsoGRuGdGkNAF3rF5WfZU1/iA+vuqTinYjITNRiOlS2Y7td+P
+	 G4/+0xSNpQ2FjOThU66JSEY31vKV8cEFKpKhoQLrzPP+W1SyE5BH6bHPtREYY7arU4
+	 gsiFvPTFTa0LdVgc4IF3CTJCybSly3PqlJ8JWClw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1171/1276] Bluetooth: L2CAP: cancel pending_rx_work before taking conn->lock
-Date: Tue, 21 Jul 2026 17:26:54 +0200
-Message-ID: <20260721152512.230933488@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>,
+	=?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH 6.12 1154/1276] PCI: Free saved list without holding pci_bus_sem
+Date: Tue, 21 Jul 2026 17:26:37 +0200
+Message-ID: <20260721152511.837253388@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -45,72 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 2641a9e0a1dd4af2e21995470a21d55dd35e5203 ]
+[ Upstream commit 1d8a0506f69895b7cfd9d5c4546761c508231a8a ]
 
-l2cap_conn_del() takes conn->lock and then calls cancel_work_sync() for
-pending_rx_work.  process_pending_rx() takes the same mutex, so teardown
-can deadlock against the worker it is flushing.
+Freeing the saved list does not require holding pci_bus_sem, so the
+critical section can be made shorter.
 
-This issue was found by our static analysis tool and then manually
-reviewed against the current tree.
-
-The grounded PoC kept the l2cap_conn_ready() -> queue_work(...,
-&conn->pending_rx_work) submit path, the l2cap_conn_del() ->
-cancel_work_sync(&conn->pending_rx_work) teardown path, and the
-process_pending_rx() -> mutex_lock(&conn->lock) worker edge.  Lockdep
-reported:
-
-  WARNING: possible circular locking dependency detected
-  process_pending_rx+0x21/0x2a [vuln_msv]
-  l2cap_conn_del.constprop.0+0x3f/0x4e [vuln_msv]
-  *** DEADLOCK ***
-
-Cancel pending_rx_work before taking conn->lock, matching the existing
-lock-before-drain ordering used for the two delayed works in the same
-teardown path.  The pending_rx queue is still purged after the work has
-been cancelled and conn->lock has been acquired.
-
-Fixes: 7ab56c3a6ecc ("Bluetooth: Fix deadlock in l2cap_conn_del()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org> # AVA, AMD GPU
+Link: https://patch.msgid.link/20251113162628.5946-6-ilpo.jarvinen@linux.intel.com
+Stable-dep-of: ee7471fe968d ("PCI: Skip Resizable BAR restore on read error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c |   10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/pci/setup-bus.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -1755,19 +1755,13 @@ static void l2cap_conn_del(struct hci_co
- 	disable_delayed_work_sync(&conn->info_timer);
- 	disable_delayed_work_sync(&conn->id_addr_timer);
+--- a/drivers/pci/setup-bus.c
++++ b/drivers/pci/setup-bus.c
+@@ -2400,8 +2400,8 @@ cleanup:
+ 		pci_claim_resource(bridge, i);
+ 		pci_setup_bridge(bridge->subordinate);
+ 	}
+-	free_list(&saved);
+ 	up_read(&pci_bus_sem);
++	free_list(&saved);
  
-+	cancel_work_sync(&conn->pending_rx_work);
-+
- 	mutex_lock(&conn->lock);
- 
- 	kfree_skb(conn->rx_skb);
- 
- 	skb_queue_purge(&conn->pending_rx);
--
--	/* We can not call flush_work(&conn->pending_rx_work) here since we
--	 * might block if we are running on a worker from the same workqueue
--	 * pending_rx_work is waiting on.
--	 */
--	if (work_pending(&conn->pending_rx_work))
--		cancel_work_sync(&conn->pending_rx_work);
--
- 	ida_destroy(&conn->tx_ida);
- 
- 	l2cap_unregister_all_users(conn);
+ 	return ret;
+ }
 
 
