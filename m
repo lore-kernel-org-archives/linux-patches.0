@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E86F439345;
-	Tue, 21 Jul 2026 21:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFED438FEE;
+	Tue, 21 Jul 2026 21:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668307; cv=none; b=ETclxx2gZlg/u8njiBf3Noi4aaAuq4KMMXU49EOMqett36rkwksApi58DnwnSO78uQ9fYCbsc06+GO6H9klEagsBVKthllbZS/gz7Gd6vT1/WV4FDKie44thHteAUKPRiDEeGo4JYetTCsRfUf6vRb4SBZRofQH+xvfzFoa1xgw=
+	t=1784668309; cv=none; b=d6UCcvUSXqEyQN4fWLGxNmRlAYyo0Iuh/qLIAL7L4ua+CwtwXI+KqKcCb/gBu34GztqELGUMvFY8TBOyZ9hmlZw604C/Xj9sHWII3GI1S3I+ICObFWTR5hJ+B3Wm7NrawSvLrY8cYItgmXDkqasswPhjNUUAOQ81egcvbfCKBFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668307; c=relaxed/simple;
-	bh=j6u//4yyXgTIdeumLCqbxuiFFpakH0eOTdmxl59DrDg=;
+	s=arc-20240116; t=1784668309; c=relaxed/simple;
+	bh=fp/O+z+T7EAI2OWvYzp6of1ErWjjq1mrRMTqi/v/Zaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YeEFFctMFuKU7Iy2F1felgljNpBNvDRRfqxzULxErBuMSNMftrEZf8D2vUOFKfHhjDXz80NxN8RH2nkH84FRg5wN6UDw2PGw6nmGGXymmN1h6SrmVYyqc3tye/mzXKx3sjHEsX6Wxp0ZumJCUUCWC0ftu+GmiR5GHBqK79GfBX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PP83XOy4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jxEiRbAfNC1Zm6JcErLc5EVZNa7wyi6JyJAihfJIYP8XZAc4uMiD9DRlfFbcCh5aGXvDxt/GGiW1GbHKImyo9aLsD7+nQ6jUDScr19c2CAwSs3sI2t86EQyEMF0uK+wtQzwr+ZbQILLx1btijRFlTknmsfRalygspBQsP5+08Ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNKen4DV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PP83XOy4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943E31F000E9;
-	Tue, 21 Jul 2026 21:11:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNKen4DV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D49E1F000E9;
+	Tue, 21 Jul 2026 21:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668306;
-	bh=bmk6ZzeU0/9qg/0KosNB4TqoSoXUM/53KNger0ATDsI=;
+	s=korg; t=1784668308;
+	bh=wjzIo7d8HiwZ5+4CpiFqM2UJ+RWh20W756EQCGgBp4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PP83XOy4moOzJH+tTDAIGmtRA33wjVYZ2pB2mX+Bl/7IRiAa7bV4FvdcyPfc7xaVF
-	 hMNJBvP2DisqGBBpJK24AYvBrs9OuTE0NFMAt0iS7Xi5NeXAQTiypzuQDgz61fOggr
-	 1aS3UcQwe9dJJ4H+LvMPWaxIXgJmd7/5djURa4uY=
+	b=bNKen4DVsPap4vdkr/+sQKaA4FJjUzt2ryQ0K96zRxB80DQpnawVCX4t84G5y91Ix
+	 gfQfqDCvD8GDRB0L14OH0y8r+tM32KIaVlCY4p/u3HyBodZ5kGPdgnR8vPmbBiJ55G
+	 i5D2AdgGZBkfHNXPXVJkll6tYw1QQm4+0bkahXWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Benson Leung <bleung@chromium.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.1 0126/1067] mfd: cros_ec: Delay dev_set_drvdata() until probe success
-Date: Tue, 21 Jul 2026 17:12:07 +0200
-Message-ID: <20260721152427.410748865@linuxfoundation.org>
+	Pratham Gupta <pratham36gupta@gmail.com>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.1 0127/1067] netfilter: ctnetlink: use nf_ct_exp_net() in expectation dump
+Date: Tue, 21 Jul 2026 17:12:08 +0200
+Message-ID: <20260721152427.434009875@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,70 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Kuchynski <akuchynski@chromium.org>
+From: Pratham Gupta <pratham36gupta@gmail.com>
 
-commit 8b2c1d41bc36c100b38ce5ee6def246c527eaf8a upstream.
+commit a7f57320bbbc67e347bf5fff4b4a9bab980d5956 upstream.
 
-If ec_device_probe() fails, cros_ec_class_release releases memory for the
-cros_ec_dev structure. However, because the drvdata was already set,
-sub-drivers like cros_ec_typec can still retrieve the stale pointer via the
-platform device. This leads to a use-after-free when cros_ec_typec attempts
-to access &typec->ec->ec->dev on a device that has already been released.
-Move dev_set_drvdata() to ensure that the pointer is only made available
-once all initialization steps have succeeded.
+Commit 02a3231b6d82 ("netfilter: nf_conntrack_expect: store netns and zone in expectation")
+introduced exp->net so RCU-only expectation paths no longer need to
+dereference exp->master for netns lookups.
 
- sysfs: cannot create duplicate filename '/class/chromeos/cros_ec'
- Call trace:
-  sysfs_do_create_link_sd+0x94/0xdc
-  sysfs_create_link+0x30/0x44
-  device_add_class_symlinks+0x90/0x13c
-  device_add+0xf0/0x50c
-  ec_device_probe+0x150/0x4f0
-  platform_probe+0xa0/0xe0
- ...
- BUG: KASAN: invalid-access in __memcpy+0x44/0x230
- Write at addr f5ffff809e2d33ac by task kworker/u32:5/125
- Pointer tag: [f5], memory tag: [fe]
- Tainted : [W]=WARN, [O]=OOT_MODULE
- Hardware name: Google Navi unprovisioned 0x7FFFFFFF/sku0 board/sku3
- Workqueue: events_unbound deferred_probe_work_func
- Call trace:
-  __memcpy+0x44/0x230
-  cros_ec_check_features+0x60/0xcc [cros_ec_proto]
-  cros_typec_probe+0xe8/0x6e0 [cros_ec_typec]
-  platform_probe+0xa0/0xe0
+Commit 3db5647984de ("netfilter: nf_conntrack_expect: skip expectations in other netns via proc")
+updated the proc path accordingly, but ctnetlink_exp_dump_table() still
+compares against nf_ct_net(exp->master).
 
+Use nf_ct_exp_net(exp) here as well so the netlink dump path matches
+the rest of the March 2026 expectation netns/RCU cleanup.
+
+Fixes: 02a3231b6d82 ("netfilter: nf_conntrack_expect: store netns and zone in expectation")
 Cc: stable@vger.kernel.org
-Fixes: 1c1d152cc5ac ("platform/chrome: cros_ec_dev - utilize new cdev_device_add helper function")
-Co-developed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Link: https://patch.msgid.link/20260427131721.1165078-1-akuchynski@chromium.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Pratham Gupta <pratham36gupta@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/cros_ec_dev.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_netlink.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mfd/cros_ec_dev.c
-+++ b/drivers/mfd/cros_ec_dev.c
-@@ -151,7 +151,6 @@ static int ec_device_probe(struct platfo
- 	if (!ec)
- 		return retval;
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -3152,7 +3152,7 @@ restart:
+ 			if (l3proto && exp->tuple.src.l3num != l3proto)
+ 				continue;
  
--	dev_set_drvdata(dev, ec);
- 	ec->ec_dev = dev_get_drvdata(dev->parent);
- 	ec->dev = dev;
- 	ec->cmd_offset = ec_platform->cmd_offset;
-@@ -193,6 +192,8 @@ static int ec_device_probe(struct platfo
- 	if (retval)
- 		goto failed;
+-			if (!net_eq(nf_ct_net(exp->master), net))
++			if (!net_eq(nf_ct_exp_net(exp), net))
+ 				continue;
  
-+	dev_set_drvdata(dev, ec);
-+
- 	/* check whether this EC is a sensor hub. */
- 	if (cros_ec_get_sensor_count(ec) > 0) {
- 		retval = mfd_add_hotplug_devices(ec->dev,
+ 			if (cb->args[1]) {
 
 
