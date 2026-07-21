@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FB943C06B;
-	Tue, 21 Jul 2026 20:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9F73EF0A6;
+	Tue, 21 Jul 2026 20:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666994; cv=none; b=PoLhdiB+UT0BPnFN87Ojj5gg6oZpxouYjXPrgK3/gAiOrMFwxFusLbBnNjk2JxQyuSLHs8T17E2OVDAt9i1NYd0syYcD1ku6aj5py0MGsh5TAK+HeYhYLiDLW7TaTiUVZMcYktXm0mQzOQ87BMT71FCWI4y7E3ojons/ccsFLas=
+	t=1784666996; cv=none; b=mfhPA+GRWnQL0daanV3sHTd8stW5G4IXFDTMhaP5nymfu9DfBIMCJUB6CCTpEmcV2xt9hb8p7NCGyiZyQ+dLrvYdlCahxCFNAw1zXrmIo9/aOe6Z5DyFJsZX2uHvcfvpH37MWPiRGn1aYWcFJBelMzvZvzG9vnrsHGac9YUiUBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666994; c=relaxed/simple;
-	bh=QMqlDWFvKbFdAV+3n1gDIgx/ZayjKwHRWQ3cf0OFAN4=;
+	s=arc-20240116; t=1784666996; c=relaxed/simple;
+	bh=3T/OjNWmss9wTQl29uTfhJ/R7Sbu39P3d0WuMjyFniY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHl7Pr4sjDL022LO0/hITq5S06HUPmSEqW6CSrZ09ZgeQDQta1R+uCeSF5sRa0j4h/n4e4jFglworS76GOgJBL909sz1i2/H9hkta6kcilJoyUZ1DIAO1J8HnwXYGnKpU93Dw7TbzDhGZn0kaontqeNMh7a68zwNCS+Fx5ks2h0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jL4kKCms; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yc159vOCk5Pk4W2WUM2Jo3CWtkCe5pHXFF9bIRv2OFnO6KI2FoNl2fdPA4IFIGtUfew+aAP8vqX7kGxZMwUIAtSFDuHy0kflAq5DgBnkh4gfRkgjbPSXEPVgZKqgz6+vMCfsaYlnTqu3SS0mp8ukVv7siR1xVEhO7NBsKqoAbdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K2kEr/dT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jL4kKCms"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BAB91F00A3E;
-	Tue, 21 Jul 2026 20:49:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K2kEr/dT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 153141F000E9;
+	Tue, 21 Jul 2026 20:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666990;
-	bh=j0iAvm+6CLxujYKxZbsQQw5tUnE/nMKosuSuukJSTwU=;
+	s=korg; t=1784666993;
+	bh=Htpa3RelJ6f6FG3CPibgpecFvWZNprFeeR+AexpEe6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jL4kKCmsS4b7c8+ELl+LCx0RUAYnhweak90lruM7aTC39iHNhDeigeOoUCT/ItJyZ
-	 4OnK6XG157bhSiOzZiORpT+3urpfENsoXel3HDVuCCIBSzCi7J4JGlSLIbWwEBWR7F
-	 UJDvyNESLHmecB9g4Y2VfM/Tv0Tw0UDb4hVEfxXg=
+	b=K2kEr/dTI0tEWIEQhjiIPf2H9+ajgI1izqG5xlx6/QquyGzZDAjnszGL81Cx54ubY
+	 kLcwmgRW2AHUMe3ii5ThroTgdFiWP0UI0A+phLOr1RS9+PJ3xAdqpRLCT/Vu2TFarb
+	 QWbPHx6K0IAwCMbS7xr0a4RmvwG1F2qF81H7xpQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Liam Girdwood <liam.r.girdwood@intel.com>,
 	Bard Liao <yung-chuan.liao@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 0892/1266] ASoC: SOF: ipc4-control: Fix TOCTOU in sof_ipc4_bytes_put
-Date: Tue, 21 Jul 2026 17:22:09 +0200
-Message-ID: <20260721152501.807659382@linuxfoundation.org>
+Subject: [PATCH 6.6 0893/1266] ASoC: SOF: ipc3-control: Use overflow checks in control_update size calc
+Date: Tue, 21 Jul 2026 17:22:10 +0200
+Message-ID: <20260721152501.831843328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -54,59 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 3ad673e7139cf214afd24321a829aad6575f4163 upstream.
+commit 8791977d7289f6e9d2b014f60a5455f053a7bc04 upstream.
 
-In sof_ipc4_bytes_put(), the copy size is derived from the old
-data->size in the buffer rather than the incoming new data's size
-field from ucontrol. If the new data has a different size, the copy
-uses the wrong length: it may truncate valid data or copy stale bytes.
+In sof_ipc3_control_update(), the expected_size calculation uses
+firmware-provided cdata->num_elems in arithmetic that could overflow
+on 32-bit platforms, wrapping to a small value. This would allow the
+cdata->rhdr.hdr.size comparison to pass with mismatched sizes,
+potentially leading to out-of-bounds access in snd_sof_update_control.
 
-Fix by validating and using the incoming data's sof_abi_hdr.size from
-ucontrol before copying.
+Use check_mul_overflow() and check_add_overflow() to detect and reject
+overflowed size calculations.
 
-Fixes: a062c8899fed ("ASoC: SOF: ipc4-control: Add support for bytes control get and put")
+Fixes: 10f461d79c2d ("ASoC: SOF: Add IPC3 topology control ops")
 Cc: stable@vger.kernel.org
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
 Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20260609083458.31193-2-peter.ujfalusi@linux.intel.com
+Link: https://patch.msgid.link/20260609083458.31193-4-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc4-control.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ sound/soc/sof/ipc3-control.c |   20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/sound/soc/sof/ipc4-control.c
-+++ b/sound/soc/sof/ipc4-control.c
-@@ -407,6 +407,8 @@ static int sof_ipc4_bytes_put(struct snd
- 	struct snd_soc_component *scomp = scontrol->scomp;
- 	struct snd_sof_dev *sdev = snd_soc_component_get_drvdata(scomp);
- 	struct sof_abi_hdr *data = cdata->data;
-+	const struct sof_abi_hdr *new_hdr =
-+		(const struct sof_abi_hdr *)ucontrol->value.bytes.data;
- 	size_t size;
- 	int ret;
- 
-@@ -417,15 +419,16 @@ static int sof_ipc4_bytes_put(struct snd
- 		return -EINVAL;
+--- a/sound/soc/sof/ipc3-control.c
++++ b/sound/soc/sof/ipc3-control.c
+@@ -626,16 +626,28 @@ static void sof_ipc3_control_update(stru
+ 		return;
  	}
  
--	/* scontrol->max_size has been verified to be >= sizeof(struct sof_abi_hdr) */
--	if (data->size > scontrol->max_size - sizeof(*data)) {
-+	/* Validate the new data's size, not the old one */
-+	if (new_hdr->size > scontrol->max_size - sizeof(*new_hdr)) {
- 		dev_err_ratelimited(scomp->dev,
- 				    "data size too big %u bytes max is %zu\n",
--				    data->size, scontrol->max_size - sizeof(*data));
-+				    new_hdr->size,
-+				    scontrol->max_size - sizeof(*new_hdr));
- 		return -EINVAL;
- 	}
- 
--	size = data->size + sizeof(*data);
-+	size = new_hdr->size + sizeof(*new_hdr);
- 
- 	/* copy from kcontrol */
- 	memcpy(data, ucontrol->value.bytes.data, size);
+-	expected_size = sizeof(struct sof_ipc_ctrl_data);
+ 	switch (cdata->type) {
+ 	case SOF_CTRL_TYPE_VALUE_CHAN_GET:
+ 	case SOF_CTRL_TYPE_VALUE_CHAN_SET:
+-		expected_size += cdata->num_elems *
+-				 sizeof(struct sof_ipc_ctrl_value_chan);
++		if (check_mul_overflow((size_t)cdata->num_elems,
++				       sizeof(struct sof_ipc_ctrl_value_chan),
++				       &expected_size))
++			return;
++		if (check_add_overflow(expected_size,
++				       sizeof(struct sof_ipc_ctrl_data),
++				       &expected_size))
++			return;
+ 		break;
+ 	case SOF_CTRL_TYPE_DATA_GET:
+ 	case SOF_CTRL_TYPE_DATA_SET:
+-		expected_size += cdata->num_elems + sizeof(struct sof_abi_hdr);
++		if (check_add_overflow((size_t)cdata->num_elems,
++				       sizeof(struct sof_abi_hdr),
++				       &expected_size))
++			return;
++		if (check_add_overflow(expected_size,
++				       sizeof(struct sof_ipc_ctrl_data),
++				       &expected_size))
++			return;
+ 		break;
+ 	default:
+ 		return;
 
 
