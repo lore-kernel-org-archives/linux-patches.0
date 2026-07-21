@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6615C4746D5;
-	Tue, 21 Jul 2026 21:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E59A3B71A0;
+	Tue, 21 Jul 2026 21:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667944; cv=none; b=OwnJSnaCBXNa3aOhq8eNZVuXzW0lNH3pEeSC7d863Ju4y8e26g022M3Es34UAA6cPBHyqBm7oR3HySelmVVt3NBfTyxQdBUV/LqCWX202mJeryVz7DlrGNwjlfDNZu2iSSRe45CnhgZ2ShdEwXqsDn/ZUvaFoR/V+vwGLudkyQ8=
+	t=1784667947; cv=none; b=IyM89gAZI+wZCoFII59wmwAoLW0oUrfHdLPUCdFFxQvtAQ0z4aSSaZ0okIdxGKC2VjmMFFmrvP7TcdJjUHyo42GZ+GeACqGu7iqczOgzf5FWQsveHSlL1bUPqIg4+GUY5XICwxN2dBYn28X4y+/caEIQDB9vgO3/X+1CLbFxlSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667944; c=relaxed/simple;
-	bh=prU/D9EasQwvRT9LZO/53FmrfKNDz5twiTwhn9j4md0=;
+	s=arc-20240116; t=1784667947; c=relaxed/simple;
+	bh=Xcv5/4UbbrmRO/vKGVTAsTU7Kb1k4DTadG1Qo9Ip4A4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FtTRYm3jJsVhmXNuVLOmy6VLUo2rBTs2cCvJ0eDKMZix5igdL1r2Z8ffmvb7fYLQuh4YYtNSrXN5gQwGUolc7wi/MS/qi+LFMs8tMqB9fxwfCLZV/4ekMhDd5ymx8zH9vDGYicBy0+x1gwjLpJoZF1sSSpwk29QfWeYUZ6Y1Gok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CsMxihZa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kJ1kBOWZilGvsM7rV0yXAyaeG7XE+vrUpZLIflJL0sTXpHCgdtMqjF8rUOt+6rupVVaIwHurWq4PPLcHAgWRo0dUF3Fe1AzZ7CZzwvt/ruLNCjCK+xyPcQpXqMUAw/rdg5NnyClsfTYasl88ajtvkOU1W1oEN7J8rOBnYo7uhgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PkZF+Upu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CsMxihZa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2391F000E9;
-	Tue, 21 Jul 2026 21:05:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PkZF+Upu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 740361F000E9;
+	Tue, 21 Jul 2026 21:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667943;
-	bh=bj9KygCyS0TeUzJ9U97UV60TrRqPwUEa3L+T7jjD200=;
+	s=korg; t=1784667946;
+	bh=W909kzAd6B8+BJaPieaol/95JfhXAGSXmL6aaW/+WSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CsMxihZa+a0SsL0CkkoEGexNFQC0REjQsNeGK66F0z5LbPAiX9OZn92jQzERyRHSY
-	 w92/Qlu2axpgqeJN9LCVI2XdjGbSsX6xBsXXB/pzAwbE15mlW0SPFrHMvzBGNjcLyX
-	 grBVREgxgfC58+WleXGfOTBXZcALt1U7ijvBlL1c=
+	b=PkZF+Upurh0ikXrfNP5kbWPLYV8z1AGKa8DY4WgjqTQpobTvklpmkBFpy4ZIXwJnI
+	 qSdbQtPl3whykM1lfDfk8YTk3vxftwB6RKhjbjIAib5E3roLzSo7N0+Fvp01P01wZv
+	 SvdkPJyTIXoqlgj3AMhvcqetD0Czmac3hRFapSMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Portnoy <dddhkts1@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 1253/1266] ksmbd: fix durable reconnect double-bind race in ksmbd_reopen_durable_fd
-Date: Tue, 21 Jul 2026 17:28:10 +0200
-Message-ID: <20260721152509.862863403@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 1254/1266] Bluetooth: hci_core: Remove check of BDADDR_ANY in hci_conn_hash_lookup_big_state
+Date: Tue, 21 Jul 2026 17:28:11 +0200
+Message-ID: <20260721152509.885241189@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,86 +49,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Portnoy <dddhkts1@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 7ce4fc40018de07f05f3035241122d992610dbfb upstream.
+commit 59710a26a289ad4e7ef227d22063e964930928b0 upstream.
 
-Two concurrent same-user DHnC reconnects can both observe fp->conn == NULL
-before either sets it. ksmbd_reopen_durable_fd() checks fp->conn to guard
-against a handle already being reconnected, but the check and the binding
-assignment are not atomic: both threads pass the guard, both call
-ksmbd_conn_get() on the same fp, and both eventually reach
-kfree(fp->owner.name) -- a double-free of the owner.name slab object.
-The double-bound ksmbd_file also causes a write-UAF on the 344-byte
-ksmbd_file_cache object when a concurrent smb2_close() spins on fp->f_lock
-after the object has been freed by the losing reconnect path.
+The check for destination to be BDADDR_ANY is no longer necessary with
+the introduction of BIS_LINK.
 
-KASAN on 7.1-rc5 (48-thread concurrent reconnect, 3000 cycles):
-  BUG: KASAN: double-free in ksmbd_reopen_durable_fd+0x268/0x308
-  BUG: KASAN: slab-use-after-free in _raw_spin_lock+0xac/0x150
-    Write of size 4 at offset 24 into freed ksmbd_file_cache object
-Five double-bind windows observed; 63 total KASAN reports triggered.
-
-Fix: validate and claim fp->conn under write_lock(&global_ft.lock) so the
-check-and-claim is atomic. ksmbd_lookup_durable_fd() already treats
-fp->conn != NULL as "in use" and skips such an fp; setting fp->conn before
-dropping the lock closes the race. ksmbd_conn_get() is a non-sleeping
-refcount increment, safe under the rwlock. The rollback path on __open_id()
-failure also clears fp->conn/tcon under the lock so concurrent readers see
-a consistent state.
-
-Fixes: b1f1e80620de ("ksmbd: centralize ksmbd_conn final release to plug transport leak")
-Assisted-by: Henry (Claude):claude-opus-4
-Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 23205562ffc8 ("Bluetooth: separate CIS_LINK and BIS_LINK link types")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/vfs_cache.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ include/net/bluetooth/hci_core.h |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -1191,19 +1191,19 @@ int ksmbd_reopen_durable_fd(struct ksmbd
- 	struct ksmbd_lock *smb_lock;
- 	unsigned int old_f_state;
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1339,8 +1339,7 @@ hci_conn_hash_lookup_big_state(struct hc
+ 	rcu_read_lock();
  
-+	write_lock(&global_ft.lock);
- 	if (!fp->is_durable || fp->conn || fp->tcon) {
-+		write_unlock(&global_ft.lock);
- 		pr_err("Invalid durable fd [%p:%p]\n", fp->conn, fp->tcon);
- 		return -EBADF;
- 	}
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+-		if (c->type != BIS_LINK || bacmp(&c->dst, BDADDR_ANY) ||
+-		    c->state != state)
++		if (c->type != BIS_LINK || c->state != state)
+ 			continue;
  
- 	if (has_file_id(fp->volatile_id)) {
-+		write_unlock(&global_ft.lock);
- 		pr_err("Still in use durable fd: %llu\n", fp->volatile_id);
- 		return -EBADF;
- 	}
- 
--	old_f_state = fp->f_state;
--	fp->f_state = FP_NEW;
--
- 	/*
- 	 * Initialize fp's connection binding before publishing fp into the
- 	 * session's file table.  If __open_id() is ordered first, a
-@@ -1214,11 +1214,17 @@ int ksmbd_reopen_durable_fd(struct ksmbd
- 	 */
- 	fp->conn = ksmbd_conn_get(conn);
- 	fp->tcon = work->tcon;
-+	write_unlock(&global_ft.lock);
-+
-+	old_f_state = fp->f_state;
-+	fp->f_state = FP_NEW;
- 
- 	__open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
- 	if (!has_file_id(fp->volatile_id)) {
-+		write_lock(&global_ft.lock);
- 		fp->conn = NULL;
- 		fp->tcon = NULL;
-+		write_unlock(&global_ft.lock);
- 		ksmbd_conn_put(conn);
- 		fp->f_state = old_f_state;
- 		return -EBADF;
+ 		if (handle == c->iso_qos.bcast.big) {
 
 
