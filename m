@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB0C40315B;
-	Tue, 21 Jul 2026 17:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B90403AFB;
+	Tue, 21 Jul 2026 17:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654940; cv=none; b=SQEApOllPZufuzHFwKo84J6PhNVprFAw4OEu6cC4YK3Np3eFtBesprlcipm0kn9WkCAXm8dG7f2dwu9gcodbrzwY5Hzb8CC86M/cgYYrXxuarn8OoA7ojL4czRvfhfAuOJK6b78Q6YlngucfxLJ3U/AzZBSJTssAUEu1x0yJB7U=
+	t=1784654943; cv=none; b=uZ496hL1hKqbGUfnkhbRBYwOX+ly0HlKmzQ0xWDJgFt5VX40iGgbxk72tHMqTT3RwRMnKNkG2+/9BeccnFVivCPJPiorjTahko6NwCmVv6zc+BRSYdZ76vkI0T22S3BOOl7wEkeBxzDi8IsM+EC7TTMPBdeAalQKUKJyPjLIRMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654940; c=relaxed/simple;
-	bh=6ThD3dBgsi9+BhhQDc+mJ0YwmfPQ4qflKlPS71TR6rg=;
+	s=arc-20240116; t=1784654943; c=relaxed/simple;
+	bh=0KPynoMBvq+85F/ajbpLM1bChAuE8FzZD59Pq8cK95M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HyK41EaR66CWZyq70ToNJ3FnJzzjCcDhR/cnhJQdDJlkiaF5jZtDspoSGoW0I7AK+yh09jt92Jyj/uzccnAI6Xabcdny2CNOSnxz0/D9XayHCxEOnF0+pvoEqXwtwvwUYcXAgkjzhtktLH8zhh+KyLHX7x2m3gd8x2BjzHqxg5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZ43JtL2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lZ+QmO4mDdoP0Sk6iabOBFEyNzVr44TS9I0Jt0bYHVKNLMm9vido1KtL22g5qQqdd7/VHYjTtkZ5bdjnI5RqJsPCC8JfF0eWTQGUFZn9Yn6cxRTUnKx0ktPKkY2CcoRu9Czm0GeoO4wuZQ4In6F2JBGsI+0H09O/8uLiksIUA/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UDU2Jq9o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZ43JtL2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF34F1F000E9;
-	Tue, 21 Jul 2026 17:28:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UDU2Jq9o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 814511F000E9;
+	Tue, 21 Jul 2026 17:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654939;
-	bh=6l+rsAH7KFx6L9RKEZIkf8brL+Q/9+qQfmkyPOvfE3E=;
+	s=korg; t=1784654942;
+	bh=E1AzbnR6AYrU2FfrxDaymEIPUPRLbMM4pwyP1sRVE0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lZ43JtL2aso+C2uQ8mjJaMhXjN5QBwSqKtG6o6sJxrg7pDNVAa7EQsJaotu4rpU0z
-	 oTdcOXQdZ6O9Mv3o/8Zg4+7tTKnscnXLWw0OA4K1AHccL4CNa3lYp08UK9/dDnimzW
-	 QG7jMEIRs35eneEV0LM8d3Qa5Si12/j1zw4BM4dI=
+	b=UDU2Jq9oMvGFfqrUHxDpQYU0PC0jwSI6X9Qebw5+xzEYfXgPmEdEAkc0jt8gkwC/v
+	 JkR2ECbz50dJSAc13YBiI81qUy1FSIsMdDuMfzP1uKBOYsfF7oU9S+sGh/zZlnFxGr
+	 cz3SwQbI1Sga6pem8aQwCNE9GfLH2BuJ8AvjmfGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.1 1851/2077] dm-stats: fix merge accounting
-Date: Tue, 21 Jul 2026 17:25:24 +0200
-Message-ID: <20260721152636.394164446@linuxfoundation.org>
+	Ingo Blechschmidt <iblech@speicherleck.de>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Ondrej Kozina <okozina@redhat.com>
+Subject: [PATCH 7.1 1852/2077] dm: avoid leaking the callers thread keyring via the table device file
+Date: Tue, 21 Jul 2026 17:25:25 +0200
+Message-ID: <20260721152636.418087320@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -49,36 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Ingo Blechschmidt <iblech@speicherleck.de>
 
-commit 1917eb2db750ecbdf710f79a8042eaa545a063c7 upstream.
+commit 981ccd97f7153d310dfa92a534525bbaf46752c2 upstream.
 
-There were wrong parentheses when setting stats_aux->merged, so that
-merging was never properly accounted. This commit fixes it.
+The refactoring in commit a28d893eb327 ("md: port block device access to file")
+accidentally causes the caller's thread keyring to be kept alive long
+beyond the caller's lifetime.
 
+As a result, "cryptsetup luksSuspend" silently fails to wipe the
+LUKS volume key from memory.
+
+In detail: "cryptsetup luksOpen" uses its supposedly ephemeral thread
+keyring to pass the volume key to the kernel. dm-crypt's
+crypt_set_keyring_key() copies the key material into its own
+crypt_config structure and then drops its own reference to the key in
+the keyring with key_put().
+
+With this fix, restoring pre-v6.9 behavior, the copy in the thread
+keyring is then promptly garbage collected, such that exactly one copy
+of the volume key remains. This single copy is correctly wiped from
+memory on "cryptsetup luksSuspend".
+
+Without this fix, the thread keyring and the volume key in it remains.
+This second copy is only freed on "luksClose". "luksSuspend" neither
+knows about this copy nor has any way to remove it, so the key remains
+recoverable from RAM after a suspend that is documented to have wiped it.
+
+This fix should not introduce new security problems, as the code is
+anyway gated by CAP_SYS_ADMIN. The device-mapper core, not the calling
+task, is the legitimate owner of this long-lived file.
+
+Fixes: a28d893eb327 ("md: port block device access to file")
+Closes: https://gitlab.com/cryptsetup/cryptsetup/-/work_items/993
+Link: https://www.speicherleck.de/iblech/cryptsetup-luksSuspend-issue-reproduction/
+Signed-off-by: Ingo Blechschmidt <iblech@speicherleck.de>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-4-6
-Fixes: fd2ed4d25270 ("dm: add statistics support")
 Cc: stable@vger.kernel.org
+Tested-by: Ondrej Kozina <okozina@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-stats.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/md/dm.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-stats.c
-+++ b/drivers/md/dm-stats.c
-@@ -692,10 +692,8 @@ void dm_stats_account_io(struct dm_stats
- 		 */
- 		last = raw_cpu_ptr(stats->last);
- 		stats_aux->merged =
--			(bi_sector == (READ_ONCE(last->last_sector) &&
--				       ((bi_rw == WRITE) ==
--					(READ_ONCE(last->last_rw) == WRITE))
--				       ));
-+			bi_sector == READ_ONCE(last->last_sector) &&
-+				(bi_rw == WRITE) == (READ_ONCE(last->last_rw) == WRITE);
- 		WRITE_ONCE(last->last_sector, end_sector);
- 		WRITE_ONCE(last->last_rw, bi_rw);
- 	} else
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -735,7 +735,16 @@ static struct table_device *open_table_d
+ 		return ERR_PTR(-ENOMEM);
+ 	refcount_set(&td->count, 1);
+ 
+-	bdev_file = bdev_file_open_by_dev(dev, mode, _dm_claim_ptr, NULL);
++	/*
++	 * Open the backing device with kernel rather than caller
++	 * credentials. Otherwise the caller's credentials would be
++	 * pinned in bdev_file->f_cred until the table device is closed.
++	 * That would keep the caller's thread keyring alive long beyond the
++	 * lifetime of the caller, breaking userspace expectation (e.g.
++	 * cryptsetup(8) leaking the LUKS volume key).
++	 */
++	scoped_with_kernel_creds()
++		bdev_file = bdev_file_open_by_dev(dev, mode, _dm_claim_ptr, NULL);
+ 	if (IS_ERR(bdev_file)) {
+ 		r = PTR_ERR(bdev_file);
+ 		goto out_free_td;
 
 
