@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E7B3B6C1D;
-	Tue, 21 Jul 2026 22:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2E9407CDA;
+	Tue, 21 Jul 2026 22:13:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671985; cv=none; b=k05AsE7Ea/BLqAu9W8Ju2lEFe5EugrEhCRAGk2Wq0goThI8gVkOo8/ZUJMf7tv3mFL7AM41/eR50SK582JAR/pIrY2OyMRouwyUu0CvvOV5WFHs+MBcrFDwR1n/MN3Bb40EaHN8B/edztEfgZ64nldYG5qf4Ii0JAhUbLP9wdVs=
+	t=1784671988; cv=none; b=qqX5Y4lMYjZx/fdw44EdtcCefEELKuhRHB1t8aWiHdfXTCc1rF5TBuY20bqZwFmOblPdXloJgw4wOsaT4S9Dm3J+JULULiutaMqkYml89XHnNauJnvqZBxLNNUlCp6sB34JtqviRuqUTkhbUaRW0nBX823ReI8Xe7LA2Os5wEK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671985; c=relaxed/simple;
-	bh=ILukYCjKX2suNmK68ZGkRY9+pRdPT7n58+y5h1OT6eg=;
+	s=arc-20240116; t=1784671988; c=relaxed/simple;
+	bh=0jVPVu2eBZSQyo6HEBPPDpjQIKR1zWZQ4jmAQcqErOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YFNn4KOtasKHl/laxyOe5nD6BHzk/0DK8LIaTwFgW6ODv43Ud1urUdnazEwi6TBShTKDJvKY/vXZKKBCQ+WL36pEUYk6JiOxCIzhEXNY7O1pupWJpqIC9icRZCv4plbYeMGycZlhf5bT5wg6+ks+YB9n79Frbr3jnf9mxqDA324=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UyYWQWng; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=alCrnVBVU49sENndfH0eMJV3L9sF9fM7lWqK0PdmwSpChspC41r2oHz7ENNqn0Y194CxE+BZh9I6ITZwjZk21ecvjgYY7lOET0hgilbnt9qkL53RMKAdEj7KKwC25g0YkDnGEoWPL7PAO771fkkiaRTtmZdssBtoXdyBoWHbU9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XG+NJ/EF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UyYWQWng"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBCC51F000E9;
-	Tue, 21 Jul 2026 22:13:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XG+NJ/EF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE1B1F000E9;
+	Tue, 21 Jul 2026 22:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671984;
-	bh=SbHeJSoz9/b0IlSqY96Y1M8esZJK2XEMr7EYGefxK+g=;
+	s=korg; t=1784671986;
+	bh=ySh0sUoTSF7jFp+Iq2lARcEfuBY6Do1poCr+wRf18rM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UyYWQWng954yWd4xyO1BFmE4toVv4nGZrs2Z2Mc0zeFopKO5SHiJnHBRGHZ2IYmnU
-	 AmnEMLmepkFBj1T7gxa9NAkxVbtvZE7c9WV95s4i24E/gmk+sNNzIX1YZR8KWvroM7
-	 z9YFyi1roDu5aB/25bGNi2BexIypvCjUQofAc4VI=
+	b=XG+NJ/EFQh8AVNgkaOh1EkXvtdQZrrSleQtKhBFRhqNhhw57n33uTIVWwaNaXYOSZ
+	 JsEvKRxW+62qP05GvEBJCI8uC/I2cqWGmf3AQuBJxwmHgbfuVQt0zuIBOtfKWKRF1g
+	 7Cx76dhghHESunI0TzcUa9JjZrk1ioc9IaCDRXmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Dai Ngo <dai.ngo@oracle.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 410/843] perf hists: Fix snprintf() in hists__scnprintf_title() UID filter path
-Date: Tue, 21 Jul 2026 17:20:45 +0200
-Message-ID: <20260721152415.262487793@linuxfoundation.org>
+Subject: [PATCH 5.15 401/843] NFSv4/pnfs: defer return_range callbacks until after inode unlock
+Date: Tue, 21 Jul 2026 17:20:36 +0200
+Message-ID: <20260721152415.058124563@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,49 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit 227a8748742f0263f1fe3131449b44563b77a209 ]
+[ Upstream commit 77b160b2d863d37f36b6c38e80a7d259ce939e69 ]
 
-hists__scnprintf_title() accumulates formatted output into a buffer
-using scnprintf() for all filter clauses except the UID filter, which
-uses snprintf().  If the buffer fills up and snprintf() returns more
-than the remaining space, printed exceeds size and the next 'size -
-printed' underflows, causing later scnprintf() calls to write past
-the buffer.
+Sometimes unmounting an NFS filesystem mounted with pNFS SCSI
+layouts triggers the following warning:
 
-Switch the UID filter clause to scnprintf() to match the rest of the
-function.
+     BUG: scheduling while atomic: umount.nfs4/...
 
-Fixes: 25c312dbf88ca402 ("perf hists: Move hists__scnprintf_title() away from the TUI code")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+    __schedule_bug+0xbd/0x100
+     schedule_debug.constprop.0+0x19f/0x220
+     __schedule+0x10d/0x10a0
+     schedule+0x74/0x190
+     schedule_timeout+0xf5/0x220
+     io_schedule_timeout+0xd5/0x160
+     __wait_for_common+0x186/0x4b0
+     blk_execute_rq+0x2ef/0x3a0
+     scsi_execute_cmd+0x1ff/0x700
+     sd_pr_out_command.isra.0+0x242/0x380 [sd_mod]
+     bl_unregister_scsi.constprop.0+0x109/0x3c0 [blocklayoutdriver]
+     bl_unregister_dev+0x175/0x1c0 [blocklayoutdriver]
+     bl_free_device+0x1f/0x1b0 [blocklayoutdriver]
+     bl_free_deviceid_node+0x12/0x30 [blocklayoutdriver]
+     nfs4_put_deviceid_node+0x171/0x360 [nfsv4]
+     ext_tree_remove+0x11c/0x1d0 [blocklayoutdriver]
+     _pnfs_return_layout+0x416/0x900 [nfsv4]
+     nfs4_evict_inode+0x108/0x130 [nfsv4]
+     evict+0x316/0x750
+     dispose_list+0xf1/0x1a0
+     evict_inodes+0x33f/0x440
+     generic_shutdown_super+0xc9/0x4e0
+     kill_anon_super+0x3a/0x90
+     nfs_kill_super+0x44/0x60 [nfs]
+     deactivate_locked_super+0xb8/0x1b0
+     cleanup_mnt+0x25a/0x380
+     task_work_run+0x13e/0x210
+     exit_to_user_mode_loop+0x169/0x400
+     do_syscall_64+0x467/0x1550
+     entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+The warning occurs because the block layout driver unregisters the SCSI
+device while the inode lock is still held. Device unregistration issues
+a SCSI PR command, which may sleep, resulting in a "scheduling while
+atomic" warning.
+
+During layout return, ext_tree_remove() invokes the layout driver's
+return_range callback while holding the inode lock. For block layouts,
+this callback eventually calls bl_unregister_scsi(), which may block in
+scsi_execute_cmd() while issuing PR commands to the device.
+
+Fix this by deferring the return_range callbacks until after the inode
+lock has been released. The layout header reference count is incremented
+before invoking return_range(), ensuring that the layout header remains
+valid while the layout driver removes extents from the extent tree.
+
+Fixes: c88953d87f5c8 ("pnfs: add return_range method")
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/hist.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/nfs/callback_proc.c | 9 +++++----
+ fs/nfs/pnfs.c          | 4 ++--
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/util/hist.c b/tools/perf/util/hist.c
-index 4c9d7858943673..72a1f7afbcac6b 100644
---- a/tools/perf/util/hist.c
-+++ b/tools/perf/util/hist.c
-@@ -2755,9 +2755,10 @@ int __hists__scnprintf_title(struct hists *hists, char *bf, size_t size, bool sh
- 			   ev_name, sample_freq_str, enable_ref ? ref : " ", nr_events);
+diff --git a/fs/nfs/callback_proc.c b/fs/nfs/callback_proc.c
+index ccf31323844120..04ea0afd9a1c3d 100644
+--- a/fs/nfs/callback_proc.c
++++ b/fs/nfs/callback_proc.c
+@@ -248,6 +248,7 @@ static u32 initiate_file_draining(struct nfs_client *clp,
+ 	struct pnfs_layout_hdr *lo;
+ 	u32 rv = NFS4ERR_NOMATCHING_LAYOUT;
+ 	LIST_HEAD(free_me_list);
++	bool return_range = false;
  
+ 	ino = nfs_layout_find_inode(clp, &args->cbl_fh, &args->cbl_stateid);
+ 	if (IS_ERR(ino)) {
+@@ -292,13 +293,13 @@ static u32 initiate_file_draining(struct nfs_client *clp,
+ 		/* Embrace your forgetfulness! */
+ 		rv = NFS4ERR_NOMATCHING_LAYOUT;
  
--	if (hists->uid_filter_str)
--		printed += snprintf(bf + printed, size - printed,
--				    ", UID: %s", hists->uid_filter_str);
-+	if (hists->uid_filter_str) {
-+		printed += scnprintf(bf + printed, size - printed,
-+				     ", UID: %s", hists->uid_filter_str);
-+	}
- 	if (thread) {
- 		if (hists__has(hists, thread)) {
- 			printed += scnprintf(bf + printed, size - printed,
+-		if (NFS_SERVER(ino)->pnfs_curr_ld->return_range) {
+-			NFS_SERVER(ino)->pnfs_curr_ld->return_range(lo,
+-				&args->cbl_range);
+-		}
++		return_range = true;
+ 	}
+ unlock:
+ 	spin_unlock(&ino->i_lock);
++	if (return_range && NFS_SERVER(ino)->pnfs_curr_ld->return_range)
++		NFS_SERVER(ino)->pnfs_curr_ld->return_range(lo,
++			&args->cbl_range);
+ 	pnfs_free_lseg_list(&free_me_list);
+ 	/* Free all lsegs that are attached to commit buckets */
+ 	nfs_commit_inode(ino, 0);
+diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
+index 2b70a40d613a11..6476ba73354b3f 100644
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -1372,8 +1372,6 @@ _pnfs_return_layout(struct inode *ino)
+ 	pnfs_clear_layoutcommit(ino, &tmp_list);
+ 	pnfs_mark_matching_lsegs_return(lo, &tmp_list, &range, 0);
+ 
+-	if (NFS_SERVER(ino)->pnfs_curr_ld->return_range)
+-		NFS_SERVER(ino)->pnfs_curr_ld->return_range(lo, &range);
+ 
+ 	/* Don't send a LAYOUTRETURN if list was initially empty */
+ 	if (!test_bit(NFS_LAYOUT_RETURN_REQUESTED, &lo->plh_flags) ||
+@@ -1385,6 +1383,8 @@ _pnfs_return_layout(struct inode *ino)
+ 
+ 	send = pnfs_prepare_layoutreturn(lo, &stateid, &cred, NULL);
+ 	spin_unlock(&ino->i_lock);
++	if (NFS_SERVER(ino)->pnfs_curr_ld->return_range)
++		NFS_SERVER(ino)->pnfs_curr_ld->return_range(lo, &range);
+ 	if (send)
+ 		status = pnfs_send_layoutreturn(lo, &stateid, &cred, IOMODE_ANY, true);
+ out_wait_layoutreturn:
 -- 
 2.53.0
 
