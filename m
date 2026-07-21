@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67D84D90AA;
-	Tue, 21 Jul 2026 15:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 408EA46C4B5;
+	Tue, 21 Jul 2026 15:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649452; cv=none; b=Jpe+1mAwpe001X/GPMmNkMGSg/BmAW6H/8HEn8Nblg5bH6y4iiq+6q2JwFPXyWGXt7y0HMEoePpE6ftsjCy1WYdmsEKXtRGmN98UY8IQsyjoitd9e1SATXr+p4kqc44C2fW3QZQPGIrD+29tcgdcm0FcXgEtJ4UCkGqz8W0mCJ0=
+	t=1784649454; cv=none; b=SQblS/wAqsQzPLSVS8hV+wU+IfEzrp5ckrOHvK7s661/JKZ3jhirsrbchOozYKvv1yG4PSiqkZesRMjhkGRqrYoY7RpyJ3x3zujtQWId58ax6T4ujUXj1U94Cr/Tt+IVVjp2Z709gRIio8LpQj6uv79K/LdF3d1KGOAipX8J7Q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649452; c=relaxed/simple;
-	bh=r7JYPnsvb6jqaapxaz3riMvI4MYiIwaV+U/wJmGX0yk=;
+	s=arc-20240116; t=1784649454; c=relaxed/simple;
+	bh=o4Oy0+wt0KxqrxKdCpPM+X+JNUhMY/Nc+s0QRXRGHWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PDp7BR/3osnWP590iSQdf26eZoKzbBKCXr6EX3cexCN/fy1mhqMHTCyVNelm5IXSVOhSij7e8uQPSR6upr/YwvMYvHBZP/wJkDI+JwfWiFRNGU7UqCjgS6/INqDh4bjnNk2S42PGrtiOVh7ZKp4088ZsASuDDyWJcQVfe6nvxZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVNjbzGC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PmmREK+fLfcHT9nYFUk+2gOuNM4UmZzntScAQnjKjxMjjsACMeXyAS+GNhhUuwHUXiIUje8+otlwy3OMHMcpqkGm/ThEaUtf/fbrBjjNaUmoLNpR9D88lk0XnCxsvoMq6s1fR46qptJp7crhLYr33qelQk3wBFcKrHAunIaVuAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qg5qblrM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVNjbzGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377831F000E9;
-	Tue, 21 Jul 2026 15:57:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qg5qblrM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACCCF1F000E9;
+	Tue, 21 Jul 2026 15:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649450;
-	bh=SfkIWp//xOqPzuiIvlPN0EJHOY1FE2Sj1zCnXnP7erg=;
+	s=korg; t=1784649453;
+	bh=+7793g4O+7l0vBogxc8zfgSRu2HyPT/156Np1pgyGN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xVNjbzGCPY8nUeOwYl57/u205/7FUG0yk8nz6Cs8DUtvrTx1K8NouGAG2f8RE5y39
-	 3NiOM2DBnn7jIdrx9UuwI3vdlfRsDXbHYRbUcG0sf+x/CoBs/ZJJZaAIeHLUy6WhOp
-	 Jy3YpKSSTTEY4Zfj52whBOcUEJL3UUef0kDpH2D4=
+	b=Qg5qblrMJaeU2JLaVI9wpT0ZqjVKzxhE/kBSRmA+yZ1ovXZQDAk4ENcr17VzIdRjd
+	 TfKH1zfYwj09HBktqL++3/313B547y8s3oqAa8IjIZvSqhlVBkjxyU1TSRUX+JI5X0
+	 7JtP3TjLBdMX4c3whXcA2D5RsMDk69ramVTTmiR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Marcin FM <marcin@lgic.pl>,
+	Cristian-Florin Radoi <radoi.chris@gmail.com>,
+	George Salukvadze <giosal90@gmail.com>,
+	Evgeny Kapusta <3193631@gmail.com>,
+	Samu Toljamo <samu.toljamo@gmail.com>,
+	Ariel Rosenfeld <ariel.rosenfeld.750@gmail.com>,
+	Chapuis Dario <chapuisdario4@gmail.com>,
+	=?UTF-8?q?Thibaut=20Fran=C3=A7ois?= <tibo@humeurlibre.fr>,
+	=?UTF-8?q?=E5=BC=A0=E6=97=AD=E6=B6=B5?= <Loong.0x00@gmail.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Javier Tia <floss@jetm.me>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0582/2077] wifi: mt76: mt7996: Fix NULL pointer dereference in mt7996_init_tx_queues()
-Date: Tue, 21 Jul 2026 17:04:15 +0200
-Message-ID: <20260721152606.537798439@linuxfoundation.org>
+Subject: [PATCH 7.1 0583/2077] wifi: mt76: mt7925: fix stale pointer comparisons in change_vif_links
+Date: Tue, 21 Jul 2026 17:04:16 +0200
+Message-ID: <20260721152606.562701974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,43 +55,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Javier Tia <floss@jetm.me>
 
-[ Upstream commit 6794edb55b5f5ef834e03b0b241b1a8b725f82c0 ]
+[ Upstream commit 9f1accf3069a0cd42c14ca6c7d44d5b17cc48a80 ]
 
-When MT76_NPU and CONFIG_NET_MEDIATEK_SOC_WED are enabled and
-mt76 detects properly the Airoha NPU SoC, mt7996_init_tx_queues() will
-dereference a NULL WED pointer.
-Fix the issue by always passing the WED pointer from mt7996_dma_init().
+In the error path of mt7925_change_vif_links(), the free: label iterates
+over link_ids to clean up, but compares against `mconf` and `mlink`
+which hold stale values from the last loop iteration rather than the
+current link_id being freed.
 
-Fixes: cd7951f242a7 ("wifi: mt76: mt7996: Integrate MT7990 dma configuration for NPU")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260418-mt7996-dma-init-npu-fix-v1-1-6b8dcffbcb57@kernel.org
+Use array-indexed access (mconfs[link_id] / mlinks[link_id]) to compare
+against the correct per-link pointers.
+
+Fixes: 69acd6d910b0 ("wifi: mt76: mt7925: add mt7925_change_vif_links")
+Tested-by: Marcin FM <marcin@lgic.pl>
+Tested-by: Cristian-Florin Radoi <radoi.chris@gmail.com>
+Tested-by: George Salukvadze <giosal90@gmail.com>
+Tested-by: Evgeny Kapusta <3193631@gmail.com>
+Tested-by: Samu Toljamo <samu.toljamo@gmail.com>
+Tested-by: Ariel Rosenfeld <ariel.rosenfeld.750@gmail.com>
+Tested-by: Chapuis Dario <chapuisdario4@gmail.com>
+Tested-by: Thibaut François <tibo@humeurlibre.fr>
+Tested-by: 张旭涵 <Loong.0x00@gmail.com>
+Reviewed-by: Sean Wang <sean.wang@mediatek.com>
+Signed-off-by: Javier Tia <floss@jetm.me>
+Link: https://patch.msgid.link/20260425195011.790265-2-sean.wang@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/dma.c b/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
-index 8f5d297dafce23..3d9353811a02eb 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
-@@ -683,7 +683,7 @@ int mt7996_dma_init(struct mt7996_dev *dev)
- 		ret = mt7996_init_tx_queues(&dev->phy, MT_TXQ_ID(0),
- 					    MT7996_NPU_TX_RING_SIZE,
- 					    MT_TXQ_RING_BASE(0) + hif1_ofs,
--					    NULL);
-+					    wed);
- 	else
- 		ret = mt7996_init_tx_queues(&dev->phy,
- 					    MT_TXQ_ID(dev->mphy.band_idx),
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+index 9dc5ee51eb9f96..8765121b916a26 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -2182,9 +2182,9 @@ mt7925_change_vif_links(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 		rcu_assign_pointer(mvif->link_conf[link_id], NULL);
+ 		rcu_assign_pointer(mvif->sta.link[link_id], NULL);
+ 
+-		if (mconf != &mvif->bss_conf)
++		if (mconfs[link_id] != &mvif->bss_conf)
+ 			devm_kfree(dev->mt76.dev, mconfs[link_id]);
+-		if (mlink != &mvif->sta.deflink)
++		if (mlinks[link_id] != &mvif->sta.deflink)
+ 			devm_kfree(dev->mt76.dev, mlinks[link_id]);
+ 	}
+ 
 -- 
 2.53.0
 
