@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37D342EEB8;
-	Tue, 21 Jul 2026 22:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 762AB42EEB8;
+	Tue, 21 Jul 2026 22:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671292; cv=none; b=IUAU11PNbxRARvNBH6yschsRfmyLGlGvE4AweorzLolmM73QaViFG18Zi9dPIgmn7vDU7BhBMdNsAqanXz4M/XcO8XcyJ4tUV8N3YiRgL82cTo7ZkAOw8w0lCqwaJVwKn4gGGo040NlaCL0CNbqjMM3nImOB8mHzg89VF1+0NXQ=
+	t=1784671294; cv=none; b=JVlgzXB8wEi4HDPBiKf3mehA09X3aD5Jr9DtXIC6jX0wd64wFnejooNALNOvtm4oBTLnlC6VX2FGgia962ddUVVYs82NBFa+N5wEFrNR+AWt2WWv73nNmazw/SdYxo8HCxBbFT1tU7BBcmDU9cLjXUUSYRWrP/8kr+IN9ipY2TI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671292; c=relaxed/simple;
-	bh=90Zts8qvF0Je/sBCTaw2tMnnOPskljUlE4ThGa9HVik=;
+	s=arc-20240116; t=1784671294; c=relaxed/simple;
+	bh=giPUYUN4Y1shiBb5cyluQYLDOMUJKdYBUZviodMxzXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ugSyWRuQZVqsoWX+kdDwWaMInV3fSypd1DZYRiietNm77o68dHKp6xJJi6r3DgF+P2SvGgF2gxhG8FMVKCtcd/BZVPB3W/ivM/jZ0sldStW5qBX4bfaQI9kIwI/wvyR0NJT0RS/IGQrIP81ScaBLRp9AaEWfRAWHtIdjb8uhiJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vyfa377M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bKTaVM9Je45/fCG90BMzH/Iql0NIu56hCsKctAK8pl7YoNs8FlEJjfGLLG9SXM8/ld4AI9tdnT1zrlE3F5ZVOZFHnYGI/X+sxdck1xFtqNO8WcI8mmWfleaFMzbjH4/Q5OsqPMq0PORvdXCfBERxtQ328r3eqHtfjpn3+xd+qB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zc6klAMb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vyfa377M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE3B1F000E9;
-	Tue, 21 Jul 2026 22:01:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zc6klAMb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3FFB1F00A3A;
+	Tue, 21 Jul 2026 22:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671289;
-	bh=LcYbuEKMacTh6pGuYOoMFDwkMuLJUVNbmJBbOgbUDYI=;
+	s=korg; t=1784671292;
+	bh=cQ5ISOoR0Ql+gMRqq3Bj8ysQVBW8CN8A6x5MbSzxoK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vyfa377M2n29wtNoZpeMbPdwI5Wa9WmgG2Q0db6YxYflP3YdqcINciNWd/0QWWftU
-	 18TWJluFtjsvVUsK/DpuADrNwVq8at54JA8EuMoOdf8fxEHBoh8GDJv3E6pEYKGCuA
-	 LFzkKebp9K/QfQ6VifrWOr+cWikZwsqp25zmFG4U=
+	b=zc6klAMbbWJWfzIWu3bIPAELcngWh8WbzTUkqJA1HvWngv0dNGJfqowztxe5x4gmv
+	 rSrgGgwCPiC3xt5torEs7pNzmUjI6bjjhyIybDzdpzuv0MKx3e+EzVTX+KkzGSLdpW
+	 2Vu5fQoxNp+OmrS3WOatuzm7iI4Jq1H7Y19mTHZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Huihui Huang <hhhuang@smu.edu.sg>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.15 173/843] tracing: Prevent out-of-bounds read in glob matching
-Date: Tue, 21 Jul 2026 17:16:48 +0200
-Message-ID: <20260721152409.910098546@linuxfoundation.org>
+	Florian Fuchs <fuchsfl@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.15 191/843] Input: maplemouse - set driver data before registering input device
+Date: Tue, 21 Jul 2026 17:17:06 +0200
+Message-ID: <20260721152410.312017814@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -57,132 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huihui Huang <hhhuang@smu.edu.sg>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 0a6070839b1ef276d5b05bedfb787743e140fb17 upstream.
+commit 738f24bbbc95dd50cb4229d1ed62a05f29db2bda upstream.
 
-String event fields are not necessarily NUL-terminated, so the filter
-predicate functions (filter_pred_string(), filter_pred_strloc() and
-filter_pred_strrelloc()) pass the field length to the regex match
-callbacks, and the length-aware matchers honour it.
+Set maple driver data before calling input_register_device() to
+ensure that it is available if the device is opened immediately and
+the callback is triggered.
 
-regex_match_glob() was the exception: it ignored the length and called
-glob_match(), which scans the string until it hits a NUL byte. Some
-string fields are not NUL-terminated. One example is the dynamic char
-array of the xfs_* namespace tracepoints, which is copied without a
-trailing NUL. For such a field, glob matching reads past the end of
-the event field, causing a KASAN slab-out-of-bounds read in
-glob_match(), reached via regex_match_glob() and filter_match_preds()
-from the xfs_lookup tracepoint.
-
-Add a length-bounded glob_match_len() and use it from regex_match_glob()
-so glob matching always stops at the field boundary. The matching loop
-is factored into a shared helper so glob_match() keeps its behaviour.
-
-Fixes: 60f1d5e3bac4 ("ftrace: Support full glob matching")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/da1aaf125fc3b63320b0c540fd6afa7c3d5b4f1a.1782836943.git.hhhuang@smu.edu.sg
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Huihui Huang <hhhuang@smu.edu.sg>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Assisted-by: Antigravity:gemini-3.5-flash
+Tested-by: Florian Fuchs <fuchsfl@gmail.com>
+Link: https://patch.msgid.link/akNXw45L_8bxD6QV@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/glob.h               |    1 +
- kernel/trace/trace_events_filter.c |    6 ++----
- lib/glob.c                         |   31 +++++++++++++++++++++++++++++--
- 3 files changed, 32 insertions(+), 6 deletions(-)
+ drivers/input/mouse/maplemouse.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/include/linux/glob.h
-+++ b/include/linux/glob.h
-@@ -6,5 +6,6 @@
- #include <linux/compiler.h>	/* For __pure */
+--- a/drivers/input/mouse/maplemouse.c
++++ b/drivers/input/mouse/maplemouse.c
+@@ -88,6 +88,8 @@ static int probe_maple_mouse(struct devi
+ 	mse->dev = input_dev;
+ 	mse->mdev = mdev;
  
- bool __pure glob_match(char const *pat, char const *str);
-+bool __pure glob_match_len(char const *pat, char const *str, size_t len);
- 
- #endif	/* _LINUX_GLOB_H */
---- a/kernel/trace/trace_events_filter.c
-+++ b/kernel/trace/trace_events_filter.c
-@@ -865,11 +865,9 @@ static int regex_match_end(char *str, st
- 	return 0;
- }
- 
--static int regex_match_glob(char *str, struct regex *r, int len __maybe_unused)
-+static int regex_match_glob(char *str, struct regex *r, int len)
- {
--	if (glob_match(r->pattern, str))
--		return 1;
--	return 0;
-+	return glob_match_len(r->pattern, str, len) ? 1 : 0;
- }
- 
- /**
---- a/lib/glob.c
-+++ b/lib/glob.c
-@@ -9,6 +9,9 @@
- MODULE_DESCRIPTION("glob(7) matching");
- MODULE_LICENSE("Dual MIT/GPL");
- 
-+static bool __pure glob_match_str(char const *pat, char const *str,
-+				  char const *str_end);
++	maple_set_drvdata(mdev, mse);
 +
- /**
-  * glob_match - Shell-style pattern matching, like !fnmatch(pat, str, 0)
-  * @pat: Shell-style pattern to match, e.g. "*.[ch]".
-@@ -39,6 +42,29 @@ MODULE_LICENSE("Dual MIT/GPL");
-  */
- bool __pure glob_match(char const *pat, char const *str)
- {
-+	return glob_match_str(pat, str, NULL);
-+}
-+EXPORT_SYMBOL(glob_match);
-+
-+/**
-+ * glob_match_len - glob match against a length-bounded string
-+ * @pat: Shell-style pattern to match.
-+ * @str: String to match.  Need not be NUL-terminated.
-+ * @len: Number of bytes of @str that may be read.
-+ *
-+ * Like glob_match(), but @str is only read up to @len bytes, so it can be
-+ * used on buffers that are not NUL-terminated (e.g. trace event fields).
-+ * A NUL byte within @len still terminates the string.
-+ */
-+bool __pure glob_match_len(char const *pat, char const *str, size_t len)
-+{
-+	return glob_match_str(pat, str, str + len);
-+}
-+EXPORT_SYMBOL(glob_match_len);
-+
-+static bool __pure glob_match_str(char const *pat, char const *str,
-+				  char const *str_end)
-+{
- 	/*
- 	 * Backtrack to previous * on mismatch and retry starting one
- 	 * character later in the string.  Because * matches all characters
-@@ -53,9 +79,11 @@ bool __pure glob_match(char const *pat,
- 	 * on mismatch, or true after matching the trailing nul bytes.
- 	 */
- 	for (;;) {
--		unsigned char c = *str++;
-+		unsigned char c = (str_end && str >= str_end) ? '\0' : *str;
- 		unsigned char d = *pat++;
+ 	input_set_drvdata(input_dev, mse);
+ 	input_dev->evbit[0] = BIT_MASK(EV_KEY) | BIT_MASK(EV_REL);
+ 	input_dev->keybit[BIT_WORD(BTN_MOUSE)] = BIT_MASK(BTN_LEFT) |
+@@ -103,12 +105,12 @@ static int probe_maple_mouse(struct devi
+ 		goto fail_register;
  
-+		str++;
-+
- 		switch (d) {
- 		case '?':	/* Wildcard: anything but nul */
- 			if (c == '\0')
-@@ -120,4 +148,3 @@ backtrack:
- 		}
- 	}
- }
--EXPORT_SYMBOL(glob_match);
+ 	mdev->driver = mdrv;
+-	maple_set_drvdata(mdev, mse);
+ 
+ 	return error;
+ 
+ fail_register:
+ 	input_free_device(input_dev);
++	maple_set_drvdata(mdev, NULL);
+ fail_nomem:
+ 	kfree(mse);
+ fail:
 
 
