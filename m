@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544054302F8;
-	Tue, 21 Jul 2026 19:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDEC535DA40;
+	Tue, 21 Jul 2026 19:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662476; cv=none; b=aSvSSREkbvWeBobD4cuS/NcRVfKWwta9O+JCfdWaXdAHaLNnhIfvwi5CMLYru4GKEKxRN7YEbCQi5xipqmOK9IsQTAOa+N+pOrI9pHZmOyJWVAYezgByy13T4FDzNoghska0N89lS56wGFD3G+p6rgcv31DVLOGWvN/zRaOwRUA=
+	t=1784662479; cv=none; b=juDlzViSSpt0kgvk6b/RxxhM4UNDVjy2Bs62nz2V1IQxFd/gS1i1Fw27bfSVRM1fN/UpM5RHp8Jh/nqO+lfjuw04QtF62lGz7eu0qf74PtyhEJpm0WaNYBOHYuHNq7D+WgEdHuVrm+ehgsqlkyZfDFpcnRpwArLg81o9teFtbDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662476; c=relaxed/simple;
-	bh=X9pDSZQ1BUbWrXU2zbYoJkGNzinOXTBz4sc5JHtD7Ks=;
+	s=arc-20240116; t=1784662479; c=relaxed/simple;
+	bh=bEgG/to0v8f9yEBPTfYmF5e0qSfmLBMEIYqYohaGhv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmVAeGWer3g+C+AW6KWU6ALn/RSu4n37X7jprqc61cz+UG53QQCgnOwo1jKjLc3Oy+0rw62uk1pU3TfJAzTB8qNPtO4SYnXDzbxE89YmKXvsxOA5CoqqOXmdRNvlTEkpJWUSEsdPABv8k6xcFidf+h3TIG5MtH0orHILz+dcL+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PmBDoC3h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tYZS/yY3holpnWbkWxNzh+YKqolQfdYiYwNiP5I9uVs5tnXN8tTh/M3ZOTEzk0r3a0Jdssx7MMIcel+F3Y0XKW4+/OaxttjveICGRhN1N98Ndm4CVGLZieS+B5T2bnDANS6L0sCc2Zq6GDm3Ntpca80MOHo0NHkhZJCkan3K/5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lifd8naN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PmBDoC3h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA81C1F000E9;
-	Tue, 21 Jul 2026 19:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lifd8naN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 608191F000E9;
+	Tue, 21 Jul 2026 19:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662475;
-	bh=HYERM1icZx6exu8+OfAybQQpcWY+n3WedQXbemlgaVY=;
+	s=korg; t=1784662477;
+	bh=stovjmZm+adx3Upoz9TmxzOOfiSw+RfE+MpbJ0aWASE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PmBDoC3hzVSLfpIG/MiLNAy4WbWVEDJGFroDKpulvV03EWtdE4M0l161IMsAkuxYo
-	 yepWKcSfUrXwGTTF5dbg3tu3c35XO4qblUW9VVzs4P4TK/K1qdTGnHCHVpThFAqDnI
-	 Sfi9yBSx7ZzT4OgahvXzEQ5UoBMUUeVt2JXLs7nE=
+	b=Lifd8naN5OcnC2zSyYYCm/AD85OX9PWxA//LR5+kx/KCv9LUyVYb8LxC/yOvLM4gw
+	 p3uSLxysscBlQSbI2uvY0080bUXx0iPEg4ic7sM0tEytvZtJzzqrRYrPZDDnF8qO/0
+	 SK2312M9Zr3g1XQI0UHtnE7xD1AQO8zKB4LCKOnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rui Qi <qirui.001@bytedance.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Anton Blanchard <anton@samba.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0457/1276] perf: Fix off-by-one stack buffer overflow in kallsyms__parse()
-Date: Tue, 21 Jul 2026 17:15:00 +0200
-Message-ID: <20260721152456.330054545@linuxfoundation.org>
+Subject: [PATCH 6.12 0458/1276] perf tools: Guard test_bit from out-of-bounds sample CPU
+Date: Tue, 21 Jul 2026 17:15:01 +0200
+Message-ID: <20260721152456.352493022@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -60,61 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rui Qi <qirui.001@bytedance.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 68018df3f55eba96a20dd703f5f276a6518f4963 ]
+[ Upstream commit a5498ccf8079fc91c938f122ff9697b0c526b2fd ]
 
-In kallsyms__parse(), the loop reading symbol names iterates with i <
-sizeof(symbol_name), which allows i to reach sizeof(symbol_name) upon
-loop exit. The subsequent symbol_name[i] = '\0' then writes one byte
-past the end of the stack-allocated symbol_name[] array.
+When PERF_SAMPLE_CPU is absent from a perf.data file, sample->cpu is
+initialized to (u32)-1 by evsel__parse_sample().  Five call sites pass
+this value directly to test_bit(sample->cpu, cpu_bitmap), reading
+massively out of bounds past the DECLARE_BITMAP(..., MAX_NR_CPUS)
+allocation of 4096 bits.
 
-Fix this by changing the loop bound to KSYM_NAME_LEN, so the null
-terminator always lands within the array. The overflow is triggerable by
-a kallsyms entry with a symbol name of KSYM_NAME_LEN+1 or more
-characters (e.g., long Rust mangled names or a malicious
-/proc/kallsyms).
+Add a sample->cpu >= MAX_NR_CPUS guard before each test_bit() call,
+matching the existing safe pattern in builtin-kwork.c.  This catches
+both the (u32)-1 sentinel and any corrupted CPU value exceeding the
+bitmap size.
 
-Fixes: 53df2b9344128984 ("libsymbols kallsyms: Parse using io api")
-Signed-off-by: Rui Qi <qirui.001@bytedance.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
+Fixes: 5d67be97f890 ("perf report/annotate/script: Add option to specify a CPU range")
+Cc: Anton Blanchard <anton@samba.org>
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/symbol/kallsyms.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/perf/builtin-annotate.c | 3 ++-
+ tools/perf/builtin-diff.c     | 3 ++-
+ tools/perf/builtin-report.c   | 3 ++-
+ tools/perf/builtin-sched.c    | 6 ++++--
+ 4 files changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/tools/lib/symbol/kallsyms.c b/tools/lib/symbol/kallsyms.c
-index e335ac2b9e1972..d64bd9cc82a90e 100644
---- a/tools/lib/symbol/kallsyms.c
-+++ b/tools/lib/symbol/kallsyms.c
-@@ -60,7 +60,7 @@ int kallsyms__parse(const char *filename, void *arg,
- 			read_to_eol(&io);
- 			continue;
- 		}
--		for (i = 0; i < sizeof(symbol_name); i++) {
-+		for (i = 0; i < KSYM_NAME_LEN; i++) {
- 			ch = io__get_char(&io);
- 			if (ch < 0 || ch == '\n')
- 				break;
-@@ -68,6 +68,9 @@ int kallsyms__parse(const char *filename, void *arg,
- 		}
- 		symbol_name[i]  = '\0';
+diff --git a/tools/perf/builtin-annotate.c b/tools/perf/builtin-annotate.c
+index 3dc6197ef3fa6d..3882f400065c7c 100644
+--- a/tools/perf/builtin-annotate.c
++++ b/tools/perf/builtin-annotate.c
+@@ -298,7 +298,8 @@ static int process_sample_event(const struct perf_tool *tool,
+ 		goto out_put;
+ 	}
  
-+		if (i == KSYM_NAME_LEN)
-+			read_to_eol(&io);
-+
- 		err = process_symbol(arg, symbol_name, symbol_type, start);
- 		if (err)
- 			break;
+-	if (ann->cpu_list && !test_bit(sample->cpu, ann->cpu_bitmap))
++	if (ann->cpu_list && (sample->cpu >= MAX_NR_CPUS ||
++			     !test_bit(sample->cpu, ann->cpu_bitmap)))
+ 		goto out_put;
+ 
+ 	if (!al.filtered &&
+diff --git a/tools/perf/builtin-diff.c b/tools/perf/builtin-diff.c
+index 82fb7773e03e62..bf5611e1f5e006 100644
+--- a/tools/perf/builtin-diff.c
++++ b/tools/perf/builtin-diff.c
+@@ -417,7 +417,8 @@ static int diff__process_sample_event(const struct perf_tool *tool,
+ 		goto out;
+ 	}
+ 
+-	if (cpu_list && !test_bit(sample->cpu, cpu_bitmap)) {
++	if (cpu_list && (sample->cpu >= MAX_NR_CPUS ||
++			!test_bit(sample->cpu, cpu_bitmap))) {
+ 		ret = 0;
+ 		goto out;
+ 	}
+diff --git a/tools/perf/builtin-report.c b/tools/perf/builtin-report.c
+index 8700c39680662a..86cbca6285a51a 100644
+--- a/tools/perf/builtin-report.c
++++ b/tools/perf/builtin-report.c
+@@ -301,7 +301,8 @@ static int process_sample_event(const struct perf_tool *tool,
+ 	if (symbol_conf.hide_unresolved && al.sym == NULL)
+ 		goto out_put;
+ 
+-	if (rep->cpu_list && !test_bit(sample->cpu, rep->cpu_bitmap))
++	if (rep->cpu_list && (sample->cpu >= MAX_NR_CPUS ||
++			     !test_bit(sample->cpu, rep->cpu_bitmap)))
+ 		goto out_put;
+ 
+ 	if (sort__mode == SORT_MODE__BRANCH) {
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index fa5f00d47e6277..6d7106fb1c0cbc 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -2185,7 +2185,8 @@ static void timehist_print_sample(struct perf_sched *sched,
+ 	char nstr[30];
+ 	u64 wait_time;
+ 
+-	if (cpu_list && !test_bit(sample->cpu, cpu_bitmap))
++	if (cpu_list && (sample->cpu >= MAX_NR_CPUS ||
++			!test_bit(sample->cpu, cpu_bitmap)))
+ 		return;
+ 
+ 	timestamp__scnprintf_usec(t, tstr, sizeof(tstr));
+@@ -2823,7 +2824,8 @@ static int timehist_sched_change_event(const struct perf_tool *tool,
+ 	}
+ 
+ 	if (!sched->idle_hist || thread__tid(thread) == 0) {
+-		if (!cpu_list || test_bit(sample->cpu, cpu_bitmap))
++		if (!cpu_list || (sample->cpu < MAX_NR_CPUS &&
++				 test_bit(sample->cpu, cpu_bitmap)))
+ 			timehist_update_runtime_stats(tr, t, tprev);
+ 
+ 		if (sched->idle_hist) {
 -- 
 2.53.0
 
