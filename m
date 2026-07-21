@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0AD7443A80;
-	Tue, 21 Jul 2026 22:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D8A43E08F;
+	Tue, 21 Jul 2026 22:28:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672935; cv=none; b=WHE/XR+qPq/T2OZMDS+oy9ZVSTYBwaD97/ltaGWpFxFbriTw/UXFjJuH9VbeCNayXK/lpTPwzmQ12WA9MG1U1T0NHQwFAeFROXwYND7mNWUYe2R9theCMTao5x00pRSuGg+cUU7PCUUCjv/0n/taj3t0654cdxWprOoFxNOxoy0=
+	t=1784672937; cv=none; b=sXMhAW9bGqoKBbXiafpZqZIB1IJ83RV1OABs9VqO1lZzx5jW9eAh9DfecIZqWJ83JT2KWUarHQBbJwJtxDW4gbtNefkWtzm+9G+HSFJ3Qqki/StJq9VvClSoa9tfPrEJRhc5bl67jzwI6rTQYiRDTuhkmHJqnwyiP5ICGfRQ25Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672935; c=relaxed/simple;
-	bh=+jR1QFnqp+6mkTeUFsshnG3VidlSxiQ2kzyecR8vBTg=;
+	s=arc-20240116; t=1784672937; c=relaxed/simple;
+	bh=CwZsgZ7Wh/I2/LTkpR2HV1Bi+FVVaITbkFRzKBkm/6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eD3UtWwHc9MNE3NvY0RHmtQdzr34hLfGri8QjwLx3aX//NAz3pRNe1J5TdNiY0NCneasl73gAlTfdcoPohEAjghRX1cXLXDnQJkEdGqVZXQj0SGM/DP3+5FhkzebTwL67VYt7P0uL6+pYu5OdjATDfHNitTlg/s2MtCvIUX6VN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ffUdMoW0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=apl10MhI8d9E6ROLiP6ju/5Xplc/5PSCcv0/jF0oZBLXL9KWocEYg+kO/PkA6DCfBdqaAxUJUJ3kS4Xh3e6+b0s/6Ox8X/p3funh7CQ9m4fSDbZlmD69wL56nOUWUfN+NuzQ/qh203o3R2SvtI9SPnePFSfQt0DBeUViTtN90es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOeuJYPW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ffUdMoW0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2102D1F000E9;
-	Tue, 21 Jul 2026 22:28:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOeuJYPW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE5261F000E9;
+	Tue, 21 Jul 2026 22:28:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672933;
-	bh=rbuQXnuvnMdvPK4wEdBCRmZ9tBcr5zVQinOEMQK6h9M=;
+	s=korg; t=1784672936;
+	bh=0ykE4A1TVqmi59HsG81tJTEds5xstWcNSSP7QxPy+vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ffUdMoW0OsEA57mIpTHD5iMlb7zjtope7J2uuxmnNZNFTMWpxSpyePv9Q+gurY1wB
-	 eyHphKd+AARxtCWhTrBy/4Ct7e9f2EZoPBNVuGSefv4+blItKY8rrEg5F5qXXcx2GI
-	 9K5VmA1j+rhnP9bJI3y0mXTqQgaKd7pyJD+in87Y=
+	b=WOeuJYPWk0QPSihYqldeqfPsH/BWbBGfazqrdGuimEMWkiHsY3WxWnwYA5zrFzdn5
+	 1tBD7DYRkNQIrUPTlS1s7/tReyFzUHc2aWXWI6wjqT1wFaEd1EKQi8QG7fQzB2lsdx
+	 ShyGhNFkkOdG8m09bECaY7ODTXJKEWZhjWDGqQn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 810/843] bpf: Convert lpm_trie.c to rqspinlock
-Date: Tue, 21 Jul 2026 17:27:25 +0200
-Message-ID: <20260721152424.293608333@linuxfoundation.org>
+Subject: [PATCH 5.15 811/843] bpf: Consistently use bpf_rcu_lock_held() everywhere
+Date: Tue, 21 Jul 2026 17:27:26 +0200
+Message-ID: <20260721152424.316547021@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,51 +52,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 47979314c0fe245ed54306e2f91b3f819c7c0f9f ]
+[ Upstream commit 48a97ffc6c826640907d13b199e29008f4fe2c15 ]
 
-Convert all LPM trie usage of raw_spinlock to rqspinlock.
+We have many places which open-code what's now is bpf_rcu_lock_held()
+macro, so replace all those places with a clean and short macro invocation.
+For that, move bpf_rcu_lock_held() macro into include/linux/bpf.h.
 
-Note that rcu_dereference_protected in trie_delete_elem is switched over
-to plain rcu_dereference, the RCU read lock should be held from BPF
-program side or eBPF syscall path, and the trie->lock is just acquired
-before the dereference. It is not clear the reason the protected variant
-was used from the commit history, but the above reasoning makes sense so
-switch over.
-
-Closes: https://lore.kernel.org/lkml/000000000000adb08b061413919e@google.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20250316040541.108729-22-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/20251014201403.4104511-1-andrii@kernel.org
 Stable-dep-of: 2f884d371faf ("bpf: Allow LPM map access from sleepable BPF programs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/lpm_trie.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ include/linux/bpf.h  |    4 ++++
+ kernel/bpf/hashtab.c |   21 +++++++--------------
+ kernel/bpf/helpers.c |    9 +++------
+ 3 files changed, 14 insertions(+), 20 deletions(-)
 
---- a/kernel/bpf/lpm_trie.c
-+++ b/kernel/bpf/lpm_trie.c
-@@ -349,8 +349,7 @@ static int trie_update_elem(struct bpf_m
- 	 */
- 	slot = &trie->root;
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -23,6 +23,7 @@
+ #include <linux/slab.h>
+ #include <linux/percpu-refcount.h>
+ #include <linux/bpfptr.h>
++#include <linux/rcupdate_trace.h>
  
--	while ((node = rcu_dereference_protected(*slot,
--					lockdep_is_held(&trie->lock)))) {
-+	while ((node = rcu_dereference(*slot))) {
- 		matchlen = longest_prefix_match(trie, node, key);
+ struct bpf_verifier_env;
+ struct bpf_verifier_log;
+@@ -1482,6 +1483,9 @@ out:
+ 		_ret;					\
+ 	})
  
- 		if (node->prefixlen != matchlen ||
-@@ -475,8 +474,7 @@ static int trie_delete_elem(struct bpf_m
- 	trim = &trie->root;
- 	trim2 = trim;
- 	parent = NULL;
--	while ((node = rcu_dereference_protected(
--		       *trim, lockdep_is_held(&trie->lock)))) {
-+	while ((node = rcu_dereference(*trim))) {
- 		matchlen = longest_prefix_match(trie, node, key);
++#define bpf_rcu_lock_held() \
++	(rcu_read_lock_held() || rcu_read_lock_trace_held() || rcu_read_lock_bh_held())
++
+ #ifdef CONFIG_BPF_SYSCALL
+ DECLARE_PER_CPU(int, bpf_prog_active);
+ extern struct mutex bpf_stats_enabled_mutex;
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -642,8 +642,7 @@ static void *__htab_map_lookup_elem(stru
+ 	struct htab_elem *l;
+ 	u32 hash, key_size;
  
- 		if (node->prefixlen != matchlen ||
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
+-		     !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!bpf_rcu_lock_held());
+ 
+ 	key_size = map->key_size;
+ 
+@@ -1047,8 +1046,7 @@ static int htab_map_update_elem(struct b
+ 		/* unknown flags */
+ 		return -EINVAL;
+ 
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
+-		     !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!bpf_rcu_lock_held());
+ 
+ 	key_size = map->key_size;
+ 
+@@ -1149,8 +1147,7 @@ static int htab_lru_map_update_elem(stru
+ 		/* unknown flags */
+ 		return -EINVAL;
+ 
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
+-		     !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!bpf_rcu_lock_held());
+ 
+ 	key_size = map->key_size;
+ 
+@@ -1218,8 +1215,7 @@ static int __htab_percpu_map_update_elem
+ 		/* unknown flags */
+ 		return -EINVAL;
+ 
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
+-		     !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!bpf_rcu_lock_held());
+ 
+ 	key_size = map->key_size;
+ 
+@@ -1273,8 +1269,7 @@ static int __htab_lru_percpu_map_update_
+ 		/* unknown flags */
+ 		return -EINVAL;
+ 
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
+-		     !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!bpf_rcu_lock_held());
+ 
+ 	key_size = map->key_size;
+ 
+@@ -1349,8 +1344,7 @@ static int htab_map_delete_elem(struct b
+ 	u32 hash, key_size;
+ 	int ret;
+ 
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
+-		     !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!bpf_rcu_lock_held());
+ 
+ 	key_size = map->key_size;
+ 
+@@ -1385,8 +1379,7 @@ static int htab_lru_map_delete_elem(stru
+ 	u32 hash, key_size;
+ 	int ret;
+ 
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
+-		     !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!bpf_rcu_lock_held());
+ 
+ 	key_size = map->key_size;
+ 
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -30,8 +30,7 @@
+  */
+ BPF_CALL_2(bpf_map_lookup_elem, struct bpf_map *, map, void *, key)
+ {
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
+-		     !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!bpf_rcu_lock_held());
+ 	return (unsigned long) map->ops->map_lookup_elem(map, key);
+ }
+ 
+@@ -47,8 +46,7 @@ const struct bpf_func_proto bpf_map_look
+ BPF_CALL_4(bpf_map_update_elem, struct bpf_map *, map, void *, key,
+ 	   void *, value, u64, flags)
+ {
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
+-		     !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!bpf_rcu_lock_held());
+ 	return map->ops->map_update_elem(map, key, value, flags);
+ }
+ 
+@@ -65,8 +63,7 @@ const struct bpf_func_proto bpf_map_upda
+ 
+ BPF_CALL_2(bpf_map_delete_elem, struct bpf_map *, map, void *, key)
+ {
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
+-		     !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!bpf_rcu_lock_held());
+ 	return map->ops->map_delete_elem(map, key);
+ }
+ 
 
 
