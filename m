@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03FD46EC8B;
-	Tue, 21 Jul 2026 19:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386DE46EF91;
+	Tue, 21 Jul 2026 19:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661246; cv=none; b=AJYU7Vn9tZLDhvN13f+VXV2kgWWYG9oLtwPMKvL6QTcomxZCZcDydL+hcIU+tPwI2OcOBayLNENnFeaU4CPvpdITlzr2YwakjaWAw2AnCZJM0r5UhWuVQU0h2pHrkYSEhYnZDAGW+emxZlShun/U1GnNvEtykyCaPeMSbWwMwvk=
+	t=1784661252; cv=none; b=Sll7ihCpmjR6+brAt2vs/al94zyTpUWvhARsD+axYkqc+nd97Sp/5xqvFlHayUTyIvt3qb3ZGOF2dcKlRALPc5lpCa/mmcHik/9NwHYgyHT6fMISKierjWjLGYkEh4a4UQ0rPp41anGdXpNDSJmF8HAIb4AM5LtSuHabbW8Izhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661246; c=relaxed/simple;
-	bh=qIQsZcUsbdjgrhTNcLGPN75IxfHr+Cx4+nmvCp6IDmM=;
+	s=arc-20240116; t=1784661252; c=relaxed/simple;
+	bh=FnyVh2ZYMqd8jE23UOPiMuCMnrG75yIKjRSyay/b924=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KLIqjAIKv7NMQc99X/mfH/SrIrpZKoKdbpMwTzQZdriOR0RsTw9imw3pnKgeDtpBmkvxh46wgHbppHgVPQb9ouxrMfJP4aNTDx/LXRcOW65E4RW18hrrgOASUz4X2RkZDeq+/HQB+gR3DJ9FzK+ON5AOsZGjvUjynCTNNmGCFGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7UpzCUi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EB+04WnZ3AmcVuPzNQpxcVoj478aqJxeZbc27ApyG78sckMtNkCgho4vZqOAAiluJULpevUeAWF8lo1YvHUjC3GG393IN3SvYRFcvBjNZisoPoicjhZs+zuP425+gjdVJnNBxryj3UA+9MjeFiCej8HC+ZzuKyZjmyNKWuhVnW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqKOM0fX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7UpzCUi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2140C1F00A3A;
-	Tue, 21 Jul 2026 19:14:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqKOM0fX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 665C91F00A3A;
+	Tue, 21 Jul 2026 19:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661245;
-	bh=+CCgqRKUZkA0XE6kTzt+CHIal9/oIhIibqCeEpaeihk=;
+	s=korg; t=1784661250;
+	bh=71umN7XAQR70DILSoclQfdBB6/o3kADNiUWtR2qz1wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I7UpzCUiCw8cOPv3YIoHOXAC20qYvr40mzFzdnO45WI4wjo5MRhjcHhHL0IIYEPbq
-	 6yGOcUbx4K246VRzzbglVKY3Vi4AQZe3QQSiNT6CxMiN/Z1p4tEQPqKB1FVsKjp/PR
-	 7HIoBNkSeOEG7mbBGmQ3q2OrmwbyDpx1OTDqXeqc=
+	b=nqKOM0fX3Y8qJtab+hVBZDPbVM8RI7xX1Yt5+KRnSB70uaw3S1MuoAvrPGc5Ie5A4
+	 E7UNDwyvPar6cWe5ZT9KOa6SGy7zadlM+hvh2IiLvkfkhrBItmo8qaxIqipMbsUh7T
+	 gEcCK2L2Kma39cULrFF0THmW4yrdWkWnT2cFXjE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1284/2077] net: sungem: fix probe error cleanup
-Date: Tue, 21 Jul 2026 17:15:57 +0200
-Message-ID: <20260721152623.103228311@linuxfoundation.org>
+Subject: [PATCH 7.1 1286/2077] net: stmmac: dwmac-spacemit: Fix wrong phy interface definition
+Date: Tue, 21 Jul 2026 17:15:59 +0200
+Message-ID: <20260721152623.151796342@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,70 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Inochi Amaoto <inochiama@gmail.com>
 
-[ Upstream commit 36dea2f639249460d13f6ca66b2a9064187cd34d ]
+[ Upstream commit d1e3a4c3b24d4430d9987a3f349c6c2a959a389a ]
 
-gem_init_one() calls gem_remove_one() when register_netdev() fails.
-gem_remove_one() unregisters and frees resources owned by the net_device,
-including the DMA block, MMIO mapping, PCI regions, and the net_device
-itself. gem_init_one() then falls through to its own cleanup labels and
-frees the same resources again.
+The current MII interface register definition from the vendor is wrong,
+use the right number for the macro. Also, correct the interface mask
+in spacemit_set_phy_intf_sel() so it can update the register with the
+right number
 
-Keep the register_netdev() error path in gem_init_one(): clear drvdata so
-PM/remove paths do not see a half-registered device, remove the NAPI
-instance added during probe, and let the existing cleanup labels release
-the resources once.
-
-The issue was found by a local static-analysis checker for probe error
-paths. The reported path was manually inspected before sending this fix.
-
-Compile-tested with CONFIG_SUNGEM=y. Runtime testing was not performed
-because no sungem hardware is available.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260623025759.3468566-1-ruoyuw560@gmail.com
+Fixes: 30f0ba420ed3 ("net: stmmac: Add glue layer for Spacemit K3 SoC")
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260623074637.503864-2-inochiama@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/sungem.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/sun/sungem.c b/drivers/net/ethernet/sun/sungem.c
-index 8e69d917d827ca..26974ee713525b 100644
---- a/drivers/net/ethernet/sun/sungem.c
-+++ b/drivers/net/ethernet/sun/sungem.c
-@@ -2986,10 +2986,10 @@ static int gem_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	dev->max_mtu = GEM_MAX_MTU;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c
+index 223754cc5c79b7..3bfb6d49be6c0c 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c
+@@ -18,8 +18,10 @@
+ #include "stmmac_platform.h"
  
- 	/* Register with kernel */
--	if (register_netdev(dev)) {
-+	err = register_netdev(dev);
-+	if (err) {
- 		pr_err("Cannot register net device, aborting\n");
--		err = -ENOMEM;
--		goto err_out_free_consistent;
-+		goto err_out_clear_drvdata;
- 	}
+ /* ctrl register bits */
+-#define CTRL_PHY_INTF_RGMII		BIT(3)
+-#define CTRL_PHY_INTF_MII		BIT(4)
++#define CTRL_PHY_INTF_MODE		GENMASK(4, 3)
++#define CTRL_PHY_INTF_RMII		FIELD_PREP(CTRL_PHY_INTF_MODE, 0)
++#define CTRL_PHY_INTF_RGMII		FIELD_PREP(CTRL_PHY_INTF_MODE, 1)
++#define CTRL_PHY_INTF_MII		FIELD_PREP(CTRL_PHY_INTF_MODE, 3)
+ #define CTRL_WAKE_IRQ_EN		BIT(9)
+ #define CTRL_PHY_IRQ_EN			BIT(12)
  
- 	/* Undo the get_cell with appropriate locking (we could use
-@@ -3003,8 +3003,13 @@ static int gem_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		    dev->dev_addr);
- 	return 0;
+@@ -118,7 +120,7 @@ static void spacemit_get_interfaces(struct stmmac_priv *priv, void *bsp_priv,
  
-+err_out_clear_drvdata:
-+	pci_set_drvdata(pdev, NULL);
-+	netif_napi_del(&gp->napi);
-+
- err_out_free_consistent:
--	gem_remove_one(pdev);
-+	dma_free_coherent(&pdev->dev, sizeof(struct gem_init_block),
-+			  gp->init_block, gp->gblock_dvma);
- err_out_iounmap:
- 	gem_put_cell(gp);
- 	iounmap(gp->regs);
+ static int spacemit_set_phy_intf_sel(void *bsp_priv, u8 phy_intf_sel)
+ {
+-	unsigned int mask = CTRL_PHY_INTF_MII | CTRL_PHY_INTF_RGMII;
++	unsigned int mask = CTRL_PHY_INTF_MODE;
+ 	struct spacmit_dwmac *dwmac = bsp_priv;
+ 	unsigned int val = 0;
+ 
+@@ -128,6 +130,7 @@ static int spacemit_set_phy_intf_sel(void *bsp_priv, u8 phy_intf_sel)
+ 		break;
+ 
+ 	case PHY_INTF_SEL_RMII:
++		val = CTRL_PHY_INTF_RMII;
+ 		break;
+ 
+ 	case PHY_INTF_SEL_RGMII:
 -- 
 2.53.0
 
