@@ -1,39 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D6A46A5F6;
-	Tue, 21 Jul 2026 15:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B235C46A5F0;
+	Tue, 21 Jul 2026 15:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648509; cv=none; b=F05Z5/ButEiRfCQW71rIjebgqkashFlLBqQT8iYC6agJGsbMUtKFjEb8WXX1+BCxwZuDi/GXE59wG/g7yLXlha0bcQVQpBuq1Cw6IvlG760BZuErtmILy0YOT/YC2wfVdHMgOxQzwxPdVwsnaNmGOTxZQdBUSH3qaxJSmqrC5XY=
+	t=1784648511; cv=none; b=b3oBGApoIPs9w+IX8uxGzEIgH6juxR/YTWEaDEdGylI2jWQQpN3eiFWzWz/9MJ7CHeZin/03gv/VP8CjC4D1StKHigYCM25gJqV2zFbAbM6ImpYPtrcNEzbBxUcn6daws0A+s+u4KrVi43M0JdrsJqEhak/QNsut/3iPR7wBkt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648509; c=relaxed/simple;
-	bh=h26DOkTJq/lCdwDqYw15QBtFmJfk6QcWFcQiJTK7Luc=;
+	s=arc-20240116; t=1784648511; c=relaxed/simple;
+	bh=mRMjerLiwmgKRAFTjoAL+i9CLafAOekLeZssWy2rz2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oMMGrQgRB31hA1Ed/9Ymh6CAmnJxugYVYbHPbDFRys7aqQbwRIptlLIHiPy86Ok6Cl7STbnP87NAO0o4azEfTrV0ghiKbbG7o74RaS5WSrwrZIGY1ACePwOkSOOHhoirNQD5B1KGhafl8j+8j4xbWcBYc8NETuip1hUMH6akJYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/o/uYgk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i/03D+gpPOFyOMR2cITsNDpGvbqXJ4NbRIkJypkFAHH3qrVe4V2EcalWXrJa7hJ30fHSRRnxENDbxslmc4AD585vdkyLGxZJyOw0Eqc0sAM7IpbK8BoizkYBx0cnh6vTlWeU57pvPZSsb15OG7cKQ7hReyh0nO04bLsehXKquGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpB64mHY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/o/uYgk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BE41F00A3A;
-	Tue, 21 Jul 2026 15:41:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpB64mHY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC091F000E9;
+	Tue, 21 Jul 2026 15:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648508;
-	bh=+CUDyXkPc4LKwfGIHiZ1GgAviGSLJSd/6aN1Xs7BMcI=;
+	s=korg; t=1784648510;
+	bh=7BuoZI+XnZ/8OnKEHB9XmInh1R8NJlsPQewKKPefN5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o/o/uYgk9Le1stgIGvFdvfFHPosHR9MQfLHGaMQxJnrUr2zFMeTmzBxmU3fJ3pD4z
-	 Ig5r+gax3Tiwsfb9fdRGbXUyIWHlmwSx4IhCXMpjRuJ8hEFV5VMygXZs7aqnYayUkC
-	 Lb21rx2G609zq85FzhdwFLj445qMsakgthefBn9g=
+	b=cpB64mHYkum+idpmBo60FCc/OshuPvJQAm/lJ3R5Sa1+Ki/8IN1wMworbLIzIkTif
+	 /PIjOKnnMTaa3iIbxeUk4LPaU67xvsYbHjZiC7nHwP9bIA/ULqWBgTVd/BbJ656YJW
+	 rVrKCr8+y0yDuFSycre/zKDjJqEAYtNkIS6tctBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Sun <2022090917019@std.uestc.edu.cn>,
-	Matt Bobrowski <mattbobrowski@google.com>,
+	Dmitry Safonov <0x7f454c46@gmail.com>,
+	Dmitry Safonov <dima@arista.com>,
+	Francesco Ruggeri <fruggeri@arista.com>,
+	Salam Noureddine <noureddine@arista.com>,
+	David Ahern <dsahern@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Michal Luczaj <mhal@rbox.co>,
+	David Wei <dw@davidwei.uk>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Aleksa Sarai <cyphar@cyphar.com>,
 	Christian Brauner <brauner@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	netdev@vger.kernel.org,
+	linux-bluetooth@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Aleksa Sarai <aleksa@amutable.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0183/2077] bpf: fix crash in bpf_[set|remove]_dentry_xattr for negative dentries
-Date: Tue, 21 Jul 2026 16:57:36 +0200
-Message-ID: <20260721152556.999542849@linuxfoundation.org>
+Subject: [PATCH 7.1 0184/2077] uaccess: fix ignored_trailing logic in copy_struct_to_user()
+Date: Tue, 21 Jul 2026 16:57:37 +0200
+Message-ID: <20260721152557.023320054@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,78 +76,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Bobrowski <mattbobrowski@google.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit 07410646f6ff1d23222f105ccab778957d401bbe ]
+[ Upstream commit 4911de3145a797389577abfdf9a5185d36cc18d7 ]
 
-bpf_set_dentry_xattr and bpf_remove_dentry_xattr BPF kfuncs attempt to
-lock the inode of the supplied dentry without checking if it is
-NULL. If a negative dentry is passed (e.g. from
-security_inode_create), d_inode(dentry) returns NULL, and
-inode_lock(inode) will cause a NULL pointer dereference.
+Currently all callers pass ignored_trailing=NULL, but I have
+code that will make use of.
 
-Trivially fix this by adding a NULL check for inode before attempting
-to lock it, returning -EINVAL if it is NULL.
+Now it actually behaves like documented:
 
-Additionally, drop WARN_ON(!inode) in bpf_xattr_read_permission() and
-bpf_xattr_write_permission(). These warnings could be triggered by
-passing a negative dentry to bpf_get_dentry_xattr() or the _locked
-variants of the xattr kfuncs, potentially causing a Denial of Service
-on systems with panic_on_warn enabled. Instead, simply return -EINVAL.
+* If @usize < @ksize, then the kernel is trying to pass userspace a newer
+  struct than it supports. Thus we only copy the interoperable portions
+  (@usize) and ignore the rest (but @ignored_trailing is set to %true if
+  any of the trailing (@ksize - @usize) bytes are non-zero).
 
-Reported-by: Quan Sun <2022090917019@std.uestc.edu.cn>
-Closes: https://lore.kernel.org/bpf/1587cbf4-1293-4e25-ad24-c970836a1686@std.uestc.edu.cn/
-Fixes: 56467292794b ("bpf: fs/xattr: Add BPF kfuncs to set and remove xattrs")
-Signed-off-by: Matt Bobrowski <mattbobrowski@google.com>
-Link: https://patch.msgid.link/20260430073836.2894001-1-mattbobrowski@google.com
+Fixes: 424a55a4a908 ("uaccess: add copy_struct_to_user helper")
+Cc: Dmitry Safonov <0x7f454c46@gmail.com>
+Cc: Dmitry Safonov <dima@arista.com>
+Cc: Francesco Ruggeri <fruggeri@arista.com>
+Cc: Salam Noureddine <noureddine@arista.com>
+Cc: David Ahern <dsahern@kernel.org>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Michal Luczaj <mhal@rbox.co>
+Cc: David Wei <dw@davidwei.uk>
+Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: Marcel Holtmann <marcel@holtmann.org>
+Cc: Xin Long <lucien.xin@gmail.com>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Kuniyuki Iwashima <kuniyu@google.com>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Willem de Bruijn <willemb@google.com>
+Cc: Neal Cardwell <ncardwell@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Simon Horman <horms@kernel.org>
+Cc: Aleksa Sarai <cyphar@cyphar.com>
+Cc: Christian Brauner <brauner@kernel.org>
+CC: Kees Cook <keescook@chromium.org>
+Cc: netdev@vger.kernel.org
+Cc: linux-bluetooth@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Link: https://patch.msgid.link/71f69442410c1186ed8ce6d5b4b9d4a5a70edbad.1775576651.git.metze@samba.org
+Reviewed-by: Aleksa Sarai <aleksa@amutable.com>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/bpf_fs_kfuncs.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ include/linux/uaccess.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/bpf_fs_kfuncs.c b/fs/bpf_fs_kfuncs.c
-index e4e51a1d0de281..606319dd69e803 100644
---- a/fs/bpf_fs_kfuncs.c
-+++ b/fs/bpf_fs_kfuncs.c
-@@ -100,7 +100,7 @@ static bool match_security_bpf_prefix(const char *name__str)
- 
- static int bpf_xattr_read_permission(const char *name, struct inode *inode)
- {
--	if (WARN_ON(!inode))
-+	if (!inode)
- 		return -EINVAL;
- 
- 	/* Allow reading xattr with user. and security.bpf. prefix */
-@@ -170,7 +170,7 @@ __bpf_kfunc_end_defs();
- 
- static int bpf_xattr_write_permission(const char *name, struct inode *inode)
- {
--	if (WARN_ON(!inode))
-+	if (!inode)
- 		return -EINVAL;
- 
- 	/* Only allow setting and removing security.bpf. xattrs */
-@@ -289,6 +289,9 @@ __bpf_kfunc int bpf_set_dentry_xattr(struct dentry *dentry, const char *name__st
- 	struct inode *inode = d_inode(dentry);
- 	int ret;
- 
-+	if (!inode)
-+		return -EINVAL;
-+
- 	inode_lock(inode);
- 	ret = bpf_set_dentry_xattr_locked(dentry, name__str, value_p, flags);
- 	inode_unlock(inode);
-@@ -314,6 +317,9 @@ __bpf_kfunc int bpf_remove_dentry_xattr(struct dentry *dentry, const char *name_
- 	struct inode *inode = d_inode(dentry);
- 	int ret;
- 
-+	if (!inode)
-+		return -EINVAL;
-+
- 	inode_lock(inode);
- 	ret = bpf_remove_dentry_xattr_locked(dentry, name__str);
- 	inode_unlock(inode);
+diff --git a/include/linux/uaccess.h b/include/linux/uaccess.h
+index 56328601218c5a..09a09cc4aac274 100644
+--- a/include/linux/uaccess.h
++++ b/include/linux/uaccess.h
+@@ -510,7 +510,7 @@ copy_struct_to_user(void __user *dst, size_t usize, const void *src,
+ 			return -EFAULT;
+ 	}
+ 	if (ignored_trailing)
+-		*ignored_trailing = ksize < usize &&
++		*ignored_trailing = usize < ksize &&
+ 			memchr_inv(src + size, 0, rest) != NULL;
+ 	/* Copy the interoperable parts of the struct. */
+ 	if (copy_to_user(dst, src, size))
 -- 
 2.53.0
 
