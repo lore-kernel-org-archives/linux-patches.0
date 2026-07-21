@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E6C356A12;
-	Tue, 21 Jul 2026 20:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF4B3B3C0A;
+	Tue, 21 Jul 2026 20:44:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666690; cv=none; b=N6XPtjXyH7kYf4zKNFHWndBndSeIeIgfTGuNbp8KMoFs/YWz2ZmRu0lCLN8UQLaqISpNH6jHQyK6lc/5gzRpJ48fdGa9Q7x1GvhQo1tej5/fMyvqRsOI4PvDaSCc8gMM6ncBSRovhuv33TWIcVRkKxCgTSmpC5E5Lo8rKSMrp7c=
+	t=1784666692; cv=none; b=rVLaMOdwwOw2pOvwLT7FbAMp2qtgtk5/v6yAeSaf+SzxXy4AjIarYMd9CYN1sRGGrrsxQHKUQ7XaCVr1Scb0y872T/DhPgPUPNCf69udRpLgV5qalmKEmrunbRUAakm9SusASXZwrOcG9N7GTYSYDfNbzU4XddoKEM9WoHtZH1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666690; c=relaxed/simple;
-	bh=JNBCcW4Hw7CklFwhY1ccAqpfey0UQh0dS3mcMmI0uac=;
+	s=arc-20240116; t=1784666692; c=relaxed/simple;
+	bh=R+8BYX8IrFEKQ6LL3j4Y5Ua3XRJj60EfGMgsNPckNLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bog80Z3YqwIB0sdZ758JdEczbWiagLUT+JfrZ2fJGiwh5V2NMEt37IyZigTwheEHvCFWU1KDreQFAdHKtlDQA4VZcJNWt/QBmYLmcn9TpB8G0V3j4soD/WgIYJTdYY5A8S3yEIVh2CiG5hiUoeHfN2ytqQ5SyAE/prTIPvX0Lh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pazvNMxQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kqvEtpwQRRNTvWNlIxi/VBb5ODZfXzipbUqoAyoaDph8YXhaIzjDy70Li32p1FfSUHOkicu9feqZgokQsoZC3aZDU0exD9hkhbOIX4qlwT0+y+onK02MfYCmdN31DFgXMdaauLa7sbZ3f7CO5+yHVHlDC3dZiLA70Ahh5tUfCjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7N+S0ev; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pazvNMxQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD081F000E9;
-	Tue, 21 Jul 2026 20:44:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7N+S0ev"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2570F1F000E9;
+	Tue, 21 Jul 2026 20:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666689;
-	bh=dOpBVwJTYXMoOTLooVuiQtPmOh9MisQI78G0BMDFLrc=;
+	s=korg; t=1784666691;
+	bh=GbbcTxDcrtCG+cYILgQ0qOQGoEN0TLkXRjLEefG7rBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pazvNMxQQ2iX41MtTqMpRI65B0UD5yx8LzBmGnSSATLxqLoKkEeiSpkTpgSSj54Ms
-	 1+fknmniP4TSoEEk2Ay+pfwRD+C5PsgZrjPmGHNLqUUhIbbOjhLtz3LLQmInDpjwUS
-	 3Ga5LkDD5kEsqQhVOZDuauCVfBsGO6AoFW1er/Ac=
+	b=P7N+S0evJScZ4/KT4OAtM/yvdkb7DHvk5srZ4DakdjpCOthhcRSRNBNTiC1Nd5r7i
+	 EEaZS6AfEUor1Tw6I6JJ7hVz/suIYLWcYkIDzMOEBWxjLQ/Dl/WBPNgNsIb2R59QOn
+	 CHEgEY9kZ+WKhhAFfp6SNouNdtiVwbxYN7d46ktg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Wyatt Feng <bronzed_45_vested@icloud.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0776/1266] netfilter: nft_synproxy: stop bypassing the priv->info snapshot
-Date: Tue, 21 Jul 2026 17:20:13 +0200
-Message-ID: <20260721152459.228283234@linuxfoundation.org>
+Subject: [PATCH 6.6 0777/1266] netfilter: nft_compat: ebtables emulation must reject non-bridge targets
+Date: Tue, 21 Jul 2026 17:20:14 +0200
+Message-ID: <20260721152459.251256043@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,71 +58,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 11d4bc4e26fb66040a5b5d95e9abf37deac2b1fc ]
+[ Upstream commit 9dbba7e694ec045f21ede2f892fb42b81b4e1692 ]
 
-nft_synproxy_eval_v4() and nft_synproxy_eval_v6() already take a
-whole-object READ_ONCE() snapshot of the shared priv->info state before
-building the SYNACK reply, but nft_synproxy_tcp_options() still masks
-opts->options with priv->info.options from the live shared object.
+xtables targets return netfilter verdicts: NF_ACCEPT, NF_DROP, and so
+on.  ebtables targets return incompatible verdicts: EBT_ACCEPT,
+EBT_DROP, ...   We cannot allow fallback to NFPROTO_UNSPEC.
 
-When a named synproxy object is updated concurrently with SYN traffic,
-the eval path can then mix mss and timestamp handling from the local
-snapshot with an options mask taken from a newer configuration, so one
-SYNACK no longer reflects a coherent synproxy configuration.
+ebtables doesn't permit this since
+11ff7288beb2 ("netfilter: ebtables: reject non-bridge targets")
+but that commit missed the nft_compat layer.
 
-Use info->options so nft_synproxy_tcp_options() stays on the same local
-snapshot that the eval path already copied from priv->info.
-
-Fixes: ee394f96ad75 ("netfilter: nft_synproxy: add synproxy stateful object support")
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reported-by: Ren Wei <n05ec@lzu.edu.cn>
+Reported-by: Wyatt Feng <bronzed_45_vested@icloud.com>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_synproxy.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ net/netfilter/nft_compat.c | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nft_synproxy.c b/net/netfilter/nft_synproxy.c
-index 4d3e5a31b4125d..ad3e7d27f02e9d 100644
---- a/net/netfilter/nft_synproxy.c
-+++ b/net/netfilter/nft_synproxy.c
-@@ -23,14 +23,13 @@ static const struct nla_policy nft_synproxy_policy[NFTA_SYNPROXY_MAX + 1] = {
- static void nft_synproxy_tcp_options(struct synproxy_options *opts,
- 				     const struct tcphdr *tcp,
- 				     struct synproxy_net *snet,
--				     struct nf_synproxy_info *info,
--				     const struct nft_synproxy *priv)
-+				     struct nf_synproxy_info *info)
- {
- 	this_cpu_inc(snet->stats->syn_received);
- 	if (tcp->ece && tcp->cwr)
- 		opts->options |= NF_SYNPROXY_OPT_ECN;
+diff --git a/net/netfilter/nft_compat.c b/net/netfilter/nft_compat.c
+index 1e8142e64e8082..67a138b9be3a6b 100644
+--- a/net/netfilter/nft_compat.c
++++ b/net/netfilter/nft_compat.c
+@@ -389,6 +389,22 @@ static int nft_target_validate(const struct nft_ctx *ctx,
+ 	return 0;
+ }
  
--	opts->options &= priv->info.options;
-+	opts->options &= info->options;
- 	opts->mss_encode = opts->mss_option;
- 	opts->mss_option = info->mss;
- 	if (opts->options & NF_SYNPROXY_OPT_TIMESTAMP)
-@@ -55,7 +54,7 @@ static void nft_synproxy_eval_v4(const struct nft_synproxy *priv,
++static int nft_target_bridge_validate(const struct nft_ctx *ctx,
++				      const struct nft_expr *expr)
++{
++	struct xt_target *target = expr->ops->data;
++
++	/* Do not allow UNSPEC to stand-in for NFPROTO_BRIDGE
++	 * targets: they are incompatible.  ebtables targets return
++	 * EBT_ACCEPT, DROP and so on which are not compatible with
++	 * NF_ACCEPT, NF_DROP and so on.
++	 */
++	if (target->family != NFPROTO_BRIDGE)
++		return -ENOENT;
++
++	return nft_target_validate(ctx, expr);
++}
++
+ static void __nft_match_eval(const struct nft_expr *expr,
+ 			     struct nft_regs *regs,
+ 			     const struct nft_pktinfo *pkt,
+@@ -916,14 +932,16 @@ nft_target_select_ops(const struct nft_ctx *ctx,
+ 	ops->init = nft_target_init;
+ 	ops->destroy = nft_target_destroy;
+ 	ops->dump = nft_target_dump;
+-	ops->validate = nft_target_validate;
+ 	ops->data = target;
+ 	ops->reduce = NFT_REDUCE_READONLY;
  
- 	if (tcp->syn) {
- 		/* Initial SYN from client */
--		nft_synproxy_tcp_options(opts, tcp, snet, &info, priv);
-+		nft_synproxy_tcp_options(opts, tcp, snet, &info);
- 		synproxy_send_client_synack(net, skb, tcp, opts);
- 		consume_skb(skb);
- 		regs->verdict.code = NF_STOLEN;
-@@ -86,7 +85,7 @@ static void nft_synproxy_eval_v6(const struct nft_synproxy *priv,
+-	if (family == NFPROTO_BRIDGE)
++	if (family == NFPROTO_BRIDGE) {
+ 		ops->eval = nft_target_eval_bridge;
+-	else
++		ops->validate = nft_target_bridge_validate;
++	} else {
+ 		ops->eval = nft_target_eval_xt;
++		ops->validate = nft_target_validate;
++	}
  
- 	if (tcp->syn) {
- 		/* Initial SYN from client */
--		nft_synproxy_tcp_options(opts, tcp, snet, &info, priv);
-+		nft_synproxy_tcp_options(opts, tcp, snet, &info);
- 		synproxy_send_client_synack_ipv6(net, skb, tcp, opts);
- 		consume_skb(skb);
- 		regs->verdict.code = NF_STOLEN;
+ 	return ops;
+ err:
 -- 
 2.53.0
 
