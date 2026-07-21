@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A341046AA9A;
-	Tue, 21 Jul 2026 15:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C67246AA94;
+	Tue, 21 Jul 2026 15:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648276; cv=none; b=WKmyp5rkr4S8UADp7ch+yl9LXwbuc1tvpEscK6svclsyRXcT3rulxwiyX1eamnKE5N5YCZUXt+w1awFiyAx4zpO6HdtRMyFLuhmgI51YCzMYPhE9xYd4heL30X0Vljzi79a0Uh6mMwzdXc35Wgq9K84IL+L4JLzbQ8FJ6vwn4WU=
+	t=1784648279; cv=none; b=n+hLx2drlf5L6lXWOJ/UnjGuMCIJGquv+K0vQW+pf3FkSBJkPHZpVO5kT0kHpK7gD/KgpDin+yUrZjnR4m11h/0dyOSUksNZMDzTmrKcVcsIMpOOjKbvOAvyE4+L7KN0d0yOV+MrP/14c0qA5h1IdVNCapp5WLEq/m8TtZDU9R4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648276; c=relaxed/simple;
-	bh=4heobmHRwqwJeujUyLMyLiQVR2YMeJQ4jxRsHNKHiw0=;
+	s=arc-20240116; t=1784648279; c=relaxed/simple;
+	bh=88C5BGdqTCZxsvfKr60844lBkbSEYcmD+RgPMnoYd98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Afe1aIx04IiTNwWjNIYDsIaAbdrUE7NDFnpyRHuGsMPzJLcc0OrOEFmhX9yNiL/8Tn4QL52Q9g7b4WR5YDzS6fOUwirJJEXH5tMOKuaiqmSWqVQQJAOG2AE7AI7CNRQWhUpge5j0Fsq+GaEEBnHiWZPATu/xL0+UHGFo1fdRMdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hjsowy1n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u7R6dAQG+UybvE6hR4zt1tDhpXpgYnKjoAiZXa0HJTl42iUN+jB0h4aqIoBLYnpI1fX8DWaewUSyhH6kE6Otbndft/LlLYPMHz62HtvanE/ZkRiUrNK6PLPHHlybh+28yNNdT+0zsGqL5hgO/ET5y38+31m419lHp9BBdFBvyK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0fqekmu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hjsowy1n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146B61F000E9;
-	Tue, 21 Jul 2026 15:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0fqekmu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB261F000E9;
+	Tue, 21 Jul 2026 15:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648275;
-	bh=rLAjsOxcTBTK3V6Gjm0MUerIajUOXa6/a7h3HaGy0Kk=;
+	s=korg; t=1784648278;
+	bh=u4lFQRjC7t67zBqWQTtk9T/2wS5uboUbmIej7XKrcuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hjsowy1njacWv5uOurrKMUAYw36V6W/CRSlECtwEzolezE89U/f1KI0/6pgP6m3c/
-	 g8qaPdn7lzYV5WqzVPxmqHnUPp3ftp1NLPFVO05YrBb8rNQVvLDeOuXQSpy8Rdf3bX
-	 2UWH69ZPE3EZxSA1IfG7aBdzybPMKHIZoIIA0Q+E=
+	b=y0fqekmuMk+8fRK6Gp0cqKr/Oli39qh6rH4HWsYB38OVhAFsbb7UMrDWx01VBrYF9
+	 1lBD8j3wCySonnGKvfFQkzQKdlyJ9L05va5cROiyU27B6hX2LkM8CHwVv5OkP4xmVK
+	 a9e8P7xd7644Ir8FEC+VrESv7NNKBdyp4lUVpYPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@nabladev.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0139/2077] dt-bindings: vendor-prefixes: Add Displaytech Ltd.
-Date: Tue, 21 Jul 2026 16:56:52 +0200
-Message-ID: <20260721152555.968133251@linuxfoundation.org>
+Subject: [PATCH 7.1 0140/2077] drm/gpuvm: take refcount on DRM device
+Date: Tue, 21 Jul 2026 16:56:53 +0200
+Message-ID: <20260721152555.990413791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,34 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@nabladev.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-[ Upstream commit 42112cff8cb78ff6120983ba71bd14d52ce9dccd ]
+[ Upstream commit c2d72717e0a9dd01c6a1bac61a1462a8e04bd179 ]
 
-Add "displaytech" vendor prefix for Displaytech Ltd. .
+Currently GPUVM relies on the owner implicitly holding a refcount to the
+drm device, and it does not implicitly take a refcount on the drm
+device. This design is error-prone, so take a refcount on the device.
 
-Signed-off-by: Marek Vasut <marex@nabladev.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260422210806.80948-1-marex@nabladev.com
+Suggested-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Fixes: 546ca4d35dcc ("drm/gpuvm: convert WARN() to drm_WARN() variants")
+Link: https://patch.msgid.link/20260416-gpuvm-drm-dev-get-v1-1-f3bc06571e73@google.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/drm_gpuvm.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 28784d66ae7ba5..11c55b5df0e4ca 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -437,6 +437,8 @@ patternProperties:
-     description: Diodes, Inc.
-   "^dioo,.*":
-     description: Dioo Microcircuit Co., Ltd
-+  "^displaytech,.*":
-+    description: Displaytech Ltd.
-   "^djn,.*":
-     description: Shenzhen DJN Optronics Technology Co., Ltd
-   "^dlc,.*":
+diff --git a/drivers/gpu/drm/drm_gpuvm.c b/drivers/gpu/drm/drm_gpuvm.c
+index f56719e9f4350a..83020b6cf9ba15 100644
+--- a/drivers/gpu/drm/drm_gpuvm.c
++++ b/drivers/gpu/drm/drm_gpuvm.c
+@@ -25,6 +25,7 @@
+  *
+  */
+ 
++#include <drm/drm_drv.h>
+ #include <drm/drm_gpuvm.h>
+ #include <drm/drm_print.h>
+ 
+@@ -1117,6 +1118,7 @@ drm_gpuvm_init(struct drm_gpuvm *gpuvm, const char *name,
+ 	gpuvm->drm = drm;
+ 	gpuvm->r_obj = r_obj;
+ 
++	drm_dev_get(drm);
+ 	drm_gem_object_get(r_obj);
+ 
+ 	drm_gpuvm_warn_check_overflow(gpuvm, start_offset, range);
+@@ -1160,13 +1162,15 @@ static void
+ drm_gpuvm_free(struct kref *kref)
+ {
+ 	struct drm_gpuvm *gpuvm = container_of(kref, struct drm_gpuvm, kref);
++	struct drm_device *drm = gpuvm->drm;
+ 
+ 	drm_gpuvm_fini(gpuvm);
+ 
+-	if (drm_WARN_ON(gpuvm->drm, !gpuvm->ops->vm_free))
++	if (drm_WARN_ON(drm, !gpuvm->ops->vm_free))
+ 		return;
+ 
+ 	gpuvm->ops->vm_free(gpuvm);
++	drm_dev_put(drm);
+ }
+ 
+ /**
 -- 
 2.53.0
 
