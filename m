@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0B946F4A6;
-	Tue, 21 Jul 2026 19:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415B046F4B3;
+	Tue, 21 Jul 2026 19:28:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662118; cv=none; b=I0jv9C9TlWPpTnsYkiGWaFNfRNulxIVhsjviyflB96uW3p6mQJt/SmCxQ6jdPKAA7BT+xvTrWPcrqPfIqmsGfR19bd8qdnCaxObMx4BFVEZDTKB3BPppRCEIb6ST5QqQF5F9DTnD28L578t+xu+6isQBubG/zZklhpGGlQMfq+c=
+	t=1784662120; cv=none; b=Zq1Q0uxdoNR/TlOENStukkLLwkglZ4AydO8A44wUDzYHHz3ZI5Hx+TfDdG1rZKeaBojiwBJol7KLoh43/7HmHGbjY4RMbpSfa6qneTWsVs9U6ti7YWGp2s16pQ27FL1ANsbJGfN7MjRW8dDp+wbUXGG2TvBxpR/4YAsEUqmtbN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662118; c=relaxed/simple;
-	bh=kBVGyjn+M2cJzEIb2+RAORmGgfoUkuK7yzQKcE31rrg=;
+	s=arc-20240116; t=1784662120; c=relaxed/simple;
+	bh=WBzraXYuGdQ18+I1TwGQibpfV5iAeHwYjpiZIS0srcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rTkTOi4CFhXTF4xFfmsE4m1/mZtvqIP84I2QDs7Gl9FkGOstUCV9M+Ggbedin1q7GmYEO+15fr2ac2e+pAHem4i1Cg9za5u+IpRx7Y4Fo2W5acMeeGTiozRJvHVcKWPM703CnH4AAYaEqjj2kjrkqdW1rVUiu/8tgibJorwp/7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cdHUXff6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nO7Pwm8a7iJ/GRntKUpGjTHTE134dYbhGGpYiwr+hYxF6GzR5YKke/sWce3iIqgtaUfjqgalEzea1J7ZsJ1Mhg0qN0iF2JhEfaMrYireDEPG3XsPjqZLaeDct1cTYZqpFqBTuPqCNDe5R/TCQf88mOQfy6MhGB0KtmvDdrRdrpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8FaE5jL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cdHUXff6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093501F000E9;
-	Tue, 21 Jul 2026 19:28:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8FaE5jL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B891F000E9;
+	Tue, 21 Jul 2026 19:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662116;
-	bh=kK3iu+iUCfepa1He9kiNvhaq20evr9f8AVD4dZ5qRzU=;
+	s=korg; t=1784662119;
+	bh=RoafH/l7NZYOxrkysPvPXGhKJjsTXcRVpofJ2PJX3h0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cdHUXff6xrs1IizcnWP5hnwC55ph5umCueMKLKg3wgFaz8xesAjeN/2/TaQo5hG36
-	 Im7ViVVQNA0H56UY55q0PfRykx4fC3v2DUE8wAWR+REIOp2XronF7+3D864YWkgotb
-	 iHPLO2j+VwQVz2FmI37pTswQfzF/pozaL9DeoFfg=
+	b=x8FaE5jLXZCOyEOC7/LIjFPrsQxvXOSY/bUVw0WRWX3zmZhwsJEf27p+UhiW0veYE
+	 I0iItvG4TemzMLkXpZ/LWzFOQyoXtesPV5lQ+NulmJyTdn6E+tbvNyUee9F1WM2Yh5
+	 1s/5S1lB/7m+ct4C6mRJmeg+Z8X4ymgp6M97Fces=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyan Xia <hongyan.xia@transsion.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0279/1276] sched/fair: Fix cpu_util runnable_avg arithmetic
-Date: Tue, 21 Jul 2026 17:12:02 +0200
-Message-ID: <20260721152452.321495899@linuxfoundation.org>
+Subject: [PATCH 6.12 0280/1276] wifi: mt76: mt7925: clean up DMA on probe failure
+Date: Tue, 21 Jul 2026 17:12:03 +0200
+Message-ID: <20260721152452.344524412@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,73 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xia <hongyan.xia@transsion.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 29922fdfc2a4008d66418bedd0ebf5038fc54efa ]
+[ Upstream commit 9629f31f505d74e76ac0d7a9492fd06c0316fc5d ]
 
-If we take runnable_avg in max(runnable_avg, util_avg) in cpu_util(), we
-should then add or subtract task runnable_avg, but the arithmetic below
-is still with task util_avg. This mixes runnable_avg with util_avg which
-is incorrect.
+mt7925_pci_probe() initializes DMA before registering the device. If
+mt7925_register_device() fails, probe returns through err_free_irq without
+tearing down DMA state.
 
-Fix by always doing arithmetic with runnable_avg and only take
-max(runnable_avg, util_avg) at the last step.
+That leaves the TX NAPI instance enabled and skips the DMA queue cleanup
+that the normal remove path performs through mt7925e_unregister_device().
+Add a dedicated unwind label for failures after mt7925_dma_init() succeeds.
 
-Fixes: 7d0583cf9ec7 ("sched/fair, cpufreq: Introduce 'runnable boosting'")
-Signed-off-by: Hongyan Xia <hongyan.xia@transsion.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://patch.msgid.link/20260605094318.37931-1-hongyan.xia@transsion.com
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260426143728.41534-1-pakmyeonghun@bagmyeonghun-ui-MacBookPro.local
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/pci.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index bd1b30ca184f3c..5a09448e22c33a 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -8101,25 +8101,32 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- static unsigned long
- cpu_util(int cpu, struct task_struct *p, int dst_cpu, int boost)
- {
-+	bool add_task = p && task_cpu(p) != cpu && dst_cpu == cpu;
-+	bool sub_task = p && task_cpu(p) == cpu && dst_cpu != cpu;
- 	struct cfs_rq *cfs_rq = &cpu_rq(cpu)->cfs;
- 	unsigned long util = READ_ONCE(cfs_rq->avg.util_avg);
- 	unsigned long runnable;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/pci.c b/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
+index a90e90131276e1..eb4684f575aff2 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
+@@ -410,10 +410,12 @@ static int mt7925_pci_probe(struct pci_dev *pdev,
  
--	if (boost) {
--		runnable = READ_ONCE(cfs_rq->avg.runnable_avg);
--		util = max(util, runnable);
--	}
--
- 	/*
- 	 * If @dst_cpu is -1 or @p migrates from @cpu to @dst_cpu remove its
- 	 * contribution. If @p migrates from another CPU to @cpu add its
- 	 * contribution. In all the other cases @cpu is not impacted by the
- 	 * migration so its util_avg is already correct.
- 	 */
--	if (p && task_cpu(p) == cpu && dst_cpu != cpu)
--		lsub_positive(&util, task_util(p));
--	else if (p && task_cpu(p) != cpu && dst_cpu == cpu)
-+	if (add_task)
- 		util += task_util(p);
-+	else if (sub_task)
-+		lsub_positive(&util, task_util(p));
-+
-+	if (boost) {
-+		runnable = READ_ONCE(cfs_rq->avg.runnable_avg);
-+		if (add_task)
-+			runnable += READ_ONCE(p->se.avg.runnable_avg);
-+		else if (sub_task)
-+			lsub_positive(&runnable,
-+				      READ_ONCE(p->se.avg.runnable_avg));
-+		util = max(util, runnable);
-+	}
+ 	ret = mt7925_register_device(dev);
+ 	if (ret)
+-		goto err_free_irq;
++		goto err_free_dma;
  
- 	if (sched_feat(UTIL_EST)) {
- 		unsigned long util_est;
+ 	return 0;
+ 
++err_free_dma:
++	mt792x_dma_cleanup(dev);
+ err_free_irq:
+ 	devm_free_irq(&pdev->dev, pdev->irq, dev);
+ err_free_dev:
 -- 
 2.53.0
 
