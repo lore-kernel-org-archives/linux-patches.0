@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF7A3ED3B2;
-	Tue, 21 Jul 2026 19:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77CC13ED3B2;
+	Tue, 21 Jul 2026 19:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661758; cv=none; b=CN7ABmVXTP4XomKPP5pbUtysnMmIy/pdUnjIsaEHarD3ccgTvBnfy5KDT3Lz3IvOlOFEn7Vn1TSNqDxZtH1r9UitgqMUPwPDUZm5f/HhZgiVaAtOdclQ72t06Th/tqbRqI2+XnUs9qUOE8nnTGs4Mcx728PyTPNdJ7oY6+ponkY=
+	t=1784661761; cv=none; b=EKfuac26cqFUECwn5aHp8YqIl0a3FRDnMg+xOcGbW+YJ/EV7VIZL8yTJiEkhuuTlxXFTEEF7phNO9yxyu2WWTbUptGeoG+vm21VWzpdSRG6bpBggahTUAEv8eC808fywo2t2cj6nCh5lR9OZVjJJmcAeOS599KzUrZa/PsRveeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661758; c=relaxed/simple;
-	bh=UFgdakgOc2j6cdVHJsCM0WCv+PqY/R31uDAIEhUEmZg=;
+	s=arc-20240116; t=1784661761; c=relaxed/simple;
+	bh=Bm+2TTx52TeArQnPHfSx2cgD8345PKvkyOfANzNqgAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W9i0zZCvokOM3mq+xpkBAzThwr4HEy6bIhHETVGhSdapdI82KEOXQnpuC/qPSBu0DGOCvm0Y7gFW40ZGIhvRiBwWpLpeW8ej1mbSaXoL92shLwln7CXDry5wBc5n4tZP+71ZOp5eg6zs5FJ8gWGz8WkM8O17gMvIZGb47C/3KYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aghbehD+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KcDKHKWhOA3V+3ooSF568yzFlxmhfb8quH7gmExe1dga3cn5NO2oy+eFvoeE7ONexlQD27c1icAVQRPv9ym4DJmkt0vC2W7U5WIQJhwNPBRa6IFlvJJ3bvUEEyzbskpN6KQWLX3cRyVfp52JImxr1ZjjV9bHRziCoypcOK2xTsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0yta49r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aghbehD+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0821F00A3A;
-	Tue, 21 Jul 2026 19:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0yta49r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3471F000E9;
+	Tue, 21 Jul 2026 19:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661757;
-	bh=MJBsFtK1ApwQ2AaSNI/N++P+R8WW1DeqYisvoUJbmzM=;
+	s=korg; t=1784661760;
+	bh=NwqrRtSS/YCm5yUx3lctpHWDcz9fk5hGes29bfsW+4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aghbehD+4XGM7Ynj6IxvDcCqZK5FJ+nF0CvmqV3pID1uI5Dghc0g1XS3TNjLN5Ur4
-	 PQchaAQidkYhQ+X9BuwnC8w8IcOjzsS9ZefW2SGJLkYYak+YN828qyT4mGkUlCZsRq
-	 ZiOG8aKoyFHwv38BLBRXm0a0kgHThd/is5FTVLMs=
+	b=K0yta49rxM2RtJbRh+c4gsscbSaDPOd+4fMPjoEhpCoe/aaZo3usbo0+zbph8+wvB
+	 HDpDiu9JC46+2XO16SrJlx6FrHccntptQfItN/PI03MTj0TsZs+3LGLBdRMBMZZ7MQ
+	 Lu9eeNttHR9HM4yvC1ossxadKKvYHxjIsJH5AnQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Tejun Heo <tj@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0144/1276] writeback: drop now-unnecessary rcu_barrier() in cgroup_writeback_umount()
-Date: Tue, 21 Jul 2026 17:09:47 +0200
-Message-ID: <20260721152449.323916487@linuxfoundation.org>
+Subject: [PATCH 6.12 0135/1276] regulator: dt-bindings: mt6359: Drop regulator-name pattern restrictions
+Date: Tue, 21 Jul 2026 17:09:38 +0200
+Message-ID: <20260721152449.122987478@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,45 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit e90a6d668e26e00a72df2d09c173b563468f09c9 ]
+[ Upstream commit cdc517688ffa2c30a64a20b558a9ecbf046c70f1 ]
 
-Commit e1b849cfa6b6 ("writeback: Avoid contention on wb->list_lock when
-switching inodes") replaced the queue_rcu_work() based scheduling of
-inode wb switches with a plain queue_work().  Since then no switcher
-goes through call_rcu(), so rcu_barrier() in cgroup_writeback_umount()
-has no callbacks of its own to wait for.  It still drains unrelated
-call_rcu() callbacks from other subsystems on busy systems, which
-incidentally slows umount down; drop it.
+The name of the regulator should match what the board design specifies
+for the power rail. There should be no limitations on what the name can
+be, and they definitely don't always follow the PMIC's own names.
 
-Fixes: e1b849cfa6b6 ("writeback: Avoid contention on wb->list_lock when switching inodes")
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Link: https://patch.msgid.link/20260521095016.2791354-3-libaokun@linux.alibaba.com
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Drop the restrictions on regulator-name.
+
+Fixes: 8771456635d5 ("dt-bindings: regulator: Add document for MT6359 regulator")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://patch.msgid.link/20260514091520.2718987-3-wenst@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c | 5 -----
- 1 file changed, 5 deletions(-)
+ .../bindings/regulator/mt6359-regulator.yaml  | 43 -------------------
+ 1 file changed, 43 deletions(-)
 
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index 57a31bd110c0bf..4e1e0dd16428ba 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -1218,11 +1218,6 @@ void cgroup_writeback_umount(struct super_block *sb)
- 		 * will then drain it.
- 		 */
- 		synchronize_rcu();
--		/*
--		 * Use rcu_barrier() to wait for all pending callbacks to
--		 * ensure that all in-flight wb switches are in the workqueue.
--		 */
--		rcu_barrier();
- 		flush_workqueue(isw_wq);
- 	}
- }
+diff --git a/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml b/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml
+index d6b3b5a5c0b346..5e4b1e74179500 100644
+--- a/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml
+@@ -18,84 +18,41 @@ patternProperties:
+   "^buck_v(s1|gpu11|modem|pu|core|s2|pa|proc2|proc1|core_sshub)$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^v(s1|gpu11|modem|pu|core|s2|pa|proc2|proc1|core_sshub)$"
+-
+     unevaluatedProperties: false
+ 
+   "^ldo_v(ibr|rf12|usb|camio|efuse|xo22)$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^v(ibr|rf12|usb|camio|efuse|xo22)$"
+-
+     unevaluatedProperties: false
+ 
+   "^ldo_v(rfck|emc|a12|a09|ufs|bbck)$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^v(rfck|emc|a12|a09|ufs|bbck)$"
+-
+     unevaluatedProperties: false
+ 
+   "^ldo_vcn(18|13|33_1_bt|13_1_wifi|33_2_bt|33_2_wifi)$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^vcn(18|13|33_1_bt|13_1_wifi|33_2_bt|33_2_wifi)$"
+-
+     unevaluatedProperties: false
+ 
+   "^ldo_vsram_(proc2|others|md|proc1|others_sshub)$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^vsram_(proc2|others|md|proc1|others_sshub)$"
+-
+     unevaluatedProperties: false
+ 
+   "^ldo_v(fe|bif|io)28$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^v(fe|bif|io)28$"
+-
+     unevaluatedProperties: false
+ 
+   "^ldo_v(aud|io|aux|rf|m)18$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^v(aud|io|aux|rf|m)18$"
+-
+     unevaluatedProperties: false
+ 
+   "^ldo_vsim[12]$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^vsim[12]$"
+-
+-    required:
+-      - regulator-name
+-
+     unevaluatedProperties: false
+ 
+ additionalProperties: false
 -- 
 2.53.0
 
