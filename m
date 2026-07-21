@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A93405845;
-	Tue, 21 Jul 2026 17:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8703A30F80C;
+	Tue, 21 Jul 2026 17:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655790; cv=none; b=MM4tsWhma/Iu15Nj0O+dSqruSqM0ajM2EI67KRvUMH2I0fMGz5WWRA32s1GO7knjj5O6Yl1REfVoOCoSXuLcDPsflyJdXDhjNl7B9pl/aiNR2aKcQxUzvGLR2OO0UoW6GYIAsfR6Xy6IFEHhBDUCmFa83vWMmPLP3mBm5YUH/S8=
+	t=1784655791; cv=none; b=AxGqjvIoWFOHHElQLPzGeWxQY5sN2Kxa8f0OkvSeQpP0os66oyXfQiYxO1eS9jtBfuvCCVKXfkcLXhYdUIhsW8fyWFn7vnhwR2KMBPA5qu7Ui5k1wuDe0DcoWknnV/rEMalx0q8pYJNyZXtOrnqVaiAErHOrVrxXY4xzoPtrG90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655790; c=relaxed/simple;
-	bh=t+z7hfr5z1wBVkBoWoDoN+4Dy1xztuyANP31yc7YSY0=;
+	s=arc-20240116; t=1784655791; c=relaxed/simple;
+	bh=qEFUKO/jMBGLdu9cHrNsvIHPDUYuoo5m+9LqXTPjuts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DW6lbBXiwt0Qgg4ikib4dNcM+28bkSNcchAQhsCidbJkawTnM2fCUraJUcieIfqC7YIv8SbeQJ7ANU9z5j5rrXyw5Cc/fymLU6/x1dU+bul9ATP6LdDui0HXI90T0qfD1JlhDma+EzUp+O2lI1xEH+Z2fOk8lUqWpyDwEeMCJSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQJU8tcQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JEFzFDl2hDAK3J2XdI+DKuvGwx9PQ3Z+yA4bfFXdJew4VKgm/Hg001LKKVn06IdMR+aAhcjUBNsXFPRb4PAMyRv54FhPC0iQBJ657fFfcYxXA/KIjBiIlgFirV6h4lhhMGLnbLtl6wCP7lIXrf55VzxJj9EXypHOGJW0lqXIUBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YyrSDsgX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQJU8tcQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90DF41F00A3E;
-	Tue, 21 Jul 2026 17:43:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YyrSDsgX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5641F000E9;
+	Tue, 21 Jul 2026 17:43:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655789;
-	bh=aTrTOTnKMofxkwULa0G1yYj+VN0wl8wW2tvQRJPJiI0=;
+	s=korg; t=1784655786;
+	bh=z3uiRMfk0ZnLXSfpY/0IUD7tn0fElkValfymrwgAOKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IQJU8tcQ0WGQJRQQFZ32QmySxqZtzf63PeA4mcn+u67+4+D3f5LF6QoSepOP/aGm3
-	 OSyU319jN4RV79se0kzy3jNiwDQ61rgMJz25zxulyANIICayQTUBJEFnRm9S7+wnqQ
-	 lR/HZqdSPhwQMR3U3yIcoydnkDzgueYSXHUbtivM=
+	b=YyrSDsgXX432LSwo2mAeWXw9Rzi/WkB19o+iQCpTWaFJka2kVKVvnyfNThIKnCASY
+	 4Cft3Isp/KRb/ASC4Axs4DdTspc9AMOOUPogNHRof0TWyPR+7mu/65RwzaP7HR4RXW
+	 4cSu22+7T44wsYnD0AlH1rmddGZPAYJNkn6v2884=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin He <helin52@huawei.com>,
-	Yongbang Shi <shiyongbang@huawei.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
+	Harshal Dev <harshal.dev@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0140/1611] drm/hisilicon/hibmc: add updating link cap in DP detect()
-Date: Tue, 21 Jul 2026 17:04:16 +0200
-Message-ID: <20260721152518.023744276@linuxfoundation.org>
+Subject: [PATCH 6.18 0139/1611] arm64: dts: qcom: sm8450: Fix ICE reg size
+Date: Tue, 21 Jul 2026 17:04:15 +0200
+Message-ID: <20260721152518.000449795@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,65 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin He <helin52@huawei.com>
+From: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
 
-[ Upstream commit 7d380ef98dd469747b6df43fb0243301b0caaacf ]
+[ Upstream commit 7fb3d0512dacc0d09217eb45057357f00298203d ]
 
-In the past, the link cap is updated in link training at encoder enable
-stage, but the hibmc_dp_mode_valid() is called before it, which will use
-DP link's rate and lanes. So add the hibmc_dp_update_caps() in
-hibmc_dp_update_caps() to avoid some potential risks.
+The ICE register region size was originally described incorrectly when
+the ICE hardware was first introduced. The same value was later carried
+over unchanged when the ICE node was split out from the UFS node into
+its own DT entry.
 
-Fixes: 607805abfb74 ("drm/hisilicon/hibmc: add dp mode valid check")
-Signed-off-by: Lin He <helin52@huawei.com>
-Signed-off-by: Yongbang Shi <shiyongbang@huawei.com>
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260509032302.2057227-2-shiyongbang@huawei.com
+Correct the register size to match the hardware specification.
+
+Fixes: 276ee34a40c1 ("arm64: dts: qcom: sm8450: add Inline Crypto Engine registers and clock")
+Signed-off-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Reviewed-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260402-ice_dt_reg_fix-v1-2-74e4c2129238@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/hisilicon/hibmc/dp/dp_comm.h   | 1 +
- drivers/gpu/drm/hisilicon/hibmc/dp/dp_link.c   | 2 +-
- drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c | 2 ++
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_comm.h b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_comm.h
-index f9ee7ebfec55c3..f53dac256ee0be 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_comm.h
-+++ b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_comm.h
-@@ -69,5 +69,6 @@ int hibmc_dp_link_training(struct hibmc_dp_dev *dp);
- int hibmc_dp_serdes_init(struct hibmc_dp_dev *dp);
- int hibmc_dp_serdes_rate_switch(u8 rate, struct hibmc_dp_dev *dp);
- int hibmc_dp_serdes_set_tx_cfg(struct hibmc_dp_dev *dp, u8 train_set[HIBMC_DP_LANE_NUM_MAX]);
-+void hibmc_dp_update_caps(struct hibmc_dp_dev *dp);
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 6c00390010f1f7..3a352e5f3f191b 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -5348,7 +5348,7 @@ ufs_mem_phy: phy@1d87000 {
+ 		ice: crypto@1d88000 {
+ 			compatible = "qcom,sm8450-inline-crypto-engine",
+ 				     "qcom,inline-crypto-engine";
+-			reg = <0 0x01d88000 0 0x8000>;
++			reg = <0 0x01d88000 0 0x18000>;
+ 			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+ 		};
  
- #endif
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_link.c b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_link.c
-index 0726cb5b736e60..8c53f16db5160f 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_link.c
-+++ b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_link.c
-@@ -325,7 +325,7 @@ static int hibmc_dp_link_downgrade_training_eq(struct hibmc_dp_dev *dp)
- 	return hibmc_dp_link_reduce_rate(dp);
- }
- 
--static void hibmc_dp_update_caps(struct hibmc_dp_dev *dp)
-+void hibmc_dp_update_caps(struct hibmc_dp_dev *dp)
- {
- 	dp->link.cap.link_rate = dp->dpcd[DP_MAX_LINK_RATE];
- 	if (dp->link.cap.link_rate > DP_LINK_BW_8_1 || !dp->link.cap.link_rate)
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c
-index 616821e3c933bc..35dff7bfbf76f3 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c
-+++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c
-@@ -41,6 +41,8 @@ static bool hibmc_dp_get_dpcd(struct hibmc_dp_dev *dp_dev)
- 	if (ret)
- 		return false;
- 
-+	hibmc_dp_update_caps(dp_dev);
-+
- 	dp_dev->is_branch = drm_dp_is_branch(dp_dev->dpcd);
- 
- 	ret = drm_dp_read_desc(dp_dev->aux, &dp_dev->desc, dp_dev->is_branch);
 -- 
 2.53.0
 
