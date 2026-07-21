@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0DF46EC9E;
-	Tue, 21 Jul 2026 18:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA77340926D;
+	Tue, 21 Jul 2026 18:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659806; cv=none; b=b3ytcgtSn4ZJ0B1m1J8WFWfikCPvGw775Ijl12ik2JMsP/Q8Xcgi6+Amdn5Ayx12ISzpsU7AHeObBIoTN2yFTpC2EnJuWcqP6aGRc5SOkYe0s9snExfUlGj8br89yYVsDBrN+fhFmpPjVoZGMay5/3iPZ/7dHNT+4XeI6WIb28M=
+	t=1784659808; cv=none; b=f5LoPXfz5qJGPuh2KQEyL9WPk7Hc6Elec0F7zIXB8PbvAlO3owsJiESzZkggzXSzTw6FF39XXz3I2L3U1oOPI+HGfCrtFvfp+QOL8XdJS3towE43XgxNRGAvSGHC8CUUxDHdRXDMNphYJZXRfQzTuEoNMao2+dM0KQEmfa6QWSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659806; c=relaxed/simple;
-	bh=JIZmUsu6q+cGx+04X2o/uIMS6AfUppGMzwSeRcYdOoQ=;
+	s=arc-20240116; t=1784659808; c=relaxed/simple;
+	bh=xyFwZzq7JEq0yiNxFXOQW2c9VP9J1wfCgnAuJiPM/Cc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iq7O2rYs8AywK6MmVIHLFSRNPcciQxQ4RMapTnbdIypj17xYINxZsyn/wfWkeCLxecSYODH4NijmNHfEuyIzaC6WA5ctMgRe1lPnMz9K39ALTzqlhxVK8Qe4RAh3MQ3Qssj+fX5ydh/nq9YA6sxlBG2a/+UdBPS24dd69DKD9yY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQCO9VQs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j7LJ4AXl2vB7vlOByygWGLoNkjAtCBgpnrHZOiqV7IhYSq2qKFpxEQivf95JgOUic6HXJ7SIJesch62OyrCHquWaZED6XOGPJL8C2pE7pfRlsOtCG6LkBZFOnzVvICwwrK2byZlNSuJq9ZViLTwDeIWDPQs8uhwPEhLXrgnipcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vn94NpO7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQCO9VQs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8F31F000E9;
-	Tue, 21 Jul 2026 18:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vn94NpO7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6CE1F000E9;
+	Tue, 21 Jul 2026 18:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659804;
-	bh=p/yFNP1kYTq9sh23lJAM0DiBC8P7RItHxXKrpB0S3OI=;
+	s=korg; t=1784659807;
+	bh=tH/r1u4sQBWbtG66/2D5qQMAVhyTmXlNkZwFwlw797k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VQCO9VQsiFsJdq6zUW6/ado88decUYeKYO1omjm8b2nWfOL901bsZl1moENmxqJWx
-	 bOqgrhZ6ppSRpS30LHgzGp8xp0M9h38fiWz7FpiXmBhrvc0lt3KW5E+2CwlU6iqLlM
-	 wfapcw8VR3prJKS6FXPV72KPySZ/xHecKnSWDFRg=
+	b=Vn94NpO7xJYR6Cnqe21micIw8sGtwYRRDwBy8Z5XUITpMaAdWvffHwA8LHBIP7Yyt
+	 YYnBQUqCoMBEqdFf+t9c7J5MnqgopFpxa5gFJhsuHG+okieL+xn8rIYn0umCnV7LzI
+	 +5jCqv0de780hzXZxaiMxtbzrfoEUQndqEnnpw9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	Li Ming <ming.li@zohomail.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Sechang Lim <rhkrqnwk98@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0733/2077] cxl/region: Fill first free targets[] slot during auto-discovery
-Date: Tue, 21 Jul 2026 17:06:46 +0200
-Message-ID: <20260721152610.086197357@linuxfoundation.org>
+Subject: [PATCH 7.1 0742/2077] tcp: clear sock_ops cb flags before force-closing a child socket
+Date: Tue, 21 Jul 2026 17:06:55 +0200
+Message-ID: <20260721152610.294976851@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,98 +54,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Ming <ming.li@zohomail.com>
+From: Sechang Lim <rhkrqnwk98@gmail.com>
 
-[ Upstream commit aa8a76711c15041ec1e42c3a74c15c2df0bd31f6 ]
+[ Upstream commit 990348e5bb457697c2f1f7f7b65154a3334d9d2b ]
 
-Any invalid endpoint decoder pointer in the target array of an active
-region is not allowed by cxl driver. This means cxl driver always
-assumes the first p->nr_targets entries of the target array in an
-auto-assembly region are valid. However, there are scenarios that could
-leave NULL endpoint decoder pointer holes in the target array.
+A child socket inherits the listener's bpf_sock_ops_cb_flags via
+sk_clone_lock(). If its setup fails in tcp_v4_syn_recv_sock() /
+tcp_v6_syn_recv_sock(), the child is freed through put_and_exit, where
+inet_csk_prepare_forced_close() drops the socket lock and tcp_done() runs
+without it.
 
-1. When cxl_cancel_auto_attach() removes an endpoint decoder from a
-   target array, the target slot is set to NULL. If the removed endpoint
-   decoder is not the last element in the target array, the target array
-   will contain a NULL hole.
+If BPF_SOCK_OPS_STATE_CB_FLAG was inherited, tcp_done() -> tcp_set_state()
+calls tcp_call_bpf(), which expects the lock and trips sock_owned_by_me():
 
-2. When a auto-assembly region removes an assigned endpoint decoder, if
-   the removed endpoint decoder is not the last element in the target
-   array, always remains a NULL hole in the target array.
+  WARNING: include/net/sock.h:1799 at tcp_set_state+0x433/0x550
+  RIP: 0010:tcp_set_state+0x433/0x550 include/net/sock.h:1799
+  Call Trace:
+   <IRQ>
+   tcp_done+0xba/0x250 net/ipv4/tcp.c:5095
+   tcp_v4_syn_recv_sock+0x850/0xa50 net/ipv4/tcp_ipv4.c:1787
+   tcp_check_req+0xf30/0x1360 net/ipv4/tcp_minisocks.c:926
+   tcp_v4_rcv+0x1047/0x1b50 net/ipv4/tcp_ipv4.c:2164
+   </IRQ>
 
-When a NULL pointer hole exists in a region's target array, it
-introduces two potential problems:
-1. Access an endpoint decoder via a NULL pointer. it always trigger
-   calltrace like that.
-    Oops: general protection fault, probably for non-canonical address 0xdffffc0000000008: 0000 [#1] SMP KASAN PTI
-    RIP: 0010:cxl_calc_interleave_pos+0x26/0x810 [cxl_core]
-    Call Trace:
-      <TASK>
-      cxl_region_attach+0xc50/0x2140 [cxl_core]
-      cxl_add_to_region+0x321/0x2330 [cxl_core]
-      discover_region+0x92/0x150 [cxl_port]
-      device_for_each_child+0xf3/0x170
-      cxl_port_probe+0x150/0x200 [cxl_port]
-      cxl_bus_probe+0x4f/0xa0 [cxl_core]
-      really_probe+0x1c8/0x960
-      __driver_probe_device+0x323/0x450
-      driver_probe_device+0x45/0x120
-      __device_attach_driver+0x15d/0x280
-      bus_for_each_drv+0x10f/0x190
+The child is freed before it is ever established, so it should run no
+sock_ops callback. Clear its cb flags in inet_csk_prepare_for_destroy_sock(),
+the common point for the IPv4, IPv6 and chtls forced-close paths and for the
+MPTCP ->syn_recv_sock() failure path (dispose_child), which reaches tcp_done()
+on a child that was never established too.
 
-2. Not having enough valid endpoint decoders attached to an
-   auto-assembly region. if an auto-assembly region is created with lock
-   flag or assigned endpoint decoder with lock flag, which means
-   assigned endpoint decoder will not be reset during detaching, they
-   could re-attach to the auto-assembly region again. But cxl region
-   driver relies on p->nr_targets to verify whether the required number
-   of endpoint decoders has been attached, and NULL endpoint decoder
-   pointers are still counted in that case.
-
-To fix above issues, adjust cxl_region_attach_auto() logic to find the
-first free target slot for endpoint decoder attachment, this ensures
-NULL holes in the target array are filled, rather than adding new
-endpoint decoders at the tail of the target array.
-
-Fixes: 87805c32e6ad ("cxl/region: Fix use-after-free from auto assembly failure")
-Fixes: 2230c4bdc412 ("cxl: Add handling of locked CXL decoder")
-Suggested-by: Alison Schofield <alison.schofield@intel.com>
-Signed-off-by: Li Ming <ming.li@zohomail.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260606-fix_two_issues_introduced_by_cxl_cancel_auto_attach-v1-2-5d94ca06c4e4@zohomail.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Suggested-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Fixes: d44874910a26 ("bpf: Add BPF_SOCK_OPS_STATE_CB")
+Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260611092923.1895982-1-rhkrqnwk98@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/region.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ include/net/tcp.h               | 9 +++++++++
+ net/ipv4/inet_connection_sock.c | 1 +
+ 2 files changed, 10 insertions(+)
 
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index 8956b049c4620c..174876e0475f1d 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -1848,8 +1848,21 @@ static int cxl_region_attach_auto(struct cxl_region *cxlr,
- 	 * this means that userspace can view devices in the wrong position
- 	 * before the region activates, and must be careful to understand when
- 	 * it might be racing region autodiscovery.
-+	 *
-+	 * The endpoint decoder will be recorded into the first free slot of
-+	 * the target array.
- 	 */
--	pos = p->nr_targets;
-+	for (pos = 0; pos < p->interleave_ways; pos++) {
-+		if (!p->targets[pos])
-+			break;
-+	}
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 98848db62894aa..607298501e1230 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -2942,6 +2942,11 @@ static inline int tcp_call_bpf_3arg(struct sock *sk, int op, u32 arg1, u32 arg2,
+ 	return tcp_call_bpf(sk, op, 3, args);
+ }
+ 
++static inline void tcp_clear_sock_ops_cb_flags(struct sock *sk)
++{
++	tcp_sk(sk)->bpf_sock_ops_cb_flags = 0;
++}
 +
-+	if (pos == p->interleave_ways) {
-+		dev_err(&cxlr->dev, "%s: unable to find a free target slot\n",
-+			dev_name(&cxled->cxld.dev));
-+		return -ENXIO;
-+	}
+ #else
+ static inline int tcp_call_bpf(struct sock *sk, int op, u32 nargs, u32 *args)
+ {
+@@ -2959,6 +2964,10 @@ static inline int tcp_call_bpf_3arg(struct sock *sk, int op, u32 arg1, u32 arg2,
+ 	return -EPERM;
+ }
+ 
++static inline void tcp_clear_sock_ops_cb_flags(struct sock *sk)
++{
++}
 +
- 	p->targets[pos] = cxled;
- 	cxled->pos = pos;
- 	cxled->state = CXL_DECODER_STATE_AUTO_STAGED;
+ #endif
+ 
+ static inline u32 tcp_timeout_init(struct sock *sk)
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index 5b934ce8d98a8c..690f7fb3f029e8 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1285,6 +1285,7 @@ EXPORT_SYMBOL(inet_csk_destroy_sock);
+ void inet_csk_prepare_for_destroy_sock(struct sock *sk)
+ {
+ 	/* The below has to be done to allow calling inet_csk_destroy_sock */
++	tcp_clear_sock_ops_cb_flags(sk);
+ 	sock_set_flag(sk, SOCK_DEAD);
+ 	tcp_orphan_count_inc();
+ }
 -- 
 2.53.0
 
