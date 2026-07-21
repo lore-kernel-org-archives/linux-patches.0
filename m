@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12048442FB7;
-	Tue, 21 Jul 2026 22:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F305843B48C;
+	Tue, 21 Jul 2026 22:48:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674083; cv=none; b=iMIvxQVS+ApYuxeBe1ijAiVJ/0I274LfmrfTNIxjvSDU6hlSF0s9GArsTdnESeiW7HdVt9O2lFR9SOjXTQ+dsd993dmZNYJpwWZrf1t/sFxdmOZFvBBBVSJoz+meRdIVZU1reQTo6LILd7FXB5Gq/cVGoiEkWQgAIoM37s+8oGg=
+	t=1784674084; cv=none; b=ZuJ1+AReW4h80sXG4spo6SQyCZ2UzwWZ4mzF0Qa+l9nJ9Gzex5O3SyupHYpQMsqdcSa/v8//0IHaMlNomlB2/QaaX7t7V5oOk/hMXIw7Mgwkweu8QdCQGWo5ZCTmsl4jimtkSMFTJTsoHIH/QOGPDjsr8tDSkie2yONlFC5u6JY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674083; c=relaxed/simple;
-	bh=9Rv62Ranm+xCGkrvHtcS5TpgnGOHWv0wsO6kdmZwXw8=;
+	s=arc-20240116; t=1784674084; c=relaxed/simple;
+	bh=sGlLy4IAV7/TQNOXRjaB7F7L+hoiXKHkf69MbnrKP+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IWVJZJ82B74WpstJxS3JjOg0wKa+bEc4egaY5u8OK/ljAamyxQJcj56irV26fiqVpsodIUj1yj5Mkh3JEExAXW+Q9OP92CvEID7+2YqMUHBvYi+C9lEaxFk6rtyAREXTF2Q3lvhBCuZBrmy5X1RgcL/o0j3QiHT4+2BeRsKRKBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xldfXNfV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IKOY6PrWC6VsIKuZNBT9TF9vb8QTEm4KPq4J0lClXP3X8kF5cT9Np26mO2tPeYSJIOSDsxAy/GGu5yqmSaO1AsjBeNjrKoKW2Pbdm1REMc353TtBBDKK4+WZKJRGB1MhFvx56h+JCFHOVCKqWGfodNSMkmhzkXeZUXMufz4lmFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlGUclFO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xldfXNfV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB0A1F00A3D;
-	Tue, 21 Jul 2026 22:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlGUclFO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1061F000E9;
+	Tue, 21 Jul 2026 22:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674077;
-	bh=dCdegBYQ2RyokaC3wq72B3BJo8TSrMoyYjLySuVNWE0=;
+	s=korg; t=1784674080;
+	bh=dHGFjEooUYaHAJRXlPTXBVVCNpPz3pUtpDk7zcrcW7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xldfXNfV+zBXKQQGX2ozaLTx2rA/DOuyOZiS64lqDWTrCCVTyZJWFgTZOTMA8yQLj
-	 NE8xdkuHPMc6jzd2zrw2guO2Q1XhYGuFmtpPgLDujd4+E9TWL7aJt6CK1Eh8YnH+br
-	 9sop0xgHFjvmIRTyXtTttqu/m6RuZ5t/kfdn76gM=
+	b=TlGUclFOYMwxfnKt1Ip5KxmZWoIrT7biDbNDHOs1Utl1T0zsqJSwgKzvBWjky0aak
+	 jLZr20nx4exGAX5Da+AuOcmyh59oR+1cCnBlb0FDmrtAi/eEmC8OQ/cslKJXuZ3GO7
+	 mdy4BalKqePVQoTZOn2p2er1hcUTM9oUenZ0CqH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandrova Alyona <aga@itb.spb.ru>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 362/699] net: dsa: sja1105: round up PTP perout pin duration
-Date: Tue, 21 Jul 2026 17:22:01 +0200
-Message-ID: <20260721152403.859736046@linuxfoundation.org>
+Subject: [PATCH 5.10 363/699] ipv6: fix error handling in disable_ipv6 sysctl
+Date: Tue, 21 Jul 2026 17:22:02 +0200
+Message-ID: <20260721152403.882441364@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,43 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandrova Alyona <aga@itb.spb.ru>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit aee5836273b07b439fb245fb43930664d8b78518 ]
+[ Upstream commit c779441e5070e2268bdfe77f6e2e0de926c431e3 ]
 
-pin_duration is converted from the user-provided period to SJA1105
-clock ticks and is later passed as the cycle_time argument to
-future_base_time().
+When writing to the disable_ipv6 sysctl, if proc_dointvec() fails to
+parse the input, it returns a negative error code. The current
+implementation is overwriting that error for write operations.
 
-Very small period values may become zero after the conversion,
-which can lead to a division by zero in future_base_time().
+This results in a silent failure, it returns a successful write although
+the configuration was not modified at all. When modifying the "all"
+variant it can also modify the configuration of existing interfaces to
+the wrong value.
 
-Round zero pin_duration up to 1 tick so that the smallest unsupported
-periods use the minimum non-zero hardware duration instead of passing
-zero to future_base_time().
+Fix this by checking the return value of proc_dointvec() and returning
+early on failure.
 
-Fixes: 747e5eb31d59 ("net: dsa: sja1105: configure the PTP_CLK pin as EXT_TS or PER_OUT")
-Signed-off-by: Aleksandrova Alyona <aga@itb.spb.ru>
-Link: https://patch.msgid.link/20260618110508.53094-1-aga@itb.spb.ru
+Fixes: 56d417b12e57 ("IPv6: Add 'autoconf' and 'disable_ipv6' module parameters")
+Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260622130857.5115-2-fmancera@suse.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_ptp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/addrconf.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/dsa/sja1105/sja1105_ptp.c b/drivers/net/dsa/sja1105/sja1105_ptp.c
-index 1b90570b257b50..c8a0a805303a54 100644
---- a/drivers/net/dsa/sja1105/sja1105_ptp.c
-+++ b/drivers/net/dsa/sja1105/sja1105_ptp.c
-@@ -711,7 +711,7 @@ static int sja1105_per_out_enable(struct sja1105_private *priv,
- 		 * 2 edges on PTP_CLK. So check for truncation which happens
- 		 * at periods larger than around 68.7 seconds.
- 		 */
--		pin_duration = ns_to_sja1105_ticks(pin_duration / 2);
-+		pin_duration = max_t(u64, ns_to_sja1105_ticks(pin_duration / 2), 1);
- 		if (pin_duration > U32_MAX) {
- 			rc = -ERANGE;
- 			goto out;
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index c0f84b2315528f..c888471bf5d355 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -6291,6 +6291,8 @@ static int addrconf_sysctl_disable(struct ctl_table *ctl, int write,
+ 	lctl.data = &val;
+ 
+ 	ret = proc_dointvec(&lctl, write, buffer, lenp, ppos);
++	if (ret)
++		return ret;
+ 
+ 	if (write)
+ 		ret = addrconf_disable_ipv6(ctl, valp, val);
 -- 
 2.53.0
 
