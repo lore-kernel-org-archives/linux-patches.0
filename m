@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A2241A776;
-	Tue, 21 Jul 2026 19:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B494470442;
+	Tue, 21 Jul 2026 19:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660530; cv=none; b=gLpbGeSsY3kT6vSkVf2r6SdFwuILvmWpGtTLTmwvkGGMg2FCeEUxNvjpuTq/hULCm8NPcADSji6whlZM9NioZqw+bSeTiwgXn6ZwHWQ1Huwvipuz6wIAklkKrkJCTj3bT2G3xSaaWWNMKy8ShAQpCZDW5d0Q44TxOabV7C7Xi7Y=
+	t=1784660532; cv=none; b=AhNOo1fldUvSUwjUWiDoCioSe7/hvytxb7qqI4z2uL6uvbKhcwL11OjKQQhvblKqOihROdmuDy6hANrs4nhobh3c9JpQ9orjg/U5zotPDg4x1MsUCmTPX/DmbVk42PQEaGBrCOSiFOGiswOymqChLVD9h8+dxTrSQ+FwN4M946c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660530; c=relaxed/simple;
-	bh=u1BJlP3+TxsLhxigLRWsYJihtO2ti8mjrXVPGx//fro=;
+	s=arc-20240116; t=1784660532; c=relaxed/simple;
+	bh=XsVKj+R83inG4vqnwqrwubjMOIBoXG4vlhOVZYxlwbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sc7fPjY5HA0cxR3upqHFcHpDJ9IZJTo4TGkRqDUgnP4GKplgW+sORf9HCZUpZ+ltXUV6BGUrGxnufod5JMUG13o1UnWMQpFFmuLcgbUKhIJok4xz6KfYX7gBbI5Xf++/vaTsb+4L29bd4ynr0AtTI0kOMMP/60ise2jMxqB+JS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cw+D5DxQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U5xJgr22d/q/HDa4gac8wQNLCw2rn/uV5b9J5p2midMUlQD5T56cwFj5bQ2e1FzqQ7RKE5cgEhzeEBY4z7QzEkoYSkwcKtf/OHw3ywY0SStS74NN2qCNMK6W2g+PAZAQnGQ2ZVnQg/XNMJ/KlDDyKVFde+nDjLGMLD2wwiqk2n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dO8ty4tn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cw+D5DxQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7706E1F00A3D;
-	Tue, 21 Jul 2026 19:02:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dO8ty4tn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37DB11F000E9;
+	Tue, 21 Jul 2026 19:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660526;
-	bh=sD4oSf9unH7iY0pG5Gw9YHjTt2f7AxZSNB7WHooRuOs=;
+	s=korg; t=1784660528;
+	bh=lnsfiLeSNt9rBTjWmyolsMUqZlmIq2RP9AoR3cGikis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cw+D5DxQj338E5czGF165cAh8NG3jek73LR9dtv4FYbqONx7lK6nhcA6Apfh5OwzH
-	 B5V+DMnCR366iSaqEc0DToCbOhWeIlhIejPuJ5eAXykvhOtPPhcGvNdbC+2YbfhK0N
-	 +I/8/YlXaDJm3CSxFfQ9dLoj6rON+jqHsJv5eQgE=
+	b=dO8ty4tnggdmehqFEXqjgbk25N8qsDaLTU88k9/c9DsPsTkmF2dLoczO8HpJGyb9L
+	 HXitc0ygQ2+s/DxJ5OCW6wMufDfSzpJA/6/cUE+6Yzq1VkWQlaCtIPKwXRgijBKRfy
+	 zdKVjljEwTfpEPOP8KxC9ROgsDvHKYvXXhLOSzbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Yang Erkun <yangerkun@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0970/2077] NFSv4/flexfiles: honor FF_FLAGS_NO_IO_THRU_MDS in pg_get_mirror_count_write
-Date: Tue, 21 Jul 2026 17:10:43 +0200
-Message-ID: <20260721152615.700290804@linuxfoundation.org>
+Subject: [PATCH 7.1 0971/2077] nfs: use nfsi->rwsem to protect traversal of the file lock list
+Date: Tue, 21 Jul 2026 17:10:44 +0200
+Message-ID: <20260721152615.723875430@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,112 +53,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Yang Erkun <yangerkun@huawei.com>
 
-[ Upstream commit 1d62e659c0bf11649cf48e002c2a55d148f2610a ]
+[ Upstream commit 4837fb36219e6c08b666bc31a86841bad8526358 ]
 
-The FF_FLAGS_NO_IO_THRU_MDS flag lives on each lseg, so any fallback
-decision made when there is no current lseg (e.g. between LAYOUTRETURN
-and the next LAYOUTGET) cannot run the per-lseg check.
+Lingfeng identified a bug and suggested two solutions, but both appear
+to have issues.
 
-Introduce a sticky hdr-level ditto for FF_FLAGS_NO_IO_THRU_MDS in
-struct nfs4_flexfile_layout::flags (NFS4_FF_HDR_NO_IO_THRU_MDS bit),
-set whenever ff_layout_alloc_lseg() parses an lseg with the flag.  The
-bit is never cleared for the lifetime of the layout hdr; the server is
-assumed to be consistent in its no-fallback policy per file.
-kzalloc() in ff_layout_alloc_layout_hdr() zero-initializes the field.
+Generally, we cannot release flc_lock while iterating over the file lock
+list to avoid use-after-free (UAF) problems with file locks. However,
+functions like nfs_delegation_claim_locks and nfs4_reclaim_locks cannot
+adhere to this rule because recover_lock or nfs4_lock_delegation_recall
+may take a long time. To resolve this, NFS switches to using nfsi->rwsem
+for the same protection, and nfs_reclaim_locks follows this approach.
+Although nfs_delegation_claim_locks uses so_delegreturn_mutex instead,
+this is inadequate since a single inode can have multiple nfs4_state
+instances. Therefore, the fix is to also use nfsi->rwsem in this case.
 
-Use the new ff_layout_hdr_no_fallback_to_mds() helper to gate
-ff_layout_pg_get_mirror_count_write(): when pnfs_update_layout() returns
-NULL (e.g. NFS_LAYOUT_BULK_RECALL, pnfs_layout_io_test_failed,
-pnfs_layoutgets_blocked) the existing code unconditionally calls
-nfs_pageio_reset_write_mds().  This is a source of unwanted WRITE to
-MDS.  Fix it by checking NFS4_FF_HDR_NO_IO_THRU_MDS bit, and if set
-surface -EAGAIN instead; the writepage-side caller (nfs_do_writepage()
-for buffered, nfs_direct_write_reschedule() for O_DIRECT) then
-redirties the request so writeback retries via pNFS.
+Furthermore, after commit c69899a17ca4 ("NFSv4: Update of VFS byte range
+lock must be atomic with the stateid update"), the functions
+nfs4_locku_done and nfs4_lock_done also break this rule because they
+call locks_lock_inode_wait without holding nfsi->rwsem. Simply adding
+this protection could cause many deadlocks, so instead, the call to
+locks_lock_inode_wait is moved into _nfs4_proc_setlk. Regarding the bug
+fixed by commit c69899a17ca4 ("NFSv4: Update of VFS byte range
+lock must be atomic with the stateid update"), it has been resolved
+after commit 0460253913e5 ("NFSv4: nfs4_do_open() is incorrectly triggering
+state recovery") because all slots are drained before calling
+nfs4_do_reclaim, which prevents concurrent stateid changes along this path.
+Also, nfs_delegation_claim_locks does not cause this concurrency either
+since when _nfs4_proc_setlk is called with NFS_DELEGATED_STATE, no RPC is
+sent, so nfs4_lock_done is not called. Therefore,
+nfs4_lock_delegation_recall from nfs_delegation_claim_locks is the first
+time the stateid is set.
 
-Fixes: 260074cd8413 ("pNFS/flexfiles: Add support for FF_FLAGS_NO_IO_THRU_MDS")
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Reported-by: Li Lingfeng <lilingfeng3@huawei.com>
+Closes: https://lore.kernel.org/all/20250419085709.1452492-1-lilingfeng3@huawei.com/
+Closes: https://lore.kernel.org/all/20250715030559.2906634-1-lilingfeng3@huawei.com/
+Fixes: c69899a17ca4 ("NFSv4: Update of VFS byte range lock must be atomic with the stateid update")
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c | 13 +++++++++++++
- fs/nfs/flexfilelayout/flexfilelayout.h | 16 ++++++++++++++++
- 2 files changed, 29 insertions(+)
+ fs/nfs/delegation.c     |  9 ++++++++-
+ fs/nfs/nfs4proc.c       | 22 +++++++++++-----------
+ include/linux/nfs_xdr.h |  1 -
+ 3 files changed, 19 insertions(+), 13 deletions(-)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
-index 80a3c43aaac052..2e7f857d5a8cb2 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -636,6 +636,9 @@ ff_layout_alloc_lseg(struct pnfs_layout_hdr *lh,
- 	if (!p)
- 		goto out_sort_mirrors;
- 	fls->flags = be32_to_cpup(p);
-+	if (fls->flags & FF_FLAGS_NO_IO_THRU_MDS)
-+		set_bit(NFS4_FF_HDR_NO_IO_THRU_MDS,
-+			&FF_LAYOUT_FROM_HDR(lh)->flags);
- 
- 	p = xdr_inline_decode(&stream, 4);
- 	if (!p)
-@@ -1185,6 +1188,16 @@ ff_layout_pg_get_mirror_count_write(struct nfs_pageio_descriptor *pgio,
- 			0, NFS4_MAX_UINT64, IOMODE_RW,
- 			NFS_I(pgio->pg_inode)->layout,
- 			pgio->pg_lseg);
-+	if (NFS_I(pgio->pg_inode)->layout &&
-+	    ff_layout_hdr_no_fallback_to_mds(NFS_I(pgio->pg_inode)->layout)) {
-+		/*
-+		 * FF_FLAGS_NO_IO_THRU_MDS: no current lseg but the server's
-+		 * policy forbids MDS fallback.  Surface -EAGAIN so writeback
-+		 * retries rather than silently issuing the WRITE via MDS.
-+		 */
-+		pgio->pg_error = -EAGAIN;
-+		goto out;
-+	}
- 	/* no lseg means that pnfs is not in use, so no mirroring here */
- 	nfs_pageio_reset_write_mds(pgio);
- out:
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.h b/fs/nfs/flexfilelayout/flexfilelayout.h
-index 17a008c8e97ce9..a5bd00f69e8242 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.h
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.h
-@@ -112,12 +112,16 @@ struct nfs4_ff_layout_segment {
- 	struct nfs4_ff_layout_mirror	*mirror_array[] __counted_by(mirror_array_cnt);
- };
- 
-+/* nfs4_flexfile_layout::flags bit indices */
-+#define NFS4_FF_HDR_NO_IO_THRU_MDS  0   /* any lseg has had FF_FLAGS_NO_IO_THRU_MDS */
-+
- struct nfs4_flexfile_layout {
- 	struct pnfs_layout_hdr generic_hdr;
- 	struct pnfs_ds_commit_info commit_info;
- 	struct list_head	mirrors;
- 	struct list_head	error_list; /* nfs4_ff_layout_ds_err */
- 	ktime_t			last_report_time; /* Layoutstat report times */
-+	unsigned long		flags;
- };
- 
- struct nfs4_flexfile_layoutreturn_args {
-@@ -184,6 +188,18 @@ ff_layout_no_fallback_to_mds(struct pnfs_layout_segment *lseg)
- 	return FF_LAYOUT_LSEG(lseg)->flags & FF_FLAGS_NO_IO_THRU_MDS;
- }
- 
-+/*
-+ * Sticky hdr-level mirror of FF_FLAGS_NO_IO_THRU_MDS so callers that have
-+ * no current lseg (e.g. between LAYOUTRETURN and the next LAYOUTGET) can
-+ * still honor the no-MDS-fallback policy.
-+ */
-+static inline bool
-+ff_layout_hdr_no_fallback_to_mds(struct pnfs_layout_hdr *lo)
-+{
-+	return test_bit(NFS4_FF_HDR_NO_IO_THRU_MDS,
-+			&FF_LAYOUT_FROM_HDR(lo)->flags);
-+}
-+
- static inline bool
- ff_layout_no_read_on_rw(struct pnfs_layout_segment *lseg)
+diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
+index 122fb3f14ffb8b..9546d2195c25f5 100644
+--- a/fs/nfs/delegation.c
++++ b/fs/nfs/delegation.c
+@@ -173,6 +173,7 @@ int nfs4_check_delegation(struct inode *inode, fmode_t type)
+ static int nfs_delegation_claim_locks(struct nfs4_state *state, const nfs4_stateid *stateid)
  {
+ 	struct inode *inode = state->inode;
++	struct nfs_inode *nfsi = NFS_I(inode);
+ 	struct file_lock *fl;
+ 	struct file_lock_context *flctx = locks_inode_context(inode);
+ 	struct list_head *list;
+@@ -182,6 +183,9 @@ static int nfs_delegation_claim_locks(struct nfs4_state *state, const nfs4_state
+ 		goto out;
+ 
+ 	list = &flctx->flc_posix;
++
++	/* Guard against reclaim and new lock/unlock calls */
++	down_write(&nfsi->rwsem);
+ 	spin_lock(&flctx->flc_lock);
+ restart:
+ 	for_each_file_lock(fl, list) {
+@@ -189,8 +193,10 @@ static int nfs_delegation_claim_locks(struct nfs4_state *state, const nfs4_state
+ 			continue;
+ 		spin_unlock(&flctx->flc_lock);
+ 		status = nfs4_lock_delegation_recall(fl, state, stateid);
+-		if (status < 0)
++		if (status < 0) {
++			up_write(&nfsi->rwsem);
+ 			goto out;
++		}
+ 		spin_lock(&flctx->flc_lock);
+ 	}
+ 	if (list == &flctx->flc_posix) {
+@@ -198,6 +204,7 @@ static int nfs_delegation_claim_locks(struct nfs4_state *state, const nfs4_state
+ 		goto restart;
+ 	}
+ 	spin_unlock(&flctx->flc_lock);
++	up_write(&nfsi->rwsem);
+ out:
+ 	return status;
+ }
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index c354b7b9029391..4db27f4eb01e94 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -7084,7 +7084,6 @@ static void nfs4_locku_done(struct rpc_task *task, void *data)
+ 	switch (task->tk_status) {
+ 		case 0:
+ 			renew_lease(calldata->server, calldata->timestamp);
+-			locks_lock_inode_wait(calldata->lsp->ls_state->inode, &calldata->fl);
+ 			if (nfs4_update_lock_stateid(calldata->lsp,
+ 					&calldata->res.stateid))
+ 				break;
+@@ -7352,11 +7351,6 @@ static void nfs4_lock_done(struct rpc_task *task, void *calldata)
+ 	case 0:
+ 		renew_lease(NFS_SERVER(d_inode(data->ctx->dentry)),
+ 				data->timestamp);
+-		if (data->arg.new_lock && !data->cancelled) {
+-			data->fl.c.flc_flags &= ~(FL_SLEEP | FL_ACCESS);
+-			if (locks_lock_inode_wait(lsp->ls_state->inode, &data->fl) < 0)
+-				goto out_restart;
+-		}
+ 		if (data->arg.new_lock_owner != 0) {
+ 			nfs_confirm_seqid(&lsp->ls_seqid, 0);
+ 			nfs4_stateid_copy(&lsp->ls_stateid, &data->res.stateid);
+@@ -7467,11 +7461,10 @@ static int _nfs4_do_setlk(struct nfs4_state *state, int cmd, struct file_lock *f
+ 	msg.rpc_argp = &data->arg;
+ 	msg.rpc_resp = &data->res;
+ 	task_setup_data.callback_data = data;
+-	if (recovery_type > NFS_LOCK_NEW) {
+-		if (recovery_type == NFS_LOCK_RECLAIM)
+-			data->arg.reclaim = NFS_LOCK_RECLAIM;
+-	} else
+-		data->arg.new_lock = 1;
++
++	if (recovery_type == NFS_LOCK_RECLAIM)
++		data->arg.reclaim = NFS_LOCK_RECLAIM;
++
+ 	task = rpc_run_task(&task_setup_data);
+ 	if (IS_ERR(task))
+ 		return PTR_ERR(task);
+@@ -7581,6 +7574,13 @@ static int _nfs4_proc_setlk(struct nfs4_state *state, int cmd, struct file_lock
+ 	up_read(&nfsi->rwsem);
+ 	mutex_unlock(&sp->so_delegreturn_mutex);
+ 	status = _nfs4_do_setlk(state, cmd, request, NFS_LOCK_NEW);
++	if (status)
++		goto out;
++
++	down_read(&nfsi->rwsem);
++	request->c.flc_flags &= ~(FL_SLEEP | FL_ACCESS);
++	status = locks_lock_inode_wait(state->inode, request);
++	up_read(&nfsi->rwsem);
+ out:
+ 	request->c.flc_flags = flags;
+ 	return status;
+diff --git a/include/linux/nfs_xdr.h b/include/linux/nfs_xdr.h
+index fcbd21b5685f46..40417e3a7f85ad 100644
+--- a/include/linux/nfs_xdr.h
++++ b/include/linux/nfs_xdr.h
+@@ -580,7 +580,6 @@ struct nfs_lock_args {
+ 	struct nfs_lowner	lock_owner;
+ 	unsigned char		block : 1;
+ 	unsigned char		reclaim : 1;
+-	unsigned char		new_lock : 1;
+ 	unsigned char		new_lock_owner : 1;
+ };
+ 
 -- 
 2.53.0
 
