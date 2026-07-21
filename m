@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D743E3DB4;
-	Tue, 21 Jul 2026 20:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD355471414;
+	Tue, 21 Jul 2026 20:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664472; cv=none; b=k+3b3/AuaKoGtHB52g6apR+Xk4kowf8/RDVGwzUzovBq9YGPY88jlpWKYbMwvvea1XIpj7NL/5CcAjsHOHNyT+SzoTPnTHacICWIqIRIRn0U/Xi2iyDxsY3VTc+CMrSsQRSHLsMWNh3m4ZZEknDatN9tad0BBBS9v2qjRLZ4/nk=
+	t=1784664475; cv=none; b=b3FynQM3XfgeHOKoq2pW/LBQDd0J5mGemY6no0qUxoT75WdC3Hhj3p4WWqN5XC8F9O0+zgnmPLFiyz7OqqIL39NEUOhVJh1t0BUJSjb3DeSdJ2nEHnzaJnNQ4HqqSSqJHqE0evVBWNGC7k/nyTbf6hqUrv0ObAHmdjAY0CsCsKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664472; c=relaxed/simple;
-	bh=CDvFAcTH7z38zJ7eFabEjJXibkoX3yEsM7dekCJBzRs=;
+	s=arc-20240116; t=1784664475; c=relaxed/simple;
+	bh=Oqnh1ToxZP7gkSjgMwHxkoCwYsryiQAGWK1OS0JdHrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C9LGHZ6lhXcOS9KVEQvGj/lrUw5GABnDa81D4uZSpJPJ678SoilqRtdHpqRABf8hiRqSTPnAsbuIOf2na6UikLlWAtl3L34hEK6T9eOJzsJx+OWxCzApt7xFwKpm3zFm6XZsyMRmZFERGHM3VO3jtxUNdcOwBw/sUv/xOslSiAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rl0tD7UY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oRDr/9LqYFaIXvu7Us2RkKMry2rI02m75LdYwkt8Lmp880VDRnR5Huw25CUFS/s3/Wvzn60rhmO4s1jBFpZHSeySVAto0d/XGHxMui7cDrldsdTl8uTbNh8Z5Wgy1EWuEdqcPSjXS4pJJolNyiL62GRre6ch7RBhuSX9Y4WSxSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+eMYUUY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rl0tD7UY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E2891F000E9;
-	Tue, 21 Jul 2026 20:07:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+eMYUUY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB8E1F00A3A;
+	Tue, 21 Jul 2026 20:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664469;
-	bh=iko77MF5G2oPxuUZBt24vuJ9JBRC/aDU6m+j0U/bqUg=;
+	s=korg; t=1784664472;
+	bh=pQWh4Feaz5hCGIVTm++OLGM5E2cmskqd3tUUss3/L6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rl0tD7UYEGVeb/t1O5FjQknXt1jYekdc4AVoKz6J+kUIgnSao4+ISf83MAcve3xDJ
-	 5q0HjnfkaP6YuDyO4hORysKPgx7nwrpCoe3mHwM2EqNqg1fIHjL9aCWPZAUbG5m566
-	 ukv30HwWCSze0YgoSSNPBB6Ah+JD/Yzb2eMc279A=
+	b=c+eMYUUYeyC9tf7X8skdMs8tDAKXm8jQAImqDGFf+T+XbwV3oZnobP5Bi+am289fn
+	 RvIcA+D+MIkQOhYXHz/wCd8KggRZ6Wwda8NB5o1DpmA7dlUTrtwUJhSlQooQrLTliE
+	 9QytvWFINh4SUj0hC2RzYfLTjBQtllAdP1xjvG/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Neill Kapron <nkapron@google.com>,
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1213/1276] usb: gadget: f_fs: Tie read_buffer lifetime to ffs_epfile
-Date: Tue, 21 Jul 2026 17:27:36 +0200
-Message-ID: <20260721152513.213858370@linuxfoundation.org>
+Subject: [PATCH 6.12 1214/1276] btrfs: concentrate the error handling of submit_one_sector()
+Date: Tue, 21 Jul 2026 17:27:37 +0200
+Message-ID: <20260721152513.235016797@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -45,59 +46,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neill Kapron <nkapron@google.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 8bdcf96eb135aebacac319667f87db034fb38406 ]
+[ Upstream commit 44820d80026e0b509007d41c83d42f1213ee8589 ]
 
-Currently, ffs_epfile_release unconditionally frees the endpoint's
-read_buffer when a file descriptor is closed. If userspace explicitly
-opens the endpoint multiple times and closes one, the read_buffer is
-destroyed. This can lead to silent data loss if other file descriptors
-are still actively reading from the endpoint.
+Currently submit_one_sector() has only one failure path from
+btrfs_get_extent().
 
-By tying the lifetime of the read_buffer to the ffs_epfile structure itself
-(which is destroyed when the functionfs instance is torn down in
-ffs_epfiles_destroy), we eliminate the brittle dependency on open/release
-calls while correctly matching the conceptual lifetime of unread data on
-the hardware endpoint.
+However the error handling is split into two parts, one inside
+submit_one_sector(), which clears the dirty flag and finishes the
+writeback for the fs block.
 
-Fixes: 9353afbbfa7b ("usb: gadget: f_fs: buffer data from ‘oversized’ OUT requests")
-Cc: stable <stable@kernel.org>
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Neill Kapron <nkapron@google.com>
-Link: https://patch.msgid.link/20260619040609.4010746-3-nkapron@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ adjusted context in ffs_epfiles_destroy() since 6.12 lacks the simple_remove_by_name() rework and still uses dentry-based cleanup ]
+The other part is to submit any remaining bio inside bio_ctrl and mark
+the ordered extent finished for the fs block.
+
+There is no special reason that we must split the error handling, let's
+just concentrate all the error handling into submit_one_sector().
+
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 66ff4d366e7e ("btrfs: fix false IO failure after falling back to buffered write")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/extent_io.c |   46 ++++++++++++++++++++++++++++------------------
+ 1 file changed, 28 insertions(+), 18 deletions(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -1365,7 +1365,6 @@ ffs_epfile_release(struct inode *inode,
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -1417,7 +1417,7 @@ out:
  
- 	mutex_unlock(&epfile->dmabufs_mutex);
+ /*
+  * Return 0 if we have submitted or queued the sector for submission.
+- * Return <0 for critical errors.
++ * Return <0 for critical errors, and the involved sector will be cleaned up.
+  *
+  * Caller should make sure filepos < i_size and handle filepos >= i_size case.
+  */
+@@ -1440,8 +1440,31 @@ static int submit_one_sector(struct btrf
+ 	ASSERT(filepos < i_size);
  
--	__ffs_epfile_read_buffer_free(epfile);
- 	ffs_data_closed(epfile->ffs);
+ 	em = btrfs_get_extent(inode, NULL, filepos, sectorsize);
+-	if (IS_ERR(em))
+-		return PTR_ERR_OR_ZERO(em);
++	if (IS_ERR(em)) {
++		/*
++		 * bio_ctrl may contain a bio crossing several folios.
++		 * Submit it immediately so that the bio has a chance
++		 * to finish normally, other than marked as error.
++		 */
++		submit_one_bio(bio_ctrl);
++
++		/*
++		 * When submission failed, we should still clear the folio dirty.
++		 * Or the folio will be written back again but without any
++		 * ordered extent.
++		 */
++		btrfs_folio_clear_dirty(fs_info, folio, filepos, sectorsize);
++		btrfs_folio_set_writeback(fs_info, folio, filepos, sectorsize);
++		btrfs_folio_clear_writeback(fs_info, folio, filepos, sectorsize);
++
++		/*
++		 * Since there is no bio submitted to finish the ordered
++		 * extent, we have to manually finish this sector.
++		 */
++		btrfs_mark_ordered_io_finished(inode, folio, filepos,
++					       fs_info->sectorsize, false);
++		return PTR_ERR(em);
++	}
  
- 	return 0;
-@@ -2386,6 +2385,7 @@ static void ffs_epfiles_destroy(struct f
- 
- 	for (; count; --count, ++epfile) {
- 		BUG_ON(mutex_is_locked(&epfile->mutex));
-+		__ffs_epfile_read_buffer_free(epfile);
- 		if (epfile->dentry) {
- 			d_delete(epfile->dentry);
- 			dput(epfile->dentry);
+ 	extent_offset = filepos - em->start;
+ 	em_end = extent_map_end(em);
+@@ -1559,19 +1582,6 @@ static noinline_for_stack int extent_wri
+ 		}
+ 		ret = submit_one_sector(inode, folio, cur, bio_ctrl, i_size);
+ 		if (unlikely(ret < 0)) {
+-			/*
+-			 * bio_ctrl may contain a bio crossing several folios.
+-			 * Submit it immediately so that the bio has a chance
+-			 * to finish normally, other than marked as error.
+-			 */
+-			submit_one_bio(bio_ctrl);
+-			/*
+-			 * Failed to grab the extent map which should be very rare.
+-			 * Since there is no bio submitted to finish the ordered
+-			 * extent, we have to manually finish this sector.
+-			 */
+-			btrfs_mark_ordered_io_finished(inode, folio, cur,
+-						       fs_info->sectorsize, false);
+ 			if (!found_error)
+ 				found_error = ret;
+ 			continue;
+@@ -1587,8 +1597,8 @@ static noinline_for_stack int extent_wri
+ 	 * Here we set writeback and clear for the range. If the full folio
+ 	 * is no longer dirty then we clear the PAGECACHE_TAG_DIRTY tag.
+ 	 *
+-	 * If we hit any error, the corresponding sector will still be dirty
+-	 * thus no need to clear PAGECACHE_TAG_DIRTY.
++	 * If we hit any error, the corresponding sector will have its dirty
++	 * flag cleared and writeback finished, thus no need to handle the error case.
+ 	 */
+ 	if (!submitted_io && !found_error) {
+ 		btrfs_folio_set_writeback(fs_info, folio, start, len);
 
 
