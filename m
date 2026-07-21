@@ -1,48 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2CD471268;
-	Tue, 21 Jul 2026 20:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48ED4471265;
+	Tue, 21 Jul 2026 20:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664377; cv=none; b=AWOlf0WVLyu76UGPpsrAlMRMAXHp7Ml7v4XREDrREqZZZ+KIYzqLJxwJ8ISCBavAcUxNgtJXzwJCtnK+boUE21V6accgUTC4KB13c8ogTMVF97q2oUYRjPtr/1DxEesa83eGauPqXZDd3FCOyPLpMR5et/16BYn3EUqpqog6wLU=
+	t=1784664380; cv=none; b=abSSYqJi0oKNNhHRx89H/WbElvggiMaMRk1jTLpmhgeFoP1sO0ZOU80gUGwrenSCPOxC5g0rp2VqgpD3b8pMbwpO5Y5l1LYlEwdfnAN+gvo9Ei8OUkhWUAbBV/HeL63ncgKt74utOmCOYKq42Ddgk/9JpnpyvivDofIGIoj7qXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664377; c=relaxed/simple;
-	bh=ol4z/DZqcugCWb9rmg0b1Jyq6t6TFT6xrYP19+F9gJ8=;
+	s=arc-20240116; t=1784664380; c=relaxed/simple;
+	bh=DkER/GLVeTgQYABAVTiH907NiV3HvQnSILWAvHhFGCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aNphP+NoptsQBsnkTTkaxQOZifC5P2utwicijyREAHgR91mHyFJ0KzgEGdS4Rkdv+IIB377RtUszjwSbFZnZaTDaebCra6tY1kCvUPaHhBScFGegxW0aXAJbaguAOhWKBFu+1FlqcZHXkIzAydZz22X8FEjWiV2gxbZhRd3JR/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQmahOyL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p7endBsoEY4QWRKEZPQVLUzSo4vT/v5uAZTC84GVY3D/slHDpvHiGsAUYPWbEpMd+zdBZeFgVmzfIStEpu8fB7mW22MGKSAIr3mXqYpf6FifqGJuTnAMeBvd2mVH/iczWnLMwFyaw4Eh/Hzl7vm9YNyb2Dgdj7Eo5ZVYhPeHW+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IiqX/2Al; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQmahOyL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D1D1F000E9;
-	Tue, 21 Jul 2026 20:06:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IiqX/2Al"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78AB61F000E9;
+	Tue, 21 Jul 2026 20:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664376;
-	bh=bAKJdNvsCtqEmeEdvo4zUci5eN3rqSjZcId2hH980eQ=;
+	s=korg; t=1784664379;
+	bh=FWi0rE0aR9IXUzrPc31uJ00JzpG0azNo39HOcSm72Ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QQmahOyLtSb3iDHcgsl/ZQ/U7nkedKZIxmD8sfnAWVHiCrhxW/wLUYktOk9X2My7y
-	 m0pxlOpls08Ln/n/Oawct3iMzsrfeshn25yOVMNBUd6t7k+VxdlQ06QxBCJGZnomMv
-	 ZDPR9hIxEqAR1ixg9ltv1rWLla6g9WsC9f/pDzCU=
+	b=IiqX/2AlbrQyILP5cmd/X1nX5Dt8B8ygWCoh9/syy+9MC230ABLvEG90p1RJcTNdm
+	 zVk/s2oxtKXRotfSM41pGousBZg1Xc1LWT0lcTRU5+IohiPpfXup5VWnqqdz1mysvN
+	 cX04PD3Kuc7/0E0/RrT0EdhWMoA/Fvkc0omracKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
-	syzbot+e12bd9ca48157add237a@syzkaller.appspotmail.com,
-	Barry Song <baohua@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Kairui Song <ryncsn@gmail.com>,
-	Michal Hocko <mhocko@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Markus Elfring <elfring@users.sourceforge.net>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1177/1276] mm: swap_cgroup: fix NULL deref in lookup_swap_cgroup_id on swapless host
-Date: Tue, 21 Jul 2026 17:27:00 +0200
-Message-ID: <20260721152512.370202838@linuxfoundation.org>
+Subject: [PATCH 6.12 1178/1276] smb: client: Improve unlocking of a mutex in cifs_get_swn_reg()
+Date: Tue, 21 Jul 2026 17:27:01 +0200
+Message-ID: <20260721152512.394537690@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -61,82 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>
+From: Markus Elfring <elfring@users.sourceforge.net>
 
-[ Upstream commit 63b02a9409cb5180398491b093e48bcb5315f5fb ]
+[ Upstream commit e2080b70c5851a132547bec3bd7dde847e649678 ]
 
-lookup_swap_cgroup_id() passes swap_cgroup_ctrl[type].map to
-__swap_cgroup_id_lookup() without checking that the type was ever
-registered via swap_cgroup_swapon().  On a swapless host every ctrl->map
-is NULL, so __swap_cgroup_id_lookup() dereferences NULL + a scaled
-swp_offset().
+Use two additional labels so that another bit of common code can be better
+reused at the end of this function implementation.
 
-Since commit bea67dcc5eea ("mm: attempt to batch free swap entries for
-zap_pte_range()"), zap_pte_range() -> swap_pte_batch() calls
-lookup_swap_cgroup_id() on any non-present, non-none PTE that decodes as a
-real swap entry, without first validating it against swap_info[].  A
-single PTE corrupted into a type-0 swap entry takes the host down at
-process exit.
-
-We hit this in production on a swapless 6.12.58 host: ~1s of
-"get_swap_device: Bad swap file entry 3f800204222bb" (do_swap_page() being
-correctly defensive about the same entry) followed by
-
-  BUG: unable to handle page fault for address: 000003f800204220
-  RIP: 0010:lookup_swap_cgroup_id+0x2b/0x60
-  Call Trace:
-   swap_pte_batch+0xbf/0x230
-   zap_pte_range+0x4c8/0x780
-   unmap_page_range+0x190/0x3e0
-   exit_mmap+0xd9/0x3c0
-   do_exit+0x20c/0x4b0
-
-syzbot has reported the identical stack.
-
-The source of the PTE corruption is a separate bug; this change makes the
-teardown path as robust as the fault path already is.  Every other caller
-of lookup_swap_cgroup_id() is downstream of a get_swap_device() that has
-already validated the entry, so the new branch is cold.
-
-Link: https://lore.kernel.org/20260504-swap-cgroup-fix-7-0-v1-1-f53ff41ee553@linux.dev
-Fixes: bea67dcc5eea ("mm: attempt to batch free swap entries for zap_pte_range()")
-Signed-off-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
-Reported-by: syzbot+e12bd9ca48157add237a@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/r/69859728.050a0220.3b3015.0033.GAE@google.com
-Assisted-by: Claude:unspecified
-Cc: Barry Song <baohua@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Kairui Song <ryncsn@gmail.com>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: ec457f9afe5a ("smb: client: resolve SWN tcon from live registrations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/swap_cgroup.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/smb/client/cifs_swn.c |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
---- a/mm/swap_cgroup.c
-+++ b/mm/swap_cgroup.c
-@@ -161,8 +161,14 @@ unsigned short swap_cgroup_record(swp_en
-  */
- unsigned short lookup_swap_cgroup_id(swp_entry_t ent)
- {
-+	struct swap_cgroup_ctrl *ctrl;
-+
- 	if (mem_cgroup_disabled())
- 		return 0;
-+
-+	ctrl = &swap_cgroup_ctrl[swp_type(ent)];
-+	if (unlikely(!ctrl->map))
-+		return 0;
- 	return lookup_swap_cgroup(ent, NULL)->id;
- }
+--- a/fs/smb/client/cifs_swn.c
++++ b/fs/smb/client/cifs_swn.c
+@@ -313,17 +313,15 @@ static struct cifs_swn_reg *cifs_get_swn
+ 	reg = cifs_find_swn_reg(tcon);
+ 	if (!IS_ERR(reg)) {
+ 		kref_get(&reg->ref_count);
+-		mutex_unlock(&cifs_swnreg_idr_mutex);
+-		return reg;
++		goto unlock;
+ 	} else if (PTR_ERR(reg) != -EEXIST) {
+-		mutex_unlock(&cifs_swnreg_idr_mutex);
+-		return reg;
++		goto unlock;
+ 	}
  
+ 	reg = kmalloc(sizeof(struct cifs_swn_reg), GFP_ATOMIC);
+ 	if (reg == NULL) {
+-		mutex_unlock(&cifs_swnreg_idr_mutex);
+-		return ERR_PTR(-ENOMEM);
++		ret = -ENOMEM;
++		goto fail_unlock;
+ 	}
+ 
+ 	kref_init(&reg->ref_count);
+@@ -354,7 +352,7 @@ static struct cifs_swn_reg *cifs_get_swn
+ 	reg->ip_notify = (tcon->capabilities & SMB2_SHARE_CAP_SCALEOUT);
+ 
+ 	reg->tcon = tcon;
+-
++unlock:
+ 	mutex_unlock(&cifs_swnreg_idr_mutex);
+ 
+ 	return reg;
+@@ -365,6 +363,7 @@ fail_idr:
+ 	idr_remove(&cifs_swnreg_idr, reg->id);
+ fail:
+ 	kfree(reg);
++fail_unlock:
+ 	mutex_unlock(&cifs_swnreg_idr_mutex);
+ 	return ERR_PTR(ret);
+ }
 
 
