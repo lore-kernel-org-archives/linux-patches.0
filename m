@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481B72EBB8D;
-	Tue, 21 Jul 2026 20:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DDC2EBB8D;
+	Tue, 21 Jul 2026 20:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666260; cv=none; b=n7aGxVkCcFuF9qW7xuyqPgZQe4blfVmxloKNzXLvB+neykSeUV1LPX1aRInhxRcvG4Bjwws8PT0TsLCl2dp4U4dR5JrOaGXx3QhHMIfABfyIbfAC46RTYj8bocKZyJOo+pHHvBV3dDghz6OX2fvMqJAdQI27xUwu3krakRXU0eE=
+	t=1784666262; cv=none; b=syY9+2kYnQwEQPVEsqbxf3h7HLOuyWKYh8lKGkcpjHa9O5c+KiSIjodDfmY2Rz8LCTmvShJaInCjFKGVmEjyYm3JT7Amb55QUPeA8TBYDzd3tATmICMLN5re0D/uXYeNRruUEhUdhIPTvKUtTQN2JZ2kBPBxXe2H4zNGxM1MQxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666260; c=relaxed/simple;
-	bh=oM/swLmCN44sK9yXnxkTR4KG8Q4bXbo83U0ldaOwUPw=;
+	s=arc-20240116; t=1784666262; c=relaxed/simple;
+	bh=aJMmuFXWIIKcRcTucb1Sz1R2JRW2jSS41KTL1y9Vijg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JK777jedN6B6vbUP6ZH7cHaBUAj31bFNVssBcZjw+PRXcdyyqQea6UYjGhrHQPjEE2s1rueD6J6D0DTRxaIypz21pBE97cfArGaU5TbRICL78fTwtxrk+uPyOrfwgQwxaVPpkO0rwxslg6TYBJkR79glcJwTEIY8IQvgCtDUB78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVkH8WSh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b9CgvDdZHT2GMtcT6lKpMYzoJ252fGQheRyiMxxJgzzXRaUDLOUVYp+9FyZzy8nYJ+ojDRh/y52GD+l2tuIRI2bm/L/fbFBONmlhCBo6f3r8fLAVKILAr/JFYdDGF4RiGqyhjylHaQP5KkkLr//Tl4ceVJwyBrDa1mi9UWwCwA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rV9FAF1+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVkH8WSh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADCD61F00A3A;
-	Tue, 21 Jul 2026 20:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rV9FAF1+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F251F00A3A;
+	Tue, 21 Jul 2026 20:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666259;
-	bh=/Yj828DES4Psxz3bL6JBMvx9BrbmI9eRc+d+On8dqaM=;
+	s=korg; t=1784666261;
+	bh=xUMHBq7wpfvBwF+JGQuGAMbGhTb8Piu6uyv85vNGxjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GVkH8WSheJ3VX4EcWscGA14SvmaJkvOd6TUh5F2MYEItfOZWCKSmFYD5zCbs2TfMh
-	 PQM3vi+pYr7jffH6V0hHy3BBV4Q+quUfZ0z3yoTWg/ddMlggYRJhaCcZcORGmldcGn
-	 m/MGS6SDdGYo9qGJNilfmBiaoURkc5y0wPQfxhHE=
+	b=rV9FAF1+BgHyunWpk8manHke+jh4ZB/6rXWcrKmtE+1EJMb5e/slJJIrI5VrH8YC/
+	 rGt4Tmic37pFr5ouQHBTFzmWuPha2HShZ8puohvlHdvwsGsbRQ+mJPkRuJ4S3RzWSI
+	 0KY3nFCeVrnX7JU0kCWY52C+rOTQ+vmfLDAv7C+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ebdb22d461c904fc3cb2@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0598/1266] tcp: ipv6: clamp default adverting MSS to avoid GSO_BY_FRAGS (0xFFFF)
-Date: Tue, 21 Jul 2026 17:17:15 +0200
-Message-ID: <20260721152455.247115945@linuxfoundation.org>
+Subject: [PATCH 6.6 0616/1266] perf pmu: Skip test on Arm64 when #slots is zero
+Date: Tue, 21 Jul 2026 17:17:33 +0200
+Message-ID: <20260721152455.645500421@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,55 +58,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 2bf43d0e2e6a27d52a7d624e2d6b9116972e8a22 ]
+[ Upstream commit 2e2ba7d1ea554ee6e9e751a53eebf3e9270b0670 ]
 
-When MTU is large, ip6_default_advmss() can return IPV6_MAXPLEN (65535).
-This is interpreted by TCP as mss_clamp, allowing the MSS to reach 65535.
+Some Arm64 PMUs expose 'caps/slots' as 0 when the slot count is not
+implemented, tool_pmu__read_event() currently returns false for this,
+so metrics that reference #slots are reported as syntax error.
 
-However, 0xFFFF is also used as a magic value GSO_BY_FRAGS in the kernel.
-If a TCP packet with gso_size=0xFFFF is passed to skb_segment(), it will
-be mistakenly treated as GSO_BY_FRAGS, leading to a NULL pointer
-dereference because local TCP packets do not use frag_list.
+Since the commit 3a61fd866ef9 ("perf expr: Return -EINVAL for syntax
+error in expr__find_ids()"), these syntax errors are populated as
+failures and make the PMU metric test fail:
 
-Fix this by returning min(IPV6_MAXPLEN, GSO_BY_FRAGS - 1) (65534) from
-ip6_default_advmss() when MTU is large.
+    9.3: Parsing of PMU event table metrics:
+    --- start ---
+    ...
 
-Also update the stale comment in ip6_default_advmss() which suggested
-that IPV6_MAXPLEN is returned to mean "any MSS".
+    Found metric 'backend_bound'
+    metric expr 100 * (stall_slot_backend / (#slots * cpu_cycles)) for backend_bound
+    parsing metric: 100 * (stall_slot_backend / (#slots * cpu_cycles))
+    Failure to read '#slots'
+    literal: #slots = nan
+    syntax error
+    Fail to parse metric or group `backend_bound'
 
-Fixes: 3953c46c3ac7 ("sk_buff: allow segmenting based on frag sizes")
-Reported-by: syzbot+ebdb22d461c904fc3cb2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a2c3193.8812e0fc.3c3fa4.0001.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260612162517.83394-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+    ...
+    ---- end(-1) ----
+    9.3: Parsing of PMU event table metrics    : FAILED!
+
+This commit introduces a new function is_expected_broken_metric() to
+identify broken metrics, and treats metrics containing "#slots" as
+expected broken when #slots == 0 on Arm64 platforms.
+
+Fixes: 3a61fd866ef9aaa1 ("perf expr: Return -EINVAL for syntax error in expr__find_ids()")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/perf/tests/pmu-events.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 6d80e17c04c0d8..c3257e8d575485 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -3251,11 +3251,11 @@ static unsigned int ip6_default_advmss(const struct dst_entry *dst)
- 	/*
- 	 * Maximal non-jumbo IPv6 payload is IPV6_MAXPLEN and
- 	 * corresponding MSS is IPV6_MAXPLEN - tcp_header_size.
--	 * IPV6_MAXPLEN is also valid and means: "any MSS,
--	 * rely only on pmtu discovery"
-+	 * Limit the default MSS to GSO_BY_FRAGS - 1 to avoid
-+	 * collision with the GSO_BY_FRAGS magic value (0xFFFF).
- 	 */
- 	if (mtu > IPV6_MAXPLEN - sizeof(struct tcphdr))
--		mtu = IPV6_MAXPLEN;
-+		mtu = min_t(unsigned int, IPV6_MAXPLEN, GSO_BY_FRAGS - 1);
- 	return mtu;
- }
+diff --git a/tools/perf/tests/pmu-events.c b/tools/perf/tests/pmu-events.c
+index f5321fbdee79d1..2ed9d2ad792e2b 100644
+--- a/tools/perf/tests/pmu-events.c
++++ b/tools/perf/tests/pmu-events.c
+@@ -15,6 +15,7 @@
+ #include "util/expr.h"
+ #include "util/hashmap.h"
+ #include "util/parse-events.h"
++#include "util/tool_pmu.h"
+ #include "metricgroup.h"
+ #include "stat.h"
  
+@@ -804,6 +805,26 @@ struct metric {
+ 	struct metric_ref metric_ref;
+ };
+ 
++static bool is_expected_broken_metric(const struct pmu_metric *pm)
++{
++	if (!strcmp(pm->metric_name, "M1") || !strcmp(pm->metric_name, "M2") ||
++	    !strcmp(pm->metric_name, "M3"))
++		return true;
++
++#if defined(__aarch64__)
++	/*
++	 * Arm64 platforms may return "#slots == 0", which is treated as a
++	 * syntax error by the parser. Don't test these metrics when running
++	 * on such platforms.
++	 */
++	if (strstr(pm->metric_expr, "#slots") &&
++	    !tool_pmu__cpu_slots_per_cycle())
++		return true;
++#endif
++
++	return false;
++}
++
+ static int test__parsing_callback(const struct pmu_metric *pm,
+ 				  const struct pmu_metrics_table *table,
+ 				  void *data)
+@@ -842,8 +863,7 @@ static int test__parsing_callback(const struct pmu_metric *pm,
+ 
+ 	err = metricgroup__parse_groups_test(evlist, table, pm->metric_name, &metric_events);
+ 	if (err) {
+-		if (!strcmp(pm->metric_name, "M1") || !strcmp(pm->metric_name, "M2") ||
+-		    !strcmp(pm->metric_name, "M3")) {
++		if (is_expected_broken_metric(pm)) {
+ 			(*failures)--;
+ 			pr_debug("Expected broken metric %s skipping\n", pm->metric_name);
+ 			err = 0;
 -- 
 2.53.0
 
