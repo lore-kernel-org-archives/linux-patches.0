@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1B046EF7A;
-	Tue, 21 Jul 2026 19:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC61432E74;
+	Tue, 21 Jul 2026 19:35:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662553; cv=none; b=n5XBJKmcPzxIubako9cy24qtTup5MAiCzfl5oeHi4GCaw2c8tAHJQPdwz5V6ZMOoMBRy3AbJ0dICmwOKnCYYEfFRxxSIkXszB7VJcXl6UrCIJ2+AoYctwcfLwX5bCW3pu7TqXLZjy0TxqA31ptEQgLOBDgyg7whK9X9FQubrHKU=
+	t=1784662556; cv=none; b=jv7t60/lvumUuAwGuZAlaNBNDDWlZwzcsmmDJt43jVOEnFD6Fj1+stpVykaSD2rR1i/fXyi29W4EnEN/e08kfDm64fyubKI2BLCePQOHnfUUwmTH2P0A8Cyn01iLJR0MZrCG8B0/5SzZ4TumrDuB4B7WD5s2xrwTJC2AJ4bsn7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662553; c=relaxed/simple;
-	bh=vLp3SFCr0Eo2TRMHMLfI/BqUI4b8mCxfhpQZVeC81xc=;
+	s=arc-20240116; t=1784662556; c=relaxed/simple;
+	bh=tEhwC3bNbE4wVE1ze77NYvvOZ4sc/6lcZByAlNxtMYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cc1xICY0J/SlGkP/XP7FSMY4FUL2N7PmorlmZOvKsybyzIE0uD2/CzPRpbu+TpifosgS+ZCObcAEWI3hv16vp4VLW1lATRDJyuxRrOD+0fY5XsIE9WbzAm1bvHoyjD3qXKudoMCeYzUKoVe7mg46oD1U1SMP40KelBE/dfoEtP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LRe9ekra; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RUyFqLx01IdW3uJKUC23O/Ye3bdnRuvg0qs4theEU5h+uqtPcs+mgNAgJZAJm6oohVYLRqj0pIq0HMDTXwYvRFOhjl10f9QENKDjXjedOQZO3zhkXdPeLAYMA1eAFf6LlMGlTN2s7roT8T91Aq6iQ/fOUNRmvMcOt659YE92vpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sd3gNJdm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LRe9ekra"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A61E81F000E9;
-	Tue, 21 Jul 2026 19:35:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sd3gNJdm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F0671F000E9;
+	Tue, 21 Jul 2026 19:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662552;
-	bh=Umai2sIhN3mVth6i/+4Gc1KGvBRm7cSnxRKCXtB6LyY=;
+	s=korg; t=1784662554;
+	bh=co4HWv3KmkNRYZXwkLKMYI42jacTttuxaZmj5V33n3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LRe9ekraRL8J5HGYm1GncnIyhFHl+J4/w2sTwPfMMumpvyiwrdeQC4tLiQnSKwEY9
-	 nt08ldxN6rX0GvFDsFlDL/Av8HHzjEVZmyK26HwJZ6o7JvpIWSi+XRI2eYXs1ZWgcI
-	 GgX4aLWIidjX4522ohHGwICLIBDHdw9DrOZnahXM=
+	b=sd3gNJdmfYV3LDz6tm/HUwy+HTs8fcYPAgFQTTd/Rgx/W1v0aQHopIXL0RvcKjVIO
+	 PuONIiT2oMYJTE8ttQo4DrRfURUO1TmzHt2W931pqQDohJryb+0VL4+XnCeLmiZWlB
+	 gwDiTTxM30gOFC7HfF1QyFv01fijC7UmzNiPjLfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0488/1276] NFSv4/pnfs: defer return_range callbacks until after inode unlock
-Date: Tue, 21 Jul 2026 17:15:31 +0200
-Message-ID: <20260721152457.022851493@linuxfoundation.org>
+Subject: [PATCH 6.12 0462/1276] perf tools: Add bounds check to cpu__get_node()
+Date: Tue, 21 Jul 2026 17:15:05 +0200
+Message-ID: <20260721152456.441394252@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,122 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 77b160b2d863d37f36b6c38e80a7d259ce939e69 ]
+[ Upstream commit 1e7921d7227de5da0dfc167943092c823ec7e49b ]
 
-Sometimes unmounting an NFS filesystem mounted with pNFS SCSI
-layouts triggers the following warning:
+cpu__get_node() accesses cpunode_map[cpu.cpu] without checking against
+max_cpu_num, the allocation size of cpunode_map.  Callers such as
+builtin-kmem.c:evsel__process_alloc_event() pass sample->cpu from
+perf.data events, which may exceed the host's CPU count when analyzing
+cross-machine recordings.
 
-     BUG: scheduling while atomic: umount.nfs4/...
+Add a bounds check against max_cpu_num before indexing, returning -1
+for out-of-range values.  This is a central fix that protects all
+callers.
 
-    __schedule_bug+0xbd/0x100
-     schedule_debug.constprop.0+0x19f/0x220
-     __schedule+0x10d/0x10a0
-     schedule+0x74/0x190
-     schedule_timeout+0xf5/0x220
-     io_schedule_timeout+0xd5/0x160
-     __wait_for_common+0x186/0x4b0
-     blk_execute_rq+0x2ef/0x3a0
-     scsi_execute_cmd+0x1ff/0x700
-     sd_pr_out_command.isra.0+0x242/0x380 [sd_mod]
-     bl_unregister_scsi.constprop.0+0x109/0x3c0 [blocklayoutdriver]
-     bl_unregister_dev+0x175/0x1c0 [blocklayoutdriver]
-     bl_free_device+0x1f/0x1b0 [blocklayoutdriver]
-     bl_free_deviceid_node+0x12/0x30 [blocklayoutdriver]
-     nfs4_put_deviceid_node+0x171/0x360 [nfsv4]
-     ext_tree_remove+0x11c/0x1d0 [blocklayoutdriver]
-     _pnfs_return_layout+0x416/0x900 [nfsv4]
-     nfs4_evict_inode+0x108/0x130 [nfsv4]
-     evict+0x316/0x750
-     dispose_list+0xf1/0x1a0
-     evict_inodes+0x33f/0x440
-     generic_shutdown_super+0xc9/0x4e0
-     kill_anon_super+0x3a/0x90
-     nfs_kill_super+0x44/0x60 [nfs]
-     deactivate_locked_super+0xb8/0x1b0
-     cleanup_mnt+0x25a/0x380
-     task_work_run+0x13e/0x210
-     exit_to_user_mode_loop+0x169/0x400
-     do_syscall_64+0x467/0x1550
-     entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-The warning occurs because the block layout driver unregisters the SCSI
-device while the inode lock is still held. Device unregistration issues
-a SCSI PR command, which may sleep, resulting in a "scheduling while
-atomic" warning.
-
-During layout return, ext_tree_remove() invokes the layout driver's
-return_range callback while holding the inode lock. For block layouts,
-this callback eventually calls bl_unregister_scsi(), which may block in
-scsi_execute_cmd() while issuing PR commands to the device.
-
-Fix this by deferring the return_range callbacks until after the inode
-lock has been released. The layout header reference count is incremented
-before invoking return_range(), ensuring that the layout header remains
-valid while the layout driver removes extents from the extent tree.
-
-Fixes: c88953d87f5c8 ("pnfs: add return_range method")
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Fixes: 86895b480a2f ("perf stat: Add --per-node agregation support")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/callback_proc.c | 9 +++++----
- fs/nfs/pnfs.c          | 4 ++--
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ tools/perf/util/cpumap.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/nfs/callback_proc.c b/fs/nfs/callback_proc.c
-index 7832fb0369a126..b70ae09aeac158 100644
---- a/fs/nfs/callback_proc.c
-+++ b/fs/nfs/callback_proc.c
-@@ -254,6 +254,7 @@ static u32 initiate_file_draining(struct nfs_client *clp,
- 	struct pnfs_layout_hdr *lo;
- 	u32 rv = NFS4ERR_NOMATCHING_LAYOUT;
- 	LIST_HEAD(free_me_list);
-+	bool return_range = false;
- 
- 	ino = nfs_layout_find_inode(clp, &args->cbl_fh, &args->cbl_stateid);
- 	if (IS_ERR(ino)) {
-@@ -298,13 +299,13 @@ static u32 initiate_file_draining(struct nfs_client *clp,
- 		/* Embrace your forgetfulness! */
- 		rv = NFS4ERR_NOMATCHING_LAYOUT;
- 
--		if (NFS_SERVER(ino)->pnfs_curr_ld->return_range) {
--			NFS_SERVER(ino)->pnfs_curr_ld->return_range(lo,
--				&args->cbl_range);
--		}
-+		return_range = true;
+diff --git a/tools/perf/util/cpumap.c b/tools/perf/util/cpumap.c
+index 27094211edd8a8..7cafa6672d4fb4 100644
+--- a/tools/perf/util/cpumap.c
++++ b/tools/perf/util/cpumap.c
+@@ -522,6 +522,10 @@ int cpu__get_node(struct perf_cpu cpu)
+ 		return -1;
  	}
- unlock:
- 	spin_unlock(&ino->i_lock);
-+	if (return_range && NFS_SERVER(ino)->pnfs_curr_ld->return_range)
-+		NFS_SERVER(ino)->pnfs_curr_ld->return_range(lo,
-+			&args->cbl_range);
- 	pnfs_free_lseg_list(&free_me_list);
- 	/* Free all lsegs that are attached to commit buckets */
- 	nfs_commit_inode(ino, 0);
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index 5928d1cb1de20d..2a6d109551d33a 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -1476,8 +1476,6 @@ _pnfs_return_layout(struct inode *ino)
- 	pnfs_clear_layoutcommit(ino, &tmp_list);
- 	pnfs_mark_matching_lsegs_return(lo, &tmp_list, &range, 0);
  
--	if (NFS_SERVER(ino)->pnfs_curr_ld->return_range)
--		NFS_SERVER(ino)->pnfs_curr_ld->return_range(lo, &range);
++	/* cpunode_map allocated for max_cpu_num entries; input may be untrusted */
++	if (cpu.cpu < 0 || cpu.cpu >= max_cpu_num.cpu)
++		return -1;
++
+ 	return cpunode_map[cpu.cpu];
+ }
  
- 	/* Don't send a LAYOUTRETURN if list was initially empty */
- 	if (!test_bit(NFS_LAYOUT_RETURN_REQUESTED, &lo->plh_flags) ||
-@@ -1489,6 +1487,8 @@ _pnfs_return_layout(struct inode *ino)
- 
- 	send = pnfs_prepare_layoutreturn(lo, &stateid, &cred, NULL);
- 	spin_unlock(&ino->i_lock);
-+	if (NFS_SERVER(ino)->pnfs_curr_ld->return_range)
-+		NFS_SERVER(ino)->pnfs_curr_ld->return_range(lo, &range);
- 	if (send)
- 		status = pnfs_send_layoutreturn(lo, &stateid, &cred, IOMODE_ANY,
- 						0);
 -- 
 2.53.0
 
