@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC7F47252F;
-	Tue, 21 Jul 2026 20:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270BF2DA76C;
+	Tue, 21 Jul 2026 20:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664932; cv=none; b=ND4+CVqDYk93MJiGtSMSFNjrFLoWqxqKULIC9q3e5Ja/6VwDsY/rzxpA73skLlPDdUjSJ28lRdsLwznn4pyVLU0kod1juyJ939JIFHnTewwzj93Ix5iKa60miNq+L/YfA8tjiD8uJ5RUZOW4ToM7Jv52zKMkaQMcuVTB4ECwZ1U=
+	t=1784664935; cv=none; b=sayCEFPjtpChiOlg95N4LCB/Z4l9SIKUWJfBjpUJjFj5KyYxpeieKn2QHAyW+X41h5Kxg8MIsjfAlE9ppKgPdeZrdadzAj5KasEhwvQXUVrECbcpg9IiIcgYWtiR27OD60YQUAgLEkHVdKcyA6fb46JF5LMJX63JpI51uLH6+LE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664932; c=relaxed/simple;
-	bh=0VflhKPPHOCW49sz1kuXi90CoM6MTliLVL7tnnVvw6s=;
+	s=arc-20240116; t=1784664935; c=relaxed/simple;
+	bh=Q+zZrV5WXEMfQ6q5CDqUuHWffgRk49Zw8Q3h2RBVjDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EURthVwJzPhq+ja7cmEqn6hXyWp6vdxhahXj0TEHMtrhpEL1Muvrh7XayeWBmqfFh9bX3jA4SvJwJtbMwfaaAYE+Rf4wBqV3vdosKgcpdObReLV54OhHXHipUo4tltsKfWkUhj6EOlho6jX6ak8z2RoMCmpfkUkN//i1wirq2U4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YkNATSZ6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=AO1W5R/1VG0XAYlfWNRKzSE4fE7FGdMstUuqBKcRygXfHj1eJUtySbPHpjHO0QKllHdC3xLjNfDR6Qi4JspQQ8k09uEu1SCO9NMwl5LFZ+xSk4TfMN9uWKB2tKUbgD1Qqhn/yPxmuTzu0+qGcEWtN1mRrNi7PRizhKr8Dn3bi/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4VHMLam; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YkNATSZ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC5621F000E9;
-	Tue, 21 Jul 2026 20:15:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4VHMLam"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689B71F000E9;
+	Tue, 21 Jul 2026 20:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664931;
-	bh=he5hy8FcEqZXB/Zka/Uq7CKpayO+Z+v8hC9mMFUNGQs=;
+	s=korg; t=1784664933;
+	bh=5kb1d4IkpTtau/YfLp66W2+2hb23uHiJ9aGp5lINyAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YkNATSZ6IqCh33clEw+Mu6Qpcr+mMMmWDGuKRBJ8ZQRt18pbHw81F/wZEfAKJWiTk
-	 fv+vc7evdTCRxrYy1WsiZwZnmwYG6jyHf9pnANU/o232GU3m5JUwYtusgKUIuSBQLc
-	 CKG0WTLVJii0o12gwh2sy+ZWeocSXCYyXS4Pckvc=
+	b=d4VHMLamhfiumrtsk19on+wYESpGYow675/aOh1wiFpye1Wyp/TxqblrYuSq5ubY6
+	 ochaMdkkQgUpxg2XC1/Ktj7CQ4uoi3aU4/0StcWXG+YoXvvMiC2y2sX/blB4hdWRhX
+	 SFB0iT62uJ9Utqeb5ILQToxCBXOK9OH1AAf2mTD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 0113/1266] ALSA: usb-audio: Propagate US-16x08 write errors in route/mix EQ-switch put callbacks
-Date: Tue, 21 Jul 2026 17:09:10 +0200
-Message-ID: <20260721152444.330808021@linuxfoundation.org>
+Subject: [PATCH 6.6 0114/1266] ALSA: usb-audio: Roll back quirk control caches on write errors
+Date: Tue, 21 Jul 2026 17:09:11 +0200
+Message-ID: <20260721152444.353595302@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,129 +53,160 @@ Content-Transfer-Encoding: 8bit
 
 From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 3c06aec8abda6ba068b58a8b7119cdb2a48456b1 upstream.
+commit 6380957fa24251856a532e48a46a4dc3d1ae26b6 upstream.
 
-Several US-16x08 mixer put callbacks log failed control URBs but
-still return success to userspace. That hides device write failures
-even though the requested value was not applied.
+Several mixer quirk callbacks cache the requested
+control value in kcontrol->private_value before
+issuing a single vendor or class write.
 
-Return the negative write error instead in the route, master, bus,
-channel, and EQ switch put callbacks.
+Their paired get and resume paths consume that cache
+directly, so a failed write currently leaves software
+state changed even though the update did not succeed.
+That can make later reads report a value the device
+never accepted and can replay the stale cache on resume.
 
-Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
+Restore the previous cached value on failure in
+the Audigy2NX LED, Emu0204 channel switch,
+Xonar U1 output switch, Native Instruments controls,
+FTU effect program switch, and Sound Blaster E1 input source switch.
+
+Fixes: 9cf3689bfe07 ("ALSA: usb-audio: Add audigy2nx resume support")
+Fixes: 5f503ee9e270 ("ALSA: usb-audio: Add Emu0204 channel switch resume support")
+Fixes: 2bfb14c3b8fb ("ALSA: usb-audio: Add Xonar U1 resume support")
+Fixes: da6d276957ea ("ALSA: usb-audio: Add resume support for Native Instruments controls")
+Fixes: 0b4e9cfcef05 ("ALSA: usb-audio: Add resume support for FTU controls")
+Fixes: 388fdb8f882a ("ALSA: usb-audio: Support changing input on Sound Blaster E1")
 Cc: stable@vger.kernel.org
 Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260429-alsa-usb-quirks-cache-rollback-v1-1-01b35c688b80@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-3-5a3bd4a673ae@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_us16x08.c |   49 ++++++++++++++++++++++------------------------
- 1 file changed, 24 insertions(+), 25 deletions(-)
+ sound/usb/mixer_quirks.c |   45 +++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 37 insertions(+), 8 deletions(-)
 
---- a/sound/usb/mixer_us16x08.c
-+++ b/sound/usb/mixer_us16x08.c
-@@ -225,14 +225,14 @@ static int snd_us16x08_route_put(struct
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -335,6 +335,7 @@ static int snd_audigy2nx_led_put(struct
+ 	int index = kcontrol->private_value & 0xff;
+ 	unsigned int value = ucontrol->value.integer.value[0];
+ 	int old_value = kcontrol->private_value >> 8;
++	unsigned long old_pval = kcontrol->private_value;
+ 	int err;
  
- 	err = snd_us16x08_send_urb(chip, buf, sizeof(route_msg));
- 
--	if (err > 0) {
--		elem->cached |= 1 << index;
--		elem->cache_val[index] = val;
--	} else {
+ 	if (value > 1)
+@@ -343,7 +344,11 @@ static int snd_audigy2nx_led_put(struct
+ 		return 0;
+ 	kcontrol->private_value = (value << 8) | index;
+ 	err = snd_audigy2nx_led_update(mixer, value, index);
+-	return err < 0 ? err : 1;
 +	if (err < 0) {
- 		usb_audio_dbg(chip, "Failed to set routing, err:%d\n", err);
++		kcontrol->private_value = old_pval;
 +		return err;
- 	}
- 
--	return err > 0 ? 1 : 0;
-+	elem->cached |= 1 << index;
-+	elem->cache_val[index] = val;
++	}
 +	return 1;
  }
  
- static int snd_us16x08_master_info(struct snd_kcontrol *kcontrol,
-@@ -284,14 +284,14 @@ static int snd_us16x08_master_put(struct
- 	buf[5] = index + 1;
- 	err = snd_us16x08_send_urb(chip, buf, sizeof(mix_msg_out));
+ static int snd_audigy2nx_led_resume(struct usb_mixer_elem_list *list)
+@@ -493,6 +498,7 @@ static int snd_emu0204_ch_switch_put(str
+ 	struct usb_mixer_elem_list *list = snd_kcontrol_chip(kcontrol);
+ 	struct usb_mixer_interface *mixer = list->mixer;
+ 	unsigned int value = ucontrol->value.enumerated.item[0];
++	unsigned long old_pval = kcontrol->private_value;
+ 	int err;
  
--	if (err > 0) {
--		elem->cached |= 1 << index;
--		elem->cache_val[index] = val;
--	} else {
+ 	if (value > 1)
+@@ -503,7 +509,11 @@ static int snd_emu0204_ch_switch_put(str
+ 
+ 	kcontrol->private_value = value;
+ 	err = snd_emu0204_ch_switch_update(mixer, value);
+-	return err < 0 ? err : 1;
 +	if (err < 0) {
- 		usb_audio_dbg(chip, "Failed to set master, err:%d\n", err);
++		kcontrol->private_value = old_pval;
 +		return err;
- 	}
- 
--	return err > 0 ? 1 : 0;
-+	elem->cached |= 1 << index;
-+	elem->cache_val[index] = val;
++	}
 +	return 1;
  }
  
- static int snd_us16x08_bus_put(struct snd_kcontrol *kcontrol,
-@@ -325,14 +325,14 @@ static int snd_us16x08_bus_put(struct sn
- 		break;
- 	}
+ static int snd_emu0204_ch_switch_resume(struct usb_mixer_elem_list *list)
+@@ -814,7 +824,11 @@ static int snd_xonar_u1_switch_put(struc
  
--	if (err > 0) {
--		elem->cached |= 1;
--		elem->cache_val[0] = val;
--	} else {
+ 	kcontrol->private_value = new_status;
+ 	err = snd_xonar_u1_switch_update(list->mixer, new_status);
+-	return err < 0 ? err : 1;
 +	if (err < 0) {
- 		usb_audio_dbg(chip, "Failed to set bus parameter, err:%d\n", err);
++		kcontrol->private_value = old_status;
 +		return err;
- 	}
- 
--	return err > 0 ? 1 : 0;
-+	elem->cached |= 1;
-+	elem->cache_val[0] = val;
++	}
 +	return 1;
  }
  
- static int snd_us16x08_bus_get(struct snd_kcontrol *kcontrol,
-@@ -393,14 +393,14 @@ static int snd_us16x08_channel_put(struc
+ static int snd_xonar_u1_switch_resume(struct usb_mixer_elem_list *list)
+@@ -1163,7 +1177,8 @@ static int snd_nativeinstruments_control
+ 					     struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct usb_mixer_elem_list *list = snd_kcontrol_chip(kcontrol);
+-	u8 oldval = (kcontrol->private_value >> 24) & 0xff;
++	unsigned long old_pval = kcontrol->private_value;
++	u8 oldval = (old_pval >> 24) & 0xff;
+ 	u8 newval = ucontrol->value.integer.value[0];
+ 	int err;
  
- 	err = snd_us16x08_send_urb(chip, buf, sizeof(mix_msg_in));
- 
--	if (err > 0) {
--		elem->cached |= 1 << index;
--		elem->cache_val[index] = val;
--	} else {
+@@ -1173,7 +1188,11 @@ static int snd_nativeinstruments_control
+ 	kcontrol->private_value &= ~(0xff << 24);
+ 	kcontrol->private_value |= (unsigned int)newval << 24;
+ 	err = snd_ni_update_cur_val(list);
+-	return err < 0 ? err : 1;
 +	if (err < 0) {
- 		usb_audio_dbg(chip, "Failed to set channel, err:%d\n", err);
++		kcontrol->private_value = old_pval;
 +		return err;
- 	}
- 
--	return err > 0 ? 1 : 0;
-+	elem->cached |= 1 << index;
-+	elem->cache_val[index] = val;
++	}
 +	return 1;
  }
  
- static int snd_us16x08_mix_info(struct snd_kcontrol *kcontrol,
-@@ -530,13 +530,13 @@ static int snd_us16x08_eqswitch_put(stru
- 		msleep(15);
- 	}
+ static const struct snd_kcontrol_new snd_nativeinstruments_ta6_mixers[] = {
+@@ -1331,7 +1350,8 @@ static int snd_ftu_eff_switch_put(struct
+ 					struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct usb_mixer_elem_list *list = snd_kcontrol_chip(kctl);
+-	unsigned int pval = list->kctl->private_value;
++	unsigned long old_pval = list->kctl->private_value;
++	unsigned int pval = old_pval;
+ 	int cur_val, err, new_val;
  
--	if (err > 0) {
--		elem->cached |= 1 << index;
--		elem->cache_val[index] = val;
--	} else {
+ 	cur_val = pval >> 24;
+@@ -1342,7 +1362,11 @@ static int snd_ftu_eff_switch_put(struct
+ 	kctl->private_value &= ~(0xff << 24);
+ 	kctl->private_value |= new_val << 24;
+ 	err = snd_ftu_eff_switch_update(list);
+-	return err < 0 ? err : 1;
 +	if (err < 0) {
- 		usb_audio_dbg(chip, "Failed to set eq switch, err:%d\n", err);
++		kctl->private_value = old_pval;
 +		return err;
- 	}
- 
-+	elem->cached |= 1 << index;
-+	elem->cache_val[index] = val;
- 	return 1;
++	}
++	return 1;
  }
  
-@@ -1419,4 +1419,3 @@ int snd_us16x08_controls_create(struct u
+ static int snd_ftu_create_effect_switch(struct usb_mixer_interface *mixer,
+@@ -2140,13 +2164,18 @@ static int snd_soundblaster_e1_switch_pu
+ {
+ 	struct usb_mixer_elem_list *list = snd_kcontrol_chip(kcontrol);
+ 	unsigned char value = !!ucontrol->value.integer.value[0];
++	unsigned long old_pval = kcontrol->private_value;
+ 	int err;
  
- 	return 0;
+ 	if (kcontrol->private_value == value)
+ 		return 0;
+ 	kcontrol->private_value = value;
+ 	err = snd_soundblaster_e1_switch_update(list->mixer, value);
+-	return err < 0 ? err : 1;
++	if (err < 0) {
++		kcontrol->private_value = old_pval;
++		return err;
++	}
++	return 1;
  }
--
+ 
+ static int snd_soundblaster_e1_switch_resume(struct usb_mixer_elem_list *list)
 
 
