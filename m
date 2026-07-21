@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEA2379C48;
-	Tue, 21 Jul 2026 15:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C35F46AA91;
+	Tue, 21 Jul 2026 15:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649550; cv=none; b=h3yEURPsBdXbKTTUYsDNzbWVMBHnbgpXtvT9sn74APWAI61h8H3HoTm/OxuQZdiJBJb9RO9gQ+HnZxrzA3LfqwrWDpYlibnOm2NrT1CY40R6RMJAIy+oBcoGypYRYCJ+JTjUs38+YiOMx4u19I/RFPz7VO9FKC68b2+4x1/syag=
+	t=1784649552; cv=none; b=rv5BGEzh5OgXwzQyDlwb+Rzphzl1vAMC72PNnPRCX5gTU7YKTVjS+9mWhVxyfriU6yXnmGJNuC1NqIOLoyNYetiKo/gU2Ie6WnLQ7e2WM5VnBNzizHTEKYNuIQMdUz9BSN6SKaiyhN2hfKzyGxXtDNF9cEE1wtIiSqPEQg56I5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649550; c=relaxed/simple;
-	bh=nkgQ+sYGBlbhSCsEqtt1pU85K1NQhMQk5zawp/QZ8dQ=;
+	s=arc-20240116; t=1784649552; c=relaxed/simple;
+	bh=ZX7R0bs0vdD5/NJEpX5drmerZqNi2FUvLnxsRENxrEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oqN+avvNZx9fMpJraLkz7KOSh/zuHc4mFMfygVAlGwPV+LycM+7bUPiKZvjQWsmnSCd3Rf7vz/8dHi3oOD0fHBJuGhB43P/obOXHTsIfWNKxbmrTTNJWJe26uUDxCMh7h7Zx+6zsOKxQn8pvmU4+bf/1kSUkkze2sWLw0K71vA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kSgQxqAb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y5pYY/yTx0zCzsC88dYOmiGlbtTZ7Op7GIQJL0uUlRRK0+rQqjHLHRc6A17huYzYo1sYBDZh9557lmDqnPzPvZ7TnYVqsexJiMOdS7omP16qvJEvKrnxxaUfWFH9UenZXX2ihor9WCh7xJD2uKIhJIr3o+f45HbITpOjkLB8dVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjwGbvo4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kSgQxqAb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F59F1F00A3D;
-	Tue, 21 Jul 2026 15:59:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjwGbvo4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2AD1F000E9;
+	Tue, 21 Jul 2026 15:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649548;
-	bh=m6V4nBsanubFebzX4qJZknIaPXEQsWLjRZ24UJBL5Cw=;
+	s=korg; t=1784649551;
+	bh=7LOVn3SudGSAM8pbGg9tcFsh5LEK9wWj5dI7RrOmGq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kSgQxqAbnLHJ+TKa3RP5D8kfqzIKTUxjx2re3JVpwrLeJxKnIvPW+0vZKU5kFk19y
-	 hqWzf0zviuMG2nBqct4lvvGrndRal5D0tpkAnEEZiOGB3T187y6uvHNnBD+Rf8MduM
-	 d2ewcsAfGBMtGp8ceptg1X0AfLXR6tbqpmHy0o7o=
+	b=CjwGbvo4JXSqb2JWU7kfWNX80hnpk/w2J63wxBmn7M0HwIGZpfvK24MvMGqHA5wVm
+	 L4PlkGocjiSoT7y7JtZsGEwSGtatOzRsDmYFQabvASy2WGqSYQ5oGtgg1fKnO0F/KB
+	 cJiAhKRJglZeSoM4sP+rc/0eI6s5GplSR1RmjvTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0620/2077] lockd: Stop warning on nlm__int__drop_reply in !V4 cast_status
-Date: Tue, 21 Jul 2026 17:04:53 +0200
-Message-ID: <20260721152607.427371406@linuxfoundation.org>
+Subject: [PATCH 7.1 0621/2077] lockd: Translate nlm__int__deadlock in __nlm4svc_proc_lock_msg()
+Date: Tue, 21 Jul 2026 17:04:54 +0200
+Message-ID: <20260721152607.450705106@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,46 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 5cca6056f2bae9be14566e0f7f6e351103a6aef3 ]
+[ Upstream commit 2175ca75882e346c9d8741a2196693d70f635340 ]
 
-cast_status folds internal lock-daemon sentinels into NLMv1/v3
-wire status codes.  The !CONFIG_LOCKD_V4 variant warns when an
-unrecognized status falls into the internal-sentinel range,
-gated by be32_to_cpu(status) >= 30000.
+When nlmsvc_lock() detects a deadlock it returns the internal
+sentinel nlm__int__deadlock (30001), which version-specific
+handlers must translate to a wire-valid status before the reply
+is encoded.  The xdrgen LOCK_MSG handler stores the sentinel
+unmodified in resp->status; the LOCK_RES callback then places
+30001 on the v4 wire, where the client rejects the reply.
 
-nlm__int__drop_reply is defined as cpu_to_be32(30000), so it
-sits at the lower edge of that range and trips pr_warn_once
-("lockd: unhandled internal status %u").  The status is
-returned unchanged so the reply is still dropped, but every
-dropped reply on a !CONFIG_LOCKD_V4 build emits a spurious
-warning.
+Commit 9e0d0c619407 ("lockd: Introduce nlm__int__deadlock")
+established the translation boundary and updated the synchronous
+v4 path nlm4svc_do_lock(), but the xdrgen LOCK_MSG handler added
+later in commit b2be4e28c23a ("lockd: Use xdrgen XDR functions
+for the NLMv4 LOCK_MSG procedure") missed the corresponding
+remap.  Apply the same translation in __nlm4svc_proc_lock_msg()
+so deadlock results are reported as nlm4_deadlock on LOCK_RES.
 
-Compare against nlm__int__drop_reply directly so the warning
-still catches the genuinely unexpected sentinels deadlock,
-stale_fh, and failed (30001 through 30003) but excludes the
-legitimate dropped-reply marker.
-
-Fixes: d343fce148a4 ("[PATCH] knfsd: Allow lockd to drop replies as appropriate")
+Fixes: b2be4e28c23a ("lockd: Use xdrgen XDR functions for the NLMv4 LOCK_MSG procedure")
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/svcproc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/lockd/svc4proc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/lockd/svcproc.c b/fs/lockd/svcproc.c
-index c0a3487719e283..110e186802b6cd 100644
---- a/fs/lockd/svcproc.c
-+++ b/fs/lockd/svcproc.c
-@@ -49,7 +49,7 @@ static inline __be32 cast_status(__be32 status)
- 		status = nlm_lck_denied_nolocks;
- 		break;
- 	default:
--		if (be32_to_cpu(status) >= 30000)
-+		if (be32_to_cpu(status) > be32_to_cpu(nlm__int__drop_reply))
- 			pr_warn_once("lockd: unhandled internal status %u\n",
- 				     be32_to_cpu(status));
- 		break;
+diff --git a/fs/lockd/svc4proc.c b/fs/lockd/svc4proc.c
+index 41cab858de5782..74070e33cb3e2d 100644
+--- a/fs/lockd/svc4proc.c
++++ b/fs/lockd/svc4proc.c
+@@ -669,6 +669,8 @@ __nlm4svc_proc_lock_msg(struct svc_rqst *rqstp, struct nlm_res *resp)
+ 	resp->status = nlmsvc_lock(rqstp, file, host, &argp->lock,
+ 				   argp->xdrgen.block, &resp->cookie,
+ 				   argp->xdrgen.reclaim);
++	if (resp->status == nlm__int__deadlock)
++		resp->status = nlm4_deadlock;
+ 	nlmsvc_release_lockowner(&argp->lock);
+ 
+ out:
 -- 
 2.53.0
 
