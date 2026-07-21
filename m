@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E400546EF73;
-	Tue, 21 Jul 2026 18:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972E846EF73;
+	Tue, 21 Jul 2026 18:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656951; cv=none; b=XgsMg63UkBZ9SmYw+Dn/IVhxK7y1I8BrRVdafvb06msQQXV8nG874fFcm6E0GmPQNiekxRdhGVkTw/zMWzQZvyLjgNEEjuY792Qz6aO/kdz2FlyNBqXPEbIystw+Fzackzsc0ikzIChxYvKmFP86dgW8Y0BvE8z6vxrFj8lmOXw=
+	t=1784656953; cv=none; b=Zu5qQhG3u969yh/c5BEugzoCYkbRqDQ92eOxRFYNUzZqL1/tyafZiJEM22m6RITJ+IkxTb366FyuynW9vklCMBUfooPW3rWqGuRWziD5dRTe2n5nHLL/3F+E99iv/KXks9bzIOqvxg4uO84KoZG+ExlDZjStAp/ANvmFxHe5ShI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656951; c=relaxed/simple;
-	bh=9tpa0qJgT8PCs3n0HYWjID/sqavF1ziU2c08njkmSVA=;
+	s=arc-20240116; t=1784656953; c=relaxed/simple;
+	bh=WgWWM18bQCw5XFq4c0seSi5v2Jw7oypWGR/QyPvrK/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kBAHi0klZzGUJB0joP314UH/OcJzSPrV211AJskR9QGvRm3c3GoC98QlE0SWkBEKhRxEVHCjqgdsjkuSR6SCVaQAzg6n9VXupAW/i21KFaGUH16KT1DTA04oRIemQ81HOHykSo3FU9sTppLJPfC9HnRGQTzmg/tULfSSiXt1yns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7+u38JE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=biyzhMhKRDy3C8qhqiHfPLxstGQZkOA6EAjiUD3dxnNuFEzqRV1kne84I1BCw/xS+0Axay3bGnHkPqYsqiDPCMTbSkpgHsq2hx1WoS4x7X1StD+GcZCEdcQHJAGaZW5FmernzTAUXB49jUyp2l7rmr6Qap+Qw0xQjgN01xPcudc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QaPg9FuC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7+u38JE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC161F000E9;
-	Tue, 21 Jul 2026 18:02:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QaPg9FuC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00F11F000E9;
+	Tue, 21 Jul 2026 18:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656949;
-	bh=QWc3/U66hz2vJTwn6mTxLMYlbsai/kA7md08UIqxumk=;
+	s=korg; t=1784656952;
+	bh=FUo2/erLrSWz3QHSPLInGaD2Mzoy68NVx5GrozmG6OI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F7+u38JE5AHz8UFo/1r/FVFdvJHlV2DxtMqpgMOYzOpSx0jljJtxMtRtm43SRcUsg
-	 xUTZ4f0aoyI37xCJ0Le3fVWw9xXYxO9qz/gmy5wgfc2Y/fU2x7xsVCCDr5vBFLu/Bu
-	 HtQ4a1Z3hOo4SZbfCkOkHctQKA5uhfbVB8o1yaFY=
+	b=QaPg9FuC571mzNdiJi/6zeuddztY4mesQLxh7d/314QTbG+8EZQbbt+EG4I2s3wOK
+	 TgCHrXAL+43Odzr5pKfGYG4UXOS4/24aCFB0baGbvl8VOVpfRWSk3eAsDKiwhd46dR
+	 q4Z+1kMd5spM0clZ4pVPq+QZxittL9MP/9xR6lOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Simon Trimmer <simont@opensource.cirrus.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Baoli.Zhang" <baoli.zhang@linux.intel.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0580/1611] soundwire: dont program SDW_SCP_BUSCLOCK_SCALE on a unattached Peripheral
-Date: Tue, 21 Jul 2026 17:11:36 +0200
-Message-ID: <20260721152528.423883920@linuxfoundation.org>
+Subject: [PATCH 6.18 0581/1611] soundwire: fix bug in sdw_add_element_group_count found by syzkaller
+Date: Tue, 21 Jul 2026 17:11:37 +0200
+Message-ID: <20260721152528.447391441@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -48,51 +47,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Baoli.Zhang <baoli.zhang@linux.intel.com>
 
-[ Upstream commit c368dd5cbd61ffab2b6f8a89b0d5775e2e16cde6 ]
+[ Upstream commit f772ff5a0e6758fd412803c09e03ba3bca5f5878 ]
 
-The SDW_SCP_BUSCLOCK_SCALE register will be programmed when the
-Peripheral is attached. We can and should skip programming the
-SDW_SCP_BUSCLOCK_SCALE register when the Peripheral is unattached.
+The original implementation caused an out-of-bounds memory access
+in the sdw_add_element_group_count for-loop when i == num.
 
-Fixes: 645291cfe5e5 ("Soundwire: stream: program BUSCLOCK_SCALE")
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Simon Trimmer <simont@opensource.cirrus.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Link: https://patch.msgid.link/20260428084612.322701-1-yung-chuan.liao@linux.intel.com
+for (i = 0; i <= num; i++) {
+    if (rate == group->rates[i] && lane == group->lanes[i])
+        ...
+
+To fix this error, the function now checks for existing rate/lane
+entries in the group(a function parameter) using a for-loop before
+adding them.
+
+No functional changes apart from this fix.
+
+Fixes: 9026118f20e2 ("soundwire: Add generic bandwidth allocation algorithm")
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Baoli.Zhang <baoli.zhang@linux.intel.com>
+Link: https://patch.msgid.link/20260506055039.3751028-2-baoli.zhang@linux.intel.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/stream.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ .../soundwire/generic_bandwidth_allocation.c  | 47 +++++++++----------
+ 1 file changed, 22 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/soundwire/stream.c b/drivers/soundwire/stream.c
-index 38c9dbd3560652..ecd0c2889bb421 100644
---- a/drivers/soundwire/stream.c
-+++ b/drivers/soundwire/stream.c
-@@ -691,6 +691,13 @@ static int sdw_program_params(struct sdw_bus *bus, bool prepare)
- 		if (scale_index < 0)
- 			return scale_index;
+diff --git a/drivers/soundwire/generic_bandwidth_allocation.c b/drivers/soundwire/generic_bandwidth_allocation.c
+index c18f0c16f92973..e52c536d663c53 100644
+--- a/drivers/soundwire/generic_bandwidth_allocation.c
++++ b/drivers/soundwire/generic_bandwidth_allocation.c
+@@ -296,39 +296,36 @@ static int sdw_add_element_group_count(struct sdw_group *group,
+ 	int num = group->count;
+ 	int i;
  
-+		/* Skip the unattached Peripherals */
-+		if (!completion_done(&slave->enumeration_complete)) {
-+			dev_warn(&slave->dev,
-+				 "Not enumerated, skip programming BUSCLOCK_SCALE\n");
-+			continue;
-+		}
+-	for (i = 0; i <= num; i++) {
++	for (i = 0; i < num; i++) {
+ 		if (rate == group->rates[i] && lane == group->lanes[i])
+-			break;
+-
+-		if (i != num)
+-			continue;
+-
+-		if (group->count >= group->max_size) {
+-			unsigned int *rates;
+-			unsigned int *lanes;
++			return 0;
++	}
+ 
+-			group->max_size += 1;
+-			rates = krealloc(group->rates,
+-					 (sizeof(int) * group->max_size),
+-					 GFP_KERNEL);
+-			if (!rates)
+-				return -ENOMEM;
++	if (group->count >= group->max_size) {
++		unsigned int *rates;
++		unsigned int *lanes;
+ 
+-			group->rates = rates;
++		group->max_size += 1;
++		rates = krealloc(group->rates,
++				 (sizeof(int) * group->max_size),
++				 GFP_KERNEL);
++		if (!rates)
++			return -ENOMEM;
+ 
+-			lanes = krealloc(group->lanes,
+-					 (sizeof(int) * group->max_size),
+-					 GFP_KERNEL);
+-			if (!lanes)
+-				return -ENOMEM;
++		group->rates = rates;
+ 
+-			group->lanes = lanes;
+-		}
++		lanes = krealloc(group->lanes,
++				 (sizeof(int) * group->max_size),
++				 GFP_KERNEL);
++		if (!lanes)
++			return -ENOMEM;
+ 
+-		group->rates[group->count] = rate;
+-		group->lanes[group->count++] = lane;
++		group->lanes = lanes;
+ 	}
+ 
++	group->rates[group->count] = rate;
++	group->lanes[group->count++] = lane;
 +
- 		ret = sdw_write_no_pm(slave, addr1, scale_index);
- 		if (ret < 0) {
- 			dev_err(&slave->dev, "SDW_SCP_BUSCLOCK_SCALE register write failed\n");
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
