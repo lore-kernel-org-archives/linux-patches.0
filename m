@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE86471257;
-	Tue, 21 Jul 2026 19:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2DC47042E;
+	Tue, 21 Jul 2026 19:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662807; cv=none; b=kB6F8rek0p4+gipaqcORksF3ASbR9pWDxiRhVdmNCH+CExmd98KuHd0YnuluOoQ57hNxIXNKdFJ4+jYmxa80/NH+f4niqs19J3UKZfC66Q5P50wVESlZP+fNflBWjmcHHp0mrUOzi0gNj824jcbb4xmyoAXnd3xigL0kRVRcLis=
+	t=1784662810; cv=none; b=jymGTldP2JnHAhEdZ3dlHKonEwOMWcwohla4h5DOFQ82Go9p2GGbwxn31e68CncK1HgLjztBDfyzDJ0HPccLGaBig2ehkwyDjM0nISm8JRiRNl3MK1mClfqk2SMOXHLW0h3Gwp+Ika8LDOp+Ny05yKsGIlriwaLTMtzzszBcKLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662807; c=relaxed/simple;
-	bh=TdSziSXKrqlaBoMB47ddgMkC89ecYkDeS8LT0pZn7FQ=;
+	s=arc-20240116; t=1784662810; c=relaxed/simple;
+	bh=v7dCA/Zu2FdUSLNvWKF8qjEJZgG3BHwFrnbGsYqIPFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r8lNJMiKq8jX5yJbIr/MBgppKYkKggUzrcfXr47gX3rLm5BO/wQVSPDi+M2U+tpsJH9b6//bejr/SnRHIViIcyUZ8KCWf3FQrCAQnZrggoaeBQo31B6YhOpeR1f3Sq0OJ9eVQCv7AC6+NdUY9qvdiIsX0ymKYJR+87UrZ+1T1U8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBZ7Tibm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nXSlMCQF/QdZYb0WOErg3QkXBojnFQQsvWgUK9IqMFAmdzYI+7VpuUwLtKOUEmbNzd8641maHDJ8SgHgGDSpXGmCUZZcv3YogOLFKWF+HaTNG0Gp+gfMtqmdRKmYCStGyFkf+CqmSJ9mbvasle6nSNrckDAzEKiBkppGxqOrbGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vq/IWFrr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBZ7Tibm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A621F000E9;
-	Tue, 21 Jul 2026 19:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vq/IWFrr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DBF81F00A3E;
+	Tue, 21 Jul 2026 19:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662806;
-	bh=pB7AFv7YFjq7WkAGvSKUk6t076JA8Rf7OO/Xvofr5Gg=;
+	s=korg; t=1784662808;
+	bh=e2dfvUDsCnYSGVecYCQ8ap1VpsE7Mu9ExY0yXrKPDhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uBZ7TibmKuSQtghIi1EYW/2IqZ6PjcfEIp4x5trQvW5KnQzcAtejS/QqlmyE2O5fO
-	 lzOrUzJGqrFP5isg/rC+/LWE4e1Zqff13BlyLVsQ/5QeNXiNczlZL6bD1Aa+hLIyuo
-	 bPBbVolsu236aEqYe151Q2tgVffoz6TNizioaj3M=
+	b=Vq/IWFrr/3qrqMZXMIl1y8vEYTJH+5OHJXlQipaQr5nZTp6lrTL5+HHT1TC/w33Po
+	 P3LrpSyDuyWhcr9blDSfkYkUpnOcZ8AoXnXgeVA9i6Nua8b8GDuVDUus+vKWVXGhmB
+	 8G6zp9KVcILWGtEBeKzaVV1qXIQaUGnV6bJmJ3vI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Breno Leitao <leitao@debian.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0583/1276] ALSA: usb-audio: Kill MIDI 2.0 URBs before freeing endpoints
-Date: Tue, 21 Jul 2026 17:17:06 +0200
-Message-ID: <20260721152459.162705689@linuxfoundation.org>
+Subject: [PATCH 6.12 0584/1276] arm64/hw_breakpoint: reject unaligned watchpoints that would truncate BAS
+Date: Tue, 21 Jul 2026 17:17:07 +0200
+Message-ID: <20260721152459.185649775@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,92 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit f199c8a8bdd54296d3458777e70fe82a78bd9817 ]
+[ Upstream commit 4cc70f75853bebac022334b6a86b953348072f74 ]
 
-MIDI 2.0 input URBs are started during snd_usb_midi_v2_create(). A
-later setup failure can still jump to snd_usb_midi_v2_free(), which
-currently frees each endpoint and its coherent URB buffers without first
-stopping the submitted URBs. A completion can then dereference the
-embedded URB context and endpoint state after they have been freed, or
-try to resubmit from the stale endpoint.
+hw_breakpoint_arch_parse() positions the BAS bit pattern in
+hw->ctrl.len with
 
-This was observed as a KASAN slab-use-after-free in
-input_urb_complete().
+	offset = hw->address & alignment_mask;	/* 0..7 */
+	hw->ctrl.len <<= offset;
 
-The buggy scenario involves two paths, with each column showing the order
-within that path:
+ctrl.len is an 8-bit bitfield (struct arch_hw_breakpoint_ctrl::len is
+u32 :8), so the shift silently drops any bits past bit 7.  For
+non-compat AArch64 watchpoints the offset is unbounded relative to
+ctrl.len: a perf_event_open(PERF_TYPE_BREAKPOINT) caller asking for
+HW_BREAKPOINT_W with bp_addr=page+1 and bp_len=HW_BREAKPOINT_LEN_8
+ends up with 0xff << 1 = 0x1fe, stored as 0xfe.  The kernel programs
+WCR.BAS=0xfe and the hardware watches bytes [1..7] instead of the
+requested [1..8] -- the eighth byte is silently dropped.  The
+syscall still returns success, leaving userspace to discover the
+gap by empirical probing.
 
-probe error path:                         USB completion path:
-1. start_input_streams() submits          1. The HCD still owns a
-   input URBs.                               submitted input URB.
-2. A later setup helper returns           2. input_urb_complete() runs
-   an error.                                 with urb->context in ep.
-3. snd_usb_midi_v2_free() frees           3. The completion reads ep
-   endpoint storage and URB buffers.         state and can requeue URBs.
+The same class affects HW_BREAKPOINT_LEN_{2,4} when offset pushes the
+high BAS bit past bit 7 (e.g. LEN_4 with offset=5 yields 0xe0
+instead of 0x1e0).  No memory-safety impact -- the value is masked
+into 8 bits before encoding -- but debuggers and perf users observe
+missed events on bytes they thought they were watching.
 
-Make the endpoint destructor follow the same teardown ordering used for
-disconnect when the endpoint has not already been disconnected: publish
-ep->disconnected, kill the URBs synchronously, and drain the endpoint
-before freeing URB buffers and endpoint storage. The guard avoids
-repeating the stop sequence after the normal
-snd_usb_midi_v2_disconnect_all() path, while still synchronizing the
-direct MIDI 2.0 create-error free path.
+The AArch32 branch immediately above already rejects unrepresentable
+(offset, len) combinations via an explicit switch.  Mirror that for
+the non-compat branch by checking that the shifted pattern fits in
+the BAS field, returning -EINVAL when it does not.
 
-Validation reproduced this kernel report:
-BUG: KASAN: slab-use-after-free in input_urb_complete+0x37/0x1b0
-Workqueue: usb_hub_wq hub_event
-RIP: 0010:_raw_spin_unlock_irq+0x2e/0x50
-Read of size 8
-Call trace:
-  dump_stack_lvl+0x77/0xb0
-  print_report+0xce/0x5f0
-  input_urb_complete+0x37/0x1b0 (sound/usb/midi2.c:186)
-  srso_alias_return_thunk+0x5/0xfbef5
-  __virt_addr_valid+0x19f/0x330
-  kasan_report+0xe0/0x110
-  __usb_hcd_giveback_urb+0x112/0x1d0
-  dummy_timer+0xaaa/0x19a0
-  lock_is_held_type+0x9a/0x110
-  __lock_acquire+0x467/0x28b0
-  mark_held_locks+0x40/0x70
-  _raw_spin_unlock_irqrestore+0x44/0x60
-  lockdep_hardirqs_on_prepare+0xbb/0x1a0
-  __hrtimer_run_queues+0x101/0x520
-  hrtimer_run_softirq+0xd0/0x130
-  handle_softirqs+0x15b/0x670
-  __irq_exit_rcu+0xd0/0x170
-  irq_exit_rcu+0xe/0x20
-  sysvec_apic_timer_interrupt+0x6c/0x80
-  asm_sysvec_apic_timer_interrupt+0x1a/0x20
+GDB and similar debuggers are unaffected by the stricter check.
+aarch64_linux_set_debug_regs() already treats EINVAL on
+NT_ARM_HW_WATCH as a downgrade signal: it clears
+kernel_supports_any_contiguous_range, calls aarch64_downgrade_regs()
+to round the BAS up to a legacy 0x01/03/0f/ff mask with an aligned
+base, and retries -- the same fallback path that PR-20207 introduced.
+The new -EINVAL is therefore reachable only from a raw
+perf_event_open() that pairs an unaligned base with an oversized
+bp_len, which is precisely the bug.
 
-Fixes: d9c99876868c ("ALSA: usb-audio: Create UMP blocks from USB MIDI GTBs")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/20260618170010.191433-1-zzzccc427@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reproducer:
+
+  struct perf_event_attr a = {
+      .type = PERF_TYPE_BREAKPOINT, .size = sizeof(a),
+      .bp_type = HW_BREAKPOINT_W,
+      .bp_addr = (uintptr_t)(buf + 1),
+      .bp_len = HW_BREAKPOINT_LEN_8,
+      .exclude_kernel = 1, .exclude_hv = 1,
+  };
+  int fd = perf_event_open(&a, 0, -1, -1, 0);
+  /* before this fix: succeeds, watches 7 bytes (buf+1..buf+7)   */
+  /* after  this fix: fails with EINVAL                          */
+
+Fixes: b08fb180bb88 ("arm64: Allow hw watchpoint at varied offset from base address")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/midi2.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/kernel/hw_breakpoint.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/sound/usb/midi2.c b/sound/usb/midi2.c
-index 6f04aa7f685b7a..95c21c9bf906cf 100644
---- a/sound/usb/midi2.c
-+++ b/sound/usb/midi2.c
-@@ -478,6 +478,11 @@ static int create_midi2_endpoint(struct snd_usb_midi2_interface *umidi,
- static void free_midi2_endpoint(struct snd_usb_midi2_endpoint *ep)
- {
- 	list_del(&ep->list);
-+	if (!ep->disconnected) {
-+		ep->disconnected = 1;
-+		kill_midi_urbs(ep, false);
-+		drain_urb_queue(ep);
-+	}
- 	free_midi_urbs(ep);
- 	kfree(ep);
- }
+diff --git a/arch/arm64/kernel/hw_breakpoint.c b/arch/arm64/kernel/hw_breakpoint.c
+index ab76b36dce820b..73cce8ac836817 100644
+--- a/arch/arm64/kernel/hw_breakpoint.c
++++ b/arch/arm64/kernel/hw_breakpoint.c
+@@ -559,6 +559,15 @@ int hw_breakpoint_arch_parse(struct perf_event *bp,
+ 		else
+ 			alignment_mask = 0x7;
+ 		offset = hw->address & alignment_mask;
++
++		/*
++		 * BAS is an 8-bit field in WCR/BCR; the shift below would
++		 * silently drop the high bits of ctrl.len when offset + len
++		 * exceeds 8, programming hardware to watch fewer bytes than
++		 * the user requested.
++		 */
++		if (((u32)hw->ctrl.len << offset) > ARM_BREAKPOINT_LEN_8)
++			return -EINVAL;
+ 	}
+ 
+ 	hw->address &= ~alignment_mask;
 -- 
 2.53.0
 
