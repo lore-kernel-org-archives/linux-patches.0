@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D5F3B0AC6;
-	Tue, 21 Jul 2026 20:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998863B7763;
+	Tue, 21 Jul 2026 20:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666915; cv=none; b=KbXrSmvtxCwHkdstQVwxlUxCV9p9p5SFORhUtdu2k4AGuGQmPPvgAwhG2OxTjlYnjbllL+ObXb+r+r/y6cBI9450Ot+YaRFcbAMa+A6ANArSru+wkukoHJeEOUqVbKkN159DdChIFxrlfBP1SzuXTPQW+y4Rk+XhGnvEip4r1dY=
+	t=1784666920; cv=none; b=m+fauCH2aIosDdtfMImkvoOnDq8Qry8CV/jaaNf9k8Ke6dEgDL5+BYhhkfAESMzPcopIVTgxKBnwO7E/y7nuuenP6LdkPgmZcr9s+F/cRbONl50xiRbQIxGSm0L4lyiwmUHlwByBe85F3jSEodzDvyvFxBGtDwE7Xh3rTwnOSe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666915; c=relaxed/simple;
-	bh=Xey8+h26lnxoq7GZmXf0/C1agY9vnXsdCecewXba7OQ=;
+	s=arc-20240116; t=1784666920; c=relaxed/simple;
+	bh=uHMYMOyivieAaqb/5/kNNZJFT+dVwEycc+q9KV5D6s8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uaVaB60bbI35CXgZjS0v2WgceSHZrzfHQG1xR+OPpM5KKFmJSYhDFfwFLVyY0L5Z7mqKHX2bf41GpTEPmDMIVZsHecEDRospPr1dr6pU1k4aMmwXvwsZeR80lEIt41eLAU1ZqK2vt3LuzkSMrGUM6tXDDNcgE2G3aQiBHtygUTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bezeUrP6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NxFTN60TSIdAYP+S9n1tl57YrF1GRoTyM+OJIfqbi8Z3GeHl0644XziHwxCcwcseOwVVnVpdHFqKdA3liJBoCV6eRLY0gN1GxZcBv4/rwDwXwMQJl7rn/fdNNUF9WPrsR7F+n0PR77cG35CmzFph/NWnijw2E5TU4nIj/a7mfbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJ4DoQAm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bezeUrP6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1651F00ADB;
-	Tue, 21 Jul 2026 20:48:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJ4DoQAm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA8151F00A3A;
+	Tue, 21 Jul 2026 20:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666911;
-	bh=qHlUvzkRKBXvCvWhGknsQ6gDFGQZs5ZPyvjvhL2GTxc=;
+	s=korg; t=1784666914;
+	bh=NDmzCsf9c4ZDCo4iiF5e1qV7zSXrlWvd8wW5E9HsX6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bezeUrP6DR8XRoDuWtma2Be3ay43GVGYV0d3/zkBdQt9XsXEWS01RpUPVPRWBtwdc
-	 JzXmbzUIIoJ0JLzaz4wyDJxyu5aUs3hh93xysz8iwoMwLmVh2qrWZy1d57j6AVMBoF
-	 NCQBIbp5W/Lm4NgmEiKz/DlaZCHlo1TsR/vRLFqI=
+	b=QJ4DoQAmTztelIbaFeJiafV6vh7NxnEoHdWcrea9yGPvVD3s2nUSLkk/umpocyZG4
+	 +A9mRh3JUcXHSGgdVZvg0jGHJaJw6msashgBHN/E3VsOoKAUvHi2k590GzPsAy6bni
+	 ZEPz0Zp4BrUl6uTN2BMA9hkfrOnK4BOLBYnQS2pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0861/1266] amt: fix size calculation in amt_get_size()
-Date: Tue, 21 Jul 2026 17:21:38 +0200
-Message-ID: <20260721152501.117609806@linuxfoundation.org>
+Subject: [PATCH 6.6 0862/1266] Bluetooth: 6lowpan: hold L2CAP conn across debugfs control
+Date: Tue, 21 Jul 2026 17:21:39 +0200
+Message-ID: <20260721152501.139500351@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,44 +51,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 9e05e91a9a847ed57926414bd7c2c5e54d6c56c6 ]
+[ Upstream commit 518aa9505fa10ea5662349e5d2efd8c9e32a820b ]
 
-amt_get_size() incorrectly used sizeof(struct iphdr) for the sizes of
-IFLA_AMT_DISCOVERY_IP, IFLA_AMT_REMOTE_IP, and IFLA_AMT_LOCAL_IP.
-These attributes contain IPv4 addresses (__be32), not full IP headers.
+get_l2cap_conn() looks up an LE hci_conn under hdev protection, but
+then drops that protection before reading hcon->l2cap_data and before
+lowpan_control_write() later dereferences conn->hcon.  A disconnect or
+device close can tear down the same L2CAP connection in that window.
 
-Replace sizeof(struct iphdr) with sizeof(__be32) to avoid over-allocating
-netlink message space.
+The buggy scenario involves two paths, with each column showing the order
+within that path:
 
-Fixes: b9022b53adad ("amt: add control plane of amt interface")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260701122329.3562825-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+6LoWPAN control write:              HCI disconnect/device close:
+  1. get_l2cap_conn() finds hcon      1. hci_disconn_cfm() dispatches
+     and hcon->l2cap_data.               the L2CAP disconnect callback.
+  2. get_l2cap_conn() drops hdev      2. l2cap_conn_del() clears
+     protection and returns conn.        hcon->l2cap_data and drops the
+                                         L2CAP connection reference.
+  3. lowpan_control_write() reads     3. hci_conn_del() removes and drops
+     conn->hcon.                         the HCI connection.
+
+Take a reference to the L2CAP connection with
+l2cap_conn_hold_unless_zero() while hdev is still locked, and drop that
+reference after the debugfs command's last use of conn.  This mirrors the
+existing L2CAP ACL receive-side handoff and keeps the connection
+dereferenceable after leaving hdev protection.  Export the existing helper
+so the bluetooth_6lowpan module can use the same lifetime primitive.
+
+Validation reproduced this kernel report:
+BUG: KASAN: slab-use-after-free in lowpan_control_write+0x374/0x520
+The buggy address belongs to the object at ffff888111b9d000 which belongs
+to the cache kmalloc-1k of size 1024
+The buggy address is located 0 bytes inside of freed 1024-byte region
+[ffff888111b9d000, ffff888111b9d400)
+Read of size 8
+Call trace:
+  dump_stack_lvl+0x66/0xa0
+  print_report+0xce/0x5f0
+  lowpan_control_write+0x374/0x520 (net/bluetooth/6lowpan.c:1131)
+  srso_alias_return_thunk+0x5/0xfbef5
+  __virt_addr_valid+0x19f/0x330
+  kasan_report+0xe0/0x110
+  __debugfs_file_get+0xf7/0x400
+  full_proxy_write+0x9e/0xd0
+  vfs_write+0x1b0/0x810
+  ksys_write+0xd2/0x170
+  dnotify_flush+0x32/0x220
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Allocated by task stack:
+  kasan_save_stack+0x33/0x60
+  kasan_save_track+0x17/0x60
+  __kasan_kmalloc+0xaa/0xb0
+  l2cap_conn_add+0x45/0x520
+  l2cap_chan_connect+0xac6/0xd90
+  l2cap_sock_connect+0x216/0x350
+  __sys_connect+0x101/0x130
+  __x64_sys_connect+0x40/0x50
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Freed by task stack:
+  kasan_save_stack+0x33/0x60
+  kasan_save_track+0x17/0x60
+  kasan_save_free_info+0x3b/0x60
+  __kasan_slab_free+0x5f/0x80
+  kfree+0x313/0x590
+  hci_conn_hash_flush+0xc0/0x140
+  hci_dev_close_sync+0x41a/0xb00
+  hci_dev_close+0x12f/0x160
+  hci_sock_ioctl+0x157/0x570
+  sock_do_ioctl+0xf7/0x210
+  sock_ioctl+0x32f/0x490
+  __x64_sys_ioctl+0xc7/0x110
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  kasan_record_aux_stack+0xa7/0xc0
+  insert_work+0x32/0x100
+  __queue_work+0x262/0xa60
+  queue_work_on+0xad/0xb0
+  l2cap_connect_cfm+0x4ef/0x670
+  hci_le_remote_feat_complete_evt+0x247/0x430
+  hci_event_packet+0x360/0x6f0
+  hci_rx_work+0x2ae/0x7a0
+  process_one_work+0x4fd/0xbc0
+  worker_thread+0x2d8/0x570
+  kthread+0x1ad/0x1f0
+  ret_from_fork+0x3c9/0x540
+  ret_from_fork_asm+0x1a/0x30
+
+Fixes: 6b8d4a6a0314 ("Bluetooth: 6LoWPAN: Use connected oriented channel instead of fixed one")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/amt.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/bluetooth/6lowpan.c    | 21 +++++++++++++++------
+ net/bluetooth/l2cap_core.c |  1 +
+ 2 files changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/amt.c b/drivers/net/amt.c
-index ddd087c2c3ed45..f2da0c49171f5d 100644
---- a/drivers/net/amt.c
-+++ b/drivers/net/amt.c
-@@ -3303,9 +3303,9 @@ static size_t amt_get_size(const struct net_device *dev)
- 	       nla_total_size(sizeof(__u16)) + /* IFLA_AMT_GATEWAY_PORT */
- 	       nla_total_size(sizeof(__u32)) + /* IFLA_AMT_LINK */
- 	       nla_total_size(sizeof(__u32)) + /* IFLA_MAX_TUNNELS */
--	       nla_total_size(sizeof(struct iphdr)) + /* IFLA_AMT_DISCOVERY_IP */
--	       nla_total_size(sizeof(struct iphdr)) + /* IFLA_AMT_REMOTE_IP */
--	       nla_total_size(sizeof(struct iphdr)); /* IFLA_AMT_LOCAL_IP */
-+	       nla_total_size(sizeof(__be32)) + /* IFLA_AMT_DISCOVERY_IP */
-+	       nla_total_size(sizeof(__be32)) + /* IFLA_AMT_REMOTE_IP */
-+	       nla_total_size(sizeof(__be32)); /* IFLA_AMT_LOCAL_IP */
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index b3132079573d4d..e44fcd37f809ed 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -1006,16 +1006,19 @@ static int get_l2cap_conn(char *buf, bdaddr_t *addr, u8 *addr_type,
+ 
+ 	hci_dev_lock(hdev);
+ 	hcon = hci_conn_hash_lookup_le(hdev, addr, le_addr_type);
+-	hci_dev_unlock(hdev);
+-	hci_dev_put(hdev);
+-
+-	if (!hcon)
++	if (!hcon) {
++		hci_dev_unlock(hdev);
++		hci_dev_put(hdev);
+ 		return -ENOENT;
++	}
+ 
+-	*conn = (struct l2cap_conn *)hcon->l2cap_data;
++	*conn = l2cap_conn_hold_unless_zero(hcon->l2cap_data);
+ 
+ 	BT_DBG("conn %p dst %pMR type %u", *conn, &hcon->dst, hcon->dst_type);
+ 
++	hci_dev_unlock(hdev);
++	hci_dev_put(hdev);
++
+ 	return 0;
  }
  
- static int amt_fill_info(struct sk_buff *skb, const struct net_device *dev)
+@@ -1158,18 +1161,22 @@ static ssize_t lowpan_control_write(struct file *fp,
+ 		if (conn) {
+ 			struct lowpan_peer *peer;
+ 
+-			if (!is_bt_6lowpan(conn->hcon))
++			if (!is_bt_6lowpan(conn->hcon)) {
++				l2cap_conn_put(conn);
+ 				return -EINVAL;
++			}
+ 
+ 			peer = lookup_peer(conn);
+ 			if (peer) {
+ 				BT_DBG("6LoWPAN connection already exists");
++				l2cap_conn_put(conn);
+ 				return -EALREADY;
+ 			}
+ 
+ 			BT_DBG("conn %p dst %pMR type %d user %u", conn,
+ 			       &conn->hcon->dst, conn->hcon->dst_type,
+ 			       addr_type);
++			l2cap_conn_put(conn);
+ 		}
+ 
+ 		ret = bt_6lowpan_connect(&addr, addr_type);
+@@ -1185,6 +1192,8 @@ static ssize_t lowpan_control_write(struct file *fp,
+ 			return ret;
+ 
+ 		ret = bt_6lowpan_disconnect(conn, addr_type);
++		if (conn)
++			l2cap_conn_put(conn);
+ 		if (ret < 0)
+ 			return ret;
+ 
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 8f83ee2e75112e..6a3b279d26886b 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -7645,6 +7645,7 @@ struct l2cap_conn *l2cap_conn_hold_unless_zero(struct l2cap_conn *c)
+ 
+ 	return c;
+ }
++EXPORT_SYMBOL(l2cap_conn_hold_unless_zero);
+ 
+ void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ {
 -- 
 2.53.0
 
