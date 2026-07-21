@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7895F472551;
-	Tue, 21 Jul 2026 18:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E5D47255C;
+	Tue, 21 Jul 2026 18:44:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659479; cv=none; b=Pb7W3mzsxBlIqu6GLMmQtGVXT3rtmKqYkXXM8Wv69gMcu3E6iaXDA8luAHUPbZVxQneb7BtdDEymjlSCuIzOExqMWnuM89N298A+ylG3TAZ2XEYGtAefVS30FN6fJwT4H3miXS+OaTfBZApeWsVqZWMoAIJRLrELWvXV9aym5og=
+	t=1784659482; cv=none; b=Rh+CMzBL6aIHQlGSgaF0fp+n72otL7FNyHMBv+ne0Q51L2ylliGX1g1n0mCxRArjpeZhkcLysAeegWWwUZIq8VE32TG/7KRczJsMgbS1RRBn5JgLMbCmVCWnuA8Eb5LUrljSzByoiRHOfh9vwkPRYtBa1fjdhmfyJvq4T90a+M8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659479; c=relaxed/simple;
-	bh=9KWmX3uypkxTi+oY8XmfbGdzr3zWCj3obSbuQCKwEbw=;
+	s=arc-20240116; t=1784659482; c=relaxed/simple;
+	bh=WZcmY8V/qfWEFUb/5m9fleul/TR3bW4iWcCsaJ8JTDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QdDeV4l8TJg+bhKfbqgk71ZR0iCsTJ8nL+6HM8XbjJLOKBuXAblK8LNgMrZI/NSM9kSD2To2PzEq1pscbGikZjdmdWWfnoErHdd7S5y8usD2li/GyW3GUxC2f/OyJSW+ipLTvRwvr02S2ieIQaSV1Bk1J+qsSGBXwK5Yn9NTU3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sq4pof92; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mlhuI+wmY3pGYhA63qD1SUF6OakC6+v1BEg4gBGJt6rU4pjgYMkPjwodDTFwnYV8kcjvH1CNFFKn5BOZ3j5YSP+nN4b+ayAoGtrwcgiFujDJz+k86NeHyM9z0fM2rKhhoixYBqb6SGQ8x/J+NVfuLoIolFxun8C/2C6zh2Gu0W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SA21cz6C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sq4pof92"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01F31F000E9;
-	Tue, 21 Jul 2026 18:44:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SA21cz6C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F731F00A3D;
+	Tue, 21 Jul 2026 18:44:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659478;
-	bh=WzPEfWy7eJxarY0drm/bxm8hiEqfRcGtMogd0XlnC4c=;
+	s=korg; t=1784659481;
+	bh=UVaFV40cm15qfnWxNvXy6HZwBpUXj46tAp2Arl92xw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sq4pof92lpBZvE3eUepaouh84WTj3qSelPv0QQEUFp2n1gN9ebUOtX70+IkSY+fLC
-	 rGPwO/XOQPk1QJ/WwVBMku8h/to9ZDh6Mo5BxblYoyXFgVe4CAenctEyvD2C1JZ9cK
-	 ZpVu8sJPqQW+MaPpUPWiVoHukqGbBYByI/n+6Wr8=
+	b=SA21cz6CTycZD0ZZg8e+WK3FGNrAj/GznuwIicKTQ6n4jzv/NiUPxiWOenhwAyerZ
+	 s89BHDTHfOTU1rnOh/+Z+rua/KGaXUsEPhmYX8LL0cBCVkx5jjOCBbqEMbrBAhTSxg
+	 n59i2MEweJe8M6wgmfWMoK11/3UMmCb2L34WKWYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Franz Schnyder <franz.schnyder@toradex.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Marco Nenciarini <mnencia@kcore.it>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1529/1611] PCI: imx6: Fix reference clock source selection for i.MX95
-Date: Tue, 21 Jul 2026 17:27:25 +0200
-Message-ID: <20260721152549.836948150@linuxfoundation.org>
+Subject: [PATCH 6.18 1538/1611] PCI: Skip Resizable BAR restore on read error
+Date: Tue, 21 Jul 2026 17:27:34 +0200
+Message-ID: <20260721152550.042145831@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,68 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Franz Schnyder <franz.schnyder@toradex.com>
+From: Marco Nenciarini <mnencia@kcore.it>
 
-[ Upstream commit 88cc4cbe08bba27bb58888d25d336774aa0ccab1 ]
+[ Upstream commit ee7471fe968d210939be9046089a924cd23c8c3b ]
 
-In the PCIe PHY init for the i.MX95, the reference clock source selection
-uses a conditional instead of always passing the mask. This currently
-breaks functionality if the internal refclk is used.
+pci_restore_rebar_state() uses the Resizable BAR Control register to decide
+how many BARs to restore (nbars) and which BAR each iteration addresses
+(bar_idx).
 
-To fix this issue, always pass IMX95_PCIE_REF_USE_PAD as the mask and clear
-bit if external refclk is not used. This essentially swaps the parameters.
+When a device does not respond, config reads typically return
+PCI_ERROR_RESPONSE (~0).  Both fields are 3 bits wide, so nbars and bar_idx
+both evaluate to 7, past the spec's valid ranges for both fields.
+pci_resource_n() then returns an unrelated resource slot, whose size is
+used to derive a nonsensical value written back to the Resizable BAR
+Control register.
 
-Fixes: d8574ce57d76 ("PCI: imx6: Add external reference clock input mode support")
-Signed-off-by: Franz Schnyder <franz.schnyder@toradex.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Bail out if any Resizable BAR Control read returns PCI_ERROR_RESPONSE. No
+further BARs are touched, which is safe because a config read that returns
+PCI_ERROR_RESPONSE indicates the device is unreachable and restoration is
+pointless.
+
+Fixes: d3252ace0bc6 ("PCI: Restore resized BAR state on resume")
+Signed-off-by: Marco Nenciarini <mnencia@kcore.it>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Richard Zhu <hongxing.zhu@nxp.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260325093118.684142-1-fra.schnyder@gmail.com
-Stable-dep-of: 0c26b1c34d12 ("PCI: imx6: Configure REF_USE_PAD before PHY reset for i.MX95")
+Link: https://patch.msgid.link/666cac19b5daa0ab0e0ab64454e76b4d24465dbd.1776429882.git.mnencia@kcore.it
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/pci/rebar.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -150,6 +150,7 @@ struct imx_lut_data {
- struct imx_pcie {
- 	struct dw_pcie		*pci;
- 	struct gpio_desc	*reset_gpiod;
-+	bool			enable_ext_refclk;
- 	struct clk_bulk_data	*clks;
- 	int			num_clks;
- 	struct regmap		*iomuxc_gpr;
-@@ -244,6 +245,8 @@ static unsigned int imx_pcie_grp_offset(
+--- a/drivers/pci/rebar.c
++++ b/drivers/pci/rebar.c
+@@ -145,6 +145,9 @@ void pci_restore_rebar_state(struct pci_
+ 		return;
  
- static int imx95_pcie_init_phy(struct imx_pcie *imx_pcie)
- {
-+	bool ext = imx_pcie->enable_ext_refclk;
+ 	pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
++	if (PCI_POSSIBLE_ERROR(ctrl))
++		return;
 +
- 	/*
- 	 * ERR051624: The Controller Without Vaux Cannot Exit L23 Ready
- 	 * Through Beacon or PERST# De-assertion
-@@ -262,13 +265,12 @@ static int imx95_pcie_init_phy(struct im
- 			IMX95_PCIE_PHY_CR_PARA_SEL,
- 			IMX95_PCIE_PHY_CR_PARA_SEL);
+ 	nbars = FIELD_GET(PCI_REBAR_CTRL_NBAR_MASK, ctrl);
  
--	regmap_update_bits(imx_pcie->iomuxc_gpr,
--			   IMX95_PCIE_PHY_GEN_CTRL,
--			   IMX95_PCIE_REF_USE_PAD, 0);
--	regmap_update_bits(imx_pcie->iomuxc_gpr,
--			   IMX95_PCIE_SS_RW_REG_0,
-+	regmap_update_bits(imx_pcie->iomuxc_gpr, IMX95_PCIE_PHY_GEN_CTRL,
-+			   IMX95_PCIE_REF_USE_PAD,
-+			   ext ? IMX95_PCIE_REF_USE_PAD : 0);
-+	regmap_update_bits(imx_pcie->iomuxc_gpr, IMX95_PCIE_SS_RW_REG_0,
- 			   IMX95_PCIE_REF_CLKEN,
--			   IMX95_PCIE_REF_CLKEN);
-+			   ext ? 0 : IMX95_PCIE_REF_CLKEN);
+ 	for (i = 0; i < nbars; i++, pos += 8) {
+@@ -152,6 +155,9 @@ void pci_restore_rebar_state(struct pci_
+ 		int bar_idx, size;
  
- 	return 0;
- }
+ 		pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
++		if (PCI_POSSIBLE_ERROR(ctrl))
++			return;
++
+ 		bar_idx = ctrl & PCI_REBAR_CTRL_BAR_IDX;
+ 		res = pci_resource_n(pdev, bar_idx);
+ 		size = pci_rebar_bytes_to_size(resource_size(res));
 
 
