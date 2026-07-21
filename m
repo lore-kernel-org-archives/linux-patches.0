@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DD846AA60;
-	Tue, 21 Jul 2026 15:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E97946AA92;
+	Tue, 21 Jul 2026 15:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648215; cv=none; b=anbML+o0KOwM4v1MtKON3NEyRa7fCOnMnvitCHmIFkctGhLs6iHcNb9h73n6NQh6IPmJcgyJavg4eoe+53GmMAC1zRwkBYbAnolhl9lEmdcMcJuNbIs9u+Pwn3FSgE7FLjs/z6HwqJS+5OhlpRETvIM/0YylevxxK5mR+pCOG4c=
+	t=1784648218; cv=none; b=tfsJzQti8+Xrewk2gTpSEmYuCcjNtVpuc2tKHL30dMQS16bzNF007SNQOQqpR1R2TkQRPrJyZo3vZq3xfk2zJRq2JfegGFXAtiTXmC1ULZHG+zCEaWdUzS7v9plRSvYvDvFUqEPtJcBdHIxK7GCnY8wbBryJy/pLyoa7QbqQgwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648215; c=relaxed/simple;
-	bh=UiXuYxp7cup5S/5Jvf3hytaXvwQ0GjG7dROi/FHsQhY=;
+	s=arc-20240116; t=1784648218; c=relaxed/simple;
+	bh=4KymAnamvXbK3Ijwa/yazc2wHf7SDkX6w/bDA4ZribA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IDdPxwOd3zauBrCtOO4q5EGUGpQ029Pcfn/LDc4nVWel/dmq2iDGjNndmqFVKpdiOpmCzB1n40origI6ETqs/COvmG3vM7KPmffKny4Wz2y93qNT2iCdfddu26oDWqXcBR5rLPJ8CuWwHtnQTqebFERuf5WlAKJjcsUJeAQxNFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbgKw3gF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XA4kYqDM9hkYYJwLBifHAgg1qT5j3odJUmTO3YXPRLxu+Rl83An2Fzcxvog075q4ppVcdQC5YJuj9v4JgK4PqpdXpQrjANPpiRku9RVwoiEPS1EI7VJZkiVFJV3PqtHPtqlAAyNgbSRJBoBPXmdVGTODefPJ2U2YdPXbYRfZGdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wHaSLfR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbgKw3gF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29701F000E9;
-	Tue, 21 Jul 2026 15:36:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wHaSLfR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B24F1F000E9;
+	Tue, 21 Jul 2026 15:36:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648214;
-	bh=PhF64J6MLZC4yA+KcZXYKYy7c/022wj5HUZH7YAYBRo=;
+	s=korg; t=1784648216;
+	bh=u1N2f5VmOhueR2ihDYLUyAtdcPn2x9YiIFM3eZ/HhD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GbgKw3gFomHiYO8mZmt0Mu0l72TvyJRN9KxmIJJgj9cRWH0p1Vvy5sv1Fhp4+eER2
-	 mBguAbZl0GmWIjf8nFYjwpMNzwSSvgrDQf4UfF0UTPkzrviCUiNX0pZ/75hxvAf0XD
-	 2lPFofgk1KL64IBe9nX2DDCmjVQuFF41vWtGjPrQ=
+	b=0wHaSLfRpDNaq7STM4lsUdaE/2xRmFJ+Jl01NL6aLfQjczp7OYlXPIhG9IUh2fO63
+	 CsCsXByKGoiaAEPWBgPUBjW/qleFe7ixjd2vFM0XYlB31HcheuwXigGaNDCgEViiY3
+	 sd5MPUH96keqBs8LpPixGMujVhJhoR+klykmKV5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingjie Gao <gaoyingjie@uniontech.com>,
+	Andrei Simion <andrei.simion@microchip.com>,
+	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0114/2077] watchdog: sp5100_tco: Use EFCH MMIO for newer Hygon FCH
-Date: Tue, 21 Jul 2026 16:56:27 +0200
-Message-ID: <20260721152555.385990983@linuxfoundation.org>
+Subject: [PATCH 7.1 0115/2077] watchdog: sama5d4_wdt: Fix WDDIS detection on SAM9X60 and SAMA7G5
+Date: Tue, 21 Jul 2026 16:56:28 +0200
+Message-ID: <20260721152555.409045133@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,48 +53,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Gao <gaoyingjie@uniontech.com>
+From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
 
-[ Upstream commit 4f675f036cd5e9cfbe6df5f24f8338158af96a4b ]
+[ Upstream commit e8bc610b14a99d24b0916635102cc52ba41def9b ]
 
-Commit 009637de1f65 ("watchdog: sp5100_tco: support Hygon FCH/SCH
-(Server Controller Hub)") added Hygon vendor matching to the efch
-layout selection, but newer Hygon 0x790b SMBus devices still need the
-efch_mmio path.
+The driver hardcoded AT91_WDT_WDDIS (bit 15) in wdt_enabled and the
+probe initial state readout. SAM9X60 and SAMA7G5 use bit 12
+(AT91_SAM9X60_WDDIS), causing incorrect WDDIS detection.
 
-The efch_mmio path enables EFCH_PM_DECODEEN_WDT_TMREN before probing the
-watchdog MMIO block. If firmware leaves that bit clear and the driver
-picks the legacy efch path instead, probe falls back to the alternate
-window and fails with "Watchdog hardware is disabled".
+Introduce a per-device wddis_mask field to select the correct WDDIS
+bit based on the compatible string.
 
-Select efch_mmio for Hygon 0x790b devices with revision 0x51 or later,
-matching the equivalent AMD behavior and allowing the watchdog to
-initialize on those systems.
-
-Fixes: 009637de1f65 ("watchdog: sp5100_tco: support Hygon FCH/SCH (Server Controller Hub)")
-Signed-off-by: Yingjie Gao <gaoyingjie@uniontech.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20260402071617.634563-2-gaoyingjie@uniontech.com
+Fixes: 266da53c35fc ("watchdog: sama5d4: readout initial state")
+Co-developed-by: Andrei Simion <andrei.simion@microchip.com>
+Signed-off-by: Andrei Simion <andrei.simion@microchip.com>
+Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/r/20260302113310.133989-2-balakrishnan.s@microchip.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/sp5100_tco.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/watchdog/sama5d4_wdt.c | 48 +++++++++++++++-------------------
+ 1 file changed, 21 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/watchdog/sp5100_tco.c b/drivers/watchdog/sp5100_tco.c
-index 2bd3dc25cb0304..7e99c3b1f3676b 100644
---- a/drivers/watchdog/sp5100_tco.c
-+++ b/drivers/watchdog/sp5100_tco.c
-@@ -92,7 +92,8 @@ static enum tco_reg_layout tco_reg_layout(struct pci_dev *dev)
- 	    dev->device == PCI_DEVICE_ID_ATI_SBX00_SMBUS &&
- 	    dev->revision < 0x40) {
- 		return sp5100;
--	} else if (dev->vendor == PCI_VENDOR_ID_AMD &&
-+	} else if ((dev->vendor == PCI_VENDOR_ID_AMD ||
-+		    dev->vendor == PCI_VENDOR_ID_HYGON) &&
- 	    sp5100_tco_pci->device == PCI_DEVICE_ID_AMD_KERNCZ_SMBUS &&
- 	    sp5100_tco_pci->revision >= AMD_ZEN_SMBUS_PCI_REV) {
- 		return efch_mmio;
+diff --git a/drivers/watchdog/sama5d4_wdt.c b/drivers/watchdog/sama5d4_wdt.c
+index 13e72918338a20..704b786cc2ec63 100644
+--- a/drivers/watchdog/sama5d4_wdt.c
++++ b/drivers/watchdog/sama5d4_wdt.c
+@@ -30,6 +30,7 @@ struct sama5d4_wdt {
+ 	void __iomem		*reg_base;
+ 	u32			mr;
+ 	u32			ir;
++	u32			wddis_mask;
+ 	unsigned long		last_ping;
+ 	bool			need_irq;
+ 	bool			sam9x60_support;
+@@ -48,7 +49,10 @@ MODULE_PARM_DESC(nowayout,
+ 	"Watchdog cannot be stopped once started (default="
+ 	__MODULE_STRING(WATCHDOG_NOWAYOUT) ")");
+ 
+-#define wdt_enabled (!(wdt->mr & AT91_WDT_WDDIS))
++static inline bool wdt_enabled(struct sama5d4_wdt *wdt)
++{
++	return !(wdt->mr & wdt->wddis_mask);
++}
+ 
+ #define wdt_read(wdt, field) \
+ 	readl_relaxed((wdt)->reg_base + (field))
+@@ -81,12 +85,9 @@ static int sama5d4_wdt_start(struct watchdog_device *wdd)
+ {
+ 	struct sama5d4_wdt *wdt = watchdog_get_drvdata(wdd);
+ 
+-	if (wdt->sam9x60_support) {
++	if (wdt->sam9x60_support)
+ 		writel_relaxed(wdt->ir, wdt->reg_base + AT91_SAM9X60_IER);
+-		wdt->mr &= ~AT91_SAM9X60_WDDIS;
+-	} else {
+-		wdt->mr &= ~AT91_WDT_WDDIS;
+-	}
++	wdt->mr &= ~wdt->wddis_mask;
+ 	wdt_write(wdt, AT91_WDT_MR, wdt->mr);
+ 
+ 	return 0;
+@@ -96,12 +97,9 @@ static int sama5d4_wdt_stop(struct watchdog_device *wdd)
+ {
+ 	struct sama5d4_wdt *wdt = watchdog_get_drvdata(wdd);
+ 
+-	if (wdt->sam9x60_support) {
++	if (wdt->sam9x60_support)
+ 		writel_relaxed(wdt->ir, wdt->reg_base + AT91_SAM9X60_IDR);
+-		wdt->mr |= AT91_SAM9X60_WDDIS;
+-	} else {
+-		wdt->mr |= AT91_WDT_WDDIS;
+-	}
++	wdt->mr |= wdt->wddis_mask;
+ 	wdt_write(wdt, AT91_WDT_MR, wdt->mr);
+ 
+ 	return 0;
+@@ -117,7 +115,7 @@ static int sama5d4_wdt_ping(struct watchdog_device *wdd)
+ }
+ 
+ static int sama5d4_wdt_set_timeout(struct watchdog_device *wdd,
+-				 unsigned int timeout)
++				    unsigned int timeout)
+ {
+ 	struct sama5d4_wdt *wdt = watchdog_get_drvdata(wdd);
+ 	u32 value = WDT_SEC2TICKS(timeout);
+@@ -140,8 +138,8 @@ static int sama5d4_wdt_set_timeout(struct watchdog_device *wdd,
+ 	 * If the watchdog is enabled, then the timeout can be updated. Else,
+ 	 * wait that the user enables it.
+ 	 */
+-	if (wdt_enabled)
+-		wdt_write(wdt, AT91_WDT_MR, wdt->mr & ~AT91_WDT_WDDIS);
++	if (wdt_enabled(wdt))
++		wdt_write(wdt, AT91_WDT_MR, wdt->mr & ~wdt->wddis_mask);
+ 
+ 	wdd->timeout = timeout;
+ 
+@@ -184,10 +182,7 @@ static int of_sama5d4_wdt_init(struct device_node *np, struct sama5d4_wdt *wdt)
+ {
+ 	const char *tmp;
+ 
+-	if (wdt->sam9x60_support)
+-		wdt->mr = AT91_SAM9X60_WDDIS;
+-	else
+-		wdt->mr = AT91_WDT_WDDIS;
++	wdt->mr = wdt->wddis_mask;
+ 
+ 	if (!of_property_read_string(np, "atmel,watchdog-type", &tmp) &&
+ 	    !strcmp(tmp, "software"))
+@@ -213,15 +208,11 @@ static int sama5d4_wdt_init(struct sama5d4_wdt *wdt)
+ 	 * If the watchdog is already running, we can safely update it.
+ 	 * Else, we have to disable it properly.
+ 	 */
+-	if (!wdt_enabled) {
++	if (!wdt_enabled(wdt)) {
+ 		reg = wdt_read(wdt, AT91_WDT_MR);
+-		if (wdt->sam9x60_support && (!(reg & AT91_SAM9X60_WDDIS)))
+-			wdt_write_nosleep(wdt, AT91_WDT_MR,
+-					  reg | AT91_SAM9X60_WDDIS);
+-		else if (!wdt->sam9x60_support &&
+-			 (!(reg & AT91_WDT_WDDIS)))
++		if (!(reg & wdt->wddis_mask))
+ 			wdt_write_nosleep(wdt, AT91_WDT_MR,
+-					  reg | AT91_WDT_WDDIS);
++					  reg | wdt->wddis_mask);
+ 	}
+ 
+ 	if (wdt->sam9x60_support) {
+@@ -273,6 +264,9 @@ static int sama5d4_wdt_probe(struct platform_device *pdev)
+ 	    of_device_is_compatible(dev->of_node, "microchip,sama7g5-wdt"))
+ 		wdt->sam9x60_support = true;
+ 
++	wdt->wddis_mask = wdt->sam9x60_support ? AT91_SAM9X60_WDDIS
++						: AT91_WDT_WDDIS;
++
+ 	watchdog_set_drvdata(wdd, wdt);
+ 
+ 	regs = devm_platform_ioremap_resource(pdev, 0);
+@@ -306,8 +300,8 @@ static int sama5d4_wdt_probe(struct platform_device *pdev)
+ 	watchdog_init_timeout(wdd, wdt_timeout, dev);
+ 
+ 	reg = wdt_read(wdt, AT91_WDT_MR);
+-	if (!(reg & AT91_WDT_WDDIS)) {
+-		wdt->mr &= ~AT91_WDT_WDDIS;
++	if (!(reg & wdt->wddis_mask)) {
++		wdt->mr &= ~wdt->wddis_mask;
+ 		set_bit(WDOG_HW_RUNNING, &wdd->status);
+ 	}
+ 
 -- 
 2.53.0
 
