@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CC9471255;
-	Tue, 21 Jul 2026 18:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B693C471253;
+	Tue, 21 Jul 2026 18:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656859; cv=none; b=QDAgksvzNUlbNrsaEL3xCU042XVJjpoK98ohCuRLNtliuuBEghix8VgdFTJsLYtTONvk10t48qKeOqgHRLYBKh3jo9xCPnZ2pv3d+NEpRmPfx4OnvlMoZ9URnA6EmVBSgIjIfhKx7O56jd3Zc1dmnE0XeSBco/h7UZsrlt+e+yk=
+	t=1784656860; cv=none; b=r/yuH9lz9ONDuPastBzdbpwi50NMZgrHcj7GxiRaEPmPx1trqCEGPeBIII1d0zaeUBFyOhgL5YaYcVZiB/RjAYcogf4qyopEhirnIX0M9qXfS6mWn1QhVlozuEQDaLhhuEdDMQQZikW9xS82OTlxmYZvKzZDOGu0qyoD8hPmEjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656859; c=relaxed/simple;
-	bh=cy0H/GfV1BlNLOPkKAUw19JFCpof+W3bn1nsvHDLpCs=;
+	s=arc-20240116; t=1784656860; c=relaxed/simple;
+	bh=kuUeY0F6UnEsqAT/FwGvF54bjf3lxHJE9ntVIcZFRmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NkXZnqtroZbPHJ/WVASwp1u0ybhhVGuRquCxvI7KdJxsDHUTyBwiohtqUW24buZhPKjaTtfKxx/zIgD+gyEmU1yy1X8cymg2a7gjIoLTLvLUNi26fh6QMZRMJufC22xTqjUOMPtQyTRx2BotDwFMQveNB75BAX3zpzFmtbJTllY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCRcEMz1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DD3jQNbHYR2UKQZcD2Ud/pOnLve9laUcYRcpc2b/as1uYB0wDBVftXkXqCJeo9egVfIJfBsHZUDBi6rb5D9LENIJDas3VwHFXJAE9AbPtGgGsMzxTzcTtI5cp5Wgk812jLzIjsEDH3jFXR4VTKZsdHpg1u4SAUkdAelSoPmov24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmntIIjE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCRcEMz1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2B11F000E9;
-	Tue, 21 Jul 2026 18:00:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmntIIjE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299031F00A3A;
+	Tue, 21 Jul 2026 18:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656857;
-	bh=6Y9D4ykid6Qdk2u5pGL57IbJakv+jCOa1JA8FSaOk7g=;
+	s=korg; t=1784656859;
+	bh=FGDOVIXwt17elooSaFXBcdxFr/BDrhDzEJ4vjfDdcmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kCRcEMz1hHpFkzwQWR7okU2r+yIwJyQOsD4otsc/CpvL2S6TmcRag7ScTPogvBWbE
-	 hfTolItkTCuLlwjUwK2vDTRYS9xq4zkI42LdVgqHQqpDolCvGEg0dP1cMCNqrQxMZ2
-	 nFFdFNYEi/Dv1v7oUnUN8mS7avFYZUiu3HA569xU=
+	b=lmntIIjEQZmmV2/V5rFCFsUHIvo4GtSOU3oG/JNycPwNPe5OSi+927j3u8eRGRXsz
+	 tIKtIcC3FLX68US+l4Vmd4r8Mu0+C5+v4x3wfdn3iRZ6RBJKT1l9qzkJFVgMBJPMVB
+	 3QkcuFT41isk4Ny74rYYGN5rH9RH9AckpEmSEYLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Sechang Lim <rhkrqnwk98@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Yadan Fan <ydfan@suse.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0544/1611] bpf, sockmap: fix integer overflow in bpf_msg_pop_data() bounds check
-Date: Tue, 21 Jul 2026 17:11:00 +0200
-Message-ID: <20260721152527.601867657@linuxfoundation.org>
+Subject: [PATCH 6.18 0545/1611] MIPS: mm: Fix out-of-bounds write in maar_res_walk()
+Date: Tue, 21 Jul 2026 17:11:01 +0200
+Message-ID: <20260721152527.626756990@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,79 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sechang Lim <rhkrqnwk98@gmail.com>
+From: Yadan Fan <ydfan@suse.com>
 
-[ Upstream commit a48802fb2cd2d1e23651989f8ff4d15e9d5dad54 ]
+[ Upstream commit 1b001b16bc88f3f7817e228acfd91ee01bdcfcce ]
 
-start and len are u32, so
+maar_res_walk() uses wi->num_cfg as the index into the fixed-size
+wi->cfg array, but checks whether the array is full only after it has
+filled the selected entry. If walk_system_ram_range() reports more than
+16 memory ranges, the overflow call writes one struct maar_config past
+the end of the array before WARN_ON() prevents num_cfg from advancing.
 
-	u64 last = start + len;
+Move the full-array check before taking the array slot and return non-zero
+when the scratch array is full, so walk_system_ram_range() terminates the
+walk instead of invoking the callback for further ranges.
 
-evaluates start + len in 32-bit and wraps before storing it in last.
-The bounds check
+Fixes: a5718fe8f70f ("MIPS: mm: Drop boot_mem_map")
 
-	if (start >= offset + l || last > msg->sg.size)
-		return -EINVAL;
-
-can then be passed with an out-of-range start/len, after which the pop
-loop runs off the end of the scatterlist and sk_msg_shift_left() calls
-put_page() on the empty msg->sg.end slot:
-
-  Oops: general protection fault, probably for non-canonical address
-  0xdffffc0000000001: 0000 [#1] SMP KASAN PTI
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  RIP: 0010:sk_msg_shift_left net/core/filter.c:2957 [inline]
-  RIP: 0010:____bpf_msg_pop_data net/core/filter.c:3103 [inline]
-  RIP: 0010:bpf_msg_pop_data+0x753/0x1a10 net/core/filter.c:2984
-  Call Trace:
-   <TASK>
-   bpf_prog_4cc92c278f4d5d56+0x1b1/0x1e8
-   bpf_prog_run_pin_on_cpu+0x107/0x320 include/linux/filter.h:746
-   sk_psock_msg_verdict+0x357/0x7f0 net/core/skmsg.c:934
-   tcp_bpf_send_verdict net/ipv4/tcp_bpf.c:420 [inline]
-   tcp_bpf_sendmsg+0x766/0x1ae0 net/ipv4/tcp_bpf.c:583
-   __sock_sendmsg+0x153/0x1c0 net/socket.c:802
-   __sys_sendto+0x326/0x430 net/socket.c:2265
-   __x64_sys_sendto+0xe3/0x100 net/socket.c:2268
-   do_syscall_64+0x14c/0x480
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-
-Widen the addition with a (u64) cast so the bound is evaluated in
-64-bit and a len near U32_MAX no longer wraps below msg->sg.size.
-
-While here, change pop from int to u32. It counts bytes against the
-unsigned scatterlist lengths and can never be negative, so the signed
-type only invites sign-confusion in the pop loop.
-
-Fixes: 7246d8ed4dcc ("bpf: helper to pop data from messages")
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20260615021959.140010-6-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Yadan Fan <ydfan@suse.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/mips/mm/init.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 5643f8f34bde61..e91659caea0f8a 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2999,8 +2999,8 @@ BPF_CALL_4(bpf_msg_pop_data, struct sk_msg *, msg, u32, start,
- 	   u32, len, u64, flags)
+diff --git a/arch/mips/mm/init.c b/arch/mips/mm/init.c
+index 8986048f9b110b..decd201504043c 100644
+--- a/arch/mips/mm/init.c
++++ b/arch/mips/mm/init.c
+@@ -275,9 +275,15 @@ static int maar_res_walk(unsigned long start_pfn, unsigned long nr_pages,
+ 			 void *data)
  {
- 	u32 i = 0, l = 0, space, offset = 0;
--	u64 last = start + len;
--	int pop;
-+	u64 last = (u64)start + len;
-+	u32 pop;
+ 	struct maar_walk_info *wi = data;
+-	struct maar_config *cfg = &wi->cfg[wi->num_cfg];
++	struct maar_config *cfg;
+ 	unsigned int maar_align;
  
- 	if (unlikely(flags))
- 		return -EINVAL;
++	/* Ensure we don't overflow the cfg array */
++	if (WARN_ON(wi->num_cfg >= ARRAY_SIZE(wi->cfg)))
++		return -1;
++
++	cfg = &wi->cfg[wi->num_cfg];
++
+ 	/* MAAR registers hold physical addresses right shifted by 4 bits */
+ 	maar_align = BIT(MIPS_MAAR_ADDR_SHIFT + 4);
+ 
+@@ -286,9 +292,7 @@ static int maar_res_walk(unsigned long start_pfn, unsigned long nr_pages,
+ 	cfg->upper = ALIGN_DOWN(PFN_PHYS(start_pfn + nr_pages), maar_align) - 1;
+ 	cfg->attrs = MIPS_MAAR_S;
+ 
+-	/* Ensure we don't overflow the cfg array */
+-	if (!WARN_ON(wi->num_cfg >= ARRAY_SIZE(wi->cfg)))
+-		wi->num_cfg++;
++	wi->num_cfg++;
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
