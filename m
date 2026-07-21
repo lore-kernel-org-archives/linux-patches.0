@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697B93B47DF;
-	Tue, 21 Jul 2026 20:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199733B83FE;
+	Tue, 21 Jul 2026 20:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667356; cv=none; b=nXHs7AGAEGW+6ATlFhTQMIYH/9vuorPqAfebL33ikL5kasQL5erSA6j5JcaXpMYcEFRouJ3WJGh49DjMog221+4HY3Z9fudVScj6/k8qZd8dUrDS9ZxirEUCru0fIfS0UvlrgEbJIr/AFZjoVzgXgscudYrqEc7wwP2ge6xcxHA=
+	t=1784667359; cv=none; b=oOoQjkjXKkQoroW+xc9IV8jDypXINNfKvmRf6p7Z9aEBL4lkzs3K6H1rwu6IiyaJ3clh4cVZBiieo6s8CjDhVoAlVhci8fZVRq/6C1nH3z6jovNPshxUFyWpvgrV2q7/lg7HoAWwXz8iu4nl4V1umzD0qKmfJfG00WFSzWufqiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667356; c=relaxed/simple;
-	bh=FeE/4XIh90gncgG8e3Gh9KE8/Bj058BZeytqIrkcn0o=;
+	s=arc-20240116; t=1784667359; c=relaxed/simple;
+	bh=ObyOrbss9bGbq1tPXDShIfthhjXjcI4eaZeu02QzeGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qN9E4ehdW6Q2f24/DwmieChTqEt7zHAgv7hAMg1Tnz0Xz71rRx5bZ4L5HoeMEjcWgzsJnSLFoSxkyROsoZCI605wyQ1OY3IRqyqP5WocMGpnd73X1Hj4ilwRruh6zmwuOj3NnOvzbpDaPLdmmnc+juvcxt9dnISMLgKUUNtq0TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6uL7HgB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uFJsk5hqY2ooOB9uj1BmOJIEOai8yy43rgQK73Ro+y+k0B1E7XXPDOxwYj4pUtZoxPwnVFBvLM0Zvg5uRWfjzwlw0yHQa0zPCkNg/rxVBE7q8LyS+JZSI8ZywXLC7FL4+EIw7gRTteWk1JasiAhhf2jYC8h7HtaeZhANX3piQQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdSktk3r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6uL7HgB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7411F000E9;
-	Tue, 21 Jul 2026 20:55:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdSktk3r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72AD81F000E9;
+	Tue, 21 Jul 2026 20:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667355;
-	bh=fGJXYUyXYyEXXIjDVjFp9csMoY87+TbFpRgOUfBzvB4=;
+	s=korg; t=1784667357;
+	bh=G3EpO5T7ie+ku+GAyh7PcwoxMJJS5g13IBiAoN1Hx6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I6uL7HgBkYy5zOVJj5lFprAUvU+/y32YFzJSlwkTMZTasB9k6dVaggw9N+ffLmFzJ
-	 JkftDFwp8iDHNvuJJG8/S5jOep6bFSE936rbpocF+q9Q1gNFo15A+rGl68uFVq3YuM
-	 q/pLAZmnTePdajtrAWCexe6jRI0oyfqdGnisMLJQ=
+	b=EdSktk3rEwNJe0kRfkxbW5Z5PD6kE2GQKJc+FUB0BeH1++WyiT0jnK4myErSHOtcI
+	 UMYcHGIFlY7xXtsxPret3iKRkWL/kH2f61x9RAakXyg4uXean2yzlxkFO4GEG3nzJ4
+	 XYRhzR+xiP9XR2D+vSdlYUOzPLqPquEmhRcxYTnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaewon Yang <yong010301@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.6 1031/1266] tpm: Make the TPM character devices non-seekable
-Date: Tue, 21 Jul 2026 17:24:28 +0200
-Message-ID: <20260721152504.895643099@linuxfoundation.org>
+	Bhargav Joshi <j.bhargav.u@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.6 1014/1266] irqchip/crossbar: Use correct index in crossbar_domain_free()
+Date: Tue, 21 Jul 2026 17:24:11 +0200
+Message-ID: <20260721152504.518290891@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,75 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaewon Yang <yong010301@gmail.com>
+From: Bhargav Joshi <j.bhargav.u@gmail.com>
 
-commit f20d61c22bcaf172d6790b6500e3838e532e71c8 upstream.
+commit 043db005a8d6932dc7d217c86307e9af0bc10ddc upstream.
 
-The TPM character devices expose a sequential command/response
-interface, but their open handlers leave FMODE_PREAD and FMODE_PWRITE
-enabled.
+crossbar_domain_free() resets the domain data and then uses the nulled
+out irq_data->hwirq member as index to reset the irq_map[] entry and to
+write the relevant crossbar register with a safe entry. That means it
+never frees the correct index and keeps the crossbar register connection
+to the source interrupt active.
 
-After a command leaves a response pending, pread(fd, buf, 16, 0x1400)
-passes 0x1400 as *off to tpm_common_read(). The transfer length is
-bounded by response_length, but the offset is used unchecked when
-forming data_buffer + *off. A sufficiently large offset therefore causes
-an out-of-bounds heap read through copy_to_user() and, if the copy
-succeeds, an out-of-bounds zero-write through the following memset().
+If it would not reset the domain data, then this would be even worse as
+irq_data->hwirq holds the source interrupt number, but both the map and
+register index need the corresponding GIC SPI number and not the source
+interrupt number. This might even result in an out of bounds access as
+the source interrupt number can be higher than the maximal index space.
 
-Positional I/O does not provide coherent semantics for this interface.
-An arbitrary pread offset cannot represent how much of a response has
-been consumed sequentially. The write callback always stores a command
-at the start of data_buffer, while pwrite() does not update file->f_pos
-and can leave the sequential read cursor stale.
+Fix this by using the GIC SPI index from the parent domain's irq_data.
 
-Call nonseekable_open() from both open handlers. This removes
-FMODE_PREAD and FMODE_PWRITE, causing positional reads and writes to
-fail with -ESPIPE before reaching the TPM callbacks, and explicitly
-marks the files non-seekable. Normal read() and write() continue to use
-the existing sequential f_pos cursor, leaving the response state machine
-unchanged.
-
-Tested on Linux 6.12 with KASAN and a swtpm TPM2 device:
-
- - sequential partial reads returned the complete response
- - pread() and preadv() with offset 0x1400 returned -ESPIPE
- - pwrite() and pwritev() with offset zero returned -ESPIPE
- - the pending response remained intact after the rejected operations
- - a subsequent normal command/response cycle completed normally
- - no KASAN report was produced.
-
-Fixes: 9488585b21be ("tpm: add support for partial reads")
-Link: https://lore.kernel.org/all/20260710090217.191289-1-yong010301@gmail.com/
+Fixes: 783d31863fb82 ("irqchip: crossbar: Convert dra7 crossbar to stacked domains")
+Signed-off-by: Bhargav Joshi <j.bhargav.u@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jaewon Yang <yong010301@gmail.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://patch.msgid.link/20260620-irq-crossbar-fix-v2-1-b8e8499f468a@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm-dev.c   |    2 +-
- drivers/char/tpm/tpmrm-dev.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-crossbar.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/char/tpm/tpm-dev.c
-+++ b/drivers/char/tpm/tpm-dev.c
-@@ -36,7 +36,7 @@ static int tpm_open(struct inode *inode,
+--- a/drivers/irqchip/irq-crossbar.c
++++ b/drivers/irqchip/irq-crossbar.c
+@@ -158,9 +158,14 @@ static void crossbar_domain_free(struct
+ 	for (i = 0; i < nr_irqs; i++) {
+ 		struct irq_data *d = irq_domain_get_irq_data(domain, virq + i);
  
- 	tpm_common_open(file, chip, priv, NULL);
- 
--	return 0;
-+	return nonseekable_open(inode, file);
- 
-  out:
- 	clear_bit(0, &chip->is_open);
---- a/drivers/char/tpm/tpmrm-dev.c
-+++ b/drivers/char/tpm/tpmrm-dev.c
-@@ -29,7 +29,7 @@ static int tpmrm_open(struct inode *inod
- 
- 	tpm_common_open(file, chip, &priv->priv, &priv->space);
- 
--	return 0;
-+	return nonseekable_open(inode, file);
- }
- 
- static int tpmrm_release(struct inode *inode, struct file *file)
++		/*
++		 * irq_map[] is indexed by GIC SPI number. The parent domain's
++		 * hwirq contains the GIC interrupt number (GIC SPI +
++		 * GIC_IRQ_START).
++		 */
++		cb->irq_map[d->parent_data->hwirq - GIC_IRQ_START] = IRQ_FREE;
++		cb->write(d->parent_data->hwirq - GIC_IRQ_START, cb->safe_map);
+ 		irq_domain_reset_irq_data(d);
+-		cb->irq_map[d->hwirq] = IRQ_FREE;
+-		cb->write(d->hwirq, cb->safe_map);
+ 	}
+ 	raw_spin_unlock(&cb->lock);
+ 	irq_domain_free_irqs_parent(domain, virq, nr_irqs);
 
 
