@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8BA8415F0C;
-	Tue, 21 Jul 2026 22:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA5E399015;
+	Tue, 21 Jul 2026 22:53:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674398; cv=none; b=adwtNEEKd/RV6z5YoQl6zMUxOt96xdPVDCV5fEsnjqN40691WIU3tHvoENbj1/mWWsJwvcYrlwgMX3tTuKy/S33HO74v7b2YJTGE86KTdtB3LwYeMxBrkZptQIa2G8zGe6WAdNqs8vwJhCm2tOb9u4Wi5xf7FsRlF7GgS2RNNAk=
+	t=1784674401; cv=none; b=SaIOtEzOP11JxE9sNkQd2ebJ7aAOsIOEqzYSSWucWi53RHDhnyft2R6hZdeHsfTzz9gW+tQmZbvY472a2AOcsfOtiWbZUjVpYtOLc97VQuqK8K/eUFaq4ZK1WuMqoN2S14Q0E/Aa/xRmBExjbWYiqZbmLsOTSGUmR5V8aPUbPtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674398; c=relaxed/simple;
-	bh=sNDJDYUGOlI8d6b1XhHvpmLgwXZFU5ttpdtTYyPGRY4=;
+	s=arc-20240116; t=1784674401; c=relaxed/simple;
+	bh=KcVMVd9HBrLpj9jM0cUF+y7K9A3PB18KI7t+5FmyJso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jKxQOB8iuvVnwzF4ln8jQaj4sEuTR/4E4+1/WSMaaC+CaWgzYxXA+dVDhM/kA55QcXpLFHq26FfHO3bRmeE/H8d/REhNbEAkx04R/6tFv8E1O5cPqwS/vs0U3C1NJsREF8qlH794CxYcaTeFRyUEjF1NkK5xFirWeg5RgDPwhP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SaZme6va; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c7IXCBzPSwISP7peeYlld0nJ4icfiUKOvIf2oEaKxLoK9Qy3yTVVPKEg78zcYapbVWdE22zRbNK2iziG6TSmMWPowQSjEPKgRnPWdbaj1LWEXu7NIboXMX70UmjxhOKyQzXMjdtmVMFrByksWrQbw/QNpMKnHtqTq9Xq4lMTHc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z9rNNPoJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SaZme6va"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2531F000E9;
-	Tue, 21 Jul 2026 22:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z9rNNPoJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D522B1F000E9;
+	Tue, 21 Jul 2026 22:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674397;
-	bh=6S25XXsmdsSYhpMT/KqMAtUDTc6ctX+PvGSswfJdFBQ=;
+	s=korg; t=1784674400;
+	bh=Gw0HQaQFbw7N6ZFb4ABQOOGGW1hKiEz1z5SelbHHTSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SaZme6va4RbN6m1fScfLLBzGK3Cb1NLoOA6tPwQuSM1bu1KFx0Y23zdclDlWTC1tY
-	 ik6iLDrFnLO9dRtC8ni/zwGzqeATxjysY+/+CTEew7RwCfNAD4vtNSs5nBU1zM+M/v
-	 0dfFbnvhRqH6ivPqNsRN4fD+mI3xvX72ZTnjHqbc=
+	b=Z9rNNPoJF/i1sUz60OeMHl4NsEmmh3FwzkAJ8Mshutn97YpKsXOGNVX/PRchCU2Di
+	 b67axHKtzBadgRyoRgwgR3sA/P2mzm4Nxs9bvBEl8mC5dg5jxzlpRUmzslojga2QHx
+	 iPNZ/l1kjXHfKyfSOWFKN2CUAjbROqsaTOHzkbSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko bot <sashiko-bot@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 525/699] Input: ims-pcu - fix type confusion in CDC union descriptor parsing
-Date: Tue, 21 Jul 2026 17:24:44 +0200
-Message-ID: <20260721152407.537329963@linuxfoundation.org>
+	Bradley Morgan <include@grrlz.net>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 5.10 526/699] cpu: hotplug: Preserve per instance callback errors
+Date: Tue, 21 Jul 2026 17:24:45 +0200
+Message-ID: <20260721152407.560474860@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,38 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Bradley Morgan <include@grrlz.net>
 
-commit ca459e237bc49567649c56bc72e4c602fb92fd67 upstream.
+commit 673db10729fb121ea1b16fe57791a0cb9eac1eb5 upstream.
 
-The driver currently trusts the bMasterInterface0 from the CDC union
-descriptor without verifying that it matches the interface being
-probed. This could lead to the driver overwriting the private data of
-another interface.
+cpuhp_invoke_callback() unwinds earlier callbacks for the same
+hotplug state when one instance fails. The rollback path currently
+reuses ret, so a successful rollback can hide the original error and
+make the failed transition look successful.
 
-Validate that the control interface found in the descriptor is indeed
-the one we are probing.
+Keep the rollback result separate from the original error.
 
-Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
+Fixes: 724a86881d03 ("smp/hotplug: Callback vs state-machine consistency")
+Signed-off-by: Bradley Morgan <include@grrlz.net>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko bot <sashiko-bot@kernel.org>
-Assisted-by: Gemini:gemini-3.1-pro
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://patch.msgid.link/20260619163719.12103-1-include@grrlz.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/ims-pcu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/cpu.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/input/misc/ims-pcu.c
-+++ b/drivers/input/misc/ims-pcu.c
-@@ -1713,7 +1713,7 @@ static int ims_pcu_parse_cdc_data(struct
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -156,7 +156,7 @@ static int cpuhp_invoke_callback(unsigne
+ 	struct cpuhp_step *step = cpuhp_get_step(state);
+ 	int (*cbm)(unsigned int cpu, struct hlist_node *node);
+ 	int (*cb)(unsigned int cpu);
+-	int ret, cnt;
++	int ret, cnt, rollback_ret;
  
- 	pcu->ctrl_intf = usb_ifnum_to_if(pcu->udev,
- 					 union_desc->bMasterInterface0);
--	if (!pcu->ctrl_intf)
-+	if (pcu->ctrl_intf != intf)
- 		return -EINVAL;
+ 	if (st->fail == state) {
+ 		st->fail = CPUHP_INVALID;
+@@ -222,12 +222,12 @@ err:
+ 			break;
  
- 	alt = pcu->ctrl_intf->cur_altsetting;
+ 		trace_cpuhp_multi_enter(cpu, st->target, state, cbm, node);
+-		ret = cbm(cpu, node);
+-		trace_cpuhp_exit(cpu, st->state, state, ret);
++		rollback_ret = cbm(cpu, node);
++		trace_cpuhp_exit(cpu, st->state, state, rollback_ret);
+ 		/*
+ 		 * Rollback must not fail,
+ 		 */
+-		WARN_ON_ONCE(ret);
++		WARN_ON_ONCE(rollback_ret);
+ 	}
+ 	return ret;
+ }
 
 
