@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4849144AB73;
-	Tue, 21 Jul 2026 21:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC06A35C695;
+	Tue, 21 Jul 2026 21:16:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668603; cv=none; b=K6a+Q+Q/04roi+JsxN0NcRWL4ReNJSBEup5NF4HoM/vX4ejiNzPLsaTW8fCtIc2GcslpL+vLtOOXK9kymOZuwX+HexAMATrUbO+1KBEBtdVjdOyiKCxKOpzr/RxQxhrhtzLq0sJ2ab7hvWH71paQMP+oveZp9A0l57g8TzgAqcs=
+	t=1784668606; cv=none; b=Ws44ldAh1r0j/J3ffhonbAO2KOy7Ur6grhNe3WI8leMewk1ahUGDsGfdL53POt1uS9SH5Q+xe9Z1suIbKuj8pA4k9OycrIC0qSB6pp/oDgVUMLI4v44S5z0LmFAYGRTDaQ7jox5+4HCekjsex++RXmrshOWX1yCWh0EaxiNi+ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668603; c=relaxed/simple;
-	bh=Pgf4yrq2lzGoFPzknjez0Efd9ZmE5WRbp2lT+7pXZRQ=;
+	s=arc-20240116; t=1784668606; c=relaxed/simple;
+	bh=nbO6jFChAZz5LThGcnFJYkgYfmupq/B5hFaXXYjXFXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QBFSwxI+aT6dKWxQCdwSbdTGMUFHxpgW360Eo5hpi9mUCF+BITpCwIQOJO1ygK1mZKdBW5/kSrWMAv0cgPS9Xdzf3NwYivKqA5attE8X82WT89lINe5e2eyM7PKrrQ3sq94bdBiSDcXQ/63HnC6n+i3Z6D04fShCcDseZsSDxM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LiWx696g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JhlSStv84cOAaZ5auz7QlDi2t7g04zABh0TGhZK7NCOL69NzOmcE49e/RD/0XUTW3VoqsSIuVkG/yWwADEzudEOv9ENNsImzejPNqqD5W/83I712gBrT/XKbrG7bxUT1/If5ouUUW6SRTX4wQA6XqqumBtmRNdrYEA+xM8lpozM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9b0K55o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LiWx696g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF1F1F000E9;
-	Tue, 21 Jul 2026 21:16:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9b0K55o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548BF1F000E9;
+	Tue, 21 Jul 2026 21:16:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668602;
-	bh=dqf0B240UKnjqiCX30kiZE2xyHgdJ8Dfwecnvrj2hsg=;
+	s=korg; t=1784668604;
+	bh=XuTSZtgQP9vdgJ/v0C/nOXlqHmaniq6pTniYh4wWa6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LiWx696gm9OS57ZM2YTuU2BxCBkWQjSGdOJC3Fsmby7gBarcHA1iOF66ekYDv2/+9
-	 VAxNgze5KbKXcbC2j1vIizBRquoSJDbSTWZ5XOWEQku5YSF6OoCt0Q7kjNdX6scuWx
-	 8UmmdiIat3Mrmr7MZMZJev3LczWHiSm3wbWLmM1M=
+	b=C9b0K55oArUD2F9qK1/NWgU+jxf+w6xfasrAwKanIKuEIxLBCwJ2+YPqwJPpTY6CL
+	 XSjiYdaC5ZazUvmWcFZVUlKWySzYALfN7ycI4uSmUFPZV0ZferC4rCX7DHeXs0qe/t
+	 4TX0rSE/MytqVNREqjenNLvi7tRPjk+ajxm3ao+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
+	Ranjan Kumar <kumarranja@chromium.org>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 0236/1067] Input: synaptics-rmi4 - bound the F30 keymap to the GPIO/LED count
-Date: Tue, 21 Jul 2026 17:13:57 +0200
-Message-ID: <20260721152429.878742131@linuxfoundation.org>
+Subject: [PATCH 6.1 0237/1067] Input: elan_i2c - prevent division by zero and arithmetic underflow
+Date: Tue, 21 Jul 2026 17:13:58 +0200
+Message-ID: <20260721152429.902369792@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,46 +50,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Ranjan Kumar <kumarranja@chromium.org>
 
-commit d577e46785d45484b2ab7e7309c49b18764bf56c upstream.
+commit df2b818fa009c10ff6ba875a1663ff001cda9558 upstream.
 
-rmi_f30_map_gpios() allocates gpioled_key_map with
-min(gpioled_count, TRACKSTICK_RANGE_END) == at most 6 entries, but
-rmi_f30_attention() iterates the full f30->gpioled_count (device query
-register, range 0..31) and dereferences gpioled_key_map[i], and
-input->keycodemax is set to the full gpioled_count while input->keycode
-points at the 6-entry allocation.
+The Elan I2C touchpad driver queries the device for its physical
+dimensions and trace counts to calculate the device resolution and width.
+However, if the device firmware or device tree provides invalid zero
+values for x_traces or y_traces, it results in a fatal division-by-zero
+exception leading to a kernel panic during device probe.
 
-A device that reports gpioled_count > 6 with GPIO support enabled
-therefore causes an out-of-bounds read on the attention interrupt and
-out-of-bounds read/write through the EVIOCGKEYCODE/EVIOCSKEYCODE ioctls,
-which bound the index only against keycodemax. This is the same defect
-as the F3A handler, which was copied from F30.
+Add checks to ensure these parameters are non-zero before performing
+the division. If invalid trace values are detected, fall back to a safe
+default of 1.
 
-Size the keymap for the full gpioled_count; the mapping loop still
-assigns only the first min(gpioled_count, TRACKSTICK_RANGE_END) entries.
+Additionally, prevent an arithmetic underflow in the touch reporting
+logic. Previously, if the calculated or fallback width was smaller than
+ETP_FWIDTH_REDUCE (90), the subtraction would underflow, resulting in a
+massive unsigned integer being reported to userspace. Clamp the adjusted
+width to a minimum of 0 to safely handle small physical dimensions and
+fallback scenarios.
 
-Fixes: 3e64fcbdbd10 ("Input: synaptics-rmi4 - limit the range of what GPIOs are buttons")
+Completing the probe with safe fallback values ensures the sysfs nodes
+are created, keeping the firmware update path intact so a recovery
+firmware can be flashed to the device.
+
+Fixes: 6696777c6506 ("Input: add driver for Elan I2C/SMbus touchpad")
+Fixes: e3a9a1290688 ("Input: elan_i2c - do not query the info if they are provided")
+Signed-off-by: Ranjan Kumar <kumarranja@chromium.org>
+Link: https://patch.msgid.link/20260612060339.3829666-1-kumarranja@chromium.org
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260614-b4-disp-818d6bda-v1-2-cf39a3615085@proton.me
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/rmi4/rmi_f30.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/mouse/elan_i2c_core.c |   36 ++++++++++++++++++++++++++++++------
+ 1 file changed, 30 insertions(+), 6 deletions(-)
 
---- a/drivers/input/rmi4/rmi_f30.c
-+++ b/drivers/input/rmi4/rmi_f30.c
-@@ -233,7 +233,7 @@ static int rmi_f30_map_gpios(struct rmi_
- 	int button_count = min_t(u8, f30->gpioled_count, TRACKSTICK_RANGE_END);
+--- a/drivers/input/mouse/elan_i2c_core.c
++++ b/drivers/input/mouse/elan_i2c_core.c
+@@ -425,8 +425,17 @@ static int elan_query_device_parameters(
+ 		if (error)
+ 			return error;
+ 	}
+-	data->width_x = data->max_x / x_traces;
+-	data->width_y = data->max_y / y_traces;
++
++	if (!x_traces || !y_traces) {
++		dev_warn(&client->dev,
++			 "invalid trace numbers: x=%u, y=%u\n",
++			 x_traces, y_traces);
++		data->width_x = 1;
++		data->width_y = 1;
++	} else {
++		data->width_x = data->max_x / x_traces;
++		data->width_y = data->max_y / y_traces;
++	}
  
- 	f30->gpioled_key_map = devm_kcalloc(&fn->dev,
--					    button_count,
-+					    f30->gpioled_count,
- 					    sizeof(f30->gpioled_key_map[0]),
- 					    GFP_KERNEL);
- 	if (!f30->gpioled_key_map) {
+ 	if (device_property_read_u32(&client->dev,
+ 				     "touchscreen-x-mm", &x_mm) ||
+@@ -440,8 +449,16 @@ static int elan_query_device_parameters(
+ 		data->x_res = elan_convert_resolution(hw_x_res, data->pattern);
+ 		data->y_res = elan_convert_resolution(hw_y_res, data->pattern);
+ 	} else {
+-		data->x_res = (data->max_x + 1) / x_mm;
+-		data->y_res = (data->max_y + 1) / y_mm;
++		if (unlikely(x_mm == 0 || y_mm == 0)) {
++			dev_warn(&client->dev,
++				 "invalid physical dimensions: x_mm=%u, y_mm=%u\n",
++				 x_mm, y_mm);
++			data->x_res = 1;
++			data->y_res = 1;
++		} else {
++			data->x_res = (data->max_x + 1) / x_mm;
++			data->y_res = (data->max_y + 1) / y_mm;
++		}
+ 	}
+ 
+ 	if (device_property_read_bool(&client->dev, "elan,clickpad"))
+@@ -960,6 +977,7 @@ static void elan_report_contact(struct e
+ 
+ 		if (data->report_features & ETP_FEATURE_REPORT_MK) {
+ 			unsigned int mk_x, mk_y, area_x, area_y;
++			int adj_width_x, adj_width_y;
+ 			u8 mk_data = high_precision ?
+ 				packet[ETP_MK_DATA_OFFSET + contact_num] :
+ 				finger_data[3];
+@@ -971,8 +989,14 @@ static void elan_report_contact(struct e
+ 			 * To avoid treating large finger as palm, let's reduce
+ 			 * the width x and y per trace.
+ 			 */
+-			area_x = mk_x * (data->width_x - ETP_FWIDTH_REDUCE);
+-			area_y = mk_y * (data->width_y - ETP_FWIDTH_REDUCE);
++
++			adj_width_x = data->width_x > ETP_FWIDTH_REDUCE ?
++					data->width_x - ETP_FWIDTH_REDUCE : 0;
++			adj_width_y = data->width_y > ETP_FWIDTH_REDUCE ?
++					data->width_y - ETP_FWIDTH_REDUCE : 0;
++
++			area_x = mk_x * adj_width_x;
++			area_y = mk_y * adj_width_y;
+ 
+ 			input_report_abs(input, ABS_TOOL_WIDTH, mk_x);
+ 			input_report_abs(input, ABS_MT_TOUCH_MAJOR,
 
 
