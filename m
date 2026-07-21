@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C8F43B490;
-	Tue, 21 Jul 2026 22:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF8843C077;
+	Tue, 21 Jul 2026 22:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671685; cv=none; b=BAS6VqNCqlJYPuJVwGFPjT+VTLi1HE5O76M3YHgHCO3GY4rWp0vsXtMPWAeBz2pnIWwNgby2FelBkyp7sWZG2/82dQKNTeKB8qbipr+jbMohgksGEhNhtbEAw/Ygxn5YgMdx0N3xu1JiwOIG6qH+k3QDzlNQdbNWMrTxedSKnSk=
+	t=1784671688; cv=none; b=NrMzNMyyISPht3Dobgumi9vi3P5TBv6lgVmDLq0Mlf3BMJ4OrVKFiuCe84745Ok/3oP8G95esEo2bn+hhG+nN887q4dDyMBhbcG6Sc2i9qB7JdWhgQU734MNE706yx4SkkLOyRHUYNRg70l8eRB2BXjGF8+qbfFMWNOPotim0bI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671685; c=relaxed/simple;
-	bh=jkTAaoCWQSnrKA2qXlvOjx/G1nYlrGiUgUkeng3I1y0=;
+	s=arc-20240116; t=1784671688; c=relaxed/simple;
+	bh=IBQQrLox8Fxn11P2pbQD7dkHjs6KsjN/n+Hc7VOX1Xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MWiu+iCdDjiRLeAFyHe4K6oZz9NVF9EfV2M8K5SURa3rgIvqFg0TCddzHBgFogzFfOPmABoSsMVvvJoM9NzfjoYCW73trC6+9TTfNIt/PSemD4j+Ek+dG6zB+2qUsIxWYoq4P95PqSuHNgtJdESuBG1/3uKsFklsY3PEzBPdA4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mc+lkUtu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sPOwdjJWNUtZv8TaveRojghYdGWFXzaGlBG23Knt/ddyySSic7OSh3qo4+F4YIaco1J01CseZTAMS8fA4ELfi1wrwwqGVGL6UqIJbG7Tk0RedyiOQNHjklYV9ukb6ndyRYR4lkUcV6haht+KRjZ3LHoCd9IQM/A7Ju2StMtsPxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OplpbBsv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mc+lkUtu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7051F000E9;
-	Tue, 21 Jul 2026 22:08:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OplpbBsv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F0671F00A3A;
+	Tue, 21 Jul 2026 22:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671683;
-	bh=VuOD/rIxTqvJ3ZVbZJKsEhUepWvcZsbrIu74vENNx2Q=;
+	s=korg; t=1784671685;
+	bh=j6AVuXdXRODlR3C1xIenR1XHprnj35yfuumB92Pq9QU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mc+lkUtuTDplXYXU8n69tJQ4v8dCtl9FImj9YkCyExpLx44kISPAPkVoLvfNgI+C7
-	 4kSSdh2JaACHgIfnouIXoxUObDEPK8uyAz5MailD3am2ADEK9MTcq7+47M+RCWIqAo
-	 XYrT/RltR2WEpWGpiQcvKv6DTFg9FizKJ5bpl4TQ=
+	b=OplpbBsvshSSkEzv5N4JtlxTAtlpO/24Za39HvW5l63SCrjVb+2K41EftDxNSpRUt
+	 kXJYrOwA13pYpardSFRXXgkacjyk6pV3deij5c6RF6YrIm2o9c/0pC7r19LYmVJyqx
+	 7w+y4CW43V/j+feckLTSi0bYzfxiJcn1zWXmeCkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 312/843] ACPI: IPMI: Fix message kref handling on dead device
-Date: Tue, 21 Jul 2026 17:19:07 +0200
-Message-ID: <20260721152413.041051205@linuxfoundation.org>
+Subject: [PATCH 5.15 339/843] ASoC: fsl: fsl_audmix: Validate written enum values
+Date: Tue, 21 Jul 2026 17:19:34 +0200
+Message-ID: <20260721152413.649045741@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,53 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 63320db6a5d84ec3fed8b3d36ba5244d07ddd108 ]
+[ Upstream commit 3cd17e4e2871114d5579fa7bc8da66faf7fc1930 ]
 
-acpi_ipmi_space_handler() takes an extra reference on tx_msg before
-checking whether the selected IPMI device is dead. The reference
-belongs to the tx_msg_list entry and is normally dropped by
-ipmi_cancel_tx_msg() or ipmi_flush_tx_msg() after the message is removed
-from the list.
+fsl_audmix_put_mix_clk_src() and fsl_audmix_put_out_src()
+convert the user-provided enum item with snd_soc_enum_item_to_val()
+before checking whether the item is within the enum's item count.
 
-On the dead-device path, the message has not been queued yet, but the
-error path still calls ipmi_msg_release() directly. That bypasses
-kref_put() and frees tx_msg while the queued-message reference is still
-recorded in the kref count.
+The generic snd_soc_put_enum_double() helper performs that
+validation, but these callbacks use the converted value first: the
+clock-source path tests it with BIT(), and the output-source path
+indexes the prms transition table with it.
 
-Take the queued-message reference only after the dead-device check
-succeeds, immediately before adding tx_msg to the list.
+Reject out-of-range enum items before converting them.
 
-Fixes: 7b9844772237 ("ACPI / IPMI: Add reference counting for ACPI IPMI transfers")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260603163108.2149359-1-dbgh9129@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: be1df61cf06e ("ASoC: fsl: Add Audio Mixer CPU DAI driver")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260609124317.38046-4-sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_ipmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/fsl/fsl_audmix.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/acpi/acpi_ipmi.c b/drivers/acpi/acpi_ipmi.c
-index a5fe2926bf5064..6878a7684352a6 100644
---- a/drivers/acpi/acpi_ipmi.c
-+++ b/drivers/acpi/acpi_ipmi.c
-@@ -548,7 +548,6 @@ acpi_ipmi_space_handler(u32 function, acpi_physical_address address,
- 		return AE_TYPE;
- 	}
+diff --git a/sound/soc/fsl/fsl_audmix.c b/sound/soc/fsl/fsl_audmix.c
+index 9c46b25cc65411..f7c8b6c8de6b6e 100644
+--- a/sound/soc/fsl/fsl_audmix.c
++++ b/sound/soc/fsl/fsl_audmix.c
+@@ -117,6 +117,9 @@ static int fsl_audmix_put_mix_clk_src(struct snd_kcontrol *kcontrol,
+ 	unsigned int *item = ucontrol->value.enumerated.item;
+ 	unsigned int reg_val, val, mix_clk;
  
--	acpi_ipmi_msg_get(tx_msg);
- 	mutex_lock(&driver_data.ipmi_lock);
- 	/* Do not add a tx_msg that can not be flushed. */
- 	if (ipmi_device->dead) {
-@@ -556,6 +555,7 @@ acpi_ipmi_space_handler(u32 function, acpi_physical_address address,
- 		ipmi_msg_release(tx_msg);
- 		return AE_NOT_EXIST;
- 	}
-+	acpi_ipmi_msg_get(tx_msg);
- 	spin_lock_irqsave(&ipmi_device->tx_msg_lock, flags);
- 	list_add_tail(&tx_msg->head, &ipmi_device->tx_msg_list);
- 	spin_unlock_irqrestore(&ipmi_device->tx_msg_lock, flags);
++	if (item[0] >= e->items)
++		return -EINVAL;
++
+ 	/* Get current state */
+ 	reg_val = snd_soc_component_read(comp, FSL_AUDMIX_CTR);
+ 	mix_clk = ((reg_val & FSL_AUDMIX_CTR_MIXCLK_MASK)
+@@ -157,6 +160,9 @@ static int fsl_audmix_put_out_src(struct snd_kcontrol *kcontrol,
+ 	unsigned int reg_val, val, mask = 0, ctr = 0;
+ 	int ret;
+ 
++	if (item[0] >= e->items)
++		return -EINVAL;
++
+ 	/* Get current state */
+ 	reg_val = snd_soc_component_read(comp, FSL_AUDMIX_CTR);
+ 
 -- 
 2.53.0
 
