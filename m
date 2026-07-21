@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6AB46D2B9;
-	Tue, 21 Jul 2026 17:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863321F3D56;
+	Tue, 21 Jul 2026 17:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653770; cv=none; b=DLvaWF0LRhTc7cg9g07Ml1SQrr99kKnjXqtOylnReCX1+MjZIUhM9hcY+jFvzqIcWkvBQGPBrfSzSKV1W9SjwuNFXe/2FZpYYDZkIn3GRy+E4cIiQgIezAz9rxISluuLIpLKtF+AZ15BynIzFk+kWWLDi3WKRidj2LzL/dOZd4g=
+	t=1784653771; cv=none; b=WHezjOMKRrK4I8ej0gKw+qmJ/xUkUSk2T+sQJkz1Uu3JRig5j+qEuf+jPmpAYv6Cho1BMPzh2wezyZ7O4Pwpc6d6ahNWn0G6Kp+HAsLPhlmRQHEqgA0S/ckysd31eGTY/GlhAy66rK97NyQOiReUo1O4rcUkX7qro0LrP2BAO/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653770; c=relaxed/simple;
-	bh=ZFRCPKxA0LSF5UdCiHltw6GOt/7KrH+sWV0V+ZCd3sk=;
+	s=arc-20240116; t=1784653771; c=relaxed/simple;
+	bh=XMuxWg34wGwzGxZajxdigNCrIzwEqDujLK4X9fNOb7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iOg2nNuPM84Mt6WmNciHZpNXk7M+Hv1GxDzbVD6m9pJj3izMlyK/cZe59Xm11QPvi2O2RXFTJo1q3K/La6pfPcJoaCXE+GRA5ZXvLHlX+zpzBAO6/XbtAeZAcGhEfFGG0NkiAc9y8G1pngpQ3XaUFK371k23Ffl6bJyKpYCBnUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zh+vPNGA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SeeaA/t3eIXVfSX3jl5int6ochliQTQYv7MN1BywKeeaVj0zQ63s3kZAg+xSuk50W4aXNYYzE++VuX/F0zUmZaE2fHhvFQ5tqWUrtbtOoihwhYXoNDq6xbgd5uEn8jZAtZL0M7GjjDikXa91jfUAX2AsYicPCOSOdXYx83Lyp64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3ijrung; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zh+vPNGA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3191F00A3D;
-	Tue, 21 Jul 2026 17:09:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3ijrung"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A984D1F000E9;
+	Tue, 21 Jul 2026 17:09:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653768;
-	bh=qUXDAUpeP0MIq071a6k02ISKg0aWsjEzhJ2eSgPn1K4=;
+	s=korg; t=1784653766;
+	bh=STtso2HzVa39EaNEGXIU9XIldCkc5ghftBd6gUzGQzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zh+vPNGADMIP4gHeK8XO99rEiAAhax2WBoEYLJgv8y7ZR72iiXa0lPeGP9CmChQyy
-	 fgReMSB25MsAjEGz8Cdwsqd72lVyrRZDGZMuTs1/TMM/IeXH0jftbNuygBmlpDFjqc
-	 VSG3krUOSmK7b1cUq/3kQxrNnVVdpB826X2BtJZM=
+	b=j3ijrungePuM4h1PspPKDo+inlvJ3dctEYSP5MZE+14gNGgeaG3/nZhoBQzuyctRD
+	 e8aatQ4Uk2Nk+SO+VHLc+VUtRS3zE1C7ptMwAsn4kOBvkIaHVpRhS5Pv1rCj97zzQc
+	 1dFF3vwlUC+eW+jnxmdTKc3et1mN/ile5Axw09A4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Ralph Boehme <slow@samba.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1452/2077] smb: client: preserve leading slash for POSIX absolute symlink targets
-Date: Tue, 21 Jul 2026 17:18:45 +0200
-Message-ID: <20260721152627.046644705@linuxfoundation.org>
+Subject: [PATCH 7.1 1451/2077] ksmbd: fix multichannel binding and enforce channel limit
+Date: Tue, 21 Jul 2026 17:18:44 +0200
+Message-ID: <20260721152627.024030565@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,79 +51,533 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit dce002f685e04e0c94e088cb66cb4021311cc6b5 ]
+[ Upstream commit 4b706360ffb7e459cb3d3edae30b06a584f6eddd ]
 
-When creating a native SMB symbolic link (CIFS_SYMLINK_TYPE_NATIVE) whose
-target is an absolute path on a mount that uses POSIX paths, the leading
-path separator was silently dropped from the stored symlink target.
+A signed multichannel SESSION_SETUP binding request can require multiple
+authentication rounds. ksmbd excludes SESSION_SETUP from the signed
+request check and tries to sign every binding response with the channel
+signing key. The channel does not exist for
+STATUS_MORE_PROCESSING_REQUIRED, so that response is sent unsigned.
+Clients reject it with STATUS_ACCESS_DENIED.
 
-create_native_symlink() converted the target to UTF-16 with
-cifs_convert_path_to_utf16().  That helper was intended for share-relative
-SMB paths and therefore unconditionally strips a leading path separator.
-For an absolute POSIX symlink target the leading '/' is significant, so a
-target of "/foo/bar" was stored and read back as "foo/bar", even
-though the reparse point was still flagged as absolute
-(SYMLINK_FLAG_RELATIVE cleared).
+The final channel signing key also needs the key exported by the binding
+authentication context. Keep that key in the channel instead of
+overwriting the established session key, and use the session signing key
+for intermediate and failed binding responses. Retain the binding session
+reference until an error response has been signed and sent.
 
-On a POSIX paths mount the symlink target is stored verbatim, so convert
-it directly with cifs_strndup_to_utf16() instead.  This preserves the
-leading separator, avoids the leading-backslash stripping that
-cifs_convert_path_to_utf16() also performs (a backslash is a valid POSIX
-filename character), and uses NO_MAP_UNI_RSVD to match the readback path
-in smb2_parse_native_symlink(), which always converts the target with
-cifs_strndup_from_utf16() / NO_MAP_UNI_RSVD.  This mirrors how the NFS and
-WSL reparse symlink creators convert their targets.
+Limit a session to 32 channels while holding the channel lock. Return
+STATUS_INSUFFICIENT_RESOURCES for an additional binding, matching the
+server limit expected by clients.
 
-The NT-style absolute symlink handling, which needs the "\??\" prefix and
-drive-letter colon preserved, continues to use cifs_convert_path_to_utf16()
-together with the existing masking of those bytes.
+This fixes smb2.multichannel.generic.num_channels, which previously
+failed the first binding with STATUS_ACCESS_DENIED and returned the same
+status instead of STATUS_INSUFFICIENT_RESOURCES for channel 33.
 
-Fixes: 12b466eb52d9 ("cifs: Fix creating and resolving absolute NT-style symlinks")
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Acked-by: Ralph Boehme <slow@samba.org>
+Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/reparse.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ fs/smb/server/auth.c              |  47 +++++-----
+ fs/smb/server/auth.h              |   7 +-
+ fs/smb/server/mgmt/user_session.c |   4 +-
+ fs/smb/server/mgmt/user_session.h |   1 +
+ fs/smb/server/smb2pdu.c           | 142 +++++++++++++++++++-----------
+ 5 files changed, 126 insertions(+), 75 deletions(-)
 
-diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index cd1e1eaee67a6b..5cc5b0410d4894 100644
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -67,6 +67,7 @@ static int create_native_symlink(const unsigned int xid, struct inode *inode,
- 	char *sym = NULL;
- 	struct kvec iov;
- 	bool directory;
-+	int path_len;
- 	int rc = 0;
+diff --git a/fs/smb/server/auth.c b/fs/smb/server/auth.c
+index 86f521e849d5e2..2c7096a782daa3 100644
+--- a/fs/smb/server/auth.c
++++ b/fs/smb/server/auth.c
+@@ -133,16 +133,17 @@ static int calc_ntlmv2_hash(struct ksmbd_conn *conn, struct ksmbd_session *sess,
+  * @blen:		NTLMv2 blob length
+  * @domain_name:	domain name
+  * @cryptkey:		session crypto key
++ * @sess_key:		derived session key output buffer
+  *
+  * Return:	0 on success, error number on error
+  */
+ int ksmbd_auth_ntlmv2(struct ksmbd_conn *conn, struct ksmbd_session *sess,
+ 		      struct ntlmv2_resp *ntlmv2, int blen, char *domain_name,
+-		      char *cryptkey)
++		      char *cryptkey, char *sess_key)
+ {
+ 	char ntlmv2_hash[CIFS_ENCPWD_SIZE];
+ 	char ntlmv2_rsp[CIFS_HMAC_MD5_HASH_SIZE];
+-	char sess_key[SMB2_NTLMV2_SESSKEY_SIZE];
++	char base_key[SMB2_NTLMV2_SESSKEY_SIZE];
+ 	struct hmac_md5_ctx ctx;
+ 	int rc;
  
- 	if (strlen(symname) > REPARSE_SYM_PATH_MAX)
-@@ -168,7 +169,21 @@ static int create_native_symlink(const unsigned int xid, struct inode *inode,
- 	if (!(sbflags & CIFS_MOUNT_POSIX_PATHS) && symname[0] == '/')
- 		sym[0] = sym[1] = sym[2] = sym[5] = '_';
+@@ -165,7 +166,7 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn *conn, struct ksmbd_session *sess,
+ 	/* Generate the session key */
+ 	hmac_md5_usingrawkey(ntlmv2_hash, CIFS_HMAC_MD5_HASH_SIZE,
+ 			     ntlmv2_rsp, CIFS_HMAC_MD5_HASH_SIZE,
+-			     sess_key);
++			     base_key);
  
--	path = cifs_convert_path_to_utf16(sym, cifs_sb);
-+	/*
-+	 * On a POSIX paths mount the symlink target is stored verbatim, so
-+	 * convert it with cifs_strndup_to_utf16().  cifs_convert_path_to_utf16()
-+	 * must not be used here: it strips a leading path separator (it is
-+	 * meant for share-relative SMB paths), which would corrupt an absolute
-+	 * POSIX symlink target such as "/foo/bar".  Using NO_MAP_UNI_RSVD also
-+	 * matches the readback path in smb2_parse_native_symlink().
-+	 */
-+	if (sbflags & CIFS_MOUNT_POSIX_PATHS)
-+		path = cifs_strndup_to_utf16(sym, strlen(sym), &path_len,
-+					     cifs_sb->local_nls,
-+					     NO_MAP_UNI_RSVD);
-+	else
-+		path = cifs_convert_path_to_utf16(sym, cifs_sb);
-+
- 	if (!path) {
- 		rc = -ENOMEM;
+ 	if (crypto_memneq(ntlmv2->ntlmv2_hash, ntlmv2_rsp,
+ 			  CIFS_HMAC_MD5_HASH_SIZE)) {
+@@ -173,12 +174,12 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn *conn, struct ksmbd_session *sess,
  		goto out;
+ 	}
+ 
+-	memcpy(sess->sess_key, sess_key, sizeof(sess_key));
++	memcpy(sess_key, base_key, sizeof(base_key));
+ 	rc = 0;
+ out:
+ 	memzero_explicit(ntlmv2_hash, sizeof(ntlmv2_hash));
+ 	memzero_explicit(ntlmv2_rsp, sizeof(ntlmv2_rsp));
+-	memzero_explicit(sess_key, sizeof(sess_key));
++	memzero_explicit(base_key, sizeof(base_key));
+ 	return rc;
+ }
+ 
+@@ -189,12 +190,13 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn *conn, struct ksmbd_session *sess,
+  * @blob_len:	length of the @authblob message
+  * @conn:	connection
+  * @sess:	session of connection
++ * @sess_key:	derived session key output buffer
+  *
+  * Return:	0 on success, error number on error
+  */
+ int ksmbd_decode_ntlmssp_auth_blob(struct authenticate_message *authblob,
+ 				   int blob_len, struct ksmbd_conn *conn,
+-				   struct ksmbd_session *sess)
++				   struct ksmbd_session *sess, char *sess_key)
+ {
+ 	char *domain_name;
+ 	unsigned int nt_off, dn_off;
+@@ -234,7 +236,7 @@ int ksmbd_decode_ntlmssp_auth_blob(struct authenticate_message *authblob,
+ 	ret = ksmbd_auth_ntlmv2(conn, sess,
+ 				(struct ntlmv2_resp *)((char *)authblob + nt_off),
+ 				nt_len - CIFS_ENCPWD_SIZE,
+-				domain_name, conn->ntlmssp.cryptkey);
++				domain_name, conn->ntlmssp.cryptkey, sess_key);
+ 	kfree(domain_name);
+ 	if (ret)
+ 		return ret;
+@@ -257,8 +259,8 @@ int ksmbd_decode_ntlmssp_auth_blob(struct authenticate_message *authblob,
+ 		if (!ctx_arc4)
+ 			return -ENOMEM;
+ 
+-		arc4_setkey(ctx_arc4, sess->sess_key, SMB2_NTLMV2_SESSKEY_SIZE);
+-		arc4_crypt(ctx_arc4, sess->sess_key,
++		arc4_setkey(ctx_arc4, sess_key, SMB2_NTLMV2_SESSKEY_SIZE);
++		arc4_crypt(ctx_arc4, sess_key,
+ 			   (char *)authblob + sess_key_off, sess_key_len);
+ 		kfree_sensitive(ctx_arc4);
+ 	}
+@@ -400,7 +402,8 @@ ksmbd_build_ntlmssp_challenge_blob(struct challenge_message *chgblob,
+ 
+ #ifdef CONFIG_SMB_SERVER_KERBEROS5
+ int ksmbd_krb5_authenticate(struct ksmbd_session *sess, char *in_blob,
+-			    int in_len, char *out_blob, int *out_len)
++			    int in_len, char *out_blob, int *out_len,
++			    char *sess_key)
+ {
+ 	struct ksmbd_spnego_authen_response *resp;
+ 	struct ksmbd_login_response_ext *resp_ext = NULL;
+@@ -455,7 +458,7 @@ int ksmbd_krb5_authenticate(struct ksmbd_session *sess, char *in_blob,
+ 		ksmbd_free_user(user);
+ 	}
+ 
+-	memcpy(sess->sess_key, resp->payload, resp->session_key_len);
++	memcpy(sess_key, resp->payload, resp->session_key_len);
+ 	memcpy(out_blob, resp->payload + resp->session_key_len,
+ 	       resp->spnego_blob_len);
+ 	*out_len = resp->spnego_blob_len;
+@@ -466,7 +469,8 @@ int ksmbd_krb5_authenticate(struct ksmbd_session *sess, char *in_blob,
+ }
+ #else
+ int ksmbd_krb5_authenticate(struct ksmbd_session *sess, char *in_blob,
+-			    int in_len, char *out_blob, int *out_len)
++			    int in_len, char *out_blob, int *out_len,
++			    char *sess_key)
+ {
+ 	return -EOPNOTSUPP;
+ }
+@@ -525,7 +529,7 @@ struct derivation {
+ 	bool binding;
+ };
+ 
+-static void generate_key(struct ksmbd_conn *conn, struct ksmbd_session *sess,
++static void generate_key(struct ksmbd_conn *conn, const char *sess_key,
+ 			 struct kvec label, struct kvec context, __u8 *key,
+ 			 unsigned int key_size)
+ {
+@@ -536,7 +540,7 @@ static void generate_key(struct ksmbd_conn *conn, struct ksmbd_session *sess,
+ 	unsigned char prfhash[SMB2_HMACSHA256_SIZE];
+ 	struct hmac_sha256_ctx ctx;
+ 
+-	hmac_sha256_init_usingrawkey(&ctx, sess->sess_key,
++	hmac_sha256_init_usingrawkey(&ctx, sess_key,
+ 				     SMB2_NTLMV2_SESSKEY_SIZE);
+ 	hmac_sha256_update(&ctx, i, 4);
+ 	hmac_sha256_update(&ctx, label.iov_base, label.iov_len);
+@@ -559,18 +563,21 @@ static int generate_smb3signingkey(struct ksmbd_session *sess,
+ 				   const struct derivation *signing)
+ {
+ 	struct channel *chann;
+-	char *key;
++	char *key, *sess_key;
+ 
+ 	chann = lookup_chann_list(sess, conn);
+ 	if (!chann)
+ 		return 0;
+ 
+-	if (conn->dialect >= SMB30_PROT_ID && signing->binding)
++	if (conn->dialect >= SMB30_PROT_ID && signing->binding) {
+ 		key = chann->smb3signingkey;
+-	else
++		sess_key = chann->sess_key;
++	} else {
+ 		key = sess->smb3signingkey;
++		sess_key = sess->sess_key;
++	}
+ 
+-	generate_key(conn, sess, signing->label, signing->context, key,
++	generate_key(conn, sess_key, signing->label, signing->context, key,
+ 		     SMB3_SIGN_KEY_SIZE);
+ 
+ 	if (!(conn->dialect >= SMB30_PROT_ID && signing->binding))
+@@ -627,11 +634,11 @@ static void generate_smb3encryptionkey(struct ksmbd_conn *conn,
+ 				       struct ksmbd_session *sess,
+ 				       const struct derivation_twin *ptwin)
+ {
+-	generate_key(conn, sess, ptwin->encryption.label,
++	generate_key(conn, sess->sess_key, ptwin->encryption.label,
+ 		     ptwin->encryption.context, sess->smb3encryptionkey,
+ 		     SMB3_ENC_DEC_KEY_SIZE);
+ 
+-	generate_key(conn, sess, ptwin->decryption.label,
++	generate_key(conn, sess->sess_key, ptwin->decryption.label,
+ 		     ptwin->decryption.context,
+ 		     sess->smb3decryptionkey, SMB3_ENC_DEC_KEY_SIZE);
+ 
+diff --git a/fs/smb/server/auth.h b/fs/smb/server/auth.h
+index 5767aabc63c9be..f14b7c03326468 100644
+--- a/fs/smb/server/auth.h
++++ b/fs/smb/server/auth.h
+@@ -41,17 +41,18 @@ int ksmbd_crypt_message(struct ksmbd_work *work, struct kvec *iov,
+ void ksmbd_copy_gss_neg_header(void *buf);
+ int ksmbd_auth_ntlmv2(struct ksmbd_conn *conn, struct ksmbd_session *sess,
+ 		      struct ntlmv2_resp *ntlmv2, int blen, char *domain_name,
+-		      char *cryptkey);
++		      char *cryptkey, char *sess_key);
+ int ksmbd_decode_ntlmssp_auth_blob(struct authenticate_message *authblob,
+ 				   int blob_len, struct ksmbd_conn *conn,
+-				   struct ksmbd_session *sess);
++				   struct ksmbd_session *sess, char *sess_key);
+ int ksmbd_decode_ntlmssp_neg_blob(struct negotiate_message *negblob,
+ 				  int blob_len, struct ksmbd_conn *conn);
+ unsigned int
+ ksmbd_build_ntlmssp_challenge_blob(struct challenge_message *chgblob,
+ 				   struct ksmbd_conn *conn);
+ int ksmbd_krb5_authenticate(struct ksmbd_session *sess, char *in_blob,
+-			    int in_len,	char *out_blob, int *out_len);
++			    int in_len, char *out_blob, int *out_len,
++			    char *sess_key);
+ void ksmbd_sign_smb2_pdu(struct ksmbd_conn *conn, char *key, struct kvec *iov,
+ 			 int n_vec, char *sig);
+ void ksmbd_sign_smb3_pdu(struct ksmbd_conn *conn, char *key, struct kvec *iov,
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index de58aed76cb426..d6331184ebfcbd 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -255,7 +255,7 @@ static void free_channel_list(struct ksmbd_session *sess)
+ 	down_write(&sess->chann_lock);
+ 	xa_for_each(&sess->ksmbd_chann_list, index, chann) {
+ 		xa_erase(&sess->ksmbd_chann_list, index);
+-		kfree(chann);
++		kfree_sensitive(chann);
+ 	}
+ 
+ 	xa_destroy(&sess->ksmbd_chann_list);
+@@ -449,7 +449,7 @@ static int ksmbd_chann_del(struct ksmbd_conn *conn, struct ksmbd_session *sess)
+ 	if (!chann)
+ 		return -ENOENT;
+ 
+-	kfree(chann);
++	kfree_sensitive(chann);
+ 	return 0;
+ }
+ 
+diff --git a/fs/smb/server/mgmt/user_session.h b/fs/smb/server/mgmt/user_session.h
+index 6aebd385be8474..8893a9aaede795 100644
+--- a/fs/smb/server/mgmt/user_session.h
++++ b/fs/smb/server/mgmt/user_session.h
+@@ -19,6 +19,7 @@
+ struct ksmbd_file_table;
+ 
+ struct channel {
++	char			sess_key[SMB2_NTLMV2_SESSKEY_SIZE];
+ 	__u8			smb3signingkey[SMB3_SIGN_KEY_SIZE];
+ 	struct ksmbd_conn	*conn;
+ };
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index e5e2bd7a672650..93fc8ea35baa09 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -89,6 +89,47 @@ struct channel *lookup_chann_list(struct ksmbd_session *sess, struct ksmbd_conn
+ 	return chann;
+ }
+ 
++#define KSMBD_MAX_CHANNELS	32
++
++static int register_session_channel(struct ksmbd_session *sess,
++				    struct ksmbd_conn *conn,
++				    const char *sess_key)
++{
++	struct channel *chann, *old;
++	unsigned long index;
++	unsigned int count = 0;
++	int rc = 0;
++
++	down_write(&sess->chann_lock);
++	if (xa_load(&sess->ksmbd_chann_list, (long)conn))
++		goto out;
++
++	xa_for_each(&sess->ksmbd_chann_list, index, chann)
++		count++;
++	if (count >= KSMBD_MAX_CHANNELS) {
++		rc = -ENOSPC;
++		goto out;
++	}
++
++	chann = kmalloc_obj(struct channel, KSMBD_DEFAULT_GFP);
++	if (!chann) {
++		rc = -ENOMEM;
++		goto out;
++	}
++
++	chann->conn = conn;
++	memcpy(chann->sess_key, sess_key, sizeof(chann->sess_key));
++	old = xa_store(&sess->ksmbd_chann_list, (long)conn, chann,
++		       KSMBD_DEFAULT_GFP);
++	if (xa_is_err(old)) {
++		kfree_sensitive(chann);
++		rc = xa_err(old);
++	}
++out:
++	up_write(&sess->chann_lock);
++	return rc;
++}
++
+ /**
+  * smb2_get_ksmbd_tcon() - get tree connection information using a tree id.
+  * @work:	smb work
+@@ -1465,9 +1506,11 @@ static int ntlm_authenticate(struct ksmbd_work *work,
+ {
+ 	struct ksmbd_conn *conn = work->conn;
+ 	struct ksmbd_session *sess = work->sess;
+-	struct channel *chann = NULL, *old;
+ 	struct ksmbd_user *user;
++	char channel_key[SMB2_NTLMV2_SESSKEY_SIZE] = {};
++	char *auth_key = conn->binding ? channel_key : sess->sess_key;
+ 	u64 prev_id;
++	bool binding = conn->binding;
+ 	int sz, rc;
+ 
+ 	ksmbd_debug(SMB, "authenticate phase\n");
+@@ -1526,11 +1569,13 @@ static int ntlm_authenticate(struct ksmbd_work *work,
+ 			sz = conn->mechTokenLen;
+ 		else
+ 			sz = le16_to_cpu(req->SecurityBufferLength);
+-		rc = ksmbd_decode_ntlmssp_auth_blob(authblob, sz, conn, sess);
++		rc = ksmbd_decode_ntlmssp_auth_blob(authblob, sz, conn, sess,
++						    auth_key);
+ 		if (rc) {
+ 			set_user_flag(sess->user, KSMBD_USER_FLAG_BAD_PASSWORD);
+ 			ksmbd_debug(SMB, "authentication failed\n");
+-			return -EPERM;
++			rc = -EPERM;
++			goto out;
+ 		}
+ 	}
+ 
+@@ -1565,37 +1610,30 @@ static int ntlm_authenticate(struct ksmbd_work *work,
+ 
+ binding_session:
+ 	if (conn->dialect >= SMB30_PROT_ID) {
+-		chann = lookup_chann_list(sess, conn);
+-		if (!chann) {
+-			chann = kmalloc_obj(struct channel, KSMBD_DEFAULT_GFP);
+-			if (!chann)
+-				return -ENOMEM;
+-
+-			chann->conn = conn;
+-			down_write(&sess->chann_lock);
+-			old = xa_store(&sess->ksmbd_chann_list, (long)conn, chann,
+-					KSMBD_DEFAULT_GFP);
+-			up_write(&sess->chann_lock);
+-			if (xa_is_err(old)) {
+-				kfree(chann);
+-				return xa_err(old);
+-			}
+-		}
++		rc = register_session_channel(sess, conn, auth_key);
++		if (rc)
++			goto out;
+ 	}
+ 
+ 	if (conn->ops->generate_signingkey) {
+ 		rc = conn->ops->generate_signingkey(sess, conn);
+ 		if (rc) {
+ 			ksmbd_debug(SMB, "SMB3 signing key generation failed\n");
+-			return -EINVAL;
++			rc = -EINVAL;
++			goto out;
+ 		}
+ 	}
+ 
+ 	if (!ksmbd_conn_lookup_dialect(conn)) {
+ 		pr_err("fail to verify the dialect\n");
+-		return -ENOENT;
++		rc = -ENOENT;
++		goto out;
+ 	}
+-	return 0;
++	rc = 0;
++out:
++	if (binding)
++		memzero_explicit(channel_key, sizeof(channel_key));
++	return rc;
+ }
+ 
+ #ifdef CONFIG_SMB_SERVER_KERBEROS5
+@@ -1606,8 +1644,10 @@ static int krb5_authenticate(struct ksmbd_work *work,
+ 	struct ksmbd_conn *conn = work->conn;
+ 	struct ksmbd_session *sess = work->sess;
+ 	char *in_blob, *out_blob;
+-	struct channel *chann = NULL, *old;
++	char channel_key[SMB2_NTLMV2_SESSKEY_SIZE] = {};
++	char *auth_key = conn->binding ? channel_key : sess->sess_key;
+ 	u64 prev_sess_id;
++	bool binding = conn->binding;
+ 	int in_len, out_len;
+ 	int retval;
+ 
+@@ -1620,10 +1660,11 @@ static int krb5_authenticate(struct ksmbd_work *work,
+ 		(le16_to_cpu(rsp->SecurityBufferOffset) + 4);
+ 
+ 	retval = ksmbd_krb5_authenticate(sess, in_blob, in_len,
+-					 out_blob, &out_len);
++					 out_blob, &out_len, auth_key);
+ 	if (retval) {
+ 		ksmbd_debug(SMB, "krb5 authentication failed\n");
+-		return -EINVAL;
++		retval = -EINVAL;
++		goto out;
+ 	}
+ 
+ 	/* Check previous session */
+@@ -1660,37 +1701,30 @@ static int krb5_authenticate(struct ksmbd_work *work,
+ 
+ binding_session:
+ 	if (conn->dialect >= SMB30_PROT_ID) {
+-		chann = lookup_chann_list(sess, conn);
+-		if (!chann) {
+-			chann = kmalloc_obj(struct channel, KSMBD_DEFAULT_GFP);
+-			if (!chann)
+-				return -ENOMEM;
+-
+-			chann->conn = conn;
+-			down_write(&sess->chann_lock);
+-			old = xa_store(&sess->ksmbd_chann_list, (long)conn,
+-					chann, KSMBD_DEFAULT_GFP);
+-			up_write(&sess->chann_lock);
+-			if (xa_is_err(old)) {
+-				kfree(chann);
+-				return xa_err(old);
+-			}
+-		}
++		retval = register_session_channel(sess, conn, auth_key);
++		if (retval)
++			goto out;
+ 	}
+ 
+ 	if (conn->ops->generate_signingkey) {
+ 		retval = conn->ops->generate_signingkey(sess, conn);
+ 		if (retval) {
+ 			ksmbd_debug(SMB, "SMB3 signing key generation failed\n");
+-			return -EINVAL;
++			retval = -EINVAL;
++			goto out;
+ 		}
+ 	}
+ 
+ 	if (!ksmbd_conn_lookup_dialect(conn)) {
+ 		pr_err("fail to verify the dialect\n");
+-		return -ENOENT;
++		retval = -ENOENT;
++		goto out;
+ 	}
+-	return 0;
++	retval = 0;
++out:
++	if (binding)
++		memzero_explicit(channel_key, sizeof(channel_key));
++	return retval;
+ }
+ #else
+ static int krb5_authenticate(struct ksmbd_work *work,
+@@ -1912,7 +1946,7 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 		rsp->hdr.Status = STATUS_REQUEST_NOT_ACCEPTED;
+ 	else if (rc == -EFAULT)
+ 		rsp->hdr.Status = STATUS_NETWORK_SESSION_EXPIRED;
+-	else if (rc == -ENOMEM)
++	else if (rc == -ENOMEM || rc == -ENOSPC)
+ 		rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
+ 	else if (rc == -EOPNOTSUPP)
+ 		rsp->hdr.Status = STATUS_NOT_SUPPORTED;
+@@ -1951,8 +1985,16 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 				sess->last_active = jiffies;
+ 				sess->state = SMB2_SESSION_EXPIRED;
+ 			}
+-			ksmbd_user_session_put(sess);
+-			work->sess = NULL;
++			/*
++			 * Keep the binding session reference until the response is
++			 * signed and sent.  Error responses for a signed binding
++			 * request are signed with the existing session signing key.
++			 */
++			if (!(req->Flags & SMB2_SESSION_REQ_FLAG_BINDING) ||
++			    work->sess != sess) {
++				ksmbd_user_session_put(sess);
++				work->sess = NULL;
++			}
+ 			if (try_delay) {
+ 				ksmbd_conn_set_need_reconnect(conn);
+ 				ssleep(5);
+@@ -9022,7 +9064,6 @@ bool smb2_is_sign_req(struct ksmbd_work *work, unsigned int command)
+ 
+ 	if ((rcv_hdr2->Flags & SMB2_FLAGS_SIGNED) &&
+ 	    command != SMB2_NEGOTIATE_HE &&
+-	    command != SMB2_SESSION_SETUP_HE &&
+ 	    command != SMB2_OPLOCK_BREAK_HE)
+ 		return true;
+ 
+@@ -9171,13 +9212,14 @@ void smb3_set_sign_rsp(struct ksmbd_work *work)
+ 	struct channel *chann;
+ 	char signature[SMB2_CMACAES_SIZE];
+ 	struct kvec *iov;
++	u16 command = conn->ops->get_cmd_val(work);
+ 	int n_vec = 1;
+ 	char *signing_key;
+ 
+ 	hdr = ksmbd_resp_buf_curr(work);
+ 
+-	if (conn->binding == false &&
+-	    le16_to_cpu(hdr->Command) == SMB2_SESSION_SETUP_HE) {
++	if (command == SMB2_SESSION_SETUP_HE &&
++	    (!conn->binding || hdr->Status != STATUS_SUCCESS)) {
+ 		signing_key = work->sess->smb3signingkey;
+ 	} else {
+ 		chann = lookup_chann_list(work->sess, work->conn);
 -- 
 2.53.0
 
