@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DD746A5FB;
-	Tue, 21 Jul 2026 15:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B3B46A5FB;
+	Tue, 21 Jul 2026 15:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649006; cv=none; b=EP51iC8eRR14nEsFiovuc5iCUPPAfTGzqhpof9+eFDJdrKpG6AqtHQjRl3yXJdkdabWGK1oREKAQBDJYNmMdFesJdfzp+BDf/qNoo3RKbEJ6B3UfRlj+YoEes+gSYOQUmbyLfi7JB/QbcMrVnnVzyuh7yYH0DLexv5x3s4Fj9KM=
+	t=1784649008; cv=none; b=AEa+F3Dz5+M8DIMucSWyopRJ05a2l3aznLwqdF74eECbGnoQjTD3k/6Vc29tkiSo0QYTz0tnn3hzpZfGS2YpdX4OVUctbHOaMRLpHqQxc1XIaHdj/w6Pj40OTlT5Zc3J6dLkAKOr0Ipauy3mJ+RLHmAWGq39T+z1T5LVzWrM2iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649006; c=relaxed/simple;
-	bh=ipRm9qDKf7mvJKk6d1XjJGYdMvUQmlrkLmkjG5Mcexw=;
+	s=arc-20240116; t=1784649008; c=relaxed/simple;
+	bh=unLsZmDdah33fXxyDRjoLIAy9wGpD9QtIbH0eB/ARBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mstF9uGP32nH4+DaKSRBM0UXL5lUMXwD9FbfiWkLxNom5EIODAoeTwd2oFU2JNgxk/u3XncSEl7K/ySOvpl4U4uNKIl3nk8E0aiQxaH6O8dawMxttQ9sdxcB9gyysXfjH1j+dofkiZPu4LYWxsfTfgFB39GVKunLVcOCV8qE4V0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uo/oLmHH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PmZ6HS09PBmh95zj7sJWAGlHQQqWdUeHRokaZam08OGiMesNACx5vcIO5JY/I/NvqD9hGmh94vFLrNUNq4YonZwjpSfZ0GwzXlWFHxPhy8BUkxcr3mHcmrM5Js5g3xa4dgTKjHnS1qyJCkD/0Cy7dHYXnLdidKsy75of1AhiWv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VU62Kim0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uo/oLmHH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34FE01F000E9;
-	Tue, 21 Jul 2026 15:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VU62Kim0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E231F1F000E9;
+	Tue, 21 Jul 2026 15:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649004;
-	bh=B27cdZKAyA4i4e0sT2qypAD3KHc5DRJ1iJ9jRr0Z5tg=;
+	s=korg; t=1784649007;
+	bh=WDwOJpnG5GyLYtfcHJcrDBEZvDUuAyM4Ry8TRpRkDdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uo/oLmHHmai1RkkS7Y9NlmYx6fdZ3DTfYuyRPOYcuOfmjisrPRL/MMZR0R2+vi2M0
-	 oHXULclhDUBUCiD1tSwLcK+VjOzHiwLcjXvp1aBZjYuwbKvp+5F15olI1LMV1BL9me
-	 rdUkmjnymMNtvgyTY7IVmBVL80uAXVsTGNvDi2ZU=
+	b=VU62Kim0nuaG2Trqh0oQAd+EiK/Ecd+8TDY+xdbmFeK6qDjbFZpxaCKF4NJiSRWrD
+	 YFo5xGlZ10jlV1qz+nmtsosKYdbrdBZmwE6DlSOkxJvjdmAE2j6hicCQ14imJMibpc
+	 CPQqfpbYerGfTjitdcO9hYbMJcM2yrrN7KySB9rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yury Norov <ynorov@nvidia.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Viktor Malik <vmalik@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0361/2077] uaccess: minimize INLINE_COPY_USER-related ifdefery
-Date: Tue, 21 Jul 2026 17:00:34 +0200
-Message-ID: <20260721152601.203246628@linuxfoundation.org>
+Subject: [PATCH 7.1 0408/2077] liveupdate: fix TOCTOU race in luo_session_retrieve()
+Date: Tue, 21 Jul 2026 17:01:21 +0200
+Message-ID: <20260721152602.355043253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -58,85 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yury Norov <ynorov@nvidia.com>
+From: Pasha Tatashin <pasha.tatashin@soleen.com>
 
-[ Upstream commit bd99fcfc6219ebe36ae4d0bf5333b5ecc17b53df ]
+[ Upstream commit d3ae9e7fddb4036f50003d7fa1ef52801fdb961b ]
 
-Now that we've got the same config selecting inline vs outline
-copy_to_user() and copy_from_user(), we can simplify the corresponding
-logic in the uaccess.h.
+Extend the scope of the rwsem_read lock in luo_session_retrieve() to
+overlap with the acquisition of the session mutex. This prevents a
+concurrent thread from releasing and freeing the session between the
+lookup and the mutex lock.
 
-Link: https://lore.kernel.org/20260425020857.356850-4-ynorov@nvidia.com
-Fixes: 1f9a8286bc0c ("uaccess: always export _copy_[from|to]_user with CONFIG_RUST")
-Signed-off-by: Yury Norov <ynorov@nvidia.com>
-Tested-by: Alice Ryhl <aliceryhl@google.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: Viktor Malik <vmalik@redhat.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 0153094d03df ("liveupdate: luo_session: add sessions support")
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Signed-off-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+Link: https://patch.msgid.link/20260527202737.1345192-3-pasha.tatashin@soleen.com
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/uaccess.h | 21 +++++++--------------
- 1 file changed, 7 insertions(+), 14 deletions(-)
+ kernel/liveupdate/luo_session.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/uaccess.h b/include/linux/uaccess.h
-index add9ceea7b1edb..9d39b640f0674b 100644
---- a/include/linux/uaccess.h
-+++ b/include/linux/uaccess.h
-@@ -190,10 +190,6 @@ _inline_copy_from_user(void *to, const void __user *from, unsigned long n)
- 	memset(to + (n - res), 0, res);
- 	return res;
- }
--#ifndef INLINE_COPY_USER
--extern __must_check unsigned long
--_copy_from_user(void *, const void __user *, unsigned long);
--#endif
+diff --git a/kernel/liveupdate/luo_session.c b/kernel/liveupdate/luo_session.c
+index ec7aebc15a8016..85af0963d66ae0 100644
+--- a/kernel/liveupdate/luo_session.c
++++ b/kernel/liveupdate/luo_session.c
+@@ -419,12 +419,11 @@ int luo_session_retrieve(const char *name, struct file **filep)
+ 	struct luo_session *it;
+ 	int err;
  
- static inline __must_check unsigned long
- _inline_copy_to_user(void __user *to, const void *from, unsigned long n)
-@@ -207,7 +203,13 @@ _inline_copy_to_user(void __user *to, const void *from, unsigned long n)
+-	scoped_guard(rwsem_read, &sh->rwsem) {
+-		list_for_each_entry(it, &sh->list, list) {
+-			if (!strncmp(it->name, name, sizeof(it->name))) {
+-				session = it;
+-				break;
+-			}
++	guard(rwsem_read)(&sh->rwsem);
++	list_for_each_entry(it, &sh->list, list) {
++		if (!strncmp(it->name, name, sizeof(it->name))) {
++			session = it;
++			break;
+ 		}
  	}
- 	return n;
- }
--#ifndef INLINE_COPY_USER
-+#ifdef INLINE_COPY_USER
-+# define _copy_to_user _inline_copy_to_user
-+# define _copy_from_user _inline_copy_from_user
-+#else
-+extern __must_check unsigned long
-+_copy_from_user(void *, const void __user *, unsigned long);
-+
- extern __must_check unsigned long
- _copy_to_user(void __user *, const void *, unsigned long);
- #endif
-@@ -217,11 +219,7 @@ copy_from_user(void *to, const void __user *from, unsigned long n)
- {
- 	if (!check_copy_size(to, n, false))
- 		return n;
--#ifdef INLINE_COPY_USER
--	return _inline_copy_from_user(to, from, n);
--#else
- 	return _copy_from_user(to, from, n);
--#endif
- }
  
- static __always_inline unsigned long __must_check
-@@ -229,12 +227,7 @@ copy_to_user(void __user *to, const void *from, unsigned long n)
- {
- 	if (!check_copy_size(from, n, true))
- 		return n;
--
--#ifdef INLINE_COPY_USER
--	return _inline_copy_to_user(to, from, n);
--#else
- 	return _copy_to_user(to, from, n);
--#endif
- }
- 
- #ifndef copy_mc_to_kernel
 -- 
 2.53.0
 
