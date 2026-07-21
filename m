@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21E846EC82;
-	Tue, 21 Jul 2026 18:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DE046C4BC;
+	Tue, 21 Jul 2026 18:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659553; cv=none; b=i2ffxI7Z9CX0ecZPabf41Ol3V4EDzSlPMLijxzK7IjXGG7ajSXD/8IPPQGDEJQ21HbgYJ2KmCKP7xU05yVd3O0ov063MKsHVMKKBP/kBlBBinBD9ZdMP5HoFE65lTOj9pntJgnhh4IXTrHQx//ejF7Qu+gTxjgUMfFtCpCNDERs=
+	t=1784659556; cv=none; b=KD53Rs3K6948dfWDF297XsOqy+c5j2aa1SNKDaTxPy6Ng2NIwf8Akjes+z/OymwhguR+zCBGINZ434fYDbfKS3tfrc34ZKVP9n0JG66YdTKYs12GkyP27ZqBB2oSGm0yEKxsHvnGX7AhQvOLPsxB8epPxtqzUqinknHk7TVseVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659553; c=relaxed/simple;
-	bh=wevLpOcbRxeRzudJX1IrpOt6pZ37Um7nvxYnx3jVLLQ=;
+	s=arc-20240116; t=1784659556; c=relaxed/simple;
+	bh=exrlSg41hyU/+GvJTlvXwMLRVLdWFczwKZJ6NvxCTyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GHxnCf1rRjTcFnsgGByce5Q3qrreM6Nqdp2rbipiJlASRHl0THbvZ3Oe9HrAPqzsdmIYotlmzDIkcQFJ+AZs0ZR/U/hy++q9OfvzgEDLZE9Y07YtdAWc2tyQXEmJhqaslAJK/xIwzjHB/MwjqNhJN0CW3wTNbMrki5TPtar62rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k0g5z2D/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AZ5stG553BeKUQLmgaP/DjdfAPDTQPp4eTkel4smNDfHRDMewAvmqKW9icMyi+qEy4flPrfxCrEbg5MNFSb0y5jJsRGx+No64J6NK4/rwE6NvmMP7eMpzKjABaiZSfyFLDjmUPbj136j0NQdjBhz7N1VBgEEZitF6Iaa3Ydw1w4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eL3yf7Qd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k0g5z2D/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263581F00A3A;
-	Tue, 21 Jul 2026 18:45:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eL3yf7Qd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D7D1F00A3A;
+	Tue, 21 Jul 2026 18:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659552;
-	bh=lwZtsvwKWhaM5cuNxVGqk+RJMS2mmFkgvCv35YCzFtY=;
+	s=korg; t=1784659555;
+	bh=nlanCATwccGgltkq8V0UvHp05+qJLsQ8kixyMT9goZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k0g5z2D/T/T80cNL4WPbJvwial0OuwAsR8Uxy2ghUTK5JAxOSujkapqFe8Nl6tObn
-	 OUM3rVkqdWowS+ozGFEuNurapMPHXiounaSCCzYlmOjiAvJO5z+ASySvBwGgWPyG5T
-	 bQrnvntC5ZoF+HU5W8MVTbyUdPyHTVVR42yzE0qU=
+	b=eL3yf7QdVcTOnGVOkb1xMIHA88YxHF9/OMs5h7BTQaqieLOOcqrSK9xff8IHS/W6g
+	 9fjtjXXgNl3l+SWM053L0cgIAYi/dZCfLQXbi9DyHbeB4uuvA7ZPf7aEu4y74Nox2Y
+	 sEgKfEupqXqj1hJZzu6IGGXjTl9hQGphx9zXQ204=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6df204b70bf3261691c5@syzkaller.appspotmail.com,
-	syzbot+e76bf3d19b85350571ac@syzkaller.appspotmail.com,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1563/1611] hfs/hfsplus: fix u32 overflow in check_and_correct_requested_length
-Date: Tue, 21 Jul 2026 17:27:59 +0200
-Message-ID: <20260721152550.618132567@linuxfoundation.org>
+Subject: [PATCH 6.18 1564/1611] xfs: initialize iomap->flags earlier in xfs_bmbt_to_iomap
+Date: Tue, 21 Jul 2026 17:28:00 +0200
+Message-ID: <20260721152550.641469421@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,66 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 966cb76fb2857a4242cab6ea2ea17acf818a3da7 ]
+[ Upstream commit 327e58826eb72f8bae9419cf1a4e722b57c85694 ]
 
-check_and_correct_requested_length() compares (off + len) against
-node_size using u32 arithmetic.  When the caller passes a large len
-value (e.g. from an underflowed subtraction in hfs_brec_remove()),
-off + len can wrap past 2^32 and produce a small result, causing the
-bounds check to pass when it should fail.
+Otherwise we lose the IOMAP_IOEND_BOUNDARY assingment for writes to the
+first block in a realtime group, and could cause incorrect merges for
+such writes.
 
-For example, with off=14 and len=0xFFFFFFF2 (underflowed from
-data_off - keyoffset - size in hfs_brec_remove), off + len wraps to 6,
-which is less than a typical node_size of 512, so the check passes and
-the subsequent memmove reads ~4GB past the node buffer.
-
-Fix this by widening the addition to u64 before comparing against
-node_size.  This prevents the u32 wrap while keeping the logic
-straightforward.
-
-Reported-by: syzbot+6df204b70bf3261691c5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6df204b70bf3261691c5
-Tested-by: syzbot+6df204b70bf3261691c5@syzkaller.appspotmail.com
-Reported-by: syzbot+e76bf3d19b85350571ac@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e76bf3d19b85350571ac
-Tested-by: syzbot+e76bf3d19b85350571ac@syzkaller.appspotmail.com
-Fixes: a431930c9bac ("hfs: fix slab-out-of-bounds in hfs_bnode_read()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20260505111300.3592757-2-tristmd@gmail.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: b91afef72471 ("xfs: don't merge ioends across RTGs")
+Cc: <stable@vger.kernel.org> # v6.13
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfs/bnode.c          |    2 +-
- fs/hfsplus/hfsplus_fs.h |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_iomap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/hfs/bnode.c
-+++ b/fs/hfs/bnode.c
-@@ -41,7 +41,7 @@ u32 check_and_correct_requested_length(s
+--- a/fs/xfs/xfs_iomap.c
++++ b/fs/xfs/xfs_iomap.c
+@@ -113,6 +113,7 @@ xfs_bmbt_to_iomap(
+ 		return xfs_alert_fsblock_zero(ip, imap);
+ 	}
  
- 	node_size = node->tree->node_size;
++	iomap->flags = iomap_flags;
+ 	if (imap->br_startblock == HOLESTARTBLOCK) {
+ 		iomap->addr = IOMAP_NULL_ADDR;
+ 		iomap->type = IOMAP_HOLE;
+@@ -147,7 +148,6 @@ xfs_bmbt_to_iomap(
+ 		iomap->dax_dev = target->bt_daxdev;
+ 	else
+ 		iomap->bdev = target->bt_bdev;
+-	iomap->flags = iomap_flags;
  
--	if ((off + len) > node_size) {
-+	if ((u64)off + len > node_size) {
- 		u32 new_len = node_size - off;
- 
- 		pr_err("requested length has been corrected: "
---- a/fs/hfsplus/hfsplus_fs.h
-+++ b/fs/hfsplus/hfsplus_fs.h
-@@ -585,7 +585,7 @@ u32 check_and_correct_requested_length(s
- 
- 	node_size = node->tree->node_size;
- 
--	if ((off + len) > node_size) {
-+	if ((u64)off + len > node_size) {
- 		u32 new_len = node_size - off;
- 
- 		pr_err("requested length has been corrected: "
+ 	/*
+ 	 * If the inode is dirty for datasync purposes, let iomap know so it
 
 
