@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481A546C4B2;
-	Tue, 21 Jul 2026 15:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6087F46AA92;
+	Tue, 21 Jul 2026 15:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649520; cv=none; b=Tf/89bwThBo7gXrXMz+B3GXSPTYsS5jdmQbNvvtpgkM1LrrORC8mmqKx+TrSBIa4sYpFXFlVqa9BDD+4IQ6Lq585QvNK6kE0JUJgyH6ww9rgiwPa0ZHCYMcRSTR0wVFRVlWCPGSs2xtXzYoi6fptBUZ5H6yAWvlDjmxq/wbnNwU=
+	t=1784649523; cv=none; b=N3wEAFBDsVU9nCjZNBMOTLveD3+W0FaA+H7T90fuJ7/lBuX3dW2rIWOjoKZuvoolZp6obfqWE1VCiayD9Yu2RxKc6UYd/GO1BhbHWn5uISs0FdVQWZjDOVK0C81iV8bxzkxq/Ib3bZUwRqChiSzCE9gncrV4oXoSylqkA6Jnn/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649520; c=relaxed/simple;
-	bh=GmG2A00IUOrNjgS72iRB5zJE0w0vWydK7GpH/aD9FMw=;
+	s=arc-20240116; t=1784649523; c=relaxed/simple;
+	bh=cB0O6JmhM9sNnptKEa0xRqO08RIaZSXIFmR5ikoGvlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eJRzqXAqNnFo1SKWFDnSL45l/hAcZv5O7d3iqmIf6yfRdgDBhRHYONpclzQ1mQgRQWVJFreT2aL3UQHO5EA0FaxrET07wWflQy2C4Tu80kdAR/DUb4hNtTmuicvuITGYI7tKUzG7StQ0x6pjVPYSmVySefnqg7G6vwPdhw9fxuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usp2Urik; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ll6zXvdV7mzwPQJrZSuIfhmRcE3OgSMVr5ECzm/xXxwtl66MT8T79hXH+nRC6DZb2A/TnYyr0gApmX1ShdrbVZ6V+EsihvUgY7My6S2Sz6wOk35mhK1rE4l4cI1bvefmkTHTW3qLTv0jjxVINmvmgPiFjbd6t+heVp9PQEavkN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Peu2qk6E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usp2Urik"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD5291F000E9;
-	Tue, 21 Jul 2026 15:58:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Peu2qk6E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827351F000E9;
+	Tue, 21 Jul 2026 15:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649519;
-	bh=ytbMmqUTB05trw1Jlx1taQ9GHM06CbgC2ldosS037vo=;
+	s=korg; t=1784649522;
+	bh=v05gezc2m467qFuKxcghkhBUJfkrGlG+IIodFolMCuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=usp2UrikrsYNe2aua+8uIr5d55tcHlohU82ryUZd7tX2c/ft4WPPnoGbIQf4pCTaY
-	 hbnwpmtLqVlnn4orIm6HfrkjsOPY48Rfnk/J3whruBr3bHLs6Wpp6uF1zAEzpCKEWh
-	 Ehf6nwzafWFrnfIvEqrCrEynDe6nAhTG9RXFJd5w=
+	b=Peu2qk6E4H891g5RPYSCiMiYWNH3jA9fSFtZ/DSxSG1Oi0MYG4eS8UohVlQU/T2Mj
+	 EFL76K4w/Nco2cRHp1ICM3iskEnzaE/OzaSpwyZNqoUL3jBSRUpPnXmFR767paLgvf
+	 QlQJMdGUIdTucFrubmklfW1bT9Q7mhkNt5Bxz+H4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0610/2077] Revert "btrfs: fix the file offset calculation inside btrfs_decompress_buf2page()"
-Date: Tue, 21 Jul 2026 17:04:43 +0200
-Message-ID: <20260721152607.194570250@linuxfoundation.org>
+Subject: [PATCH 7.1 0611/2077] btrfs: zoned: always set max_active_zones for zoned devices
+Date: Tue, 21 Jul 2026 17:04:44 +0200
+Message-ID: <20260721152607.217508086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,63 +52,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 0279bed34c22dd5ebff12e5af8ef940de93c5523 ]
+[ Upstream commit 21a3533b99b8a53a026cc9f5041b10795c1f3ae8 ]
 
-It seems that af566bdaff54 was tested against a tree which did not
-contain commit 12851bd921d4 ("fs: Turn page_offset() into a wrapper
-around folio_pos()).  Unfortunately it has a bug of its own; on 32-bit
-systems, shifting by PAGE_SHIFT will overflow on files larger than 4GiB.
-Since page_offset() is now fixed, just revert af566bdaff54.
+When a block device does not report a maximum number of open or active
+zones,  currently assign BTRFS_DEFAULT_MAX_ACTIVE_ZONES (128) to
+the internal limit, if the device has more than
+BTRFS_DEFAULT_MAX_ACTIVE_ZONES zones.
 
-Fixes: af566bdaff54 (btrfs: fix the file offset calculation inside btrfs_decompress_buf2page())
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Boris Burkov <boris@bur.io>
-Tested-by: Boris Burkov <boris@bur.io>
+But if the device has less than BTRFS_DEFAULT_MAX_ACTIVE_ZONES the
+internal max_active_zones limit will stay at 0, even if the device has
+zone resource limits. Furthermore, if the device has a total number of
+zones that is less than BTRFS_DEFAULT_MAX_ACTIVE_ZONE, max_active_zones
+should be set to at most the number of zones.
+
+Also move the max_active_zone calculation and setting into a dedicated
+helper, to shrink btrfs_get_dev_zone_info().
+
+Fixes: 04147d8394e8 ("btrfs: zoned: limit active zones to max_open_zones")
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/compression.c | 18 +-----------------
- 1 file changed, 1 insertion(+), 17 deletions(-)
+ fs/btrfs/zoned.c | 64 +++++++++++++++++++++++++++++-------------------
+ 1 file changed, 39 insertions(+), 25 deletions(-)
 
-diff --git a/fs/btrfs/compression.c b/fs/btrfs/compression.c
-index a02b62e0a8f33e..2ceb5661e0718a 100644
---- a/fs/btrfs/compression.c
-+++ b/fs/btrfs/compression.c
-@@ -1191,22 +1191,6 @@ void __cold btrfs_exit_compress(void)
- 	bioset_exit(&btrfs_compressed_bioset);
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index 16dd87aa06f20c..0d590e81f3259b 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -354,12 +354,33 @@ int btrfs_get_dev_zone_info_all_devices(struct btrfs_fs_info *fs_info)
+ 	return ret;
  }
  
--/*
-- * The bvec is a single page bvec from a bio that contains folios from a filemap.
-- *
-- * Since the folio may be a large one, and if the bv_page is not a head page of
-- * a large folio, then page->index is unreliable.
-- *
-- * Thus we need this helper to grab the proper file offset.
-- */
--static u64 file_offset_from_bvec(const struct bio_vec *bvec)
--{
--	const struct page *page = bvec->bv_page;
--	const struct folio *folio = page_folio(page);
--
--	return (page_pgoff(folio, page) << PAGE_SHIFT) + bvec->bv_offset;
--}
--
- /*
-  * Copy decompressed data from working buffer to pages.
-  *
-@@ -1259,7 +1243,7 @@ int btrfs_decompress_buf2page(const char *buf, u32 buf_len,
- 		 * cb->start may underflow, but subtracting that value can still
- 		 * give us correct offset inside the full decompressed extent.
- 		 */
--		bvec_offset = file_offset_from_bvec(&bvec) - cb->start;
-+		bvec_offset = page_offset(bvec.bv_page) + bvec.bv_offset - cb->start;
++static int btrfs_get_max_active_zones(struct btrfs_device *device,
++				      struct btrfs_zoned_device_info *zone_info)
++{
++	struct block_device *bdev = device->bdev;
++	int max_active_zones;
++
++	if (unlikely(zone_info->nr_zones < BTRFS_MIN_ACTIVE_ZONES)) {
++		btrfs_err(device->fs_info, "zoned: not enough zones to mount filesystem: %u < %d",
++			  zone_info->nr_zones, BTRFS_MIN_ACTIVE_ZONES);
++		return -EINVAL;
++	}
++
++	max_active_zones = min_not_zero(bdev_max_active_zones(bdev),
++					bdev_max_open_zones(bdev));
++	if (max_active_zones == 0)
++		max_active_zones = min(zone_info->nr_zones / 4,
++				       BTRFS_DEFAULT_MAX_ACTIVE_ZONES);
++
++	zone_info->max_active_zones = max(max_active_zones, BTRFS_MIN_ACTIVE_ZONES);
++	return 0;
++}
++
+ int btrfs_get_dev_zone_info(struct btrfs_device *device, bool populate_cache)
+ {
+ 	struct btrfs_fs_info *fs_info = device->fs_info;
+ 	struct btrfs_zoned_device_info *zone_info = NULL;
+ 	struct block_device *bdev = device->bdev;
+-	unsigned int max_active_zones;
+ 	unsigned int nactive;
+ 	sector_t nr_sectors;
+ 	sector_t sector = 0;
+@@ -424,19 +445,9 @@ int btrfs_get_dev_zone_info(struct btrfs_device *device, bool populate_cache)
+ 	if (!IS_ALIGNED(nr_sectors, zone_sectors))
+ 		zone_info->nr_zones++;
  
- 		/* Haven't reached the bvec range, exit */
- 		if (decompressed + buf_len <= bvec_offset)
+-	max_active_zones = min_not_zero(bdev_max_active_zones(bdev),
+-					bdev_max_open_zones(bdev));
+-	if (!max_active_zones && zone_info->nr_zones > BTRFS_DEFAULT_MAX_ACTIVE_ZONES)
+-		max_active_zones = BTRFS_DEFAULT_MAX_ACTIVE_ZONES;
+-	if (max_active_zones && max_active_zones < BTRFS_MIN_ACTIVE_ZONES) {
+-		btrfs_err(fs_info,
+-"zoned: %s: max active zones %u is too small, need at least %u active zones",
+-				 rcu_dereference(device->name), max_active_zones,
+-				 BTRFS_MIN_ACTIVE_ZONES);
+-		ret = -EINVAL;
++	ret = btrfs_get_max_active_zones(device, zone_info);
++	if (ret)
+ 		goto out;
+-	}
+-	zone_info->max_active_zones = max_active_zones;
+ 
+ 	zone_info->seq_zones = bitmap_zalloc(zone_info->nr_zones, GFP_KERNEL);
+ 	if (!zone_info->seq_zones) {
+@@ -517,26 +528,29 @@ int btrfs_get_dev_zone_info(struct btrfs_device *device, bool populate_cache)
+ 		goto out;
+ 	}
+ 
+-	if (max_active_zones) {
+-		if (unlikely(nactive > max_active_zones)) {
+-			if (bdev_max_active_zones(bdev) == 0) {
+-				max_active_zones = 0;
+-				zone_info->max_active_zones = 0;
+-				goto validate;
+-			}
++	if (unlikely(nactive > zone_info->max_active_zones)) {
++		if (bdev_max_active_zones(bdev) > 0) {
+ 			btrfs_err(device->fs_info,
+-			"zoned: %u active zones on %s exceeds max_active_zones %u",
+-					 nactive, rcu_dereference(device->name),
+-					 max_active_zones);
++					"zoned: %u active zones on %s exceeds max_active_zones %u",
++					nactive, rcu_dereference(device->name),
++					zone_info->max_active_zones);
+ 			ret = -EIO;
+ 			goto out;
+ 		}
++
++		/*
++		 * This is for backward compatibility with old filesystems that
++		 * have a lot of active zones because the device doesn't report
++		 * a maximum number of zones and we previously didn't care for
++		 * the limit.
++		 */
++		zone_info->max_active_zones = 0;
++	} else {
+ 		atomic_set(&zone_info->active_zones_left,
+-			   max_active_zones - nactive);
++				zone_info->max_active_zones - nactive);
+ 		set_bit(BTRFS_FS_ACTIVE_ZONE_TRACKING, &fs_info->flags);
+ 	}
+ 
+-validate:
+ 	/* Validate superblock log */
+ 	nr_zones = BTRFS_NR_SB_LOG_ZONES;
+ 	for (i = 0; i < BTRFS_SUPER_MIRROR_MAX; i++) {
 -- 
 2.53.0
 
