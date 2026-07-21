@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABF046E004;
-	Tue, 21 Jul 2026 19:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5314D46D2A1;
+	Tue, 21 Jul 2026 19:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661061; cv=none; b=n+jjvwfY/r+VF6lcRJcX7TSjo33gtJunt2wBeaKUJi9M2gN2IRUPxX1BfbDb+8svknUXDlc0MI8I+jU51z7lMuwJ+nsdCTJSIiqHIWEZFi/KeF4zTK9iyHg7+1MZYm1oB4hD6wdc93Bo9s4VP52xb5MZsKJAQUg0lH8TLUfN1L8=
+	t=1784661064; cv=none; b=Zyl6MBpyx86N2oqCRXkMa0RYrhYJlp+CYy9/yztfCRcoKUbeP54tCNv3QbSjAptrQJ8gRfN7OBovTX8/+rduWmOeZMzKkuOTS4H64RCELAsYN7G/BW4IyRhWc7uw0Th/ID63nmVgGY7GXCIybP+tXUWEq2/Gm6GF9kFvyamoeic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661061; c=relaxed/simple;
-	bh=K76ZH9b4hxxFa98c+N7g494BIebEtrmrUp5qG/lGcEM=;
+	s=arc-20240116; t=1784661064; c=relaxed/simple;
+	bh=6WNQXpferA6sHOz0ybD2+YncdVEdfZU3T9fG6+oFDwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VbFh0sXAH/odDBC9gRbcWfAhA9TmJi+PtpFJZpJuBTwoCxxwbwL1QZoNRTnGLRGBUmzYIZrSU9p0Fl7hzhe8UbRZV9HTeunRLs3UTIFP9r8n3KMTjNV6YjQblAjJxEK0E8fHUrVeIRE9O5xOyyz+T6SqGqKD2DPkxBYZDOYdwj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nwx9WR/X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=simCVsiP/apk/I6RDRzkT8UEyOoLneNDY0KdGXtplCRhBCgqr85u2e3GvJ5u/ElSL1tcxdV2x6KY6IIkvyfaeaI6PKfS90l0rB7pIchpa+57HxkdJTz5pLIeK5ltplyZLNiKjJf6a29xQzlykViWZBilNOWZmMcHr3tAwP1ePFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmgROYXx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nwx9WR/X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0596C1F000E9;
-	Tue, 21 Jul 2026 19:10:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmgROYXx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF581F000E9;
+	Tue, 21 Jul 2026 19:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661060;
-	bh=UChVStfWC/Q3ApnFLpJDSFA9XqQKMbAH9xExmuuIYPg=;
+	s=korg; t=1784661063;
+	bh=+pB0h77+s8Eg6GbZHrL3D6b//Vc6Iz7d1QJrtpHIruk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nwx9WR/XuXar5J1j0ugAbVa3LJLL0VN3Ug5I0ZJjjGReuQOfldBZ7IBg9a/OK9s8n
-	 Ch5XIil1c3SfrGFu5D9eoVEpTxra3NIltKaw5RhKuLV4l7iHSwWejJ5tzMcWh1vxyY
-	 G1NRWqdvUj31oVQW+a6i6dtVUHOAGb+HPFTwGlBQ=
+	b=EmgROYXx/W4LxB18cvcRoZrBDuMdGwaAb/8bVXgifgyU4YM65P02+FqNOWEXmozoJ
+	 e57WxvevK09ceaxkcy0FhhPQhyuTwT5urLIFUKFmsokanhB/RMpTqovkA7FkNRgJnB
+	 AbKR/wTilQ9QV8fleqMwHQuyQ7zYnNlL9UEbqT00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1216/2077] rtc: msc313: fix NULL deref in shared IRQ handler at probe
-Date: Tue, 21 Jul 2026 17:14:49 +0200
-Message-ID: <20260721152621.495279359@linuxfoundation.org>
+Subject: [PATCH 7.1 1217/2077] bpf: Guard conntrack opts error writes
+Date: Tue, 21 Jul 2026 17:14:50 +0200
+Message-ID: <20260721152621.520906028@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,51 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
 
-[ Upstream commit a369f48be8de426a7d2bca18dbd46c2ad1138803 ]
+[ Upstream commit 6f6183a39533d727deaa5061cadae6dd9e6744d0 ]
 
-msc313_rtc_probe() calls devm_request_irq() with IRQF_SHARED and
-&pdev->dev as the cookie, but platform_set_drvdata() is only called
-later after the clock setup. With a shared IRQ line, another device
-on the same line can trigger the handler in that window. The
-handler does dev_get_drvdata() on the cookie, gets NULL, and
-dereferences priv->rtc_base in interrupt context.
+The conntrack lookup and allocation kfuncs take an opts pointer
+together with an opts__sz argument. The verifier checks only the memory
+range described by opts__sz, but the wrappers unconditionally write
+opts->error whenever the internal lookup or allocation helper returns an
+error.
 
-Pass priv as the cookie directly so the handler reads it from
-dev_id without the lookup, removing the dependency on probe order.
+For an invalid size smaller than the end of opts->error, that write can
+land outside the verifier-checked range. Keep returning NULL for invalid
+arguments, but only report the error through opts->error when the
+supplied size includes the field.
 
-Fixes: be7d9c9161b9 ("rtc: Add support for the MSTAR MSC313 RTC")
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Link: https://patch.msgid.link/20260511032703.48262-1-sozdayvek@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+This preserves error reporting for the supported 12-byte and 16-byte
+layouts, and for other invalid sizes that still include opts->error.
+
+Fixes: b4c2b9593a1c ("net/netfilter: Add unstable CT lookup helpers for XDP and TC-BPF")
+Fixes: d7e79c97c00c ("net: netfilter: Add kfuncs to allocate and insert CT")
+Signed-off-by: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
+Link: https://lore.kernel.org/r/9535e781fe14449b1d4e9bbc3baa7566a93bf512.1781765747.git.chenyy23@mails.tsinghua.edu.cn
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-msc313.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nf_conntrack_bpf.c | 35 ++++++++++++--------------------
+ 1 file changed, 13 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/rtc/rtc-msc313.c b/drivers/rtc/rtc-msc313.c
-index 8d7737e0e2e02c..6ef9c4efd7c92e 100644
---- a/drivers/rtc/rtc-msc313.c
-+++ b/drivers/rtc/rtc-msc313.c
-@@ -160,7 +160,7 @@ static const struct rtc_class_ops msc313_rtc_ops = {
+diff --git a/net/netfilter/nf_conntrack_bpf.c b/net/netfilter/nf_conntrack_bpf.c
+index 40c261cd0af380..f98d1d4b42c3d6 100644
+--- a/net/netfilter/nf_conntrack_bpf.c
++++ b/net/netfilter/nf_conntrack_bpf.c
+@@ -65,6 +65,15 @@ enum {
+ 	NF_BPF_CT_OPTS_SZ = 16,
+ };
  
- static irqreturn_t msc313_rtc_interrupt(s32 irq, void *dev_id)
- {
--	struct msc313_rtc *priv = dev_get_drvdata(dev_id);
-+	struct msc313_rtc *priv = dev_id;
- 	u16 reg;
++static void *bpf_ct_opts_result(struct bpf_ct_opts *opts, u32 opts__sz, void *ret)
++{
++	if (!IS_ERR(ret))
++		return ret;
++	if (opts__sz >= offsetofend(struct bpf_ct_opts, error))
++		opts->error = PTR_ERR(ret);
++	return NULL;
++}
++
+ static int bpf_nf_ct_tuple_parse(struct bpf_sock_tuple *bpf_tuple,
+ 				 u32 tuple_len, u8 protonum, u8 dir,
+ 				 struct nf_conntrack_tuple *tuple)
+@@ -297,12 +306,7 @@ bpf_xdp_ct_alloc(struct xdp_md *xdp_ctx, struct bpf_sock_tuple *bpf_tuple,
  
- 	reg = readw(priv->rtc_base + REG_RTC_STATUS_INT);
-@@ -206,7 +206,7 @@ static int msc313_rtc_probe(struct platform_device *pdev)
- 	priv->rtc_dev->range_max = U32_MAX;
+ 	nfct = __bpf_nf_ct_alloc_entry(dev_net(ctx->rxq->dev), bpf_tuple, tuple__sz,
+ 				       opts, opts__sz, 10);
+-	if (IS_ERR(nfct)) {
+-		opts->error = PTR_ERR(nfct);
+-		return NULL;
+-	}
+-
+-	return (struct nf_conn___init *)nfct;
++	return (struct nf_conn___init *)bpf_ct_opts_result(opts, opts__sz, nfct);
+ }
  
- 	ret = devm_request_irq(dev, irq, msc313_rtc_interrupt, IRQF_SHARED,
--			       dev_name(&pdev->dev), &pdev->dev);
-+			       dev_name(&pdev->dev), priv);
- 	if (ret) {
- 		dev_err(dev, "Could not request IRQ\n");
- 		return ret;
+ /* bpf_xdp_ct_lookup - Lookup CT entry for the given tuple, and acquire a
+@@ -331,11 +335,7 @@ bpf_xdp_ct_lookup(struct xdp_md *xdp_ctx, struct bpf_sock_tuple *bpf_tuple,
+ 
+ 	caller_net = dev_net(ctx->rxq->dev);
+ 	nfct = __bpf_nf_ct_lookup(caller_net, bpf_tuple, tuple__sz, opts, opts__sz);
+-	if (IS_ERR(nfct)) {
+-		opts->error = PTR_ERR(nfct);
+-		return NULL;
+-	}
+-	return nfct;
++	return bpf_ct_opts_result(opts, opts__sz, nfct);
+ }
+ 
+ /* bpf_skb_ct_alloc - Allocate a new CT entry
+@@ -363,12 +363,7 @@ bpf_skb_ct_alloc(struct __sk_buff *skb_ctx, struct bpf_sock_tuple *bpf_tuple,
+ 
+ 	net = skb->dev ? dev_net(skb->dev) : sock_net(skb->sk);
+ 	nfct = __bpf_nf_ct_alloc_entry(net, bpf_tuple, tuple__sz, opts, opts__sz, 10);
+-	if (IS_ERR(nfct)) {
+-		opts->error = PTR_ERR(nfct);
+-		return NULL;
+-	}
+-
+-	return (struct nf_conn___init *)nfct;
++	return (struct nf_conn___init *)bpf_ct_opts_result(opts, opts__sz, nfct);
+ }
+ 
+ /* bpf_skb_ct_lookup - Lookup CT entry for the given tuple, and acquire a
+@@ -397,11 +392,7 @@ bpf_skb_ct_lookup(struct __sk_buff *skb_ctx, struct bpf_sock_tuple *bpf_tuple,
+ 
+ 	caller_net = skb->dev ? dev_net(skb->dev) : sock_net(skb->sk);
+ 	nfct = __bpf_nf_ct_lookup(caller_net, bpf_tuple, tuple__sz, opts, opts__sz);
+-	if (IS_ERR(nfct)) {
+-		opts->error = PTR_ERR(nfct);
+-		return NULL;
+-	}
+-	return nfct;
++	return bpf_ct_opts_result(opts, opts__sz, nfct);
+ }
+ 
+ /* bpf_ct_insert_entry - Add the provided entry into a CT map
 -- 
 2.53.0
 
