@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C00B46F49C;
-	Tue, 21 Jul 2026 19:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2470346EF86;
+	Tue, 21 Jul 2026 19:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663688; cv=none; b=c5//++gIEcoU9KfiyMad8pKn5fykl9WriM+Y/DR8DtoH3DPc8Ht2wl77qVOwpTIWCtP1EdR5pqRoNqLrmL+8EETRjJ9qqd4KlBt+5JLWVzEKPEBZjyMaW8nptpVvXKo3fs3Na3ezxqaVwfMhamRkWQ2Quxe2tMHDJ1YdU6yXPUA=
+	t=1784663691; cv=none; b=SZRzW+EYNMeqMMUgu3dicBouUU5lrfMV318uCrcG4jAXhzJg28UWIiUzQceNIV1Kzg0H+6hsb8b7/oLBOjz1izxXkGaYTYrN7kHoXQNUb3WAFIMo128S+MPi0i9j/F20Vq8LH7mY4XOlpxhM8PhYOwz9rahuOxmHL3IqBVaje/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663688; c=relaxed/simple;
-	bh=ZRANhImug2VkhLoQtqwRsOYE8KmxQc+8+E4mOniWAJ4=;
+	s=arc-20240116; t=1784663691; c=relaxed/simple;
+	bh=USGxlDCg04chkvBdXsV4cdf1v9GsivR1OxOyqWnfSo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CpE2pmDsfTVHqszf2R35+W9sv6EzvM63+YHuXUgruVXwnAmM2VJ+Ac5JUSmiyU/x0Lne5e2TRk0Zu7BxwoB20OTCpxDzUKfOeL6+31AWvLgT/Gk4FZh0J1oLrycOF5RbNEww0lFmlEvnX6j7R9O2jhQtAes7boYcslK/7SDXHkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDIVWMeN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M/A6amdJ1Ack4NTGjRtYNmWnfRAl9CFjzOqeCKLU7UY9EB93TsWrkbMYNi2X/adxUlbwDVnDkcgfAJ3y4qHR2Mlx4VwbYV8GO2VscOiUqAqFj5LNE/dMLmmGBza91AkqGkzXU4OmL6YRR2nWsos761YWQZhQkjn8p7HOxeWro9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OW215ZGs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDIVWMeN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB4F1F000E9;
-	Tue, 21 Jul 2026 19:54:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OW215ZGs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0B61F00A3A;
+	Tue, 21 Jul 2026 19:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663687;
-	bh=SW8zGim3Aco30sAMz8sULhhpZZBCyCCXeiGepn0XKFI=;
+	s=korg; t=1784663690;
+	bh=Qz/+BZAxnkQeUiy4HqEKKv8yKy4FQZuIlyLJ2QH1jwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uDIVWMeNiV17vl41bKw5LqhQn+9ZkiWS1kMHTVDkAUfHOURUOa76rYTA/0opTVh58
-	 I3Yv27qjwv+db/C1W+urvDk30lA6usEJV/PTDvV1xXJZYJYapBQl55mVViJJ0hl4x7
-	 qgq8irbn9nMurQVWTObplkGq7ca2Ltnl5KuyMq2Q=
+	b=OW215ZGsCHvTjzyCtI/X+Ixq9+vi0yE3tkTBWs0/Oo3skPSCp66duPjYN6drIjBJV
+	 PApWZGPyBVOWNYXm4lFEYsntxCUjKkXFl0rygRXOT05YzRNb1C1xT+WIlwdentdZd0
+	 d+Y8eFuiHoRVorimHpnKukeV0L+HMMvqO8NohmlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.12 0915/1276] fs/ntfs3: fix syncing wrong inode on DIRSYNC cross-directory rename
-Date: Tue, 21 Jul 2026 17:22:38 +0200
-Message-ID: <20260721152506.512833143@linuxfoundation.org>
+Subject: [PATCH 6.12 0916/1276] fs/ntfs3: bound DeleteIndexEntryAllocation memmove length
+Date: Tue, 21 Jul 2026 17:22:39 +0200
+Message-ID: <20260721152506.534629116@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,45 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit 932fa0c1496286e39e14e27194c1ee7c2181629f upstream.
+commit fc4626bb3656362de8b0ecd56605d47a19ec3518 upstream.
 
-In ntfs3_rename(), when IS_DIRSYNC(new_dir) is true, the code syncs
-the renamed file inode instead of the target directory new_dir:
-    if (IS_DIRSYNC(new_dir))
-        ntfs_sync_inode(inode);      /* should be new_dir */
+In do_action()'s DeleteIndexEntryAllocation case, e->size comes
+from an on-disk INDEX_BUFFER entry.  When e->size makes
+e + e->size point past hdr + hdr->used,
+PtrOffset(e1, Add2Ptr(hdr, used)) returns a negative ptrdiff_t
+that is silently cast to a quasi-infinite size_t when passed
+to memmove().  The memmove then walks past the destination
+buffer.
 
-DIRSYNC requires that directory metadata changes are written to disk
-synchronously.  Since new_dir was modified (a new directory entry was
-added), it is new_dir that must be synced to satisfy the guarantee,
-not the renamed file itself.
+The sibling DeleteIndexEntryRoot case at fslog.c:3540-3543
+already carries the corresponding guard:
 
-This bug has existed since the initial ntfs3 implementation and was
-carried through the refactoring in commit 78ab59fee07f
-("fs/ntfs3: Rework file operations").
+	if (PtrOffset(e1, Add2Ptr(hdr, used)) < esize ||
+	    Add2Ptr(e, esize) > Add2Ptr(lrh, rec_len) ||
+	    used + esize > le32_to_cpu(hdr->total)) {
+		goto dirty_vol;
+	}
 
-Fix by syncing new_dir instead of inode.
+Apply the same shape to the allocation-path case.  Also reject
+esize == 0: memmove(e, e, ...) is a no-op and leaves
+hdr->used unchanged, hiding a malformed entry from the
+existing check_index_header() walk.
 
-Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Reproduced under UML+KASAN on mainline 8d90b09e6741 by
+mounting a crafted NTFS image: the unguarded memmove takes a
+length of 0xffffffffffffff00 and the kernel oopses in
+memmove+0x81/0x1a0 on the do_action+0x36a2 frame.
+
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+[almaz.alexandrovich@paragon-software.com: clang-formatted the changes]
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/namei.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/fslog.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/fs/ntfs3/namei.c
-+++ b/fs/ntfs3/namei.c
-@@ -324,7 +324,7 @@ static int ntfs_rename(struct mnt_idmap
- 			ntfs_sync_inode(dir);
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -3574,9 +3574,23 @@ move_data:
+ 		}
  
- 		if (IS_DIRSYNC(new_dir))
--			ntfs_sync_inode(inode);
-+			ntfs_sync_inode(new_dir);
- 	}
+ 		e1 = Add2Ptr(e, esize);
+-		nsize = esize;
+ 		used = le32_to_cpu(hdr->used);
  
- 	if (dir_ni != new_dir_ni)
++		/*
++		 * Reject crafted entries whose e->size makes e + esize
++		 * point past the INDEX_HDR's used boundary.  Without this,
++		 * PtrOffset(e1, hdr + used) underflows to a quasi-infinite
++		 * size_t when fed to the memmove() below.
++		 *
++		 * Also reject esize == 0: memmove(e, e, ...) is a no-op and
++		 * leaves hdr->used unchanged, masking the crafted entry.
++		 */
++		if (!esize || Add2Ptr(e, esize) > Add2Ptr(hdr, used) ||
++		    PtrOffset(e1, Add2Ptr(hdr, used)) < esize)
++			goto dirty_vol;
++
++		nsize = esize;
++
+ 		memmove(e, e1, PtrOffset(e1, Add2Ptr(hdr, used)));
+ 
+ 		hdr->used = cpu_to_le32(used - nsize);
 
 
