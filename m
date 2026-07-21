@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2456042DA53;
-	Tue, 21 Jul 2026 19:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03FF30EF9A;
+	Tue, 21 Jul 2026 19:37:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662627; cv=none; b=e5HLUgOF4eo1W9pzwH5UuEl35vMp+E3Sk3uu6UEJwAZ0SlbGTChvoujPDHyPdDtsPyncgR1D6wRcvevXG3ruJHFELTPC/B6H/90S/U1oGZ+qn8QorhPpbqq6qBRe/uIMD5sLzWiAL54Ut+CoQq3Bmzuensn4fnNdfeevoA7gJ9o=
+	t=1784662629; cv=none; b=CUr2yZmJAtC9KTvszyCtzcgivQp88UosTXdQdwamXKXZUPeku3JsurnIcbhv3kNkrCc/cKRDugwKbpgEcuMorjjZifu9xvb7+4mylTEOiPDkWHebbeKQjUrcwAEkB4vplK5kPXGAgHssZ/NNzC+WpEZNKyn5mDizLIvrxuozuAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662627; c=relaxed/simple;
-	bh=QnJW8HpL2dUuvjSrZcmtN/O432eaHRlLCvj7ftN6J0A=;
+	s=arc-20240116; t=1784662629; c=relaxed/simple;
+	bh=RvZpGP6i1ibK6hTuUcJUEuirvJoe+Dg6oU5+0U2xDSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o0deYQH4h1cncE4Orug6tbE0fplIsQsIwDCyhEqY+ytK7tWhKEgWlh3RjPGQk/Wa5OUUj5Y1vYv02X7mZ/U4htJkmf3EuZHy6erKj0HzhVC8TlqzweJPQdd35EEy9Amh/gGSic0IzSoxWzi4g92iB3NUTynyWnSCmytuQ1vgE8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ghf9/xGA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=N8JqFoCzpM6B0V7+8QMn/uRBdwnjcK9MBU4Sb4Ut6/gBVZH1b0TkGRSPaGHvLo6DtSozmsDg1ieq4bkABzT1l57qGE17EJIyun3jGk2WUFeL6SMDUTVc6Yl2d8LiE2KE/oo2GCXqQJe7n4Gbw3jE5YdpouQPAaBNMWmTGF7F/H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ESg71+81; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ghf9/xGA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8911F000E9;
-	Tue, 21 Jul 2026 19:37:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ESg71+81"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A841F000E9;
+	Tue, 21 Jul 2026 19:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662626;
-	bh=HTnvDZ4w15vk8AkE9Z0eQlWTZY9hDUUZXr/0a20dCdQ=;
+	s=korg; t=1784662628;
+	bh=z4x32Ajw3erFLHsKDEIxwDfnL4v9MSyQrErJhHeC36Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ghf9/xGAtIMGQtqU6ioV3GcqEscl4iKtEWd9zNSJ2lcdSN2fx/CVZsvYZ/Ncfdr+r
-	 3lRguFf/XkbSIaZh4gAS/6Ay9TF2acPQbyzOtsZMe3XcEWdW7DP8WgrwYJsPnGrlOM
-	 ECVI4MzvyGbuO2IRp05tAG3mu6Fqx+WzstYvluMw=
+	b=ESg71+81X+7oA8O74kL9ygO2U5q6HkhcERVfjGRckt6VInmgaOakLQeD0uuM/bBGl
+	 /ekpoEFcjrh10qvp7KBtLABwRcKWdx9eayeX9PXKdRRs2vkXSkDng0r+Lus0GQOWjJ
+	 EtmfkNta/mD/cO+ywgsmg0ePFo76Ub+OFrKU0hf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0517/1276] tools lib api: Fix missing null termination in filename__read_int/ull()
-Date: Tue, 21 Jul 2026 17:16:00 +0200
-Message-ID: <20260721152457.682784906@linuxfoundation.org>
+Subject: [PATCH 6.12 0518/1276] perf symbols: Fix signed overflow in sysfs__read_build_id() size check
+Date: Tue, 21 Jul 2026 17:16:01 +0200
+Message-ID: <20260721152457.704790203@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -45,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -53,63 +55,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 52b1f9678499b13b7aeb0186d9c6f486c043283f ]
+[ Upstream commit 6eaa8ee3e2abe5112e80e94c27196bb175689469 ]
 
-filename__read_int() passes a stack buffer to read() using the full
-sizeof(line) and then hands it to atoi() without null-terminating.
-If a sysfs file fills the 64-byte buffer exactly, atoi() reads past
-the array into uninitialized stack memory.
+sysfs__read_build_id() reads ELF note headers from sysfs files.  The
+note's namesz and descsz fields are used to compute the skip size:
 
-filename__read_ull_base() has the same issue with strtoull().
+    int n = namesz + descsz;
+    if (n > (int)sizeof(bf))
 
-Fix both by reading sizeof(line) - 1 bytes and explicitly
-null-terminating after a successful read.
+Both namesz and descsz are size_t from NOTE_ALIGN() of 32-bit note
+header fields.  Their sum can exceed INT_MAX, overflowing the signed
+int n to a negative value.  The check n > sizeof(bf) then evaluates
+false (negative < positive in signed comparison), and read(fd, bf, n)
+reinterprets the negative n as a huge size_t count — the kernel writes
+up to MAX_RW_COUNT bytes into the 8192-byte stack buffer.
 
-Fixes: 3a351127cbc682c3 ("tools lib fs: Adopt filename__read_int from tools/perf/")
+In practice the overflow is bounded by the sysfs file's actual size,
+so a real sysfs notes file won't trigger it organically.  But crafted
+input (e.g. via a mounted debugfs/sysfs image) could.
+
+Fix by validating namesz and descsz individually against the buffer
+size before summing, and change n to size_t to avoid the signed
+overflow entirely.
+
+Fixes: f1617b40596cb341 ("perf symbols: Record the build_ids of kernel modules too")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/api/fs/fs.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ tools/perf/util/symbol-elf.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/tools/lib/api/fs/fs.c b/tools/lib/api/fs/fs.c
-index 337fde770e45fe..3c7a8a0605710e 100644
---- a/tools/lib/api/fs/fs.c
-+++ b/tools/lib/api/fs/fs.c
-@@ -294,11 +294,14 @@ int filename__read_int(const char *filename, int *value)
- {
- 	char line[64];
- 	int fd = open(filename, O_RDONLY), err = -1;
-+	ssize_t n;
+diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
+index 61f931997f2ecf..3968645e1dfa08 100644
+--- a/tools/perf/util/symbol-elf.c
++++ b/tools/perf/util/symbol-elf.c
+@@ -1063,14 +1063,17 @@ int sysfs__read_build_id(const char *filename, struct build_id *bid)
+ 			} else if (read(fd, bf, descsz) != (ssize_t)descsz)
+ 				break;
+ 		} else {
+-			int n = namesz + descsz;
++			size_t n;
  
- 	if (fd < 0)
- 		return -1;
- 
--	if (read(fd, line, sizeof(line)) > 0) {
-+	n = read(fd, line, sizeof(line) - 1);
-+	if (n > 0) {
-+		line[n] = '\0';
- 		*value = atoi(line);
- 		err = 0;
+-			if (n > (int)sizeof(bf)) {
++			/* int sum of namesz+descsz can overflow negative, bypassing size check */
++			if (namesz > sizeof(bf) || descsz > sizeof(bf) - namesz) {
+ 				n = sizeof(bf);
+ 				pr_debug("%s: truncating reading of build id in sysfs file %s: n_namesz=%u, n_descsz=%u.\n",
+ 					 __func__, filename, nhdr.n_namesz, nhdr.n_descsz);
++			} else {
++				n = namesz + descsz;
+ 			}
+-			if (read(fd, bf, n) != n)
++			if (read(fd, bf, n) != (ssize_t)n)
+ 				break;
+ 		}
  	}
-@@ -312,11 +315,14 @@ static int filename__read_ull_base(const char *filename,
- {
- 	char line[64];
- 	int fd = open(filename, O_RDONLY), err = -1;
-+	ssize_t n;
- 
- 	if (fd < 0)
- 		return -1;
- 
--	if (read(fd, line, sizeof(line)) > 0) {
-+	n = read(fd, line, sizeof(line) - 1);
-+	if (n > 0) {
-+		line[n] = '\0';
- 		*value = strtoull(line, NULL, base);
- 		if (*value != ULLONG_MAX)
- 			err = 0;
 -- 
 2.53.0
 
