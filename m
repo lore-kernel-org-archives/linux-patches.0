@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF94471257;
-	Tue, 21 Jul 2026 19:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A903783D4;
+	Tue, 21 Jul 2026 19:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662278; cv=none; b=B7S7GGH9y4IbpkghLjVwH90jaQ9l138k7joXqDp3sMDR7Ll/edE24qz1Vf9KbK87gGSc0EBggMnXWn3DCE92AN0l3mJUN4zBTuGpNamHndlvvPSpNs6mi2Q18g088HrhAd4H8u6n8u6of1Pcn4Q28hLnLkap5BBvV1iCiXrGfPQ=
+	t=1784662281; cv=none; b=F2azFAJQCZGMu9CrL3jCy5mQB3MAqhAwWdaUzCk4uP1mwVjZSdwvtBpl2+2lsjPsw26/8zSZn1wRQdUyWhS5FwqSrDgWz+faLqWKluFniLa/GRoAJ/4e9TPZVMonWqHF1Q4yv7FBWUz8Rw+JpzNoFSIC/3iKYfdSjT0gOsGP2uI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662278; c=relaxed/simple;
-	bh=j+InEzLg2OW5AhOASfatWDNI2Sueenk6AbMQiTKKGLI=;
+	s=arc-20240116; t=1784662281; c=relaxed/simple;
+	bh=D+Oq4HYsoiRQ63gpcTQ+E0zGpNyjgJZ6qkFBKBCz7H0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=THtl+a6rTiNHmPhWgsBwg3aTtK1UOnS2VskRZNHihp8aopPXrvAtnEVUov1AP2vSkCKJhbX/IWnGFPUQryowkqnotd288LpvK9z6vtuqUSrrpSXKf56MMSxje90JfQ18Vk2qP+owjN22JYlWa1HLHnYPN0GscL9dxqwIkRPCQPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2FUB1BH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bPdQhoMRad9IGtl36ekFHoYCYdyN2KTg+IMrPPmc7DN2URtyfRuA43QUyuq295DGcTqDppee9tE0vRyO9Zj555Cz1sl+8g/ZoK167N7COCbhEFfSMU7grwU7eHaU4+53svHVOl7bAtiYYMpOxrrKa6a2Hgam4gNDNNxF25rdoMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7A8h/B+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2FUB1BH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443271F000E9;
-	Tue, 21 Jul 2026 19:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7A8h/B+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8AE1F000E9;
+	Tue, 21 Jul 2026 19:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662277;
-	bh=6P90ZlUnyueaaRRLIpYJTZGbHxXrycbPp00g+BSirpQ=;
+	s=korg; t=1784662280;
+	bh=BsMt+LODbSP0WLlBHlfQUNm9Qjoh6+mt69eOBhe/L5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W2FUB1BH460rd4JJfaGYxDOO8TVM4rCAl6V0H0QNtDZaoH8WM9yiB1mljJLQ+tXht
-	 3YRV1VkFOtjF9ApjPK6BBDLnRiPc2W4UFPjCBjveSm8HI4XxtEAJw9KVDKDrpe+fOI
-	 T50f+EfB72GbA9scJyOOAqY/575ZeBAzJH0LoPh8=
+	b=r7A8h/B+yVuxAgo6fCkg+MUGrGAORQepLh19ZxOKVeOI7b+oAEA5bdnniplkNqx9V
+	 9we7RCMzhm3o/+Odvo4kgvvGgaVf+kxKRk6TJ7u7tbcvj/3UjVjkSF0McLv98prbG8
+	 vUKT060oiQi+WT6/ExWAdDfQT8zuyEZgTKmeJzd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Sechang Lim <rhkrqnwk98@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0385/1276] bpf, sockmap: fix integer overflow in bpf_msg_pop_data() bounds check
-Date: Tue, 21 Jul 2026 17:13:48 +0200
-Message-ID: <20260721152454.722325863@linuxfoundation.org>
+Subject: [PATCH 6.12 0368/1276] dpll: fix stale iteration in dpll_pin_on_pin_unregister()
+Date: Tue, 21 Jul 2026 17:13:31 +0200
+Message-ID: <20260721152454.343460655@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -54,79 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sechang Lim <rhkrqnwk98@gmail.com>
+From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-[ Upstream commit a48802fb2cd2d1e23651989f8ff4d15e9d5dad54 ]
+[ Upstream commit 32239d600236a986c8e6d16aa814d3d91066b244 ]
 
-start and len are u32, so
+Neither parent->dpll_refs nor pin->dpll_refs on its own is a correct
+iteration target at unregister time:
 
-	u64 last = start + len;
+  - pin->dpll_refs includes DPLLs the child was registered against
+    via a different parent or directly; blind unregister WARNs on
+    the cookie miss in dpll_xa_ref_pin_del().
+  - parent->dpll_refs reflects the parent's current attachments, not
+    those at child-register time. Another driver may have (un)reg'd
+    the parent against additional DPLLs in the meantime, so we miss
+    registrations that exist and visit DPLLs that have none.
 
-evaluates start + len in 32-bit and wraps before storing it in last.
-The bounds check
+Walk pin->dpll_refs and use dpll_pin_registration_find() to filter
+to entries whose cookie is this parent. Symmetric with
+dpll_pin_on_pin_register(), correct under any subsequent change to
+parent->dpll_refs.
 
-	if (start >= offset + l || last > msg->sg.size)
-		return -EINVAL;
-
-can then be passed with an out-of-range start/len, after which the pop
-loop runs off the end of the scatterlist and sk_msg_shift_left() calls
-put_page() on the empty msg->sg.end slot:
-
-  Oops: general protection fault, probably for non-canonical address
-  0xdffffc0000000001: 0000 [#1] SMP KASAN PTI
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  RIP: 0010:sk_msg_shift_left net/core/filter.c:2957 [inline]
-  RIP: 0010:____bpf_msg_pop_data net/core/filter.c:3103 [inline]
-  RIP: 0010:bpf_msg_pop_data+0x753/0x1a10 net/core/filter.c:2984
-  Call Trace:
-   <TASK>
-   bpf_prog_4cc92c278f4d5d56+0x1b1/0x1e8
-   bpf_prog_run_pin_on_cpu+0x107/0x320 include/linux/filter.h:746
-   sk_psock_msg_verdict+0x357/0x7f0 net/core/skmsg.c:934
-   tcp_bpf_send_verdict net/ipv4/tcp_bpf.c:420 [inline]
-   tcp_bpf_sendmsg+0x766/0x1ae0 net/ipv4/tcp_bpf.c:583
-   __sock_sendmsg+0x153/0x1c0 net/socket.c:802
-   __sys_sendto+0x326/0x430 net/socket.c:2265
-   __x64_sys_sendto+0xe3/0x100 net/socket.c:2268
-   do_syscall_64+0x14c/0x480
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-
-Widen the addition with a (u64) cast so the bound is evaluated in
-64-bit and a len near U32_MAX no longer wraps below msg->sg.size.
-
-While here, change pop from int to u32. It counts bytes against the
-unsigned scatterlist lengths and can never be negative, so the signed
-type only invites sign-confusion in the pop loop.
-
-Fixes: 7246d8ed4dcc ("bpf: helper to pop data from messages")
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20260615021959.140010-6-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 9431063ad323 ("dpll: core: Add DPLL framework base functions")
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Link: https://patch.msgid.link/20260607183045.1213735-4-grzegorz.nitka@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dpll/dpll_core.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 8eca5b0978c988..80aa924d3e649d 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -3007,8 +3007,8 @@ BPF_CALL_4(bpf_msg_pop_data, struct sk_msg *, msg, u32, start,
- 	   u32, len, u64, flags)
+diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
+index f6ab4f0cad84d2..241d0e906a6e81 100644
+--- a/drivers/dpll/dpll_core.c
++++ b/drivers/dpll/dpll_core.c
+@@ -961,14 +961,19 @@ EXPORT_SYMBOL_GPL(dpll_pin_on_pin_register);
+ void dpll_pin_on_pin_unregister(struct dpll_pin *parent, struct dpll_pin *pin,
+ 				const struct dpll_pin_ops *ops, void *priv)
  {
- 	u32 i = 0, l = 0, space, offset = 0;
--	u64 last = start + len;
--	int pop;
-+	u64 last = (u64)start + len;
-+	u32 pop;
++	struct dpll_pin_registration *reg;
+ 	struct dpll_pin_ref *ref;
+ 	unsigned long i;
  
- 	if (unlikely(flags))
- 		return -EINVAL;
+ 	mutex_lock(&dpll_lock);
+ 	dpll_pin_delete_ntf(pin);
+ 	dpll_xa_ref_pin_del(&pin->parent_refs, parent, ops, priv, pin);
+-	xa_for_each(&pin->dpll_refs, i, ref)
++	xa_for_each(&pin->dpll_refs, i, ref) {
++		reg = dpll_pin_registration_find(ref, ops, priv, parent);
++		if (!reg)
++			continue;
+ 		__dpll_pin_unregister(ref->dpll, pin, ops, priv, parent);
++	}
+ 	mutex_unlock(&dpll_lock);
+ }
+ EXPORT_SYMBOL_GPL(dpll_pin_on_pin_unregister);
 -- 
 2.53.0
 
