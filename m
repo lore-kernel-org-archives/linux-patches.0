@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F0A43C7DA;
-	Tue, 21 Jul 2026 22:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335C545A2AB;
+	Tue, 21 Jul 2026 22:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672295; cv=none; b=V9cGm4VG4LxJDyFea/k85o/xYt8OQRm4Q/rkOObBhiJTUxinSMpnFuetDIAGj2N4Pb5ppkJSzNGbr7Dv/rkkiGv8upRnMkqqfXZZ0LFORJdAERXOS9CEyw5A5kOIHLzMfegoDQ1FnwcwTsuaB61M9DYkNc0HYRyqP1l0WmEAl8Y=
+	t=1784672297; cv=none; b=M3j3zaydLfxSfJgdL52O99bAKMey2qFKqJm8xaiQ/b0CkM4zFrWxKSmYrEq+EQkzE12D1GtJwZd4P3eAKWbLUwEzwtuNLa7NVUuuRXTdfxbM4VwFwCcXLRhObZh8vDwcVx/zUEujuljKEbpSH03/uI3y3uv+P2480/cFwQ6RZik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672295; c=relaxed/simple;
-	bh=WjWRIuAU/v52L+9K3jlr1/kaGC3D31fB/eDvIDOchl4=;
+	s=arc-20240116; t=1784672297; c=relaxed/simple;
+	bh=5TsuizMcrLYUyhLHuKqmCd14320hoJHMDOAP5ufx3F4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WdVwvfVzKsBKnUyvVakbZery9YLsNzQ2FdzfapOxy9nu3PvMvbPVD0Aj4LkCmRq7SHpcGwotpfUCaVdMuH8DrEltra/GJjHDs/ueorlWGJmkChlbf4PXKpEvKXzFe1z34P4DBqAZwxb9/vuJ0i5dV9FklSe2kgiXz64E3n4SSPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFkjmR5g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KzTxw4AAyFVOFaVmCgznjAZav6yjrQko784+7O0b5xsmw9wdvoaMJDT0buLvGqOYK6O7xhCtl6K2MEK1iQDZSfLhIe5SNHzn3mKRuQiVGgGrhoxhdpfk5Cp10PLbYAR1NPP7pUFIYIFgLu7D/eOYaWBJM1D5FXr1JZ7+cKywxS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xdBx/awI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFkjmR5g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01DD61F000E9;
-	Tue, 21 Jul 2026 22:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xdBx/awI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0B01F00A3A;
+	Tue, 21 Jul 2026 22:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672293;
-	bh=aklStJhYnaVzEA2woLo5r1iyq1jy59JKogS3bYL+gQw=;
+	s=korg; t=1784672296;
+	bh=01XcxNFeUdFD0eFjgWRSwbGYCeFJYqKx2Tn0DbI2QSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fFkjmR5gm8c31Jw/xGRCg7LF/S6fkVy6fQHrs7/fnf5sCivyGYw1hVSLRlKw/NWi0
-	 /duT9OKsx3TzTyhrahKTmZvjV2H1M35Vzb9yQTr5OkvFEeuVfP+snFpHnM3qQzmgbU
-	 0ysWXeEmiRRLTIxvHfXFZePJeYG4PUcj49tYvfe8=
+	b=xdBx/awIQNa/qWmE3l0Xos+Xpqv2axMH3Mi1LwXhlQinoJ35u/4vgbyqEwhOgeNTf
+	 o7tOAE3TsRZGeffUDayV2h+Lpnf9meI4gWwLendaQzPud4mIzkMYSba/dGN6qLyyts
+	 ajtsC4HnKN9+aTrZyZdysQ4Fh8wZxENPfkh3WRsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.15 569/843] fbdev: carminefb: fix potential memory leak in alloc_carmine_fb()
-Date: Tue, 21 Jul 2026 17:23:24 +0200
-Message-ID: <20260721152418.847164987@linuxfoundation.org>
+Subject: [PATCH 5.15 570/843] fbdev: nvidia: fix potential memory leak in nvidiafb_probe()
+Date: Tue, 21 Jul 2026 17:23:25 +0200
+Message-ID: <20260721152418.868803985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,30 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 6fcca16a2b19c37f60693c56cbc0c923364ff3ef upstream.
+commit 85f5e38c162bdf9dbbe197275d416402712f3707 upstream.
 
-The memory allocated for modelist in fb_videomode_to_modelist() is not
-freed in the subsequent error path.
-Fix that by calling fb_destroy_modelist()
+In nvidiafb_probe(), the memory allocated for modelist in
+nvidia_set_fbinfo() is not freed in the subsequent error paths.
+Fix that by calling fb_destroy_modelist().
 
-Fixes: 2ece5f43b041 ("fbdev: add the carmine FB driver")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/carminefb.c |    1 +
+ drivers/video/fbdev/nvidia/nvidia.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/video/fbdev/carminefb.c
-+++ b/drivers/video/fbdev/carminefb.c
-@@ -592,6 +592,7 @@ static int alloc_carmine_fb(void __iomem
- 	return 0;
+--- a/drivers/video/fbdev/nvidia/nvidia.c
++++ b/drivers/video/fbdev/nvidia/nvidia.c
+@@ -1409,6 +1409,7 @@ static int nvidiafb_probe(struct pci_dev
  
- err_dealloc_cmap:
+ err_out_iounmap_fb:
+ 	iounmap(info->screen_base);
 +	fb_destroy_modelist(&info->modelist);
- 	fb_dealloc_cmap(&info->cmap);
- err_free_fb:
- 	framebuffer_release(info);
+ err_out_free_base1:
+ 	fb_destroy_modedb(info->monspecs.modedb);
+ 	nvidia_delete_i2c_busses(par);
 
 
