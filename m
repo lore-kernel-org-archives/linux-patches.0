@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043E2366DA5;
-	Tue, 21 Jul 2026 15:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C9E46D54C;
+	Tue, 21 Jul 2026 15:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649056; cv=none; b=q/qRINC+SxYS4ZcR0fIahYQ6DLs8euO/h/a0IMsx0qbmbw38yLq/poQglBdwhLtOM5fVxDRP87u+GnSPvONJaPQkHv+VAC45t+3J9pcTbw3K0DqbafVHqRdWns8eMTjK8M/bI508zEpLa2AHVDzpSNJbVfqDC8UwVbAzQe7FtI0=
+	t=1784649058; cv=none; b=ZWxlQSL3JJ+ow7UQy7Gda2Fx9hXXkrAyFK/bNGXi1Jy8nMbpeSEOspC/spbfMzIn5jOA1UStMB+Iyvq+hsyLyFGfXdjZB0i7WjPP/cXc2keA+g+u9ul/Lj2e8MWJiQbdyPHjXp+hRHTHC/m6hoCMNXMz55FVI+Lu5iGqoaiz/1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649056; c=relaxed/simple;
-	bh=qvM604U7flrZCzF/9lt58I7EFee5MUrLcOcDA85CgBw=;
+	s=arc-20240116; t=1784649058; c=relaxed/simple;
+	bh=cqMZ6+88XyvT7QSbqGKWL4IvB78b7sQqBYBKA0CIh/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cjoe1n31uwmu5iTbM0fva7526bgXx3Dx4XgzyQZpFijauS5JRXLH02PHrMKcV+pHrTGy4+i+QTBVmzdDljEY8OsZDV3ufAbxqGQTDlFGh1ju8Mj7NMJmS+xycTfSuepsrjffx/nizfkyLSiD+2v766mfSMZQjRO3UEC/4t2wy70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJsk2rIF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uM0EDyhwvO1OWovfcGCz8t6HNcA/1c5LcXpp0/Xcd3x6h1Tg+nNCYNfm56kFq9X/h39Q4eZGD+J37c5edFcH90rsBZE/6T/T2g3uH6BKxl37fTAbLo/9l1c1MZZRxCdP80idWhijZeaXrEsDy4M/dPg3cM7TYXs4lgMhA84QwsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQ+xBOPN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJsk2rIF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D5C1F000E9;
-	Tue, 21 Jul 2026 15:50:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQ+xBOPN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C431F000E9;
+	Tue, 21 Jul 2026 15:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649054;
-	bh=dpc1WqePzXr67KpdHGSgpWxO/UshGT34QtKDW9TuRUA=;
+	s=korg; t=1784649057;
+	bh=EBQqbxBd72E3CrRNzAW7mfKH18yBY4d+yfw6PaDF1KA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mJsk2rIFMAJCwicuuJyQR7RQBNc4K30vAMBLip2dNwQBoBPpTyIeg4vI7Zktfa8WQ
-	 QIiCtzVgsLMD6VFAu24IwhHcB4Qcb2VHQNruo5APjZHxTcEvRhda8bMtw2ADSsw/FC
-	 c+EE5SLmpu1Qp23N8V7Mlna7QghCV6XgZrXayuOo=
+	b=QQ+xBOPN1sySR2rtPuBMAWby2uJSqKO69yE/cLa7YWIjQMxgmIjPyFiGmmHkp19fG
+	 KRkOUHBh+/8yurUVuo26aYqyEUjrnXy40zQ31ovlGdaqtVLIqkEh7hPiD4hMFDulnv
+	 aZh3jynBqrDFklMh6E/8bCOlMiCm5adSXD/ckeYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
+	Chanwoo Lee <cw9316.lee@samsung.com>,
+	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0433/2077] scsi: pm8001: Fix error code in non_fatal_log_show()
-Date: Tue, 21 Jul 2026 17:01:46 +0200
-Message-ID: <20260721152602.964242016@linuxfoundation.org>
+Subject: [PATCH 7.1 0434/2077] scsi: ufs: Fix wrong value printed in unexpected UPIU response case
+Date: Tue, 21 Jul 2026 17:01:47 +0200
+Message-ID: <20260721152602.987744669@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,41 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Chanwoo Lee <cw9316.lee@samsung.com>
 
-[ Upstream commit 1b6f03b7ae9ee27054c55bb55a69d05555a78516 ]
+[ Upstream commit 2483ae0a56231a915c706411421c6c002a2bf83e ]
 
-The non_fatal_log_show() function is supposed to return negative error
-codes on failure.  But because the error codes are saved in a u32 and
-then cast to signed long, they end up being high positive values instead
-of negative.  Remove the intermediary u32 variable to fix this bug.
+In ufshcd_transfer_rsp_status(), the default case of the inner switch
+statement prints the UPIU response code when an unexpected response is
+received. However, the code was printing 'result' variable which is
+always 0 at that point, making the error message useless for debugging.
 
-Fixes: dba2cc03b9db ("scsi: pm80xx: sysfs attribute for non fatal dump")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Acked-by: Jack Wang <jinpu.wang@ionos.com>
-Link: https://patch.msgid.link/ahs-bEsBJH0KhnsX@stanley.mountain
+Fix this by printing the actual UPIU response code returned by
+ufshcd_get_req_rsp().
+
+Fixes: 08108d31129a ("scsi: ufs: Improve type safety")
+Signed-off-by: Chanwoo Lee <cw9316.lee@samsung.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260527092134.275887-1-cw9316.lee@samsung.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/pm8001/pm8001_ctl.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/ufs/core/ufshcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/pm8001/pm8001_ctl.c b/drivers/scsi/pm8001/pm8001_ctl.c
-index cbfda8c04e956a..c10854ec44c7bd 100644
---- a/drivers/scsi/pm8001/pm8001_ctl.c
-+++ b/drivers/scsi/pm8001/pm8001_ctl.c
-@@ -588,10 +588,7 @@ static DEVICE_ATTR(fatal_log, S_IRUGO, pm8001_ctl_fatal_log_show, NULL);
- static ssize_t non_fatal_log_show(struct device *cdev,
- 	struct device_attribute *attr, char *buf)
- {
--	u32 count;
--
--	count = pm80xx_get_non_fatal_dump(cdev, attr, buf);
--	return count;
-+	return pm80xx_get_non_fatal_dump(cdev, attr, buf);
- }
- static DEVICE_ATTR_RO(non_fatal_log);
- 
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index c3f08957d179ac..385e1a8eec1620 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -5634,7 +5634,7 @@ static inline int ufshcd_transfer_rsp_status(struct ufs_hba *hba,
+ 		default:
+ 			dev_err(hba->dev,
+ 				"Unexpected request response code = %x\n",
+-				result);
++				ufshcd_get_req_rsp(lrbp->ucd_rsp_ptr));
+ 			result = DID_ERROR << 16;
+ 			break;
+ 		}
 -- 
 2.53.0
 
