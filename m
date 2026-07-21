@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F7B46EF64;
-	Tue, 21 Jul 2026 18:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CA346EF6C;
+	Tue, 21 Jul 2026 18:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658897; cv=none; b=u8nmdo/rla64VcnQ4hqMX6JpIbmJAvDlGH51tpfvVs68G4boP3I9/XikvbVemkyrSTxFZ/LEseToZlBF4FMOhxXmSxwWuPnR/I5U5ls7+1qTc5qbwVDV/6skCsUYAPWweTpXARxWkoUXspjpZdaWYVNXrgohyXho44iPHdHjwb8=
+	t=1784658901; cv=none; b=Py+H1RxfERWH34VWvSXUOwYuoalz65I5q1p9Gwqj0Ewwlw6jY+zLXT5rP3b4H/Dvya8JGjVpxFVkhuTo0zcgrojnMMbx4+I0uykMbBKR/m04g5v8dhW16OmxIPfe+AnWCTswL2txOX6a9Ry04bLutBkrHgnLnfj61RJZS+IGM3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658897; c=relaxed/simple;
-	bh=mRGoy2RqiupL9x50/BmEM91Qu2BXPF+4dJxqYHsm60g=;
+	s=arc-20240116; t=1784658901; c=relaxed/simple;
+	bh=ZElP9sX6T5xqky5Rw469gfuLBnXymdAbZ1aBx9W6f5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tTKRpIzmoyBLOxZBWexAK93KE4tIF2fFV9cV55d+o7hL9O3zzqr2NSRVKWzu1mGisMIC1NQ3P+0w5YUqtiuDyOzSuUN8rCYPkAUFEmoiuYRJSs919VpQRilQK2FFjAlv2jGif6X0xEbTOYu/cvCF6AxC9fkpbX11ahekN04jHE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsr/0Pn+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UwSjp5iCl/v55r4zRXEhkUsJNmlrtDEIYwMrSbfRuIIvKOTm55LM5UhA/mk3I69+cB29ilRR0bmnW9wClFaKjrebfmNHzRrAJvsTCaodWnfGksguz6jMAIoIS5uU+GgtsaNGBR64N+CvTTUs6rqUEpgL1Sle+MAMWH6l3e0kbwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ez8AaSLW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsr/0Pn+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0FBF1F000E9;
-	Tue, 21 Jul 2026 18:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ez8AaSLW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F571F000E9;
+	Tue, 21 Jul 2026 18:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658896;
-	bh=L5qALKmnPydlxX67yXV2vkPlFfkaaGJkvVIwhFPI7Vo=;
+	s=korg; t=1784658899;
+	bh=2eQRsS3PSqbHsb0z+7/4fvqs6OjpCWoU5DMFtfRQvDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gsr/0Pn+wb31dd+fyRfKz5L6h+GgD5+YIm6neJ3mzCbpcHSYkkK5Y6ZKkZryBAukd
-	 fTDMAnV2EgYI6AokSMbmGTkOgJfcpCwOA5JZ+ZK86toaKJ9w9AX4IrUnv/cEG7wjDw
-	 Yx0BgB5N3tQ35tfdrRFrOKt+4JRYpj29BxFC/hg4=
+	b=ez8AaSLWSGoJAb7diGwIBBvIhdU1+7B1KPc8pyPkVc48eFr/HfLT8iHRNDwf9HBRY
+	 WZgyLdgP9oGlbUrAyfU/4+4NRPnRdtU7BnASOzgb8Nwf0/SOKjAibdDDlMnaXni15u
+	 CDCpm6+ILG2fzvXijDnuxLQcCwpUXzivuKzfNbZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Qianyu Luo <qianyuluo3@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Eyal Birger <eyal.birger@gmail.com>,
+	Sanman Pradhan <psanman@juniper.net>,
 	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.18 1317/1611] xfrm: nat_keepalive: avoid double free on send error
-Date: Tue, 21 Jul 2026 17:23:53 +0200
-Message-ID: <20260721152545.079878236@linuxfoundation.org>
+Subject: [PATCH 6.18 1318/1611] xfrm: use compat translator only for u64 alignment mismatch
+Date: Tue, 21 Jul 2026 17:23:54 +0200
+Message-ID: <20260721152545.102136013@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,87 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianyu Luo <qianyuluo3@gmail.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit 226f4a490d1a938fc838d8f8c46a4eca864c0d78 upstream.
+commit 355fbcbdc2539cca7890b0d0914d4ce0f985ad74 upstream.
 
-nat_keepalive_send() frees the keepalive skb whenever the IPv4 or IPv6
-send helper reports an error.
+The XFRM compat layer (CONFIG_XFRM_USER_COMPAT) translates 32-bit xfrm
+netlink and setsockopt messages into the native 64-bit layout. It is
+only needed on architectures where the 32-bit and 64-bit ABIs disagree
+on u64 alignment, which the kernel encodes as COMPAT_FOR_U64_ALIGNMENT.
 
-That cleanup is only correct before the skb is handed to the output
-path. Once ip_build_and_send_pkt() or ip6_xmit() takes ownership, the
-networking stack may already have consumed the skb before returning an
-error, so freeing it again is unsafe.
+That symbol is defined only by arch/x86. XFRM_USER_COMPAT depends on it,
+so the translator can never be built on any other architecture,
+including arm64, which still provides a 32-bit compat ABI (CONFIG_COMPAT)
+for AArch32 EL0 userspace. On arm64 the AArch32 EABI already aligns u64
+to 8 bytes, identical to the AArch64 ABI, so no translation is required
+and the native code path is correct for 32-bit tasks.
 
-Handle the pre-handoff failure cases inside nat_keepalive_send_ipv4()
-and nat_keepalive_send_ipv6(), where the caller still owns the skb, and
-keep nat_keepalive_send() responsible only for family dispatch and the
-unsupported-family cleanup path.
+However, xfrm_user_rcv_msg() and xfrm_user_policy() gate on
+in_compat_syscall() alone and then call xfrm_get_translator(), which
+returns NULL when no translator is registered. On arm64 that is always
+the case, so every xfrm netlink message and the XFRM_POLICY setsockopt
+issued by a 32-bit task returns -EOPNOTSUPP. A 32-bit userspace process
+on arm64 (and on any other arch with CONFIG_COMPAT but without
+COMPAT_FOR_U64_ALIGNMENT) therefore cannot configure XFRM state or
+policy through the XFRM_USER netlink API, and cannot use the XFRM_POLICY
+setsockopt path, because both fail before reaching the native parser.
 
-Fixes: f531d13bdfe3 ("xfrm: support sending NAT keepalives in ESP in UDP states")
+The translator series replaced the blanket compat rejection with a
+translator lookup. That made the path usable on x86 when the translator
+is available, but left architectures that cannot build the translator
+permanently rejected even when their compat layout already matches the
+native layout. Let those architectures use the native parser instead.
+
+Gate the translator requirement on COMPAT_FOR_U64_ALIGNMENT instead of
+on in_compat_syscall() alone. Gating on the ABI property rather than on
+CONFIG_XFRM_USER_COMPAT is deliberate: on x86 with IA32_EMULATION=y but
+XFRM_USER_COMPAT=n, a 32-bit task must still be rejected rather than
+routed through the native parser, which would misread genuinely
+4-byte-aligned x86-32 messages. COMPAT_FOR_U64_ALIGNMENT is the ABI
+property that makes the XFRM translator mandatory.
+
+Only the receive/input direction needs the guard. The send, dump and
+notification paths already call the translator as "if (xtr) { ... }"
+with no error on NULL, so on arches without a translator they no-op and
+the kernel emits native 64-bit-layout messages, which is what an AArch32
+task expects.
+
+Tested on Juniper SRX hardware: with the fix, 32-bit IPsec userspace
+netlink and XFRM_POLICY setsockopt operations that previously failed
+with -EOPNOTSUPP now succeed; x86 behaviour is unchanged by inspection.
+
+Fixes: 5106f4a8acff ("xfrm/compat: Add 32=>64-bit messages translator")
+Fixes: 96392ee5a13b ("xfrm/compat: Translate 32-bit user_policy from sockptr")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Qianyu Luo <qianyuluo3@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Eyal Birger <eyal.birger@gmail.com>
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_nat_keepalive.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ net/xfrm/xfrm_state.c |    2 +-
+ net/xfrm/xfrm_user.c  |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/xfrm/xfrm_nat_keepalive.c
-+++ b/net/xfrm/xfrm_nat_keepalive.c
-@@ -55,8 +55,10 @@ static int nat_keepalive_send_ipv4(struc
- 			   ka->encap_sport, sock_net_uid(net, NULL));
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -2983,7 +2983,7 @@ int xfrm_user_policy(struct sock *sk, in
+ 	if (IS_ERR(data))
+ 		return PTR_ERR(data);
  
- 	rt = ip_route_output_key(net, &fl4);
--	if (IS_ERR(rt))
-+	if (IS_ERR(rt)) {
-+		kfree_skb(skb);
- 		return PTR_ERR(rt);
-+	}
+-	if (in_compat_syscall()) {
++	if (IS_ENABLED(CONFIG_COMPAT_FOR_U64_ALIGNMENT) && in_compat_syscall()) {
+ 		struct xfrm_translator *xtr = xfrm_get_translator();
  
- 	skb_dst_set(skb, &rt->dst);
+ 		if (!xtr) {
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -3463,7 +3463,7 @@ static int xfrm_user_rcv_msg(struct sk_b
+ 	if (!netlink_net_capable(skb, CAP_NET_ADMIN))
+ 		return -EPERM;
  
-@@ -101,6 +103,7 @@ static int nat_keepalive_send_ipv6(struc
- 	dst = ipv6_stub->ipv6_dst_lookup_flow(net, sk, &fl6, NULL);
- 	if (IS_ERR(dst)) {
- 		local_unlock_nested_bh(&nat_keepalive_sk_ipv6.bh_lock);
-+		kfree_skb(skb);
- 		return PTR_ERR(dst);
- 	}
+-	if (in_compat_syscall()) {
++	if (IS_ENABLED(CONFIG_COMPAT_FOR_U64_ALIGNMENT) && in_compat_syscall()) {
+ 		struct xfrm_translator *xtr = xfrm_get_translator();
  
-@@ -118,7 +121,6 @@ static void nat_keepalive_send(struct na
- 					sizeof(struct ipv6hdr)) +
- 				    sizeof(struct udphdr);
- 	const u8 nat_ka_payload = 0xFF;
--	int err = -EAFNOSUPPORT;
- 	struct sk_buff *skb;
- 	struct udphdr *uh;
- 
-@@ -140,16 +142,17 @@ static void nat_keepalive_send(struct na
- 
- 	switch (ka->family) {
- 	case AF_INET:
--		err = nat_keepalive_send_ipv4(skb, ka);
-+		nat_keepalive_send_ipv4(skb, ka);
- 		break;
- #if IS_ENABLED(CONFIG_IPV6)
- 	case AF_INET6:
--		err = nat_keepalive_send_ipv6(skb, ka, uh);
-+		nat_keepalive_send_ipv6(skb, ka, uh);
- 		break;
- #endif
--	}
--	if (err)
-+	default:
- 		kfree_skb(skb);
-+		break;
-+	}
- }
- 
- struct nat_keepalive_work_ctx {
+ 		if (!xtr)
 
 
