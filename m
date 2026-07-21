@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBD846D094;
-	Tue, 21 Jul 2026 18:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0243346A6;
+	Tue, 21 Jul 2026 18:37:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659034; cv=none; b=W8MXbQiAiVvk3/wl2A6skp3UV5lHryr/+EIYWOG7e/E+fH9wP0kG3r2oqHyLNLoQ86sPd9dm/gQBNqvIDOwdsMiK25ZjEzXL0OSDPS2CaFrgRcrfiPAO+/3Thv1M8ogULGRj5REqGcH4nKfrXkud9tBFEwilAgGm3SvA8fsu17M=
+	t=1784659036; cv=none; b=ftGTAQkf+rCtU/+3xVElsLDSv/IqllGuCXoP4ACWPZp2TAZZOBKOd/1vdnxC5fof4+kxJ/0V2VjlFrab5paoMbgFW7A+mR0Z1GaPPZSfv5/8fgLz4Rz205kOasghoGrtJZu9qVA942I7N+jQ9klCntJIKV+22/Q69sdmj2zW8tY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659034; c=relaxed/simple;
-	bh=FIVJyRJ6V2CTTOnUAn5E2eHHkAk2ubXp+K3/KYgemLs=;
+	s=arc-20240116; t=1784659036; c=relaxed/simple;
+	bh=OVzMxEwlfD/z3AgGAoDYUZfSc6psA0aZa0jxBermzYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XBT2BKLMS6BYsnwyBcKqz6IHvrLoYvLBd4X+XTljiaqUggi1kdLA2edW6wAUdhy8xRNKqmuESr8u/yg/Fzw+qZxo9IIG4b2htYpbL25XRuyBPoWq+XZL7uxCQ7VHL9yggFtB+XB70Y++Ab1/GHZi/KeE1bJjtqQf5Cgu6zjBDBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+0TiaDF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dgsMc+BnJ+8a4ZIZrwH/+3m9MSjqM4mEO7y21BwwapPpEDV1qqJN6lfg3t24JPxyAkcwuW/mehzI70QP6CcfdF/seklQQAd8xKTL7i3oUhDXAiTvdixeCncqm5oCWgIgnGsrkpIMgv0un6CnHq17+ISW35E7loSR2XyHWLlLMso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNa1NvyE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+0TiaDF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8423E1F000E9;
-	Tue, 21 Jul 2026 18:37:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNa1NvyE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB781F000E9;
+	Tue, 21 Jul 2026 18:37:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659033;
-	bh=jkSc2nCXAZZsOLfwJ7C1aWio1up2oEQTG/49ma5LUyM=;
+	s=korg; t=1784659035;
+	bh=yy2dDoLdNISIzNvQb8WIgMlOMNz8BvYxoptJVoFD+oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s+0TiaDFbK1c2sLt5pQSCkFxAsYh/D1NymgqyXoBx320CifS63rguYfm1GRHrZfwk
-	 i3kyj+iTMQRUhKeElai/X/0G/jH3JEUqiGVS6E/5bsZzBlApVGYVDCmvl5OsrX3FaR
-	 zG6y55CjyZPv0UYJQOzLfeZ5tjIzKYrdpyN9Hv9k=
+	b=yNa1NvyEBI/WNHGdZ15uQaZsFidB3r5kwVITl++HZWud3I4n9pP476EHSmOo64X5h
+	 qOW5qqX5eg+DPOFybviBrS4vS66jgOGHnhv5ARMHjGzDk/EuP1/qrsomFZQEwFU5Wl
+	 lhkDF5RJMrCduT+lwJXxSIm7IV2ubMUA9aLdQ56I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Juergen Gross <jgross@suse.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.18 1368/1611] scsi: xen: scsiback: Free the command tag on the TMR submit-failure path
-Date: Tue, 21 Jul 2026 17:24:44 +0200
-Message-ID: <20260721152546.221308503@linuxfoundation.org>
+Subject: [PATCH 6.18 1369/1611] scsi: xen: scsiback: Free unsubmitted command instead of double-putting it
+Date: Tue, 21 Jul 2026 17:24:45 +0200
+Message-ID: <20260721152546.243369744@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,50 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 66aefc277ebb796ec285d550305535dc3fc0179f upstream.
+commit ca978f8a93d4d36841839bf2847d29b88c2591d6 upstream.
 
-scsiback_device_action() obtains a command tag in
-scsiback_get_pend_req() and submits a task-management request with
-target_submit_tmr(). When target_submit_tmr() fails it returns < 0 and
-scsiback jumps to the err: label, which sends a response but frees
-nothing, leaking the tag.
+scsiback_get_pend_req() obtains a command tag and returns a vscsibk_pend
+whose embedded se_cmd has only been memset to 0, so its cmd_kref is 0;
+the se_cmd is initialised (kref_init() via target_init_cmd()) only
+later, in scsiback_cmd_exec(), on the successful VSCSIIF_ACT_SCSI_CDB
+path. The two error paths in scsiback_do_cmd_fn() taken before the
+command is submitted -- a failed scsiback_gnttab_data_map() and an
+unknown ring_req.act -- call
+transport_generic_free_cmd(&pending_req->se_cmd, 0), which kref_put()s a
+refcount of 0. That underflows it ("refcount_t: underflow;
+use-after-free") and, as the release function is not run, leaks the
+command tag.
 
-Impact: a pvSCSI guest can leak the command tags of a LUN's session,
-stopping the LUN, by issuing VSCSIIF_ACT_SCSI_ABORT or RESET requests
-whenever target_submit_tmr() fails.
+Impact: a pvSCSI guest can leak every command tag of a LUN's session,
+stopping the LUN, by submitting requests with a bad grant reference or
+an unknown request type; under panic_on_warn the refcount underflow
+panics the host.
 
-transport_generic_free_cmd() cannot be used here. By the time
-target_submit_tmr() returns an error it has already run
-__target_init_cmd() (so se_cmd->cmd_kref is one, not zero), and on its
-target_get_sess_cmd() error path it has freed se_cmd->se_tmr_req via
-core_tmr_release_req() while leaving SCF_SCSI_TMR_CDB set and the
-pointer dangling. Letting the command release run target_free_cmd_mem()
-would then double-free se_tmr_req.
-
-Use the same helper, which returns just the tag, on this path too.
+Add a helper that just returns the tag with target_free_tag() and sends
+the error response. It frees the tag while the v2p reference still pins
+the session, and snapshots the response fields beforehand because
+freeing the tag can let another ring reuse the pending_req slot.
 
 Fixes: 2dbcdf33dbf6 ("xen-scsiback: Convert to percpu_ida tag allocation")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://patch.msgid.link/20260611123046.2323342-3-michael.bommarito@gmail.com
+Link: https://patch.msgid.link/20260611123046.2323342-2-michael.bommarito@gmail.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/xen-scsiback.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/xen/xen-scsiback.c |   28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
 --- a/drivers/xen/xen-scsiback.c
 +++ b/drivers/xen/xen-scsiback.c
-@@ -640,7 +640,7 @@ static void scsiback_device_action(struc
- 	return;
- 
- err:
--	scsiback_do_resp_with_sense(NULL, err, 0, pending_req);
-+	scsiback_resp_and_free(pending_req, err);
+@@ -612,6 +612,25 @@ static void scsiback_disconnect(struct v
+ 	xenbus_unmap_ring_vfree(info->dev, info->ring.sring);
  }
  
- /*
++/*
++ * Send the error response for a request that did not reach the target core
++ * and return its tag.  Free the tag before the response drops the v2p
++ * reference that keeps the session alive, and snapshot what the response
++ * needs since returning the tag can let the slot be reused.
++ */
++static void scsiback_resp_and_free(struct vscsibk_pend *pending_req,
++				   int32_t result)
++{
++	struct vscsibk_info *info = pending_req->info;
++	struct v2p_entry *v2p = pending_req->v2p;
++	struct se_session *se_sess = v2p->tpg->tpg_nexus->tvn_se_sess;
++	u16 rqid = pending_req->rqid;
++
++	target_free_tag(se_sess, &pending_req->se_cmd);
++	scsiback_send_response(info, NULL, result, 0, rqid);
++	kref_put(&v2p->kref, scsiback_free_translation_entry);
++}
++
+ static void scsiback_device_action(struct vscsibk_pend *pending_req,
+ 	enum tcm_tmreq_table act, int tag)
+ {
+@@ -793,9 +812,8 @@ static int scsiback_do_cmd_fn(struct vsc
+ 		case VSCSIIF_ACT_SCSI_CDB:
+ 			if (scsiback_gnttab_data_map(&ring_req, pending_req)) {
+ 				scsiback_fast_flush_area(pending_req);
+-				scsiback_do_resp_with_sense(NULL,
+-						DID_ERROR << 16, 0, pending_req);
+-				transport_generic_free_cmd(&pending_req->se_cmd, 0);
++				scsiback_resp_and_free(pending_req,
++						       DID_ERROR << 16);
+ 			} else {
+ 				scsiback_cmd_exec(pending_req);
+ 			}
+@@ -809,9 +827,7 @@ static int scsiback_do_cmd_fn(struct vsc
+ 			break;
+ 		default:
+ 			pr_err_ratelimited("invalid request\n");
+-			scsiback_do_resp_with_sense(NULL, DID_ERROR << 16, 0,
+-						    pending_req);
+-			transport_generic_free_cmd(&pending_req->se_cmd, 0);
++			scsiback_resp_and_free(pending_req, DID_ERROR << 16);
+ 			break;
+ 		}
+ 
 
 
