@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3FB643E068;
-	Tue, 21 Jul 2026 22:27:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D889840315B;
+	Tue, 21 Jul 2026 22:27:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672831; cv=none; b=IQTEzfALJPK4gUunYMyn8sHprqs9CtdvNmA67rNiBcg/LABspgpO6+dc6uftR92HFecOXWFBwayKSYt1yoHn4A0eGe3avwrWj7XE+ouS2c9k8F8PXSkMioxVEIwiO+W8kRcj3je+MgYXTYAyozSw4KBHZ/5UFZ2kjVmb9Saq6Pc=
+	t=1784672835; cv=none; b=odpV2aBu8gk3lxBRDYgzEJbFeRNqOL3bTBe47AW7OWJnrGMWekrVqU1WcaUqdhx5R7NHk00fdx31oiiC8xjxUh/G5Fk49/rm+zZ8fx7juzO3s2qz9j8ca3ajMjBn03ndxpBrtmYC/7fyyP2n1AcRGAGLliwajd2xQ3zUzyNGzgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672831; c=relaxed/simple;
-	bh=WRlw/Wdn9jggDQ+Fy5a4dawc6NNKIF8wbbnOQt94DtU=;
+	s=arc-20240116; t=1784672835; c=relaxed/simple;
+	bh=0UEOvsCtWoNjk7M9qAyy8hx1GJl2rew8g4/Hb8CHzmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G2bcY4RgSc15OIaiFI7PTtN/ou/q6XBfHvBlijVWnl2YvP1FAl0l9LtX1R1cXdx9cbQ5/V+pzv2GPhh+bUvxPpOB9nfqGhOvcPLx19cC4F1tEpmVFlmBlgQHHv3ykuepmXVWniT2C7s8sDJ9sjx01IaeIqpN/Jl/elHmcjdPhHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BA6KAzFG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YBByUpebh3uqfkM/Rb434p0DzAgwc3v9vjuUPZlLejHwhscSKn77WAiLco6W738VatnrQ0F4r32OfwCrXIPKNHTIovKceg3mnO+dqZm2oK6wKUXtef5ZVJy6e6n5QZjwhboOsd/gxyY59LWFPjcR5n8QERj1GwCau3wqUbAMh+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0lVFL/N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BA6KAzFG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 361901F000E9;
-	Tue, 21 Jul 2026 22:27:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0lVFL/N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBBE51F000E9;
+	Tue, 21 Jul 2026 22:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672830;
-	bh=n7gr+ABA0sScHEbRg8Fsllwxs/X0rVD0WY9HZgQkyN0=;
+	s=korg; t=1784672833;
+	bh=9KyyvyuDjZzJHmth+DT6KrKM/xX1po262ZVHJOasA80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BA6KAzFGawJmL2Q55ivyCMP2ebia83Ledlw/toKH4sakVhs060HO956UXvzqv6Qgz
-	 RcBQIRHTCLAplhHceAg07yMw8NCWVBcvR/P4UAbaXWmoWrGPhsv6gLHgp09K5dPNxX
-	 Ozrc+95vG3vtCKvwbFWPmZS83FaR+k9AnxJqO+Is=
+	b=B0lVFL/N5JiH7FMPaKG4pR1bCyJY312V5dikm8lXvcq5I7mVF/v8OE6mdWLN0Ym6E
+	 L63Jzuy8KNjVDj87zn/M2FkBbMPghoqrl+pVdbNPhmB81m6VNL6PWzmXbgFejICfqb
+	 MWHX9Z144b+kIMuU4KLjk66lWaRMuzxOCSMjFa4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Linton <jeremy.linton@arm.com>,
-	Jarred White <jarredwhite@linux.microsoft.com>,
-	Easwar Hariharan <easwar.hariharan@linux.microsoft.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 730/843] ACPI: CPPC: Suppress UBSAN warning caused by field misuse
-Date: Tue, 21 Jul 2026 17:26:05 +0200
-Message-ID: <20260721152422.463599106@linuxfoundation.org>
+Subject: [PATCH 5.15 731/843] ACPI: NFIT: core: Fix acpi_nfit_init() error cleanup
+Date: Tue, 21 Jul 2026 17:26:06 +0200
+Message-ID: <20260721152422.487179176@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,82 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Linton <jeremy.linton@arm.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 1b1acf2dada0cc3931bb2cb9ff8832edfbee46a1 ]
+[ Upstream commit 38bf27511ef41bffebd157ec3eba41fc89ba59cd ]
 
-The definition of reg->access_width changes depending on the
-reg->space_id type.  Type ACPI_ADR_SPACE_PLATFORM_COMM uses
-access_width to indicate the PCC region, which can result in a UBSAN
-if the value is greater than 4.
+If acpi_nfit_init() fails after adding the acpi_desc object to the
+acpi_descs list, that object is never removed from that list because
+the acpi_nfit_shutdown() devm action is not added for the NFIT device
+in that case.  Next, the acpi_nfit_init() failure causes
+acpi_nfit_probe() to fail, the acpi_desc object is freed, and a
+dangling pointer is left behind in the acpi_descs.  Any subsequent
+ACPI Machine Check Exception will trigger nfit_handle_mce() which
+iterates over acpi_descs and so a use-after-free will occur.
 
-For example:
+Moreover, if acpi_nfit_probe() returns 0 after installing a notify
+handler for the NFIT device and without allocating the acpi_desc
+object and setting the NFIT device's driver data pointer, the
+acpi_desc object will be allocated by acpi_nfit_update_notify()
+and acpi_nfit_init() will be called to initialize it.  Regardless
+of whether or not acpi_nfit_init() fails in that case, the
+acpi_nfit_shutdown() devm action is not added for the NFIT device
+and acpi_desc is never removed from the acpi_descs list.  If the
+acpi_desc object is freed subsequently on driver removal, any
+subsequent ACPI MCE will lead to a use-after-free like in the
+previous case.
 
- UBSAN: shift-out-of-bounds in drivers/acpi/cppc_acpi.c:1090:9
- shift exponent 32 is too large for 32-bit type 'int'
- CPU: 61 UID: 0 PID: 1220 Comm: (udev-worker) Not tainted 7.0.10-201.fc44.aarch64 #1 PREEMPT(lazy)
- Hardware name: To be filled by O.E.M.
- Call trace:
-  ...(trimming)
-  ubsan_epilogue+0x10/0x48
-  __ubsan_handle_shift_out_of_bounds+0xdc/0x1e0
-  cpc_write+0x4d0/0x670
-  cppc_set_perf+0x18c/0x490
-  cppc_cpufreq_cpu_init+0x1c8/0x380 [cppc_cpufreq]
-  ... (trimming)
+To address the first issue mentioned above, make acpi_nfit_probe()
+call acpi_nfit_shutdown() directly on acpi_nfit_init() failures and
+to address the other one, add a remove callback to the driver and
+make it call acpi_nfit_shutdown().  Also, since it is now possible to
+pass NULL to acpi_nfit_shutdown() or the acpi_desc object passed to it
+may not have been initialized, add checks against NULL for acpi_desc and
+its nvdimm_bus field to that function and make acpi_nfit_unregister()
+clear the latter after unregistering the NVDIMM bus.
 
-Lets fix this by validating the region type, as well as whether
-access_width has a value. Then since we are returning bit_width
-directly for ACPI_ADR_SPACE_PLATFORM_COMM, drop the code correcting
-the size.
-
-Fixes: 2f4a4d63a193 ("ACPI: CPPC: Use access_width over bit_width for system memory accesses")
-Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
-Tested-by: Jarred White <jarredwhite@linux.microsoft.com>
-Reviewed-by: Jarred White <jarredwhite@linux.microsoft.com>
-Reviewed-by: Easwar Hariharan <easwar.hariharan@linux.microsoft.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260601235808.1113137-1-jeremy.linton@arm.com
+Fixes: a61fe6f7902e ("nfit, tools/testing/nvdimm: unify common init for acpi_nfit_desc")
+Fixes: fbabd829fe76 ("acpi, nfit: fix module unload vs workqueue shutdown race")
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: All applicable <stable@vger.kernel.org>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/1963615.tdWV9SEqCh@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/cppc_acpi.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/acpi/nfit/core.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -161,8 +161,13 @@ show_cppc_data(cppc_get_perf_caps, cppc_
- show_cppc_data(cppc_get_perf_ctrs, cppc_perf_fb_ctrs, reference_perf);
- show_cppc_data(cppc_get_perf_ctrs, cppc_perf_fb_ctrs, wraparound_time);
+--- a/drivers/acpi/nfit/core.c
++++ b/drivers/acpi/nfit/core.c
+@@ -3445,6 +3445,8 @@ static void acpi_nfit_unregister(void *d
+ 	struct acpi_nfit_desc *acpi_desc = data;
  
--/* Check for valid access_width, otherwise, fallback to using bit_width */
--#define GET_BIT_WIDTH(reg) ((reg)->access_width ? (8 << ((reg)->access_width - 1)) : (reg)->bit_width)
-+/*
-+ * PCC reuses the access_width field as the subspace id, so only decode access
-+ * size for non-PCC registers. Otherwise, use the bit_width.
-+ */
-+#define GET_BIT_WIDTH(reg) (((reg)->access_width &&				\
-+			     (reg)->space_id != ACPI_ADR_SPACE_PLATFORM_COMM) ? \
-+			    (8 << ((reg)->access_width - 1)) : (reg)->bit_width)
+ 	nvdimm_bus_unregister(acpi_desc->nvdimm_bus);
++	/* The nvdimm_bus object may have been freed, so clear the pointer. */
++	acpi_desc->nvdimm_bus = NULL;
+ }
  
- /* Shift and apply the mask for CPC reads/writes */
- #define MASK_VAL_READ(reg, val) (((val) >> (reg)->bit_offset) &				\
-@@ -970,7 +975,6 @@ static int cpc_read(int cpu, struct cpc_
- 		 * by the bit width field; the access size is used to indicate
- 		 * the PCC subspace id.
- 		 */
--		size = reg->bit_width;
- 		vaddr = GET_PCC_VADDR(reg->address, pcc_ss_id);
- 	}
- 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
-@@ -1030,7 +1034,6 @@ static int cpc_write(int cpu, struct cpc
- 		 * by the bit width field; the access size is used to indicate
- 		 * the PCC subspace id.
- 		 */
--		size = reg->bit_width;
- 		vaddr = GET_PCC_VADDR(reg->address, pcc_ss_id);
- 	}
- 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
+ int acpi_nfit_init(struct acpi_nfit_desc *acpi_desc, void *data, acpi_size sz)
+@@ -3669,7 +3671,10 @@ static void acpi_nfit_put_table(void *ta
+ void acpi_nfit_shutdown(void *data)
+ {
+ 	struct acpi_nfit_desc *acpi_desc = data;
+-	struct device *bus_dev = to_nvdimm_bus_dev(acpi_desc->nvdimm_bus);
++	struct device *bus_dev;
++
++	if (!acpi_desc || !acpi_desc->nvdimm_bus)
++		return;
+ 
+ 	/*
+ 	 * Destruct under acpi_desc_lock so that nfit_handle_mce does not
+@@ -3684,6 +3689,7 @@ void acpi_nfit_shutdown(void *data)
+ 	mutex_unlock(&acpi_desc->init_mutex);
+ 	cancel_delayed_work_sync(&acpi_desc->dwork);
+ 
++	bus_dev = to_nvdimm_bus_dev(acpi_desc->nvdimm_bus);
+ 	/*
+ 	 * Bounce the nvdimm bus lock to make sure any in-flight
+ 	 * acpi_nfit_ars_rescan() submissions have had a chance to
+@@ -3751,13 +3757,14 @@ static int acpi_nfit_add(struct acpi_dev
+ 				sz - sizeof(struct acpi_table_nfit));
+ 
+ 	if (rc)
+-		return rc;
+-	return devm_add_action_or_reset(dev, acpi_nfit_shutdown, acpi_desc);
++		acpi_nfit_shutdown(acpi_desc);
++
++	return rc;
+ }
+ 
+ static int acpi_nfit_remove(struct acpi_device *adev)
+ {
+-	/* see acpi_nfit_unregister */
++	acpi_nfit_shutdown(dev_get_drvdata(&adev->dev));
+ 	return 0;
+ }
+ 
 
 
