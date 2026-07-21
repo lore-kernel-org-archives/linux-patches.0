@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19734470449;
-	Tue, 21 Jul 2026 19:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D5746E005;
+	Tue, 21 Jul 2026 19:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663609; cv=none; b=rkjtnITbfvZ+aWvKS1wT1HnzwSUsaw22LF3plipJ/jrZRDe5b8etLdEDjKd4ayDpOFf8NC7gOkQ4JDpGjTsKPPsj2AYYpS4r61k30rYTKx7KVRNoY36QOHnKR6yMqK+trnP5gP6P1zpl4CykRCSEfLTYTa/qxPJmwnHhykCX9m8=
+	t=1784663611; cv=none; b=RS4RlcEglrlAwifpr9fMtnjMSSsbxJq6wvfLg7R7RXF1DO10xrhRBWWzzhIqEVyvFkp8yGQcaWxxRfgtWDPj5v//mZpwX8I2EVBfWaa5ycUg5gnPXZqquMqFn0s3lfjuJ9U+fHLwLxOveyPa3w1AuAtvBkBx9vg+zFZuzVHgJo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663609; c=relaxed/simple;
-	bh=B+lW34V761bstdA9B/7KVPy9z7hlovm74pwcUHnWdOU=;
+	s=arc-20240116; t=1784663611; c=relaxed/simple;
+	bh=UqkY8QqNTf1PLgtDf91d3n91wHfaQ57fcPoXhS1vBLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NC15JOIbrxWepNA1OSUljjwNP599AlrH0UgmYEI8ni4qT0qHl1H7xnLw4HEEZv/XsceVqN2GD0RcxT42/9zyZ1BM/b6mDJJ1iSr7Qi6z8qBwQWNiXANoxmra/4rJsJ+IgW3nTl0jAvSS89DEuPBKlZcoO+KzqdGMIfxdICab2mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cnmn9UjW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rc0HFp+wHNgjoUVeADS9mTDPzT8qB/yRL+gMG1ir/zpZbiwVD1uAsmLjHhjGU4X1qQnh6b+K6PSlcV7TdGGcvbM9p8pU2FISGJrWTTKCiwsOiDh6cii6JvPC9/PdPWWdAhj7slHUMXJO3nidetaJZTQK2UbBTyWV/bxoFJOu5XU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwGjK/ep; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cnmn9UjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A8EE1F000E9;
-	Tue, 21 Jul 2026 19:53:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwGjK/ep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286481F000E9;
+	Tue, 21 Jul 2026 19:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663608;
-	bh=TZ+pZXghupJUfhmhqiCFuttEh0aZ6q5T+Nl1H62DC6w=;
+	s=korg; t=1784663610;
+	bh=ddpyBjnJ4BFr4gvwPdCXjLV5udE/KKrNBq5NSNgJTOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cnmn9UjW0jmB3H0g5fFRS/QTyw1+1MmPMTXuBIV9W4nTZRqKJVmdP17nKwrJaG4MZ
-	 vq8tGT2M7hLR/aMKdvT0Xek4gMIB3AX75S6Lg96Fg6e2MDRWePPZiNHHKas5W82390
-	 uG8ZMXr0YYI/mXRjdujcDIXD/BD/B7FsnmZ/dA4E=
+	b=fwGjK/epnhOuwAX6ikyaybE9p3csT0aNxsyvPxMAHO82FDKmTf2BpbF0j27MWjppq
+	 KO4qCQZ7+3IiR/y29i4tG8R0DngIPSwLYL4P/K8Ga+qi2j8zk4DJFe4H2sdNpMMffP
+	 HuYcEQLCs7pvxjLSuoD1wR81hYxyuOVPb+6A5I1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.12 0888/1276] batman-adv: tt: avoid request storms during pending request
-Date: Tue, 21 Jul 2026 17:22:11 +0200
-Message-ID: <20260721152505.919412107@linuxfoundation.org>
+Subject: [PATCH 6.12 0889/1276] batman-adv: fix VLAN priority offset
+Date: Tue, 21 Jul 2026 17:22:12 +0200
+Message-ID: <20260721152505.940455671@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,38 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 27c7d40008231ae4140d35501b60087a9de2d2c3 upstream.
+commit fdb3be00ba4dafa313e699d6b5b90d13f22f3f25 upstream.
 
-batadv_send_tt_request() allocates a tt_req_node when none exists for the
-destination originator node. This should prevent that a multiple TT
-requests are send at the same time to an originator.
+The batadv_skb_set_priority() receives an SKB with the inner ethernet
+header at position "offset". When it tries to extract the IPv4 and IPv6
+header, it needs to skip the ethernet header to get access to the IP
+header.
 
-But if allocation of the send buffer failed, this request must be cleaned
-up again. But indicator for such a failure is "ret == false". But the
-actual implementation is checking for "ret == true".
-
-The check must be inverted to not loose the information about the TT
-request directly after it was attempted to be sent out. This should avoid
-potential request storms.
+But for VLAN header, it performs the access with the struct vlan_ethhdr.
+This struct contains both both the ethernet header and the VLAN header. It
+is therefore incorrect to skip over the whole vlan_ethhdr size to get
+access to the vlan_ethhdr.
 
 Cc: stable@vger.kernel.org
-Fixes: 335fbe0f5d25 ("batman-adv: tvlv - convert tt query packet to use tvlv unicast packets")
+Fixes: c54f38c9aa22 ("batman-adv: set skb priority according to content")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/translation-table.c |    2 +-
+ net/batman-adv/main.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -3032,7 +3032,7 @@ static bool batadv_send_tt_request(struc
- out:
- 	batadv_hardif_put(primary_if);
+--- a/net/batman-adv/main.c
++++ b/net/batman-adv/main.c
+@@ -376,7 +376,7 @@ void batadv_skb_set_priority(struct sk_b
  
--	if (ret && tt_req_node) {
-+	if (!ret && tt_req_node) {
- 		spin_lock_bh(&bat_priv->tt.req_list_lock);
- 		if (!hlist_unhashed(&tt_req_node->list)) {
- 			hlist_del_init(&tt_req_node->list);
+ 	switch (ethhdr->h_proto) {
+ 	case htons(ETH_P_8021Q):
+-		vhdr = skb_header_pointer(skb, offset + sizeof(*vhdr),
++		vhdr = skb_header_pointer(skb, offset,
+ 					  sizeof(*vhdr), &vhdr_tmp);
+ 		if (!vhdr)
+ 			return;
 
 
