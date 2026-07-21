@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E83935C682;
-	Tue, 21 Jul 2026 22:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCCB44AB7B;
+	Tue, 21 Jul 2026 22:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671655; cv=none; b=SpddDTt7WXebwqxgnjKoc5HK9jZ1ktgfaNLXqjdsjYaFowAR/cAtUCtk4X6zkicApYJDRIcTpJCpOt6kkz7upser1QBm7UpJ/k+9pIjk8YCkGGjK7g2fNtGqQyiA2o9ITJA3UCkbOam6JyZq8YKkDV0GUdtIhb2otThQjeXFjdI=
+	t=1784671657; cv=none; b=apnsteM7fBsa9ZT+Q+zzujieiJVdkwuqskpKIRhutze+X5PXYlE9SOsHr41rJzk97jacYMlmxU5+2cpowWvx5D2BOXP6XmhC1qHo4NWnG27Sm2LV4umDVptNNV/UWO6dhHHEJ9uCeQr2KdidVDVHqu3OVvo3CBImHdAvMl9WtCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671655; c=relaxed/simple;
-	bh=Jrip5FcNmuiyhQ2l4Hn21oVmP8cgkzeWm4Om2SP1Ecg=;
+	s=arc-20240116; t=1784671657; c=relaxed/simple;
+	bh=pnI63PWzUdPPFnJqTxz8c4peYcLPG3M+OdbQdbyw1sw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I1BKeWrRKIL6UueVMh+iaVmzF6dHqwvHP4sVtQ3ElUR+AsoLfOz3CdoH3S0+sQkBdgqBxjRPk3tZuy74ktG7UAR9/kzaaCM2P4++t5riqFZ2MXBC24r52jRUX8B7CFU+0zXKAZAs9mHE53sndBkoX4H69T2uu7X9d/SsMaog+gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0UnUZ7d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jqs4ibcUMeY3wl5tBhPZR85KdJiVJBdsADtSTV+qPN5OOCLofUASZh84Y6AQ+KCcqxK3/vyOvtaAvuZhJqVJcJuFSrNRhlZaXW5N4XvSQW5H0CrmrdBFm5GWj1C2yAGs4z/+rci085cCVkpv9Y6pi0FE8GtS1gvWFCE9JsIzwgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YkbNKIGk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0UnUZ7d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DE91F000E9;
-	Tue, 21 Jul 2026 22:07:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YkbNKIGk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2813A1F000E9;
+	Tue, 21 Jul 2026 22:07:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671654;
-	bh=xdpkCm1RpTn/9Fc3wg749WvwQKC87oyf8QKD06VciXQ=;
+	s=korg; t=1784671656;
+	bh=8wdoO8fEQsrwKA3RlIE8SW9Uuzbwdl6jV1bF1ccZcRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y0UnUZ7diqiuP4kNLs/8BYD+o80iunM+6NyS9HuBt986qqDAyPvbio5fn1VEMGZs3
-	 jj5lIY7NbFlM/LyJuM5kzs2e3YMeKZSVB+/kG18/6eqKezcV+0Fb+ZOmt+idHpnVsz
-	 ud9hwa6V/sQ2F16Jiwfff5CRvgYxZp23PGPYXkIA=
+	b=YkbNKIGklT+GdLyAb5yAsOVwJZS3aEaVVZkiIELmKZr0o8vwaLNVtZLkaEViM/LNp
+	 7eJUvv4Nm/9sbS1sGnndBLwxLKm1CqJBGmapFhShrTg8Z7okfZaML0UbC01wcqRrrR
+	 HqbIUPjGOXPQ6Y3xDACe8bqnoOZlbbgve0lPaFVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Xie Yongji <xieyongji@bytedance.com>,
+	Zhang Tianci <zhangtianci.1997@bytedance.com>,
+	Jason Wang <jasowang@redhat.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 311/843] ALSA: seq: Clear variable event pointer on read
-Date: Tue, 21 Jul 2026 17:19:06 +0200
-Message-ID: <20260721152413.020119908@linuxfoundation.org>
+Subject: [PATCH 5.15 329/843] vduse: Requeue failed read to send_list head
+Date: Tue, 21 Jul 2026 17:19:24 +0200
+Message-ID: <20260721152413.419401641@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -45,52 +48,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Zhang Tianci <zhangtianci.1997@bytedance.com>
 
-[ Upstream commit 705dd6dcbc0ea87351c660c1a6443f85f1001c76 ]
+[ Upstream commit 373ec43ded742b2f3aecf14731ffe1a57f438f38 ]
 
-snd_seq_read() copies a queued variable-length event header to userspace
-before expanding the payload. Queued variable-length events use
-SNDRV_SEQ_EXT_CHAINED internally, and data.ext.ptr points at the first
-extension cell.
+When copy_to_iter() fails in vduse_dev_read_iter(), put the message back
+at the head of send_list to preserve FIFO ordering and retry the oldest
+pending request first.
 
-The read side strips SNDRV_SEQ_EXT_* bits from data.ext.len before the
-copy, but it leaves data.ext.ptr untouched. A userspace sequencer client
-can therefore write a direct variable event to itself and read back the
-extension-cell kernel address from the returned header.
-
-Clear the temporary header pointer before copy_to_user(). The original
-queued event remains unchanged and is still passed to
-snd_seq_expand_var_event(), so payload expansion keeps using the
-internal chain.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Link: https://patch.msgid.link/20260607004129.61345-1-kylebot@openai.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: c8a6153b6c59 ("vduse: Introduce VDUSE - vDPA Device in Userspace")
+Reported-by: Michael S. Tsirkin <mst@redhat.com>
+Suggested-by: Xie Yongji <xieyongji@bytedance.com>
+Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
+Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260226115550.1814-2-zhangtianci.1997@bytedance.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_clientmgr.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/vdpa/vdpa_user/vduse_dev.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
-index d756b7df90457c..37657f7d57997f 100644
---- a/sound/core/seq/seq_clientmgr.c
-+++ b/sound/core/seq/seq_clientmgr.c
-@@ -464,6 +464,7 @@ static ssize_t snd_seq_read(struct file *file, char __user *buf, size_t count,
+diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
+index bd5d78fd926db5..1e9f15608c5c7e 100644
+--- a/drivers/vdpa/vdpa_user/vduse_dev.c
++++ b/drivers/vdpa/vdpa_user/vduse_dev.c
+@@ -171,6 +171,12 @@ static void vduse_enqueue_msg(struct list_head *head,
+ 	list_add_tail(&msg->list, head);
+ }
  
- 			memcpy(&tmpev, &cell->event, aligned_size);
- 			tmpev.data.ext.len &= ~SNDRV_SEQ_EXT_MASK;
-+			tmpev.data.ext.ptr = NULL;
- 			if (copy_to_user(buf, &tmpev, aligned_size)) {
- 				err = -EFAULT;
- 				break;
++static void vduse_enqueue_msg_head(struct list_head *head,
++				   struct vduse_dev_msg *msg)
++{
++	list_add(&msg->list, head);
++}
++
+ static void vduse_dev_broken(struct vduse_dev *dev)
+ {
+ 	struct vduse_dev_msg *msg, *tmp;
+@@ -331,7 +337,7 @@ static ssize_t vduse_dev_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 	spin_lock(&dev->msg_lock);
+ 	if (ret != size) {
+ 		ret = -EFAULT;
+-		vduse_enqueue_msg(&dev->send_list, msg);
++		vduse_enqueue_msg_head(&dev->send_list, msg);
+ 		goto unlock;
+ 	}
+ 	vduse_enqueue_msg(&dev->recv_list, msg);
 -- 
 2.53.0
 
