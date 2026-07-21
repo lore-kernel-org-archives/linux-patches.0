@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CDF46C4D9;
-	Tue, 21 Jul 2026 16:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1AB46A5FB;
+	Tue, 21 Jul 2026 16:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649733; cv=none; b=ZCbl25fcLSgXQylv8yxpWp22BQEBn2zLSODed8ZX/SIUG6vI69Y5sjEaMM2wkWk8d8ruDiDZ06c8cWvFajDpwMWGoA1jgIyG+aaGLuSfSN6WDJuNTbS4m8AVLG7Pbn6ncWzN+I9xxjcxaAEISsFfrNZS1jWzHiWsCBApHPkwukA=
+	t=1784649737; cv=none; b=s7ofzp7TdXPdso6MW7SnBdWADjuB+IHydMeC7FjC9FacH9FAH/y/EqdrNorxOBp9Wa64Ec/WZh8QVK/xIZ2KZixXnD/9GsvSzh6bFwF/KQGt+4jpq1IW5z34m0nN1DBdqccohk8SE5RZDzYuSghz64bDpZlnYCDeFLwvhmYk4+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649733; c=relaxed/simple;
-	bh=J41xeem3HYMGZrY5FtypFZKH7O2rnj4E29M+mFh5zsE=;
+	s=arc-20240116; t=1784649737; c=relaxed/simple;
+	bh=b8wFQoHydavPw9bmeYlTz7q+m9QhI55ttXAuiwdCWUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ONUGme12C2HZswRxPwXx4zE6aNuTtD4JO7N7DoxMZntpkXIoYcmrMQ11mYLdXaPwQXLWqwwiFr42qrKX0U74MeZRA8Rsx1Kd6q5UV4j4DxsHMcKppOYywz9ukkIMgw+Jh4L7LjdKV8zDyYLE/viVdhKmSQwgpA4e90lyxiGizMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QvOhMoIC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j2kknYSbchun9qlSXOQr4TElihHwP2vLOb28KCtLCVXLWHZYpRXaaRzSP57Bc/GNcwKE1TxU2pXSpd6BLiyizIwYGlzSiM2/zilFe6RRA9LagI4SfKkILgxvWYIJno/zb7W9QrL9yvGfjZQFuZZms8XOyuYTJJwlm5BffI2X/c0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IooAxvAp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QvOhMoIC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A2B1F000E9;
-	Tue, 21 Jul 2026 16:02:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IooAxvAp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E961F000E9;
+	Tue, 21 Jul 2026 16:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649731;
-	bh=16JS23yVqgZ5O5zTFPb5NucrES8NyZYvLEAeR1ATDRI=;
+	s=korg; t=1784649736;
+	bh=76RsKCBLzWRuUZ2vo3hEqYivnhWxNmzfeVPGQNzggF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QvOhMoICbeLib23zgnIB3kiopxy2Rmuk8RgXQ659Ru23Y2OpbuVfaux25F7OZ50dV
-	 cYu251vYe+tI7b4U5ET1BFuQ2iZWR/qoNcZhS/SQqhzBldDK0RNwkIPSTeL9J0olsm
-	 Yl/UvzgB3OdRdnyc6IwNrUV9Zqhge4cL3JxA1Wrk=
+	b=IooAxvApXcIQ2QV82KzTollrswP6UWl9lk/2NqPaUxfz2iyRCH4gTZ2fdMNQau0yg
+	 QLqaTzt7LcwIMC9FNORjtxyOjcqy4BJ1iu/dMxhybLoSVfLEzeFn4gXtU++kYTwhgD
+	 cN+s2ZcsKqlsR6LlD+p+r06XA24ETaGcQ7HKv9G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0685/2077] Bluetooth: vhci: validate devcoredump state before side effects
-Date: Tue, 21 Jul 2026 17:05:58 +0200
-Message-ID: <20260721152608.952895183@linuxfoundation.org>
+Subject: [PATCH 7.1 0645/2077] hwmon: (gpd-fan): fix race condition between device removal and sysfs access
+Date: Tue, 21 Jul 2026 17:05:18 +0200
+Message-ID: <20260721152608.019071671@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,52 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 88c2404a3c59c3126453919388dbd5ed98ed01bd ]
+[ Upstream commit 1fb4397509bd8701d323e81ac9a97c2e24ed49eb ]
 
-The VHCI force_devcoredump debugfs hook accepts a small test record from
-userspace. It validates the requested terminal state only after
-registering, initializing and appending a Bluetooth devcoredump.
+Replace the manual gpd_fan_remove() callback with a devres-managed
+action using devm_add_action_or_reset(). The original remove hook
+resets the fan to AUTOMATIC mode, but the hwmon sysfs interface
+(registered with devm_hwmon_device_register_with_info()) remains
+active until after the remove callback completes. This creates a
+race window where a concurrent userspace sysfs access can interleave
+with the EC I/O sequence, potentially corrupting EC registers.
 
-As a result, an invalid state returns -EINVAL but still leaves queued
-devcoredump work behind. With a non-zero timeout field, the rejected
-write can still emit a devcoredump after the timeout expires.
+Using devm_add_action_or_reset() registers the reset function as a
+devres action. Due to the LIFO release order of devres, the hwmon
+device is unregistered (sysfs removed) before the reset action
+executes, eliminating the race condition.
 
-Reject unsupported states before allocating the skb or changing the HCI
-devcoredump state machine.
-
-Fixes: ab4e4380d4e1 ("Bluetooth: Add vhci devcoredump support")
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 0ab88e239439 ("hwmon: add GPD devices sensor driver")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://lore.kernel.org/r/4400828422cf3a88adad4db224d9efccdb1049d2.1781055639.git.xiaopei01@kylinos.cn
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_vhci.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/hwmon/gpd-fan.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_vhci.c b/drivers/bluetooth/hci_vhci.c
-index 2762eacf7f20ed..eddb32b30539ff 100644
---- a/drivers/bluetooth/hci_vhci.c
-+++ b/drivers/bluetooth/hci_vhci.c
-@@ -337,7 +337,17 @@ static ssize_t force_devcd_write(struct file *file, const char __user *user_buf,
- 	if (copy_from_user(&dump_data, user_buf, count))
- 		return -EFAULT;
+diff --git a/drivers/hwmon/gpd-fan.c b/drivers/hwmon/gpd-fan.c
+index 745b3fb9e3a49d..4615f98771ddf9 100644
+--- a/drivers/hwmon/gpd-fan.c
++++ b/drivers/hwmon/gpd-fan.c
+@@ -609,6 +609,16 @@ static void gpd_init_ec(struct gpd_fan_data *data)
+ 		gpd_win4_init_ec(data);
+ }
  
-+	switch (dump_data.state) {
-+	case HCI_DEVCOREDUMP_DONE:
-+	case HCI_DEVCOREDUMP_ABORT:
-+	case HCI_DEVCOREDUMP_TIMEOUT:
-+		break;
-+	default:
-+		return -EINVAL;
++static void gpd_fan_reset_hardware(void *pdata)
++{
++	struct gpd_fan_data *data = pdata;
++
++	if (data) {
++		data->pwm_enable = AUTOMATIC;
++		gpd_set_pwm_enable(data, AUTOMATIC);
 +	}
++}
 +
- 	data_size = count - offsetof(struct devcoredump_test_data, data);
+ static int gpd_fan_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -617,6 +627,7 @@ static int gpd_fan_probe(struct platform_device *pdev)
+ 	struct device *hwdev;
+ 	struct gpd_fan_data *data;
+ 	const struct gpd_fan_drvdata *match;
++	int ret;
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_IO, 0);
+ 	if (!res)
+@@ -644,6 +655,11 @@ static int gpd_fan_probe(struct platform_device *pdev)
+ 	dev_set_drvdata(dev, data);
+ 
+ 	gpd_init_ec(data);
 +
- 	skb = alloc_skb(data_size, GFP_ATOMIC);
- 	if (!skb)
- 		return -ENOMEM;
++	ret = devm_add_action_or_reset(dev, gpd_fan_reset_hardware, data);
++	if (ret)
++		return ret;
++
+ 	hwdev = devm_hwmon_device_register_with_info(dev,
+ 						     DRIVER_NAME,
+ 						     data,
+@@ -655,19 +671,8 @@ static int gpd_fan_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static void gpd_fan_remove(struct platform_device *pdev)
+-{
+-	struct gpd_fan_data *data = dev_get_drvdata(&pdev->dev);
+-
+-	if (data) {
+-		data->pwm_enable = AUTOMATIC;
+-		gpd_set_pwm_enable(data, AUTOMATIC);
+-	}
+-}
+-
+ static struct platform_driver gpd_fan_driver = {
+ 	.probe = gpd_fan_probe,
+-	.remove = gpd_fan_remove,
+ 	.driver = {
+ 		.name = KBUILD_MODNAME,
+ 	},
 -- 
 2.53.0
 
