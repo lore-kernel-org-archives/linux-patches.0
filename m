@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512CF3B995D;
-	Tue, 21 Jul 2026 21:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A03343D502;
+	Tue, 21 Jul 2026 21:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667952; cv=none; b=Htsz3Pr6DREHABufhcgFD4CurUIczJi17kXIFaITTdQLH/oRXLQznKwZcs/34L0gAIjvPSKn2b8f/WI4TINGLkt2gLEO4b4LJrbQjFdZuUUgeQaRTcDGhrrcRT20lIZBV/g2fPFI+E4HO7fOTa1r8T0L9GUqOVMHWhZctNQ7/Ik=
+	t=1784667955; cv=none; b=TK9O4dY6Q8+9rzoPNRMQ1CtwDC5SjOPWvg3KGJltF1nUw3sPUGLF85qKFdKXT46kQok/gH2HN61SVXzSUKb4PgD8dA6e++i5hNqcgRNu821JPHtrZONV1vdq1pLudHInrxo1ke0DbQVeqpS4OlKG87Bu8IaXmYSDyXkdbytd5dU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667952; c=relaxed/simple;
-	bh=P22/r+k35SYrUJ7sGExE+zZq/iwnxPSi1844PRh7KqY=;
+	s=arc-20240116; t=1784667955; c=relaxed/simple;
+	bh=MgapAoGdxagP2Ml8NS5bNloh27p6esTfG35fjq3oxAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QzY8wrJlEh6WbToCidCNXphtj0SzPhtZ4065W7Tf2Df3MbiEzO0jFL4pOAuMptPPcgV9dp391m13nx7owtwsBgL0UTrPWldo9UYxtheWW32fuaL1oapN/MvJhVGrkp16T+zpf0scxFWN3vJC8cQ/dy+M8/6ru8p4gdDi1YDpwRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1hqex56c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aL43EdYR7pqwVErveJkQ5p+g7PDd7O2KSmYbyiUrol/WByjoUEtJ/vA0zc3UemevSIcjYoV+9JcW3jDcIH0872kHX6/hRKes7ZKK3q+E2JDq77r2umvbWarmqhygbUNnbm/3LiDRYv44quyN8Qw4BnDELJnXhqMKfmwy0JRkRDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKqx/l+X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1hqex56c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A741F000E9;
-	Tue, 21 Jul 2026 21:05:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKqx/l+X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA9A1F000E9;
+	Tue, 21 Jul 2026 21:05:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667951;
-	bh=wRI+YuKHhVNpadSq7TCdCDuh52iKDAvxHHuQ5BEFTgk=;
+	s=korg; t=1784667953;
+	bh=rNOxnSiHGmrHzcOo6ZgsoHq3SNr//ZJsBnW4dwC+DCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1hqex56cKdsAAjy9syRHuZUPbwwDLmOytIEN5ULlS2ocPH7sABG1IccWnQepzqxud
-	 /ARrMctMmE/Eus5jQCsrKH8vKmW8SXY525oHknyA+3CJG+Z/HWT73NuoNF/8hY9SHB
-	 ypasCVxJSWEKxAFCxMJRNah5Ty4hq6UsRY2Gxzvc=
+	b=HKqx/l+XzXED/V04Cqd8ogsh3HrbAoM2nAdti/DlDQ+uftgLm4HYGSx0mu9Rr6QH7
+	 3azz946WDQF4xdQ3hlxEjA2FYgnIhYlkagg0Lc3/BxQ/lAFV+iPyeCyHgnTVG8J8vi
+	 Bj4Q1ap9bfmxBW2DvYlbGVFrkizqQQxvOcJ1TWv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 1256/1266] Bluetooth: 6lowpan: Fix using chan->conn as indication to no remote netdev
-Date: Tue, 21 Jul 2026 17:28:13 +0200
-Message-ID: <20260721152509.930907327@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.6 1257/1266] selftests/hid: ensure CKI can compile our new tests on old kernels
+Date: Tue, 21 Jul 2026 17:28:14 +0200
+Message-ID: <20260721152509.953531062@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -49,62 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-commit d38eaf611839b85ade3dd3db309dbc8aaaaf0095 upstream.
+commit fcdf830ea634cf0ee6543b6cd6a4932f92464fc7 upstream.
 
-b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding
-conn ref") don't reset the chan->conn to NULL anymore making the bt#
-netdev not be remove once the last l2cap_chan_del is removed.
+In the same way than commit ae7487d112cf ("selftests/hid: ensure we can
+compile the tests on kernels pre-6.3") we should expose struct hid_bpf_ops
+when it's not available in vmlinux.h.
 
-Instead of restoring the original behavior this remove the logic of
-keeping the interface after the last channel is removed because it
-never worked as intended and the l2cap_chan_del always detach its
-l2cap_conn which results in always removing the channel anyway.
+So unexpose an eventual struct hid_bpf_ops, include vmlinux.h, and
+re-export struct hid_bpf_ops.
 
-Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: d7696738d66b ("selftests/hid: convert the hid_bpf selftests with struct_ops")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/r/202406270328.bscLN1IF-lkp@intel.com/
+Link: https://patch.msgid.link/20240701-fix-cki-v2-1-20564e2e1393@kernel.org
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/6lowpan.c |   18 +++---------------
- 1 file changed, 3 insertions(+), 15 deletions(-)
+ tools/testing/selftests/hid/progs/hid_bpf_helpers.h |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -781,20 +781,10 @@ static void chan_close_cb(struct l2cap_c
- 	struct lowpan_btle_dev *dev = NULL;
- 	struct lowpan_peer *peer;
- 	int err = -ENOENT;
--	bool last = false, remove = true;
-+	bool last = false;
+--- a/tools/testing/selftests/hid/progs/hid_bpf_helpers.h
++++ b/tools/testing/selftests/hid/progs/hid_bpf_helpers.h
+@@ -7,6 +7,7 @@
  
- 	BT_DBG("chan %p conn %p", chan, chan->conn);
+ /* "undefine" structs and enums in vmlinux.h, because we "override" them below */
+ #define hid_bpf_ctx hid_bpf_ctx___not_used
++#define hid_bpf_ops hid_bpf_ops___not_used
+ #define hid_report_type hid_report_type___not_used
+ #define hid_class_request hid_class_request___not_used
+ #define hid_bpf_attach_flags hid_bpf_attach_flags___not_used
+@@ -24,6 +25,7 @@
+ #include "vmlinux.h"
  
--	if (chan->conn && chan->conn->hcon) {
--		if (!is_bt_6lowpan(chan->conn->hcon))
--			return;
--
--		/* If conn is set, then the netdev is also there and we should
--		 * not remove it.
--		 */
--		remove = false;
--	}
--
- 	spin_lock(&devices_lock);
+ #undef hid_bpf_ctx
++#undef hid_bpf_ops
+ #undef hid_report_type
+ #undef hid_class_request
+ #undef hid_bpf_attach_flags
+@@ -68,6 +70,20 @@ enum hid_class_request {
+ 	HID_REQ_SET_PROTOCOL		= 0x0B,
+ };
  
- 	list_for_each_entry_rcu(entry, &bt_6lowpan_devices, list) {
-@@ -821,10 +811,8 @@ static void chan_close_cb(struct l2cap_c
- 
- 		ifdown(dev->netdev);
- 
--		if (remove) {
--			INIT_WORK(&entry->delete_netdev, delete_netdev);
--			schedule_work(&entry->delete_netdev);
--		}
-+		INIT_WORK(&entry->delete_netdev, delete_netdev);
-+		schedule_work(&entry->delete_netdev);
- 	} else {
- 		spin_unlock(&devices_lock);
- 	}
++struct hid_bpf_ops {
++	int			hid_id;
++	u32			flags;
++	struct list_head	list;
++	int (*hid_device_event)(struct hid_bpf_ctx *ctx, enum hid_report_type report_type,
++				u64 source);
++	int (*hid_rdesc_fixup)(struct hid_bpf_ctx *ctx);
++	int (*hid_hw_request)(struct hid_bpf_ctx *ctx, unsigned char reportnum,
++			       enum hid_report_type rtype, enum hid_class_request reqtype,
++			       u64 source);
++	int (*hid_hw_output_report)(struct hid_bpf_ctx *ctx, u64 source);
++	struct hid_device *hdev;
++};
++
+ #ifndef BPF_F_BEFORE
+ #define BPF_F_BEFORE (1U << 3)
+ #endif
 
 
