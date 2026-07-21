@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E258F3BE154;
-	Tue, 21 Jul 2026 21:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAB63BE141;
+	Tue, 21 Jul 2026 21:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668030; cv=none; b=trWTkQlV+UgMFokvqt690YHD7WXAsThMwX3P+J7n4b/A5awwzQqESIt/OIbI2Y2nwD6Uu0VrdWEx5v9exY7GibEoW54LjpNQ9eXC5694d154Exnl/NhvXwxjqzmHNecRDL+ZPNpVCotL24wg0M0GrXnBe5ZnkI/8xVQRygCEpEc=
+	t=1784668032; cv=none; b=p9c7HIIymVFxq7v0zPQAqLCH5z+IQic29Gyc2VciOLIzef66vlc243/rRt4jvzjwm1nKG1Qxncfb6eqi14SYc/SMnk8KkWrBgkW97Ac8OW0ylmewTG8HucEkVwLczI3eD2Hj+Dw40xHQ8ndCwhZ8jtlR3T9LD8ztR6xdWgMEU9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668030; c=relaxed/simple;
-	bh=3YJ6YZagQOCAMw67IlQIiliDD2EFXJCzUV0thROeboA=;
+	s=arc-20240116; t=1784668032; c=relaxed/simple;
+	bh=tFUgusTMXYp9pkGcuLqvHarQEdaMhHyI7qh3R6N4Q0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XrRlV3MG5memTwRJpZPAj8Sz3GApLkv88IwEr31uUbpUtGoyETm6b32FXEUZ6/1z9HfJnIDuGpgfmQUAXoVz9w28DkrG+1LFYCkNs9JzofOzI9H+JaKDqO9oas6hI0sAbZuIGWfMqWaOQHVYfj9CzkZNErI/S97vCFlEIuyQ9xA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=en5GcuOY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=clNDnPFvQNDV+2yC3D2N9Vt2KCOkg3OMXhmnNnpVqzxd5oRIJR8grO3cB/M94adw7j5A8aKqQNuFrLm+HViWCU/S3nCTm481rKCfPqe34f2N8vyTg109fzBlUMTUTO8b1M8vxv2kK9fuECGlHPD9mHUVgc/8kDyE8qlEgHjnk38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWcWCZTX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="en5GcuOY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4AD1F00A3A;
-	Tue, 21 Jul 2026 21:07:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWcWCZTX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F423D1F00A3A;
+	Tue, 21 Jul 2026 21:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668028;
-	bh=6psvRNKgSayN97qkeBUz1TG94gCobEsKQBtPM4D9ZtQ=;
+	s=korg; t=1784668031;
+	bh=npbQN6xtBxI6Wo5U3+XeSmdxNaxAEmjt0VkdNPpB6o4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=en5GcuOYb9GcAuefmzBlw9yZtqZGgOHmm8OGZTUJrGP/N+OQo5kWEkBmbvMLJ8T1r
-	 FLl7rwLz6DjVuru5vYnz49pXqV5RhNe7JnenPhmhlDDiH5XAMAKhVPq0KdBHSIA60h
-	 fTBK+kqdX3HcM9z/X6xqTfiJfS+lIjhjXzlJedb8=
+	b=bWcWCZTXtbn0OYECw89qjX3ZfhUo68nj2+SKupDmuq9lY/MLKDsN8uoy8zEzVlxCB
+	 j7QPYY/qt80aVkpOAjChzeYg4PN84151SncQMaN3ByfDgbaxHoelS/0Y4YUty9F89J
+	 mRBfZycqPkhJevdKOmptcCP0MkHwifffyy2JlFdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0022/1067] block: Avoid mounting the bdev pseudo-filesystem in userspace
-Date: Tue, 21 Jul 2026 17:10:23 +0200
-Message-ID: <20260721152425.032867153@linuxfoundation.org>
+Subject: [PATCH 6.1 0023/1067] rpmsg: char: Fix use-after-free on probe error path
+Date: Tue, 21 Jul 2026 17:10:24 +0200
+Message-ID: <20260721152425.055171699@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,78 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit f73aa66dffcb8e61e78f01b56163ec16a15d06d2 ]
+[ Upstream commit 1ff3f528e67d20e2b1483dcaba899dc7832b2e6b ]
 
-The bdev pseudo-filesystem is an internal kernel filesystem with which
-userspace should not interfere. Unregister it so that userspace cannot
-even attempt to mount it.
+rpmsg_chrdev_probe() stores the newly allocated eptdev in the default
+endpoint's priv pointer before calling rpmsg_chrdev_eptdev_add(). If
+rpmsg_chrdev_eptdev_add() then fails, its error path frees eptdev while
+the default endpoint may still dispatch callbacks with the stale priv
+pointer.
 
-This fixes a bug [1] that occurs when attempting to access files,
-because the system call move_mount() uses pointers declared in the
-inode_operations structure, which for the bdev pseudo-filesystem
-are always equal to 0. `inode->i_op = &empty_iops;`
+Avoid publishing eptdev through the default endpoint until
+rpmsg_chrdev_eptdev_add() succeeds. Messages received before the priv
+pointer is published should be ignored by rpmsg_ept_cb(). Flow-control
+updates can hit rpmsg_ept_flow_cb() in the same window, so make both
+callbacks return success when priv is NULL.
 
-[1]
-
- BUG: kernel NULL pointer dereference, address: 0000000000000000
- #PF: supervisor instruction fetch in kernel mode
- #PF: error_code(0x0010) - not-present page
- PGD 23380067 P4D 23380067 PUD 23381067 PMD 0
- Oops: 0010 [#1] PREEMPT SMP KASAN NOPTI
- CPU: 2 PID: 17125 Comm: syz-executor.0 Not tainted 6.1.155-syzkaller-00350-g84221fde2681 #0
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
- RIP: 0010:0x0
-
- Call Trace:
- <TASK>
- lookup_open.isra.0+0x700/0x1180 fs/namei.c:3460
- open_last_lookups fs/namei.c:3550 [inline]
- path_openat+0x953/0x2700 fs/namei.c:3780
- do_filp_open+0x1c5/0x410 fs/namei.c:3810
- do_sys_openat2+0x171/0x4d0 fs/open.c:1318
- do_sys_open fs/open.c:1334 [inline]
- __do_sys_openat fs/open.c:1350 [inline]
- __se_sys_openat fs/open.c:1345 [inline]
- __x64_sys_openat+0x13c/0x1f0 fs/open.c:1345
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/all/20131010004732.GJ13318@ZenIV.linux.org.uk/T/#
+Fixes: bc69d1066569 ("rpmsg: char: Introduce the "rpmsg-raw" channel")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260521072857.5078-1-arefev@swemel.ru
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/r/20260601183247.1962010-1-dbgh9129@gmail.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bdev.c |    4 ----
- 1 file changed, 4 deletions(-)
+ drivers/rpmsg/rpmsg_char.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -478,16 +478,12 @@ EXPORT_SYMBOL_GPL(blockdev_superblock);
+--- a/drivers/rpmsg/rpmsg_char.c
++++ b/drivers/rpmsg/rpmsg_char.c
+@@ -100,6 +100,9 @@ static int rpmsg_ept_cb(struct rpmsg_dev
+ 	struct rpmsg_eptdev *eptdev = priv;
+ 	struct sk_buff *skb;
  
- void __init bdev_cache_init(void)
- {
--	int err;
- 	static struct vfsmount *bd_mnt;
++	if (!eptdev)
++		return 0;
++
+ 	skb = alloc_skb(len, GFP_ATOMIC);
+ 	if (!skb)
+ 		return -ENOMEM;
+@@ -448,6 +451,7 @@ static int rpmsg_chrdev_probe(struct rpm
+ 	struct rpmsg_channel_info chinfo;
+ 	struct rpmsg_eptdev *eptdev;
+ 	struct device *dev = &rpdev->dev;
++	int ret;
  
- 	bdev_cachep = kmem_cache_create("bdev_cache", sizeof(struct bdev_inode),
- 			0, (SLAB_HWCACHE_ALIGN|SLAB_RECLAIM_ACCOUNT|
- 				SLAB_MEM_SPREAD|SLAB_ACCOUNT|SLAB_PANIC),
- 			init_once);
--	err = register_filesystem(&bd_type);
--	if (err)
--		panic("Cannot register bdev pseudo-fs");
- 	bd_mnt = kern_mount(&bd_type);
- 	if (IS_ERR(bd_mnt))
- 		panic("Cannot create bdev pseudo-fs");
+ 	memcpy(chinfo.name, rpdev->id.name, RPMSG_NAME_SIZE);
+ 	chinfo.src = rpdev->src;
+@@ -460,13 +464,17 @@ static int rpmsg_chrdev_probe(struct rpm
+ 	/* Set the default_ept to the rpmsg device endpoint */
+ 	eptdev->default_ept = rpdev->ept;
+ 
++	ret = rpmsg_chrdev_eptdev_add(eptdev, chinfo);
++
++	if (ret)
++		return ret;
+ 	/*
+ 	 * The rpmsg_ept_cb uses *priv parameter to get its rpmsg_eptdev context.
+-	 * Storedit in default_ept *priv field.
++	 * Stored it in default_ept *priv field.
+ 	 */
+ 	eptdev->default_ept->priv = eptdev;
+ 
+-	return rpmsg_chrdev_eptdev_add(eptdev, chinfo);
++	return 0;
+ }
+ 
+ static void rpmsg_chrdev_remove(struct rpmsg_device *rpdev)
 
 
