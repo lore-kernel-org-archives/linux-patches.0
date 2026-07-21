@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2292D4582C8;
-	Tue, 21 Jul 2026 21:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C19147127E;
+	Tue, 21 Jul 2026 21:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668133; cv=none; b=NtGb2kwb264MeHJfilfj7wpkjc/32lUjRoXpp39A4P+h36kNeKtNXv1LwN6iZqoARGfZ9w6PTdKQqp6tTrmAUTrV7c9vWS/QJKi6SLavRX5iddcQ2n1QP/GbF/g2D66jeuc83lYQWxIc7buGdpK1Wy3b9X3HLDxE1NvrUcesHGk=
+	t=1784668134; cv=none; b=jlFyheEXyPFHGVgm5cZYU8Pp1DRdyYiBzr3+dzOQye98nISK0KCIE9y13EGwkxvDJDvcUQHZWexoeRlgKmYxeGQdv91x9Gh9db5X+AMmjjhvRPdYYDX5YYNnRrtapxJqSQol7Cg3j8MOtzBvO4nX4G1ZFlpqYAPFYxqKz87ttXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668133; c=relaxed/simple;
-	bh=K35vV3afKL1OF81rHhMg0wmOKFX2H9BOXcv/L4PZ3vM=;
+	s=arc-20240116; t=1784668134; c=relaxed/simple;
+	bh=NnYp6nNvyveGYkkloj+dGTwhLlsXKdQF2BHQG0vFlS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TkXNFOeuWyLXyZoYBhcQqKxRCzrtd4+Xn+7RNnzPBByFw5NpxJXHGe3hWWY5+wpHkJ1uMoZKLgFwkNbg7Gggq2kl+D/XogDznKZHos2x+Ym//gPO9ZUmqtc7DeckRcicdXaOGpWxc4krSMRdTbpKXFooEfIdEd73PriCBJUewcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tp069IUC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WdYrWzm+FUwUX8xF8HvgQzB3jNHfxHO+BqD7yxTMo7CvqPw72lkTneu2vqD+rQkau3blzajn/GL3PNtWUVwXMZe4hZyn4i8ampakv/D1ZJyjmFxsZN3ZokK4E+3dNTA8zqrkXqhatFMiRpYiSlYI+6RjvC5gkbDUuOB6qDVSE4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIA5VXne; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tp069IUC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5B81F00A3A;
-	Tue, 21 Jul 2026 21:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIA5VXne"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAE01F000E9;
+	Tue, 21 Jul 2026 21:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668131;
-	bh=1PMdIzFy6FzvB4Y5XDCSiM/d8FRCbVSnjeVATkIHK/c=;
+	s=korg; t=1784668129;
+	bh=+1VkxW1eixH3ZsZp+1KzxxuKNcsmrVL/7Rzr1dvR35Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tp069IUCMxxMPoW5pPUcNGQDBt81rB2Rg7Or1OLrNgNufbSqv7VKeJNBT4olsminj
-	 Cg8nBMHuuUCEXjdnSxopY+1oCZ4iRRk0HZ3c4pyp3dEYGg1zSnSgRcvdH5supic3FT
-	 SaKWRnjxv9eEyuRLoUAYywGw00DkINJic/rx6+/Y=
+	b=dIA5VXne8thm1dDSaH3UWL6Dcz2hy1vJIVPl/bOg3Q9ufmFi3Kd2k1Me/L5plmkFe
+	 ws3s0nfC8lIagbvh9+hTFtimT+vZPySMnCBck7foV6YO6jXSBh8CzKQmrINzgVbRQq
+	 ZGbqBKkfqnIfSUZZFTBxVsU66wcHl/e/YnWW9kS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.1 0061/1067] iio: gyro: bmg160: bail out when bandwidth/filter is not in table
-Date: Tue, 21 Jul 2026 17:11:02 +0200
-Message-ID: <20260721152425.932618316@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Griffin Kroah-Hartman <griffin@kroah.com>
+Subject: [PATCH 6.1 0052/1067] usb: gadget: function: rndis: add length check to response query
+Date: Tue, 21 Jul 2026 17:10:53 +0200
+Message-ID: <20260721152425.728875527@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,68 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-commit 8320c77e67382d5d55d77043a5f60a867d408a2b upstream.
+commit 95f90eea070837f7c72207d5520f805bdefc3bc5 upstream.
 
-bmg160_get_filter() walks bmg160_samp_freq_table[] looking for the entry
-matching the bw_bits value read from the chip:
+Add variable representations for BufLength and BufOffset in
+rndis_query_response(), and perform a length check on them.
 
-	for (i = 0; i < ARRAY_SIZE(bmg160_samp_freq_table); ++i) {
-		if (bmg160_samp_freq_table[i].bw_bits == bw_bits)
-			break;
-	}
-	*val = bmg160_samp_freq_table[i].filter;
+This is identical to how rndis_set_response() handles these parameters.
 
-If no entry matches, i ends up equal to the array size and the next line
-reads one slot past the end. bmg160_set_filter() has the same shape, driven
-by 'val' instead of bw_bits.
-
-smatch flags both:
-
-  drivers/iio/gyro/bmg160_core.c:204 bmg160_get_filter() error:
-  buffer overflow 'bmg160_samp_freq_table' 7 <= 7
-  drivers/iio/gyro/bmg160_core.c:222 bmg160_set_filter() error:
-  buffer overflow 'bmg160_samp_freq_table' 7 <= 7
-
-Return -EINVAL when no entry matches.
-
-The set_filter() path is reachable from userspace via the sysfs
-in_anglvel_filter_low_pass_3db_frequency interface, so userspace can
-trivially trigger the out-of-bounds read with a value that is not in
-bmg160_samp_freq_table[].filter.
-
-Fixes: 22b46c45fb9b ("iio:gyro:bmg160 Gyro Sensor driver")
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Assisted-by: gkh_clanker_2000
+Cc: stable <stable@kernel.org>
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Link: https://patch.msgid.link/20260708-usb-gadget-rndis-v1-1-e77e026dcc6a@kroah.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/bmg160_core.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/gadget/function/rndis.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/gyro/bmg160_core.c
-+++ b/drivers/iio/gyro/bmg160_core.c
-@@ -205,6 +205,9 @@ static int bmg160_get_filter(struct bmg1
- 			break;
- 	}
+--- a/drivers/usb/gadget/function/rndis.c
++++ b/drivers/usb/gadget/function/rndis.c
+@@ -591,6 +591,7 @@ static int rndis_init_response(struct rn
+ static int rndis_query_response(struct rndis_params *params,
+ 				rndis_query_msg_type *buf)
+ {
++	u32 BufLength, BufOffset;
+ 	rndis_query_cmplt_type *resp;
+ 	rndis_resp_t *r;
  
-+	if (i == ARRAY_SIZE(bmg160_samp_freq_table))
+@@ -598,6 +599,13 @@ static int rndis_query_response(struct r
+ 	if (!params->dev)
+ 		return -ENOTSUPP;
+ 
++	BufLength = le32_to_cpu(buf->InformationBufferLength);
++	BufOffset = le32_to_cpu(buf->InformationBufferOffset);
++	if ((BufLength > RNDIS_MAX_TOTAL_SIZE) ||
++	    (BufOffset > RNDIS_MAX_TOTAL_SIZE) ||
++	    (BufOffset + 8 >= RNDIS_MAX_TOTAL_SIZE))
 +		return -EINVAL;
 +
- 	*val = bmg160_samp_freq_table[i].filter;
+ 	/*
+ 	 * we need more memory:
+ 	 * gen_ndis_query_resp expects enough space for
+@@ -614,10 +622,8 @@ static int rndis_query_response(struct r
+ 	resp->RequestID = buf->RequestID; /* Still LE in msg buffer */
  
- 	return ret ? ret : IIO_VAL_INT;
-@@ -222,6 +225,9 @@ static int bmg160_set_filter(struct bmg1
- 			break;
- 	}
- 
-+	if (i == ARRAY_SIZE(bmg160_samp_freq_table))
-+		return -EINVAL;
-+
- 	ret = regmap_write(data->regmap, BMG160_REG_PMU_BW,
- 			   bmg160_samp_freq_table[i].bw_bits);
- 	if (ret < 0) {
+ 	if (gen_ndis_query_resp(params, le32_to_cpu(buf->OID),
+-			le32_to_cpu(buf->InformationBufferOffset)
+-					+ 8 + (u8 *)buf,
+-			le32_to_cpu(buf->InformationBufferLength),
+-			r)) {
++				BufOffset + 8 + (u8 *)buf,
++				BufLength, r)) {
+ 		/* OID not supported */
+ 		resp->Status = cpu_to_le32(RNDIS_STATUS_NOT_SUPPORTED);
+ 		resp->MessageLength = cpu_to_le32(sizeof *resp);
 
 
