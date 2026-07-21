@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A169298CC4;
-	Tue, 21 Jul 2026 22:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47B9298CC4;
+	Tue, 21 Jul 2026 22:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671473; cv=none; b=AgJgyGo81fu0Kkd2/ohs4IDidxfWYIFwAm0Ot0YGrtVsJUmNEoIzr+sRNA8uCW0CH0iRek1uHmx3IPF+nwqkJRCE+oIXAHXFteWWzPdQDyyy4Oi4uVQNWY6SPM0EwHYEMrZrs3b7xbkgcbpZJwZTFAogKwt7K8IOCzaDsbL09cE=
+	t=1784671476; cv=none; b=QLB/5DnwkUcAakr6xzGD/Pb3cik6/4i8VWWkXzG/ARXOqlmMvNETpOX52EXHUg1oElEiAZeQCq3ejGQ6yvDYyqkge34Rfcx5g3qXyPxhRZWzz8EXdya39PFv/qV67XClZBumRGGq0GYPOx3MmK2hBzvolmVmpklmdFrJ8noTO7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671473; c=relaxed/simple;
-	bh=VrkZ7BVQPfLVY49V2BK9Lc90iP2PRhGYfTEo/V8PTYU=;
+	s=arc-20240116; t=1784671476; c=relaxed/simple;
+	bh=DG6lCxASk6es4yx+iihzSInrT0XP+88rP4z5++ztekQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tF75lyynYRArwRIPeUm4MPrsMjGR+nw3LmNciF3CBuPawji9ZAlcNnDQrwV+Yf2YcS9S9yo0pg+57BX6Ut+k4hy3AO6idxUHbv9InJ8qXGv/CpL1t3p7GO3krhDepxjs2A3O0O3xTyLkPmlkVHAAQNMoqF3+1a/1srLbAUGI1ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cuv57HWn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K3ZhrDxSk8MwnW2xW0yOPV+e+bQk21R6a9jszujjto17ASTGWxr8oLMntOuBX/vz7V4tcfg2Hpm0EPy55oYsnxIxvIYYsQJd+gwKMx/fyEdvAJILa15KlYnkesKMVn8sJoYZ/vJA5Up6swrLGuSiUj41mvhOpy6NrTBxvQ3s3x0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9rmncW9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuv57HWn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08BC1F000E9;
-	Tue, 21 Jul 2026 22:04:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9rmncW9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563561F000E9;
+	Tue, 21 Jul 2026 22:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671472;
-	bh=S84jzNnJJLZw6CpitTKJLfer2MFORYEXCe+cC2fOw1g=;
+	s=korg; t=1784671474;
+	bh=vdQSWtWBoE5s+lvipf00z0219KtJzoO/lI7f9xV69bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cuv57HWnplA80bfDoQWND//TyRYhzTbfCfy3XQkrm0Qj9y/XbrhFp2/IaBK+0WEfE
-	 1H5hiP2alTpSVYlg6dRVyFgJ4HXPap9zJUOj+WREJjYshGiBn8v/mUQH/7tF72kU0t
-	 qQWddYddBdGZe2PlXFmsUdGJCJXFld3EAuU4DMYM=
+	b=u9rmncW98KSPYV85NA0gGxY7ZJHkAIRAav1hUOybYs0GI4d8+RBXspYeH8Rv9HnI+
+	 DFt3VELsHeE/Vi3r8/IIr9kavYuphZpFVbZKXSGlm3Va6BJ5zrzTFUYHkm4DUo1UMJ
+	 TezvaTqa/eBipKYPbFaV527U96ftsA2U/rHVBN9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Lianfa Weng <wenglianfa@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 257/843] IB/mlx4: Fix refcount leak in add_port() error path
-Date: Tue, 21 Jul 2026 17:18:12 +0200
-Message-ID: <20260721152411.809435082@linuxfoundation.org>
+Subject: [PATCH 5.15 258/843] RDMA/hns: Fix warning in poll cq direct mode
+Date: Tue, 21 Jul 2026 17:18:13 +0200
+Message-ID: <20260721152411.832203875@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,122 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Lianfa Weng <wenglianfa@huawei.com>
 
-[ Upstream commit 9a8826fdfbcd7ed2ccf745f5d54208358d939def ]
+[ Upstream commit 3f19c2a3852e6ba75f3e92dd5edc4e07f3d07f4a ]
 
-After kobject_init_and_add(), the lifetime of the embedded struct
-kobject is expected to be managed through the kobject core reference
-counting.
+CQs allocated by ib_alloc_cq() always have a comp_handler. Though
+in direct mode this handler is never expected to be called, it
+is still called when the driver is reset, triggering the following
+WARN_ONCE():
 
-In add_port(), failure paths after kobject_init_and_add() must not free
-struct mlx4_port directly, because the embedded kobject is then managed
-by the kobject core. Freeing it directly leaves the kobject reference
-counting unbalanced and can lead to incorrect lifetime handling.
+Call trace:
+ib_cq_completion_direct+0x38/0x60
+hns_roce_cq_completion+0x54/0x90 (hns_roce_hw_v2]
+hns_roce_handle_device_err+Ox1c8/0x340 [hns_roce_hw_v2]
+hns_roce_hw_v2_uninit_instance.constprop.0+0x34/0x70 [hns_roce_hw_v2]
+hns_roce_hw_v2_reset_notify+0xc4/0xe0 [hns_roce_hw_v2]
+hclge_notify_roce_client+0x60/0xbc [hclge]
+hclge_reset_rebuild+0x48/0x34c [hclge]
+hclge_reset_subtask+0xcc/0xec [hclge]
+hclge_reset_service_task+0x80/0x160 [hclge]
+hclge_service_task+0x50/0x80 (hclge]
+process_one_work+0x1cc/0x4d0
+worker_thread+0x154/0x414
+kthread+0x104/0x144
+ret_from_fork+0x10/0x18
 
-Allocate the pkey and gid attribute arrays before kobject_init_and_add(),
-so failures before kobject initialization can be handled by directly
-freeing the allocated memory. Once kobject_init_and_add() has been
-called, unwind later failures by removing any successfully created sysfs
-groups, calling kobject_del(), and then releasing the embedded kobject
-with kobject_put().
-
-Fixes: c1e7e466120b ("IB/mlx4: Add iov directory in sysfs under the ib device")
-Link: https://patch.msgid.link/r/20260518021910.972900-1-lgs201920130244@gmail.com
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Fixes: f295e4cece5c ("RDMA/hns: Delete unnecessary callback functions for cq")
+Link: https://patch.msgid.link/r/20260520055759.2354037-3-huangjunxian6@hisilicon.com
+Signed-off-by: Lianfa Weng <wenglianfa@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/sysfs.c | 45 ++++++++++++++++++------------
- 1 file changed, 27 insertions(+), 18 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx4/sysfs.c b/drivers/infiniband/hw/mlx4/sysfs.c
-index 88f534cf690e92..1676f819c2f760 100644
---- a/drivers/infiniband/hw/mlx4/sysfs.c
-+++ b/drivers/infiniband/hw/mlx4/sysfs.c
-@@ -638,12 +638,6 @@ static int add_port(struct mlx4_ib_dev *dev, int port_num, int slave)
- 	p->port_num = port_num;
- 	p->slave = slave;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
+index 5bafd451ca8daf..02b053acc827cd 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_main.c
++++ b/drivers/infiniband/hw/hns/hns_roce_main.c
+@@ -784,7 +784,7 @@ static void check_and_get_armed_cq(struct list_head *cq_list, struct ib_cq *cq)
+ 	unsigned long flags;
  
--	ret = kobject_init_and_add(&p->kobj, &port_type,
--				   kobject_get(dev->dev_ports_parent[slave]),
--				   "%d", port_num);
--	if (ret)
--		goto err_alloc;
--
- 	p->pkey_group.name  = "pkey_idx";
- 	p->pkey_group.attrs =
- 		alloc_group_attrs(show_port_pkey,
-@@ -651,13 +645,9 @@ static int add_port(struct mlx4_ib_dev *dev, int port_num, int slave)
- 				  dev->dev->caps.pkey_table_len[port_num]);
- 	if (!p->pkey_group.attrs) {
- 		ret = -ENOMEM;
--		goto err_alloc;
-+		goto err_free_port;
- 	}
- 
--	ret = sysfs_create_group(&p->kobj, &p->pkey_group);
--	if (ret)
--		goto err_free_pkey;
--
- 	p->gid_group.name  = "gid_idx";
- 	p->gid_group.attrs = alloc_group_attrs(show_port_gid_idx, NULL, 1);
- 	if (!p->gid_group.attrs) {
-@@ -665,28 +655,47 @@ static int add_port(struct mlx4_ib_dev *dev, int port_num, int slave)
- 		goto err_free_pkey;
- 	}
- 
-+	ret = kobject_init_and_add(&p->kobj, &port_type,
-+				   kobject_get(dev->dev_ports_parent[slave]),
-+				   "%d", port_num);
-+	if (ret)
-+		goto err_put;
-+
-+	ret = sysfs_create_group(&p->kobj, &p->pkey_group);
-+	if (ret)
-+		goto err_del;
-+
- 	ret = sysfs_create_group(&p->kobj, &p->gid_group);
- 	if (ret)
--		goto err_free_gid;
-+		goto err_remove_pkey;
- 
- 	ret = add_vf_smi_entries(p);
- 	if (ret)
--		goto err_free_gid;
-+		goto err_remove_gid;
- 
- 	list_add_tail(&p->kobj.entry, &dev->pkeys.pkey_port_list[slave]);
- 	return 0;
- 
--err_free_gid:
--	kfree(p->gid_group.attrs[0]);
--	kfree(p->gid_group.attrs);
-+err_remove_gid:
-+	sysfs_remove_group(&p->kobj, &p->gid_group);
-+
-+err_remove_pkey:
-+	sysfs_remove_group(&p->kobj, &p->pkey_group);
-+
-+err_del:
-+	kobject_del(&p->kobj);
-+
-+err_put:
-+	kobject_put(dev->dev_ports_parent[slave]);
-+	kobject_put(&p->kobj);
-+	return ret;
- 
- err_free_pkey:
- 	for (i = 0; i < dev->dev->caps.pkey_table_len[port_num]; ++i)
- 		kfree(p->pkey_group.attrs[i]);
- 	kfree(p->pkey_group.attrs);
- 
--err_alloc:
--	kobject_put(dev->dev_ports_parent[slave]);
-+err_free_port:
- 	kfree(p);
- 	return ret;
- }
+ 	spin_lock_irqsave(&hr_cq->lock, flags);
+-	if (cq->comp_handler) {
++	if (cq->comp_handler && hr_cq->ib_cq.poll_ctx != IB_POLL_DIRECT) {
+ 		if (!hr_cq->is_armed) {
+ 			hr_cq->is_armed = 1;
+ 			list_add_tail(&hr_cq->node, cq_list);
 -- 
 2.53.0
 
