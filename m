@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E243F2101;
-	Tue, 21 Jul 2026 18:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE47146E013;
+	Tue, 21 Jul 2026 18:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659745; cv=none; b=Piammpj7Y3bPjhOut1r2I5MrHTaGmUm0T2HH5wHwATAdzcKl3VbS5nMf4RvzvNZdJQdcafymG3PE11H1L8JDIFZqvpCV3/3J6PwpSU6ywYbZu6YYxLxc2f3EtmXu11qJ4j3p5dxdADTtLOqIJD5PpYF80NoTEKdMFdR4dzTRidY=
+	t=1784659748; cv=none; b=pNtawcE1Wfs2V701abgfsFClYZpOSsCPOl9kqH90EL1CeewGjLZOiQsmUHWi4ePknKO4fN0akrPXdyAW8kVTiCem8n1LhNuIPPS3P7HfNz/9+4shSPTTkwgZzdcOIzpSXTxBSJ2v/vaWKnFjJTCvBMopSQXMEy2vvq8BdRU/G/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659745; c=relaxed/simple;
-	bh=MPMT9fpN8eypP1/tqp7EPP2kEMr21rAuznuTsashD0s=;
+	s=arc-20240116; t=1784659748; c=relaxed/simple;
+	bh=eYW1JahI/kw62G5tLfcRBai7CScwZhBbcMJNqQruLRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h3l8UEP3XTIWC0sFCWLYWXPplc3gNuG03JAmpW7F42Rc7hgVcYshba7QfyqmjMLqnUVE9UJooEKZhFJ1Tn8Lex0MwaCbLq32Z0d8KmhTIfhW+IJCG2JIuyfGojIi2vRmlCBOiXigbF/6MQgF8DYLtHECfnj1tdcJmCu930ydqMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTV6X3Nf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LiiQLrW51WTbMMDZ5Fk0xdPVjHHx9L3R8h9216hVk13DcCph3VtJO57ZZyscrmnDTgOTJqIiQvqfx1sHBJ+zQz6oTC9AAduejYk8r3bC7miiLwZgo+843FMwBHIp7Cu3LWYVOXPtCsSuNxllYrnPhX7z0JLOECjOXtOAGlMGG84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zsUugJhh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTV6X3Nf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681A41F000E9;
-	Tue, 21 Jul 2026 18:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zsUugJhh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E5F1F000E9;
+	Tue, 21 Jul 2026 18:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659743;
-	bh=1nv2NtyKzsSlg9dPFs3x01djGzni5Ft792Nd/uwRIUk=;
+	s=korg; t=1784659746;
+	bh=aPkzWHewvX0aSDqRHquM4DHxdRo4P9qEZ1RgfRiv4aQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BTV6X3NfElbiMI0NPyGm3V902Q6Lp4gmyJC706QB46gFBQR0SHk3966La8f6TKZW/
-	 SFYLCjAVI6XLNAA7c9/dvzrT2hBVLR6vjh2o/8XLXrRySsHtZ7w2wZLA/ITThSMdC7
-	 hsKrKYDCOkAV0s64s8eb0W2CEOcUZVfkWTCj0GX4=
+	b=zsUugJhhWho1/W61NW4jtSW0+DlYqtj5hgSBxK58gY1/5xJ+y/3iUQL7qylPqmj8R
+	 yl8bKoQ6Qd6AYn3oZ91m1ZVYbCLYVt00tQ5Xc3uRUuoYpCJJlhkT3HMNAXQM9tKkRR
+	 KFcSF+jKyjtguUyu14DrieZxkSQJa3V2ZzMqtvqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anirudh Gupta <anirudhrudr@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0716/2077] net/sched: sch_hfsc: Dont make class passive twice
-Date: Tue, 21 Jul 2026 17:06:29 +0200
-Message-ID: <20260721152609.689298118@linuxfoundation.org>
+Subject: [PATCH 7.1 0717/2077] tipc: require net admin for TIPCv2 netlink mutators
+Date: Tue, 21 Jul 2026 17:06:30 +0200
+Message-ID: <20260721152609.714741423@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,65 +52,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 90b662ea25f5e83bb3b8ccec5b93ced810b92fb8 ]
+[ Upstream commit 86b0c540e2ea397cde021eecd24145f7c16a3d4e ]
 
-update_vf() is called from two places for the same class during a single
-dequeue when the class's child qdisc (e.g. codel/fq_codel) drops its last
-packets while dequeuing:
+TIPCv2 registers mutating generic-netlink operations without admin
+permission flags. Generic netlink only checks CAP_NET_ADMIN when an
+operation sets GENL_ADMIN_PERM or GENL_UNS_ADMIN_PERM, so a local
+unprivileged process can currently change TIPC state through commands
+such as TIPC_NL_NET_SET, TIPC_NL_KEY_SET, TIPC_NL_KEY_FLUSH, and
+bearer enable/disable.
 
-1. The child calls qdisc_tree_reduce_backlog(), which, now that the child
-   is empty, invokes hfsc_qlen_notify() -> update_vf(cl, 0, 0) and turns
-   the class passive (cl_nactive is decremented up the hierarchy).
+The legacy TIPC netlink API already checks netlink_net_capable(...,
+CAP_NET_ADMIN) for administrative commands. Give the TIPCv2 mutators
+the equivalent generic-netlink gate. Use GENL_UNS_ADMIN_PERM, which
+maps to the same namespace-aware CAP_NET_ADMIN check that
+netlink_net_capable() performs, so the behaviour matches the legacy
+path and keeps working for CAP_NET_ADMIN holders in a non-initial user
+namespace (containers).
 
-2. hfsc_dequeue() then calls update_vf(cl, qdisc_pkt_len(skb), cur_time)
-   to charge the dequeued bytes.
+A QEMU/KASAN repro run as uid/gid 65534 with zero effective
+capabilities previously succeeded in changing the network id and node
+identity, setting and flushing key material, and enabling/disabling a
+UDP bearer. With this patch applied the same operations fail with
+-EPERM.
 
-On the second call the class is already passive, but its child qdisc is
-still empty, so update_vf() arms go_passive again:
-
-      if (cl->qdisc->q.qlen == 0 && cl->cl_flags & HFSC_FSC)
-              go_passive = 1;
-
-The leaf is then skipped by the cl_nactive == 0 check inside the loop,
-which does not clear go_passive, so the stale go_passive propagates to the
-parent and decrements its cl_nactive a second time. A parent that still
-has other active children is driven to cl_nactive == 0 and removed from
-the vttree, even though those siblings are still backlogged. They are
-never dequeued again and the qdisc stalls.
-
-Fix this by only arming go_passive when the class is actually active, so an
-already-passive class no longer triggers a second passive transition. The
-byte accounting (cl->cl_total += len) still runs for every ancestor, so
-dequeued bytes continue to be counted exactly once.
-
-Fixes: 51eb3b65544c ("sch_hfsc: make hfsc_qlen_notify() idempotent")
-Reported-by: Anirudh Gupta <anirudhrudr@gmail.com>
-Closes: https://lore.kernel.org/netdev/CAN2cbVe79oj0O9==m4+4x3v+O+qzRagA=2=wkrp9i9=CqYvyZA@mail.gmail.com/
-Tested-by: Anirudh Gupta <anirudhrudr@gmail.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20260610132824.3027549-1-victor@mojatatu.com
+Fixes: 0655f6a8635b ("tipc: add bearer disable/enable to new netlink api")
+Link: https://lore.kernel.org/all/20260604163102.2658553-1-dominik.czarnota@trailofbits.com/
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260610124003.3831170-2-michael.bommarito@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hfsc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tipc/netlink.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
-index e3dd6de8f1b6e5..50112c8a71e033 100644
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -753,7 +753,7 @@ update_vf(struct hfsc_class *cl, unsigned int len, u64 cur_time)
- 	u64 f; /* , myf_bound, delta; */
- 	int go_passive = 0;
- 
--	if (cl->qdisc->q.qlen == 0 && cl->cl_flags & HFSC_FSC)
-+	if (cl->qdisc->q.qlen == 0 && cl->cl_flags & HFSC_FSC && cl->cl_nactive)
- 		go_passive = 1;
- 
- 	for (; cl->cl_parent != NULL; cl = cl->cl_parent) {
+diff --git a/net/tipc/netlink.c b/net/tipc/netlink.c
+index 1a9a5bdaccf4fc..8336a9664703fe 100644
+--- a/net/tipc/netlink.c
++++ b/net/tipc/netlink.c
+@@ -152,11 +152,13 @@ static const struct genl_ops tipc_genl_v2_ops[] = {
+ 	{
+ 		.cmd	= TIPC_NL_BEARER_DISABLE,
+ 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
++		.flags	= GENL_UNS_ADMIN_PERM,
+ 		.doit	= tipc_nl_bearer_disable,
+ 	},
+ 	{
+ 		.cmd	= TIPC_NL_BEARER_ENABLE,
+ 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
++		.flags	= GENL_UNS_ADMIN_PERM,
+ 		.doit	= tipc_nl_bearer_enable,
+ 	},
+ 	{
+@@ -168,11 +170,13 @@ static const struct genl_ops tipc_genl_v2_ops[] = {
+ 	{
+ 		.cmd	= TIPC_NL_BEARER_ADD,
+ 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
++		.flags	= GENL_UNS_ADMIN_PERM,
+ 		.doit	= tipc_nl_bearer_add,
+ 	},
+ 	{
+ 		.cmd	= TIPC_NL_BEARER_SET,
+ 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
++		.flags	= GENL_UNS_ADMIN_PERM,
+ 		.doit	= tipc_nl_bearer_set,
+ 	},
+ 	{
+@@ -197,11 +201,13 @@ static const struct genl_ops tipc_genl_v2_ops[] = {
+ 	{
+ 		.cmd	= TIPC_NL_LINK_SET,
+ 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
++		.flags	= GENL_UNS_ADMIN_PERM,
+ 		.doit	= tipc_nl_node_set_link,
+ 	},
+ 	{
+ 		.cmd	= TIPC_NL_LINK_RESET_STATS,
+ 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
++		.flags	= GENL_UNS_ADMIN_PERM,
+ 		.doit   = tipc_nl_node_reset_link_stats,
+ 	},
+ 	{
+@@ -213,6 +219,7 @@ static const struct genl_ops tipc_genl_v2_ops[] = {
+ 	{
+ 		.cmd	= TIPC_NL_MEDIA_SET,
+ 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
++		.flags	= GENL_UNS_ADMIN_PERM,
+ 		.doit	= tipc_nl_media_set,
+ 	},
+ 	{
+@@ -228,6 +235,7 @@ static const struct genl_ops tipc_genl_v2_ops[] = {
+ 	{
+ 		.cmd	= TIPC_NL_NET_SET,
+ 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
++		.flags	= GENL_UNS_ADMIN_PERM,
+ 		.doit	= tipc_nl_net_set,
+ 	},
+ 	{
+@@ -238,6 +246,7 @@ static const struct genl_ops tipc_genl_v2_ops[] = {
+ 	{
+ 		.cmd	= TIPC_NL_MON_SET,
+ 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
++		.flags	= GENL_UNS_ADMIN_PERM,
+ 		.doit	= tipc_nl_node_set_monitor,
+ 	},
+ 	{
+@@ -255,6 +264,7 @@ static const struct genl_ops tipc_genl_v2_ops[] = {
+ 	{
+ 		.cmd	= TIPC_NL_PEER_REMOVE,
+ 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
++		.flags	= GENL_UNS_ADMIN_PERM,
+ 		.doit	= tipc_nl_peer_rm,
+ 	},
+ #ifdef CONFIG_TIPC_MEDIA_UDP
+@@ -269,11 +279,13 @@ static const struct genl_ops tipc_genl_v2_ops[] = {
+ 	{
+ 		.cmd	= TIPC_NL_KEY_SET,
+ 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
++		.flags	= GENL_UNS_ADMIN_PERM,
+ 		.doit	= tipc_nl_node_set_key,
+ 	},
+ 	{
+ 		.cmd	= TIPC_NL_KEY_FLUSH,
+ 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
++		.flags	= GENL_UNS_ADMIN_PERM,
+ 		.doit	= tipc_nl_node_flush_key,
+ 	},
+ #endif
 -- 
 2.53.0
 
