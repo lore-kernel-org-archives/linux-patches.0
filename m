@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48BB44AB67;
-	Tue, 21 Jul 2026 21:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A276C4582C9;
+	Tue, 21 Jul 2026 21:02:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667751; cv=none; b=VSvrxRs/sWFhz3/nfWKRrDQKZMcIVWPwNLlM9rg9leUDszt2kBC8ziyc/U62NE0fPHa8eE24TbZQCCMGLfLk7lO1UTwbNiDM1BAg1Xi1qrL7N+oWZXEY7pP/lY/wbyaCjKOydPecGgU8lOz5JeSdENIBuEdEE88yYbp2fhRlvFM=
+	t=1784667756; cv=none; b=n5wHqPRoprTUeU9wpIc33VyZzKuxFwGaKiucoPL/bqsPyCvjmUWItK8pexLjdGXkFuVsG/CtPUzA8shfGJwB3T01q1kHnBB8r8qlqReJJB6jEyUX3XuW0YYACfi9q8QsaJDl48h9to+2Q5MomPRWe2Z4Pt02vcFoZ0fxm5R+7WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667751; c=relaxed/simple;
-	bh=lOnEWEKFB8Ml9m3A/aRVQ218MqqpV295Wl6qjcETGts=;
+	s=arc-20240116; t=1784667756; c=relaxed/simple;
+	bh=y7Ly/NvURIpTUkKnIbKBaBm9o9ja1yxb4RRz6Zk0jKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JWSWDFwbh9i9csP4Sg7gxxvHdsE0kUWfu/+Rq1HSn9PjhPClsRJeVurp8K1N4UPRyXEgRMAtRgWimsyuD+56mcTwn8zC6ScngYlHtvlcz1emYIj70kL6gjTZBBBOilFyIEcs0L+xP/gQDhbevnL3JdzYdylQbr+KWYriFWLi074=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1IELEUsG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CPQb4CMpi+VF2k94qmXyreGwlsa9pi7ZhZWgkLcnNmHwJm7rieiI811RgnMDxXBoC97kxg11MX2I1OUiw8bPp4vmrTfkydlfbxASM0ZWqHNUHWhHw5KPBpvEDVieaGZTzEKFH85Tjmyx8pNa8KuxecN7J44Z8QFHTkudXp8wjA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHyP5dOY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1IELEUsG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97FC1F000E9;
-	Tue, 21 Jul 2026 21:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHyP5dOY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C791F00A3F;
+	Tue, 21 Jul 2026 21:02:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667742;
-	bh=/SEsXNS5UQ4SQgWAJHh3qFIL10+pG4S3gBtR6ajoEbM=;
+	s=korg; t=1784667750;
+	bh=WGc8Q6gwguRVygkmGlRn2odcwpsxOhSLMIiSxBc52Iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1IELEUsGIDMAoxFnFF01qGzJXnseDd5n3GqSi8h/5BBFiffBSptP8ww2lpNx+yiR/
-	 jC5IeiuES+kPwNy9UJeLdzgXCp0YWYoirD1oeOoTHWj4jMvdSIYR1HeACF72wKb/So
-	 /GWFniBnN0LXB1YFoElXmplnSoOpBcTQkYvrRXzk=
+	b=DHyP5dOY+CvGEBZmPmaAMM4UZSbf+rc2itU0++3gei1ykbHFfJPSqPQwVtTW+PuYk
+	 r0fuszibh2ne9PO+V55BUShnAhUvwJElhxWxpPJdMQ+pHO7Ph9Z3b3KJTre3ZftbFg
+	 UWVCKDqZOw+qh4NC3zyjUcIpbubCYKsX2JBDM+Rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1176/1266] PCI: Move Resizable BAR code to rebar.c
-Date: Tue, 21 Jul 2026 17:26:53 +0200
-Message-ID: <20260721152508.107199822@linuxfoundation.org>
+Subject: [PATCH 6.6 1152/1266] ACPI: bus: Introduce devm_acpi_install_notify_handler()
+Date: Tue, 21 Jul 2026 17:26:29 +0200
+Message-ID: <20260721152507.560637553@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -46,514 +44,130 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 9f71938cd77f32a448f40a288e409eca60e55486 ]
+[ Upstream commit ca70ce555a1eb8edf5fb1d5575f1fe19c9ae17f4 ]
 
-For lack of a better place to put it, Resizable BAR code has been placed
-inside pci.c and setup-res.c that do not use it for anything.  Upcoming
-changes are going to add more Resizable BAR related functions, increasing
-the code size.
+Introduce devm_acpi_install_notify_handler() for installing an ACPI
+notify handler managed by devres that will be removed automatically on
+driver detach.
 
-As pci.c is huge as is, move the Resizable BAR related code and the BAR
-resize code from setup-res.c to rebar.c.
+It installs the notify handler on the device object in the ACPI
+namespace that corresponds to the owner device's ACPI companion, if
+present (an error is returned if the owner device doesn't have an ACPI
+companion).
 
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patch.msgid.link/20251113180053.27944-2-ilpo.jarvinen@linux.intel.com
-Stable-dep-of: ee7471fe968d ("PCI: Skip Resizable BAR restore on read error")
+Currently, there is no way to manually remove the notify handler
+installed by it because none of its users brought on subsequently
+will need to do that.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[ rjw: Kerneldoc comment refinement ]
+Link: https://patch.msgid.link/2268031.irdbgypaU6@rafael.j.wysocki
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 18a00ed0e718 ("ACPI: NFIT: core: Fix possible deadlock and missing notifications")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/driver-api/pci/pci.rst |    3 
- drivers/pci/Makefile                 |    2 
- drivers/pci/pci.c                    |  136 ----------------------
- drivers/pci/pci.h                    |    1 
- drivers/pci/rebar.c                  |  212 +++++++++++++++++++++++++++++++++++
- drivers/pci/setup-res.c              |   64 ----------
- 6 files changed, 217 insertions(+), 201 deletions(-)
- create mode 100644 drivers/pci/rebar.c
+ drivers/acpi/bus.c      |   70 ++++++++++++++++++++++++++++++++++++++++++++++++
+ include/acpi/acpi_bus.h |    2 +
+ 2 files changed, 72 insertions(+)
 
---- a/Documentation/driver-api/pci/pci.rst
-+++ b/Documentation/driver-api/pci/pci.rst
-@@ -31,6 +31,9 @@ PCI Support Library
- .. kernel-doc:: drivers/pci/slot.c
-    :export:
- 
-+.. kernel-doc:: drivers/pci/rebar.c
-+   :export:
-+
- .. kernel-doc:: drivers/pci/rom.c
-    :export:
- 
---- a/drivers/pci/Makefile
-+++ b/drivers/pci/Makefile
-@@ -4,7 +4,7 @@
- 
- obj-$(CONFIG_PCI)		+= access.o bus.o probe.o host-bridge.o \
- 				   remove.o pci.o pci-driver.o search.o \
--				   pci-sysfs.o rom.o setup-res.o irq.o vpd.o \
-+				   pci-sysfs.o rebar.o rom.o setup-res.o irq.o vpd.o \
- 				   setup-bus.o vc.o mmap.o setup-irq.o
- 
- obj-$(CONFIG_PCI)		+= msi/
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1870,33 +1870,6 @@ static void pci_restore_config_space(str
- 	}
+--- a/drivers/acpi/bus.c
++++ b/drivers/acpi/bus.c
+@@ -578,6 +578,76 @@ void acpi_dev_remove_notify_handler(stru
  }
+ EXPORT_SYMBOL_GPL(acpi_dev_remove_notify_handler);
  
--static void pci_restore_rebar_state(struct pci_dev *pdev)
--{
--	unsigned int pos, nbars, i;
--	u32 ctrl;
--
--	pos = pci_find_ext_capability(pdev, PCI_EXT_CAP_ID_REBAR);
--	if (!pos)
--		return;
--
--	pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
--	nbars = (ctrl & PCI_REBAR_CTRL_NBAR_MASK) >>
--		    PCI_REBAR_CTRL_NBAR_SHIFT;
--
--	for (i = 0; i < nbars; i++, pos += 8) {
--		struct resource *res;
--		int bar_idx, size;
--
--		pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
--		bar_idx = ctrl & PCI_REBAR_CTRL_BAR_IDX;
--		res = pdev->resource + bar_idx;
--		size = pci_rebar_bytes_to_size(resource_size(res));
--		ctrl &= ~PCI_REBAR_CTRL_BAR_SIZE;
--		ctrl |= size << PCI_REBAR_CTRL_BAR_SHIFT;
--		pci_write_config_dword(pdev, pos + PCI_REBAR_CTRL, ctrl);
--	}
--}
--
- /**
-  * pci_restore_state - Restore the saved state of a PCI device
-  * @dev: PCI device that we're dealing with
-@@ -3830,115 +3803,6 @@ void pci_acs_init(struct pci_dev *dev)
- }
- 
- /**
-- * pci_rebar_find_pos - find position of resize ctrl reg for BAR
-- * @pdev: PCI device
-- * @bar: BAR to find
-- *
-- * Helper to find the position of the ctrl register for a BAR.
-- * Returns -ENOTSUPP if resizable BARs are not supported at all.
-- * Returns -ENOENT if no ctrl register for the BAR could be found.
-- */
--static int pci_rebar_find_pos(struct pci_dev *pdev, int bar)
--{
--	unsigned int pos, nbars, i;
--	u32 ctrl;
--
--	pos = pci_find_ext_capability(pdev, PCI_EXT_CAP_ID_REBAR);
--	if (!pos)
--		return -ENOTSUPP;
--
--	pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
--	nbars = (ctrl & PCI_REBAR_CTRL_NBAR_MASK) >>
--		    PCI_REBAR_CTRL_NBAR_SHIFT;
--
--	for (i = 0; i < nbars; i++, pos += 8) {
--		int bar_idx;
--
--		pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
--		bar_idx = ctrl & PCI_REBAR_CTRL_BAR_IDX;
--		if (bar_idx == bar)
--			return pos;
--	}
--
--	return -ENOENT;
--}
--
--/**
-- * pci_rebar_get_possible_sizes - get possible sizes for BAR
-- * @pdev: PCI device
-- * @bar: BAR to query
-- *
-- * Get the possible sizes of a resizable BAR as bitmask defined in the spec
-- * (bit 0=1MB, bit 19=512GB). Returns 0 if BAR isn't resizable.
-- */
--u32 pci_rebar_get_possible_sizes(struct pci_dev *pdev, int bar)
--{
--	int pos;
--	u32 cap;
--
--	pos = pci_rebar_find_pos(pdev, bar);
--	if (pos < 0)
--		return 0;
--
--	pci_read_config_dword(pdev, pos + PCI_REBAR_CAP, &cap);
--	cap = FIELD_GET(PCI_REBAR_CAP_SIZES, cap);
--
--	/* Sapphire RX 5600 XT Pulse has an invalid cap dword for BAR 0 */
--	if (pdev->vendor == PCI_VENDOR_ID_ATI && pdev->device == 0x731f &&
--	    bar == 0 && cap == 0x700)
--		return 0x3f00;
--
--	return cap;
--}
--EXPORT_SYMBOL(pci_rebar_get_possible_sizes);
--
--/**
-- * pci_rebar_get_current_size - get the current size of a BAR
-- * @pdev: PCI device
-- * @bar: BAR to set size to
-- *
-- * Read the size of a BAR from the resizable BAR config.
-- * Returns size if found or negative error code.
-- */
--int pci_rebar_get_current_size(struct pci_dev *pdev, int bar)
--{
--	int pos;
--	u32 ctrl;
--
--	pos = pci_rebar_find_pos(pdev, bar);
--	if (pos < 0)
--		return pos;
--
--	pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
--	return (ctrl & PCI_REBAR_CTRL_BAR_SIZE) >> PCI_REBAR_CTRL_BAR_SHIFT;
--}
--
--/**
-- * pci_rebar_set_size - set a new size for a BAR
-- * @pdev: PCI device
-- * @bar: BAR to set size to
-- * @size: new size as defined in the spec (0=1MB, 19=512GB)
-- *
-- * Set the new size of a BAR as defined in the spec.
-- * Returns zero if resizing was successful, error code otherwise.
-- */
--int pci_rebar_set_size(struct pci_dev *pdev, int bar, int size)
--{
--	int pos;
--	u32 ctrl;
--
--	pos = pci_rebar_find_pos(pdev, bar);
--	if (pos < 0)
--		return pos;
--
--	pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
--	ctrl &= ~PCI_REBAR_CTRL_BAR_SIZE;
--	ctrl |= size << PCI_REBAR_CTRL_BAR_SHIFT;
--	pci_write_config_dword(pdev, pos + PCI_REBAR_CTRL, ctrl);
--	return 0;
--}
--
--/**
-  * pci_enable_atomic_ops_to_root - enable AtomicOp requests to root port
-  * @dev: the PCI device
-  * @cap_mask: mask of desired AtomicOp sizes, including one or more of:
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -643,6 +643,7 @@ static inline int acpi_get_rc_resources(
- }
- #endif
- 
-+void pci_restore_rebar_state(struct pci_dev *pdev);
- int pci_rebar_get_current_size(struct pci_dev *pdev, int bar);
- int pci_rebar_set_size(struct pci_dev *pdev, int bar, int size);
- static inline u64 pci_rebar_size_to_bytes(int size)
---- /dev/null
-+++ b/drivers/pci/rebar.c
-@@ -0,0 +1,212 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * PCI Resizable BAR Extended Capability handling.
-+ */
++struct acpi_notify_handler_devres {
++	acpi_notify_handler handler;
++	u32 handler_type;
++	struct acpi_device *adev;
++};
 +
-+#include <linux/bitfield.h>
-+#include <linux/errno.h>
-+#include <linux/export.h>
-+#include <linux/ioport.h>
-+#include <linux/pci.h>
-+#include <linux/types.h>
++static void devm_acpi_notify_handler_release(struct device *dev, void *res)
++{
++	struct acpi_notify_handler_devres *dr = res;
 +
-+#include "pci.h"
++	acpi_dev_remove_notify_handler(dr->adev, dr->handler_type,
++				       dr->handler);
++}
 +
 +/**
-+ * pci_rebar_find_pos - find position of resize ctrl reg for BAR
-+ * @pdev: PCI device
-+ * @bar: BAR to find
++ * devm_acpi_install_notify_handler - Install an ACPI notify handler for a
++ * 				      managed device
++ * @dev: Device to install a notify handler for
++ * @handler_type: Type of the notify handler
++ * @handler: Handler function to install
 + *
-+ * Helper to find the position of the ctrl register for a BAR.
-+ * Returns -ENOTSUPP if resizable BARs are not supported at all.
-+ * Returns -ENOENT if no ctrl register for the BAR could be found.
++ * This function performs the same function as acpi_dev_install_notify_handler()
++ * called for the ACPI companion of @dev with the same @handler_type and
++ * @handler arguments, but the ACPI notify handler installed by it will be
++ * automatically removed on driver detach.
++ *
++ * Callers should ensure that all resources used by @handler have been allocated
++ * prior to invoking this function, in which case those resources should be
++ * devres-managed so that they won't be released before the notify handler
++ * removal.  Otherwise, special synchronization between @handler and the
++ * management of those resources is required.
++ *
++ * When the request fails, an error message is printed.  Don't add extra error
++ * messages at the call sites.
++ *
++ * Return: 0 on success or a negative error number.
 + */
-+static int pci_rebar_find_pos(struct pci_dev *pdev, int bar)
++int devm_acpi_install_notify_handler(struct device *dev, u32 handler_type,
++				     acpi_notify_handler handler)
 +{
-+	unsigned int pos, nbars, i;
-+	u32 ctrl;
++	struct acpi_notify_handler_devres *dr;
++	struct acpi_device *adev;
++	int ret;
 +
-+	pos = pci_find_ext_capability(pdev, PCI_EXT_CAP_ID_REBAR);
-+	if (!pos)
-+		return -ENOTSUPP;
++	adev = ACPI_COMPANION(dev);
++	if (!adev && dev->bus == &acpi_bus_type)
++		adev = to_acpi_device(dev);
 +
-+	pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
-+	nbars = (ctrl & PCI_REBAR_CTRL_NBAR_MASK) >>
-+		    PCI_REBAR_CTRL_NBAR_SHIFT;
++	if (!adev)
++		return dev_err_probe(dev, -ENODEV, "No ACPI companion in %s()\n", __func__);
 +
-+	for (i = 0; i < nbars; i++, pos += 8) {
-+		int bar_idx;
++	dr = devres_alloc(devm_acpi_notify_handler_release, sizeof(*dr), GFP_KERNEL);
++	if (!dr)
++		return -ENOMEM;
 +
-+		pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
-+		bar_idx = ctrl & PCI_REBAR_CTRL_BAR_IDX;
-+		if (bar_idx == bar)
-+			return pos;
++	ret = acpi_dev_install_notify_handler(adev, handler_type, handler);
++	if (ret) {
++		devres_free(dr);
++		return dev_err_probe(dev, ret, "Failed to install an ACPI notify handler\n");
 +	}
 +
-+	return -ENOENT;
-+}
-+
-+/**
-+ * pci_rebar_get_possible_sizes - get possible sizes for BAR
-+ * @pdev: PCI device
-+ * @bar: BAR to query
-+ *
-+ * Get the possible sizes of a resizable BAR as bitmask defined in the spec
-+ * (bit 0=1MB, bit 19=512GB). Returns 0 if BAR isn't resizable.
-+ */
-+u32 pci_rebar_get_possible_sizes(struct pci_dev *pdev, int bar)
-+{
-+	int pos;
-+	u32 cap;
-+
-+	pos = pci_rebar_find_pos(pdev, bar);
-+	if (pos < 0)
-+		return 0;
-+
-+	pci_read_config_dword(pdev, pos + PCI_REBAR_CAP, &cap);
-+	cap = FIELD_GET(PCI_REBAR_CAP_SIZES, cap);
-+
-+	/* Sapphire RX 5600 XT Pulse has an invalid cap dword for BAR 0 */
-+	if (pdev->vendor == PCI_VENDOR_ID_ATI && pdev->device == 0x731f &&
-+	    bar == 0 && cap == 0x700)
-+		return 0x3f00;
-+
-+	return cap;
-+}
-+EXPORT_SYMBOL(pci_rebar_get_possible_sizes);
-+
-+/**
-+ * pci_rebar_get_current_size - get the current size of a BAR
-+ * @pdev: PCI device
-+ * @bar: BAR to set size to
-+ *
-+ * Read the size of a BAR from the resizable BAR config.
-+ * Returns size if found or negative error code.
-+ */
-+int pci_rebar_get_current_size(struct pci_dev *pdev, int bar)
-+{
-+	int pos;
-+	u32 ctrl;
-+
-+	pos = pci_rebar_find_pos(pdev, bar);
-+	if (pos < 0)
-+		return pos;
-+
-+	pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
-+	return (ctrl & PCI_REBAR_CTRL_BAR_SIZE) >> PCI_REBAR_CTRL_BAR_SHIFT;
-+}
-+
-+/**
-+ * pci_rebar_set_size - set a new size for a BAR
-+ * @pdev: PCI device
-+ * @bar: BAR to set size to
-+ * @size: new size as defined in the spec (0=1MB, 19=512GB)
-+ *
-+ * Set the new size of a BAR as defined in the spec.
-+ * Returns zero if resizing was successful, error code otherwise.
-+ */
-+int pci_rebar_set_size(struct pci_dev *pdev, int bar, int size)
-+{
-+	int pos;
-+	u32 ctrl;
-+
-+	pos = pci_rebar_find_pos(pdev, bar);
-+	if (pos < 0)
-+		return pos;
-+
-+	pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
-+	ctrl &= ~PCI_REBAR_CTRL_BAR_SIZE;
-+	ctrl |= size << PCI_REBAR_CTRL_BAR_SHIFT;
-+	pci_write_config_dword(pdev, pos + PCI_REBAR_CTRL, ctrl);
-+	return 0;
-+}
-+
-+void pci_restore_rebar_state(struct pci_dev *pdev)
-+{
-+	unsigned int pos, nbars, i;
-+	u32 ctrl;
-+
-+	pos = pci_find_ext_capability(pdev, PCI_EXT_CAP_ID_REBAR);
-+	if (!pos)
-+		return;
-+
-+	pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
-+	nbars = FIELD_GET(PCI_REBAR_CTRL_NBAR_MASK, ctrl);
-+
-+	for (i = 0; i < nbars; i++, pos += 8) {
-+		struct resource *res;
-+		int bar_idx, size;
-+
-+		pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
-+		bar_idx = ctrl & PCI_REBAR_CTRL_BAR_IDX;
-+		res = pci_resource_n(pdev, bar_idx);
-+		size = pci_rebar_bytes_to_size(resource_size(res));
-+		ctrl &= ~PCI_REBAR_CTRL_BAR_SIZE;
-+		ctrl |= size << PCI_REBAR_CTRL_BAR_SHIFT;
-+		pci_write_config_dword(pdev, pos + PCI_REBAR_CTRL, ctrl);
-+	}
-+}
-+
-+/**
-+ * pci_resize_resource - reconfigure a Resizable BAR and resources
-+ * @dev: the PCI device
-+ * @resno: index of the BAR to be resized
-+ * @size: new size as defined in the spec (0=1MB, 31=128TB)
-+ * @exclude_bars: a mask of BARs that should not be released
-+ *
-+ * Reconfigure @resno to @size and re-run resource assignment algorithm
-+ * with the new size.
-+ *
-+ * Prior to resize, release @dev resources that share a bridge window with
-+ * @resno.  This unpins the bridge window resource to allow changing it.
-+ *
-+ * The caller may prevent releasing a particular BAR by providing
-+ * @exclude_bars mask, but this may result in the resize operation failing
-+ * due to insufficient space.
-+ *
-+ * Return: 0 on success, or negative on error. In case of an error, the
-+ *         resources are restored to their original places.
-+ */
-+int pci_resize_resource(struct pci_dev *dev, int resno, int size,
-+			int exclude_bars)
-+{
-+	struct pci_host_bridge *host;
-+	int old, ret;
-+	u32 sizes;
-+	u16 cmd;
-+
-+	/* Check if we must preserve the firmware's resource assignment */
-+	host = pci_find_host_bridge(dev->bus);
-+	if (host->preserve_config)
-+		return -ENOTSUPP;
-+
-+	pci_read_config_word(dev, PCI_COMMAND, &cmd);
-+	if (cmd & PCI_COMMAND_MEMORY)
-+		return -EBUSY;
-+
-+	sizes = pci_rebar_get_possible_sizes(dev, resno);
-+	if (!sizes)
-+		return -ENOTSUPP;
-+
-+	if (!(sizes & BIT(size)))
-+		return -EINVAL;
-+
-+	old = pci_rebar_get_current_size(dev, resno);
-+	if (old < 0)
-+		return old;
-+
-+	ret = pci_rebar_set_size(dev, resno, size);
-+	if (ret)
-+		return ret;
-+
-+	ret = pci_do_resource_release_and_resize(dev, resno, size, exclude_bars);
-+	if (ret)
-+		goto error_resize;
++	dr->handler = handler;
++	dr->handler_type = handler_type;
++	dr->adev = adev;
++	devres_add(dev, dr);
 +
 +	return 0;
-+
-+error_resize:
-+	pci_rebar_set_size(dev, resno, old);
-+	return ret;
 +}
-+EXPORT_SYMBOL(pci_resize_resource);
---- a/drivers/pci/setup-res.c
-+++ b/drivers/pci/setup-res.c
-@@ -427,70 +427,6 @@ void pci_release_resource(struct pci_dev
- }
- EXPORT_SYMBOL(pci_release_resource);
++EXPORT_SYMBOL_GPL(devm_acpi_install_notify_handler);
++
+ /* Handle events targeting \_SB device (at present only graceful shutdown) */
  
--/**
-- * pci_resize_resource - reconfigure a Resizable BAR and resources
-- * @dev: the PCI device
-- * @resno: index of the BAR to be resized
-- * @size: new size as defined in the spec (0=1MB, 31=128TB)
-- * @exclude_bars: a mask of BARs that should not be released
-- *
-- * Reconfigure @resno to @size and re-run resource assignment algorithm
-- * with the new size.
-- *
-- * Prior to resize, release @dev resources that share a bridge window with
-- * @resno.  This unpins the bridge window resource to allow changing it.
-- *
-- * The caller may prevent releasing a particular BAR by providing
-- * @exclude_bars mask, but this may result in the resize operation failing
-- * due to insufficient space.
-- *
-- * Return: 0 on success, or negative on error. In case of an error, the
-- *         resources are restored to their original places.
-- */
--int pci_resize_resource(struct pci_dev *dev, int resno, int size,
--			int exclude_bars)
--{
--	struct pci_host_bridge *host;
--	int old, ret;
--	u32 sizes;
--	u16 cmd;
--
--	/* Check if we must preserve the firmware's resource assignment */
--	host = pci_find_host_bridge(dev->bus);
--	if (host->preserve_config)
--		return -ENOTSUPP;
--
--	pci_read_config_word(dev, PCI_COMMAND, &cmd);
--	if (cmd & PCI_COMMAND_MEMORY)
--		return -EBUSY;
--
--	sizes = pci_rebar_get_possible_sizes(dev, resno);
--	if (!sizes)
--		return -ENOTSUPP;
--
--	if (!(sizes & BIT(size)))
--		return -EINVAL;
--
--	old = pci_rebar_get_current_size(dev, resno);
--	if (old < 0)
--		return old;
--
--	ret = pci_rebar_set_size(dev, resno, size);
--	if (ret)
--		return ret;
--
--	ret = pci_do_resource_release_and_resize(dev, resno, size, exclude_bars);
--	if (ret)
--		goto error_resize;
--
--	return 0;
--
--error_resize:
--	pci_rebar_set_size(dev, resno, old);
--	return ret;
--}
--EXPORT_SYMBOL(pci_resize_resource);
--
- int pci_enable_resources(struct pci_dev *dev, int mask)
- {
- 	u16 cmd, old_cmd;
+ #define ACPI_SB_NOTIFY_SHUTDOWN_REQUEST 0x81
+--- a/include/acpi/acpi_bus.h
++++ b/include/acpi/acpi_bus.h
+@@ -521,6 +521,8 @@ int acpi_dev_install_notify_handler(stru
+ void acpi_dev_remove_notify_handler(struct acpi_device *adev,
+ 				    u32 handler_type,
+ 				    acpi_notify_handler handler);
++int devm_acpi_install_notify_handler(struct device *dev, u32 handler_type,
++				     acpi_notify_handler handler);
+ extern int acpi_notifier_call_chain(struct acpi_device *, u32, u32);
+ extern int register_acpi_notifier(struct notifier_block *);
+ extern int unregister_acpi_notifier(struct notifier_block *);
 
 
