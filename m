@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C67246AA94;
-	Tue, 21 Jul 2026 15:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0312146AA68;
+	Tue, 21 Jul 2026 15:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648279; cv=none; b=n+hLx2drlf5L6lXWOJ/UnjGuMCIJGquv+K0vQW+pf3FkSBJkPHZpVO5kT0kHpK7gD/KgpDin+yUrZjnR4m11h/0dyOSUksNZMDzTmrKcVcsIMpOOjKbvOAvyE4+L7KN0d0yOV+MrP/14c0qA5h1IdVNCapp5WLEq/m8TtZDU9R4=
+	t=1784648282; cv=none; b=WNm+H+NjnIBoFvmvG/QaIaFfsozfiL0yF9NIUxv3UqDH/Mljbl9CY5K6m8ejvPxkXjXEj6AMIS4zZrPIhEhWioJehLlPpXuLpdL5y+K2StJyrw9eLCqhyaYpdDu5OohqTK2an59JaDGQNP5MJGl60/zTFgaERtM2woQthbzvGq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648279; c=relaxed/simple;
-	bh=88C5BGdqTCZxsvfKr60844lBkbSEYcmD+RgPMnoYd98=;
+	s=arc-20240116; t=1784648282; c=relaxed/simple;
+	bh=tXHu54W0bncaWC/A2HMAzWwOthgm1CCEMq0yJW+R5Nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u7R6dAQG+UybvE6hR4zt1tDhpXpgYnKjoAiZXa0HJTl42iUN+jB0h4aqIoBLYnpI1fX8DWaewUSyhH6kE6Otbndft/LlLYPMHz62HtvanE/ZkRiUrNK6PLPHHlybh+28yNNdT+0zsGqL5hgO/ET5y38+31m419lHp9BBdFBvyK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0fqekmu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rc1eQNHC02mVhoBy75+ZgNNe5XOvUigR+zlJB/OIxsq1o2io2UUuggxD3GomOmZXnAPal5nRrvE8rVuhDYIXDNxKuvozzc9BHyYluZRK9cgYhPNwGUmHhZnQJ+55Rf9MdZdRQsCpPQ/XtCgBpMv5D/BLicrBvyur4b5KRFiMyzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vsuv/TAb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0fqekmu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB261F000E9;
-	Tue, 21 Jul 2026 15:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vsuv/TAb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906A51F000E9;
+	Tue, 21 Jul 2026 15:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648278;
-	bh=u4lFQRjC7t67zBqWQTtk9T/2wS5uboUbmIej7XKrcuk=;
+	s=korg; t=1784648280;
+	bh=R/l8SRMlOAjspXFOOm4YZBoJL673kJf2IIlXSbXoaAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y0fqekmuMk+8fRK6Gp0cqKr/Oli39qh6rH4HWsYB38OVhAFsbb7UMrDWx01VBrYF9
-	 1lBD8j3wCySonnGKvfFQkzQKdlyJ9L05va5cROiyU27B6hX2LkM8CHwVv5OkP4xmVK
-	 a9e8P7xd7644Ir8FEC+VrESv7NNKBdyp4lUVpYPo=
+	b=Vsuv/TAbsOBVSqx7Uf6+tZ0ApaW47r+n7azgEz9Kun+e0JuRq3uivu5wDan327Is0
+	 u/SoCWk99UGzFtFtKLEnwdBBnxd72ldCbrjydNXZVmt977RtnoRep41peVpJW5Gcgl
+	 6lB8CVKogwhLNt447y80uHI3qd3wNiiZrx7FWrog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
+	Kavita Kavita <kavita.kavita@oss.qualcomm.com>,
+	Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0140/2077] drm/gpuvm: take refcount on DRM device
-Date: Tue, 21 Jul 2026 16:56:53 +0200
-Message-ID: <20260721152555.990413791@linuxfoundation.org>
+Subject: [PATCH 7.1 0141/2077] wifi: cfg80211: restrict LMR feedback check to TB and non-TB ranging
+Date: Tue, 21 Jul 2026 16:56:54 +0200
+Message-ID: <20260721152556.013439940@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,61 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>
 
-[ Upstream commit c2d72717e0a9dd01c6a1bac61a1462a8e04bd179 ]
+[ Upstream commit bef9d5e378f07ccdf967b929897de84a9931d1e3 ]
 
-Currently GPUVM relies on the owner implicitly holding a refcount to the
-drm device, and it does not implicitly take a refcount on the drm
-device. This design is error-prone, so take a refcount on the device.
+The lmr_feedback field is only applicable to TB and non-TB ranging.
+Currently, pmsr_parse_ftm() enforces lmr_feedback for all RSTA
+requests, incorrectly rejecting valid EDCA-based RSTA requests.
 
-Suggested-by: Danilo Krummrich <dakr@kernel.org>
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Fixes: 546ca4d35dcc ("drm/gpuvm: convert WARN() to drm_WARN() variants")
-Link: https://patch.msgid.link/20260416-gpuvm-drm-dev-get-v1-1-f3bc06571e73@google.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fix this by limiting the lmr_feedback requirement to TB and non-TB
+ranging only.
+
+Fixes: 853800c746d3 ("wifi: nl80211/cfg80211: support operating as RSTA in PMSR FTM request")
+Co-developed-by: Kavita Kavita <kavita.kavita@oss.qualcomm.com>
+Signed-off-by: Kavita Kavita <kavita.kavita@oss.qualcomm.com>
+Signed-off-by: Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260420090856.2152905-2-peddolla.reddy@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_gpuvm.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/wireless/pmsr.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_gpuvm.c b/drivers/gpu/drm/drm_gpuvm.c
-index f56719e9f4350a..83020b6cf9ba15 100644
---- a/drivers/gpu/drm/drm_gpuvm.c
-+++ b/drivers/gpu/drm/drm_gpuvm.c
-@@ -25,6 +25,7 @@
-  *
-  */
+diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
+index d6cd0de64d1f84..0ca93fd7d46f8d 100644
+--- a/net/wireless/pmsr.c
++++ b/net/wireless/pmsr.c
+@@ -195,7 +195,9 @@ static int pmsr_parse_ftm(struct cfg80211_registered_device *rdev,
+ 		return -EOPNOTSUPP;
+ 	}
  
-+#include <drm/drm_drv.h>
- #include <drm/drm_gpuvm.h>
- #include <drm/drm_print.h>
- 
-@@ -1117,6 +1118,7 @@ drm_gpuvm_init(struct drm_gpuvm *gpuvm, const char *name,
- 	gpuvm->drm = drm;
- 	gpuvm->r_obj = r_obj;
- 
-+	drm_dev_get(drm);
- 	drm_gem_object_get(r_obj);
- 
- 	drm_gpuvm_warn_check_overflow(gpuvm, start_offset, range);
-@@ -1160,13 +1162,15 @@ static void
- drm_gpuvm_free(struct kref *kref)
- {
- 	struct drm_gpuvm *gpuvm = container_of(kref, struct drm_gpuvm, kref);
-+	struct drm_device *drm = gpuvm->drm;
- 
- 	drm_gpuvm_fini(gpuvm);
- 
--	if (drm_WARN_ON(gpuvm->drm, !gpuvm->ops->vm_free))
-+	if (drm_WARN_ON(drm, !gpuvm->ops->vm_free))
- 		return;
- 
- 	gpuvm->ops->vm_free(gpuvm);
-+	drm_dev_put(drm);
- }
- 
- /**
+-	if (out->ftm.rsta && !out->ftm.lmr_feedback) {
++	if (out->ftm.rsta &&
++	    (out->ftm.non_trigger_based || out->ftm.trigger_based) &&
++	    !out->ftm.lmr_feedback) {
+ 		NL_SET_ERR_MSG_ATTR(info->extack,
+ 				    tb[NL80211_PMSR_FTM_REQ_ATTR_RSTA],
+ 				    "FTM: RSTA set without LMR feedback");
 -- 
 2.53.0
 
