@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0166471438;
-	Tue, 21 Jul 2026 20:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D774472546;
+	Tue, 21 Jul 2026 20:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664147; cv=none; b=JxUYsptjgSgo3lN2DfJTUxeQ8uCYyYy8IoNGHaWKVNwcePLniGuKyImreW04KTTWHFWou9kcgvjDxd1BhQm4TY6NLMG7dR/LI0UpbDrb4eB4L3di4dzNilMqLovxEn7Wtphm9F09gzh1AvDIOGXxUdg5P1XxoQ1IbJMQH22E138=
+	t=1784664152; cv=none; b=JbcEPzuIEFyphsMeTRPrcob9ExcVYmZoYUrTiytzIxurbHdyUL0cxIkInxe7EANmEWMCVt6QQhCVF7nko21159Xmv2jAf9D8hPJz9D6SOM9H6sljD494hqxVH8vQBXiiCNoN8Gn2akkxhu6HPHh3pmfasurdlyVKMDyLfPcGy+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664147; c=relaxed/simple;
-	bh=krSGuejSLWishtnRZtQD5EQYJ3YspFfphnNR+1UsCco=;
+	s=arc-20240116; t=1784664152; c=relaxed/simple;
+	bh=3apk4OvA6ZFiHKhaR9DOFIHjfcgcWYrwmDxcTfCIfCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z8iUEl9wrBJb9WFQG+SDfrZ023nLiNO5qWE1PzbiqfmK77CLIxbu3xhvE7rGT7RVOZWAJc0FmpEB1i5MF0XqnVK/mEIWZvECACnHyAXP6sk8udSEJtxfrEeAk/giu3OllfOvC6ggRzL38PerAD2PTybGawzJXMFBBl+7DvoyqF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nR35YOMX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ROF1x1t9v4SDnP8pTNhvBecc+VRAMinRbMtCDBDrbPm2wW7EJpCQ20+zmKsyWGCthyMsqE7ifjpW3pUbgh+e0/zanXPkOp8PqLhYW/JbPA6EqtgtT5W6sVK45pL5/VoozPFPjbxIWOuVTtfnD+LBhmqyt4a8s/5TmNu/Qd/HMCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aKYTGfa3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nR35YOMX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421B21F000E9;
-	Tue, 21 Jul 2026 20:02:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aKYTGfa3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90D81F000E9;
+	Tue, 21 Jul 2026 20:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664146;
-	bh=zY3Up+GQGVxF3qzpWDN96uHxeBGfTCOAoKVWnE/uOk8=;
+	s=korg; t=1784664149;
+	bh=S+ROJLlLjhMeQAc5vZ2BRjymrPpJ7R3EBqdIZLuIqCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nR35YOMX66NYpug4iEp7NM4yKQEuZgYUFG9bhz5mgf6ZzCfZdQ16a31fbDdceVHNf
-	 KmvgBGS1l5JlWk31gc19FqvW1W88/EurMcYRxUTUlo0mXs6G96appZF94ja7fskkf0
-	 d2Z1jwo/XTpwMSyU4rvyP8wQdNyGTNQTu/K5qxtc=
+	b=aKYTGfa36q1SCzBlnV1fzRIjdtXC+uaRG3zCEGI4xPDuEzFYiviNGcqrsNBlV3yjO
+	 LTGOXGEe4qrlf+ZNiWqlIqXhfv05qei5QIW3k9OM1BX0Wa7YrYEyOdRzPjuSOb/4l0
+	 TkP/8t1c6/4Inzt0VLWTAf2umwUVa5v6SK2LftY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sven Eckelmann <sven@narfation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1063/1276] batman-adv: ensure minimal ethernet header on TX
-Date: Tue, 21 Jul 2026 17:25:06 +0200
-Message-ID: <20260721152509.774834031@linuxfoundation.org>
+	Nirmoy Das <nirmoyd@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 1090/1276] selftests: net: make busywait timeout clock portable
+Date: Tue, 21 Jul 2026 17:25:33 +0200
+Message-ID: <20260721152510.376577731@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,46 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Nirmoy Das <nirmoyd@nvidia.com>
 
-commit 49df66b7993c80b80c7eb9a84ba5b3410c8296a0 upstream.
+commit dd6a23bac306b7aa322e0aaccb60c6e32a198fb3 upstream.
 
-As documented in commit 8bd67ebb50c0 ("net: bridge: xmit: make sure we have
-at least eth header len bytes"), it is possible by for a local user with
-eBPF TC hook access to attach a tc filter which truncates the packet and
-redirects to an batadv interface. But the code assumes that at least
-ETH_HLEN bytes are available and thus might read outside of the available
-buffer.
+loopy_wait() expects millisecond timestamps. However, Ubuntu Resolute
+can use uutils date, where `date -u +%s%3N` returns seconds plus full
+nanoseconds instead of a 3-digit millisecond field. This makes
+busywait expire too early and can make vlan_bridge_binding.sh read a
+stale operstate.
 
-The batadv_interface_tx() must therefore always check itself if enough data
-is available for the ethernet header and don't rely on min_header_len.
-
-Cc: stable@vger.kernel.org
-Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-[ move from mesh- to soft-interface.c ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 25ae948b4478 ("selftests/net: add lib.sh")
+Cc: stable@vger.kernel.org # 6.8+
+Link: https://github.com/uutils/coreutils/issues/11658
+Signed-off-by: Nirmoy Das <nirmoyd@nvidia.com>
+Link: https://patch.msgid.link/20260630165157.3814871-1-nirmoyd@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/soft-interface.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/net/lib.sh |   25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
-diff --git a/net/batman-adv/soft-interface.c b/net/batman-adv/soft-interface.c
-index 42ad04d356904f..bc72238e7a08c3 100644
---- a/net/batman-adv/soft-interface.c
-+++ b/net/batman-adv/soft-interface.c
-@@ -206,6 +206,9 @@ static netdev_tx_t batadv_interface_tx(struct sk_buff *skb,
- 	if (atomic_read(&bat_priv->mesh_state) != BATADV_MESH_ACTIVE)
- 		goto dropped;
+--- a/tools/testing/selftests/net/lib.sh
++++ b/tools/testing/selftests/net/lib.sh
+@@ -67,12 +67,33 @@ ksft_exit_status_merge()
+ 		$ksft_xfail $ksft_pass $ksft_skip $ksft_fail
+ }
  
-+	if (!pskb_may_pull(skb, ETH_HLEN))
-+		goto dropped;
++timestamp_ms()
++{
++	local now
++	local seconds
++	local nanoseconds
 +
- 	/* reset control block to avoid left overs from previous users */
- 	memset(skb->cb, 0, sizeof(struct batadv_skb_cb));
++	now=$(date -u +%s:%N) || return
++	seconds=${now%:*}
++	nanoseconds=${now#*:}
++
++	if [[ $nanoseconds =~ ^[0-9]+$ ]]; then
++		nanoseconds=${nanoseconds:0:9}
++	else
++		nanoseconds=0
++	fi
++
++	echo $((seconds * 1000 + 10#$nanoseconds / 1000000))
++}
++
+ loopy_wait()
+ {
+ 	local sleep_cmd=$1; shift
+ 	local timeout_ms=$1; shift
++	local start_time
++	local current_time
  
--- 
-2.53.0
-
+-	local start_time="$(date -u +%s%3N)"
++	start_time=$(timestamp_ms) || return
+ 	while true
+ 	do
+ 		local out
+@@ -81,7 +102,7 @@ loopy_wait()
+ 			return 0
+ 		fi
+ 
+-		local current_time="$(date -u +%s%3N)"
++		current_time=$(timestamp_ms) || return
+ 		if ((current_time - start_time > timeout_ms)); then
+ 			echo -n "$out"
+ 			return 1
 
 
