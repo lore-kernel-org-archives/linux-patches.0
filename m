@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBC146C4B9;
-	Tue, 21 Jul 2026 18:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C4E46EF63;
+	Tue, 21 Jul 2026 18:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658138; cv=none; b=C6bB0nEnCTaqLGKrOkOnEtUYOYuX3UtJL4WCf7A2uobcFu6a6ektj7jUVLQOAZVXBKXTCGk2mdss5VxFrYnXaLb9YfdHRygGUE7UA6IYNZUIExNINOJFgmh2xhDxVScPeC8g08WxtcFsAfUO+Dp7D4KWN2QuisdQAMlTd2isBtM=
+	t=1784658141; cv=none; b=E/FzEuNWf49kfomiuNbJPl1MvknJenRI/j5dSqo02oHKIvQUKcVvLzKeCMR85HkN4dgIqXLrmbbu6+DlGB7AndVjAIDM4+o+auDixCO9a2Bc46SDxLLCuXts5G+DAvpF0yhckxgYlj3g2Lel1CPi1MYxjfsiZ26DsrkZE+n+YwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658138; c=relaxed/simple;
-	bh=M8S0vQMDb7JBtaW1fS4gxtu/+j0dB8xuu2eF0BkPAYY=;
+	s=arc-20240116; t=1784658141; c=relaxed/simple;
+	bh=ubVVsMrTMAIy05U8yBUspJWJR1+idYz/UCKdWfyk5mI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lHdeJpM4MI/Fxz0O1rNaTPPD2MM60VraovAeErWHvE2G5btaTEOIoKM8pudkgrmvcfCzMVXol0sHw7i/pNHJLdy3bVqy/PVRb9TVzRfGRPFrYVRYXj2bx5Z+4wpC8nWoAu3mXtqUeLi/JjYAODRoLcS7F4En5EEmMtYZrCnAHTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NP/PtZ5N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bf4jasEvelfzJIH8DxLvegMrMI5pQbXRin23XUDGhdoKNFtmgyTAO96ZPp3c3BZCIzxJ+YoFaR7/EJDzm/JBAMeEiJLIaDH8cPWwHGoTm1wp7MZoa6Kgdg5GIzbMfp76MLkKJluOhRwlHXhAZazUP5aVcQx7UQr7D1EpYb72NAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00SFi+wf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NP/PtZ5N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4516F1F000E9;
-	Tue, 21 Jul 2026 18:22:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00SFi+wf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7DD21F00A3D;
+	Tue, 21 Jul 2026 18:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658137;
-	bh=vhxlZAdk5I92uZuiC0gTM7XxBcCOd76Jdv+wwDD0qsw=;
+	s=korg; t=1784658140;
+	bh=ErFCSSagJyYP6rOLj2BJXnPanztQSg/TAm2l1sfltrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NP/PtZ5NXTbTlSz///+O5b23ZQKq5cwlm4wZF7z3eNdoFnhFYZ4oxf5DSIFpJVscJ
-	 TcTKEI842OT9pj3ikv9+01RVrxI7HcvcbImbYaYEp5FmK8FWECq9Z05oFVMD5HOXte
-	 NKyOszJyOrRYbfWYclm/IpfXknyPhyHB40wCn8sU=
+	b=00SFi+wf8FwUq0L9pHaKmtsJoMg8mQ2MfIQDIAA1UhqBRPFo6XZw421iXX0VA7wuQ
+	 cJi8Rwr2zs4AXv6mH5nhZvw9i7Bk9i+0Ei3oWuyvx7QN7oThDCsXD8QBHA6mCIbxSR
+	 hLChAaNgH/fP0Fe8E2cvg8BjkZ9ft0wjMudyn1Xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	David Hildenbrand <david@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Ben Hutchings <ben@decadent.org.uk>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1031/1611] arm64/mm: Optimize TLB flush in unmap_hotplug_[pmd|pud]_range()
-Date: Tue, 21 Jul 2026 17:19:07 +0200
-Message-ID: <20260721152538.589665393@linuxfoundation.org>
+Subject: [PATCH 6.18 1032/1611] HID: bpf: Fix hid_bpf_get_data() range check
+Date: Tue, 21 Jul 2026 17:19:08 +0200
+Message-ID: <20260721152538.613277370@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -57,67 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
 
-[ Upstream commit ff4c5a0de1f2ef7737a8688a86e19301e567020d ]
+[ Upstream commit 2d044049421dd48212b28646a850749d4a2d57fa ]
 
-Commit 48478b9f7913 ("arm64/mm: Enable batched TLB flush in
-unmap_hotplug_range") inadvertently introduced redundant TLB
-invalidation when clearing a block entry, resulting in unnecessary
-broadcast invalidation on CPUs without support for range-based
-invalidation.
+hid_bpf_get_data() returns a pointer into the HID-BPF context data when
+the caller-provided offset and size fit inside ctx->allocated_size.
 
-Re-introduce the old behaviour, along with some expanded comments to
-help people working in this area next time around.
+The current check adds rdwr_buf_size and offset before comparing the
+result against ctx->allocated_size. Since both values are unsigned, a
+very large size can wrap the sum below ctx->allocated_size and make the
+helper return a pointer even though the requested range is not contained
+in the backing buffer.
 
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Reported-by: Ben Hutchings <ben@decadent.org.uk>
-Closes: https://lore.kernel.org/all/b0d5836032ce3135bfc473f6bff791306d086925.camel@decadent.org.uk/
-Fixes: 48478b9f7913 ("arm64/mm: Enable batched TLB flush in unmap_hotplug_range()")
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-[will: Reword comments and commit message]
-Signed-off-by: Will Deacon <will@kernel.org>
+Use check_add_overflow() to reject wrapped range ends before comparing
+the requested range end against ctx->allocated_size.
+
+Fixes: 658ee5a64fcf ("HID: bpf: allocate data memory for device_event BPF programs")
+Signed-off-by: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/mmu.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/hid/bpf/hid_bpf_dispatch.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
-index ada93622ccf2c0..971cffdb8b48cc 100644
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -1515,7 +1515,13 @@ static void unmap_hotplug_pmd_range(pud_t *pudp, unsigned long addr,
- 			if (free_mapped) {
- 				/* CONT blocks are not supported in the vmemmap */
- 				WARN_ON(pmd_cont(pmd));
--				flush_tlb_kernel_range(addr, addr + PMD_SIZE);
-+				/*
-+				 * Invalidating a block entry requires just
-+				 * a single overlapping TLB invalidation,
-+				 * so limit the range of the flush to a single
-+				 * page.
-+				 */
-+				flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
- 				free_hotplug_page_range(pmd_page(pmd),
- 							PMD_SIZE, altmap);
- 			}
-@@ -1545,7 +1551,8 @@ static void unmap_hotplug_pud_range(p4d_t *p4dp, unsigned long addr,
- 		if (pud_sect(pud)) {
- 			pud_clear(pudp);
- 			if (free_mapped) {
--				flush_tlb_kernel_range(addr, addr + PUD_SIZE);
-+				/* See comment in unmap_hotplug_pmd_range(). */
-+				flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
- 				free_hotplug_page_range(pud_page(pud),
- 							PUD_SIZE, altmap);
- 			}
+diff --git a/drivers/hid/bpf/hid_bpf_dispatch.c b/drivers/hid/bpf/hid_bpf_dispatch.c
+index eb9f40c988d02b..e6cf551b41e8e7 100644
+--- a/drivers/hid/bpf/hid_bpf_dispatch.c
++++ b/drivers/hid/bpf/hid_bpf_dispatch.c
+@@ -17,6 +17,7 @@
+ #include <linux/kfifo.h>
+ #include <linux/minmax.h>
+ #include <linux/module.h>
++#include <linux/overflow.h>
+ #include "hid_bpf_dispatch.h"
+ 
+ const struct hid_ops *hid_ops;
+@@ -296,13 +297,15 @@ __bpf_kfunc __u8 *
+ hid_bpf_get_data(struct hid_bpf_ctx *ctx, unsigned int offset, const size_t rdwr_buf_size)
+ {
+ 	struct hid_bpf_ctx_kern *ctx_kern;
++	size_t end;
+ 
+ 	if (!ctx)
+ 		return NULL;
+ 
+ 	ctx_kern = container_of(ctx, struct hid_bpf_ctx_kern, ctx);
+ 
+-	if (rdwr_buf_size + offset > ctx->allocated_size)
++	if (check_add_overflow(rdwr_buf_size, offset, &end) ||
++	    end > ctx->allocated_size)
+ 		return NULL;
+ 
+ 	return ctx_kern->data + offset;
 -- 
 2.53.0
 
