@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B87546D549;
-	Tue, 21 Jul 2026 19:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C244F431A5C;
+	Tue, 21 Jul 2026 19:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661478; cv=none; b=V9MXbIYE8RZpdkMNuhw5KlefiyLio74h4lmaa1AWXCLl7MbjmmVZIkjbkn+eYpGPIMLFt4CEquHC0T++q8fzTcyxD7pdtYpnt6Pparr+XTXcL6Cqh/yqmIrTGyN6CBG26ILu7fELBJv6lddh/LD92yEsdtCCIQXZc4cgxxtAQQc=
+	t=1784661479; cv=none; b=gkB1cGkrmUEoyyLCDe7NJHzT3jNO28n3rGEkMhlN5U1sf7k0FsGfM3ITRHMa0cIC6rKI969RI2SV1IXdmlF0YJ+HbkumXcEGdFeuOoSBNMsSWZZHFPhG1tU7XahSWmjgGWarN83EZd1b7Dg++A8PNtRbq8qD8vJA3w2KFSYOx0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661478; c=relaxed/simple;
-	bh=GP3ENy2qtQPwmF61R5oRF+mMHPTQ6OuQy3TJtSHFkLk=;
+	s=arc-20240116; t=1784661479; c=relaxed/simple;
+	bh=tatQHnCMD4zyvFFmNwitGU8uVWS09UvTwKYQPvVXjMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DmYOpG6OSl1TmGtiHh9OAoNKYmeXEdbaUNb83BSiIFSB5Nf6uqzsIbILBMDbTYwMT/PQyCzC5qRFQIhnksEffyFe104s5ddMyiqzGUIwKgzkYfzFodu7I/0VKWPtLP3IeM9UqgfLR33sk5brnbBYiEtzKq0wIBD0HmCE3QeBsqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmM3ftRm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kEyKCMJB6WPSG5IfzKK7mihPAVCmLdqrB/NzWbZgzBwY4HBW3Vbk+5JofIuev4/gOm9s8MVTPrsRijqX5x6EuuttmRS/UJVN17O/BDWdOqrXFcZEiIHodFwdBfnoRQZD7dHkAhdMfpvtgwHuSz28A5f/J6cg1Yz+xrefoEXojfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QhbW85qD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmM3ftRm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F70B1F000E9;
-	Tue, 21 Jul 2026 19:17:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QhbW85qD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 344971F00A3A;
+	Tue, 21 Jul 2026 19:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661476;
-	bh=cevU2vwJDkdhgUSuP5kmIPxIE/xkbQjvtw/f4GGFJsA=;
+	s=korg; t=1784661478;
+	bh=M+VBFJEoO/g7QOfoaUfNRReMSJCAj6k8/Yu1TY1bnFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tmM3ftRmjt4C1cLXHxa6jVy5xagn1KrGRBmLQ6KmT4+3DvuKHu/W4d7pjHQVssh0P
-	 IrNWiMpcBWAZR+9TIrV/NZQcJhrhqlu/ohdkPwuFq7WIBsYXoHoe0yvdeuoMoAqSBH
-	 RLjviE3/9p4tarW7jvnXJ7aLawCX0c1uWTEUw+WY=
+	b=QhbW85qDkY++hRoGpz1kw3BFoRwaGhChGKFIg/IePIAxIduoeW7zQGc0xtC0/pNde
+	 F/FxRtX4KGx8xT93Ne/av+yviMj1QRAWdo5KNl9zZVbMFhOf3KvC8n48LFm3qjBQw8
+	 vrR26UkWiyr7GPSCdWbrWKmlvJGQQEeOWmUzBSK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingjing Deng <micro6947@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Prasanna Kumar T S M <ptsm@linux.microsoft.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0080/1276] kconfig: fix potential NULL pointer dereference in conf_askvalue
-Date: Tue, 21 Jul 2026 17:08:43 +0200
-Message-ID: <20260721152447.884506849@linuxfoundation.org>
+Subject: [PATCH 6.12 0081/1276] soc: xilinx: Shutdown and free rx mailbox channel
+Date: Tue, 21 Jul 2026 17:08:44 +0200
+Message-ID: <20260721152447.907010774@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,57 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingjing Deng <micro6947@gmail.com>
+From: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
 
-[ Upstream commit b9d21c32dca2167a614e66c9e27999b9e1c33d55 ]
+[ Upstream commit fdee7c66c0d7b6869c36b9f9a915abf29ab5b550 ]
 
-In conf_askvalue(), the 'def' argument (retrieved via sym_get_string_value)
-can be NULL. While current call sites ensure that 'def' is valid,
-calling printf("%s\n", def) is technically undefined behavior and could
-lead to a segmentation fault on certain libc implementations if the
-function were called with a NULL pointer in the future.
+A mbox rx channel is requested using mbox_request_channel_byname() in
+probe. In remove callback, the rx mailbox channel is cleaned up when the
+rx_chan is NULL due to incorrect condition check. The mailbox channel is
+not shutdown and it can receive messages even after the device removal.
+This leads to use after free. Also the channel resources are not freed.
+Fix this by checking the rx_chan correctly.
 
-Improve the robustness of conf_askvalue() by providing an empty string
-as a fallback.
-
-Additionally, remove the redundant re-initialization of the 'line'
-buffer inside the !sym_is_changeable(sym) block, as it is already
-properly initialized at the function entry.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Xingjing Deng <micro6947@gmail.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260306021709.27068-1-micro6947@gmail.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: ffdbae28d9d1a ("drivers: soc: xilinx: Use mailbox IPI callback")
+Signed-off-by: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
+Signed-off-by: Michal Simek <michal.simek@amd.com>
+Link: https://lore.kernel.org/r/20260320060445.1541017-1-ptsm@linux.microsoft.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/conf.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/soc/xilinx/zynqmp_power.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/kconfig/conf.c b/scripts/kconfig/conf.c
-index 3d7d454c54da3c..7f4b371ef41f30 100644
---- a/scripts/kconfig/conf.c
-+++ b/scripts/kconfig/conf.c
-@@ -297,9 +297,7 @@ static int conf_askvalue(struct symbol *sym, const char *def)
- 	line[1] = 0;
+diff --git a/drivers/soc/xilinx/zynqmp_power.c b/drivers/soc/xilinx/zynqmp_power.c
+index ae59bf16659a68..84ef7c87dfaa38 100644
+--- a/drivers/soc/xilinx/zynqmp_power.c
++++ b/drivers/soc/xilinx/zynqmp_power.c
+@@ -396,8 +396,10 @@ static void zynqmp_pm_remove(struct platform_device *pdev)
+ {
+ 	sysfs_remove_file(&pdev->dev.kobj, &dev_attr_suspend_mode.attr);
  
- 	if (!sym_is_changeable(sym)) {
--		printf("%s\n", def);
--		line[0] = '\n';
--		line[1] = 0;
-+		printf("%s\n", def ?: "");
- 		return 0;
- 	}
+-	if (!rx_chan)
++	if (rx_chan) {
+ 		mbox_free_channel(rx_chan);
++		rx_chan = NULL;
++	}
+ }
  
-@@ -307,7 +305,7 @@ static int conf_askvalue(struct symbol *sym, const char *def)
- 	case oldconfig:
- 	case syncconfig:
- 		if (sym_has_value(sym)) {
--			printf("%s\n", def);
-+			printf("%s\n", def ?: "");
- 			return 0;
- 		}
- 		/* fall through */
+ static const struct of_device_id pm_of_match[] = {
 -- 
 2.53.0
 
