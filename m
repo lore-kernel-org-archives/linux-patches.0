@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC09743F4CE;
-	Tue, 21 Jul 2026 22:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8C344212D;
+	Tue, 21 Jul 2026 22:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672111; cv=none; b=Tdmyz+oY9pnjyOLFHaTKx/SjwIGQHI5uHudwzxByRbXtynbmfFKuYp7W9fhgmJxsjTJzScXPNtnIXIDp33Ml5LigahAyedbYWQqhIVHIkZZDwUGiVIylS2UgVUXIkUaqp1PsVzUUUwncPzza7zNqWxDjkS8SnT2p8cMpLfmR6gs=
+	t=1784672114; cv=none; b=LtB3YItTUOaXgx8/ZBlgxMwleQ9T7vS6iJn7abU9tVYrHEWhShojN9vpvv2ihzl40YnQAhIm3eCXSqxn3ZM4kHn7b6a/6DW/5yaeAL/WLWrHONvnq5M1MkJSnqz+HPy488QFS5Jj7pe11kMZ00J31mYDZMct0oeOvbphCmvmVXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672111; c=relaxed/simple;
-	bh=tHfTnugrk7WL/7oQM34FSKIPmvjnyio9ny4su4Rpym0=;
+	s=arc-20240116; t=1784672114; c=relaxed/simple;
+	bh=kRn5Uj8zyY3K9r9O7WLvaPKDViFHq3ccA+7CCNg9heE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DKrMGwqbGnUd7JKy78LNui3EkkcGsd4WHRs60KAdGyj1Bu0jY+tQnGp5Of61jzp72EC/SJeR/YYwCdUUax1bikMoKaLB4MomCM3t5tXknk1DG4HxwZJ2CvSKlgauTwKtzPH3KWV9vYpW3Ozu65k2h/Pkx1qKq+/+QzPEk91WYzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YXfNODC0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KtPNKTf7yVlkCXr6ZjmJM5tBJv/ANgm/cyktlpHiFF4iGVr5UZOjCbWuf2MxxBM+GDuHPMyPch9J7E0trxr67fIczh11dF4nC9CU9RlVMgmUU0tzREtYe9ujTe9rS/XPJx0JEn5Givl/dVpuMg0g1vpOTgSUd2mAGWhz2c/fBqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRr/uwps; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YXfNODC0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA011F000E9;
-	Tue, 21 Jul 2026 22:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRr/uwps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F761F000E9;
+	Tue, 21 Jul 2026 22:15:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672110;
-	bh=pajl7N3b+Sz2+qIRxd6Cz3yAoZ4hSFltvMHn7KjtwII=;
+	s=korg; t=1784672113;
+	bh=JBEvqIcaiAcWfFPVOmlnNhhvOX7iD+fGxZ9LGWIznys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YXfNODC0vsm/o86Nh1CsNlEsKjtcB2JNaFw4Z1dZHUj2rVgXNYqcfWVPawnhPcxzF
-	 epvGKrOIAVlhDyij0OYf+irfTT7KfFs0++CKPVrKU4Y51JxsSHHb9R2QtTs7StudUm
-	 TpvtBSn1uR3YCdbeahp4OSvZ52rhBUHjvPH09JUc=
+	b=dRr/uwpsIShEkTkkX+82S/nLqDZRtmsmMarvUWuxXIeGxWIrGzhXwRKSjp3+n6v33
+	 Ulhovw2Vm1h+ymd998/v5RNWnZ+IUpJbXSq+cSTrkGPrjyk4oKzU295nFqPXTG4t3U
+	 dawPmK+vO7jePrk9XgdN/60kGDwo5M/AlrHmdo1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Longjun Tang <tanglongjun@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 502/843] irqchip/gic-v3-its: Fix OF node reference leak
-Date: Tue, 21 Jul 2026 17:22:17 +0200
-Message-ID: <20260721152417.325102172@linuxfoundation.org>
+Subject: [PATCH 5.15 503/843] virtio_net: disable cb when NAPI is busy-polled
+Date: Tue, 21 Jul 2026 17:22:18 +0200
+Message-ID: <20260721152417.346862382@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,46 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Longjun Tang <tanglongjun@kylinos.cn>
 
-[ Upstream commit 2e1368a9d61bdf5502ddade004f223a5831c5b8c ]
+[ Upstream commit 1eb8fc67ca41db71c90866ff76c990d85247daef ]
 
-of_get_cpu_node() returns a referenced device node. In
-its_cpu_init_collection(), the Cavium 23144 workaround only uses the
-node to compare the CPU NUMA node, but the reference is never dropped.
+When busy-poll is active, napi_schedule_prep() returns false in
+virtqueue_napi_schedule(), so virtqueue_disable_cb() is skipped.
+The device may keep firing irqs until reaches virtqueue_napi_complete().
+Under load (received == budget), it will lead to a large number
+of spurious interrupts.
 
-Use the device_node cleanup helper for the CPU node reference so it is
-released when leaving the workaround block, including the NUMA mismatch
-return path.
+Fix it by disabling the callback at the virtnet_poll() entry.
+This keeps the callback off while we poll and it is re-enabled by
+virtqueue_napi_complete() when going idle.
 
-Fixes: fbf8f40e1658 ("irqchip/gicv3-its: numa: Enable workaround for Cavium thunderx erratum 23144")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
-Acked-by: Marc Zyngier <maz@kernel.org>
+Fixes: ceef438d613f ("virtio_net: remove custom busy_poll")
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Longjun Tang <tanglongjun@kylinos.cn>
+Link: https://patch.msgid.link/20260629024230.37325-1-lange_tang@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/virtio_net.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 0fe5ee752c90ea..db5a0eb820c39b 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -3213,11 +3213,9 @@ static void its_cpu_init_collection(struct its_node *its)
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 78996989c60cea..535ea3ad3a8cd1 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -1612,6 +1612,9 @@ static int virtnet_poll(struct napi_struct *napi, int budget)
+ 	unsigned int received;
+ 	unsigned int xdp_xmit = 0;
  
- 	/* avoid cross node collections and its mapping */
- 	if (its->flags & ITS_FLAGS_WORKAROUND_CAVIUM_23144) {
--		struct device_node *cpu_node;
-+		struct device_node *cpu_node __free(device_node) = of_get_cpu_node(cpu, NULL);
++	if (budget)
++		virtqueue_disable_cb(rq->vq);
++
+ 	virtnet_poll_cleantx(rq, budget);
  
--		cpu_node = of_get_cpu_node(cpu, NULL);
--		if (its->numa_node != NUMA_NO_NODE &&
--			its->numa_node != of_node_to_nid(cpu_node))
-+		if (its->numa_node != NUMA_NO_NODE && its->numa_node != of_node_to_nid(cpu_node))
- 			return;
- 	}
- 
+ 	received = virtnet_receive(rq, budget, &xdp_xmit);
 -- 
 2.53.0
 
