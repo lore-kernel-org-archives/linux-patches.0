@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB6A479873;
-	Tue, 21 Jul 2026 21:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0760A4746A8;
+	Tue, 21 Jul 2026 21:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667664; cv=none; b=II+/vEQOGBcxyX4flzrjkjZqngyr4UG6FuLJRL37nh9zVWcs2XNaDaEkKEbZDam+LCwwa71pnygiqOo9k/oXqXdF4jvbKrK+13+72tt5qHSKqehtF6IrVyb3ryQgxMzP9lPwBJcMJF5+/EYioOpRlstWl7TYfOuYvCvNW+MYua4=
+	t=1784667667; cv=none; b=QxhQMFRqZ1QVABQEijneLdy0xvOAtoZaM7oYRAIlQT5Zswu31ns7+IfAN+xt/i6R5E8jeuB9QuNU3goCMzZH1NH62YulM19pu7yIQdzU8YclxJX24lAwrr00HC49IspuMZnekky4TEIxTZq7g+UzfrfTQVOL+so+CnvvbhuR/8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667664; c=relaxed/simple;
-	bh=8zwuLurVSUkyPiyEoilw1Kx4wA9COfCaxM2z6hdRpl0=;
+	s=arc-20240116; t=1784667667; c=relaxed/simple;
+	bh=LRrX+eLgTTzwfHWi1NnitQlS8BVNg/FWFEqGuTSWU9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKtvFzREa7nGfHfmAKgkhr3WRaeD60tEguvZF1qpaPGHDSzWmYZ9bQKRs0NnXy2E5G49+UvMucxA9PUyf06FNfY7GWgabhYNmY+aEWhiLw5+DPR/AALClUKA4OYQwzDZMzGUStu0NWhrVZ/N8KGMrD7lIn32I7xaHaimz4kG0KY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUu9i/PX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dy1zWuZRMBPy56mTbliYspxfGACViARVIccYOzNrRFon8WQJ2OMNoHHlb2MBeHazGx8D0Ug3nF/WHaL7SjbLDRWdJlZguN6kGebW16aHYJUfk5K4YQJ+yNdOjLbVNtpGnk4U6eMBW5ynK3ve95qznNszxJR1oirhhBdGUcU8qb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mo6IfkcU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUu9i/PX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A53581F00A3A;
-	Tue, 21 Jul 2026 21:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mo6IfkcU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24DCC1F000E9;
+	Tue, 21 Jul 2026 21:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667663;
-	bh=NgUCjThgBNqG62kwYMU4sTlluwTO5pPi+cWojCaUUmw=;
+	s=korg; t=1784667665;
+	bh=nWVvLtV+Ry34LVRvAKUPG6n0KGNix+6sIhZBQ3j+VuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mUu9i/PXF1NBgPmsxx/7QXbSuQnsnT6z/tQntNkgv4piB6i7xFWCXuziRC+bsoEkJ
-	 +O1W1p0HsH2wlMWbdud53filLA49OnnkWKNkkzSRzS7IJH8GfGBYWtClI5gvNfIQCw
-	 LcVlwUFomiV5TG29AwB+5NPHch4vmwAdDqF8YzjY=
+	b=Mo6IfkcUcpdaf2jeHKQgBe/1unRzgu3HjVRdlD15LODqfEpcxS40Q6ZqmYMNPcG9j
+	 oesSvIjbR35XR/pbTWYjHNIaM/0thUwQBIY+6xpP67S6U0r9RfLgUm0pTdi82dvUOR
+	 TcLxOO7KVaGqK2r3orz1e6TpyuOG3GTyZdwvYeZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.6 1144/1266] mtd: mchp23k256: use SPI match data for chip caps
-Date: Tue, 21 Jul 2026 17:26:21 +0200
-Message-ID: <20260721152507.387575955@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.6 1145/1266] mmc: vub300: defer reset until cmd_mutex is unlocked
+Date: Tue, 21 Jul 2026 17:26:22 +0200
+Message-ID: <20260721152507.409395293@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,38 +50,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit d322e40f4edf92bf0ca329e5aa4ae1c0316feb38 upstream.
+commit ee5fb641c4ccac8406c668d3e947eb20ce44f233 upstream.
 
-The driver stores chip capacity information in both the OF match table
-and the SPI id table. Probe currently uses of_device_get_match_data(),
-so a non-OF SPI modalias match falls back to mchp23k256_caps even when
-the SPI id table selected a different part.
+vub300_cmndwork_thread() holds cmd_mutex while it sends a command and
+waits for the command response.  If the response wait times out,
+__vub300_command_response() kills the command URBs and then synchronously
+resets the USB device through usb_reset_device().
 
-Use spi_get_device_match_data() so SPI id-table driver_data is consumed
-when OF match data is absent. This keeps the existing default fallback
-while avoiding the wrong MTD geometry for id-table-only matches.
+That reset path re-enters the driver through vub300_pre_reset(), which
+also takes cmd_mutex.  The worker therefore tries to acquire the same
+mutex recursively while it is still holding it from the command path.
 
-Fixes: 4379075a870b ("mtd: mchp23k256: Add support for mchp23lcv1024")
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
+
+The grounded PoC kept the real worker and timeout/reset carrier:
+
+  vub300_cmndwork_thread()
+  __vub300_command_response()
+  usb_lock_device_for_reset()
+  usb_reset_device()
+  vub300_pre_reset()
+
+Lockdep reported the same-task recursive acquisition on cmd_mutex:
+
+  WARNING: possible recursive locking detected
+  ... (&test_vub300.cmd_mutex) ... at: usb_reset_device... [vuln_msv]
+  ... (&test_vub300.cmd_mutex) ... at: vub300_cmndwork_thread+0x12/0x20 [vuln_msv]
+  Workqueue: vub300_cmd_wq vub300_cmndwork_thread [vuln_msv]
+  *** DEADLOCK ***
+
+Return a flag from __vub300_command_response() when the timeout path needs
+a device reset, then perform the reset after vub300_cmndwork_thread() has
+cleared the in-flight command state and dropped cmd_mutex.  The reset is
+still attempted before mmc_request_done(), preserving the existing request
+completion ordering while avoiding the recursive lock.
+
+Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/devices/mchp23k256.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/vub300.c |   26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
---- a/drivers/mtd/devices/mchp23k256.c
-+++ b/drivers/mtd/devices/mchp23k256.c
-@@ -188,7 +188,7 @@ static int mchp23k256_probe(struct spi_d
+--- a/drivers/mmc/host/vub300.c
++++ b/drivers/mmc/host/vub300.c
+@@ -1585,7 +1585,7 @@ static int __command_write_data(struct v
+ 	return linear_length;
+ }
  
- 	data = dev_get_platdata(&spi->dev);
+-static void __vub300_command_response(struct vub300_mmc_host *vub300,
++static bool __vub300_command_response(struct vub300_mmc_host *vub300,
+ 				      struct mmc_command *cmd,
+ 				      struct mmc_data *data, int data_length)
+ {
+@@ -1597,17 +1597,11 @@ static void __vub300_command_response(st
+ 					    msecs_to_jiffies(msec_timeout));
+ 	if (respretval == 0) { /* TIMED OUT */
+ 		/* we don't know which of "out" and "res" if any failed */
+-		int result;
+ 		vub300->usb_timed_out = 1;
+ 		usb_kill_urb(vub300->command_out_urb);
+ 		usb_kill_urb(vub300->command_res_urb);
+ 		cmd->error = -ETIMEDOUT;
+-		result = usb_lock_device_for_reset(vub300->udev,
+-						   vub300->interface);
+-		if (result == 0) {
+-			result = usb_reset_device(vub300->udev);
+-			usb_unlock_device(vub300->udev);
+-		}
++		return true;
+ 	} else if (respretval < 0) {
+ 		/* we don't know which of "out" and "res" if any failed */
+ 		usb_kill_urb(vub300->command_out_urb);
+@@ -1703,6 +1697,8 @@ static void __vub300_command_response(st
+ 	} else {
+ 		cmd->error = -EINVAL;
+ 	}
++
++	return false;
+ }
  
--	flash->caps = of_device_get_match_data(&spi->dev);
-+	flash->caps = spi_get_device_match_data(spi);
- 	if (!flash->caps)
- 		flash->caps = &mchp23k256_caps;
- 
+ static void construct_request_response(struct vub300_mmc_host *vub300,
+@@ -1748,6 +1744,7 @@ static void vub300_cmndwork_thread(struc
+ 		struct mmc_request *req = vub300->req;
+ 		struct mmc_command *cmd = vub300->cmd;
+ 		struct mmc_data *data = vub300->data;
++		bool reset_device;
+ 		int data_length;
+ 		mutex_lock(&vub300->cmd_mutex);
+ 		init_completion(&vub300->command_complete);
+@@ -1770,7 +1767,8 @@ static void vub300_cmndwork_thread(struc
+ 			data_length = __command_read_data(vub300, cmd, data);
+ 		else
+ 			data_length = __command_write_data(vub300, cmd, data);
+-		__vub300_command_response(vub300, cmd, data, data_length);
++		reset_device = __vub300_command_response(vub300, cmd,
++							 data, data_length);
+ 		vub300->req = NULL;
+ 		vub300->cmd = NULL;
+ 		vub300->data = NULL;
+@@ -1778,6 +1776,16 @@ static void vub300_cmndwork_thread(struc
+ 			if (cmd->error == -ENOMEDIUM)
+ 				check_vub300_port_status(vub300);
+ 			mutex_unlock(&vub300->cmd_mutex);
++			if (reset_device) {
++				int result;
++
++				result = usb_lock_device_for_reset(vub300->udev,
++								   vub300->interface);
++				if (result == 0) {
++					result = usb_reset_device(vub300->udev);
++					usb_unlock_device(vub300->udev);
++				}
++			}
+ 			mmc_request_done(vub300->mmc, req);
+ 			kref_put(&vub300->kref, vub300_delete);
+ 			return;
 
 
