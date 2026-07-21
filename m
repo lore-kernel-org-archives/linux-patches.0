@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AAD843E071;
-	Tue, 21 Jul 2026 22:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF273D6CCA;
+	Tue, 21 Jul 2026 22:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673551; cv=none; b=jhH5stx7LzmTVYjnQv3YI9jI56y06qyGa1l9KLGYreqTnu5Ylwdid2WhfenQlgt0JV9lWZyhxi1XsYqyVwmPShovxmvi6E0DXXI37OxyW4X3Cy+xhhxr5tdryWdINC6DnJsq3Eo/yG70gcrMASy+nE/e2pGv0sxa3fynWUqM6oQ=
+	t=1784673552; cv=none; b=hknImukPj/F7n5IcjSbgrV5MclvmEJgCKOOzxkindSlCewwUovH73xjjnbULyArlXCc5NY98WLOKTdsaObkJVC8CercMgSRtIk5CScZtuFbNlSb20Va4je/Y8gUhMPYtMOik/r6Qbvb8rugbbbcaXLIjpLmnHqfliDteMPqtK6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673551; c=relaxed/simple;
-	bh=RpMqQdJyYnb0u2QbLil/KKQOFthHZYouLSa3REjBj2Y=;
+	s=arc-20240116; t=1784673552; c=relaxed/simple;
+	bh=p+VzK4nhU587LBWAorzzLXostS3b9k6QCEfPZSfGk/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pKtGyk2JPnN4rqE0WCbQuqG8rEV3kJsjUauQl9/OAwbzNxhWk9q9yqoBiJPPYRVyphs0nOJIXXtjMpfAKrYZYjjodEHxgAmVbtBJM9cWnwE5ADs4NvmRf1wikC8Do/0wxwQ5Hz6FdiXdLvNvJG0kvGiPkYQ9l4IRYWCOLmiU2Qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEfC59pX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PvXDlbgs3h5FKx38nBUDZVY2Of3OS3K5FE8oOC8rKmJn4PU8ujAgpdRsLS3fvfEYk77XuEEjCIvaZyTdZCZikwNnNR78F0hac/pdqevUw+4/6DTXWCj7XRg/ds9ZVoD67zWUzfyMor7LUoe/TiMhEaCYBdB0SAkz7Wah8gfsbiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjB8t2fq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEfC59pX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A93B1F000E9;
-	Tue, 21 Jul 2026 22:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjB8t2fq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BAA91F00A3A;
+	Tue, 21 Jul 2026 22:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673548;
-	bh=dTlKhffXrhWBIwNClTk33bjU/HEc1O2dufHh8jl67lU=;
+	s=korg; t=1784673551;
+	bh=H0m0gzUzw1EWSIzqEsN/yeaPtW0PGKmJpwHGOIatb7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fEfC59pX4VazlsuP4txs9CHAseQKQNPHjFqN5gBE3myviiNB10i7mAalI6M9p9OIk
-	 QdEfOMHosAkVAq9pTcRGNGt1ZHAB2OldoQYMG2GdD6MWkyC/FQbFOLmYZxL/91LUez
-	 oC9Lh1MVYGyVJ920dkVuIdG2KreVMcadEGcK58Xc=
+	b=EjB8t2fq4EIDIodhRmkA5WEJlLHrWylMKacsOU7xNhvykiBiIK09716kV+eW4SiSz
+	 2ay5rD+qQshnGKBknJEEOUDJqJTf4qsJTwilMRbD7VcTql5dJ1Tz2WUWi5vPGqRjDz
+	 3o1ZBPc6yMEZTqi0K8KYMwJUJf9ENQHDA4xRQgrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiakai Xu <xujiakai24@mails.ucas.ac.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 203/699] PM: sleep: Use complete() in device_pm_sleep_init()
-Date: Tue, 21 Jul 2026 17:19:22 +0200
-Message-ID: <20260721152400.274002718@linuxfoundation.org>
+Subject: [PATCH 5.10 204/699] MIPS: Fix big-endian stack argument fetching in o32 wrapper
+Date: Tue, 21 Jul 2026 17:19:23 +0200
+Message-ID: <20260721152400.296797109@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,70 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiakai Xu <xujiakai24@mails.ucas.ac.cn>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit 3855941f1e4069182c895d5093c5fa589f5b38bd ]
+[ Upstream commit 8e0780d30b1b51248e42895b7acc7a20f147b40b ]
 
-Replace complete_all() with complete() in device_pm_sleep_init() to allow
-it to be called in atomic contexts without triggering a false-positive
-WARNING from lockdep_assert_RT_in_threaded_ctx() when
-CONFIG_PROVE_RAW_LOCK_NESTING is enabled.
+Fix an issue in call_o32() where the upper 32-bit half of incoming n64
+stack arguments is fetched and used for outgoing o32 stack arguments on
+big-endian platforms.
 
-device_pm_sleep_init() may be called during device initialization while
-holding a raw_spinlock (e.g., from within device_initialize()), and
-complete_all() is unsafe in atomic contexts on PREEMPT_RT kernels.
-complete(), which is safe to call from any context, is sufficient here.
+This code was adapted from arch/mips/dec/prom/call_o32.S which was meant
+for a little-endian platform only and therefore using 32-bit loads from
+64-bit stack slot locations holding incoming stack arguments resulted in
+correct values being retrieved for data that is expected to be 32-bit.
 
-complete_all() sets the completion count to UINT_MAX/2 (permanently
-signaled), while complete() increments it by 1. Since no threads can be
-waiting during device initialization, both are functionally equivalent.
-The completion is always reinitialized via reinit_completion() in
-dpm_clear_async_state() before each suspend/resume cycle.
+This works on little-endian platforms where the lower 32-bit half of the
+64-bit value is located at every 64-bit stack slot location.  However on
+big-endian platforms the lower 32-bit half is instead located at offset
+4 from every 64-bit stack slot location.
 
-However, changing to complete() introduces a potential deadlock for
-devices with no PM support (dev->power.no_pm = true). Such devices are
-never added to the dpm_list and never go through dpm_clear_async_state(),
-so their completion is never reinitialized. A parent device waiting on a
-no_pm child across multiple suspend phases would consume the single-use
-token in the first phase and block forever in the second.
+So to fix the issue the offset of 4 would have to be used on big-endian
+platforms only, or alternatively a 64-bit load from the 64-bit stack
+slot location can be used across the board, as the subsequent 32-bit
+store to the corresponding outgoing stack argument slot will correctly
+truncate the value and cause no unpredictable result.  We already take
+advantage of this architectural feature for the incoming arguments held
+in $a6 and $a7 registers, since the o32 wrapper does not know how many
+incoming arguments there are and consequently propagates incoming data
+which may not be 32-bit.
 
-Fix this by adding an early return in dpm_wait() when dev->power.no_pm is
-set, since no_pm devices do not participate in system suspend/resume.
+Since this code is generally supposed to be used with the stack located
+in cached memory there is no extra overhead expected for 64-bit loads as
+opposed to 32-bit ones, so pick this variant for code simplicity.
 
-Fixes: 152e1d592071 ("PM: Prevent waiting forever on asynchronous resume after failing suspend")
-Signed-off-by: Jiakai Xu <xujiakai24@mails.ucas.ac.cn>
-[ rjw: Subject adjustment ]
-Link: https://patch.msgid.link/20260523022314.2657232-1-xujiakai24@mails.ucas.ac.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 231a35d37293 ("[MIPS] RM: Collected changes")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/main.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/mips/fw/lib/call_o32.S | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
-index 964573e30d6910..24a7e280e30076 100644
---- a/drivers/base/power/main.c
-+++ b/drivers/base/power/main.c
-@@ -102,7 +102,7 @@ void device_pm_sleep_init(struct device *dev)
- 	dev->power.is_noirq_suspended = false;
- 	dev->power.is_late_suspended = false;
- 	init_completion(&dev->power.completion);
--	complete_all(&dev->power.completion);
-+	complete(&dev->power.completion);
- 	dev->power.wakeup = NULL;
- 	INIT_LIST_HEAD(&dev->power.entry);
- }
-@@ -242,6 +242,10 @@ static void dpm_wait(struct device *dev, bool async)
- 	if (!dev)
- 		return;
- 
-+	/* Devices with no PM support don't use the completion. */
-+	if (dev->power.no_pm)
-+		return;
-+
- 	if (async || (pm_async_enabled && dev->power.async_suspend))
- 		wait_for_completion(&dev->power.completion);
- }
+diff --git a/arch/mips/fw/lib/call_o32.S b/arch/mips/fw/lib/call_o32.S
+index ee856709e0b600..77533cfbdfc10b 100644
+--- a/arch/mips/fw/lib/call_o32.S
++++ b/arch/mips/fw/lib/call_o32.S
+@@ -74,7 +74,7 @@ NESTED(call_o32, O32_FRAMESZ, ra)
+ 		PTR_LA		t1,6*O32_SZREG(fp)
+ 		li		t2,O32_ARGC-6
+ 1:
+-		lw		t3,(t0)
++		ld		t3,(t0)
+ 		REG_ADDU	t0,SZREG
+ 		sw		t3,(t1)
+ 		REG_SUBU	t2,1
 -- 
 2.53.0
 
