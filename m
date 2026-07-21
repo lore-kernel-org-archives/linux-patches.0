@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F72046F4B0;
-	Tue, 21 Jul 2026 17:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B8E46F494;
+	Tue, 21 Jul 2026 17:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656055; cv=none; b=B2yTh8F29bqDzcOpvyycxjdZjvX1e8N6FrUFLZ2gwgI8clJrbXYKDgpfPEue1hbhUh5cW9/VUskO4owu4o5AU+MC9e5EOKw5nffz8+BW7Wnmy5GvpZjKayUX+mzCA/bacolyiSDhJMOtr5qZG4JO4ylJzd4gcyZzBvt/tzHNNGQ=
+	t=1784656058; cv=none; b=O+B86/yX6WC54zypYVnvhe7ySNm4zGrxwkbssCrGx0CQopmga3JsGE/H3WKYfEZJbTuTVsFLkrmyX8U7nYkDSZ6T6ReUCDDwINz9GqaVRP6sjPhHe40i8iLEHxOfYW5FL/aJoAPAhgEUWTp+dUrUqVBbivAhe3OzYVejKSM69zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656055; c=relaxed/simple;
-	bh=ZE3ON+IHRbWaBHxewnvIt5KapCDdcX1OLkT1Wzap2C4=;
+	s=arc-20240116; t=1784656058; c=relaxed/simple;
+	bh=DsTwZRDTsusm8+804DeVVM9WlYWhhJT/85zytSR0+cM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SnQUslpcVyV9oPbh2B1OkPA+5/uIxZXUd4pnqjjT4yeq0DpE1tCjrinASpfjZnHHr0gIFlqiaoKAluWQlYc6OPQwlc2+xF98sRw0o1uIyvMG/eOzb/EjU7g9nKUwJBCJgAp+uH5thRm+hPdVjJYyIEz1xgwhXYHUk55OrmKgWvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUWIisbg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AQNO7GAfj5kar+N7SXKxJfla3L2k+pWWxGVF+pg1n1eELNRHto5lcNbMjLvTme4IskLQogVgZ9H/67zbw+QM1P/QbtGOrYOt1ktoaiGbsl2yRP/wvMAIP6CdVGMIuQC61vB/I073zj7b9M33N4ZOkhBwlwxja37vz7JV5cfbkYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VDJwKjJh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUWIisbg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116981F00A3A;
-	Tue, 21 Jul 2026 17:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VDJwKjJh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FDA1F00A3F;
+	Tue, 21 Jul 2026 17:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656054;
-	bh=MXNLub2gtd2bgV+9X+rvPYeDR7TYyfII0jTXPda2M6w=;
+	s=korg; t=1784656057;
+	bh=ym9iWKRlJVOwgKAaVmS1SwtEXx5xdblok861Iw8paiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oUWIisbgChSsmcwEr7mO8ed+rnR6syENCE5fqghFLZ0un1JzVnmdCugD+EAPOcBd5
-	 saomC3JGV/7WbEQwock3JovR7a+oaQZ9rzz3N6EwF7aDSZglxkkjKMU0kHji3oMi1u
-	 Yqz6euRYFOCQEm8HiQ1XxLP9XpgDU/a+N0ObLfIA=
+	b=VDJwKjJhzXJYgY+ko//pUDBGWIuiJVaDZRFqzxiMRNdsfKJnD1VjudcvS0Fconh/A
+	 9gm1xrP05/gDtgrK3z6QyCgQhNs4inFrSmHPTjNH2R37cEmVeYr2dyg3MyKpOUNhuf
+	 uKTT8V+SbNg9UlycBqfzWUTT4s5f8ijf+X2EWRkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia He <justin.he@arm.com>,
-	David Disseldorp <ddiss@suse.de>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Wander Lairson Costa <wander@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0235/1611] init/initramfs_test: wait_for_initramfs() before running
-Date: Tue, 21 Jul 2026 17:05:51 +0200
-Message-ID: <20260721152520.297750207@linuxfoundation.org>
+Subject: [PATCH 6.18 0244/1611] rtla: Introduce for_each_action() helper
+Date: Tue, 21 Jul 2026 17:06:00 +0200
+Message-ID: <20260721152520.510550181@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,83 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia He <justin.he@arm.com>
+From: Wander Lairson Costa <wander@redhat.com>
 
-[ Upstream commit ec3f4e0443a61e68092ac07111f16dd4ca89ddb4 ]
+[ Upstream commit 648634d17c813b35da775982662e56ea8ce750de ]
 
-initramfs_test_extract() and friends call unpack_to_rootfs() from a
-kunit kthread while do_populate_rootfs() may still be running
-asynchronously from rootfs_initcall. unpack_to_rootfs() keeps its
-parser state in module-static variables (victim, byte_count, state,
-this_header, header_buf, name_buf, ...), so the two writers corrupt
-each other.
+The for loop to iterate over the list of actions is used in
+more than one place. To avoid code duplication and improve
+readability, introduce a for_each_action() helper macro.
 
-On arm64 v7.0-rc5+ this oopses early in boot:
+Replace the open-coded for loops with the new helper.
 
-  Unable to handle kernel paging request at virtual address ffff80018f9f0ffc
-  pc : do_reset+0x3c/0x98
-  Call trace:
-   do_reset
-   initramfs_test_extract
-   kunit_try_run_case
-  Initramfs unpacking failed: junk within compressed archive
-
-do_reset() faults because 'victim' was overwritten by the boot-time
-unpacker; the boot unpacker meanwhile logs the bogus "junk within
-compressed archive" on the real initrd because the test wrecked its
-state machine.
-
-Add a .suite_init callback that calls wait_for_initramfs() so the async
-unpack is quiescent before the first case runs. suite_init runs once per
-suite rather than before every individual test case.
-
-Fixes: 83c0b27266ec ("initramfs_test: kunit tests for initramfs unpacking")
-Signed-off-by: Jia He <justin.he@arm.com>
-Link: https://patch.msgid.link/20260519093937.1064628-1-justin.he@arm.com
-Reviewed-by: David Disseldorp <ddiss@suse.de>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Link: https://lore.kernel.org/r/20260106133655.249887-4-wander@redhat.com
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
+Stable-dep-of: dd520daffbc9 ("rtla/actions: Restore continue flag in actions_perform()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/initramfs_test.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ tools/tracing/rtla/src/actions.c | 6 ++++--
+ tools/tracing/rtla/src/actions.h | 5 +++++
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/init/initramfs_test.c b/init/initramfs_test.c
-index 5d2db455e60c55..3f0241ca907597 100644
---- a/init/initramfs_test.c
-+++ b/init/initramfs_test.c
-@@ -3,7 +3,9 @@
- #include <linux/fcntl.h>
- #include <linux/file.h>
- #include <linux/fs.h>
-+#include <linux/init.h>
- #include <linux/init_syscalls.h>
-+#include <linux/initrd.h>
- #include <linux/stringify.h>
- #include <linux/timekeeping.h>
- #include "initramfs_internal.h"
-@@ -462,8 +464,21 @@ static struct kunit_case __refdata initramfs_test_cases[] = {
- 	{},
+diff --git a/tools/tracing/rtla/src/actions.c b/tools/tracing/rtla/src/actions.c
+index 4274fa0894b04d..5f83ffc1008f83 100644
+--- a/tools/tracing/rtla/src/actions.c
++++ b/tools/tracing/rtla/src/actions.c
+@@ -32,7 +32,9 @@ void
+ actions_destroy(struct actions *self)
+ {
+ 	/* Free any action-specific data */
+-	for (struct action *action = self->list; action < self->list + self->len; action++) {
++	struct action *action;
++
++	for_each_action(self, action) {
+ 		if (action->type == ACTION_SHELL)
+ 			free(action->command);
+ 		if (action->type == ACTION_TRACE_OUTPUT)
+@@ -226,7 +228,7 @@ actions_perform(struct actions *self)
+ 	int pid, retval;
+ 	const struct action *action;
+ 
+-	for (action = self->list; action < self->list + self->len; action++) {
++	for_each_action(self, action) {
+ 		switch (action->type) {
+ 		case ACTION_TRACE_OUTPUT:
+ 			retval = save_trace_to_file(self->trace_output_inst, action->trace_output);
+diff --git a/tools/tracing/rtla/src/actions.h b/tools/tracing/rtla/src/actions.h
+index a4f9b570775b55..fb77069c972bae 100644
+--- a/tools/tracing/rtla/src/actions.h
++++ b/tools/tracing/rtla/src/actions.h
+@@ -42,6 +42,11 @@ struct actions {
+ 	struct tracefs_instance *trace_output_inst;
  };
  
--static struct kunit_suite initramfs_test_suite = {
-+static int __init initramfs_test_init(struct kunit_suite *suite)
-+{
-+	/*
-+	 * unpack_to_rootfs() uses module-static state (victim, byte_count,
-+	 * state, ...). The boot-time async do_populate_rootfs() may still be
-+	 * running, so wait for it to finish before we call unpack_to_rootfs()
-+	 * from the test thread, otherwise the two writers race and crash.
-+	 */
-+	wait_for_initramfs();
-+	return 0;
-+}
++#define for_each_action(actions, action)			\
++	for ((action) = (actions)->list;			\
++	     (action) < (actions)->list + (actions)->len;	\
++	     (action)++)
 +
-+static struct kunit_suite __refdata initramfs_test_suite = {
- 	.name = "initramfs",
-+	.suite_init = initramfs_test_init,
- 	.test_cases = initramfs_test_cases,
- };
- kunit_test_init_section_suites(&initramfs_test_suite);
+ void actions_init(struct actions *self);
+ void actions_destroy(struct actions *self);
+ int actions_add_trace_output(struct actions *self, const char *trace_output);
 -- 
 2.53.0
 
