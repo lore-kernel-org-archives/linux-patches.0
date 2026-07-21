@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0690446EF96;
-	Tue, 21 Jul 2026 18:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB20470452;
+	Tue, 21 Jul 2026 18:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659660; cv=none; b=AOnEFYd9tP5whqQ6jTWX3j+1nxsYUYzGufbIE0+KHkN+mLrHA7tbwV8cOKjDzoVF7/y/GKGxnMQzaF1kOPfGVulMeXrEhWAvhNlSBHSYnNYPsGACphvIm3twt16ONG6m+63NwqjyZ9U7es7rYTbk0EQK/z+erFe7ylmkGwkv23M=
+	t=1784659662; cv=none; b=FhtHBUMYcvMo8iWMDRhO5uSndZIu9H+y63tC8cdS3uYrwb5Znq8L42QHLGa5d5l7FwKvV6eLazC1XbexgBsy3jvIXsT3l7THyGz/GVY4/UITKcaFwV+urB4zcqP/6uow2dbEHiH0rVN1aoULl4M8qhZ5PSJJaToI4s0bEzGv/PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659660; c=relaxed/simple;
-	bh=gvX0t0GKSxk/bFoa06Wv8x+JimRZEWb5VrqNnfyTWEE=;
+	s=arc-20240116; t=1784659662; c=relaxed/simple;
+	bh=fFxntf66JjP6OwB0lYt64XDDxqyLBQ40ULRF76hEocU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WbZV7NAhGwMxD1hzkPms+yEoJzx27EzgccBwgUlJT1qSVT8LS8jinSb7xeti1oErXtoSV68TxogfVCvF9QjvchL9ifXEC1LDrz3JHbm40q0ai5M5jbob2ZSmAMh68E3ysG4fWYd6riHylbzSBVJkaF9yD6BNDQ3AqAP0u37ZrAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X01obeGI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ApbAue0JleFO/8sf3S8MHflIRFdZxiQkpLSxBhPqsiRyqlTlbbJQyTGNuqJFucB4YcFgOYNJ1DI1cE/WvYOAGk5Skf51GVzYQ9w8hMMbhnbhZNAIjiGTlYH+WEUOix6yMWadDrXkU9N6snCGkE/tDqExUKC8HtqfCSb5S2is6Zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYB/71Eh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X01obeGI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF171F000E9;
-	Tue, 21 Jul 2026 18:47:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYB/71Eh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7391F000E9;
+	Tue, 21 Jul 2026 18:47:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659658;
-	bh=tj61+cZhlwDziMgMQZbZuOQg8KpQRJ+lfLv2WiGpAyc=;
+	s=korg; t=1784659661;
+	bh=lwPTsoMPZmET1NwHU0fSlpIHsW6PeGLlU09KJwVS9Fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X01obeGIMCCD5qXovA5Xo5QjwHOk46t1H7p1nln/YtF9UUJ14FMnDruflvnFNEmG4
-	 C2Bl9xPK0FpHNuy39q8yv8rDOahqcbz1gVIlgKXrFqHkgt+sNnX/SPa7A6WVw4sPoV
-	 qBhvocKkcHOuCZQruKPC3eW6j01FYz6p9/s/7VbI=
+	b=oYB/71EhOjU6rQ9w/rPmjaLDDKNO/jwHASoKoaRf8vA8v1yQjBMlT2PD2lxw9/sX2
+	 TCIVdh8iuEK1y3yUmT82BukJ1RJVvI4UEgiiHEr00LEd+Ycv5pSQbE2Rbxqi7QWULe
+	 VhqQzw8p3i+H5a10P4HUTpF4V6s5S0biDgh7rZMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	syzbot+ce1e5a1b4e086b43e56d@syzkaller.appspotmail.com,
-	syzbot+306212936b13e520679d@syzkaller.appspotmail.com,
-	syzbot+457452d30bcdda75ead2@syzkaller.appspotmail.com,
-	Mauricio Faria de Oliveira <mfo@igalia.com>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Sasha Levin <sashal@kernel.org>,
-	Andrey Tsygunka <aitsygunka@yandex.ru>
-Subject: [PATCH 6.18 1577/1611] usb: atm: ueagle-atm: wait for pre-firmware load in .disconnect()
-Date: Tue, 21 Jul 2026 17:28:13 +0200
-Message-ID: <20260721152550.941321432@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.18 1604/1611] PCI: Fix BAR resize rollback path overwriting ret
+Date: Tue, 21 Jul 2026 17:28:40 +0200
+Message-ID: <20260721152551.553782277@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,178 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mauricio Faria de Oliveira <mfo@igalia.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit e2674dfbed8a30d57e2bc872c4bfa6c3eec918bf ]
+commit 08d9eae76b85263173f8c833800e3cc409ee1be4 upstream.
 
-ueagle-atm uses the asynchronous request_firmware_nowait() in .probe(),
-but does not wait for its completion, not even in .disconnect(); so, if the
-device is unplugged meanwhile, its teardown runs concurrently with that.
+The commit 337b1b566db0 ("PCI: Fix restoring BARs on BAR resize rollback
+path") added BAR rollback to pci_do_resource_release_and_resize() in case
+of resize failure.
 
-Even though this inconsistency is worth addressing on its own, it has also
-triggered several bug reports in syzbot over the years (some auto-closed)
-where the firmware sysfs fallback mechanism (CONFIG_FW_LOADER_USER_HELPER)
-creates a firmware subdirectory in the device directory during its removal,
-which might hit unexpected conditions in kernfs, apparently, depending at
-which point the add and remove operations raced. (See links.)
+On the rollback, pci_claim_resource() is called, which can fail and the
+code is prepared for that possibility. pci_claim_resource()'s return value,
+however, overwrites the original value of ret so
+pci_do_resource_release_and_resize() will return an incorrect value in the
+end (as pci_claim_resource() normally succeeds, in practice ret will be 0).
 
-The pattern is:
+Fix the issue by directly calling pci_claim_resource() inside the if ().
 
-usb ?-?: Direct firmware load for ueagle-atm/eagle?.fw failed with error -2
-usb ?-?: Falling back to sysfs fallback for: ueagle-atm/eagle?.fw
-<ERROR>
-Call trace:
- ...
- kernfs_create_dir_ns
- sysfs_create_dir_ns
- create_dir
- kobject_add_internal
- kobject_add_varg
- kobject_add
- class_dir_create_and_add
- get_device_parent
- device_add
- fw_load_sysfs_fallback
- fw_load_from_user_helper
- firmware_fallback_sysfs
- _request_firmware
- request_firmware_work_func
- ...
-
-(Some variations are observed, after fw_load_sysfs_fallback(), e.g., [1].)
-
-While the kernfs side is being looked at, the ueagle-atm side can be fixed
-by waiting for the pre-firmware load in the .disconnect() handler.
-
-This change has a similar approach to previous work by Andrey Tsygunka [2]
-(wait_for_completion() in .disconnect()), but it is relatively different in
-design/implementation; using the Originally-by tag for credit assignment.
-
-This has been tested with:
-- synthetic reproducer to check the error path;
-- USB gadget (virtual device) to check the firmware upload path;
-- QEMU device emulator to check the device ID re-enumeration path;
-(The latter two were written by Claude; no other code/text in this commit.)
-
-Links (year first reported):
- 2025 https://syzbot.org/bug?extid=ce1e5a1b4e086b43e56d
- 2025 https://syzbot.org/bug?extid=9af8471255ac36e34fd4
- 2024 https://syzbot.org/bug?extid=306212936b13e520679d
- 2023 https://syzkaller.appspot.com/bug?extid=457452d30bcdda75ead2
- 2022 https://syzbot.org/bug?extid=782984d6f1701b526edb
- 2021 https://syzbot.org/bug?id=f3f221579f4ef7e9691281f3c6f56c05f83e8490
- 2021 https://syzbot.org/bug?id=84d86f0d71394829df6fc53daf6642c045983881
- 2021 https://syzbot.org/bug?id=3302dc1c0e2b9c94f2e8edb404eabc9267bc6f90
-
-[1] https://syzkaller.appspot.com/bug?extid=457452d30bcdda75ead2
-[2] https://lore.kernel.org/lkml/20250410093146.3776801-2-aitsygunka@yandex.ru/
-
-Cc: stable <stable@kernel.org>
-Reported-by: syzbot+ce1e5a1b4e086b43e56d@syzkaller.appspotmail.com
-Closes: https://syzbot.org/bug?extid=ce1e5a1b4e086b43e56d
-Reported-by: syzbot+306212936b13e520679d@syzkaller.appspotmail.com
-Closes: https://syzbot.org/bug?extid=306212936b13e520679d
-Reported-by: syzbot+457452d30bcdda75ead2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=457452d30bcdda75ead2
-Originally-by: Andrey Tsygunka <aitsygunka@yandex.ru>
-Fixes: b72458a80c75 ("[PATCH] USB: Eagle and ADI 930 usb adsl modem driver")
-Assisted-by: Claude:claude-opus-4.7 # usb gadget & qemu device for testing
-Signed-off-by: Mauricio Faria de Oliveira <mfo@igalia.com>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Link: https://patch.msgid.link/20260526-ueagle-atm_req-fw-sync-v3-1-93c01961daaf@igalia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 337b1b566db0 ("PCI: Fix restoring BARs on BAR resize rollback path")
+Reported-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://lore.kernel.org/linux-pci/aW_w1oFQCzUxGYtu@intel.com/
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260121131417.9582-2-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/atm/ueagle-atm.c |   36 +++++++++++++++++++++++++++++++-----
- 1 file changed, 31 insertions(+), 5 deletions(-)
+ drivers/pci/setup-bus.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/usb/atm/ueagle-atm.c
-+++ b/drivers/usb/atm/ueagle-atm.c
-@@ -593,7 +593,9 @@ static int uea_send_modem_cmd(struct usb
- static void uea_upload_pre_firmware(const struct firmware *fw_entry,
- 								void *context)
- {
--	struct usb_device *usb = context;
-+	struct usb_interface *intf = context;
-+	struct usb_device *usb = interface_to_usbdev(intf);
-+	struct completion *fw_done = usb_get_intfdata(intf);
- 	const u8 *pfw;
- 	u8 value;
- 	u32 crc = 0;
-@@ -662,15 +664,17 @@ err_fw_corrupted:
- 	uea_err(usb, "firmware is corrupted\n");
- err:
- 	release_firmware(fw_entry);
-+	complete(fw_done);
- }
+--- a/drivers/pci/setup-bus.c
++++ b/drivers/pci/setup-bus.c
+@@ -2504,8 +2504,7 @@ restore:
  
- /*
-  * uea_load_firmware - Load usb firmware for pre-firmware devices.
-  */
--static int uea_load_firmware(struct usb_device *usb, unsigned int ver)
-+static int uea_load_firmware(struct usb_interface *intf, unsigned int ver)
- {
- 	int ret;
- 	char *fw_name = EAGLE_FIRMWARE;
-+	struct usb_device *usb = interface_to_usbdev(intf);
+ 		restore_dev_resource(dev_res);
  
- 	uea_info(usb, "pre-firmware device, uploading firmware\n");
+-		ret = pci_claim_resource(dev, i);
+-		if (ret)
++		if (pci_claim_resource(dev, i))
+ 			continue;
  
-@@ -693,7 +697,7 @@ static int uea_load_firmware(struct usb_
- 	}
- 
- 	ret = request_firmware_nowait(THIS_MODULE, 1, fw_name, &usb->dev,
--					GFP_KERNEL, usb,
-+					GFP_KERNEL, intf,
- 					uea_upload_pre_firmware);
- 	if (ret)
- 		uea_err(usb, "firmware %s is not available\n", fw_name);
-@@ -2556,8 +2560,23 @@ static int uea_probe(struct usb_interfac
- 
- 	usb_reset_device(usb);
- 
--	if (UEA_IS_PREFIRM(id))
--		return uea_load_firmware(usb, UEA_CHIP_VERSION(id));
-+	if (UEA_IS_PREFIRM(id)) {
-+		struct completion *fw_done;
-+
-+		/* Wait for the firmware load to be done, in .disconnect() */
-+		fw_done = kzalloc_obj(*fw_done);
-+		if (!fw_done)
-+			return -ENOMEM;
-+
-+		init_completion(fw_done);
-+		usb_set_intfdata(intf, fw_done);
-+
-+		ret = uea_load_firmware(intf, UEA_CHIP_VERSION(id));
-+		if (ret)
-+			kfree(fw_done);
-+
-+		return ret;
-+	}
- 
- 	ret = usbatm_usb_probe(intf, id, &uea_usbatm_driver);
- 	if (ret == 0) {
-@@ -2587,6 +2606,13 @@ static void uea_disconnect(struct usb_in
- 		usbatm_usb_disconnect(intf);
- 		mutex_unlock(&uea_mutex);
- 		uea_info(usb, "ADSL device removed\n");
-+	} else if (usb->config->desc.bNumInterfaces == 1) {
-+		struct completion *fw_done = usb_get_intfdata(intf);
-+
-+		uea_dbg(usb, "pre-firmware device, waiting firmware upload\n");
-+		wait_for_completion(fw_done);
-+		uea_dbg(usb, "pre-firmware device, finished waiting\n");
-+		kfree(fw_done);
- 	}
- }
- 
+ 		if (i < PCI_BRIDGE_RESOURCES) {
 
 
