@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C6B46A5E7;
-	Tue, 21 Jul 2026 18:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0F7386571;
+	Tue, 21 Jul 2026 18:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657035; cv=none; b=i1ydywMW2SbtYTD0FRS316BqVeIhGCmQhSWCoKab+jkPXtfXkwXfVPfklNEFgjzU8Ba1xbDTsrnzsh6a2BbA2DirRsGIdAGqBV1vm+Cwofa4pdnLQG7fM+cJEHSYn5JIIwDR+DxPAKPU8yI//9I3T0mfD8iNT1tWjiMBgcxsQwA=
+	t=1784657038; cv=none; b=fKMqF4qbZTqAir7obgwShBK+lGRarWbIhsK0CYMlxMmLclIokRkfmFAniQN+EwwCAVK1U925D3k7tR6YGqXFySbnY1YjVXRKRwV4wFcR1L1SGB/9gTlV9dbouS6XqOA6MzSPp7HjS+xST9gDgO/opf6BCC2URcMtq4Ui+WDGgMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657035; c=relaxed/simple;
-	bh=cJIrsz2HL56uTWL3EoVv9NnWXaQhtodyhPzF123khDc=;
+	s=arc-20240116; t=1784657038; c=relaxed/simple;
+	bh=z710D3JGrgualJB/txNv3O5Bl2ty1RUnZ1egmjnhYyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pv/MJTKgqep4s8Medo+mIndRUijx1f+EkLyijOkcJerr8+4qTqPocLgIhVWEWmpusk6GCfxR9BLFukntYmPzGsbrN0reic6ZjzJr0jkzExU7aMHc/mYXMKt+/1qzq9OnVLnR+EQlt7nn6q/PEIEa8dnyJAdhX3vjmhO4AcCZuLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fq5Pu4he; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VBfxxDT37X+g2UPvLkeeGc/xYP1eYhu1SzE5t3oxq4jFp+Ikb+v4b5H57TSLvIAt5eyPgkYWPthb1n6dv6rnHHo/PWhdoBPkonWNBhrFFp3OKeN1RkrKVRui0F4iBhjPPl+daWzI//964MUOoh2wdoF/NZHf7CyjOHbKij9BInA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YOIBS3Bi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fq5Pu4he"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB3431F00A3D;
-	Tue, 21 Jul 2026 18:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOIBS3Bi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDB01F000E9;
+	Tue, 21 Jul 2026 18:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657034;
-	bh=/FdaK6PLZLto9hQ47Rqz71u9B9cLtt0aTaZCruphsKE=;
+	s=korg; t=1784657036;
+	bh=DNItS4Sdd3/pBMwfqyh3hymSr4d+4hKIy36MK0UFxmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fq5Pu4heUmcaJxbEJ7d0XyELzwIbKP9aLL85UTc60ZHtD2JaiJfq3Msea+qGoeaei
-	 HF2HUtQ1bY8bVOcRubrt5BUngiBQRxwWQ6ncXOSyY1X5aS11KuhIxJCuHQCq/v4ziz
-	 B248FZYsyrySKXdiWMLIeuScLFZ+TePYlfvxQfaw=
+	b=YOIBS3BiGOJnrQwGfVkETB2VKh9x0DnLI/Phlt54uaSY9iqjM9tsXc3f4B/kcTRS7
+	 dmRURv/WHQj7T69gKwUicMjUcYSaY0rhesSJRcCGggYnCjkorCWODtJtac2Z0EmXIv
+	 eDyi1zxPMEEjTPe7lJ5piUVzgV2a3UT8L3HNz0O8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Kim <james010kim@gmail.com>,
+	Ruikai Peng <ruikai@pwno.io>,
+	Adam Crosser <adam.crosser@praetorian.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0613/1611] char: tlclk: fix use-after-free in tlclk_cleanup()
-Date: Tue, 21 Jul 2026 17:12:09 +0200
-Message-ID: <20260721152529.172941808@linuxfoundation.org>
+Subject: [PATCH 6.18 0614/1611] gpib: fix double decrement of descriptor_busy in command_ioctl()
+Date: Tue, 21 Jul 2026 17:12:10 +0200
+Message-ID: <20260721152529.194873895@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,58 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Kim <james010kim@gmail.com>
+From: Adam Crosser <adam.crosser@praetorian.com>
 
-[ Upstream commit bbf003b7794d6ad6f939fdd29f1f1bde8ac554c1 ]
+[ Upstream commit c4faab452b3c1ada003d49c477609dd80523b9bf ]
 
-This patch improves the module cleanup process in the tlclk driver to
-prevent potential use-after-free and race conditions.
+commit d1857f8296dc ("gpib: fix use-after-free in IO ioctl handlers")
+introduced a descriptor_busy reference counter to pin struct
+gpib_descriptor across IO ioctl operations.  In command_ioctl(), the
+error path inside the loop decrements descriptor_busy and breaks, but
+execution then falls through to the unconditional decrement after the
+loop, underflowing the counter to -1.
 
-Currently, the file_operations structure does not specify the .owner
-field, which could allow the module to be unloaded while user-space
-processes are still interacting with the device. Additionally, the
-tlclk_cleanup() function frees the alarm_events memory before ensuring
-that blocked processes in the waitqueue are fully awakened and that the
-switchover_timer has completed.
+This re-enables the use-after-free that the original fix was meant to
+prevent: a concurrent close_dev_ioctl() sees descriptor_busy == 0 on
+an actively-used descriptor and frees it.
 
-To address these cases, this patch:
-- Sets '.owner = THIS_MODULE' in tlclk_fops to safely defer module
-  unloading while the device is in use.
-- Updates tlclk_cleanup() to explicitly wake up all blocked readers
-  (wake_up_all), properly release hardware I/O regions, and safely
-  delete the timer (timer_delete_sync) prior to freeing memory.
+Remove the early decrement from the error path.  The post-loop
+decrement already handles all exit paths, matching the correct pattern
+used in read_ioctl() and write_ioctl().
 
-Fixes: 1a80ba882730 ("[PATCH] Telecom Clock Driver for MPCBL0010 ATCA computer blade")
-Signed-off-by: James Kim <james010kim@gmail.com>
-Link: https://patch.msgid.link/20260503101131.64219-1-james010kim@gmail.com
+Fixes: d1857f8296dc ("gpib: fix use-after-free in IO ioctl handlers")
+Reported-by: Ruikai Peng <ruikai@pwno.io>
+Signed-off-by: Adam Crosser <adam.crosser@praetorian.com>
+Link: https://patch.msgid.link/20260424123750.855863-1-adam.r.crosser@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tlclk.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/staging/gpib/common/gpib_os.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/char/tlclk.c b/drivers/char/tlclk.c
-index b381ea7e85d2f4..d08948cdb2b89d 100644
---- a/drivers/char/tlclk.c
-+++ b/drivers/char/tlclk.c
-@@ -264,6 +264,7 @@ static ssize_t tlclk_read(struct file *filp, char __user *buf, size_t count,
- }
+diff --git a/drivers/staging/gpib/common/gpib_os.c b/drivers/staging/gpib/common/gpib_os.c
+index 6bae025434e5cf..a2bed6bd757a06 100644
+--- a/drivers/staging/gpib/common/gpib_os.c
++++ b/drivers/staging/gpib/common/gpib_os.c
+@@ -1017,7 +1017,6 @@ static int command_ioctl(struct gpib_file_private *file_priv,
+ 		userbuf += bytes_written;
+ 		if (retval < 0) {
+ 			atomic_set(&desc->io_in_progress, 0);
+-			atomic_dec(&desc->descriptor_busy);
  
- static const struct file_operations tlclk_fops = {
-+	.owner = THIS_MODULE,
- 	.read = tlclk_read,
- 	.open = tlclk_open,
- 	.release = tlclk_release,
-@@ -837,6 +838,9 @@ static void __exit tlclk_cleanup(void)
- 	misc_deregister(&tlclk_miscdev);
- 	unregister_chrdev(tlclk_major, "telco_clock");
- 
-+	got_event = 1;
-+	wake_up_all(&wq);
-+
- 	release_region(TLCLK_BASE, 8);
- 	timer_delete_sync(&switchover_timer);
- 	kfree(alarm_events);
+ 			wake_up_interruptible(&board->wait);
+ 			break;
 -- 
 2.53.0
 
