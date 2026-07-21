@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A2B47253D;
-	Tue, 21 Jul 2026 19:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE98D47255D;
+	Tue, 21 Jul 2026 19:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663447; cv=none; b=qPMFvtyIhiYO4O13VsyG/OGpT6ZnDig3/TOlnPnQsJGfa1Vru+Rh4EQL/oCKpW4bceXG5lOP3+43ElsFhmmmuhUWuwg0TFd4STWvxUKjrqOLMBg8hYxGf0+9mqv6SRFGwOIZg4+0hpLUthbL9bKUqx/i+m1YotPAt2jzOtnpUjc=
+	t=1784663450; cv=none; b=YlRbZzVVbw2mel4lmaaIp5Wg6gVlq/OuqRq3vly5joafKp2S6v0J7YAw3bxW0QpYV2rB150suUIb0rgsoZwyOb4R0p1nDM94tfGyu7pXayDmOTWzTJl50B6vpiJ9YI/c1682n5FsOTdsUpoMMGHok/VaYKLxiH6jZSCRDYBR3Dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663447; c=relaxed/simple;
-	bh=qu6VWUb6eoJPU9LPTR62dsBYUusAybmy7NE0Jj2tYoI=;
+	s=arc-20240116; t=1784663450; c=relaxed/simple;
+	bh=MAphk9G50NWkf7QZOR0VSQEUPwquhVyAkvDBE7/g5ks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=srZePsv19Fh83o2nAl4rXSpBmFd1ibt0uG51D7y2GykE53Rc9OeNXlyS49M4T2m4ulG+IZprR7gqqBJLm0EJdVCdw4aWoeHZVqJbIz3ktn7rwYTY1KO7P0JdIYiVl3k0SbCzqJ+3MD5yepWaS1eOEI2reu1RiR98WqzNbmeLlh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ekDgjZOI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q3GT8Hrdz919kYCzoHPekr3UWTdplhAGkrFddfRfSX44WEgrt+E93vBhlAz67eshSzaLntvBuys/CtW4qjObzKIGLnW4dvCGxhFggOmEXsF81e0CKEZ5cggKKZZlw3SwVAQSpOrR7zeH0TvIyiSm++SQWnuPbaTdANcRpFAykGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yr6NsTZ+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ekDgjZOI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75E851F00A3A;
-	Tue, 21 Jul 2026 19:50:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yr6NsTZ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBFD1F00A3A;
+	Tue, 21 Jul 2026 19:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663446;
-	bh=tzxoDu5xAhVSAc+tHLBMeZEvbCEqQfbu6ShSc7CWz7c=;
+	s=korg; t=1784663448;
+	bh=kixjTtHSZLo3chwgt/5HnqX0jhW3qbtNcZ0WZWje4oI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ekDgjZOI8uPdXBqvaggOmctpGVtD2GfIO7q8MU/DkO/dv3Kpqtat18hsEy1Cuv6zI
-	 zqQaVmtR/Q9smIDtodNdQxzqcvsMGAhiyXP6+BUWMPgJpiurREF2fV0cIdkrpKbWlh
-	 RqR3E6OE15CKiSscHPhll4+sm02K+Om1mcPtDIfo=
+	b=Yr6NsTZ+z4PX+espak1LetdlP4ew6f3K53NLFnlZl2X6VOE3FYNtiMI0vbV+HzRn6
+	 4FBQvPfppQSU09hXuhN8m/am+3D2k5oQageNp7axN+mjZUcjn61C5QDEQ59GJxz7Wg
+	 x+y+tBr1bl0lasVQZZKMouy4DaUG1C03ENmzvbi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Jander <david@protonic.nl>,
 	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Alexandre Torgue <alexandre.torgue@foss.st.com>
-Subject: [PATCH 6.12 0824/1276] ARM: dts: stm32: stm32mp15x-mecio1-io: Move gpio-line-names to board files
-Date: Tue, 21 Jul 2026 17:21:07 +0200
-Message-ID: <20260721152504.504053495@linuxfoundation.org>
+Subject: [PATCH 6.12 0825/1276] ARM: dts: stm32: stm32mp15x-mecio1-io: Fix expander gpio line typo
+Date: Tue, 21 Jul 2026 17:21:08 +0200
+Message-ID: <20260721152504.525717791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,263 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 From: David Jander <david@protonic.nl>
 
-commit 4f5069609ac99894c0632d8b8c4c016f85199de9 upstream.
+commit dfb93c4acce8ad9c4f573128b2cf7ddb936e0de7 upstream.
 
-Move the gpio-line-names properties out of the common mecio1-io.dtsi file
-and into the specific board dts files.
+Fix a copy-paste error in the GPIO line names for the TCA6416 expander
+(gpio@20).
 
-The pinout originally defined in the common include file belonged to the
-mecio1r0 (Revision 0) hardware. This is moved 1:1 into the
-stm32mp151c-mecio1r0.dts file without any modifications.
-
-A large number of GPIO pins are swapped on the mecio1r1 (Revision 1)
-hardware, so a new, board-specific gpio-line-names mapping is added to
-stm32mp153c-mecio1r1.dts to reflect those hardware changes.
+The common mecio1-io include file was originally defined using the
+mecio1r1 (Revision 1) hardware layout, but incorrectly labeled pin 13
+as "HSIN9_BIAS" instead of the actual "HSIN7_BIAS" present in the
+schematics.
 
 Fixes: 8267753c891c ("ARM: dts: stm32: Add MECIO1 and MECT1S board variants")
 Co-developed-by: Oleksij Rempel <o.rempel@pengutronix.de>
 Signed-off-by: David Jander <david@protonic.nl>
 Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20260318105123.819807-6-o.rempel@pengutronix.de
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20260318105123.819807-7-o.rempel@pengutronix.de
 Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/st/stm32mp151c-mecio1r0.dts  |   64 ++++++++++++++++++++
- arch/arm/boot/dts/st/stm32mp153c-mecio1r1.dts  |   80 +++++++++++++++++++++++++
- arch/arm/boot/dts/st/stm32mp15x-mecio1-io.dtsi |   63 -------------------
- 3 files changed, 144 insertions(+), 63 deletions(-)
+ arch/arm/boot/dts/st/stm32mp15x-mecio1-io.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm/boot/dts/st/stm32mp151c-mecio1r0.dts
-+++ b/arch/arm/boot/dts/st/stm32mp151c-mecio1r0.dts
-@@ -96,3 +96,67 @@
- 	assigned-clock-rates = <125000000>; /* Clock PLL3 to 625Mhz in tf-a. */
- 	st,eth-clk-sel;
- };
-+
-+&gpiod {
-+	gpio-line-names = "", "", "", "",
-+			  "", "", "", "",
-+			  "", "", "", "",
-+			  "STP_RESETN", "STP_ENABLEN", "HPOUT0", "HPOUT0_ALERTN";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_hog_d_mecsbc>;
-+};
-+
-+&gpioe {
-+	gpio-line-names = "HPOUT0_RESETN", "HPOUT1", "HPOUT1_ALERTN", "",
-+			  "", "", "HPOUT1_RESETN",
-+			  "LPOUT0", "LPOUT0_ALERTN", "LPOUT0_RESETN",
-+			  "LPOUT1", "LPOUT1_ALERTN", "LPOUT1_RESETN",
-+			  "LPOUT2", "LPOUT2_ALERTN", "LPOUT2_RESETN";
-+};
-+
-+&gpiof {
-+	gpio-line-names = "LPOUT3", "LPOUT3_ALERTN", "LPOUT3_RESETN",
-+			  "LPOUT4", "LPOUT4_ALERTN", "LPOUT4_RESETN",
-+			  "", "",
-+			  "", "", "", "",
-+			  "", "", "", "";
-+};
-+
-+&gpiog {
-+	gpio-line-names = "LPOUT5", "LPOUT5_ALERTN", "", "LPOUT5_RESETN",
-+			  "", "", "", "",
-+			  "", "", "", "",
-+			  "", "", "", "";
-+};
-+
-+&gpioh {
-+	gpio-line-names = "", "", "", "",
-+			  "", "", "", "",
-+			  "GPIO0_RESETN", "", "", "",
-+			  "", "", "", "";
-+};
-+
-+&gpioi {
-+	gpio-line-names = "", "", "", "",
-+			  "", "", "", "",
-+			  "HPDCM0_SLEEPN", "HPDCM1_SLEEPN", "GPIO1_RESETN", "",
-+			  "", "", "", "";
-+};
-+
-+&gpioj {
-+	gpio-line-names = "HSIN10", "HSIN11", "HSIN12", "HSIN13",
-+			  "HSIN14", "HSIN15", "", "",
-+			  "", "", "", "",
-+			  "", "RTD_RESETN", "", "";
-+};
-+
-+&gpiok {
-+	gpio-line-names = "", "", "HSIN0", "HSIN1",
-+			  "HSIN2", "HSIN3", "HSIN4", "HSIN5";
-+};
-+
-+&gpioz {
-+	gpio-line-names = "", "", "", "HSIN6",
-+			  "HSIN7", "HSIN8", "HSIN9", "";
-+};
-+
---- a/arch/arm/boot/dts/st/stm32mp153c-mecio1r1.dts
-+++ b/arch/arm/boot/dts/st/stm32mp153c-mecio1r1.dts
-@@ -90,6 +90,86 @@
- 	clock-frequency = <24000000>;
- };
- 
-+&gpioa {
-+	gpio-line-names = "", "", "", "",
-+			  "", "", "", "",
-+			  "", "", "GPIO1_RESETN", "",
-+			  "", "", "", "LPOUT5";
-+};
-+
-+&gpiob {
-+	gpio-line-names = "", "", "", "",
-+			  "LPOUT4_RESETN", "", "", "",
-+			  "", "LPOUT4_ALERTN", "", "",
-+			  "", "", "", "";
-+};
-+
-+&gpioc {
-+	gpio-line-names = "", "", "", "",
-+			  "", "", "", "",
-+			  "", "LPOUT4", "", "",
-+			  "", "", "", "";
-+};
-+
-+&gpiod {
-+	gpio-line-names = "LPOUT2", "", "LPOUT3_RESETN", "",
-+			  "LPOUT2_ALERTN", "", "MECIO_ADDR0", "",
-+			  "HPOUT1_ALERTN", "HPOUT1_RESETN", "", "",
-+			  "", "", "HPOUT0", "HPOUT1";
-+};
-+
-+&gpioe {
-+	gpio-line-names = "LPOUT0_RESETN", "", "", "",
-+			  "", "LPOUT3", "LPOUT5_ALERTN", "",
-+			  "", "", "", "",
-+			  "", "", "", "HSIN_RESETN";
-+};
-+
-+&gpiof {
-+	gpio-line-names = "LPOUT5_RESETN", "", "", "HPOUT0_ALERTN",
-+			  "", "LPOUT1", "", "",
-+			  "", "", "", "",
-+			  "", "", "", "";
-+};
-+
-+&gpiog {
-+	gpio-line-names = "", "", "", "HPOUT0_RESETN",
-+			  "", "", "LPOUT3_ALERTN", "",
-+			  "", "", "GPIO0_RESETN", "",
-+			  "", "", "", "LPOUT2_RESETN";
-+};
-+
-+&gpioh {
-+	gpio-line-names = "", "", "", "",
-+			  "", "", "", "",
-+			  "", "LPOUT0", "", "",
-+			  "", "LPOUT0_ALERTN", "STP_ENABLEN", "STP_RESETN";
-+};
-+
-+&gpioi {
-+	gpio-line-names = "", "", "", "",
-+			  "", "", "", "",
-+			  "", "", "SPE_RESETN", "",
-+			  "HPDCM0_SLEEPN", "", "", "";
-+};
-+
-+&gpioj {
-+	gpio-line-names = "", "", "", "",
-+			  "", "", "", "MECIO_ADDR1",
-+			  "", "", "", "",
-+			  "", "", "", "LPOUT1_RESETN";
-+};
-+
-+&gpiok {
-+	gpio-line-names = "", "", "RTD_RESETN", "",
-+			  "", "LPOUT1_ALERTN", "", "";
-+};
-+
-+&gpioz {
-+	gpio-line-names = "", "", "", "",
-+			  "HPDCM1_SLEEPN", "", "", "";
-+};
-+
- &m_can1 {
- 	pinctrl-names = "default", "sleep";
- 	pinctrl-0 = <&m_can1_pins_b>;
+diff --git a/arch/arm/boot/dts/st/stm32mp15x-mecio1-io.dtsi b/arch/arm/boot/dts/st/stm32mp15x-mecio1-io.dtsi
+index 69a502ec36d4..1808289f8193 100644
 --- a/arch/arm/boot/dts/st/stm32mp15x-mecio1-io.dtsi
 +++ b/arch/arm/boot/dts/st/stm32mp15x-mecio1-io.dtsi
-@@ -173,69 +173,6 @@
+@@ -186,7 +186,7 @@ gpio0: gpio@20 {
+ 		#gpio-cells = <2>;
+ 		gpio-line-names = "HSIN0_BIAS", "HSIN1_BIAS", "HSIN2_BIAS", "HSIN3_BIAS",
+ 				  "", "", "HSIN_VREF0_LVL", "HSIN_VREF1_LVL",
+-				  "HSIN4_BIAS", "HSIN5_BIAS", "HSIN6_BIAS", "HSIN9_BIAS",
++				  "HSIN4_BIAS", "HSIN5_BIAS", "HSIN6_BIAS", "HSIN7_BIAS",
+ 				  "", "", "", "";
  	};
- };
  
--&gpiod {
--	gpio-line-names = "", "", "", "",
--			  "", "", "", "",
--			  "", "", "", "",
--			  "STP_RESETN", "STP_ENABLEN", "HPOUT0", "HPOUT0_ALERTN";
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_hog_d_mecsbc>;
--};
--
--&gpioe {
--	gpio-line-names = "HPOUT0_RESETN", "HPOUT1", "HPOUT1_ALERTN", "",
--			  "", "", "HPOUT1_RESETN",
--			  "LPOUT0", "LPOUT0_ALERTN", "LPOUT0_RESETN",
--			  "LPOUT1", "LPOUT1_ALERTN", "LPOUT1_RESETN",
--			  "LPOUT2", "LPOUT2_ALERTN", "LPOUT2_RESETN";
--};
--
--&gpiof {
--	gpio-line-names = "LPOUT3", "LPOUT3_ALERTN", "LPOUT3_RESETN",
--			  "LPOUT4", "LPOUT4_ALERTN", "LPOUT4_RESETN",
--			  "", "",
--			  "", "", "", "",
--			  "", "", "", "";
--};
--
--&gpiog {
--	gpio-line-names = "LPOUT5", "LPOUT5_ALERTN", "", "LPOUT5_RESETN",
--			  "", "", "", "",
--			  "", "", "", "",
--			  "", "", "", "";
--};
--
--&gpioh {
--	gpio-line-names = "", "", "", "",
--			  "", "", "", "",
--			  "GPIO0_RESETN", "", "", "",
--			  "", "", "", "";
--};
--
--&gpioi {
--	gpio-line-names = "", "", "", "",
--			  "", "", "", "",
--			  "HPDCM0_SLEEPN", "HPDCM1_SLEEPN", "GPIO1_RESETN", "",
--			  "", "", "", "";
--};
--
--&gpioj {
--	gpio-line-names = "HSIN10", "HSIN11", "HSIN12", "HSIN13",
--			  "HSIN14", "HSIN15", "", "",
--			  "", "", "", "",
--			  "", "RTD_RESETN", "", "";
--};
--
--&gpiok {
--	gpio-line-names = "", "", "HSIN0", "HSIN1",
--			  "HSIN2", "HSIN3", "HSIN4", "HSIN5";
--};
--
--&gpioz {
--	gpio-line-names = "", "", "", "HSIN6",
--			  "HSIN7", "HSIN8", "HSIN9", "";
--};
--
- &i2c2 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&i2c2_pins_a>;
+-- 
+2.55.0
+
 
 
