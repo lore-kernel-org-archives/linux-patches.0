@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DC4471255;
-	Tue, 21 Jul 2026 18:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1325546A5FB;
+	Tue, 21 Jul 2026 18:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657572; cv=none; b=jehyXi/Q77DITdjvPqfl5xzKLcJepNJVe2optofBws6Fm5kdhd3lvAUq+y2zTxkWtLoaFORAt0m1TMmz8Zwzj8MDj490eEW3MU/aCZMoXYRzwRqEyfAnOkwxTqIy3UKEWiJnHKjmDso2aYZxXazDc5lxt2LmnFDMjz5ir5H8TJs=
+	t=1784657575; cv=none; b=EGEk31QdDprGtuuOyp/rZzHstV4pEhTnlnkgUoe961EUhGFqTnUOSaLgeE5ey+Ou9EjxlQAuokAy9hn18aQSv2UXGKAGmYNniXJRLRutEzHgA26npgdl7wjCn9D8JVc78eajQyUYHnCzt9RkaGzebofi9TPXsfTOGsHq81Z+50I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657572; c=relaxed/simple;
-	bh=aWrvkhUTvs93IfKhaqL8HbvxghBbzArJgvrfzya3huA=;
+	s=arc-20240116; t=1784657575; c=relaxed/simple;
+	bh=xWaiqxjm9ZY3dcoxU2wpQgn6+PCWwt9hzY+YmcNp5yA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uDeL/QGi04LcFlemaLh0KBSX0R1OnlxrlaWiWdoPQIOGUByTtnVAU5AJ8W3MiuOoNipMnljqtDSvu4KgZuJerdcEr5NowW9ClewcVa9x2U3tLi6lj0X/ahsV9Z+rTHyWWR8Uz+DFE97hq4Va0vzxzL/4aIL2QMk6ucQ5vYdb+u4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/TtUU9t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TrO0FgDfSCTomgB4FLx1bDNgsATQoBFI2gx/s9fQts1OECSfSwofGXx28qoI5cbPTsH2Q2vdtVxHcFjt41/YsGyWvyzVghsI7aI+vEBdSlh+8kFRjnUkuYzCjTnCL5gWEcd85aQPXvSplT09wXVD1y8/nTIc62oI8oPmsrMDrko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNXC+Fjz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/TtUU9t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9431F000E9;
-	Tue, 21 Jul 2026 18:12:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNXC+Fjz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2DA1F00A3A;
+	Tue, 21 Jul 2026 18:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657571;
-	bh=lqjPXeq8GpHWcLDheL0Cl3a5VRueghnKM0sE41v3ZhU=;
+	s=korg; t=1784657573;
+	bh=lyb00Iv2N0s0HNeU6pHuTbTZ8hvpk2zsYev7ZcNSeMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o/TtUU9ta/D02x08O7OokuMFEd46+O1yw5kEZVABBY150W2Xpy1VI3lXIqr1bNEPQ
-	 dHfSiNh3fo0552Ko5NZid5HokAvXxpHKqK5NQMBcaUmel9cPUnPuJIUll00E9az9Qx
-	 v9vdAMM/7Z9+faT85pOwivonNLbrOcct7+9E9ngk=
+	b=HNXC+FjztAVHLrFjR14tcjjRMhMwQsYSvrOrnkq3K/SZ1YSDkqldtPHJe2ZjpxV79
+	 S8B/WP5f3+dSUEdrBvWG0/D6nJwTILYSOxztM8ZBAy4bWqz2cBpn/HKeppFJhK02Y3
+	 JUDa7jtt70ZVc3czJOREARHZ6ZcmUwMZh4k+t+Pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0815/1611] devlink: Fix parent ref leak in devl_rate_node_create()
-Date: Tue, 21 Jul 2026 17:15:31 +0200
-Message-ID: <20260721152533.721647931@linuxfoundation.org>
+Subject: [PATCH 6.18 0816/1611] devlink: Fix parent ref leak on tc-bw failure
+Date: Tue, 21 Jul 2026 17:15:32 +0200
+Message-ID: <20260721152533.744718446@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,52 +55,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit ba45106342bbdd905651cb9fcefb8c11871d4c25 ]
+[ Upstream commit ba81a8b80f042038b9f73a4e5bb135de890b59bb ]
 
-In the original commit the function bails out on kstrdup failure,
-forgetting to decrement the refcnt of the parent.
+When a node is created via rate-new with tc-bw and a parent node,
+devlink_nl_rate_set() executes the sequence of ops. It bails out on the
+first failure and doesn't rollback anything. For most things that is
+fine (setting some numbers), but the parent set can leak if there's
+another failure after that.
 
-Fix that by moving the parent refcnt setting after kstrdup.
+That is precisely what happens when parent setting isn't the last block
+in the function. After the referenced "Fixes" commit, when tc-bw fails
+to be set the function bails out after having set the parent and
+incremented its refcount.
+There are two callers:
+- devlink_nl_rate_set_doit() is fine, it just reports the error.
+- but devlink_nl_rate_new_doit() frees the newly created node and leaks
+  the parent refcnt.
 
-Fixes: caba177d7f4d ("devlink: Enable creation of the devlink-rate nodes from the driver")
+Fix that by reordering the blocks so parent setting is last and adding a
+comment explaining this so future modification preserve the ordering
+(hopefully).
+
+Fixes: 566e8f108fc7 ("devlink: Extend devlink rate API with traffic classes bandwidth management")
 Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
 Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260616110633.1449432-2-cratiu@nvidia.com
+Link: https://patch.msgid.link/20260616110633.1449432-3-cratiu@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/devlink/rate.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/devlink/rate.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
 diff --git a/net/devlink/rate.c b/net/devlink/rate.c
-index d157a8419bcad4..3eaf1af3b59cf1 100644
+index 3eaf1af3b59cf1..de13b9818dfcc9 100644
 --- a/net/devlink/rate.c
 +++ b/net/devlink/rate.c
-@@ -724,11 +724,6 @@ devl_rate_node_create(struct devlink *devlink, void *priv, char *node_name,
- 	if (!rate_node)
- 		return ERR_PTR(-ENOMEM);
- 
--	if (parent) {
--		rate_node->parent = parent;
--		refcount_inc(&rate_node->parent->refcnt);
--	}
--
- 	rate_node->type = DEVLINK_RATE_TYPE_NODE;
- 	rate_node->devlink = devlink;
- 	rate_node->priv = priv;
-@@ -739,6 +734,11 @@ devl_rate_node_create(struct devlink *devlink, void *priv, char *node_name,
- 		return ERR_PTR(-ENOMEM);
+@@ -487,16 +487,19 @@ static int devlink_nl_rate_set(struct devlink_rate *devlink_rate,
+ 		devlink_rate->tx_weight = weight;
  	}
  
-+	if (parent) {
-+		rate_node->parent = parent;
-+		refcount_inc(&rate_node->parent->refcnt);
-+	}
-+
- 	refcount_set(&rate_node->refcnt, 1);
- 	list_add(&rate_node->list, &devlink->rate_list);
- 	devlink_rate_notify(rate_node, DEVLINK_CMD_RATE_NEW);
+-	nla_parent = attrs[DEVLINK_ATTR_RATE_PARENT_NODE_NAME];
+-	if (nla_parent) {
+-		err = devlink_nl_rate_parent_node_set(devlink_rate, info,
+-						      nla_parent);
++	if (attrs[DEVLINK_ATTR_RATE_TC_BWS]) {
++		err = devlink_nl_rate_tc_bw_set(devlink_rate, info);
+ 		if (err)
+ 			return err;
+ 	}
+ 
+-	if (attrs[DEVLINK_ATTR_RATE_TC_BWS]) {
+-		err = devlink_nl_rate_tc_bw_set(devlink_rate, info);
++	/* Keep parent setting last because it takes a reference. This function
++	 * has no rollback, so failing after taking the ref would leak it.
++	 */
++	nla_parent = attrs[DEVLINK_ATTR_RATE_PARENT_NODE_NAME];
++	if (nla_parent) {
++		err = devlink_nl_rate_parent_node_set(devlink_rate, info,
++						      nla_parent);
+ 		if (err)
+ 			return err;
+ 	}
 -- 
 2.53.0
 
