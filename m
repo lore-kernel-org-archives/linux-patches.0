@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898AC471438;
-	Tue, 21 Jul 2026 18:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD25472524;
+	Tue, 21 Jul 2026 18:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658666; cv=none; b=OWFmWJcgnoVCgDn10vBXX1xy6PbXMqVN6MQ0zex4YJgZg5PSwrj44m3X4ZoF5zN5NvxW0wOf7HQ2t/ACqBpfDzeirW9gQ4aqF3EgrvLn76h8uaQmjcCp73gngucUOtnd8MmDY7QKUB8MT3MKeJ3QmN1+rR6dbbaEoSPtQNhddGI=
+	t=1784658669; cv=none; b=jKLVE8Fzhv5WdCVsR6/yDrtvLwD3mKPbbIXMTABmm3nDG/GM56SpkKVnGWZXVk4bBnZbto1V73n2TTlDciT4sPg5Cy3bKhqlouGp6l4MnvMgI3ZMenvHFPlOsFgtthoB4GX9Q+y0WbGeUhqdulI6u48nYEEbsVy47mzkvqV/4PQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658666; c=relaxed/simple;
-	bh=d9UnaZ5H+OsmopZ8s9iP7F8VHW8BA+aFtbryhUanAmg=;
+	s=arc-20240116; t=1784658669; c=relaxed/simple;
+	bh=yF1EVqb+DTma3gKQkQ5fpf1OYabUjh6PVRlQBcuYc9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qO++27JrCeuS8BuggYbZRDkAB+4e3n3gqg870kiTB2WtqvWXkh5PWKcy5uAW6FyYoU0TrZPdr1AgEfemyj43MQAq0DtXRk/gRZ/1zXK+NmVfYR+c3N5U5rbNgUKGM9tiON+83LqZAzYRcO68ldYO52340Jv8DXrZOpcXUvAXSmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAaQ5bT3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=svhICcHpu18n1/xWFa+ELnVgYfgV1bdHUKhheoXxw45Q97KhJvfbUhqJmdxweGmUquIiixknWWEaR5uPWdGzANZFPxZybVW6khNS0tOvfITJFefPzhGrCbZlQE2apKtxindf/uu00jbTkRGBSnGkuBZwu89mbheSYi/ovS5mbqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ygh/7P3h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAaQ5bT3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0FB21F000E9;
-	Tue, 21 Jul 2026 18:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ygh/7P3h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880DA1F00A3D;
+	Tue, 21 Jul 2026 18:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658665;
-	bh=Yb7tqXCCshpCXmeQmeUbDFb5fuCNUQNg3WVm/TQZYvg=;
+	s=korg; t=1784658668;
+	bh=n+VNTWGo/7C7fh9t4m+m114aY5LViqyLyHANlmjOh6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qAaQ5bT30iggbA1ohv+jMs387KW4U2h/pGOpnACtODrsQB5+vXmEHnlFI8+HlmE21
-	 QW1lE8X3mmHyQfCsKtSCP8ilDlbfwGmTMrBIYid0l0HGujAIswDaB7+yYJjqpW1CfP
-	 sDy13oJkG2nsPC6StVqrggXK8qIyzcvDixMeKKPE=
+	b=Ygh/7P3hKKqnB8lTjkvX1XQOhPS7zWmFWKFhCopD8v3z6sCnlcKVpWWAzkHErCLsx
+	 VAm5PxZ7Zpp2r66cNapPuzkQrFglO4AF870V/vHeNN7QzfO4FErjQ62bBinSclgHXP
+	 piSOqxBJGrK0zMAwj6seFKmuLLBjWhPzgVV8Qyyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
+	Dzmitry Sankouski <dsankouski@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.18 1229/1611] power: supply: cpcap-battery: Fix missing nvmem_device_put() causing reference leak
-Date: Tue, 21 Jul 2026 17:22:25 +0200
-Message-ID: <20260721152543.083153741@linuxfoundation.org>
+Subject: [PATCH 6.18 1230/1611] power: supply: max17042: fix OF node reference imbalance
+Date: Tue, 21 Jul 2026 17:22:26 +0200
+Message-ID: <20260721152543.105911987@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -44,55 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Johan Hovold <johan@kernel.org>
 
-commit a2c14ff63e0e02e3c832385e523e9cc81301171c upstream.
+commit 68d234144b7dffd1f50b07ba74d0d6e833ef43a4 upstream.
 
-In cpcap_battery_detect_battery_type(), the reference to an nvmem
-device obtained via nvmem_device_find() is not released with
-nvmem_device_put() on the success or read-failure paths, causing a
-permanent reference leak. The driver’s retry logic on subsequent
-battery property reads can compound this leak, preventing the nvmem
-device from ever being freed.
+The driver reuses the OF node of the parent multi-function device but
+fails to take another reference to balance the one dropped by the
+platform bus code when unbinding the MFD and deregistering the child
+devices.
 
-Found by code review.
+Fix this by using the intended helper for reusing OF nodes.
 
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Cc: stable@vger.kernel.org
-Fixes: fd46821e85de ("power: supply: cpcap-battery: Add battery type auto detection for mapphone devices")
-Link: https://patch.msgid.link/20260424011013.879639-1-make24@iscas.ac.cn
+Fixes: 0cd4f1f77ad4 ("power: supply: max17042: add platform driver variant")
+Cc: stable@vger.kernel.org	# 6.14
+Cc: Dzmitry Sankouski <dsankouski@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260407123338.2677375-1-johan@kernel.org
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/cpcap-battery.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/power/supply/max17042_battery.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/power/supply/cpcap-battery.c
-+++ b/drivers/power/supply/cpcap-battery.c
-@@ -415,10 +415,13 @@ static void cpcap_battery_detect_battery
- 	if (IS_ERR_OR_NULL(nvmem)) {
- 		ddata->check_nvmem = true;
- 		dev_info_once(ddata->dev, "Can not find battery nvmem device. Assuming generic lipo battery\n");
--	} else if (nvmem_device_read(nvmem, 2, 1, &battery_id) < 0) {
--		battery_id = 0;
--		ddata->check_nvmem = true;
--		dev_warn(ddata->dev, "Can not read battery nvmem device. Assuming generic lipo battery\n");
-+	} else {
-+		if (nvmem_device_read(nvmem, 2, 1, &battery_id) < 0) {
-+			battery_id = 0;
-+			ddata->check_nvmem = true;
-+			dev_warn(ddata->dev, "Can not read battery nvmem device. Assuming generic lipo battery\n");
-+		}
-+		nvmem_device_put(nvmem);
- 	}
+--- a/drivers/power/supply/max17042_battery.c
++++ b/drivers/power/supply/max17042_battery.c
+@@ -1165,7 +1165,8 @@ static int max17042_platform_probe(struc
+ 	if (!i2c)
+ 		return -EINVAL;
  
- 	switch (battery_id) {
+-	dev->of_node = dev->parent->of_node;
++	device_set_of_node_from_dev(dev, dev->parent);
++
+ 	id = platform_get_device_id(pdev);
+ 	irq = platform_get_irq(pdev, 0);
+ 
 
 
