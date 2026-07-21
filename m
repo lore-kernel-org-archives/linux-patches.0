@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4503AA4F9;
-	Tue, 21 Jul 2026 22:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF2944AB91;
+	Tue, 21 Jul 2026 22:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673223; cv=none; b=E97rHtfTiRAF9Sqj7M8lIXm89k5IihegpxbgnpxpkzmAaY1bN5NmQdgx8vy6GQxq15BOyPxnAnFpIP0x/FeeUy4z4gWX3nNkzMOFmmT0yiu1xYnyiK8kExAps9A3tuiwDyCowASUaST6Yq1NYgjMlnw4rf2+8Wko2MjJRq1t9mo=
+	t=1784673225; cv=none; b=XkoCS7UVa/A+yIMJM2bO3WxDcZ53vnudDEIGIha5sdhAD6c/UF41kr0jKz8bj6/zxrLddp1TG8CnLMPyvG0OFd8L0CyRViUcqhYxpJ3ri+/xKqBmpMaLekMNZYXeKMUisucPF45oss2k6EDkvzmxytgfXg33su4lZE8WCYQppXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673223; c=relaxed/simple;
-	bh=OeNkJITkjBQnkIkLlwBTDLGw2u5ppIWgRQzp+kZaMMo=;
+	s=arc-20240116; t=1784673225; c=relaxed/simple;
+	bh=ZUm6CqZhndkrvkKMIF/dfa5jbN9CkqDNrAIi4gwpM70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qr9OK3Z2gY7FmxWJ/lUbMvVnw1O2SH8XTd2U363umTAtB1zTp8y2O+ZavD4w7wxTfciP0WfiR8C5cytTNsxA32CS4plNxRSlklpG0wfLy+jR9qPcXQUcK7QPlsOyRsJlADG4a32DfIJQBrz0yJm05vA9f2xgwtSlK3TFFjpvQlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ZYA+Z23; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=klHQ6Z41RvyfQESC9VA/wyrTuYHHL8xigdm5Y0GT4xvqQrwywMxleXz1BWP4st3XdEzHmvtoRY3giNpvhTjrR54JSaLsU74ngaqLA5Uw/y2/QYMgMAXpxbooGe8qOROmqAXTHHaugSc002Wd6wQ9U+41vV6wbVT4KCDR3+5HV3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Utuuw2P6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ZYA+Z23"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660D51F000E9;
-	Tue, 21 Jul 2026 22:33:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Utuuw2P6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31EB1F000E9;
+	Tue, 21 Jul 2026 22:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673221;
-	bh=Bg7ZHIvCpGLQWw+tqUCo1EwfNwt32rJoRo8wr4uvyRA=;
+	s=korg; t=1784673224;
+	bh=1BkTM8x3i1P0D40flPkCc8zinMnymLc94Sewq+jYBB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0ZYA+Z23T6N+PESNc23LIVE2OmdUBketAcZKHPwqnqFZwvTJcF6ygcjPLFCzSGsyt
-	 kwH6H5ICDXVYID3Qmp2STKeOvsde93idCZBNAepw4R1k/+MGC7A3paRlNCeN3pb8Co
-	 UClSgmDhgQXnp39CFzPCaH+2NrwtG7C/I0KOiVGk=
+	b=Utuuw2P67nnWmOb7m9WzC0aez6mTmSuXjm7EpnzyqkcwC/z3/LhwFVQJbadyB81F/
+	 1HqCAW9B3BzkBdMip1H5AbIIkRDEPNawfGBijMXyRMpCqkgmEmYCiF6dIzbyixf5Ec
+	 LgMC+/EeemJtdjX/XeaB3GkuS5Z1orKGlTC3YXIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Eric Dumazet <edumazet@google.com>,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 079/699] net: ipv4: bound TCP reordering sysctl writes and MTU probe sizes
-Date: Tue, 21 Jul 2026 17:17:18 +0200
-Message-ID: <20260721152357.486885713@linuxfoundation.org>
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 5.10 038/699] iio: adc: ti-ads124s08: Return reset GPIO lookup errors
+Date: Tue, 21 Jul 2026 17:16:37 +0200
+Message-ID: <20260721152356.569311195@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -55,100 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wyatt Feng <bronzed_45_vested@icloud.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit efb8763d7bbb40cff4cc55a6b62c3095a038149c upstream.
+commit 7dc4de2aa6316f1d044cde21f5acfec5f3ec6b47 upstream.
 
-Reject invalid `net.ipv4.tcp_reordering` values before they reach TCP
-socket state. The sysctl is stored as an `int` but copied into the
-`u32` `tp->reordering` field for new sockets, so negative writes wrap
-to large values.
+devm_gpiod_get_optional() returns NULL when the optional GPIO is absent,
+but returns an ERR_PTR when the GPIO provider lookup fails, including
+probe deferral.
 
-With `tcp_mtu_probing=2`, the wrapped value can overflow the
-`tcp_mtu_probe()` size calculation and drive the MTU probing path into
-an out-of-bounds read. Route `tcp_reordering` writes through
-`proc_dointvec_minmax()` and require it to be at least 1. Also require
-`tcp_max_reordering` to be at least 1 so the configured maximum cannot
-become negative either.
+Probe currently logs the ERR_PTR case as if the reset GPIO were simply
+absent and keeps the error pointer in reset_gpio. Later ads124s_reset()
+treats any non-NULL reset_gpio as a valid descriptor and passes it to
+gpiod_set_value_cansleep().
 
-When registering the table for a non-init network namespace, relocate
-`extra2` pointers that refer into `init_net.ipv4` so the
-`tcp_reordering` upper bound follows that namespace's
-`tcp_max_reordering`.
+Return the lookup error instead of retaining the ERR_PTR.
 
-Harden `tcp_mtu_probe()` itself by computing `size_needed` as `u64`.
-This keeps the send queue and window checks from being bypassed through
-signed integer overflow.
-
-Fixes: 91cc17c0e5e5 ("[TCP]: MTUprobe: receiver window & data available checks fixed")
+Fixes: e717f8c6dfec ("iio: adc: Add the TI ads124s08 ADC code")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/1a5b7e1ef4d70fbad8c8ee0b82d8405f3c964a3d.1781395200.git.bronzed_45_vested@icloud.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/sysctl_net_ipv4.c |   10 ++++++++--
- net/ipv4/tcp_output.c      |    4 ++--
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/iio/adc/ti-ads124s08.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/ipv4/sysctl_net_ipv4.c
-+++ b/net/ipv4/sysctl_net_ipv4.c
-@@ -892,7 +892,9 @@ static struct ctl_table ipv4_net_table[]
- 		.data		= &init_net.ipv4.sysctl_tcp_reordering,
- 		.maxlen		= sizeof(int),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dointvec_minmax,
-+		.extra1		= SYSCTL_ONE,
-+		.extra2		= &init_net.ipv4.sysctl_tcp_max_reordering,
- 	},
- 	{
- 		.procname	= "tcp_retries1",
-@@ -1109,7 +1111,8 @@ static struct ctl_table ipv4_net_table[]
- 		.data		= &init_net.ipv4.sysctl_tcp_max_reordering,
- 		.maxlen		= sizeof(int),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec
-+		.proc_handler	= proc_dointvec_minmax,
-+		.extra1		= SYSCTL_ONE,
- 	},
- 	{
- 		.procname	= "tcp_dsack",
-@@ -1336,6 +1339,9 @@ static __net_init int ipv4_sysctl_init_n
- 				 */
- 				table[i].mode &= ~0222;
- 			}
-+			if (table[i].extra2 >= (void *)&init_net.ipv4 &&
-+			    table[i].extra2 < (void *)(&init_net.ipv4 + 1))
-+				table[i].extra2 += (void *)net - (void *)&init_net;
- 		}
- 	}
+--- a/drivers/iio/adc/ti-ads124s08.c
++++ b/drivers/iio/adc/ti-ads124s08.c
+@@ -323,7 +323,8 @@ static int ads124s_probe(struct spi_devi
+ 	ads124s_priv->reset_gpio = devm_gpiod_get_optional(&spi->dev,
+ 						   "reset", GPIOD_OUT_LOW);
+ 	if (IS_ERR(ads124s_priv->reset_gpio))
+-		dev_info(&spi->dev, "Reset GPIO not defined\n");
++		return dev_err_probe(&spi->dev, PTR_ERR(ads124s_priv->reset_gpio),
++				     "Failed to get reset GPIO\n");
  
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -2343,7 +2343,7 @@ static int tcp_mtu_probe(struct sock *sk
- 	struct sk_buff *skb, *nskb, *next;
- 	struct net *net = sock_net(sk);
- 	int probe_size;
--	int size_needed;
-+	u64 size_needed;
- 	int copy, len;
- 	int mss_now;
- 	int interval;
-@@ -2367,7 +2367,7 @@ static int tcp_mtu_probe(struct sock *sk
- 	mss_now = tcp_current_mss(sk);
- 	probe_size = tcp_mtu_to_mss(sk, (icsk->icsk_mtup.search_high +
- 				    icsk->icsk_mtup.search_low) >> 1);
--	size_needed = probe_size + (tp->reordering + 1) * tp->mss_cache;
-+	size_needed = probe_size + (tp->reordering + 1) * (u64)tp->mss_cache;
- 	interval = icsk->icsk_mtup.search_high - icsk->icsk_mtup.search_low;
- 	/* When misfortune happens, we are reprobing actively,
- 	 * and then reprobe timer has expired. We stick with current
+ 	ads124s_priv->chip_info = &ads124s_chip_info_tbl[spi_id->driver_data];
+ 
 
 
