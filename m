@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A0B43D4EE;
-	Tue, 21 Jul 2026 22:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF39843B3DA;
+	Tue, 21 Jul 2026 22:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671876; cv=none; b=hr+wxLLJuXWTrsE+O1xo+WorLIZj5Kegl2ZyyVKVkofoYr4JQFDOTQAhyjlgnBrDGWUuC9sru4AC08A+vILYwdi8VG0HzPlzDc3y3gtR6VHo3LSVNPSNk7bfNJeGnwOq/WH8YOks3zTvM9VwMfhps7zAIxO/V83W7Rmx3IisITc=
+	t=1784671879; cv=none; b=M2ieqgIjdKr6lig7uFlMuqY2TvrZXxrPs/zseHjxMxdy7HSCNYopv170R6rLyd9OzhiSMzI+n3mRx3Rv4X77cVhTIRyT4HxvddWXuUQva47PS3StUnaZjnhuCjtJCAMGN4ypLcnKR94fTV8ENquVqG8rIUAiC/hnlsSd8qzlk0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671876; c=relaxed/simple;
-	bh=sI65VPzYAGwDB4puMGBOCX+WRf/+PPHmwEx4KgXr51w=;
+	s=arc-20240116; t=1784671879; c=relaxed/simple;
+	bh=PLSS92LlCPQTc+l4Lquyp2xJKNL1716habjYwssOnig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sjuWemybE7e0KdN4HLDLcJDwN7q5xixG5i/FhtD5PnHBNr3FfWOAFkEZsDl50F6g5Mj0Z6ICTJKLvPG0M+94Z/pBLBWSdcD5DaqsUINMCWUjqv/GUB+coP3H4XQ/ujp2NYB0OJLWP700g//XArp4X+eUzMBmelfAYr4sjC7Js1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJTd5rwy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=szVVsYamx+yUptfRyMq4ejAZxbpHfO1ggerxIdvqkuni/xsW2Zd6WlFg4RU8upddvxETFg4oepZ+oTYzsRIo0qyADbHyJVXNLb8zcCoDNx70m+LD02Cm8tiAAF6Inb2J5Wj9ETRR3b/NvbBLkw1qSQkOxqxK/apG2O7TYVELF4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yUoEarSs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJTd5rwy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE411F000E9;
-	Tue, 21 Jul 2026 22:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yUoEarSs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612111F000E9;
+	Tue, 21 Jul 2026 22:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671875;
-	bh=9KYXpDSs2sjqfDh3Ro/d2OswrlhXpWhBib7sh5Metcg=;
+	s=korg; t=1784671877;
+	bh=7LZ6PfW0gKVVfQtP30dnlzMj6PoKr5VK0KyOg1dvMbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OJTd5rwys+ykJnUxPbuenQ3i7KqQ0+MStIw19E+8Gd8+KC2khJrdKetbX91MOZ7JN
-	 8vrvgVK4rWwnMSIj3ioSMy4fjVnpJI/hNDCIws/uybRuv3/EO2n+r2U4HUPtriVKC1
-	 uaTxw0y7S7gVZYLU1UuNHYdJaItWk2I06P3Dl6TY=
+	b=yUoEarSsOH6HgisLed2NeEsH2xvqFiW6zd3YTxvUvuXn2jhXoZcpMBMDo2wROGZ+8
+	 wJF3xIXfy6QIjjP+eKLKC1R0/NDDwr90L7HikfF2Jdst7e9BufUwxeiGyyc8gz31BW
+	 bUel2aOnICyoxP6OM/VOj56tagWr3MlWCthyTqvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Stephane Eranian <eranian@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 413/843] perf pmu: Fix perf_pmu__parse_scale/unit() OOB access on empty sysfs file
-Date: Tue, 21 Jul 2026 17:20:48 +0200
-Message-ID: <20260721152415.326483124@linuxfoundation.org>
+Subject: [PATCH 5.15 414/843] tools lib api: Fix missing null termination in filename__read_int/ull()
+Date: Tue, 21 Jul 2026 17:20:49 +0200
+Message-ID: <20260721152415.349271436@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -46,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
@@ -55,52 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 33035f7dd4e49f3f117e70c5e36c8c1ae88d37f2 ]
+[ Upstream commit 52b1f9678499b13b7aeb0186d9c6f486c043283f ]
 
-perf_pmu__parse_scale() reads a PMU scale file then accesses
-scale[sret - 1] to strip a trailing newline.  Only sret < 0 is
-guarded, so an empty file (sret == 0) causes scale[-1] — a stack
-buffer underflow that reads and potentially writes out of bounds.
+filename__read_int() passes a stack buffer to read() using the full
+sizeof(line) and then hands it to atoi() without null-terminating.
+If a sysfs file fills the 64-byte buffer exactly, atoi() reads past
+the array into uninitialized stack memory.
 
-perf_pmu__parse_unit() has the same pattern: alias->unit[sret - 1]
-with sret == 0 accesses the byte before the struct member, which
-may corrupt the adjacent pmu_name pointer field.
+filename__read_ull_base() has the same issue with strtoull().
 
-Change both guards from sret < 0 to sret <= 0 so that empty files
-are treated as read errors.
+Fix both by reading sizeof(line) - 1 bytes and explicitly
+null-terminating after a successful read.
 
-Fixes: 410136f5dd96b601 ("tools/perf/stat: Add event unit and scale support")
+Fixes: 3a351127cbc682c3 ("tools lib fs: Adopt filename__read_int from tools/perf/")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Stephane Eranian <eranian@google.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/pmu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/lib/api/fs/fs.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/pmu.c b/tools/perf/util/pmu.c
-index ce577e5393f92f..4cc27aa8aec723 100644
---- a/tools/perf/util/pmu.c
-+++ b/tools/perf/util/pmu.c
-@@ -162,7 +162,7 @@ static int perf_pmu__parse_scale(struct perf_pmu_alias *alias, char *dir, char *
- 		goto error;
+diff --git a/tools/lib/api/fs/fs.c b/tools/lib/api/fs/fs.c
+index 82f53d81a7a784..e102714c6845e8 100644
+--- a/tools/lib/api/fs/fs.c
++++ b/tools/lib/api/fs/fs.c
+@@ -321,11 +321,14 @@ int filename__read_int(const char *filename, int *value)
+ {
+ 	char line[64];
+ 	int fd = open(filename, O_RDONLY), err = -1;
++	ssize_t n;
  
- 	sret = read(fd, scale, sizeof(scale)-1);
--	if (sret < 0)
-+	if (sret <= 0)
- 		goto error;
- 
- 	if (scale[sret - 1] == '\n')
-@@ -189,7 +189,7 @@ static int perf_pmu__parse_unit(struct perf_pmu_alias *alias, char *dir, char *n
+ 	if (fd < 0)
  		return -1;
  
- 	sret = read(fd, alias->unit, UNIT_MAX_LEN);
--	if (sret < 0)
-+	if (sret <= 0)
- 		goto error;
+-	if (read(fd, line, sizeof(line)) > 0) {
++	n = read(fd, line, sizeof(line) - 1);
++	if (n > 0) {
++		line[n] = '\0';
+ 		*value = atoi(line);
+ 		err = 0;
+ 	}
+@@ -339,11 +342,14 @@ static int filename__read_ull_base(const char *filename,
+ {
+ 	char line[64];
+ 	int fd = open(filename, O_RDONLY), err = -1;
++	ssize_t n;
  
- 	close(fd);
+ 	if (fd < 0)
+ 		return -1;
+ 
+-	if (read(fd, line, sizeof(line)) > 0) {
++	n = read(fd, line, sizeof(line) - 1);
++	if (n > 0) {
++		line[n] = '\0';
+ 		*value = strtoull(line, NULL, base);
+ 		if (*value != ULLONG_MAX)
+ 			err = 0;
 -- 
 2.53.0
 
