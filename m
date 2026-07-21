@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074BB470124;
-	Tue, 21 Jul 2026 19:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B7F470117;
+	Tue, 21 Jul 2026 19:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660595; cv=none; b=MKjgf1mwzyrjdott1PDjDO/cxnkOErsu4DvUfMrOCaqjf019TVvn+L6y3XYmgXrhO4aUKaepoki/5Fqm8QFG/p+P7MEqPf6h8TrLixRoZkliIuc2g6JtD5VmicRYF9VEZfys4zMkC3982YijPV4J7LkK70PFUJ2qf6FBbkFn8tI=
+	t=1784660597; cv=none; b=pkReRFFAY8hcsyuuT/XxMB/4ncfdvuNci6XFRMoPLPo3wTNrCSxPTqIVoiVeqRmAMhnKfLmH5DQxfIDntrQijhMGi17lpaxdEHwTOXHFCSqW8KBW+n7tUt7NLWaWJuf9XgDrgS40VztgwpTvwEPyNfHdVyGg/7Zq8NGt3DAhsUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660595; c=relaxed/simple;
-	bh=30FE92119d0e8R5SG7rUZ6ucoeDpez75ExWa0Aup14o=;
+	s=arc-20240116; t=1784660597; c=relaxed/simple;
+	bh=HNq+1Jwgj/lbse3JRbJfZ8X/UzB8Y/mP0wdOOABbD6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XphCGgUaYeUpTO3fOKiHHN4YVu6BH1VJKT98m39NBnnkN8j3UVtgobpS04nBbkt0Y1dPtFiItshFYdW8170UHxwRfPe+CfyipQ+D7It5Rb+WraBgQ5/i9+OZJIB7Y1zz+z9PMtz+M9u82IT5Vz9uFhLMODV7L7jAuVVbMZl0eqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQ6SCozR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n7S8e28GkZL35jXcTNfUsEWbnq77VW5Csjzl0h15Q200qn4EwWhVHktdT0PLSO5RnfbchpCbL8cWqHUatpGYKsbvJoj8F2m17WvjqgZl4Wp/Cv8x5VKd/B2eOjOJKyijUqFjvnQV8StyM+vI8TNxVq6a3kHXruHvcGXtk4Tyyj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bndttl5R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQ6SCozR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82961F00A3A;
-	Tue, 21 Jul 2026 19:03:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bndttl5R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A481F00A3E;
+	Tue, 21 Jul 2026 19:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660592;
-	bh=EE6avNg/mEYzdQ53HJTQA7Z7bPaZIHY9VDHFmYdJhsE=;
+	s=korg; t=1784660595;
+	bh=uM/fjVV06aE85+7CrMJwfuQhMPK9LsS6tbP7AF6r/c0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AQ6SCozRW8gJ36z4zep9B4rJ542yajS2Tsad8dbMJMec5KBLPYMy2Okxzo4NLwc4w
-	 XQuCIO+t6xb2U8JRcVGlB3Lbs5dOMvZTFP4PV5kp7+xHA9gSOmrjamcCxf8SZ9WaMh
-	 BOa78EzWazUdZdPXnoi3JSrxWS0e+8fnnToLX1Rc=
+	b=bndttl5Rfn/BYkyy8rQkrR48bbZ4Q2+odutW2xs3WvQ+H12hSFchO9OrcZFBaWYEq
+	 6QHUabuGa3Hgq00ID9yYXYrnAUdVsSLUiDp/hlga8OJ7S3pNi5O3ygF5MuJuTHZe4N
+	 y+vG7FqxPH0M20NxXDm5+PU8Nx3aA8v6i649IXck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	John Johansen <john.johansen@canonical.com>,
+	Paul Moore <paul@paul-moore.com>,
+	James Morris <jmorris@namei.org>,
+	"Serge E. Hallyn" <serge@hallyn.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1038/2077] apparmor: fix refcount leak when updating the sk_ctx
-Date: Tue, 21 Jul 2026 17:11:51 +0200
-Message-ID: <20260721152617.295364113@linuxfoundation.org>
+Subject: [PATCH 7.1 1039/2077] security/apparmor/apparmorfs.c: conditionally compile get_loaddata_common_ref()
+Date: Tue, 21 Jul 2026 17:11:52 +0200
+Message-ID: <20260721152617.318438865@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,40 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Andrew Morton <akpm@linux-foundation.org>
 
-[ Upstream commit 6d25e7b47616cb2db43351210929c8f19dc305a3 ]
+[ Upstream commit d62d9bfe050f44f772d05a32079dba3e3523ab2a ]
 
-Currently update_sk_ctx() transfers the plabel reference, unfortunately
-it is also unconditionally put in the caller. Ideally we would make
-the caller conditionally put the reference based on whether it was
-transferred but for now just fix the bug by getting a reference.
+Some config did this:
 
-Fixes: 88fec3526e841 ("apparmor: make sure unix socket labeling is correctly updated.")
+security/apparmor/apparmorfs.c:177:28: warning: 'get_loaddata_common_ref' defined but not used [-Wunused-function]
+  177 | static struct aa_loaddata *get_loaddata_common_ref(struct aa_common_ref *ref)
+
+get_loaddata_common_ref() is only used if
+CONFIG_SECURITY_APPARMOR_EXPORT_BINARY=y.
+
+(Or of course move the function into that block if maintainers perfer)
+
+Fixes: 8e135b8aee5a0 ("apparmor: fix race between freeing data and fs accessing it")
+Cc: John Johansen <john.johansen@canonical.com>
+Cc: Paul Moore <paul@paul-moore.com>
+Cc: James Morris <jmorris@namei.org>
+Cc: "Serge E. Hallyn" <serge@hallyn.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/af_unix.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ security/apparmor/apparmorfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/security/apparmor/af_unix.c b/security/apparmor/af_unix.c
-index 23753cb2096e53..834a3b1c2f0af4 100644
---- a/security/apparmor/af_unix.c
-+++ b/security/apparmor/af_unix.c
-@@ -674,9 +674,11 @@ static void update_sk_ctx(struct sock *sk, struct aa_label *label,
- 		old = rcu_dereference_protected(ctx->peer, lockdep_is_held(&unix_sk(sk)->lock));
+diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
+index ededaf46f3caa7..aeff3d2d863bc5 100644
+--- a/security/apparmor/apparmorfs.c
++++ b/security/apparmor/apparmorfs.c
+@@ -174,6 +174,7 @@ static struct aa_proxy *get_proxy_common_ref(struct aa_common_ref *ref)
+ 	return NULL;
+ }
  
- 		if (old == plabel) {
--			rcu_assign_pointer(ctx->peer_lastupdate, plabel);
-+			rcu_assign_pointer(ctx->peer_lastupdate,
-+					   aa_get_label(plabel));
- 		} else if (aa_label_is_subset(plabel, old)) {
--			rcu_assign_pointer(ctx->peer_lastupdate, plabel);
-+			rcu_assign_pointer(ctx->peer_lastupdate,
-+					   aa_get_label(plabel));
- 			rcu_assign_pointer(ctx->peer, aa_get_label(plabel));
- 			aa_put_label(old);
- 		} /* else race or a subset - don't update */
++#ifdef CONFIG_SECURITY_APPARMOR_EXPORT_BINARY
+ static struct aa_loaddata *get_loaddata_common_ref(struct aa_common_ref *ref)
+ {
+ 	if (ref)
+@@ -181,6 +182,7 @@ static struct aa_loaddata *get_loaddata_common_ref(struct aa_common_ref *ref)
+ 						      count));
+ 	return NULL;
+ }
++#endif
+ 
+ static void aa_put_common_ref(struct aa_common_ref *ref)
+ {
 -- 
 2.53.0
 
