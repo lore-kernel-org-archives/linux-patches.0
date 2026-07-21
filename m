@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DA1415F10;
-	Tue, 21 Jul 2026 21:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF38E39B97E;
+	Tue, 21 Jul 2026 21:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670051; cv=none; b=OI/syQk2pFn/KzqGiFK9fU4k931bZQVebkkXg4j8WGcOXnz3+YbtwnFj1HXgAklnC/lfoB3k/zwpTAb3RytHLCG+n9Gnv6IBTeDlLL1i+00wepGLQo3tk99zSvFMP4+0dzzLbBlklE0G4sp7HJE44bipuPLtUuVn/NF6i4rxs+0=
+	t=1784670054; cv=none; b=bLHHLreVJdSTEeSsyp9bNbP8EkBL2WVKmb3AAwFkiNfS2Jo4ZX79vK/T3wufDCZnKSHpCcHcNcKPKZnN9qJJd+KSblmo47TG9GfY+3BoytEILGzhHBBTLUuFY4MwV55RYczoc3Z2i/REL95uKHK9lWb3I4ZQ+6W5UoGjxBnkUTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670051; c=relaxed/simple;
-	bh=LagXdlGBm3CV2M0/ziYAeUU2yP9Kk3rmuD/GrRj0ols=;
+	s=arc-20240116; t=1784670054; c=relaxed/simple;
+	bh=+au4wdYwwojVWhlSJvRkn4u7zQl6SIv0doXp8vJpPkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O56FwuYEF3SYm3oWo7uIqD96vHEVZ28WzUElp/3Hwk4gTWVBHfqJxZ5QwQamahh7GtweN0aHUnhFpiYaeuIY0o+ewA4JnT8CVCn4JgcBI8L4tgaPRBS/l8KRZxUqWariYqH0hDLX6H9xjiaML0fRc5oP5owWSBnIejJIgAdXlsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VBfpe3/x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=o+8Pcnt2Z3DHq7yeyhfh0OlozkiYN/QusZdlSnOmEfFOWW2JzmdnTnqMckOG1K5Sfm2E9htWgh7jS/yeUrXKcRMniMPSsOCw5/5Q8NIebqWe+utv3j4CKbPbVhAANUFovt5oo/vHToVbig97RF61PRLOadWFnEkMB59pV0a+gps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D0Jw1i7+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBfpe3/x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B080E1F000E9;
-	Tue, 21 Jul 2026 21:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D0Jw1i7+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506BE1F000E9;
+	Tue, 21 Jul 2026 21:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670050;
-	bh=SrBKNQy0mngwVchdXDs4fAimDVeIZoG5/p2Naas5K60=;
+	s=korg; t=1784670052;
+	bh=XXmIrgVbW6zpFcH+6Vq6WecGnLScbFyvjAMow4C/wTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VBfpe3/xhxnOGNkEZD4LSY7N7JABNiTJHNJ6H1MMHLmpF+/CArzHnnNdyhXEDbelH
-	 wEax0+jjeUwEU1dAxtupb2NmY+9WxNZyfAw6UuoBrAXEUhoXmvGnGW26e33kSdhj+U
-	 37CJPUnM2Y/r7Al58MkCpwaBWE5wNLNKCZyAmQlg=
+	b=D0Jw1i7+ItJZhH2Xv/wIzQDYlOv4sKZ2wOOBSvuXyAdnePLHIK8OlBEVpgfmd6sOi
+	 ilMu0aVDjbLSibVGIRy2A4v04gJaah3w8jgCzcczTV1Eymna10xfZ2gWqsdoCi11mz
+	 toAFD7fQAXE/3EyUHJHX2cPFDx5M8ijzJXmdCnXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.1 0749/1067] netfilter: ecache: fix inverted time_after() check
-Date: Tue, 21 Jul 2026 17:22:30 +0200
-Message-ID: <20260721152441.330778914@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.1 0785/1067] power: supply: cpcap-battery: Fix missing nvmem_device_put() causing reference leak
+Date: Tue, 21 Jul 2026 17:23:06 +0200
+Message-ID: <20260721152442.129559104@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -49,75 +44,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit b06163ce52ec0561f202fbfb9b08090cb61f512e upstream.
+commit a2c14ff63e0e02e3c832385e523e9cc81301171c upstream.
 
-ecache_work_evict_list() redelivers DESTROY events for conntracks that
-were moved to the per-netns dying_list after event delivery failed.  It
-sets a 10ms deadline:
+In cpcap_battery_detect_battery_type(), the reference to an nvmem
+device obtained via nvmem_device_find() is not released with
+nvmem_device_put() on the success or read-failure paths, causing a
+permanent reference leak. The driver’s retry logic on subsequent
+battery property reads can compound this leak, preventing the nvmem
+device from ever being freed.
 
-    stop = jiffies + ECACHE_MAX_JIFFIES
+Found by code review.
 
-but then tests:
-
-    time_after(stop, jiffies)
-
-This condition is true while the deadline is still in the future, so the
-worker returns STATE_RESTART after the first successful redelivery in the
-usual case.  ecache_work() maps STATE_RESTART to delay 0, which turns the
-redelivery path into one dying conntrack per workqueue dispatch and makes
-the sent > 16 batching/cond_resched() path effectively unreachable.
-
-A conntrack netlink listener whose receive queue is congested can make
-DESTROY event delivery fail with -ENOBUFS.  With sustained conntrack
-churn, entries then accumulate on the dying_list and are only drained at
-the degraded one-entry-per-dispatch rate once delivery succeeds again,
-wasting CPU on back-to-back workqueue reschedules and prolonging
-conntrack memory/resource pressure.
-
-In a KASAN QEMU test with CONFIG_NF_CONNTRACK_EVENTS=y and
-nf_conntrack.enable_hooks=1, a congested DESTROY listener caused 8192
-nf_ct_delete() calls to return false and move entries to the dying_list.
-After closing the listener, the unfixed kernel needed 7670 ecache_work()
-entries to destroy 7669 conntracks.  With this change, the same 8192
-entries were destroyed by 2 ecache_work() entries.
-
-Swap the comparison so the worker restarts only after the deadline has
-expired.
-
-Fixes: 2ed3bf188b33 ("netfilter: ecache: use dedicated list for event redelivery")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
 Cc: stable@vger.kernel.org
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: Claude-Code:GLM-5.2
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: fd46821e85de ("power: supply: cpcap-battery: Add battery type auto detection for mapphone devices")
+Link: https://patch.msgid.link/20260424011013.879639-1-make24@iscas.ac.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_ecache.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/cpcap-battery.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/net/netfilter/nf_conntrack_ecache.c
-+++ b/net/netfilter/nf_conntrack_ecache.c
-@@ -77,7 +77,7 @@ next:
- 		hlist_nulls_del_rcu(&ct->tuplehash[IP_CT_DIR_ORIGINAL].hnnode);
- 		hlist_nulls_add_head(&ct->tuplehash[IP_CT_DIR_REPLY].hnnode, &evicted_list);
+--- a/drivers/power/supply/cpcap-battery.c
++++ b/drivers/power/supply/cpcap-battery.c
+@@ -415,10 +415,13 @@ static void cpcap_battery_detect_battery
+ 	if (IS_ERR_OR_NULL(nvmem)) {
+ 		ddata->check_nvmem = true;
+ 		dev_info_once(ddata->dev, "Can not find battery nvmem device. Assuming generic lipo battery\n");
+-	} else if (nvmem_device_read(nvmem, 2, 1, &battery_id) < 0) {
+-		battery_id = 0;
+-		ddata->check_nvmem = true;
+-		dev_warn(ddata->dev, "Can not read battery nvmem device. Assuming generic lipo battery\n");
++	} else {
++		if (nvmem_device_read(nvmem, 2, 1, &battery_id) < 0) {
++			battery_id = 0;
++			ddata->check_nvmem = true;
++			dev_warn(ddata->dev, "Can not read battery nvmem device. Assuming generic lipo battery\n");
++		}
++		nvmem_device_put(nvmem);
+ 	}
  
--		if (time_after(stop, jiffies)) {
-+		if (time_after(jiffies, stop)) {
- 			ret = STATE_RESTART;
- 			break;
- 		}
+ 	switch (battery_id) {
 
 
