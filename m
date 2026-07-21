@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7588B3C73F6;
-	Tue, 21 Jul 2026 22:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435BC43E066;
+	Tue, 21 Jul 2026 22:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674672; cv=none; b=SdCgY839hQRx0sBL6qrti1GpLZQqaxUAU9kPpa3SR8JCcpjsR+1eio7Zrg/7rnVOeeWGR/95wd4k3BWBncbFTaYgYy1W4bDbK6KTWafHedGz7u1+4Q3w+CtX2GIERSsiDue2D0jroGK8d5LZQsdsIZjUNd09n1uUZwM2z4yxCIQ=
+	t=1784674674; cv=none; b=ER1xmAAIWw64V747Vk8234H4s38HaGM2YjEfWOYqIIEDEcjs+9D+G/JNlolCsDdD7xsJcmQYP5qJbxK7QYrU5/3szAtnLlIE8cJPZ7o16vEsiYwIQmSTpfGS5U2/DDiNxPk3nktaRoCE79Yix22koQhqVuh/AjMQNraee/8Ee8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674672; c=relaxed/simple;
-	bh=7DRLWMi6AWGxryXePs6eCu4Ckw0RVqaJI/qDsEm39n8=;
+	s=arc-20240116; t=1784674674; c=relaxed/simple;
+	bh=iEts3p7yh0+Z68aENufTOICkQiOiMqNs5ZfwpDVAigk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VjwmpmEkVsjTofU/WBOqpLOKjGCV7HsHGouRJF9m50wOFp9y00nZk+G2VU3+XveTXjnaR+RTyb2Lx3IVuPp5U2EA7hFlGVqruDgMD//g5W6nqGBOVVAEOuxt3MjESU9cJ3WVEadbSQ3Dif1TXQnGkQRiH2J69ui1hkPQdd9j3F8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J46Ma7uA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=diQ6hlXtL+gkmWnqE8OZ2mvTTmbRyAY4XGLhRDGJ643RaotcoxAc8KSmsqpSm1MYw68UclAxvwi6zYu9sDW8LJ8VFNlMXjobFPT0PHuWb/qUJXNAQLJZo1YuG6SomD8+V6QebNN1IWO4lOa5SQRoGdVWgC33IaiMhWPoBooGNAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hh5zeYTG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J46Ma7uA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8881F000E9;
-	Tue, 21 Jul 2026 22:57:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hh5zeYTG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456ED1F00A3A;
+	Tue, 21 Jul 2026 22:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674669;
-	bh=UZAoLUIl3bJCHrT4LMOf5PaHMaWQ3FTPRhQw+cLYUMQ=;
+	s=korg; t=1784674671;
+	bh=pJrjEB7Z9uK+m15E1AsU/OX5AnGA1c+KQQVS0+ifUvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J46Ma7uAfYXIr2WCO/e7oWC2LWBFLrVp1fsO9NNuna2hVlr6kRcVXtxMYB7PjzV5E
-	 zQ0fvPS1F7TyI5KdegzH8vTvr9N+prbkM7u3IJFxUidfwtPmKyritDR0wwDUJaL08X
-	 /PAn8sDMWoiDLxOOmykNfOvIuk0pWm+flb8oI+Yw=
+	b=Hh5zeYTGIvgnc3KVbW4EAewXuXNZmUt1YUdh+lAuJOp0QiRLIsLsT1rUuRdjN5ksc
+	 WC4sOvS1hPFMfthxOSwQZaGR1GygpyYiqyBshkUZnLgW7C7obrqijiCJnn284By2eS
+	 eIoY9Y/Li9n9JxEqEL67+J0MvuXHD9dlgoRJ4Uak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Caleb James DeLisle <cjd@cjdns.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 591/699] iio: imu: inv_icm42600: fix timestamping by limiting FIFO reading
-Date: Tue, 21 Jul 2026 17:25:50 +0200
-Message-ID: <20260721152409.062212238@linuxfoundation.org>
+Subject: [PATCH 5.10 627/699] PCI: mediatek: Fix IRQ domain leak when port fails to enable
+Date: Tue, 21 Jul 2026 17:26:26 +0200
+Message-ID: <20260721152409.890203694@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,69 +52,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit affe3f077d7a4eeb25937f5323ff059a54b4712c ]
+[ Upstream commit f865a57896bd92d7662eb2818d8f48872e2cbbc7 ]
 
-Timestamps are made by measuring the chip clock using the watermark
-interrupts. If we read more than watermark samples as done today, we
-are reducing the period between interrupts and distort the time
-measurement. Fix that by reading only watermark samples in the
-interrupt case.
+When mtk_pcie_enable_port() fails, mtk_pcie_port_free() removes the port
+from pcie->ports and frees the port structure. However, the IRQ domains set
+up earlier by mtk_pcie_init_irq_domain() are never freed.
 
-Fixes: 7f85e42a6c54 ("iio: imu: inv_icm42600: add buffer support in iio devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fix this by refactoring mtk_pcie_irq_teardown() into a per-port helper,
+mtk_pcie_irq_teardown_port(), and calling it from mtk_pcie_setup() when
+mtk_pcie_enable_port() fails. Since the IRQ teardown must only happen in
+the probe error path (during resume, child devices may have active MSI
+mappings and the NOIRQ context prohibits sleeping locks),
+mtk_pcie_enable_port() is changed to return an error code so callers can
+distinguish the two paths and act accordingly.
+
+This issue was reported by Sashiko while reviewing the EcoNet EN7528 SoC
+support series.
+
+Fixes: b099631df160 ("PCI: mediatek: Add controller support for MT2712 and MT7622")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Cc: stable@vger.kernel.org # 5.10
+Cc: Caleb James DeLisle <cjd@cjdns.fr>
+Link: https://patch.msgid.link/20260521174617.17692-1-mani@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c |    9 +++++----
- drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.h |    1 +
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/pci/controller/pcie-mediatek.c |   67 ++++++++++++++++++++-------------
+ 1 file changed, 42 insertions(+), 25 deletions(-)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-@@ -257,6 +257,7 @@ int inv_icm42600_buffer_update_watermark
+--- a/drivers/pci/controller/pcie-mediatek.c
++++ b/drivers/pci/controller/pcie-mediatek.c
+@@ -541,25 +541,29 @@ static void mtk_pcie_enable_msi(struct m
+ 	writel(val, port->base + PCIE_INT_MASK);
+ }
  
- 	/* compute watermark value in bytes */
- 	wm_size = watermark * packet_size;
-+	st->fifo.watermark.value = watermark;
+-static void mtk_pcie_irq_teardown(struct mtk_pcie *pcie)
++static void mtk_pcie_irq_teardown_port(struct mtk_pcie_port *port)
+ {
+-	struct mtk_pcie_port *port, *tmp;
++	irq_set_chained_handler_and_data(port->irq, NULL, NULL);
  
- 	/* changing FIFO watermark requires to turn off watermark interrupt */
- 	ret = regmap_update_bits_check(st->map, INV_ICM42600_REG_INT_SOURCE0,
-@@ -476,11 +477,10 @@ int inv_icm42600_buffer_fifo_read(struct
- 	st->fifo.nb.accel = 0;
- 	st->fifo.nb.total = 0;
+-	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
+-		irq_set_chained_handler_and_data(port->irq, NULL, NULL);
++	if (port->irq_domain)
++		irq_domain_remove(port->irq_domain);
  
--	/* compute maximum FIFO read size */
-+	/* compute maximum FIFO read size (watermark for max = 0 interrupt case) */
- 	if (max == 0)
--		max_count = sizeof(st->fifo.data);
--	else
--		max_count = max * inv_icm42600_get_packet_size(st->fifo.en);
-+		max = st->fifo.watermark.value;
-+	max_count = max * inv_icm42600_get_packet_size(st->fifo.en);
+-		if (port->irq_domain)
+-			irq_domain_remove(port->irq_domain);
++	if (IS_ENABLED(CONFIG_PCI_MSI)) {
++		if (port->msi_domain)
++			irq_domain_remove(port->msi_domain);
++		if (port->inner_domain)
++			irq_domain_remove(port->inner_domain);
++	}
  
- 	/* read FIFO count value */
- 	raw_fifo_count = (__be16 *)st->buffer;
-@@ -592,6 +592,7 @@ int inv_icm42600_buffer_init(struct inv_
+-		if (IS_ENABLED(CONFIG_PCI_MSI)) {
+-			if (port->msi_domain)
+-				irq_domain_remove(port->msi_domain);
+-			if (port->inner_domain)
+-				irq_domain_remove(port->inner_domain);
+-		}
++	irq_dispose_mapping(port->irq);
++}
  
- 	st->fifo.watermark.eff_gyro = 1;
- 	st->fifo.watermark.eff_accel = 1;
-+	st->fifo.watermark.value = 1;
+-		irq_dispose_mapping(port->irq);
+-	}
++static void mtk_pcie_irq_teardown(struct mtk_pcie *pcie)
++{
++	struct mtk_pcie_port *port, *tmp;
++
++	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
++		mtk_pcie_irq_teardown_port(port);
+ }
  
- 	/*
- 	 * Default FIFO configuration (bits 7 to 5)
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.h
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.h
-@@ -34,6 +34,7 @@ struct inv_icm42600_fifo {
- 		unsigned int accel;
- 		unsigned int eff_gyro;
- 		unsigned int eff_accel;
-+		unsigned int value;
- 	} watermark;
- 	size_t count;
- 	struct {
+ static int mtk_pcie_intx_map(struct irq_domain *domain, unsigned int irq,
+@@ -836,7 +840,7 @@ static int mtk_pcie_startup_port(struct
+ 	return 0;
+ }
+ 
+-static void mtk_pcie_enable_port(struct mtk_pcie_port *port)
++static int mtk_pcie_enable_port(struct mtk_pcie_port *port)
+ {
+ 	struct mtk_pcie *pcie = port->pcie;
+ 	struct device *dev = pcie->dev;
+@@ -845,7 +849,7 @@ static void mtk_pcie_enable_port(struct
+ 	err = clk_prepare_enable(port->sys_ck);
+ 	if (err) {
+ 		dev_err(dev, "failed to enable sys_ck%d clock\n", port->slot);
+-		goto err_sys_clk;
++		return err;
+ 	}
+ 
+ 	err = clk_prepare_enable(port->ahb_ck);
+@@ -893,11 +897,15 @@ static void mtk_pcie_enable_port(struct
+ 		goto err_phy_on;
+ 	}
+ 
+-	if (!pcie->soc->startup(port))
+-		return;
++	err = pcie->soc->startup(port);
++	if (err) {
++		dev_info(dev, "Port%d link down\n", port->slot);
++		goto err_soc_startup;
++	}
+ 
+-	dev_info(dev, "Port%d link down\n", port->slot);
++	return 0;
+ 
++err_soc_startup:
+ 	phy_power_off(port->phy);
+ err_phy_on:
+ 	phy_exit(port->phy);
+@@ -913,8 +921,8 @@ err_aux_clk:
+ 	clk_disable_unprepare(port->ahb_ck);
+ err_ahb_clk:
+ 	clk_disable_unprepare(port->sys_ck);
+-err_sys_clk:
+-	mtk_pcie_port_free(port);
++
++	return err;
+ }
+ 
+ static int mtk_pcie_parse_port(struct mtk_pcie *pcie,
+@@ -1077,8 +1085,13 @@ static int mtk_pcie_setup(struct mtk_pci
+ 		return err;
+ 
+ 	/* enable each port, and then check link status */
+-	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
+-		mtk_pcie_enable_port(port);
++	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
++		err = mtk_pcie_enable_port(port);
++		if (err) {
++			mtk_pcie_irq_teardown_port(port);
++			mtk_pcie_port_free(port);
++		}
++	}
+ 
+ 	/* power down PCIe subsys if slots are all empty (link down) */
+ 	if (list_empty(&pcie->ports))
+@@ -1181,14 +1194,18 @@ static int __maybe_unused mtk_pcie_resum
+ {
+ 	struct mtk_pcie *pcie = dev_get_drvdata(dev);
+ 	struct mtk_pcie_port *port, *tmp;
++	int err;
+ 
+ 	if (list_empty(&pcie->ports))
+ 		return 0;
+ 
+ 	clk_prepare_enable(pcie->free_ck);
+ 
+-	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
+-		mtk_pcie_enable_port(port);
++	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
++		err = mtk_pcie_enable_port(port);
++		if (err)
++			mtk_pcie_port_free(port);
++	}
+ 
+ 	/* In case of EP was removed while system suspend. */
+ 	if (list_empty(&pcie->ports))
 
 
