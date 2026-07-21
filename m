@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86A346A61C;
-	Tue, 21 Jul 2026 17:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E16B46A61C;
+	Tue, 21 Jul 2026 17:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655336; cv=none; b=GpPT57GBxGm+fcIYCbaIuNwxVpFLnGIfwLCbVEJRM9aF33gzi1Qzytl7qtTqqAPHGuFKQXLsGwPmCi+f5UpX/z75PCNR7V04glbLH2TANfCJPe1XBKgbXoEfb6DpCJTeC3f00gnQod7TAvBwUR7FScsOREgRIaYXQms3k7RqVZ4=
+	t=1784655339; cv=none; b=aahNmmBTbhiv+MJu+YY/LHuFp7PFBw2NTPOOjDHdA+BEpyX4v0tBMYMMp+xORMMgEG58QyvJ0QBsnFkhS2xUg3zKQDyFUHQEYSUGsl5Zd0Dqt7NKxgnZ7Nq8fZRUwekxTBX++FdNMqBFrzeNdsQZP/jMigYaSg9q4orPhALq+1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655336; c=relaxed/simple;
-	bh=DwS99wlUTH05+Say9ZmAXwwYSCHrx5sBGmqvEFV0fw4=;
+	s=arc-20240116; t=1784655339; c=relaxed/simple;
+	bh=2QsgEFWOxqy7rHmWibbj1YPA7XG1eZ/95oq5GZliFPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EFm2aNpfU6o0k6EEBjPsy6OgcYDwgoLcg6ng4850Wp7j1yEJv9WRviYasN9CmAVDsGBrpi4fXghDipNS8tSejZa9n8GvZZxIuhMAGvKnVu93XBVzH1FwSfdg+2NLmh6Z9QrQ3LQF9rGbmlsSANcFjAtC3Wd/kJVMB0H1KDYLE5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOudVynC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DL5g101dgDuaQCDy4/kqPVdvGafuEgzAZcZx9ci++WHQ7kLb63a4RCiS2LQbXHETyu5VmN3FQFv5BFL+qUohtzGbCpxRpihl2su1o94Z8vNfPJ37qvq/kLDXeKo/1FdzOJdhzsvQk2ucxe4suQprNXPKjDlpNad0MBxXEG22X+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZNsbM5n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOudVynC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253161F000E9;
-	Tue, 21 Jul 2026 17:35:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZNsbM5n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C90171F000E9;
+	Tue, 21 Jul 2026 17:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655335;
-	bh=LRrl2gOIRx0m7LOZz5jtWQfjzVgoBSbPnNDQtQXFGpc=;
+	s=korg; t=1784655338;
+	bh=sVlsDbaagfH1BaLW16fMqTa6OxDQapR/LQ7GmKRiKKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kOudVynCkGZqMWBrt4IKOKtSfJECWWCSmrj95z5qe7Se+xJdqiJ5cf0GufxGky6Fq
-	 DOZUbaQG7F7eJD4HBrmoPhv/CIY3Y8usOepft4JlW4Pp3D/vqDnz3f41E4/GkEzY6x
-	 oUqcYGf/UfPS4M3g/yk9lURe96+NzO3Lvg7El3uE=
+	b=LZNsbM5nZqLl91RdlHtYnVp9p7NfB5egBEwhm/PKIDf2NM2XzpjdZVbuGHDUU7CRz
+	 6xCS2+RKedFg/lQHDAYKjm4mbKopyS9Uj8+N4H1J1r3UxQjWKoTXnZvaYcs6xiPoMG
+	 hHHLuBrGxROrc63N6eIW5yvHCmalI0yuYqRm4Kd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zenghui Yu <yuzenghui@huawei.com>,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 2046/2077] samples/damon/mtier: fail early if address range parameters are invalid
-Date: Tue, 21 Jul 2026 17:28:39 +0200
-Message-ID: <20260721152640.954439643@linuxfoundation.org>
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 2047/2077] device property: initialize the remaining fields of fwnode_handle in fwnode_init()
+Date: Tue, 21 Jul 2026 17:28:40 +0200
+Message-ID: <20260721152640.978462907@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,74 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zenghui Yu <yuzenghui@huawei.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 7746d72c64054976887928d64d2caf25c5a6dcc0 upstream.
+[ Upstream commit 7eba000621fff223dd7bab484d48918c7c77a307 ]
 
-The comment on top of `struct damon_region` clearly says that
+If a firmware node is allocated on the stack (for instance: temporary
+software node whose life-time we control) or on the heap - but using a
+non-zeroing allocation function - and initialized using fwnode_init(),
+its secondary pointer will contain uninitialized memory which likely
+will be neither NULL nor IS_ERR() and so may end up being dereferenced
+(for example: in dev_to_swnode()). Set fwnode->secondary to NULL on
+initialization. While at it: initialize the remaining fields of struct
+fwnode_handle too just to be sure.
 
-    For any use case, @ar should be non-zero positive size.
-
-which is now verified in damon_verify_new_region() if the kernel is built
-with DAMON_DEBUG_SANITY.
-
-The WARN_ONCE() can be triggered if the mtier sample module is enabled
-before node{0,1}_{start,end}_addr have been properly initialized, which is
-obviously not good.
-
- ------------[ cut here ]------------
- start 0 >= end 0
- WARNING: mm/damon/core.c:217 at damon_new_region+0xf4/0x118, CPU#59: bash/341468
- Call trace:
-  damon_new_region+0xf4/0x118 (P)
-  damon_set_regions+0xfc/0x3c0
-  damon_sample_mtier_build_ctx+0xe8/0x3a8
-  damon_sample_mtier_start+0x1c/0x90
-  damon_sample_mtier_enable_store+0x98/0xb0
-  param_attr_store+0xb4/0x128
-  module_attr_store+0x2c/0x50
-  sysfs_kf_write+0x58/0x90
-  kernfs_fop_write_iter+0x16c/0x238
-  vfs_write+0x2c0/0x370
-  ksys_write+0x74/0x118
-  __arm64_sys_write+0x24/0x38
-  invoke_syscall+0xa8/0x118
-  el0_svc_common.constprop.0+0x48/0xf0
-  do_el0_svc+0x24/0x38
-  el0_svc+0x54/0x370
-  el0t_64_sync_handler+0xa0/0xe8
-  el0t_64_sync+0x1ac/0x1b0
- ---[ end trace 0000000000000000 ]---
-
-Note that the same issue can happen if detect_node_addresses is true, and
-node 0 or 1 is memoryless.  Fix it together by checking the validity of
-parameters right before damon_new_region() and fail early if they're
-invalid.
-
-Link: https://lore.kernel.org/20260629144432.133962-1-sj@kernel.org
-Fixes: 82a08bde3cf7 ("samples/damon: implement a DAMON module for memory tiering")
-Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
-Signed-off-by: SJ Park <sj@kernel.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.16.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SJ Park <sj@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 01bb86b380a3 ("driver core: Add fwnode_init()")
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260511074927.9473-1-bartosz.golaszewski@oss.qualcomm.com
+[ Fix typo in commit message. - Danilo ]
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- samples/damon/mtier.c |    3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/fwnode.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/samples/damon/mtier.c
-+++ b/samples/damon/mtier.c
-@@ -120,6 +120,9 @@ static struct damon_ctx *damon_sample_mt
- 		addr.end = promote ? node1_end_addr : node0_end_addr;
- 	}
+--- a/include/linux/fwnode.h
++++ b/include/linux/fwnode.h
+@@ -210,8 +210,10 @@ static inline void fwnode_init(struct fw
+ {
+ 	fwnode->secondary = NULL;
+ 	fwnode->ops = ops;
++	fwnode->dev = NULL;
+ 	INIT_LIST_HEAD(&fwnode->consumers);
+ 	INIT_LIST_HEAD(&fwnode->suppliers);
++	fwnode->flags = 0;
+ }
  
-+	if (addr.start >= addr.end)
-+		goto free_out;
-+
- 	region = damon_new_region(addr.start, addr.end);
- 	if (!region)
- 		goto free_out;
+ static inline void fwnode_set_flag(struct fwnode_handle *fwnode,
 
 
