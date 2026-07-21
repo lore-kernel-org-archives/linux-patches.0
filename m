@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF0944102D;
-	Tue, 21 Jul 2026 21:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF14644160C;
+	Tue, 21 Jul 2026 21:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668003; cv=none; b=NQ6zqJN4HekvGetojxKJaGzpjLD8ZRd+iScoiWP3SsnRhIXmp/WyeR6I55wH00X6R0vfFiA/4jksSy/a4BIg8t5JcRQTxT4R3umJDSDAsmwQRTBMrmZWjmbNtiEqzuY0HyrOML0g1kurtijnMuLnBk/2kuN1pA8Le8CRXN8BWQY=
+	t=1784668005; cv=none; b=VWcJWjt90rcJK79qjJe2o7cLuEx/JpQNfuK271gPnEHs5iKuxK/DW8O2K8t4n7By18s5njbda9X944f7N7e3CLrFjOxi2ROWVu6X6ia5qG2lD9vAxPFttAnEBGooqzWaYwEqRVYmqWVw0R4P1N92juzFvFTzeSHhE/C9B7lD7n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668003; c=relaxed/simple;
-	bh=lnayKCvmlgF0H7HarW2W8JyE2WnDBIBj1LI3ujBQmE0=;
+	s=arc-20240116; t=1784668005; c=relaxed/simple;
+	bh=5O2wmZjtdjm3Dz+vupD4PYJXNU/uCUdencjR5RTBNyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uDyfp7XM34UvzT2nBWKnND0B4XghslWqfBBaCvmhuBqQXWxDiPkZZ+AChxAtIA6CA32D0vXCBTiMShMz5MDe23Wf1x8Ow/3XdCyQCO11hFVd2z9RyNdlPRrwRKR2hkQeQJeRRrxqcyeUkocMmOpDQPnoMnbOeCjI6pAKAs2FVFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrixrG1T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sfBGi8k/Y89aNkeFpczonmc63nc3Vfe9Qv1YOcyaICxmUewWY/5y4dNTrqT62ti+e0huFK+joP2mMS1NXd40inXiCVIAYYFI18tRZ2BS3mhtoNfFvQ0lDAzpeZhHJGoIO+we33evEqZ0FkuInSisYLQJcNDMoGnq6jp+F6MU9nQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/XKELW+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrixrG1T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2831F000E9;
-	Tue, 21 Jul 2026 21:06:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/XKELW+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B83D1F000E9;
+	Tue, 21 Jul 2026 21:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668001;
-	bh=zOc5ZKmyNQjp8XWFjoHZYHr+nArzNpI72MAG4PsScRc=;
+	s=korg; t=1784668004;
+	bh=IOmo167UaYruViYnxxCPOSclat9Epocl2k5roCXOGdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WrixrG1TPJWeec16uPZq9l6iMUoS5UQre4SB0c9pOXNVMYityyV1US4eNmW1jV1Qw
-	 Uh9yFnzCoKgGDUmCpC22NH8xDLbAgGTFAvESltScdmTUxT5rAado4rG2O7CQOGUxa6
-	 cq2/aVYxYRlBlpnJzvWP0E/IXYtVhJvb43LUiGoE=
+	b=i/XKELW+4GXPt9S7lbXRL1T5bMZODvQY36dQUg5LusCFsJ3p1Aj3qlJjXel4SYydG
+	 25Jej/IJzZ8fxwVfgXICZgeY1FzlWuq0G20qdSp2nAcoy9pqL7NfFa4N+9q4Y7QfTL
+	 ZQVOMC4SgXh8mnOvc1zhZlGaTj1qJZem8K4S+sDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1241/1266] exfat: rename argument name for exfat_move_file and exfat_rename_file
-Date: Tue, 21 Jul 2026 17:27:58 +0200
-Message-ID: <20260721152509.587787516@linuxfoundation.org>
+Subject: [PATCH 6.1 0004/1067] nfsd: reset write verifier on deferred writeback errors
+Date: Tue, 21 Jul 2026 17:10:05 +0200
+Message-ID: <20260721152424.630012120@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
-References: <20260721152441.786066624@linuxfoundation.org>
+In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
+References: <20260721152424.521567757@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,152 +47,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 06a2b0b3b490a6103376652c01c3ac6e8e22e654 ]
+commit 2090b05803faab8a9fa62fbff871007862cac1b7 upstream.
 
-In this exfat implementation, the relationship between inode and ei
-is ei=EXFAT_I(inode). However, in the arguments of exfat_move_file()
-and exfat_rename_file(), argument 'inode' indicates the parent
-directory, but argument 'ei' indicates the target file to be renamed.
-They do not have the above relationship, which is not friendly to code
-readers.
+nfsd_vfs_write() and nfsd_commit() both call filemap_check_wb_err() to
+detect deferred writeback errors, but neither rotates the server's write
+verifier (nn->writeverf) when this check fails. Every other
+durable-storage-failure path in these functions calls
+commit_reset_write_verifier() before returning an error.
 
-So this commit renames 'inode' to 'parent_inode', making the argument
-name match its role.
+The missing rotation means clients holding UNSTABLE write data under the
+current verifier will COMMIT, receive the unchanged verifier back, and
+conclude their data is durable — silently dropping data that failed
+writeback. This violates the UNSTABLE+COMMIT durability contract
+(RFC 1813 §3.3.7, RFC 8881 §18.32).
 
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Stable-dep-of: 942296784b2a ("exfat: preserve benign secondary entries during rename and move")
+Add commit_reset_write_verifier() calls at both filemap_check_wb_err()
+error sites, matching the pattern used by adjacent error paths in the
+same functions. The helper already filters -EAGAIN and -ESTALE
+internally, so the calls are unconditionally safe.
+
+Reported-by: Chris Mason <clm@meta.com>
+Fixes: 555dbf1a9aac ("nfsd: Replace use of rwsem with errseq_t")
+Cc: stable@vger.kernel.org
+Assisted-by: kres:claude-opus-4-6
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[ cel: open-code the reset; commit_reset_write_verifier() is v6.7 ]
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/namei.c |   36 +++++++++++++++++++-----------------
- 1 file changed, 19 insertions(+), 17 deletions(-)
+ fs/nfsd/vfs.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/fs/exfat/namei.c
-+++ b/fs/exfat/namei.c
-@@ -1015,15 +1015,15 @@ unlock:
- 	return err;
- }
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 87a596fc6654dd..c40b2a706691c5 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -1134,8 +1134,11 @@ nfsd_vfs_write(struct svc_rqst *rqstp, struct svc_fh *fhp, struct nfsd_file *nf,
+ 	nfsd_stats_io_write_add(nn, exp, *cnt);
+ 	fsnotify_modify(file);
+ 	host_err = filemap_check_wb_err(file->f_mapping, since);
+-	if (host_err < 0)
++	if (host_err < 0) {
++		nfsd_reset_write_verifier(nn);
++		trace_nfsd_writeverf_reset(nn, rqstp, host_err);
+ 		goto out_nfserr;
++	}
  
--static int exfat_rename_file(struct inode *inode, struct exfat_chain *p_dir,
-+static int exfat_rename_file(struct inode *parent_inode, struct exfat_chain *p_dir,
- 		int oldentry, struct exfat_uni_name *p_uniname,
- 		struct exfat_inode_info *ei)
- {
- 	int ret, num_old_entries, num_new_entries;
- 	struct exfat_dentry *epold, *epnew;
--	struct super_block *sb = inode->i_sb;
-+	struct super_block *sb = parent_inode->i_sb;
- 	struct buffer_head *new_bh, *old_bh;
--	int sync = IS_DIRSYNC(inode);
-+	int sync = IS_DIRSYNC(parent_inode);
- 
- 	epold = exfat_get_dentry(sb, p_dir, oldentry, &old_bh);
- 	if (!epold)
-@@ -1041,8 +1041,8 @@ static int exfat_rename_file(struct inod
- 	if (num_old_entries < num_new_entries) {
- 		int newentry;
- 
--		newentry =
--			exfat_find_empty_entry(inode, p_dir, num_new_entries);
-+		newentry = exfat_find_empty_entry(parent_inode, p_dir,
-+				num_new_entries);
- 		if (newentry < 0)
- 			return newentry; /* -EIO or -ENOSPC */
- 
-@@ -1073,12 +1073,12 @@ static int exfat_rename_file(struct inod
- 		brelse(old_bh);
- 		brelse(new_bh);
- 
--		ret = exfat_init_ext_entry(inode, p_dir, newentry,
-+		ret = exfat_init_ext_entry(parent_inode, p_dir, newentry,
- 			num_new_entries, p_uniname);
- 		if (ret)
- 			return ret;
- 
--		exfat_remove_entries(inode, p_dir, oldentry, 0,
-+		exfat_remove_entries(parent_inode, p_dir, oldentry, 0,
- 			num_old_entries);
- 		ei->dir = *p_dir;
- 		ei->entry = newentry;
-@@ -1090,10 +1090,10 @@ static int exfat_rename_file(struct inod
- 		exfat_update_bh(old_bh, sync);
- 		brelse(old_bh);
- 
--		exfat_remove_entries(inode, p_dir, oldentry,
-+		exfat_remove_entries(parent_inode, p_dir, oldentry,
- 			ES_IDX_FIRST_FILENAME + 1, num_old_entries);
- 
--		ret = exfat_init_ext_entry(inode, p_dir, oldentry,
-+		ret = exfat_init_ext_entry(parent_inode, p_dir, oldentry,
- 			num_new_entries, p_uniname);
- 		if (ret)
- 			return ret;
-@@ -1101,13 +1101,13 @@ static int exfat_rename_file(struct inod
- 	return 0;
- }
- 
--static int exfat_move_file(struct inode *inode, struct exfat_chain *p_olddir,
-+static int exfat_move_file(struct inode *parent_inode, struct exfat_chain *p_olddir,
- 		int oldentry, struct exfat_chain *p_newdir,
- 		struct exfat_uni_name *p_uniname, struct exfat_inode_info *ei)
- {
- 	int ret, newentry, num_new_entries, num_old_entries;
- 	struct exfat_dentry *epmov, *epnew;
--	struct super_block *sb = inode->i_sb;
-+	struct super_block *sb = parent_inode->i_sb;
- 	struct buffer_head *mov_bh, *new_bh;
- 
- 	epmov = exfat_get_dentry(sb, p_olddir, oldentry, &mov_bh);
-@@ -1124,7 +1124,8 @@ static int exfat_move_file(struct inode
- 	if (num_new_entries < 0)
- 		return num_new_entries;
- 
--	newentry = exfat_find_empty_entry(inode, p_newdir, num_new_entries);
-+	newentry = exfat_find_empty_entry(parent_inode, p_newdir,
-+			num_new_entries);
- 	if (newentry < 0)
- 		return newentry; /* -EIO or -ENOSPC */
- 
-@@ -1137,7 +1138,7 @@ static int exfat_move_file(struct inode
- 		epnew->dentry.file.attr |= cpu_to_le16(ATTR_ARCHIVE);
- 		ei->attr |= ATTR_ARCHIVE;
- 	}
--	exfat_update_bh(new_bh, IS_DIRSYNC(inode));
-+	exfat_update_bh(new_bh, IS_DIRSYNC(parent_inode));
- 	brelse(mov_bh);
- 	brelse(new_bh);
- 
-@@ -1151,16 +1152,17 @@ static int exfat_move_file(struct inode
- 	}
- 
- 	*epnew = *epmov;
--	exfat_update_bh(new_bh, IS_DIRSYNC(inode));
-+	exfat_update_bh(new_bh, IS_DIRSYNC(parent_inode));
- 	brelse(mov_bh);
- 	brelse(new_bh);
- 
--	ret = exfat_init_ext_entry(inode, p_newdir, newentry, num_new_entries,
--		p_uniname);
-+	ret = exfat_init_ext_entry(parent_inode, p_newdir, newentry,
-+		num_new_entries, p_uniname);
- 	if (ret)
- 		return ret;
- 
--	exfat_remove_entries(inode, p_olddir, oldentry, 0, num_old_entries);
-+	exfat_remove_entries(parent_inode, p_olddir, oldentry, 0,
-+		num_old_entries);
- 
- 	exfat_chain_set(&ei->dir, p_newdir->dir, p_newdir->size,
- 		p_newdir->flags);
+ 	if (stable && use_wgather) {
+ 		host_err = wait_for_concurrent_writes(file);
+@@ -1271,6 +1274,10 @@ nfsd_commit(struct svc_rqst *rqstp, struct svc_fh *fhp, struct nfsd_file *nf,
+ 			nfsd_copy_write_verifier(verf, nn);
+ 			err2 = filemap_check_wb_err(nf->nf_file->f_mapping,
+ 						    since);
++			if (err2 < 0) {
++				nfsd_reset_write_verifier(nn);
++				trace_nfsd_writeverf_reset(nn, rqstp, err2);
++			}
+ 			err = nfserrno(err2);
+ 			break;
+ 		case -EINVAL:
+-- 
+2.53.0
+
 
 
