@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104DA3D3337;
-	Tue, 21 Jul 2026 17:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4A2314D34;
+	Tue, 21 Jul 2026 17:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653442; cv=none; b=Zx/JhkJXYf44y8nI8Bnd75DvqRzv1WfzdnJe7ttZREnIKmW2w/0Jx9fFfQLYiFQ56DyFQ8Ikcmx0YYTO2V5HAcotooeEhHlckywKL95f7tK2uc8ZoEtKCW2pxkQkb30ipMDPb9soRW+lgBRNwDckVE5ixIR8jXHRz5gZNEciRMs=
+	t=1784653444; cv=none; b=OSblq4OHcAKs9H/mR7wFo1TvujlVx1xkaXL8HnUMLu+B5uvz63EZJzt+WrAwFJf+2jY2TCeB7j5y2qvd6FKVzjz/ZUVWzWwsx8xjcKxguI6D4LwiCIwmH3500pZyzWs6c2dkva/lVqhKHbqaPw/DDjvf5857+0nfuz+MfJBDoEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653442; c=relaxed/simple;
-	bh=ZzPrjRcbvzVJ2/gE/kmaAtyWI+ML/F9fh8zFaDv7mlI=;
+	s=arc-20240116; t=1784653444; c=relaxed/simple;
+	bh=tQfrkNhZ2Qo3YT/7k3KuN/TsDYzg8mSzCQGljA92KJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ot1YwiGg0gFTPR3ingnRI0YtXN7sC+wCUAwsyyLQqVGFsDim4jc/Yp9DsmU5JCN8b2jnFKfCgmb45tNu0iw+arnwxCjDEA/3qR4Nljpm+JRxYCsxcq5h7EHFNY7FL/xNDGhdmCLfXsOKx9jo2W+fQKjQQQpBdA0wuvYdTAYvvpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ine/2LpK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qScOx58s30vwZmzcnKPtTI3vpheX/WDbNObG52++HsVIxV/BzctwA+QOtFaJtvMz05hlfGbzj8qD7rkdxKDqAefqIss+iUoWY5CU0RUi7p6kYBi45woTIaW2363HCCgMSjaTkAV5YGQjcZZMVqHuJytxfnpAgRBL9Bo7hW063U8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHWOCjat; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ine/2LpK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5051F000E9;
-	Tue, 21 Jul 2026 17:04:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHWOCjat"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DBA1F000E9;
+	Tue, 21 Jul 2026 17:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653441;
-	bh=Jr80BJ9Q/P7vzuj+RTmyrR5bCEX8k+qZ2eGnQPb+9N8=;
+	s=korg; t=1784653443;
+	bh=1KB6DLs+CaNz3EIrWS2J/urdS5HCmlitA8prTyhc7gI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ine/2LpKPkj41O+/kVGiEkownsax0Fb1ePWRdXvOw8d2J5asg1QKaFcP2atQfx8Nd
-	 HHvbYKZZ8Y7zYEGEx4b5GUUBIAKjCXdrrszz/+hEGcYe+WTv/1Zlg0m2GWMVYhfmbe
-	 aBXR/83g6lovAwMSbMiGc8+jHxs24yngdXOKjkBA=
+	b=tHWOCjatGDheWJ5i+3hGXZhoG5HD9Y5S/8pv6FzBqTMWw+JaS5KpYEsD3ATzqVWN8
+	 4Ag3d5LWSs65bLG13Gq8hDQ5LT3PldiiRnSCZqXmhi12aY5W1oWrH6QhdPVlmMpmOp
+	 MQsNLGhhhrZ8B1i7zaQkqTjqaFoCuxGY1kdGeMgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Billy Tsai <billy_tsai@aspeedtech.com>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Yue Sun <samsun1006219@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1327/2077] hwmon: (aspeed-g6-pwm-tach) Guard fan RPM calculation against divide-by-zero
-Date: Tue, 21 Jul 2026 17:16:40 +0200
-Message-ID: <20260721152624.115471070@linuxfoundation.org>
+Subject: [PATCH 7.1 1292/2077] net: udp_tunnel: prevent double queueing in udp_tunnel_nic_device_sync
+Date: Tue, 21 Jul 2026 17:16:05 +0200
+Message-ID: <20260721152623.293363770@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,49 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit fe87b8dc67f1b2c64e76a66e78468c533d3c44ca ]
+[ Upstream commit ecf69d4b43370c587e48d4d70289dbdb7e039d4d ]
 
-Sashiko reports:
+Yue Sun reported a use-after-free and debugobjects warning in
+udp_tunnel_nic_device_sync_work() during concurrent device operations.
 
-In the aspeed-g6-pwm-tacho driver, the aspeed_tach_val_to_rpm() function
-calculates the fan RPM using the tachometer value. However, it does not
-check if the tachometer value is zero before performing the division.
+The workqueue core clears the internal pending bit before invoking the
+worker. At that point, a concurrent thread can queue the work again.
+When the already running worker eventually clears the work_pending flag
+to 0, it mistakenly clears the flag for the newly queued instance.
+udp_tunnel_nic_unregister() then observes work_pending as 0 and frees
+the structure while the second work item is still active in the queue,
+leading to UAF.
 
-If the hardware reports a tachometer value of 0 (which can happen due to
-an extremely fast pulse, a stuck edge, or a hardware glitch), the
-calculated tach_div evaluates to 0. The subsequent call to do_div() with
-tach_div as the divisor triggers a divide-by-zero exception, leading to
-a kernel panic.
+Fix this by returning early in udp_tunnel_nic_device_sync() if
+work_pending is already set, preventing redundant work queueing.
 
-Check the divisor against zero to fix the problem.
-
-Fixes: 7e1449cd15d1 ("hwmon: (aspeed-g6-pwm-tacho): Support for ASPEED g6 PWM/Fan tach")
-Cc: Billy Tsai <billy_tsai@aspeedtech.com>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: cc4e3835eff4 ("udp_tunnel: add central NIC RX port offload infrastructure")
+Reported-by: Yue Sun <samsun1006219@gmail.com>
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260625065938.654652-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/aspeed-g6-pwm-tach.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/ipv4/udp_tunnel_nic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/aspeed-g6-pwm-tach.c b/drivers/hwmon/aspeed-g6-pwm-tach.c
-index 4f6e6d440dd405..5d611a8e526908 100644
---- a/drivers/hwmon/aspeed-g6-pwm-tach.c
-+++ b/drivers/hwmon/aspeed-g6-pwm-tach.c
-@@ -293,7 +293,10 @@ static int aspeed_tach_val_to_rpm(struct aspeed_pwm_tach_data *priv, u32 tach_va
- 		priv->clk_rate, tach_val, tach_div);
+diff --git a/net/ipv4/udp_tunnel_nic.c b/net/ipv4/udp_tunnel_nic.c
+index 9944ed923ddfd1..3b32a0afa9798d 100644
+--- a/net/ipv4/udp_tunnel_nic.c
++++ b/net/ipv4/udp_tunnel_nic.c
+@@ -301,7 +301,7 @@ __udp_tunnel_nic_device_sync(struct net_device *dev, struct udp_tunnel_nic *utn)
+ static void
+ udp_tunnel_nic_device_sync(struct net_device *dev, struct udp_tunnel_nic *utn)
+ {
+-	if (!utn->need_sync)
++	if (!utn->need_sync || utn->work_pending)
+ 		return;
  
- 	rpm = (u64)priv->clk_rate * 60;
--	do_div(rpm, tach_div);
-+	if (tach_div)
-+		do_div(rpm, tach_div);
-+	else
-+		rpm = 0;
- 
- 	return (int)rpm;
- }
+ 	queue_work(udp_tunnel_nic_workqueue, &utn->work);
 -- 
 2.53.0
 
