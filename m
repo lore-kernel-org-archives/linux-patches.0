@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427E7470444;
-	Tue, 21 Jul 2026 19:52:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F269E472536;
+	Tue, 21 Jul 2026 19:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663532; cv=none; b=pe6h8IENYFNZxEKC2YY+QlFmsVVnCnoO78AjvB+L5QRpB3/uOwodI1iBWjjuN9foje1LwPv5DZJ3D22lBfAUyiy5FhRzMvCSM5XLVGJEmL8nebvAz2oEpsNTzia4VogY+DGqq0FwBRvNXNJaXC5GoqUrlRu5+smVe0ImIWz6IBo=
+	t=1784663535; cv=none; b=T9pnx8cRJEMMS27bWYMQ1jEvLNBJZ1poVLJ3Al4vyRxqUy7Vvv8nwU5lfJC7xkbENJQvlUS37VEp/mE0rjvrMFpqk1oZ8wlsYBOmlFPg6f/wZN3cXBYprCJfQvjYK/HQa2erW/xoAQsUl9SwzAdXvALZnECH9WcdC+XGpg8bZKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663532; c=relaxed/simple;
-	bh=8Q25v+cajKo7jzZs22gZuzTF+nVJUZ2AH9RvHZbW4m4=;
+	s=arc-20240116; t=1784663535; c=relaxed/simple;
+	bh=Tj69OkUPpM+rsJGBe8mCuVZdU9uVnDPkTyoKn6qbQSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KBhltTLCR7RVpQzwpTjZX/Asi5O4ZRle9BSNMaq16OJP9ZCfZaSQ4peSb7uaG0ZICmdpc+sr7iwl2Cjm1M1dwY3ZHAIPj08RBqG2CLGDfVIolWTpJt0PpjRty/ia/MUUtSIwXqFre7s3VBQwJbjs07qhMGO2riMhCBEnTm/1u+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5RETTKS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EGn1miLT4F3GSU4WyvzOFgK8LQl+kmPuX3OxqGdVPnjbBsV2BP6lnSzZQle8th8NSSMR9LFL2Zcf1oF3cN/IXMhz6YBYUYTs3SUcoc7BnkHBeEO9/H+tPr2odTyAQc7d0k39ceC5nhn74k8nNDZHCHRwVIBgsQx4MEL2p7bXQwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfiGZUBw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5RETTKS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A76D1F000E9;
-	Tue, 21 Jul 2026 19:52:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfiGZUBw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC101F000E9;
+	Tue, 21 Jul 2026 19:52:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663531;
-	bh=QUiTm3TYKjXtOF8BdYPkE7Qq++ZWiluFhN3S4ilh8eY=;
+	s=korg; t=1784663533;
+	bh=ZFacja9hEsWuaEzeljAAPKw7mp7N8O70ycuix5Pcc/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D5RETTKSsPSOZDmdF++bOD6Q2atvp4qRFJ8NgtccPFJu1/fxD8ukL/oZktQ0SOEeh
-	 CZuT++jhwWEDl07wOHVhSu3BZ9Wotjojwif7MLLEcwQCsfn3+ufYjsatbXH1GEeEPb
-	 TrMQDdLIXQHEjUfoH80Ma0cx568JqEsG/KRf2/Vw=
+	b=qfiGZUBwrqzSGvUMu2FcDFx8Ve3n5EOyndAwSgiFvDeRBbar38qyoIh/ZRC7TsZMp
+	 9Oj5FRJtXaYQ4RdkfRySSvTwBd1t1vm1LMgKEaEWCT3/IaupIVeSeIRw0MsN2dZwA5
+	 aK6uhgcacrkwFwFvZrdZhLY2uQs/RGY85nfq5P8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.12 0831/1276] KVM: s390: pci: Fix GISC refcount leak on AIF enable failure
-Date: Tue, 21 Jul 2026 17:21:14 +0200
-Message-ID: <20260721152504.655790106@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.12 0858/1276] netfilter: nfnl_cthelper: apply per-class values when updating policies
+Date: Tue, 21 Jul 2026 17:21:41 +0200
+Message-ID: <20260721152505.251096120@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,41 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit 7b69729046a4c58f4cb457184e5ac4aaa179bff4 upstream.
+commit d738feccb98cb224ebabecb703e98f5008276bff upstream.
 
-kvm_s390_gisc_register() registers the guest ISC before pinning
-the guest interrupt forwarding pages and allocating the AISB bit.
-If any of the later setup steps fails, the function unwinds the
-pinned pages and other local state, but does not unregister the
-GISC reference. Add the missing kvm_s390_gisc_unregister() to the
-error unwind path.
+When a userspace conntrack helper with multiple expectation classes is
+updated via nfnetlink, every class ends up with the first class's
+max_expected and timeout values.
 
-Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
+nfnl_cthelper_update_policy_all() validates each new policy into the
+corresponding slot of the temporary new_policy array, but the second
+loop that commits the values into the live helper dereferences
+new_policy as a pointer instead of indexing it, so every iteration
+reads new_policy[0] regardless of i.  An update that changes per-class
+values is silently collapsed onto class 0's values with no error
+returned to userspace.
+
+Index the temporary array by i in the commit loop so each class gets
+its own validated values.
+
+Fixes: 2c422257550f ("netfilter: nfnl_cthelper: fix runtime expectation policy updates")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Acked-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260624061910.2794734-1-haoxiang_li2024@163.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/pci.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/nfnetlink_cthelper.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/s390/kvm/pci.c
-+++ b/arch/s390/kvm/pci.c
-@@ -330,6 +330,7 @@ unpin2:
- unpin1:
- 	unpin_user_page(aibv_page);
- out:
-+	kvm_s390_gisc_unregister(kvm, fib->fmt0.isc);
- 	return rc;
- }
+--- a/net/netfilter/nfnetlink_cthelper.c
++++ b/net/netfilter/nfnetlink_cthelper.c
+@@ -351,8 +351,8 @@ static int nfnl_cthelper_update_policy_a
+ 	for (i = 0; i < helper->expect_class_max + 1; i++) {
+ 		policy = (struct nf_conntrack_expect_policy *)
+ 				&helper->expect_policy[i];
+-		policy->max_expected = new_policy->max_expected;
+-		policy->timeout	= new_policy->timeout;
++		policy->max_expected = new_policy[i].max_expected;
++		policy->timeout	= new_policy[i].timeout;
+ 	}
  
+ err:
 
 
