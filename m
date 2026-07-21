@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C4440B112;
-	Tue, 21 Jul 2026 17:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C3246D2DA;
+	Tue, 21 Jul 2026 17:44:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655875; cv=none; b=Fjyl5JD1/aJ3GrPB4RfWmmtBdCwel8w7Co9oehbGd+P9ShCDZn5eSoRioMesxcLpnurhVY+wn+JyDevPJ2ibcUtTSU+1UqkP0HHJ7NvQK5aM8NquF8PL/qdQ0zBiD1p+wCw/Idm49HDKSYFDseOUBONteRFqKg7KhoSgBRLI+fA=
+	t=1784655879; cv=none; b=J8t/CYPN6ZmTj8iQPoCw7Uw/ksY+lp6ZlRwp04SYi1KNUUEtuF9PwbVcq34npzeJr15HE3dbMl/NgeKwRBrXg0hcCjuwRR/CuZH4C2XQYBZr/31AmE7Gv4/2DiEU2Sunsbeb1o0KOfTk3MMdrERE+VCuPWJis59WeOlKYHkvG2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655875; c=relaxed/simple;
-	bh=J28KZA1/WP5xGn2wGhOEajvLKor263QhOZpZw20WcT0=;
+	s=arc-20240116; t=1784655879; c=relaxed/simple;
+	bh=6o8ygOMMD/rQFcw9BcJMd7marTuTujwEs24BjIt0Gy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cv7XCr1/oKz37qtJ7Lzeulvg7UrcemPySzCpAt17mi/Pg7ciL33JUqR3WUeYIzYgaMH74rJTdRXWlCEVAmHWWjJ1hSPfjwEbuo2cPgqnSiVwjv22SLVsyt4BsQ8pmH9p+O5xukNeuh0CSR9Tm/5evL3uxKo3h0UtIeol/rBd5w8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzUyuu2T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p2lUDwHW2Kkw/J5cNKeKRJ9g82Fq9Apd+sSmtwyyj/LS4JhxXnixJVFNDkiUAr81PIovxHoI2nryt8aUXntPUnlzhrjG1z13AZhGrbqPmPAJ0crvSfE6ObmTdh41jjV6FVHVhcNeZQosXDO6CZz4TGxIMeIucywseQ6bDb3Jo1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaZEj0Xf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzUyuu2T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9153E1F000E9;
-	Tue, 21 Jul 2026 17:44:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaZEj0Xf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3915B1F000E9;
+	Tue, 21 Jul 2026 17:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655874;
-	bh=m9csc4OMmPOhz5F+JTDMXK4NEUzhUGe9tz4u/VNVirY=;
+	s=korg; t=1784655876;
+	bh=tWr2wIL36MoydZWiE688bOowTi9ScOcQNc88ywfUj18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EzUyuu2TY93cWdXiMXXQ+m3mRzX4kw/SuC/qgRA3QJy/vkCJyzyGFAh1RD+EdJ9Vh
-	 8xA+nKzxBLMcEKqMoik6bZFL5PxX+TpuatrTald8n4vj80IBBKQ9KU4WOqkjpK5DuX
-	 T3ZrgSpxjHDCYTdMDfN6XKo1LOU3/TLePnJSXG6Y=
+	b=aaZEj0XfHcV3PZImrEUV/TAAGDcyBSDnX48mXB31dby17+9KLMhSbkfgiY4mS/R7Y
+	 1WqTG2AobJP8TTErRcDW0SaOfn/mKsmRNoxpOiUfIun+8Q7uD3LRlnBk+SNgTxXiR6
+	 oadrSlInj5apMmTQKM+w2+HM79WB+WIXyZbC1rkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Przywara <andre.przywara@arm.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
 	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0173/1611] firmware: smccc: Fix Arm SMCCC SOC_ID name call
-Date: Tue, 21 Jul 2026 17:04:49 +0200
-Message-ID: <20260721152518.794031137@linuxfoundation.org>
+Subject: [PATCH 6.18 0174/1611] firmware: arm_scmi: Read sensor config as 32-bit value
+Date: Tue, 21 Jul 2026 17:04:50 +0200
+Message-ID: <20260721152518.817213750@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,67 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 70492cfce2a4d41e87bf46989028a90f4bc6b38f ]
+[ Upstream commit f6fe7c3c007df18afd289ff2d98c692fae9ab085 ]
 
-Commit 5f9c23abc477 ("firmware: smccc: Support optional Arm SMCCC SOC_ID
-name") introduced the SOC_ID name string call, which reports a human
-readable string describing the SoC, as returned by firmware.
+The SENSOR_CONFIG_GET response contains a 32-bit sensor_config field,
+and the xfer is initialized with a 4-byte RX buffer. Reading it with
+get_unaligned_le64() can consume bytes past the returned payload.
 
-The SMCCC spec v1.6 describes this feature as AArch64 only, since we rely
-on 8 characters to be transmitted per register. Consequently the SMCCC
-call must use the AArch64 calling convention, which requires bit 30 of
-the FID to be set. The spec is a bit confusing here, since it mentions
-that in the parameter description ("2: SoC name (optionally implemented for
-SMC64 calls, ..."), but still prints the FID explicitly as 0x80000002.
+Use get_unaligned_le32() to match the protocol layout and the allocated
+response size.
 
-But as this FID is using the SMC32 calling convention (correct for the
-other two calls), it will not match what any SMCCC conformant firmware is
-expecting, so any call would return NOT_SUPPORTED.
-
-Add a 64-bit version of the ARCH_SOC_ID FID macro, and use that for the
-SoC name version of the call to fix the issue.
-
-Fixes: 5f9c23abc477 ("firmware: smccc: Support optional Arm SMCCC SOC_ID name")
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Link: https://patch.msgid.link/20250902172053.304911-1-andre.przywara@arm.com
+Fixes: 7b83c5f41088 ("firmware: arm_scmi: Add SCMI v3.0 sensor configuration support")
+Link: https://patch.msgid.link/20260517-scmi_fixes-v1-1-d86daec4defd@kernel.org
+Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
 Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/smccc/soc_id.c | 2 +-
- include/linux/arm-smccc.h       | 5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/firmware/arm_scmi/sensors.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/smccc/soc_id.c b/drivers/firmware/smccc/soc_id.c
-index c24b3fca1cfe3f..8f556df34fc428 100644
---- a/drivers/firmware/smccc/soc_id.c
-+++ b/drivers/firmware/smccc/soc_id.c
-@@ -60,7 +60,7 @@ static char __init *smccc_soc_name_init(void)
- 	 * to the ARM_SMCCC_ARCH_SOC_ID function.  Fetch it if
- 	 * available.
- 	 */
--	args.a0 = ARM_SMCCC_ARCH_SOC_ID;
-+	args.a0 = ARM_SMCCC_ARCH_SOC_ID64;
- 	args.a1 = 2;    /* SOC_ID name */
- 	arm_smccc_1_2_invoke(&args, &res);
+diff --git a/drivers/firmware/arm_scmi/sensors.c b/drivers/firmware/arm_scmi/sensors.c
+index 791efd0f82d737..1be0f89fc2c4b1 100644
+--- a/drivers/firmware/arm_scmi/sensors.c
++++ b/drivers/firmware/arm_scmi/sensors.c
+@@ -795,7 +795,7 @@ static int scmi_sensor_config_get(const struct scmi_protocol_handle *ph,
+ 	if (!ret) {
+ 		struct scmi_sensor_info *s = si->sensors + sensor_id;
  
-diff --git a/include/linux/arm-smccc.h b/include/linux/arm-smccc.h
-index 50b47eba7d0152..976c5f8001ff27 100644
---- a/include/linux/arm-smccc.h
-+++ b/include/linux/arm-smccc.h
-@@ -90,6 +90,11 @@
- 			   ARM_SMCCC_SMC_32,				\
- 			   0, 2)
+-		*sensor_config = get_unaligned_le64(t->rx.buf);
++		*sensor_config = get_unaligned_le32(t->rx.buf);
+ 		s->sensor_config = *sensor_config;
+ 	}
  
-+#define ARM_SMCCC_ARCH_SOC_ID64						\
-+	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,				\
-+			   ARM_SMCCC_SMC_64,				\
-+			   0, 2)
-+
- #define ARM_SMCCC_ARCH_WORKAROUND_1					\
- 	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,				\
- 			   ARM_SMCCC_SMC_32,				\
 -- 
 2.53.0
 
