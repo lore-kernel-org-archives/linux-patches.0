@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE3143E073;
-	Tue, 21 Jul 2026 21:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C811C43D51D;
+	Tue, 21 Jul 2026 21:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669869; cv=none; b=ojw1Z1C8HOnbTHSsNFnF+WLrCy/Wf/0bT4SFbg+aY1iKGrppPHLTMXXONb9Dvj5WX9wDbPP8P2k+IGFeEPUZCxAZoJZKhEyq8Fy33Afm62ivS35iCEBkBT/DH+VaD1qquFxbcy7JsTjcq02m4FPtKVU4pw7GfJnSyUioDJUzUj0=
+	t=1784669873; cv=none; b=kNQwOmBD9i4ewsxxWPNkDC9MyGGconz76tWcXGJ9tQKylmsOpBNJl7yTpqGZo0BoKkbp31ekPHsBz8Oozzfeb1XAAKA41oYCW8Ed6b4cFNpYQ2e5Lv9OL62t5RrjGSNToJEZKVQ11tUwaKceFgPTCbi6DqOY5GGft5ORgnXeSoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669869; c=relaxed/simple;
-	bh=bFmkZUSxJHajKZY+VkoF3/Sotl/GZ6VxDu5HYGcbx8U=;
+	s=arc-20240116; t=1784669873; c=relaxed/simple;
+	bh=DM/PE+SxSc3M+fUhEKoB4Hw6RkZSpu7HiHsqiQA2Qu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=njVe4eePhZr0ACfYqdwtL3t7GHsW4Dvg0dxMg6kuNiafCRT9c2xRgCEF4JGmg613ITFt0rL6rDeus0WJcAYXgpnH40QZ2RlzIcu5EdOkiohkhnfipijJDcf3vZGGTf0sjMmxjfy8mNA8+QCQ9PfV15Ftg+i3rLF6/wXDc1Bn/s4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0Ebryjp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Br2N/UgzjpZSkt81iMI8D7IxJm0KQwVFNm3jmpewERhJ6i9as/Row2w9AughyDPvmg5jrAqGUVPBKV4+MONTTwDm0W7XEegOO4x1TUiQzVyTP+NFE+Z6PHyvwY88p9YSutCU2qpAm1N67goCE6UglPA2rPdymmXgS1joWF/rNJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W7tWvEIB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0Ebryjp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD4C1F000E9;
-	Tue, 21 Jul 2026 21:37:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7tWvEIB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E80D61F00A3A;
+	Tue, 21 Jul 2026 21:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669867;
-	bh=/rYpH8aJX/jBokNK/ZDoTKVE2p2SHtmSVkySukYlLyg=;
+	s=korg; t=1784669870;
+	bh=MwPIS/8AaOktvSQBnBGqXR/hpbLXh5KLTf7kzKnC0II=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b0EbryjplYcBfqVGVOp4BSTvSfMrNTfS0F/yL+U4gcMI/qQiu0pv98rY5DkPsNOhE
-	 Pk2X6KfBN3+qYv0y9QIOKahOBO8ILAPlA+ZX26LO+Lfcu3xM0fUjgL/MR33kilJcyv
-	 ai3BssgqoEcUQND+0QLowwtFGacMmhm4saJXAGlw=
+	b=W7tWvEIBUrZ6ShD1PjM1tB4f0hBDJ5F3c7zh/QqVMibnHBgHxmIpZ+vJmxdtF78Rx
+	 ZfmnpcMleSpmGXzJkbuVyMD8BzrLx6Vo/dK/nRaspGXbUAQEHbU8ZBdt1+pofhcTDJ
+	 Q90hyxsMmSSsD1kJKVrH+GVSqJiKNvFeopuoU+gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 0718/1067] ASoC: SOF: ipc3-control: Fix TOCTOU in bytes_put and bytes_get
-Date: Tue, 21 Jul 2026 17:21:59 +0200
-Message-ID: <20260721152440.650073053@linuxfoundation.org>
+	Suman Ghosh <sumang@marvell.com>,
+	Nitin Shetty J <nshettyj@marvell.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0701/1067] octeontx2-pf: check DMAC extraction support before filtering
+Date: Tue, 21 Jul 2026 17:21:42 +0200
+Message-ID: <20260721152440.272940013@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,85 +53,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Suman Ghosh <sumang@marvell.com>
 
-commit 1f97760417b5faa60e9642fd0ed61eb17d0b1b39 upstream.
+[ Upstream commit 235acadd310533ba386ae61ad155b72bee381559 ]
 
-In sof_ipc3_bytes_put(), the size used for the memcpy is derived from
-the old data->size already in the buffer, not the incoming new data's
-size field. If the new data has a different size, the copy length is
-wrong: it may truncate valid data or copy stale bytes.
+Currently, configuring a VF MAC address via the PF (e.g., 'ip link
+set <pf> vf 0 mac <mac>') blindly attempts to install a DMAC-based
+hardware filter. However, the hardware parser profile might not
+support DMAC extraction.
 
-Similarly, sof_ipc3_bytes_get() checks data->size against max_size
-without accounting for the sizeof(struct sof_ipc_ctrl_data) offset
-of the flex array within the allocation.
+Check if the hardware parsing profile supports DMAC extraction
+before adding the filter. Additionally, emit a warning message
+to inform the operator if the MAC filter installation fails due
+to missing DMAC extraction support. Update config->mac only
+after hardware programming succeeds in otx2_set_vf_mac().
 
-Fix bytes_put to validate and use the incoming data's sof_abi_hdr.size
-from ucontrol before copying. Fix bytes_get to subtract sizeof(*cdata)
-from the bounds check to match the actual available space.
-
-Fixes: 544ac8858f24 ("ASoC: SOF: Add bytes_get/put control IPC ops for IPC3")
-Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20260609083458.31193-6-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f0c2982aaf98 ("octeontx2-pf: Add support for SR-IOV management functions")
+Signed-off-by: Suman Ghosh <sumang@marvell.com>
+Signed-off-by: Nitin Shetty J <nshettyj@marvell.com>
+Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Link: https://patch.msgid.link/20260702033451.2969880-1-nshettyj@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc3-control.c |   23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ .../ethernet/marvell/octeontx2/nic/otx2_pf.c  | 43 ++++++++++++++++---
+ 1 file changed, 37 insertions(+), 6 deletions(-)
 
---- a/sound/soc/sof/ipc3-control.c
-+++ b/sound/soc/sof/ipc3-control.c
-@@ -281,10 +281,13 @@ static int sof_ipc3_bytes_get(struct snd
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+index 6a18159851d47c..49f21c7f5c1fd1 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -2296,10 +2296,42 @@ EXPORT_SYMBOL(otx2_ioctl);
  
- 	/* be->max has been verified to be >= sizeof(struct sof_abi_hdr) */
--	if (data->size > scontrol->max_size - sizeof(*data)) {
-+	if (data->size > scontrol->max_size - sizeof(*cdata) -
-+				    sizeof(*data)) {
- 		dev_err_ratelimited(scomp->dev,
- 				    "%u bytes of control data is invalid, max is %zu\n",
--				    data->size, scontrol->max_size - sizeof(*data));
-+				    data->size,
-+				    scontrol->max_size - sizeof(*cdata) -
-+				    sizeof(*data));
+ static int otx2_do_set_vf_mac(struct otx2_nic *pf, int vf, const u8 *mac)
+ {
++	struct npc_get_field_status_req *freq;
++	struct npc_get_field_status_rsp *frsp;
+ 	struct npc_install_flow_req *req;
+ 	int err;
+ 
+ 	mutex_lock(&pf->mbox.lock);
++
++	/* Skip installing the DMAC filter if the hardware parser profile
++	 * does not support DMAC extraction.
++	 */
++	freq = otx2_mbox_alloc_msg_npc_get_field_status(&pf->mbox);
++	if (!freq) {
++		err = -ENOMEM;
++		goto out;
++	}
++
++	freq->field = NPC_DMAC;
++	err = otx2_sync_mbox_msg(&pf->mbox);
++	if (err)
++		goto out;
++
++	frsp = (struct npc_get_field_status_rsp *)otx2_mbox_get_rsp
++	       (&pf->mbox.mbox, 0, &freq->hdr);
++	if (IS_ERR(frsp)) {
++		err = PTR_ERR(frsp);
++		goto out;
++	}
++
++	if (!frsp->enable) {
++		netdev_warn(pf->netdev,
++			    "VF %d MAC filter not installed: DMAC extraction not supported by parser profile\n",
++			    vf);
++		err = -EOPNOTSUPP;
++		goto out;
++	}
++
+ 	req = otx2_mbox_alloc_msg_npc_install_flow(&pf->mbox);
+ 	if (!req) {
+ 		err = -ENOMEM;
+@@ -2338,13 +2370,12 @@ static int otx2_set_vf_mac(struct net_device *netdev, int vf, u8 *mac)
+ 	if (!is_valid_ether_addr(mac))
  		return -EINVAL;
- 	}
  
-@@ -302,6 +305,8 @@ static int sof_ipc3_bytes_put(struct snd
- 	struct sof_ipc_ctrl_data *cdata = scontrol->ipc_control_data;
- 	struct snd_soc_component *scomp = scontrol->scomp;
- 	struct sof_abi_hdr *data = cdata->data;
-+	const struct sof_abi_hdr *new_hdr =
-+		(const struct sof_abi_hdr *)ucontrol->value.bytes.data;
- 	size_t size;
+-	config = &pf->vf_configs[vf];
+-	ether_addr_copy(config->mac, mac);
+-
+ 	ret = otx2_do_set_vf_mac(pf, vf, mac);
+-	if (ret == 0)
+-		dev_info(&pdev->dev,
+-			 "Load/Reload VF driver\n");
++	if (ret == 0) {
++		config = &pf->vf_configs[vf];
++		ether_addr_copy(config->mac, mac);
++		dev_info(&pdev->dev, "Load/Reload VF driver\n");
++	}
  
- 	if (scontrol->max_size > sizeof(ucontrol->value.bytes.data)) {
-@@ -310,14 +315,18 @@ static int sof_ipc3_bytes_put(struct snd
- 		return -EINVAL;
- 	}
- 
--	/* scontrol->max_size has been verified to be >= sizeof(struct sof_abi_hdr) */
--	if (data->size > scontrol->max_size - sizeof(*data)) {
--		dev_err_ratelimited(scomp->dev, "data size too big %u bytes max is %zu\n",
--				    data->size, scontrol->max_size - sizeof(*data));
-+	/* Validate the new data's size, not the old one */
-+	if (new_hdr->size > scontrol->max_size - sizeof(*cdata) -
-+				    sizeof(*new_hdr)) {
-+		dev_err_ratelimited(scomp->dev,
-+				    "data size too big %u bytes max is %zu\n",
-+				    new_hdr->size,
-+				    scontrol->max_size - sizeof(*cdata) -
-+				    sizeof(*new_hdr));
- 		return -EINVAL;
- 	}
- 
--	size = data->size + sizeof(*data);
-+	size = new_hdr->size + sizeof(*new_hdr);
- 
- 	/* copy from kcontrol */
- 	memcpy(data, ucontrol->value.bytes.data, size);
+ 	return ret;
+ }
+-- 
+2.53.0
+
 
 
