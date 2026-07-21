@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE63F471257;
-	Tue, 21 Jul 2026 19:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECB2386C39;
+	Tue, 21 Jul 2026 19:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662981; cv=none; b=FBvr/RTwSNEav27u17HrDJ0EGd31+/WeYdgktfm4cXMwuxYNfAS9+TgMLwNuD53/Qrf+X1YVnhAJl4qrq3UgtirUGpOQfgRhLRtMi96MicB+b0Wcui+9lW8rCB0vaMExlTRpghQRdxmsDVHEhGPp4PWrOSmM/L72T/uA8JJpmRM=
+	t=1784662983; cv=none; b=GXRWW6X7o3cjEIv6nDZtPHEJV0/8JZFWJBVkAoA46ukgHjuO6gFdb13bi5h9CNwr9s24XasPvlw0OUPbfE/T/ij9l/GMYT67wbFNvyEzuniB1Li3y39R6h6WVhbrSbBbG0z1U/25YhrNCb2ld2tz8FEei8um8o/MPxNXl0PdLMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662981; c=relaxed/simple;
-	bh=IigdIGKdmka1EiW9ciXcc2ZPc2Ci2v9NpzZcjBmnD80=;
+	s=arc-20240116; t=1784662983; c=relaxed/simple;
+	bh=QDZzBPKjfjxW5LKLKo1i1HoVxqaBrWY3kbvov3VsmnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H59Gi3cfkFUxOFLmGj3oarHnDZjJoxdoTwFcMrgzMGhbOMlT0pycoEbNHtRxq3SufuoEzP4+6yzE+kKaON2ys1k5+1C7mrmz6Lep4EcJjtvFTQYtH3bpRDZXfyaq8yMrk5JTs8AoDD2wUZ623MASZglRFFvJP5qaH5Xxb+T+1YI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAdrcCOB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GoQV/DjPSQ1OV1dYuyuHSG0ISaHhlZM0KOVGaZXwsNQBjPpK63qyFkoWsxDXRKZlCW6B2N1S8DKOwdftl3d3aDirJCUTrijO4zpfkLWry8lVsTwijPwGG6DfAZQNNU8Q9V0wCTG2WBosywy7cXan4ENgxkjrDt9bmW6P+C4Y7Dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMKeq0tn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAdrcCOB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D76F1F000E9;
-	Tue, 21 Jul 2026 19:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMKeq0tn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B1B61F000E9;
+	Tue, 21 Jul 2026 19:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662979;
-	bh=GPy3R8j+TIiCrjfLRZK7+/nzoRqqV8sGNu5biFIgOfk=;
+	s=korg; t=1784662982;
+	bh=ym68IkLrd2/mLntuI9zKbmOTliSTx3Svr9MwIIN8P10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TAdrcCOB3rz6j/Xxm50CLDD2cBcMELcNGnVFkerKgggtv385JUp6DfQH0sj2Evneb
-	 77lr0LTwtTlH0/0POtHXL7yFmExpcG0VxgRHKjFuTxCQcjqV7cwwp6EzcI42ROP2RV
-	 4V2VLQ4rSdZ8bHREAh2TXzK3cKHscoErUvLMuCS4=
+	b=UMKeq0tnlAP2DvSkRbX62MzbrcsRz4TZcae4ub/IH/yKOABcNZbm+oenkliCSrgge
+	 BDBygtKc6NH7aRcX5K5XAu0uquVqJh6nLTtDVCpuXNGcw5drQE7Pizp5ccAKu6O7ZX
+	 Iw4N3Vf4kWW7ragfi0LkBLL0LYNKlg1D81zkf5Q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Alejandro Olivan Alvarez <alejandro.olivan.alvarez@gmail.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0597/1276] netfilter: nf_reject: skip iphdr options when looking for icmp header
-Date: Tue, 21 Jul 2026 17:17:20 +0200
-Message-ID: <20260721152459.474156357@linuxfoundation.org>
+Subject: [PATCH 6.12 0644/1276] netfilter: nf_conncount: prevent connlimit drops for early confirmed ct
+Date: Tue, 21 Jul 2026 17:18:07 +0200
+Message-ID: <20260721152500.521769440@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,35 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit af8d6ae09c0a5f8b8a0d5680203c74b3c1daa85b ]
+[ Upstream commit c8b6f36f766991e3ebebec6596daee4b04dcbc49 ]
 
-Not a big deal but this hould have used the real ip header length and not the
-base header size.  As-is, if there are options then
-nf_skb_is_icmp_unreach() result will be random.
+Commit 69894e5b4c5e ("netfilter: nft_connlimit: update the count if add
+was skipped") introduced a regression where packets for valid
+connections are dropped when using connlimit for soft-limiting
+scenarios.
 
-Fixes: db99b2f2b3e2 ("netfilter: nf_reject: don't reply to icmp error messages")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+The issue occurs when a new connection reuses a socket currently in
+the TIME_WAIT state. In this scenario, the connection tracking entry
+is evaluated as already confirmed. Previously, __nf_conncount_add()
+assumed that if a connection was confirmed and did not originate from
+the loopback interface, it should skip the addition and return -EEXIST.
+
+Skipping the addition triggers a garbage collection run that cleans up
+the TIME_WAIT connection. Consequently, the active connection count
+drops to 0, which xt_connlimit mishandles, leading to the false rejection
+of the perfectly valid new connection.
+
+Fix this by replacing the interface check with protocol-agnostic state
+checks. We now skip the tree insertion and preserve the lockless garbage
+collection optimization only if the connection is IPS_ASSURED. This
+allows early-confirmed setup packets (such as reused TIME_WAIT sockets
+or locally generated SYN-ACKs) to be properly evaluated and counted
+without falsely dropping. The goto check_connections path is maintained
+to ensure these setup packets are deduplicated correctly.
+
+This has been tested with slowhttptest and HTTP server configured
+locally to ensure we are not breaking soft-limiting scenarios for local
+or external connections. In addition, it was tested with a OVS zone
+limit too.
+
+Fixes: 69894e5b4c5e ("netfilter: nft_connlimit: update the count if add was skipped")
+Reported-by: Alejandro Olivan Alvarez <alejandro.olivan.alvarez@gmail.com>
+Closes: https://lore.kernel.org/netfilter-devel/177349610461.3071718.4083978280323144323@eldamar.lan/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_reject_ipv4.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_conncount.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index a7a3439fe78004..1c739587bacde2 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -80,7 +80,7 @@ static bool nf_skb_is_icmp_unreach(const struct sk_buff *skb)
- 	if (iph->protocol != IPPROTO_ICMP)
- 		return false;
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index e880e4b3cd82d4..6b985afa4981eb 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -179,17 +179,16 @@ static int __nf_conncount_add(struct net *net,
+ 		return -ENOENT;
  
--	thoff = skb_network_offset(skb) + sizeof(*iph);
-+	thoff = skb_network_offset(skb) + ip_hdrlen(skb);
+ 	if (ct && nf_ct_is_confirmed(ct)) {
+-		/* local connections are confirmed in postrouting so confirmation
+-		 * might have happened before hitting connlimit
++		/* Connection is confirmed but might still be in the setup phase.
++		 * Only skip the tracking if it is fully assured. This guarantees
++		 * that setup packets or retransmissions are properly counted and
++		 * deduplicated.
+ 		 */
+-		if (skb->skb_iif != LOOPBACK_IFINDEX) {
++		if (test_bit(IPS_ASSURED_BIT, &ct->status)) {
+ 			err = -EEXIST;
+ 			goto out_put;
+ 		}
  
- 	tp = skb_header_pointer(skb,
- 				thoff + offsetof(struct icmphdr, type),
+-		/* this is likely a local connection, skip optimization to avoid
+-		 * adding duplicates from a 'packet train'
+-		 */
+ 		goto check_connections;
+ 	}
+ 
 -- 
 2.53.0
 
