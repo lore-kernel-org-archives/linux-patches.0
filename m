@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DF343E071;
-	Tue, 21 Jul 2026 21:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D504543E48D;
+	Tue, 21 Jul 2026 21:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668323; cv=none; b=cFJFt0l7OPt6eAsZQIF2xWrOIyCtraUsMw48FbgLoqrl+1DuDuxdcFWEYZnpFOuPqgouBKqZ475x+q717LL6ChCbfmOcSxJdVwkPY9Y0DqFfe8+u2D7IXU299Gpw8t1eRdY/FaNIeB6DVtmbwlQHopUAeok75YNWgBc/WN3o8wA=
+	t=1784668326; cv=none; b=kJqCWDubuKcuOJOWc4cQtqFAP9ti5Iiieph88+8FHsMLVe0xpTjEONtuEnXCivwQyRFzVqIoHTt+xO8+earmiuiRAi4vVOYu6tD15mccMD7qAvKUyXCGiojwfUIa4btB02gnxeh8F28dsOvHmrdQav4VsNXkAl29QFw8a1tyDbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668323; c=relaxed/simple;
-	bh=c8ZozrlLvRzMfEej6LObvG2FgM2sR6EiPg0ulM65a/Q=;
+	s=arc-20240116; t=1784668326; c=relaxed/simple;
+	bh=Kg9kH6Eg5gFeNTFHxN6nfYi3g4xpbT74+OHa1l95+DU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SFc8hKsdFD9UBulIVmYfIbKIkakzXd+lBhkAWHt4E5z5kpM5NyBbQ7813JkpgH488/YpyaWuMthnYOPtKS41a06DKxxeVLtCw0H6eMoIpDQE2nA5bBj+J+52dUpowbmUo07WxJ0b1kwlVIDYDZ6eDf2RNzl5HJ47bgoScgaXKnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0X9tNwKd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tv49s8Z0oNaPFl6VeGLt113Xwom6VQE6YYLEwKXhsmpnNkIT276kNm3DGKIA1Gw1PqQudPYkT7eNvXXYlprm+bThvacs+u39Isrx3ZRdfMZQvH5Wl/M3C6vor6Q8v6QwTkQu3360l6gaen6LzeHtwvN4HUiS+VXKIT+pdoDzZ/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wjz/A2JM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0X9tNwKd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88DA91F000E9;
-	Tue, 21 Jul 2026 21:12:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wjz/A2JM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419B11F00A3A;
+	Tue, 21 Jul 2026 21:12:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668322;
-	bh=bEafiQbvoc/CaP3+PvRgzHUzaI7aaHDFy/I3fATH5zw=;
+	s=korg; t=1784668324;
+	bh=KpvG7JNkypWAsMGZGQrmzGLPYu7zXDUI+FryovR/rec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0X9tNwKdQ0Z36c67qI63J+sy1a3AX13hXwws7UC+U9be4+woZCsRHbKj9fQY0q5Wi
-	 hgXWRLbjYdbFIDBM1mKanZhcSu0A5G8drqkgDUVlzRK3/GSIu7XBES9Lg2u2sBJk36
-	 gKFiTqU0ohoSHWQ9gbG/iLs+hb1YmgLpHqjdqCvk=
+	b=Wjz/A2JMzHFMlJYz5ZQcH1B4APEbTmiBMlR1SKJvuWmDtBRiqokVcPfbS08c5e7d7
+	 xEPk9D4LrCzO1j7dkAtC41lxw7qk/xjJ+lpw/YZTj9YfLvxJvHS0wqsaxmtzDy7181
+	 3dGJGLlMfDFQhJx57PlauQipfUMjNheOrbYCZTVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fed5dce4553262f3b35c@syzkaller.appspotmail.com,
+	syzbot+674ff7e4d7fdfd572afc@syzkaller.appspotmail.com,
 	Yousef Alhouseen <alhouseenyousef@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 0131/1067] Bluetooth: bnep: pin L2CAP connection during netdev registration
-Date: Tue, 21 Jul 2026 17:12:12 +0200
-Message-ID: <20260721152427.524667449@linuxfoundation.org>
+Subject: [PATCH 6.1 0132/1067] Bluetooth: fix UAF in bt_accept_dequeue()
+Date: Tue, 21 Jul 2026 17:12:13 +0200
+Message-ID: <20260721152427.546975611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,89 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-commit bb067a99a0356196c0b89a95721985485ebce5a5 upstream.
+commit 4bd0b274054f2679f28b70222b607bb0afc3ab9a upstream.
 
-bnep_add_connection() reads the L2CAP connection without holding the
-channel lock, then passes its HCI device to register_netdev(). Controller
-teardown can clear and release that connection concurrently, leaving the
-network device registration path to dereference a freed parent device.
+bt_accept_get() takes a temporary reference before dropping the accept
+queue lock. bt_accept_dequeue() currently drops that reference before
+bt_accept_unlink(), leaving only the queue reference.
 
-Take a reference to the L2CAP connection while holding the channel lock.
-Retain it until register_netdev() has taken the parent device reference.
+bt_accept_unlink() drops the queue reference. The subsequent
+sock_hold() therefore accesses freed memory if it was the final
+reference, as observed by KASAN during listening L2CAP socket cleanup.
 
-Fixes: 65f53e9802db ("Bluetooth: Access BNEP session addresses through L2CAP channel")
-Reported-by: syzbot+fed5dce4553262f3b35c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fed5dce4553262f3b35c
+Retain the temporary queue-walk reference through unlink and hand it to
+the caller on success. Drop it explicitly on the closed and
+not-yet-connected paths.
+
+Fixes: ab1513597c6c ("Bluetooth: fix UAF in l2cap_sock_cleanup_listen() vs l2cap_conn_del()")
+Reported-by: syzbot+674ff7e4d7fdfd572afc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=674ff7e4d7fdfd572afc
 Cc: stable@vger.kernel.org
 Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/bnep/core.c |   27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ net/bluetooth/af_bluetooth.c |   17 +++--------------
+ net/bluetooth/l2cap_sock.c   |    4 ++--
+ 2 files changed, 5 insertions(+), 16 deletions(-)
 
---- a/net/bluetooth/bnep/core.c
-+++ b/net/bluetooth/bnep/core.c
-@@ -562,14 +562,18 @@ static int bnep_session(void *arg)
- 	return 0;
- }
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -305,7 +305,7 @@ struct sock *bt_accept_dequeue(struct so
  
--static struct device *bnep_get_device(struct bnep_session *session)
-+static struct l2cap_conn *bnep_get_conn(struct bnep_session *session)
- {
--	struct l2cap_conn *conn = l2cap_pi(session->sock->sk)->chan->conn;
-+	struct l2cap_chan *chan = l2cap_pi(session->sock->sk)->chan;
-+	struct l2cap_conn *conn;
+ restart:
+ 	for (sk = bt_accept_get(parent, NULL); sk; sk = next) {
+-		/* Prevent early freeing of sk due to unlink and sock_kill */
++		/* The reference from bt_accept_get() keeps sk alive. */
+ 		lock_sock(sk);
  
--	if (!conn || !conn->hcon)
--		return NULL;
-+	l2cap_chan_lock(chan);
-+	conn = chan->conn;
-+	if (conn)
-+		l2cap_conn_get(conn);
-+	l2cap_chan_unlock(chan);
+ 		/* Check sk has not already been unlinked via
+@@ -321,13 +321,11 @@ restart:
  
--	return &conn->hcon->dev;
-+	return conn;
- }
+ 		next = bt_accept_get(parent, sk);
  
- static struct device_type bnep_type = {
-@@ -581,6 +585,7 @@ int bnep_add_connection(struct bnep_conn
- 	u32 valid_flags = BIT(BNEP_SETUP_RESPONSE);
- 	struct net_device *dev;
- 	struct bnep_session *s, *ss;
-+	struct l2cap_conn *conn = NULL;
- 	u8 dst[ETH_ALEN], src[ETH_ALEN];
- 	int err;
+-		/* sk is safely in the parent list so reduce reference count */
+-		sock_put(sk);
+-
+ 		/* FIXME: Is this check still needed */
+ 		if (sk->sk_state == BT_CLOSED) {
+ 			bt_accept_unlink(sk);
+ 			release_sock(sk);
++			sock_put(sk);
+ 			continue;
+ 		}
  
-@@ -640,10 +645,18 @@ int bnep_add_connection(struct bnep_conn
- 	bnep_set_default_proto_filter(s);
- #endif
+@@ -337,16 +335,6 @@ restart:
+ 			if (newsock)
+ 				sock_graft(sk, newsock);
  
--	SET_NETDEV_DEV(dev, bnep_get_device(s));
-+	conn = bnep_get_conn(s);
-+	if (!conn) {
-+		err = -ENOTCONN;
-+		goto failed;
-+	}
-+
-+	SET_NETDEV_DEV(dev, &conn->hcon->dev);
- 	SET_NETDEV_DEVTYPE(dev, &bnep_type);
+-			/* Hand the caller a reference taken while sk is
+-			 * still locked.  bt_accept_unlink() just dropped
+-			 * the accept-queue reference; without this hold a
+-			 * concurrent teardown (e.g. l2cap_conn_del() ->
+-			 * l2cap_sock_kill()) could free sk between
+-			 * release_sock() and the caller using it.  Every
+-			 * caller drops this with sock_put() when done.
+-			 */
+-			sock_hold(sk);
+-
+ 			release_sock(sk);
+ 			if (next)
+ 				sock_put(next);
+@@ -354,6 +342,7 @@ restart:
+ 		}
  
- 	err = register_netdev(dev);
-+	l2cap_conn_put(conn);
-+	conn = NULL;
- 	if (err)
- 		goto failed;
+ 		release_sock(sk);
++		sock_put(sk);
+ 	}
  
-@@ -665,6 +678,8 @@ int bnep_add_connection(struct bnep_conn
- 	return 0;
+ 	return NULL;
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1465,8 +1465,8 @@ static void l2cap_sock_cleanup_listen(st
  
- failed:
-+	if (conn)
-+		l2cap_conn_put(conn);
- 	up_write(&bnep_session_sem);
- 	free_netdev(dev);
- 	return err;
+ 	/* Close not yet accepted channels.
+ 	 *
+-	 * bt_accept_dequeue() now returns sk with an extra reference held
+-	 * (taken while sk was still locked) so a concurrent l2cap_conn_del()
++	 * bt_accept_dequeue() returns sk with its temporary queue-walk
++	 * reference held, so a concurrent l2cap_conn_del()
+ 	 * -> l2cap_sock_kill() cannot free sk under us.
+ 	 *
+ 	 * cleanup_listen() runs under the parent sk lock, so unlike
 
 
