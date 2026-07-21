@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27047375AC3;
-	Tue, 21 Jul 2026 17:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02C03D3321;
+	Tue, 21 Jul 2026 17:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654516; cv=none; b=TZCWGSxFR6ZY+O2OHGb7WbDggmHj9AeqOCiQoQuHjGCQegavrlP4m6UzpHWMzvhZZl4cMmcNFeQ03pHYulZz+29MZzZCCyQxi1OyhJ6JS9zH1dhV8UQn/s1zcYG9vEv74vkLThB5kX5KVc6icRWmiFMgHRnPo6VaY1puyhyDuf0=
+	t=1784654518; cv=none; b=lRN7vxo0TzzH055lHK6ugH0KbCQZ3d7tNxEQIVP51Srf1mXuMFzheIII7ybgQoKtZSyhI2dj6iW+cJwDqOVGqFGaZBfWbLAinI0Hv/Ixx0+FVnbj/Z/sBCkxVWY4yREvn5Lc7E9mEV8AmCOV20WimKgYA7oeQ58ZfMTQx00kGAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654516; c=relaxed/simple;
-	bh=yRLJQhvfkzyhEwCEAQ3UgfgkJ5Q2BSxkGrurH0PFSts=;
+	s=arc-20240116; t=1784654518; c=relaxed/simple;
+	bh=0FzgTO91/BNOH179nsoEwoByy82YkvlX9CjlU2SBoW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RK4q265l9M3EpC1mKGkGZ7RfPJJPo2dVDmQSTR8kIILhZ4xlxQDTwbsc8PSvRppSiRqPud+9SYkfh4U27HIJ27pmkL2XzyEyBW3zQS+6Y7oswWtsYcXG1gvI2WTk9S0U0fLtEE943HrguT9lerG8UDHAszDbts6nwDMdzWccB64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DWc0eesP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mqbEHmw+La1bGhuN8k0487qPrKKDoVxwMNXA3LaxO3YK8oxNKXKmu0Ge8DjM9fMqAfv4e+PribLRixYZsKXqkNntITcRDXon7aTc7/uqFqbgElmBd7gh4vTZ2MacY/m2+x1Ja0RbXNBoDsVviuHE9emFhIh5vdTPWzx/79dotY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZRukdZD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DWc0eesP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB021F00A3A;
-	Tue, 21 Jul 2026 17:21:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZRukdZD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32DEC1F000E9;
+	Tue, 21 Jul 2026 17:21:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654515;
-	bh=C+t8jtTzhNXdYbJ4+7Br/n9O3fU6nCLuFkSqrypoUbs=;
+	s=korg; t=1784654517;
+	bh=t0/klv+lsi9wWSkw6URsg4VbaEB+u3DB9pT4Q0U8L4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DWc0eesPIJp6YizpRroZGPxzi8R2EbPzUHh7PrcvmoG+kWf4MayLLE/7XWu12jSSg
-	 O51ghzHUGGIzVq3dyFOCSeznRE/F6HJ48K/7KzHJz/eVCwuAW9ibW85YPlvuT32x19
-	 1W2yFv0wTuO/QCGK5SYC+a4MZAqmFJ0NOm183mYU=
+	b=IZRukdZDFlkIZfmfQavi4xLK+SUCpfDXUNfqqcXSYyX7oFNYt02wqUsF45Jcylau3
+	 x8QJk0QovCVis6OUH7hhR6MfW0gksfvm3oIT4n4X/ElZtYlKuKDST1rF63NtjViT/g
+	 vgwNJNp/+5guTFx4O2jPeYP4sHyT8wVzN3EKQL1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
-	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 7.1 1734/2077] powerpc/dt_cpu_ftrs: Set CPU_FTR_P11_PVR for Power11 and later processors
-Date: Tue, 21 Jul 2026 17:23:27 +0200
-Message-ID: <20260721152633.647880130@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 7.1 1708/2077] ntfs3: cap RESTART_TABLE free-chain walker at rt->used
+Date: Tue, 21 Jul 2026 17:23:01 +0200
+Message-ID: <20260721152633.045466565@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,73 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit e4de1b9cb3b5c981e4fe9bca253a7fb9161f5acd upstream.
+commit 9611f644302c07d21bc8af97e3e06a3d30064253 upstream.
 
-When using device tree CPU features (dt-cpu-ftrs), the kernel bypasses
-the traditional cputable-based CPU identification and instead derives
-CPU features from the device tree's "ibm,powerpc-cpu-features" node
-provided by firmware.
+A crafted NTFS3 disk image triggers an in-kernel infinite loop at
+mount time, hanging the mounting thread and firing the soft-lockup
+watchdog within ~22s on multi-CPU hosts (panic with
+kernel.softlockup_panic=1).  The bug is reachable from desktop USB
+auto-mount on distributions where udisks2 routes the NTFS signature
+to the in-tree ntfs3 driver (Arch family and an increasing fraction
+of Fedora / openSUSE / RHEL deployments); CAP_SYS_ADMIN-class manual
+mount elsewhere.
 
-However, CPU_FTR_P11_PVR is a kernel-internal feature flag used to
-identify Power11 and later processors, and is not represented in the
-device tree's ISA feature set. While ISA v3.1 support (indicated by
-CPU_FTR_ARCH_31) is present on both Power10 and Power11, the
-CPU_FTR_P11_PVR flag is specifically needed by code that must
-distinguish between Power10 and Power11 processors.
+check_rstbl()'s second walker iterates the free-entry singly-linked
+list headed by rt->first_free with no upper bound on iteration count:
 
-Without this flag set, code that checks for Power11 using
-cpu_has_feature(CPU_FTR_P11_PVR) will incorrectly return false on
-Power11+ systems using dt-cpu-ftrs, leading to incorrect behavior.
+  for (off = ff; off;) {
+      if (off == RESTART_ENTRY_ALLOCATED)
+          return false;
+      off = le32_to_cpu(*(__le32 *)Add2Ptr(rt, off));
+      if (off > ts - sizeof(__le32))
+          return false;
+  }
 
-This issue manifests specifically in powernv environments (bare-metal
-or QEMU TCG with powernv machine type), where skiboot/OPAL firmware
-provides the "ibm,powerpc-cpu-features" node, causing the kernel to
-use dt-cpu-ftrs. The issue does not affect pseries guests, where SLOF
-firmware does not provide this node, causing the kernel to fall back
-to the traditional cputable path (identify_cpu) which correctly sets
-CPU_FTR_P11_PVR during PVR-based CPU identification.
+The existing guards cover three exits: end-of-list (off == 0), the
+in-use marker (off == RESTART_ENTRY_ALLOCATED), and out-of-bounds
+(off > ts - sizeof(__le32)).  None of the three prevents an
+in-bounds cycle.
 
-In powernv TCG guests, the missing flag causes KVM code to trigger
-warnings when attempting to create KVM guests, as cpu_features shows
-0x000c00eb8f4fb187 (missing bit 53) instead of the correct
-0x002c00eb8f4fb187 (with bit 53 set).
+A crafted on-disk RESTART_TABLE whose free chain contains a
+self-loop or A->B->A cycle whose offsets satisfy:
 
-Fix this by setting CPU_FTR_P11_PVR for all processors with
-PVR >= PVR_POWER11 when ISA v3.1 support is detected in
-cpufeatures_setup_start(). This approach ensures forward
-compatibility with future processor generations.
+  - in range [sizeof(struct RESTART_TABLE), ts - sizeof(__le32)]
+  - (off - sizeof(struct RESTART_TABLE)) % rsize == 0
 
-Fixes: 96e266e3bcd6 ("KVM: PPC: Book3S HV: Add Power11 capability support for Nested PAPR guests")
-Cc: stable@vger.kernel.org # v6.13+
-Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
-Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260614173437.26352-1-amachhiw@linux.ibm.com
+passes all existing guards and spins the mount-time thread forever.
+Reproduced in UML by hand-forging a 2 MB NTFS3 image whose journal
+RESTART_TABLE first_free = 0x18 and whose entry at offset 0x18
+stores 0x18 as its next pointer; mount of the forged image with
+the in-tree ntfs3 driver never returns.
+
+Bound the walker by rt->used.  Each entry on a legitimate free
+chain is unique, and the total slot count is ne = le16_to_cpu
+(rt->used).  A traversal that visits more than ne slots is by
+construction malformed; reject it as a corrupt RESTART_TABLE.
+
+After this patch, mount of the forged image returns with -EINVAL
+and a log_replay failure message, and mkntfs-produced legitimate
+images mount cleanly (verified in the same UML harness).
+
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/dt_cpu_ftrs.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ntfs3/fslog.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/arch/powerpc/kernel/dt_cpu_ftrs.c
-+++ b/arch/powerpc/kernel/dt_cpu_ftrs.c
-@@ -704,6 +704,15 @@ static void __init cpufeatures_setup_sta
- 	if (isa >= ISA_V3_1) {
- 		cur_cpu_spec->cpu_features |= CPU_FTR_ARCH_31;
- 		cur_cpu_spec->cpu_user_features2 |= PPC_FEATURE2_ARCH_3_1;
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -764,8 +764,19 @@ static bool check_rstbl(const struct RES
+ 	/*
+ 	 * Walk through the list headed by the first entry to make
+ 	 * sure none of the entries are currently being used.
++	 *
++	 * Bound traversal by ne (rt->used) to defeat a crafted on-disk
++	 * cycle in the free chain.  Each entry in a legitimate free
++	 * list is unique, so a chain that visits more than ne slots
++	 * is malformed.  Without this guard, an attacker-controlled
++	 * RESTART_TABLE with a self-loop or A->B->A cycle whose
++	 * offsets satisfy the existing alignment + in-bounds guards
++	 * spins forever at mount time.
+ 	 */
+-	for (off = ff; off;) {
++	for (off = ff, i = 0; off; i++) {
++		if (i > ne)
++			return false;
 +
-+		/*
-+		 * CPU_FTR_P11_PVR is a kernel-internal flag to identify
-+		 * Power11 and later processors. While ISA v3.1 is supported
-+		 * by Power10+, this flag specifically indicates Power11+
-+		 * for code that needs to distinguish between P10 and P11.
-+		 */
-+		if (PVR_VER(mfspr(SPRN_PVR)) >= PVR_POWER11)
-+			cur_cpu_spec->cpu_features |= CPU_FTR_P11_PVR;
- 	}
- }
+ 		if (off == RESTART_ENTRY_ALLOCATED)
+ 			return false;
  
 
 
