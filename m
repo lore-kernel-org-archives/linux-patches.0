@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F73146EC7E;
-	Tue, 21 Jul 2026 18:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD8946D2CB;
+	Tue, 21 Jul 2026 18:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658863; cv=none; b=YjhHO8lhs3bltgJ6e3bQQCBeSuwCUt4uiejdpxWTb44UoNF+DXb203UZ7oT7yDx0aw8HGm+hUwm6LdHZrEGz+wmrDhvvTuXXjzIMITr0q5EePxR/NTBScAjbKeWlF1AE7aqSmDI6cUHgh02GjC9PkJAzbj/1u4+7Cr5kN3MtS90=
+	t=1784658865; cv=none; b=Sd1EQa08SFBP8HIqUc7DL2WCTmexWMdUbyWwqpaKRm3hiBVjjIpYuLuRziurQaYazrqcAtabO74wsmWzsRHbxx8yRexkaJCW+jlPznv09v5o71Xji6w+BPr49Odw9MgockpFWt5wuQkFmpxY6vWfESyPvos22tnMUAix81MehAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658863; c=relaxed/simple;
-	bh=JbdUphpmGbYWRVueG3ugJfpGjL29S2yCOypIhpTTrGI=;
+	s=arc-20240116; t=1784658865; c=relaxed/simple;
+	bh=vtuPpb5c99rDLM+lvWfPX7sN0cY/cCV6kvT0S1ZG0P8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RAsf9TRAcy/Z/VSOU+KagGRE9hNUVcJH/3or8Re20KhwWAg7hT30iJACE4xgljeEYGwCo4ajX9Q7DVi5WVYGC3ojIaMyN/rxOIgWmqH/c/KBAGVSNKU8IBPPLZPITlggT8CqclGK59dEJue6FUzs6QHu+FDmbxcZh1PIlglyD68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOHQVjI7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gQleyahJQUU2pltu4z8cYjZWIUPRUXrwOVtovhVAltQid9X1/OyZMS4xxuPBVZs8BPI+REsRwAXAKbXAhSM+IEneHy36pdrdETNctdD2Uc+r59xC8SlO3BxcAZqivWC8D3hXCl7cMnF/mXA4FzDO7F4jQm4rHOgSPB9Y2iNJYlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/vIOU1k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOHQVjI7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 963061F000E9;
-	Tue, 21 Jul 2026 18:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/vIOU1k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDA11F000E9;
+	Tue, 21 Jul 2026 18:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658862;
-	bh=W7ZK8omQlgqCEQurY7evQekGJWk+dlJrUFeFqhizTQk=;
+	s=korg; t=1784658864;
+	bh=XMTgNeBRuKHa6XbhhBGgXvqGzic8Y3DTnS3s+OmnB2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tOHQVjI7vZRUsYa8vSr0Es1jXbT9BWhrtDqPMwzC6TAFuXErGiAXgx0cJbq2dVYGn
-	 nbmzlZJzljbDy8T93yOGdMQVUFdyQFyHdfPshwW/+vdsFT91QKe9nElv+6fvkmEy2c
-	 ENMwc136TUrDrdns8Jidz8U/HipUN1gQl6MmXNyA=
+	b=w/vIOU1kdOixRsHLZfUcH4aot+k2LkUs0vvJajaCAjOUK9LZ/KqkdPutURqVW8efX
+	 EN80oBJ6zxFdPrtVZLxm1iORubC3buI1mvJUXWHRIT5RjnY7z3NDZsbzEDfhckm/87
+	 NR1zGXDZaZwSjmkVZyQGV7CqUu2ASJ8K2qThxPZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 1251/1611] mm/damon/sysfs-schemes: put stats for scheme_add_dirs() internal error
-Date: Tue, 21 Jul 2026 17:22:47 +0200
-Message-ID: <20260721152543.583376442@linuxfoundation.org>
+	Daniel Gibson <daniel@gibson.sh>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.18 1298/1611] platform/x86/amd/pmc: Check for intermediate wakeup in function
+Date: Tue, 21 Jul 2026 17:23:34 +0200
+Message-ID: <20260721152544.641432319@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -44,65 +44,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Daniel Gibson <daniel@gibson.sh>
 
-commit 05ea83ee88ca70f8932906d9f2617ff996f45b50 upstream.
+commit 3bdd6fc11fbfa8249483f4b716ead51e43e3a0cd upstream.
 
-damon_sysfs_scheme_add_dirs() setup the tried_regions directory after the
-stats directory setup is completed.  When the tried_regions directory
-setup is failed, the setup function ensures the reference for the tried
-regions directory is released.  Hence the error path should put references
-on setup succeeded directory objects, starting from the stats directory.
-However, the error path is putting the tried_regions directory instead of
-the stats directory.
+Refactor code introduced by commit 9f5595d5f03f ("pmc: Require at
+least 2.5 seconds between HW sleep cycles") to allow adding different
+conditions for that delay in an upcoming change.
 
-As a direct result, the stats directory object is leaked.  Worse yet, if
-the tried_regions directory setup failed from the initial allocation, the
-scheme->tried_regions field remains uninitialized.  The following
-kobject_put(&scheme->tried_regions->kobj) call in the error path will
-dereference the uninitialized memory.  The setup failures should not be
-common.  But once it happens, the consequence is quite bad.
-
-Fix this issue by correctly putting the stats directory instead of the
-tried_regions directory.
-
-The issue was discovered [1] by Sashiko.
-
-Link: https://lore.kernel.org/20260618005650.83868-3-sj@kernel.org
-Link: https://lore.kernel.org/20260617005223.96813-1-sj@kernel.org [1]
-Fixes: 5181b75f438d ("mm/damon/sysfs-schemes: implement schemes/tried_regions directory")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.2.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Daniel Gibson <daniel@gibson.sh>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260611150426.3683372-2-daniel@gibson.sh
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs-schemes.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/platform/x86/amd/pmc/pmc.c |   17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -2132,12 +2132,12 @@ static int damon_sysfs_scheme_add_dirs(s
- 		goto put_filters_watermarks_quotas_access_pattern_out;
- 	err = damon_sysfs_scheme_set_tried_regions(scheme);
- 	if (err)
--		goto put_tried_regions_out;
-+		goto put_stats_out;
- 	return 0;
+--- a/drivers/platform/x86/amd/pmc/pmc.c
++++ b/drivers/platform/x86/amd/pmc/pmc.c
+@@ -598,6 +598,19 @@ static int amd_pmc_verify_czn_rtc(struct
+ 	return rc;
+ }
  
--put_tried_regions_out:
--	kobject_put(&scheme->tried_regions->kobj);
--	scheme->tried_regions = NULL;
-+put_stats_out:
-+	kobject_put(&scheme->stats->kobj);
-+	scheme->stats = NULL;
- put_filters_watermarks_quotas_access_pattern_out:
- 	kobject_put(&scheme->ops_filters->kobj);
- 	scheme->ops_filters = NULL;
++static bool amd_pmc_intermediate_wakeup_need_delay(struct amd_pmc_dev *pdev)
++{
++	/*
++	 * Starting a new HW sleep cycle right after waking from one
++	 * can cause electrical problems triggering the over voltage protection.
++	 * That is avoided by delaying the next suspend a bit, see also
++	 * https://lore.kernel.org/all/20250414162446.3853194-1-superm1@kernel.org/
++	 */
++	struct smu_metrics table;
++
++	return get_metrics_table(pdev, &table) == 0 && table.s0i3_last_entry_status;
++}
++
+ static void amd_pmc_s2idle_prepare(void)
+ {
+ 	struct amd_pmc_dev *pdev = &pmc;
+@@ -632,11 +645,9 @@ static void amd_pmc_s2idle_prepare(void)
+ static void amd_pmc_s2idle_check(void)
+ {
+ 	struct amd_pmc_dev *pdev = &pmc;
+-	struct smu_metrics table;
+ 	int rc;
+ 
+-	/* Avoid triggering OVP */
+-	if (!get_metrics_table(pdev, &table) && table.s0i3_last_entry_status)
++	if (amd_pmc_intermediate_wakeup_need_delay(pdev))
+ 		msleep(2500);
+ 
+ 	/* Dump the IdleMask before we add to the STB */
 
 
