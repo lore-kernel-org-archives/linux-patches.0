@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0914743C7DB;
-	Tue, 21 Jul 2026 21:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9E8434E4E;
+	Tue, 21 Jul 2026 21:03:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667817; cv=none; b=un3LPojkoENSWsJOjBE8cBoC/sl7Qr1p3oBVNnLEr57szdOwOolKyT+KdIYrYMgb9J/9IFkux/4Hw7/wgMmPOgLgJ/0msX6fM59yIx1JiAnKhYlPK6lcWuWPoc+fKpVM64kTDwEHpVyCALaJSO69rR9WW6muX/IaMnTb5fFo8FA=
+	t=1784667823; cv=none; b=O9ubUXw5Rg9yFCZ/zGN5dNSpzaqIl5db0yx/8w5qo3M/od89vBJaOvvEiGmTq387PVCQ58sip6hQWGNDyAgER/Zxyuzd6XDaOscr0+BbJpYqwG8J642HKQ9hGc1Dw/DH5otEMktv4ASExgIvsfkTDTAEbcLHC0Pcvb8p929zenI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667817; c=relaxed/simple;
-	bh=tCXvdYrt62eT1bpZBo4Pz79MSa/11bMWVmObQ9jJSyU=;
+	s=arc-20240116; t=1784667823; c=relaxed/simple;
+	bh=Y+NTNgHle7XArNHH7Sr8UFElkHPkZH6hxocsVV85TGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RMMfQABlWruzGjKHrpmHJm67n3FeirR4Cmf/2cF/jqIVGm0uPO7aJQ7PFack+foccSWv8B2b0qxs+T7kV2OXOktbPH1LQ6UGq1YtZUodl/Zc4+k+jSTtkArjUclzqDFYCm4SgZFhSPKkpzJ/dx8zyHJC1mODVGvlXcwgXRayjWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DWb0PNUK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HeZ93FZ6xRG2ktO4Sg6Wd0go1ZSeFZX/MkaArycoHucyRAX2aoI/GPcxDojcAVaKTKg1JME83lJ8y94+XTs2/aHGaBFGrzJUS9MkzlDhuyzpMUcYQpGrS6JK1iwPdiJE19I/LKscqkXbDwKDZHhpgo/Rw6TY6KHLPfnvmWxxfac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsC+sAxL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DWb0PNUK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62FC01F000E9;
-	Tue, 21 Jul 2026 21:03:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsC+sAxL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A861F000E9;
+	Tue, 21 Jul 2026 21:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667813;
-	bh=BN2G2pG4DDT5P6JD5uZEWYb9Qb+u8ICyJd5pDWaBwoM=;
+	s=korg; t=1784667819;
+	bh=m0QvLzud/f+I0ZBW66DWYwVzr6aWRhc/hWnxiz9GOQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DWb0PNUKaY35xrzYaX4Qz/tcO/jGoDopS+tPfg2NjUUOQz1Br7o8QG5YcX1c7vYrl
-	 3GKkmUVg0N8MKDprhW9ea+rU7r22P9zVErPARnr/KVjTnL++DmGpg/HEtnIdkiNiun
-	 MHpp0wh7tDvKKFo/WfcKuEj/Fep5tR7rDS1BTIwM=
+	b=lsC+sAxL9vCO0Qrl+CsKSd3KKmbqIYf2YJ3p2nlc4sMV/D984CEYgOYLT0mcYgGxr
+	 D+M0hXR45ZdfEZk5j5tnoU5MwUG435ESlzCzJjXXTwtfWIOE4v/C6NsZf4/zNf2D0R
+	 0EANHQZ80Q9NQpy+UjF8n0w7aWWPXTsNVtvLu5uY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Tejun Heo <tj@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1204/1266] cpufreq: qcom-cpufreq-hw: Fix possible double free
-Date: Tue, 21 Jul 2026 17:27:21 +0200
-Message-ID: <20260721152508.743107578@linuxfoundation.org>
+Subject: [PATCH 6.6 1206/1266] writeback: fix race between cgroup_writeback_umount() and inode_switch_wbs()
+Date: Tue, 21 Jul 2026 17:27:23 +0200
+Message-ID: <20260721152508.788618463@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,45 +53,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit bcb8889c4981fdde42d4fd2c29a77d510fe21da2 ]
+[ Upstream commit cba38ec4cbd3a7b8b942a8d52531a05be8a9ff0d ]
 
-qcom_cpufreq.data is allocated with devm_kzalloc() in probe() as an
-array of per-domain data. qcom_cpufreq_hw_cpu_init() stores a pointer to
-one element of this array in policy->driver_data.
+When a container exits, the following BUG_ON() is occasionally triggered:
 
-qcom_cpufreq_hw_cpu_exit() currently calls kfree() on policy->driver_data.
-This is not valid because the memory is devm-managed. For the first
-domain, this can free the devm-managed allocation while the devres entry
-is still active, leading to a possible double free when the platform
-device is later detached. For other domains, the pointer may refer to an
-element inside the array rather than the allocation base.
+==================================================================
+ VFS: Busy inodes after unmount of sdb (ext4)
+ ------------[ cut here ]------------
+ kernel BUG at fs/super.c:695!
+ CPU: 3 PID: 6 Comm: containerd-shim Tainted: G OE K 6.6 #1
+ pstate: 63400009 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+ pc : generic_shutdown_super+0xf0/0x100
+ lr : generic_shutdown_super+0xf0/0x100
+ Call trace:
+  generic_shutdown_super+0xf0/0x100
+  kill_block_super+0x20/0x48
+  ext4_kill_sb+0x28/0x60
+  deactivate_locked_super+0x54/0x130
+  deactivate_super+0x84/0xa0
+  cleanup_mnt+0xa4/0x140
+  __cleanup_mnt+0x18/0x28
+  task_work_run+0x78/0xe0
+  do_notify_resume+0x204/0x240
+==================================================================
 
-Remove the kfree(data) call and let devres release qcom_cpufreq.data.
+The root cause is a race between cgroup_writeback_umount() and
+inode_switch_wbs()/cleanup_offline_cgwb(). There is a window between
+inode_prepare_wbs_switch() returning true and the subsequent
+wb_queue_isw() call. Following is the process that triggers the issue:
 
-This issue was found by a static analysis tool I am developing.
+      CPU A (umount)           |          CPU B (writeback)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                 inode_switch_wbs/cleanup_offline_cgwb
+                                  atomic_inc(&isw_nr_in_flight)
+                                  inode_prepare_wbs_switch
+                                   -> passes SB_ACTIVE check
+                                   __iget(inode)
+ generic_shutdown_super
+  sb->s_flags &= ~SB_ACTIVE
+  cgroup_writeback_umount(sb)
+   smp_mb()
+   atomic_read(&isw_nr_in_flight)
+   rcu_barrier()
+    -> no pending RCU callbacks
+   flush_workqueue(isw_wq)
+    -> nothing queued, returns
+  evict_inodes(sb)
+   -> Inode skipped as isw still holds a ref.
+  sop->put_super(sb)
+   /* destroys percpu counters */
+  -> VFS: Busy inodes after unmount!
+                                  wb_queue_isw()
+                                   queue_work(isw_wq, ...)
+                                  /* later in work function */
+                                  inode_switch_wbs_work_fn
+                                   process_inode_switch_wbs
+                                    iput() -> evict
+                                     percpu_counter_dec() // UAF!
 
-Fixes: 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during probe")
+Fix this by extending the RCU read-side critical section in
+inode_switch_wbs() and cleanup_offline_cgwb() to cover from
+inode_prepare_wbs_switch() through wb_queue_isw().  Since there is
+no sleep in this window, rcu_read_lock() can be used.  Then add a
+synchronize_rcu() in cgroup_writeback_umount() before the existing
+rcu_barrier(), so that all in-flight switchers that have passed the
+SB_ACTIVE check have completed queue_work() before flush_workqueue()
+is called.
+
+The existing rcu_barrier() is intentionally retained so this fix can
+be backported unchanged to stable kernels (5.10.y, 6.6.y, ...) that
+still queue switches via queue_rcu_work(). It is a no-op on current
+mainline (since commit e1b849cfa6b6 ("writeback: Avoid contention on
+wb->list_lock when switching inodes")) and is removed in a follow-up
+patch.
+
+Fixes: a1a0e23e4903 ("writeback: flush inode cgroup wb switches instead of pinning super_block")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Suggested-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/all/mxnjq2l6guusfchvauxr3v7c4bwjasybxlleqbbh4efloeqspz@iqylk76ohufz
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Link: https://patch.msgid.link/20260521095016.2791354-2-libaokun@linux.alibaba.com
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/qcom-cpufreq-hw.c |    1 -
- 1 file changed, 1 deletion(-)
+ fs/fs-writeback.c |   31 +++++++++++++++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
 
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -583,7 +583,6 @@ static void qcom_cpufreq_hw_cpu_exit(str
- 	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
- 	qcom_cpufreq_hw_lmh_exit(data);
- 	kfree(policy->freq_table);
--	kfree(data);
- }
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -625,12 +625,19 @@ static void inode_switch_wbs(struct inod
  
- static void qcom_cpufreq_ready(struct cpufreq_policy *policy)
+ 	atomic_inc(&isw_nr_in_flight);
+ 
+-	/* find and pin the new wb */
++	/*
++	 * Paired with synchronize_rcu() in cgroup_writeback_umount():
++	 * holding rcu_read_lock across inode_prepare_wbs_switch()
++	 * (covering the SB_ACTIVE check and the inode grab) and
++	 * wb_queue_isw() ensures synchronize_rcu() cannot return until
++	 * the work is queued, so the subsequent flush_workqueue() will
++	 * wait for the switch.
++	 */
+ 	rcu_read_lock();
++	/* find and pin the new wb */
+ 	memcg_css = css_from_id(new_wb_id, &memory_cgrp_subsys);
+ 	if (memcg_css && !css_tryget(memcg_css))
+ 		memcg_css = NULL;
+-	rcu_read_unlock();
+ 	if (!memcg_css)
+ 		goto out_free;
+ 
+@@ -645,9 +652,11 @@ static void inode_switch_wbs(struct inod
+ 	isw->inodes[0] = inode;
+ 
+ 	wb_queue_isw(new_wb, isw);
++	rcu_read_unlock();
+ 	return;
+ 
+ out_free:
++	rcu_read_unlock();
+ 	atomic_dec(&isw_nr_in_flight);
+ 	if (new_wb)
+ 		wb_put(new_wb);
+@@ -706,6 +715,14 @@ bool cleanup_offline_cgwb(struct bdi_wri
+ 		new_wb = &wb->bdi->wb; /* wb_get() is noop for bdi's wb */
+ 
+ 	nr = 0;
++	/*
++	 * Paired with synchronize_rcu() in cgroup_writeback_umount().
++	 * Holding rcu_read_lock across the SB_ACTIVE check, the inode grab
++	 * and wb_queue_isw() ensures synchronize_rcu() cannot return until
++	 * the work is queued, so the subsequent flush_workqueue() will wait
++	 * for the switch.
++	 */
++	rcu_read_lock();
+ 	spin_lock(&wb->list_lock);
+ 	/*
+ 	 * In addition to the inodes that have completed writeback, also switch
+@@ -723,6 +740,7 @@ bool cleanup_offline_cgwb(struct bdi_wri
+ 
+ 	/* no attached inodes? bail out */
+ 	if (nr == 0) {
++		rcu_read_unlock();
+ 		atomic_dec(&isw_nr_in_flight);
+ 		wb_put(new_wb);
+ 		kfree(isw);
+@@ -730,6 +748,7 @@ bool cleanup_offline_cgwb(struct bdi_wri
+ 	}
+ 
+ 	wb_queue_isw(new_wb, isw);
++	rcu_read_unlock();
+ 
+ 	return restart;
+ }
+@@ -1163,6 +1182,14 @@ void cgroup_writeback_umount(void)
+ 
+ 	if (atomic_read(&isw_nr_in_flight)) {
+ 		/*
++		 * Paired with rcu_read_lock() in inode_switch_wbs() and
++		 * cleanup_offline_cgwb().  synchronize_rcu() waits for any
++		 * in-flight switcher that already passed the SB_ACTIVE check
++		 * to finish queueing its work, so flush_workqueue() below
++		 * will then drain it.
++		 */
++		synchronize_rcu();
++		/*
+ 		 * Use rcu_barrier() to wait for all pending callbacks to
+ 		 * ensure that all in-flight wb switches are in the workqueue.
+ 		 */
 
 
