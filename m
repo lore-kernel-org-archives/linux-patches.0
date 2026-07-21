@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3961384CC4;
-	Tue, 21 Jul 2026 19:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B6646EF61;
+	Tue, 21 Jul 2026 19:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662059; cv=none; b=N9W7V3zXvCZO4cnTPSXEQ+TFC1RKqTTKOBUGI5WUi2YRefD18QR/0vpWDvUjd0sJQRX2u6Nxn6gj70ozLvdZwvPufMYNPTvQgKduxy2Rt1QEuxuqrOR7YRgGB7T0ks05Ds1rEU+92Ic0i973NKUobaEZrD0rCPw5lgvu8v7U15c=
+	t=1784662062; cv=none; b=RI8y5BpdyyzDHTtOeG1+OOS0gj4gPSndpEviVo1u5704cy0RE+cPItTKex0ApFHYymNs9PBU/TLwYS8o5Eaok49lltCeSgUaNCjDbAI1L7tb0l+MO0+++N/BezJUWUp9sdV6BuxDqIPilb7YT4CjYPgY2P/AHQfnSTg+Iy1HH00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662059; c=relaxed/simple;
-	bh=qkYpKkwr26Ds6REWSWzNpB0GLFB0i18nyVEDM1E3eGw=;
+	s=arc-20240116; t=1784662062; c=relaxed/simple;
+	bh=sIdZOCZyRbf5+U7FQqg3vTB/SARWNk7YVMi1e1zUUe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tZwLBTJbGk+am4oESmqlQHBXObAXYdXQ7A70MZrTQl9sycZ9+0CrOfFW5M3uvSFEI20UczWTLWCfMLfxsxgEya+tyejdR64xamBDK14BM7t8nqvLi4pQ/ojc2l3YgGbQRFBvbICJp+CVjBa4g3Ur7ZuGKkzFVOK+pzTv6h1tXwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iYCXFKI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RbO/WMes4EvGxTEiUDDsNZVEW0AH0E/xq4pGQoUfdYp+TZIJygV06rn75hD7guaWCMOG9/7AcNOIxCdhib6kcevvz4AxNXfa9DvP2BnRvBL0+Ds5MDbozRKBspmQ7bSVWDRymCPjEH02/MZKx2xjBegPt1kQV0cBctP8vyjuPv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sA/pTTDu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iYCXFKI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C9E81F00A3A;
-	Tue, 21 Jul 2026 19:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sA/pTTDu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBDB1F000E9;
+	Tue, 21 Jul 2026 19:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662058;
-	bh=V5esT3iBRjt8ptXgMwGRvUMVE3AsgzAbnM9flLnAWzg=;
+	s=korg; t=1784662061;
+	bh=VF00HwCz78y6feuqu/IJJEIMkApp7PffkNl/gvEDY8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2iYCXFKIrDGQDdXv+L84M/BE6Ve0CTV8qZvR6gsheVNYiKWAAjxivI82IcPMcV0X1
-	 dxaLDbBKlhgvi4LO35sYsMZvd2D+VvORnWbbQ+XTFNUyXmDvS/xauX0t698ea0x9Gp
-	 2oDqEJRpYubuiXNbwXCR8DJCMO6J4FL4rXIIcF0s=
+	b=sA/pTTDuK3uRXcVhTwqjQaa2uQJppsi8MbDjYu82blKyecMVOjcuxDLKs2MkUqQK+
+	 E6DB8eNgNVxreQeLmzHuMvYHfo+VEiOEVbm134ohl1utySootb59Ury5CXHGSe7nPB
+	 SDZkWw6HfF7SHD7RRtqaRU+y/aOS5FCc8bL9BqUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Qing Ming <a0yami@mailbox.org>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
-	Xie Yongji <xieyongji@bytedance.com>,
-	Zhang Tianci <zhangtianci.1997@bytedance.com>,
-	Jason Wang <jasowang@redhat.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0301/1276] vduse: Requeue failed read to send_list head
-Date: Tue, 21 Jul 2026 17:12:24 +0200
-Message-ID: <20260721152452.831614765@linuxfoundation.org>
+Subject: [PATCH 6.12 0302/1276] vhost/net: complete zerocopy ubufs only once
+Date: Tue, 21 Jul 2026 17:12:25 +0200
+Message-ID: <20260721152452.853627423@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -48,62 +45,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Tianci <zhangtianci.1997@bytedance.com>
+From: Qing Ming <a0yami@mailbox.org>
 
-[ Upstream commit 373ec43ded742b2f3aecf14731ffe1a57f438f38 ]
+[ Upstream commit 8f6898fe80794f2d7c3d38c1158c806e4074a1c4 ]
 
-When copy_to_iter() fails in vduse_dev_read_iter(), put the message back
-at the head of send_list to preserve FIFO ordering and retry the oldest
-pending request first.
+vhost-net initializes one ubuf_info per outstanding zerocopy TX
+descriptor and hands it to the backend socket.  The networking stack may
+then clone a zerocopy skb before all skb references are released.  For
+example, batman-adv fragmentation reaches skb_split(), which calls
+skb_zerocopy_clone() and increments the same ubuf_info refcount.
 
-Fixes: c8a6153b6c59 ("vduse: Introduce VDUSE - vDPA Device in Userspace")
-Reported-by: Michael S. Tsirkin <mst@redhat.com>
-Suggested-by: Xie Yongji <xieyongji@bytedance.com>
-Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
-Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+vhost_zerocopy_complete() currently treats every ubuf callback as a
+completed vhost descriptor.  It dereferences ubuf->ctx, writes the
+descriptor completion state, and drops the vhost_net_ubuf_ref even when
+the callback only releases a cloned skb reference.  A backend reset can
+therefore wait for and free the vhost_net_ubuf_ref while another cloned
+skb still carries the same ubuf_info.  A later completion then
+dereferences the freed ubufs pointer.
+
+KASAN reports the stale completion as:
+
+  BUG: KASAN: slab-use-after-free in vhost_zerocopy_complete+0x1d7/0x1f0
+  BUG: KASAN: slab-use-after-free in vhost_zerocopy_complete+0x101/0x1f0
+  vhost_zerocopy_complete
+  skb_copy_ubufs
+  __dev_forward_skb2
+  veth_xmit
+
+The freed object was allocated from vhost_net_ioctl() while setting the
+backend and freed through kfree_rcu()/kvfree_rcu_bulk after backend
+removal, while delayed skb completion still reached
+vhost_zerocopy_complete().
+
+Honor the generic ubuf_info refcount before touching vhost state, and run
+the vhost descriptor completion only for the final ubuf reference.  This
+matches the msg_zerocopy_complete() ownership rule for cloned zerocopy
+skbs.
+
+Fixes: bab632d69ee4 ("vhost: vhost TX zero-copy support")
+Signed-off-by: Qing Ming <a0yami@mailbox.org>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260226115550.1814-2-zhangtianci.1997@bytedance.com>
+Message-ID: <20260601104300.197210-1-a0yami@mailbox.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_user/vduse_dev.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/vhost/net.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
-index 2430e0d8fbd1d0..bb87a71547329b 100644
---- a/drivers/vdpa/vdpa_user/vduse_dev.c
-+++ b/drivers/vdpa/vdpa_user/vduse_dev.c
-@@ -193,6 +193,12 @@ static void vduse_enqueue_msg(struct list_head *head,
- 	list_add_tail(&msg->list, head);
- }
- 
-+static void vduse_enqueue_msg_head(struct list_head *head,
-+				   struct vduse_dev_msg *msg)
-+{
-+	list_add(&msg->list, head);
-+}
-+
- static void vduse_dev_broken(struct vduse_dev *dev)
+diff --git a/drivers/vhost/net.c b/drivers/vhost/net.c
+index 3ad1a6f4ef9652..c4c01396054791 100644
+--- a/drivers/vhost/net.c
++++ b/drivers/vhost/net.c
+@@ -388,13 +388,20 @@ static void vhost_zerocopy_signal_used(struct vhost_net *net,
+ static void vhost_zerocopy_complete(struct sk_buff *skb,
+ 				    struct ubuf_info *ubuf_base, bool success)
  {
- 	struct vduse_dev_msg *msg, *tmp;
-@@ -353,7 +359,7 @@ static ssize_t vduse_dev_read_iter(struct kiocb *iocb, struct iov_iter *to)
- 	spin_lock(&dev->msg_lock);
- 	if (ret != size) {
- 		ret = -EFAULT;
--		vduse_enqueue_msg(&dev->send_list, msg);
-+		vduse_enqueue_msg_head(&dev->send_list, msg);
- 		goto unlock;
- 	}
- 	vduse_enqueue_msg(&dev->recv_list, msg);
+-	struct ubuf_info_msgzc *ubuf = uarg_to_msgzc(ubuf_base);
+-	struct vhost_net_ubuf_ref *ubufs = ubuf->ctx;
+-	struct vhost_virtqueue *vq = ubufs->vq;
++	struct ubuf_info_msgzc *ubuf;
++	struct vhost_net_ubuf_ref *ubufs;
++	struct vhost_virtqueue *vq;
+ 	int cnt;
+ 
+-	rcu_read_lock_bh();
++	/* Only the final cloned skb reference completes the vhost descriptor. */
++	if (!refcount_dec_and_test(&ubuf_base->refcnt))
++		return;
++
++	ubuf = uarg_to_msgzc(ubuf_base);
++	ubufs = ubuf->ctx;
++	vq = ubufs->vq;
+ 
++	rcu_read_lock_bh();
+ 	/* set len to mark this desc buffers done DMA */
+ 	vq->heads[ubuf->desc].len = success ?
+ 		VHOST_DMA_DONE_LEN : VHOST_DMA_FAILED_LEN;
 -- 
 2.53.0
 
