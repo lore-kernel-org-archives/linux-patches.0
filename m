@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5253644B3;
-	Tue, 21 Jul 2026 19:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D1530EF7E;
+	Tue, 21 Jul 2026 19:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663717; cv=none; b=XLYgYgWNsVipwzno2JE0E1snvWFFbpuAyhznDNKD9az0sGHgQAcdr0618ydsB++khlknzeRS9e/WVsUTm5lZm6FpESHYq9s+IkTeZOMs3uKAU0LkH0XUlGVoDgQGPvgyG0LWPFiAVsInmRVQF13Bllocpn7TXLxF3xeadZDkLQI=
+	t=1784663721; cv=none; b=kqDfnbIUvN9QqboNQk7wGw/nOPvpRMxENdhOSlTn1kECdxu85zXPJhAvYrxQ7N9xv342u3Ys8Crj0ii19dFmZfuG2ok+/HhoBV3y1PGG7fT2w4L+ZbRsRDWH2HZGXksVovujLZGd/V3zdQKWDjqjGsD2rQoYfI3Wg4Hthd9WHy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663717; c=relaxed/simple;
-	bh=XXWSqPryXfYum76f9Byj62yzD0FVmUxORFYqR8QqjpQ=;
+	s=arc-20240116; t=1784663721; c=relaxed/simple;
+	bh=WgBm7LB19gRHDgwGb2CPitlzmRYd3vdljjMjiYW7qfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=miFB07oriSgtDqR11gbY+vl0oePP3ATYR7igdzO6EuOlF2xPhNJOSv4S0caIGG2ZISFsZtATLa/uG8zrzEoaGpwcMRYo9LA+Xgf0yfAJ95IW1ruyGz8gWrbZTFsrpVedBfPtel7dDsk3alRYpsp3iKVeQTdzfwAOCeHHnErKPdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vu4GKYId; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NkTwi9tBz5WE/M2mmXQZN9D9DZ+vBK4huA+oz7/418qbJtx9mdu3qt3373tCmsbBWSAtCZ+dldUb4Ul0G4bi9JVTPhFGelMp7e+eC31WLDxDNadje4lPtG/bLY3RdcJXryQlqQqp+sn1MtfBfhWxN/m8G53pcVtZotH9gt5xdaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DlZ/sDKq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vu4GKYId"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B931F000E9;
-	Tue, 21 Jul 2026 19:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DlZ/sDKq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA69A1F000E9;
+	Tue, 21 Jul 2026 19:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663716;
-	bh=HOvKc7ZeWWgD+y0g9+yl+7Q39BwYbEtfEOHyqm+Ivyk=;
+	s=korg; t=1784663719;
+	bh=BaJ77SXoR/RVGSHXQEqm6guFxh9CB3P1RfgWYVfqVQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vu4GKYId3KbBiNr+TpUgI//r/3Vab3kvyaJJE6MPfRjXdqoffjWTlEaRiroy8WP/I
-	 /vVAGGeONKnWSwrqhylroamBpTiDeJ19iGRW21G78JgOk3G+ilcmMoTtMPpq+hFMro
-	 04hgCxIVbv5S8O1Djn7TLd4nFyWK0VaOMLMGHzKo=
+	b=DlZ/sDKq+OoJ6oCSdVVoZcEc+sdp5zfDG57gT/QpUMI4ylugz0N1FWis0hLMg2c9y
+	 xgeT/Qq/uOK40nZcZGPQMt/PpeGiM4kq1Zdi6Ni816+sfBESnn954XeXbb7CFRmWQc
+	 wptxJmb5rZBa6CLCjlkXX6vUrM24Sc5Q8NC8W2oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.12 0874/1276] leds: uleds: Fix potential buffer overread
-Date: Tue, 21 Jul 2026 17:21:57 +0200
-Message-ID: <20260721152505.611766847@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.12 0922/1276] ntfs3: cap RESTART_TABLE free-chain walker at rt->used
+Date: Tue, 21 Jul 2026 17:22:45 +0200
+Message-ID: <20260721152506.667322062@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,39 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit c19fe864f667afc49d1391d764e20b66555bcf7a upstream.
+commit 9611f644302c07d21bc8af97e3e06a3d30064253 upstream.
 
-The name string supplied by userspace is not guaranteed to be
-null-terminated, so using strchr() on it might result in a buffer
-overread. The same thing will happen when said string is used by
-the LED class device.
+A crafted NTFS3 disk image triggers an in-kernel infinite loop at
+mount time, hanging the mounting thread and firing the soft-lockup
+watchdog within ~22s on multi-CPU hosts (panic with
+kernel.softlockup_panic=1).  The bug is reachable from desktop USB
+auto-mount on distributions where udisks2 routes the NTFS signature
+to the in-tree ntfs3 driver (Arch family and an increasing fraction
+of Fedora / openSUSE / RHEL deployments); CAP_SYS_ADMIN-class manual
+mount elsewhere.
 
-Fix this by using strnchr() instead and explicitly check that
-the name string is properly null-terminated.
+check_rstbl()'s second walker iterates the free-entry singly-linked
+list headed by rt->first_free with no upper bound on iteration count:
 
+  for (off = ff; off;) {
+      if (off == RESTART_ENTRY_ALLOCATED)
+          return false;
+      off = le32_to_cpu(*(__le32 *)Add2Ptr(rt, off));
+      if (off > ts - sizeof(__le32))
+          return false;
+  }
+
+The existing guards cover three exits: end-of-list (off == 0), the
+in-use marker (off == RESTART_ENTRY_ALLOCATED), and out-of-bounds
+(off > ts - sizeof(__le32)).  None of the three prevents an
+in-bounds cycle.
+
+A crafted on-disk RESTART_TABLE whose free chain contains a
+self-loop or A->B->A cycle whose offsets satisfy:
+
+  - in range [sizeof(struct RESTART_TABLE), ts - sizeof(__le32)]
+  - (off - sizeof(struct RESTART_TABLE)) % rsize == 0
+
+passes all existing guards and spins the mount-time thread forever.
+Reproduced in UML by hand-forging a 2 MB NTFS3 image whose journal
+RESTART_TABLE first_free = 0x18 and whose entry at offset 0x18
+stores 0x18 as its next pointer; mount of the forged image with
+the in-tree ntfs3 driver never returns.
+
+Bound the walker by rt->used.  Each entry on a legitimate free
+chain is unique, and the total slot count is ne = le16_to_cpu
+(rt->used).  A traversal that visits more than ne slots is by
+construction malformed; reject it as a corrupt RESTART_TABLE.
+
+After this patch, mount of the forged image returns with -EINVAL
+and a log_replay failure message, and mkntfs-produced legitimate
+images mount cleanly (verified in the same UML harness).
+
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
 Cc: stable@vger.kernel.org
-Fixes: e381322b0190 ("leds: Introduce userspace LED class driver")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20260524235553.189134-1-W_Armin@gmx.de
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/uleds.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ntfs3/fslog.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/leds/uleds.c
-+++ b/drivers/leds/uleds.c
-@@ -102,7 +102,8 @@ static ssize_t uleds_write(struct file *
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -764,8 +764,19 @@ static bool check_rstbl(const struct RES
+ 	/*
+ 	 * Walk through the list headed by the first entry to make
+ 	 * sure none of the entries are currently being used.
++	 *
++	 * Bound traversal by ne (rt->used) to defeat a crafted on-disk
++	 * cycle in the free chain.  Each entry in a legitimate free
++	 * list is unique, so a chain that visits more than ne slots
++	 * is malformed.  Without this guard, an attacker-controlled
++	 * RESTART_TABLE with a self-loop or A->B->A cycle whose
++	 * offsets satisfy the existing alignment + in-bounds guards
++	 * spins forever at mount time.
+ 	 */
+-	for (off = ff; off;) {
++	for (off = ff, i = 0; off; i++) {
++		if (i > ne)
++			return false;
++
+ 		if (off == RESTART_ENTRY_ALLOCATED)
+ 			return false;
  
- 	name = udev->user_dev.name;
- 	if (!name[0] || !strcmp(name, ".") || !strcmp(name, "..") ||
--	    strchr(name, '/')) {
-+	    strnchr(name, sizeof(udev->user_dev.name), '/') ||
-+	    !strnchr(name, sizeof(udev->user_dev.name), '\0')) {
- 		ret = -EINVAL;
- 		goto out;
- 	}
 
 
