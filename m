@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7092D5436;
-	Tue, 21 Jul 2026 17:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8057346D2B3;
+	Tue, 21 Jul 2026 17:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655614; cv=none; b=M2K44CNMUrYGCOQqXrIL3UZ5w3Ja6u7xy3jxydJn9Gqan9BwNZhzF6DGNJkwvGO6xH7vDfi1CkkCWu1WCXaZy/Tq9X+1JxhlDvEkCULux9BDXbB1myl0oRrnTYvlEGV8dRphvhT5Dzle9twJz4L/qnFWIbxbqrbYbWSOlz5WFbU=
+	t=1784655616; cv=none; b=jGdHZeOMB8QICdeATJQsEGqZimSlvFKeGsZnf4Yz4hZoyM6AOrn7qGVXzS2a16sPNydcHjNzBYxDEhavfj/W8reLnL9Efw/Ck3+iHf9c8FYFTJUOLXgfU2sFjxiqalWwUKq0bkusCbYTClxZCkP+mbTzWWKxHySbMMq++CPdIi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655614; c=relaxed/simple;
-	bh=lT5LRvDQYMmTmNNei8CTPwOQ3gUtawsC+xCwnviFnrQ=;
+	s=arc-20240116; t=1784655616; c=relaxed/simple;
+	bh=xWmVAyOHbwDc2/A6WRvQPKZxctYVwAF24pmzQQasZ6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aJuDxkcxSMvAP1U8jnvweYWNE+KLKADyleyRiTFCYRBkQnJtZX5kcT+vZMpBpZBmKXnT+KLvsTD1ug9OkyHgJgFbew2YvrOE/U3aiqqQ+Nyr0mXO0uNVYsEDMe+Gaauad+qQR2LjU3H3RxCP6h0PxFxvjKSisYNL6j1Khbf+Rdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGd/Rk93; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CGIugS7o9XkTDIXThHlAbIThilCRljnT3/DpUbQEXOCHFvy1/FZIg+xqd0wlrX9PpoYwNe2ItxYOLeG8ZUaiM2SIPEffscGitt1kiyUfOqpWbf/T2o7Ub8UQcHysb02fVsdWCdfSqcrwUCX+39bd0EYmsDzuDASTeGha7kDYz10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/naqywx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGd/Rk93"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6321F000E9;
-	Tue, 21 Jul 2026 17:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/naqywx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E724D1F00A3A;
+	Tue, 21 Jul 2026 17:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655612;
-	bh=tjlBSs/uNCgWW1I4ytp2rJ039dgpnXQ3A+r4KU8li0A=;
+	s=korg; t=1784655615;
+	bh=i9gf8IG966CnTA9aMerFA2Js+6BSf47u7piTrPQ5KjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DGd/Rk93JRdElLDEdP6vXrCrqtC9wLJ4CEg5VMdE5wMu6Fjp+wilxtSHVQV2KI8Oo
-	 1MID07FrDfMDbDgCVh14Ph1syZf9VmKe42wF/Qv9ZoWH8XIXglSpYqERp00gwVugSi
-	 kBWjFUc/SqFbyuvg8soTg5tvfxlyp8SVL6HpXI8g=
+	b=q/naqywx4mO5WyUaksKNlyVGrKxq5CImgMf6xtKYChx05FVQGdoA805F/bVroRUf8
+	 +rj2NqPGsgmw4kMdh2SL7/0T2MCRAqwJN2nJ/LDaaJGBACplKfpqc4otnA3E3u57jl
+	 X2t051SruEJtsZgZT072M1p7RGEwsonkoOevpj9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Liu <liubaolin@kylinos.cn>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0075/1611] Documentation: proc: fix section numbering in table of contents
-Date: Tue, 21 Jul 2026 17:03:11 +0200
-Message-ID: <20260721152516.524333578@linuxfoundation.org>
+Subject: [PATCH 6.18 0076/1611] arm64: dts: rockchip: fix Ethernet PHY not found on PX30 Cobra
+Date: Tue, 21 Jul 2026 17:03:12 +0200
+Message-ID: <20260721152516.550831334@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,50 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baolin Liu <liubaolin@kylinos.cn>
+From: Quentin Schulz <quentin.schulz@cherry.de>
 
-[ Upstream commit 97a7bd8c2c58a6d820df563d1d0f68aafec45477 ]
+[ Upstream commit 6598ed3586a4b1cc79423666e66b9861631a6c7e ]
 
-Commit e24ccaaf7ec4 ("block: remove last remaining traces of IDE
-documentation") removed the IDE section but left its table of
-contents entry behind.
-Fix the stale entry and renumber the following sections.
+When not passing the PHY ID with an ethernet-phy-idX.Y compatible
+property, the MDIO bus will attempt to auto-detect the PHY by reading
+its registers and then probing the appropriate driver. For this to work,
+the PHY needs to be in a working state.
 
-Fixes: e24ccaaf7ec4 ("block: remove last remaining traces of IDE documentation")
-Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Message-ID: <20260424090654.19229-1-liubaolin12138@163.com>
+Unfortunately, the net subsystem doesn't control the PHY reset GPIO when
+attempting to auto-detect the PHY. This means the PHY needs to be in a
+working state when entering the Linux kernel. This historically has been
+the case for this device, but only because the bootloader was taking
+care of initializing the Ethernet controller even when not using it.
+We're attempting to support the removal of the network stack in the
+bootloader, which means the Linux kernel will be entered with the PHY
+still in reset and now Ethernet doesn't work anymore.
+
+The devices in the field only ever had a TI DP83825, so let's simply
+bypass the auto-detection mechanism entirely by passing the appropriate
+PHY IDs via the compatible.
+
+Fixes: bb510ddc9d3e ("arm64: dts: rockchip: add px30-cobra base dtsi and board variants")
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Link: https://patch.msgid.link/20260421-px30-eth-phy-v2-1-68c375b120fd@cherry.de
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/filesystems/proc.rst | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/rockchip/px30-cobra.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/filesystems/proc.rst b/Documentation/filesystems/proc.rst
-index 8256e857e2d747..cf7eee2d9b61d7 100644
---- a/Documentation/filesystems/proc.rst
-+++ b/Documentation/filesystems/proc.rst
-@@ -23,13 +23,13 @@ fixes/update part 1.1  Stefani Seibold <stefani@seibold.net>    June 9 2009
-   1	Collecting System Information
-   1.1	Process-Specific Subdirectories
-   1.2	Kernel data
--  1.3	IDE devices in /proc/ide
--  1.4	Networking info in /proc/net
--  1.5	SCSI info
--  1.6	Parallel port info in /proc/parport
--  1.7	TTY info in /proc/tty
--  1.8	Miscellaneous kernel statistics in /proc/stat
--  1.9	Ext4 file system parameters
-+  1.3	Networking info in /proc/net
-+  1.4	SCSI info
-+  1.5	Parallel port info in /proc/parport
-+  1.6	TTY info in /proc/tty
-+  1.7	Miscellaneous kernel statistics in /proc/stat
-+  1.8	Ext4 file system parameters
-+  1.9	/proc/consoles - Shows registered system consoles
+diff --git a/arch/arm64/boot/dts/rockchip/px30-cobra.dtsi b/arch/arm64/boot/dts/rockchip/px30-cobra.dtsi
+index b7e669d8ba4d14..add917af5de783 100644
+--- a/arch/arm64/boot/dts/rockchip/px30-cobra.dtsi
++++ b/arch/arm64/boot/dts/rockchip/px30-cobra.dtsi
+@@ -397,7 +397,7 @@ &io_domains {
  
-   2	Modifying System Parameters
- 
+ &mdio {
+ 	dp83825: ethernet-phy@0 {
+-		compatible = "ethernet-phy-ieee802.3-c22";
++		compatible = "ethernet-phy-id2000.a140";
+ 		reg = <0x0>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&phy_rst>;
 -- 
 2.53.0
 
