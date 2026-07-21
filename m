@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF72344AB7F;
-	Tue, 21 Jul 2026 21:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5E135C6B1;
+	Tue, 21 Jul 2026 21:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668858; cv=none; b=oIjA4kfr/4IQpgiYFEzE3EkSc4ExTvgDMMgtqQTVTPJtwNe4KjJnR5/I/Wzc4tGi1Omw9hOVRvX/hQWxwtREWTmi6NWzaxO2A9zvUG4vKznUwIPw/CXiNFN64os9rQ/2bNZQc80qc3ONDZpsnIMyo0OEYGz/O566RkNiVSzFE+g=
+	t=1784668859; cv=none; b=XgZnRPB/wq4x2DmmDjV7Rvo7EkgEcS9Yiig4RkKF8U1up5ANqRV2efybKxcZRQ627ArqJhk+TfBH5of8AQXqp86eiwLuPkF+sjz+u6Pfy3Icg6+e8RJc2dZ7jaqEIganz9U7NcSEK72zZr/UIjsROWN2Tyn7P+SXHe18n5BSEWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668858; c=relaxed/simple;
-	bh=ralh8AWJWFDDbS+WEFEntIiUrNWps8PdROMxyZSK8+8=;
+	s=arc-20240116; t=1784668859; c=relaxed/simple;
+	bh=4/MG7W/fi7i7pNcCfhoLdAorTQTZK4IF3eb7O5hJtC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QSNE+7oWYFeqgjxcOjHiFKo6b66PtJSidMI0j3IwzEt9eKOw3KS2D1zWXViM/nMITRv+E2DB1dAxk+96DZscfD+HO8fDh1zaX96T9xgz+mK4VwvsZNI20is3OPEnQ9iJ14xk+IaFRSE2w8yJp/O74fwDIQF1bYnSBG39riePVoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ue6EslwQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BadEWvgTj24sc5oAJE64GM33s7f0WwKskPcDQPYLDyRksD8yie3CeptacoeOYadCPmbe6QhO7uAMi6QUPXSMOCxOpCO9K/Iui+ie+jBFTupMPIB5DQf3ORvT2SvU10datgLtTVXhg1bLWcKjVW1Q0c1Ob9k3U9EyIwJv0WuEZs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LzSiVGkb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ue6EslwQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304CD1F000E9;
-	Tue, 21 Jul 2026 21:20:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LzSiVGkb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7AFE1F00A3A;
+	Tue, 21 Jul 2026 21:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668855;
-	bh=FlzRXH9PoLJRTqnLNXp0iA1AR0URxuNDb4o2g+WteHk=;
+	s=korg; t=1784668858;
+	bh=Bm48Ct0sIVix/+CTb7pCnPgIEZqMqZ95VDvvLc5WpG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ue6EslwQcCoc1zR0/5sIBY+Rfourcpudt/kQ1UUble+Tu3RNHzs6hr3W4q4mQp1kR
-	 LODi1S1/WlzKkt1a3XlidMDKwcSoXlY0uQSt4/HXs6V+GXuF+LGI6c6fy0lbgUdBZU
-	 sSOrHGDRjhMKF+HLPFwtVKJ08izfj8zc9NtXfCPU=
+	b=LzSiVGkbnxpzrjYJbLomCbKjIEPOewNWm87n22lUpWLZg5s0O/3L/eDFb3dpOIdtf
+	 iieudZRChRCsB6WAtqvjYqMZEsn0cBdotn3wuQIysMYzUiVpcIBDqgXsHQ0u34v3lK
+	 IEBd5PKXQ9zg2AyUqMp3A3vHh29R6Nzofzk80SEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingjie Gao <gaoyingjie@uniontech.com>,
+	Felix Gu <ustc.gu@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0291/1067] watchdog: sp5100_tco: Use EFCH MMIO for newer Hygon FCH
-Date: Tue, 21 Jul 2026 17:14:52 +0200
-Message-ID: <20260721152431.114353066@linuxfoundation.org>
+Subject: [PATCH 6.1 0292/1067] watchdog: sprd_wdt: Remove redundant sprd_wdt_disable() on register failure
+Date: Tue, 21 Jul 2026 17:14:53 +0200
+Message-ID: <20260721152431.135068208@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,48 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Gao <gaoyingjie@uniontech.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 4f675f036cd5e9cfbe6df5f24f8338158af96a4b ]
+[ Upstream commit 96b3cfc3b8ad0524d12fed1e08bc5df3ff345f64 ]
 
-Commit 009637de1f65 ("watchdog: sp5100_tco: support Hygon FCH/SCH
-(Server Controller Hub)") added Hygon vendor matching to the efch
-layout selection, but newer Hygon 0x790b SMBus devices still need the
-efch_mmio path.
+The driver uses devm_add_action_or_reset() to register sprd_wdt_disable()
+as a managed cleanup action.
 
-The efch_mmio path enables EFCH_PM_DECODEEN_WDT_TMREN before probing the
-watchdog MMIO block. If firmware leaves that bit clear and the driver
-picks the legacy efch path instead, probe falls back to the alternate
-window and fails with "Watchdog hardware is disabled".
+When devm_watchdog_register_device() fails, the devm core will invoke
+the cleanup action automatically.
 
-Select efch_mmio for Hygon 0x790b devices with revision 0x51 or later,
-matching the equivalent AMD behavior and allowing the watchdog to
-initialize on those systems.
+The explicit sprd_wdt_disable() call in the error path is therefore
+redundant and results in adouble cleanup.
 
-Fixes: 009637de1f65 ("watchdog: sp5100_tco: support Hygon FCH/SCH (Server Controller Hub)")
-Signed-off-by: Yingjie Gao <gaoyingjie@uniontech.com>
+Fixes: 78d9bfad2e89 ("watchdog: sprd_wdt: Convert to use device managed functions and other improvements")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
 Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20260402071617.634563-2-gaoyingjie@uniontech.com
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20260223-sprd_wdt-v1-1-2e71f9a76ecb@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/sp5100_tco.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/watchdog/sprd_wdt.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/watchdog/sp5100_tco.c b/drivers/watchdog/sp5100_tco.c
-index 2bd3dc25cb0304..7e99c3b1f3676b 100644
---- a/drivers/watchdog/sp5100_tco.c
-+++ b/drivers/watchdog/sp5100_tco.c
-@@ -92,7 +92,8 @@ static enum tco_reg_layout tco_reg_layout(struct pci_dev *dev)
- 	    dev->device == PCI_DEVICE_ID_ATI_SBX00_SMBUS &&
- 	    dev->revision < 0x40) {
- 		return sp5100;
--	} else if (dev->vendor == PCI_VENDOR_ID_AMD &&
-+	} else if ((dev->vendor == PCI_VENDOR_ID_AMD ||
-+		    dev->vendor == PCI_VENDOR_ID_HYGON) &&
- 	    sp5100_tco_pci->device == PCI_DEVICE_ID_AMD_KERNCZ_SMBUS &&
- 	    sp5100_tco_pci->revision >= AMD_ZEN_SMBUS_PCI_REV) {
- 		return efch_mmio;
+diff --git a/drivers/watchdog/sprd_wdt.c b/drivers/watchdog/sprd_wdt.c
+index 4e689b6ff1418c..aacf04616fefe2 100644
+--- a/drivers/watchdog/sprd_wdt.c
++++ b/drivers/watchdog/sprd_wdt.c
+@@ -320,10 +320,9 @@ static int sprd_wdt_probe(struct platform_device *pdev)
+ 	watchdog_init_timeout(&wdt->wdd, 0, dev);
+ 
+ 	ret = devm_watchdog_register_device(dev, &wdt->wdd);
+-	if (ret) {
+-		sprd_wdt_disable(wdt);
++	if (ret)
+ 		return ret;
+-	}
++
+ 	platform_set_drvdata(pdev, wdt);
+ 
+ 	return 0;
 -- 
 2.53.0
 
