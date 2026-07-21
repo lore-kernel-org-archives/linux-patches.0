@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B4C449B2A;
-	Tue, 21 Jul 2026 22:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905803B6BE5;
+	Tue, 21 Jul 2026 22:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672125; cv=none; b=iSqAIuS34nK6cW5XAEZA1rAjLNf4M52u4hq2Lagub5RvEr5fZ2BQXXMgo1zssnzVwpgMdbe7SDy03VVaVzy6MwF5dE+vnNKHCuecakG29njUYB9m8MOfUFVNggg3kSh12mJ+hObZKCJ0AvnZIUjrNJmI3CfdqFIAZYKOg68X074=
+	t=1784672127; cv=none; b=FjDikI215pRu8h4IUEjPMNJj+9v5CcyOp06wAVwGR0m5IRspW63bjDN7ajdjrgANJ3dIpnWJ2ibJS2J9zVGewL9qAWxrjwWEXUq8IkVtTTdjalu8rCE4hZucQb9ohbOxupHTTEaJ1qHKXZ1ea/tP/4Vt/wqGYNd44S5ptc2mGAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672125; c=relaxed/simple;
-	bh=nQXWj4FVe2yO9Aqf7u+27Lv6/nVLUBuKEi1jwzY7Yv8=;
+	s=arc-20240116; t=1784672127; c=relaxed/simple;
+	bh=YlvDe1Bn+FIXS1y/yPMtDEmUvT73x69hONWLT6zo040=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShQJCLC5eQDS3k5gfEsbkAwSBKxMOOOQKlv5D3fAjlG1SyDnBCZIATZCBhqwXgag0PPCkh5rEj8PJZxgVlSYCU+4jFg2V5pRBpYYnoM89x5i69AiBNGKM+sUZntjpPkvnciIcQ+MN99Hr2uJv8EpzFchUymYF/qv/MxTrc95ENU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D05A4sgB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d6XzsU57sW9+kWvGWy+o+snc9bDxxf6EdUUSnRd86MoLT5SGgL4QseW1wsrtZykkzVwDEwzbYsF8jtxiRwUez5gQnpEQHGLQOtkZg5AXylrhxb6e3pX433NB2KVmeNCNbx9aTf3c5L8RIZzFAizS0EE9GuNmBOmPKdzd0h9yaMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qmBdE+S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D05A4sgB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A61E1F000E9;
-	Tue, 21 Jul 2026 22:15:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qmBdE+S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F37891F000E9;
+	Tue, 21 Jul 2026 22:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672123;
-	bh=QDSXGh2s5UvtOQ+i2lBJLJTwaBAs8NGzFJ10ts64D3o=;
+	s=korg; t=1784672126;
+	bh=Vg3Zgdt0mvvJOt9OVtj2E4ZoWyGqJ3qqwtR5ImjBQWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D05A4sgBambkz96r2g5/67qeq3gnnWSdc7PXYwUb/OWyds4xsOL9HdFjPp99ikxOr
-	 1Yjiea8TvtgJ15IPxHSxGEzissz+cUhifYg4d3/E+G05CPnJ0SUlWMNQRd2yTphyWj
-	 Ia4/vgZzXXYtZllQ2hHVB4NODaaKEIOZqX0PA5Ns=
+	b=0qmBdE+SExBliaVwQSnpW8O1ymggQ+jpkDUvzWa7HaXc42ocn5eiB145/9qMSn0Fj
+	 orXh/idp1KqLyY2q/wsONMy6IuSk8aUefCwtp5YuT1VMl98SCgvshTEn1DiQwdJeIS
+	 PLITOSt3hjHB9eCC7BQgbapXWpIaG+AMoOaa5xb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dan Carpenter <error27@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 507/843] net/sched: hhf: clear heavy-hitter state on reset
-Date: Tue, 21 Jul 2026 17:22:22 +0200
-Message-ID: <20260721152417.435773176@linuxfoundation.org>
+Subject: [PATCH 5.15 508/843] afs: Fix error code in afs_extract_vl_addrs()
+Date: Tue, 21 Jul 2026 17:22:23 +0200
+Message-ID: <20260721152417.456868869@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,71 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit a225f8c20712713406ae47024b8df42deacddd4a ]
+[ Upstream commit 4897cb71d4ab1f7e1a214adb1e4b80176702368d ]
 
-HHF reset does not clear the classifier state used to identify heavy
-hitters.  Packets after reset can therefore be scheduled using flow
-history from before the reset.
+The error codes on these paths are only set on the first iteration
+through the loop.  Set the correct error code on every iteration.
 
-The reset operation should return the qdisc to an empty state.
-
-Clear the heavy-hitter classifier tables when HHF is reset.
-
-Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 0a5143f2f89c ("afs: Implement VL server rotation")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260622090856.2746629-3-dhowells@redhat.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hhf.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ fs/afs/vl_list.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
-index 73cabb4451ce7a..1fb9294a27f252 100644
---- a/net/sched/sch_hhf.c
-+++ b/net/sched/sch_hhf.c
-@@ -461,12 +461,39 @@ static struct sk_buff *hhf_dequeue(struct Qdisc *sch)
- 	return skb;
- }
- 
-+static void hhf_reset_classifier(struct hhf_sched_data *q)
-+{
-+	int i;
-+
-+	if (!q->hh_flows)
-+		return;
-+
-+	for (i = 0; i < HH_FLOWS_CNT; i++) {
-+		struct hh_flow_state *flow, *next;
-+		struct list_head *head = &q->hh_flows[i];
-+
-+		list_for_each_entry_safe(flow, next, head, flowchain) {
-+			list_del(&flow->flowchain);
-+			kfree(flow);
-+		}
-+	}
-+	WRITE_ONCE(q->hh_flows_current_cnt, 0);
-+
-+	for (i = 0; i < HHF_ARRAYS_CNT; i++) {
-+		if (q->hhf_valid_bits[i])
-+			bitmap_zero(q->hhf_valid_bits[i], HHF_ARRAYS_LEN);
-+	}
-+	q->hhf_arrays_reset_timestamp = hhf_time_stamp();
-+}
-+
- static void hhf_reset(struct Qdisc *sch)
+diff --git a/fs/afs/vl_list.c b/fs/afs/vl_list.c
+index acc48216136aed..631ee7e0629dc1 100644
+--- a/fs/afs/vl_list.c
++++ b/fs/afs/vl_list.c
+@@ -88,7 +88,7 @@ static struct afs_addr_list *afs_extract_vl_addrs(const u8 **_b, const u8 *end,
  {
-+	struct hhf_sched_data *q = qdisc_priv(sch);
- 	struct sk_buff *skb;
+ 	struct afs_addr_list *alist;
+ 	const u8 *b = *_b;
+-	int ret = -EINVAL;
++	int ret;
  
- 	while ((skb = hhf_dequeue(sch)) != NULL)
- 		rtnl_kfree_skbs(skb, skb);
-+	hhf_reset_classifier(q);
- }
- 
- static void hhf_destroy(struct Qdisc *sch)
+ 	alist = afs_alloc_addrlist(nr_addrs, VL_SERVICE, port);
+ 	if (!alist)
+@@ -106,6 +106,7 @@ static struct afs_addr_list *afs_extract_vl_addrs(const u8 **_b, const u8 *end,
+ 		case DNS_ADDRESS_IS_IPV4:
+ 			if (end - b < 4) {
+ 				_leave(" = -EINVAL [short inet]");
++				ret = -EINVAL;
+ 				goto error;
+ 			}
+ 			memcpy(x, b, 4);
+@@ -116,6 +117,7 @@ static struct afs_addr_list *afs_extract_vl_addrs(const u8 **_b, const u8 *end,
+ 		case DNS_ADDRESS_IS_IPV6:
+ 			if (end - b < 16) {
+ 				_leave(" = -EINVAL [short inet6]");
++				ret = -EINVAL;
+ 				goto error;
+ 			}
+ 			memcpy(x, b, 16);
 -- 
 2.53.0
 
