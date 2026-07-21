@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D115943B3DA;
-	Tue, 21 Jul 2026 21:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9246743B3DA;
+	Tue, 21 Jul 2026 21:39:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669980; cv=none; b=CJX9EYCwFhc1xczsDMWcY4V8NqC7RqA8A7hL4nozmiOfxroBuUvNM+mOszY9SI2bp8ykusSBsT6akdmzQp3aRTG/9uoD6whzy/3CEnFI9Qy4Aevgjlq0iv7oTl916cbjd8BEtP3DVDNLxbvGVTAR259Nc3Ybej6fk6AJsoAL8mw=
+	t=1784669982; cv=none; b=ncAXCoDrT6mHsIpoaW5OLmLmwJ/EDSLAeliP9J8WW8vy/2ydvZQ4JbjPJUm7I4FbTs53YpgxKSQIi6Rm1aiLnDb7cXirZLOvrUEtQ9A/XMBZR6yHbjWCVo0sFhEagfeY2kZ4fpmh27Ebo+SvgPnb6OPqOS5378jaJAXq+B8qE8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669980; c=relaxed/simple;
-	bh=vQR515EpRZmNBgXgDtfF6AXKwMpcz4wG47lYe6pmGOo=;
+	s=arc-20240116; t=1784669982; c=relaxed/simple;
+	bh=4cmwXxb4GgR64Ga7c1FWtOpvNZWx5nukzSvJp827rd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mazwDs+nAIGJvyxlhug+lWhqDYGkZd28zRwyONE3DKkFS0zrzD1/U6F8Zm+iiuBATYrmfM0xycmBMCs1acngP7ErXiBkpplgEla7NoXT3u1wf5knqYcyRg/Vq9ZJDmSRkFQTvF2iGcWbTfm9r6dxiArVAT2kHifAEWxWRgPpn+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imOgY0/7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YH8KCT/Hg/tQt3ZeF3gfBo7COSd6N83LgJnjAONVQbY+3pLS3a5IlLLK+mlXg12Y2ujTyjWFFTh3rPOgKlUQmEuIimTvwG795eg6sDgN6Nk9yhPuxhDWXfJAZFgbodbF2KBBTEIb820ScXHdT83bpNqwMMs/ENhYzUn4tmlyX7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdTizcWO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imOgY0/7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423CD1F000E9;
-	Tue, 21 Jul 2026 21:39:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdTizcWO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F24291F000E9;
+	Tue, 21 Jul 2026 21:39:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669978;
-	bh=63ETewHmnQXsf7d5j/L1HTOWsMtltOLTZ6lJ31cKmfc=;
+	s=korg; t=1784669981;
+	bh=bp4BzKSBIEAmN1KB07AaUVFgoV8QjjQl2VE9RC307VA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=imOgY0/7gnvoLAfU2H+axUgtpoT7m7XuesS2cKwTYuZBcA9tOKkIDz0yPH56wdfP/
-	 sPRVuT90sXpRlUfbNd1b3Dnv3Q7/s2198t19TW/Ykf8AwBRWxwLPGWG6tAI6axhHOZ
-	 tLwtft/0seT4/cDejT1gZKxDHVcIM7gof8t/zAuQ=
+	b=kdTizcWOHV6e09x6rvZP3TyJFhqG4G7DrZBIRs0/ypiAbFGhYGndrBBgtWm/hCLZd
+	 8Pmh6yMoGAU9oMDQQiMOrVZJR6nsWAo/i9dmzPcj6y2tgQpWiDWPNlr1wTlXt2iTH/
+	 EcGkZeWOcDl35E3PFPmBNl3q8wuj/1ZBq3wITnEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.1 0760/1067] x86/boot: Reject too long acpi_rsdp= values
-Date: Tue, 21 Jul 2026 17:22:41 +0200
-Message-ID: <20260721152441.570899950@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 6.1 0761/1067] perf/x86/amd/lbr: Fix kernel address leakage
+Date: Tue, 21 Jul 2026 17:22:42 +0200
+Message-ID: <20260721152441.592752188@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,51 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Sandipan Das <sandipan.das@amd.com>
 
-commit d130041a7b96f79cd4c7079a6c2431a6db4c9619 upstream.
+commit 2a892294b83f541115c94b0bb637f39bef187657 upstream.
 
-cmdline_find_option() returns the full length of the parsed acpi_rsdp=
-value. get_cmdline_acpi_rsdp() then silently truncates values which do
-not fit in the val[] buffer.
+A user-only branch stack can contain branches that originate from
+the kernel. As a result, kernel addresses are exposed to user space
+even when PERF_SAMPLE_BRANCH_USER is requested. On AMD processors
+supporting X86_FEATURE_AMD_LBR_V2, perf can still report SYSRET/ERET
+entries for which the branch-from addresses are in the kernel.
 
-Prevent boot_kstrtoul() from parsing a truncated value and then the
-kernel from silently using the wrong RSDP address, see discussion in
-Link:.
+E.g.
 
-Issue a warning so that the user is aware that s/he supplied a malformed
-value and can get feedback instead of silent crashes.
+  $ perf record -e cycles -o - -j any,save_type,u -- \
+        perf bench syscall basic --loop 1000 | \
+        perf script -i - -F brstack|tr ' ' '\n'| \
+        grep -E '0x[89a-f][0-9a-f]{15}'
 
-  [ bp: Make commit message more precise. ]
+  ...
+  0xffffffff81001268/0x717a90a38f1a/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a90a39157/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a90a2c628/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a90a41b60/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a90a260db/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a90a260db/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a8bef1c30/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a8e4d3c90/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  ...
 
-Fixes: 3c98e71b42a7 ("x86/boot: Add "acpi_rsdp=" early parsing")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+The reason is that the hardware filter only considers the privilege
+level applicable to the branch target. Extend software filtering to
+also validate the branch-from addresses against br_sel, so that any
+branch record whose branch-from address is in the kernel is dropped
+when PERF_SAMPLE_BRANCH_USER is requested.
+
+Fixes: f4f925dae741 ("perf/x86/amd/lbr: Add LbrExtV2 hardware branch filter support")
+Reported-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20260617130417.36651-4-thorsten.blum@linux.dev
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://patch.msgid.link/a898a29725f6b2f30518354cdc2e432db66c43cf.1783680119.git.sandipan.das@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/acpi.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/events/amd/lbr.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/boot/compressed/acpi.c
-+++ b/arch/x86/boot/compressed/acpi.c
-@@ -182,10 +182,15 @@ static unsigned long get_cmdline_acpi_rs
- 	char val[MAX_ADDR_LEN] = { };
- 	int ret;
+--- a/arch/x86/events/amd/lbr.c
++++ b/arch/x86/events/amd/lbr.c
+@@ -124,7 +124,8 @@ static void amd_pmu_lbr_filter(void)
+ 		}
  
--	ret = cmdline_find_option("acpi_rsdp", val, MAX_ADDR_LEN);
-+	ret = cmdline_find_option("acpi_rsdp", val, sizeof(val));
- 	if (ret < 0)
- 		return 0;
- 
-+	if (ret >= sizeof(val)) {
-+		warn("acpi_rsdp= value too long; ignoring");
-+		return 0;
-+	}
-+
- 	if (boot_kstrtoul(val, 16, &addr))
- 		return 0;
- #endif
+ 		/* If type does not correspond, then discard */
+-		if (type == X86_BR_NONE || (br_sel & type) != type) {
++		if (type == X86_BR_NONE || (br_sel & type) != type ||
++		    (!(br_sel & X86_BR_KERNEL) && kernel_ip(cpuc->lbr_entries[i].from))) {
+ 			cpuc->lbr_entries[i].from = 0;	/* mark invalid */
+ 			compress = true;
+ 		}
 
 
