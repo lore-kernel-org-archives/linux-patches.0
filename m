@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9911F3D56;
-	Tue, 21 Jul 2026 17:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62601F3D56;
+	Tue, 21 Jul 2026 17:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653643; cv=none; b=fEux1tsu4BIRT3d+VQGeDfBDlRhwDJMuNeotkTLdiFzVLRlPJZ0n2kkQUQQZagKJVE0G9TenAJvAfXanaCB/WDus9fc2tQFBnn195Z8cQIqJmny3R1H7haxpgEcy3/HPLrTBebyGDY9nuGtT9sCBbUgsyXlTKkInVMql73slNDY=
+	t=1784653646; cv=none; b=OkxUp8Sz+JfwDcHMTqW2SrSo/GvpEdu07LiZGA7B44Z/gVZdTKHSpRayML2J8xGyhRqYUqihILBwbuHt4obJhccUe7BbaLSCyNXOGbg1HMl8NvbjQwRc+waVVDEUjNJE+hk0t8ov4K1l4aBKw5Qg8AOeGQ8NSPXm+kD54bNJXk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653643; c=relaxed/simple;
-	bh=TuPQ/0iGBypVt+FkkqSpHp2nKOfKlcux596CSkf59xU=;
+	s=arc-20240116; t=1784653646; c=relaxed/simple;
+	bh=ijA7nw+81OUcWtXSrvxm7GHx0BiGEm0iW6grkKxAu4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xjk2niEPoXp6qUNv0SmrADBiXoMNtrnsJkRqWY3ymqDx73h6hqHqAO7ZyIBOEmFHywP3BZKoQ9aWY1WhonaennObAQFZotAvUGB6uTnu6amehe0SxZXzjW1YZIpwSCqaR1RZQBuEez97XLfiyA2q5fQmT51Te2lHWLy/M/6ykCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJ7Rm1e+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YQ1FQMjJp4zixEzdXDmsCOstZWWP1NH+/WVjnjRRbdkiW7zrpkzLebSSmO2TAMD3r5ieGEIIT8PMUFtLeQABeBdoLDHyWJlzNevPpdOihJo+jahMXL+Z+l5vJloz000bZZywGlg8LIB+kMwBT0L3AhqC4lXpH6oQxR05ZPYM5sM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ks7AnH84; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJ7Rm1e+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B402A1F00A3D;
-	Tue, 21 Jul 2026 17:07:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ks7AnH84"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512551F000E9;
+	Tue, 21 Jul 2026 17:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653642;
-	bh=RISSBWn1n/llKA5PMlH32srpAExXT0ZlCvR5ICZ1wDI=;
+	s=korg; t=1784653644;
+	bh=dxqGRynMWoCTfT0NYPtt5VemaUSWXSxL9xsxV2PrS/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YJ7Rm1e+tjRrixjn7AeHjvKqkPPRwUjnefkI+KjcTRx2wNYNsQHqPfBC6lYVY2Lk+
-	 mNGSjP28a9OacojJNRJlcuesZ8SIykaIEn83r77IcfcP3HyB/n3U2xrtsYq9pzAv1X
-	 tZAG/u3q9sItvbntNz3R02TJYRBzDBau7lP3ZOkc=
+	b=Ks7AnH848T+75fSRIqsGdcHauglapipDhjk9T4qgMP7YeXkuI09ovwV/xbtrdEC4v
+	 jJ4WwV1HwJKIW1SXS3OgR0yxB+9PWNn9OGLGDfTlPoSHJmg3wlsp5PZOK7b2Cye+hv
+	 RKYWJbNMbGnkDYaU/HzXkTzlrCSmb4oKc//YDono=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matthew Brost <matthew.brost@intel.com>,
 	Arvind Yadav <arvind.yadav@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1404/2077] drm/xe: fix NPD in bo_meminfo()
-Date: Tue, 21 Jul 2026 17:17:57 +0200
-Message-ID: <20260721152625.924373888@linuxfoundation.org>
+Subject: [PATCH 7.1 1405/2077] drm/xe/pt: prevent invalid cursor access for purged BOs
+Date: Tue, 21 Jul 2026 17:17:58 +0200
+Message-ID: <20260721152625.947979886@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -57,28 +57,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthew Auld <matthew.auld@intel.com>
 
-[ Upstream commit b5c55015d4164a0f206bcdcf2985da948b3c7837 ]
+[ Upstream commit 8a0fb57675be578c4db19deb4298ed08a70f0f1a ]
 
-When a buffer object is purged, its ttm.resource is set to NULL via the
-TTM pipeline gutting flow. However, the BO remains in the client's
-object list until userspace explicitly closes the GEM handle. If memory
-stats are queried during this time, accessing bo->ttm.resource->mem_type
-will result in a NULL pointer dereference.
+During a page table walk for binding, xe_pt_stage_bind() explicitly
+skips initializing the xe_res_cursor for purged BOs, treating them
+similarly to NULL VMAs by only setting the cursor size.
 
-Fix this by safely skipping purged BOs in bo_meminfo, as they no longer
-consume any memory.
+However, xe_pt_hugepte_possible() and xe_pt_scan_64K() did not check
+if the BO was purged before attempting to walk the cursor using
+xe_res_dma() and xe_res_next(). Because the cursor was left
+uninitialized for purged BOs, this falls through and triggers
+warnings like:
 
-User is getting NPD on device resume, and possible theory is that in
-bo_move(), if we need to evict something to SYSTEM to save the CCS state,
-but the BO is marked as dontneed, this won't trigger a move but will
-nuke the pages, leaving us with a NULL bo resource. And the meminfo()
-doesn't look ready to handle a NULL resource.
+  WARNING: drivers/gpu/drm/xe/xe_res_cursor.h:274 at xe_res_next
 
-v2 (Sashiko):
- - There could potentially be other cases where we might end up with a
-   NULL resource, so make this a general NULL check for now.
+Fix this by explicitly checking if the BO is purged in both
+xe_pt_hugepte_possible() and xe_pt_scan_64K(), returning early just
+as we do for NULL VMAs, avoiding the invalid cursor accesses entirely.
 
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/8419
+As a precaution, also zero-initialize the cursor in xe_pt_stage_bind()
+to ensure we don't pass garbage data into the page table walkers
+if we ever hit a similar edge case in the future.
+
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/8418
 Fixes: ad9843aac91a ("drm/xe/madvise: Implement purgeable buffer object support")
 Assisted-by: Copilot:gemini-3.1-pro-preview
 Reported-by: Matthew Schwartz <matthew.schwartz@linux.dev>
@@ -88,40 +89,65 @@ Cc: Matthew Brost <matthew.brost@intel.com>
 Cc: Arvind Yadav <arvind.yadav@intel.com>
 Reviewed-by: Matthew Brost <matthew.brost@intel.com>
 Tested-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Link: https://patch.msgid.link/20260625152054.450125-6-matthew.auld@intel.com
-(cherry picked from commit c9a8e7daa0afe3161111e27fd92176e608c7f186)
+Link: https://patch.msgid.link/20260625152054.450125-8-matthew.auld@intel.com
+(cherry picked from commit 4c7b9c6ece32440e5a435a92076d049450cd2d2e)
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_drm_client.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_pt.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_drm_client.c b/drivers/gpu/drm/xe/xe_drm_client.c
-index 84b66147bf4944..81020b4b344e08 100644
---- a/drivers/gpu/drm/xe/xe_drm_client.c
-+++ b/drivers/gpu/drm/xe/xe_drm_client.c
-@@ -168,10 +168,20 @@ static void bo_meminfo(struct xe_bo *bo,
- 		       struct drm_memory_stats stats[TTM_NUM_MEM_TYPES])
+diff --git a/drivers/gpu/drm/xe/xe_pt.c b/drivers/gpu/drm/xe/xe_pt.c
+index 3e438a2799850a..4d8f0a8b072e52 100644
+--- a/drivers/gpu/drm/xe/xe_pt.c
++++ b/drivers/gpu/drm/xe/xe_pt.c
+@@ -432,6 +432,7 @@ xe_pt_insert_entry(struct xe_pt_stage_bind_walk *xe_walk, struct xe_pt *parent,
+ static bool xe_pt_hugepte_possible(u64 addr, u64 next, unsigned int level,
+ 				   struct xe_pt_stage_bind_walk *xe_walk)
  {
- 	u64 sz = xe_bo_size(bo);
--	u32 mem_type = bo->ttm.resource->mem_type;
-+	u32 mem_type;
++	struct xe_bo *bo = xe_vma_bo(xe_walk->vma);
+ 	u64 size, dma;
  
- 	xe_bo_assert_held(bo);
+ 	if (level > MAX_HUGEPTE_LEVEL)
+@@ -445,8 +446,8 @@ static bool xe_pt_hugepte_possible(u64 addr, u64 next, unsigned int level,
+ 	if (next - xe_walk->va_curs_start > xe_walk->curs->size)
+ 		return false;
  
-+	/*
-+	 * The resource can be NULL if the BO has been purged, plus maybe some
-+	 * other cases. Either way there shouldn't be any memory to account for,
-+	 * or a current resource to account this against, so skip for now.
-+	 */
-+	if (!bo->ttm.resource)
-+		return;
-+
-+	mem_type = bo->ttm.resource->mem_type;
-+
- 	if (drm_gem_object_is_shared_for_memory_stats(&bo->ttm.base))
- 		stats[mem_type].shared += sz;
- 	else
+-	/* null VMA's do not have dma addresses */
+-	if (xe_vma_is_null(xe_walk->vma))
++	/* null VMA's and purged BO's do not have dma addresses */
++	if (xe_vma_is_null(xe_walk->vma) || (bo && xe_bo_is_purged(bo)))
+ 		return true;
+ 
+ 	/* if we are clearing page table, no dma addresses*/
+@@ -467,6 +468,7 @@ static bool xe_pt_hugepte_possible(u64 addr, u64 next, unsigned int level,
+ static bool
+ xe_pt_scan_64K(u64 addr, u64 next, struct xe_pt_stage_bind_walk *xe_walk)
+ {
++	struct xe_bo *bo = xe_vma_bo(xe_walk->vma);
+ 	struct xe_res_cursor curs = *xe_walk->curs;
+ 
+ 	if (!IS_ALIGNED(addr, SZ_64K))
+@@ -475,8 +477,8 @@ xe_pt_scan_64K(u64 addr, u64 next, struct xe_pt_stage_bind_walk *xe_walk)
+ 	if (next > xe_walk->l0_end_addr)
+ 		return false;
+ 
+-	/* null VMA's do not have dma addresses */
+-	if (xe_vma_is_null(xe_walk->vma))
++	/* null VMA's and purged BO's do not have dma addresses */
++	if (xe_vma_is_null(xe_walk->vma) || (bo && xe_bo_is_purged(bo)))
+ 		return true;
+ 
+ 	xe_res_next(&curs, addr - xe_walk->va_curs_start);
+@@ -707,7 +709,7 @@ xe_pt_stage_bind(struct xe_tile *tile, struct xe_vma *vma,
+ {
+ 	struct xe_device *xe = tile_to_xe(tile);
+ 	struct xe_bo *bo = xe_vma_bo(vma);
+-	struct xe_res_cursor curs;
++	struct xe_res_cursor curs = {};
+ 	struct xe_vm *vm = xe_vma_vm(vma);
+ 	struct xe_pt_stage_bind_walk xe_walk = {
+ 		.base = {
 -- 
 2.53.0
 
