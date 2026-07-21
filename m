@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03538443A94;
-	Tue, 21 Jul 2026 21:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A41635C697;
+	Tue, 21 Jul 2026 21:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668407; cv=none; b=QHsaaJIbi9y4LU0wvKi/rK7FAtqHw5YPDluh59x8xw4hRV2k7XSGu8S421x0OVstEH2lqugh9lGPN102VUi+SL4eHMi5bDa1d87/oAnj7HWqFgV5I7zo2wsY99us50+SolAYo3eRvueob39vEZZ40c+4CS2TimLAbMHofE15RSI=
+	t=1784668408; cv=none; b=E2+MCznRLVKr3GwNyiaY/tE4sLsIa4Jla57q3FW9byMabRIwWcunlR9BQu3bEcZSPm9XK12F1xe4hi6ERa+ASvEwvZ9zNnvL8RupQZVRw19Q672v6MFQUG0ZrosFv+lKyrpppZK73eWlAHdl9a+4tONT2inVCGIHCZF6/f8i5F8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668407; c=relaxed/simple;
-	bh=BC/Ehdxj4gcGBQUfPZ8k5jNCbAGU1cBQ39jRAIVyYak=;
+	s=arc-20240116; t=1784668408; c=relaxed/simple;
+	bh=NX1XTASJ+/EQmvZB/PFyUZ78+mpN6J1MsLEH9G7//Pw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XSyNt26k+cMpDlTGxXV80gMDvESFrLJLs3mizGQ6kEGodOaTcnj4CKHN4VqDwjHAJMnWqNOx3PZmjI0fGna6wDPRNNPerDtkz8l5ofIktLo3DpFulEPy06MzUR825trdNF3R3JGkBKMZSxVb2zyVrWWHNZbrrHdxMYGtPAzGBDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9Bkn+jM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j/ipuJj3JwQMze22ZKswT6JDt2GEePoFMU+ovHLdkeHbAHgN8nM8iNxaOL2xksXhzPwKnZkYzpbTmgzQITb4kaaJtbrUsT41IRx8YRWC/hAcBnv2r7+Zxrp7dTp607qffVdAR1dAJr7dufWjszonAgs4vT9d5LlgUlvTE0eHNTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IYMRCC3W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9Bkn+jM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF951F000E9;
-	Tue, 21 Jul 2026 21:13:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYMRCC3W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A044D1F00A3A;
+	Tue, 21 Jul 2026 21:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668404;
-	bh=LAg1vhogwWpeFcyz2kCtAsaPOUik75NZgYox0GzGmms=;
+	s=korg; t=1784668407;
+	bh=NPyEcmJS/vsFG8N25YeW91Eu9+XPOz52jaQHiahVH0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o9Bkn+jM57uTzMIw6+CrVRXqklkChLoZ/Ea6JhoitH7J5fjxA9v6aBbZPc+hehkoj
-	 iFwTuSnZK6M7KhunFN0iUJInR3mlH5ChimlgNg0jiWki7vyn9cwkPv4SinJ6/ky3W+
-	 U9HT88deLYIqkX/OMcDW6Xonyt+MkIuxal/mSmeQ=
+	b=IYMRCC3WvAJO3UgMl1KZuywqC2QMS6KQ0VN1gNIr9BDqjmIDdW2o/lCLR2YIk3S+S
+	 s2M54WmB+6YEvGzZ5pHxTlOt56ZzKKJuNk21Z8lcIx6Me1CL5dBY5gtsaKQurXKyK/
+	 ey5ZsP3S5HPQGqcCFJcO6pm0Ro7dqqP+IbmDOj14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.1 0164/1067] bpf: Restore sysctl new-value from 1 to 0
-Date: Tue, 21 Jul 2026 17:12:45 +0200
-Message-ID: <20260721152428.259190806@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.1 0147/1067] firmware_loader: fix device reference leak in firmware_upload_register()
+Date: Tue, 21 Jul 2026 17:12:28 +0200
+Message-ID: <20260721152427.884125888@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -54,52 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 2566c3b24219c5b30e35205cba029ff34ff7c78b upstream.
+commit 896df22ee57648b0c505bd76ddbc6b2341834696 upstream.
 
-Commit 4e63acdff864 ("bpf: Introduce bpf_sysctl_{get,set}_new_value
-helpers") changed the success return value to 0, but failed to update the
-corresponding check in __cgroup_bpf_run_filter_sysctl(). Since
-bpf_prog_run_array_cg() now returns 0 on success, the legacy ret == 1
-condition is never satisfied. As a result, the modified value is ignored,
-and bpf_sysctl_set_new_value() fails to replace the write buffer.
+firmware_upload_register()
+  -> fw_create_instance()
+     -> device_initialize()
 
-Fix this by checking for a return value of 0 instead, so cgroup/sysctl
-programs can correctly replace the pending sysctl buffer.
+After fw_create_instance() succeeds, the lifetime of the embedded struct
+device is expected to be managed through the device core reference
+counting, since fw_create_instance() has already called
+device_initialize().
 
-This bug was discovered during a manual code review. Tested via a
-cgroup/sysctl BPF reproducer overriding writes to a target sysctl.
-Pre-fix, bpf_sysctl_set_new_value("foo") was silently ignored: the write
-returned 8192 and the value remained "600". Post-fix, the BPF replacement
-buffer properly propagates: the write returns 3 and the value updates to
-"foo".
+In firmware_upload_register(), if alloc_lookup_fw_priv() fails after
+fw_create_instance() succeeds, the code reaches free_fw_sysfs and frees
+fw_sysfs directly instead of releasing the device reference with
+put_device(). This may leave the reference count of the embedded struct
+device unbalanced, resulting in a refcount leak.
 
-Fixes: f10d05966196 ("bpf: Make BPF_PROG_RUN_ARRAY return -err instead of allow boolean")
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review. Fix this by using put_device(fw_dev) in the
+failure path and letting fw_dev_release() handle the final cleanup,
+instead of freeing the instance directly from the error path.
+
+Fixes: 97730bbb242c ("firmware_loader: Add firmware-upload support")
 Cc: stable@vger.kernel.org
-
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Xu Kuohai <xukuohai@huawei.com>
-Link: https://lore.kernel.org/r/20260603105317.944304-4-dawei.feng@seu.edu.cn
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260505091231.607089-1-lgs201920130244@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/cgroup.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/firmware_loader/sysfs_upload.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -1744,7 +1744,7 @@ int __cgroup_bpf_run_filter_sysctl(struc
+--- a/drivers/base/firmware_loader/sysfs_upload.c
++++ b/drivers/base/firmware_loader/sysfs_upload.c
+@@ -340,7 +340,6 @@ firmware_upload_register(struct module *
+ 		goto free_fw_upload_priv;
+ 	}
+ 	fw_upload->priv = fw_sysfs;
+-	fw_sysfs->fw_upload_priv = fw_upload_priv;
+ 	fw_dev = &fw_sysfs->dev;
  
- 	kfree(ctx.cur_val);
+ 	ret = alloc_lookup_fw_priv(name, &fw_cache, &fw_priv,  NULL, 0, 0,
+@@ -348,10 +347,12 @@ firmware_upload_register(struct module *
+ 	if (ret != 0) {
+ 		if (ret > 0)
+ 			ret = -EINVAL;
+-		goto free_fw_sysfs;
++		put_device(fw_dev);
++		goto free_fw_upload_priv;
+ 	}
+ 	fw_priv->is_paged_buf = true;
+ 	fw_sysfs->fw_priv = fw_priv;
++	fw_sysfs->fw_upload_priv = fw_upload_priv;
  
--	if (ret == 1 && ctx.new_updated) {
-+	if (!ret && ctx.new_updated) {
- 		kvfree(*buf);
- 		*buf = ctx.new_val;
- 		*pcount = ctx.new_len;
+ 	ret = device_add(fw_dev);
+ 	if (ret) {
+@@ -362,9 +363,6 @@ firmware_upload_register(struct module *
+ 
+ 	return fw_upload;
+ 
+-free_fw_sysfs:
+-	kfree(fw_sysfs);
+-
+ free_fw_upload_priv:
+ 	kfree(fw_upload_priv);
+ 
 
 
