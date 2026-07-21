@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF1746A5E4;
-	Tue, 21 Jul 2026 15:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFBA46A5E8;
+	Tue, 21 Jul 2026 15:37:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648234; cv=none; b=p7wjVMvQ3qvS0BM+w25oyzOArPPxSz+QDZu4WWxy5niwUoaGGs4DwTDDgx07Y0kGrz+/lCpzLGztIqbK1NZdMe1esu+qXG0VY7P22BF/5nMmGWUOH6PrHjsZeRtB8xp+bOtO+7aBcheSuJCwiqV/Dd++ZoDjEsoYOjnwcECJzP0=
+	t=1784648237; cv=none; b=rHnVWuJpuidlCb6Euz1Z2eRJiG9AeP10lQW9tL93fVUuUls6mRtLWthNVADwMqFmfN5Kdvl/m4/uQi9oYeuZdwbhgqS1cpPQ+b4RPSJlxhA9JD8EZKF+Sg7mIdjfN7dHJz6xNcKI3CFhvY/jnvy0K1h1XKSmrLodQSwQGntG6pU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648234; c=relaxed/simple;
-	bh=NjPJUbojGpnIwhBxQJN6epbEatsWVSd9GNjMIFrOx8M=;
+	s=arc-20240116; t=1784648237; c=relaxed/simple;
+	bh=XUnfmSxPCub3W1iWqcRF0rAZdEZZ9T9T0WvH3Z8QJVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rVew+wQnK6/sA8IiTrtBQCY708OTYlOD61aPFHvtHG1EdS2bNUlOXhdsvOcCen5GMR1kiKJ5eLirwoarqdeKdwumQODKAlbaeekf1MnqtNEVw+0hBv1gC6A5Z9xOvZFCwkY6M0xpIVZf83G24B6ImgblFdRWKF/Tz1LdTJj15Y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DOtNfRoQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tbsv84n6EDCAeGEE8Ss7qFJdFJVa2MuLbpzwLlHh0dserBPRcz52g1NX5zhvfBdipeFmFFRKxda2CFndzy9nPVmUIYb6osOoCfsX0TYiCtKaGAxIdf3LlgOm/v9VtLl4Bl29PSjTSwTTkLnrjkmyxtKdRgtEy94SQn7Je5st4L0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zD3GxyBi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DOtNfRoQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 579351F000E9;
-	Tue, 21 Jul 2026 15:37:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zD3GxyBi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4401F000E9;
+	Tue, 21 Jul 2026 15:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648232;
-	bh=9B2+9DFX7g0Tm8F/S5U8QO/H91pK0AT9LkZrunSLpoI=;
+	s=korg; t=1784648235;
+	bh=3YSLHKKKRwqorD8V6AGjWJNm+f8sbQgckZZUswtSKWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DOtNfRoQJT/dQJHSpRmBfbLA8T7LOfnhXqHviGKvTeAQHVUBMgElNWatiL4wAOjAy
-	 yOtB88gccTq+r8I1ydGthi4eKU9OHUAyjajN2I7N5vSpHIaGxxo2e4DhEDM/i4EhQL
-	 j3rBIY6JPjXmstrZBUXvS+ciBGFiZqPHpWti3V4Q=
+	b=zD3GxyBiD/0A3+ZKhIVxBjgEVs9E3QrYztRM3LUlQe96/JwCftX5EPI8NY6oMKLxz
+	 Q0b36DJG5CrAGrqhXN/biqf4pSYZGy/pEOkZ23nU2gy4a2Q+SfbWuHa/pATdO1Qxrk
+	 IfgmWiWQ01R7eIrxdgwJCUzRZ3gQXxvThNUUeX0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Lawrence <joe.lawrence@redhat.com>,
-	Song Liu <song@kernel.org>,
-	Miroslav Benes <mbenes@suse.cz>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0121/2077] objtool/klp: Fix is_uncorrelated_static_local() for Clang
-Date: Tue, 21 Jul 2026 16:56:34 +0200
-Message-ID: <20260721152555.553295876@linuxfoundation.org>
+Subject: [PATCH 7.1 0086/2077] arm64: dts: qcom: ipq5424: Fix USB simple_bus_reg warnings
+Date: Tue, 21 Jul 2026 16:55:59 +0200
+Message-ID: <20260721152554.721758791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,81 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Lawrence <joe.lawrence@redhat.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 84c304a534b844703d3437811e8f072166e3f116 ]
+[ Upstream commit 864fde494aa1dd26c68254661f2ce973e9f03832 ]
 
-For naming function-local static locals, GCC uses <var>.<id>, e.g.
-__already_done.15, while Clang uses <func>.<var> with optional .<id>,
-e.g. create_worker.__already_done.111
+Correct the unit address of USB nodes in Qualcomm IPQ5424 SoC DTSI to
+fix W=1 DTC warnings:
 
-The existing is_uncorrelated_static_local() check only matches the GCC
-convention where the variable name is a prefix.  Handle both cases by
-checking for a prefix match (GCC) and by checking after the first dot
-separator (Clang).
+  ipq5424.dtsi:642.22-693.5: Warning (simple_bus_reg): /soc@0/usb2@1e00000: simple-bus unit address format error, expected "1ef8800"
+  ipq5424.dtsi:733.22-786.5: Warning (simple_bus_reg): /soc@0/usb3@8a00000: simple-bus unit address format error, expected "8af8800"
 
-Fixes: dd590d4d57eb ("objtool/klp: Introduce klp diff subcommand for diffing object files")
-Signed-off-by: Joe Lawrence <joe.lawrence@redhat.com>
-Acked-by: Song Liu <song@kernel.org>
-Reviewed-by: Miroslav Benes <mbenes@suse.cz>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Fixes: 113d52bdc820 ("arm64: dts: qcom: ipq5424: Add USB controller and phy nodes")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260405-dts-qcom-w-1-fixes-v2-3-1f2c7b74a93f@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/klp-diff.c | 33 +++++++++++++++++++++++----------
- 1 file changed, 23 insertions(+), 10 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq5424.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/objtool/klp-diff.c b/tools/objtool/klp-diff.c
-index 0b0d1503851ff9..b1b068e9b4c708 100644
---- a/tools/objtool/klp-diff.c
-+++ b/tools/objtool/klp-diff.c
-@@ -242,16 +242,17 @@ static struct symbol *next_file_symbol(struct elf *elf, struct symbol *sym)
- static bool is_uncorrelated_static_local(struct symbol *sym)
- {
- 	static const char * const vars[] = {
--		"__already_done.",
--		"__func__.",
--		"__key.",
--		"__warned.",
--		"_entry.",
--		"_entry_ptr.",
--		"_rs.",
--		"descriptor.",
--		"CSWTCH.",
-+		"__already_done",
-+		"__func__",
-+		"__key",
-+		"__warned",
-+		"_entry",
-+		"_entry_ptr",
-+		"_rs",
-+		"descriptor",
-+		"CSWTCH",
- 	};
-+	const char *dot;
+diff --git a/arch/arm64/boot/dts/qcom/ipq5424.dtsi b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
+index f20cda42909497..876bf6a8b8ff0c 100644
+--- a/arch/arm64/boot/dts/qcom/ipq5424.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
+@@ -639,7 +639,7 @@ qusb_phy_1: phy@71000 {
+ 			status = "disabled";
+ 		};
  
- 	if (!is_object_sym(sym) || !is_local_sym(sym))
- 		return false;
-@@ -259,8 +260,20 @@ static bool is_uncorrelated_static_local(struct symbol *sym)
- 	if (!strcmp(sym->sec->name, ".data.once"))
- 		return true;
+-		usb2: usb2@1e00000 {
++		usb2: usb2@1ef8800 {
+ 			compatible = "qcom,ipq5424-dwc3", "qcom,dwc3";
+ 			reg = <0 0x01ef8800 0 0x400>;
+ 			#address-cells = <2>;
+@@ -730,7 +730,7 @@ ssphy_0: phy@7d000 {
+ 			status = "disabled";
+ 		};
  
-+	dot = strchr(sym->name, '.');
-+	if (!dot)
-+		return false;
-+
- 	for (int i = 0; i < ARRAY_SIZE(vars); i++) {
--		if (strstarts(sym->name, vars[i]))
-+		size_t len = strlen(vars[i]);
-+
-+		/* GCC: <var>.<id> */
-+		if (strstarts(sym->name, vars[i]) && (sym->name[len] == '.'))
-+			return true;
-+
-+		/* Clang: <func>.<var>[.<id>] */
-+		if (strstarts(dot + 1, vars[i]) &&
-+		    (dot[1 + len] == '.' || dot[1 + len] == '\0'))
- 			return true;
- 	}
+-		usb3: usb3@8a00000 {
++		usb3: usb3@8af8800 {
+ 			compatible = "qcom,ipq5424-dwc3", "qcom,dwc3";
+ 			reg = <0 0x08af8800 0 0x400>;
  
 -- 
 2.53.0
