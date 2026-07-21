@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B015746AA67;
-	Tue, 21 Jul 2026 15:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208FD46AA88;
+	Tue, 21 Jul 2026 15:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648178; cv=none; b=s0e5T/q63F/fwghPB0tm0DWYUy9lBOnA52nZbaLVXUaxPKlKg4hqFZqtokpoZc8FBURhj1zUwup5xzi/aBtZxuQvD3Fk1uNhz3Jx0mKFARYB7kIbqV4a2sKwBfykk/uCG5+kbZgZLS4D4958m65bKxXCzoHLFalAMvget3C1dgk=
+	t=1784648181; cv=none; b=qMK8u+Exi4S6w2xVUycXp/2Hl2WSFxTNM0yBB32f1Du9CqG9HUbqAL6KWhdpObVCWUPbXrS/U+dHy9frEo0n1M5vysS2RxEfA4SzvFgLwF7ySchGQ/5cuby4f+CasV0THS7zyYI6xMP2SotbMFov4YF2KqCtAsU5M6DxqnSzLUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648178; c=relaxed/simple;
-	bh=2e8P0YOl+K+LjUh0E/vLIuBb4k46XD1/LqA6nN13IxI=;
+	s=arc-20240116; t=1784648181; c=relaxed/simple;
+	bh=ikREUq/qQ2vFGSaiHCJSGI94Kbzv+zGcrF/zUhtKIHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t03sRXPVaYt31NxMwHtAJyvvfeGDpbMKPKzvfubp62v91pDdY5QB4iEi1d8aJzmKcwWdomfHIYtQ7s1KuIsJ1/zpFMsKVrfOUIA5hK+v6st+whTjGdTDrWtIlxthD/jJto2tf2uQ21ID4Ny8V0J+9YQGrXuZTxYvWpFYLHRkJg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+83v7IL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WA+7Ih6EUOSXeU6e56N2KsMjNQ4tjaWnOXL89eU/t7J5cjjiAoENNa9e2i33g5pmsmTXrfhOHlZ2KIppSvX2yRhDmfGDqRE8rj09k33YyWgV/vVd90PByUKEs2nv59H8+ZQpwJbMiXEtB9WcvWUIWe4YW/DZk4RF7h1o/Gw5HOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ush5Uqfm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+83v7IL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC05E1F000E9;
-	Tue, 21 Jul 2026 15:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ush5Uqfm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ABF51F000E9;
+	Tue, 21 Jul 2026 15:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648177;
-	bh=shrX2qzp2h6nfwOiFa+/BojoJeXUrtLxIwVPhHimnHM=;
+	s=korg; t=1784648180;
+	bh=4rUJ2tNIj72mD//LrKCRAUCRXKu6dljQzzFlxhLr4dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I+83v7ILKcXDyO6+cw/DKdwhcm+xrMqAGWtd/XJkVma6KKkzi3YCRGUviBGYW6mJJ
-	 UJHFK7oUe9v/x+E1fgqeLX8bVP4vdYUUK7qnfFKRIREJf5nHrdsHUrtfaFN8WaNq6x
-	 kUdBtSojJsMh/1cWXtZKEBkBZJsTV7WQkIej00yc=
+	b=ush5UqfmRnMB6JmkpA1srF0AiRoXW6xXxjymUJk4V00dgFlfudiVukGrBYGja9cx6
+	 Noq+IRQKKg55XYGZePDh7+halwp2JA6qPXyNJPGjHH9jTYbSseLE0GFrnk6mEDkcNa
+	 1L48YbulaorO1vFYc0fGjnb3A75jUOWZOjg6jY+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Shin-Yi Lin <isaiah@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0084/2077] arm64: dts: qcom: glymur: Fix USB simple_bus_reg warning
-Date: Tue, 21 Jul 2026 16:55:57 +0200
-Message-ID: <20260721152554.677405442@linuxfoundation.org>
+Subject: [PATCH 7.1 0102/2077] wifi: rtw89: Correct data type for scan index to avoid infinite loop
+Date: Tue, 21 Jul 2026 16:56:15 +0200
+Message-ID: <20260721152555.099568005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,38 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Shin-Yi Lin <isaiah@realtek.com>
 
-[ Upstream commit cd66b6d256f94e40922941e14d7f9390d35d072b ]
+[ Upstream commit 08fdcb529df6df3562dd2b0035f88dd5be8b3c68 ]
 
-Correct the unit address of USB node in Qualcomm Glymur SoC DTSI to fix
-W=1 DTC warning:
+A kernel soft lockup was observed during Wi-Fi scanning on the 6GHz band.
+The CPU becomes stuck in rtw89_hw_scan_add_chan_ax for over 20 seconds,
+leading to a system panic.
 
-  glymur.dtsi:4027.23-4093.5: Warning (simple_bus_reg): /soc@0/usb@a2f8800: simple-bus unit address format error, expected "a200000"
+RIP points to 0f b6 c3 (movzbl %bl, %eax), which zero-extends
+the low 8 bits of RBX into RAX.
+RBX (the counter i) has reached a huge value: 0x137466a1.
 
-Fixes: 4eee57dd4df9 ("arm64: dts: qcom: glymur: Add USB related nodes")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260405-dts-qcom-w-1-fixes-v2-1-1f2c7b74a93f@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+  watchdog: BUG: soft lockup - CPU#2 stuck for 26s! [kworker/u16:4:6124]
+  Workqueue: events_unbound cfg80211_wiphy_work [cfg80211]
+  RIP: 0010:rtw89_hw_scan_add_chan_ax+0xb3/0x6e0 [rtw89_core]
+  Code: a0 48 89 45 a8 44 89 6d 9c 44 89 75 98 eb 29 66 66 2e 0f 1f
+  84 00 00 00 00 00 66 66 2e 0f 1f 84 00 00 00 00 00 66 90 83 c3 01
+  <0f> b6 c3 41 3b 44 24 74 0f 83 0b 02 00 00 0f b6 c3 48 8d 14 80 49
+  RSP: 0018:ffffcb48cbaa39f8 EFLAGS: 00000202
+  RAX: 0000000000000005 RBX: 00000000137466a1 RCX: 0000000000000000
+  RDX: ffff89ffc9d851a8 RSI: 0000000000004f0d RDI: 0000000096af0130
+  RBP: ffffcb48cbaa3a60 R08: 0000000000000000 R09: ffff8a00b7502080
+  R10: ffff8a00b75ff600 R11: 0000000000000000 R12: ffff89ffc7553870
+  R13: ffff8a00b7ac8f19 R14: ffff8a00b75020d8 R15: ffff89ffc3d54d80
+  FS:  0000000000000000(0000) GS:ffff8a014f962000(0000)
+  knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007558d7f9f4c4 CR3: 0000000178040001 CR4: 00000000001706f0
+  Call Trace:
+   <TASK>
+   rtw89_hw_scan_prep_chan_list_ax+0x8a/0x400 [rtw89_core]
+   rtw89_hw_scan_start+0x546/0x8a0 [rtw89_core]
+   ? rtw89_fw_h2c_default_cmac_tbl+0x13c/0x1f0 [rtw89_core]
+   rtw89_ops_hw_scan+0xae/0x120 [rtw89_core]
+   drv_hw_scan+0xbb/0x180 [mac80211]
+   __ieee80211_start_scan+0x2fc/0x750 [mac80211]
+   ieee80211_request_scan+0xe/0x20 [mac80211]
+   ieee80211_scan+0x123/0x190 [mac80211]
+   rdev_scan+0x40/0x110 [cfg80211]
+   cfg80211_scan_6ghz+0x5a1/0xa30 [cfg80211]
+
+By objdump with source:
+
+	for (i = 0; i < req->n_6ghz_params; i++) {
+   5fbc0:	83 c3 01             	add    $0x1,%ebx --> i++
+   5fbc3:	0f b6 c3             	movzbl %bl,%eax  --> get counter
+   fbc6:	41 3b 44 24 74       	cmp    0x74(%r12),%eax
+
+   * RBX: 00000000137466a1 -> %bl = a1 -> EAX = 000000a1 (161)
+
+Fixes: c6aa9a9c4725 ("wifi: rtw89: add RNR support for 6 GHz scan")
+Signed-off-by: Shin-Yi Lin <isaiah@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260420034051.17666-7-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/glymur.dtsi | 2 +-
+ drivers/net/wireless/realtek/rtw89/fw.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
-index 82436984485d41..ab2a6b577bc9d0 100644
---- a/arch/arm64/boot/dts/qcom/glymur.dtsi
-+++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
-@@ -4016,7 +4016,7 @@ usb_2_dwc3_ss: endpoint {
- 			};
- 		};
+diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
+index 17704f054727a9..089c9071b58f5b 100644
+--- a/drivers/net/wireless/realtek/rtw89/fw.c
++++ b/drivers/net/wireless/realtek/rtw89/fw.c
+@@ -8318,7 +8318,7 @@ static int rtw89_update_6ghz_rnr_chan_ax(struct rtw89_dev *rtwdev,
+ 	struct sk_buff *skb;
+ 	bool found;
+ 	int ret = 0;
+-	u8 i;
++	u32 i;
  
--		usb_hs: usb@a2f8800 {
-+		usb_hs: usb@a200000 {
- 			compatible = "qcom,glymur-dwc3", "qcom,snps-dwc3";
- 			reg = <0x0 0x0a200000 0x0 0xfc100>;
- 
+ 	if (!req->n_6ghz_params)
+ 		return 0;
 -- 
 2.53.0
 
