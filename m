@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3D8437111;
-	Tue, 21 Jul 2026 21:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298E0415F23;
+	Tue, 21 Jul 2026 21:54:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670861; cv=none; b=LF0w8uVebBftLrLyWMhCLjl6T1C3EL0of+qVHpvWv8hmZFuNwuaH94USQqDSZ+SHMB1Z3ZlAe4PuA4SQmr9wpSr31wtRC669zJXtHogBFEdSE22tcVPYCaJev5PxTiQBHfRZAY8FC4vXZDanswJayhbvcDf0Gt45+M3b6y+OvD0=
+	t=1784670864; cv=none; b=BsqsOnSl5Dmj7HIYYKYz5p0lmxdlkT4c+NOkOwL7CROjZzk8VRBFiKkfLhRx87doL/u+XssPFjcGgfsRdRvdoPMqtPk47JGsvU20q9g7vXPFAHmywjjvHE+eI0qyS+UaCu+k7frM8iaY8lXtsg4GAZGG6pV88gRkM9Zz0DbQCPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670861; c=relaxed/simple;
-	bh=Yv4QkdCxbzU4M9iuZNvwrcC0UIDLo+bs43XqHlS2Gbs=;
+	s=arc-20240116; t=1784670864; c=relaxed/simple;
+	bh=x2+os7kvzdxkCFf1UWtP6y2t2ez476R1HijiruFKTmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=orYtsmv+TqJ7SdevPEp6p5mJJIYt67wbwLgp7LZZuSeSgNeIuSIcLMKEbJuDz9lgFO1x5CQmAsSkAxfCAqWJaZE80bRMuvmgn5tXHXOuSPkfdyAii+Ku5egp+96lMWMnjoWdNPOGBQbuYGKZWmHLmuJklCjqihwIhXkkHQkEmM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZVh1esp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=doQM4ld5tnXQ2/vsprnuzt0g9xDJk6GC0iwt4YuAHQ9pa/UzXWv/GH+uQWayLBOFcFlTbXtOgY7sslOcZ2EJtzzhV/xNs6PeZjDDVaQnVSmtItsU0i9X2qJ7wgfj6LsOjgE/5WTsQD645KVrLyTHy2iWmhjAuY1fSOYGOprFvYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijdwQAq4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZVh1esp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72331F000E9;
-	Tue, 21 Jul 2026 21:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijdwQAq4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89EA41F000E9;
+	Tue, 21 Jul 2026 21:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670860;
-	bh=liYl8cvO8H5kgSsZvtug5XdVQryfDZaMgmYiCb7YBS0=;
+	s=korg; t=1784670863;
+	bh=nUETHtlQ11RtKZ7aeDDCUUwfdvgktdVl90mAtf+KC+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mZVh1espaO91dMGP1MBCX/Js/V5uCA+EcRapCj0rZ16hvv3AMTSLpuBsnCNfZnhMB
-	 EmGgFyPW1HVwFmZmvA7LmvtpjgUJxXOibwaL1wMg7APCkF/T4Ft2Jdjhuw/5RfmBFn
-	 y1ZZadEWPq4PNPd0M0ivT8JeveAbdEwu1ltrAdn4=
+	b=ijdwQAq4P1GznOXuXwJfc4AXbn0s2O9WdjzzmL3LymXtWcSh6pl2Bckvjq8nDVb56
+	 a6OoW1Sw3bP+DflWemx8/X1KhqeZLoEwkipCLMmN7eqrs+u/UDS7S28v1sY6Wt1WRQ
+	 NKW+zqVKSEMv3v2wz4rM1TktjVqp/KXJsaAKAGTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/843] device property: initialize the remaining fields of fwnode_handle in fwnode_init()
-Date: Tue, 21 Jul 2026 17:14:23 +0200
-Message-ID: <20260721152406.600660994@linuxfoundation.org>
+Subject: [PATCH 5.15 029/843] f2fs: validate orphan inode entry count
+Date: Tue, 21 Jul 2026 17:14:24 +0200
+Message-ID: <20260721152406.623910728@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -54,46 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-[ Upstream commit 7eba000621fff223dd7bab484d48918c7c77a307 ]
+[ Upstream commit 846c499a65816d13f1186e3090e825e8bb8bcb8b ]
 
-If a firmware node is allocated on the stack (for instance: temporary
-software node whose life-time we control) or on the heap - but using a
-non-zeroing allocation function - and initialized using fwnode_init(),
-its secondary pointer will contain uninitialized memory which likely
-will be neither NULL nor IS_ERR() and so may end up being dereferenced
-(for example: in dev_to_swnode()). Set fwnode->secondary to NULL on
-initialization. While at it: initialize the remaining fields of struct
-fwnode_handle too just to be sure.
+f2fs_recover_orphan_inodes() trusts the orphan block entry_count when
+replaying orphan inodes from the checkpoint pack. A corrupted entry_count
+larger than F2FS_ORPHANS_PER_BLOCK makes the recovery loop read past the
+ino[] array and interpret footer or following data as inode numbers.
 
-Cc: stable@vger.kernel.org
-Fixes: 01bb86b380a3 ("driver core: Add fwnode_init()")
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260511074927.9473-1-bartosz.golaszewski@oss.qualcomm.com
-[ Fix typo in commit message. - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+On a crafted image, mounting an unpatched kernel can drive orphan recovery
+into f2fs_bug_on() and panic the kernel. Validate entry_count before
+consuming entries so corrupted checkpoint data fails the mount with
+-EFSCORRUPTED and requests fsck instead.
+
+Set ERROR_INCONSISTENT_ORPHAN as well, so the corruption reason can be
+recorded in the superblock s_errors[] field. This gives fsck a persistent
+hint even though mount-time orphan recovery failure may leave no chance to
+persist SBI_NEED_FSCK through a checkpoint.
+
+Cc: stable@kernel.org
+Fixes: 127e670abfa7 ("f2fs: add checkpoint operations")
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ Folio API ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/fwnode.h |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/f2fs/checkpoint.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/include/linux/fwnode.h
-+++ b/include/linux/fwnode.h
-@@ -174,8 +174,10 @@ static inline void fwnode_init(struct fw
- {
- 	fwnode->secondary = NULL;
- 	fwnode->ops = ops;
-+	fwnode->dev = NULL;
- 	INIT_LIST_HEAD(&fwnode->consumers);
- 	INIT_LIST_HEAD(&fwnode->suppliers);
-+	fwnode->flags = 0;
- }
+--- a/fs/f2fs/checkpoint.c
++++ b/fs/f2fs/checkpoint.c
+@@ -738,6 +738,7 @@ int f2fs_recover_orphan_inodes(struct f2
+ 	for (i = 0; i < orphan_blocks; i++) {
+ 		struct page *page;
+ 		struct f2fs_orphan_block *orphan_blk;
++		unsigned int entry_count;
  
- static inline void fwnode_set_flag(struct fwnode_handle *fwnode,
+ 		page = f2fs_get_meta_page(sbi, start_blk + i);
+ 		if (IS_ERR(page)) {
+@@ -746,7 +747,17 @@ int f2fs_recover_orphan_inodes(struct f2
+ 		}
+ 
+ 		orphan_blk = (struct f2fs_orphan_block *)page_address(page);
+-		for (j = 0; j < le32_to_cpu(orphan_blk->entry_count); j++) {
++		entry_count = le32_to_cpu(orphan_blk->entry_count);
++		if (entry_count > F2FS_ORPHANS_PER_BLOCK) {
++			f2fs_err(sbi, "invalid orphan inode entry count %u",
++				 entry_count);
++			set_sbi_flag(sbi, SBI_NEED_FSCK);
++			err = -EFSCORRUPTED;
++			f2fs_put_page(page, 1);
++			goto out;
++		}
++
++		for (j = 0; j < entry_count; j++) {
+ 			nid_t ino = le32_to_cpu(orphan_blk->ino[j]);
+ 
+ 			err = recover_orphan_inode(sbi, ino);
 
 
