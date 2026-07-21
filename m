@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8762746EC78;
-	Tue, 21 Jul 2026 18:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D6147127E;
+	Tue, 21 Jul 2026 18:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659800; cv=none; b=ODAQj/71KwyAuRulxasbe8TpIH2JZvhIeTTPVApoKUmnj2PxBtxP3dyq+PQaOCs/33GpXzQNEhPMMpQHskuNsuSvXcqM9q5SFw/viZCM4wKl6foFyvVUZCv6x4YNvnBx9W249RKHXuEhfq0SRrZanYt+Bz/c2/C8NxZcXFtS8yQ=
+	t=1784659803; cv=none; b=sJ8RXcDV85Tqe7pT/1Ea8T92uSAt962FN7wjJO0B+i0PmJy0jeCOvJq+M/4grGGTIIsVmcr6bzrBlSrc0wH98EZPu9c+uTc/UsTl4+8yWw88fYvAAq6SZkoEuzO3v2/jgbefod873PhbYRkDRWaHhUstCxsQXt6PFdiEA+F97Jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659800; c=relaxed/simple;
-	bh=g/yCEM1grjjD8P7kMI44OuwR3nLRDwHa44Ga3VX8WlY=;
+	s=arc-20240116; t=1784659803; c=relaxed/simple;
+	bh=tM06ujHYvcH8XgvwezJ0c/YfSOkUaJcjJOeZ1H5enOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ul3pBMQ1BvwSzXRLAgtNl+ofUMLyDPcVaeL9Fl1E3drhAKQTSHTHpyIB6QzfO5IiBJsPS3Yd5tlflf3rO4ybDiJtP8WXC+gC1julK7SPu4+4jzYDzwTmartGuM+HlFr72HHgDOF+FsHtCvzhFP2KuYZjlLgJuCERuUjD3guGqwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mx79d32Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HMl9lu6LV/sbyoh7T1wpxiWymb7Z6fBnqFff/yTUCIYjXQ4Ra8+tRnaRbGbRNOLtLfnQiIwOH+oyU7FaN96pShQMCdYnWfjZJiHtHZywKfFjz6hgc8aTgCLBKLYXx9/Cuh/aJZtw2zFx3LVnkfhnIX0n7EDIXnHtCycNKHE4zwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rn9i9zCc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mx79d32Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F321F000E9;
-	Tue, 21 Jul 2026 18:49:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rn9i9zCc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D03F1F000E9;
+	Tue, 21 Jul 2026 18:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659799;
-	bh=h7vh8XEyO6zgyU9eG/w/OUyrimxeKGmKIqr/3KDOBZ0=;
+	s=korg; t=1784659802;
+	bh=ICKKUZXdT28htTCMLm1pLVepmLwNMO4FHkXa6/hMthM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mx79d32ZDbkr9u4X9gZay6j+tz2TNfi/W9in2STsM10XeS0mvztEeWyNkeSziPgtY
-	 jASn9voHnYubgK0T3zRmIjbY1F8ccTRq3NpZgsAZzHoWO9ZeFxtnnvzlA1zbZp3bdX
-	 8Ki4TghniW/EHA1Ov33EJ9w4OQY0d/7xL54AGyTQ=
+	b=rn9i9zCc2odUusrrh3IiDb3DFtNnC6GSgdis/z3++O1YvyTuF1HEQtXLv8/R2kPAt
+	 aUTkkImwWz/5KKvKr6MFtgJxqsri68mB6+0sCaLFT4n72+MfUDm+xD6b70vG7wZjXG
+	 JjdwmNnO4PheoDskrKoBNsfML9mC4lRgaN4wie5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxwell Doose <m32285159@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Fabian Frederick <fabf@skynet.be>,
-	Christian Brauner <brauner@kernel.org>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0695/2077] fs: efs: remove unneeded debug prints
-Date: Tue, 21 Jul 2026 17:06:08 +0200
-Message-ID: <20260721152609.188411191@linuxfoundation.org>
+Subject: [PATCH 7.1 0686/2077] RDMA/mlx5: Fix mkey creation error flow rollback
+Date: Tue, 21 Jul 2026 17:05:59 +0200
+Message-ID: <20260721152608.975961572@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,86 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxwell Doose <m32285159@gmail.com>
+From: Michael Guralnik <michaelgur@nvidia.com>
 
-[ Upstream commit 89009392c80da5da00876c8334ff20028e6e3eb6 ]
+[ Upstream commit c70fcfa9881207659ad193ae10a3bd56b2ae3f8a ]
 
-The current code uses debug prints conditionally compiled with #ifdef
-DEBUG.  However, that code, when compiled, causes compiler errors due to
-incompatible formatters and undefined variables, notably:
+Fix the indices of mkeys destroyed in case of an error in batch mkey
+creation.
 
-fs/efs/file.c: In function `efs_get_block':
-fs/efs/file.c:26:35: error: `block' undeclared (first use in this
-function); did you mean `iblock'?
-  26 |                         __func__, block, inode->i_blocks, inode->i_size);
-     |                                   ^~~~~
-
-and:
-
-fs/efs/file.c: In function `efs_bmap':
-./include/linux/kern_levels.h:5:25: error: format `%ld' expects
-argument of type `long int', but argument 4 has type `blkcnt_t' {aka
-`long long unsigned int'} [-Werror=format=]
-   5 | #define KERN_SOH        "\001"          /* ASCII Start Of Header */
-     |                         ^~~~~~
-
-which also extends to the other formatters.  As this part of the code has
-been dead for just about 14 years now, it has not been modernized to stay
-compatible with the most recent gcc compilers.  Fix these issues by
-removing the debug prints.
-
-Link: https://lore.kernel.org/20260605035251.89305-2-m32285159@gmail.com
-Fixes: f403d1dbac6d ("fs/efs: add pr_fmt / use __func__")
-Signed-off-by: Maxwell Doose <m32285159@gmail.com>
-Suggested-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Fabian Frederick <fabf@skynet.be>
-Cc: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 36680ef7bceb ("RDMA/mlx5: Switch from MR cache to FRMR pools")
+Link: https://patch.msgid.link/r/20260610000145.820592-2-michaelgur@nvidia.com
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/efs/file.c | 21 +++------------------
- 1 file changed, 3 insertions(+), 18 deletions(-)
+ drivers/infiniband/hw/mlx5/mr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/efs/file.c b/fs/efs/file.c
-index 9e641da6fab276..9153dfe79bbcc9 100644
---- a/fs/efs/file.c
-+++ b/fs/efs/file.c
-@@ -18,16 +18,9 @@ int efs_get_block(struct inode *inode, sector_t iblock,
- 
- 	if (create)
- 		return error;
--	if (iblock >= inode->i_blocks) {
--#ifdef DEBUG
--		/*
--		 * i have no idea why this happens as often as it does
--		 */
--		pr_warn("%s(): block %d >= %ld (filesize %ld)\n",
--			__func__, block, inode->i_blocks, inode->i_size);
--#endif
-+	if (iblock >= inode->i_blocks)
- 		return 0;
--	}
-+
- 	phys = efs_map_block(inode, iblock);
- 	if (phys)
- 		map_bh(bh_result, inode->i_sb, phys);
-@@ -42,16 +35,8 @@ int efs_bmap(struct inode *inode, efs_block_t block) {
- 	}
- 
- 	/* are we about to read past the end of a file ? */
--	if (!(block < inode->i_blocks)) {
--#ifdef DEBUG
--		/*
--		 * i have no idea why this happens as often as it does
--		 */
--		pr_warn("%s(): block %d >= %ld (filesize %ld)\n",
--			__func__, block, inode->i_blocks, inode->i_size);
--#endif
-+	if (!(block < inode->i_blocks))
- 		return 0;
--	}
- 
- 	return efs_map_block(inode, block);
+diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
+index 41ca3b1a6db079..253545ae39fd53 100644
+--- a/drivers/infiniband/hw/mlx5/mr.c
++++ b/drivers/infiniband/hw/mlx5/mr.c
+@@ -294,7 +294,7 @@ static int mlx5r_create_mkeys(struct ib_device *device, struct ib_frmr_key *key,
+ free_in:
+ 	kfree(in);
+ 	if (err)
+-		for (; i > 0; i--)
++		for (i--; i >= 0; i--)
+ 			mlx5_core_destroy_mkey(dev->mdev, handles[i]);
+ 	return err;
  }
 -- 
 2.53.0
