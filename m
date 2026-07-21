@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37DE3D9027;
-	Tue, 21 Jul 2026 17:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951AA34F279;
+	Tue, 21 Jul 2026 17:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653379; cv=none; b=SeuBgsM7BQL3bGmnVaFbSSWbwZlMrHyuB4VvziiZ6Yj8fv+xNHPzDLM54kEmaBD6dLADky0M/ZSjn9syPpSzetHCL9fjmiPrVpTG0hy//cRcO8zNiUGM7wLoYDnw9ttJWaP3XZxRaybVwIvAF96FYIZv+gwSqgIFU+APbuiYaF8=
+	t=1784653381; cv=none; b=B1F/04hKGA18V0JEDQRvyDqLnIJog1Fi++dT568aCs/AQBIXj/JKhq7mDPKgmFpeslgE8ZHxwk0WtiSaTg3yrHfW50koTq0+7wDkwiqO4WuTnZ7BS0m+BpayQSgwIWSXNNl/0TvOVTFJrouYPRoDHeoLW13KT6WAAQUF50on4UI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653379; c=relaxed/simple;
-	bh=tdblJTldlGiYlJSSBIfha1EJc06efayv8gAby0+T9TU=;
+	s=arc-20240116; t=1784653381; c=relaxed/simple;
+	bh=wc4elAG4c/uuGLFifh/qBzPBaDUp5bLn76fnANWBZBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Om3IetwfGnRQho61yvvSyBS7hTqrDJTyU9rtBZEmyURloEsvbOMO+aIyaAt2EtpmguPXvAnbjcPtQCIKQUwU//orNOqW0Nx9fH3/6qaVoHn6tzHbGHB4cpGRymrqD3CadwE/K5JeRu8GMXkbwXCTF7sK5506+NWBAKatrxCCx8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sy9P9n+W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qW6DnoMp8Y3WsXO6vhxtpq6ElU83SIynLpFemsBd5ggWdw1jXzW/VKtG+n1oMcbCCGuD58L5xhddStlaN4fgRe70RgKPTrrVC49StTgeMwb3G2Nle15qk2ES8+I9SKxT4ABC4JyJIbM1BZ0N7evhbUVv4smekTwAMp0YdPLF9Hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIIG+X/+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sy9P9n+W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2085B1F000E9;
-	Tue, 21 Jul 2026 17:02:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIIG+X/+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D571F000E9;
+	Tue, 21 Jul 2026 17:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653377;
-	bh=HQX7gfEeCL79VouM7PSlaMjORZv07OEMmqLM8qQ+DQM=;
+	s=korg; t=1784653380;
+	bh=h3ZaMvFGOuo/7+6dh2NXJofiE64R2Zaqrx7LmFrqTUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sy9P9n+WA1q94SxCBPkvb72+pp4TzQhDtd83pPARM5DZInndWk5n0137OSajJu1Hg
-	 B3oSinxApbab/ePPbSlFldbIJTvpSDDixhJ2F3tddwiTqQEV+MItUs7XUlYxA0L5e7
-	 yaWSwsher//kyTYsTepoiW9jZbI5ISDdmkL9gh7k=
+	b=rIIG+X/+7inFlRZLzlaIi0E3/wyez6ylnuIeIIaTJmvbBUsn9ftgCPLFW2OQGdPBB
+	 yYTa6XRzz34AqsZi8SIY4N0BbRB/CNY9Ho9Bpx0R9F1hkAJQrperaAKfBUng43ALx3
+	 XV/zDUbPKAPZowNyCZSxNo9KVZMGk/I3nMXslmN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Martin Kaiser <martin@kaiser.cx>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1305/2077] ALSA: FCP: Fix NULL pointer dereference in interface lookup
-Date: Tue, 21 Jul 2026 17:16:18 +0200
-Message-ID: <20260721152623.598339085@linuxfoundation.org>
+Subject: [PATCH 7.1 1306/2077] tracing: probes: fix typo in a log message
+Date: Tue, 21 Jul 2026 17:16:19 +0200
+Message-ID: <20260721152623.621572574@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,46 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaming Zhang <r772577952@gmail.com>
+From: Martin Kaiser <martin@kaiser.cx>
 
-[ Upstream commit e1e31e0ec8a609e17fd2e86b77bc00d9cbb24d7c ]
+[ Upstream commit 72c8646956ffc8050bb8be5988a0f28fc37e1ac4 ]
 
-A malformed USB device can provide a vendor-specific interface without
-any endpoint descriptors. fcp_find_fc_interface() currently selects the
-first vendor-specific interface and reads endpoint 0 from it, without
-checking whether the interface actually has any endpoints.
+Fix a typo ("Invalid $-variable") in a log message.
 
-When bNumEndpoints is zero, no endpoint array is allocated for the parsed
-alternate setting, so get_endpoint(..., 0) yields an invalid endpoint
-descriptor pointer. Dereferencing it through usb_endpoint_num() then
-triggers a NULL pointer dereference.
+Link: https://lore.kernel.org/all/20260507081041.885781-4-martin@kaiser.cx/
 
-Skip vendor-specific interfaces that do not have any endpoints.
-
-Fixes: 46757a3e7d50 ("ALSA: FCP: Add Focusrite Control Protocol driver")
-Reported-by: Jiaming Zhang <r772577952@gmail.com>
-Closes: https://lore.kernel.org/lkml/CANypQFb1EHj0xX8bA1WxSOSK-5xca6ZNKzOQcp12=s=puY7VFw@mail.gmail.com/
-Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
-Link: https://patch.msgid.link/20260625134933.425785-1-r772577952@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: ab105a4fb894 ("tracing: Use tracing error_log with probe events")
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/fcp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/trace_probe.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/fcp.c b/sound/usb/fcp.c
-index 0fc4d063c48a58..c45dbe4d453280 100644
---- a/sound/usb/fcp.c
-+++ b/sound/usb/fcp.c
-@@ -1083,6 +1083,8 @@ static int fcp_find_fc_interface(struct usb_mixer_interface *mixer)
- 
- 		if (desc->bInterfaceClass != 255)
- 			continue;
-+		if (desc->bNumEndpoints < 1)
-+			continue;
- 
- 		epd = get_endpoint(intf->altsetting, 0);
- 		private->bInterfaceNumber = desc->bInterfaceNumber;
+diff --git a/kernel/trace/trace_probe.h b/kernel/trace/trace_probe.h
+index 262d8707a3df79..df68d40de1610c 100644
+--- a/kernel/trace/trace_probe.h
++++ b/kernel/trace/trace_probe.h
+@@ -509,7 +509,7 @@ extern int traceprobe_define_arg_fields(struct trace_event_call *event_call,
+ 	C(NO_RETVAL,		"This function returns 'void' type"),	\
+ 	C(BAD_STACK_NUM,	"Invalid stack number"),		\
+ 	C(BAD_ARG_NUM,		"Invalid argument number"),		\
+-	C(BAD_VAR,		"Invalid $-valiable specified"),	\
++	C(BAD_VAR,		"Invalid $-variable specified"),	\
+ 	C(BAD_REG_NAME,		"Invalid register name"),		\
+ 	C(BAD_MEM_ADDR,		"Invalid memory address"),		\
+ 	C(BAD_IMM,		"Invalid immediate value"),		\
 -- 
 2.53.0
 
