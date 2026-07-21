@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F6343E073;
-	Tue, 21 Jul 2026 22:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A700298CC4;
+	Tue, 21 Jul 2026 22:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672886; cv=none; b=P7ZaY6VxvJyMf2JTPZueoracbMu8Xb6HlW0fSwyad0c9Tte/mmfQJVYLGHva7s78D6RlIhQuX2QBMmnFo5317InbPBxHIFsoe4/oPoWfpFo9xIob6ZtbDW1g/8MNJokIlm82MmYEzujjNQAnMF5siGxhQlEA7crl156ob/9lfoM=
+	t=1784672891; cv=none; b=rNROvEBYfKqYRGhxSvYffKiqJhAfntK0vg6VcZsl29CZgG5AhOSL3DWwiuSIZkejmLq1zC41WN9gMCU0egnndYftofFB3CsNmBwePjI1LBMIhseQeoscdJygRQXeD1zV69RIbyDlR1wSL3h25Z6RODwDICDhdv/Fqyx9fzHF39Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672886; c=relaxed/simple;
-	bh=ZwOw0dkZ+eKWvC7pHG/kfGKYgGTPIAnInPHZ6okoeYw=;
+	s=arc-20240116; t=1784672891; c=relaxed/simple;
+	bh=9ef1+LbeP5hdwHCGorigVoWYy4ENFzpLv2j85tzOwu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DqL5muG32eNV4PCtDZNlcGfw7Yn7tm8k6vvYQjd0dH9XXevswQgAq9GKXcnPXIKUpAYzsPhlG8+sUBYLPzYIkWQeBfvnuG0KyN8nQMpx2tzCX+oZfbU/mRT/3+KiaDHP1g+rSAXzAD+RhYk5DtN8s2/PsqK5GTkNrdv7r9jBoQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JgTMhzMi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eFeJNMoElLT46qkR7pJfhWDVRv2fzt4kJfEbjVCxdwVR0pHFLoAApWG7tbtU5v9Y3fLoWTuDv+QOv0DEqXzPSkXs+h0xO4K/heSJZ5ptsqaq8I75ZCzddtbo5RnXxU++oEuKjowNJMUjTUdDm20eTaIdsnHrT5rGzpysMjAFKEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=noJ/oP+W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JgTMhzMi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB301F000E9;
-	Tue, 21 Jul 2026 22:28:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="noJ/oP+W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C581F00A3A;
+	Tue, 21 Jul 2026 22:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672883;
-	bh=Z3QGFLH0L9WI8PPw9gM/a6d7+HtOXvgUYxTDFr9aBaY=;
+	s=korg; t=1784672885;
+	bh=dgXVcnjBf/HhtjWktCxKn9BROpha67Y+z+5ZMxGXa6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JgTMhzMiL42bQ0qZdVDK5CtSu5KrWilMlFzLzcmGN0MGxlG/jPnz7Dx75hLIQZ/kP
-	 sfWUgq2Jo5FCtRpsqZZGde3oO4xzzXSFkRMmet4n6Uu+rVPBVN6DSq5wYfHezlFMjP
-	 bBZ0fki+iHw5GaeMagsBo/TP5iLC6MPp+PMQvZgo=
+	b=noJ/oP+WjFX+HtkFxNLfCljf/f+jOS4NwsBmxWmZo7ltyLPhtHzNR/+kh4j/xUiHT
+	 XJMSZnhrYKXiRTVZhzIfJZRxLrf6e2F/Ozgpd6PrFEPaV2uFTczy1Cf6USATUr6M5w
+	 9sJDysIQOiJ7UvqZgbauenxdkk+73GFo2eLe0Lks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kevin Parsons (Microsoft)" <parsonskev@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jan Kara <jack@suse.cz>,
 	Christian Brauner <brauner@kernel.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jann Horn <jannh@google.com>,
-	Kalesh Singh <kaleshsingh@google.com>,
-	Hardik Garg <hargar@linux.microsoft.com>,
-	Allen Pais <apais@linux.microsoft.com>,
-	"Tyler Hicks (Microsoft)" <code@tyhicks.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 793/843] proc: Move fdinfo PTRACE_MODE_READ check into the inode .permission operation
-Date: Tue, 21 Jul 2026 17:27:08 +0200
-Message-ID: <20260721152423.900152930@linuxfoundation.org>
+Subject: [PATCH 5.15 794/843] proc: rename proc_setattr to proc_nochmod_setattr
+Date: Tue, 21 Jul 2026 17:27:09 +0200
+Message-ID: <20260721152423.923317336@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,167 +46,224 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Tyler Hicks (Microsoft)" <code@tyhicks.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 0a960ba49869ebe8ff859d000351504dd6b93b68 ]
+[ Upstream commit 690005b0b1e6b567c88b7790e6d90d4d6c9e09cc ]
 
-The following commits loosened the permissions of /proc/<PID>/fdinfo/
-directory, as well as the files within it, from 0500 to 0555 while also
-introducing a PTRACE_MODE_READ check between the current task and
-<PID>'s task:
+What is currently proc_setattr is a special version added after the more
+general procfs ->seattr in commit 6d76fa58b050 ("Don't allow chmod() on
+the /proc/<pid>/ files").  Give it a name that reflects that to free the
+proc_setattr name and better describe what is doing.
 
- - commit 7bc3fa0172a4 ("procfs: allow reading fdinfo with PTRACE_MODE_READ")
- - commit 1927e498aee1 ("procfs: prevent unprivileged processes accessing fdinfo dir")
-
-Before those changes, inode based system calls like inotify_add_watch(2)
-would fail when the current task didn't have sufficient read permissions:
-
- [...]
- lstat("/proc/1/task/1/fdinfo", {st_mode=S_IFDIR|0500, st_size=0, ...}) = 0
- inotify_add_watch(64, "/proc/1/task/1/fdinfo",
-		   IN_MODIFY|IN_ATTRIB|IN_MOVED_FROM|IN_MOVED_TO|IN_CREATE|IN_DELETE|
-		   IN_ONLYDIR|IN_DONT_FOLLOW|IN_EXCL_UNLINK) = -1 EACCES (Permission denied)
- [...]
-
-This matches the documented behavior in the inotify_add_watch(2) man
-page:
-
- ERRORS
-       EACCES Read access to the given file is not permitted.
-
-After those changes, inotify_add_watch(2) started succeeding despite the
-current task not having PTRACE_MODE_READ privileges on the target task:
-
- [...]
- lstat("/proc/1/task/1/fdinfo", {st_mode=S_IFDIR|0555, st_size=0, ...}) = 0
- inotify_add_watch(64, "/proc/1/task/1/fdinfo",
-		   IN_MODIFY|IN_ATTRIB|IN_MOVED_FROM|IN_MOVED_TO|IN_CREATE|IN_DELETE|
-		   IN_ONLYDIR|IN_DONT_FOLLOW|IN_EXCL_UNLINK) = 1757
- openat(AT_FDCWD, "/proc/1/task/1/fdinfo",
-	O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 EACCES (Permission denied)
- [...]
-
-This change in behavior broke .NET prior to v7. See the github link
-below for the v7 commit that inadvertently/quietly (?) fixed .NET after
-the kernel changes mentioned above.
-
-Return to the old behavior by moving the PTRACE_MODE_READ check out of
-the file .open operation and into the inode .permission operation:
-
- [...]
- lstat("/proc/1/task/1/fdinfo", {st_mode=S_IFDIR|0555, st_size=0, ...}) = 0
- inotify_add_watch(64, "/proc/1/task/1/fdinfo",
-		   IN_MODIFY|IN_ATTRIB|IN_MOVED_FROM|IN_MOVED_TO|IN_CREATE|IN_DELETE|
-		   IN_ONLYDIR|IN_DONT_FOLLOW|IN_EXCL_UNLINK) = -1 EACCES (Permission denied)
- [...]
-
-Reported-by: Kevin Parsons (Microsoft) <parsonskev@gmail.com>
-Link: https://github.com/dotnet/runtime/commit/89e5469ac591b82d38510fe7de98346cce74ad4f
-Link: https://stackoverflow.com/questions/75379065/start-self-contained-net6-build-exe-as-service-on-raspbian-system-unauthorizeda
-Fixes: 7bc3fa0172a4 ("procfs: allow reading fdinfo with PTRACE_MODE_READ")
-Cc: stable@vger.kernel.org
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Kalesh Singh <kaleshsingh@google.com>
-Cc: Hardik Garg <hargar@linux.microsoft.com>
-Cc: Allen Pais <apais@linux.microsoft.com>
-Signed-off-by: Tyler Hicks (Microsoft) <code@tyhicks.com>
-Link: https://lore.kernel.org/r/20240501005646.745089-1-code@tyhicks.com
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260325063711.3298685-5-hch@lst.de
+Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Stable-dep-of: 6255da28d4bb ("proc: protect ptrace_may_access() with exec_update_lock (FD links)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/fd.c |   42 ++++++++++++++++++++----------------------
- 1 file changed, 20 insertions(+), 22 deletions(-)
+ fs/proc/base.c       |   22 +++++++++++-----------
+ fs/proc/fd.c         |   12 ++++++------
+ fs/proc/internal.h   |    4 ++--
+ fs/proc/namespaces.c |    4 ++--
+ fs/proc/proc_net.c   |    2 +-
+ 5 files changed, 22 insertions(+), 22 deletions(-)
 
---- a/fs/proc/fd.c
-+++ b/fs/proc/fd.c
-@@ -72,7 +72,18 @@ out:
- 	return 0;
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -721,7 +721,7 @@ static int proc_fd_access_allowed(struct
+ 	return allowed;
  }
  
--static int proc_fdinfo_access_allowed(struct inode *inode)
-+static int seq_fdinfo_open(struct inode *inode, struct file *file)
-+{
-+	return single_open(file, seq_show, inode);
-+}
-+
-+/**
-+ * Shared /proc/pid/fdinfo and /proc/pid/fdinfo/fd permission helper to ensure
-+ * that the current task has PTRACE_MODE_READ in addition to the normal
-+ * POSIX-like checks.
-+ */
-+static int proc_fdinfo_permission(struct mnt_idmap *idmap, struct inode *inode,
-+				  int mask)
+-int proc_setattr(struct user_namespace *mnt_userns, struct dentry *dentry,
++int proc_nochmod_setattr(struct user_namespace *mnt_userns, struct dentry *dentry,
+ 		 struct iattr *attr)
+ {
+ 	int error;
+@@ -795,7 +795,7 @@ static int proc_pid_permission(struct us
+ 
+ 
+ static const struct inode_operations proc_def_inode_operations = {
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ static int proc_single_show(struct seq_file *m, void *v)
+@@ -1868,7 +1868,7 @@ out:
+ const struct inode_operations proc_pid_link_inode_operations = {
+ 	.readlink	= proc_pid_readlink,
+ 	.get_link	= proc_pid_get_link,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ 
+@@ -2316,7 +2316,7 @@ proc_map_files_get_link(struct dentry *d
+ static const struct inode_operations proc_map_files_link_inode_operations = {
+ 	.readlink	= proc_pid_readlink,
+ 	.get_link	= proc_map_files_get_link,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ static struct dentry *
+@@ -2395,7 +2395,7 @@ out:
+ static const struct inode_operations proc_map_files_inode_operations = {
+ 	.lookup		= proc_map_files_lookup,
+ 	.permission	= proc_fd_permission,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ static int
+@@ -2887,7 +2887,7 @@ static struct dentry *proc_##LSM##_attr_
+ static const struct inode_operations proc_##LSM##_attr_dir_inode_ops = { \
+ 	.lookup		= proc_##LSM##_attr_dir_lookup, \
+ 	.getattr	= pid_getattr, \
+-	.setattr	= proc_setattr, \
++	.setattr	= proc_nochmod_setattr, \
+ }
+ 
+ #ifdef CONFIG_SECURITY_SMACK
+@@ -2946,7 +2946,7 @@ static struct dentry *proc_attr_dir_look
+ static const struct inode_operations proc_attr_dir_inode_operations = {
+ 	.lookup		= proc_attr_dir_lookup,
+ 	.getattr	= pid_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ #endif
+@@ -3403,7 +3403,7 @@ static struct dentry *proc_tgid_base_loo
+ static const struct inode_operations proc_tgid_base_inode_operations = {
+ 	.lookup		= proc_tgid_base_lookup,
+ 	.getattr	= pid_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ 	.permission	= proc_pid_permission,
+ };
+ 
+@@ -3603,7 +3603,7 @@ static int proc_tid_comm_permission(stru
+ }
+ 
+ static const struct inode_operations proc_tid_comm_inode_operations = {
+-		.setattr	= proc_setattr,
++		.setattr	= proc_nochmod_setattr,
+ 		.permission	= proc_tid_comm_permission,
+ };
+ 
+@@ -3730,7 +3730,7 @@ static const struct file_operations proc
+ static const struct inode_operations proc_tid_base_inode_operations = {
+ 	.lookup		= proc_tid_base_lookup,
+ 	.getattr	= pid_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ static struct dentry *proc_task_instantiate(struct dentry *dentry,
+@@ -3926,7 +3926,7 @@ static int proc_task_getattr(struct user
+ static const struct inode_operations proc_task_inode_operations = {
+ 	.lookup		= proc_task_lookup,
+ 	.getattr	= proc_task_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ 	.permission	= proc_pid_permission,
+ };
+ 
+--- a/fs/proc/fd.c
++++ b/fs/proc/fd.c
+@@ -82,8 +82,8 @@ static int seq_fdinfo_open(struct inode
+  * that the current task has PTRACE_MODE_READ in addition to the normal
+  * POSIX-like checks.
+  */
+-static int proc_fdinfo_permission(struct mnt_idmap *idmap, struct inode *inode,
+-				  int mask)
++static int proc_fdinfo_permission(struct user_namespace *mnt_userns,
++				  struct inode *inode, int mask)
  {
  	bool allowed = false;
  	struct task_struct *task = get_proc_task(inode);
-@@ -86,18 +97,13 @@ static int proc_fdinfo_access_allowed(st
+@@ -97,12 +97,12 @@ static int proc_fdinfo_permission(struct
  	if (!allowed)
  		return -EACCES;
  
--	return 0;
-+	return generic_permission(idmap, inode, mask);
+-	return generic_permission(idmap, inode, mask);
++	return generic_permission(mnt_userns, inode, mask);
  }
  
--static int seq_fdinfo_open(struct inode *inode, struct file *file)
--{
--	int ret = proc_fdinfo_access_allowed(inode);
--
--	if (ret)
--		return ret;
--
--	return single_open(file, seq_show, inode);
--}
-+static const struct inode_operations proc_fdinfo_file_inode_operations = {
-+	.permission	= proc_fdinfo_permission,
-+	.setattr	= proc_setattr,
-+};
+ static const struct inode_operations proc_fdinfo_file_inode_operations = {
+ 	.permission	= proc_fdinfo_permission,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
  
  static const struct file_operations proc_fdinfo_file_operations = {
- 	.open		= seq_fdinfo_open,
-@@ -339,6 +345,8 @@ static struct dentry *proc_fdinfo_instan
- 	ei = PROC_I(inode);
- 	ei->fd = data->fd;
+@@ -328,7 +328,7 @@ int proc_fd_permission(struct user_names
+ const struct inode_operations proc_fd_inode_operations = {
+ 	.lookup		= proc_lookupfd,
+ 	.permission	= proc_fd_permission,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
  
-+	inode->i_op = &proc_fdinfo_file_inode_operations;
-+
- 	inode->i_fop = &proc_fdinfo_file_operations;
- 	tid_fd_update_inode(task, inode, 0);
- 
-@@ -358,23 +366,13 @@ static int proc_readfdinfo(struct file *
- 				  proc_fdinfo_instantiate);
- }
- 
--static int proc_open_fdinfo(struct inode *inode, struct file *file)
--{
--	int ret = proc_fdinfo_access_allowed(inode);
--
--	if (ret)
--		return ret;
--
--	return 0;
--}
--
+ static struct dentry *proc_fdinfo_instantiate(struct dentry *dentry,
+@@ -369,7 +369,7 @@ static int proc_readfdinfo(struct file *
  const struct inode_operations proc_fdinfo_inode_operations = {
  	.lookup		= proc_lookupfdinfo,
-+	.permission	= proc_fdinfo_permission,
- 	.setattr	= proc_setattr,
+ 	.permission	= proc_fdinfo_permission,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
  };
  
  const struct file_operations proc_fdinfo_operations = {
--	.open		= proc_open_fdinfo,
- 	.read		= generic_read_dir,
- 	.iterate_shared	= proc_readfdinfo,
- 	.llseek		= generic_file_llseek,
+--- a/fs/proc/internal.h
++++ b/fs/proc/internal.h
+@@ -178,8 +178,8 @@ extern int proc_pid_statm(struct seq_fil
+ extern const struct dentry_operations pid_dentry_operations;
+ extern int pid_getattr(struct user_namespace *, const struct path *,
+ 		       struct kstat *, u32, unsigned int);
+-extern int proc_setattr(struct user_namespace *, struct dentry *,
+-			struct iattr *);
++int proc_nochmod_setattr(struct user_namespace *mnt_userns, struct dentry *dentry,
++			struct iattr *attr);
+ extern void proc_pid_evict_inode(struct proc_inode *);
+ extern struct inode *proc_pid_make_inode(struct super_block *, struct task_struct *, umode_t);
+ extern void pid_update_inode(struct task_struct *, struct inode *);
+--- a/fs/proc/namespaces.c
++++ b/fs/proc/namespaces.c
+@@ -92,7 +92,7 @@ static int proc_ns_readlink(struct dentr
+ static const struct inode_operations proc_ns_link_inode_operations = {
+ 	.readlink	= proc_ns_readlink,
+ 	.get_link	= proc_ns_get_link,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ static struct dentry *proc_ns_instantiate(struct dentry *dentry,
+@@ -179,5 +179,5 @@ out_no_task:
+ const struct inode_operations proc_ns_dir_inode_operations = {
+ 	.lookup		= proc_ns_dir_lookup,
+ 	.getattr	= pid_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+--- a/fs/proc/proc_net.c
++++ b/fs/proc/proc_net.c
+@@ -311,7 +311,7 @@ static int proc_tgid_net_getattr(struct
+ const struct inode_operations proc_net_inode_operations = {
+ 	.lookup		= proc_tgid_net_lookup,
+ 	.getattr	= proc_tgid_net_getattr,
+-	.setattr        = proc_setattr,
++	.setattr        = proc_nochmod_setattr,
+ };
+ 
+ static int proc_tgid_net_readdir(struct file *file, struct dir_context *ctx)
 
 
