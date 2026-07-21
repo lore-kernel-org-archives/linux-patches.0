@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F05F436344;
-	Tue, 21 Jul 2026 18:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360C246C4D2;
+	Tue, 21 Jul 2026 18:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659876; cv=none; b=GcI9ke/hKPMCyr3JHDFg4GZn1Rpqb1RNBmuS2k2AkOCv/7AYK1EVpxR+qwzLesNCqseVjajPwB+FpLNZq35GC4eO7iYt8u31iFjOO5Fm2ueffOP6yF2ewR+smEeiiYr8LsU2GYGhqdwAZMrlvi3UbsbGJt2y+wKSjFo3X9BITmE=
+	t=1784659880; cv=none; b=T5m7KVrkB8GhMYF568pahAYWxTvrrN8yjG0hWyfmZYbGvSPITWhJsc5oSyhgIeV6Kq48z+c5NB91rq7sPznM+O0xFCaO4ygZYp0WZB7kdg77/R6GTF8M5msQGm95blhL9EjbOn2N29FiFnLQU/ncJq2BZ9HEEolM97qk01g1NH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659876; c=relaxed/simple;
-	bh=i4vTkE2eOIuscwT+CkSrWnrDcE2iDPhgZZMb5nt2yNM=;
+	s=arc-20240116; t=1784659880; c=relaxed/simple;
+	bh=lK8ek8FC0ZzVNNXRUcNvwL6bJZqmYspmIe+hggTZ64M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iK4/GWfnba6JZdEqmjk6UbrfuJGOgE+3JWwjperm+D1Yy0M3XFkFVvIOlV9AdXDsWEA9JqB7NQe2Flprc7/oog1Z88wkCXuZs8DuyRxwxOnmYzFKN+DFeE6Z+R/40IGltSi1kqEWhlq4p9s4b2kdyPXzIj40iAUJTjDlqqzNTo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oeRdwoLk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vFOnQEEF/bkoF/L+OC3JVwHxlD6Q3Ks/JMdFmKidJyqMdy0LIXbKE1QZ4GmXKfGFU7C70Tar/cVZ4f4uYYW9Ohi6HjI7oDzaQkdUeGSnE4oJdy373Gh10TY8y1LcTccKj8rF6xILRg/8IbiQHOnf/eB3+5wkdPOv5izHHP2fv70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pve8N3OX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oeRdwoLk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13EBC1F000E9;
-	Tue, 21 Jul 2026 18:51:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pve8N3OX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E411F00A3A;
+	Tue, 21 Jul 2026 18:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659873;
-	bh=1YEQzBK3nPDvigaGVc40fyecgOBuUsPQryXGm09AfX8=;
+	s=korg; t=1784659876;
+	bh=E2a4MwZluWOdFgVrrny60xMJ/cRRWDMv+3AW9NYhbgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oeRdwoLk8hwppoIoS95RXzoxpSWQm7HX6LAdFfbkshzXOavZPlMyWhVIXsZxudaXl
-	 ABFoivBzd5f+NmiLA5rAQnmVSek4KxDbC8+TCKzzp3pwhujxkXS0L4qh/ayTHefkL7
-	 weOK7HSI2x3yvqGzCZGDIqTLUEc6cLpp36eJlCvM=
+	b=pve8N3OX42HfRlrYcflhRP1jzJ7LuS9iN+6Y95r0sLWGN40AqrMUzv3GwYAbS13rs
+	 1GH0X5gc2mGzL/dFbUCuiper0wNuod8paH8HADXSK7GY7YfeM5BJeWcpZ3Uk8RvBm3
+	 RrVEMChZ9il8sSRlWv9oAgFH0eRDHYDwsqzpqkKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
+	Suman Ghosh <sumang@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0765/2077] net: bcmgenet: Use weighted round-robin TX DMA arbitration
-Date: Tue, 21 Jul 2026 17:07:18 +0200
-Message-ID: <20260721152610.840930257@linuxfoundation.org>
+Subject: [PATCH 7.1 0766/2077] octeontx2-af: fix NPC mailbox codes in mbox.h
+Date: Tue, 21 Jul 2026 17:07:19 +0200
+Message-ID: <20260721152610.864650407@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,100 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit fd615abd53110f0f815984e99e7cc51ca6b7d979 ]
+[ Upstream commit 925551c944a1de3058dc3fb55a517eea7749835d ]
 
-Under heavy network traffic, we observed sporadic TX queue timeouts on the
-Raspberry Pi 4. The timeouts can be reproduced by stress testing the TX
-path with multiple concurrent iperf UDP streams:
+Several NPC mailbox command IDs in the 0x601x range were assigned out of
+order. Renumber and reorder the M() definitions so each opcode matches
+the stable contract expected by userspace tools and applications.
 
-    iperf3 -c <ip> -u -b0 -P16 -t60
-    NETDEV WATCHDOG: CPU: 0: transmit queue 0 timed out 2044 ms
-    NETDEV WATCHDOG: CPU: 3: transmit queue 0 timed out 2004 ms
-
-Investigation showed that the timeouts are caused by the priority-based
-arbiter. Under heavy load the highest priority queue starves the lower
-priority ones, causing timeouts. The TX strict priority arbiter is not
-suitable for the default use case where all the traffic gets spread
-across all the TX queues.
-
-Therefore, to fix this, switch the TX DMA arbiter to Weighted Round-Robin,
-which services all queues, so they do not stall. The weights were chosen
-to follow the existing priority scheme: q0 gets the smallest weight, while
-q1-4 get the bulk of the TX bandwidth.
-
-Fixes: 1c1008c793fa ("net: bcmgenet: add main driver file")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Link: https://patch.msgid.link/20260610085238.56300-1-ovidiu.panait.rb@renesas.com
+Fixes: 4e527f1e5c15 ("octeontx2-af: npc: cn20k: Add new mailboxes for CN20K silicon")
+Cc: Suman Ghosh <sumang@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260611083330.1652181-1-rkannoth@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/genet/bcmgenet.c    | 23 +++++++------------
- 1 file changed, 8 insertions(+), 15 deletions(-)
+ .../net/ethernet/marvell/octeontx2/af/mbox.h  | 31 +++++++++----------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index 7c11cf9167620c..ad08c67269be54 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -40,9 +40,8 @@
- 
- #include "bcmgenet.h"
- 
--/* Default highest priority queue for multi queue support */
--#define GENET_Q1_PRIORITY	0
--#define GENET_Q0_PRIORITY	1
-+#define GENET_Q0_WEIGHT		1
-+#define GENET_Q1_WEIGHT		4
- 
- #define GENET_Q0_RX_BD_CNT	\
- 	(TOTAL_DESC - priv->hw_params->rx_queues * priv->hw_params->rx_bds_per_q)
-@@ -2129,13 +2128,6 @@ static netdev_tx_t bcmgenet_xmit(struct sk_buff *skb, struct net_device *dev)
- 	int i;
- 
- 	index = skb_get_queue_mapping(skb);
--	/* Mapping strategy:
--	 * queue_mapping = 0, unclassified, packet xmited through ring 0
--	 * queue_mapping = 1, goes to ring 1. (highest priority queue)
--	 * queue_mapping = 2, goes to ring 2.
--	 * queue_mapping = 3, goes to ring 3.
--	 * queue_mapping = 4, goes to ring 4.
--	 */
- 	ring = &priv->tx_rings[index];
- 	txq = netdev_get_tx_queue(dev, index);
- 
-@@ -2881,8 +2873,9 @@ static int bcmgenet_rdma_disable(struct bcmgenet_priv *priv)
- 
- /* Initialize Tx queues
-  *
-- * Queues 1-4 are priority-based, each one has 32 descriptors,
-- * with queue 1 being the highest priority queue.
-+ * Queues 1-4 are the priority queues, each one has 32 descriptors.
-+ * The weighted round-robin arbiter gives them a larger share of TX
-+ * bandwidth than the default queue 0.
-  *
-  * Queue 0 is the default Tx queue with
-  * GENET_Q0_TX_BD_CNT = 256 - 4 * 32 = 128 descriptors.
-@@ -2900,8 +2893,8 @@ static void bcmgenet_init_tx_queues(struct net_device *dev)
- 	unsigned int start = 0, end = GENET_Q0_TX_BD_CNT;
- 	u32 i, ring_mask, dma_priority[3] = {0, 0, 0};
- 
--	/* Enable strict priority arbiter mode */
--	bcmgenet_tdma_writel(priv, DMA_ARBITER_SP, DMA_ARB_CTRL);
-+	/* Enable Weighted Round-Robin arbiter mode */
-+	bcmgenet_tdma_writel(priv, DMA_ARBITER_WRR, DMA_ARB_CTRL);
- 
- 	/* Initialize Tx priority queues */
- 	for (i = 0; i <= priv->hw_params->tx_queues; i++) {
-@@ -2909,7 +2902,7 @@ static void bcmgenet_init_tx_queues(struct net_device *dev)
- 		start = end;
- 		end += priv->hw_params->tx_bds_per_q;
- 		dma_priority[DMA_PRIO_REG_INDEX(i)] |=
--			(i ? GENET_Q1_PRIORITY : GENET_Q0_PRIORITY)
-+			(i ? GENET_Q1_WEIGHT : GENET_Q0_WEIGHT)
- 			<< DMA_PRIO_REG_SHIFT(i);
- 	}
- 
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
+index dc42c81c094256..44fdd6ba7307c8 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
+@@ -283,31 +283,30 @@ M(NPC_GET_FIELD_HASH_INFO, 0x6013, npc_get_field_hash_info,
+ M(NPC_GET_FIELD_STATUS, 0x6014, npc_get_field_status,                     \
+ 				   npc_get_field_status_req,              \
+ 				   npc_get_field_status_rsp)              \
+-M(NPC_CN20K_MCAM_GET_FREE_COUNT, 0x6015, npc_cn20k_get_fcnt,		\
+-				 msg_req, npc_cn20k_get_fcnt_rsp)	\
+-M(NPC_CN20K_GET_KEX_CFG, 0x6016, npc_cn20k_get_kex_cfg,			\
++M(NPC_MCAM_DEFRAG,	 0x6016,	npc_defrag,			\
++					msg_req,			\
++					msg_rsp)		\
++M(NPC_CN20K_GET_KEX_CFG, 0x6017, npc_cn20k_get_kex_cfg,			\
+ 				   msg_req, npc_cn20k_get_kex_cfg_rsp)	\
+-M(NPC_CN20K_MCAM_WRITE_ENTRY,	0x6017, npc_cn20k_mcam_write_entry,	\
+-				 npc_cn20k_mcam_write_entry_req, msg_rsp)  \
+-M(NPC_CN20K_MCAM_ALLOC_AND_WRITE_ENTRY, 0x6018,				   \
+-npc_cn20k_mcam_alloc_and_write_entry,					   \
++M(NPC_CN20K_MCAM_GET_FREE_COUNT, 0x6018, npc_cn20k_get_fcnt,			\
++				 msg_req, npc_cn20k_get_fcnt_rsp)	\
++M(NPC_CN20K_MCAM_WRITE_ENTRY,	0x6019, npc_cn20k_mcam_write_entry,			\
++				 npc_cn20k_mcam_write_entry_req, msg_rsp)	\
++M(NPC_CN20K_MCAM_ALLOC_AND_WRITE_ENTRY, 0x601a, npc_cn20k_mcam_alloc_and_write_entry,	\
+ 				npc_cn20k_mcam_alloc_and_write_entry_req,  \
+ 				npc_mcam_alloc_and_write_entry_rsp)  \
+-M(NPC_CN20K_MCAM_READ_ENTRY,	0x6019, npc_cn20k_mcam_read_entry,	\
++M(NPC_CN20K_MCAM_READ_ENTRY,	0x601b, npc_cn20k_mcam_read_entry,	\
+ 				  npc_mcam_read_entry_req,		\
+ 				  npc_cn20k_mcam_read_entry_rsp)	\
+-M(NPC_CN20K_MCAM_READ_BASE_RULE, 0x601a, npc_cn20k_read_base_steer_rule,       \
+-				   msg_req, npc_cn20k_mcam_read_base_rule_rsp) \
+-M(NPC_MCAM_DEFRAG,	     0x601b,	npc_defrag,			\
+-					msg_req,			\
+-					msg_rsp)			\
+-M(NPC_MCAM_GET_NUM_KWS, 0x601c, npc_get_num_kws,		\
++M(NPC_CN20K_MCAM_READ_BASE_RULE, 0x601c, npc_cn20k_read_base_steer_rule,            \
++				   msg_req, npc_cn20k_mcam_read_base_rule_rsp)  \
++M(NPC_MCAM_GET_NUM_KWS, 0x601d, npc_get_num_kws,		\
+ 				npc_get_num_kws_req,		\
+ 				npc_get_num_kws_rsp)		\
+-M(NPC_MCAM_GET_DFT_RL_IDXS, 0x601d, npc_get_dft_rl_idxs,	\
++M(NPC_MCAM_GET_DFT_RL_IDXS, 0x601e, npc_get_dft_rl_idxs,	\
+ 					msg_req,		\
+ 					npc_get_dft_rl_idxs_rsp)\
+-M(NPC_MCAM_GET_NPC_PFL_INFO, 0x601e, npc_get_pfl_info,		\
++M(NPC_MCAM_GET_NPC_PFL_INFO, 0x601f, npc_get_pfl_info,		\
+ 					msg_req,		\
+ 					npc_get_pfl_info_rsp)	\
+ /* NIX mbox IDs (range 0x8000 - 0xFFFF) */				\
 -- 
 2.53.0
 
