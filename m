@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C215146EF8C;
-	Tue, 21 Jul 2026 19:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5EB471250;
+	Tue, 21 Jul 2026 19:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660718; cv=none; b=ZvakV4XBCrNggHWQsQDsbo0dSpVffPuZXKpu6sWRrJeYYkfinWg17Pu8IWn7vd7sitENQoGe63oaDVfUqCyiyKfOoOpH4mtdptTvWj7p8oqnjdhIw2Xn4QsKduy+WebIvvgkSCyt1yU5TNejHFYTCXTL4Xwb3WlriPRvD/0fMi8=
+	t=1784660721; cv=none; b=bjy2S1UL0TZnRjyqCqYoZZJ4wxZ5XKf3c2wv9YcIpsapkH75rY9FKnkkphYzS+PqbK4jxZNgYoPMh6rUJfFCMnmycB1cp+Qs6LeZSBORoyf5GDAAE8hgc8+fY7mwU4xeObXVDeaPfUGHJm3m/jXmE8frErRzqSa+OqnR99AJNVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660718; c=relaxed/simple;
-	bh=eKjwgnCC9CARKsThHLwURNskbhnei77jZurU0cz8WPo=;
+	s=arc-20240116; t=1784660721; c=relaxed/simple;
+	bh=wvSpoOFVWsCf3XqPoyVprMDNolxukOT7VQcAB7mvXq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TCZEWStE50IPDxTrn37mcmMDl26oxD+Lkqumy7ek6tAZ6Ad90TKpTAUUfVQoBZO++jrvs2ibxlNZXG0n8JyYd+5fPhXqo3rwLfOEKMoPtEoQyyaQqYDFQ3rGti4RKltKx2k9E10wIV5NcbxeKWcIfbUNPOhHLBBBB+NLggKuiIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKVjAG0W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ckkoEgRAN1sCNGloUBSKuVOijdBp8EENlEjD3Nl4euHx89MmnVdk7IIFzDDLWDMj4CdNJ3h584sZTBJ9yjpwvC730Vv3d2mjfq8uLE3eHcwf+3MlfX5F4XgEssDIgJjuLjjKYPkTrmg+Q7O357nkCYd42UpM4N3aEX15Nin8HXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l32hs2ra; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKVjAG0W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA8A1F000E9;
-	Tue, 21 Jul 2026 19:05:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l32hs2ra"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1761F000E9;
+	Tue, 21 Jul 2026 19:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660716;
-	bh=9D2ZTWF/WyLDZZwIvMtBdMHelmWcpDaMOG5YVQCPd8E=;
+	s=korg; t=1784660719;
+	bh=Vzx9S2V+d42IavLNKvCDMgHedy7cpAIy2wAE3+HEhho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tKVjAG0WISx5zsMp+FGmUakvrHwfy7bqGEY82GpEm8Q1C2p3zB0USNFRhjQJ9kMOW
-	 T0erWZTzq05yG0uD5I2ACOnmqD/LS35RmXq5AMUKTsijl/eofcqE/VIEbCnO4/9LNo
-	 NQ+nEid9rhbtU9kGAm/HHZOpj5T1ps/VAm2uvCZI=
+	b=l32hs2raSAeLDc5CWM9bY2pqamPf6Jl3aaWzYka3yRdg6/ZAQlnS5xw0itEnjID9L
+	 6csbiUHD0ftNlHuM8Z00F/YnMiMTrrNsVjC73cmcixBeD+FSK7NXXoG08UoMS4YJ+t
+	 riPPUwClBfJHRHNdnKBt/ItA9hRS3jcQqIqRYlPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Atwood <matthew.s.atwood@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	intel-xe@lists.freedesktop.org,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1085/2077] drm/xe: Fix wa_oob codegen recipe for external module builds
-Date: Tue, 21 Jul 2026 17:12:38 +0200
-Message-ID: <20260721152618.413872507@linuxfoundation.org>
+Subject: [PATCH 7.1 1086/2077] spi: dw: fix wrong BAUDR setting after resume
+Date: Tue, 21 Jul 2026 17:12:39 +0200
+Message-ID: <20260721152618.437881790@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -48,68 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit 92dc59ab2a09097cdf249e0288ff9b69261761c6 ]
+[ Upstream commit 66b6605bcea7af7aca3d1d858b9c5f14903f9f9a ]
 
-When building with 'make M=drivers/gpu/drm/xe modules', kbuild invokes
-scripts/Makefile.build with obj=., causing $(obj) to expand to '.'.
-Make normalizes './xe_gen_wa_oob' to 'xe_gen_wa_oob' when constructing
-the $^ automatic variable (target name normalization), so the recipe
-command becomes just 'xe_gen_wa_oob ...' without any path prefix, and
-the shell cannot find the tool.
+After resuming from suspend to ram, spi transfer stops working. Further
+debugging shows that the BAUDR register isn't correctly set, this is
+due to dws->current_freq doesn't match the HW BAUDR setting,
+specifically, the dws->current_freq equals to speed_hz, but BAUDR is 0.
+so the dw_spi_set_clk() in below code won't be called:
 
-Fix by replacing $^ with explicit $(obj)/xe_gen_wa_oob and
-$(src)/<rules-file> references in both wa_oob recipe commands.
-In recipe strings, make does not apply target name normalization, so
-$(obj)/xe_gen_wa_oob correctly expands to './xe_gen_wa_oob' and the
-shell can execute it. This matches the pattern already used by other
-DRM drivers (e.g. radeon's mkregtable).
+        if (dws->current_freq != speed_hz) {
+                dw_spi_set_clk(dws, clk_div);
+                dws->current_freq = speed_hz;
+        }
 
-Fixes: f037e0b78e6d ("drm/xe: add xe_device_wa infrastructure")
-Cc: Matt Atwood <matthew.s.atwood@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: intel-xe@lists.freedesktop.org
-Assisted-by: GitHub_Copilot:claude-sonnet-4.6
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patch.msgid.link/20260604074501.172129-1-thomas.hellstrom@linux.intel.com
-(cherry picked from commit 3a11a63cc16660d514ff584e7551589655337e87)
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+The mismatch comes from dw_spi_shutdown_chip() when suspending.
+Fix this mismatch by setting dws->current_freq to 0 as well when
+clearing BAUDR reg in dw_spi_shutdown_chip().
+
+Fixes: e24c74527207 ("spi: controller driver for Designware SPI core")
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Link: https://patch.msgid.link/20260612002835.5240-1-jszhang@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/Makefile | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-dw.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/xe/Makefile b/drivers/gpu/drm/xe/Makefile
-index 03242e8b3d876c..de36c8b640bafc 100644
---- a/drivers/gpu/drm/xe/Makefile
-+++ b/drivers/gpu/drm/xe/Makefile
-@@ -16,14 +16,14 @@ subdir-ccflags-y += -I$(obj) -I$(src)
- hostprogs := xe_gen_wa_oob
- generated_oob := $(obj)/generated/xe_wa_oob.c $(obj)/generated/xe_wa_oob.h
- quiet_cmd_wa_oob = GEN     $(notdir $(generated_oob))
--      cmd_wa_oob = mkdir -p $(@D); $^ $(generated_oob)
-+      cmd_wa_oob = mkdir -p $(@D); $(obj)/xe_gen_wa_oob $(src)/xe_wa_oob.rules $(generated_oob)
- $(obj)/generated/%_wa_oob.c $(obj)/generated/%_wa_oob.h: $(obj)/xe_gen_wa_oob \
- 		 $(src)/xe_wa_oob.rules
- 	$(call cmd,wa_oob)
+diff --git a/drivers/spi/spi-dw.h b/drivers/spi/spi-dw.h
+index 9cc79c566a70c0..2f2debc64e7377 100644
+--- a/drivers/spi/spi-dw.h
++++ b/drivers/spi/spi-dw.h
+@@ -282,6 +282,7 @@ static inline void dw_spi_shutdown_chip(struct dw_spi *dws)
+ {
+ 	dw_spi_enable_chip(dws, 0);
+ 	dw_spi_set_clk(dws, 0);
++	dws->current_freq = 0;
+ }
  
- generated_device_oob := $(obj)/generated/xe_device_wa_oob.c $(obj)/generated/xe_device_wa_oob.h
- quiet_cmd_device_wa_oob = GEN	$(notdir $(generated_device_oob))
--      cmd_device_wa_oob = mkdir -p $(@D); $^ $(generated_device_oob)
-+      cmd_device_wa_oob = mkdir -p $(@D); $(obj)/xe_gen_wa_oob $(src)/xe_device_wa_oob.rules $(generated_device_oob)
- $(obj)/generated/%_device_wa_oob.c $(obj)/generated/%_device_wa_oob.h: $(obj)/xe_gen_wa_oob \
- 		 $(src)/xe_device_wa_oob.rules
- 	$(call cmd,device_wa_oob)
+ extern void dw_spi_set_cs(struct spi_device *spi, bool enable);
 -- 
 2.53.0
 
