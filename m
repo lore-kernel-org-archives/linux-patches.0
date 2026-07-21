@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310293A4F4B;
-	Tue, 21 Jul 2026 19:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC760356746;
+	Tue, 21 Jul 2026 19:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663222; cv=none; b=dySteiRdJ+jax2bZ1u2nCI9XupCXW/lLtOq/r4bF8bct8+5CfT2UGuzhc5bwZas81MXwXlK7APQ6b4mpo0wmOVC7m9YuKYSrkhMzeq7jEC47H0GF1ACESOySoxmjNSw7VcYZ9H2Y/9nIggDTp9YbM6AgSUnXSbXQjr5hOVK3CiA=
+	t=1784663224; cv=none; b=o3wJnZNiNiuHDXzInVuVqte4UhbS/2XMNPdldOverTHpnp+S0aXWHEnk9113V3riVx/+mdgiA2QDcDfhq9J7eMj6u8AePnnm9voPw71FiOQnPCOe3Anh3vUnDy0BvYGEshNOeYwLStIotKkDb8O9IpzFhqYBhWk0XbqUl3fQHpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663222; c=relaxed/simple;
-	bh=F5xO2H8Q5O3fmvbNqqobI9zpxIgs0oYGB1gJswT1c1s=;
+	s=arc-20240116; t=1784663224; c=relaxed/simple;
+	bh=hKNMk3BhyxIXcC4VPuljH3GGQeH63SzjXmhWtE/DVfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JjCbf/vindNjTb2aULXE3LQ+UbM2CpA3kVzE5fsgaoMkyjgps3nmQTAlQSjTUq1yHBYgblf3EOYKOjCY5xK15USRzHfxIjnTwApRauhP1nhpP6RNKPuQA702avBkIex/V7vnMoMJNnY4J6nWd76JhIFq1hP1xBeTyBEWagA8JC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WE2aSoAN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JYco/BAaPsTQhvck6ylkooHKHsO5OTmKvPjnN+w/mdrZjuvq4/OY/gFQeaBL3Ipffx0AHrT4124mfHc3And1smGMvtjzyLBptjIgv7zYFEbMaxJ1panYALMZv2T633QpqdYNneDKl0yJM5VvppN3/+a/PJ0smmBc0mqfkdR0g4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuGjHv82; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WE2aSoAN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2D61F000E9;
-	Tue, 21 Jul 2026 19:47:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuGjHv82"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460841F000E9;
+	Tue, 21 Jul 2026 19:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663221;
-	bh=MIx/08xgjVCGOtgsQIG0SdjV1EqDSaSsoWDeuhG5F8A=;
+	s=korg; t=1784663223;
+	bh=gvTzdezXgqz/BASenafoG+66t6yLKempilCWGvSuEtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WE2aSoAN/OQEOjDs+u9pZ5ej6E+QEgTptqA4DwLHKnB5uxPwQ2hTEi45wkFn4adx3
-	 9TtzlqU7Zq3BlJg3vyTt72yExVo/FoCJZ7YsXPgMKoEEx6fZryrcw6ILZWT2jOb6zv
-	 SAIF/vBxIs3VqEfsQGioCVd739xMc/d20E+mZFGM=
+	b=yuGjHv82VZs57pMGkB57hWVxPmyGTeTGSlKwrlu5vp3zGFrxLXnWvCiJAVB+HQl1p
+	 eGIyidE2rPSnt1lvNuqOxTwp33t9XdlqtDXyafvLAwr5bkVzngtIIw/ySn7IrSOS0I
+	 dT6lqvrBFEA921Zd329lbxAEPSUfWdc5lxb07nV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0697/1276] sctp: fix SCTP_RESET_STREAMS stream list length limit
-Date: Tue, 21 Jul 2026 17:19:00 +0200
-Message-ID: <20260721152501.692936080@linuxfoundation.org>
+Subject: [PATCH 6.12 0698/1276] MIPS: DEC: Ensure RTC platform device deregistration upon failure
+Date: Tue, 21 Jul 2026 17:19:01 +0200
+Message-ID: <20260721152501.716985103@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,59 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit 2b9f5ef534184bd81b8a4772780626c40eed1fd5 ]
+[ Upstream commit eacaf5ae747f7dead6cc268de17a7382d79031fc ]
 
-SCTP_RESET_STREAMS carries a flexible array of u16 stream IDs, but the
-optlen clamps treat USHRT_MAX as a byte count and then multiply
-sizeof(__u16) by the fixed header size.
+Switch RTC platform device registration from platform_device_register()
+to platform_add_devices() so as to make sure any failure will result in
+automatic device unregistration.
 
-That caps the copied and validated option buffer at about 64 KiB, which
-rejects valid requests containing more than about half of the u16 stream
-ID range.
-
-Use struct_size_t() for the maximum struct sctp_reset_streams layout
-instead, so the bound matches the flexible array described by
-srs_number_streams.
-
-Fixes: 5960cefab9df ("sctp: add a ceiling to optlen in some sockopts")
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Link: https://patch.msgid.link/20260625142354.2600-1-alhouseenyousef@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fae67ad43114 ("arch/mips/dec: switch DECstation systems to rtc-cmos")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Acked-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/mips/dec/platform.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 72450359ccec89..4e09c01c7109d4 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -4111,8 +4111,9 @@ static int sctp_setsockopt_reset_streams(struct sock *sk,
- 	if (optlen < sizeof(*params))
- 		return -EINVAL;
- 	/* srs_number_streams is u16, so optlen can't be bigger than this. */
--	optlen = min_t(unsigned int, optlen, USHRT_MAX +
--					     sizeof(__u16) * sizeof(*params));
-+	optlen = min_t(unsigned int, optlen,
-+		       struct_size_t(struct sctp_reset_streams, srs_stream_list,
-+				     USHRT_MAX));
+diff --git a/arch/mips/dec/platform.c b/arch/mips/dec/platform.c
+index 723ce16cbfc0cc..a005246a0ac5d2 100644
+--- a/arch/mips/dec/platform.c
++++ b/arch/mips/dec/platform.c
+@@ -38,6 +38,10 @@ static struct platform_device dec_rtc_device = {
+ 	.num_resources = ARRAY_SIZE(dec_rtc_resources),
+ };
  
- 	if (params->srs_number_streams * sizeof(__u16) >
- 	    optlen - sizeof(*params))
-@@ -4598,8 +4599,8 @@ static int sctp_setsockopt(struct sock *sk, int level, int optname,
- 	if (optlen > 0) {
- 		/* Trim it to the biggest size sctp sockopt may need if necessary */
- 		optlen = min_t(unsigned int, optlen,
--			       PAGE_ALIGN(USHRT_MAX +
--					  sizeof(__u16) * sizeof(struct sctp_reset_streams)));
-+			       PAGE_ALIGN(struct_size_t(struct sctp_reset_streams,
-+							srs_stream_list, USHRT_MAX)));
- 		kopt = memdup_sockptr(optval, optlen);
- 		if (IS_ERR(kopt))
- 			return PTR_ERR(kopt);
++static struct platform_device *dec_rtc_devices[] __initdata = {
++	&dec_rtc_device,
++};
++
+ static struct resource dec_dz_resources[] = {
+ 	{ .name = "dz", .flags = IORESOURCE_MEM, },
+ 	{ .name = "dz", .flags = IORESOURCE_IRQ, },
+@@ -137,7 +141,7 @@ static int __init dec_add_devices(void)
+ 	}
+ 	num_zs = i;
+ 
+-	ret1 = platform_device_register(&dec_rtc_device);
++	ret1 = platform_add_devices(dec_rtc_devices, 1);
+ 	ret2 = IS_ENABLED(CONFIG_32BIT) ?
+ 	       platform_add_devices(dec_dz_devices, num_dz) : 0;
+ 	ret3 = platform_add_devices(dec_zs_devices, num_zs);
 -- 
 2.53.0
 
