@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0223C1400;
-	Tue, 21 Jul 2026 22:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9A034B1A6;
+	Tue, 21 Jul 2026 22:41:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673667; cv=none; b=WOGHSIPh5g/u2j2wdBIUoPF/zUZjS885NwjtN1Z1C73pTOcqYsYrOrMMYxPp9nI8FxnAR2UI+2bgz16JlCU2d2ZLkFbQxYtgDi1Kh8hYB4LiVQ96GGcB8jQRfGOEs7U+P0ot1jw3/BJbGOni86anHkIRwr/Z/ukgDjjbdEwimg4=
+	t=1784673670; cv=none; b=dyFC/FY09JQTXnV+w7A45S5S3+Vbe0ye7FgJenXAAzcoOxECL7MJ+HvGQGZsXaE2tAOXuP9OtRw3wiClquUZGGLw+XsH/hjtSp1STEeGliQv3fd+0OjijuNx+sFS6kwXxdYdedCzc8Gn/+1s2dmFe7dL+1sAch9HBqLXAWqF824=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673667; c=relaxed/simple;
-	bh=YoYNZUoW3qK8njDkErxLWULT6RwKEcIY/bKAmzBd31E=;
+	s=arc-20240116; t=1784673670; c=relaxed/simple;
+	bh=fwHzDaLWEwG9ChC16qpPfF60p/BA87oTGXNiQtg0tL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YQEU5MgqooRIsbHV7hItGz8NE9eK+HaFrDYsgtH462cAQ1+eTASgDOT3FgzCzeuPDyePZwdwfhR9yG2XdNjJ1Ep1JJTaEKNM/P7JSgtGZUqcEsTiBr5uTxEs7agCfozqmCqIqVbUp2xA7N/3/d6U/XeC/cAX/fqr4BdSZZEIOfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=No8ipNob; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=J/cAh9wvWNQ+9P6CJvV1ttattmkdkihh/1EsBtxAwFbVAaXoSx8h9V/cvcreoB7d6O1uw5LfxBoJsI0fyXohzFW6T9dmu3xrSuwsJvKZ/gKdCYpyzBluyS4YjL9QYwtmRvvzO/6t8iEWYl+yXUZ/17/yZFhnc+3R3FohXNiOWlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhodhBYM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="No8ipNob"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B23E1F000E9;
-	Tue, 21 Jul 2026 22:41:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhodhBYM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27CA1F000E9;
+	Tue, 21 Jul 2026 22:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673666;
-	bh=j9Iwu2Qb/4Qz+MHW1z7DjySEslAG2A7RIDCgLfGu6Kg=;
+	s=korg; t=1784673669;
+	bh=p7uRss2nMeXGlyO+24TWVH5uCgNV5iTs92CbKTzNFeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=No8ipNobNTIXz8VrCzqVfFl6iObeSSUNQoDoDgfFEe71S4dBFZaRRXINUr1h5VD1b
-	 qXyYocVMBSUBbNjLe+5RG7U1DVVhDWwk2ItQVF1eFkQzDCwabHJ3roFXt6vD5Mor0E
-	 cmsvFj6KdxEooWX/f7he1puWzryZVfO45u5WPvkk=
+	b=uhodhBYMorCg+ZPS6a96jWyXoRqYF4sBdwNXEB+MrYcddEz1psRWCyBs+X/SgfMNq
+	 yOFuYdHhjHgihzhhxVXWgoja9WrLwjvqGRpEax6JkeUse8SIPZm++j14+U3a0iKw5N
+	 Av1fD5EWhqBDJC2XItaVFLjzeod4LvKbTXTZwAC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Qihang Tang <q.h.hack.winter@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 222/699] scsi: pm8001: Fix error code in non_fatal_log_show()
-Date: Tue, 21 Jul 2026 17:19:41 +0200
-Message-ID: <20260721152400.707803929@linuxfoundation.org>
+Subject: [PATCH 5.10 249/699] vhost/vdpa: validate virtqueue index in mmap and fault paths
+Date: Tue, 21 Jul 2026 17:20:08 +0200
+Message-ID: <20260721152401.313828850@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -46,47 +46,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Qihang Tang <q.h.hack.winter@gmail.com>
 
-[ Upstream commit 1b6f03b7ae9ee27054c55bb55a69d05555a78516 ]
+[ Upstream commit 929e4f044621c8cc30b612fb74e1410bef09e41b ]
 
-The non_fatal_log_show() function is supposed to return negative error
-codes on failure.  But because the error codes are saved in a u32 and
-then cast to signed long, they end up being high positive values instead
-of negative.  Remove the intermediary u32 variable to fix this bug.
+vhost_vdpa_mmap() and vhost_vdpa_fault() use vma->vm_pgoff as a
+virtqueue index for get_vq_notification(), but they do not validate
+that the index is smaller than v->nvqs.
 
-Fixes: dba2cc03b9db ("scsi: pm80xx: sysfs attribute for non fatal dump")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Acked-by: Jack Wang <jinpu.wang@ionos.com>
-Link: https://patch.msgid.link/ahs-bEsBJH0KhnsX@stanley.mountain
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+The ioctl path already performs both a bounds check and
+array_index_nospec(), but the mmap/fault path only checks that the
+index fits in u16. This allows an out-of-range queue index to reach
+driver-specific get_vq_notification() callbacks.
+
+Fix this by extracting a unified vhost_vdpa_get_vq_notification()
+helper that validates the queue index against v->nvqs and applies
+array_index_nospec() before calling the driver callback. Both the
+mmap and fault paths use this helper, and the bounds checking is
+consolidated into a single location.
+
+>From source inspection, the most defensible impact is out-of-bounds
+access in the callback path, potentially leading to invalid PFN
+remaps and crash/DoS.
+
+Fixes: ddd89d0a059d ("vhost_vdpa: support doorbell mapping via mmap")
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Qihang Tang <q.h.hack.winter@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260508075821.92656-1-q.h.hack.winter@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/pm8001/pm8001_ctl.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/vhost/vdpa.c | 29 ++++++++++++++++++++++-------
+ 1 file changed, 22 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/scsi/pm8001/pm8001_ctl.c b/drivers/scsi/pm8001/pm8001_ctl.c
-index d5d5965fa7a0e9..467f77664efb90 100644
---- a/drivers/scsi/pm8001/pm8001_ctl.c
-+++ b/drivers/scsi/pm8001/pm8001_ctl.c
-@@ -588,10 +588,7 @@ static DEVICE_ATTR(fatal_log, S_IRUGO, pm8001_ctl_fatal_log_show, NULL);
- static ssize_t non_fatal_log_show(struct device *cdev,
- 	struct device_attribute *attr, char *buf)
- {
--	u32 count;
--
--	count = pm80xx_get_non_fatal_dump(cdev, attr, buf);
--	return count;
-+	return pm80xx_get_non_fatal_dump(cdev, attr, buf);
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index 61d11e7317acdc..c1fb70f840340d 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -960,16 +960,32 @@ static int vhost_vdpa_release(struct inode *inode, struct file *filep)
  }
- static DEVICE_ATTR_RO(non_fatal_log);
  
+ #ifdef CONFIG_MMU
+-static vm_fault_t vhost_vdpa_fault(struct vm_fault *vmf)
++static int
++vhost_vdpa_get_vq_notification(struct vhost_vdpa *v, unsigned long index,
++			       struct vdpa_notification_area *notify)
+ {
+-	struct vhost_vdpa *v = vmf->vma->vm_file->private_data;
+ 	struct vdpa_device *vdpa = v->vdpa;
+ 	const struct vdpa_config_ops *ops = vdpa->config;
++
++	if (index > 65535 || index >= v->nvqs)
++		return -EINVAL;
++
++	index = array_index_nospec(index, v->nvqs);
++
++	*notify = ops->get_vq_notification(vdpa, index);
++
++	return 0;
++}
++
++static vm_fault_t vhost_vdpa_fault(struct vm_fault *vmf)
++{
++	struct vhost_vdpa *v = vmf->vma->vm_file->private_data;
+ 	struct vdpa_notification_area notify;
+ 	struct vm_area_struct *vma = vmf->vma;
+-	u16 index = vma->vm_pgoff;
++	unsigned long index = vma->vm_pgoff;
+ 
+-	notify = ops->get_vq_notification(vdpa, index);
++	if (vhost_vdpa_get_vq_notification(v, index, &notify))
++		return VM_FAULT_SIGBUS;
+ 
+ 	return vmf_insert_pfn(vma, vmf->address & PAGE_MASK, PFN_DOWN(notify.addr));
+ }
+@@ -992,8 +1008,6 @@ static int vhost_vdpa_mmap(struct file *file, struct vm_area_struct *vma)
+ 		return -EINVAL;
+ 	if (vma->vm_flags & VM_READ)
+ 		return -EINVAL;
+-	if (index > 65535)
+-		return -EINVAL;
+ 	if (!ops->get_vq_notification)
+ 		return -ENOTSUPP;
+ 
+@@ -1001,7 +1015,8 @@ static int vhost_vdpa_mmap(struct file *file, struct vm_area_struct *vma)
+ 	 * support the doorbell which sits on the page boundary and
+ 	 * does not share the page with other registers.
+ 	 */
+-	notify = ops->get_vq_notification(vdpa, index);
++	if (vhost_vdpa_get_vq_notification(v, index, &notify))
++		return -EINVAL;
+ 	if (notify.addr & (PAGE_SIZE - 1))
+ 		return -EINVAL;
+ 	if (vma->vm_end - vma->vm_start != notify.size)
 -- 
 2.53.0
 
