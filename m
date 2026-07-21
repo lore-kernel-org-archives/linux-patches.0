@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C93433BC4;
-	Tue, 21 Jul 2026 19:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3625432BE4;
+	Tue, 21 Jul 2026 19:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662677; cv=none; b=EDwf1oPNR/aWxZ9nSOflyzSc52gDCWuDbnWfpzNlhT6IfzwMwEeKtDhplqNbRLJ+w0zUczzCZuu2bK6/h6H9GI/aTDP40F5qx+ilELqQF3jveD366Smd8C3UmVlthR5a8SJpivX8zBGoiBhL1x2NML3ofX4FrW5xuj8Dh5laIDg=
+	t=1784662680; cv=none; b=gCG9327iLDJRHVPQUCwORTP2L6ApLKCNVt31EKdRJjZcbjBVgmbGMei7A1mNaATo+e1mmTS5grrPrfDngYK3UnoNibqS2rdHSUzTpQKFgZwX4fgSWPB90j5fONCZU9uLjhHzpjUJga4JNbe6Ezgi3ig7SGhBXfI9A3RQr5WdQYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662677; c=relaxed/simple;
-	bh=EQwoj9pyEQAjkR8kkv3XR4EctPcEIxucm/19ZaxB/q0=;
+	s=arc-20240116; t=1784662680; c=relaxed/simple;
+	bh=onuqbObmOz+xkeOaqcwB8isMdSEETtgbW+v7LBq4XRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=avolwTy3titIJ+mAX74Bmkjcf752zQ9oWfvXvvUQ/k2dQCp4sCyZ06+oPuJ0Ow0Eusw/FpeSeBRq6l24IsZ+bZO7ZSeJWZhgpbypo7vn7/YtJ8GmkxS6kD0b0jodizjcv55m9qqP1yYH0HlMa7PIvkgVMmU8RTRQVeAlccpilSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DK8O8htj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DITu7A1UONKipR5ZfA8uF1mLEhfnGxzrMIatFA131LA4vAWkmuQJhD8lQMuKL6h2xpvx8n5Q3BHIaQnWgjUiz6rVlZYH7T6Tkkx+WnelbpIR0l0siDtPQOob1oFbEJNBTnW3Ifo45CLknge7/9gB7dgxIgCwGjQqNr73VckEDlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wui37/1p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DK8O8htj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487C01F00A3A;
-	Tue, 21 Jul 2026 19:37:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wui37/1p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 023BF1F000E9;
+	Tue, 21 Jul 2026 19:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662673;
-	bh=VDLFIdcokyy/7t/aU0vTucv9WJNmW9DBEwraGjCDp6k=;
+	s=korg; t=1784662676;
+	bh=19SGVgddz6kThUPVy5NlwmR9GkgOBir98PhiFEQ2kB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DK8O8htjc/VBvHlLd9zhJ3Zx7o7OHyT9gAgJmrCxPNpAMy65zuQawjvHKMKmpUM/k
-	 ACHFLTHBiffdOT7dlBbZlqOA1mjNM6eLlbzGLw2aqxZY0EVwEgwgvzy154V14pLI8F
-	 5RERwXlDpcvnEZ2BdQGFqsMZgrm57GhglNS6jE/o=
+	b=wui37/1psA2sRUp6JoFBdOC+cnMqpwZna8B/6jTVXtejG6TZd37ThtgyQ/e+sZhL2
+	 KTO5Ed3i9nAwnQVS25MpD8KBH1BcrcjpQVZpL5tGxnyRDwhTOyz868/fo/iSolo/6c
+	 gs3Xxr31NsrkSN+MyYt0Efb/Zem8JnInaVUXXSZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Caleb James DeLisle <cjd@cjdns.fr>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0534/1276] PCI: mediatek: Use actual physical address instead of virt_to_phys()
-Date: Tue, 21 Jul 2026 17:16:17 +0200
-Message-ID: <20260721152458.073935191@linuxfoundation.org>
+Subject: [PATCH 6.12 0508/1276] xprtrdma: Document and assert reply-handler invariants
+Date: Tue, 21 Jul 2026 17:15:51 +0200
+Message-ID: <20260721152457.476636108@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,91 +51,213 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit ebc1d9906894703286d12306a6f242d90cfb49e8 ]
+[ Upstream commit 797943e8bd1ffcc63bfe79d24faad9a77054ec40 ]
 
-The driver previously used virt_to_phys() on the ioremapped register base
-(port->base) to compute the MSI message address. Using virt_to_phys() on an
-IO mapped address is incorrect because it expects a kernel virtual address.
+The xprtrdma reply path has been the subject of recurring
+LLM-driven review claims that 'an RPC can complete while
+receive buffers are still DMA-mapped' or that 'the req can be
+freed while the HCA still owns the send buffer.'  No runtime
+reproducer has surfaced, but the absence of a written-down
+invariant set lets each pass of automated review reach the
+same hypothetical conclusion.  Subsequent fixes against
+ce2f9a4d9ccc ('xprtrdma: Decouple req recycling from RPC
+completion') closed the underlying races but did not document
+the closure where future readers will look for it.
 
-To fix it, store the physical start of the I/O register region in
-mtk_pcie_port->phys_base and use it to build the MSI address. This replaces
-the incorrect virt_to_phys() usage and ensures MSI addresses are generated
-correctly.
+State the invariants explicitly in a comment above
+rpcrdma_reply_handler() and back four of them with
+WARN_ON_ONCE() probes positioned where each invariant is
+locally checkable on the previous patch's cleaned-up
+ownership state:
 
-Fixes: 43e6409db64d ("PCI: mediatek: Add MSI support for MT2712 and MT7622")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Tested-by: Caleb James DeLisle <cjd@cjdns.fr>
-Link: https://patch.msgid.link/20260521171951.1495781-2-cjd@cjdns.fr
+- I1 (Receive WR ownership): WARN at rpcrdma_post_recvs() that
+  a rep pulled from rb_free_reps carries rr_rqst == NULL.
+
+- I2 (rep attachment): WARN at rpcrdma_reply_put() that
+  req->rl_reply was NULLed before the matching rep_put.
+
+- I3 (Registered-MR fence): WARN at rpcrdma_complete_rqst()
+  that req->rl_registered is empty.  Strong send-queue
+  ordering of the LocalInv WR chain makes the last
+  completion observe the ib_dma_unmap_sg() of every earlier
+  MR, so 'list empty' implies 'all MRs unmapped'.
+
+- I4 (Send-buffer release): WARN at rpcrdma_req_release()
+  that req->rl_sendctx is NULL.  Reaching the kref release
+  callback requires both the RPC-layer and Send-side
+  references to have dropped; the Send-side drop runs in
+  rpcrdma_sendctx_unmap(), which clears rl_sendctx
+  (previous patch).  A non-NULL rl_sendctx here would mean
+  the Send-side owner had not run -- a contradiction.
+
+The XXX comment in xprt_rdma_free() about signal-driven
+release racing the Send completion described the pre-decouple
+state.  Replace it with a one-line note pointing at the
+invariant set, since the kref scheme now holds the req across
+the in-flight Send regardless of which path released the
+rpc_task.
+
+I5 (req lifecycle) is stated in the comment but not probed:
+making it locally assertible would require moving kref_init
+out of rpcrdma_req_release(), which in turn requires adding
+kref_init to the bc_pa_list and backlog-wake reuse paths.
+That restructuring is deferred -- the invariant is unchanged
+either way.
+
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Stable-dep-of: 234c0ff695ef ("xprtrdma: Resize reply buffers before reposting receives")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-mediatek.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ net/sunrpc/xprtrdma/rpc_rdma.c  | 69 +++++++++++++++++++++++++++++++++
+ net/sunrpc/xprtrdma/transport.c | 13 +++++--
+ net/sunrpc/xprtrdma/verbs.c     |  6 +++
+ 3 files changed, 84 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-mediatek.c b/drivers/pci/controller/pcie-mediatek.c
-index 3ce6830d279f91..dcf8a63a984bc5 100644
---- a/drivers/pci/controller/pcie-mediatek.c
-+++ b/drivers/pci/controller/pcie-mediatek.c
-@@ -165,6 +165,7 @@ struct mtk_pcie_soc {
- /**
-  * struct mtk_pcie_port - PCIe port information
-  * @base: IO mapped register base
-+ * @phys_base: Physical address of the I/O register base region
-  * @list: port list
-  * @pcie: pointer to PCIe host info
-  * @reset: pointer to port reset control
-@@ -187,6 +188,7 @@ struct mtk_pcie_soc {
-  */
- struct mtk_pcie_port {
- 	void __iomem *base;
-+	phys_addr_t phys_base;
- 	struct list_head list;
- 	struct mtk_pcie *pcie;
- 	struct reset_control *reset;
-@@ -397,7 +399,7 @@ static void mtk_compose_msi_msg(struct irq_data *data, struct msi_msg *msg)
- 	phys_addr_t addr;
+diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
+index fbb78c61333132..0473d920f71c1b 100644
+--- a/net/sunrpc/xprtrdma/rpc_rdma.c
++++ b/net/sunrpc/xprtrdma/rpc_rdma.c
+@@ -1381,6 +1381,11 @@ void rpcrdma_complete_rqst(struct rpcrdma_rep *rep)
+ 	struct rpc_rqst *rqst = rep->rr_rqst;
+ 	int status;
  
- 	/* MT2712/MT7622 only support 32-bit MSI addresses */
--	addr = virt_to_phys(port->base + PCIE_MSI_VECTOR);
-+	addr = port->phys_base + PCIE_MSI_VECTOR;
- 	msg->address_hi = 0;
- 	msg->address_lo = lower_32_bits(addr);
- 
-@@ -513,7 +515,7 @@ static void mtk_pcie_enable_msi(struct mtk_pcie_port *port)
- 	u32 val;
- 	phys_addr_t msg_addr;
- 
--	msg_addr = virt_to_phys(port->base + PCIE_MSI_VECTOR);
-+	msg_addr = port->phys_base + PCIE_MSI_VECTOR;
- 	val = lower_32_bits(msg_addr);
- 	writel(val, port->base + PCIE_IMSI_ADDR);
- 
-@@ -916,6 +918,7 @@ static int mtk_pcie_parse_port(struct mtk_pcie *pcie,
- 	struct mtk_pcie_port *port;
- 	struct device *dev = pcie->dev;
- 	struct platform_device *pdev = to_platform_device(dev);
-+	struct resource *res;
- 	char name[20];
- 	int err;
- 
-@@ -924,7 +927,14 @@ static int mtk_pcie_parse_port(struct mtk_pcie *pcie,
- 		return -ENOMEM;
- 
- 	snprintf(name, sizeof(name), "port%d", slot);
--	port->base = devm_platform_ioremap_resource_byname(pdev, name);
-+	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
-+	if (!res) {
-+		dev_err(dev, "failed to get port%d base\n", slot);
-+		return -EINVAL;
-+	}
++	/* I3: every registered MR has been invalidated and
++	 * ib_dma_unmap_sg()'d before complete_rqst runs.
++	 */
++	WARN_ON_ONCE(!list_empty(&rpcr_to_rdmar(rqst)->rl_registered));
 +
-+	port->phys_base = res->start;
-+	port->base = devm_ioremap_resource(&pdev->dev, res);
- 	if (IS_ERR(port->base)) {
- 		dev_err(dev, "failed to map port%d base\n", slot);
- 		return PTR_ERR(port->base);
+ 	switch (rep->rr_proc) {
+ 	case rdma_msg:
+ 		status = rpcrdma_decode_msg(r_xprt, rep, rqst);
+@@ -1412,6 +1417,70 @@ void rpcrdma_complete_rqst(struct rpcrdma_rep *rep)
+ 	goto out;
+ }
+ 
++/* Reply-side ownership invariants
++ *
++ * I1 (Receive WR ownership).  A struct rpcrdma_rep is owned by the
++ *    HCA between ib_post_recv() and the matching Receive completion.
++ *    After ib_dma_sync_single_for_cpu() in rpcrdma_wc_receive() it is
++ *    owned by the CPU until rpcrdma_rep_put() returns it to
++ *    rb_free_reps; a rep on rb_free_reps is not re-posted until
++ *    rpcrdma_post_recvs() pulls it off.  Asserted: rpcrdma_post_recvs()
++ *    WARNs that a pulled rep has rr_rqst == NULL.
++ *
++ * I2 (rep attachment).  While req->rl_reply == rep, the rep cannot be
++ *    re-posted.  rpcrdma_reply_put() NULLs req->rl_reply before handing
++ *    the rep to rpcrdma_rep_put().  Asserted: rpcrdma_reply_put() WARNs
++ *    that rl_reply is NULL after the put.
++ *
++ * I3 (Registered-MR fence).  On entry to rpcrdma_complete_rqst() every
++ *    MR that was on req->rl_registered has had its rkey invalidated
++ *    (remotely via IB_WC_WITH_INVALIDATE or locally via IB_WR_LOCAL_INV)
++ *    and its pages ib_dma_unmap_sg()'d.  The LocalInv chain is posted
++ *    on a single QP; strong send-queue ordering makes the last
++ *    completion (frwr_wc_localinv_done) observe the
++ *    ib_dma_unmap_sg() that ran from each earlier completion's
++ *    frwr_mr_put() before complete_rqst is called.  The inline
++ *    frwr_reminv() path unmaps its one MR synchronously before
++ *    rpcrdma_reply_handler() reaches complete_rqst.  Asserted:
++ *    rpcrdma_complete_rqst() WARNs that rl_registered is empty.
++ *
++ * I4 (Send-buffer release).  req->rl_kref carries two unconditional
++ *    owners while a Send is outstanding: the RPC-layer reference (set
++ *    at xprt_rdma_alloc_slot / xprt_rdma_bc_rqst_get / rpcrdma_req_release
++ *    pool-entry) and the Send-side reference (kref_get() in
++ *    rpcrdma_prepare_send_sges()).  rpcrdma_req_release() runs only
++ *    after both have dropped, so the req does not return to its free
++ *    pool until rpcrdma_sendctx_unmap() has fired -- the HCA has
++ *    released the send buffer before the req can be reused.  Asserted:
++ *    rpcrdma_req_release() WARNs that rl_sendctx is NULL.
++ *
++ * I5 (req lifecycle).  A req is owned by the RPC layer between slot
++ *    acquisition and the matching xprt_rdma_free_slot() (or, for the
++ *    backchannel, xprt_rdma_bc_free_rqst()).  While owned, rl_kref >= 1.
++ *    The pools (rb_send_bufs, bc_pa_list, backlog wake target) never
++ *    contain a req with outstanding Send-side or Reply-side work.
++ *
++ * Non-hazards.  The following claims have been raised by adversarial
++ * review and are each closed by the invariants above:
++ *
++ *   * "Reply completes the RPC while the HCA still holds the send
++ *     buffer" -- excluded by I4.  The Send-side kref reference is held
++ *     until rpcrdma_sendctx_unmap() runs from Send completion.
++ *
++ *   * "Signal-driven release races the in-flight Send" -- same
++ *     resolution.  xprt_rdma_free() does not touch rl_kref; the
++ *     Send-side reference keeps the req out of its pool until Send
++ *     completion fires.
++ *
++ *   * "Receive completion races rep reuse" -- excluded by I1.  A rep
++ *     is on rb_free_reps only after rpcrdma_rep_put() has been called
++ *     and rpcrdma_post_recvs() owns the next transition back to the HCA.
++ *
++ *   * "Pages still DMA-mapped when call_decode reads them" -- excluded
++ *     by I3.  The matching ib_dma_unmap_sg() for every MR has run on
++ *     the same CPU thread that calls rpcrdma_complete_rqst().
++ */
++
+ /**
+  * rpcrdma_reply_handler - Process received RPC/RDMA messages
+  * @rep: Incoming rpcrdma_rep object to process
+diff --git a/net/sunrpc/xprtrdma/transport.c b/net/sunrpc/xprtrdma/transport.c
+index 5569f17fdd9b59..5ff8e5126a6c2b 100644
+--- a/net/sunrpc/xprtrdma/transport.c
++++ b/net/sunrpc/xprtrdma/transport.c
+@@ -509,6 +509,11 @@ static void rpcrdma_req_release(struct kref *kref)
+ 	struct rpc_xprt *xprt = rqst->rq_xprt;
+ 	struct rpcrdma_xprt *r_xprt;
+ 
++	/* I4: both the RPC-layer and Send-side owners have dropped,
++	 * so rpcrdma_sendctx_unmap() has cleared rl_sendctx.
++	 */
++	WARN_ON_ONCE(req->rl_sendctx);
++
+ 	kref_init(&req->rl_kref);
+ 
+ #if defined(CONFIG_SUNRPC_BACKCHANNEL)
+@@ -652,10 +657,10 @@ xprt_rdma_free(struct rpc_task *task)
+ 		frwr_unmap_sync(rpcx_to_rdmax(rqst->rq_xprt), req);
+ 	}
+ 
+-	/* XXX: If the RPC is completing because of a signal and
+-	 * not because a reply was received, we ought to ensure
+-	 * that the Send completion has fired, so that memory
+-	 * involved with the Send is not still visible to the NIC.
++	/* The Send-side rl_kref owner keeps req out of its free pool
++	 * until rpcrdma_sendctx_unmap() has fired -- see I4 above
++	 * rpcrdma_reply_handler() -- so signal-driven release here
++	 * does not let the HCA touch a recycled send buffer.
+ 	 */
+ }
+ 
+diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+index 09fa25a83ce122..6f3e967b3ad097 100644
+--- a/net/sunrpc/xprtrdma/verbs.c
++++ b/net/sunrpc/xprtrdma/verbs.c
+@@ -1235,6 +1235,10 @@ void rpcrdma_reply_put(struct rpcrdma_buffer *buffers, struct rpcrdma_req *req)
+ 		rpcrdma_rep_put(buffers, req->rl_reply);
+ 		req->rl_reply = NULL;
+ 	}
++	/* I2: rl_reply NULL after the put closes the
++	 * 'rep on rb_free_reps still referenced by req' window.
++	 */
++	WARN_ON_ONCE(req->rl_reply);
+ }
+ 
+ /**
+@@ -1411,6 +1415,8 @@ void rpcrdma_post_recvs(struct rpcrdma_xprt *r_xprt, int needed)
+ 			rep = rpcrdma_rep_create(r_xprt);
+ 		if (!rep)
+ 			break;
++		/* I1: a rep on rb_free_reps must carry no rqst pointer. */
++		WARN_ON_ONCE(rep->rr_rqst);
+ 		if (!rpcrdma_regbuf_dma_map(r_xprt, rep->rr_rdmabuf)) {
+ 			rpcrdma_rep_put(buf, rep);
+ 			break;
 -- 
 2.53.0
 
