@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42F746DFFF;
-	Tue, 21 Jul 2026 18:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6AD46DFFF;
+	Tue, 21 Jul 2026 18:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657163; cv=none; b=rlqMqonpyFwNr1YDVDN+mvFS5akAchHew5XH+qpj8h3D4c6yhX+bR1wmQ1qmTJidxq+cdWZ+3ulMmGCzRASxoD/tebVXMvFk4Cccqv13D7J86YGXuSwoMhKSu1+CmB8PD7Ik7EqnKKJlD+a+fBOxFW8AGNZC0SkLJZVU59oKyiM=
+	t=1784657166; cv=none; b=hRT/N39Oo2daORL/WBKkaLVq25AK2ktqJdvDujkUWW6ielUvV7th79psZHvdy626gqdwHnGZHHrkcAhr6U4kzvU9BHl4pc4aGg54JLoBFVVihBwe8sZniC/2sbRrIOV5oWLKjRgXwG7tYY5p8NIHdrTES3LY/+ZG+rwaLpM6Ysw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657163; c=relaxed/simple;
-	bh=bCVqm9QaCu4azZuGaB1UoHS2cIntgdxjuXQV8RGPY/A=;
+	s=arc-20240116; t=1784657166; c=relaxed/simple;
+	bh=Tf4nRtVKt5eyt3UtdTWPGgFSuwS6AMFNM/5WwunvhTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EZu6qmaIUEmZJXbQBmjIqN7ei6aMZu7X6AAfRBnlrayGnIUjFyKVeQW/pcWw/ClE6L25PBj0opDOzp+e5BGeGyDncwZWkqkXFbFGXE59aYjRPFiH42/54L9OJhvkUolw4pLHornAZNJx3GzGEiHgwkBXe5aJs7FQyPKW+gN+VwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qVqr7RAv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p+3/rBFevF748TKWUneYTwwifdpB/ePvUbkFvB9rzFbaY36ENiQnUAci2vmi+pmzsEu3QUpZuMl5bipuqr1C4yNyuRQC9WBYI/ZeWWHTYv8Q9kRpNEvbQVoS1C8UGfyNZsVCIyWzFPr2KPwhOkpxuXX9QOopH4pUFkd6RhCfPbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jpzwbmAg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qVqr7RAv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0201F000E9;
-	Tue, 21 Jul 2026 18:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jpzwbmAg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0492A1F00A3A;
+	Tue, 21 Jul 2026 18:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657162;
-	bh=vm6GU7s8YTqZPN1O63K/ArnLNUKPIv2Wwm6aJYF6ESE=;
+	s=korg; t=1784657165;
+	bh=SWQxpR9TC3P0LxIvJsfojh2sVoXg3GGNAhwpHMyxvF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qVqr7RAvQcjhqbxlZis5x6d0PrKZOVF82T3vPRT1fQHJ2XSkrHKNx3W/BSZ8yPlcg
-	 Aydcw6rrnnEu2L+rQubEZgkUXKHK2aX5dkfagQCKw/Bl6v/gUCW12A+64jVhZDPx29
-	 OJqNxmyP5+sflN0IMdmeRp6PlcVHIF1GV0W/LW2c=
+	b=jpzwbmAgx5vmObKhpPXewxxUcMb2Lzzp+1ReSUNDQXN51MtawfihbAYJGpzM5gi88
+	 755SBxg9tj0wehMVI/OTy3d6UBS9q7dfIUi85u87UqbyzM2r+aK3YsUjZcbwa+2CWa
+	 ZG8c/WPtL2CBW8fHfsFDCngy4pGRz7tBS7fPMe0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phillip Varney <pbvarney@protonmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0662/1611] clk: qcom: a53: Corrected frequency multiplier for 1152MHz
-Date: Tue, 21 Jul 2026 17:12:58 +0200
-Message-ID: <20260721152530.274859837@linuxfoundation.org>
+Subject: [PATCH 6.18 0663/1611] sunrpc: Fix error handling in rpc_sysfs_xprt_switch_add_xprt_store()
+Date: Tue, 21 Jul 2026 17:12:59 +0200
+Message-ID: <20260721152530.296756621@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,36 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phillip Varney <pbvarney@protonmail.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit bb56147ea9fce98ebde1d367335ba006cba61fbd ]
+[ Upstream commit 37957478be021b92981aa4c99b69f308d3b784d0 ]
 
-The 1152MHz frequency entry for the a53 currently selects a multiplier of 62, giving 1190MHz. This changes the mulitiplier to 60 giving the intended 1152MHz.
+xprt_create_transport() never returns NULL, only valid pointers or
+error pointers. Using IS_ERR_OR_NULL() is incorrect, and PTR_ERR(NULL)
+would return 0, which indicates EOF in a sysfs store function.
 
-Signed-off-by: Phillip Varney <pbvarney@protonmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Fixes: 0c6ab1b8f894 ("clk: qcom: Add A53 PLL support")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260605005502.313928-1-pbvarney@protonmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fix this by using IS_ERR() instead of IS_ERR_OR_NULL().
+
+Fixes: df210d9b0951 ("sunrpc: Add a sysfs file for adding a new xprt")
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/a53-pll.c | 2 +-
+ net/sunrpc/sysfs.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/a53-pll.c b/drivers/clk/qcom/a53-pll.c
-index 724a642311e50b..0549b214fcfc8b 100644
---- a/drivers/clk/qcom/a53-pll.c
-+++ b/drivers/clk/qcom/a53-pll.c
-@@ -20,7 +20,7 @@
- static const struct pll_freq_tbl a53pll_freq[] = {
- 	{  998400000, 52, 0x0, 0x1, 0 },
- 	{ 1094400000, 57, 0x0, 0x1, 0 },
--	{ 1152000000, 62, 0x0, 0x1, 0 },
-+	{ 1152000000, 60, 0x0, 0x1, 0 },
- 	{ 1209600000, 63, 0x0, 0x1, 0 },
- 	{ 1248000000, 65, 0x0, 0x1, 0 },
- 	{ 1363200000, 71, 0x0, 0x1, 0 },
+diff --git a/net/sunrpc/sysfs.c b/net/sunrpc/sysfs.c
+index 8b01b7ae2690c7..fa9892eec1b448 100644
+--- a/net/sunrpc/sysfs.c
++++ b/net/sunrpc/sysfs.c
+@@ -347,7 +347,7 @@ static ssize_t rpc_sysfs_xprt_switch_add_xprt_store(struct kobject *kobj,
+ 	xprt_create_args.reconnect_timeout = xprt->max_reconnect_timeout;
+ 
+ 	new = xprt_create_transport(&xprt_create_args);
+-	if (IS_ERR_OR_NULL(new)) {
++	if (IS_ERR(new)) {
+ 		count = PTR_ERR(new);
+ 		goto out_put_xprt;
+ 	}
 -- 
 2.53.0
 
