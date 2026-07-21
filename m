@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBAA0231829;
-	Tue, 21 Jul 2026 19:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B162C231829;
+	Tue, 21 Jul 2026 19:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660559; cv=none; b=XKEZB8FOvIygJuCYp/axUcloDYcfhNeVmpUIMUB6N0Qi5p1jh8ZHBHDgScjjXa/apSGFJEZkhSFg/7qwvwOEjPJOcgiJpTyH/mGq0FMWcA7IsqKNmO0NLcZmHME6FbDjJLN6TNRGSmIJQgaeafJdxSsXUx7jvct50v8R8DzKXms=
+	t=1784660563; cv=none; b=TLfe5A3/7AZBdCSY4tRt7Ger4JTLvuTHb7rnxG+7JA1B7F+oPDLZClrVCalgTOEn9O3ddMByH6PGUdUgYYMSPyhv9000Ts+c/DcXy4dAN7mu/NTwTjeDsrrqR34Nw7SKv4fadHULLifI8tMGz30C+74mPptGYNS744Lho1XaC+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660559; c=relaxed/simple;
-	bh=+99zQMOq+xtEk3RX97JfLAvDQ9wZ+r8v5UtGJu/ZcKU=;
+	s=arc-20240116; t=1784660563; c=relaxed/simple;
+	bh=nqy2TwDIWGQmD33kqM528yvWzCllsPcBm4pE6CrIXtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Es6quT+68Qz8GmTw8dippy0jfBfeuRE2WJi0h2w6mfBNUM3BeJf92Wwfl1iFTR5/sc4pP7ebanrLrJthFc/njRpcvyrgnQfwdlP0m5SJZ14dylgbS34HJEdiaVoRNam4/lunMezbf4BZM+uBN9iUCoonoUFMh5aKX3Ce9HRghhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhbFnLbf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u3581gthv6nO+J7LnT2013uGXmQ8P8FO4xbkdviyDniC76t3e/RAKYrTzEk8Zdebn7Kkfb+qyxKYt44Z4AOU9Ok6qC/eFDrAP1v00D5VKrnj8Qt/yyPOeWW8hsF/Iaf55Gm8CxvgMiP1CWnAHSbvI7pkF6kxsWsirRgpGGW4qS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2qpz+hwT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhbFnLbf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4870A1F00A3A;
-	Tue, 21 Jul 2026 19:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qpz+hwT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025031F000E9;
+	Tue, 21 Jul 2026 19:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660557;
-	bh=wjYEhLXZ0EHWkjT5GAd0yo+QL6bcL5E9EHicRFh3mAU=;
+	s=korg; t=1784660560;
+	bh=xE/oVsbPMJ3Xvs2iewlDZmfbzOhjSEmRcANQrZJ+FRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nhbFnLbfrOW/cymGYSIBPkmnDxaAoEg67XvvXClP2d29rKevCSYgriQMTT+wZZJLB
-	 FLBA3ZOfSlmq5XYyyXA/2ntaZ0HQcD2zSNa+BjXm26HLZKsceZ1Qq0ZoD01R6cjON8
-	 YLYfzjC+49c0A4n7VMUVQa9ToAdci1H1O6+LEQRQ=
+	b=2qpz+hwTb/ljJTUt+F0vN2AADr5nY1ZxC5M6Vne6i/6P1cK8AM6v9qII9pmpC+s8S
+	 CCdDAZi3r4A45OkIFvf7EvYCfo0ExUdC41LVFZ+BH/yBPfbMChbijRJ7AvBHKrpo7B
+	 m+hQcyCsVQo9TET7BuWqNefmaW0TYITVcHT1QelM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Rob Herring <robh@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1026/2077] dt-bindings: dma: snps,dw-axi-dmac: Add fallback compatible for CV1800B
-Date: Tue, 21 Jul 2026 17:11:39 +0200
-Message-ID: <20260721152617.019218642@linuxfoundation.org>
+Subject: [PATCH 7.1 1027/2077] dt-bindings: phy: sc8280xp-qmp-pcie: Disallow bifurcation register on Purwa
+Date: Tue, 21 Jul 2026 17:11:40 +0200
+Message-ID: <20260721152617.042606022@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,44 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Inochi Amaoto <inochiama@gmail.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 7524fe142b5a772f8421aeee2132cf7e21a00103 ]
+[ Upstream commit b3ee497970c63cea37976aeaa84bac39611fe0eb ]
 
-The previous version of the binding change only add compatible
-string without adding the fallback compatible, this breaks
-backward compatibility. Add the needed fallback compatible to
-fix this.
+Neither of the two Gen4x4 PHYs found on Purwa supports bifurcation.
+The PHY is however physically laid out as if it were to, since there
+are two separate ports (A/B).
 
-Fixes: be3e2a0419c6 ("dt-bindings: dma: snps,dw-axi-dmac: Add CV1800B compatible")
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://patch.msgid.link/20260511063818.463877-2-inochiama@gmail.com
+Split out a new if-then block to un-require the bifurcation register
+handle to squash this warning:
+
+purwa-iot-evk.dtb: phy@1bd4000 (qcom,x1p42100-qmp-gen4x4-pcie-phy): 'qcom,4ln-config-sel' is a required property
+
+Fixes: 2e1ffd4c1805 ("dt-bindings: phy: qcom,qmp-pcie: Add X1P42100 PCIe Gen4x4 PHY")
+Reported-by: Rob Herring <robh@kernel.org>
+Closes: https://lore.kernel.org/linux-arm-msm/176857775469.1631885.16133311938753588148.robh@kernel.org/
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://patch.msgid.link/20260610-topic-purwa_phy_shutup_warning-v2-1-951c1fbfe9b2@oss.qualcomm.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml    | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
-index 804514732dbe65..0a30a455b0ee54 100644
---- a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
-+++ b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
-@@ -21,11 +21,12 @@ properties:
-       - enum:
-           - snps,axi-dma-1.01a
-           - intel,kmb-axi-dma
--          - sophgo,cv1800b-axi-dma
-           - starfive,jh7110-axi-dma
-           - starfive,jh8100-axi-dma
-       - items:
--          - const: altr,agilex5-axi-dma
-+          - enum:
-+              - altr,agilex5-axi-dma
-+              - sophgo,cv1800b-axi-dma
-           - const: snps,axi-dma-1.01a
+diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+index 3a35120a77ec0c..431e8cb5df84e9 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+@@ -136,13 +136,22 @@ allOf:
+           items:
+             - description: port a
+             - description: port b
+-      required:
+-        - qcom,4ln-config-sel
+     else:
+       properties:
+         reg:
+           maxItems: 1
  
-   reg:
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sc8280xp-qmp-gen3x4-pcie-phy
++              - qcom,x1e80100-qmp-gen4x4-pcie-phy
++    then:
++      required:
++        - qcom,4ln-config-sel
++
+   - if:
+       properties:
+         compatible:
 -- 
 2.53.0
 
