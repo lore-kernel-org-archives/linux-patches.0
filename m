@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271F9408624;
-	Tue, 21 Jul 2026 19:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDC63F825F;
+	Tue, 21 Jul 2026 19:16:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661390; cv=none; b=W+6AGw3DOTq0ixsNPmlc0481aj9eRJDkDhRHlgQpbNBJquOOg91MDndVupEBx6Qu/ZRxQfy5vQMNgdBIKM6gG9aqVhLcH7ryrMHN2kN8FFFq2xkqPVfTFdkbTAF7YVMjd+9PejB1amk7ut2UU1O+TLYHJvepZ6Zjm9KCYomswLs=
+	t=1784661392; cv=none; b=OVXREgAEwZ/7Yv3/vZvjPPjkNc/X+zOHpX8YNYFDjP5+14L9NB0SRHezCVHGek7Cmc85BciQ02a44sIV3lw865bqCByxPXoV7JpZakdHXQv+6IOzUAU/ekwmuf8Oq4Y3kXf1Yj2YGhjv87N1+y456e0cd+NyMmreeIr3aa1pn/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661390; c=relaxed/simple;
-	bh=7uV1rAxmqQszP/uQJLI9GrlySsF+ccBz0ANfu6BC5LU=;
+	s=arc-20240116; t=1784661392; c=relaxed/simple;
+	bh=b5mTa4ObPI6X3kZSqnLR+aEPPb1qAFs9L3xgp/YzlmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A5B5t35yialJaqpDBREyw/wLl8E+7smzVrGYWmpl96BWlpNuYvp+CDAKCU3eYVD7uc4oNyuA4RHa3l2Uhv+l9MrUnLeUzyeFPHn/LspSCtb0IlkQ64Kpef1Kcv+ckgrHetFsnCfuyIHk4Yo4bSWpxN7iWBiFcrg4Cbh5jqlJdME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbfOUxSg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NzN+4gYqdgbV1c6OJJHjuZODPJeRL5yqP21x1SQhE+kNec7TXB4ENAWLKT8VnlQaEW2yf8F8xrjZCbtqzQYIw4hsJDM0rH/zFlzIjsTaSflM2Z2LzftnsYoKqmyW1K1jHNMOBAMLmhtgeD69WazrmojojoCPudo0ThDxro1+z10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V7ARCa1E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbfOUxSg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C8D1F000E9;
-	Tue, 21 Jul 2026 19:16:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V7ARCa1E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C711F000E9;
+	Tue, 21 Jul 2026 19:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661388;
-	bh=CSdC+2/ANDgdUwJjQedtZeYXlkWcAGvhXlXT5srJQaE=;
+	s=korg; t=1784661391;
+	bh=J9yquLr5DPINNFV1BfLx6oCxNuWwMktSg9hP+aOnYFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZbfOUxSgWEed8+IWhxD2NbzKKdb6EcGly10AD8K9HCcIaGyqt+ld+fohGfPlm3bQo
-	 bEB9ArSs9zxe3++hr9jn+NjYHeQzyhZ4td4kFfofhItKRPa5+oVa0eVksRSFKogzce
-	 xy7IcxgFeIHZTqMzLysPCoZIY4on3iiZPrLpvIGA=
+	b=V7ARCa1EhrFoeb2WdlByTYw66izz39yIWnjJayz1tAvADYAmRsPFIw5AkCv9xSEuG
+	 qIBYS/KFTrImpF+/idjEhoyxWaBqR1dofCo9bTEMsPaHpQszvFB5pMYns+ev1Bqweg
+	 /LU0X8A9irHPMEK1rneGbi3BORAzhdBOwzWoIaKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Fuad Tabba <tabba@google.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
+	syzbot+e809069bc15f26300526@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Heiko Stuebner <heiko.stuebner@cherry.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0012/1276] KVM: arm64: Bound used_lrs when flushing the pKVM hyp vCPU
-Date: Tue, 21 Jul 2026 17:07:35 +0200
-Message-ID: <20260721152446.350537374@linuxfoundation.org>
+Subject: [PATCH 6.12 0003/1276] tcp: Add preempt_{disable,enable}_nested() in reqsk_queue_hash_req().
+Date: Tue, 21 Jul 2026 17:07:26 +0200
+Message-ID: <20260721152446.148482457@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,92 +55,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit 8cc8bbbfab14c22c5551d0dd19b208a44b141c76 upstream.
+[ Upstream commit e10902df24488ca722303133acfc82490f7d59ad ]
 
-flush_hyp_vcpu() copies the host vGIC state into the hyp's private vCPU
-on every run. The vGIC list register save and restore use used_lrs as
-their loop bound and expect it to stay within the number of implemented
-list registers. While this is generally the case, flush_hyp_vcpu()
-copies vgic_v3 verbatim and does not enforce this, so a value provided
-by the host is used at EL2 to index vgic_lr[] and access ICH_LR<n>_EL2
-(host -> EL2).
+syzbot reported a weird reqsk->rsk_refcnt underflow in
+__inet_csk_reqsk_queue_drop().
 
-Fix by clamping used_lrs to the number of implemented list registers
-after the copy, as the trusted path already does in
-vgic_flush_lr_state(). The number of implemented list registers is
-constant after init, so it is replicated once from
-kvm_vgic_global_state.nr_lr into hyp_gicv3_nr_lr rather than read on
-every entry.
+The captured reqsk_put() in __inet_csk_reqsk_queue_drop()
+is called only when it successfully removes reqsk from ehash.
 
-Cc: stable@vger.kernel.org
-Fixes: be66e67f1750 ("KVM: arm64: Use the pKVM hyp vCPU structure in handle___kvm_vcpu_run()")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reviewed-by: Fuad Tabba <tabba@google.com>
-Tested-by: Fuad Tabba <tabba@google.com>
-Link: https://patch.msgid.link/20260606175614.83273-3-imv4bel@gmail.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ tabba: adjust context in flush_hyp_vcpu() and kvm_hyp.h ]
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Moreover, reqsk_timer_handler() calls another reqsk_put()
+after that.
+
+This indicates that the reqsk was missing both refcnts for
+ehash and the timer itself.
+
+Since all the syzbot reports had PREEMPT_RT enabled, the only
+possible scenario is that reqsk_queue_hash_req() is preempted
+after mod_timer() and before refcount_set(), and then the timer
+triggered after 1s aborts the reqsk due to its listener's close().
+
+Let's wrap mod_timer() and refcount_set() with
+preempt_disable_nested() and preempt_enable_nested().
+
+Note that inet_ehash_insert() holds the normal spin_lock()
+(mutex in PREEMPT_RT), so it must be called outside of
+preempt_disable_nested(), but this is fine.
+
+The lookup path just ignores 0 sk_refcnt entries in ehash
+and tries to create another reqsk, but this will fail at
+inet_ehash_insert().
+
+[0]:
+refcount_t: underflow; use-after-free.
+WARNING: lib/refcount.c:28 at refcount_warn_saturate+0xb2/0x110 lib/refcount.c:28, CPU#0: ktimers/0/16
+Modules linked in:
+CPU: 0 UID: 0 PID: 16 Comm: ktimers/0 Tainted: G             L      syzkaller #0 PREEMPT_{RT,(full)}
+Tainted: [L]=SOFTLOCKUP
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/18/2026
+RIP: 0010:refcount_warn_saturate+0xb2/0x110 lib/refcount.c:28
+Code: e4 7d d1 0a 67 48 0f b9 3a eb 4a e8 38 3d 23 fd 48 8d 3d e1 7d d1 0a 67 48 0f b9 3a eb 37 e8 25 3d 23 fd 48 8d 3d de 7d d1 0a <67> 48 0f b9 3a eb 24 e8 12 3d 23 fd 48 8d 3d db 7d d1 0a 67 48 0f
+RSP: 0000:ffffc90000157948 EFLAGS: 00010246
+RAX: ffffffff84a1301b RBX: 0000000000000003 RCX: ffff88801ca98000
+RDX: 0000000000000100 RSI: 0000000000000000 RDI: ffffffff8f72ae00
+RBP: ffffffff99ae3b01 R08: ffff88801ca98000 R09: 0000000000000005
+R10: 0000000000000100 R11: 0000000000000004 R12: ffff8880425ef568
+R13: ffff8880425ef4f8 R14: ffff8880425ef578 R15: 0000000000000000
+FS:  0000000000000000(0000) GS:ffff888126386000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f7b46710e9c CR3: 000000000dbb6000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ __refcount_sub_and_test include/linux/refcount.h:400 [inline]
+ __refcount_dec_and_test include/linux/refcount.h:432 [inline]
+ refcount_dec_and_test include/linux/refcount.h:450 [inline]
+ reqsk_put include/net/request_sock.h:136 [inline]
+ __inet_csk_reqsk_queue_drop+0x3ce/0x440 net/ipv4/inet_connection_sock.c:1007
+ reqsk_timer_handler+0x651/0xdf0 net/ipv4/inet_connection_sock.c:1137
+ call_timer_fn+0x192/0x5e0 kernel/time/timer.c:1748
+ expire_timers kernel/time/timer.c:1799 [inline]
+ __run_timers kernel/time/timer.c:2374 [inline]
+ __run_timer_base+0x6a3/0x9f0 kernel/time/timer.c:2386
+ run_timer_base kernel/time/timer.c:2395 [inline]
+ run_timer_softirq+0x67/0x170 kernel/time/timer.c:2403
+ handle_softirqs+0x1de/0x6d0 kernel/softirq.c:622
+ __do_softirq kernel/softirq.c:656 [inline]
+ run_ktimerd+0x69/0x100 kernel/softirq.c:1151
+ smpboot_thread_fn+0x541/0xa50 kernel/smpboot.c:160
+ kthread+0x388/0x470 kernel/kthread.c:436
+ ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
+
+Fixes: d2d6422f8bd1 ("x86: Allow to enable PREEMPT_RT.")
+Reported-by: syzbot+e809069bc15f26300526@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6a1a7bcf.0a9e871e.332604.000b.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20260601182101.3183993-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[updated to not require timeout changes from
+ commit 3ce5dd8161ec ("tcp: Remove timeout arg from reqsk_queue_hash_req()")
+ DCCP was retired by commit 2a63dd0edf38 ("net: Retire DCCP socket.") after
+ the release of 6.12, so the shared inet_csk_reqsk_queue_hash_add still
+ requires the timout argument]
+Signed-off-by: Heiko Stuebner <heiko.stuebner@cherry.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/kvm_hyp.h   | 1 +
- arch/arm64/kvm/arm.c               | 2 ++
- arch/arm64/kvm/hyp/nvhe/hyp-main.c | 9 +++++++++
- 3 files changed, 12 insertions(+)
+ net/ipv4/inet_connection_sock.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm64/include/asm/kvm_hyp.h b/arch/arm64/include/asm/kvm_hyp.h
-index c838309e4ec47e..19b8843374d0cf 100644
---- a/arch/arm64/include/asm/kvm_hyp.h
-+++ b/arch/arm64/include/asm/kvm_hyp.h
-@@ -144,5 +144,6 @@ extern u64 kvm_nvhe_sym(id_aa64smfr0_el1_sys_val);
- extern unsigned long kvm_nvhe_sym(__icache_flags);
- extern unsigned int kvm_nvhe_sym(kvm_arm_vmid_bits);
- extern unsigned int kvm_nvhe_sym(kvm_host_sve_max_vl);
-+extern unsigned int kvm_nvhe_sym(hyp_gicv3_nr_lr);
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index dd39cabb39001e..5ff45bc854422b 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1186,6 +1186,9 @@ static bool reqsk_queue_hash_req(struct request_sock *req,
  
- #endif /* __ARM64_KVM_HYP_H__ */
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 3753ef782e98e5..a713f32a6545b1 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -2313,6 +2313,8 @@ static int __init init_subsystems(void)
- 	switch (err) {
- 	case 0:
- 		vgic_present = true;
-+		if (static_branch_unlikely(&kvm_vgic_global_state.gicv3_cpuif))
-+			kvm_nvhe_sym(hyp_gicv3_nr_lr) = kvm_vgic_global_state.nr_lr;
- 		break;
- 	case -ENODEV:
- 	case -ENXIO:
-diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-index 75f7e386de75bc..5dbc1878428cc2 100644
---- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-+++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-@@ -22,6 +22,9 @@
- 
- DEFINE_PER_CPU(struct kvm_nvhe_init_params, kvm_init_params);
- 
-+/* Number of implemented GICv3 LRs. Used by flush_hyp_vcpu(). */
-+unsigned int hyp_gicv3_nr_lr;
+ 	/* The timer needs to be setup after a successful insertion. */
+ 	timer_setup(&req->rsk_timer, reqsk_timer_handler, TIMER_PINNED);
 +
- void __kvm_hyp_host_forward_smc(struct kvm_cpu_context *host_ctxt);
- 
- static void __hyp_sve_save_guest(struct kvm_vcpu *vcpu)
-@@ -116,6 +119,12 @@ static void flush_hyp_vcpu(struct pkvm_hyp_vcpu *hyp_vcpu)
- 	hyp_vcpu->vcpu.arch.vsesr_el2	= host_vcpu->arch.vsesr_el2;
- 
- 	hyp_vcpu->vcpu.arch.vgic_cpu.vgic_v3 = host_vcpu->arch.vgic_cpu.vgic_v3;
++	preempt_disable_nested();
 +
-+	/* Bound used_lrs by the number of implemented list registers. */
-+	hyp_vcpu->vcpu.arch.vgic_cpu.vgic_v3.used_lrs =
-+		min_t(unsigned int,
-+		      hyp_vcpu->vcpu.arch.vgic_cpu.vgic_v3.used_lrs,
-+		      hyp_gicv3_nr_lr);
+ 	mod_timer(&req->rsk_timer, jiffies + timeout);
+ 
+ 	/* before letting lookups find us, make sure all req fields
+@@ -1193,6 +1196,9 @@ static bool reqsk_queue_hash_req(struct request_sock *req,
+ 	 */
+ 	smp_wmb();
+ 	refcount_set(&req->rsk_refcnt, 2 + 1);
++
++	preempt_enable_nested();
++
+ 	return true;
  }
  
- static void sync_hyp_vcpu(struct pkvm_hyp_vcpu *hyp_vcpu)
 -- 
 2.53.0
 
