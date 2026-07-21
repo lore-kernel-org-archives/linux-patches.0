@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1113368A5;
-	Tue, 21 Jul 2026 20:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587B52EBB8D;
+	Tue, 21 Jul 2026 20:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667272; cv=none; b=A0wVSDglgWAm+MP59/gdh5jiN3WyjFtyGbIuTYmbKFaSossHoveY6wV1CKDazSDf4hKx1NYxWCzQ2YfhJohM4LFuEUFnJIdQfA1NHxR7YGoWv6ruITNl2o0ranq+pzvteCQ6mfSKitHsTCInmvqi96iwSH0Xop2DvZY0EMicAPw=
+	t=1784667274; cv=none; b=No22V/yfTI7NFm3hJ5zixcf5GoM60ZET+kHJyCkjTvX6m/HI70BBLLaq301mgRE6miqxkon7FUh0FZpk5EWsZm5tobfD9z+AoC7tY6Yv70WgLx78VvkLVh6evMxoTrnTQiCQ/wkLq0lZtgGhE+Lhj64EwyHTI42ek9kXPxX33tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667272; c=relaxed/simple;
-	bh=ctj5WmPmKqVJQiH+o2XbEkV0siDs+KQCvorzgbQUAzc=;
+	s=arc-20240116; t=1784667274; c=relaxed/simple;
+	bh=+86K8FBvIAXPmtvdJupBRDwSn9+JxtnUu20AhjVJfE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Jpv6OcLNnrehyQchD8DJoQxLLd0VXmYH20N4jvfVNhKmrCFEzUeQfD0e2RNn41yXfqQWMMc/7ON2+Fobdz3PlxMFbq1FqwhWMNs56qaD5s9eFahEqYes49FFVHDu5JGcQzUrbpVlzAKEzIEHQtir6SF4xo7U4bdWIlLDk5okNNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BmWTBIGD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UCxOBcejpPoGmdKl6J1dDyUwqLOpg8R5TjDmersEUhlkaq358O113SeWkqeRTwBVrLpOgHtqhfo1F4TCe3MF8UVhaSN+MHD3Q7AlmabYtZ/68G4Mg5rAvKCJsYwW47hgY+WrqlSQw3MPB654GI08kUz+Suiw1eDarWhHATxzF5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hiiaT1nz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BmWTBIGD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735481F000E9;
-	Tue, 21 Jul 2026 20:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hiiaT1nz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDFD1F000E9;
+	Tue, 21 Jul 2026 20:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667270;
-	bh=th0YkkfG8WHUDzNUho/0/1L6Cdshfe2iPWhDEu/7l9w=;
+	s=korg; t=1784667273;
+	bh=cwuojgfpyR/M77SmmHJUBSosiqVWDpUzEAeKIEPOu7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BmWTBIGDag+Oz5uZ/R4OvPuBtwBnZC3gRTl+1jlJqpGRUR8RAGjQkWWkRg0qKG0n8
-	 qWA8pEFy1+cSgP0aDrPbyzjyjg5gNsFP8sS460m/crpvEWFv/K0TCk94WDFduGz/on
-	 x6EO2PkSdfT7Zpi5ttmmLXt5giXMTQvqnnc+Or3I=
+	b=hiiaT1nzQ9bObHRvaGdKLcWv9FMPWR21hDWFay2QCVEWjqy/yjKpjLetFUQO3ljXQ
+	 vjO5v8XqsSzAL7hl6dt2jGrDfyPkgqLh/xiT99GMB6n5eE+l4y48cSNo760CyUE1cG
+	 o+eoqRGZgm+FrgGwA764oHdWZFCkT1+Zl0BcYric=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	Ionut Nechita <ionut.nechita@windriver.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 0997/1266] scsi: sas: Skip opt_sectors when DMA reports no real optimization hint
-Date: Tue, 21 Jul 2026 17:23:54 +0200
-Message-ID: <20260721152504.138827695@linuxfoundation.org>
+	syzbot+7ea0b96c4ddb49fd1a70@syzkaller.appspotmail.com,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 0998/1266] ocfs2: use kzalloc for quota recovery bitmap allocation
+Date: Tue, 21 Jul 2026 17:23:55 +0200
+Message-ID: <20260721152504.160190920@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -46,147 +52,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ionut Nechita <ionut.nechita@windriver.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit be8fcd4a8217a916344c88a4b1b84f5736dda17e upstream.
+commit 93c8c6ea90be9e9df8fe14048ad4e3caad0770a6 upstream.
 
-sas_host_setup() unconditionally sets shost->opt_sectors from
-dma_opt_mapping_size().
+ocfs2 quota recovery allocates a bitmap buffer with kmalloc and does not
+fully initialize it.  This can lead to use of uninitialized bits during
+quota recovery from a corrupted filesystem image.
 
-When the IOMMU is disabled or in passthrough mode and no DMA ops provide
-an opt_mapping_size callback, dma_opt_mapping_size() returns
-min(dma_max_mapping_size(), SIZE_MAX) which equals
-dma_max_mapping_size() — a hard upper bound, not an optimization hint.
+Use kzalloc instead to ensure the bitmap is zero-initialized.
 
-On a Dell PowerEdge R750 with mpt3sas (Broadcom SAS3816, FW 33.15.00.00)
-and intel_iommu=off the following values are observed:
-
-  dma_opt_mapping_size()  = dma_max_mapping_size() (no real hint)
-  shost->max_sectors      = 32767
-  opt_sectors             = min(32767, huge >> 9) = 32767
-  optimal_io_size         = 32767 << 9 = 16776704
-                          → round_down(16776704, 4096) = 16773120
-
-The SAS disk (SAMSUNG MZILT800HBHQ0D3) does not report an Optimal
-Transfer Length in VPD page B0, so sdkp->opt_xfer_blocks remains 0.
-
-sd_revalidate_disk() then uses min_not_zero(0, opt_sectors) =
-opt_sectors, propagating the bogus value into the block device's
-optimal_io_size (visible as OPT-IO = 16773120 in lsblk --topology).
-
-mkfs.xfs picks up optimal_io_size and minimum_io_size and computes:
-
-  swidth = 16773120 / 4096 = 4095
-  sunit  = 8192 / 4096     = 2
-
-Since 4095 % 2 != 0, XFS rejects the geometry:
-
-  SB stripe unit sanity check failed
-
-This makes it impossible to create XFS filesystems (e.g. for
-/var/lib/docker) during system bootstrap.
-
-Fix this by introducing a sas_dma_setup_opt_sectors() helper that sets
-opt_sectors only when dma_opt_mapping_size() is strictly less than
-dma_max_mapping_size(), indicating a genuine DMA optimization
-constraint.
-
-The helper computes min(opt_sectors, max_sectors) first, then rounds
-down to a power of two so that filesystem geometry calculations always
-produce clean results.
-
-When the two DMA values are equal, no backend provided a real hint, so
-opt_sectors stays at 0 ("no preference").
-
-[mkp: implemented hch's suggestion]
-
-Fixes: 4cbfca5f7750 ("scsi: scsi_transport_sas: cap shost opt_sectors according to DMA optimal limit")
-Cc: stable@vger.kernel.org
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Ionut Nechita <ionut.nechita@windriver.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260519135238.373784-2-ionut.nechita@windriver.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/20260418131048.1052507-1-tristmd@gmail.com
+Reported-by: syzbot+7ea0b96c4ddb49fd1a70@syzkaller.appspotmail.com
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_transport_sas.c |   41 +++++++++++++++++++++++++++++++++-----
- 1 file changed, 36 insertions(+), 5 deletions(-)
+ fs/ocfs2/quota_local.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/scsi_transport_sas.c
-+++ b/drivers/scsi/scsi_transport_sas.c
-@@ -27,6 +27,7 @@
- #include <linux/module.h>
- #include <linux/jiffies.h>
- #include <linux/err.h>
-+#include <linux/log2.h>
- #include <linux/slab.h>
- #include <linux/string.h>
- #include <linux/blkdev.h>
-@@ -220,12 +221,45 @@ static int sas_bsg_initialize(struct Scs
-  * SAS host attributes
-  */
- 
-+/*
-+ * Set shost->opt_sectors from the DMA optimal mapping size, but only
-+ * when dma_opt_mapping_size() is strictly less than dma_max_mapping_size(),
-+ * indicating a genuine optimization hint from an IOMMU or DMA backend.
-+ * When the two are equal (e.g. IOMMU disabled / passthrough), no real
-+ * hint exists, so leave opt_sectors at 0 to avoid bogus optimal_io_size
-+ * values that break filesystem geometry (e.g. mkfs.xfs stripe alignment).
-+ */
-+static void sas_dma_setup_opt_sectors(struct Scsi_Host *shost)
-+{
-+	struct device *dma_dev = shost->dma_dev;
-+	size_t opt = dma_opt_mapping_size(dma_dev);
-+	size_t max = dma_max_mapping_size(dma_dev);
-+	unsigned int opt_sectors;
-+
-+	/* opt >= max means no real hint was provided by the DMA layer */
-+	if (opt >= max)
-+		return;
-+
-+	/* Clamp to max_sectors to avoid overflow in sector arithmetic */
-+	opt_sectors = min_t(unsigned int, opt >> SECTOR_SHIFT,
-+			    shost->max_sectors);
-+
-+	/* Guard against zero before rounddown_pow_of_two() */
-+	if (!opt_sectors)
-+		return;
-+
-+	/*
-+	 * Round down to power-of-two so filesystem geometry calculations
-+	 * (e.g. XFS stripe width/unit) always produce clean divisors.
-+	 */
-+	shost->opt_sectors = rounddown_pow_of_two(opt_sectors);
-+}
-+
- static int sas_host_setup(struct transport_container *tc, struct device *dev,
- 			  struct device *cdev)
- {
- 	struct Scsi_Host *shost = dev_to_shost(dev);
- 	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
--	struct device *dma_dev = shost->dma_dev;
- 
- 	INIT_LIST_HEAD(&sas_host->rphy_list);
- 	mutex_init(&sas_host->lock);
-@@ -237,10 +271,7 @@ static int sas_host_setup(struct transpo
- 		dev_printk(KERN_ERR, dev, "fail to a bsg device %d\n",
- 			   shost->host_no);
- 
--	if (dma_dev->dma_mask) {
--		shost->opt_sectors = min_t(unsigned int, shost->max_sectors,
--				dma_opt_mapping_size(dma_dev) >> SECTOR_SHIFT);
--	}
-+	sas_dma_setup_opt_sectors(shost);
- 
- 	return 0;
- }
+--- a/fs/ocfs2/quota_local.c
++++ b/fs/ocfs2/quota_local.c
+@@ -302,7 +302,7 @@ static int ocfs2_add_recovery_chunk(stru
+ 	if (!rc)
+ 		return -ENOMEM;
+ 	rc->rc_chunk = chunk;
+-	rc->rc_bitmap = kmalloc(sb->s_blocksize, GFP_NOFS);
++	rc->rc_bitmap = kzalloc(sb->s_blocksize, GFP_NOFS);
+ 	if (!rc->rc_bitmap) {
+ 		kfree(rc);
+ 		return -ENOMEM;
 
 
