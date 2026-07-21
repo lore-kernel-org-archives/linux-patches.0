@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B5F3E49F5;
-	Tue, 21 Jul 2026 17:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DDB46A5EA;
+	Tue, 21 Jul 2026 17:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654919; cv=none; b=jbxnU/ubhq2186x1hbbQrHH/UKaQDwh3bljxd8Pz2BA314+n0/BBy8Px7skcLSU1egYWfVVICs9+Npc+6jXEqpV3MNa6PtNYdZ6iW0EuHgXPbxJRkBqtd3VLN7tch0Ucyh4RLswtLk4zclcLVL8Kv0Wo5S7WWnoZHoxgQ80ZTFU=
+	t=1784654921; cv=none; b=HwqMYGAauCDpfVxneCtx0w0TtfMSXJDqVaEIP4ZApre2vTGasaVqe2uJr7IhzabVvM44Lv6FWMBmwYvUkQdZN8ZNn9rcDkzXy3lSxIHI8bftRSLpl+d8ShvBFmwyG+ZsNfiL3Rbh943qRY6uVjdAEqgzbR1IdaNFgH/biEzEtvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654919; c=relaxed/simple;
-	bh=E5wQ1rP0Md6oxd83BDrDqt015ajgzwXWuacsgb8SUJY=;
+	s=arc-20240116; t=1784654921; c=relaxed/simple;
+	bh=yzLv+n/8xMOLncirknOZ/uHVe9qlJmrvnxh97v/sGZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=marKWWg8mpD/IOAj5me7nbSRSPu8FfRsV280NE7uGuoIMIaacDP0L2nyDsrxZkwyMN+N6NRdgEFLTY6DwVRKlkQ2cVJadhHiIbPd14SeX+dBcjCTt/9JGLDEG+Huet1lfNy8vphggtGifZQm9f8BHtSK5OLdhy6px8HoEkgvN1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KRyxiT71; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZFKSMCZ1rPqSihxAx20bOuQXrq36lXvffbcaFoAHCiRWRNMDPJzTcSq6nrkmVp4TXKaQpM9255SnlFeuGXw1wDqAxRALZlDDbWb53s2ZeI5JByjS36H6EZvxGpcxxbHX0JuKWX07jDrz3bMkhXUv5CkcJTVPvRKzj7b5utVbYGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKkbmqRH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRyxiT71"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91AFD1F000E9;
-	Tue, 21 Jul 2026 17:28:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKkbmqRH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B6E1F000E9;
+	Tue, 21 Jul 2026 17:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654918;
-	bh=oL3zEYt2cxMDjmVieKVG08VBJbmXFNDxEwSYxGE6yzM=;
+	s=korg; t=1784654920;
+	bh=ndPO+6ReosaMuyhs+PLloWIc2URH7Ib5S83Gnmr0QfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KRyxiT71vHY3zigOOF4fObqBTwIw5r9wD9XPMm5TSzW1f4lM1lrj6Uutstr6gb7eR
-	 aYhi1fp6UO/gW809jjryNbpfIFdh/HIUXU6JUNPsmRXVGfIQ+h6PyHxE4FpaQej2Vn
-	 kbZCnlGnxAJj6x2VrLncbICN3hX6iUAlMiEGmsZM=
+	b=cKkbmqRHej+IPsynDrLsGA2MjW5WOiZ06Sy8jeOhwDczdLwI3bECV8qhvMyrUbD8z
+	 k+sHx4oULq54qNtgDs4qkOjj7DXYst9n0vR+1weifOVDgnwNqYpIrZP4n6t8TqbHfW
+	 /qPkfN7hsRLTFFWXIygD4eO+0fQohIQaLNr1oxNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko bot <sashiko-bot@kernel.org>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.1 1885/2077] Input: ims-pcu - fix DMA mapping violation in line setup
-Date: Tue, 21 Jul 2026 17:25:58 +0200
-Message-ID: <20260721152637.180836735@linuxfoundation.org>
+Subject: [PATCH 7.1 1886/2077] Input: ims-pcu - fix firmware leak in async update
+Date: Tue, 21 Jul 2026 17:25:59 +0200
+Message-ID: <20260721152637.204567069@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,14 +52,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 8adf4289d945e8990e4336436a97da71d21d2cae upstream.
+commit d48795b5cd6828d36b707e8d62fc9e5c90e004ab upstream.
 
-In ims_pcu_line_setup(), the driver uses pcu->cmd_buf as a transfer
-buffer for usb_control_msg(). However, pcu->cmd_buf is embedded in the
-struct ims_pcu allocation, which violates DMA mapping rules regarding
-cacheline alignment.
-
-Use a heap-allocated buffer for the line coding data instead.
+The firmware object was not being released if validation failed.
+Use __free(firmware) to ensure the firmware is always released.
 
 Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
 Cc: stable@vger.kernel.org
@@ -68,29 +64,31 @@ Assisted-by: Gemini:gemini-3.1-pro
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/ims-pcu.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/input/misc/ims-pcu.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 --- a/drivers/input/misc/ims-pcu.c
 +++ b/drivers/input/misc/ims-pcu.c
-@@ -1841,11 +1841,16 @@ static void ims_pcu_stop_io(struct ims_p
- static int ims_pcu_line_setup(struct ims_pcu *pcu)
+@@ -964,9 +964,10 @@ out:
+ 	return retval;
+ }
+ 
+-static void ims_pcu_process_async_firmware(const struct firmware *fw,
++static void ims_pcu_process_async_firmware(const struct firmware *_fw,
+ 					   void *context)
  {
- 	struct usb_host_interface *interface = pcu->ctrl_intf->cur_altsetting;
--	struct usb_cdc_line_coding *line = (void *)pcu->cmd_buf;
-+	struct usb_cdc_line_coding *line __free(kfree) =
-+				kmalloc(sizeof(*line), GFP_KERNEL);
++	const struct firmware *fw __free(firmware) = _fw;
+ 	struct ims_pcu *pcu = context;
  	int error;
  
--	memset(line, 0, sizeof(*line));
-+	if (!line)
-+		return -ENOMEM;
-+
- 	line->dwDTERate = cpu_to_le32(57600);
-+	line->bCharFormat = USB_CDC_1_STOP_BITS;
-+	line->bParityType = USB_CDC_NO_PARITY;
- 	line->bDataBits = 8;
+@@ -986,8 +987,6 @@ static void ims_pcu_process_async_firmwa
+ 	scoped_guard(mutex, &pcu->cmd_mutex)
+ 		ims_pcu_handle_firmware_update(pcu, fw);
  
- 	error = usb_control_msg(pcu->udev, usb_sndctrlpipe(pcu->udev, 0),
+-	release_firmware(fw);
+-
+ out:
+ 	complete(&pcu->async_firmware_done);
+ }
 
 
