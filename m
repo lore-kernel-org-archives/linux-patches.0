@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5729A46EF78;
-	Tue, 21 Jul 2026 18:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157BC46DFF5;
+	Tue, 21 Jul 2026 18:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659015; cv=none; b=NeteosSDVoi9lzhDxA36zMrBqyHH0lscz5qzBUUiPOXUxNJnzbfBjtqMVrOf/qrS7VD4oKhbdXJGQleEOr2UxttOyLxpbjIQkiyp/WPYzpwWDE7Fg0+20Efeya3maotWaS2VSEEIjeN00z2L1pBE0rN/PxLNfvFFRjoy1iyNM8c=
+	t=1784659018; cv=none; b=cM6bts0w/C3X2+pmhRsWNZDhHmSSy3rLfF3stdnR31cZk5fHtMXd3ICqs7UYLJC0TwGwA6/Aa9wsvX3ohR5bFoh9rgRLocEk1c4SO9PUMKwNZTgeuvxDuXm0K8Q7AEANsDeMjY3A8HMwGu8RgrX1u/18zwtK5cEM37yHudcjjKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659015; c=relaxed/simple;
-	bh=HJupQvxQt3EgOzqXyTABa+9/Z79kOmgWJjZ+mPyNEYY=;
+	s=arc-20240116; t=1784659018; c=relaxed/simple;
+	bh=pt/zL6da4uLeJof38EYKDeDNuvWVO2z5Wc7xTl1lZ+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZObU4+pwfV3iv/VTUKRkCMPAiQIvJyLinZZt5kCIoNhaq59TltOPL4LrEnfgmAle/VxuxFj0IqAcgvYksNq6e3/A7juu4NxJ5DMAbsk5Tubi/Nj3jDLcyLGWgkCf76eI7pcjJRvziWBhBAORWboCdIHb+jx8pspzPlLmNGtosOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xoyCSZXb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kWx2CrtZ2DGvn1sKo18W/yGT4nUbS4xXyhv03ZkF53ckXta0Il1SQAZFDg3zDcZkiEr6GFixYwylqPuYY1M1F9ftJVOub5vBKNc0H1h1QJN6CP7zOpd8dpD6Xv9dWBBCOQSkrCqp+TKz9fj992oWOX3qa+Hcgnm81xPgmLbXPZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkhGOLcU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xoyCSZXb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA6D31F000E9;
-	Tue, 21 Jul 2026 18:36:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkhGOLcU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9B61F000E9;
+	Tue, 21 Jul 2026 18:36:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659014;
-	bh=hKOYAXOSSPJJk0BHWkb0/aTY8M3H0TXLsKunapxuDYw=;
+	s=korg; t=1784659016;
+	bh=6KbQfBOjCv5YpFmNqtJLy4KVUUlhErS9DUhKbA5lnLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xoyCSZXbXo/h5KJUAbtY3YjXeJcRuTZ9+aQCZQuH4O667FsJ9ljSwxcTbSclkivoH
-	 epzxVbOA4gKvhbmXJLxnYtHNeuT6+ZjoJSYqDnOloT7IkJXTuP72SrYCNTAb7ugwov
-	 z0SEZmiD2uVpt7nyfYb1FcvHanWiaq4X5SlMbhV8=
+	b=VkhGOLcUqjfeISx68nKCviKskQpFe7kiJ/nin2rqFHxCqu6SJOZSTGEpeyYM2xYx+
+	 whZgl/vPfJhUSlSKwTiKCCSm10eEk6+DPQwU0rGERMdlGyqSZF+5NlcYL/7jYASsuJ
+	 pw1I23Imv529nJNqrhI0iAcv7rOzPIF00EBy7HGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baineng Shou <shoubaineng@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
-Subject: [PATCH 6.18 1362/1611] dma-fence: Make dma_fence_dedup_array() robust against 0-count input
-Date: Tue, 21 Jul 2026 17:24:38 +0200
-Message-ID: <20260721152546.088984961@linuxfoundation.org>
+	Genjian Zhang <zhanggenjian@kylinos.cn>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.18 1345/1611] dm thin metadata: fix superblock refcount leak on snapshot shadow failure
+Date: Tue, 21 Jul 2026 17:24:21 +0200
+Message-ID: <20260721152545.708482867@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -44,54 +44,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baineng Shou <shoubaineng@gmail.com>
+From: Genjian Zhang <zhanggenjian@kylinos.cn>
 
-commit 77a9298741f8f9e8b963c977f5582ab21c6d3427 upstream.
+commit 4b22d0801fadfcae2e106e6ba32e49439c7c7ebf upstream.
 
-dma_fence_dedup_array() returns 1 when called with num_fences == 0:
-the for-loop body never executes, j stays at 0, and the final
-`return ++j` yields 1. This contradicts both the kernel-doc ("Return:
-Number of unique fences remaining in the array") and the natural
-expectation that 0 input gives 0 output.
+__reserve_metadata_snap() increments THIN_SUPERBLOCK_LOCATION in the
+metadata space map before shadowing it. When dm_tm_shadow_block()
+fails, a reference is leaked in the metadata space map.
 
-The caller __dma_fence_unwrap_merge() bails out via the
-`if (count == 0 || count == 1)` fast path and so is save.
+Fix by adding the missing dm_sm_dec_block().
 
-But amdgpu_userq_wait_*() could reach the dedup call with a zero local
-count and dereference an uninitialized fence slot in the array.
-
-Make the contract match the documentation by returning 0 early. This
-also skips an unnecessary sort() call on an empty array.
-
+Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: cc8394d86f04 ("dm thin: provide userspace access to pool metadata")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baineng Shou <shoubaineng@gmail.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Fixes: 575ec9b0c2f1 ("dma-fence: Add helper to sort and deduplicate dma_fence arrays")
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/r/20260629031346.3875683-1-shoubaineng@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/dma-fence-unwrap.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/md/dm-thin-metadata.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/dma-buf/dma-fence-unwrap.c
-+++ b/drivers/dma-buf/dma-fence-unwrap.c
-@@ -97,6 +97,9 @@ int dma_fence_dedup_array(struct dma_fen
- {
- 	int i, j;
+--- a/drivers/md/dm-thin-metadata.c
++++ b/drivers/md/dm-thin-metadata.c
+@@ -1353,8 +1353,10 @@ static int __reserve_metadata_snap(struc
+ 	dm_sm_inc_block(pmd->metadata_sm, THIN_SUPERBLOCK_LOCATION);
+ 	r = dm_tm_shadow_block(pmd->tm, THIN_SUPERBLOCK_LOCATION,
+ 			       &sb_validator, &copy, &inc);
+-	if (r)
++	if (r) {
++		dm_sm_dec_block(pmd->metadata_sm, THIN_SUPERBLOCK_LOCATION);
+ 		return r;
++	}
  
-+	if (!num_fences)
-+		return 0;
-+
- 	sort(fences, num_fences, sizeof(*fences), fence_cmp, NULL);
+ 	BUG_ON(!inc);
  
- 	/*
 
 
