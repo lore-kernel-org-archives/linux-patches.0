@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F85E43B3FA;
-	Tue, 21 Jul 2026 21:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41443B9930;
+	Tue, 21 Jul 2026 21:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670980; cv=none; b=HvGQY92bf7hzbf/Ufk+BINXS3PGvJKw5m2TRrCpNgBRxGTiz66/JppCyK/bXKo7wfV4PVmfDIMTiHowd5qPcvOMWUWe5ckaWCKpKzyqrZDvFKq0kfnlwzQC37JDHttwbk77t6qM36Sw48aOfGkOCi9CkbU4mrdHpOpiXylyjD1I=
+	t=1784670983; cv=none; b=g5Svt+fCb1wp9/lAN1jLLpzDlZRdpbU3IN9W2/GUb0GYo5Gg5hYEzhEp1VK1n5dUVe1U6q0Mt1pXL5TfLe1ZCQdz9Qu1wbaKN4db+KgEqJNNmVU9kTgvz95P9wGczwXX6lJ/0UEaLoi9ZZPqputYnrG/LDoy+cWVab4UTxDWfXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670980; c=relaxed/simple;
-	bh=GnVVbSPlFOzpumg2JuC7NBCLgq35qKOz7VbTF0a/sKE=;
+	s=arc-20240116; t=1784670983; c=relaxed/simple;
+	bh=LYIHREg0SpczB77i4AAJU5pjvcOk8rDrhoEl8dTMHdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=moXIrn5MH9FCr2cQHwA9KSmxLNk44KS3tL9q4hhZW2vNhZTtX4sxDkRw5RThCo5xA0hrnpUwFH9xV6RHfiOj31T4j8fSXLOqLjvCfsbLtmrLp7Fd5wiITvnt3RP+b3/iDXi7iynNZoPZ8ohO4EmUhV3sRUno0ZIIq4nzN9Vq+PU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwEQdK/9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uZExDBSe1LT5fkzwTa22e0CzIUvsTmKerPB5koFXsWUzyFTGz9k6M+ifP9yV1N781A7HuaeFtb752PRcVzCcHLspCthyxwpMH9/hl+OHBQOXxvtFpMLjiB3n5+C5DMiVXxXJLEd//giYrUgOKzQb/0R+y9f+0QneWNFcMU02jcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rEnC9gS5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwEQdK/9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56FE1F000E9;
-	Tue, 21 Jul 2026 21:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rEnC9gS5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66BC31F000E9;
+	Tue, 21 Jul 2026 21:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670979;
-	bh=Pj9CuET7q7lJfIeL6Mj212X9x3+t/W0NAOEj6xKjvH4=;
+	s=korg; t=1784670981;
+	bh=7PLBQFhpJ3MjyOcVrCC9Qqv1JQSsdFImmWsj4OgUD2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CwEQdK/9jmnapl5HZdcwyGIPsBFyyW8yPZc6+5O4Li6NQFDqrfXF5s4kJMgVCZ4K2
-	 fC7QDkQJDzE2V2ifgHMf8JmJ4cueM3KaonhrY2LfzmqS/79XkZCHN2rWzSpHkO2g6Y
-	 kFr8rtID8mDvsht5gNKNKVGT4+U2VteKMJEx1Q9M=
+	b=rEnC9gS5tASWBuxwM6KJqGIAsrQKjIbn5mbeSshp2gD3ZKadcb6ntLiNpPTwioKPK
+	 UtcSNeXwDwx75GEPUR4JKJ1sWBZAabAAhljHEYixK2gllRchINW9A3L9RR5XjP3gWw
+	 UB/mDr2Ct93iQ6zDhYwnEJI4PPNMQnrpQ04kdWPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Reid <preid@electromag.com.au>,
-	Johan Hovold <johan@kernel.org>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/843] i2c: core: fix hang on adapter registration failure
-Date: Tue, 21 Jul 2026 17:14:31 +0200
-Message-ID: <20260721152406.785622101@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 072/843] ALSA: usb-audio: Propagate US-16x08 write errors in route/mix EQ-switch put callbacks
+Date: Tue, 21 Jul 2026 17:15:07 +0200
+Message-ID: <20260721152407.610310542@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -46,117 +44,138 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 3c7e164344e5bcf6f274bbf59a3274f5caad9bc1 ]
+commit 3c06aec8abda6ba068b58a8b7119cdb2a48456b1 upstream.
 
-Clients may be registered from bus notifier callbacks when the adapter
-is registered. On a subsequent error during registration, the adapter
-references taken by such clients prevent the wait for the references to
-be released from ever completing.
+Several US-16x08 mixer put callbacks log failed control URBs but
+still return success to userspace. That hides device write failures
+even though the requested value was not applied.
 
-Fix this by refactoring client deregistration and deregistering also on
-late adapter registration failures.
+Return the negative write error instead in the route, master, bus,
+channel, and EQ switch put callbacks.
 
-Fixes: f8756c67b3de ("i2c: core: call of_i2c_setup_smbus_alert in i2c_register_adapter")
-Cc: stable@vger.kernel.org	# 4.15
-Cc: Phil Reid <preid@electromag.com.au>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Stable-dep-of: ba14d7cf2fe7 ("i2c: core: fix adapter registration race")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-3-5a3bd4a673ae@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core-base.c |   49 ++++++++++++++++++++++++++------------------
- 1 file changed, 29 insertions(+), 20 deletions(-)
+ sound/usb/mixer_us16x08.c |   49 ++++++++++++++++++++++------------------------
+ 1 file changed, 24 insertions(+), 25 deletions(-)
 
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -62,6 +62,7 @@
- static DEFINE_MUTEX(core_lock);
- static DEFINE_IDR(i2c_adapter_idr);
+--- a/sound/usb/mixer_us16x08.c
++++ b/sound/usb/mixer_us16x08.c
+@@ -225,14 +225,14 @@ static int snd_us16x08_route_put(struct
  
-+static void i2c_deregister_clients(struct i2c_adapter *adap);
- static int i2c_detect(struct i2c_adapter *adapter, struct i2c_driver *driver);
+ 	err = snd_us16x08_send_urb(chip, buf, sizeof(route_msg));
  
- static DEFINE_STATIC_KEY_FALSE(i2c_trace_msg_key);
-@@ -1597,6 +1598,7 @@ static int i2c_register_adapter(struct i
- 	return 0;
+-	if (err > 0) {
+-		elem->cached |= 1 << index;
+-		elem->cache_val[index] = val;
+-	} else {
++	if (err < 0) {
+ 		usb_audio_dbg(chip, "Failed to set routing, err:%d\n", err);
++		return err;
+ 	}
  
- out_reg:
-+	i2c_deregister_clients(adap);
- 	debugfs_remove_recursive(adap->debugfs);
- 	init_completion(&adap->dev_released);
- 	device_unregister(&adap->dev);
-@@ -1740,29 +1742,10 @@ static int __process_removed_adapter(str
- 	return 0;
+-	return err > 0 ? 1 : 0;
++	elem->cached |= 1 << index;
++	elem->cache_val[index] = val;
++	return 1;
  }
  
--/**
-- * i2c_del_adapter - unregister I2C adapter
-- * @adap: the adapter being unregistered
-- * Context: can sleep
-- *
-- * This unregisters an I2C adapter which was previously registered
-- * by @i2c_add_adapter or @i2c_add_numbered_adapter.
-- */
--void i2c_del_adapter(struct i2c_adapter *adap)
-+static void i2c_deregister_clients(struct i2c_adapter *adap)
- {
--	struct i2c_adapter *found;
- 	struct i2c_client *client, *next;
+ static int snd_us16x08_master_info(struct snd_kcontrol *kcontrol,
+@@ -284,14 +284,14 @@ static int snd_us16x08_master_put(struct
+ 	buf[5] = index + 1;
+ 	err = snd_us16x08_send_urb(chip, buf, sizeof(mix_msg_out));
  
--	/* First make sure that this adapter was ever added */
--	mutex_lock(&core_lock);
--	found = idr_find(&i2c_adapter_idr, adap->nr);
--	mutex_unlock(&core_lock);
--	if (found != adap) {
--		pr_debug("attempting to delete unregistered adapter [%s]\n", adap->name);
--		return;
--	}
+-	if (err > 0) {
+-		elem->cached |= 1 << index;
+-		elem->cache_val[index] = val;
+-	} else {
++	if (err < 0) {
+ 		usb_audio_dbg(chip, "Failed to set master, err:%d\n", err);
++		return err;
+ 	}
+ 
+-	return err > 0 ? 1 : 0;
++	elem->cached |= 1 << index;
++	elem->cache_val[index] = val;
++	return 1;
+ }
+ 
+ static int snd_us16x08_bus_put(struct snd_kcontrol *kcontrol,
+@@ -325,14 +325,14 @@ static int snd_us16x08_bus_put(struct sn
+ 		break;
+ 	}
+ 
+-	if (err > 0) {
+-		elem->cached |= 1;
+-		elem->cache_val[0] = val;
+-	} else {
++	if (err < 0) {
+ 		usb_audio_dbg(chip, "Failed to set bus parameter, err:%d\n", err);
++		return err;
+ 	}
+ 
+-	return err > 0 ? 1 : 0;
++	elem->cached |= 1;
++	elem->cache_val[0] = val;
++	return 1;
+ }
+ 
+ static int snd_us16x08_bus_get(struct snd_kcontrol *kcontrol,
+@@ -393,14 +393,14 @@ static int snd_us16x08_channel_put(struc
+ 
+ 	err = snd_us16x08_send_urb(chip, buf, sizeof(mix_msg_in));
+ 
+-	if (err > 0) {
+-		elem->cached |= 1 << index;
+-		elem->cache_val[index] = val;
+-	} else {
++	if (err < 0) {
+ 		usb_audio_dbg(chip, "Failed to set channel, err:%d\n", err);
++		return err;
+ 	}
+ 
+-	return err > 0 ? 1 : 0;
++	elem->cached |= 1 << index;
++	elem->cache_val[index] = val;
++	return 1;
+ }
+ 
+ static int snd_us16x08_mix_info(struct snd_kcontrol *kcontrol,
+@@ -530,13 +530,13 @@ static int snd_us16x08_eqswitch_put(stru
+ 		msleep(15);
+ 	}
+ 
+-	if (err > 0) {
+-		elem->cached |= 1 << index;
+-		elem->cache_val[index] = val;
+-	} else {
++	if (err < 0) {
+ 		usb_audio_dbg(chip, "Failed to set eq switch, err:%d\n", err);
++		return err;
+ 	}
+ 
++	elem->cached |= 1 << index;
++	elem->cache_val[index] = val;
+ 	return 1;
+ }
+ 
+@@ -1419,4 +1419,3 @@ int snd_us16x08_controls_create(struct u
+ 
+ 	return 0;
+ }
 -
--	i2c_acpi_remove_space_handler(adap);
- 	/* Tell drivers about this removal */
- 	mutex_lock(&core_lock);
- 	bus_for_each_drv(&i2c_bus_type, NULL, adap,
-@@ -1788,6 +1771,32 @@ void i2c_del_adapter(struct i2c_adapter
- 	 * them up properly, so we give them a chance to do that first. */
- 	device_for_each_child(&adap->dev, NULL, __unregister_client);
- 	device_for_each_child(&adap->dev, NULL, __unregister_dummy);
-+}
-+
-+/**
-+ * i2c_del_adapter - unregister I2C adapter
-+ * @adap: the adapter being unregistered
-+ * Context: can sleep
-+ *
-+ * This unregisters an I2C adapter which was previously registered
-+ * by @i2c_add_adapter or @i2c_add_numbered_adapter.
-+ */
-+void i2c_del_adapter(struct i2c_adapter *adap)
-+{
-+	struct i2c_adapter *found;
-+
-+	/* First make sure that this adapter was ever added */
-+	mutex_lock(&core_lock);
-+	found = idr_find(&i2c_adapter_idr, adap->nr);
-+	mutex_unlock(&core_lock);
-+	if (found != adap) {
-+		pr_debug("attempting to delete unregistered adapter [%s]\n", adap->name);
-+		return;
-+	}
-+
-+	i2c_acpi_remove_space_handler(adap);
-+
-+	i2c_deregister_clients(adap);
- 
- #ifdef CONFIG_I2C_COMPAT
- 	class_compat_remove_link(i2c_adapter_compat_class, &adap->dev,
 
 
