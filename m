@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C819D47010C;
-	Tue, 21 Jul 2026 19:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E4147044B;
+	Tue, 21 Jul 2026 19:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662846; cv=none; b=XBTTOWle4cxK6ykMIGMAYz2HWj+TugX4Am12dM/VH+rdFWXGwRHyQ+XrKbPl0bvecouienSmm6e2e5Yf5ehWzzmgUxsUg7ZHjin8ziPVFlmB4s0Rwreu/DmJsndUJeZ6W19ULot/81vhZ+lGHv5fOZK5V8NrTkbckKtPYk+L2ws=
+	t=1784662849; cv=none; b=jrJDCi8S53B2+WKFNKmSyJBg/EFqzggUUh0j2IRNpQpgU+5R0rFsT5adW74ISvm/htmWeujQZcj33LfNxWgltYO8oGT8vpTbReEmpxvc7f7Gk+T485QkKNcEhpJMRoalUClgFEg0Y5V30Mnh2/xZFmDV4e0ZUt6qDHPRcQJEBgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662846; c=relaxed/simple;
-	bh=shJHpP0WZ+o4jwDOiJZfnA6rCKkYAaMdFfRfbW46V1I=;
+	s=arc-20240116; t=1784662849; c=relaxed/simple;
+	bh=txIyyi+WnG83wh7s6vgO18boxhkNs+hazgZL0dXaPbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y6D3aZ1PG4Lp65vXnyDxB0+qg/w/UruCgmnQOfUCQVVZkvTM9c+msbJlmIg4kXCwFGav9AbBO7p+PmBxkkbMuEueCDs4qEsrcyz2KMTNP3ty7515p+RBI3spD9MeYnK+nZna/ooduvsrCAm6AWM5sNgEFEc3UUyNOaCeq7w/uxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QM4jHMM7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dsG2TiRvG4fpBOY41BQ0Av97IwcN167T1pkMmWiOIi3qWxvMgDKh/sAJyvfpDpIJIisO8KD/42nBM5dgtjN45TFWhrraOuV/TFN00pOZr6EU77kCgl5oN/O3jh0IiEgBmrSTRsdtoNgi2ec37OzyyvWg0n9DluXO4j/4lsLDgvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MrXDP7hR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QM4jHMM7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A2C11F00A3A;
-	Tue, 21 Jul 2026 19:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MrXDP7hR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D941F1F00A3A;
+	Tue, 21 Jul 2026 19:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662845;
-	bh=YtSXtus0NzSj9fm4ynzoOGfvPHafazg0CWX/nAG6dYM=;
+	s=korg; t=1784662848;
+	bh=ZDaS2dUS5slCDfiDjCHv7slr3yYXt4vZsvfQrUu/lyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QM4jHMM7+FT7n8lza4cqGF+LEQxnb5Pdx4EIozE7M7DOK7JAa2AHHchtJaCDTh+HM
-	 geTvKmd6KZmf4JQ4OP3+N8r4AQgSPKC818SxtzQftq9juVpkyCQnc5Au/i7Axjd7WC
-	 SiHuVk41WcywSGEFyEL/WtBp46UH/h/R+jj8wvwo=
+	b=MrXDP7hRCYtEAVZZSiMza4M3j0WXvCImti4fUDTrv3gdVHMYsK96nknbGE+S8MNuS
+	 eYn+ToY8KM+xIE7bhGeoVOm70Ookvmu+0XLTDCcs3cSI3FjHSuzsSH5g53umogXqLO
+	 9KUs0op/ZS+ZbntRm5t7B4+UkjMczeIAWwLuGUGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Song Liu <songliubraving@fb.com>,
+	Dave Marchevsky <davemarchevsky@fb.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0556/1276] perf bpf: Validate func_info_rec_size and sub_id in synthesize_bpf_prog_name()
-Date: Tue, 21 Jul 2026 17:16:39 +0200
-Message-ID: <20260721152458.559434067@linuxfoundation.org>
+Subject: [PATCH 6.12 0557/1276] perf bpf: Bounds-check array offsets in bpil_offs_to_addr()
+Date: Tue, 21 Jul 2026 17:16:40 +0200
+Message-ID: <20260721152458.582389720@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -54,48 +55,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 10b3c3d63ecc17c6acb855bac5f40367f1115765 ]
+[ Upstream commit 033e85edfbf271f92979d2a39aeaf40f8472a795 ]
 
-synthesize_bpf_prog_name() computes a pointer into the func_info array
-using sub_id * info->func_info_rec_size without validating either value.
-Both come from perf.data and are untrusted:
+bpil_offs_to_addr() converts offsets stored in perf.data's
+bpf_prog_info_linear structure into heap pointers by adding the offset
+to the data allocation base.  The offsets come from untrusted file input
+and are not validated against data_len.
 
-- A func_info_rec_size smaller than sizeof(struct bpf_func_info) means
-  the finfo pointer would reference a truncated entry, reading past it
-  into adjacent data.
+If an offset exceeds data_len, the computed address points outside the
+allocated data buffer.  Callers like synthesize_bpf_prog_name() then
+dereference prog_tags[sub_id] or func_info pointers, reading arbitrary
+heap memory.
 
-- A sub_id >= nr_func_info computes an offset past the func_info buffer,
-  causing an out-of-bounds read.
-
-Add bounds checks for both values before computing the pointer offset.
-When validation fails, fall through to the non-BTF name path instead
-of reading garbage.
+Add a bounds check: when an offset exceeds data_len, zero the field
+and skip the conversion.  This prevents out-of-bounds pointer
+construction from crafted perf.data files.
 
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: 7b612e291a5affb1 ("perf tools: Synthesize PERF_RECORD_* for loaded BPF programs")
-Cc: Song Liu <songliubraving@fb.com>
+Fixes: 6ac22d036f86c4e2 ("perf bpf: Pull in bpf_program__get_prog_info_linear()")
+Cc: Dave Marchevsky <davemarchevsky@fb.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf-event.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/perf/util/bpf-utils.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
-index 6c9a4a1b80a24c..db89053ce96808 100644
---- a/tools/perf/util/bpf-event.c
-+++ b/tools/perf/util/bpf-event.c
-@@ -135,7 +135,9 @@ static int synthesize_bpf_prog_name(char *buf, int size,
- 	name_len = scnprintf(buf, size, "bpf_prog_");
- 	name_len += snprintf_hex(buf + name_len, size - name_len,
- 				 prog_tags[sub_id], BPF_TAG_SIZE);
--	if (btf) {
-+	if (btf &&
-+	    info->func_info_rec_size >= sizeof(*finfo) &&
-+	    sub_id < info->nr_func_info) {
- 		finfo = func_infos + sub_id * info->func_info_rec_size;
- 		t = btf__type_by_id(btf, finfo->type_id);
- 		if (t)
+diff --git a/tools/perf/util/bpf-utils.c b/tools/perf/util/bpf-utils.c
+index 5a66dc8594aa88..03a621a0c5dcd5 100644
+--- a/tools/perf/util/bpf-utils.c
++++ b/tools/perf/util/bpf-utils.c
+@@ -264,12 +264,28 @@ void bpil_offs_to_addr(struct perf_bpil *info_linear)
+ 	for (i = PERF_BPIL_FIRST_ARRAY; i < PERF_BPIL_LAST_ARRAY; ++i) {
+ 		const struct bpil_array_desc *desc = &bpil_array_desc[i];
+ 		__u64 addr, offs;
++		__u32 count, size;
+ 
+ 		if ((info_linear->arrays & (1UL << i)) == 0)
+ 			continue;
+ 
+ 		offs = bpf_prog_info_read_offset_u64(&info_linear->info,
+ 						     desc->array_offset);
++		count = bpf_prog_info_read_offset_u32(&info_linear->info,
++						      desc->count_offset);
++		size = bpf_prog_info_read_offset_u32(&info_linear->info,
++						     desc->size_offset);
++		/* offset and extent from perf.data are untrusted — keep within data[] */
++		if (offs >= info_linear->data_len ||
++		    (u64)count * size > info_linear->data_len - offs) {
++			bpf_prog_info_set_offset_u64(&info_linear->info,
++						     desc->array_offset, 0);
++			bpf_prog_info_set_offset_u32(&info_linear->info,
++						     desc->count_offset, 0);
++			/* clear the bit so bpil_addr_to_offs() won't reverse a zeroed address */
++			info_linear->arrays &= ~(1UL << i);
++			continue;
++		}
+ 		addr = offs + ptr_to_u64(info_linear->data);
+ 		bpf_prog_info_set_offset_u64(&info_linear->info,
+ 					     desc->array_offset, addr);
 -- 
 2.53.0
 
