@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F0347124F;
-	Tue, 21 Jul 2026 18:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EDE47124F;
+	Tue, 21 Jul 2026 18:18:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657914; cv=none; b=dUD54TD1Qvj7+vcnlnQTp9Y/P0ZbhqkbI7R0HM5m5FRjz9n0LXQA9rDfaaRvgzkdo/4lROkOzNvXTT62M8KUWQ6hl08WPFHare590lDyvE7QxAIDKB9WuU0rDwqsb9IGtU96ACC0ykUafhrlX69IDeHK55gHFgM5AqswK5Qi/EM=
+	t=1784657916; cv=none; b=EcBx9cPYwQM1ZnLHWWUSg1v+E1ewMOI24V1CIPTXp5q7EVy8eVkZl0otxQ7PBu1eCVwOjHeDyZEEy/fJX5Pye5tUEPFSLVJUpDieblYw4QOpqyjpSFaWJi5ciZnBUaWFr3VsuGKGLN4gw+sDO5t6/DMejfgxga/OwIdPo9SEfj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657914; c=relaxed/simple;
-	bh=Y2o9olVoj5nZuW8kei4158Nk5RWNTbilNIQfpNGt2CU=;
+	s=arc-20240116; t=1784657916; c=relaxed/simple;
+	bh=CxtoMgloU05SfN3Ee6Ft2OmYQLoOjhh64i/G6ERMcJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aEQZ282Kuq+pnEc9ezl8qvtSorCDJatKLWx7BSqQ6AUxjzGXPLpY/MWvft0oLiJP9zqzxVpBtBTdH3vEjfqGO4QWYAUi03YhTMpuSlSF9/UQqN7/FjqT5Mr9wk+0ilFYW9ZxT/UHTRhYSgfQCBFbeybSPSzztp5ItVEJA3Gx7oY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tr/4RWDD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o0PrJEffJt6XJj14zha+6V2+TRvAHnsA7R6g1a8CyLKNXAvXcA18hCoqs0V/4HOA3GI6vbTsXblZlsz5dv0Wm+OvCIIj4LA9HWpnPFVfax1uDBcZOZOaS5kgOW7gBzWnwxHLDAAAfcf9NJoZLkUZA5tDiQPuB9RGQKYmoBWGGTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HyamAZ39; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tr/4RWDD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 488EC1F000E9;
-	Tue, 21 Jul 2026 18:18:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HyamAZ39"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68101F000E9;
+	Tue, 21 Jul 2026 18:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657912;
-	bh=/RKkNCl/roA4tEHdti2xMLVjoHGtylx8LyBK1SOA21w=;
+	s=korg; t=1784657915;
+	bh=Y+U/Hmxn7JPtBZjrNxvJv/ngwO3AsgIrcla01P1cwDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tr/4RWDD6OK0/9/QnJhZwyxz4WMlL0sMPRKEyCs4iW8t6tyPPYyNvO8UOnBH7kd0G
-	 ul9/nmsvBi5j9qlrd7vePBn/PBxTKGrCpMeWg410w2PPUBJ2MNahFDW9H4ARPJ1/3F
-	 lgB4QA4EYSKlzWsgbsR/chSaqYyHH6hdAY+1wVyk=
+	b=HyamAZ39AqRGGxdz/ddFFhZhOPVtxfB9geS0DgHfWThRl1hNFioeEYsMVUOd9riGU
+	 TB6aAK8z8wGfVncRKUNsXBtnhqkhEFToiJLROL5/Mpc6bm+2cmrgf1qGR041vB7XP/
+	 UifaAJTAQVyrVxiTstxAwBkJa+/5V0+fz6/z4L+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuaisong Yang <yangshuaisong@h-partners.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0946/1611] net: hns3: differentiate autoneg default values between copper and fiber
-Date: Tue, 21 Jul 2026 17:17:42 +0200
-Message-ID: <20260721152536.666743810@linuxfoundation.org>
+Subject: [PATCH 6.18 0929/1611] rtc: cmos: unregister HPET IRQ handler on probe failure
+Date: Tue, 21 Jul 2026 17:17:25 +0200
+Message-ID: <20260721152536.281801616@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,56 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuaisong Yang <yangshuaisong@h-partners.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit d9d349c4e8a0acd73bac8baa3605443c0df5eb26 ]
+[ Upstream commit a5bb580df018b5d1c5668f05f7979044fb19e23a ]
 
-Fix a link loss issue during driver initialization on optical ports
-connected to forced-mode (non-autoneg) remote switches.
+cmos_do_probe() registers cmos_interrupt() as the HPET RTC IRQ
+handler before requesting the RTC IRQ and registering the RTC
+device. If either request_irq() or devm_rtc_register_device()
+fails afterwards, the error path leaves the HPET RTC IRQ handler
+installed. This leaves a stale handler behind and make a later
+hpet_register_irq_handler() fail with -EBUSY.
 
-Previously, during driver probe or initialization, hclge_configure()
-blindly hardcoded hdev->hw.mac.req_autoneg to AUTONEG_ENABLE for all
-media types. While this is necessary for copper (BASE-T) ports to
-establish a link, many high-speed optical (fiber) ports in data
-centers are connected to switches running in forced mode (fixed speed,
-autoneg disabled). Forcing autoneg on these optical ports during
-initialization causes a permanent link failure since the remote end
-refuses to respond to autoneg pulses.
+Track whether the HPET handler was registered successfully and
+undo the registration on the probe error path. Also mask the HPET
+RTC IRQ bits to match the normal shutdown cleanup.
 
-Fix this by implementing media-type differentiated initialization in
-hclge_init_ae_dev(). Copper ports continue to default to
-AUTONEG_ENABLE, while optical ports strictly inherit the preset
-autoneg status pre-configured by the firmware (hdev->hw.mac.autoneg),
-preserving native compatibility with forced-mode network environments.
-
-Fixes: 05eb60e9648c ("net: hns3: using user configure after hardware reset")
-Signed-off-by: Shuaisong Yang <yangshuaisong@h-partners.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://patch.msgid.link/20260624141319.271439-5-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9d8af78b0797 ("rtc: add HPET RTC emulation to RTC_DRV_CMOS")
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20260623100848.2127281-1-haoxiang_li2024@163.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/rtc/rtc-cmos.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 87322af852cdbc..7f174453928c1d 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -11930,6 +11930,13 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
- 	if (ret)
- 		goto err_ptp_uninit;
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index 0743c6acd6e2c1..f8068c717fb852 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -927,6 +927,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 	unsigned char			rtc_control;
+ 	unsigned			address_space;
+ 	u32				flags = 0;
++	bool				hpet_registered = false;
+ 	struct nvmem_config nvmem_cfg = {
+ 		.name = "cmos_nvram",
+ 		.word_size = 1,
+@@ -1084,6 +1085,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 						" failed in rtc_init().");
+ 				goto cleanup1;
+ 			}
++			hpet_registered = true;
+ 		} else
+ 			rtc_cmos_int_handler = cmos_interrupt;
  
-+	if (hdev->hw.mac.media_type != HNAE3_MEDIA_TYPE_COPPER) {
-+		hdev->hw.mac.req_autoneg = hdev->hw.mac.autoneg;
-+		if (hdev->hw.mac.autoneg == AUTONEG_DISABLE &&
-+		    hdev->hw.mac.speed != SPEED_UNKNOWN)
-+			hdev->hw.mac.req_speed = hdev->hw.mac.speed;
+@@ -1133,6 +1135,10 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 	if (is_valid_irq(rtc_irq))
+ 		free_irq(rtc_irq, cmos_rtc.rtc);
+ cleanup1:
++	if (hpet_registered) {
++		hpet_mask_rtc_irq_bit(RTC_IRQMASK);
++		hpet_unregister_irq_handler(cmos_interrupt);
 +	}
-+
- 	ret = hclge_set_autoneg_speed_dup(hdev);
- 	if (ret) {
- 		dev_err(&pdev->dev,
+ 	cmos_rtc.dev = NULL;
+ cleanup0:
+ 	if (RTC_IOMAPPED)
 -- 
 2.53.0
 
