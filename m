@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35EA46C4B4;
-	Tue, 21 Jul 2026 15:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB710372050;
+	Tue, 21 Jul 2026 15:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649578; cv=none; b=VknGafcbEA2W4UnZQQaD8GZDxvJgcPATU0QtxxQ6E50+jMR6nWEI8uiRmmLffIhgRxJgk3bO/HdVyc81wmOz64JAa+/tnSL8vQKoM71VrQVsh9gwnFsf+/rJK36pKCj08ZC1ify6Mx+PCZisoptuLgOyOKH6BNqVysX0xq18VJI=
+	t=1784649581; cv=none; b=Z2hq/A67SKyYGiIiAbGwDV8g8oV2nufXFo7FmR5e9jlzcrujOoKcJHkbKn3u6XjRcaYBC1DqBgwnqKgFEwO3nlyvpxRR9ghkWvV82DF2j77Y/UShNXQRK+QIQObfiLwAcOOkUqOWrl/ujTGXp/nDgaqZjE0F5Wbq0lKXuSdNYyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649578; c=relaxed/simple;
-	bh=rBNEhl+biQT+zWexWn1K/b8Vxo5RY8axosH2vC5MEwo=;
+	s=arc-20240116; t=1784649581; c=relaxed/simple;
+	bh=+kA8PpnwwdZTt4NfL4sheKXlDM6I677ojrhiPfb3qys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S6X17eFn/2tdcF7HGPSbhBvj/2MBWuc506U5Ra+Kb43ebXwlcvB8lrm2DX8KARQrrIVCuzXMxVRY724ZXzJR1ITiqS0CjTElFLRjzdu+RJrx1/xRWzCLR2dzYAYe/mLBkiKWNodLGBLfbPeo84YCdp2djy9jEIH/YKuLpv3IzQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6l2pyJO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fBNapt6i9oAejHEO+gPE+2781LYAwBUGsQaxSRpD0HP7+r1cjpk8i0KX6ftf6mTqtSukaLxqa6j049f33k9jqkcfPBEmnHNTPcY5NHdUvecjFL42y56yoBoGlPY/Wgq8PUwVoL1V8aXmYl5TzIRFHAAblKljcRCTe5xjb6QyIL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iw4EbrXv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6l2pyJO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2545A1F000E9;
-	Tue, 21 Jul 2026 15:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iw4EbrXv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44E91F000E9;
+	Tue, 21 Jul 2026 15:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649577;
-	bh=l/QFlzfm+l54Wm1XobklXs1k/O72QREvTy2ngPTV9Q4=;
+	s=korg; t=1784649580;
+	bh=nG998MvClr0jLIXWGHsopsBUsElxaU8lvXGZPyMhaAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A6l2pyJOKib9bz2JxjoO2jslzZcooJxoRdwbdQt5mv8VP97dmw5tKSRMQIOt8elgE
-	 On8TqEESoWrFMxhfpvQdIjJPdh5YfRleYWbVK3+4ok9TiKgGdsCbGF6mJ+5tlU6qH+
-	 Rys4KlD22GiMkSD49+ceiqT4kk0pGhQTI7KG9KQk=
+	b=iw4EbrXvMCUBxPRVGbANynpiHMkZl1pRfHvhR6Aazk6dK1KUxc5fJ7961kxp8FSLj
+	 cu2mzypFXCRJserXTVmjOS8uNqKJKz1JtJrmA1/RWK24V1SGgFlwuWy7cuwP9MFVXE
+	 wD4fCC1NIOfeQhK6emKbYXLlTd3jLH6vzKafGGoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Jia <physicalmtea@gmail.com>,
-	Peter Hilber <peter.hilber@oss.qualcomm.com>,
+	Filip Hejsek <filip.hejsek@gmail.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0630/2077] virtio: rtc: tear down old virtqueues before restore
-Date: Tue, 21 Jul 2026 17:05:03 +0200
-Message-ID: <20260721152607.669064950@linuxfoundation.org>
+Subject: [PATCH 7.1 0631/2077] virtio_console: read size from config space during device init
+Date: Tue, 21 Jul 2026 17:05:04 +0200
+Message-ID: <20260721152607.692244399@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,118 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jia <physicalmtea@gmail.com>
+From: Filip Hejsek <filip.hejsek@gmail.com>
 
-[ Upstream commit 548d2208455f14e6121404c6e30e997bfe0cd264 ]
+[ Upstream commit b3592a32b34f37874dc94aa1a0d15c4334ed86ca ]
 
-virtio_device_restore() resets the device and restores the negotiated
-features before calling ->restore(). viortc_freeze() intentionally
-leaves the existing virtqueues in place so the alarm queue can still
-wake the system, but viortc_restore() immediately calls
-viortc_init_vqs() without first deleting those old queues.
+Previously, the size was only read upon receiving the config interrupt.
+This interrupt is sent when the size changes. However, we also need to
+read the initial size.
 
-If virtqueue reinitialization fails on virtio-pci, the transport error
-path can run vp_del_vqs() against a newly allocated vp_dev->vqs array
-while vdev->vqs still contains the old virtqueues. vp_del_vqs() then
-looks up queue state through the new array and can dereference a NULL
-info pointer in vp_del_vq(), crashing the guest kernel during restore.
+Also make sure to only read the size from config if F_SIZE is enabled.
 
-This can also happen during a non-faulty reinitialization, when one of
-the vp_find_vqs_msix() attempts is unsuccessful before a later attempt
-would succeed.
-
-Delete the stale virtqueues before rebuilding them. If restore fails
-before virtio_device_ready(), reuse the remove path to stop the device.
-Once the device is ready, return errors directly instead of deleting the
-virtqueues again.
-
-Fixes: 0623c7592768 ("virtio_rtc: Add module and driver core")
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-Reviewed-by: Peter Hilber <peter.hilber@oss.qualcomm.com>
+Fixes: 9778829cffd4 ("virtio: console: Store each console's size in the console structure")
+Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260507120801.3677552-1-physicalmtea@gmail.com>
+Message-ID: <20260223-virtio-console-fix-v1-1-0cf08303b428@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_rtc_driver.c | 28 ++++++++++++++++++++--------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ drivers/char/virtio_console.c | 52 +++++++++++++++++++++--------------
+ 1 file changed, 31 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/virtio/virtio_rtc_driver.c b/drivers/virtio/virtio_rtc_driver.c
-index a57d5e06e19d2d..4419735b0f0dcf 100644
---- a/drivers/virtio/virtio_rtc_driver.c
-+++ b/drivers/virtio/virtio_rtc_driver.c
-@@ -1257,6 +1257,15 @@ static int viortc_init_vqs(struct viortc_dev *viortc)
- 	return 0;
+diff --git a/drivers/char/virtio_console.c b/drivers/char/virtio_console.c
+index 9a33217c68d9d8..198b9731416803 100644
+--- a/drivers/char/virtio_console.c
++++ b/drivers/char/virtio_console.c
+@@ -1771,32 +1771,40 @@ static void config_intr(struct virtio_device *vdev)
+ 		schedule_work(&portdev->config_work);
  }
  
-+static void __viortc_remove(struct viortc_dev *viortc)
-+{
-+	struct virtio_device *vdev = viortc->vdev;
-+
-+	viortc_clocks_deinit(viortc);
-+	virtio_reset_device(vdev);
-+	vdev->config->del_vqs(vdev);
+-static void config_work_handler(struct work_struct *work)
++static void update_size_from_config(struct ports_device *portdev)
+ {
+-	struct ports_device *portdev;
++	struct virtio_device *vdev;
++	struct port *port;
++	u16 rows, cols;
+ 
+-	portdev = container_of(work, struct ports_device, config_work);
+-	if (!use_multiport(portdev)) {
+-		struct virtio_device *vdev;
+-		struct port *port;
+-		u16 rows, cols;
++	vdev = portdev->vdev;
+ 
+-		vdev = portdev->vdev;
+-		virtio_cread(vdev, struct virtio_console_config, cols, &cols);
+-		virtio_cread(vdev, struct virtio_console_config, rows, &rows);
++	/*
++	 * We'll use this way of resizing only for legacy support.
++	 * For multiport devices, use control messages to indicate
++	 * console size changes so that it can be done per-port.
++	 *
++	 * Don't test F_SIZE at all if we're rproc: not a valid feature.
++	 */
++	if (is_rproc_serial(vdev) ||
++	    use_multiport(portdev) ||
++	    !virtio_has_feature(vdev, VIRTIO_CONSOLE_F_SIZE))
++		return;
+ 
+-		port = find_port_by_id(portdev, 0);
+-		set_console_size(port, rows, cols);
++	virtio_cread(vdev, struct virtio_console_config, cols, &cols);
++	virtio_cread(vdev, struct virtio_console_config, rows, &rows);
+ 
+-		/*
+-		 * We'll use this way of resizing only for legacy
+-		 * support.  For newer userspace
+-		 * (VIRTIO_CONSOLE_F_MULTPORT+), use control messages
+-		 * to indicate console size changes so that it can be
+-		 * done per-port.
+-		 */
+-		resize_console(port);
+-	}
++	port = find_port_by_id(portdev, 0);
++	set_console_size(port, rows, cols);
++	resize_console(port);
 +}
 +
- /**
-  * viortc_probe() - probe a virtio_rtc virtio device
-  * @vdev: virtio device
-@@ -1282,7 +1291,7 @@ static int viortc_probe(struct virtio_device *vdev)
- 
- 	ret = viortc_init_vqs(viortc);
- 	if (ret)
--		return ret;
-+		goto err_reset_vdev;
- 
- 	virtio_device_ready(vdev);
- 
-@@ -1329,10 +1338,7 @@ static void viortc_remove(struct virtio_device *vdev)
- {
- 	struct viortc_dev *viortc = vdev->priv;
- 
--	viortc_clocks_deinit(viortc);
--
--	virtio_reset_device(vdev);
--	vdev->config->del_vqs(vdev);
-+	__viortc_remove(viortc);
++static void config_work_handler(struct work_struct *work)
++{
++	struct ports_device *portdev;
++
++	portdev = container_of(work, struct ports_device, config_work);
++	update_size_from_config(portdev);
  }
  
- static int viortc_freeze(struct virtio_device *dev)
-@@ -1353,9 +1359,11 @@ static int viortc_restore(struct virtio_device *dev)
- 	bool notify = false;
- 	int ret;
+ static int init_vqs(struct ports_device *portdev)
+@@ -2052,6 +2060,8 @@ static int virtcons_probe(struct virtio_device *vdev)
+ 	__send_control_msg(portdev, VIRTIO_CONSOLE_BAD_ID,
+ 			   VIRTIO_CONSOLE_DEVICE_READY, 1);
  
-+	dev->config->del_vqs(dev);
++	update_size_from_config(portdev);
 +
- 	ret = viortc_init_vqs(viortc);
- 	if (ret)
--		return ret;
-+		goto err_remove;
+ 	return 0;
  
- 	alarm_viortc_vq = &viortc->vqs[VIORTC_ALARMQ];
- 	alarm_vq = alarm_viortc_vq->vq;
-@@ -1364,7 +1372,7 @@ static int viortc_restore(struct virtio_device *dev)
- 		ret = viortc_populate_vq(viortc, alarm_viortc_vq,
- 					 VIORTC_ALARMQ_BUF_CAP, false);
- 		if (ret)
--			return ret;
-+			goto err_remove;
- 
- 		notify = virtqueue_kick_prepare(alarm_vq);
- 	}
-@@ -1372,8 +1380,12 @@ static int viortc_restore(struct virtio_device *dev)
- 	virtio_device_ready(dev);
- 
- 	if (notify && !virtqueue_notify(alarm_vq))
--		ret = -EIO;
-+		return -EIO;
-+
-+	return 0;
- 
-+err_remove:
-+	__viortc_remove(viortc);
- 	return ret;
- }
- 
+ free_chrdev:
 -- 
 2.53.0
 
