@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F7C387362;
-	Tue, 21 Jul 2026 18:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C180638B133;
+	Tue, 21 Jul 2026 18:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657538; cv=none; b=TEJvhZmC9H++RQSrVAqtVxmW4fTw7wL1tgyq1pL6NsDMfeN0hWNv1jpa0RIWHiaAYHjQ6uap/kk1RTrbnMOtH6evfn52LBfjvpdv02TYmnFwqvOQOvaT6MUPK1KeZfV4m/Bf6NEsyftod9EyMv+vmQLuI10gnFQgSegFUcShdgs=
+	t=1784657540; cv=none; b=nFPG14n+9hf/K0vT7JYo2bWdlJgvhm34JaLlGWiPDXhJi2HR+K+c/BfKVylDQQDbol2pmKXJgUPixhZtN5aQkCZTNpTZNOPsWIDD5L8i6RK3crbdmp+W15XNycyIQQ+nMhguFPndVsov8F1F21OT9P1fmslDgNMda4dgUz2t/H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657538; c=relaxed/simple;
-	bh=rnj0AyGExvAri5ufuuCLJXqlAdFwHWqKi/U50cq+1ns=;
+	s=arc-20240116; t=1784657540; c=relaxed/simple;
+	bh=GucMc6K3s3x9643FaGCO2N9kNnNk3A/7ruxW9gWlAkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F+xZniuNLXSDc0C9s1oNpalqEeq/DqxgjOvn2tTDrjJ48EVXZtHA4RK1fS7Ynkxxli1YKIDX0QGG1z61Qh6IpOOL6mFOWMuLnFNxUXWcASgMVHRGbTjix8miF7s4hYKu2IGdGQwlBqELYWG/eXpxKqIOX5YSQto0Np2ydoqXYuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SF9STo7b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SJzC/7WiDutxNMKMlSyh88Hy1mqbPDGoIpIoGrVmlL4X3xmHxjRoeZVMjmgawTX89YZaCzZV49rrmQGm1lxtlF9doPnzpM0ztHpR94khjn6Ygbn+FFW4xLrWdSS6qWF6ITkSEKhA7AA3uTVor8AtbIRxCu9DL57+bQmMdHXf4HA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=toGvXFxm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SF9STo7b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 840C41F000E9;
-	Tue, 21 Jul 2026 18:12:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="toGvXFxm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2638A1F000E9;
+	Tue, 21 Jul 2026 18:12:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657537;
-	bh=a/mSkB8ipTG8ZdqVi2oMdBHs+lTC5w3/QUlCsU+ehpg=;
+	s=korg; t=1784657539;
+	bh=sJtA8ZHxw82KwlSD1UBXnL3n1Xipp1ucM3MNJ3ARLrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SF9STo7bLYaesINJon/3ePXrORSQZTFUozDMvjN6O3kTx60K52Xn51FRibDoldr3k
-	 HcIl4+dlFPty82mbi3741rlRDxnQ58CkASEOPah2ur8TS++vytqAJtxLzq2+2k0zTy
-	 8yyN5LAhSb5fHsZSLd5aEVWt0LsDYNHO5dgJPePg=
+	b=toGvXFxmngd1ne/d/aAdrsjbtevtUsRNX5MaNfThjSXc0bmusK+O0Xovv2xjkcLab
+	 57qA+BY7sklbTYaOUgAO+emmWQ78Rk7HZldOdVCqob9sNq2pkcIHDvjuXgRMwjd3e2
+	 Jwrnek4W4Dz2VXW2v8h/cyA0ZPA+LOFJpQfiIMp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Melissa Wen <mwen@igalia.com>,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0803/1611] drm/amd/display: Fix mem_type change detection for async flips
-Date: Tue, 21 Jul 2026 17:15:19 +0200
-Message-ID: <20260721152533.447819305@linuxfoundation.org>
+Subject: [PATCH 6.18 0804/1611] drm/amdkfd: fix list_del corruption in kfd_criu_resume_svm
+Date: Tue, 21 Jul 2026 17:15:20 +0200
+Message-ID: <20260721152533.469773916@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,60 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 8e792f018e10e68f488f279fbd4f38009a2e066d ]
+[ Upstream commit 8fa5655da368d0306c03e9dc9cda8ae2a7840926 ]
 
-[Why]
-amdgpu_dm_crtc_mem_type_changed() fetches the "old" and "new" plane state
-with two drm_atomic_get_plane_state() calls, which both return the new
-state. It compares a state against itself, so it never detects a mem_type
-change and never rejects the async flip.
+The cleanup tail of kfd_criu_resume_svm() walks
+svms->criu_svm_metadata_list and kfree()s each struct criu_svm_metadata
+without removing it from the list. The list head is left pointing at
+freed kmalloc-96 objects.
 
-On DCN 3.0.1, this shows up as intermittent corruption when a single DCC
-plane is scanned out with immediate flips under gamescope and its buffer
-moves between the VRAM carveout and GTT.
+A second AMDKFD_IOC_CRIU_OP from the same process re-enters: list_empty()
+reads the dangling ->next (use-after-free), the loop walks freed entries,
+and each is kfree()'d again (double-free). This is reachable by an
+unprivileged render-group user via /dev/kfd with no capabilities required.
 
-[How]
-Use drm_atomic_get_old_plane_state() and drm_atomic_get_new_plane_state()
-to compare the actual old and new states. These return NULL rather than
-an error pointer for a plane that is not part of the commit, so the
-IS_ERR() check becomes a NULL check that skips those planes, such as an
-unmodified cursor still in the CRTC's plane_mask.
+Add list_del() before the kfree() so the list is properly emptied. The
+list_for_each_entry_safe() iterator already caches the next pointer, so
+unlinking during the walk is safe.
 
-Fixes: 4caacd1671b7 ("drm/amd/display: Do not elevate mem_type change to full update")
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Reviewed-by: Melissa Wen <mwen@igalia.com>
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Fixes: 2a909ae71871 ("drm/amdkfd: CRIU resume shared virtual memory ranges")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 13158e5dbd896281f3e9982b5437cffa5fd621b2)
+(cherry picked from commit 6322d278a298e2c1430b9d2697743d3a04b788b1)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index ae10e8365ae159..a2ca1de6b43cfc 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -12177,13 +12177,11 @@ static bool amdgpu_dm_crtc_mem_type_changed(struct drm_device *dev,
- 	struct drm_plane_state *new_plane_state, *old_plane_state;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index 04e4bf41ccf720..202ed1c456320d 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -4063,6 +4063,7 @@ int kfd_criu_resume_svm(struct kfd_process *p)
+ 	list_for_each_entry_safe(criu_svm_md, next, &svms->criu_svm_metadata_list, list) {
+ 		pr_debug("freeing criu_svm_md[]\n\tstart: 0x%llx\n",
+ 						criu_svm_md->data.start_addr);
++		list_del(&criu_svm_md->list);
+ 		kfree(criu_svm_md);
+ 	}
  
- 	drm_for_each_plane_mask(plane, dev, crtc_state->plane_mask) {
--		new_plane_state = drm_atomic_get_plane_state(state, plane);
--		old_plane_state = drm_atomic_get_plane_state(state, plane);
-+		new_plane_state = drm_atomic_get_new_plane_state(state, plane);
-+		old_plane_state = drm_atomic_get_old_plane_state(state, plane);
- 
--		if (IS_ERR(new_plane_state) || IS_ERR(old_plane_state)) {
--			drm_err(dev, "Failed to get plane state for plane %s\n", plane->name);
--			return false;
--		}
-+		if (!old_plane_state || !new_plane_state)
-+			continue;
- 
- 		if (old_plane_state->fb && new_plane_state->fb &&
- 		    get_mem_type(old_plane_state->fb) != get_mem_type(new_plane_state->fb))
 -- 
 2.53.0
 
