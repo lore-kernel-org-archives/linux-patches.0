@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EDB237180;
-	Tue, 21 Jul 2026 20:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E32237180;
+	Tue, 21 Jul 2026 20:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665873; cv=none; b=DayH+0uUNvorCujvhK8r+lejE1iv/XqKMyPRsIZS8CunmRkADlpVeb2COgu31MM3pCeQQtDCbvbF7PNMQabJmLPgIfInVqhPvAKToayK99RH8p9R1Bum/r/Mkc0aDO8g0C8KKnJdDZroVtaDERG2iQLjtmgQJ1xGKFlFmxXUmY0=
+	t=1784665875; cv=none; b=X25qmbUBb+hsEtLNTRc2cwf7g2aEUmIR8P6v52iK9dQ5GIgL0FxubgpIkZD7MSz400DW8z2o2iQsYS3PxDu2Z+zH/K3CgsPLIR55A+6MroJ0K2yh4xEkgG5mGWimpzM8bTdz4GiznXsgz8qG0+2jAoX4pKhCkeIh50MqVtFBGK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665873; c=relaxed/simple;
-	bh=2QYNEf0+0nMNOEqbjjqo/xQ5ABV9E0J+MJQ7Aw3IiEc=;
+	s=arc-20240116; t=1784665875; c=relaxed/simple;
+	bh=9LGBvg513WxS4BcYnIXIY6+nkiTBQFNwF14CsTv4FrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZcwiwbEiSYhhfIY3EWD2ALgnRDlFF6SiMbxstbrdpWQ8mz//AyGhK8oJL6HKsQ2O38CBfF/tjvhJtAbCUZgt1+VIvHEX1UJbQ9VgrCNkdzrKr5U0qLaZ7Mitb38HZEv5CU6qU8m87pW1F/M64Gn5fyZazfWQSFZEejCHTIC5CV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0C+apE4c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KW/soTU//AgnFNe06SWbxpt+dH90z7FYhkaEguc+F21AzxcV/TlwTM0x/nv0a4cZM5KgfqEb73olTIKhBAyHFXOqnMh9YAg7Ct4AqABYBjKrn3makOJlaS1Uq8oKJ0IYXpQySO4VOgvWxqQhd/pkCJMu5GwiBKgzTSEwl6gIBCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yF4s/N/Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0C+apE4c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1FDA1F000E9;
-	Tue, 21 Jul 2026 20:31:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yF4s/N/Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45FEE1F000E9;
+	Tue, 21 Jul 2026 20:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665872;
-	bh=Ak3SLv+7rG3QW/O8UTzzS5utfLUGNKvxGyiICX3AaGg=;
+	s=korg; t=1784665874;
+	bh=SC9v4mUzwyQ3ZoJHC+xotmzyR1PsFgZ3ACoqQUdsLhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0C+apE4cMGdz5Lzr5fSkLnkGxwnKk3yTnaJUMQf2OpNttC9DO7dEge6erEiu32mi9
-	 zwKxB8mKOqCdFUrYAg8pIKUEHx3Q1X1dk5KdyQYEYoWkxr8ILdrWSD88CYnsXonwpn
-	 P1usrGnHiCL9CKd+lNek+IJP/W3WfOrsd/1VaRlg=
+	b=yF4s/N/Y0Z+XYyPypW1TAV3ULw8Bzfab9o83i01vsSgDLSJ9PtKCqVx+aV+9QSqfh
+	 lJTPFufCmhbKgSGfQVh6kuk+tZiPVGjmgKhInzvzDyTZsWcEkwPG/UJhFINpNkQ/uq
+	 nGZ2j614IOS0OxK6JlJU9B4T2Y3018Qp3mTFQzrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	John Madieu <john.madieu.xa@bp.renesas.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0469/1266] ext4: fix LOGFLUSH shutdown ordering to allow ordered-mode data writeback
-Date: Tue, 21 Jul 2026 17:15:06 +0200
-Message-ID: <20260721152452.329175018@linuxfoundation.org>
+Subject: [PATCH 6.6 0470/1266] ASoC: rsnd: Fix RSND_SOC_MASK width to single nibble
+Date: Tue, 21 Jul 2026 17:15:07 +0200
+Message-ID: <20260721152452.351450561@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,63 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: John Madieu <john.madieu.xa@bp.renesas.com>
 
-[ Upstream commit d99748ef1695ce17eaf51c64b7a06952fa7cddab ]
+[ Upstream commit c0758279367e9d82eb7d7b4959718d7d32e96b7d ]
 
-In EXT4_GOING_FLAGS_LOGFLUSH mode, the EXT4_FLAGS_SHUTDOWN flag was set
-before calling ext4_force_commit().  This caused ordered-mode data
-writeback (triggered by journal commit) to fail with -EIO, since
-ext4_do_writepages() checks for the shutdown flag.  The journal would
-then be aborted prematurely before the commit could succeed.
+RSND_SOC_MASK was defined as (0xFF << 4), spanning bits 4-11. This is
+wider than needed since only nibble B (bits 7:4) is used for SoC
+identifiers. Narrow it to (0xF << 4) to match the intended single-nibble
+allocation and prevent overlap with bits 8-11 which will be used by
+upcoming RZ series flags.
 
-Fix this by calling ext4_force_commit() first, then setting the
-shutdown flag, so that pending data can be written back correctly.
+No functional change, since the only current user (RSND_SOC_E) fits
+within a single nibble.
 
-Note that moving ext4_force_commit() before setting the shutdown flag
-creates a small window in which new writes may occur and generate new
-journal transactions.  When the journal is subsequently aborted, the
-new transactions will not be able to write to disk.  This is intentional
-because LOGFLUSH's semantics are to flush pre-existing journal entries
-before shutdown, not to guarantee atomicity for writes that race with
-the ioctl.
-
-Fixes: 783d94854499 ("ext4: add EXT4_IOC_GOINGDOWN ioctl")
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260424104201.1930823-1-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: ba164a49f8f7 ("ASoC: rsnd: src: Avoid a potential deadlock")
+Signed-off-by: John Madieu <john.madieu.xa@bp.renesas.com>
+Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/20260525110230.4014435-3-john.madieu.xa@bp.renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ioctl.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ sound/soc/sh/rcar/rsnd.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
-index d34affd2075eb4..e27eae7f163dfd 100644
---- a/fs/ext4/ioctl.c
-+++ b/fs/ext4/ioctl.c
-@@ -826,11 +826,17 @@ int ext4_force_shutdown(struct super_block *sb, u32 flags)
- 		thaw_bdev(sb->s_bdev);
- 		break;
- 	case EXT4_GOING_FLAGS_LOGFLUSH:
-+		/*
-+		 * Call ext4_force_commit() before setting EXT4_FLAGS_SHUTDOWN.
-+		 * This is because in data=ordered mode, journal commit
-+		 * triggers data writeback which fails if shutdown is already
-+		 * set, causing the journal to be aborted prematurely before
-+		 * the commit succeeds.
-+		 */
-+		(void) ext4_force_commit(sb);
- 		set_bit(EXT4_FLAGS_SHUTDOWN, &sbi->s_ext4_flags);
--		if (sbi->s_journal && !is_journal_aborted(sbi->s_journal)) {
--			(void) ext4_force_commit(sb);
-+		if (sbi->s_journal && !is_journal_aborted(sbi->s_journal))
- 			jbd2_journal_abort(sbi->s_journal, -ESHUTDOWN);
--		}
- 		break;
- 	case EXT4_GOING_FLAGS_NOLOGFLUSH:
- 		set_bit(EXT4_FLAGS_SHUTDOWN, &sbi->s_ext4_flags);
+diff --git a/sound/soc/sh/rcar/rsnd.h b/sound/soc/sh/rcar/rsnd.h
+index 1214dbba6898b1..923436ee6f7e0d 100644
+--- a/sound/soc/sh/rcar/rsnd.h
++++ b/sound/soc/sh/rcar/rsnd.h
+@@ -637,7 +637,7 @@ struct rsnd_priv {
+ #define RSND_GEN2	(2 << 0)
+ #define RSND_GEN3	(3 << 0)
+ #define RSND_GEN4	(4 << 0)
+-#define RSND_SOC_MASK	(0xFF << 4)
++#define RSND_SOC_MASK	(0xF << 4)
+ #define RSND_SOC_E	(1 << 4) /* E1/E2/E3 */
+ 
+ 	/*
 -- 
 2.53.0
 
