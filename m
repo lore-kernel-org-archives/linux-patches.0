@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4261839733E;
-	Tue, 21 Jul 2026 22:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECFA347BC6;
+	Tue, 21 Jul 2026 22:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674454; cv=none; b=KVkcy9tGDE7xGLoHISIay7nt8VNl+zSDm0XTG/wzOOXfrc6BXmofd7CfsKxNlG8MNVpZBTzI1hAtODta3a/ef/L+0LhASDxzAxvyUESDIyU/yJOyFPA+RtzfI/ioB8HnxZi4htIMgvW7szb3m7qwgDv33bafo8Wl1g/3af63FkQ=
+	t=1784674457; cv=none; b=S77fGvgyAdYK1/Q8z4mkhyacS0Xu8VvZb3i9TI8txkRhH2fejOu3xR46hroqNDiJic2+X1LtjuTK44icsFWE51vd7NRKJWz0U4/3wK6+1vHGlDPeO9DWC7lUnRXrFVjoY2xBkwn4fIffXdQloYontk0u18aPnD8kckx9aS6CydU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674454; c=relaxed/simple;
-	bh=T1BsHJ54lqmvIFx/V5Oho0vXfWS4Kn6xuY1L6GmVu44=;
+	s=arc-20240116; t=1784674457; c=relaxed/simple;
+	bh=kf4mocPzJMNZsIH1UaMqtZDYS1aPCiYG2504FYZnkHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EuhuWNS18HThWlzi7xXvwKwd49l4V5Ih+nz5mw8fTbnK1gt5lepEnh19D9TJ6mdtlnz763X+nFbmOiHLuxnjHg6D6eZCeiItXwc3pm/yO7T3B4D7HpDUH5K0jNmVt/P8PTGdlL/IicxKzWJQSIzTymJtcFGZYYmrHjq/ql77PgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSqMdbs/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=is4gUZe9cjcFqMYLtGz7cWV4zKrF6Cq4bCSo83U+S700OQR7E+Z4BA7kxJ36xOgcy6eq6Ns6pBB6XhoVzA+AtY2Mm8ckhk3xXJmVMSDvhv8a80EhOBJyZauTpqZTRsetKwqLvQP/l0GGH2TkCwf6EQd64HyXD17BIIxeOWyx8rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Zbzbto0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSqMdbs/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E1D1F00A3A;
-	Tue, 21 Jul 2026 22:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Zbzbto0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B891F000E9;
+	Tue, 21 Jul 2026 22:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674453;
-	bh=FygCDzpEyEFctV0O6al5upIHboGlEuDoyzM+58FzhA0=;
+	s=korg; t=1784674455;
+	bh=MPYESJYH3tlpLa3+QZJc0SdTxGRmttB83843eclPJvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tSqMdbs/sIHDYsFgFzy5F3r5bZBGKZ1a01j/7br8TGXQZC1nMDrr7GIx1aJ+yfSfH
-	 aNcaQpUXA11g7x+TPpWzosZLpIbX3X6Iw9vKI9GrAzMLW/E8pPM0cxx8u24jcLluxY
-	 PlgdSYkwjKRivDQ2PRNKoFE841Fqbo/CQni5v5hw=
+	b=2Zbzbto0LWQ6nBhAVSwl9XjwtPAVUTF95JdoPU4ZZfy8rcpP3SAmhESI0hAoMSSmg
+	 ifXzOrRbHLynKJFbJZh3ZJSq0LW8swbFVjVV3okBzZKS5ptr7uqQEAkPrHvoCMO6Ut
+	 8+zyW2XieStjR0IqKzsGsU1zZhHs9gLc4o9ZgQCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ginger <ginger.jzllee@gmail.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 504/699] can: bcm: fix lockless bound/ifindex race and silent RX_SETUP failure
-Date: Tue, 21 Jul 2026 17:24:23 +0200
-Message-ID: <20260721152407.065168323@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 5.10 495/699] xfrm: use compat translator only for u64 alignment mismatch
+Date: Tue, 21 Jul 2026 17:24:14 +0200
+Message-ID: <20260721152406.861568138@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,186 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit d9b091d9d22fee81ec53fb55d2032951993ceadb upstream.
+commit 355fbcbdc2539cca7890b0d0914d4ce0f985ad74 upstream.
 
-bcm_sendmsg() reads bo->ifindex and checks bo->bound before taking
-lock_sock(), while bcm_notify(), bcm_connect() and bcm_release() all
-mutate both fields under that same lock. Because the lockless reads
-and the locked writes are unordered with respect to each other, a
-racing bcm_notify() (device unregister) or bcm_connect() (concurrent
-bind on another thread sharing the socket) can make bcm_sendmsg()
-observe an inconsistent combination, e.g. a stale bound=1 together
-with the now-cleared ifindex=0, silently turning a socket bound to a
-specific CAN interface into one that also matches "any" interface.
+The XFRM compat layer (CONFIG_XFRM_USER_COMPAT) translates 32-bit xfrm
+netlink and setsockopt messages into the native 64-bit layout. It is
+only needed on architectures where the 32-bit and 64-bit ABIs disagree
+on u64 alignment, which the kernel encodes as COMPAT_FOR_U64_ALIGNMENT.
 
-Keep the lockless bo->bound check purely as a fast-path reject, and
-move the ifindex read (and a bo->bound re-check) into the locked
-section, where every writer already serializes. This removes the
-possibility of observing the two fields torn against each other,
-rather than trying to fix it with more READ_ONCE()/WRITE_ONCE() pairs
-on two independently updated fields. Annotate the now-purely-lockless
-bo->bound accesses consistently across all its write sites.
+That symbol is defined only by arch/x86. XFRM_USER_COMPAT depends on it,
+so the translator can never be built on any other architecture,
+including arm64, which still provides a 32-bit compat ABI (CONFIG_COMPAT)
+for AArch32 EL0 userspace. On arm64 the AArch32 EABI already aligns u64
+to 8 bytes, identical to the AArch64 ABI, so no translation is required
+and the native code path is correct for 32-bit tasks.
 
-Also fix bcm_rx_setup() silently returning success when the target
-device disappears concurrently instead of reporting -ENODEV, so a
-broken RX op is no longer left registered as if it had succeeded.
+However, xfrm_user_rcv_msg() and xfrm_user_policy() gate on
+in_compat_syscall() alone and then call xfrm_get_translator(), which
+returns NULL when no translator is registered. On arm64 that is always
+the case, so every xfrm netlink message and the XFRM_POLICY setsockopt
+issued by a 32-bit task returns -EOPNOTSUPP. A 32-bit userspace process
+on arm64 (and on any other arch with CONFIG_COMPAT but without
+COMPAT_FOR_U64_ALIGNMENT) therefore cannot configure XFRM state or
+policy through the XFRM_USER netlink API, and cannot use the XFRM_POLICY
+setsockopt path, because both fail before reaching the native parser.
 
-Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
-Reported-by: Ginger <ginger.jzllee@gmail.com>
-Closes: https://lore.kernel.org/linux-can/CAGp+u1aBK8QVjsvAxM2Ldzep4rEbsP9x_pV3At4g=h1kVEtyhA@mail.gmail.com/
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260714-bcm_fixes-v15-2-562f7e3e42da@hartkopp.net
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+The translator series replaced the blanket compat rejection with a
+translator lookup. That made the path usable on x86 when the translator
+is available, but left architectures that cannot build the translator
+permanently rejected even when their compat layout already matches the
+native layout. Let those architectures use the native parser instead.
+
+Gate the translator requirement on COMPAT_FOR_U64_ALIGNMENT instead of
+on in_compat_syscall() alone. Gating on the ABI property rather than on
+CONFIG_XFRM_USER_COMPAT is deliberate: on x86 with IA32_EMULATION=y but
+XFRM_USER_COMPAT=n, a 32-bit task must still be rejected rather than
+routed through the native parser, which would misread genuinely
+4-byte-aligned x86-32 messages. COMPAT_FOR_U64_ALIGNMENT is the ABI
+property that makes the XFRM translator mandatory.
+
+Only the receive/input direction needs the guard. The send, dump and
+notification paths already call the translator as "if (xtr) { ... }"
+with no error on NULL, so on arches without a translator they no-op and
+the kernel emits native 64-bit-layout messages, which is what an AArch32
+task expects.
+
+Tested on Juniper SRX hardware: with the fix, 32-bit IPsec userspace
+netlink and XFRM_POLICY setsockopt operations that previously failed
+with -EOPNOTSUPP now succeed; x86 behaviour is unchanged by inspection.
+
+Fixes: 5106f4a8acff ("xfrm/compat: Add 32=>64-bit messages translator")
+Fixes: 96392ee5a13b ("xfrm/compat: Translate 32-bit user_policy from sockptr")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/bcm.c |   65 +++++++++++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 51 insertions(+), 14 deletions(-)
+ net/xfrm/xfrm_state.c |    2 +-
+ net/xfrm/xfrm_user.c  |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -1251,6 +1251,11 @@ static int bcm_rx_setup(struct bcm_msg_h
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -2410,7 +2410,7 @@ int xfrm_user_policy(struct sock *sk, in
+ 	if (IS_ERR(data))
+ 		return PTR_ERR(data);
  
- 				op->rx_reg_dev = dev;
- 				dev_put(dev);
-+			} else {
-+				/* the requested device is gone - do not
-+				 * silently succeed without registering
-+				 */
-+				err = -ENODEV;
- 			}
+-	if (in_compat_syscall()) {
++	if (IS_ENABLED(CONFIG_COMPAT_FOR_U64_ALIGNMENT) && in_compat_syscall()) {
+ 		struct xfrm_translator *xtr = xfrm_get_translator();
  
- 		} else
-@@ -1320,12 +1325,13 @@ static int bcm_sendmsg(struct socket *so
- {
- 	struct sock *sk = sock->sk;
- 	struct bcm_sock *bo = bcm_sk(sk);
--	int ifindex = bo->ifindex; /* default ifindex for this bcm_op */
-+	int ifindex;
- 	struct bcm_msg_head msg_head;
- 	int cfsiz;
- 	int ret; /* read bytes or error codes as return value */
+ 		if (!xtr) {
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -2833,7 +2833,7 @@ static int xfrm_user_rcv_msg(struct sk_b
+ 	if (!netlink_net_capable(skb, CAP_NET_ADMIN))
+ 		return -EPERM;
  
--	if (!bo->bound)
-+	/* Lockless fast-path check for bound socket */
-+	if (!READ_ONCE(bo->bound))
- 		return -ENOTCONN;
+-	if (in_compat_syscall()) {
++	if (IS_ENABLED(CONFIG_COMPAT_FOR_U64_ALIGNMENT) && in_compat_syscall()) {
+ 		struct xfrm_translator *xtr = xfrm_get_translator();
  
- 	/* check for valid message length from userspace */
-@@ -1341,17 +1347,38 @@ static int bcm_sendmsg(struct socket *so
- 	if ((size - MHSIZ) % cfsiz)
- 		return -EINVAL;
- 
-+	lock_sock(sk);
-+
-+	/* Re-validate under the socket lock: a concurrent bcm_notify()
-+	 * may have unbound this socket (device removal) after the
-+	 * lockless fast-path check above. bo->ifindex is only ever
-+	 * mutated under lock_sock(), so reading it here - instead of
-+	 * before taking the lock - guarantees it can't be observed
-+	 * torn against bo->bound.
-+	 */
-+	if (!bo->bound) {
-+		ret = -ENOTCONN;
-+		goto out_release;
-+	}
-+
-+	/* default ifindex for this bcm_op */
-+	ifindex = bo->ifindex;
-+
- 	/* check for alternative ifindex for this bcm_op */
- 
- 	if (!ifindex && msg->msg_name) {
- 		/* no bound device as default => check msg_name */
- 		DECLARE_SOCKADDR(struct sockaddr_can *, addr, msg->msg_name);
- 
--		if (msg->msg_namelen < BCM_MIN_NAMELEN)
--			return -EINVAL;
-+		if (msg->msg_namelen < BCM_MIN_NAMELEN) {
-+			ret = -EINVAL;
-+			goto out_release;
-+		}
- 
--		if (addr->can_family != AF_CAN)
--			return -EINVAL;
-+		if (addr->can_family != AF_CAN) {
-+			ret = -EINVAL;
-+			goto out_release;
-+		}
- 
- 		/* ifindex from sendto() */
- 		ifindex = addr->can_ifindex;
-@@ -1360,20 +1387,21 @@ static int bcm_sendmsg(struct socket *so
- 			struct net_device *dev;
- 
- 			dev = dev_get_by_index(sock_net(sk), ifindex);
--			if (!dev)
--				return -ENODEV;
-+			if (!dev) {
-+				ret = -ENODEV;
-+				goto out_release;
-+			}
- 
- 			if (dev->type != ARPHRD_CAN) {
- 				dev_put(dev);
--				return -ENODEV;
-+				ret = -ENODEV;
-+				goto out_release;
- 			}
- 
- 			dev_put(dev);
- 		}
- 	}
- 
--	lock_sock(sk);
--
- 	switch (msg_head.opcode) {
- 
- 	case TX_SETUP:
-@@ -1423,6 +1451,7 @@ static int bcm_sendmsg(struct socket *so
- 		break;
- 	}
- 
-+out_release:
- 	release_sock(sk);
- 
- 	return ret;
-@@ -1459,7 +1488,12 @@ static void bcm_notify(struct bcm_sock *
- 				bo->bcm_proc_read = NULL;
- 			}
- #endif
--			bo->bound   = 0;
-+			/* Paired with the lockless fast-path check in
-+			 * bcm_sendmsg(); bo->ifindex itself is only ever
-+			 * accessed under lock_sock() so it needs no
-+			 * annotation.
-+			 */
-+			WRITE_ONCE(bo->bound, 0);
- 			bo->ifindex = 0;
- 			notify_enodev = 1;
- 		}
-@@ -1600,7 +1634,7 @@ static int bcm_release(struct socket *so
- 
- 	/* remove device reference */
- 	if (bo->bound) {
--		bo->bound   = 0;
-+		WRITE_ONCE(bo->bound, 0);
- 		bo->ifindex = 0;
- 	}
- 
-@@ -1669,7 +1703,10 @@ static int bcm_connect(struct socket *so
- 	}
- #endif /* CONFIG_PROC_FS */
- 
--	bo->bound = 1;
-+	/* bo->ifindex above is fully assigned before this point; pairs
-+	 * with the lockless fast-path check in bcm_sendmsg()
-+	 */
-+	WRITE_ONCE(bo->bound, 1);
- 
- fail:
- 	release_sock(sk);
+ 		if (!xtr)
 
 
