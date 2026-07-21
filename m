@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028A646C4AB;
-	Tue, 21 Jul 2026 17:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86A346A61C;
+	Tue, 21 Jul 2026 17:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655334; cv=none; b=leXKfYezUEqjtM2d+CNNWM16hIFTkn1FbbXteu7DelOjpg5y0c3v0+lV0lS7REyaCODCpHHhWr1oPcMG666UTlDZt9u25ZHQcA7Dc+3ppf0TNnX8dch9P4Yv07WwtBSuV2duyb2qLGYf12+fyAR3tdfbUgUyuUxL0krqlMmX7ek=
+	t=1784655336; cv=none; b=GpPT57GBxGm+fcIYCbaIuNwxVpFLnGIfwLCbVEJRM9aF33gzi1Qzytl7qtTqqAPHGuFKQXLsGwPmCi+f5UpX/z75PCNR7V04glbLH2TANfCJPe1XBKgbXoEfb6DpCJTeC3f00gnQod7TAvBwUR7FScsOREgRIaYXQms3k7RqVZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655334; c=relaxed/simple;
-	bh=Bq1ZPxRlm4eyP0Qmjy6wRNtC36w9bh/lvj9A+8z0Zxc=;
+	s=arc-20240116; t=1784655336; c=relaxed/simple;
+	bh=DwS99wlUTH05+Say9ZmAXwwYSCHrx5sBGmqvEFV0fw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pbfyTv3PacXv0eCYtdy54yILdrU7OQzyealJcjTSkjjQxfK58QnBa8xvzqysLvFumshhe+iIMqpjvEZSYyY59uEJIi8c0cCsxvJQmyizCYQ8tVW9z/U00XrvoOWoV7jEfcZg/AQBoaTBkWidUUHnIdjJps9qc9+JPGWzZ/e5ugQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrosDvM/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EFm2aNpfU6o0k6EEBjPsy6OgcYDwgoLcg6ng4850Wp7j1yEJv9WRviYasN9CmAVDsGBrpi4fXghDipNS8tSejZa9n8GvZZxIuhMAGvKnVu93XBVzH1FwSfdg+2NLmh6Z9QrQ3LQF9rGbmlsSANcFjAtC3Wd/kJVMB0H1KDYLE5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOudVynC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrosDvM/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A0F31F000E9;
-	Tue, 21 Jul 2026 17:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOudVynC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253161F000E9;
+	Tue, 21 Jul 2026 17:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655332;
-	bh=dc1a17l7ZI1wNHHwpVVDtTeljEhb+G7EvzjlAoTQr68=;
+	s=korg; t=1784655335;
+	bh=LRrl2gOIRx0m7LOZz5jtWQfjzVgoBSbPnNDQtQXFGpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TrosDvM/kGZQjQvQnIZ5PfWlggXOqM3nIVsqnhNaJILGf+PvZSnRLOkKFMfboawBr
-	 av1+fNo3+WSqC+l3RmroIrsbvoIdAvAepgNWWd/k7V/pgwTfumfRjGtaAbTJdAP7G8
-	 XvImGpmN+SuuEFW0XGw7VIRRItRVdss6se9ERbgs=
+	b=kOudVynCkGZqMWBrt4IKOKtSfJECWWCSmrj95z5qe7Se+xJdqiJ5cf0GufxGky6Fq
+	 DOZUbaQG7F7eJD4HBrmoPhv/CIY3Y8usOepft4JlW4Pp3D/vqDnz3f41E4/GkEzY6x
+	 oUqcYGf/UfPS4M3g/yk9lURe96+NzO3Lvg7El3uE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
+	Zenghui Yu <yuzenghui@huawei.com>,
+	SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 2045/2077] mm/damon/core: trace esz at first setup
-Date: Tue, 21 Jul 2026 17:28:38 +0200
-Message-ID: <20260721152640.931714395@linuxfoundation.org>
+Subject: [PATCH 7.1 2046/2077] samples/damon/mtier: fail early if address range parameters are invalid
+Date: Tue, 21 Jul 2026 17:28:39 +0200
+Message-ID: <20260721152640.954439643@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,57 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Zenghui Yu <yuzenghui@huawei.com>
 
-commit 7e6cc35f5283eab81a14231a64ecd640b690c48c upstream.
+commit 7746d72c64054976887928d64d2caf25c5a6dcc0 upstream.
 
-DAMON traces effective size quota from the second update, only if a change
-has been made by the update.  Tracing only changed updates was an
-intentional decision to avoid unnecessary same value tracing.  Always
-skipping the first value is just an unintended mistake.
+The comment on top of `struct damon_region` clearly says that
 
-The mistake makes the tracepoint based investigation incomplete, because
-the first effective size quota is never traced.  It is not a big issue
-when the 'consist' quota tuner is used, because it keeps changing the
-quota in the usual setup.
+    For any use case, @ar should be non-zero positive size.
 
-However, when the 'temporal' tuner is used, the quota value is not changed
-before the goal achievement status is completely changed.  For example, if
-the DAMOS scheme is started with an under-achieved goal, the quota is set
-to the maximum value, and kept the same value until the goal is achieved.
-Because DAMON skips the first value, the user cannot know what effective
-quota the current scheme is using.  Only after the goal is achieved, the
-effective quota is changed to zero, and traced.
+which is now verified in damon_verify_new_region() if the kernel is built
+with DAMON_DEBUG_SANITY.
 
-Unconditionally trace the initial quota value to fix this problem.
+The WARN_ONCE() can be triggered if the mtier sample module is enabled
+before node{0,1}_{start,end}_addr have been properly initialized, which is
+obviously not good.
 
-Note that the 'temporal' quota tuner was introduced by commit af738a6a00c1
-("mm/damon/core: introduce DAMOS_QUOTA_GOAL_TUNER_TEMPORAL"), which was
-added to 7.1-rc1.  But even with the 'consist' quota tuner, the tracing is
-unintentionally incomplete.  Hence this commit marks the introduction of
-the trace event as the broken commit.
+ ------------[ cut here ]------------
+ start 0 >= end 0
+ WARNING: mm/damon/core.c:217 at damon_new_region+0xf4/0x118, CPU#59: bash/341468
+ Call trace:
+  damon_new_region+0xf4/0x118 (P)
+  damon_set_regions+0xfc/0x3c0
+  damon_sample_mtier_build_ctx+0xe8/0x3a8
+  damon_sample_mtier_start+0x1c/0x90
+  damon_sample_mtier_enable_store+0x98/0xb0
+  param_attr_store+0xb4/0x128
+  module_attr_store+0x2c/0x50
+  sysfs_kf_write+0x58/0x90
+  kernfs_fop_write_iter+0x16c/0x238
+  vfs_write+0x2c0/0x370
+  ksys_write+0x74/0x118
+  __arm64_sys_write+0x24/0x38
+  invoke_syscall+0xa8/0x118
+  el0_svc_common.constprop.0+0x48/0xf0
+  do_el0_svc+0x24/0x38
+  el0_svc+0x54/0x370
+  el0t_64_sync_handler+0xa0/0xe8
+  el0t_64_sync+0x1ac/0x1b0
+ ---[ end trace 0000000000000000 ]---
 
-Link: https://lore.kernel.org/20260520150311.80925-1-sj@kernel.org
-Fixes: a86d695193bf ("mm/damon: add trace event for effective size quota")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.17.x
+Note that the same issue can happen if detect_node_addresses is true, and
+node 0 or 1 is memoryless.  Fix it together by checking the validity of
+parameters right before damon_new_region() and fail early if they're
+invalid.
+
+Link: https://lore.kernel.org/20260629144432.133962-1-sj@kernel.org
+Fixes: 82a08bde3cf7 ("samples/damon: implement a DAMON module for memory tiering")
+Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
+Signed-off-by: SJ Park <sj@kernel.org>
+Reviewed-by: SJ Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.16.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ samples/damon/mtier.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2492,6 +2492,8 @@ static void damos_adjust_quota(struct da
- 	if (!quota->total_charged_sz && !quota->charged_from) {
- 		quota->charged_from = jiffies;
- 		damos_set_effective_quota(quota, c);
-+		if (trace_damos_esz_enabled())
-+			damos_trace_esz(c, s, quota);
+--- a/samples/damon/mtier.c
++++ b/samples/damon/mtier.c
+@@ -120,6 +120,9 @@ static struct damon_ctx *damon_sample_mt
+ 		addr.end = promote ? node1_end_addr : node0_end_addr;
  	}
  
- 	/* New charge window starts */
++	if (addr.start >= addr.end)
++		goto free_out;
++
+ 	region = damon_new_region(addr.start, addr.end);
+ 	if (!region)
+ 		goto free_out;
 
 
