@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12CB415F0E;
-	Tue, 21 Jul 2026 19:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37ABA42DA53;
+	Tue, 21 Jul 2026 19:26:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661970; cv=none; b=FU3BI07/9eJCdkoAxMc4m2QhtsfdWjslosRu3xBQFRpvHHZeg/bz3426nKJ8jIy/1u3dCYXtwUkRMdt+8H29EtfNgzgNdIO9/G66/xHxmtQ1kb1oaSyHrAaRuv8znza7m7HkKrly7K2bRJ8KgHb9Osxz+xz0zbBpkowZvu5Qtf8=
+	t=1784661973; cv=none; b=Vkzvcuu1MU0ue5nbApUKjRhOJV4S3eChvFz7k3AoC02jyBgwZH9ZTNP98v37uM+hPSUxi9PylcEy7QNeVikPnRCuSbjrH+ELhUn+oRSm5lU56/lhantroqELj3xobjKqzEkQ+DuxUq2CeCkBp5N72XZN3zev2MSy78d4X9bysVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661970; c=relaxed/simple;
-	bh=OlRAgP9shExFWgVg8ofqfbM7fhrpCxrQrY/4RmFs578=;
+	s=arc-20240116; t=1784661973; c=relaxed/simple;
+	bh=nABuHb51QYaRa9moUJZjfGyAcq4zDQXcSjTzIMTS3g4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s+8FqNUbZOuRYKYMqJgZWuQOwosF7wc++sMvuGoxI9I6fE32ZnOCt0/7TqX/9NOSmy11dyw2NRk4mG8N7vNM2gTnDgVqwtshuLvcIHzDWu8kXZpjOJBM4mgzNJY01/2n9ZLpgiT1fQVe4xSIwF2R8KlW+6lt0BgjuR4nEe2pK84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bv632GeJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m4UKLcMT1X1G2j6GgGdNyWCiqYT7/daR3j0l7TJKn9uy1WlYgi+/CRc4ipII//QAWQ0y0c1m32uJBiyAgydpVdwAaVxvbgmBiJm2ZbTpit8QHVnXyFxO8upL/w9G/B6R2ljrENO09W7CJ2UT11/WiEISQ75LP3BMPcl1QQ2BCJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLidsoIX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bv632GeJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019301F000E9;
-	Tue, 21 Jul 2026 19:26:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLidsoIX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0591F000E9;
+	Tue, 21 Jul 2026 19:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661969;
-	bh=s0o5cnIrqJSi72zAIAt4mBstCmVSVVSFverCXFAbK4Y=;
+	s=korg; t=1784661972;
+	bh=bWaANWsJG8YCATF2sfYnRpzoV7n4OL7L5ShsdLxB0H4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bv632GeJHiR8tbIYYOMmz/DvDHn4oI1M+FOkI8Sn2AggVMKEkHacj1IaBpMuJrUNp
-	 uA8AXBYoaNNYIK06G/S8VM/oIpM7FAWgghPO+sgwR+abvjZbNfbgDZztatWfrCs7zl
-	 GSUC2Eec9+sVs+StHmXt+HezGTSYgMgYHaJQrqw8=
+	b=lLidsoIXtmMTl6k8wS6MIlZVpxBj2ai5L9fiJ11kM3FLqlZsAdNIycKXTvAWhtLks
+	 KGMRUAdb9GH1HPr5rmtDnnofG/1/ppudxtdonkn3UkGZp9Rm3Xqo3X9P1KGfkH4qQC
+	 hwHcbf6GHf7ydvg2Xe5gXTkzIJ2t4p1J4ngIJym4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0266/1276] IB/mlx5: Dont take the rereg_mr fallback without a new translation
-Date: Tue, 21 Jul 2026 17:11:49 +0200
-Message-ID: <20260721152452.033614304@linuxfoundation.org>
+Subject: [PATCH 6.12 0267/1276] IB/mlx5: Properly support implicit ODP rereg_mr
+Date: Tue, 21 Jul 2026 17:11:50 +0200
+Message-ID: <20260721152452.055642817@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,34 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 55d339d200c908de83a408d023cfb7be779b0dd7 ]
+[ Upstream commit ee7a8335069150c3f1893a697ab30bbeca00d796 ]
 
-Jumping to mlx5_ib_reg_user_mr() without IB_MR_REREG_TRANS set will use
-garbage values for start, length, and iova. Recovering the original mr
-parameters for ODP and DMABUF to properly recreate it is too hard in this
-flow, so just fail it.
+Due to all the child mkeys in the implicit ODP configuration we cannot
+change anything in place for the parent mkey. Instead the whole thing
+needs to be rebuilt if any change is requested. If the user does not
+specify a translation then force the implicit values which will then fall
+through the logic into mlx5_ib_reg_user_mr() to allocate a completely new
+MR.
+
+Since implicit children were also touching the mr->pd, this removes
+another case where the access was racy.
 
 Fixes: ef3642c4f54d ("RDMA/mlx5: Fix error unwinds for rereg_mr")
-Link: https://patch.msgid.link/r/1-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com
+Link: https://sashiko.dev/#/patchset/20260427-security-bug-fixes-v3-0-4621fa52de0e%40nvidia.com?part=4
+Link: https://patch.msgid.link/r/3-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/mr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/mr.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
-index c8238db895bf16..25079fa7a8c5be 100644
+index 25079fa7a8c5be..76d2238ea5e7dd 100644
 --- a/drivers/infiniband/hw/mlx5/mr.c
 +++ b/drivers/infiniband/hw/mlx5/mr.c
-@@ -1852,7 +1852,7 @@ struct ib_mr *mlx5_ib_rereg_user_mr(struct ib_mr *ib_mr, int flags, u64 start,
- 		}
- 		/* DM or ODP MR's don't have a normal umem so we can't re-use it */
- 		if (!mr->umem || is_odp_mr(mr) || is_dmabuf_mr(mr))
--			goto recreate;
-+			return ERR_PTR(-EOPNOTSUPP);
+@@ -1838,6 +1838,21 @@ struct ib_mr *mlx5_ib_rereg_user_mr(struct ib_mr *ib_mr, int flags, u64 start,
+ 	if (!(flags & IB_MR_REREG_PD))
+ 		new_pd = ib_mr->pd;
  
- 		/*
- 		 * Only one active MR can refer to a umem at one time, revoke
++	if (mr->is_odp_implicit && !(flags & IB_MR_REREG_TRANS)) {
++		if (!(new_access_flags & IB_ACCESS_ON_DEMAND))
++			return ERR_PTR(-EOPNOTSUPP);
++
++		/*
++		 * Due to all the child mkeys we cannot actually change an
++		 * implicit MR in place. If the user did not specify a new
++		 * translation then force the fixed implicit MR values.
++		 */
++		start = 0;
++		iova = 0;
++		length = U64_MAX;
++		flags |= IB_MR_REREG_TRANS;
++	}
++
+ 	if (!(flags & IB_MR_REREG_TRANS)) {
+ 		struct ib_umem *umem;
+ 
 -- 
 2.53.0
 
