@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81493955F4;
-	Tue, 21 Jul 2026 15:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21AED46C4AD;
+	Tue, 21 Jul 2026 15:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649536; cv=none; b=Ckqq6rsbtpA9HK8KcxdTKWmrI5vRGJVZBv6DlkvIEDS7OseCd48amnevuFz5ib8jSn2n/111qJ49C+YMfi1lnT2Oc+S4fPOMy+UTQXIlc+XMELu7nAsUVdWQGjtKqeHu+jW30GfdGkcrFD9udOgsENpS/5faQm5RaiWe9SFFAtY=
+	t=1784649539; cv=none; b=WlWl2dgVWmko7E1CNtpqG26Tj2n+WyRDj3hfzR9WcP9wQNXFFt3jUthrKaGElEYt2YTxCAnKdZhFa/2TxljIXxAjtJHOeKitoayF39Hz2o++bQq/0f4Ov77suLcZKj7TFlyr32io5IVBjEN1bnIzyHoUXTLoS3cqIDpda728ovE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649536; c=relaxed/simple;
-	bh=t00Djh1al0C+ZPuqQR2VjQhT0g28JKNLbhH3bS4exbg=;
+	s=arc-20240116; t=1784649539; c=relaxed/simple;
+	bh=L/w5J5edgvg54H/TGsZZ38YuaoIov72drRrmTytcFWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jr4PMCHmgU7maK/bkKTXi6LmPkO7SOanHeIR7+uT1E0eMDanqhDFk/U7kE/MtvreB351+lB5YThnhol8j28GaG+Hu0Eiuq68h4+cIQLT9neBxtynH1TOXjpFUsamoIH1Tz3nUWIhGX6z0uqsWxXqeOdmK7BfGTFMzdESO5T7PS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOG1PBLz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=drAIj5X0XBI/5/CziPxvOQ6IAY+bhed2trtHWuffF+KJGziqkgnJfO+j7e0U/m2ceBUhCZe/Al6Q8QH7vSk+eP+Qs7PZNR0I4+Xg1PDtCs3L7o/2C3y7yFP1d9a4qAkR0eRCXn7UC5EeXFnT0R8pp9qYQFRo1Q3v91L4Nze2CV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6Tx+/5/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOG1PBLz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9551F000E9;
-	Tue, 21 Jul 2026 15:58:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6Tx+/5/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823E31F000E9;
+	Tue, 21 Jul 2026 15:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649535;
-	bh=laXZcaycC60MfgBlVnv5/4DTUABz6nslp/ACCLNpf8s=;
+	s=korg; t=1784649538;
+	bh=5rtA4KLDT46MU/RqSp/N0i7SW+9j0APjR122vVqD6oM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EOG1PBLzEGuzoyv5iW9F0celXMU3ezqrnYAzIeBcZiFp4rSVWVaL05uNaQJobUI/5
-	 Lk6ki5T2XruW1BDPIK1ZrU0BKPErueR851B4+T6Jdgpad4/Z6eL6ee3SU7eL0YPsLa
-	 /FhPcuva5cXHUbYtNR52bOOoa7C/0fMcYdSIDmus=
+	b=h6Tx+/5/P7DF8y5DVMyODtA1wPxBX/pOJCzow5/MOzaNPEfTK+VvLvjf+U+rMh3oh
+	 TQKEIsUU9wid5oEzIAfB7AMWKsFeZQ8KlIBh15Al/KA3bg1/a2ln2zZo/ZXARPkFaC
+	 vROy+LsSrB9Oxq2/LwQl8RE8rN4VxOo4U2oluUrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
+	KhaiWenTan <khai.wen.tan@linux.intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Patryk Holda <patryk.holda@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0615/2077] ixgbe: do not configure xps for XDP queues
-Date: Tue, 21 Jul 2026 17:04:48 +0200
-Message-ID: <20260721152607.311712410@linuxfoundation.org>
+Subject: [PATCH 7.1 0616/2077] igc: skip RX timestamp header for frame preemption verification
+Date: Tue, 21 Jul 2026 17:04:49 +0200
+Message-ID: <20260721152607.334025690@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -55,76 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larysa Zaremba <larysa.zaremba@intel.com>
+From: KhaiWenTan <khai.wen.tan@linux.intel.com>
 
-[ Upstream commit 7bd4355272de34c2e90e34b72c5613736d03c32b ]
+[ Upstream commit 38b7a274cf84af9b1f4b602b8e2741565b81947b ]
 
-netif_set_xps_queue() should not be called for an XDP Tx queue, since such
-queues are not netdev-exposed. On systems with number of CPUs >=64, on E610
-adapter, netdev is configured with maximum number queue pairs being 63
-(due to MSI-X assignment), but configuring XDP results in 64 XDP queues.
+When RX hardware timestamping is enabled, a 16-byte inline timestamp header
+is added to the start of the packet buffer, causing FPE handshake
+verification to fail.
 
-So, during XDP program load, when netif_set_xps_queue() is called for the
-last XDP queue, we get a WARNING with a call trace and KASAN report
-afterwards (if enabled).
+Because an incorrect packet buffer is passed to igc_fpe_handle_mpacket(),
+the mem_is_zero() check inspects the timestamp metadata instead of the
+actual mPacket payload. As a result, valid Verify/Response mPackets can be
+missed when inline RX timestamps are present.
 
-[ 2012.699800] WARNING: net/core/dev.c:2854 at __netif_set_xps_queue+0x116a/0x1e40, CPU#36: xdpsock/103668
-[...]
-[ 2012.700029] RIP: 0010:__netif_set_xps_queue+0x116a/0x1e40
-[ 2012.700035] Code: b6 34 06 48 89 f8 83 e0 07 83 c0 01 40 38 f0 7c 09 40 84 f6 0f 85 03 0a 00 00 0f b7 44 24 40 66 43 89 44 6a 18 e9 01 fb ff ff <0f> 0b e9 f2 ee ff ff 44 8b 44 24 44 45 85 c0 74 50 4d 85 e4 0f 84
-[ 2012.700040] RSP: 0018:ffff8882369aeb28 EFLAGS: 00010246
-[ 2012.700046] RAX: 0000000000000000 RBX: 000000000000003f RCX: 0000000000000000
-[ 2012.700050] RDX: 1ffff1111da3d891 RSI: ffff888120e34250 RDI: ffff8888ed1ec488
-[ 2012.700054] RBP: ffff888913281560 R08: 0000000000000000 R09: ffff8888ed1ec000
-[ 2012.700058] R10: ffff8888a2e83180 R11: 0000000000000000 R12: 0000000000007fa8
-[ 2012.700061] R13: 000000000000003f R14: ffff888120e34854 R15: ffff8889132817c8
-[ 2012.700065] FS:  00007fc8ea9ff740(0000) GS:ffff88884cefe000(0000) knlGS:0000000000000000
-[ 2012.700069] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 2012.700073] CR2: 00007f81c8000020 CR3: 00000002299f8006 CR4: 00000000007726f0
-[ 2012.700077] PKRU: 55555554
-[ 2012.700080] Call Trace:
-[ 2012.700084]  <TASK>
-[ 2012.700087]  ? ktime_get+0x61/0x150
-[ 2012.700097]  ? usleep_range_state+0x133/0x1b0
-[ 2012.700108]  ? __pfx_usleep_range_state+0x10/0x10
-[ 2012.700114]  netif_set_xps_queue+0x31/0x50
-[ 2012.700119]  ixgbe_configure_tx_ring+0x472/0x920 [ixgbe]
-[...]
-[ 2012.700486]  ixgbe_xdp+0x38f/0x750 [ixgbe]
+Pass pktbuf + pkt_offset to igc_fpe_handle_mpacket() so it inspects the
+actual mPacket payload instead of the timestamp header.
 
-[...]
-
-[ 2012.701094] BUG: KASAN: slab-out-of-bounds in __netif_set_xps_queue+0x1ac5/0x1e40
-[ 2012.701100] Write of size 4 at addr ffff88888d43cff8 by task xdpsock/103668
-
-Skip XPS configuration for XDP Tx queues.
-
-Fixes: 33fdc82f0883 ("ixgbe: add support for XDP_TX action")
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Fixes: 5422570c0010 ("igc: add support for frame preemption verification")
+Co-developed-by: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
+Signed-off-by: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
+Signed-off-by: KhaiWenTan <khai.wen.tan@linux.intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Patryk Holda <patryk.holda@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igc/igc_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-index 2646ee6f295f02..9ec250c262842f 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-@@ -3958,7 +3958,8 @@ void ixgbe_configure_tx_ring(struct ixgbe_adapter *adapter,
- 	}
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index 8ac16808023cc6..c470d2354ce8ff 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -2649,7 +2649,7 @@ static int igc_clean_rx_irq(struct igc_q_vector *q_vector, const int budget)
+ 		}
  
- 	/* initialize XPS */
--	if (!test_and_set_bit(__IXGBE_TX_XPS_INIT_DONE, ring->state)) {
-+	if (!ring_is_xdp(ring) &&
-+	    !test_and_set_bit(__IXGBE_TX_XPS_INIT_DONE, ring->state)) {
- 		struct ixgbe_q_vector *q_vector = ring->q_vector;
- 
- 		if (q_vector)
+ 		if (igc_fpe_is_pmac_enabled(adapter) &&
+-		    igc_fpe_handle_mpacket(adapter, rx_desc, size, pktbuf)) {
++		    igc_fpe_handle_mpacket(adapter, rx_desc, size, pktbuf + pkt_offset)) {
+ 			/* Advance the ring next-to-clean */
+ 			igc_is_non_eop(rx_ring, rx_desc);
+ 			cleaned_count++;
 -- 
 2.53.0
 
