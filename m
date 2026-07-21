@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 977A02DEA74;
-	Tue, 21 Jul 2026 18:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA5A46EC8F;
+	Tue, 21 Jul 2026 18:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660378; cv=none; b=B+6WN/7Jwg9PaOBIv6HC7nqiruV5kgMlvgTFMWiacttaM+V52oBHyQMHR0h1lEFm/2RHzqQRdkpHjHQA4i+uBgoEWumHOPVf1iwrPVJRSK48vKPihgVH7E7A8sqlXFb0XbBwGrpmYIpjyQ5TLRR+3BwVR9cXRr58ytF1etEXyCU=
+	t=1784660381; cv=none; b=TZdeH4T8KuQZEmnpSCaShgyBmt3uY3duTBe654qAJ3r61TstdBPz7nyuW9LLzXofZBCnCxYk65YtqQcdIRx3unD6ZA1wSihCmy57+3vhmOiZHpsHw/gvu7CHdOd26UdD3qx8p/lQ1k990uSfLUQcN7j11f71zqknN3FEs5wBNto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660378; c=relaxed/simple;
-	bh=tWGYu+fdFLGF1gV3L+5a/gvphTZcfVtgYtfSiEiI+os=;
+	s=arc-20240116; t=1784660381; c=relaxed/simple;
+	bh=4WStR1YXpe7RAbt8OeBhid3N3ew/qsrR9FQHrlwycwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ld/fdabUvO8XcPSofV3BzqouY+U3K/lSfUjDWvSvGqSTW1z9pn3lfTBc/h6hRINMizn9adpPFh+dNFVPddv1tAMcDWoo6ct1MBlUHlu9+uMkRCuDBXZ5W16b5p1mHf4a3POgJ1l5zWzfTkuET8E0SYi/aWfUVSOG4ExnxzcI8Wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yu2gxpa6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qeBbVJVXsl2HE6w9K5yKi8V9X0xHUp/bDRcSyAtJ0scrDEx6JmeJPdui/dL1aXs/YLGOb1Fy7JkFYdOf3AQ5xa+DgVLzHpK0ZmJZmbsUOmqRydNA+E6h48nHbq4/KfvSGu4/u8iXfPHf27iDNQiDNfDcNTc6bgq74FyKoKesHuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdmzrkW3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yu2gxpa6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088D41F000E9;
-	Tue, 21 Jul 2026 18:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdmzrkW3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1EEE1F00A3A;
+	Tue, 21 Jul 2026 18:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660377;
-	bh=hwmEQ1HGeCHLhI/innuFmCF2JThu5glY3N5D/emd8cw=;
+	s=korg; t=1784660380;
+	bh=Fs3MBCYXJSmQOI0VF5jeBE13hFOMZxUnOsZOKqSoUMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yu2gxpa6LJDDcyUS4pR1ChKpgjFkNXpNt5BBvfEKFUPjRJrV/b6goiGk2hI5p565A
-	 HfipuMPo6abn2J4J6rp6XyB/9V4vyKI6xPaYWj+NqyXk8aAUzMo5YPj/9c7+LdxvIf
-	 n1+cmQ4W1dDncrBXnySx+ElcJdwUT5fmrbD4MwMQ=
+	b=XdmzrkW3UhZRI20Rz/rYxgW/ebZIcuhFs2uKE83EAGcK6tdtYa5JjXQR1k8mphB3q
+	 f+y6MGPBWmR/MgVTx6vKUXUiqSj00vCAkkx5oZEqiN2wrBL/RmIMqo7HlHKjAtt+Z+
+	 xkB0E2WBwkCj5Aqukevp47UONxzFSLJ6j1tgXhU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0956/2077] docs: memfd_preservation: fix rendering of ABI documentation
-Date: Tue, 21 Jul 2026 17:10:29 +0200
-Message-ID: <20260721152615.368872855@linuxfoundation.org>
+Subject: [PATCH 7.1 0921/2077] ntfs3: avoid another -Wmaybe-uninitialized warning
+Date: Tue, 21 Jul 2026 17:09:54 +0200
+Message-ID: <20260721152614.537182511@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,39 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pratyush Yadav (Google) <pratyush@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 3a358c78093f98a70d84c934b7054f636bc846f2 ]
+[ Upstream commit 1bf15dd17385e3730521d17e9e158c475cd7474b ]
 
-The "memfd Live Update ABI" section in include/linux/kho/abi/memfd.h
-currently does not render in the exported documentation. This is because
-it should not include the "DOC:" in its reference. Drop it to ensure
-correct rendering. Tested by running make htmldocs.
+The ntfs3 specific -Wmaybe-uninitialized flag found one more false-postive,
+this time with gcc-10 on s390:
 
-Fixes: 15fc11bb2cb6 ("docs: add documentation for memfd preservation via LUO")
-Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://patch.msgid.link/20260605160645.3650271-1-pratyush@kernel.org
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+fs/ntfs3/frecord.c: In function 'ni_expand_list':
+fs/ntfs3/frecord.c:1370:16: error: 'ins_attr' may be used uninitialized in this function [-Werror=maybe-uninitialized]
+
+Add an explicit NULL pointer check before using the pointer, and
+initialize it to NULL.
+
+Fixes: 48d9b57b169f ("fs/ntfs3: add a subset of W=1 warnings for stricter checks")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/mm/memfd_preservation.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/frecord.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/mm/memfd_preservation.rst b/Documentation/mm/memfd_preservation.rst
-index a8a5b476afd306..c908a12dffa7c0 100644
---- a/Documentation/mm/memfd_preservation.rst
-+++ b/Documentation/mm/memfd_preservation.rst
-@@ -11,7 +11,7 @@ Memfd Preservation ABI
- ======================
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 78eb065c7e431b..bb3348f256d997 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -1330,7 +1330,7 @@ int ni_expand_list(struct ntfs_inode *ni)
+ {
+ 	int err = 0;
+ 	u32 asize, done = 0;
+-	struct ATTRIB *attr, *ins_attr;
++	struct ATTRIB *attr, *ins_attr = NULL;
+ 	struct ATTR_LIST_ENTRY *le;
+ 	bool is_mft = ni->mi.rno == MFT_REC_MFT;
+ 	struct MFT_REF ref;
+@@ -1363,7 +1363,7 @@ int ni_expand_list(struct ntfs_inode *ni)
+ 				      le16_to_cpu(attr->name_off), true,
+ 				      &ins_attr, NULL, NULL);
  
- .. kernel-doc:: include/linux/kho/abi/memfd.h
--   :doc: DOC: memfd Live Update ABI
-+   :doc: memfd Live Update ABI
+-		if (err)
++		if (err || !ins_attr)
+ 			goto out;
  
- .. kernel-doc:: include/linux/kho/abi/memfd.h
-    :internal:
+ 		memcpy(ins_attr, attr, asize);
 -- 
 2.53.0
 
