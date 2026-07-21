@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B388418A58;
-	Tue, 21 Jul 2026 22:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BD2298CC4;
+	Tue, 21 Jul 2026 22:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671424; cv=none; b=EWDPt8w4+JM5yZFv/dMwITnyY7JfyxVnVWZ2e6DaQsqsS9Q9ThdUjL1oeQdwrQKSSz0yHzHB/JdWoEeio/LleyDa9Dqn2LbjtvmdEspqUu/A3xP2tHhn7b53wYYAKAu7jOEdoYc2qCdpHe97enOeAokwiWLeuZ5s5CJjfpD/oOQ=
+	t=1784671424; cv=none; b=Z2AACOIfDwNs678CFWMFSjgOwdgDXh/80zvFKXwC11rafEcMhgWogdkyssJUClDbtJb6VOF/vadGTFA2GQYGBAivwcHXyCNQ5Ol43pGCYySjZzHbEa2E53u22dzO9ptq4nbmd43VZgtPVT37AdSU2CRS3KtdjYRSvzhBquLvJ5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784671424; c=relaxed/simple;
-	bh=lDjI0AGAu3kerzcXorK2jAkhan5jLtzHbS/XR98jhq0=;
+	bh=lwT41EM1GnziCh4E7eUEdH7aIYebXoZJT77g2jiyTAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i+NB1YFbX3KyJwPRY+42YkZBK5nJsPPomSnvdULyjmaJZTGnwKV9Cy7C/h/c8WvbyzD+aAK5RCMtVuWJ7ZpNuTbtsUVl5ST75s6Jyw4KX6Z5I2EjTixYjbMwzP6WuXXvGMIMKyltB7JngQxfwIC8OmUvJqyhdT4IP7i0EUgaREA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8vADGFM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R09hMc3UV7l/m4CG114uPVm6HjYAoOz6stA0h6A8LTIaWotZXpJS30SvF7omufOdM+hVkLid5lyD4LFs0Yotfx9KYuzoEyTlm5j2tEB++aDiCWN0c7pjKHyNrZdND/IgkZksfAhiX6jwUM/24Vu85hcKtE01bwaCjdlLqZC9/Mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZw3r2VR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8vADGFM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE0D1F000E9;
-	Tue, 21 Jul 2026 22:03:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZw3r2VR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78DE11F00A3A;
+	Tue, 21 Jul 2026 22:03:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671419;
-	bh=Ga2i9Mve9wl7oXI6p/BEraACNzWxtLRR8LHw+ChGd/4=;
+	s=korg; t=1784671422;
+	bh=FFtzLEvh8wLfnhvYtSZ/WGi2gMSQS9VYBgOwzrSfJgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P8vADGFMimUosgp73V4O+UEokhbb1bzxTAMjQ6imrcTeVp71dRWyrfpD5RMQGHwRV
-	 hGwCH3nbK4pOfmor/ynkyhuzEewX6sgt7zM26ZsMzUMwmpDxWXVWfkVxIdfwSR3djE
-	 4VPE6lgnpqghCX1BJJD30C4Zi/ThWaVHoF4nNHZw=
+	b=iZw3r2VRWSdbGsC9UEMl4B7TvbXjHjYDexL2YauT51xe/guHjYVD+WvwMp/z+FRyf
+	 FQrh2Rw6dASpHtqsdi53oyx95gACJ58JZ04gUjFD6oGFFAzphLta45aUvY0+j6+uSr
+	 UOpgfb7ReZmFG/Vffj7mbaNLJwZwYeBjQyOiIHgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 239/843] net/sched: sch_htb: do not change sch->flags in htb_dump()
-Date: Tue, 21 Jul 2026 17:17:54 +0200
-Message-ID: <20260721152411.391951658@linuxfoundation.org>
+Subject: [PATCH 5.15 240/843] net/sched: sch_htb: annotate data-races (I)
+Date: Tue, 21 Jul 2026 17:17:55 +0200
+Message-ID: <20260721152411.414992789@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,48 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9b949fa69129e4b694ed11ee3be6d6edd4a9b8f4 ]
+[ Upstream commit e54c33503bf7cebb1c1790251ce90f1252678081 ]
 
 htb_dump() runs without holding qdisc spinlock.
 
-It is illegal to touch sch->flags with non locked RMW,
-as concurrent readers might see intermediate wrong values.
+Add missing READ_ONCE()/WRITE_ONCE() annotations around
+q->overlimits and q->direct_pkts.
 
-Set TCQ_F_OFFLOADED in control path (htb_init()) instead.
-
-Fixes: d03b195b5aa0 ("sch_htb: Hierarchical QoS hardware offload")
+Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260514095935.3926276-2-edumazet@google.com
+Link: https://patch.msgid.link/20260514095935.3926276-3-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_htb.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ net/sched/sch_htb.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
-index 6c4de685a8e481..c704b73a655462 100644
+index c704b73a655462..2c73f49740dee4 100644
 --- a/net/sched/sch_htb.c
 +++ b/net/sched/sch_htb.c
-@@ -1152,6 +1152,7 @@ static int htb_init(struct Qdisc *sch, struct nlattr *opt,
- 	 * parts (especially calling ndo_setup_tc) on errors.
- 	 */
- 	q->offload = true;
-+	sch->flags |= TCQ_F_OFFLOADED;
+@@ -565,7 +565,7 @@ htb_change_class_mode(struct htb_sched *q, struct htb_class *cl, s64 *diff)
  
- 	return 0;
+ 	if (new_mode == HTB_CANT_SEND) {
+ 		cl->overlimits++;
+-		q->overlimits++;
++		WRITE_ONCE(q->overlimits, q->overlimits + 1);
+ 	}
  
-@@ -1228,11 +1229,6 @@ static int htb_dump(struct Qdisc *sch, struct sk_buff *skb)
+ 	if (cl->prio_activity) {	/* not necessary: speed optimization */
+@@ -625,7 +625,7 @@ static int htb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		/* enqueue to helper queue */
+ 		if (q->direct_queue.qlen < q->direct_qlen) {
+ 			__qdisc_enqueue_tail(skb, &q->direct_queue);
+-			q->direct_pkts++;
++			WRITE_ONCE(q->direct_pkts, q->direct_pkts + 1);
+ 		} else {
+ 			return qdisc_drop(skb, sch, to_free);
+ 		}
+@@ -1229,12 +1229,12 @@ static int htb_dump(struct Qdisc *sch, struct sk_buff *skb)
  	struct nlattr *nest;
  	struct tc_htb_glob gopt;
  
--	if (q->offload)
--		sch->flags |= TCQ_F_OFFLOADED;
--	else
--		sch->flags &= ~TCQ_F_OFFLOADED;
--
- 	sch->qstats.overlimits = q->overlimits;
+-	sch->qstats.overlimits = q->overlimits;
++	sch->qstats.overlimits = READ_ONCE(q->overlimits);
  	/* Its safe to not acquire qdisc lock. As we hold RTNL,
  	 * no change can happen on the qdisc parameters.
+ 	 */
+ 
+-	gopt.direct_pkts = q->direct_pkts;
++	gopt.direct_pkts = READ_ONCE(q->direct_pkts);
+ 	gopt.version = HTB_VER;
+ 	gopt.rate2quantum = q->rate2quantum;
+ 	gopt.defcls = q->defcls;
 -- 
 2.53.0
 
