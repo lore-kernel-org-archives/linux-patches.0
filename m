@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6716146A600;
-	Tue, 21 Jul 2026 15:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35B14F7978;
+	Tue, 21 Jul 2026 15:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784647842; cv=none; b=uO+KWTncEc+sl2toOZ14HenGW5U1sZVUsZrtYm0Tegv85j0jU+Vrr9pYZNy5FAsn14v/mqwJzSr6f4qsPAibocg0vnYL5GSNnaJ6FsNfmXLr6VUj7/5vtl2yPdMfJDdO3rvkj4+3TDYIngJVSwb/TJl1D2v1HJTsITo62oByWY4=
+	t=1784647845; cv=none; b=UEFzwFwu6oqOgI/n6eTuTX/szhWdo8QeL45gzNTTYkeMwDM/xnfgquxOagWwOd9tFZioviWW2MhM59/IQR3GX6pEkAEvPt/raYhC2327pYsBz9T2wRZB4DysvcirLTYcVD+dKxykgwNoGjgc59MdTgXdvfDz0n7Roa9QPzk6Lbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784647842; c=relaxed/simple;
-	bh=zxNkTr0uTJMjRtDBhKO7Zl5d5eZiO97LwPV660zZaXY=;
+	s=arc-20240116; t=1784647845; c=relaxed/simple;
+	bh=Z7229DfM3fD7t+TaNQ/6XYYKF2pY4rb7I8LDDlm1wcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WJgBzU8zNhybld46uC98d9/mXL0A0wA2J42gV34DC0d9jY6FAQd5htAt3D5miPm2kHaPBFgUB44xquZAkaddXQBwHLPkHQ6hRizTdbg5/F5Ta1kuivJJajFZ3hR7ISfgHz3gmug1XS8GjVp+U45rNVw9RO1ZLXLg8GCxjR4cPio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPxwxXmn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kz+aXcqbsntlJzsax6U0myqayg2xMQRyI9mvZMtkVDWtjTFa6NIhQs5s44b1XteUc72KmRIdqTaO8ldhvFYQdrC9qPyzi8VJ+7QZ3emmfBfzM3ttBjVe83/z9emKRLZiYxUEG++2uf6+dzTBnDchICbmEq4aaWHDufe1YOkIbnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aiQ43IaM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPxwxXmn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 713B91F00A3A;
-	Tue, 21 Jul 2026 15:30:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aiQ43IaM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B27E1F000E9;
+	Tue, 21 Jul 2026 15:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784647838;
-	bh=xheaRMu4ZyZHaEg/u3ggqbXPGdX0q0L7QF7oSqcAQtg=;
+	s=korg; t=1784647841;
+	bh=ImuZJ6OGFxqxqDylec+tbIB9fMmNoRCA1fU/CWWCYew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rPxwxXmnhinxwM4DUqLvfEHxaIHbZ/6KWf76LKdm47/nPfEgEgSlfL+lQ9Tn31aQk
-	 HWhTet3oUlthwXXi5iQR/vAJwqN1xF+UMTsuqUonTNHVQ7ZdMlgqI527qqWLOe54NT
-	 l6fY8FfUtAUspFy4gJmL3gx4TPEPRjmyRQ3tZnGg=
+	b=aiQ43IaMQwXiR34TFjJHm0FrDdbfelwDyRiJtTiRGAurRlsrnhYEyJ7aGX8CG2nlx
+	 uIJ52G8duzCXqI2pryfd7ZgZgzO4xpeeEiUPt2BWPFxf8zWatkICdvfjQ8hSUvwNqv
+	 vqtatQHgVmcWR91VdvxcV7YlU+Bddxsj0Pg0n5aQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmytro Maluka <dmaluka@chromium.org>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
-	Konstantin Andreev <andreev@swemel.ru>,
+	Steve French <stfrench@microsoft.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0002/1276] iommu/vt-d: Clear Present bit before tearing down context entry
-Date: Tue, 21 Jul 2026 17:07:25 +0200
-Message-ID: <20260721152446.127179303@linuxfoundation.org>
+Subject: [PATCH 6.18 0002/1611] smb/server: do not require delete access for non-replacing links
+Date: Tue, 21 Jul 2026 17:01:58 +0200
+Message-ID: <20260721152514.819788524@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
-References: <20260721152446.065700225@linuxfoundation.org>
+In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
+References: <20260721152514.750365251@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,131 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit c1e4f1dccbe9d7656d1c6872ebeadb5992d0aaa2 ]
+[ Upstream commit 851ed9e09639e0daf79a506ce26097b296ed5518 ]
 
-When tearing down a context entry, the current implementation zeros the
-entire 128-bit entry using multiple 64-bit writes. This creates a window
-where the hardware can fetch a "torn" entry — where some fields are
-already zeroed while the 'Present' bit is still set — leading to
-unpredictable behavior or spurious faults.
+Reproducer:
 
-While x86 provides strong write ordering, the compiler may reorder writes
-to the two 64-bit halves of the context entry. Even without compiler
-reordering, the hardware fetch is not guaranteed to be atomic with
-respect to multiple CPU writes.
+  1. server: systemctl start ksmbd
+  2. client: mount -t cifs //${server_ip}/export /mnt
+  3. client: touch /mnt/file; ln /mnt/file /mnt/hardlink
+  4. client err log: ln: failed to create hard link 'hardlink' =>
+     'file': Permission denied
+  5. server err log: ksmbd: no right to delete : 0x80
 
-Align with the "Guidance to Software for Invalidations" in the VT-d spec
-(Section 6.5.3.3) by implementing the recommended ownership handshake:
-
-1. Clear only the 'Present' (P) bit of the context entry first to
-   signal the transition of ownership from hardware to software.
-2. Use dma_wmb() to ensure the cleared bit is visible to the IOMMU.
-3. Perform the required cache and context-cache invalidation to ensure
-   hardware no longer has cached references to the entry.
-4. Fully zero out the entry only after the invalidation is complete.
-
-Also, add a dma_wmb() to context_set_present() to ensure the entry
-is fully initialized before the 'Present' bit becomes visible.
-
-Fixes: ba39592764ed2 ("Intel IOMMU: Intel IOMMU driver")
-Reported-by: Dmytro Maluka <dmaluka@chromium.org>
-Closes: https://lore.kernel.org/all/aTG7gc7I5wExai3S@google.com/
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Dmytro Maluka <dmaluka@chromium.org>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20260120061816.2132558-3-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
+Fixes: 13f3942f2bf4 ("ksmbd: add per-handle permission check to FILE_LINK_INFORMATION")
+Cc: stable@vger.kernel.org
+Reported-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c |  4 +++-
- drivers/iommu/intel/iommu.h | 21 ++++++++++++++++++++-
- drivers/iommu/intel/pasid.c |  5 ++++-
- 3 files changed, 27 insertions(+), 3 deletions(-)
+ fs/smb/server/smb2pdu.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index cce5a19b5d330e..18022d17c492b6 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -1914,10 +1914,12 @@ static void domain_context_clear_one(struct device_domain_info *info, u8 bus, u8
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 50e36050f9ea3c..44b87196c5afca 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -6572,16 +6572,18 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
  	}
+ 	case FILE_LINK_INFORMATION:
+ 	{
+-		if (!(fp->daccess & FILE_DELETE_LE)) {
+-			pr_err("no right to delete : 0x%x\n", fp->daccess);
+-			return -EACCES;
+-		}
++		struct smb2_file_link_info *file_info;
  
- 	did = context_domain_id(context);
--	context_clear_entry(context);
-+	context_clear_present(context);
- 	__iommu_flush_cache(iommu, context, sizeof(*context));
- 	spin_unlock(&iommu->lock);
- 	intel_context_flush_present(info, context, did, true);
-+	context_clear_entry(context);
-+	__iommu_flush_cache(iommu, context, sizeof(*context));
- }
+ 		if (buf_len < sizeof(struct smb2_file_link_info))
+ 			return -EINVAL;
  
- static int domain_setup_first_level(struct intel_iommu *iommu,
-diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
-index b33d8888d7ebd7..e46eb1d3fba29d 100644
---- a/drivers/iommu/intel/iommu.h
-+++ b/drivers/iommu/intel/iommu.h
-@@ -958,7 +958,26 @@ static inline unsigned long virt_to_dma_pfn(void *p)
- 
- static inline void context_set_present(struct context_entry *context)
- {
--	context->lo |= 1;
-+	u64 val;
+-		return smb2_create_link(work, work->tcon->share_conf,
+-					(struct smb2_file_link_info *)buffer,
++		file_info = (struct smb2_file_link_info *)buffer;
++		if (file_info->ReplaceIfExists && !(fp->daccess & FILE_DELETE_LE)) {
++			pr_err("no right to delete : 0x%x\n", fp->daccess);
++			return -EACCES;
++		}
 +
-+	dma_wmb();
-+	val = READ_ONCE(context->lo) | 1;
-+	WRITE_ONCE(context->lo, val);
-+}
-+
-+/*
-+ * Clear the Present (P) bit (bit 0) of a context table entry. This initiates
-+ * the transition of the entry's ownership from hardware to software. The
-+ * caller is responsible for fulfilling the invalidation handshake recommended
-+ * by the VT-d spec, Section 6.5.3.3 (Guidance to Software for Invalidations).
-+ */
-+static inline void context_clear_present(struct context_entry *context)
-+{
-+	u64 val;
-+
-+	val = READ_ONCE(context->lo) & GENMASK_ULL(63, 1);
-+	WRITE_ONCE(context->lo, val);
-+	dma_wmb();
- }
- 
- static inline void context_set_fault_enable(struct context_entry *context)
-diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
-index 74be6b547fc0c2..5e63b5d4577f75 100644
---- a/drivers/iommu/intel/pasid.c
-+++ b/drivers/iommu/intel/pasid.c
-@@ -804,7 +804,7 @@ static int device_pasid_table_setup(struct device *dev, u8 bus, u8 devfn)
++		return smb2_create_link(work, work->tcon->share_conf, file_info,
+ 					buf_len, fp->filp,
+ 					work->conn->local_nls);
  	}
- 
- 	if (context_copied(iommu, bus, devfn)) {
--		context_clear_entry(context);
-+		context_clear_present(context);
- 		__iommu_flush_cache(iommu, context, sizeof(*context));
- 
- 		/*
-@@ -824,6 +824,9 @@ static int device_pasid_table_setup(struct device *dev, u8 bus, u8 devfn)
- 		iommu->flush.flush_iotlb(iommu, 0, 0, 0, DMA_TLB_GLOBAL_FLUSH);
- 		devtlb_invalidation_with_pasid(iommu, dev, IOMMU_NO_PASID);
- 
-+		context_clear_entry(context);
-+		__iommu_flush_cache(iommu, context, sizeof(*context));
-+
- 		/*
- 		 * At this point, the device is supposed to finish reset at
- 		 * its driver probe stage, so no in-flight DMA will exist,
 -- 
 2.53.0
 
