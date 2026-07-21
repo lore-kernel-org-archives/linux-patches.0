@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6730F2EBB8D;
-	Tue, 21 Jul 2026 20:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7153B1034;
+	Tue, 21 Jul 2026 20:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666091; cv=none; b=oLq6GfM+8rsr1cY2+BXwyscLnPLPelcHXGoKjXmDIfnCjN5JA8C/B2MavROAXDMiMxhwl77nayK5qMeMYWMv2YTPldcSyJnWPxLjv8W6eAs93tgty7gC1HY4E70U5H82wCf6fGyk6/TLCUucLPWQzVAeEFszveI5b1VVET/+EII=
+	t=1784666094; cv=none; b=hJF19MxoMbTnCu5VXFIdtm02mJDz6mj7FceT1wooNKbkp5I9kkuKn5o41qke3NZBc/TOWNQJG9rrBOJkQi0gIEEhFCi+K3ZrzxEisGGvySceoXJh8IncHQ2yOeAO82tFhYRp2awUm5ExG38MHmPqpzMH6XNiODSvbr5tCZWPAqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666091; c=relaxed/simple;
-	bh=NasBng3aWBUNnCz28MjcGOIiI4R9RSda6DEr9ZGj3pg=;
+	s=arc-20240116; t=1784666094; c=relaxed/simple;
+	bh=xSnX6ohhmF8QaakIok0F7S9AZTh3MHgubm5owUn46D4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eywyGM0rZGViJertwTLwVapprv1k5upImTD10OaIbQ9PHwGG5b4RxPCsvaq2QYp0UgUlHS8113MSPs/6XOBgl4eCVRVSbXtK6Bv/2wU/VEqNpqZra1SPLGJluuPdQIN4Qb9V3U0tznAwy0NnzY8GK1xKpLJP8y+nDdDfq0wdvdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5mEgJRG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C7nf2eojdYALWVMktGBW513UOyZ3Fctce8oYyNI7/9tNpYygJUh6rLiigjdwVCAWwhMspk4YEU7z5AKe42Tep7/dyhP4g/oPb8p/eRKVbssoWXtqfVchRjka9SsDHwAGDbEA7KzK4Elozi89NyF5ILaIr4j3IyeCaI0ynmc6JB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgeToRor; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5mEgJRG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCB101F000E9;
-	Tue, 21 Jul 2026 20:34:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgeToRor"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72EDC1F000E9;
+	Tue, 21 Jul 2026 20:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666090;
-	bh=7Yb6IuW45SYQJuwKKCeO9K+XuHgSiFr0sGWWvD+KD9c=;
+	s=korg; t=1784666092;
+	bh=kemcmAw3lstuINHjVFEPIqOQjNXKJGtlTM6nvDvDwyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M5mEgJRGmUMcd2J6JvYFP3CtRT7/qLYW26dUNnbSVsOCfs3JIS3QFfuA2J+AlEnj9
-	 kwTGPaBK3sMHP/hJ8vPY+y6YcJvmvDsF5hN98LeG+FvWg1x2Chb4wNZMOOZOwARH9t
-	 BGGbL04lOHe7aDOcTLL3+MtDx5anhs2qjYoMJr40=
+	b=tgeToRorkblUHFF+6zvNMGUDXQccNNNXDVSRVQ5Pi4r+drAWXUbpMiXi3WCr+zdS0
+	 ECg29HPMpNKulfVGs8N012arx908xwdkLndt47iBdIYCzyZGyw9LxkYtrFsisTJADy
+	 3re/ypnXG7Qily430Dz8ql5zaBB2qU3kp1dsFuCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0549/1266] Bluetooth: hci_qca: fix NULL pointer dereference in qca_dmp_hdr() for non-serdev device
-Date: Tue, 21 Jul 2026 17:16:26 +0200
-Message-ID: <20260721152454.152620459@linuxfoundation.org>
+Subject: [PATCH 6.6 0508/1266] ALSA: seq: Clear variable event pointer on read
+Date: Tue, 21 Jul 2026 17:15:45 +0200
+Message-ID: <20260721152453.214227604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,38 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 6b8cbcf08de0db62254d1981f83db0f94681ccd9 ]
+[ Upstream commit 705dd6dcbc0ea87351c660c1a6443f85f1001c76 ]
 
-hu->serdev is NULL for hci_uart attached via non-serdev paths, but
-qca_dmp_hdr() unconditionally dereferences hu->serdev->dev.driver->name,
-causing a NULL pointer dereference.
+snd_seq_read() copies a queued variable-length event header to userspace
+before expanding the payload. Queued variable-length events use
+SNDRV_SEQ_EXT_CHAINED internally, and data.ext.ptr points at the first
+extension cell.
 
-Fix by guarding the dereference with a NULL check and falling back to
-"hci_ldisc_qca" for the non-serdev case.
+The read side strips SNDRV_SEQ_EXT_* bits from data.ext.len before the
+copy, but it leaves data.ext.ptr untouched. A userspace sequencer client
+can therefore write a direct variable event to itself and read back the
+extension-cell kernel address from the returned header.
 
-Fixes: 06d3fdfcdf5c ("Bluetooth: hci_qca: Add qcom devcoredump support")
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Clear the temporary header pointer before copy_to_user(). The original
+queued event remains unchanged and is still passed to
+snd_seq_expand_var_event(), so payload expansion keeps using the
+internal chain.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Link: https://patch.msgid.link/20260607004129.61345-1-kylebot@openai.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_qca.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/seq/seq_clientmgr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index ac737ee143614c..2986b18655a150 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1008,7 +1008,7 @@ static void qca_dmp_hdr(struct hci_dev *hdev, struct sk_buff *skb)
- 	skb_put_data(skb, buf, strlen(buf));
+diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
+index 9d71decaddd69d..1fddeb91c9f46f 100644
+--- a/sound/core/seq/seq_clientmgr.c
++++ b/sound/core/seq/seq_clientmgr.c
+@@ -488,6 +488,7 @@ static ssize_t snd_seq_read(struct file *file, char __user *buf, size_t count,
  
- 	snprintf(buf, sizeof(buf), "Driver: %s\n",
--		hu->serdev->dev.driver->name);
-+		 hu->serdev ? hu->serdev->dev.driver->name : "hci_ldisc_qca");
- 	skb_put_data(skb, buf, strlen(buf));
- }
- 
+ 			memcpy(&tmpev, &cell->event, aligned_size);
+ 			tmpev.data.ext.len &= ~SNDRV_SEQ_EXT_MASK;
++			tmpev.data.ext.ptr = NULL;
+ 			if (copy_to_user(buf, &tmpev, aligned_size)) {
+ 				err = -EFAULT;
+ 				break;
 -- 
 2.53.0
 
