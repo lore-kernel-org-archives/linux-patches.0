@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623433C1081;
-	Tue, 21 Jul 2026 21:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0611E44AB62;
+	Tue, 21 Jul 2026 21:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670996; cv=none; b=r2hwKUTG8769zdzPZdezuGCoYm3ZApp1c0Z1YTivlD00/xk3xLv9GK0nV/DWpTvW+icxcuKp1rsvtD6z/iAR79t7Z7ztW2z6mfzM2FKZ0xaasTcMIci+uiTmQHwVDiwW4pIYBnJ7Mb6s/BWMUu6MOW8KOfhks6g7ybrX2EcUr0w=
+	t=1784670999; cv=none; b=GU7lnvEMs14rRSM2uAg0RzuJTUh0KzSVBRvmPS6AqWuowppAzopMnrhXFMo1VBfM53oq9TvMfiqDtHheNz3zIPvK1I50aatayrtnpPwZELk3dp65Hq/rTPFye6tW8MzpwFvghQoZYwvSuVpDn7ZZoxrkBmxGFaHo7gXZDQaEmvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670996; c=relaxed/simple;
-	bh=kSwtwAp+r/Bha5E5ptQFJSWHWYSlD82IzrBm0IEtjys=;
+	s=arc-20240116; t=1784670999; c=relaxed/simple;
+	bh=Nno8b+7wIGG+VBLXmJV3Iaj38Q8DO+fwGshxGWPHFKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tJEuPI095MSBhNaKOcTpxFwV7d6ndqiJ7HEBs34isGQTskxzNyJqs8ZrFWmGceFPRg4h99GNQDJpPY7XfoG94on1xOHSUMD924/u/D+JLSBnmXjAxbeWMmRYuNjiQHvs4u+7UEMY5ys9s9SH7EcX6jSJpnpK76/hA73CZbqrCQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=apuAEWyN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PQH3mey6EOfF+UxeGK8O8UyvVPli0S32TQNass69+DYD+NfXHAq8XWwPMMs64wUSRTR5Xwr73Cjf2VHrF3hH3fYQYohKcbgbMWNqB9zrmX7ZWoGC8cjx3FtszprsMkRLtBtdZUQCBbrAggSj4Oxexw7+rGpzUP5xlC+wcwQ5P2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wF/f4Rqg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="apuAEWyN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C30E21F000E9;
-	Tue, 21 Jul 2026 21:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wF/f4Rqg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C7081F000E9;
+	Tue, 21 Jul 2026 21:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670995;
-	bh=zyCOVz3S2Cb8HCG+NorxIB6awKSSAHhgiTswtJv3z+U=;
+	s=korg; t=1784670997;
+	bh=omA/Bwgvkx842fcHJpiSAjYGpmfz15ie1uZzphZQvvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=apuAEWyNoXtOC53BMefYE1PSFvWq2RP0+up7OJs0x6tIjwhjMqEHS8hq7OAyIVpbK
-	 Y/A8U+/pjWyVLIwr/X1siJHWgnqqgK119mV0lsPVZxN3NAy34MW6EUSV3jBE0VwGWX
-	 ifvhIEZkJjUeYWhZ8vfqMmcDdePnLg8W+pxV8nWg=
+	b=wF/f4RqgCvI+pKUZVzz81bsNqUVeuFbsKCghx2PmcEVantL9GSoL61WeIpi0TDFW9
+	 ruCGC5sDnsQus3cIi0N+47+Zj03P2txCk+Oiw5wcpQp+hrtCOMGSY3bDJ+kcjKb9O6
+	 NTLu05445pwAGie1/MgM73KPssqiA6fXy57aq7Xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rajat Jain <rajatja@google.com>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
 	Johan Hovold <johan@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 077/843] Bluetooth: btusb: fix use-after-free on marvell probe failure
-Date: Tue, 21 Jul 2026 17:15:12 +0200
-Message-ID: <20260721152407.726469918@linuxfoundation.org>
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 037/843] i2c: core: fix NULL-deref on adapter registration failure
+Date: Tue, 21 Jul 2026 17:14:32 +0200
+Message-ID: <20260721152406.809114268@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,63 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit c5b600a3c05b1a7a110d558df935a8fc8a471c79 upstream.
+[ Upstream commit 2295d2bb101faa663fbc45fadbb3fec45f107441 ]
 
-Make sure to stop any TX URBs submitted during Marvell OOB wakeup
-configuration on later probe failures to avoid use-after-free in the
-completion callback.
+If adapter registration ever fails the release callback would trigger a
+NULL-pointer dereference as the completion struct has not been
+initialised.
 
-This issue was reported by Sashiko while reviewing a fix for a wakeup
-source leak in the btusb probe errors paths.
+Note that before the offending commit this would instead have resulted
+in a minor memory leak of the adapter name.
 
-Link: https://sashiko.dev/#/patchset/20260402092704.2346710-1-johan%40kernel.org
-Fixes: a4ccc9e33d2f ("Bluetooth: btusb: Configure Marvell to use one of the pins for oob wakeup")
-Cc: stable@vger.kernel.org	# 4.11
-Cc: Rajat Jain <rajatja@google.com>
+Fixes: 3f8c4f5e9a57 ("i2c: core: fix reference leak in i2c_register_adapter()")
+Cc: stable@vger.kernel.org
+Cc: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Stable-dep-of: ba14d7cf2fe7 ("i2c: core: fix adapter registration race")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |    8 +++++---
+ drivers/i2c/i2c-core-base.c |    8 +++++---
  1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3946,7 +3946,7 @@ static int btusb_probe(struct usb_interf
- 	if (id->driver_info & BTUSB_INTEL_COMBINED) {
- 		err = btintel_configure_setup(hdev);
- 		if (err)
--			goto out_free_dev;
-+			goto err_kill_tx_urbs;
- 
- 		/* Transport specific configuration */
- 		hdev->send = btusb_send_frame_intel;
-@@ -4084,7 +4084,7 @@ static int btusb_probe(struct usb_interf
- 		err = usb_set_interface(data->udev, 0, 0);
- 		if (err < 0) {
- 			BT_ERR("failed to set interface 0, alt 0 %d", err);
--			goto out_free_dev;
-+			goto err_kill_tx_urbs;
- 		}
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -1555,7 +1555,7 @@ static int i2c_register_adapter(struct i
+ 	res = device_register(&adap->dev);
+ 	if (res) {
+ 		pr_err("adapter '%s': can't register device (%d)\n", adap->name, res);
+-		goto err_remove_irq_domain;
++		goto err_put_adap;
  	}
  
-@@ -4092,7 +4092,7 @@ static int btusb_probe(struct usb_interf
- 		err = usb_driver_claim_interface(&btusb_driver,
- 						 data->isoc, data);
- 		if (err < 0)
--			goto out_free_dev;
-+			goto err_kill_tx_urbs;
- 	}
- 
- 	if (IS_ENABLED(CONFIG_BT_HCIBTUSB_BCM) && data->diag) {
-@@ -4123,6 +4123,8 @@ err_release_siblings:
- 		usb_set_intfdata(data->isoc, NULL);
- 		usb_driver_release_interface(&btusb_driver, data->isoc);
- 	}
-+err_kill_tx_urbs:
-+	usb_kill_anchored_urbs(&data->tx_anchor);
- out_free_dev:
- 	if (data->reset_gpio)
- 		gpiod_put(data->reset_gpio);
+ 	adap->debugfs = debugfs_create_dir(dev_name(&adap->dev), i2c_debugfs_root);
+@@ -1600,10 +1600,12 @@ static int i2c_register_adapter(struct i
+ out_reg:
+ 	i2c_deregister_clients(adap);
+ 	debugfs_remove_recursive(adap->debugfs);
++	device_del(&adap->dev);
++err_put_adap:
+ 	init_completion(&adap->dev_released);
+-	device_unregister(&adap->dev);
++	put_device(&adap->dev);
+ 	wait_for_completion(&adap->dev_released);
+-err_remove_irq_domain:
++
+ 	i2c_host_notify_irq_teardown(adap);
+ out_list:
+ 	mutex_lock(&core_lock);
 
 
