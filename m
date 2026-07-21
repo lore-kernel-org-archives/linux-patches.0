@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794A346AA60;
-	Tue, 21 Jul 2026 15:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2796B46AA7B;
+	Tue, 21 Jul 2026 15:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648146; cv=none; b=EeDP9YpVuCszBFCL/voWpZJd+sbOyuA75DftHwgUmKYYnNUhuEnG9bDtwf9DBTP7tBHX2+QunM/eVHAYiZ+8b+JMZy7VmI9rQzftfklyblVipaOZ/JeGga3fiGqSmWNjvgGAgKy9giPIc/17ISXGHKOUcKfJvjheikp01lZRu0g=
+	t=1784648149; cv=none; b=sCUPAkPSKj6ej9d3WVEcYiugEkzt61MMLBhrKNkLGtVkqSH9QiFHVWAUVQ3drNW4HoDkbTFmzn8yy+KZXOQLO5f1snlQVrsNKEZiXFapLkNYYyNL5oiMOI21LvGoXdif0tSu5usJG5F4prn45Ni/adWfO2mhcs7gNlVKboNtoTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648146; c=relaxed/simple;
-	bh=I7d8iOcVEfQR9QL3TAURGZtZpHWNFebyp7r3O4V6ohI=;
+	s=arc-20240116; t=1784648149; c=relaxed/simple;
+	bh=N44VnvrbhK+gguOlnVqL+jwqoxV85h81UCZ31GIUiZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G9VRS700Zk4/Vheubw174DTZ5Heg0AWUMtCrArafO4/YMDEgRAUghPJwcHWuf6aZMSaP6kbMCHvLqqDrHB2SXqst8ifznL1jjGO7dhjCSWwRnG967VJhO5DYMm5CoX8EkDhsf7geDvHzGeWyASf8VZC0tVRIaHSATzu08hXVfhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xG4rLRYK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KuxKn/VnjHHNlUf9M5OFmPP4CdwbIkKrpgFU+BSsIVyIb5JXEm+GLzsgx3mJZFHfOe5X6zSpDOquijcGCN+BMDEkd0TAscNVNYJS2CRZEAxl5GOca8iDOJ9MhmZbqPbHYkK+6PjDgMHy3OzB3IlP8ZGLB+B+DF1/kIHutV8ZOkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EW0nCZdO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xG4rLRYK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B481F000E9;
-	Tue, 21 Jul 2026 15:35:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EW0nCZdO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2BA1F000E9;
+	Tue, 21 Jul 2026 15:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648145;
-	bh=GAhOiOkZxvoHVmXOpbE33/Sc1+bY0xTz5QIPJEmxwGE=;
+	s=korg; t=1784648148;
+	bh=leMSUSubGzLIBwQ24FRTJOwHA2M+wykb26IDSeRG7fQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xG4rLRYKRpMOTG+XwKcFpwhGtCH+Kf+33GByfcTG0i9IUnginZSc75dZm+edvYfCs
-	 ahddof8SwtfrsvoD+BfscO2J+eIUXXNDT4/jGqNtwbjCfQjDfBa0WUObwbITlKNPJt
-	 VZs0FvsmUHIV6Mq7em0679PYYqPyIjJvlSvbJKTg=
+	b=EW0nCZdOv4V0lKKZdtqVJpSzpUVxEIhSElQ5EqZXceo8Cd4FYYfM6EYuMYTIjRPip
+	 pYU+2vYKzcGYT0EQY1X6JzuzvAwr9HHel/MZzDZzGAflNvYhjgaDxwn6fDU2NkqTeT
+	 eCmjaq/2YumJnAAekrLXEhI4hrbd6hPjm2TDegy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matvey Kovalev <matvey.kovalev@ispras.ru>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.1 0035/2077] afs: fix NULL pointer dereference in afs_get_tree()
-Date: Tue, 21 Jul 2026 16:55:08 +0200
-Message-ID: <20260721152553.510644591@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	David Heidelberg <david@ixit.cz>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 0083/2077] arm64: dts: qcom: sdm845-oneplus: Drop address from framebuffer node
+Date: Tue, 21 Jul 2026 16:55:56 +0200
+Message-ID: <20260721152554.653819945@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,62 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matvey Kovalev <matvey.kovalev@ispras.ru>
+From: David Heidelberg <david@ixit.cz>
 
-commit 0b70716081c6462be9b2928ad736d0d527b09678 upstream.
+[ Upstream commit b379bb1470d864659ae9522b72f241a15255dce6 ]
 
-afs_alloc_sbi() uses kzalloc for memory allocation. And, if
-ctx->dyn_root is not null, as->cell and as->volume are null.
-In trace_afs_get_tree() they are dereferenced.
+This node has no 'reg' property, so it shouldn't have a unit address
+(after '@') either
 
-KASAN error message:
-
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 2 PID: 18478 Comm: syz-executor.7 Not tainted 5.10.246-syzkaller #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1
-04/01/2014
-RIP: 0010:perf_trace_afs_get_tree+0x1d9/0x550
-include/trace/events/afs.h:1365
-
-Call Trace:
-trace_afs_get_tree include/trace/events/afs.h:1365 [inline]
-afs_get_tree+0x922/0x1350 fs/afs/super.c:599
-vfs_get_tree+0x8e/0x300 fs/super.c:1572
-do_new_mount fs/namespace.c:3011 [inline]
-path_mount+0x14a5/0x2220 fs/namespace.c:3341
-do_mount fs/namespace.c:3354 [inline]
-__do_sys_mount fs/namespace.c:3562 [inline]
-__se_sys_mount fs/namespace.c:3539 [inline]
-__x64_sys_mount+0x283/0x300 fs/namespace.c:3539
- do_syscall_64+0x33/0x50 arch/x86/entry/common.c:46
-entry_SYSCALL_64_after_hwframe+0x67/0xd1
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 80548b03991f5 ("afs: Add more tracepoints")
-Cc: stable@vger.kernel.org
-Signed-off-by: Matvey Kovalev <matvey.kovalev@ispras.ru>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260622090856.2746629-4-dhowells@redhat.com
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b0d5c96e860c ("arm64: dts: qcom: sdm845-oneplus: Add framebuffer")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Link: https://lore.kernel.org/r/20260402-beryllium-fb-v4-2-46170004da28@ixit.cz
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/super.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/afs/super.c
-+++ b/fs/afs/super.c
-@@ -587,7 +587,8 @@ static int afs_get_tree(struct fs_contex
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+index 6b7378cf4d493a..b0b9baf01ec292 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+@@ -72,7 +72,7 @@ chosen {
  
- 	fc->root = dget(sb->s_root);
--	trace_afs_get_tree(as->cell, as->volume);
-+	if (!ctx->dyn_root)
-+		trace_afs_get_tree(as->cell, as->volume);
- 	_leave(" = 0 [%p]", sb);
- 	return 0;
+ 		stdout-path = "serial0:115200n8";
  
+-		framebuffer: framebuffer@9d400000 {
++		framebuffer: framebuffer {
+ 			compatible = "simple-framebuffer";
+ 			memory-region = <&cont_splash_mem>;
+ 
+-- 
+2.53.0
+
 
 
