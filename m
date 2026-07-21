@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B410546C4DD;
-	Tue, 21 Jul 2026 18:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6AD2417D9;
+	Tue, 21 Jul 2026 18:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659739; cv=none; b=ewQ545kxoLsz0hhN3m1DN1UUMOIeSqrdgyiKsKJuCJYzZMeTmuTpdyP8w8oPDaYTsiWsjmVdE5ZUQy0lU76CFxuArPoN1tlorcQhAQxoxHM8BpVqxDnH6OIpA7DQR0I2jmY8r05bmLzL293E+afTmf4DKa3ZHcetDl7lb73LFdg=
+	t=1784659742; cv=none; b=jXeDzF8olQ3Dl0HS1sXR/q+IffUH+JX8njS4xTftr2Nw4VUva/3Zk/xWGqP4qiPsDmcXTc001PFbB47WanIAOFdvJSHbyWcb8p9M80M1oTS2GmykBefazuQAHehy/m7ZYJrwCZkvpLXHDX1dTWbdGFEadg0HuwgluPvp37mBCVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659739; c=relaxed/simple;
-	bh=Sdb7Vcx/O5Jkd4anxIlMe8iYLWhL0ItazPNOgkCgFVo=;
+	s=arc-20240116; t=1784659742; c=relaxed/simple;
+	bh=D9FBclbJIxPnXH2uGrg7Pn5aWS02Y+PS2zfdIacHuuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hc91OoTE0BYNqJO4i4ZlVlLbrKzcE5QB+Vs6AMAu3EvbSlmbh0rrJjFsfLQvEmxZrWVGCmgxc6X+CVDgAPFudHfZS2vS8wzxllzOky1H+Vk9uUGPv3JSz7bFvnPIvJL6pOU+If8ZAQpi4V8hgkCWiX0GQ8Fn8JN8gJoxLm6vUOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y+cu4cXS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p/fJuSZLB6MPv8jjdXB9UhfSnvZQSLOuZZr0oOpsLdynlruybpWUTdQXfeyHSiQdk84HGzYPtgVQHkmPEUs7KnM3mtVDzRI8/meEuPE0/TpA7LJ/I3CyaX9zLc7xmEfN+YRMZJyxGoM1vadsigMeQlVpnCOWzJLFQEOX/MqDwOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yvpGD+ER; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y+cu4cXS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8481F000E9;
-	Tue, 21 Jul 2026 18:48:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvpGD+ER"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98731F000E9;
+	Tue, 21 Jul 2026 18:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659738;
-	bh=rvm57IXujgc9t3upAcIKTNd5nS92jS2wXkAB5AbeeQc=;
+	s=korg; t=1784659741;
+	bh=IIsKhlx9iX8YtjyM7LKSeD814YtvZh1tgjfuJJUnFDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y+cu4cXSLMvjO3pwshkZJFUd7vrAkRLTKwjO5uThJljEK+vK/5riACe26edHCEf97
-	 TQdpepfxMnPBsHvponQZbfaHvnTJdT6A22/CYdtvhkyeNVgIb5G+oDbr3wZNtpi5Jg
-	 LJQduOSDNuOzg7Yr8eM6JAb+qjNH0koihihFvnHE=
+	b=yvpGD+ER6MoGNtYXObO01hdsfvyerCMTSv2oOe6kzFuSqByLQ8EKYikKgsrbXdFTV
+	 8Exixsbo/yrRZboR8oEUAmY3ADDrPmfHBpwlGgjgEk2PXto8ntTEZqD1jhz704xWz8
+	 rrbatp1+zU8n5Frkllx8B6yRmYa5/MPFeK4UA2HU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Abdelmoemen <ahmedabdelmoumen05@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	David Wei <dw@davidwei.uk>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0715/2077] net: Stop leased rxq before uninstalling its memory provider
-Date: Tue, 21 Jul 2026 17:06:28 +0200
-Message-ID: <20260721152609.665753542@linuxfoundation.org>
+Subject: [PATCH 7.1 0689/2077] RDMA/core: Fix FRMR aging push to queue error flow
+Date: Tue, 21 Jul 2026 17:06:02 +0200
+Message-ID: <20260721152609.043580318@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -55,67 +51,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Michael Guralnik <michaelgur@nvidia.com>
 
-[ Upstream commit 37314c9dbe95b4d924c7b61aaf563cec4f4e4133 ]
+[ Upstream commit c6936506ed556ce3ccad36ab999baf2764dd7d25 ]
 
-netif_rxq_cleanup_unlease() tears down the memory provider that was
-installed on a physical RX queue through a netkit queue lease. It
-currently revokes the provider's DMA mappings before stopping the
-physical queue:
+Aging pools with pinned handles requires moving handles from the
+active queue to a non-empty inactive queue that might fail on new page
+allocation, we are currently not handling the fault and leaking any mkey
+that fails the push.
 
-  __netif_mp_uninstall_rxq(virt_rxq, p);            /* DMA unmap */
-  __netif_mp_close_rxq(phys_rxq->dev, rxq_idx, p);  /* queue stop */
+Fix by Introducing push_queue_to_queue_locked() that fills the
+destination's partial tail page from the source and then splices the
+remaining source pages onto the destination, performing no allocation.
 
-This inverts the ordering used by the regular teardown paths (normal
-device unregister and the io_uring zcrx close path), which stop the
-queue before revoking the provider's mappings.
+Replace the per-handle move loop in age_pinned_pool() and the
+open-coded splice in pool_aging_work() with calls to the helper.
+As the helper cannot fail under memory pressure, removing a class of
+GFP_ATOMIC allocations under the pool lock and simplifying the error
+flow.
 
-With the physical queue still live, its NAPI can keep consuming
-net_iov entries from the page_pool alloc cache after the
-__netif_mp_uninstall_rxq() has already cleared their dma_addr,
-opening a window for the device to DMA to a stale or zero address.
-
-Fix it by swapping the two calls so the queue is stopped (and its
-NAPI quiesced) before the provider is uninstalled. No functional
-regression was observed across repeated runs of the nk_qlease.py
-HW selftest, which exercises the lease teardown path; this was
-tested against fbnic QEMU emulation.
-
-Fixes: 5602ad61ebee ("net: Proxy netif_mp_{open,close}_rxq for leased queues")
-Reported-by: Ahmed Abdelmoemen <ahmedabdelmoumen05@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: David Wei <dw@davidwei.uk>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260609212240.677889-1-daniel@iogearbox.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 020d189d16a6 ("RDMA/core: Add pinned handles to FRMR pools")
+Link: https://patch.msgid.link/r/20260610000145.820592-5-michaelgur@nvidia.com
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/netdev_rx_queue.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/infiniband/core/frmr_pools.c | 53 ++++++++++++++++++++--------
+ 1 file changed, 38 insertions(+), 15 deletions(-)
 
-diff --git a/net/core/netdev_rx_queue.c b/net/core/netdev_rx_queue.c
-index de4dac4c88b366..00a7011eb4d578 100644
---- a/net/core/netdev_rx_queue.c
-+++ b/net/core/netdev_rx_queue.c
-@@ -338,12 +338,12 @@ void __netif_mp_uninstall_rxq(struct netdev_rx_queue *rxq,
- void netif_rxq_cleanup_unlease(struct netdev_rx_queue *phys_rxq,
- 			       struct netdev_rx_queue *virt_rxq)
- {
--	struct pp_memory_provider_params *p = &phys_rxq->mp_params;
- 	unsigned int rxq_idx = get_netdev_rx_queue_index(phys_rxq);
-+	struct pp_memory_provider_params p = phys_rxq->mp_params;
- 
--	if (!p->mp_ops)
-+	if (!p.mp_ops)
- 		return;
- 
--	__netif_mp_uninstall_rxq(virt_rxq, p);
--	__netif_mp_close_rxq(phys_rxq->dev, rxq_idx, p);
-+	__netif_mp_close_rxq(phys_rxq->dev, rxq_idx, &p);
-+	__netif_mp_uninstall_rxq(virt_rxq, &p);
+diff --git a/drivers/infiniband/core/frmr_pools.c b/drivers/infiniband/core/frmr_pools.c
+index 6170466ea9581a..927642c06f3a4c 100644
+--- a/drivers/infiniband/core/frmr_pools.c
++++ b/drivers/infiniband/core/frmr_pools.c
+@@ -97,13 +97,44 @@ static void destroy_all_handles_in_queue(struct ib_device *device,
+ 	}
  }
+ 
++/*
++ * Bulk-move all handles from @src into @dst without allocating new pages.
++ * If @dst has a partial tail page, fill it handle-by-handle from @src first
++ * to preserve the invariant that only the tail page is partial, then splice
++ * the remaining @src pages onto @dst. On return @src is empty.
++ *
++ * Caller must hold the lock protecting both queues.
++ */
++static void splice_frmr_queue_locked(struct frmr_queue *dst,
++				     struct frmr_queue *src)
++{
++	u32 free_in_tail = dst->ci % NUM_HANDLES_PER_PAGE;
++	u32 handle;
++
++	if (free_in_tail) {
++		free_in_tail = NUM_HANDLES_PER_PAGE - free_in_tail;
++		while (free_in_tail && src->ci) {
++			handle = pop_handle_from_queue_locked(src);
++			push_handle_to_queue_locked(dst, handle);
++			free_in_tail--;
++		}
++	}
++
++	if (src->ci > 0) {
++		list_splice_tail_init(&src->pages_list, &dst->pages_list);
++		dst->num_pages += src->num_pages;
++		dst->ci += src->ci;
++		src->num_pages = 0;
++		src->ci = 0;
++	}
++}
++
+ static bool age_pinned_pool(struct ib_device *device, struct ib_frmr_pool *pool)
+ {
+ 	struct ib_frmr_pools *pools = device->frmr_pools;
+ 	u32 total, to_destroy, destroyed = 0;
+ 	bool has_work = false;
+ 	u32 *handles;
+-	u32 handle;
+ 
+ 	spin_lock(&pool->lock);
+ 	total = pool->queue.ci + pool->inactive_queue.ci + pool->in_use;
+@@ -112,7 +143,7 @@ static bool age_pinned_pool(struct ib_device *device, struct ib_frmr_pool *pool)
+ 		return false;
+ 	}
+ 
+-	to_destroy = total - pool->pinned_handles;
++	to_destroy = min(total - pool->pinned_handles, pool->inactive_queue.ci);
+ 
+ 	handles = kcalloc(to_destroy, sizeof(*handles), GFP_ATOMIC);
+ 	if (!handles) {
+@@ -121,15 +152,13 @@ static bool age_pinned_pool(struct ib_device *device, struct ib_frmr_pool *pool)
+ 	}
+ 
+ 	/* Destroy all excess handles in the inactive queue */
+-	while (pool->inactive_queue.ci && destroyed < to_destroy) {
+-		handles[destroyed++] = pop_handle_from_queue_locked(
++	for (; destroyed < to_destroy; destroyed++)
++		handles[destroyed] = pop_handle_from_queue_locked(
+ 			&pool->inactive_queue);
+-	}
+ 
+ 	/* Move all handles from regular queue to inactive queue */
+-	while (pool->queue.ci) {
+-		handle = pop_handle_from_queue_locked(&pool->queue);
+-		push_handle_to_queue_locked(&pool->inactive_queue, handle);
++	if (pool->queue.ci > 0) {
++		splice_frmr_queue_locked(&pool->inactive_queue, &pool->queue);
+ 		has_work = true;
+ 	}
+ 
+@@ -158,13 +187,7 @@ static void pool_aging_work(struct work_struct *work)
+ 	/* Move all pages from regular queue to inactive queue */
+ 	spin_lock(&pool->lock);
+ 	if (pool->queue.ci > 0) {
+-		list_splice_tail_init(&pool->queue.pages_list,
+-				      &pool->inactive_queue.pages_list);
+-		pool->inactive_queue.num_pages = pool->queue.num_pages;
+-		pool->inactive_queue.ci = pool->queue.ci;
+-
+-		pool->queue.num_pages = 0;
+-		pool->queue.ci = 0;
++		splice_frmr_queue_locked(&pool->inactive_queue, &pool->queue);
+ 		has_work = true;
+ 	}
+ 	spin_unlock(&pool->lock);
 -- 
 2.53.0
 
