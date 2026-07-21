@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD6446EF8D;
-	Tue, 21 Jul 2026 18:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4E12DF3EA;
+	Tue, 21 Jul 2026 18:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659445; cv=none; b=P1kxnupViGJF1UOwT0lsAxQHsuRN3OUTiK2N2vk+WGTxVwf7KQrjDoeAbHEryrIIGAI6TpyeRxAWJiAh0Y3ymABzouPyh+Vwu2L2D0EJW6GH/0nYdXxd7VzzRVs2UNeCpGULaQ8owRKsnUYknLRt599vDvtSaIHBAqO0uiimJkM=
+	t=1784659448; cv=none; b=L2YIW7p+sat1+ZPyqGM6ZZBC6ns/YKLF3eUBd6JO7IL0ffv6Ww+XRGkd1xOmzfPErwBXvilhNxJVTaugfktthL9Px9CiQDBsTgepW/XrUVyPcWhNkjT6RJqkK2aEIWTUjFbYRCFANIgGKo7TUT71uEUyKTEu2DCPoc4TccxCdHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659445; c=relaxed/simple;
-	bh=hBzE3lDVobJNumWxV5tPijlzjrkDh9lS2hiIv9rxTL4=;
+	s=arc-20240116; t=1784659448; c=relaxed/simple;
+	bh=HYEgrid8S0yPQQ5GDK53tKnaSQiiFsa3CCHf4IB3svY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V+rcQMia/c3P7w2RfAWXg38MxZ5mJHhy1NVyx0wtVTh4UslAHetwoGJaj/TBx1JkkyT0Y7Ej91kALW5JBzDjyjL+4pnW11PhBxMOMCMUumbRhFN7nKmZH/4MUjYiRl6OhSG7FSYUR8bw7CdjCfgIOhCTl6V3BLYjviGe8CwoHXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qk46XXRe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kJ1YZZROkE3yFFqmaLRa2gGXOzVakbM19GWmxTh+c+uIe1Ebm9e/zpbwUPDj4y8R1ZUrTWIBR0cUH1c+jvz0sZrq7iZbPbvH/Jc9PdwuBDlKIGu1LVJNRL8gjq1B1ZbZC12O3IB4c6E6+I1078dUV0HfZpGPe4tcxJqV+YrOC0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUb3e4ug; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qk46XXRe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723331F000E9;
-	Tue, 21 Jul 2026 18:44:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUb3e4ug"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8A41F000E9;
+	Tue, 21 Jul 2026 18:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659443;
-	bh=7V3BXF1B2K+8KIgof8lVwyXtbHiJohkbJ69kMHsqVDQ=;
+	s=korg; t=1784659446;
+	bh=kmj748fV3BifE6OX237Ptasau/AOilxTXLXF/TzHlBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qk46XXReqVRqRdERmcLx4faRx9tUEdkoxt0AL8brXNZ6IgpBItxv61WbenlO0ytYY
-	 FsVWkOZ+Y3/eK2sII5nibbsnY+2d7Wq/Jq/ctm2t7A0vln7kVmMBjGyS7IFUN09Zh+
-	 /zGQSMhBVsuzak9sjEUf3VPg5Cyac9z03LIQV/SQ=
+	b=hUb3e4ugZSsN7vJEM0SRaYzsdBfZq8E6HlJ2Qa9QzQI6Qnf7xVk9ZgTYfEUqJ9eCv
+	 4imf/zGQl20PedrEXlcqCJD+5VRDGvAo22acnncBFh59OVp7+viemvKCvhr0316/4o
+	 2mKjoFHLRXoTXnHdpdSohDXhA/tcB77OJ7ybyMeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asim Viladi Oglu Manizada <manizada@pm.me>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 1486/1611] net: openvswitch: reject oversized nested action attrs
-Date: Tue, 21 Jul 2026 17:26:42 +0200
-Message-ID: <20260721152548.869820733@linuxfoundation.org>
+	"Geoffrey D. Bennett" <g@b4.vu>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 1522/1611] ALSA: scarlett2: Allow selecting config_set by firmware version
+Date: Tue, 21 Jul 2026 17:27:18 +0200
+Message-ID: <20260721152549.679304208@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,393 +51,337 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asim Viladi Oglu Manizada <manizada@pm.me>
+From: "Geoffrey D. Bennett" <g@b4.vu>
 
-commit 3f1f755366687d051174739fb99f7d560202f60b upstream.
+[ Upstream commit 732a6397a526c025cd29c3c9309b0db6a2c08837 ]
 
-Open vSwitch stores generated flow actions as nlattrs, whose nla_len
-field is u16. Commit a1e64addf3ff ("net: openvswitch: remove
-misbehaving actions length check") allowed the total sw_flow_actions
-stream to grow beyond 64 KiB, which is valid, but also removed the last
-guard preventing a generated nested action attribute from exceeding
-U16_MAX.
+The Scarlett 2i2 Gen 4 firmware 2417 moved the direct monitor gain
+parameters, so we now need to allow each device to list multiple
+scarlett2_config_set entries, one per applicable firmware version
+range, and pick the matching one at probe time.
 
-An oversized generated container can thus be closed with a truncated
-nla_len. A later dump or teardown then walks a structurally different
-stream than the one that was validated. In particular, an oversized
-nested CLONE/CT action may cause subsequent bytes in the generated
-stream to be interpreted as independent actions.
+No functional change yet: each device gets a single config_sets
+entry whose from_firmware_version matches the existing
+min_firmware_version (0 where none was set). This both prepares for
+selection and lets a follow-up commit remove the now-redundant
+min_firmware_version field.
 
-Keep the larger total-action-stream behavior, but make nested action
-close reject generated containers that do not fit in nla_len, and return
-the error through all callers. For recursive SAMPLE, CLONE, DEC_TTL, and
-CHECK_PKT_LEN builders, trim resource-owning action-list tails in reverse
-construction order before discarding failed wrappers, so resources copied
-into the rejected tails are released before the wrappers are removed.
+scarlett2_count_io() depends on the resolved config_set so it moves
+out of scarlett2_init_private() into snd_scarlett2_controls_create()
+after the firmware version has been read.
 
-Most failed outer wrappers are discarded by truncating actions_len after
-child resources have been released. CHECK_PKT_LEN also trims its parent
-after branch resources are gone. SET/TUNNEL close failures unwind their
-known tun_dst ownership directly, and SET_TO_MASKED has no external
-ownership and truncates on close failure.
-
-Fixes: a1e64addf3ff ("net: openvswitch: remove misbehaving actions length check")
-Cc: stable@vger.kernel.org
-Assisted-by: avom-custom-harness:gpt-5.5-qwen3.6-mod-mix
-Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
-Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/20260706094336.38639-1-manizada@pm.me
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/ae1695b4c4825f365b4c86b22174035f742807e3.1777151532.git.g@b4.vu
+Stable-dep-of: 3ca15754b561 ("ALSA: scarlett2: Update offsets for 2i2 Gen 4 firmware 2417")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/flow_netlink.c |  201 ++++++++++++++++++++++++++++++++---------
- 1 file changed, 157 insertions(+), 44 deletions(-)
+ sound/usb/mixer_scarlett2.c |  143 +++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 121 insertions(+), 22 deletions(-)
 
---- a/net/openvswitch/flow_netlink.c
-+++ b/net/openvswitch/flow_netlink.c
-@@ -2496,13 +2496,56 @@ static inline int add_nested_action_star
- 	return used;
- }
+--- a/sound/usb/mixer_scarlett2.c
++++ b/sound/usb/mixer_scarlett2.c
+@@ -612,6 +612,20 @@ struct scarlett2_config_set {
+ 	const struct scarlett2_config items[SCARLETT2_CONFIG_COUNT];
+ };
  
--static inline void add_nested_action_end(struct sw_flow_actions *sfa,
--					 int st_offset)
-+static inline int add_nested_action_end(struct sw_flow_actions *sfa,
-+					int st_offset)
- {
--	struct nlattr *a = (struct nlattr *) ((unsigned char *)sfa->actions +
--							       st_offset);
-+	struct nlattr *a;
-+	u32 attr_len;
++/* Map firmware versions to config sets per-device.
++ *
++ * Each device lists one or more entries, sorted in ascending order of
++ * from_firmware_version. At probe time the running firmware version
++ * is looked up against this list and the last entry whose
++ * from_firmware_version is <= the running version is selected.
++ *
++ * The list is terminated by a sentinel entry with config_set == NULL.
++ */
++struct scarlett2_config_set_entry {
++	u16 from_firmware_version;
++	const struct scarlett2_config_set *config_set;
++};
 +
-+	if (WARN_ON_ONCE(st_offset < 0 ||
-+			 (u32)st_offset > sfa->actions_len))
-+		return -EINVAL;
+ /* Input gain TLV dB ranges */
+ 
+ static const DECLARE_TLV_DB_MINMAX(
+@@ -1100,8 +1114,8 @@ struct scarlett2_meter_entry {
+ };
+ 
+ struct scarlett2_device_info {
+-	/* which set of configuration parameters the device uses */
+-	const struct scarlett2_config_set *config_set;
++	/* which sets of configuration parameters the device uses */
++	const struct scarlett2_config_set_entry *config_sets;
+ 
+ 	/* minimum firmware version required */
+ 	u16 min_firmware_version;
+@@ -1343,7 +1357,10 @@ struct scarlett2_data {
+ /*** Model-specific data ***/
+ 
+ static const struct scarlett2_device_info s6i6_gen2_info = {
+-	.config_set = &scarlett2_config_set_gen2a,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 0, &scarlett2_config_set_gen2a },
++		{ }
++	},
+ 	.level_input_count = 2,
+ 	.pad_input_count = 2,
+ 
+@@ -1393,7 +1410,10 @@ static const struct scarlett2_device_inf
+ };
+ 
+ static const struct scarlett2_device_info s18i8_gen2_info = {
+-	.config_set = &scarlett2_config_set_gen2a,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 0, &scarlett2_config_set_gen2a },
++		{ }
++	},
+ 	.level_input_count = 2,
+ 	.pad_input_count = 4,
+ 
+@@ -1446,7 +1466,10 @@ static const struct scarlett2_device_inf
+ };
+ 
+ static const struct scarlett2_device_info s18i20_gen2_info = {
+-	.config_set = &scarlett2_config_set_gen2b,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 0, &scarlett2_config_set_gen2b },
++		{ }
++	},
+ 
+ 	.line_out_descrs = {
+ 		"Monitor L",
+@@ -1503,7 +1526,10 @@ static const struct scarlett2_device_inf
+ };
+ 
+ static const struct scarlett2_device_info solo_gen3_info = {
+-	.config_set = &scarlett2_config_set_gen3a,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 0, &scarlett2_config_set_gen3a },
++		{ }
++	},
+ 	.level_input_count = 1,
+ 	.level_input_first = 1,
+ 	.air_input_count = 1,
+@@ -1513,7 +1539,10 @@ static const struct scarlett2_device_inf
+ };
+ 
+ static const struct scarlett2_device_info s2i2_gen3_info = {
+-	.config_set = &scarlett2_config_set_gen3a,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 0, &scarlett2_config_set_gen3a },
++		{ }
++	},
+ 	.level_input_count = 2,
+ 	.air_input_count = 2,
+ 	.phantom_count = 1,
+@@ -1522,7 +1551,10 @@ static const struct scarlett2_device_inf
+ };
+ 
+ static const struct scarlett2_device_info s4i4_gen3_info = {
+-	.config_set = &scarlett2_config_set_gen3b,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 0, &scarlett2_config_set_gen3b },
++		{ }
++	},
+ 	.level_input_count = 2,
+ 	.pad_input_count = 2,
+ 	.air_input_count = 2,
+@@ -1571,7 +1603,10 @@ static const struct scarlett2_device_inf
+ };
+ 
+ static const struct scarlett2_device_info s8i6_gen3_info = {
+-	.config_set = &scarlett2_config_set_gen3b,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 0, &scarlett2_config_set_gen3b },
++		{ }
++	},
+ 	.level_input_count = 2,
+ 	.pad_input_count = 2,
+ 	.air_input_count = 2,
+@@ -1637,7 +1672,10 @@ static const char * const scarlett2_spdi
+ };
+ 
+ static const struct scarlett2_device_info s18i8_gen3_info = {
+-	.config_set = &scarlett2_config_set_gen3c,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 0, &scarlett2_config_set_gen3c },
++		{ }
++	},
+ 	.has_speaker_switching = 1,
+ 	.level_input_count = 2,
+ 	.pad_input_count = 4,
+@@ -1729,7 +1767,10 @@ static const char * const scarlett2_spdi
+ };
+ 
+ static const struct scarlett2_device_info s18i20_gen3_info = {
+-	.config_set = &scarlett2_config_set_gen3c,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 0, &scarlett2_config_set_gen3c },
++		{ }
++	},
+ 	.has_speaker_switching = 1,
+ 	.has_talkback = 1,
+ 	.level_input_count = 2,
+@@ -1803,7 +1844,10 @@ static const struct scarlett2_device_inf
+ };
+ 
+ static const struct scarlett2_device_info vocaster_one_info = {
+-	.config_set = &scarlett2_config_set_vocaster,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 1769, &scarlett2_config_set_vocaster },
++		{ }
++	},
+ 	.min_firmware_version = 1769,
+ 	.has_devmap = 1,
+ 
+@@ -1847,7 +1891,10 @@ static const struct scarlett2_device_inf
+ };
+ 
+ static const struct scarlett2_device_info vocaster_two_info = {
+-	.config_set = &scarlett2_config_set_vocaster,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 1769, &scarlett2_config_set_vocaster },
++		{ }
++	},
+ 	.min_firmware_version = 1769,
+ 	.has_devmap = 1,
+ 
+@@ -1892,7 +1939,10 @@ static const struct scarlett2_device_inf
+ };
+ 
+ static const struct scarlett2_device_info solo_gen4_info = {
+-	.config_set = &scarlett2_config_set_gen4_solo,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 2115, &scarlett2_config_set_gen4_solo },
++		{ }
++	},
+ 	.min_firmware_version = 2115,
+ 	.has_devmap = 1,
+ 
+@@ -1947,7 +1997,10 @@ static const struct scarlett2_device_inf
+ };
+ 
+ static const struct scarlett2_device_info s2i2_gen4_info = {
+-	.config_set = &scarlett2_config_set_gen4_2i2,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 2115, &scarlett2_config_set_gen4_2i2 },
++		{ }
++	},
+ 	.min_firmware_version = 2115,
+ 	.has_devmap = 1,
+ 
+@@ -2002,7 +2055,10 @@ static const struct scarlett2_device_inf
+ };
+ 
+ static const struct scarlett2_device_info s4i4_gen4_info = {
+-	.config_set = &scarlett2_config_set_gen4_4i4,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 2089, &scarlett2_config_set_gen4_4i4 },
++		{ }
++	},
+ 	.min_firmware_version = 2089,
+ 	.has_devmap = 1,
+ 
+@@ -2051,7 +2107,10 @@ static const struct scarlett2_device_inf
+ };
+ 
+ static const struct scarlett2_device_info clarett_2pre_info = {
+-	.config_set = &scarlett2_config_set_clarett,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 0, &scarlett2_config_set_clarett },
++		{ }
++	},
+ 	.level_input_count = 2,
+ 	.air_input_count = 2,
+ 
+@@ -2107,7 +2166,10 @@ static const char * const scarlett2_spdi
+ };
+ 
+ static const struct scarlett2_device_info clarett_4pre_info = {
+-	.config_set = &scarlett2_config_set_clarett,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 0, &scarlett2_config_set_clarett },
++		{ }
++	},
+ 	.level_input_count = 2,
+ 	.air_input_count = 4,
+ 
+@@ -2163,7 +2225,10 @@ static const struct scarlett2_device_inf
+ };
+ 
+ static const struct scarlett2_device_info clarett_8pre_info = {
+-	.config_set = &scarlett2_config_set_clarett,
++	.config_sets = (const struct scarlett2_config_set_entry[]) {
++		{ 0, &scarlett2_config_set_clarett },
++		{ }
++	},
+ 	.level_input_count = 2,
+ 	.air_input_count = 8,
+ 
+@@ -8211,10 +8276,32 @@ static void scarlett2_private_suspend(st
+ 
+ /*** Initialisation ***/
+ 
++/* Select the config_set matching the running firmware version.
++ *
++ * The device info's config_sets array is ordered by ascending
++ * from_firmware_version; pick the last entry whose version is <= the
++ * running firmware version. If the running firmware is older than the
++ * first entry's from_firmware_version (i.e. older than the driver's
++ * minimum supported version for this device), the first entry's
++ * config_set is selected anyway so firmware updates can still be done
++ * (requires only the ACK handler), but the usual mixer controls
++ * aren't created.
++ */
++static void scarlett2_resolve_config_set(struct scarlett2_data *private)
++{
++	const struct scarlett2_config_set_entry *entry =
++		private->info->config_sets;
 +
-+	attr_len = sfa->actions_len - (u32)st_offset;
-+	if (WARN_ON_ONCE(attr_len < NLA_HDRLEN))
-+		return -EINVAL;
-+
-+	if (attr_len > U16_MAX)
-+		return -EMSGSIZE;
-+
-+	a = (struct nlattr *)((u8 *)sfa->actions + st_offset);
-+	a->nla_len = attr_len;
-+	return 0;
++	private->config_set = entry->config_set;
++	for (entry++; entry->config_set; entry++)
++		if (entry->from_firmware_version <= private->firmware_version)
++			private->config_set = entry->config_set;
 +}
 +
-+/* Free the generated action-list tail at @start and truncate it.
-+ * If @nested, @start points to its containing nlattr header.
-+ */
-+static void ovs_nla_trim(struct sw_flow_actions *sfa, int start, bool nested)
-+{
-+	const struct nlattr *actions;
-+	u32 len;
-+
-+	if (start < 0)
-+		return;
-+
-+	if (WARN_ON_ONCE((u32)start > sfa->actions_len))
-+		return;
- 
--	a->nla_len = sfa->actions_len - st_offset;
-+	actions = (const struct nlattr *)((u8 *)sfa->actions + start);
-+	len = sfa->actions_len - (u32)start;
-+
-+	if (nested) {
-+		if (len < NLA_HDRLEN)
-+			goto out;
-+
-+		actions = (const struct nlattr *)((u8 *)actions + NLA_HDRLEN);
-+		len -= NLA_HDRLEN;
-+	}
-+
-+	ovs_nla_free_nested_actions(actions, len);
-+out:
-+	sfa->actions_len = start;
- }
- 
- static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
-@@ -2522,6 +2565,7 @@ static int validate_and_copy_sample(stru
- 	const struct nlattr *attrs[OVS_SAMPLE_ATTR_MAX + 1];
- 	const struct nlattr *probability, *actions;
- 	const struct nlattr *a;
-+	int actions_start;
- 	int rem, start, err;
- 	struct sample_arg arg;
- 
-@@ -2565,18 +2609,27 @@ static int validate_and_copy_sample(stru
- 	err = ovs_nla_add_action(sfa, OVS_SAMPLE_ATTR_ARG, &arg, sizeof(arg),
- 				 log);
- 	if (err)
--		return err;
-+		goto err;
- 
-+	actions_start = (*sfa)->actions_len;
- 	err = __ovs_nla_copy_actions(net, actions, key, sfa,
- 				     eth_type, vlan_tci, mpls_label_count, log,
- 				     depth + 1);
- 
- 	if (err)
--		return err;
-+		goto err_free;
- 
--	add_nested_action_end(*sfa, start);
-+	err = add_nested_action_end(*sfa, start);
-+	if (err)
-+		goto err_free;
- 
- 	return 0;
-+
-+err_free:
-+	ovs_nla_trim(*sfa, actions_start, false);
-+err:
-+	(*sfa)->actions_len = start;
-+	return err;
- }
- 
- static int validate_and_copy_dec_ttl(struct net *net,
-@@ -2624,18 +2677,31 @@ static int validate_and_copy_dec_ttl(str
- 		return start;
- 
- 	action_start = add_nested_action_start(sfa, OVS_DEC_TTL_ATTR_ACTION, log);
--	if (action_start < 0)
--		return action_start;
-+	if (action_start < 0) {
-+		err = action_start;
-+		goto err;
-+	}
- 
- 	err = __ovs_nla_copy_actions(net, actions, key, sfa, eth_type,
- 				     vlan_tci, mpls_label_count, log,
- 				     depth + 1);
- 	if (err)
--		return err;
-+		goto err_free;
- 
--	add_nested_action_end(*sfa, action_start);
--	add_nested_action_end(*sfa, start);
-+	err = add_nested_action_end(*sfa, action_start);
-+	if (err)
-+		goto err_free;
-+
-+	err = add_nested_action_end(*sfa, start);
-+	if (err)
-+		goto err_free;
- 	return 0;
-+
-+err_free:
-+	ovs_nla_trim(*sfa, action_start, true);
-+err:
-+	(*sfa)->actions_len = start;
-+	return err;
- }
- 
- static int validate_and_copy_clone(struct net *net,
-@@ -2646,6 +2712,7 @@ static int validate_and_copy_clone(struc
- 				   u32 mpls_label_count, bool log, bool last,
- 				   u32 depth)
+ static void scarlett2_count_io(struct scarlett2_data *private)
  {
-+	int actions_start;
- 	int start, err;
- 	u32 exec;
+ 	const struct scarlett2_device_info *info = private->info;
+-	const struct scarlett2_config_set *config_set = info->config_set;
++	const struct scarlett2_config_set *config_set = private->config_set;
+ 	const int (*port_count)[SCARLETT2_PORT_DIRNS] = info->port_count;
+ 	int port_type, srcs = 0, dsts = 0, i;
  
-@@ -2661,17 +2728,26 @@ static int validate_and_copy_clone(struc
- 	err = ovs_nla_add_action(sfa, OVS_CLONE_ATTR_EXEC, &exec,
- 				 sizeof(exec), log);
- 	if (err)
--		return err;
-+		goto err;
+@@ -8311,9 +8398,14 @@ static int scarlett2_init_private(struct
+ 	mixer->private_suspend = scarlett2_private_suspend;
  
-+	actions_start = (*sfa)->actions_len;
- 	err = __ovs_nla_copy_actions(net, attr, key, sfa,
- 				     eth_type, vlan_tci, mpls_label_count, log,
- 				     depth + 1);
- 	if (err)
--		return err;
-+		goto err_free;
- 
--	add_nested_action_end(*sfa, start);
-+	err = add_nested_action_end(*sfa, start);
-+	if (err)
-+		goto err_free;
- 
- 	return 0;
+ 	private->info = entry->info;
+-	private->config_set = entry->info->config_set;
 +
-+err_free:
-+	ovs_nla_trim(*sfa, actions_start, false);
-+err:
-+	(*sfa)->actions_len = start;
-+	return err;
- }
- 
- void ovs_match_init(struct sw_flow_match *match,
-@@ -2763,20 +2839,20 @@ static int validate_and_copy_set_tun(con
- 	tun_dst = metadata_dst_alloc(key.tun_opts_len, METADATA_IP_TUNNEL,
- 				     GFP_KERNEL);
- 
--	if (!tun_dst)
--		return -ENOMEM;
-+	if (!tun_dst) {
-+		err = -ENOMEM;
-+		goto err;
-+	}
- 
- 	err = dst_cache_init(&tun_dst->u.tun_info.dst_cache, GFP_KERNEL);
--	if (err) {
--		dst_release((struct dst_entry *)tun_dst);
--		return err;
--	}
-+	if (err)
-+		goto err_free_tun_dst;
- 
- 	a = __add_action(sfa, OVS_KEY_ATTR_TUNNEL_INFO, NULL,
- 			 sizeof(*ovs_tun), log);
- 	if (IS_ERR(a)) {
--		dst_release((struct dst_entry *)tun_dst);
--		return PTR_ERR(a);
-+		err = PTR_ERR(a);
-+		goto err_free_tun_dst;
- 	}
- 
- 	ovs_tun = nla_data(a);
-@@ -2797,8 +2873,16 @@ static int validate_and_copy_set_tun(con
- 	ip_tunnel_info_opts_set(tun_info,
- 				TUN_METADATA_OPTS(&key, key.tun_opts_len),
- 				key.tun_opts_len, dst_opt_type);
--	add_nested_action_end(*sfa, start);
-+	err = add_nested_action_end(*sfa, start);
-+	if (WARN_ON_ONCE(err))
-+		goto err_free_tun_dst;
++	/* Set config_set to the first entry's config_set so the
++	 * notify handler has a valid pointer while USB init runs; it
++	 * is re-resolved once the firmware version has been read.
++	 */
++	private->config_set = entry->info->config_sets[0].config_set;
 +
-+	return 0;
+ 	private->series_name = entry->series_name;
+-	scarlett2_count_io(private);
+ 	private->scarlett2_seq = 0;
+ 	private->mixer = mixer;
  
-+err_free_tun_dst:
-+	dst_release((struct dst_entry *)tun_dst);
-+err:
-+	(*sfa)->actions_len = start;
- 	return err;
- }
+@@ -8717,6 +8809,13 @@ static int snd_scarlett2_controls_create
+ 	if (err < 0)
+ 		return err;
  
-@@ -2971,7 +3055,7 @@ static int validate_set(const struct nla
- 
- 	/* Convert non-masked non-tunnel set actions to masked set actions. */
- 	if (!masked && key_type != OVS_KEY_ATTR_TUNNEL) {
--		int start, len = key_len * 2;
-+		int err, start, len = key_len * 2;
- 		struct nlattr *at;
- 
- 		*skip_copy = true;
-@@ -2983,8 +3067,11 @@ static int validate_set(const struct nla
- 			return start;
- 
- 		at = __add_action(sfa, key_type, NULL, len, log);
--		if (IS_ERR(at))
--			return PTR_ERR(at);
-+		if (IS_ERR(at)) {
-+			err = PTR_ERR(at);
-+			(*sfa)->actions_len = start;
-+			return err;
-+		}
- 
- 		memcpy(nla_data(at), nla_data(ovs_key), key_len); /* Key. */
- 		memset(nla_data(at) + key_len, 0xff, key_len);    /* Mask. */
-@@ -2994,7 +3081,11 @@ static int validate_set(const struct nla
- 
- 			mask->ipv6_label &= htonl(0x000FFFFF);
- 		}
--		add_nested_action_end(*sfa, start);
-+		err = add_nested_action_end(*sfa, start);
-+		if (WARN_ON_ONCE(err)) {
-+			(*sfa)->actions_len = start;
-+			return err;
-+		}
- 	}
- 
- 	return 0;
-@@ -3040,7 +3131,8 @@ static int validate_and_copy_check_pkt_l
- 	const struct nlattr *acts_if_greater, *acts_if_lesser_eq;
- 	struct nlattr *a[OVS_CHECK_PKT_LEN_ATTR_MAX + 1];
- 	struct check_pkt_len_arg arg;
--	int nested_acts_start;
-+	int greater_acts_start = -1;
-+	int lesser_acts_start = -1;
- 	int start, err;
- 
- 	err = nla_parse_deprecated_strict(a, OVS_CHECK_PKT_LEN_ATTR_MAX,
-@@ -3075,37 +3167,58 @@ static int validate_and_copy_check_pkt_l
- 	err = ovs_nla_add_action(sfa, OVS_CHECK_PKT_LEN_ATTR_ARG, &arg,
- 				 sizeof(arg), log);
- 	if (err)
--		return err;
-+		goto err_free;
- 
--	nested_acts_start = add_nested_action_start(sfa,
--		OVS_CHECK_PKT_LEN_ATTR_ACTIONS_IF_LESS_EQUAL, log);
--	if (nested_acts_start < 0)
--		return nested_acts_start;
-+	lesser_acts_start =
-+		add_nested_action_start(sfa,
-+					OVS_CHECK_PKT_LEN_ATTR_ACTIONS_IF_LESS_EQUAL,
-+					log);
-+	if (lesser_acts_start < 0) {
-+		err = lesser_acts_start;
-+		goto err_free;
-+	}
- 
- 	err = __ovs_nla_copy_actions(net, acts_if_lesser_eq, key, sfa,
- 				     eth_type, vlan_tci, mpls_label_count, log,
- 				     depth + 1);
- 
- 	if (err)
--		return err;
-+		goto err_free;
- 
--	add_nested_action_end(*sfa, nested_acts_start);
-+	err = add_nested_action_end(*sfa, lesser_acts_start);
-+	if (err)
-+		goto err_free;
- 
--	nested_acts_start = add_nested_action_start(sfa,
--		OVS_CHECK_PKT_LEN_ATTR_ACTIONS_IF_GREATER, log);
--	if (nested_acts_start < 0)
--		return nested_acts_start;
-+	greater_acts_start =
-+		add_nested_action_start(sfa,
-+					OVS_CHECK_PKT_LEN_ATTR_ACTIONS_IF_GREATER,
-+					log);
-+	if (greater_acts_start < 0) {
-+		err = greater_acts_start;
-+		goto err_free;
-+	}
- 
- 	err = __ovs_nla_copy_actions(net, acts_if_greater, key, sfa,
- 				     eth_type, vlan_tci, mpls_label_count, log,
- 				     depth + 1);
- 
- 	if (err)
--		return err;
-+		goto err_free;
++	/* Now that the firmware version is known, pick the matching
++	 * config_set
++	 */
++	scarlett2_resolve_config_set(private);
 +
-+	err = add_nested_action_end(*sfa, greater_acts_start);
-+	if (err)
-+		goto err_free;
- 
--	add_nested_action_end(*sfa, nested_acts_start);
--	add_nested_action_end(*sfa, start);
-+	err = add_nested_action_end(*sfa, start);
-+	if (err)
-+		goto err_free;
- 	return 0;
++	scarlett2_count_io(private);
 +
-+err_free:
-+	ovs_nla_trim(*sfa, greater_acts_start, true);
-+	ovs_nla_trim(*sfa, lesser_acts_start, true);
-+	ovs_nla_trim(*sfa, start, false);
-+	return err;
- }
- 
- static int validate_psample(const struct nlattr *attr)
+ 	/* Get the upgrade & settings flash segment numbers */
+ 	err = scarlett2_get_flash_segment_nums(mixer);
+ 	if (err < 0)
 
 
