@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D29E44AB62;
-	Tue, 21 Jul 2026 21:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164843C4B93;
+	Tue, 21 Jul 2026 21:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670726; cv=none; b=p6TaZAmW3RUb51v/0+102ZQJeqUP4CynEgZhiuRexP30+KrQt51dteyCUKkNZjdMi/FRD0Wjcda5IT1wTb9vh1NSMHH5SvysRll0ip/f74QHMtLuUiogspxR/UCrW/+IFLDRFZup+yqVTK0gkKqRbCu85oyKnYB3znImR2j8uGk=
+	t=1784670729; cv=none; b=Vvr8V6Or9BKJedrPfE6O5YsNxxiR9rZ89edsihOPWnVu3IuH88NPWDeSW2lRjUSX0WuqZEtR3ltsE5803XkmgNQgqExOuikoC7fCBirR3C4EEAe8zZqZK/EZoTspQva1tzaAZyxasT/tFpykARroO03tVN8nrTowd1zXjY/DPFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670726; c=relaxed/simple;
-	bh=UMK/xQaSM4W1ZMLfmHPnq20ipkIaxee4bvSKJUSr220=;
+	s=arc-20240116; t=1784670729; c=relaxed/simple;
+	bh=y9r4hPVlPXUgBV+moVo2njEsZ+UL3SVbpAIDtNoM9TM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lM5fewKqSmVmMHtpncyvfhnalyxdsEZRjAYkHn6LZBBdqfKW49KJLkIdhKn83zFoVuTPv7V0Xb5JUEptoCEB8PPyLiJQu3Bre4JUYJ8Pn3HTzAMuk/oYbESP1MarLXTWBGJ53i8v2jLWlyRIVQ0ltJ+NWPxc0JrIB+xy6858SoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i+Ov78ta; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dbThN8Mm+Dya1BVEKwhBl60URy3rlsFkA+wJh7ps39O7fUkjALgkw723W2hCzaGSKxZ46nNpf9P2cD7gjnh2eePtBAChUhalnvBd6eP1P+h70yHuopwJ8Jzt0YamWdHSiOqaoQ+/VQNq7H2ovQrJSDEO6QHLn44z1dIn3PE9p0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WGQXP6tL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+Ov78ta"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D415A1F000E9;
-	Tue, 21 Jul 2026 21:52:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WGQXP6tL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BF111F000E9;
+	Tue, 21 Jul 2026 21:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670725;
-	bh=wqJ/++nr2Js43zZ3fYasdkD6Xc83wy+y8FcnxYD4f7M=;
+	s=korg; t=1784670728;
+	bh=RfWTfHM2zWeMFfOt1QShGDTqdWFYAcb6rbS1WUXtoRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i+Ov78ta5rLSbbWFAbN7fhAdJlFz0nUqtEIPW3k/SdJvH3zKbW8+4HmttxRUbTWST
-	 0D8tjMK19P/4kZUvu0AVxEegkoGYiN7sQ79ublqnp4B1ICJri8valA7jSE1fGI8JxC
-	 VxpkxDN5YIF7JHE8H3TBR2ZcpSzCYo4k6MShDTDk=
+	b=WGQXP6tLvNYCy8Lx/SBfFwcj7MFKFDfR5gDFpSQ2mgVb+PdjtNbI9McXjFs39/SV0
+	 nbQZ8bXwaROM0ryMDIeOrv3ue17oMDRkrX7jSHkvQLZ2LUBTwGnrs3aBHe5OskYAXq
+	 vG/HQnvlKooA/mfmflEfD+WbyJQeZD57Z/SIz6NA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1024/1067] bpf: Consistently use bpf_rcu_lock_held() everywhere
-Date: Tue, 21 Jul 2026 17:27:05 +0200
-Message-ID: <20260721152447.481609914@linuxfoundation.org>
+Subject: [PATCH 6.1 1042/1067] btrfs: fix false IO failure after falling back to buffered write
+Date: Tue, 21 Jul 2026 17:27:23 +0200
+Message-ID: <20260721152447.899783904@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,188 +52,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 48a97ffc6c826640907d13b199e29008f4fe2c15 ]
+[ Upstream commit 66ff4d366e7eb4d31813d2acabf3af512ce03aa5 ]
 
-We have many places which open-code what's now is bpf_rcu_lock_held()
-macro, so replace all those places with a clean and short macro invocation.
-For that, move bpf_rcu_lock_held() macro into include/linux/bpf.h.
+[BUG]
+The test case generic/362 will fail with "nodatasum" mount option (*):
 
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20251014201403.4104511-1-andrii@kernel.org
-Stable-dep-of: 2f884d371faf ("bpf: Allow LPM map access from sleepable BPF programs")
+ MOUNT_OPTIONS -- -o nodatasum /dev/mapper/test-scratch1 /mnt/scratch
+
+# generic/362  0s ... - output mismatch (see /home/adam/xfstests/results//generic/362.out.bad)
+#    --- tests/generic/362.out	2024-08-24 15:31:37.200000000 +0930
+#    +++ /home/adam/xfstests/results//generic/362.out.bad	2026-05-27 10:21:17.574771567 +0930
+#    @@ -1,2 +1,3 @@
+#     QA output created by 362
+#    +First write failed: Input/output error
+#     Silence is golden
+#    ...
+
+*: If the test case has been executed before with default data checksum,
+the failure will not reproduce. Need the following fix to make it
+reliably reproducible:
+https://lore.kernel.org/linux-btrfs/20260528111659.87113-1-wqu@suse.com/
+
+[CAUSE]
+Inside __iomap_dio_rw(), the -EFAULT/-ENOTBLK error is not directly returned.
+Thus we never got an error pointer from __iomap_dio_rw().
+
+The call chain looks like this:
+
+ btrfs_direct_write()
+ |- btrfs_dio_write()
+ |-  __iomap_dio_rw()
+ |  |- iomap_iter()
+ |  |  |- btrfs_dio_iomap_begin()
+ |  |     Now an ordered extent is allocated for the 4K write.
+ |  |
+ |  |- iomi.status = iomap_dio_iter()
+ |  |  Where iomap_dio_iter() returned -EFAULT.
+ |  |
+ |  |- ret = iomap_iter()
+ |  |  |- btrfs_dio_iomap_end()
+ |  |  |  |- btrfs_finish_ordered_extent(uptodate = false)
+ |  |  |  |  |- can_finish_ordered_extent()
+ |  |  |  |     |- btrfs_mark_ordered_extent_error()
+ |  |  |  |        |- mapping_set_error()
+ |  |  |  |           Now the address space is marked error.
+ |  |  |  | return -ENOTBLK
+ |  |  |- return -ENOTBLK
+ |  |- if (ret == -ENOTBLK) { ret = 0; }
+ |     Now the return value is reset to 0.
+ |     Thus no error pointer will be returned.
+ |
+ |- ret = iomap_dio_complete()
+ |  Since no byte is submitted, @ret is 0.
+ |
+ |- Fallback to buffered IO
+ |  And the buffered write finished without error
+ |
+ |- filemap_fdatawait_range()
+    |- filemap_check_errors()
+       The previous error is recorded, thus an error is returned
+
+However the buffered write is properly submitted and finished, the error
+is from the btrfs_finish_ordered_extent() call with @uptodate = false.
+
+[FIX]
+When a short dio write happened, any range that is submitted will have
+btrfs_extract_ordered_extent() to be called, thus the submitted range
+will always have an OE just covering the submitted range.
+
+The remaining OE range is never submitted, thus they should be treated
+as truncated, not an error. So that we can properly reclaim and not
+insert an unnecessary file extent item, without marking the mapping as
+error.
+
+Extract a helper, btrfs_mark_ordered_extent_truncated(), and utilize
+that helper to mark the direct IO ordered extent as truncated, so it
+won't cause failure for the later buffered fallback.
+
+[REASON FOR NO FIXES TAG]
+The bug itself is pretty old, at commit f85781fb505e ("btrfs: switch to
+iomap for direct IO") we're already passing @uptodate=false finishing
+the OE.
+But at that time OE with IOERR won't call mapping_set_error(), so it's
+not exposed.
+Later commit d61bec08b904 ("btrfs: mark ordered extent and inode with
+error if we fail to finish") finally exposed the bug, but that commit
+is doing a correct job, not the root cause.
+
+Anyway the bug is very old, dating back to 5.1x days, thus only CC to
+stable.
+
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bpf.h               |    3 +++
- include/linux/bpf_local_storage.h |    3 ---
- kernel/bpf/hashtab.c              |   21 +++++++--------------
- kernel/bpf/helpers.c              |   12 ++++--------
- kernel/bpf/lpm_trie.c             |    6 ++----
- 5 files changed, 16 insertions(+), 29 deletions(-)
+ fs/btrfs/inode.c        |   33 +++++++++++++++++++++++++--------
+ fs/btrfs/ordered-data.c |   12 ++++++++++++
+ fs/btrfs/ordered-data.h |    2 ++
+ 3 files changed, 39 insertions(+), 8 deletions(-)
 
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -1722,6 +1722,9 @@ out:
- 	return ret;
- }
- 
-+#define bpf_rcu_lock_held() \
-+	(rcu_read_lock_held() || rcu_read_lock_trace_held() || rcu_read_lock_bh_held())
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -8031,12 +8031,33 @@ static int btrfs_dio_iomap_end(struct in
+ 	if (submitted < length) {
+ 		pos += submitted;
+ 		length -= submitted;
+-		if (write)
++		if (write) {
++			struct btrfs_ordered_extent *ordered;
 +
- #ifdef CONFIG_BPF_SYSCALL
- DECLARE_PER_CPU(int, bpf_prog_active);
- extern struct mutex bpf_stats_enabled_mutex;
---- a/include/linux/bpf_local_storage.h
-+++ b/include/linux/bpf_local_storage.h
-@@ -17,9 +17,6 @@
++			/*
++			 * We have a short write, and the ordered extent is
++			 * not split at submission time on this tree, so it
++			 * may cover both the submitted range and the range
++			 * that was never submitted.
++			 *
++			 * Truncate the ordered extent to the part that was
++			 * submitted properly, so the never submitted range
++			 * is reclaimed without inserting a file extent item
++			 * for it and without marking it as an IO error.
++			 */
++			ordered = btrfs_lookup_ordered_extent(BTRFS_I(inode),
++							      pos);
++			if (ordered) {
++				btrfs_mark_ordered_extent_truncated(ordered,
++						pos - ordered->file_offset);
++				btrfs_put_ordered_extent(ordered);
++			}
+ 			btrfs_mark_ordered_io_finished(BTRFS_I(inode), NULL,
+-						       pos, length, false);
+-		else
++						       pos, length, true);
++		} else {
+ 			unlock_extent(&BTRFS_I(inode)->io_tree, pos,
+ 				      pos + length - 1, NULL);
++		}
+ 		ret = -ENOTBLK;
+ 	}
  
- #define BPF_LOCAL_STORAGE_CACHE_SIZE	16
+@@ -8560,11 +8581,7 @@ static void btrfs_invalidate_folio(struc
+ 					 EXTENT_LOCKED | EXTENT_DO_ACCOUNTING |
+ 					 EXTENT_DEFRAG, &cached_state);
  
--#define bpf_rcu_lock_held()                                                    \
--	(rcu_read_lock_held() || rcu_read_lock_trace_held() ||                 \
--	 rcu_read_lock_bh_held())
- struct bpf_local_storage_map_bucket {
- 	struct hlist_head list;
- 	raw_spinlock_t lock;
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -670,8 +670,7 @@ static void *__htab_map_lookup_elem(stru
- 	struct htab_elem *l;
- 	u32 hash, key_size;
+-		spin_lock_irq(&inode->ordered_tree.lock);
+-		set_bit(BTRFS_ORDERED_TRUNCATED, &ordered->flags);
+-		ordered->truncated_len = min(ordered->truncated_len,
+-					     cur - ordered->file_offset);
+-		spin_unlock_irq(&inode->ordered_tree.lock);
++		btrfs_mark_ordered_extent_truncated(ordered, cur - ordered->file_offset);
  
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
--		     !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!bpf_rcu_lock_held());
- 
- 	key_size = map->key_size;
- 
-@@ -1088,8 +1087,7 @@ static int htab_map_update_elem(struct b
- 		/* unknown flags */
- 		return -EINVAL;
- 
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
--		     !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!bpf_rcu_lock_held());
- 
- 	key_size = map->key_size;
- 
-@@ -1190,8 +1188,7 @@ static int htab_lru_map_update_elem(stru
- 		/* unknown flags */
- 		return -EINVAL;
- 
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
--		     !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!bpf_rcu_lock_held());
- 
- 	key_size = map->key_size;
- 
-@@ -1259,8 +1256,7 @@ static int __htab_percpu_map_update_elem
- 		/* unknown flags */
- 		return -EINVAL;
- 
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
--		     !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!bpf_rcu_lock_held());
- 
- 	key_size = map->key_size;
- 
-@@ -1314,8 +1310,7 @@ static int __htab_lru_percpu_map_update_
- 		/* unknown flags */
- 		return -EINVAL;
- 
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
--		     !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!bpf_rcu_lock_held());
- 
- 	key_size = map->key_size;
- 
-@@ -1390,8 +1385,7 @@ static int htab_map_delete_elem(struct b
- 	u32 hash, key_size;
- 	int ret;
- 
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
--		     !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!bpf_rcu_lock_held());
- 
- 	key_size = map->key_size;
- 
-@@ -1426,8 +1420,7 @@ static int htab_lru_map_delete_elem(stru
- 	u32 hash, key_size;
- 	int ret;
- 
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
--		     !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!bpf_rcu_lock_held());
- 
- 	key_size = map->key_size;
- 
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -33,8 +33,7 @@
-  */
- BPF_CALL_2(bpf_map_lookup_elem, struct bpf_map *, map, void *, key)
- {
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
--		     !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!bpf_rcu_lock_held());
- 	return (unsigned long) map->ops->map_lookup_elem(map, key);
+ 		/*
+ 		 * If the ordered extent has finished, we're safe to delete all
+--- a/fs/btrfs/ordered-data.c
++++ b/fs/btrfs/ordered-data.c
+@@ -279,6 +279,18 @@ void btrfs_add_ordered_sum(struct btrfs_
+ 	spin_unlock_irq(&tree->lock);
  }
  
-@@ -50,8 +49,7 @@ const struct bpf_func_proto bpf_map_look
- BPF_CALL_4(bpf_map_update_elem, struct bpf_map *, map, void *, key,
- 	   void *, value, u64, flags)
++void btrfs_mark_ordered_extent_truncated(struct btrfs_ordered_extent *ordered,
++					 u64 truncate_len)
++{
++	struct btrfs_inode *inode = BTRFS_I(ordered->inode);
++
++	ASSERT(truncate_len <= ordered->num_bytes);
++	spin_lock_irq(&inode->ordered_tree.lock);
++	set_bit(BTRFS_ORDERED_TRUNCATED, &ordered->flags);
++	ordered->truncated_len = min(ordered->truncated_len, truncate_len);
++	spin_unlock_irq(&inode->ordered_tree.lock);
++}
++
+ static void finish_ordered_fn(struct btrfs_work *work)
  {
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
--		     !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!bpf_rcu_lock_held());
- 	return map->ops->map_update_elem(map, key, value, flags);
- }
+ 	struct btrfs_ordered_extent *ordered_extent;
+--- a/fs/btrfs/ordered-data.h
++++ b/fs/btrfs/ordered-data.h
+@@ -209,6 +209,8 @@ void btrfs_lock_and_flush_ordered_range(
+ bool btrfs_try_lock_ordered_range(struct btrfs_inode *inode, u64 start, u64 end);
+ int btrfs_split_ordered_extent(struct btrfs_ordered_extent *ordered, u64 pre,
+ 			       u64 post);
++void btrfs_mark_ordered_extent_truncated(struct btrfs_ordered_extent *ordered,
++					 u64 truncate_len);
+ int __init ordered_data_init(void);
+ void __cold ordered_data_exit(void);
  
-@@ -68,8 +66,7 @@ const struct bpf_func_proto bpf_map_upda
- 
- BPF_CALL_2(bpf_map_delete_elem, struct bpf_map *, map, void *, key)
- {
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
--		     !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!bpf_rcu_lock_held());
- 	return map->ops->map_delete_elem(map, key);
- }
- 
-@@ -125,8 +122,7 @@ const struct bpf_func_proto bpf_map_peek
- 
- BPF_CALL_3(bpf_map_lookup_percpu_elem, struct bpf_map *, map, void *, key, u32, cpu)
- {
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
--		     !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!bpf_rcu_lock_held());
- 	return (unsigned long) map->ops->map_lookup_percpu_elem(map, key, cpu);
- }
- 
---- a/kernel/bpf/lpm_trie.c
-+++ b/kernel/bpf/lpm_trie.c
-@@ -353,8 +353,7 @@ static int trie_update_elem(struct bpf_m
- 	 */
- 	slot = &trie->root;
- 
--	while ((node = rcu_dereference_protected(*slot,
--					lockdep_is_held(&trie->lock)))) {
-+	while ((node = rcu_dereference_protected(*slot, 1))) {
- 		matchlen = longest_prefix_match(trie, node, key);
- 
- 		if (node->prefixlen != matchlen ||
-@@ -475,8 +474,7 @@ static int trie_delete_elem(struct bpf_m
- 	trim = &trie->root;
- 	trim2 = trim;
- 	parent = NULL;
--	while ((node = rcu_dereference_protected(
--		       *trim, lockdep_is_held(&trie->lock)))) {
-+	while ((node = rcu_dereference_protected(*trim, 1))) {
- 		matchlen = longest_prefix_match(trie, node, key);
- 
- 		if (node->prefixlen != matchlen ||
 
 
