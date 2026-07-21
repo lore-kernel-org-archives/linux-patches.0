@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A5F415F36;
-	Tue, 21 Jul 2026 18:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EC746DFF5;
+	Tue, 21 Jul 2026 18:23:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658196; cv=none; b=uq/LnYNcCEm+3oOKG0LwLj6rTD2Gg7c9lfRPwI5HLpZCzhZ6iC/r1tVnC8O41ZIryJf3ULG7AnUq/5G7nNwt/bUyp3tThqDAvwoxBSDr7n83jreS0atP1HK0D6GlKnfcpkm7CpPKaxpkU3giUGP6JcVE2nB1EeOx6SpdQYrZhFI=
+	t=1784658199; cv=none; b=HH1RnF5Bcg3DRRIypFGpqfi96ioWvGM3VVEa4JlYmUIZRko4QS0YA5JBa+GQYAG7RXRIPCWXrOeQ+O4h9QTL0nvBCg2WYC7h9BtmT0ofToBjd5fU65psVe9OtVsvLbtuU+RMtR7Hyj4hc0JiYkWTrvPl0xe2kqe67NTbJ9o5jyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658196; c=relaxed/simple;
-	bh=efWf1Je6wT9f2ru3INfVosoa2+mHS2cwyXedfxXAdSE=;
+	s=arc-20240116; t=1784658199; c=relaxed/simple;
+	bh=vFdJMkZ/ZzpsGHWSaG+KduF1Ns86Lcll20r2uUX88Gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GeLgr7btEfN0+wOXi9BZL2NohGn1BoU6jwnV+m3620IMh/TFK8VRqKKdmlrfm1/2fu5O+M6BeLWakZwCAQSeq04o8sNdhonkmU8dkGRIXK0iZ4rNeDJK/vaFVQmBN0oIReUP+Jt26KbNml4kfPdfg+Fb72n03ZKgvgcPV5VTti8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UjtL298x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i44z+IYuKpL1M/ZBGkq3ELvEY2DWy6MU7zF6KHMJPuscE5WwLyvt5++g/hIVsae6Xp93ZW5gzPBjpX+8zNVESDvpgVtX17Q2Ah3Sfch9Z6e0i/bUNK4g4CNOcu9ob6ZQupcJPLW6iy4PgtK2qNV+/Evc3nJSaU9FzXxR1DQwgCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2cQzLn6h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UjtL298x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173221F000E9;
-	Tue, 21 Jul 2026 18:23:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2cQzLn6h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4BD71F000E9;
+	Tue, 21 Jul 2026 18:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658195;
-	bh=i5gmC3DsPf0nud1BitLcO1MuK8fqbmzJqP/sz16V9BE=;
+	s=korg; t=1784658198;
+	bh=ZdQJT3RoGoiXZYBr5li3pTmKNnQ2faIU+BdTdZzR2Oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UjtL298xS04BbG9SikHNS3Vqtfm7ZLtPs/0LSpQCy7wnNr2Pl1yE08gb75NSCzhAz
-	 vl/dghj8N8mcdxopilsj07KydGTv+Ot5Ou1UqWq1QONnWTp4tsohSXqdVwmcy5TrZb
-	 Ku9t1Dpu61IpeUAle53dJpbGNI/mfn+ujVqQMcQg=
+	b=2cQzLn6h6ivMQp+t+rtq55EAC8NpNvfhPhyu9JAWxR8yMMxc4H8BPTrKepDSSMVQI
+	 qMxAdlYiZLjRRwqIei4MCmuU6c2qdRQr+uw/MXltLezBuaIvjrXg62Ea6Yx0d11Ngq
+	 RjQg+5Fk1uUttpMwvFPU7e4eX68qy+9ryP9xMuTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1051/1611] net/smc: fix UAF in smc_cdc_rx_handler() by pinning the socket
-Date: Tue, 21 Jul 2026 17:19:27 +0200
-Message-ID: <20260721152539.048573323@linuxfoundation.org>
+Subject: [PATCH 6.18 1052/1611] amt: fix size calculation in amt_get_size()
+Date: Tue, 21 Jul 2026 17:19:28 +0200
+Message-ID: <20260721152539.070511860@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,98 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9d160b35cc34a2ba8229d07651468a7848325135 ]
+[ Upstream commit 9e05e91a9a847ed57926414bd7c2c5e54d6c56c6 ]
 
-smc_cdc_rx_handler() looks up the connection by token under the link
-group's conns_lock, drops the lock, and then dereferences conn and the
-smc_sock derived from it, ending in sock_hold(&smc->sk) inside
-smc_cdc_msg_recv(). No reference is held across the lock release.
+amt_get_size() incorrectly used sizeof(struct iphdr) for the sizes of
+IFLA_AMT_DISCOVERY_IP, IFLA_AMT_REMOTE_IP, and IFLA_AMT_LOCAL_IP.
+These attributes contain IPv4 addresses (__be32), not full IP headers.
 
-The only reference pinning the socket while the connection is
-discoverable in the link group is taken in smc_lgr_register_conn()
-(sock_hold) and dropped in __smc_lgr_unregister_conn() (sock_put), both
-under conns_lock. Once the handler drops conns_lock, a concurrent
-close() -> smc_release() -> smc_conn_free() -> smc_lgr_unregister_conn()
-can drop that reference and free the smc_sock, so the handler's later
-sock_hold() runs on freed memory:
+Replace sizeof(struct iphdr) with sizeof(__be32) to avoid over-allocating
+netlink message space.
 
-  WARNING: lib/refcount.c:25 at refcount_warn_saturate
-  Workqueue: rxe_wq do_work
-   refcount_warn_saturate (lib/refcount.c:25)
-   smc_cdc_msg_recv (net/smc/smc_cdc.c:430)
-   smc_cdc_rx_handler (net/smc/smc_cdc.c:502)
-   smc_wr_rx_tasklet_fn (net/smc/smc_wr.c:445)
-   tasklet_action_common (kernel/softirq.c:938)
-   handle_softirqs (kernel/softirq.c:622)
-  Kernel panic - not syncing: panic_on_warn set
-
-Only SMC-R is affected. The SMC-D receive tasklet is stopped by
-tasklet_kill(&conn->rx_tsklet) in smc_conn_free() before the connection
-is unregistered, so it cannot run concurrently with the free.
-
-Take the socket reference while still holding conns_lock, so the
-registration reference can no longer be the last one, and drop it once
-the handler is done.
-
-Fixes: d7b0e37c1ac1 ("net/smc: restructure CDC message reception")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260630183227.2044998-1-xmei5@asu.edu
+Fixes: b9022b53adad ("amt: add control plane of amt interface")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260701122329.3562825-1-edumazet@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_cdc.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/net/amt.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/smc/smc_cdc.c b/net/smc/smc_cdc.c
-index 619b3bab38248b..32d6d03df32145 100644
---- a/net/smc/smc_cdc.c
-+++ b/net/smc/smc_cdc.c
-@@ -470,9 +470,9 @@ static void smc_cdc_rx_handler(struct ib_wc *wc, void *buf)
- {
- 	struct smc_link *link = (struct smc_link *)wc->qp->qp_context;
- 	struct smc_cdc_msg *cdc = buf;
-+	struct smc_sock *smc = NULL;
- 	struct smc_connection *conn;
- 	struct smc_link_group *lgr;
--	struct smc_sock *smc;
- 
- 	if (wc->byte_len < offsetof(struct smc_cdc_msg, reserved))
- 		return; /* short message */
-@@ -483,21 +483,26 @@ static void smc_cdc_rx_handler(struct ib_wc *wc, void *buf)
- 	lgr = smc_get_lgr(link);
- 	read_lock_bh(&lgr->conns_lock);
- 	conn = smc_lgr_find_conn(ntohl(cdc->token), lgr);
--	read_unlock_bh(&lgr->conns_lock);
--	if (!conn || conn->out_of_sync)
-+	if (!conn || conn->out_of_sync) {
-+		read_unlock_bh(&lgr->conns_lock);
- 		return;
-+	}
- 	smc = container_of(conn, struct smc_sock, conn);
-+	sock_hold(&smc->sk);
-+	read_unlock_bh(&lgr->conns_lock);
- 
- 	if (cdc->prod_flags.failover_validation) {
- 		smc_cdc_msg_validate(smc, cdc, link);
--		return;
-+		goto out;
- 	}
- 	if (smc_cdc_before(ntohs(cdc->seqno),
- 			   conn->local_rx_ctrl.seqno))
- 		/* received seqno is old */
--		return;
-+		goto out;
- 
- 	smc_cdc_msg_recv(smc, cdc);
-+out:
-+	sock_put(&smc->sk);
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index 902c817a0dea12..e4d1aa26d7bbd7 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -3301,9 +3301,9 @@ static size_t amt_get_size(const struct net_device *dev)
+ 	       nla_total_size(sizeof(__u16)) + /* IFLA_AMT_GATEWAY_PORT */
+ 	       nla_total_size(sizeof(__u32)) + /* IFLA_AMT_LINK */
+ 	       nla_total_size(sizeof(__u32)) + /* IFLA_MAX_TUNNELS */
+-	       nla_total_size(sizeof(struct iphdr)) + /* IFLA_AMT_DISCOVERY_IP */
+-	       nla_total_size(sizeof(struct iphdr)) + /* IFLA_AMT_REMOTE_IP */
+-	       nla_total_size(sizeof(struct iphdr)); /* IFLA_AMT_LOCAL_IP */
++	       nla_total_size(sizeof(__be32)) + /* IFLA_AMT_DISCOVERY_IP */
++	       nla_total_size(sizeof(__be32)) + /* IFLA_AMT_REMOTE_IP */
++	       nla_total_size(sizeof(__be32)); /* IFLA_AMT_LOCAL_IP */
  }
  
- static struct smc_wr_rx_handler smc_cdc_rx_handlers[] = {
+ static int amt_fill_info(struct sk_buff *skb, const struct net_device *dev)
 -- 
 2.53.0
 
