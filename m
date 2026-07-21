@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1EC46D2D9;
-	Tue, 21 Jul 2026 18:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7045846EF69;
+	Tue, 21 Jul 2026 18:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658703; cv=none; b=IN+8gG8hxIyA8tKU3DCtUMsl+XD/wRzcdHOCV7iMRhaHrznEuMZZWKRFPb7jQVKYu/R2dz+vm4ZXUO64A4pSsTz7ZkTY4QkmO56nB+qx3wvavP55LNbU79hJ0iODCalXJBjJrG/tSoaMCteYJuLT5nMkFkk+I0/kZFK/qiLKB9k=
+	t=1784658706; cv=none; b=jEQIOl3fGjgnY7sRxT4EPRzumjYXcpaxEZcyeaOGcuZVAYvFbMXkSMM5hOZ/3C+49bMFRIZlLxQ9UL01md0gP7RbccVV7/8DTlXNpieeBxF4J1qk2yJOlT2PbCOD2z3Kq71zzEguR7ABG+enXUZXhLMpQpeTTP5Gd2Rw3s7wup0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658703; c=relaxed/simple;
-	bh=JnIF1gmQVaYg84egfxzXVPeMsGjiNC4dXDE77hiulZg=;
+	s=arc-20240116; t=1784658706; c=relaxed/simple;
+	bh=FFH/PdX0IMFiXYrH2mb0emvtms9sayK6H/NEwcktp8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qtr39c7pf+N0S+dYrC2UJvklTuL2wLwYS1nzejg5B7tn4LVzW1gPXDq5Z+vW3gRmyKfZJV59qg11AoEaEQxdoZSvPw3PH9K9NylLzAeWZ/P9WI/6ZSKPDh8JepLbsBjK+mduiwTnOaKzP1YhPRZyMWq+wXqvlxnDIIorj9ltbss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cuappq5x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KEPmOxfvhzvRiGBUHjBqRLS8MZ8fbehj1rBIVU8bU/BpwgD24XX3oUF1yxxL4XEIPpkcoc1XoZrokVAt76fc6A84UlXkU3zF/UKBY7kEs0OLi4KoxmX9O+eqsjC5f7oec5G6Rok2dLYokKh0LkcN/pmd0qJ1r8d1ZePsCIjflSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLf3n3nA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuappq5x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDF61F000E9;
-	Tue, 21 Jul 2026 18:31:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLf3n3nA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9398B1F000E9;
+	Tue, 21 Jul 2026 18:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658702;
-	bh=G4Au8NlOfaz9q2x/3hAi9NAiMswcmKJsIuXuCBybIXs=;
+	s=korg; t=1784658705;
+	bh=UmYBVYkbGM4MFxCURM7Sq1Xx3nIGxM9uBcRPkpeQbcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cuappq5xPgm9LeTmDueRFxxNicJbaRkhtSCxf0Th8umMNfMgPc4JUkokTQAAszpYx
-	 /cEjCL4jUeEj7YFpXGI94MVL2Ch94nQ15dXC2EUPZAwSYF2X4+A4nHxDt0FKI+p2cc
-	 LUGb7h6BvPeyTjG2P1EGXkMKuQu2rPEftgUaTGxI=
+	b=sLf3n3nAIDcn0EyqAkyO5gLHoj2kYg1w8cahx0yVhxlebWwhd9E0PHwRVSPhW+Bem
+	 +jNxtLkNeqqv5Mfg40xwjL2EGPEyW94OVBxEbKQO+K7RJkzwI87WE23hMhamrQcoUy
+	 9JH1WDESssP6sEqiwcKhHcN38UHYXGEMifNHJFZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.18 1242/1611] ntfs3: bound to_move in indx_insert_into_root before hdr_insert_head
-Date: Tue, 21 Jul 2026 17:22:38 +0200
-Message-ID: <20260721152543.378369347@linuxfoundation.org>
+Subject: [PATCH 6.18 1243/1611] ntfs3: validate split-point offset in indx_insert_into_buffer
+Date: Tue, 21 Jul 2026 17:22:39 +0200
+Message-ID: <20260721152543.401247363@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,80 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 9b6926ac9c970ae0b2c2fe6289b16e9aa10b6a67 upstream.
+commit f1df9d771df47aa40de6d70949c28720ae1e430d upstream.
 
-indx_insert_into_root() promotes a full resident $INDEX_ROOT into
-$INDEX_ALLOCATION and copies all non-last resident root entries into
-a newly allocated INDEX_BUFFER via hdr_insert_head(). The source
-byte count 'to_move' is summed from the on-disk resident entry sizes
-and is independent of the destination buffer size, which comes from
-root->index_block_size (via indx->index_bits).
+indx_insert_into_buffer() computes
 
-A crafted NTFS image that keeps a valid, full resident root but
-shrinks root->index_block_size down to 512 after the root has been
-populated makes hdr_insert_head() memcpy attacker-controlled resident
-entry bytes past the end of the kmalloc(1u << indx->index_bits)
-allocation returned by indx_new(). For a 512-byte destination and a
-resident root whose non-last entries total 560 bytes, the memcpy
-overruns by 120 bytes and a following memmove extends the highest
-written offset to 136 bytes past the allocation. The overflow bytes
-are a direct copy of on-disk entries (via kmemdup), so they are
-fully attacker-controlled.
+    used = used1 - to_copy - sp_size;
+    memmove(de_t, Add2Ptr(sp, sp_size), used - le32_to_cpu(hdr1->de_off));
 
-The write is reachable from unprivileged open(O_CREAT) on a mounted
-crafted NTFS image: a single sufficiently long create in a directory
-whose resident root is already full forces root promotion and
-triggers the copy.
+where sp and sp_size come from hdr_find_split().  hdr_find_split()
+walks entries by le16_to_cpu(e->size) without validating that each
+step stays within hdr->used or that the size field is at least
+sizeof(struct NTFS_DE).  index_hdr_check(), the on-load gatekeeper,
+only validates header-level fields (used, total, de_off) and does
+not walk per-entry sizes.
 
-This is a controlled out-of-bounds write of 120-136 bytes past a
-kmalloc(index_block_size) allocation, with attacker-controlled
-content. It is a bounded adjacent-heap corruption primitive; it is
-not an arbitrary-address write. Successful exploitation into a named
-victim object depends on the surrounding slab layout.
+A crafted NTFS image whose leaf INDEX_HDR reports used == total but
+contains one interior NTFS_DE with size = 0xFFF0 therefore passes
+validation, descends to indx_insert_into_buffer() through the
+ntfs_create() -> indx_insert_entry() path, and makes hdr_find_split()
+return an sp whose sp_size (0xFFF0) greatly exceeds the remaining
+bytes in the buffer.  The u32 subtraction underflows and the memmove
+count becomes a near-4-GiB value, producing an out-of-bounds kernel
+write that corrupts adjacent allocations and panics the kernel.
 
-Reject the copy at the sink. The destination's INDEX_HDR already
-reports hdr_total (the payload capacity of the new buffer) and
-hdr_used (the bytes already consumed by the terminal END entry
-installed by indx_new()); require that to_move fits in the remaining
-payload before calling hdr_insert_head(). On mismatch, fail with
--EINVAL and mark the filesystem as having a detected on-disk
-inconsistency, which is the same behaviour as the surrounding
-validation in this function.
+Reproduced on 7.0.0-rc7 with UML + KASAN via a crafted image and a
+single 'touch' inside the mounted directory; crash site resolves to
+fs/ntfs3/index.c at the memmove.  Trigger requires only local mount
+of an attacker-supplied filesystem image (USB, loopback, or removable
+media auto-mount).
+
+Reject the split whenever the chosen sp plus its declared size
+already extends past hdr1->used.  This is the minimal fix; it
+preserves the existing hdr_find_split() contract and relies on the
+same out: cleanup path as the pre-existing error returns.
+
+A prior OOB read in the very same indx_insert_into_buffer() memmove
+was fixed in commit b8c44949044e ("fs/ntfs3: Fix OOB read in
+indx_insert_into_buffer") by tightening hdr_find_e(), but that fix
+does not cover the split-point size field path addressed here: sp is
+returned by hdr_find_split(), not hdr_find_e(), and the underflow is
+driven by sp->size rather than hdr->used exceeding hdr->total.
 
 Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
 Cc: stable@vger.kernel.org
+Reported-by: Michael Bommarito <michael.bommarito@gmail.com>
 Assisted-by: Claude:claude-opus-4-7
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/index.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ fs/ntfs3/index.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 --- a/fs/ntfs3/index.c
 +++ b/fs/ntfs3/index.c
-@@ -1743,6 +1743,22 @@ static int indx_insert_into_root(struct
- 	hdr_used = le32_to_cpu(hdr->used);
- 	hdr_total = le32_to_cpu(hdr->total);
+@@ -1863,6 +1863,20 @@ indx_insert_into_buffer(struct ntfs_inde
+ 	memcpy(up_e, sp, sp_size);
  
+ 	used1 = le32_to_cpu(hdr1->used);
++
 +	/*
-+	 * The destination INDEX_BUFFER has 'hdr_total' bytes of payload
-+	 * available after the header, of which 'hdr_used' are already
-+	 * consumed by the single terminal END entry installed by
-+	 * indx_new(). A crafted image can present a resident root whose
-+	 * non-last entries (summing to 'to_move') exceed what fits in
-+	 * this buffer; copying them unchecked would overrun the
-+	 * kmalloc(1u << indx->index_bits) allocation backing the new
-+	 * buffer. Reject the copy in that case.
++	 * hdr_find_split does not validate per-entry sizes, so a crafted
++	 * NTFS_DE whose le16 size field is out of range can place sp such
++	 * that (PtrOffset(hdr1, sp) + sp_size) exceeds used1. Without this
++	 * guard the u32 'used = used1 - to_copy - sp_size' underflows and
++	 * the subsequent memmove count becomes a near-4-GiB value,
++	 * triggering an out-of-bounds kernel write.
 +	 */
-+	if (to_move > hdr_total - hdr_used) {
++	if (PtrOffset(hdr1, sp) + sp_size > used1) {
 +		err = -EINVAL;
-+		ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
-+		goto out_put_n;
++		goto out;
 +	}
 +
- 	/* Copy root entries into new buffer. */
- 	hdr_insert_head(hdr, re, to_move);
- 
+ 	hdr1_saved = kmemdup(hdr1, used1, GFP_NOFS);
+ 	if (!hdr1_saved) {
+ 		err = -ENOMEM;
 
 
