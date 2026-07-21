@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48EA4302E6;
-	Tue, 21 Jul 2026 20:01:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869E82F6931;
+	Tue, 21 Jul 2026 20:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664115; cv=none; b=GvRzqJyAJpFz2ZHhAsSHBQqKnJ5zcUcUvTO3mcdQGiJrDeTJkwxaEN5/xiQGRbSm7iqbHxRl1lFtoxz6Ogi2Vad8u3LEAL7awb9czCUFPLBqEUexsUPm4DIbbiTprW2RnS6E8ZO9msVFixskfey6wL7wR9FIDMxXmOyOHYjFKW8=
+	t=1784664118; cv=none; b=N5+kz0nK5Axpyu0RXVfr0igL2y3voxCrZg5XEIRC6nM2CsJB1Poa78Y3shsPsXSIGF79vYy0Ek5S6bXahwbXj4NLorwuPt+k3651Mbbn3dkE37Vl85wBgLt+L6TY6nbHCN2hw07C+hbm9Ll5OHEyoj2qjfYXysmJgkEUo79clyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664115; c=relaxed/simple;
-	bh=Wo4udALKgBJOqazxVqXRhoAaYq9UPX4OdYrgP7C/9N0=;
+	s=arc-20240116; t=1784664118; c=relaxed/simple;
+	bh=nEEZkvO48qKzk5YB3MY9HVTQddPMQ+CQEoAF1yeeKqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HEBKzukgKyybcN7C/j8OCatg2wOAhmP6XF0FL6qbejzPcWzPLwN7mzPXDD3UknCYNJUsIPZwNFhybPkfdvwL6sKoBiVJ0K6OKipYm2BS4gKAtf30Kmtp8gMFuRtoy/FwRmT5wi8U+lpxbpV4Z6fC/KEkmYwyu5JrNNKq0sc3gOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OanFDGbz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=InxweMSzY3x5XNk64Ytp4DbI1o6uK52FDDNnzjeSBOcvtna+rA7t1jddn07O6ZB6Q6Si8Zfk6yv+Aypej8BzmedgHVIfsM1+Yi0C7JBIR1T1vPerGHiymL9TyKj+Hiep9SLlk329uS8PkYIbCMWxHLszVbyzhmHvkr4fAgxMr+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HsmLLFjl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OanFDGbz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BFE1F000E9;
-	Tue, 21 Jul 2026 20:01:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsmLLFjl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6C71F000E9;
+	Tue, 21 Jul 2026 20:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664114;
-	bh=6Vceed2IxLZ5Z5EPlgrzz75sRbSoM1TD/e672zzxm4I=;
+	s=korg; t=1784664117;
+	bh=wzrzS7EU8/MSw/YZO8aWHEFaw+aEFlDyRzDzApGVEms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OanFDGbzhj4msnzFCPUTmpuyenAdNtcDLzxNWompTC9WtAZ2DjttkPHRb8knpZiAN
-	 nPXocp1l15X3zxC80MZoViBzO+TxqwlDrzs7kcMX4tl62bxJW9JheCGpMbVIKVcQvC
-	 /MZvlFRyX5FI6VNmUmDghGOCLeR7FKgyTAieTckc=
+	b=HsmLLFjluiuxh00WvRUGfqivGSdqsr6Hj65LC1bLTeZN6TfjUx8HPIE1jW5XuapOc
+	 MjkTZzl6AsPLVY4pKIhm0A9/SrXmbGO+JpcVNCNdepaHjFdzqrsMQ9CUfwCH3g4yF9
+	 FvijRfSqPPzeKpO3pw3Vsj73lyqE03Dm+O3XKx2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 1079/1276] hwmon: (max1619) add missing select REGMAP to Kconfig
-Date: Tue, 21 Jul 2026 17:25:22 +0200
-Message-ID: <20260721152510.133360061@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Sven Eckelmann <sven@narfation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 1062/1276] batman-adv: retrieve ethhdr after potential skb realloc on RX
+Date: Tue, 21 Jul 2026 17:25:05 +0200
+Message-ID: <20260721152509.752824517@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,33 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Crofts <joshua.crofts1@gmail.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit 943a749bdffdd2132fab9240db890e07d93e1fcf upstream.
+commit 035e1fed892d3d06002a73ff73668f618a514644 upstream.
 
-The Kconfig entry for the MAX1619 sensor doesn't contain a
-`select REGMAP` parameter, causing build failures if regmap
-isn't selected previously during the build process.
+pskb_may_pull() in batadv_interface_rx() could reallocate the buffer behind
+the skb. Variables which were pointing to the old buffer need to be
+reassigned to avoid an use-after-free.
 
-Fixes: f8016132ce49 ("hwmon: (max1619) Convert to use regmap")
+This was done correctly for the VLAN header but missed for the ethernet
+header which is later used for the TT and AP isolation handling.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Link: https://lore.kernel.org/r/20260629-add-kconfig-deps-v1-1-8104df929b1a@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
+Fixes: c78296665c3d ("batman-adv: Check skb size before using encapsulated ETH+VLAN header")
+[ move from mesh- to soft-interface.c ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/Kconfig |    1 +
+ net/batman-adv/soft-interface.c | 1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/hwmon/Kconfig
-+++ b/drivers/hwmon/Kconfig
-@@ -1141,6 +1141,7 @@ config SENSORS_MAX16065
- config SENSORS_MAX1619
- 	tristate "Maxim MAX1619 sensor chip"
- 	depends on I2C
-+	select REGMAP
- 	help
- 	  If you say yes here you get support for MAX1619 sensor chip.
+diff --git a/net/batman-adv/soft-interface.c b/net/batman-adv/soft-interface.c
+index f46064333f3343..42ad04d356904f 100644
+--- a/net/batman-adv/soft-interface.c
++++ b/net/batman-adv/soft-interface.c
+@@ -445,6 +445,7 @@ void batadv_interface_rx(struct net_device *soft_iface,
+ 		if (!pskb_may_pull(skb, VLAN_ETH_HLEN))
+ 			goto dropped;
  
++		ethhdr = eth_hdr(skb);
+ 		vhdr = skb_vlan_eth_hdr(skb);
+ 
+ 		/* drop batman-in-batman packets to prevent loops */
+-- 
+2.53.0
+
 
 
