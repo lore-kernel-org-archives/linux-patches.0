@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90965474B00;
-	Tue, 21 Jul 2026 17:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA0546DFE5;
+	Tue, 21 Jul 2026 17:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656369; cv=none; b=Fdy++tSYBvBxwNeNMeLajJyZOyLW5Nfoa3nUXi/nlv/HQ+QVQD+izIy/z3uTLOj3XVkKeEdKkCO2zLvUD08kPagIU7gqzeaITHhpMfFI6kmAD+9u0m+ETxM2ELjvnZ9zvFbChpoFUn8lAhyBuQ6tjybUUq1JuoTSompr3XB7KEE=
+	t=1784656372; cv=none; b=ZzvK9t15aOVLedEnyPjSSsPNjftxDdcf5lcNbS/v7Mv1lSUkEND9F7koNh0h7SBu1NYKuBFpjw+dso1dwhbWYfRnpeiDDS2d8teJVTZ2OYDbNJRomG4DZ6PZXYShdysOSS6zY5gdTw/XrkoWxYXlzSv3EWu6ZSNGSJyPkE76iWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656369; c=relaxed/simple;
-	bh=oPYvcP62fMK7I7bkU9oYbCoKNAz6jSFbAXZZj3Q0Rzg=;
+	s=arc-20240116; t=1784656372; c=relaxed/simple;
+	bh=9O3FW3VPI2w6XG8f2WKhTO890+2qB3Pz7AZqReUyI3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qi7Q/mT84PNcd2RRbElGzSs/zZoNTNZsmkprVHY2PxSpt5HmJ+NpPR5mLzbAtjjnn8BpUU8TMHkatEYyM+Qcik4SbfzDGynd46d9P038EFzjiqaAGDMiXJ1ympg4WJA0/dnpAURZsMIk9usdsW6CB00jRKc+rXbXC/BJqt9UPuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pknaA3a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C2f5RksxW8Zat6uM9n3RDrOGpL/9fCNi+JvYIDT0lEyx+jYH3waOLxHYej4EoPE8BxsMnuoXKKb72Qa+DaJUcUTfDFrlsIeArUnzBkQ/zpdNQ52vTy19MtRAacttvPG+mtbUAA4uOk3cg+GEzQhSe0xlFV8Z+JGJDkIbUTlU0G0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijAON4x3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pknaA3a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21DD1F00A3A;
-	Tue, 21 Jul 2026 17:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijAON4x3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A01021F00A3A;
+	Tue, 21 Jul 2026 17:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656368;
-	bh=bFv+2WWkk0SJx3Nfk1khIzmmkVFmr2fIwYOntX7CNIE=;
+	s=korg; t=1784656371;
+	bh=BnotPkRBr2WYybpnRFcrIZde3ISGCCCkWwJvKXN7Zv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1pknaA3afcg3wagLY6eOYvN7a3YFuUPRTRij/svjQzdD8B/S2wolZ69rEvuwBscsR
-	 yqzE19rIeX0ybPsAHBSmPlx81Xq6N+kwSTMe2E+jM18DiyC1KH0KonkBfuoREYbqcQ
-	 TI5kD8EhVvh5yTjmIf4+MYwOsxoSM4VixFj8wPl4=
+	b=ijAON4x36+xADcj2E2CxVP8v4XK8DxEYe+p4YULrDc6/j+7J587UcLS2cie0JTZZK
+	 iSV+VSwtJHSIOGniZ7H8UOsd+pxXtoJB00bGBZv1UE4zhu7ii0If+D4pRHHcaaIO8F
+	 d5r6C8lWRlMvuwJA9sU2pBOl7pmgFvv4H7ipW8kY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Kaitao Cheng <chengkaitao@kylinos.cn>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0360/1611] RDMA/siw: Fix endpoint/socket association handling
-Date: Tue, 21 Jul 2026 17:07:56 +0200
-Message-ID: <20260721152523.246367878@linuxfoundation.org>
+Subject: [PATCH 6.18 0361/1611] bpf: Clear rb node linkage when freeing bpf_rb_root
+Date: Tue, 21 Jul 2026 17:07:57 +0200
+Message-ID: <20260721152523.272528468@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,129 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Metzler <bernard.metzler@linux.dev>
+From: Kaitao Cheng <chengkaitao@kylinos.cn>
 
-[ Upstream commit ea4f6f6c53577fb3f05dbd78b15e586772d49831 ]
+[ Upstream commit 4a7910ee060d8ce55612f5b3cc267f3a265a3cec ]
 
-Disassociating a socket from an endpoint via siw_socket_disassoc() may
-release the last reference on that endpoint and free it. Therefore, don't
-clear the endpoints socket pointer after calling that function, but
-within.
+bpf_rb_root_free() detaches the root by copying the current rb_root_cached
+and then replacing the live root with RB_ROOT_CACHED. It then walks the
+copied root and drops each object contained in the tree.
 
-This fixes a:
+This leaves the rb node state intact while dropping the object. If the
+object is refcounted and survives the drop, its bpf_rb_node_kern still
+contains an owner pointer to the freed root and stale rb tree linkage. If
+a later bpf_rb_root allocation reuses the same address, bpf_rbtree_remove()
+can incorrectly pass the owner check and call rb_erase_cached() on a node
+whose rb pointers belong to the old tree.
 
-  BUG: KASAN: slab-use-after-free in siw_cm_work_handler (drivers/infiniband/sw/siw/siw_cm.c:1053 drivers/infiniband/sw/siw/siw_cm.c:1075)
+Mirror the list draining behavior by marking nodes as busy while the root
+is being detached, then clear the rb node and release the owner before
+dropping the containing object. This makes surviving nodes unowned and
+safe to reject from remove or accept for a later add.
 
-which occurred after processing a malformed MPA request during connection
-establishment, causing the new endpoint to be closed.
-
-Fixes: 6c52fdc244b5c ("rdma/siw: connection management")
-Link: https://patch.msgid.link/r/20260604160808.30948-1-bernard.metzler@linux.dev
-Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 9c395c1b99bd ("bpf: Add basic bpf_rb_{root,node} support")
+Signed-off-by: Kaitao Cheng <chengkaitao@kylinos.cn>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20260605094143.5509-1-kaitao.cheng@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_cm.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ kernel/bpf/helpers.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
-index 708b13993fdfd3..49ff121f77fe44 100644
---- a/drivers/infiniband/sw/siw/siw_cm.c
-+++ b/drivers/infiniband/sw/siw/siw_cm.c
-@@ -89,6 +89,7 @@ static void siw_socket_disassoc(struct socket *s)
- 		cep = sk_to_cep(sk);
- 		if (cep) {
- 			siw_sk_restore_upcalls(sk, cep);
-+			cep->sock = NULL;
- 			siw_cep_put(cep);
- 		} else {
- 			pr_warn("siw: cannot restore sk callbacks: no ep\n");
-@@ -369,10 +370,11 @@ static void siw_free_cm_id(struct siw_cep *cep)
- 
- static void siw_destroy_cep_sock(struct siw_cep *cep)
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index b5964524244814..a62cbdf5a3cde5 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -2178,6 +2178,7 @@ void bpf_rb_root_free(const struct btf_field *field, void *rb_root,
+ 		      struct bpf_spin_lock *spin_lock)
  {
--	if (cep->sock) {
--		siw_socket_disassoc(cep->sock);
--		sock_release(cep->sock);
--		cep->sock = NULL;
-+	struct socket *s = cep->sock;
-+
-+	if (s) {
-+		siw_socket_disassoc(s);
-+		sock_release(s);
+ 	struct rb_root_cached orig_root, *root = rb_root;
++	struct bpf_rb_node_kern *node;
+ 	struct rb_node *pos, *n;
+ 	void *obj;
+ 
+@@ -2186,14 +2187,20 @@ void bpf_rb_root_free(const struct btf_field *field, void *rb_root,
+ 
+ 	__bpf_spin_lock_irqsave(spin_lock);
+ 	orig_root = *root;
++	bpf_rbtree_postorder_for_each_entry_safe(pos, n, &orig_root.rb_root) {
++		node = rb_entry(pos, struct bpf_rb_node_kern, rb_node);
++		WRITE_ONCE(node->owner, BPF_PTR_POISON);
++	}
+ 	*root = RB_ROOT_CACHED;
+ 	__bpf_spin_unlock_irqrestore(spin_lock);
+ 
+ 	bpf_rbtree_postorder_for_each_entry_safe(pos, n, &orig_root.rb_root) {
+ 		obj = pos;
+ 		obj -= field->graph_root.node_offset;
+-
+-
++		node = rb_entry(pos, struct bpf_rb_node_kern, rb_node);
++		RB_CLEAR_NODE(pos);
++		/* Ensure __bpf_rbtree_add() sees the node as unlinked. */
++		smp_store_release(&node->owner, NULL);
+ 		__bpf_obj_drop_impl(obj, field->graph_root.value_rec, false);
  	}
  }
- 
-@@ -1001,7 +1003,6 @@ static void siw_accept_newconn(struct siw_cep *cep)
- 	if (new_s) {
- 		siw_socket_disassoc(new_s);
- 		sock_release(new_s);
--		new_cep->sock = NULL;
- 	}
- 	siw_dbg_cep(cep, "error %d\n", rv);
- }
-@@ -1153,6 +1154,8 @@ static void siw_cm_work_handler(struct work_struct *w)
- 		WARN(1, "Undefined CM work type: %d\n", work->type);
- 	}
- 	if (release_cep) {
-+		struct socket *s = cep->sock;
-+
- 		siw_dbg_cep(cep,
- 			    "release: timer=%s, QP[%u]\n",
- 			    cep->mpa_timer ? "y" : "n",
-@@ -1178,10 +1181,9 @@ static void siw_cm_work_handler(struct work_struct *w)
- 			cep->qp = NULL;
- 			siw_qp_put(qp);
- 		}
--		if (cep->sock) {
--			siw_socket_disassoc(cep->sock);
--			sock_release(cep->sock);
--			cep->sock = NULL;
-+		if (s) {
-+			siw_socket_disassoc(s);
-+			sock_release(s);
- 		}
- 		if (cep->cm_id) {
- 			siw_free_cm_id(cep);
-@@ -1511,7 +1513,6 @@ int siw_connect(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 	if (cep) {
- 		siw_socket_disassoc(s);
- 		sock_release(s);
--		cep->sock = NULL;
- 
- 		cep->qp = NULL;
- 
-@@ -1886,7 +1887,6 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
- 		siw_cep_set_inuse(cep);
- 
- 		siw_free_cm_id(cep);
--		cep->sock = NULL;
- 		siw_socket_disassoc(s);
- 		cep->state = SIW_EPSTATE_CLOSED;
- 
-@@ -1908,6 +1908,7 @@ static void siw_drop_listeners(struct iw_cm_id *id)
- 	 */
- 	list_for_each_safe(p, tmp, (struct list_head *)id->provider_data) {
- 		struct siw_cep *cep = list_entry(p, struct siw_cep, listenq);
-+		struct socket *s = cep->sock;
- 
- 		list_del(p);
- 
-@@ -1916,10 +1917,9 @@ static void siw_drop_listeners(struct iw_cm_id *id)
- 		siw_cep_set_inuse(cep);
- 
- 		siw_free_cm_id(cep);
--		if (cep->sock) {
--			siw_socket_disassoc(cep->sock);
--			sock_release(cep->sock);
--			cep->sock = NULL;
-+		if (s) {
-+			siw_socket_disassoc(s);
-+			sock_release(s);
- 		}
- 		cep->state = SIW_EPSTATE_CLOSED;
- 		siw_cep_set_free_and_put(cep);
 -- 
 2.53.0
 
