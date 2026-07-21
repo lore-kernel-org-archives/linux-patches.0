@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D7E2EBB8D;
-	Tue, 21 Jul 2026 20:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151DD356A12;
+	Tue, 21 Jul 2026 20:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666584; cv=none; b=kZDOefbUkG9A615G7hWdF4EPsqR1Ti1aiWlGE/WUjLLN58EwABGqfpTs/M+SZt+G1IhFIZqiisMzDXI7JTMDlwfyDRvbWZWXuL2z9tRClT86yhfCBrCyHSJeU8TcWIeHBxRWL38Wy5OrXT51w0vLvsUIRfgXGGaNBN79VrVV+bU=
+	t=1784666587; cv=none; b=c12QazlmWyy88gRxdXhoXfaj5wWTrKmqMaG+LSYWSmUrpBwMwUcdMUQNlFUQXaDwwrQqIBGveZxS/lvJsk83JW1C0ogMKDH2dNtLULVq0nx7U6hds/WSyEgJcOiVEVBH/hb3mvIrDQp/u4UD3Ff/wrm34o4JtM4ujwoQzIvzKSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666584; c=relaxed/simple;
-	bh=USDjQoyiG7qgzCwI1u/YVeJXF9qEVdi+LXOqCCrCQX0=;
+	s=arc-20240116; t=1784666587; c=relaxed/simple;
+	bh=m3Ttw9CX35Y2/vkY4QE+1u3qJ73au6rKDmgSDv0ysxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K56ego6EnW/WBmUx/olQiYkPfTcSnGpyIa0/lHT+NxN5rsJdMWpyCfDTcb9aZbyZpiWMzlNKydFjOjuGHQsLG0TN1eV+Mwwxxid/KN9AFgwYKzNKblEvPxqqIOwRrJNQ/mDAEwPi3tPnj+TQcSgFhvIM/g1v3U1z0ECoCHoC6g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mjtx6fyS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aE1M/1csKQh+efn/87KtsAiC1ETFOtZ2/6uQMCdh11ocoQ7GVvE+jw2It7jIkNIhj0m0KR/gAe4sw8nDybddw7OF8QGEAmr0HZeMvbn7S94XVY6t0kz/y2lTYPqxh456ObOlMVS3aFxzGn4Vn4hPrv5Z0lHlL/xydUo/iuccMxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ktoOD1Je; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mjtx6fyS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBA61F000E9;
-	Tue, 21 Jul 2026 20:43:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ktoOD1Je"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8151C1F000E9;
+	Tue, 21 Jul 2026 20:43:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666583;
-	bh=26mvFB4eE/58A5ktnOaura1saD5eiccWWGLwJHWskoE=;
+	s=korg; t=1784666586;
+	bh=bd4FvYY4yq2RyLFjg9JebkQaw2eHxVIUEngeS3HMh/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mjtx6fySEpqI7pS39mJpJTQnP3TB9gM+61eBnoj+WQjYVPx0unuN2ZsZD8D0bgWQl
-	 FPasiKPueLeSu+R5pp39juxriND+uC8Rv1I8iI+yV6i80/2ijKThs+WQ5zWIvIWCvV
-	 gHo/aT6SomrL0eikS20bb9qzFZOSmB6pD6jHBHDQ=
+	b=ktoOD1JenYbLZZF6RQNOPB9gnrq87lETPSXWhdKynnmeVlHYDZ+cunGXtkqURV/gl
+	 6+4QweGo5EEcKTv5/TO7ScEQ2IhLlm6LKqc+fz7Ee7uPP6TRGECgJLIfO5gx1YXGlA
+	 +QsxcVpAHCkLTFsQIQSfodWh8OK6EwALrav36h+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Yuanhe Shu <xiangzao@linux.alibaba.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	John Johansen <john.johansen@canonical.com>,
+	Paul Moore <paul@paul-moore.com>,
+	James Morris <jmorris@namei.org>,
+	"Serge E. Hallyn" <serge@hallyn.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0695/1266] Revert "PCI/MSI: Unmap MSI-X region on error"
-Date: Tue, 21 Jul 2026 17:18:52 +0200
-Message-ID: <20260721152457.410553105@linuxfoundation.org>
+Subject: [PATCH 6.6 0696/1266] security/apparmor/apparmorfs.c: conditionally compile get_loaddata_common_ref()
+Date: Tue, 21 Jul 2026 17:18:53 +0200
+Message-ID: <20260721152457.433300856@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,95 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuanhe Shu <xiangzao@linux.alibaba.com>
+From: Andrew Morton <akpm@linux-foundation.org>
 
-[ Upstream commit f64e03da0d83cb173743888bff4a7e61476a8fc2 ]
+[ Upstream commit d62d9bfe050f44f772d05a32079dba3e3523ab2a ]
 
-This reverts commit 1a8d4c6ecb4c81261bcdf13556abd4a958eca202.
+Some config did this:
 
-Commit 1a8d4c6ecb4c ("PCI/MSI: Unmap MSI-X region on error") added an
-iounmap(dev->msix_base) on the error path of msix_capability_init() to
-release the MSI-X region when msix_setup_interrupts() fails.
+security/apparmor/apparmorfs.c:177:28: warning: 'get_loaddata_common_ref' defined but not used [-Wunused-function]
+  177 | static struct aa_loaddata *get_loaddata_common_ref(struct aa_common_ref *ref)
 
-When msix_setup_interrupts() fails, the call chain is:
+get_loaddata_common_ref() is only used if
+CONFIG_SECURITY_APPARMOR_EXPORT_BINARY=y.
 
-  msix_setup_interrupts()
-    -> __msix_setup_interrupts()
-         struct pci_dev *dev __free(free_msi_irqs) = __dev;
-         ...
-         return ret;  // __free cleanup fires on error
+(Or of course move the function into that block if maintainers perfer)
 
-The __free(free_msi_irqs) cleanup calls pci_free_msi_irqs(), which
-already handles the unmap:
-
-  void pci_free_msi_irqs(struct pci_dev *dev)
-  {
-      pci_msi_teardown_msi_irqs(dev);
-      if (dev->msix_base) {
-          iounmap(dev->msix_base);   // already unmapped here
-          dev->msix_base = NULL;     // and set to NULL
-      }
-  }
-
-So dev->msix_base is unmapped and set to NULL before
-msix_setup_interrupts() returns to msix_capability_init(). The
-"goto out_unmap" introduced by commit 1a8d4c6ecb4c ("PCI/MSI: Unmap
-MSI-X region on error") then calls iounmap() a second time on a NULL
-pointer.
-
-This was reproduced on Intel Emerald Rapids (192 CPUs) while
-running tools/testing/selftests/kexec/test_kexec_jump.sh:
-
-  WARNING: CPU#44 at iounmap+0x2a/0xe0
-  RIP: 0010:iounmap+0x2a/0xe0
-  RDI: 0000000000000000
-  Call Trace:
-   msix_capability_init+0x317/0x3f0
-   __pci_enable_msix_range+0x21d/0x2c0
-   pci_alloc_irq_vectors_affinity+0xa9/0x130
-   nvme_setup_io_queues+0x2a8/0x420 [nvme]
-   nvme_reset_work+0x151/0x340 [nvme]
-   ...
-
-RDI=0 confirms iounmap() is called with NULL.
-
-Restore the original "goto out_disable" and leave the unmap to the
-existing __free(free_msi_irqs) cleanup.
-
-Fixes: 1a8d4c6ecb4c ("PCI/MSI: Unmap MSI-X region on error")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Yuanhe Shu <xiangzao@linux.alibaba.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://lore.kernel.org/all/20260610194406.GA380991@bhelgaas/
-Link: https://patch.msgid.link/20260611025901.1105209-1-xiangzao@linux.alibaba.com
-Closes: https://lore.kernel.org/all/4fc6208d-513b-4f41-a13a-4a0829ab50ad@roeck-us.net/
+Fixes: 8e135b8aee5a0 ("apparmor: fix race between freeing data and fs accessing it")
+Cc: John Johansen <john.johansen@canonical.com>
+Cc: Paul Moore <paul@paul-moore.com>
+Cc: James Morris <jmorris@namei.org>
+Cc: "Serge E. Hallyn" <serge@hallyn.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/msi/msi.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ security/apparmor/apparmorfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pci/msi/msi.c b/drivers/pci/msi/msi.c
-index f6f4a778a98678..b638731aa5ff2f 100644
---- a/drivers/pci/msi/msi.c
-+++ b/drivers/pci/msi/msi.c
-@@ -737,7 +737,7 @@ static int msix_capability_init(struct pci_dev *dev, struct msix_entry *entries,
+diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
+index 157ebdb100c00b..3fdb084db3a917 100644
+--- a/security/apparmor/apparmorfs.c
++++ b/security/apparmor/apparmorfs.c
+@@ -174,6 +174,7 @@ static struct aa_proxy *get_proxy_common_ref(struct aa_common_ref *ref)
+ 	return NULL;
+ }
  
- 	ret = msix_setup_interrupts(dev, entries, nvec, affd);
- 	if (ret)
--		goto out_unmap;
-+		goto out_disable;
++#ifdef CONFIG_SECURITY_APPARMOR_EXPORT_BINARY
+ static struct aa_loaddata *get_loaddata_common_ref(struct aa_common_ref *ref)
+ {
+ 	if (ref)
+@@ -181,6 +182,7 @@ static struct aa_loaddata *get_loaddata_common_ref(struct aa_common_ref *ref)
+ 						      count));
+ 	return NULL;
+ }
++#endif
  
- 	/* Disable INTX */
- 	pci_intx_for_msi(dev, 0);
-@@ -756,8 +756,6 @@ static int msix_capability_init(struct pci_dev *dev, struct msix_entry *entries,
- 	pcibios_free_irq(dev);
- 	return 0;
- 
--out_unmap:
--	iounmap(dev->msix_base);
- out_disable:
- 	dev->msix_enabled = 0;
- 	pci_msix_clear_and_set_ctrl(dev, PCI_MSIX_FLAGS_MASKALL | PCI_MSIX_FLAGS_ENABLE, 0);
+ static void aa_put_common_ref(struct aa_common_ref *ref)
+ {
 -- 
 2.53.0
 
