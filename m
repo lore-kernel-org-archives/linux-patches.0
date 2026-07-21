@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4533046EC78;
-	Tue, 21 Jul 2026 19:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E9446F499;
+	Tue, 21 Jul 2026 19:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662082; cv=none; b=jrk+JQpkbY7WQOYxnaQDfinjyykqoxCTdyNOmZJ4btf1p1nKiBjkDKnxWga8F7ANocm1riDcWVNnrn2cx/78LXiRPCAjvCeM0gxKo9/bskmiYvgd1Tb2U2/J2neDTniGQOViU6ljxhenJK0UJdcZtiMSx2w8+vDKeIH2y+k3VQA=
+	t=1784662084; cv=none; b=NBsrnOde5nqsLSD/x1D2gK+g5D7CMh9yW31uS1cOYgItmNBw5hrS9hHUi4FsiIuahq3hQX9W4UF7XAtEtSXW9JK+cNmHGRCEJfIv96jMn1k/JYLu9+hqeOgDFpq1g1TMvFnDnnaUeaSxVSA+M2T5z29OgLY8my/AR5BYEKkAdIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662082; c=relaxed/simple;
-	bh=OYDm6Q5rDpAk5qMjugTY8/6DZHI4uXAomoENeP+tZmw=;
+	s=arc-20240116; t=1784662084; c=relaxed/simple;
+	bh=LRSVsMoyapdTrKmbDmJxX0achR/EQSBXjD7W0NRdPxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FoGdDfHqwZ/WaVYrIEG8/Bw+PG5oya4SO4h2pXRVcBE4lzwcue2WHYDL4dzTAdgGzoB2wuM0ejmf9WbyPW1M8o8AGiqpGr7uYvIuW3DHAE01KnjmQrJFesrijLM2/2sCK7GxofpDfwhSJEwNvdZInPMLfO3YhQ1Wb5cJQKxESxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2X9PgyYt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RXTSsXjj20vWBlMJUpkL+qzEcgm0jqqz5nF8xQ3qdYssI8E2eAn+9+VySyrCU/gY+HMnNJdFwjXfBIM9373kpD7DTdVGXfvQk8rHsCAosD6bzKCR+7kkjGnYC05ZTPAXxX07PMb4h+0KAsb4kTmYA/qCkSVI4EyHr/4/JbzJgfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Brp3Lwmx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2X9PgyYt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B301F00A3D;
-	Tue, 21 Jul 2026 19:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Brp3Lwmx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9FE71F000E9;
+	Tue, 21 Jul 2026 19:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662079;
-	bh=PlzghbFtlrtPjIL7wgNBkKsWMlLGt52m7y9AXJBfJdY=;
+	s=korg; t=1784662082;
+	bh=APTxwH6QhlMVKgXdg7+uOaKcKNf3xeaqBLDY7a6Nmcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2X9PgyYtn3B9PLQrbLvgYlEfnQ76gsNDrUHAzI3vRlgTYifspvTOSa2/1qoq0ZTj/
-	 qEKWDLZdnoQqZiJ60gl7Jo1YyPVPqqzrdspCvFck5RkH686FD3xKj+hN5J6X5sF1yj
-	 WjN//Bt10KxKnqJnxZ1pxAUol7I4sriI4EKns4OI=
+	b=Brp3LwmxrpPBr86/eM6JE7kFJxpbW36jTlxx6cQRSK7YapurbD5n74VAz7kJ2SbzH
+	 258FWvuDvu9BXtMBfMOSsFksWFzGacXA9GwAIG/0DnbPhKl3WbOVNorrFYtqIU5EvB
+	 lK+sLLD+fY+xjS4calA8mAEktxsPKMYWa2ci+f4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0c89d865531d053abb2d@syzkaller.appspotmail.com,
-	Aditya Prakash Srivastava <aditya.ansh182@gmail.com>,
+	syzbot+ad6118a7584b607c67f2@syzkaller.appspotmail.com,
+	Yun Zhou <yun.zhou@windriver.com>,
 	Jan Kara <jack@suse.cz>,
+	Andreas Dilger <adilger@dilger.ca>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0308/1276] ext4: fix kernel BUG in ext4_write_inline_data_end
-Date: Tue, 21 Jul 2026 17:12:31 +0200
-Message-ID: <20260721152452.985098466@linuxfoundation.org>
+Subject: [PATCH 6.12 0309/1276] ext4: validate donor file superblock early in EXT4_IOC_MOVE_EXT
+Date: Tue, 21 Jul 2026 17:12:32 +0200
+Message-ID: <20260721152453.007613078@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,52 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Prakash Srivastava <aditya.ansh182@gmail.com>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-[ Upstream commit ad09aa45965d3fafaf9963bc78109b73c0f9ac8d ]
+[ Upstream commit c143957520c6c9b5cd72e0de8b52b814f0c576fe ]
 
-When the data=journal mount option is used, the ext4_journalled_write_end()
-function incorrectly calls ext4_write_inline_data_end() without checking
-if the EXT4_STATE_MAY_INLINE_DATA flag is still set on the inode.
+Reject the EXT4_IOC_MOVE_EXT ioctl early if the donor file does not
+belong to the same superblock as the original file.  Currently, this
+validation is performed inside ext4_move_extents() by
+mext_check_validity(), but only after lock_two_nondirectories() has
+already acquired the inode locks.  When the donor fd refers to a file
+on a different filesystem (e.g., overlayfs), this late validation
+creates a circular lock dependency:
 
-If a previous attempt to convert the inline data to an extent failed (e.g.
-due to ENOSPC), the EXT4_STATE_MAY_INLINE_DATA flag is cleared, but
-the EXT4_INODE_INLINE_DATA flag remains set. In this scenario, the next
-call to ext4_write_begin() will not prepare the inline data xattr for
-writing, but ext4_journalled_write_end() will incorrectly attempt to write
-to it, triggering a BUG_ON(pos + len > EXT4_I(inode)->i_inline_size) in
-ext4_write_inline_data() since i_inline_size was not expanded.
+  CPU0 (overlayfs write)            CPU1 (ext4 ioctl)
+  ----                              ----
+  inode_lock(ovl_inode)
+                                    mnt_want_write_file(filp)
+                                      sb_start_write(ext4_sb)   [sb_writers]
+    backing_file_write_iter()
+      vfs_iter_write(real_file)
+        file_start_write(real_file)
+          sb_start_write(ext4_sb)   [blocked by freeze]
+                                    lock_two_nondirectories()
+                                      inode_lock(ovl_inode)     [blocked]
 
-Fix this by ensuring that ext4_journalled_write_end() only calls
-ext4_write_inline_data_end() if the EXT4_STATE_MAY_INLINE_DATA flag is
-set, mirroring the behavior of ext4_write_end() and ext4_da_write_end().
+With a concurrent freeze operation holding sb_writers write side, this
+forms a deadlock cycle: CPU0 waits for freeze to complete, freeze waits
+for CPU1's sb_writers reader to exit, CPU1 waits for CPU0's inode lock.
 
-Reported-by: syzbot+0c89d865531d053abb2d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0c89d865531d053abb2d
-Fixes: 3fdcfb668fd7 ("ext4: add journalled write support for inline data")
-Signed-off-by: Aditya Prakash Srivastava <aditya.ansh182@gmail.com>
+Since EXT4_IOC_MOVE_EXT exchanges physical extents between two files,
+it fundamentally requires both files to reside on the same ext4
+filesystem.  Moving the superblock check before any lock acquisition
+is both semantically correct and eliminates the circular dependency
+by ensuring that cross-filesystem donor fds are rejected before
+sb_writers or inode locks are taken.
+
+Fixes: fcf6b1b729bc ("ext4: refactor ext4_move_extents code base")
+Reported-by: syzbot+ad6118a7584b607c67f2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ad6118a7584b607c67f2
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260608065227.3018-1-aditya.ansh182@gmail.com
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Link: https://patch.msgid.link/20260608152521.1292656-1-yun.zhou@windriver.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ext4/ioctl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index a0b68b9d962662..de8ad1f90af135 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -1410,7 +1410,8 @@ static int ext4_journalled_write_end(struct file *file,
+diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
+index c3758c64fc4e03..a8a024bb62b4f7 100644
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -1372,6 +1372,9 @@ static long __ext4_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+ 			goto mext_out;
+ 		}
  
- 	BUG_ON(!ext4_handle_valid(handle));
- 
--	if (ext4_has_inline_data(inode))
-+	if (ext4_has_inline_data(inode) &&
-+	    ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA))
- 		return ext4_write_inline_data_end(inode, pos, len, copied,
- 						  folio);
- 
++		if (file_inode(filp)->i_sb != file_inode(fd_file(donor))->i_sb)
++			return -EXDEV;
++
+ 		err = mnt_want_write_file(filp);
+ 		if (err)
+ 			goto mext_out;
 -- 
 2.53.0
 
