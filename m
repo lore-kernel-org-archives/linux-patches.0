@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71B1471243;
-	Tue, 21 Jul 2026 19:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A220332913;
+	Tue, 21 Jul 2026 19:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660796; cv=none; b=jFbX+FkoLUTLNr1g/sdQWcClWVeHfQaN9FcGfUug0Uq75cepSnSBj2pQlwy/giYL3KaRv/HvmiMDD5L+cmkkWQhLdAuKAHCSx2HLMOYk3DGxzLkJuLOKU3mOR33wMmTI0g2nbkKhFGPGYk7jpelZxIz8vQH81e0WCfNZ+CCQqWg=
+	t=1784660799; cv=none; b=DCeUfdDaEmnfkZKzqNsgWN25HuTlCpwvhYBUygrFLG+QqQ/nrCMCXfVqbMjPakDN6s3fjHF9QQugWSbk6TRHzQ49iYGzHByv8OXCmeJW0horiorl3lNdrL9jeKSczt1Hoit7y9FZ5SDeYEc860tkjtkGKejjgMLkTYw0ArLGNB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660796; c=relaxed/simple;
-	bh=mEbrBOkg13HZWBVXnXQyesQySkLCr3rn9d1d4AjsAS4=;
+	s=arc-20240116; t=1784660799; c=relaxed/simple;
+	bh=0sOdpsRMz3IHP3tHcPJy+NmRn00hr5VicNKxU738NeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HyR3KOf+y68vJkvSNtphUDlI/9lPo9M2ct2JsVpRn8FNFQtTB1LpLYpKE7SII1eQIo7i9W6Ek2zbWmy4UmlPl/cYjajOf2fsfqDoUKK/CqyqztXtyyy8wpt00cCRleSiR3EhK8FPCf0wK+X0QfDy8iXi96tt1FYYIDBxyXW3sh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lEOIuoF3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hmGgqZpEj0ZqcIRtk1hTgCabTQhbJ1pcWy99R4U86Num+tdJhUM11+yEmVvTpg20VEcExZq2e21gXRd/q2MfqdA31b4wwSizVQl9lreTA7CbJCfGI5YfNG7mdRZxNQzIt+dHCjO9gEnD+whsAn/0qqrySLbaBvlo/pV+IdeMs54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gtD/nIfK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lEOIuoF3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380EA1F000E9;
-	Tue, 21 Jul 2026 19:06:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtD/nIfK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F131F000E9;
+	Tue, 21 Jul 2026 19:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660795;
-	bh=dr/j/qvnazH31CXghn9JrdQz8BebmcLPZoHKx2a0xSc=;
+	s=korg; t=1784660798;
+	bh=tb9H2kM4IbdD5xudZQBhW/2LvMP4nOojghGZ5701tBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lEOIuoF3T+N7RPlx+Wa/HS62q1agZxM4LEvihFpJn4qL0xHdMr0MAZbnvY4AJAlG6
-	 4i4hYViRhMqj8yIVg8F32eevKIZB9s/b6kEQH2E/jZ8TxYJNgkmMQNwpkQ5Ef1wszr
-	 t+9t8YZugy38LPPLZ6vJ8dTvpuYtoRePw/97h65A=
+	b=gtD/nIfK+25oWXsXZdqF4EUhb3AhkNYQNFFqeE7bqbUxij7cm5VdBt2FUX239n6BX
+	 btMLQhHZmYQUCjz4hKLzUoPCVPLQXlp8e2UDX5LYa5TS7Cp0m0RSup1Y60PXtQJqqF
+	 +QuyCBA8CNoguTxloxqKXUEJypxPQm9JHrmsnalc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Ray Jui <ray.jui@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1116/2077] ALSA: usb-audio: qcom: clear opened when stream enable fails
-Date: Tue, 21 Jul 2026 17:13:09 +0200
-Message-ID: <20260721152619.143535603@linuxfoundation.org>
+Subject: [PATCH 7.1 1117/2077] PCI: iproc: Restore .map_irq() for the platform bus driver
+Date: Tue, 21 Jul 2026 17:13:10 +0200
+Message-ID: <20260721152619.165960600@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,45 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
 
-[ Upstream commit 3c7af07943b2718087ae791cad450af5cf646d90 ]
+[ Upstream commit 3c2e6cc6affa8acdb99a580be1f8f297edf54204 ]
 
-On enable, subs->opened is set before the service_interval is validated;
-an invalid interval jumps to the response label without clearing it, so
-the substream is wedged at -EBUSY until a disable or disconnect.
+Commit b64aa11eb2dd ("PCI: Set bridge map_irq and swizzle_irq to default
+functions") moved the assignment of default .map_irq() callback to
+devm_of_pci_bridge_init() and removed the initialization of
+'iproc_pcie::map_irq' in platform bus driver.  This led to the callback
+getting assigned the NULL pointer for platform bus driver, thereby breaking
+the INTx functionality, since 'iproc_pcie::map_irq' overrides the
+'pci_host_bridge::map_irq' callback in iproc_pcie_setup().
 
-Clear subs->opened on the enable error path.
+This issue only affected the iproc platform bus driver as this driver
+relies on the default callback for non-PAXC controllers. iproc-brcm driver
+was already providing the custom mapping function, so it was unaffected.
 
-Fixes: 326bbc348298a ("ALSA: usb-audio: qcom: Introduce QC USB SND offloading support")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260618025126.1862954-3-michael.bommarito@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Restore the original (and intended) behaviour to use the default map_irq
+function by removing the local 'iproc_pcie::map_irq' pointer and directly
+assigning the 'pci_host_bridge::map_irq' callback in iproc-bcma driver.
+This ensures that the default 'map_irq' callback is used for platform bus
+driver and only iproc-brcm driver overrides it with a custom one.
+
+Fixes: b64aa11eb2dd ("PCI: Set bridge map_irq and swizzle_irq to default functions")
+Signed-off-by: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+[mani: commit log]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Ray Jui <ray.jui@broadcom.com>
+Link: https://patch.msgid.link/20260430021628.1343154-1-mark.tomlinson@alliedtelesis.co.nz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/qcom/qc_audio_offload.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/pci/controller/pcie-iproc-bcma.c     | 2 +-
+ drivers/pci/controller/pcie-iproc-platform.c | 2 +-
+ drivers/pci/controller/pcie-iproc.c          | 1 -
+ drivers/pci/controller/pcie-iproc.h          | 2 --
+ 4 files changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
-index 621dca3587f853..ed833a43db6354 100644
---- a/sound/usb/qcom/qc_audio_offload.c
-+++ b/sound/usb/qcom/qc_audio_offload.c
-@@ -1625,8 +1625,13 @@ static void handle_uaudio_stream_req(struct qmi_handle *handle,
- 	if (req_msg->service_interval_valid) {
- 		ret = get_data_interval_from_si(subs,
- 						req_msg->service_interval);
--		if (ret == -EINVAL)
-+		if (ret == -EINVAL) {
-+			if (req_msg->enable) {
-+				guard(mutex)(&chip->mutex);
-+				subs->opened = 0;
-+			}
- 			goto response;
-+		}
+diff --git a/drivers/pci/controller/pcie-iproc-bcma.c b/drivers/pci/controller/pcie-iproc-bcma.c
+index 99a99900444de1..593418c2bc3aa6 100644
+--- a/drivers/pci/controller/pcie-iproc-bcma.c
++++ b/drivers/pci/controller/pcie-iproc-bcma.c
+@@ -64,7 +64,7 @@ static int iproc_bcma_pcie_probe(struct bcma_device *bdev)
+ 	if (ret)
+ 		return ret;
  
- 		datainterval = ret;
- 	}
+-	pcie->map_irq = iproc_bcma_pcie_map_irq;
++	bridge->map_irq = iproc_bcma_pcie_map_irq;
+ 
+ 	bcma_set_drvdata(bdev, pcie);
+ 
+diff --git a/drivers/pci/controller/pcie-iproc-platform.c b/drivers/pci/controller/pcie-iproc-platform.c
+index 0cb78c583c7ea4..4c9a0c4bb923e6 100644
+--- a/drivers/pci/controller/pcie-iproc-platform.c
++++ b/drivers/pci/controller/pcie-iproc-platform.c
+@@ -98,7 +98,7 @@ static int iproc_pltfm_pcie_probe(struct platform_device *pdev)
+ 	switch (pcie->type) {
+ 	case IPROC_PCIE_PAXC:
+ 	case IPROC_PCIE_PAXC_V2:
+-		pcie->map_irq = NULL;
++		bridge->map_irq = NULL;
+ 		break;
+ 	default:
+ 		break;
+diff --git a/drivers/pci/controller/pcie-iproc.c b/drivers/pci/controller/pcie-iproc.c
+index ccf71993ea3595..c22d0aecaaac55 100644
+--- a/drivers/pci/controller/pcie-iproc.c
++++ b/drivers/pci/controller/pcie-iproc.c
+@@ -1502,7 +1502,6 @@ int iproc_pcie_setup(struct iproc_pcie *pcie, struct list_head *res)
+ 
+ 	host->ops = &iproc_pcie_ops;
+ 	host->sysdata = pcie;
+-	host->map_irq = pcie->map_irq;
+ 
+ 	ret = pci_host_probe(host);
+ 	if (ret < 0) {
+diff --git a/drivers/pci/controller/pcie-iproc.h b/drivers/pci/controller/pcie-iproc.h
+index 969ded03b8c2da..c4443f236ca3bb 100644
+--- a/drivers/pci/controller/pcie-iproc.h
++++ b/drivers/pci/controller/pcie-iproc.h
+@@ -61,7 +61,6 @@ struct iproc_msi;
+  * @base_addr: PCIe host controller register base physical address
+  * @mem: host bridge memory window resource
+  * @phy: optional PHY device that controls the Serdes
+- * @map_irq: function callback to map interrupts
+  * @ep_is_internal: indicates an internal emulated endpoint device is connected
+  * @iproc_cfg_read: indicates the iProc config read function should be used
+  * @rej_unconfig_pf: indicates the root complex needs to detect and reject
+@@ -91,7 +90,6 @@ struct iproc_pcie {
+ 	phys_addr_t base_addr;
+ 	struct resource mem;
+ 	struct phy *phy;
+-	int (*map_irq)(const struct pci_dev *, u8, u8);
+ 	bool ep_is_internal;
+ 	bool iproc_cfg_read;
+ 	bool rej_unconfig_pf;
 -- 
 2.53.0
 
