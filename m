@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB33517A2F6;
-	Tue, 21 Jul 2026 19:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478EC17A2F6;
+	Tue, 21 Jul 2026 19:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661495; cv=none; b=gKjY0We+LkU8x1wwd3z1uDJCl8JOeJGqGat/aC8fLZ1TjJpLQ1Zg0p/gb358uGGNcVpVlp+An2kUNTjPLreohSQjJ/6x4mMao3rpkbucfv9ynpDtjjnwoB0tHxLrcNPErwowhYhFh0qluZIFgjwFqifIQsxe+sqB2zv+XIS3bNk=
+	t=1784661498; cv=none; b=D91W/Ep33B1PGd9V0U8/27dj3WejzLdn96+PO2Ns9I/ZV7sX9RDB0OR1KCMRxLBdKDS72Y0Gt78HjBR3s11UJHA5Os+pfIAMRdFWuJv/WrMt0S4gNxPlqtTTJjh2RgP17ftzVlP+FudGu/uR8LJFvb4V2mJweddHrx45d2W2zv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661495; c=relaxed/simple;
-	bh=HlTs5PnU+6B87eQ7v0L/FHp8NrlUS99gWxd1I5gEz6A=;
+	s=arc-20240116; t=1784661498; c=relaxed/simple;
+	bh=jfGv9u/6mLBBEK6KH4hd4gjbFQppxaTjgNKsMQvVnK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V7a2BhF/L/T6Un38415pjOgEuySncPWCaTzTfvTMA8hGZg5H2W/oWWZcE4f3omzZwf4jW1AC6yGBbpFL5S+R8Srsc82HJsM5fo9c60hK14OlqJ/lEy4iMetDhMalUFExhncCP3ezJY8PEIYi7wFkRStaCExzihDWnSGkDUnOvR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZSxSJxR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ENAOknX5u1VCKvcE9hRY5uxzhG6y5/z0t6uuXyui08hwNjye1IwolTf1eOeo+Ze6IMvs+0YE9dLPiFnXaWJs0k0pGdyvz6FT8BxU9vg15RWcEPe0cNGjELd+7KzirxtsfXiRRY18aD0rdqNA6SGvasyG1myeC0sW4HBS/J9kC2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvzonfaC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZSxSJxR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C431F000E9;
-	Tue, 21 Jul 2026 19:18:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvzonfaC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B18D71F000E9;
+	Tue, 21 Jul 2026 19:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661494;
-	bh=1DY/PNeli4GyhShUObLkajwCWKDUiIzLbDEShD8G/9k=;
+	s=korg; t=1784661497;
+	bh=y7sfKlfFrkqmhJwa9uEfSJ3GfD3GmgPGubK0i3ds70k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vZSxSJxR0dY6sqvDCcL5vkKH5fJPtUXjc098XSc9OsEJJiQBgi//fDLewKed3gy5P
-	 2pjhptjg//UrcfilK5lafzrhz7T0vXXCDdKRF4ue76crVlEJ8IrysZYxpLAl1VYUBO
-	 pLfnqWQfSitB46Up2NH8CQAqDDXWjUaIRfa0406A=
+	b=jvzonfaC4r9a+H/ivzfvFlpgAJEkx1dug6OdgzPARXuRO+3QCLrcFPU8Pjg03OxIy
+	 lbeeJ7DmeJa0loGloYWsOUbeAZRc3Bdxn2fTDfPt6ONdmhpLgRtjJK9mLXvua33gIV
+	 vs/MzCDzJMZv7rEg8ezzxx1wPWd7Y9U5AWPnvRUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
+	Paul Kocialkowski <paulk@sys-base.io>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0086/1276] watchdog: sprd_wdt: Remove redundant sprd_wdt_disable() on register failure
-Date: Tue, 21 Jul 2026 17:08:49 +0200
-Message-ID: <20260721152448.018941488@linuxfoundation.org>
+Subject: [PATCH 6.12 0087/1276] media: cedrus: Fix failure to clean up hardware on probe failure
+Date: Tue, 21 Jul 2026 17:08:50 +0200
+Message-ID: <20260721152448.041447776@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,47 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Samuel Holland <samuel@sholland.org>
 
-[ Upstream commit 96b3cfc3b8ad0524d12fed1e08bc5df3ff345f64 ]
+[ Upstream commit f0a22f1d602ed499a192284de5e811a73421f0c7 ]
 
-The driver uses devm_add_action_or_reset() to register sprd_wdt_disable()
-as a managed cleanup action.
+If V4L2 device fails to register, then SRAM still be claimed and as a
+result driver will not be able to probe again.
 
-When devm_watchdog_register_device() fails, the devm core will invoke
-the cleanup action automatically.
+ cedrus 1c0e000.video-codec: Failed to claim SRAM
+ cedrus 1c0e000.video-codec: Failed to probe hardware
+ cedrus 1c0e000.video-codec: probe with driver cedrus failed with error -16
 
-The explicit sprd_wdt_disable() call in the error path is therefore
-redundant and results in adouble cleanup.
+cedrus_hw_remove undoes everything that was previously done by
+cedrus_hw_probe, such as disabling runtime power management and
+releasing the claimed SRAM and reserved memory region.
 
-Fixes: 78d9bfad2e89 ("watchdog: sprd_wdt: Convert to use device managed functions and other improvements")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20260223-sprd_wdt-v1-1-2e71f9a76ecb@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+Signed-off-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+Fixes: 50e761516f2b ("media: platform: Add Cedrus VPU decoder driver")
+Acked-by: Paul Kocialkowski <paulk@sys-base.io>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/sprd_wdt.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/staging/media/sunxi/cedrus/cedrus.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/sprd_wdt.c b/drivers/watchdog/sprd_wdt.c
-index 4e689b6ff1418c..aacf04616fefe2 100644
---- a/drivers/watchdog/sprd_wdt.c
-+++ b/drivers/watchdog/sprd_wdt.c
-@@ -320,10 +320,9 @@ static int sprd_wdt_probe(struct platform_device *pdev)
- 	watchdog_init_timeout(&wdt->wdd, 0, dev);
+diff --git a/drivers/staging/media/sunxi/cedrus/cedrus.c b/drivers/staging/media/sunxi/cedrus/cedrus.c
+index f52df683604525..992b30e5ccac05 100644
+--- a/drivers/staging/media/sunxi/cedrus/cedrus.c
++++ b/drivers/staging/media/sunxi/cedrus/cedrus.c
+@@ -478,7 +478,7 @@ static int cedrus_probe(struct platform_device *pdev)
+ 	ret = v4l2_device_register(&pdev->dev, &dev->v4l2_dev);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Failed to register V4L2 device\n");
+-		return ret;
++		goto err_hw;
+ 	}
  
- 	ret = devm_watchdog_register_device(dev, &wdt->wdd);
--	if (ret) {
--		sprd_wdt_disable(wdt);
-+	if (ret)
- 		return ret;
--	}
-+
- 	platform_set_drvdata(pdev, wdt);
+ 	vfd = &dev->vfd;
+@@ -539,6 +539,8 @@ static int cedrus_probe(struct platform_device *pdev)
+ 	v4l2_m2m_release(dev->m2m_dev);
+ err_v4l2:
+ 	v4l2_device_unregister(&dev->v4l2_dev);
++err_hw:
++	cedrus_hw_remove(dev);
  
- 	return 0;
+ 	return ret;
+ }
 -- 
 2.53.0
 
