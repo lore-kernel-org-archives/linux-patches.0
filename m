@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E4831F99C;
-	Tue, 21 Jul 2026 15:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59CAA3B635A;
+	Tue, 21 Jul 2026 15:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648723; cv=none; b=C9FZ9MKBa6O3sJ3jOhbpgbhMBMcOwQF9kRnQvVS8gYlrcBZJ5zRnfoSD2jUObab4+A8mTOEOKYARrkNnuR4A+5DtCGvG/Yk9wX7pUzuZD5h7KX5xRv+Zke6H/xjkTCY0PITdD7JIpyOaJjY+ZxLxq2/uD/rvwMRiDCZPqqFbsbw=
+	t=1784648727; cv=none; b=URJ3Jv/sJMzT88Tg27gsl5VObcQZj420HxwwGNo8XsghbhaI2Xq8W6moMC2XzgpjDQzcBcvAPb3Ejm6OjlFld0YewALHLVqAmKd/pI0Zg8NPZfo8FKBefdLR9WCQarMdFpm549xNo8a6S5wNICoa1IWe5vwsZifcMIvp2eCH45I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648723; c=relaxed/simple;
-	bh=1GtBVF0e9XXvU0DJgjvryQRImvfBLv9GKrYMrOz5RRg=;
+	s=arc-20240116; t=1784648727; c=relaxed/simple;
+	bh=egOE1el0elvPCWp0d8qf+ymFDH/WHCk/KMt16JIcPCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aDuV6xzqS6Phagk515EJWJ36YGfH3pbmVf3WiYuReb9uU0Ef3WkAdu51GXyXL0Tk1DopkBq6Jb3wLn+dlDtEu+7GuDruGY81uz5/bxOZxbY4klsfKWNvkxPIX2UlbCe18sjUu5Q0XtRUWJOz+hCHY3iGplmfWHqxJCwxY/x9H/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0sbB0J/W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nJzxCoiibxNhY84h+0bxn+1RLicfKa5UfWBvomIKWAINRLtoLFfzl2/J+QZ1jPrcEcJKVymGLr9wCRUL+GWTIBm/76ZKvWRgpmbquyHQeeRqhEUEVCpyubBG5rygoZ96HJ56rOXOYbDrQ/njUyMr4kUF0BURrK1kNZWttGehaks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BmqaWNcy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0sbB0J/W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173831F000E9;
-	Tue, 21 Jul 2026 15:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BmqaWNcy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B58001F000E9;
+	Tue, 21 Jul 2026 15:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648722;
-	bh=Y+jaYMH8Sk8PHklMCB1aRqkImfXJ3AP2LuHw0PmtD64=;
+	s=korg; t=1784648725;
+	bh=gs3wK9udExQdY7BKSmRHiFzvwjxdQdmiZl3JBsPkEkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0sbB0J/WvIJRIcRSMBiXc8+c0CcF0r8TMUFUut9+IPD8db9MUzZlJ4XVqifhfvCJl
-	 HG5rERV0O1fgSwQNE2gpscGw14Cf+vfAi5nbihHQOSPtU6COkXg/x0WtB+RZEQ1ctt
-	 EHlr+/pB5j/7ApZvvdDxECC64RUMm5ixWApVumzE=
+	b=BmqaWNcySj5eQ0SuH0NHJdPGJyl4Utti200p3YGzw9/MMXi2YuWdYH9yKhuUEG8Nw
+	 l/CMfeLe6VDJpMsn8CM33OsKA5KiYkonm9BkF2jBSV9A0RYWrp8MKfxVmitOCqOSTw
+	 F7S1IOBbv/YuqneWuC1vpjFpajL1ZNI4tysGqX4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0306/2077] ACPI: PAD: Fix teardown ordering in acpi_pad_remove()
-Date: Tue, 21 Jul 2026 16:59:39 +0200
-Message-ID: <20260721152559.895467753@linuxfoundation.org>
+Subject: [PATCH 7.1 0307/2077] RDMA/counter: Fix incorrect port index in rdma_counter_init() error cleanup
+Date: Tue, 21 Jul 2026 16:59:40 +0200
+Message-ID: <20260721152559.919913561@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,42 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Tao Cui <cuitao@kylinos.cn>
 
-[ Upstream commit 5776575d9a7e50e77c45e0ab0271c000496f341d ]
+[ Upstream commit b86fd95805a7bd4c5b9465c9e7f75e45bbe7eb6f ]
 
-The ACPI notify handler installed by acpi_pad_probe() needs to be
-removed before calling acpi_pad_idle_cpus() in acpi_pad_remove()
-so it doesn't schedule idle time injection on some CPUs again.
+The error cleanup loop in rdma_counter_init() iterates with variable
+'i' but accesses dev->port_data[port] instead of dev->port_data[i].
+This causes the failed port's hstats to be freed multiple times while
+leaking hstats of previously initialized ports.
 
-Fixes: 8e0af5141ab9 ("ACPI: create Processor Aggregator Device driver")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2064153.usQuhbGJ8B@rafael.j.wysocki
+Fixes: 56594ae1d250 ("RDMA/core: Annotate destroy of mutex to ensure that it is released as unlocked")
+Link: https://patch.msgid.link/r/20260520104546.1776253-3-cuitao@kylinos.cn
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_pad.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/core/counters.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpi_pad.c b/drivers/acpi/acpi_pad.c
-index ec94b09bb74716..bff702835cfebb 100644
---- a/drivers/acpi/acpi_pad.c
-+++ b/drivers/acpi/acpi_pad.c
-@@ -435,12 +435,12 @@ static int acpi_pad_probe(struct platform_device *pdev)
+diff --git a/drivers/infiniband/core/counters.c b/drivers/infiniband/core/counters.c
+index c3aa6d7fc66b6e..5dad5d77ce2747 100644
+--- a/drivers/infiniband/core/counters.c
++++ b/drivers/infiniband/core/counters.c
+@@ -661,7 +661,7 @@ void rdma_counter_init(struct ib_device *dev)
  
- static void acpi_pad_remove(struct platform_device *pdev)
- {
-+	acpi_dev_remove_notify_handler(ACPI_COMPANION(&pdev->dev),
-+				       ACPI_DEVICE_NOTIFY, acpi_pad_notify);
-+
- 	mutex_lock(&isolated_cpus_lock);
- 	acpi_pad_idle_cpus(0);
- 	mutex_unlock(&isolated_cpus_lock);
--
--	acpi_dev_remove_notify_handler(ACPI_COMPANION(&pdev->dev),
--				       ACPI_DEVICE_NOTIFY, acpi_pad_notify);
- }
- 
- static const struct acpi_device_id pad_device_ids[] = {
+ fail:
+ 	for (i = port; i >= rdma_start_port(dev); i--) {
+-		port_counter = &dev->port_data[port].port_counter;
++		port_counter = &dev->port_data[i].port_counter;
+ 		rdma_free_hw_stats_struct(port_counter->hstats);
+ 		port_counter->hstats = NULL;
+ 		mutex_destroy(&port_counter->lock);
 -- 
 2.53.0
 
