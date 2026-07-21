@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CBC44AB9F;
-	Tue, 21 Jul 2026 22:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0EF939733E;
+	Tue, 21 Jul 2026 22:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674589; cv=none; b=XXIE7EIXlURcL8wu6Yd2B37IAQ0eauH82fOMJYo+toU8zDBGBAzXbX6ipTLLHHUO8cLaoJIQ7FQPAxcQV5Y13dJKgApnHCl96hvJpKxPCJuzHPR0H2OddIRikkp3XPFMzBZJ+oj4NENy+/SatpeOE2fErnsePYhRttAob1CRWvY=
+	t=1784674592; cv=none; b=CN+0a+4svQzZP731SpESjhaXeOV0uay4HVU1P+Xh8kWLPNyitDTlsIYd35KKjQBXg8wVmwBEYGHdljAGvb8K26GE985klc+uu/6FoOEaAxtSM7xB1pJdLa0hItKJuxaLCaUcH3kpZ8pGygFXAyI7UkVSotIrwXO799UntaqFtCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674589; c=relaxed/simple;
-	bh=dSTH9mrTDvam8e9RrQ5eEX63/H3vu/DKh3S+s8ibEl0=;
+	s=arc-20240116; t=1784674592; c=relaxed/simple;
+	bh=DURbs3tsiEKzzwKguyqRq2dccXYCZ7mMP8n/UkoQdWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=izEbIBKtcd8XDASzO5WAJ+ha1vwck9h+ChiW7k+kNe5bVLgLKHBAfeSLYINTXcXDERCVNo8dK417OMAYL9gkTr4NjIrwUd2mFqtbhM17iQAxkqmcapzawTOGU5CrrnXAbLeJ5DydLPDn5rooorCSbAmuKPL/yUF3WptS8aDPDjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0HRVUyNL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WfoQaB8qEcDzIfJQYk0fMHPUKfmDgTj2adDUH++yTdOkmXSTnh44GY4OjLpgG4vooyzSPD5ynwpAiNRcr9LwaQVYKDTrMbIDABrJQLFoOgI4XrMP3hvQwuO9X0UwGblG2sHUnP75dskUfJgVWgWa464reNtwuT+nTZROEn3xA/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oM89sI8Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0HRVUyNL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498321F00A3A;
-	Tue, 21 Jul 2026 22:56:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oM89sI8Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34B41F000E9;
+	Tue, 21 Jul 2026 22:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674588;
-	bh=04GSSgxNM8IjS2UnqVLrXaG6e7kDDwONgw4idPKIl1Q=;
+	s=korg; t=1784674591;
+	bh=KmWa9PM3PsHGWrjvCHjVgUydll545phlqHyFqnJ+OkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0HRVUyNLZQXvDjxsGpxbI7ufXx7QKxjBQ9954ceE0FSQgVAgzHebmbRAXwhRTux5O
-	 knBAiPSE1dNswyiZRaGqmPCduusDnFm+CKY9Bqnx0nY+i3BE6vaClvAmNkZObNRiy6
-	 I41/OCssSl5pp+NmFzbgL5f+1kQWk3yknJ3G9uB4=
+	b=oM89sI8YApZm3pRaJbxR9n5UODC7sFSP5mq2OlmRUdYzChvGKJiI8U3zUjJxtoODQ
+	 YtDnbScc1YYH5cyOKXSLs7EyW1MOFiQSwBYfm+gerswt0IvCj0szKUgQGsA1XZP1Hk
+	 LaBCSOhI5wXfuxtxDkAaCQLDhlXi7N7N3WQmL4Oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Williamson <alex.williamson@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Alex Williamson <alex@shazbot.org>,
+	stable <stable@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 599/699] vfio/pci: Release the VGA arbiter client on register_device() failure
-Date: Tue, 21 Jul 2026 17:25:58 +0200
-Message-ID: <20260721152409.242978322@linuxfoundation.org>
+Subject: [PATCH 5.10 600/699] binder: fix UAF in binder_free_transaction()
+Date: Tue, 21 Jul 2026 17:25:59 +0200
+Message-ID: <20260721152409.265908767@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,43 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Williamson <alex.williamson@nvidia.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-[ Upstream commit daedde7f024ecf88bc8e832ed40cf2c795f0796a ]
+[ Upstream commit f223d27a546c1e1f48d38fd67760e78f068fe8c4 ]
 
-The re-order in the Fixes commit below displaced vfio_pci_vga_init() as
-the last failure point of what is now vfio_pci_core_register_device()
-without introducing an unwind for the VGA arbiter registration.
+In binder_free_transaction(), the t->to_proc is read under the t->lock.
+However, once the t->lock is dropped, the to_proc can die in parallel.
+This leads to a use-after-free error when we attempt to acquire its
+inner lock right afterwards:
 
-In current kernels this is mostly benign because vfio_pci_set_decode()
-only uses pci_dev state, but the original failure path could leave a
-callback with a freed vdev cookie.  The stale registration also becomes
-unsafe again once the callback follows drvdata to the vfio device.
+  ==================================================================
+  BUG: KASAN: slab-use-after-free in _raw_spin_lock+0xe4/0x1a0
+  Write of size 4 at addr ffff00001125da70 by task B/672
 
-Add the required VGA unwind callout.
+  CPU: 20 UID: 0 PID: 672 Comm: B Not tainted 7.1.0-rc6-00284-g8e65320d91cd #4 PREEMPT
+  Hardware name: linux,dummy-virt (DT)
+  Call trace:
+   _raw_spin_lock+0xe4/0x1a0
+   binder_free_transaction+0x8c/0x320
+   binder_send_failed_reply+0x21c/0x2f8
+   binder_thread_release+0x488/0x7e0
+   binder_ioctl+0x12c0/0x29a0
+  [...]
 
-Fixes: 4aeec3984ddc ("vfio/pci: Re-order vfio_pci_probe()")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20260615191241.688297-3-alex.williamson@nvidia.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+  Allocated by task 675:
+   __kmalloc_cache_noprof+0x174/0x444
+   binder_open+0x118/0xb70
+   do_dentry_open+0x374/0x1040
+   vfs_open+0x58/0x3bc
+  [...]
+
+  Freed by task 212:
+   __kasan_slab_free+0x58/0x80
+   kfree+0x1a0/0x4a4
+   binder_proc_dec_tmpref+0x32c/0x5e0
+   binder_deferred_func+0xc48/0x104c
+   process_one_work+0x53c/0xbc0
+  [...]
+  ==================================================================
+
+To prevent this, pin the target thread (t->to_thread) to guarantee the
+target process remains alive. Undelivered transactions without a target
+thread are already safe, as the target process can only be the current
+context in those paths.
+
+Cc: stable <stable@kernel.org>
+Reported-by: Alice Ryhl <aliceryhl@google.com>
+Closes: https://lore.kernel.org/all/aikJKVuny_eOivwN@google.com/
+Fixes: a370003cc301 ("binder: fix possible UAF when freeing buffer")
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20260619185233.2194678-2-cmllamas@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/pci/vfio_pci.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/android/binder.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/vfio/pci/vfio_pci.c
-+++ b/drivers/vfio/pci/vfio_pci.c
-@@ -2094,6 +2094,7 @@ static int vfio_pci_probe(struct pci_dev
- out_power:
- 	if (!disable_idle_d3)
- 		vfio_pci_set_power_state(vdev, PCI_D0);
-+	vfio_pci_vga_uninit(vdev);
- out_vf:
- 	vfio_pci_vf_uninit(vdev);
- out_reflck:
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -1909,10 +1909,19 @@ static void binder_free_txn_fixups(struc
+ 
+ static void binder_free_transaction(struct binder_transaction *t)
+ {
++	struct binder_thread *target_thread;
+ 	struct binder_proc *target_proc;
+ 
+ 	spin_lock(&t->lock);
+ 	target_proc = t->to_proc;
++	target_thread = t->to_thread;
++	/*
++	 * Pin target_thread to keep target_proc alive. Undelivered
++	 * transactions with !target_thread are safe, as target_proc
++	 * can only be the current context there.
++	 */
++	if (target_thread)
++		atomic_inc(&target_thread->tmp_ref);
+ 	spin_unlock(&t->lock);
+ 
+ 	if (target_proc) {
+@@ -1921,6 +1930,10 @@ static void binder_free_transaction(stru
+ 			t->buffer->transaction = NULL;
+ 		binder_inner_proc_unlock(target_proc);
+ 	}
++
++	if (target_thread)
++		binder_thread_dec_tmpref(target_thread);
++
+ 	/*
+ 	 * If the transaction has no target_proc, then
+ 	 * t->buffer->transaction has already been cleared.
 
 
