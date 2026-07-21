@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA61C43634C;
-	Tue, 21 Jul 2026 20:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D95B43634C;
+	Tue, 21 Jul 2026 20:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665325; cv=none; b=fZnplQYevAagVacbJ0I71WiAMK4SwrFJhkQnMnTo/TtUcLTxd4tLhSU12lVm4sS6lScn8bZ4WzVIEUtcyLzaJDHeKXMn+yvlEcYfTtc8eR46wDj7bOLRoMSyHPymdu/vBF/8ZIRIaUu3Na699Bi4J/wiMRKxVmXEkaE4qMd2DaY=
+	t=1784665327; cv=none; b=Zz06vrLkxWm2mPmAZgLVmDhbZ/ebqdHoic7ZSVX2BzTOjnjtVs/KoW8ZgxqjeWOk0J5paJLA/G/iIcGBMQWLbdZWr7sazlm8cdJwOiY+3x2P1ROfzZL/DQHkS+R8Sw2RSmAp4Z2gMbt18sRvsQ8xCUUjYtdZn6nvzNB99/Jmaoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665325; c=relaxed/simple;
-	bh=rFWBIiaxzQM99FjYdTFlCym3SjqT0bqYXxctM+rlim4=;
+	s=arc-20240116; t=1784665327; c=relaxed/simple;
+	bh=4cZsnhke9HezrsR2G+NFBgBHMMOXM1t0P/AhwtqHW40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eJwrkMZkoUxa7OCnEhIChA6/mhjLMWtWMaRuArdJAyw3tpjZsqAPRjNMQFOYCbrsoOoT/Lae1JKo+9WMXSGHgi0VAWdsxlu5wwJ4DA0gJdtIQ3IPYubVp5FIbllGTpQCwn6DwlYyXhuonqbM2K6f5vmEvw1F+i50uPv2Mk9+qEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVGoep74; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FGLGYcIBsDIsXx4MSNaRlMKh5041UnsUTeWoMY/SHaa1ahdIo/09sDlvoklCnjA+mPGmEKv8J501Wq6Y/VybSMwygta9jao0wk4OXO2pPw6eBiFe+KyVCKLYV+JpBeOZTS4WDEOzpze9M5TGcSKMSqjxAtnWl/vY0g+9uZCV5X4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0eAnQra; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVGoep74"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46ADB1F000E9;
-	Tue, 21 Jul 2026 20:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0eAnQra"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F681F000E9;
+	Tue, 21 Jul 2026 20:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665323;
-	bh=Q4KztNn4Ck69WW+Jb1C7P0KiDVeyHeTgWI0LdhoNFc8=;
+	s=korg; t=1784665326;
+	bh=6GQKOdUv8h5qUAybMBqMzaIQjbeb6CQR9qMQZg+y3nA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LVGoep74Vue6sY0AVsjSBQo1a47WEFMxLTjfn7sS6um6N5efhENZT4jTr6y5h2mMW
-	 SSuPW6gNhrpVRJJWta/IBlba2xy7xF+3EHso8+yX8epxI62oV/HzFnMyApp02lVi7q
-	 cu3hK252aIx4LIFW4iN4ASBFR6KGeqXvwlJ/SOC8=
+	b=z0eAnQraD/YFLklbjFEUHM3Myu3KCloSMQ8OtnNKoNj3lSq2ahElS/2Z2E+c0NtJy
+	 7ryghPNcmCGFH/2nNlDjmfOOGMTg832D0+9PwGgusDWvbIbSBXjLTr25Lfdu88uAtf
+	 RFGszHgaxxbD1+FAu+oaJsKpUQ6ospsa2i1DSJiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.6 0260/1266] udf: validate free block extents against the partition length
-Date: Tue, 21 Jul 2026 17:11:37 +0200
-Message-ID: <20260721152447.635287036@linuxfoundation.org>
+Subject: [PATCH 6.6 0261/1266] udf: validate VAT header length against the VAT inode size
+Date: Tue, 21 Jul 2026 17:11:38 +0200
+Message-ID: <20260721152447.657909359@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,65 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 5f0419457f89dce1a3f1c8e62a3adf2f39ab8168 upstream.
+commit d8202786b3d75125c84ebc4de6d946f92fde0ee8 upstream.
 
-udf_free_blocks() checks the logical block number and count against the
-partition length, but drops the extent offset from that final bound.  A
-crafted extent can pass the guard while logicalBlockNum + offset + count
-points past the partition, which later indexes past the space bitmap
-array.
+udf_load_vat() takes the virtual partition's start offset straight from
+the on-disk VAT 2.0 header without checking it against the VAT inode
+size:
 
-A single ftruncate(2) on a file backed by such an extent reliably
-panics the kernel.  This is a local availability issue.  On desktop
-systems where UDisks/polkit allows the active user to mount removable
-UDF media without CAP_SYS_ADMIN, an unprivileged local user can supply
-the crafted filesystem and trigger the panic by truncating a writable
-file on it.  Systems that require root or CAP_SYS_ADMIN to mount the
-image have a higher prerequisite.
+	map->s_type_specific.s_virtual.s_start_offset =
+		le16_to_cpu(vat20->lengthHeader);
+	map->s_type_specific.s_virtual.s_num_entries =
+		(sbi->s_vat_inode->i_size -
+			map->s_type_specific.s_virtual.s_start_offset) >> 2;
 
-No confidentiality or integrity impact is claimed: the reproduced
-primitive is an out-of-bounds read of a bitmap pointer slot followed by
-a kernel panic.
+lengthHeader is a fully attacker-controlled 16-bit value.  If it exceeds
+the VAT inode size, the s_num_entries subtraction underflows to a huge
+count, which defeats the "block > s_num_entries" bound in
+udf_get_pblock_virt15(); and on the ICB-inline path that function reads
 
-Use the already computed logicalBlockNum + offset + count value for the
-partition length check.  Also make load_block_bitmap() reject an
-out-of-range block group before indexing s_block_bitmap[], so corrupted
-callers cannot walk past the flexible array.
+	((__le32 *)(iinfo->i_data + s_start_offset))[block]
 
-Fixes: 56e69e59751d ("udf: prevent integer overflow in udf_bitmap_free_blocks()")
+so a large s_start_offset indexes past the inode's in-ICB data.  Mounting
+a crafted UDF image with a virtual (VAT) partition then triggers an
+out-of-bounds read.
+
+Reject a VAT whose header length does not leave room for at least one
+entry within the VAT inode.
+
+Fixes: fa5e08156335 ("udf: Handle VAT packed inside inode properly")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260515142327.1120767-1-michael.bommarito@gmail.com
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260612-b4-disp-9a2317ee-v1-1-fefef5736154@proton.me
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/balloc.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/udf/super.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/udf/balloc.c
-+++ b/fs/udf/balloc.c
-@@ -82,8 +82,9 @@ static int __load_block_bitmap(struct su
- 	int nr_groups = bitmap->s_nr_groups;
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -1232,6 +1232,14 @@ static int udf_load_vat(struct super_blo
  
- 	if (block_group >= nr_groups) {
--		udf_debug("block_group (%u) > nr_groups (%d)\n",
-+		udf_debug("block_group (%u) >= nr_groups (%d)\n",
- 			  block_group, nr_groups);
-+		return -EFSCORRUPTED;
- 	}
- 
- 	if (bitmap->s_block_bitmap[block_group]) {
-@@ -679,7 +680,7 @@ void udf_free_blocks(struct super_block
- 
- 	if (check_add_overflow(bloc->logicalBlockNum, offset, &blk) ||
- 	    check_add_overflow(blk, count, &blk) ||
--	    bloc->logicalBlockNum + count > map->s_partition_len) {
-+	    blk > map->s_partition_len) {
- 		udf_debug("Invalid request to free blocks: (%d, %u), off %u, "
- 			  "len %u, partition len %u\n",
- 			  partition, bloc->logicalBlockNum, offset, count,
+ 		map->s_type_specific.s_virtual.s_start_offset =
+ 			le16_to_cpu(vat20->lengthHeader);
++		if (map->s_type_specific.s_virtual.s_start_offset
++		    > sbi->s_vat_inode->i_size) {
++			udf_err(sb, "Corrupted VAT header length %u (VAT inode size %lld)\n",
++				map->s_type_specific.s_virtual.s_start_offset,
++				sbi->s_vat_inode->i_size);
++			brelse(bh);
++			return -EFSCORRUPTED;
++		}
+ 		map->s_type_specific.s_virtual.s_num_entries =
+ 			(sbi->s_vat_inode->i_size -
+ 				map->s_type_specific.s_virtual.
 
 
