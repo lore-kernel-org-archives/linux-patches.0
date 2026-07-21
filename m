@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14AA43F4AF;
-	Tue, 21 Jul 2026 21:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EBA415F33;
+	Tue, 21 Jul 2026 21:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668013; cv=none; b=GETEiY+WnyLxoqmjGDSC4+wi29xBGJW77zF/0YJ//LX+rxjYbHS3VnSBq744tT++qLvmJCkumCWE4FZHPaaP8pvxKVPz4fLU3fXr3ZvkMMvqok0WhY7ms69uiAw/4O5nSk8WMk13vws1ZqYWfIZ4voaWK2Ql9KuuYpPcwBsWAAg=
+	t=1784668016; cv=none; b=kOFVO5PP0E5CxTvH4SjDNVDLG6HKxlShCeis5DYbePrcKp8wA7c+qYKSaZtYt69pYW75UtOXtR9B6R39uJZB+8vh5L4uUu4cbJAXCunYeilyj+czf1kpykhschDnmEJozSTvZOM//3Ul7RELwP3W4QUpJlPDLTWfgn5r7ZYjmro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668013; c=relaxed/simple;
-	bh=X2HXRpDaT+q0vI2iht3XzQjgi14Q0lC86dufmUdUVeM=;
+	s=arc-20240116; t=1784668016; c=relaxed/simple;
+	bh=I2BUarSx0t5Qk/GuOvmneCk9WRXRWlga27qnMeMYmj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=doPnAi61AHXi/Ugck7NI1oyxa2sxIEM3iZDQ1ohuWr3w8pViJyuTkDCgrVoGpFlrUO4MV4+Y40lbJTTVeURPRwNVksz8HKmFcOl3b5VXFxlPfZVjosUUUoIBeV9K6vwZl8Qu5Q50QcoDW39RoQAnkkqVeB733v+3ZiKnlkYu9bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V269P78F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TF+rZrwFeEzcwMXDo79OBWJwVRLWIfKzU/d5VCNZllDf/6Y7xEjI6IGh4LuT6JZihWUrCiQlmeaoW90oCqsRdCjnC29G8NKjesc2V3nHG38EkmccKBgiPYbVQ7Hddbk8+4d3oit3unlz4ZM3JFEhUxN/e+e30RZD8IXHrU7OCeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdJ6XkPp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V269P78F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D50F1F000E9;
-	Tue, 21 Jul 2026 21:06:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdJ6XkPp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A2F1F000E9;
+	Tue, 21 Jul 2026 21:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668012;
-	bh=mlP3mONh/pioxx4r7hXhPngcG72rcDcaT/IqK6Ngg8E=;
+	s=korg; t=1784668015;
+	bh=dFnPPdniVR1yT403QPUfXQVF1qE7f/b8qTmUpxsmcAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V269P78Fa42B8n6n7CZpk/gA8knS1dHkoSVjI5Ouvh+0euE/CILqsydUnjG+oCkp8
-	 p0JwPJGjJKuv24JEoPms4mfNQbqMjbXpoU1AWQqtBPi5o3DiQPA1RbPYxEBdwC7S43
-	 yE5gkHWHsF+pcR0NqDDITdDFQaRZSmfpp5B3uoc4=
+	b=kdJ6XkPpM+aYFL6sr/e/ax8pB+a8/VzIsdx81NPsns+h4IEZlysJBRZgmseebBHWI
+	 4XuUJk5Jm4zTaz4eY1C3yabL36s/5saxXq3+ihGXhD8Swpykz+qn5s26PvRRctvbHp
+	 +y/qZeyVpT+zQC2gBKLcBevMC0+EaHvgmYWc8eUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0016/1067] f2fs: validate orphan inode entry count
-Date: Tue, 21 Jul 2026 17:10:17 +0200
-Message-ID: <20260721152424.895496590@linuxfoundation.org>
+Subject: [PATCH 6.1 0017/1067] f2fs: bound i_inline_xattr_size for non-inline-xattr inodes
+Date: Tue, 21 Jul 2026 17:10:18 +0200
+Message-ID: <20260721152424.919088908@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,78 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 846c499a65816d13f1186e3090e825e8bb8bcb8b ]
+[ Upstream commit 378acf3cf19b6af6cba55e8dd1154c4e1504bae8 ]
 
-f2fs_recover_orphan_inodes() trusts the orphan block entry_count when
-replaying orphan inodes from the checkpoint pack. A corrupted entry_count
-larger than F2FS_ORPHANS_PER_BLOCK makes the recovery loop read past the
-ino[] array and interpret footer or following data as inode numbers.
+When the flexible_inline_xattr feature is enabled, do_read_inode() loads
+the on-disk i_inline_xattr_size unconditionally:
 
-On a crafted image, mounting an unpatched kernel can drive orphan recovery
-into f2fs_bug_on() and panic the kernel. Validate entry_count before
-consuming entries so corrupted checkpoint data fails the mount with
--EFSCORRUPTED and requests fsck instead.
+	if (f2fs_sb_has_flexible_inline_xattr(sbi))
+		fi->i_inline_xattr_size = le16_to_cpu(ri->i_inline_xattr_size);
 
-Set ERROR_INCONSISTENT_ORPHAN as well, so the corruption reason can be
-recorded in the superblock s_errors[] field. This gives fsck a persistent
-hint even though mount-time orphan recovery failure may leave no chance to
-persist SBI_NEED_FSCK through a checkpoint.
+but sanity_check_inode() only range-checks it when the inode also has the
+FI_INLINE_XATTR flag set.  An inode that carries an inline dentry or inline
+data but not FI_INLINE_XATTR -- the normal layout for an inline
+directory -- therefore keeps a fully attacker-controlled
+i_inline_xattr_size from a crafted image.
 
-Cc: stable@kernel.org
-Fixes: 127e670abfa7 ("f2fs: add checkpoint operations")
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+get_inline_xattr_addrs() returns that value with no flag gating, so it
+feeds the inode geometry:
+
+	MAX_INLINE_DATA()  = 4 * (CUR_ADDRS_PER_INODE - i_inline_xattr_size - 1)
+	NR_INLINE_DENTRY() = MAX_INLINE_DATA() * BITS_PER_BYTE / (...)
+	addrs_per_page()   = CUR_ADDRS_PER_INODE - i_inline_xattr_size
+
+A large i_inline_xattr_size drives MAX_INLINE_DATA() and NR_INLINE_DENTRY()
+negative, so make_dentry_ptr_inline() sets d->max (int) to a negative
+value.  The inline directory walk then compares an unsigned long bit_pos
+against that negative d->max, which is promoted to a huge unsigned bound,
+and reads far past the inline area:
+
+	while (bit_pos < d->max)		/* fs/f2fs/dir.c */
+		... test_bit_le(bit_pos, d->bitmap) / d->dentry[bit_pos] ...
+
+Mounting a crafted image and reading such a directory triggers an
+out-of-bounds read in f2fs_fill_dentries(); the same underflow also
+corrupts ADDRS_PER_INODE for regular files.
+
+Validate i_inline_xattr_size against MAX_INLINE_XATTR_SIZE whenever the
+flexible_inline_xattr feature is enabled -- i.e. whenever the value is
+loaded from disk and consumed -- and keep the lower MIN_INLINE_XATTR_SIZE
+bound gated on inodes that actually carry an inline xattr, so legitimate
+inodes with i_inline_xattr_size == 0 are still accepted.
+
+Cc: stable@vger.kernel.org
+Fixes: 6afc662e68b5 ("f2fs: support flexible inline xattr size")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/checkpoint.c    |   14 +++++++++++++-
- include/linux/f2fs_fs.h |    3 +++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ fs/f2fs/inode.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/fs/f2fs/checkpoint.c
-+++ b/fs/f2fs/checkpoint.c
-@@ -743,6 +743,7 @@ int f2fs_recover_orphan_inodes(struct f2
- 	for (i = 0; i < orphan_blocks; i++) {
- 		struct page *page;
- 		struct f2fs_orphan_block *orphan_blk;
-+		unsigned int entry_count;
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -242,14 +242,15 @@ static bool sanity_check_inode(struct in
+ 		return false;
+ 	}
  
- 		page = f2fs_get_meta_page(sbi, start_blk + i);
- 		if (IS_ERR(page)) {
-@@ -751,7 +752,18 @@ int f2fs_recover_orphan_inodes(struct f2
- 		}
- 
- 		orphan_blk = (struct f2fs_orphan_block *)page_address(page);
--		for (j = 0; j < le32_to_cpu(orphan_blk->entry_count); j++) {
-+		entry_count = le32_to_cpu(orphan_blk->entry_count);
-+		if (entry_count > F2FS_ORPHANS_PER_BLOCK) {
-+			f2fs_err(sbi, "invalid orphan inode entry count %u",
-+				 entry_count);
-+			set_sbi_flag(sbi, SBI_NEED_FSCK);
-+			f2fs_handle_error(sbi, ERROR_INCONSISTENT_ORPHAN);
-+			err = -EFSCORRUPTED;
-+			f2fs_put_page(page, 1);
-+			goto out;
-+		}
-+
-+		for (j = 0; j < entry_count; j++) {
- 			nid_t ino = le32_to_cpu(orphan_blk->ino[j]);
- 
- 			err = recover_orphan_inode(sbi, ino);
---- a/include/linux/f2fs_fs.h
-+++ b/include/linux/f2fs_fs.h
-@@ -104,6 +104,9 @@ enum f2fs_error {
- 	ERROR_INCONSISTENT_SIT,
- 	ERROR_CORRUPTED_VERITY_XATTR,
- 	ERROR_CORRUPTED_XATTR,
-+	ERROR_INVALID_NODE_REFERENCE,
-+	ERROR_INCONSISTENT_NAT,
-+	ERROR_INCONSISTENT_ORPHAN,
- 	ERROR_MAX,
- };
- 
+-	if (f2fs_has_extra_attr(inode) &&
+-		f2fs_sb_has_flexible_inline_xattr(sbi) &&
+-		f2fs_has_inline_xattr(inode) &&
+-		(!fi->i_inline_xattr_size ||
+-		fi->i_inline_xattr_size > MAX_INLINE_XATTR_SIZE)) {
++	if (f2fs_sb_has_flexible_inline_xattr(sbi) &&
++		(fi->i_inline_xattr_size > MAX_INLINE_XATTR_SIZE ||
++		(f2fs_has_inline_xattr(inode) &&
++		fi->i_inline_xattr_size <
++			sizeof(struct f2fs_xattr_header) / sizeof(__le32)))) {
+ 		set_sbi_flag(sbi, SBI_NEED_FSCK);
+-		f2fs_warn(sbi, "%s: inode (ino=%lx) has corrupted i_inline_xattr_size: %d, max: %zu",
++		f2fs_warn(sbi, "%s: inode (ino=%lx) has corrupted i_inline_xattr_size: %d, min: %zu, max: %zu",
+ 			  __func__, inode->i_ino, fi->i_inline_xattr_size,
++			  sizeof(struct f2fs_xattr_header) / sizeof(__le32),
+ 			  MAX_INLINE_XATTR_SIZE);
+ 		return false;
+ 	}
 
 
