@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5F037647B;
-	Tue, 21 Jul 2026 20:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D066F37647B;
+	Tue, 21 Jul 2026 20:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665744; cv=none; b=Z/urCsXJ3SVFSBuJWaTFEsgaKFJ0HFhyW4d2cWg0PFmwu16HrFtxSV02k3adzujREORt7M3iMcgqLFlnWmc8Lupqg9gUVxuaThWtVSGnvhG89G7wcfYbMA8Yj7hOElgUKJ9Y/ruHB7ElDjo91yaZTDUsVhmyTVN0EDxgtdWdQKQ=
+	t=1784665746; cv=none; b=Jd5ElhBSJ4QvMOj13f/YjFdfGql7Io3p6pxki/c95GC91D4wFZJGbkgkX6qx1S63FxRrempwLh/mqZAD/ZNmL0TudRs+CfpOvLme6YvLM0bU+W78V1RaqcdLpRcgfThsW++/UZxda+dQF2cNbsO0qGcQbHyb12Vua9colv5niDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665744; c=relaxed/simple;
-	bh=UR9aESDyXpM7QK738Rg3Ih6qe0xNEXSexz3TPjMDWzY=;
+	s=arc-20240116; t=1784665746; c=relaxed/simple;
+	bh=LzM4XWaFqtUMfFWEbxDefO+kwjdRUlHVlzdHC1191QI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MnzN6FB6UTYfTHw0KuLRPfyVqoSieOCqw8c1u9i6VGjAt25VwZuWWD4QnrlZWYAg4kUOYEUeyThBmU8iVZ2/DngMs0A5cF/uK+CpRTuIQ0ebYY9AKwEpOKMlNZgoGJIEzn6FqpKMb2V9DZ9yz53rqivX5p90nXIq/EP42M/OCQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A7AN0tYu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nyyZtgRGtdU2yEOcFhKpK+rahp4tOh2d+Di2BvLGgWt2TiCCAOoJ46/tugLGT7QpSEtJUB9C94XTwSN/EcDMYYe2OfM2q9uJsX17oxn7NKW/jIR7UpOW6uyr5P5TCK0f4R8LuKZ6XU0q7ETbKAOAiutAyB/c/ibJGCTlmaO+A7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2VUXoJL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7AN0tYu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 633EA1F000E9;
-	Tue, 21 Jul 2026 20:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2VUXoJL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13801F000E9;
+	Tue, 21 Jul 2026 20:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665742;
-	bh=CbdQ7klW1csh8cRiX4JObU/uiTi4NVLAa1mEStCtKzk=;
+	s=korg; t=1784665745;
+	bh=dfeuQadHxNjksi67KR1wmYxDeHsmjeKWbu9VMf29rsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A7AN0tYuHssCY7pSO8Adt9MQU2IZ+A1UugAthvq0CYjJ6II8TKMyCSh6nQmHLIQXi
-	 0NjQ/EDzd4Q/RcAMJcFz5IKUAHBgNUwTfrt9+T3OlCf2aK/tKu6/xyAaiQU+7OzDt+
-	 SIZQTq6fgIAgHDwVyR/ifMsd2tkw3vbEmxPLvyTg=
+	b=p2VUXoJLxBUJ+bNjSuh0zAJcZUcnsQKFoByKB7PQoTFQ4I+w1KN9CJmGvZDXIdnxP
+	 sH9oN+knik/cSz0/9Q1uepUzWgZeAagrmgMtU3/gQHYV3kd+7B1VBjCSwm++HnNbIu
+	 ca6M7Ne5QhDAXKqrcf02DAEBR+0w/vhfymymOehw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Stepan Ionichev <sozdayvek@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0412/1266] firmware: arm_scmi: Read sensor config as 32-bit value
-Date: Tue, 21 Jul 2026 17:14:09 +0200
-Message-ID: <20260721152451.057963042@linuxfoundation.org>
+Subject: [PATCH 6.6 0421/1266] device property: fix fwnode reference leak in fwnode_graph_get_endpoint_by_id()
+Date: Tue, 21 Jul 2026 17:14:18 +0200
+Message-ID: <20260721152451.261176668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,39 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-[ Upstream commit f6fe7c3c007df18afd289ff2d98c692fae9ab085 ]
+[ Upstream commit 9582485a65eacfd7245ec7f0a9d7e2c34749d669 ]
 
-The SENSOR_CONFIG_GET response contains a 32-bit sensor_config field,
-and the xfer is initialized with a 4-byte RX buffer. Reading it with
-get_unaligned_le64() can consume bytes past the returned payload.
+When called with FWNODE_GRAPH_ENDPOINT_NEXT, the function walks every
+endpoint under the requested port and, for any endpoint whose ID is
+greater than or equal to the requested one, may store a fwnode
+reference in best_ep via fwnode_handle_get(). If a later iteration
+finds an exact-ID match, the function returns that endpoint directly
+without dropping the reference held by best_ep, leaking it.
 
-Use get_unaligned_le32() to match the protocol layout and the allocated
-response size.
+Drop the saved candidate before returning the exact-match endpoint.
 
-Fixes: 7b83c5f41088 ("firmware: arm_scmi: Add SCMI v3.0 sensor configuration support")
-Link: https://patch.msgid.link/20260517-scmi_fixes-v1-1-d86daec4defd@kernel.org
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+This affects callers that use FWNODE_GRAPH_ENDPOINT_NEXT to ask for
+the next endpoint with ID >= the requested one (used by a number of
+media drivers, e.g. imx7/8, sun6i CSI, omap3isp, xilinx-csi2,
+stm32-csi). Each leak retains a fwnode reference until reboot/unbind.
+
+Fixes: 0fcc2bdc8aff ("device property: Add fwnode_graph_get_endpoint_by_id()")
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Link: https://patch.msgid.link/20260514171455.27271-1-sozdayvek@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/sensors.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/property.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/arm_scmi/sensors.c b/drivers/firmware/arm_scmi/sensors.c
-index 0b5853fa9d874f..4e3e937cb92c18 100644
---- a/drivers/firmware/arm_scmi/sensors.c
-+++ b/drivers/firmware/arm_scmi/sensors.c
-@@ -777,7 +777,7 @@ static int scmi_sensor_config_get(const struct scmi_protocol_handle *ph,
- 	if (!ret) {
- 		struct scmi_sensor_info *s = si->sensors + sensor_id;
+diff --git a/drivers/base/property.c b/drivers/base/property.c
+index ea93fc8ba59273..f0dd0d46c04b2c 100644
+--- a/drivers/base/property.c
++++ b/drivers/base/property.c
+@@ -1207,8 +1207,10 @@ fwnode_graph_get_endpoint_by_id(const struct fwnode_handle *fwnode,
+ 		if (fwnode_ep.port != port)
+ 			continue;
  
--		*sensor_config = get_unaligned_le64(t->rx.buf);
-+		*sensor_config = get_unaligned_le32(t->rx.buf);
- 		s->sensor_config = *sensor_config;
- 	}
+-		if (fwnode_ep.id == endpoint)
++		if (fwnode_ep.id == endpoint) {
++			fwnode_handle_put(best_ep);
+ 			return ep;
++		}
  
+ 		if (!endpoint_next)
+ 			continue;
 -- 
 2.53.0
 
