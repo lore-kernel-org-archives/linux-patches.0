@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34C144AB88;
-	Tue, 21 Jul 2026 21:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F28C44AB6D;
+	Tue, 21 Jul 2026 21:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668745; cv=none; b=uK/HLO2dwYkmURbbV0mu9rJlJa8s7yy+NihEmAZWW7hbYV52pXbADpb69qWksC/aCUWRtGWHqhE4dB0jE9PFuO36UjK8HY/QdCM4k6o3I0lTNGnEOPELqZ4vyse5pwIbQzTpdQdzgG2Q9+UVff1xj1VBMaRzgVQSW7I3lpzKuPk=
+	t=1784668748; cv=none; b=Y3vtWb/tLt5n0GnxiZeLt1FlCOx4cQ1qZbTwuGk4lyNMiH+rwZDCNmRtQgtAXhpKEsfd8ExoTwKeFtqiO4ZvorSGTabrxsE1v/vlX6SyG3lkqbU/kKPFhSWz2dJckizNLy7eFZF8KN1fLyvEHLNW33N0sQCc9W1Injzpy93V2OU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668745; c=relaxed/simple;
-	bh=CsmmKAiK5V9n2NHv7K7NnxZZo+gxuCinxgqSCTH7e4A=;
+	s=arc-20240116; t=1784668748; c=relaxed/simple;
+	bh=1bxYmMEa/VlsDnKaeUvVc79K5A+BMA1OF+fxRmZxRpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fbl14hUBmIls2+cLLYBbnCcwql4sUc6QX1SCKArFpK7qDAGlqDI7enpSqPROsO14xCo2HYrP7BwCiQ+S6RBK2WQsuxaK/sB1Elz43PyEuQNegK5oIryAo/Ao2KTMuZeLuHf3uWt7XQaanKwdnau+7EkIg9Rw2BonN9llJaUbLVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KEdVQB4/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N7RtwU7CzAtHcrnqM+5l9K3V5ewY7CcSJLDEruZvY6QFv+d84veAAlCKikjhKmLqIUe8Tdt+DBfyi4KmkENJx/oohmPbsRoS3L9N7PXPe1lnuMY0pDQGypr+bn8EhQ2JxdXqcUEC1sZ5bxMZkN65cbnnhzZYdeEua4zt0DYQUoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRJpyOR/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KEdVQB4/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B921F000E9;
-	Tue, 21 Jul 2026 21:19:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRJpyOR/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C4F1F000E9;
+	Tue, 21 Jul 2026 21:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668744;
-	bh=HUTWBQPflxVYrdqeHk8mxlqiNVyiwFcGoYsoqoz6S1E=;
+	s=korg; t=1784668747;
+	bh=zByUnNpCqhbNL6zugLCizfWwBmUTpjk8zOc4DsJmPv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KEdVQB4/BCXbA5TywyIv9gHusGXDm6EGaiEPIhT1OS7d7vGNSwj9q0IEcAwV55/tJ
-	 /HTq7KQscdGl//0atOHEqnuYrBzzqltFelVQBFxuXBiVXXALkyqdlw69Dv7GWPEh7z
-	 2o9eGWkE8PKq6K78my9TFs6oU3kdKzY4YngXHIJo=
+	b=tRJpyOR/Ywdq23a5bKbo4desQt6LoG6uSxsSjs8vMf8HpmPHQ8Wxy8yejniwQLuAq
+	 qRa5npXaqtVdXtQJ+KzjYbD3g6Y6S8mevnvCSUKGRm+C6MAgI81jwnFKvUtzGsGQHY
+	 AeGbjb0O/kYCqx6svecn5do2jYonoOggozMNznyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	David Yat Sin <david.yatsin@amd.com>,
-	Rajneesh Bhardwaj <rajneesh.bhardwaj@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0285/1067] drm/amdkfd: Validate CRIU-restored IDs before idr_alloc
-Date: Tue, 21 Jul 2026 17:14:46 +0200
-Message-ID: <20260721152430.977908673@linuxfoundation.org>
+Subject: [PATCH 6.1 0294/1067] pinctrl: sunxi: fix regulator leak in sunxi_pmx_request() error path
+Date: Tue, 21 Jul 2026 17:14:55 +0200
+Message-ID: <20260721152431.179282228@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -55,92 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 85043dd49c2f51a37b22618168e3ae59ab92f0d6 ]
+[ Upstream commit 334f7bcbdc79dc8e5b938ac3372453a5368221cf ]
 
-The KFD CRIU restore flow restores previously saved object IDs from
-userspace.
+In the error path of sunxi_pmx_request(), the code calls
+regulator_put(s_reg->regulator) to release the regulator. However,
+s_reg->regulator is only assigned after a successful regulator_enable().
+This causes a memory leak: the regulator obtained via regulator_get()
+is never properly released when regulator_enable() fails.
 
-For event restore:
-
-  kfd_criu_restore_event()
-      -> create_signal_event() / create_other_event()
-          -> allocate_event_notification_slot()
-              -> idr_alloc(..., *restore_id, *restore_id + 1, ...)
-
-For BO restore:
-
-  criu_restore_memory_of_gpu()
-      -> idr_alloc(..., bo_priv->idr_handle, ...)
-
-In both cases, the restored ID comes from userspace-provided CRIU data.
-
-idr_alloc() expects the ID range values to fit within signed int
-limits. If a restored ID is larger than INT_MAX, it can trigger a WARN
-in the IDR layer.
-
-A kernel WARN is undesirable because it prints a warning trace and may
-cause a panic or reboot on systems with panic_on_warn enabled.
-
-Smatch reported these paths as allowing unchecked userspace values to
-reach idr_alloc().
-
-Add INT_MAX validation before using restored IDs in:
-
-- kfd_criu_restore_event()
-- criu_restore_memory_of_gpu()
-
-If the restored ID is invalid, return -EINVAL.
-
-This prevents invalid restore data from reaching the IDR layer and
-avoids WARN-triggering paths, while keeping valid restore behavior
-unchanged.
-
-Fixes: 40e8a766a761 ("drm/amdkfd: CRIU checkpoint and restore events")
-Reported-by: Dan Carpenter <error27@gmail.com>
-Cc: Felix Kuehling <Felix.Kuehling@amd.com>
-Cc: David Yat Sin <david.yatsin@amd.com>
-Cc: Rajneesh Bhardwaj <rajneesh.bhardwaj@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: David Yat Sin <david.yatsin@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: dc1445584177 ("pinctrl: sunxi: Fix and simplify pin bank regulator handling")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 3 +++
- drivers/gpu/drm/amd/amdkfd/kfd_events.c  | 5 +++++
- 2 files changed, 8 insertions(+)
+ drivers/pinctrl/sunxi/pinctrl-sunxi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index 2002ab2f14ab1c..4853a8b43f08b4 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -2233,6 +2233,9 @@ static int criu_restore_memory_of_gpu(struct kfd_process_device *pdd,
- 	const bool criu_resume = true;
- 	u64 offset;
+diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi.c b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
+index df2e721297fc9d..508aa911c8d995 100644
+--- a/drivers/pinctrl/sunxi/pinctrl-sunxi.c
++++ b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
+@@ -878,7 +878,7 @@ static int sunxi_pmx_request(struct pinctrl_dev *pctldev, unsigned offset)
+ 	return 0;
  
-+	if (bo_priv->idr_handle > INT_MAX)
-+		return -EINVAL;
-+
- 	if (bo_bucket->alloc_flags & KFD_IOC_ALLOC_MEM_FLAGS_DOORBELL) {
- 		if (bo_bucket->size != kfd_doorbell_process_slice(pdd->dev))
- 			return -EINVAL;
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_events.c b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-index 14f1f14e16d73e..3f4cb39c852525 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-@@ -478,6 +478,11 @@ int kfd_criu_restore_event(struct file *devkfd,
- 	}
- 	*priv_data_offset += sizeof(*ev_priv);
+ out:
+-	regulator_put(s_reg->regulator);
++	regulator_put(reg);
  
-+	if (ev_priv->event_id > INT_MAX) {
-+		ret = -EINVAL;
-+		goto exit;
-+	}
-+
- 	if (ev_priv->user_handle) {
- 		ret = kfd_kmap_event_page(p, ev_priv->user_handle);
- 		if (ret)
+ 	return ret;
+ }
 -- 
 2.53.0
 
