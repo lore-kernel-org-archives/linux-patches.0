@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603D146EF9A;
-	Tue, 21 Jul 2026 19:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C75470102;
+	Tue, 21 Jul 2026 19:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661264; cv=none; b=M75AqosqZIHWYlRpjWn70mtM1y0DaXFRhKCaabpXcU7cOrOiwQKZdDnOITNwkR6q1sM1LQQRjHzNZOLWvHg/XJC/GE6RWQgEEjyESys32D6C60HNwnTRp+tK553juDuG0hr6jP6cx59ub3yKD+wlxkgi+UyE5d/+uajSA40JaVk=
+	t=1784661266; cv=none; b=JMkmcmJB2u8cxBnUX0V85qChHLRc4gqnhSVeJdSa+HuIXcB9p0D2As39HSqy4utXL3eQ8dDKRvhIrDkHU4zQJ0cMfIHe60dpZNJ/lGM2kEOaMy1GT5y+Fw/2E/BDka7UNc/wtkpmz37WdyIUj725/A+8q2nXmHhT4quHrkxK6ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661264; c=relaxed/simple;
-	bh=P/whtWMLAIxkAuLJ3pZqHe44KvgCcrTc7zKu2Nm0Frk=;
+	s=arc-20240116; t=1784661266; c=relaxed/simple;
+	bh=Slc0nuDEsZ6SOqR+OGK/aIqYodK/Z+Czic2v63z/kiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kWdGcS2lnY7TriODhnx/5XAPOEBOiKpkP2tzG9aqFmen/c6vULyNk1BYUWrlDp0S/zaL9NsjgIZc75no4xk14EOyeMx3nkATTvAcdN3M+nJrZoqiTaXKOXioiCl+NhjoEeWTgytEHYDTKUQth7ekDmjVvXkW9vc9y5fNh72+sT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SXBnctNe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YkTbLK30tXX7dmUZW/Aas8YiFjTAqCMsUTHlxxQO8hDY+flcz1U2uAavPdwDfYQs7nw4fIqD79JMzwtbxKqdt0lY2kWcERewe/TzvPzQYxzh9VMp1BmUxoUzsmtSjOCxorPUq2eRCha45XUHhftoChrvgocktNhm7WXQ1bsGi5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLOwG3Tp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SXBnctNe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E4A1F000E9;
-	Tue, 21 Jul 2026 19:14:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLOwG3Tp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B502D1F00A3A;
+	Tue, 21 Jul 2026 19:14:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661261;
-	bh=eHMrOCJM3aZrjIh6h0yqnAwru/U18I63K21IsKWKahI=;
+	s=korg; t=1784661264;
+	bh=WIuLoM3bvIPO/1OEkHl12kNxPko/YZup/HXhuRPSqQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SXBnctNewfCAACEQzim8X9OvWi+sgCXETWbuDm7x9qoLG3MnCTaVxlTbmcmQL2YL+
-	 l9+xSvltvDA78ufPtU8oVjyJwcN5hpEG1fjGv8qPtUE/OUiCPcNPx37JkJxpDDGjBy
-	 wNhxNkgvgEMrDxDw20DcxoCNVZk+kjDgJWN+dUts=
+	b=BLOwG3TpmxAH4C0FWLZpKlME9GWGOMnhs9EqllkbAQfxQltu5WFzpyZcsODv4P5fC
+	 5lsqElKO2DR8tRgKFblNsXklW05Q2wnJcK9eOmqXB9N8DXU1I7VNSKtizFj/4YBD+p
+	 0YT7NKlAc/czw4QLj0EuCtkdg+u0G8zhSFf3qBo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doehyun Baek <doehyunbaek@gmail.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1249/2077] Docs/driver-api/uio-howto: document mmap_prepare callback
-Date: Tue, 21 Jul 2026 17:15:22 +0200
-Message-ID: <20260721152622.272749935@linuxfoundation.org>
+Subject: [PATCH 7.1 1250/2077] net, bpf: check master for NULL in xdp_master_redirect()
+Date: Tue, 21 Jul 2026 17:15:23 +0200
+Message-ID: <20260721152622.296063354@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,46 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doehyun Baek <doehyunbaek@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit de5c46373eb8148aa92c024cf30d26a6d495e278 ]
+[ Upstream commit e82d8cc4321c373dc46e741cd2dfdaa7921fddb7 ]
 
-The UIO howto still documents an mmap callback in struct uio_info.
-That field was replaced by mmap_prepare, which takes a struct
-vm_area_desc.
+xdp_master_redirect() dereferences the result of
+netdev_master_upper_dev_get_rcu() without a NULL check, but that helper
+returns NULL when the receiving device has no upper-master adjacency.
 
-A UIO driver following the current howto no longer builds because
-struct uio_info has no mmap member. Update the documented callback
-signature and matching text to match the current API.
+The reach guard only checks netif_is_bond_slave(). On bond slave release
+bond_upper_dev_unlink() drops the upper-master adjacency before clearing
+IFF_SLAVE, so an XDP_TX reaching xdp_master_redirect() in that window
+still passes netif_is_bond_slave() while master is already NULL, and
+faults on master->flags at offset 0xb0:
 
-Fixes: 933f05f58ac6 ("uio: replace deprecated mmap hook with mmap_prepare in uio_info")
-Signed-off-by: Doehyun Baek <doehyunbaek@gmail.com>
-Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Message-ID: <20260622181821.1195257-1-doehyunbaek@gmail.com>
+  BUG: kernel NULL pointer dereference, address: 00000000000000b0
+  RIP: 0010:xdp_master_redirect (net/core/filter.c:4432)
+  Call Trace:
+   xdp_master_redirect (net/core/filter.c:4432)
+   bpf_prog_run_generic_xdp (include/net/xdp.h:700)
+   do_xdp_generic (net/core/dev.c:5608)
+   __netif_receive_skb_one_core (net/core/dev.c:6204)
+   process_backlog (net/core/dev.c:6319)
+   __napi_poll (net/core/dev.c:7729)
+   net_rx_action (net/core/dev.c:7792)
+   handle_softirqs (kernel/softirq.c:622)
+   __dev_queue_xmit (include/linux/bottom_half.h:33)
+   packet_sendmsg (net/packet/af_packet.c:3082)
+   __sys_sendto (net/socket.c:2252)
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+The missing check dates back to the original code; commit 1921f91298d1
+("net, bpf: fix null-ptr-deref in xdp_master_redirect() for down master")
+later added the master->flags read where the fault now lands but kept the
+unconditional deref. Check master for NULL before use; a NULL master is
+treated the same as one that is not up.
+
+Fixes: 879af96ffd72 ("net, core: Add support for XDP redirection to slave device")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260620201531.180123-1-xmei5@asu.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/driver-api/uio-howto.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/core/filter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/driver-api/uio-howto.rst b/Documentation/driver-api/uio-howto.rst
-index 907ffa3b38f5b7..c08472dfbcfeb3 100644
---- a/Documentation/driver-api/uio-howto.rst
-+++ b/Documentation/driver-api/uio-howto.rst
-@@ -246,10 +246,10 @@ the members are required, others are optional.
-    hardware interrupt number. The flags given here will be used in the
-    call to :c:func:`request_irq()`.
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 77984b5fada4cd..f21aeff99cc983 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -4433,7 +4433,7 @@ u32 xdp_master_redirect(struct xdp_buff *xdp)
+ 	struct net_device *master, *slave;
  
---  ``int (*mmap)(struct uio_info *info, struct vm_area_struct *vma)``:
-+-  ``int (*mmap_prepare)(struct uio_info *info, struct vm_area_desc *desc)``:
-    Optional. If you need a special :c:func:`mmap()`
-    function, you can set it here. If this pointer is not NULL, your
--   :c:func:`mmap()` will be called instead of the built-in one.
-+   ``mmap_prepare`` will be called instead of the built-in one.
- 
- -  ``int (*open)(struct uio_info *info, struct inode *inode)``:
-    Optional. You might want to have your own :c:func:`open()`,
+ 	master = netdev_master_upper_dev_get_rcu(xdp->rxq->dev);
+-	if (unlikely(!(master->flags & IFF_UP)))
++	if (unlikely(!master || !(master->flags & IFF_UP)))
+ 		return XDP_ABORTED;
+ 	slave = master->netdev_ops->ndo_xdp_get_xmit_slave(master, xdp);
+ 	if (slave && slave != xdp->rxq->dev) {
 -- 
 2.53.0
 
