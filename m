@@ -1,37 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077EE403AE2;
-	Tue, 21 Jul 2026 17:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15323D3321;
+	Tue, 21 Jul 2026 17:19:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654353; cv=none; b=MinwaD87T5ecV/B7Q7Rhl/DsB96XLivkejuUNi/PmPt2HlCicSvJtBqHlE8PQzWmnMLupgfuDhzz3L4lSZL3CnJo0PqCfpw9udUOdir95NJClWdUrYKPot0TwtiA/yfpn505agrrBNay7wTsNvcTUgSP8toMi+xdi1umJO5/aPY=
+	t=1784654356; cv=none; b=pL3sqhFTt1PAu8Z2c+uoY1bQUQVHDnV7Mvpjv4YJOYQW+4czSJhUJclDwo1QYSGTNLz36WUNRPRu/659OmCBZyNVNx2QKxzmlkyvcQuVaDwigE8Wh1ZoRQly6GPm5QZIrci8guCBQblI0ejTn3vzOCBYA5lfAOwv2LGeEKZaF84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654353; c=relaxed/simple;
-	bh=XNDRpB8jTIpPxGrQS/AO/gS7RjDLdNlHQbh4v3lw9Iw=;
+	s=arc-20240116; t=1784654356; c=relaxed/simple;
+	bh=5gMffgOBQ2N0XBHdQTy2bOCHhdo/evMLu3TeG5iQnhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O+2yA1f6dl1/CB/+dAFT/QsTF7eZvrsD4l8pvUh7WT3bpC/ILRA9wXpo4CVC9knv/7mqlFbu/jT2nzBFvXbkDjy+KsErhcPAFn2BMa9Zatb/MTC1lDFoue77jnsFgae7kRkoVveJdDQ7VWJjYlIEFFkTL9zKEoc5jVzCXGuaqZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XfB8bvX+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nNX+c89CWgfS0G3EJEGhWChQ5kMVW82Qr+pl0vkabAOIVtytlasJfwn8xAboF8jgl8QQ6hfFsl9U3Or4Mfs4Y7lHrSXMPEa2B9JXpx2slivDIJqeVs0Sdn8Of0Zh0SA7j6gsDNZRzo4fz4aRd3YRI1MZ73e7XYFfh9ATBOsdWMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uynyGTf3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfB8bvX+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650541F000E9;
-	Tue, 21 Jul 2026 17:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uynyGTf3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBCD51F000E9;
+	Tue, 21 Jul 2026 17:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654351;
-	bh=IDPbvKPBZLOB0AY9rb0QKWw1ubzdVFAqtqsA7Y90sOY=;
+	s=korg; t=1784654354;
+	bh=VLGbISWTQVB6rT0X+LepKlp6azNfwnji6RD+CT120oA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XfB8bvX+Sb782bbFBDhUwfEPDTzY2XhTFQQIIT+/zF+QDZ6vp9Jqyij0WeXByuJEh
-	 MtXNxCl14Rh8t/zq7mcgks39rafoFQ88n2fvDwxrhJxQmtk6X02xbEnZYYqtqBdNoE
-	 kTBBhWr9WDDq5IZEqWwAi5ZcISHnDA2G0ANB9maA=
+	b=uynyGTf3GYiWpb7v9ErYjucbIDctiuSdAjbk8OYdcWFjaUzqZ3thBBPmTDnu9LK8S
+	 1z1g2S9Mk5x1fM9SbFNtv5n1x6GPG6Mpm1lH6wTRC/SUWpZPd6+69YUaMLmKLg6PMC
+	 TzyOcnLAgl5xF0VTS3shuoro250yOTPYqryDWPf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 7.1 1673/2077] MIPS: DEC: Ensure 32-bit stack location for o32 prom_printf()
-Date: Tue, 21 Jul 2026 17:22:26 +0200
-Message-ID: <20260721152632.204881809@linuxfoundation.org>
+	Muchun Song <songmuchun@bytedance.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Michal Hocko <mhocko@suse.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.1 1674/2077] mm/mm_init: fix pageblock migratetype for ZONE_DEVICE compound pages
+Date: Tue, 21 Jul 2026 17:22:27 +0200
+Message-ID: <20260721152632.228877833@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,123 +63,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Muchun Song <songmuchun@bytedance.com>
 
-commit 5ff79e8bdc75db51e30298a75939e2308e7658e0 upstream.
+commit 94405c6136839f7c462249c8b4b957bcb9527a9d upstream.
 
-In 64-bit configurations calling any firmware entry points from a kernel
-thread other than the initial one will result in a situation where the
-stack has been placed in the XKPHYS 64-bit memory segment.
+The memmap_init_zone_device() function only initializes the migratetype of
+the first pageblock of a compound page.  If the compound page size exceeds
+pageblock_nr_pages (e.g., 1GB hugepages with 2MB pageblocks), subsequent
+pageblocks in the compound page remain uninitialized.
 
-Consequently the stack pointer is no longer a 32-bit value and when the
-32-bit firmware code called uses 32-bit ALU operations to manipulate the
-stack pointer, the calculated result is incorrect (in fact in the 64-bit
-MIPS ISA almost all 32-bit ALU operations will produce an unpredictable
-result when executed on 64-bit data) and control goes astray.
+Move the migratetype initialization out of __init_zone_device_page() and
+into a separate pageblock_migratetype_init_range() function.  This
+iterates over the entire PFN range of the memory, ensuring that all
+pageblocks are correctly initialized.
 
-This may happen when no final console driver has been enabled in the
-configuration and consequently the initial console continues being used
-late into bootstrap, or with an upcoming change that will switch the zs
-driver to use a platform device, which in turn will make the console
-handover happen only after other kernel threads have already been
-started, and the kernel will hang at:
+Also remove the stale confusing comment about MEMINIT_HOTPLUG above the
+migratetype setting since it is an obsolete relic from commit 966cf44f637e
+("mm: defer ZONE_DEVICE page initialization to the point where we init
+pgmap") and no longer makes sense here.
 
-  pid_max: default: 32768 minimum: 301
-
-or somewhat later, but always before:
-
-  cblist_init_generic: Setting adjustable number of callback queues.
-
-has been printed.
-
-It seems that only the prom_printf() entry point is affected.  Of all
-the other entry points wired only rex_slot_address() and rex_gettcinfo()
-are called from a kernel thread other than the initial one, specifically
-kernel_init(), and they are leaf functions that do no business with the
-stack, having worked with no issue ever since 64-bit support was added
-for the platform back in 2002.
-
-To address this issue then, arrange for the stack to be switched in the
-o32 wrapper as required for prom_printf() only, by supplying call_o32()
-with a pointer to a chunk of initdata space, which is placed in the
-CKSEG0 32-bit compatibility segment, observing that prom_printf() is
-only called from console output handler and therefore with the console
-lock held, implying no need for this code to be reentrant.
-
-Other firmware entry points may be called with interrupts enabled and no
-lock held, and may therefore require that call_o32() be reentrant.  They
-trigger no issue at this point and "if it ain't broke, don't fix it," so
-just leave them alone.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # v2.6.12+
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Link: https://lore.kernel.org/20260428081855.1249045-6-songmuchun@bytedance.com
+Fixes: c4386bd8ee3a ("mm/memremap: add ZONE_DEVICE support for compound pages")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Liam R. Howlett <liam@infradead.org>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/dec/prom/init.c        |    6 +++++-
- arch/mips/include/asm/dec/prom.h |   15 +++++++++++++--
- 2 files changed, 18 insertions(+), 3 deletions(-)
+ mm/mm_init.c |   34 +++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
---- a/arch/mips/dec/prom/init.c
-+++ b/arch/mips/dec/prom/init.c
-@@ -3,7 +3,7 @@
-  * init.c: PROM library initialisation code.
-  *
-  * Copyright (C) 1998 Harald Koerfgen
-- * Copyright (C) 2002, 2004  Maciej W. Rozycki
-+ * Copyright (C) 2002, 2004, 2026  Maciej W. Rozycki
-  */
- #include <linux/init.h>
- #include <linux/kernel.h>
-@@ -20,6 +20,10 @@
- #include <asm/dec/prom.h>
+--- a/mm/mm_init.c
++++ b/mm/mm_init.c
+@@ -674,6 +674,20 @@ static inline void fixup_hashdist(void)
+ static inline void fixup_hashdist(void) {}
+ #endif /* CONFIG_NUMA */
  
- 
-+#ifdef CONFIG_64BIT
-+unsigned long o32_stk[O32_STK_SIZE] __initdata = { 0 };
++#ifdef CONFIG_ZONE_DEVICE
++static __meminit void pageblock_migratetype_init_range(unsigned long pfn,
++		unsigned long nr_pages, int migratetype)
++{
++	const unsigned long end = pfn + nr_pages;
++
++	for (pfn = pageblock_align(pfn); pfn < end; pfn += pageblock_nr_pages) {
++		init_pageblock_migratetype(pfn_to_page(pfn), migratetype, false);
++		if (IS_ALIGNED(pfn, PAGES_PER_SECTION))
++			cond_resched();
++	}
++}
 +#endif
 +
- int (*__rex_bootinit)(void);
- int (*__rex_bootread)(void);
- int (*__rex_getbitmap)(memmap *);
---- a/arch/mips/include/asm/dec/prom.h
-+++ b/arch/mips/include/asm/dec/prom.h
-@@ -4,7 +4,7 @@
-  *
-  *	DECstation PROM interface.
-  *
-- *	Copyright (C) 2002  Maciej W. Rozycki
-+ *	Copyright (C) 2002, 2026  Maciej W. Rozycki
-  *
-  *	Based on arch/mips/dec/prom/prom.h by the Anonymous.
-  */
-@@ -97,6 +97,17 @@ extern int (*__pmax_close)(int);
- 
- #ifdef CONFIG_64BIT
- 
-+#define O32_STK_SIZE 512
-+extern unsigned long o32_stk[];
-+
-+/* Switch the stack if outside the 32-bit address space.  */
-+static inline unsigned long *o32_get_stk(void)
-+{
-+	long fp = (long)__builtin_frame_address(0);
-+
-+	return fp != (int)fp ? o32_stk + O32_STK_SIZE : NULL;
-+}
-+
  /*
-  * On MIPS64 we have to call PROM functions via a helper
-  * dispatcher to accommodate ABI incompatibilities.
-@@ -128,7 +139,7 @@ int __DEC_PROM_O32(_prom_printf, (int (*
+  * Initialize a reserved page unconditionally, finding its zone first.
+  */
+@@ -1012,21 +1026,6 @@ static void __ref __init_zone_device_pag
+ 	page->zone_device_data = NULL;
  
- #define prom_getchar()		_prom_getchar(__prom_getchar, NULL)
- #define prom_getenv(x)		_prom_getenv(__prom_getenv, NULL, x)
--#define prom_printf(x...)	_prom_printf(__prom_printf, NULL, x)
-+#define prom_printf(x...)	_prom_printf(__prom_printf, o32_get_stk(), x)
+ 	/*
+-	 * Mark the block movable so that blocks are reserved for
+-	 * movable at startup. This will force kernel allocations
+-	 * to reserve their blocks rather than leaking throughout
+-	 * the address space during boot when many long-lived
+-	 * kernel allocations are made.
+-	 *
+-	 * Please note that MEMINIT_HOTPLUG path doesn't clear memmap
+-	 * because this is done early in section_activate()
+-	 */
+-	if (pageblock_aligned(pfn)) {
+-		init_pageblock_migratetype(page, MIGRATE_MOVABLE, false);
+-		cond_resched();
+-	}
+-
+-	/*
+ 	 * ZONE_DEVICE pages other than MEMORY_TYPE_GENERIC are released
+ 	 * directly to the driver page allocator which will set the page count
+ 	 * to 1 when allocating the page.
+@@ -1122,6 +1121,9 @@ void __ref memmap_init_zone_device(struc
  
- #else /* !CONFIG_64BIT */
+ 		__init_zone_device_page(page, pfn, zone_idx, nid, pgmap);
  
++		if (IS_ALIGNED(pfn, PAGES_PER_SECTION))
++			cond_resched();
++
+ 		if (pfns_per_compound == 1)
+ 			continue;
+ 
+@@ -1129,6 +1131,8 @@ void __ref memmap_init_zone_device(struc
+ 				     compound_nr_pages(altmap, pgmap));
+ 	}
+ 
++	pageblock_migratetype_init_range(start_pfn, nr_pages, MIGRATE_MOVABLE);
++
+ 	pr_debug("%s initialised %lu pages in %ums\n", __func__,
+ 		nr_pages, jiffies_to_msecs(jiffies - start));
+ }
 
 
