@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090CA46AA80;
-	Tue, 21 Jul 2026 15:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B015746AA67;
+	Tue, 21 Jul 2026 15:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648176; cv=none; b=WnGsu6oa5vpsqT1HyGNcj5REIGaUuCawpSls9YcPn/K57HivNTYHqhT7LhliCr1wHFZPPBASdXA7CAi5Lvs6HNf76A8mZNtmzL4eAEJLmXxs9YIQicz56a7BTwLatr02R30kos7v/O8Px8b9BqI/N4h5IRO+oOoQdXnDjXFVMxM=
+	t=1784648178; cv=none; b=s0e5T/q63F/fwghPB0tm0DWYUy9lBOnA52nZbaLVXUaxPKlKg4hqFZqtokpoZc8FBURhj1zUwup5xzi/aBtZxuQvD3Fk1uNhz3Jx0mKFARYB7kIbqV4a2sKwBfykk/uCG5+kbZgZLS4D4958m65bKxXCzoHLFalAMvget3C1dgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648176; c=relaxed/simple;
-	bh=k8BJK5PVGc/lqs0Qi5VuUk1ayRY2ZSsWJxaopKBffWQ=;
+	s=arc-20240116; t=1784648178; c=relaxed/simple;
+	bh=2e8P0YOl+K+LjUh0E/vLIuBb4k46XD1/LqA6nN13IxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SVwbzQhth8+I0ldtXXvboZNC2HrtfGKPmE9zLGJCRqNzSV0dFU2nwwFCAb4Ztp//mX1Z4mvKW/aIEMehKzAHgjj3SazXlmRC76lrVQEV3GliE9MiNsQS79cgTwKij5g8mN79rMedqtIIHqVTpb4veJ1uwGRom5bhEoNsUW9NMs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVBvyRlm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t03sRXPVaYt31NxMwHtAJyvvfeGDpbMKPKzvfubp62v91pDdY5QB4iEi1d8aJzmKcwWdomfHIYtQ7s1KuIsJ1/zpFMsKVrfOUIA5hK+v6st+whTjGdTDrWtIlxthD/jJto2tf2uQ21ID4Ny8V0J+9YQGrXuZTxYvWpFYLHRkJg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+83v7IL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVBvyRlm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220191F000E9;
-	Tue, 21 Jul 2026 15:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+83v7IL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC05E1F000E9;
+	Tue, 21 Jul 2026 15:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648174;
-	bh=7tSOA2UOp4D973yoRpRIeQ5JIdKRWm7yoVSPAxEDqxI=;
+	s=korg; t=1784648177;
+	bh=shrX2qzp2h6nfwOiFa+/BojoJeXUrtLxIwVPhHimnHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tVBvyRlm0Lz4Wmy0R7X7mTyKWwaf40qeIokUBe0m9PPH9VQ2WeOJudZmUAkBmjl54
-	 3FdSNmDeP1W5qMblbK5plPMuwwz9u79jrhhurAO0Zetr57OZW0IG1sfmrJxmIGfjPs
-	 vhHKXqXopKyvSwxKJ8nI1enEs8DrNoIe5+8Q0H+M=
+	b=I+83v7ILKcXDyO6+cw/DKdwhcm+xrMqAGWtd/XJkVma6KKkzi3YCRGUviBGYW6mJJ
+	 UJHFK7oUe9v/x+E1fgqeLX8bVP4vdYUUK7qnfFKRIREJf5nHrdsHUrtfaFN8WaNq6x
+	 kUdBtSojJsMh/1cWXtZKEBkBZJsTV7WQkIej00yc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chin-Yen Lee <timlee@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0101/2077] wifi: rtw88: fix wrong pci_get_drvdata type in AER handlers
-Date: Tue, 21 Jul 2026 16:56:14 +0200
-Message-ID: <20260721152555.074459273@linuxfoundation.org>
+Subject: [PATCH 7.1 0084/2077] arm64: dts: qcom: glymur: Fix USB simple_bus_reg warning
+Date: Tue, 21 Jul 2026 16:55:57 +0200
+Message-ID: <20260721152554.677405442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,59 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chin-Yen Lee <timlee@realtek.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 706183dbef4a79d120d4e928f693bea50df496f8 ]
+[ Upstream commit cd66b6d256f94e40922941e14d7f9390d35d072b ]
 
-rtw88 stores an ieee80211_hw pointer via pci_set_drvdata() at probe
-time, but io_error_detected() and io_resume() retrieve it as a
-net_device pointer.  This causes netif_device_detach/attach to
-operate on an ieee80211_hw struct, reading and writing at wrong
-offsets.
+Correct the unit address of USB node in Qualcomm Glymur SoC DTSI to fix
+W=1 DTC warning:
 
-Use ieee80211_stop_queues/wake_queues instead, consistent with
-every other queue stop/start path in the driver.
+  glymur.dtsi:4027.23-4093.5: Warning (simple_bus_reg): /soc@0/usb@a2f8800: simple-bus unit address format error, expected "a200000"
 
-Fixes: cdb82c80b934 ("wifi: rtw88: pci: add PCI Express error handling")
-Signed-off-by: Chin-Yen Lee <timlee@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260413065926.17027-1-pkshih@realtek.com
+Fixes: 4eee57dd4df9 ("arm64: dts: qcom: glymur: Add USB related nodes")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260405-dts-qcom-w-1-fixes-v2-1-1f2c7b74a93f@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/pci.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/glymur.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/pci.c b/drivers/net/wireless/realtek/rtw88/pci.c
-index bba370ad510cf7..c56beacbb1b03f 100644
---- a/drivers/net/wireless/realtek/rtw88/pci.c
-+++ b/drivers/net/wireless/realtek/rtw88/pci.c
-@@ -1711,9 +1711,9 @@ static void rtw_pci_napi_deinit(struct rtw_dev *rtwdev)
- static pci_ers_result_t rtw_pci_io_err_detected(struct pci_dev *pdev,
- 						pci_channel_state_t state)
- {
--	struct net_device *netdev = pci_get_drvdata(pdev);
-+	struct ieee80211_hw *hw = pci_get_drvdata(pdev);
+diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
+index 82436984485d41..ab2a6b577bc9d0 100644
+--- a/arch/arm64/boot/dts/qcom/glymur.dtsi
++++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
+@@ -4016,7 +4016,7 @@ usb_2_dwc3_ss: endpoint {
+ 			};
+ 		};
  
--	netif_device_detach(netdev);
-+	ieee80211_stop_queues(hw);
+-		usb_hs: usb@a2f8800 {
++		usb_hs: usb@a200000 {
+ 			compatible = "qcom,glymur-dwc3", "qcom,snps-dwc3";
+ 			reg = <0x0 0x0a200000 0x0 0xfc100>;
  
- 	return PCI_ERS_RESULT_NEED_RESET;
- }
-@@ -1730,12 +1730,12 @@ static pci_ers_result_t rtw_pci_io_slot_reset(struct pci_dev *pdev)
- 
- static void rtw_pci_io_resume(struct pci_dev *pdev)
- {
--	struct net_device *netdev = pci_get_drvdata(pdev);
-+	struct ieee80211_hw *hw = pci_get_drvdata(pdev);
- 
- 	/* ack any pending wake events, disable PME */
- 	pci_enable_wake(pdev, PCI_D0, 0);
- 
--	netif_device_attach(netdev);
-+	ieee80211_wake_queues(hw);
- }
- 
- const struct pci_error_handlers rtw_pci_err_handler = {
 -- 
 2.53.0
 
