@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB23415F1C;
-	Tue, 21 Jul 2026 18:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2DB415F20;
+	Tue, 21 Jul 2026 18:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657631; cv=none; b=kbKJYHR4+YPnqNxnhcgCNyIHRJaH1dGmMqIt0DMKudiI9kvC9Zu+8fD2iv5m7GXb4wwVKNuSRB/0Syh78B/1ts7kQrlUdUXv+TJyG94F8j4tw/0gT63KCdxx58J7LXvAaWXTfDpHlzCmZ/YAkilfKrkAGsZk33kpRjXomDCw07Y=
+	t=1784657633; cv=none; b=TAqKWwqsx04scfp7J8zkofQ3lHnkeNoeI3CJoI2VPXWNoDVjcDfnLbDTU+AGtyknSjiQieu/sh+GSbDlj4kkUGwuXFBeSC9JeIWGO/eNNEFRUBruo+7Ac1w5SvJ1seSIFKaRW2PTGgFoFGAIYn1z6S0Ew9NT3WD4PzzJIWXdpPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657631; c=relaxed/simple;
-	bh=CV+5bjZ5m2ZPVpzBEHBYhtX05bhyplnolVEBvUx64n0=;
+	s=arc-20240116; t=1784657633; c=relaxed/simple;
+	bh=PdGHCR6GD1dTwHEl9p5Ax0SBAxNzs57d4FDafbBvLf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fADkYNZ9BSc/kXqpat5j5DG1pR79IgBTAHtpCJPRdgfyjEtEZ/X3CEdfq7AJr+4yKyippUCDHjLo9STQqa3QFPa9JxRsmfTLVDjVkVsz0iwgpq5neiCJ3LBZymCrPA+WZfb3JG8m8ZzCjakH214oJAXGb+ruTRVzOxsxHlCYNcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUkvflY/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WU+ohp4kUsYRnU8xs2Qig916wtXN9sZhaWGJUyBJb+S5udXxTWccugBudUFd7ioXzJAMX/KEOp6YwDdLGROz4U5p0CaVSQVn5NjqnzmSf+qLTYCyhR3KZCwvIUjOXTXC7pgc1g9q4uBDa18iThi1VWIa4r39H2cRjDPVuELuVDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WpBCOcFH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUkvflY/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C9FA1F000E9;
-	Tue, 21 Jul 2026 18:13:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WpBCOcFH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C49C01F00A3A;
+	Tue, 21 Jul 2026 18:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657629;
-	bh=/0K6C8YCTRE3Ddyt2qLj6MFCI/pfD4hXFkvfO7aiqRk=;
+	s=korg; t=1784657632;
+	bh=D4uO12WQqJ9mSHNbK9AjZqPpG46NpFkF/nLcul7DipU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aUkvflY/suiYoYPnoBAM/qVqwHmBWrGdzKlGodLO9S9FwbW7rxdvSuyiTx8m8c+Xb
-	 0TebKiEMxHKxH5uUwCue2ebvsyIpXe3p/ruWzvbNLrRiZS48JUZbUMCSvFIYrNyJbG
-	 SP36FY7eVGnLHe3pkfMZyGM0avkRDlAvt3IjsES0=
+	b=WpBCOcFHATXlgWnqZb1JDC/IEfFoJptBOINh8+LiqAsdnmmd0/j07ddVAoa+zV4qS
+	 dLyxylY9Zl6EpeXXWlzCw6utklx0pMinX+guCtaPemBCTSbJ5Fx+ORs5WCWbOmS3Th
+	 WXhio2Aa8NC3uh1o4p/NwgU7rvS0t8gNbHspltQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d85ba1c732720b9a4097@syzkaller.appspotmail.com,
+	syzbot+9383b1ff0df4b29ca5e6@syzkaller.appspotmail.com,
 	Eric Dumazet <edumazet@google.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0793/1611] xfrm: annotate data-races around xfrm_policy_count[] and xfrm_policy_default[]
-Date: Tue, 21 Jul 2026 17:15:09 +0200
-Message-ID: <20260721152533.224359100@linuxfoundation.org>
+Subject: [PATCH 6.18 0794/1611] xfrm: validate selector family and prefixlen during match
+Date: Tue, 21 Jul 2026 17:15:10 +0200
+Message-ID: <20260721152533.245916085@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,175 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 68de007d5ac9df0e3f4f187a179c5c842bb5a2be ]
+[ Upstream commit 40f0b1047918539f0b0f795ac65e35336b4c2c78 ]
 
-KCSAN reported a data race involving net->xfrm.policy_count access.
+syzbot reported a shift-out-of-bounds in xfrm_selector_match()
+due to AF_UNSPEC selector with large prefixlen (e.g. 128) matched
+against IPv4 flow (when XFRM_STATE_AF_UNSPEC is set).
 
-Add missing READ_ONCE()/WRITE_ONCE() annotations on
-xfrm_policy_count and xfrm_policy_default.
+Fix this by:
 
-Fixes: 2518c7c2b3d7 ("[XFRM]: Hash policies when non-prefixed.")
-Reported-by: syzbot+d85ba1c732720b9a4097@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a2b9e96.99669fcc.12a77b.0006.GAE@google.com/T/#u
+- Rejecting mismatched families in xfrm_selector_match.
+- Returning false in addr4_match if prefixlen > 32.
+- Returning false in addr_match if prefixlen > 128 (prevents overflow).
+
+Fixes: 3f0ab59e6537 ("xfrm: validate new SA's prefixlen using SA family when sel.family is unset")
+Reported-by: syzbot+9383b1ff0df4b29ca5e6@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a2fbe35.be3f099c.2836ae.0018.GAE@google.com/T/#u
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xfrm.h     |  8 ++++----
- net/xfrm/xfrm_policy.c | 24 ++++++++++++------------
- net/xfrm/xfrm_user.c   | 18 +++++++++---------
- 3 files changed, 25 insertions(+), 25 deletions(-)
+ include/net/xfrm.h     | 7 +++++++
+ net/xfrm/xfrm_policy.c | 3 +++
+ 2 files changed, 10 insertions(+)
 
 diff --git a/include/net/xfrm.h b/include/net/xfrm.h
-index 7ad342e20750ec..682bfc1de9cc5e 100644
+index 682bfc1de9cc5e..af0869c14a2539 100644
 --- a/include/net/xfrm.h
 +++ b/include/net/xfrm.h
-@@ -1250,8 +1250,8 @@ int __xfrm_policy_check(struct sock *, int dir, struct sk_buff *skb,
- static inline bool __xfrm_check_nopolicy(struct net *net, struct sk_buff *skb,
- 					 int dir)
- {
--	if (!net->xfrm.policy_count[dir] && !secpath_exists(skb))
--		return net->xfrm.policy_default[dir] == XFRM_USERPOLICY_ACCEPT;
-+	if (!READ_ONCE(net->xfrm.policy_count[dir]) && !secpath_exists(skb))
-+		return READ_ONCE(net->xfrm.policy_default[dir]) == XFRM_USERPOLICY_ACCEPT;
+@@ -943,6 +943,9 @@ static inline bool addr_match(const void *token1, const void *token2,
+ 	unsigned int pdw;
+ 	unsigned int pbi;
  
- 	return false;
- }
-@@ -1351,8 +1351,8 @@ static inline int xfrm_route_forward(struct sk_buff *skb, unsigned short family)
- {
- 	struct net *net = dev_net(skb->dev);
++	if (prefixlen > 128)
++		return false;
++
+ 	pdw = prefixlen >> 5;	  /* num of whole u32 in prefix */
+ 	pbi = prefixlen &  0x1f;  /* num of bits in incomplete u32 in prefix */
  
--	if (!net->xfrm.policy_count[XFRM_POLICY_OUT] &&
--	    net->xfrm.policy_default[XFRM_POLICY_OUT] == XFRM_USERPOLICY_ACCEPT)
-+	if (!READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_OUT]) &&
-+	    READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_OUT]) == XFRM_USERPOLICY_ACCEPT)
+@@ -967,6 +970,10 @@ static inline bool addr4_match(__be32 a1, __be32 a2, u8 prefixlen)
+ 	/* C99 6.5.7 (3): u32 << 32 is undefined behaviour */
+ 	if (sizeof(long) == 4 && prefixlen == 0)
  		return true;
++
++	if (prefixlen > 32)
++		return false;
++
+ 	return !((a1 ^ a2) & htonl(~0UL << (32 - prefixlen)));
+ }
  
- 	return (skb_dst(skb)->flags & DST_NOXFRM) ||
 diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index c76625d511ec34..5f468f01daf7b1 100644
+index 5f468f01daf7b1..4dad1f8172286a 100644
 --- a/net/xfrm/xfrm_policy.c
 +++ b/net/xfrm/xfrm_policy.c
-@@ -685,7 +685,7 @@ static void xfrm_byidx_resize(struct net *net)
- 
- static inline int xfrm_bydst_should_resize(struct net *net, int dir, int *total)
+@@ -242,6 +242,9 @@ __xfrm6_selector_match(const struct xfrm_selector *sel, const struct flowi *fl)
+ bool xfrm_selector_match(const struct xfrm_selector *sel, const struct flowi *fl,
+ 			 unsigned short family)
  {
--	unsigned int cnt = net->xfrm.policy_count[dir];
-+	unsigned int cnt = READ_ONCE(net->xfrm.policy_count[dir]);
- 	unsigned int hmask = net->xfrm.policy_bydst[dir].hmask;
- 
- 	if (total)
-@@ -711,12 +711,12 @@ static inline int xfrm_byidx_should_resize(struct net *net, int total)
- 
- void xfrm_spd_getinfo(struct net *net, struct xfrmk_spdinfo *si)
- {
--	si->incnt = net->xfrm.policy_count[XFRM_POLICY_IN];
--	si->outcnt = net->xfrm.policy_count[XFRM_POLICY_OUT];
--	si->fwdcnt = net->xfrm.policy_count[XFRM_POLICY_FWD];
--	si->inscnt = net->xfrm.policy_count[XFRM_POLICY_IN+XFRM_POLICY_MAX];
--	si->outscnt = net->xfrm.policy_count[XFRM_POLICY_OUT+XFRM_POLICY_MAX];
--	si->fwdscnt = net->xfrm.policy_count[XFRM_POLICY_FWD+XFRM_POLICY_MAX];
-+	si->incnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_IN]);
-+	si->outcnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_OUT]);
-+	si->fwdcnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_FWD]);
-+	si->inscnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_IN+XFRM_POLICY_MAX]);
-+	si->outscnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_OUT+XFRM_POLICY_MAX]);
-+	si->fwdscnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_FWD+XFRM_POLICY_MAX]);
- 	si->spdhcnt = net->xfrm.policy_idx_hmask;
- 	si->spdhmcnt = xfrm_policy_hashmax;
- }
-@@ -2318,7 +2318,7 @@ static void __xfrm_policy_link(struct xfrm_policy *pol, int dir)
- 	}
- 
- 	list_add(&pol->walk.all, &net->xfrm.policy_all);
--	net->xfrm.policy_count[dir]++;
-+	WRITE_ONCE(net->xfrm.policy_count[dir], net->xfrm.policy_count[dir] + 1);
- 	xfrm_pol_hold(pol);
- }
- 
-@@ -2337,7 +2337,7 @@ static struct xfrm_policy *__xfrm_policy_unlink(struct xfrm_policy *pol,
- 	}
- 
- 	list_del_init(&pol->walk.all);
--	net->xfrm.policy_count[dir]--;
-+	WRITE_ONCE(net->xfrm.policy_count[dir], net->xfrm.policy_count[dir] - 1);
- 
- 	return pol;
- }
-@@ -3222,7 +3222,7 @@ struct dst_entry *xfrm_lookup_with_ifid(struct net *net,
- 
- 		/* To accelerate a bit...  */
- 		if (!if_id && ((dst_orig->flags & DST_NOXFRM) ||
--			       !net->xfrm.policy_count[XFRM_POLICY_OUT]))
-+			       !READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_OUT])))
- 			goto nopol;
- 
- 		xdst = xfrm_bundle_lookup(net, fl, family, dir, &xflo, if_id);
-@@ -3296,7 +3296,7 @@ struct dst_entry *xfrm_lookup_with_ifid(struct net *net,
- 
- nopol:
- 	if ((!dst_orig->dev || !(dst_orig->dev->flags & IFF_LOOPBACK)) &&
--	    net->xfrm.policy_default[dir] == XFRM_USERPOLICY_BLOCK) {
-+	    READ_ONCE(net->xfrm.policy_default[dir]) == XFRM_USERPOLICY_BLOCK) {
- 		err = -EPERM;
- 		goto error;
- 	}
-@@ -3750,7 +3750,7 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
- 		const bool is_crypto_offload = sp &&
- 			(xfrm_input_state(skb)->xso.type == XFRM_DEV_OFFLOAD_CRYPTO);
- 
--		if (net->xfrm.policy_default[dir] == XFRM_USERPOLICY_BLOCK) {
-+		if (READ_ONCE(net->xfrm.policy_default[dir]) == XFRM_USERPOLICY_BLOCK) {
- 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINNOPOLS);
- 			return 0;
- 		}
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 2c11866be5788a..817e40d0573410 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -2476,9 +2476,9 @@ static int xfrm_notify_userpolicy(struct net *net)
- 	}
- 
- 	up = nlmsg_data(nlh);
--	up->in = net->xfrm.policy_default[XFRM_POLICY_IN];
--	up->fwd = net->xfrm.policy_default[XFRM_POLICY_FWD];
--	up->out = net->xfrm.policy_default[XFRM_POLICY_OUT];
-+	up->in = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_IN]);
-+	up->fwd = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_FWD]);
-+	up->out = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_OUT]);
- 
- 	nlmsg_end(skb, nlh);
- 
-@@ -2502,13 +2502,13 @@ static int xfrm_set_default(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	struct xfrm_userpolicy_default *up = nlmsg_data(nlh);
- 
- 	if (xfrm_userpolicy_is_valid(up->in))
--		net->xfrm.policy_default[XFRM_POLICY_IN] = up->in;
-+		WRITE_ONCE(net->xfrm.policy_default[XFRM_POLICY_IN], up->in);
- 
- 	if (xfrm_userpolicy_is_valid(up->fwd))
--		net->xfrm.policy_default[XFRM_POLICY_FWD] = up->fwd;
-+		WRITE_ONCE(net->xfrm.policy_default[XFRM_POLICY_FWD], up->fwd);
- 
- 	if (xfrm_userpolicy_is_valid(up->out))
--		net->xfrm.policy_default[XFRM_POLICY_OUT] = up->out;
-+		WRITE_ONCE(net->xfrm.policy_default[XFRM_POLICY_OUT], up->out);
- 
- 	rt_genid_bump_all(net);
- 
-@@ -2538,9 +2538,9 @@ static int xfrm_get_default(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	}
- 
- 	r_up = nlmsg_data(r_nlh);
--	r_up->in = net->xfrm.policy_default[XFRM_POLICY_IN];
--	r_up->fwd = net->xfrm.policy_default[XFRM_POLICY_FWD];
--	r_up->out = net->xfrm.policy_default[XFRM_POLICY_OUT];
-+	r_up->in = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_IN]);
-+	r_up->fwd = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_FWD]);
-+	r_up->out = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_OUT]);
- 	nlmsg_end(r_skb, r_nlh);
- 
- 	return nlmsg_unicast(net->xfrm.nlsk, r_skb, portid);
++	if (family != sel->family && sel->family != AF_UNSPEC)
++		return false;
++
+ 	switch (family) {
+ 	case AF_INET:
+ 		return __xfrm4_selector_match(sel, fl);
 -- 
 2.53.0
 
