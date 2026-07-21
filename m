@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DCA4189DA;
-	Tue, 21 Jul 2026 22:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D694035C682;
+	Tue, 21 Jul 2026 22:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671610; cv=none; b=exuiy8VJ32Va+esiOHz44AjPxOfokvCt4x27rmOrfZFGUZFjwxaJKvefYYtS9/Fdyw6dlHLXyj8dnz17cdE5hmoc6GsgDvUHwBDskezVD00K9b5FD+LJ5iiyo90R8VciGbsQsr8uO1rs9JWlETrmN4vQ8cD8rrRgMmpn00w5emU=
+	t=1784671612; cv=none; b=iTZTbFMphLiCKA/bQgm6HTVTGpx72N6nT6PbKQoRsBBaLAY9h5F2aNzTauo0tnhiloJKCBG2i1xOshh5HXeRzcA7S36j3bfLK6TH3K0gUPVfG9VIS/VCKGAkZjbri1xi4EWAWo+UKyml/Kv8GIAeuQJMcG7tIyQuTV77i1dQNzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671610; c=relaxed/simple;
-	bh=eyGpuV6laf8cwAFbjVf6QlFWcapVhwvUMUVBxaBT7us=;
+	s=arc-20240116; t=1784671612; c=relaxed/simple;
+	bh=s1KmOkJRN49YnNTnz3w8QMtOnwTAeBW6Hq85qklTOG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AWOKRkI2Ud+Ibj/aAL6bNR2JHkTsJpIXNtcs2MDG2529pRRFn+UqBV8TR4lFq+pWfYNWmPVLDqLy2wXnMuTjee8d/FkxToBtd4RLdfWz3osKkMMmstm9XONWBYD4kehqKY3IXBikZTd/amkf50hO3VPmSa3nm4jqZ5OD3WwMnIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UeWflChE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mwBrO/WC/majWH5ImuzL3Y5ELTFevMSVORGx2ud37gCQgn2QHsxANkbSYaJwMeVbg4TliSkrP0P2A0/dpPBG7IqsG48yx3ICZ29yT/KXG1Gi5NbJqyedY/eerROuDcKvegMs0oI21ayS8+CjIp/QeO7451lJwu/XuqQ0mTqw++s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vrZwa1ZO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UeWflChE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 963CB1F00A3A;
-	Tue, 21 Jul 2026 22:06:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vrZwa1ZO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471671F000E9;
+	Tue, 21 Jul 2026 22:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671609;
-	bh=bWn8oRWoI5WP6QL7pCks1mIT7zs3vMy4/JgSaaeEE2k=;
+	s=korg; t=1784671611;
+	bh=O6DvIyNI98C6At8linGv1G5mgcGWRZLVTftzWkOh7U4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UeWflChEFHiU1gGh63nYAPbH6qxt/XI2XMxhYqI40eisMkI3mQQk5Ve+hk+fX3mkN
-	 UceOZs31t794m4yf8fs3sIekLvt2Go1fCC0McYXbzLZeZUETt7cjBwkb4mZOrbPiZM
-	 mQ7l9FLnIBkqkYb54B+NqkQzib5+agPo94kKF4Eo=
+	b=vrZwa1ZOzsgCd60BdROTPe6pCZemkSRYj5I7ZBPdH+oiexba64k4r+rWCjuQlvtwX
+	 FSvzO8pmEqiT1BVfovoEaJ9KpN+8TqxwZUsebh4t38HHXxxQwASA4z4Z4k+aJWzfmD
+	 5CgcOtUNl3rcnVj8xe1FnWQP/Fp6OQPdzM7rFLG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 268/843] net/sched: cls_bpf: prevent unbounded recursion in offload rollback
-Date: Tue, 21 Jul 2026 17:18:23 +0200
-Message-ID: <20260721152412.052339202@linuxfoundation.org>
+Subject: [PATCH 5.15 269/843] drm/tegra: dc: Fix device node reference leak in tegra_dc_has_output()
+Date: Tue, 21 Jul 2026 17:18:24 +0200
+Message-ID: <20260721152412.075501174@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,89 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 27db54b90bcc7c37867fe664107fa25ea6a116e4 ]
+[ Upstream commit 63a3998d792ab5c45304bf879e385a31fa923b61 ]
 
-Quan Sun reported [1] a stack overflow in cls_bpf_offload_cmd().
+The of_for_each_phandle() macro increments the reference count of the
+device node it iterates over. If the loop exits early, the reference must
+be released manually.
 
-Reproducer on netdevsim: add a skip_sw cls_bpf filter, set the
-bpf_tc_accept debugfs knob to 0, then `tc filter replace`. The replace
-calls tc_setup_cb_replace() which fails. cls_bpf_offload_cmd() then
-swaps prog/oldprog and recursively calls itself to roll back. But
-bpf_tc_accept=0 makes the rollback fail too, which triggers yet another
-rollback frame with the same arguments, and so on until the stack is
-exhausted.
+In tegra_dc_has_output(), the function returns true immediately when a
+match is found, failing to release the current node's reference.
 
-bpf_tc_accept is just a convenient knob for the reproducer. Any driver
-whose tc_setup_cb_replace() fails twice in a row can hit the same loop,
-so this is not a netdevsim-only issue.
+Fix this by adding a call to of_node_put() before returning from the loop.
 
-Two ways to fix it:
-
-  1) Have the rollback call tc_setup_cb_add() on oldprog instead of
-     re-entering cls_bpf_offload_cmd().
-  2) Mark the rollback frame with a flag and skip a second-level
-     rollback from inside it.
-
-Go with (2). It is the smaller change and keeps the original behaviour:
-the rollback still goes through tc_setup_cb_replace(), so the driver
-gets one real chance to restore its state. If that attempt also fails,
-we just return the original error instead of recursing.
-
-[1]: https://lore.kernel.org/bpf/ce5a6005-3c5e-4696-9e05-eba9461dc860@std.uestc.edu.cn/T/#u
-
-Fixes: 102740bd9436 ("cls_bpf: fix offload assumptions after callback conversion")
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260526025529.24382-1-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c57997bce423 ("drm/tegra: sor: Add Tegra186 support")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Acked-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260128-dc-v1-1-a88205826301@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_bpf.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/tegra/dc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_bpf.c b/net/sched/cls_bpf.c
-index 63fb61a290cd6c..70ed894b812092 100644
---- a/net/sched/cls_bpf.c
-+++ b/net/sched/cls_bpf.c
-@@ -138,7 +138,8 @@ static bool cls_bpf_is_ebpf(const struct cls_bpf_prog *prog)
- 
- static int cls_bpf_offload_cmd(struct tcf_proto *tp, struct cls_bpf_prog *prog,
- 			       struct cls_bpf_prog *oldprog,
--			       struct netlink_ext_ack *extack)
-+			       struct netlink_ext_ack *extack,
-+			       bool is_rollback)
- {
- 	struct tcf_block *block = tp->chain->block;
- 	struct tc_cls_bpf_offload cls_bpf = {};
-@@ -173,7 +174,8 @@ static int cls_bpf_offload_cmd(struct tcf_proto *tp, struct cls_bpf_prog *prog,
- 					  &oldprog->in_hw_count, true);
- 
- 	if (prog && err) {
--		cls_bpf_offload_cmd(tp, oldprog, prog, extack);
-+		if (!is_rollback)
-+			cls_bpf_offload_cmd(tp, oldprog, prog, extack, true);
- 		return err;
- 	}
- 
-@@ -204,7 +206,7 @@ static int cls_bpf_offload(struct tcf_proto *tp, struct cls_bpf_prog *prog,
- 	if (!prog && !oldprog)
- 		return 0;
- 
--	return cls_bpf_offload_cmd(tp, prog, oldprog, extack);
-+	return cls_bpf_offload_cmd(tp, prog, oldprog, extack, false);
- }
- 
- static void cls_bpf_stop_offload(struct tcf_proto *tp,
-@@ -213,7 +215,7 @@ static void cls_bpf_stop_offload(struct tcf_proto *tp,
- {
+diff --git a/drivers/gpu/drm/tegra/dc.c b/drivers/gpu/drm/tegra/dc.c
+index e81fcfc2c005ba..280e1f4b09fb4d 100644
+--- a/drivers/gpu/drm/tegra/dc.c
++++ b/drivers/gpu/drm/tegra/dc.c
+@@ -94,8 +94,10 @@ bool tegra_dc_has_output(struct tegra_dc *dc, struct device *dev)
  	int err;
  
--	err = cls_bpf_offload_cmd(tp, NULL, prog, extack);
-+	err = cls_bpf_offload_cmd(tp, NULL, prog, extack, false);
- 	if (err)
- 		pr_err("Stopping hardware offload failed: %d\n", err);
+ 	of_for_each_phandle(&it, err, np, "nvidia,outputs", NULL, 0)
+-		if (it.node == dev->of_node)
++		if (it.node == dev->of_node) {
++			of_node_put(it.node);
+ 			return true;
++		}
+ 
+ 	return false;
  }
 -- 
 2.53.0
