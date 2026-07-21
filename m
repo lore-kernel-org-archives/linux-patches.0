@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EFC386C1C;
-	Tue, 21 Jul 2026 20:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC54386C1C;
+	Tue, 21 Jul 2026 20:53:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667237; cv=none; b=iFN9FwVlbJDTcGKiWYGVh/kGAd+vjQjlzGEerXqPzDcW30fYek3hGqmgLRtdmTRm0TcHrDEc1Fa+Biv1zlNBzJC8u/Sn+7uDDvYu8icxFcmTjNaVxoiAT+V4gKbgU4tpCsMqfHDB2eZbEoVCMs4bvvctHqEesd6qvLFc/PLAkD0=
+	t=1784667240; cv=none; b=C2yVpoEzzpsRIF1vnH1DIek3gpMfSriB+2PmrF9Kmq9e13ehs5zchHH16suBxny88VQ5Xpz6JjKMLu+VfFMYM8oUWogJove0CkQxopLTDCs9blaUD/6jU0nD0rLmBp3MmngVxfQZSlABwcUHI5CfykHFJGLeRjMkkFQOWKOGQ+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667237; c=relaxed/simple;
-	bh=IkYzEqozewm8oP5rfx6E2JlXD9tofQmrFXDpeuxvapk=;
+	s=arc-20240116; t=1784667240; c=relaxed/simple;
+	bh=QW7q9+HJSz6TlHNE5wwZRNO11wAPQkkQ9UA3/nORk/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QOhtaDBhoEJZoQVwHRCDBKLkPYe0W2AvBrwEutH8IGCNVmsJbasvtxQpf6Y9DzMOun5+KuXiSSrkbdc069fAJCP5r5Po61490saGkzp/R//hbGBlP+c/to/x6JXKV/TXHXNUbO8bTATH/QnppKxzQinC7l4FANjH/cD3VmiQsxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoKIFbFq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cw8/tX6CiAIDmn1ie9oTT8qBhYJCaFZkQm0DWhv5KB1aPmHmnHgt2htxe4XRpoTWbpClwidJScmSi16VlbEsUa1uJpnOO6gQUW0K1kQNcBXXXjrCmm7nkKJ3M+84cb3PmD9Svd8vWrv19TdYFpw0cgSjp0ZM4RFJgaTM7XXf1E0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AlJbqdvx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoKIFbFq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0EC1F000E9;
-	Tue, 21 Jul 2026 20:53:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AlJbqdvx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3DDD1F000E9;
+	Tue, 21 Jul 2026 20:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667236;
-	bh=HoQSWu39yEF3x81LKb3M4hItTP9Jt5WcEW5DEJkMeYk=;
+	s=korg; t=1784667239;
+	bh=+gog41cKWHI4VqJVsqSSKLBLsYHVhlun/JKUV9C0bzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HoKIFbFqCmM0svcGgDLKqDw5iYK1WVgNXsAXnQtqeJkicvO/GqxVXYw5K1TnsiPSs
-	 C0Ro09e+mvfBGDycPFOIMWMnZdRjvchMIMrMWFrhCf50pTlI2HsLBEvSP0F/Grsi0G
-	 t26rtkb+D8if/NjSof7j+O3uGT7KbjA3IMvcIr+0=
+	b=AlJbqdvxWfs85n4K4zKN96lX29HJT5qwATOdZO1owRBu0KngeVV3Uvsa7Br4dT4Jh
+	 0gYRc3nFaWWOlES4l7IJ9CS0Q124UKuWoJA26MV6gTFYn3cuIO+/Z1eDAvwtMf0y3q
+	 DKpmBWtZAFFEIo3cpD80idjpVxzzqwSTYbcRyVDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
+	syzbot+39b2fb0f2638669008ec@syzkaller.appspotmail.com,
+	Tristan Madani <tristan@talencesecurity.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.6 0985/1266] ntfs3: validate split-point offset in indx_insert_into_buffer
-Date: Tue, 21 Jul 2026 17:23:42 +0200
-Message-ID: <20260721152503.878768704@linuxfoundation.org>
+Subject: [PATCH 6.6 0986/1266] ntfs3: fix out-of-bounds read in decompress_lznt
+Date: Tue, 21 Jul 2026 17:23:43 +0200
+Message-ID: <20260721152503.900168793@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,82 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit f1df9d771df47aa40de6d70949c28720ae1e430d upstream.
+commit 7160a57192fb16d7a6fa9b7f5c7ac341d2444a89 upstream.
 
-indx_insert_into_buffer() computes
+decompress_lznt() does not validate array index bounds before accessing
+the decompression table. A corrupted NTFS3 image with invalid compressed
+data can trigger an out-of-bounds read.
 
-    used = used1 - to_copy - sp_size;
-    memmove(de_t, Add2Ptr(sp, sp_size), used - le32_to_cpu(hdr1->de_off));
+Add index bounds checking to prevent the OOB access.
 
-where sp and sp_size come from hdr_find_split().  hdr_find_split()
-walks entries by le16_to_cpu(e->size) without validating that each
-step stays within hdr->used or that the size field is at least
-sizeof(struct NTFS_DE).  index_hdr_check(), the on-load gatekeeper,
-only validates header-level fields (used, total, de_off) and does
-not walk per-entry sizes.
-
-A crafted NTFS image whose leaf INDEX_HDR reports used == total but
-contains one interior NTFS_DE with size = 0xFFF0 therefore passes
-validation, descends to indx_insert_into_buffer() through the
-ntfs_create() -> indx_insert_entry() path, and makes hdr_find_split()
-return an sp whose sp_size (0xFFF0) greatly exceeds the remaining
-bytes in the buffer.  The u32 subtraction underflows and the memmove
-count becomes a near-4-GiB value, producing an out-of-bounds kernel
-write that corrupts adjacent allocations and panics the kernel.
-
-Reproduced on 7.0.0-rc7 with UML + KASAN via a crafted image and a
-single 'touch' inside the mounted directory; crash site resolves to
-fs/ntfs3/index.c at the memmove.  Trigger requires only local mount
-of an attacker-supplied filesystem image (USB, loopback, or removable
-media auto-mount).
-
-Reject the split whenever the chosen sp plus its declared size
-already extends past hdr1->used.  This is the minimal fix; it
-preserves the existing hdr_find_split() contract and relies on the
-same out: cleanup path as the pre-existing error returns.
-
-A prior OOB read in the very same indx_insert_into_buffer() memmove
-was fixed in commit b8c44949044e ("fs/ntfs3: Fix OOB read in
-indx_insert_into_buffer") by tightening hdr_find_e(), but that fix
-does not cover the split-point size field path addressed here: sp is
-returned by hdr_find_split(), not hdr_find_e(), and the underflow is
-driven by sp->size rather than hdr->used exceeding hdr->total.
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Reported-by: syzbot+39b2fb0f2638669008ec@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Reported-by: Michael Bommarito <michael.bommarito@gmail.com>
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/index.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/ntfs3/lznt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -1865,6 +1865,20 @@ indx_insert_into_buffer(struct ntfs_inde
- 	memcpy(up_e, sp, sp_size);
+--- a/fs/ntfs3/lznt.c
++++ b/fs/ntfs3/lznt.c
+@@ -240,7 +240,7 @@ static inline ssize_t decompress_chunk(u
+ 		if (up - unc > LZNT_CHUNK_SIZE)
+ 			return -EINVAL;
+ 		/* Correct index */
+-		while (unc + s_max_off[index] < up)
++		while (index < ARRAY_SIZE(s_max_off) - 1 && unc + s_max_off[index] < up)
+ 			index += 1;
  
- 	used1 = le32_to_cpu(hdr1->used);
-+
-+	/*
-+	 * hdr_find_split does not validate per-entry sizes, so a crafted
-+	 * NTFS_DE whose le16 size field is out of range can place sp such
-+	 * that (PtrOffset(hdr1, sp) + sp_size) exceeds used1. Without this
-+	 * guard the u32 'used = used1 - to_copy - sp_size' underflows and
-+	 * the subsequent memmove count becomes a near-4-GiB value,
-+	 * triggering an out-of-bounds kernel write.
-+	 */
-+	if (PtrOffset(hdr1, sp) + sp_size > used1) {
-+		err = -EINVAL;
-+		goto out;
-+	}
-+
- 	hdr1_saved = kmemdup(hdr1, used1, GFP_NOFS);
- 	if (!hdr1_saved) {
- 		err = -ENOMEM;
+ 		/* Check the current flag for zero. */
 
 
