@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E1B3BADA2;
-	Tue, 21 Jul 2026 21:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26A13C0A02;
+	Tue, 21 Jul 2026 21:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668511; cv=none; b=FW8xHOJ7MpTzS3DYklnwMeHvgSh/L5qXy/iqq7EPJZfhcvhWfaC4rJE6N85/iCJFYp7bUZ1F/QZIVov0Sj89ueImt5aufkDAPqAIUMU5hbYP3txqKiT0WE3n3JIqi0tuTYKWB2RwygP1Q7yUVB+bFwh08LMOTgbWIK64uE30zCk=
+	t=1784668515; cv=none; b=sBW0eMxyOrdtFXEr3JohS8WVDBbkaMpy0AxgJQBVhT5ESMkaDvqhmMRoJkRU135yisF/3vB0AJ5HWe4JYHOtM7XNAhScskeatEln3SNjmGYOYkfxW6ECF3TAbFTfbdmMchdgqt5d0a2AaSGKvTrnzQ5octFkYpwN/DzOF4F9a48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668511; c=relaxed/simple;
-	bh=JUelv8KwADw9PQSBnxcjTMbNmpJCl8CC85mghXvIQuQ=;
+	s=arc-20240116; t=1784668515; c=relaxed/simple;
+	bh=18f/GEg78ju2WO/x0sFZIRRC4kAlK3sRbV6AL/IpWl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jU1/brWnliB6dBWW6IpqFXwAq28oKQnoJl/x+FaSvlAqiAycoQh6y7kmTLj/Fq9YpQH6OsldrHIAuiRj5xqTbSD6/NpOm3icMTS+qPjebwiawsrXpB9yUYp6ehc0QmCYGFBiSTFneDoT5Ci8pjgwouZhl6UzWiuFMYHxOJ53LI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AaOIkCrB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GzUmqwkU0fgQ6jPYyvdLn0/MfrU6qIaDmV4hZ8ReCoPw9y53h19Fl4g9q3QLq5+P+XG765ZaVkIEFA6MAh/v4W812pY0sPmugCSLIptICQxqLA6MMtq9ermdFe/2wQ2DmSoQKPZ75orcRegEkhDAVmjGJNybw2B/KUMo/AE7R+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPqdymvv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AaOIkCrB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2661F000E9;
-	Tue, 21 Jul 2026 21:15:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPqdymvv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D251F000E9;
+	Tue, 21 Jul 2026 21:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668510;
-	bh=ioLt4al/dbztQ08yhoIM624/IlCKWhG5+ogzKjsboxA=;
+	s=korg; t=1784668512;
+	bh=4FZA4qFNL8MDdAOvQ8ZvJpoiGW/SOE/aCuFzkvpJcPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AaOIkCrB12W/twu9BxN7V2n7Zl/Eecm95WR97o/9PSg5k7ESPK+pyjOtTLXyQCkHo
-	 ltcrco4nGPfX9XRmlXbqBt8fH12upTjuiNgQEXwN1cZDAMozJeXbOfoag92E6maNay
-	 cQZJLyDpspvhKx6M/s3zTXKW/jPgcn5v1Jl8Y0ek=
+	b=qPqdymvvwdt1toCRSDvOWcykBi3I3/fpdVwzqMW0HPKruzAbtsRg3zRpG3i9WlHFv
+	 uMVGHhEslPo4vZWmZx6B0FjMXdN7NJOhZmF7VryxKAcdOIzd2+jTreas5Om226LdEP
+	 7NiSCjWR1DP8a9r++Ob+jew9gk04HA/vdygYZQ68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Igor Achkinazi <igor.achkinazi@dell.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 0204/1067] nvme-multipath: set BIO_REMAPPED on bios remapped to per-path namespace disks
-Date: Tue, 21 Jul 2026 17:13:25 +0200
-Message-ID: <20260721152429.156970733@linuxfoundation.org>
+	Su Yue <glass.su@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 0205/1067] btrfs: do not trim a device which is not writeable
+Date: Tue, 21 Jul 2026 17:13:26 +0200
+Message-ID: <20260721152429.178852275@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,88 +52,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Achkinazi, Igor <Igor.Achkinazi@dell.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 88bac2c1a72b8f4f71e9845699aa872df04e5850 upstream.
+commit 1b1937eb08f51319bf71575484cde2b8c517aedc upstream.
 
-When nvme_ns_head_submit_bio() remaps a bio from the multipath head to a
-per-path namespace, bio_set_dev() clears BIO_REMAPPED.  The remapped bio
-is then resubmitted through submit_bio_noacct() which calls
-bio_check_eod() because BIO_REMAPPED is not set.
+[BUG]
+There is a bug report that btrfs/242 can randomly fail with the
+following NULL pointer dereference:
 
-This races with nvme_ns_remove() which zeroes the per-path capacity
-before synchronize_srcu():
+  run fstests btrfs/242 at 2026-06-01 10:25:08
+  BTRFS: device fsid d4d7f234-487c-4787-88e4-47a8b68c9874 devid 1 transid 9 /dev/sdc (8:32) scanned by mount (122609)
+  BTRFS info (device sdc): first mount of filesystem d4d7f234-487c-4787-88e4-47a8b68c9874
+  BTRFS info (device sdc): using crc32c checksum algorithm
+  BTRFS warning (device sdc): devid 2 uuid fbe72d72-3272-482d-80fb-ab88ed398192 is missing
+  BTRFS warning (device sdc): devid 2 uuid fbe72d72-3272-482d-80fb-ab88ed398192 is missing
+  BTRFS info (device sdc): allowing degraded mounts
+  BTRFS info (device sdc): turning on async discard
+  BTRFS info (device sdc): enabling free space tree
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000018
+  user pgtable: 4k pages, 48-bit VAs, pgdp=000000013fd6b000
+  CPU: 4 UID: 0 PID: 122625 Comm: fstrim Not tainted 7.0.10-2-default #1 PREEMPT(full) openSUSE Tumbleweed e9a5f6b24978fba3bf015a992f865837fdfff3dd
+  Hardware name: QEMU KVM Virtual Machine, BIOS edk2-20250812-19.fc42 08/12/2025
+  pstate: 01400005 (nzcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+  pc : btrfs_trim_fs+0x34c/0xa00 [btrfs]
+  lr : btrfs_trim_fs+0x1f0/0xa00 [btrfs]
+  Call trace:
+   btrfs_trim_fs+0x34c/0xa00 [btrfs f02c1d570ceea621c69d302ba75dd61868083840] (P)
+   btrfs_ioctl_fitrim+0xe8/0x178 [btrfs f02c1d570ceea621c69d302ba75dd61868083840]
+   btrfs_ioctl+0xdd4/0x2bd8 [btrfs f02c1d570ceea621c69d302ba75dd61868083840]
+   __arm64_sys_ioctl+0xac/0x108
+   invoke_syscall.constprop.0+0x5c/0xd0
+   el0_svc_common.constprop.0+0x40/0xf0
+   do_el0_svc+0x24/0x40
+   el0_svc+0x40/0x1d0
+   el0t_64_sync_handler+0xa0/0xe8
+   el0t_64_sync+0x1b0/0x1b8
+  Code: 17ffff83 f94017e0 f9002be0 f9402ea0 (f9400c00)
+  ---[ end trace 0000000000000000  ]---
 
-  CPU 0 (IO submission)
-  ---------------------
-  srcu_read_lock()
-  nvme_find_path() -> ns
-    [NVME_NS_READY is set]
+Also the reporter is very kind to test the following ASSERT() added to
+btrfs_trim_free_extents_throttle():
 
-  CPU 1 (namespace removal)
-  -------------------------
-  clear_bit(NVME_NS_READY)
-  set_capacity(ns->disk, 0)
-  synchronize_srcu()  <- blocks
+	ASSERT(device->bdev,
+	       "devid=%llu path=%s dev_state=0x%lx\n",
+	       device->devid, btrfs_dev_name(device), device->dev_state);
 
-  CPU 0 (IO submission)
-  ---------------------
-  bio_set_dev(bio, ns->disk->part0)
-    [clears BIO_REMAPPED]
-  submit_bio_noacct(bio)
-    -> bio_check_eod() sees capacity=0
-    -> bio fails with IO error
+And it shows the following output:
 
-The SRCU read lock prevents synchronize_srcu() from completing, but does
-not prevent set_capacity(0) from executing.  The bio fails the EOD check
-before it reaches the NVMe driver, so nvme_failover_req() never gets a
-chance to redirect it to another path of multipath.  IO errors are
-reported to the application despite another path being available.
+  assertion failed: device->bdev, in extent-tree.c:6630 (devid=2 path=/dev/sdd dev_state=0x82)
 
-On older kernels (before commit 0b64682e78f7 "block: skip unnecessary
-checks for split bio"), the same race was also reachable through split
-remainders resubmitted via submit_bio_noacct().
+Which means the device->bdev is NULL, and the dev_state is
+BTRFS_DEV_STATE_IN_FS_METADATA | BTRFS_DEV_STATE_ITEM_FOUND, without
+BTRFS_DEV_STATE_WRITEABLE flag set.
 
-Fix this by setting BIO_REMAPPED after bio_set_dev() in
-nvme_ns_head_submit_bio().  This skips bio_check_eod() on the per-path
-device; the EOD check already passed on the multipath head.
+[CAUSE]
+The pc points to the following call chain:
 
-NVMe per-path namespace devices are always whole disks (bd_partno=0), so
-the blk_partition_remap() skip also gated by BIO_REMAPPED is a no-op.
-The flag does not persist across failover and cannot go stale if the
-namespace geometry changes between attempts: nvme_failover_req() calls
-bio_set_dev() to redirect the bio back to the multipath head, which
-clears BIO_REMAPPED.  When nvme_requeue_work() resubmits through
-submit_bio_noacct(), bio_check_eod() runs normally against the current
-capacity.
+  btrfs_trim_fs()
+  |- btrfs_trim_free_extents()
+     |- btrfs_trim_free_extents_throttle()
+        |- bdev_max_discard_sectors(device->bdev)
 
-Same approach as commit 3a905c37c351 ("block: skip bio_check_eod for
-partition-remapped bios").
+So the NULL pointer dereference is caused by device->bdev being NULL.
 
-Fixes: a7c7f7b2b641 ("nvme: use bio_set_dev to assign ->bi_bdev")
-Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Igor Achkinazi <igor.achkinazi@dell.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+This looks impossible by a quick glance, as just before calling
+btrfs_trim_free_extents_throttle(), we have skipped any device that has
+BTRFS_DEV_STATE_MISSING flag set.
+
+However in this particular case, there is a window where the missing
+device is later re-scanned, causing btrfs to remove the
+BTRFS_DEV_STATE_MISSING flag:
+
+  btrfs_control_ioctl()
+  |- btrfs_scan_one_device()
+     |- device_list_add()
+        |- rcu_assign_pointer(device->name, name);
+        |  This updates the missing device's path to the new good path.
+        |
+        |- clear_bit(BTRFS_DEV_STATE_MISSING, &device->dev_state)
+           This removes the BTRFS_DEV_STATE_MISSING flag.
+
+This allows the missing device to re-appear and clear the
+BTRFS_DEV_STATE_MISSING flag.  However the device still does not have
+the BTRFS_DEV_STATE_WRITEABLE flag set, nor is its bdev pointer updated.
+
+The bdev pointer remains NULL, triggering the crash later.
+
+[FIX]
+This is a big de-synchronization between BTRFS_DEV_STATE_MISSING and
+device->bdev pointer, and shows a gap in btrfs's re-appearing-device
+handling.
+
+The proper handling of re-appearing device will need quite some extra
+work, which is out of the context of this small fix.
+
+Thankfully the regular bbio submission path has already handled it well
+by checking if the device->bdev is NULL before submitting.
+
+So here we just fix the crash by checking if the device is writeable and
+has a bdev pointer before calling bdev_max_discard_sectors().
+
+Reported-by: Su Yue <glass.su@suse.com>
+Link: https://lore.kernel.org/linux-btrfs/wlwir19t.fsf@damenly.org/
+Fixes: 499f377f49f0 ("btrfs: iterate over unused chunk space in FITRIM")
+CC: stable@vger.kernel.org # 5.10+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/multipath.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/btrfs/extent-tree.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -359,6 +359,12 @@ static void nvme_ns_head_submit_bio(stru
- 	ns = nvme_find_path(head);
- 	if (likely(ns)) {
- 		bio_set_dev(bio, ns->disk->part0);
-+		/*
-+		 * Use BIO_REMAPPED to skip bio_check_eod() when this bio
-+		 * enters submit_bio_noacct() for the per-path device. The EOD
-+		 * check already passed on the multipath head.
-+		 */
-+		bio_set_flag(bio, BIO_REMAPPED);
- 		bio->bi_opf |= REQ_NVME_MPATH;
- 		trace_block_bio_remap(bio, disk_devt(ns->head->disk),
- 				      bio->bi_iter.bi_sector);
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -6117,12 +6117,16 @@ static int btrfs_trim_free_extents(struc
+ 
+ 	*trimmed = 0;
+ 
+-	/* Discard not supported = nothing to do. */
+-	if (!bdev_max_discard_sectors(device->bdev))
++	/*
++	 * The caller only filters out MISSING devices, but a device that was
++	 * missing at mount and later rescanned has MISSING cleared while bdev
++	 * is still NULL and WRITEABLE is still unset. Skip those here.
++	 */
++	if (!test_bit(BTRFS_DEV_STATE_WRITEABLE, &device->dev_state) || !device->bdev)
+ 		return 0;
+ 
+-	/* Not writable = nothing to do. */
+-	if (!test_bit(BTRFS_DEV_STATE_WRITEABLE, &device->dev_state))
++	/* Discard not supported = nothing to do. */
++	if (!bdev_max_discard_sectors(device->bdev))
+ 		return 0;
+ 
+ 	/* No free space = nothing to do. */
 
 
