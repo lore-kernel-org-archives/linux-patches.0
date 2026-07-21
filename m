@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CAB2641CA;
-	Tue, 21 Jul 2026 21:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F8344AB60;
+	Tue, 21 Jul 2026 21:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669191; cv=none; b=eVGPDDRJLpquze6WYjvT/x1n4Yv1BGbyXXhBaflpQJt/3BAKW8axiV0LBLuNj25Crx3IVXdr6KNA7RBsQfz/ZG0GryB78tUJUADvRkZA2NscTSxucNT1iImggCiwcvCr3reXg4/EsZuaeK/z9vjSbvVVB/LLg3N2MFR1DCp3mmI=
+	t=1784669193; cv=none; b=jZoZrqY31dSAcCV43QdNNteQO+W6V3+STyxTpwYEN42xnnk4LJQ8RfOTMSntExSEehEgp2RC05xo7kWXukxAoNvv7D/hbysXhU2LBktntxk7FPAJd1lZJ4PXpY2lTFEsYGsKYmgLGARll9wGYikNtouFwhw3M256QZMueWC63tM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669191; c=relaxed/simple;
-	bh=CRUq/ZzoVJ+fGuz3rBMRLKGGC4yTNjk3p7G55uJ2jqk=;
+	s=arc-20240116; t=1784669193; c=relaxed/simple;
+	bh=FESQZKEygdOrLh1OGRGuqBDgLCoJYgw7BghNhusSBV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qY1Z3mczIRm/QE6+wUO7Sgthy+tsIeuT18cmB5JZ8gEeNy+SBDJbYWkByqnUVT6xBpVO9To0rTp/4lXUy8bnuR6ekETPqOCMYf+5ONpdc+ttco+8UAObMNqcIe2zK387bB+4lPffqDEJJBPCj3XM+i+GRSsSHYb4HAU7Jrk9PDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jk8FmZgy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tWvBfSI7wzr5IbqTFC7LlfWEsqm2oymTNJpVsBZZSBblMl2ZnkEkxUkmbegTK+uoIgnPJLUwtsBx8P/8Axa9neAy2Tntp5l3R9K9RT6fMvdCTsaxYlvLHGCg6Cs/n2xWowJjtQb5ItmfzZC5/qZnpui6FkkjInupawhXwm7KiSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezFjEcl2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jk8FmZgy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE521F000E9;
-	Tue, 21 Jul 2026 21:26:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezFjEcl2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5DD1F000E9;
+	Tue, 21 Jul 2026 21:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669190;
-	bh=2FxNDVviHURG7NDNBx4jVvdvxH6lPT/ynSXWL0nxYuc=;
+	s=korg; t=1784669192;
+	bh=3irU/u37KKtV0NZO/EuC3B4MNRUDhfCnCRpQnZCPTXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jk8FmZgyt+n0pj1wzPwoMDD0mujmR6XCx5o3rSAQsGx59lZc2zOaFyHNguq7Yi1pr
-	 +d3xPZDWwZkDysql2oykSrjTkw4cQ2AuMHKd/W88eb4zl5Sb9DXDo0hSrwPgF+wwFL
-	 wdLbELWR5UOyp86jn3YVqZsPgnePxSFzh3+R0EzA=
+	b=ezFjEcl2UCSZ7Y3RvXEOkQVMYNIxaxQ0vtySneefVmKdgJS1ccvRbdOgC3YPxqbgA
+	 rueuXpsuBo/yZigJwl/JZ7OKw95cmuNyzyHyR9d2nbzmaziOasvPuLdZoLsdDAn7k2
+	 +wnhqI2f6GMdFCOilqAvExChfqqgNJmBrwSxGuZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Xinyu Ma <mmmxny@gmail.com>,
 	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
-	Weiming Shi <bestswngs@gmail.com>,
+	Sechang Lim <rhkrqnwk98@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0460/1067] bpf, sockmap: reject overflowing copy + len in bpf_msg_push_data()
-Date: Tue, 21 Jul 2026 17:17:41 +0200
-Message-ID: <20260721152434.905583075@linuxfoundation.org>
+Subject: [PATCH 6.1 0461/1067] bpf, sockmap: fix integer overflow in bpf_msg_pop_data() bounds check
+Date: Tue, 21 Jul 2026 17:17:42 +0200
+Message-ID: <20260721152434.927193670@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -56,60 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Sechang Lim <rhkrqnwk98@gmail.com>
 
-[ Upstream commit 0c0a8ed85349dae298712d79cb276acfeb794d82 ]
+[ Upstream commit a48802fb2cd2d1e23651989f8ff4d15e9d5dad54 ]
 
-When the scatterlist ring is full or nearly full, bpf_msg_push_data()
-enters a copy fallback path and computes copy + len for the page
-allocation size. Since len comes from BPF with arg3_type = ARG_ANYTHING
-and both are u32, a crafted len can wrap the sum to a small value,
-causing an undersized allocation followed by an out-of-bounds memcpy.
+start and len are u32, so
 
- BUG: unable to handle page fault for address: ffffed104089a402
- Oops: Oops: 0000 [#1] SMP KASAN NOPTI
- Call Trace:
-  __asan_memcpy (mm/kasan/shadow.c:105)
-  bpf_msg_push_data (net/core/filter.c:2852 net/core/filter.c:2788)
-  bpf_prog_9ed8b5711920a7d7+0x2e/0x36
-  sk_psock_msg_verdict (net/core/skmsg.c:934)
-  tcp_bpf_sendmsg (net/ipv4/tcp_bpf.c:421 net/ipv4/tcp_bpf.c:584)
-  __sys_sendto (net/socket.c:2206)
-  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+	u64 last = start + len;
 
-Add an overflow check before the allocation.
+evaluates start + len in 32-bit and wraps before storing it in last.
+The bounds check
 
-Link: https://lore.kernel.org/all/20260424155913.A19FDC19425@smtp.kernel.org
-Fixes: 6fff607e2f14 ("bpf: sk_msg program helper bpf_msg_push_data")
-Tested-by: Xiang Mei <xmei5@asu.edu>
-Tested-by: Xinyu Ma <mmmxny@gmail.com>
+	if (start >= offset + l || last > msg->sg.size)
+		return -EINVAL;
+
+can then be passed with an out-of-range start/len, after which the pop
+loop runs off the end of the scatterlist and sk_msg_shift_left() calls
+put_page() on the empty msg->sg.end slot:
+
+  Oops: general protection fault, probably for non-canonical address
+  0xdffffc0000000001: 0000 [#1] SMP KASAN PTI
+  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+  RIP: 0010:sk_msg_shift_left net/core/filter.c:2957 [inline]
+  RIP: 0010:____bpf_msg_pop_data net/core/filter.c:3103 [inline]
+  RIP: 0010:bpf_msg_pop_data+0x753/0x1a10 net/core/filter.c:2984
+  Call Trace:
+   <TASK>
+   bpf_prog_4cc92c278f4d5d56+0x1b1/0x1e8
+   bpf_prog_run_pin_on_cpu+0x107/0x320 include/linux/filter.h:746
+   sk_psock_msg_verdict+0x357/0x7f0 net/core/skmsg.c:934
+   tcp_bpf_send_verdict net/ipv4/tcp_bpf.c:420 [inline]
+   tcp_bpf_sendmsg+0x766/0x1ae0 net/ipv4/tcp_bpf.c:583
+   __sock_sendmsg+0x153/0x1c0 net/socket.c:802
+   __sys_sendto+0x326/0x430 net/socket.c:2265
+   __x64_sys_sendto+0xe3/0x100 net/socket.c:2268
+   do_syscall_64+0x14c/0x480
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+
+Widen the addition with a (u64) cast so the bound is evaluated in
+64-bit and a len near U32_MAX no longer wraps below msg->sg.size.
+
+While here, change pop from int to u32. It counts bytes against the
+unsigned scatterlist lengths and can never be negative, so the signed
+type only invites sign-confusion in the pop loop.
+
+Fixes: 7246d8ed4dcc ("bpf: helper to pop data from messages")
 Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
 Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
 Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20260615021959.140010-2-jiayuan.chen@linux.dev
+Link: https://lore.kernel.org/r/20260615021959.140010-6-jiayuan.chen@linux.dev
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/core/filter.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/net/core/filter.c b/net/core/filter.c
-index 26762c3825a3dd..2e64f8e85631ef 100644
+index 2e64f8e85631ef..94a2dcf3aa08e3 100644
 --- a/net/core/filter.c
 +++ b/net/core/filter.c
-@@ -2815,6 +2815,9 @@ BPF_CALL_4(bpf_msg_push_data, struct sk_msg *, msg, u32, start,
- 	if (!space || (space == 1 && start != offset))
- 		copy = msg->sg.data[i].length;
+@@ -2981,8 +2981,8 @@ BPF_CALL_4(bpf_msg_pop_data, struct sk_msg *, msg, u32, start,
+ 	   u32, len, u64, flags)
+ {
+ 	u32 i = 0, l = 0, space, offset = 0;
+-	u64 last = start + len;
+-	int pop;
++	u64 last = (u64)start + len;
++	u32 pop;
  
-+	if (unlikely(copy + len < copy))
-+		return -EINVAL;
-+
- 	page = alloc_pages(__GFP_NOWARN | GFP_ATOMIC | __GFP_COMP,
- 			   get_order(copy + len));
- 	if (unlikely(!page))
+ 	if (unlikely(flags))
+ 		return -EINVAL;
 -- 
 2.53.0
 
