@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE58C3A4F4B;
-	Tue, 21 Jul 2026 19:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA5643302F;
+	Tue, 21 Jul 2026 19:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663343; cv=none; b=SmzBs5oqsnKbh2U+TB11MUyCn+B9EhdaS7lBRcy3/hEH2iV2YWFZwatd5636DVYvbF4fcvp+gsIOvEuy71qpHgz+acX7y4bbqF7mrq3GEiJYg8X2YxkPm5TSd7EJdXcAxIO+PNMqHjX7Of5/ZnV7xTL555nYUfbiwQ+kOuNaALw=
+	t=1784663346; cv=none; b=IRqiFqVjqc0H6NJK/l2uZsn7pN5JS9762K6sHbf+4z6zqZu5cSRCoqF90iuYnyUnlhlVf15+d9j8qggZP0ADmOU4Ef7Lj+RVnGZA7OUX5rSiX/fWNvy2OdrVTQDgvf5ml4ZLob7eC9lpTq7f5QrY8pHIqf/67LHvcS77nuMAbPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663343; c=relaxed/simple;
-	bh=OBDHFUh8yNf+PCOzXRiBC3xqok7YOcTEGQ2CXiWp6M8=;
+	s=arc-20240116; t=1784663346; c=relaxed/simple;
+	bh=ugiHKKb1+MsaroLb+TGUQdaNKtw3DLz9SmZvLOpPJIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sYJy84OPq2tneVqKS3pM7E3290BDFmmGi4CjK0Qo5E0e3Zk0QLuacBSAItTf2iA7Peu1DM9a7RPU/1Z52ca5CdZAegt7+VgIkJpPTv+yQwYgnrAJnMeXpCIU0AwK7ZgQ/nCpEEeHlisB0BWlrrlpzFxp0KWuyrLF/olLfFIE2f8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4b8RlA8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q+9+Vvzh/qA3zqfYw8EcYMv5VNPn+gdNJRfYpgpmqvNeBdJ/1emOjt2BXWGUvQnY9M6YDj1K3km/esH554VZVTOKBceRU+TXKP4VNzB/WoX4yP8HnV/2jhvgxBWn/PC31rC+66iDXy47yquudvbv2sByiKUB6WIx2ESiQqQY+d4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIahByJU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4b8RlA8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD211F000E9;
-	Tue, 21 Jul 2026 19:49:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIahByJU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B880A1F00A3D;
+	Tue, 21 Jul 2026 19:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663342;
-	bh=ROs6bN+h/oIHHiYEkpo8/Ze9hjSTUstHm4C1SCtRHuo=;
+	s=korg; t=1784663345;
+	bh=mW0uG9xbRO/vZ2bhVVbp7rn/u3kd5ZM2t+ghPFX3EkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X4b8RlA8pw3MzGDuGueUpWrs3RcPlceGwsYgUIZ33Y6gc+wMsmeyfxd1gT+SSV433
-	 yZJEL6aQZZi14qvFa9DZJAhU9p7tlVpCgAJSO7Ba1HByrZCEtseVsSA47XyR6eH6oW
-	 8T3RUcbzd/2bRnsGdbWk1EL3bkVlykg+ssFguFfk=
+	b=yIahByJUULEBWYwKuvhBao5upxJ30WlKTFqgvY2ApQd2Vu351KfZ7RegwqhKFwsso
+	 jb2Ugks2V4igpcC6r/SGHoPMRfosKpWX45ex84a5b7AUaELO0JbYUt4iOLZ4ECidyJ
+	 ce/vpZx3RK6tB4WBq9faXyL2qKQTEmYcWCPZCvEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0744/1276] ovl: fix comment about locking order
-Date: Tue, 21 Jul 2026 17:19:47 +0200
-Message-ID: <20260721152502.730956625@linuxfoundation.org>
+Subject: [PATCH 6.12 0745/1276] netfs: Fix writeback error handling
+Date: Tue, 21 Jul 2026 17:19:48 +0200
+Message-ID: <20260721152502.752381051@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,45 +55,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit fd5637a2fe6dd4448392738691d63e5559fafb12 ]
+[ Upstream commit ac5f95ac5d6d0f4c567b8b642825705a2bf0d79e ]
 
-Forgot to update the comment when we changed the locking order.
+Fix the error handling in writeback_iter() loop.  If an error occurs,
+writeback_iter() needs to be called again with *error set to the error so
+that it can clean up iteration state.  Further, the current folio needs
+unlocking and redirtying.
 
-Fixes: 162d06444070c ("ovl: reorder ovl_want_write() after ovl_inode_lock()")
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://patch.msgid.link/20260609184656.1916631-1-amir73il@gmail.com
+Fixes: 288ace2f57c9 ("netfs: New writeback implementation")
+Link: https://sashiko.dev/#/patchset/20260619140646.2633762-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260625140640.3116900-14-dhowells@redhat.com
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: Matthew Wilcox <willy@infradead.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/inode.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/netfs/write_issue.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/fs/overlayfs/inode.c b/fs/overlayfs/inode.c
-index baa54c718bd722..14b06060db4b03 100644
---- a/fs/overlayfs/inode.c
-+++ b/fs/overlayfs/inode.c
-@@ -800,8 +800,8 @@ static const struct address_space_operations ovl_aops = {
-  *
-  * This chain is valid:
-  * - inode->i_rwsem			(inode_lock[2])
-- * - upper_mnt->mnt_sb->s_writers	(ovl_want_write[0])
-  * - OVL_I(inode)->lock			(ovl_inode_lock[2])
-+ * - upper_mnt->mnt_sb->s_writers	(ovl_want_write[0])
-  * - OVL_I(lowerinode)->lock		(ovl_inode_lock[1])
-  *
-  * And this chain is valid:
-@@ -814,8 +814,8 @@ static const struct address_space_operations ovl_aops = {
-  * held, because it is in reverse order of the non-nested case using the same
-  * upper fs:
-  * - inode->i_rwsem			(inode_lock[1])
-- * - upper_mnt->mnt_sb->s_writers	(ovl_want_write[0])
-  * - OVL_I(inode)->lock			(ovl_inode_lock[1])
-+ * - upper_mnt->mnt_sb->s_writers	(ovl_want_write[0])
-  */
- #define OVL_MAX_NESTING FILESYSTEM_MAX_STACK_DEPTH
+diff --git a/fs/netfs/write_issue.c b/fs/netfs/write_issue.c
+index 2789ac4c80272b..7431c0a4252c4c 100644
+--- a/fs/netfs/write_issue.c
++++ b/fs/netfs/write_issue.c
+@@ -574,8 +574,6 @@ int netfs_writepages(struct address_space *mapping,
+ 		}
  
+ 		error = netfs_write_folio(wreq, wbc, folio);
+-		if (error < 0)
+-			break;
+ 	} while ((folio = writeback_iter(mapping, wbc, folio, &error)));
+ 
+ 	netfs_end_issue_write(wreq);
+@@ -587,7 +585,14 @@ int netfs_writepages(struct address_space *mapping,
+ 	return error;
+ 
+ couldnt_start:
+-	netfs_kill_dirty_pages(mapping, wbc, folio);
++	if (error == -ENOMEM) {
++		folio_redirty_for_writepage(wbc, folio);
++		folio_unlock(folio);
++		folio = writeback_iter(mapping, wbc, folio, &error);
++		WARN_ON_ONCE(folio != NULL);
++	} else {
++		netfs_kill_dirty_pages(mapping, wbc, folio);
++	}
+ out:
+ 	mutex_unlock(&ictx->wb_lock);
+ 	_leave(" = %d", error);
 -- 
 2.53.0
 
