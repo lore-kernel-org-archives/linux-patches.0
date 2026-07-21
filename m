@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FDA246AA6C;
-	Tue, 21 Jul 2026 15:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB8246AA73;
+	Tue, 21 Jul 2026 15:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648083; cv=none; b=KEe6ZEUrEzWj6uPiSCaPGGDOk1T0DCyPo9UUVICssEOjfYL11B6V1gG5TctNDIhTzr+JX3oND2bGbieeVwS9gxsI4N4+Q/4sGGH4fW9SX3FL7kqykZlG/7KU4S7R5tyf+7e/9VjimIWRa8+S5DSMYiM1qlFSWUflYuCQilE6uXk=
+	t=1784648085; cv=none; b=dsqCAPVp2GsW7qybx0jAe0RZ5QOAsJPlBxGUBudpYRQOz7Raei7YpQ5Aj2AYG2ftkPbwrVoDC34H1QhRAFd60oztWQ3xUss1wfcU+JCtnuxYC0CZrOy2ag0T/4sPJnXFlFO+t/9oIzIg5Pv3XU2V3izomMDKtxesKOjfohF1Cqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648083; c=relaxed/simple;
-	bh=Mc3ZnHf9K5ZMTTUu0KsABqwagJTKfA2uG+m7nxHKR+g=;
+	s=arc-20240116; t=1784648085; c=relaxed/simple;
+	bh=2IQyqZgCg8G4nISLc1EOARU1zSm+xdoxyuoxRjUxzgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b7o4xkHcilgftO0mWNksaOxzYAj+W6HI9X5iqM4aHB7pMXsn7HTPw/4MI+FeWsLNhu3yWBW2TdtTrv4GIESYtrZQO3LAPEwnbYgQwXexCXYqs1jFeImrLytCbCmoaidsJYeY9/9u5zHeuwr8RELodzi+t3asKeO3l1oO2ajSRtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hmf+AMyp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lsMsouAHzN0QjOo8Ts6u7aBzAVnR5IwMjW1o4+0vBCv8v+9pcAI1rjfrTRfs3VzmL1008/7rLuVf9EN/OTCAz3xeSpzA9Yt8f4ImXZ6sxEtr/ECqcWy6bA31BptPviB36IFd1/7gXXWhonr6WVPep1VMB0vIZk4gbQdHu6giBpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2iLp6Dc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hmf+AMyp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31F81F000E9;
-	Tue, 21 Jul 2026 15:34:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2iLp6Dc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9921E1F00A3A;
+	Tue, 21 Jul 2026 15:34:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648081;
-	bh=fBB4gIhLM7cKa+RypC2i5cCUJao6N4RxnQmDYJb7qwU=;
+	s=korg; t=1784648084;
+	bh=jbHXPvTZPLipXoiHjh/E+cLkr7oVFiZOhDDeTTQQ+2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hmf+AMypKnr/nj3T8Gz6ThL4VG0a5iSSFKBtkiBCBX8YwkUxql0+sgMj83DypOMu5
-	 4N5VcHB8vdLSkXphMRJV00TKcZrk4QjDa02GZXqA3/VOtETSXdvC/mCSxaaacKBXl4
-	 CJQXXdfx8WBVlV45QwNhor6eqE+N6eqfdIPkmrhs=
+	b=S2iLp6Dcmc4u9vjxj7d6lQvXfXMiAoI/KWMjyKRuhPG78QpDeuDykDMoeGSgBw/ri
+	 kTqZtbIreia+4MFnHwg9OlUUWv56fV3Nqq2bLsPDqieFLH6XED46ocQjTi7OyISSTX
+	 qOVJe6GHchy9DiX1XwpEkMBFgUtCZHPS/1Wh1uUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Li Daming <d4n.for.sec@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 0038/2077] afs: Fix uncancelled rxrpc OOB message handler
-Date: Tue, 21 Jul 2026 16:55:11 +0200
-Message-ID: <20260721152553.587677298@linuxfoundation.org>
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Mykyta Yatsenko <yatsenko@meta.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 0065/2077] libbpf: Report error when a negative kprobe offset is specified
+Date: Tue, 21 Jul 2026 16:55:38 +0200
+Message-ID: <20260721152554.227239365@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -57,70 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Aaron Tomlin <atomlin@atomlin.com>
 
-commit a4057e58b07005d0fe0491bdbf1868c1491909ee upstream.
+[ Upstream commit ad35d8018669fd2eea76e3f74eb050fd3d2fb690 ]
 
-Fix AFS to cancel its OOB message processing (typically to respond to
-security challenges).  Also move OOB message processing to afs_wq so that
-it's also waited for and make the OOB handler just return if the net
-namespace is no longer live.
+In attach_kprobe(), the parsing logic uses sscanf() to extract the
+target function name and offset from the section definition. Currently,
+if a user specifies a negative offset (e.g., SEC("kprobe/func+-100")),
+the input is not explicitly caught and reported as an error.
 
-Fixes: 5800b1cf3fd8 ("rxrpc: Allow CHALLENGEs to the passed to the app for a RESPONSE")
-Link: https://sashiko.dev/#/patchset/20260609140911.838677-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Li Daming <d4n.for.sec@gmail.com>
-cc: Ren Wei <n05ec@lzu.edu.cn>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260624163819.3017002-6-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This commit updates the logic to explicitly notify the user when a
+negative integer is provided. To facilitate this check, the offset
+variable is changed from unsigned long to long so that sscanf()
+can accurately capture a negative input for evaluation.
+
+If a negative offset is detected, the loader will now print an
+informative warning stating that the offset must be non-negative,
+and return -EINVAL.
+
+Additionally, free(func) is called in this new error path to prevent
+a memory leak, as the function name string is dynamically allocated
+by sscanf().
+
+Fixes: e3f9bc35ea7e9 ("libbpf: Allow decimal offset for kprobes")
+Signed-off-by: Aaron Tomlin <atomlin@atomlin.com>
+Acked-by: Mykyta Yatsenko <yatsenko@meta.com>
+Link: https://lore.kernel.org/bpf/20260419030944.1423642-1-atomlin@atomlin.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/cm_security.c |    3 ++-
- fs/afs/rxrpc.c       |    5 ++++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ tools/lib/bpf/libbpf.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/fs/afs/cm_security.c
-+++ b/fs/afs/cm_security.c
-@@ -101,7 +101,8 @@ void afs_process_oob_queue(struct work_s
- 	struct sk_buff *oob;
- 	enum rxrpc_oob_type type;
- 
--	while ((oob = rxrpc_kernel_dequeue_oob(net->socket, &type))) {
-+	while (READ_ONCE(net->live) &&
-+	       (oob = rxrpc_kernel_dequeue_oob(net->socket, &type))) {
- 		switch (type) {
- 		case RXRPC_OOB_CHALLENGE:
- 			afs_respond_to_challenge(oob);
---- a/fs/afs/rxrpc.c
-+++ b/fs/afs/rxrpc.c
-@@ -128,6 +128,7 @@ void afs_close_socket(struct afs_net *ne
- 	_enter("");
- 
- 	cancel_work_sync(&net->charge_preallocation_work);
-+	cancel_work_sync(&net->rx_oob_work);
- 	/* Future work items should now see ->live is false. */
- 
- 	kernel_listen(net->socket, 0);
-@@ -148,6 +149,7 @@ void afs_close_socket(struct afs_net *ne
- 
- 	kernel_sock_shutdown(net->socket, SHUT_RDWR);
- 	flush_workqueue(afs_async_calls);
-+	cancel_work_sync(&net->rx_oob_work);
- 	net->socket->sk->sk_user_data = NULL;
- 	sock_release(net->socket);
- 	key_put(net->fs_cm_token_key);
-@@ -989,5 +991,6 @@ static void afs_rx_notify_oob(struct soc
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 3a80a018fc7d50..83aae7a39d36de 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -12280,7 +12280,7 @@ bpf_program__attach_kprobe_multi_opts(const struct bpf_program *prog,
+ static int attach_kprobe(const struct bpf_program *prog, long cookie, struct bpf_link **link)
  {
- 	struct afs_net *net = sk->sk_user_data;
- 
--	schedule_work(&net->rx_oob_work);
-+	if (READ_ONCE(net->live))
-+		queue_work(afs_wq, &net->rx_oob_work);
- }
+ 	DECLARE_LIBBPF_OPTS(bpf_kprobe_opts, opts);
+-	unsigned long offset = 0;
++	long offset = 0;
+ 	const char *func_name;
+ 	char *func;
+ 	int n;
+@@ -12302,6 +12302,13 @@ static int attach_kprobe(const struct bpf_program *prog, long cookie, struct bpf
+ 		pr_warn("kprobe name is invalid: %s\n", func_name);
+ 		return -EINVAL;
+ 	}
++
++	if (offset < 0) {
++		free(func);
++		pr_warn("kprobe offset must be a non-negative integer: %li\n", offset);
++		return -EINVAL;
++	}
++
+ 	if (opts.retprobe && offset != 0) {
+ 		free(func);
+ 		pr_warn("kretprobes do not support offset specification\n");
+-- 
+2.53.0
+
 
 
