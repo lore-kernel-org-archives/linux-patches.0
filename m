@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BECF471418;
-	Tue, 21 Jul 2026 17:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C5A47140A;
+	Tue, 21 Jul 2026 17:55:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656542; cv=none; b=SsRAC5vnyE+NXdmt2qZv8VkYhJs2Vy0siA5M9qjNu6iANzq0V9F0ZOiFahz6DKN6+KTAcFEgFQQ1SEzKGUX5mogypQVlWmiJEK1NOwHYbVwQzt8BvQcVhUBLhPkEOkDiihhgojYRcHn4JBf7N3QBxXFEMts6PBPaH5UauWTYP1g=
+	t=1784656544; cv=none; b=E+KGoiJKER+0N/4PSPnKWF/uIqba+W2Ypm5ihYIVPjsCJLb6i3AE6e1pV2EngThDv29QdSjiw/sdsTRFkSNIV+4O156rEunzTZEGhG4W3jojhK8aM4+kDB5mGd5xlX9ccOLOCtS2lNdZw6TG9PndFt1QB0Jzz0K0VzmrlkbeUCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656542; c=relaxed/simple;
-	bh=hPqvCibQUyM42i2VI80vPLLujMQSTtVfddzbplMUCNk=;
+	s=arc-20240116; t=1784656544; c=relaxed/simple;
+	bh=8j68RaHz/yXhUdOCJcjPbYAvXlx8UzTEoU+CBGa4D4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g5DsVlYo2vmOmpGZQQYKKOqX2BnWjW4mPq8XaJ3L+Z7cFAATco18RiwXpX2uVxGQU33IUjLyh5X0l+QxJGA5TOnQsiCH/f4WiNh/YMPK7DdQe3GW5FJ+eTj68Wjuyo6YVEpGHYaNcVaJ0V22KfIpUSPmM8q4Cx0+WNBmh64c/rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jimfpSau; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pURHc8TmUbWNWwucfk7XcYeS5DoZc4Mijpb2lg8knv45ux9LWSXzZYLhx1h0I7a6QLz5SF1HpcBFsxQs9iMPXUtqLmq9Ue57VaZkkO8gyIljHFcldpgr/S2Qw2zW2OXwQMlRCpijVClLxRftw/SuraTKwfICFvNPMvzXk1Dz/zY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMZKJzRd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jimfpSau"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980571F00A3D;
-	Tue, 21 Jul 2026 17:55:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMZKJzRd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4552B1F000E9;
+	Tue, 21 Jul 2026 17:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656540;
-	bh=2lk5SkjDmt4ZnRGHPzNiMfuq0r8AccSmVVNp9mQ0ERA=;
+	s=korg; t=1784656542;
+	bh=iysL6SyEQ46MQjkJutGvDdoX5dbQ1C5wGZj3+Mof21w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jimfpSauEk6No/oyqgAxTzOq3cmJEfagtKxuP8+utZ9uhZJwZQMiR4Bz7ZzrUM8hX
-	 7J7ibqr/Mt0kQnof1f7F0eXkTfnfPJpsGM9hzPKpWhEcBydBtjLhpbLZY9pRIxuCFg
-	 bTn2avTCoDbikM8AhM4+IRuFHduwfGpCKQrMLCS0=
+	b=UMZKJzRdtpX9Oi01GpuJPKpf1EJGpdeuWdpihcGxa5RCisyajjvVIAiO4Jp9T7nAh
+	 xB9qsFasVLe6dQICW5nZrCOPtQJE75pKfHpsIsGSPbQZKq910pUuZZGNz8ZGUOk8Kg
+	 OYTXY9UHrB4C6S6d+rXMs8vMW/XcA0YQZ27SRT0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wen Gong <quic_wgong@quicinc.com>,
-	Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
+	KhaiWenTan <khai.wen.tan@linux.intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0419/1611] wifi: ath12k: enable IEEE80211_VHT_EXT_NSS_BW_CAPABLE when NSS ratio is reported
-Date: Tue, 21 Jul 2026 17:08:55 +0200
-Message-ID: <20260721152524.688676094@linuxfoundation.org>
+Subject: [PATCH 6.18 0428/1611] igc: skip RX timestamp header for frame preemption verification
+Date: Tue, 21 Jul 2026 17:09:04 +0200
+Message-ID: <20260721152524.899343279@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,59 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wen Gong <quic_wgong@quicinc.com>
+From: KhaiWenTan <khai.wen.tan@linux.intel.com>
 
-[ Upstream commit 63abe299b12b317dfee5bcd09037da4668a4431a ]
+[ Upstream commit 38b7a274cf84af9b1f4b602b8e2741565b81947b ]
 
-When firmware reports NSS ratio support, SUPPORTS_VHT_EXT_NSS_BW is enabled in
-ath12k. However, IEEE80211_VHT_EXT_NSS_BW_CAPABLE must also be set to make the
-advertisement valid.
+When RX hardware timestamping is enabled, a 16-byte inline timestamp header
+is added to the start of the packet buffer, causing FPE handshake
+verification to fail.
 
-According to IEEE Std 802.11-2024, Subclause 9.4.2.156.3 (Supported VHT-MCS and
-NSS Set subfields), the VHT Extended NSS BW Capable bit indicates whether a STA
-is capable of interpreting the Extended NSS BW Support subfield of the VHT
-capabilities information field. Advertising extended NSS BW support without
-setting this capability bit is therefore invalid.
+Because an incorrect packet buffer is passed to igc_fpe_handle_mpacket(),
+the mem_is_zero() check inspects the timestamp metadata instead of the
+actual mPacket payload. As a result, valid Verify/Response mPackets can be
+missed when inline RX timestamps are present.
 
-Without this change, mac80211 detects the inconsistency and logs:
+Pass pktbuf + pkt_offset to igc_fpe_handle_mpacket() so it inspects the
+actual mPacket payload instead of the timestamp header.
 
-  ieee80211 phy0: copying sband (band 1) due to VHT EXT NSS BW flag
-
-This indicates that mac80211 implicitly aligns IEEE80211_VHT_EXT_NSS_BW_CAPABLE
-during ieee80211_register_hw(). Explicitly setting the bit in ath12k avoids this
-fixup and ensures capabilities are advertised correctly by the driver.
-
-This change follows the same approach as the existing ath11k fix.
-https://lore.kernel.org/all/20211013073704.15888-1-wgong@codeaurora.org/
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.5-01651-QCAHKSWPL_SILICONZ-1
-
-Fixes: 18ab9d038fad ("wifi: ath12k: add support for 160 MHz bandwidth")
-Signed-off-by: Wen Gong <quic_wgong@quicinc.com>
-Signed-off-by: Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260604095831.2674298-1-maharaja.kennadyrajan@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 5422570c0010 ("igc: add support for frame preemption verification")
+Co-developed-by: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
+Signed-off-by: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
+Signed-off-by: KhaiWenTan <khai.wen.tan@linux.intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/intel/igc/igc_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 368c377ab9b55d..4bb4482e27343b 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -7672,6 +7672,10 @@ ath12k_create_vht_cap(struct ath12k *ar, u32 rate_cap_tx_chainmask,
- 	vht_cap.vht_supported = 1;
- 	vht_cap.cap = ar->pdev->cap.vht_cap;
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index 104d6ab2ce5fa8..ebc00ce2e3a6b1 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -2649,7 +2649,7 @@ static int igc_clean_rx_irq(struct igc_q_vector *q_vector, const int budget)
+ 		}
  
-+	if (ar->pdev->cap.nss_ratio_enabled)
-+		vht_cap.vht_mcs.tx_highest |=
-+			cpu_to_le16(IEEE80211_VHT_EXT_NSS_BW_CAPABLE);
-+
- 	ath12k_set_vht_txbf_cap(ar, &vht_cap.cap);
- 
- 	/* 80P80 is not supported */
+ 		if (igc_fpe_is_pmac_enabled(adapter) &&
+-		    igc_fpe_handle_mpacket(adapter, rx_desc, size, pktbuf)) {
++		    igc_fpe_handle_mpacket(adapter, rx_desc, size, pktbuf + pkt_offset)) {
+ 			/* Advance the ring next-to-clean */
+ 			igc_is_non_eop(rx_ring, rx_desc);
+ 			cleaned_count++;
 -- 
 2.53.0
 
