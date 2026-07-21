@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC28A3E0C55;
-	Tue, 21 Jul 2026 17:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D548046D2A4;
+	Tue, 21 Jul 2026 17:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653929; cv=none; b=RNOYPSy6bOvaDtHyjalIPGpnDv+glaNEhkIf0yGeM6tPXIGbU+sPlGhXz/FAFmzduQTj6H4RtXWLLW5o3qAONWJXV5NFTnzTZWq79C65WfSpT12vBwjbwPPYXMQAN31AKPTCsxHXOeNLI3r1EMWgclOw46v7dIc1UDQJzK6nV9M=
+	t=1784653931; cv=none; b=QNaogytxZSWuCvtxBc4yy0b0rGFdgo2CJWLxlYMf6q0iSFGhutNYDhYm48kmKvKg1+kl5YWjZRktlJ1oqfoohS1f/LyjooLISkWpC8j5sZTC7ib9Q0A75pfqnWXQLgs/IDWaeKt6vnmegU6jL+q1937GHuWBgoqHjpBbMHr0wts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653929; c=relaxed/simple;
-	bh=oHGs111zDIa87basBovZI9xnyARSgeqco49kXzwK2eg=;
+	s=arc-20240116; t=1784653931; c=relaxed/simple;
+	bh=iAAvcrGNlLvkFQar4JI0+bIqTG0tOaN10WYODhlG9lk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FL8A6R6A8KeSDEylTtp8SPCt6uF3La8adhWj+zsCFnNt4FRaMhnWjdLY+c/rdSyVnxV/ac1n6Haq8JLMtUpq6lU/fph6Gkcu6hBuW3SeB6iBWB23fla09PqqqGqNmRSGceQ43Ca4DLArL+nZq0hnyZB65u7cuxMgufW1Moblu/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uppKoko8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UehPe2fiiXbyzlw5ZfiESdgm6GMYBp3zhvSuRCTDBKck7W3N++w91Zu94UDk7VWZ0wF3dDVR3bIH46rjliLw1xueSKSbZVJOaOW1K/Vb/yvZZQ/xYXYAvOSW83NOb1/BlIO/PJDvt9EalOAKZIoXonKbdkArsLQjgpPeSz1YFIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rsDEebnL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uppKoko8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0E11F000E9;
-	Tue, 21 Jul 2026 17:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsDEebnL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0334F1F000E9;
+	Tue, 21 Jul 2026 17:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653927;
-	bh=/vUMUn1xj81rV2UhUlCrRcEMBwBKUQsuZoNUUjR9u5M=;
+	s=korg; t=1784653930;
+	bh=4zip0FylRlhDZ7UUuAem7tJxD/WbOHaVWWv6/VP3xiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uppKoko8++G/Vgwtsmu2teCdmAl66J3TJzk3PF2Ei4m1xZHcY6ChBTi0Auy9ypS66
-	 IN9Wf2lQmJg36OJXrmQb3WdvIxJ+1/4mbf0RG8cZfE5aWCWHb/ErIrP09gsHi4B+AW
-	 4SmDJxn8pI6JuBKdLB2zYuR4Rq5kHOzVhFjodLKw=
+	b=rsDEebnL3/0RTuFwAO5Ry+U25swkIQ2s/MtGciN3MVhpaZBNYGzWVjXEum4MKcJV8
+	 IRFjkoVRqlDw73LKf5GeAZD49zEq0t7+8DGHExyGZYJEjBTEXEuqzy9mjcdXkXIxpe
+	 bxD3YNZ8S2hzR7Yqn5rC9yoAQ0cY1yKgepYT2U14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessio Belle <alessio.belle@imgtec.com>,
-	Ben Dooks <ben.dooks@codethink.co.uk>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1511/2077] drm/imagination: make pvr_fw_trace_init_mask_ops static
-Date: Tue, 21 Jul 2026 17:19:44 +0200
-Message-ID: <20260721152628.422926763@linuxfoundation.org>
+Subject: [PATCH 7.1 1512/2077] tracing/remotes: Fix leak in trace_remote_alloc_buffer() error path
+Date: Tue, 21 Jul 2026 17:19:45 +0200
+Message-ID: <20260721152628.445247994@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,38 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Dooks <ben.dooks@codethink.co.uk>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-[ Upstream commit c804aadc4ce3dcb34d6f2ecc9a159c148210805a ]
+[ Upstream commit ec082d0b978b5fb4c11205ccce63587ac94c74e1 ]
 
-The pvr_fw_trace_init_mask_ops is not used outside pvr_fw_trace.c
-so make it static to avoid the following sparse warning:
+If page allocation fails in trace_remote_alloc_buffer(), desc->nr_cpus
+is not yet incremented for the current CPU. As a consequence, on error,
+half-allocated rb_desc will not be freed in trace_remote_free_buffer().
 
-drivers/gpu/drm/imagination/pvr_fw_trace.c:74:31: warning: symbol 'pvr_fw_trace_init_mask_ops' was not declared. Should it be static?
+Increment desc->nr_cpus as soon as the first allocation for the current
+CPU has succeeded.
 
-Fixes: c6978643ea1c ("drm/imagination: Validate fw trace group_mask")
-Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
-Link: https://patch.msgid.link/20260703162338.2848039-1-ben.dooks@codethink.co.uk
-Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
+Link: https://patch.msgid.link/20260709160017.1729517-2-vdonnefort@google.com
+Fixes: 96e43537af54 ("tracing: Introduce trace remotes")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imagination/pvr_fw_trace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_remote.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/imagination/pvr_fw_trace.c b/drivers/gpu/drm/imagination/pvr_fw_trace.c
-index 6193811ef7bebb..5b2218a7cd663b 100644
---- a/drivers/gpu/drm/imagination/pvr_fw_trace.c
-+++ b/drivers/gpu/drm/imagination/pvr_fw_trace.c
-@@ -71,7 +71,7 @@ pvr_fw_trace_init_mask_set(const char *val, const struct kernel_param *kp)
- 	return 0;
- }
+diff --git a/kernel/trace/trace_remote.c b/kernel/trace/trace_remote.c
+index d6c3f94d67cd9f..4895241bf8ff0c 100644
+--- a/kernel/trace/trace_remote.c
++++ b/kernel/trace/trace_remote.c
+@@ -1006,6 +1006,8 @@ int trace_remote_alloc_buffer(struct trace_buffer_desc *desc, size_t desc_size,
+ 		if (!rb_desc->meta_va)
+ 			goto err;
  
--const struct kernel_param_ops pvr_fw_trace_init_mask_ops = {
-+static const struct kernel_param_ops pvr_fw_trace_init_mask_ops = {
- 	.set = pvr_fw_trace_init_mask_set,
- 	.get = param_get_hexint,
- };
++		desc->nr_cpus++;
++
+ 		for (id = 0; id < nr_pages; id++) {
+ 			rb_desc->page_va[id] = (unsigned long)__get_free_page(GFP_KERNEL);
+ 			if (!rb_desc->page_va[id])
+@@ -1013,7 +1015,6 @@ int trace_remote_alloc_buffer(struct trace_buffer_desc *desc, size_t desc_size,
+ 
+ 			rb_desc->nr_page_va++;
+ 		}
+-		desc->nr_cpus++;
+ 		desc->struct_len += offsetof(struct ring_buffer_desc, page_va);
+ 		desc->struct_len += struct_size(rb_desc, page_va, rb_desc->nr_page_va);
+ 		rb_desc = __next_ring_buffer_desc(rb_desc);
 -- 
 2.53.0
 
