@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06365326D44;
-	Tue, 21 Jul 2026 17:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF58326D44;
+	Tue, 21 Jul 2026 17:50:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656219; cv=none; b=lGP0DxJq3QYWJsb6Jcjs0ZlGBaEgaanrTsynVLwGRZCrxsUsUljYW90+Zh6AGAAggBz6G4BQerY5LH1rcYOm7dTd6yX6PwhmB1Fl72sfxxJPVCthGF6zv2hwfkBv84H35ayCpP8RcGOI3FckDQIkB3cqSYi8BfRnhOOKCdhAFGo=
+	t=1784656221; cv=none; b=FnvD1CAEUh4eiTkvlVCPGVzjFGyVE9nYS4Ddb/neZ1VHbFz0RZ7Ab6YwEeuHI5KtLA+51somBBGYlXNBgFAHWjb9T5LvePmpjvFpZg5ESSNnXdd8G7XfRzrbI0lPvN1IHnKFkvQw4r3XHmlTEAFJO8q8oYZHCxwG6kY0DqdQJjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656219; c=relaxed/simple;
-	bh=D5Z1EbdA0WYw7VMtvfyR0TULTBIbe+ijuQhRV8qY9+s=;
+	s=arc-20240116; t=1784656221; c=relaxed/simple;
+	bh=T3neQMlUmh71wx0G2O8rW43HWTb6WZImvXJMYSdxLH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U5vPLUprVNUgA3BTL0Hd7YJJ0ZeDmH1F5p1sVd3Q+07vrbJKBJVUE55AZ2E2bMcsbtS+1WkoRaeG+K5JR5gaEjBEIhyvSbSng9ysF8u8a4gXE9R3nAJXkb2f66hdBCmz93MG2UgUqRT8bQriyA4OMDs9c6235dXHIW1RG1tjHj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9JhDs8g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eWkbaqDIqLo6yu5hz9laxz2P7Tccj2YOLdNaA4q8sCCFdHiA5j0raaGIWr3X6u20SLnqHoEinVYusarJMJEJo3rsBpG9G7IVb9gUFxUefowz47iQ6ZHPp6u2XSBo5GtMNjFnk1RsUR2EgsJkhP2JhfRW0bpBUCUMNM+ICe/UPJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gn18i2nV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9JhDs8g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3E71F000E9;
-	Tue, 21 Jul 2026 17:50:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gn18i2nV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1030C1F000E9;
+	Tue, 21 Jul 2026 17:50:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656217;
-	bh=/J6J8gLsGqJieHrSSnFShcEtlE+pr1XyUfo2AjfMfOQ=;
+	s=korg; t=1784656220;
+	bh=4TtQ9aIA359o+r7Z+3ea46xBDs6aBypkidFeM2EqSLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L9JhDs8geIY3Sbf6V1xhWnmuObXS0/TWXMBzwJBhH2VI5++erddWdlt8WwWlWUqYW
-	 Ge9DdWW7/jshwpDuKfcd4/0L38EbWO3of5CR9wrpaECWgMVNTU0b0oyukXTEFfWbdw
-	 WKxOvm2y7GYw4itc9u8TqaAhVRxhWfxIGJqYZf6g=
+	b=gn18i2nVMiWtSPYQpYDB5gQZGloYyQ3BcfRC4A9b+ktcadwKpOjYoMFih3JcrEaxu
+	 RA2+KK/7iXfTmE06fySdXuwmpSwIiYVQV9ybToDRTdcI/qILfiD3SPVT80vgQ3A5gc
+	 LiMeiKC+YSGTdscJMfNidaqPZPE0GorLSdJgkMYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0304/1611] libbpf: Skip initial_value override on signed loaders
-Date: Tue, 21 Jul 2026 17:07:00 +0200
-Message-ID: <20260721152521.912012109@linuxfoundation.org>
+Subject: [PATCH 6.18 0305/1611] libbpf: Skip max_entries override on signed loaders
+Date: Tue, 21 Jul 2026 17:07:01 +0200
+Message-ID: <20260721152521.933892569@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,92 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 61e084152328867fe2279cc790573aae39959cd5 ]
+[ Upstream commit 60214435b365ecdd40b2f96d4e54564b5c927645 ]
 
-bpf_gen__map_update_elem() emits code that, when the host-supplied
-loader ctx provides a non-NULL map_desc[idx].initial_value, overwrites
-the blob value with bytes read from the host (bpf_copy_from_user /
-bpf_probe_read_kernel) before the BPF_MAP_UPDATE_ELEM that populates
-the program's .data/.rodata/.bss maps.
+bpf_gen__map_create() lets the host-supplied loader ctx override a
+map's max_entries at runtime (map_desc[idx].max_entries, when non-zero).
+This is how the light skeleton sizes maps to the target machine, but
+it happens after emit_signature_match() and is covered by neither the
+signed loader instructions nor the hashed blob.
 
-This override runs after emit_signature_match() has validated map->sha[],
-and initial_value is part of neither the signed loader instructions nor
-the hashed data blob. For a signed loader this lets an untrusted host
-substitute global-variable contents into a program whose code carries
-a valid signature, thus weakening what the signature attests to.
-
-The blob already contains the signer-provided value (added via add_data()
-and covered by the embedded, signed hash), so simply skip emitting the
-override for signed loaders (gen_hash). Runtime initialization stays
-available for the unsigned light-skeleton path as before. The jump
-offsets within the override block are internal to it, so guarding the
-whole block leaves them unchanged.
+For a signed loader this means an untrusted host can re-dimension the
+program's maps, outside what the signature attests to. Gate the override
+on gen_hash so signed loaders use the signer-provided max_entries baked
+into the blob.
 
 Fixes: ea923080c145 ("libbpf: Embed and verify the metadata hash in the loader")
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260601150248.394863-5-daniel@iogearbox.net
+Link: https://lore.kernel.org/r/20260601150248.394863-6-daniel@iogearbox.net
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/gen_loader.c | 39 +++++++++++++++++++++++---------------
- 1 file changed, 24 insertions(+), 15 deletions(-)
+ tools/lib/bpf/gen_loader.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
-index 5c54913185a33c..f0898244f20ac9 100644
+index f0898244f20ac9..d41defa1936d33 100644
 --- a/tools/lib/bpf/gen_loader.c
 +++ b/tools/lib/bpf/gen_loader.c
-@@ -1187,27 +1187,36 @@ void bpf_gen__map_update_elem(struct bpf_gen *gen, int map_idx, void *pvalue,
- 	value = add_data(gen, pvalue, value_size);
- 	key = add_data(gen, &zero, sizeof(zero));
- 
--	/* if (map_desc[map_idx].initial_value) {
+@@ -545,13 +545,22 @@ void bpf_gen__map_create(struct bpf_gen *gen,
+ 	default:
+ 		break;
+ 	}
+-	/* conditionally update max_entries */
+-	if (map_idx >= 0)
++
 +	/*
-+	 * if (map_desc[map_idx].initial_value) {
- 	 *    if (ctx->flags & BPF_SKEL_KERNEL)
- 	 *        bpf_probe_read_kernel(value, value_size, initial_value);
- 	 *    else
- 	 *        bpf_copy_from_user(value, value_size, initial_value);
- 	 * }
-+	 *
-+	 * The runtime initial_value comes from the host-supplied loader
-+	 * ctx and would overwrite the blob value after emit_signature_match()
-+	 * has already validated map->sha[]. For a signed loader (gen_hash)
-+	 * the attested blob value must be authoritative, so skip the override
-+	 * and leave the hashed value in place.
- 	 */
--	emit(gen, BPF_LDX_MEM(BPF_DW, BPF_REG_3, BPF_REG_6,
--			      sizeof(struct bpf_loader_ctx) +
--			      sizeof(struct bpf_map_desc) * map_idx +
--			      offsetof(struct bpf_map_desc, initial_value)));
--	emit(gen, BPF_JMP_IMM(BPF_JEQ, BPF_REG_3, 0, 8));
--	emit2(gen, BPF_LD_IMM64_RAW_FULL(BPF_REG_1, BPF_PSEUDO_MAP_IDX_VALUE,
--					 0, 0, 0, value));
--	emit(gen, BPF_MOV64_IMM(BPF_REG_2, value_size));
--	emit(gen, BPF_LDX_MEM(BPF_W, BPF_REG_0, BPF_REG_6,
--			      offsetof(struct bpf_loader_ctx, flags)));
--	emit(gen, BPF_JMP_IMM(BPF_JSET, BPF_REG_0, BPF_SKEL_KERNEL, 2));
--	emit(gen, BPF_EMIT_CALL(BPF_FUNC_copy_from_user));
--	emit(gen, BPF_JMP_IMM(BPF_JA, 0, 0, 1));
--	emit(gen, BPF_EMIT_CALL(BPF_FUNC_probe_read_kernel));
-+	if (!OPTS_GET(gen->opts, gen_hash, false)) {
-+		emit(gen, BPF_LDX_MEM(BPF_DW, BPF_REG_3, BPF_REG_6,
-+				      sizeof(struct bpf_loader_ctx) +
-+				      sizeof(struct bpf_map_desc) * map_idx +
-+				      offsetof(struct bpf_map_desc, initial_value)));
-+		emit(gen, BPF_JMP_IMM(BPF_JEQ, BPF_REG_3, 0, 8));
-+		emit2(gen, BPF_LD_IMM64_RAW_FULL(BPF_REG_1, BPF_PSEUDO_MAP_IDX_VALUE,
-+						 0, 0, 0, value));
-+		emit(gen, BPF_MOV64_IMM(BPF_REG_2, value_size));
-+		emit(gen, BPF_LDX_MEM(BPF_W, BPF_REG_0, BPF_REG_6,
-+				      offsetof(struct bpf_loader_ctx, flags)));
-+		emit(gen, BPF_JMP_IMM(BPF_JSET, BPF_REG_0, BPF_SKEL_KERNEL, 2));
-+		emit(gen, BPF_EMIT_CALL(BPF_FUNC_copy_from_user));
-+		emit(gen, BPF_JMP_IMM(BPF_JA, 0, 0, 1));
-+		emit(gen, BPF_EMIT_CALL(BPF_FUNC_probe_read_kernel));
-+	}
- 
- 	map_update_attr = add_data(gen, &attr, attr_size);
- 	pr_debug("gen: map_update_elem: idx %d, value: off %d size %d, attr: off %d size %d\n",
++	 * Conditionally update max_entries from the host-supplied loader
++	 * ctx. This sizes the map at runtime, but for a signed loader
++	 * (gen_hash) it would let an untrusted host re-dimension the
++	 * program's maps after emit_signature_match(), outside what the
++	 * signature attests to. Keep the signer-provided max_entries
++	 * baked into the blob in that case.
++	 */
++	if (map_idx >= 0 && !OPTS_GET(gen->opts, gen_hash, false))
+ 		move_ctx2blob(gen, attr_field(map_create_attr, max_entries), 4,
+ 			      sizeof(struct bpf_loader_ctx) +
+ 			      sizeof(struct bpf_map_desc) * map_idx +
+ 			      offsetof(struct bpf_map_desc, max_entries),
+ 			      true /* check that max_entries != 0 */);
++
+ 	/* emit MAP_CREATE command */
+ 	emit_sys_bpf(gen, BPF_MAP_CREATE, map_create_attr, attr_size);
+ 	debug_ret(gen, "map_create %s idx %d type %d value_size %d value_btf_id %d",
 -- 
 2.53.0
 
