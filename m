@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863321F3D56;
-	Tue, 21 Jul 2026 17:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8397B336888;
+	Tue, 21 Jul 2026 17:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653771; cv=none; b=WHezjOMKRrK4I8ej0gKw+qmJ/xUkUSk2T+sQJkz1Uu3JRig5j+qEuf+jPmpAYv6Cho1BMPzh2wezyZ7O4Pwpc6d6ahNWn0G6Kp+HAsLPhlmRQHEqgA0S/ckysd31eGTY/GlhAy66rK97NyQOiReUo1O4rcUkX7qro0LrP2BAO/k=
+	t=1784653772; cv=none; b=VXr84OhDBH+g31drnAdJyu1gGEHNTDJYD7rShIb/BgHDSIOxU3DtERzM8ylWzvzJlviuZYvgE4UivsATqKRN3AI6i27IuGNrS+24OTdpyjXWcXR1bG0nJTjRMc3noTJa1NZXSjMrYR6bHGbKNqY/htNIweIrrTDA2HGldrsxPsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653771; c=relaxed/simple;
-	bh=XMuxWg34wGwzGxZajxdigNCrIzwEqDujLK4X9fNOb7Y=;
+	s=arc-20240116; t=1784653772; c=relaxed/simple;
+	bh=vX9Yby3JdB3hZbvlCvIkjhNNnkcdw4QvOO8/ZgsuJa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SeeaA/t3eIXVfSX3jl5int6ochliQTQYv7MN1BywKeeaVj0zQ63s3kZAg+xSuk50W4aXNYYzE++VuX/F0zUmZaE2fHhvFQ5tqWUrtbtOoihwhYXoNDq6xbgd5uEn8jZAtZL0M7GjjDikXa91jfUAX2AsYicPCOSOdXYx83Lyp64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3ijrung; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jUUMY6Zha8BSl94jYzhCRvTfK1nimyVCCE08g4EHkwwT3p50DtP7AAEDx7jNbsbSpNFoGlHMXOx2oGzrC6rJli9BpXKQmlVgMJsJGDPMQPX0dOlybt1CahHWt7P8aL3R7os0Ko9xUU/EMysKlomCIzierA1HTqJ36Gk+59WQUC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hexDSWZM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3ijrung"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A984D1F000E9;
-	Tue, 21 Jul 2026 17:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hexDSWZM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E476A1F00A3A;
+	Tue, 21 Jul 2026 17:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653766;
-	bh=STtso2HzVa39EaNEGXIU9XIldCkc5ghftBd6gUzGQzw=;
+	s=korg; t=1784653771;
+	bh=oBMvlgCmPV2AReJ/Mxo5htfM4z9qgm7HHyAo7D0/WnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j3ijrungePuM4h1PspPKDo+inlvJ3dctEYSP5MZE+14gNGgeaG3/nZhoBQzuyctRD
-	 e8aatQ4Uk2Nk+SO+VHLc+VUtRS3zE1C7ptMwAsn4kOBvkIaHVpRhS5Pv1rCj97zzQc
-	 1dFF3vwlUC+eW+jnxmdTKc3et1mN/ile5Axw09A4=
+	b=hexDSWZMR9Rs8PzDteHU5Yyp47cGnUtApdYXc9YY8sIRFn8piXA31nu5ZuHVPjcCu
+	 TjZiyZGFvOXbrayj0Vf5vUau5FAYq96ZU5aNyjofN2S0a6Dt1EzOlwcDG8k+E7fzAz
+	 /IWzc4aU0rSLAlLXpY+8zTaEBh5jrO32bMmfzIqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Marek Vasut <marex@nabladev.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1451/2077] ksmbd: fix multichannel binding and enforce channel limit
-Date: Tue, 21 Jul 2026 17:18:44 +0200
-Message-ID: <20260721152627.024030565@linuxfoundation.org>
+Subject: [PATCH 7.1 1453/2077] gpio: shared: make the voting mechanism adaptable
+Date: Tue, 21 Jul 2026 17:18:46 +0200
+Message-ID: <20260721152627.071188600@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,533 +52,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-[ Upstream commit 4b706360ffb7e459cb3d3edae30b06a584f6eddd ]
+[ Upstream commit b30973e8c3920ddfa9255a959b19057515b4e5e8 ]
 
-A signed multichannel SESSION_SETUP binding request can require multiple
-authentication rounds. ksmbd excludes SESSION_SETUP from the signed
-request check and tries to sign every binding response with the channel
-signing key. The channel does not exist for
-STATUS_MORE_PROCESSING_REQUIRED, so that response is sent unsigned.
-Clients reject it with STATUS_ACCESS_DENIED.
+The current voting mechanism in GPIO shared proxy assumes that "low" is
+always the default value and users can only vote for driving the GPIO
+"high" in which case it will remain high as long as there's at least one
+user voting.
 
-The final channel signing key also needs the key exported by the binding
-authentication context. Keep that key in the channel instead of
-overwriting the established session key, and use the session signing key
-for intermediate and failed binding responses. Retain the binding session
-reference until an error response has been signed and sent.
+This makes it impossible to use the automatic sharing management for
+certain use-cases such as the write-protect GPIOs of EEPROMs which are
+requested "high" and driven "low" to enable writing. In this case, if
+the WP GPIO is shared by multiple EEPROMs, and at least one of them
+wants to enable writing, the pin must be set to "low".
 
-Limit a session to 32 channels while holding the channel lock. Return
-STATUS_INSUFFICIENT_RESOURCES for an additional binding, matching the
-server limit expected by clients.
+Modify the voting heuristic to assume the value set by the first user on
+request to be the "default" and subseqent calls to gpiod_set_value()
+will constitute votes for a change of the value to the opposite. In the
+wp-gpios case it will mean that the nvmem core requests the GPIO as
+"out-high" for all EEPROMs sharing the pin, and when one of them wants
+to write, the pin will be driven low, enabling it.
 
-This fixes smb2.multichannel.generic.num_channels, which previously
-failed the first binding with STATUS_ACCESS_DENIED and returned the same
-status instead of STATUS_INSUFFICIENT_RESOURCES for channel 33.
-
-Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: e992d54c6f97 ("gpio: shared-proxy: implement the shared GPIO proxy driver")
+Reported-by: Marek Vasut <marex@nabladev.com>
+Closes: https://lore.kernel.org/all/20260511163518.51104-1-marex@nabladev.com/
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260630-gpio-shared-dynamic-voting-v3-1-8ecf0542953b@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/auth.c              |  47 +++++-----
- fs/smb/server/auth.h              |   7 +-
- fs/smb/server/mgmt/user_session.c |   4 +-
- fs/smb/server/mgmt/user_session.h |   1 +
- fs/smb/server/smb2pdu.c           | 142 +++++++++++++++++++-----------
- 5 files changed, 126 insertions(+), 75 deletions(-)
+ drivers/gpio/gpio-shared-proxy.c | 66 ++++++++++++++++----------------
+ drivers/gpio/gpiolib-shared.h    |  3 +-
+ 2 files changed, 34 insertions(+), 35 deletions(-)
 
-diff --git a/fs/smb/server/auth.c b/fs/smb/server/auth.c
-index 86f521e849d5e2..2c7096a782daa3 100644
---- a/fs/smb/server/auth.c
-+++ b/fs/smb/server/auth.c
-@@ -133,16 +133,17 @@ static int calc_ntlmv2_hash(struct ksmbd_conn *conn, struct ksmbd_session *sess,
-  * @blen:		NTLMv2 blob length
-  * @domain_name:	domain name
-  * @cryptkey:		session crypto key
-+ * @sess_key:		derived session key output buffer
-  *
-  * Return:	0 on success, error number on error
-  */
- int ksmbd_auth_ntlmv2(struct ksmbd_conn *conn, struct ksmbd_session *sess,
- 		      struct ntlmv2_resp *ntlmv2, int blen, char *domain_name,
--		      char *cryptkey)
-+		      char *cryptkey, char *sess_key)
- {
- 	char ntlmv2_hash[CIFS_ENCPWD_SIZE];
- 	char ntlmv2_rsp[CIFS_HMAC_MD5_HASH_SIZE];
--	char sess_key[SMB2_NTLMV2_SESSKEY_SIZE];
-+	char base_key[SMB2_NTLMV2_SESSKEY_SIZE];
- 	struct hmac_md5_ctx ctx;
- 	int rc;
+diff --git a/drivers/gpio/gpio-shared-proxy.c b/drivers/gpio/gpio-shared-proxy.c
+index 10ca2ef77ef341..52a366f0ec4de7 100644
+--- a/drivers/gpio/gpio-shared-proxy.c
++++ b/drivers/gpio/gpio-shared-proxy.c
+@@ -22,7 +22,7 @@ struct gpio_shared_proxy_data {
+ 	struct gpio_chip gc;
+ 	struct gpio_shared_desc *shared_desc;
+ 	struct device *dev;
+-	bool voted_high;
++	bool voted_change;
+ };
  
-@@ -165,7 +166,7 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn *conn, struct ksmbd_session *sess,
- 	/* Generate the session key */
- 	hmac_md5_usingrawkey(ntlmv2_hash, CIFS_HMAC_MD5_HASH_SIZE,
- 			     ntlmv2_rsp, CIFS_HMAC_MD5_HASH_SIZE,
--			     sess_key);
-+			     base_key);
+ static int
+@@ -34,52 +34,54 @@ gpio_shared_proxy_set_unlocked(struct gpio_shared_proxy_data *proxy, int value)
  
- 	if (crypto_memneq(ntlmv2->ntlmv2_hash, ntlmv2_rsp,
- 			  CIFS_HMAC_MD5_HASH_SIZE)) {
-@@ -173,12 +174,12 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn *conn, struct ksmbd_session *sess,
+ 	lockdep_assert_held(&shared_desc->mutex);
+ 
+-	if (value) {
+-	       /* User wants to set value to high. */
+-		if (proxy->voted_high)
+-			/* Already voted for high, nothing to do. */
++	if (value != shared_desc->def_val) {
++	       /* User wants to vote for a value change. */
++		if (proxy->voted_change)
++			/* Already voted for a change, nothing to do. */
+ 			goto out;
+ 
+-		/* Haven't voted for high yet. */
+-		if (!shared_desc->highcnt) {
++		/* Haven't voted for a value change yet. */
++		if (!shared_desc->votecnt) {
+ 			/*
+-			 * Current value is low, need to actually set value
+-			 * to high.
++			 * Current value is default, need to actually set value
++			 * to the opposite.
+ 			 */
+-			ret = gpiod_set_value_cansleep(desc, 1);
++			ret = gpiod_set_value_cansleep(desc, value);
+ 			if (ret)
+ 				goto out;
+ 		}
+ 
+-		shared_desc->highcnt++;
+-		proxy->voted_high = true;
++		shared_desc->votecnt++;
++		proxy->voted_change = true;
+ 
  		goto out;
  	}
  
--	memcpy(sess->sess_key, sess_key, sizeof(sess_key));
-+	memcpy(sess_key, base_key, sizeof(base_key));
- 	rc = 0;
+-	/* Desired value is low. */
+-	if (!proxy->voted_high)
+-		/* We didn't vote for high, nothing to do. */
++	/* Desired value is the default. */
++	if (!proxy->voted_change)
++		/* We didn't vote for change previously, nothing to do. */
+ 		goto out;
+ 
+-	/* We previously voted for high. */
+-	if (shared_desc->highcnt == 1) {
+-		/* This is the last remaining vote for high, set value  to low. */
+-		ret = gpiod_set_value_cansleep(desc, 0);
++	/* We previously voted for change. */
++	if (shared_desc->votecnt == 1) {
++		/* This is the last remaining vote for change, set value to default. */
++		ret = gpiod_set_value_cansleep(desc, shared_desc->def_val);
+ 		if (ret)
+ 			goto out;
+ 	}
+ 
+-	shared_desc->highcnt--;
+-	proxy->voted_high = false;
++	shared_desc->votecnt--;
++	proxy->voted_change = false;
+ 
  out:
- 	memzero_explicit(ntlmv2_hash, sizeof(ntlmv2_hash));
- 	memzero_explicit(ntlmv2_rsp, sizeof(ntlmv2_rsp));
--	memzero_explicit(sess_key, sizeof(sess_key));
-+	memzero_explicit(base_key, sizeof(base_key));
- 	return rc;
+-	if (shared_desc->highcnt)
++	if (shared_desc->votecnt)
+ 		dev_dbg(proxy->dev,
+-			"Voted for value '%s', effective value is 'high', number of votes for 'high': %u\n",
+-			str_high_low(value), shared_desc->highcnt);
++			"Voted for value '%s', effective value is '%s', number of votes: %u\n",
++			str_high_low(value), str_high_low(!shared_desc->def_val),
++			shared_desc->votecnt);
+ 	else
+-		dev_dbg(proxy->dev, "Voted for value 'low', effective value is 'low'\n");
++		dev_dbg(proxy->dev, "Voted for value '%s', effective value is '%s'\n",
++			str_high_low(value), str_high_low(shared_desc->def_val));
+ 
+ 	return ret;
  }
+@@ -107,8 +109,8 @@ static void gpio_shared_proxy_free(struct gpio_chip *gc, unsigned int offset)
  
-@@ -189,12 +190,13 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn *conn, struct ksmbd_session *sess,
-  * @blob_len:	length of the @authblob message
-  * @conn:	connection
-  * @sess:	session of connection
-+ * @sess_key:	derived session key output buffer
-  *
-  * Return:	0 on success, error number on error
-  */
- int ksmbd_decode_ntlmssp_auth_blob(struct authenticate_message *authblob,
- 				   int blob_len, struct ksmbd_conn *conn,
--				   struct ksmbd_session *sess)
-+				   struct ksmbd_session *sess, char *sess_key)
- {
- 	char *domain_name;
- 	unsigned int nt_off, dn_off;
-@@ -234,7 +236,7 @@ int ksmbd_decode_ntlmssp_auth_blob(struct authenticate_message *authblob,
- 	ret = ksmbd_auth_ntlmv2(conn, sess,
- 				(struct ntlmv2_resp *)((char *)authblob + nt_off),
- 				nt_len - CIFS_ENCPWD_SIZE,
--				domain_name, conn->ntlmssp.cryptkey);
-+				domain_name, conn->ntlmssp.cryptkey, sess_key);
- 	kfree(domain_name);
- 	if (ret)
- 		return ret;
-@@ -257,8 +259,8 @@ int ksmbd_decode_ntlmssp_auth_blob(struct authenticate_message *authblob,
- 		if (!ctx_arc4)
- 			return -ENOMEM;
+ 	guard(mutex)(&shared_desc->mutex);
  
--		arc4_setkey(ctx_arc4, sess->sess_key, SMB2_NTLMV2_SESSKEY_SIZE);
--		arc4_crypt(ctx_arc4, sess->sess_key,
-+		arc4_setkey(ctx_arc4, sess_key, SMB2_NTLMV2_SESSKEY_SIZE);
-+		arc4_crypt(ctx_arc4, sess_key,
- 			   (char *)authblob + sess_key_off, sess_key_len);
- 		kfree_sensitive(ctx_arc4);
- 	}
-@@ -400,7 +402,8 @@ ksmbd_build_ntlmssp_challenge_blob(struct challenge_message *chgblob,
+-	if (proxy->voted_high) {
+-		ret = gpio_shared_proxy_set_unlocked(proxy, 0);
++	if (proxy->voted_change) {
++		ret = gpio_shared_proxy_set_unlocked(proxy, shared_desc->def_val);
+ 		if (ret)
+ 			dev_err(proxy->dev,
+ 				"Failed to unset the shared GPIO value on release: %d\n", ret);
+@@ -197,13 +199,9 @@ static int gpio_shared_proxy_direction_output(struct gpio_chip *gc,
+ 		if (ret)
+ 			return ret;
  
- #ifdef CONFIG_SMB_SERVER_KERBEROS5
- int ksmbd_krb5_authenticate(struct ksmbd_session *sess, char *in_blob,
--			    int in_len, char *out_blob, int *out_len)
-+			    int in_len, char *out_blob, int *out_len,
-+			    char *sess_key)
- {
- 	struct ksmbd_spnego_authen_response *resp;
- 	struct ksmbd_login_response_ext *resp_ext = NULL;
-@@ -455,7 +458,7 @@ int ksmbd_krb5_authenticate(struct ksmbd_session *sess, char *in_blob,
- 		ksmbd_free_user(user);
- 	}
+-		if (value) {
+-			proxy->voted_high = true;
+-			shared_desc->highcnt = 1;
+-		} else {
+-			proxy->voted_high = false;
+-			shared_desc->highcnt = 0;
+-		}
++		shared_desc->def_val = value;
++		shared_desc->votecnt = 0;
++		proxy->voted_change = false;
  
--	memcpy(sess->sess_key, resp->payload, resp->session_key_len);
-+	memcpy(sess_key, resp->payload, resp->session_key_len);
- 	memcpy(out_blob, resp->payload + resp->session_key_len,
- 	       resp->spnego_blob_len);
- 	*out_len = resp->spnego_blob_len;
-@@ -466,7 +469,8 @@ int ksmbd_krb5_authenticate(struct ksmbd_session *sess, char *in_blob,
- }
- #else
- int ksmbd_krb5_authenticate(struct ksmbd_session *sess, char *in_blob,
--			    int in_len, char *out_blob, int *out_len)
-+			    int in_len, char *out_blob, int *out_len,
-+			    char *sess_key)
- {
- 	return -EOPNOTSUPP;
- }
-@@ -525,7 +529,7 @@ struct derivation {
- 	bool binding;
- };
- 
--static void generate_key(struct ksmbd_conn *conn, struct ksmbd_session *sess,
-+static void generate_key(struct ksmbd_conn *conn, const char *sess_key,
- 			 struct kvec label, struct kvec context, __u8 *key,
- 			 unsigned int key_size)
- {
-@@ -536,7 +540,7 @@ static void generate_key(struct ksmbd_conn *conn, struct ksmbd_session *sess,
- 	unsigned char prfhash[SMB2_HMACSHA256_SIZE];
- 	struct hmac_sha256_ctx ctx;
- 
--	hmac_sha256_init_usingrawkey(&ctx, sess->sess_key,
-+	hmac_sha256_init_usingrawkey(&ctx, sess_key,
- 				     SMB2_NTLMV2_SESSKEY_SIZE);
- 	hmac_sha256_update(&ctx, i, 4);
- 	hmac_sha256_update(&ctx, label.iov_base, label.iov_len);
-@@ -559,18 +563,21 @@ static int generate_smb3signingkey(struct ksmbd_session *sess,
- 				   const struct derivation *signing)
- {
- 	struct channel *chann;
--	char *key;
-+	char *key, *sess_key;
- 
- 	chann = lookup_chann_list(sess, conn);
- 	if (!chann)
  		return 0;
- 
--	if (conn->dialect >= SMB30_PROT_ID && signing->binding)
-+	if (conn->dialect >= SMB30_PROT_ID && signing->binding) {
- 		key = chann->smb3signingkey;
--	else
-+		sess_key = chann->sess_key;
-+	} else {
- 		key = sess->smb3signingkey;
-+		sess_key = sess->sess_key;
-+	}
- 
--	generate_key(conn, sess, signing->label, signing->context, key,
-+	generate_key(conn, sess_key, signing->label, signing->context, key,
- 		     SMB3_SIGN_KEY_SIZE);
- 
- 	if (!(conn->dialect >= SMB30_PROT_ID && signing->binding))
-@@ -627,11 +634,11 @@ static void generate_smb3encryptionkey(struct ksmbd_conn *conn,
- 				       struct ksmbd_session *sess,
- 				       const struct derivation_twin *ptwin)
- {
--	generate_key(conn, sess, ptwin->encryption.label,
-+	generate_key(conn, sess->sess_key, ptwin->encryption.label,
- 		     ptwin->encryption.context, sess->smb3encryptionkey,
- 		     SMB3_ENC_DEC_KEY_SIZE);
- 
--	generate_key(conn, sess, ptwin->decryption.label,
-+	generate_key(conn, sess->sess_key, ptwin->decryption.label,
- 		     ptwin->decryption.context,
- 		     sess->smb3decryptionkey, SMB3_ENC_DEC_KEY_SIZE);
- 
-diff --git a/fs/smb/server/auth.h b/fs/smb/server/auth.h
-index 5767aabc63c9be..f14b7c03326468 100644
---- a/fs/smb/server/auth.h
-+++ b/fs/smb/server/auth.h
-@@ -41,17 +41,18 @@ int ksmbd_crypt_message(struct ksmbd_work *work, struct kvec *iov,
- void ksmbd_copy_gss_neg_header(void *buf);
- int ksmbd_auth_ntlmv2(struct ksmbd_conn *conn, struct ksmbd_session *sess,
- 		      struct ntlmv2_resp *ntlmv2, int blen, char *domain_name,
--		      char *cryptkey);
-+		      char *cryptkey, char *sess_key);
- int ksmbd_decode_ntlmssp_auth_blob(struct authenticate_message *authblob,
- 				   int blob_len, struct ksmbd_conn *conn,
--				   struct ksmbd_session *sess);
-+				   struct ksmbd_session *sess, char *sess_key);
- int ksmbd_decode_ntlmssp_neg_blob(struct negotiate_message *negblob,
- 				  int blob_len, struct ksmbd_conn *conn);
- unsigned int
- ksmbd_build_ntlmssp_challenge_blob(struct challenge_message *chgblob,
- 				   struct ksmbd_conn *conn);
- int ksmbd_krb5_authenticate(struct ksmbd_session *sess, char *in_blob,
--			    int in_len,	char *out_blob, int *out_len);
-+			    int in_len, char *out_blob, int *out_len,
-+			    char *sess_key);
- void ksmbd_sign_smb2_pdu(struct ksmbd_conn *conn, char *key, struct kvec *iov,
- 			 int n_vec, char *sig);
- void ksmbd_sign_smb3_pdu(struct ksmbd_conn *conn, char *key, struct kvec *iov,
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index de58aed76cb426..d6331184ebfcbd 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -255,7 +255,7 @@ static void free_channel_list(struct ksmbd_session *sess)
- 	down_write(&sess->chann_lock);
- 	xa_for_each(&sess->ksmbd_chann_list, index, chann) {
- 		xa_erase(&sess->ksmbd_chann_list, index);
--		kfree(chann);
-+		kfree_sensitive(chann);
  	}
- 
- 	xa_destroy(&sess->ksmbd_chann_list);
-@@ -449,7 +449,7 @@ static int ksmbd_chann_del(struct ksmbd_conn *conn, struct ksmbd_session *sess)
- 	if (!chann)
- 		return -ENOENT;
- 
--	kfree(chann);
-+	kfree_sensitive(chann);
- 	return 0;
- }
- 
-diff --git a/fs/smb/server/mgmt/user_session.h b/fs/smb/server/mgmt/user_session.h
-index 6aebd385be8474..8893a9aaede795 100644
---- a/fs/smb/server/mgmt/user_session.h
-+++ b/fs/smb/server/mgmt/user_session.h
-@@ -19,6 +19,7 @@
- struct ksmbd_file_table;
- 
- struct channel {
-+	char			sess_key[SMB2_NTLMV2_SESSKEY_SIZE];
- 	__u8			smb3signingkey[SMB3_SIGN_KEY_SIZE];
- 	struct ksmbd_conn	*conn;
+diff --git a/drivers/gpio/gpiolib-shared.h b/drivers/gpio/gpiolib-shared.h
+index bbdc0ab7b647a4..618756f6c6aafd 100644
+--- a/drivers/gpio/gpiolib-shared.h
++++ b/drivers/gpio/gpiolib-shared.h
+@@ -41,7 +41,8 @@ struct gpio_shared_desc {
+ 	struct gpio_desc *desc;
+ 	unsigned long cfg;
+ 	unsigned int usecnt;
+-	unsigned int highcnt;
++	unsigned int votecnt;
++	int def_val;
+ 	struct mutex mutex; /* serializes all proxy operations on this descriptor */
  };
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index e5e2bd7a672650..93fc8ea35baa09 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -89,6 +89,47 @@ struct channel *lookup_chann_list(struct ksmbd_session *sess, struct ksmbd_conn
- 	return chann;
- }
  
-+#define KSMBD_MAX_CHANNELS	32
-+
-+static int register_session_channel(struct ksmbd_session *sess,
-+				    struct ksmbd_conn *conn,
-+				    const char *sess_key)
-+{
-+	struct channel *chann, *old;
-+	unsigned long index;
-+	unsigned int count = 0;
-+	int rc = 0;
-+
-+	down_write(&sess->chann_lock);
-+	if (xa_load(&sess->ksmbd_chann_list, (long)conn))
-+		goto out;
-+
-+	xa_for_each(&sess->ksmbd_chann_list, index, chann)
-+		count++;
-+	if (count >= KSMBD_MAX_CHANNELS) {
-+		rc = -ENOSPC;
-+		goto out;
-+	}
-+
-+	chann = kmalloc_obj(struct channel, KSMBD_DEFAULT_GFP);
-+	if (!chann) {
-+		rc = -ENOMEM;
-+		goto out;
-+	}
-+
-+	chann->conn = conn;
-+	memcpy(chann->sess_key, sess_key, sizeof(chann->sess_key));
-+	old = xa_store(&sess->ksmbd_chann_list, (long)conn, chann,
-+		       KSMBD_DEFAULT_GFP);
-+	if (xa_is_err(old)) {
-+		kfree_sensitive(chann);
-+		rc = xa_err(old);
-+	}
-+out:
-+	up_write(&sess->chann_lock);
-+	return rc;
-+}
-+
- /**
-  * smb2_get_ksmbd_tcon() - get tree connection information using a tree id.
-  * @work:	smb work
-@@ -1465,9 +1506,11 @@ static int ntlm_authenticate(struct ksmbd_work *work,
- {
- 	struct ksmbd_conn *conn = work->conn;
- 	struct ksmbd_session *sess = work->sess;
--	struct channel *chann = NULL, *old;
- 	struct ksmbd_user *user;
-+	char channel_key[SMB2_NTLMV2_SESSKEY_SIZE] = {};
-+	char *auth_key = conn->binding ? channel_key : sess->sess_key;
- 	u64 prev_id;
-+	bool binding = conn->binding;
- 	int sz, rc;
- 
- 	ksmbd_debug(SMB, "authenticate phase\n");
-@@ -1526,11 +1569,13 @@ static int ntlm_authenticate(struct ksmbd_work *work,
- 			sz = conn->mechTokenLen;
- 		else
- 			sz = le16_to_cpu(req->SecurityBufferLength);
--		rc = ksmbd_decode_ntlmssp_auth_blob(authblob, sz, conn, sess);
-+		rc = ksmbd_decode_ntlmssp_auth_blob(authblob, sz, conn, sess,
-+						    auth_key);
- 		if (rc) {
- 			set_user_flag(sess->user, KSMBD_USER_FLAG_BAD_PASSWORD);
- 			ksmbd_debug(SMB, "authentication failed\n");
--			return -EPERM;
-+			rc = -EPERM;
-+			goto out;
- 		}
- 	}
- 
-@@ -1565,37 +1610,30 @@ static int ntlm_authenticate(struct ksmbd_work *work,
- 
- binding_session:
- 	if (conn->dialect >= SMB30_PROT_ID) {
--		chann = lookup_chann_list(sess, conn);
--		if (!chann) {
--			chann = kmalloc_obj(struct channel, KSMBD_DEFAULT_GFP);
--			if (!chann)
--				return -ENOMEM;
--
--			chann->conn = conn;
--			down_write(&sess->chann_lock);
--			old = xa_store(&sess->ksmbd_chann_list, (long)conn, chann,
--					KSMBD_DEFAULT_GFP);
--			up_write(&sess->chann_lock);
--			if (xa_is_err(old)) {
--				kfree(chann);
--				return xa_err(old);
--			}
--		}
-+		rc = register_session_channel(sess, conn, auth_key);
-+		if (rc)
-+			goto out;
- 	}
- 
- 	if (conn->ops->generate_signingkey) {
- 		rc = conn->ops->generate_signingkey(sess, conn);
- 		if (rc) {
- 			ksmbd_debug(SMB, "SMB3 signing key generation failed\n");
--			return -EINVAL;
-+			rc = -EINVAL;
-+			goto out;
- 		}
- 	}
- 
- 	if (!ksmbd_conn_lookup_dialect(conn)) {
- 		pr_err("fail to verify the dialect\n");
--		return -ENOENT;
-+		rc = -ENOENT;
-+		goto out;
- 	}
--	return 0;
-+	rc = 0;
-+out:
-+	if (binding)
-+		memzero_explicit(channel_key, sizeof(channel_key));
-+	return rc;
- }
- 
- #ifdef CONFIG_SMB_SERVER_KERBEROS5
-@@ -1606,8 +1644,10 @@ static int krb5_authenticate(struct ksmbd_work *work,
- 	struct ksmbd_conn *conn = work->conn;
- 	struct ksmbd_session *sess = work->sess;
- 	char *in_blob, *out_blob;
--	struct channel *chann = NULL, *old;
-+	char channel_key[SMB2_NTLMV2_SESSKEY_SIZE] = {};
-+	char *auth_key = conn->binding ? channel_key : sess->sess_key;
- 	u64 prev_sess_id;
-+	bool binding = conn->binding;
- 	int in_len, out_len;
- 	int retval;
- 
-@@ -1620,10 +1660,11 @@ static int krb5_authenticate(struct ksmbd_work *work,
- 		(le16_to_cpu(rsp->SecurityBufferOffset) + 4);
- 
- 	retval = ksmbd_krb5_authenticate(sess, in_blob, in_len,
--					 out_blob, &out_len);
-+					 out_blob, &out_len, auth_key);
- 	if (retval) {
- 		ksmbd_debug(SMB, "krb5 authentication failed\n");
--		return -EINVAL;
-+		retval = -EINVAL;
-+		goto out;
- 	}
- 
- 	/* Check previous session */
-@@ -1660,37 +1701,30 @@ static int krb5_authenticate(struct ksmbd_work *work,
- 
- binding_session:
- 	if (conn->dialect >= SMB30_PROT_ID) {
--		chann = lookup_chann_list(sess, conn);
--		if (!chann) {
--			chann = kmalloc_obj(struct channel, KSMBD_DEFAULT_GFP);
--			if (!chann)
--				return -ENOMEM;
--
--			chann->conn = conn;
--			down_write(&sess->chann_lock);
--			old = xa_store(&sess->ksmbd_chann_list, (long)conn,
--					chann, KSMBD_DEFAULT_GFP);
--			up_write(&sess->chann_lock);
--			if (xa_is_err(old)) {
--				kfree(chann);
--				return xa_err(old);
--			}
--		}
-+		retval = register_session_channel(sess, conn, auth_key);
-+		if (retval)
-+			goto out;
- 	}
- 
- 	if (conn->ops->generate_signingkey) {
- 		retval = conn->ops->generate_signingkey(sess, conn);
- 		if (retval) {
- 			ksmbd_debug(SMB, "SMB3 signing key generation failed\n");
--			return -EINVAL;
-+			retval = -EINVAL;
-+			goto out;
- 		}
- 	}
- 
- 	if (!ksmbd_conn_lookup_dialect(conn)) {
- 		pr_err("fail to verify the dialect\n");
--		return -ENOENT;
-+		retval = -ENOENT;
-+		goto out;
- 	}
--	return 0;
-+	retval = 0;
-+out:
-+	if (binding)
-+		memzero_explicit(channel_key, sizeof(channel_key));
-+	return retval;
- }
- #else
- static int krb5_authenticate(struct ksmbd_work *work,
-@@ -1912,7 +1946,7 @@ int smb2_sess_setup(struct ksmbd_work *work)
- 		rsp->hdr.Status = STATUS_REQUEST_NOT_ACCEPTED;
- 	else if (rc == -EFAULT)
- 		rsp->hdr.Status = STATUS_NETWORK_SESSION_EXPIRED;
--	else if (rc == -ENOMEM)
-+	else if (rc == -ENOMEM || rc == -ENOSPC)
- 		rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
- 	else if (rc == -EOPNOTSUPP)
- 		rsp->hdr.Status = STATUS_NOT_SUPPORTED;
-@@ -1951,8 +1985,16 @@ int smb2_sess_setup(struct ksmbd_work *work)
- 				sess->last_active = jiffies;
- 				sess->state = SMB2_SESSION_EXPIRED;
- 			}
--			ksmbd_user_session_put(sess);
--			work->sess = NULL;
-+			/*
-+			 * Keep the binding session reference until the response is
-+			 * signed and sent.  Error responses for a signed binding
-+			 * request are signed with the existing session signing key.
-+			 */
-+			if (!(req->Flags & SMB2_SESSION_REQ_FLAG_BINDING) ||
-+			    work->sess != sess) {
-+				ksmbd_user_session_put(sess);
-+				work->sess = NULL;
-+			}
- 			if (try_delay) {
- 				ksmbd_conn_set_need_reconnect(conn);
- 				ssleep(5);
-@@ -9022,7 +9064,6 @@ bool smb2_is_sign_req(struct ksmbd_work *work, unsigned int command)
- 
- 	if ((rcv_hdr2->Flags & SMB2_FLAGS_SIGNED) &&
- 	    command != SMB2_NEGOTIATE_HE &&
--	    command != SMB2_SESSION_SETUP_HE &&
- 	    command != SMB2_OPLOCK_BREAK_HE)
- 		return true;
- 
-@@ -9171,13 +9212,14 @@ void smb3_set_sign_rsp(struct ksmbd_work *work)
- 	struct channel *chann;
- 	char signature[SMB2_CMACAES_SIZE];
- 	struct kvec *iov;
-+	u16 command = conn->ops->get_cmd_val(work);
- 	int n_vec = 1;
- 	char *signing_key;
- 
- 	hdr = ksmbd_resp_buf_curr(work);
- 
--	if (conn->binding == false &&
--	    le16_to_cpu(hdr->Command) == SMB2_SESSION_SETUP_HE) {
-+	if (command == SMB2_SESSION_SETUP_HE &&
-+	    (!conn->binding || hdr->Status != STATUS_SUCCESS)) {
- 		signing_key = work->sess->smb3signingkey;
- 	} else {
- 		chann = lookup_chann_list(work->sess, work->conn);
 -- 
 2.53.0
 
