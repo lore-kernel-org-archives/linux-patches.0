@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F0246AA71;
-	Tue, 21 Jul 2026 15:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E2946AA86;
+	Tue, 21 Jul 2026 15:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648337; cv=none; b=fRnDQoWnEJKxLladwwYk5zd0+fltmynFiiiG/Fo4kx5HJ2nL9qBtvOkla7TjZH/lZLHZGEXwFjH0R+vyvFIuQo+aaKAniClkdFNKxJCVVZUeR9Bt8PtXt2YksOpwtwGTNS5Urw5xbZtdcKnqXiAFVAbTyhuUOgk29BKjCuLBfRg=
+	t=1784648340; cv=none; b=O2YHnOVanO044XByA27oHmIQSxikdfVV049t66s+k3VtnBshXk2nQOhAWYLCt4nyx4nm81J+ybohcRmnSH3eTbfsy2EMx7YVCC9KeLbRyPSDJMytib4AWDUECeOswzSqf7iK3KDzXdciTxEnmElcZP/j7edDXHdfdbI/AUdYm9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648337; c=relaxed/simple;
-	bh=ijKklc0cal/4BuoB8jnkpB2e2zEzIvIoK2DyZ6mabhw=;
+	s=arc-20240116; t=1784648340; c=relaxed/simple;
+	bh=XOIvftIPuzC/QS2PZaOBZmUEKdAuDjeE+abmBQsapkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X5rbBjzl/QMXW5iwV3cQsaKJFR1+OIE0O2Ant/hWEp+rv/P+/d74nikLKvuUPzzAcIZ33s/2dmjmlNIOT9C1l28vwaXAt0eHeQTrH/SwIOkj4XAB9N4xXdTy98AR+aM+nAanvrAuBqgSNH3F24vL3xXCXNg65v7Dro5PBnvlBb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mu9IuNIn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QfPVMoO96mvq1zmnKRfLditQx+5C8kc1ZePmEm85UatUkG36S+I5bn2y0ML8DHjGBYxU9zL01CpfrrGeU+d3iVqPKbwQKi4fHdhdcA54Na64VTYhNznVo0v8EQegfSL3fV3GURtoqOMFBYDWM1dWXZu+BBA8R5nA7vzRopFFeXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnabKXBV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mu9IuNIn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C49491F000E9;
-	Tue, 21 Jul 2026 15:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnabKXBV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804EA1F000E9;
+	Tue, 21 Jul 2026 15:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648336;
-	bh=foI/QvtWpr+VwHQR/1nKBmeO6q8lim4OOPRvAnu8MIE=;
+	s=korg; t=1784648339;
+	bh=hL2v5B0H5v41WEvxErM28yUwmCelEORJlgdW0M4uoB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mu9IuNIn9WMwqJVxgEt0lNSuCuZQyggmq+zZUr1yQ6KZqt73gQZuFjeh+Rvyk974d
-	 6LgZGMYvfYj/XEBNCggMRWl445/Xp6J9tAZa7cFAwz+vWylIPwj8ZRM9ye00JVQpwg
-	 0VaC8DXS/wc60L2ry39VrzMPgZHU9UYBy8vFUgaY=
+	b=hnabKXBV2VRgeeiIoOK2sN4dHK4rGPBKEJFfFcEc+0UzaQhS+QM6CPFBzBw+QqyU2
+	 NZ5y4m2pLlK2FgLXDhzuRZwzn7Ub8X2XFFpNLfxb3KkM7rtPAnld1vvSC2BGriz11u
+	 Y5lBPHzg/mNTv+ZuhX0/bA56F3TOrYBT1YA7N/aM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ling Xu <ling_ling.xu@unisoc.com>,
-	Di Shen <di.shen@unisoc.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	"Tycho Andersen (AMD)" <tycho@kernel.org>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0160/2077] OPP: Fix race between OPP addition and lookup
-Date: Tue, 21 Jul 2026 16:57:13 +0200
-Message-ID: <20260721152556.458287871@linuxfoundation.org>
+Subject: [PATCH 7.1 0161/2077] crypto: ccp - Reverse the cleanup order in psp_dev_destroy()
+Date: Tue, 21 Jul 2026 16:57:14 +0200
+Message-ID: <20260721152556.483935952@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,65 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Di Shen <di.shen@unisoc.com>
+From: Tycho Andersen (AMD) <tycho@kernel.org>
 
-[ Upstream commit f5e1cc9a284bff2510981643a5bca4bc4c21b81a ]
+[ Upstream commit 4a76a164ba1617f60d1c8a2fd754466c9d9e48e9 ]
 
-A race exists between dev_pm_opp_add_dynamic() and
-dev_pm_opp_find_freq_exact():
+Before SNP x86 shutdown [1], all HV_FIXED pages were always leaked on
+module unload. Now pages can be reclaimed if they are freed before SNP
+shutdown.
 
-  CPU0 (add)                          CPU1 (lookup)
-  -------------------------------     ------------------------------
-  _opp_add()
-    mutex_lock()
-    list_add(&new_opp->node, head)
-    mutex_unlock()                    _opp_table_find_key()
-                                        mutex_lock()
-                                        dev_pm_opp_get(opp)
-                                          kref_get()
-                                        mutex_unlock()
-    kref_init(&new_opp->kref)
-                                      dev_pm_opp_put()
-                                        kref_put_mutex()
+The SFS driver does sfs_dev_destroy() -> snp_free_hv_fixed_pages(), marking
+the command buffer as free. But this happens after sev_dev_destroy() in
+psp_dev_destroy(), so the pages are always leaked.
 
-The newly added OPP is inserted into the list before its kref is
-initialized. A concurrent lookup can find this OPP and increment its
-reference count while it is still uninitialized, leading to refcount
-corruption and a potential premature free.
+Rearrange psp_dev_destroy() to destroy things in the reverse order from
+psp_init(), so that any dependencies can be unwound accordingly. This lets
+SFS free the page and the subsequent SNP shutdown release it.
 
-Fix this by initializing ->kref and ->opp_table before making the OPP
-visible via list_add(). This ensures any concurrent lookup observes a
-fully initialized object.
+This was identified with use of Chris Mason's review-prompts:
+https://github.com/masoncl/review-prompts
 
-Fixes: 7034764a1e4a (PM / OPP: Add 'struct kref' to struct dev_pm_opp)
-Co-developed-by: Ling Xu <ling_ling.xu@unisoc.com>
-Signed-off-by: Ling Xu <ling_ling.xu@unisoc.com>
-Signed-off-by: Di Shen <di.shen@unisoc.com>
-[ Viresh: Updated commit log ]
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+[1]: https://lore.kernel.org/all/20260324161301.1353976-1-tycho@kernel.org/
+
+Fixes: 648dbccc03a0 ("crypto: ccp - Add AMD Seamless Firmware Servicing (SFS) driver")
+Reported-by: review-prompts
+Assisted-by: Claude:claude-4.6-opus
+Suggested-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Tycho Andersen (AMD) <tycho@kernel.org>
+Reviewed-by: Ashish Kalra <ashish.kalra@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/opp/core.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/crypto/ccp/psp-dev.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-index da3f5eba434197..ab0b0a2f85a178 100644
---- a/drivers/opp/core.c
-+++ b/drivers/opp/core.c
-@@ -2088,11 +2088,10 @@ int _opp_add(struct device *dev, struct dev_pm_opp *new_opp,
- 			return ret;
+diff --git a/drivers/crypto/ccp/psp-dev.c b/drivers/crypto/ccp/psp-dev.c
+index 5c7f7e02a7d8ab..b14ce51065d5da 100644
+--- a/drivers/crypto/ccp/psp-dev.c
++++ b/drivers/crypto/ccp/psp-dev.c
+@@ -316,15 +316,15 @@ void psp_dev_destroy(struct sp_device *sp)
+ 	if (!psp)
+ 		return;
  
- 		list_add(&new_opp->node, head);
-+		new_opp->opp_table = opp_table;
-+		kref_init(&new_opp->kref);
- 	}
+-	sev_dev_destroy(psp);
++	dbc_dev_destroy(psp);
  
--	new_opp->opp_table = opp_table;
--	kref_init(&new_opp->kref);
--
- 	opp_debug_create_one(new_opp, opp_table);
+-	tee_dev_destroy(psp);
++	platform_access_dev_destroy(psp);
  
- 	if (!_opp_supported_by_regulators(new_opp, opp_table)) {
+ 	sfs_dev_destroy(psp);
+ 
+-	dbc_dev_destroy(psp);
++	tee_dev_destroy(psp);
+ 
+-	platform_access_dev_destroy(psp);
++	sev_dev_destroy(psp);
+ 
+ 	sp_free_psp_irq(sp, psp);
+ 
 -- 
 2.53.0
 
