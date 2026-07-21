@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE1C415F23;
-	Tue, 21 Jul 2026 19:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E65395D8E;
+	Tue, 21 Jul 2026 19:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660733; cv=none; b=i1gYoQgPaxYf2dhFde0DDge6droG2k7p6iUAqqEZnBR4UbTF0wiYm5NadMdGCeQJmD/sPELRBOG5782J7P9qIOdVgbUaVrBxM/lIXzvkelwXcvY/Dp8on9KYD0f2QHY1xBL24ytO5SaJcTd+xMaYcdjgKYgj4T/+jYma0ryX1eo=
+	t=1784660736; cv=none; b=FpixG6t7XnquOCsITKzL7uQD9wi7CUotHb7QnsQ6PCvGsrjJozeNW/QCK63KjEINwwNf+UIDDi5YWCggRxj/pywO9E4qepnExi6pbHBOxPmIKyMZ2uyC3oET1H7kzAnvGT3Ckc7WQQbfke7H3rVjFZOTLEubvztuXzyJu59YSgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660733; c=relaxed/simple;
-	bh=LYVGVGHNKvnjIES8i/cNI3Lr/NrAFqJPlGjIk6TXpy8=;
+	s=arc-20240116; t=1784660736; c=relaxed/simple;
+	bh=/Qt27yVDdjFEkB8CfcxWSoqoH3Ip4+toohq9lHwbc4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J6af+PL5rP3pl/8eCiZYpBI2ciWEfHcxp3R0F68KaK1K7HlBsN333P32I1LVSqYpD89kFD5gZW789USGOLSRQ5hKtDIlg2wv7GPty/p3s9qsJkVpFoUb5omjy/YRDc7jSNiXexb6VA+22cvXEpVQUUjiPcFP4k6U/Wb1KtGul0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRIP44sT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qqXlJ/pykG4Pg27shwQhcD5/7vNRIOa9044zrglztk7c0R5282QkYpTxzRI1HSGjEVIUUqmyxd+Ad4kPtRBl11dGUaSgXDcZs3YWWvzHldMuD9Ly49+lk0AIS1l2IQZn6T7ZHH+Spma41dncXA2y3bQyHA3ioVZuNRaEeHYhkQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khtHPWAb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRIP44sT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A261F00A3A;
-	Tue, 21 Jul 2026 19:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khtHPWAb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6851F000E9;
+	Tue, 21 Jul 2026 19:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660732;
-	bh=rLH9Xq7KAPoC0CKKgBlIfzsJxO2vzqqc7nAZA5aslUs=;
+	s=korg; t=1784660735;
+	bh=uU+KvrVoRXcyFI08WsS8pX81Es30YKW+oLQXOu8QDHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uRIP44sT7ffw0JF2GnJNSJHeCOdzNLncFHLNiL8fd+3c3rjYqoS9OR27iiK7RoZ9L
-	 AKoY52DitiG31VWrm8iv+ZybWWXNZTSxLhI+ZEPxUlCQkJ93Uy2wcw29yM0A1Z9Mgt
-	 MNHPxInGdqgL8VtwlW6O3aa6jZG+vV+g4nJbpqh4=
+	b=khtHPWAbaBjBBuBB8jKujf9WDO/v8qcQr34jQ8BxCLP2e8KSU16MNRPbCaxWClFFs
+	 f/HyTj5/JdZfID7UPqax6NDtLtYsQlT9M2MsCN2PRwt2zyQO6LEInY7jLI0byO94jk
+	 UYJwhMVWstc3JNm1X6fg5iO+vX+AA4mFrSCh8y3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Simon Horman <horms@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1090/2077] ALSA: usb-audio: qcom: Free sideband sg_table objects
-Date: Tue, 21 Jul 2026 17:12:43 +0200
-Message-ID: <20260721152618.532348829@linuxfoundation.org>
+Subject: [PATCH 7.1 1091/2077] xfrm: Fix xfrm state cache insertion race
+Date: Tue, 21 Jul 2026 17:12:44 +0200
+Message-ID: <20260721152618.556099053@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,60 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 7d69804a35103a50852eae41bfe6a2e0061c68fd ]
+[ Upstream commit ddd3d0132920319ac426e12456013eadbae67e15 ]
 
-The Qualcomm USB audio offload driver obtains an endpoint transfer-ring
-table by calling xhci_sideband_get_endpoint_buffer(). This getter passes
-the endpoint ring to xhci_ring_to_sgtable(), which allocates the outer
-struct sg_table with kzalloc_obj(*sgt). The event-ring path is
-equivalent: xhci_sideband_get_event_buffer() also returns the result of
-xhci_ring_to_sgtable().
+The xfrm input state cache insertion code checks the validity of
+the state before acquiring the global xfrm_state_lock.  Thus it's
+possible for someone else to kill the state after it passed the
+validity check, and then the insertion will add the dead state
+to the cache.
 
-Inside xhci_ring_to_sgtable(), sg_alloc_table_from_pages() separately
-allocates the scatterlist storage referenced by sgt->sgl. The returned
-object therefore has two allocation layers: the outer struct sg_table
-and its internal scatterlist storage.
+Fix this by moving the validity check inside the lock.
 
-The Qualcomm caller only invokes sg_free_table(sgt). sg_free_table()
-releases the scatterlist storage owned by the table, but it does not
-free the separately allocated outer struct sg_table. The local sgt
-pointer is then discarded, so every successful endpoint or event-ring
-query leaks the outer object.
+This entire function is called on the input path, where BH must
+be off (e.g., the caller of this function xfrm_input acquires
+its spinlocks without disabling BH).
 
-Call kfree(sgt) after sg_free_table(sgt) in both setup paths, after the
-required page and DMA addresses have been copied out.
+So there is no need to disable BH here or take the RCU read lock.
+Remove both and replace them with an assertion that trips if BH
+is accidentally enabled on some future calling path.
 
-Fixes: 326bbc348298 ("ALSA: usb-audio: qcom: Introduce QC USB SND offloading support")
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/90B353283AA150C4+20260616115916.1222915-1-raoxu@uniontech.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 81a331a0e72d ("xfrm: Add an inbound percpu state cache.")
+Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/qcom/qc_audio_offload.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/xfrm/xfrm_state.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
-index 649228421e2f69..ccb5ffd73a66cf 100644
---- a/sound/usb/qcom/qc_audio_offload.c
-+++ b/sound/usb/qcom/qc_audio_offload.c
-@@ -1165,6 +1165,7 @@ uaudio_endpoint_setup(struct snd_usb_substream *subs,
- 	tr_pa = page_to_phys(pg);
- 	mem_info->dma = sg_dma_address(sgt->sgl);
- 	sg_free_table(sgt);
-+	kfree(sgt);
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index 4c7eed689cd444..ae4fdc60c2a624 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -1207,9 +1207,11 @@ struct xfrm_state *xfrm_input_state_lookup(struct net *net, u32 mark,
+ 	struct hlist_head *state_cache_input;
+ 	struct xfrm_state *x = NULL;
  
- 	/* data transfer ring */
- 	iova = uaudio_iommu_map_pa(MEM_XFER_RING, dma_coherent, tr_pa,
-@@ -1234,6 +1235,7 @@ static int uaudio_event_ring_setup(struct snd_usb_substream *subs,
- 	er_pa = page_to_phys(pg);
- 	mem_info->dma = sg_dma_address(sgt->sgl);
- 	sg_free_table(sgt);
-+	kfree(sgt);
++	/* BH is always disabled on the input path. */
++	lockdep_assert_in_softirq();
++
+ 	state_cache_input = raw_cpu_ptr(net->xfrm.state_cache_input);
  
- 	iova = uaudio_iommu_map_pa(MEM_EVENT_RING, dma_coherent, er_pa,
- 				   PAGE_SIZE);
+-	rcu_read_lock();
+ 	hlist_for_each_entry_rcu(x, state_cache_input, state_cache_input) {
+ 		if (x->props.family != family ||
+ 		    x->id.spi       != spi ||
+@@ -1227,20 +1229,25 @@ struct xfrm_state *xfrm_input_state_lookup(struct net *net, u32 mark,
+ 	xfrm_hash_ptrs_get(net, &state_ptrs);
+ 
+ 	x = __xfrm_state_lookup(&state_ptrs, mark, daddr, spi, proto, family);
+-
+-	if (x && x->km.state == XFRM_STATE_VALID) {
+-		spin_lock_bh(&net->xfrm.xfrm_state_lock);
+-		if (hlist_unhashed(&x->state_cache_input)) {
++	if (x) {
++		spin_lock(&net->xfrm.xfrm_state_lock);
++		if (x->km.state != XFRM_STATE_VALID) {
++			/*
++			 * The state is about to be destroyed.
++			 *
++			 * Don't add it to the cache but still
++			 * return it to the caller.
++			 */
++		} else if (hlist_unhashed(&x->state_cache_input)) {
+ 			hlist_add_head_rcu(&x->state_cache_input, state_cache_input);
+ 		} else {
+ 			hlist_del_rcu(&x->state_cache_input);
+ 			hlist_add_head_rcu(&x->state_cache_input, state_cache_input);
+ 		}
+-		spin_unlock_bh(&net->xfrm.xfrm_state_lock);
++		spin_unlock(&net->xfrm.xfrm_state_lock);
+ 	}
+ 
+ out:
+-	rcu_read_unlock();
+ 	return x;
+ }
+ EXPORT_SYMBOL(xfrm_input_state_lookup);
 -- 
 2.53.0
 
