@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752C046AA8B;
-	Tue, 21 Jul 2026 15:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2132C46AA81;
+	Tue, 21 Jul 2026 15:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648171; cv=none; b=GVfrs2AUeF63UaYDO1XUrPQLHXlQq+e8ryMj7dKSwZ1seEbdJVPj3+taOaOkZThOlJMob3T6/cMsBUL+M+plGteqlxU0FZz9H9A+CsuVB300lfBiW7lqC18/GKELlcya9gh/W+kGFDEtNuU0PEp2NVyQ7Zfj3sS8feEXRVp/9vI=
+	t=1784648173; cv=none; b=q3+nwhnGjq/0BrAA7juDJVZke3zEDPxG4KCXc7XF8qvotaWq7/TV6Gb4iX0mJsW3WpaUctU0DIQ+VNY5GM8EiwirirCqO0Z6WD9YIktNSTAZk72b7ML7WnjlykwDB72OVLsB3Jnx7Nmi1AYC9hzxUy4KsAO5KbBuewcbDbGkK9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648171; c=relaxed/simple;
-	bh=UYkMkJQ4p5fdPkv9qiBJuAlCYelSYAdH4/3FKKm7EkU=;
+	s=arc-20240116; t=1784648173; c=relaxed/simple;
+	bh=Nbf4aw8PDL7xmn4VOuZ7MDZwx8S5Gf3PKCWwcTisioA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z2yNaEboftYcCECfJBe9FJMG1Oq7ghj//skKwnfnzMxCmgqjiAFXtqxR3B1GlVHxrQoN7gW5Hc4Tws2vMIGTaCsWi8Eun3A8VNvCFL3Gn+GHFhq+osKPPC62v3aBhryGN0VWmhHeFXLQaZLyZ2gY7qI8Aqb/EVBa2WpeE6N7+TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sb9Sg5/m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CC658yQt8KyNtOFZ/caYO8eCN64sU3ZFn2UabDmd2WUKhGIEdALvj7a1fnwj1zsRFFEKeXJBpSlPuF3UaqTVFsdW52pdsuqrBX97CbqUMtgeEhYJVgYoV1zGgdSZuWzOyumx3dmZ7kEQw4JJbJcVbvvOtP+Line3D6xrRTdQNIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hiaydf/M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sb9Sg5/m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21C11F000E9;
-	Tue, 21 Jul 2026 15:36:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hiaydf/M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CAC21F000E9;
+	Tue, 21 Jul 2026 15:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648169;
-	bh=SN8gS+tAo13VqRxHoypS5rVsLj/kBg4c0/Kh9csCcY8=;
+	s=korg; t=1784648172;
+	bh=B7PxxhiW+B7hieJbcaCIj3LegcieNa/2F6gW6e0s5ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sb9Sg5/m9kN9ikzj0qgXhX0R4EXEFAMzcQhK+Gzb6qMAtsLr07vHE0djXDmSCj3jR
-	 +aOXWEPXr2YYcV03iuRegLf8tQ48M+ONO37Xkiba7P5Epw8Ngdl2hdD2IPmXj6dN4V
-	 noL6wR1Xi2BzOsVO7KAlesVZ2Q2AFBxvYGqWltrs=
+	b=Hiaydf/MqYu5MXC2XfB/BDLNtPJy2iwkzpkAO+xnmY7ML24o6xnsbjWFJeMobXFwQ
+	 nZ+xw1CpFicFqKW7piNLBDId6mKfolNxJYszQxpx+knHFd7mbDHFfHTN53u5rGW44y
+	 mE0C8QjLPgGZNZizyCRWUNj48gGS52HbCWL1w1ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Timur Tabi <ttabi@nvidia.com>,
-	Eliot Courtney <ecourtney@nvidia.com>,
-	Gary Guo <gary@garyguo.net>,
-	Alexandre Courbot <acourbot@nvidia.com>,
+	Christos Longros <chris.longros@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0099/2077] gpu: nova-core: use correct fwsignature for GA100
-Date: Tue, 21 Jul 2026 16:56:12 +0200
-Message-ID: <20260721152555.027087416@linuxfoundation.org>
+Subject: [PATCH 7.1 0100/2077] wifi: rtw89: fix wrong pci_get_drvdata type in AER handlers
+Date: Tue, 21 Jul 2026 16:56:13 +0200
+Message-ID: <20260721152555.051472744@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,38 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Timur Tabi <ttabi@nvidia.com>
+From: Christos Longros <chris.longros@gmail.com>
 
-[ Upstream commit c1dca0cb0e761568c448a6007855fe5879ad4d37 ]
+[ Upstream commit 7068c379cf9aa8afe4dce4d9d82390187aa9c4d0 ]
 
-Although GA100 uses the same GSP-RM firmware as Turing, it has a different
-signature specifically for it.
+rtw89 stores an ieee80211_hw pointer via pci_set_drvdata() at probe
+time, but io_error_detected() and io_resume() retrieve it as a
+net_device pointer.  This causes netif_device_detach/attach to
+operate on an ieee80211_hw struct, reading and writing at wrong
+offsets.  The adjacent io_slot_reset() already does it correctly.
 
-Fixes: 121ea04cd9f2 ("gpu: nova-core: add support for Turing/GA100 fwsignature")
-Signed-off-by: Timur Tabi <ttabi@nvidia.com>
-Reviewed-by: Eliot Courtney <ecourtney@nvidia.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260417191359.1307434-2-ttabi@nvidia.com
-Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
+Use ieee80211_stop_queues/wake_queues instead, consistent with
+every other queue stop/start path in the driver.
+
+Tested on RTL8852CE by calling the handlers from a test module
+before and after the fix.
+
+Fixes: 16e3d93c6183 ("wifi: rtw89: pci: add PCI Express error handling")
+Signed-off-by: Christos Longros <chris.longros@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260329073857.113081-1-chris.longros@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/nova-core/firmware/gsp.rs | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw89/pci.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/nova-core/firmware/gsp.rs b/drivers/gpu/nova-core/firmware/gsp.rs
-index 2fcc255c3bc81b..c423191b21f018 100644
---- a/drivers/gpu/nova-core/firmware/gsp.rs
-+++ b/drivers/gpu/nova-core/firmware/gsp.rs
-@@ -138,8 +138,7 @@ impl GspFirmware {
-                             ".fwsignature_tu11x"
-                         }
-                         Architecture::Turing => ".fwsignature_tu10x",
--                        // GA100 uses the same firmware as Turing
--                        Architecture::Ampere if chipset == Chipset::GA100 => ".fwsignature_tu10x",
-+                        Architecture::Ampere if chipset == Chipset::GA100 => ".fwsignature_ga100",
-                         Architecture::Ampere => ".fwsignature_ga10x",
-                         Architecture::Ada => ".fwsignature_ad10x",
-                     };
+diff --git a/drivers/net/wireless/realtek/rtw89/pci.c b/drivers/net/wireless/realtek/rtw89/pci.c
+index 43c61b3dc969f2..64554eb35a72cf 100644
+--- a/drivers/net/wireless/realtek/rtw89/pci.c
++++ b/drivers/net/wireless/realtek/rtw89/pci.c
+@@ -4624,9 +4624,9 @@ EXPORT_SYMBOL(rtw89_pm_ops);
+ static pci_ers_result_t rtw89_pci_io_error_detected(struct pci_dev *pdev,
+ 						    pci_channel_state_t state)
+ {
+-	struct net_device *netdev = pci_get_drvdata(pdev);
++	struct ieee80211_hw *hw = pci_get_drvdata(pdev);
+ 
+-	netif_device_detach(netdev);
++	ieee80211_stop_queues(hw);
+ 
+ 	return PCI_ERS_RESULT_NEED_RESET;
+ }
+@@ -4643,12 +4643,12 @@ static pci_ers_result_t rtw89_pci_io_slot_reset(struct pci_dev *pdev)
+ 
+ static void rtw89_pci_io_resume(struct pci_dev *pdev)
+ {
+-	struct net_device *netdev = pci_get_drvdata(pdev);
++	struct ieee80211_hw *hw = pci_get_drvdata(pdev);
+ 
+ 	/* ack any pending wake events, disable PME */
+ 	pci_enable_wake(pdev, PCI_D0, 0);
+ 
+-	netif_device_attach(netdev);
++	ieee80211_wake_queues(hw);
+ }
+ 
+ const struct pci_error_handlers rtw89_pci_err_handler = {
 -- 
 2.53.0
 
