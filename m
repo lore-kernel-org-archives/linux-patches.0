@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A40F372B5E;
-	Tue, 21 Jul 2026 17:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F244F372B5E;
+	Tue, 21 Jul 2026 17:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654692; cv=none; b=PVyI5HsN199AGinelYgsPmppzoIdJtMc4Bg7x/+JBXWA1lrMI8gqHb/6RNUH4Rl+2D5/DErPikdDSPYoSD3rq8CA7j5bHLfVI+OsyTg3bcGge9QvckjrOTC8b2VBmmjxhYK1zH63Vu8BviE4N0r6QRLHRtOQOhZkel+0Kt0iwUU=
+	t=1784654695; cv=none; b=Vj+TqZQFMpNe+FzLyY1BdNVZUoXMDa7PTPATgoRJ8uPSgBhO4CtqMBE7rafDDUbvZfK2UBuBu3qPmFWLG9VAsx3xja6M7fhhazUm7+tP9+VuXSgrM87wUWJbjuJvn+Fz9hhnUcyddn39zcm7cq+69v9kAd/h1LOvYzUYQ7vUtwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654692; c=relaxed/simple;
-	bh=5SlouNeNle4NOa7jJMoFsVfA8nSwUK2iCZKIJs9c+uU=;
+	s=arc-20240116; t=1784654695; c=relaxed/simple;
+	bh=qBgF9cRldsZFvUSaHwUM36Rp2wljVJ/laef3wD0orWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9jJ0tRU9nT7ibcY095if3l270Rhf9mce2crPh1ulrm4NbjfRTab9vQb6LEEAq8LwRVjUaIAyGwa3FL7Khli5YJCsSSbVCd4oaX4GG75DkMCt6wl3kLS1EkRnLjaCLLCQKBIIo8M3+SW0PJX32npvlTK+MuYYtbORTkpNGDCX7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MY4uaL+w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xl6wyAkSd6++o/3Ce4C6SB3Yn7ME03YtjPzliJI8yqY+iHCvniPyB52jI5adR012Bh/wXEoBDUfBe1aLpahWn5LaF7fv4YAP743tQeBm4YYw5i/WvArVgY4Z9ZeDj/dOHKSzsJzPCwx+Q0SnGJSnrJRl9MgpHyJBuXosjGcvyUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgG9ER7H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MY4uaL+w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C149C1F000E9;
-	Tue, 21 Jul 2026 17:24:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgG9ER7H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657261F000E9;
+	Tue, 21 Jul 2026 17:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654691;
-	bh=auiq7EXMiL8yIXdaIoLLci/5YbDUv3wQuSEGUw3i5QM=;
+	s=korg; t=1784654693;
+	bh=BnGPjP3AdjREzffmft/aya0SO4nuXDVMpegmLRyuByE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MY4uaL+wwukrOERqMIHp4hQzvnLyRZ2ZEqN6p5nk58qx+lLmnSETR4O/ijdS5rBUa
-	 qtn47DcV5UE4fSKze0HnWT+aUO+LiWjzxfK/g9Ri1m0ySCAy8xOh24mM9KoeXctWsE
-	 Dr3+o8GYJtUUVbBC6UhW0+YMmsbvCx+JDe/L1Ios=
+	b=XgG9ER7H22N0GLARzFiQNasKJUkJsUR4jbc6ciF/mCLpiysLJfKCxeGpKnvFiT1Ms
+	 8YK6N7KoVLeXDmkzy3gnaJJGb9gSyPQjFvR0Uhaw3ojdB9To2hwIoCrXJGoUgZsk+s
+	 7sW0TzKn0RliX8C/HVWgnFvvzAJh3LFKA7aUK7Xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Subject: [PATCH 7.1 1758/2077] bus: mhi: ep: Protect mhi_ep_handle_syserr() in the error path
-Date: Tue, 21 Jul 2026 17:23:51 +0200
-Message-ID: <20260721152634.210115198@linuxfoundation.org>
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 1759/2077] net: thunderbolt: Fix frags[] overflow by bounding frame_count
+Date: Tue, 21 Jul 2026 17:23:52 +0200
+Message-ID: <20260721152634.235133585@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -49,34 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit 519ddf194b158b91439319f6b977b8a465fda0fb upstream.
+commit 55d9895f89970501fe126d1026b586b04a224c27 upstream.
 
-All the callers of mhi_ep_handle_syserr() except mhi_ep_process_cmd_ring()
-are holding the 'state_lock' to avoid the race in setting the MHI state. So
-do the same in mhi_ep_process_cmd_ring() for sanity.
+tbnet_poll() assembles a multi-frame ThunderboltIP packet into one skb. The
+first frame goes into the skb linear area and every further frame is added as
+a page fragment.
 
-Fixes: e827569062a8 ("bus: mhi: ep: Add support for processing command rings")
-Cc: stable@vger.kernel.org # 5.18
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260302085612.18725-1-manivannan.sadhasivam@oss.qualcomm.com
+	skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
+			page, hdr_size, frame_size,
+			TBNET_RX_PAGE_SIZE - hdr_size);
+
+A packet of frame_count frames therefore ends up with frame_count - 1
+fragments. tbnet_check_frame() only bounds the peer supplied frame_count to
+TBNET_RING_SIZE / 4 (64), which is far above MAX_SKB_FRAGS (17 by default). A
+peer that sends a packet of 19 or more small frames pushes nr_frags past
+MAX_SKB_FRAGS, so skb_add_rx_frag() writes past skb_shinfo()->frags[] and
+corrupts memory after the shared info.
+
+Tighten the start of packet bound to MAX_SKB_FRAGS + 1 so a packet can never
+produce more fragments than frags[] can hold. This matches the recent skb
+frags overflow fixes in other receive paths, for example f0813bcd2d9d ("net:
+wwan: t7xx: fix potential skb->frags overflow in RX path") and 600dc40554dc
+("net: usb: cdc-phonet: fix skb frags[] overflow in rx_complete()").
+
+Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
+Cc: stable@vger.kernel.org
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://patch.msgid.link/178163152194.2486768.14724194232649760778@maoyixie.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/ep/main.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/thunderbolt/main.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -232,7 +232,9 @@ static int mhi_ep_process_cmd_ring(struc
- 			ret = mhi_ep_create_device(mhi_cntrl, ch_id);
- 			if (ret) {
- 				dev_err(dev, "Error creating device for channel (%u)\n", ch_id);
-+				mutex_lock(&mhi_cntrl->state_lock);
- 				mhi_ep_handle_syserr(mhi_cntrl);
-+				mutex_unlock(&mhi_cntrl->state_lock);
- 				return ret;
- 			}
- 		}
+--- a/drivers/net/thunderbolt/main.c
++++ b/drivers/net/thunderbolt/main.c
+@@ -787,8 +787,12 @@ static bool tbnet_check_frame(struct tbn
+ 		return true;
+ 	}
+ 
+-	/* Start of packet, validate the frame header */
+-	if (frame_count == 0 || frame_count > TBNET_RING_SIZE / 4) {
++	/* Start of packet, validate the frame header. tbnet_poll() puts the
++	 * first frame in the skb linear area and every further frame in a page
++	 * fragment, so a packet may not span more than MAX_SKB_FRAGS + 1 frames
++	 * without overflowing skb_shinfo()->frags[].
++	 */
++	if (frame_count == 0 || frame_count > MAX_SKB_FRAGS + 1) {
+ 		net->stats.rx_length_errors++;
+ 		return false;
+ 	}
 
 
