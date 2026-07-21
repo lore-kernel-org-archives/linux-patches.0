@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9930F46EC7B;
-	Tue, 21 Jul 2026 19:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C03846EC7B;
+	Tue, 21 Jul 2026 19:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663510; cv=none; b=nRmjH+i06ph4Py9Z3W6ql4zIDwQL1Mf2SjszHBBQIWJGb/ql1zzX4ndonWc+Ge+rGzX1OUVmxXSw5eMBSIoLAk4YvAPE9prQnoNkXRwqV2DiaV7NcWUN1sUr7uqFVTb7dtwDCtr5fIvhW7v0ZgDDPB/cVrVl76jkfgyj4bmSTNE=
+	t=1784663513; cv=none; b=dQG447Ig54ogmIs3SqqjdAsDi/PDLe/08N8+teu9kd2PsA4YAdtohmAGT3YYDQNCYrG+uJBB+la6prGDMvND90ATyQTanvsMDk6khcfuXyuZ4m9fOIKpmcK2VsSnmjl9cmbc7H/1YZ6v5riZpqe2yM6wwAq0dqBw06P4HlcnLQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663510; c=relaxed/simple;
-	bh=7XUFs5GMSOd5K7S34W7OAq2Ue9SDDAewSxGZHrGUlyA=;
+	s=arc-20240116; t=1784663513; c=relaxed/simple;
+	bh=39BvAzz6lpUcKFNcMjEP1t31H7N/naaCe4/KRx1XVnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SMhe8ZVhmhkZzwnw8lCFa6LgQOFKVZeLlZavgBVHYf1IEuhEO6rD+uNqzCMNOqWsgnAHNN3s6E5K52xiMWkBN/EUn7UETmdI2Ytk/wlWAggqm1nAca9sORmF4PtjCn+fqKs1VBp4sK2UiDIP+N8U630CJeRVSkCPzQRKKcwnj14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHcOjxAn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SklwtLd3guXTN5/pWGAxuY6u/GMDHBI1e1qk6UHMvVuapKBQwau3GyIQV11RHU+MNpetqfp0xtubXeZJbj/Fczdi9GUUmMrou7VuqpYgZApTmOdnFp+mus7ZJFvkwbxAVbk5GNDfC9qUwn9u/5nAw12RbRoNe/aXWENgDymM++s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hy8Ckw/E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHcOjxAn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3C11F000E9;
-	Tue, 21 Jul 2026 19:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hy8Ckw/E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D001F000E9;
+	Tue, 21 Jul 2026 19:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663509;
-	bh=Faa8RG5/NejMEJeH/cEV8LseB1lJ9J12F8inATPiAzs=;
+	s=korg; t=1784663512;
+	bh=ZPiobn5Y7YdNLGcvQpjCdqCryMr3PRTXP4A+9ieXr7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HHcOjxAnjw296CE7CEJg2m2YDwtpxBo14eDg5H4dwKdvqWcM8dZBEYB94FBkfSXyC
-	 48JXdIqvz92EJHXvKAFns7sr1GY5B13c3Y1OeGuO0nRreETTI2eV6cnYMfDIqKAJZd
-	 yWDznUKNduoGoKf8j7J+0JOuIDFWWZU5dz+jivvU=
+	b=Hy8Ckw/EDRsBYARBEfTwm3PGaMKwxO41JtWPhRuOYzc0MZFWgSa4Q6ECdgebut4wU
+	 kW91imKqSGqUzgi9gXvLHTstqH+ntYDDbxrzLSxwusxI56Cr2p9pBMLD63V22jIU8H
+	 Tf7SiNk2fNTnB+G/djaW1vh4vY4F4eQuoT/zc9Ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 0850/1276] fbdev: nvidia: fix potential memory leak in nvidiafb_probe()
-Date: Tue, 21 Jul 2026 17:21:33 +0200
-Message-ID: <20260721152505.073813040@linuxfoundation.org>
+Subject: [PATCH 6.12 0851/1276] fbdev: tridentfb: fix potential memory leak in trident_pci_probe()
+Date: Tue, 21 Jul 2026 17:21:34 +0200
+Message-ID: <20260721152505.096229133@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,30 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 85f5e38c162bdf9dbbe197275d416402712f3707 upstream.
+commit 7a35ec619d9af8ee128320975c1252b8ad65f1e8 upstream.
 
-In nvidiafb_probe(), the memory allocated for modelist in
-nvidia_set_fbinfo() is not freed in the subsequent error paths.
+In trident_pci_probe(), the memory allocated for modelist using
+fb_videomode_to_modelist() is not freed in subsequent error paths.
 Fix that by calling fb_destroy_modelist().
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 6a5e3bd0c8bc ("tridentfb: Add DDC support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/nvidia/nvidia.c |    1 +
+ drivers/video/fbdev/tridentfb.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/video/fbdev/nvidia/nvidia.c
-+++ b/drivers/video/fbdev/nvidia/nvidia.c
-@@ -1420,6 +1420,7 @@ static int nvidiafb_probe(struct pci_dev
+--- a/drivers/video/fbdev/tridentfb.c
++++ b/drivers/video/fbdev/tridentfb.c
+@@ -1706,6 +1706,7 @@ static int trident_pci_probe(struct pci_
+ 	return 0;
  
- err_out_iounmap_fb:
- 	iounmap(info->screen_base);
+ out_unmap2:
 +	fb_destroy_modelist(&info->modelist);
- err_out_free_base1:
- 	fb_destroy_modedb(info->monspecs.modedb);
- 	nvidia_delete_i2c_busses(par);
+ 	if (default_par->ddc_registered)
+ 		i2c_del_adapter(&default_par->ddc_adapter);
+ 	kfree(info->pixmap.addr);
 
 
