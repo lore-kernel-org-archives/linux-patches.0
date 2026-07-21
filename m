@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0610343B3C6;
-	Tue, 21 Jul 2026 21:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4ED443C7AE;
+	Tue, 21 Jul 2026 21:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669845; cv=none; b=WFyfNO7oZc83NNEnXTjkNMCOELMEex7r4BvlnZh0VbQQLhRoqp9pwPUF1Lb0pSvgDP3GMrdkht7aD9oZafX1ec9Ma3eC3PdFp7yocWXsXd1cZMCZ9fB4nst48tGfbuXK7YkTOLGalE29Uo1PqDxIxpHa93HbGOBNC6Lu4PDamOg=
+	t=1784669848; cv=none; b=QWT2c7J1PEg9cuOhE4HpMPRyTZBCXxZ9lZ7lfieOEz9c2qNGqm10/3vtkK3Gki1VAoD2JU/MNJ1TkhzvUokK70iMUvBEVu7m9cZ88z0F/py2gW0+6H5wZPYo9oyvKSA38KD9429HLXE/JF3PlqUqgYtOEzuBpvdPDo2T3hhZ0do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669845; c=relaxed/simple;
-	bh=MuS5pnWDSsL8vX91bjWlkX87WyR7pxdKLgDFoGi+074=;
+	s=arc-20240116; t=1784669848; c=relaxed/simple;
+	bh=DQrSAAzkb63H4tsoF2X8yhdoCIH4hb86jACb2RdsVc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JxCMCysJhm8FF+E57MISsFhj5nNxlab8QzCpEpZtf/h5ketClvn6h6EwCXtZ9R/QrFh28ADpuu5MeTUMn+JORRopq7F4oz9mMFWFa144pMlTGnIQCPSDG7MBeEwL0AvZZ8NpEucLlUjdiYco5U6GOfRFr8pRKZPQy6yH8JRZGxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3TOdXZj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sxWi3uPP7cs/K0RlrDQqPJt3iVcImi69o+08yRYCBW0lC+Xyo6pKU3Ll2TACYUo4zwi2oD5L2IX9zrncmzMkzpuJaZPvf1gINO6QCm1li7HtY5IO85gHbwcRYJBQV8zG4K+icQfxbQReqTPWv1zmWZc35lpgKAyhVD04VJRAK9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSUfy73e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3TOdXZj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C43B1F00A3A;
-	Tue, 21 Jul 2026 21:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSUfy73e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147011F000E9;
+	Tue, 21 Jul 2026 21:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669843;
-	bh=IUqhNajWnyq8dXpzHnl7LQxvp7Lee71z0437MzT0fPs=;
+	s=korg; t=1784669846;
+	bh=QnGO8Nb5+lDW1fl5G2mKH9rxc2P2pbuEQ5Dpt28V3vE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P3TOdXZj3HkexfjtbnQOBWUEZ/9KZTNk2evO3SN1jOk+/Exd9RNN2HBIORRTdYT9K
-	 IVRIs+wmCNe1+h4l6upcVEgo7/SMHaKPvsh55mgqnkzE69YtvwRGCbKceAXjuf3Bms
-	 weZBrcLnKfttp/g7hz2y6W24GuKZ78OQF045nCCw=
+	b=MSUfy73euaBOJvR3HRPuvzVPxboFCG+AuwcjERMbdvzKObsjsNXaNKt+T6sdF/8Rg
+	 1pFuX2GNjzyhSd5NDTBj4kJ4hJ15ftwsoRtzMPkaWthK+yvHa4+3AEo9i9pw2SqQ+1
+	 hEzHDMbLjzRTmixIYN4wGOj625wgsjNhWCy9cffQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cao Guanghui <caoguanghui@kylinos.cn>,
-	Su Yue <glass.su@suse.com>,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0709/1067] dm era: fix NULL pointer dereference in metadata_open()
-Date: Tue, 21 Jul 2026 17:21:50 +0200
-Message-ID: <20260721152440.453164715@linuxfoundation.org>
+Subject: [PATCH 6.1 0710/1067] regulator: core: Make regulator_lock_two() logic easier to follow
+Date: Tue, 21 Jul 2026 17:21:51 +0200
+Message-ID: <20260721152440.475048871@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,48 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cao Guanghui <caoguanghui@kylinos.cn>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 9ae672606c17891d90b282e3490b817620549599 ]
+[ Upstream commit 37473397b852f556d8b9428ccbfd51886037842d ]
 
-metadata_open() returns NULL when kzalloc_obj() fails, but the
-caller era_ctr() only checks IS_ERR(md).  Since IS_ERR(NULL)
-returns false, the NULL pointer is treated as a valid result
-and later assigned to era->md, leading to a NULL pointer
-dereference when the metadata is accessed.
+The regulator_lock_two() function could be made clearer in the case of
+lock contention by having a local variable for each of the held and
+contended locks. Let's do that. At the same time, let's use the swap()
+function instead of open coding it.
 
-Fix this by returning ERR_PTR(-ENOMEM) on allocation failure,
-consistent with dm-cache-metadata.c, dm-thin-metadata.c, and
-dm-clone-metadata.c which all use ERR_PTR(-ENOMEM) for the
-same pattern.
+This change is expected to be a no-op and simply improves code
+clarity.
 
-Fixes: eec40579d848 ("dm: add era target")
-Signed-off-by: Cao Guanghui <caoguanghui@kylinos.cn>
-Reviewed-by: Su Yue <glass.su@suse.com>
-Reviewed-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Suggested-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/CAE-0n53Eb1BeDPmjBycXUaQAF4ppiAM6UDWje_jiB9GAmR8MMw@mail.gmail.com
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20230413173359.1.I1ae92b25689bd6579952e6d458b79f5f8054a0c9@changeid
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: d38f8bd771c4 ("regulator: core: regulator_lock_two() should test for EDEADLK not EDEADLOCK")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-era-target.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/regulator/core.c | 31 ++++++++++++-------------------
+ 1 file changed, 12 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/md/dm-era-target.c b/drivers/md/dm-era-target.c
-index a96290103cca89..8e4e3b46dae00a 100644
---- a/drivers/md/dm-era-target.c
-+++ b/drivers/md/dm-era-target.c
-@@ -795,8 +795,10 @@ static struct era_metadata *metadata_open(struct block_device *bdev,
- 	int r;
- 	struct era_metadata *md = kzalloc(sizeof(*md), GFP_KERNEL);
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index d55a80f05d31ab..2b8e210daa6a3d 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -219,7 +219,7 @@ static void regulator_lock_two(struct regulator_dev *rdev1,
+ 			       struct regulator_dev *rdev2,
+ 			       struct ww_acquire_ctx *ww_ctx)
+ {
+-	struct regulator_dev *tmp;
++	struct regulator_dev *held, *contended;
+ 	int ret;
  
--	if (!md)
--		return NULL;
-+	if (!md) {
-+		DMERR("could not allocate metadata struct");
-+		return ERR_PTR(-ENOMEM);
-+	}
+ 	ww_acquire_init(ww_ctx, &regulator_ww_class);
+@@ -233,25 +233,18 @@ static void regulator_lock_two(struct regulator_dev *rdev1,
+ 		goto exit;
+ 	}
  
- 	md->bdev = bdev;
- 	md->block_size = block_size;
++	held = rdev1;
++	contended = rdev2;
+ 	while (true) {
+-		/*
+-		 * Start of loop: rdev1 was locked and rdev2 was contended.
+-		 * Need to unlock rdev1, slowly lock rdev2, then try rdev1
+-		 * again.
+-		 */
+-		regulator_unlock(rdev1);
+-
+-		ww_mutex_lock_slow(&rdev2->mutex, ww_ctx);
+-		rdev2->ref_cnt++;
+-		rdev2->mutex_owner = current;
+-		ret = regulator_lock_nested(rdev1, ww_ctx);
+-
+-		if (ret == -EDEADLOCK) {
+-			/* More contention; swap which needs to be slow */
+-			tmp = rdev1;
+-			rdev1 = rdev2;
+-			rdev2 = tmp;
+-		} else {
++		regulator_unlock(held);
++
++		ww_mutex_lock_slow(&contended->mutex, ww_ctx);
++		contended->ref_cnt++;
++		contended->mutex_owner = current;
++		swap(held, contended);
++		ret = regulator_lock_nested(contended, ww_ctx);
++
++		if (ret != -EDEADLOCK) {
+ 			WARN_ON(ret);
+ 			break;
+ 		}
 -- 
 2.53.0
 
