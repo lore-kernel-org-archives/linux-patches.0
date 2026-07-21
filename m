@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05CF145B27;
-	Tue, 21 Jul 2026 17:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5513637647B;
+	Tue, 21 Jul 2026 17:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654618; cv=none; b=YbosG+z5vnW1fLbShsQkwDMbS3hzCjzTaFB3Futu67Yzn/gbjdI+W1b7snHsloFqUGl9ArUWk0Xd9maz+ezdKK7rClZnR8QkNlz9AgYkQg2U+/zeG0oZ1FNSJeG4kK4+qR01HnHDiARHvRhzVjzBz7tRGBeRa2rgFoFlumQ/yp0=
+	t=1784654621; cv=none; b=jRP4W1RasWA4WRoV9xx2mVSM+13gvnUaApWLrzRWW+mnPhF4c6dEgt06sz7MkBtxtVzIJDIQ+H1uB0ZGsgXpzPorDoWCzZgBQE0L12ufvt+UKAh5Y6LL5CWNoN0LyvWgtjxHeOc8uRSj0vxZ4KjqkyxP3vZHvk5V0AygbrdyHtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654618; c=relaxed/simple;
-	bh=ly3CE7pq4k2BE4wrrGm1NZaTiyUn8HitWXVMuad8tNE=;
+	s=arc-20240116; t=1784654621; c=relaxed/simple;
+	bh=I6DY7lUq0MVIPX61Vhm/RUdLjsNP/TAv/JeCwdxt3Xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GQwlemb/D8LFbBrUmmjgG2zIH778IVmq8AldxbmN2Pg48mxB3WUAHhMNcwSLKzpSkgK5mi8xCkvYXSKbmO5OSAK9qKvd5rUadIl8tsH8Upu3js+ytw/tr1Xyi1gutq3MIfSgcLzt+pGw5HD84ALlloKYfZSKSPjk6Udm8wiE/hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNILr1UL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uT/2AZG9odJE8t7TlVIvFER2HXSE7AT9XBw5JxgGsf6xg4wrlBRv94y1hRXfD3HMsMjdv8s830HxKd1JHdFELlqR2vmMMQzdgUIK2LOmyNEkqpKpo2PTg0F+jAlueubvFrCE4MWz7sUy5DKHmz2sc/wOxAD/jRS4Z/Wfm3bM9as=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvdXtBtk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNILr1UL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1208C1F000E9;
-	Tue, 21 Jul 2026 17:23:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvdXtBtk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3A01F000E9;
+	Tue, 21 Jul 2026 17:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654617;
-	bh=uPR1EAs1AifPICM08ftiYXnGOZqaZGBb+QJIhHrfDsc=;
+	s=korg; t=1784654620;
+	bh=bUDKwJCXMkU+69xDCQb6eKfOfUIgiRgUhKS12oEQ6wA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uNILr1ULz4XGYXk/TPpVhpArRDHxu7I3/acJysYmdx1tVnZ7VDAw8ry5CyBmSym2c
-	 lFHPbxYrkMG2byCYsDjfmb2gr5uwrrye2xnIhDulx3R77XHc0GM/xO1avGzk9YjsRi
-	 rnn7hpPcehyM3+CeVH0VDnQaLuqVg/jKT3ygUpxs=
+	b=cvdXtBtkpV8MYUSY30nFmKxFTTcPInaYF53HqUdwSaWkpcKsGUVnkv5gg91PZ78WQ
+	 A0/74K6Y/gGcbmx0K6+3UiG+yNKVvsYEkXf7R4jrMrSQv5wzlVbrtdr7axxe/nwuDx
+	 4+nKxzlxeJPwGwOOuLuY1k3YEI/EYDNse0IxysLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>
-Subject: [PATCH 7.1 1773/2077] sunrpc: fix uninitialized xprt_create_args structure
-Date: Tue, 21 Jul 2026 17:24:06 +0200
-Message-ID: <20260721152634.571147497@linuxfoundation.org>
+	Kartik Rajput <kkartik@nvidia.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 7.1 1774/2077] dmaengine: tegra: Fix burst size calculation
+Date: Tue, 21 Jul 2026 17:24:07 +0200
+Message-ID: <20260721152634.594697982@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,44 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Kartik Rajput <kkartik@nvidia.com>
 
-commit 17d90b68c3a3d7d7e95b49e1fe9381a723f637a8 upstream.
+commit 4651df83b6c796daead3447e8fd874322918ee4f upstream.
 
-The xprt_create_args structure is allocated on the stack without
-initialization in rpc_sysfs_xprt_switch_add_xprt_store(). While some
-fields are manually populated, critical fields like srcaddr, bc_xps,
-and flags contain uninitialized stack garbage.
+Currently, the Tegra GPC DMA hardware requires the transfer length to
+be a multiple of the max burst size configured for the channel. When a
+client requests a transfer where the length is not evenly divisible by
+the configured max burst size, the DMA hangs with partial burst at
+the end.
 
-This can lead to:
-1. Kernel panic when xs_setup_xprt() dereferences garbage srcaddr
-2. Information leak if srcaddr points to sensitive stack data
-3. Unpredictable behavior if flags has random bits set
+Fix this by reducing the burst size to the largest power-of-2 value
+that evenly divides the transfer length. For example, a 40-byte
+transfer with a 16-byte max burst will now use an 8-byte burst
+(40 / 8 = 5 complete bursts) instead of causing a hang.
 
-The fix is to zero-initialize the structure to ensure all unused
-fields are NULL/0, preventing the transport setup code from acting
-on garbage data.
+This issue was observed with the PL011 UART driver where TX DMA
+transfers of arbitrary lengths were stuck.
 
+Fixes: ee17028009d4 ("dmaengine: tegra: Add tegra gpcdma driver")
 Cc: stable@vger.kernel.org
-Suggested-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260422064134.1323610-1-kkartik@nvidia.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/sysfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/tegra186-gpc-dma.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/net/sunrpc/sysfs.c
-+++ b/net/sunrpc/sysfs.c
-@@ -327,7 +327,7 @@ static ssize_t rpc_sysfs_xprt_switch_add
- {
- 	struct rpc_xprt_switch *xprt_switch =
- 		rpc_sysfs_xprt_switch_kobj_get_xprt(kobj);
--	struct xprt_create xprt_create_args;
-+	struct xprt_create xprt_create_args = {};
- 	struct rpc_xprt *xprt, *new;
+--- a/drivers/dma/tegra186-gpc-dma.c
++++ b/drivers/dma/tegra186-gpc-dma.c
+@@ -825,6 +825,13 @@ static unsigned int get_burst_size(struc
+ 	 * len to calculate the optimum burst size
+ 	 */
+ 	burst_byte = burst_size ? burst_size * slave_bw : len;
++
++	/*
++	 * Find the largest burst size that evenly divides the transfer length.
++	 * The hardware requires the transfer length to be a multiple of the
++	 * burst size - partial bursts are not supported.
++	 */
++	burst_byte = min(burst_byte, 1U << __ffs(len));
+ 	burst_mmio_width = burst_byte / 4;
  
- 	if (!xprt_switch)
+ 	if (burst_mmio_width < TEGRA_GPCDMA_MMIOSEQ_BURST_MIN)
 
 
