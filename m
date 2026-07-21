@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58B8446839;
-	Tue, 21 Jul 2026 19:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFEF30EF7E;
+	Tue, 21 Jul 2026 19:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663712; cv=none; b=DbhtHbdrnve+FNx/P6ukdfbEReDmcuWTCsIiTrYD8QvDJ8tLT0ItSsmFaPW0OIRmBNg2VIoftTf8pyjCywkdaZefGSz2P62uPx9z75xvAU0r9wMMnYs52aOtUyLgyCSy60w/587vbP+L/lmyp/5jwR1VsvE2JevnvrVa7QyZohY=
+	t=1784663715; cv=none; b=sLKorUs427F86Hh3LOvxPpRme9ET8KECdPH/bqy5dZh8Q7KHSpP+Kb9ZRQla1Fycb/NdR285BM+KLARIVgs0vWFRLdhW2W0n4B+EOrvlzARGthec7tefBddw8qBuklg6rritffjAzDFflx9GViHg5ApP5zKmbFHBMekYaoQiuRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663712; c=relaxed/simple;
-	bh=XJ91R25OcFXnGFifzEyXknHxfiJ4W30s0N3Hv88TuGQ=;
+	s=arc-20240116; t=1784663715; c=relaxed/simple;
+	bh=qvP8cVT6ZURZeIk/W3b+jfE72X4XccuF0EyCJzIPhho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CBri5rX56JSQ+xVLdTmYgkSKiFM3X9Px3Qk/v8cPV5PtkUtW9x2wksZ+BOtM09Cp+LuyrEuElmx+FLCF4oh9si087OWoJ0ku4cMZHqqb4jVJkFVA1ce4DfLXYsR7Bj41fPPfRneRKL+ui21hbOUKjmVKhd6O6jv2beWFV9adCBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/Z+uk+1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=da3hWAGCO00sm107zV1LZ5S3eLiYQkuxZDpjL3Gnvjm5/2pDbQh3zSDTypHDo5lc05bvzmdvN7Y/tYbTVFjLnN9k31+7pBdytBAvX8z6rKVDmm8LdUcwBCO1ev0uH/Re/1365x2beG1Tp2LqfCTtsr/k4hhXvjYZO4K4vY/5J5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=llEJjku/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/Z+uk+1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B174D1F000E9;
-	Tue, 21 Jul 2026 19:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="llEJjku/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5561F000E9;
+	Tue, 21 Jul 2026 19:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663711;
-	bh=WGRF1bxI50fM4+5bhZsYIkX6kEZFyhqLlHcGhYT7F5c=;
+	s=korg; t=1784663713;
+	bh=rrwXFezE21piUeVsHCkV/1jdRH26ohhAOpsDeHxrfYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i/Z+uk+1oQHyuonT7DvBlnVEgSvuKjwHVH5i+Kf5ks3VwPyfTqtKs0HDTjBnG44Z1
-	 ixo3fEVJSc3b1NZ8Wm4hVTxn4WzCXyNJW7b3gLd6ggeBwkxcqzmx1mQMVqjXMR93PC
-	 QpNIfQKszQQmCammx9WUEp1qLMO0cxDPoUs8fy0U=
+	b=llEJjku/uQfMeiZ3ME26cNSVRAjentHzmOk+jznsTuRuCAMoMwsyYkw/j08qfqYtg
+	 S0NBZnLL5SLRw7XX03akOJnHMNRhGTHbpd4bTnXRQ02HhvwbL1raNHf0pg6pgwFymY
+	 osTykjdPVWZ8LVaFSx6gN/KHbSsJFD8UHUF679Gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.12 0882/1276] batman-adv: gw: acquire ethernet header only after skb realloc
-Date: Tue, 21 Jul 2026 17:22:05 +0200
-Message-ID: <20260721152505.788422916@linuxfoundation.org>
+Subject: [PATCH 6.12 0883/1276] batman-adv: access unicast_ttvn skb->data only after skb realloc
+Date: Tue, 21 Jul 2026 17:22:06 +0200
+Message-ID: <20260721152505.810994263@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,36 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 77880a3be88d378d60cc1e8f8ec70430e2ed0518 upstream.
+commit 7141990add3f75436f2933cb310654cad3b1e3e9 upstream.
 
 The pskb_may_pull() called by batadv_get_vid() could reallocate the buffer
 behind the skb. Variables which were pointing to the old buffer need to be
 reassigned to avoid an use-after-free.
 
+This was done correctly for the ethernet header but missed for the
+unicast_packet pointer.
+
 Cc: stable@vger.kernel.org
-Fixes: 6c413b1c22a2 ("batman-adv: send every DHCP packet as bat-unicast")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: c018ad3de61a ("batman-adv: add the VLAN ID attribute to the TT entry")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/gateway_client.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/batman-adv/routing.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/batman-adv/gateway_client.c
-+++ b/net/batman-adv/gateway_client.c
-@@ -693,12 +693,13 @@ bool batadv_gw_out_of_range(struct batad
- 	struct batadv_gw_node *gw_node = NULL;
- 	struct batadv_gw_node *curr_gw = NULL;
- 	struct batadv_neigh_ifinfo *curr_ifinfo, *old_ifinfo;
--	struct ethhdr *ethhdr = (struct ethhdr *)skb->data;
-+	struct ethhdr *ethhdr;
- 	bool out_of_range = false;
- 	u8 curr_tq_avg;
- 	unsigned short vid;
+--- a/net/batman-adv/routing.c
++++ b/net/batman-adv/routing.c
+@@ -856,8 +856,8 @@ static bool batadv_check_unicast_ttvn(st
+ 	if (skb_cow(skb, sizeof(*unicast_packet)) < 0)
+ 		return false;
  
- 	vid = batadv_get_vid(skb, 0);
-+	ethhdr = (struct ethhdr *)skb->data;
+-	unicast_packet = (struct batadv_unicast_packet *)skb->data;
+ 	vid = batadv_get_vid(skb, hdr_len);
++	unicast_packet = (struct batadv_unicast_packet *)skb->data;
+ 	ethhdr = (struct ethhdr *)(skb->data + hdr_len);
  
- 	if (is_multicast_ether_addr(ethhdr->h_dest))
- 		goto out;
+ 	/* do not reroute multicast frames in a unicast header */
 
 
