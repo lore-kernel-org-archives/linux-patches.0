@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD8A4189DA;
-	Tue, 21 Jul 2026 22:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583B643C7D7;
+	Tue, 21 Jul 2026 22:10:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671823; cv=none; b=RCYHLyiHKepqt5J/0dz++IBYYH7z3Flxv8ttIxQ0qcPdgwJ/20M6IrHdfwKqOGzGDFuYkjKgAEiIRUowaApz/wRh3h1Dq5Ut5YhRzILOKWfvagF+hCEy5ZTh/BBftnClHwa/db8MPvMgxQsiaM6KgPC2m2thnSzOGN0pn4J8inA=
+	t=1784671826; cv=none; b=JSTifT9+0wYba5P7oOlcDVt71vcuI7TWMKG7S1REICQ/y12w88r2k5n5hem7g59w0aQRL2v7Utie1J6ahuYHjmYyc36cBl7r9cpTMR7FNpwPJTUJS2vmJQcAC3eBGl4oAmibeMz4RJ5738ManlTPyur1z2uwhJBYAF6lGlWIZ6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671823; c=relaxed/simple;
-	bh=/qnJIADV7BkBJzDR00pHCN+yfjhxuLpwYBS3fssEzc0=;
+	s=arc-20240116; t=1784671826; c=relaxed/simple;
+	bh=9BnKbvv9E3swcNxtxGRLYuJ+OBEpDwpre1V4ta8bxF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FuJ1IOqxzQ2G8apk4Dn7dDiEVgaSKluI4cpnsP2bxk84SUlMzVHstZImrCM2bRtQOrZBc6i/oAjt/Teb6TH7kfarMhxyYR+8nXqInsguwVADtqOW6THOBJaOJBJcZq/eSZ4bE7RcrMRH4g3t6Y5dwu++T7feeP0irBDz3BcjtdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zUvJj7ux; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HvwxNkBdFliDkfAhBuLcEnSkxT+BLMrGG2oEgzZGyiXEjUd17+sNjkseNXCPDU+h+A8B/AVHt9x1zCwdbaJZ7aRnCTSRbHqDjoG6hgyUxiAZ5aYNJs/2VjapcZ8Y3MuCKoeyBTCmRWnvPqkzmW3cXIJuL5mknrMnXHeq99/M1Hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iMwneLZ7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zUvJj7ux"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7ED31F000E9;
-	Tue, 21 Jul 2026 22:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iMwneLZ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87DF01F000E9;
+	Tue, 21 Jul 2026 22:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671822;
-	bh=6a0/jsjR0xFQqRS7qPcdO5fCWJUdLrV/6CtXlRZUWcs=;
+	s=korg; t=1784671825;
+	bh=zfwQhcfe8GPREwUitAeF9M075TZ1/vchUG3jTEYntAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zUvJj7uxGdCGRqM6uuaMJ1K+MzE7NPXPRTpy+GuXmdz0lbtgrn6XqPvQ99tqWt1VG
-	 H8HSr8wyjFAZZnb5CGCpudC/fqeemQC0BYB44cLO49eV2a/YAUSrbNd7n7Rr0S172S
-	 foVTOcGjH5TpwTEwu6N/Qw8d8TPwIAY7CT83x4po=
+	b=iMwneLZ7BMchMLA8salGPW8gNndUa+P5m7pzjgr/uhLf4UBWDre/tchwGYkQDv8UU
+	 K7TDcNa8BJIcYNAdehB+jlLnq4/VX4TaOS3nutGU7bebcZcxioafPSvbAYpsRH9bSr
+	 9Xp5sVmIvKdsfFfPG9TPqHSx93D4mPmcTSVcbs14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rui Qi <qirui.001@bytedance.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Alexey Budankov <alexey.budankov@linux.intel.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 391/843] perf: Fix off-by-one stack buffer overflow in kallsyms__parse()
-Date: Tue, 21 Jul 2026 17:20:26 +0200
-Message-ID: <20260721152414.832364349@linuxfoundation.org>
+Subject: [PATCH 5.15 392/843] perf mmap: Guard cpu__get_node() return in aio_bind()
+Date: Tue, 21 Jul 2026 17:20:27 +0200
+Message-ID: <20260721152414.859377267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -60,61 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rui Qi <qirui.001@bytedance.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 68018df3f55eba96a20dd703f5f276a6518f4963 ]
+[ Upstream commit f32dc302a090f48893477ef297a888db109ec0bd ]
 
-In kallsyms__parse(), the loop reading symbol names iterates with i <
-sizeof(symbol_name), which allows i to reach sizeof(symbol_name) upon
-loop exit. The subsequent symbol_name[i] = '\0' then writes one byte
-past the end of the stack-allocated symbol_name[] array.
+perf_mmap__aio_bind() passes the cpu__get_node() return value directly
+to an unsigned long variable (node_index).  When cpu__get_node() returns
+-1 for an unknown CPU, the implicit int-to-unsigned-long conversion
+sign-extends it to ULONG_MAX.
 
-Fix this by changing the loop bound to KSYM_NAME_LEN, so the null
-terminator always lands within the array. The overflow is triggerable by
-a kallsyms entry with a symbol name of KSYM_NAME_LEN+1 or more
-characters (e.g., long Rust mangled names or a malicious
-/proc/kallsyms).
+This causes bitmap_zalloc(ULONG_MAX + 1) which wraps to
+bitmap_zalloc(0), returning a zero-sized allocation.  The subsequent
+__set_bit(ULONG_MAX, node_mask) then writes massively out of bounds.
 
-Fixes: 53df2b9344128984 ("libsymbols kallsyms: Parse using io api")
-Signed-off-by: Rui Qi <qirui.001@bytedance.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
+Check the return value in a signed temporary before assigning to
+node_index, and skip the NUMA binding when the node is unknown.
+
+Fixes: c44a8b44ca9f ("perf record: Bind the AIO user space buffers to nodes")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Alexey Budankov <alexey.budankov@linux.intel.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/symbol/kallsyms.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/perf/util/mmap.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/symbol/kallsyms.c b/tools/lib/symbol/kallsyms.c
-index e335ac2b9e1972..d64bd9cc82a90e 100644
---- a/tools/lib/symbol/kallsyms.c
-+++ b/tools/lib/symbol/kallsyms.c
-@@ -60,7 +60,7 @@ int kallsyms__parse(const char *filename, void *arg,
- 			read_to_eol(&io);
- 			continue;
- 		}
--		for (i = 0; i < sizeof(symbol_name); i++) {
-+		for (i = 0; i < KSYM_NAME_LEN; i++) {
- 			ch = io__get_char(&io);
- 			if (ch < 0 || ch == '\n')
- 				break;
-@@ -68,6 +68,9 @@ int kallsyms__parse(const char *filename, void *arg,
- 		}
- 		symbol_name[i]  = '\0';
+diff --git a/tools/perf/util/mmap.c b/tools/perf/util/mmap.c
+index 512dc8b9c1685c..f642018a8926c0 100644
+--- a/tools/perf/util/mmap.c
++++ b/tools/perf/util/mmap.c
+@@ -103,9 +103,15 @@ static int perf_mmap__aio_bind(struct mmap *map, int idx, int cpu, int affinity)
+ 	int err = 0;
  
-+		if (i == KSYM_NAME_LEN)
-+			read_to_eol(&io);
+ 	if (affinity != PERF_AFFINITY_SYS && cpu__max_node() > 1) {
++		int node;
 +
- 		err = process_symbol(arg, symbol_name, symbol_type, start);
- 		if (err)
- 			break;
+ 		data = map->aio.data[idx];
+ 		mmap_len = mmap__mmap_len(map);
+-		node_index = cpu__get_node(cpu);
++		node = cpu__get_node(cpu);
++		/* -1 sign-extends to ULONG_MAX, wrapping bitmap_zalloc(0) and OOB __set_bit */
++		if (node < 0)
++			return 0;
++		node_index = node;
+ 		node_mask = bitmap_zalloc(node_index + 1);
+ 		if (!node_mask) {
+ 			pr_err("Failed to allocate node mask for mbind: error %m\n");
 -- 
 2.53.0
 
