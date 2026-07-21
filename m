@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B56F46AA6A;
-	Tue, 21 Jul 2026 15:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3008A46AA6A;
+	Tue, 21 Jul 2026 15:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784647974; cv=none; b=skkV/+E/bvO33JCTSe9P2loCykNf5SCibL9hgrrZwdoZS7BF0BbSFnch8wXH1DZedqpiHe6jor8uNrUSTm80wJXKQUrQ2IOa1a02XEmmpE8Z4P/z0ISaO9jisHY38eS6BRA1OriirSVCuUVBdvyrzAhYnaAoA2sgGXio6SMTgHA=
+	t=1784647977; cv=none; b=Y3rjZupRqbEjeh0lhzEmLOkDbqyj+ifAmqwMKBlFw9faxwqVMp9jPKhVdVm9GD8jdWSbBCk8H+vfBx1txhK8WeY2xN8Q0wmQSe/w5yO9VQT/dkpMYbFKyMxqvDAkS9+Z4jrAxjD5Zp9moWJIwg7PkCe4b5bcNcY4Vvkhhc9hOJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784647974; c=relaxed/simple;
-	bh=wIHtTDfH2/H9GE0cw03lQDGVpjnaoigXVbkxaZ1Cj5g=;
+	s=arc-20240116; t=1784647977; c=relaxed/simple;
+	bh=DWcXAtOmc8tPrz/B4pxMF42Al6qXXoGOwpOm0GxGnE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VaKjaYBsXU80Kv0Yf59J2/edYXlTaGOlNJHPc8kw3+Er6f+r9PiMD/a08ggMtHB3aGnCyWbKQedE/rDrFuKk67Fg+JIHzHnSF/RIgMWm3f7VL3FCjm9cpVdi11gaLQ1J9Mz3z5aXNqL29UgAeueu+1LcvSkzbqRSuP/pQpgb8U4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dw9EvzNH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SbjC+ValoyOla3gf0fEMcI82LB1hDHg6e7E3uQNpM/h6Fh7sDF5+2SKZUJmwpVSL1sMMuiD9rg+GPf7rKR4v6R0Jr9VflbVgL9nVbJ8FRlWWczinDY6ZVw1yvDneb+R1XSkrg90NQ9Z59pMUlgBDMsMA/sU0w75dAN9Tqz4tvzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CgnSQhTY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dw9EvzNH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0073A1F000E9;
-	Tue, 21 Jul 2026 15:32:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgnSQhTY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E1D1F000E9;
+	Tue, 21 Jul 2026 15:32:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784647973;
-	bh=Oa65vmMtlGZX11dOzrqS7qq1ojhv7FHiTH/ONWoEoCQ=;
+	s=korg; t=1784647976;
+	bh=TEZDiFCOOIwnuDLyo8L684Mmh3KOJI5o0acOPAhI9XA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dw9EvzNHkl9xy80jwaWmMixfTR+8EeQqKi5BrNcgZQfia5rg8+GPS4djEE65EJfgE
-	 Z0Z7mUuOCdJuGIKQPS3jHLs4rNHVc808J9kfJT0r0ULF1oB8KaKY4uhjxtXJNxanVm
-	 K6zUZRljfBaVWJbnmtjYhZJWV/xgRJWiIszUubd8=
+	b=CgnSQhTYmyHxjvl3TbyrFsYLWByhjaPZ4Rnql9C0QfZTXcCFb5WZ2nu8OiUpvPgTx
+	 z+sT9mK2xU+A85gtdxVhdFYYS0FPKVzP97ns6a+o/IcN7SHr3W10ryHpONyBSGSix+
+	 zjP7iou2dVOs3qRzIqVzXaZAUWPAdJGNy8Y80rLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
 	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
 	Simon Horman <horms@kernel.org>,
 	linux-afs@lists.infradead.org,
 	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 0024/2077] rxrpc: Fix UAF in rxgk_issue_challenge()
-Date: Tue, 21 Jul 2026 16:54:57 +0200
-Message-ID: <20260721152553.241469555@linuxfoundation.org>
+Subject: [PATCH 7.1 0025/2077] rxrpc: Fix socket notification race
+Date: Tue, 21 Jul 2026 16:54:58 +0200
+Message-ID: <20260721152553.265677917@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -56,45 +57,41 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-commit 107a4cb0d47e735830f852d83970d5c81f8e1e08 upstream.
+commit e66f8f32f50116670dbbee5bc9e692cd2cd0c8f8 upstream.
 
-Fix rxgk_issue_challenge() to free the page containing the challenge
-content after invoking the tracepoint as the whdr passed to the tracepoint
-points into the page just freed.
+There's a race between rxrpc_recvmsg() and rxrpc_notify_socket(), whereby
+the latter's attempt to avoid disabling interrupts and taking the socket's
+recvmsg_lock if the call is already queued may happen simultaneously with
+the former's discarding of a call that has nothing queued.
 
-Fixes: 9d1d2b59341f ("rxrpc: rxgk: Implement the yfs-rxgk security class (GSSAPI)")
-Reported-by: Marc Dionne <marc.dionne@auristor.com>
+Fix this by removing the shortcut.  Note that this only affects userspace's
+use of AF_RXRPC; the AFS filesystem driver doesn't use the socket queue.
+
+Fixes: 248f219cb8bc ("rxrpc: Rewrite the data and ack handling code")
+Link: https://sashiko.dev/#/patchset/20260616155749.2125907-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
 cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@kernel.org
-Link: https://patch.msgid.link/20260609140911.838677-4-dhowells@redhat.com
+Link: https://patch.msgid.link/20260624163819.3017002-10-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/rxgk.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/rxrpc/recvmsg.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/net/rxrpc/rxgk.c
-+++ b/net/rxrpc/rxgk.c
-@@ -687,16 +687,17 @@ static int rxgk_issue_challenge(struct r
- 	ret = do_udp_sendmsg(conn->local->socket, &msg, len);
- 	if (ret > 0)
- 		rxrpc_peer_mark_tx(conn->peer);
--	__free_page(page);
+--- a/net/rxrpc/recvmsg.c
++++ b/net/rxrpc/recvmsg.c
+@@ -27,8 +27,6 @@ void rxrpc_notify_socket(struct rxrpc_ca
  
- 	if (ret < 0) {
- 		trace_rxrpc_tx_fail(conn->debug_id, serial, ret,
- 				    rxrpc_tx_point_rxgk_challenge);
-+		__free_page(page);
- 		return -EAGAIN;
- 	}
+ 	_enter("%d", call->debug_id);
  
- 	trace_rxrpc_tx_packet(conn->debug_id, whdr,
- 			      rxrpc_tx_point_rxgk_challenge);
-+	__free_page(page);
- 	_leave(" = 0");
- 	return 0;
- }
+-	if (!list_empty(&call->recvmsg_link))
+-		return;
+ 	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
+ 		rxrpc_see_call(call, rxrpc_call_see_notify_released);
+ 		return;
 
 
