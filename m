@@ -1,50 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B8F46EC7E;
-	Tue, 21 Jul 2026 18:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1FE46EC8F;
+	Tue, 21 Jul 2026 18:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658852; cv=none; b=Pim0UzXDKv2sPPM1WxHRCEMOIbqnR6LjN2OELLE1diycZlEVCZeCAMI7QuBaZoqPhtc7Ph4A8a9OB8SalD85iEewBnqiedR6E/b9KonXYZdM+bNdiFBYT+4ppbpOBdBIysc50J85sRcUgSQXfV9JolYMSDqmmk4+3V+G8zl6NNs=
+	t=1784658855; cv=none; b=ALUkC9nFHeijXQJFCFpTRW7XL4A3WsDNJbvnDnjMgpeGYEUwPrbUHTe6BoHcV1daIC9UTcjGVo1hpfiLhNqU7AsFtN1Qc7pOAoqUV7ShLIViV30edLb1F9H/ZsncHZlmyuyXufc1WcjC7AgswAkeOdHYferleiBgTVNiXe3h6eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658852; c=relaxed/simple;
-	bh=asDwiJBMdld8oFNchgakxXvREhJd8wZHF/V9462cZb0=;
+	s=arc-20240116; t=1784658855; c=relaxed/simple;
+	bh=EZtNdvrvTZ10Dyoxp+M813168Cu0UX+fAqCG9H9qmBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T4yfpnShoF54sC8xIcp335mbLM8KN2SW6phf64QLmhzrRY3kSh0UhrL2igSejJfVOSMsgHgHz+HYa7s0pYphDd86BqGblJGHsCcINrUuidRQNx/ZR5szdoyL6MLa87R350kMNLWrAN+uigWYAFWxYBI4goSbxEDnzQzOo4OM6EA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rxardTk3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jIyjZrdwR2RaCIIfp/lEDyUiHeae5Z73sXxRU92X3+h0ZhGfDah3S2fQ6d6Eu55w6ephXEUHsCxdpFuuwPiv6MZ4RW/N5KgzK79K+LzaepopMCC6yifAgYmS9QhhLZRG7mcPc3qZ8av3rkBXa9DB8xDjr6p+GFVMz/FgnOvEIY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H16tn3OS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxardTk3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE591F000E9;
-	Tue, 21 Jul 2026 18:34:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H16tn3OS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F2B1F000E9;
+	Tue, 21 Jul 2026 18:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658851;
-	bh=2yVAd+a9s0McMpaNq1efuLrwEZxh9mnHQbpLt6LelNc=;
+	s=korg; t=1784658854;
+	bh=VQoNZ0YyOEb7RDZLbyD67X1PqtEoujqfi/haQuUUBXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rxardTk3hl82m5VmWTp3mdTee6B1kP//iVOOOORHxUFMtg1xSZ2oHWH5uxPrtWuLz
-	 ZEm1AI0SCpKpIzt+Nq6Nm5EyEkBAZo23DFxAVoOh4dKFXuouUZAeEEKPWM139eNCcp
-	 P72jl6v2cwK0R28/ErEYW5ZxY0+wAJ0npXRxYW3A=
+	b=H16tn3OS8rKWzoE9CwjKJS4bD/eHgrFDTzQW/60A+kv+0/XtzBJ206lwJkH7GTROs
+	 bUqUjnVtDbdLgsBGw4ek80ST6+4ePOZR9aNXHw4s0Mn4YnhNS47rXbeHwsjet52r8F
+	 NbYLYro+Ye0mYvyNoGUDQXMFq0bqD9WtK2J06yTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Michal Hocko <mhocko@suse.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Kees Cook <kees@kernel.org>,
+	Marco Elver <elver@google.com>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 1257/1611] mm/mm_init: fix uninitialized struct pages for ZONE_DEVICE
-Date: Tue, 21 Jul 2026 17:22:53 +0200
-Message-ID: <20260721152543.722746123@linuxfoundation.org>
+Subject: [PATCH 6.18 1258/1611] kcov: use WRITE_ONCE() for selftest mode stores
+Date: Tue, 21 Jul 2026 17:22:54 +0200
+Message-ID: <20260721152543.746077319@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -63,73 +56,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit cd681403a87085562499d60325b7b45d3be11217 upstream.
+commit 9a79524d1420e6b79a6868208c264f4518d1318e upstream.
 
-If DAX memory is hotplugged into an unoccupied subsection of an early
-section, section_activate() reuses the unoptimized boot memmap.  However,
-compound_nr_pages() still assumes that vmemmap optimization is in effect
-and initializes only the reduced number of struct pages.  As a result, the
-remaining tail struct pages are left uninitialized, which can later lead
-to unexpected behavior or crashes.
+The KCOV selftest enables coverage by setting current->kcov_mode to
+KCOV_MODE_TRACE_PC without installing a coverage area.  If an interrupt
+records coverage in that window, the access should fault and expose the
+bug.
 
-Fix this by treating early sections as unoptimized when calculating how
-many struct pages to initialize.
+When building for QEMU raspi0 (Raspberry Pi Zero, ARMv6, CONFIG_CPU_V6K=y,
+CONFIG_CURRENT_POINTER_IN_TPIDRURO=y) with GCC 13.3.0, the store that
+enables the mode is removed.  The generated kcov_init() code only stores
+zero after the wait loop:
 
-Link: https://lore.kernel.org/20260428081855.1249045-7-songmuchun@bytedance.com
-Fixes: 6fd3620b3428 ("mm/page_alloc: reuse tail struct pages for compound devmaps")
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Acked-by: Liam R. Howlett <liam@infradead.org>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
-Cc: Joao Martins <joao.m.martins@oracle.com>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
+  mrc	15, 0, r3, cr13, cr0, {3}
+  str	r4, [r3, #2028]
+
+where r4 is zero.  There is no store of KCOV_MODE_TRACE_PC before the
+loop, so the selftest reports success without exercising coverage.
+
+Use WRITE_ONCE() for the temporary mode stores.  With the same compiler
+and config, kcov_init() contains the intended mode store:
+
+  mov	r3, #2
+  mrc	15, 0, r2, cr13, cr0, {3}
+  str	r3, [r2, #2028]
+
+Now that the KCOV selftest is actually executed, it may expose KCOV
+instrumentation issues depending on the kernel config.  That is expected
+for a selftest that was intended to catch coverage from interrupt paths.
+
+Link: https://lore.kernel.org/20260526114715.38280-1-kmehltretter@gmail.com
+Fixes: 6cd0dd934b03 ("kcov: Add interrupt handling self test")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Marco Elver <elver@google.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mm_init.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ kernel/kcov.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/mm/mm_init.c
-+++ b/mm/mm_init.c
-@@ -1072,10 +1072,17 @@ static void __ref __init_zone_device_pag
-  * of how the sparse_vmemmap internals handle compound pages in the lack
-  * of an altmap. See vmemmap_populate_compound_pages().
-  */
--static inline unsigned long compound_nr_pages(struct vmem_altmap *altmap,
-+static inline unsigned long compound_nr_pages(unsigned long pfn,
-+					      struct vmem_altmap *altmap,
- 					      struct dev_pagemap *pgmap)
- {
--	if (!vmemmap_can_optimize(altmap, pgmap))
-+	/*
-+	 * If DAX memory is hot-plugged into an unoccupied subsection
-+	 * of an early section, the unoptimized boot memmap is reused.
-+	 * See section_activate().
-+	 */
-+	if (early_section(__pfn_to_section(pfn)) ||
-+	    !vmemmap_can_optimize(altmap, pgmap))
- 		return pgmap_vmemmap_nr(pgmap);
- 
- 	return VMEMMAP_RESERVE_NR * (PAGE_SIZE / sizeof(struct page));
-@@ -1145,7 +1152,7 @@ void __ref memmap_init_zone_device(struc
- 			continue;
- 
- 		memmap_init_compound(page, pfn, zone_idx, nid, pgmap,
--				     compound_nr_pages(altmap, pgmap));
-+				     compound_nr_pages(pfn, altmap, pgmap));
- 	}
- 
- 	pageblock_migratetype_init_range(start_pfn, nr_pages, MIGRATE_MOVABLE);
+--- a/kernel/kcov.c
++++ b/kernel/kcov.c
+@@ -1095,10 +1095,10 @@ static void __init selftest(void)
+ 	 * potentially traced functions in this region.
+ 	 */
+ 	start = jiffies;
+-	current->kcov_mode = KCOV_MODE_TRACE_PC;
++	WRITE_ONCE(current->kcov_mode, KCOV_MODE_TRACE_PC);
+ 	while ((jiffies - start) * MSEC_PER_SEC / HZ < 300)
+ 		;
+-	current->kcov_mode = 0;
++	WRITE_ONCE(current->kcov_mode, 0);
+ 	pr_err("done running self test\n");
+ }
+ #endif
 
 
