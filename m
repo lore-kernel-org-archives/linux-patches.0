@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E30746F4B6;
-	Tue, 21 Jul 2026 17:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF06D472544;
+	Tue, 21 Jul 2026 17:59:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656770; cv=none; b=Wx3yGX52cZShOpiOqNni1IhWR3h0PLUfE2cSbn/SOi17hVC0J7YSYiR+nQoAi867gECvb5sjepYPb9cHJxkNJ9pRPtismkBD31nlVq3BwDtZWhm6dly8Wn8bhfZPHC5y6KlKw9H6mKc6Ajmy5DKLnNuTrYdxFE/MjnI9XgEZWPg=
+	t=1784656772; cv=none; b=lTP0SFd0H5JARW5rQGWDSGTxsLJGbqA8yx80wsSu2oYB8oHhhR3mp63wv6BIxtDH/bUY3wUgNSrlqt1yuIP0iXz/UCxSOc9WsGtfuIKC3dNgMwRjqLH24qqw1/D9rpdY8kLQ/b+cYcU/sZxK/iZ3KLwPysuygeB3vPpS3TO57zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656770; c=relaxed/simple;
-	bh=r6dROPNhpUVURF62vRmdq0yn5hSN6IuaIygpKk4JMzw=;
+	s=arc-20240116; t=1784656772; c=relaxed/simple;
+	bh=N4v11HA6OZugicNMqunJ4Wl2uLZUz29yFI47UM8OCag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jkLXaHdWTa1zwlkmm/2IPs6+CYR0bsKiN+ACWziHfKcEwN3VZ4ZXC1XJspoHVvKtSj0g8Vq0JcsBGJ2N0kL+oL6+pGkRfFlrCeUsNaiolRaQlhKqn8O10HJ5qzUHDZ39Q63k+2/vGOjR2FiOpbzvIBYIZJXjaL8nG1+UR9InB7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXMbtNUt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YoT0sNsQkd2hkOqLqRrL7IuNZ4EB9CIPGxQj5BDQSaV1kIka1/i5ASDpoTEBilN1UlMxT68IHbZhRZssKYGvS0DhYz9LqBR0StrH7V4kZzqVo9lcyYEY4CIsJA/3cIRP2jq5dMnZwbd3/JAvQsQzgU+3asQhfcnxpoJaIProwG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BDNRtJT+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXMbtNUt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E821F000E9;
-	Tue, 21 Jul 2026 17:59:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDNRtJT+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191621F000E9;
+	Tue, 21 Jul 2026 17:59:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656769;
-	bh=O2CidQHUlNSYG4MI5QElBUDNqfDZPIL7H0nL2h4M73c=;
+	s=korg; t=1784656771;
+	bh=/Ty28rvliiCVpWl3qyZACpRIPmNoy823by/fnyyI0zU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RXMbtNUttKUDOPtb80xvqz4ctovA0S/uLYkDDlOgd+lvGFvCTlTLQpdT7TU7qCokI
-	 9Nash1yAVE6kVPZJ6zMQcN1tCN0NHBABW56w4dv0NwkZ8rvQs/TF6idEkgHbEzRRxg
-	 jL/m3Kr9plKlEBCZ12sT2TwY+zCnU5E1UPwU+j2k=
+	b=BDNRtJT+EdsfDzh0pFwjKKOy2KNkv7GdtUvGMGNJt5+A8ALDzs/qFQuO+DeBLUCdj
+	 ghxa1oIodEQ/RmP3c+kcL6CM6UxJsZUatyz6ypVS3ATWOjxY48+upg8mvE2Eo8gJSI
+	 K1n3cV8s93gpQ4yj+fJ589enwApGFq+f0VMaDBBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+381d82bbf0253710b35d@syzkaller.appspotmail.com,
-	syzbot+3479efbc2821cb2a79f2@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhao Dongdong <zhaodongdong@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0510/1611] net: watchdog: fix refcount tracking races
-Date: Tue, 21 Jul 2026 17:10:26 +0200
-Message-ID: <20260721152526.819191262@linuxfoundation.org>
+Subject: [PATCH 6.18 0469/1611] Bluetooth: btmtk: fix URB leak in alloc_mtk_intr_urb error path
+Date: Tue, 21 Jul 2026 17:09:45 +0200
+Message-ID: <20260721152525.870532738@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,199 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Zhao Dongdong <zhaodongdong@kylinos.cn>
 
-[ Upstream commit 8eed5519e496b7a07f441a0f579cb228a33189f7 ]
+[ Upstream commit f396f4005180928cd9e15e352a6512865d3bc908 ]
 
-Blamed commit converted the untracked dev_hold()/dev_put() calls
-in the watchdog code to use the tracked dev_hold_track()/dev_put_track()
-(which were later renamed/interfaced to netdev_hold() and netdev_put()).
+When btmtk_isopkt_pad() fails, the previously allocated URB is not freed,
+leaking the urb structure. Add usb_free_urb() before returning the error.
 
-By introducing dev->watchdog_dev_tracker to store the
-reference tracking information without adding synchronization
-between netdev_watchdog_up() and dev_watchdog(), it enabled the
-race condition where this pointer could be overwritten or freed
-concurrently, leading to the list corruption crash syzbot reported:
-
-list_del corruption, ffff888114a18c00->next is NULL
- kernel BUG at lib/list_debug.c:52 !
-Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
-CPU: 1 UID: 0 PID: 91 Comm: kworker/u8:5 Not tainted syzkaller #0 PREEMPT(lazy)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/09/2026
-Workqueue: events_unbound linkwatch_event
- RIP: 0010:__list_del_entry_valid_or_report.cold+0x22/0x2a lib/list_debug.c:52
-Call Trace:
- <TASK>
-  __list_del_entry_valid include/linux/list.h:132 [inline]
-  __list_del_entry include/linux/list.h:246 [inline]
-  list_move_tail include/linux/list.h:341 [inline]
-  ref_tracker_free+0x1a7/0x6c0 lib/ref_tracker.c:329
-  netdev_tracker_free include/linux/netdevice.h:4491 [inline]
-  netdev_put include/linux/netdevice.h:4508 [inline]
-  netdev_put include/linux/netdevice.h:4504 [inline]
-  netdev_watchdog_down net/sched/sch_generic.c:600 [inline]
-  dev_deactivate_many+0x28c/0xfe0 net/sched/sch_generic.c:1363
-  dev_deactivate+0x109/0x1d0 net/sched/sch_generic.c:1397
-  linkwatch_do_dev net/core/link_watch.c:184 [inline]
-  linkwatch_do_dev+0xd3/0x120 net/core/link_watch.c:166
-  __linkwatch_run_queue+0x3a5/0x810 net/core/link_watch.c:240
-  linkwatch_event+0x8f/0xc0 net/core/link_watch.c:314
-  process_one_work+0xa0e/0x1980 kernel/workqueue.c:3314
-  process_scheduled_works kernel/workqueue.c:3397 [inline]
-  worker_thread+0x5ef/0xe50 kernel/workqueue.c:3478
-  kthread+0x370/0x450 kernel/kthread.c:436
-  ret_from_fork+0x69a/0xc80 arch/x86/kernel/process.c:158
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-
-This patch has three coordinated parts:
-
-1) Add dev->watchdog_lock and dev->watchdog_ref_held to serialize watchdog operations.
-
-2) Remove netdev_watchdog_up() call from netif_carrier_on():
-   This ensures netdev_watchdog_up() is only called from process/BH context
-   (via linkwatch workqueue dev_activate()), allowing us to use
-   spin_lock_bh() for synchronization.
-
-3) Synchronize watchdog up and watchdog timer:
-   Protect netdev_watchdog_up() with tx_global_lock and watchdog_lock.
-   Only allocate a new tracker in netdev_watchdog_up() if one is
-   not already present.
-   In dev_watchdog(), ensure we don't release the tracker if the
-   timer was rescheduled either by dev_watchdog() itself or concurrently
-   by netdev_watchdog_up().
-
-Fixes: f12bf6f3f942 ("net: watchdog: add net device refcount tracker")
-Reported-by: syzbot+381d82bbf0253710b35d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a26b751.c25708ab.1b19ef.0013.GAE@google.com/T/#u
-Tested-by: syzbot+3479efbc2821cb2a79f2@syzkaller.appspotmail.com
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260611152737.2580480-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ceac1cb0259d ("Bluetooth: btusb: mediatek: add ISO data transmission functions")
+Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h |  4 ++++
- net/core/dev.c            |  3 ++-
- net/sched/sch_generic.c   | 44 +++++++++++++++++++++++++++++----------
- 3 files changed, 39 insertions(+), 12 deletions(-)
+ drivers/bluetooth/btmtk.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index fc55157a448601..43ea96ecedc3a5 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -1949,6 +1949,8 @@ enum netdev_reg_state {
-  *	@qdisc_hash:		qdisc hash table
-  *	@watchdog_timeo:	Represents the timeout that is used by
-  *				the watchdog (see dev_watchdog())
-+ *	@watchdog_lock:		protect watchdog_ref_held
-+ *	@watchdog_ref_held:	True if the watchdog device ref is taken.
-  *	@watchdog_timer:	List of timers
-  *
-  *	@proto_down_reason:	reason a netdev interface is held down
-@@ -2360,6 +2362,8 @@ struct net_device {
- 	/* These may be needed for future network-power-down code. */
- 	struct timer_list	watchdog_timer;
- 	int			watchdog_timeo;
-+	spinlock_t		watchdog_lock;
-+	bool			watchdog_ref_held;
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index 38ba8f2bd2f967..a908e7b46ecaf9 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -1051,8 +1051,10 @@ struct urb *alloc_mtk_intr_urb(struct hci_dev *hdev, struct sk_buff *skb,
+ 	if (!urb)
+ 		return ERR_PTR(-ENOMEM);
  
- 	u32                     proto_down_reason;
- 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 5853aada258ca1..8dee703a0916ed 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -11138,7 +11138,8 @@ static int netif_alloc_netdev_queues(struct net_device *dev)
- 
- 	netdev_for_each_tx_queue(dev, netdev_init_one_queue, NULL);
- 	spin_lock_init(&dev->tx_global_lock);
--
-+	spin_lock_init(&dev->watchdog_lock);
-+	dev->watchdog_ref_held = false;
- 	return 0;
- }
- 
-diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
-index 30d77ad7b81d23..d44cee56a58e38 100644
---- a/net/sched/sch_generic.c
-+++ b/net/sched/sch_generic.c
-@@ -543,16 +543,24 @@ static void dev_watchdog(struct timer_list *t)
- 				dev->netdev_ops->ndo_tx_timeout(dev, i);
- 				netif_unfreeze_queues(dev);
- 			}
--			if (!mod_timer(&dev->watchdog_timer,
--				       round_jiffies(oldest_start +
--						     dev->watchdog_timeo)))
--				release = false;
-+			spin_lock(&dev->watchdog_lock);
-+			mod_timer(&dev->watchdog_timer,
-+				  round_jiffies(oldest_start +
-+						dev->watchdog_timeo));
-+			release = false;
-+			spin_unlock(&dev->watchdog_lock);
- 		}
- 	}
- 	spin_unlock(&dev->tx_global_lock);
- 
--	if (release)
-+	spin_lock(&dev->watchdog_lock);
-+	if (timer_pending(&dev->watchdog_timer))
-+		release = false;
-+	if (release && dev->watchdog_ref_held) {
- 		netdev_put(dev, &dev->watchdog_dev_tracker);
-+		dev->watchdog_ref_held = false;
+-	if (btmtk_isopkt_pad(hdev, skb))
++	if (btmtk_isopkt_pad(hdev, skb)) {
++		usb_free_urb(urb);
+ 		return ERR_PTR(-EINVAL);
 +	}
-+	spin_unlock(&dev->watchdog_lock);
- }
  
- void netdev_watchdog_up(struct net_device *dev)
-@@ -561,18 +569,34 @@ void netdev_watchdog_up(struct net_device *dev)
- 		return;
- 	if (dev->watchdog_timeo <= 0)
- 		dev->watchdog_timeo = 5*HZ;
-+	spin_lock_bh(&dev->tx_global_lock);
-+
-+	spin_lock(&dev->watchdog_lock);
- 	if (!mod_timer(&dev->watchdog_timer,
--		       round_jiffies(jiffies + dev->watchdog_timeo)))
--		netdev_hold(dev, &dev->watchdog_dev_tracker,
--			    GFP_ATOMIC);
-+		       round_jiffies(jiffies + dev->watchdog_timeo))) {
-+		if (!dev->watchdog_ref_held) {
-+			netdev_hold(dev, &dev->watchdog_dev_tracker,
-+				    GFP_ATOMIC);
-+			dev->watchdog_ref_held = true;
-+		}
-+	}
-+	spin_unlock(&dev->watchdog_lock);
-+
-+	spin_unlock_bh(&dev->tx_global_lock);
- }
- EXPORT_SYMBOL_GPL(netdev_watchdog_up);
- 
- static void netdev_watchdog_down(struct net_device *dev)
- {
- 	netif_tx_lock_bh(dev);
--	if (timer_delete(&dev->watchdog_timer))
-+
-+	spin_lock(&dev->watchdog_lock);
-+	if (timer_delete(&dev->watchdog_timer)) {
- 		netdev_put(dev, &dev->watchdog_dev_tracker);
-+		dev->watchdog_ref_held = false;
-+	}
-+	spin_unlock(&dev->watchdog_lock);
-+
- 	netif_tx_unlock_bh(dev);
- }
- 
-@@ -589,8 +613,6 @@ void netif_carrier_on(struct net_device *dev)
- 			return;
- 		atomic_inc(&dev->carrier_up_count);
- 		linkwatch_fire_event(dev);
--		if (netif_running(dev))
--			netdev_watchdog_up(dev);
- 	}
- }
- EXPORT_SYMBOL(netif_carrier_on);
+ 	pipe = usb_sndintpipe(btmtk_data->udev,
+ 			      btmtk_data->isopkt_tx_ep->bEndpointAddress);
 -- 
 2.53.0
 
