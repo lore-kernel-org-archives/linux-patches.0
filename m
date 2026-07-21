@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323F347127E;
-	Tue, 21 Jul 2026 18:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18175471272;
+	Tue, 21 Jul 2026 18:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659161; cv=none; b=Ymh3DBTZePKswdinkwv9GhjVbXQqXj9oho+tLNLNrMIC64nj1wPI2jB4cuxtYZ9Bsuwou4RKdsoxmFwHsC7UERzO95/GbM6eAhKd2Dh94TQ/tlI43wQuWPVRWNNjABUG8CqB/Wj3LtKzdKONm7D98X0JUb5/NgMgrrofx6FlVVs=
+	t=1784659164; cv=none; b=H+iSYOfWxlxkBMPLaNxQJtZeNn6qWyZqmJ37WQVWTuQKHYGtmRuA9T5/JMgEjDdfAWQxPJlEDDrwNt7cPy8Fc3nIECm/dx63G+rHCjZTp1GrYuws2CavgCuZCLNEc7lMCG76nymFLGrT8/j8x6bEaiw+aVVgaGhUPoCJYwdyVM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659161; c=relaxed/simple;
-	bh=u4mKMpjjMgnkvXQYBURtVWN2rezZ17uyLnw++MoUU7Y=;
+	s=arc-20240116; t=1784659164; c=relaxed/simple;
+	bh=f44+e2hO8sd4TjOFKJj1o3JDU16Y4VDPDK6EJfT+stE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dgEkmBd3BT4TnxxOTUE5f0OE+7gHJXh8DoLWnLJyi5brv9f5E1XVvz9bogNDTzDQkFYnXbQSs1CLkjXfKBQxRQdroOpwmntXs0IgwJVID4a1T78BJ1tzW7k6jh60JR7Lo7uKgaVKs4cwV9hypue/MhtSetI4B0Yz+a58Klg/JWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vcu/qaNs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gT4h+RNaKRo8QBuZ7rv7aB3eSYNtjx95N7I3Z2KWdaY9URIQF9gHYl3OnD5hiCDri6s1WodmzzxoXcVlj5Lx/OurkAderSYK6oekLh7Xgs60DR57Uij5tXbWaxmJeb0hdxZCRmN+WOCU9ZlCwE1UQ/a5F62DyQAZzh9/Vt8hZ4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InYHbZPW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcu/qaNs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03681F000E9;
-	Tue, 21 Jul 2026 18:39:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InYHbZPW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9B21F000E9;
+	Tue, 21 Jul 2026 18:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659160;
-	bh=VVVd0PtCknR+JjEMwGsEh/t0MmDjUeo11xGrDXlEWJc=;
+	s=korg; t=1784659162;
+	bh=BHG3lLNINqqvfLJppTnqqmqSEKlTwBXC8UTvZH4SC2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vcu/qaNsi3zjEZRa1o/IeH2smxnPrsw4VzvsEMLQOdjPSXtEkPv7VVc61Gsa3u4q8
-	 9eWNKAgSGFEOTbm+pJdjS1ABEfzs66IX4wb+ryUbii2efnucolJUHYwcxYcNQtWC1p
-	 XjUQLESBL+AIuhPY1CM97RQu66ge6IG9YQZAmx3w=
+	b=InYHbZPWgo41hChYnUjtvX7QpWuunyZKgbQAfV42EStmMz8Gei1uJtMaOGJLNC0q+
+	 nU1ixC0bj9zsm4pDLBalsncCNtrPBR9hPVBwNFXYT5LwmSDhZtVRFi4SMcJBw9ZIMw
+	 Q/9e/jCZ2Uc4tlk5+4DnZL6Obdkt1GOEbF00XNuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ankit Garg <nktgrg@google.com>,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
-	Jordan Rhee <jordanrhee@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Joshua Washington <joshwash@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 1416/1611] gve: fix header buffer corruption with header-split and HW-GRO
-Date: Tue, 21 Jul 2026 17:25:32 +0200
-Message-ID: <20260721152547.288751600@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Daniel Gibson <daniel@gibson.sh>
+Subject: [PATCH 6.18 1417/1611] platform/x86/amd/pmc: Avoid logging "(null)" for DMI values
+Date: Tue, 21 Jul 2026 17:25:33 +0200
+Message-ID: <20260721152547.310715235@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -49,145 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ankit Garg <nktgrg@google.com>
+From: Daniel Gibson <daniel@gibson.sh>
 
-commit d676c9a73bdcd8237425dbb826f2bd1a25c36e40 upstream.
+commit a0738abd042f7406edd2175a819cf2e66388ed97 upstream.
 
-The DQO RX datapath programs a per-buffer-queue-descriptor
-header_buf_addr at post time and reads the split header back at
-completion time. Both the post and the read currently index the
-header buffer by queue position rather than by the buffer's identity:
+dmi_get_system_info(...) can return NULL. Using that as %s arguments
+of dev_info() would log "(null)" (as part of a message like
+'... System Vendor: "(null)", Product Name: "(null)" ...'), which may
+be confusing for users.
 
-  - post (gve_rx_post_buffers_dqo): header_buf_addr is computed from
-    bufq->tail
-  - read (gve_rx_dqo): the header is read from desc_idx (the completion
-    queue head index)
+Use Elvis operator to print "(Unknown)" instead.
 
-This relies on the buffer-queue index and the completion-queue index
-being equal for the start of every packet, i.e. on the device consuming
-posted buffers and returning completions in the exact same order. That
-assumption does not hold once HW-GRO is enabled with multiple
-flows: coalesced segments are accepted and completed in an order that
-may differ from the order buffers were posted, and segments from
-different flows may interleave.
-
-That results in two problems:
-
-1. Wrong header slot on read. Because the read offset is derived from
-   the completion index (desc_idx) while the device wrote the header to
-   the address programmed for the buffer's buf_id, the driver can copy
-   a header belonging to a different packet. This shows up as
-   throughput drop (about 30% drop and large numbers of TCP
-   retransmissions) with header-split and HW-GRO both enabled and many
-   streams.
-
-2. Header buffer reused while still owned by the device. The driver
-   advances bufq->head by one per completion and re-posts buffers based
-   on that. Arrival of N RX completions only guarantees that at least N
-   RX buffer descriptors have been read by the device. It does not
-   guarantee that the device has relinquished the ownership of all the
-   buffers corresponding to those N descriptors. With out-of-order
-   completions (e.g. the completion for a packet copied into buffer N
-   arrives before the completion for a packet copied into buffer N-1),
-   the driver can re-post and overwrite a header buffer that the device
-   is still going to write into, corrupting the header of a packet
-   whose completion has not yet been processed.
-
-Fix both issues by indexing the header buffer by buf_id on both the post
-and read paths. Reading from buf_id's slot is therefore always correct
-regardless of completion ordering (fixes problem 1).
-
-Indexing by buf_id also ties each header slot to the lifetime of its
-buffer state. A buffer state is only returned to the free/recycle lists
-when its own completion (buf_id) is processed, so its header slot can
-only be re-posted after the device is done with it. This makes header
-slot reuse safe under out-of-order completions (fixes problem 2).
-
-Allocate (gve_rx_alloc_hdr_bufs) and free (gve_rx_free_hdr_bufs) the
-header buffers based on num_buf_states to match the buf_id indexing.
-
-Cc: stable@vger.kernel.org
-Fixes: 5e37d8254e7f ("gve: Add header split data path")
-Signed-off-by: Ankit Garg <nktgrg@google.com>
-Reviewed-by: Praveen Kaligineedi <pkaligineedi@google.com>
-Reviewed-by: Jordan Rhee <jordanrhee@google.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Signed-off-by: Joshua Washington <joshwash@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260617013208.3781453-1-joshwash@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 428b9fd2dce5 ("platform/x86/amd/pmc: Add delay_suspend module parameter")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202606251540.Nr2BtaNu-lkp@intel.com/
+Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Daniel Gibson <daniel@gibson.sh>
+Link: https://patch.msgid.link/20260626220210.1761783-2-daniel@gibson.sh
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_rx_dqo.c |   28 +++++++++++++++++----------
- 1 file changed, 18 insertions(+), 10 deletions(-)
+ drivers/platform/x86/amd/pmc/pmc.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-+++ b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-@@ -21,11 +21,13 @@
- static void gve_rx_free_hdr_bufs(struct gve_priv *priv, struct gve_rx_ring *rx)
- {
- 	struct device *hdev = &priv->pdev->dev;
--	int buf_count = rx->dqo.bufq.mask + 1;
- 
- 	if (rx->dqo.hdr_bufs.data) {
--		dma_free_coherent(hdev, priv->header_buf_size * buf_count,
--				  rx->dqo.hdr_bufs.data, rx->dqo.hdr_bufs.addr);
-+		size_t size =
-+			(size_t)priv->header_buf_size * rx->dqo.num_buf_states;
-+
-+		dma_free_coherent(hdev, size, rx->dqo.hdr_bufs.data,
-+				  rx->dqo.hdr_bufs.addr);
- 		rx->dqo.hdr_bufs.data = NULL;
+--- a/drivers/platform/x86/amd/pmc/pmc.c
++++ b/drivers/platform/x86/amd/pmc/pmc.c
+@@ -660,11 +660,11 @@ static bool amd_pmc_want_suspend_delay(s
+ 	} else if (delay_suspend == 1) {
+ 		if (!intermediate_wakeup)
+ 			dev_info(pdev->dev, "Delaying suspend by 2.5s because delay_suspend=1. If this solves problems on your machine, please report this whole line to: platform-driver-x86@vger.kernel.org so it can be automatically detected as affected in the future. System Vendor: \"%s\" Product Name: \"%s\" Product Family: \"%s\" Board Vendor: \"%s\" Board Name: \"%s\"\n",
+-				 dmi_get_system_info(DMI_SYS_VENDOR),
+-				 dmi_get_system_info(DMI_PRODUCT_NAME),
+-				 dmi_get_system_info(DMI_PRODUCT_FAMILY),
+-				 dmi_get_system_info(DMI_BOARD_VENDOR),
+-				 dmi_get_system_info(DMI_BOARD_NAME));
++				 dmi_get_system_info(DMI_SYS_VENDOR) ?: "(Unknown)",
++				 dmi_get_system_info(DMI_PRODUCT_NAME) ?: "(Unknown)",
++				 dmi_get_system_info(DMI_PRODUCT_FAMILY) ?: "(Unknown)",
++				 dmi_get_system_info(DMI_BOARD_VENDOR) ?: "(Unknown)",
++				 dmi_get_system_info(DMI_BOARD_NAME) ?: "(Unknown)");
+ 		return true;
  	}
- }
-@@ -250,7 +252,7 @@ int gve_rx_alloc_ring_dqo(struct gve_pri
- 
- 	/* Allocate header buffers for header-split */
- 	if (cfg->enable_header_split)
--		if (gve_rx_alloc_hdr_bufs(priv, rx, buffer_queue_slots))
-+		if (gve_rx_alloc_hdr_bufs(priv, rx, rx->dqo.num_buf_states))
- 			goto err;
- 
- 	/* Allocate RX completion queue */
-@@ -379,10 +381,13 @@ void gve_rx_post_buffers_dqo(struct gve_
- 			break;
- 		}
- 
--		if (rx->dqo.hdr_bufs.data)
-+		if (rx->dqo.hdr_bufs.data) {
-+			u16 buf_id = le16_to_cpu(desc->buf_id);
-+
- 			desc->header_buf_addr =
- 				cpu_to_le64(rx->dqo.hdr_bufs.addr +
--					    priv->header_buf_size * bufq->tail);
-+					(size_t)priv->header_buf_size * buf_id);
-+		}
- 
- 		bufq->tail = (bufq->tail + 1) & bufq->mask;
- 		complq->num_free_slots--;
-@@ -799,10 +804,13 @@ static int gve_rx_dqo(struct napi_struct
- 		int unsplit = 0;
- 
- 		if (hdr_len && !hbo) {
--			rx->ctx.skb_head = gve_rx_copy_data(priv->dev, napi,
--							    rx->dqo.hdr_bufs.data +
--							    desc_idx * priv->header_buf_size,
--							    hdr_len);
-+			size_t offset =
-+				(size_t)buffer_id * priv->header_buf_size;
-+
-+			rx->ctx.skb_head =
-+				gve_rx_copy_data(priv->dev, napi,
-+						 rx->dqo.hdr_bufs.data + offset,
-+						 hdr_len);
- 			if (unlikely(!rx->ctx.skb_head))
- 				goto error;
- 			rx->ctx.skb_tail = rx->ctx.skb_head;
+ 	return false;
 
 
