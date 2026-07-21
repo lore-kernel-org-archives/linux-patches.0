@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024E54071E3;
-	Tue, 21 Jul 2026 18:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1663F46C4BC;
+	Tue, 21 Jul 2026 18:58:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660294; cv=none; b=iQYkl8cXr+CbIUf6vblJO7i94Lq4kB5q0THi8HTLgDaGTMIUz+Kzz+FimSkgM67Cgqae+8FEDV782bmD3mpvNvVwPyA1fKOtKhbWN6nafNW4ZIIXGM8R3oyA7WEYvideKYa03WlFGAQ6w1aViLXQw/JMU+A6mb3WtMxdTOCpoHM=
+	t=1784660295; cv=none; b=g43l3QiU4jskeIGTiCMF9x9gL+XjFzljT1JqXEh5nDJMHwr6PgQhxwdRTmlDVFH4Rqmz/Tbo0cJq8rMNw24PZPdhq4Ksz01cKdJYX53yxcFcqlYwHP3De+/wP7/WZDTvFAib7KBkl8+3RtNaD1dC8uOLVXT87C4FRlDKHaSAqMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660294; c=relaxed/simple;
-	bh=WQ3Gdqw6rqoIjWkQMc/ZzTHthl2d11JcPG8OBeiPZ20=;
+	s=arc-20240116; t=1784660295; c=relaxed/simple;
+	bh=SGKhKl+SXVWINeWCXseFZzim1DP5d0MzKX5jKIHrS+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HGsgUxn3cMiWwv1+S5s/WP6GSt4EK9N3kMVJDmG96KsAta+BOclJAH+wVJCCY5Dqt5UfkiUk3FaKqHN75Gx4qMMYfKKp5bsHUhIlvenlrw/jhy+gdKDCQmqNp6wnkfNWbMVdgoBGabimC0/WVScE7ZEGnd4ABh7om77XzKk5ufk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w3txCWBP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eUtVszyiGsaGytC81yolFOeJtVuZOvH8wBceABo/VcZ1qITs0h7L2Ur/taRgNetaaw9k0Gpa9d6ryFgUgO4Hyiof0iyOuTzHvkB03CmWjv3n2TpaRre94Wr4M4tsU3nKUztDA4YlIn/YQ6vsyEIMD5iIa/31dRVVHG3fxgCKGNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkhF9eYr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3txCWBP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 288F01F00A3A;
-	Tue, 21 Jul 2026 18:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkhF9eYr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC091F00A3D;
+	Tue, 21 Jul 2026 18:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660287;
-	bh=aj0BHO3kHX8E7IrN7ZBbNbLVZGzLuT4yG0/XwwmAYGI=;
+	s=korg; t=1784660292;
+	bh=VhpoMeOIZ1Y0LFJipfIdZwgmlQNUg9dGnWobv6K6vEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w3txCWBPzu+iPTnTbq9Qv5hj2hYuiH5RVzoVbLrKJ07ZH+X//BbCfE1wqxYKngtWQ
-	 vXIfXce55T9GO04OoAFZldKinTRaid4Y7keQWYJsLSolfK0aqrVlu53Yjbi30Ob3Q/
-	 dlC02w11vR2U6czBXMGDp1zGXsLg7vvQu1cs9J6c=
+	b=EkhF9eYrxgrhuBMwuOdeBrCljg8Mi1rVsfj9HmBTC0LdfcjcW9V171KId8UsXqtRE
+	 UIQt6g7O0YO3jb/2JWFkKFls0wAlCk0llnj2xlX9esSAdu6knPI+iqbkrltrEOfwOf
+	 cjuC2/ekFZTGwWu9MZiK4LkSscSEW1zIRGt/KLdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0880/2077] PCI/pwrctrl: Lock device when calling device_is_bound()
-Date: Tue, 21 Jul 2026 17:09:13 +0200
-Message-ID: <20260721152613.554828315@linuxfoundation.org>
+Subject: [PATCH 7.1 0918/2077] fs/ntfs3: fix wrong LCN in run_remove_range() when splitting a run
+Date: Tue, 21 Jul 2026 17:09:51 +0200
+Message-ID: <20260721152614.466532428@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,74 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-[ Upstream commit 548f3d287d92bcbc908b02db57fb889f8a8276a0 ]
+[ Upstream commit 36c7276816ed4266c155b71b1fa747b2785f23f7 ]
 
-The kerneldoc for device_is_bound() states that it must be called with
-the device lock taken. Synchronize the two calls in pwrctrl core.
+When run_remove_range() removes a middle portion of a non-sparse run,
+it splits the run into head and tail parts.  The tail is inserted via
+run_add_entry() but uses the original r->lcn as its starting LCN
+instead of advancing it by the split offset.
 
-Fixes: b35cf3b6aa1e ("PCI/pwrctrl: Add APIs to power on/off pwrctrl devices")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260518100700.47581-1-bartosz.golaszewski@oss.qualcomm.com
+For example, removing VCN range [10, 20) from a run
+{vcn=0, lcn=100, len=30} should produce:
+  {vcn=0,  lcn=100, len=10}   (head)
+  {vcn=20, lcn=120, len=10}   (tail, lcn advanced by 20)
+
+But the current code produces:
+  {vcn=0,  lcn=100, len=10}
+  {vcn=20, lcn=100, len=10}   (wrong: points to same physical clusters)
+
+This creates overlapping physical mappings in the in-memory run tree,
+which can corrupt cluster allocation decisions and lead to data
+corruption.
+
+The correct pattern is already used in run_insert_range():
+  CLST lcn2 = r->lcn == SPARSE_LCN ? SPARSE_LCN : (r->lcn + len1);
+
+Apply the same logic in run_remove_range().
+
+Fixes: 10d7c95af043 ("fs/ntfs3: add delayed-allocation (delalloc) support")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pwrctrl/core.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ fs/ntfs3/run.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pwrctrl/core.c b/drivers/pci/pwrctrl/core.c
-index 97cff5b8ca8852..cd08d590483b86 100644
---- a/drivers/pci/pwrctrl/core.c
-+++ b/drivers/pci/pwrctrl/core.c
-@@ -161,10 +161,12 @@ static void pci_pwrctrl_power_off_device(struct device_node *np)
- 	if (!pdev)
- 		return;
+diff --git a/fs/ntfs3/run.c b/fs/ntfs3/run.c
+index 19aa044fd1fcc9..ad7db67514ef7c 100644
+--- a/fs/ntfs3/run.c
++++ b/fs/ntfs3/run.c
+@@ -1297,9 +1297,12 @@ bool run_remove_range(struct runs_tree *run, CLST vcn, CLST len, CLST *done)
  
--	if (device_is_bound(&pdev->dev)) {
--		ret = __pci_pwrctrl_power_off_device(&pdev->dev);
--		if (ret)
--			dev_err(&pdev->dev, "Failed to power off device: %d", ret);
-+	scoped_guard(device, &pdev->dev) {
-+		if (device_is_bound(&pdev->dev)) {
-+			ret = __pci_pwrctrl_power_off_device(&pdev->dev);
-+			if (ret)
-+				dev_err(&pdev->dev, "Failed to power off device: %d", ret);
-+		}
- 	}
- 
- 	platform_device_put(pdev);
-@@ -205,7 +207,7 @@ static int __pci_pwrctrl_power_on_device(struct device *dev)
- static int pci_pwrctrl_power_on_device(struct device_node *np)
- {
- 	struct platform_device *pdev;
--	int ret;
-+	int ret = 0;
- 
- 	for_each_available_child_of_node_scoped(np, child) {
- 		ret = pci_pwrctrl_power_on_device(child);
-@@ -217,12 +219,14 @@ static int pci_pwrctrl_power_on_device(struct device_node *np)
- 	if (!pdev)
- 		return 0;
- 
--	if (device_is_bound(&pdev->dev)) {
--		ret = __pci_pwrctrl_power_on_device(&pdev->dev);
--	} else {
--		/* FIXME: Use blocking wait instead of probe deferral */
--		dev_dbg(&pdev->dev, "driver is not bound\n");
--		ret = -EPROBE_DEFER;
-+	scoped_guard(device, &pdev->dev) {
-+		if (device_is_bound(&pdev->dev)) {
-+			ret = __pci_pwrctrl_power_on_device(&pdev->dev);
-+		} else {
-+			/* FIXME: Use blocking wait instead of probe deferral */
-+			dev_dbg(&pdev->dev, "driver is not bound\n");
-+			ret = -EPROBE_DEFER;
-+		}
- 	}
- 
- 	platform_device_put(pdev);
+ 		if (r_end > end) {
+ 			/* Remove a middle part, split. */
++			CLST tail_lcn = r->lcn == SPARSE_LCN ?
++					SPARSE_LCN : (r->lcn + (end - r->vcn));
++
+ 			*done += len;
+ 			r->len = d;
+-			return run_add_entry(run, end, r->lcn, r_end - end,
++			return run_add_entry(run, end, tail_lcn, r_end - end,
+ 					     false);
+ 		}
+ 		/* Remove tail of run .*/
 -- 
 2.53.0
 
