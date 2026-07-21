@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469E43783D4;
-	Tue, 21 Jul 2026 19:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C2B2DB794;
+	Tue, 21 Jul 2026 19:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660405; cv=none; b=NVcyreHBnng7+vhMohJkAgC2fNpoF+NDM5rKsrz1l93vWjBcAuXh0mIaDi8uwI2Tkk8rY+oP1GqAXBaOHHgmeHnX7DZzYeazd8004TJ/H39kUKPHoP/1m4WkY189p25ovi+wpGGy3ifYmOMfIVbN069XazkjeRs2rVfLjGu+GFk=
+	t=1784660408; cv=none; b=MlYzciY5KtC6daDalHRbsH0u/Rs7i/u9J9T24gWvOZ/Nn8zOhUc77UXaDreLp4KoUq7e3oxias6j0eCyphEqCv01SmMi7q6o6efdog1YWpAUelW3BoefU//eKy+CfQ0s5CmMWPXDu4UFRmzg8r/IkqIpkWpNJM80ApnpcYEMJzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660405; c=relaxed/simple;
-	bh=O8wqkwjOhn+aekRbfM0dchFDULl+Oe7U0nVmj8DRfKI=;
+	s=arc-20240116; t=1784660408; c=relaxed/simple;
+	bh=8iADgWh3y089UFinpJoxPmnlkkVdXd/7YcoLz2rdH9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oOLh4WxxQDNCT6kjWBUfBxWbDFmXAyuPZtKyfQK5SRD+qWsjEunwJJJ9ZWhiumaBK9jRVugFa8b6qu+vi9sPJvxg0avA8qokCdAChsBix7ouS/cQcsiCFrnqEZC9ApvPYrgf211QaQ08BDX1ieSEIhguExtI4Scl7YAY/v44cYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nRdCek9N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QcU+uI6+j3wj5wJ7WS+CzXhQTjM7ZrJOcklUTfzGTU/kU5koFBTUTkKLfxh/T03drkm2UMY0PmPE8bzhapy5qcQYt5mKhAkziuLxM/B6gFxY2m7I2Helfqx39W65iJ44P1MIogecVhUf8IrDmm+4SXGaLqA8/QavL1ih75EOLuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kK0X85wa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRdCek9N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B19BC1F000E9;
-	Tue, 21 Jul 2026 19:00:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kK0X85wa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650711F000E9;
+	Tue, 21 Jul 2026 19:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660404;
-	bh=5/iYkM2TbaqWe8f1jtg7eiQCPQRDHJ2gZyl5oodshqc=;
+	s=korg; t=1784660406;
+	bh=zoRlYEZPfgJp4TryTtBUK/5jOK27ltcgGRJAN+MvB/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nRdCek9N38Xfauxi9VAawmbfGfM7KBmN/ZuNj7hglNVQoubKIx8qcc5Yt+dGJ3/1r
-	 dZd4j4UHBQ/f3re48smYYWhFfzM5U3gddhCljbwKtehVh4P5c2j4oyk5IUKZN0+GOA
-	 ss5bOULkjZ3yrQ4qRV3f681lFHNOwodAtKXpY2JA=
+	b=kK0X85waiNmvoTKlTe4t0xD3zjAQIL0LuyduQ4ohxgeGAeK8DOeitHIBMGasRz9nv
+	 rTOnjCygiL84wJeM5ZEPfB9fmX0Gh/c75DwRUAqOzLtAALHuQl/lHYYI2zuaGAwUY1
+	 xw5HMY6WOgcmwNs79Nf6RNmVmgyGz35/unfWv7Js=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Wayne Lin <Wayne.Lin@amd.com>,
-	Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>,
-	Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Xu Rao <raoxu@uniontech.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0923/2077] drm/amd/display: Add missing kdoc for ALLM parameters
-Date: Tue, 21 Jul 2026 17:09:56 +0200
-Message-ID: <20260721152614.583632164@linuxfoundation.org>
+Subject: [PATCH 7.1 0924/2077] thunderbolt: debugfs: Fix margining error counter buffer leak
+Date: Tue, 21 Jul 2026 17:09:57 +0200
+Message-ID: <20260721152614.606725063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -58,47 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit d4c6ec729fb7a8bf8a27b19bd70a1b945ad93dac ]
+[ Upstream commit 503c5ae1e72aa9ed91925dafa3d82ee2e992747f ]
 
-Add descriptions for the missing parameters for ALLMEnabled and
-ALLMValue  to keep the function documentation synchronized with the
-function prototype mod_build_hf_vsif_infopacket().
+When USB4 lane margining debugfs write support is enabled,
+margining_error_counter_write() copies the user input with
+validate_and_copy_from_user(). This allocates a temporary page that is
+only needed while parsing the requested error counter mode.
 
-Fixes the below with gcc W=1:
-../display/modules/info_packet/info_packet.c:507 function parameter 'ALLMEnabled' not described in 'mod_build_hf_vsif_infopacket'
-../display/modules/info_packet/info_packet.c:507 function parameter 'ALLMValue' not described in 'mod_build_hf_vsif_infopacket'
+The function currently returns without freeing that page. This leaks one
+page per write to the error_counter debugfs file, including successful
+writes and writes that later fail while taking the domain lock or because
+software margining is not enabled.
 
-Fixes: 3c2381b92cba ("drm/amd/display: add support for VSIP info packet")
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Wayne Lin <Wayne.Lin@amd.com>
-Cc: Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>
-Cc: Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Free the temporary page once parsing has completed, and also before
+returning from the invalid-input path.
+
+Fixes: 10904df3f20c ("thunderbolt: Improve software receiver lane margining")
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/thunderbolt/debugfs.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c b/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
-index 00473c6284d5cc..614db22d62f38b 100644
---- a/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
-+++ b/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
-@@ -502,6 +502,8 @@ void mod_build_vsc_infopacket(const struct dc_stream_state *stream,
-  *
-  *  @stream:      contains data we may need to construct VSIF (i.e. timing_3d_format, etc.)
-  *  @info_packet: output structure where to store VSIF
-+ *  @ALLMEnabled: indicates whether ALLM HF-VSIF should be generated
-+ *  @ALLMValue:   ALLM bit value to advertise in HF-VSIF
-  */
- void mod_build_hf_vsif_infopacket(const struct dc_stream_state *stream,
- 		struct dc_info_packet *info_packet)
+diff --git a/drivers/thunderbolt/debugfs.c b/drivers/thunderbolt/debugfs.c
+index 042f6a0d0f7f06..25f6ea6ea09472 100644
+--- a/drivers/thunderbolt/debugfs.c
++++ b/drivers/thunderbolt/debugfs.c
+@@ -956,7 +956,9 @@ margining_error_counter_write(struct file *file, const char __user *user_buf,
+ 	else if (!strcmp(buf, "stop"))
+ 		error_counter = USB4_MARGIN_SW_ERROR_COUNTER_STOP;
+ 	else
+-		return -EINVAL;
++		goto err_free;
++
++	free_page((unsigned long)buf);
+ 
+ 	scoped_cond_guard(mutex_intr, return -ERESTARTSYS, &tb->lock) {
+ 		if (!margining->software)
+@@ -966,6 +968,10 @@ margining_error_counter_write(struct file *file, const char __user *user_buf,
+ 	}
+ 
+ 	return count;
++
++err_free:
++	free_page((unsigned long)buf);
++	return -EINVAL;
+ }
+ 
+ static int margining_error_counter_show(struct seq_file *s, void *not_used)
 -- 
 2.53.0
 
