@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74434471265;
-	Tue, 21 Jul 2026 18:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35EF847126C;
+	Tue, 21 Jul 2026 18:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657617; cv=none; b=SX+bN/OC+UjUvxIcntYGqNNW/M14jshFY7BTatliWKkeGPytlqV/ikXqtFlApJDzaeHCsxTrVxLUV4B7BU7rb28X1mQZWUo/gNTj9+buotOpl1WxeyZAcF8eO3bna5C/f9CemifA/KDwemkq4CjTMD7pbH6yLNtW+783f11TjPg=
+	t=1784657620; cv=none; b=pUXtR/i4P58j+qenHkFmEHN0/rLXVGak2xMneE0HRhDqvBnHPzrjmQMOns96cMpR1spmPk+VaKL0iJK0U5k3Yz1l15yuecp8rI6qLy/8G8ehmk2KVvAjKRYFoSROnyQcNAWxAGXf2pN1D6CazhnJZnf0SkRvx+N/2kJS3AM48IU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657617; c=relaxed/simple;
-	bh=Avot2jdJKSGG58ArRD198+X3iDGeTd7TnLqxhmAqWW4=;
+	s=arc-20240116; t=1784657620; c=relaxed/simple;
+	bh=jjtx0goVQn0hFbf1cPfzl0ZKoagpRpqWrYcaVcLJgy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AyBh/Hl/4ORVYaFJzcCSLarS75uJq08GG7X7HcJx2wu9TY50RIkt50z/84185RHJJXfR4REZAjjYuv3cEWw0e4GNwICsrF3oUTHMJJsurZKOF06OItbKi75Ztzl0NNyLB76WPfM2SgZhD/ZToVeMQK1WjY3O7rTYKnejPOCEEkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=buwuw0QR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pvWBx+qz7MRMzDSj+lKBmXUYImLpF52TvCkYNxQ6pEbGzFcSduN6aah0X6wYS2bKSzcrs9fOuu/CrdxqEMZT2DXcBVkrg6Mo1i2AZe5cmbzRRcSHllKvqTO1GUNufwHmGmuW4vp1mfbI6DGidzpRgKyD2g4HLLy8bfmLYUTo6PI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Ptxqdm4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="buwuw0QR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6B51F000E9;
-	Tue, 21 Jul 2026 18:13:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Ptxqdm4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E921F000E9;
+	Tue, 21 Jul 2026 18:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657616;
-	bh=5OhwHlqj6VWcLXPCGyUP9wqR6xQkvKMShQ45tUaWnHU=;
+	s=korg; t=1784657619;
+	bh=8sU0NhF8lnCZCtABmwxkdGit1Msc2VkjfqvF7jutNSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=buwuw0QR1akS39e/4Pw/cVjLThve2OtjPH++ZN/ALPzrypEW58lBFCrNITDnbf8Gt
-	 5+CKKBrX4KCFhRyguop4fgpamECmC8VTDgqvloSx6GbxB5dD1hjdCESRAbxsdnFLlI
-	 OC8Rv+K3qUby/P+Eq3xcfweeMG5TXblXIGQrWmdU=
+	b=1Ptxqdm4YA/CJH8wtAs8yz697jpsgM7HppjwgoQ6Qt/wVcOSmcUo9DfXoFav9Tezi
+	 uLimFj4C4Z9LFTP5sBlTIBN9lYheZ7D4ioXysivV6/KZMtZV6kyjLry/dj2p2TZWHV
+	 XwFrN0UKRasU7UeuqoHVhtAyLBAdrmPoPgmKL7Lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robertus Diawan Chris <robertusdchris@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Yu Kuai <yukuai@fnnas.com>,
+	Li Nan <linan122@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0830/1611] mac802154: Prevent overwrite return code in mac802154_perform_association()
-Date: Tue, 21 Jul 2026 17:15:46 +0200
-Message-ID: <20260721152534.057883145@linuxfoundation.org>
+Subject: [PATCH 6.18 0831/1611] md: merge mddev has_superblock into mddev_flags
+Date: Tue, 21 Jul 2026 17:15:47 +0200
+Message-ID: <20260721152534.081298217@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,40 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robertus Diawan Chris <robertusdchris@gmail.com>
+From: Yu Kuai <yukuai@fnnas.com>
 
-[ Upstream commit 649147cb3f8b3c0c9aeba5d89d69a6ef221c12c2 ]
+[ Upstream commit fba4a980403d2f489bc680dbff7d7d2514e669f9 ]
 
-When assoc_status not equal to IEEE802154_ASSOCIATION_SUCCESSFUL, the
-return value assigned to either "-ERANGE" or "-EPERM" but this return
-value will be overwritten to 0 after exiting the conditional scope.
-So, jump to clear_assoc label to preserve the return value when
-assoc_status not equal to IEEE802154_ASSOCIATION_SUCCESSFUL.
+There is not need to use a separate field in struct mddev, there are no
+functional changes.
 
-This is reported by Coverity Scan as "Unused value".
-
-Fixes: fefd19807fe9 ("mac802154: Handle associating")
-Signed-off-by: Robertus Diawan Chris <robertusdchris@gmail.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/20260602054133.470293-1-robertusdchris@gmail.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Link: https://lore.kernel.org/linux-raid/20260114171241.3043364-3-yukuai@fnnas.com
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Reviewed-by: Li Nan <linan122@huawei.com>
+Stable-dep-of: a286cb88ddb2 ("md/raid1: honor REQ_NOWAIT when waiting for behind writes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac802154/scan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/md.c | 6 +++---
+ drivers/md/md.h | 3 ++-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/net/mac802154/scan.c b/net/mac802154/scan.c
-index a6dab3cc3ad858..0eef3b4f5b9b39 100644
---- a/net/mac802154/scan.c
-+++ b/net/mac802154/scan.c
-@@ -594,6 +594,7 @@ int mac802154_perform_association(struct ieee802154_sub_if_data *sdata,
- 			 "Negative ASSOC RESP received from %8phC: %s\n", &ceaddr,
- 			 local->assoc_status == IEEE802154_PAN_AT_CAPACITY ?
- 			 "PAN at capacity" : "access denied");
-+		goto clear_assoc;
- 	}
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index b7d47c018a12f5..a26dde7bdecdd5 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -6537,7 +6537,7 @@ int md_run(struct mddev *mddev)
+ 	 * the only valid external interface is through the md
+ 	 * device.
+ 	 */
+-	mddev->has_superblocks = false;
++	clear_bit(MD_HAS_SUPERBLOCK, &mddev->flags);
+ 	rdev_for_each(rdev, mddev) {
+ 		if (test_bit(Faulty, &rdev->flags))
+ 			continue;
+@@ -6550,7 +6550,7 @@ int md_run(struct mddev *mddev)
+ 		}
  
- 	ret = 0;
+ 		if (rdev->sb_page)
+-			mddev->has_superblocks = true;
++			set_bit(MD_HAS_SUPERBLOCK, &mddev->flags);
+ 
+ 		/* perform some consistency tests on the device.
+ 		 * We don't want the data to overlap the metadata,
+@@ -9173,7 +9173,7 @@ void md_write_start(struct mddev *mddev, struct bio *bi)
+ 	rcu_read_unlock();
+ 	if (did_change)
+ 		sysfs_notify_dirent_safe(mddev->sysfs_state);
+-	if (!mddev->has_superblocks)
++	if (!test_bit(MD_HAS_SUPERBLOCK, &mddev->flags))
+ 		return;
+ 	wait_event(mddev->sb_wait,
+ 		   !test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags));
+diff --git a/drivers/md/md.h b/drivers/md/md.h
+index da312d4692858d..ce639f2b1d0a68 100644
+--- a/drivers/md/md.h
++++ b/drivers/md/md.h
+@@ -340,6 +340,7 @@ struct md_cluster_operations;
+  *		   array is ready yet.
+  * @MD_BROKEN: This is used to stop writes and mark array as failed.
+  * @MD_DELETED: This device is being deleted
++ * @MD_HAS_SUPERBLOCK: There is persistence sb in member disks.
+  *
+  * change UNSUPPORTED_MDDEV_FLAGS for each array type if new flag is added
+  */
+@@ -356,6 +357,7 @@ enum mddev_flags {
+ 	MD_BROKEN,
+ 	MD_DO_DELETE,
+ 	MD_DELETED,
++	MD_HAS_SUPERBLOCK,
+ };
+ 
+ enum mddev_sb_flags {
+@@ -622,7 +624,6 @@ struct mddev {
+ 	/* The sequence number for sync thread */
+ 	atomic_t sync_seq;
+ 
+-	bool	has_superblocks:1;
+ 	bool	fail_last_dev:1;
+ 	bool	serialize_policy:1;
+ };
 -- 
 2.53.0
 
