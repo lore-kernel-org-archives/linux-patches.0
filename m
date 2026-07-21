@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767733B2FC0;
-	Tue, 21 Jul 2026 20:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120883B1EFC;
+	Tue, 21 Jul 2026 20:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666465; cv=none; b=NkRqg7CBaekN4y7u+OML8jJ9EeTD9KMb7k+ltJg5mLHZD5PbYczCW7+fbBHkfYqOf1y4S90WZFpMst+eoky2v6jbSWKGghpv0rwuzWCRZy9s3fyocPncugnKFsrXXTpvhJJU7QbvVzOFqlZzhSJDrSQV00+0xEOpBiUvMA4JpVc=
+	t=1784666468; cv=none; b=pCevG1Bw6nCk9BiZ5zkw2CKjQc+TbQPyRtqm8XuOAqccew0czdeg/cCvwjHXgCaN26GqHtxSrKhJj3ZnT++eq/ezDqODdsYboWrs0nkxGv6Lo6Wl9zaMJeIpJWSGajcH1Pz5pP0p9mFPNrz8S3iJ7TGjXVJOo8/6/gtihZWAg5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666465; c=relaxed/simple;
-	bh=k2Z3sPDn1Ip2apfdqVW8c9Db8WHfq1PEc/NoLJKZpNw=;
+	s=arc-20240116; t=1784666468; c=relaxed/simple;
+	bh=LJcyx3KfNnDKoAVBmlhkKyD9gB2AiAnkFFMcDq0NNmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TfGoJf/twD82YE3NH5NmjZX34SbiUiJMSTNMeC4yQuJF2b9st0B/gyhpaKNCL8XfGzfV450xfdKs6fFSA9abGQFUMieOaj8eVwGKgkj+Ch77HmP+T+uu84pSYSxzm0OGR0VSpfSaWmoe5fogxRr8aalCmmLUH/Eq76yHTcVoHW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQYwCW9L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ONBOvFe8Dle+8lMTT5qf5Khn6JIMVC3LUwxfKehZXBktR+nv2krjmsd1pfo0qJ8UdvXi3+X5qsDfCm1nmkGe631lexjhxh0NVUGV3cpo7YSCkoqxJ2VYDQHUPc0fue+n5A4LoFrit7T9XZygndOtdhJlnnRwg3BBcV7tDghnsQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zunu+UK9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQYwCW9L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB77C1F000E9;
-	Tue, 21 Jul 2026 20:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zunu+UK9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D151F000E9;
+	Tue, 21 Jul 2026 20:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666464;
-	bh=1F9w1zaVmDZo2UIe4JLaySs18fai3a3oQsCTdwv9sCg=;
+	s=korg; t=1784666467;
+	bh=fSU4nb0ykQBv1UeFH3du6URqSLzNAK/9Ahqs5dbezCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FQYwCW9LzXov5bnfeezRz2AxVEbtzqYJbfugF5fXCkVvVPZFAcgtoBcioDDcmxICG
-	 MUo4VdRE9AVx+IXHpZSnL8q1U9VwTjrFKvhBvlQuyl8Z+6g20ujItIgSXjMbLWddeZ
-	 YWAkjv61Cd5X8xFX8c60MpW+NghkJ8VZvlu67HbE=
+	b=zunu+UK9y9j2wv7++kPU8zJUxFAkOWTZGvBfACNrywu7coo8s/t7Y8Q/VYzdK8ZUm
+	 u2qmbYXMndaHP12jF4saTLv+s0567UzPJieYpp/U/Dw6zjgZZuBAN/RN/Qvf6DPvJJ
+	 Fp+ZiBiOwcDH9Sg/MNuhQuh2fMOLDOvxD0urOrlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0650/1266] xprtrdma: Remove temp allocation of rpcrdma_rep objects
-Date: Tue, 21 Jul 2026 17:18:07 +0200
-Message-ID: <20260721152456.402225029@linuxfoundation.org>
+Subject: [PATCH 6.6 0651/1266] xprtrdma: Avoid 250 ms delay on backlog wakeup
+Date: Tue, 21 Jul 2026 17:18:08 +0200
+Message-ID: <20260721152456.423623807@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -54,224 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 0e13dd9ea8be46f980a46c3ffd8cb786f3e2fb5b ]
+[ Upstream commit 100142093e22b3f7741ac88e94878bb3694e306f ]
 
-The original code was designed so that most calls to
-rpcrdma_rep_create() would occur on the NUMA node that the device
-preferred. There are a few cases where that's not possible, so
-those reps are marked as temporary.
+Commit a721035477fb ("SUNRPC/xprt: async tasks mustn't block waiting
+for memory") changed xprt_rdma_alloc_slot() to set tk_status to
+-ENOMEM so that call_reserveresult() would sleep HZ/4 before
+retrying.  That rationale applies to xprt_dynamic_alloc_slot(),
+where an immediate retry under memory pressure wastes CPU, but not
+to the RDMA backlog path: a task woken from the backlog has a slot
+waiting for it, so the 250 ms rpc_delay adds latency without
+benefit.
 
-However, we have the device (and its preferred node) already in
-rpcrdma_rep_create(), so let's use that to guarantee the memory
-is allocated from the correct node.
+This also aligns the code with the existing kernel-doc for
+xprt_rdma_alloc_slot(), which already documented %-EAGAIN.
 
+Fixes: a721035477fb ("SUNRPC/xprt: async tasks mustn't block waiting for memory")
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Stable-dep-of: e786233d2e0b ("xprtrdma: Decouple req recycling from RPC completion")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/rpc_rdma.c  |  3 +-
- net/sunrpc/xprtrdma/verbs.c     | 57 ++++++++++++++-------------------
- net/sunrpc/xprtrdma/xprt_rdma.h |  3 +-
- 3 files changed, 26 insertions(+), 37 deletions(-)
+ net/sunrpc/xprtrdma/transport.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
-index 190a4de239c85a..1478c41c7e9da7 100644
---- a/net/sunrpc/xprtrdma/rpc_rdma.c
-+++ b/net/sunrpc/xprtrdma/rpc_rdma.c
-@@ -1471,8 +1471,7 @@ void rpcrdma_reply_handler(struct rpcrdma_rep *rep)
- 		credits = 1;	/* don't deadlock */
- 	else if (credits > r_xprt->rx_ep->re_max_requests)
- 		credits = r_xprt->rx_ep->re_max_requests;
--	rpcrdma_post_recvs(r_xprt, credits + (buf->rb_bc_srv_max_requests << 1),
--			   false);
-+	rpcrdma_post_recvs(r_xprt, credits + (buf->rb_bc_srv_max_requests << 1));
- 	if (buf->rb_credits != credits)
- 		rpcrdma_update_cwnd(r_xprt, credits);
+diff --git a/net/sunrpc/xprtrdma/transport.c b/net/sunrpc/xprtrdma/transport.c
+index 29b0562d62e759..b971776b55936c 100644
+--- a/net/sunrpc/xprtrdma/transport.c
++++ b/net/sunrpc/xprtrdma/transport.c
+@@ -511,7 +511,7 @@ xprt_rdma_alloc_slot(struct rpc_xprt *xprt, struct rpc_task *task)
+ 	return;
  
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index 4132a505d742ad..d468ebf6de8062 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -69,13 +69,15 @@ static void rpcrdma_sendctx_put_locked(struct rpcrdma_xprt *r_xprt,
- 				       struct rpcrdma_sendctx *sc);
- static int rpcrdma_reqs_setup(struct rpcrdma_xprt *r_xprt);
- static void rpcrdma_reqs_reset(struct rpcrdma_xprt *r_xprt);
--static void rpcrdma_rep_destroy(struct rpcrdma_rep *rep);
- static void rpcrdma_reps_unmap(struct rpcrdma_xprt *r_xprt);
- static void rpcrdma_mrs_create(struct rpcrdma_xprt *r_xprt);
- static void rpcrdma_mrs_destroy(struct rpcrdma_xprt *r_xprt);
- static void rpcrdma_ep_get(struct rpcrdma_ep *ep);
- static int rpcrdma_ep_put(struct rpcrdma_ep *ep);
- static struct rpcrdma_regbuf *
-+rpcrdma_regbuf_alloc_node(size_t size, enum dma_data_direction direction,
-+			  int node);
-+static struct rpcrdma_regbuf *
- rpcrdma_regbuf_alloc(size_t size, enum dma_data_direction direction);
- static void rpcrdma_regbuf_dma_unmap(struct rpcrdma_regbuf *rb);
- static void rpcrdma_regbuf_free(struct rpcrdma_regbuf *rb);
-@@ -505,7 +507,7 @@ int rpcrdma_xprt_connect(struct rpcrdma_xprt *r_xprt)
- 	 * outstanding Receives.
- 	 */
- 	rpcrdma_ep_get(ep);
--	rpcrdma_post_recvs(r_xprt, 1, true);
-+	rpcrdma_post_recvs(r_xprt, 1);
- 
- 	rc = rdma_connect(ep->re_id, &ep->re_remote_cma);
- 	if (rc)
-@@ -938,18 +940,20 @@ static void rpcrdma_reqs_reset(struct rpcrdma_xprt *r_xprt)
+ out_sleep:
+-	task->tk_status = -ENOMEM;
++	task->tk_status = -EAGAIN;
+ 	xprt_add_backlog(xprt, task);
  }
  
- static noinline
--struct rpcrdma_rep *rpcrdma_rep_create(struct rpcrdma_xprt *r_xprt,
--				       bool temp)
-+struct rpcrdma_rep *rpcrdma_rep_create(struct rpcrdma_xprt *r_xprt)
- {
- 	struct rpcrdma_buffer *buf = &r_xprt->rx_buf;
-+	struct rpcrdma_ep *ep = r_xprt->rx_ep;
-+	struct ib_device *device = ep->re_id->device;
- 	struct rpcrdma_rep *rep;
- 
- 	rep = kzalloc(sizeof(*rep), XPRTRDMA_GFP_FLAGS);
- 	if (rep == NULL)
- 		goto out;
- 
--	rep->rr_rdmabuf = rpcrdma_regbuf_alloc(r_xprt->rx_ep->re_inline_recv,
--					       DMA_FROM_DEVICE);
-+	rep->rr_rdmabuf = rpcrdma_regbuf_alloc_node(ep->re_inline_recv,
-+						    DMA_FROM_DEVICE,
-+						    ibdev_to_node(device));
- 	if (!rep->rr_rdmabuf)
- 		goto out_free;
- 
-@@ -964,7 +968,6 @@ struct rpcrdma_rep *rpcrdma_rep_create(struct rpcrdma_xprt *r_xprt,
- 	rep->rr_recv_wr.wr_cqe = &rep->rr_cqe;
- 	rep->rr_recv_wr.sg_list = &rep->rr_rdmabuf->rg_iov;
- 	rep->rr_recv_wr.num_sge = 1;
--	rep->rr_temp = temp;
- 
- 	spin_lock(&buf->rb_lock);
- 	list_add(&rep->rr_all, &buf->rb_all_reps);
-@@ -983,17 +986,6 @@ static void rpcrdma_rep_free(struct rpcrdma_rep *rep)
- 	kfree(rep);
- }
- 
--static void rpcrdma_rep_destroy(struct rpcrdma_rep *rep)
--{
--	struct rpcrdma_buffer *buf = &rep->rr_rxprt->rx_buf;
--
--	spin_lock(&buf->rb_lock);
--	list_del(&rep->rr_all);
--	spin_unlock(&buf->rb_lock);
--
--	rpcrdma_rep_free(rep);
--}
--
- static struct rpcrdma_rep *rpcrdma_rep_get_locked(struct rpcrdma_buffer *buf)
- {
- 	struct llist_node *node;
-@@ -1025,10 +1017,8 @@ static void rpcrdma_reps_unmap(struct rpcrdma_xprt *r_xprt)
- 	struct rpcrdma_buffer *buf = &r_xprt->rx_buf;
- 	struct rpcrdma_rep *rep;
- 
--	list_for_each_entry(rep, &buf->rb_all_reps, rr_all) {
-+	list_for_each_entry(rep, &buf->rb_all_reps, rr_all)
- 		rpcrdma_regbuf_dma_unmap(rep->rr_rdmabuf);
--		rep->rr_temp = true;	/* Mark this rep for destruction */
--	}
- }
- 
- static void rpcrdma_reps_destroy(struct rpcrdma_buffer *buf)
-@@ -1245,14 +1235,15 @@ void rpcrdma_buffer_put(struct rpcrdma_buffer *buffers, struct rpcrdma_req *req)
-  * or Replies they may be registered externally via frwr_map.
-  */
- static struct rpcrdma_regbuf *
--rpcrdma_regbuf_alloc(size_t size, enum dma_data_direction direction)
-+rpcrdma_regbuf_alloc_node(size_t size, enum dma_data_direction direction,
-+			  int node)
- {
- 	struct rpcrdma_regbuf *rb;
- 
--	rb = kmalloc(sizeof(*rb), XPRTRDMA_GFP_FLAGS);
-+	rb = kmalloc_node(sizeof(*rb), XPRTRDMA_GFP_FLAGS, node);
- 	if (!rb)
- 		return NULL;
--	rb->rg_data = kmalloc(size, XPRTRDMA_GFP_FLAGS);
-+	rb->rg_data = kmalloc_node(size, XPRTRDMA_GFP_FLAGS, node);
- 	if (!rb->rg_data) {
- 		kfree(rb);
- 		return NULL;
-@@ -1264,6 +1255,12 @@ rpcrdma_regbuf_alloc(size_t size, enum dma_data_direction direction)
- 	return rb;
- }
- 
-+static struct rpcrdma_regbuf *
-+rpcrdma_regbuf_alloc(size_t size, enum dma_data_direction direction)
-+{
-+	return rpcrdma_regbuf_alloc_node(size, direction, NUMA_NO_NODE);
-+}
-+
- /**
-  * rpcrdma_regbuf_realloc - re-allocate a SEND/RECV buffer
-  * @rb: regbuf to reallocate
-@@ -1341,10 +1338,9 @@ static void rpcrdma_regbuf_free(struct rpcrdma_regbuf *rb)
-  * rpcrdma_post_recvs - Refill the Receive Queue
-  * @r_xprt: controlling transport instance
-  * @needed: current credit grant
-- * @temp: mark Receive buffers to be deleted after one use
-  *
-  */
--void rpcrdma_post_recvs(struct rpcrdma_xprt *r_xprt, int needed, bool temp)
-+void rpcrdma_post_recvs(struct rpcrdma_xprt *r_xprt, int needed)
- {
- 	struct rpcrdma_buffer *buf = &r_xprt->rx_buf;
- 	struct rpcrdma_ep *ep = r_xprt->rx_ep;
-@@ -1358,8 +1354,7 @@ void rpcrdma_post_recvs(struct rpcrdma_xprt *r_xprt, int needed, bool temp)
- 	if (likely(ep->re_receive_count > needed))
- 		goto out;
- 	needed -= ep->re_receive_count;
--	if (!temp)
--		needed += RPCRDMA_MAX_RECV_BATCH;
-+	needed += RPCRDMA_MAX_RECV_BATCH;
- 
- 	if (atomic_inc_return(&ep->re_receiving) > 1)
- 		goto out_dec;
-@@ -1368,12 +1363,8 @@ void rpcrdma_post_recvs(struct rpcrdma_xprt *r_xprt, int needed, bool temp)
- 	wr = NULL;
- 	while (needed) {
- 		rep = rpcrdma_rep_get_locked(buf);
--		if (rep && rep->rr_temp) {
--			rpcrdma_rep_destroy(rep);
--			continue;
--		}
- 		if (!rep)
--			rep = rpcrdma_rep_create(r_xprt, temp);
-+			rep = rpcrdma_rep_create(r_xprt);
- 		if (!rep)
- 			break;
- 		if (!rpcrdma_regbuf_dma_map(r_xprt, rep->rr_rdmabuf)) {
-diff --git a/net/sunrpc/xprtrdma/xprt_rdma.h b/net/sunrpc/xprtrdma/xprt_rdma.h
-index da409450dfc05c..08bda29ed9535a 100644
---- a/net/sunrpc/xprtrdma/xprt_rdma.h
-+++ b/net/sunrpc/xprtrdma/xprt_rdma.h
-@@ -198,7 +198,6 @@ struct rpcrdma_rep {
- 	__be32			rr_proc;
- 	int			rr_wc_flags;
- 	u32			rr_inv_rkey;
--	bool			rr_temp;
- 	struct rpcrdma_regbuf	*rr_rdmabuf;
- 	struct rpcrdma_xprt	*rr_rxprt;
- 	struct rpc_rqst		*rr_rqst;
-@@ -466,7 +465,7 @@ void rpcrdma_flush_disconnect(struct rpcrdma_xprt *r_xprt, struct ib_wc *wc);
- int rpcrdma_xprt_connect(struct rpcrdma_xprt *r_xprt);
- void rpcrdma_xprt_disconnect(struct rpcrdma_xprt *r_xprt);
- 
--void rpcrdma_post_recvs(struct rpcrdma_xprt *r_xprt, int needed, bool temp);
-+void rpcrdma_post_recvs(struct rpcrdma_xprt *r_xprt, int needed);
- 
- /*
-  * Buffer calls - xprtrdma/verbs.c
 -- 
 2.53.0
 
