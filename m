@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0ED3E49F0;
-	Tue, 21 Jul 2026 17:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36ED03DDB19;
+	Tue, 21 Jul 2026 17:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653575; cv=none; b=VyXtJvnbFW+fWzoeDc5tGCmepPsMLP1P/SLsDmaDPcfKIDWXEMGQv2XqzjQl1IMr101lmUJOrH3XedNZ0Ok2Yj5ovudK49NIKI7XEgzXzExKcGGDY7jrIKGEPAGlABJgxk3hjTpn33Q49RPpDvXR3PjNM2uqz2nqizXDNXzp+BA=
+	t=1784653577; cv=none; b=o5wciE5WaOw9vKKbSRFiMJzFsLrMZtHrU6JAF8Up5gTZA/6vjb6rP2vMRfPKrRJFmL3wlQLJ9hCXq5aBv0cpLJkmWflKlfTSAFOsex3wUSSgAzhcQEWIPVlsau0S7QzechPautp/+cD2t6clpKHVfY9ApYEVs9kHUGaPr4QoQlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653575; c=relaxed/simple;
-	bh=TEhbTgHDy8TEd/MMUC5PtnWlXOHJ7dk39pvOarh1tuo=;
+	s=arc-20240116; t=1784653577; c=relaxed/simple;
+	bh=8afvkG3HzUhlIs96Jdl7c+/cTj/5wTfSPw29ibcatvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKzXnTprxbUTZsZGbrox2jaNBEaPEKYCXsxftWI9ORFRG77YbIvmitqSMoOSr+KYGYbwqxH5PDb1rWx9Tdk0BJbQpXUiTa6I5QtfbIJBE1qNTeXgPUraIgyWfQukYGcl6DEII3ZWy4a4Im+5hHySfkyFWzYuUDrxWdub2psF918=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yutrV6jC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RfPdj9BYDPGgSxBdiR01rIFV0ZVoHyONJfvwApvEOFIAH7n0Daq16T2BdEr4qIjZpLCv1d6Ut32iHE+JJM8gpy7k+IeO+22k8o6POT1v5S3l7l6keYs2SQS402aqZkZUOR9Fdtp+o/1Xxqv+i957a7rIjGYz/wjuwvO2BmSqzjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WualbsaR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yutrV6jC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65291F00A3A;
-	Tue, 21 Jul 2026 17:06:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WualbsaR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A721F000E9;
+	Tue, 21 Jul 2026 17:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653573;
-	bh=6wuqRyb9hZgo4MuPFxUCrhs4YIrjtXjgRFWDYoquS9w=;
+	s=korg; t=1784653575;
+	bh=ackawq4vyhksTxAaLdvBS7PCRI9MnUSeFPYkxQ5SsEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yutrV6jCIf8cSoXRKqcYud+uwgpXMA8h3uZmxaVBA9ayUCrwIWz86xqDLoAIjygLP
-	 7eSoVE0tka0fULYBmBwwX/gS/FcdAhXrC7g+5VKjYcOBJA/8etMQMlnx9EEmIWv3hG
-	 USXgTk1Lw5mAU/dMDQIbv4lJZKHf4pSHGd86hj3s=
+	b=WualbsaRn/z+Pq5KAiBgMgkej31ULh0Dt0Iwq7zBYz9wgivYB52kMn7hub/GnLN+7
+	 VFIm7jR6nK6Y1VUspJjYiry8M5dGqdzHsVRWKGp2i7TlDkuRN00orb5l9XWX8RSQ3n
+	 8wjIMXhOfh/iNHW/gr3LqtkpGlOf0b3lkNqJM1jU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
+	Hillf Danton <hdanton@sina.com>,
 	David Howells <dhowells@redhat.com>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
 	linux-afs@lists.infradead.org,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1376/2077] afs: Fix bulk lookup malfunction due to change in dir_emit() API
-Date: Tue, 21 Jul 2026 17:17:29 +0200
-Message-ID: <20260721152625.270770750@linuxfoundation.org>
+Subject: [PATCH 7.1 1377/2077] afs: Fix misplaced inc of net->cells_outstanding
+Date: Tue, 21 Jul 2026 17:17:30 +0200
+Message-ID: <20260721152625.295046493@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -56,157 +56,40 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 2f79d1b93c62470fe02dbdc24770f1ae5a9e1be6 ]
+[ Upstream commit c9c3b615a462a4023bd148f02c564e175ed10502 ]
 
-afs_do_lookup() and afs_do_lookup_one() use the same directory parsing code
-as afs_readdir() and were supplying alternative dir_context actors to
-retrieve dirents, but because lookup needs the vnode's uniquifier as part
-of the reference, but not the DT flags, the uniquifier was being passed in
-the dt flags argument to the lookup actors.
+Fix net->cells_outstanding being incremented before the check for failure
+of idr_alloc_cyclic(), leaving the count incremented on error.
 
-Unfortunately, commit c644bce62b9c, added to fix overlayfs with fuse, broke
-this by masking off part of the uniquifier.  This doesn't matter enough to
-be directly noticeable, instead causing bulk advance inode lookups to fail
-(which are retried later) and may cause dir revalidation to malfunction if
-the uniquifier is changed by masking.
-
-Fix this by making the afs directory parsing code take special ->actor
-values of AFS_LOOKUP or AFS_LOOKUP_ONE instead that tell it to call
-afs_lookup_filldir() or afs_lookup_one_filldir() directly rather than going
-through dir_emit().  dir_emit() is still used for readdir.
-
-Fixes: c644bce62b9c ("readdir: require opt-in for d_type flags")
-Reported-by: Marc Dionne <marc.dionne@auristor.com>
+Fixes: 88c853c3f5c0 ("afs: Fix cell refcounting by splitting the usage counter")
+Reported-by: Hillf Danton <hdanton@sina.com>
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260622090856.2746629-11-dhowells@redhat.com
-cc: Amir Goldstein <amir73il@gmail.com>
+Link: https://patch.msgid.link/20260622090856.2746629-12-dhowells@redhat.com
+cc: Marc Dionne <marc.dionne@auristor.com>
 cc: linux-afs@lists.infradead.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/dir.c | 40 +++++++++++++++++++++++++---------------
- 1 file changed, 25 insertions(+), 15 deletions(-)
+ fs/afs/cell.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/afs/dir.c b/fs/afs/dir.c
-index 498b99ccdf0e27..6df56fe9163fd7 100644
---- a/fs/afs/dir.c
-+++ b/fs/afs/dir.c
-@@ -28,9 +28,11 @@ static int afs_d_revalidate(struct inode *dir, const struct qstr *name,
- static int afs_d_delete(const struct dentry *dentry);
- static void afs_d_iput(struct dentry *dentry, struct inode *inode);
- static bool afs_lookup_one_filldir(struct dir_context *ctx, const char *name, int nlen,
--				  loff_t fpos, u64 ino, unsigned dtype);
-+				   u64 ino, u32 uniquifier);
-+#define AFS_LOOKUP_ONE ((filldir_t)0x123UL)
- static bool afs_lookup_filldir(struct dir_context *ctx, const char *name, int nlen,
--			      loff_t fpos, u64 ino, unsigned dtype);
-+			       u64 ino, u32 uniquifier);
-+#define AFS_LOOKUP ((filldir_t)0x137UL)
- static int afs_create(struct mnt_idmap *idmap, struct inode *dir,
- 		      struct dentry *dentry, umode_t mode, bool excl);
- static struct dentry *afs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
-@@ -421,11 +423,18 @@ static int afs_dir_iterate_block(struct afs_vnode *dvnode,
- 		}
+diff --git a/fs/afs/cell.c b/fs/afs/cell.c
+index 9738684dbdd268..e0fab1609f2787 100644
+--- a/fs/afs/cell.c
++++ b/fs/afs/cell.c
+@@ -205,11 +205,11 @@ static struct afs_cell *afs_alloc_cell(struct afs_net *net,
+ 	cell->dns_source = vllist->source;
+ 	cell->dns_status = vllist->status;
+ 	smp_store_release(&cell->dns_lookup_count, 1); /* vs source/status */
+-	atomic_inc(&net->cells_outstanding);
+ 	ret = idr_alloc_cyclic(&net->cells_dyn_ino, cell,
+ 			       2, INT_MAX / 2, GFP_KERNEL);
+ 	if (ret < 0)
+ 		goto error;
++	atomic_inc(&net->cells_outstanding);
+ 	cell->dynroot_ino = ret;
+ 	cell->debug_id = atomic_inc_return(&cell_debug_id);
  
- 		/* found the next entry */
--		if (!dir_emit(ctx, dire->u.name, nlen,
--			      ntohl(dire->u.vnode),
--			      (ctx->actor == afs_lookup_filldir ||
--			       ctx->actor == afs_lookup_one_filldir)?
--			      ntohl(dire->u.unique) : DT_UNKNOWN)) {
-+		if (ctx->actor == AFS_LOOKUP) {
-+			if (!afs_lookup_filldir(ctx, dire->u.name, nlen,
-+						ntohl(dire->u.vnode),
-+						ntohl(dire->u.unique)))
-+				return 0;
-+		} else if (ctx->actor == AFS_LOOKUP_ONE) {
-+			if (!afs_lookup_one_filldir(ctx, dire->u.name, nlen,
-+						    ntohl(dire->u.vnode),
-+						    ntohl(dire->u.unique)))
-+				return 0;
-+		} else if (!dir_emit(ctx, dire->u.name, nlen,
-+				     ntohl(dire->u.vnode), DT_UNKNOWN)) {
- 			_leave(" = 0 [full]");
- 			return 0;
- 		}
-@@ -545,6 +554,7 @@ static int afs_readdir(struct file *file, struct dir_context *ctx)
- {
- 	afs_dataversion_t dir_version;
- 
-+	ctx->dt_flags_mask = UINT_MAX;
- 	return afs_dir_iterate(file_inode(file), ctx, file, &dir_version);
- }
- 
-@@ -554,14 +564,14 @@ static int afs_readdir(struct file *file, struct dir_context *ctx)
-  *   uniquifier through dtype
-  */
- static bool afs_lookup_one_filldir(struct dir_context *ctx, const char *name,
--				  int nlen, loff_t fpos, u64 ino, unsigned dtype)
-+				  int nlen, u64 ino, u32 uniquifier)
- {
- 	struct afs_lookup_one_cookie *cookie =
- 		container_of(ctx, struct afs_lookup_one_cookie, ctx);
- 
- 	_enter("{%s,%u},%s,%u,,%llu,%u",
- 	       cookie->name.name, cookie->name.len, name, nlen,
--	       (unsigned long long) ino, dtype);
-+	       (unsigned long long) ino, uniquifier);
- 
- 	/* insanity checks first */
- 	BUILD_BUG_ON(sizeof(union afs_xdr_dir_block) != 2048);
-@@ -574,7 +584,7 @@ static bool afs_lookup_one_filldir(struct dir_context *ctx, const char *name,
- 	}
- 
- 	cookie->fid.vnode = ino;
--	cookie->fid.unique = dtype;
-+	cookie->fid.unique = uniquifier;
- 	cookie->found = 1;
- 
- 	_leave(" = false [found]");
-@@ -591,7 +601,7 @@ static int afs_do_lookup_one(struct inode *dir, const struct qstr *name,
- {
- 	struct afs_super_info *as = dir->i_sb->s_fs_info;
- 	struct afs_lookup_one_cookie cookie = {
--		.ctx.actor = afs_lookup_one_filldir,
-+		.ctx.actor = AFS_LOOKUP_ONE,
- 		.name = *name,
- 		.fid.vid = as->volume->vid
- 	};
-@@ -622,14 +632,14 @@ static int afs_do_lookup_one(struct inode *dir, const struct qstr *name,
-  *   uniquifier through dtype
-  */
- static bool afs_lookup_filldir(struct dir_context *ctx, const char *name,
--			      int nlen, loff_t fpos, u64 ino, unsigned dtype)
-+			      int nlen, u64 ino, u32 uniquifier)
- {
- 	struct afs_lookup_cookie *cookie =
- 		container_of(ctx, struct afs_lookup_cookie, ctx);
- 
- 	_enter("{%s,%u},%s,%u,,%llu,%u",
- 	       cookie->name.name, cookie->name.len, name, nlen,
--	       (unsigned long long) ino, dtype);
-+	       (unsigned long long) ino, uniquifier);
- 
- 	/* insanity checks first */
- 	BUILD_BUG_ON(sizeof(union afs_xdr_dir_block) != 2048);
-@@ -637,7 +647,7 @@ static bool afs_lookup_filldir(struct dir_context *ctx, const char *name,
- 
- 	if (cookie->nr_fids < 50) {
- 		cookie->fids[cookie->nr_fids].vnode	= ino;
--		cookie->fids[cookie->nr_fids].unique	= dtype;
-+		cookie->fids[cookie->nr_fids].unique	= uniquifier;
- 		cookie->nr_fids++;
- 	}
- 
-@@ -778,7 +788,7 @@ static struct inode *afs_do_lookup(struct inode *dir, struct dentry *dentry)
- 
- 	for (i = 0; i < ARRAY_SIZE(cookie->fids); i++)
- 		cookie->fids[i].vid = dvnode->fid.vid;
--	cookie->ctx.actor = afs_lookup_filldir;
-+	cookie->ctx.actor = AFS_LOOKUP;
- 	cookie->name = dentry->d_name;
- 	cookie->nr_fids = 2; /* slot 1 is saved for the fid we actually want
- 			      * and slot 0 for the directory */
 -- 
 2.53.0
 
