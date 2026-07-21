@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5299646F4B4;
-	Tue, 21 Jul 2026 17:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46BD476CD7;
+	Tue, 21 Jul 2026 17:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656409; cv=none; b=IHG12ryLDOMR6jDbTgEpACHAsl8m2csnjxpvfg/9CaQzM9xPUBtVvXgbfCvi3+YNce++zl5QZB5BEbF7C4r9K977tzXz7JjsPX0wtO0pbyMThsljuhS8wCOmZ3wEz4qxkOz7zjNQLcr80C6Vez3RRSCSiK8XI91PPX96DyiUBIU=
+	t=1784656412; cv=none; b=pv1ofVEGIJkjGMZklaionU6QVvUsVOXpGLTu7d4Mgi2NLUBnNhoTWDNbbxLu0pnZY+uxD284aa6gKh/bosTVSisrL4MiW9nyYe1HEGVc+br8YsRQle21qU3TFIPkfXDlV/uJYiUKcGJ27ABt5eU+A/n+e5ZedBeuxxctomYOUcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656409; c=relaxed/simple;
-	bh=vPYpb9IYZGQwPtPfm31MeGESY8dv9By2Uq1wsZVPTAw=;
+	s=arc-20240116; t=1784656412; c=relaxed/simple;
+	bh=6+C+FaqZHCyA/4YEFJbjQXbJuMFfW0pZSqpyvrWmhdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YkiLlF/Jp4wEaGh29aaw3iAqgxg/hwGzpJFtO7jwqyIk5059++ATE+GfCfy9rG9pZif5nDW+jtg6oPjGkWqXP2TD09GcENCCQTV+zgAtu8nx3DG7K+QQJGYOPLIQvtVR7SrGgeLEs5nzDMtJTUSNlZ3P8uLaGABuWArernVVIuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9U4OgGR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fpwc9uvhTDndbDJPdXtxqaSLdh3OarHtIOO/e5OV8XqP35gogXW2Epln79cDQWlXTn5wn0s40gqaeZ6rOrOsRp+YexLZ272o4w1HuWulAn5Dhuldnzx7fMJud902sWJZdzzelLVWuXyhNLDp/u9ImB7B6wNuoXN40TKpTEpKiP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/Ym0GTa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9U4OgGR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B040A1F00A3A;
-	Tue, 21 Jul 2026 17:53:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/Ym0GTa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DDDD1F00A3E;
+	Tue, 21 Jul 2026 17:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656408;
-	bh=hDbTIH+A270IIt2YLZ+EJc28IXaWf61gi6CZ1zqYB8k=;
+	s=korg; t=1784656410;
+	bh=A2dvRscgLhsxbb3sYivkFtd9S0jUeACffh9c7zYBjqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H9U4OgGRn3DxlJUJXH0TXcgkCgFI86qFbaKUfHe20hKgA20YaOO/8dHTwGrvKqDH+
-	 YtMqVvbyCcNEOwQhqBZaAjZqVJfwIEweXARwepjO18y2n/KC74hwiG+leD4pGHpJ1t
-	 mLPO8L/2olpj0L5rMmXb44912wCxmvL24e9EGkuI=
+	b=1/Ym0GTaGnD7gg6qw5fqDwFcVTTJacmX7B2k708KAp8+4Gb3go12Y8T9egR3tboji
+	 hXEPPYh1uGVDzMFls1MczcxbV+C1Vx0aRI0GkPkoIBdx9YpPVybIqymbW2AkM8Hg9b
+	 bns0jvhcgWC/mBDn2R7bp0SjCllQX5WsU1CLjxbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wandun Chen <chenwandun@lixiang.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0333/1611] of: reserved_mem: avoid post-init UAF when alloc_reserved_mem_array() fails
-Date: Tue, 21 Jul 2026 17:07:29 +0200
-Message-ID: <20260721152522.591221445@linuxfoundation.org>
+Subject: [PATCH 6.18 0334/1611] ocfs2: rebase copied fsdlm LVB pointers in locking_state
+Date: Tue, 21 Jul 2026 17:07:30 +0200
+Message-ID: <20260721152522.614405781@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,96 +58,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wandun Chen <chenwandun@lixiang.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit e1686ca81dbf3edbde589b7daf312b45cbf76e03 ]
+[ Upstream commit 93612d48fa42b3d1a637eb9279e15281c611c000 ]
 
-The global pointer 'reserved_mem' continues to reference the
-reserved_mem_array which lives in __initdata if
-alloc_reserved_mem_array() fails. of_reserved_mem_lookup() is
-exported for post-init use, that would dereference freed memory
-and trigger a use-after-free.
+The locking_state debugfs iterator snapshots struct ocfs2_lock_res by
+value under ocfs2_dlm_tracking_lock and later formats that copy in
+ocfs2_dlm_seq_show().  That is fine for the inline fields, but the
+userspace fsdlm stack stores the LVB through lksb_fsdlm.sb_lvbptr.  Once
+the iterator drops the tracking lock, a copied non-NULL sb_lvbptr still
+points into the original lockres owner, so teardown can free that
+container before the debugfs dump walks the raw LVB bytes.
 
-So reset reserved_mem_count to 0 when alloc_reserved_mem_array()
-fails.
+Rebase the copied sb_lvbptr to the copied l_lksb before dumping the raw
+LVB.  The seq snapshot already carries the inline LVB storage reserved in
+struct ocfs2_dlm_lksb, so the debugfs reader can dump the copied bytes
+without borrowing the original lockres lifetime.
 
-Fixes: 00c9a452a235 ("of: reserved_mem: Add code to dynamically allocate reserved_mem array")
-Signed-off-by: Wandun Chen <chenwandun@lixiang.com>
-Link: https://patch.msgid.link/20260604015332.3669384-1-chenwandun1@gmail.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+The buggy scenario involves two paths, with each column showing the order
+within that path:
+
+locking_state reader:                  lockres teardown:
+1. ocfs2_dlm_seq_start()/next()        1. file release or another owner
+   copies struct ocfs2_lock_res           teardown reaches
+2. ocfs2_dlm_seq_show() formats           ocfs2_lock_res_free()
+   the copied row                      2. the lockres is removed from the
+3. ocfs2_dlm_lvb() follows the            tracking list
+   copied sb_lvbptr                   3. the owner frees the original
+                                          lockres container
+
+Validation reproduced this kernel report:
+KASAN slab-use-after-free in ocfs2_dlm_seq_show+0x1bd/0x430
+RIP: 0033:0x7f8ec4b1e29d
+The buggy address belongs to the object at ffff88810a1e0800 which belongs
+to the cache kmalloc-1k of size 1024
+The buggy address is located 368 bytes inside of freed 1024-byte region
+[ffff88810a1e0800, ffff88810a1e0c00)
+Read of size 1
+Call trace:
+  dump_stack_lvl+0x66/0xa0
+  print_report+0xce/0x630
+  ocfs2_dlm_seq_show+0x1bd/0x430 (fs/ocfs2/dlmglue.c:3137)
+  srso_alias_return_thunk+0x5/0xfbef5
+  __virt_addr_valid+0x19f/0x330
+  kasan_report+0xe0/0x110
+  seq_read_iter+0x29d/0x790
+  seq_read+0x20a/0x280
+  find_held_lock+0x2b/0x80
+  rcu_read_unlock+0x18/0x70
+  full_proxy_read+0x9e/0xd0
+  vfs_read+0x12c/0x590
+  ksys_read+0xd2/0x170
+  do_user_addr_fault+0x65a/0x890
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Allocated by task stack:
+  kasan_save_stack+0x33/0x60
+  kasan_save_track+0x14/0x30
+  __kasan_kmalloc+0xaa/0xb0
+  ocfs2_file_open+0x13e/0x300
+  do_dentry_open+0x233/0x7f0
+  vfs_open+0x5a/0x1b0
+  path_openat+0x66d/0x1540
+  do_file_open+0x186/0x2b0
+  do_sys_openat2+0xce/0x150
+  __x64_sys_openat+0xd0/0x140
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Freed by task stack:
+  kasan_save_stack+0x33/0x60
+  kasan_save_track+0x14/0x30
+  kasan_save_free_info+0x3b/0x60
+  __kasan_slab_free+0x5f/0x80
+  kfree+0x313/0x590
+  ocfs2_file_release+0x138/0x260
+  __fput+0x1df/0x4b0
+  fput_close_sync+0xd2/0x170
+  __x64_sys_close+0x55/0x90
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Link: https://lore.kernel.org/20260525041726.4112882-1-rollkingzzc@gmail.com
+Fixes: cf4d8d75d8ab ("ocfs2: add fsdlm to stackglue")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/of_reserved_mem.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ fs/ocfs2/dlmglue.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
-index fe111d1ea73971..39d8305a168006 100644
---- a/drivers/of/of_reserved_mem.c
-+++ b/drivers/of/of_reserved_mem.c
-@@ -71,29 +71,32 @@ static int __init early_init_dt_alloc_reserved_memory_arch(phys_addr_t size,
-  * the initial static array is copied over to this new array and
-  * the new array is used from this point on.
+diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
+index 92a6149da9c102..8ade51f7ffa8bb 100644
+--- a/fs/ocfs2/dlmglue.c
++++ b/fs/ocfs2/dlmglue.c
+@@ -3134,6 +3134,22 @@ static void *ocfs2_dlm_seq_next(struct seq_file *m, void *v, loff_t *pos)
+  *	- Add last pr/ex unlock times and first lock wait time in usecs
   */
--static void __init alloc_reserved_mem_array(void)
-+static int __init alloc_reserved_mem_array(void)
- {
- 	struct reserved_mem *new_array;
- 	size_t alloc_size, copy_size, memset_size;
-+	int ret;
+ #define OCFS2_DLM_DEBUG_STR_VERSION 4
 +
-+	if (!total_reserved_mem_cnt)
-+		return 0;
- 
- 	alloc_size = array_size(total_reserved_mem_cnt, sizeof(*new_array));
- 	if (alloc_size == SIZE_MAX) {
--		pr_err("Failed to allocate memory for reserved_mem array with err: %d", -EOVERFLOW);
--		return;
-+		ret = -EOVERFLOW;
-+		goto fail;
- 	}
- 
- 	new_array = memblock_alloc(alloc_size, SMP_CACHE_BYTES);
- 	if (!new_array) {
--		pr_err("Failed to allocate memory for reserved_mem array with err: %d", -ENOMEM);
--		return;
-+		ret = -ENOMEM;
-+		goto fail;
- 	}
- 
- 	copy_size = array_size(reserved_mem_count, sizeof(*new_array));
- 	if (copy_size == SIZE_MAX) {
- 		memblock_free(new_array, alloc_size);
--		total_reserved_mem_cnt = MAX_RESERVED_REGIONS;
--		pr_err("Failed to allocate memory for reserved_mem array with err: %d", -EOVERFLOW);
--		return;
-+		ret = -EOVERFLOW;
-+		goto fail;
- 	}
- 
- 	memset_size = alloc_size - copy_size;
-@@ -102,6 +105,12 @@ static void __init alloc_reserved_mem_array(void)
- 	memset(new_array + reserved_mem_count, 0, memset_size);
- 
- 	reserved_mem = new_array;
-+	return 0;
-+
-+fail:
-+	pr_err("Failed to allocate memory for reserved_mem array with err: %d", ret);
-+	reserved_mem_count = 0;
-+	return ret;
- }
- 
- static void __init fdt_init_reserved_mem_node(struct reserved_mem *rmem);
-@@ -250,7 +259,8 @@ void __init fdt_scan_reserved_mem_reg_nodes(void)
- 	}
- 
- 	/* Attempt dynamic allocation of a new reserved_mem array */
--	alloc_reserved_mem_array();
-+	if (alloc_reserved_mem_array())
++/*
++ * The debug iterator snapshots lockres by value, so a userspace-stack LVB
++ * pointer copied from the original lockres must be rebased to the copied
++ * lksb before the dump walks the raw bytes.
++ */
++static void ocfs2_dlm_seq_rebase_lvb(struct ocfs2_lock_res *lockres)
++{
++	if (!ocfs2_stack_supports_plocks())
 +		return;
++
++	if (lockres->l_lksb.lksb_fsdlm.sb_lvbptr)
++		lockres->l_lksb.lksb_fsdlm.sb_lvbptr =
++			(char *)&lockres->l_lksb + sizeof(struct dlm_lksb);
++}
++
+ static int ocfs2_dlm_seq_show(struct seq_file *m, void *v)
+ {
+ 	int i;
+@@ -3191,6 +3207,7 @@ static int ocfs2_dlm_seq_show(struct seq_file *m, void *v)
+ 		   lockres->l_blocking);
  
- 	if (__reserved_mem_check_root(node)) {
- 		pr_err("Reserved memory: unsupported node format, ignoring\n");
+ 	/* Dump the raw LVB */
++	ocfs2_dlm_seq_rebase_lvb(lockres);
+ 	lvb = ocfs2_dlm_lvb(&lockres->l_lksb);
+ 	for(i = 0; i < DLM_LVB_LEN; i++)
+ 		seq_printf(m, "0x%x\t", lvb[i]);
 -- 
 2.53.0
 
