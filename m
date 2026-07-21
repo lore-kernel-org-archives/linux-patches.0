@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B66431A4E;
-	Tue, 21 Jul 2026 22:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5953D16EF;
+	Tue, 21 Jul 2026 22:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673563; cv=none; b=jUd1KvfFRB+RXUliJ1KTCwMy5Buwu3nW9hgjDGBkwfKJ7P274A2TRltCYnjf7XYp3yFD6aL34wYoeyjKZGdGLgjNLi1AvciaQZJoylt7WVlzxoYZDeqlku9Rgisu7yT0JRCExZuXQICpiDknuG7hmpjul9opAKexVwv0YE8MDUI=
+	t=1784673565; cv=none; b=TTiRfryNbqo6hnS2RtVTdDBrEATzEq3NKHnb3W9wHS88OIdN/76AWrBNCv80b2OSj3f9VWAWBZEXTjb1n+Ipvo2CNXZV10BccnLYev2iloh3kezgOtgTEFD6HyHpux/cUWsuu5FFi2ZekO3LXvlAUBYl4n6j1cTm6Vm3jLOdBpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673563; c=relaxed/simple;
-	bh=+PyEi4SkV9rugCJYgBE6OOePi9SImvWORu/pHF+pXaI=;
+	s=arc-20240116; t=1784673565; c=relaxed/simple;
+	bh=riUOjoe1La55yqYKeOgy9FTOhtNoZHHNfNXOqBJTieI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jSffluHWgMfrzWctw1rrIgK4krgC8kq9it/VB9EQWRIh8go0D937z0sMy7H6i1L+j9VnnRKoIxLbtB9yrI3O9rNGK5UwFq4Icb4ieiiZjzesc2z1bu03iqO+BaTyMYXmV7v8jSNGBFEVdclrgAB4Nzz/u8WL+jgq0GM8RmxsW+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeZ+yET/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N2ghikBFtrsf5Bb11InVE4rlGqSgpVfW9I97fG3M5MMhOi535h/LWqZAf+Uq/R9qfMNKyyp4t/lhskAjnSYKphTp9WThREFaRmFJfiYSeRUAVBvA5tOr/vSf74GUIWt6Kgd0B/jdWu1d5NNT4G8h1wnHLTAjZCz0MZFkFslM+DM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mrv4Axru; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeZ+yET/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 848A41F000E9;
-	Tue, 21 Jul 2026 22:39:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mrv4Axru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D68F1F000E9;
+	Tue, 21 Jul 2026 22:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673562;
-	bh=P0e6BjprtYGCc7NwLE2zwIvYUrpIMsMPz5vpgFdchDo=;
+	s=korg; t=1784673564;
+	bh=akY02BESHKR8ols6VVMK575RGvw2gWAnh7pEg1Mnb1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LeZ+yET/+kpr5Ta+SIMEoP4iuPcdDFr8gY2jI8UvS6MJ8bgh0cblICKxL216TzFtM
-	 IJ4csiSvvCOIvi6SYvRBhGgCGAW3lkH+d9Jw/Uti/EytN4+6s9NiqKTPgUjvFmU4wB
-	 G+ppkEbuNYFp+pOXfraL8zSgUseGV7XlIbii9qKQ=
+	b=mrv4AxruH72dZUixOR+bQTFE6DuSN/5SfUr9PZiNRAnH/1OMrwNyQux1OabS3H8CG
+	 0xtpRcPArOHl28JQx0mO/oTER+ChB7jxdy2GcmEi9LhX93QIXcGJ5ZU/4HEj2SQW2l
+	 frXmHqTIfeSvgf5ljG7PqiQpXvJqPkc2xQmfRr5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Tejun Heo <tj@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Stephen Suryaputra <ssuryaextr@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 208/699] workqueue: drop spurious * from print_worker_info() fn declaration
-Date: Tue, 21 Jul 2026 17:19:27 +0200
-Message-ID: <20260721152400.390666861@linuxfoundation.org>
+Subject: [PATCH 5.10 209/699] ipv6: guard against possible NULL deref in __in6_dev_stats_get()
+Date: Tue, 21 Jul 2026 17:19:28 +0200
+Message-ID: <20260721152400.413495854@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,47 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 611583a76ea97991b0f65ec1ff099eac7fe0bae4 ]
+[ Upstream commit 507541c2a8eeb76c02bd2511958f73a8cfa3e1bc ]
 
-print_worker_info() declares its local 'fn' as work_func_t * but
-worker->current_func has type work_func_t (a function pointer). The
-extra level of indirection is wrong and only happens to be harmless
-today because every supported Linux architecture has
-sizeof(work_func_t) == sizeof(work_func_t *):
-copy_from_kernel_nofault() reads the correct number of bytes by
-accident, and %ps still resolves the printed address because the
-stored value is the function address regardless of declared type.
+dev_get_by_index_rcu() could return NULL if the original physical
+device is unregistered.
 
-On any future ABI where sizeof(void (*)()) differs from
-sizeof(void *), the nofault copy would transfer the wrong number of
-bytes and the subsequent %ps would print an incorrect address.
+Found by Sashiko.
 
-Match the field type so the intent is explicit and the code does not
-silently rely on equal pointer sizes.
-
-Fixes: 3d1cb2059d93 ("workqueue: include workqueue info when printing debug dump of a worker task")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: e1ae5c2ea478 ("vrf: Increment Icmp6InMsgs on the original netdev")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Stephen Suryaputra <ssuryaextr@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260526145529.3587126-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/workqueue.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/addrconf.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index 63140e4dd5dfca..eeda0e263cbfa1 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -4651,7 +4651,7 @@ EXPORT_SYMBOL_GPL(set_worker_desc);
-  */
- void print_worker_info(const char *log_lvl, struct task_struct *task)
+diff --git a/include/net/addrconf.h b/include/net/addrconf.h
+index f666d3628d6aa8..0d6a20841d3ac8 100644
+--- a/include/net/addrconf.h
++++ b/include/net/addrconf.h
+@@ -334,8 +334,11 @@ static inline struct inet6_dev *__in6_dev_get(const struct net_device *dev)
+ static inline struct inet6_dev *__in6_dev_stats_get(const struct net_device *dev,
+ 						    const struct sk_buff *skb)
  {
--	work_func_t *fn = NULL;
-+	work_func_t fn = NULL;
- 	char name[WQ_NAME_LEN] = { };
- 	char desc[WORKER_DESC_LEN] = { };
- 	struct pool_workqueue *pwq = NULL;
+-	if (netif_is_l3_master(dev))
++	if (netif_is_l3_master(dev)) {
+ 		dev = dev_get_by_index_rcu(dev_net(dev), inet6_iif(skb));
++		if (!dev)
++			return NULL;
++	}
+ 	return __in6_dev_get(dev);
+ }
+ 
 -- 
 2.53.0
 
