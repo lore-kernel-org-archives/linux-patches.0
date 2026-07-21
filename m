@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CD444AB62;
-	Tue, 21 Jul 2026 21:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7AB44AB84;
+	Tue, 21 Jul 2026 21:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667789; cv=none; b=jHTjNl5pC3XfLii5SVN/i+JQxGept//OdN2zV0dOqk0Ftip4asiSUu36kVC1aNiCrRB95kraepbteOtpB1C4jvOMZ0jyqAWkl0826/6T4TJoxZFR8jb/MnsdF6KU85XkPch2Ia4RB4CSM+ZfaEFeTNstRsCGoMVJmNv0cEeMPdY=
+	t=1784667788; cv=none; b=DGsYhA1qrLYll/tZHiZ9VQslnPcx+MTI+SuNn/j4A5Q1U2cdkeemcqYQn0DeyEMDa9Yp6JdBJd8+VxFzfX+gTVuysUO7xzDZv7uQEY8OPWjW0w54SwI5nTxjr2PNMOy/ePt3nlsCHBnnUx77/VdmWkkIASXQ7GEbEcxi92TFlKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667789; c=relaxed/simple;
-	bh=FaWTkWKq/yhPwtAQtuzoV1CAjqFeGLWJUJyIrteupvc=;
+	s=arc-20240116; t=1784667788; c=relaxed/simple;
+	bh=nO1lHYYCrecSxvlq5HgJq1qjJLfO7Z2ee+54EgSS5c8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hCAXnSgQij8QUcOyoGUUPSAOwewX9x/6YHmaz8dh7uMsRscQBrrfomffpSAETRaClMr5i1+9/ZiP0gV422df3ngdzkpFlP8BAp7GYgLR9erjATGwncsQ3EY1RZhwtjokPkH1BXu7IDBq9cGJVZxqZsEMp7G/GNZ96OgK88nDwB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EToPgDXI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FwhhgLWBUKyG70qsWytbvH+cMHupbvK6HK/12jbrAVmkZwCgqqwUQLFA5OR59C5VgUrwbdIO5j1kHPEUHBxaFpMVJ3peakZRsEP1Plkt0m14UL0bxuv3Ji1NdklX9xKTamlfFamvSGB+Nf3xZjzKbSGvoYOx12pmgzbL1qVfYEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZm4vC3O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EToPgDXI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FFBE1F00A3A;
-	Tue, 21 Jul 2026 21:03:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZm4vC3O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4DD1F000E9;
+	Tue, 21 Jul 2026 21:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667784;
-	bh=VWQ+CZmx+NzoE22PG8w6FIbm0OlMPA5Bzjy54m4Uyl4=;
+	s=korg; t=1784667782;
+	bh=LVY+Tg9B0jhm+iC7SkLiNMURE7hPTn9Js9/V2+4OqkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EToPgDXISNVnmd4IFT5U6CA0YnOo1Dns+A8mw7eoXBvRzzAssVgGVh7DRVjhsEa0D
-	 cvInlG6zAghzpK6k4aOALFxkGK4Qsu6BJxLqNcG8pUYxOCot7mVZKhNgDHiT8fsla7
-	 ABSgOe5gQv0vFB7jbvyXQFtvW+c4jML4y8yc6KPw=
+	b=gZm4vC3OMUZiac9UOTOBusAYtRwQIsW1Dvh2VJMdpmkHTt7Q3plB/j0JSHINC8f6i
+	 ykmPbu9Wk8wSgJcmMYxV806gWLTtUtilLkczTev9DDljrXILWjP0CGcs3oJLPEEOh4
+	 ZpXhtcMxsh4v1aysKB8royk3fMw9yWusK1kum61c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Florian Westphal <fw@strlen.de>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1190/1266] netfilter: ebtables: Use vmalloc_array() to improve code
-Date: Tue, 21 Jul 2026 17:27:07 +0200
-Message-ID: <20260721152508.425819724@linuxfoundation.org>
+Subject: [PATCH 6.6 1189/1266] media: nxp: imx8-isi: Fix use-after-free on remove
+Date: Tue, 21 Jul 2026 17:27:06 +0200
+Message-ID: <20260721152508.403752884@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,74 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit 46015e6b3ea75297b28d4806564f3f692cf11861 ]
+[ Upstream commit b670bf89824ede5d07d20bb9bfbafb754846081d ]
 
-Remove array_size() calls and replace vmalloc() with vmalloc_array() to
-simplify the code.  vmalloc_array() is also optimized better, uses fewer
-instructions, and handles overflow more concisely[1].
+KASAN reports a slab-use-after-free in __media_entity_remove_link()
+during rmmod of imx8_isi:
 
-[1]: https://lore.kernel.org/lkml/abc66ec5-85a4-47e1-9759-2f60ab111971@vivo.com/
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: cbfe53599eeb ("netfilter: ebtables: zero chainstack array")
+  BUG: KASAN: slab-use-after-free in __media_entity_remove_link+0x608/0x650
+  Read of size 2 at addr ffff0000d47cb02a by task rmmod/724
+
+  Call trace:
+   __media_entity_remove_link+0x608/0x650
+   __media_entity_remove_links+0x78/0x144
+   __media_device_unregister_entity+0x150/0x280
+   media_device_unregister_entity+0x48/0x68
+   v4l2_device_unregister_subdev+0x158/0x300
+   v4l2_async_unbind_subdev_one+0x22c/0x358
+   v4l2_async_nf_unbind_all_subdevs+0xfc/0x1c0
+   v4l2_async_nf_unregister+0x5c/0x14c
+   mxc_isi_remove+0x124/0x2a0 [imx8_isi]
+
+  Allocated by task 249:
+   __kmalloc_noprof+0x27c/0x690
+   mxc_isi_crossbar_init+0x22c/0x560 [imx8_isi]
+
+  Freed by task 724:
+   kfree+0x1e4/0x5b0
+   mxc_isi_crossbar_cleanup+0x34/0x80 [imx8_isi]
+   mxc_isi_remove+0x11c/0x2a0 [imx8_isi]
+
+The problem is that mxc_isi_remove() calls mxc_isi_crossbar_cleanup()
+before mxc_isi_v4l2_cleanup(). The crossbar cleanup frees the media
+entity pads, but the subsequent v4l2 cleanup still tries to remove
+media links that reference those pads.
+
+Fix this by calling mxc_isi_v4l2_cleanup() before
+mxc_isi_crossbar_cleanup() to ensure all media entities are properly
+unregistered while the pads are still valid.
+
+Fixes: cf21f328fcaf ("media: nxp: Add i.MX8 ISI driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://patch.msgid.link/20260507041318.491594-2-xiaolei.wang@windriver.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/netfilter/ebtables.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -923,8 +923,8 @@ static int translate_table(struct net *n
- 		 * if an error occurs
- 		 */
- 		newinfo->chainstack =
--			vmalloc(array_size(nr_cpu_ids,
--					   sizeof(*(newinfo->chainstack))));
-+			vmalloc_array(nr_cpu_ids,
-+				      sizeof(*(newinfo->chainstack)));
- 		if (!newinfo->chainstack)
- 			return -ENOMEM;
- 		for_each_possible_cpu(i) {
-@@ -941,7 +941,7 @@ static int translate_table(struct net *n
- 			}
- 		}
- 
--		cl_s = vmalloc(array_size(udc_cnt, sizeof(*cl_s)));
-+		cl_s = vmalloc_array(udc_cnt, sizeof(*cl_s));
- 		if (!cl_s)
- 			return -ENOMEM;
- 		i = 0; /* the i'th udc */
-@@ -1021,8 +1021,8 @@ static int do_replace_finish(struct net
- 	 * the check on the size is done later, when we have the lock
- 	 */
- 	if (repl->num_counters) {
--		unsigned long size = repl->num_counters * sizeof(*counterstmp);
--		counterstmp = vmalloc(size);
-+		counterstmp = vmalloc_array(repl->num_counters,
-+					    sizeof(*counterstmp));
- 		if (!counterstmp)
- 			return -ENOMEM;
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-core.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-core.c
+@@ -521,8 +521,8 @@ static void mxc_isi_remove(struct platfo
+ 		mxc_isi_pipe_cleanup(pipe);
  	}
-@@ -1389,7 +1389,7 @@ static int do_update_counters(struct net
- 	if (num_counters == 0)
- 		return -EINVAL;
  
--	tmp = vmalloc(array_size(num_counters, sizeof(*tmp)));
-+	tmp = vmalloc_array(num_counters, sizeof(*tmp));
- 	if (!tmp)
- 		return -ENOMEM;
+-	mxc_isi_crossbar_cleanup(&isi->crossbar);
+ 	mxc_isi_v4l2_cleanup(isi);
++	mxc_isi_crossbar_cleanup(&isi->crossbar);
+ }
  
-@@ -1531,7 +1531,7 @@ static int copy_counters_to_user(struct
- 	if (num_counters != nentries)
- 		return -EINVAL;
- 
--	counterstmp = vmalloc(array_size(nentries, sizeof(*counterstmp)));
-+	counterstmp = vmalloc_array(nentries, sizeof(*counterstmp));
- 	if (!counterstmp)
- 		return -ENOMEM;
- 
+ static const struct of_device_id mxc_isi_of_match[] = {
 
 
