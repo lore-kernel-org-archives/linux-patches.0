@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828A53368A5;
-	Tue, 21 Jul 2026 20:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233923368A5;
+	Tue, 21 Jul 2026 20:54:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667261; cv=none; b=j9GQA0ekgISc0PG4YBMTG2R/EIoxdAYFxRrMuDRtC+jXFjIYnWylMFeVQPJOMUtiaM4vqxpXToIskUPwKAuRvyQ1ZdkqgwemwbrcdbdFnVhUOIAHVTlt+PO4LX0at9xbCdANTEl6jM4Fch0/Z/kVTGIC+Puvvo/MJ7mrK2Quhis=
+	t=1784667264; cv=none; b=elS8+r94O63hNlANdHoLP5sM/OGj3OeARx/VopvJYNDBi/qU7XWn8ROVKFCDp7PWpubXasZzBeoBajAb9LSZtZHeH7GaReFmdbz8TJdC+XMkr3eZuYgfvM9I5Gvzk+7BdjU5wk6O1y5hD1tzpkRnVBJ1Q5IphcxPaiP0el03e04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667261; c=relaxed/simple;
-	bh=yPxkViJ5HGIdwDPlI7e3/wri5Ik632rdzc1aKPhccqk=;
+	s=arc-20240116; t=1784667264; c=relaxed/simple;
+	bh=V5zziDHrzqgWN4WMt8vtd0Nkpt72O4YCHELPrWJxzoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YP5lT6iZ+WYIqfYi7tp0sVDHIFhy+Xa5q+2mt2QfX6hdeK7kcc18kiWax/w5XYato6dfkL/+rUu3KtlWnVRj8GibPLCU0LbA4vjJSNilS4hWB7jZXoqICQ0ZNoxxkARUOu90aYOkYXs1ecHST6PjAYx9uMGz3dz1Z1T3IZ1mP/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJZqbuHV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TJRKIN8CPI+gGQziLgtUjzjZgBKJlKvvp2XS+zIvQ9j9sZHf5087JkJeVvlltfKVRBLO2W4qxAvG87Q4V89jtzblyOGBuVM3x7ix52/5m/rTuHhnhaKrp0O+q3GPGye16oUdosOGmXt2oBsPgW4mCC02eHonavOBCdfnXebytZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KHcPmkNl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJZqbuHV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C921F000E9;
-	Tue, 21 Jul 2026 20:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHcPmkNl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A1F61F000E9;
+	Tue, 21 Jul 2026 20:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667260;
-	bh=MFv+Di8rUqyqYY6es0iBZxAbWRXxCRltIKcSkJ1ZMDI=;
+	s=korg; t=1784667263;
+	bh=9GbPlF5vm7hRFGgW9pSLVF5T10RtJP0J0fNEyDN1CrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gJZqbuHVZecYysj1Tmi5b44BEXAfk0VqUadI1r26FkfR3h+xCBz3HL74/5tY6/9vY
-	 N5xKCg7Dpz6WPctyvP0qzujGSshH10h0cDhOBuGQKjEs2fHAG1a1bLeywrkREysZHq
-	 CEDFY2ZOkeQUDTJLs7Ry5IJwT8KKgOxuOR5pQfuM=
+	b=KHcPmkNllY7OhpKwrCFMKWM9GN4ggEKgmT12Jd/QzlXSF3ZAw32mWHPbVFNkWwbJK
+	 SYaC4a7PSHznYDL7SkbZErBKHjEQOfmbyVizaUROSySVFfsoC5hy/p93RV+W5b4TXK
+	 bi3rfxqkC3LzYDF1WDirQ3PYpldnHsG5jS02tKt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.6 0994/1266] mtd: slram: remove failed entries from the device list
-Date: Tue, 21 Jul 2026 17:23:51 +0200
-Message-ID: <20260721152504.075231282@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.6 0968/1266] SUNRPC: Bound-check xdr_buf_to_bvec() stores before writing
+Date: Tue, 21 Jul 2026 17:23:25 +0200
+Message-ID: <20260721152503.492917897@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,85 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 36f1648644d769c496a8e47e53603e863e358d73 upstream.
+commit 42f5b80dda6b86e424054baf1475df686c403d5c upstream.
 
-register_device() links a new slram_mtdlist entry before allocating all
-of the state needed by the entry. If a later allocation, memremap(), or
-mtd_device_register() fails, the partially initialized entry remains on
-the global list. A later cleanup can then dereference or free invalid
-state from that failed entry.
+xdr_buf_to_bvec() writes a bio_vec into the caller's array before
+testing whether that slot is in range, and the head branch performs
+the store with no check at all. When the caller's budget is exactly
+used up, the next store lands one element past the end of the array.
+The overflow label returns count - 1, which masks the surplus store
+but cannot undo it.
 
-Unwind the partially initialized entry and clear the list tail on each
-failure path after the entry has been linked.
+rq_bvec, the array passed by nfsd_vfs_write(), is allocated to
+exactly rq_maxpages entries with no slack. The OOB store can land in
+adjacent slab memory; the bv_len and bv_offset fields written there
+are derived from client-supplied RPC payload sizes.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Move the in-range check ahead of the store in the head, page-loop,
+and tail branches. With the check at the top of each sequence, count
+is incremented only after a successful store, so the overflow label
+can return count directly.
+
+Reported-by: Chris Mason <clm@meta.com>
+Fixes: 2eb2b9358181 ("SUNRPC: Convert svc_tcp_sendmsg to use bio_vecs directly")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/devices/slram.c |   22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ net/sunrpc/xdr.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/drivers/mtd/devices/slram.c
-+++ b/drivers/mtd/devices/slram.c
-@@ -129,6 +129,7 @@ static int slram_write(struct mtd_info *
- static int register_device(char *name, unsigned long start, unsigned long length)
- {
- 	slram_mtd_list_t **curmtd;
-+	int ret = -ENOMEM;
+--- a/net/sunrpc/xdr.c
++++ b/net/sunrpc/xdr.c
+@@ -180,6 +180,8 @@ unsigned int xdr_buf_to_bvec(struct bio_
+ 	unsigned int count = 0;
  
- 	curmtd = &slram_mtdlist;
- 	while (*curmtd) {
-@@ -155,14 +156,15 @@ static int register_device(char *name, u
- 
- 	if (!(*curmtd)->mtdinfo) {
- 		E("slram: Cannot allocate new MTD device.\n");
--		return(-ENOMEM);
-+		goto err_free_list;
+ 	if (head->iov_len) {
++		if (unlikely(count >= bvec_size))
++			goto bvec_overflow;
+ 		bvec_set_virt(bvec++, head->iov_base, head->iov_len);
+ 		++count;
+ 	}
+@@ -193,25 +195,27 @@ unsigned int xdr_buf_to_bvec(struct bio_
+ 		while (remaining > 0) {
+ 			len = min_t(unsigned int, remaining,
+ 				    PAGE_SIZE - offset);
++			if (unlikely(count >= bvec_size))
++				goto bvec_overflow;
+ 			bvec_set_page(bvec++, *pages++, len, offset);
+ 			remaining -= len;
+ 			offset = 0;
+-			if (unlikely(++count > bvec_size))
+-				goto bvec_overflow;
++			++count;
+ 		}
  	}
  
- 	if (!(((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start =
- 		memremap(start, length,
- 			 MEMREMAP_WB | MEMREMAP_WT | MEMREMAP_WC))) {
- 		E("slram: memremap failed\n");
--		return -EIO;
-+		ret = -EIO;
-+		goto err_free_priv;
+ 	if (tail->iov_len) {
+-		bvec_set_virt(bvec, tail->iov_base, tail->iov_len);
+-		if (unlikely(++count > bvec_size))
++		if (unlikely(count >= bvec_size))
+ 			goto bvec_overflow;
++		bvec_set_virt(bvec, tail->iov_base, tail->iov_len);
++		++count;
  	}
- 	((slram_priv_t *)(*curmtd)->mtdinfo->priv)->end =
- 		((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start + length;
-@@ -183,10 +185,8 @@ static int register_device(char *name, u
  
- 	if (mtd_device_register((*curmtd)->mtdinfo, NULL, 0))	{
- 		E("slram: Failed to register new device\n");
--		memunmap(((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start);
--		kfree((*curmtd)->mtdinfo->priv);
--		kfree((*curmtd)->mtdinfo);
--		return(-EAGAIN);
-+		ret = -EAGAIN;
-+		goto err_unmap;
- 	}
- 	T("slram: Registered device %s from %luKiB to %luKiB\n", name,
- 			(start / 1024), ((start + length) / 1024));
-@@ -194,6 +194,16 @@ static int register_device(char *name, u
- 			((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start,
- 			((slram_priv_t *)(*curmtd)->mtdinfo->priv)->end);
- 	return(0);
-+
-+err_unmap:
-+	memunmap(((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start);
-+err_free_priv:
-+	kfree((*curmtd)->mtdinfo->priv);
-+err_free_list:
-+	kfree((*curmtd)->mtdinfo);
-+	kfree(*curmtd);
-+	*curmtd = NULL;
-+	return ret;
+ 	return count;
+ 
+ bvec_overflow:
+ 	pr_warn_once("%s: bio_vec array overflow\n", __func__);
+-	return count - 1;
++	return count;
  }
  
- static void unregister_devices(void)
+ /**
 
 
