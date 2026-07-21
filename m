@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79378471252;
-	Tue, 21 Jul 2026 19:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CCD386C39;
+	Tue, 21 Jul 2026 19:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660823; cv=none; b=s00b+HCDdFkvkEDZ+jfooSnxXHUn1UjVCtfhnjaoSxx9HQ77lDjVQKpZyHR3OPanfvh/BgRdTxUEchLL/TcXCy0VhubQfsXKP8J7bZf2q4sbX4T0kCVrkg5bRBCOCqCbYfMsKBqdgLyikxXp1m5TPTCGUXxbtwXh+FOr9OB/KIU=
+	t=1784660827; cv=none; b=ARzF7HgC9H045Mpu1ASlYvJtg07BY2GULoEQJHy2aivLr25GGB3fj8Uxm7uP8gyL3EfBlIPLwf42bkbA/zSPM6DXcJTkCOUwbpCmid2M4FI8tpIYg2r/Jpq5XUW+XL8uo0094eAchXnSUNxgbyV5dTSYo74ib27r6FweX+i2MXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660823; c=relaxed/simple;
-	bh=mkmeduiXeyH6qCjmftWleQ/yOCslIfhMMqRHrvugpb8=;
+	s=arc-20240116; t=1784660827; c=relaxed/simple;
+	bh=uTd1KHFwpc5achNXek6VcjLC4rkJg2OMhvvgtyjeC6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VtMj7qKZmfxPRe9FxQzUE1nRS7XQQ3OBYoEaXUOSq6Uh2aFOvcOEXT29dc3lforAXJ6ADi1lZkoQ1Ra9Mo/j77E4M0mHA3rhGLJWWmZv1vhKVVSz3EI6aMXfWVnXsc58n8jWSCIxuhhf7FWj9M6QwKkz7gZ4+Uyc8bysThJnSwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8FQRlRE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I/J0hEREnm8UJFaIbgCwUP/MgsWt8eBTC8i4vvhxv5t9AUgfKwsxvsHhV1nwg8kpiVs6OG+FUxDL7gnMvuzEF3Obci6/KEUfHyK5CnX5lCe7rULCorekLDGuZ/Mm2qnRMKm1iJalz0YlFsQYpaJgURHRUuGlxO6u9SXH+kj4QfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6VnlmqH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8FQRlRE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7AD1F000E9;
-	Tue, 21 Jul 2026 19:07:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6VnlmqH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FE01F000E9;
+	Tue, 21 Jul 2026 19:07:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660822;
-	bh=OHWxUPbOM0eYWGPQWwR5sXzWdS/RemcUHS7MENIN7Dg=;
+	s=korg; t=1784660824;
+	bh=DEoJLD5KM1DHWV6DesWwiCgomhg8mh9YAlqLh/A3brY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a8FQRlREnYyPe8QRw/Bg8jHZqZnJ90yCWfPohZJrrvaBXWqz9OBnf5NkKvLuMI/nw
-	 NM8HSstifv5XEb7Vr38dweAhLXqJ2b2KB6cRrXkLHcVZ2q7Zi4RKm46/wISwpvwM/W
-	 jRxpbk/V7WDgfaBWPKSDtMcgIMazgSJ7Sxc0FYaA=
+	b=h6VnlmqHSJmNj4kwkk8uujNtGN8q5lcARRXUWRDJgmhVFsqHKewmyKJG2U/ZTUzzh
+	 kE7TkpUP2C7h0nji8LTX87an401xl01QYwl5Mu/cCTiQA/vg3UY2z1MFNz2A7ZVWaQ
+	 fJLFuLhlCFEJjRFj1CJDpSdkcwYl5BW6iWBUeTY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fa2f5b1fb06147be5e16@syzkaller.appspotmail.com,
-	Yun Zhou <yun.zhou@windriver.com>,
+	Breno Leitao <leitao@debian.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1125/2077] flow_dissector: check device type before reading ETH_ADDRS
-Date: Tue, 21 Jul 2026 17:13:18 +0200
-Message-ID: <20260721152619.354248277@linuxfoundation.org>
+Subject: [PATCH 7.1 1126/2077] netconsole: dont drop the last byte of a full-sized message
+Date: Tue, 21 Jul 2026 17:13:19 +0200
+Message-ID: <20260721152619.376737190@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,89 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit bf6e8af2c8be77489bedeae9f8a9654cb710e500 ]
+[ Upstream commit c0ebe492329a4d29592e2240df17e56724849f1f ]
 
-__skb_flow_dissect() unconditionally reads 12 bytes from eth_hdr(skb)
-when FLOW_DISSECTOR_KEY_ETH_ADDRS is requested. This assumes the skb
-has a valid Ethernet header at mac_header, which is not always the case.
+nt->buf is exactly MAX_PRINT_CHUNK bytes, but scnprintf() reserves one
+byte for its NUL terminator, so a non-fragmented payload of exactly
+MAX_PRINT_CHUNK loses its last byte (emitted as a stray NUL in the
+release path). Grow nt->buf to MAX_PRINT_CHUNK + 1 and bound the
+scnprintf() calls with sizeof(nt->buf); the transmitted length stays
+capped at MAX_PRINT_CHUNK.
 
-The problem can be triggered by:
- 1. Creating a TUN device in L3 mode (IFF_TUN, hard_header_len=0)
- 2. Attaching a multiq qdisc with a flower filter matching on eth_src
- 3. Sending a packet through AF_PACKET
+Alternatively, nt->buf could be left at MAX_PRINT_CHUNK and the NUL byte
+reserved by routing exactly-MAX_PRINT_CHUNK payloads to fragmentation
+('len < MAX_PRINT_CHUNK'), at the cost of fragmenting those messages.
+But it would look less sane, thus the current approach.
 
-Since TUN in L3 mode has no link-layer header, mac_header points to
-the L3 data area. The flow dissector reads 12 bytes of uninitialized
-skb memory, which then propagates through fl_set_masked_key() and is
-used as a rhashtable lookup key in __fl_lookup(), as reported by KMSAN.
-
-Rejecting the filter in the control path (at tc filter add time) is
-not feasible because TC filter blocks can be shared between arbitrary
-devices -- a filter installed on an Ethernet device may later classify
-packets on a headerless device through a shared block. The device
-association is not fixed at filter creation time.
-
-Fix this by gating the memcpy on dev->type == ARPHRD_ETHER, which
-ensures only true Ethernet-framed packets have their addresses read.
-This is more precise than the previous hard_header_len >= 12 check,
-which would incorrectly pass for non-Ethernet link types like IPoIB
-(ARPHRD_INFINIBAND, hard_header_len=24) and FDDI (hard_header_len=21)
-whose L2 headers are not in Ethernet format. Additionally check
-skb_mac_header_was_set() to guard against the pathological case where
-mac_header is the unset sentinel (~0U), which would cause eth_hdr() to
-return a wild pointer.
-
-For the act_mirred redirect case (Ethernet packet redirected to a
-non-Ethernet device sharing a TC block), zeroing the key is the correct
-behavior: the packet is now being classified on the target device, where
-Ethernet address matching is not semantically meaningful.
-
-Note: on non-Ethernet devices, the zeroed key will match a filter
-configured with all-zero MAC addresses. This is an improvement over the
-previous behavior where uninitialized memory could randomly match any
-filter.
-
-Reported-by: syzbot+fa2f5b1fb06147be5e16@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fa2f5b1fb06147be5e16
-Fixes: 67a900cc0436 ("flow_dissector: introduce support for Ethernet addresses")
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Link: https://patch.msgid.link/20260616123057.482154-1-yun.zhou@windriver.com
+Fixes: c62c0a17f9b7 ("netconsole: Append kernel version to message")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260616-max_print_chunk-v1-1-8dc125d67083@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/flow_dissector.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/netconsole.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index 2a98f5fa74eb09..8aa4f9b4df8101 100644
---- a/net/core/flow_dissector.c
-+++ b/net/core/flow_dissector.c
-@@ -1173,13 +1173,21 @@ bool __skb_flow_dissect(const struct net *net,
+diff --git a/drivers/net/netconsole.c b/drivers/net/netconsole.c
+index 57dd6821a8aa90..bfab0a47678c9b 100644
+--- a/drivers/net/netconsole.c
++++ b/drivers/net/netconsole.c
+@@ -184,8 +184,10 @@ struct netconsole_target {
+ 	bool			extended;
+ 	bool			release;
+ 	struct netpoll		np;
+-	/* protected by target_list_lock */
+-	char			buf[MAX_PRINT_CHUNK];
++	/* protected by target_list_lock; +1 gives scnprintf() room for its
++	 * NUL terminator so a full MAX_PRINT_CHUNK payload is not truncated
++	 */
++	char			buf[MAX_PRINT_CHUNK + 1];
+ 	struct work_struct	resume_wq;
+ };
  
- 	if (dissector_uses_key(flow_dissector,
- 			       FLOW_DISSECTOR_KEY_ETH_ADDRS)) {
--		struct ethhdr *eth = eth_hdr(skb);
- 		struct flow_dissector_key_eth_addrs *key_eth_addrs;
+@@ -1692,7 +1694,7 @@ static void send_msg_no_fragmentation(struct netconsole_target *nt,
+ 	if (release_len) {
+ 		release = init_utsname()->release;
  
- 		key_eth_addrs = skb_flow_dissector_target(flow_dissector,
- 							  FLOW_DISSECTOR_KEY_ETH_ADDRS,
- 							  target_container);
--		memcpy(key_eth_addrs, eth, sizeof(*key_eth_addrs));
-+		/* TC filter blocks can be shared across devices with
-+		 * different link types, so we cannot validate this
-+		 * when the filter is installed -- check at dissect time.
-+		 */
-+		if (skb && skb->dev &&
-+		    skb->dev->type == ARPHRD_ETHER &&
-+		    skb_mac_header_was_set(skb))
-+			memcpy(key_eth_addrs, eth_hdr(skb), sizeof(*key_eth_addrs));
-+		else
-+			memset(key_eth_addrs, 0, sizeof(*key_eth_addrs));
- 	}
+-		scnprintf(nt->buf, MAX_PRINT_CHUNK, "%s,%.*s", release,
++		scnprintf(nt->buf, sizeof(nt->buf), "%s,%.*s", release,
+ 			  msg_len, msg);
+ 		msg_len += release_len;
+ 	} else {
+@@ -1701,12 +1703,12 @@ static void send_msg_no_fragmentation(struct netconsole_target *nt,
  
- 	if (dissector_uses_key(flow_dissector,
+ 	if (userdata)
+ 		msg_len += scnprintf(&nt->buf[msg_len],
+-				     MAX_PRINT_CHUNK - msg_len, "%s",
++				     sizeof(nt->buf) - msg_len, "%s",
+ 				     userdata);
+ 
+ 	if (sysdata)
+ 		msg_len += scnprintf(&nt->buf[msg_len],
+-				     MAX_PRINT_CHUNK - msg_len, "%s",
++				     sizeof(nt->buf) - msg_len, "%s",
+ 				     sysdata);
+ 
+ 	send_udp(nt, nt->buf, msg_len);
 -- 
 2.53.0
 
