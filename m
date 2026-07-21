@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F262EBB8D;
-	Tue, 21 Jul 2026 20:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A753B1ECC;
+	Tue, 21 Jul 2026 20:35:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666110; cv=none; b=PBi5xnxN0VmvQVeCPj0/GpiodtW6ycRW0I+n0Dn2xAb41BItyOAQ+MlpK9yh/E0rcfoLHYp0WZwbHSQLNQiAZvnif0LbNunU0irHW2RnvRsVEdbK/fMr/IGqCLPxVS7qHSLwBQwwrX2T4du54lHii/tT4qybmPPsM/0EtXzs/jM=
+	t=1784666112; cv=none; b=bTjT5U/cXFpr1Vwn+TVGni0tzOU4I1RCzaTOPGM+5ezycdJBWV9bsQ87shB3V1KH+NFzqvV/AvS3MVpe0qu2c+ZqL4aSYeGKTDUpjk+K2fWOLjivij7APgBGNkz45P2y6YJyy12j1w9Ky9jz2HktkIr6QFwP3yuf7/TbsINRCs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666110; c=relaxed/simple;
-	bh=ivTOPiflcGBwYswXF7FJpYyGjCc2feruW46ATuaKCDk=;
+	s=arc-20240116; t=1784666112; c=relaxed/simple;
+	bh=/6EixvjmA6tVFsVlyClUls1Z1XS27BaZosHNAw0wHcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u64q1x2/Ri60Uzv4+tq/jM2fYJEScR4DNsjjLaPK0Yh99CCpjIVQ89wwrWvWGdHn60YM8cEGKX8NF2krASbwRdhWQa8uBlH1/fQf2KaFVntnP+J4dNR9rx+rhBJYyR8uVnVIGz3zl9qDMhXfb9UH5mzZmfsQXyPnstu9W/SEhQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xRu9bldS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dOr5PRSAX6BOQklmLsO+VLl0RYMH2b7jrKyadKzFD9dGOOz8jLs7dhNI6NkvdFiPlJMU+w8Vd0qWUTKZf8HFC4BAN01IT18PAeZYZOQL5tkuouklFX3e9lrSobV+ZNkUf3pbsz7WgCCKmR80WrEGLbw5PUv1i3dYn3sClPE+1Q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4FFDfea; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xRu9bldS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69CDA1F000E9;
-	Tue, 21 Jul 2026 20:35:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4FFDfea"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DB61F000E9;
+	Tue, 21 Jul 2026 20:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666108;
-	bh=pciLcrodaKUz47WICGcFm66hi5x48V4LT9lVg+7H0xQ=;
+	s=korg; t=1784666111;
+	bh=NV6WGHZJ9Nw2O0ymXIZAyCf/InmQ59L3vsdDgDp1DAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xRu9bldSv+8Dn9TQVL4Gx1RlVJTGOyBnpCgWHnbdEAAIVmkgr0cD6fTAffTIhLQ+O
-	 PRYxheLLCkwRkDpdnZ5fkgC+15oA84V4+1Uthj9dTgl8MXtQ/sDaU5ctWuaurNl73u
-	 A8fPiGSIAiWDDNxCWNtrXIHSgwx1Nz6FYH1+0TJU=
+	b=m4FFDfean3FXonOt7UChrATEJK7LGOfYx3jeGpwz8exR9hcZ9Bbx9KwwZ8/wunoKy
+	 gUvASog1V0SiDwHwCaENRdY/rgz9bsWUhIJvHOrFETPQbR5st5g1pHKoWjzzMWpUkr
+	 nypf9B1wPzGITJMLI6hAUv21FgRMCcYcFfEY1xAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0551/1266] Bluetooth: vhci: validate devcoredump state before side effects
-Date: Tue, 21 Jul 2026 17:16:28 +0200
-Message-ID: <20260721152454.195499166@linuxfoundation.org>
+Subject: [PATCH 6.6 0560/1266] net: fib_rules: Dont dump dying fib_rule in fib_rules_dump().
+Date: Tue, 21 Jul 2026 17:16:37 +0200
+Message-ID: <20260721152454.397595476@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,52 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 88c2404a3c59c3126453919388dbd5ed98ed01bd ]
+[ Upstream commit 2821e85c058f81c9948a2fb1a634f7b47457d51c ]
 
-The VHCI force_devcoredump debugfs hook accepts a small test record from
-userspace. It validates the requested terminal state only after
-registering, initializing and appending a Bluetooth devcoredump.
+rocker_router_fib_event() calls fib_rule_get() during RCU dump.
 
-As a result, an invalid state returns -EINVAL but still leaves queued
-devcoredump work behind. With a non-zero timeout field, the rejected
-write can still emit a devcoredump after the timeout expires.
+If the fib_rule is dying, refcount_inc() will complain about it.
 
-Reject unsupported states before allocating the skb or changing the HCI
-devcoredump state machine.
+Let's call refcount_inc_not_zero() in fib_rules_dump().
 
-Fixes: ab4e4380d4e1 ("Bluetooth: Add vhci devcoredump support")
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 5d7bfd141924 ("ipv4: fib_rules: Dump FIB rules when registering FIB notifier")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260610061744.2030996-3-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_vhci.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ include/net/fib_rules.h | 5 +++++
+ net/core/fib_rules.c    | 6 +++++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/hci_vhci.c b/drivers/bluetooth/hci_vhci.c
-index 0935045051699f..c0588fe110a2d4 100644
---- a/drivers/bluetooth/hci_vhci.c
-+++ b/drivers/bluetooth/hci_vhci.c
-@@ -337,7 +337,17 @@ static ssize_t force_devcd_write(struct file *file, const char __user *user_buf,
- 	if (copy_from_user(&dump_data, user_buf, count))
- 		return -EFAULT;
+diff --git a/include/net/fib_rules.h b/include/net/fib_rules.h
+index 82da359bca035d..c47f6f6d3cada6 100644
+--- a/include/net/fib_rules.h
++++ b/include/net/fib_rules.h
+@@ -107,6 +107,11 @@ static inline void fib_rule_get(struct fib_rule *rule)
+ 	refcount_inc(&rule->refcnt);
+ }
  
-+	switch (dump_data.state) {
-+	case HCI_DEVCOREDUMP_DONE:
-+	case HCI_DEVCOREDUMP_ABORT:
-+	case HCI_DEVCOREDUMP_TIMEOUT:
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
++static inline bool fib_rule_get_safe(struct fib_rule *rule)
++{
++	return refcount_inc_not_zero(&rule->refcnt);
++}
 +
- 	data_size = count - offsetof(struct devcoredump_test_data, data);
+ static inline void fib_rule_put(struct fib_rule *rule)
+ {
+ 	if (refcount_dec_and_test(&rule->refcnt))
+diff --git a/net/core/fib_rules.c b/net/core/fib_rules.c
+index 75282222e0b456..e31873c87c0a36 100644
+--- a/net/core/fib_rules.c
++++ b/net/core/fib_rules.c
+@@ -328,7 +328,7 @@ int fib_rules_lookup(struct fib_rules_ops *ops, struct flowi *fl,
+ 
+ 		if (err != -EAGAIN) {
+ 			if ((arg->flags & FIB_LOOKUP_NOREF) ||
+-			    likely(refcount_inc_not_zero(&rule->refcnt))) {
++			    likely(fib_rule_get_safe(rule))) {
+ 				arg->rule = rule;
+ 				goto out;
+ 			}
+@@ -386,8 +386,12 @@ int fib_rules_dump(struct net *net, struct notifier_block *nb, int family,
+ 	if (!ops)
+ 		return -EAFNOSUPPORT;
+ 	list_for_each_entry_rcu(rule, &ops->rules_list, list) {
++		if (!fib_rule_get_safe(rule))
++			continue;
 +
- 	skb = alloc_skb(data_size, GFP_ATOMIC);
- 	if (!skb)
- 		return -ENOMEM;
+ 		err = call_fib_rule_notifier(nb, FIB_EVENT_RULE_ADD,
+ 					     rule, family, extack);
++		fib_rule_put(rule);
+ 		if (err)
+ 			break;
+ 	}
 -- 
 2.53.0
 
