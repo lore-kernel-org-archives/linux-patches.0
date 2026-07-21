@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6504044AB62;
-	Tue, 21 Jul 2026 21:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267493C1081;
+	Tue, 21 Jul 2026 21:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670824; cv=none; b=GF14c/KqO+LvXRpHSyPet5BuuMnAc2aOTyXuG/aXJHrzDwI4DGZkjYiNWjK1/eyVtdZam+ZZA4/6M812RnwAaIbwuugzsrATYUI7KoYHR7A1R5GK8aRyt/VCj11jmuAbyVXuvH0Wlqet4hgEKMcbM/uB5lQWAb14rGE3WkGh6Gc=
+	t=1784670827; cv=none; b=R/tEDNvq45qFYbBWAjXxyVjYQ8E/woWppY1nF1CcPiZf8EjYlIJzrp+fu8dvp0iC9+E1dB0Kr7Xm/E7LYnH1wZyZILFcWxXiAjeHM47rU1CTmjFKuA90EOgnZv54243BQFOwDILLllBuZ37dJ2ETRrvuZolgi8ffuRltAviK8ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670824; c=relaxed/simple;
-	bh=jVM93WSe0ZpBuYeMJtIxmgfiptJAkMZXD0b77LUPCD0=;
+	s=arc-20240116; t=1784670827; c=relaxed/simple;
+	bh=sqTW1aOEautAfL+Dj2Mgmrr50bdDTemKWiflFdwGYqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JK+Q6O8raNh/9eJ5CoYIMitm5rXd81GHhgUV1m2k8ZK5tY/S5b7TW8GGKYKF6bHPpfUHeHK1np+A7aMRxwKSjaKRsHGzCeWxCcrMB8Bis1koQwuJkGNQQviGRp2D79B8ihtSrLHzzywjclRokYmtrg03+cB7v6fV4p7mptk8QBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVDQzzWk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I2F0Tkn/YMKMm+hJGdE9nWezEhScjHB02J54am9i9BScStGdADDLEtNBt4Z2q++S4AN8CWFZw3DiGE5WZ2wmv63kbBNC9txRNDDLqbADoksari6hZRtK8G1rMGZD+oGIEBslCFy2zLafjGL0T0FmwkbDg8NscXfRNRPwFSzm8+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbmI/7mJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVDQzzWk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F981F000E9;
-	Tue, 21 Jul 2026 21:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbmI/7mJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B401F000E9;
+	Tue, 21 Jul 2026 21:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670823;
-	bh=l5TISm3flkYy3E7tr5H49au3qv0Uku7HBkwLLcsbdR4=;
+	s=korg; t=1784670826;
+	bh=Cff3wLkhRVNqlYULjoRCXz/uB8dDbtR4SKrbQdTnCXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JVDQzzWk7cJsoyBTZdKPZATupzdy1iTkk7KAcq2zwbOgsfCEZNaH6y8q6oupZFzan
-	 aR49Epi7YEqrH4dTl+6mP+RkQ8qx20NVfrTMfovOJiWG7aqo/CCFPXndzNLkukyqlu
-	 KRMR3/axZrYwdpotZuEyUKkVb1o5jDiKTvbfyxc8=
+	b=rbmI/7mJurdaZwpo1d9/bKAH3hdQfxS3zoiVuZvdVGW3Fm1FphJgGCN2g77v2Jnuf
+	 ZtyFigp93fvgXevuIUSS7BRxzEurwC3Hb7DR93+Zp4xBZnXfQ7ZLHqcFgnJWPWqneG
+	 11wprtluZivq4l3bfTeFcn8Ap3Jtv4pgSpRlI1i8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neil@brown.name>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Darshit Shah <darnshah@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 015/843] nfsd: change nfs4_client_to_reclaim() to allocate data
-Date: Tue, 21 Jul 2026 17:14:10 +0200
-Message-ID: <20260721152406.298406550@linuxfoundation.org>
+Subject: [PATCH 5.15 016/843] KVM: Replace guest-triggerable BUG_ON() in ioeventfd datamatch with get_unaligned()
+Date: Tue, 21 Jul 2026 17:14:11 +0200
+Message-ID: <20260721152406.322121091@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,216 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neil@brown.name>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 4552f4e3f2c96597914f07b060d5c5db84420ddd ]
+commit f1edbed787ba67988ed34e0132ca128b052b6ce8 upstream.
 
-The calling convention for nfs4_client_to_reclaim() is clumsy in that
-the caller needs to free memory if the function fails.  It is much
-cleaner if the function frees its own memory.
+Drop a BUG_ON() that has been reachable since it was first added, way back
+in 2009, and instead use get_unaligned() to perform potentially-unaligned
+accesses.
 
-This patch changes nfs4_client_to_reclaim() to re-allocate the .data
-fields to be stored in the newly allocated struct nfs4_client_reclaim,
-and to free everything on failure.
+For a given store, KVM x86's emulator tracks the entire value in the
+destination operand, x86_emulate_ctxt.dst.  If the destination is memory,
+and the target splits multiple pages and/or is emulated MMIO, then KVM
+handles each fragment independently.  E.g. on a page split starting at page
+offset 0xffc, KVM writes 4 bytes to the first page, then the remaining
+bytes to the second page, using ctxt->dst as the source for both (with
+appropriate offsets).
 
-__cld_pipe_inprogress_downcall() needs to allocate the data anyway to
-copy it from user-space, so now that data is allocated twice.  I think
-that is a small price to pay for a cleaner interface.
+If the destination splits a page *and* hits emulated MMIO on the second
+page, then KVM will complete the write to the first page, then emulate the
+MMIO access to the second page.  If there is a datamatch-enabled ioeventfd
+at offset 0 of the second page, then KVM will process the remainder of the
+store as a potential ioeventfd signal.
 
-Signed-off-by: NeilBrown <neil@brown.name>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Putting it all together, if the guest emits a store that splits a page
+starting at page offset N, and the second page has a datamatch-enabled
+ioeventfd at offset 0, then KVM will check for datamatch using
+&dst.valptr[N] as the source.  Due to dst (and thus dst.valptr) being
+32-byte aligned, if N is not aligned to @len, the BUG_ON() fires.
+
+E.g. with a 16-byte store at page offset 0xffc, to an ioeventfd of len 8,
+all initial checks in ioeventfd_in_range() will succeed, and the BUG_ON()
+fires due to @val being 4-byte aligned, but not 8-byte aligned.
+
+  ------------[ cut here ]------------
+  kernel BUG at arch/x86/kvm/../../../virt/kvm/eventfd.c:783!
+  Oops: invalid opcode: 0000 [#1] SMP
+  CPU: 0 UID: 1000 PID: 615 Comm: repro Not tainted 7.1.0-rc2-ff238429d1ea #365 PREEMPT
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  RIP: 0010:ioeventfd_write+0x6c/0x70 [kvm]
+  Call Trace:
+   <TASK>
+   __kvm_io_bus_write+0x85/0xb0 [kvm]
+   kvm_io_bus_write+0x53/0x80 [kvm]
+   vcpu_mmio_write+0x66/0xf0 [kvm]
+   emulator_read_write_onepage+0x12a/0x540 [kvm]
+   emulator_read_write+0x109/0x2b0 [kvm]
+   x86_emulate_insn+0x4f8/0xfb0 [kvm]
+   x86_emulate_instruction+0x181/0x790 [kvm]
+   kvm_mmu_page_fault+0x313/0x630 [kvm]
+   vmx_handle_exit+0x18a/0x590 [kvm_intel]
+   kvm_arch_vcpu_ioctl_run+0xc81/0x1c90 [kvm]
+   kvm_vcpu_ioctl+0x2d5/0x970 [kvm]
+   __x64_sys_ioctl+0x8a/0xd0
+   do_syscall_64+0xb7/0x890
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  RIP: 0033:0x7f19c931a9bf
+   </TASK>
+  Modules linked in: kvm_intel kvm irqbypass
+  ---[ end trace 0000000000000000 ]---
+
+In a perfect world, the fix would be to simply delete the BUG_ON(), as KVM
+x86 doesn't perform alignment checks on "normal" memory accesses at CPL0.
+Sadly, C99 ruins all the fun; while the x86 architecture plays nice,
+dereferencing an unaligned pointer directly is undefined behavior in C,
+e.g. triggers splats when running with CONFIG_UBSAN_ALIGNMENT=y.
+
+Fixes: d34e6b175e61 ("KVM: add ioeventfd support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260612225241.678509-1-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[ Use the old <asm/unaligned.h> header instead ]
+Signed-off-by: Darshit Shah <darnshah@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4recover.c | 67 +++++++++++++++----------------------------
- fs/nfsd/nfs4state.c   | 22 ++++++++++++--
- 2 files changed, 42 insertions(+), 47 deletions(-)
+ virt/kvm/eventfd.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
-index 52984348ba3995..d13e512149eede 100644
---- a/fs/nfsd/nfs4recover.c
-+++ b/fs/nfsd/nfs4recover.c
-@@ -167,24 +167,13 @@ legacy_recdir_name_error(struct nfs4_client *clp, int error)
+diff --git a/virt/kvm/eventfd.c b/virt/kvm/eventfd.c
+index c841f8bc8228a1..b78a82f6dbbbd0 100644
+--- a/virt/kvm/eventfd.c
++++ b/virt/kvm/eventfd.c
+@@ -24,6 +24,7 @@
+ #include <linux/slab.h>
+ #include <linux/seqlock.h>
+ #include <linux/irqbypass.h>
++#include <asm/unaligned.h>
+ #include <trace/events/kvm.h>
  
- static void
- __nfsd4_create_reclaim_record_grace(struct nfs4_client *clp,
--		const char *dname, int len, struct nfsd_net *nn)
-+				    char *dname, struct nfsd_net *nn)
- {
--	struct xdr_netobj name;
-+	struct xdr_netobj name = { .len = strlen(dname), .data = dname };
- 	struct xdr_netobj princhash = { .len = 0, .data = NULL };
- 	struct nfs4_client_reclaim *crp;
+ #include <kvm/iodev.h>
+@@ -710,21 +711,18 @@ ioeventfd_in_range(struct _ioeventfd *p, gpa_t addr, int len, const void *val)
+ 		return true;
  
--	name.data = kmemdup(dname, len, GFP_KERNEL);
--	if (!name.data) {
--		dprintk("%s: failed to allocate memory for name.data!\n",
--			__func__);
--		return;
--	}
--	name.len = len;
- 	crp = nfs4_client_to_reclaim(name, princhash, nn);
--	if (!crp) {
--		kfree(name.data);
--		return;
--	}
- 	crp->cr_clp = clp;
- }
- 
-@@ -240,8 +229,7 @@ nfsd4_create_clid_dir(struct nfs4_client *clp)
- 	inode_unlock(d_inode(dir));
- 	if (status == 0) {
- 		if (nn->in_grace)
--			__nfsd4_create_reclaim_record_grace(clp, dname,
--					HEXDIR_LEN, nn);
-+			__nfsd4_create_reclaim_record_grace(clp, dname, nn);
- 		vfs_fsync(nn->rec_file, 0);
- 	} else {
- 		printk(KERN_ERR "NFSD: failed to write recovery record"
-@@ -478,7 +466,7 @@ nfsd4_recdir_purge_old(struct nfsd_net *nn)
- static int
- load_recdir(struct dentry *parent, char *cname, struct nfsd_net *nn)
- {
--	struct xdr_netobj name;
-+	struct xdr_netobj name = { .len = HEXDIR_LEN, .data = cname };
- 	struct xdr_netobj princhash = { .len = 0, .data = NULL };
- 
- 	if (strlen(cname) != HEXDIR_LEN - 1) {
-@@ -487,16 +475,7 @@ load_recdir(struct dentry *parent, char *cname, struct nfsd_net *nn)
- 		/* Keep trying; maybe the others are OK: */
- 		return 0;
- 	}
--	name.data = kstrdup(cname, GFP_KERNEL);
--	if (!name.data) {
--		dprintk("%s: failed to allocate memory for name.data!\n",
--			__func__);
--		goto out;
--	}
--	name.len = HEXDIR_LEN;
--	if (!nfs4_client_to_reclaim(name, princhash, nn))
--		kfree(name.data);
--out:
-+	nfs4_client_to_reclaim(name, princhash, nn);
- 	return 0;
- }
- 
-@@ -792,6 +771,8 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
- {
- 	uint8_t cmd, princhashlen;
- 	struct xdr_netobj name, princhash = { .len = 0, .data = NULL };
-+	char *namecopy __free(kfree) = NULL;
-+	char *princhashcopy __free(kfree) = NULL;
- 	uint16_t namelen;
- 	struct cld_net *cn = nn->cld_net;
- 
-@@ -810,20 +791,20 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
- 				dprintk("%s: namelen should not be zero", __func__);
- 				return -EINVAL;
- 			}
--			name.data = memdup_user(&ci->cc_name.cn_id, namelen);
--			if (IS_ERR(name.data))
--				return PTR_ERR(name.data);
-+			namecopy = memdup_user(&ci->cc_name.cn_id, namelen);
-+			if (IS_ERR(namecopy))
-+				return PTR_ERR(namecopy);
-+			name.data = namecopy;
- 			name.len = namelen;
- 			if (get_user(princhashlen, &ci->cc_princhash.cp_len))
- 				return -EFAULT;
- 			if (princhashlen > 0) {
--				princhash.data = memdup_user(
--						&ci->cc_princhash.cp_data,
--						princhashlen);
--				if (IS_ERR(princhash.data)) {
--					kfree(name.data);
--					return PTR_ERR(princhash.data);
--				}
-+				princhashcopy = memdup_user(
-+					&ci->cc_princhash.cp_data,
-+					princhashlen);
-+				if (IS_ERR(princhashcopy))
-+					return PTR_ERR(princhashcopy);
-+				princhash.data = princhashcopy;
- 				princhash.len = princhashlen;
- 			} else
- 				princhash.len = 0;
-@@ -837,23 +818,21 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
- 				dprintk("%s: namelen should not be zero", __func__);
- 				return -EINVAL;
- 			}
--			name.data = memdup_user(&cnm->cn_id, namelen);
--			if (IS_ERR(name.data))
--				return PTR_ERR(name.data);
-+			namecopy = memdup_user(&cnm->cn_id, namelen);
-+			if (IS_ERR(namecopy))
-+				return PTR_ERR(namecopy);
-+			name.data = namecopy;
- 			name.len = namelen;
- 		}
- #ifdef CONFIG_NFSD_V4
- 		if (name.len > 5 && memcmp(name.data, "hash:", 5) == 0) {
- 			name.len = name.len - 5;
--			memmove(name.data, name.data + 5, name.len);
-+			name.data = name.data + 5;
- 			cn->cn_has_legacy = true;
- 		}
- #endif
--		if (!nfs4_client_to_reclaim(name, princhash, nn)) {
--			kfree(name.data);
--			kfree(princhash.data);
-+		if (!nfs4_client_to_reclaim(name, princhash, nn))
- 			return -EFAULT;
--		}
- 		return nn->client_tracking_ops->msglen;
- 	}
- 	return -EFAULT;
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 86e3bf53440e38..e6c0b1520973e9 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -8028,9 +8028,6 @@ nfs4_has_reclaimed_state(struct xdr_netobj name, struct nfsd_net *nn)
- 
- /*
-  * failure => all reset bets are off, nfserr_no_grace...
-- *
-- * The caller is responsible for freeing name.data if NULL is returned (it
-- * will be freed in nfs4_remove_reclaim_record in the normal case).
-  */
- struct nfs4_client_reclaim *
- nfs4_client_to_reclaim(struct xdr_netobj name, struct xdr_netobj princhash,
-@@ -8039,6 +8036,22 @@ nfs4_client_to_reclaim(struct xdr_netobj name, struct xdr_netobj princhash,
- 	unsigned int strhashval;
- 	struct nfs4_client_reclaim *crp;
- 
-+	name.data = kmemdup(name.data, name.len, GFP_KERNEL);
-+	if (!name.data) {
-+		dprintk("%s: failed to allocate memory for name.data!\n",
-+			__func__);
-+		return NULL;
-+	}
-+	if (princhash.len) {
-+		princhash.data = kmemdup(princhash.data, princhash.len, GFP_KERNEL);
-+		if (!princhash.data) {
-+			dprintk("%s: failed to allocate memory for princhash.data!\n",
-+				__func__);
-+			kfree(name.data);
-+			return NULL;
-+		}
-+	} else
-+		princhash.data = NULL;
- 	crp = alloc_reclaim();
- 	if (crp) {
- 		strhashval = clientstr_hashval(name);
-@@ -8050,6 +8063,9 @@ nfs4_client_to_reclaim(struct xdr_netobj name, struct xdr_netobj princhash,
- 		crp->cr_princhash.len = princhash.len;
- 		crp->cr_clp = NULL;
- 		nn->reclaim_str_hashtbl_size++;
-+	} else {
-+		kfree(name.data);
-+		kfree(princhash.data);
- 	}
- 	return crp;
- }
+ 	/* otherwise, we have to actually compare the data */
+-
+-	BUG_ON(!IS_ALIGNED((unsigned long)val, len));
+-
+ 	switch (len) {
+ 	case 1:
+-		_val = *(u8 *)val;
++		_val = get_unaligned((u8 *)val);
+ 		break;
+ 	case 2:
+-		_val = *(u16 *)val;
++		_val = get_unaligned((u16 *)val);
+ 		break;
+ 	case 4:
+-		_val = *(u32 *)val;
++		_val = get_unaligned((u32 *)val);
+ 		break;
+ 	case 8:
+-		_val = *(u64 *)val;
++		_val = get_unaligned((u64 *)val);
+ 		break;
+ 	default:
+ 		return false;
 -- 
 2.53.0
 
