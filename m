@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BD647010D;
-	Tue, 21 Jul 2026 20:08:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83DC547252B;
+	Tue, 21 Jul 2026 20:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664484; cv=none; b=GdonnqcGD6SNKKJbe7utSZcuPbukDnIaRs3ci2M2GhtTXsJugHFGSsEkVUaQcIW3IUCicYbGLeuBgb4ygujK6USPeDk/fgTUuj1I6+tymnehZWVDFz12BZedtLm/mONMvo/uP5vBNmWjexSnoaYTqgE7YbNCrKDopYRlCV3SLBs=
+	t=1784664495; cv=none; b=j4Wgnwy3EHVqX/eDZaX5nNbBI4qf3ehQVtEgn+9OxuLUH1M0qBW1uoCuLdVGjJ5jwoITjo6ckvfhqQwzLXjuod7YsZ+zcptRb94UfKzFAx5rG3Kqn9mwXvgDEkEACMO5B5Bcd+m204WSsEeA86836KcI7r3F3LXd1711Dktyvso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664484; c=relaxed/simple;
-	bh=2onX1fngZaedaorjuH9DY9sVNNqQRxMQxeKv4MEVrPg=;
+	s=arc-20240116; t=1784664495; c=relaxed/simple;
+	bh=KVy0ZAE3tK+W+f3LJYLI4Y5ZQNKl/3dJbjA5PihnhV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g21EGMQzmPJU1ZTg3hWK3LrvQbF+rTbqTwVK/RCu/EJd9oKhMTsPe7/bCPaZy+o3K0e31ko0O/SlBA+/HM6ZZlRcgXDQJwRF5nRHBKwQ7WkgoZfMeWeBtFENlHphJ9WwgO76PabVIhwAdSLTev+9W79TaZYpt0mwrDivV0UGSWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdrKXKIE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OjiyEDkVa51emhHtYzSiFES2HPHBePCGSxt6hZ5B/CJ6jziHyZldaozfkp6EK41f3j5qa+j9osVLekVGVXMeHWK+iq/RC7AxeWHbI7PcBB9cyVXtrIegaAOmMwIa5oeD9AnPurube/CJrNJ1fx91m+TNy+heVyEiIHyMs98DAdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T28C9AUw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdrKXKIE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF171F000E9;
-	Tue, 21 Jul 2026 20:07:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T28C9AUw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB6E1F00A3D;
+	Tue, 21 Jul 2026 20:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664480;
-	bh=NUFAqynwBeVOJKzYJ5KwxGratZtnnkbCS99oykdn/gg=;
+	s=korg; t=1784664482;
+	bh=nn3KPy8Jnuq+s94RzikaqdSk+VgbYHxDYbMsOQNaESY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MdrKXKIEv4REeKfKvEIAdD9DPFKtuWZSdBDfU0epZ7WO/ZCKkp88bE2ccZHAQP8kM
-	 sSLJUmV61kpRjzND/P/HdwIFDCC87fvk/ZPywtbkfu6YO6je9P0iLTs/9ddE6wY4LP
-	 gDAqSfeOti8znYKdJpKXoVES1Y0QRF16QKG1nHq4=
+	b=T28C9AUwnL9tRJSrLJEOS7aHyx0fnvra1hr9R4IE76tzARzRqmIt6VB/lQo8VdiXd
+	 jFxV9lfFs0C80rWl2dRYUKA17XHY0C2s/3BXV8nIXRVzLOFoqgJ4xtOJwi4AniHTKP
+	 DtigZd78oTZkex0f6HzrH7sIZirjiG0pSwkTLChU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1217/1276] btrfs: remove the COW fixup mechanism
-Date: Tue, 21 Jul 2026 17:27:40 +0200
-Message-ID: <20260721152513.303002724@linuxfoundation.org>
+Subject: [PATCH 6.12 1200/1276] hfs/hfsplus: prevent getting negative values of offset/length
+Date: Tue, 21 Jul 2026 17:27:23 +0200
+Message-ID: <20260721152512.917571327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,364 +53,954 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit b2a9f217ad3fa8012940744059956b20a3971135 ]
+[ Upstream commit 00c14a09a70e10ae18eb3707d0059291425c04bd ]
 
-[BACKGROUND]
-Btrfs has a special mechanism called COW fixup, which detects dirty
-pages without an ordered extent (folio ordered flag).
+The syzbot reported KASAN out-of-bounds issue in
+hfs_bnode_move():
 
-Normally a dirty folio must go through delayed allocation (delalloc)
-before it can be submitted, and delalloc will create an ordered extent
-for it and mark the range with ordered flag.
+[   45.588165][ T9821] hfs: dst 14, src 65536, len -65536
+[   45.588895][ T9821] ==================================================================
+[   45.590114][ T9821] BUG: KASAN: out-of-bounds in hfs_bnode_move+0xfd/0x140
+[   45.591127][ T9821] Read of size 18446744073709486080 at addr ffff888035935400 by task repro/9821
+[   45.592207][ T9821]
+[   45.592420][ T9821] CPU: 0 UID: 0 PID: 9821 Comm: repro Not tainted 6.16.0-rc7-dirty #42 PREEMPT(full)
+[   45.592428][ T9821] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   45.592431][ T9821] Call Trace:
+[   45.592434][ T9821]  <TASK>
+[   45.592437][ T9821]  dump_stack_lvl+0x1c1/0x2a0
+[   45.592446][ T9821]  ? __virt_addr_valid+0x1c8/0x5c0
+[   45.592454][ T9821]  ? __pfx_dump_stack_lvl+0x10/0x10
+[   45.592461][ T9821]  ? rcu_is_watching+0x15/0xb0
+[   45.592469][ T9821]  ? lock_release+0x4b/0x3e0
+[   45.592476][ T9821]  ? __virt_addr_valid+0x1c8/0x5c0
+[   45.592483][ T9821]  ? __virt_addr_valid+0x4a5/0x5c0
+[   45.592491][ T9821]  print_report+0x17e/0x7c0
+[   45.592497][ T9821]  ? __virt_addr_valid+0x1c8/0x5c0
+[   45.592504][ T9821]  ? __virt_addr_valid+0x4a5/0x5c0
+[   45.592511][ T9821]  ? __phys_addr+0xd3/0x180
+[   45.592519][ T9821]  ? hfs_bnode_move+0xfd/0x140
+[   45.592526][ T9821]  kasan_report+0x147/0x180
+[   45.592531][ T9821]  ? _printk+0xcf/0x120
+[   45.592537][ T9821]  ? hfs_bnode_move+0xfd/0x140
+[   45.592544][ T9821]  ? hfs_bnode_move+0xfd/0x140
+[   45.592552][ T9821]  kasan_check_range+0x2b0/0x2c0
+[   45.592557][ T9821]  ? hfs_bnode_move+0xfd/0x140
+[   45.592565][ T9821]  __asan_memmove+0x29/0x70
+[   45.592572][ T9821]  hfs_bnode_move+0xfd/0x140
+[   45.592580][ T9821]  hfs_brec_remove+0x473/0x560
+[   45.592589][ T9821]  hfs_cat_move+0x6fb/0x960
+[   45.592598][ T9821]  ? __pfx_hfs_cat_move+0x10/0x10
+[   45.592607][ T9821]  ? seqcount_lockdep_reader_access+0x122/0x1c0
+[   45.592614][ T9821]  ? lockdep_hardirqs_on+0x9c/0x150
+[   45.592631][ T9821]  ? __lock_acquire+0xaec/0xd80
+[   45.592641][ T9821]  hfs_rename+0x1dc/0x2d0
+[   45.592649][ T9821]  ? __pfx_hfs_rename+0x10/0x10
+[   45.592657][ T9821]  vfs_rename+0xac6/0xed0
+[   45.592664][ T9821]  ? __pfx_vfs_rename+0x10/0x10
+[   45.592670][ T9821]  ? d_alloc+0x144/0x190
+[   45.592677][ T9821]  ? bpf_lsm_path_rename+0x9/0x20
+[   45.592683][ T9821]  ? security_path_rename+0x17d/0x490
+[   45.592691][ T9821]  do_renameat2+0x890/0xc50
+[   45.592699][ T9821]  ? __pfx_do_renameat2+0x10/0x10
+[   45.592707][ T9821]  ? getname_flags+0x1e5/0x540
+[   45.592714][ T9821]  __x64_sys_rename+0x82/0x90
+[   45.592720][ T9821]  ? entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   45.592725][ T9821]  do_syscall_64+0xf3/0x3a0
+[   45.592741][ T9821]  ? exc_page_fault+0x9f/0xf0
+[   45.592748][ T9821]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   45.592754][ T9821] RIP: 0033:0x7f7f73fe3fc9
+[   45.592760][ T9821] Code: 00 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 48
+[   45.592765][ T9821] RSP: 002b:00007ffc7e116cf8 EFLAGS: 00000283 ORIG_RAX: 0000000000000052
+[   45.592772][ T9821] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f7f73fe3fc9
+[   45.592776][ T9821] RDX: 0000200000000871 RSI: 0000200000000780 RDI: 00002000000003c0
+[   45.592781][ T9821] RBP: 00007ffc7e116d00 R08: 0000000000000000 R09: 00007ffc7e116d30
+[   45.592784][ T9821] R10: fffffffffffffff0 R11: 0000000000000283 R12: 00005557e81f8250
+[   45.592788][ T9821] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+[   45.592795][ T9821]  </TASK>
+[   45.592797][ T9821]
+[   45.619721][ T9821] The buggy address belongs to the physical page:
+[   45.620300][ T9821] page: refcount:1 mapcount:1 mapping:0000000000000000 index:0x559a88174 pfn:0x35935
+[   45.621150][ T9821] memcg:ffff88810a1d5b00
+[   45.621531][ T9821] anon flags: 0xfff60000020838(uptodate|dirty|lru|owner_2|swapbacked|node=0|zone=1|lastcpupid=0x7ff)
+[   45.622496][ T9821] raw: 00fff60000020838 ffffea0000d64d88 ffff888021753e10 ffff888029da0771
+[   45.623260][ T9821] raw: 0000000559a88174 0000000000000000 0000000100000000 ffff88810a1d5b00
+[   45.624030][ T9821] page dumped because: kasan: bad access detected
+[   45.624602][ T9821] page_owner tracks the page as allocated
+[   45.625115][ T9821] page last allocated via order 0, migratetype Movable, gfp_mask 0x140dca(GFP_HIGHUSER_MOVABLE|__GFP_ZERO0
+[   45.626685][ T9821]  post_alloc_hook+0x240/0x2a0
+[   45.627127][ T9821]  get_page_from_freelist+0x2101/0x21e0
+[   45.627628][ T9821]  __alloc_frozen_pages_noprof+0x274/0x380
+[   45.628154][ T9821]  alloc_pages_mpol+0x241/0x4b0
+[   45.628593][ T9821]  vma_alloc_folio_noprof+0xe4/0x210
+[   45.629066][ T9821]  folio_prealloc+0x30/0x180
+[   45.629487][ T9821]  __handle_mm_fault+0x34bd/0x5640
+[   45.629957][ T9821]  handle_mm_fault+0x40e/0x8e0
+[   45.630392][ T9821]  do_user_addr_fault+0xa81/0x1390
+[   45.630862][ T9821]  exc_page_fault+0x76/0xf0
+[   45.631273][ T9821]  asm_exc_page_fault+0x26/0x30
+[   45.631712][ T9821] page last free pid 5269 tgid 5269 stack trace:
+[   45.632281][ T9821]  free_unref_folios+0xc73/0x14c0
+[   45.632740][ T9821]  folios_put_refs+0x55b/0x640
+[   45.633177][ T9821]  free_pages_and_swap_cache+0x26d/0x510
+[   45.633685][ T9821]  tlb_flush_mmu+0x3a0/0x680
+[   45.634105][ T9821]  tlb_finish_mmu+0xd4/0x200
+[   45.634525][ T9821]  exit_mmap+0x44c/0xb70
+[   45.634914][ T9821]  __mmput+0x118/0x420
+[   45.635286][ T9821]  exit_mm+0x1da/0x2c0
+[   45.635659][ T9821]  do_exit+0x652/0x2330
+[   45.636039][ T9821]  do_group_exit+0x21c/0x2d0
+[   45.636457][ T9821]  __x64_sys_exit_group+0x3f/0x40
+[   45.636915][ T9821]  x64_sys_call+0x21ba/0x21c0
+[   45.637342][ T9821]  do_syscall_64+0xf3/0x3a0
+[   45.637756][ T9821]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   45.638290][ T9821] page has been migrated, last migrate reason: numa_misplaced
+[   45.638956][ T9821]
+[   45.639173][ T9821] Memory state around the buggy address:
+[   45.639677][ T9821]  ffff888035935300: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   45.640397][ T9821]  ffff888035935380: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   45.641117][ T9821] >ffff888035935400: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   45.641837][ T9821]                    ^
+[   45.642207][ T9821]  ffff888035935480: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   45.642929][ T9821]  ffff888035935500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   45.643650][ T9821] ==================================================================
 
-However in older kernels, there are bugs related to get_user_pages()
-which can lead to some page marked dirty but without notifying the fs to
-properly prepare them for writeback.
+This commit [1] fixes the issue if an offset inside of b-tree node
+or length of the request is bigger than b-tree node. However,
+this fix is still not ready for negative values
+of the offset or length. Moreover, negative values of
+the offset or length doesn't make sense for b-tree's
+operations. Because we could try to access the memory address
+outside of the beginning of memory page's addresses range.
+Also, using of negative values make logic very complicated,
+unpredictable, and we could access the wrong item(s)
+in the b-tree node.
 
-In that case without an ordered extent btrfs is unable to properly
-submit such dirty folios, thus the COW fixup mechanism is introduced,
-which do the extra space reservation so that they can be written back
-properly.
+This patch changes b-tree interface by means of converting
+signed integer arguments of offset and length on u32 type.
+Such conversion has goal to prevent of using negative values
+unintentionally or by mistake in b-tree operations.
 
-[MODERN SOLUTIONS]
-The MM layer has solved it properly now with the introduction of
-pin_user_pages*(), so we're handling cases that are no longer valid.
+[1] 'commit a431930c9bac ("hfs: fix slab-out-of-bounds in hfs_bnode_read()")'
 
-So commit 7ca3e84980ef ("btrfs: reject out-of-band dirty folios during
-writeback") is introduced to change the behavior from going through
-COW fixup to rejecting them directly for experimental builds.
-
-So far it works fine, but when errors are injected into the IO path, we
-have random failures triggering the new warnings.
-
-It looks like we have error path that cleared the ordered flag but
-leaves the folio dirty flag, which later triggers the warning.
-
-[REMOVAL OF COW FIXUP]
-Although I hope to fix all those known warnings cases, I just can not
-figure out the root cause yet.
-
-But on the other hand, if we remove the ordered and checked flags in the
-future, and purely rely on the dirty flags and ordered extent search, we
-can get a much cleaner handling.
-
-Considering it's no longer hitting the COW fixup for normal IO paths, I
-think it's finally the time to remove the COW fixup completely.
-
-Furthermore, the function name "btrfs_writepage_cow_fixup()" is no
-longer meaningful, and since it's pretty small, only a folio flag check
-with error message, there is no need to put it as a dedicated helper,
-just open code it inside extent_writepage_io().
-
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 95ee2231896d ("btrfs: check and set EXTENT_DELALLOC_NEW before clearing EXTENT_DELALLOC")
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20251002200020.2578311-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Stable-dep-of: 966cb76fb285 ("hfs/hfsplus: fix u32 overflow in check_and_correct_requested_length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/btrfs_inode.h |    1 
- fs/btrfs/disk-io.c     |   16 ----
- fs/btrfs/extent_io.c   |   17 ++--
- fs/btrfs/fs.h          |    7 -
- fs/btrfs/inode.c       |  187 -------------------------------------------------
- 5 files changed, 12 insertions(+), 216 deletions(-)
+ fs/hfs/bfind.c          |    2 -
+ fs/hfs/bnode.c          |   52 ++++++++++++++--------------
+ fs/hfs/brec.c           |    2 -
+ fs/hfs/btree.c          |    2 -
+ fs/hfs/btree.h          |   71 +++++++++++++++++++-------------------
+ fs/hfs/hfs_fs.h         |   88 ++++++++++++++++++++++++++++--------------------
+ fs/hfs/inode.c          |    3 +
+ fs/hfsplus/bfind.c      |    2 -
+ fs/hfsplus/bnode.c      |   60 ++++++++++++++++----------------
+ fs/hfsplus/brec.c       |    2 -
+ fs/hfsplus/btree.c      |    2 -
+ fs/hfsplus/hfsplus_fs.h |   38 ++++++++++----------
+ 12 files changed, 171 insertions(+), 153 deletions(-)
 
---- a/fs/btrfs/btrfs_inode.h
-+++ b/fs/btrfs/btrfs_inode.h
-@@ -609,7 +609,6 @@ int btrfs_prealloc_file_range_trans(stru
- 				    loff_t actual_len, u64 *alloc_hint);
- int btrfs_run_delalloc_range(struct btrfs_inode *inode, struct folio *locked_folio,
- 			     u64 start, u64 end, struct writeback_control *wbc);
--int btrfs_writepage_cow_fixup(struct folio *folio);
- int btrfs_encoded_io_compression_from_extent(struct btrfs_fs_info *fs_info,
- 					     int compress_type);
- int btrfs_encoded_read_regular_fill_pages(struct btrfs_inode *inode,
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -1747,7 +1747,6 @@ static int read_backup_root(struct btrfs
- /* helper to cleanup workers */
- static void btrfs_stop_all_workers(struct btrfs_fs_info *fs_info)
- {
--	btrfs_destroy_workqueue(fs_info->fixup_workers);
- 	btrfs_destroy_workqueue(fs_info->delalloc_workers);
- 	btrfs_destroy_workqueue(fs_info->workers);
- 	if (fs_info->endio_workers)
-@@ -1954,9 +1953,6 @@ static int btrfs_init_workqueues(struct
- 	fs_info->caching_workers =
- 		btrfs_alloc_workqueue(fs_info, "cache", flags, max_active, 0);
- 
--	fs_info->fixup_workers =
--		btrfs_alloc_ordered_workqueue(fs_info, "fixup", ordered_flags);
--
- 	fs_info->endio_workers =
- 		alloc_workqueue("btrfs-endio", flags, max_active);
- 	fs_info->endio_meta_workers =
-@@ -1985,7 +1981,7 @@ static int btrfs_init_workqueues(struct
- 	      fs_info->compressed_write_workers &&
- 	      fs_info->endio_write_workers &&
- 	      fs_info->endio_freespace_worker && fs_info->rmw_workers &&
--	      fs_info->caching_workers && fs_info->fixup_workers &&
-+	      fs_info->caching_workers &&
- 	      fs_info->delayed_workers && fs_info->qgroup_rescan_workers &&
- 	      fs_info->discard_ctl.discard_workers)) {
- 		return -ENOMEM;
-@@ -4246,16 +4242,6 @@ void __cold close_ctree(struct btrfs_fs_
- 		btrfs_error_commit_super(fs_info);
- 
- 	/*
--	 * Wait for any fixup workers to complete.
--	 * If we don't wait for them here and they are still running by the time
--	 * we call kthread_stop() against the cleaner kthread further below, we
--	 * get an use-after-free on the cleaner because the fixup worker adds an
--	 * inode to the list of delayed iputs and then attempts to wakeup the
--	 * cleaner kthread, which was already stopped and destroyed. We parked
--	 * already the cleaner, but below we run all pending delayed iputs.
--	 */
--	btrfs_flush_workqueue(fs_info->fixup_workers);
--	/*
- 	 * Similar case here, we have to wait for delalloc workers before we
- 	 * proceed below and stop the cleaner kthread, otherwise we trigger a
- 	 * use-after-tree on the cleaner kthread task_struct when a delalloc
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -1543,12 +1543,17 @@ static noinline_for_stack int extent_wri
- 
- 	ASSERT(start >= folio_start && end <= folio_end);
- 
--	ret = btrfs_writepage_cow_fixup(folio);
--	if (ret) {
--		/* Fixup worker will requeue */
--		folio_redirty_for_writepage(bio_ctrl->wbc, folio);
--		folio_unlock(folio);
--		return 1;
-+	if (unlikely(!folio_test_ordered(folio))) {
-+		WARN_ON(IS_ENABLED(CONFIG_BTRFS_DEBUG));
-+		btrfs_err_rl(fs_info,
-+	"root %lld ino %llu folio %llu is marked dirty without notifying the fs",
-+			     btrfs_root_id(inode->root),
-+			     btrfs_ino(inode),
-+			     folio_pos(folio));
-+		btrfs_folio_clear_dirty(fs_info, folio, start, len);
-+		btrfs_folio_set_writeback(fs_info, folio, start, len);
-+		btrfs_folio_clear_writeback(fs_info, folio, start, len);
-+		return -EUCLEAN;
- 	}
- 
- 	bitmap_set(&range_bitmap, (start - folio_pos(folio)) >> fs_info->sectorsize_bits,
---- a/fs/btrfs/fs.h
-+++ b/fs/btrfs/fs.h
-@@ -620,13 +620,6 @@ struct btrfs_fs_info {
- 	struct btrfs_workqueue *endio_write_workers;
- 	struct btrfs_workqueue *endio_freespace_worker;
- 	struct btrfs_workqueue *caching_workers;
--
--	/*
--	 * Fixup workers take dirty pages that didn't properly go through the
--	 * cow mechanism and make them safe to write.  It happens for the
--	 * sys_munmap function call path.
--	 */
--	struct btrfs_workqueue *fixup_workers;
- 	struct btrfs_workqueue *delayed_workers;
- 
- 	struct task_struct *transaction_kthread;
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -2822,193 +2822,6 @@ int btrfs_set_extent_delalloc(struct btr
- 			      EXTENT_DELALLOC | extra_bits, cached_state);
+--- a/fs/hfs/bfind.c
++++ b/fs/hfs/bfind.c
+@@ -167,7 +167,7 @@ release:
+ 	return res;
  }
  
--/* see btrfs_writepage_start_hook for details on why this is required */
--struct btrfs_writepage_fixup {
--	struct folio *folio;
--	struct btrfs_inode *inode;
--	struct btrfs_work work;
--};
--
--static void btrfs_writepage_fixup_worker(struct btrfs_work *work)
--{
--	struct btrfs_writepage_fixup *fixup =
--		container_of(work, struct btrfs_writepage_fixup, work);
--	struct btrfs_ordered_extent *ordered;
--	struct extent_state *cached_state = NULL;
--	struct extent_changeset *data_reserved = NULL;
--	struct folio *folio = fixup->folio;
--	struct btrfs_inode *inode = fixup->inode;
--	struct btrfs_fs_info *fs_info = inode->root->fs_info;
--	u64 page_start = folio_pos(folio);
--	u64 page_end = folio_pos(folio) + folio_size(folio) - 1;
--	int ret = 0;
--	bool free_delalloc_space = true;
--
--	/*
--	 * This is similar to page_mkwrite, we need to reserve the space before
--	 * we take the folio lock.
--	 */
--	ret = btrfs_delalloc_reserve_space(inode, &data_reserved, page_start,
--					   folio_size(folio));
--again:
--	folio_lock(folio);
--
--	/*
--	 * Before we queued this fixup, we took a reference on the folio.
--	 * folio->mapping may go NULL, but it shouldn't be moved to a different
--	 * address space.
--	 */
--	if (!folio->mapping || !folio_test_dirty(folio) ||
--	    !folio_test_checked(folio)) {
--		/*
--		 * Unfortunately this is a little tricky, either
--		 *
--		 * 1) We got here and our folio had already been dealt with and
--		 *    we reserved our space, thus ret == 0, so we need to just
--		 *    drop our space reservation and bail.  This can happen the
--		 *    first time we come into the fixup worker, or could happen
--		 *    while waiting for the ordered extent.
--		 * 2) Our folio was already dealt with, but we happened to get an
--		 *    ENOSPC above from the btrfs_delalloc_reserve_space.  In
--		 *    this case we obviously don't have anything to release, but
--		 *    because the folio was already dealt with we don't want to
--		 *    mark the folio with an error, so make sure we're resetting
--		 *    ret to 0.  This is why we have this check _before_ the ret
--		 *    check, because we do not want to have a surprise ENOSPC
--		 *    when the folio was already properly dealt with.
--		 */
--		if (!ret) {
--			btrfs_delalloc_release_extents(inode, folio_size(folio));
--			btrfs_delalloc_release_space(inode, data_reserved,
--						     page_start, folio_size(folio),
--						     true);
--		}
--		ret = 0;
--		goto out_page;
--	}
--
--	/*
--	 * We can't mess with the folio state unless it is locked, so now that
--	 * it is locked bail if we failed to make our space reservation.
--	 */
--	if (ret)
--		goto out_page;
--
--	lock_extent(&inode->io_tree, page_start, page_end, &cached_state);
--
--	/* already ordered? We're done */
--	if (folio_test_ordered(folio))
--		goto out_reserved;
--
--	ordered = btrfs_lookup_ordered_range(inode, page_start, PAGE_SIZE);
--	if (ordered) {
--		unlock_extent(&inode->io_tree, page_start, page_end,
--			      &cached_state);
--		folio_unlock(folio);
--		btrfs_start_ordered_extent(ordered);
--		btrfs_put_ordered_extent(ordered);
--		goto again;
--	}
--
--	ret = btrfs_set_extent_delalloc(inode, page_start, page_end, 0,
--					&cached_state);
--	if (ret)
--		goto out_reserved;
--
--	/*
--	 * Everything went as planned, we're now the owner of a dirty page with
--	 * delayed allocation bits set and space reserved for our COW
--	 * destination.
--	 *
--	 * The page was dirty when we started, nothing should have cleaned it.
--	 */
--	BUG_ON(!folio_test_dirty(folio));
--	free_delalloc_space = false;
--out_reserved:
--	btrfs_delalloc_release_extents(inode, PAGE_SIZE);
--	if (free_delalloc_space)
--		btrfs_delalloc_release_space(inode, data_reserved, page_start,
--					     PAGE_SIZE, true);
--	unlock_extent(&inode->io_tree, page_start, page_end, &cached_state);
--out_page:
--	if (ret) {
--		/*
--		 * We hit ENOSPC or other errors.  Update the mapping and page
--		 * to reflect the errors and clean the page.
--		 */
--		mapping_set_error(folio->mapping, ret);
--		btrfs_folio_clear_ordered(fs_info, folio, page_start,
--					  folio_size(folio));
--		btrfs_mark_ordered_io_finished(inode, page_start,
--					       folio_size(folio), !ret);
--		folio_clear_dirty_for_io(folio);
--	}
--	btrfs_folio_clear_checked(fs_info, folio, page_start, PAGE_SIZE);
--	folio_unlock(folio);
--	folio_put(folio);
--	kfree(fixup);
--	extent_changeset_free(data_reserved);
--	/*
--	 * As a precaution, do a delayed iput in case it would be the last iput
--	 * that could need flushing space. Recursing back to fixup worker would
--	 * deadlock.
--	 */
--	btrfs_add_delayed_iput(inode);
--}
--
--/*
-- * There are a few paths in the higher layers of the kernel that directly
-- * set the folio dirty bit without asking the filesystem if it is a
-- * good idea.  This causes problems because we want to make sure COW
-- * properly happens and the data=ordered rules are followed.
-- *
-- * In our case any range that doesn't have the ORDERED bit set
-- * hasn't been properly setup for IO.  We kick off an async process
-- * to fix it up.  The async helper will wait for ordered extents, set
-- * the delalloc bit and make it safe to write the folio.
-- */
--int btrfs_writepage_cow_fixup(struct folio *folio)
--{
--	struct inode *inode = folio->mapping->host;
--	struct btrfs_fs_info *fs_info = inode_to_fs_info(inode);
--	struct btrfs_writepage_fixup *fixup;
--
--	/* This folio has ordered extent covering it already */
--	if (folio_test_ordered(folio))
--		return 0;
--
--	/*
--	 * folio_checked is set below when we create a fixup worker for this
--	 * folio, don't try to create another one if we're already
--	 * folio_test_checked.
--	 *
--	 * The extent_io writepage code will redirty the foio if we send back
--	 * EAGAIN.
--	 */
--	if (folio_test_checked(folio))
--		return -EAGAIN;
--
--	fixup = kzalloc(sizeof(*fixup), GFP_NOFS);
--	if (!fixup)
--		return -EAGAIN;
--
--	/*
--	 * We are already holding a reference to this inode from
--	 * write_cache_pages.  We need to hold it because the space reservation
--	 * takes place outside of the folio lock, and we can't trust
--	 * page->mapping outside of the folio lock.
--	 */
--	ihold(inode);
--	btrfs_folio_set_checked(fs_info, folio, folio_pos(folio), folio_size(folio));
--	folio_get(folio);
--	btrfs_init_work(&fixup->work, btrfs_writepage_fixup_worker, NULL);
--	fixup->folio = folio;
--	fixup->inode = BTRFS_I(inode);
--	btrfs_queue_work(fs_info->fixup_workers, &fixup->work);
--
--	return -EAGAIN;
--}
--
- static int insert_reserved_file_extent(struct btrfs_trans_handle *trans,
- 				       struct btrfs_inode *inode, u64 file_pos,
- 				       struct btrfs_file_extent_item *stack_fi,
+-int hfs_brec_read(struct hfs_find_data *fd, void *rec, int rec_len)
++int hfs_brec_read(struct hfs_find_data *fd, void *rec, u32 rec_len)
+ {
+ 	int res;
+ 
+--- a/fs/hfs/bnode.c
++++ b/fs/hfs/bnode.c
+@@ -16,14 +16,14 @@
+ #include "btree.h"
+ 
+ static inline
+-bool is_bnode_offset_valid(struct hfs_bnode *node, int off)
++bool is_bnode_offset_valid(struct hfs_bnode *node, u32 off)
+ {
+ 	bool is_valid = off < node->tree->node_size;
+ 
+ 	if (!is_valid) {
+ 		pr_err("requested invalid offset: "
+ 		       "NODE: id %u, type %#x, height %u, "
+-		       "node_size %u, offset %d\n",
++		       "node_size %u, offset %u\n",
+ 		       node->this, node->type, node->height,
+ 		       node->tree->node_size, off);
+ 	}
+@@ -32,7 +32,7 @@ bool is_bnode_offset_valid(struct hfs_bn
+ }
+ 
+ static inline
+-int check_and_correct_requested_length(struct hfs_bnode *node, int off, int len)
++u32 check_and_correct_requested_length(struct hfs_bnode *node, u32 off, u32 len)
+ {
+ 	unsigned int node_size;
+ 
+@@ -42,12 +42,12 @@ int check_and_correct_requested_length(s
+ 	node_size = node->tree->node_size;
+ 
+ 	if ((off + len) > node_size) {
+-		int new_len = (int)node_size - off;
++		u32 new_len = node_size - off;
+ 
+ 		pr_err("requested length has been corrected: "
+ 		       "NODE: id %u, type %#x, height %u, "
+-		       "node_size %u, offset %d, "
+-		       "requested_len %d, corrected_len %d\n",
++		       "node_size %u, offset %u, "
++		       "requested_len %u, corrected_len %u\n",
+ 		       node->this, node->type, node->height,
+ 		       node->tree->node_size, off, len, new_len);
+ 
+@@ -57,12 +57,12 @@ int check_and_correct_requested_length(s
+ 	return len;
+ }
+ 
+-void hfs_bnode_read(struct hfs_bnode *node, void *buf, int off, int len)
++void hfs_bnode_read(struct hfs_bnode *node, void *buf, u32 off, u32 len)
+ {
+ 	struct page *page;
+-	int pagenum;
+-	int bytes_read;
+-	int bytes_to_read;
++	u32 pagenum;
++	u32 bytes_read;
++	u32 bytes_to_read;
+ 
+ 	memset(buf, 0, len);
+ 
+@@ -72,7 +72,7 @@ void hfs_bnode_read(struct hfs_bnode *no
+ 	if (len == 0) {
+ 		pr_err("requested zero length: "
+ 		       "NODE: id %u, type %#x, height %u, "
+-		       "node_size %u, offset %d, len %d\n",
++		       "node_size %u, offset %u, len %u\n",
+ 		       node->this, node->type, node->height,
+ 		       node->tree->node_size, off, len);
+ 		return;
+@@ -88,7 +88,7 @@ void hfs_bnode_read(struct hfs_bnode *no
+ 		if (pagenum >= node->tree->pages_per_bnode)
+ 			break;
+ 		page = node->page[pagenum];
+-		bytes_to_read = min_t(int, len - bytes_read, PAGE_SIZE - off);
++		bytes_to_read = min_t(u32, len - bytes_read, PAGE_SIZE - off);
+ 
+ 		memcpy_from_page(buf + bytes_read, page, off, bytes_to_read);
+ 
+@@ -97,7 +97,7 @@ void hfs_bnode_read(struct hfs_bnode *no
+ 	}
+ }
+ 
+-u16 hfs_bnode_read_u16(struct hfs_bnode *node, int off)
++u16 hfs_bnode_read_u16(struct hfs_bnode *node, u32 off)
+ {
+ 	__be16 data;
+ 	// optimize later...
+@@ -105,7 +105,7 @@ u16 hfs_bnode_read_u16(struct hfs_bnode
+ 	return be16_to_cpu(data);
+ }
+ 
+-u8 hfs_bnode_read_u8(struct hfs_bnode *node, int off)
++u8 hfs_bnode_read_u8(struct hfs_bnode *node, u32 off)
+ {
+ 	u8 data;
+ 	// optimize later...
+@@ -113,10 +113,10 @@ u8 hfs_bnode_read_u8(struct hfs_bnode *n
+ 	return data;
+ }
+ 
+-void hfs_bnode_read_key(struct hfs_bnode *node, void *key, int off)
++void hfs_bnode_read_key(struct hfs_bnode *node, void *key, u32 off)
+ {
+ 	struct hfs_btree *tree;
+-	int key_len;
++	u32 key_len;
+ 
+ 	tree = node->tree;
+ 	if (node->type == HFS_NODE_LEAF ||
+@@ -127,14 +127,14 @@ void hfs_bnode_read_key(struct hfs_bnode
+ 
+ 	if (key_len > sizeof(hfs_btree_key) || key_len < 1) {
+ 		memset(key, 0, sizeof(hfs_btree_key));
+-		pr_err("hfs: Invalid key length: %d\n", key_len);
++		pr_err("hfs: Invalid key length: %u\n", key_len);
+ 		return;
+ 	}
+ 
+ 	hfs_bnode_read(node, key, off, key_len);
+ }
+ 
+-void hfs_bnode_write(struct hfs_bnode *node, void *buf, int off, int len)
++void hfs_bnode_write(struct hfs_bnode *node, void *buf, u32 off, u32 len)
+ {
+ 	struct page *page;
+ 
+@@ -144,7 +144,7 @@ void hfs_bnode_write(struct hfs_bnode *n
+ 	if (len == 0) {
+ 		pr_err("requested zero length: "
+ 		       "NODE: id %u, type %#x, height %u, "
+-		       "node_size %u, offset %d, len %d\n",
++		       "node_size %u, offset %u, len %u\n",
+ 		       node->this, node->type, node->height,
+ 		       node->tree->node_size, off, len);
+ 		return;
+@@ -159,20 +159,20 @@ void hfs_bnode_write(struct hfs_bnode *n
+ 	set_page_dirty(page);
+ }
+ 
+-void hfs_bnode_write_u16(struct hfs_bnode *node, int off, u16 data)
++void hfs_bnode_write_u16(struct hfs_bnode *node, u32 off, u16 data)
+ {
+ 	__be16 v = cpu_to_be16(data);
+ 	// optimize later...
+ 	hfs_bnode_write(node, &v, off, 2);
+ }
+ 
+-void hfs_bnode_write_u8(struct hfs_bnode *node, int off, u8 data)
++void hfs_bnode_write_u8(struct hfs_bnode *node, u32 off, u8 data)
+ {
+ 	// optimize later...
+ 	hfs_bnode_write(node, &data, off, 1);
+ }
+ 
+-void hfs_bnode_clear(struct hfs_bnode *node, int off, int len)
++void hfs_bnode_clear(struct hfs_bnode *node, u32 off, u32 len)
+ {
+ 	struct page *page;
+ 
+@@ -182,7 +182,7 @@ void hfs_bnode_clear(struct hfs_bnode *n
+ 	if (len == 0) {
+ 		pr_err("requested zero length: "
+ 		       "NODE: id %u, type %#x, height %u, "
+-		       "node_size %u, offset %d, len %d\n",
++		       "node_size %u, offset %u, len %u\n",
+ 		       node->this, node->type, node->height,
+ 		       node->tree->node_size, off, len);
+ 		return;
+@@ -197,8 +197,8 @@ void hfs_bnode_clear(struct hfs_bnode *n
+ 	set_page_dirty(page);
+ }
+ 
+-void hfs_bnode_copy(struct hfs_bnode *dst_node, int dst,
+-		struct hfs_bnode *src_node, int src, int len)
++void hfs_bnode_copy(struct hfs_bnode *dst_node, u32 dst,
++		    struct hfs_bnode *src_node, u32 src, u32 len)
+ {
+ 	struct page *src_page, *dst_page;
+ 
+@@ -218,7 +218,7 @@ void hfs_bnode_copy(struct hfs_bnode *ds
+ 	set_page_dirty(dst_page);
+ }
+ 
+-void hfs_bnode_move(struct hfs_bnode *node, int dst, int src, int len)
++void hfs_bnode_move(struct hfs_bnode *node, u32 dst, u32 src, u32 len)
+ {
+ 	struct page *page;
+ 	void *ptr;
+--- a/fs/hfs/brec.c
++++ b/fs/hfs/brec.c
+@@ -62,7 +62,7 @@ u16 hfs_brec_keylen(struct hfs_bnode *no
+ 	return retval;
+ }
+ 
+-int hfs_brec_insert(struct hfs_find_data *fd, void *entry, int entry_len)
++int hfs_brec_insert(struct hfs_find_data *fd, void *entry, u32 entry_len)
+ {
+ 	struct hfs_btree *tree;
+ 	struct hfs_bnode *node, *new_node;
+--- a/fs/hfs/btree.c
++++ b/fs/hfs/btree.c
+@@ -259,7 +259,7 @@ static struct hfs_bnode *hfs_bmap_new_bm
+ }
+ 
+ /* Make sure @tree has enough space for the @rsvd_nodes */
+-int hfs_bmap_reserve(struct hfs_btree *tree, int rsvd_nodes)
++int hfs_bmap_reserve(struct hfs_btree *tree, u32 rsvd_nodes)
+ {
+ 	struct inode *inode = tree->inode;
+ 	u32 count;
+--- a/fs/hfs/btree.h
++++ b/fs/hfs/btree.h
+@@ -86,48 +86,49 @@ struct hfs_find_data {
+ 
+ 
+ /* btree.c */
+-extern struct hfs_btree *hfs_btree_open(struct super_block *, u32, btree_keycmp);
+-extern void hfs_btree_close(struct hfs_btree *);
+-extern void hfs_btree_write(struct hfs_btree *);
+-extern int hfs_bmap_reserve(struct hfs_btree *, int);
+-extern struct hfs_bnode * hfs_bmap_alloc(struct hfs_btree *);
++extern struct hfs_btree *hfs_btree_open(struct super_block *sb, u32 id,
++					btree_keycmp keycmp);
++extern void hfs_btree_close(struct hfs_btree *tree);
++extern void hfs_btree_write(struct hfs_btree *tree);
++extern int hfs_bmap_reserve(struct hfs_btree *tree, u32 rsvd_nodes);
++extern struct hfs_bnode *hfs_bmap_alloc(struct hfs_btree *tree);
+ extern void hfs_bmap_free(struct hfs_bnode *node);
+ 
+ /* bnode.c */
+-extern void hfs_bnode_read(struct hfs_bnode *, void *, int, int);
+-extern u16 hfs_bnode_read_u16(struct hfs_bnode *, int);
+-extern u8 hfs_bnode_read_u8(struct hfs_bnode *, int);
+-extern void hfs_bnode_read_key(struct hfs_bnode *, void *, int);
+-extern void hfs_bnode_write(struct hfs_bnode *, void *, int, int);
+-extern void hfs_bnode_write_u16(struct hfs_bnode *, int, u16);
+-extern void hfs_bnode_write_u8(struct hfs_bnode *, int, u8);
+-extern void hfs_bnode_clear(struct hfs_bnode *, int, int);
+-extern void hfs_bnode_copy(struct hfs_bnode *, int,
+-			   struct hfs_bnode *, int, int);
+-extern void hfs_bnode_move(struct hfs_bnode *, int, int, int);
+-extern void hfs_bnode_dump(struct hfs_bnode *);
+-extern void hfs_bnode_unlink(struct hfs_bnode *);
+-extern struct hfs_bnode *hfs_bnode_findhash(struct hfs_btree *, u32);
+-extern struct hfs_bnode *hfs_bnode_find(struct hfs_btree *, u32);
+-extern void hfs_bnode_unhash(struct hfs_bnode *);
+-extern void hfs_bnode_free(struct hfs_bnode *);
+-extern struct hfs_bnode *hfs_bnode_create(struct hfs_btree *, u32);
+-extern void hfs_bnode_get(struct hfs_bnode *);
+-extern void hfs_bnode_put(struct hfs_bnode *);
++extern void hfs_bnode_read(struct hfs_bnode *node, void *buf, u32 off, u32 len);
++extern u16 hfs_bnode_read_u16(struct hfs_bnode *node, u32 off);
++extern u8 hfs_bnode_read_u8(struct hfs_bnode *node, u32 off);
++extern void hfs_bnode_read_key(struct hfs_bnode *node, void *key, u32 off);
++extern void hfs_bnode_write(struct hfs_bnode *node, void *buf, u32 off, u32 len);
++extern void hfs_bnode_write_u16(struct hfs_bnode *node, u32 off, u16 data);
++extern void hfs_bnode_write_u8(struct hfs_bnode *node, u32 off, u8 data);
++extern void hfs_bnode_clear(struct hfs_bnode *node, u32 off, u32 len);
++extern void hfs_bnode_copy(struct hfs_bnode *dst_node, u32 dst,
++			   struct hfs_bnode *src_node, u32 src, u32 len);
++extern void hfs_bnode_move(struct hfs_bnode *node, u32 dst, u32 src, u32 len);
++extern void hfs_bnode_dump(struct hfs_bnode *node);
++extern void hfs_bnode_unlink(struct hfs_bnode *node);
++extern struct hfs_bnode *hfs_bnode_findhash(struct hfs_btree *tree, u32 cnid);
++extern struct hfs_bnode *hfs_bnode_find(struct hfs_btree *tree, u32 num);
++extern void hfs_bnode_unhash(struct hfs_bnode *node);
++extern void hfs_bnode_free(struct hfs_bnode *node);
++extern struct hfs_bnode *hfs_bnode_create(struct hfs_btree *tree, u32 num);
++extern void hfs_bnode_get(struct hfs_bnode *node);
++extern void hfs_bnode_put(struct hfs_bnode *node);
+ 
+ /* brec.c */
+-extern u16 hfs_brec_lenoff(struct hfs_bnode *, u16, u16 *);
+-extern u16 hfs_brec_keylen(struct hfs_bnode *, u16);
+-extern int hfs_brec_insert(struct hfs_find_data *, void *, int);
+-extern int hfs_brec_remove(struct hfs_find_data *);
++extern u16 hfs_brec_lenoff(struct hfs_bnode *node, u16 rec, u16 *off);
++extern u16 hfs_brec_keylen(struct hfs_bnode *node, u16 rec);
++extern int hfs_brec_insert(struct hfs_find_data *fd, void *entry, u32 entry_len);
++extern int hfs_brec_remove(struct hfs_find_data *fd);
+ 
+ /* bfind.c */
+-extern int hfs_find_init(struct hfs_btree *, struct hfs_find_data *);
+-extern void hfs_find_exit(struct hfs_find_data *);
+-extern int __hfs_brec_find(struct hfs_bnode *, struct hfs_find_data *);
+-extern int hfs_brec_find(struct hfs_find_data *);
+-extern int hfs_brec_read(struct hfs_find_data *, void *, int);
+-extern int hfs_brec_goto(struct hfs_find_data *, int);
++extern int hfs_find_init(struct hfs_btree *tree, struct hfs_find_data *fd);
++extern void hfs_find_exit(struct hfs_find_data *fd);
++extern int __hfs_brec_find(struct hfs_bnode *bnode, struct hfs_find_data *fd);
++extern int hfs_brec_find(struct hfs_find_data *fd);
++extern int hfs_brec_read(struct hfs_find_data *fd, void *rec, u32 rec_len);
++extern int hfs_brec_goto(struct hfs_find_data *fd, int cnt);
+ 
+ 
+ struct hfs_bnode_desc {
+--- a/fs/hfs/hfs_fs.h
++++ b/fs/hfs/hfs_fs.h
+@@ -171,74 +171,90 @@ struct hfs_sb_info {
+ #define HFS_FLG_ALT_MDB_DIRTY	2
+ 
+ /* bitmap.c */
+-extern u32 hfs_vbm_search_free(struct super_block *, u32, u32 *);
+-extern int hfs_clear_vbm_bits(struct super_block *, u16, u16);
++extern u32 hfs_vbm_search_free(struct super_block *sb, u32 goal, u32 *num_bits);
++extern int hfs_clear_vbm_bits(struct super_block *sb, u16 start, u16 count);
+ 
+ /* catalog.c */
+-extern int hfs_cat_keycmp(const btree_key *, const btree_key *);
++extern int hfs_cat_keycmp(const btree_key *key1, const btree_key *key2);
+ struct hfs_find_data;
+-extern int hfs_cat_find_brec(struct super_block *, u32, struct hfs_find_data *);
+-extern int hfs_cat_create(u32, struct inode *, const struct qstr *, struct inode *);
+-extern int hfs_cat_delete(u32, struct inode *, const struct qstr *);
+-extern int hfs_cat_move(u32, struct inode *, const struct qstr *,
+-			struct inode *, const struct qstr *);
+-extern void hfs_cat_build_key(struct super_block *, btree_key *, u32, const struct qstr *);
++extern int hfs_cat_find_brec(struct super_block *sb, u32 cnid,
++			     struct hfs_find_data *fd);
++extern int hfs_cat_create(u32 cnid, struct inode *dir,
++			  const struct qstr *str, struct inode *inode);
++extern int hfs_cat_delete(u32 cnid, struct inode *dir, const struct qstr *str);
++extern int hfs_cat_move(u32 cnid, struct inode *src_dir,
++			const struct qstr *src_name,
++			struct inode *dst_dir,
++			const struct qstr *dst_name);
++extern void hfs_cat_build_key(struct super_block *sb, btree_key *key,
++			      u32 parent, const struct qstr *name);
+ 
+ /* dir.c */
+ extern const struct file_operations hfs_dir_operations;
+ extern const struct inode_operations hfs_dir_inode_operations;
+ 
+ /* extent.c */
+-extern int hfs_ext_keycmp(const btree_key *, const btree_key *);
++extern int hfs_ext_keycmp(const btree_key *key1, const btree_key *key2);
+ extern u16 hfs_ext_find_block(struct hfs_extent *ext, u16 off);
+-extern int hfs_free_fork(struct super_block *, struct hfs_cat_file *, int);
+-extern int hfs_ext_write_extent(struct inode *);
+-extern int hfs_extend_file(struct inode *);
+-extern void hfs_file_truncate(struct inode *);
++extern int hfs_free_fork(struct super_block *sb,
++			 struct hfs_cat_file *file, int type);
++extern int hfs_ext_write_extent(struct inode *inode);
++extern int hfs_extend_file(struct inode *inode);
++extern void hfs_file_truncate(struct inode *inode);
+ 
+-extern int hfs_get_block(struct inode *, sector_t, struct buffer_head *, int);
++extern int hfs_get_block(struct inode *inode, sector_t block,
++			 struct buffer_head *bh_result, int create);
+ 
+ /* inode.c */
+ extern const struct address_space_operations hfs_aops;
+ extern const struct address_space_operations hfs_btree_aops;
+ 
+ int hfs_write_begin(struct file *file, struct address_space *mapping,
+-		loff_t pos, unsigned len, struct folio **foliop, void **fsdata);
+-extern struct inode *hfs_new_inode(struct inode *, const struct qstr *, umode_t);
+-extern void hfs_inode_write_fork(struct inode *, struct hfs_extent *, __be32 *, __be32 *);
+-extern int hfs_write_inode(struct inode *, struct writeback_control *);
+-extern int hfs_inode_setattr(struct mnt_idmap *, struct dentry *,
+-			     struct iattr *);
++		    loff_t pos, unsigned int len, struct folio **foliop,
++		    void **fsdata);
++extern struct inode *hfs_new_inode(struct inode *dir, const struct qstr *name,
++				   umode_t mode);
++extern void hfs_inode_write_fork(struct inode *inode, struct hfs_extent *ext,
++				 __be32 *log_size, __be32 *phys_size);
++extern int hfs_write_inode(struct inode *inode, struct writeback_control *wbc);
++extern int hfs_inode_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
++			     struct iattr *attr);
+ extern void hfs_inode_read_fork(struct inode *inode, struct hfs_extent *ext,
+-			__be32 log_size, __be32 phys_size, u32 clump_size);
+-extern struct inode *hfs_iget(struct super_block *, struct hfs_cat_key *, hfs_cat_rec *);
+-extern void hfs_evict_inode(struct inode *);
+-extern void hfs_delete_inode(struct inode *);
++				__be32 __log_size, __be32 phys_size,
++				u32 clump_size);
++extern struct inode *hfs_iget(struct super_block *sb, struct hfs_cat_key *key,
++				hfs_cat_rec *rec);
++extern void hfs_evict_inode(struct inode *inode);
++extern void hfs_delete_inode(struct inode *inode);
+ 
+ /* attr.c */
+ extern const struct xattr_handler * const hfs_xattr_handlers[];
+ 
+ /* mdb.c */
+-extern int hfs_mdb_get(struct super_block *);
+-extern void hfs_mdb_commit(struct super_block *);
+-extern void hfs_mdb_close(struct super_block *);
+-extern void hfs_mdb_put(struct super_block *);
++extern int hfs_mdb_get(struct super_block *sb);
++extern void hfs_mdb_commit(struct super_block *sb);
++extern void hfs_mdb_close(struct super_block *sb);
++extern void hfs_mdb_put(struct super_block *sb);
+ 
+ /* part_tbl.c */
+-extern int hfs_part_find(struct super_block *, sector_t *, sector_t *);
++extern int hfs_part_find(struct super_block *sb,
++			 sector_t *part_start, sector_t *part_size);
+ 
+ /* string.c */
+ extern const struct dentry_operations hfs_dentry_operations;
+ 
+-extern int hfs_hash_dentry(const struct dentry *, struct qstr *);
+-extern int hfs_strcmp(const unsigned char *, unsigned int,
+-		      const unsigned char *, unsigned int);
++extern int hfs_hash_dentry(const struct dentry *dentry, struct qstr *this);
++extern int hfs_strcmp(const unsigned char *s1, unsigned int len1,
++		      const unsigned char *s2, unsigned int len2);
+ extern int hfs_compare_dentry(const struct dentry *dentry,
+-		unsigned int len, const char *str, const struct qstr *name);
++				unsigned int len, const char *str,
++				const struct qstr *name);
+ 
+ /* trans.c */
+-extern void hfs_asc2mac(struct super_block *, struct hfs_name *, const struct qstr *);
+-extern int hfs_mac2asc(struct super_block *, char *, const struct hfs_name *);
++extern void hfs_asc2mac(struct super_block *sb,
++			struct hfs_name *out, const struct qstr *in);
++extern int hfs_mac2asc(struct super_block *sb,
++			char *out, const struct hfs_name *in);
+ 
+ /* super.c */
+ extern void hfs_mark_mdb_dirty(struct super_block *sb);
+--- a/fs/hfs/inode.c
++++ b/fs/hfs/inode.c
+@@ -45,7 +45,8 @@ static void hfs_write_failed(struct addr
+ }
+ 
+ int hfs_write_begin(struct file *file, struct address_space *mapping,
+-		loff_t pos, unsigned len, struct folio **foliop, void **fsdata)
++		    loff_t pos, unsigned int len, struct folio **foliop,
++		    void **fsdata)
+ {
+ 	int ret;
+ 
+--- a/fs/hfsplus/bfind.c
++++ b/fs/hfsplus/bfind.c
+@@ -210,7 +210,7 @@ release:
+ 	return res;
+ }
+ 
+-int hfs_brec_read(struct hfs_find_data *fd, void *rec, int rec_len)
++int hfs_brec_read(struct hfs_find_data *fd, void *rec, u32 rec_len)
+ {
+ 	int res;
+ 
+--- a/fs/hfsplus/bnode.c
++++ b/fs/hfsplus/bnode.c
+@@ -20,10 +20,10 @@
+ 
+ 
+ /* Copy a specified range of bytes from the raw data of a node */
+-void hfs_bnode_read(struct hfs_bnode *node, void *buf, int off, int len)
++void hfs_bnode_read(struct hfs_bnode *node, void *buf, u32 off, u32 len)
+ {
+ 	struct page **pagep;
+-	int l;
++	u32 l;
+ 
+ 	memset(buf, 0, len);
+ 
+@@ -33,7 +33,7 @@ void hfs_bnode_read(struct hfs_bnode *no
+ 	if (len == 0) {
+ 		pr_err("requested zero length: "
+ 		       "NODE: id %u, type %#x, height %u, "
+-		       "node_size %u, offset %d, len %d\n",
++		       "node_size %u, offset %u, len %u\n",
+ 		       node->this, node->type, node->height,
+ 		       node->tree->node_size, off, len);
+ 		return;
+@@ -45,17 +45,17 @@ void hfs_bnode_read(struct hfs_bnode *no
+ 	pagep = node->page + (off >> PAGE_SHIFT);
+ 	off &= ~PAGE_MASK;
+ 
+-	l = min_t(int, len, PAGE_SIZE - off);
++	l = min_t(u32, len, PAGE_SIZE - off);
+ 	memcpy_from_page(buf, *pagep, off, l);
+ 
+ 	while ((len -= l) != 0) {
+ 		buf += l;
+-		l = min_t(int, len, PAGE_SIZE);
++		l = min_t(u32, len, PAGE_SIZE);
+ 		memcpy_from_page(buf, *++pagep, 0, l);
+ 	}
+ }
+ 
+-u16 hfs_bnode_read_u16(struct hfs_bnode *node, int off)
++u16 hfs_bnode_read_u16(struct hfs_bnode *node, u32 off)
+ {
+ 	__be16 data;
+ 	/* TODO: optimize later... */
+@@ -63,7 +63,7 @@ u16 hfs_bnode_read_u16(struct hfs_bnode
+ 	return be16_to_cpu(data);
+ }
+ 
+-u8 hfs_bnode_read_u8(struct hfs_bnode *node, int off)
++u8 hfs_bnode_read_u8(struct hfs_bnode *node, u32 off)
+ {
+ 	u8 data;
+ 	/* TODO: optimize later... */
+@@ -71,10 +71,10 @@ u8 hfs_bnode_read_u8(struct hfs_bnode *n
+ 	return data;
+ }
+ 
+-void hfs_bnode_read_key(struct hfs_bnode *node, void *key, int off)
++void hfs_bnode_read_key(struct hfs_bnode *node, void *key, u32 off)
+ {
+ 	struct hfs_btree *tree;
+-	int key_len;
++	u32 key_len;
+ 
+ 	tree = node->tree;
+ 	if (node->type == HFS_NODE_LEAF ||
+@@ -86,17 +86,17 @@ void hfs_bnode_read_key(struct hfs_bnode
+ 
+ 	if (key_len > sizeof(hfsplus_btree_key) || key_len < 1) {
+ 		memset(key, 0, sizeof(hfsplus_btree_key));
+-		pr_err("hfsplus: Invalid key length: %d\n", key_len);
++		pr_err("hfsplus: Invalid key length: %u\n", key_len);
+ 		return;
+ 	}
+ 
+ 	hfs_bnode_read(node, key, off, key_len);
+ }
+ 
+-void hfs_bnode_write(struct hfs_bnode *node, void *buf, int off, int len)
++void hfs_bnode_write(struct hfs_bnode *node, void *buf, u32 off, u32 len)
+ {
+ 	struct page **pagep;
+-	int l;
++	u32 l;
+ 
+ 	if (!is_bnode_offset_valid(node, off))
+ 		return;
+@@ -104,7 +104,7 @@ void hfs_bnode_write(struct hfs_bnode *n
+ 	if (len == 0) {
+ 		pr_err("requested zero length: "
+ 		       "NODE: id %u, type %#x, height %u, "
+-		       "node_size %u, offset %d, len %d\n",
++		       "node_size %u, offset %u, len %u\n",
+ 		       node->this, node->type, node->height,
+ 		       node->tree->node_size, off, len);
+ 		return;
+@@ -116,29 +116,29 @@ void hfs_bnode_write(struct hfs_bnode *n
+ 	pagep = node->page + (off >> PAGE_SHIFT);
+ 	off &= ~PAGE_MASK;
+ 
+-	l = min_t(int, len, PAGE_SIZE - off);
++	l = min_t(u32, len, PAGE_SIZE - off);
+ 	memcpy_to_page(*pagep, off, buf, l);
+ 	set_page_dirty(*pagep);
+ 
+ 	while ((len -= l) != 0) {
+ 		buf += l;
+-		l = min_t(int, len, PAGE_SIZE);
++		l = min_t(u32, len, PAGE_SIZE);
+ 		memcpy_to_page(*++pagep, 0, buf, l);
+ 		set_page_dirty(*pagep);
+ 	}
+ }
+ 
+-void hfs_bnode_write_u16(struct hfs_bnode *node, int off, u16 data)
++void hfs_bnode_write_u16(struct hfs_bnode *node, u32 off, u16 data)
+ {
+ 	__be16 v = cpu_to_be16(data);
+ 	/* TODO: optimize later... */
+ 	hfs_bnode_write(node, &v, off, 2);
+ }
+ 
+-void hfs_bnode_clear(struct hfs_bnode *node, int off, int len)
++void hfs_bnode_clear(struct hfs_bnode *node, u32 off, u32 len)
+ {
+ 	struct page **pagep;
+-	int l;
++	u32 l;
+ 
+ 	if (!is_bnode_offset_valid(node, off))
+ 		return;
+@@ -146,7 +146,7 @@ void hfs_bnode_clear(struct hfs_bnode *n
+ 	if (len == 0) {
+ 		pr_err("requested zero length: "
+ 		       "NODE: id %u, type %#x, height %u, "
+-		       "node_size %u, offset %d, len %d\n",
++		       "node_size %u, offset %u, len %u\n",
+ 		       node->this, node->type, node->height,
+ 		       node->tree->node_size, off, len);
+ 		return;
+@@ -158,22 +158,22 @@ void hfs_bnode_clear(struct hfs_bnode *n
+ 	pagep = node->page + (off >> PAGE_SHIFT);
+ 	off &= ~PAGE_MASK;
+ 
+-	l = min_t(int, len, PAGE_SIZE - off);
++	l = min_t(u32, len, PAGE_SIZE - off);
+ 	memzero_page(*pagep, off, l);
+ 	set_page_dirty(*pagep);
+ 
+ 	while ((len -= l) != 0) {
+-		l = min_t(int, len, PAGE_SIZE);
++		l = min_t(u32, len, PAGE_SIZE);
+ 		memzero_page(*++pagep, 0, l);
+ 		set_page_dirty(*pagep);
+ 	}
+ }
+ 
+-void hfs_bnode_copy(struct hfs_bnode *dst_node, int dst,
+-		    struct hfs_bnode *src_node, int src, int len)
++void hfs_bnode_copy(struct hfs_bnode *dst_node, u32 dst,
++		    struct hfs_bnode *src_node, u32 src, u32 len)
+ {
+ 	struct page **src_page, **dst_page;
+-	int l;
++	u32 l;
+ 
+ 	hfs_dbg(BNODE_MOD, "copybytes: %u,%u,%u\n", dst, src, len);
+ 	if (!len)
+@@ -190,12 +190,12 @@ void hfs_bnode_copy(struct hfs_bnode *ds
+ 	dst &= ~PAGE_MASK;
+ 
+ 	if (src == dst) {
+-		l = min_t(int, len, PAGE_SIZE - src);
++		l = min_t(u32, len, PAGE_SIZE - src);
+ 		memcpy_page(*dst_page, src, *src_page, src, l);
+ 		set_page_dirty(*dst_page);
+ 
+ 		while ((len -= l) != 0) {
+-			l = min_t(int, len, PAGE_SIZE);
++			l = min_t(u32, len, PAGE_SIZE);
+ 			memcpy_page(*++dst_page, 0, *++src_page, 0, l);
+ 			set_page_dirty(*dst_page);
+ 		}
+@@ -227,11 +227,11 @@ void hfs_bnode_copy(struct hfs_bnode *ds
+ 	}
+ }
+ 
+-void hfs_bnode_move(struct hfs_bnode *node, int dst, int src, int len)
++void hfs_bnode_move(struct hfs_bnode *node, u32 dst, u32 src, u32 len)
+ {
+ 	struct page **src_page, **dst_page;
+ 	void *src_ptr, *dst_ptr;
+-	int l;
++	u32 l;
+ 
+ 	hfs_dbg(BNODE_MOD, "movebytes: %u,%u,%u\n", dst, src, len);
+ 	if (!len)
+@@ -301,7 +301,7 @@ void hfs_bnode_move(struct hfs_bnode *no
+ 		dst &= ~PAGE_MASK;
+ 
+ 		if (src == dst) {
+-			l = min_t(int, len, PAGE_SIZE - src);
++			l = min_t(u32, len, PAGE_SIZE - src);
+ 
+ 			dst_ptr = kmap_local_page(*dst_page) + src;
+ 			src_ptr = kmap_local_page(*src_page) + src;
+@@ -311,7 +311,7 @@ void hfs_bnode_move(struct hfs_bnode *no
+ 			kunmap_local(dst_ptr);
+ 
+ 			while ((len -= l) != 0) {
+-				l = min_t(int, len, PAGE_SIZE);
++				l = min_t(u32, len, PAGE_SIZE);
+ 				dst_ptr = kmap_local_page(*++dst_page);
+ 				src_ptr = kmap_local_page(*++src_page);
+ 				memmove(dst_ptr, src_ptr, l);
+--- a/fs/hfsplus/brec.c
++++ b/fs/hfsplus/brec.c
+@@ -60,7 +60,7 @@ u16 hfs_brec_keylen(struct hfs_bnode *no
+ 	return retval;
+ }
+ 
+-int hfs_brec_insert(struct hfs_find_data *fd, void *entry, int entry_len)
++int hfs_brec_insert(struct hfs_find_data *fd, void *entry, u32 entry_len)
+ {
+ 	struct hfs_btree *tree;
+ 	struct hfs_bnode *node, *new_node;
+--- a/fs/hfsplus/btree.c
++++ b/fs/hfsplus/btree.c
+@@ -344,7 +344,7 @@ static struct hfs_bnode *hfs_bmap_new_bm
+ }
+ 
+ /* Make sure @tree has enough space for the @rsvd_nodes */
+-int hfs_bmap_reserve(struct hfs_btree *tree, int rsvd_nodes)
++int hfs_bmap_reserve(struct hfs_btree *tree, u32 rsvd_nodes)
+ {
+ 	struct inode *inode = tree->inode;
+ 	struct hfsplus_inode_info *hip = HFSPLUS_I(inode);
+--- a/fs/hfsplus/hfsplus_fs.h
++++ b/fs/hfsplus/hfsplus_fs.h
+@@ -389,21 +389,21 @@ u32 hfsplus_calc_btree_clump_size(u32 bl
+ struct hfs_btree *hfs_btree_open(struct super_block *sb, u32 id);
+ void hfs_btree_close(struct hfs_btree *tree);
+ int hfs_btree_write(struct hfs_btree *tree);
+-int hfs_bmap_reserve(struct hfs_btree *tree, int rsvd_nodes);
++int hfs_bmap_reserve(struct hfs_btree *tree, u32 rsvd_nodes);
+ struct hfs_bnode *hfs_bmap_alloc(struct hfs_btree *tree);
+ void hfs_bmap_free(struct hfs_bnode *node);
+ 
+ /* bnode.c */
+-void hfs_bnode_read(struct hfs_bnode *node, void *buf, int off, int len);
+-u16 hfs_bnode_read_u16(struct hfs_bnode *node, int off);
+-u8 hfs_bnode_read_u8(struct hfs_bnode *node, int off);
+-void hfs_bnode_read_key(struct hfs_bnode *node, void *key, int off);
+-void hfs_bnode_write(struct hfs_bnode *node, void *buf, int off, int len);
+-void hfs_bnode_write_u16(struct hfs_bnode *node, int off, u16 data);
+-void hfs_bnode_clear(struct hfs_bnode *node, int off, int len);
+-void hfs_bnode_copy(struct hfs_bnode *dst_node, int dst,
+-		    struct hfs_bnode *src_node, int src, int len);
+-void hfs_bnode_move(struct hfs_bnode *node, int dst, int src, int len);
++void hfs_bnode_read(struct hfs_bnode *node, void *buf, u32 off, u32 len);
++u16 hfs_bnode_read_u16(struct hfs_bnode *node, u32 off);
++u8 hfs_bnode_read_u8(struct hfs_bnode *node, u32 off);
++void hfs_bnode_read_key(struct hfs_bnode *node, void *key, u32 off);
++void hfs_bnode_write(struct hfs_bnode *node, void *buf, u32 off, u32 len);
++void hfs_bnode_write_u16(struct hfs_bnode *node, u32 off, u16 data);
++void hfs_bnode_clear(struct hfs_bnode *node, u32 off, u32 len);
++void hfs_bnode_copy(struct hfs_bnode *dst_node, u32 dst,
++		    struct hfs_bnode *src_node, u32 src, u32 len);
++void hfs_bnode_move(struct hfs_bnode *node, u32 dst, u32 src, u32 len);
+ void hfs_bnode_dump(struct hfs_bnode *node);
+ void hfs_bnode_unlink(struct hfs_bnode *node);
+ struct hfs_bnode *hfs_bnode_findhash(struct hfs_btree *tree, u32 cnid);
+@@ -418,7 +418,7 @@ bool hfs_bnode_need_zeroout(struct hfs_b
+ /* brec.c */
+ u16 hfs_brec_lenoff(struct hfs_bnode *node, u16 rec, u16 *off);
+ u16 hfs_brec_keylen(struct hfs_bnode *node, u16 rec);
+-int hfs_brec_insert(struct hfs_find_data *fd, void *entry, int entry_len);
++int hfs_brec_insert(struct hfs_find_data *fd, void *entry, u32 entry_len);
+ int hfs_brec_remove(struct hfs_find_data *fd);
+ 
+ /* bfind.c */
+@@ -431,7 +431,7 @@ int hfs_find_rec_by_key(struct hfs_bnode
+ int __hfs_brec_find(struct hfs_bnode *bnode, struct hfs_find_data *fd,
+ 		    search_strategy_t rec_found);
+ int hfs_brec_find(struct hfs_find_data *fd, search_strategy_t do_key_compare);
+-int hfs_brec_read(struct hfs_find_data *fd, void *rec, int rec_len);
++int hfs_brec_read(struct hfs_find_data *fd, void *rec, u32 rec_len);
+ int hfs_brec_goto(struct hfs_find_data *fd, int cnt);
+ 
+ /* catalog.c */
+@@ -589,14 +589,14 @@ hfsplus_btree_lock_class(struct hfs_btre
+ }
+ 
+ static inline
+-bool is_bnode_offset_valid(struct hfs_bnode *node, int off)
++bool is_bnode_offset_valid(struct hfs_bnode *node, u32 off)
+ {
+ 	bool is_valid = off < node->tree->node_size;
+ 
+ 	if (!is_valid) {
+ 		pr_err("requested invalid offset: "
+ 		       "NODE: id %u, type %#x, height %u, "
+-		       "node_size %u, offset %d\n",
++		       "node_size %u, offset %u\n",
+ 		       node->this, node->type, node->height,
+ 		       node->tree->node_size, off);
+ 	}
+@@ -605,7 +605,7 @@ bool is_bnode_offset_valid(struct hfs_bn
+ }
+ 
+ static inline
+-int check_and_correct_requested_length(struct hfs_bnode *node, int off, int len)
++u32 check_and_correct_requested_length(struct hfs_bnode *node, u32 off, u32 len)
+ {
+ 	unsigned int node_size;
+ 
+@@ -615,12 +615,12 @@ int check_and_correct_requested_length(s
+ 	node_size = node->tree->node_size;
+ 
+ 	if ((off + len) > node_size) {
+-		int new_len = (int)node_size - off;
++		u32 new_len = node_size - off;
+ 
+ 		pr_err("requested length has been corrected: "
+ 		       "NODE: id %u, type %#x, height %u, "
+-		       "node_size %u, offset %d, "
+-		       "requested_len %d, corrected_len %d\n",
++		       "node_size %u, offset %u, "
++		       "requested_len %u, corrected_len %u\n",
+ 		       node->this, node->type, node->height,
+ 		       node->tree->node_size, off, len, new_len);
+ 
 
 
