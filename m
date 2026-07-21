@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFD531F99C;
-	Tue, 21 Jul 2026 15:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CFC746D55F;
+	Tue, 21 Jul 2026 15:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648937; cv=none; b=j4xy+BTchvvdiXC/rnra6ddfekmvupGsp9hfjNea7DFHGzZoZyT7Hz64X8WNV4EP/d7bd5bGInG1eHvOEFjFWoLbwmUxOySDARQ5VGkc/PJzE9ayk7zDTr4ov5BWhDq6phLg7FTgEDp5ZBNdhd3brUSKiotwohNBm55KspmTD1k=
+	t=1784648940; cv=none; b=esPwcT7cn1khSyaaug7KjV44i2yXNmCPo0lnUCxdgSpZDr7TSj6XXGM6RNiWHJc8e3Tb+Fh27f6UfI10VDjurkGxdNCDX8AmaU9Gza8vdS4UCQGuxCn/NSkr4SjQuloMdxK5bmS0G7AONn0yh57jG6+AJ28DW9EukKc6ocqNK9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648937; c=relaxed/simple;
-	bh=2gnREzT1mpY2Stg/q5KCVir0SB6VUmM8ALf4PEdJ9wk=;
+	s=arc-20240116; t=1784648940; c=relaxed/simple;
+	bh=ipjVeDwQrpZOkyuwgDDSNZVy3vOtHSocTh1BJfxJIOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fO9TMfYLaw2tlt/y3TS29udt5FW5rWnF5/4fMKdDXZu1juOQ0wGTFjpzwqFpFED1H73O4BuQTpoArr+iKryFwHGnpgg/T0BmLSkMa1RzwqEasX1SH1PCn5NQljq38yeg5JIviNAIDhg91fG4dn3hhfNdHqSn9bugEneQGtePGt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0R6lJqTv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S5YkCVilN1BHqEqjXDA/MfhxwPVVbpT+qPZGm7BRWaOwb6jIiNsYVoGVL/uQB51EgYT1MbAo1LBLYBt8k9VjUBXzRN7u4LDttZGXjIH9itFIzJjDrk74XAJqcFxTA5tTn6xHzM/CD6nAuzYHOU0MGoifaS/mYHqrZ1OimkGf8nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OWy6BvNl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0R6lJqTv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33761F000E9;
-	Tue, 21 Jul 2026 15:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OWy6BvNl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744DB1F000E9;
+	Tue, 21 Jul 2026 15:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648936;
-	bh=0L0AHAV0rTlH/PN/IW5WriQXawSaSLLID6YgOm6rJm8=;
+	s=korg; t=1784648938;
+	bh=VteiOTCXCbTSURrs4kuCeuzlR8q+4SFLa8ux3A8w/CU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0R6lJqTvshMF1BuamoDv1jEE5RfOfg1Aw6kRhmCR9wX3VYxQTlOrXNE+mmkHyWRd2
-	 VRoAo4MzcP6/ZBxM+NAdWVVngoWBBJ5lPgGxQYPgE5a1VLe9DFn0DHtfkvTtAd6MgO
-	 1ZGhxkcHtXoisnoAf0EE4Wdk+siGU66ZbmgtYJHg=
+	b=OWy6BvNlQN4uy6qYRxAHDw79fPi6vCD2uHtJHXD7L/2wdMm51tmtPaRCPqOhppXrH
+	 i3FLnOljMSaXnscgkNI5JJliUP1e7MaW/maad3u7p27bUvnXU2m2oSm2kw+cn9nFBT
+	 ZVj5P5JLdjKQQb4bVecCZuAB1ZpT1ZCsym5Fk2vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
 	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0388/2077] media: qcom: venus: relax encoder frame/blur dimension steps on v4
-Date: Tue, 21 Jul 2026 17:01:01 +0200
-Message-ID: <20260721152601.854008504@linuxfoundation.org>
+Subject: [PATCH 7.1 0389/2077] media: qcom: venus: relax encoder frame/blur step size on v6
+Date: Tue, 21 Jul 2026 17:01:02 +0200
+Message-ID: <20260721152601.878177206@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,49 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Renjiang Han <renjiang.han@oss.qualcomm.com>
 
-[ Upstream commit 35428ae3a6a40912f1f7b47bb6c65f1a63d0b8f8 ]
+[ Upstream commit c53e0550288b2e08b984b24035c471941b7820c7 ]
 
-Encoder HFI capabilities on v4 advertise a 16-pixel step for frame and
-blur dimensions. This is overly restrictive and can cause userspace caps
-negotiation to fail even for valid resolutions.
+Encoder HFI capabilities on v6 enforce a 16-pixel step for frame and blur
+dimensions, which does not reflect actual hardware requirements and can
+reject valid userspace configurations.
 
-Relax the advertised step size to 1 and keep alignment enforcement in
-buffer layout and size calculations.
+Relax the step size to 1 while leaving min/max limits unchanged.
 
-Fixes: 8b88cabef404e ("media: venus: hfi_plat_v4: Populate codecs and capabilities for v4")
+Fixes: 869d77e706290 ("media: venus: hfi_plat_v6: Populate capabilities for v6")
 Signed-off-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
 Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/qcom/venus/hfi_platform_v4.c     | 20 +++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ .../media/platform/qcom/venus/hfi_platform_v6.c  | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v4.c b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-index cda888b56b5d48..e0b3652bb44093 100644
---- a/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-+++ b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-@@ -136,8 +136,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.codec = HFI_VIDEO_CODEC_H264,
- 	.domain = VIDC_SESSION_TYPE_ENC,
- 	.cap_bufs_mode_dynamic = true,
--	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 16},
--	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 16},
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 1},
- 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
- 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
- 	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
+diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v6.c b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
+index d8568c08cc3612..fb8d10ab34043e 100644
+--- a/drivers/media/platform/qcom/venus/hfi_platform_v6.c
++++ b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
 @@ -173,8 +173,8 @@ static const struct hfi_plat_caps caps[] = {
  	.codec = HFI_VIDEO_CODEC_HEVC,
  	.domain = VIDC_SESSION_TYPE_ENC,
  	.cap_bufs_mode_dynamic = true,
--	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 16},
--	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 16},
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 1},
- 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
- 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
+-	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 8192, 16},
+-	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 8192, 16},
++	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 8192, 1},
++	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 8192, 1},
+ 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 138240, 1},
+ 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 160000000, 1},
  	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
 @@ -195,8 +195,8 @@ static const struct hfi_plat_caps caps[] = {
  	.caps[19] = {HFI_CAPABILITY_RATE_CONTROL_MODES, 0x1000001, 0x1000005, 1},
@@ -113,12 +101,12 @@ index cda888b56b5d48..e0b3652bb44093 100644
  	.codec = HFI_VIDEO_CODEC_VP8,
  	.domain = VIDC_SESSION_TYPE_ENC,
  	.cap_bufs_mode_dynamic = true,
--	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 16},
--	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 16},
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 1},
- 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
- 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
+-	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 4096, 16},
+-	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 4096, 16},
++	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 4096, 1},
++	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 4096, 1},
+ 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 36864, 1},
+ 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 74000000, 1},
  	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
 @@ -229,8 +229,8 @@ static const struct hfi_plat_caps caps[] = {
  	.caps[16] = {HFI_CAPABILITY_P_FRAME_QP, 0, 127, 1},
