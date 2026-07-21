@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D2040B11B;
-	Tue, 21 Jul 2026 15:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842DE46D57A;
+	Tue, 21 Jul 2026 15:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648623; cv=none; b=XiKUAWx0qftk1IEDRZNWbCT5K6wIkllTtM4WIA8TkRhl6bT5ae2WpuK3SDIKIABs5Ar6NFZcgnpQDjeZllMLSYPgPhGEeLsviaDFxGqeE/Hipr3cm1p1j3Lf0hW8IZAMFrFeT6pgTZcX6jpwbWkIAubuEfvF+UHesUuJwpStFg8=
+	t=1784648625; cv=none; b=qbiwUGteqkZtkK8DCnjLRF3ys7OuK3ms2k3QLdX4kT6X/RoWW0sN0TD4cwkMBg2A0JH9DE3gNehRfn/pIeR8VPoIYds0oZselSXJvUpdPGFFRQYGlxfcmZi1p3DVyf/zMceZqYdRIOrKxHenlGXeEkDaOW5sWsbs+Qoui2NOO6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648623; c=relaxed/simple;
-	bh=0OTbZATmyon4O4xcDMtCpzPyc560ZWwhlfCYFrzMQEM=;
+	s=arc-20240116; t=1784648625; c=relaxed/simple;
+	bh=aN7h45aAROV/pZoOahu0JuQOcUgukCKwq5QlWQ+opeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bpebXBxG36LWrnOZKcM4yNKpJV4/aOoKwsSdD8MEgWBO6Ux4t9l3XLW21l57sZxngKnnvxztF69gm2wgXJB9tT8HgNe3n+pPUkIKgaVvymVemvKhmJX2Va/LnOuLNlCRlIVSSKBLwGXNCT75BByZj9/EPW5YgP86+b1VVNSIJzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=StgL0OyQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NvlJ2Mvu5nSnRnfnSCVJAOTfnSlj92mH2f3wojI1r7PgxpmD6ED2JCheF6ggkYnGAq2RfzFUjXE4tDykhkkuICgSVQ+UmgkDA8L5XUpJJZsDM7AsQpvx6PBGXzRYO7SMrIc1cYBd+gZV1tbXfj7vJ++VQOTr/1g4gol5grEmr4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdvJs2aK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="StgL0OyQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A091F000E9;
-	Tue, 21 Jul 2026 15:43:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdvJs2aK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EACF21F000E9;
+	Tue, 21 Jul 2026 15:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648621;
-	bh=tSm7ZJFgGeEaZ3zZ3AwqqxxcBwfmQkv+oi93wpn561w=;
+	s=korg; t=1784648624;
+	bh=SV/5jVwKTUE3zKDNhXIqmXu60A850ozv/hH3l0LesuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=StgL0OyQdGbspasX+HAOItw/atpy8XGe4wI8iEWPHdIBEtYbK0+ngm82Yu7sZ33rW
-	 cooYsBjoJy6hV+i2TcByJpRD+EhZw5q9ddOZdmEZI7R0BIC8cb7JDcY1hS/y7Xp8ua
-	 13gF6qHnHtpAHoYku6JEIbCaUHHgpcShGCrLG3Y4=
+	b=HdvJs2aKdXsZSiFTcxpolUekdB0lbAyKaY72VUYsKMAbvbZ8623O6o79vEaa97OK9
+	 2cy2tX0hYnD0sCCwd/ahtbCXj+DG4xGBGCy/MYrFzrfRtAZH0cJLQJXA4eox1Ty8V4
+	 daOEjHZ5auxelveCQFDdpUnM4x6Gu9Wa0S9dd/+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-	Harshal Dev <harshal.dev@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0267/2077] arm64: dts: qcom: sc7180: Add power-domain and iface clk for ice node
-Date: Tue, 21 Jul 2026 16:59:00 +0200
-Message-ID: <20260721152558.973073315@linuxfoundation.org>
+Subject: [PATCH 7.1 0226/2077] RDMA/hns: Initialize seqfile before creating file
+Date: Tue, 21 Jul 2026 16:58:19 +0200
+Message-ID: <20260721152558.010064446@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,46 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshal Dev <harshal.dev@oss.qualcomm.com>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit 7cd7271ac525e4eadd22734f418219f247638f43 ]
+[ Upstream commit b4070770506ff516e21b4923afdaf7eb5da0e150 ]
 
-Qualcomm in-line crypto engine (ICE) platform driver specifies and votes
-for its own resources. Before accessing ICE hardware during probe, to
-avoid potential unclocked register access issues (when clk_ignore_unused
-is not passed on the kernel command line), in addition to the 'core' clock
-the 'iface' clock should also be turned on by the driver. This can only be
-done if the UFS_PHY_GDSC power domain is enabled. Specify both the
-UFS_PHY_GDSC power domain and the 'iface' clock in the ICE node for sc7180.
+The debugfs file was created before seq->read and seq->data were set,
+leaving a small window where userspace could access an uninitialized
+seqfile.
 
-Fixes: 858536d9dc946 ("arm64: dts: qcom: sc7180: Add UFS nodes")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260416-qcom_ice_power_and_clk_vote-v5-6-5ccf5d7e2846@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Move debugfs_create_file() after the assignments to avoid this issue.
+Also, inline the original init_debugfs_seqfile() since it is not a
+really necessary helper.
+
+Fixes: ca7ad04cd5d2 ("RDMA/hns: Add debugfs to hns RoCE")
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20260507012148.1079712-2-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/hns/hns_roce_debugfs.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index a4b17564469eed..94a699cc26889e 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1605,7 +1605,11 @@ ice: crypto@1d90000 {
- 			compatible = "qcom,sc7180-inline-crypto-engine",
- 				     "qcom,inline-crypto-engine";
- 			reg = <0 0x01d90000 0 0x8000>;
--			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-+			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
-+				 <&gcc GCC_UFS_PHY_AHB_CLK>;
-+			clock-names = "core",
-+				      "iface";
-+			power-domains = <&gcc UFS_PHY_GDSC>;
- 		};
+diff --git a/drivers/infiniband/hw/hns/hns_roce_debugfs.c b/drivers/infiniband/hw/hns/hns_roce_debugfs.c
+index b869cdc5411893..db32c5897640fb 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_debugfs.c
++++ b/drivers/infiniband/hw/hns/hns_roce_debugfs.c
+@@ -26,17 +26,6 @@ static const struct file_operations hns_debugfs_seqfile_fops = {
+ 	.llseek = seq_lseek
+ };
  
- 		ipa: ipa@1e40000 {
+-static void init_debugfs_seqfile(struct hns_debugfs_seqfile *seq,
+-				 const char *name, struct dentry *parent,
+-				 int (*read_fn)(struct seq_file *, void *),
+-				 void *data)
+-{
+-	debugfs_create_file(name, 0400, parent, seq, &hns_debugfs_seqfile_fops);
+-
+-	seq->read = read_fn;
+-	seq->data = data;
+-}
+-
+ static const char * const sw_stat_info[] = {
+ 	[HNS_ROCE_DFX_AEQE_CNT] = "aeqe",
+ 	[HNS_ROCE_DFX_CEQE_CNT] = "ceqe",
+@@ -76,10 +65,12 @@ static void create_sw_stat_debugfs(struct hns_roce_dev *hr_dev,
+ {
+ 	struct hns_sw_stat_debugfs *dbgfs = &hr_dev->dbgfs.sw_stat_root;
+ 
+-	dbgfs->root = debugfs_create_dir("sw_stat", parent);
++	dbgfs->sw_stat.read = sw_stat_debugfs_show;
++	dbgfs->sw_stat.data = hr_dev;
+ 
+-	init_debugfs_seqfile(&dbgfs->sw_stat, "sw_stat", dbgfs->root,
+-			     sw_stat_debugfs_show, hr_dev);
++	dbgfs->root = debugfs_create_dir("sw_stat", parent);
++	debugfs_create_file("sw_stat", 0400, dbgfs->root, &dbgfs->sw_stat,
++			    &hns_debugfs_seqfile_fops);
+ }
+ 
+ /* debugfs for device */
 -- 
 2.53.0
 
