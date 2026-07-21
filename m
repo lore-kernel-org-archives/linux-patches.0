@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4640F46F49C;
-	Tue, 21 Jul 2026 20:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D72470105;
+	Tue, 21 Jul 2026 20:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664106; cv=none; b=F77eRttxVUpWNbzyZwD+nbBwdPGVWRnojrnyRxnCg1j5VdLklE9/VflzPN5sJraRCyMMi3lOAgOZNeneKt4O/K/mT3Hb33Si1sNhF2h1P4g/Eqg942lOLzY52JdP8tfenUIfzK2wxCe3Yt2HptLZIFbdP19QdRvbiLkiZhKoAxc=
+	t=1784664108; cv=none; b=f7meuzwYDkeeG3m3/kDsTFI1lgsSEyUHfaktM9ZZ1PhBZ3N5OWbiuVVUDAxBAbiKpcTBo+3hS5JHnL9e1SeKeQv+pCdP1pShQvL8olkqqrUKOuKVMYkd2NDMNw0AYEux4GQFLuKIGXGC6ikIYQzbnU9QdueGvmPqY0L+EVGux54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664106; c=relaxed/simple;
-	bh=Jpypk0WoO8rXDqLYlolElbVBo6dHvhEWJkADCGUB9wM=;
+	s=arc-20240116; t=1784664108; c=relaxed/simple;
+	bh=mmXjniyTc4M9k6LyAyx6ipeJs+mZGaRi3rhe6KuDmLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mtrWKTQxaOMG9zzYBzos2BVvTgdZvy0f0b9/SESgPo0NlQ+pR8iUbNnCnPSkvAYDWplm+pJHDNxxnY0qJXwIEVjLYP8k9/jR0Y/OUjJam9zTKS6/6Nccef1kUfujW3qcduMb1dBh+gqWCKr9V/bZefXBzCUqnc0O3VzbqaVmuko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3uwfEUl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IiXsVC70oo4k2035RKhntHul6sFreCsxJmQeT8ylEnESB9iXFazyA84xocJ2z/v82qgnSgNma65hw1gkJ114R8ViJuyxVJ4keXohyUyOWH6nUYJRibwOZwdm1/J13vfgO+FqxeRQVBGfmmk+PL37gsCUYRixiQ0LMr5yVdSHH3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kAu+ocAH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3uwfEUl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28DC1F000E9;
-	Tue, 21 Jul 2026 20:01:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kAu+ocAH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3231F000E9;
+	Tue, 21 Jul 2026 20:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664104;
-	bh=7dfoj7vp2ldZD1/dV1bzTqOpOwiZUiWpSRtvg2p3BLg=;
+	s=korg; t=1784664106;
+	bh=4zFLBQbVA5u6CSqtsI2zZH9tmo0G6tiXT6AHA/CAkYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G3uwfEUl3loPPgj1HlANlSLG63aTS1M8GLCMgKL2HUprkdrSh1WZd+K7CI0xXaSyk
-	 12Y7ny/RTS1HNUSDEX7TEC5f8wNOAPwpzybiu8MxsOd7NpBzBnmDcc3VDSRpe2LZkX
-	 XnwwmCVrTlPt4Dqpzq4yJMq6iB9l6kjzVqEPe8r8=
+	b=kAu+ocAHLwV00QBznsSr2l6dDZLRbXwxHUjzgBk0xbu1+NanMA6geuN+A/nJfjUnJ
+	 utuyBUv+fIQK5w/B8wNnCVEstN/LcrGg00G2hJfRCEqsJ0pYvSkWTJiv2/O3kfJxIk
+	 kx4RC/umiU6x2Vhi6iB2Xlxpi/NvHZK6WhBezT0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	David Thompson <davthompson@nvidia.com>,
-	Thangaraj Samynathan <Thangaraj.s@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 1075/1276] net: lan743x: Initialize eth_syslock spinlock before use
-Date: Tue, 21 Jul 2026 17:25:18 +0200
-Message-ID: <20260721152510.043371691@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 1076/1276] net/sched: sch_multiq: Replace direct dequeue call with peek and qdisc_dequeue_peeked
+Date: Tue, 21 Jul 2026 17:25:19 +0200
+Message-ID: <20260721152510.066278731@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,46 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 39139b1c1c2b614096519b526112c726adb12ff0 upstream.
+commit 54f6b0c843e228d499eb4b6bbb89df68cad9ad5d upstream.
 
-lan743x_hardware_init() calls pci11x1x_strap_get_status() during the
-PCI11x1x probe sequence. That helper acquires the Ethernet subsystem
-hardware lock via lan743x_hs_syslock_acquire(), which relies on
-adapter->eth_syslock_spinlock to serialize access.
+multiq_dequeue() takes a packet from a band's child with a direct
+->dequeue() call after multiq_peek() peeked it. When the child is
+non-work-conserving the peek stashes the skb in the child's gso_skb, so
+the direct dequeue returns a different skb and orphans the stash,
+desyncing the child's qlen/backlog. With a qfq child reached through a
+peeking parent (e.g. tbf) this re-enters the child on an emptied list and
+dereferences NULL, panicking the kernel from softirq on ordinary egress.
 
-The spinlock is currently initialized only after the strap status is
-read. With CONFIG_DEBUG_SPINLOCK enabled, taking the zeroed initialized
-spinlock can trip the spinlock debug check.
+Take the packet through qdisc_dequeue_peeked(), as sch_prio already does
+and as sch_red and sch_sfb were just fixed to do. The helper is a no-op
+when the child has no stash, so a work-conserving child is unaffected.
 
-Fix by initializing adapter->eth_syslock_spinlock before reading the
-strap status so the probe path never attempts to lock an uninitialized
-spinlock.
-
-Fixes: 46b777ad9a8c ("net: lan743x: Add support to SGMII 1G and 2.5G")
-Cc: stable@vger.kernel.org # v6.0+
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Reviewed-by: David Thompson <davthompson@nvidia.com>
-Reviewed-by: Thangaraj Samynathan<Thangaraj.s@microchip.com>
-Link: https://patch.msgid.link/20260626163218.3591486-1-arighi@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 77be155cba4e ("pkt_sched: Add peek emulation for non-work-conserving qdiscs.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260625-b4-disp-31bcb279-v1-2-85c40b83c529@proton.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/lan743x_main.c |    2 +-
+ net/sched/sch_multiq.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -3506,8 +3506,8 @@ static int lan743x_hardware_init(struct
- 		adapter->max_tx_channels = PCI11X1X_MAX_TX_CHANNELS;
- 		adapter->used_tx_channels = PCI11X1X_USED_TX_CHANNELS;
- 		adapter->max_vector_count = PCI11X1X_MAX_VECTOR_COUNT;
--		pci11x1x_strap_get_status(adapter);
- 		spin_lock_init(&adapter->eth_syslock_spinlock);
-+		pci11x1x_strap_get_status(adapter);
- 		mutex_init(&adapter->sgmii_rw_lock);
- 		pci11x1x_set_rfe_rd_fifo_threshold(adapter);
- 		sgmii_ctl = lan743x_csr_read(adapter, SGMII_CTL);
+--- a/net/sched/sch_multiq.c
++++ b/net/sched/sch_multiq.c
+@@ -103,7 +103,7 @@ static struct sk_buff *multiq_dequeue(st
+ 		if (!netif_xmit_stopped(
+ 		    netdev_get_tx_queue(qdisc_dev(sch), q->curband))) {
+ 			qdisc = q->queues[q->curband];
+-			skb = qdisc->dequeue(qdisc);
++			skb = qdisc_dequeue_peeked(qdisc);
+ 			if (skb) {
+ 				qdisc_bstats_update(sch, skb);
+ 				sch->q.qlen--;
 
 
