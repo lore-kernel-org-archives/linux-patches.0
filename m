@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B483955F4;
-	Tue, 21 Jul 2026 15:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90CF256C84;
+	Tue, 21 Jul 2026 15:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649412; cv=none; b=XvrGs3D1GXdcMMa7S5OVO/c7/5HZMsVICefvxpBIQSFOlSHXt+D+wxPH77IUmhvz8NNd2OJz/Yb6WytdmG65RMDkpn7iL3Km6Yxl8Fw5VtoRbMGBwHpSnpdCYnRmI+xoKn+GBM9e4WsyaJHGGlA6at7cl9LsaveoMFudVU/UI50=
+	t=1784649414; cv=none; b=JTnfG1ZufJxceciToEIocgWYXJoNcJOA1/CUcUHnW2utfLRCUNQRlQGYZwiY0oyzCkGuXTJ8icBvJwhIYGkZiiPd1/ocRIdShITfbAW9X0qmSYv+GAY0eNlrYw/HJU3p0/d2GUNasqVyTuLecmCFWtSkBe/LItgEfLQS9JAQ/xY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649412; c=relaxed/simple;
-	bh=JC7xEh66VmMuDYTGi8aPvHaX5Fz5l8cR7pfpcF4illI=;
+	s=arc-20240116; t=1784649414; c=relaxed/simple;
+	bh=eIVg3mheZg8mW+U7xvsxbovmogUHUv7Rkf/mDmzaZHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WqznqC/jmV0Ekg4KAtiqlKbEiWywWdglmbT6K9Da5ArvurV9/6j++KAlT7FdujX5POvVSQlkbnp5J+4Vcl+7CvgnlBsRmyVc6yw9xbZiyCfmSSfDhfFU8L91gKvuUzsOknCD3Mv1z+ZhT1iFtfWkZAUqn4yhakK7/qkvr3ykNlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9kIEPWP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r3/mHMEN4X0bcIgVoq/hDiA40MuYmZ4H0/dWqQMOZAUYRRG/7TpC8FdImkWz9WCCYrbYVsHDhS12SIMvw+9sDV8XZds3nmg9f6Q5InLKL1ZRGCkW9np46PMAm9FtqfMjqQc49hqGE7sVEwwV1VKtBHH77eU85wJRa2Y3w1k5XMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPSx1VCf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9kIEPWP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B151F000E9;
-	Tue, 21 Jul 2026 15:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPSx1VCf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F85B1F00A3D;
+	Tue, 21 Jul 2026 15:56:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649411;
-	bh=2YF2GxXvGSICA4hdEguPiK0bhQNkmQq4+ovO/dCknmI=;
+	s=korg; t=1784649413;
+	bh=HJay47GhelGTuN8mIo0cZQXybVQMYKNy0O7av5q/UrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n9kIEPWPyIl7rhFNEqR3UHIjyz0e9FKSOMpkhYS3eim7xgU1b1GHE9XpmutV4Z0vz
-	 xlAVL9MbY075QdRBCtXXb6/8YHIXxfUsiyY4+UrsI0vTHC/Q+HszUL6oe7d/O67Oyo
-	 COVkT4+EJQYcCnnk9Eg34qZZNpQU08f2iwfLRTbU=
+	b=xPSx1VCfu9k0t2sPey73iGCXuq4Ce77x7IhTCenqqWM7g1w3BPlhkmwoaBS3I1SPW
+	 FCSPaY1AUcryw3W0p06yZ6PqLCzHuGCGafLPq7fbdfOdnJQ/qx2O0z0jQuuU0MGUSk
+	 opQi2OatH2FYLqGtoOpfgWObXlTR0r22/KF4uYAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Timur Tabi <ttabi@nvidia.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Ankit Soni <Ankit.Soni@amd.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0568/2077] pinctrl: PINCTRL_STMFX should depend on CONFIG_OF
-Date: Tue, 21 Jul 2026 17:04:01 +0200
-Message-ID: <20260721152606.207571117@linuxfoundation.org>
+Subject: [PATCH 7.1 0569/2077] iommufd: Take dma_resv lock before dma_buf_unpin() in release path
+Date: Tue, 21 Jul 2026 17:04:02 +0200
+Message-ID: <20260721152606.230162824@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,43 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Timur Tabi <ttabi@nvidia.com>
+From: Ankit Soni <Ankit.Soni@amd.com>
 
-[ Upstream commit fd9490bdd4536a8e0911578f62164176b9000552 ]
+[ Upstream commit e745cd2c749e557c14a15ac931761c3f58c24489 ]
 
-Commit e785c990adcc ("pinctrl: Kconfig: drop unneeded dependencies
-on OF_GPIO") removed a redundant dependecy on CONFIG_OF_GPIO for
-several pinctrl drivers, but this change also removed a dependency
-on CONFIG_OF for some of those drivers.
+dma_buf_unpin() requires the caller to hold the exporter's dma_resv
+lock:
 
-Normally, this wouldn't be a problem, but PINCTRL_STMFX also selected
-MFD_STMFX, which does depend on CONFIG_OF.  This conflict allows
-MFD_STMFX to be enabled even if CONFIG_OF is disabled.
+  void dma_buf_unpin(struct dma_buf_attachment *attach)
+  {
+          ...
+          dma_resv_assert_held(dmabuf->resv);
+          ...
+  }
 
-Fix this by also having PINCTRL_STMFX depend on CONFIG_OF.  This is
-okay because the pinctrl-stmfx driver actually does depend on CONFIG_OF
-functions.
+iopt_release_pages() calls dma_buf_unpin() without taking that lock,
+so every iommufd_ioas_destroy()/iommufd_ioas_unmap() that releases
+the last reference on a DMABUF-backed iopt_pages triggers a WARN.
+This was hit while running tools/testing/selftests/iommu/iommufd:
 
-Fixes: e785c990adcc ("pinctrl: Kconfig: drop unneeded dependencies on OF_GPIO")
-Signed-off-by: Timur Tabi <ttabi@nvidia.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+  WARNING: drivers/dma-buf/dma-buf.c:1137 at dma_buf_unpin+0x62/0x70
+  RIP: 0010:dma_buf_unpin+0x62/0x70
+  Call Trace:
+   <TASK>
+   dma_buf_unpin+0x62/0x70
+   iopt_release_pages+0xe4/0x190
+   iopt_unmap_iova_range+0x1c7/0x290
+   iopt_unmap_all+0x1a/0x30
+   iommufd_ioas_destroy+0x1d/0x50
+   iommufd_fops_release+0x93/0x150
+   __fput+0xfc/0x2c0
+   __x64_sys_close+0x3d/0x80
+   do_syscall_64+0x65/0x180
+   </TASK>
+
+Take the dma_resv lock around dma_buf_unpin() in iopt_release_pages(),
+matching the iopt_map_dmabuf() convention. dma_buf_detach() acquires the
+reservation lock internally, so it must remain outside the locked region.
+
+Fixes: 8c5f9645c389 ("iommufd: Add dma_buf_pin()")
+Link: https://patch.msgid.link/r/20260526111034.4079-1-Ankit.Soni@amd.com
+Reported-by: Ankit Soni <Ankit.Soni@amd.com>
+Signed-off-by: Ankit Soni <Ankit.Soni@amd.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/iommufd/pages.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pinctrl/Kconfig b/drivers/pinctrl/Kconfig
-index 03f2e3ee065f42..75131b6e6eeac9 100644
---- a/drivers/pinctrl/Kconfig
-+++ b/drivers/pinctrl/Kconfig
-@@ -548,6 +548,7 @@ config PINCTRL_ST
+diff --git a/drivers/iommu/iommufd/pages.c b/drivers/iommu/iommufd/pages.c
+index 9bdb2945afe1eb..7b64002e54b9a2 100644
+--- a/drivers/iommu/iommufd/pages.c
++++ b/drivers/iommu/iommufd/pages.c
+@@ -1663,7 +1663,9 @@ void iopt_release_pages(struct kref *kref)
+ 	if (iopt_is_dmabuf(pages) && pages->dmabuf.attach) {
+ 		struct dma_buf *dmabuf = pages->dmabuf.attach->dmabuf;
  
- config PINCTRL_STMFX
- 	tristate "STMicroelectronics STMFX GPIO expander pinctrl driver"
-+	depends on OF
- 	depends on I2C
- 	depends on HAS_IOMEM
- 	select GENERIC_PINCONF
++		dma_resv_lock(dmabuf->resv, NULL);
+ 		dma_buf_unpin(pages->dmabuf.attach);
++		dma_resv_unlock(dmabuf->resv);
+ 		dma_buf_detach(dmabuf, pages->dmabuf.attach);
+ 		dma_buf_put(dmabuf);
+ 		WARN_ON(!list_empty(&pages->dmabuf.tracker));
 -- 
 2.53.0
 
