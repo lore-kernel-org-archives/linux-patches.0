@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B7546D2D2;
-	Tue, 21 Jul 2026 19:10:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E385646D2D2;
+	Tue, 21 Jul 2026 19:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661014; cv=none; b=bXZ8DvjcRLDcDK96XO0TSb5+WKGltgDv4gme/qCzkInvJ04Z12vURP6ns6xYkbyOecsE8LXfoAIweJCo6m26midTd7QsnatBUWFDyal7U//hCBHccJL4p9AbHmtypwY/4EePtX8H2g3GAoUl1ghFteSgxmtgz8zPvjvuP2WoaP4=
+	t=1784661016; cv=none; b=HxXI7Zo0Z4q/KrsK0S8SXrnKuciWihLOYz2IC0DfaOOzatwT/bJ6KXYWd9yUzrq4cBEXz416VUfNwIQi/r9nXKurV7RRkYKh7drLe/m9ATa9D28MDgIlqZQyzW0GxnwbqYfVBbs/KHSUm/eIfGxV9eR4twjBVLYevMZEWVPSLAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661014; c=relaxed/simple;
-	bh=3as0GrVCRaxo1xUgBDgJlWIktrmS8pqI1zqSuphh7c0=;
+	s=arc-20240116; t=1784661016; c=relaxed/simple;
+	bh=UdXwa0Nq2VZ49MuWEwOZp0nybtef8B6Wn2RlVCVqWwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oo9YBIlNAde7001Agk7WTz3qFYCksrkd/SCHz4X9gIIF+VwhCze+ekkk/754PrlXMjyWphid/rDCUgkyHmshO5UxjA6rJ5ErVOUlcdyxfJ9s/N5EkHtKUmHT3w9B4aXpYixX2qrlNeGP8IjHzgOQDGHJDWq9BxMSn9tKKGTpML0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKZl8RPu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NdcA7n6zb6n0Q8zC/mZzbHRUtq2bR07sesRCmiuOBwcp4BsunQNubUEORw2ygZmvkMX46/O1CugRqskEtA/QQfTENrzBjxEBysnjLGytnixv/hHiXREdF0ET3Ljn5IqJRGR5hxr4jVnF9Gm4MhUp9GQxpIlYb2MDc/Sj2IcKbmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGWvwC9b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKZl8RPu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E41D1F000E9;
-	Tue, 21 Jul 2026 19:10:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGWvwC9b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 488F71F000E9;
+	Tue, 21 Jul 2026 19:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661013;
-	bh=GBpOTxuUGENdEYpJsFBbOPcogrUUp+5abky5KrqlbPw=;
+	s=korg; t=1784661015;
+	bh=8VZpHd0mR8ky0cTo5T4LeuhFosU57r2r7CA4RUJYftQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CKZl8RPuA0X5I420YRJ+bx1wwyF427wSopbWLg0fRrbsLTj1xUqTRdErt9GuhUB6k
-	 kG5bjTPHfZjBu98Zc9Zh6y92cjjmb0DLP/Gvb2ncWkrctf+2L1Ytedg00Cs2EgDNVQ
-	 lAnFz3T7cZSJFwbiwYwBo7rn0g0zsE6wrKhT+4QA=
+	b=VGWvwC9bW3kwZMmLeSQLfTlfAcy4qvan1JoqO57sRvVHNy7XHTIImzlD4w+z1GJc/
+	 uUhkJ1pxsqAg0kY9av8gjFiO6LKnRaACRfTAYnkJFGPmzht79XfZ3y4IPgNzTvVYyq
+	 tCQ7tInksszwFEkY2gVyyuSghtGDF/KqNnSmhNtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Bhargav Joshi <j.bhargav.u@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1156/2077] mailbox: imx: Forward the timeout/ error in imx_mu_generic_tx()
-Date: Tue, 21 Jul 2026 17:13:49 +0200
-Message-ID: <20260721152620.087491884@linuxfoundation.org>
+Subject: [PATCH 7.1 1157/2077] irqchip/crossbar: Fix parent domain resource leak
+Date: Tue, 21 Jul 2026 17:13:50 +0200
+Message-ID: <20260721152620.110247957@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,45 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Bhargav Joshi <j.bhargav.u@gmail.com>
 
-[ Upstream commit 82ef9a635d7130ca27ec9dd88c16afc39c83a4e8 ]
+[ Upstream commit a1074dd62faa6572921d387e8a21589ccea00efc ]
 
-imx_mu_generic_tx() for the IMX_MU_TYPE_TXDB_V2 type polls on a register
-which may timeout and is recognized as an error. This error is siltently
-dropped and not dropped to the caller.
+irq_domain_alloc_irqs_parent() is called in allocate_gic_irq() but
+irq_domain_free_irqs_parent() is never called which causes a resource leak.
 
-Forward the error to the caller.
+Fix this by calling irq_domain_free_irqs_parent() in
+crossbar_domain_free().
 
-Fixes: b5ef17917f3a7 ("mailbox: imx: fix TXDB_V2 channel race condition")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Fixes: 783d31863fb82 ("irqchip: crossbar: Convert dra7 crossbar to stacked domains")
+Signed-off-by: Bhargav Joshi <j.bhargav.u@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260620-irq-crossbar-fix-v2-2-b8e8499f468a@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/imx-mailbox.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-crossbar.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
-index 246a9a9e395206..0028073be4a717 100644
---- a/drivers/mailbox/imx-mailbox.c
-+++ b/drivers/mailbox/imx-mailbox.c
-@@ -227,6 +227,7 @@ static int imx_mu_generic_tx(struct imx_mu_priv *priv,
- 	u32 val;
- 	int ret, count;
- 
-+	ret = 0;
- 	switch (cp->type) {
- 	case IMX_MU_TYPE_TX:
- 		imx_mu_write(priv, *arg, priv->dcfg->xTR + cp->idx * 4);
-@@ -259,7 +260,7 @@ static int imx_mu_generic_tx(struct imx_mu_priv *priv,
- 		return -EINVAL;
+diff --git a/drivers/irqchip/irq-crossbar.c b/drivers/irqchip/irq-crossbar.c
+index cd1134101ace03..3035f8ecfac855 100644
+--- a/drivers/irqchip/irq-crossbar.c
++++ b/drivers/irqchip/irq-crossbar.c
+@@ -163,6 +163,7 @@ static void crossbar_domain_free(struct irq_domain *domain, unsigned int virq,
+ 		cb->write(d->hwirq, cb->safe_map);
  	}
- 
--	return 0;
-+	return ret;
+ 	raw_spin_unlock(&cb->lock);
++	irq_domain_free_irqs_parent(domain, virq, nr_irqs);
  }
  
- static int imx_mu_generic_rx(struct imx_mu_priv *priv,
+ static int crossbar_domain_translate(struct irq_domain *d,
 -- 
 2.53.0
 
