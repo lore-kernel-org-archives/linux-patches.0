@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9469B417355;
-	Tue, 21 Jul 2026 19:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3759335DA40;
+	Tue, 21 Jul 2026 19:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662384; cv=none; b=XENt8OBH9gAIAOSR0cBYB1kOZQHbwn1IIoSANsTkHLNu6WQ2SbUXZqTOa0o52BqHnug3RfbOJBQQCOUXTslKC1hkKPqyvertXTPXIjBBVvRy67hCOn72uoEhTBLni9pbqFg3DRN0ttOi1XlKQW/ltDBKo/Vr7tJE1V0+OL+B3eg=
+	t=1784662387; cv=none; b=lrE8A4MNWx/TuYK+63F8pvaPRPywOx05xvXq68I+/hpmGN16Fu7rrafitc3LQoy9yHgdfDlLF7SHxjfnSOfL5ZmYfiz/zatfrYx9MJlXwejv6vBihB8uxcahn6PQwgSjWExXdS4DAmMvQbl+NREtAvlufqy5tJfRLf97YS3eY7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662384; c=relaxed/simple;
-	bh=ra6YnCQn8PNFA1+VWXOWOru/5sO4AJK6X9FqrP8QRHQ=;
+	s=arc-20240116; t=1784662387; c=relaxed/simple;
+	bh=2I/s97JDKT4QCTZ2PiXzdGr7EanQN0BLEqKbxYMktP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VFh/3ucw2WqnY/96tsGr9gBisUQPBpfaLl9aLAyoqGWod7Nm2wRprLoVm6jr534acF6wuYprw8hP8XO1y17v7DNuIS91CtuavcOtyLPJ7qp86yH3IqyHht5muIRMb13cwttLN/m4CrpkWnwxmX1yzMhrnQlYu74RtUw7kzC90uQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgCMZrDT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ednEtKEcPxHy7l6cWYupcA0XZT1sgVwV2Zs49UC5GZnrVrR6KbMfSyDG0SLFGVfKyTUGDwjiVTneZaN8wGa+BdnhLeWi6V3/5txr0TLNCmuRiwdomsVHFHZ+OeW7Mh+/KHjgc9HTx0HRwT55X4nlNkXTnpsIDYPX6E9KG20w/CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mmq0dIq7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgCMZrDT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DABF1F000E9;
-	Tue, 21 Jul 2026 19:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mmq0dIq7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2C01F000E9;
+	Tue, 21 Jul 2026 19:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662383;
-	bh=q8MEb8aFczhLWJ8LrAsAZZrpUMiaAuJUBd+bKmCOYNQ=;
+	s=korg; t=1784662386;
+	bh=0q6l5c/hYjOmrCs3FJFk8JAivI6ikGrPSeOfOmsBX3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tgCMZrDTT6OjUdGnMRimQsahNCLbvrUWpinYra/N13nq9bXBrXD66rX+x+3X1UxoS
-	 1onMwzQ/Bvnz+hCOecQPQCl9f2Lk15gKMgzd6DzezzNa5oDqKmnj09zliApATMYUVs
-	 xthKeTsY/myX73MXlqk7oZKslcYdx26xAFsGXPS0=
+	b=Mmq0dIq76GWYYnPeyY2L1DB/FfarZyIymcbVHFNq6RVIe7RkQrUPlhsGNWv/crczN
+	 Fj2YSN3E3JOhSWTg2D5356ffQfVgvBUUjSvDv1uM6p6qUkfytFfuTlZcanvYaoNshH
+	 2XjXBHV0fTf1wvtnULxar0LYblPcx6cIhqTPXoo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Kumar <sumit.kumar@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Qiang Yu <qiang.yu@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0425/1276] bus: mhi: ep: Fix potential deadlock in mhi_ep_reset_worker()
-Date: Tue, 21 Jul 2026 17:14:28 +0200
-Message-ID: <20260721152455.613532951@linuxfoundation.org>
+Subject: [PATCH 6.12 0426/1276] PCI: qcom: Set max OPP before DBI access during resume
+Date: Tue, 21 Jul 2026 17:14:29 +0200
+Message-ID: <20260721152455.637241543@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,60 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
+From: Qiang Yu <qiang.yu@oss.qualcomm.com>
 
-[ Upstream commit 9dece4435d396e9877e27483552b910ba8654169 ]
+[ Upstream commit 5dc31cd4a91a7f006d23efa97a5594a7e3ac7790 ]
 
-There is a potential deadlock scenario in mhi_ep_reset_worker() where
-the state_lock mutex is acquired twice in the same call chain:
+During resume, qcom_pcie_icc_opp_update() may access DBI registers before
+the OPP votes are restored, triggering NoC errors.
 
-mhi_ep_reset_worker()
-  mutex_lock(&mhi_cntrl->state_lock)
-    mhi_ep_power_up()
-      mhi_ep_set_ready_state()
-        mutex_lock(&mhi_cntrl->state_lock)  <- Deadlock
+Set the PCIe controller to the maximum OPP first in resume_noirq(), then
+proceed with link/DBI accesses. The OPP is later updated again based on
+the actual link bandwidth requirements.
 
-Fix this by releasing the state_lock before calling mhi_ep_power_up().
-The lock is only needed to protect current MHI state read operation. The
-lock can be safely released before proceeding with the power up sequence.
+Introduce a helper to reuse the max-OPP setup code and share it with
+probe().
 
-Fixes: 7a97b6b47353 ("bus: mhi: ep: Add support for handling MHI_RESET")
-Signed-off-by: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260414-reset_worker_deadlock-v2-1-42fd682b45db@oss.qualcomm.com
+Fixes: 5b6272e0efd5 ("PCI: qcom: Add OPP support to scale performance")
+Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+[mani: commit log and error log rewording]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20260416-setmaxopp-v1-1-6a74e2d945a0@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/ep/main.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/pci/controller/dwc/pcie-qcom.c | 42 ++++++++++++++++----------
+ 1 file changed, 26 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index cdea24e9291959..4bb007d1933315 100644
---- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -1087,11 +1087,12 @@ static void mhi_ep_reset_worker(struct work_struct *work)
- 
- 	mhi_ep_power_down(mhi_cntrl);
- 
--	mutex_lock(&mhi_cntrl->state_lock);
--
- 	/* Reset MMIO to signal host that the MHI_RESET is completed in endpoint */
- 	mhi_ep_mmio_reset(mhi_cntrl);
-+
-+	mutex_lock(&mhi_cntrl->state_lock);
- 	cur_state = mhi_cntrl->mhi_state;
-+	mutex_unlock(&mhi_cntrl->state_lock);
- 
- 	/*
- 	 * Only proceed further if the reset is due to SYS_ERR. The host will
-@@ -1100,8 +1101,6 @@ static void mhi_ep_reset_worker(struct work_struct *work)
- 	 */
- 	if (cur_state == MHI_STATE_SYS_ERR)
- 		mhi_ep_power_up(mhi_cntrl);
--
--	mutex_unlock(&mhi_cntrl->state_lock);
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 5d27cd149f5120..533782940f2e21 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1508,6 +1508,22 @@ static void qcom_pcie_icc_opp_update(struct qcom_pcie *pcie)
+ 	}
  }
  
- /*
++static int qcom_pcie_set_max_opp(struct device *dev)
++{
++	unsigned long max_freq = ULONG_MAX;
++	struct dev_pm_opp *opp;
++	int ret;
++
++	opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
++	if (IS_ERR(opp))
++		return PTR_ERR(opp);
++
++	ret = dev_pm_opp_set_opp(dev, opp);
++	dev_pm_opp_put(opp);
++
++	return ret;
++}
++
+ static int qcom_pcie_link_transition_count(struct seq_file *s, void *data)
+ {
+ 	struct qcom_pcie *pcie = (struct qcom_pcie *)dev_get_drvdata(s->private);
+@@ -1573,9 +1589,7 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
+ static int qcom_pcie_probe(struct platform_device *pdev)
+ {
+ 	const struct qcom_pcie_cfg *pcie_cfg;
+-	unsigned long max_freq = ULONG_MAX;
+ 	struct device *dev = &pdev->dev;
+-	struct dev_pm_opp *opp;
+ 	struct qcom_pcie *pcie;
+ 	struct dw_pcie_rp *pp;
+ 	struct resource *res;
+@@ -1658,21 +1672,9 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+ 	 * probe(), OPP will be updated using qcom_pcie_icc_opp_update().
+ 	 */
+ 	if (!ret) {
+-		opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
+-		if (IS_ERR(opp)) {
+-			ret = PTR_ERR(opp);
+-			dev_err_probe(pci->dev, ret,
+-				      "Unable to find max freq OPP\n");
+-			goto err_pm_runtime_put;
+-		} else {
+-			ret = dev_pm_opp_set_opp(dev, opp);
+-		}
+-
+-		dev_pm_opp_put(opp);
++		ret = qcom_pcie_set_max_opp(dev);
+ 		if (ret) {
+-			dev_err_probe(pci->dev, ret,
+-				      "Failed to set OPP for freq %lu\n",
+-				      max_freq);
++			dev_err_probe(dev, ret, "Failed to set max OPP\n");
+ 			goto err_pm_runtime_put;
+ 		}
+ 
+@@ -1803,6 +1805,14 @@ static int qcom_pcie_resume_noirq(struct device *dev)
+ 	int ret;
+ 
+ 	if (pm_suspend_target_state != PM_SUSPEND_MEM) {
++		if (pcie->use_pm_opp) {
++			ret = qcom_pcie_set_max_opp(dev);
++			if (ret) {
++				dev_err(dev, "Failed to set max OPP: %d\n", ret);
++				return ret;
++			}
++		}
++
+ 		ret = icc_enable(pcie->icc_cpu);
+ 		if (ret) {
+ 			dev_err(dev, "Failed to enable CPU-PCIe interconnect path: %d\n", ret);
 -- 
 2.53.0
 
