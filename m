@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFD137E310;
-	Tue, 21 Jul 2026 22:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAC4382385;
+	Tue, 21 Jul 2026 22:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673973; cv=none; b=r/LLyldeY0WK6SC4z7x7fIhhaJ4RJvUlcHfgbjYrqUgAG6jDkFuy1+BBcvJvVfKmaApG/ni4cX20G7wT8p1PymmLYvuQs3Cdg5/zvxNd3YnaGvQh1qcbkcKUrZR6POKBWdewg8ze0loNPMbovU+BRwzqGHHeRu2JLjWgs+qWyAA=
+	t=1784673976; cv=none; b=KVsw22nTuSVsSCeXTQQ8hHEVbgssbIHk7BnHhkOxUq/ovyc/L/2wNseW+et9S3YvdaUveA5M5kxohiZzMUrGdFgyz+Id+dDeVm4PM0Vd1rzVKwAG+C8IIFVWj5q60jJr7CstDX9SzzDjIhn+jRzIjhBIGxO/Nss4fHM1ZaugHMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673973; c=relaxed/simple;
-	bh=ZmuWo6faVe/oeZm4Xx0ajVXTJGsAWCRSEwO99TbTPT4=;
+	s=arc-20240116; t=1784673976; c=relaxed/simple;
+	bh=utxR1wLz4vzf4Su3StUdEFXSJSUaPouD81MkiNKqptI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PK6ry6U66yN0ABsiEHl6mxxa9+vBTSiPcjGkoVhXTtqENdY3fp9aZHiCUhQCXEe1LUupCaReJVuw6LNUdeqT4GOpoOTcvqVlPBEyna3ldLxuNCaD1hoJyE9REiO6PfLHNkuEh8QDJ4hiVRLurYllqVHMVcri9TGL9Pqv168gDhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QoV2urhH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l/5Z0XqLbEXhwPTHhqk04VlHXJqRU1HSTUl7mTgxEVT3SlKBfKsc/4Ao6uXn337+2xaFf9ha12juuwrcwMUEiG12tWOK+Nt+tJQJaPNrgG+hkHL25fcHnOnrEzKE7WCYDiyv8KkvMn6DFFnq6xkkHorZy1uaA4NLpsgNOS8xcPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u2Kn7A+u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QoV2urhH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF7E1F000E9;
-	Tue, 21 Jul 2026 22:46:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2Kn7A+u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 853B81F000E9;
+	Tue, 21 Jul 2026 22:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673972;
-	bh=QpTx8lk8ypgv9auJ1LKNX8PiqfARbzWu/snndM8D5yg=;
+	s=korg; t=1784673975;
+	bh=dxSqcBX/PbiaAThTSvIGmkZVk2/s0OnG4sbcl996n6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QoV2urhHErquIu7CT6b66dtLdR+0Ow1T93+j8FLyHt02NiqZBuNml2VamDdEYQBvT
-	 xHtrzJFS3+yw4Dyj7vt3qcdylz2TNicc38FsqUyheKnkO2896kymZB24wChPtAZqQJ
-	 Sb3EPI0vs8yFHrI28UhwQAoyL0wZSh+5vwQDNgpM=
+	b=u2Kn7A+udbJgmHpceBmkU/8v3RYe0qhFGpWaLbLUNjqY8WHy5OT7MJmWnCCXkjoIl
+	 0QK26tGsz8N8XAP/UFjwgVg2pPFsCpDsiJSCqboP0Kikpu6pbMf8RhoYya0tsAibyi
+	 6UClXqHMLlglV58xjJXO633Vi6cdQMr90+tTK6ME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alejandro Olivan Alvarez <alejandro.olivan.alvarez@gmail.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Huiwen He <hehuiwen@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 358/699] netfilter: nf_conncount: prevent connlimit drops for early confirmed ct
-Date: Tue, 21 Jul 2026 17:21:57 +0200
-Message-ID: <20260721152403.766524241@linuxfoundation.org>
+Subject: [PATCH 5.10 367/699] smb/client: preserve errors from smb2_set_sparse()
+Date: Tue, 21 Jul 2026 17:22:06 +0200
+Message-ID: <20260721152403.975697526@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,76 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit c8b6f36f766991e3ebebec6596daee4b04dcbc49 ]
+[ Upstream commit 2a4b3d2db5c6fcdba889baf7b2ae5661b0beac89 ]
 
-Commit 69894e5b4c5e ("netfilter: nft_connlimit: update the count if add
-was skipped") introduced a regression where packets for valid
-connections are dropped when using connlimit for soft-limiting
-scenarios.
+smb2_set_sparse() converts every FSCTL_SET_SPARSE failure to false and
+marks sparse support as broken for the share. Callers therefore report
+EOPNOTSUPP even for errors such as ENOSPC or EACCES, and later sparse
+operations remain disabled until the share is unmounted.
 
-The issue occurs when a new connection reuses a socket currently in
-the TIME_WAIT state. In this scenario, the connection tracking entry
-is evaluated as already confirmed. Previously, __nf_conncount_add()
-assumed that if a connection was confirmed and did not originate from
-the loopback interface, it should skip the addition and return -EEXIST.
+Return the SMB2 ioctl error directly. Set broken_sparse_sup only for
+EOPNOTSUPP, which indicates that the server does not support the request.
 
-Skipping the addition triggers a garbage collection run that cleans up
-the TIME_WAIT connection. Consequently, the active connection count
-drops to 0, which xt_connlimit mishandles, leading to the false rejection
-of the perfectly valid new connection.
+Update smb3_punch_hole() to propagate the error returned by
+smb2_set_sparse().
 
-Fix this by replacing the interface check with protocol-agnostic state
-checks. We now skip the tree insertion and preserve the lockless garbage
-collection optimization only if the connection is IPS_ASSURED. This
-allows early-confirmed setup packets (such as reused TIME_WAIT sockets
-or locally generated SYN-ACKs) to be properly evaluated and counted
-without falsely dropping. The goto check_connections path is maintained
-to ensure these setup packets are deduplicated correctly.
-
-This has been tested with slowhttptest and HTTP server configured
-locally to ensure we are not breaking soft-limiting scenarios for local
-or external connections. In addition, it was tested with a OVS zone
-limit too.
-
-Fixes: 69894e5b4c5e ("netfilter: nft_connlimit: update the count if add was skipped")
-Reported-by: Alejandro Olivan Alvarez <alejandro.olivan.alvarez@gmail.com>
-Closes: https://lore.kernel.org/netfilter-devel/177349610461.3071718.4083978280323144323@eldamar.lan/
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 3d1a3745d8ca ("Add sparse file support to SMB2/SMB3 mounts")
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conncount.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ fs/cifs/smb2ops.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
-index b9265a8cdb2bc4..79b0d9c8de56d9 100644
---- a/net/netfilter/nf_conncount.c
-+++ b/net/netfilter/nf_conncount.c
-@@ -179,17 +179,16 @@ static int __nf_conncount_add(struct net *net,
- 		return -ENOENT;
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index 62ec542871ec16..032799e25d9f03 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -1941,8 +1941,9 @@ smb2_sync_write(const unsigned int xid, struct cifs_fid *pfid,
+ }
  
- 	if (ct && nf_ct_is_confirmed(ct)) {
--		/* local connections are confirmed in postrouting so confirmation
--		 * might have happened before hitting connlimit
-+		/* Connection is confirmed but might still be in the setup phase.
-+		 * Only skip the tracking if it is fully assured. This guarantees
-+		 * that setup packets or retransmissions are properly counted and
-+		 * deduplicated.
- 		 */
--		if (skb->skb_iif != LOOPBACK_IFINDEX) {
-+		if (test_bit(IPS_ASSURED_BIT, &ct->status)) {
- 			err = -EEXIST;
- 			goto out_put;
- 		}
+ /* Set or clear the SPARSE_FILE attribute based on value passed in setsparse */
+-static bool smb2_set_sparse(const unsigned int xid, struct cifs_tcon *tcon,
+-		struct cifsFileInfo *cfile, struct inode *inode, __u8 setsparse)
++static int smb2_set_sparse(const unsigned int xid, struct cifs_tcon *tcon,
++			   struct cifsFileInfo *cfile, struct inode *inode,
++			   __u8 setsparse)
+ {
+ 	struct cifsInodeInfo *cifsi;
+ 	int rc;
+@@ -1951,31 +1952,31 @@ static bool smb2_set_sparse(const unsigned int xid, struct cifs_tcon *tcon,
  
--		/* this is likely a local connection, skip optimization to avoid
--		 * adding duplicates from a 'packet train'
--		 */
- 		goto check_connections;
+ 	/* if file already sparse don't bother setting sparse again */
+ 	if ((cifsi->cifsAttrs & FILE_ATTRIBUTE_SPARSE_FILE) && setsparse)
+-		return true; /* already sparse */
++		return 0; /* already sparse */
+ 
+ 	if (!(cifsi->cifsAttrs & FILE_ATTRIBUTE_SPARSE_FILE) && !setsparse)
+-		return true; /* already not sparse */
++		return 0; /* already not sparse */
+ 
+ 	/*
+ 	 * Can't check for sparse support on share the usual way via the
+ 	 * FS attribute info (FILE_SUPPORTS_SPARSE_FILES) on the share
+ 	 * since Samba server doesn't set the flag on the share, yet
+ 	 * supports the set sparse FSCTL and returns sparse correctly
+-	 * in the file attributes. If we fail setting sparse though we
+-	 * mark that server does not support sparse files for this share
+-	 * to avoid repeatedly sending the unsupported fsctl to server
+-	 * if the file is repeatedly extended.
++	 * in the file attributes. If the server returns EOPNOTSUPP, mark
++	 * that sparse files are not supported on this share to avoid
++	 * repeatedly sending the unsupported FSCTL.
+ 	 */
+ 	if (tcon->broken_sparse_sup)
+-		return false;
++		return -EOPNOTSUPP;
+ 
+ 	rc = SMB2_ioctl(xid, tcon, cfile->fid.persistent_fid,
+ 			cfile->fid.volatile_fid, FSCTL_SET_SPARSE,
+ 			&setsparse, 1, CIFSMaxBufSize, NULL, NULL);
+ 	if (rc) {
+-		tcon->broken_sparse_sup = true;
++		if (rc == -EOPNOTSUPP)
++			tcon->broken_sparse_sup = true;
+ 		cifs_dbg(FYI, "set sparse rc = %d\n", rc);
+-		return false;
++		return rc;
  	}
  
+ 	if (setsparse)
+@@ -1983,7 +1984,7 @@ static bool smb2_set_sparse(const unsigned int xid, struct cifs_tcon *tcon,
+ 	else
+ 		cifsi->cifsAttrs &= (~FILE_ATTRIBUTE_SPARSE_FILE);
+ 
+-	return true;
++	return 0;
+ }
+ 
+ static int
+@@ -3480,10 +3481,9 @@ static long smb3_punch_hole(struct file *file, struct cifs_tcon *tcon,
+ 	inode_lock(inode);
+ 	/* Need to make file sparse, if not already, before freeing range. */
+ 	/* Consider adding equivalent for compressed since it could also work */
+-	if (!smb2_set_sparse(xid, tcon, cfile, inode, set_sparse)) {
+-		rc = -EOPNOTSUPP;
++	rc = smb2_set_sparse(xid, tcon, cfile, inode, set_sparse);
++	if (rc)
+ 		goto out;
+-	}
+ 
+ 	/*
+ 	 * We implement the punch hole through ioctl, so we need remove the page
 -- 
 2.53.0
 
