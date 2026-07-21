@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179593B47E2;
-	Tue, 21 Jul 2026 20:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CAD93B6C1E;
+	Tue, 21 Jul 2026 20:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666291; cv=none; b=pHl+YbLsj8wsqe99jniD64Qsp9/GgxlnY1SfKukkdWtj/CmrhGXIXSOOlrskVh1NIs+PxU+mCekk3kvzVSw+fARcT8aBSWDG1rhZ1jeSEcQ/DFR2iGadu0RZxTLfxUyMQnd1SNpj10oSa+2DZbi3pl1kRflDgnABQaJYbAqpYdc=
+	t=1784666293; cv=none; b=YMKZVFWTT013l+mnzDLTNC3fzTVuz1A1jLxRYVyLIoa6rV87KH6lEOxN8QvES3+/49ZrungpE9+8JH5nJm7C7nylz/YpOev3SQznzDDjDivY5Po4/EPS01zXgozqIIV+eJa+KB2OPBA8CIr79bVx50r/yDxRb91A2E4K+7qbnu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666291; c=relaxed/simple;
-	bh=TwPHQGmo4MrYyDE7jtx63L2519Buxl1FTgHbvmpdOog=;
+	s=arc-20240116; t=1784666293; c=relaxed/simple;
+	bh=DpPDJIxI7ktBfyVCtFkT3ti/19pQZW9qUWBDJNF0Cq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSfcJtbvk9zHZlWHTwJa0a+RAhBF3hf0xk64KNVxazY4lEgZwtJZZleBM8cM9prCabcAQdOojw5803XeZULJ1Q4tasotyTQdymWmFkXoszjTfd90dALzdAF9jzHy38AM1WNa+aH1bSEfqohy2wYF+ZI36eb8MqhejVSZWcuQZ+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tc+xbmPg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iQrX134qTIvq58dWp2WAAxuWZvxAN0qLM2ddJ7Axc7/F7f+kIlttU1FW+NMVw1gByJHKt520Pet4Xku7EhDC3eRF93xn9cMxZwr8hcWTgPGSnsiWrWt1AlujGCJyjI+vhk1V/zGMbcqeXRiM5WSoBzpzCvxyCYT2VzMBRKyQ7Kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z89hdCwr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tc+xbmPg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBD71F00A3A;
-	Tue, 21 Jul 2026 20:38:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z89hdCwr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 634751F000E9;
+	Tue, 21 Jul 2026 20:38:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666285;
-	bh=4iaAdRHO375qi6wAy9VZgW/BkgH+hy8M+XeOBuz5rjE=;
+	s=korg; t=1784666287;
+	bh=RlW2hWqvmAM3Exu7MEEkhU3gfeC6qT7qdKUno7syHmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tc+xbmPg5qKed7QCmGwEhqvhIuhJEg1A6AfA7KCPErF6go8maEVIFNhiQHWlw2Nqm
-	 gMNd3wOP6Cel2R94lXhOk1NyQx4pHvbT7eFBkl3/9oAEZEBDT2z9WXOZoJXvvP9XMU
-	 szFNACtxu9VhllX+b956rf8s3s5O3ilLTMLPSKiE=
+	b=z89hdCwrK9y9oz6PiYtj85qAdJw3HNZhvtMoMH5Gp45HCwg8oNe9QUqrcDEztXx0b
+	 Kz0WVACiZcUhmuMCOP6qzpP9zKrL/814HGuZ1nE9xolC9OT+vpECmx/1yV5QG6Lzr/
+	 ZvHn2Wf09gg3KjZRTLwuHnOYxJjNS3JK8b16+WSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Eric Joyner <eric.joyner@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0625/1266] iio: magnetometer: ak8975: fix potential kernel stack memory leak
-Date: Tue, 21 Jul 2026 17:17:42 +0200
-Message-ID: <20260721152455.848360787@linuxfoundation.org>
+Subject: [PATCH 6.6 0599/1266] ionic: Fix check in ionic_get_link_ext_stats
+Date: Tue, 21 Jul 2026 17:17:16 +0200
+Message-ID: <20260721152455.268364577@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,77 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Crofts <joshua.crofts1@gmail.com>
+From: Brett Creeley <brett.creeley@amd.com>
 
-[ Upstream commit a9a00d727b7bbc5e913a919530a9dd468935bf95 ]
+[ Upstream commit 7678e69079c10b2fb10977f28f44ddb22971ea5b ]
 
-Currently in the AK8975 driver there are four instances where potential
-uninitialized kernel stack memory leaks can occur. If
-i2c_smbus_read_i2c_block_data_or_emulated() returns a value less than
-the size of the buffer, uninitialized bytes are retained in the buffer
-and later the buffer is passed on to IIO buffers, potentially leaking
-memory to userspace.
+The current check will fail if SR-IOV is not initialized for the
+physical function; this is because is_physfn is 0 if sriov_init() isn't
+run or fails. Change the check that prevents getting the link down count
+to use is_virtfn instead so that VFs don't get this functionality, which
+was the original intent.
 
-Fix this by adding checks whether the return value of the function is
-equal to the size of the buffer and subsequently if the value is
-lesser than zero to distinguish from a returned error code.
-
-Fixes: bc11ca4a0b84 ("iio:magnetometer:ak8975: triggered buffer support")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260513-ak8975-fix-v1-1-104ea605dd54%40gmail.com
-Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: 132b4ebfa090 ("ionic: add support for ethtool extended stat link_down_count")
+Signed-off-by: Brett Creeley <brett.creeley@amd.com>
+Signed-off-by: Eric Joyner <eric.joyner@amd.com>
+Link: https://patch.msgid.link/20260614205303.48088-2-eric.joyner@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/magnetometer/ak8975.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/net/ethernet/pensando/ionic/ionic_ethtool.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/magnetometer/ak8975.c b/drivers/iio/magnetometer/ak8975.c
-index e8c52179b3315d..547a4738cf1dd0 100644
---- a/drivers/iio/magnetometer/ak8975.c
-+++ b/drivers/iio/magnetometer/ak8975.c
-@@ -464,6 +464,10 @@ static int ak8975_who_i_am(struct i2c_client *client,
- 		dev_err(&client->dev, "Error reading WIA\n");
- 		return ret;
- 	}
-+	if (ret != sizeof(wia_val)) {
-+		dev_err(&client->dev, "Error reading WIA\n");
-+		return -EIO;
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
+index b07dd56b0c76d2..38c2695bc529ef 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
+@@ -114,8 +114,15 @@ static void ionic_get_link_ext_stats(struct net_device *netdev,
+ {
+ 	struct ionic_lif *lif = netdev_priv(netdev);
+ 
+-	if (lif->ionic->pdev->is_physfn)
+-		stats->link_down_events = lif->link_down_count;
++	if (lif->ionic->pdev->is_virtfn)
++		return;
++
++	if (!lif->ionic->idev.port_info) {
++		netdev_err_once(netdev, "port_info not initialized\n");
++		return;
 +	}
++
++	stats->link_down_events = lif->link_down_count;
+ }
  
- 	if (wia_val[0] != AK8975_DEVICE_ID)
- 		return -ENODEV;
-@@ -580,6 +584,10 @@ static int ak8975_setup(struct i2c_client *client)
- 		dev_err(&client->dev, "Not able to read asa data\n");
- 		return ret;
- 	}
-+	if (ret != sizeof(data->asa)) {
-+		dev_err(&client->dev, "Error reading asa data\n");
-+		return -EIO;
-+	}
- 
- 	/* After reading fuse ROM data set power-down mode */
- 	ret = ak8975_set_mode(data, POWER_DOWN);
-@@ -719,6 +727,10 @@ static int ak8975_read_axis(struct iio_dev *indio_dev, int index, int *val)
- 			sizeof(rval), (u8*)&rval);
- 	if (ret < 0)
- 		goto exit;
-+	if (ret != sizeof(rval)) {
-+		ret = -EIO;
-+		goto exit;
-+	}
- 
- 	/* Read out ST2 for release lock on measurment data. */
- 	ret = i2c_smbus_read_byte_data(client, data->def->ctrl_regs[ST2]);
-@@ -848,6 +860,8 @@ static void ak8975_fill_buffer(struct iio_dev *indio_dev)
- 							(u8 *)fval);
- 	if (ret < 0)
- 		goto unlock;
-+	if (ret != sizeof(fval))
-+		goto unlock;
- 
- 	mutex_unlock(&data->lock);
- 
+ static int ionic_get_link_ksettings(struct net_device *netdev,
 -- 
 2.53.0
 
