@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FF947141B;
-	Tue, 21 Jul 2026 19:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449F338910F;
+	Tue, 21 Jul 2026 19:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663672; cv=none; b=qnpGVRZmpizQZ4jCBRynUyDPJFzohLrGZyiqo+88flQ+ropVGrHXzK/CI6RUgzXSZFXdD0CWnGENaxPuoqcyXPYwLJM+PWiWK1ZOr1bq3/uiaqzgDRxpfnhgT7CifigGOrTu40I2kKGMatEwKQmonIKl4Wtr304NojX9kdnKUtE=
+	t=1784663675; cv=none; b=OKxl+MFRTVNkxQ4rfKHbxtnasW5t0IAAANqMMa9D82Q1sk3xNadQKgp4XD61KtzPq72v84U3n4N35ot4YP2HEmTQn9tSuDEKR5GT67KuJxdvg9C/GprjcSSeM7aQg241DlSwRm5eyd5AtMPaHJ74S0psdeYxSzWKQdaXTyLFq2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663672; c=relaxed/simple;
-	bh=VxwFJ3ye8304q5CXaS5mNThbTmM67YtnkwimTT2fyFo=;
+	s=arc-20240116; t=1784663675; c=relaxed/simple;
+	bh=wTeF378VA1GNopS/aTS9XxbAuP/GQ5uggaLzpV612uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u7Dof2JatBh/zPuo7DSQhtio75UX1rTXM+kpFsbFCm44l57d2DD3zsNpkw73BCpcoOhsdjzxSKnGdhCxrpt7fESNX0rCwT3fHPycFOCRd+mtMyLTVHois5y92CvikBuUyyB7MH23hVNtfMbz9N2F/t9ag1oOAiEvB8b9aPjJeUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AezV9cT7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sfi+nSYRNcn/J9JZM2rpzSQPhUD14UmdysalEGE9ii2G5eH8vSoRYVyEBVF1KLAILCdiJ7XZS2sxFHQnQUyoQyA6yxnja/nHVVq06d3IErSCoLietcGTz6w58TTFveoVudbBj8lT8WjZ7srSSwKf+YtQ1M+IrsHC5Aavq7rwVKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPoRKmdk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AezV9cT7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 049611F00A3A;
-	Tue, 21 Jul 2026 19:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPoRKmdk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D781F000E9;
+	Tue, 21 Jul 2026 19:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663671;
-	bh=G31f9DlPYZOuBRoMYoBeh+UEAo1HY5YH78nMUuo7NYQ=;
+	s=korg; t=1784663674;
+	bh=FfxOD60iit5in7PYof+vVV23escgqWeFSiL3y27828U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AezV9cT7a/myE98nJkGq0lx1UuiLZvdYly+fOnaTSK8eOhhyPcvkyxhOTiO5qhs7K
-	 P9UZBxw1NkQEp4/tNJtYXrg/+/UOym6OdqXs1c3Cq+yoReBBEqyPt9ExrfRZU7GXPe
-	 /5u9JBHA6/HB/4DnkKdVyn9Ek2P9pKQhJ2pe098M=
+	b=WPoRKmdkHM0gIlsm/fxDvPWrdwImdfzDBSd/L0ykOViup7pqFZ+gl10aJkH+8NTou
+	 CvoX2Qw3xCNysQySLX6rLDIezNd+qSuVX+18rAokE3TI/m7bL3JPEwPxO9hiLxKBgz
+	 Wm+xRZm5NquCh63YK5HFmIYcHoycBAujJNr1zIgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 0910/1276] MIPS: ip22-gio: fix device reference leak in probe
-Date: Tue, 21 Jul 2026 17:22:33 +0200
-Message-ID: <20260721152506.399194087@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.12 0911/1276] MIPS: DEC: Ensure 32-bit stack location for o32 prom_printf()
+Date: Tue, 21 Jul 2026 17:22:34 +0200
+Message-ID: <20260721152506.421468789@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,39 +50,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit b82930a4c5dbc5c4df39c0f93d968c239f2c6885 upstream.
+commit 5ff79e8bdc75db51e30298a75939e2308e7658e0 upstream.
 
-The gio probe function needlessly takes a device reference which is
-never released and therefore prevents unbound gio devices from being
-freed.
+In 64-bit configurations calling any firmware entry points from a kernel
+thread other than the initial one will result in a situation where the
+stack has been placed in the XKPHYS 64-bit memory segment.
 
-Fixes: e84de0c61905 ("MIPS: GIO bus support for SGI IP22/28")
-Cc: stable@vger.kernel.org	# 3.3
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Consequently the stack pointer is no longer a 32-bit value and when the
+32-bit firmware code called uses 32-bit ALU operations to manipulate the
+stack pointer, the calculated result is incorrect (in fact in the 64-bit
+MIPS ISA almost all 32-bit ALU operations will produce an unpredictable
+result when executed on 64-bit data) and control goes astray.
+
+This may happen when no final console driver has been enabled in the
+configuration and consequently the initial console continues being used
+late into bootstrap, or with an upcoming change that will switch the zs
+driver to use a platform device, which in turn will make the console
+handover happen only after other kernel threads have already been
+started, and the kernel will hang at:
+
+  pid_max: default: 32768 minimum: 301
+
+or somewhat later, but always before:
+
+  cblist_init_generic: Setting adjustable number of callback queues.
+
+has been printed.
+
+It seems that only the prom_printf() entry point is affected.  Of all
+the other entry points wired only rex_slot_address() and rex_gettcinfo()
+are called from a kernel thread other than the initial one, specifically
+kernel_init(), and they are leaf functions that do no business with the
+stack, having worked with no issue ever since 64-bit support was added
+for the platform back in 2002.
+
+To address this issue then, arrange for the stack to be switched in the
+o32 wrapper as required for prom_printf() only, by supplying call_o32()
+with a pointer to a chunk of initdata space, which is placed in the
+CKSEG0 32-bit compatibility segment, observing that prom_printf() is
+only called from console output handler and therefore with the console
+lock held, implying no need for this code to be reentrant.
+
+Other firmware entry points may be called with interrupts enabled and no
+lock held, and may therefore require that call_o32() be reentrant.  They
+trigger no issue at this point and "if it ain't broke, don't fix it," so
+just leave them alone.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Cc: stable@vger.kernel.org # v2.6.12+
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/sgi-ip22/ip22-gio.c |    4 ----
- 1 file changed, 4 deletions(-)
+ arch/mips/dec/prom/init.c        |    6 +++++-
+ arch/mips/include/asm/dec/prom.h |   15 +++++++++++++--
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
---- a/arch/mips/sgi-ip22/ip22-gio.c
-+++ b/arch/mips/sgi-ip22/ip22-gio.c
-@@ -133,13 +133,9 @@ static int gio_device_probe(struct devic
- 	if (!drv->probe)
- 		return error;
+--- a/arch/mips/dec/prom/init.c
++++ b/arch/mips/dec/prom/init.c
+@@ -3,7 +3,7 @@
+  * init.c: PROM library initialisation code.
+  *
+  * Copyright (C) 1998 Harald Koerfgen
+- * Copyright (C) 2002, 2004  Maciej W. Rozycki
++ * Copyright (C) 2002, 2004, 2026  Maciej W. Rozycki
+  */
+ #include <linux/init.h>
+ #include <linux/kernel.h>
+@@ -20,6 +20,10 @@
+ #include <asm/dec/prom.h>
  
--	gio_dev_get(gio_dev);
--
- 	match = gio_match_device(drv->id_table, gio_dev);
- 	if (match)
- 		error = drv->probe(gio_dev, match);
--	if (error)
--		gio_dev_put(gio_dev);
  
- 	return error;
- }
++#ifdef CONFIG_64BIT
++unsigned long o32_stk[O32_STK_SIZE] __initdata = { 0 };
++#endif
++
+ int (*__rex_bootinit)(void);
+ int (*__rex_bootread)(void);
+ int (*__rex_getbitmap)(memmap *);
+--- a/arch/mips/include/asm/dec/prom.h
++++ b/arch/mips/include/asm/dec/prom.h
+@@ -4,7 +4,7 @@
+  *
+  *	DECstation PROM interface.
+  *
+- *	Copyright (C) 2002  Maciej W. Rozycki
++ *	Copyright (C) 2002, 2026  Maciej W. Rozycki
+  *
+  *	Based on arch/mips/dec/prom/prom.h by the Anonymous.
+  */
+@@ -97,6 +97,17 @@ extern int (*__pmax_close)(int);
+ 
+ #ifdef CONFIG_64BIT
+ 
++#define O32_STK_SIZE 512
++extern unsigned long o32_stk[];
++
++/* Switch the stack if outside the 32-bit address space.  */
++static inline unsigned long *o32_get_stk(void)
++{
++	long fp = (long)__builtin_frame_address(0);
++
++	return fp != (int)fp ? o32_stk + O32_STK_SIZE : NULL;
++}
++
+ /*
+  * On MIPS64 we have to call PROM functions via a helper
+  * dispatcher to accommodate ABI incompatibilities.
+@@ -128,7 +139,7 @@ int __DEC_PROM_O32(_prom_printf, (int (*
+ 
+ #define prom_getchar()		_prom_getchar(__prom_getchar, NULL)
+ #define prom_getenv(x)		_prom_getenv(__prom_getenv, NULL, x)
+-#define prom_printf(x...)	_prom_printf(__prom_printf, NULL, x)
++#define prom_printf(x...)	_prom_printf(__prom_printf, o32_get_stk(), x)
+ 
+ #else /* !CONFIG_64BIT */
+ 
 
 
