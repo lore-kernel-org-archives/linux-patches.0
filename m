@@ -1,41 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9482E736D;
-	Tue, 21 Jul 2026 17:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7C3401A18;
+	Tue, 21 Jul 2026 17:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654592; cv=none; b=IzM36h4encxO5xZwdMZ0RtK0puUrqInE1QsbeBxhp05Nl2glyWvPF7lPxHRRk16h3I3MCho3J1tsHp0KlnLzJPgSlvuOVLSIiet22cBcGKcmMkBRjYQl7A76aXLIrbpF4iGDWpErBHMQqXExFLeykUjPYGCVBwDqc/TFSKmsvNE=
+	t=1784654595; cv=none; b=bNtTbfj5hIg93gK7BtxpH3iXsK5/nCwenNugJs3IW2m2yWiDdwj1arqSSsIpK/CaWjYKYD23j9+leX06L/YqIf29aQgPK4ccbGqBZGToIdknjvCXK/fgIaIxN+6UrMV4UY3blqLh6tbifOnvrF+UQFJ9pDncrxgC90KydARhMxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654592; c=relaxed/simple;
-	bh=iV9Re+wn29smm6Z/23lUfnAmxZ2Tt7m1Nq/kZ32S7/I=;
+	s=arc-20240116; t=1784654595; c=relaxed/simple;
+	bh=Vsat8Hxl5gpnmBV200azzL3ooTWcEjv3VNXh8CALv/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fDErpcUlXBR8t4h5Vfk2Hs9zG+kLx2h7lSRMyWrXJHlsUKTvVD3eylIB5STIojLgz6QJM/lVvgdWzVc/CI0pdsh3RwphNMV9NQ6ixqhtZEHq5hcey7GzrDi7vNgfG1y6FeDeNKxfOCYDQWwB3ABdyRccdBHPThXh0uo3ZCr4wng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxmQfMUL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C38CTuFeB16pIm/HTJ0jWhbWAhG81qWDn5ldoRGwdSruJTWp+zf0/LitHophYH8DxeQHwjHu3K1Mkh4nT3mo4c/ln2EbmrbOJXKRGOVJfYyK8B+0gifD9OCQzEhlolXswz9xuR/JZ7JHgj+YHixVindOkv06tH9Egc6xwOpKs7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16CUBzTb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxmQfMUL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA12A1F000E9;
-	Tue, 21 Jul 2026 17:23:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16CUBzTb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE431F000E9;
+	Tue, 21 Jul 2026 17:23:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654591;
-	bh=SPcwSE3u4wrljB2Y5xOvNskGn7hLRg6eqBRD9vzPiAI=;
+	s=korg; t=1784654593;
+	bh=GM7Nm5S2i740dweYsPqiDQziA88KaV5dteDDKUTwuIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bxmQfMULjTz1HDDUr4d/XfcZR4LcfMEDnCm1qetfYImv4fy4WxuugopFCA3GkpSs1
-	 tJP6yfTL4L3DuYm5eXSENKL8Xq8yN7GKO9+/CkjHVpFqBFb0Zin36IAXg+v83CWv8i
-	 vFLzjb3s8vzkp5X4oYrmcOa7GAc19fZ4B5JOAH24=
+	b=16CUBzTbtZ3qvQY4bJUbcLccDtc9MgJdZT0vw91mduyw1bv0I2LPjsjRN93GHOC39
+	 Rq88Ptyr2ybxweJPtVspVOGh1166oMvdsUaL55A85md93pQLkUkD/mn3YFtalXsARk
+	 lApMP8Bns5D4PmmZS3P2JCQeB+GM71thpJsvKjus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Takahiro Kuwano <takahiro.kuwano@infineon.com>,
-	Michael Walle <mwalle@kernel.org>
-Subject: [PATCH 7.1 1764/2077] mtd: spi-nor: spansion: use die erase for multi-die devices only
-Date: Tue, 21 Jul 2026 17:23:57 +0200
-Message-ID: <20260721152634.351797117@linuxfoundation.org>
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 7.1 1765/2077] mtd: rawnand: Pause continuous reads at block boundaries
+Date: Tue, 21 Jul 2026 17:23:58 +0200
+Message-ID: <20260721152634.374594573@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,41 +49,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takahiro Kuwano <takahiro.kuwano@infineon.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-commit 306e443156b82a2a14a3f33da908c303be45529c upstream.
+commit 8e4531667d718e2e9b193928cf9b2497fa0d01ef upstream.
 
-Die erase opcode is supported in multi-die devices only. For single die
-devices, default chip erase opcode must be used.
+Some chips do not support sequential cached reads past block
+boundaries, like Winbond. In practice when using UBI, this should very
+rarely happen, but let's make sure it never happens.
 
-In s25hx_t_late_init(), die erase opcode is set only when the device is
-multi-die.
-
-Fixes: 461d0babb544 ("mtd: spi-nor: spansion: enable die erase for multi die flashes")
-Cc: stable@kernel.org
-Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
-Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Takahiro Kuwano <takahiro.kuwano@infineon.com>
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 003fe4b9545b ("mtd: rawnand: Support for sequential cache reads")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/spansion.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/nand_base.c |   24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
---- a/drivers/mtd/spi-nor/spansion.c
-+++ b/drivers/mtd/spi-nor/spansion.c
-@@ -674,7 +674,9 @@ static int s25hx_t_late_init(struct spi_
- 	params->ready = cypress_nor_sr_ready_and_clear;
- 	cypress_nor_ecc_init(nor);
- 
--	params->die_erase_opcode = SPINOR_OP_CYPRESS_DIE_ERASE;
-+	if (params->n_dice > 1)
-+		params->die_erase_opcode = SPINOR_OP_CYPRESS_DIE_ERASE;
-+
- 	return 0;
+--- a/drivers/mtd/nand/raw/nand_base.c
++++ b/drivers/mtd/nand/raw/nand_base.c
+@@ -1216,32 +1216,32 @@ static int nand_lp_exec_read_page_op(str
+ 	return nand_exec_op(chip, &op);
  }
  
+-static unsigned int rawnand_last_page_of_lun(unsigned int pages_per_lun, unsigned int lun)
++static unsigned int rawnand_last_page_of_block(unsigned int ppb, unsigned int block)
+ {
+-	/* lun is expected to be very small */
+-	return (lun * pages_per_lun) + pages_per_lun - 1;
++	/* block is expected to be very small */
++	return (block * ppb) + ppb - 1;
+ }
+ 
+ static void rawnand_cap_cont_reads(struct nand_chip *chip)
+ {
+ 	struct nand_memory_organization *memorg;
+-	unsigned int ppl, first_lun, last_lun;
++	unsigned int ppb, first_block, last_block;
+ 
+ 	memorg = nanddev_get_memorg(&chip->base);
+-	ppl = memorg->pages_per_eraseblock * memorg->eraseblocks_per_lun;
+-	first_lun = chip->cont_read.first_page / ppl;
+-	last_lun = chip->cont_read.last_page / ppl;
+-
+-	/* Prevent sequential cache reads across LUN boundaries */
+-	if (first_lun != last_lun)
+-		chip->cont_read.pause_page = rawnand_last_page_of_lun(ppl, first_lun);
++	ppb = memorg->pages_per_eraseblock;
++	first_block = chip->cont_read.first_page / ppb;
++	last_block = chip->cont_read.last_page / ppb;
++
++	/* Prevent sequential cache reads across block boundaries */
++	if (first_block != last_block)
++		chip->cont_read.pause_page = rawnand_last_page_of_block(ppb, first_block);
+ 	else
+ 		chip->cont_read.pause_page = chip->cont_read.last_page;
+ 
+ 	if (chip->cont_read.first_page == chip->cont_read.pause_page) {
+ 		chip->cont_read.first_page++;
+ 		chip->cont_read.pause_page = min(chip->cont_read.last_page,
+-						 rawnand_last_page_of_lun(ppl, first_lun + 1));
++						 rawnand_last_page_of_block(ppb, first_block + 1));
+ 	}
+ 
+ 	if (chip->cont_read.first_page >= chip->cont_read.last_page)
 
 
