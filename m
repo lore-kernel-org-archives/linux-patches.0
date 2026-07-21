@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2BA44AB61;
-	Tue, 21 Jul 2026 21:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C8A44AB88;
+	Tue, 21 Jul 2026 21:26:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669167; cv=none; b=oY7m8Ex7FrsTkzv1MNaeQT67e8Sp4Ft4j9jcBRDvrBMZfQhX/b5b0Rn4BZ7m1VJmcRRgpXXb7TjGJfbIgNtiavtPtNu5P1jzlkeOppBSlslLb/8mOe/W8wVLn+V8WsyB7t7N38neJzZWQw8XB4P/FtpkAqvCFWhkrGJGTShSu2A=
+	t=1784669170; cv=none; b=PSh5fFyTAklZ2fCidYNgS6rMmaPlGHmW/bOwMvjT6p8+l0M9gKLWuRa26wPl6kQpq06WGCUYWQMZ2BWIksF3IKwmbK+ZF7CdYXxcfOzYsc/I9SFse/RuufQcCeiKTA7AWUVj3A4MIzN1vEIvT1wXNsEP3ONDY97Me/U6gSdWOZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669167; c=relaxed/simple;
-	bh=afmbu2lFXSndLNZtOu4+1C7T/xWLvnQQSeoe3mn2vys=;
+	s=arc-20240116; t=1784669170; c=relaxed/simple;
+	bh=V27ejXd1w3kKES29Sg94KpxlN3/Yr9WC+0Ka+XETVPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BQEqapWGx0VIk632ws0YCfn3g/MmxFh/Ypxu3PKv2fZE7cNM30Dllv5DeUMwVwV253JRSVuTSDv8rHP6IJifWuMXhAdsj0u1+KexzEWQ/DkH7rd2BCObQad8wx6NefvtIapSoHc1A1rirkWN6ywebKajppTJrUXMS+rUBpMZpZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yysHJSVx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l98DseL49rf4/ruj0EiaFq8LXJZUHFhStr/MpYtjFmu19lXkwGK8pbuDoXpEoLIhAGWqKRjdfqmNwCec/Q2KIS4W/pYPWCyGB26LacjmLgZ5A/qrlSRVWYZ+jq/lwHulpxU8wGErWlYVmo4FuPBmnd13tyCIzojOShDgTlZ5VjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/yoW2hh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yysHJSVx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06B21F000E9;
-	Tue, 21 Jul 2026 21:26:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/yoW2hh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB491F000E9;
+	Tue, 21 Jul 2026 21:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669166;
-	bh=eh9Dq2hmVbsDcNdchrEcKvrh41oyy3Q3tUqWtky3IxU=;
+	s=korg; t=1784669168;
+	bh=Tih+EmprBJu3O5DDBld+8AdCQ9TVdVWmxaTg/d6+AZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yysHJSVx3sTPqL/sUHtnHKDaBdjp52MqUKgTXkfjEJBdisloHUj/M3zoTc38JCrnM
-	 zCA61vVb1gP3BC+Io8wDG7jDRX9sEtDNK2Ac3qlx6XNhBptHAJCs876p9Iah9GbqQq
-	 yefVWWvwnrri3euHCaX7NpBJzjHuLHEbnwKRTnes=
+	b=y/yoW2hhZ4oEwX4byeIvvsF3V9EHacXK6i0BZEdPokfidvNGlWYAb4JBkoRxwabwI
+	 Zgod4ezHXxmVIljwvurwoeUl5K7362j82pUwiI370+HAXAluqBeU6keJyoeBnjjzth
+	 xHzruQsUF34e59Ag8tfKIo7L7wKsqipdrEzEkVVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxwell Doose <m32285159@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Fabian Frederick <fabf@skynet.be>,
-	Christian Brauner <brauner@kernel.org>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Yael Chemla <ychemla@nvidia.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0425/1067] fs: efs: remove unneeded debug prints
-Date: Tue, 21 Jul 2026 17:17:06 +0200
-Message-ID: <20260721152434.127894171@linuxfoundation.org>
+Subject: [PATCH 6.1 0452/1067] net/mlx5: Check max_macs devlink param value against max capability
+Date: Tue, 21 Jul 2026 17:17:33 +0200
+Message-ID: <20260721152434.728969779@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,86 +55,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxwell Doose <m32285159@gmail.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 89009392c80da5da00876c8334ff20028e6e3eb6 ]
+[ Upstream commit d7b0413b35715d7b32cb12d4d424613eff85ed2b ]
 
-The current code uses debug prints conditionally compiled with #ifdef
-DEBUG.  However, that code, when compiled, causes compiler errors due to
-incompatible formatters and undefined variables, notably:
+The max_macs devlink param is checked against the FW max value only at
+param register time (driver load) and inside the validate callback
+(devlink param set). The stored DRIVERINIT value persists across FW
+resets and devlink reloads without any further checks against the max.
 
-fs/efs/file.c: In function `efs_get_block':
-fs/efs/file.c:26:35: error: `block' undeclared (first use in this
-function); did you mean `iblock'?
-  26 |                         __func__, block, inode->i_blocks, inode->i_size);
-     |                                   ^~~~~
+If the FW link type changes from Ethernet to IB and a FW reset happens,
+the MAX cap for log_max_current_uc_list will become zero, but the
+previously stored max_macs value remains and is unconditionally
+programmed into the HCA caps in handle_hca_cap(). FW will then return a
+syndrome during SET_HCA_CAP:
 
-and:
+ mlx5_cmd_out_err:839:(pid 3831): SET_HCA_CAP(0x109) op_mod(0x0) failed,
+ status bad parameter(0x3), syndrome (0x537801), err(-22)
+ set_hca_cap:907:(pid 3831): handle_hca_cap failed
 
-fs/efs/file.c: In function `efs_bmap':
-./include/linux/kern_levels.h:5:25: error: format `%ld' expects
-argument of type `long int', but argument 4 has type `blkcnt_t' {aka
-`long long unsigned int'} [-Werror=format=]
-   5 | #define KERN_SOH        "\001"          /* ASCII Start Of Header */
-     |                         ^~~~~~
+This results in a failure to register the RDMA device.
 
-which also extends to the other formatters.  As this part of the code has
-been dead for just about 14 years now, it has not been modernized to stay
-compatible with the most recent gcc compilers.  Fix these issues by
-removing the debug prints.
+This patch skips programming log_max_current_uc_list when the MAX
+capability is 0 (in case of IB).
 
-Link: https://lore.kernel.org/20260605035251.89305-2-m32285159@gmail.com
-Fixes: f403d1dbac6d ("fs/efs: add pr_fmt / use __func__")
-Signed-off-by: Maxwell Doose <m32285159@gmail.com>
-Suggested-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Fabian Frederick <fabf@skynet.be>
-Cc: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 8680a60fc1fc ("net/mlx5: Let user configure max_macs generic param")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Yael Chemla <ychemla@nvidia.com>
+Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://patch.msgid.link/20260611135230.534513-1-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/efs/file.c | 21 +++------------------
- 1 file changed, 3 insertions(+), 18 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/main.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/fs/efs/file.c b/fs/efs/file.c
-index 9e641da6fab276..9153dfe79bbcc9 100644
---- a/fs/efs/file.c
-+++ b/fs/efs/file.c
-@@ -18,16 +18,9 @@ int efs_get_block(struct inode *inode, sector_t iblock,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index 72af9827157d8e..ef406e8d5fc4e9 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -550,7 +550,6 @@ static int handle_hca_cap(struct mlx5_core_dev *dev, void *set_ctx)
+ {
+ 	struct mlx5_profile *prof = &dev->profile;
+ 	void *set_hca_cap;
+-	int max_uc_list;
+ 	int err;
  
- 	if (create)
- 		return error;
--	if (iblock >= inode->i_blocks) {
--#ifdef DEBUG
--		/*
--		 * i have no idea why this happens as often as it does
--		 */
--		pr_warn("%s(): block %d >= %ld (filesize %ld)\n",
--			__func__, block, inode->i_blocks, inode->i_size);
--#endif
-+	if (iblock >= inode->i_blocks)
- 		return 0;
--	}
+ 	err = mlx5_core_get_caps(dev, MLX5_CAP_GENERAL);
+@@ -627,10 +626,13 @@ static int handle_hca_cap(struct mlx5_core_dev *dev, void *set_ctx)
+ 		MLX5_SET(cmd_hca_cap, set_hca_cap, roce,
+ 			 mlx5_is_roce_on(dev));
+ 
+-	max_uc_list = max_uc_list_get_devlink_param(dev);
+-	if (max_uc_list > 0)
+-		MLX5_SET(cmd_hca_cap, set_hca_cap, log_max_current_uc_list,
+-			 ilog2(max_uc_list));
++	if (MLX5_CAP_GEN_MAX(dev, log_max_current_uc_list)) {
++		int max_uc_list = max_uc_list_get_devlink_param(dev);
 +
- 	phys = efs_map_block(inode, iblock);
- 	if (phys)
- 		map_bh(bh_result, inode->i_sb, phys);
-@@ -42,16 +35,8 @@ int efs_bmap(struct inode *inode, efs_block_t block) {
- 	}
++		if (max_uc_list > 0)
++			MLX5_SET(cmd_hca_cap, set_hca_cap,
++				 log_max_current_uc_list, ilog2(max_uc_list));
++	}
  
- 	/* are we about to read past the end of a file ? */
--	if (!(block < inode->i_blocks)) {
--#ifdef DEBUG
--		/*
--		 * i have no idea why this happens as often as it does
--		 */
--		pr_warn("%s(): block %d >= %ld (filesize %ld)\n",
--			__func__, block, inode->i_blocks, inode->i_size);
--#endif
-+	if (!(block < inode->i_blocks))
- 		return 0;
--	}
- 
- 	return efs_map_block(inode, block);
+ 	return set_caps(dev, set_ctx, MLX5_SET_HCA_CAP_OP_MOD_GENERAL_DEVICE);
  }
 -- 
 2.53.0
