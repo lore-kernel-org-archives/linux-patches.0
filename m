@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E16335555;
-	Tue, 21 Jul 2026 15:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7675546A5E3;
+	Tue, 21 Jul 2026 15:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648929; cv=none; b=kuxOLalAa5PtSY/Aps50FOmwTjlFnIsHuW54Yh323xoxPiyyCdBrxSMD00G8wFXWI8F5/XyWr1NdQKjN7jIEkF4kA3xsXwCJ9MQI4iY82FM8dW9SajytvhzZ1fQTAyHZq5aBHagjBVcSulbhV096/EiXXlRDLf1rK7idCwTAIU0=
+	t=1784648932; cv=none; b=GIYPhNtvleqprLPOnMsFjwXLfU9rgR+VN0dzG9zEJ1t7e+NUlRhsmT6H9oFzEj1FigmkiUBeAreGG58jG78Jk+pbIXtBUMCuu3vPUkTWKAOhLhXFMWFgFP3pL5DyoafMh3BWlamPx7Pni6fRs5VmwCmnsDrSc0q+hgXYizSHAGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648929; c=relaxed/simple;
-	bh=Q6fJruOOW9r5xoXXTy991AFoenuBXLhTAsafpqBLciw=;
+	s=arc-20240116; t=1784648932; c=relaxed/simple;
+	bh=h8qBCsV9+5LKF5DQQPB5B30FogSAJs9g+viwE45TSoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K8NRudxEfF+rnPdzBUY0J5CcLUlDzwasAUEHskww3//Yry3GEDBiRfBXd07WceED5r+pLvakaTRY8r49ZGEw/pn/gYGfcdlU9lA0E665WA41RmDr2dQo4kX+nESKhoYzT0BZKylzK1MkhGxu/teUKjNVD8tXer6gygBOQ+IJO3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CYG24ICr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=icXQZPUDT5EJ7ZSU8JRem9QQL52wG3Gkedno7q74Dd/2H0CFBK53Yb+x18ZJLopdqmFK81LM7jlnUeaAc8+VQ3B2jnxocyZ1reExL78lp5V1Q0ZruDe7/L2dJL8QRHkxyf4QaaYDQwJDjZf5QnX2Je3bOkgr+zoQDSA4lJIvEow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTE78zw9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYG24ICr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1B971F000E9;
-	Tue, 21 Jul 2026 15:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTE78zw9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9604D1F000E9;
+	Tue, 21 Jul 2026 15:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648928;
-	bh=3GtvLfVHzifUfS0WI1699ydGTrvor8pU2T8Z5V+Qk/I=;
+	s=korg; t=1784648931;
+	bh=nguWc0lYNpjLU1m+aXKphZlsOOYixHIk2kL30IJ+qJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CYG24ICr34ZMivXmA8PUOZ3+644q29UP0Yjiit6C7vYk31qrUULCKgi4JKWHS2v/d
-	 hrxS+SI2P+tRDa/2MWGpFV+cdvK5TjL+SpeWnet5liBYGsSfjIU7Uy5MQbgSG4qkrr
-	 ao4FFgwxCjxh49IS4m1yvdDHB4SAQZsnKtUIpZXM=
+	b=pTE78zw9gnxP6WpYRgdOE31pSZFrRCahsfPAdKDOcU2j+iyo2uXirhcag5FOWqnnd
+	 M7J6gp1GwU0WD6GqerS/xd7pJLPUxfqFKObLh+zVb0JwHzXWT9zND5yy+4rU2/advN
+	 RS3jFAPkCIVy0AG2WSkTfMzEbyv+L4PZKje9w21U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Han Gao <gaohan@iscas.ac.cn>,
-	Yixun Lan <dlan@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0385/2077] dts: riscv: spacemit: k3: Fix I/O power settings
-Date: Tue, 21 Jul 2026 17:00:58 +0200
-Message-ID: <20260721152601.778561145@linuxfoundation.org>
+Subject: [PATCH 7.1 0386/2077] Revert "media: venus: hfi_platform: Correct supported codecs for sc7280"
+Date: Tue, 21 Jul 2026 17:00:59 +0200
+Message-ID: <20260721152601.804026492@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,38 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yixun Lan <dlan@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 3ea695eb111fc5a7ffddd21d5c3fee6d82560413 ]
+[ Upstream commit 3eb9ba0da0ab73e135f93ffccf07381ba11f100e ]
 
-SpacemiT K3 SoC support dual-voltage I/O power domain, while initially
-configure to 3.3v, and need to access register from APBC space to switch
-to 1.8v domain.
+This reverts commit c0ab2901fc68 ("media: venus: hfi_platform: Correct
+supported codecs for sc7280"). The codecs might be deprecated, but they
+still work (somewhat) perfectly and don't cause any issues with the rest
+of the system. Reenable VP8 codecs by reverting the offending commit.
 
-Fix the GMAC0's I/O pins 1.8v switch failure that will result a broken
-ethernet driver.
+Tested with fluster:
 
-Fixes: d8944577496b ("riscv: dts: spacemit: k3: add pinctrl support")
-Reported-by: Han Gao <gaohan@iscas.ac.cn>
-Link: https://patch.msgid.link/20260518-07-dts-pinctrl-io-power-v1-1-abe19c14a726@kernel.org
-Signed-off-by: Yixun Lan <dlan@kernel.org>
+|Test|FFmpeg-VP8-v4l2m2m|GStreamer-VP8-V4L2|
+|TOTAL|50/61|50/61|
+|TOTAL TIME|12.171s|11.824s|
+
+Fixes: c0ab2901fc68 ("media: venus: hfi_platform: Correct supported codecs for sc7280")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/boot/dts/spacemit/k3.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ .../media/platform/qcom/venus/hfi_parser.c    |  6 ++---
+ .../media/platform/qcom/venus/hfi_platform.c  | 24 -------------------
+ .../media/platform/qcom/venus/hfi_platform.h  |  2 --
+ 3 files changed, 2 insertions(+), 30 deletions(-)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-index e6faf8d8759e1f..719850aa7aac5a 100644
---- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-@@ -803,6 +803,7 @@ pinctrl: pinctrl@d401e000 {
- 			clocks = <&syscon_apbc CLK_APBC_AIB>,
- 				 <&syscon_apbc CLK_APBC_AIB_BUS>;
- 			clock-names = "func", "bus";
-+			spacemit,apbc = <&syscon_apbc>;
- 		};
+diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
+index 92765f9c88730a..c4cf6cd50a9a03 100644
+--- a/drivers/media/platform/qcom/venus/hfi_parser.c
++++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+@@ -268,7 +268,6 @@ static int hfi_platform_parser(struct venus_core *core, struct venus_inst *inst)
+ 	const struct hfi_plat_caps *caps = NULL;
+ 	u32 enc_codecs, dec_codecs, count = 0;
+ 	unsigned int entries;
+-	int ret;
  
- 		uart10: serial@d401f000 {
+ 	plat = hfi_platform_get(core->res->hfi_version);
+ 	if (!plat)
+@@ -277,9 +276,8 @@ static int hfi_platform_parser(struct venus_core *core, struct venus_inst *inst)
+ 	if (inst)
+ 		return 0;
+ 
+-	ret = hfi_platform_get_codecs(core, &enc_codecs, &dec_codecs, &count);
+-	if (ret)
+-		return ret;
++	if (plat->codecs)
++		plat->codecs(core, &enc_codecs, &dec_codecs, &count);
+ 
+ 	if (plat->capabilities)
+ 		caps = plat->capabilities(core, &entries);
+diff --git a/drivers/media/platform/qcom/venus/hfi_platform.c b/drivers/media/platform/qcom/venus/hfi_platform.c
+index cde7f93045ac45..f19572ab1d1613 100644
+--- a/drivers/media/platform/qcom/venus/hfi_platform.c
++++ b/drivers/media/platform/qcom/venus/hfi_platform.c
+@@ -2,9 +2,7 @@
+ /*
+  * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+  */
+-#include <linux/of.h>
+ #include "hfi_platform.h"
+-#include "core.h"
+ 
+ const struct hfi_platform *hfi_platform_get(enum hfi_version version)
+ {
+@@ -73,25 +71,3 @@ hfi_platform_get_codec_lp_freq(struct venus_core *core,
+ 
+ 	return freq;
+ }
+-
+-int
+-hfi_platform_get_codecs(struct venus_core *core, u32 *enc_codecs,
+-			u32 *dec_codecs, u32 *count)
+-{
+-	const struct hfi_platform *plat;
+-
+-	plat = hfi_platform_get(core->res->hfi_version);
+-	if (!plat)
+-		return -EINVAL;
+-
+-	if (plat->codecs)
+-		plat->codecs(core, enc_codecs, dec_codecs, count);
+-
+-	if (IS_IRIS2_1(core)) {
+-		*enc_codecs &= ~HFI_VIDEO_CODEC_VP8;
+-		*dec_codecs &= ~HFI_VIDEO_CODEC_VP8;
+-	}
+-
+-	return 0;
+-}
+-
+diff --git a/drivers/media/platform/qcom/venus/hfi_platform.h b/drivers/media/platform/qcom/venus/hfi_platform.h
+index 5e4f8013a6b1db..a0b6d19f3e1a04 100644
+--- a/drivers/media/platform/qcom/venus/hfi_platform.h
++++ b/drivers/media/platform/qcom/venus/hfi_platform.h
+@@ -74,6 +74,4 @@ unsigned long hfi_platform_get_codec_vsp_freq(struct venus_core *core,
+ unsigned long hfi_platform_get_codec_lp_freq(struct venus_core *core,
+ 					     enum hfi_version version,
+ 					     u32 codec, u32 session_type);
+-int hfi_platform_get_codecs(struct venus_core *core, u32 *enc_codecs,
+-			    u32 *dec_codecs, u32 *count);
+ #endif
 -- 
 2.53.0
 
