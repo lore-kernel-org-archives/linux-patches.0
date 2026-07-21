@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E181A2641CA;
-	Tue, 21 Jul 2026 21:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C01C44AB61;
+	Tue, 21 Jul 2026 21:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669107; cv=none; b=QOFXQeRT6zPd9fPVc72rBQevlcajTkVVv8mDuh8tfmK8q38kbSAMZOFP0hVfvNDQUgRNFFz6d+Eq5tjO3v+ljjgcoJoLvbX6z7mWGyu89+J4J167B/TJwNLYB+K3TsP/KL25vWzJQoHr3PPVAptQvKCOGzmFsEq5QRAuH9R1WGk=
+	t=1784669109; cv=none; b=d38RZYau7EHhn5itJw2lYaAUBh1JtFcsm9oolpFWcqaBREE5TNvADaFNNXHK+NLswqHm69rqnfnvXgUQRm5PGxWxw2voqWRGjX1b+xBesj+HnZz/tZiWNNkjv3Oo0tgOkIiUKgeyqsihb4V07yg/TA10AcLAEFz2Qt0350rqi8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669107; c=relaxed/simple;
-	bh=qwUDlihVa0Y9xWXYy3Fi3zsFpEKFfJKn47RcVUWYQ54=;
+	s=arc-20240116; t=1784669109; c=relaxed/simple;
+	bh=1dbqoK14Acldx6HIRxOBROJ2bRb7zMH5StacUmDqV5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xj43duvz6a6iWgKxdUoQa8gS/AlygDKP2yTCFvVLc6HMHNScNqT7p8pWKJ5+1uFXUeVoPdP/TcInS5dchQ2IFwSqg2jXuHyBFVn6JAwexAaWGyS+4kAWwfQ6QoPY8mM2xqouJEc3BijKwY99hQUQBZmI59iZw5OcFKrZeLiNCBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPCy7HBf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ny5VFk1dvGW7t0BgT5oTzb0oNFV9UmFUljydSzXjBKIhjKJFTZvl3i5JuHN6HVpT0LysfA/Gnp9c3NW+Si6ZosqNYP+eUBQkeiheGt/Ki4zh1mBIRsJ+APayy6mX9VQ14iLX0cmSQRST5nuKqtRp4e4tKuQcoPTHCzdLGhCeCdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKMwrmTt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPCy7HBf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515921F000E9;
-	Tue, 21 Jul 2026 21:25:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKMwrmTt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A7A1F000E9;
+	Tue, 21 Jul 2026 21:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669105;
-	bh=KmzCZe6Fkc5ZKRRMa0OUOUa8PzLPasu0S2it29/ad5E=;
+	s=korg; t=1784669108;
+	bh=kUXnu0M4d5k91PXHXyksk8KquKJ96krozON2wM0XCE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BPCy7HBfpPVDylcR8gOoswfhv6h4N7fFiehHMCgoF0ghDcf+itHuXMXQJPoBHTqfA
-	 R2fMAZDVPRH0ra0hVyDK7gqMArJQip+SIVsvAvsX+s7Cz+ephykI6xSNEb7YmmstLW
-	 HSR8Z7x6+OFdzzn7QIjJi36XuM8cCdLecaNMhVJY=
+	b=yKMwrmTtboh+9SFJzCcvMy+DqgUKCx/mw0QwGm3bXBep++nYbNs24mSTsI7zEyw9b
+	 ooiX9htvxOpEberIIRbe5pEyjP2ysT9Bg6EzOJPeO/iPJ9d01Xr5OYdJdHeS8/vglJ
+	 fdzLDLpzoDnfChP182ao9sFuZ8ry1GQKwtn/gFl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0376/1067] ocfs2: rebase copied fsdlm LVB pointers in locking_state
-Date: Tue, 21 Jul 2026 17:16:17 +0200
-Message-ID: <20260721152433.038228971@linuxfoundation.org>
+Subject: [PATCH 6.1 0423/1067] Bluetooth: eir: Fix stack OOB write when prepending the Flags AD
+Date: Tue, 21 Jul 2026 17:17:04 +0200
+Message-ID: <20260721152434.085530427@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -58,138 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 93612d48fa42b3d1a637eb9279e15281c611c000 ]
+[ Upstream commit 6f5fb689fdf80bdd143f22a502f9eb1f3c85e286 ]
 
-The locking_state debugfs iterator snapshots struct ocfs2_lock_res by
-value under ocfs2_dlm_tracking_lock and later formats that copy in
-ocfs2_dlm_seq_show().  That is fine for the inline fields, but the
-userspace fsdlm stack stores the LVB through lksb_fsdlm.sb_lvbptr.  Once
-the iterator drops the tracking lock, a copied non-NULL sb_lvbptr still
-points into the original lockres owner, so teardown can free that
-container before the debugfs dump walks the raw LVB bytes.
+eir_create_adv_data() builds the advertising data into a fixed-size
+buffer ("size", 31 for the legacy path). It may prepend a 3-byte "Flags"
+AD structure (LE_AD_NO_BREDR on an LE-only controller) and then copies
+the per-instance data without checking that it still fits:
 
-Rebase the copied sb_lvbptr to the copied l_lksb before dumping the raw
-LVB.  The seq snapshot already carries the inline LVB storage reserved in
-struct ocfs2_dlm_lksb, so the debugfs reader can dump the copied bytes
-without borrowing the original lockres lifetime.
+	memcpy(ptr, adv->adv_data, adv->adv_data_len);
 
-The buggy scenario involves two paths, with each column showing the order
-within that path:
+tlv_data_max_len() only reserves those 3 bytes when the user-supplied
+flags carry a managed-flags bit, so an instance added with flags == 0 is
+accepted with adv_data_len up to the full buffer. At advertise time the
+flags are still prepended, and the memcpy() writes 3 + adv_data_len
+bytes into the size-byte buffer:
 
-locking_state reader:                  lockres teardown:
-1. ocfs2_dlm_seq_start()/next()        1. file release or another owner
-   copies struct ocfs2_lock_res           teardown reaches
-2. ocfs2_dlm_seq_show() formats           ocfs2_lock_res_free()
-   the copied row                      2. the lockres is removed from the
-3. ocfs2_dlm_lvb() follows the            tracking list
-   copied sb_lvbptr                   3. the owner frees the original
-                                          lockres container
+  BUG: KASAN: stack-out-of-bounds in eir_create_adv_data (net/bluetooth/eir.c:301)
+  Write of size 31 at addr ffff88800a547bdc by task kworker/u9:0/65
+  Workqueue: hci0 hci_cmd_sync_work
+   __asan_memcpy (mm/kasan/shadow.c:106)
+   eir_create_adv_data (net/bluetooth/eir.c:301)
+   hci_update_adv_data_sync (net/bluetooth/hci_sync.c:1310)
+   hci_schedule_adv_instance_sync (net/bluetooth/hci_sync.c:1817)
+   hci_cmd_sync_work (net/bluetooth/hci_sync.c:332)
+  This frame has 1 object:
+   [32, 64) 'cp'
 
-Validation reproduced this kernel report:
-KASAN slab-use-after-free in ocfs2_dlm_seq_show+0x1bd/0x430
-RIP: 0033:0x7f8ec4b1e29d
-The buggy address belongs to the object at ffff88810a1e0800 which belongs
-to the cache kmalloc-1k of size 1024
-The buggy address is located 368 bytes inside of freed 1024-byte region
-[ffff88810a1e0800, ffff88810a1e0c00)
-Read of size 1
-Call trace:
-  dump_stack_lvl+0x66/0xa0
-  print_report+0xce/0x630
-  ocfs2_dlm_seq_show+0x1bd/0x430 (fs/ocfs2/dlmglue.c:3137)
-  srso_alias_return_thunk+0x5/0xfbef5
-  __virt_addr_valid+0x19f/0x330
-  kasan_report+0xe0/0x110
-  seq_read_iter+0x29d/0x790
-  seq_read+0x20a/0x280
-  find_held_lock+0x2b/0x80
-  rcu_read_unlock+0x18/0x70
-  full_proxy_read+0x9e/0xd0
-  vfs_read+0x12c/0x590
-  ksys_read+0xd2/0x170
-  do_user_addr_fault+0x65a/0x890
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-Allocated by task stack:
-  kasan_save_stack+0x33/0x60
-  kasan_save_track+0x14/0x30
-  __kasan_kmalloc+0xaa/0xb0
-  ocfs2_file_open+0x13e/0x300
-  do_dentry_open+0x233/0x7f0
-  vfs_open+0x5a/0x1b0
-  path_openat+0x66d/0x1540
-  do_file_open+0x186/0x2b0
-  do_sys_openat2+0xce/0x150
-  __x64_sys_openat+0xd0/0x140
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-Freed by task stack:
-  kasan_save_stack+0x33/0x60
-  kasan_save_track+0x14/0x30
-  kasan_save_free_info+0x3b/0x60
-  __kasan_slab_free+0x5f/0x80
-  kfree+0x313/0x590
-  ocfs2_file_release+0x138/0x260
-  __fput+0x1df/0x4b0
-  fput_close_sync+0xd2/0x170
-  __x64_sys_close+0x55/0x90
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The "Flags" structure is added by the kernel, not requested by
+userspace, so only prepend it when it fits together with the instance
+advertising data; when there is no room for both, drop the flags rather
+than the user-provided data.
 
-Link: https://lore.kernel.org/20260525041726.4112882-1-rollkingzzc@gmail.com
-Fixes: cf4d8d75d8ab ("ocfs2: add fsdlm to stackglue")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reachable by a local user with CAP_NET_ADMIN owning an LE-only
+controller on the legacy advertising path.
+
+Fixes: b44133ff03be ("Bluetooth: Support the "discoverable" adv flag")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlmglue.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ net/bluetooth/eir.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
-index d96cacf31f53d7..8fcf85e7eb924e 100644
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -3133,6 +3133,22 @@ static void *ocfs2_dlm_seq_next(struct seq_file *m, void *v, loff_t *pos)
-  *	- Add last pr/ex unlock times and first lock wait time in usecs
-  */
- #define OCFS2_DLM_DEBUG_STR_VERSION 4
-+
-+/*
-+ * The debug iterator snapshots lockres by value, so a userspace-stack LVB
-+ * pointer copied from the original lockres must be rebased to the copied
-+ * lksb before the dump walks the raw bytes.
-+ */
-+static void ocfs2_dlm_seq_rebase_lvb(struct ocfs2_lock_res *lockres)
-+{
-+	if (!ocfs2_stack_supports_plocks())
-+		return;
-+
-+	if (lockres->l_lksb.lksb_fsdlm.sb_lvbptr)
-+		lockres->l_lksb.lksb_fsdlm.sb_lvbptr =
-+			(char *)&lockres->l_lksb + sizeof(struct dlm_lksb);
-+}
-+
- static int ocfs2_dlm_seq_show(struct seq_file *m, void *v)
- {
- 	int i;
-@@ -3193,6 +3209,7 @@ static int ocfs2_dlm_seq_show(struct seq_file *m, void *v)
- 		   lockres->l_blocking);
+diff --git a/net/bluetooth/eir.c b/net/bluetooth/eir.c
+index 3f72111ba651f9..1de5f9df6eec00 100644
+--- a/net/bluetooth/eir.c
++++ b/net/bluetooth/eir.c
+@@ -283,10 +283,12 @@ u8 eir_create_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr, u8 size)
+ 		if (!flags)
+ 			flags |= mgmt_get_adv_discov_flags(hdev);
  
- 	/* Dump the raw LVB */
-+	ocfs2_dlm_seq_rebase_lvb(lockres);
- 	lvb = ocfs2_dlm_lvb(&lockres->l_lksb);
- 	for(i = 0; i < DLM_LVB_LEN; i++)
- 		seq_printf(m, "0x%x\t", lvb[i]);
+-		/* If flags would still be empty, then there is no need to
+-		 * include the "Flags" AD field".
++		/* Only add the "Flags" if it fits together with the instance
++		 * advertising data; drop it rather than overflow the buffer.
+ 		 */
+-		if (flags && (ad_len + eir_precalc_len(1) <= size)) {
++		if (flags &&
++		    (ad_len + eir_precalc_len(1) +
++		     (adv ? adv->adv_data_len : 0) <= size)) {
+ 			ptr[0] = 0x02;
+ 			ptr[1] = EIR_FLAGS;
+ 			ptr[2] = flags;
 -- 
 2.53.0
 
