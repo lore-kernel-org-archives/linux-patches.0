@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5A646C4D2;
-	Tue, 21 Jul 2026 18:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9C73264FF;
+	Tue, 21 Jul 2026 18:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659166; cv=none; b=Hu4dKzByjtbdtTS5+DzcJ41xodfdvufMt9mXAJMFXJyF5dYyD8GUgcIysH4a+MioXyIP/vhTe5IT6voAphnQmCbyTXR9tD+A/cJ+Q7HVuGa94ow99NaFLkcURjvzNV/mpR8TLKQZ7iNEPYZZpOYf0aIoQ+1wJBawi6ZCq+E1b0E=
+	t=1784659169; cv=none; b=K2dwjr8P0dz+4b4WozC9ffCgvyBuceJw1DSB7VY3YtNMeMT10ettEh+EIkiLrczYjP8QVZFwbj3upk26NnFS8LF2EBvbdKrMLd2gCfnvOlsel/nfsMJbZ7R7ssl5VJQ/SPgyE+x/ncB0gAaX/gaZbq9RU4UPvMp2Jlh9roXIRss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659166; c=relaxed/simple;
-	bh=SpL6pNXNjIZQPhHVGRwMfU0PIMN7yYLGQCa0YhokbTY=;
+	s=arc-20240116; t=1784659169; c=relaxed/simple;
+	bh=8VaOIiHsqiVR32s+MoRliv474vlBGNGiDEU+x/Q5FSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u2d3r2hwNjZvYb3wCs9eOgNQy0jRKib/4Tsk9K9NghmNcYSKZgOIxItmJHmCmU0NtKPnvdbDBL1Y5LJBFDT35RsYnGt6Rj1sCwxDkcybto/lGA4OH2m3xI7s/YSbA/VEirMpx/F0g9+sDgWfZH+HDUE/nZFH7JBkwCpvAKs7dcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPjGOT68; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Csiazz3/nNuffeVBQ7DFjeZNqcfXjeVYKSz1lKGUyOkYwzmyasZkT6mdDKIjJ22l+ZNzF2VlD9LfWdl1MKgnDDm1DIjcMrtE7f6ZSVVcvt0jGpBmCYAP6l3oqO83RRoel7MZFmCml8TeO8ZUUlvI5ha6v/+TANOEsqQOSnh8xoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uw38pFpn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPjGOT68"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D139C1F00A3A;
-	Tue, 21 Jul 2026 18:39:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uw38pFpn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A861F000E9;
+	Tue, 21 Jul 2026 18:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659165;
-	bh=MeRjmkCeSalinDUnaobspCMKL4eAl6ybDUaZDxQ6OxU=;
+	s=korg; t=1784659168;
+	bh=i/4LZ7BH2e6/zkITT2QOn13mSwhossgRzgQgfGNVfIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tPjGOT689dnoO5nlvp7SljVx6hqM3+nmj6LXaUpo5tS+XM9qCS8qodAHb7zI8TVzh
-	 dC6lnDOg8lq2QuF+jATrdKUmo+f15PglBAS68YYpLT9Ytxtsz/Cm2tOY6pSXiTkEUF
-	 mawLtZ9bfJ1zQCIizq7ZSerErQdH7Ty60+oTSsVI=
+	b=uw38pFpnppHk/z6C0GYgnrZIbcYeXBECJHmp9hMk1fuPIWwZTDG4hUahyMYosD4Qv
+	 c6toapEGQHSOMX+wgQ9GDTNLQ+TU2kZq/J8X2PlTUPld4wy1rbgwo83bJiAVv1vyfE
+	 i+wA0lpg0mLr2ThvM/LtWp8F6BZMezm2AKf/dQXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 1418/1611] net/sched: sch_teql: move rcu_read_lock()/spin_lock() from _bh variants
-Date: Tue, 21 Jul 2026 17:25:34 +0200
-Message-ID: <20260721152547.333011709@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
+Subject: [PATCH 6.18 1419/1611] drm/xe/userptr: Stub notifier_lock helpers when DRM_GPUSVM=n
+Date: Tue, 21 Jul 2026 17:25:35 +0200
+Message-ID: <20260721152547.355237367@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -44,124 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-commit 6301f6a34ed86fe6f3b7b3211ea069f3677fc559 upstream.
+commit f5ef65adf81da3dbce4e692e48c1754c0bb95da0 upstream.
 
-This is a followup based on sashiko comments [1] on commit e5b811fe7931
-("net/sched: sch_teql: Introduce slaves_lock to avoid race condition and UAF")
+When CONFIG_DRM_GPUSVM=n (e.g. um-allyesconfig), the only caller of
+xe_pt_svm_userptr_notifier_lock() is compiled out, triggering:
 
-Use plain rcu_read_lock()/spin_lock() in teql_master_xmit() instead of the
-_bh variants, since ndo_start_xmit is already invoked with BH disabled
-by the core stack and the _bh primitives can warn in_hardirq() when xmit
-is reached through netpoll or a softirq xmit path with hard IRQs disabled.
+  drivers/gpu/drm/xe/xe_pt.c:1418:13: warning:
+    'xe_pt_svm_userptr_notifier_lock' defined but not used
+    [-Wunused-function]
 
-Moves rcu_read_lock() after restart: label + adds rcu_read_unlock() before
-goto restart (fixes the unbounded RCU hold across retries)
+The helpers cannot simply be removed in this case: the matching
+xe_pt_svm_userptr_notifier_unlock() is also referenced from
+xe_pt_update_ops_run(), which lives outside any DRM_GPUSVM ifdef and is
+gated only at runtime by pt_update_ops->needs_svm_lock. The symbol must
+exist in all builds.
 
-[1] https://sashiko.dev/#/patchset/20260628111229.669751-1-jhs%40mojatatu.com
+Provide empty static inline stubs for !DRM_GPUSVM, matching the pattern
+used by xe_svm_notifier_lock()/_unlock() in xe_svm.h.
 
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Fixes: e5b811fe7931 ("net/sched: sch_teql: Introduce slaves_lock to avoid race condition and UAF")
-Link: https://patch.msgid.link/20260630150922.238714-1-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: dca6e08c923a ("drm/xe/userptr: Hold notifier_lock for write on inject test path")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202606302210.QqcLbOEN-lkp@intel.com/
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260630192221.2998168-1-shuicheng.lin@intel.com
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+(cherry picked from commit 3359422bf0a1140e96d783a19a397686e580a3ca)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_teql.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/xe/xe_pt.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/sched/sch_teql.c
-+++ b/net/sched/sch_teql.c
-@@ -311,14 +311,14 @@ static netdev_tx_t teql_master_xmit(stru
- 	int subq = skb_get_queue_mapping(skb);
- 	struct sk_buff *skb_res = NULL;
- 
--	rcu_read_lock_bh();
--
--	start = rcu_dereference_bh(master->slaves);
--
- restart:
- 	nores = 0;
- 	busy = 0;
- 
-+	rcu_read_lock();
-+
-+	start = rcu_dereference(master->slaves);
-+
- 	q = start;
- 	if (!q)
- 		goto drop;
-@@ -345,17 +345,17 @@ restart:
- 				    netdev_start_xmit(skb, slave, slave_txq, false) ==
- 				    NETDEV_TX_OK) {
- 					__netif_tx_unlock(slave_txq);
--					spin_lock_bh(&master->slaves_lock);
-+					spin_lock(&master->slaves_lock);
- 					if (rcu_dereference_protected(master->slaves,
- 								      lockdep_is_held(&master->slaves_lock)) == q)
- 						rcu_assign_pointer(master->slaves,
- 								   rcu_dereference_protected(NEXT_SLAVE(q),
- 											     lockdep_is_held(&master->slaves_lock)));
--					spin_unlock_bh(&master->slaves_lock);
-+					spin_unlock(&master->slaves_lock);
- 					netif_wake_queue(dev);
- 					master->tx_packets++;
- 					master->tx_bytes += length;
--					rcu_read_unlock_bh();
-+					rcu_read_unlock();
- 					return NETDEV_TX_OK;
- 				}
- 				__netif_tx_unlock(slave_txq);
-@@ -364,37 +364,38 @@ restart:
- 				busy = 1;
- 			break;
- 		case 1:
--			spin_lock_bh(&master->slaves_lock);
-+			spin_lock(&master->slaves_lock);
- 			if (rcu_dereference_protected(master->slaves,
- 						      lockdep_is_held(&master->slaves_lock)) == q)
- 				rcu_assign_pointer(master->slaves,
- 						   rcu_dereference_protected(NEXT_SLAVE(q),
- 									     lockdep_is_held(&master->slaves_lock)));
--			spin_unlock_bh(&master->slaves_lock);
--			rcu_read_unlock_bh();
-+			spin_unlock(&master->slaves_lock);
-+			rcu_read_unlock();
- 			return NETDEV_TX_OK;
- 		default:
- 			nores = 1;
- 			break;
- 		}
- 		__skb_pull(skb, skb_network_offset(skb));
--	} while ((q = rcu_dereference_bh(NEXT_SLAVE(q))) != start);
-+	} while ((q = rcu_dereference(NEXT_SLAVE(q))) != start);
- 
- 	if (nores && skb_res == NULL) {
- 		skb_res = skb;
-+		rcu_read_unlock();
- 		goto restart;
- 	}
- 
- 	if (busy) {
- 		netif_stop_queue(dev);
--		rcu_read_unlock_bh();
-+		rcu_read_unlock();
- 		return NETDEV_TX_BUSY;
- 	}
- 	master->tx_errors++;
- 
- drop:
- 	master->tx_dropped++;
--	rcu_read_unlock_bh();
-+	rcu_read_unlock();
- 	dev_kfree_skb(skb);
- 	return NETDEV_TX_OK;
+--- a/drivers/gpu/drm/xe/xe_pt.c
++++ b/drivers/gpu/drm/xe/xe_pt.c
+@@ -1388,6 +1388,7 @@ static int xe_pt_pre_commit(struct xe_mi
+ 				     pt_update_ops, rftree);
  }
+ 
++#if IS_ENABLED(CONFIG_DRM_GPUSVM)
+ /*
+  * Acquire/release the svm notifier_lock around xe_pt_svm_userptr_pre_commit()
+  * and the matching late release in xe_pt_update_ops_run(). Read mode by
+@@ -1414,6 +1415,10 @@ static void xe_pt_svm_userptr_notifier_u
+ 	xe_svm_notifier_unlock(vm);
+ #endif
+ }
++#else
++static inline void xe_pt_svm_userptr_notifier_lock(struct xe_vm *vm) { }
++static inline void xe_pt_svm_userptr_notifier_unlock(struct xe_vm *vm) { }
++#endif
+ 
+ #if IS_ENABLED(CONFIG_DRM_GPUSVM)
+ #ifdef CONFIG_DRM_XE_USERPTR_INVAL_INJECT
 
 
