@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407F542DA53;
-	Tue, 21 Jul 2026 19:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE52C408039;
+	Tue, 21 Jul 2026 19:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661981; cv=none; b=eTRBTGkIXffulHfwtkDOkJv7HhsdydEEG8qwaAyNWiueDYyoOm9BK7//sbjHRcAplsrRaEsyp0ZifYpn3pesgymzqH1Tuawa0IsK5tvt58+jz5Y77O3TQi0GH5m1yzXYN4XP+mrHENVKEO2CkwgqvglWaveeAqyq269Bx6R+ciU=
+	t=1784661983; cv=none; b=fDgY7aGBt6USxu8LlMg/OxDuDQEoS+Bv7ysSor/mM1vL2pQeIY+HdT81dXfuko2w+8946ggGzt8zHbYsVpqklhAb4BWwJFH3Qr2UAK1vxJqnanpMpGei6KKhEEONsw5UCFWzXGkAb2Zn40CTrB574ozBy5kmLdsBveewXw5oQMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661981; c=relaxed/simple;
-	bh=ndAbPcYR8Du2TD4Hm4BehWTlmZUSbV/NocLHOyIvQ1c=;
+	s=arc-20240116; t=1784661983; c=relaxed/simple;
+	bh=VgFG57xrTpjf4iE8pdcOkMLbougabLN6bjgLHy11dhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s6unkbKsE6SdgKfNfZSFAIYI0F8COfHdIrLUGqjtEcnEnI6wx+6RMauufaY4dFDa13t20DXxw6GTS3wayKG3Ub/fXvZXISIl0mJYG9E85ZaXRi7TgyQUnoThDpmQqJ1TEUrs40RMAzUjQ7JMMHJQQ4RfdQ/c7MrO5tYx0ino4ZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbhHW1+/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=egN6WYFf5iFifbvCzdk3Y5mRfODbJ4IDqy5LQx2R6lpkzGSp0rjlCdP4ef/Q9cFCNlwvF9FHsXbcg+n2AEQkQYVHnujuzYoU/AxEl0ytYI+jS0/J0bBpEHbWeCHAqWNr5C/4b1eD7fE9DLQ1IkvAVaIZP5pvXPWV5/+FIQOwk1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1dRVtlW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbhHW1+/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7FB1F000E9;
-	Tue, 21 Jul 2026 19:26:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1dRVtlW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312CF1F000E9;
+	Tue, 21 Jul 2026 19:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661980;
-	bh=bTVubFZzyuPqGfXoesHz83Uj9mOM0gg0bfqkjWS5+08=;
+	s=korg; t=1784661982;
+	bh=bIiiwi/wcrO7DaeeEXTDkeYngz2F1janPhtCA+ORYD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nbhHW1+/H1rrupSVAKMqShgBT+ArW940TCS2hzlvyKgcklaZ7Ilg8Jt56TxXtdr/Z
-	 JDLmm0fY6YPP8+rCBdRoxtmWssG+c6zAg7RaV3RUWTeQpdWT2usrDDHHu3bFf+x1mL
-	 Klizv8uzMMWYEgzNBkb/RERWyUP0gl27+UBd9h0c=
+	b=k1dRVtlWh2rPIEIEjtscSUH1tIKAiU5p5St5a4VXKW9Dv2kBSdacRq2vbIe+WfzF4
+	 PGZIyN3AsdBTnbLzd1T8NYrgrrDSP+kOeDR9efqu0IJkzra4XvoBGzgiG19I9YWcXG
+	 KIzd/yShCiAfFLLCtzlZjqgsePl14cPbyw1+Ofs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Ma <aaron.ma@canonical.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+e70e4c6f6eee43357ba7@syzkaller.appspotmail.com,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0269/1276] ASoC: amd: acp-sdw-sof: Bound DAI link iteration
-Date: Tue, 21 Jul 2026 17:11:52 +0200
-Message-ID: <20260721152452.099642715@linuxfoundation.org>
+Subject: [PATCH 6.12 0270/1276] firmware_loader: Fix recursive lock in device_cache_fw_images()
+Date: Tue, 21 Jul 2026 17:11:53 +0200
+Message-ID: <20260721152452.122411858@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,57 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Ma <aaron.ma@canonical.com>
+From: Dmitry Vyukov <dvyukov@google.com>
 
-[ Upstream commit 4d992e63f52d58f52b724606c60ae7b37a1c582f ]
+[ Upstream commit d3ec78f8f8d48a04a9fac38d47275c34645e5103 ]
 
-create_sdw_dailinks() walks sof_dais until it finds an entry with
-initialised cleared, but sof_dais is allocated with exactly num_ends
-entries. If all entries are initialised, the loop reads past the end of
-the array.
+A recursive locking deadlock can occur in the firmware loader's power
+management notification handler.
 
-Pass the allocated entry count to create_sdw_dailinks() and stop before
-reading past the array.
+During system suspend or hibernation preparation, fw_pm_notify() calls
+device_cache_fw_images(). This function acquires fw_lock to set the
+firmware cache state to FW_LOADER_START_CACHE and then iterates over all
+devices using dpm_for_each_dev() while still holding the lock.
 
-Fixes: 6d8348ddc56e ("ASoC: amd: acp: refactor SoundWire machine driver code")
-Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
-Link: https://patch.msgid.link/20260528082110.915549-2-aaron.ma@canonical.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+For each device, dev_cache_fw_image() schedules asynchronous work to cache
+the firmware. If memory allocation for the async work entry fails (e.g., in
+out-of-memory conditions), async_schedule_node_domain() falls back to
+executing the work function synchronously in the current thread.
+
+The synchronous execution path (__async_dev_cache_fw_image() ->
+cache_firmware() -> request_firmware() -> assign_fw()) attempts to acquire
+fw_lock again. Since the current thread already holds fw_lock, this results
+in a recursive locking deadlock.
+
+Fix this by releasing fw_lock immediately after updating the cache state
+and before calling dpm_for_each_dev(). The lock is only needed to protect
+the state update. Concurrent firmware requests will correctly see the
+FW_LOADER_START_CACHE state and use the piggyback mechanism, which is
+independently protected by its own fwc->name_lock.
+
+Fixes: ac39b3ea73aa ("firmware loader: let caching firmware piggyback on loading firmware")
+Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
+Reported-by: syzbot+e70e4c6f6eee43357ba7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e70e4c6f6eee43357ba7
+Link: https://syzkaller.appspot.com/ai_job?id=8b4af9fd-24af-423f-8acb-1159fd34c1a5
+Signed-off-by: Dmitry Vyukov <dvyukov@google.com>
+Link: https://patch.msgid.link/48b092a5-f49d-48a4-95f4-f65bebfc6bc3@mail.kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-sdw-sof-mach.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/base/firmware_loader/main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/acp/acp-sdw-sof-mach.c b/sound/soc/amd/acp/acp-sdw-sof-mach.c
-index 876f0b7fcd3dee..e169b33f65712c 100644
---- a/sound/soc/amd/acp/acp-sdw-sof-mach.c
-+++ b/sound/soc/amd/acp/acp-sdw-sof-mach.c
-@@ -260,13 +260,14 @@ static int create_sdw_dailink(struct snd_soc_card *card,
+diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
+index c6664a78796979..b4c4a532957074 100644
+--- a/drivers/base/firmware_loader/main.c
++++ b/drivers/base/firmware_loader/main.c
+@@ -1547,9 +1547,10 @@ static void device_cache_fw_images(void)
  
- static int create_sdw_dailinks(struct snd_soc_card *card,
- 			       struct snd_soc_dai_link **dai_links, int *be_id,
--			       struct asoc_sdw_dailink *sof_dais,
-+			       struct asoc_sdw_dailink *sof_dais, int num_dais,
- 			       struct snd_soc_codec_conf **codec_conf)
- {
-+	int i;
- 	int ret;
+ 	mutex_lock(&fw_lock);
+ 	fwc->state = FW_LOADER_START_CACHE;
+-	dpm_for_each_dev(NULL, dev_cache_fw_image);
+ 	mutex_unlock(&fw_lock);
  
- 	/* generate DAI links by each sdw link */
--	while (sof_dais->initialised) {
-+	for (i = 0; i < num_dais && sof_dais->initialised; i++) {
- 		int current_be_id = 0;
++	dpm_for_each_dev(NULL, dev_cache_fw_image);
++
+ 	/* wait for completion of caching firmware for all devices */
+ 	async_synchronize_full_domain(&fw_cache_domain);
  
- 		ret = create_sdw_dailink(card, sof_dais, dai_links,
-@@ -373,7 +374,7 @@ static int sof_card_dai_links_create(struct snd_soc_card *card)
- 	/* SDW */
- 	if (sdw_be_num) {
- 		ret = create_sdw_dailinks(card, &dai_links, &be_id,
--					  sof_dais, &codec_conf);
-+					  sof_dais, num_ends, &codec_conf);
- 		if (ret)
- 			goto err_end;
- 	}
 -- 
 2.53.0
 
