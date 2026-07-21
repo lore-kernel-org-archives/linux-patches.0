@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1ED44AB6A;
-	Tue, 21 Jul 2026 21:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C023844AB6A;
+	Tue, 21 Jul 2026 21:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668801; cv=none; b=BbLBZYToOIAhFyW0OYoRCXjVlQqNqNrOue171Qy+Sxvlyt281gUfCzmK7vyfu04svHOVSmfwSlinGZGe0X9td2QwIlvEv2PpbK9t+y7VjmWuLkxqGweZeMvhvIHwGOwXEzoEjT3v8zNRzyABRytKmNbHMDeiBXCXRb++l2jg5Z8=
+	t=1784668803; cv=none; b=qCiweO+rOQjyJPp/ZqfqL1KmCKKvkvbvAsz7+K3HuQKtT5zacNUptEGbby+QnJ6vZseUkK7GUaRhZB27u/aDXYYv/cldzrb+HGAmbF/VQdRIOIS0WryvqFxklyrqchTNUXkUh9ZUsN81AizHxw+3m7XabTLsr4gQIh32JQkdiq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668801; c=relaxed/simple;
-	bh=kI81iJcUi3BCH6OKj8ADB4do5lQfnVgRmCaBeMhGS60=;
+	s=arc-20240116; t=1784668803; c=relaxed/simple;
+	bh=jgkbXfavJVr2Xh1WpjxTetfeBPMw7DaAstjuMxRTEZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MZO6Mwb30HA9BMw5eygQVdY7xjISWwYfZIDWroQTnX3YSuFYNWvXzrDm9Bd24dwS86cwELJGO0cj2Zk9nMPk1iRlNQEm49ZELB/zSevWO4ayW5bzygeu5tjEuWH1xRfK/qvpRLkKmI5dkYRBYCCKfX/I9yA8ekkrzxYoEpfyIF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UkoA7uLr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ibk09TEsYeZ8KsgHu5pD7iZsF5Hlu00OBSl1jhbu6fYjOAYGOkzkEwJtL9F7rnxK6Pa+sZAy5sOVW8SP2ApuLwKTke7d71k4CPYiKtg3snxT5dLjbBgeccN9qInoz7UQY/gRvYod/hdmtd4oAr52jaSTaGEg4AnfZ49GdIxAc7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjTJBK6f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UkoA7uLr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2BB41F000E9;
-	Tue, 21 Jul 2026 21:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjTJBK6f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 586DB1F000E9;
+	Tue, 21 Jul 2026 21:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668800;
-	bh=KeNPWbZkg+cLA9tEy2tG0R50j9InvQzgHP06fsHHADg=;
+	s=korg; t=1784668802;
+	bh=J34BJOBwn9VFcEWoz/hI+AO328aPc0xfVaHag5VtUg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UkoA7uLrtiuqF3RyT/Q8KSKw3GCzuBNfHtVMbOS1V1ArI2scnvZW8xAAjG+Jkb7Ev
-	 db8zs/fkxS1WXyE4GOU7SPJ/K/YdjaymlVAZROP3BdU7Sf5/J5hfjByStq4ThyTdMU
-	 Qzk3WRazDtsJlvb3iYAsznJEmArVgZnS64Ytlq2A=
+	b=hjTJBK6fqJpVobv7swDaKbvWHVOncfgGp5y8/0sKFLHqnB8PzorgMDFEBFyR4hI/Q
+	 4IU6cJ8qIx02bZE7fHTrrOonh2oVLamLOztma+P6gX3ZkxQaQRUfdNey6WIIaoe4ov
+	 fWostgA95hKL44MjN6WjdGvltXfLqGjFn9obzbAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0313/1067] RDMA/mlx5: Fix devx subscribe-event unwind NULL dereference
-Date: Tue, 21 Jul 2026 17:15:14 +0200
-Message-ID: <20260721152431.594707766@linuxfoundation.org>
+Subject: [PATCH 6.1 0287/1067] wifi: rtw88: fix OOB read from firmware RX descriptor exceeding DMA buffer
+Date: Tue, 21 Jul 2026 17:14:48 +0200
+Message-ID: <20260721152431.022135442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,101 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 43f8f7946814c8e5f464518246fdbc69b6e32326 ]
+[ Upstream commit 6e76e9ed273dfb4b3333a5ebbb94958cc5752ab6 ]
 
-MLX5_IB_METHOD_DEVX_SUBSCRIBE_EVENT() links event_sub into sub_list
-before initializing the fields used by the shared error path.
+In rtw_pci_rx_napi(), new_len is computed as the sum of pkt_len (14-bit
+descriptor field, max 16383) and pkt_offset (drv_info_sz + shift, both
+firmware-controlled). The result can exceed RTK_PCI_RX_BUF_SIZE (11478),
+causing an out-of-bounds read from the pre-allocated DMA buffer when
+skb_put_data copies new_len bytes. The USB transport already validates
+this (rtw_usb_rx_data_put checks against RTW_USB_MAX_RECVBUF_SZ); the
+PCIe path does not.
 
-If eventfd_ctx_fdget() then fails, the unwind path dereferences
-event_sub->ev_file in uverbs_uobject_put() and calls
-subscribe_event_xa_dealloc() with an unset xa_key_level1.
+Add a check that new_len does not exceed the DMA buffer size.
 
-subscribe_event_xa_alloc() creates the XA entry exactly once for a given
-key_level1, on the first occurrence of that key. The unwind path must
-therefore call subscribe_event_xa_dealloc() exactly once for it as well.
-
-Enforce that by adding devx_key_in_sub_list() and calling
-subscribe_event_xa_dealloc() only when the last matching pending entry is
-being cleaned up.
-
-Fixes: 759738537142 ("IB/mlx5: Enable subscription for device events over DEVX")
-Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
-Link: https://patch.msgid.link/20260428224319.37682-1-prathameshdeshpande7@gmail.com
-Reviewed-by: Yishai Hadas <yishaih@nvidia.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260421111434.3389674-1-tristmd@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/devx.c | 30 +++++++++++++++++++++++-------
- 1 file changed, 23 insertions(+), 7 deletions(-)
+ drivers/net/wireless/realtek/rtw88/pci.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/infiniband/hw/mlx5/devx.c b/drivers/infiniband/hw/mlx5/devx.c
-index 80c26551564fb3..06bd84bffdf74d 100644
---- a/drivers/infiniband/hw/mlx5/devx.c
-+++ b/drivers/infiniband/hw/mlx5/devx.c
-@@ -1851,6 +1851,17 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_OBJ_ASYNC_QUERY)(
- 	return err;
- }
- 
-+static bool devx_key_in_sub_list(struct list_head *list, u32 key_level1)
-+{
-+	struct devx_event_subscription *s;
-+
-+	list_for_each_entry(s, list, event_list)
-+		if (s->xa_key_level1 == key_level1)
-+			return true;
-+
-+	return false;
-+}
-+
- static void
- subscribe_event_xa_dealloc(struct mlx5_devx_event_table *devx_event_table,
- 			   u32 key_level1,
-@@ -2100,10 +2111,17 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_SUBSCRIBE_EVENT)(
- 		num_alloc_xa_entries++;
- 		event_sub = kzalloc(sizeof(*event_sub), GFP_KERNEL);
- 		if (!event_sub) {
-+			if (!devx_key_in_sub_list(&sub_list, key_level1))
-+				subscribe_event_xa_dealloc(devx_event_table,
-+							   key_level1,
-+							   obj,
-+							   obj_id);
- 			err = -ENOMEM;
- 			goto err;
- 		}
- 
-+		event_sub->ev_file = ev_file;
-+		event_sub->xa_key_level1 = key_level1;
- 		list_add_tail(&event_sub->event_list, &sub_list);
- 		uverbs_uobject_get(&ev_file->uobj);
- 		if (use_eventfd) {
-@@ -2118,9 +2136,6 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_SUBSCRIBE_EVENT)(
- 		}
- 
- 		event_sub->cookie = cookie;
--		event_sub->ev_file = ev_file;
--		/* May be needed upon cleanup the devx object/subscription */
--		event_sub->xa_key_level1 = key_level1;
- 		event_sub->xa_key_level2 = obj_id;
- 		INIT_LIST_HEAD(&event_sub->obj_list);
- 	}
-@@ -2165,10 +2180,11 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_SUBSCRIBE_EVENT)(
- 	list_for_each_entry_safe(event_sub, tmp_sub, &sub_list, event_list) {
- 		list_del(&event_sub->event_list);
- 
--		subscribe_event_xa_dealloc(devx_event_table,
--					   event_sub->xa_key_level1,
--					   obj,
--					   obj_id);
-+		if (!devx_key_in_sub_list(&sub_list, event_sub->xa_key_level1))
-+			subscribe_event_xa_dealloc(devx_event_table,
-+						   event_sub->xa_key_level1,
-+						   obj,
-+						   obj_id);
- 
- 		if (event_sub->eventfd)
- 			eventfd_ctx_put(event_sub->eventfd);
+diff --git a/drivers/net/wireless/realtek/rtw88/pci.c b/drivers/net/wireless/realtek/rtw88/pci.c
+index ba0842e911c1ad..cdb2d2d3ca9ac1 100644
+--- a/drivers/net/wireless/realtek/rtw88/pci.c
++++ b/drivers/net/wireless/realtek/rtw88/pci.c
+@@ -1108,6 +1108,11 @@ static u32 rtw_pci_rx_napi(struct rtw_dev *rtwdev, struct rtw_pci *rtwpci,
+ 		 * discard the frame if none available
+ 		 */
+ 		new_len = pkt_stat.pkt_len + pkt_offset;
++		if (unlikely(new_len > RTK_PCI_RX_BUF_SIZE)) {
++			rtw_dbg(rtwdev, RTW_DBG_RX,
++				"oversized RX packet: %u\n", new_len);
++			goto next_rp;
++		}
+ 		new = dev_alloc_skb(new_len);
+ 		if (WARN_ONCE(!new, "rx routine starvation\n"))
+ 			goto next_rp;
 -- 
 2.53.0
 
