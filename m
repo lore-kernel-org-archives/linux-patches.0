@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DF946AA6F;
-	Tue, 21 Jul 2026 17:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4727846DFF9;
+	Tue, 21 Jul 2026 17:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655176; cv=none; b=WIyYYQrBnl68z9xRsPxFLWYW/S5FaNCUpQt/fRRPiwdcDmXkpiDJJOSkOxcMGR24Fgzi/czynTp4gfp0GZ2LzgZAiLJNXoD34g7TWWiFmYtjQcZ1VA1LjzXueQpAsA2H8SA70OyVmwgqm9mRioS7KGsb9yMInX9BazAe6Tam0GA=
+	t=1784655179; cv=none; b=b47Bbm8KFPG7fjXF0LwL6ddpak3/Wru0WBANSkkQWQwsEqQPXTzLElLmI9iemNA3sNobJBL1oeGuQy84c/1nxn/UJQo3xvBWxRav022gbrSXkcKVPXX6NLjiTNBDqI/vK8Eiuf+zfht7zGJBs2cvLgrbWI0PTgdVVWR3butl7n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655176; c=relaxed/simple;
-	bh=CmDrMatGLXEkwAyAgL8Gs8SUQRYawaT26wXQUxsNopE=;
+	s=arc-20240116; t=1784655179; c=relaxed/simple;
+	bh=ptlm7Dcqq99EBk/J2ZwOryteaykcU7yxdW0wxX9ii1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KX6De/6Fj13xlo1QgWKxyRAPnMLD9HzJeUH3UsxwW747tCQWXEzacAcW3vmBcggo77KS9g3nl1g81gHia0iidfMfOpYdjfqWa44BlNS7DOTEie2y8Duqb7DdaHnzKWpVyTlzkldbNVF/FRB1tHRwhDcIWQG6VkzCuvcsnhWqN/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0PaipC4a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qiPwBqMOtCKXOFpxHaAvNaX4i4H6k0Y14HIyq6ViLTDDX4MAVLKBUikx0gwgZWPoS0x9iTsqH5snMhIsPacBLL/EXKG0Z4oHCxBzE6JF36yGCfGa4ndrTw35IHUagPXN6cwl3Sjepp6kQ8beLsfyodrOCgAA3XBswJNj2kszSx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+wmZ28B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0PaipC4a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09EBF1F000E9;
-	Tue, 21 Jul 2026 17:32:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+wmZ28B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0C11F00A3D;
+	Tue, 21 Jul 2026 17:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655174;
-	bh=l9whtrMnnnJ9zqiWAzjlF+BFI0DUseIt7lpFby1W7VM=;
+	s=korg; t=1784655177;
+	bh=3iJ136ryJoezgIzTSvEwWy1V6M6sGs27m9gVLvcqrGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0PaipC4aRvs8pGrYAR5kcNUxmCCrqKN3Gl9cSMAaBVQq/gruTCJmS7zj/461gJqlM
-	 ng4NR/HKjC+S8ooo1xwA22fol+hMs+RdFUpWm6DccMrJS/qy3zJn/QDhEaOPNEipeI
-	 4vsLlompKM0v/WYf3NbgPxNmTS/rtSQfoDf/Nm28=
+	b=d+wmZ28BTIVMrz8cdWDSOv50puOXGB3iNCI3RGvVkOn+qa+S8WPq4r+k4nqmAD6sB
+	 t40YvL0gGWCzwf+LyOXQpAUuuPcQ9hZL24sVplbuIV9e/bO9lkEJMs9g5IyAvlXz56
+	 p3G1dvyxdUYhJTIGxCsGZj6WjTrrFv1J2Cm0Qld4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	James Morse <james.morse@arm.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 7.1 1982/2077] cpu/hotplug: Fix NULL kobject warning in cpuhp_smt_enable()
-Date: Tue, 21 Jul 2026 17:27:35 +0200
-Message-ID: <20260721152639.458050497@linuxfoundation.org>
+	Aaron Esau <aaron1esau@gmail.com>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 7.1 1941/2077] espintcp: use sk_msg_free_partial to fix partial send
+Date: Tue, 21 Jul 2026 17:26:54 +0200
+Message-ID: <20260721152638.489356371@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,174 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-commit f9a82544c7174851f5c7524622f5966dcafd3a47 upstream.
+commit 007800408002d871f5699bdb944f985896730b8f upstream.
 
-On arm64, when booting with `maxcpus` greater than the number of present
-CPUs (e.g., QEMU -smp cpus=4,maxcpus=8), some CPUs are marked as 'present'
-but have not yet been registered via register_cpu(). Consequently,
-the per-cpu device objects for these CPUs are not yet initialized.
+sk_msg_free_partial() ensures consistency of the skmsg at every
+iteration, without having to manually handle uncharges and offsets.
+This simplifies the code, and fixes some bugs in skmsg accounting when
+we don't send the full contents.
 
-In cpuhp_smt_enable(), the code iterates over all present CPUs. Calling
-_cpu_up() for these unregistered CPUs eventually leads to
-sysfs_create_group() being called with a NULL kobject (or a kobject
-without a directory), triggering the following warning in
-fs/sysfs/group.c:
-
-  WARNING: fs/sysfs/group.c:137 at internal_create_group+0x41c/0x4bc, CPU#2: sh/181
-  [...]
-  Call trace:
-    internal_create_group+0x41c/0x4bc (P)
-    sysfs_create_group+0x18/0x24
-    topology_add_dev+0x1c/0x28
-    cpuhp_invoke_callback+0x104/0x20c
-    __cpuhp_invoke_callback_range+0x94/0x11c
-    _cpu_up+0x200/0x37c
-
-When booting with ACPI, arm64 smp_prepare_cpus() currently sets all
-enumerated CPUs as "present" regardless of their status in the MADT. This
-causes issues with SMT hotplug control. For instance, with QEMU's
-"-smp 4,maxcpus=8" configuration, the MADT GICC entries are populated as
-follows:
-
-1. The first four CPUs: `Enabled` set but `Online Capable` not set.
-
-2. The remaining four CPUs: `Online Capable` set but `Enabled` not set
-   to support potential hot-plugging.
-
-Fix this by:
-
-1. When booting with ACPI, checking the ACPI_MADT_ENABLED flag in the GICC
-   entry before calling set_cpu_present() during SMP initialization.
-
-2. Properly managing the present mask in acpi_map_cpu() and
-   acpi_unmap_cpu() to support actual CPU hotplug events, This aligns with
-   other architectures like x86 and LoongArch.
-
-3. Update the arm64 CPU hotplug documentation to no longer state that all
-   online-capable vCPUs are marked as present by the kernel at boot time.
-
-This ensures that only physically available or explicitly enabled CPUs
-are in the present mask, keeping the SMT control logic consistent with
-the actual hardware state.
-
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Jonathan Cameron <jic23@kernel.org>
-Cc: James Morse <james.morse@arm.com>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
 Cc: stable@vger.kernel.org
-Link: https://uefi.org/specs/ACPI/6.5/05_ACPI_Software_Programming_Model.html#gic-cpu-interface-gicc-structure
-Fixes: eed4583bcf9a ("arm64: Kconfig: Enable HOTPLUG_SMT")
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Reported-by: Aaron Esau <aaron1esau@gmail.com>
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/arch/arm64/cpu-hotplug.rst |   28 ++++++++++++++++------------
- arch/arm64/kernel/acpi.c                 |    2 ++
- arch/arm64/kernel/smp.c                  |   12 +++++++++++-
- 3 files changed, 29 insertions(+), 13 deletions(-)
+ net/xfrm/espintcp.c |   34 +++++++---------------------------
+ 1 file changed, 7 insertions(+), 27 deletions(-)
 
---- a/Documentation/arch/arm64/cpu-hotplug.rst
-+++ b/Documentation/arch/arm64/cpu-hotplug.rst
-@@ -47,11 +47,12 @@ ever have can be described at boot. Ther
- as such devices are emulated.
+--- a/net/xfrm/espintcp.c
++++ b/net/xfrm/espintcp.c
+@@ -212,43 +212,23 @@ static int espintcp_sendskmsg_locked(str
+ 	struct sk_msg *skmsg = &emsg->skmsg;
+ 	bool more = flags & MSG_MORE;
+ 	struct scatterlist *sg;
+-	int done = 0;
+ 	int ret;
  
- CPU Hotplug on virtual systems is supported. It is distinct from physical
--CPU Hotplug as all resources are described as ``present``, but CPUs may be
--marked as disabled by firmware. Only the CPU's online/offline behaviour is
--influenced by firmware. An example is where a virtual machine boots with a
--single CPU, and additional CPUs are added once a cloud orchestrator deploys
--the workload.
-+CPU Hotplug as all vCPU resources are statically described in the firmware
-+configuration tables (e.g. MADT), meaning their maximum possible count is
-+known at boot. However, vCPUs that are not enabled at boot are not marked
-+as ``present`` by the kernel until they are hotplugged. An example is where
-+a virtual machine boots with a single CPU, and additional CPUs are added
-+once a cloud orchestrator deploys the workload.
+-	sg = &skmsg->sg.data[skmsg->sg.start];
+ 	do {
+ 		struct bio_vec bvec;
+-		size_t size = sg->length - emsg->offset;
+-		int offset = sg->offset + emsg->offset;
+-		struct page *p;
+-
+-		emsg->offset = 0;
  
- For a virtual machine, the VMM (e.g. Qemu) plays the part of firmware.
++		sg = &skmsg->sg.data[skmsg->sg.start];
+ 		if (sg_is_last(sg) && !more)
+ 			msghdr.msg_flags &= ~MSG_MORE;
  
-@@ -60,16 +61,19 @@ brought online. Firmware can enforce its
- ``DENIED``.
+-		p = sg_page(sg);
+-retry:
+-		bvec_set_page(&bvec, p, size, offset);
+-		iov_iter_bvec(&msghdr.msg_iter, ITER_SOURCE, &bvec, 1, size);
+-		ret = tcp_sendmsg_locked(sk, &msghdr, size);
+-		if (ret < 0) {
+-			emsg->offset = offset - sg->offset;
+-			skmsg->sg.start += done;
++		bvec_set_page(&bvec, sg_page(sg), sg->length, sg->offset);
++		iov_iter_bvec(&msghdr.msg_iter, ITER_SOURCE, &bvec, 1, sg->length);
++		ret = tcp_sendmsg_locked(sk, &msghdr, sg->length);
++		if (ret < 0)
+ 			return ret;
+-		}
  
- The ACPI tables must describe all the resources of the virtual machine. CPUs
--that firmware wishes to disable either from boot (or later) should not be
--``enabled`` in the MADT GICC structures, but should have the ``online capable``
--bit set, to indicate they can be enabled later. The boot CPU must be marked as
--``enabled``.  The 'always on' GICR structure must be used to describe the
--redistributors.
-+that are hot-pluggable must have the ``online capable`` bit set and the
-+``enabled`` bit cleared in the MADT GICC structures to indicate they can be
-+enabled later. The boot CPU must be marked as ``enabled`` with its
-+``online capable`` bit cleared. The 'always on' GICR structure must be used
-+to describe the redistributors.
+-		if (ret != size) {
+-			offset += ret;
+-			size -= ret;
+-			goto retry;
+-		}
+-
+-		done++;
+-		put_page(p);
+-		sk_mem_uncharge(sk, sg->length);
+-		sg = sg_next(sg);
+-	} while (sg);
++		sk_msg_free_partial(sk, skmsg, ret);
++	} while (skmsg->sg.size);
  
- CPUs described as ``online capable`` but not ``enabled`` can be set to enabled
- by the DSDT's Processor object's _STA method. On virtual systems the _STA method
--must always report the CPU as ``present``. Changes to the firmware policy can
--be notified to the OS via device-check or eject-request.
-+must always set the ``ACPI_STA_DEVICE_PRESENT`` bit, while toggling the
-+``ACPI_STA_DEVICE_ENABLED`` bit to reflect its plug status. The kernel will
-+then dynamically mark the vCPU as ``present`` within the OS when the
-+``ACPI_STA_DEVICE_ENABLED`` bit becomes set during hot-add. Changes to the
-+firmware policy can be notified to the OS via device-check or eject-request.
+ 	memset(emsg, 0, sizeof(*emsg));
  
- CPUs described as ``enabled`` in the static table, should not have their _STA
- modified dynamically by firmware. Soft-restart features such as kexec will
---- a/arch/arm64/kernel/acpi.c
-+++ b/arch/arm64/kernel/acpi.c
-@@ -448,12 +448,14 @@ int acpi_map_cpu(acpi_handle handle, phy
- 		return *pcpu;
- 	}
- 
-+	set_cpu_present(*pcpu, true);
- 	return 0;
- }
- EXPORT_SYMBOL(acpi_map_cpu);
- 
- int acpi_unmap_cpu(int cpu)
- {
-+	set_cpu_present(cpu, false);
- 	return 0;
- }
- EXPORT_SYMBOL(acpi_unmap_cpu);
---- a/arch/arm64/kernel/smp.c
-+++ b/arch/arm64/kernel/smp.c
-@@ -556,6 +556,11 @@ struct acpi_madt_generic_interrupt *acpi
- }
- EXPORT_SYMBOL_GPL(acpi_cpu_get_madt_gicc);
- 
-+static bool acpi_cpu_is_present(int cpu)
-+{
-+	return acpi_cpu_get_madt_gicc(cpu)->flags & ACPI_MADT_ENABLED;
-+}
-+
- /*
-  * acpi_map_gic_cpu_interface - parse processor MADT entry
-  *
-@@ -660,6 +665,10 @@ static void __init acpi_parse_and_init_c
- 		early_map_cpu_to_node(i, acpi_numa_get_nid(i));
- }
- #else
-+static bool acpi_cpu_is_present(int cpu)
-+{
-+	return false;
-+}
- #define acpi_parse_and_init_cpus(...)	do { } while (0)
- #endif
- 
-@@ -798,7 +807,8 @@ void __init smp_prepare_cpus(unsigned in
- 		if (err)
- 			continue;
- 
--		set_cpu_present(cpu, true);
-+		if (acpi_disabled || acpi_cpu_is_present(cpu))
-+			set_cpu_present(cpu, true);
- 		numa_store_cpu_info(cpu);
- 	}
- }
 
 
