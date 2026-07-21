@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223C844AB9F;
-	Tue, 21 Jul 2026 22:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81C444AB91;
+	Tue, 21 Jul 2026 22:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673366; cv=none; b=QaOQU6kmGKJMoKjaOfzAHzl9w1wptUGJH5QC1mlc2fQCQACAI218OGnZSZUXJ0g7Od5Jmi1WFn3+vYAwfc84gJkfhhXWgx1tMWQlw9MO+S4bLw1DGmej3xg2F7fSt1fRxE2wf7y/Qg2poiJ7oe7o2mZznCsN4IJJXygXh4iRVAU=
+	t=1784673369; cv=none; b=Ns77/ocpFCpQeN1+SDfkoyMU/rgV2IxZoPS0yc81YsG04rVjtN+XFf8vzeBbIhEQwg9+zu02ZVfY3r5qHdXd+FjD814TqLH5WcjOzhAD/i+Oms/61X6fI4dcR62tAgURrzxTqSgm6uITmp+9X5tF0US53IRAcSKnmB2DUU10Cq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673366; c=relaxed/simple;
-	bh=co2TtNviBGxui5Py43O/9biuWMEciElqCvFtrZoqfEs=;
+	s=arc-20240116; t=1784673369; c=relaxed/simple;
+	bh=j5iMDU+15SEtoqRs75Rt4dcrqH2KHTTka9AD3fZ0npc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qJ1P7JNdKbMUuBijD/cOqHitzlElFLoNPORE48fPk0gf07EKGScEvGTy4H5EmOOKrA+0oK1S9Jer+eUOi+ZnVj3gU5uwb4Bhz5ZQ/FDitc5kGhUcFeOIJnvjUUwlzZYy4DeQakuFC8N0lsR6o1X/0HX0pddSklbpfj9zM3PGZis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bk7KrKdE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tKsrHwtwLNSLJ6jQUJ0wArd25Czl6wtihO+pz7UUrmcXdrH07rwIeMK3OMyvOAdJ5zpmqJSaW/nQ6iLS0ZpXTXyjeGdAHPRAvhR7xVOxASVIg6NwOnNik2VHV2pf8JcvHgqiuS+0sv1JQP4rYutZ+3PMC10OIaagpwMLcfbp2Gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPWxYe4s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bk7KrKdE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878D51F000E9;
-	Tue, 21 Jul 2026 22:36:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPWxYe4s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41DF21F000E9;
+	Tue, 21 Jul 2026 22:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673365;
-	bh=uzitj26zWemB9yxHYB4Rq2NYWmswpnp6Qk936zzGAdI=;
+	s=korg; t=1784673367;
+	bh=LOA5cZ66INRlmdo6wC3XH67O07F1FnYNT16BYib8hx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bk7KrKdEI0juuwrDX7WUeYQYUszE+aKcS7n8Wtesbs5/FCuXaoPT8x/g6zSzZl5dn
-	 Dxycsl30Egm2YdgQ+8idxCL2u49WGzBrd/bf0u+2j6z55/VmOkUqCiweuCnESDhxek
-	 LNrxFfFv5mY1tTtYW/7mpEOo3fMW62A7L46RWLPw=
+	b=lPWxYe4sGAAHCWPg6ddqbAFEBx59KHpJeKKlOPU1B4yLehqnKQzfGy/C+P+igV1j+
+	 /4HvUIkow4DpHp78WxyOppGgeCBKIAklsY/TTTwFh1hAuPe2rIPq9oIZaAFjIVwNO/
+	 FQNjQXM+ubVFsWMA4hHKXlEx4hywqT6QxYo3PVCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 136/699] spi: fsl-lpspi: terminate the RX channel on TX prepare failure path
-Date: Tue, 21 Jul 2026 17:18:15 +0200
-Message-ID: <20260721152358.777278089@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Huihui Huang <hhhuang@smu.edu.sg>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.10 137/699] tracing: Prevent out-of-bounds read in glob matching
+Date: Tue, 21 Jul 2026 17:18:16 +0200
+Message-ID: <20260721152358.800887633@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,39 +57,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Huihui Huang <hhhuang@smu.edu.sg>
 
-commit 01980b5da56e573d62798d0ff6c86bcaa2b22cbe upstream.
+commit 0a6070839b1ef276d5b05bedfb787743e140fb17 upstream.
 
-When dmaengine_prep_slave_sg() fails for the TX channel, the error path
-terminates the TX DMA channel but leaves the RX channel running. Since
-the RX channel was already submitted and issued prior to preparing
-the TX descriptor, returning -EINVAL causes the SPI core to unmap the
-DMA buffers while the RX DMA engine continues writing to them, leading
-to potential memory corruption or use-after-free.
+String event fields are not necessarily NUL-terminated, so the filter
+predicate functions (filter_pred_string(), filter_pred_strloc() and
+filter_pred_strrelloc()) pass the field length to the regex match
+callbacks, and the length-aware matchers honour it.
 
-Terminate the RX channel before returning on the TX prepare failure path.
+regex_match_glob() was the exception: it ignored the length and called
+glob_match(), which scans the string until it hits a NUL byte. Some
+string fields are not NUL-terminated. One example is the dynamic char
+array of the xfs_* namespace tracepoints, which is copied without a
+trailing NUL. For such a field, glob matching reads past the end of
+the event field, causing a KASAN slab-out-of-bounds read in
+glob_match(), reached via regex_match_glob() and filter_match_preds()
+from the xfs_lookup tracepoint.
 
-Fixes: 09c04466ce7e ("spi: lpspi: add dma mode support")
+Add a length-bounded glob_match_len() and use it from regex_match_glob()
+so glob matching always stops at the field boundary. The matching loop
+is factored into a shared helper so glob_match() keeps its behaviour.
+
+Fixes: 60f1d5e3bac4 ("ftrace: Support full glob matching")
 Cc: stable@vger.kernel.org
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Link: https://patch.msgid.link/20260525062357.3191349-3-carlos.song@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/da1aaf125fc3b63320b0c540fd6afa7c3d5b4f1a.1782836943.git.hhhuang@smu.edu.sg
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Huihui Huang <hhhuang@smu.edu.sg>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-lpspi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/glob.h               |    1 +
+ kernel/trace/trace_events_filter.c |    6 ++----
+ lib/glob.c                         |   31 +++++++++++++++++++++++++++++--
+ 3 files changed, 32 insertions(+), 6 deletions(-)
 
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -577,7 +577,7 @@ static int fsl_lpspi_dma_transfer(struct
- 				tx->sgl, tx->nents, DMA_MEM_TO_DEV,
- 				DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
- 	if (!desc_tx) {
--		dmaengine_terminate_sync(controller->dma_tx);
-+		dmaengine_terminate_sync(controller->dma_rx);
- 		return -EINVAL;
- 	}
+--- a/include/linux/glob.h
++++ b/include/linux/glob.h
+@@ -6,5 +6,6 @@
+ #include <linux/compiler.h>	/* For __pure */
  
+ bool __pure glob_match(char const *pat, char const *str);
++bool __pure glob_match_len(char const *pat, char const *str, size_t len);
+ 
+ #endif	/* _LINUX_GLOB_H */
+--- a/kernel/trace/trace_events_filter.c
++++ b/kernel/trace/trace_events_filter.c
+@@ -865,11 +865,9 @@ static int regex_match_end(char *str, st
+ 	return 0;
+ }
+ 
+-static int regex_match_glob(char *str, struct regex *r, int len __maybe_unused)
++static int regex_match_glob(char *str, struct regex *r, int len)
+ {
+-	if (glob_match(r->pattern, str))
+-		return 1;
+-	return 0;
++	return glob_match_len(r->pattern, str, len) ? 1 : 0;
+ }
+ 
+ /**
+--- a/lib/glob.c
++++ b/lib/glob.c
+@@ -9,6 +9,9 @@
+ MODULE_DESCRIPTION("glob(7) matching");
+ MODULE_LICENSE("Dual MIT/GPL");
+ 
++static bool __pure glob_match_str(char const *pat, char const *str,
++				  char const *str_end);
++
+ /**
+  * glob_match - Shell-style pattern matching, like !fnmatch(pat, str, 0)
+  * @pat: Shell-style pattern to match, e.g. "*.[ch]".
+@@ -39,6 +42,29 @@ MODULE_LICENSE("Dual MIT/GPL");
+  */
+ bool __pure glob_match(char const *pat, char const *str)
+ {
++	return glob_match_str(pat, str, NULL);
++}
++EXPORT_SYMBOL(glob_match);
++
++/**
++ * glob_match_len - glob match against a length-bounded string
++ * @pat: Shell-style pattern to match.
++ * @str: String to match.  Need not be NUL-terminated.
++ * @len: Number of bytes of @str that may be read.
++ *
++ * Like glob_match(), but @str is only read up to @len bytes, so it can be
++ * used on buffers that are not NUL-terminated (e.g. trace event fields).
++ * A NUL byte within @len still terminates the string.
++ */
++bool __pure glob_match_len(char const *pat, char const *str, size_t len)
++{
++	return glob_match_str(pat, str, str + len);
++}
++EXPORT_SYMBOL(glob_match_len);
++
++static bool __pure glob_match_str(char const *pat, char const *str,
++				  char const *str_end)
++{
+ 	/*
+ 	 * Backtrack to previous * on mismatch and retry starting one
+ 	 * character later in the string.  Because * matches all characters
+@@ -53,9 +79,11 @@ bool __pure glob_match(char const *pat,
+ 	 * on mismatch, or true after matching the trailing nul bytes.
+ 	 */
+ 	for (;;) {
+-		unsigned char c = *str++;
++		unsigned char c = (str_end && str >= str_end) ? '\0' : *str;
+ 		unsigned char d = *pat++;
+ 
++		str++;
++
+ 		switch (d) {
+ 		case '?':	/* Wildcard: anything but nul */
+ 			if (c == '\0')
+@@ -120,4 +148,3 @@ backtrack:
+ 		}
+ 	}
+ }
+-EXPORT_SYMBOL(glob_match);
 
 
