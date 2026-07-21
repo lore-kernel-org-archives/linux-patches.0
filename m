@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7379546C4AC;
-	Tue, 21 Jul 2026 17:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1914946E01D;
+	Tue, 21 Jul 2026 17:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655278; cv=none; b=pf4zu49ZVsgEAh9wqPszpggC4kkMIWcHrBxDwRRsOQutboReAx/u45tL11aUWkJa8yDhp62o0W58dGIA8fE8HH9eJ3gpnpiRE/ctBe13r4bnMlEv0XXs6SHJsWfPBpcT5hHBMkOWNWCmFOSsR0gPg3p23Zk/I+9V6Z/tOVONwM4=
+	t=1784655281; cv=none; b=jBk41yB5K/bSmLzYKuFYedlm/ycl9oEg5AMT+pDhnaqCnDFgHJyIBxxGNjqm6UKJVy7qA47cQUH1kDWNAW1N8WRKz+hMeXIoCqYvvsYwujRufYGUm/QMslrtnSjX9IXtsA5FtPAfWJjwzu8l5b99yXudQ3yTjrXEmvUa4b1QJak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655278; c=relaxed/simple;
-	bh=4JLVjFfUB1Sb5KxcgJT/3h2QOM1G+Oa4nZkxeKjS8ms=;
+	s=arc-20240116; t=1784655281; c=relaxed/simple;
+	bh=ZaDGuiKa6jZ0u3lVVuHYK+FqkJf0kg1Rcw/W8Q2Yycg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=blakhgri7qm/zFWfMG3saVz1MNdRnHyXLrzxIG23NpHgrLOQtt7tRSbcPyX6l9HusnstF3GsSjvTmKmBBrxEnT3Kz5ZPluvKCOdUtM3Pr2ZgDh3eN79ajCvHADg6f05RVa5TEIsXy8ZM2xBvIx1cqRQ8IPB2W2YugdygXaHanrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUkf2LU5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mVgg056HlC1U2ceV4q9V2tNJt14wqcrWrd4N7UE3KTZoYjt0VVQh5b5dzaCwEcZziMu7i7XDVcOfLWbPTVxu470HR93rFCJi6uFw+PEas5UYBa+pzsrlmCTUdVN8tSQ1qfMLCCM/L/gdP1qjcXDwpOqoXUkGu4+zsrFfifKgFXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVRL2Owc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUkf2LU5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB50C1F000E9;
-	Tue, 21 Jul 2026 17:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVRL2Owc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F0E61F000E9;
+	Tue, 21 Jul 2026 17:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655277;
-	bh=fHHpuznd3bTjtVzd/RcnRIC1E7B9utqoPxsJPXjFxJQ=;
+	s=korg; t=1784655280;
+	bh=TZLbIq88xps8vTsD+ZsuOXBOm7E0h5urlqS+oWlvyjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hUkf2LU5FRGjfr1ts4IzP8vmOd+14j+XbDkpziGxLwhCav0H3OIeBlMhJT/Z1yD7P
-	 fAwLu/GmQ49XdUi9nJvXMBEeC0xAWrSftWEq9SU3kULKBMWiw8rg7jhtkhlHzLIR4v
-	 gUKGXjn/0ofE21qc2RjGvnRMKsa21uJ3kfz7e7wA=
+	b=nVRL2OwcKPltyvqDPzX6nXI/vmI9svC9V2X7zAxi+hmqMepbJVQ0OWRnkBKWufyGp
+	 Zq/je5YCvZR+anhUalxYylh+MyU/YBnzl2nvHXceQasmoJov8dNZ1o7NTVImromXv1
+	 tAOhtm456jD06eCyy49ZO42qWtqHs9ocWBPdpFxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haofeng Li <lihaofeng@kylinos.cn>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.1 2022/2077] wifi: cfg80211: validate EHT MLE before MLD ID read
-Date: Tue, 21 Jul 2026 17:28:15 +0200
-Message-ID: <20260721152640.392241940@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.1 1987/2077] drbd: reject data replies with an out-of-range payload size
+Date: Tue, 21 Jul 2026 17:27:40 +0200
+Message-ID: <20260721152639.577042833@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -44,60 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haofeng Li <lihaofeng@kylinos.cn>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 74e27cd1d98b546fdb276008a83708d062339661 upstream.
+commit bd910a7660d280595ef94cb6d193951d855d330f upstream.
 
-cfg80211_gen_new_ie() copies ML probe response elements from
-the parent frame when the parent EHT multi-link element has an
-MLD ID matching the nontransmitted BSSID index.
+recv_dless_read() receives a P_DATA_REPLY from a peer into the bio of an
+outstanding read request. The peer-supplied payload length reaches it as
+the signed int data_size, and two peer-controlled inputs can make it
+negative. With a negotiated data-integrity-alg the digest length is
+subtracted first, so a reply whose payload is smaller than the digest
+underflows data_size. With no integrity algorithm (the default) data_size
+is assigned from the unsigned h95/h100 wire length and drbdd() never
+bounds it for a payload-carrying command, so a length above INT_MAX casts
+it negative; this path needs no non-default feature. The bio receive loop
+then computes expect = min_t(int, data_size, bv_len), which is negative,
+and drbd_recv_all_warn(mapped, expect) receives with a size_t of SIZE_MAX
+into the first mapped page.
 
-The code only checked that the extension element had more than
-one byte before calling ieee80211_mle_get_mld_id(). That helper
-assumes a BASIC MLE with enough common info and documents that
-callers must first use ieee80211_mle_type_ok().
+The sibling receive path read_in_block() is not affected: it uses an
+unsigned size and rejects it against DRBD_MAX_BIO_SIZE before receiving.
+Reject a data reply whose size is negative after the optional digest
+subtraction, covering both triggers.
 
-Attack chain:
-malicious AP sends a short EHT MLE in an MBSSID beacon.
-cfg80211_inform_bss_frame_data() stores the copied IE buffer.
-cfg80211_parse_mbssid_data() builds the nontransmitted BSS IE.
-cfg80211_gen_new_ie() sees the EHT MLE in the parent frame.
-ieee80211_mle_get_mld_id() then reads past the IE boundary.
+Impact: a malicious or man-in-the-middle DRBD peer copies attacker-chosen
+bytes past a bio page in the receiver, corrupting kernel memory. A node
+that reads from its peer (a diskless node, or read-balancing to the peer)
+is exposed in the default configuration; data-integrity-alg is not
+required.
 
-Validate the MLE type and size before reading the MLD ID. This
-matches the contract required by the MLE helper and rejects the
-short element before any internal MLE fields are accessed.
-
+Fixes: b411b3637fa7 ("The DRBD driver")
 Cc: stable@vger.kernel.org
-Fixes: 61dcfa8c2a8f ("wifi: cfg80211: copy multi-link element from the multi-link probe request's frame body to the generated elements")
-Signed-off-by: Haofeng Li <lihaofeng@kylinos.cn>
-Link: https://patch.msgid.link/20260701093327.2680709-1-lihaofeng@kylinos.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Assisted-by: Codex:gpt-5-5-xhigh
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Link: https://patch.msgid.link/20260710022837.3738461-1-michael.bommarito@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/scan.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/block/drbd/drbd_receiver.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -326,8 +326,11 @@ cfg80211_gen_new_ie(const u8 *ie, size_t
- 		/* For ML probe response, match the MLE in the frame body with
- 		 * MLD id being 'bssid_index'
- 		 */
--		if (parent->id == WLAN_EID_EXTENSION && parent->datalen > 1 &&
-+		if (parent->id == WLAN_EID_EXTENSION &&
- 		    parent->data[0] == WLAN_EID_EXT_EHT_MULTI_LINK &&
-+		    ieee80211_mle_type_ok(parent->data + 1,
-+					  IEEE80211_ML_CONTROL_TYPE_BASIC,
-+					  parent->datalen - 1) &&
- 		    bssid_index == ieee80211_mle_get_mld_id(parent->data + 1)) {
- 			if (!cfg80211_copy_elem_with_frags(parent,
- 							   ie, ielen,
+--- a/drivers/block/drbd/drbd_receiver.c
++++ b/drivers/block/drbd/drbd_receiver.c
+@@ -1810,6 +1810,11 @@ static int recv_dless_read(struct drbd_p
+ 		data_size -= digest_size;
+ 	}
+ 
++	if (data_size < 0) {
++		drbd_err(peer_device, "Invalid data reply size\n");
++		return -EIO;
++	}
++
+ 	/* optimistically update recv_cnt.  if receiving fails below,
+ 	 * we disconnect anyways, and counters will be reset. */
+ 	peer_device->device->recv_cnt += data_size>>9;
 
 
