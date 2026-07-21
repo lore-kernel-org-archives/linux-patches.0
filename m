@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8C2471253;
-	Tue, 21 Jul 2026 18:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B49647127E;
+	Tue, 21 Jul 2026 18:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657758; cv=none; b=odHo4VyrzfAwLXQpaMoxeKA8L8/7iEObsTVhx1sZEbeP0rDbgsqUHQdT+zz/ghKbPqcIB+5K2nbfQzQWYi1e8DXi6T3yl+GFavFNimbtM06Dsp6CT82QCWVRGnhDcUmx+i2LEyZuU9bCIzdSfFa/P0bx8oK8WyFRzEM4KgA1DX4=
+	t=1784657761; cv=none; b=EQwzjXigYP17HVGoxknp8brWy3cXQT6/MUv9KCt1vOQiVn7uvjdAwOKkWy+W/hQ5ZVm+Lp8wzBPsHTMzxWlJq3OR/kLu27Kcr0p5LF3fBUFc+C2VNEItsWXUura6g+q4qw1CjtNSve6ygcWOew9IrCFuTUGJq3ZrAjcyZVTvHjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657758; c=relaxed/simple;
-	bh=Pg9vV+6JkaPmAVmSYRaO+BbqlSLs3xhNWrsBwy2AM/I=;
+	s=arc-20240116; t=1784657761; c=relaxed/simple;
+	bh=UwG644ELWXt6CNfVKVykSuAZM9z2kj/Pyn0BE0svO9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uzQu9BM2TUMikq8fBUm5Y9D/ihOJCCx5Aj3JFfmJNLpvcvHVst/7VlodMkNFw8rRBuYGKZYyBHzVKU/QSidJw/c5S///KgQ+H5+1+2KCTbOY/dgbpvMyt9fsh6va1E+ESlFSJ+9WXptkeZPjXqk3f8xOYkWFqNifRNSj+lleEIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFOKgdAs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nd0ADercydoUbV6sdI1CYiv+mH92YjyM6/rB6GttXFsc6fdsJ/B8Qt2FLIDewZo+glKcpUFZ2T4Llzaw5GYEuxjs4q5VAofy8C1/k9wTNg6W8YxH74C52SRIc4OgNjoPEyFy0DtU67vc++7XAekJlOC4MLmZNF/kgUIiMqlgAcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIdNOGFQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFOKgdAs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C808C1F000E9;
-	Tue, 21 Jul 2026 18:15:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIdNOGFQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CEB91F00A3E;
+	Tue, 21 Jul 2026 18:15:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657757;
-	bh=zrQJMqpdHc+t6uQhNVXRhcZxmgNAUMiYvjVxcFTXzL8=;
+	s=korg; t=1784657759;
+	bh=DtbuP2xuY5YJp60a6uODOXNtrp4YqaFzou4Att2N5uY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GFOKgdAsayQ/8+LL5AfHOuyDqOjx+9rnI4gzSlKnAhYFaTTJjBTYIwXWX8n2eth8h
-	 NKIyn5y9rr2V4a8WtR8iALITD0plRw+isFbhZ1f+jF+FC889/0FZBq5cyMcpOuhgBb
-	 oRHnogJgfMBK+vavs5AcNE3wZNZquUOPM7LZldgk=
+	b=qIdNOGFQ8QTFwEf8k9vFTVFjTVmvktfM3wIyPvA2VJSCdb1MrxZP0x3wDZgRaA5GH
+	 airPMeRgc8wj8jsJ5gD2sja+GH9z1hrIur3RCdMJ+EVYhybqzSHFvuGQc56Tey6YVX
+	 6w665mJkR1xxDyE+8uANHG4N5AXdce6LpotH+19M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0844/1611] netfilter: nft_flow_offload: zero device address for non-ether case
-Date: Tue, 21 Jul 2026 17:16:00 +0200
-Message-ID: <20260721152534.369280673@linuxfoundation.org>
+Subject: [PATCH 6.18 0835/1611] md/raid1: free r1_bio when REQ_NOWAIT is set and read would block on retry
+Date: Tue, 21 Jul 2026 17:15:51 +0200
+Message-ID: <20260721152534.170293428@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,40 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 
-[ Upstream commit e409c23c2d0630f3b95efd12428b2e58800b7645 ]
+[ Upstream commit 69ad6ce47f9bf2b9fe0ed69b042db993d33bbf12 ]
 
-LLM points out that the skip causes unitialised stack array to
-propagate down into dev_fill_forward_path().  Its not clear to me that
-there is a guarantee that a later ctx.dev->netdev_ops->ndo_fill_forward_path()
-would always fix this up.
+When a read is retried, raid1_read_request() may be called with a
+pre-allocated r1_bio. If wait_read_barrier() fails for a REQ_NOWAIT
+read, the bio is completed and the function returns immediately. In this
+case the existing r1_bio is leaked.
 
-Cc: Felix Fietkau <nbd@nbd.name>
-Fixes: 45ca3e61999e ("netfilter: nft_flow_offload: skip dst neigh lookup for ppp devices")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+This fixes a leak of pre-allocated r1_bio structures for retried reads.
+
+Fixes: 5aa705039c4f ("md: raid1 add nowait support")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260611083514.754922-1-abd.masalkhi@gmail.com?part=1
+Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+Link: https://patch.msgid.link/20260611101350.759154-1-abd.masalkhi@gmail.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_path.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/raid1.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/netfilter/nf_flow_table_path.c b/net/netfilter/nf_flow_table_path.c
-index e525e3745651d8..76d4ff14543986 100644
---- a/net/netfilter/nf_flow_table_path.c
-+++ b/net/netfilter/nf_flow_table_path.c
-@@ -52,8 +52,10 @@ static int nft_dev_fill_forward_path(const struct nf_flow_route *route,
- 	struct neighbour *n;
- 	u8 nud_state;
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index cc057ef1829ac1..16625b79788bdd 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -1334,6 +1334,12 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
+ 	 */
+ 	if (!wait_read_barrier(conf, bio->bi_iter.bi_sector, nowait)) {
+ 		bio_wouldblock_error(bio);
++
++		if (r1bio_existed) {
++			set_bit(R1BIO_Returned, &r1_bio->state);
++			raid_end_bio_io(r1_bio);
++		}
++
+ 		return;
+ 	}
  
--	if (!nft_is_valid_ether_device(dev))
-+	if (!nft_is_valid_ether_device(dev)) {
-+		eth_zero_addr(ha);
- 		goto out;
-+	}
- 
- 	n = dst_neigh_lookup(dst_cache, daddr);
- 	if (!n)
 -- 
 2.53.0
 
