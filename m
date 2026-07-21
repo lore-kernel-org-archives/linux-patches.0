@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDEEE46EF86;
-	Tue, 21 Jul 2026 19:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90EF346EC9E;
+	Tue, 21 Jul 2026 19:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662068; cv=none; b=VQo3in7a7R4J2shJYuedh6QZLELIWWoIjwaXW0556ti+rKzFeX5gBr3aiUio11/QhqIAh94op9n7tJ5qnB9zle+gUEniMk/wi823v/tgUaL74fRuN3cyBipikmvsxhyhJzLxI/E6gFmdPvMi9kjvfG/LAdLiz/kCZ8wmhOdspX4=
+	t=1784662072; cv=none; b=tV5Kld3YrSP2XdnKBz+lJXwafh+8+QljtTG0CAG9FXCA/w42JxjgAT7F/GW7LleCrJwvsGmEZbZjNrEQEQack0+zShuJ+VzuyXpu+AeGM+o11enn/S77PfjEotgV6DPQ0xjnmks5yjJGQx1paJjYKFEX0vjBPU7zcs3rVnV/fsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662068; c=relaxed/simple;
-	bh=rPUcO4AsRxiOthf6Zx4zDdnXsdntmzz8CdhphIDhb5o=;
+	s=arc-20240116; t=1784662072; c=relaxed/simple;
+	bh=TuQNti8KHv6f6A+zYr1cuA977DEtUUnhsWfxLszTOSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UWdtRXx6lPTR9RhJtvAvsvK/BhzbzJJWLUNj/U4/1fzkubgH4sGQt+aujwVUEqT/Uy0mDNe4K6thHHhd+dHnV8ZKtXPmz5lCXvvfQ4F1knr8tnnlDhz8lSgqAaLib2xF6WPtXCX/ZzyJ2pBLreaH4eJwv1d/Vf30Xzogb64K1C0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tnXqaZxc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dDaCm1wZi2EM2mMaLyEhJuZu7TqIt3Jgl4HETXUYBxGsst7Y/XbEsOoN3T4unUNpg9jOIDZYRRZ0lx3T7WrAMFdf6tkm887Zl0qeA0MDyyZHAo8XBxvhbYs8GZBRkKRCsDhV1l5ap9FRdP+3jGkOjl6yTU7lpmExps1U+Fcmk2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=auS7T7vT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tnXqaZxc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04E601F000E9;
-	Tue, 21 Jul 2026 19:27:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="auS7T7vT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C60F1F00A3A;
+	Tue, 21 Jul 2026 19:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662066;
-	bh=+ldpt3sEYZjo9JEi66r8M0uxJ5PDb8iez6DY6LAvsD4=;
+	s=korg; t=1784662069;
+	bh=By/U7eRsowswSHP9TU31qETzf5Ct33prV181/JXMw6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tnXqaZxcC0la5w9FnF2mD5bCHBBeBbiVk9TbYgsxnbo6IOQO1G3uj964YVq/VGpAr
-	 F+I2ozXOV8gNGKZWjz8r+I0jVvBW5WypJJwhj9FB0QQnZsB/e8CDOisOkWfFhhgFb2
-	 Fl/eN8f+EnlWwPiOl8ctx9n0cSq1WmgUhIZOQclI=
+	b=auS7T7vTyIY776Tx1lO9O5DjO7X7duzBQZmKpmTa9rzGhTb+fdH4JLVYI5DkveWGg
+	 jsrSco5aJ6NWsSM1DJToOMrXI+qFO6YiLygJ7kmVwqIvVmuw3gV8XjLba4/S3ORF/f
+	 7junjKCmGix35hC1qTTNVFTa4M54t6OGUCxWddvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	longlong yan <yanlonglong@kylinos.cn>,
+	Srujana Challa <schalla@marvell.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0303/1276] tools/virtio: check mmap return value in vringh_test
-Date: Tue, 21 Jul 2026 17:12:26 +0200
-Message-ID: <20260721152452.874302505@linuxfoundation.org>
+Subject: [PATCH 6.12 0304/1276] vdpa/octeon_ep: Fix PF->VF mailbox data address calculation
+Date: Tue, 21 Jul 2026 17:12:27 +0200
+Message-ID: <20260721152452.896270587@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,45 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: longlong yan <yanlonglong@kylinos.cn>
+From: Srujana Challa <schalla@marvell.com>
 
-[ Upstream commit ec6177dfe98b9be1c3ede6c0dfe4394ea2a76959 ]
+[ Upstream commit 74dc530f4c505d61f0f3620e59fe56c325ae3437 ]
 
-In parallel_test(), the return values of mmap() for both host_map and
-guest_map are not checked against MAP_FAILED. If mmap() fails, the
-subsequent code will dereference the invalid pointer, leading to a
-segmentation fault.
+The mailbox address was computed assuming 1 ring per VF. Read the
+actual rings-per-VF from OCTEP_EPF_RINFO and use it when calculating
+OCTEP_PF_MBOX_DATA offsets, fixing VF initialization when rings
+per VF > 1.
 
-Add MAP_FAILED checks after both mmap() calls, using err() to report
-the error and exit, consistent with the existing error handling style
-in this file (e.g., the open() call on line 149).
-
-Fixes: 1515c5ce26ae ("tools/virtio: add vring_test.")
-Signed-off-by: longlong yan <yanlonglong@kylinos.cn>
+Fixes: 8b6c724cdab8 ("virtio: vdpa: vDPA driver for Marvell OCTEON DPU devices")
+Signed-off-by: Srujana Challa <schalla@marvell.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260605021446.1611-1-yanlonglong@kylinos.cn>
+Message-ID: <20260224095226.1001151-2-schalla@marvell.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/virtio/vringh_test.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/vdpa/octeon_ep/octep_vdpa_main.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/virtio/vringh_test.c b/tools/virtio/vringh_test.c
-index b9591223437a64..5ea6d29bc992d2 100644
---- a/tools/virtio/vringh_test.c
-+++ b/tools/virtio/vringh_test.c
-@@ -159,7 +159,12 @@ static int parallel_test(u64 features,
+diff --git a/drivers/vdpa/octeon_ep/octep_vdpa_main.c b/drivers/vdpa/octeon_ep/octep_vdpa_main.c
+index 70c932df42fab1..e65565ea5b836d 100644
+--- a/drivers/vdpa/octeon_ep/octep_vdpa_main.c
++++ b/drivers/vdpa/octeon_ep/octep_vdpa_main.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /* Copyright (C) 2024 Marvell. */
  
- 	/* Parent and child use separate addresses, to check our mapping logic! */
- 	host_map = mmap(NULL, mapsize, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
-+	if (host_map == MAP_FAILED)
-+		err(1, "mmap host_map");
-+
- 	guest_map = mmap(NULL, mapsize, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
-+	if (guest_map == MAP_FAILED)
-+		err(1, "mmap guest_map");
++#include <linux/bitfield.h>
+ #include <linux/interrupt.h>
+ #include <linux/io-64-nonatomic-lo-hi.h>
+ #include <linux/module.h>
+@@ -678,6 +679,8 @@ static int octep_sriov_enable(struct pci_dev *pdev, int num_vfs)
+ 	bool done = false;
+ 	int index = 0;
+ 	int ret, i;
++	u8 rpvf;
++	u64 val;
  
- 	pipe_ret = pipe(to_guest);
- 	assert(!pipe_ret);
+ 	ret = pci_enable_sriov(pdev, num_vfs);
+ 	if (ret)
+@@ -697,9 +700,11 @@ static int octep_sriov_enable(struct pci_dev *pdev, int num_vfs)
+ 		}
+ 	}
+ 
++	val = readq(addr + OCTEP_EPF_RINFO(0));
++	rpvf = FIELD_GET(GENMASK_ULL(35, 32), val);
+ 	if (done) {
+ 		for (i = 0; i < pf->enabled_vfs; i++)
+-			writeq(OCTEP_DEV_READY_SIGNATURE, addr + OCTEP_PF_MBOX_DATA(i));
++			writeq(OCTEP_DEV_READY_SIGNATURE, addr + OCTEP_PF_MBOX_DATA(i * rpvf));
+ 	}
+ 
+ 	return num_vfs;
 -- 
 2.53.0
 
