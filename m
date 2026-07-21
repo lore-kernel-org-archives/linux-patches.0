@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F50235836E;
-	Tue, 21 Jul 2026 16:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00B22C21DD;
+	Tue, 21 Jul 2026 16:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649682; cv=none; b=MFscBPoE78fscvmsK+pCwddcawz66e7gvSv23NJPobSGjAAbs4NeFKJiOZjGE/iqQgpcvN98RFTIriQ5uZ+M+FM9fhxJ4s+gJ1s/sDx4L6EmP6w8H9gdlAH9lKsIAZsnhltUYzfPKFkqri6paMtOCnUnvONm8M8/772n604oQn8=
+	t=1784649685; cv=none; b=cjpVky5tXxigCLd4iMgt+pugmV2rvZC8Gg3oQdblZwD6FQY4ZWRTQfPcn840gSrAc9Yj4stpU6qW+nO84wKwAuDGLXlDZQMI7C8xR+gzce7UStzq4D3g4sReKyFEMxSW9NewnldG4FqAxVGEhR/IHvw3E7Dac8YKAtzKGQeCjKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649682; c=relaxed/simple;
-	bh=Vd3zceVsfBdxbIX3cgeN8uu48rHj091dxT5Qxh3rbro=;
+	s=arc-20240116; t=1784649685; c=relaxed/simple;
+	bh=DAyYxDPpS5bJwl7gEHw9dxDuqAW1iH6BJeOnTIgGqA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OTdcBcuZaHcdY9IiyPVHEAAIprGzsMETLnjNQ62DULF5LmGwV3B7lmpxyJrFwgJ9qlORdUqPMbgqzYB6yqh94eJknT4qVLV/gmSKSToFn7I+Q/Ow2tXYPelupugixr/mqg04y+HAoGzeoowFF8j3LKLuYWOKQuOE8sAJZR3MnYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=negpZb0u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eYr4cqtJZaq6KqwhUuopTn26HKc6zNxDjhnpQ6MlAXIuKeRw9ZPsOd/p4hby5F4ODSM0LNcwvP96UaCbolFbwwX0XjaaN/cJCbVl7DWI/3/zXctWk34UmexFDimFXUGbBXWQGDgfD/At0K27mJGV7XB0+FHHNp2ev0DeLyB7DX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EunPTJd6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="negpZb0u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945871F000E9;
-	Tue, 21 Jul 2026 16:01:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EunPTJd6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A901F000E9;
+	Tue, 21 Jul 2026 16:01:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649681;
-	bh=Ydc0nZe2IyAOc2C3mK6owX0oLAGsaBfOwyaArNGGU1I=;
+	s=korg; t=1784649683;
+	bh=IsmV3Ax1Ccj3ddN9BLseda2zQe2Byo2on3yPCwIJ8Go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=negpZb0uUDPNCPZN7yBJPBr+JBqEircI2CgUr0l9zkYAUCv/zuIVWO/8VVVX+poTx
-	 5wGj3vw5Zt/FYAYMnnUdZw5mv7d4ldeyDkt5SzdZZgBw7KB9znpdVy8ymaTlMj4PjN
-	 vIqfx9J/igwHl93AdArNzLAg38bnQL3wwIboFvnM=
+	b=EunPTJd62L2wmbYiCJcMeeuyvMvhhk7RE00ofjInPacKO/ahZq+518J9lFvTRyEa9
+	 hguIRJRnLtXvNZ/N0ATb55s/OSWhu3BzcVOQvzgIJ3QFaZu0eo1eo/Q7IO5nxP3Eqc
+	 /Tnch4Pu+pYJbBJQ2/fJMVj0CbYqCf8A5LMFXgeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
-	Linus Walleij <linusw@kernel.org>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0669/2077] pinctrl: airoha: fix pwm pin function for an7581 and an7583
-Date: Tue, 21 Jul 2026 17:05:42 +0200
-Message-ID: <20260721152608.582657516@linuxfoundation.org>
+Subject: [PATCH 7.1 0643/2077] hwmon: (gpd-fan): drop global driver data and use per-device allocation
+Date: Tue, 21 Jul 2026 17:05:16 +0200
+Message-ID: <20260721152607.973050981@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,125 +51,520 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 08a5af468e613b6d8cd9725d284c9e6be288d364 ]
+[ Upstream commit 03b4addf8282fa2b63f2d7448d1a9bce9be3f556 ]
 
-AN7581 have 47 valid GPIOs only (gpio0-gpio46), so gpio47 is a fiction.
-AN7583 have 49 valid GPIOs (gpio0-gpio48), so gpio48 is missed
+replace the global state gpd_driver_priv with per-device private data
+(struct gpd_fan_data) allocated in probe. This allows the driver to
+support multiple instances in the future and aligns with kernel best
+practices.
 
-To fix an issue
- * create AN7583 specific pwm pin function,
- * remove gpio47 from AN7581 pwm pin function.
+No functional change intended.
 
-Fixes: 3ffeb17a9a27 ("pinctrl: airoha: add support for Airoha AN7583 PINs")
-Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://lore.kernel.org/r/1cd3e13033fdd3d0f9b59322f7c86e350d113b92.1781055639.git.xiaopei01@kylinos.cn
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 1fb4397509bd ("hwmon: (gpd-fan): fix race condition between device removal and sysfs access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-airoha.c | 74 ++++++++++++++++++++++-
- 1 file changed, 72 insertions(+), 2 deletions(-)
+ drivers/hwmon/gpd-fan.c | 209 ++++++++++++++++++++++------------------
+ 1 file changed, 115 insertions(+), 94 deletions(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-airoha.c b/drivers/pinctrl/mediatek/pinctrl-airoha.c
-index 9be759f08b184a..15a54172434945 100644
---- a/drivers/pinctrl/mediatek/pinctrl-airoha.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-airoha.c
-@@ -906,7 +906,30 @@ static const char *const pwm_groups[] = { "gpio0", "gpio1",
- 					  "gpio40", "gpio41",
- 					  "gpio42", "gpio43",
- 					  "gpio44", "gpio45",
--					  "gpio46", "gpio47" };
-+					  "gpio46" };
-+static const char *const an7583_pwm_groups[] = { "gpio0", "gpio1",
-+						 "gpio2", "gpio3",
-+						 "gpio4", "gpio5",
-+						 "gpio6", "gpio7",
-+						 "gpio8", "gpio9",
-+						 "gpio10", "gpio11",
-+						 "gpio12", "gpio13",
-+						 "gpio14", "gpio15",
-+						 "gpio16", "gpio17",
-+						 "gpio18", "gpio19",
-+						 "gpio20", "gpio21",
-+						 "gpio22", "gpio23",
-+						 "gpio24", "gpio25",
-+						 "gpio26", "gpio27",
-+						 "gpio28", "gpio29",
-+						 "gpio30", "gpio31",
-+						 "gpio36", "gpio37",
-+						 "gpio38", "gpio39",
-+						 "gpio40", "gpio41",
-+						 "gpio42", "gpio43",
-+						 "gpio44", "gpio45",
-+						 "gpio46", "gpio47",
-+						 "gpio48" };
- static const char *const phy1_led0_groups[] = { "gpio33", "gpio34",
- 						"gpio35", "gpio42" };
- static const char *const phy2_led0_groups[] = { "gpio33", "gpio34",
-@@ -1504,7 +1527,54 @@ static const struct airoha_pinctrl_func_group pwm_func_group[] = {
- 	AIROHA_PINCTRL_PWM_EXT("gpio44", GPIO44_FLASH_MODE_CFG),
- 	AIROHA_PINCTRL_PWM_EXT("gpio45", GPIO45_FLASH_MODE_CFG),
- 	AIROHA_PINCTRL_PWM_EXT("gpio46", GPIO46_FLASH_MODE_CFG),
-+};
-+
-+static const struct airoha_pinctrl_func_group an7583_pwm_func_group[] = {
-+	AIROHA_PINCTRL_PWM("gpio0", GPIO0_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM("gpio1", GPIO1_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM("gpio2", GPIO2_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM("gpio3", GPIO3_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM("gpio4", GPIO4_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM("gpio5", GPIO5_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM("gpio6", GPIO6_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM("gpio7", GPIO7_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM("gpio8", GPIO8_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM("gpio9", GPIO9_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM("gpio10", GPIO10_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM("gpio11", GPIO11_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM("gpio12", GPIO12_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM("gpio13", GPIO13_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM("gpio14", GPIO14_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM("gpio15", GPIO15_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio16", GPIO16_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio17", GPIO17_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio18", GPIO18_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio19", GPIO19_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio20", GPIO20_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio21", GPIO21_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio22", GPIO22_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio23", GPIO23_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio24", GPIO24_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio25", GPIO25_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio26", GPIO26_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio27", GPIO27_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio28", GPIO28_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio29", GPIO29_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio30", GPIO30_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio31", GPIO31_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio36", GPIO36_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio37", GPIO37_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio38", GPIO38_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio39", GPIO39_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio40", GPIO40_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio41", GPIO41_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio42", GPIO42_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio43", GPIO43_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio44", GPIO44_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio45", GPIO45_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio46", GPIO46_FLASH_MODE_CFG),
- 	AIROHA_PINCTRL_PWM_EXT("gpio47", GPIO47_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT("gpio48", GPIO48_FLASH_MODE_CFG),
+diff --git a/drivers/hwmon/gpd-fan.c b/drivers/hwmon/gpd-fan.c
+index 80de5f20781eb1..7284babd4f5c96 100644
+--- a/drivers/hwmon/gpd-fan.c
++++ b/drivers/hwmon/gpd-fan.c
+@@ -40,12 +40,11 @@ enum FAN_PWM_ENABLE {
+ 	AUTOMATIC	= 2,
  };
  
- #define AIROHA_PINCTRL_PHY_LED0(gpio, mux_val, map_mask, map_val)	\
-@@ -1759,7 +1829,7 @@ static const struct airoha_pinctrl_func an7583_pinctrl_funcs[] = {
- 	PINCTRL_FUNC_DESC("emmc", emmc),
- 	PINCTRL_FUNC_DESC("pnand", pnand),
- 	PINCTRL_FUNC_DESC("pcie_reset", an7583_pcie_reset),
--	PINCTRL_FUNC_DESC("pwm", pwm),
-+	PINCTRL_FUNC_DESC("pwm", an7583_pwm),
- 	PINCTRL_FUNC_DESC("phy1_led0", an7583_phy1_led0),
- 	PINCTRL_FUNC_DESC("phy2_led0", an7583_phy2_led0),
- 	PINCTRL_FUNC_DESC("phy3_led0", an7583_phy3_led0),
+-static struct {
++struct gpd_fan_data {
+ 	enum FAN_PWM_ENABLE pwm_enable;
+ 	u8 pwm_value;
+-
+ 	const struct gpd_fan_drvdata *drvdata;
+-} gpd_driver_priv;
++};
+ 
+ struct gpd_fan_drvdata {
+ 	const char *board_name; // Board name for module param comparison
+@@ -249,10 +248,10 @@ static const struct gpd_fan_drvdata *gpd_module_drvdata[] = {
+ };
+ 
+ // Helper functions to handle EC read/write
+-static void gpd_ecram_read(u16 offset, u8 *val)
++static void gpd_ecram_read(const struct gpd_fan_drvdata *drvdata, u16 offset, u8 *val)
+ {
+-	u16 addr_port = gpd_driver_priv.drvdata->addr_port;
+-	u16 data_port = gpd_driver_priv.drvdata->data_port;
++	u16 addr_port = drvdata->addr_port;
++	u16 data_port = drvdata->data_port;
+ 
+ 	outb(0x2E, addr_port);
+ 	outb(0x11, data_port);
+@@ -270,10 +269,10 @@ static void gpd_ecram_read(u16 offset, u8 *val)
+ 	*val = inb(data_port);
+ }
+ 
+-static void gpd_ecram_write(u16 offset, u8 value)
++static void gpd_ecram_write(const struct gpd_fan_drvdata *drvdata, u16 offset, u8 value)
+ {
+-	u16 addr_port = gpd_driver_priv.drvdata->addr_port;
+-	u16 data_port = gpd_driver_priv.drvdata->data_port;
++	u16 addr_port = drvdata->addr_port;
++	u16 data_port = drvdata->data_port;
+ 
+ 	outb(0x2E, addr_port);
+ 	outb(0x11, data_port);
+@@ -291,198 +290,198 @@ static void gpd_ecram_write(u16 offset, u8 value)
+ 	outb(value, data_port);
+ }
+ 
+-static int gpd_generic_read_rpm(void)
++static int gpd_generic_read_rpm(struct gpd_fan_data *data)
+ {
+-	const struct gpd_fan_drvdata *const drvdata = gpd_driver_priv.drvdata;
++	const struct gpd_fan_drvdata *drvdata = data->drvdata;
+ 	u8 high, low;
+ 
+-	gpd_ecram_read(drvdata->rpm_read, &high);
+-	gpd_ecram_read(drvdata->rpm_read + 1, &low);
++	gpd_ecram_read(drvdata, drvdata->rpm_read, &high);
++	gpd_ecram_read(drvdata, drvdata->rpm_read + 1, &low);
+ 
+ 	return (u16)high << 8 | low;
+ }
+ 
+-static int gpd_wm2_read_rpm(void)
++static int gpd_wm2_read_rpm(struct gpd_fan_data *data)
+ {
++	const struct gpd_fan_drvdata *drvdata = data->drvdata;
++
+ 	for (u16 pwm_ctr_offset = GPD_PWM_CTR_OFFSET;
+ 	     pwm_ctr_offset <= GPD_PWM_CTR_OFFSET + 2; pwm_ctr_offset++) {
+ 		u8 PWMCTR;
+ 
+-		gpd_ecram_read(pwm_ctr_offset, &PWMCTR);
++		gpd_ecram_read(drvdata, pwm_ctr_offset, &PWMCTR);
+ 
+ 		if (PWMCTR != 0xB8)
+-			gpd_ecram_write(pwm_ctr_offset, 0xB8);
++			gpd_ecram_write(drvdata, pwm_ctr_offset, 0xB8);
+ 	}
+ 
+-	return gpd_generic_read_rpm();
++	return gpd_generic_read_rpm(data);
+ }
+ 
+ // Read value for fan1_input
+-static int gpd_read_rpm(void)
++static int gpd_read_rpm(struct gpd_fan_data *data)
+ {
+-	switch (gpd_driver_priv.drvdata->board) {
++	switch (data->drvdata->board) {
+ 	case win4_6800u:
+ 	case win_mini:
+ 	case duo:
+ 	case mpc2:
+-		return gpd_generic_read_rpm();
++		return gpd_generic_read_rpm(data);
+ 	case win_max_2:
+-		return gpd_wm2_read_rpm();
++		return gpd_wm2_read_rpm(data);
+ 	}
+ 
+ 	return 0;
+ }
+ 
+-static int gpd_wm2_read_pwm(void)
++static int gpd_wm2_read_pwm(struct gpd_fan_data *data)
+ {
+-	const struct gpd_fan_drvdata *const drvdata = gpd_driver_priv.drvdata;
++	const struct gpd_fan_drvdata *drvdata = data->drvdata;
+ 	u8 var;
+ 
+-	gpd_ecram_read(drvdata->pwm_write, &var);
++	gpd_ecram_read(drvdata, drvdata->pwm_write, &var);
+ 
+ 	// Match gpd_generic_write_pwm(u8) below
+ 	return DIV_ROUND_CLOSEST((var - 1) * 255, (drvdata->pwm_max - 1));
+ }
+ 
+ // Read value for pwm1
+-static int gpd_read_pwm(void)
++static int gpd_read_pwm(struct gpd_fan_data *data)
+ {
+-	switch (gpd_driver_priv.drvdata->board) {
++	switch (data->drvdata->board) {
+ 	case win_mini:
+ 	case duo:
+ 	case win4_6800u:
+ 	case mpc2:
+-		switch (gpd_driver_priv.pwm_enable) {
++		switch (data->pwm_enable) {
+ 		case DISABLE:
+ 			return 255;
+ 		case MANUAL:
+-			return gpd_driver_priv.pwm_value;
++			return data->pwm_value;
+ 		case AUTOMATIC:
+ 			return -EOPNOTSUPP;
+ 		}
+ 		break;
+ 	case win_max_2:
+-		return gpd_wm2_read_pwm();
++		return gpd_wm2_read_pwm(data);
+ 	}
+ 	return 0;
+ }
+ 
+ // PWM value's range in EC is 1 - pwm_max, cast 0 - 255 to it.
+-static inline u8 gpd_cast_pwm_range(u8 val)
++static inline u8 gpd_cast_pwm_range(const struct gpd_fan_drvdata *drvdata, u8 val)
+ {
+-	const struct gpd_fan_drvdata *const drvdata = gpd_driver_priv.drvdata;
+-
+ 	return DIV_ROUND_CLOSEST(val * (drvdata->pwm_max - 1), 255) + 1;
+ }
+ 
+-static void gpd_generic_write_pwm(u8 val)
++static void gpd_generic_write_pwm(struct gpd_fan_data *data, u8 val)
+ {
+-	const struct gpd_fan_drvdata *const drvdata = gpd_driver_priv.drvdata;
++	const struct gpd_fan_drvdata *drvdata = data->drvdata;
+ 	u8 pwm_reg;
+ 
+-	pwm_reg = gpd_cast_pwm_range(val);
+-	gpd_ecram_write(drvdata->pwm_write, pwm_reg);
++	pwm_reg = gpd_cast_pwm_range(drvdata, val);
++	gpd_ecram_write(drvdata, drvdata->pwm_write, pwm_reg);
+ }
+ 
+-static void gpd_duo_write_pwm(u8 val)
++static void gpd_duo_write_pwm(struct gpd_fan_data *data, u8 val)
+ {
+-	const struct gpd_fan_drvdata *const drvdata = gpd_driver_priv.drvdata;
++	const struct gpd_fan_drvdata *drvdata = data->drvdata;
+ 	u8 pwm_reg;
+ 
+-	pwm_reg = gpd_cast_pwm_range(val);
+-	gpd_ecram_write(drvdata->pwm_write, pwm_reg);
+-	gpd_ecram_write(drvdata->pwm_write + 1, pwm_reg);
++	pwm_reg = gpd_cast_pwm_range(drvdata, val);
++	gpd_ecram_write(drvdata, drvdata->pwm_write, pwm_reg);
++	gpd_ecram_write(drvdata, drvdata->pwm_write + 1, pwm_reg);
+ }
+ 
+ // Write value for pwm1
+-static int gpd_write_pwm(u8 val)
++static int gpd_write_pwm(struct gpd_fan_data *data, u8 val)
+ {
+-	if (gpd_driver_priv.pwm_enable != MANUAL)
++	if (data->pwm_enable != MANUAL)
+ 		return -EPERM;
+ 
+-	switch (gpd_driver_priv.drvdata->board) {
++	switch (data->drvdata->board) {
+ 	case duo:
+-		gpd_duo_write_pwm(val);
++		gpd_duo_write_pwm(data, val);
+ 		break;
+ 	case win_mini:
+ 	case win4_6800u:
+ 	case win_max_2:
+ 	case mpc2:
+-		gpd_generic_write_pwm(val);
++		gpd_generic_write_pwm(data, val);
+ 		break;
+ 	}
+ 
+ 	return 0;
+ }
+ 
+-static void gpd_win_mini_set_pwm_enable(enum FAN_PWM_ENABLE pwm_enable)
++static void gpd_win_mini_set_pwm_enable(struct gpd_fan_data *data, enum FAN_PWM_ENABLE pwm_enable)
+ {
+ 	switch (pwm_enable) {
+ 	case DISABLE:
+-		gpd_generic_write_pwm(255);
++		gpd_generic_write_pwm(data, 255);
+ 		break;
+ 	case MANUAL:
+-		gpd_generic_write_pwm(gpd_driver_priv.pwm_value);
++		gpd_generic_write_pwm(data, data->pwm_value);
+ 		break;
+ 	case AUTOMATIC:
+-		gpd_ecram_write(gpd_driver_priv.drvdata->pwm_write, 0);
++		gpd_ecram_write(data->drvdata, data->drvdata->pwm_write, 0);
+ 		break;
+ 	}
+ }
+ 
+-static void gpd_duo_set_pwm_enable(enum FAN_PWM_ENABLE pwm_enable)
++static void gpd_duo_set_pwm_enable(struct gpd_fan_data *data, enum FAN_PWM_ENABLE pwm_enable)
+ {
+ 	switch (pwm_enable) {
+ 	case DISABLE:
+-		gpd_duo_write_pwm(255);
++		gpd_duo_write_pwm(data, 255);
+ 		break;
+ 	case MANUAL:
+-		gpd_duo_write_pwm(gpd_driver_priv.pwm_value);
++		gpd_duo_write_pwm(data, data->pwm_value);
+ 		break;
+ 	case AUTOMATIC:
+-		gpd_ecram_write(gpd_driver_priv.drvdata->pwm_write, 0);
++		gpd_ecram_write(data->drvdata, data->drvdata->pwm_write, 0);
+ 		break;
+ 	}
+ }
+ 
+-static void gpd_wm2_set_pwm_enable(enum FAN_PWM_ENABLE enable)
++static void gpd_wm2_set_pwm_enable(struct gpd_fan_data *data, enum FAN_PWM_ENABLE enable)
+ {
+-	const struct gpd_fan_drvdata *const drvdata = gpd_driver_priv.drvdata;
++	const struct gpd_fan_drvdata *drvdata = data->drvdata;
+ 
+ 	switch (enable) {
+ 	case DISABLE:
+-		gpd_generic_write_pwm(255);
+-		gpd_ecram_write(drvdata->manual_control_enable, 1);
++		gpd_generic_write_pwm(data, 255);
++		gpd_ecram_write(drvdata, drvdata->manual_control_enable, 1);
+ 		break;
+ 	case MANUAL:
+-		gpd_generic_write_pwm(gpd_driver_priv.pwm_value);
+-		gpd_ecram_write(drvdata->manual_control_enable, 1);
++		gpd_generic_write_pwm(data, data->pwm_value);
++		gpd_ecram_write(drvdata, drvdata->manual_control_enable, 1);
+ 		break;
+ 	case AUTOMATIC:
+-		gpd_ecram_write(drvdata->manual_control_enable, 0);
++		gpd_ecram_write(drvdata, drvdata->manual_control_enable, 0);
+ 		break;
+ 	}
+ }
+ 
+ // Write value for pwm1_enable
+-static void gpd_set_pwm_enable(enum FAN_PWM_ENABLE enable)
++static void gpd_set_pwm_enable(struct gpd_fan_data *data, enum FAN_PWM_ENABLE enable)
+ {
+ 	if (enable == MANUAL)
+ 		// Set pwm_value to max firstly when switching to manual mode, in
+ 		// consideration of device safety.
+-		gpd_driver_priv.pwm_value = 255;
++		data->pwm_value = 255;
+ 
+-	switch (gpd_driver_priv.drvdata->board) {
++	switch (data->drvdata->board) {
+ 	case win_mini:
+ 	case win4_6800u:
+ 	case mpc2:
+-		gpd_win_mini_set_pwm_enable(enable);
++		gpd_win_mini_set_pwm_enable(data, enable);
+ 		break;
+ 	case duo:
+-		gpd_duo_set_pwm_enable(enable);
++		gpd_duo_set_pwm_enable(data, enable);
+ 		break;
+ 	case win_max_2:
+-		gpd_wm2_set_pwm_enable(enable);
++		gpd_wm2_set_pwm_enable(data, enable);
+ 		break;
+ 	}
+ }
+@@ -505,15 +504,16 @@ static umode_t gpd_fan_hwmon_is_visible(__always_unused const void *drvdata,
+ 	return 0;
+ }
+ 
+-static int gpd_fan_hwmon_read(__always_unused struct device *dev,
++static int gpd_fan_hwmon_read(struct device *dev,
+ 			      enum hwmon_sensor_types type, u32 attr,
+ 			      __always_unused int channel, long *val)
+ {
++	struct gpd_fan_data *data = dev_get_drvdata(dev);
+ 	int ret;
+ 
+ 	if (type == hwmon_fan) {
+ 		if (attr == hwmon_fan_input) {
+-			ret = gpd_read_rpm();
++			ret = gpd_read_rpm(data);
+ 
+ 			if (ret < 0)
+ 				return ret;
+@@ -524,10 +524,10 @@ static int gpd_fan_hwmon_read(__always_unused struct device *dev,
+ 	} else if (type == hwmon_pwm) {
+ 		switch (attr) {
+ 		case hwmon_pwm_enable:
+-			*val = gpd_driver_priv.pwm_enable;
++			*val = data->pwm_enable;
+ 			return 0;
+ 		case hwmon_pwm_input:
+-			ret = gpd_read_pwm();
++			ret = gpd_read_pwm(data);
+ 
+ 			if (ret < 0)
+ 				return ret;
+@@ -540,27 +540,29 @@ static int gpd_fan_hwmon_read(__always_unused struct device *dev,
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static int gpd_fan_hwmon_write(__always_unused struct device *dev,
++static int gpd_fan_hwmon_write(struct device *dev,
+ 			       enum hwmon_sensor_types type, u32 attr,
+ 			       __always_unused int channel, long val)
+ {
++	struct gpd_fan_data *data = dev_get_drvdata(dev);
++
+ 	if (type == hwmon_pwm) {
+ 		switch (attr) {
+ 		case hwmon_pwm_enable:
+ 			if (!in_range(val, 0, 3))
+ 				return -EINVAL;
+ 
+-			gpd_driver_priv.pwm_enable = val;
++			data->pwm_enable = val;
+ 
+-			gpd_set_pwm_enable(gpd_driver_priv.pwm_enable);
++			gpd_set_pwm_enable(data, data->pwm_enable);
+ 			return 0;
+ 		case hwmon_pwm_input:
+ 			if (!in_range(val, 0, 256))
+ 				return -EINVAL;
+ 
+-			gpd_driver_priv.pwm_value = val;
++			data->pwm_value = val;
+ 
+-			return gpd_write_pwm(val);
++			return gpd_write_pwm(data, val);
+ 		}
+ 	}
+ 
+@@ -584,26 +586,27 @@ static struct hwmon_chip_info gpd_fan_chip_info = {
+ 	.info = gpd_fan_hwmon_channel_info
+ };
+ 
+-static void gpd_win4_init_ec(void)
++static void gpd_win4_init_ec(struct gpd_fan_data *data)
+ {
++	const struct gpd_fan_drvdata *drvdata = data->drvdata;
+ 	u8 chip_id, chip_ver;
+ 
+-	gpd_ecram_read(0x2000, &chip_id);
++	gpd_ecram_read(drvdata, 0x2000, &chip_id);
+ 
+ 	if (chip_id == 0x55) {
+-		gpd_ecram_read(0x1060, &chip_ver);
+-		gpd_ecram_write(0x1060, chip_ver | 0x80);
++		gpd_ecram_read(drvdata, 0x1060, &chip_ver);
++		gpd_ecram_write(drvdata, 0x1060, chip_ver | 0x80);
+ 	}
+ }
+ 
+-static void gpd_init_ec(void)
++static void gpd_init_ec(struct gpd_fan_data *data)
+ {
+ 	// The buggy firmware won't initialize EC properly on boot.
+ 	// Before its initialization, reading RPM will always return 0,
+ 	// and writing PWM will have no effect.
+ 	// Initialize it manually on driver load.
+-	if (gpd_driver_priv.drvdata->board == win4_6800u)
+-		gpd_win4_init_ec();
++	if (data->drvdata->board == win4_6800u)
++		gpd_win4_init_ec(data);
+ }
+ 
+ static int gpd_fan_probe(struct platform_device *pdev)
+@@ -611,7 +614,9 @@ static int gpd_fan_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	const struct resource *region;
+ 	const struct resource *res;
+-	const struct device *hwdev;
++	struct device *hwdev;
++	struct gpd_fan_data *data;
++	const struct gpd_fan_drvdata *match;
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_IO, 0);
+ 	if (!res)
+@@ -624,24 +629,42 @@ static int gpd_fan_probe(struct platform_device *pdev)
+ 		return dev_err_probe(dev, -EBUSY,
+ 				     "Failed to request region\n");
+ 
++	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
++	if (!data)
++		return -ENOMEM;
++
++	match = dev_get_platdata(dev);
++	if (!match)
++		return -EINVAL;
++
++	data->drvdata = match;
++	data->pwm_enable = AUTOMATIC;
++	data->pwm_value = 255;
++
++	dev_set_drvdata(dev, data);
++
+ 	hwdev = devm_hwmon_device_register_with_info(dev,
+ 						     DRIVER_NAME,
+-						     NULL,
++						     data,
+ 						     &gpd_fan_chip_info,
+ 						     NULL);
+ 	if (IS_ERR(hwdev))
+ 		return dev_err_probe(dev, PTR_ERR(hwdev),
+ 				     "Failed to register hwmon device\n");
+ 
+-	gpd_init_ec();
++	gpd_init_ec(data);
+ 
+ 	return 0;
+ }
+ 
+-static void gpd_fan_remove(__always_unused struct platform_device *pdev)
++static void gpd_fan_remove(struct platform_device *pdev)
+ {
+-	gpd_driver_priv.pwm_enable = AUTOMATIC;
+-	gpd_set_pwm_enable(AUTOMATIC);
++	struct gpd_fan_data *data = dev_get_drvdata(&pdev->dev);
++
++	if (data) {
++		data->pwm_enable = AUTOMATIC;
++		gpd_set_pwm_enable(data, AUTOMATIC);
++	}
+ }
+ 
+ static struct platform_driver gpd_fan_driver = {
+@@ -668,6 +691,7 @@ static int __init gpd_fan_init(void)
+ 	if (!match) {
+ 		const struct dmi_system_id *dmi_match =
+ 			dmi_first_match(dmi_table);
++
+ 		if (dmi_match)
+ 			match = dmi_match->driver_data;
+ 	}
+@@ -675,10 +699,6 @@ static int __init gpd_fan_init(void)
+ 	if (!match)
+ 		return -ENODEV;
+ 
+-	gpd_driver_priv.pwm_enable = AUTOMATIC;
+-	gpd_driver_priv.pwm_value = 255;
+-	gpd_driver_priv.drvdata = match;
+-
+ 	struct resource gpd_fan_resources[] = {
+ 		{
+ 			.start = match->addr_port,
+@@ -690,7 +710,8 @@ static int __init gpd_fan_init(void)
+ 	gpd_fan_platform_device = platform_create_bundle(&gpd_fan_driver,
+ 							 gpd_fan_probe,
+ 							 gpd_fan_resources,
+-							 1, NULL, 0);
++							 1,
++							 match, sizeof(*match));
+ 
+ 	if (IS_ERR(gpd_fan_platform_device)) {
+ 		pr_warn("Failed to create platform device\n");
 -- 
 2.53.0
 
