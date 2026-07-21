@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E574298CC4;
-	Tue, 21 Jul 2026 21:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA64044AB7C;
+	Tue, 21 Jul 2026 21:14:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668461; cv=none; b=nirrHKw4AfKQUo/ECLEvWsERkivxNmzBa2QWxywCeeNgyM/2ujuwaRoN+rd9h4BPf6O8HMgEJ46vZOkmdQ0YVlRgg7bXfH74W+u2tO5UZK9GvbIlgeYkkRGBPSHj52ERQCKgZonTiP5MLt4k2DClwt7eojcLSm53JHuMO02xICo=
+	t=1784668463; cv=none; b=Q0+xooZlj+DcVDPoWKA4WZgCuTmsba3WrTBUU2vrMdvJVF4KzLtZqfwfmZ8Uw1G2ZaZuwnQmnm343c84ZhnB6SHigF2nEPE/mpeEg0qRiF2KQ7WpPKqMa7ulrEGCq2iUO8wPeNyRcyUiVvWMoKyjpzmcPG8SBh8v5bWkdvtMajM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668461; c=relaxed/simple;
-	bh=KzPuA1Xx6qnYlULeLoGVfnkVg8OlWCfZpUT8jLY1B2w=;
+	s=arc-20240116; t=1784668463; c=relaxed/simple;
+	bh=uj+wp2C9LvWViNYyg3eZPif8TjR32mjPYd1fEOMt/6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PAQw4wiyxZz4yCzBFW6718fQbV14+Qbe8L4yxrA0U8G6TpOiThCS09yQDMdK1HsK2CeovTuW7DGJn2XGXqUVysfIpdOd96vrXyGMPn7IT+gkL+KyqgzUIMMfxrc1y6YIq8p3gMF30mc98hXC06zXa34Zw2At12d1lqTRyaSMr2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLrmuHif; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cnQ5jVN24U0+sw9XjhMGWnjS4otYOwaZq30zjeuXvNfyDurDurCMrQLjj/LpWbYJEchmPQrdYG7kzn7PEbDJoyI91ZtXQ1VcS3Z4XXaDWKnfabFMnvb6V46v/K/qwB5W1j8T2yBN1e1KBC+LWfKNY5q8IdWCxj9mrHLEg23SJ2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dLCJ//ny; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLrmuHif"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B2F1F000E9;
-	Tue, 21 Jul 2026 21:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dLCJ//ny"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB141F000E9;
+	Tue, 21 Jul 2026 21:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668460;
-	bh=ApQl/B9PUa24ITG874NTNLEh9Fu+L7ZXprDxQyCOik4=;
+	s=korg; t=1784668462;
+	bh=c71yt9wyI+sDnadT+/CEZgjoFipF2GsDIYJOgVl7krk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BLrmuHifLnITMX1sZ7pLd28BoeHj1HxuNaN8TmnEHN5MsuJicOMcVO7YpjpqN3V4D
-	 u2iwOnccXKK/lI9EK2YPbriYgpzlpTvEnHKdxze2X/DbC57KAXsRA5qv1MJti0lNdt
-	 maWXFG+1//WtHes4V3bR5/n9R5tu6+b4xt16rKSk=
+	b=dLCJ//nybWkNeySjtZCmkZnS1CaijyVEwpVKxam2VRoyxMeLWnTk+AGrTsNl+wYx4
+	 uWMd1UxeE30knb2b0ws+MUROk5EjJBS2UtepcGz9bCxRrUguN0TS+vhmwx9pCPRcCf
+	 YNJQ2epIoE3ZcpJRN0eAkuLpLndvmtPP2rdAJSW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 0183/1067] USB: serial: digi_acceleport: fix broken rx after throttle
-Date: Tue, 21 Jul 2026 17:13:04 +0200
-Message-ID: <20260721152428.688518877@linuxfoundation.org>
+Subject: [PATCH 6.1 0184/1067] USB: serial: digi_acceleport: fix hard lockup on disconnect
+Date: Tue, 21 Jul 2026 17:13:05 +0200
+Message-ID: <20260721152428.711132837@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,54 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 83a3dfc018943b05b6daf3a6f891833e1aabfa1f upstream.
+commit 5c1ea24b53bf3bfb859f0a05573997487975da23 upstream.
 
-If the port is closed while throttled, the read urb is never resubmitted
-and the port will not receive any further data until the device is
-reconnected (or the driver is rebound).
+If submitting the OOB write urb fails persistently (e.g if the device is
+being disconnected) the driver would loop indefinitely with interrupts
+disabled.
 
-Clear the throttle flags and submit the urb if needed when opening the
-port.
+Check for urb submission errors when sending OOB commands to avoid
+hanging if, for example, open(), set_termios() or close() races with a
+physical disconnect.
 
+This is issue was flagged by Sashiko when reviewing an unrelated change
+to the driver.
+
+Link: https://sashiko.dev/#/patchset/20260610132232.356139-1-johan%40kernel.org?part=1
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/digi_acceleport.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/usb/serial/digi_acceleport.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 --- a/drivers/usb/serial/digi_acceleport.c
 +++ b/drivers/usb/serial/digi_acceleport.c
-@@ -1072,6 +1072,7 @@ static int digi_open(struct tty_struct *
- 	unsigned char buf[32];
- 	struct digi_port *priv = usb_get_serial_port_data(port);
- 	struct ktermios not_termios;
-+	int throttled;
- 
- 	/* be sure the device is started up */
- 	if (digi_startup_device(port->serial) != 0)
-@@ -1099,6 +1100,21 @@ static int digi_open(struct tty_struct *
- 		not_termios.c_iflag = ~tty->termios.c_iflag;
- 		digi_set_termios(tty, port, &not_termios);
+@@ -396,12 +396,14 @@ static int digi_write_oob_command(struct
+ 			len &= ~3;
+ 		memcpy(oob_port->write_urb->transfer_buffer, buf, len);
+ 		oob_port->write_urb->transfer_buffer_length = len;
++
+ 		ret = usb_submit_urb(oob_port->write_urb, GFP_ATOMIC);
+-		if (ret == 0) {
+-			oob_priv->dp_write_urb_in_use = 1;
+-			count -= len;
+-			buf += len;
+-		}
++		if (ret)
++			break;
++
++		oob_priv->dp_write_urb_in_use = 1;
++		count -= len;
++		buf += len;
  	}
-+
-+	spin_lock_irq(&priv->dp_port_lock);
-+	throttled = priv->dp_throttle_restart;
-+	priv->dp_throttled = 0;
-+	priv->dp_throttle_restart = 0;
-+	spin_unlock_irq(&priv->dp_port_lock);
-+
-+	if (throttled) {
-+		ret = usb_submit_urb(port->read_urb, GFP_KERNEL);
-+		if (ret) {
-+			dev_err(&port->dev, "failed to submit read urb: %d\n", ret);
-+			return ret;
-+		}
-+	}
-+
- 	return 0;
- }
- 
+ 	spin_unlock_irqrestore(&oob_priv->dp_port_lock, flags);
+ 	if (ret)
 
 
