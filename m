@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1504D1F3D56;
-	Tue, 21 Jul 2026 17:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24AE437B40C;
+	Tue, 21 Jul 2026 17:10:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653807; cv=none; b=kQUGG8sTC+hUZoXczdDm9TjsXL2FRJYMU6aqWy503HZJzbxB2xh8t2yXT8ldIao4zRHVzWp+wmzLrC98aP576VlfSaC68meVj+yI7wkM8X35eh9d54Wm7G19U578YJmEOtzWxp96Km9xqnpOgB0pv79+1ODZz67Fj3o5/Midlyc=
+	t=1784653810; cv=none; b=EBr+NFheEPb+vUw+BqSAFzlCygXk8gjjotUbvzm7FBZOIkGVQbc0USemFnPqDqXvluNbu+EzQpbiWYhptMMFzXIJIHi+tWrvjolJ6HClsFiywgEJDZ15RU6VuBhjFaWoVxULX/yhux8w5Hbm8NGpU5e4acNZINiRIRcgH4qWifg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653807; c=relaxed/simple;
-	bh=hgoeu2YpCUjJ3JnmeedakK214uPSEOXhZazEhApp3cE=;
+	s=arc-20240116; t=1784653810; c=relaxed/simple;
+	bh=hdv9+iowyvpcRJFt2T8p9bdaQGHy1DwUjTeLZFHyL8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RrYwT8sWkWkWAAzMXOtltbHnT/WOYEj3WlKYjPtJ/vleUo9J6pvaG1o1ncSrNdPFmTjBqU7W63gkuqXjVwXBde8qvh+Cw6TYpVBDFWDYOwCfx0utgPcZVW4sxg1lkk7hUc9foysZ6tLCOS1VZhDB/FUmLOmQzK2Z+ZrO9ax5PW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MjETkoYD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SP4IDFt4e7I7K9JFopAqdfAZj0Ezh9C5ENBJa1uUXQx2ZSO/GA2qhAnTNzZiThWgQv/Q9d2mPEZpj+M8F0G+lpbfahb1wPIzePUapncqlSLQWI8mwPXPH9PJhj1jw3w6BM8C5h4G1n0HSs8QUf25EMRR/sZYw+wn+t+oxuTm1RU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukdwPPWM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MjETkoYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B13B1F000E9;
-	Tue, 21 Jul 2026 17:10:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukdwPPWM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A861F000E9;
+	Tue, 21 Jul 2026 17:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653806;
-	bh=BelA6K8RJIE2hlwjwU1OLDjbxDGd9LDm0VaMRsAt4oY=;
+	s=korg; t=1784653808;
+	bh=dwoMgxa8ZPzwPQnvhxo5QS0FZDQDMFEA/tMQf8fWvao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MjETkoYDhFbmCgzBT1Q6a+ruDWhspMSJBZeoXuCoQSW0k8ATT8m0LUzRkh2Ec10DV
-	 t02Ij/XbhJTk0zP5JdMGnvkiWqvD8LRg9ruG6dl/ypY7RoGuSY+Twbu7pkcIK195ft
-	 UuijzBojKtuWpC5hDN6G/vzthH51SJxxoisoz9Wo=
+	b=ukdwPPWMqv03NOCqvPq8bjgUESih3WI8YwQ4vecNKfJcigGbISi3khcZ0icOmd7N7
+	 iZ5lCPLW0Tx7ukOv+ZlEThbbtiZPUZuGS86jEjDFntp9l1J/AxttbfW4Jhl+CHVJol
+	 NtPSYkHoxb0SuQAdHOmrvOhStrGpWw20W8AGTEBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
+	Stig Hornang <stig@hornang.me>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1465/2077] Bluetooth: bpa10x: avoid OOB read of revision string in bpa10x_setup()
-Date: Tue, 21 Jul 2026 17:18:58 +0200
-Message-ID: <20260721152627.353091998@linuxfoundation.org>
+Subject: [PATCH 7.1 1466/2077] Bluetooth: L2CAP: fix tx ident leak for commands without a response
+Date: Tue, 21 Jul 2026 17:18:59 +0200
+Message-ID: <20260721152627.375533780@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,59 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Stig Hornang <stig@hornang.me>
 
-[ Upstream commit dd068ef044128db655f48323a4acfd5907e04903 ]
+[ Upstream commit 6e1930ece855a4c256f1c7e6632d634cfb9888b5 ]
 
-bpa10x_setup() sends the vendor command 0xfc0e and passes the response
-to bt_dev_info() and hci_set_fw_info() as a "%s" string starting at
-skb->data + 1, without checking the length:
+Commit 6c3ea155e5ee ("Bluetooth: L2CAP: Fix not tracking outstanding
+TX ident") changed ident allocation to use an IDA, releasing idents in
+l2cap_put_ident() when the matching response command is received.
 
-	bt_dev_info(hdev, "%s", (char *)(skb->data + 1));
-	hci_set_fw_info(hdev, "%s", skb->data + 1);
+But identifiers allocated for commands that have no response defined
+are never released. In particular L2CAP_LE_CREDITS is sent repeatedly for
+the lifetime of an LE CoC channel, so a peer streaming data to the
+host exhausts the 1-255 ident range after 254 credit packets. From
+then on l2cap_get_ident() fails:
 
-A device that returns a one-byte response (status only) leaves
-skb->data + 1 past the end of the data, and the %s walk reads adjacent
-slab memory until it meets a NUL. The same happens when the payload is
-not NUL-terminated within skb->len. The out-of-bounds bytes end up in
-the kernel log and the firmware-info debugfs file.
+    kernel: Bluetooth: Unable to allocate ident: -28
 
-Print the revision string with a bounded "%.*s" limited to skb->len - 1
-instead. This keeps the string readable for well-behaved devices while
-never reading past the received data, and does not fail setup, so a
-device returning a short or unterminated response keeps working.
+and every subsequent L2CAP_LE_CREDITS packet is sent with ident 0,
+which is invalid (Core Spec, Vol 3, Part A, Section 4: "Signaling
+identifier 0x00 is an invalid identifier and shall never be used in
+any command"). Remote stacks that validate the ident drop these
+commands, never receive new credits, and the channel stalls
+permanently. With default socket buffers this happens after roughly 0.5 MB
+of received data (the exact amount depends on the socket receive buffer):
 
-Fixes: ddd68ec8f484 ("Bluetooth: bpa10x: Read revision information in setup stage")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reported-by: Xiang Mei <xmei5@asu.edu>
+  < ACL Data TX: Handle 2048 flags 0x00 dlen 12
+        LE L2CAP: LE Flow Control Credit (0x16) ident 0 len 4
+          Source CID: 64
+          Credits: 1
+
+Release the ident immediately after sending L2CAP_LE_CREDITS since no
+response will ever release it. Use a local variable instead of
+chan->ident so that an ident that an EXT_FLOWCTL channel may be waiting on
+(e.g. a pending reconfigure) is not overwritten by a credit packet.
+
+Also add the missing L2CAP_LE_CONN_RSP case to l2cap_put_ident() so
+idents allocated for outgoing L2CAP_LE_CONN_REQ commands are released
+when the response arrives.
+
+Fixes: 6c3ea155e5ee ("Bluetooth: L2CAP: Fix not tracking outstanding TX ident")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221629
+Assisted-by: Claude:claude-opus-4.8
+Assisted-by: Fable:5
+Signed-off-by: Stig Hornang <stig@hornang.me>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/bpa10x.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/bluetooth/l2cap_core.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/bpa10x.c b/drivers/bluetooth/bpa10x.c
-index 2ae38a321c4b3c..e63d1af250ec91 100644
---- a/drivers/bluetooth/bpa10x.c
-+++ b/drivers/bluetooth/bpa10x.c
-@@ -255,9 +255,13 @@ static int bpa10x_setup(struct hci_dev *hdev)
- 	if (IS_ERR(skb))
- 		return PTR_ERR(skb);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 4b8246b2971135..93507cb10bc922 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4824,6 +4824,7 @@ static void l2cap_put_ident(struct l2cap_conn *conn, u8 code, u8 id)
+ 	case L2CAP_ECHO_RSP:
+ 	case L2CAP_INFO_RSP:
+ 	case L2CAP_CONN_PARAM_UPDATE_RSP:
++	case L2CAP_LE_CONN_RSP:
+ 	case L2CAP_ECRED_CONN_RSP:
+ 	case L2CAP_ECRED_RECONF_RSP:
+ 		/* First do a lookup since the remote may send bogus ids that
+@@ -6721,6 +6722,7 @@ static void l2cap_chan_le_send_credits(struct l2cap_chan *chan)
+ 	struct l2cap_conn *conn = chan->conn;
+ 	struct l2cap_le_credits pkt;
+ 	u16 return_credits = l2cap_le_rx_credits(chan);
++	int ident;
  
--	bt_dev_info(hdev, "%s", (char *)(skb->data + 1));
-+	/* Bounded print: the device controls skb->len. */
-+	if (skb->len > 1) {
-+		int len = skb->len - 1;
+ 	if (chan->mode != L2CAP_MODE_LE_FLOWCTL &&
+ 	    chan->mode != L2CAP_MODE_EXT_FLOWCTL)
+@@ -6738,9 +6740,18 @@ static void l2cap_chan_le_send_credits(struct l2cap_chan *chan)
+ 	pkt.cid     = cpu_to_le16(chan->scid);
+ 	pkt.credits = cpu_to_le16(return_credits);
  
--	hci_set_fw_info(hdev, "%s", skb->data + 1);
-+		bt_dev_info(hdev, "%.*s", len, (char *)(skb->data + 1));
-+		hci_set_fw_info(hdev, "%.*s", len, skb->data + 1);
-+	}
+-	chan->ident = l2cap_get_ident(conn);
++	ident = l2cap_get_ident(conn);
  
- 	kfree_skb(skb);
- 	return 0;
+-	l2cap_send_cmd(conn, chan->ident, L2CAP_LE_CREDITS, sizeof(pkt), &pkt);
++	l2cap_send_cmd(conn, ident, L2CAP_LE_CREDITS, sizeof(pkt), &pkt);
++
++	/* L2CAP_LE_CREDITS has no response so the ident is never released by
++	 * l2cap_put_ident() - release it right away, otherwise the tx_ida
++	 * range is exhausted after 254 packets and from then on credits are
++	 * sent with the invalid ident 0, which some remote stacks ignore,
++	 * stalling the channel.
++	 */
++	if (ident > 0)
++		ida_free(&conn->tx_ida, ident);
+ }
+ 
+ void l2cap_chan_rx_avail(struct l2cap_chan *chan, ssize_t rx_avail)
 -- 
 2.53.0
 
