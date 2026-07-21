@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BDEC2DBF75;
-	Tue, 21 Jul 2026 18:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1220246E00B;
+	Tue, 21 Jul 2026 18:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659532; cv=none; b=eaR8tvYibRWDHxAtgzN5k9ywNidhDIQSLKIBaApMlrhRSxw/I1bFsBQNHpjNGeAT4znl9fU1q2317l+5f1gjQDTSLN83XIcq8scU0w0u3ZzRoVvxJa7DljsNrYaP5QCTxIspO5o+NcXaoldWUkFldE2JzVxbaFp3Kju2KlGTfIY=
+	t=1784659535; cv=none; b=j+l1h3rgdojITPBdJIdl4quGgX1pEBMs5Axt2eJmwLr8KRkVQhicQYJgtL2reLt7uaKVeqxcqhtVlWO7qGag+txwIa4XGw7TABJJLJSM+ukiha/AjGCbGraOhAjzo+zrktmSFi5kkQO+SqVVV5NclzUy6MFjQxdxO7HSLqyeZEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659532; c=relaxed/simple;
-	bh=XHXp2H0MS1NMi5nn5iJF6kHtWEgIOoSNj4oJiWjSktU=;
+	s=arc-20240116; t=1784659535; c=relaxed/simple;
+	bh=ltRqpmVsKGySUs2iFLxjwQsiI+B33pimrVLi7g650QU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cz4tD1rHSAhhJjkD1A8PQ6tHqd3Fiq6DiueK0bp/ybw55KRLIlKKnRiEbg7KcCH49PaJRV7N5RrbsSVM7j+NJAd2VKtZI3nRfyd8szk1n7Qz3RdnOKp8WXnFmKrahre9Faro1xt9UfvUVu/e1a+qObKBTPj1XHa/GqKQMsnK3O8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogVEh+Om; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X9IkxnZfi7fq2qcF23HOFVcSJzxsNSlJX+YbPEjD0pgrDlc6nsIhmZ/L/wjv0kFqf+/Z68Iljb+hpdDhWhx/1NSbtLODku5p3yylJetNnc8nLw1m4p7hWatHFL+HvDe4PFYgPmRLbRoBpY0e6xuobAQOHIl1iupHRsQA8q9F04o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HP+76qxs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogVEh+Om"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1CC81F000E9;
-	Tue, 21 Jul 2026 18:45:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HP+76qxs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D541F000E9;
+	Tue, 21 Jul 2026 18:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659531;
-	bh=ySbo2Cporxw2jORJmxZEHHeiniaBua3soy9nvmbfzYo=;
+	s=korg; t=1784659534;
+	bh=BIQ5iPD+l8taIKg9nE71lviaeLIUwMc0bfkgVe13+wA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ogVEh+Om14d/nnpL9p29pHgIPv4bNZhr6JzYi33a/gJGyuBAw96piAN6JMLra7txz
-	 IM4lNpduT4rYdc0on4uSOxYucHvIzmgQNVgZGgzDQraN5mHlyoiEnhIN7/nkMzo5i2
-	 Ms0pf/bu/mFA9KkX1tj1pINqZSaczto4nbiuc8Y8=
+	b=HP+76qxsxBYIUylcHAQCD+ND8Cg9lxIa6qWxDI7+alUKHlUfgK6/wfnvGpKBFTKTj
+	 2WItQxPuYejKNbw4loInZxcWzPw+9g9WQ7ty9GLR0RAaKhsYTyDpYiWEmChKjBdz1s
+	 cxn2rD3vwuyLRahbxPzZmdqBxGMNTz8Dz4ZslQPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haofeng Li <lihaofeng@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1556/1611] ksmbd: validate NTLMv2 response before updating session key
-Date: Tue, 21 Jul 2026 17:27:52 +0200
-Message-ID: <20260721152550.456362155@linuxfoundation.org>
+Subject: [PATCH 6.18 1557/1611] proc: rename proc_setattr to proc_nochmod_setattr
+Date: Tue, 21 Jul 2026 17:27:53 +0200
+Message-ID: <20260721152550.478920562@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,97 +52,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haofeng Li <lihaofeng@kylinos.cn>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 954d196bebb2b50151cb96454c72dc113b2af1ac ]
+[ Upstream commit 690005b0b1e6b567c88b7790e6d90d4d6c9e09cc ]
 
-ksmbd_auth_ntlmv2() derives the NTLMv2 session key into
-sess->sess_key before it verifies the NTLMv2 response.
-ksmbd_decode_ntlmssp_auth_blob() then continues into KEY_XCH even
-when ksmbd_auth_ntlmv2() failed.
+What is currently proc_setattr is a special version added after the more
+general procfs ->seattr in commit 6d76fa58b050 ("Don't allow chmod() on
+the /proc/<pid>/ files").  Give it a name that reflects that to free the
+proc_setattr name and better describe what is doing.
 
-With SMB3 multichannel binding, the failed authentication operates on
-an existing session and the session setup error path does not expire
-binding sessions. A client can send a binding session setup with a
-bad NT proof and KEY_XCH and still modify sess->sess_key before
-STATUS_LOGON_FAILURE is returned.
-
-Relevant path:
-
-  smb2_sess_setup()
-    -> conn->binding = true
-    -> ntlm_authenticate()
-       -> session_user()
-       -> ksmbd_decode_ntlmssp_auth_blob()
-          -> ksmbd_auth_ntlmv2()
-             -> calc_ntlmv2_hash()
-             -> hmac_md5_usingrawkey(..., sess->sess_key)
-             -> crypto_memneq() returns mismatch
-          -> KEY_XCH arc4_crypt(..., sess->sess_key, ...)
-    -> out_err without expiring the binding session
-
-Derive the base session key into a local buffer and copy it to
-sess->sess_key only after the proof matches. Return immediately on
-authentication failure so KEY_XCH is only processed after successful
-authentication.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Fixes: f9929ef6a2a5 ("ksmbd: add support for key exchange")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haofeng Li <lihaofeng@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260325063711.3298685-5-hch@lst.de
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 6255da28d4bb ("proc: protect ptrace_may_access() with exec_update_lock (FD links)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/auth.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ fs/proc/base.c       |   22 +++++++++++-----------
+ fs/proc/fd.c         |    6 +++---
+ fs/proc/internal.h   |    4 ++--
+ fs/proc/namespaces.c |    4 ++--
+ fs/proc/proc_net.c   |    2 +-
+ 5 files changed, 19 insertions(+), 19 deletions(-)
 
---- a/fs/smb/server/auth.c
-+++ b/fs/smb/server/auth.c
-@@ -142,6 +142,7 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn
- {
- 	char ntlmv2_hash[CIFS_ENCPWD_SIZE];
- 	char ntlmv2_rsp[CIFS_HMAC_MD5_HASH_SIZE];
-+	char sess_key[SMB2_NTLMV2_SESSKEY_SIZE];
- 	struct hmac_md5_ctx ctx;
- 	int rc;
- 
-@@ -164,12 +165,21 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn
- 	/* Generate the session key */
- 	hmac_md5_usingrawkey(ntlmv2_hash, CIFS_HMAC_MD5_HASH_SIZE,
- 			     ntlmv2_rsp, CIFS_HMAC_MD5_HASH_SIZE,
--			     sess->sess_key);
-+			     sess_key);
- 
- 	if (crypto_memneq(ntlmv2->ntlmv2_hash, ntlmv2_rsp,
--			  CIFS_HMAC_MD5_HASH_SIZE))
--		return -EINVAL;
--	return 0;
-+			  CIFS_HMAC_MD5_HASH_SIZE)) {
-+		rc = -EINVAL;
-+		goto out;
-+	}
-+
-+	memcpy(sess->sess_key, sess_key, sizeof(sess_key));
-+	rc = 0;
-+out:
-+	memzero_explicit(ntlmv2_hash, sizeof(ntlmv2_hash));
-+	memzero_explicit(ntlmv2_rsp, sizeof(ntlmv2_rsp));
-+	memzero_explicit(sess_key, sizeof(sess_key));
-+	return rc;
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -721,7 +721,7 @@ static bool proc_fd_access_allowed(struc
+ 	return allowed;
  }
  
- /**
-@@ -226,6 +236,8 @@ int ksmbd_decode_ntlmssp_auth_blob(struc
- 				nt_len - CIFS_ENCPWD_SIZE,
- 				domain_name, conn->ntlmssp.cryptkey);
- 	kfree(domain_name);
-+	if (ret)
-+		return ret;
+-int proc_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
++int proc_nochmod_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 		 struct iattr *attr)
+ {
+ 	int error;
+@@ -794,7 +794,7 @@ static int proc_pid_permission(struct mn
  
- 	/* The recovered secondary session key */
- 	if (conn->ntlmssp.client_flags & NTLMSSP_NEGOTIATE_KEY_XCH) {
+ 
+ static const struct inode_operations proc_def_inode_operations = {
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ static int proc_single_show(struct seq_file *m, void *v)
+@@ -1866,7 +1866,7 @@ out:
+ const struct inode_operations proc_pid_link_inode_operations = {
+ 	.readlink	= proc_pid_readlink,
+ 	.get_link	= proc_pid_get_link,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ 
+@@ -2319,7 +2319,7 @@ proc_map_files_get_link(struct dentry *d
+ static const struct inode_operations proc_map_files_link_inode_operations = {
+ 	.readlink	= proc_pid_readlink,
+ 	.get_link	= proc_map_files_get_link,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ static struct dentry *
+@@ -2398,7 +2398,7 @@ out:
+ static const struct inode_operations proc_map_files_inode_operations = {
+ 	.lookup		= proc_map_files_lookup,
+ 	.permission	= proc_fd_permission,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ static int
+@@ -2885,7 +2885,7 @@ static struct dentry *proc_##LSM##_attr_
+ static const struct inode_operations proc_##LSM##_attr_dir_inode_ops = { \
+ 	.lookup		= proc_##LSM##_attr_dir_lookup, \
+ 	.getattr	= pid_getattr, \
+-	.setattr	= proc_setattr, \
++	.setattr	= proc_nochmod_setattr, \
+ }
+ 
+ #ifdef CONFIG_SECURITY_SMACK
+@@ -2944,7 +2944,7 @@ static struct dentry *proc_attr_dir_look
+ static const struct inode_operations proc_attr_dir_inode_operations = {
+ 	.lookup		= proc_attr_dir_lookup,
+ 	.getattr	= pid_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ #endif
+@@ -3460,7 +3460,7 @@ static struct dentry *proc_tgid_base_loo
+ static const struct inode_operations proc_tgid_base_inode_operations = {
+ 	.lookup		= proc_tgid_base_lookup,
+ 	.getattr	= pid_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ 	.permission	= proc_pid_permission,
+ };
+ 
+@@ -3659,7 +3659,7 @@ static int proc_tid_comm_permission(stru
+ }
+ 
+ static const struct inode_operations proc_tid_comm_inode_operations = {
+-		.setattr	= proc_setattr,
++		.setattr	= proc_nochmod_setattr,
+ 		.permission	= proc_tid_comm_permission,
+ };
+ 
+@@ -3788,7 +3788,7 @@ static const struct file_operations proc
+ static const struct inode_operations proc_tid_base_inode_operations = {
+ 	.lookup		= proc_tid_base_lookup,
+ 	.getattr	= pid_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ static struct dentry *proc_task_instantiate(struct dentry *dentry,
+@@ -4001,7 +4001,7 @@ static loff_t proc_dir_llseek(struct fil
+ static const struct inode_operations proc_task_inode_operations = {
+ 	.lookup		= proc_task_lookup,
+ 	.getattr	= proc_task_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ 	.permission	= proc_pid_permission,
+ };
+ 
+--- a/fs/proc/fd.c
++++ b/fs/proc/fd.c
+@@ -102,7 +102,7 @@ static int proc_fdinfo_permission(struct
+ 
+ static const struct inode_operations proc_fdinfo_file_inode_operations = {
+ 	.permission	= proc_fdinfo_permission,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ static const struct file_operations proc_fdinfo_file_operations = {
+@@ -361,7 +361,7 @@ const struct inode_operations proc_fd_in
+ 	.lookup		= proc_lookupfd,
+ 	.permission	= proc_fd_permission,
+ 	.getattr	= proc_fd_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ static struct dentry *proc_fdinfo_instantiate(struct dentry *dentry,
+@@ -402,7 +402,7 @@ static int proc_fdinfo_iterate(struct fi
+ const struct inode_operations proc_fdinfo_inode_operations = {
+ 	.lookup		= proc_lookupfdinfo,
+ 	.permission	= proc_fdinfo_permission,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ const struct file_operations proc_fdinfo_operations = {
+--- a/fs/proc/internal.h
++++ b/fs/proc/internal.h
+@@ -257,8 +257,8 @@ extern int proc_pid_statm(struct seq_fil
+ extern const struct dentry_operations pid_dentry_operations;
+ extern int pid_getattr(struct mnt_idmap *, const struct path *,
+ 		       struct kstat *, u32, unsigned int);
+-extern int proc_setattr(struct mnt_idmap *, struct dentry *,
+-			struct iattr *);
++int proc_nochmod_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
++			struct iattr *attr);
+ extern void proc_pid_evict_inode(struct proc_inode *);
+ extern struct inode *proc_pid_make_inode(struct super_block *, struct task_struct *, umode_t);
+ extern void pid_update_inode(struct task_struct *, struct inode *);
+--- a/fs/proc/namespaces.c
++++ b/fs/proc/namespaces.c
+@@ -92,7 +92,7 @@ static int proc_ns_readlink(struct dentr
+ static const struct inode_operations proc_ns_link_inode_operations = {
+ 	.readlink	= proc_ns_readlink,
+ 	.get_link	= proc_ns_get_link,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ static struct dentry *proc_ns_instantiate(struct dentry *dentry,
+@@ -178,5 +178,5 @@ out_no_task:
+ const struct inode_operations proc_ns_dir_inode_operations = {
+ 	.lookup		= proc_ns_dir_lookup,
+ 	.getattr	= pid_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+--- a/fs/proc/proc_net.c
++++ b/fs/proc/proc_net.c
+@@ -322,7 +322,7 @@ static int proc_tgid_net_getattr(struct
+ const struct inode_operations proc_net_inode_operations = {
+ 	.lookup		= proc_tgid_net_lookup,
+ 	.getattr	= proc_tgid_net_getattr,
+-	.setattr        = proc_setattr,
++	.setattr        = proc_nochmod_setattr,
+ };
+ 
+ static int proc_tgid_net_readdir(struct file *file, struct dir_context *ctx)
 
 
