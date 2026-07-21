@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF774189DA;
-	Tue, 21 Jul 2026 22:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D143C1081;
+	Tue, 21 Jul 2026 22:07:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671674; cv=none; b=PluhkE1vsXJap9Zlk2s17Lf5uhnIth0yrQaqz0wdaC5vMc5fTRmnUh1oSzfy9AotaApsdh5l9ZxhwzxdYGe4ost4j9xhOc8kNmAV/jPZGX+DYtHHCD9Camr9lt+MLTiteIfekz5HnDAwhkIaNEJ4qwUzeruUTPr1JbqmPZ8o+WI=
+	t=1784671676; cv=none; b=c42PazSsnmEdHB0p7ZsODS2V3CQq5Bwpp9Y3qHjZmK6M+O7j1fNERr13f3Zy/ITobSWUqivqiZ+hGpX+0DT764mAUfX+PzhwREFWZFFa/434rHl8PTwLbyAgAO70Oh8yclYQlhQ5cMurYrdh0Tk0mQJMBNFRsgNHLNaNxvv9pjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671674; c=relaxed/simple;
-	bh=mP2GXEEqVK+Xe0jIEyE0ZVSUaFwfIzu3GKnroVpZ8Ko=;
+	s=arc-20240116; t=1784671676; c=relaxed/simple;
+	bh=CGV2vkWlunn/yFke2VkLm4DmgIXUjbMz0I9B1t9UXNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NraUiwdKZVAqjuua6DXZt/MMdQlub+tgw2YZqmkULnE1reuw6LCUYF2MNl2ULBZrfJD3vdenRIB5FJJeiBJMdDQmfZ2NpizJQdJc6rt0Yt2ciK2QY1yoUKpi5WXzN+q3vEXkVLoLcQibu4AW4uTwytfuHwn24P3EWrMSklwMq7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZUhy1+zt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PDIEUS+Qhp7la0KUNujwN97+M5VpShEalemO1HI3kJETTXvPd3a0u4nbM/VRzq+DVmbJ/Rqble5M9DA4dmfS4HfWvKOKa4fagwTMU4dKWkek8G807yj0M2jaHLkhyYXIP4DMagx02bjJKxLU4k2hIos0EpVq3lV8FICGUJTZAgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FEzTxu1s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZUhy1+zt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05A181F000E9;
-	Tue, 21 Jul 2026 22:07:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FEzTxu1s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A264D1F000E9;
+	Tue, 21 Jul 2026 22:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671672;
-	bh=r1v/xw6sywKqAf8G1Q8J+4WfrpmSJlbKYN4UY56HQc4=;
+	s=korg; t=1784671675;
+	bh=Oa7VDMOzWsHOvKHYKuMfkoX6SZfubBaI4rB/dhbeIV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZUhy1+ztG1JadhDAytPHUbjXt0BFjPFBnx+iHvxUdADB8nBaGKYcF1CUC6URfHMjP
-	 LchFf8GY3ElzBgcpZdRGsURD00ZPEsu9is1IRQmqsF+RL7r7EYu8qmyJlGJn/POUhi
-	 VUbnVpDKn9CYKNNeBMnyP++I8cxXtJLZm4DJTKb0=
+	b=FEzTxu1sgHCIfqgoRbWWrcjM8/Qa+MzMgtWBqGwKh249QOrTfVKOTythdIJ+o8hh+
+	 t7KACzppUH0Tc6p8VyB/eGERF/K1W9NMx4o2Vw1uvBHE/nQyTakiHMTWOcPvVcfTcM
+	 ksg2KSn5UowPvSstgsi9grv+IeTiCV904mxAIeBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxwell Doose <m32285159@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Fabian Frederick <fabf@skynet.be>,
-	Christian Brauner <brauner@kernel.org>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 335/843] fs: efs: remove unneeded debug prints
-Date: Tue, 21 Jul 2026 17:19:30 +0200
-Message-ID: <20260721152413.556143921@linuxfoundation.org>
+Subject: [PATCH 5.15 336/843] RDMA/mlx5: Remove raw RSS QP restrack tracking
+Date: Tue, 21 Jul 2026 17:19:31 +0200
+Message-ID: <20260721152413.579523459@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,87 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxwell Doose <m32285159@gmail.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 89009392c80da5da00876c8334ff20028e6e3eb6 ]
+[ Upstream commit 666031fed8f0fdfc29b20d125a628c1b0a04cdaf ]
 
-The current code uses debug prints conditionally compiled with #ifdef
-DEBUG.  However, that code, when compiled, causes compiler errors due to
-incompatible formatters and undefined variables, notably:
+Raw RSS QP restrack tracking wasn't working to begin with as it was
+only tracking the first raw RSS QP which was added, since at creation
+the raw RSS QP number is reserved so the QP number for this qp type
+was always zero.
+The following raw RSS QP additions were always failing silently.
 
-fs/efs/file.c: In function `efs_get_block':
-fs/efs/file.c:26:35: error: `block' undeclared (first use in this
-function); did you mean `iblock'?
-  26 |                         __func__, block, inode->i_blocks, inode->i_size);
-     |                                   ^~~~~
+Since the fix isn't trivial and there were no users that required or
+complained about this issue we are dropping this for now instead of fixing.
 
-and:
-
-fs/efs/file.c: In function `efs_bmap':
-./include/linux/kern_levels.h:5:25: error: format `%ld' expects
-argument of type `long int', but argument 4 has type `blkcnt_t' {aka
-`long long unsigned int'} [-Werror=format=]
-   5 | #define KERN_SOH        "\001"          /* ASCII Start Of Header */
-     |                         ^~~~~~
-
-which also extends to the other formatters.  As this part of the code has
-been dead for just about 14 years now, it has not been modernized to stay
-compatible with the most recent gcc compilers.  Fix these issues by
-removing the debug prints.
-
-Link: https://lore.kernel.org/20260605035251.89305-2-m32285159@gmail.com
-Fixes: f403d1dbac6d ("fs/efs: add pr_fmt / use __func__")
-Signed-off-by: Maxwell Doose <m32285159@gmail.com>
-Suggested-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Fabian Frederick <fabf@skynet.be>
-Cc: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 968f0b6f9c01 ("RDMA/mlx5: Consolidate into special function all create QP calls")
+Link: https://patch.msgid.link/r/20260607-restrack-uaf-fix-v1-2-d72e45eb76c2@nvidia.com
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/efs/file.c | 21 +++------------------
- 1 file changed, 3 insertions(+), 18 deletions(-)
+ drivers/infiniband/hw/mlx5/qp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/efs/file.c b/fs/efs/file.c
-index 9e641da6fab276..9153dfe79bbcc9 100644
---- a/fs/efs/file.c
-+++ b/fs/efs/file.c
-@@ -18,16 +18,9 @@ int efs_get_block(struct inode *inode, sector_t iblock,
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index d58ed4a09cd939..f15b89be3b0b92 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -3000,6 +3000,7 @@ static int create_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
+ 	int err;
  
- 	if (create)
- 		return error;
--	if (iblock >= inode->i_blocks) {
--#ifdef DEBUG
--		/*
--		 * i have no idea why this happens as often as it does
--		 */
--		pr_warn("%s(): block %d >= %ld (filesize %ld)\n",
--			__func__, block, inode->i_blocks, inode->i_size);
--#endif
-+	if (iblock >= inode->i_blocks)
- 		return 0;
--	}
-+
- 	phys = efs_map_block(inode, iblock);
- 	if (phys)
- 		map_bh(bh_result, inode->i_sb, phys);
-@@ -42,16 +35,8 @@ int efs_bmap(struct inode *inode, efs_block_t block) {
+ 	if (params->is_rss_raw) {
++		rdma_restrack_no_track(&qp->ibqp.res);
+ 		err = create_rss_raw_qp_tir(dev, pd, qp, params);
+ 		goto out;
  	}
- 
- 	/* are we about to read past the end of a file ? */
--	if (!(block < inode->i_blocks)) {
--#ifdef DEBUG
--		/*
--		 * i have no idea why this happens as often as it does
--		 */
--		pr_warn("%s(): block %d >= %ld (filesize %ld)\n",
--			__func__, block, inode->i_blocks, inode->i_size);
--#endif
-+	if (!(block < inode->i_blocks))
- 		return 0;
--	}
- 
- 	return efs_map_block(inode, block);
- }
 -- 
 2.53.0
 
