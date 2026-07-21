@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0125386C39;
-	Tue, 21 Jul 2026 19:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6C1403135;
+	Tue, 21 Jul 2026 19:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660841; cv=none; b=OHu9LgS6IlXzYVc6H91hXURG74zDs9URTuEIMWcFhJsSuweHGsbSu3JuJ0RsW8Nrjx6VLIi+pecp3cBZN0bYaKvEv/SXfSIds/w9WTSHg6orDhMzJeVoQDu4jDBhQN09j2ZFNP4Ay+9OnmrlAuSU5XIhRTr4hSDjwZop0djtxjc=
+	t=1784660845; cv=none; b=ZZ8v+oyTASEkUZhW1ZPYYC93PcwICBQne6YfX841qXvJrLFJxtYuLGLRDNlUFZeEDq5I68slIwV+Uqxa4IlvbgNe7mF+r8kabvOo+CiENjdRr3yzoQb3DkoYg5mA2KCXVPQ4Gh5k1Jt/x3IxR8u5EskRtIR4NSMnWdPXHs6yeuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660841; c=relaxed/simple;
-	bh=SlHk0YK4SttIgQirtcmhWwCjuFWrAJESs3aTR6hgZmQ=;
+	s=arc-20240116; t=1784660845; c=relaxed/simple;
+	bh=vhEzvl96mp7B2I5d6yXRFikvmvZYqb7iQsSZkgsxB/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ae7QC0Ew4c332A1nM/+2UxMgMG2p+UL2hVkJfkM0hXyyu0M/DD3koBSnNv4Uhz3WNWs4nxGADo+MyWElXZjHDqlJK7Y8UKivnM+ltJl4dVz6IKz7f7SI5PlxK3ZiJ4OJO4CtCCDOsmISugKO6f/Stxe+3Y3O85aj+QHfSQMjX8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOmLD99l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X73piJlrme3jPhcsf8ltUlxknM5s/yAkmrKk9YUee5/NArIgN6L/EMTXyI9snWyZwZGeuL9hPpQYfodrgtDWH1qZxskXg2m/Fbdkk7Mgx6G25ktQ8/u//BXyBTNoeblnH8rr6YUr8f7HhdsvMqW/viKOe4sAn5RT9vnRjibgLKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whyHMbSh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOmLD99l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC081F000E9;
-	Tue, 21 Jul 2026 19:07:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whyHMbSh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C55A01F000E9;
+	Tue, 21 Jul 2026 19:07:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660840;
-	bh=IOhdMXWMgvRwnRWkNgllZEPnxCaJk0fX+nq3qG6H+G4=;
+	s=korg; t=1784660843;
+	bh=k0QsCYmUEBtshjcngLheNtIwlP7LDQh2iRb2fWx5gCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eOmLD99lcz6xIYPJuc6dUJJgfoIdulOA0qrox4YvuuyvoOOkWPIy1+ZM8HRZz3iXZ
-	 abERk/3QdqoaC24kaGmKdu8nQg098Lo0xallDTEs/RPc06DlKQ9vpTTLEjzi5eRaqS
-	 Z5QVY/FZwtq+teMRyJpe088JMO0Sl9CrnnhbxAOg=
+	b=whyHMbShx6lzBDAuQTXSPe03zalfoNXKkwSV54MguQV4Dv8FY9e7SPmY8y74Mqa78
+	 U3DmYzWwu/ZNbx44UeVRE9/zNgpDr6AOupMKN690HuAPYr7xCxYrQ7dbQ1/JmvODMe
+	 OSdKdZFwBxNTc9hGLi/c7MZt9QFkBKtI4AObSoMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Will Deacon <will@kernel.org>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Melissa Wen <mwen@igalia.com>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1132/2077] arm64/hw_breakpoint: reject unaligned watchpoints that would truncate BAS
-Date: Tue, 21 Jul 2026 17:13:25 +0200
-Message-ID: <20260721152619.519737777@linuxfoundation.org>
+Subject: [PATCH 7.1 1106/2077] drm/amd/display: Fix mem_type change detection for async flips
+Date: Tue, 21 Jul 2026 17:12:59 +0200
+Message-ID: <20260721152618.906439876@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,89 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Matthew Schwartz <matthew.schwartz@linux.dev>
 
-[ Upstream commit 4cc70f75853bebac022334b6a86b953348072f74 ]
+[ Upstream commit 8e792f018e10e68f488f279fbd4f38009a2e066d ]
 
-hw_breakpoint_arch_parse() positions the BAS bit pattern in
-hw->ctrl.len with
+[Why]
+amdgpu_dm_crtc_mem_type_changed() fetches the "old" and "new" plane state
+with two drm_atomic_get_plane_state() calls, which both return the new
+state. It compares a state against itself, so it never detects a mem_type
+change and never rejects the async flip.
 
-	offset = hw->address & alignment_mask;	/* 0..7 */
-	hw->ctrl.len <<= offset;
+On DCN 3.0.1, this shows up as intermittent corruption when a single DCC
+plane is scanned out with immediate flips under gamescope and its buffer
+moves between the VRAM carveout and GTT.
 
-ctrl.len is an 8-bit bitfield (struct arch_hw_breakpoint_ctrl::len is
-u32 :8), so the shift silently drops any bits past bit 7.  For
-non-compat AArch64 watchpoints the offset is unbounded relative to
-ctrl.len: a perf_event_open(PERF_TYPE_BREAKPOINT) caller asking for
-HW_BREAKPOINT_W with bp_addr=page+1 and bp_len=HW_BREAKPOINT_LEN_8
-ends up with 0xff << 1 = 0x1fe, stored as 0xfe.  The kernel programs
-WCR.BAS=0xfe and the hardware watches bytes [1..7] instead of the
-requested [1..8] -- the eighth byte is silently dropped.  The
-syscall still returns success, leaving userspace to discover the
-gap by empirical probing.
+[How]
+Use drm_atomic_get_old_plane_state() and drm_atomic_get_new_plane_state()
+to compare the actual old and new states. These return NULL rather than
+an error pointer for a plane that is not part of the commit, so the
+IS_ERR() check becomes a NULL check that skips those planes, such as an
+unmodified cursor still in the CRTC's plane_mask.
 
-The same class affects HW_BREAKPOINT_LEN_{2,4} when offset pushes the
-high BAS bit past bit 7 (e.g. LEN_4 with offset=5 yields 0xe0
-instead of 0x1e0).  No memory-safety impact -- the value is masked
-into 8 bits before encoding -- but debuggers and perf users observe
-missed events on bytes they thought they were watching.
-
-The AArch32 branch immediately above already rejects unrepresentable
-(offset, len) combinations via an explicit switch.  Mirror that for
-the non-compat branch by checking that the shifted pattern fits in
-the BAS field, returning -EINVAL when it does not.
-
-GDB and similar debuggers are unaffected by the stricter check.
-aarch64_linux_set_debug_regs() already treats EINVAL on
-NT_ARM_HW_WATCH as a downgrade signal: it clears
-kernel_supports_any_contiguous_range, calls aarch64_downgrade_regs()
-to round the BAS up to a legacy 0x01/03/0f/ff mask with an aligned
-base, and retries -- the same fallback path that PR-20207 introduced.
-The new -EINVAL is therefore reachable only from a raw
-perf_event_open() that pairs an unaligned base with an oversized
-bp_len, which is precisely the bug.
-
-Reproducer:
-
-  struct perf_event_attr a = {
-      .type = PERF_TYPE_BREAKPOINT, .size = sizeof(a),
-      .bp_type = HW_BREAKPOINT_W,
-      .bp_addr = (uintptr_t)(buf + 1),
-      .bp_len = HW_BREAKPOINT_LEN_8,
-      .exclude_kernel = 1, .exclude_hv = 1,
-  };
-  int fd = perf_event_open(&a, 0, -1, -1, 0);
-  /* before this fix: succeeds, watches 7 bytes (buf+1..buf+7)   */
-  /* after  this fix: fails with EINVAL                          */
-
-Fixes: b08fb180bb88 ("arm64: Allow hw watchpoint at varied offset from base address")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 4caacd1671b7 ("drm/amd/display: Do not elevate mem_type change to full update")
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 13158e5dbd896281f3e9982b5437cffa5fd621b2)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/hw_breakpoint.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/kernel/hw_breakpoint.c b/arch/arm64/kernel/hw_breakpoint.c
-index ab76b36dce820b..73cce8ac836817 100644
---- a/arch/arm64/kernel/hw_breakpoint.c
-+++ b/arch/arm64/kernel/hw_breakpoint.c
-@@ -559,6 +559,15 @@ int hw_breakpoint_arch_parse(struct perf_event *bp,
- 		else
- 			alignment_mask = 0x7;
- 		offset = hw->address & alignment_mask;
-+
-+		/*
-+		 * BAS is an 8-bit field in WCR/BCR; the shift below would
-+		 * silently drop the high bits of ctrl.len when offset + len
-+		 * exceeds 8, programming hardware to watch fewer bytes than
-+		 * the user requested.
-+		 */
-+		if (((u32)hw->ctrl.len << offset) > ARM_BREAKPOINT_LEN_8)
-+			return -EINVAL;
- 	}
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index f8c13bad4ac237..1ecd7bef9ed850 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -12553,13 +12553,11 @@ static bool amdgpu_dm_crtc_mem_type_changed(struct drm_device *dev,
+ 	struct drm_plane_state *new_plane_state, *old_plane_state;
  
- 	hw->address &= ~alignment_mask;
+ 	drm_for_each_plane_mask(plane, dev, crtc_state->plane_mask) {
+-		new_plane_state = drm_atomic_get_plane_state(state, plane);
+-		old_plane_state = drm_atomic_get_plane_state(state, plane);
++		new_plane_state = drm_atomic_get_new_plane_state(state, plane);
++		old_plane_state = drm_atomic_get_old_plane_state(state, plane);
+ 
+-		if (IS_ERR(new_plane_state) || IS_ERR(old_plane_state)) {
+-			drm_err(dev, "Failed to get plane state for plane %s\n", plane->name);
+-			return false;
+-		}
++		if (!old_plane_state || !new_plane_state)
++			continue;
+ 
+ 		if (old_plane_state->fb && new_plane_state->fb &&
+ 		    get_mem_type(old_plane_state->fb) != get_mem_type(new_plane_state->fb))
 -- 
 2.53.0
 
