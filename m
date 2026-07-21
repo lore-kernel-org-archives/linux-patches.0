@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7045846EF69;
-	Tue, 21 Jul 2026 18:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD7846D2D9;
+	Tue, 21 Jul 2026 18:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658706; cv=none; b=jEQIOl3fGjgnY7sRxT4EPRzumjYXcpaxEZcyeaOGcuZVAYvFbMXkSMM5hOZ/3C+49bMFRIZlLxQ9UL01md0gP7RbccVV7/8DTlXNpieeBxF4J1qk2yJOlT2PbCOD2z3Kq71zzEguR7ABG+enXUZXhLMpQpeTTP5Gd2Rw3s7wup0=
+	t=1784658709; cv=none; b=CxwWhfYrnyFuekVBmLKby6Hsc99IiC3fZp/olSLquuAxSFfmoGysvlxQ7z/tMuwKxv2Ay5eNdDusLkZOVAxguntQtSXxMxgHUM1ABohZCjl/w4v/Cad2RRVC6FQ49j3UPzhey/V4O4RRNycFNHB2OFGdeoJ3+o/xWGkC9uc8MGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658706; c=relaxed/simple;
-	bh=FFH/PdX0IMFiXYrH2mb0emvtms9sayK6H/NEwcktp8c=;
+	s=arc-20240116; t=1784658709; c=relaxed/simple;
+	bh=qJWrZOHmaFkuhnunAwXm9YfSpmedepJoFRKxosy7cGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KEPmOxfvhzvRiGBUHjBqRLS8MZ8fbehj1rBIVU8bU/BpwgD24XX3oUF1yxxL4XEIPpkcoc1XoZrokVAt76fc6A84UlXkU3zF/UKBY7kEs0OLi4KoxmX9O+eqsjC5f7oec5G6Rok2dLYokKh0LkcN/pmd0qJ1r8d1ZePsCIjflSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLf3n3nA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zm0TIv2uyir7DWCeltiSXmiKwj+3BqjjvXMuqtCRTTwlJC3OoNq8WG/MlJmi0qxyclCL52wB+yKVBoR9QlGuOEjWXlDboMljt9WQe2l6VVGOnXBoqCi3svWQcGDMfgFrYICVKrXR5zQv3m4e9W+c3ilQDAdsd1ArIP2WeXxROWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOXwQ8NS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLf3n3nA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9398B1F000E9;
-	Tue, 21 Jul 2026 18:31:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOXwQ8NS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B68E1F000E9;
+	Tue, 21 Jul 2026 18:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658705;
-	bh=UmYBVYkbGM4MFxCURM7Sq1Xx3nIGxM9uBcRPkpeQbcI=;
+	s=korg; t=1784658707;
+	bh=7z4vH1yQZvC/Sem19fEiqJiEaPbT5HKb8XYrpwnXxO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sLf3n3nAIDcn0EyqAkyO5gLHoj2kYg1w8cahx0yVhxlebWwhd9E0PHwRVSPhW+Bem
-	 +jNxtLkNeqqv5Mfg40xwjL2EGPEyW94OVBxEbKQO+K7RJkzwI87WE23hMhamrQcoUy
-	 9JH1WDESssP6sEqiwcKhHcN38UHYXGEMifNHJFZU=
+	b=uOXwQ8NS8Y/7hbG6Tiy/jX4yfxZonPH9xF93xXqLOnBms93jRH7Kx80FWa0bZhqE5
+	 KXc40FCW9DnbS8LJpg5sfTWhE4KKBcJKAKu3NSue9jmzBpgycfHhumbvh7WPNK25SK
+	 ExaiGrgsWqH1j28GdngTUoqtTNMt/Tc3FrW0Mn3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.18 1243/1611] ntfs3: validate split-point offset in indx_insert_into_buffer
-Date: Tue, 21 Jul 2026 17:22:39 +0200
-Message-ID: <20260721152543.401247363@linuxfoundation.org>
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 6.18 1208/1611] batman-adv: tt: prevent TVLV OOB check overflow
+Date: Tue, 21 Jul 2026 17:22:04 +0200
+Message-ID: <20260721152542.605666051@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,82 +49,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit f1df9d771df47aa40de6d70949c28720ae1e430d upstream.
+commit 7a581d9aaba8c82bd6177fa36b2588eea77f6e2b upstream.
 
-indx_insert_into_buffer() computes
+A TT unicast TVLV contains the number of VLANs stored in it. This number is
+an u16 and gets multiplied by the size of the struct
+batadv_tvlv_tt_vlan_data (8 bytes). The size can therefore overflow the u16
+used to store the tt_vlan_len. All additional safety checks to prevent
+out-of-bounds access of the TVLV buffer are invalid due to this overflow.
 
-    used = used1 - to_copy - sp_size;
-    memmove(de_t, Add2Ptr(sp, sp_size), used - le32_to_cpu(hdr1->de_off));
+Using size_t prevents this overflow and ensures that the safety checks
+compare against the actual buffer requirements.
 
-where sp and sp_size come from hdr_find_split().  hdr_find_split()
-walks entries by le16_to_cpu(e->size) without validating that each
-step stays within hdr->used or that the size field is at least
-sizeof(struct NTFS_DE).  index_hdr_check(), the on-load gatekeeper,
-only validates header-level fields (used, total, de_off) and does
-not walk per-entry sizes.
-
-A crafted NTFS image whose leaf INDEX_HDR reports used == total but
-contains one interior NTFS_DE with size = 0xFFF0 therefore passes
-validation, descends to indx_insert_into_buffer() through the
-ntfs_create() -> indx_insert_entry() path, and makes hdr_find_split()
-return an sp whose sp_size (0xFFF0) greatly exceeds the remaining
-bytes in the buffer.  The u32 subtraction underflows and the memmove
-count becomes a near-4-GiB value, producing an out-of-bounds kernel
-write that corrupts adjacent allocations and panics the kernel.
-
-Reproduced on 7.0.0-rc7 with UML + KASAN via a crafted image and a
-single 'touch' inside the mounted directory; crash site resolves to
-fs/ntfs3/index.c at the memmove.  Trigger requires only local mount
-of an attacker-supplied filesystem image (USB, loopback, or removable
-media auto-mount).
-
-Reject the split whenever the chosen sp plus its declared size
-already extends past hdr1->used.  This is the minimal fix; it
-preserves the existing hdr_find_split() contract and relies on the
-same out: cleanup path as the pre-existing error returns.
-
-A prior OOB read in the very same indx_insert_into_buffer() memmove
-was fixed in commit b8c44949044e ("fs/ntfs3: Fix OOB read in
-indx_insert_into_buffer") by tightening hdr_find_e(), but that fix
-does not cover the split-point size field path addressed here: sp is
-returned by hdr_find_split(), not hdr_find_e(), and the underflow is
-driven by sp->size rather than hdr->used exceeding hdr->total.
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
 Cc: stable@vger.kernel.org
-Reported-by: Michael Bommarito <michael.bommarito@gmail.com>
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/index.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ net/batman-adv/translation-table.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -1863,6 +1863,20 @@ indx_insert_into_buffer(struct ntfs_inde
- 	memcpy(up_e, sp, sp_size);
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -4025,7 +4025,8 @@ static int batadv_tt_tvlv_unicast_handle
+ 					     u16 tvlv_value_len)
+ {
+ 	struct batadv_tvlv_tt_data *tt_data;
+-	u16 tt_vlan_len, tt_num_entries;
++	u16 tt_num_entries;
++	size_t tt_vlan_len;
+ 	char tt_flag;
+ 	bool ret;
  
- 	used1 = le32_to_cpu(hdr1->used);
-+
-+	/*
-+	 * hdr_find_split does not validate per-entry sizes, so a crafted
-+	 * NTFS_DE whose le16 size field is out of range can place sp such
-+	 * that (PtrOffset(hdr1, sp) + sp_size) exceeds used1. Without this
-+	 * guard the u32 'used = used1 - to_copy - sp_size' underflows and
-+	 * the subsequent memmove count becomes a near-4-GiB value,
-+	 * triggering an out-of-bounds kernel write.
-+	 */
-+	if (PtrOffset(hdr1, sp) + sp_size > used1) {
-+		err = -EINVAL;
-+		goto out;
-+	}
-+
- 	hdr1_saved = kmemdup(hdr1, used1, GFP_NOFS);
- 	if (!hdr1_saved) {
- 		err = -ENOMEM;
 
 
