@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8338B3E49FD;
-	Tue, 21 Jul 2026 22:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220493E49FD;
+	Tue, 21 Jul 2026 22:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671847; cv=none; b=gJz5jZwT2nZXAyF6j1u6/Co0ld+k/qHsqmXpv866+9prfSWkg5D28OwCWaf/bxQKMAo1XWjvf5aXVYu5FlmyF5TzSopSo33wxA2KIJV9fZx59iV/ywXUzXNxtn1EHLI/DbbFzdZunX87lzWtd2sTifR995hFu20d87AxomHBUwA=
+	t=1784671850; cv=none; b=TAd0cUdMaptQAQMNh/ya4MWrXOuTDRSbSO2s7QLm8g9HA180DexwiliMR4lFecN553p6BzdkgfxozK+gKM/6MH/TXy2WrswmEWxLCHeAa7quz1LuK+LSDHOnZlwFQHwzU+ydVEN1Cv24PJ5zWUQJi1SsTDlu7ajwv/kzlvIOjx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671847; c=relaxed/simple;
-	bh=6RGOKvdHsx9fEvCfjPvEJmhEdXsozOcHe1K/dGOiG/k=;
+	s=arc-20240116; t=1784671850; c=relaxed/simple;
+	bh=0UBeR/+eXu7dQX8HPtw/Xkw38Ajlaq68NRfbzJu2C00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l7iuJ4tPwrsn+HuOPgcaFcx4TX/eDW8KMSfe6zbNMy7K+Z74nxq1GKAP+xYgOW/WTT9dw5iCuhcZS+QlLaxQ/MA/97tvt2CA7S2XKDKHSe3hFhtjmIsgiaaTV6aMzClP06Qjofw/zQ0FHyaWp3GGSLljHD+0pF0/YNsSHiE1lfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ccfHaRqs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nw8jZSxtyfj5vC2nfpKcAITlcUcCmW3rvBYM1Kd3IaXbuxvFEZjOOtVEJ4o+dgkRbInh5EVIIuY9zox5veaqU7u+HZGq4MCa8Lqc8gkPz2XTVv1nXXvDY059RInk+qy8XA3eoTcE6h12Sq6pOgudR8oWICuDkXf08NQm1Q2ssrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eny8A5kM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccfHaRqs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E290A1F000E9;
-	Tue, 21 Jul 2026 22:10:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eny8A5kM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F2D1F000E9;
+	Tue, 21 Jul 2026 22:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671846;
-	bh=3gGPq+v018fPRqsjMLcn66JJBlNcOKk4h2XEOqBrg2Q=;
+	s=korg; t=1784671849;
+	bh=dEe/J8DJjvhP+1QLewye0xiEYB6yqz5k0UJSwFUP4wI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ccfHaRqsZ1Pa1RMRLLYE9mBi5zEJl2glo2JAOMdCwpFoIrhQlfTqXpXpQP9zJtC7I
-	 xcSmtp2wbJ3X5+x99B8NJiN2ddO6K8Qt/NnKFexsYBkmzuoAG9CS8BYEkfh6PqFcE3
-	 4wBU3sPnM9j3mXB2tRfRT3EEVajK08ny85MXx1Vs=
+	b=Eny8A5kMKKOGuDp+fMRiw82UXs0CpQ7JiR0p/TMC6y7s7qGLri3VIUpX1wzSqcc1K
+	 e1kdNl5F6E0YIlPG0QxR8vvzMCGvr50bLvkktnvArd/li4n2FlJ1iYI24JI0cmStDS
+	 /QwctFhFriNIMvz92xf0o2uVgEbJAiAVq49upzME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phillip Varney <pbvarney@protonmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 399/843] clk: qcom: a53: Corrected frequency multiplier for 1152MHz
-Date: Tue, 21 Jul 2026 17:20:34 +0200
-Message-ID: <20260721152415.014824144@linuxfoundation.org>
+Subject: [PATCH 5.15 400/843] pNFS/filelayout: fix cheking if a layout is striped
+Date: Tue, 21 Jul 2026 17:20:35 +0200
+Message-ID: <20260721152415.035470252@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,36 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phillip Varney <pbvarney@protonmail.com>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit bb56147ea9fce98ebde1d367335ba006cba61fbd ]
+[ Upstream commit 91668417d4e925c98cae4a55b1b9860380ddbf16 ]
 
-The 1152MHz frequency entry for the a53 currently selects a multiplier of 62, giving 1190MHz. This changes the mulitiplier to 60 giving the intended 1152MHz.
+A layout can still be striped with num_fh = 1 as it is perfectly possible
+that both MDS and DSs can handle the same filehandle. Hence check according
+to stripe_count > 1, which is the correct check to begin with.
 
-Signed-off-by: Phillip Varney <pbvarney@protonmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Fixes: 0c6ab1b8f894 ("clk: qcom: Add A53 PLL support")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260605005502.313928-1-pbvarney@protonmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+We should not be called with flseg->dsaddr = NULL, but if for some reason
+we do, return our best guess with is flseg->num_fh > 1.
+
+Fixes: a6b9d2fa0024 ("pNFS/filelayout: Fix coalescing test for single DS")
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/a53-pll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/filelayout/filelayout.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/qcom/a53-pll.c b/drivers/clk/qcom/a53-pll.c
-index 9e6decb9c26fa7..454a8458e00b33 100644
---- a/drivers/clk/qcom/a53-pll.c
-+++ b/drivers/clk/qcom/a53-pll.c
-@@ -20,7 +20,7 @@
- static const struct pll_freq_tbl a53pll_freq[] = {
- 	{  998400000, 52, 0x0, 0x1, 0 },
- 	{ 1094400000, 57, 0x0, 0x1, 0 },
--	{ 1152000000, 62, 0x0, 0x1, 0 },
-+	{ 1152000000, 60, 0x0, 0x1, 0 },
- 	{ 1209600000, 63, 0x0, 0x1, 0 },
- 	{ 1248000000, 65, 0x0, 0x1, 0 },
- 	{ 1363200000, 71, 0x0, 0x1, 0 },
+diff --git a/fs/nfs/filelayout/filelayout.c b/fs/nfs/filelayout/filelayout.c
+index 45eec08ec904f0..ba04cfc52fd1df 100644
+--- a/fs/nfs/filelayout/filelayout.c
++++ b/fs/nfs/filelayout/filelayout.c
+@@ -786,6 +786,8 @@ filelayout_alloc_lseg(struct pnfs_layout_hdr *layoutid,
+ static bool
+ filelayout_lseg_is_striped(const struct nfs4_filelayout_segment *flseg)
+ {
++	if (flseg->dsaddr)
++		return flseg->dsaddr->stripe_count > 1;
+ 	return flseg->num_fh > 1;
+ }
+ 
 -- 
 2.53.0
 
