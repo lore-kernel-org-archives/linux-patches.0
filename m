@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A534343CEE4;
-	Tue, 21 Jul 2026 22:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2291535C682;
+	Tue, 21 Jul 2026 22:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671339; cv=none; b=WD/ncmVkkM0KRUBsNZpQJAtv1UAFyLRZmJOlHhEr2oiedIqnrJ+ciYwyZFr9yBfkfoO8I6QhpgMj17CK838XcjTQ4g6WLvCxtlJ7vcsu0NSjLPWS6OMiKclDXdRweltu3gzqE8UVOFDVyqt4SEYJgZVv3oOq8EeouzALzYBN4BQ=
+	t=1784671341; cv=none; b=no7BarUzYeoMoWnr9sb09e9OQN7epDGkZufH32iyjqG3blqgpkBIZbIQKCukaudyLDitXuECTrIAGNbRbOIfvvKwVkkLZdZLDut5CDl5JVrzOZTE1RMQNHsjLfg95pYVMlAdHUsiJ6IS0u7JdLa5zvgApdl7bQuCx7hrW9h0gxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671339; c=relaxed/simple;
-	bh=j1DQokPwEFamFWHgcLtfUgpoMgiU6d/fl8MB0Q9qFQk=;
+	s=arc-20240116; t=1784671341; c=relaxed/simple;
+	bh=YMfa9hwhxZ9RMz4hXBUAslvTrX7lEugLjkm+stcQCnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dn5hSDs1CTsEht8nrkhTL+Jh1BZdwxGoA6hXGl7UQP2VKdKzKvwAjYtPHkSmL1o8nc8B6mQtLSMeVr48BjI08Xwhtp/JNIweYcFrVkFVgK7CdegR6DnDACRWuweT8tZS92V/fQUk3BHuSpn2JKx+8tE8dkl4sWAy1RQ8Vb70k1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zJtMx+UP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tp9lvhezU2Ld1eDYhkJpOohV2628LT/lrxJnG+guRYCaAS5gQZwshUQGlm26wzMu9Lr67NTLLM0KFzfX6W+B61kN1uwHgRK0ZX+Vbptgv+DfvCGn5Wrh1Hc5C8G7l7/lY3xP74n8ZLdwac1oRNLy55FuQ3RHz70AAVg/LRu7MyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VpkW8jPL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zJtMx+UP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F5E1F000E9;
-	Tue, 21 Jul 2026 22:02:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VpkW8jPL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7AA1F000E9;
+	Tue, 21 Jul 2026 22:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671337;
-	bh=p0++m1OM+Iy3rFhVxC/Y+Q7gA8WDsxlr1uFpQL/TpoY=;
+	s=korg; t=1784671339;
+	bh=Gk/kS/DmCqqOHVytHA6v9d9hW1/eO1+3Oa/ICnFv06g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zJtMx+UP+vw+44MAVFnZh1KTt8UwiVOCiSawxsB5VMZi8z9fG8uLzpXnNIy7FP5kH
-	 S5O/5ngmoisKhoGi0miPwRpSZyR9sL/hvtbmb67sn3nU98dTM9OVCSOvmbRKmux1Xu
-	 Mw4YOnkrYG6UkLV8cWSj5Y4NXH33XA2TrLwAb5e0=
+	b=VpkW8jPLwowAqYD2Qu49pC/CkccxO+RGP8TRDRmvjmZeaqhFOOcAc8BUHO9kpF4l0
+	 XmkqldEatH9tkEqAHKwR/HqNMkbhIZPCy3M/RwZH8wU8oyTLTkXbDo45NC/gGoyiub
+	 KfXdns+b5D5TqMBWcSP3gNcGEt89OJUtBniU4oQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 207/843] crypto: hisi-trng - Remove crypto_rng interface
-Date: Tue, 21 Jul 2026 17:17:22 +0200
-Message-ID: <20260721152410.675720068@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.15 208/843] media: uvcvideo: Avoid partial metadata buffers
+Date: Tue, 21 Jul 2026 17:17:23 +0200
+Message-ID: <20260721152410.697865526@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,413 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit 216a7795ec210bdabd5dad42323eee70bbfc8d90 upstream.
+commit a15b773fe4ffa450b56347cc506b2d1405600f5d upstream.
 
-drivers/crypto/hisilicon/trng/trng.c exposes the same hardware through
-two completely separate interfaces, crypto_rng and hwrng.  However, the
-implementation of this is buggy because it permits generation operations
-from these interfaces to run concurrently with each other, accessing the
-same registers.  That is, hisi_trng_generate() synchronizes with itself
-but not with hisi_trng_read().  This results in potential repetition of
-output from the RNG, output of non-random values, etc.
+If the metadata queue that is empty receives a new buffer while we are
+in the middle of processing a frame, the first metadata buffer will
+contain partial information.
 
-Fortunately, there's actually no point in hardware RNG drivers
-implementing the crypto_rng interface.  It's not actually used by
-anything besides the "rng" algorithm type of AF_ALG, which in turn is
-not actually used in practice.  Other crypto_rng hardware drivers are
-likewise being phased out, leaving just the hwrng support.
+Avoid this by tracking the state of the metadata buffer and making sure
+that it is in sync with the data buffer.
 
-Thus, remove it to simplify the code and avoid conflict (and confusion)
-with the hwrng interface which is the one that actually matters.
+Now that we are at it, make sure that we skip buffers of size 1 or 0.
+They are not allowed by the spec... but it is a simple check to add and
+better be safe than sorry.
 
-Fixes: e4d9d10ef4be ("crypto: hisilicon/trng - add support for PRNG")
+Fixes: 088ead255245 ("media: uvcvideo: Add a metadata device node")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://patch.msgid.link/20260417-uvc-meta-partial-v2-2-31d274af7d2d@chromium.org
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/hisilicon/Kconfig     |   1 -
- drivers/crypto/hisilicon/trng/trng.c | 298 +--------------------------
- 2 files changed, 2 insertions(+), 297 deletions(-)
+ drivers/media/usb/uvc/uvc_video.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/Kconfig b/drivers/crypto/hisilicon/Kconfig
-index e572f9982d4ef4..f52aebd75c30ed 100644
---- a/drivers/crypto/hisilicon/Kconfig
-+++ b/drivers/crypto/hisilicon/Kconfig
-@@ -78,6 +78,5 @@ config CRYPTO_DEV_HISI_TRNG
- 	tristate "Support for HISI TRNG Driver"
- 	depends on ARM64 && ACPI
- 	select HW_RANDOM
--	select CRYPTO_RNG
- 	help
- 	  Support for HiSilicon TRNG Driver.
-diff --git a/drivers/crypto/hisilicon/trng/trng.c b/drivers/crypto/hisilicon/trng/trng.c
-index 687705ae50ab51..de1f86fc147cc5 100644
---- a/drivers/crypto/hisilicon/trng/trng.c
-+++ b/drivers/crypto/hisilicon/trng/trng.c
-@@ -1,234 +1,27 @@
- // SPDX-License-Identifier: GPL-2.0
- /* Copyright (c) 2019 HiSilicon Limited. */
- 
--#include <crypto/internal/rng.h>
- #include <linux/acpi.h>
--#include <linux/crypto.h>
- #include <linux/err.h>
- #include <linux/hw_random.h>
- #include <linux/io.h>
- #include <linux/iopoll.h>
- #include <linux/kernel.h>
--#include <linux/list.h>
- #include <linux/module.h>
--#include <linux/mutex.h>
- #include <linux/platform_device.h>
- #include <linux/random.h>
- 
- #define HISI_TRNG_REG		0x00F0
- #define HISI_TRNG_BYTES		4
- #define HISI_TRNG_QUALITY	512
--#define HISI_TRNG_VERSION	0x01B8
--#define HISI_TRNG_VER_V1	GENMASK(31, 0)
- #define SLEEP_US		10
- #define TIMEOUT_US		10000
--#define SW_DRBG_NUM_SHIFT	2
--#define SW_DRBG_KEY_BASE	0x082C
--#define SW_DRBG_SEED(n)         (SW_DRBG_KEY_BASE - ((n) << SW_DRBG_NUM_SHIFT))
--#define SW_DRBG_SEED_REGS_NUM	12
--#define SW_DRBG_SEED_SIZE	48
--#define SW_DRBG_BLOCKS		0x0830
--#define SW_DRBG_INIT		0x0834
--#define SW_DRBG_GEN		0x083c
--#define SW_DRBG_STATUS		0x0840
--#define SW_DRBG_BLOCKS_NUM	4095
--#define SW_DRBG_DATA_BASE	0x0850
--#define SW_DRBG_DATA_NUM	4
--#define SW_DRBG_DATA(n)		(SW_DRBG_DATA_BASE - ((n) << SW_DRBG_NUM_SHIFT))
--#define SW_DRBG_BYTES		16
--#define SW_DRBG_ENABLE_SHIFT	12
--#define SEED_SHIFT_24		24
--#define SEED_SHIFT_16		16
--#define SEED_SHIFT_8		8
--#define SW_MAX_RANDOM_BYTES	65520
--
--struct hisi_trng_list {
--	struct mutex lock;
--	struct list_head list;
--	bool is_init;
--};
- 
- struct hisi_trng {
- 	void __iomem *base;
--	struct hisi_trng_list *trng_list;
--	struct list_head list;
- 	struct hwrng rng;
--	u32 ver;
--	u32 ctx_num;
--	/* The bytes of the random number generated since the last seeding. */
--	u32 random_bytes;
--	struct mutex lock;
--};
--
--struct hisi_trng_ctx {
--	struct hisi_trng *trng;
- };
- 
--static atomic_t trng_active_devs;
--static struct hisi_trng_list trng_devices;
--static int hisi_trng_read(struct hwrng *rng, void *buf, size_t max, bool wait);
--
--static int hisi_trng_set_seed(struct hisi_trng *trng, const u8 *seed)
--{
--	u32 val, seed_reg, i;
--	int ret;
--
--	writel(0x0, trng->base + SW_DRBG_BLOCKS);
--
--	for (i = 0; i < SW_DRBG_SEED_SIZE;
--	     i += SW_DRBG_SEED_SIZE / SW_DRBG_SEED_REGS_NUM) {
--		val = seed[i] << SEED_SHIFT_24;
--		val |= seed[i + 1UL] << SEED_SHIFT_16;
--		val |= seed[i + 2UL] << SEED_SHIFT_8;
--		val |= seed[i + 3UL];
--
--		seed_reg = (i >> SW_DRBG_NUM_SHIFT) % SW_DRBG_SEED_REGS_NUM;
--		writel(val, trng->base + SW_DRBG_SEED(seed_reg));
--	}
--
--	writel(SW_DRBG_BLOCKS_NUM | (0x1 << SW_DRBG_ENABLE_SHIFT),
--	       trng->base + SW_DRBG_BLOCKS);
--	writel(0x1, trng->base + SW_DRBG_INIT);
--	ret = readl_relaxed_poll_timeout(trng->base + SW_DRBG_STATUS,
--					 val, val & BIT(0), SLEEP_US, TIMEOUT_US);
--	if (ret) {
--		pr_err("failed to init trng(%d)\n", ret);
--		return -EIO;
--	}
--
--	trng->random_bytes = 0;
--
--	return 0;
--}
--
--static int hisi_trng_seed(struct crypto_rng *tfm, const u8 *seed,
--			  unsigned int slen)
--{
--	struct hisi_trng_ctx *ctx = crypto_rng_ctx(tfm);
--	struct hisi_trng *trng = ctx->trng;
--	int ret;
--
--	if (slen < SW_DRBG_SEED_SIZE) {
--		pr_err("slen(%u) is not matched with trng(%d)\n", slen,
--			SW_DRBG_SEED_SIZE);
--		return -EINVAL;
--	}
--
--	mutex_lock(&trng->lock);
--	ret = hisi_trng_set_seed(trng, seed);
--	mutex_unlock(&trng->lock);
--
--	return ret;
--}
--
--static int hisi_trng_reseed(struct hisi_trng *trng)
--{
--	u8 seed[SW_DRBG_SEED_SIZE];
--	int size;
--
--	if (!trng->random_bytes)
--		return 0;
--
--	size = hisi_trng_read(&trng->rng, seed, SW_DRBG_SEED_SIZE, false);
--	if (size != SW_DRBG_SEED_SIZE)
--		return -EIO;
--
--	return hisi_trng_set_seed(trng, seed);
--}
--
--static int hisi_trng_get_bytes(struct hisi_trng *trng, u8 *dstn, unsigned int dlen)
--{
--	u32 data[SW_DRBG_DATA_NUM];
--	u32 currsize = 0;
--	u32 val = 0;
--	int ret;
--	u32 i;
--
--	ret = hisi_trng_reseed(trng);
--	if (ret)
--		return ret;
--
--	do {
--		ret = readl_relaxed_poll_timeout(trng->base + SW_DRBG_STATUS,
--						 val, val & BIT(1), SLEEP_US, TIMEOUT_US);
--		if (ret) {
--			pr_err("failed to generate random number(%d)!\n", ret);
--			break;
--		}
--
--		for (i = 0; i < SW_DRBG_DATA_NUM; i++)
--			data[i] = readl(trng->base + SW_DRBG_DATA(i));
--
--		if (dlen - currsize >= SW_DRBG_BYTES) {
--			memcpy(dstn + currsize, data, SW_DRBG_BYTES);
--			currsize += SW_DRBG_BYTES;
--		} else {
--			memcpy(dstn + currsize, data, dlen - currsize);
--			currsize = dlen;
--		}
--
--		trng->random_bytes += SW_DRBG_BYTES;
--		writel(0x1, trng->base + SW_DRBG_GEN);
--	} while (currsize < dlen);
--
--	return ret;
--}
--
--static int hisi_trng_generate(struct crypto_rng *tfm, const u8 *src,
--			      unsigned int slen, u8 *dstn, unsigned int dlen)
--{
--	struct hisi_trng_ctx *ctx = crypto_rng_ctx(tfm);
--	struct hisi_trng *trng = ctx->trng;
--	unsigned int currsize = 0;
--	unsigned int block_size;
--	int ret;
--
--	if (!dstn || !dlen) {
--		pr_err("output is error, dlen %u!\n", dlen);
--		return -EINVAL;
--	}
--
--	do {
--		block_size = min_t(unsigned int, dlen - currsize, SW_MAX_RANDOM_BYTES);
--		mutex_lock(&trng->lock);
--		ret = hisi_trng_get_bytes(trng, dstn + currsize, block_size);
--		mutex_unlock(&trng->lock);
--		if (ret)
--			return ret;
--		currsize += block_size;
--	} while (currsize < dlen);
--
--	return 0;
--}
--
--static int hisi_trng_init(struct crypto_tfm *tfm)
--{
--	struct hisi_trng_ctx *ctx = crypto_tfm_ctx(tfm);
--	struct hisi_trng *trng;
--	u32 ctx_num = ~0;
--
--	mutex_lock(&trng_devices.lock);
--	list_for_each_entry(trng, &trng_devices.list, list) {
--		if (trng->ctx_num < ctx_num) {
--			ctx_num = trng->ctx_num;
--			ctx->trng = trng;
--		}
--	}
--	ctx->trng->ctx_num++;
--	mutex_unlock(&trng_devices.lock);
--
--	return 0;
--}
--
--static void hisi_trng_exit(struct crypto_tfm *tfm)
--{
--	struct hisi_trng_ctx *ctx = crypto_tfm_ctx(tfm);
--
--	mutex_lock(&trng_devices.lock);
--	ctx->trng->ctx_num--;
--	mutex_unlock(&trng_devices.lock);
--}
--
- static int hisi_trng_read(struct hwrng *rng, void *buf, size_t max, bool wait)
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -1073,7 +1073,9 @@ static void uvc_video_stats_stop(struct
+  * uvc_video_decode_end will never be called with a NULL buffer.
+  */
+ static int uvc_video_decode_start(struct uvc_streaming *stream,
+-		struct uvc_buffer *buf, const u8 *data, int len)
++				  struct uvc_buffer *buf,
++				  struct uvc_buffer *meta_buf,
++				  const u8 *data, int len)
  {
- 	struct hisi_trng *trng;
-@@ -260,42 +53,6 @@ static int hisi_trng_read(struct hwrng *rng, void *buf, size_t max, bool wait)
- 	return currsize;
- }
+ 	u8 fid;
  
--static struct rng_alg hisi_trng_alg = {
--	.generate = hisi_trng_generate,
--	.seed =	hisi_trng_seed,
--	.seedsize = SW_DRBG_SEED_SIZE,
--	.base = {
--		.cra_name = "stdrng",
--		.cra_driver_name = "hisi_stdrng",
--		.cra_priority = 300,
--		.cra_ctxsize = sizeof(struct hisi_trng_ctx),
--		.cra_module = THIS_MODULE,
--		.cra_init = hisi_trng_init,
--		.cra_exit = hisi_trng_exit,
--	},
--};
--
--static void hisi_trng_add_to_list(struct hisi_trng *trng)
--{
--	mutex_lock(&trng_devices.lock);
--	list_add_tail(&trng->list, &trng_devices.list);
--	mutex_unlock(&trng_devices.lock);
--}
--
--static int hisi_trng_del_from_list(struct hisi_trng *trng)
--{
--	int ret = -EBUSY;
--
--	mutex_lock(&trng_devices.lock);
--	if (!trng->ctx_num) {
--		list_del(&trng->list);
--		ret = 0;
--	}
--	mutex_unlock(&trng_devices.lock);
--
--	return ret;
--}
--
- static int hisi_trng_probe(struct platform_device *pdev)
- {
- 	struct hisi_trng *trng;
-@@ -305,70 +62,20 @@ static int hisi_trng_probe(struct platform_device *pdev)
- 	if (!trng)
- 		return -ENOMEM;
+@@ -1140,6 +1142,8 @@ static int uvc_video_decode_start(struct
  
--	platform_set_drvdata(pdev, trng);
--
- 	trng->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(trng->base))
- 		return PTR_ERR(trng->base);
+ 		/* TODO: Handle PTS and SCR. */
+ 		buf->state = UVC_BUF_STATE_ACTIVE;
++		if (meta_buf)
++			meta_buf->state = UVC_BUF_STATE_ACTIVE;
+ 	}
  
--	trng->ctx_num = 0;
--	trng->random_bytes = SW_MAX_RANDOM_BYTES;
--	mutex_init(&trng->lock);
--	trng->ver = readl(trng->base + HISI_TRNG_VERSION);
--	if (!trng_devices.is_init) {
--		INIT_LIST_HEAD(&trng_devices.list);
--		mutex_init(&trng_devices.lock);
--		trng_devices.is_init = true;
--	}
--
--	hisi_trng_add_to_list(trng);
--	if (trng->ver != HISI_TRNG_VER_V1 &&
--	    atomic_inc_return(&trng_active_devs) == 1) {
--		ret = crypto_register_rng(&hisi_trng_alg);
--		if (ret) {
--			dev_err(&pdev->dev,
--				"failed to register crypto(%d)\n", ret);
--			atomic_dec_return(&trng_active_devs);
--			goto err_remove_from_list;
--		}
--	}
--
- 	trng->rng.name = pdev->name;
- 	trng->rng.read = hisi_trng_read;
- 	trng->rng.quality = HISI_TRNG_QUALITY;
-+
- 	ret = devm_hwrng_register(&pdev->dev, &trng->rng);
--	if (ret) {
-+	if (ret)
- 		dev_err(&pdev->dev, "failed to register hwrng: %d!\n", ret);
--		goto err_crypto_unregister;
--	}
--
--	return ret;
--
--err_crypto_unregister:
--	if (trng->ver != HISI_TRNG_VER_V1 &&
--	    atomic_dec_return(&trng_active_devs) == 0)
--		crypto_unregister_rng(&hisi_trng_alg);
--
--err_remove_from_list:
--	hisi_trng_del_from_list(trng);
- 	return ret;
- }
+ 	/* Mark the buffer as done if we're at the beginning of a new frame.
+@@ -1332,7 +1336,7 @@ static void uvc_video_decode_meta(struct
+ 	ktime_t time;
+ 	const u8 *scr;
  
--static int hisi_trng_remove(struct platform_device *pdev)
--{
--	struct hisi_trng *trng = platform_get_drvdata(pdev);
--
--	/* Wait until the task is finished */
--	while (hisi_trng_del_from_list(trng))
--		;
--
--	if (trng->ver != HISI_TRNG_VER_V1 &&
--	    atomic_dec_return(&trng_active_devs) == 0)
--		crypto_unregister_rng(&hisi_trng_alg);
--
--	return 0;
--}
--
- static const struct acpi_device_id hisi_trng_acpi_match[] = {
- 	{ "HISI02B3", 0 },
- 	{ }
-@@ -377,7 +84,6 @@ MODULE_DEVICE_TABLE(acpi, hisi_trng_acpi_match);
+-	if (!meta_buf || length == 2)
++	if (length <= 2 || !meta_buf || meta_buf->state != UVC_BUF_STATE_ACTIVE)
+ 		return;
  
- static struct platform_driver hisi_trng_driver = {
- 	.probe		= hisi_trng_probe,
--	.remove         = hisi_trng_remove,
- 	.driver		= {
- 		.name	= "hisi-trng-v2",
- 		.acpi_match_table = ACPI_PTR(hisi_trng_acpi_match),
--- 
-2.53.0
-
+ 	has_pts = mem[1] & UVC_STREAM_PTS;
+@@ -1449,7 +1453,7 @@ static void uvc_video_decode_isoc(struct
+ 		/* Decode the payload header. */
+ 		mem = urb->transfer_buffer + urb->iso_frame_desc[i].offset;
+ 		do {
+-			ret = uvc_video_decode_start(stream, buf, mem,
++			ret = uvc_video_decode_start(stream, buf, meta_buf, mem,
+ 				urb->iso_frame_desc[i].actual_length);
+ 			if (ret == -EAGAIN)
+ 				uvc_video_next_buffers(stream, &buf, &meta_buf);
+@@ -1497,7 +1501,8 @@ static void uvc_video_decode_bulk(struct
+ 	 */
+ 	if (stream->bulk.header_size == 0 && !stream->bulk.skip_payload) {
+ 		do {
+-			ret = uvc_video_decode_start(stream, buf, mem, len);
++			ret = uvc_video_decode_start(stream, buf, meta_buf, mem,
++						     len);
+ 			if (ret == -EAGAIN)
+ 				uvc_video_next_buffers(stream, &buf, &meta_buf);
+ 		} while (ret == -EAGAIN);
 
 
