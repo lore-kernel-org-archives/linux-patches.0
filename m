@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891C646EF71;
-	Tue, 21 Jul 2026 17:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF5046EF71;
+	Tue, 21 Jul 2026 17:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656648; cv=none; b=XVcQOCqWJK1t9RElcCIhJL1FjD6+G1VhPbCU3zBd/pMIcw31GXEhSpjJ9I20mO0aJkIn8NqVdiEBjjonAiuuP4lxT0piK8yX/oT0waVU0hCNUFUjDlhN0sZecqb9nugvVeFY+Z8cSMSf4L/7BdgwrWUISbHZkC9Q4bGSEgkB84o=
+	t=1784656651; cv=none; b=gAgOb+5000hAAwT5SOgumrO4EGLoqDxLOz2OGNwAOsg9jEjAGOGKgsXKoky3DVspqqjNP+uu9c++c/ejaUi4uZwpsAE9srx60LhGsEr7hoHaKucHmoNKpyPReq0c2LrmblZXE04IqFMxBHSfnQHO7ZJLTC18kIiWr1QbiMtbKsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656648; c=relaxed/simple;
-	bh=KITh/F1LIhTEXeoi14K52HGdXjL/dZYQln/xlTOT5F0=;
+	s=arc-20240116; t=1784656651; c=relaxed/simple;
+	bh=jY7YGNxQus7XcGtyN6gU7vhnzS5JFUzj5HgqSRnEMdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uMzbVtG2cyPYUU9u8/QP/u74y5Kn4Fo8EhSLYE9KDVXxf892QOzC+IR8AeHnSrsUZ91mskFwb+60Bq4TLDQzLHX+eM/LXkya/cTDNKGH1R45oCeUxvWAtXXU2I/RHDQempO4tMhhdSXmGasbCwinwPcxfnXEdQ2bcZ5/TxMREeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Y3RRgYT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fs9m/3iGi498kag+hHzh0JGCVu1/PEcGkHdDq2h32Hr5KJUsvfoniHzPhFXDtOXjNt7ws3i1HntaIEzF31bA0dBKjPJr9S14S5zwwZutJchi7aCpVJY2Ey3MmosdXD48e3Rrsxj+CiGeDIX9hw/6NzBqcdTuSss0CadYKhAPz9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BFD0LMx9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Y3RRgYT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB0B91F000E9;
-	Tue, 21 Jul 2026 17:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFD0LMx9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8861F00A3D;
+	Tue, 21 Jul 2026 17:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656647;
-	bh=qDRaa1rs/8LJxxyqaVDh8oKub/B0qPyjQqAYdnKScQw=;
+	s=korg; t=1784656650;
+	bh=+G4iQMsBpHyV/nPDkQRM4Atec3FyCqvVpT1YA1lP/+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Y3RRgYTQJjCFRa8G5PsXGbnwvuLFxefoI/3MUi+FUHnT1zLck2dsm46h42H7DOaj
-	 bNIhm5GK3HHLDZNXrT2bNSLqMvmEgP1YowDxmyQ/yqgIrLbLDUtHb5RZcZtsvkhRQo
-	 U6aOp6puCQyHG8xLvlXrE5rw5Wfx9jin+3DFi278=
+	b=BFD0LMx9T/N0pcHcNvzFosR/9r8DJIVAN2BwD/+yr76kRoJJCACO2TIFlT/cctoet
+	 NzxeVjrotZdEGa0I5jNbbD+91mjfna+G8DNTR/bfG09E/7BJhT5ScKZ9XOYh2X6xGi
+	 tOzydOyf4ObF5y8whNLZjT6YSnKphM7T03HpDW+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Qu Wenruo <wqu@suse.com>,
 	Boris Burkov <boris@bur.io>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0423/1611] btrfs: zoned: dont account data relocation space-info in statfs free space
-Date: Tue, 21 Jul 2026 17:08:59 +0200
-Message-ID: <20260721152524.782765936@linuxfoundation.org>
+Subject: [PATCH 6.18 0424/1611] Revert "btrfs: fix the file offset calculation inside btrfs_decompress_buf2page()"
+Date: Tue, 21 Jul 2026 17:09:00 +0200
+Message-ID: <20260721152524.806109911@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,40 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 52416a27aabc43eab3792fd0ca9f5dabeab58f31 ]
+[ Upstream commit 0279bed34c22dd5ebff12e5af8ef940de93c5523 ]
 
-Don't account the free space in a data relocation space-info sub-group as
-usable free space in statfs.
+It seems that af566bdaff54 was tested against a tree which did not
+contain commit 12851bd921d4 ("fs: Turn page_offset() into a wrapper
+around folio_pos()).  Unfortunately it has a bug of its own; on 32-bit
+systems, shifting by PAGE_SHIFT will overflow on files larger than 4GiB.
+Since page_offset() is now fixed, just revert af566bdaff54.
 
-This is misleading as no user allocations can be made in this space-info
-sub-group. It is only a target for relocation.
-
-Fixes: f92ee31e031c ("btrfs: introduce btrfs_space_info sub-group")
+Fixes: af566bdaff54 (btrfs: fix the file offset calculation inside btrfs_decompress_buf2page())
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
 Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Tested-by: Boris Burkov <boris@bur.io>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/super.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/compression.c | 18 +-----------------
+ 1 file changed, 1 insertion(+), 17 deletions(-)
 
-diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
-index 35903afdd1e5b1..736575f9251794 100644
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -1741,7 +1741,8 @@ static int btrfs_statfs(struct dentry *dentry, struct kstatfs *buf)
- 	int mixed = 0;
+diff --git a/fs/btrfs/compression.c b/fs/btrfs/compression.c
+index 8c3899832a1aa1..fbf1ff5965994c 100644
+--- a/fs/btrfs/compression.c
++++ b/fs/btrfs/compression.c
+@@ -1187,22 +1187,6 @@ void __cold btrfs_exit_compress(void)
+ 	bioset_exit(&btrfs_compressed_bioset);
+ }
  
- 	list_for_each_entry(found, &fs_info->space_info, list) {
--		if (found->flags & BTRFS_BLOCK_GROUP_DATA) {
-+		if (found->flags & BTRFS_BLOCK_GROUP_DATA &&
-+		    found->subgroup_id != BTRFS_SUB_GROUP_DATA_RELOC) {
- 			int i;
+-/*
+- * The bvec is a single page bvec from a bio that contains folios from a filemap.
+- *
+- * Since the folio may be a large one, and if the bv_page is not a head page of
+- * a large folio, then page->index is unreliable.
+- *
+- * Thus we need this helper to grab the proper file offset.
+- */
+-static u64 file_offset_from_bvec(const struct bio_vec *bvec)
+-{
+-	const struct page *page = bvec->bv_page;
+-	const struct folio *folio = page_folio(page);
+-
+-	return (page_pgoff(folio, page) << PAGE_SHIFT) + bvec->bv_offset;
+-}
+-
+ /*
+  * Copy decompressed data from working buffer to pages.
+  *
+@@ -1255,7 +1239,7 @@ int btrfs_decompress_buf2page(const char *buf, u32 buf_len,
+ 		 * cb->start may underflow, but subtracting that value can still
+ 		 * give us correct offset inside the full decompressed extent.
+ 		 */
+-		bvec_offset = file_offset_from_bvec(&bvec) - cb->start;
++		bvec_offset = page_offset(bvec.bv_page) + bvec.bv_offset - cb->start;
  
- 			total_free_data += found->disk_total - found->disk_used;
+ 		/* Haven't reached the bvec range, exit */
+ 		if (decompressed + buf_len <= bvec_offset)
 -- 
 2.53.0
 
