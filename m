@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA5744330D;
-	Tue, 21 Jul 2026 22:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F74D44330D;
+	Tue, 21 Jul 2026 22:18:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672324; cv=none; b=fcd9DigXfJCZDkfJirWfgn/+OTDU3dKzQV1dh5O0B/Nhrxpy4V98GeazHKl/Ofnr+Gm+SLE0cbhWALcvTZLyljF16H3rP3X430EIsrnXVvifupP535NUuZQLhRHzCJAo0cyg8IByyZoF1XFWNG04E/wc1IEBwkqyAppf9L3OH1Y=
+	t=1784672327; cv=none; b=Svaj1xrtYSElCPJk8mosXw+TVS4fXUxdfZcSoYAKFTLUL/wKregCW3J2H+B4R5KxXQwUC7uKeu2IH/IqYHLgwSjbldeGuqvC+bOCIFw9ZQ+LDnDVp5X+84elv4d/iAOET7H9IWr20CZrWFvVreui0E84s79mJwgj3tZCbfqzR64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672324; c=relaxed/simple;
-	bh=wcJLw/kfPFu4w9UuArJT49PyMvOeDYr1nEWcVnI863o=;
+	s=arc-20240116; t=1784672327; c=relaxed/simple;
+	bh=+dltU+MTe9KX/3oay4vYSppZ6Sv/Gx4oCMav8FW5RHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jy0cacaMTUPDE6Ou3qHuLtCVVMkmXfdNSD79pHGzFQl44PI9/K6EW7tFVKNTdalKFL8I4tIHWu6QMz6GUFcL+q5E/6kVWgsff5wND05q3UoGb2CO3A2Oeo5XhMDh/ErTHM76Z6zv1vQAoNLC2+YFDXgN5W/AChvJftkVPVmsxGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FoGceG4Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M9UFuqkF3A9DwMscs9eFNOM+NqPqhy2ZWDKzjZbYdbs1W1EenUohBq40+fyceH3ZR9M6/U/I6oRHqZFBDHogG/n1dpAdU/u1rGT8g1Umy6k1oFQhlUpOcAhhsRQYSLXajJRXRBI7W57OXaAj3Wp7pl4BCp3G9FqGPcHR8EVv5/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ipcs5dFQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FoGceG4Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0FC61F000E9;
-	Tue, 21 Jul 2026 22:18:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ipcs5dFQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 957971F00A3A;
+	Tue, 21 Jul 2026 22:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672322;
-	bh=TEmPsi9broEbgIn/ZShJsOASZxOged3Ud15uCVxYgKo=;
+	s=korg; t=1784672325;
+	bh=cubVAU55GtCw1/Q66H0loUOkMve8a41Yk4CK9py+O78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FoGceG4ZFbqZPr8TJh5/koCBYFRn1Q4tjhpvVEMOz9FqUZfhit6DpMuSrduRKCAh9
-	 WqYdbt96C4BRHb2JvX8fy2S+ZsSEyniagHy1QLy40K2ga6tJPEVRVo2ezW+7TT2fzw
-	 ryaFn06zcSOh/HRCxZh42V2U6WLw4DFPQIm6pJu0=
+	b=Ipcs5dFQMj2dfxog6L3HXa03ci+5lRqKC6/khBW3dBAb1EZdpQJXKlp6YgO04Ihzk
+	 yQvircaRpyfiExaG5SuIKktpKz1SDBcFMQ7tm1QMLwc3Ut3bBso2foRns9Sixkgpai
+	 Nw7QSZ7Fh9UTP3kcVGfT29xnkhxziq2DPLqhugJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 5.15 579/843] netfilter: bridge: fix stale prevhdr pointer in br_ip6_fragment()
-Date: Tue, 21 Jul 2026 17:23:34 +0200
-Message-ID: <20260721152419.071860675@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>
+Subject: [PATCH 5.15 580/843] gpu: host1x: Fix device reference leak in host1x_device_parse_dt() error path
+Date: Tue, 21 Jul 2026 17:23:35 +0200
+Message-ID: <20260721152419.094932793@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,78 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 86f3ce81dd2b4b0aa2c3016c989a943e4b1b643d upstream.
+commit e75717f9aec04355777be41070890c6a815c76df upstream.
 
-br_ip6_fragment() gets prevhdr, a pointer into the skb head, from
-ip6_find_1stfragopt(), then calls skb_checksum_help().  For a cloned skb
-skb_checksum_help() reallocates the head via pskb_expand_head(), leaving
-prevhdr dangling.  It is later dereferenced in ip6_frag_next(), causing a
-use-after-free write.
+After device_initialize(), the embedded struct device in struct
+host1x_device should be released through the device core with
+put_device().
 
-Save prevhdr's offset before skb_checksum_help() and recompute it after,
-like commit ef0efcd3bd3f ("ipv6: Fix dangling pointer when ipv6
-fragment").
+In host1x_device_add(), if host1x_device_parse_dt() fails, the current
+error path frees the object directly with kfree(device). That bypasses
+the normal device lifetime handling and leaks the reference held on the
+embedded struct device.
 
-  BUG: KASAN: slab-use-after-free in ip6_frag_next (net/ipv6/ip6_output.c:857)
-  Write of size 1 at addr ffff888013ff5016 by task exploit/141
-  Call Trace:
-   ...
-   kasan_report (mm/kasan/report.c:595)
-   ip6_frag_next (net/ipv6/ip6_output.c:857)
-   br_ip6_fragment (net/ipv6/netfilter.c:212)
-   nf_ct_bridge_post (net/bridge/netfilter/nf_conntrack_bridge.c:407)
-   nf_hook_slow (net/netfilter/core.c:619)
-   br_forward_finish (net/bridge/br_forward.c:66)
-   __br_forward (net/bridge/br_forward.c:115)
-   maybe_deliver (net/bridge/br_forward.c:191)
-   br_flood (net/bridge/br_forward.c:245)
-   br_handle_frame_finish (net/bridge/br_input.c:229)
-   br_handle_frame (net/bridge/br_input.c:442)
-   ...
-   packet_sendmsg (net/packet/af_packet.c:3114)
-   ...
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  Kernel panic - not syncing: Fatal exception in interrupt
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
 
-Fixes: 764dd163ac92 ("netfilter: nf_conntrack_bridge: add support for IPv6")
+Fix this by using put_device() in the host1x_device_parse_dt() failure
+path.
+
+Fixes: f4c5cf88fbd50 ("gpu: host1x: Provide a proper struct bus_type")
 Cc: stable@vger.kernel.org
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Acked-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260413141526.2961841-1-lgs201920130244@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/netfilter.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/host1x/bus.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/netfilter.c
-+++ b/net/ipv6/netfilter.c
-@@ -130,7 +130,7 @@ int br_ip6_fragment(struct net *net, str
- 	ktime_t tstamp = skb->tstamp;
- 	struct ip6_frag_state state;
- 	u8 *prevhdr, nexthdr = 0;
--	unsigned int mtu, hlen;
-+	unsigned int mtu, hlen, nexthdr_offset;
- 	int hroom, err = 0;
- 	__be32 frag_id;
+--- a/drivers/gpu/host1x/bus.c
++++ b/drivers/gpu/host1x/bus.c
+@@ -473,7 +473,7 @@ static int host1x_device_add(struct host
  
-@@ -139,6 +139,7 @@ int br_ip6_fragment(struct net *net, str
- 		goto blackhole;
- 	hlen = err;
- 	nexthdr = *prevhdr;
-+	nexthdr_offset = prevhdr - skb_network_header(skb);
+ 	err = host1x_device_parse_dt(device, driver);
+ 	if (err < 0) {
+-		kfree(device);
++		put_device(&device->dev);
+ 		return err;
+ 	}
  
- 	mtu = skb->dev->mtu;
- 	if (frag_max_size > mtu ||
-@@ -157,6 +158,7 @@ int br_ip6_fragment(struct net *net, str
- 	    (err = skb_checksum_help(skb)))
- 		goto blackhole;
- 
-+	prevhdr = skb_network_header(skb) + nexthdr_offset;
- 	hroom = LL_RESERVED_SPACE(skb->dev);
- 	if (skb_has_frag_list(skb)) {
- 		unsigned int first_len = skb_pagelen(skb);
 
 
