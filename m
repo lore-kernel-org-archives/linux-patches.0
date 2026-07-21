@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECA5472558;
-	Tue, 21 Jul 2026 20:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B416472553;
+	Tue, 21 Jul 2026 20:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664194; cv=none; b=R/LNbTwaYd86Tc1ZE4v62Ez1HQQYZzQzF5KfY6J/jz08wOezL6TU4km4ghVo9sw4+DFwomRZVXHPgnBWELqjBpMc2ggAKXzAt3lvfkNpvDO7ejr0m3t1vCFkejCFR/IRGa0j+tRhHCmfeyDdhZrYxOy2uXOnNXVpeDuwO4TK8gA=
+	t=1784664198; cv=none; b=J7uWQV+kFKswD9/ksPWCyFcEKnHW6eYaIM92W6gqkzSMujngVLPj4TeXK4/kqf9LqipcsBs+1wH7K94N3gfiTz2beurFm2ViwxoKkWuefSeeEAwvf1eJGQFw0URCJ2JPvogGc6+Djrs6X4OvMoRf9Ki3Wz1HhNr/pWumuesWPXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664194; c=relaxed/simple;
-	bh=/yn3mUjOQ0lJbNE/4G5bS0JCg6WrT8okiqSE/4R5Aq0=;
+	s=arc-20240116; t=1784664198; c=relaxed/simple;
+	bh=ff9zqizpBHp9FfRv12bji5ol2IVU7HFigpqDvwCL9aI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iZ1E4DpJhsxrk4LPUvvV1PPdcXxpt+3bcUXze8Rtc0x18ZAncGt5243Pb5mGTChDl1IT41WacrMcJGsf1xijGJ+MB1DLnuppsxOhxiZExlkcYwO4UoCoBfV/CBbMeLZ3DnPfDxYD20MZhO5e0BC130ijXUkgFcXWqDNdlWpH5Sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hfj6gucl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NFkM53NbpVjWGkws3foglvYTnrvfcUNM8Lz+qQj3ceoovTn83HzQVR4ie/OKvh0wzzkGwwhIt7+xb825HwA5YYfWZryhXrvD2Qe1EURXrwjhtHP4UX/M9eiqTYEEwb6/M+LGDH/5XbHpGMiBlf+FmEp2aTkPdAbLaV4pT+VyJIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YcwxEUQd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hfj6gucl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F6E1F00A3A;
-	Tue, 21 Jul 2026 20:03:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YcwxEUQd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D119D1F000E9;
+	Tue, 21 Jul 2026 20:03:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664191;
-	bh=0qNuwHPwYN2K5/4mzsyHYPfmAxAKEyvGdk2gi6CYERs=;
+	s=korg; t=1784664194;
+	bh=F+98DMHViV2WJZa4taQ1bYhlQCrvICUONq7+vgL0M2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hfj6guclvfaLFCWVo3oel/Uiq5rklSRBmrf1VZ2LzMInX2jNC8woRva6CRinLpGxX
-	 pOsIyiHoncC1E1H2CaXY3y1EhDjyvp0MvpcmqXFpFHYnFlNlgDSraHEICevY0cSQlp
-	 hHxhN/jjoyobvafcrtUDDnqCROqb5UHxvdhLpTWk=
+	b=YcwxEUQdftGapCRwGmrRRPjgAED16/pdd7ueiPT/XraDrSTU3mbGjRhLCfmHU+XJ8
+	 G/0GczDKVeL1UUmhQyfQ/2iIHdRHydebf4y/r3hWojJ1v/yFq46CxtUfAhfYNfrLiY
+	 8wb2WzM+t6DcyJDcgWfQ0ipr1yHInHPppse2ZUhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Huth <thuth@redhat.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 6.12 1105/1276] selftests/landlock: Fix screwed up pointers in the scoped_signal_test
-Date: Tue, 21 Jul 2026 17:25:48 +0200
-Message-ID: <20260721152510.718641839@linuxfoundation.org>
+	Sven Eckelmann <sven@narfation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 1065/1276] batman-adv: clean untagged VLAN on netdev registration failure
+Date: Tue, 21 Jul 2026 17:25:08 +0200
+Message-ID: <20260721152509.819438937@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -44,188 +44,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Huth <thuth@redhat.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit d793186aa3bb833c878ae6826c87e62c843afaa3 upstream.
+commit 8669a550c752d86baebc5fdc83b8ff35c4372c0e upstream.
 
-The scoped_signal_test uses pthread_join(..., (void **)&ret)) in
-a couple of places, i.e. the return value of the thread is stored
-in the shape of a "void *" into the memory location of &ret.
-Pointers are 64-bit on modern computers, but the ret variable is
-declared as a simple "enum thread_return" which is only 32 bits.
-So the pthread_join() will overflow the ret variable by 4 byte.
+When an mesh interface is registered, it creates an untagged struct
+batadv_meshif_vlan on top of it via the NETDEV_REGISTER notifier. But in
+this process, another receiver of this notification can veto the
+registration. The netdev registration will be aborted because of this veto.
 
-The problem is very visible on big endian systems like s390x
-where the test is failing: The least significant byte that carries
-the return code of the thread is not written into the ret variable
-here, but somewhere else in the stack frame, so the comparison
-for the right return code is failing here.
+The register_netdevice() call will try to clean up the net_device using
+unregister_netdevice_queue() - which only uses the .priv_destructor to
+free private resources. In this situation, .dellink will not be called.
 
-Fix it by getting rid of the enum and defining the THREAD_* constants
-and "ret" variables as proper "void *" pointers. This way we can
-also get rid of some ugly (void *) castings in a couple of spots.
+The cleanup of the untagged batadv_meshif_vlan must thefore be done in the
+destructor to avoid a leak of this object.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Link: https://patch.msgid.link/20260709164340.339656-1-thuth@redhat.com
 Cc: stable@vger.kernel.org
-Fixes: c8994965013e ("selftests/landlock: Test signal scoping for threads")
-[mic: Add clang-format markups]
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5d2c05b21337 ("batman-adv: add per VLAN interface attribute framework")
+[ switch to old "mesh_iface" name "soft_iface" ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/landlock/scoped_signal_test.c |   46 +++++++++---------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ net/batman-adv/main.c           |    8 ++++++++
+ net/batman-adv/soft-interface.c |   13 ++-----------
+ net/batman-adv/soft-interface.h |    2 ++
+ 3 files changed, 12 insertions(+), 11 deletions(-)
 
---- a/tools/testing/selftests/landlock/scoped_signal_test.c
-+++ b/tools/testing/selftests/landlock/scoped_signal_test.c
-@@ -249,12 +249,12 @@ TEST_F(scoped_domains, check_access_sign
- 		_metadata->exit_code = KSFT_FAIL;
- }
- 
--enum thread_return {
--	THREAD_INVALID = 0,
--	THREAD_SUCCESS = 1,
--	THREAD_ERROR = 2,
--	THREAD_TEST_FAILED = 3,
--};
-+/* clang-format off */
-+#define THREAD_INVALID		((void *)0)
-+#define THREAD_SUCCESS		((void *)1)
-+#define THREAD_ERROR		((void *)2)
-+#define THREAD_TEST_FAILED	((void *)3)
-+/* clang-format on */
- 
- static void *thread_sync(void *arg)
+--- a/net/batman-adv/main.c
++++ b/net/batman-adv/main.c
+@@ -259,6 +259,7 @@ err_orig:
+ void batadv_mesh_free(struct net_device *soft_iface)
  {
-@@ -262,15 +262,15 @@ static void *thread_sync(void *arg)
- 	char buf;
+ 	struct batadv_priv *bat_priv = netdev_priv(soft_iface);
++	struct batadv_softif_vlan *vlan;
  
- 	if (read(pipe_read, &buf, 1) != 1)
--		return (void *)THREAD_ERROR;
-+		return THREAD_ERROR;
+ 	atomic_set(&bat_priv->mesh_state, BATADV_MESH_DEACTIVATING);
  
--	return (void *)THREAD_SUCCESS;
-+	return THREAD_SUCCESS;
- }
+@@ -274,6 +275,13 @@ void batadv_mesh_free(struct net_device
  
- TEST(signal_scoping_thread_before)
+ 	batadv_mcast_free(bat_priv);
+ 
++	/* destroy the "untagged" VLAN */
++	vlan = batadv_softif_vlan_get(bat_priv, BATADV_NO_FLAGS);
++	if (vlan) {
++		batadv_softif_destroy_vlan(bat_priv, vlan);
++		batadv_softif_vlan_put(vlan);
++	}
++
+ 	/* Free the TT and the originator tables only after having terminated
+ 	 * all the other depending components which may use these structures for
+ 	 * their purposes.
+--- a/net/batman-adv/soft-interface.c
++++ b/net/batman-adv/soft-interface.c
+@@ -606,8 +606,8 @@ int batadv_softif_create_vlan(struct bat
+  * @bat_priv: the bat priv with all the soft interface information
+  * @vlan: the object to remove
+  */
+-static void batadv_softif_destroy_vlan(struct batadv_priv *bat_priv,
+-				       struct batadv_softif_vlan *vlan)
++void batadv_softif_destroy_vlan(struct batadv_priv *bat_priv,
++				struct batadv_softif_vlan *vlan)
  {
- 	pthread_t no_sandbox_thread;
--	enum thread_return ret = THREAD_INVALID;
-+	void *ret = THREAD_INVALID;
- 	int thread_pipe[2];
- 
- 	drop_caps(_metadata);
-@@ -285,7 +285,7 @@ TEST(signal_scoping_thread_before)
- 	EXPECT_EQ(0, pthread_kill(no_sandbox_thread, 0));
- 	EXPECT_EQ(1, write(thread_pipe[1], ".", 1));
- 
--	EXPECT_EQ(0, pthread_join(no_sandbox_thread, (void **)&ret));
-+	EXPECT_EQ(0, pthread_join(no_sandbox_thread, &ret));
- 	EXPECT_EQ(THREAD_SUCCESS, ret);
- 
- 	EXPECT_EQ(0, close(thread_pipe[0]));
-@@ -295,7 +295,7 @@ TEST(signal_scoping_thread_before)
- TEST(signal_scoping_thread_after)
+ 	/* explicitly remove the associated TT local entry because it is marked
+ 	 * with the NOPURGE flag
+@@ -1103,22 +1103,13 @@ static int batadv_softif_newlink(struct
+ static void batadv_softif_destroy_netlink(struct net_device *soft_iface,
+ 					  struct list_head *head)
  {
- 	pthread_t scoped_thread;
--	enum thread_return ret = THREAD_INVALID;
-+	void *ret = THREAD_INVALID;
- 	int thread_pipe[2];
+-	struct batadv_priv *bat_priv = netdev_priv(soft_iface);
+ 	struct batadv_hard_iface *hard_iface;
+-	struct batadv_softif_vlan *vlan;
  
- 	drop_caps(_metadata);
-@@ -310,7 +310,7 @@ TEST(signal_scoping_thread_after)
- 	EXPECT_EQ(0, pthread_kill(scoped_thread, 0));
- 	EXPECT_EQ(1, write(thread_pipe[1], ".", 1));
- 
--	EXPECT_EQ(0, pthread_join(scoped_thread, (void **)&ret));
-+	EXPECT_EQ(0, pthread_join(scoped_thread, &ret));
- 	EXPECT_EQ(THREAD_SUCCESS, ret);
- 
- 	EXPECT_EQ(0, close(thread_pipe[0]));
-@@ -327,20 +327,20 @@ void *thread_setuid(void *ptr)
- 	char buf;
- 
- 	if (read(arg->pipe_read, &buf, 1) != 1)
--		return (void *)THREAD_ERROR;
-+		return THREAD_ERROR;
- 
- 	/* libc's setuid() should update all thread's credentials. */
- 	if (getuid() != arg->new_uid)
--		return (void *)THREAD_TEST_FAILED;
-+		return THREAD_TEST_FAILED;
- 
--	return (void *)THREAD_SUCCESS;
-+	return THREAD_SUCCESS;
- }
- 
- TEST(signal_scoping_thread_setuid)
- {
- 	struct thread_setuid_args arg;
- 	pthread_t no_sandbox_thread;
--	enum thread_return ret = THREAD_INVALID;
-+	void *ret = THREAD_INVALID;
- 	int pipe_parent[2];
- 	int prev_uid;
- 
-@@ -367,7 +367,7 @@ TEST(signal_scoping_thread_setuid)
- 	EXPECT_EQ(arg.new_uid, getuid());
- 	EXPECT_EQ(1, write(pipe_parent[1], ".", 1));
- 
--	EXPECT_EQ(0, pthread_join(no_sandbox_thread, (void **)&ret));
-+	EXPECT_EQ(0, pthread_join(no_sandbox_thread, &ret));
- 	EXPECT_EQ(THREAD_SUCCESS, ret);
- 
- 	clear_cap(_metadata, CAP_SETUID);
-@@ -688,20 +688,20 @@ static void *thread_setown_scoped(void *
- 	ruleset_fd =
- 		landlock_create_ruleset(&ruleset_attr, sizeof(ruleset_attr), 0);
- 	if (ruleset_fd < 0)
--		return (void *)THREAD_ERROR;
-+		return THREAD_ERROR;
- 	if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0) ||
- 	    landlock_restrict_self(ruleset_fd, 0)) {
- 		close(ruleset_fd);
--		return (void *)THREAD_ERROR;
-+		return THREAD_ERROR;
+ 	list_for_each_entry(hard_iface, &batadv_hardif_list, list) {
+ 		if (hard_iface->soft_iface == soft_iface)
+ 			batadv_hardif_disable_interface(hard_iface);
  	}
- 	close(ruleset_fd);
  
- 	/* Makes this process group own the SIGIO source. */
- 	if (fcntl(fd, F_SETSIG, SIGURG) || fcntl(fd, F_SETOWN, -getpgrp()) ||
- 	    fcntl(fd, F_SETFL, O_ASYNC))
--		return (void *)THREAD_ERROR;
-+		return THREAD_ERROR;
- 
--	return (void *)THREAD_SUCCESS;
-+	return THREAD_SUCCESS;
+-	/* destroy the "untagged" VLAN */
+-	vlan = batadv_softif_vlan_get(bat_priv, BATADV_NO_FLAGS);
+-	if (vlan) {
+-		batadv_softif_destroy_vlan(bat_priv, vlan);
+-		batadv_softif_vlan_put(vlan);
+-	}
+-
+ 	unregister_netdevice_queue(soft_iface, head);
  }
  
- /*
-@@ -723,7 +723,7 @@ TEST(sigio_to_pgid_self)
- {
- 	int trigger[2];
- 	pthread_t thread;
--	enum thread_return ret = THREAD_INVALID;
-+	void *ret = THREAD_INVALID;
- 	int i;
- 
- 	drop_caps(_metadata);
-@@ -743,7 +743,7 @@ TEST(sigio_to_pgid_self)
- 	 */
- 	ASSERT_EQ(0, pthread_create(&thread, NULL, thread_setown_scoped,
- 				    &trigger[0]));
--	ASSERT_EQ(0, pthread_join(thread, (void **)&ret));
-+	ASSERT_EQ(0, pthread_join(thread, &ret));
- 	ASSERT_EQ(THREAD_SUCCESS, ret);
- 
- 	/* Fans SIGURG out to the process group. */
+--- a/net/batman-adv/soft-interface.h
++++ b/net/batman-adv/soft-interface.h
+@@ -22,6 +22,8 @@ void batadv_interface_rx(struct net_devi
+ bool batadv_softif_is_valid(const struct net_device *net_dev);
+ extern struct rtnl_link_ops batadv_link_ops;
+ int batadv_softif_create_vlan(struct batadv_priv *bat_priv, unsigned short vid);
++void batadv_softif_destroy_vlan(struct batadv_priv *bat_priv,
++				struct batadv_softif_vlan *vlan);
+ void batadv_softif_vlan_release(struct kref *ref);
+ struct batadv_softif_vlan *batadv_softif_vlan_get(struct batadv_priv *bat_priv,
+ 						  unsigned short vid);
 
 
