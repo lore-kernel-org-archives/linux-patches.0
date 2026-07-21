@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C63415F14;
-	Tue, 21 Jul 2026 19:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7143ED3B2;
+	Tue, 21 Jul 2026 19:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661700; cv=none; b=V4plE+wiOQbtgKTFpgy4Gmt1C7YFJeDHB7YUd7dx6l498uXI2zsIQPxM4KLGHoiXWUsWxr+okwuq2nkgv4ULYpnjzCBi1ztNFuvHs9hAObo7gWgv3VIk/HcGRnOMD5bBpjDniPMP44312XGg3dnonPKR6s/OcylkH2zKCNlLDNU=
+	t=1784661702; cv=none; b=S83vLO1dGXoc1hJuXUIqa5PxcilE/cSIyrhMLRzvTD9QeCYp9RvDSj2Y/S7dzAc31e0SBATsPm09CDZvPSOavJeOqDil4zyl3XgGITc8xkc6t7Rwym70sRlFKpwX191VDdEC0SjcRNVq1YmkJhIHthbSE+McdSlWatRGWyX3S9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661700; c=relaxed/simple;
-	bh=c5JePxi6pSJKsKpHk5pchxq8RWf0pBBv0docO19IiQA=;
+	s=arc-20240116; t=1784661702; c=relaxed/simple;
+	bh=c6Bbt2VMHfVjphOJ+7xzJ76auBPXzwzFhHSn4zCPRcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AtcN1c+fftdOezxQDHv09v6UcIEYIxLS+o1ucKM7daNNXnoBGuKhKOJzPulEDytvv7mwLClje/Xl8AH4LAIy57PDXmWZ5MFC1tSPutQl0Oup3DtKTC+VgAd8QYg4kWJ0tWIF1Sg17MEteqAWWxBzvoU6LTFaQnHzlJA+qnWipFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uov8Y00K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q9oj2CslreXJApHRh/cYVdeTp606kt7hOXIR5RqCBpy8WoBR3YtxhYW+xpOwL5OmhufsTZ221nRUMXdsGiswFPEv3abMn46v3AgN+6Kg7V3KMonctmquiLCqzbv2SsQ5Voca3YaiufxeC9LwFZw0LXW/xlEPv9GqvFJ0RJrapQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XOIDazVn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uov8Y00K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4911F000E9;
-	Tue, 21 Jul 2026 19:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XOIDazVn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A221F000E9;
+	Tue, 21 Jul 2026 19:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661699;
-	bh=DbVS65pOq+Tr3fpNskqT4eg42LVxqxZPf8ftUMKgqkY=;
+	s=korg; t=1784661701;
+	bh=i13czIZgx4WMM0y+2HjqtD4bH+1DI9p61exmq3CDYzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uov8Y00KNDPI7cvoxJZ2ECt8KNIjigyhihifstHSant9T9HgA35y6MBuqYyRlx1Jn
-	 I/rniw8+avNWpF+siJmc20vkyPLtBTBXQZII5lUa5gUiOpcVwJwZjd9gjtPbtQX5Bc
-	 32Sh9tqT8kdFUDFhqNTQU591TDj9mNqN3UM9bKFE=
+	b=XOIDazVnLGZAZyRtBcCY33LkwzIFOT36x0PzLqBVu3i5+x/m34+sbBfo4ex01Vzya
+	 q8tlJvZtkyFEqLBVXkmrJTTl1eK4lHKnCaWhZ18u/shUHs34Ogz5vnFW9PleLZI8B3
+	 d4QBGQyqqkvFUNlNDfIiL5ajFmIAIeokNiB7fAAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Biju Das <biju.das.jz@bp.renesas.com>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0138/1276] firmware: arm_scmi: Fix OOB in scmi_power_name_get()
-Date: Tue, 21 Jul 2026 17:09:41 +0200
-Message-ID: <20260721152449.190255969@linuxfoundation.org>
+Subject: [PATCH 6.12 0165/1276] driver core: Fix missing jiffies conversion in deferred_probe_extend_timeout()
+Date: Tue, 21 Jul 2026 17:10:08 +0200
+Message-ID: <20260721152449.792741923@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,44 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit f9ef3f66f4b18078e464b7606f9497e4dbeb9905 ]
+[ Upstream commit f9e6da99fe49277979798a1c3b9790ae10aaa18a ]
 
-scmi_power_name_get() does not validate the domain number passed by the
-external caller, which may lead to an out-of-bounds access.
+mod_delayed_work() takes jiffies, not seconds. Thus, restore the dropped
+conversion.
 
-Fix this by returning "unknown" for invalid domains, like
-scmi_reset_name_get() does.
+While at it, fix incorrect indentation.
 
-Fixes: 76a6550990e296a7 ("firmware: arm_scmi: add initial support for power protocol")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://patch.msgid.link/75caae28bdffb55199a0bc6cac5df112a966c608.1778838987.git.geert+renesas@glider.be
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: 1137838865bf ("driver core: Use mod_delayed_work to prevent lost deferred probe work")
+Tested-by: Biju Das <biju.das.jz@bp.renesas.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260525012340.3860581-1-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/power.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/base/dd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/arm_scmi/power.c b/drivers/firmware/arm_scmi/power.c
-index 59aa16444c6432..7d3e5f3fc379b2 100644
---- a/drivers/firmware/arm_scmi/power.c
-+++ b/drivers/firmware/arm_scmi/power.c
-@@ -205,8 +205,12 @@ scmi_power_name_get(const struct scmi_protocol_handle *ph,
- 		    u32 domain)
- {
- 	struct scmi_power_info *pi = ph->get_priv(ph);
--	struct power_dom_info *dom = pi->dom_info + domain;
-+	struct power_dom_info *dom;
-+
-+	if (domain >= pi->num_domains)
-+		return "unknown";
- 
-+	dom = pi->dom_info + domain;
- 	return dom->name;
+diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+index 48e0ae8892ded1..f84cbb900908e0 100644
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -327,7 +327,7 @@ void deferred_probe_extend_timeout(void)
+ 	 * start a new one.
+ 	 */
+ 	if (mod_delayed_work(system_wq, &deferred_probe_timeout_work,
+-						 driver_deferred_probe_timeout))
++			     secs_to_jiffies(driver_deferred_probe_timeout)))
+ 		pr_debug("Extended deferred probe timeout by %d secs\n",
+ 					driver_deferred_probe_timeout);
  }
- 
 -- 
 2.53.0
 
