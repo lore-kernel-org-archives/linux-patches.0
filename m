@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBBE9471252;
-	Tue, 21 Jul 2026 19:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CAE6471252;
+	Tue, 21 Jul 2026 19:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660834; cv=none; b=pf9gNI6VB6pZ/7XNUtbdVUPJxPexSlsI+58/0BTQU+jlWWjAWW0yzx7LUzwcdu1BWVlwAJWDRu4xfpVxa2QvaxL6g4b654g5+loTlXBVoH+bmoizEaaxFLIJYVAuK/uV7VAlF8S3FvoEs1vjlZxkxhxt7JnJs6pWoz1WshMtgy0=
+	t=1784660836; cv=none; b=D/xGwL5GSoeCjDCdQz6wzfk8qjOXYh4ngfPBO6AufKQvM2Blq+6m3P2uaifjBQQO2SLCgGO3kJ4jhzlG7eE0P3UmobZjEjo7lzz1/GsYv9JWaUjOhT+H+nZfbXV2rLUDUXjpg1PAZb40DdX/BRpJ3A5bTOAF3zqYnfQYG3+GvPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660834; c=relaxed/simple;
-	bh=65hSfw2w6qku4CMPa2pEj6Q9VchI2J8e23JmMBXy2DI=;
+	s=arc-20240116; t=1784660836; c=relaxed/simple;
+	bh=mljaPAkH6mPZ5yjoYjlSCfIreZqpXZS/ADsj4D86xK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GVWrboxQZ8Mrg5hSI2j0oy5zKdDi31IhlR9YW/MEyRiLaKCwkK4AiImQ4k5AIAz9AZstbMWnHReuAfL7gQPWdaH9SwMTFPDQkvTkr2XqFLJ59DlCLeI5owd9qHHMrPdhxMvamFyMH8YCNIsmTOIzEeE7DOdE495rjJc+8gD+x5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdljLooF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TJ8WKdp9XL3Trnk/pHATsBd/ZwAjpqWj2sNmn6eK17jZSBPPftPywUQcl2kK7YhC2j2etk+rmxtY55PLwGCHtRWf+E6MDuX55ya4/WgEIYWU6mWWgo7K5gugU4gEEuNbhJ+OCWVqzKM2doxqtmKgWUnbHRjmPCQBcKgQ0rRG3zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMYm1HDI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdljLooF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF541F000E9;
-	Tue, 21 Jul 2026 19:07:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMYm1HDI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA9B51F000E9;
+	Tue, 21 Jul 2026 19:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660832;
-	bh=y8eeH19hWKqTEsvmBDV6pKscmBkMIgv+B/q08nnaPVk=;
+	s=korg; t=1784660835;
+	bh=e1xdDxmFAnfVbECBI7WoTorsS1eMxWSOpGMGZUWlCiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pdljLooFjs9T153GJVDjmLOIVYHzQ/J5CetiLdVk0Rdi6PRDbcjmKiOHEl46NcdTA
-	 GBS/TKMu42S1CVOvhEPePAGlSdG6ssbBplyh2TBLhYRdr3mK529/9vS0zZJYimOJUA
-	 hhxk+Q693PUyaKFYkzeHXKPXFjY2pWWVLit0Mg/M=
+	b=XMYm1HDIA9suA/+K2JNJHu7fbDN6m+GTG8vVDb81r3j2JFeLKBc/JCwd7xmq5LbYT
+	 X/lMx0FDckolN3Bt2qltDkNAGj2yUgxgomDb4ybob/FGHLPsm0HHUYVwdSdpdjgBka
+	 lPKdbZOXQjz0Lpk4bRZZ0ANUwUDyUDenA5UA8gRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1129/2077] ALSA: usb-audio: Kill MIDI 2.0 URBs before freeing endpoints
-Date: Tue, 21 Jul 2026 17:13:22 +0200
-Message-ID: <20260721152619.445799171@linuxfoundation.org>
+Subject: [PATCH 7.1 1130/2077] netfilter: flowtable: fix and simplify IP6IP6 tunnel handling
+Date: Tue, 21 Jul 2026 17:13:23 +0200
+Message-ID: <20260721152619.470809526@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,92 +51,279 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit f199c8a8bdd54296d3458777e70fe82a78bd9817 ]
+[ Upstream commit f4c2d8668d85ed125985da663c824a9c25498257 ]
 
-MIDI 2.0 input URBs are started during snd_usb_midi_v2_create(). A
-later setup failure can still jump to snd_usb_midi_v2_free(), which
-currently frees each endpoint and its coherent URB buffers without first
-stopping the submitted URBs. A completion can then dereference the
-embedded URB context and endpoint state after they have been freed, or
-try to resubmit from the stale endpoint.
+Fix nf_flow_ip6_tunnel_proto() to use pskb_may_pull() instead of
+skb_header_pointer() to ensure the outer IPv6 header is in the skb
+headroom, which is required for subsequent packet processing. Move
+ctx->offset update inside the IPPROTO_IPV6 conditional block since it
+should only be adjusted when an IP6IP6 tunnel is actually detected.
+Simplify the rx path by removing ipv6_skip_exthdr() and checking
+ip6h->nexthdr directly, as the flowtable fast path only handles simple
+IP6IP6 encapsulation without extension headers.
+Drop the tunnel encapsulation limit destination option support from the
+tx path to match, since the rx path no longer handles extension headers.
+Remove the encap_limit parameter from nf_flow_offload_ipv6_forward(),
+nf_flow_tunnel_ip6ip6_push() and nf_flow_tunnel_v6_push(), along with
+the ipv6_tel_txoption struct and related headroom/MTU adjustments.
 
-This was observed as a KASAN slab-use-after-free in
-input_urb_complete().
-
-The buggy scenario involves two paths, with each column showing the order
-within that path:
-
-probe error path:                         USB completion path:
-1. start_input_streams() submits          1. The HCD still owns a
-   input URBs.                               submitted input URB.
-2. A later setup helper returns           2. input_urb_complete() runs
-   an error.                                 with urb->context in ep.
-3. snd_usb_midi_v2_free() frees           3. The completion reads ep
-   endpoint storage and URB buffers.         state and can requeue URBs.
-
-Make the endpoint destructor follow the same teardown ordering used for
-disconnect when the endpoint has not already been disconnected: publish
-ep->disconnected, kill the URBs synchronously, and drain the endpoint
-before freeing URB buffers and endpoint storage. The guard avoids
-repeating the stop sequence after the normal
-snd_usb_midi_v2_disconnect_all() path, while still synchronizing the
-direct MIDI 2.0 create-error free path.
-
-Validation reproduced this kernel report:
-BUG: KASAN: slab-use-after-free in input_urb_complete+0x37/0x1b0
-Workqueue: usb_hub_wq hub_event
-RIP: 0010:_raw_spin_unlock_irq+0x2e/0x50
-Read of size 8
-Call trace:
-  dump_stack_lvl+0x77/0xb0
-  print_report+0xce/0x5f0
-  input_urb_complete+0x37/0x1b0 (sound/usb/midi2.c:186)
-  srso_alias_return_thunk+0x5/0xfbef5
-  __virt_addr_valid+0x19f/0x330
-  kasan_report+0xe0/0x110
-  __usb_hcd_giveback_urb+0x112/0x1d0
-  dummy_timer+0xaaa/0x19a0
-  lock_is_held_type+0x9a/0x110
-  __lock_acquire+0x467/0x28b0
-  mark_held_locks+0x40/0x70
-  _raw_spin_unlock_irqrestore+0x44/0x60
-  lockdep_hardirqs_on_prepare+0xbb/0x1a0
-  __hrtimer_run_queues+0x101/0x520
-  hrtimer_run_softirq+0xd0/0x130
-  handle_softirqs+0x15b/0x670
-  __irq_exit_rcu+0xd0/0x170
-  irq_exit_rcu+0xe/0x20
-  sysvec_apic_timer_interrupt+0x6c/0x80
-  asm_sysvec_apic_timer_interrupt+0x1a/0x20
-
-Fixes: d9c99876868c ("ALSA: usb-audio: Create UMP blocks from USB MIDI GTBs")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/20260618170010.191433-1-zzzccc427@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: d98103575dcdd ("netfilter: flowtable: Add IP6IP6 rx sw acceleration")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/midi2.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/ipv6/ip6_tunnel.c                         |  7 ++
+ net/netfilter/nf_flow_table_ip.c              | 80 +++++--------------
+ .../selftests/net/netfilter/nft_flowtable.sh  |  8 +-
+ 3 files changed, 30 insertions(+), 65 deletions(-)
 
-diff --git a/sound/usb/midi2.c b/sound/usb/midi2.c
-index 04aeb9052f139e..3ec63329177267 100644
---- a/sound/usb/midi2.c
-+++ b/sound/usb/midi2.c
-@@ -470,6 +470,11 @@ static int create_midi2_endpoint(struct snd_usb_midi2_interface *umidi,
- static void free_midi2_endpoint(struct snd_usb_midi2_endpoint *ep)
- {
- 	list_del(&ep->list);
-+	if (!ep->disconnected) {
-+		ep->disconnected = 1;
-+		kill_midi_urbs(ep, false);
-+		drain_urb_queue(ep);
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index 9d1037ac082f6a..bf1e77f95f1817 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -1850,6 +1850,13 @@ static int ip6_tnl_fill_forward_path(struct net_device_path_ctx *ctx,
+ 	struct dst_entry *dst;
+ 	int err;
+ 
++	if (!(t->parms.flags & IP6_TNL_F_IGN_ENCAP_LIMIT)) {
++		/* encaplimit option is currently not supported is
++		 * sw-acceleration path.
++		 */
++		return -EOPNOTSUPP;
 +	}
- 	free_midi_urbs(ep);
- 	kfree(ep);
++
+ 	dst = ip6_route_output(dev_net(ctx->dev), NULL, &fl6);
+ 	if (!dst->error) {
+ 		path->type = DEV_PATH_TUN;
+diff --git a/net/netfilter/nf_flow_table_ip.c b/net/netfilter/nf_flow_table_ip.c
+index 9c05a50d601384..e7a3fb2b2d9466 100644
+--- a/net/netfilter/nf_flow_table_ip.c
++++ b/net/netfilter/nf_flow_table_ip.c
+@@ -347,29 +347,23 @@ static bool nf_flow_ip6_tunnel_proto(struct nf_flowtable_ctx *ctx,
+ 				     struct sk_buff *skb)
+ {
+ #if IS_ENABLED(CONFIG_IPV6)
+-	struct ipv6hdr *ip6h, _ip6h;
+-	__be16 frag_off;
+-	u8 nexthdr;
+-	int hdrlen;
++	struct ipv6hdr *ip6h;
+ 
+-	ip6h = skb_header_pointer(skb, ctx->offset, sizeof(*ip6h), &_ip6h);
+-	if (!ip6h)
++	if (!pskb_may_pull(skb, sizeof(*ip6h) + ctx->offset))
+ 		return false;
+ 
++	ip6h = (struct ipv6hdr *)(skb_network_header(skb) + ctx->offset);
+ 	if (ip6h->hop_limit <= 1)
+ 		return false;
+ 
+-	nexthdr = ip6h->nexthdr;
+-	hdrlen = ipv6_skip_exthdr(skb, sizeof(*ip6h) + ctx->offset, &nexthdr,
+-				  &frag_off);
+-	if (hdrlen < 0)
++	if (ipv6_ext_hdr(ip6h->nexthdr))
+ 		return false;
+ 
+-	if (nexthdr == IPPROTO_IPV6) {
+-		ctx->tun.hdr_size = hdrlen;
+-		ctx->tun.proto = IPPROTO_IPV6;
++	if (ip6h->nexthdr == IPPROTO_IPV6) {
++		ctx->tun.proto = ip6h->nexthdr;
++		ctx->tun.hdr_size = sizeof(*ip6h);
++		ctx->offset += ctx->tun.hdr_size;
+ 	}
+-	ctx->offset += ctx->tun.hdr_size;
+ 
+ 	return true;
+ #else
+@@ -648,25 +642,19 @@ static int nf_flow_tunnel_v4_push(struct net *net, struct sk_buff *skb,
+ 	return 0;
  }
+ 
+-struct ipv6_tel_txoption {
+-	struct ipv6_txoptions ops;
+-	__u8 dst_opt[8];
+-};
+-
+ static int nf_flow_tunnel_ip6ip6_push(struct net *net, struct sk_buff *skb,
+ 				      struct flow_offload_tuple *tuple,
+-				      struct in6_addr **ip6_daddr,
+-				      int encap_limit)
++				      struct in6_addr **ip6_daddr)
+ {
+ 	struct ipv6hdr *ip6h = (struct ipv6hdr *)skb_network_header(skb);
+-	u8 hop_limit = ip6h->hop_limit, proto = IPPROTO_IPV6;
+ 	struct rtable *rt = dst_rtable(tuple->dst_cache);
+ 	__u8 dsfield = ipv6_get_dsfield(ip6h);
+ 	struct flowi6 fl6 = {
+ 		.daddr = tuple->tun.src_v6,
+ 		.saddr = tuple->tun.dst_v6,
+-		.flowi6_proto = proto,
++		.flowi6_proto = IPPROTO_IPV6,
+ 	};
++	u8 hop_limit = ip6h->hop_limit;
+ 	int err, mtu;
+ 	u32 headroom;
+ 
+@@ -674,41 +662,18 @@ static int nf_flow_tunnel_ip6ip6_push(struct net *net, struct sk_buff *skb,
+ 	if (err)
+ 		return err;
+ 
+-	skb_set_inner_ipproto(skb, proto);
++	skb_set_inner_ipproto(skb, IPPROTO_IPV6);
+ 	headroom = sizeof(*ip6h) + LL_RESERVED_SPACE(rt->dst.dev) +
+ 		   rt->dst.header_len;
+-	if (encap_limit)
+-		headroom += 8;
+ 	err = skb_cow_head(skb, headroom);
+ 	if (err)
+ 		return err;
+ 
+ 	skb_scrub_packet(skb, true);
+ 	mtu = dst_mtu(&rt->dst) - sizeof(*ip6h);
+-	if (encap_limit)
+-		mtu -= 8;
+ 	mtu = max(mtu, IPV6_MIN_MTU);
+ 	skb_dst_update_pmtu_no_confirm(skb, mtu);
+ 
+-	if (encap_limit > 0) {
+-		struct ipv6_tel_txoption opt = {
+-			.dst_opt[2] = IPV6_TLV_TNL_ENCAP_LIMIT,
+-			.dst_opt[3] = 1,
+-			.dst_opt[4] = encap_limit,
+-			.dst_opt[5] = IPV6_TLV_PADN,
+-			.dst_opt[6] = 1,
+-		};
+-		struct ipv6_opt_hdr *hopt;
+-
+-		opt.ops.dst1opt = (struct ipv6_opt_hdr *)opt.dst_opt;
+-		opt.ops.opt_nflen = 8;
+-
+-		hopt = skb_push(skb, ipv6_optlen(opt.ops.dst1opt));
+-		memcpy(hopt, opt.ops.dst1opt, ipv6_optlen(opt.ops.dst1opt));
+-		hopt->nexthdr = IPPROTO_IPV6;
+-		proto = NEXTHDR_DEST;
+-	}
+-
+ 	skb_push(skb, sizeof(*ip6h));
+ 	skb_reset_network_header(skb);
+ 
+@@ -716,7 +681,7 @@ static int nf_flow_tunnel_ip6ip6_push(struct net *net, struct sk_buff *skb,
+ 	ip6_flow_hdr(ip6h, dsfield,
+ 		     ip6_make_flowlabel(net, skb, fl6.flowlabel, true, &fl6));
+ 	ip6h->hop_limit = hop_limit;
+-	ip6h->nexthdr = proto;
++	ip6h->nexthdr = IPPROTO_IPV6;
+ 	ip6h->daddr = tuple->tun.src_v6;
+ 	ip6h->saddr = tuple->tun.dst_v6;
+ 	ipv6_hdr(skb)->payload_len = htons(skb->len - sizeof(*ip6h));
+@@ -729,12 +694,10 @@ static int nf_flow_tunnel_ip6ip6_push(struct net *net, struct sk_buff *skb,
+ 
+ static int nf_flow_tunnel_v6_push(struct net *net, struct sk_buff *skb,
+ 				  struct flow_offload_tuple *tuple,
+-				  struct in6_addr **ip6_daddr,
+-				  int encap_limit)
++				  struct in6_addr **ip6_daddr)
+ {
+ 	if (tuple->tun_num)
+-		return nf_flow_tunnel_ip6ip6_push(net, skb, tuple, ip6_daddr,
+-						  encap_limit);
++		return nf_flow_tunnel_ip6ip6_push(net, skb, tuple, ip6_daddr);
+ 
+ 	return 0;
+ }
+@@ -1089,7 +1052,7 @@ static int nf_flow_tuple_ipv6(struct nf_flowtable_ctx *ctx, struct sk_buff *skb,
+ static int nf_flow_offload_ipv6_forward(struct nf_flowtable_ctx *ctx,
+ 					struct nf_flowtable *flow_table,
+ 					struct flow_offload_tuple_rhash *tuplehash,
+-					struct sk_buff *skb, int encap_limit)
++					struct sk_buff *skb)
+ {
+ 	enum flow_offload_tuple_dir dir;
+ 	struct flow_offload *flow;
+@@ -1100,11 +1063,8 @@ static int nf_flow_offload_ipv6_forward(struct nf_flowtable_ctx *ctx,
+ 	flow = container_of(tuplehash, struct flow_offload, tuplehash[dir]);
+ 
+ 	mtu = flow->tuplehash[dir].tuple.mtu + ctx->offset;
+-	if (flow->tuplehash[!dir].tuple.tun_num) {
++	if (flow->tuplehash[!dir].tuple.tun_num)
+ 		mtu -= sizeof(*ip6h);
+-		if (encap_limit > 0)
+-			mtu -= 8; /* encap limit option */
+-	}
+ 
+ 	if (unlikely(nf_flow_exceeds_mtu(skb, mtu)))
+ 		return 0;
+@@ -1158,7 +1118,6 @@ unsigned int
+ nf_flow_offload_ipv6_hook(void *priv, struct sk_buff *skb,
+ 			  const struct nf_hook_state *state)
+ {
+-	int encap_limit = IPV6_DEFAULT_TNL_ENCAP_LIMIT;
+ 	struct flow_offload_tuple_rhash *tuplehash;
+ 	struct nf_flowtable *flow_table = priv;
+ 	struct flow_offload_tuple *other_tuple;
+@@ -1177,8 +1136,7 @@ nf_flow_offload_ipv6_hook(void *priv, struct sk_buff *skb,
+ 	if (tuplehash == NULL)
+ 		return NF_ACCEPT;
+ 
+-	ret = nf_flow_offload_ipv6_forward(&ctx, flow_table, tuplehash, skb,
+-					   encap_limit);
++	ret = nf_flow_offload_ipv6_forward(&ctx, flow_table, tuplehash, skb);
+ 	if (ret < 0)
+ 		return NF_DROP;
+ 	else if (ret == 0)
+@@ -1198,7 +1156,7 @@ nf_flow_offload_ipv6_hook(void *priv, struct sk_buff *skb,
+ 	ip6_daddr = &other_tuple->src_v6;
+ 
+ 	if (nf_flow_tunnel_v6_push(state->net, skb, other_tuple,
+-				   &ip6_daddr, encap_limit) < 0)
++				   &ip6_daddr) < 0)
+ 		return NF_DROP;
+ 
+ 	switch (tuplehash->tuple.xmit_type) {
+diff --git a/tools/testing/selftests/net/netfilter/nft_flowtable.sh b/tools/testing/selftests/net/netfilter/nft_flowtable.sh
+index 7a34ef468975d4..08ad07500e8a71 100755
+--- a/tools/testing/selftests/net/netfilter/nft_flowtable.sh
++++ b/tools/testing/selftests/net/netfilter/nft_flowtable.sh
+@@ -592,7 +592,7 @@ ip -net "$nsr1" link set tun0 up
+ ip -net "$nsr1" addr add 192.168.100.1/24 dev tun0
+ ip netns exec "$nsr1" sysctl net.ipv4.conf.tun0.forwarding=1 > /dev/null
+ 
+-ip -net "$nsr1" link add name tun6 type ip6tnl local fee1:2::1 remote fee1:2::2
++ip -net "$nsr1" link add name tun6 type ip6tnl local fee1:2::1 remote fee1:2::2 encaplimit none
+ ip -net "$nsr1" link set tun6 up
+ ip -net "$nsr1" addr add fee1:3::1/64 dev tun6 nodad
+ 
+@@ -601,7 +601,7 @@ ip -net "$nsr2" link set tun0 up
+ ip -net "$nsr2" addr add 192.168.100.2/24 dev tun0
+ ip netns exec "$nsr2" sysctl net.ipv4.conf.tun0.forwarding=1 > /dev/null
+ 
+-ip -net "$nsr2" link add name tun6 type ip6tnl local fee1:2::2 remote fee1:2::1 || ret=1
++ip -net "$nsr2" link add name tun6 type ip6tnl local fee1:2::2 remote fee1:2::1 encaplimit none || ret=1
+ ip -net "$nsr2" link set tun6 up
+ ip -net "$nsr2" addr add fee1:3::2/64 dev tun6 nodad
+ 
+@@ -651,7 +651,7 @@ ip -net "$nsr1" route change default via 192.168.200.2
+ ip netns exec "$nsr1" sysctl net.ipv4.conf.tun0/10.forwarding=1 > /dev/null
+ ip netns exec "$nsr1" nft -a insert rule inet filter forward 'meta oif tun0.10 accept'
+ 
+-ip -net "$nsr1" link add name tun6.10 type ip6tnl local fee1:4::1 remote fee1:4::2
++ip -net "$nsr1" link add name tun6.10 type ip6tnl local fee1:4::1 remote fee1:4::2 encaplimit none
+ ip -net "$nsr1" link set tun6.10 up
+ ip -net "$nsr1" addr add fee1:5::1/64 dev tun6.10 nodad
+ ip -6 -net "$nsr1" route delete default
+@@ -670,7 +670,7 @@ ip -net "$nsr2" addr add 192.168.200.2/24 dev tun0.10
+ ip -net "$nsr2" route change default via 192.168.200.1
+ ip netns exec "$nsr2" sysctl net.ipv4.conf.tun0/10.forwarding=1 > /dev/null
+ 
+-ip -net "$nsr2" link add name tun6.10 type ip6tnl local fee1:4::2 remote fee1:4::1 || ret=1
++ip -net "$nsr2" link add name tun6.10 type ip6tnl local fee1:4::2 remote fee1:4::1 encaplimit none || ret=1
+ ip -net "$nsr2" link set tun6.10 up
+ ip -net "$nsr2" addr add fee1:5::2/64 dev tun6.10 nodad
+ ip -6 -net "$nsr2" route delete default
 -- 
 2.53.0
 
