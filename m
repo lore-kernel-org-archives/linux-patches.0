@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5663B3C0A;
-	Tue, 21 Jul 2026 20:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690C72EBB8D;
+	Tue, 21 Jul 2026 20:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666228; cv=none; b=NbOVT1ZO3Sf5dWHml+XOanxwi1T0lH5wlNalujH7b1h6dwAGHxjnckADGkA5eZ5XoVqRX023fZ6JzQ1B2az33IJnzAjVR1D45RjAcqfLuRKYSry48w10peUOxjzoVjyU/G6LmdUyNh4nTUPuSQTtXKLQwr8gaPuuWfeeNUqKg9E=
+	t=1784666231; cv=none; b=cKivBUoQK+J+0YooKPrNQvFWMU5aTO11s85dVlbe6sbCnBKr2Nb8rP/OXjLMBfv3g7IeoVBdAXookI+KQ7Rfiuf1czQDL4jvWwkDlJxs45FRKPtKEEynW/DeIS85DH5vDZi/+NPXkJPWcvzbxYoJriKzqTZ8+ihkOt7AivZhlEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666228; c=relaxed/simple;
-	bh=ThgaAT8pGLxl6Rxa67e2b1K3iU8XOix+C8BbbcnhV0w=;
+	s=arc-20240116; t=1784666231; c=relaxed/simple;
+	bh=yNo2b91A9Q/wMLZQqU0knTwIjfcS9dMnt09H0IB2SEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rk0TG4UUBq6bkY5U0DBmvHlBy7+UDqIXROyoXej896cciltifOz9XLDwduyOp0CHZZOPpOpHDKaDKhPLVoMMgxudMwYPVodm+xhyxe3S4Uiub6OcFq7n37NWoV3HbqPcER7fexPnt1dZREurhWD5paKF5fwQSmMY1P7arRw/fc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDO/nfGP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sk2sioQz1gvcV1XaYuSQoIVvgUvS11NhKyy5y/RILPUz1OPtXlL6Vy4/IBp2qfCHRJTDPEA6c6KWgj3035c7Rx8ev4wyZrIbDzZf4znFyD1ocAOGpzmfhFF0WAflV62oYt0DzLe/MvSBeLlbIwwthXM1+XndLL6Os6djh6mHVKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x48l+H4Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDO/nfGP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C7DD1F000E9;
-	Tue, 21 Jul 2026 20:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x48l+H4Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B9D1F000E9;
+	Tue, 21 Jul 2026 20:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666227;
-	bh=43HuLrLRd6nfdDFFPSMJdxd4+RiNKOVQQTpSJ2ynzAk=;
+	s=korg; t=1784666230;
+	bh=pR+S6M0wNtr/SN/M9TniLmkvqQZ1VcY6CYo2P6IzYfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KDO/nfGP2O7nz43dKAgHbCILocTgijM2k7ojypuvnFfIry1PMRbEWvU1Zdl+dOf4X
-	 yg4hx/+9dt1YEXLRDAwStcfL2z54IYVYMr+15yxNloVMh36cUDRhzRRz5878hPijZ1
-	 h+nTDcBe+JNPrHK/K0JOOCE0+QEPXQty43f8zJHM=
+	b=x48l+H4ZjHnX0qxNRp7FjDZZJeqW+HERakUbMzodTZIwAle2ALexx82aedeyJ4FAS
+	 lV1Z8jGvobRcyOjLmF/FVitQm/D0SaxmaO2RS1R4siCQ6aR0VhhLS/WG1JBw+8fqjF
+	 RnhaarRP68rY26wkHBdg9eA8rE7LWLMBIszpbo7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot+64ec81389cbad56a8c35@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jon Maloy <jmaloy@redhat.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0550/1266] Bluetooth: hci: validate codec capability element length
-Date: Tue, 21 Jul 2026 17:16:27 +0200
-Message-ID: <20260721152454.174580609@linuxfoundation.org>
+Subject: [PATCH 6.6 0597/1266] tipc: fix UAF in tipc_l2_send_msg()
+Date: Tue, 21 Jul 2026 17:17:14 +0200
+Message-ID: <20260721152455.223495485@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,47 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c38fbcdc407925c7088f7e5f11c1fff73d2d35a2 ]
+[ Upstream commit f4c3d89fc986b0da196ddfc6cfe0ea5d5d08bec6 ]
 
-Read Local Codec Capabilities returns a sequence of capability elements.
-Each element starts with a one-byte length followed by that many payload
-bytes.
+Syzbot reported a slab-use-after-free in ipvlan_hard_header() when
+called from tipc_l2_send_msg().
 
-hci_read_codec_capabilities() checks that the skb contains the length
-byte, but then validates only caps->len against the remaining skb
-length.  A malformed controller response with one remaining byte and
-caps->len set to one passes that check even though the element needs two
-bytes.  The parser then records a two-byte capability and copies one
-byte beyond the advertised response payload into the codec list.
+The root cause is that tipc_disable_l2_media() calls synchronize_net()
+while b->media_ptr is still valid. This allows concurrent RCU readers
+to obtain the device pointer after synchronize_net() has finished.
+The pointer is cleared later in bearer_disable(), but without any
+subsequent synchronization, allowing the device to be freed while
+still in use by readers.
 
-Validate the full element size, including the length byte, before adding
-it to the accumulated capability length.  This preserves all well-formed
-capability elements and drops only truncated controller responses.
+Fix this by clearing b->media_ptr in tipc_disable_l2_media() before
+calling synchronize_net().
 
-Fixes: 8961987f3f5f ("Bluetooth: Enumerate local supported codec and cache details")
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+This is safe to do now because the call order in bearer_disable()
+was reversed in 0d051bf93c06 ("tipc: make bearer packet filtering generic")
+to call tipc_node_delete_links() (which needs the pointer) before
+disable_media().
+
+Fixes: 282b3a056225 ("tipc: send out RESET immediately when link goes down")
+https: //lore.kernel.org/netdev/6a2c1007.428ffe26.258b27.015d.GAE@google.com/T/#u
+Reported-by: syzbot+64ec81389cbad56a8c35@syzkaller.appspotmail.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Jon Maloy <jmaloy@redhat.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260612135949.4010482-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_codec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tipc/bearer.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/bluetooth/hci_codec.c b/net/bluetooth/hci_codec.c
-index 3cc135bb1d30ca..5bc5003c387c66 100644
---- a/net/bluetooth/hci_codec.c
-+++ b/net/bluetooth/hci_codec.c
-@@ -100,7 +100,7 @@ static void hci_read_codec_capabilities(struct hci_dev *hdev, __u8 transport,
- 				caps = (void *)skb->data;
- 				if (skb->len < sizeof(*caps))
- 					goto error;
--				if (skb->len < caps->len)
-+				if (skb->len < sizeof(caps->len) + caps->len)
- 					goto error;
- 				len += sizeof(caps->len) + caps->len;
- 				skb_pull(skb,  sizeof(caps->len) + caps->len);
+diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
+index fec638e494c9dd..ae57ac1174f812 100644
+--- a/net/tipc/bearer.c
++++ b/net/tipc/bearer.c
+@@ -482,6 +482,7 @@ void tipc_disable_l2_media(struct tipc_bearer *b)
+ 	dev = (struct net_device *)rtnl_dereference(b->media_ptr);
+ 	dev_remove_pack(&b->pt);
+ 	RCU_INIT_POINTER(dev->tipc_ptr, NULL);
++	RCU_INIT_POINTER(b->media_ptr, NULL);
+ 	synchronize_net();
+ 	dev_put(dev);
+ }
 -- 
 2.53.0
 
