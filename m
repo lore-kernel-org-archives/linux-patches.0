@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D8546AA71;
-	Tue, 21 Jul 2026 15:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9EA46AA6B;
+	Tue, 21 Jul 2026 15:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648202; cv=none; b=otZ4i3dtgGrUKBfz0N41ZQeSwkPXpbrz0YSmjVJ/Uo5FiOlKFJLs+phits7Tf93+SmrpUiLYGoOtIhUrVHdDgFsll3X38VhPOi6xvIWcfsaJ6ghJOeGm7WkLh/JF0ZOPMVUnfhj+tXSLjAgco/pkknPqT4qFlVS2GKZb0u1vBlc=
+	t=1784648204; cv=none; b=ItABQVppYk/CGWovUB69i1/jHhcdsx4yzXh7KZIKsM1X7IF77vv20asWqJita/hbxraJ2mmT3m0H9lnEJIi7wYkapcW52cLzrzySfWaZbpKBzhKsvUV0Dixrl7DDR4jF19O8Bzngxzwjfpwx+GVVT1/JxRYrSOguAQSJjBh0xFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648202; c=relaxed/simple;
-	bh=cwFKhvckrIsVNDDKEF3hTngpVCohv1dvhDZ5Rvh13dU=;
+	s=arc-20240116; t=1784648204; c=relaxed/simple;
+	bh=2gxr6R7WTJMDw2iGLGfMgZN39pfL8/4r3H+rWXmUHzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PNm72gMiHvIbmJigIrNFyjWEKLCg/xeAEaZF5id9YWxZ8x/Wbdv67LGSkpg/pPPp75NX9wpL9JXNGAbuyMCiEHUc2CiArrQtUNkhprQDDojgLi21sxPR6KACuga64ocYlatLNK09MUiP0gNvxXplCf3m2aw4c16wAy768FBl9zY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzrQJXkZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HnPyHxlCAzdQCVYHC8W0xLhkm0EuBvOBab1+h1U/KEU0geOw57YWsy3cx9jCNBoxHf+fx/FdRBgaMwt5iFatG7RXuYUCwiF9mpqiMKU8K2363yHLAGV5y/YIMKd8MJD3eNKLlBCF3QTAgIwh9sfgdTVpbyyBuOX2Ni1E3qjBwp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LFlRBfKj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzrQJXkZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8915A1F000E9;
-	Tue, 21 Jul 2026 15:36:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LFlRBfKj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9D81F000E9;
+	Tue, 21 Jul 2026 15:36:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648201;
-	bh=roskZvoyP/xeRCSYKsrw01wtgqiZLIZ6yn1kDVG1vZI=;
+	s=korg; t=1784648203;
+	bh=Yy3tU83hGf5EBTgSg8aW+M40+9QhbilaD4PF1eVl68E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tzrQJXkZF/4C+WC8p9q6uXyaePJFpf2l2i7/nvvEJyzvKnQY+2gD2azRweaOugkSd
-	 HL46+V1gkxFLkKuq446ZwTvGA+yR4yq1oPju375QhSpf95sA7XiNgqPEEwqCOPqKCg
-	 qhlnYlIfqb0LehlbhpYTZDdmm7QPZwckg71BDA4k=
+	b=LFlRBfKjipLjbO9ca/xx1HMxMVZ+2u2VMYMQtJ5RnnuoRk8jKd0Q+7lNV0Qh5c7t6
+	 YjNMkbICBRWCeW/FRbbzG7dK2GKW682ZiMIe5M77W2pAFvmTZemNjioQ3Pi/2hSzbB
+	 BNhmZJtAZeoPMDFbmzmBtOKmy7JwpH8S84Otgw78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Zhang <wei.zhang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
+	"Kevin Hilman (TI)" <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0110/2077] wifi: ath11k: cancel SSR work items during PCI shutdown
-Date: Tue, 21 Jul 2026 16:56:23 +0200
-Message-ID: <20260721152555.289919107@linuxfoundation.org>
+Subject: [PATCH 7.1 0111/2077] ARM: dts: am335x-sl50: Fix audio bitclock and frame master endpoint
+Date: Tue, 21 Jul 2026 16:56:24 +0200
+Message-ID: <20260721152555.314102271@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,100 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Zhang <wei.zhang@oss.qualcomm.com>
+From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
 
-[ Upstream commit 8c79aac429b583301f387374ff37c59be671df87 ]
+[ Upstream commit 2bc564f46b00dc4f4331fc337277ff3f5fac8a4e ]
 
-A reboot can crash the kernel if it overlaps with WLAN firmware crash
-recovery (SSR). The crash is a NULL pointer dereference in the MHI teardown
-path while freeing DMA-backed MHI contexts.
+The cpu_endpoint in mcasp0 specifies the TLV320AIC3106 codec as the
+bitclock and frame master, but the phandles point to the codec's port
+node (codec_port) rather than its endpoint node (codec_endpoint).
 
-Simplified trace:
-  dma_free_attrs
-  mhi_deinit_dev_ctxt [mhi]
-  ath11k_pci_power_down [ath11k_pci]
-  ath11k_pci_shutdown [ath11k_pci]
-  device_shutdown
-  kernel_restart
+audio-graph-card calls simple_util_parse_daifmt() with ep_codec set to
+the endpoint node (codec_endpoint). The function resolves the
+bitclock-master phandle and checks whether it equals ep_codec. Since
+codec_port is the parent of codec_endpoint, not the endpoint itself, the
+comparison always evaluates to false. This causes the mcasp0 CPU side to
+be silently configured as bitclock and frame master instead of the codec,
+which is the opposite of the intended configuration.
 
-On the host side, SSR is driven by the MHI RDDM callback, which queues
-reset_work to perform device recovery. reset_work power-cycles the device
-by calling ath11k_hif_power_down() followed by ath11k_hif_power_up(). The
-power-down phase deinitializes MHI and frees DMA resources.
+Fix by pointing bitclock-master and frame-master to codec_endpoint.
 
-Shutdown/reboot runs fully asynchronously with this RDDM-driven SSR
-recovery flow. As a result, the shutdown path
-(ath11k_pci_shutdown() -> ath11k_pci_power_down()) can race with the SSR
-recovery sequence.
-
-Fix this by canceling SSR-related work items during PCI shutdown, marking
-the device as unregistering, and serializing the RDDM callback path that
-checks and queues reset_work. This ensures that no new SSR recovery work
-can be queued once teardown has started, and that any in-flight recovery
-work is fully synchronized before device power-down, preventing MHI
-teardown and DMA resource freeing from running more than once.
-
-Note: This issue only affects PCI/MHI-based devices. AHB-based ath11k
-devices do not queue reset_work in normal SSR flows.
-
-Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-04866.5-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
-
-Fixes: 13da397f884d ("ath11k: add support for device recovery for QCA6390/WCN6855")
-Fixes: 5edbb148bc57 ("wifi: ath11k: Add firmware coredump collection support")
-Signed-off-by: Wei Zhang <wei.zhang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260404043050.3433754-1-wei.zhang@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: e5f89dbdebc5 ("ARM: dts: am335x-sl50: use audio-graph-card for sound")
+Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+Link: https://patch.msgid.link/20260325223411.123666-1-jihed.chaibi.dev@gmail.com
+Signed-off-by: Kevin Hilman (TI) <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/mhi.c | 4 +++-
- drivers/net/wireless/ath/ath11k/pci.c | 8 ++++++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/ti/omap/am335x-sl50.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
-index f994233df2bb94..a6c9ff112c68f4 100644
---- a/drivers/net/wireless/ath/ath11k/mhi.c
-+++ b/drivers/net/wireless/ath/ath11k/mhi.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause-Clear
- /*
-  * Copyright (c) 2020 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
+diff --git a/arch/arm/boot/dts/ti/omap/am335x-sl50.dts b/arch/arm/boot/dts/ti/omap/am335x-sl50.dts
+index 1dc4e344efd63e..c5259eb7d21c7e 100644
+--- a/arch/arm/boot/dts/ti/omap/am335x-sl50.dts
++++ b/arch/arm/boot/dts/ti/omap/am335x-sl50.dts
+@@ -558,8 +558,8 @@ cpu_endpoint: endpoint {
+ 			remote-endpoint = <&codec_endpoint>;
  
- #include <linux/msi.h>
-@@ -282,8 +282,10 @@ static void ath11k_mhi_op_status_cb(struct mhi_controller *mhi_cntrl,
- 			break;
- 		}
- 
-+		spin_lock_bh(&ab->base_lock);
- 		if (!(test_bit(ATH11K_FLAG_UNREGISTERING, &ab->dev_flags)))
- 			queue_work(ab->workqueue_aux, &ab->reset_work);
-+		spin_unlock_bh(&ab->base_lock);
- 
- 		break;
- 	default:
-diff --git a/drivers/net/wireless/ath/ath11k/pci.c b/drivers/net/wireless/ath/ath11k/pci.c
-index 7114eca8810dbf..35bb9e7a63a207 100644
---- a/drivers/net/wireless/ath/ath11k/pci.c
-+++ b/drivers/net/wireless/ath/ath11k/pci.c
-@@ -1210,6 +1210,14 @@ static void ath11k_pci_shutdown(struct pci_dev *pdev)
- 	struct ath11k_pci *ab_pci = ath11k_pci_priv(ab);
- 
- 	ath11k_pci_set_irq_affinity_hint(ab_pci, NULL);
-+
-+	spin_lock_bh(&ab->base_lock);
-+	set_bit(ATH11K_FLAG_UNREGISTERING, &ab->dev_flags);
-+	spin_unlock_bh(&ab->base_lock);
-+
-+	cancel_work_sync(&ab->reset_work);
-+	cancel_work_sync(&ab->dump_work);
-+
- 	ath11k_pci_power_down(ab, false);
- }
- 
+ 			dai-format = "dsp_b";
+-			bitclock-master = <&codec_port>;
+-			frame-master = <&codec_port>;
++			bitclock-master = <&codec_endpoint>;
++			frame-master = <&codec_endpoint>;
+ 			bitclock-inversion;
+ 			clocks = <&audio_mclk>;
+ 		};
 -- 
 2.53.0
 
