@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816F743935B;
-	Tue, 21 Jul 2026 23:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89003ACA5D;
+	Tue, 21 Jul 2026 23:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674869; cv=none; b=b1wHgiMZooiYIgg9oSsb0dwpYapggw5YOrzXMRCnF/AZYUL8gXDAuI4o0J9htjiwh7WgkAQWb5rtn7oV9XCRIbpPXDOaXVsAZAJMeW/l4fSl6QkY9UeXQDUWChN17hh5iUtiKt7jHU3tsV4MTGiGEwQAVmEON3agVTT8LScqSJc=
+	t=1784674872; cv=none; b=VK+zh41hiLFrRIQ9KKQ5g3tXURcDhWVqHqUbpLtQh0ajEZ4RtSUxtXcZVWt6abbSDeY9+C6Q8hsSAiA7hI8VX4fnmetfi3h+DT5ns5N5xYRYM2o353vKE+WtJ4gOG/68zETKo9O3TIPSc02TNHrJmLV1Cfbe3/pXw/tPag3puxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674869; c=relaxed/simple;
-	bh=04Vmik7iwWUjSKQ77ZT/aefIESv28lINcKp1U8kpDqM=;
+	s=arc-20240116; t=1784674872; c=relaxed/simple;
+	bh=paYvdJPL+72f2uzDwAuOscOibj1ox3nRaW0OhwKiG8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H1LBlMifmUddFv+iC3cdAYKsHvzKycxR9VQHfYBUXMktjaSZ11qwJJeVcLxLNFwG1SPSqkdvBW50McGqYdVZ6o6XwvoF6l6l81DEhomromRzcPqw2CEEhw0fNIqgm5hJtI/cgXjEfEehixna74vxYl1s08QOA1q/FquCjy6m6CI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w4/koimK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QEc+dRVdkH9m4PfO+UIzDCQAXQymCPmReDkjIsJNVfeSzoAUB41//uF28gBhI3CabLg2DpuVbt4T/v3mnQ0KrCQ+1cC0GPGnhVdDjrA4ARVPdUJO5q+oSbBBzvCmIlCZeFPCpQBuPKVokjzAvyUmeZEAxRS7s3IAM+ue1tCpNaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qudUH0NX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w4/koimK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43B31F000E9;
-	Tue, 21 Jul 2026 23:01:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qudUH0NX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A06E1F000E9;
+	Tue, 21 Jul 2026 23:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674868;
-	bh=is9kPkCRQfyLPx//kPuuWzCf/PPf17sOrPCFviZ3fMQ=;
+	s=korg; t=1784674870;
+	bh=jMhOPB83hEHFyZmmt0v8A1E/85V0bCTLdH02HU0sN3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w4/koimKUZsfeluTW7PKVKpyMNXHTKpP7PBeMmEdDiSgBiYTe/BWv4tMo1gNSGfOT
-	 5hKA0+bxRLv2BmlmSun3kaLpckQb5u6HLmSMTVao1uf/rD1bXpRNc8ZVkIIbeH/QCo
-	 he++rV9khMPRsB3FjCQky3o5WMUc9q4OBQ73QOdk=
+	b=qudUH0NXP1Q1taDLJnyV33Bm59TmIcobVbqjwBB6ln1EWeKETg49bbhEOGdkui+Qr
+	 +4EMaR84YwOJqci7UapyAqVtNjDTbT2yTkk64ypHJm/ZdJlfIY+a33eUgXuKkxNyAa
+	 AJeowYDv7LzaRjOCpjJN8sAXNHPhUqz+vhiWmiyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Guy Briggs <rgb@redhat.com>,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 684/699] audit: fix potential integer overflow in audit_log_n_hex()
-Date: Tue, 21 Jul 2026 17:27:23 +0200
-Message-ID: <20260721152411.207219244@linuxfoundation.org>
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 5.10 685/699] posix-cpu-timers: Use u64 multiplication in update_rlimit_cpu()
+Date: Tue, 21 Jul 2026 17:27:24 +0200
+Message-ID: <20260721152411.229827025@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,63 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Robaina <rrobaina@redhat.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-[ Upstream commit 65dfde57d1e29ce2b76fc23dd565eccd5c0bc0f0 ]
+commit 26aff38fefb1d6cd87e22525f41cc8f1aa61b24f upstream.
 
-The function calculates new_len as len << 1 for hex encoding. This
-has two overflow risks: the shift itself can overflow when len is
-large, and the result can be truncated when assigned to new_len
-(declared as int) from the size_t calculation.
+update_rlimit_cpu() converts the RLIMIT_CPU value to nanoseconds with
 
-Fix by using check_shl_overflow() to catch shift overflow and
-changing new_len and loop counter i to size_t to prevent truncation.
+        u64 nsecs = rlim_new * NSEC_PER_SEC;
 
+On 32-bit kernels both rlim_new (unsigned long) and NSEC_PER_SEC
+(1000000000L) are 32-bit, so the multiplication is performed in unsigned
+long and truncated for rlim_new > 4 seconds before being widened to u64.
+
+The same file already casts to u64 for the matching computation in
+check_process_timers():
+
+        u64 softns = (u64)soft * NSEC_PER_SEC;
+
+As a result, the truncated value is installed into the CPUCLOCK_PROF
+expiry cache (nextevt), causing the process CPU timer to be programmed
+to fire prematurely for any RLIMIT_CPU soft limit >= 5 seconds. The
+actual SIGXCPU/SIGKILL decision in check_process_timers() already casts
+to u64 and is therefore correct, so limit enforcement is not broken;
+only the expiry-cache programming is wrong. Apply the same cast here so
+both paths convert rlim_cur identically.
+
+64-bit kernels are unaffected.
+
+Fixes: 858cf3a8c599 ("timers/itimer: Convert internal cputime_t units to nsec")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: 168b7173959f ("AUDIT: Clean up logging of untrusted strings")
-Reviewed-by: Richard Guy Briggs <rgb@redhat.com>
-Signed-off-by: Ricardo Robaina <rrobaina@redhat.com>
-[PM: remove vertical whitspace noise]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20260616112017.1681372-1-zhanxusheng@xiaomi.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/audit.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ kernel/time/posix-cpu-timers.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/audit.c
-+++ b/kernel/audit.c
-@@ -61,6 +61,7 @@
- #include <net/netns/generic.h>
- #include <net/ip.h>
- #include <net/ipv6.h>
-+#include <linux/overflow.h>
- 
- #include "audit.h"
- 
-@@ -2034,7 +2035,8 @@ void audit_log_format(struct audit_buffe
- void audit_log_n_hex(struct audit_buffer *ab, const unsigned char *buf,
- 		size_t len)
+--- a/kernel/time/posix-cpu-timers.c
++++ b/kernel/time/posix-cpu-timers.c
+@@ -37,7 +37,7 @@ void posix_cputimers_group_init(struct p
+  */
+ void update_rlimit_cpu(struct task_struct *task, unsigned long rlim_new)
  {
--	int i, avail, new_len;
-+	int avail;
-+	size_t i, new_len;
- 	unsigned char *ptr;
- 	struct sk_buff *skb;
+-	u64 nsecs = rlim_new * NSEC_PER_SEC;
++	u64 nsecs = (u64)rlim_new * NSEC_PER_SEC;
  
-@@ -2044,7 +2046,12 @@ void audit_log_n_hex(struct audit_buffer
- 	BUG_ON(!ab->skb);
- 	skb = ab->skb;
- 	avail = skb_tailroom(skb);
--	new_len = len<<1;
-+
-+	if (check_shl_overflow(len, 1, &new_len)) {
-+		audit_log_format(ab, "?");
-+		return;
-+	}
-+
- 	if (new_len >= avail) {
- 		/* Round the buffer request up to the next multiple */
- 		new_len = AUDIT_BUFSIZ*(((new_len-avail)/AUDIT_BUFSIZ) + 1);
+ 	spin_lock_irq(&task->sighand->siglock);
+ 	set_process_cpu_timer(task, CPUCLOCK_PROF, &nsecs, NULL);
 
 
