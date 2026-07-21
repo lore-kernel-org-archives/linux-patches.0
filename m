@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECEA35C1A6;
-	Tue, 21 Jul 2026 19:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0652146F48B;
+	Tue, 21 Jul 2026 19:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662829; cv=none; b=TqWUIhg7XtLYo/1Gkd/n6vrU8vgHiD5NMil65IV2EsiD8WkAGc+qLBh1LonJDsHBL9HEZYMeHZn+RYlMc5dq3ESkB4ulg9EqZwrpf1hIQRbyJn9Az1tgpIdkVtRuTk0fMWLmizKlAlqq8nS9qBRNw1Uw5QlgJvi64WK6okazO1w=
+	t=1784662831; cv=none; b=IirToGEsF0yljj+VtM5k4GIDY2LyLXsUu7MsGMQSMoexYgW8nJb+0VObnyyOrvwFIuqsiV2c3No4NAYJ9CdNLm43NySS9EwCR2xkuf65eV2OznK5RE/R+oy6S+qdBkXLmfjAyHpb3iRUkRur7dsNJpYAXSJUBeNcuAPdvUB9afk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662829; c=relaxed/simple;
-	bh=LC66wlaQL/mU9Tq7Drr9FK+pdMhdJDK4HygK7SYEtYY=;
+	s=arc-20240116; t=1784662831; c=relaxed/simple;
+	bh=PRFqiYqfGmreaNbTvFL4fDLUM+ZDK/dx0Rd0vELnZcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r8XulNkMcTjWO76OHXPqk7llu8I53MnWD65Ee1qkm/iIyRteTwqfSEb2jOeS949VwwFDCsMkx64LrBNjGjT0yjPmSGWTtpkyS59gN8j+Np5vgy4uNUHoRLXuIKI3+gVQdxdgY5Ho6RZDplqY7AkJQwbe1QuFU93lr7U6UH+Bk5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBAD8Bwd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ToyiMo43FQnOjWIwlfW2CUdI4hEsE64lBOLrUiTI/vWHoGEr3dIREHQhBbDOA/BqMCwRwsoK/sD470XSet+WgzQiTDl/vTnBq36nItnCkEhACWBg67Sn3HQU8mAbmGGBH3Q49qyDFkWURiUkP1s7FPufNGRE6v2PdO4+oE47KXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxQM84kC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBAD8Bwd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48761F000E9;
-	Tue, 21 Jul 2026 19:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxQM84kC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6EC1F00A3A;
+	Tue, 21 Jul 2026 19:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662827;
-	bh=tG9g1zKGB4dIzN4w8O0WUTxPxv1zvsH8qYQBTn+Su2A=;
+	s=korg; t=1784662829;
+	bh=FsxPalyFf+I4P7jhe5zzSNZA2hL3KtVD6i5w+X2rj1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cBAD8Bwd4VhrU3Y6WyRSyyDy6+uopBispRWbzCOu7rfcDXxLGwx+nz4i2UqZ+R2+H
-	 Ja/nAeyOCaPFY7Jy+M/6zORJSy8XfZC7wkNypKSnLq18rQ3iYWHGHX1k1O78eqEDlb
-	 NDMKryo188ps7wKV+BgAQVd0Q3q4ho4EyymOq0Ts=
+	b=GxQM84kCQDt8teciRMHpCHFhkWtVFhxJ6rKp+K6hHV7y2aIPELO22t6LizlF5++1O
+	 QEYbfpGR72KMsBvOe5mQ/JbKQATp21vH58buISk1oF7QYRssdvTwRW3/QZ4D/RrVAy
+	 Yc5Xt2ObtdcVpvg0BODpGev+Snk42huf12Uw0I/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Zhang Yanmin <yanmin_zhang@linux.intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0555/1276] perf tools: Use snprintf() for root_dir path construction
-Date: Tue, 21 Jul 2026 17:16:38 +0200
-Message-ID: <20260721152458.538281048@linuxfoundation.org>
+Subject: [PATCH 6.12 0591/1276] md/raid1: free r1_bio when REQ_NOWAIT is set and read would block on retry
+Date: Tue, 21 Jul 2026 17:17:14 +0200
+Message-ID: <20260721152459.339634759@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,54 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 
-[ Upstream commit 7b0df6f4d498b1608afccfd6dffb264e6da91693 ]
+[ Upstream commit 69ad6ce47f9bf2b9fe0ed69b042db993d33bbf12 ]
 
-get_kernel_version() in machine.c and dso__load_guest_kernel_sym() in
-symbol.c use sprintf() to construct paths by prepending root_dir to
-"/proc/version" and "/proc/kallsyms" respectively.  Both write into
-PATH_MAX stack buffers, but root_dir comes from --guestmount or KVM
-configuration and is not length-checked.  A root_dir at or near
-PATH_MAX causes a stack buffer overflow.
+When a read is retried, raid1_read_request() may be called with a
+pre-allocated r1_bio. If wait_read_barrier() fails for a REQ_NOWAIT
+read, the bio is completed and the function returns immediately. In this
+case the existing r1_bio is leaked.
 
-Switch to snprintf() with sizeof(path) to prevent overflow.
+This fixes a leak of pre-allocated r1_bio structures for retried reads.
 
+Fixes: 5aa705039c4f ("md: raid1 add nowait support")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: a1645ce12adb6c9c ("perf: 'perf kvm' tool for monitoring guest performance from host")
-Cc: Zhang Yanmin <yanmin_zhang@linux.intel.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Closes: https://sashiko.dev/#/patchset/20260611083514.754922-1-abd.masalkhi@gmail.com?part=1
+Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+Link: https://patch.msgid.link/20260611101350.759154-1-abd.masalkhi@gmail.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 2 +-
- tools/perf/util/symbol.c  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/raid1.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index 557853fcb5479b..71d3d034ba095e 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -1294,7 +1294,7 @@ static char *get_kernel_version(const char *root_dir)
- 	char *name, *tmp;
- 	const char *prefix = "Linux version ";
- 
--	sprintf(version, "%s/proc/version", root_dir);
-+	snprintf(version, sizeof(version), "%s/proc/version", root_dir);
- 	file = fopen(version, "r");
- 	if (!file)
- 		return NULL;
-diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
-index e792dd22b54983..92b31c1a73a839 100644
---- a/tools/perf/util/symbol.c
-+++ b/tools/perf/util/symbol.c
-@@ -2270,7 +2270,7 @@ static int dso__load_guest_kernel_sym(struct dso *dso, struct map *map)
- 		if (!kallsyms_filename)
- 			return -1;
- 	} else {
--		sprintf(path, "%s/proc/kallsyms", machine->root_dir);
-+		snprintf(path, sizeof(path), "%s/proc/kallsyms", machine->root_dir);
- 		kallsyms_filename = path;
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index eb583df45ecbc8..4b18151cd81365 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -1335,6 +1335,12 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
+ 	if (!wait_read_barrier(conf, bio->bi_iter.bi_sector,
+ 				bio->bi_opf & REQ_NOWAIT)) {
+ 		bio_wouldblock_error(bio);
++
++		if (r1bio_existed) {
++			set_bit(R1BIO_Returned, &r1_bio->state);
++			raid_end_bio_io(r1_bio);
++		}
++
+ 		return;
  	}
  
 -- 
