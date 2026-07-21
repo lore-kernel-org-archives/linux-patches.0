@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC2B402BA9;
-	Tue, 21 Jul 2026 17:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3592619049B;
+	Tue, 21 Jul 2026 17:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654792; cv=none; b=tKEkQQI+ASMw6EhBMRBClPdoaqWlGymdmsdic71sPVUl9kZ5hwc0A6UD+K3Bj2QDE4xf0Z+n8W1bIWk8yjrwuSApFiGTDD9XMRCibSxV5cjASYAUxeRPI4DHc6+vxKPHoCOLXvrqrH8THJbpO/ZBQbP3pueSK2SVv+VVhO5c+YM=
+	t=1784654795; cv=none; b=dnm202q6K+stOY5mP2A1/JbhmFUEyluqJ2FZOf96886++3hdDl/KndveVvaAwF4ipafzrzH4x5d08FUuvXRMMYW+c4V3KwN+WqcxpNyKULyT+YH/Gq/2aON8DRFTeMFuoJVl6y1IkIXqC+Jh1U+a0ntc0E7VGzpn6X02yd86vnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654792; c=relaxed/simple;
-	bh=rJ3NjfYNWeWPYHPf5PLvjl2UeBt1wjRC1o8kXAW5veA=;
+	s=arc-20240116; t=1784654795; c=relaxed/simple;
+	bh=V1+auJRWPE8/noc/HwF65DcB58d/bvkJ+znzFGXYFx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hSniWH66FpbSLgFd0ap8+d9mU2hi8A0kkyUd8IUIgNcqaTYIqMXnguUjqQdaxrqCPWpq1/YyEn1iKxr65MONBri7ZUrNdgn0NQzzBIw3aOQKt8YlVf/f1I3EYgbg6cX4pb0eVvHIXzNWu9Y5pJJvKpRzOe3ICB3BCiT65NVORq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dqBgTl9I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rpf0hlv9O0qJ89mGfDd30VkN0NIq1Z9tRuwIt1ipErV3qFibznJf/ugYi0LJwuxDbY7nD+LJAU8qo6Y8mYT2uo6XMLwuFqD+21yYItLUysGYmWQeOlAJaE930ChmxGtvq/h3HVWfJD6tdAqSgGYpnv3p1q8cI10MJKqzUqZ27cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aY+UjRV6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqBgTl9I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29321F000E9;
-	Tue, 21 Jul 2026 17:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aY+UjRV6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC711F000E9;
+	Tue, 21 Jul 2026 17:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654791;
-	bh=w9eBp1B6OAoRruXdfrzl/10jfkq1y2Cxhtbf3uMGb8s=;
+	s=korg; t=1784654794;
+	bh=mmoMK5wKLzSKc3bTCv0fVynhfNaZXvLPhgMObGtwZE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dqBgTl9ImoMFgd47kW3ocblQDXN0vTeWGPQ6C8Ccsa9Er0tZiQn3kfRBPmfMAVbFL
-	 9OEUPYA5vkXg0STwILVkFtauxFMn+iOCG4+6zRzJoGaJM8SmmrFyLngHnjg/T5JdGk
-	 10nxFbStyS2L7g3dLNPgLn7/eLOyuxNEn6nR2t44=
+	b=aY+UjRV6/WtCvtE4dod0ufdR8VszGa8wQKZZxNeJeM7R2spAYmOGaWy0pDcUIcWUc
+	 V3W7UGZ26IatynPEE7D82Xn0otlTE4CI+w3TKb7kmap309HCWGLra/CtR8o1zPey7x
+	 hZ/rGCgvUFIYUgHQnPbmHLM8ECZbbZPgITt39sic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 7.1 1837/2077] bpf: Add missing access_ok call to copy_user_syms
-Date: Tue, 21 Jul 2026 17:25:10 +0200
-Message-ID: <20260721152636.067328751@linuxfoundation.org>
+	Sun Jian <sun.jian.kdev@gmail.com>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Eduard Zingerman <eddyz87@gmail.com>
+Subject: [PATCH 7.1 1838/2077] selftests/bpf: Cover negative buffer pointer offsets
+Date: Tue, 21 Jul 2026 17:25:11 +0200
+Message-ID: <20260721152636.089408310@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,58 +51,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Sun Jian <sun.jian.kdev@gmail.com>
 
-commit d5dc200c3a3f217de072af269dd90adddf90e48d upstream.
+commit 6f59deb32efa4673fc3b1fef9f3a0da48e9d8494 upstream.
 
-As reported by sashiko we use __get_user without prior access_ok call on the
-user space pointer. Adding the missing call for the whole pointer array.
+Add verifier coverage for constant negative offsets on PTR_TO_TP_BUFFER
+and PTR_TO_BUF pointers. Both programs adjust the buffer pointer by -8
+and access it at offset zero, so the negative effective start must be
+rejected at load time.
 
-Plus removing the err check in the error path, because it's not needed and
-also we can return -ENOMEM directly from the first kvmalloc_array fail path.
+Switch the raw tracepoint writable attach checks from nbd_send_request
+to bpf_testmod_test_writable_bare_tp, avoiding a dependency on the NBD
+tracepoint. Keep the existing past-end case and add a case with a
+negative var_off compensated by a positive instruction offset. The
+effective start remains non-negative, so the program loads, but its
+access end exceeds the writable context size and
+bpf_raw_tracepoint_open() must return -EINVAL.
 
-Cc: stable@vger.kernel.org
-[1] https://lore.kernel.org/bpf/20260611115503.AC16D1F00893@smtp.kernel.org/
-Fixes: 0236fec57a15 ("bpf: Resolve symbols with ftrace_lookup_symbols for kprobe multi link")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/bpf/20260611115503.AC16D1F00893@smtp.kernel.org/
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/r/20260616083056.405652-1-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Cc: stable@vger.kernel.org # 5.2.0
+Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
+Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Link: https://patch.msgid.link/20260714093846.18159-3-sun.jian.kdev@gmail.com
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/bpf_trace.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/raw_tp_writable_reject_bad_access.c  |   57 ++++++++++
+ tools/testing/selftests/bpf/prog_tests/raw_tp_writable_reject_nbd_invalid.c |   43 -------
+ tools/testing/selftests/bpf/prog_tests/verifier.c                           |    2 
+ tools/testing/selftests/bpf/progs/verifier_ptr_to_buf.c                     |   27 ++++
+ tools/testing/selftests/bpf/progs/verifier_raw_tp_writable.c                |   16 ++
+ 5 files changed, 102 insertions(+), 43 deletions(-)
+ create mode 100644 tools/testing/selftests/bpf/prog_tests/raw_tp_writable_reject_bad_access.c
+ delete mode 100644 tools/testing/selftests/bpf/prog_tests/raw_tp_writable_reject_nbd_invalid.c
+ create mode 100644 tools/testing/selftests/bpf/progs/verifier_ptr_to_buf.c
 
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2331,9 +2331,12 @@ static int copy_user_syms(struct user_sy
- 	int err = -ENOMEM;
- 	unsigned int i;
- 
-+	if (!access_ok(usyms, cnt * sizeof(*usyms)))
-+		return -EFAULT;
+--- /dev/null
++++ b/tools/testing/selftests/bpf/prog_tests/raw_tp_writable_reject_bad_access.c
+@@ -0,0 +1,57 @@
++// SPDX-License-Identifier: GPL-2.0
 +
- 	syms = kvmalloc_array(cnt, sizeof(*syms), GFP_KERNEL);
- 	if (!syms)
--		goto error;
-+		return -ENOMEM;
- 
- 	buf = kvmalloc_array(cnt, KSYM_NAME_LEN, GFP_KERNEL);
- 	if (!buf)
-@@ -2358,10 +2361,8 @@ static int copy_user_syms(struct user_sy
- 	return 0;
- 
- error:
--	if (err) {
--		kvfree(syms);
--		kvfree(buf);
--	}
-+	kvfree(syms);
-+	kvfree(buf);
- 	return err;
++#include <test_progs.h>
++#include "test_kmods/bpf_testmod.h"
++#include "bpf_util.h"
++
++static void check_attach_reject(const struct bpf_insn *program, size_t prog_len)
++{
++	LIBBPF_OPTS(bpf_prog_load_opts, opts);
++	char error[4096];
++	int bpf_fd, tp_fd;
++
++	opts.log_level = 2;
++	opts.log_buf = error;
++	opts.log_size = sizeof(error);
++
++	bpf_fd = bpf_prog_load(BPF_PROG_TYPE_RAW_TRACEPOINT_WRITABLE, NULL, "GPL v2",
++			       program, prog_len, &opts);
++	if (!ASSERT_GE(bpf_fd, 0, "prog_load"))
++		return;
++
++	tp_fd = bpf_raw_tracepoint_open("bpf_testmod_test_writable_bare_tp", bpf_fd);
++	ASSERT_EQ(tp_fd, -EINVAL, "bpf_raw_tracepoint_open");
++	if (tp_fd >= 0)
++		close(tp_fd);
++
++	close(bpf_fd);
++}
++
++void test_raw_tp_writable_reject_bad_access(void)
++{
++	const struct bpf_insn program[] = {
++		/* r6 is our tp buffer */
++		BPF_LDX_MEM(BPF_DW, BPF_REG_6, BPF_REG_1, 0),
++		/* one byte beyond the end of the writable context */
++		BPF_LDX_MEM(BPF_B, BPF_REG_0, BPF_REG_6,
++			    sizeof(struct bpf_testmod_test_writable_ctx)),
++		BPF_EXIT_INSN(),
++	};
++
++	const struct bpf_insn negative_var_off_program[] = {
++		BPF_LDX_MEM(BPF_DW, BPF_REG_6, BPF_REG_1, 0),
++		/* make var_off negative, but keep the effective access offset non-negative */
++		BPF_ALU64_IMM(BPF_ADD, BPF_REG_6, -8),
++		/* one byte beyond the end of the writable context */
++		BPF_LDX_MEM(BPF_B, BPF_REG_0, BPF_REG_6,
++			    sizeof(struct bpf_testmod_test_writable_ctx) + 8),
++		BPF_EXIT_INSN(),
++	};
++
++	if (test__start_subtest("past_end"))
++		check_attach_reject(program, ARRAY_SIZE(program));
++
++	if (test__start_subtest("negative_var_off_past_end"))
++		check_attach_reject(negative_var_off_program,
++				    ARRAY_SIZE(negative_var_off_program));
++}
+--- a/tools/testing/selftests/bpf/prog_tests/raw_tp_writable_reject_nbd_invalid.c
++++ /dev/null
+@@ -1,43 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0
+-
+-#include <test_progs.h>
+-#include <linux/nbd.h>
+-#include "bpf_util.h"
+-
+-void test_raw_tp_writable_reject_nbd_invalid(void)
+-{
+-	__u32 duration = 0;
+-	char error[4096];
+-	int bpf_fd = -1, tp_fd = -1;
+-
+-	const struct bpf_insn program[] = {
+-		/* r6 is our tp buffer */
+-		BPF_LDX_MEM(BPF_DW, BPF_REG_6, BPF_REG_1, 0),
+-		/* one byte beyond the end of the nbd_request struct */
+-		BPF_LDX_MEM(BPF_B, BPF_REG_0, BPF_REG_6,
+-			    sizeof(struct nbd_request)),
+-		BPF_EXIT_INSN(),
+-	};
+-
+-	LIBBPF_OPTS(bpf_prog_load_opts, opts,
+-		.log_level = 2,
+-		.log_buf = error,
+-		.log_size = sizeof(error),
+-	);
+-
+-	bpf_fd = bpf_prog_load(BPF_PROG_TYPE_RAW_TRACEPOINT_WRITABLE, NULL, "GPL v2",
+-			       program, ARRAY_SIZE(program),
+-			       &opts);
+-	if (CHECK(bpf_fd < 0, "bpf_raw_tracepoint_writable load",
+-		  "failed: %d errno %d\n", bpf_fd, errno))
+-		return;
+-
+-	tp_fd = bpf_raw_tracepoint_open("nbd_send_request", bpf_fd);
+-	if (CHECK(tp_fd >= 0, "bpf_raw_tracepoint_writable open",
+-		  "erroneously succeeded\n"))
+-		goto out_bpffd;
+-
+-	close(tp_fd);
+-out_bpffd:
+-	close(bpf_fd);
+-}
+--- a/tools/testing/selftests/bpf/prog_tests/verifier.c
++++ b/tools/testing/selftests/bpf/prog_tests/verifier.c
+@@ -77,6 +77,7 @@
+ #include "verifier_precision.skel.h"
+ #include "verifier_prevent_map_lookup.skel.h"
+ #include "verifier_private_stack.skel.h"
++#include "verifier_ptr_to_buf.skel.h"
+ #include "verifier_raw_stack.skel.h"
+ #include "verifier_raw_tp_writable.skel.h"
+ #include "verifier_reg_equal.skel.h"
+@@ -225,6 +226,7 @@ void test_verifier_or_jmp32_k(void)
+ void test_verifier_precision(void)            { RUN(verifier_precision); }
+ void test_verifier_prevent_map_lookup(void)   { RUN(verifier_prevent_map_lookup); }
+ void test_verifier_private_stack(void)        { RUN(verifier_private_stack); }
++void test_verifier_ptr_to_buf(void)           { RUN(verifier_ptr_to_buf); }
+ void test_verifier_raw_stack(void)            { RUN(verifier_raw_stack); }
+ void test_verifier_raw_tp_writable(void)      { RUN(verifier_raw_tp_writable); }
+ void test_verifier_reg_equal(void)            { RUN(verifier_reg_equal); }
+--- /dev/null
++++ b/tools/testing/selftests/bpf/progs/verifier_ptr_to_buf.c
+@@ -0,0 +1,27 @@
++// SPDX-License-Identifier: GPL-2.0
++
++#include <vmlinux.h>
++#include <bpf/bpf_helpers.h>
++#include "bpf_misc.h"
++
++SEC("iter/bpf_map_elem")
++__description("PTR_TO_BUF: reject negative const offset")
++__failure
++__msg("invalid negative rdwr buffer offset")
++__naked void ptr_to_buf_reject_negative_const_offset(void)
++{
++	asm volatile ("r0 = 0;					\
++	 r2 = *(u64 *)(r1 + %[value_off]);			\
++	 if r2 == 0 goto l0_%=;					\
++	 r2 += -8;						\
++	 r0 = *(u64 *)(r2 + 0);					\
++l0_%=:								\
++	 exit;							\
++	"
++	:
++	: __imm_const(value_off,
++		      offsetof(struct bpf_iter__bpf_map_elem, value))
++	: __clobber_all);
++}
++
++char _license[] SEC("license") = "GPL";
+--- a/tools/testing/selftests/bpf/progs/verifier_raw_tp_writable.c
++++ b/tools/testing/selftests/bpf/progs/verifier_raw_tp_writable.c
+@@ -47,4 +47,20 @@ l0_%=:	/* shift the buffer pointer to a
+ 	: __clobber_all);
  }
  
++SEC("raw_tracepoint.w")
++__description("raw_tracepoint_writable: reject negative const offset")
++__failure
++__msg("invalid negative tracepoint buffer offset")
++__naked void tracepoint_writable_reject_negative_const_offset(void)
++{
++	asm volatile ("					\
++	r6 = *(u64 *)(r1 + 0);				\
++	r6 += -8;					\
++	r0 = *(u64 *)(r6 + 0);				\
++	exit;						\
++"	:
++	:
++	: __clobber_all);
++}
++
+ char _license[] SEC("license") = "GPL";
 
 
