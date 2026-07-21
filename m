@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006AA471257;
-	Tue, 21 Jul 2026 19:30:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21EF1AF0BB;
+	Tue, 21 Jul 2026 19:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662224; cv=none; b=MN5x6rqK0k6i/ElIXzkhMsvVveTr5Qx08ZO700X1IVXv2XQud6ZU9qTrKPPp/sc1JfN6OEchzxcL/ICY21MpnKz2eE+jMROi1rf16THHxnYm+U/uMxLMa/hMDO//ca8Oo1INTIsWttL3ZrTNsaPwxlD8cHynAbZYEtmxWfRbR5Q=
+	t=1784662226; cv=none; b=DJevBLo1qemxkYaE4QhhQy5SzqYw2orAVDNAKVZuf7zXFZ/uVHYLttpFEvtY4K1ZzJz4lMh/Y7ZykM1OdgNauFycr2S2cpm0rfl/iO9wURlv9HIcwTFl6NMjw6jnXxTAZ6GVt2F+sneJJbf8AWx+BxBY+rwkI4yvFnHANMXRRZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662224; c=relaxed/simple;
-	bh=/Lu8YJTgzN1nMEFA38woxA2dLwKIEDhLxyoyPSiqAjo=;
+	s=arc-20240116; t=1784662226; c=relaxed/simple;
+	bh=xsVw1nu69NgMvD2c7TEHuuQBq0wxfXLP/3qQYuLlfAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQ/pWuzH9oZxhYNwuLL4wD76BxIOOZvWujFl3SHknC6dEN3ZungYu+k3fWApPezIM3ZYj93+KLWTrQHgQXXT4NGOJsyiOn4Bp4vn0ronjCqQhvcgPubbroYU0D7p5KH3iq4TtocTGLrD1nj5dcGVTDk/IPOT0L1idP2iTuiiyRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzvYFt8q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mj4Jb04Q0hD+N8BJvqG8phx5tDEv/nA6CEe9vxZQrs6c9gDU7FTzEpHOE68WGB1EiZwkEdQabDXHvzGNe12q7+Yt/ml4gQW8/5FvFwjFAaW3HFpFZbONx6zUd4RFPRsPT8AkjcOIE8OmgRzLaVaLoddsQReJ79Ge4NsyHezq0zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UK0kaa0Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzvYFt8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149D71F000E9;
-	Tue, 21 Jul 2026 19:30:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UK0kaa0Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1E991F000E9;
+	Tue, 21 Jul 2026 19:30:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662222;
-	bh=mVnhiY6lccuJoqv/m3CKLxCDQI3/g+rWlVf2IivNbuU=;
+	s=korg; t=1784662225;
+	bh=QYIiP9Pqj3WsO5gc9KNFqxQmQIDVnAlkJPx4nqp+dUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jzvYFt8qil9x7LD/tM3fl+a4meD5rfIfAt6zFTebo8HKoP7m+H1+sX0va7swINS6e
-	 77gZ0iIRT/5+o2pY+Zck3Hfa856pVJAgXOQgrRJnC0hrv+/J3+Dd2HcSYwpD9w3IXM
-	 qps8PCBpPojSWIfdq1D94klJtCOwaLnDmAGP8AHE=
+	b=UK0kaa0QHlQ0YPTGj3O1tnRq2P/N0cLJtufbmHKBjo3PB7KzlwdgJFoSDgZAvLv1u
+	 +ZsFTbuEQDy8z8+qXgFw8znZDLl7XbaeaeHN7rXvLxbn+Thk95M93fJ+JJKK67Jp1a
+	 mP41fwm0ZKa8V/z6RMUF0cZQMnzQZe7ijY04nwsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Milena Olech <milena.olech@intel.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0361/1276] net: wwan: t7xx: check skb_clone in control TX
-Date: Tue, 21 Jul 2026 17:13:24 +0200
-Message-ID: <20260721152454.187010904@linuxfoundation.org>
+Subject: [PATCH 6.12 0362/1276] dpll: add reference-sync netlink attribute
+Date: Tue, 21 Jul 2026 17:13:25 +0200
+Message-ID: <20260721152454.207904865@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,41 +54,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
 
-[ Upstream commit 05f789fa90d95d5771230e78453cedff2486039d ]
+[ Upstream commit 7f15ee35972dd3dee37704bfd0f136290f6d63d9 ]
 
-t7xx_port_ctrl_tx() clones each skb fragment before passing it to the
-port transmit path. The clone is used immediately to set cloned->len, so
-an skb_clone() failure results in a NULL pointer dereference.
+Add new netlink attribute to allow user space configuration of reference
+sync pin pairs, where both pins are used to provide one clock signal
+consisting of both: base frequency and sync signal.
 
-Check the clone before using it. If previous fragments were already
-queued, preserve the driver's existing partial-write behavior by
-returning the number of bytes submitted so far.
-
-Fixes: 36bd28c1cb0d ("wwan: core: Support slicing in port TX flow of WWAN subsystem")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260612035613.1192486-1-ruoyuw560@gmail.com
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Milena Olech <milena.olech@intel.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Link: https://patch.msgid.link/20250626135219.1769350-2-arkadiusz.kubalewski@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 32239d600236 ("dpll: fix stale iteration in dpll_pin_on_pin_unregister()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wwan/t7xx/t7xx_port_wwan.c | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/driver-api/dpll.rst     | 25 +++++++++++++++++++++++++
+ Documentation/netlink/specs/dpll.yaml | 19 +++++++++++++++++++
+ drivers/dpll/dpll_nl.c                | 10 ++++++++--
+ drivers/dpll/dpll_nl.h                |  1 +
+ include/uapi/linux/dpll.h             |  1 +
+ 5 files changed, 54 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wwan/t7xx/t7xx_port_wwan.c b/drivers/net/wwan/t7xx/t7xx_port_wwan.c
-index 4b23ba693f3f1d..5de2b5fb647683 100644
---- a/drivers/net/wwan/t7xx/t7xx_port_wwan.c
-+++ b/drivers/net/wwan/t7xx/t7xx_port_wwan.c
-@@ -106,6 +106,8 @@ static int t7xx_port_ctrl_tx(struct t7xx_port *port, struct sk_buff *skb)
+diff --git a/Documentation/driver-api/dpll.rst b/Documentation/driver-api/dpll.rst
+index e6855cd37e8525..f8cbe7c48f7fb4 100644
+--- a/Documentation/driver-api/dpll.rst
++++ b/Documentation/driver-api/dpll.rst
+@@ -235,6 +235,31 @@ the pin.
+   ``DPLL_A_PIN_ESYNC_PULSE``                pulse type of Embedded SYNC
+   ========================================= =================================
  
- 	while (cur) {
- 		cloned = skb_clone(cur, GFP_KERNEL);
-+		if (!cloned)
-+			return cnt ? cnt : -ENOMEM;
- 		cloned->len = skb_headlen(cur);
- 		ret = t7xx_port_send_skb(port, cloned, 0, 0);
- 		if (ret) {
++Reference SYNC
++==============
++
++The device may support the Reference SYNC feature, which allows the combination
++of two inputs into a input pair. In this configuration, clock signals
++from both inputs are used to synchronize the DPLL device. The higher frequency
++signal is utilized for the loop bandwidth of the DPLL, while the lower frequency
++signal is used to syntonize the output signal of the DPLL device. This feature
++enables the provision of a high-quality loop bandwidth signal from an external
++source.
++
++A capable input provides a list of inputs that can be bound with to create
++Reference SYNC. To control this feature, the user must request a desired
++state for a target pin: use ``DPLL_PIN_STATE_CONNECTED`` to enable or
++``DPLL_PIN_STATE_DISCONNECTED`` to disable the feature. An input pin can be
++bound to only one other pin at any given time.
++
++  ============================== ==========================================
++  ``DPLL_A_PIN_REFERENCE_SYNC``  nested attribute for providing info or
++                                 requesting configuration of the Reference
++                                 SYNC feature
++    ``DPLL_A_PIN_ID``            target pin id for Reference SYNC feature
++    ``DPLL_A_PIN_STATE``         state of Reference SYNC connection
++  ============================== ==========================================
++
+ Configuration commands group
+ ============================
+ 
+diff --git a/Documentation/netlink/specs/dpll.yaml b/Documentation/netlink/specs/dpll.yaml
+index 860350e61edb55..cb5763f79ac2ae 100644
+--- a/Documentation/netlink/specs/dpll.yaml
++++ b/Documentation/netlink/specs/dpll.yaml
+@@ -365,6 +365,15 @@ attribute-sets:
+         doc: |
+           A ratio of high to low state of a SYNC signal pulse embedded
+           into base clock frequency. Value is in percents.
++      -
++        name: reference-sync
++        type: nest
++        multi-attr: true
++        nested-attributes: reference-sync
++        doc: |
++          Capable pin provides list of pins that can be bound to create a
++          reference-sync pin pair.
++
+   -
+     name: pin-parent-device
+     subset-of: pin
+@@ -395,6 +404,14 @@ attribute-sets:
+         name: frequency-min
+       -
+         name: frequency-max
++  -
++    name: reference-sync
++    subset-of: pin
++    attributes:
++      -
++        name: id
++      -
++        name: state
+ 
+ operations:
+   enum-name: dpll_cmd
+@@ -535,6 +552,7 @@ operations:
+             - esync-frequency
+             - esync-frequency-supported
+             - esync-pulse
++            - reference-sync
+ 
+       dump:
+         request:
+@@ -562,6 +580,7 @@ operations:
+             - parent-pin
+             - phase-adjust
+             - esync-frequency
++            - reference-sync
+     -
+       name: pin-create-ntf
+       doc: Notification about pin appearing
+diff --git a/drivers/dpll/dpll_nl.c b/drivers/dpll/dpll_nl.c
+index fe9b6893d26147..d709a8dc304f6e 100644
+--- a/drivers/dpll/dpll_nl.c
++++ b/drivers/dpll/dpll_nl.c
+@@ -24,6 +24,11 @@ const struct nla_policy dpll_pin_parent_pin_nl_policy[DPLL_A_PIN_STATE + 1] = {
+ 	[DPLL_A_PIN_STATE] = NLA_POLICY_RANGE(NLA_U32, 1, 3),
+ };
+ 
++const struct nla_policy dpll_reference_sync_nl_policy[DPLL_A_PIN_STATE + 1] = {
++	[DPLL_A_PIN_ID] = { .type = NLA_U32, },
++	[DPLL_A_PIN_STATE] = NLA_POLICY_RANGE(NLA_U32, 1, 3),
++};
++
+ /* DPLL_CMD_DEVICE_ID_GET - do */
+ static const struct nla_policy dpll_device_id_get_nl_policy[DPLL_A_TYPE + 1] = {
+ 	[DPLL_A_MODULE_NAME] = { .type = NLA_NUL_STRING, },
+@@ -62,7 +67,7 @@ static const struct nla_policy dpll_pin_get_dump_nl_policy[DPLL_A_PIN_ID + 1] =
+ };
+ 
+ /* DPLL_CMD_PIN_SET - do */
+-static const struct nla_policy dpll_pin_set_nl_policy[DPLL_A_PIN_ESYNC_FREQUENCY + 1] = {
++static const struct nla_policy dpll_pin_set_nl_policy[DPLL_A_PIN_REFERENCE_SYNC + 1] = {
+ 	[DPLL_A_PIN_ID] = { .type = NLA_U32, },
+ 	[DPLL_A_PIN_FREQUENCY] = { .type = NLA_U64, },
+ 	[DPLL_A_PIN_DIRECTION] = NLA_POLICY_RANGE(NLA_U32, 1, 2),
+@@ -72,6 +77,7 @@ static const struct nla_policy dpll_pin_set_nl_policy[DPLL_A_PIN_ESYNC_FREQUENCY
+ 	[DPLL_A_PIN_PARENT_PIN] = NLA_POLICY_NESTED(dpll_pin_parent_pin_nl_policy),
+ 	[DPLL_A_PIN_PHASE_ADJUST] = { .type = NLA_S32, },
+ 	[DPLL_A_PIN_ESYNC_FREQUENCY] = { .type = NLA_U64, },
++	[DPLL_A_PIN_REFERENCE_SYNC] = NLA_POLICY_NESTED(dpll_reference_sync_nl_policy),
+ };
+ 
+ /* Ops table for dpll */
+@@ -139,7 +145,7 @@ static const struct genl_split_ops dpll_nl_ops[] = {
+ 		.doit		= dpll_nl_pin_set_doit,
+ 		.post_doit	= dpll_pin_post_doit,
+ 		.policy		= dpll_pin_set_nl_policy,
+-		.maxattr	= DPLL_A_PIN_ESYNC_FREQUENCY,
++		.maxattr	= DPLL_A_PIN_REFERENCE_SYNC,
+ 		.flags		= GENL_ADMIN_PERM | GENL_CMD_CAP_DO,
+ 	},
+ };
+diff --git a/drivers/dpll/dpll_nl.h b/drivers/dpll/dpll_nl.h
+index f491262bee4f0c..3da10cfe9a6ef1 100644
+--- a/drivers/dpll/dpll_nl.h
++++ b/drivers/dpll/dpll_nl.h
+@@ -14,6 +14,7 @@
+ /* Common nested types */
+ extern const struct nla_policy dpll_pin_parent_device_nl_policy[DPLL_A_PIN_PHASE_OFFSET + 1];
+ extern const struct nla_policy dpll_pin_parent_pin_nl_policy[DPLL_A_PIN_STATE + 1];
++extern const struct nla_policy dpll_reference_sync_nl_policy[DPLL_A_PIN_STATE + 1];
+ 
+ int dpll_lock_doit(const struct genl_split_ops *ops, struct sk_buff *skb,
+ 		   struct genl_info *info);
+diff --git a/include/uapi/linux/dpll.h b/include/uapi/linux/dpll.h
+index b0654ade7b7eba..7fa641b3a20adb 100644
+--- a/include/uapi/linux/dpll.h
++++ b/include/uapi/linux/dpll.h
+@@ -213,6 +213,7 @@ enum dpll_a_pin {
+ 	DPLL_A_PIN_ESYNC_FREQUENCY,
+ 	DPLL_A_PIN_ESYNC_FREQUENCY_SUPPORTED,
+ 	DPLL_A_PIN_ESYNC_PULSE,
++	DPLL_A_PIN_REFERENCE_SYNC,
+ 
+ 	__DPLL_A_PIN_MAX,
+ 	DPLL_A_PIN_MAX = (__DPLL_A_PIN_MAX - 1)
 -- 
 2.53.0
 
