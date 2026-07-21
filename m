@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DF633A9FC;
-	Tue, 21 Jul 2026 20:46:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B27F395243;
+	Tue, 21 Jul 2026 20:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666766; cv=none; b=OCiL53fsKYQblhcNBYsxePJp0Xj1PwN7nAey59OBsElFgL1Ne8k/cfoTYzAkFeuAJdP7dUJvmxoDV32PO51KA6ZVAheAj8Xe1U7CKkaf1gvXVDgukDCmXYwzXj6lwlMkIyUexHNYFb7e8gBi/bqHtUzJEKFAcvsH00V44BKANmM=
+	t=1784666769; cv=none; b=iXes8oeKaYoQ3WOduTM3ht7TZg6URPaN9idjcZaRX2GLgGeWDpiF5bkGa5I/3oID1us7FeSQGtqkElx2/79fXRMZavr2jhDDmgM9hpLI/KxBiIPhCKGTm+1PGgsXa5ihIDyy3p6+dWPMsBzoJMh4CALzeaXuReGyO3GXnqLJ9cU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666766; c=relaxed/simple;
-	bh=tRgjYnNJYL49EOvwgg2oWyEO/Jr0UW0MZeOTxyCP5i0=;
+	s=arc-20240116; t=1784666769; c=relaxed/simple;
+	bh=XVKt4ni0ktG5++tjUsfCVx6T1kspQoNgLdwqvDMziVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SYmtknAoAIJc08hjHoE8YdVl1wEYg9HpuvvFPJ5s/79Os52LY6aQqBpqN6SOhlCjH9h72Chd1P9J2CnmSqOoqEd9c2u6psbNm6Vqnt9ZfvhAOgBjWDNTSrq6eLoqdSA//VeI4DPnle+7MZ8/gq6DrjCrQEK9nTGIgltMmO/TeyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMVFvyRh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lW8NYmcvzjBBmJCOtB6CgoSGX5attl6nSRakjeiReikZ89tlliiIfp+eJIwDJQ/m1H4DIcMNfE3wZpcM8WXUrlV3kFvbgryH4CMJjlvDrnVs693q8++JkviLBtu0KD7wbIw2erAP8p8F1OrbYLXYaEZuLxDYZZIUNtMUwe920uM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTedzGMU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMVFvyRh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257281F000E9;
-	Tue, 21 Jul 2026 20:46:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTedzGMU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A3E1F000E9;
+	Tue, 21 Jul 2026 20:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666765;
-	bh=yKHgxtZt1T/0tZVB5BxIBbs9eIAzdFsxVRQXvh0CV5c=;
+	s=korg; t=1784666768;
+	bh=bHN1hak39hDQJYs3wRjJ++TTp+1BDvtEoM49tjADVCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XMVFvyRhKpvUr9ax8GJBZ4t3QqwXQvzEe+nAiKO9ih2anqQw77U+2eaBj+v4rCdii
-	 MhjQDDfYGWqJtPsWmfWAsN/zYFBpHLUBMIqFtLpZQAPdvyjSOzRM9eusG8ESqm/oaK
-	 EgE8F3CZ+a9lzqGfO8cjxEzYs+DHOnD6JcJ2iWks=
+	b=hTedzGMUdFxD3B0gwZCDuhlG98bgLCW2fpxNB4A3vLw+tMsEvjWcFXrH2ZHE0g1xb
+	 ZXpSQYYSBCiKPWB3ZMufeXDP5d/4Jxu3ZLxOlgXUuO8FvEHY0V+8hGyRSsMMMyHHkF
+	 6iDmlEzI5f12luXpgiGAZ9ZhVbvCnvcL3hfoGxw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0807/1266] MIPS: DEC: Ensure RTC platform device deregistration upon failure
-Date: Tue, 21 Jul 2026 17:20:44 +0200
-Message-ID: <20260721152459.919131339@linuxfoundation.org>
+Subject: [PATCH 6.6 0808/1266] hwmon: adm1275: Prevent reading uninitialized stack
+Date: Tue, 21 Jul 2026 17:20:45 +0200
+Message-ID: <20260721152459.941030847@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,47 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit eacaf5ae747f7dead6cc268de17a7382d79031fc ]
+[ Upstream commit 553f9517813912a5ab661af5504485d96824a61c ]
 
-Switch RTC platform device registration from platform_device_register()
-to platform_add_devices() so as to make sure any failure will result in
-automatic device unregistration.
+While adding support for the ROHM BD127X0 hot-swap controllers, sashiko
+reported an error in device-name comparison, which can lead to reading
+uninitialized stack memory.
 
-Fixes: fae67ad43114 ("arch/mips/dec: switch DECstation systems to rtc-cmos")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Acked-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Quoting Sashiko:
+
+This is a pre-existing issue, but I noticed that just before this block in
+adm1275_probe(), there might be an out-of-bounds stack read:
+
+    ret = i2c_smbus_read_block_data(client, PMBUS_MFR_MODEL, block_buffer);
+    if (ret < 0) { ... }
+    for (mid = adm1275_id; mid->name[0]; mid++) {
+            if (!strncasecmp(mid->name, block_buffer, strlen(mid->name)))
+                    break;
+    }
+
+Since i2c_smbus_read_block_data() reads up to 32 bytes into the
+uninitialized stack array block_buffer without appending a null
+terminator, strncasecmp() could read past the valid bytes returned in ret.
+
+For example, if the device returns a shorter string like "adm12", checking
+it against "adm1275" up to the length of "adm1275" will continue reading
+into uninitialized stack bounds.
+
+Prevent reading uninitialized memory by zeroing the stack array.
+
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: 87102808d039 ("hwmon: (pmbus/adm1275) Validate device ID")
+Link: https://lore.kernel.org/r/c8ad38e0cdb347261c6245de2b7965e747f28d22.1782458224.git.mazziesaccount@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/dec/platform.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/hwmon/pmbus/adm1275.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/dec/platform.c b/arch/mips/dec/platform.c
-index 723ce16cbfc0cc..a005246a0ac5d2 100644
---- a/arch/mips/dec/platform.c
-+++ b/arch/mips/dec/platform.c
-@@ -38,6 +38,10 @@ static struct platform_device dec_rtc_device = {
- 	.num_resources = ARRAY_SIZE(dec_rtc_resources),
- };
- 
-+static struct platform_device *dec_rtc_devices[] __initdata = {
-+	&dec_rtc_device,
-+};
-+
- static struct resource dec_dz_resources[] = {
- 	{ .name = "dz", .flags = IORESOURCE_MEM, },
- 	{ .name = "dz", .flags = IORESOURCE_IRQ, },
-@@ -137,7 +141,7 @@ static int __init dec_add_devices(void)
- 	}
- 	num_zs = i;
- 
--	ret1 = platform_device_register(&dec_rtc_device);
-+	ret1 = platform_add_devices(dec_rtc_devices, 1);
- 	ret2 = IS_ENABLED(CONFIG_32BIT) ?
- 	       platform_add_devices(dec_dz_devices, num_dz) : 0;
- 	ret3 = platform_add_devices(dec_zs_devices, num_zs);
+diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
+index e2c61d6fa521b1..0fd1cec7b6cabc 100644
+--- a/drivers/hwmon/pmbus/adm1275.c
++++ b/drivers/hwmon/pmbus/adm1275.c
+@@ -508,7 +508,7 @@ static int adm1275_enable_vout_temp(struct adm1275_data *data,
+ static int adm1275_probe(struct i2c_client *client)
+ {
+ 	s32 (*config_read_fn)(const struct i2c_client *client, u8 reg);
+-	u8 block_buffer[I2C_SMBUS_BLOCK_MAX + 1];
++	u8 block_buffer[I2C_SMBUS_BLOCK_MAX + 1] = {0};
+ 	int config, device_config;
+ 	int ret;
+ 	struct pmbus_driver_info *info;
 -- 
 2.53.0
 
