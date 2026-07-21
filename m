@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308DB3DC4C2;
-	Tue, 21 Jul 2026 17:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05B1402428;
+	Tue, 21 Jul 2026 17:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654215; cv=none; b=UuWnUeJbLaUB/WXH+DTic+ERPAil9tPGQzZ0j/eLWItL///0RxvE1TiyO7RQfzEALtLKXRx3hjAeDWzyHon6RflVK4O5/vWLoNY2/EBFvMKKRv8yYy79yvb+PTTRRZP+OYlADGxasrRjZw+VtBl10T6KV3M0e/G+mrOB3YmDX/k=
+	t=1784654217; cv=none; b=Zv7MT5eFGvde1CCgtpWEaPXTlrBlqGHtGUTlofhoZXIQAnt/tEYqg3he5/yGUMpo0vq2tCcK1RrmOtxcmi4nj6CBJ4Oyc2rK02cg/0pmQA28aHGcwcsD6V1HUKZy/FQoCePuLutWE80xs8nx4lzM7skdZUZKRxkqNST1d/XQ2Mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654215; c=relaxed/simple;
-	bh=k29IovyL7wMVK85XU9soFc9JJq4GIBScVIruCb1yVzo=;
+	s=arc-20240116; t=1784654217; c=relaxed/simple;
+	bh=R4q82uk+Ep52VxX86widHsCbpDznFWxKBJBzMt95v/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AdyQ0qkgH66VboTCE6BS64dn3J/Jq7bLMtAZI4w33i0erWBai8TNhnMs8nQRVjnKJS9W9ErPX9Smws5Z24OlSig/nHVpZDFwksmtjUIbCKUz5afDF8ZNUIYhjwsbclkGfXH/W7kZn4as7tJ99WGjH+UV8sB+jxwaQqoHYaigCWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/BDqYZW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tPcwOPnqr7AqzaY12hVbcEP5NP5MAm5HUUUL15VCxvbJeM13Xm4gMdWkIAxfSruuiX1eCxh7vmwRBNtqit+ItaOwjyXWUbw+tB1b3fy6/OZZ3hWxTyuaRq6VDejx7A59X2y5UvpsBUTMz/p6uIpEpRdi+xXc+TlanGhibM1pumg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yCBGrdjY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/BDqYZW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F041F00A3A;
-	Tue, 21 Jul 2026 17:16:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCBGrdjY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 420CA1F000E9;
+	Tue, 21 Jul 2026 17:16:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654214;
-	bh=kDC/h9rl0aBKPy9Bn0bBekEwcg3Z8A+fOM9w551EzGo=;
+	s=korg; t=1784654216;
+	bh=OOUxEV2jrmuCum4ESsvuKV5WhfbwH0VAshDymecz6dU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j/BDqYZWtZTHVhqAW/V/JwTI29zeTJoI5Ah+OunDkp2cK3G0wCEBgb2Zqceakq4YU
-	 rWGcN9HVACTa8G9lQJSFa0QzildOPUqMNAt4UB7WXF55JSECZLx9Mumz2LSx6V1a3+
-	 jBrLLvSjhFI/denb8M+P/s9CnnUgSVGZvtppyRxs=
+	b=yCBGrdjYHk4ykjHUvIqRqnA8LV+ARVzmsiWO+C04HbPfpOz1pSqBC/+Yjj5PXh/Fb
+	 ok4xBceVR9tZ61kkbyYGsSn8qJemSColbArX/vhVXm1jYMID6t/unBcsmGW2UzEmyU
+	 6EjttMinznd5mYW2QhpYWlG7292sI+zXaiU8KdNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 7.1 1613/2077] netfilter: xt_physdev: masks are not c-strings
-Date: Tue, 21 Jul 2026 17:21:26 +0200
-Message-ID: <20260721152630.808029737@linuxfoundation.org>
+	Wang Jun <1742789905@qq.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>
+Subject: [PATCH 7.1 1622/2077] soc: fsl: qe: panic on ioremap() failure in qe_reset()
+Date: Tue, 21 Jul 2026 17:21:35 +0200
+Message-ID: <20260721152631.016439206@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -49,36 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Wang Jun <1742789905@qq.com>
 
-commit f468c48d488d0ea2df3422b3e1dfafae1611e853 upstream.
+commit a0fe29d20e7822182e12324905af5115c1b3aed3 upstream.
 
-... and must not be subjected to the 'nul terminated' constraint.
-If the interface name is 15 characters long, the mask is 16-bytes
-'0xff' (to cover for \0) and the valid device name is rejected.
+When ioremap() fails in qe_reset(), the global pointer qe_immr remains
+NULL, leading to a subsequent NULL pointer dereference when the pointer
+is accessed. Since this happens early in the boot process, a failure to
+map a few bytes of I/O memory indicates a fatal error from which the
+system cannot recover.
 
-Fixes: 8df772afc9d0 ("netfilter: x_physdev: reject empty or not-nul terminated device names")
+Follow the same pattern as qe_sdma_init() and panic immediately when
+ioremap() fails. This avoids a silent NULL pointer dereference later
+and makes the error explicit.
+
+Fixes: 986585385131 ("[POWERPC] Add QUICC Engine (QE) infrastructure")
 Cc: stable@vger.kernel.org
-Closes: https://bugs.launchpad.net/neutron/+bug/2159935
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Wang Jun <1742789905@qq.com>
+Link: https://lore.kernel.org/r/tencent_FED49CF5331CC0C7910618883332A08E2606@qq.com
+[chleroy: Rearranged change to reduce churn]
+Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/xt_physdev.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/soc/fsl/qe/qe.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/netfilter/xt_physdev.c
-+++ b/net/netfilter/xt_physdev.c
-@@ -130,11 +130,6 @@ static int physdev_mt_check(const struct
- 		if (X(physoutdev))
- 			return -ENAMETOOLONG;
- 	}
--
--	if (X(in_mask))
--		return -ENAMETOOLONG;
--	if (X(out_mask))
--		return -ENAMETOOLONG;
- #undef X
+--- a/drivers/soc/fsl/qe/qe.c
++++ b/drivers/soc/fsl/qe/qe.c
+@@ -89,6 +89,9 @@ void qe_reset(void)
+ 	if (qe_immr == NULL)
+ 		qe_immr = ioremap(get_qe_base(), QE_IMMAP_SIZE);
  
- 	if (!brnf_probed) {
++	if (!qe_immr)
++		panic("QE:ioremap failed!");
++
+ 	qe_snums_init();
+ 
+ 	qe_issue_cmd(QE_RESET, QE_CR_SUBBLOCK_INVALID,
 
 
