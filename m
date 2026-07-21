@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB80402444;
-	Tue, 21 Jul 2026 17:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320C3402BAB;
+	Tue, 21 Jul 2026 17:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654228; cv=none; b=RKzovKxgO7FCc/h0PdfUCZOZc8thfsHJ2JXh8peyEk6bUaz1OFAEoBxr1gh9V6FUQIYCWsI9BgdNSdGbJLK6Be7bvczS/RmxMKYW7wuYajO+hJl+AQBrbYkltwdA08w5aCptwE5qqX0wFNrpIIrYDq9JwXHNDOGPlVBlfI6QzPw=
+	t=1784654231; cv=none; b=jBHeRrLt7QTU7HFpALBvwwQARcvOv49qNR/AUkSOGqHu7nYLu0a2oURh4GB4Fp9h3XGnBhTMJDa69BcKBXVh4YC20BemFTOdIJFDSAHsELy+jy42tkEVFGfuIEQ+6Klrz7MbjF+AFzYWrb2bBpr3IHyl0mx0qOjZN6jfUNmzUhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654228; c=relaxed/simple;
-	bh=6ppqjV1BrbVt+/57AvpFOMEIXHnDm2YhcGs9eY4V5fw=;
+	s=arc-20240116; t=1784654231; c=relaxed/simple;
+	bh=C+kZX5J/e14bXs6NhzaygSu2IdKWoox9p7C4vlhCiJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kpIw6fdNiYGmfzaHpU+Qtfb37fAFcXPIl+WsEKiVyq/x/ZtjLGFPJosBLtJE66M6J+POEUP+MBlOOhkBTp+ESckorjUgIqeKeuhv2q5IVGXv7gfWDRgjlto3WCK1qk3//C0oInOrSAWff+ETxLKfp3cDaTp4aOhyoxfdA3lOgqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZz13TuX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lnCYMoyDFrx4noHsw20EO9lIWRaaH2qWg4VaZlJPNGHPAeL5d7fOkvwgVLNxfZ8TMdn+ziQDhv+w6hZq+3wNNjMIb7Wri84CekwJAlc66r50PYlnRCZIwv43ZV2lySqzmC89a/aV0hYNjgj+7t+9GP5U8WZYqkjydRU+0Au8wuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwGhYewL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZz13TuX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34D61F000E9;
-	Tue, 21 Jul 2026 17:17:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwGhYewL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9857D1F000E9;
+	Tue, 21 Jul 2026 17:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654227;
-	bh=/hm72ovExVORQYufqzCTbp+OeZqe7L1WB5Ndygethek=;
+	s=korg; t=1784654230;
+	bh=DxyzKqyINWKO/mRFQs9ir7tcX3h1SqijNJA1+GZHZ/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nZz13TuXFCn2WT9sbYWezytQoc0dM1qwGDP1QnspLQsSracyCMNlwDQO638joYZRT
-	 ZGTBX3A24ffII1RO/E6Qf4VRy/VFsczZbfBvALtCqJlhxZCD8DTmBI7V23ZlNKY65p
-	 GQAmwsPio9OzxTpKAhHfUJ6gF8u9L76jT7/ORzYs=
+	b=DwGhYewLoofch1FgQAmJ10gV97shqHoLfF5oSaUuLKyNHOduGMbIwjvajGOZ///ni
+	 j4MCmd9BRv6b3KI9yKrCdou74lBAjfG95sSiqykiKYoxTWEChkFOyQ4sUGa8Zothar
+	 3kZ3DHd5Qj1ZqDwM3qkWWYIStvZwRut/1q8UPalA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Lee Jones <lee@kernel.org>
-Subject: [PATCH 7.1 1626/2077] leds: uleds: Fix potential buffer overread
-Date: Tue, 21 Jul 2026 17:21:39 +0200
-Message-ID: <20260721152631.109305112@linuxfoundation.org>
+Subject: [PATCH 7.1 1627/2077] mfd: sm501: Fix reference leak on failed device registration
+Date: Tue, 21 Jul 2026 17:21:40 +0200
+Message-ID: <20260721152631.131930680@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,39 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit c19fe864f667afc49d1391d764e20b66555bcf7a upstream.
+commit 8c2f0b42fc252e1bf1c7746447091a468e784ca1 upstream.
 
-The name string supplied by userspace is not guaranteed to be
-null-terminated, so using strchr() on it might result in a buffer
-overread. The same thing will happen when said string is used by
-the LED class device.
+When platform_device_register() fails in sm501_register_device(), the
+embedded struct device in pdev has already been initialized by
+device_initialize(), but the failure path only reports the error and
+returns without dropping the device reference for the current platform
+device:
 
-Fix this by using strnchr() instead and explicitly check that
-the name string is properly null-terminated.
+  sm501_register_device()
+    -> platform_device_register(pdev)
+       -> device_initialize(&pdev->dev)
+       -> setup_pdev_dma_masks(pdev)
+       -> platform_device_add(pdev)
 
+This leads to a reference leak when platform_device_register() fails.
+Fix this by calling platform_device_put() before returning the error.
+
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
+
+Fixes: b6d6454fdb66f ("[PATCH] mfd: SM501 core driver")
 Cc: stable@vger.kernel.org
-Fixes: e381322b0190 ("leds: Introduce userspace LED class driver")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20260524235553.189134-1-W_Armin@gmx.de
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260415162627.3558789-1-lgs201920130244@gmail.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/uleds.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mfd/sm501.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/leds/uleds.c
-+++ b/drivers/leds/uleds.c
-@@ -102,7 +102,8 @@ static ssize_t uleds_write(struct file *
+--- a/drivers/mfd/sm501.c
++++ b/drivers/mfd/sm501.c
+@@ -704,9 +704,11 @@ static int sm501_register_device(struct
+ 	if (ret >= 0) {
+ 		dev_dbg(sm->dev, "registered %s\n", pdev->name);
+ 		list_add_tail(&smdev->list, &sm->devices);
+-	} else
++	} else {
+ 		dev_err(sm->dev, "error registering %s (%d)\n",
+ 			pdev->name, ret);
++		platform_device_put(pdev);
++	}
  
- 	name = udev->user_dev.name;
- 	if (!name[0] || !strcmp(name, ".") || !strcmp(name, "..") ||
--	    strchr(name, '/')) {
-+	    strnchr(name, sizeof(udev->user_dev.name), '/') ||
-+	    !strnchr(name, sizeof(udev->user_dev.name), '\0')) {
- 		ret = -EINVAL;
- 		goto out;
- 	}
+ 	return ret;
+ }
 
 
