@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26816431A4E;
-	Tue, 21 Jul 2026 22:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D9844AB91;
+	Tue, 21 Jul 2026 22:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674156; cv=none; b=Yn96c+pHqKZa7zvhL+CaPb0vdxDRc2cFwybnGS99nNA4LZ5VwBafXshFyMsqVMp2YvJCqtuwh5QZ94x/RjCHladuD3arlyvuOyV7ZmmxVftm0SeyMh2YonHveRA/EnG1Ie/L6FJAqtKs2uekhDOIGEtSDf3mFWadQTGBcFm83/M=
+	t=1784674158; cv=none; b=J6aZ09X7Fg0BbQZSCcJ7Cza0C586cN9Uw6EsbqL1o5SKZkIELTI7K/73fhIFN1+QN0wMOb0hN/Qn9sKQztRr5/nwA31s4vArwIJM0oqRLh4JGLDPzDOQGM4Z9Rurcbipu/PWe4HBROFGhDfRhyawQdY61HCXUoAbyXjTp/M5e7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674156; c=relaxed/simple;
-	bh=lDQhazO78t3vemLsiSMoj8LoSJT0HaIV7hXGkpB4FuA=;
+	s=arc-20240116; t=1784674158; c=relaxed/simple;
+	bh=s2GwjOCslIXJlaL42YQOe9+mk5WxpJThhuHrp+T/g8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p6MPAkhOvw0HbUbdJpnSKAlfaUm0nGoCcDlftsahoOc4JmC0au0edyCE67YQskDxhtpZ3POtcfQLxqS4zJTkM/1dUhtW9zEd6FMkLLtSPDquU5RLMqSEVfHwH3XdKBnO/eidk4ZgXZ8bPCwWiLD5i5IyU/vl81AMayAbmEwkE5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIcFNl10; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ek3z0I6Y3uFzoDlx9Bf4EujiH05sxGyRetBg+9jC2UzIwS/+Cm/KCGjxRA8uciRp0lMy6evaxEWcm2ivd1xcVM4O8tIijgP6WtfOQX6QJlWphZuSTP7h1EDWb9BdO1I7gPQvMYFNg5cFOGDNUELB+R5w0Fdvbc3Ag2oAM6Sc4dM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0QmjVPJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIcFNl10"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569B81F00A3A;
-	Tue, 21 Jul 2026 22:49:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0QmjVPJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF18F1F000E9;
+	Tue, 21 Jul 2026 22:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674154;
-	bh=B34cEeseA5yNj8721KOMDSb5cFwP8y4wtLHgs0WtDrk=;
+	s=korg; t=1784674157;
+	bh=rEYbdjruAPT5mmD2slN/MNGjEAeF3NsSZPgBjtkaQKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cIcFNl10oweGOpYSiNs3cXZG/ws6TTUPS+w29k68GXcekOIbA5OfxJ0Ov91e4h682
-	 9VuE1PCV2me3+iQln/5JVekiojYG0KUGOfV+GVQ6lX/VnVytPRzJUuV41WRY9Ef3C5
-	 0jK4iZKSAhR7ikFmL8VK+xy4tHwL9JMKxxy1qIIU=
+	b=m0QmjVPJiWvNKsbMiCPNCQXOrKraBiPC4INCX3N5Ullo3kzEreviDz7NZCPZjnIlN
+	 fvaWu0CLTqOs9RK4EYf/5OuQS8d+gtEGzXuXHs5i0wj4hqyoXynFeMcEn7bN5glsd4
+	 62INiDDroSHqMf+M0rm0NhXVro1al4EziOjY+6T4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Nickolay Goppen <setotau@mainlining.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.10 433/699] arm64: dts: qcom: sdm630: describe adsp_mem region properly
-Date: Tue, 21 Jul 2026 17:23:12 +0200
-Message-ID: <20260721152405.461383937@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 5.10 434/699] KVM: arm64: vgic: Check the interrupt is still ours before migrating it
+Date: Tue, 21 Jul 2026 17:23:13 +0200
+Message-ID: <20260721152405.484364197@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,44 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolay Goppen <setotau@mainlining.org>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit ce414263e9ebe5080381a50cbdf9065c29816202 upstream.
+commit 0074b82cdfcb5fd13710a0ac308ade68ac6f6fbe upstream.
 
-Downstream [1] this region is marked as shared, reusable and dynamic so
-describe it that way.
+vgic_prune_ap_list() drops both ap_list_lock and irq_lock while migrating
+an interrupt to another vCPU. After reacquiring the locks it only checks
+that the affinity is unchanged (target_vcpu == vgic_target_oracle(irq))
+before moving the interrupt, which assumes that an interrupt whose affinity
+is preserved is still queued on this vCPU's ap_list.
 
-[1]: https://github.com/xiaomi-sdm660/android_kernel_xiaomi_sdm660/blob/11-EAS/arch/arm/boot/dts/qcom/sdm660.dtsi#L448
+That assumption no longer holds if the interrupt is taken off the ap_list
+while the locks are dropped. vgic_flush_pending_lpis() removes the
+interrupt from the list and sets irq->vcpu to NULL, but leaves
+enabled/pending/target_vcpu untouched. As the interrupt is still enabled
+and pending, vgic_target_oracle() returns the same target_vcpu, so the
+affinity check passes and list_del() is run a second time on an entry that
+has already been removed.
 
-Fixes: b190fb010664 ("arm64: dts: qcom: sdm630: Add sdm630 dts file")
+Also check that the interrupt is still assigned to this vCPU
+(irq->vcpu == vcpu) before moving it.
+
+Fixes: 0919e84c0fc1 ("KVM: arm/arm64: vgic-new: Add IRQ sync/flush framework")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://patch.msgid.link/aiHnI1mu6SGQrgnz@v4bel
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Reviewed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
-Link: https://lore.kernel.org/r/20260429-qcom-sdm660-cdsp-adsp-fastrpc-dts-fix-v5-4-16bc82e622ad@mainlining.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ arch/arm64/kvm/vgic/vgic.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -391,9 +391,12 @@
- 			no-map;
- 		};
+--- a/arch/arm64/kvm/vgic/vgic.c
++++ b/arch/arm64/kvm/vgic/vgic.c
+@@ -685,15 +685,16 @@ retry:
+ 		raw_spin_lock(&irq->irq_lock);
  
--		adsp_mem: adsp-region@f6000000 {
--			reg = <0x0 0xf6000000 0x0 0x800000>;
--			no-map;
-+		adsp_mem: adsp-region {
-+			compatible = "shared-dma-pool";
-+			alloc-ranges = <0x0 0x80000000 0x0 0x80000000>;
-+			alignment = <0x0 0x400000>;
-+			size = <0x0 0x800000>;
-+			reusable;
- 		};
+ 		/*
+-		 * If the affinity has been preserved, move the
+-		 * interrupt around. Otherwise, it means things have
+-		 * changed while the interrupt was unlocked, and we
+-		 * need to replay this.
++		 * If the interrupt is still ours and its affinity has
++		 * been preserved, move it around. Otherwise, it means
++		 * things have changed while the interrupt was unlocked
++		 * (it may even have been taken off the list with its
++		 * affinity left untouched), and we need to replay this.
+ 		 *
+ 		 * In all cases, we cannot trust the list not to have
+ 		 * changed, so we restart from the beginning.
+ 		 */
+-		if (target_vcpu == vgic_target_oracle(irq)) {
++		if (irq->vcpu == vcpu && target_vcpu == vgic_target_oracle(irq)) {
+ 			struct vgic_cpu *new_cpu = &target_vcpu->arch.vgic_cpu;
  
- 		qseecom_mem: qseecom-region@f6800000 {
+ 			list_del(&irq->ap_list);
 
 
