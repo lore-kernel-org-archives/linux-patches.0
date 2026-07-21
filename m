@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29EC46D0A4;
-	Tue, 21 Jul 2026 18:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180A33909A9;
+	Tue, 21 Jul 2026 18:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658409; cv=none; b=r5vSBf4/FBoIDIhgAL6uCYkx4tRzpQMbUjTCWTk7Oj9HDtF4pIfSzSwxn+HVZ53C/2t2HDbVYzwVJuHsEVmqqSP9OxLd41S1GzRwf0wzjrqGSpkKz71+P4gsYtfHwsSto820DSgY0y1ufvcwNDOknyxPZG3Uxohy+WuAQhNRgdM=
+	t=1784658411; cv=none; b=EPQyR9P5kD+Jz9zHLa76w79eg15BjDEqgPk+K09xwe946iF+O32D9lWvCw6oGTcozoMBOQXUTgdK7XXzNw2Y9F/8Xizb1ZlRHCFiUz8deQVNWGfVJn3EbkBSyOvrGNxwt8i50pfwCfjp/XTqdSTMkzhDJi1wSabfBiotw5zHZzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658409; c=relaxed/simple;
-	bh=rcqCdh1V5MGff6FOULue7fKaml0mWVVvuX5rIZDy4OA=;
+	s=arc-20240116; t=1784658411; c=relaxed/simple;
+	bh=1qG2vKLApQuswuEo+o+YwunP3ZDFhHboI94Q9gJYoyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X50YY6IehYYANGfyfzuqUq1o7Ap8y+VJND8UAz5/Aok+P30jSnovF3gkQss7pzdGEygPnPmxOsAZFO9hg9u5yedQqH6s3NmpTaXAQgZzQI2HUw/qKf2OIpYR5fLys3dMsvq+LVmeTBHkSaHiECZ0B+hGG29iHxGmTkTXLC+2uYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtpTiTFB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NvoDO0ibRgbkxqrMps9bh+Fyt+1c0ttOvp25pFzVwGyDX5iQF7MNAzLzm1/b1RQLtoCLDUOzL5Qs8ArbMZ3dasI4a0uaS2D7Y6iuVjMtBvE7ItbPO/yPUR1lsCX2M7jd6NSrkQSWwRoxsfKisJ9YQJyf4fCIvzFPTcAKoH64RCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2VOv348; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtpTiTFB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0CDF1F000E9;
-	Tue, 21 Jul 2026 18:26:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2VOv348"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 793B91F000E9;
+	Tue, 21 Jul 2026 18:26:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658407;
-	bh=Ib0GlIwylFds6i0Hl5v4Ot5FsoTF1NrPX3LH1kIZ/xg=;
+	s=korg; t=1784658410;
+	bh=9SY0rJGah4PZS61H0ETNf1XB//h5j9LJ1NJl4YtyHYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WtpTiTFBzpKWvE37L8QOcnUJVg3UJF9yisOqltnD/TZZSvD1hZ5Fd3OS/qCwBdMaC
-	 PkV0z9/80Uc15IqVtDTA1v7aAqXKr1al5IlZ3/ImOLkZUWCvQe420vKhMWXNRDoKG5
-	 hEiVjVU6OnghFV6XnBTz+yEGB9fG01CEp4bDMJlE=
+	b=T2VOv348thgQJRHLt359rMpP9socgIa8bLoyGooWNbIRAYCBEWuI/kM9nlxS0bjtd
+	 01zJuepG5fpeBYX+9mP8sSjRuWtLL/1T4bS6v9oCdn+2pca9jOyJgZPbqHFq0azoLq
+	 WjwMpvsl0pTZbk6BiZxgZ/i5tZOoFLmyuF23R974=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.18 1132/1611] KVM: s390: pci: Fix handling of AIF enable without AISB
-Date: Tue, 21 Jul 2026 17:20:48 +0200
-Message-ID: <20260721152540.885931373@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Atish Patra <atishp@meta.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.18 1133/1611] KVM: SEV: Do not allow intra-host migration/mirroring of SNP VMs
+Date: Tue, 21 Jul 2026 17:20:49 +0200
+Message-ID: <20260721152540.908869109@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,43 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Rosato <mjrosato@linux.ibm.com>
+From: Atish Patra <atishp@meta.com>
 
-commit 3e3aa6da87d30a0064a17b836685cd43c90a3572 upstream.
+commit 6ee4140788234a6fabf59e6a50e38cdb936008cd upstream.
 
-When a guest seeks to register IRQs without a summary bit specified,
-ensure that the associated GAITE then stores 0 for the guest AISB
-location instead of virt_to_phys(page_address(NULL)).
+The intra-host migration/mirroring feature is not fully implemented for
+SEV-SNP VMs. The proper migration requires additional SNP-specific
+state such as guest_req_mutex, guest_req_buf, and guest_resp_buf to be
+transferred or initialized on the destination.
 
-Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
+The SNP VM mirroring requires vmsa features to be copied as well otherwise
+ASID would be bound to SNP range while VM is detected as a SEV VM.
+
+Reject SNP source VMs in migration/mirroring until proper SNP state
+transfer is implemented.
+
+Fixes: 1dfe571c12cf ("KVM: SEV: Add initial SEV-SNP support")
+
+Reported-by: Chris Mason <clm@meta.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Assisted-by: Claude:claude-opus-4-6
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Atish Patra <atishp@meta.com>
+Link: https://patch.msgid.link/20260602-sev_snp_fixes-v3-1-24bfd3ae047c@meta.com
 Cc: stable@vger.kernel.org
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+[sean: let lines poke past 80 chars, tag for stable]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/pci.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/x86/kvm/svm/sev.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/s390/kvm/pci.c
-+++ b/arch/s390/kvm/pci.c
-@@ -301,9 +301,14 @@ static int kvm_s390_pci_aif_enable(struc
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -2086,8 +2086,9 @@ int sev_vm_move_enc_context_from(struct
+ 	if (ret)
+ 		return ret;
  
- 	gaite->gisc = fib->fmt0.isc;
- 	gaite->count++;
--	gaite->aisbo = fib->fmt0.aisbo;
--	gaite->aisb = virt_to_phys(page_address(aisb_page) + (fib->fmt0.aisb &
--							      ~PAGE_MASK));
-+	if (fib->fmt0.sum == 1) {
-+		gaite->aisbo = fib->fmt0.aisbo;
-+		gaite->aisb = virt_to_phys(page_address(aisb_page) +
-+					   (fib->fmt0.aisb & ~PAGE_MASK));
-+	} else {
-+		gaite->aisbo = 0;
-+		gaite->aisb = 0;
-+	}
- 	aift->kzdev[zdev->aisb] = zdev->kzdev;
- 	spin_unlock_irq(&aift->gait_lock);
- 
++	/* Do not allow SNP VM migration until additional state transfer is implemented  */
+ 	if (kvm->arch.vm_type != source_kvm->arch.vm_type ||
+-	    sev_guest(kvm) || !sev_guest(source_kvm)) {
++	    sev_guest(kvm) || !sev_guest(source_kvm) || sev_snp_guest(source_kvm)) {
+ 		ret = -EINVAL;
+ 		goto out_unlock;
+ 	}
+@@ -2831,8 +2832,9 @@ int sev_vm_copy_enc_context_from(struct
+ 	 * disallow out-of-band SEV/SEV-ES init if the target is already an
+ 	 * SEV guest, or if vCPUs have been created.  KVM relies on vCPUs being
+ 	 * created after SEV/SEV-ES initialization, e.g. to init intercepts.
++	 * Also do not allow SNP VM mirroring until additional state transfer is implemented.
+ 	 */
+-	if (sev_guest(kvm) || !sev_guest(source_kvm) ||
++	if (sev_guest(kvm) || !sev_guest(source_kvm) || sev_snp_guest(source_kvm) ||
+ 	    is_mirroring_enc_context(source_kvm) || kvm->created_vcpus) {
+ 		ret = -EINVAL;
+ 		goto e_unlock;
 
 
