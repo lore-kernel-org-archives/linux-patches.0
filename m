@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A4744AB7B;
-	Tue, 21 Jul 2026 22:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8712844AB7B;
+	Tue, 21 Jul 2026 22:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671750; cv=none; b=ePV3Yn6YOtV/sYb/vLjAhOxW6EKwvPBizRoviwtHAAfKzoYeH3m/TDvJ+P4OJ4kPxtox21eIipXkycCWQNVuZYfYvsNwwoCuJMvigPVr695OPtFv7RM8/pQp1gire8XpaPMgKUYZEKbgW1UA7QO52Zk4KCQTZqhjgotIKQu5rlw=
+	t=1784671752; cv=none; b=MOlfqwx5OFOn4jifFPhfu93yG0LdcAm8wQiPOSAWQ7ioMNFtJNMix0+P7yjIJV4v3HhWfGwRNoEByE3SThh/TjjKst/4BLDKNe2lMTVfudIKCETL96AfuoyF38dsWupgSV5NTRijYMGYF6tGI5GmaG+7Un8OqpzNGNVv/waMm8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671750; c=relaxed/simple;
-	bh=ZlYwSSlGffkkS1TgihCza3891V0zKVeLX8ALquoX4Ck=;
+	s=arc-20240116; t=1784671752; c=relaxed/simple;
+	bh=Jp+NVCsQh6edE46jbWWHg3rWu12O8IRHmLcYuPAZInQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bQpt50NnvlLO7WyWJLsDF+EJA3eYPXBbXBFnkB9yrNpJoz3I12LlHv+9oTLjvWGex2n/643nNlSZZRrmrXkfVWAH17Wh3HCz9lJDHy9YNQr5kDodjypaD26IoBccNgK94p8J+NMv4AO7iKzwCwc1SLjVT1DxBy0C25vx091g8pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JfAyzw6M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RjANDqn2VT9T+URx5XyAD1dzsru4lBs9XbDQRYj0WqehYimYmYVU1nTjrwZRkfgY7zQCkm3NQI5YIeApGHOLH/iEk2rAbUrEv49Pu91GSm/Lm+9gQ3URH58rurvqr6MdVLGpA5B3e/6XoAugBbIv9f0uGEhUkiWLs36j3P7b438=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kk461IBS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfAyzw6M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B3E1F00A3A;
-	Tue, 21 Jul 2026 22:09:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kk461IBS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDBB91F000E9;
+	Tue, 21 Jul 2026 22:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671748;
-	bh=GBMTbC+L2GYL9Lh4jToPKyVs+cJPuvThe6KdX7PlJ+k=;
+	s=korg; t=1784671751;
+	bh=ryAh6/edJdkOM+xAH9ruPxSnMRXmRXf/eHjT8ZFJ6q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JfAyzw6M1mcA5hKL3heEqguhqk3LBk20SaYdFQeFyzBIx2gAvQX+pcO8wxgkMdIpi
-	 BEPobXiE4B5wbg6ytDe/HAFuaeKE6JYDLZ5IlPgklbzHhm2/jcNHZqNS179qoA2LU6
-	 I1b1gaP4pOWhaagozpVNkfBMCOPfuWubymMs0PoY=
+	b=Kk461IBSru79RYUXcgrny7aZk/fr1HvBKZZo6zV/KXzQ7iBtAXOor85IFX7BhH9Xt
+	 4DyiSypoPIbOGVUKUDRx5f6bAqeZasKevxq3tONkQumEm2biLPn7pT1TRbol1OuP2o
+	 QVtzy4fWtseHPrgfZW3o0L4vpvb+zM7zUhzhywuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 365/843] powerpc/powernv: fix preempt count leak in pnv_kexec_wait_secondaries_down
-Date: Tue, 21 Jul 2026 17:20:00 +0200
-Message-ID: <20260721152414.240660919@linuxfoundation.org>
+Subject: [PATCH 5.15 366/843] powerpc/kexec: fix double get_cpu() imbalance in kexec_prepare_cpus
+Date: Tue, 21 Jul 2026 17:20:01 +0200
+Message-ID: <20260721152414.263154659@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,46 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Aboorva Devarajan <aboorvad@linux.ibm.com>
 
-[ Upstream commit 0ecd26e93e698c8327521910fc6296f5b84a4b92 ]
+[ Upstream commit 5c86f1c1f972761a04bf22f4c0618d1aa714185b ]
 
-pnv_kexec_wait_secondaries_down() calls get_cpu() to obtain the current
-CPU id but never calls the matching put_cpu(), leaking one
-preempt_disable() nesting level on every invocation.
+kexec_prepare_cpus_wait() calls get_cpu() internally to obtain the
+current CPU id. kexec_prepare_cpus() calls kexec_prepare_cpus_wait()
+twice -- once for KEXEC_STATE_IRQS_OFF and once for
+KEXEC_STATE_REAL_MODE -- but only issues a single put_cpu() at the end,
+leaving preempt_count elevated by one extra nesting level.
 
-In practice the imbalance does not trigger a visible splat because the
-kexec teardown path is a one-way trip: IRQs are already disabled, no
-schedule() occurs after the leak, and default_machine_kexec() overwrites
-preempt_count with HARDIRQ_OFFSET before jumping into kexec_sequence()
-which never returns. However the bookkeeping is still wrong.
+In practice the imbalance does not trigger a 'scheduling while atomic'
+splat because the kexec path is a one-way trip: IRQs are already
+disabled, no schedule() occurs after the leak, and
+default_machine_kexec() overwrites preempt_count with HARDIRQ_OFFSET
+before jumping into kexec_sequence() which never returns. However the
+bookkeeping is still wrong.
 
-The function only needs the current CPU id, and this path runs with
-interrupts disabled and the CPU pinned, so the preempt_disable()
-side-effect of get_cpu() is unnecessary. Replace it with
-raw_smp_processor_id().
+kexec_prepare_cpus() calls local_irq_disable()/hard_irq_disable()
+before invoking kexec_prepare_cpus_wait(), so the CPU is already pinned
+and the get_cpu()/put_cpu() preempt_disable() bracketing is unnecessary.
+Only the current CPU id is needed, so replace get_cpu() with
+raw_smp_processor_id() and drop the now-unneeded put_cpu().
 
-Fixes: 298b34d7d578 ("powerpc/powernv: Fix kexec races going back to OPAL")
+Fixes: 1fc711f7ffb0 ("powerpc/kexec: Fix race in kexec shutdown")
 Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Reviewed-by: Shrikanth Hegde <sshegde@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260605082912.305100-3-aboorvad@linux.ibm.com
+Link: https://patch.msgid.link/20260605082912.305100-4-aboorvad@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/powernv/setup.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/kexec/core_64.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/platforms/powernv/setup.c b/arch/powerpc/platforms/powernv/setup.c
-index 1b3c7e04a7af52..c6e54d319285f5 100644
---- a/arch/powerpc/platforms/powernv/setup.c
-+++ b/arch/powerpc/platforms/powernv/setup.c
-@@ -359,7 +359,8 @@ static void pnv_kexec_wait_secondaries_down(void)
- {
- 	int my_cpu, i, notified = -1;
+diff --git a/arch/powerpc/kexec/core_64.c b/arch/powerpc/kexec/core_64.c
+index 89c069d664a5d3..25cca59d966f30 100644
+--- a/arch/powerpc/kexec/core_64.c
++++ b/arch/powerpc/kexec/core_64.c
+@@ -167,7 +167,7 @@ static void kexec_prepare_cpus_wait(int wait_state)
+ 	int my_cpu, i, notified=-1;
  
+ 	hw_breakpoint_disable();
 -	my_cpu = get_cpu();
-+	/* Called with interrupts disabled, so the CPU is pinned. */
 +	my_cpu = raw_smp_processor_id();
+ 	/* Make sure each CPU has at least made it to the state we need.
+ 	 *
+ 	 * FIXME: There is a (slim) chance of a problem if not all of the CPUs
+@@ -246,8 +246,6 @@ static void kexec_prepare_cpus(void)
+ 	/* after we tell the others to go down */
+ 	if (ppc_md.kexec_cpu_down)
+ 		ppc_md.kexec_cpu_down(0, 0);
+-
+-	put_cpu();
+ }
  
- 	for_each_online_cpu(i) {
- 		uint8_t status;
+ #else /* ! SMP */
 -- 
 2.53.0
 
