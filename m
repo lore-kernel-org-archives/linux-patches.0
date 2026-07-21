@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9132EBB8D;
-	Tue, 21 Jul 2026 20:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF429346A0C;
+	Tue, 21 Jul 2026 20:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666505; cv=none; b=FV2GE2SiNLQ3A9FI++qqNGWjrYpzZLlr8B8P+YT7M42hZNO20F85jskaep4XZCOqUOUeq/VxOLeZZ0AIy2rE9Z5JMI0+fApJgZP10cOrae0DQC6AdHORHxRtRjG24fRecfKp9QjuhQWAU7GKyf/j0oab/SE70dXc01aJe2V0f64=
+	t=1784666507; cv=none; b=tUYvjbDzoMRGJC6RepJaBx7qVMKYm3mjKy8bCDneUH1fGijZ6xHZPtRcLDztZqRM3JJcd2HSEf1t9M3OS+WcnqxLEwgCDPIcZpMOHoGgAP70lTLX0Bu10ECFENaC7D4/3nCV9m/r4mvUuuJn8X/4vU44+qxM+T6NmpojyOvHSsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666505; c=relaxed/simple;
-	bh=9lVG2CkyP/1FF0hf+tnwWAq1pUxA2iokCppKzQG3sF8=;
+	s=arc-20240116; t=1784666507; c=relaxed/simple;
+	bh=ATdDoXyLRQN30kVn0Gakv8CeZRzJYQBE/vwFpeIsMgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h1Z3hBXmJ6mevRrJyY28py5OCI3KaUsg+n2hPkMgfmGlRzexzWzuZy0B9eK719QDXYEesiYqrG4HoKMyw4ymEkzBwoqObK+cbYqe2cHORYR8+DyZX7yU05F0xjIZpjpUNr0krH/KjCRpz7aZBNiAQH9wg2JfFmVarReubORRUyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hwNBQzeO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QUAVYTyxH0Q+KZn/CKaEbWlmJRc6TblHBv7HadJSV6rUOGthiPt58CJVLeCUxg11ph5lJCmspFF9M305CWlwGTyZDJ/x+1rmAf4ySV27zA2zD9TwGVdEJJVfzluphmFvBY/u2/b68NIE/AAMKPk0rnJK7jtPGBm9wAKHLE56Xj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0GSwzFj1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwNBQzeO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB261F000E9;
-	Tue, 21 Jul 2026 20:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0GSwzFj1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3957B1F000E9;
+	Tue, 21 Jul 2026 20:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666504;
-	bh=KjSKv5U5cTnh0Z8e69YDMHM5c/egqnnzslGjzoBtqRQ=;
+	s=korg; t=1784666506;
+	bh=V/UOiAAUlH4HtseIl/b2ez+l4eaAcxvjQjEv5bv/w2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hwNBQzeOJkSfT+rgSWOzrSh6i6CzgARVTCM0tzaV22Ac0ssowau0cgo+W8U7oOAiU
-	 k3Z3TYCc2zKa2ZrT6MNCQILDIRrn05H5tGmIiCEQS7k5LNpB7979DDN9krlIdfLSNY
-	 eks6hK1iRYBwMWcLhzdridP/1JN5jbvDgAnOvtCo=
+	b=0GSwzFj1yHcobDJGV80QdK7bODlkSseRQepO2w44SLOIX8RvkbfSga7QwejGh9P1r
+	 GyDqLxu6ifTuFMCggfVP1GMIKgkVX84Qlh0XTlawaDy0p/nn5EDvAB5sqCNn1XUp5G
+	 D3u58HeTW+UwzItc/ZTsAUDLFFt1bptYaYCmNaMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Zhang Yanmin <yanmin_zhang@linux.intel.com>,
+	Song Liu <songliubraving@fb.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0708/1266] perf tools: Use snprintf() for root_dir path construction
-Date: Tue, 21 Jul 2026 17:19:05 +0200
-Message-ID: <20260721152457.706198326@linuxfoundation.org>
+Subject: [PATCH 6.6 0709/1266] perf bpf: Validate func_info_rec_size and sub_id in synthesize_bpf_prog_name()
+Date: Tue, 21 Jul 2026 17:19:06 +0200
+Message-ID: <20260721152457.729822181@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -54,54 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 7b0df6f4d498b1608afccfd6dffb264e6da91693 ]
+[ Upstream commit 10b3c3d63ecc17c6acb855bac5f40367f1115765 ]
 
-get_kernel_version() in machine.c and dso__load_guest_kernel_sym() in
-symbol.c use sprintf() to construct paths by prepending root_dir to
-"/proc/version" and "/proc/kallsyms" respectively.  Both write into
-PATH_MAX stack buffers, but root_dir comes from --guestmount or KVM
-configuration and is not length-checked.  A root_dir at or near
-PATH_MAX causes a stack buffer overflow.
+synthesize_bpf_prog_name() computes a pointer into the func_info array
+using sub_id * info->func_info_rec_size without validating either value.
+Both come from perf.data and are untrusted:
 
-Switch to snprintf() with sizeof(path) to prevent overflow.
+- A func_info_rec_size smaller than sizeof(struct bpf_func_info) means
+  the finfo pointer would reference a truncated entry, reading past it
+  into adjacent data.
+
+- A sub_id >= nr_func_info computes an offset past the func_info buffer,
+  causing an out-of-bounds read.
+
+Add bounds checks for both values before computing the pointer offset.
+When validation fails, fall through to the non-BTF name path instead
+of reading garbage.
 
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: a1645ce12adb6c9c ("perf: 'perf kvm' tool for monitoring guest performance from host")
-Cc: Zhang Yanmin <yanmin_zhang@linux.intel.com>
+Fixes: 7b612e291a5affb1 ("perf tools: Synthesize PERF_RECORD_* for loaded BPF programs")
+Cc: Song Liu <songliubraving@fb.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 2 +-
- tools/perf/util/symbol.c  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/bpf-event.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index e2a6facd1c4e2a..2f5a5245483ede 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -1495,7 +1495,7 @@ static char *get_kernel_version(const char *root_dir)
- 	char *name, *tmp;
- 	const char *prefix = "Linux version ";
- 
--	sprintf(version, "%s/proc/version", root_dir);
-+	snprintf(version, sizeof(version), "%s/proc/version", root_dir);
- 	file = fopen(version, "r");
- 	if (!file)
- 		return NULL;
-diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
-index 18556b7a765630..8618e4175e20fd 100644
---- a/tools/perf/util/symbol.c
-+++ b/tools/perf/util/symbol.c
-@@ -2215,7 +2215,7 @@ static int dso__load_guest_kernel_sym(struct dso *dso, struct map *map)
- 		if (!kallsyms_filename)
- 			return -1;
- 	} else {
--		sprintf(path, "%s/proc/kallsyms", machine->root_dir);
-+		snprintf(path, sizeof(path), "%s/proc/kallsyms", machine->root_dir);
- 		kallsyms_filename = path;
- 	}
- 
+diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
+index dfebec3a6e71f5..fb4eb16c7b5bae 100644
+--- a/tools/perf/util/bpf-event.c
++++ b/tools/perf/util/bpf-event.c
+@@ -134,7 +134,9 @@ static int synthesize_bpf_prog_name(char *buf, int size,
+ 	name_len = scnprintf(buf, size, "bpf_prog_");
+ 	name_len += snprintf_hex(buf + name_len, size - name_len,
+ 				 prog_tags[sub_id], BPF_TAG_SIZE);
+-	if (btf) {
++	if (btf &&
++	    info->func_info_rec_size >= sizeof(*finfo) &&
++	    sub_id < info->nr_func_info) {
+ 		finfo = func_infos + sub_id * info->func_info_rec_size;
+ 		t = btf__type_by_id(btf, finfo->type_id);
+ 		if (t)
 -- 
 2.53.0
 
