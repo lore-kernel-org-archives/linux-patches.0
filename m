@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5007415F10;
-	Tue, 21 Jul 2026 21:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 796B0418A58;
+	Tue, 21 Jul 2026 21:42:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670132; cv=none; b=rQnm4ofbXSrKFa4aiTApzHPMHmjSd2pfVHgpLazKsR0g7xwku24l3QtzwzpCfldYSuOJywOBJTHZHd8Mbq3Hrsx6iG2EM1ZjBz5HHWS2rjxDQAylQBE8gvKUp8n96XjP6yah6x8CwLeZiVrBl/ra+3O6K+Dbg7Jov5EM6eWPGHE=
+	t=1784670135; cv=none; b=hH15qMYGihouOO+yfdDLNkuyLvgSMYUl32eQk4NOnQbBX76uV7e1PzGBkHVo0xi6nNesdQbS30MpkIOZtZBnyPu9CVK4pgW8xRfxULCkXgVhpbYuLoPVx8HILQIhL4B/AOlhgqO9cS7raGidknX60T1a5HVzK78tH+Wz8NdDZtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670132; c=relaxed/simple;
-	bh=3D5cmK0+8RXr+YwI2ycAfxBTu132IF0tc0cwn2TgtOc=;
+	s=arc-20240116; t=1784670135; c=relaxed/simple;
+	bh=FZOZ872xXfblHd6/ZKv1oE1K65u9oUiOSq3bpnBRUqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pb4LV1tGOATtlIcY1RQaswUNUY79/Ctdx0j7nZ/i/EB45v8X7ZfUKrDhWDRXUey+PjUf5vglZVYk8OE4h4psOjqFK6M7GrnHgqN3KBbX9cXeccSue/a8q+IigMCm9pf4yczzcLLqnAks00DQ3mIlHCMD5XUKn4DR6KPnmdSH9rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJvgVWRg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eYFr5G4qYKgNxOw9OIpm25c+rqt6LiPTBlnA7yJn2pU5SdgEqxLO9erQYzo5GyD9oxFkhUgdhKreRdQCSC3b5Q5OM76GoQanONq7a77SIJ407iVOKdpN50z+s4BcsdHxDaj8puybrvz54wATGU6yCNE0IEb7tBXamWcDrXnEqHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duelOUwX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJvgVWRg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7F01F000E9;
-	Tue, 21 Jul 2026 21:42:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duelOUwX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D99BB1F000E9;
+	Tue, 21 Jul 2026 21:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670131;
-	bh=YA96EtE+NPiysmhwKBQiJvCIGz+7yXmx1pzWtIg4IZs=;
+	s=korg; t=1784670134;
+	bh=FyMIs09FS7IlErUv2MOJm7uweu83ejkd7PvKrYt5h0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nJvgVWRgR68fTcNI9tpD3GdY806yleTpedwcw1SQpX8ckGcxXUE9bSNGojO4Ws5VC
-	 1Z85iHJ55i6gWq/TT/9a8jquUXU/DiqMASQtKl2Xr3C8C1jGWJLtdZwYSgq0GiTdes
-	 tg+dAHxbekOuCymBreAdkULzugKs0Ok6zgB23HdQ=
+	b=duelOUwX5LOOHxQMcjz+hH90nOg1FJDYqUDIvtjjVV3cCV3MqgAojVr7t1kPmibWd
+	 k1nKp4YkyaPCQ/3OAgD3KJgRrQEHNOguxwirUNW2aV+TukSuts3Cwx4hLAQYrAn1Rq
+	 nBxsg/Lyp6Bl0i6IWaUw4lylpH8cQAS8sfqDlpmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bhargav Joshi <j.bhargav.u@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.1 0817/1067] irqchip/crossbar: Use correct index in crossbar_domain_free()
-Date: Tue, 21 Jul 2026 17:23:38 +0200
-Message-ID: <20260721152442.830591645@linuxfoundation.org>
+	Linus Walleij <linusw@kernel.org>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.1 0818/1067] tpm: tpm_tis_spi: Use wait_woken() in wait_for_tmp_stat()
+Date: Tue, 21 Jul 2026 17:23:39 +0200
+Message-ID: <20260721152442.851831735@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,52 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bhargav Joshi <j.bhargav.u@gmail.com>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-commit 043db005a8d6932dc7d217c86307e9af0bc10ddc upstream.
+commit c0c9cfb3b75def8bf200a2d4db09015806acfeaf upstream.
 
-crossbar_domain_free() resets the domain data and then uses the nulled
-out irq_data->hwirq member as index to reset the irq_map[] entry and to
-write the relevant crossbar register with a safe entry. That means it
-never frees the correct index and keeps the crossbar register connection
-to the source interrupt active.
+wait_event_interruptible_timeout() evaluates its condition after setting
+the current task state to TASK_INTERRUPTIBLE.
 
-If it would not reset the domain data, then this would be even worse as
-irq_data->hwirq holds the source interrupt number, but both the map and
-register index need the corresponding GIC SPI number and not the source
-interrupt number. This might even result in an out of bounds access as
-the source interrupt number can be higher than the maximal index space.
+With CONFIG_DEBUG_ATOMIC_SLEEP this triggers a warning when the IRQ wait
+path is used:
 
-Fix this by using the GIC SPI index from the parent domain's irq_data.
+    tpm_tis_status()
+      tpm_tis_spi_read_bytes()
+        tpm_tis_spi_transfer_full()
+          spi_bus_lock()
+            mutex_lock()
 
-Fixes: 783d31863fb82 ("irqchip: crossbar: Convert dra7 crossbar to stacked domains")
-Signed-off-by: Bhargav Joshi <j.bhargav.u@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260620-irq-crossbar-fix-v2-1-b8e8499f468a@gmail.com
+Address this with the following measures:
+
+1. Call wait_tpm_stat_cond() only while tasking is running.
+2. Use wait_woken() to wait for changes.
+
+Cc: stable@vger.kernel.org # v4.19+
+Cc: Linus Walleij <linusw@kernel.org>
+Reported-by: Stefan Wahren <wahrenst@gmx.net>
+Closes: https://lore.kernel.org/linux-integrity/6964bec7-3dbb-453b-89ef-9b990217a8b9@gmx.net/
+Fixes: 1a339b658d9d ("tpm_tis_spi: Pass the SPI IRQ down to the driver")
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Tested-by: Stefan Wahren <wahrenst@gmx.net>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-crossbar.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c |   35 +++++++++++++++++++++--------------
+ 1 file changed, 21 insertions(+), 14 deletions(-)
 
---- a/drivers/irqchip/irq-crossbar.c
-+++ b/drivers/irqchip/irq-crossbar.c
-@@ -158,9 +158,14 @@ static void crossbar_domain_free(struct
- 	for (i = 0; i < nr_irqs; i++) {
- 		struct irq_data *d = irq_domain_get_irq_data(domain, virq + i);
- 
-+		/*
-+		 * irq_map[] is indexed by GIC SPI number. The parent domain's
-+		 * hwirq contains the GIC interrupt number (GIC SPI +
-+		 * GIC_IRQ_START).
-+		 */
-+		cb->irq_map[d->parent_data->hwirq - GIC_IRQ_START] = IRQ_FREE;
-+		cb->write(d->parent_data->hwirq - GIC_IRQ_START, cb->safe_map);
- 		irq_domain_reset_irq_data(d);
--		cb->irq_map[d->hwirq] = IRQ_FREE;
--		cb->write(d->hwirq, cb->safe_map);
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -49,8 +49,8 @@ static int wait_for_tpm_stat(struct tpm_
+ 		bool check_cancel)
+ {
+ 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
++	DEFINE_WAIT_FUNC(wait, woken_wake_function);
+ 	unsigned long stop;
+-	long rc;
+ 	u8 status;
+ 	bool canceled = false;
+ 	u8 sts_mask = 0;
+@@ -77,23 +77,30 @@ static int wait_for_tpm_stat(struct tpm_
+ 	/* process status changes with irq support */
+ 	if (sts_mask) {
+ 		ret = -ETIME;
++		add_wait_queue(queue, &wait);
+ again:
++		if (wait_for_tpm_stat_cond(chip, sts_mask, check_cancel,
++					   &canceled)) {
++			ret = canceled ? -ECANCELED : 0;
++			goto out;
++		}
++
+ 		timeout = stop - jiffies;
+ 		if ((long)timeout <= 0)
+-			return -ETIME;
+-		rc = wait_event_interruptible_timeout(*queue,
+-			wait_for_tpm_stat_cond(chip, sts_mask, check_cancel,
+-					       &canceled),
+-			timeout);
+-		if (rc > 0) {
+-			if (canceled)
+-				return -ECANCELED;
+-			ret = 0;
+-		}
+-		if (rc == -ERESTARTSYS && freezing(current)) {
+-			clear_thread_flag(TIF_SIGPENDING);
+-			goto again;
++			goto out;
++
++		if (signal_pending(current)) {
++			if (freezing(current)) {
++				clear_thread_flag(TIF_SIGPENDING);
++				goto again;
++			}
++			goto out;
+ 		}
++
++		wait_woken(&wait, TASK_INTERRUPTIBLE, timeout);
++		goto again;
++out:
++		remove_wait_queue(queue, &wait);
  	}
- 	raw_spin_unlock(&cb->lock);
- 	irq_domain_free_irqs_parent(domain, virq, nr_irqs);
+ 
+ 	if (ret)
 
 
