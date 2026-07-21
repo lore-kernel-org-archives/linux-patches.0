@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE994746A5;
-	Tue, 21 Jul 2026 21:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C344746A5;
+	Tue, 21 Jul 2026 21:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667932; cv=none; b=ICE1zuxM4GeokEnI8nlEMdHdcj6CjeXE5erAvRgdLO/Fq2QfKGWa0UBMo7rzrB9z3joTGwSkIJ0T8cCnICuB8GNcgl8WMD6OiR4kFEv0L7Mwi3a5lI3/Be+ZYwmTfO/S7Se5q6tfy/6qwCZenbOa8lbvuSTdINZfAWPbZ+HD3Ys=
+	t=1784667934; cv=none; b=bkYi2nzsbtDci7pzifxpzwM5XcRGwU27lABXZrGsmCmYrslqXtaf245q3rX6mUfvXWf7kgiQ0bys0HbkQ4Ft25JKT7p7fJfAfKCrCamQ+q3QrPctM6PPkgt1g/NiVUs0fCPfo42vO06Jk657S/WcouPbHrpuq4bbAYZ64elWgT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667932; c=relaxed/simple;
-	bh=uMTUFrxIf2+qDLneRB3o3iNH7R5fJX/ux4ZY7jwY4Ms=;
+	s=arc-20240116; t=1784667934; c=relaxed/simple;
+	bh=BcgCQlPb69/dDMWcL7Dnx2mRsV72q57RgZEk/N54E+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bkc7DfBPiQY/VMc6fPyFecRjVxXPZECq79OxufRyZO88MZRiwwFd4B7YXCDkuYNmRdtnP5HHm7MbJrE2R/zXt2Z5qItyUrTpUkiNRUv8UVv8TalJMvh2RxYtQ+XokEQWN6Q13QKX/pKgbebuXrRbBa36n6rOslTWQhDL+F2l4Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=llj8fTU6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BFsaEbR3IrvvfM1ktRfaHcA/7f7WoRyp/Az/jahM47kjnoHYcxD/F9Nc95FilzI/Ln7pVppzGGaRsu5TSJ/x1o/ULXaELRUO5RYG7B+oaTtlzZi/D6S/9KhOKzvNddfRyrcAZ3wHyeo4sPKAnGF53qu/zeUwGqPBU0sKph80LMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j63E73/Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="llj8fTU6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C8E1F000E9;
-	Tue, 21 Jul 2026 21:05:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j63E73/Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E2D1F000E9;
+	Tue, 21 Jul 2026 21:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667930;
-	bh=l2kOr5OQH++fgIp7pHF47YnGdY1lDFMUFEx9SvL4J50=;
+	s=korg; t=1784667932;
+	bh=AV1m/i4ZUk2x87nZHoYOrANYMVhZczxGfe2wMBbqFVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=llj8fTU6rVEzcdwcYhmBxv437UFaPOlhfVk/NRagXf43YfrquACkUsisHtXCIYVU/
-	 HGVZFsG9FDYmggJu9Ddg0w7TZOJyZ8JbdItc/XJxDZNLtRYk3FAJleUek41jFiizYp
-	 I3Nlepfs1EF+meZMJJwQwcqogrGQOjUDFPHYRPyc=
+	b=j63E73/ZxS+hDXQSsPRgNGm6fabUwtKM7M+UNn9roPAMKk7/vwFfmQMaICsKYfKRm
+	 p1wLpbn+aykr/KBS47G5sB7nk0sckTnOc8hpoQOI6DaBm70yF5QXlQ+QmquV+o/0+J
+	 T75XO4OeRJ3AQr3D8ZbyfKQYzTgwyLrGUPIL3lf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lizhe <sensor1010@163.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Kevin Hilman <khilman@baylibre.com>
-Subject: [PATCH 6.6 1203/1266] cpufreq: Make cpufreq_driver->exit() return void
-Date: Tue, 21 Jul 2026 17:27:20 +0200
-Message-ID: <20260721152508.720283042@linuxfoundation.org>
+	stable@kernel.org,
+	Siwei Zhang <oss@fourdim.xyz>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 1194/1266] Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_new_connection_cb()
+Date: Tue, 21 Jul 2026 17:27:11 +0200
+Message-ID: <20260721152508.514896607@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -57,616 +52,539 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhe <sensor1010@163.com>
+From: Siwei Zhang <oss@fourdim.xyz>
 
-[ Upstream commit b4b1ddc9dfe997a5f492fa3a36487f8e7a5de30d ]
+[ Upstream commit 6fef032af0092ed5ccb767239a9ac1bc38c08a40 ]
 
-The cpufreq core doesn't check the return type of the exit() callback
-and there is not much the core can do on failures at that point. Just
-drop the returned value and make it return void.
+l2cap_sock_new_connection_cb() returned l2cap_pi(sk)->chan after
+release_sock(parent). Once the parent lock is dropped the newly
+enqueued child socket sk is reachable via the accept queue, so another
+task can accept and free it before the callback dereferences sk,
+resulting in a use-after-free.
 
-Signed-off-by: Lizhe <sensor1010@163.com>
-[ Viresh: Reworked the patches to fix all missing changes together. ]
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com> # Mediatek
-Acked-by: Sudeep Holla <sudeep.holla@arm.com> # scpi, scmi, vexpress
-Acked-by: Mario Limonciello <mario.limonciello@amd.com> # amd
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com> # bmips
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Acked-by: Kevin Hilman <khilman@baylibre.com> # omap
-Stable-dep-of: bcb8889c4981 ("cpufreq: qcom-cpufreq-hw: Fix possible double free")
+Rework the ->new_connection() op so the core, rather than the callback,
+owns the child channel's lifetime. The op now receives a pre-allocated
+new_chan and returns an errno instead of allocating and returning a
+channel. l2cap_new_connection() allocates the child channel and links
+it into the conn list via __l2cap_chan_add() before invoking the
+callback, so the conn-list reference keeps the channel alive once
+release_sock(parent) exposes the socket to other tasks.
+
+Channel configuration that was duplicated in l2cap_sock_init() and the
+various new_connection callbacks is consolidated into
+l2cap_chan_set_defaults(), which now inherits from the parent channel
+when one is supplied.
+
+Fixes: 8ffb929098a5 ("Bluetooth: Remove parent socket usage from l2cap_core.c")
+Cc: stable@kernel.org
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/acpi-cpufreq.c         |    4 +---
- drivers/cpufreq/amd-pstate.c           |    7 ++-----
- drivers/cpufreq/apple-soc-cpufreq.c    |    4 +---
- drivers/cpufreq/bmips-cpufreq.c        |    4 +---
- drivers/cpufreq/cppc_cpufreq.c         |    3 +--
- drivers/cpufreq/cpufreq-dt.c           |    3 +--
- drivers/cpufreq/e_powersaver.c         |    3 +--
- drivers/cpufreq/intel_pstate.c         |    8 +++-----
- drivers/cpufreq/mediatek-cpufreq-hw.c  |    4 +---
- drivers/cpufreq/mediatek-cpufreq.c     |    4 +---
- drivers/cpufreq/omap-cpufreq.c         |    3 +--
- drivers/cpufreq/pasemi-cpufreq.c       |    6 ++----
- drivers/cpufreq/powernow-k6.c          |    5 ++---
- drivers/cpufreq/powernow-k7.c          |    3 +--
- drivers/cpufreq/powernow-k8.c          |    6 ++----
- drivers/cpufreq/powernv-cpufreq.c      |    4 +---
- drivers/cpufreq/ppc_cbe_cpufreq.c      |    3 +--
- drivers/cpufreq/qcom-cpufreq-hw.c      |    4 +---
- drivers/cpufreq/qoriq-cpufreq.c        |    4 +---
- drivers/cpufreq/scmi-cpufreq.c         |    4 +---
- drivers/cpufreq/scpi-cpufreq.c         |    4 +---
- drivers/cpufreq/sh-cpufreq.c           |    4 +---
- drivers/cpufreq/sparc-us2e-cpufreq.c   |    3 +--
- drivers/cpufreq/sparc-us3-cpufreq.c    |    3 +--
- drivers/cpufreq/speedstep-centrino.c   |   10 +++-------
- drivers/cpufreq/tegra194-cpufreq.c     |    4 +---
- drivers/cpufreq/vexpress-spc-cpufreq.c |    5 ++---
- include/linux/cpufreq.h                |    2 +-
- 28 files changed, 37 insertions(+), 84 deletions(-)
+ include/net/bluetooth/l2cap.h |   10 ++--
+ net/bluetooth/6lowpan.c       |   18 -------
+ net/bluetooth/l2cap_core.c    |   78 ++++++++++++++++++++++++++-----
+ net/bluetooth/l2cap_sock.c    |  103 +++++++++++++++++++-----------------------
+ net/bluetooth/smp.c           |   27 ++---------
+ 5 files changed, 127 insertions(+), 109 deletions(-)
 
---- a/drivers/cpufreq/acpi-cpufreq.c
-+++ b/drivers/cpufreq/acpi-cpufreq.c
-@@ -926,7 +926,7 @@ err_free:
- 	return result;
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -614,7 +614,8 @@ struct l2cap_chan {
+ struct l2cap_ops {
+ 	char			*name;
+ 
+-	struct l2cap_chan	*(*new_connection) (struct l2cap_chan *chan);
++	int			(*new_connection)(struct l2cap_chan *chan,
++						  struct l2cap_chan *new_chan);
+ 	int			(*recv) (struct l2cap_chan * chan,
+ 					 struct sk_buff *skb);
+ 	void			(*teardown) (struct l2cap_chan *chan, int err);
+@@ -879,9 +880,10 @@ static inline __u16 __next_seq(struct l2
+ 	return (seq + 1) % (chan->tx_win_max + 1);
  }
  
--static int acpi_cpufreq_cpu_exit(struct cpufreq_policy *policy)
-+static void acpi_cpufreq_cpu_exit(struct cpufreq_policy *policy)
+-static inline struct l2cap_chan *l2cap_chan_no_new_connection(struct l2cap_chan *chan)
++static inline int l2cap_chan_no_new_connection(struct l2cap_chan *chan,
++					       struct l2cap_chan *new_chan)
  {
- 	struct acpi_cpufreq_data *data = policy->driver_data;
+-	return NULL;
++	return -EOPNOTSUPP;
+ }
  
-@@ -939,8 +939,6 @@ static int acpi_cpufreq_cpu_exit(struct
- 	free_cpumask_var(data->freqdomain_cpus);
- 	kfree(policy->freq_table);
- 	kfree(data);
+ static inline int l2cap_chan_no_recv(struct l2cap_chan *chan, struct sk_buff *skb)
+@@ -957,7 +959,7 @@ int l2cap_chan_send(struct l2cap_chan *c
+ void l2cap_chan_busy(struct l2cap_chan *chan, int busy);
+ void l2cap_chan_rx_avail(struct l2cap_chan *chan, ssize_t rx_avail);
+ int l2cap_chan_check_security(struct l2cap_chan *chan, bool initiator);
+-void l2cap_chan_set_defaults(struct l2cap_chan *chan);
++void l2cap_chan_set_defaults(struct l2cap_chan *chan, struct l2cap_chan *pchan);
+ int l2cap_ertm_init(struct l2cap_chan *chan);
+ void l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan);
+ void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan);
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -631,7 +631,7 @@ static struct l2cap_chan *chan_create(vo
+ 	if (!chan)
+ 		return NULL;
+ 
+-	l2cap_chan_set_defaults(chan);
++	l2cap_chan_set_defaults(chan, NULL);
+ 
+ 	chan->chan_type = L2CAP_CHAN_CONN_ORIENTED;
+ 	chan->mode = L2CAP_MODE_LE_FLOWCTL;
+@@ -744,21 +744,6 @@ static inline void chan_ready_cb(struct
+ 	ifup(dev->netdev);
+ }
+ 
+-static inline struct l2cap_chan *chan_new_conn_cb(struct l2cap_chan *pchan)
+-{
+-	struct l2cap_chan *chan;
 -
--	return 0;
- }
- 
- static int acpi_cpufreq_resume(struct cpufreq_policy *policy)
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -900,7 +900,7 @@ free_cpudata1:
- 	return ret;
- }
- 
--static int amd_pstate_cpu_exit(struct cpufreq_policy *policy)
-+static void amd_pstate_cpu_exit(struct cpufreq_policy *policy)
- {
- 	struct amd_cpudata *cpudata = policy->driver_data;
- 
-@@ -908,8 +908,6 @@ static int amd_pstate_cpu_exit(struct cp
- 	freq_qos_remove_request(&cpudata->req[0]);
- 	policy->fast_switch_possible = false;
- 	kfree(cpudata);
+-	chan = chan_create();
+-	if (!chan)
+-		return NULL;
 -
--	return 0;
- }
- 
- static int amd_pstate_cpu_resume(struct cpufreq_policy *policy)
-@@ -1353,7 +1351,7 @@ free_cpudata1:
- 	return ret;
- }
- 
--static int amd_pstate_epp_cpu_exit(struct cpufreq_policy *policy)
-+static void amd_pstate_epp_cpu_exit(struct cpufreq_policy *policy)
+-	chan->ops = pchan->ops;
+-
+-	BT_DBG("chan %p pchan %p", chan, pchan);
+-
+-	return chan;
+-}
+-
+ static void unregister_dev(struct lowpan_btle_dev *dev)
  {
- 	struct amd_cpudata *cpudata = policy->driver_data;
+ 	struct hci_dev *hdev = READ_ONCE(dev->hdev);
+@@ -900,7 +885,6 @@ static long chan_get_sndtimeo_cb(struct
  
-@@ -1363,7 +1361,6 @@ static int amd_pstate_epp_cpu_exit(struc
+ static const struct l2cap_ops bt_6lowpan_chan_ops = {
+ 	.name			= "L2CAP 6LoWPAN channel",
+-	.new_connection		= chan_new_conn_cb,
+ 	.recv			= chan_recv_cb,
+ 	.close			= chan_close_cb,
+ 	.state_change		= chan_state_change_cb,
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -525,7 +525,10 @@ void l2cap_chan_put(struct l2cap_chan *c
+ }
+ EXPORT_SYMBOL_GPL(l2cap_chan_put);
+ 
+-void l2cap_chan_set_defaults(struct l2cap_chan *chan)
++/* Initialise @chan with default values, inheriting from the parent channel
++ * @pchan when it is given.
++ */
++void l2cap_chan_set_defaults(struct l2cap_chan *chan, struct l2cap_chan *pchan)
+ {
+ 	chan->fcs  = L2CAP_FCS_CRC16;
+ 	chan->max_tx = L2CAP_DEFAULT_MAX_TX;
+@@ -539,6 +542,31 @@ void l2cap_chan_set_defaults(struct l2ca
+ 	chan->retrans_timeout = L2CAP_DEFAULT_RETRANS_TO;
+ 	chan->monitor_timeout = L2CAP_DEFAULT_MONITOR_TO;
+ 
++	if (pchan) {
++		BT_DBG("chan %p pchan %p", chan, pchan);
++
++		chan->chan_type = pchan->chan_type;
++		chan->imtu = pchan->imtu;
++		chan->omtu = pchan->omtu;
++		chan->mode = pchan->mode;
++		chan->fcs = pchan->fcs;
++		chan->max_tx = pchan->max_tx;
++		chan->tx_win = pchan->tx_win;
++		chan->tx_win_max = pchan->tx_win_max;
++		chan->sec_level = pchan->sec_level;
++		chan->conf_state = pchan->conf_state;
++		chan->flags = pchan->flags;
++		chan->tx_credits = pchan->tx_credits;
++		chan->rx_credits = pchan->rx_credits;
++
++		if (chan->chan_type == L2CAP_CHAN_FIXED) {
++			chan->scid = pchan->scid;
++			chan->dcid = pchan->scid;
++		}
++
++		return;
++	}
++
+ 	chan->conf_state = 0;
+ 	set_bit(CONF_NOT_COMPLETE, &chan->conf_state);
+ 
+@@ -3975,6 +4003,38 @@ static inline int l2cap_command_rej(stru
+ 	return 0;
+ }
+ 
++/* Allocate and initialise a channel for an incoming connection.
++ *
++ * The channel inherits its configuration from @pchan and is linked into @conn
++ * before ->new_connection() runs, so the conn list reference keeps it alive if
++ * the callback exposes it (e.g. via the socket accept queue) before this
++ * returns. The l2cap_chan_create() reference is taken over by the subsystem on
++ * success and dropped here on failure.
++ */
++static struct l2cap_chan *l2cap_new_connection(struct l2cap_conn *conn,
++					       struct l2cap_chan *pchan)
++{
++	struct l2cap_chan *chan;
++
++	chan = l2cap_chan_create();
++	if (!chan)
++		return NULL;
++
++	l2cap_chan_set_defaults(chan, pchan);
++	chan->ops = pchan->ops;
++
++	__l2cap_chan_add(conn, chan);
++
++	if (pchan->ops->new_connection &&
++	    pchan->ops->new_connection(pchan, chan) < 0) {
++		l2cap_chan_del(chan, 0);
++		l2cap_chan_put(chan);
++		return NULL;
++	}
++
++	return chan;
++}
++
+ static void l2cap_connect(struct l2cap_conn *conn, struct l2cap_cmd_hdr *cmd,
+ 			  u8 *data, u8 rsp_code)
+ {
+@@ -4021,7 +4081,7 @@ static void l2cap_connect(struct l2cap_c
+ 		goto response;
  	}
  
- 	pr_debug("CPU %d exiting\n", policy->cpu);
--	return 0;
- }
+-	chan = pchan->ops->new_connection(pchan);
++	chan = l2cap_new_connection(conn, pchan);
+ 	if (!chan)
+ 		goto response;
  
- static void amd_pstate_epp_update_limit(struct cpufreq_policy *policy)
---- a/drivers/cpufreq/apple-soc-cpufreq.c
-+++ b/drivers/cpufreq/apple-soc-cpufreq.c
-@@ -311,7 +311,7 @@ out_iounmap:
- 	return ret;
- }
+@@ -4039,8 +4099,6 @@ static void l2cap_connect(struct l2cap_c
+ 	chan->psm  = psm;
+ 	chan->dcid = scid;
  
--static int apple_soc_cpufreq_exit(struct cpufreq_policy *policy)
-+static void apple_soc_cpufreq_exit(struct cpufreq_policy *policy)
- {
- 	struct apple_cpu_priv *priv = policy->driver_data;
- 
-@@ -319,8 +319,6 @@ static int apple_soc_cpufreq_exit(struct
- 	dev_pm_opp_remove_all_dynamic(priv->cpu_dev);
- 	iounmap(priv->reg_base);
- 	kfree(priv);
+-	__l2cap_chan_add(conn, chan);
 -
--	return 0;
- }
+ 	dcid = chan->scid;
  
- static struct cpufreq_driver apple_soc_cpufreq_driver = {
---- a/drivers/cpufreq/bmips-cpufreq.c
-+++ b/drivers/cpufreq/bmips-cpufreq.c
-@@ -121,11 +121,9 @@ static int bmips_cpufreq_target_index(st
- 	return 0;
- }
+ 	__set_chan_timer(chan, chan->ops->get_sndtimeo(chan));
+@@ -4909,7 +4967,7 @@ static int l2cap_le_connect_req(struct l
+ 		goto response_unlock;
+ 	}
  
--static int bmips_cpufreq_exit(struct cpufreq_policy *policy)
-+static void bmips_cpufreq_exit(struct cpufreq_policy *policy)
- {
- 	kfree(policy->freq_table);
+-	chan = pchan->ops->new_connection(pchan);
++	chan = l2cap_new_connection(conn, pchan);
+ 	if (!chan) {
+ 		result = L2CAP_CR_LE_NO_MEM;
+ 		goto response_unlock;
+@@ -4924,8 +4982,6 @@ static int l2cap_le_connect_req(struct l
+ 	chan->omtu = mtu;
+ 	chan->remote_mps = mps;
+ 
+-	__l2cap_chan_add(conn, chan);
 -
--	return 0;
- }
+ 	l2cap_le_flowctl_init(chan, __le16_to_cpu(req->credits));
  
- static int bmips_cpufreq_init(struct cpufreq_policy *policy)
---- a/drivers/cpufreq/cppc_cpufreq.c
-+++ b/drivers/cpufreq/cppc_cpufreq.c
-@@ -707,7 +707,7 @@ out:
- 	return ret;
- }
+ 	dcid = chan->scid;
+@@ -5134,7 +5190,7 @@ static inline int l2cap_ecred_conn_req(s
+ 			continue;
+ 		}
  
--static int cppc_cpufreq_cpu_exit(struct cpufreq_policy *policy)
-+static void cppc_cpufreq_cpu_exit(struct cpufreq_policy *policy)
- {
- 	struct cppc_cpudata *cpu_data = policy->driver_data;
- 	struct cppc_perf_caps *caps = &cpu_data->perf_caps;
-@@ -724,7 +724,6 @@ static int cppc_cpufreq_cpu_exit(struct
- 			 caps->lowest_perf, cpu, ret);
+-		chan = pchan->ops->new_connection(pchan);
++		chan = l2cap_new_connection(conn, pchan);
+ 		if (!chan) {
+ 			result = L2CAP_CR_LE_NO_MEM;
+ 			continue;
+@@ -5149,8 +5205,6 @@ static inline int l2cap_ecred_conn_req(s
+ 		chan->omtu = mtu;
+ 		chan->remote_mps = mps;
  
- 	cppc_cpufreq_put_cpu_data(policy);
--	return 0;
- }
- 
- static inline u64 get_delta(u64 t1, u64 t0)
---- a/drivers/cpufreq/cpufreq-dt.c
-+++ b/drivers/cpufreq/cpufreq-dt.c
-@@ -166,10 +166,9 @@ static int cpufreq_offline(struct cpufre
- 	return 0;
- }
- 
--static int cpufreq_exit(struct cpufreq_policy *policy)
-+static void cpufreq_exit(struct cpufreq_policy *policy)
- {
- 	clk_put(policy->clk);
--	return 0;
- }
- 
- static struct cpufreq_driver dt_cpufreq_driver = {
---- a/drivers/cpufreq/e_powersaver.c
-+++ b/drivers/cpufreq/e_powersaver.c
-@@ -360,14 +360,13 @@ static int eps_cpu_init(struct cpufreq_p
- 	return 0;
- }
- 
--static int eps_cpu_exit(struct cpufreq_policy *policy)
-+static void eps_cpu_exit(struct cpufreq_policy *policy)
- {
- 	unsigned int cpu = policy->cpu;
- 
- 	/* Bye */
- 	kfree(eps_cpu[cpu]);
- 	eps_cpu[cpu] = NULL;
--	return 0;
- }
- 
- static struct cpufreq_driver eps_driver = {
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -2705,13 +2705,11 @@ static int intel_pstate_cpu_offline(stru
- 	return intel_cpufreq_cpu_offline(policy);
- }
- 
--static int intel_pstate_cpu_exit(struct cpufreq_policy *policy)
-+static void intel_pstate_cpu_exit(struct cpufreq_policy *policy)
- {
- 	pr_debug("CPU %d exiting\n", policy->cpu);
- 
- 	policy->fast_switch_possible = false;
+-		__l2cap_chan_add(conn, chan);
 -
--	return 0;
- }
+ 		l2cap_ecred_init(chan, __le16_to_cpu(req->credits));
  
- static int __intel_pstate_cpu_init(struct cpufreq_policy *policy)
-@@ -3041,7 +3039,7 @@ pstate_exit:
- 	return ret;
- }
+ 		/* Init response */
+@@ -7421,14 +7475,12 @@ static void l2cap_connect_cfm(struct hci
+ 			goto next;
  
--static int intel_cpufreq_cpu_exit(struct cpufreq_policy *policy)
-+static void intel_cpufreq_cpu_exit(struct cpufreq_policy *policy)
- {
- 	struct freq_qos_request *req;
- 
-@@ -3051,7 +3049,7 @@ static int intel_cpufreq_cpu_exit(struct
- 	freq_qos_remove_request(req);
- 	kfree(req);
- 
--	return intel_pstate_cpu_exit(policy);
-+	intel_pstate_cpu_exit(policy);
- }
- 
- static int intel_cpufreq_suspend(struct cpufreq_policy *policy)
---- a/drivers/cpufreq/mediatek-cpufreq-hw.c
-+++ b/drivers/cpufreq/mediatek-cpufreq-hw.c
-@@ -260,7 +260,7 @@ static int mtk_cpufreq_hw_cpu_init(struc
- 	return 0;
- }
- 
--static int mtk_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
-+static void mtk_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
- {
- 	struct mtk_cpufreq_data *data = policy->driver_data;
- 	struct resource *res = data->res;
-@@ -270,8 +270,6 @@ static int mtk_cpufreq_hw_cpu_exit(struc
- 	writel_relaxed(0x0, data->reg_bases[REG_FREQ_ENABLE]);
- 	iounmap(base);
- 	release_mem_region(res->start, resource_size(res));
+ 		l2cap_chan_lock(pchan);
+-		chan = pchan->ops->new_connection(pchan);
++		chan = l2cap_new_connection(conn, pchan);
+ 		if (chan) {
+ 			bacpy(&chan->src, &hcon->src);
+ 			bacpy(&chan->dst, &hcon->dst);
+ 			chan->src_type = bdaddr_src_type(hcon);
+ 			chan->dst_type = dst_type;
 -
--	return 0;
- }
+-			__l2cap_chan_add(conn, chan);
+ 		}
  
- static void mtk_cpufreq_register_em(struct cpufreq_policy *policy)
---- a/drivers/cpufreq/mediatek-cpufreq.c
-+++ b/drivers/cpufreq/mediatek-cpufreq.c
-@@ -599,13 +599,11 @@ static int mtk_cpufreq_init(struct cpufr
- 	return 0;
- }
+ 		l2cap_chan_unlock(pchan);
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -45,7 +45,8 @@ static struct bt_sock_list l2cap_sk_list
+ static const struct proto_ops l2cap_sock_ops;
+ static void l2cap_sock_init(struct sock *sk, struct sock *parent);
+ static struct sock *l2cap_sock_alloc(struct net *net, struct socket *sock,
+-				     int proto, gfp_t prio, int kern);
++				     int proto, gfp_t prio, int kern,
++				     struct l2cap_chan *chan);
+ static void l2cap_sock_cleanup_listen(struct sock *parent);
  
--static int mtk_cpufreq_exit(struct cpufreq_policy *policy)
-+static void mtk_cpufreq_exit(struct cpufreq_policy *policy)
- {
- 	struct mtk_cpu_dvfs_info *info = policy->driver_data;
- 
- 	dev_pm_opp_free_cpufreq_table(info->cpu_dev, &policy->freq_table);
--
--	return 0;
- }
- 
- static struct cpufreq_driver mtk_cpufreq_driver = {
---- a/drivers/cpufreq/omap-cpufreq.c
-+++ b/drivers/cpufreq/omap-cpufreq.c
-@@ -135,11 +135,10 @@ static int omap_cpu_init(struct cpufreq_
- 	return 0;
- }
- 
--static int omap_cpu_exit(struct cpufreq_policy *policy)
-+static void omap_cpu_exit(struct cpufreq_policy *policy)
- {
- 	freq_table_free();
- 	clk_put(policy->clk);
--	return 0;
- }
- 
- static struct cpufreq_driver omap_driver = {
---- a/drivers/cpufreq/pasemi-cpufreq.c
-+++ b/drivers/cpufreq/pasemi-cpufreq.c
-@@ -204,21 +204,19 @@ out:
+ bool l2cap_is_socket(struct socket *sock)
+@@ -1240,6 +1241,23 @@ done:
  	return err;
  }
  
--static int pas_cpufreq_cpu_exit(struct cpufreq_policy *policy)
-+static void pas_cpufreq_cpu_exit(struct cpufreq_policy *policy)
- {
- 	/*
- 	 * We don't support CPU hotplug. Don't unmap after the system
- 	 * has already made it to a running state.
- 	 */
- 	if (system_state >= SYSTEM_RUNNING)
--		return 0;
++/* Release the sock's ref on chan and clear the pointer so that the ref is
++ * dropped exactly once even if both l2cap_sock_kill() and
++ * l2cap_sock_destruct() run. Setting chan->data to NULL first stops any other
++ * task from dereferencing the now-dead sock pointer.
++ */
++static void l2cap_sock_put_chan(struct sock *sk)
++{
++	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
++
++	if (!chan)
 +		return;
++
++	chan->data = NULL;
++	l2cap_pi(sk)->chan = NULL;
++	l2cap_chan_put(chan);
++}
++
+ /* Kill socket (only if zapped and orphan)
+  * Must be called on unlocked socket, with l2cap channel lock.
+  */
+@@ -1250,13 +1268,9 @@ static void l2cap_sock_kill(struct sock
  
- 	if (sdcasr_mapbase)
- 		iounmap(sdcasr_mapbase);
- 	if (sdcpwr_mapbase)
- 		iounmap(sdcpwr_mapbase);
--
--	return 0;
+ 	BT_DBG("sk %p state %s", sk, state_to_string(sk->sk_state));
+ 
+-	/* Sock is dead, so set chan data to NULL, avoid other task use invalid
+-	 * sock pointer.
+-	 */
+-	l2cap_pi(sk)->chan->data = NULL;
+-	/* Kill poor orphan */
++	l2cap_sock_put_chan(sk);
+ 
+-	l2cap_chan_put(l2cap_pi(sk)->chan);
++	/* Kill poor orphan */
+ 	sock_set_flag(sk, SOCK_DEAD);
+ 	sock_put(sk);
+ }
+@@ -1499,12 +1513,13 @@ static void l2cap_sock_cleanup_listen(st
+ 	}
  }
  
- static int pas_cpufreq_target(struct cpufreq_policy *policy,
---- a/drivers/cpufreq/powernow-k6.c
-+++ b/drivers/cpufreq/powernow-k6.c
-@@ -219,7 +219,7 @@ have_busfreq:
- }
- 
- 
--static int powernow_k6_cpu_exit(struct cpufreq_policy *policy)
-+static void powernow_k6_cpu_exit(struct cpufreq_policy *policy)
+-static struct l2cap_chan *l2cap_sock_new_connection_cb(struct l2cap_chan *chan)
++static int l2cap_sock_new_connection_cb(struct l2cap_chan *chan,
++					struct l2cap_chan *new_chan)
  {
- 	unsigned int i;
+ 	struct sock *sk, *parent = chan->data;
  
-@@ -234,10 +234,9 @@ static int powernow_k6_cpu_exit(struct c
- 			cpufreq_freq_transition_begin(policy, &freqs);
- 			powernow_k6_target(policy, i);
- 			cpufreq_freq_transition_end(policy, &freqs, 0);
--			break;
-+			return;
+ 	if (!parent)
+-		return NULL;
++		return -EINVAL;
+ 
+ 	lock_sock(parent);
+ 
+@@ -1512,25 +1527,28 @@ static struct l2cap_chan *l2cap_sock_new
+ 	if (sk_acceptq_is_full(parent)) {
+ 		BT_DBG("backlog full %d", parent->sk_ack_backlog);
+ 		release_sock(parent);
+-		return NULL;
++		return -ENOBUFS;
+ 	}
+ 
+ 	sk = l2cap_sock_alloc(sock_net(parent), NULL, BTPROTO_L2CAP,
+-			      GFP_ATOMIC, 0);
++			      GFP_ATOMIC, 0, new_chan);
+ 	if (!sk) {
+ 		release_sock(parent);
+-		return NULL;
+-        }
++		return -ENOMEM;
++	}
+ 
+ 	bt_sock_reclassify_lock(sk, BTPROTO_L2CAP);
+ 
+ 	l2cap_sock_init(sk, parent);
+ 
++	/* The conn list reference taken by l2cap_new_connection() keeps new_chan
++	 * alive once release_sock() lets another task free this socket.
++	 */
+ 	bt_accept_enqueue(parent, sk, false);
+ 
+ 	release_sock(parent);
+ 
+-	return l2cap_pi(sk)->chan;
++	return 0;
+ }
+ 
+ static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
+@@ -1828,10 +1846,7 @@ static void l2cap_sock_destruct(struct s
+ 
+ 	BT_DBG("sk %p", sk);
+ 
+-	if (l2cap_pi(sk)->chan) {
+-		l2cap_pi(sk)->chan->data = NULL;
+-		l2cap_chan_put(l2cap_pi(sk)->chan);
+-	}
++	l2cap_sock_put_chan(sk);
+ 
+ 	list_for_each_entry_safe(rx_busy, next, &l2cap_pi(sk)->rx_busy, list) {
+ 		kfree_skb(rx_busy->skb);
+@@ -1863,30 +1878,12 @@ static void l2cap_sock_init(struct sock
+ 	BT_DBG("sk %p", sk);
+ 
+ 	if (parent) {
+-		struct l2cap_chan *pchan = l2cap_pi(parent)->chan;
+-
+ 		sk->sk_type = parent->sk_type;
+ 		bt_sk(sk)->flags = bt_sk(parent)->flags;
+ 
+-		chan->chan_type = pchan->chan_type;
+-		chan->imtu = pchan->imtu;
+-		chan->omtu = pchan->omtu;
+-		chan->conf_state = pchan->conf_state;
+-		chan->mode = pchan->mode;
+-		chan->fcs  = pchan->fcs;
+-		chan->max_tx = pchan->max_tx;
+-		chan->tx_win = pchan->tx_win;
+-		chan->tx_win_max = pchan->tx_win_max;
+-		chan->sec_level = pchan->sec_level;
+-		chan->flags = pchan->flags;
+-		chan->tx_credits = pchan->tx_credits;
+-		chan->rx_credits = pchan->rx_credits;
+-
+-		if (chan->chan_type == L2CAP_CHAN_FIXED) {
+-			chan->scid = pchan->scid;
+-			chan->dcid = pchan->scid;
+-		}
+-
++		/* Channel configuration is inherited from the parent by
++		 * l2cap_new_connection().
++		 */
+ 		security_sk_clone(parent, sk);
+ 	} else {
+ 		switch (sk->sk_type) {
+@@ -1912,7 +1909,7 @@ static void l2cap_sock_init(struct sock
+ 			chan->mode = L2CAP_MODE_BASIC;
  		}
- 	}
--	return 0;
- }
  
- static unsigned int powernow_k6_get(unsigned int cpu)
---- a/drivers/cpufreq/powernow-k7.c
-+++ b/drivers/cpufreq/powernow-k7.c
-@@ -644,7 +644,7 @@ static int powernow_cpu_init(struct cpuf
- 	return 0;
- }
- 
--static int powernow_cpu_exit(struct cpufreq_policy *policy)
-+static void powernow_cpu_exit(struct cpufreq_policy *policy)
- {
- #ifdef CONFIG_X86_POWERNOW_K7_ACPI
- 	if (acpi_processor_perf) {
-@@ -655,7 +655,6 @@ static int powernow_cpu_exit(struct cpuf
- #endif
- 
- 	kfree(powernow_table);
--	return 0;
- }
- 
- static struct cpufreq_driver powernow_driver = {
---- a/drivers/cpufreq/powernow-k8.c
-+++ b/drivers/cpufreq/powernow-k8.c
-@@ -1089,13 +1089,13 @@ err_out:
- 	return -ENODEV;
- }
- 
--static int powernowk8_cpu_exit(struct cpufreq_policy *pol)
-+static void powernowk8_cpu_exit(struct cpufreq_policy *pol)
- {
- 	struct powernow_k8_data *data = per_cpu(powernow_data, pol->cpu);
- 	int cpu;
- 
- 	if (!data)
--		return -EINVAL;
-+		return;
- 
- 	powernow_k8_cpu_exit_acpi(data);
- 
-@@ -1104,8 +1104,6 @@ static int powernowk8_cpu_exit(struct cp
- 	/* pol->cpus will be empty here, use related_cpus instead. */
- 	for_each_cpu(cpu, pol->related_cpus)
- 		per_cpu(powernow_data, cpu) = NULL;
--
--	return 0;
- }
- 
- static void query_values_on_cpu(void *_err)
---- a/drivers/cpufreq/powernv-cpufreq.c
-+++ b/drivers/cpufreq/powernv-cpufreq.c
-@@ -874,7 +874,7 @@ static int powernv_cpufreq_cpu_init(stru
- 	return 0;
- }
- 
--static int powernv_cpufreq_cpu_exit(struct cpufreq_policy *policy)
-+static void powernv_cpufreq_cpu_exit(struct cpufreq_policy *policy)
- {
- 	struct powernv_smp_call_data freq_data;
- 	struct global_pstate_info *gpstates = policy->driver_data;
-@@ -886,8 +886,6 @@ static int powernv_cpufreq_cpu_exit(stru
- 		del_timer_sync(&gpstates->timer);
- 
- 	kfree(policy->driver_data);
--
--	return 0;
- }
- 
- static int powernv_cpufreq_reboot_notifier(struct notifier_block *nb,
---- a/drivers/cpufreq/ppc_cbe_cpufreq.c
-+++ b/drivers/cpufreq/ppc_cbe_cpufreq.c
-@@ -113,10 +113,9 @@ static int cbe_cpufreq_cpu_init(struct c
- 	return 0;
- }
- 
--static int cbe_cpufreq_cpu_exit(struct cpufreq_policy *policy)
-+static void cbe_cpufreq_cpu_exit(struct cpufreq_policy *policy)
- {
- 	cbe_cpufreq_pmi_policy_exit(policy);
--	return 0;
- }
- 
- static int cbe_cpufreq_target(struct cpufreq_policy *policy,
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -574,7 +574,7 @@ static int qcom_cpufreq_hw_cpu_init(stru
- 	return qcom_cpufreq_hw_lmh_init(policy, index);
- }
- 
--static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
-+static void qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
- {
- 	struct device *cpu_dev = get_cpu_device(policy->cpu);
- 	struct qcom_cpufreq_data *data = policy->driver_data;
-@@ -584,8 +584,6 @@ static int qcom_cpufreq_hw_cpu_exit(stru
- 	qcom_cpufreq_hw_lmh_exit(data);
- 	kfree(policy->freq_table);
- 	kfree(data);
--
--	return 0;
- }
- 
- static void qcom_cpufreq_ready(struct cpufreq_policy *policy)
---- a/drivers/cpufreq/qoriq-cpufreq.c
-+++ b/drivers/cpufreq/qoriq-cpufreq.c
-@@ -225,7 +225,7 @@ err_np:
- 	return -ENODEV;
- }
- 
--static int qoriq_cpufreq_cpu_exit(struct cpufreq_policy *policy)
-+static void qoriq_cpufreq_cpu_exit(struct cpufreq_policy *policy)
- {
- 	struct cpu_data *data = policy->driver_data;
- 
-@@ -233,8 +233,6 @@ static int qoriq_cpufreq_cpu_exit(struct
- 	kfree(data->table);
- 	kfree(data);
- 	policy->driver_data = NULL;
--
--	return 0;
- }
- 
- static int qoriq_cpufreq_target(struct cpufreq_policy *policy,
---- a/drivers/cpufreq/scmi-cpufreq.c
-+++ b/drivers/cpufreq/scmi-cpufreq.c
-@@ -247,7 +247,7 @@ out_free_priv:
- 	return ret;
- }
- 
--static int scmi_cpufreq_exit(struct cpufreq_policy *policy)
-+static void scmi_cpufreq_exit(struct cpufreq_policy *policy)
- {
- 	struct scmi_data *priv = policy->driver_data;
- 
-@@ -255,8 +255,6 @@ static int scmi_cpufreq_exit(struct cpuf
- 	dev_pm_opp_remove_all_dynamic(priv->cpu_dev);
- 	free_cpumask_var(priv->opp_shared_cpus);
- 	kfree(priv);
--
--	return 0;
- }
- 
- static void scmi_cpufreq_register_em(struct cpufreq_policy *policy)
---- a/drivers/cpufreq/scpi-cpufreq.c
-+++ b/drivers/cpufreq/scpi-cpufreq.c
-@@ -175,7 +175,7 @@ out_free_opp:
- 	return ret;
- }
- 
--static int scpi_cpufreq_exit(struct cpufreq_policy *policy)
-+static void scpi_cpufreq_exit(struct cpufreq_policy *policy)
- {
- 	struct scpi_data *priv = policy->driver_data;
- 
-@@ -183,8 +183,6 @@ static int scpi_cpufreq_exit(struct cpuf
- 	dev_pm_opp_free_cpufreq_table(priv->cpu_dev, &policy->freq_table);
- 	dev_pm_opp_remove_all_dynamic(priv->cpu_dev);
- 	kfree(priv);
--
--	return 0;
- }
- 
- static struct cpufreq_driver scpi_cpufreq_driver = {
---- a/drivers/cpufreq/sh-cpufreq.c
-+++ b/drivers/cpufreq/sh-cpufreq.c
-@@ -135,14 +135,12 @@ static int sh_cpufreq_cpu_init(struct cp
- 	return 0;
- }
- 
--static int sh_cpufreq_cpu_exit(struct cpufreq_policy *policy)
-+static void sh_cpufreq_cpu_exit(struct cpufreq_policy *policy)
- {
- 	unsigned int cpu = policy->cpu;
- 	struct clk *cpuclk = &per_cpu(sh_cpuclk, cpu);
- 
- 	clk_put(cpuclk);
--
--	return 0;
- }
- 
- static struct cpufreq_driver sh_cpufreq_driver = {
---- a/drivers/cpufreq/sparc-us2e-cpufreq.c
-+++ b/drivers/cpufreq/sparc-us2e-cpufreq.c
-@@ -296,10 +296,9 @@ static int us2e_freq_cpu_init(struct cpu
- 	return 0;
- }
- 
--static int us2e_freq_cpu_exit(struct cpufreq_policy *policy)
-+static void us2e_freq_cpu_exit(struct cpufreq_policy *policy)
- {
- 	us2e_freq_target(policy, 0);
--	return 0;
- }
- 
- static struct cpufreq_driver cpufreq_us2e_driver = {
---- a/drivers/cpufreq/sparc-us3-cpufreq.c
-+++ b/drivers/cpufreq/sparc-us3-cpufreq.c
-@@ -140,10 +140,9 @@ static int us3_freq_cpu_init(struct cpuf
- 	return 0;
- }
- 
--static int us3_freq_cpu_exit(struct cpufreq_policy *policy)
-+static void us3_freq_cpu_exit(struct cpufreq_policy *policy)
- {
- 	us3_freq_target(policy, 0);
--	return 0;
- }
- 
- static struct cpufreq_driver cpufreq_us3_driver = {
---- a/drivers/cpufreq/speedstep-centrino.c
-+++ b/drivers/cpufreq/speedstep-centrino.c
-@@ -400,16 +400,12 @@ static int centrino_cpu_init(struct cpuf
- 	return 0;
- }
- 
--static int centrino_cpu_exit(struct cpufreq_policy *policy)
-+static void centrino_cpu_exit(struct cpufreq_policy *policy)
- {
- 	unsigned int cpu = policy->cpu;
- 
--	if (!per_cpu(centrino_model, cpu))
--		return -ENODEV;
--
--	per_cpu(centrino_model, cpu) = NULL;
--
--	return 0;
-+	if (per_cpu(centrino_model, cpu))
-+		per_cpu(centrino_model, cpu) = NULL;
- }
- 
- /**
---- a/drivers/cpufreq/tegra194-cpufreq.c
-+++ b/drivers/cpufreq/tegra194-cpufreq.c
-@@ -526,14 +526,12 @@ static int tegra194_cpufreq_offline(stru
- 	return 0;
- }
- 
--static int tegra194_cpufreq_exit(struct cpufreq_policy *policy)
-+static void tegra194_cpufreq_exit(struct cpufreq_policy *policy)
- {
- 	struct device *cpu_dev = get_cpu_device(policy->cpu);
- 
- 	dev_pm_opp_remove_all_dynamic(cpu_dev);
- 	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
--
--	return 0;
- }
- 
- static int tegra194_cpufreq_set_target(struct cpufreq_policy *policy,
---- a/drivers/cpufreq/vexpress-spc-cpufreq.c
-+++ b/drivers/cpufreq/vexpress-spc-cpufreq.c
-@@ -447,7 +447,7 @@ static int ve_spc_cpufreq_init(struct cp
- 	return 0;
- }
- 
--static int ve_spc_cpufreq_exit(struct cpufreq_policy *policy)
-+static void ve_spc_cpufreq_exit(struct cpufreq_policy *policy)
- {
- 	struct device *cpu_dev;
- 
-@@ -455,11 +455,10 @@ static int ve_spc_cpufreq_exit(struct cp
- 	if (!cpu_dev) {
- 		pr_err("%s: failed to get cpu%d device\n", __func__,
- 		       policy->cpu);
--		return -ENODEV;
-+		return;
+-		l2cap_chan_set_defaults(chan);
++		l2cap_chan_set_defaults(chan, NULL);
  	}
  
- 	put_cluster_clk_and_freq_table(cpu_dev, policy->related_cpus);
--	return 0;
+ 	/* Default config options */
+@@ -1931,10 +1928,10 @@ static struct proto l2cap_proto = {
+ };
+ 
+ static struct sock *l2cap_sock_alloc(struct net *net, struct socket *sock,
+-				     int proto, gfp_t prio, int kern)
++				     int proto, gfp_t prio, int kern,
++				     struct l2cap_chan *chan)
+ {
+ 	struct sock *sk;
+-	struct l2cap_chan *chan;
+ 
+ 	sk = bt_sock_alloc(net, sock, &l2cap_proto, proto, prio, kern);
+ 	if (!sk)
+@@ -1945,16 +1942,7 @@ static struct sock *l2cap_sock_alloc(str
+ 
+ 	INIT_LIST_HEAD(&l2cap_pi(sk)->rx_busy);
+ 
+-	chan = l2cap_chan_create();
+-	if (!chan) {
+-		sk_free(sk);
+-		if (sock)
+-			sock->sk = NULL;
+-		return NULL;
+-	}
+-
+-	l2cap_chan_hold(chan);
+-
++	/* The sock takes ownership of the caller's reference on chan. */
+ 	l2cap_pi(sk)->chan = chan;
+ 
+ 	return sk;
+@@ -1964,6 +1952,7 @@ static int l2cap_sock_create(struct net
+ 			     int kern)
+ {
+ 	struct sock *sk;
++	struct l2cap_chan *chan;
+ 
+ 	BT_DBG("sock %p", sock);
+ 
+@@ -1978,10 +1967,16 @@ static int l2cap_sock_create(struct net
+ 
+ 	sock->ops = &l2cap_sock_ops;
+ 
+-	sk = l2cap_sock_alloc(net, sock, protocol, GFP_ATOMIC, kern);
+-	if (!sk)
++	chan = l2cap_chan_create();
++	if (!chan)
+ 		return -ENOMEM;
+ 
++	sk = l2cap_sock_alloc(net, sock, protocol, GFP_ATOMIC, kern, chan);
++	if (!sk) {
++		l2cap_chan_put(chan);
++		return -ENOMEM;
++	}
++
+ 	l2cap_sock_init(sk, NULL);
+ 	bt_sock_link(&l2cap_sk_list, sk);
+ 	return 0;
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -3235,34 +3235,19 @@ static const struct l2cap_ops smp_chan_o
+ 	.get_sndtimeo		= l2cap_chan_no_get_sndtimeo,
+ };
+ 
+-static inline struct l2cap_chan *smp_new_conn_cb(struct l2cap_chan *pchan)
++static inline int smp_new_conn_cb(struct l2cap_chan *chan,
++				  struct l2cap_chan *new_chan)
+ {
+-	struct l2cap_chan *chan;
+-
+-	BT_DBG("pchan %p", pchan);
+-
+-	chan = l2cap_chan_create();
+-	if (!chan)
+-		return NULL;
+-
+-	chan->chan_type	= pchan->chan_type;
+-	chan->ops	= &smp_chan_ops;
+-	chan->scid	= pchan->scid;
+-	chan->dcid	= chan->scid;
+-	chan->imtu	= pchan->imtu;
+-	chan->omtu	= pchan->omtu;
+-	chan->mode	= pchan->mode;
++	new_chan->ops = &smp_chan_ops;
+ 
+ 	/* Other L2CAP channels may request SMP routines in order to
+ 	 * change the security level. This means that the SMP channel
+ 	 * lock must be considered in its own category to avoid lockdep
+ 	 * warnings.
+ 	 */
+-	atomic_set(&chan->nesting, L2CAP_NESTING_SMP);
+-
+-	BT_DBG("created chan %p", chan);
++	atomic_set(&new_chan->nesting, L2CAP_NESTING_SMP);
+ 
+-	return chan;
++	return 0;
  }
  
- static struct cpufreq_driver ve_spc_cpufreq_driver = {
---- a/include/linux/cpufreq.h
-+++ b/include/linux/cpufreq.h
-@@ -388,7 +388,7 @@ struct cpufreq_driver {
+ static const struct l2cap_ops smp_root_chan_ops = {
+@@ -3333,7 +3318,7 @@ create_chan:
  
- 	int		(*online)(struct cpufreq_policy *policy);
- 	int		(*offline)(struct cpufreq_policy *policy);
--	int		(*exit)(struct cpufreq_policy *policy);
-+	void		(*exit)(struct cpufreq_policy *policy);
- 	int		(*suspend)(struct cpufreq_policy *policy);
- 	int		(*resume)(struct cpufreq_policy *policy);
+ 	l2cap_add_scid(chan, cid);
  
+-	l2cap_chan_set_defaults(chan);
++	l2cap_chan_set_defaults(chan, NULL);
+ 
+ 	if (cid == L2CAP_CID_SMP) {
+ 		u8 bdaddr_type;
 
 
