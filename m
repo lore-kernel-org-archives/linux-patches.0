@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6096435C6B3;
-	Tue, 21 Jul 2026 21:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2359F414A1C;
+	Tue, 21 Jul 2026 21:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670662; cv=none; b=r/ABd6CUf8ug1kdHdYJGAZaYmpp3AH+zITqpzMf9NnrNXXGjn3ot98IHWRNiqwNUg6R5ZTGtfQbiWqePv0ctP6sGYj80+YJrAzntlZrv5q4UKWI2N/P9ZQ/Nsa/xj6huuym4ey8nitFgf0v1GybWdgrVe4lE4tlxniyv4xc5+O4=
+	t=1784670665; cv=none; b=iCIY+QkPWLEASNHddCMHDhhi00oDN4dnfSzcUe+BOhH4GRtsXA8Cm2K2cPV0z5CdHP6sCgzn+QQOti+0XnhcCSrxIHRALL8rzH8hF4wm8/zdNxzOizklLIJHVyfwP9tZWIa4nm1Vv/T2HwQzZnsvx85n2dESKdJk8B47v8quea0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670662; c=relaxed/simple;
-	bh=IFxlyKXLxnWBDP9Q7TG1ZODwhTT9LViL0zyWTpScLv4=;
+	s=arc-20240116; t=1784670665; c=relaxed/simple;
+	bh=+00Be7ceEjLcAqQ/SDIzmsUv/zJi8EjxCsrCufLSTFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hnHlxfzp2dSKmmdHdZUXqPGAGmSFwEoAyGDTCqt5PS7O0Zpcy8OScZ2UDbGTq4sDL8d0y+arLXv32dGJqrMKEa2Z6dldkJHwT8PdZqsQP/Cdw7QMWehnDhnHRWgDDGw3hTGAHAe6rQQOeYClVQ27O7p2sQdGlfkrL4d43sd6mc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmMuVbd4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uwdcUq/QtrdvuTGFeab4zrmi5exbRlaW9PvyZmfETbKMLf6e3t2DU5aKf2R+7rR5ThtEMK3MDykeD79gUqhmYTOPlETTU0vd6Oqvj3GsNFN0YabhARisN8MBqOG8Nxyx6osu6uXmeJ/OukP5UPYvHZ2U9DUPJ5ExOboHRRu34SA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnJV9fRs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmMuVbd4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C491F000E9;
-	Tue, 21 Jul 2026 21:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnJV9fRs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 809AD1F000E9;
+	Tue, 21 Jul 2026 21:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670661;
-	bh=IiKvC5DBStazgKxnbedQLGbWJ3CtBducvvtk8X2evvg=;
+	s=korg; t=1784670664;
+	bh=ZJivGAl2vCNmea9VFOCFTJMZwyyIu8+BxZrSzR3aJGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mmMuVbd4LscRS5GSN0/DE29imhzqGTHk74DRMQMbyi1WOJ42bgRBrsjYcgycp9+BX
-	 QUePp6N5x42AmQMHb1q5fnc322JTBmUjNWxfs4SCgTl3uaOJ7MONvX05h9o2zsykHZ
-	 QBdAw9NL6M4eLOv0CskXwqYh5SRY7rQwhw2eIN34=
+	b=XnJV9fRsLr0hj3uGgaRLaXbe0kWI+oOZEboFH75uy0qOJBFp+0aFlEhO73BxH2TwN
+	 D99GNc4NKP5LuybBKAffjQ5unLf58uCAun2Pr4bfgAZBiZ6gRyXipPm8NSjfmsI4tY
+	 ST7X0KMTwE6Nk4rd/8bC8Ce7tQXZlJWqWFpjBto0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <john@metanate.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0980/1067] mm: shrinkers: fix debugfs file permissions
-Date: Tue, 21 Jul 2026 17:26:21 +0200
-Message-ID: <20260721152446.475751181@linuxfoundation.org>
+Subject: [PATCH 6.1 1016/1067] seqlock: Change do_task_stat() to use scoped_seqlock_read()
+Date: Tue, 21 Jul 2026 17:26:57 +0200
+Message-ID: <20260721152447.299845973@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,38 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Keeping <john@metanate.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 2124f79de6a909630d1a62b01ecc32db9f967181 ]
+[ Upstream commit b76f72bea2c601afec81829ea427fc0d20f83216 ]
 
-The permissions for the files here are swapped as "count" is read-only and
-"scan" is write-only.  While this doesn't really matter as these
-permissions don't stop the files being opened for reading/writing as
-appropriate, they are shown by "ls -l" and are confusing.
+To simplify the code and make it more readable.
 
-Link: https://lkml.kernel.org/r/20230418101906.3131303-1-john@metanate.com
-Signed-off-by: John Keeping <john@metanate.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: e30453c61e18 ("mm: shrinker: fix NULL pointer dereference in debugfs")
+[peterz: change to new interface]
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Stable-dep-of: 6650527444da ("proc: protect ptrace_may_access() with exec_update_lock (part 1)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shrinker_debug.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/proc/array.c |    9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
---- a/mm/shrinker_debug.c
-+++ b/mm/shrinker_debug.c
-@@ -180,9 +180,9 @@ int shrinker_debugfs_add(struct shrinker
- 	}
- 	shrinker->debugfs_entry = entry;
+--- a/fs/proc/array.c
++++ b/fs/proc/array.c
+@@ -473,7 +473,6 @@ static int do_task_stat(struct seq_file
+ 	unsigned long flags;
+ 	int exit_code = task->exit_code;
+ 	struct signal_struct *sig = task->signal;
+-	unsigned int seq = 1;
  
--	debugfs_create_file("count", 0220, entry, shrinker,
-+	debugfs_create_file("count", 0440, entry, shrinker,
- 			    &shrinker_debugfs_count_fops);
--	debugfs_create_file("scan", 0440, entry, shrinker,
-+	debugfs_create_file("scan", 0220, entry, shrinker,
- 			    &shrinker_debugfs_scan_fops);
- 	return 0;
- }
+ 	state = *get_task_state(task);
+ 	vsize = eip = esp = 0;
+@@ -530,10 +529,7 @@ static int do_task_stat(struct seq_file
+ 	if (permitted && (!whole || num_threads < 2))
+ 		wchan = !task_is_running(task);
+ 
+-	do {
+-		seq++; /* 2 on the 1st/lockless path, otherwise odd */
+-		flags = read_seqbegin_or_lock_irqsave(&sig->stats_lock, &seq);
+-
++	scoped_seqlock_read (&sig->stats_lock, ss_lock_irqsave) {
+ 		cmin_flt = sig->cmin_flt;
+ 		cmaj_flt = sig->cmaj_flt;
+ 		cutime = sig->cutime;
+@@ -555,8 +551,7 @@ static int do_task_stat(struct seq_file
+ 			}
+ 			rcu_read_unlock();
+ 		}
+-	} while (need_seqretry(&sig->stats_lock, seq));
+-	done_seqretry_irqrestore(&sig->stats_lock, seq, flags);
++	}
+ 
+ 	if (whole) {
+ 		thread_group_cputime_adjusted(task, &utime, &stime);
 
 
