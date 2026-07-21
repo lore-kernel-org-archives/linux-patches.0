@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB26367B92;
-	Tue, 21 Jul 2026 22:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C51413D69;
+	Tue, 21 Jul 2026 22:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673713; cv=none; b=WbkeQBbgD9uwYrWmQz4lWxvJ/qUNE1UaooR4d7deJnaCo+bcLQvvU7JZbN4QZYCZeM2oOv0EFAaUnY0/xjQ1BZIh38uJ7xvRwiPFTCvKtQ6SCiq3kUB6Qqywn+a3Uxl8YcQnp55hu3yizSBk/88Pf949zgXkliMLazQxu2QoYJU=
+	t=1784673715; cv=none; b=F8aFOM4OHwF2lbascsOPEu+OmZB7zPqzc6vAJlC3IrcONbnCxqOra361enO0LzDCOZuxVpvFH5DXkjY3d55kHHIwN6Lk7qLiqNSTPsMlSZZ6tBQQcADQwuWBLiUdZQtnJdMT/Gx0u9RW+lUrO0SUXjcWRQoBDO3VEfjL7af1YnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673713; c=relaxed/simple;
-	bh=0GRM09UEke6XK9VElfxk7PKa7uyK7BbkDEedCAZ+U1U=;
+	s=arc-20240116; t=1784673715; c=relaxed/simple;
+	bh=zOUYamlBGjB8FuTxKtZ9WbHt7fRipO97OaqcC6P2kjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WNJiHKp801WocJYakdgmqWAgNtXlRFH6+av03GzVaN6Bm8kxNPTqpG4TcmIBwkmnMazKUKVRPDBz0Bqbqg8J2PJWmLh+K7TqR8b0iBrWQL5Uc1qpC8RXXiiHetjzTronyX8MjGr/22JWI9r5OEuFp2uDGuiP7j/NIkcd9acG0Ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nF9oRbgF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jBzRwlnes6mNKO2Acx9fcN/mLnfYNrPWDz/boGnLlsZn4OmGhCLiDWwTiQtNZ37OMjxEvexZLSEMu7vQh4PiVx8LCDwdtFaZu2wZ776wscE/9Pa1NOug1BfKwKxSszm4zPZpJCmAbCVBTcgcScgJP5YbeZ92Zze0TlXYi+KjDAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9Pie2RY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nF9oRbgF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E68F1F000E9;
-	Tue, 21 Jul 2026 22:41:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9Pie2RY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD251F000E9;
+	Tue, 21 Jul 2026 22:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673711;
-	bh=Rd5hp71foqez1/ONZNFOeM7BCzd8l0eOiDz5n/OlTCQ=;
+	s=korg; t=1784673714;
+	bh=KdRAHhHo6bnQI2z06BE5+F0aScG+7e7V01H5cDgr1Zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nF9oRbgFhwSGjj60qweN6Ac9HhTNRY/QXpXSEHUrOnRlQWg8VR8RskZSVyhSaqKXI
-	 /SW+JgR6a8WaKgEFEHMfnjebcA6jHETgOo58rAde1Kp2OZvZooyp3hpKrJ0KHvbjHj
-	 5OmsPPCtjDdCBqkJj+NNQCBqNnraVB2eDHjf7bi8=
+	b=C9Pie2RYQBHfNTB7rGKtMIevsPlU1gA9+4vlG+o/82/tAlyqTb1oW/N0sLb4GLkyB
+	 mY84zrgZs8GZwjrnIXVycnYqXle+isutrjvwud9aTg0vAvRKzAAF+HeFMFDdgZCKJ3
+	 Zh9zBs6Z6xUz2oROyTV4QMCR7gl0GVak11mhjmxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Lars=20P=C3=B6schel?= <lars.poeschel@edag.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alexander Potapenko <glider@google.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 264/699] spi: xilinx: use FIFO occupancy register to determine buffer size
-Date: Tue, 21 Jul 2026 17:20:23 +0200
-Message-ID: <20260721152401.657578336@linuxfoundation.org>
+Subject: [PATCH 5.10 224/699] lib/test_meminit: use && for bools
+Date: Tue, 21 Jul 2026 17:19:43 +0200
+Message-ID: <20260721152400.753518319@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -46,84 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lars Pöschel <lars.poeschel@edag.com>
+From: Alexander Potapenko <glider@google.com>
 
-[ Upstream commit 47f3b5365536e8c38f264824ab15fdb74454e066 ]
+[ Upstream commit 8e0c2085c978ed6d9764d79fc785920360096f21 ]
 
-The method the driver uses to determine the size of the FIFO has a
-problem. What it currently does is this:
-It stops the SPI hardware and writes to the TX FIFO register until TX
-FIFO FULL asserts in the status register. But the hardware does not only
-have the FIFO, it also has a shift register which can hold a byte. This
-can be seen, when writing a byte to the FIFO (while the SPI hardware is
-stopped,) the TX FIFO EMPTY is still empty. So, if we have a FIFO size
-of 16 for example, the current method returns a 17.
-This is a problem, at least when using the driver in irq mode. The same
-size determined for the TX FIFO is also assumed for the RX FIFO. When a
-SPI transaction wants to write the amount of the FIFO size or more
-bytes, the following happens, for example with 16 bytes FIFO size:
-The driver stops the SPI hardware and writes 17 bytes to the TX FIFO and
-starts the SPI hardware and goes sleep.
-The hardware then shifts out 17 bytes (FIFO + shift register) and
-simultaneously reads bytes into the RX FIFO, but it only has 16 places,
-so it looses one byte. Then TX FIFO empty asserts, wakes the driver
-again, which has a fast path and reads 16 bytes from the RX FIFO, but
-before reading the last 17th byte (which is lost) it does this:
+As pointed out by Dan Carpenter, test_kmemcache() was using a bitwise AND
+on two bools instead of a boolean AND.  Fix this for the sake of code
+cleanliness.
 
-	sr = xspi->read_fn(xspi->regs + XSPI_SR_OFFSET);
-	if (!(sr & XSPI_SR_RX_EMPTY_MASK)) {
-		xilinx_spi_rx(xspi);
-		rx_words--;
-	}
-
-It reads the status register and checks if the RX FIFO is not empty.
-But it is empty in our case. So this check spins in a while loop
-forever locking the driver.
-
-This patch fixes the logic to determine the FIFO size.
-
-Fixes: 4c9a761402d7 ("spi/xilinx: Simplify spi_fill_tx_fifo")
-Signed-off-by: Lars Pöschel <lars.poeschel@edag.com>
-Reviewed-by: Michal Simek <michal.simek@amd.com>
-Link: https://patch.msgid.link/20260612105244.9076-1-lars.poeschel.linux@edag.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/20260504100637.1535762-1-glider@google.com
+Fixes: 5015a300a522 ("lib: introduce test_meminit module")
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/kernel-janitors/afOcIan1ap9kD26M@stanley.mountain/
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-xilinx.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ lib/test_meminit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-xilinx.c b/drivers/spi/spi-xilinx.c
-index d497fc4bc19ebd..337ccdaa057c2c 100644
---- a/drivers/spi/spi-xilinx.c
-+++ b/drivers/spi/spi-xilinx.c
-@@ -369,11 +369,18 @@ static int xilinx_spi_find_buffer_size(struct xilinx_spi *xspi)
- 		xspi->regs + XIPIF_V123B_RESETR_OFFSET);
- 
- 	/* Fill the Tx FIFO with as many words as possible */
--	do {
-+	while (1) {
- 		xspi->write_fn(0, xspi->regs + XSPI_TXD_OFFSET);
- 		sr = xspi->read_fn(xspi->regs + XSPI_SR_OFFSET);
-+		if (sr & XSPI_SR_TX_FULL_MASK)
-+			break;
-+
- 		n_words++;
--	} while (!(sr & XSPI_SR_TX_FULL_MASK));
-+	}
-+
-+	/* Handle the NO FIFO case separately */
-+	if (!n_words)
-+		return 1;
- 
- 	return n_words;
- }
+diff --git a/lib/test_meminit.c b/lib/test_meminit.c
+index 0f1a3bd09b7b5c..9e031f4c39b64f 100644
+--- a/lib/test_meminit.c
++++ b/lib/test_meminit.c
+@@ -358,7 +358,7 @@ static int __init test_kmemcache(int *total_failures)
+ 			ctor = flags & 1;
+ 			rcu = flags & 2;
+ 			zero = flags & 4;
+-			if (ctor & zero)
++			if (ctor && zero)
+ 				continue;
+ 			num_tests += do_kmem_cache_size(size, ctor, rcu, zero,
+ 							&failures);
 -- 
 2.53.0
 
