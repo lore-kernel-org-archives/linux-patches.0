@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED533375D5;
-	Tue, 21 Jul 2026 22:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0143375D5;
+	Tue, 21 Jul 2026 22:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674441; cv=none; b=eZ1dAusuqH9EVSRw6LxtrFpKJIMrbPO7YeMOWwdWxfIwA+Swb5RqHjGI25nz6rB6zvex2uzmWsJaBACVudNwbsPrz0NrWF6ok9tGE8rMi1MbtfOIbh02XUQ8qf+wTIDecWQDB5o6G+YeqeyOLoH+axDrETDbTgp2A6oabXHf9go=
+	t=1784674443; cv=none; b=jvQT6j1YMJsdL8Mk2vU01G/v2wSlgPACq3QheTRT7wDU+UUolJD0rLop/P+C7KPmuYz7hXML4jQ/BFthnzuoZJmOnrV2TGo2dX/ZDJ9AyjO/gGztetVFc5ooWim3JqlBhxlr5Pgwqai7X8eJnErwqw94BVE85eZ3VZzwj08eNCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674441; c=relaxed/simple;
-	bh=fefFSNlyz5HX3v8hC4GZDVyC+R0xhHDlwszxX+TdXsQ=;
+	s=arc-20240116; t=1784674443; c=relaxed/simple;
+	bh=yRAmbvkg19SD6tzuhRiK9z2oz6bhuQqy02c4A3XP0xU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QXr92wvkKSSs/hracYcg9J0ov21kic6C+QgfYVcb7EYrqkoilT3rMpbzuuAHTtWCfE6vlg+iitLeHXJZlL/t8hmXfQg+rnqWCLipXj10ypsMvxv/1Eg5/vd+tEpEFspvCxrx1i/gXshcyT3nYv/6xr0nj6gfqRymgag98UCdApY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PA5PQF9V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tzpV5g1wqwCclCIULbeww1KPXZoJDRKjEqGT9UaMK/qsZnS22GIcVSnDR28GjNpdhb8ZcnTE4bd84NYrxKVTGdLhP7dM/F6KQsFTJ+VkUDdyZIYJkVBuD2U34l/7l/7BshjjFA4bqRZjCSopMjDUL7wJ2DUwzOx7bTqvoeK07W0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPv6sEwl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PA5PQF9V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B411F000E9;
-	Tue, 21 Jul 2026 22:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPv6sEwl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED571F000E9;
+	Tue, 21 Jul 2026 22:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674439;
-	bh=vFHXFPrcwtwll1AHWAbeJ6SO0P/xrSa1dn3pK/Qrq0o=;
+	s=korg; t=1784674442;
+	bh=IdFiP4LDVRoEmNQ4SzmWD0Yy+2YBWf/NSDciJ3nns0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PA5PQF9Vo/mJJmwBOr6fiIwz68wEnZkuQ8Y1ipozfi4DQpM+a1+zrUb8iuzwFXXd8
-	 56g1LTOta26fUDoevVuPGmfmNtwYh0NbGDk/pkbTFZwlfBtIVY7gOvuSegKOsoHvrR
-	 NApJPKxCXmt8C+VqwccVqiFtwLbYwZxbsiyFuAaM=
+	b=TPv6sEwlIuZ+cGL3hUuPk/jNYgRuFKXMmbWuXm3ujEjgCha9EYWvnvegMdRehu/VX
+	 rFDglNt5cRR5kkGYmbbeaW/6GJVo1KcTz3lSZSRD0q1PS5SrzP4A2XK91SA5vPY4Kf
+	 C1/TM5eVrLBJV11O5YqLG1Ll7/nq5KfPBQ932m/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Keenan Dong <keenanat2000@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 5.10 540/699] rtmutex: Use waiter::task instead of current in remove_waiter()
-Date: Tue, 21 Jul 2026 17:24:59 +0200
-Message-ID: <20260721152407.880328402@linuxfoundation.org>
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	Kyungwook Boo <bookyungwook@gmail.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 500/699] spi: uniphier: Fix completion initialization order before devm_request_irq()
+Date: Tue, 21 Jul 2026 17:24:19 +0200
+Message-ID: <20260721152406.974026813@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -55,85 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keenan Dong <keenanat2000@gmail.com>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-commit 3bfdc63936dd4773109b7b8c280c0f3b5ae7d349 upstream.
+commit f3ad1c87d8201e54b66bd6072442f0b5d5a308ee upstream.
 
-remove_waiter() is used by the slowlock paths, but it is also used for
-proxy-lock rollback in rt_mutex_start_proxy_lock() when invoked from
-futex_requeue().
+The driver calls devm_request_irq() before initializing the completion
+used by the interrupt handler. Because the interrupt may occur immediately
+after devm_request_irq(), the handler may execute before init_completion().
 
-In the latter case waiter::task is not current, but remove_waiter()
-operates on current for the dequeue operation. That results in several
-problems:
+This may result in calling complete() on an uninitialized completion,
+causing undefined behavior. This has been observed with KASAN.
 
-  1) the rbtree dequeue happens without waiter::task::pi_lock being held
+Fix this by initializing the completion before registering the IRQ.
 
-  2) the waiter task's pi_blocked_on state is not cleared, which leaves a
-     dangling pointer primed for UAF around.
-
-  3) rt_mutex_adjust_prio_chain() operates on the wrong top priority waiter
-     task
-
-Use waiter::task instead of current in all related operations in
-remove_waiter() to cure those problems.
-
-[ tglx: Fixup rt_mutex_adjust_prio_chain(), add a comment and amend the
-  	changelog ]
-
-Fixes: 8161239a8bcc ("rtmutex: Simplify PI algorithm and make highest prio task get lock")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Keenan Dong <keenanat2000@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
+Fixes: 5ba155a4d4cc ("spi: add SPI controller driver for UniPhier SoC")
 Cc: stable@vger.kernel.org
-(cherry picked from commit d8cce4773c2b23d819baf5abedc62f7b430e8745)
-[Lee: Backported to linux-5.10.y from linux-6.1.y]
-Signed-off-by: Lee Jones <lee@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://patch.msgid.link/20260616011223.201357-1-hayashi.kunihiko@socionext.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/locking/rtmutex.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/spi/spi-uniphier.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/locking/rtmutex.c
-+++ b/kernel/locking/rtmutex.c
-@@ -1061,20 +1061,23 @@ static void mark_wakeup_next_waiter(stru
-  *
-  * Must be called with lock->wait_lock held and interrupts disabled. I must
-  * have just failed to try_to_take_rt_mutex().
-+ *
-+ * When invoked from rt_mutex_start_proxy_lock() waiter::task != current !
-  */
- static void remove_waiter(struct rt_mutex *lock,
- 			  struct rt_mutex_waiter *waiter)
- {
- 	bool is_top_waiter = (waiter == rt_mutex_top_waiter(lock));
- 	struct task_struct *owner = rt_mutex_owner(lock);
-+	struct task_struct *waiter_task = waiter->task;
- 	struct rt_mutex *next_lock;
+--- a/drivers/spi/spi-uniphier.c
++++ b/drivers/spi/spi-uniphier.c
+@@ -659,6 +659,8 @@ static int uniphier_spi_probe(struct pla
+ 	priv->master = master;
+ 	priv->is_save_param = false;
  
- 	lockdep_assert_held(&lock->wait_lock);
++	init_completion(&priv->xfer_done);
++
+ 	priv->base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+ 	if (IS_ERR(priv->base)) {
+ 		ret = PTR_ERR(priv->base);
+@@ -690,8 +692,6 @@ static int uniphier_spi_probe(struct pla
+ 		goto out_disable_clk;
+ 	}
  
--	raw_spin_lock(&current->pi_lock);
-+	raw_spin_lock(&waiter_task->pi_lock);
- 	rt_mutex_dequeue(lock, waiter);
--	current->pi_blocked_on = NULL;
--	raw_spin_unlock(&current->pi_lock);
-+	waiter_task->pi_blocked_on = NULL;
-+	raw_spin_unlock(&waiter_task->pi_lock);
+-	init_completion(&priv->xfer_done);
+-
+ 	clk_rate = clk_get_rate(priv->clk);
  
- 	/*
- 	 * Only update priority if the waiter was the highest priority
-@@ -1110,7 +1113,7 @@ static void remove_waiter(struct rt_mute
- 	raw_spin_unlock_irq(&lock->wait_lock);
- 
- 	rt_mutex_adjust_prio_chain(owner, RT_MUTEX_MIN_CHAINWALK, lock,
--				   next_lock, NULL, current);
-+				   next_lock, NULL, waiter_task);
- 
- 	raw_spin_lock_irq(&lock->wait_lock);
- }
+ 	master->max_speed_hz = DIV_ROUND_UP(clk_rate, SSI_MIN_CLK_DIVIDER);
 
 
