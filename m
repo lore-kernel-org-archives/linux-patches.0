@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE63471264;
-	Tue, 21 Jul 2026 18:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287C1315D53;
+	Tue, 21 Jul 2026 18:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659260; cv=none; b=CCGwEnW9p3GifsPo+jVQfyu2Ui+Ldqk4kpBzT3kG3qPn9HfVditc02DYGD3NCromHr+7urBGw1tERV7T8Q5WgLmRr1IZ/bL37RMe+3KgkezGqjTS7J3ymZhYC7WyFK4LgH13PqD/e8NXzDFMDCj0xZEvSTpewqWEhjTcSJ27cH4=
+	t=1784659262; cv=none; b=sSg6QsXKp99S4zdehqRz0otYDAERVV3n6tR5OKBx4/OMik6R6q1S9ZI/P9BmhjYOv1F804psgTLK6Ojl4acKyn0IMJTECVomFxzcZx9vb3YIzsJUcC4ZtFpHW4ooZLgVSWsflqXkagqDyc/ajVUcRk0JqMXQ958yQL0h0J6msAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659260; c=relaxed/simple;
-	bh=UcM0UrdR/tI5P972CIrDBht7ivrDZNDhWTzo9U5EyaA=;
+	s=arc-20240116; t=1784659262; c=relaxed/simple;
+	bh=Y8S007HfnO/kUdGA0DuhjqAc6zoat0T3a2Rh1zyNwxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hcWjh1hXNuiyQiiXmvwhopkP4Zllp8JqYLPKbTEt6F6CwtmNEsQjF2gR9h1F4nRuncHt5Whu9HuWX6CZjgRQhBMiNApgf27E6VKSaoLOs/v26uS4cv1ICFYNJ3Mc5izz5W3vLoulmBJWI8+DZZpJBCjGTvCB3dA1fxRInlLefhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bn8u1dHO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZWN8IV+33BPn6IdeFbfqLMdQI4vRP3Pp4oeotiha1FQ7eLpiBOYyZ/HzPVtpuuqVKwBfo93EYr4p2k+4VBVl4p1tf4BUFwHVtlWmv+oiHT7NgOnxb9SxF/3nCORsqyndwlpuExMfs5h2O2ijVGYDZvdf3qb5xQS2ExzsPFJ+VUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2wSZfce; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bn8u1dHO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF9CF1F000E9;
-	Tue, 21 Jul 2026 18:40:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2wSZfce"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C761F000E9;
+	Tue, 21 Jul 2026 18:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659258;
-	bh=M0yTdCJUe6Oo3lCWW0XLVoPXIJOGEP/Ym6kMIMjeYLM=;
+	s=korg; t=1784659261;
+	bh=5X0NyROFFnFbnMIO0isIcq3xyuobc6SDgYONVBqL3WQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bn8u1dHOtwm9aHPf7GNVlDBmGU1ADMmobgQTlhs82GwvWPokUHH9nzRGcLNck/9gQ
-	 gqERDXOIBqQIK3CO8JfX0UPfl7EX5Qys0tlORuv+XpmD06ata502zGU/AaY/LS3Qec
-	 7KfTGxXtIsQu5fN2q5qIM0P3sII6LVe+dAnTsFVk=
+	b=U2wSZfceLvbPHBqjgrfdrzsBMWy/3DZt6lsXIBW3vsyMorPEisiH/GCJVfdjCf00t
+	 IamoGIbNRkqNb348FPdKlwS6wsdUQDH2kk3kDyniXBWky+1haf1AImawMLTTBxqgwc
+	 do6XagvDc5/XMbIQ3s9GzzF+eXgZAC+TafB+R8Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 1454/1611] llc: fix SAP refcount leak in llc_ui_autobind()
-Date: Tue, 21 Jul 2026 17:26:10 +0200
-Message-ID: <20260721152548.151772079@linuxfoundation.org>
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.18 1455/1611] ipvs: use parsed transport offset in SCTP state lookup
+Date: Tue, 21 Jul 2026 17:26:11 +0200
+Message-ID: <20260721152548.175091417@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,45 +56,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-commit 660667cd406648bbaffbd5c0d897c2263a852f11 upstream.
+commit 2f75c0faa3361b28e36cc0512b3299e163e25789 upstream.
 
-llc_ui_autobind() opens a SAP after choosing a dynamic LSAP.
-llc_sap_open() returns a reference owned by the caller, and
-llc_sap_add_socket() takes a second reference for the socket's
-membership in the SAP hash tables.
+set_sctp_state() reads the SCTP chunk header again in order to drive the
+IPVS SCTP state table. For IPv6 it computes the offset with
+sizeof(struct ipv6hdr), while the surrounding IPVS code uses iph.len from
+ip_vs_fill_iph_skb(), where ipv6_find_hdr() has already skipped
+extension headers and found the real transport header.
 
-llc_ui_bind() drops the caller's reference after adding the socket,
-but llc_ui_autobind() keeps it. When the socket is closed,
-llc_sap_remove_socket() releases only the socket reference, leaving
-the SAP on llc_sap_list with sk_count == 0.
+This makes the state machine read from the wrong offset for IPv6 SCTP
+packets that carry extension headers. For example, an INIT packet with an
+8-byte destination options header can be scheduled correctly by
+sctp_conn_schedule(), but set_sctp_state() reads the first byte of the
+SCTP verification tag as a DATA chunk type. The connection then moves
+from NONE to ESTABLISHED instead of INIT1, gets the longer established
+timeout, and updates the active/inactive destination counters
+incorrectly. This happens even though the SCTP handshake has not
+completed.
 
-This is user-visible because repeated autobind and close cycles can consume
-all dynamic SAP values and make later autobinds fail with -EUSERS.
+Use the parsed transport offset passed down from ip_vs_set_state() for
+the SCTP chunk-header lookup. For IPv4 and IPv6 packets without
+extension headers this preserves the existing offset.
 
-Drop the caller's reference after a successful autobind, matching
-llc_ui_bind()'s ownership model.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 2906f66a5682 ("ipvs: SCTP Trasport Loadbalancing Support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Link: https://patch.msgid.link/20260630194856.1036497-1-shuangpeng.kernel@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/netdev/20260705123040.35755-1-zhaoyz24@mails.tsinghua.edu.cn/
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: Claude Code:GLM-5.2
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/llc/af_llc.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/ipvs/ip_vs_proto_sctp.c |   15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
---- a/net/llc/af_llc.c
-+++ b/net/llc/af_llc.c
-@@ -317,6 +317,7 @@ static int llc_ui_autobind(struct socket
- 	/* assign new connection to its SAP */
- 	llc_sap_add_socket(sap, sk);
- 	sock_reset_flag(sk, SOCK_ZAPPED);
-+	llc_sap_put(sap);
- 	rc = 0;
- out:
- 	dev_put(dev);
+--- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+@@ -372,20 +372,15 @@ static const char *sctp_state_name(int s
+ 
+ static inline void
+ set_sctp_state(struct ip_vs_proto_data *pd, struct ip_vs_conn *cp,
+-		int direction, const struct sk_buff *skb)
++		int direction, const struct sk_buff *skb,
++		unsigned int iph_len)
+ {
+ 	struct sctp_chunkhdr _sctpch, *sch;
+ 	unsigned char chunk_type;
+ 	int event, next_state;
+-	int ihl, cofs;
+-
+-#ifdef CONFIG_IP_VS_IPV6
+-	ihl = cp->af == AF_INET ? ip_hdrlen(skb) : sizeof(struct ipv6hdr);
+-#else
+-	ihl = ip_hdrlen(skb);
+-#endif
++	int cofs;
+ 
+-	cofs = ihl + sizeof(struct sctphdr);
++	cofs = iph_len + sizeof(struct sctphdr);
+ 	sch = skb_header_pointer(skb, cofs, sizeof(_sctpch), &_sctpch);
+ 	if (sch == NULL)
+ 		return;
+@@ -472,7 +467,7 @@ sctp_state_transition(struct ip_vs_conn
+ 		unsigned int iph_len)
+ {
+ 	spin_lock_bh(&cp->lock);
+-	set_sctp_state(pd, cp, direction, skb);
++	set_sctp_state(pd, cp, direction, skb, iph_len);
+ 	spin_unlock_bh(&cp->lock);
+ }
+ 
 
 
