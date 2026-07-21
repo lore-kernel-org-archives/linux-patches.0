@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63986471439;
-	Tue, 21 Jul 2026 19:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD2F47143F;
+	Tue, 21 Jul 2026 19:42:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662918; cv=none; b=Jm+pNeQYNynT4qpJNFSkxl4iiY3O3gRWVEuI0N43XR0QGgoUiCfi9/CmtkoRtbPM7N4NIkuwSjN9ZXSmIPWG3kSnhRZdM25wrKKS5eJuPJ8trMpKB5jHkuhUDPIrlefuFB4Ix3vapRTGrEiK8N+6jWefpWJ20qVMAWoxEnpw3PM=
+	t=1784662921; cv=none; b=C7pvFOlvdVMQFIYeVCxOVgwj1iwS6BfYjnfn8/83u40GvsGfveiAwscrEDuJVsy4SWLqk4oPFF5SzTP9Tpk/gAJ3mw60qFljE1qR/+CKlEcjZU7DoqadlJ/fdIOXMMcBx6gGiWHb+lrXvsVQOf1tIndDkjL4vj5iI97yHkVjNVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662918; c=relaxed/simple;
-	bh=hTNvUjf9C6Htdh4yXMVf/psbIPCZIYZfrkqtrwv43Sw=;
+	s=arc-20240116; t=1784662921; c=relaxed/simple;
+	bh=VFxeTJbgSYLL2Vlq6z6ON8EU5qV7zHxk4wAdtqgk0Fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iVfuXpZwegqifg4QemS7gwc1BQiD8YG7jK522ZtQzzkTOGTeXt2lMmPMOhhMNng8AjXniE4MZVSr3tiM5BnAjtYepqahGAjDQjpULZgBpBiP/oF0qyeEatUyE14ONrk8XNOS9kcJMQJvIuuzU06tlgCAWOqXmL1OAgaMzn9+eaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2zxJMmc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pMDXuZCaPP2KgWBR5sZe4jVX4DRnPgeVredGtbv8vXT6zEIAmxZ/Gfd2BrzmgAQsu37w+UwvKI0Dd5oYHHS89/6P8sr1Hmv5XfZdroHtmez5sw/apBK5vt80Ld/PF2/mvQOEf9oBTkrnIHgHnLvCCqkS2NjWhNKl1yDP4hlM4gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qii9lCUe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2zxJMmc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD901F000E9;
-	Tue, 21 Jul 2026 19:41:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qii9lCUe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E8321F000E9;
+	Tue, 21 Jul 2026 19:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662917;
-	bh=ryV+IPh4q15PZXwanKwhYvC7AMeqqb0JV8yaGsqlkCk=;
+	s=korg; t=1784662919;
+	bh=kdv/MRtBD+3aRQ9uChQ9w3C+HUi/a7QqEWhBAsVJyA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O2zxJMmc+pKMKHL0sojg4O98R1ie4xuBlDAfnkupmjJ9j0Pl2zAC8akC8PC/qrdT6
-	 UomNUoGRSSrfK2YhXLDblUZhkFoWkg4gmDKgYKQFJKshh2CnOSpT3ctLlyTP0lZTGw
-	 1A339vYvPyRwE8MXT2jh8yn3sdYY8jKtYqX8HWfA=
+	b=qii9lCUeQFsXwBiOky+mAezYaXyrAK10x5je4t1XA/RAtbD95PDEeYRHHN359v3sX
+	 TJL6Ykx1j3KNUfogF7qLBGu9oOvaZyC2fxXFDbTN1Z63eeaqp+CO19o80ApCeUbNLW
+	 likXCue9MWXwbEzvxvaxTG341/lDg2xUDSbqvj8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Bhargav Joshi <j.bhargav.u@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0626/1276] ice: fix FDIR CTRL VSI resource leak in ice_reset_all_vfs()
-Date: Tue, 21 Jul 2026 17:17:49 +0200
-Message-ID: <20260721152500.117524043@linuxfoundation.org>
+Subject: [PATCH 6.12 0600/1276] irqchip/crossbar: Fix parent domain resource leak
+Date: Tue, 21 Jul 2026 17:17:23 +0200
+Message-ID: <20260721152459.541745159@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -54,44 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+From: Bhargav Joshi <j.bhargav.u@gmail.com>
 
-[ Upstream commit ebbe8868cf473f698e0fbaf436d2618b2bcda806 ]
+[ Upstream commit a1074dd62faa6572921d387e8a21589ccea00efc ]
 
-Resetting all VFs causes resource leak on VFs with FDIR filters
-enabled as CTRL VSIs are only invalidated and not freed. Fix by using
-ice_vf_ctrl_vsi_release() instead of ice_vf_ctrl_invalidate_vsi() which
-aligns behavior with the ice_reset_vf() function.
+irq_domain_alloc_irqs_parent() is called in allocate_gic_irq() but
+irq_domain_free_irqs_parent() is never called which causes a resource leak.
 
-Reproduction:
-  echo 1 > /sys/class/net/$pf/device/sriov_numvfs
-  ethtool -N $vf flow-type ether proto 0x9000 action 0
-  echo 1 > /sys/class/net/$pf/device/reset
+Fix this by calling irq_domain_free_irqs_parent() in
+crossbar_domain_free().
 
-Fixes: da62c5ff9dcd ("ice: Add support for per VF ctrl VSI enabling")
-Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 783d31863fb82 ("irqchip: crossbar: Convert dra7 crossbar to stacked domains")
+Signed-off-by: Bhargav Joshi <j.bhargav.u@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260620-irq-crossbar-fix-v2-2-b8e8499f468a@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_vf_lib.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/irqchip/irq-crossbar.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.c b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-index 5267b08011fcf8..afa9e7ce463763 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-@@ -800,7 +800,7 @@ void ice_reset_all_vfs(struct ice_pf *pf)
- 		 * setup only when VF creates its first FDIR rule.
- 		 */
- 		if (vf->ctrl_vsi_idx != ICE_NO_VSI)
--			ice_vf_ctrl_invalidate_vsi(vf);
-+			ice_vf_ctrl_vsi_release(vf);
+diff --git a/drivers/irqchip/irq-crossbar.c b/drivers/irqchip/irq-crossbar.c
+index a05a7501e10790..729492772ff46e 100644
+--- a/drivers/irqchip/irq-crossbar.c
++++ b/drivers/irqchip/irq-crossbar.c
+@@ -163,6 +163,7 @@ static void crossbar_domain_free(struct irq_domain *domain, unsigned int virq,
+ 		cb->write(d->hwirq, cb->safe_map);
+ 	}
+ 	raw_spin_unlock(&cb->lock);
++	irq_domain_free_irqs_parent(domain, virq, nr_irqs);
+ }
  
- 		ice_vf_pre_vsi_rebuild(vf);
- 		if (ice_vf_rebuild_vsi(vf)) {
+ static int crossbar_domain_translate(struct irq_domain *d,
 -- 
 2.53.0
 
