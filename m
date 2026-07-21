@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFB5436342;
-	Tue, 21 Jul 2026 20:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6F9437473;
+	Tue, 21 Jul 2026 20:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665157; cv=none; b=RJtEYfESrZFYnEH60InKC6jDokclLkoIxg924efY9xBUXYrJPBeebrQcOvyO0sNuZO69jO5x9n7xC0/x+u849t9Tw+8Red3nu3uhPBCjx6SCQqmNlCqgdSss1cr8htR6DGaF+HqNyYZSz5S8KcZ+NP0Bm4CDjX4/Z4GxyBro+Yw=
+	t=1784665160; cv=none; b=QGD0T9hGcShysdfUedHHLN/znJiBC++7q+1tz+3S9lnOydq/Rjt6Q+7NXVDTTQ2ecLQ/vvFSunnSEv9GX1Pva9VQ+tZ6BU3Po9+bopRw6vA5NR2i8m3D2VdqfRVai6qe9oS0/sVlI7UkxithQkF+WojngurHHhFLpK3jWQGAmKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665157; c=relaxed/simple;
-	bh=vNO/vVimKN500dsnGMhRdwKnwd/9B+N+NHXdLQSoSs4=;
+	s=arc-20240116; t=1784665160; c=relaxed/simple;
+	bh=V2Jp2ztm/FiYZGGbN1/gpQ3PfJUlmXtOJTk2S6wkjVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S9u3P+l+zFTvvfVc6XzNaGAXq3bpzQuashG2HCbevgDX6O05pM2C5wN8M3o01B8oZZ2oUixh24fX2vvEh218jro9rBQe8MFyjMKtxEFaifHEn5TX5b3JWaI4Zm6of8UsnyNOr4PQXFWZUsesc3H0WU0hHz6voTRDRBb+MZ2dnUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZeNAtJxH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fg2sGSkeRmjHUBOLgPb5/l3UqnTnCUdsTedIDBAS0db9npHSHU2qRKLvQ7dvCtolVW2pk5vMj35Sq+r7khcjtSB1K6EnceuGqS5bV2v4iEZo32ZHWqE8jFwdDDz+ruh7WEItnXFdM+4W4qhAJqTjQhG0DFzVms5twTSd39TPux8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvlMmFVr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZeNAtJxH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F09161F000E9;
-	Tue, 21 Jul 2026 20:19:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvlMmFVr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A50F1F000E9;
+	Tue, 21 Jul 2026 20:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665156;
-	bh=3J5+T7XxJ/zvRYRK0x/hWrsl9RsX3njFK9ijkGSxX5g=;
+	s=korg; t=1784665159;
+	bh=OYxmGuZf7XDLZSkR9AKL42DTEX+78fWU5xqZHhx/LOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZeNAtJxHxnKTPJolrkj9e3rHs4GoLDdVqfzrmS7UiZfQTfZNE23NolqDsiFzz7olg
-	 M+NHBDzXHNJki8y9tJjbIq0adbojpYvUA4KgYPZBh/wRoPV2FmbE9v+M3uMh9R/O95
-	 5n0OJ8d92X1OC4ncPChMQEt9m3JAYXgqFjyvTEEc=
+	b=IvlMmFVrJ7pzMyySslBdMi/romjLKGCor0og9XGbr66w2J+k7hvE1xg6Uaph73rnj
+	 TLhjyLxOm2IeIQ8DZ7YhAba6sPJn6QLlmhUc5im4lXHORwJ4M8txGsHAtrJa51Aar7
+	 lJzf5Fy0F2J/LhylWZzTORTp1icq7ktXRjM0nezs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Portnoy <dddhkts1@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Zihan Xi <xizh2024@lzu.edu.cn>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 0181/1266] ksmbd: add permission checks for FSCTL_DUPLICATE_EXTENTS_TO_FILE
-Date: Tue, 21 Jul 2026 17:10:18 +0200
-Message-ID: <20260721152445.856368043@linuxfoundation.org>
+Subject: [PATCH 6.6 0199/1266] smb: client: use unaligned reads in parse_posix_ctxt()
+Date: Tue, 21 Jul 2026 17:10:36 +0200
+Message-ID: <20260721152446.262573721@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,48 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Portnoy <dddhkts1@gmail.com>
+From: Zihan Xi <xizh2024@lzu.edu.cn>
 
-commit 388e4139db27a9e3612c9d356b826f5b1ff6a9e3 upstream.
+commit b86467cd2691192ad4809a5a6e922fc24b8e9839 upstream.
 
-The FSCTL_DUPLICATE_EXTENTS_TO_FILE arm of smb2_ioctl() overwrites the
-destination file's data via vfs_clone_file_range() with neither the
-share-level KSMBD_TREE_CONN_FLAG_WRITABLE check nor a per-handle
-fp->daccess check that the other write-bearing arms carry. A client can
-overwrite destination data on a read-only share, or from a handle opened
-with only FILE_WRITE_ATTRIBUTES (which still yields an FMODE_WRITE filp).
-FILE_WRITE_ATTRIBUTES-only destination handle overwrote the file's data via
-the clone. Add both checks, matching the FSCTL_SET_SPARSE permission fix;
-require FILE_WRITE_DATA since this writes data.
+The server controls create-context DataOffset, so the POSIX context data
+pointer may be misaligned on strict-alignment architectures. Use
+get_unaligned_le32() when reading nlink, reparse_tag, and mode.
 
+Fixes: 69dda3059e7a ("cifs: add SMB2_open() arg to return POSIX data")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Zihan Xi <xizh2024@lzu.edu.cn>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/smb/client/smb2pdu.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -8482,6 +8482,17 @@ int smb2_ioctl(struct ksmbd_work *work)
- 			goto dup_ext_out;
- 		}
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -2307,9 +2307,9 @@ parse_posix_ctxt(struct create_context *
  
-+		if (!test_tree_conn_flag(work->tcon,
-+					 KSMBD_TREE_CONN_FLAG_WRITABLE)) {
-+			ret = -EACCES;
-+			goto dup_ext_out;
-+		}
-+
-+		if (!(fp_out->daccess & FILE_WRITE_DATA_LE)) {
-+			ret = -EACCES;
-+			goto dup_ext_out;
-+		}
-+
- 		src_off = le64_to_cpu(dup_ext->SourceFileOffset);
- 		dst_off = le64_to_cpu(dup_ext->TargetFileOffset);
- 		length = le64_to_cpu(dup_ext->ByteCount);
+ 	memset(posix, 0, sizeof(*posix));
+ 
+-	posix->nlink = le32_to_cpu(*(__le32 *)(beg + 0));
+-	posix->reparse_tag = le32_to_cpu(*(__le32 *)(beg + 4));
+-	posix->mode = le32_to_cpu(*(__le32 *)(beg + 8));
++	posix->nlink = get_unaligned_le32(beg);
++	posix->reparse_tag = get_unaligned_le32(beg + 4);
++	posix->mode = get_unaligned_le32(beg + 8);
+ 
+ 	sid = beg + 12;
+ 	sid_len = posix_info_sid_size(sid, end);
 
 
