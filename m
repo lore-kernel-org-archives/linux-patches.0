@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41444471243;
-	Tue, 21 Jul 2026 19:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA674386C39;
+	Tue, 21 Jul 2026 19:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660786; cv=none; b=Yz+XRkgkAy5bHUP9EoX2lWw02PNqI6mJnN8p+quKWmqFxFaFp/EyeX7zDy2rthAAMeDKj/+Cr/XuKMaEmVcZDnz9yytKFEiCTgta7BkSIdGtsgI1T91a8kPPCAxYPe46A9F2D6Uh69tjtuwnBtrCLs/5FZgBJWq/ntCYz1VYtrQ=
+	t=1784660788; cv=none; b=T1qzM6rlaWye4igEylr8CXMlph39FdRu62uKOOPLCFiS3hpJbZutqcI00TtDp6Iw8diUS25CWRDoOL56TG9DrQYuIwto7p3d7+jRGM+ng3RAtxrtSCtnBVO95BLqC2o0woT77ESHO1I9QVb4QVMfILJJFXhilIeNq51r885hMOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660786; c=relaxed/simple;
-	bh=/HItX9xFUld2ptNL29a8Q1HXUKBqrFLuyAODNJdvG5s=;
+	s=arc-20240116; t=1784660788; c=relaxed/simple;
+	bh=FKEcIzw0XAtFe7nIJeuLr1KfU6sGkf7QlAlmtj+q3pc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lhc4CbNQYF8rGJZBhLd5mfa9aVphdcc3g6ER1fxg7TYsSn3AAET9i0sZAzZHnbMpFHkijfs2L1gU1e5LuawBQgIsqjE7VmSbwa11PDRh6bqOmx8/mgYhaUzWtE8dxlZV7h3YZHUhyHDJyZI41BsyQ1kHsauhQ73MdKnv5IV3/iE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QB/iFNR/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a9odp2JTF7he4Orf3Dy/Cbq8zvX4SKVfQig9/EcsN/LP6f+PqNqgmoVzlJm1LObTA1rc88ZDbCe1ql7SI9L/trV0KTkQydEfifbvpRfHnBhLPLQfDUSBvDC77wT8zZ1baiMbnKN0d2S6bqrHuIi2z0x3pj65xCLhNR2DEku8YiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmJwgu4D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QB/iFNR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A699E1F000E9;
-	Tue, 21 Jul 2026 19:06:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmJwgu4D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CADD1F000E9;
+	Tue, 21 Jul 2026 19:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660785;
-	bh=Cs0eF2VQeG3eZDI23hjqHkhOjnjsG2eQgPb88FiBVMo=;
+	s=korg; t=1784660787;
+	bh=jPhvFgg4PBUZxKXYxmAypdmco2ph0et2bl1AajegMNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QB/iFNR/ZIkZaV/EQsuJUcoKok2Q5hbNcH7+XgdR/cVh6bH7fCpNBTWno0PZjWoFw
-	 Gy4UsCZQ5GddHcJ7aQk5D5WTyrWs1JI4bWDpEq/pVwmxjSFlknAq6tvMZ8NGKd3+sC
-	 67pUfdxRlC/xF+fFRfYFDoy2E6rZlElibD+qwcBY=
+	b=wmJwgu4D6x52Xqv++Py2wjdlhuNtBS0jqh0lPDMAsVZ3MsP0B1PyKxwDGruVJdk8x
+	 ewVB34U9ETlGhX2R8ePzmwXe0v8YDN7mmGDdwxoCI3n19WDFgjZeQwUdHrnlXcH41/
+	 CJr7zF8OBcYG4lfc/VMrzQV7H+GzAvlALG0aze+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Qiang Yu <Qiang.Yu@amd.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1104/2077] drm/amdgpu: initialize iter.start in amdgpu_devcoredump_format
-Date: Tue, 21 Jul 2026 17:12:57 +0200
-Message-ID: <20260721152618.858683382@linuxfoundation.org>
+Subject: [PATCH 7.1 1113/2077] net: psample: fix info leak in PSAMPLE_ATTR_DATA
+Date: Tue, 21 Jul 2026 17:13:06 +0200
+Message-ID: <20260721152619.073532040@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,49 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Yu <Qiang.Yu@amd.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 1c2d7a656655a50bd1b7227fb26d173959a1955d ]
+[ Upstream commit aedd02af1f8b0bceb7f42f5a21c41634ca9ed390 ]
 
-This fixes read /sys/class/drm/cardN/device/devcoredump/data
-return empty content sometimes.
+psample open codes nla_put() presumably to avoid wiping
+the data with 0s just to override it with packet data.
+This open coding is missing clearing the pad, however,
+each netlink attr is padded to 4B and data_len may
+not be divisible by 4B.
 
-amdgpu_devcoredump_format() leaves struct drm_print_iterator's
-.start field uninitialized on the stack before passing it to
-drm_coredump_printer(). __drm_puts_coredump() compares the running
-.offset against .start to decide whether to skip or copy each
-chunk:
-
-	if (iterator->offset < iterator->start) {
-		if (iterator->offset + len <= iterator->start) {
-			iterator->offset += len;
-			return;
-		}
-		...
-	}
-
-Fixes: 4bbba79a7f1d ("drm/amdgpu: move devcoredump generation to a worker")
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Qiang Yu <Qiang.Yu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit cd6397b7af8262a380e188dc32e9de11ff897ed2)
+Fixes: 6ae0a6286171 ("net: Introduce psample, a new genetlink channel for packet sampling")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://patch.msgid.link/20260616003046.1099490-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/psample/psample.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c
-index 3d5a2abf27c634..f89f3a37a45b1f 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c
-@@ -229,6 +229,7 @@ amdgpu_devcoredump_format(char *buffer, size_t count, struct amdgpu_coredump_inf
+diff --git a/net/psample/psample.c b/net/psample/psample.c
+index 7763662036fb7d..c112e1f0ccacb0 100644
+--- a/net/psample/psample.c
++++ b/net/psample/psample.c
+@@ -476,15 +476,17 @@ void psample_sample_packet(struct psample_group *group,
+ 		goto error;
  
- 	sizing_pass = buffer == NULL;
- 	iter.data = buffer;
-+	iter.start = 0;
- 	iter.offset = 0;
- 	iter.remain = count;
+ 	if (data_len) {
+-		int nla_len = nla_total_size(data_len);
++		int nla_len = nla_attr_size(data_len);
+ 		struct nlattr *nla;
  
+ 		nla = skb_put(nl_skb, nla_len);
+ 		nla->nla_type = PSAMPLE_ATTR_DATA;
+-		nla->nla_len = nla_attr_size(data_len);
++		nla->nla_len = nla_len;
+ 
+ 		if (skb_copy_bits(skb, 0, nla_data(nla), data_len))
+ 			goto error;
++
++		skb_put_zero(nl_skb, nla_padlen(data_len));
+ 	}
+ 
+ #ifdef CONFIG_INET
 -- 
 2.53.0
 
