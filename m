@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A747C3C276E;
-	Tue, 21 Jul 2026 17:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588E246D2DA;
+	Tue, 21 Jul 2026 17:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655447; cv=none; b=UKv4j8e9mCIaS+D794y5nhHMzrrqUDrOjpDlPJtG0AOemsydIZ0db/LWEzkZadT6Y0sBeKiIOjkKRvP4qmdN8bpA0yxm3pOWPJy2BnEITAjBYZXjIAXUl0YkzEibWjC7VYP3zV+sXgKHOh6tr5eMsjtWfjAHGa/goXbjBjQooFg=
+	t=1784655450; cv=none; b=ZnY8DFa0PdVBymfvpN0yc/rX4ctQHT0Wm5EVccPY5hLGSG1UaOJh+TWiT5HD4XMfhyNPdh+vN/t/YSvoJ5+n0FyKC7CDqTe/mSqqGMAmHeFwI2HNStCV2fcxDyMo22mknqGkGfsieZXFdw/MGqXj4mYY+I0t+BmvCYirMDPB42Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655447; c=relaxed/simple;
-	bh=K2Hzr8FP6+UaLkvJJKiT5cTCwE9wGvSahP0pHl1SNNA=;
+	s=arc-20240116; t=1784655450; c=relaxed/simple;
+	bh=6u3+RvF6teSkk0WTDwh6Fom/7Jq6Kn+FENAtMYGeUiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZL72WNUdC6KnwiexiT92a9RJnTgJ2z2/fqRPEFKrfpthAhm07VOwPaDSYcpGnjuLH6LTKPEG/XB/qlUwYFl62y65X74HGPz0JlbyydsRbZ/Z/7AfddoTVolnEHVaU46q03LuzG8XPeUiStossNFOJquQTYqcwM+w0h6key7+HI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKVlI/Tz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pMA8eztwzQyFhkBSiVTaqqveVJ4r81xhhnyywscZzwIbhelnjwGEJ+h56AcoWNZWI8gQj8trjbutHE6pyYgbN6OjLFk+F76QQUakEl8sv8WXR1b3Bsoeo+8/h3iApuShljC3bnLFNRNYc1/ZxVE91bVFnhP+0U0DepHHKxxCl1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8LDAi8/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKVlI/Tz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB8B1F000E9;
-	Tue, 21 Jul 2026 17:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8LDAi8/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B245C1F000E9;
+	Tue, 21 Jul 2026 17:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655446;
-	bh=FsR08TNJ0ErZTCg3WQEipWr0APjR7VoOxsHC7kD7rrQ=;
+	s=korg; t=1784655449;
+	bh=IdJ9ZKHjEpylMiNE1Aos7gfZkqn1cq6xcSXui9DyPCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CKVlI/Tz8QNz9A6SISohYmUtu0Dv3KJ3gLHqC4oLnQzMgcCb5Tf5g50eQJpSel/6F
-	 ONkXtHHhBr0S1jvAiZMN5k0xQuvJPK4C/82Vz/3bn1vWoOWPrnw+4TUCDhiLhwBq6+
-	 KxAuRgoV0VShQf3y2RgjcTFwY5FSBZyT8JNEsmdo=
+	b=j8LDAi8/9Gey9w/HW5/ZQnFXm9OiEkFFGghE6gFvPsFyv00T6A+G64VXoqjtXqX4k
+	 NkuA4+9Lbjb6p9PLRoqer0YjBundRWLR4nQ20Nti9kKDIt19kXY+unGoMkXAYDmuO2
+	 FCRI+FsjD8VjXTlF65HfNsOeNfMrZ2LLUNsJTqGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puranjay Mohan <puranjay@kernel.org>,
+	STAR Labs SG <info@starlabs.sg>,
 	Daniel Borkmann <daniel@iogearbox.net>,
-	Eduard Zingerman <eddyz87@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0013/1611] selftests/bpf: Add a test cases for sync_linked_regs regarding zext propagation
-Date: Tue, 21 Jul 2026 17:02:09 +0200
-Message-ID: <20260721152515.085784311@linuxfoundation.org>
+Subject: [PATCH 6.18 0014/1611] bpf: Clear delta when clearing reg id for non-{add,sub} ops
+Date: Tue, 21 Jul 2026 17:02:10 +0200
+Message-ID: <20260721152515.110287185@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -56,185 +55,164 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit 4a04d13576fd69149b91672b5f1dc62eca272fa5 upstream.
+commit 1b327732c84640c1e3da487eefe9d00cc9f2dd34 upstream.
 
-Add multiple test cases for linked register tracking with alu32 ops:
+When a non-{add,sub} alu op such as xor is performed on a scalar
+register that previously had a BPF_ADD_CONST delta, the else path
+in adjust_reg_min_max_vals() only clears dst_reg->id but leaves
+dst_reg->delta unchanged.
 
-  - Add a test that checks sync_linked_regs() regarding reg->id (the linked
-    target register) for BPF_ADD_CONST32 rather than known_reg->id (the
-    branch register).
+This stale delta can propagate via assign_scalar_id_before_mov()
+when the register is later used in a mov. It gets a fresh id but
+keeps the stale delta from the old (now-cleared) BPF_ADD_CONST.
+This stale delta can later propagate leading to a verifier-vs-
+runtime value mismatch.
 
-  - Add a test case for linked register tracking that exposes the cross-type
-    sync_linked_regs() bug. One register uses alu32 (w7 += 1, BPF_ADD_CONST32)
-    and another uses alu64 (r8 += 2, BPF_ADD_CONST64), both linked to the
-    same base register.
+The clear_id label already correctly clears both delta and id.
+Make the else path consistent by also zeroing the delta when id
+is cleared. More generally, this introduces a helper clear_scalar_id()
+which internally takes care of zeroing. There are various other
+locations in the verifier where only the id is cleared. By using
+the helper we catch all current and future locations.
 
-  - Add a test case that exercises regsafe() path pruning when two execution
-    paths reach the same program point with linked registers carrying
-    different ADD_CONST flags (BPF_ADD_CONST32 from alu32 vs BPF_ADD_CONST64
-    from alu64). This particular test passes with and without the fix since
-    the pruning will fail due to different ranges, but it would still be
-    useful to carry this one as a regression test for the unreachable div
-    by zero.
-
-With the fix applied all the tests pass:
-
-  # LDLIBS=-static PKG_CONFIG='pkg-config --static' ./vmtest.sh -- ./test_progs -t verifier_linked_scalars
-  [...]
-  ./test_progs -t verifier_linked_scalars
-  #602/1   verifier_linked_scalars/scalars: find linked scalars:OK
-  #602/2   verifier_linked_scalars/sync_linked_regs_preserves_id:OK
-  #602/3   verifier_linked_scalars/scalars_neg:OK
-  #602/4   verifier_linked_scalars/scalars_neg_sub:OK
-  #602/5   verifier_linked_scalars/scalars_neg_alu32_add:OK
-  #602/6   verifier_linked_scalars/scalars_neg_alu32_sub:OK
-  #602/7   verifier_linked_scalars/scalars_pos:OK
-  #602/8   verifier_linked_scalars/scalars_sub_neg_imm:OK
-  #602/9   verifier_linked_scalars/scalars_double_add:OK
-  #602/10  verifier_linked_scalars/scalars_sync_delta_overflow:OK
-  #602/11  verifier_linked_scalars/scalars_sync_delta_overflow_large_range:OK
-  #602/12  verifier_linked_scalars/scalars_alu32_big_offset:OK
-  #602/13  verifier_linked_scalars/scalars_alu32_basic:OK
-  #602/14  verifier_linked_scalars/scalars_alu32_wrap:OK
-  #602/15  verifier_linked_scalars/scalars_alu32_zext_linked_reg:OK
-  #602/16  verifier_linked_scalars/scalars_alu32_alu64_cross_type:OK
-  #602/17  verifier_linked_scalars/scalars_alu32_alu64_regsafe_pruning:OK
-  #602/18  verifier_linked_scalars/alu32_negative_offset:OK
-  #602/19  verifier_linked_scalars/spurious_precision_marks:OK
-  #602     verifier_linked_scalars:OK
-  Summary: 1/19 PASSED, 0 SKIPPED, 0 FAILED
-
-Co-developed-by: Puranjay Mohan <puranjay@kernel.org>
-Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
+Fixes: 98d7ca374ba4 ("bpf: Track delta between "linked" registers.")
+Reported-by: STAR Labs SG <info@starlabs.sg>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260319211507.213816-2-daniel@iogearbox.net
+Link: https://lore.kernel.org/r/20260407192421.508817-2-daniel@iogearbox.net
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+[shung-hsi.yu: `delta` field was called `off` before commit 3d91c618aca4 ("bpf:
+rename bpf_reg_state->off to bpf_reg_state->delta"), and clear_singular_ids()
+does not exists before commit b2a0aa3a8739 ("bpf: Clear singular ids for
+scalars in is_state_visited()")]
 Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bpf/progs/verifier_linked_scalars.c       | 108 ++++++++++++++++++
- 1 file changed, 108 insertions(+)
+ kernel/bpf/verifier.c | 50 ++++++++++++++++++++++---------------------
+ 1 file changed, 26 insertions(+), 24 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c b/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
-index 2ef346c827c25b..87930b5e7b784f 100644
---- a/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
-@@ -348,6 +348,114 @@ l0_%=:							\
- 	: __clobber_all);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 3dcf591acd50d2..bf8cadd19593b2 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -5013,27 +5013,30 @@ static bool __is_pointer_value(bool allow_ptr_leaks,
+ 	return reg->type != SCALAR_VALUE;
  }
  
-+/*
-+ * Test that sync_linked_regs() checks reg->id (the linked target register)
-+ * for BPF_ADD_CONST32 rather than known_reg->id (the branch register).
-+ */
-+SEC("socket")
-+__success
-+__naked void scalars_alu32_zext_linked_reg(void)
++static void clear_scalar_id(struct bpf_reg_state *reg)
 +{
-+	asm volatile ("						\
-+	call %[bpf_get_prandom_u32];				\
-+	w6 = w0;		/* r6 in [0, 0xFFFFFFFF] */	\
-+	r7 = r6;		/* linked: same id as r6 */	\
-+	w7 += 1;		/* alu32: r7.id |= BPF_ADD_CONST32 */ \
-+	r8 = 0xFFFFffff ll;					\
-+	if r6 < r8 goto l0_%=;					\
-+	/* r6 in [0xFFFFFFFF, 0xFFFFFFFF] */			\
-+	/* sync_linked_regs: known_reg=r6, reg=r7 */		\
-+	/* CPU: w7 = (u32)(0xFFFFFFFF + 1) = 0, zext -> r7 = 0 */ \
-+	/* With fix: r7 64-bit = [0, 0] (zext applied) */	\
-+	/* Without fix: r7 64-bit = [0x100000000] (no zext) */	\
-+	r7 >>= 32;						\
-+	if r7 == 0 goto l0_%=;					\
-+	r0 /= 0;		/* unreachable with fix */	\
-+l0_%=:								\
-+	r0 = 0;							\
-+	exit;							\
-+"	:
-+	: __imm(bpf_get_prandom_u32)
-+	: __clobber_all);
++	reg->id = 0;
++	reg->off = 0;
 +}
 +
-+/*
-+ * Test that sync_linked_regs() skips propagation when one register used
-+ * alu32 (BPF_ADD_CONST32) and the other used alu64 (BPF_ADD_CONST64).
-+ * The delta relationship doesn't hold across different ALU widths.
-+ */
-+SEC("socket")
-+__failure __msg("div by zero")
-+__naked void scalars_alu32_alu64_cross_type(void)
-+{
-+	asm volatile ("						\
-+	call %[bpf_get_prandom_u32];				\
-+	w6 = w0;		/* r6 in [0, 0xFFFFFFFF] */	\
-+	r7 = r6;		/* linked: same id as r6 */	\
-+	w7 += 1;		/* alu32: BPF_ADD_CONST32, delta = 1 */ \
-+	r8 = r6;		/* linked: same id as r6 */	\
-+	r8 += 2;		/* alu64: BPF_ADD_CONST64, delta = 2 */ \
-+	r9 = 0xFFFFffff ll;					\
-+	if r7 < r9 goto l0_%=;					\
-+	/* r7 = 0xFFFFFFFF */					\
-+	/* sync: known_reg=r7 (ADD_CONST32), reg=r8 (ADD_CONST64) */ \
-+	/* Without fix: r8 = zext(0xFFFFFFFF + 1) = 0 */	\
-+	/* With fix: r8 stays [2, 0x100000001] (r8 >= 2) */	\
-+	if r8 > 0 goto l1_%=;					\
-+	goto l0_%=;						\
-+l1_%=:								\
-+	r0 /= 0;		/* div by zero */		\
-+l0_%=:								\
-+	r0 = 0;						\
-+	exit;							\
-+"	:
-+	: __imm(bpf_get_prandom_u32)
-+	: __clobber_all);
-+}
-+
-+/*
-+ * Test that regsafe() prevents pruning when two paths reach the same program
-+ * point with linked registers carrying different ADD_CONST flags (one
-+ * BPF_ADD_CONST32 from alu32, another BPF_ADD_CONST64 from alu64).
-+ */
-+SEC("socket")
-+__failure __msg("div by zero")
-+__flag(BPF_F_TEST_STATE_FREQ)
-+__naked void scalars_alu32_alu64_regsafe_pruning(void)
-+{
-+	asm volatile ("						\
-+	call %[bpf_get_prandom_u32];				\
-+	w6 = w0;		/* r6 in [0, 0xFFFFFFFF] */	\
-+	r7 = r6;		/* linked: same id as r6 */	\
-+	/* Get another random value for the path branch */	\
-+	call %[bpf_get_prandom_u32];				\
-+	if r0 > 0 goto l_pathb_%=;				\
-+	/* Path A: alu32 */					\
-+	w7 += 1;		/* BPF_ADD_CONST32, delta = 1 */\
-+	goto l_merge_%=;					\
-+l_pathb_%=:							\
-+	/* Path B: alu64 */					\
-+	r7 += 1;		/* BPF_ADD_CONST64, delta = 1 */\
-+l_merge_%=:							\
-+	/* Merge point: regsafe() compares path B against cached path A. */ \
-+	/* Narrow r6 to trigger sync_linked_regs for r7 */	\
-+	r9 = 0xFFFFffff ll;					\
-+	if r6 < r9 goto l0_%=;					\
-+	/* r6 = 0xFFFFFFFF */					\
-+	/* sync: r7 = 0xFFFFFFFF + 1 = 0x100000000 */		\
-+	/* Path A: zext -> r7 = 0 */				\
-+	/* Path B: no zext -> r7 = 0x100000000 */		\
-+	r7 >>= 32;						\
-+	if r7 == 0 goto l0_%=;					\
-+	r0 /= 0;		/* div by zero on path B */	\
-+l0_%=:								\
-+	r0 = 0;						\
-+	exit;							\
-+"	:
-+	: __imm(bpf_get_prandom_u32)
-+	: __clobber_all);
-+}
-+
- SEC("socket")
- __success
- void alu32_negative_offset(void)
+ static void assign_scalar_id_before_mov(struct bpf_verifier_env *env,
+ 					struct bpf_reg_state *src_reg)
+ {
+ 	if (src_reg->type != SCALAR_VALUE)
+ 		return;
+-
+-	if (src_reg->id & BPF_ADD_CONST) {
+-		/*
+-		 * The verifier is processing rX = rY insn and
+-		 * rY->id has special linked register already.
+-		 * Cleared it, since multiple rX += const are not supported.
+-		 */
+-		src_reg->id = 0;
+-		src_reg->off = 0;
+-	}
+-
++	/*
++	 * The verifier is processing rX = rY insn and
++	 * rY->id has special linked register already.
++	 * Cleared it, since multiple rX += const are not supported.
++	 */
++	if (src_reg->id & BPF_ADD_CONST)
++		clear_scalar_id(src_reg);
++	/*
++	 * Ensure that src_reg has a valid ID that will be copied to
++	 * dst_reg and then will be used by sync_linked_regs() to
++	 * propagate min/max range.
++	 */
+ 	if (!src_reg->id && !tnum_is_const(src_reg->var_off))
+-		/* Ensure that src_reg has a valid ID that will be copied to
+-		 * dst_reg and then will be used by sync_linked_regs() to
+-		 * propagate min/max range.
+-		 */
+ 		src_reg->id = ++env->id_gen;
+ }
+ 
+@@ -5466,7 +5469,7 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
+ 				 * coerce_reg_to_size will adjust the boundaries.
+ 				 */
+ 				if (get_reg_width(reg) > size * BITS_PER_BYTE)
+-					state->regs[dst_regno].id = 0;
++					clear_scalar_id(&state->regs[dst_regno]);
+ 			} else {
+ 				int spill_cnt = 0, zero_cnt = 0;
+ 
+@@ -15476,7 +15479,7 @@ static void scalar_byte_swap(struct bpf_reg_state *dst_reg, struct bpf_insn *ins
+ 	 * any existing ties and avoid incorrect bounds propagation.
+ 	 */
+ 	if (need_bswap || insn->imm == 16 || insn->imm == 32)
+-		dst_reg->id = 0;
++		clear_scalar_id(dst_reg);
+ 
+ 	if (need_bswap) {
+ 		if (insn->imm == 16)
+@@ -15845,8 +15848,7 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
+ 			 * we cannot accumulate another val into rx->off.
+ 			 */
+ clear_id:
+-			dst_reg->off = 0;
+-			dst_reg->id = 0;
++			clear_scalar_id(dst_reg);
+ 		} else {
+ 			if (alu32)
+ 				dst_reg->id |= BPF_ADD_CONST32;
+@@ -15859,7 +15861,7 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
+ 		 * Make sure ID is cleared otherwise dst_reg min/max could be
+ 		 * incorrectly propagated into other registers by sync_linked_regs()
+ 		 */
+-		dst_reg->id = 0;
++		clear_scalar_id(dst_reg);
+ 	}
+ 	return 0;
+ }
+@@ -15990,7 +15992,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
+ 							assign_scalar_id_before_mov(env, src_reg);
+ 						copy_register_state(dst_reg, src_reg);
+ 						if (!no_sext)
+-							dst_reg->id = 0;
++							clear_scalar_id(dst_reg);
+ 						coerce_reg_to_size_sx(dst_reg, insn->off >> 3);
+ 						dst_reg->subreg_def = DEF_NOT_SUBREG;
+ 					} else {
+@@ -16016,7 +16018,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
+ 						 * propagated into src_reg by sync_linked_regs()
+ 						 */
+ 						if (!is_src_reg_u32)
+-							dst_reg->id = 0;
++							clear_scalar_id(dst_reg);
+ 						dst_reg->subreg_def = env->insn_idx + 1;
+ 					} else {
+ 						/* case: W1 = (s8, s16)W2 */
+@@ -16026,7 +16028,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
+ 							assign_scalar_id_before_mov(env, src_reg);
+ 						copy_register_state(dst_reg, src_reg);
+ 						if (!no_sext)
+-							dst_reg->id = 0;
++							clear_scalar_id(dst_reg);
+ 						dst_reg->subreg_def = env->insn_idx + 1;
+ 						coerce_subreg_to_size_sx(dst_reg, insn->off >> 3);
+ 					}
+@@ -16856,7 +16858,7 @@ static void __collect_linked_regs(struct linked_regs *reg_set, struct bpf_reg_st
+ 		e->is_reg = is_reg;
+ 		e->regno = spi_or_reg;
+ 	} else {
+-		reg->id = 0;
++		clear_scalar_id(reg);
+ 	}
+ }
+ 
 -- 
 2.53.0
 
