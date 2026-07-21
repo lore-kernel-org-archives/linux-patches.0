@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B49B38839E;
-	Tue, 21 Jul 2026 20:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373F82BEFF5;
+	Tue, 21 Jul 2026 20:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667113; cv=none; b=t1C7VCzR0reRN8qYWDLguHooJBqbxF7vTJbx2roygMJPbLHtyTTTgT5XNxQJCiFyAJpZSBVInECMrTp7L/R+hcpn5d0DwFTSK917teGcxGzbhja3djbTBPQz8wYpw7pRgEzxqdhIFGIVlZRHPY3P9kXWz3ZeR5J6cOMhnNz6JKw=
+	t=1784667116; cv=none; b=QzzYX47Ys3hcA2FuBB72BcHqzSdRrYLDl2oUfgf2eHYtqpiFCO1cbxV0j0+N/57BZ8/OH/t3cAkOF2WwkdT4qF8Ou2cV28Yt/hdIY+TNO7G5WWLjEQxPTUS/snJFPGZhg1yIfEU2aer+K7S6oxhFT4BjJlC1x1yAxOv9WZWQnuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667113; c=relaxed/simple;
-	bh=CsHNTKl9LdzWVJRzOIM+LWBA5AQXiJNqodD4hX/aZ+g=;
+	s=arc-20240116; t=1784667116; c=relaxed/simple;
+	bh=KrQA5YO1d0VUtfN/kN1/IixuAKbPqM5aZMSYip2S2fE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Lrme9tzhyBKEMSmW2MUfDtCFyzZPdTa3zw8eKgCQFoAAqFS6UHC1R3xiIKUpnJQIDNV7Jpy7sjcsldG6WEgd55cd5aF4SM6llopdLmqEVCuya3vXZV740FvMsBA0/Ikgy61c6KUNy74XoOZ2oGr7MHegpCRtnj4O2OkU5bFA84A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BIFfgC6l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ePVeamFY4LFfHfc5cOKJp/Z8gVm+MmGwd9OnNVLKPE1EmsUfjwiwKGP8mRwKAJvZavsmGVmixyXT5mxuVne04WoaN105BMDnnHk6A/V2kjkxr5PS77VNhsMG8JsReGy+92TRNw7Xr1biv/oTWzbv16Wz7veBbDDf00ElUlkrDHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oO5LmRBc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BIFfgC6l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12391F000E9;
-	Tue, 21 Jul 2026 20:51:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oO5LmRBc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988961F000E9;
+	Tue, 21 Jul 2026 20:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667112;
-	bh=fJZddyYru+YCFyweMqNU5Vr/B6w2+bjeX4lUxGST9kQ=;
+	s=korg; t=1784667115;
+	bh=izidjtwA+mSC9TpVAGPh/cdQIsvcV7wqcnHW4IGVnH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BIFfgC6lInPBf5qp6Pyq/JZD+Tq7XY5kJQpEJkLDXFixmguQEj8LBo+8u1yTikgk3
-	 BtanPb3dY2X6Ql9Yzy+ckpfKJKCoBG+v7eYty6yxl/khXleO8SLW4ApSEW5S6PALQw
-	 vHSW70B/hOd6ZpEtAGStTSFmvQOJVtu1MOSqrg+4=
+	b=oO5LmRBcBcsH6rg1sZX9+VwRaEAGkUvtaOHVhBOscBNZOUok5p2idyF3xOXKdHGgp
+	 fMSZXv/3+bqk9OSMOcidy2QuQ8PVoFqgrcFKTJC4jSX1PTgkIJ6i3+wZ7xqLyJTwb1
+	 qw7b0bT6vClZYLHUprc8D87Jl8RADG+MUeLp5Si4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 0921/1266] ASoC: mediatek: mt8183: Release reserved memory on cleanup
-Date: Tue, 21 Jul 2026 17:22:38 +0200
-Message-ID: <20260721152502.448408169@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.6 0939/1266] mfd: sm501: Fix reference leak on failed device registration
+Date: Tue, 21 Jul 2026 17:22:56 +0200
+Message-ID: <20260721152502.847076522@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -44,60 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit bee65e00c0924ebecf97718d95dcf4a05ee36471 upstream.
+commit 8c2f0b42fc252e1bf1c7746447091a468e784ca1 upstream.
 
-The MT8183 AFE probe can assign reserved memory with
-of_reserved_mem_device_init(), but the assignment is never released on
-driver removal or later probe failures.
+When platform_device_register() fails in sm501_register_device(), the
+embedded struct device in pdev has already been initialized by
+device_initialize(), but the failure path only reports the error and
+returns without dropping the device reference for the current platform
+device:
 
-Register a devm cleanup action so the reserved memory assignment is
-released consistently, matching newer Mediatek AFE drivers.
+  sm501_register_device()
+    -> platform_device_register(pdev)
+       -> device_initialize(&pdev->dev)
+       -> setup_pdev_dma_masks(pdev)
+       -> platform_device_add(pdev)
 
-Fixes: ec4a10ca4a68 ("ASoC: mediatek: use reserved memory or enable buffer pre-allocation")
+This leads to a reference leak when platform_device_register() fails.
+Fix this by calling platform_device_put() before returning the error.
+
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
+
+Fixes: b6d6454fdb66f ("[PATCH] mfd: SM501 core driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260527-asoc-mt8183-probe-cleanup-v1-1-4f4f5593c8d1@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260415162627.3558789-1-lgs201920130244@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/mediatek/mt8183/mt8183-afe-pcm.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/mfd/sm501.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/soc/mediatek/mt8183/mt8183-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8183/mt8183-afe-pcm.c
-@@ -1085,6 +1085,11 @@ static const dai_register_cb dai_registe
- 	mt8183_dai_memif_register,
- };
- 
-+static void mt8183_afe_release_reserved_mem(void *data)
-+{
-+	of_reserved_mem_device_release(data);
-+}
-+
- static int mt8183_afe_pcm_dev_probe(struct platform_device *pdev)
- {
- 	struct mtk_base_afe *afe;
-@@ -1111,6 +1116,12 @@ static int mt8183_afe_pcm_dev_probe(stru
- 	if (ret) {
- 		dev_info(dev, "no reserved memory found, pre-allocating buffers instead\n");
- 		afe->preallocate_buffers = true;
+--- a/drivers/mfd/sm501.c
++++ b/drivers/mfd/sm501.c
+@@ -747,9 +747,11 @@ static int sm501_register_device(struct
+ 	if (ret >= 0) {
+ 		dev_dbg(sm->dev, "registered %s\n", pdev->name);
+ 		list_add_tail(&smdev->list, &sm->devices);
+-	} else
 +	} else {
-+		ret = devm_add_action_or_reset(dev,
-+					       mt8183_afe_release_reserved_mem,
-+					       dev);
-+		if (ret)
-+			return ret;
- 	}
+ 		dev_err(sm->dev, "error registering %s (%d)\n",
+ 			pdev->name, ret);
++		platform_device_put(pdev);
++	}
  
- 	/* initial audio related clock */
+ 	return ret;
+ }
 
 
