@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E2D34B1A6;
-	Tue, 21 Jul 2026 21:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4A0438FEE;
+	Tue, 21 Jul 2026 21:48:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670480; cv=none; b=Cw3nZkEkB4g326k3br6XeOeT44rNeOzLqVeh+TN0U/GojO6B7H5HxpQ19nrNhNPn9RYheBWQDEjq97KCl/kNPN9TrtPziyXDgtXYmgEgjPw7MWHWoF+FEwqyg/X8/LJcFrktqf8CSI9BTqAt3iWpFBpx9Yl+EcbFCiB/A/M9hJI=
+	t=1784670484; cv=none; b=L9OFxf16q/PHubsjYADjtAvEIw8AsLDGvJa5UZAriRYzyCn6LvJdfs1oWG8oIyQXiuEFK9pt2d5Vv4UNy58rPuh44jJT85WRHJa/A+RCWDBpd0jdDRxoPFFNe16zSo3/V9oYyVfKFKPHp0vuRFHXTb1du01VySlOXfexacN5/p4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670480; c=relaxed/simple;
-	bh=SEO8kgN+TTISQR1Dg86PGE4meOHJUo78+dswI/OBu3Q=;
+	s=arc-20240116; t=1784670484; c=relaxed/simple;
+	bh=zJBEmHZ8q1pAcHinRN5ud8o/mkFFSFwiimKfSu4NBCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ubhrszS7FNxOgjoMUTXzVOcfPyrgDCs+C93wyIheC7SfGSPok5L6tZ0mJfKoyAQEgKwINcAh7ZpRZuYlm47Jh2X/dgpNs5BA9KlAosXmFC3RRJcbh2E5icCZHCoizi0tU+o0H+pnhVIDAlwsvgeo5iu3XL9QlHKlvJI0tlf7tR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inujrJV3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bqC3ON6K7J0wRnj1OnOoxkjaGInqRNDPNe47JOUabDuyM/vyjVOi2O5uk3GQS2g1mZF0wNHHU1mj8+sufQnlsTe+1ZXdsWfUbKh6IEkp/A5KOl3Y88byYFltqScYofg45Z6amIVpDJYyNfV5O7uuRelve4jU5DsoK6BkuQydgsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XbKSyiBo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inujrJV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFCA1F000E9;
-	Tue, 21 Jul 2026 21:47:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XbKSyiBo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6024E1F000E9;
+	Tue, 21 Jul 2026 21:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670479;
-	bh=eDe+eznI6NFsIQlJibXgqeyS9PbtMXMVQokV/zLs6w4=;
+	s=korg; t=1784670481;
+	bh=EukTSDZRopFDn1ZmpJo+cVrz8eJYd7LuJelMPiVLuVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=inujrJV3lDH5Yi3mCM8xhnDe1EYDw9OTh45J08CqVQlGg69TnLRltLnGHYaC5L9Xp
-	 Bk9TNyRzS0RtPn/t7TLqckfzp+NAKINAvA6TX4iEZn0dC8/kBPLy2HalcIiXEkRWwb
-	 TFZnihl4gp6WiXfRkwz9kmyVRGFO1sRN4bwPDLHc=
+	b=XbKSyiBo16GtrA+DImh5te6IDMBhDVvQ0YPIYoL6dEnd8qLT5+CG9OeJi5jx9W0QH
+	 6MDuefQ5FDMCQH8LB+OV0tfgVFfItsTBea0ihgpCP+XXxo6eTnn8H/q0yBJWokrf7o
+	 RIr+XUljBqzjjeEAIBLBRtAqFGXpjbyvXTVuuOUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Zhao Dongdong <zhaodongdong@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0949/1067] iio: imu: inv_icm42600: fix timestamping by limiting FIFO reading
-Date: Tue, 21 Jul 2026 17:25:50 +0200
-Message-ID: <20260721152445.768740624@linuxfoundation.org>
+Subject: [PATCH 6.1 0950/1067] ALSA: aoa: check snd_ctl_new1() return value
+Date: Tue, 21 Jul 2026 17:25:51 +0200
+Message-ID: <20260721152445.791212331@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,69 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Zhao Dongdong <zhaodongdong@kylinos.cn>
 
-[ Upstream commit affe3f077d7a4eeb25937f5323ff059a54b4712c ]
+[ Upstream commit 8df560fefe6fed6a20b7e06720eeaeccec349ac0 ]
 
-Timestamps are made by measuring the chip clock using the watermark
-interrupts. If we read more than watermark samples as done today, we
-are reducing the period between interrupts and distort the time
-measurement. Fix that by reading only watermark samples in the
-interrupt case.
+snd_ctl_new1() can return NULL when memory allocation fails. In
+layout.c, the function does not check the return value before
+dereferencing ctl->id.name or passing to aoa_snd_ctl_add(), which can
+lead to a NULL pointer dereference.
 
-Fixes: 7f85e42a6c54 ("iio: imu: inv_icm42600: add buffer support in iio devices")
+Add NULL checks after snd_ctl_new1() calls and return early if any
+fails.
+
+Assisted-by: Opencode:DeepSeek-V4-Flash
 Cc: stable@vger.kernel.org
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: f3d9478b2ce4 ("[ALSA] snd-aoa: add snd-aoa")
+Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
+Link: https://patch.msgid.link/tencent_35F3A25FEEBF190A2E15ED787754C57E3708@qq.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c |    9 +++++----
- drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.h |    1 +
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ sound/aoa/fabrics/layout.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-@@ -257,6 +257,7 @@ int inv_icm42600_buffer_update_watermark
- 
- 	/* compute watermark value in bytes */
- 	wm_size = watermark * packet_size;
-+	st->fifo.watermark.value = watermark;
- 
- 	/* changing FIFO watermark requires to turn off watermark interrupt */
- 	ret = regmap_update_bits_check(st->map, INV_ICM42600_REG_INT_SOURCE0,
-@@ -476,11 +477,10 @@ int inv_icm42600_buffer_fifo_read(struct
- 	st->fifo.nb.accel = 0;
- 	st->fifo.nb.total = 0;
- 
--	/* compute maximum FIFO read size */
-+	/* compute maximum FIFO read size (watermark for max = 0 interrupt case) */
- 	if (max == 0)
--		max_count = sizeof(st->fifo.data);
--	else
--		max_count = max * inv_icm42600_get_packet_size(st->fifo.en);
-+		max = st->fifo.watermark.value;
-+	max_count = max * inv_icm42600_get_packet_size(st->fifo.en);
- 
- 	/* read FIFO count value */
- 	raw_fifo_count = (__be16 *)st->buffer;
-@@ -592,6 +592,7 @@ int inv_icm42600_buffer_init(struct inv_
- 
- 	st->fifo.watermark.eff_gyro = 1;
- 	st->fifo.watermark.eff_accel = 1;
-+	st->fifo.watermark.value = 1;
- 
- 	/*
- 	 * Default FIFO configuration (bits 7 to 5)
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.h
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.h
-@@ -34,6 +34,7 @@ struct inv_icm42600_fifo {
- 		unsigned int accel;
- 		unsigned int eff_gyro;
- 		unsigned int eff_accel;
-+		unsigned int value;
- 	} watermark;
- 	size_t count;
- 	struct {
+--- a/sound/aoa/fabrics/layout.c
++++ b/sound/aoa/fabrics/layout.c
+@@ -947,6 +947,8 @@ static void layout_attached_codec(struct
+ 			if (lineout == 1)
+ 				ldev->gpio.methods->set_lineout(codec->gpio, 1);
+ 			ctl = snd_ctl_new1(&lineout_ctl, codec->gpio);
++			if (!ctl)
++				return;
+ 			if (cc->connected & CC_LINEOUT_LABELLED_HEADPHONE)
+ 				strscpy(ctl->id.name,
+ 					"Headphone Switch", sizeof(ctl->id.name));
+@@ -961,6 +963,8 @@ static void layout_attached_codec(struct
+ 			if (ldev->have_lineout_detect) {
+ 				ctl = snd_ctl_new1(&lineout_detect_choice,
+ 						   ldev);
++				if (!ctl)
++					return;
+ 				if (cc->connected & CC_LINEOUT_LABELLED_HEADPHONE)
+ 					strscpy(ctl->id.name,
+ 						"Headphone Detect Autoswitch",
+@@ -968,6 +972,8 @@ static void layout_attached_codec(struct
+ 				aoa_snd_ctl_add(ctl);
+ 				ctl = snd_ctl_new1(&lineout_detected,
+ 						   ldev);
++				if (!ctl)
++					return;
+ 				if (cc->connected & CC_LINEOUT_LABELLED_HEADPHONE)
+ 					strscpy(ctl->id.name,
+ 						"Headphone Detected",
 
 
