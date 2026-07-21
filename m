@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16DF74582D3;
-	Tue, 21 Jul 2026 22:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EDD46EF61;
+	Tue, 21 Jul 2026 22:21:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672514; cv=none; b=fBvg3lztRsmOTsPTyrCDIPYt0j4oQQWjtFcBobNMywgbR5VQQA3y2yF0wRuyc3Kiz5rg7z//OwypFVq9e64bMZyLx+6iVIY8IXZXZT7AqA70yadVmkJhM2ufeCFb0fPMEmUoEPI2aJyd/qqMwdl532XAV0L2clyrcGw9kgvdqFo=
+	t=1784672517; cv=none; b=aZnQLXnSnXvfOu3urhjUCqdHNsH5A4sEShlt0QGmy44XqIxsT1Xe8d/D4/E1D32tLvflxDIW5FQzmXoYSoKy4EoGkqBRVxO8LFfCojIMz19ZlE//LdkqqUBb30W9osZrk0CRrYU9yprlP/oARTcleIEx1QLdxrpC8SXSjD+jEYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672514; c=relaxed/simple;
-	bh=dM6RSw8hrVQXjHrblG73XzT+p527b1uZiXnWilj6QCA=;
+	s=arc-20240116; t=1784672517; c=relaxed/simple;
+	bh=j+B5Jy7pw1eV3NAbnxGojs1hxLOf4NggKr8GYy30+6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z8EqX+/0Wd0ekJ/sfJ8z2jsS2+v8j2TDVi/feBcHbmjpWU5IgA+SPrzdTIna1kktH6PMUvZ1DKNHdPcCCa0QmNnyp2qoTu3oiPo/UlBIhIEeNxsDvTd3FIkgeNv78Gcdp0dPUJk0bmsEbi3PKxvSigN0a7hkQn7qPWkEvNIvfK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tc6oR1SI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Njng8UfyO+cElhBkEsWTqYZjz4yFc2FJe/jrd0phgsCG2a3MT+4tUDP8OL2YXQWnvpUpRic2BOrx0g08NI71N4Wt/xF8AmsCR58CQvgG8NY1mKxYnaElbgj1fnQuqFRYtJmZQjQ8Rpgp08vHR7VO9NfuppT/X4FRzlvgG9dt5Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnnOnouo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tc6oR1SI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5971F000E9;
-	Tue, 21 Jul 2026 22:21:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnnOnouo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2484C1F000E9;
+	Tue, 21 Jul 2026 22:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672513;
-	bh=WAdso37wB83QjKNGSWukzebHLEOExAvVzdyJVbh6c+U=;
+	s=korg; t=1784672515;
+	bh=/yquZgh4JCiuurpa+6f8CqWp1QHd/qXTz1cZeN2G0Pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tc6oR1SIb3mgGdO6SSJbgyLCnX534FPwXoE1KYDIc7lvdr3GUw5T2iIjDj4rd+FtW
-	 B/R71LZZnOJvReFZgecY5hLIPRDkba0GXWAPSl4kdcAKCIT+uWfa6bygBrDbSByty6
-	 6vnSt/mVTipGnp4mAtKe1YilRS9V94djSOYYkBqE=
+	b=SnnOnouonuBU/VXVOSSt8E4TW7D28gSHtOqrxDiOHlm2nGkcD344veiivbeGsQJeS
+	 7ZZEAXGq9WHspxltqhZbQ07NYS9kn3n2RvnFo5lwPCfOkvMKf5VIfiRsI94o8Cwyt6
+	 m3UtopVX6Dm30bVneijRGv7MF2D4jZqKXtXmo8fo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	Ming-Hung Tsai <mtsai@redhat.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.15 653/843] dm era: fix out-of-bounds memory access for non-zero start sector
-Date: Tue, 21 Jul 2026 17:24:48 +0200
-Message-ID: <20260721152420.757404858@linuxfoundation.org>
+Subject: [PATCH 5.15 654/843] dm-bufio: fix wrong count calculation in dm_bufio_issue_discard
+Date: Tue, 21 Jul 2026 17:24:49 +0200
+Message-ID: <20260721152420.779867221@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,59 +49,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit a868196f03c2b19418ae3d2b69e195d668a271e5 upstream.
+commit 422f1d4f141eaa3a6e4199ceec86cc6b9bf26570 upstream.
 
-dm-era tracks writes in target-relative blocks, but era_map() calculates
-the writeset block before applying the target offset.  Tables with a
-non-zero start sector can therefore pass an absolute mapped-device block
-to metadata_current_marked().
+block_to_sector converts a block number to a sector number and adds
+c->start to the result. It is inappropriate to use this function for
+converting the number of blocks to a number to sectors because c->start
+would be incorrectly added to the result.
 
-If the absolute block is beyond the current writeset size,
-writeset_marked() tests past the end of the in-core bitset.  KASAN reports
-this as a vmalloc-out-of-bounds access.
+Luckily, the only target that uses dm_bufio_issue_discard is dm-ebs,
+which sets c->start to 0, so this bug is latent.
 
-Apply the target offset before calculating the era block so writeset
-lookups use the target-relative block number.
-
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Reviewed-by: Ming-Hung Tsai <mtsai@redhat.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: Claude:claude-opus-4-6
+Fixes: 6fbeb0048e6b ("dm bufio: implement discard")
 Cc: stable@vger.kernel.org
-Fixes: eec40579d848 ("dm: add era target")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-era-target.c |    4 +++-
+ drivers/md/dm-bufio.c |    4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-era-target.c
-+++ b/drivers/md/dm-era-target.c
-@@ -1214,6 +1214,7 @@ static dm_block_t get_block(struct era *
- static void remap_to_origin(struct era *era, struct bio *bio)
- {
- 	bio_set_dev(bio, era->origin_dev->bdev);
-+	bio->bi_iter.bi_sector = dm_target_offset(era->ti, bio->bi_iter.bi_sector);
- }
+--- a/drivers/md/dm-bufio.c
++++ b/drivers/md/dm-bufio.c
+@@ -1375,7 +1375,9 @@ int dm_bufio_issue_discard(struct dm_buf
+ 	struct dm_io_region io_reg = {
+ 		.bdev = c->bdev,
+ 		.sector = block_to_sector(c, block),
+-		.count = block_to_sector(c, count),
++		.count = likely(c->sectors_per_block_bits >= 0) ?
++			count << c->sectors_per_block_bits :
++			count * (c->block_size >> SECTOR_SHIFT),
+ 	};
  
- /*----------------------------------------------------------------
-@@ -1538,7 +1539,7 @@ static void era_dtr(struct dm_target *ti
- static int era_map(struct dm_target *ti, struct bio *bio)
- {
- 	struct era *era = ti->private;
--	dm_block_t block = get_block(era, bio);
-+	dm_block_t block;
- 
- 	/*
- 	 * All bios get remapped to the origin device.  We do this now, but
-@@ -1546,6 +1547,7 @@ static int era_map(struct dm_target *ti,
- 	 * block is marked in this era.
- 	 */
- 	remap_to_origin(era, bio);
-+	block = get_block(era, bio);
- 
- 	/*
- 	 * REQ_PREFLUSH bios carry no data, so we're not interested in them.
+ 	BUG_ON(dm_bufio_in_request());
 
 
