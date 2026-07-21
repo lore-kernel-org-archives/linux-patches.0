@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A878F47255C;
-	Tue, 21 Jul 2026 17:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12BD7472558;
+	Tue, 21 Jul 2026 17:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656665; cv=none; b=ev7ZqlMSdK7WjaHo3jnJqphf+opgUWAZFw+0zzQCYfd9/p8jkDydRukArd5nW8Qy//zeA8it26k9Y8BJTKMGa5oAX7fFQvV0RtqhdxcJAVWVY27sQM6O392pLFhA9302UA800LfTk8MDKTnkYQi3XakeazzHm6frmhDzxleotLc=
+	t=1784656667; cv=none; b=tTDO4Q6AyhAo+8WE+8v3BYt19yDUnM5dmrP2vy9lX6H1sOIBS7Am//umlJ3zMUOacfLVG47C/b2lcYTQ3L3hcqkBh0zA/HvGX2ypSdiiz4LueYFQ7HK947AaPnY7rnOd0XmS3i2oioo/nAz8XO+//n/g/nGEpQgfOKN2JCQaoTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656665; c=relaxed/simple;
-	bh=EK9RDYRcAvvt1ow7C7cYAt5aYUPKib+RJKSRGHH9fDc=;
+	s=arc-20240116; t=1784656667; c=relaxed/simple;
+	bh=f3ZvkkpC0ZIMBjKyBEuBoPghtLAp285X9kA7tnAuOQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EYratzRVE6I7DHEAwF2di6ceMykwAKaJTBv+ArmeWilDBRdpr0g6qaR8s//Y2HSj+tfe2+8BJaUAQ66SLywaZV/TDyk9J82mJYpIw53Im/AiAuDMkbW9oxuTUIBytgEghzEaHtQLajoZjTcSBEIKqn7iVTFAXXvaXFRRcx77JKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08BFAEf1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WqQGxHg2LVhRvieJ4fly8AZwPfxOP81N398zFkoIjkC3JJgGKfp8CzGSVaqnfDytCwaRoGpAry59y0+O1wItzDCaKQI9waJCtER0BuWPut3rDKSQbMRdLqyPXuZyIrQyos1xpksFGHD3SA4p3vWoUOYreqPFDS0pdH2WP/NBfGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNmrRetr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08BFAEf1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C691B1F000E9;
-	Tue, 21 Jul 2026 17:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNmrRetr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7731C1F00A3A;
+	Tue, 21 Jul 2026 17:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656663;
-	bh=NfPt3pnn2//QBg+FgkEntxq+geB1bMlQM2JumdCXnZ4=;
+	s=korg; t=1784656666;
+	bh=Xb8thuneW+5zA7XfB5w73UiG1eufq2zp3Ck01Hgp2zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=08BFAEf1bRgHwOvSqLEOLQ8y86/JtlWSfKobPAt4BwJPtrIRcU1a4N3619SqouGwR
-	 g45GBiekFEGS0zsW62+PZnjS+7jXn4qQqTNmWRyJV1aYfEY3bZjd3m/zOdTHTqLRl9
-	 Oe5lz1orbWh9owWirOaJ6ZnED42D4yWNvV622c+Q=
+	b=gNmrRetrKUEA/zKdPcrF4EktOv2Uc9brWDGHJkuVrr8GzpBGJhrhplV9TuBLnbD/o
+	 KGqE3waxCnav59mDe0+lK/8zB/dgpBI3hrDeECSJcaCvcK9eh0UuomtfdYWODke8Od
+	 yfX+3Jgk86tCWP9JpZx9guPsxkikwQ5tcWw9id+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0465/1611] Bluetooth: hci_qca: fix NULL pointer dereference in qca_dmp_hdr() for non-serdev device
-Date: Tue, 21 Jul 2026 17:09:41 +0200
-Message-ID: <20260721152525.774477278@linuxfoundation.org>
+Subject: [PATCH 6.18 0474/1611] RDMA/mlx5: Remove raw RSS QP restrack tracking
+Date: Tue, 21 Jul 2026 17:09:50 +0200
+Message-ID: <20260721152525.987712044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,38 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 6b8cbcf08de0db62254d1981f83db0f94681ccd9 ]
+[ Upstream commit 666031fed8f0fdfc29b20d125a628c1b0a04cdaf ]
 
-hu->serdev is NULL for hci_uart attached via non-serdev paths, but
-qca_dmp_hdr() unconditionally dereferences hu->serdev->dev.driver->name,
-causing a NULL pointer dereference.
+Raw RSS QP restrack tracking wasn't working to begin with as it was
+only tracking the first raw RSS QP which was added, since at creation
+the raw RSS QP number is reserved so the QP number for this qp type
+was always zero.
+The following raw RSS QP additions were always failing silently.
 
-Fix by guarding the dereference with a NULL check and falling back to
-"hci_ldisc_qca" for the non-serdev case.
+Since the fix isn't trivial and there were no users that required or
+complained about this issue we are dropping this for now instead of fixing.
 
-Fixes: 06d3fdfcdf5c ("Bluetooth: hci_qca: Add qcom devcoredump support")
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 968f0b6f9c01 ("RDMA/mlx5: Consolidate into special function all create QP calls")
+Link: https://patch.msgid.link/r/20260607-restrack-uaf-fix-v1-2-d72e45eb76c2@nvidia.com
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_qca.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/qp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index d37a51101ca760..c649a3f702c042 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1023,7 +1023,7 @@ static void qca_dmp_hdr(struct hci_dev *hdev, struct sk_buff *skb)
- 	skb_put_data(skb, buf, strlen(buf));
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index 67294cac625bfb..49566479f70474 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -3105,6 +3105,7 @@ static int create_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
+ 	int err;
  
- 	snprintf(buf, sizeof(buf), "Driver: %s\n",
--		hu->serdev->dev.driver->name);
-+		 hu->serdev ? hu->serdev->dev.driver->name : "hci_ldisc_qca");
- 	skb_put_data(skb, buf, strlen(buf));
- }
- 
+ 	if (params->is_rss_raw) {
++		rdma_restrack_no_track(&qp->ibqp.res);
+ 		err = create_rss_raw_qp_tir(dev, pd, qp, params);
+ 		goto out;
+ 	}
 -- 
 2.53.0
 
