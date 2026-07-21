@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B0D411661;
-	Tue, 21 Jul 2026 19:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A9D42D76B;
+	Tue, 21 Jul 2026 19:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661022; cv=none; b=ix9tLbFnZDev+AXct9Cr9vANTqUqNJtdd7X5erBWmeWKsc87L04fbqZyKYmMT4RUA6vsbiDRKF02/fJMEe4H4D7geZ38IF6eFe9d6pJwmjsvWbHKtxs4vtIvNZFWYqLZFkzB7YFlm4rswmh10jShzyTy24JSNoQhlncAH6AQueo=
+	t=1784661024; cv=none; b=GVVu9SBtUiK38fLvt5m6KbEV4te0nOSmMuBL89CxpAHrHYXjvc6VzSQZCiD5cQQFumyS2F/dSmvslz9IZk4BmVE7Ncm1L/Thyc1MQhN8HiClRyva9NQfVq39dBJpenHq+b0sZyXbJp6b7B9UmONxAhJ/+9WpU5Z7rqihyRuDrcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661022; c=relaxed/simple;
-	bh=C64qxqr/75EHd6SZ5A3CMOyuw9MjoD3XIGWDt4dJgbo=;
+	s=arc-20240116; t=1784661024; c=relaxed/simple;
+	bh=d6h75WbixJm5uuqfSFHN30lyys9De3vFMtmUZJQbDyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kXeAfG1TUV8YFciuTezjQotTuq7uGlUy22Z/EdZSntyEX9630fXHa+5YPayBh2aZ+CYj9hFtmvIjxNGtV4JEDq379Y8XJ2UO6plgKXhyByvgviKU1Bt06QSjv87C9dwNNUJXCRgo7ng+n4lVX6fdcTQuW2z5jp1w0jMBrVQjGcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEEuIYD1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jm64z2HZkrx+COuJ63Ui2I1Ur1kliqvBAnn5lWNoN1WABtTVXfdDUYjztPGM/PahrdotlglWan60Wh3gCDNQTjDt6TC50cUOq02UUSyPIh/sw7x/b0QKJvSiSJLApSKk5109Ayz3pf9oMzf/YwCvnKG0E4pQ25MFOJosIcFijTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VqZYCfoH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEEuIYD1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7653B1F00A3A;
-	Tue, 21 Jul 2026 19:10:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VqZYCfoH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A621F000E9;
+	Tue, 21 Jul 2026 19:10:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661021;
-	bh=d8++ZN1AtGVoJope7thDa5xK5i1/gcyguNBZqtulYzs=;
+	s=korg; t=1784661023;
+	bh=m6RnwF+8BeWoxTk1UWjIWJu1GcmCTDaFQ/1YpKoaWQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BEEuIYD12wsjCjxmsf6YfMOjI5fFhEDdimft4BH4lRj1/EWW+xKMBqrK0qLPId2P/
-	 9hdFmO88A8DQiGbYHPHHYNniMKgd2x9d06Mju2T0Rh65Jjm7xkRQRrT9d3q/+4dmNo
-	 VjVdTE0cjZL5uKzrLVByWJkCoFAjwsZdt7F9XQCU=
+	b=VqZYCfoH6U/iIAbsQIriwh+53TfB0LCGZ75ecI7kh0f9EcqVDSaYNBgBO3+Np5Y1w
+	 cyRIVpbsr+PbHs1S8haI6ucYaudGF4g1+ctyqgXJW4SilvmB1RkOuPO9nwsfeLabAG
+	 PjNjUd6QT51M4tJP2Zxn+FBL55i3bB3m/p7cNNyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sayali Patil <sayalip@linux.ibm.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	David Hildenbrand <david@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Michal Hocko <mhocko@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Florian Westphal <fw@strlen.de>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1159/2077] selftests/mm: restore default nr_hugepages value via exit trap in charge_reserved_hugetlb.sh
-Date: Tue, 21 Jul 2026 17:13:52 +0200
-Message-ID: <20260721152620.158316008@linuxfoundation.org>
+Subject: [PATCH 7.1 1150/2077] netfilter: nft_payload: reject offsets exceeding 65535 bytes
+Date: Tue, 21 Jul 2026 17:13:43 +0200
+Message-ID: <20260721152619.946503354@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -61,81 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sayali Patil <sayalip@linux.ibm.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit a3f66e9b6e4dad38444656ffc28c28c33a4d4e1f ]
+[ Upstream commit 213be32f46a29ca15a314df06c3424ecffd6c90a ]
 
-Patch series "selftests/mm: fix failures and robustness improvements", v7.
+Large offsets were rejected based on netlink policy, but blamed commit
+removed the policy without updating nft_payload_inner_init() to use the
+truncation-check helper.
 
-Powerpc systems with a 64K base page size exposed several issues while
-running mm selftests. Some tests assume specific hugetlb configurations,
-use incorrect interfaces, or fail instead of skipping when the required
-kernel features are not available.
+Silent truncation is not a problem, but not wanted either, so add a
+check.
 
-This series fixes these issues and improves test robustness.
-
-This patch (of 13):
-
-cleanup() resets nr_hugepages to 0 on every invocation, while the test
-reconfigures it again in the next iteration.  This leads to repeated
-allocation and freeing of large numbers of hugepages, especially when the
-original value is high.
-
-Additionally, with set -e, failures in earlier cleanup steps (e.g., rmdir
-or umount returning EBUSY while background activity is still ongoing) can
-cause the script to exit before restoring the original value, leaving the
-system in a modified state.
-
-Introduce a trap on EXIT, INT, and TERM to restore the original
-nr_hugepages value once at script termination.  This avoids unnecessary
-allocation churn and ensures the original value is reliably restored on
-all exit paths.
-
-Link: https://lore.kernel.org/cover.1779296493.git.sayalip@linux.ibm.com
-Link: https://lore.kernel.org/5b8fbb29cd6ceffe6752e0af104f60cec072aa10.1779296493.git.sayalip@linux.ibm.com
-Fixes: 7d695b1c3695 ("selftests/mm: save and restore nr_hugepages value")
-Signed-off-by: Sayali Patil <sayalip@linux.ibm.com>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 077dc4a27579 ("netfilter: nft_payload: extend offset to 65535 bytes")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/charge_reserved_hugetlb.sh | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/netfilter/nft_payload.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
-index 44f4e703deb9b5..e1945901fd207c 100755
---- a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
-+++ b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
-@@ -17,6 +17,7 @@ if ! command -v killall >/dev/null 2>&1; then
- fi
+diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
+index 484a5490832e4a..4438d05f8018c6 100644
+--- a/net/netfilter/nft_payload.c
++++ b/net/netfilter/nft_payload.c
+@@ -224,11 +224,17 @@ static int nft_payload_init(const struct nft_ctx *ctx,
+ 			    const struct nlattr * const tb[])
+ {
+ 	struct nft_payload *priv = nft_expr_priv(expr);
++	u32 offset;
++	int err;
  
- nr_hugepgs=$(cat /proc/sys/vm/nr_hugepages)
-+trap 'echo "$nr_hugepgs" > /proc/sys/vm/nr_hugepages' EXIT INT TERM
+ 	priv->base   = ntohl(nla_get_be32(tb[NFTA_PAYLOAD_BASE]));
+-	priv->offset = ntohl(nla_get_be32(tb[NFTA_PAYLOAD_OFFSET]));
+ 	priv->len    = ntohl(nla_get_be32(tb[NFTA_PAYLOAD_LEN]));
  
- fault_limit_file=limit_in_bytes
- reservation_limit_file=rsvd.limit_in_bytes
-@@ -70,7 +71,6 @@ function cleanup() {
-   if [[ -e $cgroup_path/hugetlb_cgroup_test2 ]]; then
-     rmdir $cgroup_path/hugetlb_cgroup_test2
-   fi
--  echo 0 >/proc/sys/vm/nr_hugepages
-   echo CLEANUP DONE
- }
++	err = nft_parse_u32_check(tb[NFTA_PAYLOAD_OFFSET], U16_MAX, &offset);
++	if (err < 0)
++		return err;
++	priv->offset = offset;
++
+ 	return nft_parse_register_store(ctx, tb[NFTA_PAYLOAD_DREG],
+ 					&priv->dreg, NULL, NFT_DATA_VALUE,
+ 					priv->len);
+@@ -621,7 +627,8 @@ static int nft_payload_inner_init(const struct nft_ctx *ctx,
+ 				  const struct nlattr * const tb[])
+ {
+ 	struct nft_payload *priv = nft_expr_priv(expr);
+-	u32 base;
++	u32 base, offset;
++	int err;
  
-@@ -599,4 +599,3 @@ if [[ $do_umount ]]; then
-   rmdir $cgroup_path
- fi
+ 	if (!tb[NFTA_PAYLOAD_BASE] || !tb[NFTA_PAYLOAD_OFFSET] ||
+ 	    !tb[NFTA_PAYLOAD_LEN] || !tb[NFTA_PAYLOAD_DREG])
+@@ -639,8 +646,11 @@ static int nft_payload_inner_init(const struct nft_ctx *ctx,
+ 	}
  
--echo "$nr_hugepgs" > /proc/sys/vm/nr_hugepages
+ 	priv->base   = base;
+-	priv->offset = ntohl(nla_get_be32(tb[NFTA_PAYLOAD_OFFSET]));
+ 	priv->len    = ntohl(nla_get_be32(tb[NFTA_PAYLOAD_LEN]));
++	err = nft_parse_u32_check(tb[NFTA_PAYLOAD_OFFSET], U16_MAX, &offset);
++	if (err < 0)
++		return err;
++	priv->offset = offset;
+ 
+ 	return nft_parse_register_store(ctx, tb[NFTA_PAYLOAD_DREG],
+ 					&priv->dreg, NULL, NFT_DATA_VALUE,
 -- 
 2.53.0
 
