@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BE7471415;
-	Tue, 21 Jul 2026 19:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5473471414;
+	Tue, 21 Jul 2026 19:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662905; cv=none; b=FGBLPU0zaRbEmw6aurXD893Pp2zCfGIiqZhmjK1m8ca9P/uXeWKjLjd48+zusQ8wfOWQHo/HNCKgCNnvhUMgKxDUwj7uMo1pu8lnEpv9KRtVGkKUvvpHeOgw4Yy9o3bPskeMv1RAkw9LOe0+tEhYmKfM0+quAZl0qfC2oHZwLGA=
+	t=1784662908; cv=none; b=kXQIQHqZ096+0jX7XGYBFOq0gVNO5lXRILa6cAoUd2GB0iIAXFKQwHVcXofIiYSyTVs5RITAneX5DQ6kOiuRNSwHyTiN62Ya8mLgxLlwJgO4j2ltNr9flPD+zG2hel1ODR9ou8t4MnhMlMN5QlCwnYcr3FHKBWrc8ra+TqfZ7TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662905; c=relaxed/simple;
-	bh=f8jKMmtXyofdxmqF6e3kdRq9VwsZwDOzZQUAJCAopE0=;
+	s=arc-20240116; t=1784662908; c=relaxed/simple;
+	bh=c0+VU8GHn5DLD1DBu6cHVjfThitCU3ByaajkCRNldzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E7FehqsR2pFeVyVcywjvYMzxFLN8zYRzhYQ24G5GqWqoIBZO4TmTqAuWSXn2vLG30dbsFS8AD/UpkjxRmQvb89THK8z0SQHx9rsv1zMDA4v+1sZrVSHAwcv0TxsUH9xFfEQRiHn+QFavpNA+i8nSWJH36UqK/N/C9kVq7rCAuw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pzw0ERRZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dMfyziR+cMw4KAiNj8bpeB4GmxniB9Nm4F2eElczL6dblJrY+dpqcRug2/rRHA/Av1DSc/cyHy/aK0nAAvGLFp+tLgLuACNTWlxxgz5L+EOO7nS8ONvDE1YFnbbpryEawTeUS+o+g+bkXLqtRKbm9QwD80rQ+anzj+8dinB7O60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D49S+G7Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pzw0ERRZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DA91F00A3F;
-	Tue, 21 Jul 2026 19:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D49S+G7Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416A61F000E9;
+	Tue, 21 Jul 2026 19:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662904;
-	bh=uKoNuoikzfoxlBka91QWt1MrCwJHLxqNfzediapELro=;
+	s=korg; t=1784662906;
+	bh=5b6C81v9DhRhW+4qKv1IGBVRXOppUa2NEsIwLyTSNHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pzw0ERRZGuMnLhnYeR+NboLQnQpPBkYMupFFC23pLeVDhN45v/8r+PdafIEGhvdM4
-	 4wvi6kcSKoKOcJ3SGibXiBm8p+jZwpCobQyRfoLs7TjyVG/VbA7m0B4OoTQsIACnHC
-	 ZjD8Oq2pzACTKiVx0IwbF+zlqB3ICmMzOtghiRFY=
+	b=D49S+G7Z9riAqvW+5USD4aFAxiGlWCMH0fq0hJcPBRK7yjKAZ8EBGtLSTVKoUCXxU
+	 ZGLWO+2ftNAbO0ns6VerujI5Zr6JGVenYNMLrXjgbkLyE9HCEVfNV3qTLv177aOTDX
+	 irtllZDfejsYhB1xgxDBOMkYtMtImdZtji2CMqqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amery Hung <ameryhung@gmail.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0621/1276] bpf: Fix effective prog array index with BPF_F_PREORDER
-Date: Tue, 21 Jul 2026 17:17:44 +0200
-Message-ID: <20260721152500.004418798@linuxfoundation.org>
+Subject: [PATCH 6.12 0622/1276] power: sequencing: fix ABBA deadlock in pwrseq_device_unregister()
+Date: Tue, 21 Jul 2026 17:17:45 +0200
+Message-ID: <20260721152500.025713810@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,216 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amery Hung <ameryhung@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-[ Upstream commit f08aaee3152d0dfc578b3f2586932d82062701dd ]
+[ Upstream commit 2d5a7d406ecece5837af1e278ffbbf6c0315560a ]
 
-replace_effective_prog() and purge_effective_progs() located the slot in
-the effective array by walking the program hlist and counting entries
-linearly. That count does not match the array layout: compute_effective_
-progs() places BPF_F_PREORDER programs at the front (ancestor cgroup
-first, attach order within a cgroup) and the rest after them (descendant
-cgroup first). So when a preorder program is present, the linear hlist
-position no longer equals the program's index in the effective array.
+The pwrseq core takes three locks in consistent order everywhere:
 
-For replace_effective_prog() (bpf_link_update()) this overwrote the
-wrong slot, corrupting the effective order. For purge_effective_progs(),
-it could dummy out a slot belonging to a different program and leave the
-detached program in the array while bpf_prog_put() drops its reference,
-i.e. a use-after-free.
+  pwrseq_sem -> pwrseq->rw_lock -> pwrseq->state_lock
 
-Fix both by replaying compute_effective_progs()'s placement (including
-the per-cgroup preorder reversal) in a shared effective_prog_pos()
-helper. Identify the entry by its struct bpf_prog_list pointer rather
-than by (prog, link) value, so the lookup resolves to exactly the
-attachment the syscall selected even when the same bpf_prog is attached
-to several cgroups in the hierarchy.
+pwrseq_get() -> pwrseq_match_device() takes pwrseq_sem for reading, then
+rw_lock for reading. pwrseq_power_on()/pwrseq_power_off() take rw_lock
+for reading and then state_lock.
 
-Fixes: 4b82b181a26c ("bpf: Allow pre-ordering for bpf cgroup progs")
-Signed-off-by: Amery Hung <ameryhung@gmail.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20260619063520.2690547-2-ameryhung@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+pwrseq_device_unregister() is the only exception, it takes: state_lock,
+then rw_lock for writing and finally pwrseq_sem for writing. This created
+two potential ABBA deadlock situations that sashiko pointed out.
+
+  - pwrseq_power_on/off() take rw_lock for reading then state_lock, while
+    pwrseq_unregister() takes state_lock then rw_lock for writing
+  - pwrseq_get() takes pwrseq_sem for reading then rw_lock for reading,
+    while pwrseq_unregister() takes rw_lock for writing then pwrseq_sem
+    for writing
+
+Reorder the unregister path to taking pwrseq_sem for writing -> rw_lock
+for writing and drop the state_lock entirely. This is safe as
+enable_count is only ever written under rw_lock held for read (via
+pwrseq_unit_enable()/disable(), reached only from pwrseq_power_on/off()),
+so holding rw_lock for writing already excludes every other writer and
+reader and the active-users WARN() stays race-free without state_lock.
+
+Fixes: 249ebf3f65f8 ("power: sequencing: implement the pwrseq core")
+Closes: https://sashiko.dev/#/patchset/20260616151049.1705503-1-vulab%40iscas.ac.cn
+Link: https://patch.msgid.link/20260618-pwrseq-abba-deadlock-v1-1-943a3fd81c06@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cgroup.c | 108 +++++++++++++++++++++++++-------------------
- 1 file changed, 62 insertions(+), 46 deletions(-)
+ drivers/power/sequencing/core.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-index 26ed09cdc85624..ad054a4c782ea9 100644
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -769,19 +769,65 @@ static int cgroup_bpf_attach(struct cgroup *cgrp,
- 	return ret;
- }
+diff --git a/drivers/power/sequencing/core.c b/drivers/power/sequencing/core.c
+index 50aed0a5e8b215..7e94abd913a057 100644
+--- a/drivers/power/sequencing/core.c
++++ b/drivers/power/sequencing/core.c
+@@ -543,15 +543,18 @@ void pwrseq_device_unregister(struct pwrseq_device *pwrseq)
+ 	struct device *dev = &pwrseq->dev;
+ 	struct pwrseq_target *target;
  
-+static int effective_prog_pos(struct cgroup *cgrp,
-+			      enum cgroup_bpf_attach_type atype,
-+			      struct bpf_prog_list *target_pl)
-+{
-+	int cnt = 0, preorder_cnt = 0, fstart, bstart, init_bstart, pos = -1;
-+	struct bpf_prog_list *pl;
-+	struct cgroup *p = cgrp;
-+
-+	/* count effective programs to find where the preorder region ends */
-+	do {
-+		if (cnt == 0 || (p->bpf.flags[atype] & BPF_F_ALLOW_MULTI))
-+			cnt += prog_list_length(&p->bpf.progs[atype], &preorder_cnt);
-+		p = cgroup_parent(p);
-+	} while (p);
-+
-+	/* replay compute_effective_progs() placement and record target's slot */
-+	cnt = 0;
-+	p = cgrp;
-+	fstart = preorder_cnt;
-+	bstart = preorder_cnt - 1;
-+	do {
-+		if (cnt > 0 && !(p->bpf.flags[atype] & BPF_F_ALLOW_MULTI))
-+			continue;
-+
-+		init_bstart = bstart;
-+		hlist_for_each_entry(pl, &p->bpf.progs[atype], node) {
-+			if (!prog_list_prog(pl))
-+				continue;
-+
-+			if (pl->flags & BPF_F_PREORDER) {
-+				if (pl == target_pl)
-+					pos = bstart;
-+				bstart--;
-+			} else {
-+				if (pl == target_pl)
-+					pos = fstart;
-+				fstart++;
-+			}
-+			cnt++;
-+		}
-+
-+		/* reverse pre-ordering progs at this cgroup level */
-+		if (pos >= bstart + 1 && pos <= init_bstart)
-+			pos = bstart + 1 + init_bstart - pos;
-+	} while ((p = cgroup_parent(p)));
-+
-+	return pos;
-+}
-+
- /* Swap updated BPF program for given link in effective program arrays across
-  * all descendant cgroups. This function is guaranteed to succeed.
-  */
- static void replace_effective_prog(struct cgroup *cgrp,
- 				   enum cgroup_bpf_attach_type atype,
--				   struct bpf_cgroup_link *link)
-+				   struct bpf_prog_list *pl)
- {
- 	struct bpf_prog_array_item *item;
- 	struct cgroup_subsys_state *css;
- 	struct bpf_prog_array *progs;
--	struct bpf_prog_list *pl;
--	struct hlist_head *head;
--	struct cgroup *cg;
- 	int pos;
+-	scoped_guard(mutex, &pwrseq->state_lock) {
++	scoped_guard(rwsem_write, &pwrseq_sem) {
+ 		guard(rwsem_write)(&pwrseq->rw_lock);
  
- 	css_for_each_descendant_pre(css, &cgrp->self) {
-@@ -790,27 +836,15 @@ static void replace_effective_prog(struct cgroup *cgrp,
- 		if (percpu_ref_is_zero(&desc->bpf.refcnt))
- 			continue;
++		/*
++		 * Holding rw_lock for write excludes all power on/off callers
++		 * (they hold it for read), so it's safe to read enable_count
++		 * here without taking the state_lock.
++		 */
+ 		list_for_each_entry(target, &pwrseq->targets, list)
+ 			WARN(target->unit->enable_count,
+ 			     "REMOVING POWER SEQUENCER WITH ACTIVE USERS\n");
  
--		/* find position of link in effective progs array */
--		for (pos = 0, cg = desc; cg; cg = cgroup_parent(cg)) {
--			if (pos && !(cg->bpf.flags[atype] & BPF_F_ALLOW_MULTI))
--				continue;
-+		pos = effective_prog_pos(desc, atype, pl);
-+		if (WARN_ON_ONCE(pos < 0))
-+			continue;
- 
--			head = &cg->bpf.progs[atype];
--			hlist_for_each_entry(pl, head, node) {
--				if (!prog_list_prog(pl))
--					continue;
--				if (pl->link == link)
--					goto found;
--				pos++;
--			}
--		}
--found:
--		BUG_ON(!cg);
- 		progs = rcu_dereference_protected(
- 				desc->bpf.effective[atype],
- 				lockdep_is_held(&cgroup_mutex));
- 		item = &progs->items[pos];
--		WRITE_ONCE(item->prog, link->link.prog);
-+		WRITE_ONCE(item->prog, pl->link->link.prog);
- 	}
- }
- 
-@@ -853,7 +887,7 @@ static int __cgroup_bpf_replace(struct cgroup *cgrp,
- 		return -ENOENT;
- 
- 	old_prog = xchg(&link->link.prog, new_prog);
--	replace_effective_prog(cgrp, atype, link);
-+	replace_effective_prog(cgrp, atype, pl);
- 	bpf_prog_put(old_prog);
- 	return 0;
- }
-@@ -920,19 +954,14 @@ static struct bpf_prog_list *find_detach_entry(struct hlist_head *progs,
-  *                           recomputing the array in place.
-  *
-  * @cgrp: The cgroup which descendants to travers
-- * @prog: A program to detach or NULL
-- * @link: A link to detach or NULL
-+ * @pl: The prog_list entry being detached
-  * @atype: Type of detach operation
-  */
--static void purge_effective_progs(struct cgroup *cgrp, struct bpf_prog *prog,
--				  struct bpf_cgroup_link *link,
-+static void purge_effective_progs(struct cgroup *cgrp, struct bpf_prog_list *pl,
- 				  enum cgroup_bpf_attach_type atype)
- {
- 	struct cgroup_subsys_state *css;
- 	struct bpf_prog_array *progs;
--	struct bpf_prog_list *pl;
--	struct hlist_head *head;
--	struct cgroup *cg;
- 	int pos;
- 
- 	/* recompute effective prog array in place */
-@@ -942,24 +971,11 @@ static void purge_effective_progs(struct cgroup *cgrp, struct bpf_prog *prog,
- 		if (percpu_ref_is_zero(&desc->bpf.refcnt))
- 			continue;
- 
--		/* find position of link or prog in effective progs array */
--		for (pos = 0, cg = desc; cg; cg = cgroup_parent(cg)) {
--			if (pos && !(cg->bpf.flags[atype] & BPF_F_ALLOW_MULTI))
--				continue;
+-		guard(rwsem_write)(&pwrseq_sem);
 -
--			head = &cg->bpf.progs[atype];
--			hlist_for_each_entry(pl, head, node) {
--				if (!prog_list_prog(pl))
--					continue;
--				if (pl->prog == prog && pl->link == link)
--					goto found;
--				pos++;
--			}
--		}
--
-+		pos = effective_prog_pos(desc, atype, pl);
- 		/* no link or prog match, skip the cgroup of this layer */
--		continue;
--found:
-+		if (pos < 0)
-+			continue;
-+
- 		progs = rcu_dereference_protected(
- 				desc->bpf.effective[atype],
- 				lockdep_is_held(&cgroup_mutex));
-@@ -1020,7 +1036,7 @@ static int __cgroup_bpf_detach(struct cgroup *cgrp, struct bpf_prog *prog,
- 		/* if update effective array failed replace the prog with a dummy prog*/
- 		pl->prog = old_prog;
- 		pl->link = link;
--		purge_effective_progs(cgrp, old_prog, link, atype);
-+		purge_effective_progs(cgrp, pl, atype);
+ 		device_del(dev);
  	}
  
- 	/* now can actually delete it from this cgroup list */
 -- 
 2.53.0
 
