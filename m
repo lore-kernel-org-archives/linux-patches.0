@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C342546D540;
-	Tue, 21 Jul 2026 17:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B0746D08D;
+	Tue, 21 Jul 2026 17:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655378; cv=none; b=K4Dn+sq/t0InQEvWyTtd92gSNcv0DkdmAuVsAI0Xr8wpTwUa5DW30MxMbgTtaiKZ6WoWtFynMi8rqjLDxBYzcZ9b1rOo5Ou5S2u8EJl0kAQEnibCed5npsXIElqpJc91IBEdmi4y6wUx+GH1wX4TE39uo3KqlVdw89NNaw1TrAI=
+	t=1784655381; cv=none; b=V84HXH3eVGHTj7t4T0Op/fzN86fa5xBRB9MrINlv5ViyZx9S3GSsHWVilU5tALOMGlXt+YBBS+dS1eqlbd/6hZgeq1ToUkndJttATza6EoW7QjEON8in0kzWB82k4zcQNg9FJ+DyYPdV7jeDKOqzpjITjR/wy7BTBgRgvWXrJZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655378; c=relaxed/simple;
-	bh=0WD+Bl8g32l1HTt9RcK6Yd7A9TdOpGLy26tTq+jc0fc=;
+	s=arc-20240116; t=1784655381; c=relaxed/simple;
+	bh=kch/SBbnHmPKCMfJf3PijAnrQY4pDvRcZj+JnOl3gEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pnt4fcsr3ddu5OXKJn7QooIzgmlsQV9dK7w2kZMrCGew7twKxDMIu8ltnnyzsRB/xvCEJcfoEdD3yAcT4eVHSkEQg0107idt+7ssnXu82NIbGFgopni/0WV2OynL5TQWq2vrHSf8zFBarlVeScN4GU+2nNgdPi+CEM2bgGfdFq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izswnI4Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lhp3/GbfCiRiUXm2HnxV/fk65uh0023nTTKeQuAVmJnFuL2qv2qIa9wCvI/zhIZkYTVmkCR650DKUqORmn1R0O6X04vsNZ69Op1Llo9rMAh0B0OjuZ2BW9L/q1gpl9hRHKAbCV+s6nIoMGJUdbihpCiSVMjw+bmEw/Ka7RF4Bpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0f2vQc27; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izswnI4Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35ABB1F000E9;
-	Tue, 21 Jul 2026 17:36:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0f2vQc27"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF371F00A3A;
+	Tue, 21 Jul 2026 17:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655377;
-	bh=nlKk6myBzJMuJDxp86p18rDCq77DyUxo0uVXO3QcwgI=;
+	s=korg; t=1784655380;
+	bh=PLSURkEbuOMx647Auyc2G2eMx/ly0aNBJERhzKvj3no=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=izswnI4ZN2XJT27KlwpBtOE2IitHho/FQf+ErjQW+ihVqk2B01a6MLLxrwfuXQzQA
-	 5hb7N7pc2pa4wuZuZxPz1Ss3XhYTssL2ok8yzcehdgFimPq9ntyOknS5d2cuuX+XAG
-	 Reu4uQthaJFTisujDq5wjUVIlvMAazF3gq96FaUE=
+	b=0f2vQc27MJuiae9x7eTIuSf54KLTcmeFF93xY3t50Scpy8CuAAWceTxazOvMcNLM4
+	 DvttJk+u7tCgGtolZKmI/0NtP2HBdjSULzAGAEuwrC77BkJrxDzh01wbD6VcxTZ/3l
+	 oivEqrN9Vox4AWoJTmq57xssfINGzDW6JOgCNZ5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davide Ornaghi <d.ornaghi97@gmail.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 2060/2077] ksmbd: fix path resolution in ksmbd_vfs_kern_path_create
-Date: Tue, 21 Jul 2026 17:28:53 +0200
-Message-ID: <20260721152641.285426995@linuxfoundation.org>
+Subject: [PATCH 7.1 2061/2077] smb: move compression definitions into common/fscc.h
+Date: Tue, 21 Jul 2026 17:28:54 +0200
+Message-ID: <20260721152641.310524010@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,136 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davide Ornaghi <d.ornaghi97@gmail.com>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit 1c8951963d8ed357f70f59e0ad4ddce2199d2016 ]
+[ Upstream commit 9d357903ec9b0da60cccc4d311f99763ba0924a2 ]
 
-The SMB2 open lookup is rooted at the share with LOOKUP_BENEATH, but the
-create/mkdir/hardlink sink is not: ksmbd_vfs_kern_path_create() builds an
-absolute path with convert_to_unix_name() and resolves it from AT_FDCWD
-via start_creating_path(), so a ".." component is walked from the real
-filesystem root and escapes the export.
+These definitions will also be used by ksmbd, move them into
+common header file.
 
-An authenticated client races a missing path component so the rooted open
-lookup returns -ENOENT (taking the create branch) while the same component
-is present (a directory) when the create walk runs; the create then
-resolves ".." out of the share.
-
-Root the create walk at the share like the lookup and rename paths already
-are: resolve the parent with vfs_path_parent_lookup(..., LOOKUP_BENEATH,
-&share_conf->vfs_path) and create the final component with
-start_creating_noperm(). convert_to_unix_name() then has no callers and is
-removed.
-
-Fixes: 265fd1991c1d ("ksmbd: use LOOKUP_BENEATH to prevent the out of share access")
-Cc: stable@vger.kernel.org
-Signed-off-by: Davide Ornaghi <d.ornaghi97@gmail.com>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: c6394bcaf254 ("ksmbd: use opener credentials for FSCTL mutations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/misc.c |   33 ---------------------------------
- fs/smb/server/misc.h |    1 -
- fs/smb/server/vfs.c  |   33 +++++++++++++++++++++++++++------
- 3 files changed, 27 insertions(+), 40 deletions(-)
+ fs/smb/client/smb1pdu.h |    5 -----
+ fs/smb/client/smb2pdu.h |    4 ----
+ fs/smb/common/fscc.h    |   18 ++++++++++++++++++
+ fs/smb/server/smb2pdu.h |    3 ---
+ 4 files changed, 18 insertions(+), 12 deletions(-)
 
---- a/fs/smb/server/misc.c
-+++ b/fs/smb/server/misc.c
-@@ -283,39 +283,6 @@ char *ksmbd_extract_sharename(struct uni
- 	return ksmbd_casefold_sharename(um, name);
- }
+--- a/fs/smb/client/smb1pdu.h
++++ b/fs/smb/client/smb1pdu.h
+@@ -1211,11 +1211,6 @@ typedef struct smb_com_transaction_compr
+ 	__le16 compression_state;  /* See below for valid flags */
+ } __packed TRANSACT_COMPR_IOCTL_REQ;
  
--/**
-- * convert_to_unix_name() - convert windows name to unix format
-- * @share:	ksmbd_share_config pointer
-- * @name:	file name that is relative to share
-- *
-- * Return:	converted name on success, otherwise NULL
-- */
--char *convert_to_unix_name(struct ksmbd_share_config *share, const char *name)
--{
--	int no_slash = 0, name_len, path_len;
--	char *new_name;
+-/* compression state flags */
+-#define COMPRESSION_FORMAT_NONE		0x0000
+-#define COMPRESSION_FORMAT_DEFAULT	0x0001
+-#define COMPRESSION_FORMAT_LZNT1	0x0002
 -
--	if (name[0] == '/')
--		name++;
--
--	path_len = share->path_sz;
--	name_len = strlen(name);
--	new_name = kmalloc(path_len + name_len + 2, KSMBD_DEFAULT_GFP);
--	if (!new_name)
--		return new_name;
--
--	memcpy(new_name, share->path, path_len);
--	if (new_name[path_len - 1] != '/') {
--		new_name[path_len] = '/';
--		no_slash = 1;
--	}
--
--	memcpy(new_name + path_len + no_slash, name, name_len);
--	path_len += name_len + no_slash;
--	new_name[path_len] = 0x00;
--	return new_name;
--}
--
- char *ksmbd_convert_dir_info_name(struct ksmbd_dir_info *d_info,
- 				  const struct nls_table *local_nls,
- 				  int *conv_len)
---- a/fs/smb/server/misc.h
-+++ b/fs/smb/server/misc.h
-@@ -25,7 +25,6 @@ void ksmbd_strip_last_slash(char *path);
- void ksmbd_conv_path_to_windows(char *path);
- char *ksmbd_casefold_sharename(struct unicode_map *um, const char *name);
- char *ksmbd_extract_sharename(struct unicode_map *um, const char *treename);
--char *convert_to_unix_name(struct ksmbd_share_config *share, const char *name);
+ typedef struct smb_com_transaction_ioctl_rsp {
+ 	struct smb_hdr hdr;	/* wct = 19 */
+ 	__u8 Reserved[3];
+--- a/fs/smb/client/smb2pdu.h
++++ b/fs/smb/client/smb2pdu.h
+@@ -195,10 +195,6 @@ struct network_resiliency_req {
  
- #define KSMBD_DIR_INFO_ALIGNMENT	8
- struct ksmbd_dir_info;
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -1261,15 +1261,36 @@ struct dentry *ksmbd_vfs_kern_path_creat
- 					  unsigned int flags,
- 					  struct path *path)
- {
--	char *abs_name;
-+	struct ksmbd_share_config *share_conf = work->tcon->share_conf;
-+	struct qstr last;
- 	struct dentry *dent;
-+	int err, type;
+ #define NO_FILE_ID 0xFFFFFFFFFFFFFFFFULL /* general ioctls to srv not to file */
  
--	abs_name = convert_to_unix_name(work->tcon->share_conf, name);
--	if (!abs_name)
--		return ERR_PTR(-ENOMEM);
-+	/* resolve the name beneath the share root so ".." cannot escape */
-+	CLASS(filename_kernel, filename)(name);
+-struct compress_ioctl {
+-	__le16 CompressionState; /* See cifspdu.h for possible flag values */
+-} __packed;
+-
+ /*
+  * Maximum number of iovs we need for an ioctl request.
+  * [0] : struct smb2_ioctl_req
+--- a/fs/smb/common/fscc.h
++++ b/fs/smb/common/fscc.h
+@@ -100,6 +100,24 @@ struct duplicate_extents_to_file_ex {
+ 	__le32 Reserved;
+ } __packed;
  
--	dent = start_creating_path(AT_FDCWD, abs_name, path, flags);
--	kfree(abs_name);
-+	err = vfs_path_parent_lookup(filename, flags | LOOKUP_BENEATH,
-+				     path, &last, &type,
-+				     &share_conf->vfs_path);
-+	if (err)
-+		return ERR_PTR(err);
++/*
++ * compression state flags
++ * See MS-FSCC 2.3.18
++ *     MS-FSCC 2.3.67
++ *     MS-FSCC 2.4.9
++ */
++#define COMPRESSION_FORMAT_NONE	0x0000
++#define COMPRESSION_FORMAT_DEFAULT	0x0001
++#define COMPRESSION_FORMAT_LZNT1	0x0002
 +
-+	if (unlikely(type != LAST_NORM)) {
-+		path_put(path);
-+		return ERR_PTR(-EINVAL);
-+	}
++/*
++ * See MS-FSCC 2.3.18
++ *     MS-FSCC 2.3.67
++ */
++struct compress_ioctl {
++	__le16 CompressionState;
++} __packed;
 +
-+	err = mnt_want_write(path->mnt);
-+	if (err) {
-+		path_put(path);
-+		return ERR_PTR(err);
-+	}
-+
-+	dent = start_creating_noperm(path->dentry, &last);
-+	if (IS_ERR(dent)) {
-+		mnt_drop_write(path->mnt);
-+		path_put(path);
-+	}
- 	return dent;
- }
+ /* See MS-FSCC 2.3.20 */
+ struct fsctl_get_integrity_information_rsp {
+ 	__le16	ChecksumAlgorithm;
+--- a/fs/smb/server/smb2pdu.h
++++ b/fs/smb/server/smb2pdu.h
+@@ -230,9 +230,6 @@ struct smb2_file_mode_info {
+ 	__le32 Mode;
+ } __packed;
  
+-#define COMPRESSION_FORMAT_NONE 0x0000
+-#define COMPRESSION_FORMAT_LZNT1 0x0002
+-
+ struct smb2_file_comp_info {
+ 	__le64 CompressedFileSize;
+ 	__le16 CompressionFormat;
 
 
