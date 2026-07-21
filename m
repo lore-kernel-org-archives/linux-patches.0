@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2D23C1098;
-	Tue, 21 Jul 2026 22:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B9944AB73;
+	Tue, 21 Jul 2026 22:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671792; cv=none; b=iCJFq45xIEkGPxD96e5ajK5B2kLKrQkMjHcDtyTic3ibFCfPfVnChKrLyrE9Bqi85LnY0V+hg9lNUl+CwgtY6tmXYMA4SsMW87hBdSmECz/gCc6gF+X/qV6+JgJkoosoz2+gA68ugN10i82Kpi08Dzn33Vq3m2/HDM91qmAF/3A=
+	t=1784671794; cv=none; b=aLStoLpW0YyzpHH0AHiRcpG+VlBPR4GSn+qXo3iWaA1Kt6qwUhtN1Y+xSWj1D//y9h0LDr8Z5c0RkFDf8imPm1djwf4nL/D3ChzYpWgVdHzsA1SMQh/h0Tat/8Ej/RwGN2RB5x+vjypT+FzxKPsttkQhrV3E/ixqN0Z5tVMNbeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671792; c=relaxed/simple;
-	bh=OwIr3IH2dEIo9inogmodJeJ3uOMsaH/BQrpQRtw/ZwI=;
+	s=arc-20240116; t=1784671794; c=relaxed/simple;
+	bh=HwEN3NiSCESM81pjPnQqH34oyEk/gabY9bckKvc6cJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZnRzb02fe37O8pLKfCUfULG8upafOrdfWEatiEwtaU6Kie0/14EEoNaOQFTKswiVg8HGwChR+MrKailOgAoWhG+R9nu6bRV3Trv/4W4CfUK8igwabrvD0qH3D1wWlSaI+cjOGcgWvgi4uMdCZVUmPrehC52wuPYbHaN6f8x7eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RuIVeiHu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wf6qi3ihJSH3n1/KvZUiAAvp2sYP6j6qu23jYHLHxkE6N5hwdzDJMntdIkp0vzAx1CpDrIjnbcf3+daW5KCHgnrteqa1ZXVjdzYjwB4tIEBPsrxXVgW/3LWHhH0MmvtUW/tzjHTEo2ypaCLfVR53YUzJBRzewy82jqAqEuHWF8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0IrsmE9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RuIVeiHu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A12E1F000E9;
-	Tue, 21 Jul 2026 22:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0IrsmE9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134A21F000E9;
+	Tue, 21 Jul 2026 22:09:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671790;
-	bh=3nZZYxQMzT9AbI2R4XeAIbamjqG0CL7jnlfHEbxPT7Q=;
+	s=korg; t=1784671793;
+	bh=ic73mtsXgFSXxGsrT7XesjsRItigB/YHcd1mFedStEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RuIVeiHu7pjDh8P2U2JLs7S/ovItAROpbiTwe+sRHHZqMoJpTWJ9+yvxLHCfBqhJK
-	 ziwdjidBB6Htbeu0+F+oC6Yrgg8AQqlXcZvQnRCu5HeCFkyNs9COXMj2qdk/irNA+Q
-	 sp7jRp+DexCuRXGfvRbL0G0Aa5j3d5FXYahyz/Rg=
+	b=M0IrsmE9N5JJH4DPnCnpCdPt8m3wx/KanCyARlQ/eZqZVrVP7yiaNAhlTreX6IPiC
+	 QxqNhZbGXlc+IYgjL5wMiG1yc0ScYADZgKKmxNHiqBk7BaTxqtl3JAkQy76fDof15X
+	 l9mewlFNFAos9Elqlb2v4t24hWl0VVBBJkMdXgf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Seungjin Bae <eeodqql09@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 380/843] staging: most: video: avoid double free on video register failure
-Date: Tue, 21 Jul 2026 17:20:15 +0200
-Message-ID: <20260721152414.586980329@linuxfoundation.org>
+Subject: [PATCH 5.15 381/843] usb: host: max3421: Fix shift-out-of-bounds in max3421_hub_control()
+Date: Tue, 21 Jul 2026 17:20:16 +0200
+Message-ID: <20260721152414.608443123@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,71 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Seungjin Bae <eeodqql09@gmail.com>
 
-[ Upstream commit 7cb1c5b32a2bfde961fff8d5204526b609bcb30a ]
+[ Upstream commit cff06b03b530ae1fe8a13e93a7848f2130e00fb4 ]
 
-comp_register_videodev() allocates a video_device with
-video_device_alloc() and releases it if video_register_device() fails.
+The `max3421_hub_control()` function handles USB hub class requests
+to the virtual root hub. In the `default` branches of both the
+`ClearPortFeature` and `SetPortFeature` switch statements, it modifies
+`max3421_hcd->port_status` by left shifting 1 by the request's `value`
+parameter. However, it does not validate whether this shift will exceed
+the width of `port_status`.
 
-This can double free the video_device when __video_register_device()
-reaches device_register() and that call fails:
+So if a malicious userspace task with access to the root hub via
+/dev/bus/usb/.../001 issues a USBDEVFS_CONTROL ioctl with `wValue`
+greater than or equal to 32, the left shift operation invokes
+shift-out-of-bounds undefined behavior. This results in arbitrary
+bit corruption of `port_status`, including the normally-immutable
+change bits, which can bypass internal state checks and confuse the
+hub status.
 
-  video_register_device()
-    -> __video_register_device()
-       -> device_register() fails
-          -> put_device(&vdev->dev)
-             -> v4l2_device_release()
-                -> vdev->release(vdev)
-                   -> video_device_release(vdev)
+Fix this by rejecting requests whose `value` exceeds the shift width
+before performing the shift.
 
-  comp_register_videodev()
-    -> video_device_release(mdev->vdev)
+This issue was found using a KLEE-based symbolic execution tool for
+kernel drivers that I'm currently developing.
 
-Use video_device_release_empty() while registering the device so that
-registration failure paths do not free mdev->vdev through vdev->release().
-comp_register_videodev() then releases mdev->vdev exactly once on failure.
-Restore video_device_release() after successful registration so the
-registered device keeps its normal lifetime handling.
-
-This issue was found by a static analysis tool I am developing.
-
-Fixes: eab231c0398a ("staging: most: v4l2-aim: remove unnecessary label err_vbi_dev")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260517111218.945796-1-lgs201920130244@gmail.com
+Fixes: 2d53139f3162 ("Add support for using a MAX3421E chip as a host driver.")
+Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
+Link: https://patch.msgid.link/20260518224901.1887013-1-eeodqql09@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/most/video/video.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/host/max3421-hcd.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/staging/most/video/video.c b/drivers/staging/most/video/video.c
-index b7858e47145fa1..24ea0d0b6d22d7 100644
---- a/drivers/staging/most/video/video.c
-+++ b/drivers/staging/most/video/video.c
-@@ -416,6 +416,7 @@ static int comp_register_videodev(struct most_video_dev *mdev)
- 
- 	/* Fill the video capture device struct */
- 	*mdev->vdev = comp_videodev_template;
-+	mdev->vdev->release = video_device_release_empty;
- 	mdev->vdev->v4l2_dev = &mdev->v4l2_dev;
- 	mdev->vdev->lock = &mdev->lock;
- 	snprintf(mdev->vdev->name, sizeof(mdev->vdev->name), "MOST: %s",
-@@ -428,9 +429,13 @@ static int comp_register_videodev(struct most_video_dev *mdev)
- 		v4l2_err(&mdev->v4l2_dev, "video_register_device failed (%d)\n",
- 			 ret);
- 		video_device_release(mdev->vdev);
-+		return ret;
- 	}
- 
--	return ret;
-+	mdev->vdev->release = video_device_release;
-+
-+	return 0;
-+
- }
- 
- static void comp_unregister_videodev(struct most_video_dev *mdev)
+diff --git a/drivers/usb/host/max3421-hcd.c b/drivers/usb/host/max3421-hcd.c
+index b2641009519b5e..5bdd95e5e1eb44 100644
+--- a/drivers/usb/host/max3421-hcd.c
++++ b/drivers/usb/host/max3421-hcd.c
+@@ -1703,6 +1703,8 @@ max3421_hub_control(struct usb_hcd *hcd, u16 type_req, u16 value, u16 index,
+ 						!pdata->vbus_active_level);
+ 			fallthrough;
+ 		default:
++			if (value >= 32)
++				goto error;
+ 			max3421_hcd->port_status &= ~(1 << value);
+ 		}
+ 		break;
+@@ -1756,6 +1758,8 @@ max3421_hub_control(struct usb_hcd *hcd, u16 type_req, u16 value, u16 index,
+ 			max3421_reset_port(hcd);
+ 			fallthrough;
+ 		default:
++			if (value >= 32)
++				goto error;
+ 			if ((max3421_hcd->port_status & USB_PORT_STAT_POWER)
+ 			    != 0)
+ 				max3421_hcd->port_status |= (1 << value);
 -- 
 2.53.0
 
