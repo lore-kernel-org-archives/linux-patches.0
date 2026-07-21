@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C01C43C06B;
-	Tue, 21 Jul 2026 22:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DCB4266BF;
+	Tue, 21 Jul 2026 22:02:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671355; cv=none; b=uFoDl2Uqoxj5p8GMHjDWM5kdvUghHYUP2CamZFtVZYyKJQRMQ1BJug5ulwXOmYtar4DPB9cZwX2e2Syi8MSHC1DTjgnCOzzTefKFKrsEFGT3C1prHw/gK8RY4ZyRdcsQWAlUga861QllILe1DrHSv3xQLJCdfh4iTZ6mMHugsyo=
+	t=1784671357; cv=none; b=Gd4kdNvgCExQTVXVxtKBodwlvi/a/zh4C40hnggn20PhhmqBmL4J8o2YKmhuniqI33o+9OAqM2E9I/HDre6fZkKEMxreHQNyiUjTkBZiD8d58FiyJj5lMw3gmgpE6di4nA8ciMvyNwZH3SO1VF+OgUijrE0lT+vgRaMFBTvU5Qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671355; c=relaxed/simple;
-	bh=ERoCIRFxOZfNJnQTFWcceBg2to9dm336SkYshSUyBDI=;
+	s=arc-20240116; t=1784671357; c=relaxed/simple;
+	bh=59VWWRClJEmqLIsIgQ2v8HMNQ1pr64+FrMKeg9AzgJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ouPboo462RFslawkn57G9dgeDtLdPvKqF736ZbFFH8JC8amjUmW3ocW5p5imloJxXsT5/BTbtH78mOAE5w/olQzbcqaJp2a0k0NwL1+X9O0spk62s2gH2pujnq3rCLzA9lpo9k1DCiRshea3Q4hFZcjZe0nfvcLtLWPDIXcNvZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJ8eLVsC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LXd2AW5C44kkpAg6vxBuPwM+iuOMBbCk7O3fQmCkOXqAb81DK2ezzcPSYBUC75fBpZjGKhu+JHeHrobERfBshmX7m4jK7c0ybmDqrYyw6kJgaHgxzKw64+wXkxv9pInpFSiWCVagoS5J42lJaAjyvE81Ue3rPXeORZme2RoVpmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkmyOqxR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJ8eLVsC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FE11F000E9;
-	Tue, 21 Jul 2026 22:02:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkmyOqxR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 262491F00A3A;
+	Tue, 21 Jul 2026 22:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671353;
-	bh=AqYH75XCfNuxPi+uG5UY+R6eRIHVfCheJsnEWvcRoG0=;
+	s=korg; t=1784671355;
+	bh=7mHmDX0OBy9W0EaVmAzZd7w2kJ5evrAl7enyEMgEwic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lJ8eLVsCmaltM+tkjIaCONmKFTCPxNRtAioh1WJQpid8YO0id1EhNfLHQ6pn0uaiO
-	 LZ1Zi5lICyvpaeHkbUl31FtXopStMYnlMzxbLP26NtKiVelbXuidT2wlvbBZo7f/jU
-	 zORjQ2/1VUBxLzZfyzCJtmY2LwvP2Et8LQ9J+fpM=
+	b=XkmyOqxRaMSF+BnesM+36wVunQaZ5NDSW6Cd6WgN7YnqX3VI0HBkjS/j+Hll957kJ
+	 d5OtXUh79tKpFJwD1r5t0HuhINTZ3Ce3/U4F4M56H7owjBvfAkQwByeJAa4XRTIMWi
+	 qD9/ra+CHBvGhDdzYOeE33rN1BnUYrSPJvzrJ5KM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Matthias Feser <mfe@KBSgmbhfr.onmicrosoft.com>,
-	Moteen Shah <m-shah@ti.com>
-Subject: [PATCH 5.15 212/843] serial: 8250_omap: clear rx_running on zero-length DMA completes
-Date: Tue, 21 Jul 2026 17:17:27 +0200
-Message-ID: <20260721152410.787827387@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Li Daming <d4n.for.sec@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 213/843] afs: Fix netns teardown to cancel the preallocation charger
+Date: Tue, 21 Jul 2026 17:17:28 +0200
+Message-ID: <20260721152410.809186645@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,50 +57,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Feser <mfe@KBSgmbhfr.onmicrosoft.com>
+From: David Howells <dhowells@redhat.com>
 
-commit 061b627ba534230a18ec4d7251562af12325d06a upstream.
+commit 47694fbc9d24ab6bf210f91e8efe06a10a478064 upstream.
 
-On AM33xx RX DMA only triggers when the FIFO reaches the
-configured threshold (typically 48 bytes). For smaller bursts
-no DMA request is issued and the FIFO is drained by RX timeout.
+Fix the teardown of an afs network namespace to make sure it cancels the
+work item that keeps the preallocated rxrpc call/conn/peer queue charged
+before incoming calls are disabled (i.e. listen 0).
 
-In this case __dma_rx_do_complete() can legitimately see count == 0.
+Also, if net->live is false because the afs netns is being deleted, make
+afs_charge_preallocation() skip charging and make afs_rx_new_call() avoid
+requeuing the charger.
 
-The current code exits early in this case and does not clear
-dma->rx_running, leaving the DMA state inconsistent. This can
-prevent RX DMA from restarting and may cause
-omap_8250_rx_dma_flush() to fail, marking DMA as broken.
+(This was found by AI review).
 
-Fix this by clearing dma->rx_running once the DMA transfer has
-completed or been terminated, even if no data was transferred.
-
-Fixes: a5fd8945a478 ("serial: 8250: 8250_omap.c: Clear DMA RX running status only after DMA termination is done")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Matthias Feser <mfe@KBSgmbhfr.onmicrosoft.com>
-Reviewed-by: Moteen Shah <m-shah@ti.com>
-Link: https://patch.msgid.link/BE3P281MB55155F2F5795E411F5A65282EE0B2@BE3P281MB5515.DEUP281.PROD.OUTLOOK.COM
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 00e907127e6f ("rxrpc: Preallocate peers, conns and calls for incoming service requests")
+Reported-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Li Daming <d4n.for.sec@gmail.com>
+cc: Ren Wei <n05ec@lzu.edu.cn>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260609140911.838677-5-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_omap.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/afs/rxrpc.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -878,11 +878,12 @@ static void __dma_rx_do_complete(struct
- 				dev_err(p->port.dev, "teardown incomplete\n");
- 		}
- 	}
-+
-+	dma->rx_running = 0;
- 	if (!count)
- 		goto out;
- 	ret = tty_insert_flip_string(tty_port, dma->rx_buf, count);
+--- a/fs/afs/rxrpc.c
++++ b/fs/afs/rxrpc.c
+@@ -107,6 +107,7 @@ void afs_close_socket(struct afs_net *ne
+ {
+ 	_enter("");
  
--	dma->rx_running = 0;
- 	p->port.icount.rx += ret;
- 	p->port.icount.buf_overrun += count - ret;
- out:
++	cancel_work_sync(&net->charge_preallocation_work);
+ 	kernel_listen(net->socket, 0);
+ 	flush_workqueue(afs_async_calls);
+ 
+@@ -716,7 +717,7 @@ void afs_charge_preallocation(struct wor
+ 		container_of(work, struct afs_net, charge_preallocation_work);
+ 	struct afs_call *call = net->spare_incoming_call;
+ 
+-	for (;;) {
++	while (READ_ONCE(net->live)) {
+ 		if (!call) {
+ 			call = afs_alloc_call(net, &afs_RXCMxxxx, GFP_KERNEL);
+ 			if (!call)
+@@ -761,7 +762,8 @@ static void afs_rx_new_call(struct sock
+ {
+ 	struct afs_net *net = afs_sock2net(sk);
+ 
+-	queue_work(afs_wq, &net->charge_preallocation_work);
++	if (net->live)
++		queue_work(afs_wq, &net->charge_preallocation_work);
+ }
+ 
+ /*
 
 
