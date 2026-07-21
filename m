@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B6242DFEC;
-	Tue, 21 Jul 2026 22:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4799A3C10AB;
+	Tue, 21 Jul 2026 22:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674124; cv=none; b=Y2YB3g0eBIPK2hl91o62if5MyohsZXYzESvnL8q3oHAGP8rSuix3Eh9I3nuziKCulyDsp0CyG+H+akfeoBLJjK+1I66OYJNvogcLDz+oDe8c0ZRjGo11ZwQPHYkHna+yH+9y0vRw0xENxBdH80iVHtMWpQ3ZdxZv7ZExyAH7wYk=
+	t=1784674127; cv=none; b=gUv6V0BfItojYcQ/9UYlXVJfh0bXrqc72zC60AJPitQR05dAtKgVcSxUlExnfB4mAbxstVFQ+ERakZ1j6Z/tP8UesithwRxoi0Q0RebTDAeTfk1u/WaSSsFC0FfDlQUxKwxbwfd3fWXfkcmVIvj3elmx1UOx2ZTldEFmRUvkOE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674124; c=relaxed/simple;
-	bh=WL6LK1On8pB2A5ahe6RQ7/7jU1vt3DCJMvn2FnIrDGg=;
+	s=arc-20240116; t=1784674127; c=relaxed/simple;
+	bh=7TK37+u3hQSw3jyZDhnzQTAszzPgPQMlTamutjyHrEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W0vNGGbvG8gVUaR3FlGZO0fVG+I2UyoW/3HeH+B6qKr1M+RKmrKiuHN2DjtEeLGJRy4p5mnew9egU2S2BGktvWYmt4Vj9go5YaG79dBcPEjH0/tGYOnq5sV+8h7bcvWDphQn0wqvvXwmr9wTVzKVSLDI25PUZd3ak+7A/DZUk9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBFXIhm2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BYe5R+RZpiVdcwbRDBCdZuCJcC1IEnMyzn6lMYJHtwXXigc5AEjBm6JPKMRktEbQ1Bnr2AB4LlVO+9ZTEj/Eg/NOounRDjimWZLiux5S4XDbSvRV8tAmrYeRgda7LEBCyvMCEkSOO++NT74b8TAJ36uGsTQ4r8b05S63Dorpf78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNL0khre; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBFXIhm2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDD51F000E9;
-	Tue, 21 Jul 2026 22:48:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNL0khre"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63A011F000E9;
+	Tue, 21 Jul 2026 22:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674123;
-	bh=EmBOqooNAMEIKrQSEcVk/C2+XPlL4yeZ1ICl1nCiMcg=;
+	s=korg; t=1784674125;
+	bh=2l9tZNVlQ+5CISuJJEB8JH4lGkp1IQgtCzXwswo3OkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DBFXIhm20Zg/uZnPCeihKIopeF6XGVuo5rqX1H0Xj6tl9q5dg1iUS2yalQ8RvIM7q
-	 HO10obJjNmKFLVi8D3leqg6xbFD2+dv6oxA3PMoAng4lCdYciiggz+polSwPPNM4c+
-	 hpNktRhsxHc95+vLeXlJZszudJXeft12fFNuySJ0=
+	b=UNL0khreDip9ACCbZ5VPckewBtqrWEMnqOo706AvvrNPfPZJaOCoHZL0Y/L3RFOeO
+	 B1eAnreVJuJp5NCQqKdYbu3oJ/h9QiQxke2Rni4bGXE24fCVSXOwg3Lqewz8icffuE
+	 Kjzm2VqlP/5n9uLwpTtAh2zXsQpL6iz8P6hFvC2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 405/699] Bluetooth: ISO: exclude RFU bits from ISO_SDU_Length
-Date: Tue, 21 Jul 2026 17:22:44 +0200
-Message-ID: <20260721152404.831513207@linuxfoundation.org>
+Subject: [PATCH 5.10 423/699] ipvs: ensure inner headers in ICMP errors are in headroom
+Date: Tue, 21 Jul 2026 17:23:02 +0200
+Message-ID: <20260721152405.234543062@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,40 +51,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit fd076d8deeab6f9f18ef13400f89e1f550df665b ]
+[ Upstream commit 3f7a535ff0fa627a0132803e4c2f903ceffcbc1c ]
 
-slen contains ISO_SDU_Length (12 bits), RFU (2 bits),
-Packet_Status_Flags (2 bits).
+Sashiko points out that after stripping the outer headers
+with pskb_pull() we should ensure the inner IP headers
+in ICMP errors from tunnels are present in the skb headroom
+for functions like ipv4_update_pmtu(), icmp_send() and
+IP_VS_DBG().
 
-Exclude the RFU bits from hci_iso_data_len. Also add masks to the pack
-macro.
+Also, add more checks for the length of the inner headers.
 
-Fixes: 4de0fc599eb9 ("Bluetooth: Add definitions for CIS connections")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: f2edb9f7706d ("ipvs: implement passive PMTUD for IPIP packets")
+Link: https://sashiko.dev/#/patchset/20260702073430.67680-1-zhaoyz24%40mails.tsinghua.edu.cn
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/netfilter/ipvs/ip_vs_core.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index ede7a153c69a5f..02a27fb4a634a1 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -2538,8 +2538,9 @@ static inline struct hci_sco_hdr *hci_sco_hdr(const struct sk_buff *skb)
- #define hci_iso_flags_pack(pb, ts)	((pb & 0x03) | ((ts & 0x01) << 2))
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index 3a338f20fb6c07..4ce5aa8be321e5 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -1653,6 +1653,7 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 	bool tunnel, new_cp = false;
+ 	union nf_inet_addr *raddr;
+ 	char *outer_proto = "IPIP";
++	unsigned int hlen_ipip;
+ 	int ulen = 0;
  
- /* ISO data length and flags pack/unpack */
--#define hci_iso_data_len_pack(h, f)	((__u16) ((h) | ((f) << 14)))
--#define hci_iso_data_len(h)		((h) & 0x3fff)
-+#define hci_iso_data_len_pack(h, f)	((__u16) (((h) & 0x0fff) | \
-+						  (((f) & 0x3) << 14)))
-+#define hci_iso_data_len(h)		((h) & 0x0fff)
- #define hci_iso_data_flags(h)		((h) >> 14)
+ 	*related = 1;
+@@ -1690,9 +1691,10 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 	/* Now find the contained IP header */
+ 	offset += sizeof(_icmph);
+ 	cih = skb_header_pointer(skb, offset, sizeof(_ciph), &_ciph);
+-	if (cih == NULL)
++	if (!(cih && cih->version == 4 && cih->ihl >= 5))
+ 		return NF_ACCEPT; /* The packet looks wrong, ignore */
+ 	raddr = (union nf_inet_addr *)&cih->daddr;
++	hlen_ipip = cih->ihl * 4;
  
- /* le24 support */
+ 	/* Special case for errors for IPIP/UDP/GRE tunnel packets */
+ 	tunnel = false;
+@@ -1708,9 +1710,9 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 		/* Only for known tunnel */
+ 		if (!dest || dest->tun_type != IP_VS_CONN_F_TUNNEL_TYPE_IPIP)
+ 			return NF_ACCEPT;
+-		offset += cih->ihl * 4;
++		offset += hlen_ipip;
+ 		cih = skb_header_pointer(skb, offset, sizeof(_ciph), &_ciph);
+-		if (cih == NULL)
++		if (!(cih && cih->version == 4 && cih->ihl >= 5))
+ 			return NF_ACCEPT; /* The packet looks wrong, ignore */
+ 		tunnel = true;
+ 	} else if ((cih->protocol == IPPROTO_UDP ||	/* Can be UDP encap */
+@@ -1722,7 +1724,7 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 		/* Non-first fragment has no UDP/GRE header */
+ 		if (unlikely(cih->frag_off & htons(IP_OFFSET)))
+ 			return NF_ACCEPT;
+-		offset2 = offset + cih->ihl * 4;
++		offset2 = offset + hlen_ipip;
+ 		if (cih->protocol == IPPROTO_UDP) {
+ 			ulen = ipvs_udp_decap(ipvs, skb, offset2, AF_INET,
+ 					      raddr, &iproto);
+@@ -1791,6 +1793,7 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 	}
+ 
+ 	if (tunnel) {
++		unsigned int hlen_orig = cih->ihl * 4;
+ 		__be32 info = ic->un.gateway;
+ 		__u8 type = ic->type;
+ 		__u8 code = ic->code;
+@@ -1807,6 +1810,9 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 				goto ignore_tunnel;
+ 			offset2 -= ihl + sizeof(_icmph);
+ 			skb_reset_network_header(skb);
++			/* Ensure the IP header is present in headroom */
++			if (!pskb_may_pull(skb, hlen_ipip))
++				goto ignore_tunnel;
+ 			IP_VS_DBG(12, "ICMP for %s %pI4->%pI4: mtu=%u\n",
+ 				  outer_proto, &ip_hdr(skb)->saddr,
+ 				  &ip_hdr(skb)->daddr, mtu);
+@@ -1822,8 +1828,8 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 				if (dest_dst)
+ 					mtu = dst_mtu(dest_dst->dst_cache);
+ 			}
+-			if (mtu > 68 + sizeof(struct iphdr) + ulen)
+-				mtu -= sizeof(struct iphdr) + ulen;
++			if (mtu > 68 + hlen_ipip + ulen)
++				mtu -= hlen_ipip + ulen;
+ 			info = htonl(mtu);
+ 		}
+ 		/* Strip outer IP, ICMP and IPIP/UDP/GRE, go to IP header of
+@@ -1832,6 +1838,9 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 		if (pskb_pull(skb, offset2) == NULL)
+ 			goto ignore_tunnel;
+ 		skb_reset_network_header(skb);
++		/* Ensure the IP header is present in headroom */
++		if (!pskb_may_pull(skb, hlen_orig))
++			goto ignore_tunnel;
+ 		IP_VS_DBG(12, "Sending ICMP for %pI4->%pI4: t=%u, c=%u, i=%u\n",
+ 			&ip_hdr(skb)->saddr, &ip_hdr(skb)->daddr,
+ 			type, code, ntohl(info));
 -- 
 2.53.0
 
