@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C18443AAC;
-	Tue, 21 Jul 2026 22:19:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC96443AAC;
+	Tue, 21 Jul 2026 22:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672355; cv=none; b=Pyv7epwzqRXOVDScB96G703Hd1/gd3dGP7lwVA8xz2EimjPy37G6YwkbdpABdUB2OGeA1hVVnBfbdvDJwWIhMjczBxIYqpAK6+TxgEjyF4gBIMDuMtsC3QuCPcpZucTGpa3mGCFtAe8AWuRk8U9dCvlCZyAqygC2AEysX5rh4io=
+	t=1784672358; cv=none; b=OewIgKDIj2WAXWifNZhyfAL4od3Rfpq9ZuzrTuhC8eCZNi1ZPOgWAfX9g4KG+2EbfWQFDcj45k1wn6b1oyOHPEBRNSs3aMU72wwvarxiVl0CJ0ynBuMdwMYox99nUQjo0Xo9lcmsARJCaAyZPUUkcKjpXLkobdroNRVaSeqGxBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672355; c=relaxed/simple;
-	bh=DgdNAT4gXIi9ZwEXy0R5CRZ1RG0XzDJSa0QEnfnfJb0=;
+	s=arc-20240116; t=1784672358; c=relaxed/simple;
+	bh=sggvqGS+hxt/4reEyyCOschp1SUQ4/uZnTq6LVEu8p8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iqekseno9qktARzdle1Hr0s4PxpHJYG22KQ9zqVqDfC00yUFyoIIZ9w08DJaURei3Jl6rwDfItxTgGOVPotlFtp5tplMyePawi6F0hmx0dg5QUtqtosggaPidWJ6H5Apqx/zbjQcrALevmS9QXDN8NTDQ1sIqxRa/JAfC+iSbqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BDBZOh4o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lO5xYLJJOaqgqIwpdZMPW8uYRE58fjE8CBagMAhhRtLEnPifFLCed3R5J9vLZ1nQPj7EB/xVeVg4CrZtYmeKq38kxRlyIVCxKXyrM06VshuMfkIWgng1DEBXrqCdt9fysy/+L/XdeCgmlBfOTCLXHp/cYVm7DJBWX+l89yIf58w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AuImmY9X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDBZOh4o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01DCA1F000E9;
-	Tue, 21 Jul 2026 22:19:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AuImmY9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52FA1F000E9;
+	Tue, 21 Jul 2026 22:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672354;
-	bh=cPqcNqDOEjuIQ4BPS/dtJuRsxFJCAeXdw6fgb9ccAWM=;
+	s=korg; t=1784672357;
+	bh=vpxY+KjkFUW1Subr3hwtN7ge0shG+SlLSFQHjGtuGOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BDBZOh4o0/Xgo52NazgvU+234glPwOVL9BZEA+YKXEpHEBtKwoEauo/2lAf2IlYNf
-	 ZsaxOOjJaUFd9hzY2S89x3d5cB9dzg8BWiQlNM2TqTPlE8cm7PNSpiI0ejZ71Rj5+i
-	 msIiwff3n8rKISrR2QxPjZrYolEajUWcFMt3PdFY=
+	b=AuImmY9XfMelSlotO8huX/5wL5ZvzckKMZYpQpMtGia4PT8ZJ7g0hKU2JepWNWS/N
+	 cu7hk+/1a8MEvFgY5D9j3xxRNrbMvRPuSvNgked6gYUlcBFYXJLhtYbZwSShRTdcVF
+	 lN3b7/X11KN9EZM2shIg7ZX4bLgFABuC3cFp0k/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 5.15 594/843] batman-adv: fix VLAN priority offset
-Date: Tue, 21 Jul 2026 17:23:49 +0200
-Message-ID: <20260721152419.412517041@linuxfoundation.org>
+Subject: [PATCH 5.15 595/843] batman-adv: frag: free unfragmentable packet
+Date: Tue, 21 Jul 2026 17:23:50 +0200
+Message-ID: <20260721152419.433006044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,36 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit fdb3be00ba4dafa313e699d6b5b90d13f22f3f25 upstream.
+commit 6b628425aed49a1c7a4ffc997583840fc582d32b upstream.
 
-The batadv_skb_set_priority() receives an SKB with the inner ethernet
-header at position "offset". When it tries to extract the IPv4 and IPv6
-header, it needs to skip the ethernet header to get access to the IP
-header.
+The caller of batadv_frag_send_packet() assume that the skb provided to the
+function are always consumed. But the pre-check for an empty payload or the
+zero fragment size returned an error without any further actions.
 
-But for VLAN header, it performs the access with the struct vlan_ethhdr.
-This struct contains both both the ethernet header and the VLAN header. It
-is therefore incorrect to skip over the whole vlan_ethhdr size to get
-access to the vlan_ethhdr.
+A failed pre-check must use the same error handling code as the rest of the
+function.
 
 Cc: stable@vger.kernel.org
-Fixes: c54f38c9aa22 ("batman-adv: set skb priority according to content")
+Fixes: ee75ed88879a ("batman-adv: Fragment and send skbs larger than mtu")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/batman-adv/fragmentation.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/batman-adv/main.c
-+++ b/net/batman-adv/main.c
-@@ -375,7 +375,7 @@ void batadv_skb_set_priority(struct sk_b
+--- a/net/batman-adv/fragmentation.c
++++ b/net/batman-adv/fragmentation.c
+@@ -522,8 +522,10 @@ int batadv_frag_send_packet(struct sk_bu
+ 	mtu = min_t(unsigned int, mtu, BATADV_FRAG_MAX_FRAG_SIZE);
+ 	max_fragment_size = mtu - header_size;
  
- 	switch (ethhdr->h_proto) {
- 	case htons(ETH_P_8021Q):
--		vhdr = skb_header_pointer(skb, offset + sizeof(*vhdr),
-+		vhdr = skb_header_pointer(skb, offset,
- 					  sizeof(*vhdr), &vhdr_tmp);
- 		if (!vhdr)
- 			return;
+-	if (skb->len == 0 || max_fragment_size == 0)
+-		return -EINVAL;
++	if (skb->len == 0 || max_fragment_size == 0) {
++		ret = -EINVAL;
++		goto free_skb;
++	}
+ 
+ 	num_fragments = (skb->len - 1) / max_fragment_size + 1;
+ 	max_fragment_size = (skb->len - 1) / num_fragments + 1;
 
 
