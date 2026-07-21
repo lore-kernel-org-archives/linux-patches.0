@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0426546D558;
-	Tue, 21 Jul 2026 15:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94EC846D545;
+	Tue, 21 Jul 2026 15:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648660; cv=none; b=LRUMUvkVwSY6RCXocLYGbmLfJo0zDDrnV0GoZfy1M1q7b/e5KJCHalLMjDspbc5WKRnitlViy8lgwzcBQGj306BzcT6JGecsnAVWkwGMll/8EGihhyLo+++6dxEmx+pfBD7+up/mXsU8+B+Lwiuypmw8SbIPBdfDk2/cv+3sgeI=
+	t=1784648662; cv=none; b=sMjZKZTDNYb5mVTXQjwaFYlA9wV6nHzLNzvypknW54d0GK+WgrwSlmppTY705HqfsI8I+CpjvU5viyRynKMmMIWJDxRm5I0Ae1qh9wdz9a22I8PWIaSftdPTExL+yUTGvzUUU0+/INfz4YgJ5yPN6U3HLPqYGsSlZSZAcHIC8vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648660; c=relaxed/simple;
-	bh=vzegVaTgB4YZNWixCvLCEBuVBF1igisyHXUhzcCjMDo=;
+	s=arc-20240116; t=1784648662; c=relaxed/simple;
+	bh=BMjUadY6qWQSvuAmrEybTr7oAUxRlpMxDOl/aLfUGk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PrhGwp1PI2wjDwE4nGDI7n/iIRq5R7djfCHfbNuoR+53o4bWnkD01KEyAopAdJGsbxJvsTMGaod0w4WJZijDupHrIt78puTOVAetad70D5BzZ6bY5Jn0Ii7/+2rX3al+0reA0sooPLxVgwzddqB/WEexrYZqx4wYCJZa7ECN7FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PrUpQzn+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uz+CjuVVaRhWpVfo7eRsc0JYdd7lGy/TOcx2dpdHykOlXqZaswqp82GNkSQJwXJJw1xXBpaEqCwoIE0TuEcCZhyd8VewdPJCbJCkCOq7LrgSQuyb7GaQzryVvVVALB4Gh6Ec9BXNYiJ5SE6p3Nm33BS8DOCtNUf0bqxeQtKl7wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JyVAQa+s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PrUpQzn+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD261F000E9;
-	Tue, 21 Jul 2026 15:44:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JyVAQa+s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080F01F000E9;
+	Tue, 21 Jul 2026 15:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648658;
-	bh=C2EpL36B8iFOWc4ty7cb7NXXU3KKDGGajTwVv4T/IXs=;
+	s=korg; t=1784648661;
+	bh=ID5HXhADOpeGwu8YzfND+P9NpXQx0IVfR9WgzWeXiLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PrUpQzn+snvJKUQWYzOtYPj8uh8H8kAbpiZrOs8jUHq8wmUkGD3p2LTlYyMR8gwH8
-	 xqPoheF8+UpKeviojRTODtExOBxv2G17amoGaf7TTTNHPLKt4WLbPb0BdbCfNIGQQL
-	 6ctg7NOQKbRDuHdy9sDZJf8HL8lLJS4xz9y/kS/E=
+	b=JyVAQa+sMwz6qlGMn/4hiTIHSWcRHnLhOplgRuhYu+Y+dOIV4YYOU3ms+WSjfu5lw
+	 fjRR8G9TgkIRcAzPV2sQkdGGi31HVMkyIxzbyaFWPcm/ti8QiM7RZTbRMAGGcOwWPY
+	 orGsarPVvO0gFh5CCwwsp8qm7e9ItafDczDinif0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0284/2077] ASoC: mediatek: mt8189: Fix probe resource cleanup
-Date: Tue, 21 Jul 2026 16:59:17 +0200
-Message-ID: <20260721152559.380751181@linuxfoundation.org>
+Subject: [PATCH 7.1 0285/2077] drm/msm/mdss: correct UBWC programming sequences
+Date: Tue, 21 Jul 2026 16:59:18 +0200
+Message-ID: <20260721152559.404005702@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,147 +45,203 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 5404599c3292a12dfc6a3b604cebb5d51064f553 ]
+[ Upstream commit 78de481c75c34623f450abf0f4604344f9396593 ]
 
-The MT8189 AFE probe assigns reserved memory with
-of_reserved_mem_device_init(), but only releases that assignment from
-.remove().  If probe fails after the reserved memory has been assigned,
-the assignment record is left behind.
+The UBWC registers in the MDSS region are not dependent on the UBWC
+version (it is an invalid assumption we inherited from the vendor SDE
+driver). Instead they are dependent only on the MDSS core revision.
 
-The probe path also uses pm_runtime_get_sync() without checking its
-return value.  If runtime resume fails, pm_runtime_get_sync() leaves the
-usage count incremented and the driver continues initialization without
-the device being resumed.  Use pm_runtime_resume_and_get() so resume
-errors abort probe without leaking a PM usage count.
+Rework UBWC programming to follow MDSS revision and to use required (aka
+encoder) UBWC version instead of the ubwc_dec_version.
 
-Finally, component registration failure currently jumps to a label that
-drops a runtime PM reference even though the temporary probe reference
-was already released.  Return the component registration error directly,
-and do not drop an unmatched PM reference from .remove().
-
-Fixes: 7eb153585598 ("ASoC: mediatek: mt8189: add platform driver")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260514-asoc-mt8189-probe-cleanup-v1-1-ded733363281@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: d68db6069a8e ("drm/msm/mdss: convert UBWC setup to use match data")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/723384/
+Link: https://lore.kernel.org/r/20260507-ubwc-rework-v4-1-c19593d20c1d@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8189/mt8189-afe-pcm.c | 38 ++++++++++++++++------
- 1 file changed, 28 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/msm/msm_mdss.c | 115 ++++++++++++---------------------
+ 1 file changed, 41 insertions(+), 74 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8189/mt8189-afe-pcm.c b/sound/soc/mediatek/mt8189/mt8189-afe-pcm.c
-index 24b0c78815f61f..77cf2b604f6ce8 100644
---- a/sound/soc/mediatek/mt8189/mt8189-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8189/mt8189-afe-pcm.c
-@@ -2351,9 +2351,13 @@ static int mt8189_afe_runtime_resume(struct device *dev)
- static int mt8189_afe_component_probe(struct snd_soc_component *component)
+diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+index 90c3fa0681a06b..4a6acd468bc84c 100644
+--- a/drivers/gpu/drm/msm/msm_mdss.c
++++ b/drivers/gpu/drm/msm/msm_mdss.c
+@@ -166,22 +166,19 @@ static int _msm_mdss_irq_domain_add(struct msm_mdss *msm_mdss)
+ 	return 0;
+ }
+ 
+-static void msm_mdss_setup_ubwc_dec_20(struct msm_mdss *msm_mdss)
++static void msm_mdss_4x_setup_ubwc(struct msm_mdss *msm_mdss)
  {
- 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(component);
-+	int ret;
+ 	const struct qcom_ubwc_cfg_data *data = msm_mdss->mdss_data;
+-	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle) |
++	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle & 0x1) |
+ 		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(data->highest_bank_bit - 13);
  
- 	/* enable clock for regcache get default value from hw */
--	pm_runtime_get_sync(afe->dev);
-+	ret = pm_runtime_resume_and_get(afe->dev);
-+	if (ret)
-+		return dev_err_probe(afe->dev, ret, "failed to resume device\n");
+-	if (data->ubwc_bank_spread)
+-		value |= MDSS_UBWC_STATIC_UBWC_BANK_SPREAD;
+-
+ 	if (data->ubwc_enc_version == UBWC_1_0)
+ 		value |= MDSS_UBWC_STATIC_UBWC_MIN_ACC_LEN(1);
+ 
+ 	writel_relaxed(value, msm_mdss->mmio + REG_MDSS_UBWC_STATIC);
+ }
+ 
+-static void msm_mdss_setup_ubwc_dec_30(struct msm_mdss *msm_mdss)
++static void msm_mdss_5x_setup_ubwc(struct msm_mdss *msm_mdss)
+ {
+ 	const struct qcom_ubwc_cfg_data *data = msm_mdss->mdss_data;
+ 	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle & 0x1) |
+@@ -199,11 +196,12 @@ static void msm_mdss_setup_ubwc_dec_30(struct msm_mdss *msm_mdss)
+ 	writel_relaxed(value, msm_mdss->mmio + REG_MDSS_UBWC_STATIC);
+ }
+ 
+-static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss)
++static void msm_mdss_6x_setup_ubwc(struct msm_mdss *msm_mdss)
+ {
+ 	const struct qcom_ubwc_cfg_data *data = msm_mdss->mdss_data;
+ 	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle) |
+ 		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(data->highest_bank_bit - 13);
++	u32 ver, prediction_mode;
+ 
+ 	if (data->ubwc_bank_spread)
+ 		value |= MDSS_UBWC_STATIC_UBWC_BANK_SPREAD;
+@@ -211,45 +209,42 @@ static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss)
+ 	if (data->macrotile_mode)
+ 		value |= MDSS_UBWC_STATIC_MACROTILE_MODE;
+ 
+-	writel_relaxed(value, msm_mdss->mmio + REG_MDSS_UBWC_STATIC);
+-
+-	if (data->ubwc_enc_version == UBWC_3_0) {
+-		writel_relaxed(1, msm_mdss->mmio + REG_MDSS_UBWC_CTRL_2);
+-		writel_relaxed(0, msm_mdss->mmio + REG_MDSS_UBWC_PREDICTION_MODE);
+-	} else {
+-		if (data->ubwc_dec_version == UBWC_4_3)
+-			writel_relaxed(3, msm_mdss->mmio + REG_MDSS_UBWC_CTRL_2);
+-		else
+-			writel_relaxed(2, msm_mdss->mmio + REG_MDSS_UBWC_CTRL_2);
+-		writel_relaxed(1, msm_mdss->mmio + REG_MDSS_UBWC_PREDICTION_MODE);
+-	}
+-}
+-
+-static void msm_mdss_setup_ubwc_dec_50(struct msm_mdss *msm_mdss)
+-{
+-	const struct qcom_ubwc_cfg_data *data = msm_mdss->mdss_data;
+-	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle) |
+-		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(data->highest_bank_bit - 13);
+-
+-	if (data->ubwc_bank_spread)
+-		value |= MDSS_UBWC_STATIC_UBWC_BANK_SPREAD;
+-
+-	if (data->macrotile_mode)
+-		value |= MDSS_UBWC_STATIC_MACROTILE_MODE;
++	if (data->ubwc_enc_version == UBWC_1_0)
++		value |= MDSS_UBWC_STATIC_UBWC_MIN_ACC_LEN(1);
+ 
+ 	writel_relaxed(value, msm_mdss->mmio + REG_MDSS_UBWC_STATIC);
+ 
+-	if (data->ubwc_dec_version == UBWC_6_0)
+-		writel_relaxed(5, msm_mdss->mmio + REG_MDSS_UBWC_CTRL_2);
++	if (data->ubwc_enc_version < UBWC_4_0)
++		prediction_mode = 0;
+ 	else
+-		writel_relaxed(4, msm_mdss->mmio + REG_MDSS_UBWC_CTRL_2);
+-
+-	writel_relaxed(1, msm_mdss->mmio + REG_MDSS_UBWC_PREDICTION_MODE);
++		prediction_mode = 1;
 +
- 	mtk_afe_add_sub_dai_control(component);
- 	pm_runtime_put_sync(afe->dev);
- 
-@@ -2417,6 +2421,11 @@ static const struct reg_sequence mt8189_cg_patch[] = {
- 	{ AUDIO_TOP_CON4, 0x361c },
- };
- 
-+static void mt8189_afe_release_reserved_mem(void *data)
-+{
-+	of_reserved_mem_device_release(data);
-+}
++	if (data->ubwc_enc_version >= UBWC_6_0)
++		ver = 5;
++	else if (data->ubwc_enc_version >= UBWC_5_0)
++		ver = 4;
++	else if (data->ubwc_enc_version >= UBWC_4_3)
++		ver = 3;
++	else if (data->ubwc_enc_version >= UBWC_4_0)
++		ver = 2;
++	else if (data->ubwc_enc_version >= UBWC_3_0)
++		ver = 1;
++	else /* UBWC 1.0 and 2.0 */
++		ver = 0;
 +
- static int mt8189_afe_pcm_dev_probe(struct platform_device *pdev)
++	writel_relaxed(ver, msm_mdss->mmio + REG_MDSS_UBWC_CTRL_2);
++	writel_relaxed(prediction_mode, msm_mdss->mmio + REG_MDSS_UBWC_PREDICTION_MODE);
+ }
+ 
++#define MDSS_HW_VER(major, minor, step)	\
++	((((major) & 0xf) << 28) |	\
++	 (((minor) & 0xfff) << 16) |	\
++	 ((step) & 0xffff))
++
+ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
  {
  	int ret, i;
-@@ -2431,8 +2440,15 @@ static int mt8189_afe_pcm_dev_probe(struct platform_device *pdev)
- 		return ret;
++	u32 hw_rev;
  
- 	ret = of_reserved_mem_device_init(dev);
--	if (ret)
-+	if (ret) {
- 		dev_warn(dev, "failed to assign memory region: %d\n", ret);
-+	} else {
-+		ret = devm_add_action_or_reset(dev,
-+					       mt8189_afe_release_reserved_mem,
-+					       dev);
-+		if (ret)
-+			return ret;
-+	}
+ 	/*
+ 	 * Several components have AXI clocks that can only be turned on if
+@@ -283,43 +278,15 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+ 	if (msm_mdss->is_mdp5 || !msm_mdss->mdss_data)
+ 		return 0;
  
- 	afe = devm_kzalloc(dev, sizeof(*afe), GFP_KERNEL);
- 	if (!afe)
-@@ -2533,18 +2549,22 @@ static int mt8189_afe_pcm_dev_probe(struct platform_device *pdev)
- 	dev_pm_syscore_device(dev, true);
+-	/*
+-	 * ubwc config is part of the "mdss" region which is not accessible
+-	 * from the rest of the driver. hardcode known configurations here
+-	 *
+-	 * Decoder version can be read from the UBWC_DEC_HW_VERSION reg,
+-	 * UBWC_n and the rest of params comes from hw data.
+-	 */
+-	switch (msm_mdss->mdss_data->ubwc_dec_version) {
+-	case 0: /* no UBWC */
+-	case UBWC_1_0:
+-		/* do nothing */
+-		break;
+-	case UBWC_2_0:
+-		msm_mdss_setup_ubwc_dec_20(msm_mdss);
+-		break;
+-	case UBWC_3_0:
+-		msm_mdss_setup_ubwc_dec_30(msm_mdss);
+-		break;
+-	case UBWC_4_0:
+-	case UBWC_4_3:
+-		msm_mdss_setup_ubwc_dec_40(msm_mdss);
+-		break;
+-	case UBWC_5_0:
+-		msm_mdss_setup_ubwc_dec_50(msm_mdss);
+-		break;
+-	case UBWC_6_0:
+-		msm_mdss_setup_ubwc_dec_50(msm_mdss);
+-		break;
+-	default:
+-		dev_err(msm_mdss->dev, "Unsupported UBWC decoder version %x\n",
+-			msm_mdss->mdss_data->ubwc_dec_version);
+-		dev_err(msm_mdss->dev, "HW_REV: 0x%x\n",
+-			readl_relaxed(msm_mdss->mmio + REG_MDSS_HW_VERSION));
+-		dev_err(msm_mdss->dev, "UBWC_DEC_HW_VERSION: 0x%x\n",
+-			readl_relaxed(msm_mdss->mmio + REG_MDSS_UBWC_DEC_HW_VERSION));
+-		break;
+-	}
++	hw_rev = readl_relaxed(msm_mdss->mmio + REG_MDSS_HW_VERSION);
++
++	if (hw_rev >= MDSS_HW_VER(6, 0, 0))
++		msm_mdss_6x_setup_ubwc(msm_mdss);
++	else if (hw_rev >= MDSS_HW_VER(5, 0, 0))
++		msm_mdss_5x_setup_ubwc(msm_mdss);
++	else if (hw_rev >= MDSS_HW_VER(4, 0, 0))
++		msm_mdss_4x_setup_ubwc(msm_mdss);
++	/* else UBWC 1.0 or none, no params to program */
  
- 	/* enable clock for regcache get default value from hw */
--	pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to resume device\n");
- 
- 	afe->regmap = devm_regmap_init_mmio(dev, afe->base_addr,
- 					    &mt8189_afe_regmap_config);
--	if (IS_ERR(afe->regmap))
--		return PTR_ERR(afe->regmap);
-+	if (IS_ERR(afe->regmap)) {
-+		ret = PTR_ERR(afe->regmap);
-+		goto err_pm_put;
-+	}
- 
- 	ret = regmap_register_patch(afe->regmap, mt8189_cg_patch,
- 				    ARRAY_SIZE(mt8189_cg_patch));
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to apply cg patch\n");
--		goto err_pm_disable;
-+		goto err_pm_put;
- 	}
- 
- 	regmap_read(afe->regmap, AFE_IRQ_MCU_EN, &tmp_reg);
-@@ -2563,12 +2583,12 @@ static int mt8189_afe_pcm_dev_probe(struct platform_device *pdev)
- 					      afe->num_dai_drivers);
- 	if (ret) {
- 		dev_err(dev, "afe component err: %d\n", ret);
--		goto err_pm_disable;
-+		return ret;
- 	}
- 
- 	return 0;
- 
--err_pm_disable:
-+err_pm_put:
- 	pm_runtime_put_sync(dev);
  	return ret;
  }
-@@ -2578,14 +2598,12 @@ static void mt8189_afe_pcm_dev_remove(struct platform_device *pdev)
- 	struct mtk_base_afe *afe = platform_get_drvdata(pdev);
- 	struct device *dev = &pdev->dev;
- 
--	pm_runtime_put_sync(dev);
- 	if (!pm_runtime_status_suspended(dev))
- 		mt8189_afe_runtime_suspend(dev);
- 
- 	mt8189_afe_disable_main_clock(afe);
- 	/* disable afe clock */
- 	mt8189_afe_disable_reg_rw_clk(afe);
--	of_reserved_mem_device_release(dev);
- }
- 
- static const struct of_device_id mt8189_afe_pcm_dt_match[] = {
 -- 
 2.53.0
 
