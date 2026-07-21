@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556893E49DD;
-	Tue, 21 Jul 2026 17:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4E34028D9;
+	Tue, 21 Jul 2026 17:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654758; cv=none; b=aR3854QnJUeNN8R5UHD47Uxmyg1WJYoHHJnJXMXwTJxQd/u4oWl5rFDOX15RHRIhv6/HqeFtCAzXnL+61fi6XZLTTk8Ly+etx9dzZW+Zk7YgIkAOaWhVOvu9BGR0OnkiepJYCMyD5MkX4hBiq1KPM6ibkk1JPhQwWFEvJfVUgsQ=
+	t=1784654761; cv=none; b=W/rN/9cRKYVeNYyaKMsno49FaYvMQ0h9+AUEP1AjJXyvS59I4e1oMP8T4/WgVzXIEKEYJgc+oGpPMeDIPoA4Syj4FODP0JpOQ71sSUqFJ3MqmmHMW0YSyeqJgC8YMytKy/sDMrAK8quJMPV+DFX+W8Me/OOEFHHH4Wqe+4gQJfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654758; c=relaxed/simple;
-	bh=WGJw+pOsXB+7x+2QMmGR25NPA2vRlqGSyZODaz5nkA8=;
+	s=arc-20240116; t=1784654761; c=relaxed/simple;
+	bh=n35I609rfmvaTrEGpRi6rfkcWX7hpjLEybqSFzWWqBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lwjeUXHzmb7IcjVloPGcseCXV0mwtOkBY067B5UimJvCLZUmzWBcc6XeewYLSQEAsQd8zjivaPdREf/CHJFoIe5tvxjTUoKgE+NFF7XJ3Du6nnaUVmEqiy7OzJX5BGsxfCPXKBpU0ItjpK9y4wQk179e53OlUoRt8ntfeOS/caw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1isti5/d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sYm20dv9g/ZplKA7QfmDl8UA+Sba0RAcvScVn7ihueiPYlkHT0/TLs+pSBONevBEEavWSE1aNBK75OlJprUGp1NQqXGZnitTK+AhmQ4ydGrkDusDHvqn0/7AvXRr85r6V4Ayw8hbOhx+cJFFATOXR+N0uEdxf33UBSkhPf/YQgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rf4vheLr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1isti5/d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE52A1F000E9;
-	Tue, 21 Jul 2026 17:25:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rf4vheLr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605351F000E9;
+	Tue, 21 Jul 2026 17:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654757;
-	bh=pzUdAclsS51t8r2Raco9ugneGznnphKGctOB2VfY8GQ=;
+	s=korg; t=1784654759;
+	bh=WKflC4gyQ/MnAoPc4PTqf/OTGIVBO2BM2bkcC1+Vgi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1isti5/dMRb3VDtJkd/76R9pmJ794a23GtRUi5VqECZOIFr8l08erFglJ2vfnNdg4
-	 dSYVCZuf0eqicoh99CQNLDWxBmob7/9Oq0YWYPKhs8lKo87Nf+v46z47BI5P1gKIO9
-	 G7Gnzopk76L+XbFDDl59a+2B1dMUaSzlsU0lgoSQ=
+	b=Rf4vheLrnFoUbVMK4F1pBx2nAQJcv1+RruNNmVKaVAJEtNKpYyRz5n0vLcFkAKgOX
+	 melHuwgFo+z94u2pFdTd8wQDmnBbCBLrJp7FoiToDP/9e3CS3P223ggrwdHxLzHLbE
+	 lOhN4NoL2OFhCzslZtD72u8xZgR36qx4GZuRavQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-reviews@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 7.1 1826/2077] can: bcm: add missing rcu list annotations and operations
-Date: Tue, 21 Jul 2026 17:24:59 +0200
-Message-ID: <20260721152635.813364070@linuxfoundation.org>
+	Qihang <q.h.hack.winter@gmail.com>,
+	Dmitry Safonov <0x7f454c46@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 1800/2077] tcp: Decrement tcp_md5_needed static branch
+Date: Tue, 21 Jul 2026 17:24:33 +0200
+Message-ID: <20260721152635.204044857@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,122 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Dmitry Safonov <0x7f454c46@gmail.com>
 
-commit 7b2c3eabc4dafc062a25e10711154f2107526a78 upstream.
+commit 6f6e860e370c9e4e919b92118a25e9e1f82e9180 upstream.
 
-sashiko-bot remarked the missing use of list_add_rcu() in
-bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
-when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
+In case of early freeing an unwanted TCP-MD5 key on TCP-AO connect(),
+md5sig_info is freed right away (and set to NULL). Later, at
+the moment of socket destruction, the static branch counter
+is not getting decremented.
 
-To cover all initial settings of the bcm_op's the list_add_rcu() calls
-are moved to the end of the setup code.
+Add a missing decrement for TCP-MD5 static branch.
 
-While at it, also fix the mirroring removal side: bcm_release() called
-bcm_remove_op() - which frees the op via call_rcu() - on ops that were
-still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
-Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
-matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
-
-Reported-by: sashiko-reviews@lists.linux.dev
-Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
-Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260714-bcm_fixes-v15-5-562f7e3e42da@hartkopp.net
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reported-by: Qihang <q.h.hack.winter@gmail.com>
+Fixes: 0aadc73995d0 ("net/tcp: Prevent TCP-MD5 with TCP-AO being set")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Safonov <0x7f454c46@gmail.com>
+Link: https://patch.msgid.link/20260625-tcp-md5-connect-v3-3-1fd313d6c1e0@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/bcm.c |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ net/ipv4/tcp_output.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -262,7 +262,7 @@ static int bcm_proc_show(struct seq_file
- 			   (reduction == 100) ? "near " : "", reduction);
- 	}
- 
--	list_for_each_entry(op, &bo->tx_ops, list) {
-+	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
- 
- 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
- 			   bcm_proc_getifname(net, ifname, op->ifindex));
-@@ -994,6 +994,7 @@ static int bcm_tx_setup(struct bcm_msg_h
- 	struct bcm_sock *bo = bcm_sk(sk);
- 	struct bcm_op *op;
- 	struct canfd_frame *cf;
-+	bool add_op_to_list = false;
- 	unsigned int i;
- 	int err;
- 
-@@ -1135,8 +1136,7 @@ static int bcm_tx_setup(struct bcm_msg_h
- 		hrtimer_setup(&op->thrtimer, hrtimer_dummy_timeout, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the tx_ops */
--		list_add(&op->list, &bo->tx_ops);
-+		add_op_to_list = true;
- 
- 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
- 
-@@ -1158,6 +1158,10 @@ static int bcm_tx_setup(struct bcm_msg_h
- 		op->flags |= TX_ANNOUNCE;
- 	}
- 
-+	/* add this bcm_op to the list of the tx_ops? */
-+	if (add_op_to_list)
-+		list_add_rcu(&op->list, &bo->tx_ops);
-+
- 	if (op->flags & TX_ANNOUNCE)
- 		bcm_can_tx(op, NULL);
- 
-@@ -1350,9 +1354,6 @@ static int bcm_rx_setup(struct bcm_msg_h
- 		hrtimer_setup(&op->thrtimer, bcm_rx_thr_handler, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the rx_ops */
--		list_add(&op->list, &bo->rx_ops);
--
- 		/* call can_rx_register() */
- 		do_rx_register = 1;
- 
-@@ -1426,10 +1427,12 @@ static int bcm_rx_setup(struct bcm_msg_h
- 					      bcm_rx_handler, op, "bcm", sk);
- 		if (err) {
- 			/* this bcm rx op is broken -> remove it */
--			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return err;
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -4333,8 +4333,8 @@ int tcp_connect(struct sock *sk)
+ 			tcp_clear_md5_list(sk);
+ 			md5sig = rcu_replace_pointer(tp->md5sig_info, NULL,
+ 						     lockdep_sock_is_held(sk));
+-			if (md5sig)
+-				kfree_rcu(md5sig, rcu);
++			kfree_rcu(md5sig, rcu);
++			static_branch_slow_dec_deferred(&tcp_md5_needed);
  		}
-+
-+		/* add this bcm_op to the list of the rx_ops */
-+		list_add_rcu(&op->list, &bo->rx_ops);
  	}
- 
- 	return msg_head->nframes * op->cfsiz + MHSIZ;
-@@ -1763,8 +1766,10 @@ static int bcm_release(struct socket *so
- 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
- #endif /* CONFIG_PROC_FS */
- 
--	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
- 		/*
-@@ -1795,8 +1800,10 @@ static int bcm_release(struct socket *so
- 
- 	synchronize_rcu();
- 
--	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	/* remove device reference */
- 	if (bo->bound) {
+ #endif
 
 
