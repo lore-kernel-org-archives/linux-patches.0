@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6CF39EF16;
-	Tue, 21 Jul 2026 21:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F6C3B95E0;
+	Tue, 21 Jul 2026 21:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668584; cv=none; b=ORSyjHVs2mJ7xsr3HEzslvw4DB8rtpWWBF75LgM/vEi9sLzY0ti4b6AAahvq9MuVb0g6r4rNu1zZiNV1LtsBnkxYp+c5jF5hD8p4J5A+/Y3j0ko7t7uFeDgPtEq+2L7dkhb8+w01tkJIqv5c+tJjvpxDKI584LDFNRAfNpz1udo=
+	t=1784668588; cv=none; b=ez9qkc0545MCWdZLRHObvYh4nEXXsSdYyMhTn7lgKe07khUkHWPBieebGYpnVHvKPiKmSFdfxrquTv0udrhhZTwh2fOEkYVue75r48FZxs2Vlz4KvyxFfFEl8PcKBR8/1D73EyoONvfVcycA+W3b+/IIIlneE2FzVLTlw+IfkNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668584; c=relaxed/simple;
-	bh=f5DtmY3Gsv0HGRvCepnCa94oC3HLPuFGMh61dWreAIs=;
+	s=arc-20240116; t=1784668588; c=relaxed/simple;
+	bh=Dk1KbnsyV/iretd+29Kdbq7xc+z+a9T/El5WPjohq+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dIQmmpCN1uNgvZ60+m91PHzMOVox5E6iqFY2UogGmSh2aCd9hPvMAwTT7YYohvsUHk2oETsOiEaBsEEkxaQ/9cFTxnVL917Zx8zdQKRkmDlI+GXL58zDb1QXEG/fzniQRhZiV9EK3ViAKq679TGTXOAPhAFaAvOCRRM6mw6rbsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sYrS3giJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VZ7xtxjnLghKbFxe/Mraspc1beHXuLvGstZFRRpWgguYHBjOP44qskoeYRx/Issy5SVJFrRaIQ6Y3g5qb6y5mfLk8k0WhrfEyAZErWBoapup4xFZNbv82nAswGKLpfX+MEN/R1Vg0eQiQIZL66WKccJo2Fd57ECf97yaEPSsRyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IxRPMqYh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sYrS3giJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA1B1F000E9;
-	Tue, 21 Jul 2026 21:16:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IxRPMqYh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9FB41F000E9;
+	Tue, 21 Jul 2026 21:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668583;
-	bh=Dj99ZY3Mtv2TiB3xRvDKoq5JnEDhRBjzzFFbTBegWUA=;
+	s=korg; t=1784668586;
+	bh=1dXKLiqyybNV63cTT+9NLxAlik4juylFSBM3ONtGOzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sYrS3giJ1DMoTUdD75vZHq3nLh9N8G51cyTLX9OF3bf6A9QpHuINCS1bv5pPI5Aq5
-	 1OhO3j/nnmLdwijvftW3/+6f2JXojuPMvB443j1Kib7Attgse4eR1Jts1KQRVlFT6e
-	 MnHM14aKbqQ3wUyAdsuwl6L2vfGF1+Y0XNp4CtlU=
+	b=IxRPMqYh/AIFen1Tb3SkNrFtq50t31A05rrIWLT3QA2PUh04H5G8k9QUVd/FYNYE4
+	 UKTGG996Bab4L8P/VjSobWDVh0TvIvTNsGKXhMPyJgEXI3IqvoA5PxbdpJNHTBlVlf
+	 xhEedqmwxNJI9Jood2AtT7mCuq2Xbba3FXxL/8L8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot ci <syzbot+ci493c6d734b63e050@syzkaller.appspotmail.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.1 0230/1067] KVM: VMX: Grab vmcs12 on CR8 interception update iff vCPU is in guest mode
-Date: Tue, 21 Jul 2026 17:13:51 +0200
-Message-ID: <20260721152429.747718509@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 0195/1067] usb: typec: ucsi: ccg: Fix use-after-free of ucsi on remove
+Date: Tue, 21 Jul 2026 17:13:16 +0200
+Message-ID: <20260721152428.956895876@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,66 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 7ef78d71ca713d8c00f7c34ddcf276c808143f77 upstream.
+commit 1f0bdc2884b67de337215079bba166df0cdf4ac5 upstream.
 
-When updating CR8 intercepts, get vmcs12 if and only if the vCPU is in
-guest mode so that a future change can have update CR8 intercepts during
-vCPU creation, without running afoul of get_vmcs12()'s lockdep assertion.
+The threaded IRQ handler ccg_irq_handler() calls ucsi_notify_common(),
+which on a connector-change event calls ucsi_connector_change() and
+schedules connector work.  In ucsi_ccg_remove(), ucsi_destroy() frees
+uc->ucsi (kfree) before free_irq() is called, so a handler invocation
+already in flight may access the freed object after ucsi_destroy().
 
-  ------------[ cut here ]------------
-  debug_locks && !(lock_is_held(&(&vcpu->mutex)->dep_map) || !refcount_read(&vcpu->kvm->users_count))
-  WARNING: arch/x86/kvm/vmx/nested.h:61 at get_vmcs12 arch/x86/kvm/vmx/nested.h:60 [inline], CPU#0: syz.2.19/5879
-  WARNING: arch/x86/kvm/vmx/nested.h:61 at vmx_update_cr8_intercept+0x3de/0x4e0 arch/x86/kvm/vmx/vmx.c:6879, CPU#0: syz.2.19/5879
-  Modules linked in:
-  CPU: 0 UID: 0 PID: 5879 Comm: syz.2.19 Not tainted syzkaller #0 PREEMPT(full)
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
-  RIP: 0010:get_vmcs12 arch/x86/kvm/vmx/nested.h:60 [inline]
-  RIP: 0010:vmx_update_cr8_intercept+0x3de/0x4e0 arch/x86/kvm/vmx/vmx.c:6879
-  Call Trace:
-   <TASK>
-   apic_update_ppr arch/x86/kvm/lapic.c:984 [inline]
-   kvm_lapic_reset+0x1c24/0x2980 arch/x86/kvm/lapic.c:3023
-   kvm_vcpu_reset+0x44c/0x1bf0 arch/x86/kvm/x86.c:12986
-   kvm_arch_vcpu_create+0x746/0x8b0 arch/x86/kvm/x86.c:12847
-   kvm_vm_ioctl_create_vcpu+0x428/0x930 virt/kvm/kvm_main.c:4201
-   kvm_vm_ioctl+0x893/0xd50 virt/kvm/kvm_main.c:5159
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:597 [inline]
-   __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0x174/0x580 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
+  CPU 0 (remove)            | CPU 1 (threaded IRQ)
+    ucsi_destroy(uc->ucsi)  |   ccg_irq_handler()
+      kfree(ucsi) // FREE   |     ucsi_notify_common(uc->ucsi) // USE
 
-No functional change intended.
+Move free_irq() before ucsi_destroy() in the remove path.  It is kept
+after ucsi_unregister(): ucsi_unregister() cancels connector work whose
+handler issues GET_CONNECTOR_STATUS through ucsi_send_command_common(),
+which waits for a completion that is signalled from the IRQ handler, so
+the IRQ must stay active until that work has been cancelled.
 
-Reported-by: syzbot ci <syzbot+ci493c6d734b63e050@syzkaller.appspotmail.com>
-Closes: https://lore.kernel.org/all/6a2adf3b.3b0a2d4e.8c8d1.0012.GAE@google.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260618174347.1981064-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+The probe error path already orders free_irq() before ucsi_destroy().
+
+This bug was found by static analysis.
+
+Fixes: e32fd989ac1c ("usb: typec: ucsi: ccg: Move to the new API")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260616132011.103279-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/vmx.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_ccg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -6620,11 +6620,10 @@ static noinstr void vmx_l1d_flush(struct
+--- a/drivers/usb/typec/ucsi/ucsi_ccg.c
++++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
+@@ -1435,8 +1435,8 @@ static void ucsi_ccg_remove(struct i2c_c
+ 	cancel_work_sync(&uc->work);
+ 	pm_runtime_disable(uc->dev);
+ 	ucsi_unregister(uc->ucsi);
+-	ucsi_destroy(uc->ucsi);
+ 	free_irq(uc->irq, uc);
++	ucsi_destroy(uc->ucsi);
+ }
  
- static void vmx_update_cr8_intercept(struct kvm_vcpu *vcpu, int tpr, int irr)
- {
--	struct vmcs12 *vmcs12 = get_vmcs12(vcpu);
- 	int tpr_threshold;
- 
- 	if (is_guest_mode(vcpu) &&
--		nested_cpu_has(vmcs12, CPU_BASED_TPR_SHADOW))
-+	    nested_cpu_has(get_vmcs12(vcpu), CPU_BASED_TPR_SHADOW))
- 		return;
- 
- 	tpr_threshold = (irr == -1 || tpr < irr) ? 0 : irr;
+ static const struct i2c_device_id ucsi_ccg_device_id[] = {
 
 
