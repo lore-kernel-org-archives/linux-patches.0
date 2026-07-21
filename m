@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1593C1081;
-	Tue, 21 Jul 2026 22:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6D844AB7B;
+	Tue, 21 Jul 2026 22:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671773; cv=none; b=gD4j+BA0HJqXwk9gDF9D9TiDBhiz4yw0iio7SV16IYOhtpUredy7V3ZeLEI7dDlpfSWwPE20lQCoHP4NpOz10lj9ddwt9RKgWpLsCUZroA3OUi/CRy3tHKuDciLh5kocHrcv/49bvnZOWcTfjGNzy21snkF7lw/Hp7t2pGwWkVg=
+	t=1784671776; cv=none; b=MkSbC8aG1t3a6fT9NN5Zy//24IFUJZpetbvE2lIEuIOCEcXVlm7Hj+GxInKd/7XaK87+HP2r6dBpQmszCx/gVYeLV61BHaun8xOfSovnAX44EQhltW3K2XiZ1jeHUTseVqlePHl3+zlooLuT8f2NHSRYUOnxKQlY8RlZRScZ/3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671773; c=relaxed/simple;
-	bh=1LGG7yS8L1m6UmcSztbHUEMhBJvc0SXFPAI7Wu9xWGk=;
+	s=arc-20240116; t=1784671776; c=relaxed/simple;
+	bh=R0JVo3ptWqWWh4btrU/WgF+vb2KnUVrsyGSfZjj9CNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SKdsWD+fnvXssTX9cJCkVpVXS2gTRovkITY+SJVLoVFxHW0fStOfVjATR5QtvPKgLQ7+6hclZGX77gy97vt7tpG5So3g6bmL2Zts/zfCqqIqknfjqOg7J7ccEWkZKm9uycNzJsbTci+1dRnIKxxRETv+KvwhEm/fXzETtJp2TCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDFIClap; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=C9NYvoDe0+VHfu0xqDdo7QcyRG6hFSCYNi8ShSsAC9rCa/reBQo5YTzFbM2t6XdEKrjDnGwPUbMMKmBsJjhfl9kQmy594FoeSRtQgp/zfwvUrqLG1J6QGiDLm05YhTllST75lZMNTu4ZZNq76o2T8b03CHxQYIcerjWYvx4pnWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G29x0SEN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDFIClap"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD371F000E9;
-	Tue, 21 Jul 2026 22:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G29x0SEN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43E11F000E9;
+	Tue, 21 Jul 2026 22:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671772;
-	bh=HTCctMaijWMhfOzhPqfdah+AC0lWSWAafoJIIwcGivY=;
+	s=korg; t=1784671775;
+	bh=L687iuPQjmWb38Em/8bZHDJpE9yfu9kRXcPE5OcViJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hDFIClap/EVjKslVYTbRZM0UaFdQ00y9U8hgDyoF6YG6gmR7SAG9JfvAGicWUUevk
-	 0Dru+xTvroEsZ0n/vjvMUfxQLPXuElgoW3eR4/Bc+X0VEMnmryU7aJkeLBIlOkyVZM
-	 zeEyW8pZEAqGQ2rhwsYzOOob49WmQDeqvGvzRk04=
+	b=G29x0SENBe1Msp2Ej/sT40eoggyr6RkDoQ3gjVS8VGvsXyCcS72c2qfeB+t1TaOI5
+	 cVar+Z4pJ5v1WOnfDTDrHGmivsX6PgaIQAP0VYNK+qy8hjN+GpGVmtrh3lIEouSNc4
+	 OEAlwba8qRGMM5wLNx/rZZSC/qOmyCqY5NrWX6IA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingchao Deng <yingchao.deng@oss.qualcomm.com>,
-	Leo Yan <leo.yan@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Sun Jian <sun.jian.kdev@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 374/843] coresight: cti: Fix DT filter signals silently ignored
-Date: Tue, 21 Jul 2026 17:20:09 +0200
-Message-ID: <20260721152414.447210698@linuxfoundation.org>
+Subject: [PATCH 5.15 357/843] bpf: Run generic devmap egress prog on private skb
+Date: Tue, 21 Jul 2026 17:19:52 +0200
+Message-ID: <20260721152414.064065370@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -46,49 +48,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yingchao Deng <yingchao.deng@oss.qualcomm.com>
+From: Sun Jian <sun.jian.kdev@gmail.com>
 
-[ Upstream commit 551bb2fd5e4ed63d33aa11f07102cce5179b7595 ]
+[ Upstream commit 6001896f00984d317fb75160ba05c4a885fbe2a0 ]
 
-In cti_plat_process_filter_sigs(), after allocating a temporary
-cti_trig_grp struct via kzalloc_obj(), the code never assigns tg->nr_sigs
-= nr_filter_sigs. Since kzalloc zero-initialises the struct, tg->nr_sigs
-remains 0. cti_plat_read_trig_group() guards with:
-    if (!tgrp->nr_sigs)
-        return 0;
+Generic XDP devmap multi redirect uses skb_clone() for intermediate
+destinations and sends the last destination with the original skb. This
+can leave multiple destinations sharing the same packet data.
 
-so it returns immediately without reading any signal indices from DT.
+This becomes visible after generic devmap egress-program support was
+added: a devmap egress program may mutate packet data, and another
+destination sharing the same data can observe that mutation.
 
-Fix by assigning tg->nr_sigs before calling cti_plat_read_trig_group().
+Native XDP broadcast redirect does not have this issue because
+xdpf_clone() copies the frame data for each destination. Generic XDP
+should provide the same per-destination isolation before running a
+devmap egress program.
 
-Fixes: a5614770ab97 ("coresight: cti: Add device tree support for custom CTI")
-Signed-off-by: Yingchao Deng <yingchao.deng@oss.qualcomm.com>
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260426-nr_sigs-v1-1-3b9df99dab97@oss.qualcomm.com
+Fix this by making cloned skbs private before running the generic devmap
+egress program. Use skb_copy() instead of skb_unshare() so allocation
+failure does not consume the skb and the existing caller error paths keep
+their ownership semantics.
+
+Fixes: 2ea5eabaf04a ("bpf: devmap: Implement devmap prog execution for generic XDP")
+Suggested-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
+Link: https://lore.kernel.org/r/20260612114032.244616-2-sun.jian.kdev@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-cti-platform.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/bpf/devmap.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/hwtracing/coresight/coresight-cti-platform.c b/drivers/hwtracing/coresight/coresight-cti-platform.c
-index ccef04f27f12fa..438f9c7ddccdc3 100644
---- a/drivers/hwtracing/coresight/coresight-cti-platform.c
-+++ b/drivers/hwtracing/coresight/coresight-cti-platform.c
-@@ -329,6 +329,7 @@ static int cti_plat_process_filter_sigs(struct cti_drvdata *drvdata,
- 	if (!tg)
- 		return -ENOMEM;
+diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
+index 6ad4b068abc770..0e67e6cabdb689 100644
+--- a/kernel/bpf/devmap.c
++++ b/kernel/bpf/devmap.c
+@@ -676,6 +676,18 @@ int dev_map_generic_redirect(struct bpf_dtab_netdev *dst, struct sk_buff *skb,
+ 	if (unlikely(err))
+ 		return err;
  
-+	tg->nr_sigs = nr_filter_sigs;
- 	err = cti_plat_read_trig_group(tg, fwnode, CTI_DT_FILTER_OUT_SIGS);
- 	if (!err)
- 		drvdata->config.trig_out_filter |= tg->used_mask;
++	if (dst->xdp_prog && skb_cloned(skb)) {
++		struct sk_buff *nskb;
++
++		nskb = skb_copy(skb, GFP_ATOMIC);
++		if (!nskb)
++			return -ENOMEM;
++
++		nskb->mac_len = skb->mac_len;
++		consume_skb(skb);
++		skb = nskb;
++	}
++
+ 	/* Redirect has already succeeded semantically at this point, so we just
+ 	 * return 0 even if packet is dropped. Helper below takes care of
+ 	 * freeing skb.
 -- 
 2.53.0
 
