@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0DD743CEF5;
-	Tue, 21 Jul 2026 22:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62160415F23;
+	Tue, 21 Jul 2026 22:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671372; cv=none; b=MY9spOtyrf9m7xqODgUqlwSWqkHHkkrPRiQzo0HSKBuGxnOOTV9ayV0nvbKPJAPbmLFXOo3iIwyPERpEn/+CAbFKSTvo1CBv5ApV5U+Xe1JrIZlNOhnde2VlzhddsYrihIvd2hx9NktlQhFhcaZj2H1dAMENwFaNtY+t/QfhclE=
+	t=1784671375; cv=none; b=mOEUXgiRq+Std259fdF/VEKOQSAXVzgbMjTMJWZ4OZHfhmdKcEYzsBHwbV6PmuwQGhBYORycg/rbH/5XSmyFKwooYZrwAsTl5Q9baU9AQMc1QmiCQJvZGVI4fycMoJH4FPTmZQYoHqk0FL8NI27KfP33zk/zSjvqJIqk4d3g5Es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671372; c=relaxed/simple;
-	bh=YKCu+2Q4R4DhsG+ylBUvRISsbwHX3mkapS+Itgsifnc=;
+	s=arc-20240116; t=1784671375; c=relaxed/simple;
+	bh=ICOREwVQj8mez3uwOp0vlVWbuWN5Pg81gC+2r0Y76jY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nrF3DvAuiuVoZI3T0blD4ehmIe/xJeJRb/33/7IJIzpd0zukvSrzgAV2Ys7oYgyKFKfJWoV1TMqEvNo0IUUOd01V+9FNe0Fl+gBWYFkVA9Nhg8UYn5r3rxRpqzrY4sVq11uTQjyB66C5hTNbqyOEiRtSa728Ljingy2+/ggurfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ourq5SAI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oDReGT52LLCyhz8wmgUmtSvyp0F9iwzC+ilDsJCYvsX/WmY6qHp5BWt5mouCRSrOy/iyVosclFjamEUA0roeKoUzLiTVWyfoLAkao7FNNHAE1LycVFdOcgCKg9QSLkgOCiNnqRFSNKiRxK6BdWahwK8WwfSqEtaOouMbjwv3nH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xsvioNpK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ourq5SAI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE451F000E9;
-	Tue, 21 Jul 2026 22:02:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xsvioNpK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D321F000E9;
+	Tue, 21 Jul 2026 22:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671371;
-	bh=Kk9bjKayME+VFz6+vyhE4M7dkTbNEo+xd20iLjNZMYo=;
+	s=korg; t=1784671374;
+	bh=bH3lZBMnuaSJ6GaxMZRUtJn2mYlZ6+ZD3sAhUIL45YM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ourq5SAII7/yM/z7uKJ0QtFtOR31iNGoKw11SxH3KqaXJ6hHXWdDzqYojI0YvF7pk
-	 mNQUyoZi/hUpth17vZLwbHweHS5n3DtlGfcDRL0hDUDBj+r911r/h7P3qj4/W9X1fd
-	 BDX5MEX/aDSOno+fh4wTKlV7Zr5I+wZyXZ+BSPh8=
+	b=xsvioNpKXqu0DDhQfhwFyiXgI2OzM7kIehynBoCgbfft/iCCjJ8AgNvWhkP60vVi7
+	 tjoRks9lV3UZ1BNlQp9SVMBPHEtv4GevDmdjv57K2VGIZJZ9WIGAnemtvGGX/CWMwF
+	 VcVcdmg4GjYTiyjhgMK9tvisZg4GxOI9VlkSDTjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Vivek Kasireddy <vivek.kasireddy@intel.com>
-Subject: [PATCH 5.15 178/843] udmabuf: fix DMA direction mismatch in release_udmabuf()
-Date: Tue, 21 Jul 2026 17:16:53 +0200
-Message-ID: <20260721152410.020103390@linuxfoundation.org>
+	Jean Delvare <khali@linux-fr.org>,
+	Johan Hovold <johan@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>
+Subject: [PATCH 5.15 179/843] i2c: core: fix adapter deregistration race
+Date: Tue, 21 Jul 2026 17:16:54 +0200
+Message-ID: <20260721152410.041192133@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,70 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit fb7b1a0ab25a6077d26cb3829e31743972d4f31d upstream.
+commit b1a58ed9eab146b36f41a55db8f5d7ce9fdedf3f upstream.
 
-begin_cpu_udmabuf() maps the sg_table with the caller-provided direction
-(e.g., DMA_TO_DEVICE for a write-only sync), and caches it in ubuf->sg
-for reuse.  However, release_udmabuf() always unmaps this sg_table with
-a hardcoded DMA_BIDIRECTIONAL, regardless of the direction that was
-originally used for the mapping.
+Adapters can be looked up by their id using i2c_get_adapter() which
+takes a reference to the embedded struct device.
 
-With CONFIG_DMA_API_DEBUG=y this produces:
+Remove the adapter from the IDR before tearing it down during
+deregistration (and on registration failure) to make sure its resources
+are not accessed after having been freed (e.g. the device name).
 
-  DMA-API: misc udmabuf: device driver frees DMA memory with different
-  direction [device address=0x000000044a123000] [size=4096 bytes]
-  [mapped with DMA_TO_DEVICE] [unmapped with DMA_BIDIRECTIONAL]
-
-The issue was found during video playback when GStreamer performed a
-write-only DMA_BUF_IOCTL_SYNC on a udmabuf.  It can be reproduced
-with CONFIG_DMA_API_DEBUG=y by creating a udmabuf from a memfd,
-performing a write-only sync (DMA_BUF_SYNC_WRITE without
-DMA_BUF_SYNC_READ), and closing the file descriptor.
-
-Fix this by storing the DMA direction used when the sg_table is first
-created in begin_cpu_udmabuf(), and passing that same direction to
-put_sg_table() in release_udmabuf().
-
-Fixes: 284562e1f348 ("udmabuf: implement begin_cpu_access/end_cpu_access hooks")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Reviewed-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Link: https://patch.msgid.link/20260314232722.15555-1-mikhail.v.gavrilov@gmail.com
+Fixes: 35fc37f81881 ("i2c: Limit core locking to the necessary sections")
+Cc: stable@vger.kernel.org	# 2.6.31
+Cc: Jean Delvare <khali@linux-fr.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/udmabuf.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/i2c/i2c-core-base.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/dma-buf/udmabuf.c
-+++ b/drivers/dma-buf/udmabuf.c
-@@ -25,6 +25,7 @@ struct udmabuf {
- 	pgoff_t pagecount;
- 	struct page **pages;
- 	struct sg_table *sg;
-+	enum dma_data_direction sg_dir;
- 	struct miscdevice *device;
- };
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -1566,7 +1566,7 @@ static int i2c_register_adapter(struct i
+ 	res = device_add(&adap->dev);
+ 	if (res) {
+ 		pr_err("adapter '%s': can't register device (%d)\n", adap->name, res);
+-		goto err_remove_debugfs;
++		goto err_replace_id;
+ 	}
  
-@@ -111,7 +112,7 @@ static void release_udmabuf(struct dma_b
- 	pgoff_t pg;
- 
- 	if (ubuf->sg)
--		put_sg_table(dev, ubuf->sg, DMA_BIDIRECTIONAL);
-+		put_sg_table(dev, ubuf->sg, ubuf->sg_dir);
- 
- 	for (pg = 0; pg < ubuf->pagecount; pg++)
- 		put_page(ubuf->pages[pg]);
-@@ -131,6 +132,8 @@ static int begin_cpu_udmabuf(struct dma_
- 		if (IS_ERR(ubuf->sg)) {
- 			ret = PTR_ERR(ubuf->sg);
- 			ubuf->sg = NULL;
-+		} else {
-+			ubuf->sg_dir = direction;
- 		}
- 	} else {
- 		dma_sync_sgtable_for_cpu(dev, ubuf->sg, direction);
+ 	res = i2c_setup_smbus_alert(adap);
+@@ -1609,7 +1609,10 @@ static int i2c_register_adapter(struct i
+ out_reg:
+ 	i2c_deregister_clients(adap);
+ 	device_del(&adap->dev);
+-err_remove_debugfs:
++err_replace_id:
++	mutex_lock(&core_lock);
++	idr_replace(&i2c_adapter_idr, NULL, adap->nr);
++	mutex_unlock(&core_lock);
+ 	debugfs_remove_recursive(adap->debugfs);
+ 	init_completion(&adap->dev_released);
+ 	put_device(&adap->dev);
+@@ -1799,6 +1802,8 @@ void i2c_del_adapter(struct i2c_adapter
+ 	/* First make sure that this adapter was ever added */
+ 	mutex_lock(&core_lock);
+ 	found = idr_find(&i2c_adapter_idr, adap->nr);
++	if (found == adap)
++		idr_replace(&i2c_adapter_idr, NULL, adap->nr);
+ 	mutex_unlock(&core_lock);
+ 	if (found != adap) {
+ 		pr_debug("attempting to delete unregistered adapter [%s]\n", adap->name);
 
 
