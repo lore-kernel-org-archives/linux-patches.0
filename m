@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AB4367B92;
-	Tue, 21 Jul 2026 22:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF84418A48;
+	Tue, 21 Jul 2026 22:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673799; cv=none; b=mt2F0RqdabgdfZ40I+zqCdBUIE4Rkavn9inVYsM6lbT+mEjb33K5p+YCLakZn92rIhrPdXiH2gMFPf+qhvtAbZUZn2v6Ex7974+BXdbxcIzDIe59V69pnt04AxVS4M95ysAmpzQX4s+y6WoOvhgAlmhyqQNNixw1AX4GQ0NdWMU=
+	t=1784673802; cv=none; b=mr6prtqWyJc0O0injeVduB4yJmXdYXRjLF0LcmZ1rA4NoSpUpogJ26SFnEZBrHr8Mdw9IbsDkMsf+8wIkmVvW7ndWG0NjtFzL91J4rwMdW0uIN3+1OqQmclvrnQnDz5yZ1Z4wRAh0AcmmIc3Pk77Lv9/h5MECCDGhGUONH5JUXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673799; c=relaxed/simple;
-	bh=rThpcGGkAMLNpE/ljn+EQhhVY0VeURTOI02pjEtO/UY=;
+	s=arc-20240116; t=1784673802; c=relaxed/simple;
+	bh=x3Di5Ft0KTTmKpudvm5+7/jufVkd89WJP5ehV+Yc+RQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=catXi4QTCh6q9znXLj0i9CKFRG6UJu+r8yh7PIyEbBHtXsUIyVN1NrqOM5sS0CyRVSSma/sWqcr98Mivi5oYFhtz4uVCFiRkFemzI5z1S94d73uC/S9Jdi15fpuXhwl6B34nLz6jN7iBVVJU8bhqpa4l6fw2mS2OVdncjRTyYBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H1TzzvUu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=U694THj/zAHV4dFwjnarA/a48+uueUb7tpxO/GTOaw5V0A0i7PkOkNr2oZuZtxQlEYd0lTGxDi4QjXUe3P3c8ZHJJkCAv6+KF99l77nHt0f08eURRF08+9K6qz2IDAkGT3DqENyQ6nax0qMtlpvlUxy9vwb7IBGBmF7XnxlwRTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UHmNcpj7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H1TzzvUu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1EE1F000E9;
-	Tue, 21 Jul 2026 22:43:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UHmNcpj7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 844C91F00A3D;
+	Tue, 21 Jul 2026 22:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673798;
-	bh=3HzfECqWgwnjqINymmBcvepZP+5loDO1oMACSOGMn74=;
+	s=korg; t=1784673801;
+	bh=jbvXtR3NFVSfJmTd2NY7yNrCS4fJXKmQDzHalVfGG7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H1TzzvUuPq8KEgUijd7FlPaxqHUr906DO+uZx1YS+VaILBaLv7I8uRtGsVnLx6sGg
-	 3MzfRkwGyOrp4XvGuRyeCM5ungIDGUgewCAIkszu6Lkdq22QU0E+BNdlATaM45ZAII
-	 gsXHKvOrJ+Gi2JISJos4Tjy1dfr92CwZIXpbMzh4=
+	b=UHmNcpj7+WoSbs4MQw+wgIxVrcAS2x70ByCx4lz7WXFk8CrvwPJV2htnprQPBsCRV
+	 HHXLOHv+ocxdLh1AywQyDeajFHvRK22dudxMK3Kjvwh0oUmqyy46M5GW8agIImBTiC
+	 9IS5LRfl1bfCvyG+IwDJd2pzqINyMrOz1BPBFBFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 298/699] perf c2c: Fix use-after-free in he__get_c2c_hists() error path
-Date: Tue, 21 Jul 2026 17:20:57 +0200
-Message-ID: <20260721152402.420441862@linuxfoundation.org>
+Subject: [PATCH 5.10 299/699] dmaengine: Fix possible use after free
+Date: Tue, 21 Jul 2026 17:20:58 +0200
+Message-ID: <20260721152402.442144245@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -46,47 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Nuno Sá <nuno.sa@analog.com>
 
-[ Upstream commit 5e5e6196d737c5be03d20647428316b36621608d ]
+[ Upstream commit 92f853f0645aebf1d05d333e97ab7c342ace1892 ]
 
-he__get_c2c_hists() assigns c2c_he->hists before calling
-c2c_hists__init().  If init fails, the error path calls free(hists)
-but leaves c2c_he->hists pointing to freed memory.  On teardown,
-c2c_he_free() finds the non-NULL pointer and calls
-hists__delete_entries() on it, causing a use-after-free.
+In dma_release_channel(), check chan->device->privatecnt after call
+dma_chan_put(). However, dma_chan_put() call dma_device_put() which could
+release the last reference of the device if the DMA provider is already
+gone and hence free it.
 
-Set c2c_he->hists to NULL before freeing so teardown skips the
-already-freed allocation.
+Fixes it by moving dma_chan_put() after the check.
 
-Fixes: b2252ae67b687d2b ("perf c2c report: Decode c2c_stats for hist entries")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 0f571515c332 ("dmaengine: Add privatecnt to revert DMA_PRIVATE property")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260424-dma-dmac-handle-vunmap-v4-1-90f43412fdc0@analog.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-c2c.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/dmaengine.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-c2c.c b/tools/perf/builtin-c2c.c
-index fb7d01f3961b7e..d48b00a829dc66 100644
---- a/tools/perf/builtin-c2c.c
-+++ b/tools/perf/builtin-c2c.c
-@@ -201,6 +201,7 @@ he__get_c2c_hists(struct hist_entry *he,
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index 9559ebd61f3bb6..68078e83d57560 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -906,11 +906,12 @@ void dma_release_channel(struct dma_chan *chan)
+ 	mutex_lock(&dma_list_mutex);
+ 	WARN_ONCE(chan->client_count != 1,
+ 		  "chan reference count %d != 1\n", chan->client_count);
+-	dma_chan_put(chan);
+ 	/* drop PRIVATE cap enabled by __dma_request_channel() */
+ 	if (--chan->device->privatecnt == 0)
+ 		dma_cap_clear(DMA_PRIVATE, chan->device->cap_mask);
  
- 	ret = c2c_hists__init(hists, sort, nr_header_lines);
- 	if (ret) {
-+		c2c_he->hists = NULL;
- 		free(hists);
- 		return NULL;
- 	}
++	dma_chan_put(chan);
++
+ 	if (chan->slave) {
+ 		sysfs_remove_link(&chan->dev->device.kobj, DMA_SLAVE_NAME);
+ 		sysfs_remove_link(&chan->slave->kobj, chan->name);
 -- 
 2.53.0
 
