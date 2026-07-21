@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3C146AA96;
-	Tue, 21 Jul 2026 15:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9734546AA96;
+	Tue, 21 Jul 2026 15:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648258; cv=none; b=iT3sYBSFvHvH2fFi97M9PKP7sN/PrUAtFI736H6WFag7gpNksm45G7x4ZdriZbwAkYBkX2VPoGhIWwNBq661GZhwbmG5MTig4ABuX9IwVtXT5vJ28AQ9xL7QojYanK+B27AfV2ctGf9qgNVQqQj9J6F7ru41HV1980eswyU7++g=
+	t=1784648260; cv=none; b=BgPxX+g0ivWRunkfDmUKVVEfl4N3wpWmFdCpwWopufwsF/99RihIYJHAhx4BlEz9EnmTrypBTizmSHNm0cd+lKr/iw9Fg0/OLEEgeR1QA/F9W+sl6zNMQrjST6ruuYjUAEYLLq3lyWAy4qt/k6PeEXJ3YqABYWp1TsDceNMh6ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648258; c=relaxed/simple;
-	bh=xYVLR0OO1pj7hrp1pbfuSdYiEJzkk3Vstpcadsl/A+M=;
+	s=arc-20240116; t=1784648260; c=relaxed/simple;
+	bh=Cg7XzJ3hgCdN7TvTkaj9OasSzsg/ieGbymno8JB2fo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tt8owZsxLuRr9hvkKOGa1IqtZX4VK8LTxx5YvN+gFD/4Ygnb95AydHWKEIs1EQ5Aj2mShk8wQcWDH9cjxqDuonBX43nOQZ6BIMmw7UG1u/raiM3JBQo7GwQqjy0qzUD2xoC+Rzsx1QaiUOV63WytjVCFMnYaYgw3QuIVgv9wl8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RbF+ZxQF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BuG+a/YvWTsZhwbaECBPb7HT94sQAHUm5wc/rmHdqA5U76HAv6popsrDkn3XeM7IVJx1GzLm+emwpgbYWn7RrE7D6YAfklDMSD09pic/qS0t9PsGkAMG4KtyNFlRNMZ6X4cQDmxHcq5S51aacY1/a+I2tggvjxBvnfRT4oXj/rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9kv2BlZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RbF+ZxQF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6A51F000E9;
-	Tue, 21 Jul 2026 15:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9kv2BlZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 089061F000E9;
+	Tue, 21 Jul 2026 15:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648256;
-	bh=ddK50lhEkPCWM3ZmKFefwxIN/F3DjKvXvvPSRyxy3Nc=;
+	s=korg; t=1784648259;
+	bh=p3G9gC6Q2mYH8qYJz8vH/UoHhw9WsNZXZGhB1Z+efes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RbF+ZxQFIv7SSglgLo+6k3sjZOhREyPVziMFiDueYEFaCKYxuPoYhm9zztM9C3P7t
-	 xtdneRCbmBdYC7vu4vhrEhFzRbZ+7fpAH+E5HKjpB99DrQSmTJ3VQn/ugNsBNQUQHN
-	 mpSWWn+lZOR9VzUUk7P8piJhsF1EpB8yQeDDHBe8=
+	b=i9kv2BlZ0/BuXqtcrCQjS0KynDeoi9VDie9wCdTtECkGSkYRnzY/7SqaLGR0q3A8U
+	 95nqQE/y/mvf7UWwRz9CPBc76w5JzRiP2wTHgXeusmjvrC1TnoYnLCsJP2ko/vAYkt
+	 892OdswyqqIWTyXHbZcpoM8j9y8wq2gDCIrDW9zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	David Heidelberg <david@ixit.cz>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0088/2077] arm64: dts: qcom: sdm845-mezzanine: Fix camss ports unit_address_vs_reg warning
-Date: Tue, 21 Jul 2026 16:56:01 +0200
-Message-ID: <20260721152554.766655165@linuxfoundation.org>
+Subject: [PATCH 7.1 0089/2077] arm64: dts: qcom: fix temp-alarm probe failure for PMH0104 on Glymur
+Date: Tue, 21 Jul 2026 16:56:02 +0200
+Message-ID: <20260721152554.789403707@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,43 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
 
-[ Upstream commit f20a82aacd7f381084391a8d1f0f58defa91974c ]
+[ Upstream commit e8fae9152e100b4bb30d38b25bc9c81623e8e91e ]
 
-Add necessary properties for ports node in SDM845 DB845c Navigation
-mezzanine overlay to fix W=1 DTC warning:
+The temp-alarm driver probe is failing for the pmh0104 PMICs on glymur.
 
-sdm845-db845c-navigation-mezzanine.dtso:19.10-24.5: Warning (unit_address_vs_reg): /fragment@0/__overlay__/ports/port@0: node has a unit name, but no reg or ranges property
+[    3.999713] spmi-temp-alarm c426000.spmi:pmic@8:temp-alarm@a00: error -ENODEV: failed to register sensor
+[    4.015066] spmi-temp-alarm c426000.spmi:pmic@9:temp-alarm@a00: error -ENODEV: failed to register sensor
+[    4.033908] spmi-temp-alarm c437000.spmi:pmic@b:temp-alarm@a00: error -ENODEV: failed to register sensor
 
-Fixes: 30df676a31b7 ("arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: Convert mezzanine riser to dtso")
+This happens because thermal zone associated with the temp alarm was
+defined under the thermal zones parent node which had a typo (used `_` in
+place of `-`). Correct the typo to fix probe failure.
+
+Fixes: 41b6e8db400c ("arm64: dts: qcom: Introduce Glymur base dtsi")
+Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: David Heidelberg <david@ixit.cz>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260405-dts-qcom-w-1-fixes-v2-5-1f2c7b74a93f@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260406-glymur-pmh0104-temp-alarm-fix-v1-1-4441b7b01f85@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso    | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/qcom/pmh0104-glymur.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-index dbe1911d8e470e..678a17c805f74c 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-@@ -16,7 +16,12 @@
- 	status = "okay";
+diff --git a/arch/arm64/boot/dts/qcom/pmh0104-glymur.dtsi b/arch/arm64/boot/dts/qcom/pmh0104-glymur.dtsi
+index 7a1e5f355c1759..6b4747025b9f85 100644
+--- a/arch/arm64/boot/dts/qcom/pmh0104-glymur.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmh0104-glymur.dtsi
+@@ -7,7 +7,7 @@
+ #include <dt-bindings/spmi/spmi.h>
  
- 	ports {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
- 		port@0 {
-+			reg = <0>;
-+
- 			csiphy0_ep: endpoint {
- 				data-lanes = <0 1 2 3>;
- 				remote-endpoint = <&ov8856_ep>;
+ /{
+-	thermal_zones {
++	thermal-zones {
+ 		pmh0104_i0_thermal: pmh0104-i0-thermal {
+ 			polling-delay-passive = <100>;
+ 			thermal-sensors = <&pmh0104_i_e0_temp_alarm>;
 -- 
 2.53.0
 
