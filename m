@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3339B46F48E;
-	Tue, 21 Jul 2026 18:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96EB147142F;
+	Tue, 21 Jul 2026 18:48:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659685; cv=none; b=tIb0Fk7oF3roKq9A6e6ewFnJ3pyA+J7V9L0+4BwWJveAnDrf8a4xMvD2EN2zBkpTVyEPDSzt1kKLjxacbhBX1IT6Ndsq3E5Ih64HlMWHGHT+yV7LcDDqyEY9KG+O/vstX2QQtef9Zlm/74lYgLoG5igGWmCRsGOstJVV7Nt4A8M=
+	t=1784659688; cv=none; b=QbAOgst94/RQ24FU8Qjq6vh+x3BEY3Ipz+66ppEwEAx+PU5jzbLqtJaUjawQYjB6FKa7mvm5g3zXNo2wiOYKJ1tRjSvlozRK/vcccrvKgEKcSBwejzy092LyigI1R6JGQU1aWX2zb8UQORvTo+lRw80QFgzd3jONyigQg3nuI9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659685; c=relaxed/simple;
-	bh=jepx9Szc637yM1A637VbBdrRb/pfBE2p5OM2noZ8J98=;
+	s=arc-20240116; t=1784659688; c=relaxed/simple;
+	bh=XXcyfinz+d4PUe3E63B3VVT27a3YV365ipR3z+0ay4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4zmrRBz7uJAuSt+s2zanBWCWZPHjmAce+BZToGy26o+B2NMWCa5FzsWDkbbH33cef7dhbsxN+3aBGruQtSfBUsL8R1y0DdTL8gnilrf8InNsVDlUaae79Nml8cT296o4ox9aomb8t+Nzcv8wVUKxVPVWzxx1+aTEuIGa7/NrFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJclkihx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FsOs7F91gcZc5+pcydGs/VrKn9aEf6kGQ7y+RIaOo3fxWvZbr4NQQTdIQ0nX9PTxgpRXD7jkCFoOoitqYTe0Adi222td43933PY1EAK7CNkCy6yDs9Js3Vui5cP1vn7Jo9wCQ6p29yS4RuoaVOY7U0qzK3uFJsx+tXGBt/kJqso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yACHtY+Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJclkihx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4352F1F000E9;
-	Tue, 21 Jul 2026 18:48:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yACHtY+Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10D31F00A3A;
+	Tue, 21 Jul 2026 18:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659682;
-	bh=JyLNrrugLvD339RfbIi+heOxtHos6iRVNZbt8sckFgU=;
+	s=korg; t=1784659685;
+	bh=PUF0OI6BspUpYsjz4jmW3Blo3wbQHif/sTSavWZCD94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lJclkihxDcOIYfzpbHuYM33jGW4sMCIk4EyX37PLh/fvTGiDxOqS389VccSrXUKnV
-	 OeQoqhILaQ72lBu07o0/Pz92R0y+o7xWOxNxWRNfoyct5lXMh/iQCVhTbFGfU1oQBd
-	 380jjAG8JUqel8ZIVMIodUjJB44PJRwUm5W+OyNg=
+	b=yACHtY+Zj5JbjMHUhh9WMLbQ6ffq2/Q9fdwEaUDkBOojY3Lx8kY4QSUajSieAHA+V
+	 ZDce5gUEsqdfQJ6HWhUZ80Fxv88i8Dz9BqLd6G84tmPjsQT05zBjT613ZIR8VHxYKy
+	 35Cls6dFsdwIr9mu5jX2aec5rE8lp602bZY5uUGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <mszeredi@redhat.com>,
 	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1578/1611] new helper: simple_remove_by_name()
-Date: Tue, 21 Jul 2026 17:28:14 +0200
-Message-ID: <20260721152550.964598006@linuxfoundation.org>
+Subject: [PATCH 6.18 1579/1611] functionfs: dont abuse ffs_data_closed() on fs shutdown
+Date: Tue, 21 Jul 2026 17:28:15 +0200
+Message-ID: <20260721152550.988020930@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,80 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 4051a9115ad24bb9a691774730ca9c1dd56de665 ]
+[ Upstream commit fcb8985143540cbcb8e91c0ea8b7fb5d37c88177 ]
 
-simple_recursive_removal(), but instead of victim dentry it takes
-parent + name.
+ffs_data_closed() has a seriously confusing logics in it: in addition
+to the normal "decrement a counter and do some work if it hits zero"
+there's "... and if it has somehow become negative, do that" bit.
 
-Used to be open-coded in fs/fuse/control.c, but there's no need to expose
-the guts of that thing there and there are other potential users, so
-let's lift it into libfs...
+It's not a race, despite smelling rather fishy.  What really happens
+is that in addition to "call that on close of files there, to match
+the increments of counter on opens" there's one call in ->kill_sb().
+Counter starts at 0 and never goes negative over the lifetime of
+filesystem (or we have much worse problems everywhere - ->release()
+call of some file somehow unpaired with successful ->open() of the
+same).  At the filesystem shutdown it will be 0 or, again, we have
+much worse problems - filesystem instance destroyed with files on it
+still open.  In other words, at that call and at that call alone
+the decrement would go from 0 to -1, hitting that chunk (and not
+hitting the "if it hits 0" part).
 
-Acked-by: Miklos Szeredi <mszeredi@redhat.com>
+So that check is a weirdly spelled "called from ffs_kill_sb()".
+Just expand the call in the latter and kill the misplaced chunk
+in ffs_data_closed().
+
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Stable-dep-of: 3137b243c939 ("usb: gadget: f_fs: initialize reset_work at allocation time")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/control.c  |    7 +------
- fs/libfs.c         |   13 +++++++++++++
- include/linux/fs.h |    2 ++
- 3 files changed, 16 insertions(+), 6 deletions(-)
+ drivers/usb/gadget/function/f_fs.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/fs/fuse/control.c
-+++ b/fs/fuse/control.c
-@@ -290,18 +290,13 @@ static void remove_one(struct dentry *de
-  */
- void fuse_ctl_remove_conn(struct fuse_conn *fc)
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -2086,12 +2086,18 @@ static int ffs_fs_init_fs_context(struct
+ 	return 0;
+ }
+ 
++static void ffs_data_reset(struct ffs_data *ffs);
++
+ static void
+ ffs_fs_kill_sb(struct super_block *sb)
  {
--	struct dentry *dentry;
- 	char name[32];
- 
- 	if (!fuse_control_sb || fc->no_control)
- 		return;
- 
- 	sprintf(name, "%u", fc->dev);
--	dentry = lookup_noperm_positive_unlocked(&QSTR(name), fuse_control_sb->s_root);
--	if (!IS_ERR(dentry)) {
--		simple_recursive_removal(dentry, remove_one);
--		dput(dentry);	// paired with lookup_noperm_positive_unlocked()
--	}
-+	simple_remove_by_name(fuse_control_sb->s_root, name, remove_one);
- }
- 
- static int fuse_ctl_fill_super(struct super_block *sb, struct fs_context *fsc)
---- a/fs/libfs.c
-+++ b/fs/libfs.c
-@@ -647,6 +647,19 @@ void simple_recursive_removal(struct den
- }
- EXPORT_SYMBOL(simple_recursive_removal);
- 
-+void simple_remove_by_name(struct dentry *parent, const char *name,
-+                           void (*callback)(struct dentry *))
-+{
-+	struct dentry *dentry;
-+
-+	dentry = lookup_noperm_positive_unlocked(&QSTR(name), parent);
-+	if (!IS_ERR(dentry)) {
-+		simple_recursive_removal(dentry, callback);
-+		dput(dentry);	// paired with lookup_noperm_positive_unlocked()
+ 	kill_litter_super(sb);
+-	if (sb->s_fs_info)
+-		ffs_data_closed(sb->s_fs_info);
++	if (sb->s_fs_info) {
++		struct ffs_data *ffs = sb->s_fs_info;
++		ffs->state = FFS_CLOSING;
++		ffs_data_reset(ffs);
++		ffs_data_put(ffs);
 +	}
-+}
-+EXPORT_SYMBOL(simple_remove_by_name);
-+
- /* caller holds parent directory with I_MUTEX_PARENT */
- void locked_recursive_removal(struct dentry *dentry,
-                               void (*callback)(struct dentry *))
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -3655,6 +3655,8 @@ extern int simple_rename(struct mnt_idma
- 			 unsigned int);
- extern void simple_recursive_removal(struct dentry *,
-                               void (*callback)(struct dentry *));
-+extern void simple_remove_by_name(struct dentry *, const char *,
-+                              void (*callback)(struct dentry *));
- extern void locked_recursive_removal(struct dentry *,
-                               void (*callback)(struct dentry *));
- extern int noop_fsync(struct file *, loff_t, loff_t, int);
+ }
+ 
+ static struct file_system_type ffs_fs_type = {
+@@ -2129,7 +2135,6 @@ static void functionfs_cleanup(void)
+ /* ffs_data and ffs_function construction and destruction code **************/
+ 
+ static void ffs_data_clear(struct ffs_data *ffs);
+-static void ffs_data_reset(struct ffs_data *ffs);
+ 
+ static void ffs_data_get(struct ffs_data *ffs)
+ {
+@@ -2186,11 +2191,6 @@ static void ffs_data_closed(struct ffs_d
+ 			ffs_data_reset(ffs);
+ 		}
+ 	}
+-	if (atomic_read(&ffs->opened) < 0) {
+-		ffs->state = FFS_CLOSING;
+-		ffs_data_reset(ffs);
+-	}
+-
+ 	ffs_data_put(ffs);
+ }
+ 
 
 
