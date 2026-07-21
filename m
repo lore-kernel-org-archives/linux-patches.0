@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1AF144AB60;
-	Tue, 21 Jul 2026 21:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9D544AB60;
+	Tue, 21 Jul 2026 21:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669019; cv=none; b=sPshGq5tmo9y1/IC2ljXvmh9+Oj0xSbJ+9Q86s3DC5oYXDuFh//8ccviL2Zl26CBU//aDI0ltYD/pJTAT+Rt/seQqDdueb8I5IECo75RId0mGqDVOW641aZqfZS0/cPxBxm64YtLsEcLyUDdG7ngUAcFWClNAxQJYNchKzGPqnI=
+	t=1784669022; cv=none; b=TPfXqB09j1tVxZAkqC0pK560nQGIIPVnr+js1IXSWLc9DSAaysmVYf02nPMCtjK0iGPJg/w5HmGU0iAj7he3Rp1KhXx99TCSz4GzZmbJADiu3c0q+Owyh/iLCo3uTkqpheNqxh3Us9pwUjhkOcezAF3QgUsXFVwpZYl4WhZbzsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669019; c=relaxed/simple;
-	bh=tqK1ZTAs0uetgufnyQDLLuwnETznoDzRsE2xX9FgOZk=;
+	s=arc-20240116; t=1784669022; c=relaxed/simple;
+	bh=cksZK7YajvlX9FKADPyJIWxGgYnFi/7ttmCrle00/LE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JlP/mYgT760SWQuPrH2yxFPqm5Ca5LxTJ0KEeGkmsyzdU50iy+qU0MGrN8LfEZ4wnAFnDtWa2/RS7ueIds0g8OQdaEQCesGQQcZjW5MxgF+8sWzAIOl5s0DTAmUK+O1LxYGeFIQT8/EkE7oL3T45pK7DIO4NA0pqfWWz+2bL7aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V3jHiQWA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O9Bt5T9vhJ1IfUC0Dbv6s8ycbnOZ45pINbcKolzeynHXfytZ3hA9Zq2LNsAFIf9I2AM2HpxpZwdovS4JNjWp2ftKcIt4DQJh7dpm1YW6lamWNGxxapkBgQY8rRUKapbyCzjNh42mO3yxK2bDhAk6NFZO3mgJ82/34u9OyBImuKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNA1Vmmj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V3jHiQWA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD481F000E9;
-	Tue, 21 Jul 2026 21:23:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNA1Vmmj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C33301F000E9;
+	Tue, 21 Jul 2026 21:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669018;
-	bh=+L9M4fqsWt0iRIyx3rQALjQZ2g4wxkaBLQ2jeyONAZc=;
+	s=korg; t=1784669021;
+	bh=4BsLid8PiJ/PYzD1rMSPcqJj9rgIyAwTHSpKzSbYKwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V3jHiQWAijWZYRXlDbcbglYLlyd1r2pV03LfRUr0ZdWKLaRkd+4HBhOc769GwHMfs
-	 4Yrw8u+4GH6V/Sc8ykGIUkmdeIZwXhZhL7GDIc7eDsWq1hzr2Y8XgmP6mHWM6Xfehx
-	 6LKwU+UMT7YuJmiHXEUYorBS49Cz1GFBIT12ddGU=
+	b=KNA1VmmjS5U6VIqHpmkBvKK6vp4yY9iLUFTnc2IAfh0i8c0DOS7j0qOAGvaX2lAUx
+	 yb5U4T7piqoGHB9DaFBjII/05MShs6chYzwZqMKVp0wmREKTYcoM+fgB2+RC019tRw
+	 BRCMOX/GAK5t7QYCLkGk2AIRFPzPZzXsL6DVAkuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengjie Zhang <zhangpengjie2@huawei.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0396/1067] cpufreq: Documentation: fix conservative governor freq_step description
-Date: Tue, 21 Jul 2026 17:16:37 +0200
-Message-ID: <20260721152433.490412034@linuxfoundation.org>
+Subject: [PATCH 6.1 0397/1067] IB/mlx5: Dont take the rereg_mr fallback without a new translation
+Date: Tue, 21 Jul 2026 17:16:38 +0200
+Message-ID: <20260721152433.511855889@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,45 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengjie Zhang <zhangpengjie2@huawei.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 03120e1425262c7d11f93362a88e579a1720390b ]
+[ Upstream commit 55d339d200c908de83a408d023cfb7be779b0dd7 ]
 
-The conservative governor documentation incorrectly states that setting
-freq_step to 0 will use the default 5% frequency step. In reality, since
-at least commit 8e677ce83bf4 ("[CPUFREQ] conservative: fixup governor to
-function more like ondemand logic"), freq_step=0 has always caused the
-governor to skip frequency updates entirely.
+Jumping to mlx5_ib_reg_user_mr() without IB_MR_REREG_TRANS set will use
+garbage values for start, length, and iova. Recovering the original mr
+parameters for ODP and DMABUF to properly recreate it is too hard in this
+flow, so just fail it.
 
-Correct the documentation to reflect the actual behavior: freq_step=0
-disables frequency changes by the governor entirely.
-
-Fixes: 2a0e49279850 ("cpufreq: User/admin documentation update and consolidation")
-Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-[ rjw: Subject adjustment ]
-Link: https://patch.msgid.link/20260603055635.1549943-1-zhangpengjie2@huawei.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: ef3642c4f54d ("RDMA/mlx5: Fix error unwinds for rereg_mr")
+Link: https://patch.msgid.link/r/1-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/pm/cpufreq.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/mlx5/mr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/admin-guide/pm/cpufreq.rst b/Documentation/admin-guide/pm/cpufreq.rst
-index d2f37309cca3b3..5247eabb92065a 100644
---- a/Documentation/admin-guide/pm/cpufreq.rst
-+++ b/Documentation/admin-guide/pm/cpufreq.rst
-@@ -569,8 +569,8 @@ This governor exposes the following tunables:
- 	100 (5 by default).
+diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
+index b81b03aa2a629e..ca8ebe5cdeebf2 100644
+--- a/drivers/infiniband/hw/mlx5/mr.c
++++ b/drivers/infiniband/hw/mlx5/mr.c
+@@ -1463,7 +1463,7 @@ struct ib_mr *mlx5_ib_rereg_user_mr(struct ib_mr *ib_mr, int flags, u64 start,
+ 		}
+ 		/* DM or ODP MR's don't have a normal umem so we can't re-use it */
+ 		if (!mr->umem || is_odp_mr(mr) || is_dmabuf_mr(mr))
+-			goto recreate;
++			return ERR_PTR(-EOPNOTSUPP);
  
- 	This is how much the frequency is allowed to change in one go.  Setting
--	it to 0 will cause the default frequency step (5 percent) to be used
--	and setting it to 100 effectively causes the governor to periodically
-+	it to 0 disables frequency changes by the governor entirely and setting
-+	it to 100 effectively causes the governor to periodically
- 	switch the frequency between the ``scaling_min_freq`` and
- 	``scaling_max_freq`` policy limits.
- 
+ 		/*
+ 		 * Only one active MR can refer to a umem at one time, revoke
 -- 
 2.53.0
 
