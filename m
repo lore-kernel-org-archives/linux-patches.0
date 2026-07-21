@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6AB444AB61;
-	Tue, 21 Jul 2026 21:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2BA44AB61;
+	Tue, 21 Jul 2026 21:26:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669164; cv=none; b=fZAsUHltDhRV2RfgjHl65mk8MVB2zC3AMvCxUWCEbCb+BmKQZGkxo8Q+Gc5NY/QcPsszzrnB1+CSpyjHBgs2iw610ka1N/cVAWulg7gtpKZcZXRpPsCQKz7V4YFNGOTj0AX9keXCvT1oPWnzErUjRsRNXhcH0xHxmADTGEiX848=
+	t=1784669167; cv=none; b=oY7m8Ex7FrsTkzv1MNaeQT67e8Sp4Ft4j9jcBRDvrBMZfQhX/b5b0Rn4BZ7m1VJmcRRgpXXb7TjGJfbIgNtiavtPtNu5P1jzlkeOppBSlslLb/8mOe/W8wVLn+V8WsyB7t7N38neJzZWQw8XB4P/FtpkAqvCFWhkrGJGTShSu2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669164; c=relaxed/simple;
-	bh=iQ3dbV/ZdQ3/idtPfmrD6PNTbYDyrXxlKqO7IylsMQ0=;
+	s=arc-20240116; t=1784669167; c=relaxed/simple;
+	bh=afmbu2lFXSndLNZtOu4+1C7T/xWLvnQQSeoe3mn2vys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iM28oca/TmXaQBEkqb9RzbbNmgk8JnMjcyfawczHdTom/X+RBErxsSj5dsLCd9xNhRNE7TiKp14NEufpgkI+Sya3zqoN3W8nTyxyhwxN4isFVUmRAvDgsjaigeOnk+GzSuVu3uXYAYWeSpda0F0GMshENMY4djuOTXNa5nSsGbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lKec7rR8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BQEqapWGx0VIk632ws0YCfn3g/MmxFh/Ypxu3PKv2fZE7cNM30Dllv5DeUMwVwV253JRSVuTSDv8rHP6IJifWuMXhAdsj0u1+KexzEWQ/DkH7rd2BCObQad8wx6NefvtIapSoHc1A1rirkWN6ywebKajppTJrUXMS+rUBpMZpZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yysHJSVx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKec7rR8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFE11F000E9;
-	Tue, 21 Jul 2026 21:26:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yysHJSVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06B21F000E9;
+	Tue, 21 Jul 2026 21:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669163;
-	bh=QXK5ltXD6M9UN1Sol73KD379/2fKQbUe7nOD1VLElYY=;
+	s=korg; t=1784669166;
+	bh=eh9Dq2hmVbsDcNdchrEcKvrh41oyy3Q3tUqWtky3IxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lKec7rR8/fq895wMo1x9ejSZnBDIY1RTXqMZnAPVOO9dEe0qvGHumyDj/2KIXQo95
-	 rWuaZB6xx/x5aGebk478OtBbNsENZSoiX7ONxV2OFFEk5Yyf1pIovFiSs3AuS2d0fB
-	 y+pdAfIgCKoZfxu4KDIu9jCHpvns9nX1x6Piu4Yw=
+	b=yysHJSVx3sTPqL/sUHtnHKDaBdjp52MqUKgTXkfjEJBdisloHUj/M3zoTc38JCrnM
+	 zCA61vVb1gP3BC+Io8wDG7jDRX9sEtDNK2Ac3qlx6XNhBptHAJCs876p9Iah9GbqQq
+	 yefVWWvwnrri3euHCaX7NpBJzjHuLHEbnwKRTnes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Sun Jian <sun.jian.kdev@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Maxwell Doose <m32285159@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Fabian Frederick <fabf@skynet.be>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0451/1067] bpf: Run generic devmap egress prog on private skb
-Date: Tue, 21 Jul 2026 17:17:32 +0200
-Message-ID: <20260721152434.706914998@linuxfoundation.org>
+Subject: [PATCH 6.1 0425/1067] fs: efs: remove unneeded debug prints
+Date: Tue, 21 Jul 2026 17:17:06 +0200
+Message-ID: <20260721152434.127894171@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -48,70 +47,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sun Jian <sun.jian.kdev@gmail.com>
+From: Maxwell Doose <m32285159@gmail.com>
 
-[ Upstream commit 6001896f00984d317fb75160ba05c4a885fbe2a0 ]
+[ Upstream commit 89009392c80da5da00876c8334ff20028e6e3eb6 ]
 
-Generic XDP devmap multi redirect uses skb_clone() for intermediate
-destinations and sends the last destination with the original skb. This
-can leave multiple destinations sharing the same packet data.
+The current code uses debug prints conditionally compiled with #ifdef
+DEBUG.  However, that code, when compiled, causes compiler errors due to
+incompatible formatters and undefined variables, notably:
 
-This becomes visible after generic devmap egress-program support was
-added: a devmap egress program may mutate packet data, and another
-destination sharing the same data can observe that mutation.
+fs/efs/file.c: In function `efs_get_block':
+fs/efs/file.c:26:35: error: `block' undeclared (first use in this
+function); did you mean `iblock'?
+  26 |                         __func__, block, inode->i_blocks, inode->i_size);
+     |                                   ^~~~~
 
-Native XDP broadcast redirect does not have this issue because
-xdpf_clone() copies the frame data for each destination. Generic XDP
-should provide the same per-destination isolation before running a
-devmap egress program.
+and:
 
-Fix this by making cloned skbs private before running the generic devmap
-egress program. Use skb_copy() instead of skb_unshare() so allocation
-failure does not consume the skb and the existing caller error paths keep
-their ownership semantics.
+fs/efs/file.c: In function `efs_bmap':
+./include/linux/kern_levels.h:5:25: error: format `%ld' expects
+argument of type `long int', but argument 4 has type `blkcnt_t' {aka
+`long long unsigned int'} [-Werror=format=]
+   5 | #define KERN_SOH        "\001"          /* ASCII Start Of Header */
+     |                         ^~~~~~
 
-Fixes: 2ea5eabaf04a ("bpf: devmap: Implement devmap prog execution for generic XDP")
-Suggested-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
-Link: https://lore.kernel.org/r/20260612114032.244616-2-sun.jian.kdev@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+which also extends to the other formatters.  As this part of the code has
+been dead for just about 14 years now, it has not been modernized to stay
+compatible with the most recent gcc compilers.  Fix these issues by
+removing the debug prints.
+
+Link: https://lore.kernel.org/20260605035251.89305-2-m32285159@gmail.com
+Fixes: f403d1dbac6d ("fs/efs: add pr_fmt / use __func__")
+Signed-off-by: Maxwell Doose <m32285159@gmail.com>
+Suggested-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Fabian Frederick <fabf@skynet.be>
+Cc: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/devmap.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/efs/file.c | 21 +++------------------
+ 1 file changed, 3 insertions(+), 18 deletions(-)
 
-diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
-index fac0773fe9a0c4..f4e28ad6c920dd 100644
---- a/kernel/bpf/devmap.c
-+++ b/kernel/bpf/devmap.c
-@@ -681,6 +681,18 @@ int dev_map_generic_redirect(struct bpf_dtab_netdev *dst, struct sk_buff *skb,
- 	if (unlikely(err))
- 		return err;
+diff --git a/fs/efs/file.c b/fs/efs/file.c
+index 9e641da6fab276..9153dfe79bbcc9 100644
+--- a/fs/efs/file.c
++++ b/fs/efs/file.c
+@@ -18,16 +18,9 @@ int efs_get_block(struct inode *inode, sector_t iblock,
  
-+	if (dst->xdp_prog && skb_cloned(skb)) {
-+		struct sk_buff *nskb;
+ 	if (create)
+ 		return error;
+-	if (iblock >= inode->i_blocks) {
+-#ifdef DEBUG
+-		/*
+-		 * i have no idea why this happens as often as it does
+-		 */
+-		pr_warn("%s(): block %d >= %ld (filesize %ld)\n",
+-			__func__, block, inode->i_blocks, inode->i_size);
+-#endif
++	if (iblock >= inode->i_blocks)
+ 		return 0;
+-	}
 +
-+		nskb = skb_copy(skb, GFP_ATOMIC);
-+		if (!nskb)
-+			return -ENOMEM;
-+
-+		nskb->mac_len = skb->mac_len;
-+		consume_skb(skb);
-+		skb = nskb;
-+	}
-+
- 	/* Redirect has already succeeded semantically at this point, so we just
- 	 * return 0 even if packet is dropped. Helper below takes care of
- 	 * freeing skb.
+ 	phys = efs_map_block(inode, iblock);
+ 	if (phys)
+ 		map_bh(bh_result, inode->i_sb, phys);
+@@ -42,16 +35,8 @@ int efs_bmap(struct inode *inode, efs_block_t block) {
+ 	}
+ 
+ 	/* are we about to read past the end of a file ? */
+-	if (!(block < inode->i_blocks)) {
+-#ifdef DEBUG
+-		/*
+-		 * i have no idea why this happens as often as it does
+-		 */
+-		pr_warn("%s(): block %d >= %ld (filesize %ld)\n",
+-			__func__, block, inode->i_blocks, inode->i_size);
+-#endif
++	if (!(block < inode->i_blocks))
+ 		return 0;
+-	}
+ 
+ 	return efs_map_block(inode, block);
+ }
 -- 
 2.53.0
 
