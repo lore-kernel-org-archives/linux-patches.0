@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19F646D55F;
-	Tue, 21 Jul 2026 15:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D0246D563;
+	Tue, 21 Jul 2026 15:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648609; cv=none; b=a0BimTMSeKpi0vvMbhYtUC5QNhcSJ7JPPELkCTM+RpdpfjfjzXmpnGmrw153ssmL7gIU/GXT0yvqjgghye5jNghb2utAu5WvIfEpbmc97zfz1pfI3usrFVcN06a6ZlH+AemKV6Fdwxh7LRuBmWWAso3Rf0ZdApMGcg2sNBtGeCQ=
+	t=1784648612; cv=none; b=qsHOSFx2FTFH6C5NbLYyN+h9UzBLpncUe/3507cZZd7XqHWuumQKUHd9KnbMuuHZMsWHiqrPdKekzraHyjq6WSi6PZPTiVe3lsRAph4Urd2Wy5J2hHsRGuM/ivZKoGUefLlIyQEkvRie3cFhbO/IrvmYvNzFrnV474ZguVSi+nQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648609; c=relaxed/simple;
-	bh=c9guzoIges84FCjfsdpuijmeJNvgmG3HCjfIPvpDsso=;
+	s=arc-20240116; t=1784648612; c=relaxed/simple;
+	bh=+ydt/5YnOZjfJLnoBFOJbZI0c/KD5wMBg/6xd1IaqpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iro2sYM1LMqBkKMlOfSGBswFi4XdTCJClcS5yBOWAirm52moChzAh0/pll+5R6MsT2RlZhiKExM9d+hDvtN6vlRrk7K0M5+JJCSGN7x7aHZwK+2nBk47AHiR2XYJDa2m4i+yqpQF1EPRHPpyZDWJ6kNSH+zQJEik2TnGd/WHwCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqGDJ1CP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CPJ2rl4ambri/03FYKwizJTFKg/GmoXeEfIZlLwiK2dktgcP9SXbbzstNjJgP4Ud7G9DHkk2LYLhQ9w48WFbbFl0R2wiYZ5LInslCXYuu5Fbm9xR3NmoyVjZnUctQwJLaXxjsEQziBR+T8h/3nS/heE55mGE6mOs+b3DLftwdUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eahx77aE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqGDJ1CP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 310F61F00A3A;
-	Tue, 21 Jul 2026 15:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eahx77aE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA3F31F000E9;
+	Tue, 21 Jul 2026 15:43:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648608;
-	bh=MDSh9wTx9Fapav81Htmyy/02c1uoPt9LPIujkKi+rkY=;
+	s=korg; t=1784648611;
+	bh=cntMBgvM9iItH+w8B/sndAgKye3Jm5PiHiUX3DtF6yI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yqGDJ1CPvEKHu3cd6ZwOLtWIxbVF4JzK8d0OLZTHBA28ibRzKBSXtqaW8nhnpMH8m
-	 xgPAwjy2jj3fhYlZhivFmfn/Hj39rtaVYbpsqbFzTmcU554j8CnZJJxMZmWQgqMdwA
-	 LKKdc/l3FFHLf4PY4dxCikxXt30RUvhq480reZnE=
+	b=Eahx77aEIBK7clRk0Lf5gy88N6hw7BCUvMZ+KNhG8k9DBB+gLp0WJ0rwiiheFADoP
+	 jnoyyv4cx21gMJIrTkob6g9jGXnldIkey/cSAJMCCtt3jP/egaqYl3tgOug2A+aRNY
+	 V/qpjC7GjUSvzpckRk3mH69lmpACHnz6utUBBiTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0262/2077] firmware: arm_scmi: Fix OOB in scmi_power_name_get()
-Date: Tue, 21 Jul 2026 16:58:55 +0200
-Message-ID: <20260721152558.858957654@linuxfoundation.org>
+Subject: [PATCH 7.1 0263/2077] arm64: dts: qcom: eliza-mtp: Fix the debug UART index
+Date: Tue, 21 Jul 2026 16:58:56 +0200
+Message-ID: <20260721152558.882501139@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,44 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit f9ef3f66f4b18078e464b7606f9497e4dbeb9905 ]
+[ Upstream commit 179d11c1c0cfaddcfc984edc3c1863ab600f679f ]
 
-scmi_power_name_get() does not validate the domain number passed by the
-external caller, which may lead to an out-of-bounds access.
+The Eliza MTP debug UART is QUPv3 WRAP2 SE5. The existing DTS labels it
+as uart14, but the serial-engine index for this block is actually 13.
 
-Fix this by returning "unknown" for invalid domains, like
-scmi_reset_name_get() does.
+Rename the SoC UART label and pinctrl state to uart13 and update the MTP
+alias and node reference accordingly.
 
-Fixes: 76a6550990e296a7 ("firmware: arm_scmi: add initial support for power protocol")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://patch.msgid.link/75caae28bdffb55199a0bc6cac5df112a966c608.1778838987.git.geert+renesas@glider.be
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: af20af39fc09 ("arm64: dts: qcom: Introduce Eliza Soc base dtsi")
+Fixes: 2a5d4fc6f3f7 ("arm64: dts: qcom: eliza: Enable Eliza MTP board support")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260515-eliza-dts-fix-debug-uart-and-more-support-v2-1-5ad3da81b9d3@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/power.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/eliza-mtp.dts | 4 ++--
+ arch/arm64/boot/dts/qcom/eliza.dtsi    | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/power.c b/drivers/firmware/arm_scmi/power.c
-index bb5062ab8280e0..28ef63a4ecc2e1 100644
---- a/drivers/firmware/arm_scmi/power.c
-+++ b/drivers/firmware/arm_scmi/power.c
-@@ -204,8 +204,12 @@ scmi_power_name_get(const struct scmi_protocol_handle *ph,
- 		    u32 domain)
- {
- 	struct scmi_power_info *pi = ph->get_priv(ph);
--	struct power_dom_info *dom = pi->dom_info + domain;
-+	struct power_dom_info *dom;
-+
-+	if (domain >= pi->num_domains)
-+		return "unknown";
+diff --git a/arch/arm64/boot/dts/qcom/eliza-mtp.dts b/arch/arm64/boot/dts/qcom/eliza-mtp.dts
+index 90f629800cb02f..4708df8eb4a409 100644
+--- a/arch/arm64/boot/dts/qcom/eliza-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/eliza-mtp.dts
+@@ -15,7 +15,7 @@ / {
+ 	chassis-type = "handset";
  
-+	dom = pi->dom_info + domain;
- 	return dom->name;
- }
+ 	aliases {
+-		serial0 = &uart14;
++		serial0 = &uart13;
+ 	};
  
+ 	chosen {
+@@ -382,7 +382,7 @@ &tlmm {
+ 			       <118 1>;  /* NFC Secure I/O */
+ };
+ 
+-&uart14 {
++&uart13 {
+ 	compatible = "qcom,geni-debug-uart";
+ 
+ 	status = "okay";
+diff --git a/arch/arm64/boot/dts/qcom/eliza.dtsi b/arch/arm64/boot/dts/qcom/eliza.dtsi
+index 7e97361a5dc58c..9edfee5e1dde53 100644
+--- a/arch/arm64/boot/dts/qcom/eliza.dtsi
++++ b/arch/arm64/boot/dts/qcom/eliza.dtsi
+@@ -639,7 +639,7 @@ qupv3_2: geniqup@8c0000 {
+ 			#size-cells = <2>;
+ 			ranges;
+ 
+-			uart14: serial@894000 {
++			uart13: serial@894000 {
+ 				compatible = "qcom,geni-uart";
+ 				reg = <0x0 0x00894000 0x0 0x4000>;
+ 
+@@ -655,7 +655,7 @@ &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
+ 				interconnect-names = "qup-core",
+ 						     "qup-config";
+ 
+-				pinctrl-0 = <&qup_uart14_default>;
++				pinctrl-0 = <&qup_uart13_default>;
+ 				pinctrl-names = "default";
+ 
+ 				status = "disabled";
+@@ -1338,7 +1338,7 @@ tlmm: pinctrl@f100000 {
+ 			gpio-ranges = <&tlmm 0 0 184>;
+ 			wakeup-parent = <&pdc>;
+ 
+-			qup_uart14_default: qup-uart14-default-state {
++			qup_uart13_default: qup-uart13-default-state {
+ 				/* TX, RX */
+ 				pins = "gpio18", "gpio19";
+ 				function = "qup2_se5";
 -- 
 2.53.0
 
