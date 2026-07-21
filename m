@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724D846D2B3;
-	Tue, 21 Jul 2026 17:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E494746D2B3;
+	Tue, 21 Jul 2026 17:39:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655587; cv=none; b=BtVX898sNqaG5kJBIfql882nyUUAP0xF9jWSi8SObhlrY2R0Zs8KtvJ762yFXp6ZLdduNYTaOlCj+kfSCOVSWkNMHY5g0xYOoh1JAsPBFyBUyQctOEow08VdqeOUCLqBnOkXIrvqNgxgfjxdYbLLXfFQjuOYEyvbSF8KSZvlyFg=
+	t=1784655590; cv=none; b=Bs0zs/DQujIUErDhDuBFwc2KWFya2w1AtYCeQoxk/xkDFt913GKgn6yAe32fjj+fKeDN88BUTDzDi/U2s9QixK7LlSyAphuOLai+9zK4WR4KWNPvdX5Tgzi9Bbr4sK5PCe5yUHteHxVQ0qqLkN5XosD4dLinn7frQ0OrwHfym4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655587; c=relaxed/simple;
-	bh=mcNmW3UDCsvv82gegy/KYpjkmSyjHNkRj7bmZaehIsU=;
+	s=arc-20240116; t=1784655590; c=relaxed/simple;
+	bh=V45W132CyN/kpjXgsGl4RbSB1VNsnlca+QMzcO+auM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U+JjnlX6mjx2uzOrhheiKrGh65abW1hNpym6AMQOVI+shTEJACnnYeiEfFpkxMJDQWmvD6J40SJr0WgG+kIyx5NaGpc7oNdexhrygoVPuoFKktycaS4bvDtKvueZwBcWXKCCnT5dukNtbhuLvfMC671BLD627O0SOZ7lJNHANwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUZiCuud; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sp+MxwLxoLIPP9VzrkIaaRLNIowsRJb7Lb+lUCma31NpP+NF9KpB6ZdMcHHlpF9bRpsrxXjNEbS6FtmhL0VYQBiytEHWmptjnBQl8lOSAxSVBOn2TYYMrbHz7h9Dyu+Lgi/l2Wr2OiN+BVNFgrXxgGTvRAZxnrl3KdB/1UXKndY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wK3Cie5i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUZiCuud"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969081F00A3A;
-	Tue, 21 Jul 2026 17:39:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wK3Cie5i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516AB1F000E9;
+	Tue, 21 Jul 2026 17:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655586;
-	bh=r8uLvb/2KFt8eoKOVKz9W1SKXo98rCe4h7CZO/3Jpko=;
+	s=korg; t=1784655588;
+	bh=AcUOAV9Pko9D05EMCKdBX0D4KSOEtmy0RbFopVfXgpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gUZiCuudJWeiPuvvE6JQsg4phAhMHJYH5dY7Osy0wIrgWb3BjshC7h8u00hYM4vS3
-	 mVsTSrdCbgbvTjPk03pWll8KlSD4BN2zbXob16G80FhMyOd3om3Q+BF3k4iKINdnny
-	 jTVcwBkSqxqxrQKcyVGerVHMswOXYcK71bLMP+3Y=
+	b=wK3Cie5inClL3GucAifVs7sz9+Fcv6zZY1tcY51NODIb9jSjILvUE2GJOMh2FJWYy
+	 W1lvWn6RmRtIrKbUC1FHBSFHchlJZftEQNYm0xbltQfmOD+tacW8kWoMxye/ZWdZCU
+	 /IfdMKjUz2IguMWEXvnFI5byCyeYDss39Q+NqRjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Werner Kasselman <werner@verivus.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0066/1611] drm/amdgpu: fix integer overflow in amdgpu_gem_align_pitch()
-Date: Tue, 21 Jul 2026 17:03:02 +0200
-Message-ID: <20260721152516.318004640@linuxfoundation.org>
+Subject: [PATCH 6.18 0067/1611] drm/radeon: fix integer overflow in radeon_align_pitch()
+Date: Tue, 21 Jul 2026 17:03:03 +0200
+Message-ID: <20260721152516.341227303@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,61 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Werner Kasselman <werner@verivus.ai>
 
-[ Upstream commit fc3659f178d4a65599167d5a648bbeef4b0d4446 ]
+[ Upstream commit ce3b24eb3ee8f82de851535f516bf21f83e82259 ]
 
-amdgpu_gem_align_pitch() is passed u32 width and cpp from dumb buffer
-creation but uses signed int internally.  The round-up add and the
-aligned * cpp multiplication can overflow, returning zero or a negative
-pitch.  A zero pitch propagates to a zero-sized GEM object allocation
-that reaches userspace via DRM_IOCTL_MODE_CREATE_DUMB.
+radeon_align_pitch() has the same kind of overflow issue as the old
+amdgpu helper: both the alignment round-up add and the final
+'aligned * cpp' calculation can overflow signed int.
 
-Switch the helper to unsigned int and use check_add_overflow() /
-check_mul_overflow() so wraparound returns zero.  Reject a zero pitch
-or size in amdgpu_mode_dumb_create() rather than allocating a zero-
-byte BO.
+If that wraps, radeon_mode_dumb_create() can end up returning an
+invalid pitch or creating a zero-sized dumb buffer.
 
-Fixes: 8e911ab770f7 ("drm: amdgpu: Replace drm_fb_get_bpp_depth() with drm_format_plane_cpp()")
+Fix this by using check_add_overflow() for the alignment round-up and
+check_mul_overflow() for the final pitch calculation, returning 0 on
+overflow. Also reject zero pitch and size in
+radeon_mode_dumb_create().
+
+Found via AST-based call-graph analysis using sqry.
+
+Fixes: ff72145badb8 ("drm: dumb scanout create/mmap for intel/radeon (v3)")
 Signed-off-by: Werner Kasselman <werner@verivus.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/radeon/radeon_gem.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-index 1bc1233487a0b6..cd52ddd27c58b3 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-@@ -27,6 +27,7 @@
-  */
- #include <linux/ktime.h>
- #include <linux/module.h>
-+#include <linux/overflow.h>
- #include <linux/pagemap.h>
- #include <linux/pci.h>
- #include <linux/dma-buf.h>
-@@ -1209,13 +1210,14 @@ int amdgpu_gem_list_handles_ioctl(struct drm_device *dev, void *data,
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/radeon/radeon_gem.c b/drivers/gpu/drm/radeon/radeon_gem.c
+index f86773f3db200a..1e84342ac05134 100644
+--- a/drivers/gpu/drm/radeon/radeon_gem.c
++++ b/drivers/gpu/drm/radeon/radeon_gem.c
+@@ -28,6 +28,7 @@
  
--static int amdgpu_gem_align_pitch(struct amdgpu_device *adev,
--				  int width,
--				  int cpp,
--				  bool tiled)
-+static unsigned int amdgpu_gem_align_pitch(struct amdgpu_device *adev,
-+					   unsigned int width,
-+					   unsigned int cpp,
-+					   bool tiled)
- {
--	int aligned = width;
--	int pitch_mask = 0;
-+	unsigned int aligned = width;
-+	unsigned int pitch_mask = 0;
-+	unsigned int pitch;
+ #include <linux/debugfs.h>
+ #include <linux/iosys-map.h>
++#include <linux/overflow.h>
+ #include <linux/pci.h>
+ 
+ #include <drm/drm_device.h>
+@@ -812,6 +813,7 @@ int radeon_align_pitch(struct radeon_device *rdev, int width, int cpp, bool tile
+ 	int aligned = width;
+ 	int align_large = (ASIC_IS_AVIVO(rdev)) || tiled;
+ 	int pitch_mask = 0;
++	int pitch;
  
  	switch (cpp) {
  	case 1:
-@@ -1230,9 +1232,12 @@ static int amdgpu_gem_align_pitch(struct amdgpu_device *adev,
+@@ -826,9 +828,12 @@ int radeon_align_pitch(struct radeon_device *rdev, int width, int cpp, bool tile
  		break;
  	}
  
@@ -121,20 +111,20 @@ index 1bc1233487a0b6..cd52ddd27c58b3 100644
 +	return pitch;
  }
  
- int amdgpu_mode_dumb_create(struct drm_file *file_priv,
-@@ -1259,8 +1264,12 @@ int amdgpu_mode_dumb_create(struct drm_file *file_priv,
+ int radeon_mode_dumb_create(struct drm_file *file_priv,
+@@ -842,8 +847,12 @@ int radeon_mode_dumb_create(struct drm_file *file_priv,
  
- 	args->pitch = amdgpu_gem_align_pitch(adev, args->width,
- 					     DIV_ROUND_UP(args->bpp, 8), 0);
+ 	args->pitch = radeon_align_pitch(rdev, args->width,
+ 					 DIV_ROUND_UP(args->bpp, 8), 0);
 +	if (!args->pitch)
 +		return -EINVAL;
  	args->size = (u64)args->pitch * args->height;
  	args->size = ALIGN(args->size, PAGE_SIZE);
 +	if (!args->size)
 +		return -EINVAL;
- 	domain = amdgpu_bo_get_preferred_domain(adev,
- 				amdgpu_display_supported_domains(adev, flags));
- 	r = amdgpu_gem_object_create(adev, args->size, 0, domain, flags,
+ 
+ 	r = radeon_gem_object_create(rdev, args->size, 0,
+ 				     RADEON_GEM_DOMAIN_VRAM, 0,
 -- 
 2.53.0
 
