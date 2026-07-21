@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A383E3B6C17;
-	Tue, 21 Jul 2026 22:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C02346771;
+	Tue, 21 Jul 2026 22:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673466; cv=none; b=LcoakqgQXYdk9REOyeKQmxLCYWFytL7kOwDfXApZH+Lb6ykfrXBNtN3e8yhrGJHyIcXuk8Ke1QWAXXdiUQU7d67xF53K4nK0J7fcXaKvxx5d+IbJZ4p19ZvaGNBNIc3XBmBXTuRMWNHOA4PXpx/cDt2KtbheCQVuS7qE4UCZoIk=
+	t=1784673472; cv=none; b=FLyOVC5RVbJ6CrE5UmdH+WhRxz/Kz41jJmWu+lti5iZUhmlkyKUbP4ZCyJWfCCf9AVAW2qENRqvmD4JkX9mdxCUTwPQ4LVIjxidGq+VdrF8i9l8N/21Ix8f6PlptpJTC7+Z8cWBroh7aaTqgtu+9s4JFyvLdmu+XftJi8s4CSsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673466; c=relaxed/simple;
-	bh=ad5R6vphNYaJQq8uNNccj213yU7ZwNBVWZFQkn4O67Q=;
+	s=arc-20240116; t=1784673472; c=relaxed/simple;
+	bh=dtB6q/glweO79BUL05ejaNatG4lNQrPzkpdfj3cbzX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C+zGsSblqj7GKzGTQ8hJ2IJs9+UHQXRL2WaEbhZ5IN0NS1dkdeCFbgZsIFaMYQB2VWQGk4yX/YDG1YOlStHtKMh/n9C3TrDre/sRX6eGBefpveY4aaNOewETdSq5W36/6UICm7QB180PwhBg7kaOvB2D+hSF+p1H2KbylKq3lpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8UcDiXS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DC9ozz2xasWfgENCAxu2QxMaBY/O6uj2dOgL39rJfXLdkSA2R/nKi7jQDTdb7Epgio5gXMck63RSN4lh/kJSHgnc4GMICS0VYZB/8Dq6E9s8qanaZ1SBjKZMx509CiNMimIPHOtx+GCN1cn18eJYyuMij7goZYv6Q6h4PdJ8ggE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nMGgz8DW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8UcDiXS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146A31F000E9;
-	Tue, 21 Jul 2026 22:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nMGgz8DW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F9E1F000E9;
+	Tue, 21 Jul 2026 22:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673465;
-	bh=vTh+c4c+n/2lzROIfb9/MCzLotHLUdzFxwuhxV11/n8=;
+	s=korg; t=1784673468;
+	bh=PglpJa1D4ngPGMkf/A6bUFIpm9SU3oT0+YJPA/ov9IA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T8UcDiXSfTQyf3xwLoWUc8Xf1JvN3PTBo6G5FPdm4UElHMNwlGTr9GJ4AYgbdzzX+
-	 NNJwt9e8pGkpjMNIGw7nsqn1UI3DDhizWnOTbMCIM2EZlY0+z88eSulbKttePuxaUg
-	 4r3kZ1mMrxxzpubfe5GkH9LW1pp5GUHGN6cvojFM=
+	b=nMGgz8DWkQGuBIjPAnOgwmEwNWQPSVgUJcWZFnznAuyz62HpBLiEFlJaP+wgPGvaN
+	 TF/eb8uEdUKk/xo444OPXaFzfp2TC/DiKiU6cLZKpUgixKX8+tqEC+rYebxgu2NgjR
+	 prCdqPGo3H1nPypMcOWcjOaN34trJnzenvlKJTo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Saravana Kannan <saravanak@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 171/699] driver core: use READ_ONCE() for dev->driver in dev_has_sync_state()
-Date: Tue, 21 Jul 2026 17:18:50 +0200
-Message-ID: <20260721152359.559024729@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.10 131/699] crypto: drbg - Fix returning success on failure in CTR_DRBG
+Date: Tue, 21 Jul 2026 17:18:10 +0200
+Message-ID: <20260721152358.665602519@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,51 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit e9506871a8ea304cde48ff4a57226df2aadddae3 ]
+commit 39a31ad9e2a5ed7e9c9c6f711dca96c8c8f5f26b upstream.
 
-dev_has_sync_state() reads dev->driver twice without holding
-device_lock() -- once for the NULL check and once to dereference
-->sync_state. Some callers only hold device_links_write_lock, which
-doesn't prevent a concurrent unbind from clearing dev->driver via
-device_unbind_cleanup().
+drbg_ctr_generate() sometimes returns success when it fails, leaving the
+output buffer uninitialized.  Fix it.
 
-Fix it by reading dev->driver exactly once with READ_ONCE(), pairing
-with the WRITE_ONCE() in device_set_driver().
-
-Link: https://lore.kernel.org/driver-core/DHW8QPU1VU1F.3P6PH69HLFBYC@kernel.org/
-Fixes: ac338acf514e ("driver core: Add dev_has_sync_state()")
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Saravana Kannan <saravanak@kernel.org>
-Link: https://patch.msgid.link/20260418162221.1121873-1-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: cde001e4c3c3 ("crypto: rng - RNGs must return 0 in success case")
+Cc: stable@vger.kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/device.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ crypto/drbg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/device.h b/include/linux/device.h
-index 77d6493c26a484..3575a28fee7f3c 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -842,9 +842,12 @@ static inline struct device_node *dev_of_node(struct device *dev)
+--- a/crypto/drbg.c
++++ b/crypto/drbg.c
+@@ -601,7 +601,7 @@ static int drbg_ctr_generate(struct drbg
+ 	if (addtl && !list_empty(addtl)) {
+ 		ret = drbg_ctr_update(drbg, addtl, 2);
+ 		if (ret)
+-			return 0;
++			return ret;
+ 	}
  
- static inline bool dev_has_sync_state(struct device *dev)
- {
-+	struct device_driver *drv;
-+
- 	if (!dev)
- 		return false;
--	if (dev->driver && dev->driver->sync_state)
-+	drv = READ_ONCE(dev->driver);
-+	if (drv && drv->sync_state)
- 		return true;
- 	if (dev->bus && dev->bus->sync_state)
- 		return true;
--- 
-2.53.0
-
+ 	/* 10.2.1.5.2 step 4.1 */
 
 
