@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED722DBF75;
-	Tue, 21 Jul 2026 18:52:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885092DF3EA;
+	Tue, 21 Jul 2026 18:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659968; cv=none; b=TcAVyCTOMQBi4AdZ3X1u5GOpDS/4ANwhZ5e+qa216M4hl7LvAz8kys3Km/SfK9qCTnmQ/I4qn9kthIDHtIKOlN1BII9pB6oi3TS0sTvA718pSACRSRn/1eOktCuURJO2RgGdZt3PskP0XprE5KiPN9kX3SjAnnlZhbHyvStQuGM=
+	t=1784659970; cv=none; b=L87AHT/Xh6aPQcw4/VOLLErE69PV1zL9JVJt0RlWltqNP3a/f1BBZ9frtw75jO1bdIZVracN58nuzHoyWKyczCzSo5UT/s07iwT9gkoeM0ZYHQ6wF+HJvMd/rDOeenz8A9yvUWQw8n4Kk37CURlusvRC05CpqTCfWp7Q4ju2TSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659968; c=relaxed/simple;
-	bh=kBxgV7mRYE3OhEpNBvcD6L4TR1+VzQvy9+1y0B7hSdM=;
+	s=arc-20240116; t=1784659970; c=relaxed/simple;
+	bh=nN7g0Q+8/EYV+Shkbz0uQqGGSOBQIPBf1v2oJSHghyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fRAumzAjv0PFPEyYpB6m2KwBjW7Gxtfro+4Aw1ftoY/pAxrPlpy/DSzair3WCobr+/lORdPBf68ajpATmJId0wZP1swwYWrwfllW91Ty9c0VKqiD7qNWyW4duOKuOknuEiLyXFf4/NnZzxrFVxII1oDxsMfDeE7qkL1Hk9cFYjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOZLCus+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n7N+e7K7vDbjJqqYDZUc5ojuslRJuQEYwajCTHTBbhV6JjXhX04ssT13mQT7BfyZG/0zWr4HZvxR8/oVp8OsRFS+Zcz4yjOc6AuJzCjSAkoiPMfuAMLk8bHegYYZ01BVXqjezT4gC7usUVJr0AjCwJtnOwkpLBHBUPCaVnaUwQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZQBoEGn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOZLCus+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 493411F000E9;
-	Tue, 21 Jul 2026 18:52:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZQBoEGn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B1A1F000E9;
+	Tue, 21 Jul 2026 18:52:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659966;
-	bh=HjmqAbzFuCK7hCnnJTPlANDIWkUP3qq67yCiWrxLIWQ=;
+	s=korg; t=1784659969;
+	bh=xOOgMrpIEotfqmJn/nP8LACIpOVqK2rKIlAaYfA9fNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WOZLCus+mYuRweJbC4myvdwe3AE39vE9GggJBxnWAmPWT6cl5eJbKSET23r5prQ+j
-	 /K8u5PcsXXfo6YyOVMGsu2fRW9sCIy5jyUpbBEZwKuILa4uSBEma9BwH7ODasJ/0yc
-	 y4TBLxjcQltBYY+GqeUcUEMuAVcU9T0ruCCBD0DE=
+	b=PZQBoEGnqlvEjgXwkCFK2dWh0k5u4XETwajlnnMe/rfP48lGt2Jmcic/u/gHuZqcO
+	 qTBUwVbU7hbxeC7+PeGcvA9aZyJMNy6PjtfaKjmQzcYPxxzph2SwouX9SzXGX3pU9B
+	 1kkiOArjDRzWbAvB7wr7a3ThLsvnRZltEwuPZ92E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Eric Joyner <eric.joyner@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0801/2077] dt-bindings: net: updated interrupt type to be active low, level triggered
-Date: Tue, 21 Jul 2026 17:07:54 +0200
-Message-ID: <20260721152611.685698227@linuxfoundation.org>
+Subject: [PATCH 7.1 0802/2077] ionic: Fix check in ionic_get_link_ext_stats
+Date: Tue, 21 Jul 2026 17:07:55 +0200
+Message-ID: <20260721152611.708851777@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,44 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
+From: Brett Creeley <brett.creeley@amd.com>
 
-[ Upstream commit 31e56112e6544afba0a50d60251175585ee62943 ]
+[ Upstream commit 7678e69079c10b2fb10977f28f44ddb22971ea5b ]
 
-According to OPEN Alliance 10BASE-T1x MACPHY Serial Interface (TC6)
-specification, interrupt type is active low, level triggered interrupt.
+The current check will fail if SR-IOV is not initialized for the
+physical function; this is because is_physfn is 0 if sriov_init() isn't
+run or fails. Change the check that prevents getting the link down count
+to use is_virtfn instead so that VFs don't get this functionality, which
+was the original intent.
 
-Specification calls for when interrupt level will be asserted and what
-condition it is de-asserted. By using edge triggered interrupt, there is a
-potential chance to miss it, particularly if it is asserted when interrupt
-is disabled.
-
-Level triggered interrupt can't be missed as it gets de-asserted only on
-interrupt handler taking actions on interrupting conditions.
-
-Fixes: ac49b950bea9 ("dt-bindings: net: add Microchip's LAN865X 10BASE-T1S MACPHY")
-Signed-off-by: Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260611-level-trigger-v5-4-4533a9e85ce2@onsemi.com
+Fixes: 132b4ebfa090 ("ionic: add support for ethtool extended stat link_down_count")
+Signed-off-by: Brett Creeley <brett.creeley@amd.com>
+Signed-off-by: Eric Joyner <eric.joyner@amd.com>
+Link: https://patch.msgid.link/20260614205303.48088-2-eric.joyner@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/net/microchip,lan8650.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/pensando/ionic/ionic_ethtool.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/net/microchip,lan8650.yaml b/Documentation/devicetree/bindings/net/microchip,lan8650.yaml
-index 61e11d4a07c407..766ff58147ae36 100644
---- a/Documentation/devicetree/bindings/net/microchip,lan8650.yaml
-+++ b/Documentation/devicetree/bindings/net/microchip,lan8650.yaml
-@@ -67,7 +67,7 @@ examples:
-         pinctrl-names = "default";
-         pinctrl-0 = <&eth0_pins>;
-         interrupt-parent = <&gpio>;
--        interrupts = <6 IRQ_TYPE_EDGE_FALLING>;
-+        interrupts = <6 IRQ_TYPE_LEVEL_LOW>;
-         local-mac-address = [04 05 06 01 02 03];
-         spi-max-frequency = <15000000>;
-       };
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
+index 78a802eb159f0a..6069fa46091318 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
+@@ -116,8 +116,15 @@ static void ionic_get_link_ext_stats(struct net_device *netdev,
+ {
+ 	struct ionic_lif *lif = netdev_priv(netdev);
+ 
+-	if (lif->ionic->pdev->is_physfn)
+-		stats->link_down_events = lif->link_down_count;
++	if (lif->ionic->pdev->is_virtfn)
++		return;
++
++	if (!lif->ionic->idev.port_info) {
++		netdev_err_once(netdev, "port_info not initialized\n");
++		return;
++	}
++
++	stats->link_down_events = lif->link_down_count;
+ }
+ 
+ static int ionic_get_link_ksettings(struct net_device *netdev,
 -- 
 2.53.0
 
