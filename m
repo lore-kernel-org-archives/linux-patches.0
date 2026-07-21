@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A66F3370EA;
-	Tue, 21 Jul 2026 19:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD823370EA;
+	Tue, 21 Jul 2026 19:52:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663558; cv=none; b=N4YrPS3JW+pN/fzBj13y3koA/zgDNt3GfxYDm8VG4KXXKbBMVrk+dTxqgUSZdyzG0yaYTRpTic3Xf+tx7bjrU1WBELeEWgzYlKA1tKX5rq+tRx4UrRrpUlMHNcwOA/ntI1UuBoRUfRkJBP7tEb1fyoVXjqReu/D/+hXrNefYFlE=
+	t=1784663561; cv=none; b=T4KWEXcXyZfOLk07ccnxJ8dOHjp2CawACBqt7qAdJF5tMeUQabFyMraaILferWS+Ur534jz60fa6aUJDJL9mFugQIKLFLH3floYUXg6Luv4hWKMfCKp9FVDXIRW502NTl7M+jVL9IjY0amXTYt0mgsiWaDiqkrI/W7vJ91crgDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663558; c=relaxed/simple;
-	bh=FtLi5eDbj21cvCWHVDXG6OH827M23cRpVXaImY40ID8=;
+	s=arc-20240116; t=1784663561; c=relaxed/simple;
+	bh=Rxor9iIEypknTxfPKlXYesXOsAxdp8dDam9A8njZ4r8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AHl4UPVwL33T+qRfBTriazoyt3nHSvLbRjOe7Rd0ijEVcH1XO+9FxvW88HA/Mu8dfPg16HUFJRblf9eKz0rbx4kRL5XJHQVPQusntGI2zWEp9TpONSBsrHPGdbmufnq2SUjApbL8V+KuYph/jW/6AA6gFDkxlRhwI657WfuZbtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WxddNjDC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VkqDuMJzIsuxOtBMt5rPOkU+b0hacsQ0UZM89wJ3M50uRtWT3U8swE0N/EPLYLZuKb+UEmSxup48gfWzKqciyOvsIui1yF7Zs/zhYU9PhA2UcOrZTF1exQ74k+5BpTAba4xazTnjRI/H3U3KrEbDW+gaHR4O8e1NJoPSmqqga64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vICT2xk1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WxddNjDC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BFCF1F000E9;
-	Tue, 21 Jul 2026 19:52:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vICT2xk1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39DC1F000E9;
+	Tue, 21 Jul 2026 19:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663557;
-	bh=xy1uv9Z6wNFY4+lcr2alkzIOxgHrFzIaoE2AXIbK+YE=;
+	s=korg; t=1784663560;
+	bh=DpwmHoOoiuyeyFyWuANlhV7oNjHJSV31wJqUIXgRFZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WxddNjDCtmUQtwKcjdjEXUSELxtMFqsDHgp7NgVPLJDNzYD+flHTmjgHqIkMF1Pi6
-	 /jjoO3hwUiqi+OSFD9ihECsz3RJFGY4lS01eVaOwUne/2YvXSTAG0KEIGUEmevELaQ
-	 WxLOxHrHyD1zpanjbd2TMSdejlo7gqWfIEVz8aj0=
+	b=vICT2xk1ErOdnt6q7SGW5hFs1KpyJUf99/AUP0A7qYOOaYFOvxti/qAO9cokTYWQl
+	 gw4gvLE1Ba0LP3olCBmUjwpf+xKy4wCRD2F3rU6eBLbpeajZxdsgHlLFq80z9XZQiX
+	 7QcgUir1OIEzr5kBu9H5OS5cs9+pV6MgI3pJsZEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.12 0867/1276] netfilter: bridge: fix stale prevhdr pointer in br_ip6_fragment()
-Date: Tue, 21 Jul 2026 17:21:50 +0200
-Message-ID: <20260721152505.453325439@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.12 0832/1276] KVM: arm64: vgic: Check the interrupt is still ours before migrating it
+Date: Tue, 21 Jul 2026 17:21:15 +0200
+Message-ID: <20260721152504.677850055@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,78 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 86f3ce81dd2b4b0aa2c3016c989a943e4b1b643d upstream.
+commit 0074b82cdfcb5fd13710a0ac308ade68ac6f6fbe upstream.
 
-br_ip6_fragment() gets prevhdr, a pointer into the skb head, from
-ip6_find_1stfragopt(), then calls skb_checksum_help().  For a cloned skb
-skb_checksum_help() reallocates the head via pskb_expand_head(), leaving
-prevhdr dangling.  It is later dereferenced in ip6_frag_next(), causing a
-use-after-free write.
+vgic_prune_ap_list() drops both ap_list_lock and irq_lock while migrating
+an interrupt to another vCPU. After reacquiring the locks it only checks
+that the affinity is unchanged (target_vcpu == vgic_target_oracle(irq))
+before moving the interrupt, which assumes that an interrupt whose affinity
+is preserved is still queued on this vCPU's ap_list.
 
-Save prevhdr's offset before skb_checksum_help() and recompute it after,
-like commit ef0efcd3bd3f ("ipv6: Fix dangling pointer when ipv6
-fragment").
+That assumption no longer holds if the interrupt is taken off the ap_list
+while the locks are dropped. vgic_flush_pending_lpis() removes the
+interrupt from the list and sets irq->vcpu to NULL, but leaves
+enabled/pending/target_vcpu untouched. As the interrupt is still enabled
+and pending, vgic_target_oracle() returns the same target_vcpu, so the
+affinity check passes and list_del() is run a second time on an entry that
+has already been removed.
 
-  BUG: KASAN: slab-use-after-free in ip6_frag_next (net/ipv6/ip6_output.c:857)
-  Write of size 1 at addr ffff888013ff5016 by task exploit/141
-  Call Trace:
-   ...
-   kasan_report (mm/kasan/report.c:595)
-   ip6_frag_next (net/ipv6/ip6_output.c:857)
-   br_ip6_fragment (net/ipv6/netfilter.c:212)
-   nf_ct_bridge_post (net/bridge/netfilter/nf_conntrack_bridge.c:407)
-   nf_hook_slow (net/netfilter/core.c:619)
-   br_forward_finish (net/bridge/br_forward.c:66)
-   __br_forward (net/bridge/br_forward.c:115)
-   maybe_deliver (net/bridge/br_forward.c:191)
-   br_flood (net/bridge/br_forward.c:245)
-   br_handle_frame_finish (net/bridge/br_input.c:229)
-   br_handle_frame (net/bridge/br_input.c:442)
-   ...
-   packet_sendmsg (net/packet/af_packet.c:3114)
-   ...
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  Kernel panic - not syncing: Fatal exception in interrupt
+Also check that the interrupt is still assigned to this vCPU
+(irq->vcpu == vcpu) before moving it.
 
-Fixes: 764dd163ac92 ("netfilter: nf_conntrack_bridge: add support for IPv6")
+Fixes: 0919e84c0fc1 ("KVM: arm/arm64: vgic-new: Add IRQ sync/flush framework")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://patch.msgid.link/aiHnI1mu6SGQrgnz@v4bel
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/netfilter.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/vgic/vgic.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/net/ipv6/netfilter.c
-+++ b/net/ipv6/netfilter.c
-@@ -131,7 +131,7 @@ int br_ip6_fragment(struct net *net, str
- 	ktime_t tstamp = skb->tstamp;
- 	struct ip6_frag_state state;
- 	u8 *prevhdr, nexthdr = 0;
--	unsigned int mtu, hlen;
-+	unsigned int mtu, hlen, nexthdr_offset;
- 	int hroom, err = 0;
- 	__be32 frag_id;
+--- a/arch/arm64/kvm/vgic/vgic.c
++++ b/arch/arm64/kvm/vgic/vgic.c
+@@ -684,15 +684,16 @@ retry:
+ 		raw_spin_lock(&irq->irq_lock);
  
-@@ -140,6 +140,7 @@ int br_ip6_fragment(struct net *net, str
- 		goto blackhole;
- 	hlen = err;
- 	nexthdr = *prevhdr;
-+	nexthdr_offset = prevhdr - skb_network_header(skb);
+ 		/*
+-		 * If the affinity has been preserved, move the
+-		 * interrupt around. Otherwise, it means things have
+-		 * changed while the interrupt was unlocked, and we
+-		 * need to replay this.
++		 * If the interrupt is still ours and its affinity has
++		 * been preserved, move it around. Otherwise, it means
++		 * things have changed while the interrupt was unlocked
++		 * (it may even have been taken off the list with its
++		 * affinity left untouched), and we need to replay this.
+ 		 *
+ 		 * In all cases, we cannot trust the list not to have
+ 		 * changed, so we restart from the beginning.
+ 		 */
+-		if (target_vcpu == vgic_target_oracle(irq)) {
++		if (irq->vcpu == vcpu && target_vcpu == vgic_target_oracle(irq)) {
+ 			struct vgic_cpu *new_cpu = &target_vcpu->arch.vgic_cpu;
  
- 	mtu = skb->dev->mtu;
- 	if (frag_max_size > mtu ||
-@@ -158,6 +159,7 @@ int br_ip6_fragment(struct net *net, str
- 	    (err = skb_checksum_help(skb)))
- 		goto blackhole;
- 
-+	prevhdr = skb_network_header(skb) + nexthdr_offset;
- 	hroom = LL_RESERVED_SPACE(skb->dev);
- 	if (skb_has_frag_list(skb)) {
- 		unsigned int first_len = skb_pagelen(skb);
+ 			list_del(&irq->ap_list);
 
 
