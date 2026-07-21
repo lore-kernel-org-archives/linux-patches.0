@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79F724A078;
-	Tue, 21 Jul 2026 21:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9546F44AB7F;
+	Tue, 21 Jul 2026 21:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668788; cv=none; b=ITbW8poGobuevEZ/a9/hHLR/MH71kz0brNpZ+9MLypKEg/JfxwsY6EsQCt293thyEc982Hd62n9a8sREXTydSN8IM/7/wj4ZhvApJhmAP3Emar0RzU0jZgqjKyx4iiaw/VS3oGuqFgR2QfuLIoMYnMd/2UJJ4JYSnw73gsq+aJk=
+	t=1784668792; cv=none; b=HS87IytDafuY/RuHp+sCm+IBSUhJimZ1dKZAidarew2FOA+uZGJMFLM7Ky5ieZjTp2uNkvb56cZcvnbem6f4yeqjcE0HUCjMB+aRKz2bQi/2MzN50CnRebnUsLT4jjgKdbd9hLxIluUXobRv01EPpAmUCF+2hh9dJZoQqDECYX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668788; c=relaxed/simple;
-	bh=P6MWYk5+FaSzz1/aNuwffERBNymzOK9CdaSB5CUIWaY=;
+	s=arc-20240116; t=1784668792; c=relaxed/simple;
+	bh=S/9alnhcZbPGrziul94sBjAe2FIeoIprM+FYTZWZHVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ii04xjUoWvKnmM65v5KagDk+9KO4vSeEwLht5QzdnfTBi7OIThjFdAB37UNcMpz0InDAiuj3j3Lnz3owCIPwRI1s3yM06nfYqwr40zlBzDLnJjn3xr7D9TAvNrkyhi2gHB9y+cdol/8eC69JjcYNF/ysY0Pny/Nf/EEtVvNpLjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULrHKY5P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kCWitZF8Tv/unaDn/t6mzuvCRJj/lkRESg9/g+Az8PxteZfl2czdpYP5tOJUHYr3s86KUFSc0sj4c+2iRhW/+4NYuOk0Ad+U35u3F9+bLs9+T7Fl3inHpVcQdn0QeJX3VDN/6xA89M23GZEJyomu5txQTf9RyswphNXR49pGZ8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VEZzEh6r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULrHKY5P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53EBE1F000E9;
-	Tue, 21 Jul 2026 21:19:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VEZzEh6r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05ACF1F000E9;
+	Tue, 21 Jul 2026 21:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668786;
-	bh=YQjXsTKDhwnz3Mzs/+xVbWQmW/mzHgMpQYb688/CxMs=;
+	s=korg; t=1784668789;
+	bh=gGR79NUFi+Xyk7ViXdU6merJwQHYNLEXGgZxvbTq3S4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ULrHKY5Py33nqC1F/22EP+cqVqgWg52AwwiiZ8G3ccKBBqbR6fOFmqB2+Im/kJRup
-	 E0ajFyRi+tbKFIHwFHhyCIXlKqdAC7iXZzalXRombADsIG9UR/JhWKCPxtM+kskcui
-	 zKWWETuowQKbBD8jdiupgp9oJ1i5q+Ht1I5pz9tU=
+	b=VEZzEh6rA4SmEk8IW0ZwbwHXjgDYRSSbt8Zrzj8ONGEKeaH5wanRWr+OXeK4U6q6w
+	 5eQF1mHeae9gXjtf5Zbjk7A4uLehP0CFEJDAIRE3TRFFE2vbPnGxUa1Ap2E+ARJ3Xa
+	 QbFsojiUQQ34PkflRI2wFdt4AITiyNZS60RxRd2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0308/1067] crypto: ccp - Treat zero-length cert chain as query for blob lengths
-Date: Tue, 21 Jul 2026 17:15:09 +0200
-Message-ID: <20260721152431.486247068@linuxfoundation.org>
+Subject: [PATCH 6.1 0309/1067] net/sched: sch_htb: do not change sch->flags in htb_dump()
+Date: Tue, 21 Jul 2026 17:15:10 +0200
+Message-ID: <20260721152431.507572115@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,73 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ef8c9dacda2871accd64e3eda951fef6b788b1ea ]
+[ Upstream commit 9b949fa69129e4b694ed11ee3be6d6edd4a9b8f4 ]
 
-When handling a PDH export, treat a zero-length userspace cert chain buffer
-as a request to query the length of the relevant blobs.  Failure to account
-for the zero-length buffer trips a BUG_ON() when running with
-CONFIG_DEBUG_VIRTUAL=y due to trying to get the physical address of the
-ZERO_SIZE_PTR (returned by kzalloc() on the bogus allocation).
+htb_dump() runs without holding qdisc spinlock.
 
-   kernel BUG at arch/x86/mm/physaddr.c:28 !
-  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-  CPU: 30 UID: 0 PID: 28580 Comm: syz.2.18 Kdump: loaded
-  Tainted: G        W           6.18.16-smp-DEV #1 NONE
-  Tainted: [W]=WARN
-  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 12.62.0-0 11/19/2025
-   RIP: 0010:__phys_addr+0x16a/0x180 arch/x86/mm/physaddr.c:28
-  RSP: 0018:ffffc9008329fc80 EFLAGS: 00010293
-  RAX: ffffffff8179110a RBX: 0000778000000010 RCX: ffff8884e6992600
-  RDX: 0000000000000000 RSI: 0000000080000010 RDI: 0000778000000010
-  RBP: ffffc9008329fdf0 R08: 0000000000000dc0 R09: 00000000ffffffff
-  R10: dffffc0000000000 R11: fffffbfff126d297 R12: dffffc0000000000
-  R13: 1ffff92010653fc8 R14: 0000000080000010 R15: dffffc0000000000
-  FS:  0000555556bec9c0(0000) GS:ffff88aa4ce1c000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00007fd3159e7000 CR3: 00000004fbc44000 CR4: 0000000000350ef0
-  Call Trace:
-   <TASK>
-    [<ffffffff853d3869>] sev_ioctl_do_pdh_export+0x559/0x7a0 drivers/crypto/ccp/sev-dev.c:2308
-    [<ffffffff853d1fdd>] sev_ioctl+0x2cd/0x480 drivers/crypto/ccp/sev-dev.c:2556
-    [<ffffffff82549ebc>] vfs_ioctl fs/ioctl.c:52 [inline]
-    [<ffffffff82549ebc>] __do_sys_ioctl fs/ioctl.c:598 [inline]
-    [<ffffffff82549ebc>] __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:584
-    [<ffffffff8630115f>] do_syscall_x64 arch/x86/entry/syscall_64.c:64 [inline]
-    [<ffffffff8630115f>] do_syscall_64+0x9f/0xf40 arch/x86/entry/syscall_64.c:98
-   [<ffffffff81000136>] entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  RIP: 0033:0x7fd3158eac39
-   </TASK>
+It is illegal to touch sch->flags with non locked RMW,
+as concurrent readers might see intermediate wrong values.
 
-Thankfully, the bug is benign outside of CONFIG_DEBUG_VIRTUAL=y as getting
-the physical address is just arithmetic, and the PSP errors out before
-trying to write to the garbage address (which it must, otherwise querying
-the blob lengths would clobber memory at pfn=0).
+Set TCQ_F_OFFLOADED in control path (htb_init()) instead.
 
-Fixes: 76a2b524a4b1 ("crypto: ccp: Implement SEV_PDH_CERT_EXPORT ioctl command")
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: d03b195b5aa0 ("sch_htb: Hierarchical QoS hardware offload")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260514095935.3926276-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/sev-dev.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/sch_htb.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
-index 0870c85d6d5675..26fe13970640d1 100644
---- a/drivers/crypto/ccp/sev-dev.c
-+++ b/drivers/crypto/ccp/sev-dev.c
-@@ -1011,7 +1011,8 @@ static int sev_ioctl_do_pdh_export(struct sev_issue_cmd *argp, bool writable)
- 	/* Userspace wants to query the certificate length. */
- 	if (!input.pdh_cert_address ||
- 	    !input.pdh_cert_len ||
--	    !input.cert_chain_address)
-+	    !input.cert_chain_address ||
-+	    !input.cert_chain_len)
- 		goto cmd;
+diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
+index 7aac0916205b17..99e1a4c1fcb13d 100644
+--- a/net/sched/sch_htb.c
++++ b/net/sched/sch_htb.c
+@@ -1145,6 +1145,7 @@ static int htb_init(struct Qdisc *sch, struct nlattr *opt,
+ 	 * parts (especially calling ndo_setup_tc) on errors.
+ 	 */
+ 	q->offload = true;
++	sch->flags |= TCQ_F_OFFLOADED;
  
- 	input_pdh_cert_address = (void __user *)input.pdh_cert_address;
+ 	return 0;
+ }
+@@ -1205,11 +1206,6 @@ static int htb_dump(struct Qdisc *sch, struct sk_buff *skb)
+ 	struct nlattr *nest;
+ 	struct tc_htb_glob gopt;
+ 
+-	if (q->offload)
+-		sch->flags |= TCQ_F_OFFLOADED;
+-	else
+-		sch->flags &= ~TCQ_F_OFFLOADED;
+-
+ 	sch->qstats.overlimits = q->overlimits;
+ 	/* Its safe to not acquire qdisc lock. As we hold RTNL,
+ 	 * no change can happen on the qdisc parameters.
 -- 
 2.53.0
 
