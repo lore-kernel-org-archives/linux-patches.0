@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBC746D56F;
-	Tue, 21 Jul 2026 18:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C62246D56F;
+	Tue, 21 Jul 2026 18:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658730; cv=none; b=MA6kO8nuF4QFBmVY8QGNsDhxJVmvTLGPD6WsEhz00NLXYFOC8SS05yLustUZwgDUDm3nMHfffEf8yp+Llw9W+xMwCZ8isU8mcSYOm7XYFz1pQuIgGatJKs283kRgTVrefCi5ApY9pCJvUMwIKsCI4ZL5Wipj72/4MBikAN0skk4=
+	t=1784658732; cv=none; b=HGlLrF+1//Jh2odDP4UNIgCpl+Gr9LWDxhnFg//P1iEBwjo7tLZc/k5wJzsi548THE+YC/4Rxg/N6plrLPB5/ELbc4aCmUBQuoZmIHZbfqe65ZvaSmUjDUThj2NldT2wJQHqAWhdbv6sRN0eQ9YLXE1xhfM1l+gM5n8HliIMbrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658730; c=relaxed/simple;
-	bh=+3yJV289jdLV1ydVP9KVeNjRUT4eExvooJPsV8fV4Kw=;
+	s=arc-20240116; t=1784658732; c=relaxed/simple;
+	bh=eWQ1M+PeM4thfgjYTQeiygYB6Dy32guQ/Hi+Rchl0go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BLKaX4JZgip+4s4UEzQ7BpjfPWAgTer3R3lK7XIZj5c0/EGC7wcCFf7aNXtPRiQXu3Ffh995VbWiIgwCqp7Srcppl1gj2GbochEGmXT/TsZhXI1LBjS6KpNaPygXnDNZftYFOXRdfJ0eDfLFhDKXg/skzpPATqACavlo0TF0AP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7v3YpMc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=boxMMYPIA6XjOdE8O53eEvwfmkZUbqaZeURh7kAj0UuysPwRf5JBNpHwYN74kxYLZBZeOu1FpBykqImiW/nV9QIB4J524i7t5c24O0DDrG9ycdBe5Q9989AwP+5aE5GRkD0WbP6HRfsKc8BJAC3lbqknOvLqaV+uaBJwYHJ9XWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3e5KBnk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7v3YpMc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A67B1F000E9;
-	Tue, 21 Jul 2026 18:32:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3e5KBnk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED461F000E9;
+	Tue, 21 Jul 2026 18:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658728;
-	bh=LvGOqw62CaNK2Cip0ffL8BnEpPD2ZSvCRf2vBpEeVOk=;
+	s=korg; t=1784658731;
+	bh=Ti+vW0+1B7saij+qMP+saJozaMxANPOb7ZDhbEVIIgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m7v3YpMcOSPGf87j1s/MkVXHQuG6lKjCxtkVsx4ZigHfFzNf0d6MQvjCKyUYvEqjQ
-	 BUi7VEqyCF6QzA12rV5TLS+x6ed5ov30D2if8mRFm+a7LOheASjCQCztKnd5bbWm/t
-	 Xa7lbFOSJNpwC/NTM1qXrp9GPNdIdhd0S7o/HcDA=
+	b=U3e5KBnk5YoQT6HS5jUum9MLSsBA7ekF3QnFvktd34tWcPVDXv3jxVzOCijw2hZDu
+	 0Q2IiXlqqJPh3JMUzAZLBKkC6hhKx7FeHqsGesNj3PgEN0zePZBojcy3YNtcR2UmQn
+	 2ZhV8HTZSbT9bOTRjn9m5uAwI1rN40Me8qgGCZrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 1209/1611] cifs: invalidate cfid on unlink/rename/rmdir
-Date: Tue, 21 Jul 2026 17:22:05 +0200
-Message-ID: <20260721152542.628731829@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.18 1210/1611] mfd: tps6586x: Fix OF node refcount
+Date: Tue, 21 Jul 2026 17:22:06 +0200
+Message-ID: <20260721152542.652425339@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,97 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit f71d68d2b473e47db260c27c98212829590d8bae upstream.
+commit 3001ed2b4e06da2276c42ace6551617065a5b1f9 upstream.
 
-Today we do not invalidate the cached_dirent or the entire
-parent cfid when a dentry in a dir has been removed/moved.
+Platform devices created with platform_device_alloc() call
+platform_device_release() when the last reference to the device's
+kobject is dropped. This function calls of_node_put() unconditionally.
+This works fine for devices created with platform_device_register_full()
+but users of the split approach (platform_device_alloc() +
+platform_device_add()) must bump the reference of the of_node they
+assign manually. Add the missing call to of_node_get().
 
-This change invalidates the parent cfid so that we don't serve
-directory contents from the cache.
-
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: stable@vger.kernel.org
+Fixes: 62f6b0879304 ("tps6586x: Add device tree support")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260521-pdev-fwnode-ref-v1-1-88c324a1b8d2@oss.qualcomm.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/inode.c |   30 +++++++++++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+ drivers/mfd/tps6586x.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -28,6 +28,23 @@
- #include "cached_dir.h"
- #include "reparse.h"
+--- a/drivers/mfd/tps6586x.c
++++ b/drivers/mfd/tps6586x.c
+@@ -397,7 +397,7 @@ static int tps6586x_add_subdevs(struct t
  
-+static void cifs_invalidate_cached_dir(struct cifs_tcon *tcon,
-+				       struct dentry *parent)
-+{
-+	struct cached_fid *parent_cfid = NULL;
-+
-+	if (!tcon || !parent)
-+		return;
-+
-+	if (!open_cached_dir_by_dentry(tcon, parent, &parent_cfid)) {
-+		mutex_lock(&parent_cfid->dirents.de_mutex);
-+		parent_cfid->dirents.is_valid = false;
-+		parent_cfid->dirents.is_failed = true;
-+		mutex_unlock(&parent_cfid->dirents.de_mutex);
-+		close_cached_dir(parent_cfid);
-+	}
-+}
-+
- /*
-  * Set parameters for the netfs library
-  */
-@@ -2063,6 +2080,9 @@ psx_del_no_retry:
- 		cifs_set_file_info(inode, attrs, xid, full_path, origattr);
+ 		pdev->dev.parent = tps6586x->dev;
+ 		pdev->dev.platform_data = subdev->platform_data;
+-		pdev->dev.of_node = subdev->of_node;
++		pdev->dev.of_node = of_node_get(subdev->of_node);
  
- out_reval:
-+	if (!rc && dentry->d_parent)
-+		cifs_invalidate_cached_dir(tcon, dentry->d_parent);
-+
- 	if (inode) {
- 		cifs_inode = CIFS_I(inode);
- 		cifs_inode->time = 0;	/* will force revalidate to get info
-@@ -2372,7 +2392,6 @@ int cifs_rmdir(struct inode *inode, stru
- 	}
- 
- 	rc = server->ops->rmdir(xid, tcon, full_path, cifs_sb);
--	cifs_put_tlink(tlink);
- 
- 	cifsInode = CIFS_I(d_inode(direntry));
- 
-@@ -2382,6 +2401,8 @@ int cifs_rmdir(struct inode *inode, stru
- 		i_size_write(d_inode(direntry), 0);
- 		clear_nlink(d_inode(direntry));
- 		spin_unlock(&d_inode(direntry)->i_lock);
-+		if (direntry->d_parent)
-+			cifs_invalidate_cached_dir(tcon, direntry->d_parent);
- 	}
- 
- 	/* force revalidate to go get info when needed */
-@@ -2396,6 +2417,7 @@ int cifs_rmdir(struct inode *inode, stru
- 
- 	inode_set_ctime_current(d_inode(direntry));
- 	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
-+	cifs_put_tlink(tlink);
- 
- rmdir_exit:
- 	free_dentry_path(page);
-@@ -2663,6 +2685,12 @@ unlink_target:
- 	}
- 
- 	/* force revalidate to go get info when needed */
-+	if (!rc) {
-+		cifs_invalidate_cached_dir(tcon, source_dentry->d_parent);
-+		if (target_dentry->d_parent != source_dentry->d_parent)
-+			cifs_invalidate_cached_dir(tcon, target_dentry->d_parent);
-+	}
-+
- 	CIFS_I(source_dir)->time = CIFS_I(target_dir)->time = 0;
- 
- cifs_rename_exit:
+ 		ret = platform_device_add(pdev);
+ 		if (ret) {
 
 
