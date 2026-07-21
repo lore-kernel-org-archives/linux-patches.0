@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D5B46C4A4;
-	Tue, 21 Jul 2026 18:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E493FFFAF;
+	Tue, 21 Jul 2026 18:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657638; cv=none; b=e1wBDpMTEaTkRnRhe6naiDOsWY7KAGJ2zt52Ut7XVpiQY6Nq9R8YHNn9YmnujSRobw9P+ybMDpiaR4sPGuyDJxJBcNDzuZV7PEx+0JrxgnG/ZbH8Yixn/9g0ViDZbU+ww/vQqb8cNTMHxBMS/G2edU3hvzJt0DG+4fPOulO0pLI=
+	t=1784657641; cv=none; b=azBzSHiCr7CFJGvxFCeHIu6BzThY+dr0+AKEOwQgzUSjgzIbhlCAzyCzXKNxXak7QhhMFa+DEfFx6o/AjO9Ta0JptOWvhIe6q6UXH2dPckcJ0LmyC06wmsDr8WJEWwrSiDi09LYdM+i1PeEyS01PP4j3bQ1HyZ9LocTEzC1WxPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657638; c=relaxed/simple;
-	bh=hl1jwgiN+lLN1iYOQ6fdTnA17GlC9wWxS6untf23q3I=;
+	s=arc-20240116; t=1784657641; c=relaxed/simple;
+	bh=w1uZ2cfnap0bvWFJkzYHtj5o/ucaVLuajckpdt4StkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rnC8SgOLfyn99rRWrSycoDVv5jnZtPg/pUh1roMF/oW14b3ZgaRAFhIMpcCV9Ys5DoCDQYESf2uIf9gEf/xPijiBrs4iOoNGrczCZ8MjKA6dcIutrW5Gw+GRevYJtGe48YUf+sYqllRrR2yp5qMTCYIKdyx+U6Vwko35QBgisfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Keddyh0x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uIA4ywNW681W+AEWZVq3d5CgEkW0YFDkaG41pKMwd9G3SZflYKW8LtMAKPBVgGojHzz2tZUF6U3Lt9lEK4O4tL7PNW57pFr8mrfTO4kuVZ4hJgfq1KEoH8GiO5agBeSTNWwzJMbEOimlaLcdE0qo+PC7SqzYo219MEv6g0zmrFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xd0qj4sM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Keddyh0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8621F000E9;
-	Tue, 21 Jul 2026 18:13:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xd0qj4sM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A211F00A3A;
+	Tue, 21 Jul 2026 18:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657637;
-	bh=/uShuD4IXDoYUmZZEJ9bsVwMcIGcVr6/YjnLO/GnwbY=;
+	s=korg; t=1784657640;
+	bh=8gLRYPfNc0ReXYQx6TB1LuWqow5Vkc9sOVDhEmRA/Ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Keddyh0xF/t5bLWYl3TkzsSIU+gKbrYYr8ANnBAIqAkW+UEa0AlsGewzw/Q7WEoXQ
-	 MNkeWNBiD9IYMn4iX0mZaZogXdlLIWFSFeylbitXqsGGIL6+BjS8c6ohez6H+19lAb
-	 BgIm+xDLdxF7s+64raJvG2HeTHez0W++AozGOW00=
+	b=Xd0qj4sMkNk6auQpgTPXKP+UohlgZ1myTkhL44vKaQ9hg19tQKnaF3/s+mnymt0y7
+	 EYLXFn5HywD/8j9dRgJAKQleSW6g9nvdn8K35ljfbxSgGzKOw7y4JAaeU+Xn759yQL
+	 4IJqJYzDYO8ZDv0FoY6/R6o2kald6B7Bp0KgNSG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,12 +31,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	James Clark <james.clark@arm.com>,
 	Leo Yan <leo.yan@linaro.org>,
-	Tor Jeremiassen <tor@ti.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0796/1611] perf cs-etm: Validate num_cpu before metadata allocation
-Date: Tue, 21 Jul 2026 17:15:12 +0200
-Message-ID: <20260721152533.292505769@linuxfoundation.org>
+Subject: [PATCH 6.18 0797/1611] perf cs-etm: Require full global header in auxtrace_info size check
+Date: Tue, 21 Jul 2026 17:15:13 +0200
+Message-ID: <20260721152533.314290105@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -57,57 +56,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 312d91329b8fc6989a916a3f9a12d0674167b7e4 ]
+[ Upstream commit 78d8ba680126f3545e8d0fba667e12d79fd4353b ]
 
-cs_etm__process_auxtrace_info_full() reads num_cpu from untrusted
-perf.data and uses it to allocate the metadata pointer array:
+cs_etm__process_auxtrace_info() checks that header.size covers
+event_header_size + INFO_HEADER_SIZE (16 bytes total), but then
+accesses ptr[CS_PMU_TYPE_CPUS] at offset 24 from the start of the
+event.  A crafted 16-byte auxtrace_info event passes the size check
+but reads out-of-bounds.
 
-  metadata = zalloc(sizeof(*metadata) * num_cpu);
+Include CS_ETM_HEADER_SIZE in the minimum size check so that the
+global header entries (version, pmu_type_cpus, snapshot) are
+guaranteed to fit within the event.
 
-On 32-bit, sizeof(*metadata) is 4, so num_cpu = 0x40000000 overflows
-the multiplication to 0, causing zalloc(0) to return a valid zero-sized
-allocation followed by out-of-bounds writes in the population loop.
-
-Fix by computing priv_size early and using it to bound num_cpu: each
-CPU needs at least one u64 metadata entry, so num_cpu cannot exceed
-the total number of u64 entries in the event's private data area.
-
-Fixes: cd8bfd8c973eaff8 ("perf tools: Add processing of coresight metadata")
+Fixes: 55c1de9973d66516 ("perf cs-etm: Print auxtrace info even if OpenCSD isn't linked")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: James Clark <james.clark@arm.com>
 Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Tor Jeremiassen <tor@ti.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ tools/perf/util/cs-etm-base.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index 4e5b38db7b01be..f2ea3cbea0fdfe 100644
---- a/tools/perf/util/cs-etm.c
-+++ b/tools/perf/util/cs-etm.c
-@@ -3442,6 +3442,18 @@ int cs_etm__process_auxtrace_info_full(union perf_event *event,
+diff --git a/tools/perf/util/cs-etm-base.c b/tools/perf/util/cs-etm-base.c
+index 4abe416e3febd2..aebef71d3a0a1d 100644
+--- a/tools/perf/util/cs-etm-base.c
++++ b/tools/perf/util/cs-etm-base.c
+@@ -170,7 +170,9 @@ int cs_etm__process_auxtrace_info(union perf_event *event,
+ 	u64 *ptr = NULL;
+ 	u64 hdr_version;
+ 
+-	if (auxtrace_info->header.size < (event_header_size + INFO_HEADER_SIZE))
++	/* Ensure priv[] is large enough for the global header entries */
++	if (auxtrace_info->header.size < (event_header_size + INFO_HEADER_SIZE +
++					  CS_ETM_HEADER_SIZE))
+ 		return -EINVAL;
+ 
  	/* First the global part */
- 	ptr = (u64 *) auxtrace_info->priv;
- 	num_cpu = ptr[CS_PMU_TYPE_CPUS] & 0xffffffff;
-+
-+	/*
-+	 * Bound num_cpu by the event size: the global header consumes
-+	 * CS_ETM_HEADER_SIZE bytes, and each CPU needs at least one u64
-+	 * metadata entry after that.
-+	 */
-+	priv_size = total_size - event_header_size - INFO_HEADER_SIZE -
-+		    CS_ETM_HEADER_SIZE;
-+	if (num_cpu <= 0 || priv_size <= 0 ||
-+	    num_cpu > priv_size / (int)sizeof(u64))
-+		return -EINVAL;
-+
- 	metadata = zalloc(sizeof(*metadata) * num_cpu);
- 	if (!metadata)
- 		return -ENOMEM;
 -- 
 2.53.0
 
