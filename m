@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2094246C4D1;
-	Tue, 21 Jul 2026 17:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09CD46C4D5;
+	Tue, 21 Jul 2026 17:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655157; cv=none; b=VhEUDNNE2Owo67bz2t5cNmcG0q9BxVMvkjfiVtK22ZiyzjDf0ApNUgRFlnMFGNgZm2UXs99VRhH7kT5CUziWm0bvQgrP8bRbqQIA9Oj8Z5QClLNC9O3hZzstmbT9x5flsETR6NWDZ1rjyfNxOj9CpQRu01jFdQ/Kt0V75OB4rbA=
+	t=1784655159; cv=none; b=rDOLHmT/78APel1z3QLsFltehKCVnKo233QvHCxDoy/SWeduSjF1JezEcWsFCSvr9YqbyyLeReXuK3j0uxgmLB/2InABd0IeBVa/7paAFH2dsnjzIMowvyjb/jOjvd/SxLoKaVjapoXn1MedyIElImzsDRto0+ZjgGJFEmvjIC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655157; c=relaxed/simple;
-	bh=KSuO/hf5SCLRJMJvQPBr1Vj01WvdF3Cax1i3KrLICRM=;
+	s=arc-20240116; t=1784655159; c=relaxed/simple;
+	bh=md45yWuQTDqCD3pMui7My5it7+DN5TKOsn+ok/tp9wI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XK5OA0KNioF6BkvhD/HQ7nbkz84qsH9p31gaomfrhPqssYuFbWyyyawfx7LoIqjujKMP1wmW80dzZitQnHtqKO8AZ6ofTKplmdADhCzNRjp1bKnl0vLaELVSizUARjEezGA5WcxwPBVA1d8uDF/Lx58cj7X0W3gpR6XB6eFoPMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1Aly2rs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kqbq8OYQl/n9GCCCH3qvWlYHHTAqLxbC13y3cWWc12PjG6rUtOCcQ2x6m3fqcH5X6IdkjYCHR9LddIxiwNqMrju4hohUw7dzz02G1tGBbvk6IMLlVFfzV2hPt0fD+eEtnwDG2JEeX/LDQbpkddmWgPfMGULc2fR9KsQEFfDDlDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pujPfQ/f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1Aly2rs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866B61F000E9;
-	Tue, 21 Jul 2026 17:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pujPfQ/f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6DD1F000E9;
+	Tue, 21 Jul 2026 17:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655156;
-	bh=lIt4dTlxUB2TezJerCdYyWcQA+e7D0ekYoyT+gfHS7M=;
+	s=korg; t=1784655158;
+	bh=QT5d81YBF5WRGaU2erY0aw+DAKQmsIJlc1WHFCo4PeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z1Aly2rsBNPq4hUTehAbNW7s6NWCIwwGcoz5KDrD2Jp2Dr96WJ6SebFwLUbOIpbbN
-	 xk85zBSMkCS5IM4+bC0h923k3+OYuVc0kQHssD0//B2/QZupUuXz1m1/tDbNTi5L+k
-	 RCzP2T+gY0V3UFvfn07uHqiZ3kipo+PW5+7S2Zao=
+	b=pujPfQ/fYqDS7yFCvIaRtF6x/ZQJxWM4Wcj47wschf+gvYqaG/TyNLtEFWQXxnYnG
+	 7qy3TA733TB4/uzaJdlJciy3e2SY39HLQoqYqL2M3WiKmfexOW5P/4YQooNzXADrlx
+	 joPC+o/ZCqoFlfB0dmoVqBwfemKD2AM69H5ZiYHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Fleming <mfleming@cloudflare.com>,
-	Corey Minyard <corey@minyard.net>
-Subject: [PATCH 7.1 1940/2077] ipmi: Fix user refcount underflow in event delivery
-Date: Tue, 21 Jul 2026 17:26:53 +0200
-Message-ID: <20260721152638.465308600@linuxfoundation.org>
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 7.1 1976/2077] ipvs: reset full ip_vs_seq structs in ip_vs_conn_new
+Date: Tue, 21 Jul 2026 17:27:29 +0200
+Message-ID: <20260721152639.313100055@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,48 +55,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Fleming <mfleming@cloudflare.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-commit 6aa9e61c46465d231e9beddf56af7effd71be682 upstream.
+commit 2975324d164c552b028632f107b567302863b7f6 upstream.
 
-ipmi_alloc_recv_msg(user) takes the temporary user reference owned by the
-receive message, and ipmi_free_recv_msg() drops it again. If event delivery
-fails after allocating receive messages for earlier users,
-handle_read_event_rsp() rolls those messages back with
-ipmi_free_recv_msg().
+Commit 9a05475cebdd ("ipvs: avoid kmem_cache_zalloc in
+ip_vs_conn_new") changed ip_vs_conn_new() to allocate an ip_vs_conn
+object with kmem_cache_alloc().  The function then initializes many
+fields explicitly, but only resets in_seq.delta and out_seq.delta in the
+two struct ip_vs_seq members.
 
-That rollback path still drops user->refcount explicitly after freeing each
-message. The extra put can free a user that remains linked on intf->users,
-so later event delivery may dereference a freed user or trip refcount_t's
-addition-on-zero warning when ipmi_alloc_recv_msg() tries to acquire
-another reference.
+That leaves init_seq and previous_delta uninitialized.  This is normally
+harmless while the corresponding IP_VS_CONN_F_IN_SEQ or
+IP_VS_CONN_F_OUT_SEQ flag is clear.  For connections learned from a sync
+message, however, ip_vs_proc_conn() preserves those flags from
+IP_VS_CONN_F_BACKUP_MASK and passes opt=NULL when the message omits
+IPVS_OPT_SEQ_DATA.  In that case the new connection can be hashed with
+SEQ flags set but with the rest of in_seq/out_seq still containing stale
+slab data.
 
-Remove the stale explicit put and the now-dead user assignment. Keep the
-list_del() and ipmi_free_recv_msg() calls; they are the required rollback
-operations.
+When a packet for such a connection is later handled by an IPVS
+application helper, vs_fix_seq() and vs_fix_ack_seq() use
+previous_delta and init_seq to rewrite TCP sequence numbers.  A malformed
+sync message can therefore make forwarded packets carry stale slab bytes
+in their TCP seq/ack numbers, and can also corrupt the forwarded TCP
+flow.
 
-Fixes: b52da4054ee0 ("ipmi: Rework user message limit handling")
-Cc: stable@vger.kernel.org # v6.18+
-Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
-Message-ID: <20260521130628.3641050-1-matt@readmodwrite.com>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Reset both struct ip_vs_seq members completely before publishing the
+connection.  This matches the existing "reset struct ip_vs_seq" comment
+and keeps the sequence-adjustment gates inactive unless valid sequence
+data is installed later.
+
+Fixes: 9a05475cebdd ("ipvs: avoid kmem_cache_zalloc in ip_vs_conn_new")
+Cc: stable@vger.kernel.org
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: Claude-Code:GLM-5.2
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c |    2 --
- 1 file changed, 2 deletions(-)
+ net/netfilter/ipvs/ip_vs_conn.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -4477,10 +4477,8 @@ static int handle_read_event_rsp(struct
- 			mutex_unlock(&intf->users_mutex);
- 			list_for_each_entry_safe(recv_msg, recv_msg2, &msgs,
- 						 link) {
--				user = recv_msg->user;
- 				list_del(&recv_msg->link);
- 				ipmi_free_recv_msg(recv_msg);
--				kref_put(&user->refcount, free_ipmi_user);
- 			}
- 			/*
- 			 * We couldn't allocate memory for the
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -1411,8 +1411,8 @@ ip_vs_conn_new(const struct ip_vs_conn_p
+ 	cp->app = NULL;
+ 	cp->app_data = NULL;
+ 	/* reset struct ip_vs_seq */
+-	cp->in_seq.delta = 0;
+-	cp->out_seq.delta = 0;
++	memset(&cp->in_seq, 0, sizeof(cp->in_seq));
++	memset(&cp->out_seq, 0, sizeof(cp->out_seq));
+ 
+ 	atomic_inc(&ipvs->conn_count);
+ 	if (unlikely(flags & IP_VS_CONN_F_NO_CPORT)) {
 
 
