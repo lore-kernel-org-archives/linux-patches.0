@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C670343D4FE;
-	Tue, 21 Jul 2026 21:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C48C43D4FE;
+	Tue, 21 Jul 2026 21:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668281; cv=none; b=W9OYhu8mNxZCeZl/hH4xoNEP8AVn6KCyhiGCiVsFLtbRaHnW2NJcwwXHEC8l951KIKE1/xXLWaa4pZ+0Erx+arAmwdXl54BWnYlWt8CoqRLmRNYCHJO35Z+GKBAeOH1tgahfuRPuTQdCi+YZgd3eZbZrAXKd+56/kKmHqn1IeAQ=
+	t=1784668284; cv=none; b=C5eDKSCxDiTROgeRjVJeg4ymh+abg7r9YdHc6NrXsQo3CY3PlBIVfuUA2CXZkJHflqN/5SXF5B2EGKyCobGEKXph6mBCxuQOfJMRR5HmCzR4iC57sm4a6rkGR3u/7M/SuMTIFhyKfl2BYJJWfLNrXb60b3Ros8/z/Us3oQwXtoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668281; c=relaxed/simple;
-	bh=iEddto00NdJ5/nu2efFsyUcvnwRx4ClR1VqiJcmIaww=;
+	s=arc-20240116; t=1784668284; c=relaxed/simple;
+	bh=meWJryh8XzVfY+z6+y5bSI9lK3uhUOGWV9Xs2aD6lpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PpR/0SC/lHymwMeIrsdtJXBb2OyE1bVkiBfyF9OQAZMs6p/QJft/a6wdQzAWLS8VQckCrGUluvXW/GldE7hcOG8lZacdKiguqJ9kW0ycFfcrpKF3BhUNZ2od14CXhdnVMlJJLeAYLkL62H9PUOkDDS6//Q8TeObfCGfl9Q7GLvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pujbIa5C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YbDy4PgwRWw7gXNP4KQiidckERIsNT4kE43MGz8kjQ834u4o8+RYTQkrHK2Oe+BD02ijsr2dgOmt2tj7V4t5Q9cpmi2z+8N0r6taX3oHvY6yYj98DjSQCYa4kWHVvvTtgMwyHsyKK6GZ2hNRj9pem3/CI33aP+S2ia5JWWV304s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgUcfM8k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pujbIa5C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246981F000E9;
-	Tue, 21 Jul 2026 21:11:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgUcfM8k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17971F000E9;
+	Tue, 21 Jul 2026 21:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668279;
-	bh=OmywMeBDgTRlLpYlgyg3/f3RWJUEUPN8HsxP4nvtYm0=;
+	s=korg; t=1784668282;
+	bh=nR0uGVuW2OoZeRoMrRb+/x0ywylQoUv5jQltgfmnfTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pujbIa5CxUaSaQgGHvqgP3ovpMoCpZILHAoCJcdecQFv1ylrmf5KLXSngQ6vToVFG
-	 fhU+o8hgdAcuGrM2S6370r/Ca/n0Jp382UqYz9sPM3mc8xCJXYrkPZNK5bQosrcHm6
-	 1TmUNv4i+7bFRPcNZmI5QNwSaQxhqQm3Olh5tvPY=
+	b=SgUcfM8kqlFNBal1z5lss+xQvsny6W9/JkyB9O/d2IsoUQ2Xc5ugqIaFnh0BZWNWH
+	 1ytX5bWooDmgJBypWCPDobqY5g92ZL+CocKFqL0HBnsh+WCtikuIKyeJuceWMupScC
+	 cmsQ17rzALo5TkjCJK6lBKPhwUWcn4ix5X00W8Tk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijing Yin <yzjaurora@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.1 0117/1067] net: af_key: initialize alg_key_len for IPComp states
-Date: Tue, 21 Jul 2026 17:11:58 +0200
-Message-ID: <20260721152427.205923852@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.1 0100/1067] usb: dwc3: run gadget disconnect from sleepable suspend context
+Date: Tue, 21 Jul 2026 17:11:41 +0200
+Message-ID: <20260721152426.826842270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,111 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijing Yin <yzjaurora@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit d129c3177d7b1138fd5066fcc63a698b3ba415b0 upstream.
+commit 010382937fb69892b3469ac4d30af072262f59e8 upstream.
 
-pfkey_msg2xfrm_state() handles the IPComp (SADB_X_SATYPE_IPCOMP) case by
-allocating x->calg and copying only the algorithm name:
+dwc3_gadget_suspend() takes dwc->lock with IRQs disabled and then calls
+dwc3_disconnect_gadget().  For async callbacks that helper only uses
+plain spin_unlock()/spin_lock(), so the gadget ->disconnect() callback
+still runs with IRQs disabled and any sleepable callback trips Lockdep.
 
-	x->calg = kmalloc_obj(*x->calg);
-	if (!x->calg) {
-		err = -ENOMEM;
-		goto out;
-	}
-	strcpy(x->calg->alg_name, a->name);
-	x->props.calgo = sa->sadb_sa_encrypt;
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
 
-Unlike the authentication (x->aalg) and encryption (x->ealg) branches of
-the same function, the compression branch never initializes
-calg->alg_key_len.  IPComp carries no key and the allocation only
-reserves sizeof(struct xfrm_algo) (i.e. no room for a key), so the field
-is left containing uninitialized slab data.
+The grounded PoC kept the dwc3_gadget_suspend() ->
+dwc3_disconnect_gadget() -> gadget_driver->disconnect() chain, and
+Lockdep reported:
 
-calg->alg_key_len is later used as a length by xfrm_algo_clone() when an
-IPComp state is cloned during XFRM_MSG_MIGRATE:
+  BUG: sleeping function called from invalid context
+  gadget_disconnect+0x21/0x39 [vuln_msv]
+  dwc3_gadget_suspend.constprop.0+0x2b/0x42 [vuln_msv]
 
-	xfrm_state_migrate()
-	  xfrm_state_clone_and_setup()
-	    x->calg = xfrm_algo_clone(orig->calg);
-	      kmemdup(orig, xfrm_alg_len(orig));
+Keep the disconnect callback selection in one common helper, but add a
+sleepable suspend-side wrapper which snapshots the callback under
+dwc->lock and then runs it after spin_unlock_irqrestore().  The regular
+event path still uses the existing spin_unlock()/spin_lock() window.
 
-where xfrm_alg_len() returns sizeof(*alg) + (alg_key_len + 7) / 8.  With
-a non-zero garbage alg_key_len, kmemdup() reads past the end of the
-68-byte calg object.  Adding an IPComp SA via PF_KEY and then migrating
-it triggers (net-next, KASAN, init_on_alloc=0):
-
-  BUG: KASAN: slab-out-of-bounds in kmemdup_noprof+0x44/0x60
-  Read of size 4164 at addr ff11000025a74980 by task diag2/9287
-  CPU: 3 UID: 0 PID: 9287 Comm: diag2 7.1.0-rc6-g903db046d557 #1
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x10e/0x1f0
-   print_report+0xf7/0x600
-   kasan_report+0xe4/0x120
-   kasan_check_range+0x105/0x1b0
-   __asan_memcpy+0x23/0x60
-   kmemdup_noprof+0x44/0x60
-   xfrm_state_migrate+0x70a/0x1da0
-   xfrm_migrate+0x753/0x18a0
-   xfrm_do_migrate+0xb47/0xf10
-   xfrm_user_rcv_msg+0x411/0xb50
-   netlink_rcv_skb+0x158/0x420
-   xfrm_netlink_rcv+0x71/0x90
-   netlink_unicast+0x584/0x850
-   netlink_sendmsg+0x8b0/0xdc0
-   ____sys_sendmsg+0x9f7/0xb90
-   ___sys_sendmsg+0x134/0x1d0
-   __sys_sendmsg+0x16d/0x220
-   do_syscall_64+0x116/0x7d0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-
-  Allocated by task 9287:
-   kasan_save_stack+0x33/0x60
-   kasan_save_track+0x14/0x30
-   __kasan_kmalloc+0xaa/0xb0
-   pfkey_add+0x2652/0x2ea0
-   pfkey_process+0x6d0/0x830
-   pfkey_sendmsg+0x42c/0x850
-   __sys_sendto+0x461/0x4b0
-   __x64_sys_sendto+0xe0/0x1c0
-   do_syscall_64+0x116/0x7d0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-  The buggy address belongs to the object at ff11000025a74980
-   which belongs to the cache kmalloc-96 of size 96
-  The buggy address is located 0 bytes inside of
-   allocated 68-byte region [ff11000025a74980, ff11000025a749c4)
-
-Depending on the uninitialized value the same field can instead request
-an oversized kmemdup() allocation and make the migration clone fail.
-
-The XFRM netlink path is not affected: verify_one_alg() rejects an
-XFRMA_ALG_COMP attribute shorter than xfrm_alg_len(), so a calg added via
-XFRM_MSG_NEWSA is always self-consistent.
-
-Initialize calg->alg_key_len to 0, matching the aalg/ealg branches.
-
-Fixes: 80c9abaabf42 ("[XFRM]: Extension for dynamic update of endpoint address(es)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zijing Yin <yzjaurora@gmail.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: c8540870af4c ("usb: dwc3: gadget: Improve dwc3_gadget_suspend() and dwc3_gadget_resume()")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20260612052005.3849659-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/key/af_key.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/dwc3/gadget.c |   43 ++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 36 insertions(+), 7 deletions(-)
 
---- a/net/key/af_key.c
-+++ b/net/key/af_key.c
-@@ -1202,6 +1202,7 @@ static struct xfrm_state * pfkey_msg2xfr
- 				goto out;
- 			}
- 			strcpy(x->calg->alg_name, a->name);
-+			x->calg->alg_key_len = 0;
- 			x->props.calgo = sa->sadb_sa_encrypt;
- 		} else {
- 			int keysize = 0;
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -3784,15 +3784,48 @@ static void dwc3_endpoint_interrupt(stru
+ 	}
+ }
+ 
++static bool dwc3_prepare_disconnect_gadget(struct dwc3 *dwc,
++					   struct usb_gadget_driver **driver,
++					   struct usb_gadget **gadget)
++{
++	if (!dwc->async_callbacks || !dwc->gadget_driver ||
++	    !dwc->gadget_driver->disconnect)
++		return false;
++
++	*driver = dwc->gadget_driver;
++	*gadget = dwc->gadget;
++
++	return true;
++}
++
+ static void dwc3_disconnect_gadget(struct dwc3 *dwc)
+ {
+-	if (dwc->async_callbacks && dwc->gadget_driver->disconnect) {
++	struct usb_gadget_driver *driver;
++	struct usb_gadget *gadget;
++
++	if (dwc3_prepare_disconnect_gadget(dwc, &driver, &gadget)) {
+ 		spin_unlock(&dwc->lock);
+-		dwc->gadget_driver->disconnect(dwc->gadget);
++		driver->disconnect(gadget);
+ 		spin_lock(&dwc->lock);
+ 	}
+ }
+ 
++static void dwc3_disconnect_gadget_sleepable(struct dwc3 *dwc)
++{
++	struct usb_gadget_driver *driver;
++	struct usb_gadget *gadget;
++	unsigned long flags;
++
++	spin_lock_irqsave(&dwc->lock, flags);
++	if (!dwc3_prepare_disconnect_gadget(dwc, &driver, &gadget)) {
++		spin_unlock_irqrestore(&dwc->lock, flags);
++		return;
++	}
++
++	spin_unlock_irqrestore(&dwc->lock, flags);
++	driver->disconnect(gadget);
++}
++
+ static void dwc3_suspend_gadget(struct dwc3 *dwc)
+ {
+ 	if (dwc->async_callbacks && dwc->gadget_driver->suspend) {
+@@ -4659,7 +4692,6 @@ void dwc3_gadget_exit(struct dwc3 *dwc)
+ 
+ int dwc3_gadget_suspend(struct dwc3 *dwc)
+ {
+-	unsigned long flags;
+ 	int ret;
+ 
+ 	ret = dwc3_gadget_soft_disconnect(dwc);
+@@ -4673,10 +4705,7 @@ int dwc3_gadget_suspend(struct dwc3 *dwc
+ 		return -EAGAIN;
+ 	}
+ 
+-	spin_lock_irqsave(&dwc->lock, flags);
+-	if (dwc->gadget_driver)
+-		dwc3_disconnect_gadget(dwc);
+-	spin_unlock_irqrestore(&dwc->lock, flags);
++	dwc3_disconnect_gadget_sleepable(dwc);
+ 
+ 	return 0;
+ }
 
 
