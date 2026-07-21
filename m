@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88B13DC4D7;
-	Tue, 21 Jul 2026 18:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A88415F0C;
+	Tue, 21 Jul 2026 18:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657532; cv=none; b=DEi1ovyJksCQsvN55DGKheIs332b8RTLpXN9V6GgpkJ0yf4RqxliJqH2emCz8vB6hWYQPoWD0QmaOa0OtxzCNdmc/boraW+af9XYkCzS0bld9piyzjz8U5UQh+FKCM6iM/Fed51GIICrsdtfe8N/GqGHUNim5IxRDVrCQDmLUMo=
+	t=1784657535; cv=none; b=dGeJwzalZsrDbKj5C0M64WCj3XH7TVszw8wCksFocjOgBab7SOzcZwdYKWHocsd4EbwRDzRPXYk6aq0AtAEQ4qZaVhfeQwMkkBRd2s54/Va68QTlHtdWKrGW8jYVmcjVmGraRR2QtbRQDEIiOoDHUhv3QeZLeyc3HGByNlDgcs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657532; c=relaxed/simple;
-	bh=4sHFD0RiLyiZ1vji2HwtJktAEGXH3/i80iebepfAl/k=;
+	s=arc-20240116; t=1784657535; c=relaxed/simple;
+	bh=NEWVOxkTG7Fepd4/Ye97QytQJkRUyX1/YDJnmq9gGCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CabSf98vlF4eHjutUBqX3lO0fXIsdWu3sP43sqoVcjFRnYxcJJz6zwJZiHceR2ISi1dFg/QeSFavIN4vzn+SwGtBvbTfqNSz2XfnWFU2uye69ZlFllMZSLbS6wJsr4sh+ukllryQs51MSrXAaL5GB/K+k4nAFtls0ryKJPRyiNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfzN7dvU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X9Zc9DrW5SSpMFNwAvtIG2i+iiW+MAvYduQjIdR4omMkpxlgErggg8q0pao527KDJEdbi6dfQDAnwj4ZnFsuEdIpvwsP565nYxFdqkdoqwOy30Ft9mSa9Wb/LXhjrI6kM40eYVFDDtpq8PYzi2+NDtffKEATUy2cPgsWdE57LFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bvl3PLVp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfzN7dvU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ABD91F000E9;
-	Tue, 21 Jul 2026 18:12:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bvl3PLVp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89C21F000E9;
+	Tue, 21 Jul 2026 18:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657531;
-	bh=GBB0tukQRaw7tzu+lkTWhkZLfEzrjbhfRxFkV5m8A3Y=;
+	s=korg; t=1784657534;
+	bh=lBv9dt6SJrIQdhQOgwVlqCVsVDXd8vjEiPmYH9ygYps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nfzN7dvUimFuzMPr3F9e6JXMgIHy3z8oOTHRWzfgTDu07PI3Jpu3YZt3WTSFM5VG6
-	 VjbDS9Z7qqvoLMMvk13jXizqjof/HnOAR83zqDO8l/SRaXgei2HJWiR6dvNa1IaGdY
-	 /CJt4JMb5N6C9LzsnD5UshWT9EYdkuKhY4b41p8k=
+	b=bvl3PLVpvoKVw6GLOdKVryJTuBp7RBfGF+9pSc/blT9kSVIAjB1q3Wgp5rlZ4gPCb
+	 /gWvlqUTp4BlX8EVYhmYjKBY4kPIRM1YmVQNPM70jg3VBlhAvggDUwfvbmBihqJpkg
+	 E4GC9DI9aD3PXLUji+R8tWw5gxdg66xh4wCG3K/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mir Jeffres <m-jeffres@ti.com>,
-	Sen Wang <sen@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yunxiang Li <Yunxiang.Li@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0801/1611] ASoC: tlv320aic3x: restrict CLKDIV bypass Q values in dual-rate mode
-Date: Tue, 21 Jul 2026 17:15:17 +0200
-Message-ID: <20260721152533.403347458@linuxfoundation.org>
+Subject: [PATCH 6.18 0802/1611] drm/amdkfd: Avoid double-unpin of DOORBELL/MMIO BOs on free
+Date: Tue, 21 Jul 2026 17:15:18 +0200
+Message-ID: <20260721152533.424763031@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,93 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sen Wang <sen@ti.com>
+From: Yunxiang Li <Yunxiang.Li@amd.com>
 
-[ Upstream commit fdf043f5f3bae150b678feae3d7bb1beed87ec14 ]
+[ Upstream commit 3f0cc1735273a57c5116710cf0202e12152f59cc ]
 
-The datasheet documents that when the PLL is disabled and dual-rate mode
-is enabled, only Q values {4, 8, 9, 12, 16} are valid for the CLKDIV
-bypass path; all other Q values produce invalid bitclock output.
+amdgpu_amdkfd_gpuvm_free_memory_of_gpu() unpinned DOORBELL and MMIO
+remap BOs (which are pinned at allocation time) before checking whether
+the BO is still mapped to the GPU. When the BO is still mapped, the
+function returns -EBUSY and leaves the BO alive, but it has already
+been unpinned. The BO is then unpinned again when it is finally freed
+during process teardown, triggering a ttm_bo_unpin() underflow warning:
 
-The existing loop iterates Q from 2 to 17 without this restriction,
-causing silent audio failure when an out-of-spec Q is picked.
+  WARNING: CPU: 18 PID: 15066 at ttm/ttm_bo.c:650 amdttm_bo_unpin+0x6d/0x80 [amdttm]
+  Workqueue: kfd_process_wq kfd_process_wq_release [amdgpu]
+  RIP: 0010:amdttm_bo_unpin+0x6d/0x80 [amdttm]
+  Call Trace:
+   amdgpu_bo_unpin+0x1a/0x90 [amdgpu]
+   amdgpu_amdkfd_gpuvm_unpin_bo+0x31/0xb0 [amdgpu]
+   amdgpu_amdkfd_gpuvm_free_memory_of_gpu+0x3bf/0x460 [amdgpu]
+   kfd_process_free_outstanding_kfd_bos+0xd4/0x170 [amdgpu]
+   kfd_process_wq_release+0x109/0x1b0 [amdgpu]
+   process_one_work+0x1e2/0x3b0
+   worker_thread+0x50/0x3a0
+   kthread+0xdd/0x100
+   ret_from_fork+0x29/0x50
 
-Restrict the Q search to the allowed set in dual-rate mode.
+Move the unpin after the mapped_to_gpu_memory check so it only happens
+once we are committed to freeing the BO.
 
-Fixes: 4f9c16ccfa26 ("[ALSA] soc - tlv320aic3x - revisit clock setup")
-Suggested-by: Mir Jeffres <m-jeffres@ti.com>
-Signed-off-by: Sen Wang <sen@ti.com>
-Link: https://patch.msgid.link/20260616233322.873081-1-sen@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: d25e35bc26c3 ("drm/amdgpu: Pin MMIO/DOORBELL BO's in GTT  domain")
+Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 927c5b2defb9b09856444d94bebfd056a002bd75)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tlv320aic3x.c | 25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/codecs/tlv320aic3x.c b/sound/soc/codecs/tlv320aic3x.c
-index eea8ca285f8e0f..0e5e8002cd0124 100644
---- a/sound/soc/codecs/tlv320aic3x.c
-+++ b/sound/soc/codecs/tlv320aic3x.c
-@@ -1049,11 +1049,13 @@ static int aic3x_hw_params(struct snd_pcm_substream *substream,
- 			   struct snd_pcm_hw_params *params,
- 			   struct snd_soc_dai *dai)
- {
-+	static const u8 dual_rate_q[] = {4, 8, 9, 12, 16};
- 	struct snd_soc_component *component = dai->component;
- 	struct aic3x_priv *aic3x = snd_soc_component_get_drvdata(component);
- 	int codec_clk = 0, bypass_pll = 0, fsref, last_clk = 0;
- 	u8 data, j, r, p, pll_q, pll_p = 1, pll_r = 1, pll_j = 1;
- 	u16 d, pll_d = 1;
-+	bool dual_rate;
- 	int clk;
- 	int width = aic3x->slot_width;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+index 0ab85d0a6a43e2..285c35545ebbfb 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -1896,13 +1896,6 @@ int amdgpu_amdkfd_gpuvm_free_memory_of_gpu(
  
-@@ -1079,14 +1081,25 @@ static int aic3x_hw_params(struct snd_pcm_substream *substream,
+ 	mutex_lock(&mem->lock);
  
- 	/* Fsref can be 44100 or 48000 */
- 	fsref = (params_rate(params) % 11025 == 0) ? 44100 : 48000;
-+	dual_rate = params_rate(params) >= 64000;
+-	/* Unpin MMIO/DOORBELL BO's that were pinned during allocation */
+-	if (mem->alloc_flags &
+-	    (KFD_IOC_ALLOC_MEM_FLAGS_DOORBELL |
+-	     KFD_IOC_ALLOC_MEM_FLAGS_MMIO_REMAP)) {
+-		amdgpu_amdkfd_gpuvm_unpin_bo(mem->bo);
+-	}
+-
+ 	mapped_to_gpu_memory = mem->mapped_to_gpu_memory;
+ 	is_imported = mem->is_imported;
+ 	mutex_unlock(&mem->lock);
+@@ -1916,6 +1909,15 @@ int amdgpu_amdkfd_gpuvm_free_memory_of_gpu(
+ 		return -EBUSY;
+ 	}
  
- 	/* Try to find a value for Q which allows us to bypass the PLL and
- 	 * generate CODEC_CLK directly. */
--	for (pll_q = 2; pll_q < 18; pll_q++)
--		if (aic3x->sysclk / (128 * pll_q) == fsref) {
--			bypass_pll = 1;
--			break;
-+	if (dual_rate) {
-+		for (int i = 0; i < ARRAY_SIZE(dual_rate_q); i++) {
-+			pll_q = dual_rate_q[i];
-+			if (aic3x->sysclk / (128 * pll_q) == fsref) {
-+				bypass_pll = 1;
-+				break;
-+			}
- 		}
-+	} else {
-+		for (pll_q = 2; pll_q < 18; pll_q++)
-+			if (aic3x->sysclk / (128 * pll_q) == fsref) {
-+				bypass_pll = 1;
-+				break;
-+			}
++	/* At this point the BO is guaranteed to be freed, so unpin the
++	 * MMIO/DOORBELL BOs that were pinned during allocation.
++	 */
++	if (mem->alloc_flags &
++	    (KFD_IOC_ALLOC_MEM_FLAGS_DOORBELL |
++	     KFD_IOC_ALLOC_MEM_FLAGS_MMIO_REMAP)) {
++		amdgpu_amdkfd_gpuvm_unpin_bo(mem->bo);
 +	}
- 
- 	if (bypass_pll) {
- 		pll_q &= 0xf;
-@@ -1106,13 +1119,13 @@ static int aic3x_hw_params(struct snd_pcm_substream *substream,
- 	 * right DAC to right channel input */
- 	data = (LDAC2LCH | RDAC2RCH);
- 	data |= (fsref == 44100) ? FSREF_44100 : FSREF_48000;
--	if (params_rate(params) >= 64000)
-+	if (dual_rate)
- 		data |= DUAL_RATE_MODE;
- 	snd_soc_component_write(component, AIC3X_CODEC_DATAPATH_REG, data);
- 
- 	/* codec sample rate select */
- 	data = (fsref * 20) / params_rate(params);
--	if (params_rate(params) < 64000)
-+	if (!dual_rate)
- 		data /= 2;
- 	data /= 5;
- 	data -= 2;
++
+ 	/* Make sure restore workers don't access the BO any more */
+ 	mutex_lock(&process_info->lock);
+ 	list_del(&mem->validate_list);
 -- 
 2.53.0
 
