@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C723443B490;
-	Tue, 21 Jul 2026 21:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0843BE641;
+	Tue, 21 Jul 2026 21:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670495; cv=none; b=g9jkaFR0SkBvJIrYxeIGK3zWxeOwuFTeS/aC3J4tsnUJdWZ1KexjXA2ouVikoyKvKpanFd474B4sSEynUY4TOMP/Amok5ac0aMws+g3NBBsuM64mgSRPCWDeoe95GJwLu0HNw8F6FieBKX7mYd9ckEQUC/hQiat1XVNkZ1CWAH0=
+	t=1784670495; cv=none; b=mzvXWb4kVpYhEoisf6GM95R+Zr4D4ljVs+/pkBk4YHUONUyuvN8S/hfzH9k21vQoe0xIhNq7gLA/TFwWcTmkxJENXFaFi1TX2ZKdXpmoNGl803QmIwsfnonZyNi21ugDM6yxiQhwwXfELkTrEy/4qieNweVxRfZ9YFFeynOxxDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784670495; c=relaxed/simple;
-	bh=8uBY9NHVapEaClxTAQlA4mPC8apZ33qPjqtgrkhrcGM=;
+	bh=+Ccsc5XldVL1YOaHSZoq+t/xO/PKyMFIzH8+1kZirNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ri2uWf2PzM1SdjQCdxKtbBsYl0fRCdvo1CmPFDReVUGlkAp5wLk5Dv8nBSnRjRV7cXywKN4Hq2vvSn1iON0vM9KG2GhR1PvqKiipuOV08+EX+cgUdtBBtHxu20CQfxG3s2Kz5CHLKQO87ZO43BNQLc04sqrY5q8XgCgj7f+Cm4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+9eTnjU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XlpHwBqeqpjpN8T5mnFLkP/mwuhKi5Dx26f9TcmZRs4/OL3PEfUcVXygmCZx7Wakn3LFW7fyWDpYoqfBh6NCqRJk9qj5b3YnJKd73qzA7C4P/XWtsf3vN0nq3keehXB8AU81w6ca25YujciVqo8cAKB3vcPQ4vyYxFIIqpkuD3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0lm/ypBm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+9eTnjU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8213C1F000E9;
-	Tue, 21 Jul 2026 21:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0lm/ypBm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA36C1F00A3E;
+	Tue, 21 Jul 2026 21:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670487;
-	bh=DUpUWscoBdL8dqaTH/zFuxDpq4SciPKNPWVI9ECdAfg=;
+	s=korg; t=1784670492;
+	bh=l7lpcgM+vu7iFE5vBK9PZ1iRvV4HYsMcnsFuG/nsv5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l+9eTnjUqz2+V7uOu9mitXf3rK3Wxspympd5itn00eh9FkxSXO0tCabMANhTHXDx2
-	 rXvTbvXPBtqoOGEUI6aqnP5mXwbQnZOhoV1tvsxbIimP4LPcndPMR0xVcQ4PHvFZqU
-	 uHksBPMJPQGHOE6EE553ogD5xchmqXX8oKRcNo8I=
+	b=0lm/ypBmIxLMcbAt5ABm3qJuOLiSUk7wYz+PTMBdoq+MHJT2VQme8XhV5z50hC/Cy
+	 MwZrerdB5FYgNtfC4PW6yMfyjZsM0IbUb0YYP7+hOxqaPRj5f81JPRTZgzWVX5zPdW
+	 B9AcKxB2Wqa06BYdamXHm2UyffuJCC1fXs+BxIO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Yury Norov <yury.norov@gmail.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0951/1067] bitops: make BYTES_TO_BITS() treewide-available
-Date: Tue, 21 Jul 2026 17:25:52 +0200
-Message-ID: <20260721152445.815161834@linuxfoundation.org>
+Subject: [PATCH 6.1 0953/1067] vfio/pci: Use bitfield for struct vfio_pci_core_device flags
+Date: Tue, 21 Jul 2026 17:25:54 +0200
+Message-ID: <20260721152445.859773751@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -54,87 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Lobakin <aleksander.lobakin@intel.com>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-[ Upstream commit 7d8296b250f2eed73f1758607926d4d258dea5d4 ]
+[ Upstream commit 9cd0f6d5cbb6fda09aa83beb8146c287a552017e ]
 
-Avoid open-coding that simple expression each time by moving
-BYTES_TO_BITS() from the probes code to <linux/bitops.h> to export
-it to the rest of the kernel.
-Simplify the macro while at it. `BITS_PER_LONG / sizeof(long)` always
-equals to %BITS_PER_BYTE, regardless of the target architecture.
-Do the same for the tools ecosystem as well (incl. its version of
-bitops.h). The previous implementation had its implicit type of long,
-while the new one is int, so adjust the format literal accordingly in
-the perf code.
+struct vfio_pci_core_device contains eleven boolean flags.
+Boolean flags clearly indicate their usage but space usage
+starts to be a concern when there are many.
 
-Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Acked-by: Yury Norov <yury.norov@gmail.com>
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 55052184ac90 ("iio: common: st_sensors: honour channel endianness in read_axis_data")
+An upcoming change adds another boolean flag to
+struct vfio_pci_core_device, thereby increasing the concern
+that the boolean flags are consuming unnecessary space.
+
+Transition the boolean flags to use bitfields. On a system that
+uses one byte per boolean this reduces the space consumed
+by existing flags from 11 bytes to 2 bytes with room for
+a few more flags without increasing the structure's size.
+
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Acked-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/cf34bf0499c889554a8105eeb18cc0ab673005be.1683740667.git.reinette.chatre@intel.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Stable-dep-of: 40ef3edf151e ("vfio/pci: Use a private flag to prevent power state change with VFs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bitops.h         |    2 ++
- kernel/trace/trace_probe.c     |    2 --
- tools/include/linux/bitops.h   |    2 ++
- tools/perf/util/probe-finder.c |    4 +---
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ include/linux/vfio_pci_core.h |   22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
---- a/include/linux/bitops.h
-+++ b/include/linux/bitops.h
-@@ -21,6 +21,8 @@
- #define BITS_TO_U32(nr)		__KERNEL_DIV_ROUND_UP(nr, BITS_PER_TYPE(u32))
- #define BITS_TO_BYTES(nr)	__KERNEL_DIV_ROUND_UP(nr, BITS_PER_TYPE(char))
- 
-+#define BYTES_TO_BITS(nb)	((nb) * BITS_PER_BYTE)
-+
- extern unsigned int __sw_hweight8(unsigned int w);
- extern unsigned int __sw_hweight16(unsigned int w);
- extern unsigned int __sw_hweight32(unsigned int w);
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -535,8 +535,6 @@ parse_probe_arg(char *arg, const struct
- 	return ret;
- }
- 
--#define BYTES_TO_BITS(nb)	((BITS_PER_LONG * (nb)) / sizeof(long))
--
- /* Bitfield type needs to be parsed into a fetch function */
- static int __parse_bitfield_probe_arg(const char *bf,
- 				      const struct fetch_type *t,
---- a/tools/include/linux/bitops.h
-+++ b/tools/include/linux/bitops.h
-@@ -20,6 +20,8 @@
- #define BITS_TO_U32(nr)		DIV_ROUND_UP(nr, BITS_PER_TYPE(u32))
- #define BITS_TO_BYTES(nr)	DIV_ROUND_UP(nr, BITS_PER_TYPE(char))
- 
-+#define BYTES_TO_BITS(nb)	((nb) * BITS_PER_BYTE)
-+
- extern unsigned int __sw_hweight8(unsigned int w);
- extern unsigned int __sw_hweight16(unsigned int w);
- extern unsigned int __sw_hweight32(unsigned int w);
---- a/tools/perf/util/probe-finder.c
-+++ b/tools/perf/util/probe-finder.c
-@@ -304,8 +304,6 @@ static_var:
- 	return ret2;
- }
- 
--#define BYTES_TO_BITS(nb)	((nb) * BITS_PER_LONG / sizeof(long))
--
- static int convert_variable_type(Dwarf_Die *vr_die,
- 				 struct probe_trace_arg *tvar,
- 				 const char *cast, bool user_access)
-@@ -335,7 +333,7 @@ static int convert_variable_type(Dwarf_D
- 		total = dwarf_bytesize(vr_die);
- 		if (boffs < 0 || total < 0)
- 			return -ENOENT;
--		ret = snprintf(buf, 16, "b%d@%d/%zd", bsize, boffs,
-+		ret = snprintf(buf, 16, "b%d@%d/%d", bsize, boffs,
- 				BYTES_TO_BITS(total));
- 		goto formatted;
- 	}
+--- a/include/linux/vfio_pci_core.h
++++ b/include/linux/vfio_pci_core.h
+@@ -69,17 +69,17 @@ struct vfio_pci_core_device {
+ 	u16			msix_size;
+ 	u32			msix_offset;
+ 	u32			rbar[7];
+-	bool			pci_2_3;
+-	bool			virq_disabled;
+-	bool			reset_works;
+-	bool			extended_caps;
+-	bool			bardirty;
+-	bool			has_vga;
+-	bool			needs_reset;
+-	bool			nointx;
+-	bool			needs_pm_restore;
+-	bool			pm_intx_masked;
+-	bool			pm_runtime_engaged;
++	bool			pci_2_3:1;
++	bool			virq_disabled:1;
++	bool			reset_works:1;
++	bool			extended_caps:1;
++	bool			bardirty:1;
++	bool			has_vga:1;
++	bool			needs_reset:1;
++	bool			nointx:1;
++	bool			needs_pm_restore:1;
++	bool			pm_intx_masked:1;
++	bool			pm_runtime_engaged:1;
+ 	struct pci_saved_state	*pci_saved_state;
+ 	struct pci_saved_state	*pm_save;
+ 	int			ioeventfds_nr;
 
 
