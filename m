@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD1D441616;
-	Tue, 21 Jul 2026 22:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82B1441616;
+	Tue, 21 Jul 2026 22:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673104; cv=none; b=F9QAZS44tKPW/4h/5l+1NLsV0xvTm13UCnkoMYQEvRlEQyvMMDM20O5XEGVphrCdT/iXi1PTNcQxLhPj8WKCultRyWSgi7u/VWwZJ4tLirET+Dcb4pNCMkL/aSETgSi5w4Iw4i3eDoRwid1u20nfSuEhsyOstd6F/NDGqIF9n5U=
+	t=1784673106; cv=none; b=UN/DyqX4rR9OQu+0OxeCIruAh1QSbfbMCvN8o28MFR8OgWdR+lTx4m3BDOwjuUUaepBp8OiprZcn8YHxeshOYcIzbRat0xvpOWyhRXoj5ErRS8026CRORHC2rI24V5DpFhKgqyBvsxyBHICu/rZMdI2PWyVMeSLTdSB2yJ5y5rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673104; c=relaxed/simple;
-	bh=8PmhEtFnRBTNJMj/U5l9fjXF2JFpG9Yj6tImbwA130o=;
+	s=arc-20240116; t=1784673106; c=relaxed/simple;
+	bh=a3/i/04/ldTCorjMADXhzwOhPUpOAx8VM6oGidZkDnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qHFoBWbgayG+wsKhBWwMixRmyj95yw7oUtwlON3+rpz+zdW6xN6ZtVt9+sO7uSv3Wepgj9ItulK1fbb0lYkkuwSAJ5UBDTw2/3HB2wPEjKunyDbgCpOr3KCQ6u/UpvJYO4J5DukKoyrn1LDk5qENoMzYy8GAR2dyD5S6U02esT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgYzNkat; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HZ871RFw2r5PYdSbCinBoHeBR56/ruYgAyzkrA5wk97oQ0dditAkzGsURIu3vYfN40SoTQ3esPvTJMb34X0IC6vR6yeRF/aVWf+rENid6YkXPHGTmatNdGC9DPQAcd315zcIvGU7wmFw35DDqValCpdArQBmDn1ysjVsV4VGZtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTZkYiHm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgYzNkat"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36C81F000E9;
-	Tue, 21 Jul 2026 22:31:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTZkYiHm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 715F01F000E9;
+	Tue, 21 Jul 2026 22:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673103;
-	bh=Z1o8wEMaGs/uQv3ZU11DfN3aAHCwnTYw/yzoiZyBG/4=;
+	s=korg; t=1784673105;
+	bh=Wxkut0bqGdjEcNC9WZTEjOi2BfYbdq8FsBNU9SH3Af0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xgYzNkatXoPdTFh9uefrRwreYvLWA+slcI6avinwC1ighBFU3deQ1PlkkggHGXK7e
-	 +y+UBq9vlKZYYOAry+zlvVe50BnsCwBiHm0+i/vNvmaWhnSH1VW8qFR1K+5dNPqMrc
-	 eyYNCxzc9ZFFxChxehujjrJGLqLh9fvT3/NP/Ctw=
+	b=DTZkYiHmZ1GUdpYbKSNDtub6I5qs8d9vDnSSeLYj7obQt0CYXQkBoVdd/r1QOb+Lq
+	 IsNgoIRcwNp3NwccG3xW/hrjPSDMXHw0FV2jE2dW8vZdvQaJDfgC46j1oedELjl7P5
+	 eCnt99jX0NbTFu4Y9FRAeblYPCScFpAHo6C9uc6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Markus Mayer <mmayer@broadcom.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 5.10 010/699] perf trace beauty fcntl: Fix build with older kernel headers
-Date: Tue, 21 Jul 2026 17:16:09 +0200
-Message-ID: <20260721152355.912181197@linuxfoundation.org>
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Alexander Martyniuk <alexevgmart@gmail.com>
+Subject: [PATCH 5.10 011/699] bus: mhi: host: Add alignment check for event ring read pointer
+Date: Tue, 21 Jul 2026 17:16:10 +0200
+Message-ID: <20260721152355.936429058@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -60,60 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 
-commit 7ee7f48413c42b90230de4a8e40898b757bc8e82 upstream.
+commit eff9704f5332a13b08fbdbe0f84059c9e7051d5f upstream.
 
-Toolchains with older kernel headers that do not include upstream commit
-c75b1d9421f80f41 ("fs: add fcntl() interface for setting/getting write
-life time hints") will now fail to build perf due to missing definitions
-for F_GET_RW_HINT/F_SET_RW_HINT/F_GET_FILE_RW_HINT/F_SET_FILE_RW_HINT.
+Though we do check the event ring read pointer by "is_valid_ring_ptr"
+to make sure it is in the buffer range, but there is another risk the
+pointer may be not aligned.  Since we are expecting event ring elements
+are 128 bits(struct mhi_ring_element) aligned, an unaligned read pointer
+could lead to multiple issues like DoS or ring buffer memory corruption.
 
-Provide a fallback definition for these when they are not already
-defined.
+So add a alignment check for event ring read pointer.
 
-Fixes: 9c47f66748381ecb ("perf trace beauty fcntl: Basic 'arg' beautifier")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Markus Mayer <mmayer@broadcom.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: ec32332df764 ("bus: mhi: core: Sanity check values from remote device before use")
+cc: stable@vger.kernel.org
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20231031-alignment_check-v2-1-1441db7c5efd@quicinc.com
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/trace/beauty/fcntl.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/bus/mhi/host/main.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/tools/perf/trace/beauty/fcntl.c
-+++ b/tools/perf/trace/beauty/fcntl.c
-@@ -9,6 +9,22 @@
- #include <linux/kernel.h>
- #include <uapi/linux/fcntl.h>
+--- a/drivers/bus/mhi/host/main.c
++++ b/drivers/bus/mhi/host/main.c
+@@ -222,7 +222,8 @@ static void mhi_del_ring_element(struct
  
-+#ifndef F_GET_RW_HINT
-+#define F_GET_RW_HINT		(F_LINUX_SPECIFIC_BASE + 11)
-+#endif
-+
-+#ifndef F_SET_RW_HINT
-+#define F_SET_RW_HINT		(F_LINUX_SPECIFIC_BASE + 12)
-+#endif
-+
-+#ifndef F_GET_FILE_RW_HINT
-+#define F_GET_FILE_RW_HINT	(F_LINUX_SPECIFIC_BASE + 13)
-+#endif
-+
-+#ifndef F_SET_FILE_RW_HINT
-+#define F_SET_FILE_RW_HINT	(F_LINUX_SPECIFIC_BASE + 14)
-+#endif
-+
- static size_t fcntl__scnprintf_getfd(unsigned long val, char *bf, size_t size, bool show_prefix)
+ static bool is_valid_ring_ptr(struct mhi_ring *ring, dma_addr_t addr)
  {
- 	return val ? scnprintf(bf, size, "%s", "0") :
+-	return addr >= ring->iommu_base && addr < ring->iommu_base + ring->len;
++	return addr >= ring->iommu_base && addr < ring->iommu_base + ring->len &&
++			!(addr & (sizeof(struct mhi_tre) - 1));
+ }
+ 
+ int mhi_destroy_device(struct device *dev, void *data)
 
 
