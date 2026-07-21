@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F8038910F;
-	Tue, 21 Jul 2026 18:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CD722B8DF;
+	Tue, 21 Jul 2026 18:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660167; cv=none; b=tGHXj3TQAsXuJqQEa/Bcx2LIooBcJtgjJJzFu0YHJBNgTOnWC5sFOx+k1HtXvx/eM7fRBgYzjCDrnq1beVzHOtsMje6cGzL8yPMR65t+GEMoIvmRJOtmO/fqNhEwvs8AyfiLQFQUc8g0BHRqhByn4FlmForM29Zyfvjyw4fGmfs=
+	t=1784660170; cv=none; b=CUgkWlL1lvkvp7+uACj2vTmQB0C2A6UamyPTn1L8piCYYu51MFi51ukkrrotV8ughgHyLINoNn6W9AcBbMNvKm25GGmJyZYc8OSimyoOhYGak2mVbpergvQDG4Az6qUWMfcwk+cDsF70ZO7k/n7/lDSnb7XNW2oO8Vw5GEOXIrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660167; c=relaxed/simple;
-	bh=/yyf4YieUYMpg3FuGCa3qEwyLIrXTpfHI/rHGxkA1O4=;
+	s=arc-20240116; t=1784660170; c=relaxed/simple;
+	bh=IdF5zhFkXpeWgr4VX0ege31bgo6u5Sb2c22duW4gfCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O64V2vx/aSbpmOdrMfYJXx6YJSwggYFLLriXvSbB5jAA8PZRUgcK4UBnkEyJfiEk3yaMF/TZNEknk4JtpSae8axeUJY0UMXu94att/wwBK4qD0jM5w5k09ypzPtWtg74Y9/nhSd/NjXZ4/gFL4aJ5tci3P0QFyPDuB8kXH8UVLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EbSX8K3u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uRz8f9AesWT8skdbojZPOZkvW4GaSYocOhCc9IwrYIL+F8j/43Cw0NxH7NaVKBL7PsvvVCRYT6nlp766g5ol3UjWOVBk0K7vHQPUkt2s/HL7ekLPQ9maIWNV44g755X+Lm8qG6G/JQxA8ft+2mNulnxOchlU99kkZBJ2DEtDO5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y7OfwFbv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EbSX8K3u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF861F000E9;
-	Tue, 21 Jul 2026 18:56:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7OfwFbv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B241F000E9;
+	Tue, 21 Jul 2026 18:56:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660166;
-	bh=qzhlldjEnZ+dkDSWoeW+gr39tocDZLTwAuEtXWVGS+M=;
+	s=korg; t=1784660169;
+	bh=7qx+HbUXWXWToQrpC5WteYwYfiWJBeGgp1W+8lWwMFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EbSX8K3uy+uI0Gy9+D6wJh36Jrf5XuhO7crys9ct8rlcZstNMel2397fxT02vCpL9
-	 eTXFeWyjRhfplGDV301UMK/24nmhaMx07TdMtfiMj9fLO4q72d/l4fOFoZkxQG7kj1
-	 z+lf3jN3ZqXI2ueH/AL9nrYW5x7ppS7bXgOGtIkg=
+	b=y7OfwFbvFc8El02GwC+rmkdAfjQeZ4tYJIsSFyri08PbV+Mr8qQt5B4dxdDlRcCyw
+	 SV6ynnQ4/nKlcYeKCbv8F+fmksZa2LzRshm6Aq8H0zIE3Mw/WrpVemb+E7k8zmE9X+
+	 2V/73v1IZl3L4xxNLJUfUi4UcYAelamKA6aIwvnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Alexandru Hossu <hossu.alexandru@gmail.com>,
+	David Laight <david.laight.linux@gmail.com>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0834/2077] staging: nvec: fix use-after-free in nvec_rx_completed()
-Date: Tue, 21 Jul 2026 17:08:27 +0200
-Message-ID: <20260721152612.460031648@linuxfoundation.org>
+Subject: [PATCH 7.1 0825/2077] 9p: avoid returning ERR_PTR(0) from mkdir operations
+Date: Tue, 21 Jul 2026 17:08:18 +0200
+Message-ID: <20260721152612.246372164@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,55 +53,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Hossu <hossu.alexandru@gmail.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit 26813881181deb3a32fbb59eadb2599cbe8423f6 ]
+[ Upstream commit 314b58c01a9047567fd19446ca5fd46c473b89ff ]
 
-In nvec_rx_completed(), when an incomplete RX transfer is detected,
-nvec_msg_free() is called to return the message back to the pool by
-clearing its 'used' atomic flag. Immediately after this, the code
-accesses nvec->rx->data[0] to check the message type.
+When mkdir succeeds, v9fs_vfs_mkdir_dotl() and v9fs_vfs_mkdir() return
+ERR_PTR(0) which is incorrect. They should return NULL instead for
+success and ERR_PTR() only with negative error codes for failure.
 
-Since nvec_msg_free() marks the pool slot as available via atomic_set(),
-any concurrent or subsequent call to nvec_msg_alloc() could claim that
-same slot and overwrite its data[] array. Reading nvec->rx->data[0] after
-freeing the message is therefore a use-after-free.
+Return NULL instead of passing to ERR_PTR while err is zero
+Fixes smatch warnings:
+  fs/9p/vfs_inode_dotl.c:420 v9fs_vfs_mkdir_dotl() warn: passing zero to 'ERR_PTR'
+  fs/9p/vfs_inode.c:695 v9fs_vfs_mkdir() warn: passing zero to 'ERR_PTR'
 
-Fix this by saving the message type byte before calling nvec_msg_free(),
-then using the saved value for the battery quirk check.
+The v9fs_vfs_mkdir() code was further simplified because v9fs_create()
+can never return NULL, so we do not need to check for fid being set
+separately, and the error path can be a simple return immediately after
+v9fs_create() failure.
+There is no intended functional change.
 
-Fixes: d6bdcf2e1019 ("staging: nvec: Add battery quirk to ignore incomplete responses")
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
-Link: https://patch.msgid.link/20260427081713.3401874-2-hossu.alexandru@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 88d5baf69082 ("Change inode_operations.mkdir to return struct dentry *")
+Suggested-by: David Laight <david.laight.linux@gmail.com>
+Acked-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Message-ID: <20260520022650.14217-1-zenghongling@kylinos.cn>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/nvec/nvec.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/9p/vfs_inode.c      | 19 ++++++-------------
+ fs/9p/vfs_inode_dotl.c |  4 ++--
+ 2 files changed, 8 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/staging/nvec/nvec.c b/drivers/staging/nvec/nvec.c
-index 952c5a849a563d..2a3499dd4d6342 100644
---- a/drivers/staging/nvec/nvec.c
-+++ b/drivers/staging/nvec/nvec.c
-@@ -494,6 +494,8 @@ static void nvec_tx_completed(struct nvec_chip *nvec)
- static void nvec_rx_completed(struct nvec_chip *nvec)
+diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
+index f468acb8ee7df6..cdaa259af16de7 100644
+--- a/fs/9p/vfs_inode.c
++++ b/fs/9p/vfs_inode.c
+@@ -672,27 +672,20 @@ v9fs_vfs_create(struct mnt_idmap *idmap, struct inode *dir,
+ static struct dentry *v9fs_vfs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
+ 				     struct dentry *dentry, umode_t mode)
  {
- 	if (nvec->rx->pos != nvec_msg_size(nvec->rx)) {
-+		unsigned char msg_type = nvec->rx->data[0];
-+
- 		dev_err(nvec->dev, "RX incomplete: Expected %u bytes, got %u\n",
- 			(uint)nvec_msg_size(nvec->rx),
- 			(uint)nvec->rx->pos);
-@@ -502,7 +504,7 @@ static void nvec_rx_completed(struct nvec_chip *nvec)
- 		nvec->state = 0;
+-	int err;
+ 	u32 perm;
+ 	struct p9_fid *fid;
+ 	struct v9fs_session_info *v9ses;
  
- 		/* Battery quirk - Often incomplete, and likes to crash */
--		if (nvec->rx->data[0] == NVEC_BAT)
-+		if (msg_type == NVEC_BAT)
- 			complete(&nvec->ec_transfer);
+ 	p9_debug(P9_DEBUG_VFS, "name %pd\n", dentry);
+-	err = 0;
+ 	v9ses = v9fs_inode2v9ses(dir);
+ 	perm = unixmode2p9mode(v9ses, mode | S_IFDIR);
+ 	fid = v9fs_create(v9ses, dir, dentry, NULL, perm, P9_OREAD);
+-	if (IS_ERR(fid)) {
+-		err = PTR_ERR(fid);
+-		fid = NULL;
+-	} else {
+-		inc_nlink(dir);
+-		v9fs_invalidate_inode_attr(dir);
+-	}
+-
+-	if (fid)
+-		p9_fid_put(fid);
+-	return ERR_PTR(err);
++	if (IS_ERR(fid))
++		return ERR_CAST(fid);
++	inc_nlink(dir);
++	v9fs_invalidate_inode_attr(dir);
++	p9_fid_put(fid);
++	return NULL;
+ }
  
- 		return;
+ /**
+diff --git a/fs/9p/vfs_inode_dotl.c b/fs/9p/vfs_inode_dotl.c
+index 141fb54db65d2f..e90808808ea571 100644
+--- a/fs/9p/vfs_inode_dotl.c
++++ b/fs/9p/vfs_inode_dotl.c
+@@ -349,7 +349,7 @@ static struct dentry *v9fs_vfs_mkdir_dotl(struct mnt_idmap *idmap,
+ 					  struct inode *dir, struct dentry *dentry,
+ 					  umode_t omode)
+ {
+-	int err;
++	int err = 0;
+ 	struct v9fs_session_info *v9ses;
+ 	struct p9_fid *fid = NULL, *dfid = NULL;
+ 	kgid_t gid;
+@@ -412,7 +412,7 @@ static struct dentry *v9fs_vfs_mkdir_dotl(struct mnt_idmap *idmap,
+ 	p9_fid_put(fid);
+ 	v9fs_put_acl(dacl, pacl);
+ 	p9_fid_put(dfid);
+-	return ERR_PTR(err);
++	return err ? ERR_PTR(err) : NULL;
+ }
+ 
+ static int
 -- 
 2.53.0
 
