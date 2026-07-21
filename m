@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9129135C694;
-	Tue, 21 Jul 2026 22:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5DC35C6AC;
+	Tue, 21 Jul 2026 22:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673233; cv=none; b=ktrxKZ9sNsVDK9apWPawjPipgH0AWAwnuvGWBYrNy4D02jZvIJcL861euYGJ2hUo39r4TQGDmjRDCqG9FP63XvbQiTXRqalnTrv0AaezkLGLz88JyvWqAqmCnVCYPCnUqlzHmn/qUVnzywHMC0R/c83WlZQl8N+JarrO9nuHVo8=
+	t=1784673236; cv=none; b=TuQOXCDEsRYBBYADLnu8p3zdly3G14lCBm4EPLGraTjH/sP31gIJVq1yJ4PYczVh/wKecJIQGk7D+825q9gJLG88mi91BM3U+tO2wktGwHPq5ye9e+vojpdoMUtu1368GNXXClhKCqbRlx+3Kx+nQ4Migo+GIWYdvaREvH/+voU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673233; c=relaxed/simple;
-	bh=H7rRhI3xdk3Qjx9y2S/UwjNjNYXpRNHmu5xUI1jSQ8o=;
+	s=arc-20240116; t=1784673236; c=relaxed/simple;
+	bh=5X0jQJLwgpWDkNwuGJ6e0BYO+OKSYD2QmJZGTeHTStE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hy7MqhbY4XLZTS+k/jLDGC5zFnLYxYtmA3j1LmGWNpXCtGx+pG8zxSX3dvEcBq9qEGNJ1j39o+Uoa4R6olo/FuwGVRfSycNVL3AA68hyVV68iFOXW/RmOKNTzK2tSrh3lyw/0yT3DbYZxIPU8hJm8NI47z3JzcKjbI5LmaSo4GE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTrXIhpY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iZCXc8tiWbhQDHIy9yOByfYcQF6uvTKsbZYP3nUPQkYAm5pJF+BNm8zN/ZBioFFvMlNlq4EtKr7UHly1d9RMzbJyKLpNGRQY6iDyfeTUeB+PZ7nXP3WZf5Ngyy95gQBDDYH4UPLyEpUlJ8689eVCSpYIW7KWut/FVZKj1mV5pfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/k6zLIn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTrXIhpY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E771F000E9;
-	Tue, 21 Jul 2026 22:33:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/k6zLIn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A105F1F000E9;
+	Tue, 21 Jul 2026 22:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673232;
-	bh=BSvI8UEYC+BBCUbAkT0WosJct5iZ1hckN0BDBHX1ZZY=;
+	s=korg; t=1784673235;
+	bh=AVQGomyNHtdD89lUWpkyubgZosOzI6RJmxBC90oHOBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QTrXIhpYbqkWTJ0OVUpRnOKFstJfTBEfDpkWxNJl2IyhjcPSwrwswRBPdBYd5R2f3
-	 pUfSwAfCkyVZBcc6EJMeEbP4e6VYNojtES0Ng8uQsHJ3x10NMUtaa/AD1FHTA92RpA
-	 LpFmHkAsWy2b4pOazBhUEC2pIzwC/5wV2rBAfEPg=
+	b=Z/k6zLIne6FpwFU4qe+fluyRlv6t/fV+udZBRH7gKA1F34ISOfZIBIw2QnilOBUiH
+	 szN5/vzZAJF/FIeuyt2A0c/MfPiubvrn3W6wHZXzYnWFIA26IRJ5ktLwxDb6KFJ3v0
+	 j583Zlo4XB0ePwXUXSLMHoKV/7K08X30fjr2UzW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Stepan Ionichev <sozdayvek@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 5.10 041/699] iio: gyro: bmg160: bail out when bandwidth/filter is not in table
-Date: Tue, 21 Jul 2026 17:16:40 +0200
-Message-ID: <20260721152356.637411143@linuxfoundation.org>
+Subject: [PATCH 5.10 042/699] iio: gyro: bmg160: wait full startup time after mode change at probe
+Date: Tue, 21 Jul 2026 17:16:41 +0200
+Message-ID: <20260721152356.659317252@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -54,66 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Stepan Ionichev <sozdayvek@gmail.com>
 
-commit 8320c77e67382d5d55d77043a5f60a867d408a2b upstream.
+commit 088fcb9b567f8723074ad9eb1bf5cb46f8a0096b upstream.
 
-bmg160_get_filter() walks bmg160_samp_freq_table[] looking for the entry
-matching the bw_bits value read from the chip:
+bmg160_chip_init() calls bmg160_set_mode(BMG160_MODE_NORMAL) and
+then waits only 500-1000 us. Per the BMG160 datasheet
+(BST-BMG160-DS000-07 Rev. 1.0, May 2013), the start-up and wake-up
+times (tsu, twusm) are 30 ms.
 
-	for (i = 0; i < ARRAY_SIZE(bmg160_samp_freq_table); ++i) {
-		if (bmg160_samp_freq_table[i].bw_bits == bw_bits)
-			break;
-	}
-	*val = bmg160_samp_freq_table[i].filter;
+The same file already waits BMG160_MAX_STARTUP_TIME_MS (80 ms)
+in bmg160_runtime_resume() after the same set_mode(NORMAL)
+operation. The 500 us value at probe was likely a unit mix-up;
+the old comment said "500 ms" while the code used microseconds.
 
-If no entry matches, i ends up equal to the array size and the next line
-reads one slot past the end. bmg160_set_filter() has the same shape, driven
-by 'val' instead of bw_bits.
-
-smatch flags both:
-
-  drivers/iio/gyro/bmg160_core.c:204 bmg160_get_filter() error:
-  buffer overflow 'bmg160_samp_freq_table' 7 <= 7
-  drivers/iio/gyro/bmg160_core.c:222 bmg160_set_filter() error:
-  buffer overflow 'bmg160_samp_freq_table' 7 <= 7
-
-Return -EINVAL when no entry matches.
-
-The set_filter() path is reachable from userspace via the sysfs
-in_anglvel_filter_low_pass_3db_frequency interface, so userspace can
-trivially trigger the out-of-bounds read with a value that is not in
-bmg160_samp_freq_table[].filter.
+Reuse the same constant via msleep() and add a code comment
+explaining the datasheet basis for the wait. Without this,
+register writes that follow the mode change can hit the chip
+before it is ready.
 
 Fixes: 22b46c45fb9b ("iio:gyro:bmg160 Gyro Sensor driver")
 Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/bmg160_core.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/iio/gyro/bmg160_core.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 --- a/drivers/iio/gyro/bmg160_core.c
 +++ b/drivers/iio/gyro/bmg160_core.c
-@@ -203,6 +203,9 @@ static int bmg160_get_filter(struct bmg1
- 			break;
- 	}
+@@ -266,8 +266,14 @@ static int bmg160_chip_init(struct bmg16
+ 	if (ret < 0)
+ 		return ret;
  
-+	if (i == ARRAY_SIZE(bmg160_samp_freq_table))
-+		return -EINVAL;
-+
- 	*val = bmg160_samp_freq_table[i].filter;
+-	/* Wait upto 500 ms to be ready after changing mode */
+-	usleep_range(500, 1000);
++	/*
++	 * Wait for the chip to be ready after switching to normal mode.
++	 * The BMG160 datasheet (BST-BMG160-DS000-07 Rev. 1.0, May 2013)
++	 * specifies a start-up / wake-up time (tsu, twusm) of 30 ms; use
++	 * BMG160_MAX_STARTUP_TIME_MS (80 ms) as a safety margin, matching
++	 * what bmg160_runtime_resume() already does.
++	 */
++	msleep(BMG160_MAX_STARTUP_TIME_MS);
  
- 	return ret ? ret : IIO_VAL_INT;
-@@ -220,6 +223,9 @@ static int bmg160_set_filter(struct bmg1
- 			break;
- 	}
- 
-+	if (i == ARRAY_SIZE(bmg160_samp_freq_table))
-+		return -EINVAL;
-+
- 	ret = regmap_write(data->regmap, BMG160_REG_PMU_BW,
- 			   bmg160_samp_freq_table[i].bw_bits);
- 	if (ret < 0) {
+ 	/* Set Bandwidth */
+ 	ret = bmg160_set_bw(data, BMG160_DEF_BW);
 
 
