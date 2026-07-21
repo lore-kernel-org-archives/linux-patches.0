@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810BC470449;
-	Tue, 21 Jul 2026 17:34:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F6A49218D;
+	Tue, 21 Jul 2026 17:34:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655249; cv=none; b=gdCXgM8Chsz9JN1ieDMbEMM4HVXnZ1ip9CmkeY5pJh0Glw2vA+69Icfuuf7pxIVDoheMUj9Abfk/jlbxCYJwvRroxAoS8FaNUNaQZrWERzJaWFyCpALHicda+q9CqTwUD8oDtySdaIPt25plE/xEO5jsFzn0lqH+T1N+kmhteS0=
+	t=1784655252; cv=none; b=M5IJja3rcQ5zM1nt3qrCb7vMvnzo+WXK8OOWpw8tEww67dNelsYqL472n2SFlvpt3FWoAfuG5nct0ug++33jmd1HOpsR60H+xxr1KgWa4ou9V3MciqI65jOE09RY/uph4SFASFWGhBrqb4hXG2kTp/FSK8PquJny5Dzmd/H6LOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655249; c=relaxed/simple;
-	bh=gLA6m46UqpxW3ecbvKdge12EU75DYnLPsWvLq0K3xfA=;
+	s=arc-20240116; t=1784655252; c=relaxed/simple;
+	bh=Z7/BCMikCvDz6RqhJJbs5rCN4O0/xuC9CLbiKvwgN/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J3c6PdXiMgHC556fCDtSrQgSGQJ1GJH05Y0Tx1l+OO5OM/Yq3ue9kuu/ci42qVAaWqrkHJQrCGHVy9KN2uOSLH9G7ta6mq4Q+7aVdG3904j3E3B5s8Q6S4DuJotvBUBF8rN12T+9NphX30A61pOT3dUNhMfKDXmn67hIhVr5WOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ha8d6/vZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I5l5uMH+4pI5MSAvmlKNxLVPpSdBqa+iAIOUzNJFVWEkNRtpKqmKSoCfaHNeFf3c67K332VndmPLX/RkzmtDrimbyQM6dPU260bejjXdQSd/933wbT8fho96RWGLL0Ax2dNXBztfMLKWfl/Zjxl1tn4fM2HcO9JHLxyNcvk1OPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPOtgN53; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ha8d6/vZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85961F00A3E;
-	Tue, 21 Jul 2026 17:34:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPOtgN53"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6101F000E9;
+	Tue, 21 Jul 2026 17:34:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655248;
-	bh=QnesSfSgascawAOrYBX/OB5Llny33Aa+TOcoqFO29KQ=;
+	s=korg; t=1784655251;
+	bh=qO4FoEDTVGvVFBdAVdNGNJVQgqmIyR/pPTbYPeONsCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ha8d6/vZ0ov7SrcHCEQROH6qAbw82wi3c+7H6i0uCOJnEI4j0B1GQJBLhZo2ao0sw
-	 nc/6o+zrYB5/Ex+1gRW0xpmVNL6ZXW5Eqf5d9mKuxjj8bOFFgWgbs4YgffoOIhJ31y
-	 jY/KVA85N0oH2AnCY1eZI1y4kEbScFRvz+2kAEWk=
+	b=NPOtgN53GnaP6PoFw6ywaf1+f9BXS3yxu7HkVF3PlET/8FCcP97ctyCI+Rp0s9wmt
+	 I2bkrVDE0W+WG/5TYQRdi12s/zsw7uYNBgjqLKfbTdkiJLFqvZCflPDIzvtjgG5/Q5
+	 IUHn4Pb3XFScTLMiSiSa9UrhHp1w5SdPWr9+jTmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 7.1 2012/2077] crypto: aes - Fix conditions for selecting MAC dependencies
-Date: Tue, 21 Jul 2026 17:28:05 +0200
-Message-ID: <20260721152640.162589868@linuxfoundation.org>
+	Terrence Adams <tadamsjr@google.com>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 7.1 1986/2077] ata: libata-core: Allow capacity transition to zero for locked drives
+Date: Tue, 21 Jul 2026 17:27:39 +0200
+Message-ID: <20260721152639.553311596@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -49,65 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: TJ Adams <tadamsjr@google.com>
 
-commit e073f1238ecaea366f53e98724c40b31856da56a upstream.
+commit 793bf193b18e9bff6c4280268bbffd16a5b533e5 upstream.
 
-Starting in commit 7137cbf2b5c9 ("crypto: aes - Add cmac, xcbc, and
-cbcmac algorithms using library"), the aes module (CRYPTO_AES) supports
-CBC based MACs using the corresponding library functions.
+Commit 91842ed844a0 ("ata: libata-core: Set capacity to zero for a
+security locked drive") introduced setting the device capacity (n_sectors)
+to zero in ata_dev_configure() if the drive is security locked.
 
-To avoid including unneeded functionality, that support honors the
-existing CRYPTO_CMAC, CRYPTO_XCBC, and CRYPTO_CCM kconfig options.  The
-dependencies are selected if at least one of those is enabled.
+However, during runtime revalidation, ata_dev_revalidate() compares the
+new capacity (now 0) with the old capacity (>0) and detects a mismatch.
+Since it does not consider the locked status, it returns -ENODEV.
 
-However, the select statements don't correctly handle the case where
-CRYPTO_AES=y and (for example) CRYPTO_CMAC=m.  In that case the
-dependencies get selected at level 'm', due to how the kconfig language
-works.  That causes a linker error.
+This revalidation failure can occur when doing a reset of the PHY (e.g.
+hard reset) for a controller that has I/Os in flight. The timed out
+I/Os trigger the SCSI Error Handling (EH) path, which in turn invokes
+libata device revalidation. If the drive is locked at runtime (e.g.
+it lost power during reset and relocked), revalidation sees the capacity
+transition to zero and fails, eventually disabling the device.
 
-Fix this by changing the selection conditions to use '!= n'.
+Fix this by allowing the capacity transition to zero in
+ata_dev_revalidate() if the drive is reported as security locked by
+ata_id_is_locked().
 
-A similar issue also exists for CRYPTO_LIB_AES's conditional selection
-of CRYPTO_LIB_UTILS.  The same '!= n' would work, but instead just make
-CRYPTO_LIB_AES always select CRYPTO_LIB_UTILS.  CRYPTO_LIB_UTILS is
-lightweight, and it's needed by most AES modes and many other things.
-
-Fixes: 7137cbf2b5c9 ("crypto: aes - Add cmac, xcbc, and cbcmac algorithms using library")
-Fixes: 309a7e514da7 ("lib/crypto: aes: Add support for CBC-based MACs")
+Fixes: 91842ed844a0 ("ata: libata-core: Set capacity to zero for a security locked drive")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260709022954.45113-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Terrence Adams <tadamsjr@google.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/Kconfig     |    4 ++--
- lib/crypto/Kconfig |    3 +--
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ drivers/ata/libata-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/crypto/Kconfig
-+++ b/crypto/Kconfig
-@@ -358,8 +358,8 @@ config CRYPTO_AES
- 	tristate "AES (Advanced Encryption Standard)"
- 	select CRYPTO_ALGAPI
- 	select CRYPTO_LIB_AES
--	select CRYPTO_LIB_AES_CBC_MACS if CRYPTO_CMAC || CRYPTO_XCBC || CRYPTO_CCM
--	select CRYPTO_HASH if CRYPTO_CMAC || CRYPTO_XCBC || CRYPTO_CCM
-+	select CRYPTO_LIB_AES_CBC_MACS if CRYPTO_CMAC != n || CRYPTO_XCBC != n || CRYPTO_CCM != n
-+	select CRYPTO_HASH if CRYPTO_CMAC != n || CRYPTO_XCBC != n || CRYPTO_CCM != n
- 	help
- 	  AES cipher algorithms (Rijndael)(FIPS-197, ISO/IEC 18033-3)
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -3992,7 +3992,7 @@ int ata_dev_revalidate(struct ata_device
  
---- a/lib/crypto/Kconfig
-+++ b/lib/crypto/Kconfig
-@@ -8,8 +8,7 @@ config CRYPTO_LIB_UTILS
+ 	/* verify n_sectors hasn't changed */
+ 	if (dev->class != ATA_DEV_ATA || !n_sectors ||
+-	    dev->n_sectors == n_sectors)
++	    dev->n_sectors == n_sectors || ata_id_is_locked(dev->id))
+ 		return 0;
  
- config CRYPTO_LIB_AES
- 	tristate
--	# Select dependencies of modes that are part of libaes.
--	select CRYPTO_LIB_UTILS if CRYPTO_LIB_AES_CBC_MACS
-+	select CRYPTO_LIB_UTILS
- 
- config CRYPTO_LIB_AES_ARCH
- 	bool
+ 	/* n_sectors has changed */
 
 
