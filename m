@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1514403EA1;
-	Tue, 21 Jul 2026 22:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73318404BF6;
+	Tue, 21 Jul 2026 22:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673324; cv=none; b=kRkGQ9xobAuJiAJQpLf7iRpCoNYdobAI86JAc+8uhMZF87SvRb24R5IIoq4mpnaNU9TnRZhpyTXbtc2shpDAhpSfaH2DkpG+PX/8XfpG0DRxHaVKu+i7AZkGkCuz8lKUHEfOAE/mzWmakhX5PNKcoNaC4X4L6pAg6M9z4xiuH1M=
+	t=1784673326; cv=none; b=eykz3KrB9QF2VBvIPExFqMcYjn/AQb2YTt9ADnSWQA6kqsxzmVMq8qWg/tON4mciSoWwSpyroumxYTIutfGm8MjOSuu6Q0n1/AON0rDpgLSN1wXnjftt0qHVSItgJqygdnZDUK7F5iJxskXzrm11MD3LeM+VNxva/LaSSfiw/KY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673324; c=relaxed/simple;
-	bh=wm1QS1j17uzBtyhUeTLsPz6WYctdqSbEIv03bGqeK9M=;
+	s=arc-20240116; t=1784673326; c=relaxed/simple;
+	bh=Lm6Qap8yHrfLXuMFeV9IzvSwYjsNM/7LqVqTQKPV9d4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NGILFKKzMTnhIrI2iqBY/I5nGVb36+P7Gyp9XUgYfnJwJ6oLH9BkiUWNNwyRfGpS21UoY8OqxGlc07CPzivGa72cLfWmRwn/xCblkXTaW1Jh2If/BE9jCB8dA+PvNaNBjvBlTUX+rgoEFE9/awAhWYJmO3snoVz7qnYJLFlYZcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9tSklx4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Asugmn6/znlFkCJ87GTzADFda3+WlU7quu9CagVmG87CYnOlvMCArD08AlVJbTUUoz8wDxa89IOAruyj7VxYk4Kxu+kpz3lpmzCbTtvEplHap0L2kC8lggdFMljT5Wuq3cbXSrRWcW5rAJGcPIoBc0XWhtBJ/7Yh1gM+CNS/TAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DllgggMB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9tSklx4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418D51F000E9;
-	Tue, 21 Jul 2026 22:35:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DllgggMB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEEC1F000E9;
+	Tue, 21 Jul 2026 22:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673322;
-	bh=OR+38Lxrz8OGH+KWjgPiz3fC0ikRu2LrmhELPfHRV1w=;
+	s=korg; t=1784673325;
+	bh=0AFyP8+URNZ5ImKSRJdWnh7STreBoh8uUPGZ8hbP6NQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e9tSklx4XhPYbyy69g84/sHewhWlFzA+yOuW6fUMBvIN3QRm3DtKuU4HmcLPknFys
-	 D5tMmTFEH2DdNe3CVhDZ1QHf3+jGIJV728LehssIjRXWV6OATt7+sNOO5GowZ/Gjtq
-	 HAbJUES+tdvYB11296YMvxLBCybF9dabDxxBw5GE=
+	b=DllgggMBJM16bE48TuLCSsLF/AdOPg3MkA2XSQmQtXhaix3qdOMXf3xXsn3ZzxVLN
+	 XnZs7e6zud3yH9gpvPfXwIiXJjdhr/isZPd71wOOuztiIUnCwPsFya0kndBXtM09dX
+	 OwcH/5+NbDGjXAeV1gZQkIVAAXvEI+VtJs+wKntw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Madhu M <madhu.m@intel.com>,
-	Jameson Thies <jthies@google.com>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.10 118/699] usb: typec: ucsi: Pass full DP config payload in SET_NEW_CAM for DP alt mode
-Date: Tue, 21 Jul 2026 17:17:57 +0200
-Message-ID: <20260721152358.367521054@linuxfoundation.org>
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	Kyungwook Boo <bookyungwook@gmail.com>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Maxwell Doose <m32285159@gmail.com>,
+	Vladimir Zapolskiy <vz@kernel.org>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 119/699] iio: adc: spear: Initialize completion before requesting IRQ
+Date: Tue, 21 Jul 2026 17:17:58 +0200
+Message-ID: <20260721152358.389923177@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,48 +56,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Madhu M <madhu.m@intel.com>
+From: Maxwell Doose <m32285159@gmail.com>
 
-commit 735a461d060d4eeb2f9732aba1295bc32a3982e2 upstream.
+[ Upstream commit 3ee2128b6f0eb0be7b6cb8f6e0f1f113a65201a0 ]
 
-In the UCSI Specification Revision 3.1 RC1, bits 32-63 of the SET_NEW_CAM
-command hold the 32-bit Alternate Mode Specific (AMSpecific) field.
+In the report from Jaeyoung Chung:
 
-For DisplayPort Alternate Mode, this field must contain the full
-32-bit DisplayPort configuration VDO payload that the OPM wants the
-connector to operate in, rather than just the pin assignment value.
-This AMSpecific value follows the DisplayPort Configurations defined
-in the DisplayPort Alt Mode on USB Type-C Specification v2.1a,
-Table 5-13: SOP DisplayPort Configurations.
+"spear_adc_probe() in drivers/iio/adc/spear_adc.c registers its
+interrupt handler with devm_request_irq() before it initializes
+st->completion with init_completion(). If an interrupt arrives after
+devm_request_irq() and before init_completion(), the handler calls
+complete() on an uninitialized completion, causing a kernel panic.
 
-Fixes: af8622f6a585 ("usb: typec: ucsi: Support for DisplayPort alt mode")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Madhu M <madhu.m@intel.com>
-Reviewed-by: Jameson Thies <jthies@google.com>
-Reviewed-by: Andrei Kuchynski <akuchynski@chromium.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260619153311.3526083-1-madhu.m@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The probe path, in spear_adc_probe():
+
+    iodev = devm_iio_device_alloc(&pdev->dev, sizeof(*st)); /* st kzalloc-zeroed */
+    ...
+    retval = devm_request_irq(&pdev->dev, irq, spear_adc_isr, 0,
+                              LPC32XXAD_NAME, st);           /* register handler */
+    ...
+    init_completion(&st->completion);                       /* initialize completion */
+
+spear_adc_isr() calls complete():
+
+    complete(&st->completion);
+
+If the device raises an interrupt before init_completion() runs,
+complete() acquires the uninitialized wait.lock and walks the zeroed
+task_list in swake_up_locked(). The zeroed task_list makes list_empty()
+return false, so swake_up_locked() dereferences a NULL list entry,
+triggering a KASAN wild-memory-access."
+
+Fix the chance of a spurious IRQ causing an uninitialized pointer
+dereference by moving init_completion() above devm_request_irq().
+
+Fixes: b586e5d9eee0 ("staging:iio:adc:spear rename device specific state structure to _state")
+Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Closes: https://lore.kernel.org/linux-iio/20260610115700.774689-1-jjy600901@snu.ac.kr/
+Signed-off-by: Maxwell Doose <m32285159@gmail.com>
+Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Maxwell Doose <m32285159@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/displayport.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/iio/adc/spear_adc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/ucsi/displayport.c
-+++ b/drivers/usb/typec/ucsi/displayport.c
-@@ -169,13 +169,12 @@ static int ucsi_displayport_status_updat
+diff --git a/drivers/iio/adc/spear_adc.c b/drivers/iio/adc/spear_adc.c
+index 4d4aff88aa6ceb..12e0811a47b71a 100644
+--- a/drivers/iio/adc/spear_adc.c
++++ b/drivers/iio/adc/spear_adc.c
+@@ -274,6 +274,8 @@ static int spear_adc_probe(struct platform_device *pdev)
+ 	st = iio_priv(indio_dev);
+ 	st->np = np;
  
- static int ucsi_displayport_configure(struct ucsi_dp *dp)
- {
--	u32 pins = DP_CONF_GET_PIN_ASSIGN(dp->data.conf);
- 	u64 command;
++	init_completion(&st->completion);
++
+ 	/*
+ 	 * SPEAr600 has a different register layout than other SPEAr SoC's
+ 	 * (e.g. SPEAr3xx). Let's provide two register base addresses
+@@ -334,8 +336,6 @@ static int spear_adc_probe(struct platform_device *pdev)
  
- 	if (!dp->override)
- 		return 0;
+ 	platform_set_drvdata(pdev, indio_dev);
  
--	command = UCSI_CMD_SET_NEW_CAM(dp->con->num, 1, dp->offset, pins);
-+	command = UCSI_CMD_SET_NEW_CAM(dp->con->num, 1, dp->offset, dp->data.conf);
- 
- 	return ucsi_send_command(dp->con->ucsi, command, NULL, 0);
- }
+-	init_completion(&st->completion);
+-
+ 	indio_dev->name = SPEAR_ADC_MOD_NAME;
+ 	indio_dev->info = &spear_adc_info;
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
+-- 
+2.53.0
+
 
 
