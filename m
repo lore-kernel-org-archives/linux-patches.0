@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E0B37DE97;
-	Tue, 21 Jul 2026 18:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9B337DE97;
+	Tue, 21 Jul 2026 18:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657811; cv=none; b=miU1CaICyS7fAh9/KBtZ7RIB9o0009Sexq1B1SmL6mWD/vogU9fVGHxh8POfWcWC29k35R6II79vemwWLw/ycxC0S9eSu8Hnmf5YHIB5WcmhZ3AAhsRmkXQqPc7s0J//E3Cp/tGy9SBKad4wfHwY+1XkkKws7IWM2Yd2OpxA8xc=
+	t=1784657813; cv=none; b=A20AHUMXQpsWLkKSYZsQr8629beGjWUY3fjBN6I1fowJtAycoMjxxMczm2vGT3MHn/9N2DhD1chQFQwbajgRia/7gWIFz1UXch416uWqpMc/MQ5U+ICxpczAAknayRBjyei5qSiNjFqOyRwrZfWMk6SnI7vy/VXPbJreEByXE3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657811; c=relaxed/simple;
-	bh=lfBV3OsLRQerQ9bmjYHVM4G7N3Y6/DAqQC4/T7LvSms=;
+	s=arc-20240116; t=1784657813; c=relaxed/simple;
+	bh=29d26ajeg8SBcm0nlAKoMRTqgSmAlFdKcGtRZArD084=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e86FzdahaGKlTJX61M4Ud6S1rF6OwDKdRoVsqZiRiffadoJg4sjFfKSdMAqHtPsZxJWp+hsyoiw4I/lkWwmFM6k6tmwhhXdKNUyQIRSXkPy6QZUPH+qT3fv/p4pIab8i0XOvJmVJmhS0CIpLkHzg1IMI4UiBcH1dRe454e/7qB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJAgMOPR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EUExOpKM+7c8nQiE3dKs+4bV/IYSnHGUCkkSjbc0OBbOeP5giGvDAq1dPXrxah01YCpReDCDn8nVnCZtvAW//dBaD+ETH10QQzBFlt6Bxq4sfhai+WyrXN9y8KI/GZpXeMCM9U9B1NZkVjYERdIQwzP2EhYkLHlge5wtzJbHDzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rRat2Nv/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJAgMOPR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0A61F00A3A;
-	Tue, 21 Jul 2026 18:16:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRat2Nv/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1396A1F000E9;
+	Tue, 21 Jul 2026 18:16:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657809;
-	bh=O15cWDyF8o3FthSNHECgorawkc0RaUOdZ7wc+p+6gc8=;
+	s=korg; t=1784657812;
+	bh=W+60PIAOSiLOSmReZcvbTt60ojG7TvZfyL9h/i5FGXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UJAgMOPR5wX1VBb80GXS4rgf2uvB/FSZXhbmQxXCWkWLWDjDaM2CMSMWSDzWPTYPt
-	 Rsq8JhSvfUZTrPq4Q8UvleQvgNaLtsYd1ZSgKUc5+Efk/dT3O3Xq8QHM0OhRveWJff
-	 +zrIRG1cH362srGHBN/FlW7m8ki3Qzl6/RAYH8VE=
+	b=rRat2Nv/1rMEeSfES5o12YZnLGKVPD859B1WNIHPy54/phsZGP02Rywu7j5Ne7cL7
+	 N6cudJCynB6l3mPZmPN/3P1TwYGQ/j0WutGoW1ptlDVmwSWS2Oh0q6d6v/DIk8rAGL
+	 L2Udf7dN93f3v+cdhhBJw5NCgy0hX6PG+8Ury5Qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingshuang Fu <fuqingshuang@kylinos.cn>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0906/1611] gpio: davinci: fix IRQ domain leak on devm_kzalloc failure
-Date: Tue, 21 Jul 2026 17:17:02 +0200
-Message-ID: <20260721152535.769058264@linuxfoundation.org>
+Subject: [PATCH 6.18 0907/1611] NTB: epf: Make db_valid_mask cover only real doorbell bits
+Date: Tue, 21 Jul 2026 17:17:03 +0200
+Message-ID: <20260721152535.790099295@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,46 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingshuang Fu <fuqingshuang@kylinos.cn>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 4e8eb6952aa6749726c6c3763ae0032a6332c24f ]
+[ Upstream commit 6eb7e28f1f24a28234add38755687a7ed8bc2654 ]
 
-In davinci_gpio_irq_setup(), after successfully creating an IRQ domain
-with irq_domain_create_legacy(), a subsequent devm_kzalloc() failure
-in the bank loop causes the function to return -ENOMEM without
-removing the IRQ domain.
+ndev->db_count includes an unused doorbell slot due to the legacy extra
+offset in the peer doorbell path. db_valid_mask must cover only the real
+doorbell bits and exclude the unused slot.
 
-Unlike devm-managed resources, irq_domain_create_legacy() does not
-auto-clean up on probe failure, so the domain is leaked.
+Set db_valid_mask to BIT_ULL(db_count - 1) - 1.
 
-Fix by calling irq_domain_remove() before returning on allocation
-failure.
-
-Fixes: b5cf3fd827d2 ("gpio: davinci: Redesign driver to accommodate ngpios in one gpio chip")
-Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
-Link: https://patch.msgid.link/20260623023106.117229-1-fffsqian@163.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: 812ce2f8d14e ("NTB: Add support for EPF PCI Non-Transparent Bridge")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260513024923.451765-10-den@valinux.co.jp
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-davinci.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/ntb/hw/epf/ntb_hw_epf.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-davinci.c b/drivers/gpio/gpio-davinci.c
-index 538f27209ce718..5de42f1143dab6 100644
---- a/drivers/gpio/gpio-davinci.c
-+++ b/drivers/gpio/gpio-davinci.c
-@@ -550,8 +550,10 @@ static int davinci_gpio_irq_setup(struct platform_device *pdev)
- 				       sizeof(struct
- 					      davinci_gpio_irq_data),
- 					      GFP_KERNEL);
--		if (!irqdata)
-+		if (!irqdata) {
-+			irq_domain_remove(chips->irq_domain);
- 			return -ENOMEM;
-+		}
+diff --git a/drivers/ntb/hw/epf/ntb_hw_epf.c b/drivers/ntb/hw/epf/ntb_hw_epf.c
+index 15d99d08f84f9a..051af2a45c6f98 100644
+--- a/drivers/ntb/hw/epf/ntb_hw_epf.c
++++ b/drivers/ntb/hw/epf/ntb_hw_epf.c
+@@ -560,7 +560,11 @@ static int ntb_epf_init_dev(struct ntb_epf_dev *ndev)
+ 		return ret;
+ 	}
  
- 		irqdata->regs = g;
- 		irqdata->bank_num = bank;
+-	ndev->db_valid_mask = BIT_ULL(ndev->db_count) - 1;
++	/*
++	 * ndev->db_count includes an extra skipped slot due to the legacy
++	 * doorbell layout, hence -1.
++	 */
++	ndev->db_valid_mask = BIT_ULL(ndev->db_count - 1) - 1;
+ 	ndev->mw_count = readl(ndev->ctrl_reg + NTB_EPF_MW_COUNT);
+ 	ndev->spad_count = readl(ndev->ctrl_reg + NTB_EPF_SPAD_COUNT);
+ 
 -- 
 2.53.0
 
