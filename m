@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C582D30F80C;
-	Tue, 21 Jul 2026 17:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D6A3F12CE;
+	Tue, 21 Jul 2026 17:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655793; cv=none; b=q0L3D1fRcQutQB/obxhnHaOv1TdIKFv+Das7V0u8od76LiSTN2dCCLij0/r+G5PXIRv3FoFMxGCiU15n746iPoEbTEEngVeRMNJocrG3r27NjKUicNRNkdIVAzt4kBn0Wrb7ffhbCmQzloXCSoJPGj11KHuJwXTA5DQP5IZkRh0=
+	t=1784655795; cv=none; b=JLw3ypAJhCS+cm2eBrbFdRqa82Z/cXUA3MV2ANqwYtaCPhrFfBXq32wrAcP2HLmCWknUK6o5OBx8HqbZx+tc20+NCuc+o5yWPfT/xuwPBzejKFVCja93I8f6bEIF3tYXkHQ3MW3CkiHtmz1tYdO8NuA+i3+G8+Q1bW6zbW0DZV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655793; c=relaxed/simple;
-	bh=pjxE9mtJNMUQtTywu+YwA4Ds1CIFxxCAwnytet/Xez4=;
+	s=arc-20240116; t=1784655795; c=relaxed/simple;
+	bh=PXFvkJnaF+xquMxeby1pA7/OzA2tyMjHfaUj1WiP+9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rSjWuvlVOXyPTv6sGO65PGPOr6MEI+JHt5yf3ZFcMVbIl2N4DMWR7LHSijqqqzUctz3b71AayGRyGhP9fs52dTSj5ii2TUYGtnvFs3GEFa8tKy2CuEGtir1d+GyobljAjiQBlzdI9Xq0b7ZkPjq7IBvDNO8rqtgcgeiSmbAharU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTUfLlvF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GVguGf848toRnVO1KbSO9uSs25drBof+OpmTv/Fmb3ptAESDuJsC8RPnB6CRbFRZ7aPiDl46TaBJZiqVDGCiLEWprFepoX3xw6KIDoHFMO2M4wE0TQTEere0w4bnjmf2IWUbB+OmdEUfE9IILjdS3yC7urNk0q8Vez3i/AWv7I0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOxRO9qw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTUfLlvF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A05F1F00ACA;
-	Tue, 21 Jul 2026 17:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOxRO9qw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5CA41F000E9;
+	Tue, 21 Jul 2026 17:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655791;
-	bh=QKzc87lg27BkB3PVb5GaAX6oekn2+SE98pr7Gluqw/A=;
+	s=korg; t=1784655794;
+	bh=/24D2D//+XsZnL9/xD+kDtCmXg1dwNpRFQU/KUkFJg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NTUfLlvFxs5356rOvyG2S4Og+fYaSmLaOOBd6+2jjliAximWXHDwriK1JaGltaHwp
-	 GjdRPyK9Ha7ZyBi0IxITXtcE+TUGaZLaXuLmZnmYPCCmnswCwlVYN2Jax5TD6V3u6q
-	 Rkd7L29vp4RRCRunZhs5826SQsqtuP1qIlJpZn0g=
+	b=WOxRO9qwyKKWXiCRNvXCy+Zms5F++8tkmGSKafvw6fNtYGwX9d+o62NgmMtD58HCK
+	 7T4kB/Kjpm7lFgGrm1T/Pj5Kka+uD6JWfJCf8Ue7AYBBewTlPBn/tP3v3ji+x2bV7e
+	 wYxLUFMmOjQXlsR7wcU57uuCBO6LTaiWwEHOi5gk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel@sholland.org>,
-	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
-	Paul Kocialkowski <paulk@sys-base.io>,
+	Nas Chung <nas.chung@chipsnmedia.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0100/1611] media: cedrus: Fix failure to clean up hardware on probe failure
-Date: Tue, 21 Jul 2026 17:03:36 +0200
-Message-ID: <20260721152517.093830960@linuxfoundation.org>
+Subject: [PATCH 6.18 0101/1611] media: v4l2-common: Add YUV24 format info
+Date: Tue, 21 Jul 2026 17:03:37 +0200
+Message-ID: <20260721152517.116106262@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,54 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Holland <samuel@sholland.org>
+From: Nas Chung <nas.chung@chipsnmedia.com>
 
-[ Upstream commit f0a22f1d602ed499a192284de5e811a73421f0c7 ]
+[ Upstream commit 968b741872914a15363af0daf24ed2e82ec355f3 ]
 
-If V4L2 device fails to register, then SRAM still be claimed and as a
-result driver will not be able to probe again.
+The YUV24 format is missing an entry in the v4l2_format_info().
+The YUV24 format is the packed YUV 4:4:4 formats with 8 bits
+per component.
 
- cedrus 1c0e000.video-codec: Failed to claim SRAM
- cedrus 1c0e000.video-codec: Failed to probe hardware
- cedrus 1c0e000.video-codec: probe with driver cedrus failed with error -16
-
-cedrus_hw_remove undoes everything that was previously done by
-cedrus_hw_probe, such as disabling runtime power management and
-releasing the claimed SRAM and reserved memory region.
-
-Signed-off-by: Samuel Holland <samuel@sholland.org>
-Signed-off-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
-Fixes: 50e761516f2b ("media: platform: Add Cedrus VPU decoder driver")
-Acked-by: Paul Kocialkowski <paulk@sys-base.io>
+Fixes: 0376a51fbe5e ("media: v4l: Add packed YUV444 24bpp pixel format")
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/sunxi/cedrus/cedrus.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/v4l2-core/v4l2-common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/staging/media/sunxi/cedrus/cedrus.c b/drivers/staging/media/sunxi/cedrus/cedrus.c
-index bff42ea1871f73..1c7191bb0d8fca 100644
---- a/drivers/staging/media/sunxi/cedrus/cedrus.c
-+++ b/drivers/staging/media/sunxi/cedrus/cedrus.c
-@@ -476,7 +476,7 @@ static int cedrus_probe(struct platform_device *pdev)
- 	ret = v4l2_device_register(&pdev->dev, &dev->v4l2_dev);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Failed to register V4L2 device\n");
--		return ret;
-+		goto err_hw;
- 	}
- 
- 	vfd = &dev->vfd;
-@@ -537,6 +537,8 @@ static int cedrus_probe(struct platform_device *pdev)
- 	v4l2_m2m_release(dev->m2m_dev);
- err_v4l2:
- 	v4l2_device_unregister(&dev->v4l2_dev);
-+err_hw:
-+	cedrus_hw_remove(dev);
- 
- 	return ret;
- }
+diff --git a/drivers/media/v4l2-core/v4l2-common.c b/drivers/media/v4l2-core/v4l2-common.c
+index b367d479d6b3b7..c1e3bcb4c1c40b 100644
+--- a/drivers/media/v4l2-core/v4l2-common.c
++++ b/drivers/media/v4l2-core/v4l2-common.c
+@@ -281,6 +281,7 @@ const struct v4l2_format_info *v4l2_format_info(u32 format)
+ 		{ .format = V4L2_PIX_FMT_Y212,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 1, .bpp = { 4, 0, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 2, .vdiv = 1 },
+ 		{ .format = V4L2_PIX_FMT_Y216,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 1, .bpp = { 4, 0, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 2, .vdiv = 1 },
+ 		{ .format = V4L2_PIX_FMT_YUV48_12, .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 1, .bpp = { 6, 0, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 1, .vdiv = 1 },
++		{ .format = V4L2_PIX_FMT_YUV24,   .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 1, .bpp = { 3, 0, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 1, .vdiv = 1 },
+ 		{ .format = V4L2_PIX_FMT_MT2110T, .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 2, .comp_planes = 2, .bpp = { 5, 10, 0, 0 }, .bpp_div = { 4, 4, 1, 1 }, .hdiv = 2, .vdiv = 2,
+ 		  .block_w = { 16, 8, 0, 0 }, .block_h = { 32, 16, 0, 0 }},
+ 		{ .format = V4L2_PIX_FMT_MT2110R, .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 2, .comp_planes = 2, .bpp = { 5, 10, 0, 0 }, .bpp_div = { 4, 4, 1, 1 }, .hdiv = 2, .vdiv = 2,
 -- 
 2.53.0
 
