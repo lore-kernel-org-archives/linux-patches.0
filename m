@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8066346DFE9;
-	Tue, 21 Jul 2026 18:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B5246DFF5;
+	Tue, 21 Jul 2026 18:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660284; cv=none; b=CaAsjt5Pvfw9za1+BmI143LAVHhM2WJ48yAMLTmFwTWdeQHBLDL0hkbLkDcbnih6Xs1M2Vfz1oeC5CC23K9b2TmY8WFvwahtwce7qdR9A33TU685QNfvWOL/+CQqcY61riPlKuzCF8LrnlZtU7pPiMSS+mMaF9YP3nSKUSUQMS0=
+	t=1784660288; cv=none; b=mw7mM+dbZHer95pQKubJp4BEewC42mHYsWQwx/VrxrVZsMpuIvGZu6fh3WEYeGaCGQr6HfooR+mtX33CWd9SrWirrZE50p/dwai0Yn6FlXUmUrq8w2+fnBECl2QduUaucL1bpQQ7xE42KIosnmCZgPvgwklEKwNKM8poPrgXiq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660284; c=relaxed/simple;
-	bh=lP7VGR4+21h54WWMoUwAS5wqSTAEbo7C4+T2iqWb1nw=;
+	s=arc-20240116; t=1784660288; c=relaxed/simple;
+	bh=ovpIkxbRbIY9hnTjFFx1vqVAdURYkBOOjeG3o9qclwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=irNr1xgU5p4pOpPajGCObUmQp2qozE4G60aX6NL1gqGwRMeXbksye5pyBx9zP16g8lRwOPZvJFgdDX4OTOz2ZAC7TMpTCeaIxRPn0mqFzwDAqYvb9SKdPYJOgLjSCXNDnXeMzIP94Is6sW8CF2PyqUSBlfxIL8KXEwp0SJpX7bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tz5aJhn1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HexjQXApIhJe8niOjeUOLHAz9ctc4zoFvzjO9s/+ARqlFCUpj1IrKEVjquBwfBYCQgd+lPCqiuhqkcGdTFTf/12tFSqM08lSJb7S2c8GeZEafdlbC8Zg6N5DOj/EhILbfmd4PBV+xBu/NjnNjJvENHY1g3yRVQG5oGW/a3MDTRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZtpMpWI5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tz5aJhn1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2CF1F00A3A;
-	Tue, 21 Jul 2026 18:58:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZtpMpWI5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FA91F000E9;
+	Tue, 21 Jul 2026 18:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660282;
-	bh=IAZxr4nWWDNRMzpjYfMwiSSYLHLKOguFWP5dMr2Xq18=;
+	s=korg; t=1784660285;
+	bh=Ldsy+UAx1ukTU1LoxHa0roVMcglhxbYCmMmH+8m9B6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tz5aJhn1qJFwTGoghiL9RfsVyhvApbVqYrhTE6NtPJ6ETjRp+cgO+8YfOw7hxBAtX
-	 AFx1RC1mHi8mKS9VwfYULTmZuUdC5oMfs2KzWF7a0n9S2g9ZHzHxsZ8nHhmAnGKcpv
-	 Gh4ImzohqFrwdGyPQpvMOo39BBARsQgp/bWLYqe4=
+	b=ZtpMpWI5iB6NVqLre28C5GVi0h4+WuHhEZRYpD8rrfAUFkKVCKS1nW/IJI/02SWF+
+	 3NMiy4Ay8FHQrDwSAR9jwuS9qkYP4v1V1Bo7ccYCLqwZ3S7b4baj0/qxk8/sN0I/Q2
+	 kOlJ5qzdiEZhCxg0fr9ta7F3Zh2mSvqrKR1lFkjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0878/2077] mailbox: mtk-adsp: fix UAF during device teardown
-Date: Tue, 21 Jul 2026 17:09:11 +0200
-Message-ID: <20260721152613.502046564@linuxfoundation.org>
+Subject: [PATCH 7.1 0879/2077] mailbox: dont free the channel if the startup callback failed
+Date: Tue, 21 Jul 2026 17:09:12 +0200
+Message-ID: <20260721152613.527136768@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,101 +45,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit b57d1a40bc43258372fa1f4d39305e093947a262 ]
+[ Upstream commit 4f176444dcc977d1888fd9220c357a4d32338ee0 ]
 
-When the SOF audio driver fails to initialize (e.g. firmware boot
-timeout), its devres unwind frees the snd_sof_dev object that the
-mailbox client (mtk-adsp-ipc) reaches via chan->cl->rx_callback.
-The mtk-adsp-mailbox shutdown clears the mailbox command registers
-but leaves the IRQ line unmasked, so a late interrupt can still
-queue a threaded handler after mbox_free_channel() had cleared
-chan->cl, and mbox_chan_received_data() would then trigger UAF:
+If the optional startup() callbacks fails, we need to clear some states.
+Currently, this is done by freeing the channel. This does, however, more
+than needed which creates problems. Namely, it is calling the shutdown()
+callback. This is totally not intuitive. No user expects that shutdown()
+is called when startup() fails, similar to remove() not being called
+when probe() fails. Currently, quite some mailbox users register the IRQ
+in startup() and free them in shutdown(). These drivers will get a WARN
+about freeing an already free IRQ. Other subtle issues could arise from
+this unexpected behaviour.
 
-  BUG: KASAN: slab-use-after-free in sof_ipc3_validate_fw_version
-   sof_ipc3_validate_fw_version
-   sof_ipc3_do_rx_work
-   sof_ipc3_rx_msg
-   mt8196_dsp_handle_request
-   mtk_adsp_ipc_recv
-   mbox_chan_received_data
-   mtk_adsp_mbox_isr
-   irq_thread_fn
-  Freed by task ...:
-   kfree
-   devres_release_all
-   really_probe
-   ... (sof-audio-of-mt8196 probe failure)
+To solve this problem, introduce a helper which does the minimal cleanup
+and use it in both, in free_channel() and after startup() failed.
 
-The crash was observed roughly three seconds after the failed probe.
-
-disable_irq() in shutdown and enable_irq() in startup. disable_irq()
-also waits for any in-flight interrupts, so by the time
-mbox_free_channel() proceeds to clear chan->cl no rx_callback can run.
-
-In addition, request the IRQ with IRQF_NO_AUTOEN so it stays masked
-between probe and the first client bind — otherwise an early interrupt
-can crash on chan->cl == NULL in mbox_chan_received_data().
-
-Fixes: af2dfa96c52d ("mailbox: mediatek: add support for adsp mailbox controller")
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260402112709.13002-1-wsa%2Brenesas%40sang-engineering.com # second issue
+Fixes: 2b6d83e2b8b7 ("mailbox: Introduce framework for mailbox")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mtk-adsp-mailbox.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/mailbox/mailbox.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/mailbox/mtk-adsp-mailbox.c b/drivers/mailbox/mtk-adsp-mailbox.c
-index 91487aa4d7da08..8bcecddee0eb5c 100644
---- a/drivers/mailbox/mtk-adsp-mailbox.c
-+++ b/drivers/mailbox/mtk-adsp-mailbox.c
-@@ -19,6 +19,7 @@ struct mtk_adsp_mbox_priv {
- 	struct mbox_controller mbox;
- 	void __iomem *va_mboxreg;
- 	const struct mtk_adsp_mbox_cfg *cfg;
-+	int irq;
- };
- 
- struct mtk_adsp_mbox_cfg {
-@@ -67,6 +68,8 @@ static int mtk_adsp_mbox_startup(struct mbox_chan *chan)
- 	writel(0xFFFFFFFF, priv->va_mboxreg + priv->cfg->clr_in);
- 	writel(0xFFFFFFFF, priv->va_mboxreg + priv->cfg->clr_out);
- 
-+	enable_irq(priv->irq);
-+
- 	return 0;
+diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
+index bbc9fd75a95f7c..006ea5a5c32074 100644
+--- a/drivers/mailbox/mailbox.c
++++ b/drivers/mailbox/mailbox.c
+@@ -327,6 +327,19 @@ int mbox_flush(struct mbox_chan *chan, unsigned long timeout)
  }
+ EXPORT_SYMBOL_GPL(mbox_flush);
  
-@@ -74,6 +77,8 @@ static void mtk_adsp_mbox_shutdown(struct mbox_chan *chan)
- {
- 	struct mtk_adsp_mbox_priv *priv = get_mtk_adsp_mbox_priv(chan->mbox);
- 
-+	disable_irq(priv->irq);
++static void mbox_clean_and_put_channel(struct mbox_chan *chan)
++{
++	/* The queued TX requests are simply aborted, no callbacks are made */
++	scoped_guard(spinlock_irqsave, &chan->lock) {
++		chan->cl = NULL;
++		chan->active_req = MBOX_NO_MSG;
++		if (chan->txdone_method == MBOX_TXDONE_BY_ACK)
++			chan->txdone_method = MBOX_TXDONE_BY_POLL;
++	}
 +
- 	/* Clear ADSP mbox command */
- 	writel(0xFFFFFFFF, priv->va_mboxreg + priv->cfg->clr_in);
- 	writel(0xFFFFFFFF, priv->va_mboxreg + priv->cfg->clr_out);
-@@ -139,8 +144,10 @@ static int mtk_adsp_mbox_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return irq;
++	module_put(chan->mbox->dev->driver->owner);
++}
++
+ static int __mbox_bind_client(struct mbox_chan *chan, struct mbox_client *cl)
+ {
+ 	struct device *dev = cl->dev;
+@@ -350,10 +363,9 @@ static int __mbox_bind_client(struct mbox_chan *chan, struct mbox_client *cl)
  
-+	priv->irq = irq;
- 	ret = devm_request_threaded_irq(dev, irq, mtk_adsp_mbox_irq,
--					mtk_adsp_mbox_isr, IRQF_TRIGGER_NONE,
-+					mtk_adsp_mbox_isr,
-+					IRQF_TRIGGER_NONE | IRQF_NO_AUTOEN,
- 					dev_name(dev), mbox->chans);
- 	if (ret < 0)
- 		return ret;
+ 	if (chan->mbox->ops->startup) {
+ 		ret = chan->mbox->ops->startup(chan);
+-
+ 		if (ret) {
+ 			dev_err(dev, "Unable to startup the chan (%d)\n", ret);
+-			mbox_free_channel(chan);
++			mbox_clean_and_put_channel(chan);
+ 			return ret;
+ 		}
+ 	}
+@@ -495,15 +507,7 @@ void mbox_free_channel(struct mbox_chan *chan)
+ 	if (chan->mbox->ops->shutdown)
+ 		chan->mbox->ops->shutdown(chan);
+ 
+-	/* The queued TX requests are simply aborted, no callbacks are made */
+-	scoped_guard(spinlock_irqsave, &chan->lock) {
+-		chan->cl = NULL;
+-		chan->active_req = MBOX_NO_MSG;
+-		if (chan->txdone_method == MBOX_TXDONE_BY_ACK)
+-			chan->txdone_method = MBOX_TXDONE_BY_POLL;
+-	}
+-
+-	module_put(chan->mbox->dev->driver->owner);
++	mbox_clean_and_put_channel(chan);
+ }
+ EXPORT_SYMBOL_GPL(mbox_free_channel);
+ 
 -- 
 2.53.0
 
