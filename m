@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F48471250;
-	Tue, 21 Jul 2026 18:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCEB145B27;
+	Tue, 21 Jul 2026 18:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658971; cv=none; b=WN8/bVwciPLDKH/3WItBp96O/E7jDSSJsT1BtnsY81RYfHFoFugMlcwegCVzUStrNI04vih8CxwMDNFrnYIofR9waMFgf9XGPMcfN/TUcpibAhO+uHsWS/pfjp9cHqnO/dr5pnW6wkl+3MX8DS9eGj/XpkFu7U60bUOeyIQLaMo=
+	t=1784658974; cv=none; b=gpdjykBu45rDafAUchMYrNNiV032GGtvpaglu+n1R6yLnnN7ZegM7GUaeGmQXgK/xoCn0LxSLUx32KpJFRB35GaU7DUsGx7M82+bEKCD1gDbGWBydk8rvWyNKah+nxZTq5tnXuxHZAdzj8169+4TFMWwgOdbfrKI6BsEpf7ihyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658971; c=relaxed/simple;
-	bh=9EsRJhinwwk585h1m8M1cIIqg1sCxef9GaDDjkcN0iQ=;
+	s=arc-20240116; t=1784658974; c=relaxed/simple;
+	bh=zhvL5foERAM2OJ8P5AGnnbHnmAhc6aSjnzWMYf5c0As=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KD2o5wuNnGaHGKm49IKGJzG4tnl3tVqLrpQKD3cieo7sKSShRLhcKBA6vjbw6Rx2sBqEdWrU1vR7FyZN/RFDN5dS0cJBL0v3yjn04KLZgbZtAyA2kt1yOJb78DLmcIxVDF5Z9/RoKsF+YXavYthybzeyWpce/g9E1VaAaQ9GyUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjErBZHh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K3u9JkMCC1zUfZ3H2eNQV0OQGTcArmVsa9qfB9aj0mqUEgZhdkDKlVzgm50TKtnzIY8nKxJdMgq/zNxTzKIGoS1izMU/OHaViuR/bMKKLZOCJx1DQNGHrlo5rHJp4Jfw0t0FHu6xlfPvlFRbTtwEdW+rset3kEGYKZo639kgbps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FnYGfOQ9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjErBZHh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 266891F000E9;
-	Tue, 21 Jul 2026 18:36:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FnYGfOQ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15AB1F00A3A;
+	Tue, 21 Jul 2026 18:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658970;
-	bh=XEmUUXRTe0osEb1TlSEluVsVueLb9GmpPGSBWnide04=;
+	s=korg; t=1784658973;
+	bh=Fl4NqZx9x2J86TALTDG8U+S+aL5MmrY1JjoE50qsrro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hjErBZHhydUDbj/6L4vw2zaUF1vuIlPx0Up9tdxSNPGaQL4nKBMj4lr9dNMFTq6sN
-	 1GiW7Z88xAE4vvWGltYgYRV6r9u4CvkjvBDtjbsF1OBt2SpIvH1mrIkPYD3QkRZs6q
-	 6kqSJbxCHfHKr0Ho+Bbq87uSVWuUolYRMjFTyRK0=
+	b=FnYGfOQ9u/lXH2+pLcuuHvPfdDjkQ1LgywSd3T5X3Jp3WTjfh96Ce2FAeggu9e5FO
+	 /uPKF88OY/RJYz8wiLdzEq3UuOUAHMpLZPXaquPhaXoQbk7XuLb2ISNcnJAP8nObYh
+	 YsOM2Yj7757P3628lg4T5qACc8W0+GLPfIUd8fV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	stable@kernel.org
-Subject: [PATCH 6.18 1302/1611] pkey: Move keytype check from pkey api to handler
-Date: Tue, 21 Jul 2026 17:23:38 +0200
-Message-ID: <20260721152544.732585376@linuxfoundation.org>
+	Fredric Cover <fredric.cover.lkernel@gmail.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.18 1303/1611] smb: client: use kvzalloc() for megabyte buffer in simple fallocate
+Date: Tue, 21 Jul 2026 17:23:39 +0200
+Message-ID: <20260721152544.755982431@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,72 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Holger Dengler <dengler@linux.ibm.com>
+From: Fredric Cover <fredric.cover.lkernel@gmail.com>
 
-commit 754e9e49b76fd5be339172aa98544182ed3ca75e upstream.
+commit 806c00c23e3ce8eae397a40ced536ef88ae4e012 upstream.
 
-The PKEY_VERIFYPROTK ioctl takes data from user-space and verifies the
-contained protected key. While checking the integrity of the ioctl
-request structure is the responsibility of the generic pkey_api code,
-the verification of the contained protected key is the responsibility
-of the pkey handler.
+Currently in smb3_simple_fallocate_range(), a 1 MB buffer is allocated
+using kzalloc(). Under heavy memory fragmentation, a contiguous 1 MB block
+of physical memory (an order-8 allocation) may not be available,
+causing the allocation to fail.
 
-The keytype verification (based on the calculated bitsize of the key)
-is part of the protected key verification and therefore the
-responsibility of the pkey handler (which already verifies
-it). Therefore the keytype verification is removed from the generic
-pkey_api code.
+This failure was observed during xfstests generic/013 on a 4GB RAM
+test machine running fsstress:
 
-As the calculation of the key bitsize is currently wrong, the removal
-of the keytype check in pkey_api also removes this wrong
-calculation. For this reason, the commit is flagged with the Fixes:
-tag.
+fsstress: page allocation failure: order:8,
+mode:0x40dc0(GFP_KERNEL|__GFP_ZERO|__GFP_COMP),
+nodemask=(null),cpuset=/,mems_allowed=0
 
-Cc: stable@kernel.org # 6.12+
-Fixes: 8fcc231ce3be ("s390/pkey: Introduce pkey base with handler registry and handler modules")
-Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x5d/0x80
+ warn_alloc+0x163/0x190
+ __alloc_pages_slowpath.constprop.0+0x71b/0x12f0
+ __alloc_frozen_pages_noprof+0x2f6/0x340
+ alloc_pages_mpol+0xb6/0x170
+ ___kmalloc_large_node+0xb3/0xd0
+ __kmalloc_large_noprof+0x1e/0xc0
+ smb3_simple_falloc.isra.0+0x62b/0x960
+ cifs_fallocate+0xed/0x180
+ vfs_fallocate+0x165/0x3c0
+ __x64_sys_fallocate+0x48/0xa0
+ do_syscall_64+0xe1/0x640
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ </TASK>
+
+Node 0 Normal: 3375*4kB ... 7*128kB 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB
+
+Since this scratch buffer does not require physically contiguous memory,
+switch the allocation to kvzalloc(). This retains the performance
+benefits of kmalloc() under normal conditions, while gracefully falling
+back to virtually contiguous memory when physical allocation fails.
+
+Fixes: 966a3cb7c7db ("cifs: improve fallocate emulation")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
+Tested-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/pkey_api.c |   11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ fs/smb/client/smb2ops.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/s390/crypto/pkey_api.c
-+++ b/drivers/s390/crypto/pkey_api.c
-@@ -328,7 +328,6 @@ static int pkey_ioctl_verifyprotk(struct
- {
- 	struct pkey_verifyprotk kvp;
- 	struct protaeskeytoken *t;
--	u32 keytype;
- 	u8 *tmpbuf;
- 	int rc;
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3560,7 +3560,7 @@ static int smb3_simple_fallocate_range(u
+ 	if (rc)
+ 		goto out;
  
-@@ -342,14 +341,6 @@ static int pkey_ioctl_verifyprotk(struct
- 		return -EINVAL;
- 	}
+-	buf = kzalloc(1024 * 1024, GFP_KERNEL);
++	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
+ 	if (buf == NULL) {
+ 		rc = -ENOMEM;
+ 		goto out;
+@@ -3617,7 +3617,7 @@ static int smb3_simple_fallocate_range(u
  
--	keytype = pkey_aes_bitsize_to_keytype(8 * kvp.protkey.len);
--	if (!keytype) {
--		PKEY_DBF_ERR("%s unknown/unsupported protkey length %u\n",
--			     __func__, kvp.protkey.len);
--		memzero_explicit(&kvp, sizeof(kvp));
--		return -EINVAL;
--	}
--
- 	/* build a 'protected key token' from the raw protected key */
- 	tmpbuf = kzalloc(sizeof(*t), GFP_KERNEL);
- 	if (!tmpbuf) {
-@@ -359,7 +350,7 @@ static int pkey_ioctl_verifyprotk(struct
- 	t = (struct protaeskeytoken *)tmpbuf;
- 	t->type = TOKTYPE_NON_CCA;
- 	t->version = TOKVER_PROTECTED_KEY;
--	t->keytype = keytype;
-+	t->keytype = kvp.protkey.type;
- 	t->len = kvp.protkey.len;
- 	memcpy(t->protkey, kvp.protkey.protkey, kvp.protkey.len);
+  out:
+ 	kfree(out_data);
+-	kfree(buf);
++	kvfree(buf);
+ 	return rc;
+ }
  
 
 
