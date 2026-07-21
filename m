@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F77415F10;
-	Tue, 21 Jul 2026 22:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD9343D510;
+	Tue, 21 Jul 2026 22:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674792; cv=none; b=gmcnL8Qp5owhkO94TqNaZ1ryQzf8eixi2frRUK6bsRXdUvACPoBwJS4Q47/mcDWl/+C8yVrgTSr+HaUiLOQKNAywro9O0UBrk0GTAutY7w/AtwcSBg3VuvxdAl9NJG2eYQS74CYNZM8zdO5emITU1xEKoM0D0xkXAWwqYmd2Ip8=
+	t=1784674794; cv=none; b=bkt6EUacyLiQ0pqwq/o1BR74XbCSSciDboRYKM1yBWw1kyGd4ZQOA9g5GLEUMhA0gjwD5BIrqYQf1P1RktCI3e4KFRREgZIZq5o7cbRmwUqEf0He0eOk6wuNLrocowKSPJEVaKRVf4+4qut1LzADSv+7h4TRBSk9XdUHKvDIVL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674792; c=relaxed/simple;
-	bh=EReSY9QvO6aygSnLm1eK30Ut+kHcgSSblDUYOR1eAF8=;
+	s=arc-20240116; t=1784674794; c=relaxed/simple;
+	bh=IaFYiwsTXNeQ6+UqYvS92/AvqEdqFFq2vLXf06aRfFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N4AhceqCU/0Mxlj+2WLFbNv0GcNX9zFnA/XZbcec3d/ESCrUA7f0RnMDWgMcz+j5T1K3BUFNYWUbHfAE9XmI+6hlz+/OeAFecSCpNnT5QcWiq+lhUcoPzI3Usa/w7p70gcB4h7wy0GvcXRvNdQkJeIqorS8jPF/iaNPshMQsEy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3Bj8C2w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EBKJfweLr4kCUODEOAY+YfxORFHaTff9/rP86fTBCRU/riMz1G3MaDQK7qp7JABC9POcW4yUzNYDDeHhWJUnLK/Ei3tRFLHGjpsNj7MQSKKCS3y2EbFR+GJENOKHebGpqfJl71zSELZeJ63hRKjgpmxP+XSoVUoUKRDwEZWkkrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iuZ/Siw+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3Bj8C2w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5331F000E9;
-	Tue, 21 Jul 2026 22:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iuZ/Siw+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86FC11F000E9;
+	Tue, 21 Jul 2026 22:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674790;
-	bh=wyCYZmWjVFm73Ta5CTmIjdZtWjBTidgU75YwXRSnGjM=;
+	s=korg; t=1784674793;
+	bh=AhjhNQxG2qTwJAN+6h5rVFXDMGiVb4pAHS5xxeGAHqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j3Bj8C2wKOzaYUxh7hd4kQfGlE7RzrJU95oV32t92x2VL46kJx4t3sp77a2VOY122
-	 dSARA7mIAAy/R1IHwi7VkHZt4s2AfltF8pUbehIn3OSVCFltifNUy4E9DDdqnYC91g
-	 MTrAPZZj82tGfBoDKmMqvg7O/tThg/p+pbYUyyc4=
+	b=iuZ/Siw+iT9kjjrgo5M1F104IpfHlE+BRyUTdrdttUNsY4YOAXe9yQIi4A9ZFSDVA
+	 qxLGWf/FDwVVjfgZVra4iNBvtD7rgW1iea3u0KcUspG9OKBf/3QY/llzrdVlC4e74V
+	 HiO8nS0EIyfh3T2XRRzo3W9s5LuW5y2nOHfN4hiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 672/699] usb: typec: ucsi: ccg: Fix use-after-free of ucsi on remove
-Date: Tue, 21 Jul 2026 17:27:11 +0200
-Message-ID: <20260721152410.927206762@linuxfoundation.org>
+	syzbot+ce1e5a1b4e086b43e56d@syzkaller.appspotmail.com,
+	syzbot+306212936b13e520679d@syzkaller.appspotmail.com,
+	syzbot+457452d30bcdda75ead2@syzkaller.appspotmail.com,
+	Mauricio Faria de Oliveira <mfo@igalia.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Sasha Levin <sashal@kernel.org>,
+	Andrey Tsygunka <aitsygunka@yandex.ru>
+Subject: [PATCH 5.10 673/699] usb: atm: ueagle-atm: wait for pre-firmware load in .disconnect()
+Date: Tue, 21 Jul 2026 17:27:12 +0200
+Message-ID: <20260721152410.948792951@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,53 +56,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Mauricio Faria de Oliveira <mfo@igalia.com>
 
-[ Upstream commit 1f0bdc2884b67de337215079bba166df0cdf4ac5 ]
+[ Upstream commit e2674dfbed8a30d57e2bc872c4bfa6c3eec918bf ]
 
-The threaded IRQ handler ccg_irq_handler() calls ucsi_notify_common(),
-which on a connector-change event calls ucsi_connector_change() and
-schedules connector work.  In ucsi_ccg_remove(), ucsi_destroy() frees
-uc->ucsi (kfree) before free_irq() is called, so a handler invocation
-already in flight may access the freed object after ucsi_destroy().
+ueagle-atm uses the asynchronous request_firmware_nowait() in .probe(),
+but does not wait for its completion, not even in .disconnect(); so, if the
+device is unplugged meanwhile, its teardown runs concurrently with that.
 
-  CPU 0 (remove)            | CPU 1 (threaded IRQ)
-    ucsi_destroy(uc->ucsi)  |   ccg_irq_handler()
-      kfree(ucsi) // FREE   |     ucsi_notify_common(uc->ucsi) // USE
+Even though this inconsistency is worth addressing on its own, it has also
+triggered several bug reports in syzbot over the years (some auto-closed)
+where the firmware sysfs fallback mechanism (CONFIG_FW_LOADER_USER_HELPER)
+creates a firmware subdirectory in the device directory during its removal,
+which might hit unexpected conditions in kernfs, apparently, depending at
+which point the add and remove operations raced. (See links.)
 
-Move free_irq() before ucsi_destroy() in the remove path.  It is kept
-after ucsi_unregister(): ucsi_unregister() cancels connector work whose
-handler issues GET_CONNECTOR_STATUS through ucsi_send_command_common(),
-which waits for a completion that is signalled from the IRQ handler, so
-the IRQ must stay active until that work has been cancelled.
+The pattern is:
 
-The probe error path already orders free_irq() before ucsi_destroy().
+usb ?-?: Direct firmware load for ueagle-atm/eagle?.fw failed with error -2
+usb ?-?: Falling back to sysfs fallback for: ueagle-atm/eagle?.fw
+<ERROR>
+Call trace:
+ ...
+ kernfs_create_dir_ns
+ sysfs_create_dir_ns
+ create_dir
+ kobject_add_internal
+ kobject_add_varg
+ kobject_add
+ class_dir_create_and_add
+ get_device_parent
+ device_add
+ fw_load_sysfs_fallback
+ fw_load_from_user_helper
+ firmware_fallback_sysfs
+ _request_firmware
+ request_firmware_work_func
+ ...
 
-This bug was found by static analysis.
+(Some variations are observed, after fw_load_sysfs_fallback(), e.g., [1].)
 
-Fixes: e32fd989ac1c ("usb: typec: ucsi: ccg: Move to the new API")
+While the kernfs side is being looked at, the ueagle-atm side can be fixed
+by waiting for the pre-firmware load in the .disconnect() handler.
+
+This change has a similar approach to previous work by Andrey Tsygunka [2]
+(wait_for_completion() in .disconnect()), but it is relatively different in
+design/implementation; using the Originally-by tag for credit assignment.
+
+This has been tested with:
+- synthetic reproducer to check the error path;
+- USB gadget (virtual device) to check the firmware upload path;
+- QEMU device emulator to check the device ID re-enumeration path;
+(The latter two were written by Claude; no other code/text in this commit.)
+
+Links (year first reported):
+ 2025 https://syzbot.org/bug?extid=ce1e5a1b4e086b43e56d
+ 2025 https://syzbot.org/bug?extid=9af8471255ac36e34fd4
+ 2024 https://syzbot.org/bug?extid=306212936b13e520679d
+ 2023 https://syzkaller.appspot.com/bug?extid=457452d30bcdda75ead2
+ 2022 https://syzbot.org/bug?extid=782984d6f1701b526edb
+ 2021 https://syzbot.org/bug?id=f3f221579f4ef7e9691281f3c6f56c05f83e8490
+ 2021 https://syzbot.org/bug?id=84d86f0d71394829df6fc53daf6642c045983881
+ 2021 https://syzbot.org/bug?id=3302dc1c0e2b9c94f2e8edb404eabc9267bc6f90
+
+[1] https://syzkaller.appspot.com/bug?extid=457452d30bcdda75ead2
+[2] https://lore.kernel.org/lkml/20250410093146.3776801-2-aitsygunka@yandex.ru/
+
 Cc: stable <stable@kernel.org>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260616132011.103279-1-fanwu01@zju.edu.cn
+Reported-by: syzbot+ce1e5a1b4e086b43e56d@syzkaller.appspotmail.com
+Closes: https://syzbot.org/bug?extid=ce1e5a1b4e086b43e56d
+Reported-by: syzbot+306212936b13e520679d@syzkaller.appspotmail.com
+Closes: https://syzbot.org/bug?extid=306212936b13e520679d
+Reported-by: syzbot+457452d30bcdda75ead2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=457452d30bcdda75ead2
+Originally-by: Andrey Tsygunka <aitsygunka@yandex.ru>
+Fixes: b72458a80c75 ("[PATCH] USB: Eagle and ADI 930 usb adsl modem driver")
+Assisted-by: Claude:claude-opus-4.7 # usb gadget & qemu device for testing
+Signed-off-by: Mauricio Faria de Oliveira <mfo@igalia.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260526-ueagle-atm_req-fw-sync-v3-1-93c01961daaf@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi_ccg.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/atm/ueagle-atm.c |   36 +++++++++++++++++++++++++++++++-----
+ 1 file changed, 31 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-+++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-@@ -1418,8 +1418,8 @@ static int ucsi_ccg_remove(struct i2c_cl
- 	cancel_work_sync(&uc->work);
- 	pm_runtime_disable(uc->dev);
- 	ucsi_unregister(uc->ucsi);
--	ucsi_destroy(uc->ucsi);
- 	free_irq(uc->irq, uc);
-+	ucsi_destroy(uc->ucsi);
- 
- 	return 0;
+--- a/drivers/usb/atm/ueagle-atm.c
++++ b/drivers/usb/atm/ueagle-atm.c
+@@ -599,7 +599,9 @@ static int uea_send_modem_cmd(struct usb
+ static void uea_upload_pre_firmware(const struct firmware *fw_entry,
+ 								void *context)
+ {
+-	struct usb_device *usb = context;
++	struct usb_interface *intf = context;
++	struct usb_device *usb = interface_to_usbdev(intf);
++	struct completion *fw_done = usb_get_intfdata(intf);
+ 	const u8 *pfw;
+ 	u8 value;
+ 	u32 crc = 0;
+@@ -670,15 +672,17 @@ err_fw_corrupted:
+ err:
+ 	release_firmware(fw_entry);
+ 	uea_leaves(usb);
++	complete(fw_done);
  }
+ 
+ /*
+  * uea_load_firmware - Load usb firmware for pre-firmware devices.
+  */
+-static int uea_load_firmware(struct usb_device *usb, unsigned int ver)
++static int uea_load_firmware(struct usb_interface *intf, unsigned int ver)
+ {
+ 	int ret;
+ 	char *fw_name = EAGLE_FIRMWARE;
++	struct usb_device *usb = interface_to_usbdev(intf);
+ 
+ 	uea_enters(usb);
+ 	uea_info(usb, "pre-firmware device, uploading firmware\n");
+@@ -702,7 +706,7 @@ static int uea_load_firmware(struct usb_
+ 	}
+ 
+ 	ret = request_firmware_nowait(THIS_MODULE, 1, fw_name, &usb->dev,
+-					GFP_KERNEL, usb,
++					GFP_KERNEL, intf,
+ 					uea_upload_pre_firmware);
+ 	if (ret)
+ 		uea_err(usb, "firmware %s is not available\n", fw_name);
+@@ -2598,8 +2602,23 @@ static int uea_probe(struct usb_interfac
+ 
+ 	usb_reset_device(usb);
+ 
+-	if (UEA_IS_PREFIRM(id))
+-		return uea_load_firmware(usb, UEA_CHIP_VERSION(id));
++	if (UEA_IS_PREFIRM(id)) {
++		struct completion *fw_done;
++
++		/* Wait for the firmware load to be done, in .disconnect() */
++		fw_done = kzalloc(sizeof(*fw_done), GFP_KERNEL);
++		if (!fw_done)
++			return -ENOMEM;
++
++		init_completion(fw_done);
++		usb_set_intfdata(intf, fw_done);
++
++		ret = uea_load_firmware(intf, UEA_CHIP_VERSION(id));
++		if (ret)
++			kfree(fw_done);
++
++		return ret;
++	}
+ 
+ 	ret = usbatm_usb_probe(intf, id, &uea_usbatm_driver);
+ 	if (ret == 0) {
+@@ -2630,6 +2649,13 @@ static void uea_disconnect(struct usb_in
+ 		usbatm_usb_disconnect(intf);
+ 		mutex_unlock(&uea_mutex);
+ 		uea_info(usb, "ADSL device removed\n");
++	} else if (usb->config->desc.bNumInterfaces == 1) {
++		struct completion *fw_done = usb_get_intfdata(intf);
++
++		uea_dbg(usb, "pre-firmware device, waiting firmware upload\n");
++		wait_for_completion(fw_done);
++		uea_dbg(usb, "pre-firmware device, finished waiting\n");
++		kfree(fw_done);
+ 	}
+ 
+ 	uea_leaves(usb);
 
 
