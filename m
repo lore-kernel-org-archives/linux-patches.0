@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1B035DA40;
-	Tue, 21 Jul 2026 19:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BB0408039;
+	Tue, 21 Jul 2026 19:31:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662292; cv=none; b=JPytLJ1iqx3xe5kWoFcA8Xb6XEB+4Pl2ICdCUY0XmAj1usTqP0hXXBojll9HeQ4ftM5DrXZSpDcQu5v0r21YeT/9Omb3rJnOhCh6L/ehRkMaHtg5Ceh2kc19y6giII05E3DuOJOwmGBJc81IlahBPmCktkp2LgTRO/pOWMVzq+w=
+	t=1784662294; cv=none; b=qLkWTUD050VUm273ZyazBHMZetOTjXqZJJEz6BRDfDVqoPLp0PMAKISfBQ+7Pb/fe3sXnxWvK8MmCItakBQEFSHuDjFsLO9hU5jjkwOQmvgSna0W122ExLWnx6ZWDmyC7QNTs/zVS6ZX0Cl/CVSGNMFy+34d379o8Bc4qks7Nks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662292; c=relaxed/simple;
-	bh=07W349AETYy7KElkAmDU59mx2t9puoPJuOEpdrz6byY=;
+	s=arc-20240116; t=1784662294; c=relaxed/simple;
+	bh=aDwZK5nwMe9YROSXT+Y89x0bBrrog51W2pwTwzFZ5u0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qPf4XJiBXKBO9guL2BsB2VJOE7VQOzgacGxznRcXZqgIjCyKmVmNt6EX7CjVNPUhaxBqHn/5vh009ZHVp5U0gpvvKacnCovSGJbGA7AUBq1+wsN10AvxCfMORcvJpd/TzBKpm9U+EUsqbNp8kZvZ+6K2XtEE2dga49PM3EIJbYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tB/gv+8V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GcpFvtVuovR3eyNwJfiBQ2JCN50ubvvpbRwlx7NHH6JSRPVmdfNPK9Vngne1NlexoUo06FmNnf9ht7U2jJkDLgdF7/O/Z5yZU1LKKSSuG3AEAWoGXpLhWrhhanDe/ZS8lHVsMxVpH0gs2YYTlsvPtg16aLU043EETmMfc4qLcJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QwBY29wI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tB/gv+8V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CAA81F000E9;
-	Tue, 21 Jul 2026 19:31:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwBY29wI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E3C1F000E9;
+	Tue, 21 Jul 2026 19:31:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662291;
-	bh=T9hxKCQsOIAzumbBjIhwrpIa7JQ+lM/12/s9TWgMQFE=;
+	s=korg; t=1784662293;
+	bh=KVqHyVb+APL93rqLKg5E3Y3pXNXa0SfMJoebyTpu+k0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tB/gv+8VOQRN5wR2Fy+jEKRAYsKui8R/wEjBhBfOzLRQQg+U+Y5QuX3xOKQQ/hgPu
-	 RWLuJ1YRL1x210puqPUMEOP4K8VVUMmVBVfaEtE340KaRsUukK3yuDZvd+JVCI4Nlo
-	 Yjbzz4oqLktw64O0zNyYfpxI8QcMgJzJgIgKfLiE=
+	b=QwBY29wI+PIC9m1EJO6Lq4RnODAsTBZaMgRUZGqhytbNbzXtreZBBkI7LYEuuHS80
+	 +ZQLH6Uyggm3O9v4fDTXlBUNCXqtedE1TKZfdOuKwUdlz1dXdNGGrMfHW3tjrASwDo
+	 4p76D6Kj0ZunpxR5B2kN/bEQ37OLhOB06jPwO0BY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0389/1276] powerpc/kexec: fix double get_cpu() imbalance in kexec_prepare_cpus
-Date: Tue, 21 Jul 2026 17:13:52 +0200
-Message-ID: <20260721152454.812246151@linuxfoundation.org>
+Subject: [PATCH 6.12 0390/1276] KEYS: Use acquire when reading state in keyring search
+Date: Tue, 21 Jul 2026 17:13:53 +0200
+Message-ID: <20260721152454.835972770@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,61 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aboorva Devarajan <aboorvad@linux.ibm.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit 5c86f1c1f972761a04bf22f4c0618d1aa714185b ]
+[ Upstream commit c1201b37f666f6466ab1fd3a381c2b7a4b7e9fee ]
 
-kexec_prepare_cpus_wait() calls get_cpu() internally to obtain the
-current CPU id. kexec_prepare_cpus() calls kexec_prepare_cpus_wait()
-twice -- once for KEXEC_STATE_IRQS_OFF and once for
-KEXEC_STATE_REAL_MODE -- but only issues a single put_cpu() at the end,
-leaving preempt_count elevated by one extra nesting level.
+The negative-key race fix added release/acquire ordering for key use.
 
-In practice the imbalance does not trigger a 'scheduling while atomic'
-splat because the kexec path is a one-way trip: IRQs are already
-disabled, no schedule() occurs after the leak, and
-default_machine_kexec() overwrites preempt_count with HARDIRQ_OFFSET
-before jumping into kexec_sequence() which never returns. However the
-bookkeeping is still wrong.
+Publish payload before state; read state before payload.
 
-kexec_prepare_cpus() calls local_irq_disable()/hard_irq_disable()
-before invoking kexec_prepare_cpus_wait(), so the CPU is already pinned
-and the get_cpu()/put_cpu() preempt_disable() bracketing is unnecessary.
-Only the current CPU id is needed, so replace get_cpu() with
-raw_smp_processor_id() and drop the now-unneeded put_cpu().
+keyring_search_iterator() still uses READ_ONCE() before match callbacks.
+An asymmetric match callback calls asymmetric_key_ids(), which reads
+key->payload.data[asym_key_ids].
 
-Fixes: 1fc711f7ffb0 ("powerpc/kexec: Fix race in kexec shutdown")
-Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Reviewed-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260605082912.305100-4-aboorvad@linux.ibm.com
+Use key_read_state() there to complete that ordering.
+
+Fixes: 363b02dab09b ("KEYS: Fix race between updating and finding a negative key")
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20260529033406.20673-1-hanguidong02@gmail.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kexec/core_64.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ security/keys/keyring.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kexec/core_64.c b/arch/powerpc/kexec/core_64.c
-index 825ab8a88f18e6..58c13a59b93b58 100644
---- a/arch/powerpc/kexec/core_64.c
-+++ b/arch/powerpc/kexec/core_64.c
-@@ -169,7 +169,7 @@ static void kexec_prepare_cpus_wait(int wait_state)
- 	int my_cpu, i, notified=-1;
+diff --git a/security/keys/keyring.c b/security/keys/keyring.c
+index df2580072cfe16..e105349794f23e 100644
+--- a/security/keys/keyring.c
++++ b/security/keys/keyring.c
+@@ -576,7 +576,7 @@ static int keyring_search_iterator(const void *object, void *iterator_data)
+ 	struct keyring_search_context *ctx = iterator_data;
+ 	const struct key *key = keyring_ptr_to_key(object);
+ 	unsigned long kflags = READ_ONCE(key->flags);
+-	short state = READ_ONCE(key->state);
++	short state = key_read_state(key);
  
- 	hw_breakpoint_disable();
--	my_cpu = get_cpu();
-+	my_cpu = raw_smp_processor_id();
- 	/* Make sure each CPU has at least made it to the state we need.
- 	 *
- 	 * FIXME: There is a (slim) chance of a problem if not all of the CPUs
-@@ -267,8 +267,6 @@ static void kexec_prepare_cpus(void)
- 	/* after we tell the others to go down */
- 	if (ppc_md.kexec_cpu_down)
- 		ppc_md.kexec_cpu_down(0, 0);
--
--	put_cpu();
- }
+ 	kenter("{%d}", key->serial);
  
- #else /* ! SMP */
 -- 
 2.53.0
 
