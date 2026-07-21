@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEFD367B63;
-	Tue, 21 Jul 2026 22:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DFCA3603EE;
+	Tue, 21 Jul 2026 22:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673191; cv=none; b=g4PB3UV4yTEYJ5TW8hWxy2ijMQJXjR77uIl3NqWUVBg9ol+gLjXcWX5XFfPDeEHt9R5AIo2GAuM0zdE+YWLuvz5hHCQNOsnZs4CSkvy0Beu6Vmx61KojJ3dX7XswdCm0GFUOe2gY5fxmKt3xCw3md4G2nNM9OO3Z/IlfE4WFW6g=
+	t=1784673194; cv=none; b=ocFcZkUkuKNOnnYuY6qCCERzLDQ2AKA6saO6IhEwZPHuHZ5E4oyeSL3l/UDEoiURJN9lrKt3OLJXtuQgE1hW1iWLea4N/cakeW+QIvRkLsDD52HEvg385mti9iZJNj1BqSpRTcKslD+oJW6WZE8ZWpaLhISCWK+1Lt+uIzFyMR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673191; c=relaxed/simple;
-	bh=2iAnVLma1Ywdq0hKAIPGd+wWKvjYb9CjhYBkraeNvJM=;
+	s=arc-20240116; t=1784673194; c=relaxed/simple;
+	bh=ES+LQsFPXD1HnRVTgDLHCgs6nUWk/p/CAUWTutG4CoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0Jby15HjudVenJvgqZL4ukOLHj1M49GKzVi+8549n3OeOdMKDiySNgU9Bsu9Ew2TWw3Z/SnBGe3t3nTwbYne6lene5heJn00lId9E/hgnaXFe6QssubqzK9x//4G6rz9Gzf3lo7uqUBnCNa02oCfPx7c9sd949Vr/70gLdYX48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ITtB4Y1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eoMgH9Um4SnCpWITO8B+hS+V0Rezjz3qNlAieBe8crOmt5X/xArJnzBRJgVG/V6Ohjvinoyxt0srgjWo23kIesw2LLyPhW6bPTmUfICmxRcCaUI8VeIWhGfJQRVbIRkdpKnNMlFZ633K+A8TDHhQjnq8J23CnKWleKEAHYpxgiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+UPf4+C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ITtB4Y1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E525E1F000E9;
-	Tue, 21 Jul 2026 22:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+UPf4+C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B3111F000E9;
+	Tue, 21 Jul 2026 22:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673190;
-	bh=0yvV+MNvCR4lkSLUolYRd7iJlp+H9bXuMB7OLV0xqt4=;
+	s=korg; t=1784673193;
+	bh=Tly2R38YxPoVLkeO+gM6br4qtwS3NKwwyBhWRIsg1wA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0ITtB4Y1cZ6sRCv4BB0KKJf0zXph6pJvjcjkBHApuW1CTjsF6e1RtD7Q7+Fhp6GBQ
-	 bKMAjfgD2pOJb11F2LoXn+DMAdiUj32NzT/OMrKt3hDco/d0bBEgqzjCr7qJQvZq2a
-	 6WsL9lDWMXp5ukUDIjJXmvcm+J5EoS4YzLeaBNig=
+	b=l+UPf4+C8hIWO8zUlf9R4TxOONRpe6TTsOeBSjM/FK3igfWpqhuVMz6jVuIB9cjhb
+	 H385mLXMAwWEiBTRWkEOFgqggYobv2T8aSKPpgi5B6D3JNqO9dcyN/Mh3CpL/4iL7m
+	 91+/6hCHYHZQ9L0582ldA4Em3oyiRghK1vCZBW3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 068/699] USB: chaoskey: Fix slab-use-after-free in chaoskey_release()
-Date: Tue, 21 Jul 2026 17:17:07 +0200
-Message-ID: <20260721152357.238674162@linuxfoundation.org>
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Alexander Aring <aahringo@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 069/699] 6lowpan: fix NHC entry use-after-free on error path
+Date: Tue, 21 Jul 2026 17:17:08 +0200
+Message-ID: <20260721152357.260975905@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,65 +56,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-commit abf76d3239dee97b66e7241ad04811f1ce562e28 upstream.
+commit 1720db928e5a58ca7d75ac1d514c3b73fd7061a7 upstream.
 
-The chaoskey driver has a use-after-free bug in its release routine.
-If the user closes the device file after the USB device has been
-unplugged, a debugging log statement will try to access the
-usb_interface structure after it has been deallocated:
+lowpan_nhc_do_uncompression() looks up an NHC descriptor while holding
+lowpan_nhc_lock.  If the descriptor has no uncompress callback, the error
+path drops the lock before printing nhc->name.
 
-	BUG: KASAN: slab-use-after-free in dev_driver_string (drivers/base/core.c:2406)
-	Read of size 8 at addr ffff888168e8a0b8 by task chaoskey_raw_re/10106
+lowpan_nhc_del() removes descriptors under the same lock and then relies
+on synchronize_net() before the owning module can be unloaded.  That only
+waits for net RX RCU readers.  lowpan_header_decompress() is also exported
+and can be reached from callers that are not necessarily covered by the net
+core RX critical section, for example the Bluetooth 6LoWPAN L2CAP receive
+path.
 
-	Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-	Call Trace:
-	 <TASK>
-	 dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-	 print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
-	 kasan_report (mm/kasan/report.c:595)
-	 dev_driver_string (drivers/base/core.c:2406)
-	 __dynamic_dev_dbg (lib/dynamic_debug.c:906)
-	 chaoskey_release (drivers/usb/misc/chaoskey.c:323)
-	 __fput (fs/file_table.c:510)
-	 fput_close_sync (fs/file_table.c:615)
-	 __x64_sys_close (fs/open.c:1507 fs/open.c:1492 fs/open.c:1492)
-	 do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
-	 entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+This leaves a race where one task drops lowpan_nhc_lock in the error path,
+another task unregisters and frees the matching descriptor after
+synchronize_net() returns, and the first task then dereferences nhc->name
+for the warning.
 
-The driver's last reference to the interface structure is dropped in
-the chaoskey_free() routine, so the code must not use the interface --
-even in a debugging statement -- after that routine returns.
-(Exception: If we know that another reference is held by someone else,
-such as the device core while the disconnect routine runs, there's no
-problem.  Thanks to Johan Hovold for pointing this out.)
+With the post-unlock window widened, KASAN reports:
 
-Since the bad access is part of an unimportant debugging statement,
-we can fix the problem simply by removing the whole statement.
+  BUG: KASAN: slab-use-after-free in lowpan_nhc_do_uncompression+0x1f4/0x220
+  Read of size 8
+  lowpan_nhc_do_uncompression
+  lowpan_header_decompress
 
-Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Closes: https://lore.kernel.org/linux-usb/20EC9664-054E-438B-B411-2145D347F97B@gmail.com/
-Tested-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: 66e3e591891d ("usb: Add driver for Altus Metrum ChaosKey device (v2)")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/bb5b1dc6-eb59-43e1-8d26-51e658e88bbe@rowland.harvard.edu
+Fix this by printing the warning before dropping lowpan_nhc_lock, so the
+descriptor name is read while unregister is still excluded.  The malformed
+packet is still rejected with -ENOTSUPP.
+
+Fixes: 92aa7c65d295 ("6lowpan: add generic nhc layer interface")
+Cc: stable@vger.kernel.org
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Acked-by: Alexander Aring <aahringo@redhat.com>
+Link: https://patch.msgid.link/20260609080054.4541-1-zhaoyz24@mails.tsinghua.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/chaoskey.c |    1 -
- 1 file changed, 1 deletion(-)
+ net/6lowpan/nhc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/misc/chaoskey.c
-+++ b/drivers/usb/misc/chaoskey.c
-@@ -321,7 +321,6 @@ bail:
- 	mutex_unlock(&dev->lock);
- destruction:
- 	mutex_unlock(&chaoskey_list_lock);
--	usb_dbg(interface, "release success");
- 	return rv;
- }
- 
+--- a/net/6lowpan/nhc.c
++++ b/net/6lowpan/nhc.c
+@@ -168,9 +168,9 @@ int lowpan_nhc_do_uncompression(struct s
+ 				return ret;
+ 			}
+ 		} else {
+-			spin_unlock_bh(&lowpan_nhc_lock);
+ 			netdev_warn(dev, "received nhc id for %s which is not implemented.\n",
+ 				    nhc->name);
++			spin_unlock_bh(&lowpan_nhc_lock);
+ 			return -ENOTSUPP;
+ 		}
+ 	} else {
 
 
