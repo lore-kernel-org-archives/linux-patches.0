@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAD73644B3;
-	Tue, 21 Jul 2026 19:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727104302F8;
+	Tue, 21 Jul 2026 19:30:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662237; cv=none; b=ba7ldu/OkaHgdGHgwbXMGIfG0h1Hld03WKkExRpXpPwVq1aO1aEZRS4Ga2X4J1M+u/pgTzI+PkIa981tEcUvqmlb4Bg0LKFZbOhG4dppBOBT1e9XlBfi+TULfyQZ0efS7HcP8nv6WQ5tpm7vrTp9VC684KowcOKq7zcI3nMMdNo=
+	t=1784662239; cv=none; b=NxTEzE6sn1d9RLTz1ar3jMW9gC+PsZGokLA/oNI0KlHFwhxox06R+h2yB1B4ns1SSSIyrBjp9Te2/eTGg++8+a9w63tDDgu0O+DIor2DbTHNosx7PgOIZWTD/XbvsvcQEXwMQsUyWSmb6tf4BLJGZIQZ8T9JWJHctGmApH4LwcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662237; c=relaxed/simple;
-	bh=32EDPsPzMaJwFrBSaxOVT4rAEG0v9e94jn7hKX/9KMM=;
+	s=arc-20240116; t=1784662239; c=relaxed/simple;
+	bh=hlo0aa9cAPjgQDEnEFuNAP4wwK/aJWTjgQeaUOUyj08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JbrL4aYFI9yxAmMOQsGy1lUC1p3AzYfxD7YXEjF2gaLWhyDOglye2K2Rf3KiwZ0P0useb1ACqEO+qlGEyOVVBYN0Lw1LSNvQ03cW5DN83kZ7Fi4aAHR9z5xTahJwGyLqvqCxLkamsDbWMIg1VHPDIhF/cKzWWOE6xu204Ducrco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnKddFSN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y+98Vn+ou99xHzY/fSaRRke1y2YmXmXZci42xESKSuXyb2HJYaqjh7iN5lL2nFgpiCxzlYakgpnGxAM6uAf67lIMMXUqIJsExGSLcPkMuudoafYDJ/YA8U3M/+ZJMEMRrn/e5jrzKQvGC5tRqmPEC2r8hzHTr5BI6RxNXci+0DI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9Z4tW+H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnKddFSN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3401F00A3F;
-	Tue, 21 Jul 2026 19:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9Z4tW+H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83701F000E9;
+	Tue, 21 Jul 2026 19:30:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662235;
-	bh=dc06jK5uB3sYWP/eh33DMahE5OOs8h5c9gsYHLefOko=;
+	s=korg; t=1784662238;
+	bh=fNJznthVyckS9CkgIjsj31HHBvyffNc6TxmhoPbGytw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BnKddFSNH0oChVh86fvYG2DHI2kL6v8y4iI+5zoJ0Pbb88mscjc30MyBQwF28nyov
-	 bRR+tk6LO6GeRAfhnBBZWWRHt3pG6tCbnNma9xkDPM63Ro9CfojXkmbrdsAf9tIKCk
-	 8wz/1bz6kFHZNBPfJx/WlJdhS6l+04xZnLufzxlY=
+	b=u9Z4tW+HNsf3sm4k90c09DbZIK41Q6uxTt5lAR4djaRUGWoq6ypKfVR1ULS9EUUEq
+	 cQnURqwCkXmNek1DvdnRHhdorOI8g1vQk0LX8fMj85mH8CCjTu8QKgJLrbuUQ4sE2g
+	 m2w37KAwAkf45kxZLD6ky3LEVYTKpMDvs8m9ALlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Edward Srouji <edwards@nvidia.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0325/1276] RDMA/mlx5: Remove DCT restrack tracking
-Date: Tue, 21 Jul 2026 17:12:48 +0200
-Message-ID: <20260721152453.369454100@linuxfoundation.org>
+Subject: [PATCH 6.12 0326/1276] RDMA/mlx5: Remove raw RSS QP restrack tracking
+Date: Tue, 21 Jul 2026 17:12:49 +0200
+Message-ID: <20260721152453.391804475@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -55,54 +55,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit b136a7af41f796a48665afc6a55907488a3d5500 ]
+[ Upstream commit 666031fed8f0fdfc29b20d125a628c1b0a04cdaf ]
 
-DCT restrack tracking wasn't working to begin with as it was only
-tracking the first DCT which was added, since at creation the DCT number
-isn't yet initialized because the DCT FW object is only created during
-modify. The following DCT additions were failing silently.
+Raw RSS QP restrack tracking wasn't working to begin with as it was
+only tracking the first raw RSS QP which was added, since at creation
+the raw RSS QP number is reserved so the QP number for this qp type
+was always zero.
+The following raw RSS QP additions were always failing silently.
 
 Since the fix isn't trivial and there were no users that required or
 complained about this issue we are dropping this for now instead of fixing.
 
-Fixes: fd3af5e21866 ("RDMA/mlx5: Track DCT, DCI and REG_UMR QPs as diver_detail resources.")
-Link: https://patch.msgid.link/r/20260607-restrack-uaf-fix-v1-1-d72e45eb76c2@nvidia.com
+Fixes: 968f0b6f9c01 ("RDMA/mlx5: Consolidate into special function all create QP calls")
+Link: https://patch.msgid.link/r/20260607-restrack-uaf-fix-v1-2-d72e45eb76c2@nvidia.com
 Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
 Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
 Signed-off-by: Edward Srouji <edwards@nvidia.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/qp.c       | 1 +
- drivers/infiniband/hw/mlx5/restrack.c | 3 ---
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ drivers/infiniband/hw/mlx5/qp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
-index ded139b4e87aa4..ae0c3a24a1c9e6 100644
+index ae0c3a24a1c9e6..ba704c723c6e4f 100644
 --- a/drivers/infiniband/hw/mlx5/qp.c
 +++ b/drivers/infiniband/hw/mlx5/qp.c
-@@ -3084,6 +3084,7 @@ static int create_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
+@@ -3078,6 +3078,7 @@ static int create_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
+ 	int err;
  
- 	switch (qp->type) {
- 	case MLX5_IB_QPT_DCT:
+ 	if (params->is_rss_raw) {
 +		rdma_restrack_no_track(&qp->ibqp.res);
- 		err = create_dct(dev, pd, qp, params);
- 		break;
- 	case MLX5_IB_QPT_DCI:
-diff --git a/drivers/infiniband/hw/mlx5/restrack.c b/drivers/infiniband/hw/mlx5/restrack.c
-index affcf8fe943c1d..76077fdfc8a93c 100644
---- a/drivers/infiniband/hw/mlx5/restrack.c
-+++ b/drivers/infiniband/hw/mlx5/restrack.c
-@@ -169,9 +169,6 @@ static int fill_res_qp_entry(struct sk_buff *msg, struct ib_qp *ibqp)
- 		ret = nla_put_string(msg, RDMA_NLDEV_ATTR_RES_SUBTYPE,
- 				     "REG_UMR");
- 		break;
--	case MLX5_IB_QPT_DCT:
--		ret = nla_put_string(msg, RDMA_NLDEV_ATTR_RES_SUBTYPE, "DCT");
--		break;
- 	case MLX5_IB_QPT_DCI:
- 		ret = nla_put_string(msg, RDMA_NLDEV_ATTR_RES_SUBTYPE, "DCI");
- 		break;
+ 		err = create_rss_raw_qp_tir(dev, pd, qp, params);
+ 		goto out;
+ 	}
 -- 
 2.53.0
 
