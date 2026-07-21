@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343F843E9F4;
-	Tue, 21 Jul 2026 22:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD72415F0C;
+	Tue, 21 Jul 2026 22:59:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674786; cv=none; b=VL13w/mGCg0uOfED0WzXZWMXEuqykQ9xauQo445fLVm/rG+6+c2Fm4OID8Vi4gcCHaBoB8xohbehPosxIg/jNbFdgHwiaUwxjc83gSm3n5l0v7ygIcAbihBIkYPQzxo/tyPrBVVgU4Tp6KNzQaqskYCLtiKbkH2oAKQxVmwRoPA=
+	t=1784674789; cv=none; b=XJP9BXMFFEQGY7wAvh+SijmIvnYkk0av07zlhRIfZ+224ejL3du0ZPlqJjjIPZw0+Wdu8f3NUmWJumh0MSU/g7DWp7XDfKDm+Ieb+XdjqjUb7Ahum4X3b5IRxtNK8rMlnGVuAoYHZ4dmH1eYE2GCTNnZlq+S6GCPFCqFEoPUuWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674786; c=relaxed/simple;
-	bh=LqBR90vLDRtaXJ1uJz4xePfUmx9EdTo1Qfb9HHTkF0o=;
+	s=arc-20240116; t=1784674789; c=relaxed/simple;
+	bh=cvmE8MHQWgt7OJDshgxcZ4mS8S3eopiwArVAIwMUg2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MVPHnUaRI+vT1NACOCHHWErqvxmg2ulNoshwRSISwpSKuUqZ4VMJOhDa7aL0JUlr8jRsGG+abKPnibduMZQ1Lqu5hfXdNz4Oo5JBnCTKlQqDZkTzP3v5QvknMW/d5C3bAU+a45Gmi/H7O4oZQWmtpft+6MqdQpjle3RLhQDLD3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LH2/Fc+z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m5Ai1w9nwLXC7QgQiKN8+JHczmfF2zObzfLe7JfG7GgaVmXPmbm4nnknhA6MRP+POj3Sz75d42SK6NutS2UlRgHuP5r7KHEzH85VU+Q/Yp0WUI6EjiF5PTF2gU+XN1LYkG7HDvWoKKcKmV2Jd7SPxpmiR4x7/lOtwmvalw/0E7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MD6RCzFJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LH2/Fc+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9431A1F000E9;
-	Tue, 21 Jul 2026 22:59:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MD6RCzFJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4018B1F000E9;
+	Tue, 21 Jul 2026 22:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674785;
-	bh=onTk8KfM2BG0Mdlr05N9+sSA6ozl0J7cA3LQNN7mFSk=;
+	s=korg; t=1784674787;
+	bh=iypgATXh+FGCKOHXO73cb+iqVgK8vW0BoB5P8gDmsF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LH2/Fc+zW50y5KhODTAXQX5iv4yplcPiNVg+sIKwBTWMsNe1i74xaICeu48uHZWsK
-	 CFRbzb4BT06ivXrGDlL02RpYCq+T9ear5RLj9W2fToYuHep6QjgIc5H/ExfFM4eMeY
-	 NDFOTvIY7g2ki4MTu93Yx3WFdnv7eG3BmpVH/S9w=
+	b=MD6RCzFJT1O52TH9MZHuvDy3b7zRdizUkbKx7Knl/8NeO3t1BDhihNkrUpI4LZE/S
+	 jKVa6xJCBmruETk32SZjlNQiXZX+1P9AqGDOclhfm9eCDmdCHEwq5LcQzbi3A8CSHd
+	 TDbS2ujBdGcKSC9coLDpb7GsR2CdNXZPWQhUsHJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Wolfram Sang <wsa@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	James Clark <james.clark@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 671/699] gpio: pca953x: Make platform teardown callback return void
-Date: Tue, 21 Jul 2026 17:27:10 +0200
-Message-ID: <20260721152410.903850949@linuxfoundation.org>
+Subject: [PATCH 5.10 636/699] coresight: etb10: restore atomic_t for shared reading state
+Date: Tue, 21 Jul 2026 17:26:35 +0200
+Message-ID: <20260721152410.097762617@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -47,110 +46,126 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 6a8f359c3132e4f51bdb263ad74ec632c65e55fd ]
+[ Upstream commit fa09f08ede3db3050ae16ae1ed92c902d0cada23 ]
 
-All platforms that provide a teardown callback return 0. New users are
-supposed to not make use of platform support, so there is no
-functionality lost.
+The etb10 miscdevice uses drvdata->reading as a shared exclusivity gate
+for userspace buffer access. etb_open() claims that gate with
+local_cmpxchg(), and etb_release() clears it with local_set().
 
-This patch is a preparation for making i2c remove callbacks return void.
+That gate is shared per-device state rather than CPU-local state. A
+running system can reach it whenever /dev/<etb> is opened, closed, and
+reopened by different tasks while the device remains registered, so the
+same drvdata->reading variable may be claimed on one CPU and later
+cleared on another.
 
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Acked-by: Bartosz Golaszewski <brgl@bgdev.pl>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Stable-dep-of: 1f0bdc2884b6 ("usb: typec: ucsi: ccg: Fix use-after-free of ucsi on remove")
+This code used to use atomic_t for the same gate, but commit
+27b10da8fff2 ("coresight: etb10: moving to local atomic operations")
+changed it to local_t even though the access pattern remained cross-task
+and cross-CPU. Restore atomic_t together with atomic_cmpxchg() and
+atomic_set() so the exclusivity gate again uses a primitive intended
+for shared state.
+
+The issue was found on Linux v6.18.21 by our static analysis tool while
+scanning surviving local_t-on-shared-state sites, and then manually
+reviewed against the live etb10 file-op path.
+
+It was runtime-validated with a reproducible QEMU no-device KCSAN PoC
+that kept the same report-local contract:
+
+  1. use one shared struct etb_drvdata carrier and its
+     drvdata->reading gate;
+  2. call etb_open() and etb_release() sequentially on that gate to
+     confirm the original claim/clear path;
+  3. bind the open side to CPU0 and the release side to CPU1 for the
+     same gate to show cross-CPU ownership;
+  4. run bound workers that repeatedly race etb_open() and
+     etb_release() on the same gate until KCSAN reports a target hit.
+
+The harness recorded:
+
+  L1 passed open=1 release=1
+  reading_after_open=1 reading_after_release=0
+  L2 passed open_cpu=0 release_cpu=1
+  cross_cpu_release=1 reading_after=0 open_ret=0
+
+Representative KCSAN excerpt from the no-device validation run:
+
+  BUG: KCSAN: data-race in etb_open.constprop.0.isra.0 [vuln_msv]
+
+  write to 0xffffffffc0003810 of 4 bytes by task 216 on cpu 1:
+   etb_open.constprop.0.isra.0+0x38/0x80 [vuln_msv]
+   l3_worker_thread_fn+0x4f/0xf0 [vuln_msv]
+   kthread+0x17e/0x1c0
+   ret_from_fork+0x22/0x30
+
+  read to 0xffffffffc0003810 of 4 bytes by task 215 on cpu 0:
+   etb_open.constprop.0.isra.0+0x18/0x80 [vuln_msv]
+   l3_worker_thread_fn+0x4f/0xf0 [vuln_msv]
+   kthread+0x17e/0x1c0
+   ret_from_fork+0x22/0x30
+
+  value changed: 0x00000000 -> 0x00000001
+
+  Reported by Kernel Concurrency Sanitizer on:
+  CPU: 0 PID: 215 Comm: etb10_l3_a Tainted: G           O       6.1.66 #2
+
+This no-device harness is not a real ETB10 hardware end-to-end run, but
+it preserves the same shared drvdata->reading gate and the same
+etb_open()/etb_release() claim/clear contract. No real ETB10 hardware
+was available for runtime testing.
+
+Build-tested with:
+  make olddefconfig
+  make -j"$(nproc)" drivers/hwtracing/coresight/coresight-etb10.o
+
+Fixes: 27b10da8fff2 ("coresight: etb10: moving to local atomic operations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260528165201.319452-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mach-davinci/board-da850-evm.c |   12 ++++--------
- drivers/gpio/gpio-pca953x.c             |   11 +++--------
- include/linux/platform_data/pca953x.h   |    2 +-
- 3 files changed, 8 insertions(+), 17 deletions(-)
+ drivers/hwtracing/coresight/coresight-etb10.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/arm/mach-davinci/board-da850-evm.c
-+++ b/arch/arm/mach-davinci/board-da850-evm.c
-@@ -519,8 +519,8 @@ exp_setup_sela_fail:
- 	return ret;
- }
+--- a/drivers/hwtracing/coresight/coresight-etb10.c
++++ b/drivers/hwtracing/coresight/coresight-etb10.c
+@@ -86,7 +86,7 @@ struct etb_drvdata {
+ 	struct coresight_device	*csdev;
+ 	struct miscdevice	miscdev;
+ 	spinlock_t		spinlock;
+-	local_t			reading;
++	atomic_t		reading;
+ 	pid_t			pid;
+ 	u8			*buf;
+ 	u32			mode;
+@@ -603,7 +603,7 @@ static int etb_open(struct inode *inode,
+ 	struct etb_drvdata *drvdata = container_of(file->private_data,
+ 						   struct etb_drvdata, miscdev);
  
--static int da850_evm_ui_expander_teardown(struct i2c_client *client,
--					unsigned gpio, unsigned ngpio, void *c)
-+static void da850_evm_ui_expander_teardown(struct i2c_client *client,
-+					   unsigned gpio, unsigned ngpio, void *c)
+-	if (local_cmpxchg(&drvdata->reading, 0, 1))
++	if (atomic_cmpxchg(&drvdata->reading, 0, 1))
+ 		return -EBUSY;
+ 
+ 	dev_dbg(&drvdata->csdev->dev, "%s: successfully opened\n", __func__);
+@@ -641,7 +641,7 @@ static int etb_release(struct inode *ino
  {
- 	platform_device_unregister(&da850_evm_ui_keys_device);
+ 	struct etb_drvdata *drvdata = container_of(file->private_data,
+ 						   struct etb_drvdata, miscdev);
+-	local_set(&drvdata->reading, 0);
++	atomic_set(&drvdata->reading, 0);
  
-@@ -532,8 +532,6 @@ static int da850_evm_ui_expander_teardow
- 	gpio_free(gpio + DA850_EVM_UI_EXP_SEL_C);
- 	gpio_free(gpio + DA850_EVM_UI_EXP_SEL_B);
- 	gpio_free(gpio + DA850_EVM_UI_EXP_SEL_A);
--
--	return 0;
- }
- 
- /* assign the baseboard expander's GPIOs after the UI board's */
-@@ -700,13 +698,11 @@ io_exp_setup_sw_fail:
- 	return ret;
- }
- 
--static int da850_evm_bb_expander_teardown(struct i2c_client *client,
--					unsigned gpio, unsigned ngpio, void *c)
-+static void da850_evm_bb_expander_teardown(struct i2c_client *client,
-+					   unsigned gpio, unsigned ngpio, void *c)
- {
- 	platform_device_unregister(&da850_evm_bb_leds_device);
- 	platform_device_unregister(&da850_evm_bb_keys_device);
--
--	return 0;
- }
- 
- static struct pca953x_platform_data da850_evm_ui_expander_info = {
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -1073,20 +1073,15 @@ static int pca953x_remove(struct i2c_cli
- {
- 	struct pca953x_platform_data *pdata = dev_get_platdata(&client->dev);
- 	struct pca953x_chip *chip = i2c_get_clientdata(client);
--	int ret;
- 
- 	if (pdata && pdata->teardown) {
--		ret = pdata->teardown(client, chip->gpio_chip.base,
--				      chip->gpio_chip.ngpio, pdata->context);
--		if (ret < 0)
--			dev_err(&client->dev, "teardown failed, %d\n", ret);
--	} else {
--		ret = 0;
-+		pdata->teardown(client, chip->gpio_chip.base,
-+				chip->gpio_chip.ngpio, pdata->context);
- 	}
- 
- 	regulator_disable(chip->regulator);
- 
--	return ret;
-+	return 0;
- }
- 
- #ifdef CONFIG_PM_SLEEP
---- a/include/linux/platform_data/pca953x.h
-+++ b/include/linux/platform_data/pca953x.h
-@@ -22,7 +22,7 @@ struct pca953x_platform_data {
- 	int		(*setup)(struct i2c_client *client,
- 				unsigned gpio, unsigned ngpio,
- 				void *context);
--	int		(*teardown)(struct i2c_client *client,
-+	void		(*teardown)(struct i2c_client *client,
- 				unsigned gpio, unsigned ngpio,
- 				void *context);
- 	const char	*const *names;
+ 	dev_dbg(&drvdata->csdev->dev, "%s: released\n", __func__);
+ 	return 0;
 
 
