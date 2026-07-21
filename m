@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1676E227BB5;
-	Tue, 21 Jul 2026 18:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39633D16E6;
+	Tue, 21 Jul 2026 18:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658403; cv=none; b=QsapXd0UbYcOVnZpWur9NhVWw1zhQESyNGDTXxN7MkRI+Qy7tdCaoz4uHT8Xl/SIPp8zPf96afG+QThSZUb9AIjwAC/KTbRDEPloNi3hqy4f2iDHjhjn/8EvTPCe+I8xxjxh8aGJ92Vl3MwKz14CclpHXr39J/ICoMWXKh/qhjs=
+	t=1784658405; cv=none; b=KOjFLJMxYk/zOYtrJhjMfkygTKA5j5/HXRwQ6MSp9KH+hWfY5V/63yJHe8xAUVkKiJCcCv+BKz9CPPj/czE1I+DyJLPrgWxuYGYSEASyBFZOVAdaxcjjzo+0I0aYwwtpVh3BWE2ClkDWpG3ST36R2cZlQrlA+jbksfFxYKg1lXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658403; c=relaxed/simple;
-	bh=/MolHIFNcvvyWq3IPdfHNMH/NcEDCRTYBlQ48WmFDq8=;
+	s=arc-20240116; t=1784658405; c=relaxed/simple;
+	bh=FUFsRn0CNbsmzLXq9xYYR1nInZpJ5Xp/8nPfVWk6GZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o+3gaPGKm0cERsUZ5x4jE1Pnh0riikPXEzyzStSSzBqfnEPAnAqvYJzrekqnbDXXpX99okG9BhizVmiyrP6Yx+nEtwDVYxzQ6fMGdrOazbVnd7h+4IB93fcCHV7E/zcnuy+xAYYW61cmoy0GNJG4e+SXOIkKZ4YgcJga0Lbp6Aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLGp94ON; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EhhyeH8TwhyznAXLVrFcq4v+vIid8jdkMqRLxkRgVE79a6UWxbMrnBXVprbxim1V2bAGMwaMQohRUCiGjVYN8en+CU8nnaYFwytangSIf4wgO0tBJhxuVS545qmZH42u2NnZgoSB3yLzlRsprgAx1DhPW2N6NL/UdtIHkt2ZArY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srOK1Ztn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLGp94ON"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D5B71F000E9;
-	Tue, 21 Jul 2026 18:26:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srOK1Ztn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2487A1F000E9;
+	Tue, 21 Jul 2026 18:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658402;
-	bh=FDc9lttkQjjnOQcmjil196sL1nAVvovbVXZq0zzVXd4=;
+	s=korg; t=1784658404;
+	bh=doFu/vToPwt72TS98Iz24v+oiiC45iW+HNSx02228g0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oLGp94ON86kSBFJQ8LS/Di1Or4g07f448yZsNpqfNDCaswVbTkBuXQtvJvqytK8dh
-	 b9AA9h9mE1HHN2qTlJ+qRCrOEIV6tg8HLydPbuoLqEpBIIJj+7uHoj1xkm9PhRS0jm
-	 qNhUN5l1ewRh5XpLpBPYPgTXe51CmlsnsN5QVA0M=
+	b=srOK1ZtnByYO1fJ5azYHqv5J7Fzp/qq+PlifFmRzYscZ4joCNYgFn3G9m319FMwFH
+	 SNm7vHtegrilFMAC+fDg3nzxkyp09ZD0KLfoL7R4QhaIMob7UVlp3Tkd/nqkM/8z0M
+	 0zcetqGV7l3LvDEZK7pfupfFcps7iVM1JKh5y6Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.18 1131/1611] KVM: arm64: vgic: Handle race between interrupt affinity change and LPI disabling
-Date: Tue, 21 Jul 2026 17:20:47 +0200
-Message-ID: <20260721152540.863042170@linuxfoundation.org>
+	David Jander <david@protonic.nl>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>
+Subject: [PATCH 6.18 1114/1611] ARM: dts: stm32: stm32mp15x-mecio1-io: Fix ADC sampling times
+Date: Tue, 21 Jul 2026 17:20:30 +0200
+Message-ID: <20260721152540.476124473@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,76 +51,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: David Jander <david@protonic.nl>
 
-commit 7258770e5814f15e8308ebda82ac9acf6964ba8e upstream.
+commit 8407e611faf80ce790a393addf7b44cc595742af upstream.
 
-Hyunwoo Kim reports some really bad races should the following
-situation occur:
+Increase the minimum ADC sample times for all configured channels on
+ADC1 and ADC2 to ensure measurement accuracy meets specifications.
 
-- LPI-I is pending in vcpu-B's AP list
-- vcpu-A writes to vcpu-B's RD to disable its LPIs
-- vcpu-C moves I from B to C
+The default 5us sample time is insufficient for the internal sampling
+capacitor to fully charge. Increase the default time to 20us to relax
+the input impedance requirements.
 
-If the last two race nicely enough, vgic_prune_ap_list() can drop
-the irq and AP list locks, reacquire them, and in the interval
-the irq has been freed. UAF follows.
+Additionally, the phint0_ain and phint1_ain channels require a much
+longer sampling period due to their specific circuit design. Increase
+their sample times to 200us. Remove stale comments regarding clock
+cycles that no longer match the updated timings.
 
-The fix is two-fold:
-
-- Before dropping the irq and ap_list locks, take a reference on
-  the irq
-
-- Do not try to handle migration of the pending bit: there is no
-  expectation that this state is retained, as per the architecture
-
-With that, we're sure that the interrupt is still around, and we
-safely remove it from the AP list as it has no target at this
-stage (unless another interrupt fires, but that's another story).
-
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Tested-by: Hyunwoo Kim <imv4bel@gmail.com>
-Link: https://lore.kernel.org/r/ailsCnyoS82r_QRz@v4bel
-Link: https://patch.msgid.link/20260615181625.3029352-1-maz@kernel.org
-Fixes: 5dd4b924e390a ("KVM: arm/arm64: vgic: Add refcounting for IRQs")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
+Fixes: 8267753c891c ("ARM: dts: stm32: Add MECIO1 and MECT1S board variants")
+Co-developed-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Signed-off-by: David Jander <david@protonic.nl>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20260318105123.819807-3-o.rempel@pengutronix.de
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/st/stm32mp15x-mecio1-io.dtsi |   32 +++++++++++--------------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
 
---- a/arch/arm64/kvm/vgic/vgic.c
-+++ b/arch/arm64/kvm/vgic/vgic.c
-@@ -188,6 +188,7 @@ void vgic_flush_pending_lpis(struct kvm_
- 	list_for_each_entry_safe(irq, tmp, &vgic_cpu->ap_list_head, ap_list) {
- 		if (irq->intid >= VGIC_MIN_LPI) {
- 			raw_spin_lock(&irq->irq_lock);
-+			irq->pending_latch = false;
- 			list_del(&irq->ap_list);
- 			irq->vcpu = NULL;
- 			raw_spin_unlock(&irq->irq_lock);
-@@ -712,7 +713,11 @@ retry:
- 			continue;
- 		}
+--- a/arch/arm/boot/dts/st/stm32mp15x-mecio1-io.dtsi
++++ b/arch/arm/boot/dts/st/stm32mp15x-mecio1-io.dtsi
+@@ -104,80 +104,79 @@
  
--		/* This interrupt looks like it has to be migrated. */
-+		/*
-+		 * This interrupt looks like it has to be migrated,
-+		 * make sure it is kept alive while locks are dropped.
-+		 */
-+		vgic_get_irq_ref(irq);
+ 	channel@0 {
+ 		reg = <0>;
+-		/* 16.5 ck_cycles sampling time */
+-		st,min-sample-time-ns = <5000>;
++		st,min-sample-time-ns = <20000>;
+ 		label = "p24v_stp";
+ 	};
  
- 		raw_spin_unlock(&irq->irq_lock);
- 		raw_spin_unlock(&vgic_cpu->ap_list_lock);
-@@ -757,6 +762,8 @@ retry:
- 		raw_spin_unlock(&vcpuB->arch.vgic_cpu.ap_list_lock);
- 		raw_spin_unlock(&vcpuA->arch.vgic_cpu.ap_list_lock);
+ 	channel@1 {
+ 		reg = <1>;
+-		st,min-sample-time-ns = <5000>;
++		st,min-sample-time-ns = <20000>;
+ 		label = "p24v_hpdcm";
+ 	};
  
-+		deleted_lpis |= vgic_put_irq_norelease(vcpu->kvm, irq);
-+
- 		if (target_vcpu_needs_kick) {
- 			kvm_make_request(KVM_REQ_IRQ_PENDING, target_vcpu);
- 			kvm_vcpu_kick(target_vcpu);
+ 	channel@2 {
+ 		reg = <2>;
+-		st,min-sample-time-ns = <5000>;
++		st,min-sample-time-ns = <20000>;
+ 		label = "ain0";
+ 	};
+ 
+ 	channel@3 {
+ 		reg = <3>;
+-		st,min-sample-time-ns = <5000>;
++		st,min-sample-time-ns = <20000>;
+ 		label = "hpdcm1_i2";
+ 	};
+ 
+ 	channel@5 {
+ 		reg = <5>;
+-		st,min-sample-time-ns = <5000>;
++		st,min-sample-time-ns = <20000>;
+ 		label = "hpout1_i";
+ 	};
+ 
+ 	channel@6 {
+ 		reg = <6>;
+-		st,min-sample-time-ns = <5000>;
++		st,min-sample-time-ns = <20000>;
+ 		label = "ain1";
+ 	};
+ 
+ 	channel@9 {
+ 		reg = <9>;
+-		st,min-sample-time-ns = <5000>;
++		st,min-sample-time-ns = <20000>;
+ 		label = "hpout0_i";
+ 	};
+ 
+ 	channel@10 {
+ 		reg = <10>;
+-		st,min-sample-time-ns = <5000>;
++		st,min-sample-time-ns = <200000>;
+ 		label = "phint0_ain";
+ 	};
+ 
+ 	channel@13 {
+ 		reg = <13>;
+-		st,min-sample-time-ns = <5000>;
++		st,min-sample-time-ns = <200000>;
+ 		label = "phint1_ain";
+ 	};
+ 
+ 	channel@15 {
+ 		reg = <15>;
+-		st,min-sample-time-ns = <5000>;
++		st,min-sample-time-ns = <20000>;
+ 		label = "hpdcm0_i1";
+ 	};
+ 
+ 	channel@16 {
+ 		reg = <16>;
+-		st,min-sample-time-ns = <5000>;
++		st,min-sample-time-ns = <20000>;
+ 		label = "lsin";
+ 	};
+ 
+ 	channel@18 {
+ 		reg = <18>;
+-		st,min-sample-time-ns = <5000>;
++		st,min-sample-time-ns = <20000>;
+ 		label = "hpdcm0_i2";
+ 	};
+ 
+ 	channel@19 {
+ 		reg = <19>;
+-		st,min-sample-time-ns = <5000>;
++		st,min-sample-time-ns = <20000>;
+ 		label = "hpdcm1_i1";
+ 	};
+ };
+@@ -187,14 +186,13 @@
+ 
+ 	channel@2 {
+ 		reg = <2>;
+-		/* 16.5 ck_cycles sampling time */
+-		st,min-sample-time-ns = <5000>;
++		st,min-sample-time-ns = <20000>;
+ 		label = "ain2";
+ 	};
+ 
+ 	channel@6 {
+ 		reg = <6>;
+-		st,min-sample-time-ns = <5000>;
++		st,min-sample-time-ns = <20000>;
+ 		label = "ain3";
+ 	};
+ };
 
 
