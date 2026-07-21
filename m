@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B376472F8D;
-	Tue, 21 Jul 2026 21:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C6D472F8D;
+	Tue, 21 Jul 2026 21:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667675; cv=none; b=sHbvt1cxRaefqjAvnzF88kNa10Bkj2V+gTt4hbHe4t7TPkfE7UnSeCq/qtnDbSnkCAM4ymk7m1t6zG/Dn83b/rUbRW/dhJCBN1Pp+cQBXQm05RKVBpsh1kPBqDExqIZcKmq7/fsSyc1SyXBtQpY1Dmg3fehbsmMegW6I4yaMrfY=
+	t=1784667677; cv=none; b=fCQwrLIWLbE//2LOn062mEadbwD7FmNxHvZA1xdQ0kQERrsQrv3YMEZvt9tIivVa3eN/WzDW9g293Pi4+GZNNS4Whz7xzXneQig/SnlauRkQZbbr6vDDqJMhfZe+fj4OmrU939xMYiHC9MOifpseRolkDuw30ASpyDQrF1IpmFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667675; c=relaxed/simple;
-	bh=NL3j4elEYO5mM9Fra5q837QQXgqLIBUxgMGj2WqetpQ=;
+	s=arc-20240116; t=1784667677; c=relaxed/simple;
+	bh=x0D83Lv56GjdnaVuoT6HD5vy4HpN5VGsjnqGP8YAo3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dfx2SreEbaXJ7+5TuddCdAHD9RDgeyY9ikhlK/5o7eShDNPzVO8Gn/TK4SgL2q7LEDcMl/fm390LQuAw8wowecJSZQgd60b6buCIQif6+5wF23tm1VXqsgsXQ6PEg5J2NtQChlkKsBKAr5kgNX3UvYYn1X8I5qMVblQAc+h1fys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q39g3m+o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UTiF7WB9mUOMZZKmDc1BaWPsAntdm8ELX2abjPaehrNKRSC6Vw30am8wGHNco027FOBOQzmKfYXpgTcgqbhtMcODPPg53tYskqWJEse7bJRZKg2eSmDm3eFsY4nHlixLTi8IGrWccWqYZftkd+EYxTnIZvo7xTnvFYXroXokO6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XJWRc/xb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q39g3m+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161151F000E9;
-	Tue, 21 Jul 2026 21:01:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XJWRc/xb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B121F000E9;
+	Tue, 21 Jul 2026 21:01:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667673;
-	bh=tFVNsH/tN64kyqhIDMcCdtB1vQSMoaTfUIrmoNcZXX4=;
+	s=korg; t=1784667676;
+	bh=TDAKQuXOYlcP/pE/PPqzl5ifRpZp1m1wJ0qOvCLBsnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q39g3m+ojnES04U6dYBbGX+qGszsgGCPBYy42gJ7/dUmN3l9Ik/kYbWRBN8Nq44he
-	 sjolkgo4IGvwBTPFGDUu3r3JbuFAVm0PUxfkIoBLgrbZuWDeBWesw0sQGp8mXJhLvb
-	 kN6J1ZPtWeRLpp0tcFunkU4Pf2meq4GHRmJJ4FsU=
+	b=XJWRc/xbA0MMsntpSRlGae3aZFgKoZpi2Mx5/C+wR8DU7nwa0pNIoDAdlVddPozMM
+	 bWKFDBX9KODKJ8U5HO/ADFKtzVlPQFgm14Er/wlW/1iFshBluIVrnbBEHBTSfCo8Nn
+	 Ou+GVkwqJDhpU7Rul3LCSc6y5ViA6rCVAjSkX6rM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vz@kernel.org>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.6 1148/1266] mtd: rawnand: lpc32xx_slc: fail DMA transfer on completion timeout
-Date: Tue, 21 Jul 2026 17:26:25 +0200
-Message-ID: <20260721152507.472845247@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 1108/1266] net/sched: sch_taprio: Replace direct dequeue call with peek and qdisc_dequeue_peeked
+Date: Tue, 21 Jul 2026 17:25:45 +0200
+Message-ID: <20260721152506.596239510@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,59 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 17a8ce84964f243c8f89dc7353ac7e8d3137bc74 upstream.
+commit e056e1dfcddca877dd46d704e8ec9860cfc9ec44 upstream.
 
-lpc32xx_xmit_dma() waits for the DMA completion callback but ignores
-wait_for_completion_timeout(). A timed out DMA transfer is therefore
-unmapped and reported as successful to the NAND read/write path.
+When taprio's software path peeks a non-work-conserving child qdisc, the
+child stashes the peeked skb in its gso_skb; taprio_dequeue_from_txq()
+then takes the packet with a direct child ->dequeue() call, which ignores
+that stash, orphans the peeked skb and desyncs the child's qlen/backlog.
+With a qfq child this re-enters the child on an emptied list and
+dereferences NULL, panicking the kernel from softirq on ordinary egress.
 
-Return -ETIMEDOUT when the completion wait expires. Terminate the DMA
-channel before unmapping the scatterlist so the timed out transfer cannot
-continue to access the buffer after the error is returned.
+Take the packet through qdisc_dequeue_peeked(), as sch_red and sch_sfb
+now do. The helper returns the child's stashed skb first and is a no-op
+when there is none, so a work-conserving child is unaffected and the
+gated path now consumes the skb whose length was charged to the budget.
 
-Fixes: 2944a44da09e ("mtd: add LPC32xx SLC NAND driver")
+Fixes: 5a781ccbd19e ("tc: Add support for configuring the taprio scheduler")
 Cc: stable@vger.kernel.org
-Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260625-b4-disp-31bcb279-v1-1-85c40b83c529@proton.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/lpc32xx_slc.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ net/sched/sch_taprio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/lpc32xx_slc.c
-+++ b/drivers/mtd/nand/raw/lpc32xx_slc.c
-@@ -430,6 +430,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
- 	struct dma_async_tx_descriptor *desc;
- 	int flags = DMA_CTRL_ACK | DMA_PREP_INTERRUPT;
- 	int res;
-+	unsigned long time_left;
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -759,7 +759,7 @@ static struct sk_buff *taprio_dequeue_fr
+ 		return NULL;
  
- 	host->dma_slave_config.direction = dir;
- 	host->dma_slave_config.src_addr = dma;
-@@ -467,12 +468,19 @@ static int lpc32xx_xmit_dma(struct mtd_i
- 	dmaengine_submit(desc);
- 	dma_async_issue_pending(host->dma_chan);
+ skip_peek_checks:
+-	skb = child->ops->dequeue(child);
++	skb = qdisc_dequeue_peeked(child);
+ 	if (unlikely(!skb))
+ 		return NULL;
  
--	wait_for_completion_timeout(&host->comp, msecs_to_jiffies(1000));
-+	time_left = wait_for_completion_timeout(&host->comp,
-+						msecs_to_jiffies(1000));
-+	if (!time_left) {
-+		dmaengine_terminate_sync(host->dma_chan);
-+		res = -ETIMEDOUT;
-+	} else {
-+		res = 0;
-+	}
- 
- 	dma_unmap_sg(host->dma_chan->device->dev, &host->sgl, 1,
- 		     DMA_BIDIRECTIONAL);
- 
--	return 0;
-+	return res;
- out1:
- 	dma_unmap_sg(host->dma_chan->device->dev, &host->sgl, 1,
- 		     DMA_BIDIRECTIONAL);
 
 
