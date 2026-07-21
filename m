@@ -1,58 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D22397E80;
-	Tue, 21 Jul 2026 20:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B9F397E80;
+	Tue, 21 Jul 2026 20:47:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666854; cv=none; b=jNd3h3Fzjt7VfzaHWiG3Clcf+TyVNuCh94Zd64YbcP1L5IhceU8uLw2OCnF5ETtGJv6JGc8nS+tuevCMXsYUvGsEAKXbkksoem9lyOyFzVUmKVEPqfUifiAmd1IrgcqxCBUGusr0jHWlsykunnMdw6WtzWeVjLgumVhOyKvp3Mc=
+	t=1784666857; cv=none; b=FkZhwGvyiMH56BCfyrLTgUbOVxuQbVCTJS3bvrme/VW+O93qXeTgNOISGbAGtDXN/vpBSxUrrLweg1oSKCc2sN5ez1yCAcTUYc1bcMVPN+m1F0kO7QhgqLndrQiMRHYDcjg9k5zKya1eEclbD+pJPMjbCbUdf0T3wUjrlRagL2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666854; c=relaxed/simple;
-	bh=XP19CFrcEryIF6GnCd9berjzug6vwo4kU/N/BIRxXcA=;
+	s=arc-20240116; t=1784666857; c=relaxed/simple;
+	bh=famqY/oLawrp5R6cMqhlgAT84MTqB0LpfDrsJLpe+z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ruP/tgrxLk/pggDIqKl2yL+w4GYGgAqLxPamtxq2ZkxJtHEIhshXB+xkYYA55PciiazXiIBms2sHEW6xiK56L+qQZl+LMHwzHgeNiQCBlQ7u8VG85gEKzLBtcmLu4FjJ8Q7XOuQ0flLOaSrpGIofFR5yd+gMqYwo8ga7upg5cwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nr9CiRn6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hacM9K6Vdn8bpw7XBUT6ppWE4jYXM9Y4jlT+W8X21HCbNx7VElextTgTovEo7+ksRJ65fHVO/jEUMGvwzmwHsafCOO/dSxfOvkkQTGxox6KgkXNFh6+3d3kTlz9Z8nreSGtANxttnfBPNvKttnnS2oQZ7CvyKQLRfLABVt5vLRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmmxTVfr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nr9CiRn6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6586B1F000E9;
-	Tue, 21 Jul 2026 20:47:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmmxTVfr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2885D1F000E9;
+	Tue, 21 Jul 2026 20:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666853;
-	bh=2qQ8fr4abLG1Z6pjlUOyMwx/DTZkuUS+A1MXLRNYbMo=;
+	s=korg; t=1784666855;
+	bh=UlWSfx0TpGUbawCrp6gpwE1G+iuz6cVWinKyWiupWCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nr9CiRn67miz62h61DTcxZIuk5GqgtM+W5gcqpZmwtr0sxwwIBjBfgaodg8KQ+NbW
-	 /KEsX3xsos+d6ngLAlNOEx4CGU+v02qdlP0tn/M/JEI6Hcxjfnw9a4bO4gsyq+WaK1
-	 IehKCyt1tLL2gBfAwljJ6GuRgfvTpUDY5NYLfh9o=
+	b=gmmxTVfrzE6GaYfAlodfLoAmlsfYJ+aaf4I8eAqaeDS+/aFRpq4xKikVf5i/8YMQ5
+	 1zw2qdLVMDoqfctVra0LF4Wjq780TW1hi/b8q06IyWJAnfwNVC3/sQ6r1bESe0HAGW
+	 0eOQ63XUMqMcRzSG07jJWeJSX3bc89UPxcVHA14o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Mark Rutland <mark.rutland@arm.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Barry Song <21cnbao@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	David Hildenbrand <david@redhat.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Morse <james.morse@arm.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Marc Zyngier <maz@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
 	Will Deacon <will@kernel.org>,
-	Yang Shi <shy828301@gmail.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	David Hildenbrand <david@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Ben Hutchings <ben@decadent.org.uk>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0841/1266] arm64/mm: convert ptep_clear() to ptep_get_and_clear()
-Date: Tue, 21 Jul 2026 17:21:18 +0200
-Message-ID: <20260721152500.675339982@linuxfoundation.org>
+Subject: [PATCH 6.6 0842/1266] arm64/mm: Optimize TLB flush in unmap_hotplug_[pmd|pud]_range()
+Date: Tue, 21 Jul 2026 17:21:19 +0200
+Message-ID: <20260721152500.696984038@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -71,58 +57,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Roberts <ryan.roberts@arm.com>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-[ Upstream commit cbb0294fdd72a5f63ec59fad5c0a98d63bd572fc ]
+[ Upstream commit ff4c5a0de1f2ef7737a8688a86e19301e567020d ]
 
-ptep_clear() is a generic wrapper around the arch-implemented
-ptep_get_and_clear().  We are about to convert ptep_get_and_clear() into a
-public version and private version (__ptep_get_and_clear()) to support the
-transparent contpte work.  We won't have a private version of ptep_clear()
-so let's convert it to directly call ptep_get_and_clear().
+Commit 48478b9f7913 ("arm64/mm: Enable batched TLB flush in
+unmap_hotplug_range") inadvertently introduced redundant TLB
+invalidation when clearing a block entry, resulting in unnecessary
+broadcast invalidation on CPUs without support for range-based
+invalidation.
 
-Link: https://lkml.kernel.org/r/20240215103205.2607016-10-ryan.roberts@arm.com
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Tested-by: John Hubbard <jhubbard@nvidia.com>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Barry Song <21cnbao@gmail.com>
-Cc: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
+Re-introduce the old behaviour, along with some expanded comments to
+help people working in this area next time around.
+
+Cc: Catalin Marinas <catalin.marinas@arm.com>
 Cc: Will Deacon <will@kernel.org>
-Cc: Yang Shi <shy828301@gmail.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: ff4c5a0de1f2 ("arm64/mm: Optimize TLB flush in unmap_hotplug_[pmd|pud]_range()")
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Reported-by: Ben Hutchings <ben@decadent.org.uk>
+Closes: https://lore.kernel.org/all/b0d5836032ce3135bfc473f6bff791306d086925.camel@decadent.org.uk/
+Fixes: 48478b9f7913 ("arm64/mm: Enable batched TLB flush in unmap_hotplug_range()")
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+[will: Reword comments and commit message]
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/hugetlbpage.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/mm/mmu.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/mm/hugetlbpage.c b/arch/arm64/mm/hugetlbpage.c
-index 398310ce919614..688d11b1cabdb4 100644
---- a/arch/arm64/mm/hugetlbpage.c
-+++ b/arch/arm64/mm/hugetlbpage.c
-@@ -228,7 +228,7 @@ static void clear_flush(struct mm_struct *mm,
- 	unsigned long i, saddr = addr;
- 
- 	for (i = 0; i < ncontig; i++, addr += pgsize, ptep++)
--		ptep_clear(mm, addr, ptep);
-+		ptep_get_and_clear(mm, addr, ptep);
- 
- 	flush_tlb_range(&vma, saddr, addr);
- }
+diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
+index fcc9b965aa7e68..e075792d722575 100644
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -901,7 +901,13 @@ static void unmap_hotplug_pmd_range(pud_t *pudp, unsigned long addr,
+ 			if (free_mapped) {
+ 				/* CONT blocks are not supported in the vmemmap */
+ 				WARN_ON(pmd_cont(pmd));
+-				flush_tlb_kernel_range(addr, addr + PMD_SIZE);
++				/*
++				 * Invalidating a block entry requires just
++				 * a single overlapping TLB invalidation,
++				 * so limit the range of the flush to a single
++				 * page.
++				 */
++				flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
+ 				free_hotplug_page_range(pmd_page(pmd),
+ 							PMD_SIZE, altmap);
+ 			}
+@@ -931,7 +937,8 @@ static void unmap_hotplug_pud_range(p4d_t *p4dp, unsigned long addr,
+ 		if (pud_sect(pud)) {
+ 			pud_clear(pudp);
+ 			if (free_mapped) {
+-				flush_tlb_kernel_range(addr, addr + PUD_SIZE);
++				/* See comment in unmap_hotplug_pmd_range(). */
++				flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
+ 				free_hotplug_page_range(pud_page(pud),
+ 							PUD_SIZE, altmap);
+ 			}
 -- 
 2.53.0
 
