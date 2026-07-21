@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71D146D2D1;
-	Tue, 21 Jul 2026 18:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF6D46D2DC;
+	Tue, 21 Jul 2026 18:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657273; cv=none; b=e2GK1vB2iNLY3UsfyYrKGgXqTGHB1SCm0P5WgzEQdeixjSrd2I83px7v4/HW4s4GCiO4IoRnu9H7sZdtfhUaA2VKHDrJHCviPTqahp2dDS6NNaIcbzZgHlNejs5t1MsojSHYjNKxAUe8IxHYch390cpzpdfTMEuLU1EMZEI7WeA=
+	t=1784657275; cv=none; b=cJVrWZwB/sr44hgX2Soy7DcLXW1DdVtQHn7Fw4ScPWnMiBGkDM7i3jUmxNWFJKl2BEs+FLp5noAdFBOx8o8t6WJFUX4oasjxDwGc7iKaDzDmMAo5nd34jqhoq/SjGdhKzAR/+PvxS64DLRcnbDib7giMYY1gjMgOo0eK4X8e+gE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657273; c=relaxed/simple;
-	bh=fU1z0li/o6ly3Nrrrnb7r1A05q0+TuC3SKj6jkvp3JM=;
+	s=arc-20240116; t=1784657275; c=relaxed/simple;
+	bh=X0ngXoUD7lxLPa2/1aSulg9bRCgVaISXQ0Fd0NNaj4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kj0Z/QA3Ysy0HGgihz4RfPWufE6cBE1jG7CRmo7CdIBdflQnjk6ZxMw0zjBnyXc2JcD34yxHc8KxvQJhXvt0yUwU4UEjThe6qPfQCe1R1PzDeapbp4ftc7O2mmZ3QjRgJfaCkLTlfkTbHgFjNZkTKYuvk+rugAELHbkj2Dco9j8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BA9iueYx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VRjICVo68nRbxfsKzlv+z1HjF10Qi8TVwvPZs5PicpOe1BopT2AQiyxayWaj5K0k+YjDO6fVH3BxoRxOOw7Pg4Ur3mdEF24f9kBpLr1rIxLanW90jzF1jmGaJGZJlhAhGM8XKpAaSgm79BcNf2uYLZcm7SgnS4KPBaIjyiPc030=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B5fmnify; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BA9iueYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F6F1F00A3F;
-	Tue, 21 Jul 2026 18:07:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5fmnify"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC9BE1F000E9;
+	Tue, 21 Jul 2026 18:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657271;
-	bh=omWrXdZL9lqsnFCKK56bR7cZSA3LmMsnfxVugzGnEus=;
+	s=korg; t=1784657274;
+	bh=qZficGQ0Ox+CnRDM95/kZ/eINO+/jiBboxs6+HGTASk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BA9iueYxBYnx8KKWw98v7vJy9cBB7LqWTQaa/K0S1plouhIiwC/ZxKwfaIsIPMXKI
-	 tRAaE53AE34ZL9J0h8OdWdprGqyvPxTJRGLt5NPoGd7Ly0aqCLkqT7XHn+cvfHdpzj
-	 bcWVHxj9I0u/RMlBHLweQXwmAv613ehX6T66X6KY=
+	b=B5fmnifyAazMI7BYPM/jAMJ2mpEhJltv40z+CE5vYT6z+fJGiIs1wHr7BX89kwL/f
+	 /HwWAKw7aGD2vUr+RK6iKt0Ymfuux61dUCyjvM3Sej0cIJeA1YCS4lYMhxVJ9Y4Fz3
+	 dvieAyKjLT8eZyZZOdl6DjxKKdF1FBOoRzZvxGX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0658/1611] dmaengine: qcom: gpi: set DMA_PRIVATE capability
-Date: Tue, 21 Jul 2026 17:12:54 +0200
-Message-ID: <20260721152530.185948302@linuxfoundation.org>
+Subject: [PATCH 6.18 0649/1611] perf sched: Replace BUG_ON and add NULL checks in replay event helpers
+Date: Tue, 21 Jul 2026 17:12:45 +0200
+Message-ID: <20260721152529.988226724@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,40 +53,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 4e351f408743354d54ee1af5193fc78234f2044e ]
+[ Upstream commit 75eafe4a3a93a0143a20c0cc286bfb9008ac1478 ]
 
-The GPI DMA controller is only responsible for QUP peripherals, and
-cannot work as a general-purpose DMA accelerator.
+get_new_event() has three issues:
 
-Set DMA_PRIVATE capability for it.
+1. The zalloc() result is dereferenced without a NULL check, crashing
+   on allocation failure.
 
-This fixes error messages about GPI being shown when an async-tx
-consumer is loaded.
+2. BUG_ON(!task->atoms) kills the process when realloc() fails.
+   Since perf.data is untrusted input, this should be a graceful error.
 
-Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
-Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260602070344.3707256-1-zhengxingda@iscas.ac.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+3. The realloc pattern assigns directly to task->atoms, losing the old
+   pointer on failure.  task->nr_events is also incremented before the
+   realloc, leaving corrupted state on failure.
+
+Fix get_new_event() to:
+  - Check the zalloc() result before dereferencing
+  - Use a temporary for realloc() to avoid losing the old pointer
+  - Increment nr_events only after successful realloc
+  - Return NULL instead of calling BUG_ON on failure
+
+Also fix add_sched_event_wakeup() where zalloc() for wait_sem is
+passed to sem_init() without a NULL check.
+
+Update all callers (add_sched_event_run, add_sched_event_wakeup,
+add_sched_event_sleep) to handle NULL returns by returning early.
+The replay may produce incomplete output on OOM but will not crash.
+
+Fixes: ec156764d424 ("perf sched: Import schedbench.c")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/qcom/gpi.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/builtin-sched.c | 28 +++++++++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index 8908b7c7190074..51d52a140c1b3a 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -2253,6 +2253,7 @@ static int gpi_probe(struct platform_device *pdev)
- 	/* clear and Set capabilities */
- 	dma_cap_zero(gpi_dev->dma_device.cap_mask);
- 	dma_cap_set(DMA_SLAVE, gpi_dev->dma_device.cap_mask);
-+	dma_cap_set(DMA_PRIVATE, gpi_dev->dma_device.cap_mask);
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index e93606446cc3c6..36c8a018a830f1 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -358,14 +358,25 @@ get_new_event(struct task_desc *task, u64 timestamp)
+ 	struct sched_atom *event = zalloc(sizeof(*event));
+ 	unsigned long idx = task->nr_events;
+ 	size_t size;
++	struct sched_atom **atoms_p;
++
++	if (event == NULL) {
++		pr_err("ERROR: sched: failed to allocate event\n");
++		return NULL;
++	}
  
- 	/* configure dmaengine apis */
- 	gpi_dev->dma_device.directions = BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO_DEV);
+ 	event->timestamp = timestamp;
+ 	event->nr = idx;
+ 
++	size = sizeof(struct sched_atom *) * (task->nr_events + 1);
++	atoms_p = realloc(task->atoms, size);
++	if (!atoms_p) {
++		pr_err("ERROR: sched: failed to grow atoms array\n");
++		free(event);
++		return NULL;
++	}
++	task->atoms = atoms_p;
+ 	task->nr_events++;
+-	size = sizeof(struct sched_atom *) * task->nr_events;
+-	task->atoms = realloc(task->atoms, size);
+-	BUG_ON(!task->atoms);
+ 
+ 	task->atoms[idx] = event;
+ 
+@@ -396,6 +407,8 @@ static void add_sched_event_run(struct perf_sched *sched, struct task_desc *task
+ 	}
+ 
+ 	event = get_new_event(task, timestamp);
++	if (event == NULL)
++		return;
+ 
+ 	event->type = SCHED_EVENT_RUN;
+ 	event->duration = duration;
+@@ -409,6 +422,8 @@ static void add_sched_event_wakeup(struct perf_sched *sched, struct task_desc *t
+ 	struct sched_atom *event, *wakee_event;
+ 
+ 	event = get_new_event(task, timestamp);
++	if (event == NULL)
++		return;
+ 	event->type = SCHED_EVENT_WAKEUP;
+ 	event->wakee = wakee;
+ 
+@@ -423,6 +438,10 @@ static void add_sched_event_wakeup(struct perf_sched *sched, struct task_desc *t
+ 	}
+ 
+ 	wakee_event->wait_sem = zalloc(sizeof(*wakee_event->wait_sem));
++	if (!wakee_event->wait_sem) {
++		pr_err("ERROR: sched: failed to allocate semaphore\n");
++		return;
++	}
+ 	sem_init(wakee_event->wait_sem, 0, 0);
+ 	event->wait_sem = wakee_event->wait_sem;
+ 
+@@ -434,6 +453,9 @@ static void add_sched_event_sleep(struct perf_sched *sched, struct task_desc *ta
+ {
+ 	struct sched_atom *event = get_new_event(task, timestamp);
+ 
++	if (event == NULL)
++		return;
++
+ 	event->type = SCHED_EVENT_SLEEP;
+ 
+ 	sched->nr_sleep_events++;
 -- 
 2.53.0
 
