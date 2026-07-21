@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771F046EF82;
-	Tue, 21 Jul 2026 18:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC0C471250;
+	Tue, 21 Jul 2026 18:35:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658934; cv=none; b=k5SmKRNtcwITgUW4p5GEdkscfO8XSOaeKVVFGnaryVM/7WX+C2z2eQ64rWl6JZH8M67+aIQQug+oSBKHdzCx/QelLK7FHa3IPVN9/MSK2wE6KHYz6IkjontLS31cek/6GvxkMo6oriqYhvPe4nZH+XDgP3qyRn43baWXYAAgP30=
+	t=1784658938; cv=none; b=GBteBOFNR6A8uUbF11HWoaW9v5Cue7LWTJPq28UX9sFkzO0tiXPowHOpjdawXD/I84UHwYeRecFs+3HiyWmu0CfiqGu1EZMczuxhz/IaeSkYFhNCubzM+RgX4EPIngPazD0guuW8j8CkMjDDC0kbH2SrV9vELLsTqgrXQPnjNfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658934; c=relaxed/simple;
-	bh=quPNS3H8tW7mXvs9tAvtVQw/WwC4/p8xUyO2NeFDyf4=;
+	s=arc-20240116; t=1784658938; c=relaxed/simple;
+	bh=E1aEgSHZRvC/FAOfhtFGfEF5bswV86mj7ixjSmdeeBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g506b3df969xHyz73TzfUCsB9P0uXQ8DdTgTW6aCIGWxUfLQX9yp7lgACsF7zuDS3H/bfsEZKNz8+hHNbSieYVf/XTTFXnON3SNwWGAStEkaxdLPMKctT9jz7SD+SWCe78WXCLmwevXlPUn2YCRwvSYV6kVxKoG2D32B/4klDak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDRXoH8o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hyZyVaIbPTSKkAM4sNn4dwB6vWXuAP2/SQozchq3PK8+TCEftM+ikkqfQgIv5SijYDzx2qJ0t6z0oAkdz45Kc0G9yp+UsFe+2Z6rDU565jXIjHh0lPPdEBa1T1JlspVRIE2eaTMg869/+SldsjMahmCXGzb7uaTRZioaTqgHN9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hwUqQVs8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDRXoH8o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE49E1F00A3A;
-	Tue, 21 Jul 2026 18:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwUqQVs8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E911F000E9;
+	Tue, 21 Jul 2026 18:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658933;
-	bh=Aw6JlgrhQVNq1uuBirctWo/M11pQnVRUIxmR839iMlY=;
+	s=korg; t=1784658936;
+	bh=+VHuznOCNXU71n3HYRetX2gQVzsLzIPIUETkc/YK/PA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xDRXoH8oGWkXrrzZUTHApLWUMfuBNEeS1192/Voi+KdkSR/cJcyk19kMzHsb4N/89
-	 SG/pCKyuSl6M61bMyia3O1y0gyIJ76WwYe2Iei/bDgvVkbcxOSvUg5JdLwa5Y8gnh8
-	 WhPPB8kRnKPj21wHiy7ZuI168oG7IWnUP09FYv5M=
+	b=hwUqQVs849qI+B9oiiwJLjdi6mkFNitH6WM62/GAcgcRBAGrfZ3SGSC3ouUJOm92H
+	 yXazfuCfp6Z8+oul890WfmpozLDbFoXWf8nzRvs3CSW7rl/eyBZpxhcvyC6xmn2Lrn
+	 bK95NOvNfo8dq0ZkNrUfLBD+T6BJa7J6l63Ib144=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Joe Damato <joe@dama.to>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 1330/1611] netdev-genl: report NAPI thread PID in the callers pid namespace
-Date: Tue, 21 Jul 2026 17:24:06 +0200
-Message-ID: <20260721152545.368949606@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.18 1331/1611] can: esd_usb: kill anchored URBs before freeing netdevs
+Date: Tue, 21 Jul 2026 17:24:07 +0200
+Message-ID: <20260721152545.389658859@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,55 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 1f24c0d01db214c9e661915e9972404c96ca73c0 upstream.
+commit c43122fef328a70045fe7621c06de6b2b8e19264 upstream.
 
-netdev_nl_napi_fill_one() reports the NAPI kthread PID in NETDEV_A_NAPI_PID
-using task_pid_nr(), which returns the PID in the initial pid namespace.
+esd_usb_disconnect() frees each CAN netdev with free_candev() inside
+its per-netdev loop and only calls unlink_all_urbs(dev) afterwards.
+The per-netdev private data (struct esd_usb_net_priv) is embedded in
+the net_device allocation returned by alloc_candev(), so once
+free_candev() has run, dev->nets[i] points to freed memory.
+unlink_all_urbs() then dereferences the freed dev->nets[i] to kill the
+per-netdev TX anchor (usb_kill_anchored_urbs(&priv->tx_submitted)),
+clear active_tx_jobs, and reset priv->tx_contexts[].
 
-NETDEV_CMD_NAPI_GET does not have GENL_ADMIN_PERM and the netdev genl family
-is netnsok, so a caller in a child pid namespace can issue it. That caller
-then sees the kthread's global PID, even though the kthread is not visible
-in its pid namespace, where the value should be 0.
+Reorder the teardown so the anchored URBs are killed before the netdevs
+are freed, matching other CAN/USB drivers in the same directory such as
+ems_usb, usb_8dev and mcba_usb, which unregister, then unlink, then
+free: unregister the netdevs first (which stops their TX queues), call
+unlink_all_urbs(dev) once, then free the netdevs.
 
-Translate the PID through the caller's pid namespace, the same way commit
-3799c2570982 ("io_uring/fdinfo: translate SqThread PID through caller's
-pid_ns") did for the io_uring SQPOLL thread. The doit and dumpit paths both
-run synchronously in the caller's context, so task_active_pid_ns(current) is
-the caller's pid namespace.
+This issue was found by an in-house static analysis tool.
 
-Fixes: db4704f4e4df ("netdev-genl: Add PID for the NAPI thread")
+Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
 Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Joe Damato <joe@dama.to>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Link: https://patch.msgid.link/20260615171736.1709318-1-maoyixie.tju@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260709164159.497640-1-fanwu01@zju.edu.cn
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/netdev-genl.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/can/usb/esd_usb.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/core/netdev-genl.c
-+++ b/net/core/netdev-genl.c
-@@ -2,6 +2,7 @@
- 
- #include <linux/netdevice.h>
- #include <linux/notifier.h>
-+#include <linux/pid_namespace.h>
- #include <linux/rtnetlink.h>
- #include <net/busy_poll.h>
- #include <net/net_namespace.h>
-@@ -189,7 +190,8 @@ netdev_nl_napi_fill_one(struct sk_buff *
- 		goto nla_put_failure;
- 
- 	if (napi->thread) {
--		pid = task_pid_nr(napi->thread);
-+		pid = task_pid_nr_ns(napi->thread,
-+				     task_active_pid_ns(current));
- 		if (nla_put_u32(rsp, NETDEV_A_NAPI_PID, pid))
- 			goto nla_put_failure;
+--- a/drivers/net/can/usb/esd_usb.c
++++ b/drivers/net/can/usb/esd_usb.c
+@@ -1387,10 +1387,13 @@ static void esd_usb_disconnect(struct us
+ 				netdev = dev->nets[i]->netdev;
+ 				netdev_info(netdev, "unregister\n");
+ 				unregister_netdev(netdev);
+-				free_candev(netdev);
+ 			}
+ 		}
+ 		unlink_all_urbs(dev);
++		for (i = 0; i < dev->net_count; i++) {
++			if (dev->nets[i])
++				free_candev(dev->nets[i]->netdev);
++		}
+ 		kfree(dev);
  	}
+ }
 
 
