@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62BF42D8376;
-	Tue, 21 Jul 2026 18:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77BF2DEA74;
+	Tue, 21 Jul 2026 18:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660057; cv=none; b=ucqwIYvXZtS2GeQHdV3z0BOe7mnn3RWX6T+t1f8jch8DOa88O3en3J+B21NNSR1UX86g/f1Ylcy5aV5WN7oLtdRLXz3+1HTOlUNmANagwdBfLuMxSBWVMH6jbPgMOqG+jve+g4O0xxO7w178hKjZ4LvKKyRq628ZoRKuv4zLCgY=
+	t=1784660060; cv=none; b=Wk82myC364W6Oa4JhXo//zMoJTmJXU4RY3OQ/X5sjs/XFFVpOYhlquqLN/PCjhhdhr+ALDMxSNBwgYX+aPGqojS7GQj2bCu+EI0WlEe7OqMW5D01r6fKsWeRYKwx12oeD9sWCQVbZ0Xsimyhw9dTOmVvtmIXMe8pSxjoFMqPiA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660057; c=relaxed/simple;
-	bh=HJszdNKULSFxGHv9klc3iz/aHjpnBAYB4fiJ51LRSEU=;
+	s=arc-20240116; t=1784660060; c=relaxed/simple;
+	bh=Ke9HMo6z3+44idy+Q2RTdS+mUy6cKMar5EQA7VFhpus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b+scgH5utXbExz3QRCL94Vw9vYMIHPn/914RTArXz28+ddkPPvVWADJA4nHLg5Do+eliWWfQDyCUdHmG0VwLllEjCQ+52oNW5OYabkFwHqDcFmzH/BpxXUTEyUeHV08o/8TGRWOcEHemPABMGFq0vAN9DEnfl9TVstguH9I0QSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n0yT26nv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=siidHYpcyianSN+3T83kIXRjUFzlEoAa77kivMMQOjF7xgHNBpuAveHi7hUXYXRoDPVNJC0cscqiRDbvO7Rrx6iGfv62+BBA3OHyO/HmJslFj1v4rOnhc/d7labd0v9N8H+ovBQR9+4SRD+7kuqPJ4CjDnbtvghHjxOh8i4G5m8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aOomRw4k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n0yT26nv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE2E71F00A3A;
-	Tue, 21 Jul 2026 18:54:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aOomRw4k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0871F000E9;
+	Tue, 21 Jul 2026 18:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660056;
-	bh=NUvvWOLNPfBAHU49L1zdcPy+noVEJSD1i/8H1mA+hg4=;
+	s=korg; t=1784660058;
+	bh=xV7miY7xCKPASISC8p97Y2p/uokdxTaFDVUXp2iuQQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n0yT26nvsrYrNnlHRZcdG8VriMs6L9f86dXsrPI9NkulJus7fBWBWEWPN3Hk/mHVx
-	 C13t568RCw/OJZ/rL0H+uq4Y7PHBl+5eJMoBr+Cz46tlFYtP/3A6ygoABbYKVDh4jn
-	 ouMQqFxTtebBmcJZtoqs868VkWv2pu+itgouQpnc=
+	b=aOomRw4ksFDqLWLuWs+u3EgU80vAJrsYkwaesXN+xbuAZOgNRSMiB7q5AwxBTpwMR
+	 XNQYX0O8eaE1uzw48jhfbInS1ZsJo5n3xOQwRZSOCA0t4h7WXhTlopqdknR5Eu2Ag5
+	 zc5cVYbYx3SrtlBIoLLDyrhqy2nXv0BSXCwp29X8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -38,9 +38,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zecheng Li <zli94@ncsu.edu>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0836/2077] perf dwarf-aux: Fix libdw API contract violations
-Date: Tue, 21 Jul 2026 17:08:29 +0200
-Message-ID: <20260721152612.507132288@linuxfoundation.org>
+Subject: [PATCH 7.1 0837/2077] perf libdw: Fix libdw API contract violations and memory leaks
+Date: Tue, 21 Jul 2026 17:08:30 +0200
+Message-ID: <20260721152612.529845867@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -61,35 +61,27 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 17e9b4243e76f0a0fe951d30ce990d6081a8b426 ]
+[ Upstream commit 9c6d535ddb794fb540c3b142ab1d7416d469c1de ]
 
-Check return values of `dwarf_decl_line` (where non-optional),
-`dwarf_getfuncs`, and `dwarf_lineaddr` to prevent using uninitialized
-stack variables or incorrectly reporting success on failure.
-
-For the root DIE in `die_walk_lines()`, `dwarf_decl_line` and
-`die_get_decl_file` are optional and their failures are handled
-gracefully to avoid breaking line walking on valid functions.
-Specifically, remove the strict `!decf` (declared file) check that
-would prematurely abort line walking on generated or artificial
-functions lacking this optional attribute.
+Check return values of `dwfl_report_end` and `dwfl_module_addrdie`
+to prevent using uninitialized stack variables or reporting success on
+failure.
 
 Additionally:
- - Add NULL pointer protection for `strcmp()` in `die_walk_lines()`
-   when `inf` or `decf` are NULL to prevent crashes on generated
-   code.
- - Use `dwarf_attr_integrate` in `die_get_data_member_location` to
-   correctly resolve inherited member locations (e.g. via abstract
-   origin or specification).
+ - Ensure `*file` is freed and inline frames are cleared on error in
+   `libdw__addr2line()` to prevent memory leaks and duplicated
+   callchains when falling back to other unwinders.
+ - Use `die_name()` safe wrapper inside the inline function unwinding
+   callback (`libdw_a2l_cb`).
+ - Refactor `libdw_a2l_cb`'s repeated memory error handling/cleanup
+   paths using a cleaner goto control flow.
 
-Fixes: 57f95bf5f882 ("perf probe: Show correct statement line number by perf probe -l")
-Fixes: 3f4460a28fb2 ("perf probe: Filter out redundant inline-instances")
-Fixes: 75186a9b09e4 ("perf probe: Fix to show lines of sys_ functions correctly")
-Fixes: e0d153c69040 ("perf-probe: Move dwarf library routines to dwarf-aux.{c, h}")
-Fixes: 6243b9dc4c99 ("perf probe: Move dwarf specific functions to dwarf-aux.c")
+Fixes: b7a2b011e9627ff3 ("perf powerpc: Unify the skip-callchain-idx libdw with that for addr2line")
+Fixes: 88c51002d06f9a68 ("perf addr2line: Add a libdw implementation")
 Assisted-by: Gemini-CLI:Google Gemini 3
 Signed-off-by: Ian Rogers <irogers@google.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
 Cc: Ingo Molnar <mingo@redhat.com>
 Cc: James Clark <james.clark@linaro.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
@@ -100,116 +92,108 @@ Cc: Zecheng Li <zli94@ncsu.edu>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dwarf-aux.c | 34 +++++++++++++++++-----------------
- tools/perf/util/dwarf-aux.h |  5 +++++
- 2 files changed, 22 insertions(+), 17 deletions(-)
+ tools/perf/util/libdw.c | 49 ++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 43 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
-index 109a166a6d19ce..d7160f87ac7d7a 100644
---- a/tools/perf/util/dwarf-aux.c
-+++ b/tools/perf/util/dwarf-aux.c
-@@ -125,7 +125,8 @@ int cu_find_lineinfo(Dwarf_Die *cu_die, Dwarf_Addr addr,
- 	    && die_entrypc(&die_mem, &faddr) == 0 &&
- 	    faddr == addr) {
- 		*fname = die_get_decl_file(&die_mem);
--		dwarf_decl_line(&die_mem, lineno);
-+		if (dwarf_decl_line(&die_mem, lineno) != 0)
-+			return -ENOENT;
- 		goto out;
+diff --git a/tools/perf/util/libdw.c b/tools/perf/util/libdw.c
+index 21697788410308..15bf646d104f5a 100644
+--- a/tools/perf/util/libdw.c
++++ b/tools/perf/util/libdw.c
+@@ -60,7 +60,10 @@ struct Dwfl *dso__libdw_dwfl(struct dso *dso)
+ 		return NULL;
  	}
  
-@@ -459,7 +460,7 @@ int die_get_data_member_location(Dwarf_Die *mb_die, Dwarf_Word *offs)
- 	size_t nexpr;
- 	int ret;
- 
--	if (dwarf_attr(mb_die, DW_AT_data_member_location, &attr) == NULL)
-+	if (dwarf_attr_integrate(mb_die, DW_AT_data_member_location, &attr) == NULL)
- 		return -ENOENT;
- 
- 	if (dwarf_formudata(&attr, offs) != 0) {
-@@ -795,8 +796,7 @@ static int __die_walk_instances_cb(Dwarf_Die *inst, void *data)
- 
- 	/* Ignore redundant instances */
- 	if (dwarf_tag(inst) == DW_TAG_inlined_subroutine) {
--		dwarf_decl_line(origin, &tmp);
--		if (die_get_call_lineno(inst) == tmp) {
-+		if (dwarf_decl_line(origin, &tmp) == 0 && die_get_call_lineno(inst) == tmp) {
- 			tmp = die_get_decl_fileno(origin);
- 			if (die_get_call_fileno(inst) == tmp)
- 				return DIE_FIND_CB_CONTINUE;
-@@ -950,11 +950,6 @@ int die_walk_lines(Dwarf_Die *rt_die, line_walk_callback_t callback, void *data)
- 		cu_die = dwarf_diecu(rt_die, &die_mem, NULL, NULL);
- 		dwarf_decl_line(rt_die, &decl);
- 		decf = die_get_decl_file(rt_die);
--		if (!decf) {
--			pr_debug2("Failed to get the declared file name of %s\n",
--				  dwarf_diename(rt_die));
--			return -EINVAL;
--		}
- 	} else
- 		cu_die = rt_die;
- 	if (!cu_die) {
-@@ -998,11 +993,12 @@ int die_walk_lines(Dwarf_Die *rt_die, line_walk_callback_t callback, void *data)
- 			if (die_find_inlinefunc(rt_die, addr, &die_mem)) {
- 				/* Call-site check */
- 				inf = die_get_call_file(&die_mem);
--				if ((inf && !strcmp(inf, decf)) &&
-+				if ((inf == decf || (inf && decf && !strcmp(inf, decf))) &&
- 				    die_get_call_lineno(&die_mem) == lineno)
- 					goto found;
- 
--				dwarf_decl_line(&die_mem, &inl);
-+				if (dwarf_decl_line(&die_mem, &inl) != 0)
-+					inl = 0;
- 				if (inl != decl ||
- 				    decf != die_get_decl_file(&die_mem))
- 					continue;
-@@ -1034,8 +1030,10 @@ int die_walk_lines(Dwarf_Die *rt_die, line_walk_callback_t callback, void *data)
- 			.data = data,
- 			.retval = 0,
- 		};
--		dwarf_getfuncs(cu_die, __die_walk_culines_cb, &param, 0);
--		ret = param.retval;
-+		if (dwarf_getfuncs(cu_die, __die_walk_culines_cb, &param, 0) < 0)
-+			ret = -EINVAL;
-+		else
-+			ret = param.retval;
- 	}
- 
- 	return ret;
-@@ -1939,10 +1937,12 @@ static bool die_get_postprologue_addr(unsigned long entrypc_idx,
- 			break;
- 	}
- 
--	dwarf_lineaddr(line, postprologue_addr);
--	if (*postprologue_addr >= highpc)
--		dwarf_lineaddr(dwarf_onesrcline(lines, i - 1),
--			       postprologue_addr);
-+	if (dwarf_lineaddr(line, postprologue_addr) != 0)
-+		return false;
-+	if (*postprologue_addr >= highpc) {
-+		if (dwarf_lineaddr(dwarf_onesrcline(lines, i - 1), postprologue_addr) != 0)
-+			return false;
+-	dwfl_report_end(dwfl, /*removed=*/NULL, /*arg=*/NULL);
++	if (dwfl_report_end(dwfl, /*removed=*/NULL, /*arg=*/NULL) != 0) {
++		dwfl_end(dwfl);
++		return NULL;
 +	}
+ 	dso__set_libdw(dso, dwfl);
  
- 	return true;
- }
-diff --git a/tools/perf/util/dwarf-aux.h b/tools/perf/util/dwarf-aux.h
-index a79968a2e573b3..161f0bf980b6ee 100644
---- a/tools/perf/util/dwarf-aux.h
-+++ b/tools/perf/util/dwarf-aux.h
-@@ -10,6 +10,11 @@
- #include <elfutils/libdwfl.h>
- #include <elfutils/version.h>
+ 	return dwfl;
+@@ -72,18 +75,19 @@ struct libdw_a2l_cb_args {
+ 	struct inline_node *node;
+ 	char *leaf_srcline;
+ 	bool leaf_srcline_used;
++	int err;
+ };
  
-+static inline const char *die_name(Dwarf_Die *die)
-+{
-+	return dwarf_diename(die) ?: "<unknown>";
-+}
+ static int libdw_a2l_cb(Dwarf_Die *die, void *_args)
+ {
+ 	struct libdw_a2l_cb_args *args  = _args;
+-	struct symbol *inline_sym = new_inline_sym(args->dso, args->sym, dwarf_diename(die));
++	struct symbol *inline_sym = new_inline_sym(args->dso, args->sym, die_name(die));
+ 	const char *call_fname = die_get_call_file(die);
+ 	char *call_srcline = srcline__unknown;
+ 	struct inline_list *ilist;
+ 
+ 	if (!inline_sym)
+-		return -ENOMEM;
++		goto abort_enomem;
+ 
+ 	/* Assign caller information to the parent. */
+ 	if (call_fname)
+@@ -103,12 +107,27 @@ static int libdw_a2l_cb(Dwarf_Die *die, void *_args)
+ 
+ 	/* Add this symbol to the chain as the leaf. */
+ 	if (!args->leaf_srcline_used) {
+-		inline_list__append_tail(inline_sym, args->leaf_srcline, args->node);
++		if (inline_list__append_tail(inline_sym, args->leaf_srcline, args->node) != 0)
++			goto abort_delete_sym;
+ 		args->leaf_srcline_used = true;
+ 	} else {
+-		inline_list__append_tail(inline_sym, strdup(args->leaf_srcline), args->node);
++		char *srcline = strdup(args->leaf_srcline);
 +
- struct strbuf;
++		if (!srcline)
++			goto abort_delete_sym;
++		if (inline_list__append_tail(inline_sym, srcline, args->node) != 0) {
++			free(srcline);
++			goto abort_delete_sym;
++		}
+ 	}
+ 	return 0;
++
++abort_delete_sym:
++	if (inline_sym->inlined)
++		symbol__delete(inline_sym);
++abort_enomem:
++	args->err = -ENOMEM;
++	return DWARF_CB_ABORT;
+ }
  
- /* Find the realpath of the target file */
+ int libdw__addr2line(u64 addr, char **file, unsigned int *line_nr,
+@@ -162,11 +181,29 @@ int libdw__addr2line(u64 addr, char **file, unsigned int *line_nr,
+ 			.leaf_srcline = srcline_from_fileline(src ?: "<unknown>", lineno),
+ 		};
+ 
++		if (!args.leaf_srcline) {
++			if (file && *file) {
++				free(*file);
++				*file = NULL;
++			}
++			return 0;
++		}
++
+ 		/* Walk from the parent down to the leaf. */
+-		cu_walk_functions_at(cudie, addr, libdw_a2l_cb, &args);
++		if (cudie)
++			cu_walk_functions_at(cudie, addr, libdw_a2l_cb, &args);
+ 
+ 		if (!args.leaf_srcline_used)
+ 			free(args.leaf_srcline);
++
++		if (args.err) {
++			if (file && *file) {
++				free(*file);
++				*file = NULL;
++			}
++			inline_node__clear_frames(node);
++			return 0;
++		}
+ 	}
+ 	return 1;
+ }
 -- 
 2.53.0
 
