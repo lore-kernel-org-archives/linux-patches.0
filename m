@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F1D3D6CCA;
-	Tue, 21 Jul 2026 22:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580C8367B63;
+	Tue, 21 Jul 2026 22:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673422; cv=none; b=RvEgXB9EbQBRZauJl29TWr5GvimnyGuW4aS/Y47i7XX8DCVvw3sZh1s9r8/3gmyoIb4960io+lQZmb+mlVYiXA0a0r3CpvG2+RhJiengPzEKvbGIUzbia19ohxPdIW48Nrddd4UYNMypkF5ueCwEAcXymFhD2FvK3XJoSAJCl/U=
+	t=1784673424; cv=none; b=tyRc6tbwxcTArQT/T346MFJ0OWZOeALD8eEKdoeu9K4znKLg8iLH0urHU9t0Xqi27V4I7v+9eck9WFLmXYGUfHRfLbpcumYxkvl+J7H0SUr19av2UypzAhLAtuBRbo33AX8PLGa5NPIsHqSNUg55zqrN8FdXncLvJ5GNknkaIY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673422; c=relaxed/simple;
-	bh=rLR7G+wOV7fP0Ck4+wIJi8LlwpgKE0XJWyZGR650qDY=;
+	s=arc-20240116; t=1784673424; c=relaxed/simple;
+	bh=n0aJQjuKNkQLAqmmWA0V4EOSUpiy/cP8hAnNZByMphs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GAJdbIYvcqWq8ZKfZumxa392NRipAoNyPyFGR+VCgsTIo9IMlLO5RPOAe6xlJ6Fsqy9MXSQiH4d71pDPYbKjh1OUfX4JSwW2OCPqLEqqocMQqecEbLDSiMZuRY6kQf2dBqmtx0c3dNTZXWf9truzcZFj6dQLad7G8NAXFP2D6l8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1T69B6O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W39x+P/NiyMaVrd9Bnh/joY6v+OHZI0FmnMLqD9Tei5/3yuSRJPYL/0wCnvkCmyrozaryQsmoFjFlweCCV3OypwoFO9QABerhq+CO9uHIb2OZ5fXWuMWBYI8CdD29Q/gKdAY8Ft2YJFwmf27X9MzV37Q9mEzcPWLr8hOwFDrHAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KHFwxDJ9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1T69B6O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D70F1F000E9;
-	Tue, 21 Jul 2026 22:36:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHFwxDJ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB481F000E9;
+	Tue, 21 Jul 2026 22:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673420;
-	bh=hl/LPxZh5C1pQvHAkItOJkugwLo5nEdwlG0vu3QYX+w=;
+	s=korg; t=1784673423;
+	bh=4NDyf37xb0Zzkt7BnYgVcAiIbXj0LLXOyOuK65p4Idg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B1T69B6OZoz+O5nwXUjf/SWM1rECvx1MpvrIFo6GNCCDP91aPW6chg4iV4/ygzCBR
-	 Hl2oesWDqND2u09OjOF+JmewP0pZMjQQd4ETrehmmaDCIQiqCmS3iM0VdpFSo9zhEZ
-	 mkY6/9YakMkvYSOBWrkqhHtWAKiNVAD9bV0hocSw=
+	b=KHFwxDJ90RVw7fEmcQyjhkAxVeWYEx0ALIpBpLND1KeZRPJn3lY92JbvwvSOkJdPh
+	 mti/6F/jo94xXSLM+7aHnxsV/nIn0w1uvW/gVZcvk101mqmP3TOn6BvcsJDggy290T
+	 pbbBTNDSJqo5EWCjJoFLEXuXhMJJp6U68myFjAQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anastasia Tishchenko <sv3iry@gmail.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.10 129/699] crypto: ecc - Fix carry overflow in vli multiplication
-Date: Tue, 21 Jul 2026 17:18:08 +0200
-Message-ID: <20260721152358.617416421@linuxfoundation.org>
+	Alberto Ruiz <aruiz@redhat.com>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 5.10 156/699] fuse: fix device node leak in cuse_process_init_reply()
+Date: Tue, 21 Jul 2026 17:18:35 +0200
+Message-ID: <20260721152359.220824868@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,98 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anastasia Tishchenko <sv3iry@gmail.com>
+From: Alberto Ruiz <aruiz@redhat.com>
 
-commit 27b536a2ec8e2f85a0380c2d13c9ecbc7aaab406 upstream.
+commit 9fa4f7a53406430ee9982f2f636a15b338185122 upstream.
 
-The carry flag calculation fails when r01.m_high is saturated
-(0xFFFFFFFFFFFFFFFF) and addition of lower bits overflows.
+If device_add() succeeds during CUSE initialization but a subsequent
+step (cdev_alloc() or cdev_add()) fails, the error path calls
+put_device() without first calling device_del().  This leaks the
+devtmpfs entry created by device_add(), leaving a stale /dev/<name>
+node that persists until reboot.
 
-The condition (r01.m_high < product.m_high) doesn't handle the case
-where r01.m_high == product.m_high and an additional carry exists
-from lower-bit overflow.
+Since the cuse_conn is never linked into cuse_conntbl on the failure
+path, cuse_channel_release() sees cc->dev == NULL and skips
+device_unregister(), so no other code path cleans up the node.
 
-When commit 3c4b23901a0c ("crypto: ecdh - Add ECDH software support")
-introduced crypto/ecc.c, it split the muladd() function in the
-micro-ecc library into separate mul_64_64() and add_128_128() helpers.
-It seems the check got lost in translation.
+This has several consequences:
 
-Add proper handling for this boundary by accounting for the carry
-from the lower addition.
+ - The device name is permanently poisoned: any subsequent attempt to
+   create a CUSE device with the same name hits the stale sysfs entry,
+   device_add() fails, and the new device is aborted.
 
-Fixes: 3c4b23901a0c ("crypto: ecdh - Add ECDH software support")
-Signed-off-by: Anastasia Tishchenko <sv3iry@gmail.com>
-Cc: stable@vger.kernel.org # v4.8+
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+ - The collision manifests as ENODEV returned to userspace with no
+   dmesg diagnostic, making it very difficult to debug.
+
+ - The failure is self-perpetuating: once a name is leaked, all future
+   attempts with that name fail identically.
+
+Fix this by introducing an err_dev label that calls device_del() to
+undo device_add() before falling through to err_unlock.  The existing
+err_unlock path from a device_add() failure correctly skips device_del()
+since the device was never added.
+
+Testing instructions can be found at the lore link below.
+
+Link: https://lore.kernel.org/all/20260408-wip-cuse-leak-fix-v1-0-1c028d575e97@redhat.com/
+Signed-off-by: Alberto Ruiz <aruiz@redhat.com>
+Fixes: 151060ac1314 ("CUSE: implement CUSE - Character device in Userspace")
+Cc: stable@vger.kernel.org
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/ecc.c |   31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ fs/fuse/cuse.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/crypto/ecc.c
-+++ b/crypto/ecc.c
-@@ -364,14 +364,26 @@ static uint128_t mul_64_64(u64 left, u64
- 	return result;
- }
+--- a/fs/fuse/cuse.c
++++ b/fs/fuse/cuse.c
+@@ -386,7 +386,7 @@ static void cuse_process_init_reply(stru
+ 	rc = -ENOMEM;
+ 	cdev = cdev_alloc();
+ 	if (!cdev)
+-		goto err_unlock;
++		goto err_dev;
  
--static uint128_t add_128_128(uint128_t a, uint128_t b)
-+/* Calculate addition with overflow checking. Returns true on wrap-around,
-+ * false otherwise.
-+ */
-+static bool check_add_128_128_overflow(uint128_t *result, uint128_t a,
-+				       uint128_t b)
- {
--	uint128_t result;
-+	bool carry;
+ 	cdev->owner = THIS_MODULE;
+ 	cdev->ops = &cuse_frontend_fops;
+@@ -412,6 +412,8 @@ out:
  
--	result.m_low = a.m_low + b.m_low;
--	result.m_high = a.m_high + b.m_high + (result.m_low < a.m_low);
-+	result->m_low = a.m_low + b.m_low;
-+	carry = (result->m_low < a.m_low);
- 
--	return result;
-+	result->m_high = a.m_high + b.m_high + carry;
-+
-+	/* Using constant-time bitwise arithmetic to prevent timing
-+	 * side-channels.
-+	 */
-+	carry = (result->m_high < a.m_high) |
-+		((result->m_high == a.m_high) & carry);
-+
-+	return carry;
- }
- 
- static void vli_mult(u64 *result, const u64 *left, const u64 *right,
-@@ -396,9 +408,7 @@ static void vli_mult(u64 *result, const
- 			uint128_t product;
- 
- 			product = mul_64_64(left[i], right[k - i]);
--
--			r01 = add_128_128(r01, product);
--			r2 += (r01.m_high < product.m_high);
-+			r2 += check_add_128_128_overflow(&r01, r01, product);
- 		}
- 
- 		result[k] = r01.m_low;
-@@ -421,7 +431,7 @@ static void vli_umult(u64 *result, const
- 		uint128_t product;
- 
- 		product = mul_64_64(left[k], right);
--		r01 = add_128_128(r01, product);
-+		check_add_128_128_overflow(&r01, r01, product);
- 		/* no carry */
- 		result[k] = r01.m_low;
- 		r01.m_low = r01.m_high;
-@@ -458,8 +468,7 @@ static void vli_square(u64 *result, cons
- 				product.m_low <<= 1;
- 			}
- 
--			r01 = add_128_128(r01, product);
--			r2 += (r01.m_high < product.m_high);
-+			r2 += check_add_128_128_overflow(&r01, r01, product);
- 		}
- 
- 		result[k] = r01.m_low;
+ err_cdev:
+ 	cdev_del(cdev);
++err_dev:
++	device_del(dev);
+ err_unlock:
+ 	mutex_unlock(&cuse_lock);
+ 	put_device(dev);
 
 
