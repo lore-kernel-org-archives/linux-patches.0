@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4673ED3B2;
-	Tue, 21 Jul 2026 15:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7A93ED3B2;
+	Tue, 21 Jul 2026 15:56:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649375; cv=none; b=cm6YmG/oEJs3Aq6mzRHKbBqkwW6+8OQgG9qJT3N+MZ4sedOhTVG32wNDSuGaIcMZVlsHHQMyimdqClhfPDCaUrL0JWhKxcumOW2oeNP/rkWHJQKiLUsmR5SAXTRjJGtLDoOPJPDEqj+kdwqtDHO+O8PTIot9ZVQG0ss3BeDg7rA=
+	t=1784649377; cv=none; b=fBntQIwlJigET5lXbtTa1HbeL/kOw0RXH24fHN7tVybTvyLlmYgaqMQQbAloAgL19LYAG/yRsyy4wS+Jj1EdQlTcgDKwO4hRSmagh/9aFIo0czdP/WqYXXDZ2nvdjqL417qNBYAywD2VyI+DZZwJGqWtGRPL+5v0Am6jAuPdXAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649375; c=relaxed/simple;
-	bh=mzkU4qZojB5n7Y8FOWmuHdjBx7Nlnk1n/QFYrT82SUI=;
+	s=arc-20240116; t=1784649377; c=relaxed/simple;
+	bh=TsgrqgdpiU9rYiWZ3FqjXno4cyUxeerMlvG3RfWVjow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QruANTjmRG67XQZEbSUM2UIBBPt+AOMZuRwNRTS6CFfMwxLuMPx4IQWzwT0w5Q/eYK19tsxGs62VuHqjhUHSx5Wg81qrPlBnnLgik0yIZm8wnF1PU6eIT2hqUEC5p153clFDiCC5/ZV8KJCp4lBdd2J6jTUM8pkGxrf6hHid90I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eVHju2x8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cXKjIiT2mHkRbOxSRCwVZeEY1O9EKJZ5Bw7ANnAjkb35M0OZFNog6sT7H/L/qmF8s8So6ROh8qZdxhTFRi9msaX41f/re68cDW9KDi1RYT+Fjg/2i1xGbsvHlgQJigmdy9rYmq2HLwaoh1LNzRtzL/k8d7crTF8XPwwr2HkOou0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HAhCPFZc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eVHju2x8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746341F000E9;
-	Tue, 21 Jul 2026 15:56:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HAhCPFZc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4441F000E9;
+	Tue, 21 Jul 2026 15:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649374;
-	bh=/i6tpqFLIBoyTcKu9GOJv/Ms4+Lsh8nT5eDSbzF6KXQ=;
+	s=korg; t=1784649376;
+	bh=9I/Bw+gvFBYqT4SPYuBz1rlYYv0ZAQi/1V7hhLAeT5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eVHju2x8BQ3O+rjndKYLKNKeYUEg/LbTjbNK0Q5/dXMwERxeU8GIwMNvSA98vyZ1M
-	 276gs+aexMNN7DcN0/MV8G7lD0nLNurrIE4Fq7UOy9w5x7SoH9KsAsDa8nEmT4I1kz
-	 A4gfM5rDAvhMtE4wEElUwubSjajfdBQFnKB3WD9o=
+	b=HAhCPFZcIXfvDTJlGDqsBNQ8MauzA2WazbHs2Uj+Q55BkxLcIxZ7zbQ32JqxKp8md
+	 1qjaotjWLs+ibbb9UsZgEx2erHnoY2cZQK63uOJDflKwmn/n3LxP4oFmy3l/MQH7X4
+	 JZpv8AJ5/zTAHTwiMMxSfa1GHvM8IUD4iKqYHHPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Hyunchul Lee <hyc.lee@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Aaron Ma <aaron.ma@canonical.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0547/2077] ntfs: bound the attribute-list entry in ntfs_read_inode_mount()
-Date: Tue, 21 Jul 2026 17:03:40 +0200
-Message-ID: <20260721152605.714005250@linuxfoundation.org>
+Subject: [PATCH 7.1 0556/2077] ASoC: amd: acp-sdw-legacy: Bound DAI link iteration
+Date: Tue, 21 Jul 2026 17:03:49 +0200
+Message-ID: <20260721152605.930049171@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,56 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Aaron Ma <aaron.ma@canonical.com>
 
-[ Upstream commit 98634df5b1cb56c26299b7409227025ddb0167d8 ]
+[ Upstream commit d49ecdf327cc91062d2f80996a163cf65fda1e60 ]
 
-The $MFT attribute-list walk in ntfs_read_inode_mount() validates each
-entry only with "(u8 *)al_entry + 6 > al_end" and
-"(u8 *)al_entry + le16_to_cpu(al_entry->length) > al_end", but then reads
-al_entry->lowest_vcn (an __le64 at offset 8) and al_entry->mft_reference
-(offset 16) -- fields beyond the 6 bytes proven in range. al_entry->length
-is attacker-controlled and only required non-zero, so a short entry (e.g.
-length 8) placed at the tail passes both checks while the lowest_vcn /
-mft_reference reads fall past al_end.
+create_sdw_dailinks() walks soc_dais until it finds an entry with
+initialised cleared, but soc_dais is allocated with exactly num_ends
+entries. If all entries are initialised, the loop reads past the end of
+the array.
 
-al_end is ni->attr_list + attr_list_size (the on-disk size); the buffer is
-kvzalloc(round_up(attr_list_size, SECTOR_SIZE)), so the sector rounding
-usually absorbs the over-read -- but when attr_list_size is a multiple of
-SECTOR_SIZE there is no slack and a crafted $MFT attribute list produces an
-out-of-bounds read at mount time.
+This was reported by KASAN:
 
-Validate the entry with ntfs_attr_list_entry_is_valid() (added in patch
-1/3) before dereferencing it, matching the bound the other attribute-list
-walks now use. The validator already requires the length to cover the fixed
-header, which makes the separate "!al_entry->length" check redundant, so
-drop it too.
+  BUG: KASAN: slab-out-of-bounds in mc_probe+0x26b3/0x2774 [snd_acp_sdw_legacy_mach]
+  Read of size 1
 
-Fixes: 1e9ea7e04472 ("Revert "fs: Remove NTFS classic"")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Pass the allocated entry count to create_sdw_dailinks() and stop before
+reading past the array.
+
+Fixes: 2981d9b0789c ("ASoC: amd: acp: add soundwire machine driver for legacy stack")
+Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
+Link: https://patch.msgid.link/20260528082110.915549-1-aaron.ma@canonical.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/inode.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ sound/soc/amd/acp/acp-sdw-legacy-mach.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ntfs/inode.c b/fs/ntfs/inode.c
-index a5f7400fd19dc4..c4fa6aa11c9e8d 100644
---- a/fs/ntfs/inode.c
-+++ b/fs/ntfs/inode.c
-@@ -2000,10 +2000,7 @@ int ntfs_read_inode_mount(struct inode *vi)
- 			/* Catch the end of the attribute list. */
- 			if ((u8 *)al_entry == al_end)
- 				goto em_put_err_out;
--			if (!al_entry->length)
--				goto em_put_err_out;
--			if ((u8 *)al_entry + 6 > al_end ||
--			    (u8 *)al_entry + le16_to_cpu(al_entry->length) > al_end)
-+			if (!ntfs_attr_list_entry_is_valid(al_entry, al_end))
- 				goto em_put_err_out;
- 			next_al_entry = (struct attr_list_entry *)((u8 *)al_entry +
- 					le16_to_cpu(al_entry->length));
+diff --git a/sound/soc/amd/acp/acp-sdw-legacy-mach.c b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
+index 09b475c83c4966..e8b6819cc4b459 100644
+--- a/sound/soc/amd/acp/acp-sdw-legacy-mach.c
++++ b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
+@@ -303,13 +303,14 @@ static int create_sdw_dailink(struct snd_soc_card *card,
+ 
+ static int create_sdw_dailinks(struct snd_soc_card *card,
+ 			       struct snd_soc_dai_link **dai_links, int *be_id,
+-			       struct asoc_sdw_dailink *soc_dais,
++			       struct asoc_sdw_dailink *soc_dais, int num_dais,
+ 			       struct snd_soc_codec_conf **codec_conf)
+ {
+ 	struct device *dev = card->dev;
+ 	struct asoc_sdw_mc_private *ctx = snd_soc_card_get_drvdata(card);
+ 	struct amd_mc_ctx *amd_ctx = (struct amd_mc_ctx *)ctx->private;
+ 	struct snd_soc_dai_link_component *sdw_platform_component;
++	int i;
+ 	int ret;
+ 
+ 	sdw_platform_component = devm_kzalloc(dev, sizeof(struct snd_soc_dai_link_component),
+@@ -329,7 +330,7 @@ static int create_sdw_dailinks(struct snd_soc_card *card,
+ 	}
+ 
+ 	/* generate DAI links by each sdw link */
+-	while (soc_dais->initialised) {
++	for (i = 0; i < num_dais && soc_dais->initialised; i++) {
+ 		int current_be_id = 0;
+ 
+ 		ret = create_sdw_dailink(card, soc_dais, dai_links,
+@@ -463,7 +464,7 @@ static int soc_card_dai_links_create(struct snd_soc_card *card)
+ 	/* SDW */
+ 	if (sdw_be_num) {
+ 		ret = create_sdw_dailinks(card, &dai_links, &be_id,
+-					  soc_dais, &codec_conf);
++					  soc_dais, num_ends, &codec_conf);
+ 		if (ret)
+ 			return ret;
+ 	}
 -- 
 2.53.0
 
