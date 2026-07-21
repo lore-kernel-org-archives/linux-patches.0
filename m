@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4964646C4C7;
-	Tue, 21 Jul 2026 17:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47261415F0C;
+	Tue, 21 Jul 2026 17:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656451; cv=none; b=BbEf8osCDPKjeiBE/Ct9o+Zvlr3nwBJfR1VC8O6+St0JA1E70ZVBr4tbvAeQP7FPa2Vdn96cDPeUptTtiLnUieeGxl8RaD9VbEzBCgWYHEWiV/vdmUGAp3xYQX8vob/lySd+ClLzBVgl1BGjKmLo6E6v0zozhw934zSUbpQUxIU=
+	t=1784656454; cv=none; b=cyM/zGQ8N7nVT6d7qbB1S5AJkjFoySnrFqxROLmx6UdjOjcibv1ZQao4GpN53Rs0AEMarP8EWDj3Ko/QGuofwQQg8D7aOV/TE46xlZ5Ev1l3myOGV3fZ8jMd2u5R4xmO5tK0zCbHInxP12MZhmIRxQItlA7pF2TahgIGqPgOv5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656451; c=relaxed/simple;
-	bh=Sc2fo/l3cvFktZQBqfdIEAPtdgfpcwAx4RuNDvKuSwA=;
+	s=arc-20240116; t=1784656454; c=relaxed/simple;
+	bh=97ET17IpFco/KQQvgTs7QFnro8fIQ+j8aX4ntmDd2vQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H6laLJlPuuC4ukw77VJkks5DXxcK0SThHXDhfdmsHvWYmpShBOYsowvbo/Cl1xQI+vWJhQyx8Ohq+WCAYn5iEMcehKqRDIrJoY1WXXuw50MqiEDLxAQM+JZDGSaqOteNGPqRjkP5t+ertWea+1uROu5gsVrnGg/7qe6whmvOpYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJhpGEMg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fVVzpoo0NofLZtzHhMgkFeoewCiYBjfEUwmDTw0qkto+GeVSC5lTa+kCkWgTBwojqmXuSZWh69JyaJcqNUYk13mg9+PAMil9mTGj+TI0woCC2tDDoeenP3/KJK4zKXmxF5LL+WmTWoA/b+LiyAngMVnF/9G+GG+Png8L8fFMWDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HpWVc9o1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJhpGEMg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4921F000E9;
-	Tue, 21 Jul 2026 17:54:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HpWVc9o1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B7041F000E9;
+	Tue, 21 Jul 2026 17:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656450;
-	bh=vumHU5qEAHcsVaykylQpnNvKSy4Wro55GdSkAQImB8A=;
+	s=korg; t=1784656452;
+	bh=N4EdgzyTIOYz1u2MMZ3L62L0OPPUxw06sLU/33ffjwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qJhpGEMgLPGXo+amyu3e+o7bMSXKR6KXGGOsjdal6aVXl2/J22J+bpBan+qHAZV89
-	 Yp/n3Q3GsSu0wj0XdJP2O7WF0UyR/iW8US8tBBV0jzToxuc2AHFSHSq8ByAbaCqaji
-	 o+7ZzS5uVRHZkyWg2AEGRwfSwu8OsiGgEDl5qDGQ=
+	b=HpWVc9o1WKElLqqQRnvSjw8sYVJQT/PvgxEajCt7nka8BTsoW6N4S60BD50EgVpym
+	 xCNoyj4iyibgL8xkWpixLej6U/Y+qD7TmC/mKkY6JUT3TjYOxRKAp5doFr4EyCBLuj
+	 6Af8z14YaYWVANzNcAbW6k5vLEWSBXHXlANrXbbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Disseldorp <ddiss@suse.de>,
-	Lee Duncan <lduncan@suse.com>,
-	John Garry <john.g.garry@oracle.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	Hannes Reinecke <hare@kernel.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0392/1611] scsi: target: Fix hexadecimal CHAP_I handling
-Date: Tue, 21 Jul 2026 17:08:28 +0200
-Message-ID: <20260721152524.037988909@linuxfoundation.org>
+Subject: [PATCH 6.18 0393/1611] scsi: target: Remove tcm_loop target reset handling
+Date: Tue, 21 Jul 2026 17:08:29 +0200
+Message-ID: <20260721152524.061254657@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -47,84 +46,117 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Disseldorp <ddiss@suse.de>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 7e161211f1dd5288b4ea802b30e70ef919ebc3da ]
+[ Upstream commit 7c08d430835a90414cd962e3a9602e5b002dee3b ]
 
-A mutual CHAP handshake requires target processing of an initiator-sent
-CHAP_I identifier. The RFC 3720 specification states:
+tcm_loop_target_reset is supposed to handle all the LUNs on a target but
+it's only doing a TMR_LUN_RESET so only that one LUN is handled.  This
+will cause us to return early while IOs to other LUNs are still hung in
+lower layers. This just removes the target reset handler for the driver
+because LIO doesn't support target resets and for the common case where
+this is run from the scsi-ml error hamdler we have already tried an
+abort and lun reset so waiting again is most likely useless.
 
-  11.1.4.  Challenge Handshake Authentication Protocol (CHAP)
-  ...
-  CHAP_A=<A> CHAP_I=<I> CHAP_C=<C>
-  ...
-  Where N, (A,A1,A2), I, C, and R are (correspondingly) the Name,
-  Algorithm, Identifier, Challenge, and Response as defined in
-  [RFC1994], N is a text string, A,A1,A2, and I are numbers
-
-CHAP_I parsing currently calls extract_param(), which returns the
-@identifier string (stripped of any 0b/0B or 0x/0X prefix) and a @type
-which indicates DECIMAL, HEX, or BASE64 encoding (based on any stripped
-prefix).
-
-Any HEX encoded CHAP_I string is further processed via:
-
-  ret = kstrtoul(&identifier[2], 0, &id);
-
-This is incorrect for two reasons:
-
- * The @identifier string has already been stripped of the 0x/0X prefix,
-   so skipping the first two bytes omits part of the number.
-
- * The kstrtoul() call specifies a base of 0, which will see
-   &identifier[2] parsed as a decimal, unless a '0x' or (octal) '0' is
-   erroneously present at that offset.
-
-Fix this by passing the (zero-offset) identifier string to kstrtoul()
-along with a base=16 parameter. Also add an explicit error handler for
-BASE64 encoding.
-
-Hex-encoded CHAP_I handling can be testing using the libiscsi EncodedI
-test linked below.
-
-Reported-by: Sashiko (gemini/gemini-3.1-pro-preview)
-Link: https://sashiko.dev/#/patchset/20260521151121.808477-1-hossu.alexandru%40gmail.com
-Link: https://github.com/sahlberg/libiscsi/pull/473
-Fixes: 85db7391310b ("scsi: target: iscsi: Validate CHAP_R length before base64 decode")
-Signed-off-by: David Disseldorp <ddiss@suse.de>
-Reviewed-by: Lee Duncan <lduncan@suse.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Link: https://patch.msgid.link/20260605122019.24146-2-ddiss@suse.de
+Fixes: 1333eee56cdf ("scsi: target: tcm_loop: Drain commands in target_reset handler")
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260530052349.5134-1-michael.christie@oracle.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target_auth.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/target/loopback/tcm_loop.c | 64 ------------------------------
+ 1 file changed, 64 deletions(-)
 
-diff --git a/drivers/target/iscsi/iscsi_target_auth.c b/drivers/target/iscsi/iscsi_target_auth.c
-index 02a4c9aff98d51..41e4def46ede69 100644
---- a/drivers/target/iscsi/iscsi_target_auth.c
-+++ b/drivers/target/iscsi/iscsi_target_auth.c
-@@ -437,9 +437,11 @@ static int chap_server_compute_hash(
- 	}
+diff --git a/drivers/target/loopback/tcm_loop.c b/drivers/target/loopback/tcm_loop.c
+index 156f934049f194..c6b64000983c0d 100644
+--- a/drivers/target/loopback/tcm_loop.c
++++ b/drivers/target/loopback/tcm_loop.c
+@@ -269,69 +269,6 @@ static int tcm_loop_device_reset(struct scsi_cmnd *sc)
+ 	return (ret == TMR_FUNCTION_COMPLETE) ? SUCCESS : FAILED;
+ }
  
- 	if (type == HEX)
--		ret = kstrtoul(&identifier[2], 0, &id);
-+		ret = kstrtoul(identifier, 16, &id);
-+	else if (type == DECIMAL)
-+		ret = kstrtoul(identifier, 10, &id);
- 	else
--		ret = kstrtoul(identifier, 0, &id);
-+		ret = -EINVAL;
- 
- 	if (ret < 0) {
- 		pr_err("kstrtoul() failed for CHAP identifier: %d\n", ret);
+-static bool tcm_loop_flush_work_iter(struct request *rq, void *data)
+-{
+-	struct scsi_cmnd *sc = blk_mq_rq_to_pdu(rq);
+-	struct tcm_loop_cmd *tl_cmd = scsi_cmd_priv(sc);
+-	struct se_cmd *se_cmd = &tl_cmd->tl_se_cmd;
+-
+-	flush_work(&se_cmd->work);
+-	return true;
+-}
+-
+-static int tcm_loop_target_reset(struct scsi_cmnd *sc)
+-{
+-	struct tcm_loop_hba *tl_hba;
+-	struct tcm_loop_tpg *tl_tpg;
+-	struct Scsi_Host *sh = sc->device->host;
+-	int ret;
+-
+-	/*
+-	 * Locate the tcm_loop_hba_t pointer
+-	 */
+-	tl_hba = *(struct tcm_loop_hba **)shost_priv(sh);
+-	if (!tl_hba) {
+-		pr_err("Unable to perform device reset without active I_T Nexus\n");
+-		return FAILED;
+-	}
+-	/*
+-	 * Locate the tl_tpg pointer from TargetID in sc->device->id
+-	 */
+-	tl_tpg = &tl_hba->tl_hba_tpgs[sc->device->id];
+-	if (!tl_tpg)
+-		return FAILED;
+-
+-	/*
+-	 * Issue a LUN_RESET to drain all commands that the target core
+-	 * knows about.  This handles commands not yet marked CMD_T_COMPLETE.
+-	 */
+-	ret = tcm_loop_issue_tmr(tl_tpg, sc->device->lun, 0, TMR_LUN_RESET);
+-	if (ret != TMR_FUNCTION_COMPLETE)
+-		return FAILED;
+-
+-	/*
+-	 * Flush any deferred target core completion work that may still be
+-	 * queued.  Commands that already had CMD_T_COMPLETE set before the TMR
+-	 * are skipped by the TMR drain, but their async completion work
+-	 * (transport_lun_remove_cmd → percpu_ref_put, release_cmd → scsi_done)
+-	 * may still be pending in target_completion_wq.
+-	 *
+-	 * The SCSI EH will reuse in-flight scsi_cmnd structures for recovery
+-	 * commands (e.g. TUR) immediately after this handler returns SUCCESS —
+-	 * if deferred work is still pending, the memset in queuecommand would
+-	 * zero the se_cmd while the work accesses it, leaking the LUN
+-	 * percpu_ref and hanging configfs unlink forever.
+-	 *
+-	 * Use blk_mq_tagset_busy_iter() to find all started requests and
+-	 * flush_work() on each — the same pattern used by mpi3mr, scsi_debug,
+-	 * and other SCSI drivers to drain outstanding commands during reset.
+-	 */
+-	blk_mq_tagset_busy_iter(&sh->tag_set, tcm_loop_flush_work_iter, NULL);
+-
+-	tl_tpg->tl_transport_status = TCM_TRANSPORT_ONLINE;
+-	return SUCCESS;
+-}
+-
+ static const struct scsi_host_template tcm_loop_driver_template = {
+ 	.show_info		= tcm_loop_show_info,
+ 	.proc_name		= "tcm_loopback",
+@@ -340,7 +277,6 @@ static const struct scsi_host_template tcm_loop_driver_template = {
+ 	.change_queue_depth	= scsi_change_queue_depth,
+ 	.eh_abort_handler = tcm_loop_abort_task,
+ 	.eh_device_reset_handler = tcm_loop_device_reset,
+-	.eh_target_reset_handler = tcm_loop_target_reset,
+ 	.this_id		= -1,
+ 	.sg_tablesize		= 256,
+ 	.max_sectors		= 0xFFFF,
 -- 
 2.53.0
 
