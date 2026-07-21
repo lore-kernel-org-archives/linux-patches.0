@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E58415F20;
-	Tue, 21 Jul 2026 18:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20424415F25;
+	Tue, 21 Jul 2026 18:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659885; cv=none; b=LzrtcWyP9O8OIzcACmiZO0VcNppJMjjI+holk0PVFNKcedGMFIP9HuPKY/oEW6bBozliZfxAIlsGjfuWgV2NP7k6vqe+z5Cz+DOqWvr34VG5LSS0yRy/VlZJiR2t1/rlLQhzPDIdfLBT0dM8lQOVXprn03nm4DRWE27p3jDD+30=
+	t=1784659889; cv=none; b=WCSBwpaDMZzRBHIQor7Q4oMFUjI4i0y7xuHcr5NQQ3KUoBPLCXGfceZUJQYC2hlIRzgVn1bZtGXEc97AsK1DXKjy8JrjDYg4eC5NWjybFVrQkqMUihvEL6dkrMLfhntbnnspkLOfIvzt1QeyjUGlzU9q3KMkQl5+mJRp9JWMpr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659885; c=relaxed/simple;
-	bh=rlOT20oyma+ynov8KZWP2oxx32nsOZOcpEYIWNzQAdY=;
+	s=arc-20240116; t=1784659889; c=relaxed/simple;
+	bh=SiaAb9ywDxSzLNCqrp15A0v/IOcQ+4JgEN7PPLTzb1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WMZfgIrWVnxbXmAnEQK4hOQqomKOksBG+KBctXXOnxW7Tgy/3CLKOqAl7VV3h0F1XfVjAd0YlmmVpDx8ebkgMS0SozlBD2bkXy5Xd0rXr6GtjRrwZ+LKNhjOTs9dQKoQf9asrjwbTclrUnoUbZ9U5bAD7awhxzlwDn26EWtoCE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBb/IK0v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=laHacQCRtabozA0zE6qTdXZljd7IFcm0olEZ0BbcONQ2c3a7iVUahRXrtZignNAew2wqz816fRPdN99aUg0htLHVkgz6NS7Z8SiWKqZ9F+XvPFwxebLYBu1iIerRCkJYSGCVFp76SomjKYVfGAlwZec3id+blP0DToP8mMThags=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vKCZED+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBb/IK0v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257E71F00A3A;
-	Tue, 21 Jul 2026 18:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vKCZED+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF221F00A3A;
+	Tue, 21 Jul 2026 18:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659881;
-	bh=yKwi4xB2JBb6Poke/r1KGCpuFgGj8eDBdgKJgooWWRk=;
+	s=korg; t=1784659887;
+	bh=1nX5tC55kCZZ4BvBwjcDhqEOztkuHozqBFZYVPBWky0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uBb/IK0vnRJQzS4S0IDoKxz9CWd4APw1TZPk/PMCNIQqGhVkZGZWo8JuBY0+Aqglx
-	 zCZvnZqDP5gONU8YrjnffELhFLNpfFpJuwaMCV9JDFdt1eqa56TNGQ+y5mQNkV5fVS
-	 x7OMZyFhZqG51XYUbPqn2unx2ru1vxZqy5rh2WvA=
+	b=1vKCZED+D35LTPZZsvZT69ewKQQTzPmR5zjnUr8Lb0FeQ956xxivnkltHtefOSlb/
+	 8pOzm6MBwZqWyiwNHb7pqldnx/8JVaiuKOv0lkdpc+jmTSRVAof+65fIKpIeGOySjv
+	 ERKyQezV94RrXJdK8mG8atYkUJDSpLpXHt3lFB9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Wayen.Yan" <win847@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0768/2077] net: airoha: Fix debugfs new-tuple display for IPv4 ROUTE entries
-Date: Tue, 21 Jul 2026 17:07:21 +0200
-Message-ID: <20260721152610.910539659@linuxfoundation.org>
+Subject: [PATCH 7.1 0770/2077] ALSA: seq: oss: Serialize readq reset state with q->lock
+Date: Tue, 21 Jul 2026 17:07:23 +0200
+Message-ID: <20260721152610.957517215@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,52 +45,201 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wayen.Yan <win847@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 1c3a77471afbb3981af28f7f7c8b2487558e4b00 ]
+[ Upstream commit 49ce92d207820f588b0406add82f053decfbe5d9 ]
 
-In airoha_ppe_debugfs_foe_show(), the second switch statement falls
-through from PPE_PKT_TYPE_IPV4_HNAPT/DSLITE to PPE_PKT_TYPE_IPV4_ROUTE,
-accessing hwe->ipv4.new_tuple for all three types. However, IPv4 ROUTE
-(3-tuple) entries do not contain a valid new_tuple — this field is only
-meaningful for NATted flows (HNAPT/DSLITE). For ROUTE entries, the
-memory at the new_tuple offset holds routing information, not NAT data,
-so displaying "new=" produces garbage output.
+snd_seq_oss_readq_clear() resets qlen, head, and tail without
+q->lock even though the normal reader and producer paths serialize the
+same ring state under that spinlock. A reset can therefore race
+snd_seq_oss_readq_free() or snd_seq_oss_readq_put_event() and leave
+stale records in the queue, drop freshly queued ones, or report the
+wrong readiness after wakeup. KCSAN reports a data race between
+snd_seq_oss_readq_clear() and snd_seq_oss_readq_free().
 
-Display new_tuple only for HNAPT and DSLITE, and let IPV4_ROUTE fall
-through to the default case.
+Take q->lock while clearing the ring and resetting input_time. Factor
+the enqueue logic into a caller-locked helper so
+snd_seq_oss_readq_put_timestamp() updates its suppression state under
+the same lock instead of racing the reset path.
 
-Fixes: 3fe15c640f38 ("net: airoha: Introduce PPE debugfs support")
-Link: https://lore.kernel.org/6a2b40ea.4dd82583.3a5c46.e5a2@mx.google.com
-Signed-off-by: Wayen.Yan <win847@gmail.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/6a2be54b.ef98c1b2.3c3224.2ed8@mx.google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The buggy scenario involves two paths, with each column showing the
+order within that path:
+
+reset path:                      locked readq updater:
+1. snd_seq_oss_reset() or        1. A reader or callback producer
+   release reaches                  takes q->lock on the same queue.
+   snd_seq_oss_readq_clear().
+2. snd_seq_oss_readq_clear()     2. The updater tests or modifies
+   resets qlen, head, tail,         qlen, head, and tail.
+   and input_time.
+3. snd_seq_oss_readq_clear()     3. The updater completes its
+   wakes sleepers on                read-modify-write sequence.
+   q->midi_sleep.
+4. Without q->lock, the reset    4. The resulting ring state drives
+   can overlap the locked           later reads and readiness.
+   update.
+
+KCSAN reports:
+
+BUG: KCSAN: data-race in snd_seq_oss_readq_clear /
+snd_seq_oss_readq_free
+
+write to 0xffff8881069fe608 of 4 bytes by task 120516 on cpu 0:
+  snd_seq_oss_readq_free+0x6c/0x80
+  snd_seq_oss_read+0xcb/0x250
+  odev_read+0x38/0x60
+  vfs_read+0xff/0x600
+  ksys_read+0xb4/0x140
+  __x64_sys_read+0x46/0x60
+  do_syscall_64+0xbb/0x2f0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+read to 0xffff8881069fe608 of 4 bytes by task 120517 on cpu 1:
+  snd_seq_oss_readq_clear+0x1f/0x90
+  snd_seq_oss_reset+0xa7/0xf0
+  snd_seq_oss_ioctl+0x6f6/0x7e0
+  odev_ioctl+0x56/0xc0
+  __x64_sys_ioctl+0xd1/0x120
+  do_syscall_64+0xbb/0x2f0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+value changed: 0x00000001 -> 0x00000000
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20260614004801.3507773-1-zzzccc427@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_ppe_debugfs.c | 2 --
- 1 file changed, 2 deletions(-)
+ sound/core/seq/oss/seq_oss_readq.c | 77 ++++++++++++++++++++----------
+ 1 file changed, 52 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_ppe_debugfs.c b/drivers/net/ethernet/airoha/airoha_ppe_debugfs.c
-index 0112c41150bb05..e46a98514486ff 100644
---- a/drivers/net/ethernet/airoha/airoha_ppe_debugfs.c
-+++ b/drivers/net/ethernet/airoha/airoha_ppe_debugfs.c
-@@ -121,8 +121,6 @@ static int airoha_ppe_debugfs_foe_show(struct seq_file *m, void *private,
- 		case PPE_PKT_TYPE_IPV4_DSLITE:
- 			src_port = &hwe->ipv4.new_tuple.src_port;
- 			dest_port = &hwe->ipv4.new_tuple.dest_port;
--			fallthrough;
--		case PPE_PKT_TYPE_IPV4_ROUTE:
- 			src_addr = &hwe->ipv4.new_tuple.src_ip;
- 			dest_addr = &hwe->ipv4.new_tuple.dest_ip;
- 			seq_puts(m, " new=");
+diff --git a/sound/core/seq/oss/seq_oss_readq.c b/sound/core/seq/oss/seq_oss_readq.c
+index c880d47711698a..06e12707db2131 100644
+--- a/sound/core/seq/oss/seq_oss_readq.c
++++ b/sound/core/seq/oss/seq_oss_readq.c
+@@ -73,13 +73,17 @@ snd_seq_oss_readq_delete(struct seq_oss_readq *q)
+ void
+ snd_seq_oss_readq_clear(struct seq_oss_readq *q)
+ {
+-	if (q->qlen) {
+-		q->qlen = 0;
+-		q->head = q->tail = 0;
++	scoped_guard(spinlock_irqsave, &q->lock) {
++		if (q->qlen) {
++			q->qlen = 0;
++			q->head = 0;
++			q->tail = 0;
++		}
++		q->input_time = (unsigned long)-1;
+ 	}
++
+ 	/* if someone sleeping, wake'em up */
+ 	wake_up(&q->midi_sleep);
+-	q->input_time = (unsigned long)-1;
+ }
+ 
+ /*
+@@ -136,11 +140,11 @@ int snd_seq_oss_readq_sysex(struct seq_oss_readq *q, int dev,
+ /*
+  * copy an event to input queue:
+  * return zero if enqueued
++ * caller must hold lock
+  */
+-int
+-snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
++static int snd_seq_oss_readq_put_event_locked(struct seq_oss_readq *q,
++					      union evrec *ev)
+ {
+-	guard(spinlock_irqsave)(&q->lock);
+ 	if (q->qlen >= q->maxlen - 1)
+ 		return -ENOMEM;
+ 
+@@ -148,12 +152,27 @@ snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
+ 	q->tail = (q->tail + 1) % q->maxlen;
+ 	q->qlen++;
+ 
+-	/* wake up sleeper */
+-	wake_up(&q->midi_sleep);
+-
+ 	return 0;
+ }
+ 
++/*
++ * copy an event to input queue:
++ * return zero if enqueued
++ */
++int
++snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
++{
++	int rc;
++
++	scoped_guard(spinlock_irqsave, &q->lock) {
++		rc = snd_seq_oss_readq_put_event_locked(q, ev);
++		if (!rc)
++			wake_up(&q->midi_sleep);
++	}
++
++	return rc;
++}
++
+ 
+ /*
+  * pop queue
+@@ -209,23 +228,31 @@ snd_seq_oss_readq_poll(struct seq_oss_readq *q, struct file *file, poll_table *w
+ int
+ snd_seq_oss_readq_put_timestamp(struct seq_oss_readq *q, unsigned long curt, int seq_mode)
+ {
+-	if (curt != q->input_time) {
+-		union evrec rec;
+-		memset(&rec, 0, sizeof(rec));
+-		switch (seq_mode) {
+-		case SNDRV_SEQ_OSS_MODE_SYNTH:
+-			rec.echo = (curt << 8) | SEQ_WAIT;
+-			snd_seq_oss_readq_put_event(q, &rec);
+-			break;
+-		case SNDRV_SEQ_OSS_MODE_MUSIC:
+-			rec.t.code = EV_TIMING;
+-			rec.t.cmd = TMR_WAIT_ABS;
+-			rec.t.time = curt;
+-			snd_seq_oss_readq_put_event(q, &rec);
+-			break;
++	int queued = 0;
++
++	scoped_guard(spinlock_irqsave, &q->lock) {
++		if (curt != q->input_time) {
++			union evrec rec;
++
++			memset(&rec, 0, sizeof(rec));
++			switch (seq_mode) {
++			case SNDRV_SEQ_OSS_MODE_SYNTH:
++				rec.echo = (curt << 8) | SEQ_WAIT;
++				queued = !snd_seq_oss_readq_put_event_locked(q, &rec);
++				break;
++			case SNDRV_SEQ_OSS_MODE_MUSIC:
++				rec.t.code = EV_TIMING;
++				rec.t.cmd = TMR_WAIT_ABS;
++				rec.t.time = curt;
++				queued = !snd_seq_oss_readq_put_event_locked(q, &rec);
++				break;
++			}
++			q->input_time = curt;
+ 		}
+-		q->input_time = curt;
+ 	}
++	if (queued)
++		wake_up(&q->midi_sleep);
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
