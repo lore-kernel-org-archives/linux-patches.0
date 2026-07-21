@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EE13B6356;
-	Tue, 21 Jul 2026 21:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036203BCD29;
+	Tue, 21 Jul 2026 21:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669282; cv=none; b=U3LEzQPV3iZgDYT3MaWpWuTsMkxWFnzaXzGWTnruGwv13NLfiJ2MVsQkOOYZRHJIRhW8fQwElfjuaALPlxj7pLbCOlGjW5y9mQShcGTIG9EgO1uFZymR6kF3zGJfJm9CZoxYOECZrFE/go1XARgrqU2iex5nVW3pRIeOer5LikY=
+	t=1784669286; cv=none; b=LYN5wIrbE46mASn6S/voay93fErnQzkCpvlj8zIrW2W+NSLWMgH/q/Iy3iB72Tqq/x0HtwLG65MP4JbjB0RT35IILHP/5L0RkARHN8Pgy9t69evP5luqVTln/1JLOwBAlAkJYotwCRpQu8i+xaxuJbM7t/zvtaYlyGzJO32zsDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669282; c=relaxed/simple;
-	bh=BuqSuijslrzonMF4FP1PFt/cNF+TFmD9JHISV7HRYVs=;
+	s=arc-20240116; t=1784669286; c=relaxed/simple;
+	bh=+Y5G3JLKRnEjLUGgzVLceU1yImAekD8QrKMDfzp0lJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bGInSUPBjNw7GX9vQRy4US7ngloDjEij2sg/AS2UT8C91IeE7ulCNMbDRpBAzcFk4+j2NMlSE5+TpkyC2xVPVPLRSyE1Qo31ItiVu1dZsxxCCJEZl2kV7GPmHgTC2yBZlD6znixsemb9lsdKxOhJebnQGJFuoHCT6sigdjjz5rY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTeIDti9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sIPDgxpi/Se9wKIbDYaFU4Z/M28n1udkBMrj6WwSVDFs1bOAMZeJN+ZgQEsuT8StAjVF0tpHDIj+03Q4TYejvUR6edY8498Pm93xX/i8kuw6pWVfZFlv3zYMldDXaRvqo7Xsj+75yGonjeSFtH+xQ6l3Hd8NBSiMpkJEEF+cRV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1sHSRRs9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTeIDti9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C5F31F000E9;
-	Tue, 21 Jul 2026 21:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sHSRRs9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0851F00A3E;
+	Tue, 21 Jul 2026 21:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669271;
-	bh=uPtfW5WaTXzLX8EYRsrUNCTJRZLTa7zqsCuMpjqiECI=;
+	s=korg; t=1784669277;
+	bh=bn0wL/24N2SxLS8PGdvhLF0zbjz/stVmM0fcA7ZO0qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kTeIDti9X+4ebQs4R7wUwGumGvZwGJl3YWjms+DRGrf7PiwIG8vcUaPycBW7k/XfT
-	 jX8y0pnxHflKFXUT8Hg8DpJ8UFka6Sj1C1dRP4E2Dw3zCLUbznIhnWFTT1h/CWSFcc
-	 AnkLV/5JAOYSuo5Ufc2zyqxnPYTfAnmYrqTl0kgM=
+	b=1sHSRRs9z3ZFqvEC/z9Q7AKHmuhxX3N1tR008Mnf/0WGJonuxgLZLo4+idTcXc6rq
+	 xF5dl69qo41Xo5zDa2BNqe0EZosq7ncXQszUUGswSKlC4xbEGrks9PIcX43XS2DkX7
+	 FkTpP7GLZTZeFzGEcI9HP+K0UfurRCLH5KG8lQFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Sanjay Chitroda <sanjayembeddedse@gmail.com>,
 	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0492/1067] iio: magnetometer: ak8975: fix potential kernel stack memory leak
-Date: Tue, 21 Jul 2026 17:18:13 +0200
-Message-ID: <20260721152435.619787273@linuxfoundation.org>
+Subject: [PATCH 6.1 0494/1067] iio: accel: mma8452: handle I2C read error(s) in mma8452_read()
+Date: Tue, 21 Jul 2026 17:18:15 +0200
+Message-ID: <20260721152435.663905339@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,76 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Crofts <joshua.crofts1@gmail.com>
+From: Sanjay Chitroda <sanjayembeddedse@gmail.com>
 
-[ Upstream commit a9a00d727b7bbc5e913a919530a9dd468935bf95 ]
+[ Upstream commit 5bdff291d20c31b365d9ddfe9c426fbfb41da5bb ]
 
-Currently in the AK8975 driver there are four instances where potential
-uninitialized kernel stack memory leaks can occur. If
-i2c_smbus_read_i2c_block_data_or_emulated() returns a value less than
-the size of the buffer, uninitialized bytes are retained in the buffer
-and later the buffer is passed on to IIO buffers, potentially leaking
-memory to userspace.
+Currently, If i2c_smbus_read_i2c_block_data() fails but
+mma8452_set_runtime_pm_state() succeeds, mma8452_read() returns 0.
 
-Fix this by adding checks whether the return value of the function is
-equal to the size of the buffer and subsequently if the value is
-lesser than zero to distinguish from a returned error code.
+As a result, the caller mma8452_read_raw() assumes the read was
+successful and proceeds to use a buffer containing uninitialized
+stack memory.
 
-Fixes: bc11ca4a0b84 ("iio:magnetometer:ak8975: triggered buffer support")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260513-ak8975-fix-v1-1-104ea605dd54%40gmail.com
-Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Add proper checking of the I2C read return value and propagate errors
+to the caller.
+
+Fixes: 96c0cb2bbfe0 ("iio: mma8452: add support for runtime power management")
+Signed-off-by: Sanjay Chitroda <sanjayembeddedse@gmail.com>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/magnetometer/ak8975.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/iio/accel/mma8452.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iio/magnetometer/ak8975.c b/drivers/iio/magnetometer/ak8975.c
-index 44f3ab2bb1b330..ac7541e1b7da54 100644
---- a/drivers/iio/magnetometer/ak8975.c
-+++ b/drivers/iio/magnetometer/ak8975.c
-@@ -464,6 +464,10 @@ static int ak8975_who_i_am(struct i2c_client *client,
- 		dev_err(&client->dev, "Error reading WIA\n");
- 		return ret;
- 	}
-+	if (ret != sizeof(wia_val)) {
-+		dev_err(&client->dev, "Error reading WIA\n");
-+		return -EIO;
-+	}
+diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
+index ad7b7770d52628..28002c714ea98d 100644
+--- a/drivers/iio/accel/mma8452.c
++++ b/drivers/iio/accel/mma8452.c
+@@ -254,6 +254,8 @@ static int mma8452_read(struct mma8452_data *data, __be16 buf[3])
  
- 	if (wia_val[0] != AK8975_DEVICE_ID)
- 		return -ENODEV;
-@@ -580,6 +584,10 @@ static int ak8975_setup(struct i2c_client *client)
- 		dev_err(&client->dev, "Not able to read asa data\n");
- 		return ret;
- 	}
-+	if (ret != sizeof(data->asa)) {
-+		dev_err(&client->dev, "Error reading asa data\n");
-+		return -EIO;
-+	}
+ 	ret = i2c_smbus_read_i2c_block_data(data->client, MMA8452_OUT_X,
+ 					    3 * sizeof(__be16), (u8 *)buf);
++	if (ret < 0)
++		return ret;
  
- 	/* After reading fuse ROM data set power-down mode */
- 	ret = ak8975_set_mode(data, POWER_DOWN);
-@@ -719,6 +727,10 @@ static int ak8975_read_axis(struct iio_dev *indio_dev, int index, int *val)
- 			sizeof(rval), (u8*)&rval);
- 	if (ret < 0)
- 		goto exit;
-+	if (ret != sizeof(rval)) {
-+		ret = -EIO;
-+		goto exit;
-+	}
- 
- 	/* Read out ST2 for release lock on measurment data. */
- 	ret = i2c_smbus_read_byte_data(client, data->def->ctrl_regs[ST2]);
-@@ -848,6 +860,8 @@ static void ak8975_fill_buffer(struct iio_dev *indio_dev)
- 							(u8 *)fval);
- 	if (ret < 0)
- 		goto unlock;
-+	if (ret != sizeof(fval))
-+		goto unlock;
- 
- 	mutex_unlock(&data->lock);
+ 	ret = mma8452_set_runtime_pm_state(data->client, false);
  
 -- 
 2.53.0
