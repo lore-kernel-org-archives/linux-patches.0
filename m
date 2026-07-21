@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E312544AB7B;
-	Tue, 21 Jul 2026 22:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C2843C7C8;
+	Tue, 21 Jul 2026 22:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671394; cv=none; b=kWdvlpfYRM0PEXtTDLy4+1JU8yfU4H8OZFcyeyHt71/8fjcp3WrK9wmUZNH344As3Z0Oe8u6rw+8DUNZyrVB280mc44TzOcGA8TamWZf9OTLTT6fXrXkdj7olCbYrjSYh6gdOJK13E99Uxw0HafNeKEAhorPK6eDlxvBrvrWbBY=
+	t=1784671396; cv=none; b=GlJdQFgQW+uFueAnxu2NOW4zeqAsVWfIqcSs5Cx+8hyFXSxqjnaehOsZNvkDsVqwClC86HbLqU/4DoTrKzzetfVC0HVl2KZumSCgByMn+lZIaJM9u6Ib8H3R5pjlkWYMWCnjTdGHm4xXSO83xipQwYSO3uQY6qcC5SlO7Lxo8ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671394; c=relaxed/simple;
-	bh=zFPquqL9gql7pvOstPRcphMQBx/g9GcCdwjwAcxZZVc=;
+	s=arc-20240116; t=1784671396; c=relaxed/simple;
+	bh=Z4SCCcIWiFdp5y0QWhzGb1lNaL3xdz4p3zIdSYTda4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XrFolFEQEQmXLFLX2ukUYwBwVSWa4ZOpaAKYomF9lw+QcW4nai7qV66SRsQnvFvMq0D7ptcHV3j2nSjpQWDL9fkLvfz6WVXAOtAHqrfhL3+XWLy2QwuPxP8EERqpW/Cwo/LCfMdnZuLSshIXMMG+FsGwjMmWrlQVzlkJ9W7YvBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GcEt2GfU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c44OFjN/i3FrfWczmnuxoGxi6/4jk/xQC2Zl2QDM0T/jZzOCtKlKZJwQhRf7/fZT+fy6JVTCBnBRaeBiSFCCfDCuCVMSYkKxbamz4IHRHu3wvrz4nc4sviSVyjN0uXwt76zwwnk5jzxQErnOUBU8Py3SAhfazeqc6Rl1zRyi6/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfASTAhP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GcEt2GfU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54DBC1F000E9;
-	Tue, 21 Jul 2026 22:03:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfASTAhP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30091F000E9;
+	Tue, 21 Jul 2026 22:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671392;
-	bh=vmg4Af10955rOZ4VvCvw7ThRzqou5uZSriyFPPG4YIU=;
+	s=korg; t=1784671395;
+	bh=j26TeGpBVakD5JHTiSyMoeWLUF8fzlNBRpvNQ+jE6K8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GcEt2GfUnN5Yfdx2+fggjh7rtaJqOKPI05r0aylxJngHap5X7M3oMM353tE6YHK96
-	 K0SFjy0Cf18AiS+obiAVkJPzMVQn9WcBOedNTCrD/Tx3cWh3u+iMmavwEooJ75Z7EN
-	 /RkfFSU2bjd3M4sDaT35D9BSoJ7bghPzirb71MTU=
+	b=vfASTAhP8yEaQZmiW9DmphXgFjIIHVMtrHLmlf5j6IOsxk0vMxnPW7Fa+biSqZ4Ph
+	 HZ9AYSBpg0hJJjDiop91i+Eg4WiKHeXYG6UzbDe4TGLqspgzQai89uETs4z8AcY/Qu
+	 QtNfTGI/BJHV5NHbV4YLwr3Oy0Q167GHK2Z5hEIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sean Christopherson <seanjc@google.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Wei Wang <wei.w.wang@hotmail.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 230/843] crypto: asymmetric_keys - fix OOB read in pefile_digest_pe_contents
-Date: Tue, 21 Jul 2026 17:17:45 +0200
-Message-ID: <20260721152411.192123320@linuxfoundation.org>
+Subject: [PATCH 5.15 231/843] iommu/amd: Fix a stale comment about which legacy mode is user visible
+Date: Tue, 21 Jul 2026 17:17:46 +0200
+Message-ID: <20260721152411.214202488@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,56 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit f7dd32c5179d7755de18e21d5674b08f9e5cb180 ]
+[ Upstream commit 4bf53c2d0c08bbdaa32f2114281f1ddab61902bf ]
 
-pefile_digest_pe_contents() computes the trailing-data hash length as
-pelen - (hashed_bytes + certs_size). A crafted PE can make the addition
-exceed pelen, causing the unsigned subtraction to underflow to ~4 GiB.
-This is passed to crypto_shash_update() which reads out of bounds and
-panics on unmapped vmalloc guard pages.
+Update a stale comment about which of the legacy modes is visible to the
+user, i.e. can be forced via amd_iommu_intr=legacy.
 
- BUG: unable to handle page fault for address: ffffc900038d8000
- Oops: Oops: 0000 [#1] SMP KASAN NOPTI
- RIP: 0010:sha256_blocks_generic (lib/crypto/sha256.c:152)
- Call Trace:
-  <TASK>
-  __sha256_update (lib/crypto/sha256.c:208)
-  crypto_sha256_update (crypto/sha256.c:142)
-  verify_pefile_signature (crypto/asymmetric_keys/verify_pefile.c:436)
-  kexec_kernel_verify_pe_sig (kernel/kexec_file.c:151)
-  __do_sys_kexec_file_load (kernel/kexec_file.c:406)
-  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  </TASK>
- Kernel panic - not syncing: Fatal exception
-
-Validate that the addition does not overflow and the result does not
-exceed pelen before the subtraction. Return -ELIBBAD on failure.
-
-Fixes: af316fc442ef ("pefile: Digest the PE binary and compare to the PKCS#7 data")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: b74aa02d7a30 ("iommu/amd: Fix legacy interrupt remapping for x2APIC-enabled system")
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Wei Wang <wei.w.wang@hotmail.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/asymmetric_keys/verify_pefile.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iommu/amd/amd_iommu_types.h | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/crypto/asymmetric_keys/verify_pefile.c b/crypto/asymmetric_keys/verify_pefile.c
-index 22beaf2213a224..7e5b392dcac79a 100644
---- a/crypto/asymmetric_keys/verify_pefile.c
-+++ b/crypto/asymmetric_keys/verify_pefile.c
-@@ -305,6 +305,8 @@ static int pefile_digest_pe_contents(const void *pebuf, unsigned int pelen,
+diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
+index 2dc025acad4ceb..9453d15286acd4 100644
+--- a/drivers/iommu/amd/amd_iommu_types.h
++++ b/drivers/iommu/amd/amd_iommu_types.h
+@@ -841,12 +841,13 @@ static inline int get_hpet_devid(int id)
+ }
  
- 	if (pelen > hashed_bytes) {
- 		tmp = hashed_bytes + ctx->certs_size;
-+		if (tmp <= hashed_bytes || pelen < tmp)
-+			return -ELIBBAD;
- 		ret = crypto_shash_update(desc,
- 					  pebuf + hashed_bytes,
- 					  pelen - tmp);
+ enum amd_iommu_intr_mode_type {
+-	AMD_IOMMU_GUEST_IR_LEGACY,
+-
+-	/* This mode is not visible to users. It is used when
+-	 * we cannot fully enable vAPIC and fallback to only support
+-	 * legacy interrupt remapping via 128-bit IRTE.
++	/*
++	 * The legacy format mode is not visible to users to prevent the user
++	 * from crashing x2APIC systems, which for all intents and purposes
++	 * require 128-bit IRTEs.   The legacy format will be forced as needed
++	 * when hardware doesn't support 128-bit IRTEs.
+ 	 */
++	AMD_IOMMU_GUEST_IR_LEGACY,
+ 	AMD_IOMMU_GUEST_IR_LEGACY_GA,
+ 	AMD_IOMMU_GUEST_IR_VAPIC,
+ };
 -- 
 2.53.0
 
