@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F3E44AB85;
-	Tue, 21 Jul 2026 21:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4875C44AB85;
+	Tue, 21 Jul 2026 21:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668571; cv=none; b=TOqNltFKuzzjj9IK+CsNqrF40vNl0gqZbXM87+4abtcB6Z4kyN2NQ2pqNtPhS5VJi+1uOuRoqQtH8ZnV99vYmUQ1qzsTmY7QD7XZdE65a3zGm3828Cf+88+1k9bbUFmqzztRaytWZjohE/TLp+KQwcefBSGScHhStCrh30kZnLo=
+	t=1784668574; cv=none; b=Tols1jaOlUBVVtPCl/EVd6mywCyHgss8q+ED3ZgtYqcSWDlQlHf4Qb64tFhFHlgv4tAA9BdG/t5FwvSnhM9Pa6LApbVORfM2gJpPFpyE3CLrYkEYwVKBN0eOLeZzRxcciXMFIaXNI5vGnd+hF+hLH7AfphvCBLYQwZxoCz19fWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668571; c=relaxed/simple;
-	bh=XpwmRHL6Fv9IlwpJdmJVMBTS1AZPfswAsM/kNdBIQPA=;
+	s=arc-20240116; t=1784668574; c=relaxed/simple;
+	bh=eE+RgbLthaOyG87AQxWOqVdyXvoJrZjFGD5ty1eePcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MKG8r3Qo8YHNdSRVJnAtQCcYPw4UXxrGtYzonfjQMMtiAuNOZDj9weDxpM7rgVAhmN3m6QM40xOiCnSdYf1Equs3siR4SjlP3/MavPBFBLWyKhM+4wMv+3pBGELl+5/mxHHauj4admRTL9KNLZrduaqyRR+CHacJe3+3Hu5uxps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ftyBiuQY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jQ+3NQUhktSJmi/AF5oIzI9xddMZDCikQWuZ6VULGPB/7uDasZr3jRwVK54qBMkKth3I0k91AT51h/OKkN3Nlg1VQJHP1MEaOjuPrAdC3zh8idMpP2IwJoP1wThyGI4IecHhYMlNOJ1SgklvckKsUmN3G0GNZyASfsEpSKRJXF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h8yhp08U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftyBiuQY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163F61F000E9;
-	Tue, 21 Jul 2026 21:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h8yhp08U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF1B51F000E9;
+	Tue, 21 Jul 2026 21:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668570;
-	bh=AmuYbcamTaYUhrJa602pzq9/B7veIH1l/tBgqjiOU/Y=;
+	s=korg; t=1784668573;
+	bh=BUUzeBTk9szz6FNplF18QFpHgOlGHYYZ6uY3rhHPWjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ftyBiuQY5x5JnFU92GaLD0IiGdUSNZ8eChTVL0gjYRPOpI+k4l2zF1Iwq243HZ7oI
-	 1BBM2USZzkxrY8ABbeQxUz5Me8BXb914hMpQM8znF8Eho//4dIgpueKf70Nos/ipfd
-	 Wv8gb+1c3FOIQdWEOiKxhCRx3cg/1KOksXGIEkOM=
+	b=h8yhp08UdaaQT5BG62zGZuXMQpK/nRUTT+EEqjZeR9jZ5/f277zwFMXSzMbus9RAA
+	 OPCTJ7Xr+Ym4+2KGgzkZ3qX5Q3G/rOKcHm15R1FpVbLPM816q2LvVVS3dzajzMEPPI
+	 3lRIPPlG3uXfax5qME4xevJnX//GatM91ZolAHIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trondmy@kernel.org>,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>
-Subject: [PATCH 6.1 0225/1067] NFSv4: include MAY_WRITE in open permission mask for O_TRUNC
-Date: Tue, 21 Jul 2026 17:13:46 +0200
-Message-ID: <20260721152429.632791191@linuxfoundation.org>
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Andrii Kuchmenko <capyenglishlite@gmail.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>
+Subject: [PATCH 6.1 0226/1067] module: decompress: check return value of module_extend_max_pages()
+Date: Tue, 21 Jul 2026 17:13:47 +0200
+Message-ID: <20260721152429.655082127@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,48 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <ben.coddington@hammerspace.com>
+From: Andrii Kuchmenko <capyenglishlite@gmail.com>
 
-commit 5140f099ecd8a2f2808b7f7b720ee1bad8468974 upstream.
+commit 786d2d84416a9a1c1a47b71a68d679d886284be2 upstream.
 
-POSIX requires write permission to truncate a file, so an open() that
-specifies O_TRUNC must be authorized for write access regardless of the
-O_ACCMODE access mode.
+module_extend_max_pages() calls kvrealloc() internally and returns
+-ENOMEM on allocation failure. The return value is never checked.
 
-nfs_open_permission_mask() builds the access mask passed to
-nfs_may_open(), which is the local authorization gate for OPENs the
-client serves itself from a cached write delegation via the
-can_open_delegated() path in nfs4_try_open_cached().  The mask is
-derived from O_ACCMODE alone, so an open(O_RDONLY | O_TRUNC) against a
-file the caller cannot write requests only MAY_READ and passes the
-local check.  The OPEN is then satisfied locally and the truncation is
-issued to the server as a SETATTR(size=0) over the delegation stateid,
-which the server accepts under standard write-delegation semantics.
-POSIX requires that this open fail with EACCES.
+If the initial allocation fails, info->pages remains NULL and
+info->max_pages remains 0. Subsequent calls to module_get_next_page()
+will attempt to dynamically grow the array by calling
+module_extend_max_pages(info, 0) since info->used_pages is 0. This
+results in kvrealloc(NULL, 0) returning ZERO_SIZE_PTR, which is treated
+as a success, leading to a dereference of ZERO_SIZE_PTR and a kernel
+oops.
 
-Include MAY_WRITE in the mask whenever O_TRUNC is set so the local
-check matches the access the server would have enforced.
+Fix: add the missing error check after module_extend_max_pages() and
+return immediately on failure. This matches the pattern used by every
+other kvrealloc() caller in the module loading path.
 
-Suggested-by: Trond Myklebust <trondmy@kernel.org>
-Fixes: af22f94ae02a ("NFSv4: Simplify _nfs4_do_access()")
+Fixes: b1ae6dc41eaa ("module: add in-kernel support for decompressing")
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Signed-off-by: Andrii Kuchmenko <capyenglishlite@gmail.com>
+Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+[Sami: Corrected the analysis in the commit message.]
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/dir.c |    2 ++
+ kernel/module/decompress.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -3237,6 +3237,8 @@ static int nfs_open_permission_mask(int
- 			mask |= MAY_READ;
- 		if ((openflags & O_ACCMODE) != O_RDONLY)
- 			mask |= MAY_WRITE;
-+		if (openflags & O_TRUNC)
-+			mask |= MAY_WRITE;
- 	}
+--- a/kernel/module/decompress.c
++++ b/kernel/module/decompress.c
+@@ -215,6 +215,8 @@ int module_decompress(struct load_info *
+ 	 */
+ 	n_pages = DIV_ROUND_UP(size, PAGE_SIZE) * 2;
+ 	error = module_extend_max_pages(info, n_pages);
++	if (error)
++		return error;
  
- 	return mask;
+ 	data_size = MODULE_DECOMPRESS_FN(info, buf, size);
+ 	if (data_size < 0) {
 
 
