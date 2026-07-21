@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6659847125C;
-	Tue, 21 Jul 2026 18:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF576379C32;
+	Tue, 21 Jul 2026 18:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658419; cv=none; b=NE36I6Lwsb32ZeWu7Q6sqP/Y/eYREteki+34SMPowGdKu+CrZ6aiLU4K+JX+3vGeNWkNx8pVubQo4oJz9vgn04ktQf/P1VmLKRZT9DRZB6Sk6DBIg5AH5ivRydWUyoDa5gZldQjYWPTVD2vqG268Mu0NczmxnUO40PxHpHWY5xA=
+	t=1784658421; cv=none; b=gS0Z7u/uxxApBR5adpYbAxNAuk2PyRsLB9eKz0S1FB/W3NUf+YqRqmRbTp4PCUb3c6VD3jekCc1drgQQVzQpLDmI1ItPsJN6QPQert1lNczGG3dyypoo5GPH1phnSykrIygaxwh2JscAySBJ/tC0CoQmjfyOsiJ2O/foJXM3iKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658419; c=relaxed/simple;
-	bh=ZJS6TjE9CxWBOVImnAdc7bsydzyOjcFn4yj+PwZ/lCY=;
+	s=arc-20240116; t=1784658421; c=relaxed/simple;
+	bh=IbUa3tcS9HneHz1y1pdGwvctZsgHIaCRXMoHI9amDUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=US1jlIe7MPdD7tx5qNFgTIg4SKI/0srRV2/O8JxKZBiyu0nNGfiT95xo497b4ICkSASGYkgyh/8an5W2ugBMqQ58g+6gkMZZqYeR1U5gEnUzyntAK1c0c4zwoDt0Zq9IIFebOAzV81xEBTHCEX9caRaTMrcb7BZKOm0qEnOjep0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTVUNY/A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mPkodhIAlipUY18sbsmmnUCQWKaRINT2b+D5vOcJRenS/z07OhTjp6uvrJSFB91RiR5nwqfb7oitU1GhQoyd9GQ5/nQADWoPW4yOlz32bXW1XhSw8eDh+ARWWzn+XJLOt9Opd4nkklLRAdo+Ib66ckVzCXjolyKMHWtp59QT+Fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTrXPyTM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTVUNY/A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F1C1F000E9;
-	Tue, 21 Jul 2026 18:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTrXPyTM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3151F1F000E9;
+	Tue, 21 Jul 2026 18:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658418;
-	bh=rG+m9ZNQofCmjYDn51M6vT2VfbQdiiciHbzkVBPzHJU=;
+	s=korg; t=1784658420;
+	bh=uX3qP3VdHsEmQLfNeGDwDndykE6RrAvcB2Syi8GK/WI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kTVUNY/A8Ki5encnJ3YQHmeQmNSd96bwQQTyLFl22+dBdwC93NhgWayKFOGrJUeH1
-	 9pxsi4or7njBFJ758ZPzfL5+/GB0iRfksBueXM30PsMf43v2y8/kt7vUywSPXsyKYY
-	 Zu/29Ji0JoN3pYxtLjGE2QVggank3XaCgrhVtXxc=
+	b=nTrXPyTMAeT2pBqHaYE2eJZo8072Q1wqJM9FaYHsy5SoMk3x+0Riny/xFjkpnjm/Y
+	 vKB+TJEjjgoN97O9KKYp6iPgzezkziUHUJPUF3VGXo2k0XhLLUrND4g/13DxyKUQsO
+	 FdBziSAT9oclfFdrvWecL2yhM5Khxa1ci2DCh4To=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minh Nguyen <minhnguyen.080505@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.18 1136/1611] KVM: nVMX: Put vmcs12 pages if nested VM-Enter fails due to invalid guest state
-Date: Tue, 21 Jul 2026 17:20:52 +0200
-Message-ID: <20260721152540.977363479@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	Oliver Upton <oupton@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.18 1137/1611] KVM: Move kvm_io_bus_get_dev() locking responsibilities to callers
+Date: Tue, 21 Jul 2026 17:20:53 +0200
+Message-ID: <20260721152540.999048416@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,44 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 2f2312c422fd2695da772cecb30c69994b795964 upstream.
+commit 3a07249981629ace483ebbef81ef6b34c2d2afec upstream.
 
-Put all vmcs12 pages if KVM synthesizes a nested VM-Exit due to invalid
-guest while emulating VMLAUNCH or VMRESUME.  The invalid guest state path
-doesn't use nested_vmx_vmexit() as that API is intended to be used if and
-only if L2 is active, and the open coded equivalent neglects to put the
-vmcs12 pages.  Failure to put the vmcs12 pages leaks any pinned pages
-(and/or mappings) if L1 retries VMLAUNCH/VMRESUME.
+kvm_io_bus_get_dev() returns a device that is only matched by the
+address, and nothing else. This can cause a lifetime issue if
+the matched device is not the expected type, as by the time
+the caller can introspect the object, it might be gone (the srcu
+lock having been dropped).
 
-Note, the !from_vmenter scenario doesn't suffer the same problem, as
-vmx_get_nested_state_pages() only gets/pins/maps the vmcs12 pages if L2 is
-active, i.e. if a "full" VM-Exit is guaranteed before KVM will retry
-getting vmcs12 pages.
+Given that there is only a single user of this helper, the simplest
+option is to move the locking responsibility to the caller, which
+can keep the srcu lock held for as long as it wants.
 
-Fixes: 96c66e87deee ("KVM/nVMX: Use kvm_vcpu_map when mapping the virtual APIC page")
-Fixes: 3278e0492554 ("KVM/nVMX: Use kvm_vcpu_map when mapping the posted interrupt descriptor table")
-Fixes: fe1911aa443e ("KVM: nVMX: Use kvm_vcpu_map() to get/pin vmcs12's APIC-access page")
-Reported-by: Minh Nguyen <minhnguyen.080505@gmail.com>
+Note that this aligns with other kvm_io_bus*() helpers, which
+already require the srcu lock to be held by the callers.
+
+Reported-by: Will Deacon <will@kernel.org>
+Fixes: 8a39d00670f07 ("KVM: kvm_io_bus: Add kvm_io_bus_get_dev() call")
+Link: https://lore.kernel.org/all/20260626111344.802555-1-maz@kernel.org
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Oliver Upton <oupton@kernel.org>
+Link: https://patch.msgid.link/20260627105105.1005990-1-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/kvm/vgic/vgic-its.c |    2 ++
+ virt/kvm/kvm_main.c            |   16 +++++-----------
+ 2 files changed, 7 insertions(+), 11 deletions(-)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -3799,6 +3799,8 @@ vmentry_fail_vmexit:
- 	if (!from_vmentry)
- 		return NVMX_VMENTRY_VMEXIT;
+--- a/arch/arm64/kvm/vgic/vgic-its.c
++++ b/arch/arm64/kvm/vgic/vgic-its.c
+@@ -507,6 +507,8 @@ static struct vgic_its *__vgic_doorbell_
+ 	struct kvm_io_device *kvm_io_dev;
+ 	struct vgic_io_device *iodev;
  
-+	nested_put_vmcs12_pages(vcpu);
++	guard(srcu)(&kvm->srcu);
 +
- 	load_vmcs12_host_state(vcpu, vmcs12);
- 	vmcs12->vm_exit_reason = exit_reason.full;
- 	if (enable_shadow_vmcs || nested_vmx_is_evmptr12_valid(vmx))
+ 	kvm_io_dev = kvm_io_bus_get_dev(kvm, KVM_MMIO_BUS, db);
+ 	if (!kvm_io_dev)
+ 		return ERR_PTR(-EINVAL);
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -6059,25 +6059,19 @@ struct kvm_io_device *kvm_io_bus_get_dev
+ 					 gpa_t addr)
+ {
+ 	struct kvm_io_bus *bus;
+-	int dev_idx, srcu_idx;
+-	struct kvm_io_device *iodev = NULL;
++	int dev_idx;
+ 
+-	srcu_idx = srcu_read_lock(&kvm->srcu);
++	lockdep_assert_held(&kvm->srcu);
+ 
+ 	bus = kvm_get_bus_srcu(kvm, bus_idx);
+ 	if (!bus)
+-		goto out_unlock;
++		return NULL;
+ 
+ 	dev_idx = kvm_io_bus_get_first_dev(bus, addr, 1);
+ 	if (dev_idx < 0)
+-		goto out_unlock;
++		return NULL;
+ 
+-	iodev = bus->range[dev_idx].dev;
+-
+-out_unlock:
+-	srcu_read_unlock(&kvm->srcu, srcu_idx);
+-
+-	return iodev;
++	return bus->range[dev_idx].dev;
+ }
+ EXPORT_SYMBOL_FOR_KVM_INTERNAL(kvm_io_bus_get_dev);
+ 
 
 
