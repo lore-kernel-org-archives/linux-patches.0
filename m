@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC760356746;
-	Tue, 21 Jul 2026 19:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B40284662;
+	Tue, 21 Jul 2026 19:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663224; cv=none; b=o3wJnZNiNiuHDXzInVuVqte4UhbS/2XMNPdldOverTHpnp+S0aXWHEnk9113V3riVx/+mdgiA2QDcDfhq9J7eMj6u8AePnnm9voPw71FiOQnPCOe3Anh3vUnDy0BvYGEshNOeYwLStIotKkDb8O9IpzFhqYBhWk0XbqUl3fQHpE=
+	t=1784663227; cv=none; b=DDe6II4NPuVeqt4EmS2CI5HkUveD+1OQNZgS1GlyApK0VaI037cOZ/02wO5AYgIbt/hludfTZAhHnNHGdQNsdI/KwtkyX57IX7njrJ8u4PSCPmZRmhIxMmJzWHryfxYwJgsEDjvzIcIgD5bzUcIo20uxbDHdfg/Y4umpwQfSX68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663224; c=relaxed/simple;
-	bh=hKNMk3BhyxIXcC4VPuljH3GGQeH63SzjXmhWtE/DVfY=;
+	s=arc-20240116; t=1784663227; c=relaxed/simple;
+	bh=C3nGV1nlijSxwM0GDDNPoK5nC3WNImI5lNa7nKucbjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JYco/BAaPsTQhvck6ylkooHKHsO5OTmKvPjnN+w/mdrZjuvq4/OY/gFQeaBL3Ipffx0AHrT4124mfHc3And1smGMvtjzyLBptjIgv7zYFEbMaxJ1panYALMZv2T633QpqdYNneDKl0yJM5VvppN3/+a/PJ0smmBc0mqfkdR0g4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuGjHv82; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gt9APdVAbB3bY9vTMVRjPQL/Ka9ONYynMYrMOQXx5WKj93SL3XOM4CJh0cXAIBllogvkk8bxcQaRtGoaxWihKx/xYxNBdjhU4V8s5oxa7X5Qv3ZoNcR6QwvlCxxLBtVEkmhk1P6xjW4D5EjSvbZYaIB/zJ0XrWcLAq1+lmFEm5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tvGLtLdr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuGjHv82"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460841F000E9;
-	Tue, 21 Jul 2026 19:47:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tvGLtLdr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE131F000E9;
+	Tue, 21 Jul 2026 19:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663223;
-	bh=gvTzdezXgqz/BASenafoG+66t6yLKempilCWGvSuEtc=;
+	s=korg; t=1784663226;
+	bh=YbAV27+BgzIHWC5c5bkaz0ih7RxBb598NbOhkKKeoZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yuGjHv82VZs57pMGkB57hWVxPmyGTeTGSlKwrlu5vp3zGFrxLXnWvCiJAVB+HQl1p
-	 eGIyidE2rPSnt1lvNuqOxTwp33t9XdlqtDXyafvLAwr5bkVzngtIIw/ySn7IrSOS0I
-	 dT6lqvrBFEA921Zd329lbxAEPSUfWdc5lxb07nV4=
+	b=tvGLtLdrNbW15NrtLcxWLYjWuHdpgCzR5jkybtZDKtCltVE7614RxswtQ7fwLIe1Q
+	 uo4/ThM9MjQkr6+qNR6itY1YIjMSWNLvPQka6Kl2j+Glztr/eIbXWkOcFOs17Xl/+8
+	 r137497rWMLuwtOtWimGSMV0TFDQtDzb8FE9zcVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Shuaisong Yang <yangshuaisong@h-partners.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0698/1276] MIPS: DEC: Ensure RTC platform device deregistration upon failure
-Date: Tue, 21 Jul 2026 17:19:01 +0200
-Message-ID: <20260721152501.716985103@linuxfoundation.org>
+Subject: [PATCH 6.12 0689/1276] net: hns3: differentiate autoneg default values between copper and fiber
+Date: Tue, 21 Jul 2026 17:18:52 +0200
+Message-ID: <20260721152501.514396436@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,47 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Shuaisong Yang <yangshuaisong@h-partners.com>
 
-[ Upstream commit eacaf5ae747f7dead6cc268de17a7382d79031fc ]
+[ Upstream commit d9d349c4e8a0acd73bac8baa3605443c0df5eb26 ]
 
-Switch RTC platform device registration from platform_device_register()
-to platform_add_devices() so as to make sure any failure will result in
-automatic device unregistration.
+Fix a link loss issue during driver initialization on optical ports
+connected to forced-mode (non-autoneg) remote switches.
 
-Fixes: fae67ad43114 ("arch/mips/dec: switch DECstation systems to rtc-cmos")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Acked-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Previously, during driver probe or initialization, hclge_configure()
+blindly hardcoded hdev->hw.mac.req_autoneg to AUTONEG_ENABLE for all
+media types. While this is necessary for copper (BASE-T) ports to
+establish a link, many high-speed optical (fiber) ports in data
+centers are connected to switches running in forced mode (fixed speed,
+autoneg disabled). Forcing autoneg on these optical ports during
+initialization causes a permanent link failure since the remote end
+refuses to respond to autoneg pulses.
+
+Fix this by implementing media-type differentiated initialization in
+hclge_init_ae_dev(). Copper ports continue to default to
+AUTONEG_ENABLE, while optical ports strictly inherit the preset
+autoneg status pre-configured by the firmware (hdev->hw.mac.autoneg),
+preserving native compatibility with forced-mode network environments.
+
+Fixes: 05eb60e9648c ("net: hns3: using user configure after hardware reset")
+Signed-off-by: Shuaisong Yang <yangshuaisong@h-partners.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Link: https://patch.msgid.link/20260624141319.271439-5-shaojijie@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/dec/platform.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/mips/dec/platform.c b/arch/mips/dec/platform.c
-index 723ce16cbfc0cc..a005246a0ac5d2 100644
---- a/arch/mips/dec/platform.c
-+++ b/arch/mips/dec/platform.c
-@@ -38,6 +38,10 @@ static struct platform_device dec_rtc_device = {
- 	.num_resources = ARRAY_SIZE(dec_rtc_resources),
- };
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index 54072be71a9ed9..79858b06c97b0d 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -11930,6 +11930,13 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
+ 	if (ret)
+ 		goto err_ptp_uninit;
  
-+static struct platform_device *dec_rtc_devices[] __initdata = {
-+	&dec_rtc_device,
-+};
++	if (hdev->hw.mac.media_type != HNAE3_MEDIA_TYPE_COPPER) {
++		hdev->hw.mac.req_autoneg = hdev->hw.mac.autoneg;
++		if (hdev->hw.mac.autoneg == AUTONEG_DISABLE &&
++		    hdev->hw.mac.speed != SPEED_UNKNOWN)
++			hdev->hw.mac.req_speed = hdev->hw.mac.speed;
++	}
 +
- static struct resource dec_dz_resources[] = {
- 	{ .name = "dz", .flags = IORESOURCE_MEM, },
- 	{ .name = "dz", .flags = IORESOURCE_IRQ, },
-@@ -137,7 +141,7 @@ static int __init dec_add_devices(void)
- 	}
- 	num_zs = i;
- 
--	ret1 = platform_device_register(&dec_rtc_device);
-+	ret1 = platform_add_devices(dec_rtc_devices, 1);
- 	ret2 = IS_ENABLED(CONFIG_32BIT) ?
- 	       platform_add_devices(dec_dz_devices, num_dz) : 0;
- 	ret3 = platform_add_devices(dec_zs_devices, num_zs);
+ 	ret = hclge_set_autoneg_speed_dup(hdev);
+ 	if (ret) {
+ 		dev_err(&pdev->dev,
 -- 
 2.53.0
 
