@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18A0471268;
-	Tue, 21 Jul 2026 20:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267B424A078;
+	Tue, 21 Jul 2026 20:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664576; cv=none; b=MDbP0xfOapjwVqJ+FZVUr5z1cRjUcujwFafvB+0R0F6wyRBvI42nHKqZFsdKHnwr0GaoF1YeUjEUeNmjRQZAYRdsHCvucvMkoJ7qQRsaHc1v6EJTfBagQCuI4ihIfp/uwwOamFoNZ5PfSDxrSjsdfBxxXCYeoSBIEqz+Gj/PhcM=
+	t=1784664579; cv=none; b=EWvI0hGVM+NqL3OeCxNBeOjcyYCvJZEgFp0kNpy/Se3kWywbt/e5qsNM09IU69LFqRdxEmwhyUI5HcMNyQAdSCxqCrDqsoVKxGvHwmdc+WdIpInRgPFd0XR9MPZ7pTJB5HfU0ACSWdLYStJfY1CcajWD1YP6uP0+rqONEPdesCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664576; c=relaxed/simple;
-	bh=MZx/mJaZNduZ3/1tDbqcv/yDzjw2YKID+kK181+qN9I=;
+	s=arc-20240116; t=1784664579; c=relaxed/simple;
+	bh=v9TzwgubxsRXy5MWqE0F2lfgp0zR0KUfAwCKykFr3d0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mea6ByKYtbLLHkj19yu4H6J+XCsjYGoUyBCUnvw/8oviYlrLAJohNM4RIItam3tVxmr2+EA8wCDup0iGQQSnTTA9ASBoAQqF+PBbsJauns5ZffEAbOjmQ24US7jfLXQgKfhQsRzrHoBItSOWZjtOFXq3/5AEWdod1ibp1qLYPac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zozCNfPH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cCB4xuNfeP2jn7iLGGakqAf9u+htuOtoMMyDXi4VT7zy2jJUFIpq+/nc2bgz9lEV6L7fx61ylELKUfMru1baWfs1VM59PCrIkcWuTkX/gUAovHrYNPntHr1wHwq2aaJOahaXZofAEqhyS0LraPgkVrnX/Aoj2gabtHkgMF8AvKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DLddbgn9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zozCNfPH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99311F00A3A;
-	Tue, 21 Jul 2026 20:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DLddbgn9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA571F000E9;
+	Tue, 21 Jul 2026 20:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664575;
-	bh=Kqn6cl+xc2NLE5MtVUFZHTcXnNj97tkwoHIJHkmpBM8=;
+	s=korg; t=1784664577;
+	bh=PiUK2ioqh2BYVrmabTp1PfcvkxlDT4JEX8xC4ka/whI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zozCNfPHcWg0dbNyGrdxim1UM1tWqjmbKNawWeWw1nR9YDpqNzwmz5R+mQAJdyTa7
-	 9hH1CfiBRD6W2YL7yfqx77KRGAyaMgp2fkBnx+1mwMrax3qr5Kk7bXaSKPN6QKnagb
-	 Wd77VVaA/8uYipVx1OU0rnzwtQOMbP1XQ6HrHY4U=
+	b=DLddbgn9Jc/bwveW0prc+TgDS0j49dIy7Nx65zOBUds18CjsvTnKEVAOzrLiHv08i
+	 /uRPfVrKZlmt5X7xFcYkyXDsfJtQ56Cf11/7B0Zl65K2BcZbETvzjhSDtRC78V0mUp
+	 WAG81U58FtnIyrs/8V5P9Wx6C3AK4GvXafN+R/IQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Oliver Upton <oupton@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.12 1245/1276] KVM: arm64: Fix propagation of TLBI level in kvm_pgtable_stage2_relax_perms()
-Date: Tue, 21 Jul 2026 17:28:08 +0200
-Message-ID: <20260721152513.955589898@linuxfoundation.org>
+	James Clark <james.clark@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Julio.Suarez@arm.com,
+	Kiel.Friedt@arm.com,
+	Ryan.Roberts@arm.com,
+	Will Deacon <will@kernel.org>,
+	Mike Leach <mike.leach@linaro.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Besar Wicaksono <bwicaksono@nvidia.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Namhyung Kim <namhyung@kernel.org>
+Subject: [PATCH 6.12 1254/1276] perf arm-spe: Use old behavior when opening old SPE files
+Date: Tue, 21 Jul 2026 17:28:17 +0200
+Message-ID: <20260721152514.156438847@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,46 +59,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: James Clark <james.clark@linaro.org>
 
-commit 8d187d4b33c262c0f3e44842553521151d8629e8 upstream.
+commit ba993e5ada1ddce7a71140dc85ef65bc2cd981bc upstream.
 
-Assigning the invalidation level (an s8 value) with TLBI_TTL_UNKNOWN
-(a 32bit signed value) is not ideal, to say the least. Instead of
-this, only pass TLBI_TTL_UNKNOWN to __kvm_tlb_flush_vmid_ipa_nsh()
-when we know for sure that we don't have a provided level.
+Since the linked commit, we stopped interpreting data source if the
+perf.data file doesn't have the new metadata version. This means that
+perf c2c will show no samples in this case.
 
-Fixes: 100baf0184896 ("KVM: arm64: Ensure level is always initialized when relaxing perms")
-Reported-by: Mark Brown <broonie@kernel.org>
-Reviewed-by: Oliver Upton <oupton@kernel.org>
-Link: https://lore.kernel.org/r/akztC7H2IsEKaq4i@sirena.org.uk
-Link: https://patch.msgid.link/20260707162935.1900874-1-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Keep the old behavior so old files can be opened, but also still show
+the new warning that updating might improve the decoding.
+
+Also re-write the warning to be more concise and specific to a user.
+
+Fixes: ba5e7169e548 ("perf arm-spe: Use metadata to decide the data source feature")
+Signed-off-by: James Clark <james.clark@linaro.org>
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Cc: Julio.Suarez@arm.com
+Cc: Kiel.Friedt@arm.com
+Cc: Ryan.Roberts@arm.com
+Cc: Will Deacon <will@kernel.org>
+Cc: Mike Leach <mike.leach@linaro.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: Besar Wicaksono <bwicaksono@nvidia.com>
+Cc: John Garry <john.g.garry@oracle.com>
+Link: https://lore.kernel.org/r/20241029143734.291638-1-james.clark@linaro.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hyp/pgtable.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/perf/util/arm-spe.c |   50 ++++++++++++++++++++++------------------------
+ 1 file changed, 24 insertions(+), 26 deletions(-)
 
---- a/arch/arm64/kvm/hyp/pgtable.c
-+++ b/arch/arm64/kvm/hyp/pgtable.c
-@@ -1314,7 +1314,7 @@ int kvm_pgtable_stage2_relax_perms(struc
- 				   enum kvm_pgtable_prot prot)
- {
- 	int ret;
--	s8 level = TLBI_TTL_UNKNOWN;
-+	s8 level;
- 	kvm_pte_t set = 0, clr = 0;
+--- a/tools/perf/util/arm-spe.c
++++ b/tools/perf/util/arm-spe.c
+@@ -655,37 +655,35 @@ static bool arm_spe__is_common_ds_encodi
+ 	u64 *metadata = NULL;
+ 	u64 midr = 0;
  
- 	if (prot & KVM_PTE_LEAF_ATTR_HI_SW)
-@@ -1333,7 +1333,8 @@ int kvm_pgtable_stage2_relax_perms(struc
- 				       KVM_PGTABLE_WALK_HANDLE_FAULT |
- 				       KVM_PGTABLE_WALK_SHARED);
- 	if (!ret || ret == -EAGAIN)
--		kvm_call_hyp(__kvm_tlb_flush_vmid_ipa_nsh, pgt->mmu, addr, level);
-+		kvm_call_hyp(__kvm_tlb_flush_vmid_ipa_nsh, pgt->mmu, addr,
-+			     (ret == -EAGAIN) ? TLBI_TTL_UNKNOWN : level);
- 	return ret;
- }
+-	/*
+-	 * Metadata version 1 doesn't contain any info for MIDR.
+-	 * Simply return false in this case.
+-	 */
++	/* Metadata version 1 assumes all CPUs are the same (old behavior) */
+ 	if (spe->metadata_ver == 1) {
+-		pr_warning_once("The data file contains metadata version 1, "
+-				"which is absent the info for data source. "
+-				"Please upgrade the tool to record data.\n");
+-		return false;
+-	}
+-
+-	/* CPU ID is -1 for per-thread mode */
+-	if (speq->cpu < 0) {
+-		/*
+-		 * On the heterogeneous system, due to CPU ID is -1,
+-		 * cannot confirm the data source packet is supported.
+-		 */
+-		if (!spe->is_homogeneous)
+-			return false;
++		const char *cpuid;
  
+-		/* In homogeneous system, simply use CPU0's metadata */
+-		if (spe->metadata)
+-			metadata = spe->metadata[0];
++		pr_warning_once("Old SPE metadata, re-record to improve decode accuracy\n");
++		cpuid = perf_env__cpuid(spe->session->evlist->env);
++		midr = strtol(cpuid, NULL, 16);
+ 	} else {
+-		metadata = arm_spe__get_metadata_by_cpu(spe, speq->cpu);
+-	}
++		/* CPU ID is -1 for per-thread mode */
++		if (speq->cpu < 0) {
++			/*
++			 * On the heterogeneous system, due to CPU ID is -1,
++			 * cannot confirm the data source packet is supported.
++			 */
++			if (!spe->is_homogeneous)
++				return false;
++
++			/* In homogeneous system, simply use CPU0's metadata */
++			if (spe->metadata)
++				metadata = spe->metadata[0];
++		} else {
++			metadata = arm_spe__get_metadata_by_cpu(spe, speq->cpu);
++		}
+ 
+-	if (!metadata)
+-		return false;
++		if (!metadata)
++			return false;
+ 
+-	midr = metadata[ARM_SPE_CPU_MIDR];
++		midr = metadata[ARM_SPE_CPU_MIDR];
++	}
+ 
+ 	is_in_cpu_list = is_midr_in_range_list(midr, common_ds_encoding_cpus);
+ 	if (is_in_cpu_list)
 
 
