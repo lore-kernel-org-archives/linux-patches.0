@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E702F3909A9;
-	Tue, 21 Jul 2026 18:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B453B379C32;
+	Tue, 21 Jul 2026 18:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658451; cv=none; b=AfgxDaOJhRux7fg1LW1KV+wkXokanDQ4zz/dmNlUmq+I9RKinpgiwkBdis5DvWix43uN3FJtDiibihyW334KJRe3bEWEyfnvMoLNmvaHEJD1yozpd0IC1ZLDDU+W/gG4NjH1LsbueZv7XT4dqs6xL3UvCSDliiAv/e7BB6RAS5o=
+	t=1784658453; cv=none; b=rcxRypSLQmdBN4pwt5VZ/oQybEDZEeR5gMZdCgSfRIlcbwRZNAxrsOs7Z2C/AvxsIwMNaoS30q+mdKImMY7rNhaw7pPU0nf3Sa/oGt9cKBl/zYLQPY8bkKM7h+RD7RCOdUjmbCr0TOi1H49seb7DnY86PRHYrgbQ7vM9Fv7URDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658451; c=relaxed/simple;
-	bh=RrdZ+QNtJo6EQaS7+Byb4DTfihcGhvr+jPpSWW4K3ow=;
+	s=arc-20240116; t=1784658453; c=relaxed/simple;
+	bh=TVJU6yWkgB/vEUFvQ+sg6o4evE6fiiJ3KQddal5ZT9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nfx55YKj8zwb0qgIznTNDoEFv9Jr/oubf/gnQbCwTJUqzfuRg3tVcyxeCOKkAQ8S03KSsyf2bxpAKtkf14hyg+M/6Qri5GQ1n3P71JxGpZucCrg1gZ0a0VCOEuS2dmB94oyB/gjQ5Ol26peiwFDxj+jtKjg51qnkT6E2MNvLalo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqhdCbOQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O+nP0QkC11SjiOPqG79isuu/YSSQD3XD++ULl5zoF4ahmJWLbcW0YgU2bXMdJpDlEIvrnsGj03+HCKwnF8yAZx9lfhOjMfplTCt/XUHcTBvwrDxgofLDbIueTcZ3Tc+j9RaCSrRamUu+Ee8/K8CHxk7JxKEc0vSASXHX7jICxaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+GZrhYE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqhdCbOQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2751F000E9;
-	Tue, 21 Jul 2026 18:27:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+GZrhYE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02C3B1F000E9;
+	Tue, 21 Jul 2026 18:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658449;
-	bh=266r5sj3dZ4bmDgf3gCmfOgK0uptW2FBSvNbnwoZ+Xc=;
+	s=korg; t=1784658452;
+	bh=Dr7GLCDA1ennc+nddGnNmpmO/Dz90o14n1101qSvErQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QqhdCbOQqhj4h92ItBNn2wLQRuovKB/Kn7QYTRSp9Q6k+ZIEZ9pUKhWFZ6R4scO1Z
-	 632m0ysMiLKB1/ycOQreGq9lqAMZAzdSLsjY7rJEAmh7NlSOKkqF+ikZluKbUgcU1A
-	 UnOPNHZ44hZmzp7Km4hK0gz3r4j3EGtbOCKzju/0=
+	b=T+GZrhYEjWW+r9XiHdlbEgrJm2tJoCqvjmPdItJZZ2pqsDR/meM9q8EafgxA46REh
+	 +BhqjftBUppqnw74g/jUxj+b4dfs/vG2d7LP+PjgkbtvRlNW4FtK8nDL7ZKMMpAR7r
+	 4ro5R9c/e8aFsUtT0mdmh14WPoJ+SI/n6p5Uh2/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.18 1147/1611] fbdev: sm712: Fix operator precedence in big_swap macro
-Date: Tue, 21 Jul 2026 17:21:03 +0200
-Message-ID: <20260721152541.217985866@linuxfoundation.org>
+Subject: [PATCH 6.18 1148/1611] fbdev: efifb: fix memory leak in efifb_probe()
+Date: Tue, 21 Jul 2026 17:21:04 +0200
+Message-ID: <20260721152541.240700668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,40 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 5dbe5b65df0b0c0ec77492427c274b7b5011890e upstream.
+commit 9b6eaf101656958397a6012bf43f6e2e42c9e5cb upstream.
 
-The big_swap(p) macro was intended to swap bytes within 16-bit halves
-of a 32-bit value. However, because the bitwise shift operators (<<, >>)
-have higher precedence than the bitwise AND operator (&), the original
-code failed to perform any shifting on the masked bits.
+Since commit 73ce73c30ba9 ("fbdev: Transfer video= option strings to
+caller; clarify ownership") the string returned from fb_get_options()
+is expected to be freed by the caller, but the string is not freed in
+efifb_probe(). Fix that by freeing the option string after setup.
 
-For example, 'p & 0xff00ff00 >> 8' was evaluated as 'p &
-(0xff00ff00 >> 8)', effectively neutralizing the intended swap.
-
-Fix this by adding parentheses to ensure the bitwise AND is performed
-before the shift, correctly implementing the byte swap logic.
-
-Fixes: 1461d66728648 ("staging: sm7xxfb: merge sm712fb with fbdev")
+Fixes: 73ce73c30ba9 ("fbdev: Transfer video= option strings to caller; clarify ownership")
 Cc: stable@vger.kernel.org
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/sm712.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/efifb.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/video/fbdev/sm712.h
-+++ b/drivers/video/fbdev/sm712.h
-@@ -101,7 +101,7 @@ struct modeinit {
- #define mmio_addr		0x00800000
- #define seqw17()		smtc_seqw(0x17, 0x30)
- #define big_pixel_depth(p, d)	{if (p == 24) {p = 32; d = 32; } }
--#define big_swap(p)		((p & 0xff00ff00 >> 8) | (p & 0x00ff00ff << 8))
-+#define big_swap(p)		(((p & 0xff00ff00) >> 8) | ((p & 0x00ff00ff) << 8))
- #else
- #define pal_rgb(r, g, b, val)	val
- #define big_addr		0
+--- a/drivers/video/fbdev/efifb.c
++++ b/drivers/video/fbdev/efifb.c
+@@ -375,6 +375,7 @@ static int efifb_probe(struct platform_d
+ 	if (fb_get_options("efifb", &option))
+ 		return -ENODEV;
+ 	efifb_setup(si, option);
++	kfree(option);
+ 
+ 	/* We don't get linelength from UGA Draw Protocol, only from
+ 	 * EFI Graphics Protocol.  So if it's not in DMI, and it's not
 
 
