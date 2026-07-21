@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4870F471410;
-	Tue, 21 Jul 2026 20:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51EC470119;
+	Tue, 21 Jul 2026 20:02:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664138; cv=none; b=BhtJy6qbX+T1CuvrHKxcMaQNgeWgVewI1+7VYHHV8gNJN7/2KBCz7m9QWMWehPLAdEM4KaJpXMBJ9zdKRmX2KEDKfELfXiLBJdJTABuqUhX5BM9ftYQUPIrKLvvKbcEW6tS3WNEvta8SITMsI/wqRGTwuF5i9179Ot2wQnxQCP8=
+	t=1784664139; cv=none; b=lpcvmM9GHtVSheZCxjySu9H50vryDcOkMB93SuO57UKLrtAZNOyTlL3KFlI1e8Bva2NolLJ7gDfPOngDjvyOyQZPhp9Uw9hOJhgkihSN8mBUKrdScQpkrC2mgLvNpLiM2oF0wgVXigSyI+DQgcjzHgKgjUy0Ikrikr/FQE8B+Zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664138; c=relaxed/simple;
-	bh=rDPNVtU1TrNqGIqtX1szJFXey7VP+6f+MPNGq61ZShc=;
+	s=arc-20240116; t=1784664139; c=relaxed/simple;
+	bh=lhq/rqgYyQHibb2xUY1QHaHkNrXdEGxgS4Hc+dvvtH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oqj2LNscT4zzFwc73NQNESPRrV7DyIOCx4JpmsECJOZ5Z5soNDs+X6f5kAhRVsKNgle2LOunOmOt89jkd/PXElS7um52b5zD4W/aLYyyVMPmD5RTpikbu5nwUUxRt/Yd4PP0e9WvVuabqJDajNuMxC3zpxX9/ma6aV0VGLp8WYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SGEnqC9T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m+mhd7wupT88/yP31qNCwCjFd5Uq1mXJjclULqjSrvfSOngo6V3lTmJ11Kk0X2k8FZQzXOPEkUFbPzoQb+3oLRSLutwsKuMwFgZI75b4269XdLKggQnNK9oQ+NEP5ROgpXdXlgAO3jqFbZAMXDj6DjgvG4bLHa6uDfYXEP+pEW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUIOWlaz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SGEnqC9T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CCF1F000E9;
-	Tue, 21 Jul 2026 20:02:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUIOWlaz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B2B1F00A3A;
+	Tue, 21 Jul 2026 20:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664136;
-	bh=6hXgXaNGgK7KA6rzec3DwGvAurEuUtSjEO2Z9Lu2m+o=;
+	s=korg; t=1784664138;
+	bh=3AnuLzZMHK9eipDWMW6W+LysUIYk0SSf+5OP3gxoMwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SGEnqC9TVx93tuauJQlItAIEA3iVMiwahT1IGn00BtQDl7Mzxs4L7k7T4ikZeXRcx
-	 skggST9y2CNMlRaJlMM1fHQFSqOQNAEH9LOsDyMJLxjzA43g4LS+vIEl1SgL9/RzlA
-	 82HM4BTEijU0s28wUv7b1FwIUTOBG5/+rUv8W8CM=
+	b=vUIOWlazlGKpAcbVWlx5qoljeSuNtiIOznzRJVhJY0U0sZhN3pEJsjUaCaVGUrr7d
+	 RK2BTmmsw9GiDtJuhFljYbX9tSeRZW4hQ5Hb5tXFb5G+koMdaK9joc3nX8zIsHtGYo
+	 KqYQ5di58IAzznaIKmnyvV2Vq+uSx2/NUTA4PRwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Brendan Jackman <jackmanb@google.com>,
-	Jiaqi Yan <jiaqiyan@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 1086/1276] mm/compaction: handle free_pages_prepare() properly in compaction_free()
-Date: Tue, 21 Jul 2026 17:25:29 +0200
-Message-ID: <20260721152510.286333798@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.12 1087/1276] irqchip/irq-riscv-imsic-early: Fix fwnode leak on state setup failure
+Date: Tue, 21 Jul 2026 17:25:30 +0200
+Message-ID: <20260721152510.310390793@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -58,53 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 7da7d599b8a83271c464adfd5ef160202b470570 upstream.
+commit 1358126fbed104e5657955d3ba029b283687ba02 upstream.
 
-free_pages_prepare() can fail but compaction_free() does not handle the
-failure case.  Failed pages should not be added back to cc->freepages for
-future use, since they can be either PageHWPoison or free_page_is_bad()
-and might cause data corruption.
+imsic_early_acpi_init() allocates a firmware node before setting up the
+IMSIC state. If imsic_setup_state() fails, the function returns without
+freeing the allocated fwnode.
 
-Link: https://lore.kernel.org/20260622-handle_free_pages_prepare_in_compaction_free-v1-1-fcf3b14abcf7@nvidia.com
-Fixes: 733aea0b3a7b ("mm/compaction: add support for >0 order folio memory compaction.")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: Jiaqi Yan <jiaqiyan@google.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Free the fwnode and clear the global pointer on this error path, matching
+the cleanup already done when imsic_early_probe() fails.
+
+[ tglx: Use a common cleanup path instead of copying code around ]
+
+Fixes: fbe826b1c106 ("irqchip/riscv-imsic: Add ACPI support")
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260623073744.2009137-1-haoxiang_li2024@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/compaction.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/irqchip/irq-riscv-imsic-early.c |   15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
---- a/mm/compaction.c
-+++ b/mm/compaction.c
-@@ -1894,15 +1894,14 @@ static void compaction_free(struct folio
- 	int order = folio_order(dst);
- 	struct page *page = &dst->page;
- 
--	if (folio_put_testzero(dst)) {
--		free_pages_prepare(page, order);
-+	if (folio_put_testzero(dst) && free_pages_prepare(page, order)) {
- 		list_add(&dst->lru, &cc->freepages[order]);
- 		cc->nr_freepages += 1 << order;
+--- a/drivers/irqchip/irq-riscv-imsic-early.c
++++ b/drivers/irqchip/irq-riscv-imsic-early.c
+@@ -236,16 +236,13 @@ static int __init imsic_early_acpi_init(
+ 	rc = imsic_setup_state(imsic_acpi_fwnode, imsic);
+ 	if (rc) {
+ 		pr_err("%pfwP: failed to setup state (error %d)\n", imsic_acpi_fwnode, rc);
+-		return rc;
++		goto cleanup;
  	}
- 	cc->nr_migratepages += 1 << order;
- 	/*
--	 * someone else has referenced the page, we cannot take it back to our
--	 * free list.
-+	 * someone else has referenced the page or free_pages_prepare() fails,
-+	 * we cannot take it back to our free list.
- 	 */
- }
  
+ 	/* Do early setup of IMSIC state and IPIs */
+ 	rc = imsic_early_probe(imsic_acpi_fwnode);
+-	if (rc) {
+-		irq_domain_free_fwnode(imsic_acpi_fwnode);
+-		imsic_acpi_fwnode = NULL;
+-		return rc;
+-	}
++	if (rc)
++		goto cleanup;
+ 
+ 	rc = imsic_platform_acpi_probe(imsic_acpi_fwnode);
+ 
+@@ -264,8 +261,12 @@ static int __init imsic_early_acpi_init(
+ 	 * DT where IPI works but MSI probe fails for some reason.
+ 	 */
+ 	return 0;
+-}
+ 
++cleanup:
++	irq_domain_free_fwnode(imsic_acpi_fwnode);
++	imsic_acpi_fwnode = NULL;
++	return rc;
++}
+ IRQCHIP_ACPI_DECLARE(riscv_imsic, ACPI_MADT_TYPE_IMSIC, NULL,
+ 		     1, imsic_early_acpi_init);
+ #endif
 
 
