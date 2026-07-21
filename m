@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC06A35C695;
-	Tue, 21 Jul 2026 21:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5DA44AB8A;
+	Tue, 21 Jul 2026 21:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668606; cv=none; b=Ws44ldAh1r0j/J3ffhonbAO2KOy7Ur6grhNe3WI8leMewk1ahUGDsGfdL53POt1uS9SH5Q+xe9Z1suIbKuj8pA4k9OycrIC0qSB6pp/oDgVUMLI4v44S5z0LmFAYGRTDaQ7jox5+4HCekjsex++RXmrshOWX1yCWh0EaxiNi+ew=
+	t=1784668608; cv=none; b=B9BSx9ubl5Wi63RtrDlavqQOlBq9QiCyYh/7drhiQZadiNYjwOVVPqebmrSTR7ynrWXUgcn21mZxmAezteqjWcUJReqMNdI6OE4mac5vZMRz7/OZublIg6w0qJHV0irSsYJKDneu4IxmNgMUc7V2WBH4pO20dubi0HRTtzh3QyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668606; c=relaxed/simple;
-	bh=nbO6jFChAZz5LThGcnFJYkgYfmupq/B5hFaXXYjXFXo=;
+	s=arc-20240116; t=1784668608; c=relaxed/simple;
+	bh=mQbcv857B4FY5zcuGKnl22KZ1queaYbRebXTb7dd3lQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JhlSStv84cOAaZ5auz7QlDi2t7g04zABh0TGhZK7NCOL69NzOmcE49e/RD/0XUTW3VoqsSIuVkG/yWwADEzudEOv9ENNsImzejPNqqD5W/83I712gBrT/XKbrG7bxUT1/If5ouUUW6SRTX4wQA6XqqumBtmRNdrYEA+xM8lpozM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9b0K55o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X7NY4HJcuKzhi/gyaK1Cl9F3RIJ3FNLe5Y7SaIunsWllRCwNxxknlMBaL3Uq+HKggVFLbWA+TMzkVYIJvgXSMKk6kU1FWW6SxPDv1MWau1Hy/aypeaVEvLDIBDI4YeMr3o5/B9ZJWvbcBCSulWWLfC40qZhVi0dwe1Kri6nHyiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPwCsGpu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9b0K55o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548BF1F000E9;
-	Tue, 21 Jul 2026 21:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPwCsGpu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05BF1F000E9;
+	Tue, 21 Jul 2026 21:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668604;
-	bh=XuTSZtgQP9vdgJ/v0C/nOXlqHmaniq6pTniYh4wWa6U=;
+	s=korg; t=1784668607;
+	bh=4+R9or5joqv7jxip3hT/lyKuKfTEhKVj3KBixQPbTck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C9b0K55oArUD2F9qK1/NWgU+jxf+w6xfasrAwKanIKuEIxLBCwJ2+YPqwJPpTY6CL
-	 XSjiYdaC5ZazUvmWcFZVUlKWySzYALfN7ycI4uSmUFPZV0ZferC4rCX7DHeXs0qe/t
-	 4TX0rSE/MytqVNREqjenNLvi7tRPjk+ajxm3ao+8=
+	b=hPwCsGpuxalE8jY/2LRuiS8mnbNvIDx8u4v38ooRYIRT76i9YlkQBUrU9XHoK/9xf
+	 ir0YaI+6fauMKAqxktFGrei5Lvrnake28+ttMeVhvf8YZPtNxW1Kl/aatFlL7BW6ke
+	 yIzu90LgHoMYRj0/V+AEe+92V3Cuebx6Q4j3WChQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjan Kumar <kumarranja@chromium.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 0237/1067] Input: elan_i2c - prevent division by zero and arithmetic underflow
-Date: Tue, 21 Jul 2026 17:13:58 +0200
-Message-ID: <20260721152429.902369792@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 0196/1067] usb: typec: ucsi: cancel pending work on system suspend
+Date: Tue, 21 Jul 2026 17:13:17 +0200
+Message-ID: <20260721152428.979593281@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,107 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjan Kumar <kumarranja@chromium.org>
+From: Paul Menzel <pmenzel@molgen.mpg.de>
 
-commit df2b818fa009c10ff6ba875a1663ff001cda9558 upstream.
+commit 7c4a234bd31a64a8dbd0140dc812da592c5e0787 upstream.
 
-The Elan I2C touchpad driver queries the device for its physical
-dimensions and trace counts to calculate the device resolution and width.
-However, if the device firmware or device tree provides invalid zero
-values for x_traces or y_traces, it results in a fatal division-by-zero
-exception leading to a kernel panic during device probe.
+On a Dell XPS 13 9360 (BIOS 2.21.0), entering system suspend (deep/S3)
+races a pending UCSI connector-change worker against the ACPI EC teardown.
+The worker evaluates the UCSI _DSM (GET_CONNECTOR_STATUS), whose AML
+accesses the Embedded Controller. By that point the ACPI EC has already
+been stopped for suspend, so the EC address space handler rejects the
+access with AE_BAD_PARAMETER, aborting the AML and failing the connector
+query:
 
-Add checks to ensure these parameters are non-zero before performing
-the division. If invalid trace values are detected, fall back to a safe
-default of 1.
+    [22314.689495] ACPI: EC: interrupt blocked
+    [22314.711981] ACPI: PM: Preparing to enter system sleep state S3
+    [22314.743260] ACPI: EC: event blocked
+    [22314.743265] ACPI: EC: EC stopped
+    [22314.743267] ACPI: PM: Saving platform NVS memory
+    [22314.744241] ACPI Error: AE_BAD_PARAMETER, Returned by Handler for [EmbeddedControl] (20260408/evregion-303)
+    [22314.744432] ACPI Error: Aborting method \_SB.PCI0.LPCB.ECDV.ECW1 due to previous error (AE_BAD_PARAMETER) (20260408/psparse-543)
+    [22314.744673] ACPI Error: Aborting method \ECWB due to previous error (AE_BAD_PARAMETER) (20260408/psparse-543)
+    [22314.745201] ACPI Error: Aborting method \_SB.UBTC._DSM due to previous error (AE_BAD_PARAMETER) (20260408/psparse-543)
+    [22314.745394] ACPI: \_SB_.UBTC: failed to evaluate _DSM c298836f-a47c-e411-ad36-631042b5008f rev:1 func:1 (0x1001)
+    [22314.745414] ucsi_acpi USBC000:00: ucsi_acpi_dsm: failed to evaluate _DSM 1
+    [22314.745424] ucsi_acpi USBC000:00: ucsi_handle_connector_change: GET_CONNECTOR_STATUS failed (-5)
 
-Additionally, prevent an arithmetic underflow in the touch reporting
-logic. Previously, if the calculated or fallback width was smaller than
-ETP_FWIDTH_REDUCE (90), the subtraction would underflow, resulting in a
-massive unsigned integer being reported to userspace. Clamp the adjusted
-width to a minimum of 0 to safely handle small physical dimensions and
-fallback scenarios.
+ucsi_acpi implements a resume callback but no suspend callback, so nothing
+cancels the connector-change work before the firmware/EC is torn down.
 
-Completing the probe with safe fallback values ensures the sysfs nodes
-are created, keeping the firmware update path intact so a recovery
-firmware can be flashed to the device.
+Add a `ucsi_suspend()` core helper that cancels the pending init and
+connector-change work, and wire it into ucsi_acpi's PM ops. The connector
+state is re-read on resume by `ucsi_resume()`, so cancelling the work loses
+nothing.
 
-Fixes: 6696777c6506 ("Input: add driver for Elan I2C/SMbus touchpad")
-Fixes: e3a9a1290688 ("Input: elan_i2c - do not query the info if they are provided")
-Signed-off-by: Ranjan Kumar <kumarranja@chromium.org>
-Link: https://patch.msgid.link/20260612060339.3829666-1-kumarranja@chromium.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 4e3a50293c2b ("usb: typec: ucsi: acpi: Implement resume callback")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Assisted-by: Claude Opus 4.8
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260703110738.8457-2-pmenzel@molgen.mpg.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/elan_i2c_core.c |   36 ++++++++++++++++++++++++++++++------
- 1 file changed, 30 insertions(+), 6 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c      |   20 ++++++++++++++++++++
+ drivers/usb/typec/ucsi/ucsi.h      |    1 +
+ drivers/usb/typec/ucsi/ucsi_acpi.c |   10 +++++++++-
+ 3 files changed, 30 insertions(+), 1 deletion(-)
 
---- a/drivers/input/mouse/elan_i2c_core.c
-+++ b/drivers/input/mouse/elan_i2c_core.c
-@@ -425,8 +425,17 @@ static int elan_query_device_parameters(
- 		if (error)
- 			return error;
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1374,6 +1374,26 @@ static void ucsi_resume_work(struct work
  	}
--	data->width_x = data->max_x / x_traces;
--	data->width_y = data->max_y / y_traces;
+ }
+ 
++int ucsi_suspend(struct ucsi *ucsi)
++{
++	int i;
 +
-+	if (!x_traces || !y_traces) {
-+		dev_warn(&client->dev,
-+			 "invalid trace numbers: x=%u, y=%u\n",
-+			 x_traces, y_traces);
-+		data->width_x = 1;
-+		data->width_y = 1;
-+	} else {
-+		data->width_x = data->max_x / x_traces;
-+		data->width_y = data->max_y / y_traces;
-+	}
- 
- 	if (device_property_read_u32(&client->dev,
- 				     "touchscreen-x-mm", &x_mm) ||
-@@ -440,8 +449,16 @@ static int elan_query_device_parameters(
- 		data->x_res = elan_convert_resolution(hw_x_res, data->pattern);
- 		data->y_res = elan_convert_resolution(hw_y_res, data->pattern);
- 	} else {
--		data->x_res = (data->max_x + 1) / x_mm;
--		data->y_res = (data->max_y + 1) / y_mm;
-+		if (unlikely(x_mm == 0 || y_mm == 0)) {
-+			dev_warn(&client->dev,
-+				 "invalid physical dimensions: x_mm=%u, y_mm=%u\n",
-+				 x_mm, y_mm);
-+			data->x_res = 1;
-+			data->y_res = 1;
-+		} else {
-+			data->x_res = (data->max_x + 1) / x_mm;
-+			data->y_res = (data->max_y + 1) / y_mm;
-+		}
- 	}
- 
- 	if (device_property_read_bool(&client->dev, "elan,clickpad"))
-@@ -960,6 +977,7 @@ static void elan_report_contact(struct e
- 
- 		if (data->report_features & ETP_FEATURE_REPORT_MK) {
- 			unsigned int mk_x, mk_y, area_x, area_y;
-+			int adj_width_x, adj_width_y;
- 			u8 mk_data = high_precision ?
- 				packet[ETP_MK_DATA_OFFSET + contact_num] :
- 				finger_data[3];
-@@ -971,8 +989,14 @@ static void elan_report_contact(struct e
- 			 * To avoid treating large finger as palm, let's reduce
- 			 * the width x and y per trace.
- 			 */
--			area_x = mk_x * (data->width_x - ETP_FWIDTH_REDUCE);
--			area_y = mk_y * (data->width_y - ETP_FWIDTH_REDUCE);
++	/*
++	 * Cancel pending work so it cannot access the firmware after the ACPI
++	 * EC is stopped for suspend; state is re-read on resume.
++	 */
++	cancel_delayed_work_sync(&ucsi->work);
 +
-+			adj_width_x = data->width_x > ETP_FWIDTH_REDUCE ?
-+					data->width_x - ETP_FWIDTH_REDUCE : 0;
-+			adj_width_y = data->width_y > ETP_FWIDTH_REDUCE ?
-+					data->width_y - ETP_FWIDTH_REDUCE : 0;
++	if (!ucsi->connector)
++		return 0;
 +
-+			area_x = mk_x * adj_width_x;
-+			area_y = mk_y * adj_width_y;
++	for (i = 0; i < ucsi->cap.num_connectors; i++)
++		cancel_work_sync(&ucsi->connector[i].work);
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(ucsi_suspend);
++
+ int ucsi_resume(struct ucsi *ucsi)
+ {
+ 	if (ucsi->connector)
+--- a/drivers/usb/typec/ucsi/ucsi.h
++++ b/drivers/usb/typec/ucsi/ucsi.h
+@@ -351,6 +351,7 @@ int ucsi_send_command(struct ucsi *ucsi,
+ 		      void *retval, size_t size);
  
- 			input_report_abs(input, ABS_TOOL_WIDTH, mk_x);
- 			input_report_abs(input, ABS_MT_TOUCH_MAJOR,
+ void ucsi_altmode_update_active(struct ucsi_connector *con);
++int ucsi_suspend(struct ucsi *ucsi);
+ int ucsi_resume(struct ucsi *ucsi);
+ 
+ #if IS_ENABLED(CONFIG_POWER_SUPPLY)
+--- a/drivers/usb/typec/ucsi/ucsi_acpi.c
++++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
+@@ -290,6 +290,13 @@ static int ucsi_acpi_remove(struct platf
+ 	return 0;
+ }
+ 
++static int ucsi_acpi_suspend(struct device *dev)
++{
++	struct ucsi_acpi *ua = dev_get_drvdata(dev);
++
++	return ucsi_suspend(ua->ucsi);
++}
++
+ static int ucsi_acpi_resume(struct device *dev)
+ {
+ 	struct ucsi_acpi *ua = dev_get_drvdata(dev);
+@@ -297,7 +304,8 @@ static int ucsi_acpi_resume(struct devic
+ 	return ucsi_resume(ua->ucsi);
+ }
+ 
+-static DEFINE_SIMPLE_DEV_PM_OPS(ucsi_acpi_pm_ops, NULL, ucsi_acpi_resume);
++static DEFINE_SIMPLE_DEV_PM_OPS(ucsi_acpi_pm_ops, ucsi_acpi_suspend,
++				ucsi_acpi_resume);
+ 
+ static const struct acpi_device_id ucsi_acpi_match[] = {
+ 	{ "PNP0CA0", 0 },
 
 
