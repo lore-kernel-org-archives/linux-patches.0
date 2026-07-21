@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107B5415F2D;
-	Tue, 21 Jul 2026 18:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7479415F3C;
+	Tue, 21 Jul 2026 18:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658496; cv=none; b=q+04yql2GXaYsaIp5ShD1cXBBURMoasjK//GH7aTvdANSe8UaeY3JapEPIFlRKMB0q6LHCopPzsLHqHFkEuRUci1EIW6M+ncCzyYR7+/O5EG+Qf7fRzhUtuRax+0nHqjxl4fZM43GZf5SvRMAdu2zVkkEFvNteEOOPhFVOx31t4=
+	t=1784658498; cv=none; b=SjPGDsf2o/uapxmrQYKz8n16al6lMOmg6c3G4yGG/L3rBGH7eRhGefy+lfHLzjbFSZgnrp/8c6AfJBIYCcjYd2vJrqQGcAWPmb724Umr9ZwHt7ttvTjCQ4/wrR8eb50PnBpnrIx1R7dblYpW0z7kG8aFUfss4RQc9xBxtEVRgMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658496; c=relaxed/simple;
-	bh=jDz/cuIrH3pKzr8LbYv7r1Ko48s2aZfEFi1StCNTEfw=;
+	s=arc-20240116; t=1784658498; c=relaxed/simple;
+	bh=x8WZWmRVS6LlPbSGRmY5KwN2CUyIjEpKdYxFrzBoGMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CgKKXcMnBZFqIgVulLghMffLYQO49bl0UrgKT1BP40YFglXRgFkWrsg839BgfH3z8ss175iw1nD46lNRrCk7Nz+xMW9o5sdJT6e4czOi72dMbWpmwOOYaFHAKZYTEESuywlC+M6dv4Aw5mTsOn/obmS3dNxCi15HCUSGae9noFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2Hycwdj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nS2Q6Z/8GopJZIBv5KlG7QkRKRw4+BlqAtcKjQps7+dGMD21Abe9vCuCXxQ6QKW/E4Dxr8CWy2KbF+lxnjgqk5HAiwxnn9+u/DWUgIg2QFJC7xhK43ESwNXA7+3eThcU8N2QUuW2S/1tYVmdL5csELvupz1qfjPFt9Bdbi8Ei6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfNk6O6s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2Hycwdj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750331F000E9;
-	Tue, 21 Jul 2026 18:28:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfNk6O6s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0221F000E9;
+	Tue, 21 Jul 2026 18:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658495;
-	bh=KRchuBHD3vWAkJcaPBG4PlCtF47TZb1sZGvjPGAU3jQ=;
+	s=korg; t=1784658497;
+	bh=bJOYDefgyb8uoYa+DVZQPOD4NiefPRP57sZJZ4USn3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e2HycwdjqDwDyoiXH26YoVI/2/heccv4vbheEE9QBisgVGo+uW9AJa81ZRVSljS0C
-	 h5DBhNnk7+eFb81MHOQlhYQoIRXi4V9mL7ghO5NCwIZYQl01GOWjcJFEQ8vkZ9kyxD
-	 SzDOdOIYGSUTUgbEIjVska7mO8bQmm7Ess7R4kTk=
+	b=BfNk6O6s/ukQSocWXayfIbquWgKnIG5rH628D9mMsDhfrmZJfSDJBxnQBJKRHNrua
+	 4jbanTPUNffTb81x9dvJSiP2CeBP2N5GnD6LdxGutAHnGB1nxqXozsSTpJD3ArkXtr
+	 5VeKTZd/lYYcV9J2FiOs7uGwYEbHgKR2hYdoL9D8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Nickolay Goppen <setotau@mainlining.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.18 1112/1611] arm64: dts: qcom: sdm630: describe adsp_mem region properly
-Date: Tue, 21 Jul 2026 17:20:28 +0200
-Message-ID: <20260721152540.430346948@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 1159/1611] ASoC: SOF: ipc3-control: Validate size in snd_sof_update_control
+Date: Tue, 21 Jul 2026 17:21:15 +0200
+Message-ID: <20260721152541.492842384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,44 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolay Goppen <setotau@mainlining.org>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit ce414263e9ebe5080381a50cbdf9065c29816202 upstream.
+commit 390aa4c9339bb0ec0bc8d554e830faf93ca9d49e upstream.
 
-Downstream [1] this region is marked as shared, reusable and dynamic so
-describe it that way.
+In snd_sof_update_control(), firmware-provided cdata->num_elems is
+checked against local_cdata->data->size but never against the actual
+allocation size. If local_cdata->data->size was previously set to an
+inconsistent value, the memcpy could write past the allocated buffer.
 
-[1]: https://github.com/xiaomi-sdm660/android_kernel_xiaomi_sdm660/blob/11-EAS/arch/arm/boot/dts/qcom/sdm660.dtsi#L448
+Add a bounds check to ensure num_elems fits within the available space
+in the ipc_control_data allocation before copying.
 
-Fixes: b190fb010664 ("arm64: dts: qcom: sdm630: Add sdm630 dts file")
+Fixes: 10f461d79c2d ("ASoC: SOF: Add IPC3 topology control ops")
 Cc: stable@vger.kernel.org
-Reviewed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
-Link: https://lore.kernel.org/r/20260429-qcom-sdm660-cdsp-adsp-fastrpc-dts-fix-v5-4-16bc82e622ad@mainlining.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20260609083458.31193-5-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/soc/sof/ipc3-control.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -494,9 +494,12 @@
- 			no-map;
- 		};
+--- a/sound/soc/sof/ipc3-control.c
++++ b/sound/soc/sof/ipc3-control.c
+@@ -555,6 +555,15 @@ static void snd_sof_update_control(struc
+ 			return;
+ 		}
  
--		adsp_mem: adsp-region@f6000000 {
--			reg = <0x0 0xf6000000 0x0 0x800000>;
--			no-map;
-+		adsp_mem: adsp-region {
-+			compatible = "shared-dma-pool";
-+			alloc-ranges = <0x0 0x80000000 0x0 0x80000000>;
-+			alignment = <0x0 0x400000>;
-+			size = <0x0 0x800000>;
-+			reusable;
- 		};
- 
- 		qseecom_mem: qseecom-region@f6800000 {
++		/* Verify the size fits within the allocation */
++		if (cdata->num_elems > scontrol->max_size - sizeof(*local_cdata) -
++					sizeof(*local_cdata->data)) {
++			dev_err(scomp->dev,
++				"cdata binary size %u exceeds buffer\n",
++				cdata->num_elems);
++			return;
++		}
++
+ 		/* copy the new binary data */
+ 		memcpy(local_cdata->data, cdata->data, cdata->num_elems);
+ 	} else if (cdata->num_elems != scontrol->num_channels) {
 
 
