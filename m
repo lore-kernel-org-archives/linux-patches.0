@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22244471246;
-	Tue, 21 Jul 2026 19:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B8B46DFED;
+	Tue, 21 Jul 2026 19:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660996; cv=none; b=PFxIKhjXvp9+FaIZEBdMgtc/uUsi/MjEXdMAa71OJcdQscZLBpcRwPSpggicWqcacVcMAjNq2IzhIgiTckBIdoWKWlH/5rM2o0gRNZdC4DCF0AbekO9UmID1foKxDKaBjc8GMrc1I7hbGYwolPNWxVXT2TptP7yiMQUoUYSfmFM=
+	t=1784661000; cv=none; b=OWfiX4vBvfR+0VBe+9pNd8pwS6HigIohBcW+J1pcTK4rrpRhwbl1UDdv2miBaihuKuE6XawLYzKN1ZVE1vpnnhGc/gqNG4Zt/VyfUwiAciRxaFIh54hiKOFNpifvC3/DX7ASCR47Ts4iYJKwGQx0zv9t5iPY17VwVFXX2uQL8Z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660996; c=relaxed/simple;
-	bh=Et7lTbflh4FdAyVM0uhq59+pi+Xc5SOFWLQmWUtzu8A=;
+	s=arc-20240116; t=1784661000; c=relaxed/simple;
+	bh=BdXPTNcKEuUOY9uvQIg/gHZsM/EiVm7pQ6dL+k8l9Cs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QBYZ0TEs6YI7jT7KaBTl1XfsUjxBiS3Pn8Jd3QddyD1wskWqJWLk8Tcs+v4KzchpIugmiPK6Cm63Q1qjBSWr66bmiqyfPMdvc9kHVyBelgSeNz3fKcVwB2+5bzwb9x7G3g0SdkcGYZaDoMZButQvEn4WcH4msXElk9zRCsEXdPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NFJBd1EY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ANF6W7MRVdVfCjtJSSVGrC3czp1t00MJqZzD2/UDlRHJb7eLHuxf0ClZT0EY9hc1jQEFU4nYcT0aDPdhqmh3MGLzCMHa4FJImfX9/Wqy9rPst3GdnUH65alel4PZY7ERuufz1gmQxyVfim0KbH8DmsK6G37cyaNOZrjEctb7TeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVV1L4Tj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NFJBd1EY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5971F000E9;
-	Tue, 21 Jul 2026 19:09:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVV1L4Tj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63731F000E9;
+	Tue, 21 Jul 2026 19:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660994;
-	bh=2ZR/ir/MW8Lj124ypkgVeZBraLftUm6//dalXaY8myY=;
+	s=korg; t=1784660997;
+	bh=WoE5cxcsJPItHf69yWJHkIQGWvaPjevgtVpYYulxHmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NFJBd1EYZ+dk2Qj8XXDItkL2PI3aBBsVvBzgJh5AUbiVNe81Waepff6bPLFARAiSE
-	 n9HVL/gbaAX0Ye0jpZYZ73SOVF4SyvhSeIxspQauYaoLhMxcWJZjhSstZ8fsPgdeKO
-	 1lw6DdKoPGr9vcToS/ccjTO3iX5+KidHTkttX7fM=
+	b=tVV1L4TjOdZ5l2LxA5dgY2dh1LWOUNtEqA5cnqBJyi5fWkZOgd7VuTPj/mLTjFJ8r
+	 9WUvJDkDX5hTjMlSwLsBAoWb9+7hxanE8MOCqvjx8Pt2uxSAX+0zHnvUd5Z8wnQveP
+	 jCNoIuVOvdWR4Fc5FZkzOOtPGzCkWwDtBJxbTl80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1154/2077] netfilter: nft_meta_bridge: fix NFT_META_BRI_IIFPVID stack leak
-Date: Tue, 21 Jul 2026 17:13:47 +0200
-Message-ID: <20260721152620.041935470@linuxfoundation.org>
+	Ronan Dalton <ronan.dalton@alliedtelesis.co.nz>,
+	linux-rtc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Tyler Hicks <code@tyhicks.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Meagan Lloyd <meaganlloyd@linux.microsoft.com>,
+	Rodolfo Giometti <giometti@enneenne.com>,
+	Chris Packham <chris.packham@alliedtelesis.co.nz>
+Subject: [PATCH 7.1 1190/2077] rtc: ds1307: handle oscillator stop flag for ds1337/ds1339/ds3231
+Date: Tue, 21 Jul 2026 17:14:23 +0200
+Message-ID: <20260721152620.886581638@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,36 +57,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Ronan Dalton <ronan.dalton@alliedtelesis.co.nz>
 
-[ Upstream commit 27dd2997746d54ebc079bb13161cc1bdd401d4a6 ]
+[ Upstream commit a091e1ba3b68cabc9caedafc6f81d9fe9b3b2200 ]
 
-This needs to test for nonzero retval.
+Prior to commit 48458654659c ("rtc: ds1307: remove clear of oscillator
+stop flag (OSF) in probe"), the oscillator stop flag (OSF) bit was
+checked during device probe for the ds1337, ds1339, ds1341, and ds3231
+chips; if it was set, it would be cleared and a warning would be logged
+saying "SET TIME!". Since that commit, the OSF bit is no longer cleared,
+but the warning is still printed.
 
-Fixes: c54c7c685494 ("netfilter: nft_meta_bridge: add NFT_META_BRI_IIFPVID support")
-Closes: https://sashiko.dev/#/patchset/20260618061631.21919-1-fw%40strlen.de
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Directly following that commit, there was no way to get rid of this
+warning because nothing cleared the OSF bit on these chips.
+
+The commit associated with the previous commit, 523923cfd5d6 ("rtc:
+ds1307: handle oscillator stop flag (OSF) for ds1341"), made proper use
+of the OSF when getting and setting the time in the RTC. However, the
+other RTC variants ds1337, ds1339 and ds3231 didn't have a corresponding
+change made.
+
+Given that the OSF bit is no longer cleared at probe time when it is
+set, the remaining three chips should have the same handling as the
+ds1341 chip has for the OSF bit.
+
+Fix the issue on the ds1337, ds1339 and ds3231 chips by applying the
+same logic as the ds1341 has to these chips.
+
+Note that any devices brought up between the first referenced commit and
+this one may begin mistrusting the time reported by the RTC until it is
+set again, if the bit was never explicitly cleared.
+
+Note that only the ds1339 was tested with this change, but the
+datasheets for the other chips contain essentially identical
+descriptions of the OSF bit so the same change should work.
+
+Signed-off-by: Ronan Dalton <ronan.dalton@alliedtelesis.co.nz>
+Cc: linux-rtc@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: Tyler Hicks <code@tyhicks.com>
+Cc: Sasha Levin <sashal@kernel.org>
+Cc: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
+Cc: Rodolfo Giometti <giometti@enneenne.com>
+Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>
+Fixes: 48458654659c ("rtc: ds1307: remove clear of oscillator stop flag (OSF) in probe")
+Reviewed-by: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
+Reviewed-by: Tyler Hicks <code@tyhicks.com>
+Link: https://patch.msgid.link/20260508032518.3696705-2-ronan.dalton@alliedtelesis.co.nz
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/nft_meta_bridge.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-ds1307.c | 28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/net/bridge/netfilter/nft_meta_bridge.c b/net/bridge/netfilter/nft_meta_bridge.c
-index 3d95f68e0906ab..e4c9aa1f64e25f 100644
---- a/net/bridge/netfilter/nft_meta_bridge.c
-+++ b/net/bridge/netfilter/nft_meta_bridge.c
-@@ -44,7 +44,9 @@ static void nft_meta_bridge_get_eval(const struct nft_expr *expr,
- 		if (!br_dev || !br_vlan_enabled(br_dev))
- 			goto err;
- 
--		br_vlan_get_pvid_rcu(in, &p_pvid);
-+		if (br_vlan_get_pvid_rcu(in, &p_pvid))
-+			goto err;
-+
- 		nft_reg_store16(dest, p_pvid);
- 		return;
- 	}
+diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
+index 7205c59ff7294e..edf81b975decb7 100644
+--- a/drivers/rtc/rtc-ds1307.c
++++ b/drivers/rtc/rtc-ds1307.c
+@@ -269,6 +269,16 @@ static int ds1307_get_time(struct device *dev, struct rtc_time *t)
+ 		if (tmp & DS1338_BIT_OSF)
+ 			return -EINVAL;
+ 		break;
++	case ds_1337:
++	case ds_1339:
++	case ds_1341:
++	case ds_3231:
++		ret = regmap_read(ds1307->regmap, DS1337_REG_STATUS, &tmp);
++		if (ret)
++			return ret;
++		if (tmp & DS1337_BIT_OSF)
++			return -EINVAL;
++		break;
+ 	case ds_1340:
+ 		if (tmp & DS1340_BIT_nEOSC)
+ 			return -EINVAL;
+@@ -279,13 +289,6 @@ static int ds1307_get_time(struct device *dev, struct rtc_time *t)
+ 		if (tmp & DS1340_BIT_OSF)
+ 			return -EINVAL;
+ 		break;
+-	case ds_1341:
+-		ret = regmap_read(ds1307->regmap, DS1337_REG_STATUS, &tmp);
+-		if (ret)
+-			return ret;
+-		if (tmp & DS1337_BIT_OSF)
+-			return -EINVAL;
+-		break;
+ 	case ds_1388:
+ 		ret = regmap_read(ds1307->regmap, DS1388_REG_FLAG, &tmp);
+ 		if (ret)
+@@ -380,14 +383,17 @@ static int ds1307_set_time(struct device *dev, struct rtc_time *t)
+ 		regmap_update_bits(ds1307->regmap, DS1307_REG_CONTROL,
+ 				   DS1338_BIT_OSF, 0);
+ 		break;
+-	case ds_1340:
+-		regmap_update_bits(ds1307->regmap, DS1340_REG_FLAG,
+-				   DS1340_BIT_OSF, 0);
+-		break;
++	case ds_1337:
++	case ds_1339:
+ 	case ds_1341:
++	case ds_3231:
+ 		regmap_update_bits(ds1307->regmap, DS1337_REG_STATUS,
+ 				   DS1337_BIT_OSF, 0);
+ 		break;
++	case ds_1340:
++		regmap_update_bits(ds1307->regmap, DS1340_REG_FLAG,
++				   DS1340_BIT_OSF, 0);
++		break;
+ 	case ds_1388:
+ 		regmap_update_bits(ds1307->regmap, DS1388_REG_FLAG,
+ 				   DS1388_BIT_OSF, 0);
 -- 
 2.53.0
 
