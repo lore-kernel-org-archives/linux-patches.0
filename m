@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C9B39903B;
-	Tue, 21 Jul 2026 18:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4373DD870;
+	Tue, 21 Jul 2026 18:16:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657792; cv=none; b=Q9yiKsIzDVyP0aW8eaRfS/xrDvyv0k718ewthqPlR2LZoVyJ+M/obj9AT9MhMyXWRsFiF9mSkayHT1pCzKjeQlnDNjv3+WnUCM7aNbcPchBak1YjnMs+je1PQ+Qt4JAKCzygcdnOcGmNqrcr3ECkEb7qF8jfp2kif52/8LjJCd0=
+	t=1784657792; cv=none; b=risZL2dvjNOKUsxX3c4YOG5iFf3TAHG6j7tYBOfEMa52eoL4rbZjQV+CER8NgywEJEmC7jF2XmkvCowsvBElzEwI8JOQDS8nYycos1SYWN0iEKPGyHtYEjRHEWOxzT/ayLCcUGTGd545vzPJvE53eoRd/SMWzeQpfd9zZg+TrIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784657792; c=relaxed/simple;
-	bh=5/dH4h8DQHVgGbfXGvlDW2JoPnc5DqwHUwNculpAzJg=;
+	bh=ntVNfD6GSW6wrPKT+Xc9qHLQTKBwlmt/f5rf8PFxd5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZD3fq2ss3DcAKK2YmTWtxPAK+w6L8x/TJUkDJ1UuJdrXccuDkXfeBUKDUk3yUlS1oqpxuv9vQIJBZb3BoKEenc4n0yec9Ivy6IUvMfczuNUhhaago0kNipqzDlqeo6+Ydkmh2xRh525VLRE5aceET5klosER+2Qtc8O+p7es0h8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IiVk2vlQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NeoVL0QtEu7tsXOCz45czes9UE1uF/+qgt/zv5fbY0MCE/hnrX7y0Hy4wL3OSeBEKE/U5zMNC5/1VteUhTAN0bHn6saAkB0X2x/XaUUMCgl0wZhnJ0UYfyxdsFWApxhXOOaDL1+S3PjTaIbQQZERauGfPx1wyGwSW7kLgZIBLsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omnFMy/b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IiVk2vlQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6898B1F000E9;
-	Tue, 21 Jul 2026 18:16:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omnFMy/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CFEE1F00A3F;
+	Tue, 21 Jul 2026 18:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657788;
-	bh=CwOcsULucec7Oo/4IXsNRVLZDQRHj1jz1tTwxELcAXE=;
+	s=korg; t=1784657791;
+	bh=gAkXwdeEhW+zobkLI4N40FfkxcqqcOJ1ouqj4/V7QgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IiVk2vlQS25ryxBfkwuzMVFWb/4zs4uEIV8ScPf4ZA2KrbTjW59tO+Ik3DS/KsWCH
-	 i236+nI5Q864rCK0xbVZgIrnVd4dpmApJRHLMkefl6dGS6o2oSz+4b28YmrWyNwGzx
-	 RBcnu00z6JjrhkJaXMi2BbZnw4lsBMC6XXzE08Bg=
+	b=omnFMy/bHsqJtIYeLenPhR7lTzkAnu4WnB4q0ao/ICejEUOYx5VnaRZYrusDNQ6yC
+	 k13Ljr5l8tIvd48FQyOrqPcWWSMRnyUx5qotJcO1iQIwdXIpPdJvgar8Wpwy/2q/XO
+	 fyBKewedPWcnIhSbdQX+4UsNnP9T7hV++6vDNBkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Cheng <chencheng@fnnas.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0899/1611] md/raid5: use stripe state snapshot in break_stripe_batch_list()
-Date: Tue, 21 Jul 2026 17:16:55 +0200
-Message-ID: <20260721152535.612254893@linuxfoundation.org>
+Subject: [PATCH 6.18 0882/1611] drm/edid: fix OOB read in drm_parse_tiled_block()
+Date: Tue, 21 Jul 2026 17:16:38 +0200
+Message-ID: <20260721152535.229861953@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,137 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Cheng <chencheng@fnnas.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 9b249f5ffbeda24c57e6c56ed896c5ca4fc70549 ]
+[ Upstream commit faaa1e1155833e7d4ce7e3cfaf64c0d636b190db ]
 
-The patch just suppress KCSAN noise. No functional change.
+drm_parse_tiled_block() casts the DisplayID block to a
+struct displayid_tiled_block and reads the full fixed layout up to
+tile->topology_id[7] without checking block->num_bytes. The DisplayID
+iterator only validates the declared payload length, so a crafted EDID
+can advertise a tiled-display block (tag DATA_BLOCK_TILED_DISPLAY, or
+DATA_BLOCK_2_TILED_DISPLAY_TOPOLOGY for v2.0) with a small num_bytes at
+the end of a DisplayID extension. The read then runs past the end of the
+exact-sized kmemdup()'d EDID allocation, a heap out-of-bounds read.
 
-RAID-5 can group multi full-stripe-write aka stripe_head into a
-batch aka batch_list, with one head_sh leading them. Call
-break_stripe_batch_list() when the batch is finished, or,
-a stripe has to be dropped out of the batch.
+Reject blocks shorter than the spec's 22-byte tiled payload before
+reading the fixed struct, as drm_parse_vesa_mso_data() already does.
 
-break_stripe_batch_list() reads stripe state several times while
-request paths can update thost state words concurrently with
-lockless bitops, which reported by KCSAN.
+  BUG: KASAN: slab-out-of-bounds in drm_edid_connector_update
+  Read of size 2 at addr ffff888010077700 by task exploit/147
+   dump_stack_lvl (lib/dump_stack.c:94 ...)
+   print_report (mm/kasan/report.c:378 ...)
+   kasan_report (mm/kasan/report.c:595)
+   drm_edid_connector_update (drivers/gpu/drm/drm_edid.c:7581)
+   bochs_connector_helper_get_modes (drivers/gpu/drm/tiny/bochs.c:574)
+   drm_helper_probe_single_connector_modes (drivers/gpu/drm/drm_probe_helper.c:426)
+   status_store (drivers/gpu/drm/drm_sysfs.c:219)
+   ...
+   vfs_write (fs/read_write.c:595 fs/read_write.c:688)
+   ksys_write (fs/read_write.c:740)
 
-Use a snapshot to guarantees that the value used for
-warning, copying, and handle checks is internally consistent
-at current read moment.
-
-KCSAN report:
-==============================================
-BUG: KCSAN: data-race in __add_stripe_bio / break_stripe_batch_list
-
-write (marked) to 0xffff8e89d4f0b988 of 8 bytes by task 4323 on cpu 3:
-  __add_stripe_bio+0x35e/0x400
-  raid5_make_request+0x6ac/0x2930
-  md_handle_request+0x4a2/0xa40
-  md_submit_bio+0x109/0x1a0
-  __submit_bio+0x2ec/0x390
-  submit_bio_noacct_nocheck+0x457/0x710
-  submit_bio_noacct+0x2a7/0xc20
-  submit_bio+0x56/0x250
-  blkdev_direct_IO+0x54c/0xda0
-  blkdev_write_iter+0x38f/0x570
-  aio_write+0x22b/0x490
-  io_submit_one+0xa51/0xf70
-
-read to 0xffff8e89d4f0b988 of 8 bytes by task 4290 on cpu 4:
-  break_stripe_batch_list+0x3ce/0x480
-  handle_stripe_clean_event+0x720/0x9b0
-  handle_stripe+0x32fb/0x4500
-  handle_active_stripes.isra.0+0x6e0/0xa50
-  raid5d+0x7e0/0xba0
-
-Signed-off-by: Chen Cheng <chencheng@fnnas.com>
-Link: https://patch.msgid.link/20260618134748.1168360-1-chencheng@fnnas.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
-Stable-dep-of: 55b77337bdd0 ("md/raid5: avoid R5_Overlap races while breaking stripe batches")
+Fixes: 40d9b043a89e ("drm/connector: store tile information from displayid (v3)")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patch.msgid.link/20260615184737.899892-1-xmei5@asu.edu
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 45 ++++++++++++++++++++++++++-------------------
- 1 file changed, 26 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/drm_edid.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 381f56c4b5e276..e4cbf5fcec8e7a 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -4853,31 +4853,35 @@ static void break_stripe_batch_list(struct stripe_head *head_sh,
- {
- 	struct stripe_head *sh, *next;
- 	int i;
-+	unsigned long state;
+diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+index e2e85345aa9a40..046b5e86a78731 100644
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -7500,6 +7500,14 @@ static void drm_parse_tiled_block(struct drm_connector *connector,
+ 	u8 num_v_tile, num_h_tile;
+ 	struct drm_tile_group *tg;
  
- 	list_for_each_entry_safe(sh, next, &head_sh->batch_list, batch_list) {
- 
- 		list_del_init(&sh->batch_list);
- 
--		WARN_ONCE(sh->state & ((1 << STRIPE_ACTIVE) |
--					  (1 << STRIPE_SYNCING) |
--					  (1 << STRIPE_REPLACED) |
--					  (1 << STRIPE_DELAYED) |
--					  (1 << STRIPE_BIT_DELAY) |
--					  (1 << STRIPE_FULL_WRITE) |
--					  (1 << STRIPE_BIOFILL_RUN) |
--					  (1 << STRIPE_COMPUTE_RUN)  |
--					  (1 << STRIPE_DISCARD) |
--					  (1 << STRIPE_BATCH_READY) |
--					  (1 << STRIPE_BATCH_ERR)),
--			"stripe state: %lx\n", sh->state);
--		WARN_ONCE(head_sh->state & ((1 << STRIPE_DISCARD) |
--					      (1 << STRIPE_REPLACED)),
--			"head stripe state: %lx\n", head_sh->state);
-+		state = READ_ONCE(sh->state);
-+		WARN_ONCE(state & ((1 << STRIPE_ACTIVE) |
-+				   (1 << STRIPE_SYNCING) |
-+				   (1 << STRIPE_REPLACED) |
-+				   (1 << STRIPE_DELAYED) |
-+				   (1 << STRIPE_BIT_DELAY) |
-+				   (1 << STRIPE_FULL_WRITE) |
-+				   (1 << STRIPE_BIOFILL_RUN) |
-+				   (1 << STRIPE_COMPUTE_RUN)  |
-+				   (1 << STRIPE_DISCARD) |
-+				   (1 << STRIPE_BATCH_READY) |
-+				   (1 << STRIPE_BATCH_ERR)),
-+			"stripe state: %lx\n", state);
++	/* tiled block payload per spec: cap 1 + topo 3 + size 4 + bezel 5 + id 9 = 22 */
++	if (block->num_bytes < 22) {
++		drm_dbg_kms(connector->dev,
++			    "[CONNECTOR:%d:%s] Unexpected tiled block size %u\n",
++			    connector->base.id, connector->name, block->num_bytes);
++		return;
++	}
 +
-+		state = READ_ONCE(head_sh->state);
-+		WARN_ONCE(state & ((1 << STRIPE_DISCARD) |
-+				   (1 << STRIPE_REPLACED)),
-+			"head stripe state: %lx\n", state);
- 
- 		set_mask_bits(&sh->state, ~(STRIPE_EXPAND_SYNC_FLAGS |
- 					    (1 << STRIPE_PREREAD_ACTIVE) |
- 					    (1 << STRIPE_ON_UNPLUG_LIST)),
--			      head_sh->state & (1 << STRIPE_INSYNC));
-+			      state & (1 << STRIPE_INSYNC));
- 
- 		sh->check_state = head_sh->check_state;
- 		sh->reconstruct_state = head_sh->reconstruct_state;
-@@ -4890,8 +4894,9 @@ static void break_stripe_batch_list(struct stripe_head *head_sh,
- 			sh->dev[i].flags = head_sh->dev[i].flags &
- 				(~((1 << R5_WriteError) | (1 << R5_Overlap)));
- 		}
--		if (handle_flags == 0 ||
--		    sh->state & handle_flags)
-+
-+		state = READ_ONCE(sh->state);
-+		if (handle_flags == 0 || (state & handle_flags))
- 			set_bit(STRIPE_HANDLE, &sh->state);
- 		raid5_release_stripe(sh);
- 	}
-@@ -4901,7 +4906,9 @@ static void break_stripe_batch_list(struct stripe_head *head_sh,
- 	for (i = 0; i < head_sh->disks; i++)
- 		if (test_and_clear_bit(R5_Overlap, &head_sh->dev[i].flags))
- 			wake_up_bit(&head_sh->dev[i].flags, R5_Overlap);
--	if (head_sh->state & handle_flags)
-+
-+	state = READ_ONCE(head_sh->state);
-+	if (state & handle_flags)
- 		set_bit(STRIPE_HANDLE, &head_sh->state);
- }
+ 	w = tile->tile_size[0] | tile->tile_size[1] << 8;
+ 	h = tile->tile_size[2] | tile->tile_size[3] << 8;
  
 -- 
 2.53.0
