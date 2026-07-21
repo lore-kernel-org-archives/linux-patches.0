@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7568846A60E;
-	Tue, 21 Jul 2026 19:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D40646A60E;
+	Tue, 21 Jul 2026 19:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661782; cv=none; b=Cuaxefw/ZVKtgptZhCJKLJyNH0JJ5X22iHh/ZKwEcvW5XfNJKMGyW//9gAxeO33/t69s+WUzTwJiFSu+M8Nf594tpzBWAmbjQSSWHVThaPmu58Ht3VcZZPJC5m/W2Ba5Lw/XA3QgRuJWl9mbL0DXOc42Au4vC9Bbc3rVx5GzhNE=
+	t=1784661785; cv=none; b=qyhvNPZW/5oVPg3aIF78MSQeVyeHLgjlTnkODtrbameAWMkmRSyuIQfcaKEOivaHjO5myn5HheExJTV0YG5gK/30w7QgKS6cArfUEhJqido3nO3o85LMBa2DsuHZxL6lhQh+VcKK5MndgCAWEENmjax9KaE5k0nlIV/D4sUJpMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661782; c=relaxed/simple;
-	bh=47JkOpItVlwZM7NT+fHCFEhMmOpL2TUD8D7J659Hb9g=;
+	s=arc-20240116; t=1784661785; c=relaxed/simple;
+	bh=6E088KB+7LeOE05PaVDrPIAro6U7N6OmxmVHA49XuYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gfB/CAgA+7lOY+xx3jLLEkZM3upgEQixa/bmMrD5cymOKqqUTQAml70VP4YLuJ6y3Gz4LmdmPYOiazd2CUWoaKJco6Whswk3Z9gqA0xKXfochxPBxWj9s45WM84SLPGdQ2HhbF3QM3GoOetSo4q53lG2Q7I1bN33jwhVLEV8rrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zB6bnTkO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pzfa/9O1+/8VWiRfHuGfJhzV8jhabia/Bqtvuii60DxAB/4Af1hvfIraoQwDuOZ9pGwMih+iyRL8ozvbN8vbsMwLhtoGYDAbrXp8J0UvnzenhKL6U0mICAQ++DBSezxU7gDGd2So+sI+8ldwAtX1hPSXsbmhsqop+V/Nktr/+r8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/zEdC0d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zB6bnTkO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D0D1F000E9;
-	Tue, 21 Jul 2026 19:23:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/zEdC0d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832D41F000E9;
+	Tue, 21 Jul 2026 19:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661781;
-	bh=ohfshcdHjlpMKKYHPieBlCiAJlHPesJMkfBidr5Rg8w=;
+	s=korg; t=1784661784;
+	bh=cpCIp2YeKdWRBan6qj2WiPhpUFLCksUDbTz2UcQlZxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zB6bnTkOJV+tg5pZCFB5nk4iciwS/EVBpiRi+rJx2dIaGFV42Y+QdNGd0QoY6RSkU
-	 o1dGCFwyaSTQteZlQ3uaR/SWnGslvMHkTVXTw9YO4THvj4JdONO2vKw6L7PnrQXDAb
-	 T97rgA310xbAgYGVoeWG+lfY/VTgbfbJzSvnv63A=
+	b=L/zEdC0dbW3uGUP8mjCdInm9LXNzq9NAROaUEAhmSBeZYHvkwwhVQTODGjrzLT9Q5
+	 6a19avw16zi5WKIjMGFFHs1AQKM9lpfz+GK2pl3BetEAlEDLr8BUuUib90FIAmlrLU
+	 4WbDRCWL4Jr4J4oZ1JNmYNhXrUEt59oberxsYu+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhoumin <teczm@foxmail.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0197/1276] EDAC/{skx_common,skx}: Fix UBSAN shift-out-of-bounds in skx_get_dimm_info
-Date: Tue, 21 Jul 2026 17:10:40 +0200
-Message-ID: <20260721152450.493090768@linuxfoundation.org>
+Subject: [PATCH 6.12 0198/1276] RDMA/rxe: Fix TOCTOU heap overflow in get_srq_wqe
+Date: Tue, 21 Jul 2026 17:10:41 +0200
+Message-ID: <20260721152450.515430798@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,45 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhoumin <teczm@foxmail.com>
+From: Tristan Madani <tristmd@gmail.com>
 
-[ Upstream commit c63ed6e1f5fe648a4a099b6717f679999be482ef ]
+[ Upstream commit 22b8fbded65b8c441b634a185f8da67657df6c50 ]
 
-When the skx_get_dimm_attr() helper returns -EINVAL,
-skx_get_dimm_info() does not validate these return values before using
-them in a shift operation:
+get_srq_wqe() reads wqe->dma.num_sge from the shared receive queue
+buffer, which is mapped into userspace. It validates num_sge against
+max_sge, but then re-reads the same field to calculate the memcpy
+size. A concurrent userspace thread can modify num_sge between
+validation and use, causing a heap buffer overflow when copying the
+WQE into qp->resp.srq_wqe.
 
-    size = ((1ull << (rows + cols + ranks)) * banks) >> (20 - 3);
+Read num_sge into a local variable and use it for both the bounds
+check and the size calculation.
 
-If all three values are -22, the shift exponent becomes -66, triggering
-a UBSAN shift-out-of-bounds error:
-
-    UBSAN: shift-out-of-bounds in drivers/edac/skx_common.c
-    shift exponent -66 is negative
-
-Fixes: 88a242c98740 ("EDAC, skx_common: Separate common code out from skx_edac")
-Signed-off-by: zhoumin <teczm@foxmail.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/tencent_2A0CC835A18366643CBD2865B169948AB409@qq.com
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Link: https://patch.msgid.link/r/20260518215040.1598586-2-tristan@talencesecurity.com
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/skx_common.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/sw/rxe/rxe_resp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
-index 88f5ff249f2e0e..f584165994cb0d 100644
---- a/drivers/edac/skx_common.c
-+++ b/drivers/edac/skx_common.c
-@@ -417,6 +417,9 @@ int skx_get_dimm_info(u32 mtr, u32 mcmtr, u32 amap, struct dimm_info *dimm,
- 	rows = numrow(mtr);
- 	cols = imc->hbm_mc ? 6 : numcol(mtr);
+diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
+index 29e32b91d74b88..55619eedd4b5cd 100644
+--- a/drivers/infiniband/sw/rxe/rxe_resp.c
++++ b/drivers/infiniband/sw/rxe/rxe_resp.c
+@@ -263,6 +263,7 @@ static enum resp_states get_srq_wqe(struct rxe_qp *qp)
+ 	struct rxe_recv_wqe *wqe;
+ 	struct ib_event ev;
+ 	unsigned int count;
++	unsigned int num_sge;
+ 	size_t size;
+ 	unsigned long flags;
  
-+	if (ranks < 0 || rows < 0 || cols < 0)
-+		return 0;
-+
- 	if (imc->hbm_mc) {
- 		banks = 32;
- 		mtype = MEM_HBM2;
+@@ -278,12 +279,13 @@ static enum resp_states get_srq_wqe(struct rxe_qp *qp)
+ 	}
+ 
+ 	/* don't trust user space data */
+-	if (unlikely(wqe->dma.num_sge > srq->rq.max_sge)) {
++	num_sge = wqe->dma.num_sge;
++	if (unlikely(num_sge > srq->rq.max_sge)) {
+ 		spin_unlock_irqrestore(&srq->rq.consumer_lock, flags);
+ 		rxe_dbg_qp(qp, "invalid num_sge in SRQ entry\n");
+ 		return RESPST_ERR_MALFORMED_WQE;
+ 	}
+-	size = sizeof(*wqe) + wqe->dma.num_sge*sizeof(struct rxe_sge);
++	size = sizeof(*wqe) + num_sge * sizeof(struct rxe_sge);
+ 	memcpy(&qp->resp.srq_wqe, wqe, size);
+ 
+ 	qp->resp.wqe = &qp->resp.srq_wqe.wqe;
 -- 
 2.53.0
 
