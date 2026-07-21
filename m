@@ -1,38 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46596264A86;
-	Tue, 21 Jul 2026 18:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FB0471247;
+	Tue, 21 Jul 2026 18:04:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657043; cv=none; b=CrfhDE338IKCbaA7gzX22itJPIzRZGSjZrJFEzfldAiBzatPVZYl4QcVc6sYul18yn5gVMYrh5kI6tdK4HurFZs6fyRoswM9P0WdPU6YhFWSPWD//IJlEvihK1UKJXMeTa+9rY7EgH2BOo2NJ/SNlw9OoBwMeRNaSmcF5pt4vuc=
+	t=1784657046; cv=none; b=pXXGkVoLEgpXGLmW1LeE8ylRm/GWNOlGawjPS4atdDU0TvtyZDNCDxnFLhJ/y+m8qaAPC8QPfNsORDGiEOYFvxVXaflg0Dw41i4EIbqW3zr63YFEakv+3MBbP8Ei94NL7v6YfBWtB6hYFZ6sQwXoUEuGtRFyT6pkOnFDgGHwHLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657043; c=relaxed/simple;
-	bh=BP6iJ+CDRevDntib+LNpHYrpfhvAAFBn2PAve/q6Yoc=;
+	s=arc-20240116; t=1784657046; c=relaxed/simple;
+	bh=Ti3tjYu/KmoDA3/Fqz2PaJ1b1P3qyw7ymfOtmME0Bv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MRPdKiESBDtxtAAphPgEOL8o3SJ29Mo6u3DVhmC8zcM/8PGZkPx9iVCHWrVl9RKs5VYtKnpoup2W+J3lH2FDWv25Os9a97Bj/eGHdrSNNNVBwUrbwaa7g+UwrCw5Pws3kG1pOlAm21k8B/u0e5zKSxatIvCTaBsFKTJz8ILfOnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTmB6eBj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UEX/zEjvj3GiZNo6iG8eCyYOjKb65/fYM4amWhm7ur8mirUTUvd6nSRnVxOARE7IEenHUya4lXCCxjcacqURZERre3uU91q0RO/dig4JbZjr8Q/iaRv6Tt98vqNV8nnElgT61KhUzRwRaKZuiFtcRM6pzUO6/PqB5DXLHcbQjDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8069EYN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTmB6eBj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A524E1F00A3D;
-	Tue, 21 Jul 2026 18:04:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8069EYN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5481F000E9;
+	Tue, 21 Jul 2026 18:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657042;
-	bh=vwDNLMJsIfn2kCaW8bo1rDzjk5L3T0xrhrNJM124zrs=;
+	s=korg; t=1784657044;
+	bh=5xtMHxx34PEXevzT53PfQsB9wuoA9FIAYguQR3et/pA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iTmB6eBjXWIcP2mfafAfIlbl+lgDY00NhHVLDWvMxdwqvomANYO+r1vd19lXDWl6d
-	 KSQd5g+acri+NV3qpEpeLF1uyS+FodXXF9fHvTxXHBHjeX1fRhFGFmGHDgXucJE5jY
-	 ZQxF8mcDFL8sB8niPIbL097yhjsmVNfcJw1Wh6xk=
+	b=H8069EYNu3GVzhQNBEbIEE9BKJlXVe5DMOFUYj7pnMa48MKcey3IGLgKnRindt5os
+	 6UtXerLbN5aWYQ2Llv1jJidSvytHRLeOb6wzfuGm2urI0enWLIZsyJ9C7RJsK4W80V
+	 p2JHoYx5mQ5vGZpqwKuoRrFdRaqd95tCZJky/hMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Athira Rajeev <atrajeev@linux.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Hari Bathini <hbathini@linux.vnet.ibm.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	linuxppc-dev@lists.ozlabs.org,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Petlan <mpetlan@redhat.com>,
+	Shivani Nittor <shivani@linux.ibm.com>,
+	Tanushree Shah <tanushree.shah@ibm.com>,
+	Tejas Manhas <tejas.manhas1@ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0616/1611] clk: renesas: rzg2l: Rename iterator in for_each_mod_clock() to avoid shadowing
-Date: Tue, 21 Jul 2026 17:12:12 +0200
-Message-ID: <20260721152529.241648226@linuxfoundation.org>
+Subject: [PATCH 6.18 0617/1611] powerpc tools perf: Initialize error code in auxtrace_record_init function
+Date: Tue, 21 Jul 2026 17:12:13 +0200
+Message-ID: <20260721152529.263859692@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,51 +63,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Athira Rajeev <atrajeev@linux.ibm.com>
 
-[ Upstream commit 1f10c4509649e7c5f6d5d3acccf3ef6fbb5cdd46 ]
+[ Upstream commit 789d22d77879eabb042627f6627cdb62787bc142 ]
 
-Rename the internal loop iterator variable in the for_each_mod_clock()
-macro from 'i' to '__i'.
+perf trace record fails some cases in powerpc
 
-The current naming conflicts with local loop variables named 'i' inside
-code blocks that utilize the macro, triggering compiler warnings due to
-variable shadowing:
+ # perf test "perf trace record and replay"
+ 128: perf trace record and replay                                    : FAILED!
 
-  drivers/clk/renesas/rzg2l-cpg.c:1494:36: warning: declaration of `i` shadows a previous local [-Wshadow]
-   1494 |                  for (unsigned int i = 0; i < clk->num_shared_mstop_clks; i++)
+  # perf trace record sleep 1
+  # echo $?
+    32
 
-Using a unique identifier for the macro-internal iterator resolves the
-shadowing warnings globally across all macro expansions.
+This is happening because of non-zero err value from
+auxtrace_record__init() function.
 
-Fixes: 3fd4a8bb4b63 ("clk: renesas: rzg2l: Add macro to loop through module clocks")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260520092947.70596-1-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+ static int record__auxtrace_init(struct record *rec)
+ {
+        int err;
+
+        if ((rec->opts.auxtrace_snapshot_opts || rec->opts.auxtrace_sample_opts)
+            && record__threads_enabled(rec)) {
+                pr_err("AUX area tracing options are not available in parallel streaming mode.\n");
+                return -EINVAL;
+        }
+
+        if (!rec->itr) {
+                rec->itr = auxtrace_record__init(rec->evlist, &err);
+                if (err)
+                        return err;
+        }
+
+Here "int err" is not initialised. The code expects "err" to be set from
+auxtrace_record__init() function.
+
+Update auxtrace_record__init() in arch/powerpc/util/auxtrace.c to clear
+err value in the beginning.
+
+- Clear err value in beginning of function. Any fail later will
+set appropriate return code to err.
+
+- Even if we haven't found any event for auxtrace, perf record
+should continue for other events. NULL return
+will indicate that there is no auxtrace record initialized.
+
+- Not having "err" set here will affect monitoring of other events
+also because perf record will fail seeing random value in err.
+
+Set err to -EINVAL before invoking auxtrace_record__init() in
+builtin-record.c
+
+With the fix,
+
+  # perf trace record sleep 1
+  [ perf record: Woken up 2 times to write data ]
+  [ perf record: Captured and wrote 0.033 MB perf.data (228 samples) ]
+
+Fixes: 1dbfaf94cf66ec4b ("perf powerpc: Add basic CONFIG_AUXTRACE support for VPA pmu on powerpc")
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Athira Rajeev <atrajeev@linux.ibm.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Athira Rajeev <atrajeev@linux.ibm.com>
+Cc: Hari Bathini <hbathini@linux.vnet.ibm.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: linuxppc-dev@lists.ozlabs.org
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Petlan <mpetlan@redhat.com>
+Cc: Shivani Nittor <shivani@linux.ibm.com>
+Cc: Tanushree Shah <tanushree.shah@ibm.com>
+Cc: Tejas Manhas <tejas.manhas1@ibm.com>
+Cc: Thomas Richter <tmricht@linux.ibm.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/rzg2l-cpg.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/perf/arch/powerpc/util/auxtrace.c | 6 ++++++
+ tools/perf/builtin-record.c             | 1 +
+ 2 files changed, 7 insertions(+)
 
-diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
-index edad47ca33ec56..769aae1a9fd356 100644
---- a/drivers/clk/renesas/rzg2l-cpg.c
-+++ b/drivers/clk/renesas/rzg2l-cpg.c
-@@ -1228,10 +1228,10 @@ struct mod_clock {
- #define to_mod_clock(_hw) container_of(_hw, struct mod_clock, hw)
+diff --git a/tools/perf/arch/powerpc/util/auxtrace.c b/tools/perf/arch/powerpc/util/auxtrace.c
+index 62c6f67f1bbe66..57f2910c0b0198 100644
+--- a/tools/perf/arch/powerpc/util/auxtrace.c
++++ b/tools/perf/arch/powerpc/util/auxtrace.c
+@@ -70,6 +70,12 @@ struct auxtrace_record *auxtrace_record__init(struct evlist *evlist,
+ 	struct evsel *pos;
+ 	int found = 0;
  
- #define for_each_mod_clock(mod_clock, hw, priv) \
--	for (unsigned int i = 0; (priv) && i < (priv)->num_mod_clks; i++) \
--		if ((priv)->clks[(priv)->num_core_clks + i] == ERR_PTR(-ENOENT)) \
-+	for (unsigned int __i = 0; (priv) && __i < (priv)->num_mod_clks; __i++) \
-+		if ((priv)->clks[(priv)->num_core_clks + __i] == ERR_PTR(-ENOENT)) \
- 			continue; \
--		else if (((hw) = __clk_get_hw((priv)->clks[(priv)->num_core_clks + i])) && \
-+		else if (((hw) = __clk_get_hw((priv)->clks[(priv)->num_core_clks + __i])) && \
- 			 ((mod_clock) = to_mod_clock(hw)))
++	/*
++	 * Set err value to zero here. Any fail later
++	 * will set appropriate return code to err.
++	 */
++	*err = 0;
++
+ 	evlist__for_each_entry(evlist, pos) {
+ 		if (strstarts(pos->name, "vpa_dtl")) {
+ 			found = 1;
+diff --git a/tools/perf/builtin-record.c b/tools/perf/builtin-record.c
+index b1fb87016d5aa9..2563ef66a4d946 100644
+--- a/tools/perf/builtin-record.c
++++ b/tools/perf/builtin-record.c
+@@ -867,6 +867,7 @@ static int record__auxtrace_init(struct record *rec)
+ 	}
  
- /* Need to be called with a lock held to avoid concurrent access to mstop->usecnt. */
+ 	if (!rec->itr) {
++		err = -EINVAL;
+ 		rec->itr = auxtrace_record__init(rec->evlist, &err);
+ 		if (err)
+ 			return err;
 -- 
 2.53.0
 
