@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E3946D0AA;
-	Tue, 21 Jul 2026 17:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3CEE46D088;
+	Tue, 21 Jul 2026 17:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656102; cv=none; b=Dshi1+ArMFeUaFIKxo1ycj6L++jPEthDY3VQl9tXVyb1YJh0uzxXiElHijj35CVUk786NGJX1vvrrtWh/wbqTh8djkG3BP9mdpdRIdR8cSVvAEFF43RSh0bBpx2Sh1SUUFUJTeGGR4j61QVouMDoDiiqysGpZJsWhoPTZxvSjLY=
+	t=1784656102; cv=none; b=ZqkIyanovyYVGxXmLEWkruL4G1RX/cocao64MVMV056QAqwdkESV1i65qmm/zMh+V+77wsaczUuVawQKaI59SpjjaEh8qooNs9Cbzd73lINvxZOJknwluQaacXXBNyZeWvV9D4eK5/hf+19CcxhA5B44WQ/qjSQnCvxL+0Eeg5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784656102; c=relaxed/simple;
-	bh=NATqdG6qfC23uo4d7ENIv49CRlSJCaTQxSJXd9ScEjk=;
+	bh=xMt5ociNmNfaZGJZvZRyVPB9+FW1GWUdEDq0Wqh20Po=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PHo7BxPrPxpMzmYt7iTb+FK9Pi/I+AFbWGiBUNojFfbnQx/4Kw6cuvBCa/7qypCP8jdpKw59fvSrA6uqs66K+qABJo4DUnF/Hhv6n1p7bqUiMG0humWuM+BrZEjiheoywiCyOJP/ULyK30cPffMPn81ndD3NvA8alN3sDb6bQ8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNOfxRl6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g8dHggcBfN3Qx1oC9oTzl+52WCm7Xbta/+CVhjm8uzEeZApTav1mxHmNhgtx0iBvdSsNeGlBo5OZD2r89TMWq8hqiJjxy76r1RLau3jlDUCRUgioXoaFdAuRIErM9xmDg8eR+m4RoAt8oqGAdDz2mAN/m7CQqu/cqHZs5l9/cqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHW1PKZ8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNOfxRl6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5BF41F00A3A;
-	Tue, 21 Jul 2026 17:48:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHW1PKZ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73BB91F00A3D;
+	Tue, 21 Jul 2026 17:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656099;
-	bh=WXgDDsfRNp33HOM2cu71LxVM5njC6YFc+TgmEkOhYl0=;
+	s=korg; t=1784656093;
+	bh=jNW1lT64b9H2NzJyUO/TxhuwAXHU6K0o9jzFB6jzoTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yNOfxRl6lM+uOia3ZGD5KXinwb7AS2LfyLE6fBXP9iPqJZPpPX1KaadTcqnJspa5n
-	 FKj1AnR+eMp2cxFogcA+DaZj312unRUFHiv51hrg8orFikoL4oolFiBB/jnuJedJqy
-	 99DMK92VOpInFXIoors30cifxHmGTN93Kq1RX7So=
+	b=YHW1PKZ8tL2AAJcRX+O9C5v6+MHwfRCinkmOEM/QQ20iZx24fzuMfaI1/HKUz1R8c
+	 JkRfltYJE/JeIaBI5lvhPYMoVLKCP04H2Mowi5sgJNYUsN5hvf0uRNfKonhqvtro4X
+	 GBq4LbMiVrSt9/sYo84FP4ouV+Hjr0h7Ph4CY+fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Chul Kim <chul.kim@idt.com>,
-	Matt Porter <mporter@kernel.crashing.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Brian Norris <briannorris@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0259/1611] rapidio/tsi721: prevent a bad dereference in tsi721_db_dpc()
-Date: Tue, 21 Jul 2026 17:06:15 +0200
-Message-ID: <20260721152520.870147688@linuxfoundation.org>
+Subject: [PATCH 6.18 0257/1611] arm64: tegra: Add #{address,size}-cells to Chromium-based /firmware
+Date: Tue, 21 Jul 2026 17:06:13 +0200
+Message-ID: <20260721152520.825195762@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,56 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Brian Norris <briannorris@chromium.org>
 
-[ Upstream commit fc15e3a30ddd950f009c76765331783b9af94a87 ]
+[ Upstream commit f0fbedccae9e16624977cca02216ab2399f5a3ab ]
 
-With a list_for_each() loop, if we don't find the item we are looking for
-in the list, then the loop exits with the iterator, which is "dbell" in
-this loop, pointing to invalid memory.
+Chromium/Depthcharge bootloaders may dynamically add a few device nodes
+to a system's DTB under a /firmware node. A typical DT looks something
+like the following:
 
-This code uses the "found" variable to determine if we have found the
-doorbell we are looking for or not.  However, the problem that the "found"
-variable needs to be set to false at the start of each iteration,
-otherwise after the first correct doorbell, then everything is marked as
-found.
+/ {
+        firmware {
+                ranges;
 
-Reset the "found" to false at the start of the iteration and move the
-variable inside the loop.
+                coreboot {
+                        compatible = "coreboot";
+                        reg = <...>;
+                        ...;
+                };
+        };
+};
 
-Link: https://lore.kernel.org/af2WHMZiqMwdYveO@stanley.mountain
-Fixes: 48618fb4e522 ("RapidIO: add mport driver for Tsi721 bridge")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Chul Kim <chul.kim@idt.com>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Notably, the /firmware node has an empty 'ranges', but does not have
+address/size-cells.
+
+Commit 6e5773d52f4a ("of/address: Fix WARN when attempting translating
+non-translatable addresses") started requiring #address-cells for a
+device's parent if we want to use the reg resource in a device node.
+This leads to errors like the following:
+
+[    7.763870] coreboot_table firmware:coreboot: probe with driver coreboot_table failed with error -22
+
+Add appropriate #{address,size}-cells to work around the problem.
+
+Note that Google has also patched the Depthcharge bootloader source to
+add {address,size}-cells [1], but bootloader updates are typically
+delivered only via Google OS updates. Not all users install Google
+software updates, and even if they do, Google may not produce updated
+binaries for all/older devices.
+
+[1] https://lore.kernel.org/all/20241209092809.GA3246424@google.com/
+    https://crrev.com/c/6051580 ("coreboot: Insert #address-cells and
+    #size-cells for firmware node")
+
+Closes: https://lore.kernel.org/all/aeKlYzTiL0OB1y3g@google.com/
+Fixes: 6e5773d52f4a ("of/address: Fix WARN when attempting translating non-translatable addresses")
+Signed-off-by: Brian Norris <briannorris@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rapidio/devices/tsi721.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/nvidia/tegra132-norrin.dts | 5 +++++
+ arch/arm64/boot/dts/nvidia/tegra210-smaug.dts  | 5 +++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/drivers/rapidio/devices/tsi721.c b/drivers/rapidio/devices/tsi721.c
-index 4b84270a890617..ab64c991468de2 100644
---- a/drivers/rapidio/devices/tsi721.c
-+++ b/drivers/rapidio/devices/tsi721.c
-@@ -394,7 +394,6 @@ static void tsi721_db_dpc(struct work_struct *work)
- 						    idb_work);
- 	struct rio_mport *mport;
- 	struct rio_dbell *dbell;
--	int found = 0;
- 	u32 wr_ptr, rd_ptr;
- 	u64 *idb_entry;
- 	u32 regval;
-@@ -412,6 +411,8 @@ static void tsi721_db_dpc(struct work_struct *work)
- 	rd_ptr = ioread32(priv->regs + TSI721_IDQ_RP(IDB_QUEUE)) % IDB_QSIZE;
+diff --git a/arch/arm64/boot/dts/nvidia/tegra132-norrin.dts b/arch/arm64/boot/dts/nvidia/tegra132-norrin.dts
+index 683ac124523b3b..1f5222d43e62c1 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra132-norrin.dts
++++ b/arch/arm64/boot/dts/nvidia/tegra132-norrin.dts
+@@ -18,6 +18,11 @@ chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
  
- 	while (wr_ptr != rd_ptr) {
-+		int found = 0;
++	firmware {
++		#address-cells = <2>;
++		#size-cells = <2>;
++	};
 +
- 		idb_entry = (u64 *)(priv->idb_base +
- 					(TSI721_IDB_ENTRY_SIZE * rd_ptr));
- 		rd_ptr++;
+ 	memory@80000000 {
+ 		device_type = "memory";
+ 		reg = <0x0 0x80000000 0x0 0x80000000>;
+diff --git a/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts b/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
+index dfbd1c72388c12..8cf6c04601ad68 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
++++ b/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
+@@ -25,6 +25,11 @@ chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
+ 
++	firmware {
++		#address-cells = <2>;
++		#size-cells = <2>;
++	};
++
+ 	memory@80000000 {
+ 		device_type = "memory";
+ 		reg = <0x0 0x80000000 0x0 0xc0000000>;
 -- 
 2.53.0
 
