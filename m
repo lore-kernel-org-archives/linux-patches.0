@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5525C3BD63B;
-	Tue, 21 Jul 2026 22:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70E935C682;
+	Tue, 21 Jul 2026 22:05:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671520; cv=none; b=Zi8HikqrBiuQnme+z9UpqsBeo6WMWdNqohb2p4SQ9l5CUJZdnNrLt6taX/R4JpyVORpkgANwTAWTyT3OYMp5jr7mvVJMzgXZiN/H0azRfRXNGbf7HPLc/X/fdl+Asng/lw0rd+h5hsnn81rO4mwLE/qC2dJM0d+AVNE6oObX474=
+	t=1784671523; cv=none; b=HoSrBhtxNPMjPbdnBPo8WTqMOtacHSP0Sv9+zQDb9jaMw8ZLlCsbAZeLzupP/G1LGSuo+qzBfCWlzhOMM8vUgD3LCSjL4X87JBSbtIePTDhlhKuHkBJ8khuik47yjhWIKh/1qT+DinOXPoLhzqsuxHuVVytJm38fjTcris1Z9oY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671520; c=relaxed/simple;
-	bh=HQ+tGHHH22guOxz8b1d6/cdWknFI437RD/Ni8uQc2pc=;
+	s=arc-20240116; t=1784671523; c=relaxed/simple;
+	bh=C1Cv9BHpFHQVyUo6E6loAB4KbUGXQYvSL2DOvQ+HARA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dziMjx7GciR8CkDpEZTPxBe1EZFoWlRsFMaULlnqjo3X/JciSSbm4bGTTatepiVk6ubjG1DifthIsqVfCWpLQPlGr9l5OnDEniViLXJ7KpAmn2R9sUYjkK9kromynvmXZGpZ2F5V4NhafrQC2F5dU/N7pdZMFHXVWsrzwltXTB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BwysRV+A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qEz3IlHDv98X6uQ7mefRKEHm2Qd3k5qRCKogSO8y99UcHIhXAfXZqfb5w1shcS741WsKl6Cm89aARCQIf2VHQOdnQf4x8H4kcAqnswx+vOmLGZWHDorQKE5So0yc4iRGZo99jcRDGah6MgJ2Yc1rVZbrnnLGkaLoxePWd2pAZmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p423pijV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BwysRV+A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B561F000E9;
-	Tue, 21 Jul 2026 22:05:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p423pijV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6048E1F000E9;
+	Tue, 21 Jul 2026 22:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671519;
-	bh=UeuziTShJdc+mpCen8NW/ktKyjM7V4Pfj/4HOZ6V7Bg=;
+	s=korg; t=1784671521;
+	bh=niuajMdtAEC67ZDGTdCiD0idwfXEg3Ib3PooVwC6z00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BwysRV+A/+mHcMWvVwG0OEbY2UCWtJFnsF4vdtDaqym7N7tOhBHMGcAOfe/FDMhqQ
-	 GIbRjWrTluo7EjS7juZpbznvuJah7hpYvR6k16La0vU9go4hK7551rw5qNUVqhSetF
-	 acCH2p6htCtIXuEO95Oz+lzCl/vWXKRvc6kYz0dg=
+	b=p423pijV98ZyNSGP1GMyLhkQ4Rh+NEtIIcSj4SOkuI4PwceVeXlqoizmdh3dUQyrj
+	 BobDhy8hjLCszOq4ARjQukFs7kEXb39N4v7MMnDYqUIDIMnW3+BfnFccwCJqoXh80N
+	 PzCv8jMhGe1s0TVdpiEaHwljtbg/qb23Q1pX6eGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
 	Val Packett <val@packett.cool>,
 	Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Subject: [PATCH 5.15 278/843] drm/msm/dp: fix HPD state status bit shift value
-Date: Tue, 21 Jul 2026 17:18:33 +0200
-Message-ID: <20260721152412.279577153@linuxfoundation.org>
+Subject: [PATCH 5.15 279/843] drm/msm/dp: Fix the ISR_* enum values
+Date: Tue, 21 Jul 2026 17:18:34 +0200
+Message-ID: <20260721152412.302581619@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -56,42 +56,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
 
-[ Upstream commit 2e6c2e81d81251623c458a60e2a57447dcbc988e ]
+[ Upstream commit 3fbfdc3b1d48cc115a86953e5df0c76cd2efc42b ]
 
-The HPD state status is the 3 most significant bits, not 4 bits of the
-HPD_INT_STATUS register.
+The ISR_HPD_* enum should represent values that can be read from the
+REG_DP_DP_HPD_INT_STATUS register. Swap ISR_HPD_IO_GLITCH_COUNT and
+ISR_HPD_REPLUG_COUNT to map them correctly to register values.
 
-Fix the bit shift macro so that the correct bits are returned in
-msm_dp_aux_is_link_connected().
+While we are at it, correct the spelling for ISR_HPD_REPLUG_COUNT.
 
-Fixes: 19e52bcb27c2 ("drm/msm/dp: return correct connection status after suspend")
+Fixes: 8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
 Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Tested-by: Val Packett <val@packett.cool> # x1e80100-dell-latitude-7455
 Tested-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com> # Hamoa IOT EVK, QCS8300 Ride
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/727611/
-Link: https://lore.kernel.org/r/20260524-hpd-refactor-v6-1-cf3ab488dd7b@oss.qualcomm.com
+Patchwork: https://patchwork.freedesktop.org/patch/727602/
+Link: https://lore.kernel.org/r/20260524-hpd-refactor-v6-2-cf3ab488dd7b@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_reg.h | 4 ++--
+ drivers/gpu/drm/msm/dp/dp_display.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
-index 176a503ece9c04..92c69864ad7228 100644
---- a/drivers/gpu/drm/msm/dp/dp_reg.h
-+++ b/drivers/gpu/drm/msm/dp/dp_reg.h
-@@ -32,8 +32,8 @@
- #define DP_DP_IRQ_HPD_INT_ACK			(0x00000002)
- #define DP_DP_HPD_REPLUG_INT_ACK		(0x00000004)
- #define DP_DP_HPD_UNPLUG_INT_ACK		(0x00000008)
--#define DP_DP_HPD_STATE_STATUS_BITS_MASK	(0x0000000F)
--#define DP_DP_HPD_STATE_STATUS_BITS_SHIFT	(0x1C)
-+#define DP_DP_HPD_STATE_STATUS_BITS_MASK	(0x00000007)
-+#define DP_DP_HPD_STATE_STATUS_BITS_SHIFT	(0x1D)
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index bbe350fab797c6..d32c1cf0e56ec6 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -34,9 +34,9 @@ enum {
+ 	ISR_DISCONNECTED,
+ 	ISR_CONNECT_PENDING,
+ 	ISR_CONNECTED,
+-	ISR_HPD_REPLUG_COUNT,
++	ISR_HPD_IO_GLITCH_COUNT,
+ 	ISR_IRQ_HPD_PULSE_COUNT,
+-	ISR_HPD_LO_GLITH_COUNT,
++	ISR_HPD_REPLUG_COUNT,
+ };
  
- #define REG_DP_DP_HPD_INT_MASK			(0x0000000C)
- #define DP_DP_HPD_PLUG_INT_MASK			(0x00000001)
+ /* event thread connection state */
 -- 
 2.53.0
 
