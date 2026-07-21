@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C6143F4CE;
-	Tue, 21 Jul 2026 20:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E9E439345;
+	Tue, 21 Jul 2026 20:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667550; cv=none; b=TYLbzyREfbVeEg2wHPyEELJfFWyITJ6sUbpJ76kemEpsE+OGxM8WUZrb0JIXSkoSIHYcbSD5wPu+XsRnRaq5HSvy7rrQEIZtg/a5OI/l6X6OIXwmNxt43ncV0C4GAGKP4UCMAjwlpUW49usXalkJatA5B98F9ShMGYQtdKvVVhA=
+	t=1784667552; cv=none; b=N/xtPj3G8Uv56OgVPjIu1//ZXr+SCAEdycTUqO2+CBhnQ9gXDSg5ACQyNXrdZou0wQaQyFe9sp1lZO0y30KMY3R0/Qg2UD4EKFG1RCajBYBf07X6qE9guu0MwDq3Vc+sNPAfVkdRZ5qMPuLaxubLRFjdaUbom2+CPkddNZkbTaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667550; c=relaxed/simple;
-	bh=sONuebx8tfWFs3RMgQjZyLpu+Wbd3e40FAX4cdaXrns=;
+	s=arc-20240116; t=1784667552; c=relaxed/simple;
+	bh=EQBq9TTTI55w81xg5wXRNHBVQfQg2arepSKBRW66yUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pr77mHUzSA7l4ZuUJsA1PLSY87Uazjj7zgUZdrh4vScXMHtCJH2EaE2TeWzksMyNaCDHjzb8UBqH23s/E5GMRFhaiHLq2AAnw3JoycgOJ2WRZMcXaB13PBwiE5oT8U2+dYRcsa+vwzljHly+EGnYKfFx+4hPxZjQuq08Uo5HqsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b93TNEwk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EZrMFlXmZL9j3NaR3jr59s7HXTTmANzHheQrBOCUY4dnKxvfNLOEnbj2in/DxiAPC/t2u8IgVg7CyYkZFALSIarzjfvdH7IwvVP1x4RW4xBGxV/VknOc0konrcQfy+ymFvnXduGejXDfuLCOBkeyUe8fzLyOf1wbt3tBM2BWCIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VPAUSNjs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b93TNEwk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424D91F00A3D;
-	Tue, 21 Jul 2026 20:59:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VPAUSNjs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFF51F000E9;
+	Tue, 21 Jul 2026 20:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667548;
-	bh=2pdfxwR54iF+ARZK+JF9AjVLA8BHskxaupJRsu0kTCg=;
+	s=korg; t=1784667551;
+	bh=NHXMPDkML5XKaefC0yId1jOpyHyA2vdfDDsImkBw9Us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b93TNEwk13Pfnzk17skNw2BV1RYeLZhYXR8YVJvZl+UxzcCsMOfa5nDoLBOrCntdi
-	 Tee/TyjlVCyQEFFh3sdMwqrQHLw1jnReGw/y5hIuPoHsoJnfXltqCNsTybWftQAh9g
-	 5IaPWF+tEsERzduMWdMBEQ3o9GKOg7rUJqB/u36Q=
+	b=VPAUSNjs/oFtSbIxq1ddvzsp2ekhNGsL3FIIAUNW6yqPqVq0s6/kCdoOI2phN7ycY
+	 kvMdEbV8N0AFmVSjJO4mLWsv37S7du/5fE+r+nAx/AscdSLlFraZK3JcHl19ukfhSo
+	 6+yJ0X+8z8+hYzyPKJ1whXLqyLTyeaZrKLpkezJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.6 1101/1266] hwmon: (w83627hf) remove VID sysfs files on error and remove
-Date: Tue, 21 Jul 2026 17:25:38 +0200
-Message-ID: <20260721152506.439494667@linuxfoundation.org>
+Subject: [PATCH 6.6 1102/1266] hwmon: (w83793) remove vrm sysfs file on probe failure
+Date: Tue, 21 Jul 2026 17:25:39 +0200
+Message-ID: <20260721152506.462440405@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,47 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 5264b389c4e02dec214a46c400eb3ab867a7749a upstream.
+commit 77b983757280c69b0290811669ff1d31022e5f1d upstream.
 
-w83627hf_probe() creates cpu0_vid and vrm with device_create_file() when
-VID information is available.
+w83793_probe() creates the vrm sysfs file after creating the VID files
+when VID support is present.
 
-The error path and remove callback only remove the common and optional
-attribute groups.  Those groups do not contain cpu0_vid or vrm, so the
-files can remain after a later probe failure or after device removal
-while their callbacks still expect live driver data.
+The normal remove path deletes vrm, but the probe error path only
+removes the sensor, SDA, VID, fan, PWM and temperature files.  A later
+probe failure can therefore leave vrm behind after the driver data has
+been freed.
 
-Remove the standalone VID sysfs files from both the probe error path and
-the remove callback.
+Remove vrm in the probe error path next to the VID files, matching the
+normal remove path.
 
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20260615064732.48113-1-pengpeng@iscas.ac.cn
+Link: https://lore.kernel.org/r/20260615064806.51139-1-pengpeng@iscas.ac.cn
 Cc: stable@vger.kernel.org
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/w83627hf.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hwmon/w83793.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/hwmon/w83627hf.c
-+++ b/drivers/hwmon/w83627hf.c
-@@ -1823,6 +1823,8 @@ static int w83627hf_probe(struct platfor
- 	return 0;
+--- a/drivers/hwmon/w83793.c
++++ b/drivers/hwmon/w83793.c
+@@ -1918,6 +1918,7 @@ exit_remove:
  
-  error:
+ 	for (i = 0; i < ARRAY_SIZE(w83793_vid); i++)
+ 		device_remove_file(dev, &w83793_vid[i].dev_attr);
 +	device_remove_file(dev, &dev_attr_vrm);
-+	device_remove_file(dev, &dev_attr_cpu0_vid);
- 	sysfs_remove_group(&dev->kobj, &w83627hf_group);
- 	sysfs_remove_group(&dev->kobj, &w83627hf_group_opt);
- 	return err;
-@@ -1834,6 +1836,8 @@ static int w83627hf_remove(struct platfo
  
- 	hwmon_device_unregister(data->hwmon_dev);
- 
-+	device_remove_file(&pdev->dev, &dev_attr_vrm);
-+	device_remove_file(&pdev->dev, &dev_attr_cpu0_vid);
- 	sysfs_remove_group(&pdev->dev.kobj, &w83627hf_group);
- 	sysfs_remove_group(&pdev->dev.kobj, &w83627hf_group_opt);
- 
+ 	for (i = 0; i < ARRAY_SIZE(w83793_left_fan); i++)
+ 		device_remove_file(dev, &w83793_left_fan[i].dev_attr);
 
 
