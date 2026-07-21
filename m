@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53A3375AC3;
-	Tue, 21 Jul 2026 17:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DF6376A06;
+	Tue, 21 Jul 2026 17:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653511; cv=none; b=qdPKxFgV4B6CyyNSXv249xqg7tiUK47MmIkRIW1ZbvziS6azLhB+JqGDGgu5DwLZEvuXSty8ySDgZ7lUNpdTJhY+T6nKkJOrTYI7RJP3Vq8cBm0/HXkfU0ozyXAJNK89W+svMNQBNHX0oRcjJQE4PPgDnW6vxD1hnT+McVLhmls=
+	t=1784653513; cv=none; b=bpH70g3GbtCelzoqV00yGW6/RSRJP4GeHxeBJROi34tvxRNnI82dooQgsIe9P41AsoxUMDvN/MuDoBEdexph4WmY/OoDi+a/jGXrYxmxPBcbb8AKQ65zUPsj99x+v9eSK75+UdAw5N/QLL6AUd+tDhpaWGjwYK8cVUuWfVs/NP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653511; c=relaxed/simple;
-	bh=fyZy539fBrtOnpFjUfz/wtrXRD+IIhs6Uwgwu9DQlFQ=;
+	s=arc-20240116; t=1784653513; c=relaxed/simple;
+	bh=NLBL16ZHZZRqJbpgmKg8or0WgkMnGtZqja8c2/mQ+no=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y6cyJzm8k3/PN6KSKhLizculkQRqt1gCT0D76jFkrolOxBIvHcts7RarDjlRzobYCONJygoutaaVfhbrnsGpv60FawCeqqpNzjtlAK/i/tTluzPoh8pELG2Azir9WykEPINMrbD4lSWgHykA63Xh7gsc9sAyn3M1cdxPFDdnIqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GzO/0d8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L2VfGRaNaeX5aMhcnMpRuc5HMOwWMpr/7s6eDKcGTPosrmuUUraWUp0vsVdXd4BmjFj9tMTvlMG0+Kllq9GbHxikvrOwZKYXuJnplp07dSEE039Lh2Y6hy5/5lFReA9yccBKuzJMuhKCQ8AEEj+EKyJsDpmWAO9ZcR5+dFh+oBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNcS+f/n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GzO/0d8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1291F000E9;
-	Tue, 21 Jul 2026 17:05:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNcS+f/n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73651F000E9;
+	Tue, 21 Jul 2026 17:05:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653509;
-	bh=txx7iZk3wE47hzqCDXWhaXyEXOM2TfM3D8uUz1W4Pws=;
+	s=korg; t=1784653512;
+	bh=u1y6Rg9lOAy879PKqD9mw92+96Atn9b/kTSRwtluZVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1GzO/0d8mTWjiKJYMTPfmt9LVcwyeZYy8pi/KH/fuW/s0tWuBaCW66J8kHSjWL++m
-	 crS6/8dJXfkidwyygc7kGnUvuzqPR+AqqMhZ98lJGqV7PwUUMthvuYRYNzSjkWiVpu
-	 00rpkKQi5DtMDMLH/FYSXxAQBuGWDt1dq00QfQ9w=
+	b=oNcS+f/nmjBmJ6aP7azlz7JpF5fsk18TwjxJ3JFMngHyjiuFj6AZoN12Hi8SJd2pP
+	 XNQhY6twGlXOaWf3wSaMByDkN09hNPIUOHrQH0rjCThNo3nRybxB+u48db1vsiq0N2
+	 /cRc6Q+kXwg6vqVdCebVoP9uOuKfX438qKtx4cm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Qingshuang Fu <fuqingshuang@kylinos.cn>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1337/2077] drm/panthor: Always use the IRQ-safe variant when acquiring the fence lock
-Date: Tue, 21 Jul 2026 17:16:50 +0200
-Message-ID: <20260721152624.350989030@linuxfoundation.org>
+Subject: [PATCH 7.1 1355/2077] irqchip/ts4800: Fix missing chained handler cleanup on remove
+Date: Tue, 21 Jul 2026 17:17:08 +0200
+Message-ID: <20260721152624.777814057@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,176 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Qingshuang Fu <fuqingshuang@kylinos.cn>
 
-[ Upstream commit 778c57d624974e64535ef1c9d9b4d8e5066153f4 ]
+[ Upstream commit 98bf7e54cec07d514b3575c11896a8b12d50ecc4 ]
 
-Since dma_fence objects can be shared with other subsystems, they may be
-accessed from hardirq context in those drivers, and we have to take
-that into account by also using the IRQ-safe variant when acquiring
-the lock.
+The driver installs a chained handler for the parent interrupt during probe
+using irq_set_chained_handler_and_data(), but the remove function does not
+clear this handler. This leaves a dangling handler that may be called when
+the parent interrupt fires after the driver has been removed, potentially
+accessing freed memory and causing a kernel crash.
 
-While at it, switch to the guard model.
+Additionally, the parent_irq obtained via irq_of_parse_and_map() is not
+stored, making it inaccessible in the remove function. Moreover, interrupt
+mappings created during probe are not properly disposed.
 
-Fixes: de8548813824 ("drm/panthor: Add the scheduler logical block")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260625-panthor-signal-from-irq-v5-0-8836a74e0ef9@collabora.com?part=11
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260625-panthor-misc-fixes-v1-1-b67ed973fea6@collabora.com
+Fix this by:
+
+   - Saving parent_irq in probe
+   - Clearing the chained handler with NULL in ts4800_ic_remove()
+   - Disposing all IRQ mappings before domain removal to prevent resource
+     leaks
+
+Fixes: d01f8633d52e ("irqchip/ts4800: Add TS-4800 interrupt controller")
+Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260623015211.109382-1-fffsqian@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_sched.c | 81 ++++++++++++-------------
- 1 file changed, 38 insertions(+), 43 deletions(-)
+ drivers/irqchip/irq-ts4800.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
-index 2fe04d0f0e3a81..d3e7f70fdd3283 100644
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -1151,15 +1151,14 @@ queue_suspend_timeout_locked(struct panthor_queue *queue)
- static void
- queue_suspend_timeout(struct panthor_queue *queue)
+diff --git a/drivers/irqchip/irq-ts4800.c b/drivers/irqchip/irq-ts4800.c
+index 2e4013c6834de1..c7c0b155e353ee 100644
+--- a/drivers/irqchip/irq-ts4800.c
++++ b/drivers/irqchip/irq-ts4800.c
+@@ -28,6 +28,7 @@ struct ts4800_irq_data {
+ 	void __iomem            *base;
+ 	struct platform_device	*pdev;
+ 	struct irq_domain       *domain;
++	unsigned int            parent_irq;
+ };
+ 
+ static void ts4800_irq_mask(struct irq_data *d)
+@@ -134,6 +135,7 @@ static int ts4800_ic_probe(struct platform_device *pdev)
+ 	irq_set_chained_handler_and_data(parent_irq,
+ 					 ts4800_ic_chained_handle_irq, data);
+ 
++	data->parent_irq = parent_irq;
+ 	platform_set_drvdata(pdev, data);
+ 
+ 	return 0;
+@@ -142,6 +144,14 @@ static int ts4800_ic_probe(struct platform_device *pdev)
+ static void ts4800_ic_remove(struct platform_device *pdev)
  {
--	spin_lock(&queue->fence_ctx.lock);
-+	guard(spinlock_irqsave)(&queue->fence_ctx.lock);
- 	queue_suspend_timeout_locked(queue);
--	spin_unlock(&queue->fence_ctx.lock);
+ 	struct ts4800_irq_data *data = platform_get_drvdata(pdev);
++	unsigned int hwirq;
++
++	irq_set_chained_handler_and_data(data->parent_irq, NULL, NULL);
++
++	for (hwirq = 0; hwirq < 8; hwirq++)
++		irq_dispose_mapping(irq_find_mapping(data->domain, hwirq));
++
++	irq_dispose_mapping(data->parent_irq);
+ 
+ 	irq_domain_remove(data->domain);
  }
- 
- static void
- queue_resume_timeout(struct panthor_queue *queue)
- {
--	spin_lock(&queue->fence_ctx.lock);
-+	guard(spinlock_irqsave)(&queue->fence_ctx.lock);
- 
- 	if (queue_timeout_is_suspended(queue)) {
- 		mod_delayed_work(queue->scheduler.timeout_wq,
-@@ -1168,8 +1167,6 @@ queue_resume_timeout(struct panthor_queue *queue)
- 
- 		queue->timeout.remaining = MAX_SCHEDULE_TIMEOUT;
- 	}
--
--	spin_unlock(&queue->fence_ctx.lock);
- }
- 
- /**
-@@ -1542,7 +1539,7 @@ cs_slot_process_fault_event_locked(struct panthor_device *ptdev,
- 		u64 cs_extract = queue->iface.output->extract;
- 		struct panthor_job *job;
- 
--		spin_lock(&queue->fence_ctx.lock);
-+		guard(spinlock_irqsave)(&queue->fence_ctx.lock);
- 		list_for_each_entry(job, &queue->fence_ctx.in_flight_jobs, node) {
- 			if (cs_extract >= job->ringbuf.end)
- 				continue;
-@@ -1552,7 +1549,6 @@ cs_slot_process_fault_event_locked(struct panthor_device *ptdev,
- 
- 			dma_fence_set_error(job->done_fence, -EINVAL);
- 		}
--		spin_unlock(&queue->fence_ctx.lock);
- 	}
- 
- 	if (group) {
-@@ -2181,13 +2177,13 @@ group_term_post_processing(struct panthor_group *group)
- 		if (!queue)
- 			continue;
- 
--		spin_lock(&queue->fence_ctx.lock);
--		list_for_each_entry_safe(job, tmp, &queue->fence_ctx.in_flight_jobs, node) {
--			list_move_tail(&job->node, &faulty_jobs);
--			dma_fence_set_error(job->done_fence, err);
--			dma_fence_signal_locked(job->done_fence);
-+		scoped_guard(spinlock_irqsave, &queue->fence_ctx.lock) {
-+			list_for_each_entry_safe(job, tmp, &queue->fence_ctx.in_flight_jobs, node) {
-+				list_move_tail(&job->node, &faulty_jobs);
-+				dma_fence_set_error(job->done_fence, err);
-+				dma_fence_signal_locked(job->done_fence);
-+			}
- 		}
--		spin_unlock(&queue->fence_ctx.lock);
- 
- 		/* Manually update the syncobj seqno to unblock waiters. */
- 		syncobj = group->syncobjs->kmap + (i * sizeof(*syncobj));
-@@ -3046,39 +3042,39 @@ static bool queue_check_job_completion(struct panthor_queue *queue)
- 	LIST_HEAD(done_jobs);
- 
- 	cookie = dma_fence_begin_signalling();
--	spin_lock(&queue->fence_ctx.lock);
--	list_for_each_entry_safe(job, job_tmp, &queue->fence_ctx.in_flight_jobs, node) {
--		if (!syncobj) {
--			struct panthor_group *group = job->group;
-+	scoped_guard(spinlock_irqsave, &queue->fence_ctx.lock) {
-+		list_for_each_entry_safe(job, job_tmp, &queue->fence_ctx.in_flight_jobs, node) {
-+			if (!syncobj) {
-+				struct panthor_group *group = job->group;
- 
--			syncobj = group->syncobjs->kmap +
--				  (job->queue_idx * sizeof(*syncobj));
--		}
-+				syncobj = group->syncobjs->kmap +
-+					  (job->queue_idx * sizeof(*syncobj));
-+			}
- 
--		if (syncobj->seqno < job->done_fence->seqno)
--			break;
-+			if (syncobj->seqno < job->done_fence->seqno)
-+				break;
- 
--		list_move_tail(&job->node, &done_jobs);
--		dma_fence_signal_locked(job->done_fence);
--	}
-+			list_move_tail(&job->node, &done_jobs);
-+			dma_fence_signal_locked(job->done_fence);
-+		}
- 
--	if (list_empty(&queue->fence_ctx.in_flight_jobs)) {
--		/* If we have no job left, we cancel the timer, and reset remaining
--		 * time to its default so it can be restarted next time
--		 * queue_resume_timeout() is called.
--		 */
--		queue_suspend_timeout_locked(queue);
-+		if (list_empty(&queue->fence_ctx.in_flight_jobs)) {
-+			/* If we have no job left, we cancel the timer, and reset remaining
-+			 * time to its default so it can be restarted next time
-+			 * queue_resume_timeout() is called.
-+			 */
-+			queue_suspend_timeout_locked(queue);
- 
--		/* If there's no job pending, we consider it progress to avoid a
--		 * spurious timeout if the timeout handler and the sync update
--		 * handler raced.
--		 */
--		progress = true;
--	} else if (!list_empty(&done_jobs)) {
--		queue_reset_timeout_locked(queue);
--		progress = true;
-+			/* If there's no job pending, we consider it progress to avoid a
-+			 * spurious timeout if the timeout handler and the sync update
-+			 * handler raced.
-+			 */
-+			progress = true;
-+		} else if (!list_empty(&done_jobs)) {
-+			queue_reset_timeout_locked(queue);
-+			progress = true;
-+		}
- 	}
--	spin_unlock(&queue->fence_ctx.lock);
- 	dma_fence_end_signalling(cookie);
- 
- 	list_for_each_entry_safe(job, job_tmp, &done_jobs, node) {
-@@ -3343,9 +3339,8 @@ queue_run_job(struct drm_sched_job *sched_job)
- 	job->ringbuf.end = job->ringbuf.start + (instrs.count * sizeof(u64));
- 
- 	panthor_job_get(&job->base);
--	spin_lock(&queue->fence_ctx.lock);
--	list_add_tail(&job->node, &queue->fence_ctx.in_flight_jobs);
--	spin_unlock(&queue->fence_ctx.lock);
-+	scoped_guard(spinlock_irqsave, &queue->fence_ctx.lock)
-+		list_add_tail(&job->node, &queue->fence_ctx.in_flight_jobs);
- 
- 	/* Make sure the ring buffer is updated before the INSERT
- 	 * register.
 -- 
 2.53.0
 
