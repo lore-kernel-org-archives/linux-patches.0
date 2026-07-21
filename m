@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4AB3BA225;
-	Tue, 21 Jul 2026 20:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3379F3AFAEC;
+	Tue, 21 Jul 2026 20:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667047; cv=none; b=twRvPPYek7hWi9lVI4g62/rMqyu4nnlMIhknuXHQiCUizgES/s9ZF6+3a54e2KpN3DYEOUrkIx4lkSnZmEwGz93iGEP4qF39h8af/6VzWYPH2ACmp0CvOIsfSh6SFeDV/hhv8kcdQBNyI4N0FtqfsDr874p1yJaG+x1psxcDHOM=
+	t=1784667050; cv=none; b=IS0NqqxPdpqOnLxeRtEy1kx0sey4ibX4u+RlY2Ytiu0wqTtpkdUFFbQJrV0rXPwa2oXDpYkc69Q9GgvSBhjyKjNgMnvM5z3kWR4aiajmxKcbkHk21Em//h5v2vAR+2PE33UJQ39kkKRwSQVjCKmJIHiEB833nyN08MbQuX6IbK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667047; c=relaxed/simple;
-	bh=Lt94pT0D73kg+TQCHg1pHoZY1efk4h0ERbAvzTHSEgg=;
+	s=arc-20240116; t=1784667050; c=relaxed/simple;
+	bh=DN3cogYXeSuzEbLTcv6nerbhbriI5uRSLqtC4L/OC5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KsBByWA9sEh5at89EkUZVxx/gjY9S2eiMB60DjOVXLeTeEGYw38BbKl7OQU3jF16AxjkBGnK4V49CRsThMYotDCStWfMAbtjEwILOranHv5i30pHOX574MLDz+AxN4fzABITgzuAmXUenGruvhs6OZnzq8igcIY/TYlTctVE5MA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDZIS76y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oPp2R0k7Cj2CMlOd0gWBOCcBuEgqbPIVpBAMDeCYE0BuYhcz5u7jNFi1cGXFGbFTSRlWkFxFMkJhuUdN3IC6SIh63/ceEzq2llRiAvWwFoSrhEy09EdlAl0txf2N1dijx18MKulRjPZkDIsEgQX5o85Q1qOHXj6PvlHNXSquX4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQt08syg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDZIS76y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050EC1F00A3A;
-	Tue, 21 Jul 2026 20:50:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQt08syg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9910C1F000E9;
+	Tue, 21 Jul 2026 20:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667046;
-	bh=DBNQXFVUyXYC/tkxXIJVHCy5cAXCqvdpzPFcXvULjK4=;
+	s=korg; t=1784667049;
+	bh=CeDqCzPIGLUCddq+7qFxsN+XuLn4ynY+UALtQeSWb1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iDZIS76ypPOQh1xeuB+u6+nPRm0vu6gvCbSSyoBUScP9ZG+A9DK/ktAqi1Pxc4XVs
-	 cGhm3/5ry2Vcv5nGTl+cGXQiyLuGNMarK6218AkNs4qvIFvWRIw7iHqhvZ85KPuFKH
-	 mWHHUi66UY1SqBkdDlPkaL+INeMlSo81MazJC9Wo=
+	b=EQt08sygIe5mvgeGAIQWOx+doK3GJ9huN8+LYi+ECXrWuJTN6UV1pBIo1T/tkZOI9
+	 p1GdvxtLMPh4QeppCD0oSTMD+gpvGHjBd7T/6Z1IfbNEc3IPcnUA2N6OSG+2kB4odi
+	 sYkvSGDrP41ZaQISXRLMhYixN6uJHxwz8CcstPik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Julian Anastasov <ja@ssi.bg>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0876/1266] ipvs: use parsed transport offset in TCP state lookup
-Date: Tue, 21 Jul 2026 17:21:53 +0200
-Message-ID: <20260721152501.451188816@linuxfoundation.org>
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.6 0912/1266] fbdev: uvesafb: fix potential memory leak in uvesafb_probe()
+Date: Tue, 21 Jul 2026 17:22:29 +0200
+Message-ID: <20260721152502.253605711@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -57,60 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit 2500fa3958b1ba51c2b065e39db1b04dfa7e23a2 ]
+commit 033e56fed09047ee63072e9f58789f40c1c7079d upstream.
 
-TCP state handling reparses the skb to find the TCP header. For IPv6 it
-uses sizeof(struct ipv6hdr), while the surrounding IPVS code already
-parsed the packet with ip_vs_fill_iph_skb() and has the real
-transport-header offset in iph.len.
+Due to an incorrect goto label, memory allocated for modedb and modelist
+in uvesafb_vbe_init() is not freed in some error paths. Fix this by
+updating the goto label.
 
-This makes TCP state handling look at the wrong bytes when an IPv6
-packet carries extension headers. Use the parsed transport offset passed
-down from ip_vs_set_state() when reading the TCP header.
-
-For IPv4 and for IPv6 packets without extension headers, the passed
-offset matches the previous value.
-
-Fixes: 0bbdd42b7efa6 ("IPVS: Extend protocol DNAT/SNAT and state handlers")
-Link: https://lore.kernel.org/netdev/20260705125659.37744-1-zhaoyz24@mails.tsinghua.edu.cn/
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: Claude Code:GLM-5.2
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8bdb3a2d7df4 ("uvesafb: the driver core")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_proto_tcp.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/video/fbdev/uvesafb.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_proto_tcp.c b/net/netfilter/ipvs/ip_vs_proto_tcp.c
-index dc8394383c148e..b382810156b2c6 100644
---- a/net/netfilter/ipvs/ip_vs_proto_tcp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_tcp.c
-@@ -585,13 +585,7 @@ tcp_state_transition(struct ip_vs_conn *cp, int direction,
- {
- 	struct tcphdr _tcph, *th;
+--- a/drivers/video/fbdev/uvesafb.c
++++ b/drivers/video/fbdev/uvesafb.c
+@@ -1697,14 +1697,14 @@ static int uvesafb_probe(struct platform
+ 	i = uvesafb_vbe_init_mode(info);
+ 	if (i < 0) {
+ 		err = -EINVAL;
+-		goto out;
++		goto out_mode;
+ 	} else {
+ 		mode = &par->vbe_modes[i];
+ 	}
  
--#ifdef CONFIG_IP_VS_IPV6
--	int ihl = cp->af == AF_INET ? ip_hdrlen(skb) : sizeof(struct ipv6hdr);
--#else
--	int ihl = ip_hdrlen(skb);
--#endif
--
--	th = skb_header_pointer(skb, ihl, sizeof(_tcph), &_tcph);
-+	th = skb_header_pointer(skb, iph_len, sizeof(_tcph), &_tcph);
- 	if (th == NULL)
- 		return;
+ 	if (fb_alloc_cmap(&info->cmap, 256, 0) < 0) {
+ 		err = -ENXIO;
+-		goto out;
++		goto out_mode;
+ 	}
  
--- 
-2.53.0
-
+ 	uvesafb_init_info(info, mode);
 
 
