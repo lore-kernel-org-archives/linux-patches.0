@@ -1,38 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E6C39B4A2;
-	Tue, 21 Jul 2026 17:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C144339B4A2;
+	Tue, 21 Jul 2026 17:33:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655194; cv=none; b=OxMB547Lcv3xSTvDbafhKyNO5RgNvoMi+23W/KJYpXUC/2SuQISTT4gvgW0667L1BcyAHZTDlCIpN2ZxS6/M4UbHy990lYJThHIQhtAA8XuLyJfXSjOmi2y5lcXIwFIUz7SavqbvCCdpWy2TmYs8JtUhxfM9jxfKoGBipRvGwTs=
+	t=1784655197; cv=none; b=hbHo8Zg3HpGyBuUKANH1Ae0MQEpQhC23gdEErW7d27UG2h0XSuPI3Lfe1KPimaeCT13EWs2kNaoiz/bDsqs25A2s3zwOpqWfxRA7SR1eiU3STB9z+phdDbCzMaXqUQc4QeNC0AJ2jkEbx6biQsGWGUGw8ffiNGIq3AO5fyhbz7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655194; c=relaxed/simple;
-	bh=bLJX8xqm7SuiH4t2O3Xdn0mZgulG+BzwcUxq2z3FN9Q=;
+	s=arc-20240116; t=1784655197; c=relaxed/simple;
+	bh=UUQWWHoi+lDMogxLeu8zoPReSi09CuS9T+Jzd6dXCFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2z6iV5KS4BBlD458+dh/K56dW94ymX/DrHd4kNXgqLon+kXCnYZgpfjH/iRYKOkk1lsatKlOT7WIMz8tn9/bm+8TUBYsNU3e6SnvwUvcBB2eXh1r4riU1n06Vuz6cwFz76ZJWSKtkD8cdZwm1Ms5i8aPvNhT0MoTSo4VOLSTec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2HnlxXf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VuBZf06jxcvJ9ZyqBsTxxI9PJektxnzA01xlEtY3Pa6uXY5SSnyOeT7WRgHVQhXlUBJuHLZHAB1U3pmHhjlQuommU+UVAA6Xewcy46ZcaVh23DcYYUhYlK1UwCtpj5J8DuR2CUrG6oEQiHDOi6HU6EafTBB3/7fEQnr5tusW/zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V3geiyEU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2HnlxXf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5CC1F000E9;
-	Tue, 21 Jul 2026 17:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V3geiyEU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4191F000E9;
+	Tue, 21 Jul 2026 17:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655193;
-	bh=BpBhXrQiM4MNK87CmXL1L/FkD1ARu3Qi1w0WxVOGvu4=;
+	s=korg; t=1784655195;
+	bh=QGZgBQgitWWjddBk1bqGO39VpflAzm4L/icx6sFCcno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J2HnlxXferufwRh9I1zNRsVydxs4rQimYXxh2fAmnlF3vnwqXljqZKSju9Mv995rH
-	 7jffoTs7NTBmyrCbR9cQDyZf6S0GkMjkMRWNLZEi7/eXS28yjY+3reblR3+djVcfaI
-	 nf6H3hSE4TpenbokM4jHI04q9kumVQuefxTZnPxo=
+	b=V3geiyEUThss+Zygdat4Of4i4v2AksHmYR8OLcNm10rcrJrnZoA5JxDWbrCc/dzmL
+	 A4eZj0oBT1H9b07bdz57hd0swiLcdSrbP1mYWcLsjYpPyZCAnxmhLW73Wb6rGzS/+E
+	 OFI6teqvRPthZ6nwAS/I7bVhHlSZ42B6MY12QP4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 7.1 1984/2077] fs/resctrl: Fix double-add of pseudo-locked regions RMID to free list
-Date: Tue, 21 Jul 2026 17:27:37 +0200
-Message-ID: <20260721152639.505911547@linuxfoundation.org>
+	Gregory Price <gourry@gourry.net>,
+	Waiman Long <longman@redhat.com>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Alistair Popple <apopple@nvidia.com>,
+	Byungchul Park <byungchul@sk.com>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Zi Yan <ziy@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
+	Ridong Chen <ridong.chen@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>
+Subject: [PATCH 7.1 1993/2077] cgroup/cpuset: rebind mm mempolicy to effective_mems, not mems_allowed
+Date: Tue, 21 Jul 2026 17:27:46 +0200
+Message-ID: <20260721152639.720014006@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,62 +59,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+From: Farhad Alemi <farhad.alemi@berkeley.edu>
 
-commit b9f089723aee892efc77c349ae47a6b452b293c4 upstream.
+commit b983c56426383e4a06fa5970c4e33cee879b1482 upstream.
 
-A pseudo-locked group's RMID is freed when it is created. On unmount
-rmdir_all_sub() unconditionally frees all RMID of all groups, resulting
-in a double-free of the pseudo-locked group's RMID. The consequence of this
-is that the original free results in the pseudo-locked group's RMID being
-added to the rmid_free_lru linked list and the second free then attempts
-to add the same RMID entry to the rmid_free_lru again.
+Creating a child cpuset where cpuset.mems is never set leads to a div/0
+when a VMA mempolicy with MPOL_F_RELATIVE_NODES rebinds in response to a
+CPU hotplug event.
 
-Do not double-free a pseudo-locked group's RMID.
+Reproduction steps:
+ 1) Create a cgroup w/ cpuset controls (do not set cpuset.mems)
+ 2) Move the task into the child cpuset
+ 3) Create a VMA mempolicy for that task with MPOL_F_RELATIVE_NODES
+ 4) unplug and hotplug a cpu
+      echo 0 > /sys/devices/system/cpu/cpu1/online
+      echo 1 > /sys/devices/system/cpu/cpu1/online
+ 5) mempolicy rebind does a div/0 in mpol_relative_nodemask on the
+    call to __nodes_fold()
 
-Fixes: e0bdfe8e36f3 ("x86/intel_rdt: Support creation/removal of pseudo-locked region")
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/551432dd7e624a862b8e58314c38aaba0afff3e9.1783377598.git.reinette.chatre@intel.com
+The cpuset code passes (cs->mems_allowed) which is not guaranteed to have
+nodes to the rebind routine.  Use cs->effective_mems instead, which is
+guaranteed to have a non-empty nodemask once we reach that code path.
+
+Link: https://lore.kernel.org/all/CA+0ovCiEz6SP_sn3kN4Tb+_oC=eHMXy_Ffj=usV3wREdQrUtww@mail.gmail.com/
+Fixes: ae1c802382f7 ("cpuset: apply cs->effective_{cpus,mems}")
+Closes: https://lore.kernel.org/linux-mm/CA+0ovCgxbZkXa+OU8w3s84R3KNPNxxRfmsNR-udh+afQBbGNmw@mail.gmail.com/
+Suggested-by: Gregory Price <gourry@gourry.net>
+Suggested-by: Waiman Long <longman@redhat.com>
+Acked-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: Gregory Price <gourry@gourry.net>
+Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Ridong Chen <ridong.chen@linux.dev>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: "Michal Koutný" <mkoutny@suse.com>
+Cc: <stable@vger.kernel.org>
+[ david: add a comment, slightly rephrase description ]
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/resctrl/rdtgroup.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ kernel/cgroup/cpuset.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -3074,10 +3074,6 @@ static void rmdir_all_sub(void)
- 		if (rdtgrp == &rdtgroup_default)
- 			continue;
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -2650,7 +2650,12 @@ void cpuset_update_tasks_nodemask(struct
  
--		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
--		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
--			rdtgroup_pseudo_lock_remove(rdtgrp);
--
- 		/*
- 		 * Give any CPUs back to the default group. We cannot copy
- 		 * cpu_online_mask because a CPU might have executed the
-@@ -3088,7 +3084,13 @@ static void rmdir_all_sub(void)
+ 		migrate = is_memory_migrate(cs);
  
- 		rdtgroup_unassign_cntrs(rdtgrp);
- 
--		free_rmid(rdtgrp->closid, rdtgrp->mon.rmid);
-+		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
-+		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
-+			rdtgroup_pseudo_lock_remove(rdtgrp);
-+		} else {
-+			/* Pseudo-locked group's RMID is freed during setup. */
-+			free_rmid(rdtgrp->closid, rdtgrp->mon.rmid);
-+		}
- 
- 		kernfs_remove(rdtgrp->kn);
- 		list_del(&rdtgrp->rdtgroup_list);
+-		mpol_rebind_mm(mm, &cs->mems_allowed);
++		/*
++		 * For v1 we can have empty effective_mems, but we cannot
++		 * attach any tasks (see cpuset_can_attach_check()). For v2,
++		 * effective_mems is guaranteed to not be empty.
++		 */
++		mpol_rebind_mm(mm, &cs->effective_mems);
+ 		if (migrate)
+ 			cpuset_migrate_mm(mm, &cs->old_mems_allowed, &newmems);
+ 		else
 
 
