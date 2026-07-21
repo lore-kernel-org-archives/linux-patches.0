@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3995C34DCE4;
-	Tue, 21 Jul 2026 22:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E9E3AA4F9;
+	Tue, 21 Jul 2026 22:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673358; cv=none; b=jOgD/0PMXcXxUl9ZQU85gh8vhUQGMLiKUkt1XnxDzT+WwnflEtx6v/jk7g8cNbTbG2DW/rgxmKIT/stSa+CTutDrgGgwcFAjy+qSA3JQjhTGMsns5YplLkOu3EfwR7woaVe9VLss/4wbN0tA5wlIoPWwQ2l1lNRb/c+AuwEeFhI=
+	t=1784673361; cv=none; b=dC4G1AmCaG2Xt1UYdMqFFWedLGYiluw745m4ZzVt/VgMg1RUQ2E09VgLtjUgYW9JF1JktFixfoV8zxmrDYzBMUpRQYt8xSUV5P04D0HR1aRSPjUDjuhDPKJjpI9FOfynM+bCTJHpyOKS/yUxX6lZxm1zHw6O7cLmRGzENboGlEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673358; c=relaxed/simple;
-	bh=OYMLMlaiYXPWuNuRyt9Gyf+LKGqu2RFeOVGSnlxStQw=;
+	s=arc-20240116; t=1784673361; c=relaxed/simple;
+	bh=Wc5hKid3xcN4kH9HRvEW273HrzNp6ojwRiVvIIX0tqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tInfRbTl8ISMqGihyZnzcqEltyPijzp+Uwxxok1wKeI+ssfcLzAc7GD7K7Ep9C8l749n3j56da5acL0m8H17PW3VITeEBFvORL/48qfEkDPo7FvwPLQGr00r4+h/dzTuEQLlOPTK9jTC6sAnyz7JqF9OqeqpU91bVSxide6AX8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k87+mcig; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ATIfhcKHO2JCczDhpq5o5LNi7moiGv2x7On4IDJt+Ruxr5PnofTKHa/66fehW1QREBX+7F2uF2xXQ+KO2T2TV6Ggm/1tksuWRS1xeJs5q70sgiYUJEAA3rsjMCv/YOLrFcnl9a7ptVB8YZKn1q4B6TBOLgk274MkHr5K7elCKPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxqiT4Wv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k87+mcig"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00891F000E9;
-	Tue, 21 Jul 2026 22:35:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxqiT4Wv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41BC61F000E9;
+	Tue, 21 Jul 2026 22:35:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673357;
-	bh=JzKkkQZJ3befebmUOQntqjwgcTliutlmZAcbR8uF0YM=;
+	s=korg; t=1784673359;
+	bh=qBgEOs/Lul/scU5G4dKkmnD2TEBj/X1juh88T/fZmjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k87+mcigr8hH3VPK+a0ka4PWyGSTOjBt8uuKnUz0KuFlXy2GIyLNhUFVCpvC0flBQ
-	 fBzB/uzljqUsZk/zM9HJWNnELD7UZeZ4MitC37sFoLOQWE6Ixc8IEKp7iisBb8Qf4Q
-	 fmEVeRL6jfLB+XP9g3YOav6N+lLgI/Be8N9VlmcU=
+	b=MxqiT4WvXE0+NSFKVKIWvRpwJVTINlsmJvDvloIHc1xVBXWA16/7SR88WUxiv0lCN
+	 6Gu7yLrpjki5H92x7yyAFDa+JU7lxOcvU2IqMGdeaVLTkgGO8eLgUkr3M4UsHc00rR
+	 Rsgmgc5KfTYNHLAasG3YuD5iQ7s++8XWOfxuCLQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.10 089/699] cpufreq: pcc: fix use-after-free and double free in _OSC evaluation
-Date: Tue, 21 Jul 2026 17:17:28 +0200
-Message-ID: <20260721152357.710298327@linuxfoundation.org>
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Andrei Kuchynski <akuchynski@chromium.org>,
+	Benson Leung <bleung@chromium.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 5.10 080/699] mfd: cros_ec: Delay dev_set_drvdata() until probe success
+Date: Tue, 21 Jul 2026 17:17:19 +0200
+Message-ID: <20260721152357.509699123@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,43 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Andrei Kuchynski <akuchynski@chromium.org>
 
-commit 266d3dd8b757b48a576e90f018b51f7b7563cc32 upstream.
+commit 8b2c1d41bc36c100b38ce5ee6def246c527eaf8a upstream.
 
-pcc_cpufreq_do_osc() calls acpi_evaluate_object() twice for the
-two-phase _OSC negotiation. Between the two calls it freed
-output.pointer but left output.length unchanged. Since
-acpi_evaluate_object() treats a non-zero length with a non-NULL
-pointer as an existing buffer to write into, the second call wrote
-into freed memory (use-after-free). The subsequent kfree(output.pointer)
-at out_free then freed the same pointer a second time (double free).
+If ec_device_probe() fails, cros_ec_class_release releases memory for the
+cros_ec_dev structure. However, because the drvdata was already set,
+sub-drivers like cros_ec_typec can still retrieve the stale pointer via the
+platform device. This leads to a use-after-free when cros_ec_typec attempts
+to access &typec->ec->ec->dev on a device that has already been released.
+Move dev_set_drvdata() to ensure that the pointer is only made available
+once all initialization steps have succeeded.
 
-Reset output.pointer to NULL and output.length to ACPI_ALLOCATE_BUFFER
-after freeing the first result, so ACPICA allocates a fresh buffer for
-each phase independently.
+ sysfs: cannot create duplicate filename '/class/chromeos/cros_ec'
+ Call trace:
+  sysfs_do_create_link_sd+0x94/0xdc
+  sysfs_create_link+0x30/0x44
+  device_add_class_symlinks+0x90/0x13c
+  device_add+0xf0/0x50c
+  ec_device_probe+0x150/0x4f0
+  platform_probe+0xa0/0xe0
+ ...
+ BUG: KASAN: invalid-access in __memcpy+0x44/0x230
+ Write at addr f5ffff809e2d33ac by task kworker/u32:5/125
+ Pointer tag: [f5], memory tag: [fe]
+ Tainted : [W]=WARN, [O]=OOT_MODULE
+ Hardware name: Google Navi unprovisioned 0x7FFFFFFF/sku0 board/sku3
+ Workqueue: events_unbound deferred_probe_work_func
+ Call trace:
+  __memcpy+0x44/0x230
+  cros_ec_check_features+0x60/0xcc [cros_ec_proto]
+  cros_typec_probe+0xe8/0x6e0 [cros_ec_typec]
+  platform_probe+0xa0/0xe0
 
-Fixes: 0f1d683fb35d ("[CPUFREQ] Processor Clocking Control interface driver")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260416144621.93964-1-dbgh9129@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: 1c1d152cc5ac ("platform/chrome: cros_ec_dev - utilize new cdev_device_add helper function")
+Co-developed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Link: https://patch.msgid.link/20260427131721.1165078-1-akuchynski@chromium.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/pcc-cpufreq.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mfd/cros_ec_dev.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/cpufreq/pcc-cpufreq.c
-+++ b/drivers/cpufreq/pcc-cpufreq.c
-@@ -351,6 +351,8 @@ static int __init pcc_cpufreq_do_osc(acp
- 	}
+--- a/drivers/mfd/cros_ec_dev.c
++++ b/drivers/mfd/cros_ec_dev.c
+@@ -137,7 +137,6 @@ static int ec_device_probe(struct platfo
+ 	if (!ec)
+ 		return retval;
  
- 	kfree(output.pointer);
-+	output.pointer = NULL;
-+	output.length = ACPI_ALLOCATE_BUFFER;
- 	capabilities[0] = 0x0;
- 	capabilities[1] = 0x1;
+-	dev_set_drvdata(dev, ec);
+ 	ec->ec_dev = dev_get_drvdata(dev->parent);
+ 	ec->dev = dev;
+ 	ec->cmd_offset = ec_platform->cmd_offset;
+@@ -179,6 +178,8 @@ static int ec_device_probe(struct platfo
+ 	if (retval)
+ 		goto failed;
  
++	dev_set_drvdata(dev, ec);
++
+ 	/* check whether this EC is a sensor hub. */
+ 	if (cros_ec_get_sensor_count(ec) > 0) {
+ 		retval = mfd_add_hotplug_devices(ec->dev,
 
 
