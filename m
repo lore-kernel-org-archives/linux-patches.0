@@ -1,55 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50BCF471257;
-	Tue, 21 Jul 2026 19:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE63F471257;
+	Tue, 21 Jul 2026 19:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662978; cv=none; b=AZbKUnLHPoeNaRRGjmOEYBr3N0m0WeHSkCABtqit1QA7lMGF4zzDtD5h5rmHfRmq79WS/bMLBmrGR5/a0KlalBgz4RFxp2tLYaMzvG5Wmpbsdx4OZWMQ6wAPm5oIj5WS86Vxb5GeOvjeWuMZQxi2ZJJMCZ4tohjlMf8V+p1soEc=
+	t=1784662981; cv=none; b=FBvr/RTwSNEav27u17HrDJ0EGd31+/WeYdgktfm4cXMwuxYNfAS9+TgMLwNuD53/Qrf+X1YVnhAJl4qrq3UgtirUGpOQfgRhLRtMi96MicB+b0Wcui+9lW8rCB0vaMExlTRpghQRdxmsDVHEhGPp4PWrOSmM/L72T/uA8JJpmRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662978; c=relaxed/simple;
-	bh=nmahHFUXdHIdQm7vE6Sx3fQ+zspmheD+6ldN/zWQ4Ps=;
+	s=arc-20240116; t=1784662981; c=relaxed/simple;
+	bh=IigdIGKdmka1EiW9ciXcc2ZPc2Ci2v9NpzZcjBmnD80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APUe8dyyuxzgCYuK54wCkuzcSN1DxkVyYcSW0sLtgnG/Aso+LUI9AOQRbRmnEDUHZAQUCitt1MahFuYeocL7SI9+k4p9W5GNHIzlPjPAtClOOuMaSRQlrwiuz2LS/hRe5cFX+IYgRzU3mp0r6MhNQ4ENj4uiXczBL6p9yZVA0hA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8ddyZZ1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H59Gi3cfkFUxOFLmGj3oarHnDZjJoxdoTwFcMrgzMGhbOMlT0pycoEbNHtRxq3SufuoEzP4+6yzE+kKaON2ys1k5+1C7mrmz6Lep4EcJjtvFTQYtH3bpRDZXfyaq8yMrk5JTs8AoDD2wUZ623MASZglRFFvJP5qaH5Xxb+T+1YI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAdrcCOB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8ddyZZ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B1591F000E9;
-	Tue, 21 Jul 2026 19:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAdrcCOB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D76F1F000E9;
+	Tue, 21 Jul 2026 19:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662977;
-	bh=SYMhOxk7GtySTRVWH+ZvX1zwRNxyXExk8ERgVVx7rXU=;
+	s=korg; t=1784662979;
+	bh=GPy3R8j+TIiCrjfLRZK7+/nzoRqqV8sGNu5biFIgOfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A8ddyZZ1NdVKCBlTQ1TXjlJagDIWFQ/v45Byywciyq6ru0tStG2PcSQafcDVmwno8
-	 k+OGdgcTSVsxRtGqYi+rdRYl9d0kXStbnndWg9/tdvt1yfjMYivNBhaEcup5bf3/P4
-	 tiitT9s25QpUpV5AFrLdfpgCk+A21xz34WLMleFY=
+	b=TAdrcCOB3rz6j/Xxm50CLDD2cBcMELcNGnVFkerKgggtv385JUp6DfQH0sj2Evneb
+	 77lr0LTwtTlH0/0POtHXL7yFmExpcG0VxgRHKjFuTxCQcjqV7cwwp6EzcI42ROP2RV
+	 4V2VLQ4rSdZ8bHREAh2TXzK3cKHscoErUvLMuCS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	Alex Sierra <alex.sierra@amd.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	David Hildenbrand <david@kernel.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Leon Romanovsky <leon@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	Sayali Patil <sayalip@linux.ibm.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0606/1276] selftests/mm: fix exclusive_cow test fork() handling
-Date: Tue, 21 Jul 2026 17:17:29 +0200
-Message-ID: <20260721152459.670746067@linuxfoundation.org>
+Subject: [PATCH 6.12 0597/1276] netfilter: nf_reject: skip iphdr options when looking for icmp header
+Date: Tue, 21 Jul 2026 17:17:20 +0200
+Message-ID: <20260721152459.474156357@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -68,105 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aboorva Devarajan <aboorvad@linux.ibm.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit cea5702144615878600d3a39b5d8b3cc34719012 ]
+[ Upstream commit af8d6ae09c0a5f8b8a0d5680203c74b3c1daa85b ]
 
-The test ignores the return value of fork(), so both the parent and the
-(newly created) child run the COW verification loops and then call
-hmm_buffer_free() before returning into the kselftest harness, which
-_exit()s each side.  This duplicated teardown sequence has been observed
-to manifest as a SIGSEGV in the test child, e.g.:
+Not a big deal but this hould have used the real ip header length and not the
+base header size.  As-is, if there are options then
+nf_skb_is_icmp_unreach() result will be random.
 
-  hmm-tests[360141]: segfault (11) at 0 nip 10006964 lr 1000ac3c code 1
-  in hmm-tests[6964,10000000+30000]
-
-Fix this by adopting the same fork()-then-wait pattern already used by the
-nearby anon_write_child / anon_write_child_shared tests in this file: the
-child performs the COW verification and then _exit(0)s so it does not run
-the test teardown, while the parent independently verifies COW, waits for
-the child, and only then frees the buffer.
-
-Link: https://lore.kernel.org/20260611034102.1030738-4-aboorvad@linux.ibm.com
-Fixes: b659baea75469 ("mm: selftests for exclusive device memory")
-Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Cc: Alex Sierra <alex.sierra@amd.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Balbir Singh <balbirs@nvidia.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Ralph Campbell <rcampbell@nvidia.com>
-Cc: Sayali Patil <sayalip@linux.ibm.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: db99b2f2b3e2 ("netfilter: nf_reject: don't reply to icmp error messages")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/hmm-tests.c | 31 +++++++++++++++++++++++---
- 1 file changed, 28 insertions(+), 3 deletions(-)
+ net/ipv4/netfilter/nf_reject_ipv4.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/mm/hmm-tests.c b/tools/testing/selftests/mm/hmm-tests.c
-index 912fecb59a92cd..722beaa6da1b9d 100644
---- a/tools/testing/selftests/mm/hmm-tests.c
-+++ b/tools/testing/selftests/mm/hmm-tests.c
-@@ -1896,6 +1896,8 @@ TEST_F(hmm, exclusive_cow)
- 	unsigned long i;
- 	int *ptr;
- 	int ret;
-+	pid_t pid;
-+	int status;
+diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
+index a7a3439fe78004..1c739587bacde2 100644
+--- a/net/ipv4/netfilter/nf_reject_ipv4.c
++++ b/net/ipv4/netfilter/nf_reject_ipv4.c
+@@ -80,7 +80,7 @@ static bool nf_skb_is_icmp_unreach(const struct sk_buff *skb)
+ 	if (iph->protocol != IPPROTO_ICMP)
+ 		return false;
  
- 	npages = ALIGN(HMM_BUFFER_SIZE, self->page_size) >> self->page_shift;
- 	ASSERT_NE(npages, 0);
-@@ -1924,14 +1926,37 @@ TEST_F(hmm, exclusive_cow)
- 	ASSERT_EQ(ret, 0);
- 	ASSERT_EQ(buffer->cpages, npages);
+-	thoff = skb_network_offset(skb) + sizeof(*iph);
++	thoff = skb_network_offset(skb) + ip_hdrlen(skb);
  
--	fork();
-+	pid = fork();
-+	if (pid == -1)
-+		ASSERT_EQ(pid, 0);
- 
--	/* Fault pages back to system memory and check them. */
-+	if (pid == 0) {
-+		/*
-+		 * Child verifies COW independently, then _exit(0)s so it does
-+		 * not run the test teardown.  A failed ASSERT_* here makes the
-+		 * harness abort() the child, so the parent sees
-+		 * !WIFEXITED(status) below and fails in turn.
-+		 */
-+		for (i = 0, ptr = buffer->ptr; i < size / sizeof(*ptr); ++i)
-+			ASSERT_EQ(ptr[i]++, i);
-+
-+		for (i = 0, ptr = buffer->ptr; i < size / sizeof(*ptr); ++i)
-+			ASSERT_EQ(ptr[i], i + 1);
-+
-+		_exit(0);
-+	}
-+
-+	/* Parent: also increment to verify COW works for both processes. */
- 	for (i = 0, ptr = buffer->ptr; i < size / sizeof(*ptr); ++i)
- 		ASSERT_EQ(ptr[i]++, i);
- 
- 	for (i = 0, ptr = buffer->ptr; i < size / sizeof(*ptr); ++i)
--		ASSERT_EQ(ptr[i], i+1);
-+		ASSERT_EQ(ptr[i], i + 1);
-+
-+	/* Parent: wait for child and then free the buffer. */
-+	ASSERT_EQ(waitpid(pid, &status, 0), pid);
-+	ASSERT_TRUE(WIFEXITED(status));
-+	ASSERT_EQ(WEXITSTATUS(status), 0);
- 
- 	hmm_buffer_free(buffer);
- }
+ 	tp = skb_header_pointer(skb,
+ 				thoff + offsetof(struct icmphdr, type),
 -- 
 2.53.0
 
