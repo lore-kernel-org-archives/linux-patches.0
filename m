@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1923471435;
-	Tue, 21 Jul 2026 20:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A21434E5D;
+	Tue, 21 Jul 2026 20:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665426; cv=none; b=tPsZnVBU+9t780fqg+jAnnnvcdAjfo3kbOuOKKVu03jdv9XEOYdCFOp5VpMKQz0t/VjQaMy9NjYeHY8U9fqHdrQiIQnjKORMunwe9MUHkq+zfRlxcgkogcJqmeBPbGuKnHDgV505yhGohMJx5SUtToMRdcKzTJKBKqHXYWrLLD0=
+	t=1784665428; cv=none; b=Y5L4qgrLPZCBKgVo/6OEU/cAqPIHQ3QZRpsUIFs72wxaAyYaRo+bFK8QRmJ8jNEO2azU7av22CdXlzW5A3DjLCZhtRut7VGtDsXWaHuQQtThSIviGZ1ux2W2MDErIE76OwDYmWUviU6SpSUjj0eJ3ITHk6x8juwIwYKSMBS6Hbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665426; c=relaxed/simple;
-	bh=izUM5Euzy+rdg+A7Wi3piju/NojXzPEr8pUTaSjQNmE=;
+	s=arc-20240116; t=1784665428; c=relaxed/simple;
+	bh=LNl62e+sRMJ55EvUhmcv6mW2xZwnTHxrabCLwRr8faU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RuSXbGw5CVu7ZNco/gtv6GtfgZkPlIG0xO6FrhiqKSqC89ejuZOuflK1QgQrloO7A+rLB9BltqOZS1Uqn14T/qA/viyk61gDfQ1CZL8a/QkBD2XJm6lTWS+B0LmR/eqMzDgmYb+5kAS1gNq4i01mVgyNRpdsVZS4nvh/zBCtdBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gCrKqSGW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jKdRwBTQBcskeBNVPZS3CTfo5oCyhL4QECvjOrqP5zqpZNtdzwp2T0PvbDFWIlyOAwOnrDmGaWr1AeOhliP0s00J/V15bQMoOrsOH3okPVqvO7ecwvmjkTJtOwnvUCFzy008wDSZlWp9jB1rL4OLLwEfMNRKLgcv37xPoFpW+88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j75Esrkl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gCrKqSGW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 336F31F000E9;
-	Tue, 21 Jul 2026 20:23:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j75Esrkl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5881F000E9;
+	Tue, 21 Jul 2026 20:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665424;
-	bh=k+5jIkKyBHOKYxKRh9QbrTICghtaDTcUZuxTIQhVKkg=;
+	s=korg; t=1784665427;
+	bh=jvK+6e1OcQ9jEf7PYJDVw9DT6eDanOSAAZ1DXrX0LZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gCrKqSGW3kOWCrOiyA0gawHtmS+NUhcJ4Hj5gbr+tDc6ZM7iEuQDQw8xwc/7eS8X+
-	 EBZi7K2qTII8ygdFPdZY6docT+IWXesDnYLbm/niM5g9Rh3YpeApZOonWJo1A4kYN/
-	 mflRMKVyc+fMa3PyywrQSBhfovzEXQuQiOUBMdBk=
+	b=j75EsrklQZysT8AefkASEwXcUmqYhI9ijqBzeKgH2xTRICQpLs8PgCtoHuPThmAEO
+	 6hKTlw18Rrm1vtKMzizKCM2efrbBpUpVH+oMKJAcYW+4/gkWGmCUciMx7+MkxbtSGl
+	 yKoUazhA5M93mxFlpUXicnhwkiG7FSZnUoW+lAGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Wenlong <houwenlong.hwl@antgroup.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.6 0299/1266] KVM: VMX: Refresh GUEST_PENDING_DBG_EXCEPTIONS.BS on all injected #DBs
-Date: Tue, 21 Jul 2026 17:12:16 +0200
-Message-ID: <20260721152448.517592782@linuxfoundation.org>
+	syzbot ci <syzbot+ci493c6d734b63e050@syzkaller.appspotmail.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.6 0300/1266] KVM: VMX: Grab vmcs12 on CR8 interception update iff vCPU is in guest mode
+Date: Tue, 21 Jul 2026 17:12:17 +0200
+Message-ID: <20260721152448.538647904@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,96 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit c5bad4fa2d5dfd8c25140051a9807eba387a19b8 upstream.
+commit 7ef78d71ca713d8c00f7c34ddcf276c808143f77 upstream.
 
-Move KVM's stuffing of GUEST_PENDING_DBG_EXCEPTIONS.BS when RFLAGS.TF=1 and
-MOV/POP SS or STI blocking is active into the exception injection code so
-that KVM fixes up the VMCS for all injected #DBs, not only those that are
-reflected back into the guest after #DB interception.  E.g. if KVM queues
-a #DB in the emulator, or more importantly if userspace does save/restore
-exactly on the #DB+shadow boundary, then KVM needs to massage the VMCS to
-avoid the VM-Entry consistency check.
+When updating CR8 intercepts, get vmcs12 if and only if the vCPU is in
+guest mode so that a future change can have update CR8 intercepts during
+vCPU creation, without running afoul of get_vmcs12()'s lockdep assertion.
 
-Opportunistically update the wording of the comment to describe the
-behavior as a workaround of flawed CPU behavior/architecture, to make it
-clear that the *only* thing KVM is doing is fudging around a consistency
-check.  Per the SDM:
+  ------------[ cut here ]------------
+  debug_locks && !(lock_is_held(&(&vcpu->mutex)->dep_map) || !refcount_read(&vcpu->kvm->users_count))
+  WARNING: arch/x86/kvm/vmx/nested.h:61 at get_vmcs12 arch/x86/kvm/vmx/nested.h:60 [inline], CPU#0: syz.2.19/5879
+  WARNING: arch/x86/kvm/vmx/nested.h:61 at vmx_update_cr8_intercept+0x3de/0x4e0 arch/x86/kvm/vmx/vmx.c:6879, CPU#0: syz.2.19/5879
+  Modules linked in:
+  CPU: 0 UID: 0 PID: 5879 Comm: syz.2.19 Not tainted syzkaller #0 PREEMPT(full)
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
+  RIP: 0010:get_vmcs12 arch/x86/kvm/vmx/nested.h:60 [inline]
+  RIP: 0010:vmx_update_cr8_intercept+0x3de/0x4e0 arch/x86/kvm/vmx/vmx.c:6879
+  Call Trace:
+   <TASK>
+   apic_update_ppr arch/x86/kvm/lapic.c:984 [inline]
+   kvm_lapic_reset+0x1c24/0x2980 arch/x86/kvm/lapic.c:3023
+   kvm_vcpu_reset+0x44c/0x1bf0 arch/x86/kvm/x86.c:12986
+   kvm_arch_vcpu_create+0x746/0x8b0 arch/x86/kvm/x86.c:12847
+   kvm_vm_ioctl_create_vcpu+0x428/0x930 virt/kvm/kvm_main.c:4201
+   kvm_vm_ioctl+0x893/0xd50 virt/kvm/kvm_main.c:5159
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:597 [inline]
+   __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x174/0x580 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
 
-  There are no pending debug exceptions after VM entry if any of the
-  following are true:
+No functional change intended.
 
-    * The VM entry is vectoring with one of the following interruption
-      types: external interrupt, non-maskable interrupt (NMI), hardware
-      exception, or privileged software exception.
-
-I.e. forcing GUEST_PENDING_DBG_EXCEPTIONS.BS does *not* impact guest-
-visible behavior.
-
-Fixes: b9bed78e2fa9 ("KVM: VMX: Set vmcs.PENDING_DBG.BS on #DB in STI/MOVSS blocking shadow")
+Reported-by: syzbot ci <syzbot+ci493c6d734b63e050@syzkaller.appspotmail.com>
+Closes: https://lore.kernel.org/all/6a2adf3b.3b0a2d4e.8c8d1.0012.GAE@google.com
 Cc: stable@vger.kernel.org
-Reported-by: Hou Wenlong <houwenlong.hwl@antgroup.com>
-Closes: https://lore.kernel.org/all/b1a294bc9ed4dae532474a5dc6c8cb6e5962de7c.1757416809.git.houwenlong.hwl@antgroup.com
-Reviewed-by: Hou Wenlong <houwenlong.hwl@antgroup.com>
-Link: https://patch.msgid.link/20260515222638.1949982-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260618174347.1981064-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/vmx.c |   35 ++++++++++++++++++-----------------
- 1 file changed, 18 insertions(+), 17 deletions(-)
+ arch/x86/kvm/vmx/vmx.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 --- a/arch/x86/kvm/vmx/vmx.c
 +++ b/arch/x86/kvm/vmx/vmx.c
-@@ -1810,6 +1810,24 @@ static void vmx_inject_exception(struct
- 	u32 intr_info = ex->vector | INTR_INFO_VALID_MASK;
- 	struct vcpu_vmx *vmx = to_vmx(vcpu);
+@@ -6701,11 +6701,10 @@ static noinstr void vmx_l1d_flush(struct
  
-+	/*
-+	 * When injecting a #DB, single-stepping is enabled in RFLAGS, and STI
-+	 * or MOV-SS blocking is active, set vmcs.PENDING_DBG_EXCEPTIONS.BS to
-+	 * prevent a false positive from VM-Entry consistency check.  VM-Entry
-+	 * asserts that a single-step #DB _must_ be pending in this scenario,
-+	 * as the previous instruction cannot have toggled RFLAGS.TF 0=>1
-+	 * (because STI and POP/MOV don't modify RFLAGS), therefore the one
-+	 * instruction delay when activating single-step breakpoints must have
-+	 * already expired.  However, the CPU isn't smart enough to peek at
-+	 * vmcs.VM_ENTRY_INTR_INFO_FIELD and so doesn't realize that yes, there
-+	 * is indeed a #DB pending/imminent.
-+	 */
-+	if (ex->vector == DB_VECTOR &&
-+	    (vmx_get_rflags(vcpu) & X86_EFLAGS_TF) &&
-+	    vmx_get_interrupt_shadow(vcpu))
-+		vmcs_writel(GUEST_PENDING_DBG_EXCEPTIONS,
-+			    vmcs_readl(GUEST_PENDING_DBG_EXCEPTIONS) | DR6_BS);
-+
- 	kvm_deliver_exception_payload(vcpu, ex);
+ static void vmx_update_cr8_intercept(struct kvm_vcpu *vcpu, int tpr, int irr)
+ {
+-	struct vmcs12 *vmcs12 = get_vmcs12(vcpu);
+ 	int tpr_threshold;
  
- 	if (ex->has_error_code) {
-@@ -5281,26 +5299,9 @@ static int handle_exception_nmi(struct k
- 			 * avoid single-step #DB and MTF updates, as ICEBP is
- 			 * higher priority.  Note, skipping ICEBP still clears
- 			 * STI and MOVSS blocking.
--			 *
--			 * For all other #DBs, set vmcs.PENDING_DBG_EXCEPTIONS.BS
--			 * if single-step is enabled in RFLAGS and STI or MOVSS
--			 * blocking is active, as the CPU doesn't set the bit
--			 * on VM-Exit due to #DB interception.  VM-Entry has a
--			 * consistency check that a single-step #DB is pending
--			 * in this scenario as the previous instruction cannot
--			 * have toggled RFLAGS.TF 0=>1 (because STI and POP/MOV
--			 * don't modify RFLAGS), therefore the one instruction
--			 * delay when activating single-step breakpoints must
--			 * have already expired.  Note, the CPU sets/clears BS
--			 * as appropriate for all other VM-Exits types.
- 			 */
- 			if (is_icebp(intr_info))
- 				WARN_ON(!skip_emulated_instruction(vcpu));
--			else if ((vmx_get_rflags(vcpu) & X86_EFLAGS_TF) &&
--				 (vmcs_read32(GUEST_INTERRUPTIBILITY_INFO) &
--				  (GUEST_INTR_STATE_STI | GUEST_INTR_STATE_MOV_SS)))
--				vmcs_writel(GUEST_PENDING_DBG_EXCEPTIONS,
--					    vmcs_readl(GUEST_PENDING_DBG_EXCEPTIONS) | DR6_BS);
+ 	if (is_guest_mode(vcpu) &&
+-		nested_cpu_has(vmcs12, CPU_BASED_TPR_SHADOW))
++	    nested_cpu_has(get_vmcs12(vcpu), CPU_BASED_TPR_SHADOW))
+ 		return;
  
- 			kvm_queue_exception_p(vcpu, DB_VECTOR, dr6);
- 			return 1;
+ 	tpr_threshold = (irr == -1 || tpr < irr) ? 0 : irr;
 
 
