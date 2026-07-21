@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC874471438;
-	Tue, 21 Jul 2026 20:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D1246EF9C;
+	Tue, 21 Jul 2026 20:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664803; cv=none; b=L/crg9388dVS+G6UN+mANjItd+gZ5TAorkdycyJsXM3c6DGvO2qpcChxiQaSG/zJ6fEVvt96LHbM3f+HKmvYugA1vemUb6YNJfbUGW+6u6E30OKeX3y2irxH7/1A31ljHTsbfNm6U6guVekD/7nvSsh4dgKaPAy8v9wpkd3n6q0=
+	t=1784664805; cv=none; b=hyyyChjnRl/ljHR1qei8fjB2uu4kcUNIOAMtxEwwCRBVJTJolTyCo2eVrSuIX5WACfaOV/zu1LR62R6riJcL9c++/hR7MbmByNO1LjZLX5gF3QUmLEL7Chvlo6DHjpXlRHhQNT/nUL0CwHcBSpzZ/49lqW9Qqa/lyuMvGz+WCbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664803; c=relaxed/simple;
-	bh=Kz0GRaN7ouFx9gfp3a78MEXPbsQXEyxOSmGT1WVwmJ8=;
+	s=arc-20240116; t=1784664805; c=relaxed/simple;
+	bh=siD98TnQxVudevARDmJ2jCArrroF9/a/FzAPANfyYKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b0gZvZZSWoLWLCkMcU4xfyfkFDjUmGuR27svd0u2YOB34i8BDpcBkuNCpMJgcOYne0RzWZZGQQ+S7hn4cPL1sGDw+XQU8iukaf03Ez4dtiI8Se4F7cJo3rzrE3hScDC4x2e8cR/c7w11haiYdcnaPou0AC2V8drEsWLAKvCIbhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AhsV6WuV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JYRKHkMLwY3TfcwkotjddyI/4XSSZh+a95bJKq9dLzqMSqG0LVqJJBDpD/VTNGppYC9dmEyjd8XnxWCyN0zndwoiu5uZ9DjTqSEi+aBdN2xz6YcjA4L8NLyx+OZkGeuI7wcDTAURrD6V76t2Lhzj9WqFk09V5xPzVDQCeoebAEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=itK6VWzL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AhsV6WuV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D78B1F00A3A;
-	Tue, 21 Jul 2026 20:13:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itK6VWzL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97CE1F000E9;
+	Tue, 21 Jul 2026 20:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664801;
-	bh=N00WsY59ij/WmPRSY572fsCXLh3w5XIw06lfJX/pwbE=;
+	s=korg; t=1784664804;
+	bh=NeveGTiC6vguzFnyLhQPcArH9otmDqw+HbniMju8G3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AhsV6WuVffxvkzm4Obv8ZG6wxJtP7O/8OL0v2Ff1FsNgZgRbtvUjEWEFrtKnXnsoW
-	 wEabOMxqWEPC9ea6bXchUcY7T4G887J0hv6+tvYZbIcq+gpiZ9k9tlBp6HzQFaP8Qs
-	 7kK3eQHeMxhPHrsUzQeaNwTwRLPWq49yRqTzVJUU=
+	b=itK6VWzLP2952h2P+nufHIU9TVFP7UHPdsoj0axxJIj0OHxAq9rGQwCtN2QyuLBT5
+	 3MfpBOTdl9shaPYgbOK2E5OJdk6o2BCZAubBKzbUWXa058Ql+UuCbm7DJqRABLjrtF
+	 pzcKbrkSO2Tqi0Ct4hlIcW6U34zsCG6FGNEt6ago=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taeyang Lee <0wn@theori.io>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Goetz Goerisch <ggoerisch@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0064/1266] perf/core: Detach event groups during remove_on_exec
-Date: Tue, 21 Jul 2026 17:08:21 +0200
-Message-ID: <20260721152443.235079947@linuxfoundation.org>
+Subject: [PATCH 6.6 0065/1266] Revert "crypto: talitos - rename first/last to first_desc/last_desc"
+Date: Tue, 21 Jul 2026 17:08:22 +0200
+Message-ID: <20260721152443.257949010@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,96 +50,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taeyang Lee <0wn@theori.io>
+From: Goetz Goerisch <ggoerisch@gmail.com>
 
-[ Upstream commit 037a3c43edfb597665dd34457cd22b14692f2ba3 ]
+This reverts commit a866e2b1c65edaee2e1bb1024ee2c761ced335f8.
 
-perf_event_remove_on_exec() removes events by calling
-perf_event_exit_event(). For top-level events, this removes the event from
-the context with DETACH_EXIT only.
+Which was backported without applying upstream
+commit 9826d1d6ed5f86cb3d61610b3b1fe31e96a40418 first.
 
-This can leave inconsistent group state when a removed event is a group
-leader and the group contains siblings without remove_on_exec. If the group
-was active, the surviving siblings can remain active and attached to the
-removed leader's sibling list, but are no longer represented by a valid
-group leader on the PMU context active lists.
+Commit a1b80018b8cec27fc06a8b04a7f8b5f6cfe86eae
+was backported to 6.6.y with a866e2b1c65edaee2e1bb1024ee2c761ced335f8
+It renames last to last_desc but misses one occurrence which leads to compile errors on mpc85xx
 
-A later close of the removed leader uses DETACH_GROUP and can promote the
-still-active siblings from this stale group state. The next schedule-in can
-then add an already-linked active_list entry again, corrupting the PMU
-context active list.
+drivers/crypto/talitos.c: In function 'ahash_digest':
+drivers/crypto/talitos.c:2204:16: error: 'struct talitos_ahash_req_ctx' has no member named 'last'
+ 2204 | req_ctx->last = 1;
+      |        ^~~~
 
-With DEBUG_LIST enabled, this is caught as a list_add double-add in
-merge_sched_in().
+Instead of renaming req_ctx->last, commit 9826d1d6ed5f8 ("crypto: talitos - stop
+using crypto_ahash::init") should be applied.
+Ideally before commit 00463d5f864a ("crypto: talitos - fix SEC1 32k ahash
+request limitation") to avoid any compilation breakage and ensure correctness of
+the code.
 
-Fix this by detaching group relationships when remove_on_exec removes an
-event. This preserves the existing task-exit and revoke behavior, while
-ensuring surviving siblings are ungrouped before the removed event leaves
-the context.
+Reverting and applying in correct order.
 
-Fixes: 2e498d0a74e5 ("perf: Add support for event removal on exec")
-Signed-off-by: Taeyang Lee <0wn@theori.io>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/ai65GgZcC0LAlWLG@Taeyangs-MacBook-Pro.local
+Link: https://lore.kernel.org/all/DIOA24QU02W5.2RSVK05RE7BJK@bootlin.com/
+Signed-off-by: Goetz Goerisch <ggoerisch@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/crypto/talitos.c | 46 ++++++++++++++++++++--------------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 73a86db06cc9b1..d45bce2acdbc75 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -4449,7 +4449,8 @@ static void perf_event_enable_on_exec(struct perf_event_context *ctx)
+diff --git a/drivers/crypto/talitos.c b/drivers/crypto/talitos.c
+index 347483f6fc5dd6..f78a44f991013b 100644
+--- a/drivers/crypto/talitos.c
++++ b/drivers/crypto/talitos.c
+@@ -869,8 +869,8 @@ struct talitos_ahash_req_ctx {
+ 	u8 buf[2][HASH_MAX_BLOCK_SIZE];
+ 	int buf_idx;
+ 	unsigned int swinit;
+-	unsigned int first_desc;
+-	unsigned int last_desc;
++	unsigned int first;
++	unsigned int last;
+ 	unsigned int last_request;
+ 	unsigned int to_hash_later;
+ 	unsigned int nbuf;
+@@ -889,8 +889,8 @@ struct talitos_export_state {
+ 	u32 hw_context[TALITOS_MDEU_MAX_CONTEXT_SIZE / sizeof(u32)];
+ 	u8 buf[HASH_MAX_BLOCK_SIZE];
+ 	unsigned int swinit;
+-	unsigned int first_desc;
+-	unsigned int last_desc;
++	unsigned int first;
++	unsigned int last;
+ 	unsigned int to_hash_later;
+ 	unsigned int nbuf;
+ };
+@@ -1722,7 +1722,7 @@ static void common_nonsnoop_hash_unmap(struct device *dev,
+ 	if (desc->next_desc &&
+ 	    desc->ptr[5].ptr != desc2->ptr[5].ptr)
+ 		unmap_single_talitos_ptr(dev, &desc2->ptr[5], DMA_FROM_DEVICE);
+-	if (req_ctx->last_desc)
++	if (req_ctx->last)
+ 		memcpy(areq->result, req_ctx->hw_context,
+ 		       crypto_ahash_digestsize(tfm));
  
- static void perf_remove_from_owner(struct perf_event *event);
- static void perf_event_exit_event(struct perf_event *event,
--				  struct perf_event_context *ctx);
-+				  struct perf_event_context *ctx,
-+				  unsigned long detach_flags);
+@@ -1759,7 +1759,7 @@ static void ahash_done(struct device *dev,
+ 		 container_of(desc, struct talitos_edesc, desc);
+ 	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
  
- /*
-  * Removes all events from the current task that have been marked
-@@ -4476,7 +4477,7 @@ static void perf_event_remove_on_exec(struct perf_event_context *ctx)
+-	if (!req_ctx->last_desc && req_ctx->to_hash_later) {
++	if (!req_ctx->last && req_ctx->to_hash_later) {
+ 		/* Position any partial block for next update/final/finup */
+ 		req_ctx->buf_idx = (req_ctx->buf_idx + 1) & 1;
+ 		req_ctx->nbuf = req_ctx->to_hash_later;
+@@ -1825,7 +1825,7 @@ static int common_nonsnoop_hash(struct talitos_edesc *edesc,
+ 	/* first DWORD empty */
  
- 		modified = true;
+ 	/* hash context in */
+-	if (!req_ctx->first_desc || req_ctx->swinit) {
++	if (!req_ctx->first || req_ctx->swinit) {
+ 		map_single_talitos_ptr_nosync(dev, &desc->ptr[1],
+ 					      req_ctx->hw_context_size,
+ 					      req_ctx->hw_context,
+@@ -1833,7 +1833,7 @@ static int common_nonsnoop_hash(struct talitos_edesc *edesc,
+ 		req_ctx->swinit = 0;
+ 	}
+ 	/* Indicate next op is not the first. */
+-	req_ctx->first_desc = 0;
++	req_ctx->first = 0;
  
--		perf_event_exit_event(event, ctx);
-+		perf_event_exit_event(event, ctx, DETACH_GROUP);
+ 	/* HMAC key */
+ 	if (ctx->keylen)
+@@ -1866,7 +1866,7 @@ static int common_nonsnoop_hash(struct talitos_edesc *edesc,
+ 	/* fifth DWORD empty */
+ 
+ 	/* hash/HMAC out -or- hash context out */
+-	if (req_ctx->last_desc)
++	if (req_ctx->last)
+ 		map_single_talitos_ptr(dev, &desc->ptr[5],
+ 				       crypto_ahash_digestsize(tfm),
+ 				       req_ctx->hw_context, DMA_FROM_DEVICE);
+@@ -1908,7 +1908,7 @@ static int common_nonsnoop_hash(struct talitos_edesc *edesc,
+ 		if (sg_count > 1)
+ 			sync_needed = true;
+ 		copy_talitos_ptr(&desc2->ptr[5], &desc->ptr[5], is_sec1);
+-		if (req_ctx->last_desc)
++		if (req_ctx->last)
+ 			map_single_talitos_ptr_nosync(dev, &desc->ptr[5],
+ 						      req_ctx->hw_context_size,
+ 						      req_ctx->hw_context,
+@@ -1964,7 +1964,7 @@ static int ahash_process_req_one(struct ahash_request *areq, unsigned int nbytes
+ 	bool is_sec1 = has_ftr_sec1(priv);
+ 	u8 *ctx_buf = req_ctx->buf[req_ctx->buf_idx];
+ 
+-	if (!req_ctx->last_desc && (nbytes + req_ctx->nbuf <= blocksize)) {
++	if (!req_ctx->last && (nbytes + req_ctx->nbuf <= blocksize)) {
+ 		/* Buffer up to one whole block */
+ 		nents = sg_nents_for_len(req_ctx->request_sl, nbytes);
+ 		if (nents < 0) {
+@@ -1981,7 +1981,7 @@ static int ahash_process_req_one(struct ahash_request *areq, unsigned int nbytes
+ 	nbytes_to_hash = nbytes + req_ctx->nbuf;
+ 	to_hash_later = nbytes_to_hash & (blocksize - 1);
+ 
+-	if (req_ctx->last_desc)
++	if (req_ctx->last)
+ 		to_hash_later = 0;
+ 	else if (to_hash_later)
+ 		/* There is a partial block. Hash the full block(s) now */
+@@ -2041,19 +2041,19 @@ static int ahash_process_req_one(struct ahash_request *areq, unsigned int nbytes
+ 	edesc->desc.hdr = ctx->desc_hdr_template;
+ 
+ 	/* On last one, request SEC to pad; otherwise continue */
+-	if (req_ctx->last_desc)
++	if (req_ctx->last)
+ 		edesc->desc.hdr |= DESC_HDR_MODE0_MDEU_PAD;
+ 	else
+ 		edesc->desc.hdr |= DESC_HDR_MODE0_MDEU_CONT;
+ 
+ 	/* request SEC to INIT hash. */
+-	if (req_ctx->first_desc && !req_ctx->swinit)
++	if (req_ctx->first && !req_ctx->swinit)
+ 		edesc->desc.hdr |= DESC_HDR_MODE0_MDEU_INIT;
+ 
+ 	/* When the tfm context has a keylen, it's an HMAC.
+ 	 * A first or last (ie. not middle) descriptor must request HMAC.
+ 	 */
+-	if (ctx->keylen && (req_ctx->first_desc || req_ctx->last_desc))
++	if (ctx->keylen && (req_ctx->first || req_ctx->last))
+ 		edesc->desc.hdr |= DESC_HDR_MODE0_MDEU_HMAC;
+ 
+ 	return common_nonsnoop_hash(edesc, req_ctx->areq, nbytes_to_hash, ahash_done);
+@@ -2076,7 +2076,7 @@ static void sec1_ahash_process_remaining(struct work_struct *work)
+ 			req_ctx->remaining_ahash_request_bytes;
+ 
+ 		if (req_ctx->last_request)
+-			req_ctx->last_desc = 1;
++			req_ctx->last = 1;
  	}
  
- 	raw_spin_lock_irqsave(&ctx->lock, flags);
-@@ -13230,10 +13231,11 @@ static void sync_child_event(struct perf_event *child_event)
- }
- 
- static void
--perf_event_exit_event(struct perf_event *event, struct perf_event_context *ctx)
-+perf_event_exit_event(struct perf_event *event,
-+		      struct perf_event_context *ctx,
-+		      unsigned long detach_flags)
- {
- 	struct perf_event *parent_event = event->parent;
--	unsigned long detach_flags = 0;
- 
- 	if (parent_event) {
- 		/*
-@@ -13248,7 +13250,7 @@ perf_event_exit_event(struct perf_event *event, struct perf_event_context *ctx)
- 		 * Do destroy all inherited groups, we don't care about those
- 		 * and being thorough is better.
- 		 */
--		detach_flags = DETACH_GROUP | DETACH_CHILD;
-+		detach_flags |= DETACH_GROUP | DETACH_CHILD;
- 		mutex_lock(&parent_event->child_mutex);
+ 	err = ahash_process_req_one(req_ctx->areq,
+@@ -2103,7 +2103,7 @@ static int ahash_process_req(struct ahash_request *areq, unsigned int nbytes)
+ 		if (nbytes > TALITOS1_MAX_DATA_LEN)
+ 			nbytes = TALITOS1_MAX_DATA_LEN;
+ 		else if (req_ctx->last_request)
+-			req_ctx->last_desc = 1;
++			req_ctx->last = 1;
  	}
  
-@@ -13328,7 +13330,7 @@ static void perf_event_exit_task_context(struct task_struct *child)
- 	perf_event_task(child, child_ctx, 0);
+ 	req_ctx->current_ahash_request_bytes = nbytes;
+@@ -2124,14 +2124,14 @@ static int ahash_init(struct ahash_request *areq)
+ 	/* Initialize the context */
+ 	req_ctx->buf_idx = 0;
+ 	req_ctx->nbuf = 0;
+-	req_ctx->first_desc = 1; /* first_desc indicates h/w must init its context */
++	req_ctx->first = 1; /* first indicates h/w must init its context */
+ 	req_ctx->swinit = 0; /* assume h/w init of context */
+ 	size =	(crypto_ahash_digestsize(tfm) <= SHA256_DIGEST_SIZE)
+ 			? TALITOS_MDEU_CONTEXT_SIZE_MD5_SHA1_SHA256
+ 			: TALITOS_MDEU_CONTEXT_SIZE_SHA384_SHA512;
+ 	req_ctx->hw_context_size = size;
+ 	req_ctx->last_request = 0;
+-	req_ctx->last_desc = 0;
++	req_ctx->last = 0;
+ 	INIT_WORK(&req_ctx->sec1_ahash_process_remaining, sec1_ahash_process_remaining);
  
- 	list_for_each_entry_safe(child_event, next, &child_ctx->event_list, event_entry)
--		perf_event_exit_event(child_event, child_ctx);
-+		perf_event_exit_event(child_event, child_ctx, 0);
+ 	dma = dma_map_single(dev, req_ctx->hw_context, req_ctx->hw_context_size,
+@@ -2223,8 +2223,8 @@ static int ahash_export(struct ahash_request *areq, void *out)
+ 	       req_ctx->hw_context_size);
+ 	memcpy(export->buf, req_ctx->buf[req_ctx->buf_idx], req_ctx->nbuf);
+ 	export->swinit = req_ctx->swinit;
+-	export->first_desc = req_ctx->first_desc;
+-	export->last_desc = req_ctx->last_desc;
++	export->first = req_ctx->first;
++	export->last = req_ctx->last;
+ 	export->to_hash_later = req_ctx->to_hash_later;
+ 	export->nbuf = req_ctx->nbuf;
  
- 	mutex_unlock(&child_ctx->mutex);
+@@ -2249,8 +2249,8 @@ static int ahash_import(struct ahash_request *areq, const void *in)
+ 	memcpy(req_ctx->hw_context, export->hw_context, size);
+ 	memcpy(req_ctx->buf[0], export->buf, export->nbuf);
+ 	req_ctx->swinit = export->swinit;
+-	req_ctx->first_desc = export->first_desc;
+-	req_ctx->last_desc = export->last_desc;
++	req_ctx->first = export->first;
++	req_ctx->last = export->last;
+ 	req_ctx->to_hash_later = export->to_hash_later;
+ 	req_ctx->nbuf = export->nbuf;
  
 -- 
 2.53.0
