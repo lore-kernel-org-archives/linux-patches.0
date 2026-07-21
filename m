@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C06471401;
-	Tue, 21 Jul 2026 17:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BECF471418;
+	Tue, 21 Jul 2026 17:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656540; cv=none; b=h97A4cmkVvrpGRF4/XnK6CZiHTi6aw1W8kQXkIDtNOG1qOBHbykzTFq51D64Ca4fc+H14uPNpEJO1qFwfTD1tOqNjgvJzgtg29lt8iqN4KN/tAOaxkvl3j81NulmcvKHYwkhEqdOV74KiWrNveswSoURFyT5E9IkqdoqnnczIxs=
+	t=1784656542; cv=none; b=SsRAC5vnyE+NXdmt2qZv8VkYhJs2Vy0siA5M9qjNu6iANzq0V9F0ZOiFahz6DKN6+KTAcFEgFQQ1SEzKGUX5mogypQVlWmiJEK1NOwHYbVwQzt8BvQcVhUBLhPkEOkDiihhgojYRcHn4JBf7N3QBxXFEMts6PBPaH5UauWTYP1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656540; c=relaxed/simple;
-	bh=5Z5tYlqvimQI1bnrRkAQ1zebY/K5BnwVhQSqf0ui7x4=;
+	s=arc-20240116; t=1784656542; c=relaxed/simple;
+	bh=hPqvCibQUyM42i2VI80vPLLujMQSTtVfddzbplMUCNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l69bFQB7iVd1qY8hM6U8QKCRNRqd2P0TQpZIIDe5nj75/TDULIGK04ctNZyIMdFmWS7iJpn1XZYDzSW0j0XU8mE43qaQHiUU9mTCC5nefOrLT/jAbIizJ3xrIjqrZf7edOwBv6b5QsW/Lx9QEUJmK3Bps4IdjfH9rK4YC3FTU+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYSw1xTr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g5DsVlYo2vmOmpGZQQYKKOqX2BnWjW4mPq8XaJ3L+Z7cFAATco18RiwXpX2uVxGQU33IUjLyh5X0l+QxJGA5TOnQsiCH/f4WiNh/YMPK7DdQe3GW5FJ+eTj68Wjuyo6YVEpGHYaNcVaJ0V22KfIpUSPmM8q4Cx0+WNBmh64c/rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jimfpSau; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYSw1xTr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A201F000E9;
-	Tue, 21 Jul 2026 17:55:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jimfpSau"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980571F00A3D;
+	Tue, 21 Jul 2026 17:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656537;
-	bh=WWZNgAj2n860BnOsH8nplKRdGVzekuWQdVYPJD1uoZM=;
+	s=korg; t=1784656540;
+	bh=2lk5SkjDmt4ZnRGHPzNiMfuq0r8AccSmVVNp9mQ0ERA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pYSw1xTrtqtxtqqwEIff+oJmFdlTT14N+GfLBjn7LZPncmvaRYIw3Z//2sSvCqAWo
-	 Sad2/64ClP8NpM/hTuobeoxteaAjpFxIgZqTTn+Pgx+VRglsj8kHb5qQb/SMc0F3dG
-	 com6hNGdPSqy/wOayPfuflZzu29yoNX/KFvb0W2c=
+	b=jimfpSauEk6No/oyqgAxTzOq3cmJEfagtKxuP8+utZ9uhZJwZQMiR4Bz7ZzrUM8hX
+	 7J7ibqr/Mt0kQnof1f7F0eXkTfnfPJpsGM9hzPKpWhEcBydBtjLhpbLZY9pRIxuCFg
+	 bTn2avTCoDbikM8AhM4+IRuFHduwfGpCKQrMLCS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c69a0a2c816716f1e0d5@syzkaller.appspotmail.com,
-	syzbot+18b26edb69b2e19f3b33@syzkaller.appspotmail.com,
-	Mykyta Yatsenko <yatsenko@meta.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Wen Gong <quic_wgong@quicinc.com>,
+	Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0372/1611] bpf: Fix NMI/tracepoint re-entry deadlock on lru locks
-Date: Tue, 21 Jul 2026 17:08:08 +0200
-Message-ID: <20260721152523.545968902@linuxfoundation.org>
+Subject: [PATCH 6.18 0419/1611] wifi: ath12k: enable IEEE80211_VHT_EXT_NSS_BW_CAPABLE when NSS ratio is reported
+Date: Tue, 21 Jul 2026 17:08:55 +0200
+Message-ID: <20260721152524.688676094@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,493 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mykyta Yatsenko <yatsenko@meta.com>
+From: Wen Gong <quic_wgong@quicinc.com>
 
-[ Upstream commit 89edbdfc5d0308cef57b71359331de5c4ddbf763 ]
+[ Upstream commit 63abe299b12b317dfee5bcd09037da4668a4431a ]
 
-NMI and tracepoint BPF programs can re-enter the per-CPU or global
-LRU lock that bpf_lru_pop_free()/push_free() already hold on the
-same CPU, AA-deadlocking. Lockdep reports "inconsistent
-{INITIAL USE} -> {IN-NMI}" on &l->lock (syzbot c69a0a2c816716f1e0d5)
-and "possible recursive locking detected" on &loc_l->lock (syzbot
-18b26edb69b2e19f3b33).
+When firmware reports NSS ratio support, SUPPORTS_VHT_EXT_NSS_BW is enabled in
+ath12k. However, IEEE80211_VHT_EXT_NSS_BW_CAPABLE must also be set to make the
+advertisement valid.
 
-Prior trylock and rqspinlock based fixes (see links) were nacked
-because compromised on reliability.
+According to IEEE Std 802.11-2024, Subclause 9.4.2.156.3 (Supported VHT-MCS and
+NSS Set subfields), the VHT Extended NSS BW Capable bit indicates whether a STA
+is capable of interpreting the Extended NSS BW Support subfield of the VHT
+capabilities information field. Advertising extended NSS BW support without
+setting this capability bit is therefore invalid.
 
-This patch converts every LRU lock site to rqspinlock_t and adds a
-recovery path for some failure windows to avoid node leaks.
+Without this change, mac80211 detects the inconsistency and logs:
 
-Failure recovery:
+  ieee80211 phy0: copying sband (band 1) due to VHT EXT NSS BW flag
 
- - *_pop_free top-level: return NULL; prealloc_lru_pop() already
-   treats that as no-free-element (-ENOMEM).
+This indicates that mac80211 implicitly aligns IEEE80211_VHT_EXT_NSS_BW_CAPABLE
+during ieee80211_register_hw(). Explicitly setting the bit in ath12k avoids this
+fixup and ensures capabilities are advertised correctly by the driver.
 
- - Cross-CPU steal: skip the victim's locked loc_l, try next CPU.
+This change follows the same approach as the existing ath11k fix.
+https://lore.kernel.org/all/20211013073704.15888-1-wgong@codeaurora.org/
 
- - Post-steal local lock fail: publish stolen node to lockless
-   per-CPU free_llist; next pop on this CPU picks it up.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.5-01651-QCAHKSWPL_SILICONZ-1
 
- - push_free fail: mark node pending_free=1. __local_list_flush(),
-   __local_list_pop_pending() reclaim the node from pending_list.
-   __bpf_lru_list_shrink_inactive() reclaims the node from inactive
-   list. Nodes from active list are reclaimed by __bpf_lru_list_shrink()
-   or after __bpf_lru_list_rotate_active() demotes it to the inactive.
-
-Fixes: 3a08c2fd7634 ("bpf: LRU List")
-Reported-by: syzbot+c69a0a2c816716f1e0d5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c69a0a2c816716f1e0d5
-Reported-by: syzbot+18b26edb69b2e19f3b33@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=18b26edb69b2e19f3b33
-Link: https://lore.kernel.org/bpf/CAPPBnEYO4R+m+SpVc2gNj_x31R6fo1uJvj2bK2YS1P09GWT6kQ@mail.gmail.com/
-Link: https://lore.kernel.org/bpf/CAPPBnEZmFA3ab8Uc=PEm0bdojZy=7T_F5_+eyZSHyZR3MBG4Vw@mail.gmail.com/
-Link: https://lore.kernel.org/bpf/20251030030010.95352-1-dongml2@chinatelecom.cn/
-Link: https://lore.kernel.org/bpf/20260119142120.28170-1-leon.hwang@linux.dev/
-Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
-Link: https://lore.kernel.org/r/20260607-lru_map_spin-v3-1-bcd9332e911b@meta.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 18ab9d038fad ("wifi: ath12k: add support for 160 MHz bandwidth")
+Signed-off-by: Wen Gong <quic_wgong@quicinc.com>
+Signed-off-by: Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260604095831.2674298-1-maharaja.kennadyrajan@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_lru_list.c | 165 +++++++++++++++++++++++---------------
- kernel/bpf/bpf_lru_list.h |  25 ++++--
- 2 files changed, 119 insertions(+), 71 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/bpf/bpf_lru_list.c b/kernel/bpf/bpf_lru_list.c
-index e7a2fc60523f6c..5ed7cb4b98c006 100644
---- a/kernel/bpf/bpf_lru_list.c
-+++ b/kernel/bpf/bpf_lru_list.c
-@@ -13,23 +13,8 @@
- #define PERCPU_FREE_TARGET		(4)
- #define PERCPU_NR_SCANS			PERCPU_FREE_TARGET
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 368c377ab9b55d..4bb4482e27343b 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -7672,6 +7672,10 @@ ath12k_create_vht_cap(struct ath12k *ar, u32 rate_cap_tx_chainmask,
+ 	vht_cap.vht_supported = 1;
+ 	vht_cap.cap = ar->pdev->cap.vht_cap;
  
--/* Helpers to get the local list index */
--#define LOCAL_LIST_IDX(t)	((t) - BPF_LOCAL_LIST_T_OFFSET)
--#define LOCAL_FREE_LIST_IDX	LOCAL_LIST_IDX(BPF_LRU_LOCAL_LIST_T_FREE)
--#define LOCAL_PENDING_LIST_IDX	LOCAL_LIST_IDX(BPF_LRU_LOCAL_LIST_T_PENDING)
- #define IS_LOCAL_LIST_TYPE(t)	((t) >= BPF_LOCAL_LIST_T_OFFSET)
- 
--/* Local list helpers */
--static struct list_head *local_free_list(struct bpf_lru_locallist *loc_l)
--{
--	return &loc_l->lists[LOCAL_FREE_LIST_IDX];
--}
--
--static struct list_head *local_pending_list(struct bpf_lru_locallist *loc_l)
--{
--	return &loc_l->lists[LOCAL_PENDING_LIST_IDX];
--}
--
- /* bpf_lru_node helpers */
- static bool bpf_lru_node_is_ref(const struct bpf_lru_node *node)
- {
-@@ -72,6 +57,7 @@ static void __bpf_lru_node_move_to_free(struct bpf_lru_list *l,
- 	bpf_lru_list_count_dec(l, node->type);
- 
- 	node->type = tgt_free_type;
-+	WRITE_ONCE(node->pending_free, 0);
- 	list_move(&node->list, free_list);
- }
- 
-@@ -87,6 +73,9 @@ static void __bpf_lru_node_move_in(struct bpf_lru_list *l,
- 	bpf_lru_list_count_inc(l, tgt_type);
- 	node->type = tgt_type;
- 	bpf_lru_node_clear_ref(node);
-+	/* Reset pending_free only when moving to the free list */
-+	if (tgt_type == BPF_LRU_LIST_T_FREE)
-+		WRITE_ONCE(node->pending_free, 0);
- 	list_move(&node->list, &l->lists[tgt_type]);
- }
- 
-@@ -212,9 +201,11 @@ __bpf_lru_list_shrink_inactive(struct bpf_lru *lru,
- 	unsigned int i = 0;
- 
- 	list_for_each_entry_safe_reverse(node, tmp_node, inactive, list) {
--		if (bpf_lru_node_is_ref(node)) {
-+		if (bpf_lru_node_is_ref(node) &&
-+		    !READ_ONCE(node->pending_free)) {
- 			__bpf_lru_node_move(l, node, BPF_LRU_LIST_T_ACTIVE);
--		} else if (lru->del_from_htab(lru->del_arg, node)) {
-+		} else if (READ_ONCE(node->pending_free) ||
-+			   lru->del_from_htab(lru->del_arg, node)) {
- 			__bpf_lru_node_move_to_free(l, node, free_list,
- 						    tgt_free_type);
- 			if (++nshrinked == tgt_nshrink)
-@@ -273,7 +264,8 @@ static unsigned int __bpf_lru_list_shrink(struct bpf_lru *lru,
- 
- 	list_for_each_entry_safe_reverse(node, tmp_node, force_shrink_list,
- 					 list) {
--		if (lru->del_from_htab(lru->del_arg, node)) {
-+		if (READ_ONCE(node->pending_free) ||
-+		    lru->del_from_htab(lru->del_arg, node)) {
- 			__bpf_lru_node_move_to_free(l, node, free_list,
- 						    tgt_free_type);
- 			return 1;
-@@ -290,8 +282,10 @@ static void __local_list_flush(struct bpf_lru_list *l,
- 	struct bpf_lru_node *node, *tmp_node;
- 
- 	list_for_each_entry_safe_reverse(node, tmp_node,
--					 local_pending_list(loc_l), list) {
--		if (bpf_lru_node_is_ref(node))
-+					 &loc_l->pending_list, list) {
-+		if (READ_ONCE(node->pending_free))
-+			__bpf_lru_node_move_in(l, node, BPF_LRU_LIST_T_FREE);
-+		else if (bpf_lru_node_is_ref(node))
- 			__bpf_lru_node_move_in(l, node, BPF_LRU_LIST_T_ACTIVE);
- 		else
- 			__bpf_lru_node_move_in(l, node,
-@@ -307,9 +301,12 @@ static void bpf_lru_list_push_free(struct bpf_lru_list *l,
- 	if (WARN_ON_ONCE(IS_LOCAL_LIST_TYPE(node->type)))
- 		return;
- 
--	raw_spin_lock_irqsave(&l->lock, flags);
-+	if (raw_res_spin_lock_irqsave(&l->lock, flags)) {
-+		WRITE_ONCE(node->pending_free, 1);
-+		return;
-+	}
- 	__bpf_lru_node_move(l, node, BPF_LRU_LIST_T_FREE);
--	raw_spin_unlock_irqrestore(&l->lock, flags);
-+	raw_res_spin_unlock_irqrestore(&l->lock, flags);
- }
- 
- static void bpf_lru_list_pop_free_to_local(struct bpf_lru *lru,
-@@ -318,8 +315,10 @@ static void bpf_lru_list_pop_free_to_local(struct bpf_lru *lru,
- 	struct bpf_lru_list *l = &lru->common_lru.lru_list;
- 	struct bpf_lru_node *node, *tmp_node;
- 	unsigned int nfree = 0;
-+	LIST_HEAD(tmp_free);
- 
--	raw_spin_lock(&l->lock);
-+	if (raw_res_spin_lock(&l->lock))
-+		return;
- 
- 	__local_list_flush(l, loc_l);
- 
-@@ -327,7 +326,7 @@ static void bpf_lru_list_pop_free_to_local(struct bpf_lru *lru,
- 
- 	list_for_each_entry_safe(node, tmp_node, &l->lists[BPF_LRU_LIST_T_FREE],
- 				 list) {
--		__bpf_lru_node_move_to_free(l, node, local_free_list(loc_l),
-+		__bpf_lru_node_move_to_free(l, node, &tmp_free,
- 					    BPF_LRU_LOCAL_LIST_T_FREE);
- 		if (++nfree == lru->target_free)
- 			break;
-@@ -335,10 +334,19 @@ static void bpf_lru_list_pop_free_to_local(struct bpf_lru *lru,
- 
- 	if (nfree < lru->target_free)
- 		__bpf_lru_list_shrink(lru, l, lru->target_free - nfree,
--				      local_free_list(loc_l),
-+				      &tmp_free,
- 				      BPF_LRU_LOCAL_LIST_T_FREE);
- 
--	raw_spin_unlock(&l->lock);
-+	raw_res_spin_unlock(&l->lock);
++	if (ar->pdev->cap.nss_ratio_enabled)
++		vht_cap.vht_mcs.tx_highest |=
++			cpu_to_le16(IEEE80211_VHT_EXT_NSS_BW_CAPABLE);
 +
-+	/*
-+	 * Transfer the harvested nodes from the temporary list_head into
-+	 * the lockless per-CPU free llist.
-+	 */
-+	list_for_each_entry_safe(node, tmp_node, &tmp_free, list) {
-+		list_del(&node->list);
-+		llist_add(&node->llist, &loc_l->free_llist);
-+	}
- }
+ 	ath12k_set_vht_txbf_cap(ar, &vht_cap.cap);
  
- static void __local_list_add_pending(struct bpf_lru *lru,
-@@ -350,22 +358,21 @@ static void __local_list_add_pending(struct bpf_lru *lru,
- 	*(u32 *)((void *)node + lru->hash_offset) = hash;
- 	node->cpu = cpu;
- 	node->type = BPF_LRU_LOCAL_LIST_T_PENDING;
-+	WRITE_ONCE(node->pending_free, 0);
- 	bpf_lru_node_clear_ref(node);
--	list_add(&node->list, local_pending_list(loc_l));
-+	list_add(&node->list, &loc_l->pending_list);
- }
- 
- static struct bpf_lru_node *
- __local_list_pop_free(struct bpf_lru_locallist *loc_l)
- {
--	struct bpf_lru_node *node;
-+	struct llist_node *llnode;
- 
--	node = list_first_entry_or_null(local_free_list(loc_l),
--					struct bpf_lru_node,
--					list);
--	if (node)
--		list_del(&node->list);
-+	llnode = llist_del_first(&loc_l->free_llist);
-+	if (!llnode)
-+		return NULL;
- 
--	return node;
-+	return container_of(llnode, struct bpf_lru_node, llist);
- }
- 
- static struct bpf_lru_node *
-@@ -376,10 +383,10 @@ __local_list_pop_pending(struct bpf_lru *lru, struct bpf_lru_locallist *loc_l)
- 
- ignore_ref:
- 	/* Get from the tail (i.e. older element) of the pending list. */
--	list_for_each_entry_reverse(node, local_pending_list(loc_l),
--				    list) {
-+	list_for_each_entry_reverse(node, &loc_l->pending_list, list) {
- 		if ((!bpf_lru_node_is_ref(node) || force) &&
--		    lru->del_from_htab(lru->del_arg, node)) {
-+		    (READ_ONCE(node->pending_free) ||
-+		     lru->del_from_htab(lru->del_arg, node))) {
- 			list_del(&node->list);
- 			return node;
- 		}
-@@ -404,7 +411,8 @@ static struct bpf_lru_node *bpf_percpu_lru_pop_free(struct bpf_lru *lru,
- 
- 	l = per_cpu_ptr(lru->percpu_lru, cpu);
- 
--	raw_spin_lock_irqsave(&l->lock, flags);
-+	if (raw_res_spin_lock_irqsave(&l->lock, flags))
-+		return NULL;
- 
- 	__bpf_lru_list_rotate(lru, l);
- 
-@@ -420,7 +428,7 @@ static struct bpf_lru_node *bpf_percpu_lru_pop_free(struct bpf_lru *lru,
- 		__bpf_lru_node_move(l, node, BPF_LRU_LIST_T_INACTIVE);
- 	}
- 
--	raw_spin_unlock_irqrestore(&l->lock, flags);
-+	raw_res_spin_unlock_irqrestore(&l->lock, flags);
- 
- 	return node;
- }
-@@ -437,7 +445,8 @@ static struct bpf_lru_node *bpf_common_lru_pop_free(struct bpf_lru *lru,
- 
- 	loc_l = per_cpu_ptr(clru->local_list, cpu);
- 
--	raw_spin_lock_irqsave(&loc_l->lock, flags);
-+	if (raw_res_spin_lock_irqsave(&loc_l->lock, flags))
-+		return NULL;
- 
- 	node = __local_list_pop_free(loc_l);
- 	if (!node) {
-@@ -448,17 +457,22 @@ static struct bpf_lru_node *bpf_common_lru_pop_free(struct bpf_lru *lru,
- 	if (node)
- 		__local_list_add_pending(lru, loc_l, cpu, node, hash);
- 
--	raw_spin_unlock_irqrestore(&loc_l->lock, flags);
-+	raw_res_spin_unlock_irqrestore(&loc_l->lock, flags);
- 
- 	if (node)
- 		return node;
- 
--	/* No free nodes found from the local free list and
-+	/*
-+	 * No free nodes found from the local free list and
- 	 * the global LRU list.
- 	 *
- 	 * Steal from the local free/pending list of the
- 	 * current CPU and remote CPU in RR.  It starts
- 	 * with the loc_l->next_steal CPU.
-+	 *
-+	 * Acquire the victim's lock before touching either list. On
-+	 * acquisition failure (rqspinlock AA or timeout) skip the victim
-+	 * and try the next CPU.
- 	 */
- 
- 	first_steal = loc_l->next_steal;
-@@ -466,24 +480,36 @@ static struct bpf_lru_node *bpf_common_lru_pop_free(struct bpf_lru *lru,
- 	do {
- 		steal_loc_l = per_cpu_ptr(clru->local_list, steal);
- 
--		raw_spin_lock_irqsave(&steal_loc_l->lock, flags);
--
--		node = __local_list_pop_free(steal_loc_l);
--		if (!node)
--			node = __local_list_pop_pending(lru, steal_loc_l);
--
--		raw_spin_unlock_irqrestore(&steal_loc_l->lock, flags);
-+		if (!raw_res_spin_lock_irqsave(&steal_loc_l->lock, flags)) {
-+			node = __local_list_pop_free(steal_loc_l);
-+			if (!node)
-+				node = __local_list_pop_pending(lru, steal_loc_l);
-+			raw_res_spin_unlock_irqrestore(&steal_loc_l->lock, flags);
-+		}
- 
- 		steal = cpumask_next_wrap(steal, cpu_possible_mask);
- 	} while (!node && steal != first_steal);
- 
- 	loc_l->next_steal = steal;
- 
--	if (node) {
--		raw_spin_lock_irqsave(&loc_l->lock, flags);
--		__local_list_add_pending(lru, loc_l, cpu, node, hash);
--		raw_spin_unlock_irqrestore(&loc_l->lock, flags);
-+	if (!node)
-+		return NULL;
-+
-+	if (raw_res_spin_lock_irqsave(&loc_l->lock, flags)) {
-+		/*
-+		 * The local pending lock can't be acquired (rqspinlock AA
-+		 * or timeout). Return the stolen node to the per-CPU
-+		 * free_llist instead of orphaning it; the next pop_free on
-+		 * this CPU will pick it up.
-+		 */
-+		node->type = BPF_LRU_LOCAL_LIST_T_FREE;
-+		bpf_lru_node_clear_ref(node);
-+		WRITE_ONCE(node->pending_free, 0);
-+		llist_add(&node->llist, &loc_l->free_llist);
-+		return NULL;
- 	}
-+	__local_list_add_pending(lru, loc_l, cpu, node, hash);
-+	raw_res_spin_unlock_irqrestore(&loc_l->lock, flags);
- 
- 	return node;
- }
-@@ -511,18 +537,24 @@ static void bpf_common_lru_push_free(struct bpf_lru *lru,
- 
- 		loc_l = per_cpu_ptr(lru->common_lru.local_list, node->cpu);
- 
--		raw_spin_lock_irqsave(&loc_l->lock, flags);
-+		if (raw_res_spin_lock_irqsave(&loc_l->lock, flags)) {
-+			WRITE_ONCE(node->pending_free, 1);
-+			return;
-+		}
- 
- 		if (unlikely(node->type != BPF_LRU_LOCAL_LIST_T_PENDING)) {
--			raw_spin_unlock_irqrestore(&loc_l->lock, flags);
-+			raw_res_spin_unlock_irqrestore(&loc_l->lock,
-+						       flags);
- 			goto check_lru_list;
- 		}
- 
- 		node->type = BPF_LRU_LOCAL_LIST_T_FREE;
- 		bpf_lru_node_clear_ref(node);
--		list_move(&node->list, local_free_list(loc_l));
-+		list_del(&node->list);
-+
-+		raw_res_spin_unlock_irqrestore(&loc_l->lock, flags);
- 
--		raw_spin_unlock_irqrestore(&loc_l->lock, flags);
-+		llist_add(&node->llist, &loc_l->free_llist);
- 		return;
- 	}
- 
-@@ -538,11 +570,14 @@ static void bpf_percpu_lru_push_free(struct bpf_lru *lru,
- 
- 	l = per_cpu_ptr(lru->percpu_lru, node->cpu);
- 
--	raw_spin_lock_irqsave(&l->lock, flags);
-+	if (raw_res_spin_lock_irqsave(&l->lock, flags)) {
-+		WRITE_ONCE(node->pending_free, 1);
-+		return;
-+	}
- 
- 	__bpf_lru_node_move(l, node, BPF_LRU_LIST_T_FREE);
- 
--	raw_spin_unlock_irqrestore(&l->lock, flags);
-+	raw_res_spin_unlock_irqrestore(&l->lock, flags);
- }
- 
- void bpf_lru_push_free(struct bpf_lru *lru, struct bpf_lru_node *node)
-@@ -565,6 +600,7 @@ static void bpf_common_lru_populate(struct bpf_lru *lru, void *buf,
- 
- 		node = (struct bpf_lru_node *)(buf + node_offset);
- 		node->type = BPF_LRU_LIST_T_FREE;
-+		node->pending_free = 0;
- 		bpf_lru_node_clear_ref(node);
- 		list_add(&node->list, &l->lists[BPF_LRU_LIST_T_FREE]);
- 		buf += elem_size;
-@@ -594,6 +630,7 @@ static void bpf_percpu_lru_populate(struct bpf_lru *lru, void *buf,
- 		node = (struct bpf_lru_node *)(buf + node_offset);
- 		node->cpu = cpu;
- 		node->type = BPF_LRU_LIST_T_FREE;
-+		node->pending_free = 0;
- 		bpf_lru_node_clear_ref(node);
- 		list_add(&node->list, &l->lists[BPF_LRU_LIST_T_FREE]);
- 		i++;
-@@ -618,14 +655,12 @@ void bpf_lru_populate(struct bpf_lru *lru, void *buf, u32 node_offset,
- 
- static void bpf_lru_locallist_init(struct bpf_lru_locallist *loc_l, int cpu)
- {
--	int i;
--
--	for (i = 0; i < NR_BPF_LRU_LOCAL_LIST_T; i++)
--		INIT_LIST_HEAD(&loc_l->lists[i]);
-+	INIT_LIST_HEAD(&loc_l->pending_list);
-+	init_llist_head(&loc_l->free_llist);
- 
- 	loc_l->next_steal = cpu;
- 
--	raw_spin_lock_init(&loc_l->lock);
-+	raw_res_spin_lock_init(&loc_l->lock);
- }
- 
- static void bpf_lru_list_init(struct bpf_lru_list *l)
-@@ -640,7 +675,7 @@ static void bpf_lru_list_init(struct bpf_lru_list *l)
- 
- 	l->next_inactive_rotation = &l->lists[BPF_LRU_LIST_T_INACTIVE];
- 
--	raw_spin_lock_init(&l->lock);
-+	raw_res_spin_lock_init(&l->lock);
- }
- 
- int bpf_lru_init(struct bpf_lru *lru, bool percpu, u32 hash_offset,
-diff --git a/kernel/bpf/bpf_lru_list.h b/kernel/bpf/bpf_lru_list.h
-index fe2661a58ea94a..8d0ee61622af0c 100644
---- a/kernel/bpf/bpf_lru_list.h
-+++ b/kernel/bpf/bpf_lru_list.h
-@@ -6,11 +6,11 @@
- 
- #include <linux/cache.h>
- #include <linux/list.h>
--#include <linux/spinlock_types.h>
-+#include <linux/llist.h>
-+#include <asm/rqspinlock.h>
- 
- #define NR_BPF_LRU_LIST_T	(3)
- #define NR_BPF_LRU_LIST_COUNT	(2)
--#define NR_BPF_LRU_LOCAL_LIST_T (2)
- #define BPF_LOCAL_LIST_T_OFFSET NR_BPF_LRU_LIST_T
- 
- enum bpf_lru_list_type {
-@@ -22,10 +22,22 @@ enum bpf_lru_list_type {
- };
- 
- struct bpf_lru_node {
--	struct list_head list;
-+	/*
-+	 * A node is in at most one list at a time. The free path on the
-+	 * per-CPU locallist uses an llist, so share storage via a union.
-+	 */
-+	union {
-+		struct list_head list;
-+		struct llist_node llist;
-+	};
- 	u16 cpu;
- 	u8 type;
- 	u8 ref;
-+	/*
-+	 * Marks nodes whose *_push_free() lock acquire failed; reclaimed
-+	 * by flush/shrink which honor the flag instead of del_from_htab().
-+	 */
-+	u8 pending_free;
- };
- 
- struct bpf_lru_list {
-@@ -34,13 +46,14 @@ struct bpf_lru_list {
- 	/* The next inactive list rotation starts from here */
- 	struct list_head *next_inactive_rotation;
- 
--	raw_spinlock_t lock ____cacheline_aligned_in_smp;
-+	rqspinlock_t lock ____cacheline_aligned_in_smp;
- };
- 
- struct bpf_lru_locallist {
--	struct list_head lists[NR_BPF_LRU_LOCAL_LIST_T];
-+	struct list_head pending_list;
-+	struct llist_head free_llist;
- 	u16 next_steal;
--	raw_spinlock_t lock;
-+	rqspinlock_t lock;
- };
- 
- struct bpf_common_lru {
+ 	/* 80P80 is not supported */
 -- 
 2.53.0
 
