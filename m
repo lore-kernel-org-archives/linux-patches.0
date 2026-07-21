@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B624335C68B;
-	Tue, 21 Jul 2026 22:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D83E35C682;
+	Tue, 21 Jul 2026 22:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671588; cv=none; b=lxaMbVUOjVyTg9tlViE2/FhcPR671LwhkGL4W2Be/E7kMqsRPSNFs+O5lDOGR1FizZbw14OUXPZv/l/uMhHpqyV+ArmJFn6S07jJc8d25V64E8FhcaZK9QtH/SX/iu/ueLGnQjTQgc7rcgdW1pI2NpZcdmyQhsY3hhcA7ADlz70=
+	t=1784671591; cv=none; b=ZcKyhL2vjqG149p+YN1QcMUFw4Lrif2VKZTRRGuizYdAgEVWrnNtmsAuiCOGO6ChBlVSSxoWPUO0CnOJwIlBCzF6vPPixPTWQl/YA6fyk5I0/BoD384of1yRhuC59r6o4lrfSXggKr4erI6wB3p4b4tJegS5B1o1gmilnDq1rgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671588; c=relaxed/simple;
-	bh=6Eyv9w3UI3woYAs+MhU3xnw2yKlO7cGlrVid59UNG+s=;
+	s=arc-20240116; t=1784671591; c=relaxed/simple;
+	bh=PR3nBNTgdsqayAf3kbIJ0Qg5HZsjlTjBMT1xfptyS6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=um5dHXu5zYgCSGOxRXc/smqIhrRsx5BK0Su7xQFMb0GjIauLGitWmeR2XNujBwLanjmpkSeAA99g0CNUCcVQzUvv8l+Fle4CLKKgncdISKEjhk0HtZaMH4qh/lSFoJlgmkwoepU+n1HugK5e8Y2BgMJH+q/aQePbjgHrExPLJts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRjoVjEA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gIsYEAOW5si7dYXxHDKTwaH1ikb2NlcAMz3rYWwEnJ/oWEQ4OfkWGZIphaJZAciwwnfhOl7SZZ6zQoNaYzetaZBO6BjDX/+zLZ5iIeS8UWQMOo7yAdAZZPYezAevpGO5AL3s/yUcf8yMXHv6ndDuyMKtXu05HUr2ZLBlOU5TpOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GC927WB9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRjoVjEA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC431F000E9;
-	Tue, 21 Jul 2026 22:06:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GC927WB9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941E41F000E9;
+	Tue, 21 Jul 2026 22:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671587;
-	bh=FzTooLLQlM7SxPHlM7NbOoirL089T5xOL7PiA4P9yCw=;
+	s=korg; t=1784671590;
+	bh=8cySC0frBvlUtQRs0EIfWbtfdXiJ+9KNWskIABfg8B0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XRjoVjEA0z2yWsV7636Rg2kmAACmh+7HGO9HbjSZurMjgzJVkJiUuG5E9FY1CMOaP
-	 UF6OKDDd+PdzaF2pG+ntr/+mxG1IQc0ReaM33e3mEECRsbRClEhqXhvhh7W/XJKB9a
-	 qVtjJMIDGNOLxrfEOwTtXrADo2VgqMmzjP1PR7/0=
+	b=GC927WB9f2bAE3uwTxs/dwA09767p2QhquH9ymdemVX8O9xaIVxLELg6LDitvQb7t
+	 W+E+VZrWpx2kdtovtxP5GkTH4YHBeePTuG1kxZeodQIHoqNEk9d5I/HD1+7+YrN7XR
+	 tG96fremaE5kWUIPJ01aiPDocxT96M5PdE9Ge/cY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Stephen Suryaputra <ssuryaextr@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 302/843] netfilter: synproxy: protect nf_ct_seqadj_init() with conntrack lock
-Date: Tue, 21 Jul 2026 17:18:57 +0200
-Message-ID: <20260721152412.820763849@linuxfoundation.org>
+Subject: [PATCH 5.15 267/843] ipv6: guard against possible NULL deref in __in6_dev_stats_get()
+Date: Tue, 21 Jul 2026 17:18:22 +0200
+Message-ID: <20260721152412.028744220@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,46 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9e37388b8070afe73d4ab2d973b28593ed65f3ad ]
+[ Upstream commit 507541c2a8eeb76c02bd2511958f73a8cfa3e1bc ]
 
-nf_ct_seqadj_init() is called without holding the ct lock. This can race
-with nf_ct_seq_adjust() when a connection is in CLOSE state due to an
-RST or connection reopening. In addition for SYN_RECV state, concurrent
-processing of packets can trigger nf_ct_seq_adjust() too. These
-situations create a read/write data race.
+dev_get_by_index_rcu() could return NULL if the original physical
+device is unregistered.
 
-As synproxy is the only user of nf_ct_seqadj_init() at the moment, fix
-this by holding ct->lock inside nf_ct_seqadj_init() until all is done.
+Found by Sashiko.
 
-Fixes: 48b1de4c110a ("netfilter: add SYNPROXY core/target")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: e1ae5c2ea478 ("vrf: Increment Icmp6InMsgs on the original netdev")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Stephen Suryaputra <ssuryaextr@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260526145529.3587126-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_seqadj.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/net/addrconf.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_seqadj.c b/net/netfilter/nf_conntrack_seqadj.c
-index 3066449f8bd8a3..bcb4adf9879dcf 100644
---- a/net/netfilter/nf_conntrack_seqadj.c
-+++ b/net/netfilter/nf_conntrack_seqadj.c
-@@ -17,12 +17,14 @@ int nf_ct_seqadj_init(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
- 	if (off == 0)
- 		return 0;
- 
-+	spin_lock_bh(&ct->lock);
- 	set_bit(IPS_SEQ_ADJUST_BIT, &ct->status);
- 
- 	seqadj = nfct_seqadj(ct);
- 	this_way = &seqadj->seq[dir];
- 	this_way->offset_before	 = off;
- 	this_way->offset_after	 = off;
-+	spin_unlock_bh(&ct->lock);
- 	return 0;
+diff --git a/include/net/addrconf.h b/include/net/addrconf.h
+index 5cf1a73774078a..39da955b0326f7 100644
+--- a/include/net/addrconf.h
++++ b/include/net/addrconf.h
+@@ -332,8 +332,11 @@ static inline struct inet6_dev *__in6_dev_get(const struct net_device *dev)
+ static inline struct inet6_dev *__in6_dev_stats_get(const struct net_device *dev,
+ 						    const struct sk_buff *skb)
+ {
+-	if (netif_is_l3_master(dev))
++	if (netif_is_l3_master(dev)) {
+ 		dev = dev_get_by_index_rcu(dev_net(dev), inet6_iif(skb));
++		if (!dev)
++			return NULL;
++	}
+ 	return __in6_dev_get(dev);
  }
- EXPORT_SYMBOL_GPL(nf_ct_seqadj_init);
+ 
 -- 
 2.53.0
 
