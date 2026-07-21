@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786BB237180;
-	Tue, 21 Jul 2026 20:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BE22FF66A;
+	Tue, 21 Jul 2026 20:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665828; cv=none; b=oHX1ESm8xi4RrtXQntsTwO/MO2nNHM0gBHYHVz8mpVV6OHh1a2bj6cGHHWSnOqUiiJYHLGr7+XQhXI4UDV5JGH16t01e1eXpvDreq4XkxYITdPYxBp4DfjtWwv9uE+Zw+zRYVScrvBEDPLj4ntbLreWZVmQsYdIdJ2pZw7llazk=
+	t=1784665831; cv=none; b=JwJuZUrPwljxwP6tIz4ajx9Y5PCyloQgjW0nxPomtbkKiy2ZCuQzzYJUDUU8ZLk0mHoEycOL/XSs+vjnDDFadDnSySqO6fR+cfiG9oR3JVcvDZK2mG2j4kp+VNxnvKZcS2TZSAXA9fygaT9d8jZUw3INKhuGuarpMH6dJgx7yyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665828; c=relaxed/simple;
-	bh=KiMwGdeXMvE+gQLagCnTLMuCa1LFsJQHbGm/AuD9wkc=;
+	s=arc-20240116; t=1784665831; c=relaxed/simple;
+	bh=90mE/wDoqkO+MrW9nIeQbzdWMEXP1eEgTIifTR+ZF2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PMjP5rurMzjcfLulu1L43SBnUHrmtB/IrJe8bwMV5dnHPpgoJgBXonCaaEDtkIShOg3YOzeYPcfqzpWU3zkRo6kVq2Al/i/ji1bV8cxYlJ4z8qoJZmn+SxpKOChKigVt1A0Vqy6bc5+WtSnyFlzIbG6BNL1dQLfu++ylTMO6LWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0SZPdb1l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lare6KsXI8SVBuP6PywqDh3688OOFLO3feAeDC8ly+HBExgAY3UzFvVfHbdtvGkPfHJmTMjEr3GaP59znlQUmMtSTyQyn62wxxzHfkP3B06C+09EzD9mgJJIJpAjkCy4Q4p+UFdG4uoEpYfFL8RH/YNiQAB2t5MnPuXFFMy1Hoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJBcw5SA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0SZPdb1l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDAA41F000E9;
-	Tue, 21 Jul 2026 20:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJBcw5SA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8729C1F000E9;
+	Tue, 21 Jul 2026 20:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665827;
-	bh=zkSSLi7gpKj8urGhAdLz9FuJXhCx4JHhPun3IpNKwfg=;
+	s=korg; t=1784665830;
+	bh=pSFqL+aKCm2srJjdB0di+bGsFjtoA5i1ctRmF+50kjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0SZPdb1lH0CVJsndc8mUa3/BRLTS3Ts+iNWwISu3rHQY6/5xlgfGSXgU6WK/2G8IX
-	 x8f+4CgLj5kwci6YtVoifGv8uNTOn3MHaWFa79RHOTKIGbhmls7hk1mJIHLCnjbYly
-	 DHjpkyYD4mDQmAJLsh74j9exlLXJTYWem8NrSVZU=
+	b=TJBcw5SAoxDw8ZAGH/eoo8a3qP3Aq+S6f4KLblcYDBih30jYaTC4qI18W5Fjpy7R4
+	 bXpWVuzZl3EFPlq1p0jSvfTAUqtpYWXVeM3vD94M5vxMcu456B7I7YWdyCD/68uhSH
+	 s0lnZXV0vmBzavHa6Dtfua3YjjP7PPE22If135bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0450/1266] drm/tegra: Fix iommu_map_sgtable() return value check
-Date: Tue, 21 Jul 2026 17:14:47 +0200
-Message-ID: <20260721152451.905743171@linuxfoundation.org>
+Subject: [PATCH 6.6 0415/1266] regulator: dt-bindings: mt6359: Drop regulator-name pattern restrictions
+Date: Tue, 21 Jul 2026 17:14:12 +0200
+Message-ID: <20260721152451.125406606@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,57 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit b3f349517de8f4469c385ebb7bfdfcc148790c0f ]
+[ Upstream commit cdc517688ffa2c30a64a20b558a9ecbf046c70f1 ]
 
-Commit "iommu: return full error code from iommu_map_sg[_atomic]()"
-changed iommu_map_sgtable() to return an ssize_t and negative values
-in error cases, rather than a size_t and a zero.
+The name of the regulator should match what the board design specifies
+for the power rail. There should be no limitations on what the name can
+be, and they definitely don't always follow the PMIC's own names.
 
-Update tegra_bo_iommu_map() to correctly check for errors from
-iommu_map_sgtable.
+Drop the restrictions on regulator-name.
 
-Fixes: ad8f36e4b6b1 ("iommu: return full error code from iommu_map_sg[_atomic]()")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260421-iommu_map_sgtable-return-v1-2-fb484c07d2a1@nvidia.com
+Fixes: 8771456635d5 ("dt-bindings: regulator: Add document for MT6359 regulator")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://patch.msgid.link/20260514091520.2718987-3-wenst@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/gem.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ .../bindings/regulator/mt6359-regulator.yaml  | 43 -------------------
+ 1 file changed, 43 deletions(-)
 
-diff --git a/drivers/gpu/drm/tegra/gem.c b/drivers/gpu/drm/tegra/gem.c
-index 69a7aa5cd76ca4..c4cc8353574ea2 100644
---- a/drivers/gpu/drm/tegra/gem.c
-+++ b/drivers/gpu/drm/tegra/gem.c
-@@ -224,6 +224,7 @@ static const struct host1x_bo_ops tegra_bo_ops = {
- static int tegra_bo_iommu_map(struct tegra_drm *tegra, struct tegra_bo *bo)
- {
- 	int prot = IOMMU_READ | IOMMU_WRITE;
-+	ssize_t size;
- 	int err;
+diff --git a/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml b/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml
+index d6b3b5a5c0b346..5e4b1e74179500 100644
+--- a/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml
+@@ -18,84 +18,41 @@ patternProperties:
+   "^buck_v(s1|gpu11|modem|pu|core|s2|pa|proc2|proc1|core_sshub)$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^v(s1|gpu11|modem|pu|core|s2|pa|proc2|proc1|core_sshub)$"
+-
+     unevaluatedProperties: false
  
- 	if (bo->mm)
-@@ -245,13 +246,15 @@ static int tegra_bo_iommu_map(struct tegra_drm *tegra, struct tegra_bo *bo)
+   "^ldo_v(ibr|rf12|usb|camio|efuse|xo22)$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^v(ibr|rf12|usb|camio|efuse|xo22)$"
+-
+     unevaluatedProperties: false
  
- 	bo->iova = bo->mm->start;
+   "^ldo_v(rfck|emc|a12|a09|ufs|bbck)$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^v(rfck|emc|a12|a09|ufs|bbck)$"
+-
+     unevaluatedProperties: false
  
--	bo->size = iommu_map_sgtable(tegra->domain, bo->iova, bo->sgt, prot);
--	if (!bo->size) {
-+	size = iommu_map_sgtable(tegra->domain, bo->iova, bo->sgt, prot);
-+	if (size < 0) {
- 		dev_err(tegra->drm->dev, "failed to map buffer\n");
--		err = -ENOMEM;
-+		err = size;
- 		goto remove;
- 	}
+   "^ldo_vcn(18|13|33_1_bt|13_1_wifi|33_2_bt|33_2_wifi)$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^vcn(18|13|33_1_bt|13_1_wifi|33_2_bt|33_2_wifi)$"
+-
+     unevaluatedProperties: false
  
-+	bo->size = size;
-+
- 	mutex_unlock(&tegra->mm_lock);
+   "^ldo_vsram_(proc2|others|md|proc1|others_sshub)$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^vsram_(proc2|others|md|proc1|others_sshub)$"
+-
+     unevaluatedProperties: false
  
- 	return 0;
+   "^ldo_v(fe|bif|io)28$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^v(fe|bif|io)28$"
+-
+     unevaluatedProperties: false
+ 
+   "^ldo_v(aud|io|aux|rf|m)18$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^v(aud|io|aux|rf|m)18$"
+-
+     unevaluatedProperties: false
+ 
+   "^ldo_vsim[12]$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^vsim[12]$"
+-
+-    required:
+-      - regulator-name
+-
+     unevaluatedProperties: false
+ 
+ additionalProperties: false
 -- 
 2.53.0
 
