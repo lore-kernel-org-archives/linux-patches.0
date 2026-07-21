@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7B9388E40;
-	Tue, 21 Jul 2026 19:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7175C39A7FD;
+	Tue, 21 Jul 2026 19:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661196; cv=none; b=a+N0CImNSqPsR4tJFUwNGp8gJVOQBuryYNOiRcFRanHOn5JUWhdORNgkXlCTdBnNTlaha57J5O/fu/RUgfJPAn7Dy1mWa4fVrq9Y4KzBOz13+IU5wCZTMyWGkfmRU5in7mutzeaYF9LW85dJ2+6G9FWXsIWveQE59yth6UYlSPM=
+	t=1784661199; cv=none; b=JXj78IXHyc5DqiplTRebf1HJWBK1jMkQkXC5oGPrLYMfKvnpvknDO3c5uui/5K5jZ3fmkPTL9k/QtwcC1DjBWynZbpfx3aPIcn2SPOuHFCGqTkbHTnD+htB1gdea3g3mfE7gAj8aqo/cGAkOKASkIOWYv1e2o9bdJIyTuO705hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661196; c=relaxed/simple;
-	bh=osvbA9ZRiaunXt8cb8bXlMIcm5ky5laVzOjlR1J4vMA=;
+	s=arc-20240116; t=1784661199; c=relaxed/simple;
+	bh=x+BKBDBUL6fg+6dYGBiUhVYeGD46wCOlWNVPbg+RmsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iLZXLK4t28dCP8FO42qXB81lLYwrs3tvayAVRuKYDWxGPTYUW6O4gKv1/Jq/UQVG4HFQlf/jdPlMPvldXRkxDvvVCzi50JdCoz/wLunH3qOc27o/WDiVosEDKw7EWIzwXe6xjuKepVfMHZub7QzFju61947KaggsMOVGucfkiEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlSI7CU3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BsHC47q0xmnzn/r+VGDQH+Cf7DIhnQ71hnXeBuxYv2/mrWSHEfehjwf62k3BCYTZH+g7PNX+bby3FZmEx30OiprpkyY5pcMKe5Lp0KIWbts0dhC9gakhIIivYUSiNVcETQUmzMm6DMFnvUlWqy7QTJy95USc/EA28V6y5DPaqvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vx4lz+nl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlSI7CU3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEA21F000E9;
-	Tue, 21 Jul 2026 19:13:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vx4lz+nl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA3321F000E9;
+	Tue, 21 Jul 2026 19:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661195;
-	bh=mCAu0ezRO5F4RvCR3ws/w+DtDcFhc+tzk9OVT0GgfwY=;
+	s=korg; t=1784661198;
+	bh=tXpvLceE/TqayfgWxPzlMEfzXsTLmMQ91bJLaXocWmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NlSI7CU3lDg8i04ixn2Rac+eAPgG/VCu/XXKFegJSoAY5hgPaPsS1ow6AcoWqJjBQ
-	 NL9Z2ZOSpkwXKalFK1r92YicTYJ10jsGy2MPFkzbqnIOh+FY/N9aN7Pd0HfRwYexqu
-	 YGXcl72odQgX3XWy7cILphQnVRgZ+ZAS1/mHkMiU=
+	b=vx4lz+nl5fWek+t3Tomx5QuZ39SvtCkVECaN9Ieeh4I5sUvRq90gReaPRprpFgetC
+	 7HQpurxwMuSCzf9EV3cdEvuMxkMgRQBJhWOwLb5sPOg7udmx3AVCxMr6aqFellXuRM
+	 mq7YwLwCg98Yq47W08MvA1VDTJ0CEE3QDUdgmL9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jiri Slaby <jirislaby@kernel.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1267/2077] thermal: testing: zone: Flush work items during cleanup
-Date: Tue, 21 Jul 2026 17:15:40 +0200
-Message-ID: <20260721152622.702864866@linuxfoundation.org>
+Subject: [PATCH 7.1 1268/2077] ACPICA: Unbreak tools build after switching over to strscpy_pad()
+Date: Tue, 21 Jul 2026 17:15:41 +0200
+Message-ID: <20260721152622.726914039@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,143 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit fb1a5dfe86d3af1e1c3ce168cf0d8d43897e0f77 ]
+[ Upstream commit 292db66afd20dd0b7a3c9a3dad9b864a64c8bddf ]
 
-To prevent freed module code from being executed during the thermal
-testing module unload, make it add a dedicated workqueue for thermal
-testing work items and flush it in thermal_testing_exit().
+Commit 97f7d3f9c9ac ("ACPICA: Replace strncpy() with strscpy_pad() in
+acpi_ut_safe_strncpy()") switched over the ACPICA code in the kernel to
+using strscpy_pad() instead of a combination of strncpy() and manual
+NUL-termination of the destination string, but it overlooked the fact
+that tools also use the code in question and strscpy_pad() is not
+defined in those builds.
 
-Fixes: f6a034f2df42 ("thermal: Introduce a debugfs-based testing facility")
-Link: https://sashiko.dev/#/patchset/20260605185212.2491144-1-sam.moelius%40trailofbits.com
+Address that by using the original ACPICA code in non-kernel builds.
+
+Fixes: 97f7d3f9c9ac ("ACPICA: Replace strncpy() with strscpy_pad() in acpi_ut_safe_strncpy()")
+Reported-by: Jiri Slaby <jirislaby@kernel.org>
+Closes: https://lore.kernel.org/all/79e9e913-0fb1-4110-804b-c3b5d0edafe4@kernel
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/1959388.tdWV9SEqCh@rafael.j.wysocki
-[ rjw: Make variable d_command static ]
+Reviewed-by: Kees Cook <kees@kernel.org>
+[ rjw: Fixed up the number of added code lines ]
+Link: https://patch.msgid.link/12923581.O9o76ZdvQC@rafael.j.wysocki
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/testing/command.c         | 36 ++++++++++++++++++++---
- drivers/thermal/testing/thermal_testing.h |  8 +++++
- drivers/thermal/testing/zone.c            |  7 ++---
- 3 files changed, 43 insertions(+), 8 deletions(-)
+ drivers/acpi/acpica/utnonansi.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/thermal/testing/command.c b/drivers/thermal/testing/command.c
-index fbf7ab9729b5a5..90e06c5933278a 100644
---- a/drivers/thermal/testing/command.c
-+++ b/drivers/thermal/testing/command.c
-@@ -86,7 +86,10 @@
- 
- #include "thermal_testing.h"
- 
--struct dentry *d_testing;
-+struct workqueue_struct *tt_wq __ro_after_init;
-+
-+struct dentry *d_testing __ro_after_init;
-+static struct dentry *d_command __ro_after_init;
- 
- #define TT_COMMAND_SIZE		16
- 
-@@ -203,17 +206,42 @@ static const struct file_operations tt_command_fops = {
- 
- static int __init thermal_testing_init(void)
+diff --git a/drivers/acpi/acpica/utnonansi.c b/drivers/acpi/acpica/utnonansi.c
+index 3a7952be654579..93867ad7f3421f 100644
+--- a/drivers/acpi/acpica/utnonansi.c
++++ b/drivers/acpi/acpica/utnonansi.c
+@@ -168,7 +168,16 @@ void acpi_ut_safe_strncpy(char *dest, char *source, acpi_size dest_size)
  {
-+	int error;
-+
-+	tt_wq = alloc_workqueue("thermal_testing", WQ_UNBOUND, 0);
-+	if (!tt_wq)
-+		return -ENOMEM;
-+
- 	d_testing = debugfs_create_dir("thermal-testing", NULL);
--	if (!IS_ERR(d_testing))
--		debugfs_create_file("command", 0200, d_testing, NULL,
--				    &tt_command_fops);
-+	if (IS_ERR(d_testing)) {
-+		error = PTR_ERR(d_testing);
-+		goto destroy_wq;
-+	}
-+
-+	d_command = debugfs_create_file("command", 0200, d_testing, NULL, &tt_command_fops);
-+	if (IS_ERR(d_command)) {
-+		error = PTR_ERR(d_command);
-+		goto remove_d_testing;
-+	}
+ 	/* Always terminate destination string */
  
- 	return 0;
-+
-+remove_d_testing:
-+	debugfs_remove(d_testing);
-+destroy_wq:
-+	destroy_workqueue(tt_wq);
-+	return error;
++#ifdef __KERNEL__
+ 	strscpy_pad(dest, source, dest_size);
++#else
++	/*
++	 * strscpy_pad() is not defined in ACPICA tools builds, so use strncpy()
++	 * and directly NUL-terminate the destination string in that case.
++	 */
++	strncpy(dest, source, dest_size);
++	dest[dest_size - 1] = 0;
++#endif
  }
- module_init(thermal_testing_init);
  
- static void __exit thermal_testing_exit(void)
- {
-+	/* First, prevent new commands from being entered. */
-+	debugfs_remove(d_command);
-+	/* Flush commands in progress (if any). */
-+	flush_workqueue(tt_wq);
-+	destroy_workqueue(tt_wq);
-+	/* Remove the directory structure and clean up. */
- 	debugfs_remove(d_testing);
- 	tt_zone_cleanup();
- }
-diff --git a/drivers/thermal/testing/thermal_testing.h b/drivers/thermal/testing/thermal_testing.h
-index c790a32aae4ed7..5880c9a63dba99 100644
---- a/drivers/thermal/testing/thermal_testing.h
-+++ b/drivers/thermal/testing/thermal_testing.h
-@@ -1,4 +1,12 @@
- /* SPDX-License-Identifier: GPL-2.0 */
-+#include <linux/workqueue.h>
-+
-+extern struct workqueue_struct *tt_wq;
-+
-+static inline void tt_queue_work(struct work_struct *work)
-+{
-+	queue_work(tt_wq, work);
-+}
- 
- extern struct dentry *d_testing;
- 
-diff --git a/drivers/thermal/testing/zone.c b/drivers/thermal/testing/zone.c
-index 3c339242f52d4c..51f1c0806d2149 100644
---- a/drivers/thermal/testing/zone.c
-+++ b/drivers/thermal/testing/zone.c
-@@ -13,7 +13,6 @@
- #include <linux/idr.h>
- #include <linux/list.h>
- #include <linux/thermal.h>
--#include <linux/workqueue.h>
- 
- #include "thermal_testing.h"
- 
-@@ -207,7 +206,7 @@ int tt_add_tz(void)
- 
- 	INIT_WORK(&tt_work->work, tt_add_tz_work_fn);
- 	tt_work->tt_zone = no_free_ptr(tt_zone);
--	schedule_work(&(no_free_ptr(tt_work)->work));
-+	tt_queue_work(&(no_free_ptr(tt_work)->work));
- 
- 	return 0;
- }
-@@ -269,7 +268,7 @@ int tt_del_tz(const char *arg)
- 
- 	INIT_WORK(&tt_work->work, tt_del_tz_work_fn);
- 	tt_work->tt_zone = tt_zone;
--	schedule_work(&(no_free_ptr(tt_work)->work));
-+	tt_queue_work(&(no_free_ptr(tt_work)->work));
- 
- 	return 0;
- }
-@@ -358,7 +357,7 @@ int tt_zone_add_trip(const char *arg)
- 	INIT_WORK(&tt_work->work, tt_zone_add_trip_work_fn);
- 	tt_work->tt_zone = no_free_ptr(tt_zone);
- 	tt_work->tt_trip = no_free_ptr(tt_trip);
--	schedule_work(&(no_free_ptr(tt_work)->work));
-+	tt_queue_work(&(no_free_ptr(tt_work)->work));
- 
- 	return 0;
- }
+ #endif
 -- 
 2.53.0
 
