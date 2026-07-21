@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D6E335555;
-	Tue, 21 Jul 2026 15:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E16335555;
+	Tue, 21 Jul 2026 15:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648927; cv=none; b=vFBTbVYZFTQ7PHdSTSV6grNIwC5QkqLCxN/jt8BbUPZcxe5DtVywlvSwdjn58YvqiVXqXDQ4uYCbxOZ5A8kBmj5kUfw2xw+acgeISkXZ1EEc3YHSzScgMWiGiWcGfaprSej6w1qXPTDoDyLP0vHQySDYorYYRUUKS3QwL0YtiQw=
+	t=1784648929; cv=none; b=kuxOLalAa5PtSY/Aps50FOmwTjlFnIsHuW54Yh323xoxPiyyCdBrxSMD00G8wFXWI8F5/XyWr1NdQKjN7jIEkF4kA3xsXwCJ9MQI4iY82FM8dW9SajytvhzZ1fQTAyHZq5aBHagjBVcSulbhV096/EiXXlRDLf1rK7idCwTAIU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648927; c=relaxed/simple;
-	bh=qu/wmXMwDgmTsTR7JrClj53cDDyoUqpPWb/Jme9OK0w=;
+	s=arc-20240116; t=1784648929; c=relaxed/simple;
+	bh=Q6fJruOOW9r5xoXXTy991AFoenuBXLhTAsafpqBLciw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GyZ75Ch4xPx5nq3ukcYy1yHroIdkilqrMGtMipRtmRQdw/qEYGgyJovl8vXzt4wYLUXiBPG6nV3EESQEXVAwJGv7uGRIcXDp9QqPX1DbpuaxnRKmw5YBUF20OrfPyofAa7ClURifsf99QtZCKRptqoGSwGYNRGhFGvgDSKecUAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TsS3rGd1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K8NRudxEfF+rnPdzBUY0J5CcLUlDzwasAUEHskww3//Yry3GEDBiRfBXd07WceED5r+pLvakaTRY8r49ZGEw/pn/gYGfcdlU9lA0E665WA41RmDr2dQo4kX+nESKhoYzT0BZKylzK1MkhGxu/teUKjNVD8tXer6gygBOQ+IJO3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CYG24ICr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TsS3rGd1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A41D1F000E9;
-	Tue, 21 Jul 2026 15:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYG24ICr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1B971F000E9;
+	Tue, 21 Jul 2026 15:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648925;
-	bh=sm9zfz3oLO1uBOe1AR48ucsWw68I5mM/6m57qyWP2Dk=;
+	s=korg; t=1784648928;
+	bh=3GtvLfVHzifUfS0WI1699ydGTrvor8pU2T8Z5V+Qk/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TsS3rGd1xae7tjUNBktckDzGFKxxEy4xMvY5k/i4HFTDFcpjIus7CIePThp/yy2kK
-	 53GjdjsubRCfJQborPHIC7wAKQy1AhpFrzxhTWtcYxoQPGtw3wBLJnm8yawOrtg8M5
-	 47gtzC6zR2SeS2yrmy0thST/Z+6D24k6H0r3BCfs=
+	b=CYG24ICr34ZMivXmA8PUOZ3+644q29UP0Yjiit6C7vYk31qrUULCKgi4JKWHS2v/d
+	 hrxS+SI2P+tRDa/2MWGpFV+cdvK5TjL+SpeWnet5liBYGsSfjIU7Uy5MQbgSG4qkrr
+	 ao4FFgwxCjxh49IS4m1yvdDHB4SAQZsnKtUIpZXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Han Gao <gaohan@iscas.ac.cn>,
+	Yixun Lan <dlan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0384/2077] RDMA/rxe: Copy WQE to local buffer in non-SRQ receive path
-Date: Tue, 21 Jul 2026 17:00:57 +0200
-Message-ID: <20260721152601.754577810@linuxfoundation.org>
+Subject: [PATCH 7.1 0385/2077] dts: riscv: spacemit: k3: Fix I/O power settings
+Date: Tue, 21 Jul 2026 17:00:58 +0200
+Message-ID: <20260721152601.778561145@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,76 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristmd@gmail.com>
+From: Yixun Lan <dlan@kernel.org>
 
-[ Upstream commit d6ab440240a04b8737ee4c7bb21af9182e451733 ]
+[ Upstream commit 3ea695eb111fc5a7ffddd21d5c3fee6d82560413 ]
 
-For non-SRQ QPs, the responder reads WQE fields directly from the
-shared queue buffer mapped into userspace. This allows a malicious
-user to modify fields like num_sge or sge entries while the kernel
-is processing the WQE, leading to out-of-bounds reads in
-rxe_resp_check_length() and copy_data().
+SpacemiT K3 SoC support dual-voltage I/O power domain, while initially
+configure to 3.3v, and need to access register from APBC space to switch
+to 1.8v domain.
 
-Introduce get_recv_wqe() that validates num_sge and copies the WQE
-to a kernel-local buffer before processing, matching the approach
-already used for SRQ WQEs in get_srq_wqe(). The srq_wqe buffer is
-reused since SRQ and non-SRQ paths are mutually exclusive per QP.
+Fix the GMAC0's I/O pins 1.8v switch failure that will result a broken
+ethernet driver.
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Link: https://patch.msgid.link/r/20260518215040.1598586-3-tristan@talencesecurity.com
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: d8944577496b ("riscv: dts: spacemit: k3: add pinctrl support")
+Reported-by: Han Gao <gaohan@iscas.ac.cn>
+Link: https://patch.msgid.link/20260518-07-dts-pinctrl-io-power-v1-1-abe19c14a726@kernel.org
+Signed-off-by: Yixun Lan <dlan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_resp.c | 27 ++++++++++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ arch/riscv/boot/dts/spacemit/k3.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
-index 8a0a9739636014..e0294b7c956936 100644
---- a/drivers/infiniband/sw/rxe/rxe_resp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_resp.c
-@@ -310,6 +310,29 @@ static enum resp_states get_srq_wqe(struct rxe_qp *qp)
- 	return RESPST_CHK_LENGTH;
- }
+diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
+index e6faf8d8759e1f..719850aa7aac5a 100644
+--- a/arch/riscv/boot/dts/spacemit/k3.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
+@@ -803,6 +803,7 @@ pinctrl: pinctrl@d401e000 {
+ 			clocks = <&syscon_apbc CLK_APBC_AIB>,
+ 				 <&syscon_apbc CLK_APBC_AIB_BUS>;
+ 			clock-names = "func", "bus";
++			spacemit,apbc = <&syscon_apbc>;
+ 		};
  
-+static enum resp_states rxe_get_recv_wqe(struct rxe_qp *qp)
-+{
-+	struct rxe_queue *q = qp->rq.queue;
-+	struct rxe_recv_wqe *wqe;
-+	unsigned int num_sge;
-+	size_t size;
-+
-+	wqe = queue_head(q, QUEUE_TYPE_FROM_CLIENT);
-+	if (!wqe)
-+		return RESPST_ERR_RNR;
-+
-+	num_sge = wqe->dma.num_sge;
-+	if (unlikely(num_sge > qp->rq.max_sge)) {
-+		rxe_dbg_qp(qp, "invalid num_sge in recv WQE\n");
-+		return RESPST_ERR_MALFORMED_WQE;
-+	}
-+	size = sizeof(*wqe) + num_sge * sizeof(struct rxe_sge);
-+	memcpy(&qp->resp.srq_wqe, wqe, size);
-+
-+	qp->resp.wqe = &qp->resp.srq_wqe.wqe;
-+	return RESPST_CHK_LENGTH;
-+}
-+
- static enum resp_states check_resource(struct rxe_qp *qp,
- 				       struct rxe_pkt_info *pkt)
- {
-@@ -330,9 +353,7 @@ static enum resp_states check_resource(struct rxe_qp *qp,
- 		if (srq)
- 			return get_srq_wqe(qp);
- 
--		qp->resp.wqe = queue_head(qp->rq.queue,
--				QUEUE_TYPE_FROM_CLIENT);
--		return (qp->resp.wqe) ? RESPST_CHK_LENGTH : RESPST_ERR_RNR;
-+		return rxe_get_recv_wqe(qp);
- 	}
- 
- 	return RESPST_CHK_LENGTH;
+ 		uart10: serial@d401f000 {
 -- 
 2.53.0
 
