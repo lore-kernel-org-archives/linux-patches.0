@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AD946EF8C;
-	Tue, 21 Jul 2026 20:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB8E46EF8C;
+	Tue, 21 Jul 2026 20:04:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664266; cv=none; b=jTW/uU8QIo3tEndy69Q9gR7fbPmeRR8UlpdXTshbX5xj35L0viWcdijH9URENwoJC73GQhvSA9ab/ulrXP3mwyJ8LFKjZRajCJFT8uUnqFQKKr6M4NjLTpKLkcdO6veAK9m+i5Ny6dnuUv+b8X6qPvN+dxPOP6i+UllJEll+ZN8=
+	t=1784664269; cv=none; b=e9B7tnGsHt6hodKsRZ71teezFYGcdLOqeIUzqLXti32slYWAOfeAX3iXnK+7Ih3RByXKb1AsPoQHr6EPZjgVmh5c1rayMLk9X8hEPtDthWU53hqSi7JyWp+kyBKmCK9MJH+UhFHyaYDJ9zSVpTZI7J8dZPU0yyr+JoJg9aqCJgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664266; c=relaxed/simple;
-	bh=jOBvqqSLZ2F48V3MeHhToNhX4FLgMibgpFE5tdAbpiw=;
+	s=arc-20240116; t=1784664269; c=relaxed/simple;
+	bh=1pj5uRPuPEAuevdI0SD3mKUXrzI4qe0Wx2iM3tiXvMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=edtjSWyCu66fZUMQdE8tcI/Y/9nbhIvmi6TK6BeO0FVnxiaWXifGftgVb/N0gxHkILkbEbXT3kchv4t+bXYBh1bsdg6B5/+u4+guCGGwuP04Ld/+f7/yI971gl278DIxnOectX9aDP3cQ7HNzkvP4j+AC06OPKaJdudru2Akaj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SMaRfZNt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TkNVmQ4ksNHLcmQsamDs0cWm2N4bzzEzCokguFT3ub1WcGmcx+29rFA0FG9dHPzUOC+dmBPePvXrW95ZyM5DyToGKmI60yf9/+zlBypbHaAadAc9580HZK2p9jQJ++4dmIwD8HGR6Cs3JkI/6tqTiMoES7DHYmdzqstRnwVC+vI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=As5iUIWO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMaRfZNt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FF11F000E9;
-	Tue, 21 Jul 2026 20:04:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="As5iUIWO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD5891F000E9;
+	Tue, 21 Jul 2026 20:04:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664265;
-	bh=NtBISqKP0AuQqvxjp2yuMe/jwtvoCjVhfEcQdbntj5c=;
+	s=korg; t=1784664268;
+	bh=DmYKljlJKLAyRqBePCdewjY1D9vx/UnMaNcbbi1eF8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SMaRfZNtdmc+ZSh6sgvQ2cJOTaxuUN6BynXUjOnlQOOmB+b4LaU71srDV2d91oHvj
-	 T5aoGw2JbAFD4C7k+1Yiqw79Ig5PSDwZ94ujOpQO1d6e548O9C5n1WxuLi/ja3E20U
-	 sxkp5e2RX/uYnuSK2RDruTHZge2dSG/xTXcFBNNY=
+	b=As5iUIWOy3NxGJz6mSFJsS3FljvKgWoW8Hf2vFb0NpXl8STMtjk3V1WVmkKDmvIJ6
+	 giQxdy9GUwlVeFIbLSKjF9auLYShjlwKrEi5UKs76E03gIQWRzKcIQ2RjcCQ4x73A8
+	 UOxia6+vT5QK+4VlxA7cp7UStZT2CrfAoveWu9y0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1135/1276] ACPI: NFIT: core: Use devm_acpi_install_notify_handler()
-Date: Tue, 21 Jul 2026 17:26:18 +0200
-Message-ID: <20260721152511.396957815@linuxfoundation.org>
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 1109/1276] wifi: mac80211: fix memory leak in ieee80211_register_hw()
+Date: Tue, 21 Jul 2026 17:25:52 +0200
+Message-ID: <20260721152510.807865372@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,80 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-[ Upstream commit 198541ad53c0d0d891fedea4098f9953a0f566c0 ]
+commit 95fc02722edde02946d0d475221f2b2054d3d8ba upstream.
 
-Now that devm_acpi_install_notify_handler() is available, use it in
-acpi_nfit_probe() instead of a custom devm action removing an ACPI
-notify handler installed via acpi_dev_install_notify_handler().
+If kmemdup() fails while copying supported band structures, the error
+path jumps to fail_rate. This skips rate_control_deinitialize() and
+leaks the initialized local->rate_ctrl.
 
-Also drop the explicit ACPI_COMPANION() check against NULL that is
-not necessary any more becuase devm_acpi_install_notify_handler()
-carries out an equivalent check internally and use ACPI_HANDLE() to
-retrieve the platform device's ACPI handle.
+Fix this by adding a fail_band label that shares the rate-control cleanup
+path before falling through to the remaining teardown.
 
-No intentional functional impact.
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still present in
+v7.1-rc7.
 
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/3048737.e9J7NaK4W3@rafael.j.wysocki
-Stable-dep-of: 18a00ed0e718 ("ACPI: NFIT: core: Fix possible deadlock and missing notifications")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+An x86_64 allyesconfig build showed no new warnings. As we do not have a
+suitable mac80211 device/driver combination to test with, no runtime
+testing was able to be performed.
+
+Fixes: 09b4a4faf9d0 ("mac80211: introduce capability flags for VHT EXT NSS support")
+Cc: stable@vger.kernel.org
+Reviewed-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Link: https://patch.msgid.link/20260706143507.146131-1-dawei.feng@seu.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/nfit/core.c |   27 +++++++--------------------
- 1 file changed, 7 insertions(+), 20 deletions(-)
+ net/mac80211/main.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/acpi/nfit/core.c
-+++ b/drivers/acpi/nfit/core.c
-@@ -3285,19 +3285,11 @@ static void acpi_nfit_put_table(void *ta
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -1568,7 +1568,7 @@ int ieee80211_register_hw(struct ieee802
+ 		sband = kmemdup(sband, sizeof(*sband), GFP_KERNEL);
+ 		if (!sband) {
+ 			result = -ENOMEM;
+-			goto fail_rate;
++			goto fail_band;
+ 		}
  
- static void acpi_nfit_notify(acpi_handle handle, u32 event, void *data)
- {
--	struct acpi_device *adev = data;
-+	struct device *dev = data;
- 
--	device_lock(&adev->dev);
--	__acpi_nfit_notify(&adev->dev, handle, event);
--	device_unlock(&adev->dev);
--}
--
--static void acpi_nfit_remove_notify_handler(void *data)
--{
--	struct acpi_device *adev = data;
--
--	acpi_dev_remove_notify_handler(adev, ACPI_DEVICE_NOTIFY,
--				       acpi_nfit_notify);
-+	device_lock(dev);
-+	__acpi_nfit_notify(dev, handle, event);
-+	device_unlock(dev);
- }
- 
- void acpi_nfit_shutdown(void *data)
-@@ -3344,13 +3336,8 @@ static int acpi_nfit_add(struct acpi_dev
- 	acpi_size sz;
- 	int rc = 0;
- 
--	rc = acpi_dev_install_notify_handler(adev, ACPI_DEVICE_NOTIFY,
--					     acpi_nfit_notify, adev);
--	if (rc)
--		return rc;
--
--	rc = devm_add_action_or_reset(dev, acpi_nfit_remove_notify_handler,
--					adev);
-+	rc = devm_acpi_install_notify_handler(dev, ACPI_DEVICE_NOTIFY,
-+					      acpi_nfit_notify, dev);
- 	if (rc)
- 		return rc;
- 
-@@ -3381,7 +3368,7 @@ static int acpi_nfit_add(struct acpi_dev
- 	acpi_desc->acpi_header = *tbl;
- 
- 	/* Evaluate _FIT and override with that if present */
--	status = acpi_evaluate_object(adev->handle, "_FIT", NULL, &buf);
-+	status = acpi_evaluate_object(ACPI_HANDLE(dev), "_FIT", NULL, &buf);
- 	if (ACPI_SUCCESS(status) && buf.length > 0) {
- 		union acpi_object *obj = buf.pointer;
- 
+ 		wiphy_dbg(hw->wiphy, "copying sband (band %d) due to VHT EXT NSS BW flag\n",
+@@ -1635,6 +1635,7 @@ int ieee80211_register_hw(struct ieee802
+ #endif
+ 	wiphy_unregister(local->hw.wiphy);
+  fail_wiphy_register:
++ fail_band:
+ 	rtnl_lock();
+ 	rate_control_deinitialize(local);
+ 	ieee80211_remove_interfaces(local);
 
 
