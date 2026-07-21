@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BDF2E736D;
-	Tue, 21 Jul 2026 17:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89033F5BE4;
+	Tue, 21 Jul 2026 17:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653913; cv=none; b=cZJ2XiGleu0u6IGRJDfyRT4EQE32LfZEnopvvgjHuwzY6djL5VRO/rUkffCIrBB4aORu3RDFEq+unJ/+Wh9T06Wzce6+15M0BYw/iezbc+IWecoqVBA41vj+s92p/hY88sj/VNmRDkquiIwxd1sKRsvMrFo25dqsKENej6jtgOI=
+	t=1784653916; cv=none; b=izW3ZS715SfXp9F9xkdiQWOs47DYRyuWAxpptuCwtR+DiMxigU60J3Ie7M3BOQyZymrMS7D+kMrQUnRKMJmzbUzLocbnct7ssUAp0UoHO0uEoBrcu5nhb8prVeWY5qEW64sf1b1NJsCk5nvtueoClG4ixsZFBpiX28SyIZhLYf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653913; c=relaxed/simple;
-	bh=Tp/mqryPscoijG4G2rhvrPghGtz0eq12ZJXCb/MiPA8=;
+	s=arc-20240116; t=1784653916; c=relaxed/simple;
+	bh=B17PhRAU25YZfrDP5wwtaIevGxNapp+cO4C/1OfHEdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A4eRTKynTTi+4FwIjrP+s+tXNif+6obQi7sPaO2HMe0xowyxsZl7YfOmZPVc3+LqbhJYr8CJ0y3MlNw3u64kTSqC18eO+cs6fk252pDhtKqxAIDnGBYYFlqMpvoUnLBKNL075TdS8zZRYu4KTAWdHlJ/IWbCyFiiyC4aHIf2ZgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwWvZnkr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XqoygywGpa9au67yyf2nkM5ETjj1p4NI57VqIL3gY1AmqbaIUs40S/0CbZejgV9yJCd14qvLm6sprk8p3GIufw1+Nvmx5ou+SidWyF5BFQdBswOugTSwFdKyn0/eRh+hv7+vKryo0YQp5UkY/bh5eJ4yZ8j+ZITBzGlwKJK2RIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4LltZSe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwWvZnkr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 654141F000E9;
-	Tue, 21 Jul 2026 17:11:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4LltZSe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276381F000E9;
+	Tue, 21 Jul 2026 17:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653911;
-	bh=I2XfBaZU1zNoYxIaKyU+9cTLlZdsgnYB4Y0VTg8Z7KE=;
+	s=korg; t=1784653914;
+	bh=ZiImNzQls23N0Sbuk/RG+/1+ImNpyO3BxWFS5pHgXbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OwWvZnkrHXoHebr5ZSDs+LEwdiR1JP/lYgRb+4m17syaL55E2XK/RlpCTARCXdOOw
-	 adMgzqvG8gXChux07tMQv8vdqbW6O0CgnrR3gSObVoEta9fDmbzgn1RdHC6QeQAVdM
-	 IBTqmO6lIjF2FWR+Tn4052rR6oto5+KrOZe+IoDA=
+	b=Y4LltZSeHD3V02IMfVeybXUrFH+RBZ9vy6x4R94b6mRC8UDOYW1yjYrhbURXONIPm
+	 g6NNXQF5GXD6xkhTue5LYyVCh2YP+EPQKH+9qS1beqEl3XBipySYr6GU7cKVbI64So
+	 sjpQpBM1V3FMQuPHudE4oFQeRwFvNehvtfy+IZI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Simon Horman <horms@kernel.org>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Nimrod Oren <noren@nvidia.com>,
+	Gal Pressman <gal@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1505/2077] net/mlx5: Fix L3 tunnel entropy refcount leak
-Date: Tue, 21 Jul 2026 17:19:38 +0200
-Message-ID: <20260721152628.282222330@linuxfoundation.org>
+Subject: [PATCH 7.1 1506/2077] ethtool: rss: Fix hfunc and input_xfrm parsing on big endian
+Date: Tue, 21 Jul 2026 17:19:39 +0200
+Message-ID: <20260721152628.306186195@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,44 +53,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit c914307e1d41c2cb7bcdcbfde4cd2f214f6aa027 ]
+[ Upstream commit b62869a81a7ce388d1fbb0fac5fa8300ea614d81 ]
 
-mlx5_tun_entropy_refcount_inc() counts both VXLAN and L2-to-L3
-tunnel reformat entries as entropy-enabling users. The matching
-decrement path only handled VXLAN, leaving L2-to-L3 tunnel entries
-counted after release.
+ETHTOOL_A_RSS_HFUNC and ETHTOOL_A_RSS_INPUT_XFRM are NLA_U32 attributes,
+but ethnl_rss_set() and ethnl_rss_create_doit() parse them with
+ethnl_update_u8(), which reads a single byte.
 
-Handle MLX5_REFORMAT_TYPE_L2_TO_L3_TUNNEL in
-mlx5_tun_entropy_refcount_dec() as well so the enabling entry
-refcount remains balanced.
+On little endian this happens to read the least significant byte and
+works as long as the value fits in a byte. On big endian it reads the
+most significant byte, so the requested value is parsed incorrectly.
 
-Fixes: f828ca6a2fb6 ("net/mlx5e: Add support for hw encapsulation of MPLS over UDP")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260703141423.1723-1-lirongqing@baidu.com
+The destination fields in struct ethtool_rxfh_param are u8, so the
+attribute can't be read directly with ethnl_update_u32().
+Cap the hfunc policy at U8_MAX so an out of range value is rejected
+instead of being silently truncated into the u8 field, and add
+ethnl_update_u8_u32() to read the full u32 and narrow it into the u8
+destination.
+
+Fixes: 82ae67cbc423 ("ethtool: rss: support setting hfunc via Netlink")
+Fixes: d3e2c7bab124 ("ethtool: rss: support setting input-xfrm via Netlink")
+Fixes: a166ab7816c5 ("ethtool: rss: support creating contexts via Netlink")
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Nimrod Oren <noren@nvidia.com>
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Link: https://patch.msgid.link/20260706055017.3355806-1-gal@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ethtool/netlink.h | 28 ++++++++++++++++++++++++++++
+ net/ethtool/rss.c     | 14 ++++++++------
+ 2 files changed, 36 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c
-index 4571c56ec3c9b2..97f6097d4c705f 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c
-@@ -176,7 +176,8 @@ void mlx5_tun_entropy_refcount_dec(struct mlx5_tun_entropy *tun_entropy,
- 				   int reformat_type)
- {
- 	mutex_lock(&tun_entropy->lock);
--	if (reformat_type == MLX5_REFORMAT_TYPE_L2_TO_VXLAN)
-+	if (reformat_type == MLX5_REFORMAT_TYPE_L2_TO_VXLAN ||
-+	    reformat_type == MLX5_REFORMAT_TYPE_L2_TO_L3_TUNNEL)
- 		tun_entropy->num_enabling_entries--;
- 	else if (reformat_type == MLX5_REFORMAT_TYPE_L2_TO_NVGRE &&
- 		 --tun_entropy->num_disabling_entries == 0)
+diff --git a/net/ethtool/netlink.h b/net/ethtool/netlink.h
+index fd2198e45d2bba..733fb3c3a63a5d 100644
+--- a/net/ethtool/netlink.h
++++ b/net/ethtool/netlink.h
+@@ -115,6 +115,34 @@ static inline void ethnl_update_u8(u8 *dst, const struct nlattr *attr,
+ 	*mod = true;
+ }
+ 
++/**
++ * ethnl_update_u8_u32() - update u8 value from an NLA_U32 attribute
++ * @dst:  value to update
++ * @attr: netlink attribute with new value or null
++ * @mod:  pointer to bool for modification tracking
++ *
++ * Some attributes are NLA_U32 on the wire but are stored in a u8. Read the
++ * full 32-bit value from NLA_U32 netlink attribute @attr and narrow it into
++ * the u8 pointed to by @dst; do nothing if @attr is null.
++ * Bool pointed to by @mod is set to true if this function changed the value
++ * of *dst, otherwise it is left as is.
++ */
++static inline void ethnl_update_u8_u32(u8 *dst, const struct nlattr *attr,
++				       bool *mod)
++{
++	u32 val;
++
++	if (!attr)
++		return;
++	val = nla_get_u32(attr);
++	DEBUG_NET_WARN_ON_ONCE(val > U8_MAX);
++	if (*dst == val)
++		return;
++
++	*dst = val;
++	*mod = true;
++}
++
+ /**
+  * ethnl_update_bool32() - update u32 used as bool from NLA_U8 attribute
+  * @dst:  value to update
+diff --git a/net/ethtool/rss.c b/net/ethtool/rss.c
+index 53792f53f9229f..ca6ed152c2be33 100644
+--- a/net/ethtool/rss.c
++++ b/net/ethtool/rss.c
+@@ -574,7 +574,7 @@ static const struct nla_policy ethnl_rss_flows_policy[] = {
+ const struct nla_policy ethnl_rss_set_policy[ETHTOOL_A_RSS_FLOW_HASH + 1] = {
+ 	[ETHTOOL_A_RSS_HEADER] = NLA_POLICY_NESTED(ethnl_header_policy),
+ 	[ETHTOOL_A_RSS_CONTEXT] = { .type = NLA_U32, },
+-	[ETHTOOL_A_RSS_HFUNC] = NLA_POLICY_MIN(NLA_U32, 1),
++	[ETHTOOL_A_RSS_HFUNC] = NLA_POLICY_RANGE(NLA_U32, 1, U8_MAX),
+ 	[ETHTOOL_A_RSS_INDIR] = { .type = NLA_BINARY, },
+ 	[ETHTOOL_A_RSS_HKEY] = NLA_POLICY_MIN(NLA_BINARY, 1),
+ 	[ETHTOOL_A_RSS_INPUT_XFRM] =
+@@ -855,7 +855,7 @@ ethnl_rss_set(struct ethnl_req_info *req_info, struct genl_info *info)
+ 	indir_mod = !!tb[ETHTOOL_A_RSS_INDIR];
+ 
+ 	rxfh.hfunc = data.hfunc;
+-	ethnl_update_u8(&rxfh.hfunc, tb[ETHTOOL_A_RSS_HFUNC], &mod);
++	ethnl_update_u8_u32(&rxfh.hfunc, tb[ETHTOOL_A_RSS_HFUNC], &mod);
+ 	if (rxfh.hfunc == data.hfunc)
+ 		rxfh.hfunc = ETH_RSS_HASH_NO_CHANGE;
+ 
+@@ -864,7 +864,8 @@ ethnl_rss_set(struct ethnl_req_info *req_info, struct genl_info *info)
+ 		goto exit_free_indir;
+ 
+ 	rxfh.input_xfrm = data.input_xfrm;
+-	ethnl_update_u8(&rxfh.input_xfrm, tb[ETHTOOL_A_RSS_INPUT_XFRM], &mod);
++	ethnl_update_u8_u32(&rxfh.input_xfrm, tb[ETHTOOL_A_RSS_INPUT_XFRM],
++			    &mod);
+ 	xfrm_sym = rxfh.input_xfrm || data.input_xfrm;
+ 	if (rxfh.input_xfrm == data.input_xfrm)
+ 		rxfh.input_xfrm = RXH_XFRM_NO_CHANGE;
+@@ -938,7 +939,7 @@ const struct ethnl_request_ops ethnl_rss_request_ops = {
+ const struct nla_policy ethnl_rss_create_policy[ETHTOOL_A_RSS_INPUT_XFRM + 1] = {
+ 	[ETHTOOL_A_RSS_HEADER]	= NLA_POLICY_NESTED(ethnl_header_policy),
+ 	[ETHTOOL_A_RSS_CONTEXT]	= NLA_POLICY_MIN(NLA_U32, 1),
+-	[ETHTOOL_A_RSS_HFUNC]	= NLA_POLICY_MIN(NLA_U32, 1),
++	[ETHTOOL_A_RSS_HFUNC]	= NLA_POLICY_RANGE(NLA_U32, 1, U8_MAX),
+ 	[ETHTOOL_A_RSS_INDIR]	= NLA_POLICY_MIN(NLA_BINARY, 1),
+ 	[ETHTOOL_A_RSS_HKEY]	= NLA_POLICY_MIN(NLA_BINARY, 1),
+ 	[ETHTOOL_A_RSS_INPUT_XFRM] =
+@@ -1054,14 +1055,15 @@ int ethnl_rss_create_doit(struct sk_buff *skb, struct genl_info *info)
+ 		goto exit_clean_data;
+ 	indir_user_size = ret;
+ 
+-	ethnl_update_u8(&rxfh.hfunc, tb[ETHTOOL_A_RSS_HFUNC], &mod);
++	ethnl_update_u8_u32(&rxfh.hfunc, tb[ETHTOOL_A_RSS_HFUNC], &mod);
+ 
+ 	ret = rss_set_prep_hkey(dev, info, &data, &rxfh, &mod);
+ 	if (ret)
+ 		goto exit_free_indir;
+ 
+ 	rxfh.input_xfrm = RXH_XFRM_NO_CHANGE;
+-	ethnl_update_u8(&rxfh.input_xfrm, tb[ETHTOOL_A_RSS_INPUT_XFRM], &mod);
++	ethnl_update_u8_u32(&rxfh.input_xfrm, tb[ETHTOOL_A_RSS_INPUT_XFRM],
++			    &mod);
+ 
+ 	ctx = ethtool_rxfh_ctx_alloc(ops, data.indir_size, data.hkey_size);
+ 	if (!ctx) {
 -- 
 2.53.0
 
