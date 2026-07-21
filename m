@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F6133A9FC;
-	Tue, 21 Jul 2026 22:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B9135C6AC;
+	Tue, 21 Jul 2026 22:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673841; cv=none; b=MGgENP+GPXr36H+vjqQpRz14NfMaFVq/Rj7jpwhN2Tb10Ow/0OATZZ9JTkOmlpihDbCfe4ckyMEr8l/hWjZndh+Kh844GDm0Kxb5NzBWryfvvX0V6vC/uJxKJmj8nSRTQma9TOl24Ogvb8vsm0hbqR6CPSkvmdjk6hXZQiZefcU=
+	t=1784673844; cv=none; b=Ru/UiZIbqgrx1MgGnAT7/qJTXg6dZ4p1WwIB9nkOL1WdyEEp6rQznZXV1KmR1WFI5Mz3S6nEDFh9CBno1U8yw5nbYqMSnDAesLblb9IEXLaxYg2JoOrE8VdrfVucb9tF6AIGuE5HDSyXvptvdaCFpnfuHrSJNXDHZ6/RN9ONMps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673841; c=relaxed/simple;
-	bh=FbsH5l/6o37JbAX/RRPvIV/h7ri2BOqluM/B2SY25ZM=;
+	s=arc-20240116; t=1784673844; c=relaxed/simple;
+	bh=tAThJOK3RZ71LjbRE3S4wb415PwPGKtLLNmkAP5oAz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lVYjnr5zbCJxDvT6dohD4naPQRWkb1JEI/A/fobzLFifhPJeLg2aTdpP0P+PUEELsu8mQuKuMiaDqEC8BYu0zL8xV8qskrMzyKYlH20xOx73z+tzpvq6Qd5JqKDWlZzi2RGS/bDG9cJUXoPcuWadupMz57L551gr7AE/kr0b3jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+SJn6BM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tk8LAoNVlgtAHw8K3EcT4Ecle39qM1ok8XKPfsLhu59KH/WApViT2xbcjvgZ83QalArE7mQaoWhyDolQmaFCHk8Z7ynOlUZLv3H6A1g03+BRwS8Y9WwkPikmJqpNtQHW+b0XrOYe4TswcwHnVGKOsdZK6iWhEeWd+DSoTX5hg5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDpPG1Yf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+SJn6BM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E581F000E9;
-	Tue, 21 Jul 2026 22:43:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDpPG1Yf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFEF21F000E9;
+	Tue, 21 Jul 2026 22:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673840;
-	bh=rPrexI0RRTXfv8dAiBsBq51b1VM30ThdqgS+NAengEk=;
+	s=korg; t=1784673843;
+	bh=mz5herCkKD0XxNgJCJT6xwMvaa39Fcekrm8+pbSy8yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d+SJn6BMWuDGDHn+NKzxYCwQF5NC/s0uS+9BqKUc+JU8sR3vmii+7FwKPiZ1mKDWz
-	 HyCd61SIWcFpk/XhSBYzbxuPIjafaQiEnbHB8NfAVolbVy1u+apW4BCieHEbfC6uy/
-	 3Prg/tEm9nsNNXxQINA23MJoNY0jQ1Irf8MjE2is=
+	b=GDpPG1YfncEp4J43viQZhIucZGBT22IIa+Qzy9FVTfJogOA6a5AF5cSMlofbBdxFB
+	 HK9Z4FAsZ309YQUoqPwuv8uZmRN/TLkjVlohr068gAd9uh3nSmrRPQU6FHz2Zy1HPN
+	 uhl1bVs8FBvYWYXJNkj1fng7+KK8fPl6TKp9ULtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
 	Aboorva Devarajan <aboorvad@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 272/699] powerpc/perf: fix preempt count underflow in fsl_emb_pmu_del
-Date: Tue, 21 Jul 2026 17:20:31 +0200
-Message-ID: <20260721152401.835869648@linuxfoundation.org>
+Subject: [PATCH 5.10 273/699] powerpc/powernv: fix preempt count leak in pnv_kexec_wait_secondaries_down
+Date: Tue, 21 Jul 2026 17:20:32 +0200
+Message-ID: <20260721152401.856918802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -54,47 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Aboorva Devarajan <aboorvad@linux.ibm.com>
 
-[ Upstream commit 81e3a86030462824a67d697739cf3f387f4ba350 ]
+[ Upstream commit 0ecd26e93e698c8327521910fc6296f5b84a4b92 ]
 
-fsl_emb_pmu_del() unconditionally calls put_cpu_var(cpu_hw_events) at
-the 'out:' label, but only calls the matching get_cpu_var() after the
-'i < 0' early-return check. When event->hw.idx is negative the
-function jumps to 'out:' without having taken get_cpu_var(), and the
-trailing put_cpu_var() then issues an unmatched preempt_enable(),
-underflowing preempt_count.
+pnv_kexec_wait_secondaries_down() calls get_cpu() to obtain the current
+CPU id but never calls the matching put_cpu(), leaking one
+preempt_disable() nesting level on every invocation.
 
-On a CONFIG_PREEMPT=y kernel preempt_count would underflow and
-eventually present as a 'scheduling while atomic' BUG.
+In practice the imbalance does not trigger a visible splat because the
+kexec teardown path is a one-way trip: IRQs are already disabled, no
+schedule() occurs after the leak, and default_machine_kexec() overwrites
+preempt_count with HARDIRQ_OFFSET before jumping into kexec_sequence()
+which never returns. However the bookkeeping is still wrong.
 
-Move put_cpu_var() to pair with get_cpu_var() so the percpu access is
-correctly bracketed and the 'out:' label only handles perf_pmu_enable.
+The function only needs the current CPU id, and this path runs with
+interrupts disabled and the CPU pinned, so the preempt_disable()
+side-effect of get_cpu() is unnecessary. Replace it with
+raw_smp_processor_id().
 
-Fixes: a11106544f33 ("powerpc/perf: e500 support")
-Reviewed-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Fixes: 298b34d7d578 ("powerpc/powernv: Fix kexec races going back to OPAL")
 Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260605082912.305100-2-aboorvad@linux.ibm.com
+Link: https://patch.msgid.link/20260605082912.305100-3-aboorvad@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/perf/core-fsl-emb.c | 3 ++-
+ arch/powerpc/platforms/powernv/setup.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/perf/core-fsl-emb.c b/arch/powerpc/perf/core-fsl-emb.c
-index 1a53ab08447cbe..31037df4178ca2 100644
---- a/arch/powerpc/perf/core-fsl-emb.c
-+++ b/arch/powerpc/perf/core-fsl-emb.c
-@@ -366,9 +366,10 @@ static void fsl_emb_pmu_del(struct perf_event *event, int flags)
+diff --git a/arch/powerpc/platforms/powernv/setup.c b/arch/powerpc/platforms/powernv/setup.c
+index 1a2f12dc05525c..7b2f83a737d686 100644
+--- a/arch/powerpc/platforms/powernv/setup.c
++++ b/arch/powerpc/platforms/powernv/setup.c
+@@ -362,7 +362,8 @@ static void pnv_kexec_wait_secondaries_down(void)
+ {
+ 	int my_cpu, i, notified = -1;
  
- 	cpuhw->n_events--;
+-	my_cpu = get_cpu();
++	/* Called with interrupts disabled, so the CPU is pinned. */
++	my_cpu = raw_smp_processor_id();
  
-+	put_cpu_var(cpu_hw_events);
-+
-  out:
- 	perf_pmu_enable(event->pmu);
--	put_cpu_var(cpu_hw_events);
- }
- 
- static void fsl_emb_pmu_start(struct perf_event *event, int ef_flags)
+ 	for_each_online_cpu(i) {
+ 		uint8_t status;
 -- 
 2.53.0
 
