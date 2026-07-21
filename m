@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ABB344AB91;
-	Tue, 21 Jul 2026 22:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46F034DCE4;
+	Tue, 21 Jul 2026 22:36:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673374; cv=none; b=t5vMIrl56jRVDrOJAeDOBhu8jgvEAFFhA3X4bAMU2hrbbvbOjdY/TjLnbqfEEATWWelpy2E6YOlOhuWg4BdjI/GAKfPWJ8ivfal5pZRY1jKkc95xxrCn6UgklsYPIO4LR3jORQ4anPgeOLX/dY2uG4RtHqLMn8l+I4FA1ohCB2o=
+	t=1784673376; cv=none; b=NFWG4H0nyVxZyMsbvTX0Yhw3RSf18yDJccCVdrkLwPXSre1cCDQ0kJLQ6jnpOwJByQ63PZBCm1Vdd1E3ODM1jFYFsgMOcfMRyLt1ljRVR+Mtoh8smZuK0mQbxxNNYhLqBZYJbDBGAlEf8i8XvYxi4J31yW0JajBT4yPUyrtGy8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673374; c=relaxed/simple;
-	bh=Y4NLaC/+IrBZIotZdIRB602hrWho0W+D1ntyeSej6i4=;
+	s=arc-20240116; t=1784673376; c=relaxed/simple;
+	bh=QeN2CScws8PzdWaWBHVANXdKytlQUtea5atiMSwBiOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=awm/qsypYxiKxfn60Jc9Fjb4ru7s4Z4eWyH3hKvI3Uh19oCPoEHxB+JZV4h7vWg9Tbo5W5ke45MXZlx8+0dQy/hqRA26GnAiYmuQ+KGzlRCAD97YTOGVW3loq/76iazvZL7FDptMzYv+WUAYcH4YAGjNrs0TVBVJpbWcBbolMtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4qS446Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=csmmqBuVVJ7KaQ5FDBTMJ3j/p2PfCf7jx/qrCNg0UArReYoqem9o88jnpbXOXv+yci0ArdrXy8W8uCq4wJAi0qY9Be8gSWg8bfC5fZK4zEemV1+PYwLkckyas1S0WesUkc3WZTqsqJ7B108NnN+KBIhN3crREnFXXZ3sw/8nUuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1NojHDt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4qS446Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804CF1F00A3A;
-	Tue, 21 Jul 2026 22:36:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1NojHDt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2612E1F000E9;
+	Tue, 21 Jul 2026 22:36:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673373;
-	bh=2XwkPwn7N0wDgSfhUKgzdDdrSAjrUNmoLRdpD6Wdw7M=;
+	s=korg; t=1784673375;
+	bh=+8Cpv+DipLE3+PPqG9xUyEE1CJnT8LJcCH+kRky9K8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U4qS446Qb6re7XDq4vPBJjLz16K7YCkr17QMH+FHwgl6JKHJFJUtY5gV4lIroIOOF
-	 0QBYfw+c0L3vHf5edMRpND3kwK/LlKf4FlOQ7yvsWbQwPAHJY5+jGJxCfqhipou22b
-	 mOcAvrKYW46JuHpT5sPpSqwd+2iYachmcH1N5f+8=
+	b=k1NojHDtABL69AuNTEyqQRidvntR1xrF0Ui8B/M41WE+4GRONTbpOVpvq5Wcr9vmr
+	 ubOPGRDMnXsuvE/9YHrCrfGK+2/X6wbMTuY400LWmzkAZ46HF6v4sDajU8Lrc1pqZr
+	 53O3/kQc54/UyUnwwnFzwLcZM2RuHOKtrDoafsoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Bryam Vargas <hexlabsecurity@proton.me>
-Subject: [PATCH 5.10 139/699] exfat: bound uniname advance in exfat_find_dir_entry()
-Date: Tue, 21 Jul 2026 17:18:18 +0200
-Message-ID: <20260721152358.844446200@linuxfoundation.org>
+	syzbot ci <syzbot+ci493c6d734b63e050@syzkaller.appspotmail.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.10 140/699] KVM: VMX: Grab vmcs12 on CR8 interception update iff vCPU is in guest mode
+Date: Tue, 21 Jul 2026 17:18:19 +0200
+Message-ID: <20260721152358.865951126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,79 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 3a1230e7b043c62737b05a3e9275ca83a43ad20a upstream.
+commit 7ef78d71ca713d8c00f7c34ddcf276c808143f77 upstream.
 
-In exfat_find_dir_entry(), each TYPE_EXTEND (file name) entry advances the
-output pointer by a fixed amount while the loop guard only tracks the
-accumulated name length:
+When updating CR8 intercepts, get vmcs12 if and only if the vCPU is in
+guest mode so that a future change can have update CR8 intercepts during
+vCPU creation, without running afoul of get_vmcs12()'s lockdep assertion.
 
-	if (++order == 2)
-		uniname = p_uniname->name;
-	else
-		uniname += EXFAT_FILE_NAME_LEN;
-	len = exfat_extract_uni_name(ep, entry_uniname);
-	name_len += len;
-	unichar = *(uniname+len);
-	*(uniname+len) = 0x0;
+  ------------[ cut here ]------------
+  debug_locks && !(lock_is_held(&(&vcpu->mutex)->dep_map) || !refcount_read(&vcpu->kvm->users_count))
+  WARNING: arch/x86/kvm/vmx/nested.h:61 at get_vmcs12 arch/x86/kvm/vmx/nested.h:60 [inline], CPU#0: syz.2.19/5879
+  WARNING: arch/x86/kvm/vmx/nested.h:61 at vmx_update_cr8_intercept+0x3de/0x4e0 arch/x86/kvm/vmx/vmx.c:6879, CPU#0: syz.2.19/5879
+  Modules linked in:
+  CPU: 0 UID: 0 PID: 5879 Comm: syz.2.19 Not tainted syzkaller #0 PREEMPT(full)
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
+  RIP: 0010:get_vmcs12 arch/x86/kvm/vmx/nested.h:60 [inline]
+  RIP: 0010:vmx_update_cr8_intercept+0x3de/0x4e0 arch/x86/kvm/vmx/vmx.c:6879
+  Call Trace:
+   <TASK>
+   apic_update_ppr arch/x86/kvm/lapic.c:984 [inline]
+   kvm_lapic_reset+0x1c24/0x2980 arch/x86/kvm/lapic.c:3023
+   kvm_vcpu_reset+0x44c/0x1bf0 arch/x86/kvm/x86.c:12986
+   kvm_arch_vcpu_create+0x746/0x8b0 arch/x86/kvm/x86.c:12847
+   kvm_vm_ioctl_create_vcpu+0x428/0x930 virt/kvm/kvm_main.c:4201
+   kvm_vm_ioctl+0x893/0xd50 virt/kvm/kvm_main.c:5159
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:597 [inline]
+   __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x174/0x580 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
 
-uniname grows by EXFAT_FILE_NAME_LEN (15) per name entry, but name_len
-grows only by the actual extracted length, which is shorter when a name
-fragment contains an early NUL.  The only guard is
-`name_len >= MAX_NAME_LENGTH`, so a crafted directory with many short
-name fragments lets uniname run far past the
-p_uniname->name[MAX_NAME_LENGTH + 3] buffer while name_len stays small,
-causing an out-of-bounds read and write at *(uniname+len).
+No functional change intended.
 
-The sibling extractor exfat_get_uniname_from_ext_entry() already stops
-on a short fragment (the lockstep `len != EXFAT_FILE_NAME_LEN` guard
-added in commit d42334578eba ("exfat: check if filename entries exceeds
-max filename length")); exfat_find_dir_entry() never got the
-equivalent.  Track the per-entry write offset as a count and reject a
-fragment once the offset, or the offset plus the extracted length, would
-exceed MAX_NAME_LENGTH, before forming the output pointer.
-
-Fixes: ca06197382bd ("exfat: add directory operations")
+Reported-by: syzbot ci <syzbot+ci493c6d734b63e050@syzkaller.appspotmail.com>
+Closes: https://lore.kernel.org/all/6a2adf3b.3b0a2d4e.8c8d1.0012.GAE@google.com
 Cc: stable@vger.kernel.org
-Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260618174347.1981064-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/dir.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ arch/x86/kvm/vmx/vmx.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/exfat/dir.c
-+++ b/fs/exfat/dir.c
-@@ -1045,6 +1045,7 @@ rewind:
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -6309,11 +6309,10 @@ static noinstr void vmx_l1d_flush(struct
  
- 			if (entry_type == TYPE_EXTEND) {
- 				unsigned short entry_uniname[16], unichar;
-+				unsigned int offset;
+ static void update_cr8_intercept(struct kvm_vcpu *vcpu, int tpr, int irr)
+ {
+-	struct vmcs12 *vmcs12 = get_vmcs12(vcpu);
+ 	int tpr_threshold;
  
- 				if (step != DIRENT_STEP_NAME ||
- 				    name_len >= MAX_NAME_LENGTH) {
-@@ -1053,13 +1054,15 @@ rewind:
- 					continue;
- 				}
+ 	if (is_guest_mode(vcpu) &&
+-		nested_cpu_has(vmcs12, CPU_BASED_TPR_SHADOW))
++	    nested_cpu_has(get_vmcs12(vcpu), CPU_BASED_TPR_SHADOW))
+ 		return;
  
--				if (++order == 2)
--					uniname = p_uniname->name;
--				else
--					uniname += EXFAT_FILE_NAME_LEN;
--
-+				offset = (++order - 2) * EXFAT_FILE_NAME_LEN;
- 				len = exfat_extract_uni_name(ep, entry_uniname);
- 				brelse(bh);
-+				if (offset > MAX_NAME_LENGTH ||
-+				    len > MAX_NAME_LENGTH - offset) {
-+					step = DIRENT_STEP_FILE;
-+					continue;
-+				}
-+				uniname = p_uniname->name + offset;
- 				name_len += len;
- 
- 				unichar = *(uniname+len);
+ 	tpr_threshold = (irr == -1 || tpr < irr) ? 0 : irr;
 
 
