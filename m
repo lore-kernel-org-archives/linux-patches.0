@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9859544AB68;
-	Tue, 21 Jul 2026 21:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D4C44AB68;
+	Tue, 21 Jul 2026 21:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668434; cv=none; b=j0ewOIQTkQNShR+kN3ibIWI2yEMBqa6hXVG2xKXotkGgTtqtQWRDvzfE/aUHOZb03YNvabVFhvTmZ2rlXabCQt5biMm02froz9WqzrZNK/60hFE+158xBrAYA5bWwqXaW/1Se9dERUolpCtOWdibIb84tQ3AS7RZ64VDaU9GKV0=
+	t=1784668437; cv=none; b=RbqhDwHBi+tNv6k8j49TQ8tS5y3Vk2AXzpgxfP3Pihyaj+SbG0ubPNEnOMwo4rbKNmAf8+vLigda74Rc5J6Dm+9VfCjCHsnF4krORvfsXzfy+trXZpqFt5wln7SdengtfiRhRtw3ireIzTGsbVXmSTCF3SzNzPvi2VU3Ih9ldkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668434; c=relaxed/simple;
-	bh=LTjgNj0GRGHT//+l6HC91G8HyDPQ6PCLdKmr4i5O1tY=;
+	s=arc-20240116; t=1784668437; c=relaxed/simple;
+	bh=CKU6Mg01Nak9TSqQzQANqSEiKoltzcR/YU97OV0+oCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qYFf42shnz9filGqfd9w2SwF3EhQ1ExhCwXasaD+IxYfILsk5tvzQ7JrU8XpXN7G3qeSUNtWAp0NiPf0NKw+Rt1obmr5DIF8mwF+f+2x9adya5SsA5RtTURY0jNhhN5i9E+6fyeu3z+WuxTVRA4X9EDJUz6zrcibkKa48p6cCMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYB7wt6w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vu5OscNhlaR9W4w4Olzollx80MbW88H5yIkEEiDOkYfnOGhiB6/baPFdlsENHgioadJNSJdVgDA1SAjxItgSPL98BtBAmXFIwVcpsCsIbT7zADRWO0Sragyi1qkIkSSgxhmj6+emDwUYtUxufY/rqh3LdaerGvsscu8jxbriNcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=abU0UcMK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYB7wt6w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A26C1F000E9;
-	Tue, 21 Jul 2026 21:13:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="abU0UcMK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B817E1F000E9;
+	Tue, 21 Jul 2026 21:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668433;
-	bh=mV4Dy2SD+ScmjpGXiTkiaDwzI6GDRqbdZdf/C0Mf3CA=;
+	s=korg; t=1784668436;
+	bh=0qvRrdZurlb8ivXl/aZi/ZjW20b78B7gHVolQqQjGT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JYB7wt6w6sFeWLkM0blbb5hDrYBqAgPiDLzEck5QspEDHvQOyIgXFFcYXMl6hSoRJ
-	 EW0RLh1/yLKxP2sVaNMvN0P7OkLPisJGWO86K4YR+nMcJocu5s+4WsT686iIU8YwC4
-	 nGP91EvlDOiQlAmaSu3nK2BxHT3kYJzF9jbyeC1Y=
+	b=abU0UcMKdQ7MKrdgthQPdkwae8cY0q+TF4lxhKx/gFxQ3VoBhjR2hG5oWK1j3WR2m
+	 YyT0LFLVg2tK9w45eStG6djScsTPw3VW3s7NNn4GCjNHVrMiQVO1wymA/Oj+Zjzarj
+	 XlOxtfZ9ziu/CWAIX2b/PIw/WzRw3uBkY9jlo2Ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ad2aac2febc3bedf0962@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 0174/1067] USB: iowarrior: fix use-after-free on disconnect
-Date: Tue, 21 Jul 2026 17:12:55 +0200
-Message-ID: <20260721152428.483950650@linuxfoundation.org>
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Fushuai Wang <wangfushuai@baidu.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.1 0148/1067] cpufreq: intel_pstate: Sync policy->cur during CPU offline
+Date: Tue, 21 Jul 2026 17:12:29 +0200
+Message-ID: <20260721152427.905518196@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,44 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Fushuai Wang <wangfushuai@baidu.com>
 
-commit bc0e4f16c44e50daa0b1ea729934baa3b4815dee upstream.
+commit bcbdaa1086c25a8a5d48e04e1b82fdfb0682b681 upstream.
 
-Submitted write URBs are not stopped on close() and therefore need to be
-stopped unconditionally on disconnect() to avoid use-after-free in the
-completion handler.
+When a CPU goes offline with HWP disabled, intel_pstate_set_min_pstate()
+sets the MSR_IA32_PERF_CTL to minimum frequency to prevent SMT siblings
+from being restricted. However, the policy->cur value was not updated,
+leaving it at the previous value.
 
-Fixes: b5f8d46867ca ("USB: iowarrior: fix use-after-free after driver unbind")
-Fixes: 946b960d13c1 ("USB: add driver for iowarrior devices.")
-Reported-by: syzbot+ad2aac2febc3bedf0962@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/6a0ce39b.170a0220.39a13.0007.GAE@google.com/
-Cc: stable <stable@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260523170523.1074563-1-johan@kernel.org
+When the CPU comes back online, governor->limits() checks if target_freq
+equals policy->cur and skips the frequency adjustment if they match. Since
+policy->cur still holds the previous value, the governor does not call
+cpufreq_driver->target to update MSR_IA32_PERF_CTL.
+
+Fix this by synchronizing policy->cur with the hardware state when setting
+minimum pstate during CPU offline.
+
+Fixes: bb18008f8086 ("intel_pstate: Set core to min P state during core offline")
+Cc: stable@vger.kernel.org # 3.15+
+Suggested-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
+[ rjw: Subject refinement ]
+Link: https://patch.msgid.link/20260520032119.30615-1-fushuai.wang@linux.dev
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/iowarrior.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/cpufreq/intel_pstate.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/misc/iowarrior.c
-+++ b/drivers/usb/misc/iowarrior.c
-@@ -920,13 +920,15 @@ static void iowarrior_disconnect(struct
- 	/* prevent device read, write and ioctl */
- 	dev->present = 0;
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -2631,10 +2631,12 @@ static int intel_cpufreq_cpu_offline(str
+ 	 * from getting to lower performance levels, so force the minimum
+ 	 * performance on CPU offline to prevent that from happening.
+ 	 */
+-	if (hwp_active)
++	if (hwp_active) {
+ 		intel_pstate_hwp_offline(cpu);
+-	else
++	} else {
+ 		intel_pstate_set_min_pstate(cpu);
++		policy->cur = cpu->pstate.min_freq;
++	}
  
-+	/* write urbs are not stopped on close() so kill unconditionally */
-+	usb_kill_anchored_urbs(&dev->submitted);
-+
- 	if (dev->opened) {
- 		/* There is a process that holds a filedescriptor to the device ,
- 		   so we only shutdown read-/write-ops going on.
- 		   Deleting the device is postponed until close() was called.
- 		 */
- 		usb_kill_urb(dev->int_in_urb);
--		usb_kill_anchored_urbs(&dev->submitted);
- 		wake_up_interruptible(&dev->read_wait);
- 		wake_up_interruptible(&dev->write_wait);
- 		mutex_unlock(&dev->mutex);
+ 	intel_pstate_exit_perf_limits(policy);
+ 
 
 
