@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F5422B8DF;
-	Tue, 21 Jul 2026 18:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE8246C4C0;
+	Tue, 21 Jul 2026 18:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657719; cv=none; b=Ie+sotjL4AsTW4wgJolLzjJaMMuoo7KVnDleUWbeCgCtRNI3vykjXgpImmuQyrO0sv+0Wqvh66BvQL5CVRX5kzu4XQHU9G5m2KfaSEdAb+v+Vj81ZhSxGPehGHyRXmPRSbg3Dv45U1GVVUXs9cvwNbW3s/ILgSiB4P1aqCJ3XMs=
+	t=1784657721; cv=none; b=seFbogO0Gtp7K5Qx6Z0iRUBmKTl3qnKG2yo8asP6rY60SXzWHpMlh0ntkX8mCyLVtFhaLzt4Dv8iChif6DXxSGATl0BIWCRAEj2Jsz4YHwnRqeLptYIipwlsgod5vIDOUl4qKJbq/sdtjqiFBUI6mJw3fnlBUduRhYq9+Je3Lb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657719; c=relaxed/simple;
-	bh=nje7rL8U8ZpyO32HiXOZzyC5MX50lHfvjcSfLvwk9kM=;
+	s=arc-20240116; t=1784657721; c=relaxed/simple;
+	bh=i8dX51NzbN4u+6FCvuSZJBvxUlmZIRYelLo1YFeeE90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JKXDqSyZB5UE5MsMbhxfYyGkfLqfCUSKN0CtOaVsFSdrLoklIj9xvOAeQFE3YeU3vmLWmCz4pBctZA+gacKWUF8oMMTt1chpg+/ByTBI86siQyiKSccdqhRZxc7twqF7PWrzUuCyNN/bmBSwdE2F3RnKGqST3nLbIOAXcrtXPvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rStt4dM7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kjgWrxeSos26DoPMVzM0EurOIHWyjg2stkVNtJ4EDWyssKTwAHeS8keDl9Uy6GX0rlgLot53moxVwhhrF7IUPj8CzuLzYPeP6a+ymVZZMZFzhi5L50JrRcRpw6gavFKJkOAHTitB16FeWbbJth0hUYJed2pcRSR22R/W3SYUgow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u2ozXL/S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rStt4dM7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 431FC1F000E9;
-	Tue, 21 Jul 2026 18:15:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2ozXL/S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFF311F000E9;
+	Tue, 21 Jul 2026 18:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657717;
-	bh=imagQzUosZ5DKlaTdRy8g45/UBAs0IuPMLYIhkIPFIA=;
+	s=korg; t=1784657720;
+	bh=hEjAii3xMciVLNx/DmV9MA4krFcILTKB+aqWRwVm2+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rStt4dM74lvBlMQzRv6XvuQj1unZ2h4llG7vmdOTmYtk6wKZ6LUnMxY96Rj7M3LXN
-	 wg9pnd+S2L6Vb3TAYXs1ppWevCo/BfCmo3oz4hQDSOK+ULL9rZKMIU9SCaedZKBJUD
-	 lrvikakY0dO76jUG1JWDBLkO9LMEnFENtb20QJ/k=
+	b=u2ozXL/SOVu5VZJrJvPAeezEiUxg4BhqX+VGbs3AR1PaiZp7QTp/TRAhOGcaM6sJR
+	 g3TXzRF1QsDxGvv2rXkDljYrpJlWuw8wOlHXkc/6vQfnMYOAlLk6hOQnzGNb06RDJq
+	 rxZ03hOwCuiKjxfuWBcHGWAOKTJM2VWuh/yqbKcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Joe Damato <joe@dama.to>,
-	Wayen Yan <win847@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0870/1611] net: airoha: Fix skb->priority underflow in airoha_dev_select_queue()
-Date: Tue, 21 Jul 2026 17:16:26 +0200
-Message-ID: <20260721152534.960361379@linuxfoundation.org>
+Subject: [PATCH 6.18 0871/1611] ipv6: ndisc: fix NULL deref in accept_untracked_na()
+Date: Tue, 21 Jul 2026 17:16:27 +0200
+Message-ID: <20260721152534.982910683@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -47,62 +47,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wayen Yan <win847@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 86e51aa24686cc95bb35613059e8b94b9b81e3f0 ]
+[ Upstream commit d186e942365acece7c56d39da05dd63bf95b280a ]
 
-In airoha_dev_select_queue(), the expression:
+accept_untracked_na() re-fetches the inet6_dev with __in6_dev_get(dev)
+and dereferences idev->cnf.accept_untracked_na without a NULL check,
+even though its only caller ndisc_recv_na() already fetched and
+NULL-checked idev for the same device.
 
-  queue = (skb->priority - 1) % AIROHA_NUM_QOS_QUEUES;
+Both reads of dev->ip6_ptr run in the same RCU read-side critical
+section, but a concurrent addrconf_ifdown() can clear dev->ip6_ptr
+between them: lowering the MTU below IPV6_MIN_MTU calls addrconf_ifdown()
+without the synchronize_net() that orders the unregister path, so the
+re-fetch returns NULL and oopses:
 
-implicitly converts to unsigned arithmetic: when skb->priority is 0
-(the default for unclassified traffic), (0u - 1u) wraps to UINT_MAX,
-and UINT_MAX % 8 = 7, routing default best-effort packets to the
-highest-priority QoS queue. This causes QoS inversion where the
-majority of traffic on a PON gateway starves actual high-priority
-flows (VoIP, gaming, etc.).
+ BUG: KASAN: null-ptr-deref in ndisc_recv_na (net/ipv6/ndisc.c:974)
+ Read of size 4 at addr 0000000000000364
+ Call Trace:
+  <IRQ>
+  ndisc_recv_na (net/ipv6/ndisc.c:974)
+  icmpv6_rcv (net/ipv6/icmp.c:1193)
+  ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:479)
+  ip6_input_finish (net/ipv6/ip6_input.c:534)
+  ip6_input (net/ipv6/ip6_input.c:545)
+  ip6_mc_input (net/ipv6/ip6_input.c:635)
+  ipv6_rcv (net/ipv6/ip6_input.c:351)
+  </IRQ>
 
-The "- 1" offset was a leftover from the ETS offload implementation
-that has since been removed. The correct mapping is a direct modulo:
+It is reachable by an unprivileged user via a network namespace.
 
-  queue = skb->priority % AIROHA_NUM_QOS_QUEUES;
+Pass the caller's already validated idev instead of re-fetching it; the
+idev stays alive for the whole RCU critical section, so it is safe even
+after dev->ip6_ptr has been cleared.
 
-This maps priority 0 → queue 0 (lowest), priority 7 → queue 7
-(highest), with higher priorities wrapping around. This is the
-standard Linux sk_prio → HW queue mapping used by other drivers.
-
-Fixes: 2b288b81560b ("net: airoha: Introduce ndo_select_queue callback")
-Link: https://lore.kernel.org/netdev/178185573207.2378135.3729126358670287878@gmail.com/
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Reviewed-by: Joe Damato <joe@dama.to>
-Signed-off-by: Wayen Yan <win847@gmail.com>
-Link: https://patch.msgid.link/178194366700.2485734.5368768965976693502@gmail.com
+Fixes: aaa5f515b16b ("net: ipv6: new accept_untracked_na option to accept na only if in-network")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260617065512.2529757-2-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ndisc.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 5e7939c4f3e6fe..5efd03c2deea77 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -1937,7 +1937,7 @@ static u16 airoha_dev_select_queue(struct net_device *dev, struct sk_buff *skb,
- 	 */
- 	channel = netdev_uses_dsa(dev) ? skb_get_queue_mapping(skb) : port->id;
- 	channel = channel % AIROHA_NUM_QOS_CHANNELS;
--	queue = (skb->priority - 1) % AIROHA_NUM_QOS_QUEUES; /* QoS queue */
-+	queue = skb->priority % AIROHA_NUM_QOS_QUEUES;
- 	queue = channel * AIROHA_NUM_QOS_QUEUES + queue;
+diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
+index ded2d3a0660c3e..9df1fba967c6e8 100644
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -966,10 +966,8 @@ static enum skb_drop_reason ndisc_recv_ns(struct sk_buff *skb)
+ 	return reason;
+ }
  
- 	return queue < dev->num_tx_queues ? queue : 0;
+-static int accept_untracked_na(struct net_device *dev, struct in6_addr *saddr)
++static int accept_untracked_na(struct inet6_dev *idev, struct in6_addr *saddr)
+ {
+-	struct inet6_dev *idev = __in6_dev_get(dev);
+-
+ 	switch (READ_ONCE(idev->cnf.accept_untracked_na)) {
+ 	case 0: /* Don't accept untracked na (absent in neighbor cache) */
+ 		return 0;
+@@ -979,7 +977,7 @@ static int accept_untracked_na(struct net_device *dev, struct in6_addr *saddr)
+ 		 * same subnet as an address configured on the interface that
+ 		 * received the na
+ 		 */
+-		return !!ipv6_chk_prefix(saddr, dev);
++		return !!ipv6_chk_prefix(saddr, idev->dev);
+ 	default:
+ 		return 0;
+ 	}
+@@ -1077,7 +1075,7 @@ static enum skb_drop_reason ndisc_recv_na(struct sk_buff *skb)
+ 	 */
+ 	new_state = msg->icmph.icmp6_solicited ? NUD_REACHABLE : NUD_STALE;
+ 	if (!neigh && lladdr && idev && READ_ONCE(idev->cnf.forwarding)) {
+-		if (accept_untracked_na(dev, saddr)) {
++		if (accept_untracked_na(idev, saddr)) {
+ 			neigh = neigh_create(&nd_tbl, &msg->target, dev);
+ 			new_state = NUD_STALE;
+ 		}
 -- 
 2.53.0
 
