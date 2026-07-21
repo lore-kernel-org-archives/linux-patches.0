@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E76744211F;
-	Tue, 21 Jul 2026 22:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B19443A9D;
+	Tue, 21 Jul 2026 22:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674091; cv=none; b=m26IYZrQZHpvCEMefBiGvv3fVzL+sKGryWQcxV/Cbzb9okTtVwoFWuVaBMds8JObNazbjYlgxXrKjdY9Jy6bDTkPm5nK1yl2UC8wPJKQ2G9DUgcoAl3nIruT/lJ639aUqmGRkXwNgyOk2JnB0/gug0ej7DfQtb9JgWbHfrctliE=
+	t=1784674097; cv=none; b=Pv7xdHeAEsp3xMwXdQuae9vgd3ioPJSNVovXN22J0U9w+YqhlobmO9meWk2t9NIOeSUkCP59d9ICIDCP/r0XBZT38Vrvp5+0Iw4OVhUXT/SdwUBfWwKmxEKUK8Ezt5Ad7PgRBv1Z4j9pA5Yytck8HlUwKAN87f9xilxIFweb0oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674091; c=relaxed/simple;
-	bh=YYbiw6UHjS9TUKJrVpvveklMvBoZtzlKuaw9PQunOC8=;
+	s=arc-20240116; t=1784674097; c=relaxed/simple;
+	bh=3xwtTri2vnXX9zA/JiE8W4G1rFd0mczvMoTlww17Lng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T7f+xfp5msWIfwT6/Nw4MdGxkEJwkmoanwFQ8jCWYrU42KtO/+/tjpzwB2nkAwKuBtPljyKK7VZ4bkGM+hEfoSuHpwg3X467bI2VcYs9dI26PRzMsALT/3ZMChWxrrFCFojk9Mf2RjRSdR5Noovz+kicyrLUb6RaHRkqLxE89Pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRBl+joK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k7jWYVOX5wVNk0xFd4JX0hKjJrD9xhiatvVvTfJXvvDofx72QNG0e9Ri2QF3KrYi6JyRzVveQkQ0lRQnO9fUgG+Uxd6VzgrtM5yPSlA/W4MmyNCvyfiR3Cvap0yhfPI7n4eHPgk6tnXIHe0YMi6Nu3D3SVYsAYejFbCcBcCi+ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TR4sHC0y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRBl+joK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71DF01F000E9;
-	Tue, 21 Jul 2026 22:48:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TR4sHC0y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D351F00A3A;
+	Tue, 21 Jul 2026 22:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674085;
-	bh=mZ6N1nFArLYVRLr3WZkH/pcDfrLJ6F2J2mbefFA0r8s=;
+	s=korg; t=1784674088;
+	bh=EpYmeRjfQBCd1Qp8+DmBhk2ytt1gtbI5z/duBTQZKhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dRBl+joKq7P/YVhYvDP99STdEezc7wJBTCKRZn5KIyor1PRvFZsO4VI84dMpUB0CV
-	 rkJu3m2+Lq6wFac9pIvRgIYP+aXsoO+HcDZuxzLM68K52SRgUVYBSlbj7sRCA+bXRn
-	 pzENJ7L9UhhDKjJw6oQN03oG4CgIPP7SRI6z0TpA=
+	b=TR4sHC0yqCJaMyLNzQ2NMBkv815Ce26wdJ58tqboYdKAOaQZx9wp40c+GD+pOuLYi
+	 N151ycIwrZs5BsVmgc9P+h0eKywmRv12ngU8s/rO2lySKh+WirRikhfTEu95da/Hum
+	 qPqIWcaLWVKJ6ssxX1KWmHmokdHBdTNZiI7ypynA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 365/699] ipv6: fix error handling in forwarding sysctl
-Date: Tue, 21 Jul 2026 17:22:04 +0200
-Message-ID: <20260721152403.927505238@linuxfoundation.org>
+Subject: [PATCH 5.10 366/699] ipv6: fix error handling in disable_policy sysctl
+Date: Tue, 21 Jul 2026 17:22:05 +0200
+Message-ID: <20260721152403.951834361@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -55,54 +55,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 058b9b19f9639fe1e1225a17c540f61b65bee6ad ]
+[ Upstream commit 3e0e51c0ee1d08cc9d48dc17f3248d5b31cf8066 ]
 
-When writing to the forwarding sysctl, if proc_dointvec() fails to parse
-the input, it returns a negative error code. The current implementation
-is overwriting that error for write operations.
-
-This results in a silent failure, it returns a successful write although
-the configuration was not modified at all. When modifying the "all"
-variant it can also modify the configuration of existing interfaces to
-the wrong value.
+When writing to the disable_policy sysctl, if proc_dointvec() fails to
+parse the input, it returns a negative error code. The current
+implementation is resetting the position argument even if an error
+occurred during proc_dointvec() and not only during sysctl restart.
 
 Fix this by checking the return value of proc_dointvec() and returning
-early on failure. In addition, adjust return code of
-addrconf_fixup_forwarding() for successful operation.
+early on failure.
 
-Fixes: b325fddb7f86 ("ipv6: Fix sysctl unregistration deadlock")
+Fixes: df789fe75206 ("ipv6: Provide ipv6 version of "disable_policy" sysctl")
 Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260622130857.5115-4-fmancera@suse.de
+Link: https://patch.msgid.link/20260622130857.5115-5-fmancera@suse.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ipv6/addrconf.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 8c33e4cfa320e4..288178ee2c72ce 100644
+index 288178ee2c72ce..199c14504444bd 100644
 --- a/net/ipv6/addrconf.c
 +++ b/net/ipv6/addrconf.c
-@@ -907,7 +907,7 @@ static int addrconf_fixup_forwarding(struct ctl_table *table, int *p, int newf)
- 
- 	if (newf)
- 		rt6_purge_dflt_routers(net);
--	return 1;
-+	return 0;
- }
- 
- static void addrconf_linkdown_change(struct net *net, __s32 newf)
-@@ -6194,6 +6194,8 @@ static int addrconf_sysctl_forward(struct ctl_table *ctl, int write,
+@@ -6588,6 +6588,8 @@ static int addrconf_sysctl_disable_policy(struct ctl_table *ctl, int write,
+ 	lctl = *ctl;
  	lctl.data = &val;
- 
  	ret = proc_dointvec(&lctl, write, buffer, lenp, ppos);
 +	if (ret)
 +		return ret;
  
- 	if (write)
- 		ret = addrconf_fixup_forwarding(ctl, valp, val);
+ 	if (write && (*valp != val))
+ 		ret = addrconf_disable_policy(ctl, valp, val);
 -- 
 2.53.0
 
