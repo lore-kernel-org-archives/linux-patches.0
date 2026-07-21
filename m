@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92164397E80;
-	Tue, 21 Jul 2026 20:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C1D3B7770;
+	Tue, 21 Jul 2026 20:48:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666883; cv=none; b=plZQa1+eDPkD7FCyu8FUJMedcXm2jl4/MbYz8aBILkaNp0VxQN3Oeov/N3bo1mARgFPCxEQDh3r32TFRC7Sej2Rg1Rvok/dwhXpQkudGw6QBAUENcPbzufD+a5h7C1v6x/M9+MCpJQrI0eO/dqVdY6fI9YaUTE1yhQ1VkLcLH1A=
+	t=1784666884; cv=none; b=AKMTlpUBR/zc9N0e2lT8VhQ1SgaaSQCoCoPoEzC2ifPIEVSLy35BsShrRXt5rTqdC0kqY+X/xaBhyisUl3dETl+5hKP1gBv1o7ixbKo5/DGfM1l6OP/zY+3piWyRO8+FdIms+iAADJ0U88t5lwAT+vuO2cC9r4u9ic8lRlZXZ04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666883; c=relaxed/simple;
-	bh=thCGVcX7KZIuGuiKfKmCIS7XeS4sfh/3ftDAn1y9WCc=;
+	s=arc-20240116; t=1784666884; c=relaxed/simple;
+	bh=kl1p749QFavnFJXFi+WNKa++StgqBXh8GgokluzpK28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tPB+6Z0NtlgpCecnnc0VIVpPw23pKRC7HOnF55vZY/xV7ijJHm0Dd86+NvpR3b8F0mZ4Vgd0uWcfai/cGVAGPGvzNtAotZ0oOzTbxQQSb5Z5jCM/CCuGIr9vcKK62orjyb6j1fpPtb6NOvDJM0zrX+5UUuvAXnF39W6dQh7MoYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1OdWd0r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nax3k+iqfOVMCmeYRuZeBilzB81PG1Yx0RoLWOQXGULuUg6UzDJbrt9LmLeZfGLWygHwwF9VJfYAXYnlrtUi3sQOJN1iMi2CYFd0mn3QksBpfpXrXcPRWujzcF3StUeHRLSBrgdpXy/Vl0bCJdcxx9K+YLF2KtiRfFT4JwRlC4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UcXxTJKw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1OdWd0r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D367F1F00A3A;
-	Tue, 21 Jul 2026 20:47:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UcXxTJKw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E701F00A3E;
+	Tue, 21 Jul 2026 20:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666874;
-	bh=YddhCpA/bbJfy58J8YWpiR5TZfpSdw8dD3TML/ezGFU=;
+	s=korg; t=1784666882;
+	bh=SKYv/C+LOsUM+Ry35GYV2VvnjVLfZQEhgSC+Fp7BRdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c1OdWd0rViuZq8aR0kS55+OfsW3idfe134HHGRP9QkTXWeAAJ2kKzUwzo7urRvFae
-	 xGnZsZ5GsXQyzVA3U8Vp2JqE788wfieKNsRL1e6gx1NOP2+oIpqZVkwPiPf/KBVHW2
-	 t0gjmnAlC/dz77segC0fF4RxkOZ4tjKLGpYVc5xc=
+	b=UcXxTJKwDoFet4y601+zYij6gpOuSZ7m2U1HS9TpC19LFLKyjcdVZkFIKL/GXOtvM
+	 YKBcVcAMqsZ4LFCiVhpnsX/IW45ZXAkf1hlwcxVx5Pxz+Gv8/SIFkHkedxodyVGryK
+	 Lh8GvUMepRhliW1NdZHMXueDRdzo76oNQDpGJk6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Feng Wu <wufengwufengwufeng@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0848/1266] net: usb: net1080: validate packet_len before pad-byte access in rx_fixup
-Date: Tue, 21 Jul 2026 17:21:25 +0200
-Message-ID: <20260721152500.833114240@linuxfoundation.org>
+Subject: [PATCH 6.6 0851/1266] netfilter: xt_rateest: fix u64 truncation in xt_rateest_mt()
+Date: Tue, 21 Jul 2026 17:21:28 +0200
+Message-ID: <20260721152500.897550442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,54 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Feng Wu <wufengwufengwufeng@gmail.com>
 
-[ Upstream commit 03f384bc0cb8d4a1301d4f5b0baef2d980258383 ]
+[ Upstream commit 444853cd438201007da5359821adcc2995655ab1 ]
 
-For an even packet_len, net1080_rx_fixup() reads the pad byte at
-skb->data[packet_len] before the skb->len != packet_len check further
-down, and packet_len is only bounded against NC_MAX_PACKET. A malicious
-NetChip 1080 device can send a short frame advertising a large even
-packet_len (e.g. 0x4000), so the pad-byte read lands past the end of the
-skb:
+On links faster than ~34 Gbps, where byte rate may exceed 2^32-1
+(~ 4.3 GBps), the comparison result becomes incorrect because the
+truncated value no longer reflects the actual estimator rate.
 
-  BUG: KASAN: slab-out-of-bounds in net1080_rx_fixup
-  Read of size 1 at addr ffff8880106c83c6 by task ksoftirqd/0/14
-   ...
-   net1080_rx_fixup (drivers/net/usb/net1080.c:384)
-   usbnet_bh (drivers/net/usb/usbnet.c:1589)
-   process_one_work (kernel/workqueue.c:3322)
-   bh_worker (kernel/workqueue.c:3708)
-   tasklet_action (kernel/softirq.c:965)
-   handle_softirqs (kernel/softirq.c:622)
-   ...
+Fix by changing the local variables to u64.
 
-Reject the frame when packet_len >= skb->len before reading.
-
-Fixes: 904813cd8a0b ("[PATCH] USB: usbnet (4/9) module for net1080 cables")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260630045121.1565324-1-xmei5@asu.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 1c0d32fde5bd ("net_sched: gen_estimator: complete rewrite of rate estimators")
+Signed-off-by: Feng Wu <wufengwufengwufeng@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/net1080.c | 2 +-
+ net/netfilter/xt_rateest.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/net1080.c b/drivers/net/usb/net1080.c
-index b0c0c9dd6a028d..8a66549cefa7df 100644
---- a/drivers/net/usb/net1080.c
-+++ b/drivers/net/usb/net1080.c
-@@ -381,7 +381,7 @@ static int net1080_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 	skb_trim(skb, skb->len - sizeof *trailer);
+diff --git a/net/netfilter/xt_rateest.c b/net/netfilter/xt_rateest.c
+index b1d736c15fcbe5..7c05b63425784e 100644
+--- a/net/netfilter/xt_rateest.c
++++ b/net/netfilter/xt_rateest.c
+@@ -16,7 +16,7 @@ xt_rateest_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ {
+ 	const struct xt_rateest_match_info *info = par->matchinfo;
+ 	struct gnet_stats_rate_est64 sample = {0};
+-	u_int32_t bps1, bps2, pps1, pps2;
++	u64 bps1, bps2, pps1, pps2;
+ 	bool ret = true;
  
- 	if ((packet_len & 0x01) == 0) {
--		if (skb->data [packet_len] != PAD_BYTE) {
-+		if (packet_len >= skb->len || skb->data[packet_len] != PAD_BYTE) {
- 			dev->net->stats.rx_frame_errors++;
- 			netdev_dbg(dev->net, "bad pad\n");
- 			return 0;
+ 	gen_estimator_read(&info->est1->rate_est, &sample);
 -- 
 2.53.0
 
