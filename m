@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9963434E2F;
-	Tue, 21 Jul 2026 22:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF4943C063;
+	Tue, 21 Jul 2026 22:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673949; cv=none; b=lxmL4ccUmb4R7wLjwK6IfJU8GSj8ex99LGWLkGGOvGZfTlqMnrkvy8+Y91R7CSZTfDBS2SG1jtiH1Q1oPrcwwl6F++z2xhil1smU0jv37HoGGISek7/9sZ/RHv8sjzzrN5hKZVzMwtr1KF6jYYSgjFkkcT33yyi0smjf+9+HyIo=
+	t=1784673953; cv=none; b=uUlHIkP+wtfPwLY5SaIUDyJLp2LvPtqG614PfPNnEoR0Pcc2WnYVfTgCwPdAB+6vyU0rkM4hE8E1ilv+Td9A63hlQsV/2mOy+PvdhNoiZT9hDCMdNFFl2vyyJPfOmBl9g//FKrK6KcXj1zDhWjEuRSVCDBOY0ahL2zrTifdOiH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673949; c=relaxed/simple;
-	bh=0/J2b3Mi1jozJMeVnz/jv8ZFb/vrnZADQlB0T/1pWss=;
+	s=arc-20240116; t=1784673953; c=relaxed/simple;
+	bh=NPY93MboMv3rM49hVhUf5pyeWNLnU1RmUFA5GkcVlNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CQC+bbh4m3c/0hOKNR+lvQQqMqriwYIzP6fx2P6P5Lh/uKDwr3xwrKK4sVPu0ojp8V/GyVmSrzbiVF57Wnh/YJ7o2t+TjMOnAXT9r75X1mcxT+zgrVXIYluK/gSkrAp7u5c+JZjTJkaOkLBgFcxbjeagScNHZDxg5jeespeT5AI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnBo5oLK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p4cJhcNNwCNifaGlzMIvbsKYFlzCwq/P12U/zWu5Q1CqsqTEALWxdxhUHoh7kOydvPAGBs86fus0HWYnNxLZ78HvtfpFeQG6XZPk73JHSwhfdboXSd6YegvOsZzkfAXmoCz4ytzb7vvdEenKuvhqLmTulupyPns2ynErGyl6QjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5ZdIYx9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnBo5oLK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E181F000E9;
-	Tue, 21 Jul 2026 22:45:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5ZdIYx9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76DC1F000E9;
+	Tue, 21 Jul 2026 22:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673948;
-	bh=+XcxngDeljTASh5AGKmZSYjQUsyu2F6vODSOJZHmgrI=;
+	s=korg; t=1784673951;
+	bh=a9EM8n2DTEJy8WrzXpBPnNms7/Viq2bHudx7lop2dzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NnBo5oLK6kW1W9FcxTYyU8fs6yU945kzrY/yMODmd3foYu2zf/Cx+dBCRZoN8bRar
-	 +zqOVmXyIIOKDQ4LA0j5IbsiukA3t/4vq5Hqkt9fmiswEVbZE9eYjBFBjlngyfdlKE
-	 QwATn5hPLTqWb2AO3IPMcjBx6Qw+YhpCb4eAHiQU=
+	b=l5ZdIYx9XgMLOu/4xWQwp4RGs8WGTn8k9OVR+3FTLO1LuGb8S8HfeChkXgr7na8Wu
+	 e9DfNMhXMYnllP7camwNiu0GlM6F/0tpw0Atq0jKMYPOFpy1HAZ4GnSxx0RzJPgnYn
+	 ZOyBIWQVcr0qWQn+Pd9D7IRLbjCHi4/Zev8CZCqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luis Gerhorst <luis.gerhorst@fau.de>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 354/699] bpf: Fix stack slot index in nospec checks
-Date: Tue, 21 Jul 2026 17:21:53 +0200
-Message-ID: <20260721152403.678632606@linuxfoundation.org>
+Subject: [PATCH 5.10 355/699] drm/edid: fix OOB read in drm_parse_tiled_block()
+Date: Tue, 21 Jul 2026 17:21:54 +0200
+Message-ID: <20260721152403.700695520@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -54,49 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit d1d53aa30ab3b5ae89161c9cc840b3f7489ad386 ]
+[ Upstream commit faaa1e1155833e7d4ce7e3cfaf64c0d636b190db ]
 
-check_stack_write_fixed_off() computes the byte slot for a fixed-offset
-stack write as -off - 1, and records each written byte in slot_type[] with
-(slot - i) % BPF_REG_SIZE.
+drm_parse_tiled_block() casts the DisplayID block to a
+struct displayid_tiled_block and reads the full fixed layout up to
+tile->topology_id[7] without checking block->num_bytes. The DisplayID
+iterator only validates the declared payload length, so a crafted EDID
+can advertise a tiled-display block (tag DATA_BLOCK_TILED_DISPLAY, or
+DATA_BLOCK_2_TILED_DISPLAY_TOPOLOGY for v2.0) with a small num_bytes at
+the end of a DisplayID extension. The read then runs past the end of the
+exact-sized kmemdup()'d EDID allocation, a heap out-of-bounds read.
 
-The Spectre v4 sanitization pre-check uses slot_type[i] instead. For a
-4-byte write at fp-8 after the lower half of fp-8 has been zeroed, the
-pre-check scans bytes 0..3 and sees STACK_ZERO while the actual write updates
-bytes 7..4. That can leave the second half-slot write without nospec_result
-even though the bytes being overwritten still require sanitization.
+Reject blocks shorter than the spec's 22-byte tiled payload before
+reading the fixed struct, as drm_parse_vesa_mso_data() already does.
 
-Use the same slot index in the sanitization pre-check that the write path uses
-when updating slot_type[].
+  BUG: KASAN: slab-out-of-bounds in drm_edid_connector_update
+  Read of size 2 at addr ffff888010077700 by task exploit/147
+   dump_stack_lvl (lib/dump_stack.c:94 ...)
+   print_report (mm/kasan/report.c:378 ...)
+   kasan_report (mm/kasan/report.c:595)
+   drm_edid_connector_update (drivers/gpu/drm/drm_edid.c:7581)
+   bochs_connector_helper_get_modes (drivers/gpu/drm/tiny/bochs.c:574)
+   drm_helper_probe_single_connector_modes (drivers/gpu/drm/drm_probe_helper.c:426)
+   status_store (drivers/gpu/drm/drm_sysfs.c:219)
+   ...
+   vfs_write (fs/read_write.c:595 fs/read_write.c:688)
+   ksys_write (fs/read_write.c:740)
 
-Fixes: 2039f26f3aca ("bpf: Fix leakage due to insufficient speculative store bypass mitigation")
-Acked-by: Luis Gerhorst <luis.gerhorst@fau.de>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Signed-off-by: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
-Link: https://lore.kernel.org/r/20260618-f01-11-stack-nospec-slot-index-v3-1-780297041721@mails.tsinghua.edu.cn
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 40d9b043a89e ("drm/connector: store tile information from displayid (v3)")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patch.msgid.link/20260615184737.899892-1-xmei5@asu.edu
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_edid.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index e6cf29b117e1a5..19e1f7fff07a9c 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2523,7 +2523,8 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 		bool sanitize = reg && is_spillable_regtype(reg->type);
+diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+index c3b4a84a9f911d..268791a29828a1 100644
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -5896,6 +5896,14 @@ static void drm_parse_tiled_block(struct drm_connector *connector,
+ 	u8 num_v_tile, num_h_tile;
+ 	struct drm_tile_group *tg;
  
- 		for (i = 0; i < size; i++) {
--			u8 type = state->stack[spi].slot_type[i];
-+			u8 type = state->stack[spi].slot_type[(slot - i) %
-+							      BPF_REG_SIZE];
++	/* tiled block payload per spec: cap 1 + topo 3 + size 4 + bezel 5 + id 9 = 22 */
++	if (block->num_bytes < 22) {
++		drm_dbg_kms(connector->dev,
++			    "[CONNECTOR:%d:%s] Unexpected tiled block size %u\n",
++			    connector->base.id, connector->name, block->num_bytes);
++		return;
++	}
++
+ 	w = tile->tile_size[0] | tile->tile_size[1] << 8;
+ 	h = tile->tile_size[2] | tile->tile_size[3] << 8;
  
- 			if (type != STACK_MISC && type != STACK_ZERO) {
- 				sanitize = true;
 -- 
 2.53.0
 
