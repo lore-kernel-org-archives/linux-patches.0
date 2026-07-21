@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C60352029;
-	Tue, 21 Jul 2026 21:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D25352029;
+	Tue, 21 Jul 2026 21:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670093; cv=none; b=KiQ4dm2l+TSjEyWbOyE6R1CUesLbk/6NDZaFOP5qkXlSWSYKaKJuFl+AH8dkQ4QtLwZOV9gdVeqnpJifUFuuJ9ElrvFL+XTziRN2hcEcL26wrpUiVYbMhD8alcdUpDNSllFXZUHcmocyRKf60oVgUtg+3htmVCAra46LxNlLkiU=
+	t=1784670096; cv=none; b=obnMBTDVaEnR/uRmUNLp/1Z57D6m1jQZTM7hpoQpgt26cNgQ8JYwZhCa4D3tzIXnqwojq0AQ5vZVO+DM4RLuNA0N+D6socWxb+tEAjneYCDN9XOJ9u9L9s5JhxtVT93VsoRYaCeuzKVbPY68VF/kA9imCDo5RyGwi4c4t0c718k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670093; c=relaxed/simple;
-	bh=fbNTvMC6GLaLpVneA5Lyj+H/S9UmzhMynuqaFxP5+iE=;
+	s=arc-20240116; t=1784670096; c=relaxed/simple;
+	bh=D2K8iSl0TQx2kHImPSQVHi4P9t4TblfC6yYSBsUJIV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=doXlz8WreiL/Smul290lEkUAq3ABuWLeGl8NTlGMbIkvHDwcWN3ZCWREPXcXklTOtdXXVaDA1aJX4EW4v7rDHG1ylo4gaSPdsIXGAidOWANwHp48oHkMzHKamtTpHyF5VFQs+jvNk6vd4Oul/aKI/qgnZOuPmPjUMowvVXU41K0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBJJnihw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vGb8Hg+M8r722ABdhZD6kmYP8/oFYNwnyWoQO/vMqIMK4PoUbKzIVKVjwEdelmj9c1l5gH2HqsOFsVKT126Cto+yweFH+KudC/O/SdxGyTRpSgq+UDFHMS8uD5nz+osQzOJr8F0BlrvwRCYWjtsZWTYN5v9hV2DMSXutS/DSWII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KehOAOUE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBJJnihw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFB91F000E9;
-	Tue, 21 Jul 2026 21:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KehOAOUE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641791F000E9;
+	Tue, 21 Jul 2026 21:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670092;
-	bh=eXoC0/4V60yDLar/LO/O56sixSNeRJTy6YVrQKV/fNM=;
+	s=korg; t=1784670094;
+	bh=epZEm2SCh5gkk0LoT2QAGZltMWznIWYBDzDjqDbJjEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RBJJnihwJIMV4b+kKlgQir51xZHQOtL77cynfwVkjzX7asNdCeUYAjFmiSjoXcqL3
-	 uQI4EREqHYDnyht2VUaH9JWR/4b8VFyhnrK7oVV06g4fF3kM5KW+b6l5xFSZIryNd2
-	 4YaqL55aK5DM8u7uGCT/yLX+AZgOEWRLVthjind4=
+	b=KehOAOUENCHzCeNeOuk5rwZ30yNRk21H6mNkE/IoI+UyckpvYPylbQzNab0lRasCO
+	 GpOQyTKodhwEZeBy52qByb9pqRJYBwAHqCSkTvqDieF00KJhmRSizO6hqvZVxetFbW
+	 2JvA8Wo2tdeSmyg2w3Xz+Dzqy4nPRgs+LJny1IEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7ea0b96c4ddb49fd1a70@syzkaller.appspotmail.com,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 0803/1067] ocfs2: use kzalloc for quota recovery bitmap allocation
-Date: Tue, 21 Jul 2026 17:23:24 +0200
-Message-ID: <20260721152442.525490391@linuxfoundation.org>
+	Bastien Curutchet <bastien.curutchet@bootlin.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.1 0804/1067] mtd: rawnand: pl353: fix probe resource allocation
+Date: Tue, 21 Jul 2026 17:23:25 +0200
+Message-ID: <20260721152442.547136359@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -58,43 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Bastien Curutchet <bastien.curutchet@bootlin.com>
 
-commit 93c8c6ea90be9e9df8fe14048ad4e3caad0770a6 upstream.
+commit 19ed11aee966d91beebdef9d32ce926474872f79 upstream.
 
-ocfs2 quota recovery allocates a bitmap buffer with kmalloc and does not
-fully initialize it.  This can lead to use of uninitialized bits during
-quota recovery from a corrupted filesystem image.
+During probe(), the devm_ioremap() is called with the parent device
+instead of the current one. So when the module is unloaded, the register
+area isn't released.
 
-Use kzalloc instead to ensure the bitmap is zero-initialized.
+Target the pl35x device in the devm_ioremap() instead of its parent.
 
-Link: https://lore.kernel.org/20260418131048.1052507-1-tristmd@gmail.com
-Reported-by: syzbot+7ea0b96c4ddb49fd1a70@syzkaller.appspotmail.com
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 08d8c62164a3 ("mtd: rawnand: pl353: Add support for the ARM PL353 SMC NAND controller")
+Signed-off-by: Bastien Curutchet <bastien.curutchet@bootlin.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/quota_local.c |    2 +-
+ drivers/mtd/nand/raw/pl35x-nand-controller.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ocfs2/quota_local.c
-+++ b/fs/ocfs2/quota_local.c
-@@ -302,7 +302,7 @@ static int ocfs2_add_recovery_chunk(stru
- 	if (!rc)
- 		return -ENOMEM;
- 	rc->rc_chunk = chunk;
--	rc->rc_bitmap = kmalloc(sb->s_blocksize, GFP_NOFS);
-+	rc->rc_bitmap = kzalloc(sb->s_blocksize, GFP_NOFS);
- 	if (!rc->rc_bitmap) {
- 		kfree(rc);
- 		return -ENOMEM;
+--- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
++++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
+@@ -1155,7 +1155,7 @@ static int pl35x_nand_probe(struct platf
+ 	nfc->controller.ops = &pl35x_nandc_ops;
+ 	INIT_LIST_HEAD(&nfc->chips);
+ 
+-	nfc->conf_regs = devm_ioremap_resource(&smc_amba->dev, &smc_amba->res);
++	nfc->conf_regs = devm_ioremap_resource(nfc->dev, &smc_amba->res);
+ 	if (IS_ERR(nfc->conf_regs))
+ 		return PTR_ERR(nfc->conf_regs);
+ 
 
 
