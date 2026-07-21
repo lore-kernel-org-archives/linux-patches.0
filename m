@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8703A30F80C;
-	Tue, 21 Jul 2026 17:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C582D30F80C;
+	Tue, 21 Jul 2026 17:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655791; cv=none; b=AxGqjvIoWFOHHElQLPzGeWxQY5sN2Kxa8f0OkvSeQpP0os66oyXfQiYxO1eS9jtBfuvCCVKXfkcLXhYdUIhsW8fyWFn7vnhwR2KMBPA5qu7Ui5k1wuDe0DcoWknnV/rEMalx0q8pYJNyZXtOrnqVaiAErHOrVrxXY4xzoPtrG90=
+	t=1784655793; cv=none; b=q0L3D1fRcQutQB/obxhnHaOv1TdIKFv+Das7V0u8od76LiSTN2dCCLij0/r+G5PXIRv3FoFMxGCiU15n746iPoEbTEEngVeRMNJocrG3r27NjKUicNRNkdIVAzt4kBn0Wrb7ffhbCmQzloXCSoJPGj11KHuJwXTA5DQP5IZkRh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655791; c=relaxed/simple;
-	bh=qEFUKO/jMBGLdu9cHrNsvIHPDUYuoo5m+9LqXTPjuts=;
+	s=arc-20240116; t=1784655793; c=relaxed/simple;
+	bh=pjxE9mtJNMUQtTywu+YwA4Ds1CIFxxCAwnytet/Xez4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JEFzFDl2hDAK3J2XdI+DKuvGwx9PQ3Z+yA4bfFXdJew4VKgm/Hg001LKKVn06IdMR+aAhcjUBNsXFPRb4PAMyRv54FhPC0iQBJ657fFfcYxXA/KIjBiIlgFirV6h4lhhMGLnbLtl6wCP7lIXrf55VzxJj9EXypHOGJW0lqXIUBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YyrSDsgX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rSjWuvlVOXyPTv6sGO65PGPOr6MEI+JHt5yf3ZFcMVbIl2N4DMWR7LHSijqqqzUctz3b71AayGRyGhP9fs52dTSj5ii2TUYGtnvFs3GEFa8tKy2CuEGtir1d+GyobljAjiQBlzdI9Xq0b7ZkPjq7IBvDNO8rqtgcgeiSmbAharU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTUfLlvF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YyrSDsgX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5641F000E9;
-	Tue, 21 Jul 2026 17:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTUfLlvF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A05F1F00ACA;
+	Tue, 21 Jul 2026 17:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655786;
-	bh=z3uiRMfk0ZnLXSfpY/0IUD7tn0fElkValfymrwgAOKc=;
+	s=korg; t=1784655791;
+	bh=QKzc87lg27BkB3PVb5GaAX6oekn2+SE98pr7Gluqw/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YyrSDsgXX432LSwo2mAeWXw9Rzi/WkB19o+iQCpTWaFJka2kVKVvnyfNThIKnCASY
-	 4Cft3Isp/KRb/ASC4Axs4DdTspc9AMOOUPogNHRof0TWyPR+7mu/65RwzaP7HR4RXW
-	 4cSu22+7T44wsYnD0AlH1rmddGZPAYJNkn6v2884=
+	b=NTUfLlvFxs5356rOvyG2S4Og+fYaSmLaOOBd6+2jjliAximWXHDwriK1JaGltaHwp
+	 GjdRPyK9Ha7ZyBi0IxITXtcE+TUGaZLaXuLmZnmYPCCmnswCwlVYN2Jax5TD6V3u6q
+	 Rkd7L29vp4RRCRunZhs5826SQsqtuP1qIlJpZn0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-	Harshal Dev <harshal.dev@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Samuel Holland <samuel@sholland.org>,
+	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
+	Paul Kocialkowski <paulk@sys-base.io>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0139/1611] arm64: dts: qcom: sm8450: Fix ICE reg size
-Date: Tue, 21 Jul 2026 17:04:15 +0200
-Message-ID: <20260721152518.000449795@linuxfoundation.org>
+Subject: [PATCH 6.18 0100/1611] media: cedrus: Fix failure to clean up hardware on probe failure
+Date: Tue, 21 Jul 2026 17:03:36 +0200
+Message-ID: <20260721152517.093830960@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,41 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+From: Samuel Holland <samuel@sholland.org>
 
-[ Upstream commit 7fb3d0512dacc0d09217eb45057357f00298203d ]
+[ Upstream commit f0a22f1d602ed499a192284de5e811a73421f0c7 ]
 
-The ICE register region size was originally described incorrectly when
-the ICE hardware was first introduced. The same value was later carried
-over unchanged when the ICE node was split out from the UFS node into
-its own DT entry.
+If V4L2 device fails to register, then SRAM still be claimed and as a
+result driver will not be able to probe again.
 
-Correct the register size to match the hardware specification.
+ cedrus 1c0e000.video-codec: Failed to claim SRAM
+ cedrus 1c0e000.video-codec: Failed to probe hardware
+ cedrus 1c0e000.video-codec: probe with driver cedrus failed with error -16
 
-Fixes: 276ee34a40c1 ("arm64: dts: qcom: sm8450: add Inline Crypto Engine registers and clock")
-Signed-off-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Reviewed-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260402-ice_dt_reg_fix-v1-2-74e4c2129238@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+cedrus_hw_remove undoes everything that was previously done by
+cedrus_hw_probe, such as disabling runtime power management and
+releasing the claimed SRAM and reserved memory region.
+
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+Signed-off-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+Fixes: 50e761516f2b ("media: platform: Add Cedrus VPU decoder driver")
+Acked-by: Paul Kocialkowski <paulk@sys-base.io>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/media/sunxi/cedrus/cedrus.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 6c00390010f1f7..3a352e5f3f191b 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -5348,7 +5348,7 @@ ufs_mem_phy: phy@1d87000 {
- 		ice: crypto@1d88000 {
- 			compatible = "qcom,sm8450-inline-crypto-engine",
- 				     "qcom,inline-crypto-engine";
--			reg = <0 0x01d88000 0 0x8000>;
-+			reg = <0 0x01d88000 0 0x18000>;
- 			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
- 		};
+diff --git a/drivers/staging/media/sunxi/cedrus/cedrus.c b/drivers/staging/media/sunxi/cedrus/cedrus.c
+index bff42ea1871f73..1c7191bb0d8fca 100644
+--- a/drivers/staging/media/sunxi/cedrus/cedrus.c
++++ b/drivers/staging/media/sunxi/cedrus/cedrus.c
+@@ -476,7 +476,7 @@ static int cedrus_probe(struct platform_device *pdev)
+ 	ret = v4l2_device_register(&pdev->dev, &dev->v4l2_dev);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Failed to register V4L2 device\n");
+-		return ret;
++		goto err_hw;
+ 	}
  
+ 	vfd = &dev->vfd;
+@@ -537,6 +537,8 @@ static int cedrus_probe(struct platform_device *pdev)
+ 	v4l2_m2m_release(dev->m2m_dev);
+ err_v4l2:
+ 	v4l2_device_unregister(&dev->v4l2_dev);
++err_hw:
++	cedrus_hw_remove(dev);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
