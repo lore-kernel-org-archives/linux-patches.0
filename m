@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55CB46EF7D;
-	Tue, 21 Jul 2026 20:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030A946AA69;
+	Tue, 21 Jul 2026 20:28:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665706; cv=none; b=B65HDX8u9bBURyX9vIr1TVJeE7ospIaETnZfmCCAuzX1D/yFBL+gcSdW9M461cL4X4t7we+jxzeQFvZg3QlzAg3ZUil9oGpD5kmbzw7HXoL5OsBni1Gon86GlPQtGBW9NJzHp70rwM2C42xaTaamD0YSzBeXFOJYcduywCevQSY=
+	t=1784665707; cv=none; b=r8cDT4/DF4fFTqZEy5neqSspJscl2ptV8ZjzS8de3kGLnYb5FGaMGPNiD595++ivepaCG8SN387il7l9JVOJshj45RQy1qzvVmRqYFp/2UfEtvOn1OjuwQbNu1AzqNvUk7UmMU6MlPv1dKcDDWBNxpYSSQE7rAA/u+p8+OzKxDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665706; c=relaxed/simple;
-	bh=h5CQlT2+uJ+XdV53Ws7g8IbW8sVCpgFRLqwnHML0X2A=;
+	s=arc-20240116; t=1784665707; c=relaxed/simple;
+	bh=xwBJuM4f7Rai01FAME1pIdKPyfJ9WfZLDtFkz9XCSdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j62T9EH2XCv8+oQJQMzKr13H0xxYwNNWt9TbsoA8Z93G23owz926pzRXPmtrAmAX8knTG9HgoqxKS6PZ16tKHDmeRoDwkejepgwPzlQNrgMVovZ6qM968eS5A0gZZnRTbTDM+iDPLJuGLZcg374pJXhavj5bWRtHw280MG6w5zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=clu+Ijop; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HvqnkE2jJeXt1kgkNmRmEfkSd78S/EWM9lFylTWWV1EESXcrTVQPTcyL7HcKwSGlSXAjNoxk6fW2TCHHjY155kH2cjcFlzp40JfzamyWL29GlGs2D6/LV70LpYGT0geP+v/QlwIslJpWVPSGzD1++GEI9xvMr/2TLK6kEh8VpHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNDIwPvV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="clu+Ijop"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686B71F00A3A;
-	Tue, 21 Jul 2026 20:28:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNDIwPvV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10EFC1F00A3D;
+	Tue, 21 Jul 2026 20:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665702;
-	bh=05bjQ7qnv2AbbZUKX5h0Eo+Rb73Ip4oyh7mJZNsUOlY=;
+	s=korg; t=1784665705;
+	bh=hdvD9HcxiAi1yNpjqharJBZpO0tBTqP5O7EIaO0zrxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=clu+Ijoptsq+kY3OmNJl/7xG5rr62dx5wrHZix7eh18JmMEF5rjOM6cKhyaaFe4Cz
-	 6vllQLqqF4NijEWff06DWxHnJLi0mJT7CjSMBUs8zwZAnRBQ27eHVamygaAnBKZ8NG
-	 qaVa+5rZZfuKDN3XZ+iDIOlxlljwZspSwldGte4M=
+	b=aNDIwPvVrSOfgESaEJthprpomN78o60glIHFAAdQvSxXy5Gaj/0dN74xSjKD5oePx
+	 Ayw/y/wp95W1QBqfgTvYcJ0AQY1YWv/4zwebBzj7Q9xaKEbWt4Lc1Kv8DX0lVb038j
+	 3AEGC4bxuSIOi3oAyTGMHUAU6jwvYWm1w+CntB6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Ma <maqianga@uniontech.com>,
-	Mark Brown <broonie@kernel.org>,
+	Louis Kotze <loukot@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0403/1266] spi: hisi-kunpeng: Use dev_err_probe() for host registration failure
-Date: Tue, 21 Jul 2026 17:14:00 +0200
-Message-ID: <20260721152450.850387815@linuxfoundation.org>
+Subject: [PATCH 6.6 0368/1266] wifi: cfg80211: fix grammar in MLO group key error message
+Date: Tue, 21 Jul 2026 17:13:25 +0200
+Message-ID: <20260721152450.061903368@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,51 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Ma <maqianga@uniontech.com>
+From: Louis Kotze <loukot@gmail.com>
 
-[ Upstream commit 59b991990a04b1d1ce95373983b7c8b65bdf7acc ]
+[ Upstream commit 9dcc1af3bbf5441f71a1e51b8d81bdf38a249607 ]
 
-When the SPI core registers the Kunpeng controller it may need to acquire
-chip-select GPIO descriptors. If the GPIO provider has not probed yet,
-spi_register_controller() returns -EPROBE_DEFER.
+The error message emitted by nl80211_validate_key_link_id() when a group
+key install on an MLO wdev is missing the link ID reads "link ID must
+for MLO group key", which is missing the words "be set". This makes the
+error harder to grep and parse in userspace logs, and is reported
+verbatim by wpa_supplicant via its nl80211 extack relay, e.g.:
 
-On a Kunpeng system this currently prints an alarming error even though the
-next deferred-probe retry succeeds:
+  wpa_supplicant: nl80211: kernel reports: link ID must for MLO group key
 
-  hisi-kunpeng-spi HISI03E1:00: failed to register spi host, ret=-517
-  hisi-kunpeng-spi HISI03E1:00: hw version:0x30 max-freq:12500 kHz
+The sibling error strings in the same helper already use grammatical
+phrasing ("link ID not allowed for pairwise key", "invalid link ID for
+MLO group key", "link ID not allowed for non-MLO group key"). Fix this
+one to match.
 
-Use dev_err_probe() so that -EPROBE_DEFER is reported through the deferred
-probe mechanism instead of as a hard error, while preserving normal error
-reporting for real registration failures.
+No functional change.
 
-Fixes: c770d8631e18 ("spi: Add HiSilicon SPI Controller Driver for Kunpeng SoCs")
-
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
-Link: https://patch.msgid.link/20260515102620.1926930-1-maqianga@uniontech.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: e7a7b84e3317 ("wifi: cfg80211: Add link_id parameter to various key operations for MLO")
+Signed-off-by: Louis Kotze <loukot@gmail.com>
+Link: https://patch.msgid.link/20260414122728.92234-1-loukot@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-hisi-kunpeng.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/wireless/nl80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-hisi-kunpeng.c b/drivers/spi/spi-hisi-kunpeng.c
-index 77526f7940688d..6afa37d10c7c1b 100644
---- a/drivers/spi/spi-hisi-kunpeng.c
-+++ b/drivers/spi/spi-hisi-kunpeng.c
-@@ -518,10 +518,8 @@ static int hisi_spi_probe(struct platform_device *pdev)
- 	}
- 
- 	ret = spi_register_controller(host);
--	if (ret) {
--		dev_err(dev, "failed to register spi host, ret=%d\n", ret);
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to register spi host\n");
- 
- 	if (hisi_spi_debugfs_init(hs))
- 		dev_info(dev, "failed to create debugfs dir\n");
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 9f2e84af6f8b46..e4a490d12b504e 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -4456,7 +4456,7 @@ static int nl80211_validate_key_link_id(struct genl_info *info,
+ 	if (wdev->valid_links) {
+ 		if (link_id == -1) {
+ 			GENL_SET_ERR_MSG(info,
+-					 "link ID must for MLO group key");
++					 "link ID must be set for MLO group key");
+ 			return -EINVAL;
+ 		}
+ 		if (!(wdev->valid_links & BIT(link_id))) {
 -- 
 2.53.0
 
