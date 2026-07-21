@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0676A34B1A6;
-	Tue, 21 Jul 2026 22:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7906A3C1400;
+	Tue, 21 Jul 2026 22:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673739; cv=none; b=pETxhfe1la+nne0F8V9U7jzTxLaD0M2oiV8SSAImpFt0mSUdzClpTruiaiDmDwzTXdvaVNZZACQLE9kQ7VokIXxMgbjguDy6SvJXBWG4KtYeZ62r42EuTPcKcHBmq6mBNQnunKVFpmhGpq1901ZYios4GGFx8Ddr8fKibiP+eK0=
+	t=1784673741; cv=none; b=tfQDHbJX/HY3ttnIH3+KjJkglXERPo44jmbcF2CnlCT9H3dEs/01Oee76TTkrEu1X66tMiSgzcr+4LqsFdYtBYC6EWvQYxeXdXqrUKjrG+45ZmIOxZxWTbN1QQnLcaWGrD1meRxMfKreFJfghQNSLRz3nHO8N5BWByMqn6n0pHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673739; c=relaxed/simple;
-	bh=frw5N3YG1i/7mAh43SqDZAY3TKlP0Zf22gYaQ3VUfiM=;
+	s=arc-20240116; t=1784673741; c=relaxed/simple;
+	bh=YKggATUSOb66glh4V7odlfv8xZk62roenmdKgAOWO8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mzaQ60OH0WERo9E/dC+exqPqyGx3KMYGtEYT+qBgpW+CMUzDpUh8TD95viCD1cpnZz93olGtnANIHVnaCWop4s3BvL/XpFUT6J2Vk2jBJ4LERLsYdKnsIRVsmqQB1TY16SQSgNEOgfUNdQIlcReeOuX1dl0dJMUD4rdQpYJlVqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kSkvXJdG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qskwh/B3QLvbBiEdIvohi0VkDEZJyK6MUYQDzc/Kv2mV3sFJwINjHDuM4QhkUGfFv53rY7kVSsTEWYZxeZVIzopU6jRmeF0JFTmNLHA7snk007r72jKZRsjVSUhKSV5jAUszSI4ZMdKdCz4a3g9GMKnO5htdaiTxpky+8pFLFt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFMNAu57; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kSkvXJdG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA7C1F000E9;
-	Tue, 21 Jul 2026 22:42:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFMNAu57"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4E81F000E9;
+	Tue, 21 Jul 2026 22:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673737;
-	bh=JqvTfcoIoUxHLtuFzAE0mJ+CXngBn/REOW0IxRp9b5A=;
+	s=korg; t=1784673740;
+	bh=ozPFVnxlvakf/LDhfaX6ky9LEDmvl5JnLHb7rWK9NII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kSkvXJdG2Gg0InufEFKA5+GzWtvJLFI8bnOgZWTd7dhOGF01DbPBzjpcmFwxw0Hwm
-	 qxQSPbzsoOd4sX1yep1Y2B4MahUPVeECyK9zjOgs7RXHuI4Hzlr6oSPNtoJFFK/WSU
-	 R5A6LGMOquYP9sNRJLEsQb7OVEjJhazxo6UQ3EFA=
+	b=vFMNAu57GlOjfsQs94BCZdhqS3BXuYI6AqJK1cFhsC9ryTe4X5v/hN2DmzI+fw3ce
+	 9CJI6zB+MAq85MK5DtMkUPU9AZ03k5OZ5/beErHJm1ZskqL5BkLxTgOsUiIDCblNyE
+	 7PRSsgH4hj8SBUej2MWsbiQ21nu1oQU3H3g4qUpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ebdb22d461c904fc3cb2@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+b225d4dfce6219600c42@syzkaller.appspotmail.com,
+	Aleksandr Nogikh <nogikh@google.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Joseph Qi <jiangqi903@gmail.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 277/699] tcp: ipv6: clamp default adverting MSS to avoid GSO_BY_FRAGS (0xFFFF)
-Date: Tue, 21 Jul 2026 17:20:36 +0200
-Message-ID: <20260721152401.946316205@linuxfoundation.org>
+Subject: [PATCH 5.10 278/699] ocfs2: fix circular locking dependency in ocfs2_dio_end_io_write
+Date: Tue, 21 Jul 2026 17:20:37 +0200
+Message-ID: <20260721152401.968699079@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,54 +59,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-[ Upstream commit 2bf43d0e2e6a27d52a7d624e2d6b9116972e8a22 ]
+[ Upstream commit ff6f26c58421614b02694ac9d219ac61d924bc68 ]
 
-When MTU is large, ip6_default_advmss() can return IPV6_MAXPLEN (65535).
-This is interpreted by TCP as mss_clamp, allowing the MSS to reach 65535.
+A circular locking dependency involves INODE_ALLOC_SYSTEM_INODE,
+EXTENT_ALLOC_SYSTEM_INODE, and ORPHAN_DIR_SYSTEM_INODE.
 
-However, 0xFFFF is also used as a magic value GSO_BY_FRAGS in the kernel.
-If a TCP packet with gso_size=0xFFFF is passed to skb_segment(), it will
-be mistakenly treated as GSO_BY_FRAGS, leading to a NULL pointer
-dereference because local TCP packets do not use frag_list.
+1. ocfs2_mknod() acquires INODE_ALLOC then EXTENT_ALLOC.
 
-Fix this by returning min(IPV6_MAXPLEN, GSO_BY_FRAGS - 1) (65534) from
-ip6_default_advmss() when MTU is large.
+2. ocfs2_dio_end_io_write() acquires EXTENT_ALLOC for unwritten
+   extents, then ORPHAN_DIR via ocfs2_del_inode_from_orphan() while still
+   holding EXTENT_ALLOC.
 
-Also update the stale comment in ip6_default_advmss() which suggested
-that IPV6_MAXPLEN is returned to mean "any MSS".
+3. ocfs2_wipe_inode() acquires ORPHAN_DIR then INODE_ALLOC via
+   ocfs2_remove_inode.
 
-Fixes: 3953c46c3ac7 ("sk_buff: allow segmenting based on frag sizes")
-Reported-by: syzbot+ebdb22d461c904fc3cb2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a2c3193.8812e0fc.3c3fa4.0001.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260612162517.83394-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Break the cycle in ocfs2_dio_end_io_write() by freeing the allocation
+contexts (releasing EXTENT_ALLOC) before acquiring ORPHAN_DIR.
+
+WARNING: possible circular locking dependency detected
+------------------------------------------------------
+is trying to acquire lock:
+ffff8881e78b33a0
+(&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]){+.+.}-{4:4}, at:
+ocfs2_evict_inode+0x1539/0x43b0 fs/ocfs2/inode.c:1299
+
+but task is already holding lock:
+ffff8881e78b4fa0
+(&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]){+.+.}-{4:4}, at:
+ocfs2_evict_inode+0xe97/0x43b0 fs/ocfs2/inode.c:1299
+
+the existing dependency chain (in reverse order) is:
+
+-> #2 (&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]){+.+.}-{4:4}:
+       inode_lock include/linux/fs.h:1029 [inline]
+       ocfs2_del_inode_from_orphan+0x12e/0x7a0 fs/ocfs2/namei.c:2728
+       ocfs2_dio_end_io+0xf9c/0x1370 fs/ocfs2/aops.c:2418
+       dio_complete+0x25b/0x790 fs/direct-io.c:281
+
+-> #1 (&ocfs2_sysfile_lock_key[EXTENT_ALLOC_SYSTEM_INODE]){+.+.}-{4:4}:
+       inode_lock include/linux/fs.h:1029 [inline]
+       ocfs2_reserve_suballoc_bits+0x16d/0x4840 fs/ocfs2/suballoc.c:882
+       ocfs2_reserve_new_metadata_blocks+0x415/0x9a0
+       fs/ocfs2/suballoc.c:1078
+       ocfs2_mknod+0x10f3/0x2260 fs/ocfs2/namei.c:351
+
+-> #0 (&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]){+.+.}-{4:4}:
+       __lock_acquire+0x15a5/0x2cf0 kernel/locking/lockdep.c:5237
+       lock_acquire+0x106/0x350 kernel/locking/lockdep.c:5868
+       down_write+0x96/0x200 kernel/locking/rwsem.c:1625
+       inode_lock include/linux/fs.h:1029 [inline]
+       ocfs2_remove_inode fs/ocfs2/inode.c:733 [inline]
+       ocfs2_wipe_inode fs/ocfs2/inode.c:896 [inline]
+       ocfs2_delete_inode fs/ocfs2/inode.c:1157 [inline]
+       ocfs2_evict_inode+0x1539/0x43b0 fs/ocfs2/inode.c:1299
+
+Chain exists of:
+  &ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE] -->
+  &ocfs2_sysfile_lock_key[EXTENT_ALLOC_SYSTEM_INODE] -->
+  &ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]);
+                               lock(&ocfs2_sysfile_lock_key[EXTENT_ALLOC_SYSTEM_INODE]);
+                               lock(&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]);
+  lock(&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]);
+
+ *** DEADLOCK ***
+
+Link: https://lore.kernel.org/97c902a6-3bcf-43ea-9b70-f1f136a6c3f2@mail.kernel.org
+Fixes: d647c5b2fbf8 ("ocfs2: split transactions in dio completion to avoid credit exhaustion")
+Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
+Reported-by: syzbot+b225d4dfce6219600c42@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b225d4dfce6219600c42
+Link: https://syzkaller.appspot.com/ai_job?id=0b53ce1e-2972-4192-aa85-8097a702762c
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Joseph Qi <jiangqi903@gmail.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ocfs2/aops.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 9726c5002dbdfc..039e1304b03136 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -3072,11 +3072,11 @@ static unsigned int ip6_default_advmss(const struct dst_entry *dst)
- 	/*
- 	 * Maximal non-jumbo IPv6 payload is IPV6_MAXPLEN and
- 	 * corresponding MSS is IPV6_MAXPLEN - tcp_header_size.
--	 * IPV6_MAXPLEN is also valid and means: "any MSS,
--	 * rely only on pmtu discovery"
-+	 * Limit the default MSS to GSO_BY_FRAGS - 1 to avoid
-+	 * collision with the GSO_BY_FRAGS magic value (0xFFFF).
- 	 */
- 	if (mtu > IPV6_MAXPLEN - sizeof(struct tcphdr))
--		mtu = IPV6_MAXPLEN;
-+		mtu = min_t(unsigned int, IPV6_MAXPLEN, GSO_BY_FRAGS - 1);
- 	return mtu;
- }
+diff --git a/fs/ocfs2/aops.c b/fs/ocfs2/aops.c
+index 02556d212f4f65..cd54477529a083 100644
+--- a/fs/ocfs2/aops.c
++++ b/fs/ocfs2/aops.c
+@@ -2403,6 +2403,15 @@ static int ocfs2_dio_end_io_write(struct inode *inode,
+ unlock:
+ 	up_write(&oi->ip_alloc_sem);
+ 
++	if (data_ac) {
++		ocfs2_free_alloc_context(data_ac);
++		data_ac = NULL;
++	}
++	if (meta_ac) {
++		ocfs2_free_alloc_context(meta_ac);
++		meta_ac = NULL;
++	}
++
+ 	/* everything looks good, let's start the cleanup */
+ 	if (!ret && dwc->dw_orphaned) {
+ 		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
+@@ -2414,10 +2423,6 @@ static int ocfs2_dio_end_io_write(struct inode *inode,
+ 	ocfs2_inode_unlock(inode, 1);
+ 	brelse(di_bh);
+ out:
+-	if (data_ac)
+-		ocfs2_free_alloc_context(data_ac);
+-	if (meta_ac)
+-		ocfs2_free_alloc_context(meta_ac);
+ 	ocfs2_run_deallocs(osb, &dealloc);
+ 	ocfs2_dio_free_write_ctx(inode, dwc);
  
 -- 
 2.53.0
