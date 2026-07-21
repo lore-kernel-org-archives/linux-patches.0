@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3453B6C06;
-	Tue, 21 Jul 2026 20:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EFC386C1C;
+	Tue, 21 Jul 2026 20:53:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667235; cv=none; b=sqsRhTX2IQNUJRSEl20ggGivX3RXaBJjumeumA0zr/fSsywW1mqHT3Kmgti0hVCVfXCH4ymjWuiX3U3FJ2gMLJBAYBj+rQC8ha5wOzvkwqi5fkG60QI563F++R05gViibBVj5uMhtLTssHnbWbnS/U0Xg9EvYne8uzv9kHRYLGg=
+	t=1784667237; cv=none; b=iFN9FwVlbJDTcGKiWYGVh/kGAd+vjQjlzGEerXqPzDcW30fYek3hGqmgLRtdmTRm0TcHrDEc1Fa+Biv1zlNBzJC8u/Sn+7uDDvYu8icxFcmTjNaVxoiAT+V4gKbgU4tpCsMqfHDB2eZbEoVCMs4bvvctHqEesd6qvLFc/PLAkD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667235; c=relaxed/simple;
-	bh=WsidEa4J/UyyEzYtoHnfwj6UfkxHasb0WX5m1d99t+0=;
+	s=arc-20240116; t=1784667237; c=relaxed/simple;
+	bh=IkYzEqozewm8oP5rfx6E2JlXD9tofQmrFXDpeuxvapk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ka5/U4Srt6tqQz6aVEwLXUjEVgvqbYuwX1NrTpTJGkkYz6s1RqOj01w6UrfgkvMtcHTVsCAKW+AhDWEXSJvIosC8XLcCytCTkc1dNJ3TlvjC8Djzwud2vLG18xdFQgSo/X0B7RIXFCoQ6Iv0xi89pHwzvdb4YTyq/yiYkZZJBD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYxcNuKn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QOhtaDBhoEJZoQVwHRCDBKLkPYe0W2AvBrwEutH8IGCNVmsJbasvtxQpf6Y9DzMOun5+KuXiSSrkbdc069fAJCP5r5Po61490saGkzp/R//hbGBlP+c/to/x6JXKV/TXHXNUbO8bTATH/QnppKxzQinC7l4FANjH/cD3VmiQsxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoKIFbFq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYxcNuKn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F541F000E9;
-	Tue, 21 Jul 2026 20:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoKIFbFq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0EC1F000E9;
+	Tue, 21 Jul 2026 20:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667234;
-	bh=7NfPKK8jmCjRewrgNf1y8Tg+uBaH+4ILIde2ipdgcYo=;
+	s=korg; t=1784667236;
+	bh=HoQSWu39yEF3x81LKb3M4hItTP9Jt5WcEW5DEJkMeYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vYxcNuKnW/44zUggyaz4Xj13DmYR9OfErIA6WaJ+kINKX4L1oXDSHTBXpJS3xI/6T
-	 HyQh9/lCUE6laXUWfGYO9mGVw9Mk9sC79AQ0pk39kwbqON1kiK/pVeObklq7tO+Oz4
-	 i/hU+2fL5/aYqsgP508MEKKiZplTcfam/4cfkJ24=
+	b=HoKIFbFqCmM0svcGgDLKqDw5iYK1WVgNXsAXnQtqeJkicvO/GqxVXYw5K1TnsiPSs
+	 C0Ro09e+mvfBGDycPFOIMWMnZdRjvchMIMrMWFrhCf50pTlI2HsLBEvSP0F/Grsi0G
+	 t26rtkb+D8if/NjSof7j+O3uGT7KbjA3IMvcIr+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 0967/1266] lockd: Plug nlm_file refcount leak on cached nlm_do_fopen() failure
-Date: Tue, 21 Jul 2026 17:23:24 +0200
-Message-ID: <20260721152503.470316946@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.6 0985/1266] ntfs3: validate split-point offset in indx_insert_into_buffer
+Date: Tue, 21 Jul 2026 17:23:42 +0200
+Message-ID: <20260721152503.878768704@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -49,42 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 70a38f87bed7f0694fd07988b47b2db1e10d8df3 upstream.
+commit f1df9d771df47aa40de6d70949c28720ae1e430d upstream.
 
-The cached-file path in nlm_lookup_file() reaches the found: label
-unconditionally, even when nlm_do_fopen() fails. At that label
-*result and file->f_count are updated before the error is returned.
-The wrappers nlm3svc_lookup_file() and nlm4svc_lookup_file() then
-bail out of their switch without copying *result back to their
-caller, so the proc handler's local nlm_file pointer remains NULL
-and the cleanup path skips nlm_release_file(). The f_count
-increment is never released, and nlm_traverse_files() can no
-longer reap the file because its refcount never returns to zero
-between requests.
+indx_insert_into_buffer() computes
 
-Short-circuit the cached path so neither *result nor f_count is
-touched when nlm_do_fopen() fails on a hashed nlm_file.
+    used = used1 - to_copy - sp_size;
+    memmove(de_t, Add2Ptr(sp, sp_size), used - le32_to_cpu(hdr1->de_off));
 
-Fixes: 7f024fcd5c97 ("Keep read and write fds with each nlm_file")
+where sp and sp_size come from hdr_find_split().  hdr_find_split()
+walks entries by le16_to_cpu(e->size) without validating that each
+step stays within hdr->used or that the size field is at least
+sizeof(struct NTFS_DE).  index_hdr_check(), the on-load gatekeeper,
+only validates header-level fields (used, total, de_off) and does
+not walk per-entry sizes.
+
+A crafted NTFS image whose leaf INDEX_HDR reports used == total but
+contains one interior NTFS_DE with size = 0xFFF0 therefore passes
+validation, descends to indx_insert_into_buffer() through the
+ntfs_create() -> indx_insert_entry() path, and makes hdr_find_split()
+return an sp whose sp_size (0xFFF0) greatly exceeds the remaining
+bytes in the buffer.  The u32 subtraction underflows and the memmove
+count becomes a near-4-GiB value, producing an out-of-bounds kernel
+write that corrupts adjacent allocations and panics the kernel.
+
+Reproduced on 7.0.0-rc7 with UML + KASAN via a crafted image and a
+single 'touch' inside the mounted directory; crash site resolves to
+fs/ntfs3/index.c at the memmove.  Trigger requires only local mount
+of an attacker-supplied filesystem image (USB, loopback, or removable
+media auto-mount).
+
+Reject the split whenever the chosen sp plus its declared size
+already extends past hdr1->used.  This is the minimal fix; it
+preserves the existing hdr_find_split() contract and relies on the
+same out: cleanup path as the pre-existing error returns.
+
+A prior OOB read in the very same indx_insert_into_buffer() memmove
+was fixed in commit b8c44949044e ("fs/ntfs3: Fix OOB read in
+indx_insert_into_buffer") by tightening hdr_find_e(), but that fix
+does not cover the split-point size field path addressed here: sp is
+returned by hdr_find_split(), not hdr_find_e(), and the underflow is
+driven by sp->size rather than hdr->used exceeding hdr->total.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reported-by: Michael Bommarito <michael.bommarito@gmail.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/lockd/svcsubs.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ntfs3/index.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/fs/lockd/svcsubs.c
-+++ b/fs/lockd/svcsubs.c
-@@ -123,6 +123,8 @@ nlm_lookup_file(struct svc_rqst *rqstp,
- 			mutex_lock(&file->f_mutex);
- 			nfserr = nlm_do_fopen(rqstp, file, mode);
- 			mutex_unlock(&file->f_mutex);
-+			if (nfserr)
-+				goto out_unlock;
- 			goto found;
- 		}
- 	nlm_debug_print_fh("creating file for", &lock->fh);
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -1865,6 +1865,20 @@ indx_insert_into_buffer(struct ntfs_inde
+ 	memcpy(up_e, sp, sp_size);
+ 
+ 	used1 = le32_to_cpu(hdr1->used);
++
++	/*
++	 * hdr_find_split does not validate per-entry sizes, so a crafted
++	 * NTFS_DE whose le16 size field is out of range can place sp such
++	 * that (PtrOffset(hdr1, sp) + sp_size) exceeds used1. Without this
++	 * guard the u32 'used = used1 - to_copy - sp_size' underflows and
++	 * the subsequent memmove count becomes a near-4-GiB value,
++	 * triggering an out-of-bounds kernel write.
++	 */
++	if (PtrOffset(hdr1, sp) + sp_size > used1) {
++		err = -EINVAL;
++		goto out;
++	}
++
+ 	hdr1_saved = kmemdup(hdr1, used1, GFP_NOFS);
+ 	if (!hdr1_saved) {
+ 		err = -ENOMEM;
 
 
