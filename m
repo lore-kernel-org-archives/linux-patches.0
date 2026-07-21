@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1B93644B3;
-	Tue, 21 Jul 2026 19:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3032C46DFEF;
+	Tue, 21 Jul 2026 19:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663739; cv=none; b=Nezn27znginAJtSF/ZU7EGXu0CwTk9xq7xUnDxOmByy+j2wunqFjqCmeumDOdivoM0S7maeNm/QBA2dyUwk7Rnn5kuVGB4y9Afr4y65rpgD5B7fYH1YovKF2Q5YPh98ALDB0JdN6oCVOILRHBBIYQJpyOen2qKKYB5QVCLfzmYQ=
+	t=1784663742; cv=none; b=iUbOJ8nMYp/lDcKmB3zvSZJePtEJ2uz0eUsrEZ4QskKPC69nJRFBzJTTKt3QbmdHcK9WDzpNTzM7VDL4C+0Go+SmMGxk6ZoUEOpEX/+8Q+bUNCscVg27KpHMP34gACSRiRmxm30udq5EJnUucH1Yg7z+4OkIfXsf4Liwo/5Tw88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663739; c=relaxed/simple;
-	bh=N7AJHvzrR9/JEOX7yXPDO3dNElAtGxhzn8do7D1vRp4=;
+	s=arc-20240116; t=1784663742; c=relaxed/simple;
+	bh=24TtvqE3kG6lYR4+CE++dyG4U1BEYdQta8zOKhdemTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I58kbstUVhjMmAaA7twRBlgk16RHrsNf5e/9nawB4IstjPDw46ma1VZGOUoV+/jDJEB6BWc0M1eBVOSIYO2+ZKdAu+wIQNlqC6VKsgWXMfHFPOBmh4V3bhjViU5Xg7rfFSzLYPQBrCQF9ADXPs6hLK8rBufJVnrp9xK2udE8J8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LyvP9VcV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SUvyKtRVVSj81LQkJY2vGEakHKoUeTzGmMrXp3THiYK8jsCnI4FiNI9cMNiyyYf+mzQHTZHs01TRNulPDKos2qX16XClBy8Cdk0H/G8HTucFWNDXPRi8EPuY8uD/ZeVRxKQE0KkB46L0PE1KaO2CX0Jy+s+XK8SnxAK6CZ6LrtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CWkl63PS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LyvP9VcV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26A31F000E9;
-	Tue, 21 Jul 2026 19:55:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CWkl63PS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950A31F000E9;
+	Tue, 21 Jul 2026 19:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663737;
-	bh=amBViTZp3i2i8ysYSJsdKMQOVYVrPGOaiUcHj2n37Sw=;
+	s=korg; t=1784663740;
+	bh=/hKWlionh2xsUvGQMwwkfdnHZ11CCGuy2u5AE0aeweI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LyvP9VcVOJOB57cFsE5KGZnPjdlbmxr3VzSGmupFxI2l+AvBIXlPhWoK368tbnCfT
-	 mcr3yVjvvFPji61lpujNSmFap0rVSMY5yNYh5UTEG5RU/NyW4h7E5dw1Aun5SsWXnb
-	 /k5M+f2yIj+57cF/zzKfgzcfi22zPDDhZaGrr9bY=
+	b=CWkl63PSbMyLd31rgtL5gFbVYDWpSBAQqTwIyNS4HD4CWkN959MWUeHZPnkZ1QfrC
+	 MJvG6FVRjhEc+TVNT9iUl9K2Y4oaRsTi1xuJkLpPNDSdRLpJ2Fz47Tlnc5/temQKv+
+	 /MbMTM+CVz74Hsutie5IglVxT05ZpI9AYSu/bca4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.12 0937/1276] mtd: slram: remove failed entries from the device list
-Date: Tue, 21 Jul 2026 17:23:00 +0200
-Message-ID: <20260721152507.000780211@linuxfoundation.org>
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Breno Leitao <leitao@debian.org>
+Subject: [PATCH 6.12 0938/1276] 9p: skip nlink update in cacheless mode to fix WARN_ON
+Date: Tue, 21 Jul 2026 17:23:01 +0200
+Message-ID: <20260721152507.022538698@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,85 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 36f1648644d769c496a8e47e53603e863e358d73 upstream.
+commit 574aa0b4799470ac814479f1138d19efe6262255 upstream.
 
-register_device() links a new slram_mtdlist entry before allocating all
-of the state needed by the entry. If a later allocation, memremap(), or
-mtd_device_register() fails, the partially initialized entry remains on
-the global list. A later cleanup can then dereference or free invalid
-state from that failed entry.
+v9fs_dec_count() unconditionally calls drop_nlink() on regular files,
+even when the inode's nlink is already zero. In cacheless mode the
+client refetches inode metadata from the server (the source of truth)
+on every operation, so by the time v9fs_remove() returns, the locally
+cached nlink may already reflect the post-unlink value:
 
-Unwind the partially initialized entry and clear the list tail on each
-failure path after the entry has been linked.
+  1. Client initiates unlink, server processes it and sets nlink to 0
+  2. Client refetches inode metadata (nlink=0) before unlink returns
+  3. Client's v9fs_remove() completes successfully
+  4. Client calls v9fs_dec_count() which calls drop_nlink() on nlink=0
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+This race is easily triggered under heavy unlink workloads, such as
+stress-ng's unlink stressor, producing the following warning:
+
+  WARNING: fs/inode.c:417 at drop_nlink+0x4c/0xc8
+  Call trace:
+   drop_nlink+0x4c/0xc8
+   v9fs_remove+0x1e0/0x250 [9p]
+   v9fs_vfs_unlink+0x20/0x38 [9p]
+   vfs_unlink+0x13c/0x258
+   ...
+
+In cacheless mode the server is authoritative and the inode is on its
+way out, so locally adjusting nlink buys nothing. Skip v9fs_dec_count()
+entirely when neither CACHE_META nor CACHE_LOOSE is set, which both
+avoids the warning and removes a class of nlink races (two concurrent
+unlinkers observing nlink > 0 and both calling drop_nlink()) that an
+nlink == 0 guard alone would only narrow rather than close.
+
+Fixes: ac89b2ef9b55 ("9p: don't maintain dir i_nlink if the exported fs doesn't either")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Suggested-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Message-ID: <20260421-9p-v2-1-48762d294fad@debian.org>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/devices/slram.c |   22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ fs/9p/vfs_inode.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/mtd/devices/slram.c
-+++ b/drivers/mtd/devices/slram.c
-@@ -129,6 +129,7 @@ static int slram_write(struct mtd_info *
- static int register_device(char *name, unsigned long start, unsigned long length)
+--- a/fs/9p/vfs_inode.c
++++ b/fs/9p/vfs_inode.c
+@@ -488,10 +488,19 @@ static int v9fs_at_to_dotl_flags(int fla
+  * - ext4 (with dir_nlink feature enabled) sets nlink to 1 if a dir has more
+  *   than EXT4_LINK_MAX (65000) links.
+  *
++ * In cacheless mode the server is the source of truth for nlink and the
++ * inode is going away immediately, so locally adjusting i_nlink buys
++ * nothing and races with concurrent metadata fetches that may already
++ * have observed the post-unlink value (nlink == 0).
++ *
+  * @inode: inode whose nlink is being dropped
+  */
+ static void v9fs_dec_count(struct inode *inode)
  {
- 	slram_mtd_list_t **curmtd;
-+	int ret = -ENOMEM;
- 
- 	curmtd = &slram_mtdlist;
- 	while (*curmtd) {
-@@ -155,14 +156,15 @@ static int register_device(char *name, u
- 
- 	if (!(*curmtd)->mtdinfo) {
- 		E("slram: Cannot allocate new MTD device.\n");
--		return(-ENOMEM);
-+		goto err_free_list;
- 	}
- 
- 	if (!(((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start =
- 		memremap(start, length,
- 			 MEMREMAP_WB | MEMREMAP_WT | MEMREMAP_WC))) {
- 		E("slram: memremap failed\n");
--		return -EIO;
-+		ret = -EIO;
-+		goto err_free_priv;
- 	}
- 	((slram_priv_t *)(*curmtd)->mtdinfo->priv)->end =
- 		((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start + length;
-@@ -183,10 +185,8 @@ static int register_device(char *name, u
- 
- 	if (mtd_device_register((*curmtd)->mtdinfo, NULL, 0))	{
- 		E("slram: Failed to register new device\n");
--		memunmap(((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start);
--		kfree((*curmtd)->mtdinfo->priv);
--		kfree((*curmtd)->mtdinfo);
--		return(-EAGAIN);
-+		ret = -EAGAIN;
-+		goto err_unmap;
- 	}
- 	T("slram: Registered device %s from %luKiB to %luKiB\n", name,
- 			(start / 1024), ((start + length) / 1024));
-@@ -194,6 +194,16 @@ static int register_device(char *name, u
- 			((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start,
- 			((slram_priv_t *)(*curmtd)->mtdinfo->priv)->end);
- 	return(0);
++	struct v9fs_session_info *v9ses = v9fs_inode2v9ses(inode);
 +
-+err_unmap:
-+	memunmap(((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start);
-+err_free_priv:
-+	kfree((*curmtd)->mtdinfo->priv);
-+err_free_list:
-+	kfree((*curmtd)->mtdinfo);
-+	kfree(*curmtd);
-+	*curmtd = NULL;
-+	return ret;
++	if (!(v9ses->cache & (CACHE_META | CACHE_LOOSE)))
++		return;
+ 	if (!S_ISDIR(inode->i_mode) || inode->i_nlink > 2)
+ 		drop_nlink(inode);
  }
- 
- static void unregister_devices(void)
 
 
