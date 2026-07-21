@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF4546C4B4;
-	Tue, 21 Jul 2026 15:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7889E46D567;
+	Tue, 21 Jul 2026 15:52:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649162; cv=none; b=crZEs+nrO4EhgD74UWqhKkZi3GC1hJ5ywBtWRuPv8N9/RR7+MI0r0JkX7UsnfVMG/OURuwTAejCtjPlsLIH04k+gYqyVybjRnf89eljekvxNFfH9MUKK5S64vDYmtDSf86NAgaOA9ws0T7kF/UYgzkBQId5JBvKpjXh0bUg8K0w=
+	t=1784649164; cv=none; b=OGIT0KWgd0to0I44UEBXcEYjrh8rjX2kE14RBSeHyLH78CeCwNoELEw2UxLwIEFaUi6gWWz9rfwLRKJ+RizjAfDBNjYxrB4IMOPG4D1H5fZzIrlf4KapHXl6VYdbu6etMXPFhtggSy3KoOIO+fAwlB3gO8/+Py//V+9RFIqQbpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649162; c=relaxed/simple;
-	bh=tRGgfVr3PmpZzHC4l6QDc4iY28UA+FHywQ6dNvZyMTY=;
+	s=arc-20240116; t=1784649164; c=relaxed/simple;
+	bh=XeV8UYp6m54ysHo3cLPdpF7RD52WenFJbJPvtzivEDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bhApPojHx4zeND9aDr0R1617LI6BYbj/h9gBuNfqA2foT1VgSp4DGGVg435q5IOnpM8zwFbarLwJcKEYhlf6xduplU+Vz5HmfKIGLMb0wL68wgbj3Ajal3vywAyCOcvRGux/dTssm8g6SoVtNNfhEm7p1w+9fOuXp09cRW5Z5QM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQuAEZdF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Eo8NhK9ZyikEQ9oWepm6a8pr3s2nN+xFXrvEULGVfrnikADirA4611GMlm8FgyyKJDxZi7JBkVX+BKEU5xAYFwN8uB9LR7eptSVwiit2feTC+N/O0CFCRCndI+oeUysD6u1Gezhpzc4QEGH0EmEpBbhv69fklx2ol2ta65+wm34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LqXDyJ/o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQuAEZdF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758111F000E9;
-	Tue, 21 Jul 2026 15:52:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LqXDyJ/o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5A2C1F000E9;
+	Tue, 21 Jul 2026 15:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649161;
-	bh=f3DW5q6vwpi2Mn/idX5DXd1NjYpc5D5AxV1cy1kj3CQ=;
+	s=korg; t=1784649163;
+	bh=b0uyJEJYbNGcMqQL/4GwPFqocX1hHvrkWqdAkohPjU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CQuAEZdF1dh+5bh4PeRsZjlV+SPgn4jvb3d9a1QhiEnTher1rD3y9fvNaUm2LdSxL
-	 +qRsntzuKpAWW7oeLlP0Qpq7l+xZx2xpN2tlniMPMD1cdYWXFuG7cTrnMMDQFzYdx9
-	 OH0NauPjNqX+hzbX45o83k78OIrwJz9ZnwnR9U/k=
+	b=LqXDyJ/ojI+C8yKg4q0++aixMwVsesBc5IRhWjkH32Efs+sYyneJ3IH0sqvU0n5MB
+	 prx42AdzVsmzy/bn+bsVZRVsxBRWK+hqq+waWfhOxKDH74RytmUoJlkcdpRzF4nCg0
+	 zXErmCwwWM1YaTeI5R3YPYgNRyE7JYJ96bd9Fnww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ShuangYu <shuangyu@yunyoo.cc>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0456/2077] vhost: fix vhost_get_avail_idx for a non empty ring
-Date: Tue, 21 Jul 2026 17:02:09 +0200
-Message-ID: <20260721152603.542441440@linuxfoundation.org>
+Subject: [PATCH 7.1 0474/2077] ocfs2: rebase copied fsdlm LVB pointers in locking_state
+Date: Tue, 21 Jul 2026 17:02:27 +0200
+Message-ID: <20260721152603.979787778@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,80 +58,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit 09861858a68342f851f71c669ac0f69865c32151 ]
+[ Upstream commit 93612d48fa42b3d1a637eb9279e15281c611c000 ]
 
-vhost_get_avail_idx is supposed to report whether it has updated
-vq->avail_idx. Instead, it returns whether all entries have been
-consumed, which is usually the same. But not always - in
-drivers/vhost/net.c and when mergeable buffers have been enabled, the
-driver checks whether the combined entries are big enough to store an
-incoming packet. If not, the driver re-enables notifications with
-available entries still in the ring. The incorrect return value from
-vhost_get_avail_idx propagates through vhost_enable_notify and causes
-the host to livelock if the guest is not making progress, as vhost will
-immediately disable notifications and retry using the available entries.
+The locking_state debugfs iterator snapshots struct ocfs2_lock_res by
+value under ocfs2_dlm_tracking_lock and later formats that copy in
+ocfs2_dlm_seq_show().  That is fine for the inline fields, but the
+userspace fsdlm stack stores the LVB through lksb_fsdlm.sb_lvbptr.  Once
+the iterator drops the tracking lock, a copied non-NULL sb_lvbptr still
+points into the original lockres owner, so teardown can free that
+container before the debugfs dump walks the raw LVB bytes.
 
-This goes back to commit d3bb267bbdcb ("vhost: cache avail index in
-vhost_enable_notify()") which changed vhost_enable_notify() to compare
-the freshly read avail index against vq->last_avail_idx instead of the
-previously cached vq->avail_idx. Commit 7ad472397667 ("vhost: move
-smp_rmb() into vhost_get_avail_idx()") then carried over the same
-comparison when refactoring vhost_enable_notify() to call the unified
-vhost_get_avail_idx().
+Rebase the copied sb_lvbptr to the copied l_lksb before dumping the raw
+LVB.  The seq snapshot already carries the inline LVB storage reserved in
+struct ocfs2_dlm_lksb, so the debugfs reader can dump the copied bytes
+without borrowing the original lockres lifetime.
 
-The obvious fix is to make vhost_get_avail_idx do what the comment
-says it does and report whether new entries have been added.
+The buggy scenario involves two paths, with each column showing the order
+within that path:
 
-Reported-by: ShuangYu <shuangyu@yunyoo.cc>
-Fixes: d3bb267bbdcb ("vhost: cache avail index in vhost_enable_notify()")
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <559b04ae6ce52973c535dc47e461638b7f4c3d63.1772441455.git.mst@redhat.com>
+locking_state reader:                  lockres teardown:
+1. ocfs2_dlm_seq_start()/next()        1. file release or another owner
+   copies struct ocfs2_lock_res           teardown reaches
+2. ocfs2_dlm_seq_show() formats           ocfs2_lock_res_free()
+   the copied row                      2. the lockres is removed from the
+3. ocfs2_dlm_lvb() follows the            tracking list
+   copied sb_lvbptr                   3. the owner frees the original
+                                          lockres container
+
+Validation reproduced this kernel report:
+KASAN slab-use-after-free in ocfs2_dlm_seq_show+0x1bd/0x430
+RIP: 0033:0x7f8ec4b1e29d
+The buggy address belongs to the object at ffff88810a1e0800 which belongs
+to the cache kmalloc-1k of size 1024
+The buggy address is located 368 bytes inside of freed 1024-byte region
+[ffff88810a1e0800, ffff88810a1e0c00)
+Read of size 1
+Call trace:
+  dump_stack_lvl+0x66/0xa0
+  print_report+0xce/0x630
+  ocfs2_dlm_seq_show+0x1bd/0x430 (fs/ocfs2/dlmglue.c:3137)
+  srso_alias_return_thunk+0x5/0xfbef5
+  __virt_addr_valid+0x19f/0x330
+  kasan_report+0xe0/0x110
+  seq_read_iter+0x29d/0x790
+  seq_read+0x20a/0x280
+  find_held_lock+0x2b/0x80
+  rcu_read_unlock+0x18/0x70
+  full_proxy_read+0x9e/0xd0
+  vfs_read+0x12c/0x590
+  ksys_read+0xd2/0x170
+  do_user_addr_fault+0x65a/0x890
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Allocated by task stack:
+  kasan_save_stack+0x33/0x60
+  kasan_save_track+0x14/0x30
+  __kasan_kmalloc+0xaa/0xb0
+  ocfs2_file_open+0x13e/0x300
+  do_dentry_open+0x233/0x7f0
+  vfs_open+0x5a/0x1b0
+  path_openat+0x66d/0x1540
+  do_file_open+0x186/0x2b0
+  do_sys_openat2+0xce/0x150
+  __x64_sys_openat+0xd0/0x140
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Freed by task stack:
+  kasan_save_stack+0x33/0x60
+  kasan_save_track+0x14/0x30
+  kasan_save_free_info+0x3b/0x60
+  __kasan_slab_free+0x5f/0x80
+  kfree+0x313/0x590
+  ocfs2_file_release+0x138/0x260
+  __fput+0x1df/0x4b0
+  fput_close_sync+0xd2/0x170
+  __x64_sys_close+0x55/0x90
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Link: https://lore.kernel.org/20260525041726.4112882-1-rollkingzzc@gmail.com
+Fixes: cf4d8d75d8ab ("ocfs2: add fsdlm to stackglue")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vhost.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/ocfs2/dlmglue.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
-index 2f2c45d2088320..db329a6f614589 100644
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -1522,6 +1522,7 @@ static void vhost_dev_unlock_vqs(struct vhost_dev *d)
- static inline int vhost_get_avail_idx(struct vhost_virtqueue *vq)
- {
- 	__virtio16 idx;
-+	u16 avail_idx;
- 	int r;
- 
- 	r = vhost_get_avail(vq, idx, &vq->avail->idx);
-@@ -1532,17 +1533,19 @@ static inline int vhost_get_avail_idx(struct vhost_virtqueue *vq)
- 	}
- 
- 	/* Check it isn't doing very strange thing with available indexes */
--	vq->avail_idx = vhost16_to_cpu(vq, idx);
--	if (unlikely((u16)(vq->avail_idx - vq->last_avail_idx) > vq->num)) {
-+	avail_idx = vhost16_to_cpu(vq, idx);
-+	if (unlikely((u16)(avail_idx - vq->last_avail_idx) > vq->num)) {
- 		vq_err(vq, "Invalid available index change from %u to %u",
--		       vq->last_avail_idx, vq->avail_idx);
-+		       vq->last_avail_idx, avail_idx);
- 		return -EINVAL;
- 	}
- 
- 	/* We're done if there is nothing new */
--	if (vq->avail_idx == vq->last_avail_idx)
-+	if (avail_idx == vq->avail_idx)
- 		return 0;
- 
-+	vq->avail_idx = avail_idx;
+diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
+index 7283bb2c5a31bf..a23dd8f86c8950 100644
+--- a/fs/ocfs2/dlmglue.c
++++ b/fs/ocfs2/dlmglue.c
+@@ -3134,6 +3134,22 @@ static void *ocfs2_dlm_seq_next(struct seq_file *m, void *v, loff_t *pos)
+  *	- Add last pr/ex unlock times and first lock wait time in usecs
+  */
+ #define OCFS2_DLM_DEBUG_STR_VERSION 4
 +
- 	/*
- 	 * We updated vq->avail_idx so we need a memory barrier between
- 	 * the index read above and the caller reading avail ring entries.
++/*
++ * The debug iterator snapshots lockres by value, so a userspace-stack LVB
++ * pointer copied from the original lockres must be rebased to the copied
++ * lksb before the dump walks the raw bytes.
++ */
++static void ocfs2_dlm_seq_rebase_lvb(struct ocfs2_lock_res *lockres)
++{
++	if (!ocfs2_stack_supports_plocks())
++		return;
++
++	if (lockres->l_lksb.lksb_fsdlm.sb_lvbptr)
++		lockres->l_lksb.lksb_fsdlm.sb_lvbptr =
++			(char *)&lockres->l_lksb + sizeof(struct dlm_lksb);
++}
++
+ static int ocfs2_dlm_seq_show(struct seq_file *m, void *v)
+ {
+ 	int i;
+@@ -3191,6 +3207,7 @@ static int ocfs2_dlm_seq_show(struct seq_file *m, void *v)
+ 		   lockres->l_blocking);
+ 
+ 	/* Dump the raw LVB */
++	ocfs2_dlm_seq_rebase_lvb(lockres);
+ 	lvb = ocfs2_dlm_lvb(&lockres->l_lksb);
+ 	for(i = 0; i < DLM_LVB_LEN; i++)
+ 		seq_printf(m, "0x%x\t", lvb[i]);
 -- 
 2.53.0
 
