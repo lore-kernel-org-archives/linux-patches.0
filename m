@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51D6326D44;
-	Tue, 21 Jul 2026 17:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C6F3672BA;
+	Tue, 21 Jul 2026 17:39:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655539; cv=none; b=cJhuZjxj5L4f87AnSkUl8a4Ro39cMKXtfvZIiFVaCwgaYxqtYKK6BkNKPgFk2ZH/BEehR7NoEjlBdDKl3oG6lVDkuaOv9HwkJeEV6jqB7D4UCGnf+OAxYnjMCFoXSeUXL61Gc2N3XBm+00iDly8XNsKwusAAwYZj3Pbha35E2kI=
+	t=1784655542; cv=none; b=mphxW+iRTLmUuKq7WoPuRZg33hfd0fcyTkGKZkd74wahrQNsrxhHVzEoAINTC9CmNkaWTKk5Yk/nDAgKfa5ck1Vq1iVnh3XPkl+xTGKlM6y7P1CLc4LcZeXZ22kxHDsedhpgZXCn8hHfY869jFY+BAGwT8D6Pn52t2MrbPUaLNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655539; c=relaxed/simple;
-	bh=0y/S2dTBNIrSY2yG51akDWqqTKCsA8LNBrjK5cRSbRw=;
+	s=arc-20240116; t=1784655542; c=relaxed/simple;
+	bh=1gAhIZy+IRlm9XammINrS3QVuNjhFlTZimT0lO9AGGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W0Z9WMG4tj4TKmDYO7P9Q/OJsrdwBWiO+czNL+LBpH9GVW9HP9DmpQR5vruC9jGSg3/TURPrDTDlmfRE4HPWQhN/6UrAj4fuYpNjLAmY5Ut8pVI506HgVv7615VXvpvP1MgK8cDf/7k+7Vz/VLqYrLssT3FDSGIvlyFiTxf0eMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DVq/2pSt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oERN9EZnc9JnQTeq9Y1GwotfEFPknB2sDZn94xtORTIB4reudtVAAKhAnU+d1PyRoLeMn3FCenYSFXpylq5rI0aHGGqgozUb58jw+M+v556EtkA5eCxESK6hSZTzrcAY3jcX4oCPw4u5r7E2in3Ywf9YEYJcadoz6GFnCQ85RAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBQCRvFK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVq/2pSt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7E51F000E9;
-	Tue, 21 Jul 2026 17:38:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBQCRvFK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC891F000E9;
+	Tue, 21 Jul 2026 17:39:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655538;
-	bh=ZJ9gYLCl5UCE7pMg6owABQnsYjVFD1og0C6+L1VlyLs=;
+	s=korg; t=1784655541;
+	bh=XrivUe4Iw5NDe3otG+yp+mnRItGirnPBzixNsPjdWPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DVq/2pStyHQrbugrttUmHCVYuwMJWcIkfbkp8y1PiQ0CIlLVydWujDabKep+AkkQ0
-	 FE7pJiCUWUPWBTiqizg4b9tA8rvDxTqjr4Vj8AMpGoD/ab+sucGJc//KYERirGkHSs
-	 V5GyQ7Aw1p1v1rOdBIHkGPK7VzggvVH9GWKRYqpM=
+	b=cBQCRvFKZFlh7xtTyz2j42elEYlQIUkQsmQhHGWwj1gp2TpAj65ELk7RdApYDo5Px
+	 FYSgPuRS3XADHuctdfsZX5U76LWsRP0oIOtse9mk6yksrZL3sEsbFBIxEeBfJ7ktAo
+	 GoZn+PlOSuPxnbDc9nE2NyF84a+bsZByrZHtu9Y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Wyatt Feng <bronzed_45_vested@icloud.com>,
 	David Howells <dhowells@redhat.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
 	linux-afs@lists.infradead.org,
-	stable@kernel.org,
+	Jeffrey Altman <jaltman@auristor.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 0045/1611] rxrpc: Fix oob challenge leak in cleanup after notification failure
-Date: Tue, 21 Jul 2026 17:02:41 +0200
-Message-ID: <20260721152515.837606986@linuxfoundation.org>
+Subject: [PATCH 6.18 0046/1611] rxrpc: Fix ACKALL packet handling
+Date: Tue, 21 Jul 2026 17:02:42 +0200
+Message-ID: <20260721152515.860298623@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,108 +60,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Wyatt Feng <bronzed_45_vested@icloud.com>
 
-commit 092275882aec4a70ba55c3efb66fff947c81656a upstream.
+commit 9b6ce594808580b2a19e6e1aa459ef56c0153ac1 upstream.
 
-Fix rxrpc_notify_socket_oob() to return an indication of failure in the
-event that it failed to queue a packet and fix rxrpc_post_challenge() to
-clean up the connection ref in such an event.
+rxrpc_input_ackall() accepts ACKALL packets without checking whether the
+call is in a state that can legitimately have outstanding transmit buffers.
+A forged ACKALL can therefore reach a new service call in
+RXRPC_CALL_SERVER_RECV_REQUEST before any reply packets have been queued.
 
-Fixes: 5800b1cf3fd8 ("rxrpc: Allow CHALLENGEs to the passed to the app for a RESPONSE")
-Link: https://sashiko.dev/#/patchset/20260616155749.2125907-1-dhowells%40redhat.com
+In that state call->tx_top is zero and call->tx_queue is NULL, so
+rxrpc_rotate_tx_window() dereferences a NULL txqueue and triggers a
+null-pointer dereference.
+
+Fix the handling of ACKALL packets by the following means:
+
+ (1) Add two new call states: RXRPC_CALL_CLIENT_PRE_SEND which indicates
+     that the client call is connected, but nothing has been transmitted as
+     yet; and RXRPC_CALL_CLIENT_AWAIT_ACK, which indicates that everything
+     has been transmitted at least once, but we're now waiting for the
+     stuff remaining in the Tx buffer to be ACK'd (retransmissions may
+     still happen).
+
+     The RXRPC_CALL_CLIENT_PRE_SEND state is set when the call is assigned
+     a channel and transitions to RXRPC_CALL_CLIENT_SEND_REQUEST when the
+     first packet is transmitted.
+
+     RXRPC_CALL_CLIENT_AWAIT_REPLY is then narrowed in scope to indicate
+     that all Tx packets have been ACK'd and we're now waiting for the
+     reply to be received.
+
+ (2) As per Wyatt Feng's original patch[1], the ACKALL handler then checks
+     that the call state is one in which there might be stuff in the Tx
+     buffer to ACK, but now this includes AWAIT_ACK rather than
+     AWAIT_REPLY.  ACKALL packets are ignored if received in the wrong
+     state.
+
+     Note that unlike Wyatt Feng's patch, it's no longer necessary to check
+     to see if the Tx buffer exists as this the state set now covers this.
+
+ (3) Make the ACKALL handler use call->tx_transmitted rather than
+     call->tx_top as the former is explicitly the highest packet seq number
+     transmitted, whereas the latter has a looser definition.
+
+Thanks to Jeffrey Altman for a description of the history of the ACKALL
+packet[1].
+
+Fixes: b341a0263b1b ("rxrpc: Implement progressive transmission queue struct")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
+Co-developed-by: David Howells <dhowells@redhat.com>
 Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Ren Wei <n05ec@lzu.edu.cn>
 cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260624163819.3017002-8-dhowells@redhat.com
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20260616155749.2125907-2-dhowells@redhat.com/ [1]
+Link: https://lore.kernel.org/r/c0fd4fec-1576-4070-b31e-a37d5506f5ed@auristor.com/ [2]
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
+Link: https://patch.msgid.link/20260624163819.3017002-2-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/ar-internal.h |    4 ++--
- net/rxrpc/conn_event.c  |    9 +++++++--
- net/rxrpc/oob.c         |    7 +++++--
- 3 files changed, 14 insertions(+), 6 deletions(-)
+ net/rxrpc/ar-internal.h |    2 ++
+ net/rxrpc/call_event.c  |    5 ++++-
+ net/rxrpc/call_object.c |    2 ++
+ net/rxrpc/conn_client.c |    2 +-
+ net/rxrpc/input.c       |   23 +++++++++++++++++++----
+ net/rxrpc/sendmsg.c     |    3 ++-
+ 6 files changed, 30 insertions(+), 7 deletions(-)
 
 --- a/net/rxrpc/ar-internal.h
 +++ b/net/rxrpc/ar-internal.h
-@@ -1355,9 +1355,9 @@ static inline struct rxrpc_net *rxrpc_ne
+@@ -650,7 +650,9 @@ enum rxrpc_call_event {
+ enum rxrpc_call_state {
+ 	RXRPC_CALL_UNINITIALISED,
+ 	RXRPC_CALL_CLIENT_AWAIT_CONN,	/* - client waiting for connection to become available */
++	RXRPC_CALL_CLIENT_PRE_SEND,	/* - client is connected, but hasn't sent anything yet */
+ 	RXRPC_CALL_CLIENT_SEND_REQUEST,	/* - client sending request phase */
++	RXRPC_CALL_CLIENT_AWAIT_ACK,	/* - client awaiting ACKs of request */
+ 	RXRPC_CALL_CLIENT_AWAIT_REPLY,	/* - client awaiting reply */
+ 	RXRPC_CALL_CLIENT_RECV_REPLY,	/* - client receiving reply phase */
+ 	RXRPC_CALL_SERVER_PREALLOC,	/* - service preallocation */
+--- a/net/rxrpc/call_event.c
++++ b/net/rxrpc/call_event.c
+@@ -178,7 +178,7 @@ static void rxrpc_close_tx_phase(struct
+ 
+ 	switch (__rxrpc_call_state(call)) {
+ 	case RXRPC_CALL_CLIENT_SEND_REQUEST:
+-		rxrpc_set_call_state(call, RXRPC_CALL_CLIENT_AWAIT_REPLY);
++		rxrpc_set_call_state(call, RXRPC_CALL_CLIENT_AWAIT_ACK);
+ 		break;
+ 	case RXRPC_CALL_SERVER_SEND_REPLY:
+ 		rxrpc_set_call_state(call, RXRPC_CALL_SERVER_AWAIT_ACK);
+@@ -244,6 +244,8 @@ static void rxrpc_transmit_fresh_data(st
+ 				break;
+ 		} while (req.n < limit && before(seq, send_top));
+ 
++		if (__rxrpc_call_state(call) == RXRPC_CALL_CLIENT_PRE_SEND)
++			rxrpc_set_call_state(call, RXRPC_CALL_CLIENT_SEND_REQUEST);
+ 		if (txb->flags & RXRPC_LAST_PACKET) {
+ 			rxrpc_close_tx_phase(call);
+ 			tq = NULL;
+@@ -267,6 +269,7 @@ void rxrpc_transmit_some_data(struct rxr
+ 		fallthrough;
+ 
+ 	case RXRPC_CALL_SERVER_SEND_REPLY:
++	case RXRPC_CALL_CLIENT_PRE_SEND:
+ 	case RXRPC_CALL_CLIENT_SEND_REQUEST:
+ 		if (!rxrpc_tx_window_space(call))
+ 			return;
+--- a/net/rxrpc/call_object.c
++++ b/net/rxrpc/call_object.c
+@@ -18,7 +18,9 @@
+ const char *const rxrpc_call_states[NR__RXRPC_CALL_STATES] = {
+ 	[RXRPC_CALL_UNINITIALISED]		= "Uninit  ",
+ 	[RXRPC_CALL_CLIENT_AWAIT_CONN]		= "ClWtConn",
++	[RXRPC_CALL_CLIENT_PRE_SEND]		= "ClPreSnd",
+ 	[RXRPC_CALL_CLIENT_SEND_REQUEST]	= "ClSndReq",
++	[RXRPC_CALL_CLIENT_AWAIT_ACK]		= "ClAwtAck",
+ 	[RXRPC_CALL_CLIENT_AWAIT_REPLY]		= "ClAwtRpl",
+ 	[RXRPC_CALL_CLIENT_RECV_REPLY]		= "ClRcvRpl",
+ 	[RXRPC_CALL_SERVER_PREALLOC]		= "SvPrealc",
+--- a/net/rxrpc/conn_client.c
++++ b/net/rxrpc/conn_client.c
+@@ -449,7 +449,7 @@ static void rxrpc_activate_one_channel(s
+ 	trace_rxrpc_connect_call(call);
+ 	call->tx_last_sent = ktime_get_real();
+ 	rxrpc_start_call_timer(call);
+-	rxrpc_set_call_state(call, RXRPC_CALL_CLIENT_SEND_REQUEST);
++	rxrpc_set_call_state(call, RXRPC_CALL_CLIENT_PRE_SEND);
+ 	wake_up(&call->waitq);
  }
  
- /*
-- * out_of_band.c
-+ * oob.c
-  */
--void rxrpc_notify_socket_oob(struct rxrpc_call *call, struct sk_buff *skb);
-+bool rxrpc_notify_socket_oob(struct rxrpc_call *call, struct sk_buff *skb);
- void rxrpc_add_pending_oob(struct rxrpc_sock *rx, struct sk_buff *skb);
- int rxrpc_sendmsg_oob(struct rxrpc_sock *rx, struct msghdr *msg, size_t len);
+--- a/net/rxrpc/input.c
++++ b/net/rxrpc/input.c
+@@ -181,7 +181,8 @@ void rxrpc_congestion_degrade(struct rxr
+ 	if (call->cong_ca_state != RXRPC_CA_SLOW_START &&
+ 	    call->cong_ca_state != RXRPC_CA_CONGEST_AVOIDANCE)
+ 		return;
+-	if (__rxrpc_call_state(call) == RXRPC_CALL_CLIENT_AWAIT_REPLY)
++	if (__rxrpc_call_state(call) == RXRPC_CALL_CLIENT_AWAIT_ACK ||
++	    __rxrpc_call_state(call) == RXRPC_CALL_CLIENT_AWAIT_REPLY)
+ 		return;
  
---- a/net/rxrpc/conn_event.c
-+++ b/net/rxrpc/conn_event.c
-@@ -436,7 +436,7 @@ static bool rxrpc_post_challenge(struct
- 	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
- 	struct rxrpc_call *call = NULL;
- 	struct rxrpc_sock *rx;
--	bool respond = false;
-+	bool respond = false, queued = false;
+ 	rtt = ns_to_ktime(call->srtt_us * (NSEC_PER_USEC / 8));
+@@ -359,6 +360,7 @@ static void rxrpc_end_tx_phase(struct rx
  
- 	sp->chall.conn =
- 		rxrpc_get_connection(conn, rxrpc_conn_get_challenge_input);
-@@ -472,8 +472,13 @@ static bool rxrpc_post_challenge(struct
- 	}
+ 	switch (__rxrpc_call_state(call)) {
+ 	case RXRPC_CALL_CLIENT_SEND_REQUEST:
++	case RXRPC_CALL_CLIENT_AWAIT_ACK:
+ 	case RXRPC_CALL_CLIENT_AWAIT_REPLY:
+ 		if (reply_begun) {
+ 			rxrpc_set_call_state(call, RXRPC_CALL_CLIENT_RECV_REPLY);
+@@ -697,6 +699,7 @@ static void rxrpc_input_data(struct rxrp
  
- 	if (call)
--		rxrpc_notify_socket_oob(call, skb);
-+		queued = rxrpc_notify_socket_oob(call, skb);
- 	rcu_read_unlock();
-+	if (call && !queued) {
-+		rxrpc_put_connection(conn, rxrpc_conn_put_challenge_input);
-+		sp->chall.conn = NULL;
-+		return false;
-+	}
+ 	switch (__rxrpc_call_state(call)) {
+ 	case RXRPC_CALL_CLIENT_SEND_REQUEST:
++	case RXRPC_CALL_CLIENT_AWAIT_ACK:
+ 	case RXRPC_CALL_CLIENT_AWAIT_REPLY:
+ 		/* Received data implicitly ACKs all of the request
+ 		 * packets we sent when we're acting as a client.
+@@ -1157,10 +1160,12 @@ static void rxrpc_input_ack(struct rxrpc
+ 	if (hard_ack + 1 == 0)
+ 		return rxrpc_proto_abort(call, 0, rxrpc_eproto_ackr_zero);
  
- 	if (!call)
- 		rxrpc_post_packet_to_conn(conn, skb);
---- a/net/rxrpc/oob.c
-+++ b/net/rxrpc/oob.c
-@@ -32,11 +32,12 @@ struct rxrpc_oob_params {
-  * Post an out-of-band message for attention by the socket or kernel service
-  * associated with a reference call.
-  */
--void rxrpc_notify_socket_oob(struct rxrpc_call *call, struct sk_buff *skb)
-+bool rxrpc_notify_socket_oob(struct rxrpc_call *call, struct sk_buff *skb)
+-	/* Ignore ACKs unless we are or have just been transmitting. */
++	/* Ignore ACKs unless we are transmitting or are waiting for
++	 * acknowledgement of the packets we've just been transmitting.
++	 */
+ 	switch (__rxrpc_call_state(call)) {
+ 	case RXRPC_CALL_CLIENT_SEND_REQUEST:
+-	case RXRPC_CALL_CLIENT_AWAIT_REPLY:
++	case RXRPC_CALL_CLIENT_AWAIT_ACK:
+ 	case RXRPC_CALL_SERVER_SEND_REPLY:
+ 	case RXRPC_CALL_SERVER_AWAIT_ACK:
+ 		break;
+@@ -1218,7 +1223,17 @@ static void rxrpc_input_ackall(struct rx
  {
- 	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
- 	struct rxrpc_sock *rx;
- 	struct sock *sk;
-+	bool queued = false;
+ 	struct rxrpc_ack_summary summary = { 0 };
  
- 	rcu_read_lock();
- 
-@@ -49,6 +50,7 @@ void rxrpc_notify_socket_oob(struct rxrp
- 			skb->skb_mstamp_ns = rx->oob_id_counter++;
- 			rxrpc_get_skb(skb, rxrpc_skb_get_post_oob);
- 			skb_queue_tail(&rx->recvmsg_oobq, skb);
-+			queued = true;
- 
- 			trace_rxrpc_notify_socket(call->debug_id, sp->hdr.serial);
- 			if (rx->app_ops)
-@@ -56,11 +58,12 @@ void rxrpc_notify_socket_oob(struct rxrp
- 		}
- 
- 		spin_unlock_irq(&rx->recvmsg_lock);
--		if (!rx->app_ops && !sock_flag(sk, SOCK_DEAD))
-+		if (queued && !rx->app_ops && !sock_flag(sk, SOCK_DEAD))
- 			sk->sk_data_ready(sk);
- 	}
- 
- 	rcu_read_unlock();
-+	return queued;
+-	if (rxrpc_rotate_tx_window(call, call->tx_top, &summary))
++	switch (__rxrpc_call_state(call)) {
++	case RXRPC_CALL_CLIENT_SEND_REQUEST:
++	case RXRPC_CALL_CLIENT_AWAIT_ACK:
++	case RXRPC_CALL_SERVER_SEND_REPLY:
++	case RXRPC_CALL_SERVER_AWAIT_ACK:
++		break;
++	default:
++		return;
++	}
++
++	if (rxrpc_rotate_tx_window(call, call->tx_transmitted, &summary))
+ 		rxrpc_end_tx_phase(call, false, rxrpc_eproto_unexpected_ackall);
  }
  
- /*
+--- a/net/rxrpc/sendmsg.c
++++ b/net/rxrpc/sendmsg.c
+@@ -366,7 +366,8 @@ reload:
+ 	if (state >= RXRPC_CALL_COMPLETE)
+ 		goto maybe_error;
+ 	ret = -EPROTO;
+-	if (state != RXRPC_CALL_CLIENT_SEND_REQUEST &&
++	if (state != RXRPC_CALL_CLIENT_PRE_SEND &&
++	    state != RXRPC_CALL_CLIENT_SEND_REQUEST &&
+ 	    state != RXRPC_CALL_SERVER_ACK_REQUEST &&
+ 	    state != RXRPC_CALL_SERVER_SEND_REPLY) {
+ 		/* Request phase complete for this client call */
 
 
