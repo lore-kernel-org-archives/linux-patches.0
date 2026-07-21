@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4D746A5E9;
-	Tue, 21 Jul 2026 15:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6CC46D543;
+	Tue, 21 Jul 2026 15:49:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648966; cv=none; b=qXziWIK4tA+2cMFj+DGelQN7e5uAkub4QT9cQBRCFfsdobyKo/n2hToXLo4IPfvMBux3Fq3Z+FNBokrQYwskqjkZxdtJF+n+o076+63J8zDlXpQxqt6vbx7UF/iHZX/jQpuN+LI+/wvDgMWViw1oWH6KoJG7OpHcSuP7rXERfPs=
+	t=1784648969; cv=none; b=UOZamX5MaKP2mNxx5h9m6DSWdN/Wu9oHzVC/AdqzsuqdYKGvvsoJ3lJ9u1TWLeDqQiMhzqPakO/6eAA+v1rJ6nA39wx6Y2RIze02h/0fDaZ+QuNah0FE11yLEgRACrDBb/nG0cFoDNM0Rq9Fl2RdPobgvjcF8zfns5BT9GMJMCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648966; c=relaxed/simple;
-	bh=1fOGbtQIzuGQiM7QvrcC9myX7mVB+CIUxIi+PxQvsEI=;
+	s=arc-20240116; t=1784648969; c=relaxed/simple;
+	bh=lT+uNbTJoImPtc8X3GVzAsSR7KU7/zX/df9DpJ5po8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cW02N8VX9aA8UStKBQPlFTLfcms43MPucErW5Qb1UJnU4UoPMSPwhiPr51x+esXqWg0ZY4rPSEbCRVfVS5f3S29jo/EtrHjDJSdwsd19+OzEJTytpTDrHk2GdZWTjpqwylP0uMs//g/aA/zgJUqrt/od4VhlsapzBGSvc0XH1Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNBxdwZ1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aVRaMqjBtU9fi3FzllPkVQF290wk6B98oX4SxCzePKwNDppNneK0OzqdETUfsenFYju3g4mVT3BOP0RV52F7o6+6XF1qBNTmDaxEgrHpehVpgpR1AUr3HtKxl3UpqdPOfkFtMr54Yzx3DCQeCBRnFUvLQSrFZAGpvH5XbJB2kgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvgti+UF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNBxdwZ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2391F000E9;
-	Tue, 21 Jul 2026 15:49:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvgti+UF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB381F00A3A;
+	Tue, 21 Jul 2026 15:49:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648965;
-	bh=28kBVghTsNkRCDxvQp//yTSyoHabPGBM5XvNBE5LPxg=;
+	s=korg; t=1784648967;
+	bh=rnjxH6Ua6al5AyKRlphK79xShg4Ofm23gIYcsRek1qE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UNBxdwZ1u8fU2vED5ZDxDMjESsUWtMXeibJqhyfFlIQwNuejCJM6yY+xKBF0H+O/T
-	 6PlKgybA4xK4t/5CJuQZCjD7Z1DfsIcAWGcuDC8Vi29BwLZykyxLkPycNx8Tle9V+4
-	 unUinnJHnGHH1Wi9vmtlfxdk6ZzaHDYur0SlAuLQ=
+	b=fvgti+UFm5FoDwGofI/9Z1EJKv383nZlIkajPKUWolr4hZr50WERgxckRU1Bevujf
+	 se0JMD8Pg26DfDmMMIQacgmgV08bAPQ6v/kqZQeyBZLm5FLzxIT8a+Hq1gb1kFkddF
+	 WzPTqLxiYISy3Tpn5U6FSiIWA03B8i3+z+0IDRsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xiao Ni <xiao@kernel.org>,
 	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0398/2077] md/raid1,raid10: fix error-path detection with md_cloned_bio()
-Date: Tue, 21 Jul 2026 17:01:11 +0200
-Message-ID: <20260721152602.104405853@linuxfoundation.org>
+Subject: [PATCH 7.1 0399/2077] md/raid1,raid10: fix bio accounting for split md cloned bios
+Date: Tue, 21 Jul 2026 17:01:12 +0200
+Message-ID: <20260721152602.128276399@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,93 +54,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 
-[ Upstream commit 811545e0926d02a6a0b1a1258bb5544777c164d4 ]
+[ Upstream commit ba976e3501111d11c550848b3b7341a73035f582 ]
 
-Detect the error path using md_cloned_bio() instead of relying
-on r1_bio in raid1 or r10_bio->read_slot in raid10, which may be
-NULL or -1 after splitting and resubmitting a failed bio.
+Use md_cloned_bio() to control bio accounting instead of relying
+on r1bio_existed in raid1 or the io_accounting flag in raid10.
 
-As a result, the error path may not be recognized and memory
-allocations can incorrectly use GFP_NOIO instead of
-(GFP_NOIO | __GFP_HIGH), which can lead to a deadlock under
-memory pressure.
+The previous logic does not reliably reflect whether a bio is an
+md cloned bio. When a failed bio is split and resubmitted via
+bio_submit_split_bioset() on the error path, this can lead to either
+double accounting for md cloned bios, or missing accounting for bios
+returned from bio_submit_split_bioset()
 
-Fixes: 689389a06ce7 ("md/raid1: simplify handle_read_error().")
-Fixes: 545250f24809 ("md/raid10: simplify handle_read_error()")
+Fix this by using md_cloned_bio() to detect md cloned bios and
+skip accounting accordingly.
+
+Fixes: bb2a9acefaf9 ("md/raid1: switch to use md_account_bio() for io accounting")
+Fixes: 820455238366 ("md/raid10: switch to use md_account_bio() for io accounting")
 Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 Reviewed-by: Xiao Ni <xiao@kernel.org>
-Link: https://patch.msgid.link/20260501114652.590037-3-abd.masalkhi@gmail.com
+Link: https://patch.msgid.link/20260501114652.590037-4-abd.masalkhi@gmail.com
 Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c  | 13 ++++++++++---
- drivers/md/raid10.c | 20 ++++++++++++++------
- 2 files changed, 24 insertions(+), 9 deletions(-)
+ drivers/md/raid1.c  | 2 +-
+ drivers/md/raid10.c | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 64d970e2ef50fd..22458df5069e9d 100644
+index 22458df5069e9d..603aa09088f05a 100644
 --- a/drivers/md/raid1.c
 +++ b/drivers/md/raid1.c
-@@ -1343,11 +1343,18 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
- 	bool r1bio_existed = !!r1_bio;
+@@ -1418,7 +1418,7 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
+ 	}
  
- 	/*
--	 * If r1_bio is set, we are blocking the raid1d thread
--	 * so there is a tiny risk of deadlock.  So ask for
-+	 * An md cloned bio indicates we are in the error path.
-+	 * This is more reliable than checking r1_bio, which might
-+	 * be NULL even in the error path if a failed bio was split.
-+	 */
-+	bool err_path = md_cloned_bio(mddev, bio);
-+
-+	/*
-+	 * If we are in the error path, we are blocking the raid1d
-+	 * thread so there is a tiny risk of deadlock.  So ask for
- 	 * emergency memory if needed.
- 	 */
--	gfp_t gfp = r1_bio ? (GFP_NOIO | __GFP_HIGH) : GFP_NOIO;
-+	gfp_t gfp = err_path ? (GFP_NOIO | __GFP_HIGH) : GFP_NOIO;
- 
- 	/*
- 	 * Still need barrier for READ in case that whole
+ 	r1_bio->read_disk = rdisk;
+-	if (!r1bio_existed) {
++	if (likely(!md_cloned_bio(mddev, bio))) {
+ 		md_account_bio(mddev, &bio);
+ 		r1_bio->master_bio = bio;
+ 	}
 diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 7dc2a5a127e893..b38a0ccd4661a3 100644
+index b38a0ccd4661a3..5bd7698e0a1b54 100644
 --- a/drivers/md/raid10.c
 +++ b/drivers/md/raid10.c
-@@ -1155,7 +1155,20 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
- 	char b[BDEVNAME_SIZE];
- 	int slot = r10_bio->read_slot;
- 	struct md_rdev *err_rdev = NULL;
--	gfp_t gfp = GFP_NOIO;
-+
-+	/*
-+	 * An md cloned bio indicates we are in the error path.
-+	 * This is more reliable than checking slot, which might
-+	 * be -1 even in the error path if a failed bio was split.
-+	 */
-+	bool err_path = md_cloned_bio(mddev, bio);
-+
-+	/*
-+	 * If we are in the error path, we are blocking the raid10d
-+	 * thread so there is a tiny risk of deadlock.  So ask for
-+	 * emergency memory if needed.
-+	 */
-+	gfp_t gfp = err_path ? (GFP_NOIO | __GFP_HIGH) : GFP_NOIO;
+@@ -1146,7 +1146,7 @@ static bool regular_request_wait(struct mddev *mddev, struct r10conf *conf,
+ }
  
- 	if (slot >= 0 && r10_bio->devs[slot].rdev) {
- 		/*
-@@ -1166,11 +1179,6 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
- 		 * we lose the device name in error messages.
- 		 */
- 		int disk;
--		/*
--		 * As we are blocking raid10, it is a little safer to
--		 * use __GFP_HIGH.
--		 */
--		gfp = GFP_NOIO | __GFP_HIGH;
+ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
+-				struct r10bio *r10_bio, bool io_accounting)
++				struct r10bio *r10_bio)
+ {
+ 	struct r10conf *conf = mddev->private;
+ 	struct bio *read_bio;
+@@ -1226,7 +1226,7 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
+ 	}
+ 	slot = r10_bio->read_slot;
  
- 		disk = r10_bio->devs[slot].devnum;
- 		err_rdev = conf->mirrors[disk].rdev;
+-	if (io_accounting) {
++	if (likely(!md_cloned_bio(mddev, bio))) {
+ 		md_account_bio(mddev, &bio);
+ 		r10_bio->master_bio = bio;
+ 	}
+@@ -1552,7 +1552,7 @@ static void __make_request(struct mddev *mddev, struct bio *bio, int sectors)
+ 			conf->geo.raid_disks);
+ 
+ 	if (bio_data_dir(bio) == READ)
+-		raid10_read_request(mddev, bio, r10_bio, true);
++		raid10_read_request(mddev, bio, r10_bio);
+ 	else
+ 		raid10_write_request(mddev, bio, r10_bio);
+ }
+@@ -2867,7 +2867,7 @@ static void handle_read_error(struct mddev *mddev, struct r10bio *r10_bio)
+ 
+ 	rdev_dec_pending(rdev, mddev);
+ 	r10_bio->state = 0;
+-	raid10_read_request(mddev, r10_bio->master_bio, r10_bio, false);
++	raid10_read_request(mddev, r10_bio->master_bio, r10_bio);
+ 	/*
+ 	 * allow_barrier after re-submit to ensure no sync io
+ 	 * can be issued while regular io pending.
 -- 
 2.53.0
 
