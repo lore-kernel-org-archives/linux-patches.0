@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2806C3B0AC6;
-	Tue, 21 Jul 2026 20:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C764B35201C;
+	Tue, 21 Jul 2026 20:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666801; cv=none; b=OONLwgU/BVPtAxfHjR6Asjdu0UudgzFS85Bpk4Hec6wHM/MOD7G6wCGSVWeJ+usoCr3PvAWqFX43Ym1cuXeoFrbgWKGWuHhV2adz8hnV4JFfIAE2VkLO3DQOE256zog3NCCo/A+N+wfcGfJkTkw3NoKLUz7fSQjp86TNaVA1l2Q=
+	t=1784666804; cv=none; b=suGGdePgAGJwOhfpE7K2OWDB5yf4fooqgWdINmOIax/AXV0sI9pu/GbMBAdY5GhYVRpqwxxh/apauPMox3o6qW45nV9KH2YQSG7DHucYhe/W/w2XzOvRyQozSpFtomE6ThUMxgqkCJ/k7k5ZvSBsDCk0HP8VcfK1qFlmSBLGDoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666801; c=relaxed/simple;
-	bh=jfIdykMe1g21nIRJ9jRtP2BYbCdMPGkuYNJNyyjWhV0=;
+	s=arc-20240116; t=1784666804; c=relaxed/simple;
+	bh=r8lJXTKCBPtfcivyEKC1QcXf2Oe/mO6F2w4BDHKGjnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N6bpUDAKvVJ6FptJGaFCCcybrlXZys5wweurS2DOWqyrj2sRcMr+jyqswdGw2Cp19vRD0LyBI/eA8W2LmkwuOrQVHjbil4xcFsqLXGOMjplh4ZvklSXjlgrKHqGU0KYAsgCo9jy/CbRxsa/itwlfPT0RH+MfZvDn6dbl9yIna8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I653e2AV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ReQrBsY3NwMmnFRs6DP9tZtMqsxB2+Okr3xiruLxFYv4Cj5pER9kX0yCGxCbQ7zffqNn+NMZ/pneAYn3z94YS4G2qfMncUHSldpDcVlgQfRewIYtFAFjM0/jrmMtadxxpceApeooTDLfDOq/WBlIVDViDKylhbQRvzjlejFTzBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YhZz2L+N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I653e2AV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEC01F000E9;
-	Tue, 21 Jul 2026 20:46:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YhZz2L+N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E611F000E9;
+	Tue, 21 Jul 2026 20:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666800;
-	bh=bK8ZhIdV7p6lEoESlZoiGgsvCkiiDSuN9bqQzgZRXRY=;
+	s=korg; t=1784666802;
+	bh=fmUtWkaAUwHX1w0JVP8peOWYIztYQuJM852Nb5b5RNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I653e2AVCwwWaKfRNRGy1WFXvfSX5EZlH7gGGN/2Vlqwy08iuE6p3ypIXtSeOSFaL
-	 V7Atc9rpN/60Z5BGqzK8x2jFkTv2POFjHRTE6vGgzHISdemy6WfWZ0LYR45fIauAUj
-	 GSMciNKLMnvkDwlKw73laAzUs6SSOr2KoDQUbBGk=
+	b=YhZz2L+Nc4jENY+W5xuWRK0ML0HIMnFAAeTBZ81apt3SmcwPTyBZWKxC9FEhv648E
+	 jH0JmyGsksvhXc1aswiDFLDIJPdsswSVCx3yjvdZvTfNIj+mi0gi1Nmnx9TOKWf3GJ
+	 lEiAFuTgLk5iQ6RsjUaBSSqYg3badIbbGXlSzD84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Longjun Tang <tanglongjun@kylinos.cn>,
+	Aleksandrova Alyona <aga@itb.spb.ru>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0819/1266] virtio_net: disable cb when NAPI is busy-polled
-Date: Tue, 21 Jul 2026 17:20:56 +0200
-Message-ID: <20260721152500.187305363@linuxfoundation.org>
+Subject: [PATCH 6.6 0784/1266] net: dsa: sja1105: round up PTP perout pin duration
+Date: Tue, 21 Jul 2026 17:20:21 +0200
+Message-ID: <20260721152459.405490921@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,44 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longjun Tang <tanglongjun@kylinos.cn>
+From: Aleksandrova Alyona <aga@itb.spb.ru>
 
-[ Upstream commit 1eb8fc67ca41db71c90866ff76c990d85247daef ]
+[ Upstream commit aee5836273b07b439fb245fb43930664d8b78518 ]
 
-When busy-poll is active, napi_schedule_prep() returns false in
-virtqueue_napi_schedule(), so virtqueue_disable_cb() is skipped.
-The device may keep firing irqs until reaches virtqueue_napi_complete().
-Under load (received == budget), it will lead to a large number
-of spurious interrupts.
+pin_duration is converted from the user-provided period to SJA1105
+clock ticks and is later passed as the cycle_time argument to
+future_base_time().
 
-Fix it by disabling the callback at the virtnet_poll() entry.
-This keeps the callback off while we poll and it is re-enabled by
-virtqueue_napi_complete() when going idle.
+Very small period values may become zero after the conversion,
+which can lead to a division by zero in future_base_time().
 
-Fixes: ceef438d613f ("virtio_net: remove custom busy_poll")
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Longjun Tang <tanglongjun@kylinos.cn>
-Link: https://patch.msgid.link/20260629024230.37325-1-lange_tang@163.com
+Round zero pin_duration up to 1 tick so that the smallest unsupported
+periods use the minimum non-zero hardware duration instead of passing
+zero to future_base_time().
+
+Fixes: 747e5eb31d59 ("net: dsa: sja1105: configure the PTP_CLK pin as EXT_TS or PER_OUT")
+Signed-off-by: Aleksandrova Alyona <aga@itb.spb.ru>
+Link: https://patch.msgid.link/20260618110508.53094-1-aga@itb.spb.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/dsa/sja1105/sja1105_ptp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 8be173b76abe5b..fe0e647808cd7e 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -2228,6 +2228,9 @@ static int virtnet_poll(struct napi_struct *napi, int budget)
- 	unsigned int received;
- 	unsigned int xdp_xmit = 0;
- 
-+	if (budget)
-+		virtqueue_disable_cb(rq->vq);
-+
- 	virtnet_poll_cleantx(rq, budget);
- 
- 	received = virtnet_receive(rq, budget, &xdp_xmit);
+diff --git a/drivers/net/dsa/sja1105/sja1105_ptp.c b/drivers/net/dsa/sja1105/sja1105_ptp.c
+index a7d41e7813982e..afb11690c21712 100644
+--- a/drivers/net/dsa/sja1105/sja1105_ptp.c
++++ b/drivers/net/dsa/sja1105/sja1105_ptp.c
+@@ -755,7 +755,7 @@ static int sja1105_per_out_enable(struct sja1105_private *priv,
+ 		 * 2 edges on PTP_CLK. So check for truncation which happens
+ 		 * at periods larger than around 68.7 seconds.
+ 		 */
+-		pin_duration = ns_to_sja1105_ticks(pin_duration / 2);
++		pin_duration = max_t(u64, ns_to_sja1105_ticks(pin_duration / 2), 1);
+ 		if (pin_duration > U32_MAX) {
+ 			rc = -ERANGE;
+ 			goto out;
 -- 
 2.53.0
 
