@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48DC470123;
-	Tue, 21 Jul 2026 19:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A20D46C4BD;
+	Tue, 21 Jul 2026 19:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663364; cv=none; b=RfE5OUWhJ1dEefvatgKkWm483qytKOVgJA65nuxfGFO+Mx9kE9cR/JOGwwzrZSiIKT9PA+hgFojTKAyD9jfO6ULYRAqSmgcjaVmrN3p8uAIbC/+tyK0t9D6gVTu6AeGrcSY4AgqNT/pdIduXFPBdrkOPT2whJxPdjtKVVG+Xj0E=
+	t=1784663367; cv=none; b=kpedG/31y9t1U4vqYYa1L3hXrZfJxUTn1wWoK585pd687bFF9haLT5B6kc/j9t6SejIrOAMjCYYzJi19D91JMTwvw46Cae4Y+VE9bFZ5hJ2g+S1ckfLxQqgfLdZ8dtf3u8MCj/VmTS61BoUBQPCDJRcwLOmqsjfi+rh9zsLOhA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663364; c=relaxed/simple;
-	bh=9CeRqqVNYKGUB5LH9eOJ4F9okHjnj/SrLlOzt68UuHE=;
+	s=arc-20240116; t=1784663367; c=relaxed/simple;
+	bh=o/Bi3MDP9Ck0Qlpde/YMug6uANqOU7g/2nU4vIoPZ2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBBlYoUlw1sgb2hm6dRM2qUVQ6f12y7DHGOCOM1V80bqhxlujIDX5LTXNn+SxtdqR//qE8APeTXKGvaeQIUgnMuPtKA+4DUfeHg7TxbAym4fsNknEgCgF0EuYrLLYo/gthMkYVQI7bbEPVh3CNlv8fm1qtFATCkEDZzREqfhPQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1WOvya/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TOhM7iD6KmmkyMYPJsfvfiUXsxbQQtG4fuisnbFj+XchEXAZOsCBpCTfHwyz2p1Mk6T2Y8Q7wZ/90kGUojkH7y/jaBsm/tg2gCqEui0BXkmcdv1t34pOHUpN61dnmvYybces78Dl0ekzTrcFGs5wgdK1uRuyKSkWAJGTF6/ehQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HvXkC5g0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1WOvya/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460E51F00A3A;
-	Tue, 21 Jul 2026 19:49:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HvXkC5g0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFACA1F00ACA;
+	Tue, 21 Jul 2026 19:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663363;
-	bh=fqnsa8ZMOgjvKRWny8EohcviF5DbdWm3bP4nvuSX4uM=;
+	s=korg; t=1784663366;
+	bh=Mf9sqHqGh1EBJSsmEbfzarGDqdVddJakTQOitk5tVNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v1WOvya/6C59ah0/ivPkdEEFMXtGyJwd5uwz/q3n2Mywf308MwtQvcBUjA+NQ9q59
-	 ueLqtylYfNfba7r54I4shxelfv2TsnUayKeSzk+aolabhs3bm2Bkd8J1LdEWNKcdhW
-	 SImng/JZkXArAz8s09H/EHtknCNx02EvJx8hIiuw=
+	b=HvXkC5g0ONlv9snvSbpnAWw4PRVbAIk01plk4cA1mCb0z1r/ycxY5gwBiidvQjNQ3
+	 qZC1oozgKnfqjwsa0XIZk2T34NqZaxVMIOESMOy/HnABy7UhZQr9Snz7Al+AVUwpql
+	 zxcQ5vvDeIBPdcdKxo1QhuaIx41vTOKIaVHTASzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Michael Nemanov <michael.nemanov@vastdata.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0796/1276] cifs: validate DFS referral string offsets
-Date: Tue, 21 Jul 2026 17:20:39 +0200
-Message-ID: <20260721152503.885815734@linuxfoundation.org>
+Subject: [PATCH 6.12 0797/1276] SUNRPC: release lower rpc_clnt if killed waiting for XPRT_LOCKED
+Date: Tue, 21 Jul 2026 17:20:40 +0200
+Message-ID: <20260721152503.908905057@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,57 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 027a84ac6b50c12ef767c15abfc58aa865820e9e ]
+[ Upstream commit 29bacb096d43bd04062f6655e50ceeed27fe6d2f ]
 
-parse_dfs_referrals() validates that the response header and referral
-array fit in the received buffer, but each referral also contains string
-offsets supplied by the server.
+xs_tcp_tls_setup_socket() creates a temporary "lower" rpc_clnt with
+rpc_create() to drive the inner TLS handshake, then waits for
+XPRT_LOCKED on its xprt with TASK_KILLABLE so a stuck handshake can
+be aborted by signal. When the wait is interrupted, the function
+jumps to out_unlock without releasing lower_clnt. The success path
+and the out_close error path both call
+rpc_shutdown_client(lower_clnt); only the killed-wait path skips it,
+leaking the clnt and its underlying xprt.
 
-Those offsets are used to compute the DfsPath and NetworkAddress string
-pointers without checking whether they still point inside the response
-buffer. A malformed referral can therefore make the computed pointer
-exceed the end of the buffer. The resulting negative max_len is then
-passed to cifs_strndup_from_utf16(), and the non-Unicode path forwards it
-to kstrndup() as a size_t, allowing strnlen() to read out of bounds.
+Call rpc_shutdown_client() on this path before joining out_unlock.
+xprt_release_write() is not needed here because XPRT_LOCKED was
+never acquired.
 
-Validate each string offset before deriving the string pointer.
-
-Fixes: 4ecce920e13a ("CIFS: move DFS response parsing out of SMB1 code")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 26e8bfa30dac ("SUNRPC/TLS: Lock the lower_xprt during the tls handshake")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Tested-by: Michael Nemanov <michael.nemanov@vastdata.com>
+Reviewed-by: Michael Nemanov <michael.nemanov@vastdata.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/misc.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/sunrpc/xprtsock.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
-index 6abfa22f4c176e..713b95a2361145 100644
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -1029,6 +1029,10 @@ parse_dfs_referrals(struct get_dfs_referral_rsp *rsp, u32 rsp_size,
- 		node->ref_flag = le16_to_cpu(ref->ReferralEntryFlags);
+diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
+index b78f1aae9e8068..f5b22267fadf46 100644
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -2732,8 +2732,11 @@ static void xs_tcp_tls_setup_socket(struct work_struct *work)
+ 	lower_xprt = rcu_dereference(lower_clnt->cl_xprt);
+ 	rcu_read_unlock();
  
- 		/* copy DfsPath */
-+		if (le16_to_cpu(ref->DfsPathOffset) > data_end - (char *)ref) {
-+			rc = -EINVAL;
-+			goto parse_DFS_referrals_exit;
-+		}
- 		temp = (char *)ref + le16_to_cpu(ref->DfsPathOffset);
- 		max_len = data_end - temp;
- 		node->path_name = cifs_strndup_from_utf16(temp, max_len,
-@@ -1039,6 +1043,10 @@ parse_dfs_referrals(struct get_dfs_referral_rsp *rsp, u32 rsp_size,
- 		}
+-	if (wait_on_bit_lock(&lower_xprt->state, XPRT_LOCKED, TASK_KILLABLE))
++	if (wait_on_bit_lock(&lower_xprt->state, XPRT_LOCKED, TASK_KILLABLE)) {
++		/* XPRT_LOCKED was never acquired. */
++		rpc_shutdown_client(lower_clnt);
+ 		goto out_unlock;
++	}
  
- 		/* copy link target UNC */
-+		if (le16_to_cpu(ref->NetworkAddressOffset) > data_end - (char *)ref) {
-+			rc = -EINVAL;
-+			goto parse_DFS_referrals_exit;
-+		}
- 		temp = (char *)ref + le16_to_cpu(ref->NetworkAddressOffset);
- 		max_len = data_end - temp;
- 		node->node_name = cifs_strndup_from_utf16(temp, max_len,
+ 	status = xs_tls_handshake_sync(lower_xprt, &upper_xprt->xprtsec);
+ 	if (status) {
 -- 
 2.53.0
 
