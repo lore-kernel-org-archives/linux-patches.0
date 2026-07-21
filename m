@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59B13B1EFC;
-	Tue, 21 Jul 2026 20:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA322EBB8D;
+	Tue, 21 Jul 2026 20:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666521; cv=none; b=rXGb6RG9VK08fmzusdgV1vFlM5Bv/MM2GrOc7VkUAj6RWpDII0LyG0AyqIVEaHTvO1y0BjFZTP5bTgnUerMwQQCu+3pnSf2acidzzSdal7y6lmcWQevz4eKp4MuAjUMhwp5ZNmNiYI2HxYTL8IItUpdf68NlclT/1gDPFlrPRAI=
+	t=1784666524; cv=none; b=ODXtDx1A8xcTllhNyWlT3QbvCHWTbzIhm2fdT2jhhUP3U9PKgH+MhVejDDqlE2e71Kf9rMbKE42+G0QgfsrKxBrZ8XBF4r0fefVikVLzb4I+lDPaXjpd5pBgrkBNIujgBS2hpYhoN6qE2A2HPRIlH2WtiPbvBpGYJCzUEYCRLVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666521; c=relaxed/simple;
-	bh=2H13zIZXRk+iAix6mWXISzrPihNZzyX9P5C7YwRRZao=;
+	s=arc-20240116; t=1784666524; c=relaxed/simple;
+	bh=JxbUj+g772m6xoj5+b7ZUUa3Ja1Arkwb9DoMj1mW2Uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aPjJtMbcql0nSGro4lhCPYagcgHLyu//8rGG4fQAjTfZqdzzesHBeE3haoGpbHBrcNq2JIcN6r0n+zPyQrDbFEUt9EIAyVTctejr7mKWrbTdCwBkU5fKYTyGTLr7odiO8njwwqqA5s+SGyw6qd3GrQ1zNJ1zBIRIgbN61Hr4Zog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ef9Em1EH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gjC3VgfqIZT+qoNf7kTGsKmzDID1vT9r13tOt6MbgDRcD5VngGEs+gHJBDzVORMPRViUSk/wtitoezT+gt7sV2NNE2S9380e5wb2uMLJ8JKDnNd3aPXFL25kMdDsK6/YnFo5tEKKq/lV0XJJTuGg2TYG3VopiuAOvSSC+XKoO74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bm8OKOTb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ef9Em1EH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577F71F000E9;
-	Tue, 21 Jul 2026 20:41:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bm8OKOTb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180A91F000E9;
+	Tue, 21 Jul 2026 20:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666519;
-	bh=wgRodg2BzJqwQxv3Nma1uFfYRC717QVBN7J2OOl0ItU=;
+	s=korg; t=1784666522;
+	bh=KEe8VGGVqNckFirn826sp9IYFWD3CT8gXq9slYIEZKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ef9Em1EHYAuyI17QKiQpNvf5AB48ijcZLBcog/HwzNGXfPp1e3hE0hAvQMqTPWpmR
-	 xAoxqYYRxVDCsiQqh2E5+ZFLQVKZBatEtB+MtoTWPae4mLFZM5fQtEtpTr5qJDsN22
-	 vjKguiPmh4t5kvMCITN0l0hvtr7wMOinPE9OogrI=
+	b=Bm8OKOTbVV1HFhFDWrU2GebMXrQGZJoDZQrOE/Bkq2ctR6fjxYCniilLY+Ud6h9rS
+	 6gws29HNftTFYa81sp+HZgCLhh5gdFH3JSa4Bqgqb190R5VI0sT2MbrFzgD/rBE/P0
+	 HVd+wOpkzz7l3nRRzcpcl7EXUIJcukf49T8s1tGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Yu <yumike@google.com>,
+	syzbot+d85ba1c732720b9a4097@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0714/1266] xfrm: Support crypto offload for inbound IPv6 ESP packets not in GRO path
-Date: Tue, 21 Jul 2026 17:19:11 +0200
-Message-ID: <20260721152457.842937781@linuxfoundation.org>
+Subject: [PATCH 6.6 0715/1266] xfrm: annotate data-races around xfrm_policy_count[] and xfrm_policy_default[]
+Date: Tue, 21 Jul 2026 17:19:12 +0200
+Message-ID: <20260721152457.865101757@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,81 +52,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Yu <yumike@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f7e8542d71e908706855a9f3e9e7844fea1feea0 ]
+[ Upstream commit 68de007d5ac9df0e3f4f187a179c5c842bb5a2be ]
 
-IPsec crypt offload supports outbound IPv6 ESP packets, but it doesn't
-support inbound IPv6 ESP packets.
+KCSAN reported a data race involving net->xfrm.policy_count access.
 
-This change enables the crypto offload for inbound IPv6 ESP packets
-that are not handled through GRO code path. If HW drivers add the
-offload information to the skb, the packet will be handled in the
-crypto offload rx code path.
+Add missing READ_ONCE()/WRITE_ONCE() annotations on
+xfrm_policy_count and xfrm_policy_default.
 
-Apart from the change in crypto offload rx code path, the change
-in xfrm_policy_check is also needed.
-
-Exampe of RX data path:
-
-  +-----------+   +-------+
-  | HW Driver |-->| wlan0 |--------+
-  +-----------+   +-------+        |
-                                   v
-                             +---------------+   +------+
-                     +------>| Network Stack |-->| Apps |
-                     |       +---------------+   +------+
-                     |             |
-                     |             v
-                 +--------+   +------------+
-                 | ipsec1 |<--| XFRM Stack |
-                 +--------+   +------------+
-
-Test: Enabled both in/out IPsec crypto offload, and verified IPv6
-      ESP packets on Android device on both wifi/cellular network
-Signed-off-by: Mike Yu <yumike@google.com>
+Fixes: 2518c7c2b3d7 ("[XFRM]: Hash policies when non-prefixed.")
+Reported-by: syzbot+d85ba1c732720b9a4097@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a2b9e96.99669fcc.12a77b.0006.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Stable-dep-of: 68de007d5ac9 ("xfrm: annotate data-races around xfrm_policy_count[] and xfrm_policy_default[]")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_input.c  | 2 +-
- net/xfrm/xfrm_policy.c | 5 ++++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ include/net/xfrm.h     |  8 ++++----
+ net/xfrm/xfrm_policy.c | 24 ++++++++++++------------
+ net/xfrm/xfrm_user.c   | 18 +++++++++---------
+ 3 files changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
-index 1d20f2a0a7386b..1483770f845642 100644
---- a/net/xfrm/xfrm_input.c
-+++ b/net/xfrm/xfrm_input.c
-@@ -470,7 +470,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 	struct xfrm_offload *xo = xfrm_offload(skb);
- 	struct sec_path *sp;
+diff --git a/include/net/xfrm.h b/include/net/xfrm.h
+index c4aab470171100..c499c142097453 100644
+--- a/include/net/xfrm.h
++++ b/include/net/xfrm.h
+@@ -1143,8 +1143,8 @@ int __xfrm_policy_check(struct sock *, int dir, struct sk_buff *skb,
+ static inline bool __xfrm_check_nopolicy(struct net *net, struct sk_buff *skb,
+ 					 int dir)
+ {
+-	if (!net->xfrm.policy_count[dir] && !secpath_exists(skb))
+-		return net->xfrm.policy_default[dir] == XFRM_USERPOLICY_ACCEPT;
++	if (!READ_ONCE(net->xfrm.policy_count[dir]) && !secpath_exists(skb))
++		return READ_ONCE(net->xfrm.policy_default[dir]) == XFRM_USERPOLICY_ACCEPT;
  
--	if (encap_type < 0 || (xo && xo->flags & XFRM_GRO)) {
-+	if (encap_type < 0 || (xo && (xo->flags & XFRM_GRO || encap_type == 0))) {
- 		x = xfrm_input_state(skb);
+ 	return false;
+ }
+@@ -1244,8 +1244,8 @@ static inline int xfrm_route_forward(struct sk_buff *skb, unsigned short family)
+ {
+ 	struct net *net = dev_net(skb->dev);
  
- 		if (unlikely(x->km.state != XFRM_STATE_VALID)) {
+-	if (!net->xfrm.policy_count[XFRM_POLICY_OUT] &&
+-	    net->xfrm.policy_default[XFRM_POLICY_OUT] == XFRM_USERPOLICY_ACCEPT)
++	if (!READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_OUT]) &&
++	    READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_OUT]) == XFRM_USERPOLICY_ACCEPT)
+ 		return true;
+ 
+ 	return (skb_dst(skb)->flags & DST_NOXFRM) ||
 diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index 2110941c8e9a75..ef07c9872b8d14 100644
+index ef07c9872b8d14..6ac96f7bfc7ed4 100644
 --- a/net/xfrm/xfrm_policy.c
 +++ b/net/xfrm/xfrm_policy.c
-@@ -3683,12 +3683,15 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
+@@ -656,7 +656,7 @@ static void xfrm_byidx_resize(struct net *net)
+ 
+ static inline int xfrm_bydst_should_resize(struct net *net, int dir, int *total)
+ {
+-	unsigned int cnt = net->xfrm.policy_count[dir];
++	unsigned int cnt = READ_ONCE(net->xfrm.policy_count[dir]);
+ 	unsigned int hmask = net->xfrm.policy_bydst[dir].hmask;
+ 
+ 	if (total)
+@@ -682,12 +682,12 @@ static inline int xfrm_byidx_should_resize(struct net *net, int total)
+ 
+ void xfrm_spd_getinfo(struct net *net, struct xfrmk_spdinfo *si)
+ {
+-	si->incnt = net->xfrm.policy_count[XFRM_POLICY_IN];
+-	si->outcnt = net->xfrm.policy_count[XFRM_POLICY_OUT];
+-	si->fwdcnt = net->xfrm.policy_count[XFRM_POLICY_FWD];
+-	si->inscnt = net->xfrm.policy_count[XFRM_POLICY_IN+XFRM_POLICY_MAX];
+-	si->outscnt = net->xfrm.policy_count[XFRM_POLICY_OUT+XFRM_POLICY_MAX];
+-	si->fwdscnt = net->xfrm.policy_count[XFRM_POLICY_FWD+XFRM_POLICY_MAX];
++	si->incnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_IN]);
++	si->outcnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_OUT]);
++	si->fwdcnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_FWD]);
++	si->inscnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_IN+XFRM_POLICY_MAX]);
++	si->outscnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_OUT+XFRM_POLICY_MAX]);
++	si->fwdscnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_FWD+XFRM_POLICY_MAX]);
+ 	si->spdhcnt = net->xfrm.policy_idx_hmask;
+ 	si->spdhmcnt = xfrm_policy_hashmax;
+ }
+@@ -2298,7 +2298,7 @@ static void __xfrm_policy_link(struct xfrm_policy *pol, int dir)
+ 	struct net *net = xp_net(pol);
+ 
+ 	list_add(&pol->walk.all, &net->xfrm.policy_all);
+-	net->xfrm.policy_count[dir]++;
++	WRITE_ONCE(net->xfrm.policy_count[dir], net->xfrm.policy_count[dir] + 1);
+ 	xfrm_pol_hold(pol);
+ }
+ 
+@@ -2318,7 +2318,7 @@ static struct xfrm_policy *__xfrm_policy_unlink(struct xfrm_policy *pol,
  	}
  
- 	if (!pol) {
-+		const bool is_crypto_offload = sp &&
-+			(xfrm_input_state(skb)->xso.type == XFRM_DEV_OFFLOAD_CRYPTO);
-+
- 		if (net->xfrm.policy_default[dir] == XFRM_USERPOLICY_BLOCK) {
+ 	list_del_init(&pol->walk.all);
+-	net->xfrm.policy_count[dir]--;
++	WRITE_ONCE(net->xfrm.policy_count[dir], net->xfrm.policy_count[dir] - 1);
+ 
+ 	return pol;
+ }
+@@ -3192,7 +3192,7 @@ struct dst_entry *xfrm_lookup_with_ifid(struct net *net,
+ 
+ 		/* To accelerate a bit...  */
+ 		if (!if_id && ((dst_orig->flags & DST_NOXFRM) ||
+-			       !net->xfrm.policy_count[XFRM_POLICY_OUT]))
++			       !READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_OUT])))
+ 			goto nopol;
+ 
+ 		xdst = xfrm_bundle_lookup(net, fl, family, dir, &xflo, if_id);
+@@ -3264,7 +3264,7 @@ struct dst_entry *xfrm_lookup_with_ifid(struct net *net,
+ 
+ nopol:
+ 	if ((!dst_orig->dev || !(dst_orig->dev->flags & IFF_LOOPBACK)) &&
+-	    net->xfrm.policy_default[dir] == XFRM_USERPOLICY_BLOCK) {
++	    READ_ONCE(net->xfrm.policy_default[dir]) == XFRM_USERPOLICY_BLOCK) {
+ 		err = -EPERM;
+ 		goto error;
+ 	}
+@@ -3686,7 +3686,7 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
+ 		const bool is_crypto_offload = sp &&
+ 			(xfrm_input_state(skb)->xso.type == XFRM_DEV_OFFLOAD_CRYPTO);
+ 
+-		if (net->xfrm.policy_default[dir] == XFRM_USERPOLICY_BLOCK) {
++		if (READ_ONCE(net->xfrm.policy_default[dir]) == XFRM_USERPOLICY_BLOCK) {
  			XFRM_INC_STATS(net, LINUX_MIB_XFRMINNOPOLS);
  			return 0;
  		}
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index ec1bda65c82fdf..5a895cafbc4239 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -2217,9 +2217,9 @@ static int xfrm_notify_userpolicy(struct net *net)
+ 	}
  
--		if (sp && secpath_has_nontransport(sp, 0, &xerr_idx)) {
-+		if (sp && secpath_has_nontransport(sp, 0, &xerr_idx) && !is_crypto_offload) {
- 			xfrm_secpath_reject(xerr_idx, skb, &fl);
- 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINNOPOLS);
- 			return 0;
+ 	up = nlmsg_data(nlh);
+-	up->in = net->xfrm.policy_default[XFRM_POLICY_IN];
+-	up->fwd = net->xfrm.policy_default[XFRM_POLICY_FWD];
+-	up->out = net->xfrm.policy_default[XFRM_POLICY_OUT];
++	up->in = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_IN]);
++	up->fwd = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_FWD]);
++	up->out = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_OUT]);
+ 
+ 	nlmsg_end(skb, nlh);
+ 
+@@ -2243,13 +2243,13 @@ static int xfrm_set_default(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	struct xfrm_userpolicy_default *up = nlmsg_data(nlh);
+ 
+ 	if (xfrm_userpolicy_is_valid(up->in))
+-		net->xfrm.policy_default[XFRM_POLICY_IN] = up->in;
++		WRITE_ONCE(net->xfrm.policy_default[XFRM_POLICY_IN], up->in);
+ 
+ 	if (xfrm_userpolicy_is_valid(up->fwd))
+-		net->xfrm.policy_default[XFRM_POLICY_FWD] = up->fwd;
++		WRITE_ONCE(net->xfrm.policy_default[XFRM_POLICY_FWD], up->fwd);
+ 
+ 	if (xfrm_userpolicy_is_valid(up->out))
+-		net->xfrm.policy_default[XFRM_POLICY_OUT] = up->out;
++		WRITE_ONCE(net->xfrm.policy_default[XFRM_POLICY_OUT], up->out);
+ 
+ 	rt_genid_bump_all(net);
+ 
+@@ -2279,9 +2279,9 @@ static int xfrm_get_default(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	}
+ 
+ 	r_up = nlmsg_data(r_nlh);
+-	r_up->in = net->xfrm.policy_default[XFRM_POLICY_IN];
+-	r_up->fwd = net->xfrm.policy_default[XFRM_POLICY_FWD];
+-	r_up->out = net->xfrm.policy_default[XFRM_POLICY_OUT];
++	r_up->in = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_IN]);
++	r_up->fwd = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_FWD]);
++	r_up->out = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_OUT]);
+ 	nlmsg_end(r_skb, r_nlh);
+ 
+ 	return nlmsg_unicast(net->xfrm.nlsk, r_skb, portid);
 -- 
 2.53.0
 
