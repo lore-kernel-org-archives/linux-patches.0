@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D027432E97;
-	Tue, 21 Jul 2026 21:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66D143990E;
+	Tue, 21 Jul 2026 21:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668252; cv=none; b=S04cbUXk1EXMk/uxgHia4H7p+vQu8H2R2bXdAyQTL7y1N95+aWP+2VGNI50j2yIq0f7EC3QoL+GHyX7fRgQNSVM6H4FtZvGSlpNzDUtXs/POCPtvgvCoyBqJMnPza5dby2y3Qt7IbVkTsyA4tbjOnSXYu4x4R3xSUtdZ5YAuNig=
+	t=1784668254; cv=none; b=lO4kucH7GuSsWWadp4yqZuX1t/OkdshZhN98zA15QEUdDvvBlMYNhfKDRvydWzt7M5Bj8N271FoD9OatQCBHPNcePKCiemELD+nw9nWg7mhFnaMRLOjUn9GUGsLwCC1xfE3FERnneurI/gjQncSWZQ8DfWEidTD3Rdwb/ci8eyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668252; c=relaxed/simple;
-	bh=whR9t2zYTTzaQdq1djPIt/zJQmWUmuSo+mpnlwRUvr8=;
+	s=arc-20240116; t=1784668254; c=relaxed/simple;
+	bh=Eg1XBPRYgNNEjwE6/2vddP2e2evOsIxolrnAD0gySRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gOzVH42FvbUlEDcvLO1p22mbX3IGdXsQsQpcKEy/IhbphXDi26NMQKwBlaD6K3X2z4m0cInPVAVqhaP7ygNl0PRigwMz/jgTtvIXY7//oxbT8VYeux5rAoTHAcmOrFC/msRhMAOkbWynTK4ead+Lm8i8FqsLyFOGzS7Tn4mvB+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krfyVEg9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OW+bB7yy9UWuqouatHrTNCrEhK6MFF9dphtLTE2T05MftpTxDX/DR6PWHCIl0vC+knkXVJKqwutiP/adyWuuNsniePJ9dpE3xKmMsL4AM/NBoUO8PQLOZQsaa6vllRzCJawMChieZvCZAq+CsSwxpXESDz0LAqfjrJee3o8nPnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOWzuhmz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krfyVEg9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6BF1F000E9;
-	Tue, 21 Jul 2026 21:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOWzuhmz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17FF11F00A3A;
+	Tue, 21 Jul 2026 21:10:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668250;
-	bh=JOjBWfEF5VTpSNCYEFHXiFwpJZt9gjxkFd20liaRTHo=;
+	s=korg; t=1784668253;
+	bh=0zJtMuzMsw6U98e/Q33DG6/OJfaM/hptNnGH+T7/H10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=krfyVEg9flke5WkJobGACAG8UXYds2KThGSLUiXEmgdlXscJvp9O54PmXuFFwPqra
-	 Piv5koCNNmCefGLadMIJbHNzZ1yNMNGXmQr65rfxZ33IVdBXQoWGUQ20SlXdGLfUbK
-	 cILTDhgmIDfEZjZU6Xz14x1QJ8+LnsK3nAvgMfJE=
+	b=pOWzuhmzNC/uQ7qKZUl82fVW9Q5Gsr4yg/GJ8M1vn/uXrxeEkZmR+x7YlRKVNF3+x
+	 mRlZmYCZMVa7TIVz/YaIMcW9Sdw4W8+VsLusb6JHnxVu031nIlbFpmllG/PSVOZQdW
+	 tSICo8JlLJL2EOb1U28WNYGxVp92niO9PlFFUleU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Jelonek <jelonek.jonas@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0051/1067] MIPS: smp: report dying CPU to RCU in stop_this_cpu()
-Date: Tue, 21 Jul 2026 17:10:52 +0200
-Message-ID: <20260721152425.706368708@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	stable <stable@kernel.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 0099/1067] USB: chaoskey: Fix slab-use-after-free in chaoskey_release()
+Date: Tue, 21 Jul 2026 17:11:40 +0200
+Message-ID: <20260721152426.804898074@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,81 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Jelonek <jelonek.jonas@gmail.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 9f3f3bdc6d9dac1a5a8262ee7ad0f2ff1527a7e7 upstream.
+commit abf76d3239dee97b66e7241ad04811f1ce562e28 upstream.
 
-smp_send_stop() parks all secondary CPUs in stop_this_cpu(). The function
-marks the CPU offline for the scheduler via set_cpu_online(false) but
-never informs RCU, so RCU keeps expecting a quiescent state from CPUs
-that are now spinning forever with interrupts disabled.
+The chaoskey driver has a use-after-free bug in its release routine.
+If the user closes the device file after the USB device has been
+unplugged, a debugging log statement will try to access the
+usb_interface structure after it has been deallocated:
 
-As long as nothing waits for an RCU grace period after smp_send_stop()
-this is harmless, which is why it went unnoticed. Since commit
-91840be8f710 ("irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT")
-however, irq_work_sync() calls synchronize_rcu() on architectures without
-an irq_work self-IPI, i.e. where arch_irq_work_has_interrupt() returns
-false. That is the asm-generic default used by MIPS. Any irq_work_sync()
-issued in the reboot/shutdown path after smp_send_stop() then blocks on
-a grace period that can never complete, hanging the reboot:
+	BUG: KASAN: slab-use-after-free in dev_driver_string (drivers/base/core.c:2406)
+	Read of size 8 at addr ffff888168e8a0b8 by task chaoskey_raw_re/10106
 
-  WARNING: CPU: 0 PID: 15 at kernel/irq_work.c:144 irq_work_queue_on
-  ...
-  rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-  rcu: Offline CPU 1 blocking current GP.
-  rcu: Offline CPU 2 blocking current GP.
-  rcu: Offline CPU 3 blocking current GP.
+	Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+	Call Trace:
+	 <TASK>
+	 dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+	 print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+	 kasan_report (mm/kasan/report.c:595)
+	 dev_driver_string (drivers/base/core.c:2406)
+	 __dynamic_dev_dbg (lib/dynamic_debug.c:906)
+	 chaoskey_release (drivers/usb/misc/chaoskey.c:323)
+	 __fput (fs/file_table.c:510)
+	 fput_close_sync (fs/file_table.c:615)
+	 __x64_sys_close (fs/open.c:1507 fs/open.c:1492 fs/open.c:1492)
+	 do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
+	 entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
 
-This issue was noticed on several Realtek MIPS switch SoCs (MIPS
-interAptiv) and came up during kernel bump downstream in OpenWrt from
-6.18.33 to 6.18.34, after the backport of the patch to the 6.18 stable
-branch. The patch also has been backported all the way back to 6.1.
+The driver's last reference to the interface structure is dropped in
+the chaoskey_free() routine, so the code must not use the interface --
+even in a debugging statement -- after that routine returns.
+(Exception: If we know that another reference is held by someone else,
+such as the device core while the disconnect routine runs, there's no
+problem.  Thanks to Johan Hovold for pointing this out.)
 
-Call rcu_report_dead() once interrupts are disabled, mirroring the
-generic CPU-hotplug offline path, so RCU stops waiting on the parked CPUs
-and grace periods can still complete. MIPS shuts down all CPUs here
-without going through the CPU-hotplug mechanism, so this report is not
-otherwise issued. Reporting a dying CPU to RCU outside the regular hotplug
-offline path is not unprecedented: arm64 does the same in cpu_die_early().
-There it is an exception for a CPU that was coming online and is aborting
-bringup, rather than the default shutdown action as on MIPS.
+Since the bad access is part of an unimportant debugging statement,
+we can fix the problem simply by removing the whole statement.
 
-Note: this differs from the upstream commit in that it calls
-rcu_report_dead(smp_processor_id()) instead of rcutree_report_cpu_dead().
-The latter, along with the rcutree_report_cpu_dead() name, was introduced
-by commit 448e9f34d91d ("rcu: Standardize explicit CPU-hotplug calls")
-in v6.7; on this kernel the equivalent function is still named
-rcu_report_dead() and takes an explicit CPU argument.
-
-Fixes: 91840be8f710 ("irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT")
-Signed-off-by: Jonas Jelonek <jelonek.jonas@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Closes: https://lore.kernel.org/linux-usb/20EC9664-054E-438B-B411-2145D347F97B@gmail.com/
+Tested-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 66e3e591891d ("usb: Add driver for Altus Metrum ChaosKey device (v2)")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/bb5b1dc6-eb59-43e1-8d26-51e658e88bbe@rowland.harvard.edu
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kernel/smp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/misc/chaoskey.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/mips/kernel/smp.c b/arch/mips/kernel/smp.c
-index 002c91fcb842ec..06030533bcfacd 100644
---- a/arch/mips/kernel/smp.c
-+++ b/arch/mips/kernel/smp.c
-@@ -19,6 +19,7 @@
- #include <linux/sched/mm.h>
- #include <linux/cpumask.h>
- #include <linux/cpu.h>
-+#include <linux/rcupdate.h>
- #include <linux/err.h>
- #include <linux/ftrace.h>
- #include <linux/irqdomain.h>
-@@ -392,6 +393,7 @@ static void stop_this_cpu(void *dummy)
- 	set_cpu_online(smp_processor_id(), false);
- 	calculate_cpu_foreign_map();
- 	local_irq_disable();
-+	rcu_report_dead(smp_processor_id());
- 	while (1);
+--- a/drivers/usb/misc/chaoskey.c
++++ b/drivers/usb/misc/chaoskey.c
+@@ -321,7 +321,6 @@ bail:
+ 	mutex_unlock(&dev->lock);
+ destruction:
+ 	mutex_unlock(&chaoskey_list_lock);
+-	usb_dbg(interface, "release success");
+ 	return rv;
  }
  
--- 
-2.53.0
-
 
 
