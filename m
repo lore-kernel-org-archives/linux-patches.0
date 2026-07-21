@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01E33B9930;
-	Tue, 21 Jul 2026 21:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF2442DFEC;
+	Tue, 21 Jul 2026 21:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670515; cv=none; b=IJ3VwKezM1RL7TxbA03jqqmDjK3O75ikU4JTWNxkyFTB5RWVtISPlspEgYK7RoYgrhqpISjY/zCvGJc9sGuYs22mLPARIyjHhO11Oxq/dQbD9GGckNJbJn9jeXUmrG9Do+4lw/P9lU6FrQRUhNB41vpPjq5LM5Ux/qQh2KjaZP8=
+	t=1784670517; cv=none; b=WQjwVxm1pgWEhKwUkDSilwJWFZB1yWnplRV1kVi74UUmvcitSXe0BEHrH7qEHT2vwUpX+A6z7GjGCs0qEI+s3u+fsdLaZNFozXpXSbCy+ldfiTZaWjsklo8yJl65cp61cz5n1ZnnCwF/HAXMABLdOjMNn38ofnS86+K550ZIO7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670515; c=relaxed/simple;
-	bh=ORP/5Z3HYFhJ9wC/BDSRd1SOxpz+bm9EzbMDw+/Tb5M=;
+	s=arc-20240116; t=1784670517; c=relaxed/simple;
+	bh=I0EF7fV3IXHySLwUSY8EGSeg8I35siXmhAAWu2K/vhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mrYwXBJ75AckKbVqAS0hFQyKiJbeB8vo3DjPuV6AQkkLZWEryPWQfr5wXrwXkjaW1iBuYu9XGgjtzaywLAEKNMXy8MSDJamtPNQ2gQENQ7+HDGfmeL6BLyXCdP0t5r9iphdISqtuvGGdbRD98cY+Ovtr+4CnfjktQrCDawM/AN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QY+/9x1y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XL0g/wTRyqyELdhiA0OQ2yfx/iOYROcCmxN7knv0ZqmAlWgc4enSoLgnH5/pvYXFIfRHOtQMBNyGzyiawQiRtZ2znzagITGjqf0/6BdVt/FDEt5Pg3DvipPS4E4Pt3bL9IbBHL48/7IXXNcl1MHI6q3ibMsBeONQ2AYoCAUGJOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6ZYPbzE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QY+/9x1y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54AF1F000E9;
-	Tue, 21 Jul 2026 21:48:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6ZYPbzE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A70D1F000E9;
+	Tue, 21 Jul 2026 21:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670513;
-	bh=n1PXAk0xlt8EkZJRBtPNBfd68SdkFgZWcSM+Ei+aSQE=;
+	s=korg; t=1784670516;
+	bh=fPMLef+JuDKkd98MXnmKslIl4B8SIWeun5Ms/UdxTnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QY+/9x1yyiJMTwtRu63bEMGI7jux2eNErxr5N2tmyZUTFoyr74ux6iUdKHHfYQ7Ri
-	 IcWB4OuU7+5qgZ6ngpP+Mq4v2IiOFkvsLv4ToxjxdnPN7GAnsUH+6NDlSx5Ae6R2we
-	 iwWARCp9CSMfAF1uq2NY7w6XeG6sqHhME/fN5FqM=
+	b=Q6ZYPbzE8fNZ1FpWJXttzKZIuk2x0PvXh00iE1buo0nvm8uI3dB6TTjHfAimx9G0J
+	 5TOH9IPydIQwGcFUmkZCEpE+1ivWNFo1B6Zzb16ifq3pnYbp+k2hBtMaX+c/7A6vXM
+	 zENXOID8m9/v8znBN23GsVImoE/BRChOGSJi/MeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.1 0934/1067] mmc: vub300: defer reset until cmd_mutex is unlocked
-Date: Tue, 21 Jul 2026 17:25:35 +0200
-Message-ID: <20260721152445.427070768@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Luka Gejak <luka.gejak@linux.dev>,
+	Alexandru Hossu <hossu.alexandru@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0961/1067] staging: rtl8723bs: fix heap buffer overflow in rtw_cfg80211_set_wpa_ie()
+Date: Tue, 21 Jul 2026 17:26:02 +0200
+Message-ID: <20260721152446.035040797@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,126 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Alexandru Hossu <hossu.alexandru@gmail.com>
 
-commit ee5fb641c4ccac8406c668d3e947eb20ce44f233 upstream.
+[ Upstream commit 5a752a616e756844388a1a45404db9fc29fec655 ]
 
-vub300_cmndwork_thread() holds cmd_mutex while it sends a command and
-waits for the command response.  If the response wait times out,
-__vub300_command_response() kills the command URBs and then synchronously
-resets the USB device through usb_reset_device().
+supplicant_ie is a 256-byte array in struct security_priv. The WPA and
+WPA2 IE copy paths use:
 
-That reset path re-enters the driver through vub300_pre_reset(), which
-also takes cmd_mutex.  The worker therefore tries to acquire the same
-mutex recursively while it is still holding it from the command path.
+    memcpy(padapter->securitypriv.supplicant_ie, &pwpa[0], wpa_ielen + 2);
 
-This issue was found by our static analysis tool and then manually
-reviewed against the current tree.
+where wpa_ielen is the raw IE length field (u8, 0-255). When a local user
+supplies a connect request via nl80211 with a crafted WPA IE of length 255,
+wpa_ielen + 2 equals 257, overflowing the 256-byte buffer by one byte into
+the adjacent last_mic_err_time field.
 
-The grounded PoC kept the real worker and timeout/reset carrier:
+rtw_parse_wpa_ie() does not prevent this: its length consistency check
+compares *(wpa_ie+1) against (u8)(wpa_ie_len-2), which is (u8)(255) == 255
+when wpa_ie_len = 257, so the check passes silently.
 
-  vub300_cmndwork_thread()
-  __vub300_command_response()
-  usb_lock_device_for_reset()
-  usb_reset_device()
-  vub300_pre_reset()
+Add explicit bounds checks for both the WPA and WPA2 paths before the
+memcpy, rejecting any IE whose total size (wpa_ielen + 2) exceeds the
+supplicant_ie buffer.
 
-Lockdep reported the same-task recursive acquisition on cmd_mutex:
-
-  WARNING: possible recursive locking detected
-  ... (&test_vub300.cmd_mutex) ... at: usb_reset_device... [vuln_msv]
-  ... (&test_vub300.cmd_mutex) ... at: vub300_cmndwork_thread+0x12/0x20 [vuln_msv]
-  Workqueue: vub300_cmd_wq vub300_cmndwork_thread [vuln_msv]
-  *** DEADLOCK ***
-
-Return a flag from __vub300_command_response() when the timeout path needs
-a device reset, then perform the reset after vub300_cmndwork_thread() has
-cleared the in-flight command state and dropped cmd_mutex.  The reset is
-still attempted before mmc_request_done(), preserving the existing request
-completion ordering while avoiding the recursive lock.
-
-Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
+Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
+Link: https://patch.msgid.link/20260522004531.1038924-4-hossu.alexandru@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/vub300.c |   26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -1587,7 +1587,7 @@ static int __command_write_data(struct v
- 	return linear_length;
- }
+--- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
++++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
+@@ -1482,6 +1482,10 @@ static int rtw_cfg80211_set_wpa_ie(struc
  
--static void __vub300_command_response(struct vub300_mmc_host *vub300,
-+static bool __vub300_command_response(struct vub300_mmc_host *vub300,
- 				      struct mmc_command *cmd,
- 				      struct mmc_data *data, int data_length)
- {
-@@ -1599,17 +1599,11 @@ static void __vub300_command_response(st
- 					    msecs_to_jiffies(msec_timeout));
- 	if (respretval == 0) { /* TIMED OUT */
- 		/* we don't know which of "out" and "res" if any failed */
--		int result;
- 		vub300->usb_timed_out = 1;
- 		usb_kill_urb(vub300->command_out_urb);
- 		usb_kill_urb(vub300->command_res_urb);
- 		cmd->error = -ETIMEDOUT;
--		result = usb_lock_device_for_reset(vub300->udev,
--						   vub300->interface);
--		if (result == 0) {
--			result = usb_reset_device(vub300->udev);
--			usb_unlock_device(vub300->udev);
--		}
-+		return true;
- 	} else if (respretval < 0) {
- 		/* we don't know which of "out" and "res" if any failed */
- 		usb_kill_urb(vub300->command_out_urb);
-@@ -1705,6 +1699,8 @@ static void __vub300_command_response(st
- 	} else {
- 		cmd->error = -EINVAL;
- 	}
-+
-+	return false;
- }
+ 	pwpa = rtw_get_wpa_ie(buf, &wpa_ielen, ielen);
+ 	if (pwpa && wpa_ielen > 0) {
++		if (wpa_ielen + 2 > sizeof(padapter->securitypriv.supplicant_ie)) {
++			ret = -EINVAL;
++			goto exit;
++		}
+ 		if (rtw_parse_wpa_ie(pwpa, wpa_ielen + 2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
+ 			padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_8021X;
+ 			padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeWPAPSK;
+@@ -1491,6 +1495,10 @@ static int rtw_cfg80211_set_wpa_ie(struc
  
- static void construct_request_response(struct vub300_mmc_host *vub300,
-@@ -1750,6 +1746,7 @@ static void vub300_cmndwork_thread(struc
- 		struct mmc_request *req = vub300->req;
- 		struct mmc_command *cmd = vub300->cmd;
- 		struct mmc_data *data = vub300->data;
-+		bool reset_device;
- 		int data_length;
- 		mutex_lock(&vub300->cmd_mutex);
- 		init_completion(&vub300->command_complete);
-@@ -1772,7 +1769,8 @@ static void vub300_cmndwork_thread(struc
- 			data_length = __command_read_data(vub300, cmd, data);
- 		else
- 			data_length = __command_write_data(vub300, cmd, data);
--		__vub300_command_response(vub300, cmd, data, data_length);
-+		reset_device = __vub300_command_response(vub300, cmd,
-+							 data, data_length);
- 		vub300->req = NULL;
- 		vub300->cmd = NULL;
- 		vub300->data = NULL;
-@@ -1780,6 +1778,16 @@ static void vub300_cmndwork_thread(struc
- 			if (cmd->error == -ENOMEDIUM)
- 				check_vub300_port_status(vub300);
- 			mutex_unlock(&vub300->cmd_mutex);
-+			if (reset_device) {
-+				int result;
-+
-+				result = usb_lock_device_for_reset(vub300->udev,
-+								   vub300->interface);
-+				if (result == 0) {
-+					result = usb_reset_device(vub300->udev);
-+					usb_unlock_device(vub300->udev);
-+				}
-+			}
- 			mmc_request_done(vub300->mmc, req);
- 			kref_put(&vub300->kref, vub300_delete);
- 			return;
+ 	pwpa2 = rtw_get_wpa2_ie(buf, &wpa2_ielen, ielen);
+ 	if (pwpa2 && wpa2_ielen > 0) {
++		if (wpa2_ielen + 2 > sizeof(padapter->securitypriv.supplicant_ie)) {
++			ret = -EINVAL;
++			goto exit;
++		}
+ 		if (rtw_parse_wpa2_ie(pwpa2, wpa2_ielen + 2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
+ 			padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_8021X;
+ 			padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeWPA2PSK;
 
 
