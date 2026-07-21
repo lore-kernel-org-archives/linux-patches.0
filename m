@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB24D46F4A9;
-	Tue, 21 Jul 2026 19:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C63356A12;
+	Tue, 21 Jul 2026 19:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662178; cv=none; b=WVvtV4dD3ap5INf+Alow/1uVZStYWtFpOGD/XcVCo36No9IG40bQ2ons2oB8vUXarWrEy++36L+/soWkD4mA4BoyGdhBxjE/440TZfYoT1DCxpsW+nGOuax9tQGNMLd9/8wPiBQKqgJAwQZnsgx2LFirNpQByRm+1igU5K68yJU=
+	t=1784662181; cv=none; b=D0Yzfg1c11cQ65oB1Nd9cFtCr91kVWY1qndmmgSrfJxeuHkhY+fFnvKofkTbEd+Y8AEpigwGHVkrf25cphZXy+iJFKXbVshjojOjGWGp2tJJ8mqOElIvhqlUjBsDksbwUTEmd9jCy5QQVSB1yN7K88TfeOKY6Ff3SpYjwTlkrFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662178; c=relaxed/simple;
-	bh=4Zh2VkBB2Z0U2pAo4wShbluw6mPbM1mCEEez0yaqWhU=;
+	s=arc-20240116; t=1784662181; c=relaxed/simple;
+	bh=l+XMrL/EzM3OD9w09iF5meHBMQy4TW0FS39u6yopQPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IdRYlO9kdm+lyw9BJkSu5arZtXvIKP2N5Jq1k+6wYV3AHZumD475zBSb1j93duJRIFD7s2Woop2DHGYO/2WOJ4ySmhwb3+fwDfK1WUvNsj36r4dDeViuYUiqNGB4aV1ttI8ldyHBRKnlgyqW2P3Lj79VdrI3UPPc43DHuMWLmpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFELCMAW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o/Q6kdR/ck+h6MblUp4PFdgddlq82U+pJ0/co53woSg5dbsdfGxN6NYFUG55SyfGqbpvnktzFiN+5CfvsndMT7N/RuGxh0X4DC+q2C74Lxbf+ncH9g4QM9mG5IZxrDhvuFQfABC8Y5GiE/Dzt9vGRA+PnxCKcQeR1IGEzgJ4lBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whuKOvyw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFELCMAW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7B291F000E9;
-	Tue, 21 Jul 2026 19:29:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whuKOvyw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717F31F00A3A;
+	Tue, 21 Jul 2026 19:29:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662177;
-	bh=vrTBE7SoHuH67rdAlh2CVv6oRyRkbzZC5T3utu54PXg=;
+	s=korg; t=1784662179;
+	bh=zWVppLKpy4Gzt7uCsBihCRl8z6QKRCWEvNWZpelc0X4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zFELCMAWyUVfgVht2uc0UJASM6noK01Gh8AbAe7bTur5LGG8h+7/V7WKzp/EdKPBp
-	 eg4m9RIJh5RHpLh4HR88venUAHeUv+ojveuX4NnBO85EaTfNFDtEgc0Ryh0SVyoCOH
-	 FzKH1iyhWBl7i0OB7R2yZbV7Hc4BVxaTpvk3NMTQ=
+	b=whuKOvywKrhPYLBje4kwVb+aFTHJ7IG9yj7MDe4yceU0wb9YOO+mEC4ezrswBTpgc
+	 uRkzr2KkDRoJK1MSwB5kYhKVS7e8TvuYb4FflFHDCuAvCN+/8AGIyC5ybuWwib0iEw
+	 YmCDiUUY6vXHsLd5933EbeLcT4cPBcOLdjX1SlIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	HanQuan <eilaimemedsnaimel@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0346/1276] crypto: rng - Free default RNG on module exit
-Date: Tue, 21 Jul 2026 17:13:09 +0200
-Message-ID: <20260721152453.852653447@linuxfoundation.org>
+Subject: [PATCH 6.12 0347/1276] ALSA: seq: Fix kernel heap address leak in bounce_error_event()
+Date: Tue, 21 Jul 2026 17:13:10 +0200
+Message-ID: <20260721152453.877710451@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,41 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: HanQuan <eilaimemedsnaimel@gmail.com>
 
-[ Upstream commit 606ba888b98e0d26a2c4e5c8dc0542e3ad8f0f3a ]
+[ Upstream commit efc86691e4d8083d9e380ea95042c2cf679f65fd ]
 
-When the rng module is removed the default RNG will be leaked.
-Call crypto_del_default_rng to free it if possible.
+The comment above bounce_error_event() documents that user clients
+should receive SNDRV_SEQ_EVENT_BOUNCE with the original event embedded
+as variable-length data, while kernel clients should receive
+SNDRV_SEQ_EVENT_KERNEL_ERROR with a quoted kernel pointer.
 
-Fixes: 7cecadb7cca8 ("crypto: rng - Do not free default RNG when it becomes unused")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+However, the implementation unconditionally uses
+SNDRV_SEQ_EVENT_KERNEL_ERROR with data.quote.event set to the raw
+struct snd_seq_event pointer for all clients.  When a bounce error
+event is delivered to a USER_CLIENT via snd_seq_read(), the kernel
+heap address in data.quote.event is exposed to userspace through
+copy_to_user() in the fixed-length branch.
+
+This is a distinct leak path from the one addressed by commit
+705dd6dcbc0e ("ALSA: seq: Clear variable event pointer on read"),
+which sanitizes data.ext.ptr in the variable-length branch of
+snd_seq_read().  The bounce_error_event() leak uses fixed-length
+events that take the else branch where no sanitization occurs.
+
+Differentiate the bounce event by client type.  For USER_CLIENT,
+send SNDRV_SEQ_EVENT_BOUNCE with SNDRV_SEQ_EVENT_LENGTH_VARIABLE
+and data.ext pointing to the original event.  The variable-length
+path in snd_seq_event_dup() copies the event data into chained
+cells, and snd_seq_expand_var_event() copies only the content --
+never the pointer -- to userspace.  For KERNEL_CLIENT, keep the
+existing SNDRV_SEQ_EVENT_KERNEL_ERROR behavior with the quoted
+pointer.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: HanQuan <eilaimemedsnaimel@gmail.com>
+Link: https://patch.msgid.link/20260612103222.2528305-1-eilaimemedsnaimel@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/rng.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/core/seq/seq_clientmgr.c | 32 +++++++++++++++++++++++++++-----
+ 1 file changed, 27 insertions(+), 5 deletions(-)
 
-diff --git a/crypto/rng.c b/crypto/rng.c
-index 72da96fdfb5ddc..b0bc13d14db5f2 100644
---- a/crypto/rng.c
-+++ b/crypto/rng.c
-@@ -225,5 +225,16 @@ void crypto_unregister_rngs(struct rng_alg *algs, int count)
- }
- EXPORT_SYMBOL_GPL(crypto_unregister_rngs);
+diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
+index 18755d26662766..530a7d9be67752 100644
+--- a/sound/core/seq/seq_clientmgr.c
++++ b/sound/core/seq/seq_clientmgr.c
+@@ -589,16 +589,38 @@ static int bounce_error_event(struct snd_seq_client *client,
  
-+static void __exit rng_exit(void)
-+{
-+	int err;
+ 	/* set up quoted error */
+ 	memset(&bounce_ev, 0, sizeof(bounce_ev));
+-	bounce_ev.type = SNDRV_SEQ_EVENT_KERNEL_ERROR;
+-	bounce_ev.flags = SNDRV_SEQ_EVENT_LENGTH_FIXED;
 +
-+	err = crypto_del_default_rng();
-+	if (err)
-+		pr_err("Failed delete default RNG: %d\n", err);
-+}
++	if (client->type == USER_CLIENT) {
++		/*
++		 * For user clients, send SNDRV_SEQ_EVENT_BOUNCE with the
++		 * original event embedded as variable-length data.  This
++		 * avoids exposing data.quote.event (a kernel pointer) to
++		 * userspace.  The variable-length path in snd_seq_event_dup()
++		 * copies the event data from data.ext.ptr into chained cells,
++		 * and snd_seq_expand_var_event() copies only the data content
++		 * -- never the pointer -- to userspace.
++		 */
++		bounce_ev.type = SNDRV_SEQ_EVENT_BOUNCE;
++		bounce_ev.flags = SNDRV_SEQ_EVENT_LENGTH_VARIABLE;
++		bounce_ev.data.ext.len = sizeof(struct snd_seq_event);
++		bounce_ev.data.ext.ptr = (char *)event;
++	} else {
++		/*
++		 * For kernel clients, quote the event pointer directly.
++		 * Kernel consumers can safely dereference the pointer.
++		 */
++		bounce_ev.type = SNDRV_SEQ_EVENT_KERNEL_ERROR;
++		bounce_ev.flags = SNDRV_SEQ_EVENT_LENGTH_FIXED;
++		bounce_ev.data.quote.origin = event->dest;
++		bounce_ev.data.quote.event = event;
++		bounce_ev.data.quote.value = -err; /* use positive value */
++	}
 +
-+module_exit(rng_exit);
-+
- MODULE_LICENSE("GPL");
- MODULE_DESCRIPTION("Random Number Generator");
+ 	bounce_ev.queue = SNDRV_SEQ_QUEUE_DIRECT;
+ 	bounce_ev.source.client = SNDRV_SEQ_CLIENT_SYSTEM;
+ 	bounce_ev.source.port = SNDRV_SEQ_PORT_SYSTEM_ANNOUNCE;
+ 	bounce_ev.dest.client = client->number;
+ 	bounce_ev.dest.port = event->source.port;
+-	bounce_ev.data.quote.origin = event->dest;
+-	bounce_ev.data.quote.event = event;
+-	bounce_ev.data.quote.value = -err; /* use positive value */
+ 	result = snd_seq_deliver_single_event(NULL, &bounce_ev, atomic, hop + 1);
+ 	if (result < 0) {
+ 		client->event_lost++;
 -- 
 2.53.0
 
