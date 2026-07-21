@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3163046E01C;
-	Tue, 21 Jul 2026 17:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8641F46DFF2;
+	Tue, 21 Jul 2026 17:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656730; cv=none; b=jOcvWuG8FLYiwlWeBpHyW/fQDt0iix6SXrtuqEXABLmck/RVlzVwV4nwLT2ES9b5A8Ir+IUQMlTVGv7i0iaH7Mg5HMDZ41IU+gNL/ovpvJKoymKo0ShuehZ4a6OExmUPgq2RK87uj3tG0M0MK7KE+Ja92I7uJzdE/L4RcSmx2pA=
+	t=1784656731; cv=none; b=Dv4JntjFgX5Th7gRRNHEHQEE8vSsnIVRwvWRzdpLBLw1GKTq6xAUGtbnmXfh33Jp0kzeHh2EwyA75ESbDy6d4zQj83Vcnc3JuBMMqcMx0gR27Do7WybTowJgOuauzgKiW/CbVZgt9UvltMu39HvFiZMRlLGeTZL9Vsc0Yx/LbHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656730; c=relaxed/simple;
-	bh=XI+FCXB+g6FiKKFWxw8Saev/kX7+nfpxZO4gm/pJaSk=;
+	s=arc-20240116; t=1784656731; c=relaxed/simple;
+	bh=mjmGKDzNJuBdJSg2TYYDcmP5F9eETlrjDzgQSDBJcG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IoA3ALrtHAl/NlH10U8YX6QxYrhHjGwCNeX00xSZpRGFsxqpZBlusM9M98o63Wx2zgi1o5PbJo2kCii8/LHaUzxZcYBSUYzluT1OFihoOenMNwnhd61cwnG3jlpv0Uer5yr8I5zd9I54OK4HdW8aG2860H1cycGqs6O6MNbDxyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OV0Zx6l0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MuL31mLHH6xHfc9LZnVWclmCv/2pffR7dim45eh+X2wwmq0QvCF6+9UO5XhVsL89mzdji6TCXnxzDzDnRSsjza/3LbheLHGjhkNt1KsRvUzxVOmQkmSzbRdK+FWpPESPuwdjdF5i6braLL8XReWMZ20Dpo6H2bRDdfyTseKNTRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZOw1fcx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OV0Zx6l0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B101F00A3A;
-	Tue, 21 Jul 2026 17:58:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZOw1fcx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4441F000E9;
+	Tue, 21 Jul 2026 17:58:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656729;
-	bh=Tm5M3qKV/+LEL/rD0FcoeRBGsRKTKIVt4b/b8ZVdqEk=;
+	s=korg; t=1784656726;
+	bh=1gqP7ZHGCyZcmLnHoGo3YeM+J28XZ50FCyiA2YCDLvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OV0Zx6l0jVfU2guPqSHxqwxDGGe+9gUW1hepC9QvkpAQMmHAFKBO5GlWaT2hpaoKj
-	 AXNBxn+1KGI4WYtm3QVSSDC1BL8RsNMezGD/62B+9odQfqMMJkjkH5FU1y2wxhDzs9
-	 AX7SuScqXCeAraMnfo4IWE2HuwBLhaoZLWAe9G5E=
+	b=2ZOw1fcxxMKAaDa4JVAom02YBs+lwFaadF9V6G7Rqc4m6WEhvXESiHycV3PLauEWE
+	 sU9oi7xblzY7sDwR7Ox9sEnkzpes0W2zAGrq0PlirfMG107tAHNhb53epmDg0BFfri
+	 87AOa0PiORKsX8v1cm1stiTb3Uyn0FR3NwDDcO7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0496/1611] ALSA: usb-audio: qcom: Guard sideband endpoint removal
-Date: Tue, 21 Jul 2026 17:10:12 +0200
-Message-ID: <20260721152526.497822647@linuxfoundation.org>
+Subject: [PATCH 6.18 0495/1611] crypto: rng - Free default RNG on module exit
+Date: Tue, 21 Jul 2026 17:10:11 +0200
+Message-ID: <20260721152526.475721696@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -45,72 +44,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 2773023abb381e36ce02d364022d901f6f7a416d ]
+[ Upstream commit 606ba888b98e0d26a2c4e5c8dc0542e3ad8f0f3a ]
 
-qmi_stop_session() conditionally looks up the cached data and sync
-endpoints, but removes each endpoint unconditionally.
+When the rng module is removed the default RNG will be leaked.
+Call crypto_del_default_rng to free it if possible.
 
-The data endpoint is always present for an active offload stream, while
-the sync endpoint is optional. When no sync endpoint exists, ep still
-refers to the data endpoint and the code attempts to remove that endpoint
-a second time. The current sideband implementation rejects the duplicate
-removal, but the teardown path should not pass an unrelated endpoint for
-an absent sync endpoint.
-
-Only look up and remove an endpoint when its cached pipe exists, check the
-lookup result, and clear the cached pipe after handling it. This matches
-the normal stream-disable path.
-
-Fixes: 326bbc348298 ("ALSA: usb-audio: qcom: Introduce QC USB SND offloading support")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260611-alsa-usb-qcom-guard-sideband-endpoint-removal-v1-1-00e73787c156@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 7cecadb7cca8 ("crypto: rng - Do not free default RNG when it becomes unused")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/qcom/qc_audio_offload.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ crypto/rng.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
-index e70649c4afcdc6..962b5f27f04478 100644
---- a/sound/usb/qcom/qc_audio_offload.c
-+++ b/sound/usb/qcom/qc_audio_offload.c
-@@ -794,15 +794,23 @@ static void qmi_stop_session(void)
- 				continue;
- 			}
- 			/* Release XHCI endpoints */
--			if (info->data_ep_pipe)
-+			if (info->data_ep_pipe) {
- 				ep = usb_pipe_endpoint(uadev[pcm_card_num].udev,
- 						       info->data_ep_pipe);
--			xhci_sideband_remove_endpoint(uadev[pcm_card_num].sb, ep);
-+				if (ep)
-+					xhci_sideband_remove_endpoint(uadev[pcm_card_num].sb,
-+								      ep);
-+				info->data_ep_pipe = 0;
-+			}
+diff --git a/crypto/rng.c b/crypto/rng.c
+index ee1768c5a4005b..b021936094b077 100644
+--- a/crypto/rng.c
++++ b/crypto/rng.c
+@@ -226,5 +226,16 @@ void crypto_unregister_rngs(struct rng_alg *algs, int count)
+ }
+ EXPORT_SYMBOL_GPL(crypto_unregister_rngs);
  
--			if (info->sync_ep_pipe)
-+			if (info->sync_ep_pipe) {
- 				ep = usb_pipe_endpoint(uadev[pcm_card_num].udev,
- 						       info->sync_ep_pipe);
--			xhci_sideband_remove_endpoint(uadev[pcm_card_num].sb, ep);
-+				if (ep)
-+					xhci_sideband_remove_endpoint(uadev[pcm_card_num].sb,
-+								      ep);
-+				info->sync_ep_pipe = 0;
-+			}
- 
- 			disable_audio_stream(subs);
- 		}
++static void __exit rng_exit(void)
++{
++	int err;
++
++	err = crypto_del_default_rng();
++	if (err)
++		pr_err("Failed delete default RNG: %d\n", err);
++}
++
++module_exit(rng_exit);
++
+ MODULE_LICENSE("GPL");
+ MODULE_DESCRIPTION("Random Number Generator");
 -- 
 2.53.0
 
