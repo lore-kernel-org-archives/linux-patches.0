@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9D2439908;
-	Tue, 21 Jul 2026 22:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A823E43B490;
+	Tue, 21 Jul 2026 22:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674063; cv=none; b=FZf2dIpPMw6kttiJqYkw7tlOHELWk36uuSXEjaxRUp4LQPJD/O7My5HYNDrcymOmm+JYlT1lDaMieaDxsEJ1AndEbWhKl3tW6De4g9hcjSL6gIaxWwsPRiNvavLemtBP9CH8mHe3n1+yiIAnlzDiJJSMG09+IelU1RxgBswQqC4=
+	t=1784674067; cv=none; b=Skjp/00Y6g3fK9swVegUTzYmx8nYBFaSyn9HdLZqghAK+SaFjAN0cw1wPJUOv7iTDb4gH5SUtlZDdU4Klr1g+GwRnxWapRvI1kzjoCNh/dSq5sssCDxTX+k6aBVmT8ApOz+okyqVdDfYgU5eF09gRxD/Tf+bkIL3pTkWygjiGfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674063; c=relaxed/simple;
-	bh=0nC4DdKiWdV5TW3eUiCgcN3HBjEMVCt2Gnr1WrZ4EQI=;
+	s=arc-20240116; t=1784674067; c=relaxed/simple;
+	bh=XDy+5uPI9lCkvqsgEPnMq+Wt79Z0KTi+8u70yxtzrP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LG19OSUu9/3zvAO227X1U1yAEHRVa6H6r2lq2pJB+225TpBQaL1bUSIzT91kSqlFDKekXnbAEwQZGXJr00ClVtPebyVZJi4UhANFNeZSFFUy6IFlUEWzN0RA0wAc7aKB3HgcskyqxO2K3k7inhbFGAs3QgDayN2NvmymVxXu5k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYwBRymF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l1PBZEbG4AQ1phrRXE85c5/ldBBJc5ROHmvC+gSyBMWdrgv7cOUGg9CDF1+b3G8Q2uIcXGoYUUlljoQyC9PlCtDnsvSHFu43h+vO3grzw2ajeJMfa2n+/kQ302rpLrbLEWvVjQeBjfsI9Yxv0noTGU7YDgUehNkOj+AIvm1IYwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxlI6AE/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYwBRymF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59521F000E9;
-	Tue, 21 Jul 2026 22:47:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxlI6AE/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 797401F00A3F;
+	Tue, 21 Jul 2026 22:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674059;
-	bh=u5rkAESFA8okXUE5kqtgb8TB2VMbsaI044poWUZyLVY=;
+	s=korg; t=1784674062;
+	bh=vBUr4LD6Vh825iANlJ/DSwWNvX/8Dd0jIRqVLfDLzyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JYwBRymFKa7ftHfZNudMoPwrj1x7664rpO54qVfwQYTl9HLBy97uiUGoovLMvr3gb
-	 r0bVFBqPpYYvtpl/ZOhDOjjFYvA7TYwakdLMgiQNtk2Di7KBAcn5ZhZHSohytfb8p/
-	 G9Tny/2I4lswktkXnJCZt81XztBc+A9p46mK1lNw=
+	b=KxlI6AE/sqdnRmxUtRdMsNRdi6Evdk2eitkuCzGZwSjJBZ03IQ7/epUfkTNCrw7RO
+	 Qsad/yZypndJ8p5PijK7TVc2+zClzCTmUpQW/OT6IVtXx/XowmkvxNqThUFCj0flBv
+	 oZW5RZLuL+uRJZ0jwdlwmDD2h0gBiM7KOPm0o4KU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Magnus Lindholm <linmag7@gmail.com>,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Alex Elder <elder@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 361/699] alpha/PCI: Fix __pci_mmap_fits() overflow for zero-length BARs
-Date: Tue, 21 Jul 2026 17:22:00 +0200
-Message-ID: <20260721152403.836048866@linuxfoundation.org>
+Subject: [PATCH 5.10 397/699] net: qualcomm: rmnet: simplify some byte order logic
+Date: Tue, 21 Jul 2026 17:22:36 +0200
+Message-ID: <20260721152404.651430368@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -48,58 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Alex Elder <elder@linaro.org>
 
-[ Upstream commit 802a3b3f470b9bc1148f26e01fc9cbfeb4dfcb57 ]
+[ Upstream commit 50c62a111c4855510b0d8a2d8e50214172166b61 ]
 
-Currently, __pci_mmap_fits() computes the BAR size using
-"pci_resource_len() - 1", which wraps to a large value when the BAR length
-is zero, causing the bounds check to incorrectly succeed.
+In rmnet_map_ipv4_ul_csum_header() and rmnet_map_ipv6_ul_csum_header()
+the offset within a packet at which checksumming should commence is
+calculated.  This calculation involves byte swapping and a forced type
+conversion that makes it hard to understand.
 
-Add an early return for empty resources.
+Simplify this by computing the offset in host byte order, then
+converting the result when assigning it into the header field.
 
-Fixes: 10a0ef39fbd1 ("PCI/alpha: pci sysfs resources")
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Tested-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Acked-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://patch.msgid.link/20260508043543.217179-15-kwilczynski@kernel.org
+Signed-off-by: Alex Elder <elder@linaro.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: f0f1887a9e30 ("net: qualcomm: rmnet: validate MAP frame length before ingress parsing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/kernel/pci-sysfs.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ .../net/ethernet/qualcomm/rmnet/rmnet_map_data.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/arch/alpha/kernel/pci-sysfs.c b/arch/alpha/kernel/pci-sysfs.c
-index f1fd9543067424..cc0b0d3c52f2f1 100644
---- a/arch/alpha/kernel/pci-sysfs.c
-+++ b/arch/alpha/kernel/pci-sysfs.c
-@@ -37,12 +37,16 @@ static int hose_mmap_page_range(struct pci_controller *hose,
- static int __pci_mmap_fits(struct pci_dev *pdev, int num,
- 			   struct vm_area_struct *vma, int sparse)
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
+index 21d38167f96180..0bfe69698b278f 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
+@@ -197,12 +197,10 @@ rmnet_map_ipv4_ul_csum_header(void *iphdr,
+ 			      struct rmnet_map_ul_csum_header *ul_header,
+ 			      struct sk_buff *skb)
  {
-+	resource_size_t len = pci_resource_len(pdev, num);
- 	unsigned long nr, start, size;
- 	int shift = sparse ? 5 : 0;
+-	struct iphdr *ip4h = (struct iphdr *)iphdr;
+-	__be16 *hdr = (__be16 *)ul_header, offset;
++	__be16 *hdr = (__be16 *)ul_header;
++	struct iphdr *ip4h = iphdr;
  
-+	if (!len)
-+		return 0;
-+
- 	nr = vma_pages(vma);
- 	start = vma->vm_pgoff;
--	size = ((pci_resource_len(pdev, num) - 1) >> (PAGE_SHIFT - shift)) + 1;
-+	size = ((len - 1) >> (PAGE_SHIFT - shift)) + 1;
+-	offset = htons((__force u16)(skb_transport_header(skb) -
+-				     (unsigned char *)iphdr));
+-	ul_header->csum_start_offset = offset;
++	ul_header->csum_start_offset = htons(skb_network_header_len(skb));
+ 	ul_header->csum_insert_offset = skb->csum_offset;
+ 	ul_header->csum_enabled = 1;
+ 	if (ip4h->protocol == IPPROTO_UDP)
+@@ -239,12 +237,10 @@ rmnet_map_ipv6_ul_csum_header(void *ip6hdr,
+ 			      struct rmnet_map_ul_csum_header *ul_header,
+ 			      struct sk_buff *skb)
+ {
+-	struct ipv6hdr *ip6h = (struct ipv6hdr *)ip6hdr;
+-	__be16 *hdr = (__be16 *)ul_header, offset;
++	__be16 *hdr = (__be16 *)ul_header;
++	struct ipv6hdr *ip6h = ip6hdr;
  
- 	if (start < size && size - start >= nr)
- 		return 1;
+-	offset = htons((__force u16)(skb_transport_header(skb) -
+-				     (unsigned char *)ip6hdr));
+-	ul_header->csum_start_offset = offset;
++	ul_header->csum_start_offset = htons(skb_network_header_len(skb));
+ 	ul_header->csum_insert_offset = skb->csum_offset;
+ 	ul_header->csum_enabled = 1;
+ 
 -- 
 2.53.0
 
