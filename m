@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84534443A91;
-	Tue, 21 Jul 2026 22:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AF4443AAD;
+	Tue, 21 Jul 2026 22:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673109; cv=none; b=pcNcRzP57y3aN2qO4Z6cS9e5D678uxeWu84HEuEkO6TD5YWtRUCsqNizCA5BXdwpAN25ZDNYNdQQMzw9nYBfBUHDn4+SuNdLbpOBZMw5oZ4bz3hrwDwjzie1jPA8wwnkiWvcRZ8Cqz3AdT8+81BH2ri434fldxo8HhqhXJfRjhk=
+	t=1784673112; cv=none; b=D/BMIF1YyLp5H4txkk7MbOxEJAZdX4cc4u1gfYlqx9JhpTNT7QtqjAOT2uG/HUIbJsEfxdCS9P3jApt9vZghEnmMXLPRaIfzp0uXjU9cs2RViUuHZ4awVhuYMALcNH1f4YTtbihpJ1Qifw+t5b8N6LddI3+qtQNKAPfTNBHXqV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673109; c=relaxed/simple;
-	bh=T0ok0OM0HKwTKrd41+EcmFlxk4m3iQH1IgnuwuDAiRI=;
+	s=arc-20240116; t=1784673112; c=relaxed/simple;
+	bh=Ifp9VtVNSxcYOksMYq2TjTUFPYuWL5PAHoIwfqCagkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oxKPCwiFynKCE6oBvALIbiq9aWhJEPBa3bmDPohCHycEqo4y9rBxpV9/zVDbLjMEB1cEAPG5E+LQp+DF+67/djyWgPPSo3phVTmgHS+NebH9DI5CuOeZa03HeM5/zLn0Kb/2GOV6u2ygYEkd0TlO+xdkWQQ7kQHMGg7ZFD7AaZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BO1zkeuO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LTrUhTb4ONk9g65RmFXHTbw8HmDLuos1wP7UfS/jUHTUzzcj8BYL09bljbZQsQduyjIBoVROuO5FZMmBpFJAch+kz0fdItDdnlclTHMgFuBAG4zWgGHaVD7P4kqB3dwn/L+AbNPNgppeg+AozJuptvFYjFpIWpga0puGJHI4Xqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oAWOWEGw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BO1zkeuO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E321F000E9;
-	Tue, 21 Jul 2026 22:31:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oAWOWEGw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5E41F000E9;
+	Tue, 21 Jul 2026 22:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673108;
-	bh=BdzFKPAnFJH2TJfDhOe8mpS3ZfifEF5IrlfgXMoxOjw=;
+	s=korg; t=1784673111;
+	bh=/fjysGECZdRkySs0vU60Zo4wl5a8NKKI72cn0dYY3tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BO1zkeuORAs/7DWZXnT5C6Sirwv7BBmMPV+s8ErlKIIW4qLQvFOBBEz28wDvNonO6
-	 fZk9Kt4dUlcrEd3UWq9qOX7iZVgbKl1EuJm+wi8B0ZXDwUT6aMmli8tWLA9sgIfn8x
-	 Dm6uoxyXsMwX9+wMiwW2p5B1oSgSgZkWW63BC38A=
+	b=oAWOWEGwXvSxe1csw7mUDj5x4HNilS7k0Iu/1FOg301F1hB0BeDqRCEAgqw7ovvR9
+	 7ldkoOtOuA1CnrqP/EzbCiy8LRsKrwfmoz5uopjvSxbT6ch+1sW+bLAk/WqyI4sSRh
+	 RPVMTrHW5jF9CaBhDZcL7RXD0nsEDwPIgJ0Cgz9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Alexander Martyniuk <alexevgmart@gmail.com>
-Subject: [PATCH 5.10 012/699] netfilter: nf_log: validate MAC header was set before dumping it
-Date: Tue, 21 Jul 2026 17:16:11 +0200
-Message-ID: <20260721152355.959441686@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 013/699] skmsg: convert struct sk_msg_sg::copy to a bitmap
+Date: Tue, 21 Jul 2026 17:16:12 +0200
+Message-ID: <20260721152355.983308736@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,80 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Eric Dumazet <edumazet@google.com>
 
-commit a84b6fedbc97078788be78dbdd7517d143ad1a77 upstream.
+[ Upstream commit 5a8fb33e530512ee67a11b30f3451a4f030f4b01 ]
 
-The fallback path of dump_mac_header() guards the MAC header access
-only with "skb->mac_header != skb->network_header", without checking
-skb_mac_header_was_set(). When the MAC header is unset, mac_header is
-0xffff, so the test passes and skb_mac_header(skb) returns
-skb->head + 0xffff, ~64 KiB past the buffer; the loop then reads
-dev->hard_header_len bytes out of bounds into the kernel log.
+We have plans for increasing MAX_SKB_FRAGS, but sk_msg_sg::copy
+is currently an unsigned long, limiting MAX_SKB_FRAGS to 30 on 32bit arches.
 
-This is reachable via the netdev logger: nf_log_unknown_packet() calls
-dump_mac_header() unconditionally, and an skb sent through AF_PACKET
-with PACKET_QDISC_BYPASS reaches the egress hook with mac_header still
-unset (__dev_queue_xmit(), which would reset it, is bypassed).
+Convert it to a bitmap, as Jakub suggested.
 
-Add the skb_mac_header_was_set() check the ARPHRD_ETHER path already
-uses, and replace the open-coded MAC header length test with
-skb_mac_header_len(). Only skbs with an unset MAC header are affected;
-valid ones are dumped as before.
-
- BUG: KASAN: slab-out-of-bounds in dump_mac_header (net/netfilter/nf_log_syslog.c:831)
- Read of size 1 at addr ffff88800ea49d3f by task exploit/148
- Call Trace:
-  kasan_report (mm/kasan/report.c:595)
-  dump_mac_header (net/netfilter/nf_log_syslog.c:831)
-  nf_log_netdev_packet (net/netfilter/nf_log_syslog.c:938 net/netfilter/nf_log_syslog.c:963)
-  nf_log_packet (net/netfilter/nf_log.c:260)
-  nft_log_eval (net/netfilter/nft_log.c:60)
-  nft_do_chain (net/netfilter/nf_tables_core.c:285)
-  nft_do_chain_netdev (net/netfilter/nft_chain_filter.c:307)
-  nf_hook_slow (net/netfilter/core.c:619)
-  nf_hook_direct_egress (net/packet/af_packet.c:257)
-  packet_xmit (net/packet/af_packet.c:280)
-  packet_sendmsg (net/packet/af_packet.c:3114)
-  __sys_sendto (net/socket.c:2265)
-
-Fixes: 7eb9282cd0ef ("netfilter: ipt_LOG/ip6t_LOG: add option to print decoded MAC header")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 406e8a651a7b ("net: skmsg: preserve sg.copy across SG transforms")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/netfilter/nf_log_ipv4.c |    4 ++--
- net/ipv6/netfilter/nf_log_ipv6.c |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ include/linux/skmsg.h |   11 +++++------
+ net/core/filter.c     |    4 ++--
+ 2 files changed, 7 insertions(+), 8 deletions(-)
 
---- a/net/ipv4/netfilter/nf_log_ipv4.c
-+++ b/net/ipv4/netfilter/nf_log_ipv4.c
-@@ -296,8 +296,8 @@ static void dump_ipv4_mac_header(struct
+--- a/include/linux/skmsg.h
++++ b/include/linux/skmsg.h
+@@ -29,7 +29,7 @@ struct sk_msg_sg {
+ 	u32				end;
+ 	u32				size;
+ 	u32				copybreak;
+-	unsigned long			copy;
++	DECLARE_BITMAP(copy, MAX_MSG_FRAGS + 2);
+ 	/* The extra two elements:
+ 	 * 1) used for chaining the front and sections when the list becomes
+ 	 *    partitioned (e.g. end < start). The crypto APIs require the
+@@ -38,7 +38,6 @@ struct sk_msg_sg {
+ 	 */
+ 	struct scatterlist		data[MAX_MSG_FRAGS + 2];
+ };
+-static_assert(BITS_PER_LONG >= NR_MSG_FRAG_IDS);
  
- fallback:
- 	nf_log_buf_add(m, "MAC=");
--	if (dev->hard_header_len &&
--	    skb->mac_header != skb->network_header) {
-+	if (dev->hard_header_len && skb_mac_header_was_set(skb) &&
-+	    skb_mac_header_len(skb) != 0) {
- 		const unsigned char *p = skb_mac_header(skb);
- 		unsigned int i;
+ /* UAPI in filter.c depends on struct sk_msg_sg being first element. */
+ struct sk_msg {
+@@ -235,7 +234,7 @@ static inline void sk_msg_compute_data_p
+ {
+ 	struct scatterlist *sge = sk_msg_elem(msg, msg->sg.start);
  
---- a/net/ipv6/netfilter/nf_log_ipv6.c
-+++ b/net/ipv6/netfilter/nf_log_ipv6.c
-@@ -309,8 +309,8 @@ static void dump_ipv6_mac_header(struct
+-	if (test_bit(msg->sg.start, &msg->sg.copy)) {
++	if (test_bit(msg->sg.start, msg->sg.copy)) {
+ 		msg->data = NULL;
+ 		msg->data_end = NULL;
+ 	} else {
+@@ -254,7 +253,7 @@ static inline void sk_msg_page_add(struc
+ 	sg_set_page(sge, page, len, offset);
+ 	sg_unmark_end(sge);
  
- fallback:
- 	nf_log_buf_add(m, "MAC=");
--	if (dev->hard_header_len &&
--	    skb->mac_header != skb->network_header) {
-+	if (dev->hard_header_len && skb_mac_header_was_set(skb) &&
-+	    skb_mac_header_len(skb) != 0) {
- 		const unsigned char *p = skb_mac_header(skb);
- 		unsigned int len = dev->hard_header_len;
- 		unsigned int i;
+-	__set_bit(msg->sg.end, &msg->sg.copy);
++	__set_bit(msg->sg.end, msg->sg.copy);
+ 	msg->sg.size += len;
+ 	sk_msg_iter_next(msg, end);
+ }
+@@ -263,9 +262,9 @@ static inline void sk_msg_sg_copy(struct
+ {
+ 	do {
+ 		if (copy_state)
+-			__set_bit(i, &msg->sg.copy);
++			__set_bit(i, msg->sg.copy);
+ 		else
+-			__clear_bit(i, &msg->sg.copy);
++			__clear_bit(i, msg->sg.copy);
+ 		sk_msg_iter_var_next(i);
+ 		if (i == msg->sg.end)
+ 			break;
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2677,7 +2677,7 @@ BPF_CALL_4(bpf_msg_pull_data, struct sk_
+ 	 * account for the headroom.
+ 	 */
+ 	bytes_sg_total = start - offset + bytes;
+-	if (!test_bit(i, &msg->sg.copy) && bytes_sg_total <= len)
++	if (!test_bit(i, msg->sg.copy) && bytes_sg_total <= len)
+ 		goto out;
+ 
+ 	/* At this point we need to linearize multiple scatterlist
+@@ -2900,7 +2900,7 @@ place_new:
+ 	/* Place newly allocated data buffer */
+ 	sk_mem_charge(msg->sk, len);
+ 	msg->sg.size += len;
+-	__clear_bit(new, &msg->sg.copy);
++	__clear_bit(new, msg->sg.copy);
+ 	sg_set_page(&msg->sg.data[new], page, len + copy, 0);
+ 	if (rsge.length) {
+ 		get_page(sg_page(&rsge));
 
 
