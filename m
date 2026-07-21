@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9594F46D2A4;
-	Tue, 21 Jul 2026 17:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2C8336888;
+	Tue, 21 Jul 2026 17:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653963; cv=none; b=ea0N3KDIV5z7DLipPdTlE4eKtgwQMhu+sqBveK5OUq4/0Ih2gwckzlfMpbIUtNaeBCT/yKTJ44chvHJr1uM5buLCgN5ORVSCrMJGf7+7p7OFCr2zmTXdPLBOnXJS4DWRdR+xsv+DrLtOZS2511DXj3HpTR2vSmGaFS7EGVl6F6o=
+	t=1784653966; cv=none; b=UDznJqx7Qq60h7yEsY4bYU7xWOT+ziJ2WdcUzDsAclG0S2IrAVkOu4wzrr9ekR9srcgvITIf6z6XjJH1yPi0Q2ullpV3ClHpWo6VBZwlA03j/c3VZJBUggfBMK4EpWT5vvKm7qrWx8X4d5MInu6AHOo2ZYWR43P3TD2c4lZip8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653963; c=relaxed/simple;
-	bh=TJu00TTVewAwIU4IoC9B+JkKWssDGkKWUBulviRV7Ro=;
+	s=arc-20240116; t=1784653966; c=relaxed/simple;
+	bh=STXSxsFT200Z7dg/aXCOt0HmSRCaTiiuQgJL0SmHu0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p8UIcqZCnpVx1kUsWeHHrkWV4NDIYOzzcw7eOAbpEHIB3+cYhmogClSINkuAqnmnJt1NkXdiZ9hHZNftRTB8XEmDmyYq5fRWlt2lCjBVoVyJ8BlMBQm9NP/QHITB1OJtDGsyCgtvxaKZgd08xE6TSqXoPWDWLndJlHiFTF4prEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsZf+7vF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IeP3DsTyRnoHjd/afpS8V1XOE5+VywgdNBHa7gxQ5g3KLSW1ivT4AG5W9JB8EHYbmqZ1oGhXQyuha3H15gis2TKR5EnvOkzB4LjaEMflTd/J2UBTuFAvWH0pxs43uVx1jb/dor7GfXDwXE41awaUfgtZmEYagX7BXYZM9bk8qys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5nhdghV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsZf+7vF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037531F000E9;
-	Tue, 21 Jul 2026 17:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5nhdghV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EE21F00A3A;
+	Tue, 21 Jul 2026 17:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653962;
-	bh=lsFmhR/KQEjMjxboeGWy8VBg78QjvI4LeLEjpA7l80k=;
+	s=korg; t=1784653965;
+	bh=rqUVEJKmJqonfwJF7hGmZfzSLE5zge3GVCRx0VyMi4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dsZf+7vFbW78MrVy6L5zkJ0L7j4F6dE4Gm3V6EQi7gWLafkLGGnm3NkwEpHvBmYAF
-	 2WTkrYEVgq7H3L//HZ8ARCjZS9k7w+vHA1PzmsNVHPpT+W1Xd//xQDd9zi5lE3TM7c
-	 egwQsTJ70KSkJ8GjUTveWyl014vvvLg30su3bQi8=
+	b=S5nhdghVz2Cig/p+CN1lSkHwlHIbov5cqNZ2Hjm4IZFeqLzGcPOdajPUS9KIWiF4A
+	 BgM4HppH6tC556e8Ttb2umBa5WijuUgoWub0Xht775dzIGNFn+DpU+8xF79cszVDh+
+	 gDOVC9BBRwe5JlRqqwxOV7e8mX/h3IDvG9WHHudE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Yuho Choi <dbgh9129@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1482/2077] net/sched: cake: reject overhead values that underflow length
-Date: Tue, 21 Jul 2026 17:19:15 +0200
-Message-ID: <20260721152627.756296565@linuxfoundation.org>
+Subject: [PATCH 7.1 1473/2077] net/liquidio: drop cached VF pci_dev LUT
+Date: Tue, 21 Jul 2026 17:19:06 +0200
+Message-ID: <20260721152627.537375278@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,57 +45,172 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit b7f97cae7ec1b6c3c32843c42be218690d310467 ]
+[ Upstream commit 5c0e3ba4f500fd4314ceb42f07f16bc445156431 ]
 
-CAKE accepts signed overhead values and stores them in an s16, but the
-adjusted packet length calculation uses unsigned arithmetic.  A negative
-effective length can therefore wrap to a large value.
+The PF SR-IOV enable path caches VF pci_dev pointers in
+dpiring_to_vfpcidev_lut[] by iterating with pci_get_device(). Those
+entries do not own a reference, because the iterator drops the previous
+device reference on each step. The cached pointer is then dereferenced
+later when handling OCTEON_VF_FLR_REQUEST.
 
-Such configurations make rate accounting depend on integer wraparound
-rather than on the packet size userspace intended to model.  A static
-netlink lower bound is not enough because packets reaching CAKE can be
-smaller than any reasonable manual-overhead allowance.
+Replace the cached VF mapping with runtime lookup on the mailbox DPI
+ring: derive the VF index from q_no, resolve the VF via exported PCI
+IOV helpers, validate it with the PF pointer and VF ID, then issue
+pcie_flr() and drop the reference with pci_dev_put(). Remove the
+unused VF lookup table initialization and cleanup.
 
-Fold the signed overhead adjustment into the existing datapath MPU clamp
-so negative adjusted lengths are clamped before link-layer framing
-adjustments.
-
-Fixes: a729b7f0bd5b ("sch_cake: Add overhead compensation support to the rate shaper")
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20260702000758.297407.e5c888d9d99d.cake-overhead-underflow@trailofbits.com
+Fixes: ca6139ffc67ee ("liquidio CN23XX: sysfs VF config support")
+Fixes: 8c978d059224 ("liquidio CN23XX: Mailbox support")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Link: https://patch.msgid.link/20260701040847.1897845-1-dbgh9129@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_cake.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ .../net/ethernet/cavium/liquidio/lio_main.c   | 27 ---------------
+ .../ethernet/cavium/liquidio/octeon_device.h  |  3 --
+ .../ethernet/cavium/liquidio/octeon_mailbox.c | 33 ++++++++++++++++++-
+ 3 files changed, 32 insertions(+), 31 deletions(-)
 
-diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index c4915073d9d1a4..07ea175657bb8e 100644
---- a/net/sched/sch_cake.c
-+++ b/net/sched/sch_cake.c
-@@ -1389,10 +1389,7 @@ static u32 cake_calc_overhead(struct cake_sched_data *qd, u32 len, u32 off)
- 	if (qd->min_netlen > len)
- 		WRITE_ONCE(qd->min_netlen, len);
+diff --git a/drivers/net/ethernet/cavium/liquidio/lio_main.c b/drivers/net/ethernet/cavium/liquidio/lio_main.c
+index c1a3df22525492..32dd9b25760e31 100644
+--- a/drivers/net/ethernet/cavium/liquidio/lio_main.c
++++ b/drivers/net/ethernet/cavium/liquidio/lio_main.c
+@@ -3781,9 +3781,7 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
+ static int octeon_enable_sriov(struct octeon_device *oct)
+ {
+ 	unsigned int num_vfs_alloced = oct->sriov_info.num_vfs_alloced;
+-	struct pci_dev *vfdev;
+ 	int err;
+-	u32 u;
  
--	len += q->rate_overhead;
+ 	if (OCTEON_CN23XX_PF(oct) && num_vfs_alloced) {
+ 		err = pci_enable_sriov(oct->pci_dev,
+@@ -3796,23 +3794,6 @@ static int octeon_enable_sriov(struct octeon_device *oct)
+ 			return err;
+ 		}
+ 		oct->sriov_info.sriov_enabled = 1;
 -
--	if (len < q->rate_mpu)
--		len = q->rate_mpu;
-+	len = max((s32)len + q->rate_overhead, (s32)q->rate_mpu);
+-		/* init lookup table that maps DPI ring number to VF pci_dev
+-		 * struct pointer
+-		 */
+-		u = 0;
+-		vfdev = pci_get_device(PCI_VENDOR_ID_CAVIUM,
+-				       OCTEON_CN23XX_VF_VID, NULL);
+-		while (vfdev) {
+-			if (vfdev->is_virtfn &&
+-			    (vfdev->physfn == oct->pci_dev)) {
+-				oct->sriov_info.dpiring_to_vfpcidev_lut[u] =
+-					vfdev;
+-				u += oct->sriov_info.rings_per_vf;
+-			}
+-			vfdev = pci_get_device(PCI_VENDOR_ID_CAVIUM,
+-					       OCTEON_CN23XX_VF_VID, vfdev);
+-		}
+ 	}
  
- 	if (q->atm_mode == CAKE_ATM_ATM) {
- 		len += 47;
+ 	return num_vfs_alloced;
+@@ -3820,8 +3801,6 @@ static int octeon_enable_sriov(struct octeon_device *oct)
+ 
+ static int lio_pci_sriov_disable(struct octeon_device *oct)
+ {
+-	int u;
+-
+ 	if (pci_vfs_assigned(oct->pci_dev)) {
+ 		dev_err(&oct->pci_dev->dev, "VFs are still assigned to VMs.\n");
+ 		return -EPERM;
+@@ -3829,12 +3808,6 @@ static int lio_pci_sriov_disable(struct octeon_device *oct)
+ 
+ 	pci_disable_sriov(oct->pci_dev);
+ 
+-	u = 0;
+-	while (u < MAX_POSSIBLE_VFS) {
+-		oct->sriov_info.dpiring_to_vfpcidev_lut[u] = NULL;
+-		u += oct->sriov_info.rings_per_vf;
+-	}
+-
+ 	oct->sriov_info.num_vfs_alloced = 0;
+ 	dev_info(&oct->pci_dev->dev, "oct->pf_num:%d disabled VFs\n",
+ 		 oct->pf_num);
+diff --git a/drivers/net/ethernet/cavium/liquidio/octeon_device.h b/drivers/net/ethernet/cavium/liquidio/octeon_device.h
+index 19344b21f8fb94..858a0fff2cc0b6 100644
+--- a/drivers/net/ethernet/cavium/liquidio/octeon_device.h
++++ b/drivers/net/ethernet/cavium/liquidio/octeon_device.h
+@@ -390,9 +390,6 @@ struct octeon_sriov_info {
+ 
+ 	struct lio_trusted_vf	trusted_vf;
+ 
+-	/*lookup table that maps DPI ring number to VF pci_dev struct pointer*/
+-	struct pci_dev *dpiring_to_vfpcidev_lut[MAX_POSSIBLE_VFS];
+-
+ 	u64	vf_macaddr[MAX_POSSIBLE_VFS];
+ 
+ 	u16	vf_vlantci[MAX_POSSIBLE_VFS];
+diff --git a/drivers/net/ethernet/cavium/liquidio/octeon_mailbox.c b/drivers/net/ethernet/cavium/liquidio/octeon_mailbox.c
+index ad685f5d0a1363..697fcdc41e3cd7 100644
+--- a/drivers/net/ethernet/cavium/liquidio/octeon_mailbox.c
++++ b/drivers/net/ethernet/cavium/liquidio/octeon_mailbox.c
+@@ -26,6 +26,31 @@
+ #include "octeon_mailbox.h"
+ #include "cn23xx_pf_device.h"
+ 
++static struct pci_dev *lio_vf_pci_dev_by_qno(struct octeon_device *oct, u32 q_no)
++{
++	struct pci_dev *vfdev = NULL;
++	int vfidx;
++
++	if (!oct->sriov_info.rings_per_vf)
++		return NULL;
++
++	if (q_no % oct->sriov_info.rings_per_vf)
++		return NULL;
++
++	vfidx = q_no / oct->sriov_info.rings_per_vf;
++	if (vfidx >= oct->sriov_info.num_vfs_alloced)
++		return NULL;
++
++	while ((vfdev = pci_get_device(PCI_VENDOR_ID_CAVIUM,
++				       OCTEON_CN23XX_VF_VID, vfdev))) {
++		if (pci_physfn(vfdev) && pci_physfn(vfdev) == oct->pci_dev &&
++		    pci_iov_vf_id(vfdev) == vfidx)
++			return vfdev;
++	}
++
++	return NULL;
++}
++
+ /**
+  * octeon_mbox_read:
+  * @mbox: Pointer mailbox
+@@ -237,6 +262,7 @@ static int octeon_mbox_process_cmd(struct octeon_mbox *mbox,
+ 				   struct octeon_mbox_cmd *mbox_cmd)
+ {
+ 	struct octeon_device *oct = mbox->oct_dev;
++	struct pci_dev *vfdev;
+ 
+ 	switch (mbox_cmd->msg.s.cmd) {
+ 	case OCTEON_VF_ACTIVE:
+@@ -260,7 +286,12 @@ static int octeon_mbox_process_cmd(struct octeon_mbox *mbox,
+ 		dev_info(&oct->pci_dev->dev,
+ 			 "got a request for FLR from VF that owns DPI ring %u\n",
+ 			 mbox->q_no);
+-		pcie_flr(oct->sriov_info.dpiring_to_vfpcidev_lut[mbox->q_no]);
++		vfdev = lio_vf_pci_dev_by_qno(oct, mbox->q_no);
++		if (!vfdev)
++			break;
++
++		pcie_flr(vfdev);
++		pci_dev_put(vfdev);
+ 		break;
+ 
+ 	case OCTEON_PF_CHANGED_VF_MACADDR:
 -- 
 2.53.0
 
