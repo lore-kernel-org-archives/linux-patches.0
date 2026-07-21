@@ -1,42 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D6847254E;
-	Tue, 21 Jul 2026 18:31:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCE346EC7A;
+	Tue, 21 Jul 2026 18:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658672; cv=none; b=j6afsV8PY+F7ipcPUAQLWQhOP3EjK+k5FEy4YX49xY7TlhR0ROJzsduw7EiRA1wbGJEZru9SHyCaQpchcdZh3xsmsMGl7STa18QwiRfX5iZNRvEH69Cnqdpwh+/d9aJHifcSrVXvQs+4d5gWSHmq5guKVUz0B1Co6JVnnLb9MhY=
+	t=1784658675; cv=none; b=aOS3tdA2Xfc0NRtRJOS+nKlF4cWYtLTEW3/uhNyKYGr7dk2gXKdK+LYN9U5+h5h7cxGK7xMDwfikq8mjzeiPc9gn4z/xngWaEt6vBLNITCRfiEWiZGaqlRWmuKguRq0jRcGhwJ0u8/9B8xypWenEgMPgTFyP7ewSnhFmfD1CjLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658672; c=relaxed/simple;
-	bh=wIZipTNRh/LZOEJQKnUMIGwSYUQu8JkGWl5dYPaBgYA=;
+	s=arc-20240116; t=1784658675; c=relaxed/simple;
+	bh=ZNHw+YjaP/OhOJ/b1xJPo9sKfIdWScKExyaTYVq4JgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DxtMBhaqGjLpaMv3ax7AE/nc0uNfBzC0z4yLIxEK0mR54oN8lELRG9FgWqz9+8WnLE5XhqC0vluh+JFPKYNccu6O/q1HSdiMpYxCSrqLhYru5zg4E+9JVmrYOhtf/QgBco3+JaDZCwcoS0HnifrOeND1E9+3fMd8p84oc0exy78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LjQ67Ck; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n5mjKMuxw0OoPoXeLYd0nXPVqiQPQGbSYpoDzd0Duoi5JTOIjWH6/DllndJzF/wHt8WwVVAXQ7P/GRb7aHzlTptE8T9mO+ahnZ+vCM9ECZ3lwPNCNslxJIc8uM3hw8SMsdWfa5Eg3U2Lpox3hel751YDvFEApwNJlp31ULpGT/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPSBGFvj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LjQ67Ck"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F4B1F000E9;
-	Tue, 21 Jul 2026 18:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPSBGFvj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FFFD1F00A3E;
+	Tue, 21 Jul 2026 18:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658670;
-	bh=KCNRxTDZl+4m2obyabTG4qqwhQW7OKG2qy1wYYgu8qQ=;
+	s=korg; t=1784658673;
+	bh=huj3Xr6/muvPWOVyBqPdtjuyWl+M3zHpRGG7PUB7UqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0LjQ67Ckc2gQT6a4Z6qpn1OWT0cEGqpcItRHfvc8CeK9MjqV7B04P3VGQ9OrlixBV
-	 4BHB1nsCzdRFN9A0w86OtAPQfDiH5thitKuWNFId/MZki+VbYqXYlxSe0PlzF6Srjh
-	 8NOtEOg6B2NOqCQDC3sDWbNK4nUC3TTnQA1Xwn/0=
+	b=qPSBGFvj7E/NjjAl/t+S61NbhTYBOXCMPXwsKj+agjtQ7yE08DaogKrykK1iPGMD3
+	 FgKw5Y59oMB8HOTaWRR7U0OvKrpr//4/yD2HEIgX5xghrOpyBSGg21Fok6DSdJ4Hpb
+	 KyJziHy1O9H7YRvoCBttVnuTlTH2inFGD/o+e8io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+226c1f947186f8fef796@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
+	Muchun Song <songmuchun@bytedance.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Georgi Djakov <georgi.djakov@oss.qualcomm.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Michal Hocko <mhocko@suse.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
 	Oscar Salvador <osalvador@suse.de>,
-	Mina Almasry <almasrymina@google.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 1231/1611] mm/hugetlb: fix hugetlb cgroup rsvd charge/uncharge mismatch
-Date: Tue, 21 Jul 2026 17:22:27 +0200
-Message-ID: <20260721152543.128969193@linuxfoundation.org>
+Subject: [PATCH 6.18 1232/1611] mm/memory_hotplug: fix incorrect altmap passing in error path
+Date: Tue, 21 Jul 2026 17:22:28 +0200
+Message-ID: <20260721152543.152103043@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,84 +64,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Muchun Song <songmuchun@bytedance.com>
 
-commit 15807d0ddde37407af72859426b654f3d1972b00 upstream.
+commit 2fac4afa0e2e68841334c78c1821e49f74fbc66a upstream.
 
-In alloc_hugetlb_folio(), a single h_cg pointer is used for both the rsvd
-and non-rsvd hugetlb cgroup charges.  When map_chg is set,
-hugetlb_cgroup_charge_cgroup_rsvd() stores the charged cgroup in h_cg, but
-the immediately following hugetlb_cgroup_charge_cgroup() overwrites h_cg
-with the non-rsvd cgroup pointer.
+In create_altmaps_and_memory_blocks(), when arch_add_memory() succeeds
+with memmap_on_memory enabled, the vmemmap pages are allocated from
+params.altmap.  If create_memory_block_devices() subsequently fails, the
+error path calls arch_remove_memory() with a NULL altmap instead of
+params.altmap.
 
-As a result, hugetlb_cgroup_commit_charge_rsvd() stores the wrong
-(non-rsvd) cgroup pointer into the folio's rsvd slot.
+This is a bug that could lead to memory corruption.  Since altmap is NULL,
+vmemmap_free() falls back to freeing the vmemmap pages into the system
+buddy allocator via free_pages() instead of the altmap.
+arch_remove_memory() then immediately destroys the physical linear mapping
+for this memory.  This injects unowned pages into the buddy allocator,
+causing machine checks or memory corruption if the system later attempts
+to allocate and use those freed pages.
 
-When the folio is later freed, free_huge_folio() unconditionally calls
-both hugetlb_cgroup_uncharge_folio() and
-hugetlb_cgroup_uncharge_folio_rsvd().  The rsvd uncharge reads back the
-wrong cgroup from the folio and decrements a counter that was never
-charged for that cgroup, causing a page_counter underflow:
+Fix this by passing params.altmap to arch_remove_memory() in the error
+path.
 
-  page_counter underflow: -512 nr_pages=512
-  WARNING: mm/page_counter.c:61 at page_counter_cancel
-
-Fix this by introducing a separate h_cg_rsvd pointer exclusively for the
-rsvd charge path, keeping the rsvd and non-rsvd charges fully independent
-through their charge, commit, and error uncharge paths.
-
-Link: https://lore.kernel.org/20260328065534.346053-1-kartikey406@gmail.com
-Fixes: 08cf9faf7558 ("hugetlb_cgroup: support noreserve mappings")
-Reported-by: syzbot+226c1f947186f8fef796@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=226c1f947186f8fef796
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
+Link: https://lore.kernel.org/20260428081855.1249045-3-songmuchun@bytedance.com
+Fixes: 6b8f0798b85a ("mm/memory_hotplug: split memmap_on_memory requests across memblocks")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Liam R. Howlett <liam@infradead.org>
+Reviewed-by: Georgi Djakov <georgi.djakov@oss.qualcomm.com>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
 Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Mina Almasry <almasrymina@google.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ mm/memory_hotplug.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -2959,6 +2959,7 @@ struct folio *alloc_hugetlb_folio(struct
- 	map_chg_state map_chg;
- 	int ret, idx;
- 	struct hugetlb_cgroup *h_cg = NULL;
-+	struct hugetlb_cgroup *h_cg_rsvd = NULL;
- 	gfp_t gfp = htlb_alloc_mask(h) | __GFP_RETRY_MAYFAIL;
- 
- 	idx = hstate_index(h);
-@@ -3009,7 +3010,7 @@ struct folio *alloc_hugetlb_folio(struct
- 	 */
- 	if (map_chg) {
- 		ret = hugetlb_cgroup_charge_cgroup_rsvd(
--			idx, pages_per_huge_page(h), &h_cg);
-+			idx, pages_per_huge_page(h), &h_cg_rsvd);
- 		if (ret)
- 			goto out_subpool_put;
- 	}
-@@ -3051,7 +3052,7 @@ struct folio *alloc_hugetlb_folio(struct
- 	 */
- 	if (map_chg) {
- 		hugetlb_cgroup_commit_charge_rsvd(idx, pages_per_huge_page(h),
--						  h_cg, folio);
-+						  h_cg_rsvd, folio);
- 	}
- 
- 	spin_unlock_irq(&hugetlb_lock);
-@@ -3106,7 +3107,7 @@ out_uncharge_cgroup:
- out_uncharge_cgroup_reservation:
- 	if (map_chg)
- 		hugetlb_cgroup_uncharge_cgroup_rsvd(idx, pages_per_huge_page(h),
--						    h_cg);
-+						    h_cg_rsvd);
- out_subpool_put:
- 	/*
- 	 * put page to subpool iff the quota of subpool's rsv_hpages is used
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1489,7 +1489,7 @@ static int create_altmaps_and_memory_blo
+ 		ret = create_memory_block_devices(cur_start, memblock_size, nid,
+ 						  params.altmap, group);
+ 		if (ret) {
+-			arch_remove_memory(cur_start, memblock_size, NULL);
++			arch_remove_memory(cur_start, memblock_size, params.altmap);
+ 			kfree(params.altmap);
+ 			goto out;
+ 		}
 
 
