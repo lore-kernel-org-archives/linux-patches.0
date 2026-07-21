@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC1C403135;
-	Tue, 21 Jul 2026 17:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B69403B1F;
+	Tue, 21 Jul 2026 17:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654803; cv=none; b=ij8X/+coGxFLBah2t3D70ehBJG6V7JyKJ9MZRDBAf7IWIVx+wvV1nQvmNnhRbU70xAqJ3FdzD/g+DDbXJaM+H1Rxm7QzDzhsCnlGkwWKw0tMUQDMiot+jvrVoi2VBZbNji+jupKLeifiS5oXUfiwqHxZfcyeNPn6AzJ+q9sPs5I=
+	t=1784654805; cv=none; b=scm0ZuKNAzGvgOGiJW8AY7NNmZKkFCh+/5wgySdxvHwIOWQ1D54NOxnhOYPRLLcARKdf/9kxdMIF0MlGVCK1KLkZQWTfkm39pUoqmANvhRwHhI7JQnMCMMO/UQ7wl+h4LvgrQrdSnZYGPktzHdjMIil4RhaVZHmnHXogVnbQvMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654803; c=relaxed/simple;
-	bh=LuVkiePYG4KaV7AU4HCm1MWEnCFTw+p+MDb1I2GsiGI=;
+	s=arc-20240116; t=1784654805; c=relaxed/simple;
+	bh=3JDTbBfQnvwDFhS0aZNQ2zDQtdBi30BSPCMl/f84eVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G4l/15ROpH3p/EHJuUyieTEWoDXAEOIcvhv4Cim903DtOW/hbtmQt+P7/S8u822vSosrPEKm/G4eF2TIIYQ0S/cOCoxUNhFNpOGwAee8fY6jyQo/3HilKEIg4+off6KLBKYqxmY5tOC024xIlGDqbb77JHVpeCXGham4OWY/6yM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMyw7wAu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pdI+t+mg3fwcGBLImQv7SYUhGH64qqZuZCyhQM+X9olSOeoUXpORAQE0aKYVUizZU9bkK6THaRgHPC5FVjSuOZ+u4hJwrlQe8UWQ2eCCrcXYAXho5X9yxw6EdwxYiK4G5Pw+ryfGbM8gIgp5s78COhqKUIOSG+Oy4seAd3FyFNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWrZkiwa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMyw7wAu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F881F000E9;
-	Tue, 21 Jul 2026 17:26:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWrZkiwa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29EA81F000E9;
+	Tue, 21 Jul 2026 17:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654802;
-	bh=UbgVhQ55ZHGwch+QX5thppruMllDmJtnKJprRstT258=;
+	s=korg; t=1784654804;
+	bh=6efMpcJgjke695SaO3y1sX3YzsAUatFZQSIZsuHUAQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UMyw7wAu7RwihW9Tn5HBGYdJGplBbvoLOzsSGi6edAzg0jOvKdMn5ivF5wEVp/5mV
-	 3/crlnwjXGIv2skQkwj2qIl4o5ng4FnQexGzO8NedNqhkU/bq/5S4ZZtAMNUklJhDk
-	 N90hWvCCvD1emchFeGs6NbVnkpSupfCyVl+RURDc=
+	b=ZWrZkiwalqSEmBWdxTETmb9pM2sA+TrPAD1uZiRcz7sKk8fB/1ICK8mnkK5/PllKW
+	 hFa1kenBs6nASw/LjWp0ycKukfT+T8WZAR8fvVJz02zYuxcZTjnxIbIbaPSDUGX9CA
+	 TFLT0HB6pUDXpa0WRfkCyz+9kGkQGP/Te3iipCNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yitang Yang <yi1tang.yang@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.1 1841/2077] block: fix IORING_URING_CMD_REISSUE flags check in blkdev_uring_cmd
-Date: Tue, 21 Jul 2026 17:25:14 +0200
-Message-ID: <20260721152636.160729380@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 1842/2077] net: sparx5: unregister blocking notifier on init failure
+Date: Tue, 21 Jul 2026 17:25:15 +0200
+Message-ID: <20260721152636.183547015@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,41 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yitang Yang <yi1tang.yang@gmail.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 4f919141be38ea2b1314e3a531b7b998eb64e8bc upstream.
+commit 483be61b4a9a6df3b7cb277e8f189e082dee4cb8 upstream.
 
-blkdev_uring_cmd() checks IORING_URING_CMD_REISSUE to determine whether
-this is the first issue. However, this flag lives in cmd->flags instead
-of issue_flags.
+sparx5_register_notifier_blocks() registers the switchdev blocking
+notifier before allocating the ordered workqueue. If the workqueue
+allocation fails, the error path unregisters the switchdev and netdevice
+notifiers, but leaves the blocking notifier registered.
 
-Coincidentally, IO_URING_F_NONBLOCK shares bit 31 with
-IORING_URING_CMD_REISSUE. As a result, the SQE read was never performed,
-bic->len remained zero, and every BLOCK_URING_CMD_DISCARD failed with
--EINVAL.
+Add a separate error label for the workqueue allocation failure path and
+unregister the switchdev blocking notifier there.
 
-Fix it by checking cmd->flags as intended.
-
+Fixes: d6fce5141929 ("net: sparx5: add switching support")
 Cc: stable@vger.kernel.org
-Fixes: 212ec34e4e72 ("block: only read from sqe on initial invocation of blkdev_uring_cmd")
-Signed-off-by: Yitang Yang <yi1tang.yang@gmail.com>
-Link: https://patch.msgid.link/20260616155129.406057-1-yi1tang.yang@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260623115714.2192074-1-haoxiang_li2024@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/ioctl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -951,7 +951,7 @@ int blkdev_uring_cmd(struct io_uring_cmd
- 	u32 cmd_op = cmd->cmd_op;
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c
+@@ -765,11 +765,13 @@ int sparx5_register_notifier_blocks(stru
+ 	sparx5_owq = alloc_ordered_workqueue("sparx5_order", 0);
+ 	if (!sparx5_owq) {
+ 		err = -ENOMEM;
+-		goto err_switchdev_blocking_nb;
++		goto err_alloc_workqueue;
+ 	}
  
- 	/* Read what we need from the SQE on the first issue */
--	if (!(issue_flags & IORING_URING_CMD_REISSUE)) {
-+	if (!(cmd->flags & IORING_URING_CMD_REISSUE)) {
- 		const struct io_uring_sqe *sqe = cmd->sqe;
+ 	return 0;
  
- 		if (unlikely(sqe->ioprio || sqe->__pad1 || sqe->len ||
++err_alloc_workqueue:
++	unregister_switchdev_blocking_notifier(&s5->switchdev_blocking_nb);
+ err_switchdev_blocking_nb:
+ 	unregister_switchdev_notifier(&s5->switchdev_nb);
+ err_switchdev_nb:
 
 
