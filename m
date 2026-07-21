@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17EE46A5F2;
-	Tue, 21 Jul 2026 15:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240A046A5FF;
+	Tue, 21 Jul 2026 15:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784647835; cv=none; b=DV3djcSdo2tG2OTAR3bGYVD5a2ErO4LQ/X8h+n4sKQE/oNmTcGk67tD0fmTjT2AYn94rV89YeEyiYWH8GnT/QzDTvqHJqVClDMaqkgm3gl9ft2cGB2jhsLYW9tfRcJuXhD8HqfhDh/i4E9kaIWQPHiAELJzUK7mBIadFa27QP/s=
+	t=1784647840; cv=none; b=qs01HextG842Wg20xQQr6OrAHke2RlRoor9swI/QoLxNlKk+RtcreKf7AgxIVyGtl/6a+DNOpYmLEZPDesYNodb9zMaYNP5BTEbemRrnT40ZTvDkIJziyXCLLIdRDfhr1cVooXdScqq+tDHI+f8rDCwZ9R0QHls/Fb4y90tKaXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784647835; c=relaxed/simple;
-	bh=ccXncTKm7+Og8WMKm1s56jYqaT7vUFT+K/YaJeHx58g=;
+	s=arc-20240116; t=1784647840; c=relaxed/simple;
+	bh=mhTJOfkEyUoH0MZdWjqW1box7cHWKm6MiEVVv0fZ1/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J+Tc2yTE27JqaUK+MMYsWs1P+RJPuFhDc56a6iDHYnJVBKAOtNBrs+cs2ZM4qTJo9IH4Ajg16GYS+aSby9V2U382934hvEMIGmJiwVpZ6YHKUu4+uOV6XqOkY2M5DZ1Lp+GsvZHb1E01Hrmn4sPhInlorPoBVQc5y3wuUfOMuhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0iJ99ykI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hIAYMmWkZOo3AODJeojhyCcVEmXvFUSdGbPFKrHBcYVNQ9jJp+CZF1IpDmfv2MRKolSBnQqmQtXG44kHhd2ZqgjFxRQhkqucUxPm1Am8dnjcpUAx5uwXoqLR7eO1y6cPCNtzZc6OCvFtvUaXY8OauP8SA4cQbQMLXHIDV7DNaLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZWlYwBD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0iJ99ykI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8EC1F00A3A;
-	Tue, 21 Jul 2026 15:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZWlYwBD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5CE81F000E9;
+	Tue, 21 Jul 2026 15:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784647833;
-	bh=0TmsEVQFqMP+hh05WmXuupuZGOQuyOe3xeZuGbPxu7Y=;
+	s=korg; t=1784647836;
+	bh=7tHtyXXNxmo8IkNAmv2sr3rc4eKQOZDS9S5+QLoFNG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0iJ99ykIt4PwoNrJGa6IgyxeWatRUcLBaIoP5c6lEvWOKfYDLYd2gYVVt1HLkU9PG
-	 ik4sd0FpBxaAoNcMmbuHgja9ewdtd/M36a6NCHq+Pp2Xr7+UgXbQOzhBZs1jF9+4pA
-	 LEvnjnMlGmPQkHs2fWSyAc9P0UmYt9D1PmmdV7G0=
+	b=aZWlYwBDyh+oF9wA4ZUipfLXAqGLo1chtUawQVwIyVl2l7QD5xQ/8lEhEPSOHkt/L
+	 6paF1AB9ZqVjgLaFWZpXAixN/9WoRgrQQGMsIjcAGhVkMXXh8Fgk5XawCH7uNdpOWJ
+	 SuZ0EQ9XSy2fRK2aFhkY7lI0LWpmT/YmpzuCNU58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,12 +32,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0003/1067] nfsd: release layout stid on setlease failure
-Date: Tue, 21 Jul 2026 17:10:04 +0200
-Message-ID: <20260721152424.607508506@linuxfoundation.org>
+Subject: [PATCH 6.6 0002/1266] nfsd: release layout stid on setlease failure
+Date: Tue, 21 Jul 2026 17:07:19 +0200
+Message-ID: <20260721152441.848556668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
-References: <20260721152424.521567757@linuxfoundation.org>
+In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
+References: <20260721152441.786066624@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,7 +49,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -98,7 +98,7 @@ Assisted-by: kres (claude-opus-4-7)
 Signed-off-by: Chris Mason <clm@meta.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ cel: no ls_fence_work in 6.1.y; dropped INIT_DELAYED_WORK hunk ]
+[ cel: no ls_fence_work in 6.6.y; dropped INIT_DELAYED_WORK hunk ]
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
