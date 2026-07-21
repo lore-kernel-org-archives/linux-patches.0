@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9872A224B05;
-	Tue, 21 Jul 2026 22:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C662382385;
+	Tue, 21 Jul 2026 22:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673986; cv=none; b=G/SajC811DtgVisLDxJ/+RmPJJQlktkgguMtWLko0wVvCBVX2S3+Jf80UuAQSKRAq9mWAcXV62vzJc0jfJ0PivdzadhKsEv0WCtNGV2TZtzXLYk/ikJmqm/5kEuCylyGkctGZCdjzvhU/RPDgivihiS8z+NLR7efQAKz5SunZK4=
+	t=1784673989; cv=none; b=m9TQTkNODXp/Eht0mKtcEkGf0gg4WNWnxuu0tZdz2VuePBi6HUTztDKgKUPDk9ldThAw/RMvU6Jf0sNoHNlXniOjQEU9PqcmlXeKlvKKr0zVRBmdIg2jCYqerBUzqG09CAQ+G+tsBDEI8KihirDvxI7aWINzWA7RdGUB/v81Qyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673986; c=relaxed/simple;
-	bh=x0RPrHiskJg2v+J4ws8Pq7xTCaDhXpbTev+yh+hI1kc=;
+	s=arc-20240116; t=1784673989; c=relaxed/simple;
+	bh=HGTr9U0aesD41GrDafF/Myd97OtcB3lFUvbPxMIg9hU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b+KcbAbfB/gCC6j+zauQYvRRnD6x2oNBawkSHwKU7g5bRD3GAGZBZAiD/Gz6cMCAEoKaf6zjNcV0FKqbfXh58hqEpOZzlcTfF9xe4bnRfVcPFFG9Cr3V5ha9leVxrnZZAs2MMtPjsDQ6fb7f38mgRpEnTYx5fMwZWXvcHYjQ0fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z9mMXB3Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IkHQRhTzck1kAU758Ef88aABy3K/pyjDaetvO+bHk5GdMRuOhb8Jgj8YKHe0XX0C2iEb590pZPtEcw9E5zNcDt+/gw7+qdLz/9aQ6L38Ml0a91twEcEQLJXAGjxWyUrHIPtYszcTm7+R0W+WkTVIf4q/j9i1wdtOvYDscZF961I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6Fydv3W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z9mMXB3Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFEC1F000E9;
-	Tue, 21 Jul 2026 22:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6Fydv3W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2AE31F000E9;
+	Tue, 21 Jul 2026 22:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673985;
-	bh=Fk+s/aXXEY8N5o+KdxAwdvQFJt2RhN+aRuHwpSFl9eo=;
+	s=korg; t=1784673988;
+	bh=EsUGVmSWv9gM+sZgVV6XDa4eu0oy9YNg53XW5h3Rmf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z9mMXB3ZriCpZ8SkUtwtt8MWl1qrK8CRNJScCGbv4toZVOHxPoLqZ1iOl6KsjrWJe
-	 LJa02mwYIAT461eZ5RWcQn+fVXpRVWMT39+8/79lLEHuIuK+Wl5NMDq0zEXlU4SDL/
-	 zMBCAK2AgfRUNucyUdfxPOoNSIxLl9m0eHKYLp9Q=
+	b=T6Fydv3W3XaQT7qRV2cJrDj5wL62I7xcujHG6F72MOg7faQIHWfI/ZC/arWlrZIkb
+	 Anb5Lp++/cq9TLyfqtcVrLASmzh4poVwVb7p3C0yJZdNmelSYwJTwDb//t9NSJTGIH
+	 xSFs5rBR/mLsSLCsCSDA35FLyi6TcR/wfRhqSrTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Martin Kaiser <martin@kaiser.cx>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 371/699] net: sungem: fix probe error cleanup
-Date: Tue, 21 Jul 2026 17:22:10 +0200
-Message-ID: <20260721152404.063695991@linuxfoundation.org>
+Subject: [PATCH 5.10 372/699] tracing: probes: fix typo in a log message
+Date: Tue, 21 Jul 2026 17:22:11 +0200
+Message-ID: <20260721152404.086631333@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,70 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Martin Kaiser <martin@kaiser.cx>
 
-[ Upstream commit 36dea2f639249460d13f6ca66b2a9064187cd34d ]
+[ Upstream commit 72c8646956ffc8050bb8be5988a0f28fc37e1ac4 ]
 
-gem_init_one() calls gem_remove_one() when register_netdev() fails.
-gem_remove_one() unregisters and frees resources owned by the net_device,
-including the DMA block, MMIO mapping, PCI regions, and the net_device
-itself. gem_init_one() then falls through to its own cleanup labels and
-frees the same resources again.
+Fix a typo ("Invalid $-variable") in a log message.
 
-Keep the register_netdev() error path in gem_init_one(): clear drvdata so
-PM/remove paths do not see a half-registered device, remove the NAPI
-instance added during probe, and let the existing cleanup labels release
-the resources once.
+Link: https://lore.kernel.org/all/20260507081041.885781-4-martin@kaiser.cx/
 
-The issue was found by a local static-analysis checker for probe error
-paths. The reported path was manually inspected before sending this fix.
-
-Compile-tested with CONFIG_SUNGEM=y. Runtime testing was not performed
-because no sungem hardware is available.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260623025759.3468566-1-ruoyuw560@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ab105a4fb894 ("tracing: Use tracing error_log with probe events")
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/sungem.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ kernel/trace/trace_probe.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/sun/sungem.c b/drivers/net/ethernet/sun/sungem.c
-index 4d6a9f02c7388d..0cd80b27d8598c 100644
---- a/drivers/net/ethernet/sun/sungem.c
-+++ b/drivers/net/ethernet/sun/sungem.c
-@@ -2983,10 +2983,10 @@ static int gem_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	dev->max_mtu = GEM_MAX_MTU;
- 
- 	/* Register with kernel */
--	if (register_netdev(dev)) {
-+	err = register_netdev(dev);
-+	if (err) {
- 		pr_err("Cannot register net device, aborting\n");
--		err = -ENOMEM;
--		goto err_out_free_consistent;
-+		goto err_out_clear_drvdata;
- 	}
- 
- 	/* Undo the get_cell with appropriate locking (we could use
-@@ -3000,8 +3000,13 @@ static int gem_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		    dev->dev_addr);
- 	return 0;
- 
-+err_out_clear_drvdata:
-+	pci_set_drvdata(pdev, NULL);
-+	netif_napi_del(&gp->napi);
-+
- err_out_free_consistent:
--	gem_remove_one(pdev);
-+	dma_free_coherent(&pdev->dev, sizeof(struct gem_init_block),
-+			  gp->init_block, gp->gblock_dvma);
- err_out_iounmap:
- 	gem_put_cell(gp);
- 	iounmap(gp->regs);
+diff --git a/kernel/trace/trace_probe.h b/kernel/trace/trace_probe.h
+index 5d4dc7ac3d198b..0f7a584ac21bfc 100644
+--- a/kernel/trace/trace_probe.h
++++ b/kernel/trace/trace_probe.h
+@@ -409,7 +409,7 @@ extern int traceprobe_define_arg_fields(struct trace_event_call *event_call,
+ 	C(RETVAL_ON_PROBE,	"$retval is not available on probe"),	\
+ 	C(BAD_STACK_NUM,	"Invalid stack number"),		\
+ 	C(BAD_ARG_NUM,		"Invalid argument number"),		\
+-	C(BAD_VAR,		"Invalid $-valiable specified"),	\
++	C(BAD_VAR,		"Invalid $-variable specified"),	\
+ 	C(BAD_REG_NAME,		"Invalid register name"),		\
+ 	C(BAD_MEM_ADDR,		"Invalid memory address"),		\
+ 	C(BAD_IMM,		"Invalid immediate value"),		\
 -- 
 2.53.0
 
