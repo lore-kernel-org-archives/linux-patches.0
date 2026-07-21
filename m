@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4F9471259;
-	Tue, 21 Jul 2026 18:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20B6471259;
+	Tue, 21 Jul 2026 18:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657064; cv=none; b=CVxcvArA3actAsX4hUoScRR0SRkt9cOHjXnrMeoN/lkd97QO8EOfd4pmPhyiAUDUlGtNTRed4KeC6IJPMTwfCPz9HuM9fWtAloziD0Bj7TySstjpA3vnx2G/2G7upZHzI3WOFKnXzw6E3DSIVvyhx1k6kjqsfr22/M3My2XRc3c=
+	t=1784657066; cv=none; b=snwfmgdhYn5FFY4aDIGh9AQ8OihxguRHeSD/LabqV9/oS8GzyrNbYIVBZaiV4YCP9U4n2h9o/jWOi0OoCefmrExsw0xthqibpiNjCT9o9rQs7c/FRzjJP5IwVECO3k5KVV2AIjjW0/otDtfklCcTiFX+x5ekCdthTwq4z8DBsX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657064; c=relaxed/simple;
-	bh=MjRwZ44QDFpmjT2zRyfwQumw7sHKbYJoFlOgany28kY=;
+	s=arc-20240116; t=1784657066; c=relaxed/simple;
+	bh=MfDWXCii0k1l4O1jEabq3CET8qViJnMQAagSAgb+oRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fGPH4XrH80b7Aq/E2oPqZJrb2ES6Tcn5WbHsaX/l7Mlj3jNwChmPhj4rtavDcODtpJy6p6BWcXDGDaYk+QEAAgQTcFwfSZjHYuOLVQNU4vLcp7qyeZ2vccUvgW10eS9z1JPr97bswWcqYzce4Gr3aj7LQX1vR4mRMzGApdt8m+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmSkaIUd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BIILHWIa4BpKov4HB5v6++LZXMNmv77RtJCvc/MvU3kkAsOuxTVzVsRODyhrAPel3tBmTOz3pZsvO/vreNzou+8G9BocHA4UjHqt8K9W5MVyhpXUUA+Txm0lND6sB+JP1rLP/rnd5Ah+aoE8HLlysHDV4/mpx/lr9/7H42hOy4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FeGk9CVN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmSkaIUd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06B31F00A3D;
-	Tue, 21 Jul 2026 18:04:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FeGk9CVN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555C51F000E9;
+	Tue, 21 Jul 2026 18:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657063;
-	bh=WLtPjXHbOS7rLwbGq1ftJ0i312HK+ZGE5hIkfspYgto=;
+	s=korg; t=1784657065;
+	bh=qMMD0wWknsmPZdMGzwU9N88IfB+z5p5eHzB2N1w8czE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jmSkaIUdH/6Btvy8MiGeBS6pjvcJD+sUxyIfbtfiPvH3ZoXccXnKQ3RWmNXH9Usm2
-	 QsX4+EcICLCAKVLE2CjEZ6BEe8Z6MVZsdoXVmuWa1SeUbh5vpY7m5azBh95MqwEj8u
-	 EfzaXbac9GMyJ1a0POfDS64jGf5qJv7Ejy6TllMQ=
+	b=FeGk9CVNLhUpmkw6Ln7vpcLhl4DFQuS3LXmAFkvU1IYkP6JqArUVPMDiswD/Yve0Y
+	 s/N4zRKXEqJTMY1iypI32jDvYfBnOkdJNBah3y7iEP01NK5tQQxMlg0ERAfzQRq1Hb
+	 zwkX9rqGRKhtUhyCwOGyLD6uGMQII1M+GrJwIIgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guilherme Ivo Bozi <guilherme.bozi@usp.br>,
-	Salih Erim <salih.erim@amd.com>,
+	Sanjay Chitroda <sanjayembeddedse@gmail.com>,
 	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0623/1611] iio: adc: xilinx-ams: fix out-of-bounds channel lookup in event handling
-Date: Tue, 21 Jul 2026 17:12:19 +0200
-Message-ID: <20260721152529.400722743@linuxfoundation.org>
+Subject: [PATCH 6.18 0624/1611] iio: accel: mma8452: handle I2C read error(s) in mma8452_read()
+Date: Tue, 21 Jul 2026 17:12:20 +0200
+Message-ID: <20260721152529.424443324@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,51 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guilherme Ivo Bozi <guilherme.bozi@usp.br>
+From: Sanjay Chitroda <sanjayembeddedse@gmail.com>
 
-[ Upstream commit 947eb6f0a274f8b15a0248051a65b069effd5057 ]
+[ Upstream commit 5bdff291d20c31b365d9ddfe9c426fbfb41da5bb ]
 
-ams_event_to_channel() may return a pointer past the end of
-dev->channels when no matching scan_index is found. This can lead
-to invalid memory access in ams_handle_event().
+Currently, If i2c_smbus_read_i2c_block_data() fails but
+mma8452_set_runtime_pm_state() succeeds, mma8452_read() returns 0.
 
-Add a bounds check in ams_event_to_channel() and return NULL when
-no channel is found. Also guard the caller to safely handle this
-case.
+As a result, the caller mma8452_read_raw() assumes the read was
+successful and proceeds to use a buffer containing uninitialized
+stack memory.
 
-Fixes: d5c70627a794 ("iio: adc: Add Xilinx AMS driver")
-Signed-off-by: Guilherme Ivo Bozi <guilherme.bozi@usp.br>
-Reviewed-by: Salih Erim <salih.erim@amd.com>
-Tested-by: Salih Erim <salih.erim@amd.com>
+Add proper checking of the I2C read return value and propagate errors
+to the caller.
+
+Fixes: 96c0cb2bbfe0 ("iio: mma8452: add support for runtime power management")
+Signed-off-by: Sanjay Chitroda <sanjayembeddedse@gmail.com>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/xilinx-ams.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/iio/accel/mma8452.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iio/adc/xilinx-ams.c b/drivers/iio/adc/xilinx-ams.c
-index 124470c9252978..6191cd1b29a510 100644
---- a/drivers/iio/adc/xilinx-ams.c
-+++ b/drivers/iio/adc/xilinx-ams.c
-@@ -871,6 +871,9 @@ static const struct iio_chan_spec *ams_event_to_channel(struct iio_dev *dev,
- 		if (dev->channels[i].scan_index == scan_index)
- 			break;
+diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
+index 15172ba2972c59..cefc7cf4bd8353 100644
+--- a/drivers/iio/accel/mma8452.c
++++ b/drivers/iio/accel/mma8452.c
+@@ -252,6 +252,8 @@ static int mma8452_read(struct mma8452_data *data, __be16 buf[3])
  
-+	if (i == dev->num_channels)
-+		return NULL;
-+
- 	return &dev->channels[i];
- }
+ 	ret = i2c_smbus_read_i2c_block_data(data->client, MMA8452_OUT_X,
+ 					    3 * sizeof(__be16), (u8 *)buf);
++	if (ret < 0)
++		return ret;
  
-@@ -1012,6 +1015,8 @@ static void ams_handle_event(struct iio_dev *indio_dev, u32 event)
- 	const struct iio_chan_spec *chan;
+ 	ret = mma8452_set_runtime_pm_state(data->client, false);
  
- 	chan = ams_event_to_channel(indio_dev, event);
-+	if (!chan)
-+		return;
- 
- 	if (chan->type == IIO_TEMP) {
- 		/*
 -- 
 2.53.0
 
