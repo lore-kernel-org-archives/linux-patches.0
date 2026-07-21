@@ -1,40 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9F23EEAE2;
-	Tue, 21 Jul 2026 19:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B0D411661;
+	Tue, 21 Jul 2026 19:10:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661019; cv=none; b=OQp1Cr85TAiumOW7iQ4fNHjmA5g6wcPw4ai5JTAZYQnzAeSVV5JVd008wmcpZ+K5np3xRuvq0BPsiMzbpOtr1XQOSKDKWhpXRGHb8/yOk/XTBM8SfHdi7QGFD8sapav6qrB3BPwhReTJPHHp2k/9Iy0ApvI7kKuFn9tYWzsgxRA=
+	t=1784661022; cv=none; b=ix9tLbFnZDev+AXct9Cr9vANTqUqNJtdd7X5erBWmeWKsc87L04fbqZyKYmMT4RUA6vsbiDRKF02/fJMEe4H4D7geZ38IF6eFe9d6pJwmjsvWbHKtxs4vtIvNZFWYqLZFkzB7YFlm4rswmh10jShzyTy24JSNoQhlncAH6AQueo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661019; c=relaxed/simple;
-	bh=mzTmT3YvOY/yz5ASffCVYPUaL61T/MWWuOwapt9qcAM=;
+	s=arc-20240116; t=1784661022; c=relaxed/simple;
+	bh=C64qxqr/75EHd6SZ5A3CMOyuw9MjoD3XIGWDt4dJgbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YqLCjeaz3aR1vkSF7Mn5E0lN/8uBSVE38v5EVPd4hIK1HWBuLPQgI41Om8ltByQK537hBBbi531Cevr0n/Jg1NsIFQptKkFVAQG4uuSXMa7hKCMExBaFlHkyHtQO7MkBkLY1wTMPpIBlqgjW+Geno7fiysRnDU6huR2qj9ouw6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oFeD4ae; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kXeAfG1TUV8YFciuTezjQotTuq7uGlUy22Z/EdZSntyEX9630fXHa+5YPayBh2aZ+CYj9hFtmvIjxNGtV4JEDq379Y8XJ2UO6plgKXhyByvgviKU1Bt06QSjv87C9dwNNUJXCRgo7ng+n4lVX6fdcTQuW2z5jp1w0jMBrVQjGcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEEuIYD1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oFeD4ae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B611F000E9;
-	Tue, 21 Jul 2026 19:10:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEEuIYD1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7653B1F00A3A;
+	Tue, 21 Jul 2026 19:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661018;
-	bh=ZjSt7S5hpQLoCfSLnBK2jYefTmZ47H5n9Q2TrJszLUw=;
+	s=korg; t=1784661021;
+	bh=d8++ZN1AtGVoJope7thDa5xK5i1/gcyguNBZqtulYzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0oFeD4aevyik02ii4TZdrXvJRkdSalOqGxek0/K3+EhNh8gnbv6W10pGtF6h+J+oE
-	 xB/QYTcWc6zEgRG6T9VW4xFaS8fCTAQT4YkchZFq2ciBQf58CszmmLV//HDO5KN6es
-	 s0QeNgktcGXsrKZ3v0KSC1gObEwqqJWTAl5epsPM=
+	b=BEEuIYD12wsjCjxmsf6YfMOjI5fFhEDdimft4BH4lRj1/EWW+xKMBqrK0qLPId2P/
+	 9hdFmO88A8DQiGbYHPHHYNniMKgd2x9d06Mju2T0Rh65Jjm7xkRQRrT9d3q/+4dmNo
+	 VjVdTE0cjZL5uKzrLVByWJkCoFAjwsZdt7F9XQCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Ge <hao.ge@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
+	Sayali Patil <sayalip@linux.ibm.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	David Hildenbrand <david@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Michal Hocko <mhocko@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1158/2077] alloc_tag: fix use-after-free in /proc/allocinfo after module unload
-Date: Tue, 21 Jul 2026 17:13:51 +0200
-Message-ID: <20260721152620.133976019@linuxfoundation.org>
+Subject: [PATCH 7.1 1159/2077] selftests/mm: restore default nr_hugepages value via exit trap in charge_reserved_hugetlb.sh
+Date: Tue, 21 Jul 2026 17:13:52 +0200
+Message-ID: <20260721152620.158316008@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,89 +61,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Ge <hao.ge@linux.dev>
+From: Sayali Patil <sayalip@linux.ibm.com>
 
-[ Upstream commit 2956268efc457cb05d29c1bf94de1e8e684d7bbc ]
+[ Upstream commit a3f66e9b6e4dad38444656ffc28c28c33a4d4e1f ]
 
-allocinfo_start() only reinitializes the codetag iterator at position 0.
-For subsequent reads (position > 0), it reuses cached iterator state from
-the previous batch.  allocinfo_stop() drops mod_lock between read batches,
-which allows module unload to complete and free the module memory that the
-cached iterator still references:
+Patch series "selftests/mm: fix failures and robustness improvements", v7.
 
-  CPU0 (read)                        CPU1 (rmmod)
-  ----                               ----
-  allocinfo_start(pos=0)
-    down_read(mod_lock)
-    allocinfo_show()
-    ...
-  allocinfo_stop()
-    up_read(mod_lock)
-                                     codetag_unload_module()
-                                       kfree(cmod)
-                                       release_module_tags()
-                                     ...
-                                     free_mod_mem()
-  allocinfo_start(pos=N)
-    down_read(mod_lock)
-    // reuses cached iter, skips re-init
-  allocinfo_show()
-    ct->filename   <-- UAF
+Powerpc systems with a 64K base page size exposed several issues while
+running mm selftests. Some tests assume specific hugetlb configurations,
+use incorrect interfaces, or fail instead of skipping when the required
+kernel features are not available.
 
-After free_mod_mem() frees the module's .rodata, allocinfo_show()
-dereferences ct->filename, ct->function which point there.
+This series fixes these issues and improves test robustness.
 
-Save the iterator state in allocinfo_next() and resume from it in
-allocinfo_start() with codetag_next_ct(), which detects module removal via
-idr_find() returning NULL and skips to the next module.
+This patch (of 13):
 
-Link: https://lore.kernel.org/20260604065938.105991-1-hao.ge@linux.dev
-Fixes: 9f44df50fee4 ("alloc_tag: keep codetag iterator active between read()")
-Signed-off-by: Hao Ge <hao.ge@linux.dev>
-Suggested-by: Suren Baghdasaryan <surenb@google.com>
-Acked-by: Suren Baghdasaryan <surenb@google.com>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
+cleanup() resets nr_hugepages to 0 on every invocation, while the test
+reconfigures it again in the next iteration.  This leads to repeated
+allocation and freeing of large numbers of hugepages, especially when the
+original value is high.
+
+Additionally, with set -e, failures in earlier cleanup steps (e.g., rmdir
+or umount returning EBUSY while background activity is still ongoing) can
+cause the script to exit before restoring the original value, leaving the
+system in a modified state.
+
+Introduce a trap on EXIT, INT, and TERM to restore the original
+nr_hugepages value once at script termination.  This avoids unnecessary
+allocation churn and ensures the original value is reliably restored on
+all exit paths.
+
+Link: https://lore.kernel.org/cover.1779296493.git.sayalip@linux.ibm.com
+Link: https://lore.kernel.org/5b8fbb29cd6ceffe6752e0af104f60cec072aa10.1779296493.git.sayalip@linux.ibm.com
+Fixes: 7d695b1c3695 ("selftests/mm: save and restore nr_hugepages value")
+Signed-off-by: Sayali Patil <sayalip@linux.ibm.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Cc: Shuah Khan <shuah@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/alloc_tag.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ tools/testing/selftests/mm/charge_reserved_hugetlb.sh | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/lib/alloc_tag.c b/lib/alloc_tag.c
-index ed1bdcf1f8abfc..a9ab88f416b9f7 100644
---- a/lib/alloc_tag.c
-+++ b/lib/alloc_tag.c
-@@ -45,6 +45,7 @@ int alloc_tag_ref_offs;
+diff --git a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
+index 44f4e703deb9b5..e1945901fd207c 100755
+--- a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
++++ b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
+@@ -17,6 +17,7 @@ if ! command -v killall >/dev/null 2>&1; then
+ fi
  
- struct allocinfo_private {
- 	struct codetag_iterator iter;
-+	struct codetag_iterator reported_iter;
- 	bool print_header;
- };
+ nr_hugepgs=$(cat /proc/sys/vm/nr_hugepages)
++trap 'echo "$nr_hugepgs" > /proc/sys/vm/nr_hugepages' EXIT INT TERM
  
-@@ -58,16 +59,20 @@ static void *allocinfo_start(struct seq_file *m, loff_t *pos)
- 	if (node == 0) {
- 		priv->print_header = true;
- 		priv->iter = codetag_get_ct_iter(alloc_tag_cttype);
--		codetag_next_ct(&priv->iter);
-+	} else {
-+		priv->iter = priv->reported_iter;
- 	}
-+	codetag_next_ct(&priv->iter);
- 	return priv->iter.ct ? priv : NULL;
+ fault_limit_file=limit_in_bytes
+ reservation_limit_file=rsvd.limit_in_bytes
+@@ -70,7 +71,6 @@ function cleanup() {
+   if [[ -e $cgroup_path/hugetlb_cgroup_test2 ]]; then
+     rmdir $cgroup_path/hugetlb_cgroup_test2
+   fi
+-  echo 0 >/proc/sys/vm/nr_hugepages
+   echo CLEANUP DONE
  }
  
- static void *allocinfo_next(struct seq_file *m, void *arg, loff_t *pos)
- {
- 	struct allocinfo_private *priv = (struct allocinfo_private *)arg;
--	struct codetag *ct = codetag_next_ct(&priv->iter);
-+	struct codetag *ct;
+@@ -599,4 +599,3 @@ if [[ $do_umount ]]; then
+   rmdir $cgroup_path
+ fi
  
-+	priv->reported_iter = priv->iter;
-+	ct = codetag_next_ct(&priv->iter);
- 	(*pos)++;
- 	if (!ct)
- 		return NULL;
+-echo "$nr_hugepgs" > /proc/sys/vm/nr_hugepages
 -- 
 2.53.0
 
