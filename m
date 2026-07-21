@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64DD47127A;
-	Tue, 21 Jul 2026 18:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8762746EC78;
+	Tue, 21 Jul 2026 18:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659797; cv=none; b=R9d58ZkZaSycR54cN3UJAQ9v/w419zNavVdqEBROTfilpOhk8cP/3vomdZ6aDUXn3mBjidzFXHBNDOwX1tTNuF7Kqg0y7mMwlC2DMiVwQU5ytdfx6zzie2bIve10+aDCHGfQ01CgRVCNKe4JHOqRhUp119GGIXRO7tLe6621DsM=
+	t=1784659800; cv=none; b=ODAQj/71KwyAuRulxasbe8TpIH2JZvhIeTTPVApoKUmnj2PxBtxP3dyq+PQaOCs/33GpXzQNEhPMMpQHskuNsuSvXcqM9q5SFw/viZCM4wKl6foFyvVUZCv6x4YNvnBx9W249RKHXuEhfq0SRrZanYt+Bz/c2/C8NxZcXFtS8yQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659797; c=relaxed/simple;
-	bh=fSvf7Q4pSDpvC14A3FnBL4lyzu863WweZxlcBttWRAE=;
+	s=arc-20240116; t=1784659800; c=relaxed/simple;
+	bh=g/yCEM1grjjD8P7kMI44OuwR3nLRDwHa44Ga3VX8WlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kgNMIYA22Y4yApq5qHCEpIummmVpJFgzHGq7iyLB4OAFJloZJD1yoaer89KyZ2BwBsTYRuFp+LHBJ30DGQetO+1pQk5undfuBjkYJKHq06AYcTp6L6eWoj4M7DVpHdzi9AdpPifDU3/8fFlo0nseDXxqoBJMK7csVRuFKTYOnIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqjMyYdZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ul3pBMQ1BvwSzXRLAgtNl+ofUMLyDPcVaeL9Fl1E3drhAKQTSHTHpyIB6QzfO5IiBJsPS3Yd5tlflf3rO4ybDiJtP8WXC+gC1julK7SPu4+4jzYDzwTmartGuM+HlFr72HHgDOF+FsHtCvzhFP2KuYZjlLgJuCERuUjD3guGqwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mx79d32Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqjMyYdZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3999C1F000E9;
-	Tue, 21 Jul 2026 18:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mx79d32Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F321F000E9;
+	Tue, 21 Jul 2026 18:49:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659796;
-	bh=m6n1LjBXtY6SwgxTaMiTS7cUEM39NOF+btLeAFKlyVU=;
+	s=korg; t=1784659799;
+	bh=h7vh8XEyO6zgyU9eG/w/OUyrimxeKGmKIqr/3KDOBZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sqjMyYdZJfrN4CDfNRlKLPtl3tt2EWMnYG5GENo+LZIhNMnx1i2XeioNnTQdlQgoA
-	 Qhm16+8T/pESxCeXC5XjtQokXTXDWPPRDd32rWNbtVgqoD3gViusX1MxlbD3Q6vVKr
-	 9ykFmUVdfMXJ8WjWGd+QDj8oiiGzcp9YHq3/yuMg=
+	b=Mx79d32ZDbkr9u4X9gZay6j+tz2TNfi/W9in2STsM10XeS0mvztEeWyNkeSziPgtY
+	 jASn9voHnYubgK0T3zRmIjbY1F8ccTRq3NpZgsAZzHoWO9ZeFxtnnvzlA1zbZp3bdX
+	 8Ki4TghniW/EHA1Ov33EJ9w4OQY0d/7xL54AGyTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Maxwell Doose <m32285159@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Fabian Frederick <fabf@skynet.be>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0694/2077] RDMA/mlx5: Drop FRMR pool handle on UMR revoke failure
-Date: Tue, 21 Jul 2026 17:06:07 +0200
-Message-ID: <20260721152609.163333334@linuxfoundation.org>
+Subject: [PATCH 7.1 0695/2077] fs: efs: remove unneeded debug prints
+Date: Tue, 21 Jul 2026 17:06:08 +0200
+Message-ID: <20260721152609.188411191@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,57 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Guralnik <michaelgur@nvidia.com>
+From: Maxwell Doose <m32285159@gmail.com>
 
-[ Upstream commit c37d79dd967d450ea02e0ee2b6438b8534bbd044 ]
+[ Upstream commit 89009392c80da5da00876c8334ff20028e6e3eb6 ]
 
-When UMR revoke fails during MR cleanup, the handle is left in an
-unknown state and cannot be returned to the pool. The driver already
-destroys the mkey via the fallback path, but the pool's in_use counter
-is never decremented, drifting upward over time.
+The current code uses debug prints conditionally compiled with #ifdef
+DEBUG.  However, that code, when compiled, causes compiler errors due to
+incompatible formatters and undefined variables, notably:
 
-Call ib_frmr_pool_drop on the revoke-failure path so the pool's
-accounting stays consistent with the handles it has handed out.
+fs/efs/file.c: In function `efs_get_block':
+fs/efs/file.c:26:35: error: `block' undeclared (first use in this
+function); did you mean `iblock'?
+  26 |                         __func__, block, inode->i_blocks, inode->i_size);
+     |                                   ^~~~~
 
-Fixes: 36680ef7bceb ("RDMA/mlx5: Switch from MR cache to FRMR pools")
-Link: https://patch.msgid.link/r/20260610000145.820592-10-michaelgur@nvidia.com
-Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+and:
+
+fs/efs/file.c: In function `efs_bmap':
+./include/linux/kern_levels.h:5:25: error: format `%ld' expects
+argument of type `long int', but argument 4 has type `blkcnt_t' {aka
+`long long unsigned int'} [-Werror=format=]
+   5 | #define KERN_SOH        "\001"          /* ASCII Start Of Header */
+     |                         ^~~~~~
+
+which also extends to the other formatters.  As this part of the code has
+been dead for just about 14 years now, it has not been modernized to stay
+compatible with the most recent gcc compilers.  Fix these issues by
+removing the debug prints.
+
+Link: https://lore.kernel.org/20260605035251.89305-2-m32285159@gmail.com
+Fixes: f403d1dbac6d ("fs/efs: add pr_fmt / use __func__")
+Signed-off-by: Maxwell Doose <m32285159@gmail.com>
+Suggested-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Fabian Frederick <fabf@skynet.be>
+Cc: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/mr.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/efs/file.c | 21 +++------------------
+ 1 file changed, 3 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
-index 723594efa094e6..4118cd2d15fd55 100644
---- a/drivers/infiniband/hw/mlx5/mr.c
-+++ b/drivers/infiniband/hw/mlx5/mr.c
-@@ -1398,9 +1398,11 @@ static int mlx5r_handle_mkey_cleanup(struct mlx5_ib_mr *mr)
- 	bool is_odp = is_odp_mr(mr);
- 	int ret;
+diff --git a/fs/efs/file.c b/fs/efs/file.c
+index 9e641da6fab276..9153dfe79bbcc9 100644
+--- a/fs/efs/file.c
++++ b/fs/efs/file.c
+@@ -18,16 +18,9 @@ int efs_get_block(struct inode *inode, sector_t iblock,
  
--	if (mr->ibmr.frmr.pool && !mlx5_umr_revoke_mr_with_lock(mr)) {
--		ib_frmr_pool_push(mr->ibmr.device, &mr->ibmr);
--		return 0;
-+	if (mr->ibmr.frmr.pool) {
-+		if (!mlx5_umr_revoke_mr_with_lock(mr)) {
-+			ib_frmr_pool_push(mr->ibmr.device, &mr->ibmr);
-+			return 0;
-+		}
+ 	if (create)
+ 		return error;
+-	if (iblock >= inode->i_blocks) {
+-#ifdef DEBUG
+-		/*
+-		 * i have no idea why this happens as often as it does
+-		 */
+-		pr_warn("%s(): block %d >= %ld (filesize %ld)\n",
+-			__func__, block, inode->i_blocks, inode->i_size);
+-#endif
++	if (iblock >= inode->i_blocks)
+ 		return 0;
+-	}
++
+ 	phys = efs_map_block(inode, iblock);
+ 	if (phys)
+ 		map_bh(bh_result, inode->i_sb, phys);
+@@ -42,16 +35,8 @@ int efs_bmap(struct inode *inode, efs_block_t block) {
  	}
  
- 	if (is_odp)
-@@ -1422,6 +1424,10 @@ static int mlx5r_handle_mkey_cleanup(struct mlx5_ib_mr *mr)
- 		dma_resv_unlock(
- 			to_ib_umem_dmabuf(mr->umem)->attach->dmabuf->resv);
- 	}
-+
-+	if (mr->ibmr.frmr.pool && !ret)
-+		ib_frmr_pool_drop(&mr->ibmr);
-+
- 	return ret;
+ 	/* are we about to read past the end of a file ? */
+-	if (!(block < inode->i_blocks)) {
+-#ifdef DEBUG
+-		/*
+-		 * i have no idea why this happens as often as it does
+-		 */
+-		pr_warn("%s(): block %d >= %ld (filesize %ld)\n",
+-			__func__, block, inode->i_blocks, inode->i_size);
+-#endif
++	if (!(block < inode->i_blocks))
+ 		return 0;
+-	}
+ 
+ 	return efs_map_block(inode, block);
  }
- 
 -- 
 2.53.0
 
