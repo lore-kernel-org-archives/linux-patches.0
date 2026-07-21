@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01EA41735B;
-	Tue, 21 Jul 2026 20:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802BB400DE1;
+	Tue, 21 Jul 2026 20:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665259; cv=none; b=C6ybyhYnaF/Uw/MNeVoCFcstFKlRSJsprjeML5V+pvLgV22lWuocgc9c567xRXv6YMnPRHFC+PUIQhW1J5Em5uoE2fNDJRYPBw4uy7s7d/1nLENVXqFrQRICHkvNMNk7NjQ5YyQzIucjOgrvpHdIe9bHu2Wh1yzhO6RXzrDcA+U=
+	t=1784665261; cv=none; b=nx2GsjpV3UqOMHfarAFXTdW5aXXlDFTHJMetc7A6Lu+ffr6bm6lW/O150KxnJlqQ6xbyuDNln5+rZ5r773dJQi5MlVicnyVALCjwnhigrqGbpaOQaQSJQqu9OnaMWSXmOy697XicPzVxDku0ypTU7DFCGz5NQa3M/lcru3GPldU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665259; c=relaxed/simple;
-	bh=TfI41jbERzfwkNLm14jmyKbkVh0dRN3CUIrqsGX7myo=;
+	s=arc-20240116; t=1784665261; c=relaxed/simple;
+	bh=GLbLz79QKz/hloscuXtZjIgVNW6JFp6mHLANBWXzUoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sFD3xa2eOzOUkyT7P2X/LqFoufG3Zb6smlS+AlNDb9cboCcv/XZ+xwHZw3bWBrmv6bvVbBWWjfdZrnabHDSONJsakayir7VRCNWuiL2q+x4uqkamsYFT/4TOW6ehqwFWAW4sIpnzeqtdJvQ/pkSe1/J7g1YUwEayxmbC2l+3cfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+njmarU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Epv33pU6FfK8unV6ksZfjNjq9KBUg1Hh4/JX6bjREWLgbmaI8VIvqTp6di/oE3I4X7uITje9RYMhHZ6TqQeqQQqwdmztkR1E6Qnb3TWW9yL8hJhgG/ZyQ3n8/NAV/kc10Ua4ZSHKERPhtpjVEzp5khTzeCiZR5UNSQZqimH4ZW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBUGRC+w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+njmarU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078581F000E9;
-	Tue, 21 Jul 2026 20:20:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBUGRC+w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F2B51F000E9;
+	Tue, 21 Jul 2026 20:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665257;
-	bh=eoz2NTrg8sxCMuLLfh94aOviVFtkWt9hd5yJ+LoApgw=;
+	s=korg; t=1784665260;
+	bh=PF29uCw/c/bdHXVA65RozlMvk3tHdBUO2ea4tnarOlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k+njmarUqWaN17HJdK808IehR9arEgswc+4w3WAXYFMXscS1lIZnGg++KOH15IV2m
-	 5VLUbJEl09Bzl2tAzzI3fuCyaKjeKa77V++jWzJoiMBWWqrTkBC4igGpgcjPiyT+Ib
-	 tJFJ1M4MMYTOhNGMwms7EdodFbR+puUp6lUFCEIY=
+	b=jBUGRC+wldkbjzKPEAf37RB68824N57jHYQO2zKXvS3jEjfOPw3Y3iOL7ehaXgFT3
+	 z4SL4B7bcJa4Lfd2aFuYIj65oHBkeXA2+DFeo6HqXpVwWmSaSxJhwJNtPVBFF2PjUX
+	 nE+G//Cm66XEosZ64nlNS0AmN3p36tsLjZQCG0go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Daniel Walker <dwalker@mvista.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 0237/1266] USB: legousbtower: fix use-after-free on disconnect race
-Date: Tue, 21 Jul 2026 17:11:14 +0200
-Message-ID: <20260721152447.122739497@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>
+Subject: [PATCH 6.6 0238/1266] usb: sl811-hcd: disable controller wakeup on remove
+Date: Tue, 21 Jul 2026 17:11:15 +0200
+Message-ID: <20260721152447.144286658@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,141 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 62fc8eb1b1481051f7bab4aa93d79809053dd09f upstream.
+commit 4e8ba83ac4d311992e6a4c21de5dd705010df06e upstream.
 
-mutex_unlock() may access the mutex structure after releasing the lock
-and therefore cannot be used to manage lifetime of objects directly
-(unlike spinlocks and refcounts). [1][2]
+sl811h_probe() enables the HCD controller device as a wakeup source after
+usb_add_hcd() succeeds, but sl811h_remove() removes the HCD and releases
+the driver resources without disabling that wakeup source.
 
-Use a kref to release the driver data to avoid use-after-free in
-mutex_unlock() when release() races with disconnect().
+Disable controller wakeup after usb_remove_hcd() and before usb_put_hcd()
+so the wakeup source object is detached while the controller device pointer
+is still available.
 
-[1] a51749ab34d9 ("locking/mutex: Document that mutex_unlock() is
-                   non-atomic")
-[2] 2b9d9e0a9ba0 ("locking/mutex: Clarify that mutex_unlock(), and most
-                   other sleeping locks, can still use the lock object
-                   after it's unlocked")
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-Fixes: 18bcbcfe9ca2 ("USB: misc: legousbtower: semaphore to mutex")
+Fixes: 3c9740a117d4 ("usb: hcd: move controller wakeup setting initialization to individual driver")
 Cc: stable <stable@kernel.org>
-Cc: Daniel Walker <dwalker@mvista.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260622152612.116422-5-johan@kernel.org
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260701121625.96815-1-mhun512@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/legousbtower.c |   37 +++++++++++++++++++------------------
- 1 file changed, 19 insertions(+), 18 deletions(-)
+ drivers/usb/host/sl811-hcd.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/misc/legousbtower.c
-+++ b/drivers/usb/misc/legousbtower.c
-@@ -185,6 +185,7 @@ MODULE_DEVICE_TABLE(usb, tower_table);
+--- a/drivers/usb/host/sl811-hcd.c
++++ b/drivers/usb/host/sl811-hcd.c
+@@ -1590,6 +1590,7 @@ sl811h_remove(struct platform_device *de
  
- /* Structure to hold all of our device specific stuff */
- struct lego_usb_tower {
-+	struct kref		kref;
- 	struct mutex		lock;		/* locks this structure */
- 	struct usb_device	*udev;		/* save off the usb device pointer */
- 	unsigned char		minor;		/* the starting minor number for this device */
-@@ -220,7 +221,6 @@ struct lego_usb_tower {
- /* local function prototypes */
- static ssize_t tower_read(struct file *file, char __user *buffer, size_t count, loff_t *ppos);
- static ssize_t tower_write(struct file *file, const char __user *buffer, size_t count, loff_t *ppos);
--static inline void tower_delete(struct lego_usb_tower *dev);
- static int tower_open(struct inode *inode, struct file *file);
- static int tower_release(struct inode *inode, struct file *file);
- static __poll_t tower_poll(struct file *file, poll_table *wait);
-@@ -286,8 +286,10 @@ static inline void lego_usb_tower_debug_
- /*
-  *	tower_delete
-  */
--static inline void tower_delete(struct lego_usb_tower *dev)
-+static inline void tower_delete(struct kref *kref)
- {
-+	struct lego_usb_tower *dev = container_of(kref, struct lego_usb_tower, kref);
-+
- 	/* free data structures */
- 	usb_free_urb(dev->interrupt_in_urb);
- 	usb_free_urb(dev->interrupt_out_urb);
-@@ -381,6 +383,8 @@ static int tower_open(struct inode *inod
+ 	remove_debug_file(sl811);
+ 	usb_remove_hcd(hcd);
++	device_wakeup_disable(hcd->self.controller);
  
- 	dev->open_count = 1;
- 
-+	kref_get(&dev->kref);
-+
- unlock_exit:
- 	mutex_unlock(&dev->lock);
- 
-@@ -404,14 +408,8 @@ static int tower_release(struct inode *i
- 
- 	mutex_lock(&dev->lock);
- 
--	if (dev->disconnected) {
--		/* the device was unplugged before the file was released */
--
--		/* unlock here as tower_delete frees dev */
--		mutex_unlock(&dev->lock);
--		tower_delete(dev);
--		goto exit;
--	}
-+	if (dev->disconnected)
-+		goto out_unlock;
- 
- 	/* wait until write transfer is finished */
- 	if (dev->interrupt_out_busy) {
-@@ -425,7 +423,9 @@ static int tower_release(struct inode *i
- 
- 	dev->open_count = 0;
- 
-+out_unlock:
- 	mutex_unlock(&dev->lock);
-+	kref_put(&dev->kref, tower_delete);
- exit:
- 	return retval;
- }
-@@ -752,6 +752,7 @@ static int tower_probe(struct usb_interf
- 	if (!dev)
- 		goto exit;
- 
-+	kref_init(&dev->kref);
- 	mutex_init(&dev->lock);
- 	dev->udev = usb_get_dev(udev);
- 	spin_lock_init(&dev->read_buffer_lock);
-@@ -828,7 +829,7 @@ exit:
- 	return retval;
- 
- error:
--	tower_delete(dev);
-+	kref_put(&dev->kref, tower_delete);
- 	return retval;
- }
- 
-@@ -856,18 +857,18 @@ static void tower_disconnect(struct usb_
- 
- 	mutex_lock(&dev->lock);
- 
--	/* if the device is not opened, then we clean up right now */
--	if (!dev->open_count) {
--		mutex_unlock(&dev->lock);
--		tower_delete(dev);
--	} else {
--		dev->disconnected = 1;
-+	dev->disconnected = 1;
-+
-+	if (dev->open_count) {
- 		/* wake up pollers */
- 		wake_up_interruptible_all(&dev->read_wait);
- 		wake_up_interruptible_all(&dev->write_wait);
--		mutex_unlock(&dev->lock);
- 	}
- 
-+	mutex_unlock(&dev->lock);
-+
-+	kref_put(&dev->kref, tower_delete);
-+
- 	dev_info(&interface->dev, "LEGO USB Tower #%d now disconnected\n",
- 		 (minor - LEGO_USB_TOWER_MINOR_BASE));
- }
+ 	/* some platforms may use IORESOURCE_IO */
+ 	res = platform_get_resource(dev, IORESOURCE_MEM, 1);
 
 
