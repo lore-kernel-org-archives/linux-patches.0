@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998863B7763;
-	Tue, 21 Jul 2026 20:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E5F43B498;
+	Tue, 21 Jul 2026 20:48:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666920; cv=none; b=m+fauCH2aIosDdtfMImkvoOnDq8Qry8CV/jaaNf9k8Ke6dEgDL5+BYhhkfAESMzPcopIVTgxKBnwO7E/y7nuuenP6LdkPgmZcr9s+F/cRbONl50xiRbQIxGSm0L4lyiwmUHlwByBe85F3jSEodzDvyvFxBGtDwE7Xh3rTwnOSe0=
+	t=1784666921; cv=none; b=Vvfresfxzug6yB2yBJoSMUH1L0zNTHLGe1PIiZoUjoGq0CwnBFP5TpMJMeBrFyYGwa9reRghnPZ6MGaBFxuduzb07/OB+HoS171oVPfUT09jb2fN7xt8LTGRr/LhgpgcAV2o/31sUKqM1GrML/MoK1yfmRlL0TisiZFGqQbBxQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666920; c=relaxed/simple;
-	bh=uHMYMOyivieAaqb/5/kNNZJFT+dVwEycc+q9KV5D6s8=;
+	s=arc-20240116; t=1784666921; c=relaxed/simple;
+	bh=BgnoSENHfXqzlgoaxHnHd8uiq4L+qxd3/Vz6VMX1lBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NxFTN60TSIdAYP+S9n1tl57YrF1GRoTyM+OJIfqbi8Z3GeHl0644XziHwxCcwcseOwVVnVpdHFqKdA3liJBoCV6eRLY0gN1GxZcBv4/rwDwXwMQJl7rn/fdNNUF9WPrsR7F+n0PR77cG35CmzFph/NWnijw2E5TU4nIj/a7mfbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJ4DoQAm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ceDQAriaKjx2plWQPImnffPU1Y/0FnzelfuPkdOsMzbBh32yFe9oJCxxA45Oua66d1o1O2Oe1GayITUGD4rmvnbJPbFvNqXZNa1huJJ+wssr4yHkK22EaIw8jgmDN7Jfk7qHehIxIM2hTVzSAW5gHqQcgeHhhjl8zKM5nf49NqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dq41xYCM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJ4DoQAm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA8151F00A3A;
-	Tue, 21 Jul 2026 20:48:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dq41xYCM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6AC1F00A3E;
+	Tue, 21 Jul 2026 20:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666914;
-	bh=NDmzCsf9c4ZDCo4iiF5e1qV7zSXrlWvd8wW5E9HsX6s=;
+	s=korg; t=1784666916;
+	bh=MmHwk/RkkIthxvJBJoFbk5vIThfoKMPhkLTdqwy67/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QJ4DoQAmTztelIbaFeJiafV6vh7NxnEoHdWcrea9yGPvVD3s2nUSLkk/umpocyZG4
-	 +A9mRh3JUcXHSGgdVZvg0jGHJaJw6msashgBHN/E3VsOoKAUvHi2k590GzPsAy6bni
-	 ZEPz0Zp4BrUl6uTN2BMA9hkfrOnK4BOLBYnQS2pg=
+	b=dq41xYCMB2rL91Om8MsupczHXQ80XX/w+IssODhSDap4ju/lhgA7xXceebWE+G13E
+	 K45tsPI/MJcoNszhpSBYFzzBIA1VrBWt11/tBsldRNnfI0nXRvdMWj4m3LSrib2zvr
+	 DCF8Doq3nfsrix/n4pMvbmSAWWmBqn1+mV2yyzUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cen Zhang <zzzccc427@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0862/1266] Bluetooth: 6lowpan: hold L2CAP conn across debugfs control
-Date: Tue, 21 Jul 2026 17:21:39 +0200
-Message-ID: <20260721152501.139500351@linuxfoundation.org>
+Subject: [PATCH 6.6 0863/1266] Bluetooth: MGMT: Fix adv monitor add failure cleanup
+Date: Tue, 21 Jul 2026 17:21:40 +0200
+Message-ID: <20260721152501.161186700@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,177 +53,138 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 518aa9505fa10ea5662349e5d2efd8c9e32a820b ]
+[ Upstream commit 384a4b2fef9ffe5e270ee5558975c0504881c5fb ]
 
-get_l2cap_conn() looks up an LE hci_conn under hdev protection, but
-then drops that protection before reading hcon->l2cap_data and before
-lowpan_control_write() later dereferences conn->hcon.  A disconnect or
-device close can tear down the same L2CAP connection in that window.
+hci_add_adv_monitor() publishes a new adv_monitor in
+hdev->adv_monitors_idr before the powered MSFT setup step. The MSFT
+offload add path can then fail either locally before the controller add
+command completes, or in the MSFT add callback. In the current queued
+management add flow, hci_cmd_sync_work() still invokes
+mgmt_add_adv_patterns_monitor_complete() with the original pending command
+after msft_add_monitor_pattern() returns.
 
 The buggy scenario involves two paths, with each column showing the order
 within that path:
 
-6LoWPAN control write:              HCI disconnect/device close:
-  1. get_l2cap_conn() finds hcon      1. hci_disconn_cfm() dispatches
-     and hcon->l2cap_data.               the L2CAP disconnect callback.
-  2. get_l2cap_conn() drops hdev      2. l2cap_conn_del() clears
-     protection and returns conn.        hcon->l2cap_data and drops the
-                                         L2CAP connection reference.
-  3. lowpan_control_write() reads     3. hci_conn_del() removes and drops
-     conn->hcon.                         the HCI connection.
+MSFT add handling                  MGMT completion
+1. insert monitor and handle       1. receive sync error
+2. send MSFT add command           2. call add-monitor completion
+3. callback sees bad response      3. load cmd->user_data
+4. callback frees monitor          4. read monitor->handle
 
-Take a reference to the L2CAP connection with
-l2cap_conn_hold_unless_zero() while hdev is still locked, and drop that
-reference after the debugfs command's last use of conn.  This mirrors the
-existing L2CAP ACL receive-side handoff and keeps the connection
-dereferenceable after leaving hdev protection.  Export the existing helper
-so the bluetooth_6lowpan module can use the same lifetime primitive.
+Local MSFT setup failures have the other half of the same ownership bug:
+they return an error after the IDR insertion, but no later code removes the
+failed monitor from the IDR.
+
+Keep ownership with the pending management command until its completion.
+For normal management adds, the MSFT add callback now records successful
+controller state and returns errors to its caller. The management
+completion frees the monitor on non-success after copying the response
+handle, while resume/reregister callback-error cleanup remains in the
+MSFT callback. The success path keeps the existing bookkeeping.
 
 Validation reproduced this kernel report:
-BUG: KASAN: slab-use-after-free in lowpan_control_write+0x374/0x520
-The buggy address belongs to the object at ffff888111b9d000 which belongs
-to the cache kmalloc-1k of size 1024
-The buggy address is located 0 bytes inside of freed 1024-byte region
-[ffff888111b9d000, ffff888111b9d400)
-Read of size 8
-Call trace:
-  dump_stack_lvl+0x66/0xa0
-  print_report+0xce/0x5f0
-  lowpan_control_write+0x374/0x520 (net/bluetooth/6lowpan.c:1131)
-  srso_alias_return_thunk+0x5/0xfbef5
-  __virt_addr_valid+0x19f/0x330
-  kasan_report+0xe0/0x110
-  __debugfs_file_get+0xf7/0x400
-  full_proxy_write+0x9e/0xd0
-  vfs_write+0x1b0/0x810
-  ksys_write+0xd2/0x170
-  dnotify_flush+0x32/0x220
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-Allocated by task stack:
-  kasan_save_stack+0x33/0x60
-  kasan_save_track+0x17/0x60
-  __kasan_kmalloc+0xaa/0xb0
-  l2cap_conn_add+0x45/0x520
-  l2cap_chan_connect+0xac6/0xd90
-  l2cap_sock_connect+0x216/0x350
-  __sys_connect+0x101/0x130
-  __x64_sys_connect+0x40/0x50
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-Freed by task stack:
-  kasan_save_stack+0x33/0x60
-  kasan_save_track+0x17/0x60
-  kasan_save_free_info+0x3b/0x60
-  __kasan_slab_free+0x5f/0x80
-  kfree+0x313/0x590
-  hci_conn_hash_flush+0xc0/0x140
-  hci_dev_close_sync+0x41a/0xb00
-  hci_dev_close+0x12f/0x160
-  hci_sock_ioctl+0x157/0x570
-  sock_do_ioctl+0xf7/0x210
-  sock_ioctl+0x32f/0x490
-  __x64_sys_ioctl+0xc7/0x110
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  kasan_record_aux_stack+0xa7/0xc0
-  insert_work+0x32/0x100
-  __queue_work+0x262/0xa60
-  queue_work_on+0xad/0xb0
-  l2cap_connect_cfm+0x4ef/0x670
-  hci_le_remote_feat_complete_evt+0x247/0x430
-  hci_event_packet+0x360/0x6f0
-  hci_rx_work+0x2ae/0x7a0
-  process_one_work+0x4fd/0xbc0
-  worker_thread+0x2d8/0x570
-  kthread+0x1ad/0x1f0
-  ret_from_fork+0x3c9/0x540
-  ret_from_fork_asm+0x1a/0x30
+BUG: KASAN: slab-use-after-free in mgmt_add_adv_patterns_monitor_complete+0xfb/0x260 [bluetooth]
 
-Fixes: 6b8d4a6a0314 ("Bluetooth: 6LoWPAN: Use connected oriented channel instead of fixed one")
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x66/0xa0
+ print_report+0xce/0x5f0
+ ? mgmt_add_adv_patterns_monitor_complete+0xfb/0x260 [bluetooth]
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __virt_addr_valid+0x19f/0x330
+ ? mgmt_add_adv_patterns_monitor_complete+0xfb/0x260 [bluetooth]
+ kasan_report+0xe0/0x110
+ ? mgmt_add_adv_patterns_monitor_complete+0xfb/0x260 [bluetooth]
+ mgmt_add_adv_patterns_monitor_complete+0xfb/0x260 [bluetooth]
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? 0xffffffffc00d00da
+ ? __pfx_mgmt_add_adv_patterns_monitor_complete+0x10/0x10 [bluetooth]
+ ? __pfx_mgmt_add_adv_patterns_monitor_complete+0x10/0x10 [bluetooth]
+ ? hci_cmd_sync_work+0x1ab/0x210 [bluetooth]
+ hci_cmd_sync_work+0x1c0/0x210 [bluetooth]
+ ? __pfx_mgmt_add_adv_patterns_monitor_complete+0x10/0x10 [bluetooth]
+ process_one_work+0x4fd/0xbc0
+ ? __pfx_process_one_work+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __list_add_valid_or_report+0x37/0xf0
+ ? __pfx_hci_cmd_sync_work+0x10/0x10 [bluetooth]
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ worker_thread+0x2d8/0x570
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x1ad/0x1f0
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x3c9/0x540
+ ? __pfx_ret_from_fork+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __switch_to+0x2e9/0x730
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+Allocated by task 471 on cpu 3 at 285.205389s:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x17/0x60
+ __kasan_kmalloc+0xaa/0xb0
+ add_adv_patterns_monitor_rssi+0xd5/0x230 [bluetooth]
+ hci_sock_sendmsg+0x96b/0xf80 [bluetooth]
+ __sys_sendto+0x2bc/0x2d0
+ __x64_sys_sendto+0x76/0x90
+ do_syscall_64+0x115/0x6a0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Freed by task 454 on cpu 2 at 285.217112s:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x17/0x60
+ kasan_save_free_info+0x3b/0x60
+ __kasan_slab_free+0x5f/0x80
+ kfree+0x313/0x590
+ msft_add_monitor_sync+0x54a/0x570 [bluetooth]
+ hci_add_adv_monitor+0x133/0x180 [bluetooth]
+ hci_cmd_sync_work+0x187/0x210 [bluetooth]
+ process_one_work+0x4fd/0xbc0
+ worker_thread+0x2d8/0x570
+ kthread+0x1ad/0x1f0
+ ret_from_fork+0x3c9/0x540
+ ret_from_fork_asm+0x1a/0x30
+
+Fixes: a2a4dedf88ab ("Bluetooth: advmon offload MSFT add monitor")
 Assisted-by: Codex:gpt-5.5
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c    | 21 +++++++++++++++------
- net/bluetooth/l2cap_core.c |  1 +
- 2 files changed, 16 insertions(+), 6 deletions(-)
+ net/bluetooth/mgmt.c | 2 ++
+ net/bluetooth/msft.c | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index b3132079573d4d..e44fcd37f809ed 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -1006,16 +1006,19 @@ static int get_l2cap_conn(char *buf, bdaddr_t *addr, u8 *addr_type,
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index d64fe535d52512..ac696b870021af 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -5347,6 +5347,8 @@ static void mgmt_add_adv_patterns_monitor_complete(struct hci_dev *hdev,
+ 		if (monitor->state == ADV_MONITOR_STATE_NOT_REGISTERED)
+ 			monitor->state = ADV_MONITOR_STATE_REGISTERED;
+ 		hci_update_passive_scan(hdev);
++	} else {
++		hci_free_adv_monitor(hdev, monitor);
+ 	}
  
- 	hci_dev_lock(hdev);
- 	hcon = hci_conn_hash_lookup_le(hdev, addr, le_addr_type);
--	hci_dev_unlock(hdev);
--	hci_dev_put(hdev);
--
--	if (!hcon)
-+	if (!hcon) {
-+		hci_dev_unlock(hdev);
-+		hci_dev_put(hdev);
- 		return -ENOENT;
-+	}
+ 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode,
+diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
+index d039683d3bdd41..9aee9bffaa7e07 100644
+--- a/net/bluetooth/msft.c
++++ b/net/bluetooth/msft.c
+@@ -292,7 +292,7 @@ static int msft_le_monitor_advertisement_cb(struct hci_dev *hdev, u16 opcode,
+ 	monitor->state = ADV_MONITOR_STATE_OFFLOADED;
  
--	*conn = (struct l2cap_conn *)hcon->l2cap_data;
-+	*conn = l2cap_conn_hold_unless_zero(hcon->l2cap_data);
+ unlock:
+-	if (status)
++	if (status && msft->resuming)
+ 		hci_free_adv_monitor(hdev, monitor);
  
- 	BT_DBG("conn %p dst %pMR type %u", *conn, &hcon->dst, hcon->dst_type);
- 
-+	hci_dev_unlock(hdev);
-+	hci_dev_put(hdev);
-+
- 	return 0;
- }
- 
-@@ -1158,18 +1161,22 @@ static ssize_t lowpan_control_write(struct file *fp,
- 		if (conn) {
- 			struct lowpan_peer *peer;
- 
--			if (!is_bt_6lowpan(conn->hcon))
-+			if (!is_bt_6lowpan(conn->hcon)) {
-+				l2cap_conn_put(conn);
- 				return -EINVAL;
-+			}
- 
- 			peer = lookup_peer(conn);
- 			if (peer) {
- 				BT_DBG("6LoWPAN connection already exists");
-+				l2cap_conn_put(conn);
- 				return -EALREADY;
- 			}
- 
- 			BT_DBG("conn %p dst %pMR type %d user %u", conn,
- 			       &conn->hcon->dst, conn->hcon->dst_type,
- 			       addr_type);
-+			l2cap_conn_put(conn);
- 		}
- 
- 		ret = bt_6lowpan_connect(&addr, addr_type);
-@@ -1185,6 +1192,8 @@ static ssize_t lowpan_control_write(struct file *fp,
- 			return ret;
- 
- 		ret = bt_6lowpan_disconnect(conn, addr_type);
-+		if (conn)
-+			l2cap_conn_put(conn);
- 		if (ret < 0)
- 			return ret;
- 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 8f83ee2e75112e..6a3b279d26886b 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -7645,6 +7645,7 @@ struct l2cap_conn *l2cap_conn_hold_unless_zero(struct l2cap_conn *c)
- 
- 	return c;
- }
-+EXPORT_SYMBOL(l2cap_conn_hold_unless_zero);
- 
- void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- {
+ 	hci_dev_unlock(hdev);
 -- 
 2.53.0
 
