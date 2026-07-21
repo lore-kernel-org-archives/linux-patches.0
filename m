@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD16405845;
-	Tue, 21 Jul 2026 17:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A76846D082;
+	Tue, 21 Jul 2026 17:49:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656171; cv=none; b=nfJxdMH2rr8Fs7UwrkI5LPkO/nOy0cW+OgpkQU4jLCG5KDVfYwlMqFM9ppGyXn2esIPhUOfug/pYicPj4CW7P0+7UrmPd4RRNcOOtTkNVdiwasHVUHPXAAl7CbEpyszolD4lktDZNP2B0LoKHWFMLihNk1C7kff3BXLAi7QHOXY=
+	t=1784656174; cv=none; b=InBcQbFe5XNrFuReAHrrHhq9OPNwYqtk/A6KgE4OYmLdpL4ojboS1FuOIypAYsIXLjl+lmUvTECOjcqRyOLQ/2aS8CHiqidyBI53pMSAdWq3KOlFiD6ZWn3H+Pr8cOFMXXNJwPbItzXITuW6CdjEAn62uc9ZIh3OfkG25l977X4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656171; c=relaxed/simple;
-	bh=whi4++P1Qw747g0l3OHJ9NY1nEbfVo0lyIoUTwkkb+c=;
+	s=arc-20240116; t=1784656174; c=relaxed/simple;
+	bh=0Eg085atxl4oSsfO+uwWjO0p1H2jQP4lM4iLJ4Oo/c0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HTGNRqxktv5QmpKh7E3nDRTQh3hfmMWrssHiGwTpunVSQtB40V51BNxMDIMTuYI1riYwOzTpHhR/zjeLxYqqNZMW4LEodJhpBpU8Vg+NyopnMBfKbkCeZFjIaqp5rNl+slD/v3NFEITToI2nK3gxxipasYXvxvJh8jeUXyuzkYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGZa251i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KWUFafgcE05ufDdAVDVorAB/osPsMnLy7AGuaDWPbQQgtMqX6ICNpNJEekZ5mbPlhdEn7QMYbdEKgivWvnlYRLZlEJELYNvmAHPlaH1JILi5JsUFO2wb2P4invGXZOJZmRsGFFPxM5yNKZenS+9ClIJh8o/mEWaM17YQSAaPhFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlsHEHM0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGZa251i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E013B1F00A3F;
-	Tue, 21 Jul 2026 17:49:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlsHEHM0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E961F000E9;
+	Tue, 21 Jul 2026 17:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656170;
-	bh=m2n+ILi5UQwYi0FrB/wLBxfpSmy/hkdO3Q8MfEb6HCY=;
+	s=korg; t=1784656173;
+	bh=V7dbv524Wb6gLBK5i1CkAxgdVFE01zPbMm+IijNJDCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lGZa251iLUKR2d7LA/k1IDq3ShME5o/JljyMf4L4+8PIosnsWxYarhH26vQDOG0ZE
-	 ziUoelUIDmHwbErmZFnw+pj705lXNMIL5tNBXSBSk8uvrUyl/bMqBIbXPdyzdEbeeD
-	 6+9YG/rkz5jLlpdrEM/rTRGszLhk6/qaSWRAOrkc=
+	b=FlsHEHM0r18zoNIO4GqC/KU+AjHdQ73nYUCnfTWGGDifHSg32LoFXrmyfsjrpkvbw
+	 2ai4cxL1LV5t90sdXIkcUEuESd0JU1ZjU2Oi6NB+4DaFFAxFGwE3QHFc0QtlEXgmLs
+	 NkXxaissBcfiChxlQCnI4IUkQKRjNc2Dau/zkXjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudheer Dantuluri <dantuluris@google.com>,
-	Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0243/1611] iommu/amd: Fix premature break in init_iommu_one()
-Date: Tue, 21 Jul 2026 17:05:59 +0200
-Message-ID: <20260721152520.485985956@linuxfoundation.org>
+Subject: [PATCH 6.18 0234/1611] pinctrl: cs42l43: Fix polarity on debounce
+Date: Tue, 21 Jul 2026 17:05:50 +0200
+Message-ID: <20260721152520.273443758@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,51 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 283d245468a2b61c41aa8b582f25ed5615d1c304 ]
+[ Upstream commit 9da52ee80aee3ab3c69208bd1cfbb4be01371214 ]
 
-In init_iommu_one(), when processing IOMMU EFR attributes, the code checks
-whether GASUP is enabled. If GASUP is not enabled, the code falls back to
-legacy guest IR mode and then breaks out of the switch statement.
+The debounce bit sets a bypass on the debounce rather than enabling it,
+as such the current polarity of the debounce is set incorrectly. Invert
+the polarity to correct this.
 
-This break incorrectly skips the subsequent initialization steps that
-follow the GASUP check. These initializations are independent of GASUP
-support and must always be performed.
-
-Fix this by replacing the early break with a conditional else block,
-ensuring that the XTSUP check is only skipped when GASUP is not available.
-
-Fixes: a44092e326d4 ("iommu/amd: Use IVHD EFR for early initialization of IOMMU features")
-Reported-by: Sudheer Dantuluri <dantuluris@google.com>
-Tested-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: d5282a539297 ("pinctrl: cs42l43: Add support for the cs42l43")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/pinctrl/cirrus/pinctrl-cs42l43.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 6e5efc340c83e4..32175daa3dd8a1 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -1933,12 +1933,11 @@ static int __init init_iommu_one(struct amd_iommu *iommu, struct ivhd_header *h,
- 		/* XT and GAM require GA mode. */
- 		if ((h->efr_reg & (0x1 << IOMMU_EFR_GASUP_SHIFT)) == 0) {
- 			amd_iommu_guest_ir = AMD_IOMMU_GUEST_IR_LEGACY;
--			break;
-+		} else {
-+			if (h->efr_reg & BIT(IOMMU_EFR_XTSUP_SHIFT))
-+				amd_iommu_xt_mode = IRQ_REMAP_X2APIC_MODE;
- 		}
+diff --git a/drivers/pinctrl/cirrus/pinctrl-cs42l43.c b/drivers/pinctrl/cirrus/pinctrl-cs42l43.c
+index 3cc18352060770..305233fc198762 100644
+--- a/drivers/pinctrl/cirrus/pinctrl-cs42l43.c
++++ b/drivers/pinctrl/cirrus/pinctrl-cs42l43.c
+@@ -343,7 +343,7 @@ static int cs42l43_pin_set_db(struct cs42l43_pin *priv, unsigned int pin,
  
--		if (h->efr_reg & BIT(IOMMU_EFR_XTSUP_SHIFT))
--			amd_iommu_xt_mode = IRQ_REMAP_X2APIC_MODE;
--
- 		if (h->efr_attr & BIT(IOMMU_IVHD_ATTR_HATDIS_SHIFT)) {
- 			pr_warn_once("Host Address Translation is not supported.\n");
- 			amd_iommu_hatdis = true;
+ 	return regmap_update_bits(priv->regmap, CS42L43_GPIO_CTRL2,
+ 				  CS42L43_GPIO1_DEGLITCH_BYP_MASK << pin,
+-				  !!us << pin);
++				  !us << pin);
+ }
+ 
+ static int cs42l43_pin_config_get(struct pinctrl_dev *pctldev,
 -- 
 2.53.0
 
