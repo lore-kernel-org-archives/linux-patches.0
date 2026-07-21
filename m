@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F80A386450;
-	Tue, 21 Jul 2026 18:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B25F415F05;
+	Tue, 21 Jul 2026 18:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656882; cv=none; b=c/QqgF1/JciZn472kt7sSg0O06/WUvtsgBwuv0cpToCabQDu0k5qeWbHH2mt1jnleiIfqntiaUAGIHa6DCsgyf34kGd7yE6+/87yjxl5uPdbI9z3ea9z502S9NE+fQcfwt4P+NrngjmUIdT3tAe86lVHFqcfdb7hVwkHNh3JXQA=
+	t=1784656884; cv=none; b=WjacOrMRVE7E6+6YDFFPW5wBZmcCGMOISdjCSVvBOzfly5tWLH0sYJ5TYPauEAEhUyoccoO1JXufHP5SyNSq/0TaJBrStlfS6w6Wz3cUqqyiFvurxjEsrbXOjSuGoVrXAMzhBk7ZP7vTQFap3SZBUvy6O+OllHd/MDFrKmROU+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656882; c=relaxed/simple;
-	bh=03qNFIlN/FAumT9eHDnEC7cbXjNog7L7XUmVgCo6hE0=;
+	s=arc-20240116; t=1784656884; c=relaxed/simple;
+	bh=qVlKWFoDigt0kTDwSLreLeseK6fVYQermA5hK+5g8E8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JwanDrrNAiEb2h1n1Ybvs20NO6uQlWsCCJmAF9PwK1NckXlmWomCSEsw7Z90MBo9NIeokSww6/5mijzGBOMcvylhxsBKrOE0j3gWikNEUTMo2GhgKmbgTzNv2Loe5bNXxya5oS/A+66M2Hl01VOwPQjVD+h+cCG5k6HCTN4WTNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sY9RT8rp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I99F5WnIjQTRSvhe/pPIS1Ra5qpWAp5DLp+D8r/+oNW02Ab8dx2Xm2uLjkesrr9qFlUl3dsu6zIliltw4N+MFzBn1gr+VrjmnlXLYMPe5pgdD66IKw7apNd1cTQsAizlHS1f4WkY//9MLpyVJaWQex0sFd7VzkKwMJOkjeeKNe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=di03li2q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sY9RT8rp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298051F000E9;
-	Tue, 21 Jul 2026 18:01:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="di03li2q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3C11F000E9;
+	Tue, 21 Jul 2026 18:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656880;
-	bh=yIP3v1SqpFbBtuDUuhiCnBy8v9tn45tc813IsSEhkho=;
+	s=korg; t=1784656883;
+	bh=r0Ixu5SQoJlbT6PrZfRZskIeTBE+2FWyh4BVbjpsmh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sY9RT8rp4WYWGk2TwQI/KKSpAe2JOBOz4hENgUinFiXyd/qHQcOkl57ZL8KSVC3wK
-	 pCuysPZ38IjB9uvmh+1Ikl3iEAJo0/opccT6viro29/+mfJu1gAbo8rUFGzUUt8mv2
-	 j25wWKVDHOgSxQ/qPFinbU8SBh9JUUdcATfrtqaI=
+	b=di03li2qBeKQtm+uCi9jtcX7ETAY2F0Hyx09DftYvGxPck5Jyo6O2Cs2iGLx0GPKD
+	 oNykqLbhUgR6yi7jLjoq7vA7P9RrpdaTUbEeaXM+5DKLZ4epVbwvJOABX3qA4UZTSC
+	 RsHxubbLYWBKVExU48rXV86nuEK3mllE9ivEgIFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Wayen.Yan" <win847@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0552/1611] net: airoha: Fix always-true condition in PPE1 queue reservation loop
-Date: Tue, 21 Jul 2026 17:11:08 +0200
-Message-ID: <20260721152527.795412118@linuxfoundation.org>
+Subject: [PATCH 6.18 0553/1611] net: ethernet: oa_tc6: mdiobus->parent initialized with NULL
+Date: Tue, 21 Jul 2026 17:11:09 +0200
+Message-ID: <20260721152527.818734732@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,50 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayen.Yan <win847@gmail.com>
+From: Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
 
-[ Upstream commit c66f8511a8109fa50767941b26d3623e316fde02 ]
+[ Upstream commit a221d3f7e3f3ea6a3b4bc511cf2a59242daa06e1 ]
 
-In airoha_fe_pse_ports_init(), the inner condition for PPE1 queue
-reservation is identical to the for-loop bound, making it always true
-and the else branch dead code:
+As "dev" pointer in oa_tc6 structure is never initialized,
+mbiobus->parent was initialized with NULL.  This change
+fixes it by initializing it with device pointer of spi.
 
-  for (q = 0; q < pse_port_num_queues[FE_PSE_PORT_PPE1]; q++) {
-      if (q < pse_port_num_queues[FE_PSE_PORT_PPE1])  /* always true */
-          set RSV_PAGES;
-      else
-          set 0;  /* unreachable */
-  }
-
-The intended behavior is to reserve pages only for the first half of
-the queues, matching the PPE2 implementation on line 334 which
-correctly uses the /2 divisor. Fix the PPE1 condition accordingly.
-
-Fixes: 23020f049327 ("net: airoha: Introduce ethernet support for EN7581 SoC")
-Signed-off-by: Wayen.Yan <win847@gmail.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/6a2ca3de.ad59c0a6.147df9.2ac1@mx.google.com
+Fixes: 8f9bf857e43b ("net: ethernet: oa_tc6: implement internal PHY initialization")
+Signed-off-by: Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
+Link: https://patch.msgid.link/20260611-level-trigger-v5-2-4533a9e85ce2@onsemi.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/oa_tc6.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 7e7256d92fdb0b..5e7939c4f3e6fe 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -311,7 +311,7 @@ static void airoha_fe_pse_ports_init(struct airoha_eth *eth)
- 					 PSE_QUEUE_RSV_PAGES);
- 	/* PPE1 */
- 	for (q = 0; q < pse_port_num_queues[FE_PSE_PORT_PPE1]; q++) {
--		if (q < pse_port_num_queues[FE_PSE_PORT_PPE1])
-+		if (q < pse_port_num_queues[FE_PSE_PORT_PPE1] / 2)
- 			airoha_fe_set_pse_oq_rsv(eth, FE_PSE_PORT_PPE1, q,
- 						 PSE_QUEUE_RSV_PAGES);
- 		else
--- 
-2.53.0
-
+--- a/drivers/net/ethernet/oa_tc6.c
++++ b/drivers/net/ethernet/oa_tc6.c
+@@ -107,7 +107,6 @@
+ 
+ /* Internal structure for MAC-PHY drivers */
+ struct oa_tc6 {
+-	struct device *dev;
+ 	struct net_device *netdev;
+ 	struct phy_device *phydev;
+ 	struct mii_bus *mdiobus;
+@@ -518,7 +517,7 @@ static int oa_tc6_mdiobus_register(struc
+ 	tc6->mdiobus->read_c45 = oa_tc6_mdiobus_read_c45;
+ 	tc6->mdiobus->write_c45 = oa_tc6_mdiobus_write_c45;
+ 	tc6->mdiobus->name = "oa-tc6-mdiobus";
+-	tc6->mdiobus->parent = tc6->dev;
++	tc6->mdiobus->parent = &tc6->spi->dev;
+ 
+ 	snprintf(tc6->mdiobus->id, ARRAY_SIZE(tc6->mdiobus->id), "%s",
+ 		 dev_name(&tc6->spi->dev));
 
 
