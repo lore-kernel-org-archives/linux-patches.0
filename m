@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919143EEAC7;
-	Tue, 21 Jul 2026 19:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641BE46C4D9;
+	Tue, 21 Jul 2026 19:20:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661644; cv=none; b=ebbtonjtkn5DeuKfkY2wxrsH87U6IdrQYaR35Um3fE5HWcro2c5LIf+QqvpQQlEErIq0ssBnvxJh89Dfwrk9dd2F5nzd5e8+14+neJRu12OTsFtKxdoREtooIbXkefQTp08fq65ob2LsZOMW8+Rr2MFsnRFTIsj+CSU/jkcnNVw=
+	t=1784661647; cv=none; b=iUbr51K/QKT5dYWtcbIDUltiRb0k9vSBbrk3OzEUifwHnBPd23NJRiqnmZuxkmbZXBn53XKg5ye9PX4SJ6f17w+zgqau8IhlNhe3PchdYh4/nTzJlpYn/JK4MpdULYKQFoFqHrbs31jeYBqoT6ysoKIV3qt+eYSv5TVYPm/+hzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661644; c=relaxed/simple;
-	bh=fyaoBs0eOkmHTdNyhjfCO8B+ivIq0Rca1ACMqGu5whY=;
+	s=arc-20240116; t=1784661647; c=relaxed/simple;
+	bh=7XvcNyK+1//5qCAreppaFEl3jzUjl2njzJLZh5x9Es4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KN1vZzPN++j0FykrMNl0w4fSqwiBVkqjToNAIJIo6NQTFngjjSkweiVTilJIOZwZzRioHPQgzAS+tfMnfKiJgdRnMLmNWeadPQ/3VnMA2dT7rlxMlTNPVvuHhssH+SZuHwysAMy0gImBR7sBmu4lVTTMnCZrRCLjHsjR4Nx0kPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYFvDZ8x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A4PRoJLgd3ftg9Tk3Wf7adiqWoyT2veqhdMRlz7gtA6IksJ40rrOfjvIchj9FehPvStaHaLlcMNdH2xGN15K37mfKxozGhOSIFzvTnvobGbYlJfTKBR7+R/jzblJr/kokJkqM2ZN6KNm6rboW/4m/GYdBPIUjwogBd0iOuu9/gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmrzHaQF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYFvDZ8x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC1A1F000E9;
-	Tue, 21 Jul 2026 19:20:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmrzHaQF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9831F000E9;
+	Tue, 21 Jul 2026 19:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661643;
-	bh=ZhgdDDSQ0NXRimHU8wNWla/FjPbg5dALZFvUDGMZSlI=;
+	s=korg; t=1784661646;
+	bh=iKBEH5HJCZkZyF5Mr70VheVtb4mXvc2MJvsRiDymAsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QYFvDZ8xSGXa0j+7wSbuEl+Vh4ab0xWcnCt4ea3sVud0d7UyS9Yi2O58YihLR0Rib
-	 ZK8DmiXDeFP5Oc71h99IIIvBhdumjgEsANcX3vhcQ0u16l8HrktQ9D80qOXVF0X4oS
-	 QllAryVlROgmDVhWvU08/Ord07MikXAxBS3woz2E=
+	b=gmrzHaQFvxuemThS/M1chCzQGcHsFRvSkq2L1MDkpIh4kAiDHLfBKU5fsTuao13Ri
+	 LEjACvqyjj2ICegEpm8UxDPtCK7TMPF7zfUcCAyUk8bW5sVpkxpeenb0+hXZQNP4iX
+	 +2Y0G0g2N2CtNg6gC461WbRPjEMd8j4qH5QYBIIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
+	Zhang Yuwei <zhangyuwei20@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0145/1276] device property: fix fwnode reference leak in fwnode_graph_get_endpoint_by_id()
-Date: Tue, 21 Jul 2026 17:09:48 +0200
-Message-ID: <20260721152449.345637548@linuxfoundation.org>
+Subject: [PATCH 6.12 0146/1276] driver core: Use mod_delayed_work to prevent lost deferred probe work
+Date: Tue, 21 Jul 2026 17:09:49 +0200
+Message-ID: <20260721152449.367814813@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,49 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Zhang Yuwei <zhangyuwei20@huawei.com>
 
-[ Upstream commit 9582485a65eacfd7245ec7f0a9d7e2c34749d669 ]
+[ Upstream commit 1137838865bfc9a7cd5869c1dc5c22aa45ec12c8 ]
 
-When called with FWNODE_GRAPH_ENDPOINT_NEXT, the function walks every
-endpoint under the requested port and, for any endpoint whose ID is
-greater than or equal to the requested one, may store a fwnode
-reference in best_ep via fwnode_handle_get(). If a later iteration
-finds an exact-ID match, the function returns that endpoint directly
-without dropping the reference held by best_ep, leaking it.
+The deferred_probe_timeout_work may be permanently and unexpectedly
+canceled when deferred_probe_extend_timeout() executes concurrently.
+Starting with deferred_probe_timeout_work pending, the problem can
+occur after the following sequence:
 
-Drop the saved candidate before returning the exact-match endpoint.
+  CPU0                                 CPU1
+deferred_probe_extend_timeout
+  -> cancel_delayed_work() => true
+                                   deferred_probe_extend_timeout
+                                     -> cancel_delayed_work()
+                                       -> __cancel_work()
+                                         -> try_grab_pending()
+  -> schedule_delayed_work()
+    -> queue_delayed_work_on()
+(Since the pending bit is grabbed,
+ it just returns without queuing)
+                                         -> set_work_pool_and_clear_pending()
+                                  (This __cancel_work() returns false and
+                                     the work will never be queued again)
 
-This affects callers that use FWNODE_GRAPH_ENDPOINT_NEXT to ask for
-the next endpoint with ID >= the requested one (used by a number of
-media drivers, e.g. imx7/8, sun6i CSI, omap3isp, xilinx-csi2,
-stm32-csi). Each leak retains a fwnode reference until reboot/unbind.
+The root cause is that the WORK_STRUCT_PENDING_BIT of the work_struct
+is set temporarily in __cancel_work() (via try_grab_pending()). This
+transient state prevents the work_struct from being successfully queued
+by another CPU.
 
-Fixes: 0fcc2bdc8aff ("device property: Add fwnode_graph_get_endpoint_by_id()")
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Link: https://patch.msgid.link/20260514171455.27271-1-sozdayvek@gmail.com
+To fix this, replace the original non-atomic cancel and schedule
+mechanism with mod_delayed_work(). This ensures the modification is
+handled atomically and guarantees that the work is not lost.
+
+Fixes: 2b28a1a84a0e ("driver core: Extend deferred probe timeout on driver registration")
+Signed-off-by: Zhang Yuwei <zhangyuwei20@huawei.com>
+Link: https://patch.msgid.link/20260410024448.387231-1-zhangyuwei20@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/property.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/base/dd.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/base/property.c b/drivers/base/property.c
-index 4217d00c76fd78..ffe4e75908e4c9 100644
---- a/drivers/base/property.c
-+++ b/drivers/base/property.c
-@@ -1202,8 +1202,10 @@ fwnode_graph_get_endpoint_by_id(const struct fwnode_handle *fwnode,
- 		if (fwnode_ep.port != port)
- 			continue;
+diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+index 7524555ff6cfcf..48e0ae8892ded1 100644
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -326,12 +326,10 @@ void deferred_probe_extend_timeout(void)
+ 	 * If the work hasn't been queued yet or if the work expired, don't
+ 	 * start a new one.
+ 	 */
+-	if (cancel_delayed_work(&deferred_probe_timeout_work)) {
+-		schedule_delayed_work(&deferred_probe_timeout_work,
+-				driver_deferred_probe_timeout * HZ);
++	if (mod_delayed_work(system_wq, &deferred_probe_timeout_work,
++						 driver_deferred_probe_timeout))
+ 		pr_debug("Extended deferred probe timeout by %d secs\n",
+ 					driver_deferred_probe_timeout);
+-	}
+ }
  
--		if (fwnode_ep.id == endpoint)
-+		if (fwnode_ep.id == endpoint) {
-+			fwnode_handle_put(best_ep);
- 			return ep;
-+		}
- 
- 		if (!endpoint_next)
- 			continue;
+ /**
 -- 
 2.53.0
 
