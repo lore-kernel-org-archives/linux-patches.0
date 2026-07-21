@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EE54582EC;
-	Tue, 21 Jul 2026 20:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7C04746AA;
+	Tue, 21 Jul 2026 20:58:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667500; cv=none; b=GPj5ACStc0l3lkZfvQRpFSnvVd3Ou3azELKCz0oiqxt5hqR6fIBwUB7kHja7nwShqQRuWDB1I/uDUFwjp+xmUDUrw8IPcnHwaxbOm5tsUSYaNyu9R/aTjR5ggfWkStGYhrvl1ainv4NnETacrDdcqglZEtC/v2F8ghgHAGn4lv0=
+	t=1784667502; cv=none; b=kbXUtVOGolEyp5EIe2zqfkIyxPMZdbSAcRPkSs/g7iHlMEB9PAZTp1JkeqReNpT+pmH7eRtp4euins5jp2SvUJ9g1o/hQIUUqxLezwF6MnT8ekIXM++gYDwG9yXTerXdBuie/D5BuYwu7pqPLG/Pbc8ZNvUD4fw5ymRW8pF6QMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667500; c=relaxed/simple;
-	bh=oK+g7nHQCujNRIrxmeUI7fbAcdA88Bery77reQeNtjo=;
+	s=arc-20240116; t=1784667502; c=relaxed/simple;
+	bh=J8D8OnjC/ZqeYVYI/8EZWn39anEBW20yQoH0KqJ4lUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rJbu+UFLvm9sIYDkoUzx+MxAJwOJXho9tW77hHgDNB0O84sdvjtmih7E3prWTFiGLwllwjvGDDSRh1eUEvgvTw5bijq8Tmnw9tacADXiJLEaw3sUyxny7RY3PKsE17a54xLJGfaIGvSyZJm4aisR7iKRYPXgZS/qWT15NxaxshQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKZ0ddg0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kc0WGLWkh4/AI5oEtw0Bbn5rFkd11aSFa7cinCJWvA4Fj+WxwEtjhEqw6bOgv8nyPhKMzo0kBqrUd3XtMnDWNGLd/MeHmTl3UVdkxkN9Bzlf7KPbkPoe8W+t/pEmLPUlgnhssDclTcEkB0CZrNaAqQ+bEVMOPzGiFR8yGU8WQro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s0qUSvPD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKZ0ddg0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C8D1F00A3D;
-	Tue, 21 Jul 2026 20:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s0qUSvPD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555681F00A3F;
+	Tue, 21 Jul 2026 20:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667485;
-	bh=XjbE5f0mhai6Ovusv7Yw28sZSwgOgLyFU0pP/gZUt3w=;
+	s=korg; t=1784667487;
+	bh=m7cGkUS1Vb+IPM1HZZgjg32+yHphKdAFYOiGW3Jddgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SKZ0ddg0e0pch3dbPTdqZOX1HmTMswhY5LeEOSjwXEp/Ipnguv1AhlbkDX80Wua1Y
-	 drEkI9uhwH07u6DH+nXOIdx4r5QsqY2OAaJP36XJlzDd07T9+BaTit8OQ2BDfV+FAm
-	 jk4LAlBGNFdHHjQPw09xrYabl49v97WiBUAfMahY=
+	b=s0qUSvPDeyyW4V+LM8PQ+0TfKqi9hFfjKK69wkt/GVOuVoJ3KNSq08noZFI7q8uML
+	 H6XCVmoRZf6iaQYiTCtbZ86UAMo9hWNVKni8KKyWJSbAeqg5OO8NFDXZuYFNSPSpAO
+	 iiMyAMYIKfbAR82yx2skZA4iTMaX7E4ON/KpNLKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.6 1079/1266] gpios: palmas: add .get_direction() op
-Date: Tue, 21 Jul 2026 17:25:16 +0200
-Message-ID: <20260721152505.958800468@linuxfoundation.org>
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 1080/1266] net: sit: require CAP_NET_ADMIN in the device netns for changelink
+Date: Tue, 21 Jul 2026 17:25:17 +0200
+Message-ID: <20260721152505.980298214@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,58 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit db4a79713ed8e252d5e4edf6eaaa80948b6855a2 upstream.
+commit 27ccb68e7cccead5d8c611665a45d23032d468b3 upstream.
 
-Accessing debug/gpio is quite noisy without a get_direction()
-implementation. To calm that down add an implementation.
+ipip6_changelink() operates on at most two netns, dev_net(dev) and the
+tunnel link netns t->net. They differ once the device is created in or
+moved to a netns other than the one the request runs in. The rtnl
+changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
+caller privileged there but not in t->net can rewrite a tunnel that
+lives in t->net.
 
-Fixes: 3d50a2785271 ("gpio: palmas: Add support for Palmas GPIO")
+Gate ipip6_changelink() on rtnl_dev_link_net_capable() at its top,
+before any attribute is parsed. sit was the one tunnel type not covered
+by the recent series that added this check to the other changelink()
+handlers.
+
+Fixes: 5e6700b3bf98 ("sit: add support of x-netns")
+Link: https://lore.kernel.org/netdev/20260612085941.3158249-1-maoyixie.tju@gmail.com/
 Cc: stable@vger.kernel.org
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20260704-palmas-getdirection-v2-1-2fd85fee3832@kemnade.info
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260618070817.3378283-1-maoyixie.tju@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-palmas.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ net/ipv6/sit.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpio/gpio-palmas.c
-+++ b/drivers/gpio/gpio-palmas.c
-@@ -117,6 +117,24 @@ static int palmas_gpio_input(struct gpio
- 	return ret;
- }
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -1615,6 +1615,9 @@ static int ipip6_changelink(struct net_d
+ 	__u32 fwmark = t->fwmark;
+ 	int err;
  
-+static int palmas_gpio_get_direction(struct gpio_chip *gc, unsigned int offset)
-+{
-+	struct palmas_gpio *pg = gpiochip_get_data(gc);
-+	struct palmas *palmas = pg->palmas;
-+	unsigned int val;
-+	unsigned int reg;
-+	int ret;
-+	int gpio16 = (offset/8);
++	if (!rtnl_dev_link_net_capable(dev, net))
++		return -EPERM;
 +
-+	offset %= 8;
-+	reg = (gpio16) ? PALMAS_GPIO_DATA_DIR2 : PALMAS_GPIO_DATA_DIR;
-+	ret = palmas_read(palmas, PALMAS_GPIO_BASE, reg, &val);
-+	if (ret)
-+		return ret;
-+
-+	return (val & BIT(offset)) ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
-+}
-+
- static int palmas_gpio_to_irq(struct gpio_chip *gc, unsigned offset)
- {
- 	struct palmas_gpio *pg = gpiochip_get_data(gc);
-@@ -165,6 +183,7 @@ static int palmas_gpio_probe(struct plat
- 	palmas_gpio->gpio_chip.can_sleep = true;
- 	palmas_gpio->gpio_chip.direction_input = palmas_gpio_input;
- 	palmas_gpio->gpio_chip.direction_output = palmas_gpio_output;
-+	palmas_gpio->gpio_chip.get_direction = palmas_gpio_get_direction;
- 	palmas_gpio->gpio_chip.to_irq = palmas_gpio_to_irq;
- 	palmas_gpio->gpio_chip.set	= palmas_gpio_set;
- 	palmas_gpio->gpio_chip.get	= palmas_gpio_get;
+ 	if (dev == sitn->fb_tunnel_dev)
+ 		return -EINVAL;
+ 
 
 
