@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF50340099C;
-	Tue, 21 Jul 2026 18:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DF13DD870;
+	Tue, 21 Jul 2026 18:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658086; cv=none; b=q9W77/A8dKS+WRZ3Y7uFATwDjMrFscyuNjHieKrmF9re2tm5I5Ml8z16crq1hujzCVOa6kbL4qUwD0exQDD/jpNLacUMsF/W/2Dh+hqHAKkMr5+zqpw3vtqTT+iSFQyFSqKAibRReF7Cu05gLcVRm4rPMYkZqCLG6wDaYXBPeCs=
+	t=1784658088; cv=none; b=MBAwDwLr4o2J6dDADdMi5PUKURaLpKP2P299/bMxdbYwwPksiLSaHS1gD4Mz+bQH7zHRzJ0PzPmT3Ax8kzZbPFml78hSxppjHgTntNFFPwF8dsgcXreGT5kX29Ff6YRYdV+REGx/LnirWNiPbzk7POSsQdQaniw+rt3cnM+ArDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658086; c=relaxed/simple;
-	bh=uih6WP1aLBH27aBumpsHaujWXBiPOjo4xJM1x7j98lo=;
+	s=arc-20240116; t=1784658088; c=relaxed/simple;
+	bh=/twZcG9JT0oWX1V+d7uZJ9vraWaV/6mg/Kk295YYJbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hthHxtWZ+CaVMg2qZ2RBt02rlnrqI/iQMNBFZyFlOhQetRMgtUM6BCHulYS6tbmiSVRS1ijwaYGQLhWcvJa7qtiq8o6tohpWpHHTnKtmHZMHmt7u++GU1ewmyAYlodlsGt+WfdpxwyTVmc792dnkOutz2fuYDfaxCj6D2j/Bt3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILBzwtn/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bFE1S9sEQyoDBz+DDDqzS/ZhcWMCqoF9LCxRQmZLLwn5zHGTbkRD+AwtSpA2qQNwssAo/2C3gKzZM1iEvtiimYdYL2EUef/NUpupvHHnmNp289k6LDMksPiyqAPNjGP4+MDqEc6XfCBWUHbgGsBYRbSTUbcnEr5qvPnQYfz387E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fYSHTWgW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILBzwtn/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627241F00A3A;
-	Tue, 21 Jul 2026 18:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fYSHTWgW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 084521F00A3A;
+	Tue, 21 Jul 2026 18:21:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658084;
-	bh=2qpOBEqzp508wEWOPpm/EUXrHrWHU7bM10WmqFKHBvU=;
+	s=korg; t=1784658087;
+	bh=gv+7c0hO0SVpelvqMHFDOGXIJt7316IMVJc2vYhR3Lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ILBzwtn/x02R1EVX9e0zL1LCHzWwVemCg1axxLzJROcKL82CNiJERiCk4HTw7rH0u
-	 UXrrM65dvJMmLWGdA/DIlODB1lNu7y71aF6+F6n6N0b8IQP50jmWrTBcyCJ+cXvEmT
-	 pT8iO1+6IJCmA8xhN+kOdRrXeJ6wpYpXD1UUExbc=
+	b=fYSHTWgWYFOgY/yU8xs+4FCpaozOX5hFYLhGk7TBmwuaJhtjzzR9J5ih0IIlUZmqq
+	 KeWdFKic1nwCKOUNTIYIj21cjyrdvEEaWP8/atjRrl+ri4LEL3SgDIIounrZfuEXY7
+	 XGj+ALB0qPFFYozTKPuypZ56T21g+52Kh/1sXMRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linux-afs@lists.infradead.org,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1009/1611] afs: Fix lack of locking around modifications of net->cells_dyn_ino
-Date: Tue, 21 Jul 2026 17:18:45 +0200
-Message-ID: <20260721152538.089469472@linuxfoundation.org>
+Subject: [PATCH 6.18 1010/1611] afs: Fix premature cell exposure through /afs
+Date: Tue, 21 Jul 2026 17:18:46 +0200
+Message-ID: <20260721152538.113164934@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,75 +55,103 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 55e841836c6f4646490f7b0347192b7a92d431ba ]
+[ Upstream commit 26f17ce6fa3f05cb5965790499c1839094260de4 ]
 
-Fix the lack of locking around modifications of net->cells_dyn_ino by
-taking net->cells_lock exclusively.  This also requires to cell to be
-removed from net->cells_dyn_ino in afs_destroy_cell_work() rather than in
-afs_cell_destroy() as the latter runs in RCU cleanup context and sleeping
-locks cannot be taken there.
+AFS cell records are prematurely exposured through the /afs dynamic root by
+virtue of adding them immediately to the net->cells_dyn_ino IDR when the
+cell is allocated rather than when it is added to the lookup tree.  This
+allows a candidate record to be accessed, even if it's actually a duplicate
+or not published yet.
 
-Fixes: 1d0b929fc070 ("afs: Change dynroot to create contents on demand")
-Closes: https://sashiko.dev/#/patchset/20260618074903.2374756-1-dhowells%40redhat.com
+Fix this by not adding the cell to cells_dyn_ino until it's confirmed
+non-duplicate and is being published.  A flag is then used to record
+whether it is added to the IDR to make removal from the IDR conditional.
+
+Closes: https://sashiko.dev/#/patchset/20260618155141.2513212-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260622090856.2746629-19-dhowells@redhat.com
+Link: https://patch.msgid.link/20260622090856.2746629-20-dhowells@redhat.com
+Fixes: 1d0b929fc070 ("afs: Change dynroot to create contents on demand")
 cc: Marc Dionne <marc.dionne@auristor.com>
 cc: linux-afs@lists.infradead.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/cell.c    | 8 +++++++-
- fs/afs/dynroot.c | 2 +-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ fs/afs/cell.c     | 27 +++++++++++++++++----------
+ fs/afs/internal.h |  1 +
+ 2 files changed, 18 insertions(+), 10 deletions(-)
 
 diff --git a/fs/afs/cell.c b/fs/afs/cell.c
-index fdc036c8e6af94..e85e50716459eb 100644
+index e85e50716459eb..24b8a05712ca2d 100644
 --- a/fs/afs/cell.c
 +++ b/fs/afs/cell.c
-@@ -205,8 +205,10 @@ static struct afs_cell *afs_alloc_cell(struct afs_net *net,
+@@ -205,14 +205,7 @@ static struct afs_cell *afs_alloc_cell(struct afs_net *net,
  	cell->dns_source = vllist->source;
  	cell->dns_status = vllist->status;
  	smp_store_release(&cell->dns_lookup_count, 1); /* vs source/status */
-+	down_write(&net->cells_lock);
- 	ret = idr_alloc_cyclic(&net->cells_dyn_ino, cell,
- 			       2, INT_MAX / 2, GFP_KERNEL);
-+	up_write(&net->cells_lock);
- 	if (ret < 0)
- 		goto error;
+-	down_write(&net->cells_lock);
+-	ret = idr_alloc_cyclic(&net->cells_dyn_ino, cell,
+-			       2, INT_MAX / 2, GFP_KERNEL);
+-	up_write(&net->cells_lock);
+-	if (ret < 0)
+-		goto error;
  	atomic_inc(&net->cells_outstanding);
-@@ -579,7 +581,6 @@ static void afs_cell_destroy(struct rcu_head *rcu)
- 	afs_put_vlserverlist(net, rcu_access_pointer(cell->vl_servers));
- 	afs_unuse_cell(cell->alias_of, afs_cell_trace_unuse_alias);
- 	key_put(cell->anonymous_key);
--	idr_remove(&net->cells_dyn_ino, cell->dynroot_ino);
- 	kfree(cell->name - 1);
- 	kfree(cell);
+-	cell->dynroot_ino = ret;
+ 	cell->debug_id = atomic_inc_return(&cell_debug_id);
  
-@@ -594,6 +595,11 @@ static void afs_destroy_cell_work(struct work_struct *work)
- 	afs_see_cell(cell, afs_cell_trace_destroy);
+ 	trace_afs_cell(cell->debug_id, 1, 0, afs_cell_trace_alloc);
+@@ -306,6 +299,13 @@ struct afs_cell *afs_lookup_cell(struct afs_net *net,
+ 			goto cell_already_exists;
+ 	}
+ 
++	ret = idr_alloc_cyclic(&net->cells_dyn_ino, candidate,
++			       2, INT_MAX / 2, GFP_KERNEL);
++	if (ret < 0)
++		goto cant_alloc_ino;
++	candidate->dynroot_ino = ret;
++	set_bit(AFS_CELL_FL_HAVE_INO, &candidate->flags);
++
+ 	cell = candidate;
+ 	candidate = NULL;
+ 	afs_use_cell(cell, trace);
+@@ -380,6 +380,11 @@ struct afs_cell *afs_lookup_cell(struct afs_net *net,
+ 	_leave(" = %p [cell]", cell);
+ 	return cell;
+ 
++cant_alloc_ino:
++	up_write(&net->cells_lock);
++	afs_put_cell(candidate, afs_cell_trace_put_candidate);
++	goto error_noput;
++
+ cell_already_exists:
+ 	_debug("cell exists");
+ 	cell = cursor;
+@@ -596,9 +601,11 @@ static void afs_destroy_cell_work(struct work_struct *work)
  	timer_delete_sync(&cell->management_timer);
  	cancel_work_sync(&cell->manager);
-+
-+	down_write(&cell->net->cells_lock);
-+	idr_remove(&cell->net->cells_dyn_ino, cell->dynroot_ino);
-+	up_write(&cell->net->cells_lock);
-+
+ 
+-	down_write(&cell->net->cells_lock);
+-	idr_remove(&cell->net->cells_dyn_ino, cell->dynroot_ino);
+-	up_write(&cell->net->cells_lock);
++	if (test_bit(AFS_CELL_FL_HAVE_INO, &cell->flags)) {
++		down_write(&cell->net->cells_lock);
++		idr_remove(&cell->net->cells_dyn_ino, cell->dynroot_ino);
++		up_write(&cell->net->cells_lock);
++	}
+ 
  	call_rcu(&cell->rcu, afs_cell_destroy);
  }
- 
-diff --git a/fs/afs/dynroot.c b/fs/afs/dynroot.c
-index dc9d29e3739e71..8beac43c21ce2e 100644
---- a/fs/afs/dynroot.c
-+++ b/fs/afs/dynroot.c
-@@ -278,7 +278,7 @@ static struct dentry *afs_lookup_atcell(struct inode *dir, struct dentry *dentry
- }
- 
- /*
-- * Transcribe the cell database into readdir content under the RCU read lock.
-+ * Transcribe the cell database into readdir content under net->cells_lock.
-  * Each cell produces two entries, one prefixed with a dot and one not.
-  */
- static int afs_dynroot_readdir_cells(struct afs_net *net, struct dir_context *ctx)
+diff --git a/fs/afs/internal.h b/fs/afs/internal.h
+index 009064b8d6616c..bea8aae5364ec7 100644
+--- a/fs/afs/internal.h
++++ b/fs/afs/internal.h
+@@ -389,6 +389,7 @@ struct afs_cell {
+ #define AFS_CELL_FL_NO_GC	0		/* The cell was added manually, don't auto-gc */
+ #define AFS_CELL_FL_DO_LOOKUP	1		/* DNS lookup requested */
+ #define AFS_CELL_FL_CHECK_ALIAS	2		/* Need to check for aliases */
++#define AFS_CELL_FL_HAVE_INO	3		/* Have dynroot_ino */
+ 	enum afs_cell_state	state;
+ 	short			error;
+ 	enum dns_record_source	dns_source:8;	/* Latest source of data from lookup */
 -- 
 2.53.0
 
