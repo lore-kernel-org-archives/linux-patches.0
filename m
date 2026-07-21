@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E14846D2DA;
-	Tue, 21 Jul 2026 17:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F5A46D2DA;
+	Tue, 21 Jul 2026 17:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655442; cv=none; b=fVN/cejr7PkIevfMpnImaDGzpr/oiLoZ3Ndnsl+dj6i7xHKi/7LQy52RooszA/qLTZ6FgG645eXiFo2aKGUIqGiNJR2DdAeDAlP9UJc+38SiQMINTd2VYKoDRCrj6p0tQofL+hL2MPKmqReR9mbAInIlFJOO+ZK/g4+6972Kquc=
+	t=1784655445; cv=none; b=dReouE2BjgiMmili4/Ljz4Fkb9BYteGCNcKdo610OrYw0L8yfPZYRv0+SwfpwjtR3N6eM/KBq5BbmjQNDFGQ2mBfohGqZCLU3yEXLbFMXGp8W5r7S6GJ3DQO8eFsfL7ZesyptyawYYAv5DQ+oLD5tyuTO/Mu/Tr2kAnDhlLcLzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655442; c=relaxed/simple;
-	bh=/xP4jAqGV6boM1igvZekoorVQCmCa5DuRnvd4d7YoMM=;
+	s=arc-20240116; t=1784655445; c=relaxed/simple;
+	bh=IVzoMM9lTvbVEscCa7pFETyVqUeZosnGt/3/myljpHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=olOaCz/M+ImDb9FHb0bTQPam6aNd0PaEDYTFBd9fpvbgTdlhW6dIN6CDnvbuOUsSKLxKG2m1U6FFsHeiv/ZGIWCJIgm/O6ufi3yPCAz44DhLGpNw/cz3C4XfRSFlTKBYctGZ4KN8ISzsAGmfaSSP8BMMYzEOqz0t08UrNMlXDx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+d3/ukM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Q3GfWi/Na0w/7di40Bu7lBxIDyvdgLqX6YkF7U6cYuL1LpuUPMIVS+CYtRYi0h09gVDocDXH1uXmSB5GGkSqxKRD6Hn6uig685Cq9UOwUuT3swdOJaGZJUQvUW7nlAmDuPRwksPStYPK3DQ8vtgGCaps6J8dwXPKEDl7jqUXV20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ye6RIlwX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+d3/ukM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82AA1F00A3A;
-	Tue, 21 Jul 2026 17:37:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ye6RIlwX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 782BB1F000E9;
+	Tue, 21 Jul 2026 17:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655441;
-	bh=9uuQdq5L+y4lfGHPD+tbzhbg+smVIL0MjG/Q43d96ys=;
+	s=korg; t=1784655444;
+	bh=sHjqdYsTIonCDKGeK7cFSwguGcbQDSbRDxEs4rADLPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f+d3/ukMq2LvFS8hiadlQg2QZ3VyPcQgl82ADKSGbsVBMNJnS/K5jnPKHei91vANN
-	 svaiugkVXYLDj9Aez3HsjO7gQUFywllQ1f82beslNugYnrHdIBaJONvIY26qTCbHvi
-	 ATBB3/rhbsB2JNrSV7Uofw/bzdVx7aw7LaEFJXJE=
+	b=Ye6RIlwXd2+4dscz3eMnzYqm/LVT1jNai4leWzZVug0OmNSR6CCwIxWqm1I7MC1ys
+	 VVK3ALSJpKQfwjiq5d9RsIlL7sCLedy6mKj+31gpoBKJhJqrWsVx4ermrmqDA8KHd2
+	 ycAHItu/7G5eNIV7L9o89ybZJlktwcQzDKF32KfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	=?UTF-8?q?Muhammet=20Kaan=20KILIN=C3=87?= <muhammetkaankilinc@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 2074/2077] iomap: consolidate bio submission
-Date: Tue, 21 Jul 2026 17:29:07 +0200
-Message-ID: <20260721152641.622106997@linuxfoundation.org>
+Subject: [PATCH 6.18 0004/1611] crypto: algif_skcipher - force synchronous processing
+Date: Tue, 21 Jul 2026 17:02:00 +0200
+Message-ID: <20260721152514.869742324@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
-References: <20260721152552.646164743@linuxfoundation.org>
+In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
+References: <20260721152514.750365251@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,136 +44,163 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.1-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Muhammet Kaan KILINÇ <muhammetkaankilinc@gmail.com>
 
-[ Upstream commit 044472d5ee7d71f918fa3f61bd65e4933a0c006e ]
+The AIO/async path in skcipher_recvmsg() passes the socket-wide ctx->iv
+directly into the skcipher request. After io_submit() the socket lock is
+dropped and the request is processed asynchronously by a worker (e.g.
+cryptd), which dereferences ctx->iv only later.
 
-Add a iomap_bio_submit_read_endio helper factored out of
-iomap_bio_submit_read to that all ->submit_read implementations for
-iomap_read_ops that use iomap_bio_read_folio_range can shared the
-logic.
+A concurrent sendmsg(ALG_SET_IV) on the same socket can overwrite ctx->iv
+inside this window, so the in-flight request runs under an
+attacker-controlled IV. For CTR and other stream modes this causes
+IV/keystream reuse and allows an unprivileged user to recover the
+plaintext of a concurrent operation.
 
-Right now that logic is mostly trivial, but already has a bug for XFS
-because the XFS version is too trivial:  file system integrity validation
-needs a workqueue context and thus can't happen from the default iomap
-bi_end_io I/O handler.  Unfortunately the iomap refactoring just before
-fs integrity landed moved code around here and the call go misplaced,
-meaning it never got called.  The PI information still is verified by
-the block layer, but the offloading is less efficient (and the future
-userspace interface can't get at it).
+Snapshotting ctx->iv into per-request storage for the async path is not
+sufficient here. For ciphers with statesize == 0 - which includes cbc
+and ctr - skcipher_prepare_alg() installs skcipher_noimport()/
+skcipher_noexport(), so ctx->state carries nothing and the MSG_MORE
+inter-chunk IV chaining is carried solely by the in-place req->iv
+writeback. A snapshot redirects that writeback into per-request memory
+that af_alg_free_resources() releases on completion, so AIO + MSG_MORE
+with cbc/ctr would silently produce wrong output. Writing the IV back
+from the completion callback instead is not possible either: that would
+require lock_sock() there, but the callback can run in softirq/atomic
+context, so it must not sleep.
 
-Fixes: 0b10a370529c ("iomap: support T10 protection information")
-Cc: stable@vger.kernel.org # v7.1
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260629121750.3392300-2-hch@lst.de
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Make the operation synchronous instead. ctx->iv is then only ever
+dereferenced under the socket lock held by recvmsg(), which removes the
+race, and the req->iv writeback lands in ctx->iv as before, which keeps
+MSG_MORE chaining intact for statesize == 0 ciphers. The ctx->state
+import/export path is unchanged for ciphers that do have state.
+
+This is equivalent to the upstream resolution: commit fcc77d33a34c
+("net: Remove support for AIO on sockets") removed the AIO socket path
+across net/ entirely, producing the same end state for this file -
+algif_skcipher never processes an AIO request asynchronously. After this
+patch, _skcipher_recvmsg() matches mainline's crypto/algif_skcipher.c as
+it stands today, including the same now-dead -EIOCBQUEUED check. This
+patch deviates from that commit deliberately: rather than removing AIO
+socket support tree-wide, which would be far too invasive for stable, it
+removes only the AIO branch in crypto/algif_skcipher.c. io_submit() now
+completes synchronously, which is valid for the AIO interface; AF_ALG
+async is rarely used in practice.
+
+The -EIOCBQUEUED check in skcipher_recvmsg() is now dead but harmless,
+and is left alone to keep the fix minimal.
+
+Fixes: e870456d8e7c ("crypto: algif_skcipher - overhaul memory management")
+Cc: <stable@vger.kernel.org>
+Reported-by: Muhammet Kaan KILINÇ <muhammetkaankilinc@gmail.com>
+Signed-off-by: Muhammet Kaan KILINÇ <muhammetkaankilinc@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/iomap/bio.c        |   13 ++++++++++---
- fs/ntfs/aops.c        |    6 ++----
- fs/ntfs3/inode.c      |    5 +----
- fs/xfs/xfs_aops.c     |    3 +--
- include/linux/iomap.h |    2 ++
- 5 files changed, 16 insertions(+), 13 deletions(-)
+ crypto/algif_skcipher.c | 75 +++++++++++++----------------------------
+ 1 file changed, 24 insertions(+), 51 deletions(-)
 
---- a/fs/iomap/bio.c
-+++ b/fs/iomap/bio.c
-@@ -78,15 +78,23 @@ u32 iomap_finish_ioend_buffered_read(str
- 	return __iomap_read_end_io(&ioend->io_bio, ioend->io_error);
+diff --git a/crypto/algif_skcipher.c b/crypto/algif_skcipher.c
+index ba0a17fd95aca2..35ebc3e0201b04 100644
+--- a/crypto/algif_skcipher.c
++++ b/crypto/algif_skcipher.c
+@@ -79,20 +79,6 @@ static int algif_skcipher_export(struct sock *sk, struct skcipher_request *req)
+ 	return err;
  }
  
--static void iomap_bio_submit_read(const struct iomap_iter *iter,
--		struct iomap_read_folio_ctx *ctx)
-+void iomap_bio_submit_read_endio(const struct iomap_iter *iter,
-+		struct iomap_read_folio_ctx *ctx, bio_end_io_t end_io)
- {
- 	struct bio *bio = ctx->read_ctx;
- 
-+	bio->bi_end_io = end_io;
- 	if (iter->iomap.flags & IOMAP_F_INTEGRITY)
- 		fs_bio_integrity_alloc(bio);
- 	submit_bio(bio);
- }
-+EXPORT_SYMBOL_GPL(iomap_bio_submit_read_endio);
-+
-+static void iomap_bio_submit_read(const struct iomap_iter *iter,
-+		struct iomap_read_folio_ctx *ctx)
-+{
-+	return iomap_bio_submit_read_endio(iter, ctx, iomap_read_end_io);
-+}
- 
- static struct bio_set *iomap_read_bio_set(struct iomap_read_folio_ctx *ctx)
- {
-@@ -127,7 +135,6 @@ static void iomap_read_alloc_bio(const s
- 	if (ctx->rac)
- 		bio->bi_opf |= REQ_RAHEAD;
- 	bio->bi_iter.bi_sector = iomap_sector(iomap, iter->pos);
--	bio->bi_end_io = iomap_read_end_io;
- 	bio_add_folio_nofail(bio, folio, plen,
- 			offset_in_folio(folio, iter->pos));
- 	ctx->read_ctx = bio;
---- a/fs/ntfs/aops.c
-+++ b/fs/ntfs/aops.c
-@@ -38,11 +38,9 @@ static void ntfs_iomap_read_end_io(struc
- }
- 
- static void ntfs_iomap_bio_submit_read(const struct iomap_iter *iter,
--	struct iomap_read_folio_ctx *ctx)
-+		struct iomap_read_folio_ctx *ctx)
- {
--	struct bio *bio = ctx->read_ctx;
--	bio->bi_end_io = ntfs_iomap_read_end_io;
--	submit_bio(bio);
-+	iomap_bio_submit_read_endio(iter, ctx, ntfs_iomap_read_end_io);
- }
- 
- static const struct iomap_read_ops ntfs_iomap_bio_read_ops = {
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -609,10 +609,7 @@ static void ntfs_iomap_read_end_io(struc
- static void ntfs_iomap_bio_submit_read(const struct iomap_iter *iter,
- 		struct iomap_read_folio_ctx *ctx)
- {
--	struct bio *bio = ctx->read_ctx;
+-static void algif_skcipher_done(void *data, int err)
+-{
+-	struct af_alg_async_req *areq = data;
+-	struct sock *sk = areq->sk;
 -
--	bio->bi_end_io = ntfs_iomap_read_end_io;
--	submit_bio(bio);
-+	iomap_bio_submit_read_endio(iter, ctx, ntfs_iomap_read_end_io);
- }
+-	if (err)
+-		goto out;
+-
+-	err = algif_skcipher_export(sk, &areq->cra_u.skcipher_req);
+-
+-out:
+-	af_alg_async_cb(data, err);
+-}
+-
+ static int _skcipher_recvmsg(struct socket *sock, struct msghdr *msg,
+ 			     size_t ignored, int flags)
+ {
+@@ -171,43 +157,30 @@ static int _skcipher_recvmsg(struct socket *sock, struct msghdr *msg,
+ 		cflags |= CRYPTO_SKCIPHER_REQ_CONT;
+ 	}
  
- static const struct iomap_read_ops ntfs_iomap_bio_read_ops = {
---- a/fs/xfs/xfs_aops.c
-+++ b/fs/xfs/xfs_aops.c
-@@ -753,8 +753,7 @@ xfs_bio_submit_read(
+-	if (msg->msg_iocb && !is_sync_kiocb(msg->msg_iocb)) {
+-		/* AIO operation */
+-		sock_hold(sk);
+-		areq->iocb = msg->msg_iocb;
+-
+-		/* Remember output size that will be generated. */
+-		areq->outlen = len;
+-
+-		skcipher_request_set_callback(&areq->cra_u.skcipher_req,
+-					      cflags |
+-					      CRYPTO_TFM_REQ_MAY_SLEEP,
+-					      algif_skcipher_done, areq);
+-		err = ctx->enc ?
+-			crypto_skcipher_encrypt(&areq->cra_u.skcipher_req) :
+-			crypto_skcipher_decrypt(&areq->cra_u.skcipher_req);
+-
+-		/* AIO operation in progress */
+-		if (err == -EINPROGRESS)
+-			return -EIOCBQUEUED;
+-
+-		sock_put(sk);
+-	} else {
+-		/* Synchronous operation */
+-		skcipher_request_set_callback(&areq->cra_u.skcipher_req,
+-					      cflags |
+-					      CRYPTO_TFM_REQ_MAY_SLEEP |
+-					      CRYPTO_TFM_REQ_MAY_BACKLOG,
+-					      crypto_req_done, &ctx->wait);
+-		err = crypto_wait_req(ctx->enc ?
+-			crypto_skcipher_encrypt(&areq->cra_u.skcipher_req) :
+-			crypto_skcipher_decrypt(&areq->cra_u.skcipher_req),
+-						 &ctx->wait);
+-
+-		if (!err)
+-			err = algif_skcipher_export(
+-				sk, &areq->cra_u.skcipher_req);
+-	}
++	/*
++	 * Force synchronous processing.  The async (AIO) path passed the
++	 * socket-wide ctx->iv into the request, which the worker
++	 * dereferenced after the socket lock had been dropped, letting a
++	 * concurrent sendmsg(ALG_SET_IV) inject an attacker IV.  Mainline
++	 * removed the AIO socket path in commit fcc77d33a34c ("net: Remove
++	 * support for AIO on sockets"); the minimal stable fix is to always
++	 * complete synchronously, so ctx->iv is only ever dereferenced under
++	 * the socket lock.  This also keeps the IV chaining intact: for
++	 * ciphers with statesize == 0 (e.g. ctr, cbc) the chained IV is
++	 * carried by the req->iv writeback into ctx->iv, which is only
++	 * consistent on the synchronous path.
++	 */
++	skcipher_request_set_callback(&areq->cra_u.skcipher_req,
++				      cflags |
++				      CRYPTO_TFM_REQ_MAY_SLEEP |
++				      CRYPTO_TFM_REQ_MAY_BACKLOG,
++				      crypto_req_done, &ctx->wait);
++	err = crypto_wait_req(ctx->enc ?
++		crypto_skcipher_encrypt(&areq->cra_u.skcipher_req) :
++		crypto_skcipher_decrypt(&areq->cra_u.skcipher_req),
++				 &ctx->wait);
++	if (!err)
++		err = algif_skcipher_export(sk, &areq->cra_u.skcipher_req);
  
- 	/* defer read completions to the ioend workqueue */
- 	iomap_init_ioend(iter->inode, bio, ctx->read_ctx_file_offset, 0);
--	bio->bi_end_io = xfs_end_bio;
--	submit_bio(bio);
-+	iomap_bio_submit_read_endio(iter, ctx, xfs_end_bio);
- }
- 
- static const struct iomap_read_ops xfs_iomap_read_ops = {
---- a/include/linux/iomap.h
-+++ b/include/linux/iomap.h
-@@ -615,6 +615,8 @@ extern struct bio_set iomap_ioend_bioset
- #ifdef CONFIG_BLOCK
- int iomap_bio_read_folio_range(const struct iomap_iter *iter,
- 		struct iomap_read_folio_ctx *ctx, size_t plen);
-+void iomap_bio_submit_read_endio(const struct iomap_iter *iter,
-+		struct iomap_read_folio_ctx *ctx, bio_end_io_t end_io);
- 
- extern const struct iomap_read_ops iomap_bio_read_ops;
- 
+ free:
+ 	af_alg_free_resources(areq);
+-- 
+2.53.0
+
 
 
