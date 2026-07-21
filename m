@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB3044AB79;
-	Tue, 21 Jul 2026 21:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D44D35C68D;
+	Tue, 21 Jul 2026 21:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669361; cv=none; b=R2BiQJ7wxkBOJLANVq3ANmbm6Lo0RSzljvtJElfU4RbwvqniIP59OCHAmKyCexxJoMmmMHyXKowLJQxNHQbWGd8jVJT9xXu6oFjwxbOKliBL+cG2hRICr3UHzxJuCy/Pkv+tT8rLiHixgA97OsPpe3Kzi7QkZwzFiL1cR+fA89k=
+	t=1784669362; cv=none; b=XuRAk1ePrdPNB3Uj8I7dNLv1IJ/3L3K+FfJhu1+0CzVGizFNUxNdxwhdxv5lW7D75uc7m/GHVjCW6QLrDOxPTnlAs0hGoy94ikoMScModb5FX+eVHln4D8b8gP71/FWU/ViWSS2IhNSKPJZLQnjphPmX8Yd6Cd9baE1KE8s569c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669361; c=relaxed/simple;
-	bh=NnRjNGl3O5DOwLKvckFCvrgqxA2CJC+hLIA/LgIXAjo=;
+	s=arc-20240116; t=1784669362; c=relaxed/simple;
+	bh=Baf6yyPvthYU3SkHwGaiN4gB2H0U4jFcyWaeeAydpYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z/uN4E7jbH4NCRqb2EyKW9w7856y8AO5EoRgnAe/TTOr9+kmmuTojkSlNHHsu00quNI0QvG3N0yXJRyAnPlImeIxhHfm9brX/yTiLdduXN83mHBA9mz8cMO/YHoPaTbycyTJg6ns9iC0T8qVYcOF0A8HKJ8ac/DEzDZ/LLYch8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WquhsymN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QuR34/9jNXXnf9C/axOPQGL3FE8K6sdgeK/H1edM3zA4AJ1sNyDFCf0c0lssZC0qrW2kF2WgvYYbooRcXzAmlqV8l7W6vjzgsdSZJyHnJ+nCxeMHc7VXF1Ivb3q2gelS/Wgt304wPGo0p85MMhu5udufEOaDZQWLQvovHU5bJp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXGwZuIL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WquhsymN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25CA91F00A3A;
-	Tue, 21 Jul 2026 21:29:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXGwZuIL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE4B1F000E9;
+	Tue, 21 Jul 2026 21:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669358;
-	bh=U4QS+VxPGH3PRYcHeRIwjRAamSqeCuOJD7CL2RCtyu8=;
+	s=korg; t=1784669361;
+	bh=X+5C+RkLpZkuYpe91ZL7Dwv1nR7zcXHd8/YXcLI+FsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WquhsymNmOpbuwH82wCaDZBJW2YnKWAiq2m4VpqgRtJH89JljgpRQNEx4GheKqLjO
-	 DgTH112b3vRIayzoTai3IhE4sCuVJQ3afLokjzhtrzz5YPtgvpHP4FdCkM+SW4DfCu
-	 9um//WPvKVXMH0QnI+tzMhEZQnkkyaK8S82yMC3o=
+	b=AXGwZuIL1b66iDm1Wib7DQPGRPpr+AmcGGdkEXDMPQMcVXFTsrI2LbnrniX84WATc
+	 whAqKtg77K2ZxDLBgfhsT/alhbyJcJNLeQTheFsa80oEDQsmKsX8LocB6N4E3+92GZ
+	 2MjERDj9UF+2CwI+s5e4v3FtarUAFOf4019ASK7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Namhyung Kim <namhyung@kernel.org>,
 	Ian Rogers <irogers@google.com>,
+	Song Liu <song@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0526/1067] perf sched: Fix idle-hist callchain display using wrong rb_first variant
-Date: Tue, 21 Jul 2026 17:18:47 +0200
-Message-ID: <20260721152436.375212471@linuxfoundation.org>
+Subject: [PATCH 6.1 0527/1067] perf bpf: Use scnprintf() in snprintf_hex() and synthesize_bpf_prog_name()
+Date: Tue, 21 Jul 2026 17:18:48 +0200
+Message-ID: <20260721152436.398123167@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -48,7 +47,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
@@ -57,49 +55,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit d9b99dc8148e0c1f5da3942131b47e0d21187a32 ]
+[ Upstream commit cab3a9331ed0b3f884dd61c8a25b3cf123705982 ]
 
-timehist_print_idlehist_callchain() calls rb_first_cached() on
-sorted_root, but the sort function (callchain_param.sort) populates it
-via rb_insert_color() on the plain rb_root member — not the cached
-variant.  This means rb_leftmost is never set, so rb_first_cached()
-always returns NULL and the entire callchain summary is silently
-dropped from --idle-hist output.
+Both functions accumulate formatted output via ret += snprintf(buf + ret,
+size - ret, ...).  If the buffer is too small and snprintf() returns more
+than the remaining space, ret exceeds size and the next 'size - ret'
+underflows, causing snprintf() to write past the buffer end.
 
-The original code in ba957ebb54893aca ("perf sched timehist: Show
-callchains for idle stat") was correct — it used struct rb_root and
-rb_first().  The bug was introduced when sorted_root was converted to
-rb_root_cached without converting the sort insertion path to use
-rb_insert_color_cached().
+Switch to scnprintf() which returns the actual number of bytes written,
+making the accumulation safe.
 
-Use rb_first(&root->rb_root) to match how the tree was populated.
-
-Fixes: cb4c13a5137766c3 ("perf sched: Use cached rbtrees")
+Fixes: 7b612e291a5affb1 ("perf tools: Synthesize PERF_RECORD_* for loaded BPF programs")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Acked-by: Ian Rogers <irogers@google.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Song Liu <song@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/perf/util/bpf-event.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 9fa02e8ab091c0..84f705a2286d11 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -2890,7 +2890,8 @@ static size_t timehist_print_idlehist_callchain(struct rb_root_cached *root)
- 	size_t ret = 0;
- 	FILE *fp = stdout;
- 	struct callchain_node *chain;
--	struct rb_node *rb_node = rb_first_cached(root);
-+	/* sort() uses rb_insert_color() on rb_root, not rb_root_cached */
-+	struct rb_node *rb_node = rb_first(&root->rb_root);
+diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
+index 91c7bfa82a50a9..d94e523b2cebbb 100644
+--- a/tools/perf/util/bpf-event.c
++++ b/tools/perf/util/bpf-event.c
+@@ -94,7 +94,7 @@ static int snprintf_hex(char *buf, size_t size, unsigned char *data, size_t len)
+ 	size_t i;
  
- 	printf("  %16s  %8s  %s\n", "Idle time (msec)", "Count", "Callchains");
- 	printf("  %.16s  %.8s  %.50s\n", graph_dotted_line, graph_dotted_line,
+ 	for (i = 0; i < len; i++)
+-		ret += snprintf(buf + ret, size - ret, "%02x", data[i]);
++		ret += scnprintf(buf + ret, size - ret, "%02x", data[i]);
+ 	return ret;
+ }
+ 
+@@ -195,7 +195,7 @@ static int synthesize_bpf_prog_name(char *buf, int size,
+ 	const struct btf_type *t;
+ 	int name_len;
+ 
+-	name_len = snprintf(buf, size, "bpf_prog_");
++	name_len = scnprintf(buf, size, "bpf_prog_");
+ 	name_len += snprintf_hex(buf + name_len, size - name_len,
+ 				 prog_tags[sub_id], BPF_TAG_SIZE);
+ 	if (btf) {
+@@ -208,9 +208,10 @@ static int synthesize_bpf_prog_name(char *buf, int size,
+ 			short_name = info->name;
+ 	} else
+ 		short_name = "F";
+-	if (short_name)
+-		name_len += snprintf(buf + name_len, size - name_len,
+-				     "_%s", short_name);
++	if (short_name) {
++		name_len += scnprintf(buf + name_len, size - name_len,
++				      "_%s", short_name);
++	}
+ 	return name_len;
+ }
+ 
 -- 
 2.53.0
 
