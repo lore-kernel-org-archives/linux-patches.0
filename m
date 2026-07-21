@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA66B44AB9C;
-	Tue, 21 Jul 2026 21:13:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAB444AB76;
+	Tue, 21 Jul 2026 21:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668427; cv=none; b=gFVFay9O9cnM28xHggPVzK3taG3aDLraEeLj2Yh7YhMUKbZGNRxNyyUudNK3YpWNYqcyAEJ8iatFpkoT+rWsPDNuVzF9UcskavjrLglKDM/AtEUUe3LGcn/ZLYTpsPH+63EQ5GIyHTdxU3LHoPVLFIUg93yHj3YfX6VHtg2RE0M=
+	t=1784668429; cv=none; b=oIKLlcC6AkP8/2JSDXT7VnX/Jvk8v/xke8eTImSVE3nBs7HQAbObkRIYyCepZjKqSOxzETRIapx854HjxO9j7AHfYlJNN+IXXPfLpg1MkWn3BK3fG/aHrHT2n6ZCGGAbj633hQA5kQZzhoGpax2ciFsgsJ0uYj9tJeP/3QZc/ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668427; c=relaxed/simple;
-	bh=V+EOOH4tzmFOcFxP26LlkphN2SomUvyEfdo0Q86FzWk=;
+	s=arc-20240116; t=1784668429; c=relaxed/simple;
+	bh=gA2z9UULytr9+ml0vBXug4qtmxUtDObI3plIiMyfHhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fPushYcFGont16peDi1aIia1KYL8I/DlU1JFnPVHu7Gtvz7HCGCC4rUy6nLH+EsCdOdRTPoufP6Tu/deqYp7Jp0Y28FE7NYdj6WWKWMuGNFZrBIezP0wj96b3o2tM5C8xXvSavYUTuMpgCXi0uHRMdGIfY58AODZsxjg4IpF0UA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHHyEclh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NTQB4PyEaTLBaTcptYklW09t7bR65jTi7F8D7EX/qmXt306O8lMwoU140KAG69NrMP3cG80eNonAUyYnrBMAiJbCAKK0amhV7vOSogR0f1HRte2cR0bPcTX0RY3Rm1J03o40IKYb7ULTjQbY1pWw3QgEAZLDvOeSQAyGoouuw2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZtQfYGx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHHyEclh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6101F000E9;
-	Tue, 21 Jul 2026 21:13:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZtQfYGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE7E31F000E9;
+	Tue, 21 Jul 2026 21:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668425;
-	bh=tbyfXPbUEgwQ3srp+nIzgYgw93Pch+c+Jpdi8fsFb8E=;
+	s=korg; t=1784668428;
+	bh=dBE3DhNli/2wshYcPt9Qps+oEZUEki+kEW8O8UjVf7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iHHyEclhvVtN4NuP8DEfuCrsDUhJEB/rYnFNH44Q8ivtSLSefPT3Z3Rjqx2pCUJZx
-	 ge2xenn6aanptzcTTtDbxWO6llziTjOdsjKC8xXzDwnQ3ZKXPJRIWVCT668gfHXWjH
-	 UTNACri0WJqrOa9mQTwjZ67X6Tib7G5B4F/4por0=
+	b=ZZtQfYGx84qnY9LgOBH3UyCN0nCoa5FcUY1p5P1GnZIp16YZn4fYO5QGRdJPFk0Zl
+	 vBzibYH1fCtqQezIHXPsoNSIfjUnHMonpEU0mO7eDyr4/mDS9t/RdKHE1AE3oUZbN3
+	 JOh4dezLAbD5td8okeSuoohy4VPL/rmKURGc2Dss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	stable <stable@kernel.org>,
-	Jimmy Hu <hhhuuu@google.com>
-Subject: [PATCH 6.1 0171/1067] usb: gadget: udc: Fix use-after-free in gadget_match_driver
-Date: Tue, 21 Jul 2026 17:12:52 +0200
-Message-ID: <20260721152428.416387046@linuxfoundation.org>
+	Oliver Neukum <oliver@neukum.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 0172/1067] USB: idmouse: fix use-after-free on disconnect race
+Date: Tue, 21 Jul 2026 17:12:53 +0200
+Message-ID: <20260721152428.438675158@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,113 +50,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jimmy Hu <hhhuuu@google.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 67e511d2989eb1c8c588b599ce2fcc6bb8e6f7ea upstream.
+commit ff002c153f9722caece3983cc23dc4d9d4652cb4 upstream.
 
-The udc structure acts as the management structure for the gadget,
-but their lifecycles are decoupled. A race condition exists where
-usb_del_gadget() frees the udc memory (e.g., via mode-switch work)
-while gadget_match_driver() concurrently accesses the freed udc memory
-(e.g., via configfs), causing a Use-After-Free (UAF) that triggers a
-NULL pointer dereference when the freed memory is zeroed:
+mutex_unlock() may access the mutex structure after releasing the lock
+and therefore cannot be used to manage lifetime of objects directly
+(unlike spinlocks and refcounts). [1][2]
 
-[39430.908615][ T1171] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-[39430.911397][ T1171] pc : __pi_strcmp+0x20/0x140
-[39430.911441][ T1171] lr : gadget_match_driver+0x34/0x60
-...
-[39430.911890][ T1171]  usb_gadget_register_driver_owner+0x50/0xf8
-[39430.911910][ T1171]  gadget_dev_desc_UDC_store+0xf4/0x140
-[39430.931308][ T1171]  configfs_write_iter+0xec/0x134
+Use a kref to release the driver data to avoid use-after-free in
+mutex_unlock() when release() races with disconnect().
 
-[39430.957058][ T1171] Workqueue: events_freezable __dwc3_set_mode
-[39430.957287][ T1171]  dwc3_gadget_exit+0x34/0x8c
-[39430.957304][ T1171]  __dwc3_set_mode+0xc0/0x664
+[1] a51749ab34d9 ("locking/mutex: Document that mutex_unlock() is
+                   non-atomic")
+[2] 2b9d9e0a9ba0 ("locking/mutex: Clarify that mutex_unlock(), and most
+                   other sleeping locks, can still use the lock object
+                   after it's unlocked")
 
-Fix this by ensuring the udc structure remains allocated until the
-gadget is released. To achieve this, introduce a new
-usb_gadget_release() routine to the core. When the gadget is added,
-usb_add_gadget() stores the gadget's release routine in the udc
-structure and takes a reference to the udc. When the gadget is
-released, usb_gadget_release() drops the reference to the udc and
-then calls the gadget's release routine.
-
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jimmy Hu <hhhuuu@google.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260625073705.803880-1-hhhuuu@google.com
+Fixes: 54d2bc068fd2 ("USB: fix locking in idmouse")
+Cc: stable@vger.kernel.org	# 2.6.24
+Cc: Oliver Neukum <oliver@neukum.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260622152612.116422-3-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/core.c |   29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ drivers/usb/misc/idmouse.c |   45 ++++++++++++++++++++++-----------------------
+ 1 file changed, 22 insertions(+), 23 deletions(-)
 
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -31,8 +31,9 @@ static struct bus_type gadget_bus_type;
- /**
-  * struct usb_udc - describes one usb device controller
-  * @driver: the gadget driver pointer. For use by the class code
-- * @dev: the child device to the actual controller
-  * @gadget: the gadget. For use by the class code
-+ * @gadget_release: the gadget's release routine
-+ * @dev: the child device to the actual controller
-  * @list: for use by the udc class driver
-  * @vbus: for udcs who care about vbus status, this value is real vbus status;
-  * for udcs who do not care about vbus status, this value is always true
-@@ -53,6 +54,7 @@ static struct bus_type gadget_bus_type;
- struct usb_udc {
- 	struct usb_gadget_driver	*driver;
- 	struct usb_gadget		*gadget;
-+	void				(*gadget_release)(struct device *dev);
- 	struct device			dev;
- 	struct list_head		list;
- 	bool				vbus;
-@@ -1351,6 +1353,17 @@ static void usb_udc_nop_release(struct d
- 	dev_vdbg(dev, "%s\n", __func__);
+--- a/drivers/usb/misc/idmouse.c
++++ b/drivers/usb/misc/idmouse.c
+@@ -63,6 +63,7 @@ MODULE_DEVICE_TABLE(usb, idmouse_table);
+ 
+ /* structure to hold all of our device specific stuff */
+ struct usb_idmouse {
++	struct kref kref;
+ 
+ 	struct usb_device *udev; /* save off the usb device pointer */
+ 	struct usb_interface *interface; /* the interface for this device */
+@@ -209,8 +210,10 @@ static int idmouse_resume(struct usb_int
+ 	return 0;
  }
  
-+static void usb_gadget_release(struct device *dev)
-+{
-+	struct usb_gadget *gadget = dev_to_usb_gadget(dev);
-+	struct usb_udc *udc = gadget->udc;
-+	/* Cache the gadget's release routine to prevent UAF */
-+	void (*release)(struct device *dev) = udc->gadget_release;
+-static inline void idmouse_delete(struct usb_idmouse *dev)
++static inline void idmouse_delete(struct kref *kref)
+ {
++	struct usb_idmouse *dev = container_of(kref, struct usb_idmouse, kref);
 +
-+	put_device(&udc->dev);
-+	release(dev);
-+}
+ 	kfree(dev->bulk_in_buffer);
+ 	kfree(dev);
+ }
+@@ -254,6 +257,8 @@ static int idmouse_open(struct inode *in
+ 		/* increment our usage count for the driver */
+ 		++dev->open;
+ 
++		kref_get(&dev->kref);
 +
- /**
-  * usb_initialize_gadget - initialize a gadget and its embedded struct device
-  * @parent: the parent device to this udc. Usually the controller driver's
-@@ -1407,6 +1420,14 @@ int usb_add_gadget(struct usb_gadget *ga
- 	mutex_init(&udc->connect_lock);
+ 		/* save our object in the file's private structure */
+ 		file->private_data = dev;
  
- 	udc->started = false;
-+	/*
-+	 * Align decoupled lifecycles: take a UDC reference to ensure it
-+	 * remains allocated until the gadget is released, requiring an
-+	 * override of the gadget's release routine to drop it.
-+	 */
-+	udc->gadget_release = gadget->dev.release;
-+	gadget->dev.release = usb_gadget_release;
-+	get_device(&udc->dev);
+@@ -277,16 +282,11 @@ static int idmouse_release(struct inode
  
- 	mutex_lock(&udc_lock);
- 	list_add_tail(&udc->list, &udc_list);
-@@ -1451,6 +1472,12 @@ int usb_add_gadget(struct usb_gadget *ga
- 	mutex_lock(&udc_lock);
- 	list_del(&udc->list);
- 	mutex_unlock(&udc_lock);
-+	/*
-+	 * Revert the override and drop the UDC reference to prevent
-+	 * leaking the UDC if the gadget was statically allocated.
-+	 */
-+	gadget->dev.release = udc->gadget_release;
-+	put_device(&udc->dev);
+ 	/* lock our device */
+ 	mutex_lock(&dev->lock);
+-
+ 	--dev->open;
++	mutex_unlock(&dev->lock);
++
++	kref_put(&dev->kref, idmouse_delete);
  
-  err_put_udc:
- 	put_device(&udc->dev);
+-	if (!dev->present) {
+-		/* the device was unplugged before the file was released */
+-		mutex_unlock(&dev->lock);
+-		idmouse_delete(dev);
+-	} else {
+-		mutex_unlock(&dev->lock);
+-	}
+ 	return 0;
+ }
+ 
+@@ -334,6 +334,7 @@ static int idmouse_probe(struct usb_inte
+ 	if (dev == NULL)
+ 		return -ENOMEM;
+ 
++	kref_init(&dev->kref);
+ 	mutex_init(&dev->lock);
+ 	dev->udev = udev;
+ 	dev->interface = interface;
+@@ -342,8 +343,7 @@ static int idmouse_probe(struct usb_inte
+ 	result = usb_find_bulk_in_endpoint(iface_desc, &endpoint);
+ 	if (result) {
+ 		dev_err(&interface->dev, "Unable to find bulk-in endpoint.\n");
+-		idmouse_delete(dev);
+-		return result;
++		goto err_put_kref;
+ 	}
+ 
+ 	dev->orig_bi_size = usb_endpoint_maxp(endpoint);
+@@ -351,8 +351,8 @@ static int idmouse_probe(struct usb_inte
+ 	dev->bulk_in_endpointAddr = endpoint->bEndpointAddress;
+ 	dev->bulk_in_buffer = kmalloc(IMGSIZE + dev->bulk_in_size, GFP_KERNEL);
+ 	if (!dev->bulk_in_buffer) {
+-		idmouse_delete(dev);
+-		return -ENOMEM;
++		result = -ENOMEM;
++		goto err_put_kref;
+ 	}
+ 
+ 	/* allow device read, write and ioctl */
+@@ -364,14 +364,18 @@ static int idmouse_probe(struct usb_inte
+ 	if (result) {
+ 		/* something prevented us from registering this device */
+ 		dev_err(&interface->dev, "Unable to allocate minor number.\n");
+-		idmouse_delete(dev);
+-		return result;
++		goto err_put_kref;
+ 	}
+ 
+ 	/* be noisy */
+ 	dev_info(&interface->dev,"%s now attached\n",DRIVER_DESC);
+ 
+ 	return 0;
++
++err_put_kref:
++	kref_put(&dev->kref, idmouse_delete);
++
++	return result;
+ }
+ 
+ static void idmouse_disconnect(struct usb_interface *interface)
+@@ -387,14 +391,9 @@ static void idmouse_disconnect(struct us
+ 	/* prevent device read, write and ioctl */
+ 	dev->present = 0;
+ 
+-	/* if the device is opened, idmouse_release will clean this up */
+-	if (!dev->open) {
+-		mutex_unlock(&dev->lock);
+-		idmouse_delete(dev);
+-	} else {
+-		/* unlock */
+-		mutex_unlock(&dev->lock);
+-	}
++	mutex_unlock(&dev->lock);
++
++	kref_put(&dev->kref, idmouse_delete);
+ 
+ 	dev_info(&interface->dev, "disconnected\n");
+ }
 
 
