@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E8B223708;
-	Tue, 21 Jul 2026 17:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EFF37B40C;
+	Tue, 21 Jul 2026 17:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654818; cv=none; b=RuAokJU9eS7SuOlBHJtwuc3/glq2tmOHI1TsD6ImwKy+YGNkrQVgn/Ps5fE7HeCePhX2+ykldiF0obnYYZTyz/tpB3N637Xp49vvLzNAHbUuWSlvN2gniAp9bXG15VIsuaPJ0IUDotWDvyGo05WWOmWFhKQb3WtnxcZkAEHtt/w=
+	t=1784654821; cv=none; b=ZyUeKIhfxV1uji3JuJIRdhn21mMXHIcqh27vu5M6IAnGbEfs+8C3UsTOUnazWv1x/76JiWKzXj7zPJTEeyhDBXKZADybPx9BndtbFMgOfemGe7JMr3y75zUkE4wlsikjHJxhiHDOT9765T9Pz3NYdMvxnOQdDP5TYSJXz/36CUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654818; c=relaxed/simple;
-	bh=I+ZtzyMEBcvXS4VaYEaILyoGbLKvdqZVNJKtotnXclM=;
+	s=arc-20240116; t=1784654821; c=relaxed/simple;
+	bh=aJDZtX46h7k7ctw/2faLyuZ9MaV64q1Jb6x5smnckOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ax2/M6hdB3Vj8kwLDeWSGjidKJhTEQfZKOh+ZYn/29Zvtuw3zVExDUq/nDfjnMpJaIUf7bhIai9wcsySORz0VPefJWdPjT+0O1BuQn4cJ+aASQI2hqI1AG/+fQIndJQGRxrtPrwKeS72bNyCTCP6S9RZsqZnlMXP2d+DNh1A6L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O70VVP6b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FiJgIHTRGXTjf7H7eJTNYJ794k5kch9MM0t/Mt1UqoCV6N/+46ZfQN5iZxhVqN4vVuKahf9Kfi9zkJo7MmFn/p+lKlBo8ReyLXz2ZN1flrBxBK4Hxy/fhnpxaXHezBx8G4PEGHz6UdVSosreuDyMZJ0W1VyQpW652DsY4KWFjaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERTGGoEu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O70VVP6b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8DE1F000E9;
-	Tue, 21 Jul 2026 17:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERTGGoEu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70F31F000E9;
+	Tue, 21 Jul 2026 17:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654817;
-	bh=tC/qq9Vr87I8oD/n+8TBoXUEzM/ljsXoew0Xq6V4XLw=;
+	s=korg; t=1784654820;
+	bh=1i5362EdR3W+038KrO/NpPkx2H4E9Dd845hIfl5x9Rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O70VVP6b2FBSmmFjVDxNuHTWW4szuMGjbXmLbbz+A3+c8FPa11YWkmTnKVkflY6wb
-	 wATFxlhRfgMW45ZQF72376FHv9csKq1xq5j/IPkWv7AzEFltByb8VcBdiJ/V/QrhN6
-	 5N91i78G5/Y8tA1QowbRCDIgUqNZ3SMi08Wm9Z9s=
+	b=ERTGGoEuoDdmYYhg0KdBrX1qAhE9fdaEZZ+Ifnzxr/3KlggJTJXLWOExR7hYADm6V
+	 +w/teFktkUO/hAnZqgv0cYqo/bXFnDm1zjB8qB1wR6bvXq2nGWweATpERTP/wEf9IJ
+	 m1Hdiem55CeKoKRkF7iJuCWd629gtDmvv/dJRpYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 7.1 1806/2077] tpm: fix event_size output in tpm1_binary_bios_measurements_show
-Date: Tue, 21 Jul 2026 17:24:39 +0200
-Message-ID: <20260721152635.344928900@linuxfoundation.org>
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 7.1 1797/2077] i2c: spacemit: fix spurious IRQ handling returning IRQ_HANDLED
+Date: Tue, 21 Jul 2026 17:24:30 +0200
+Message-ID: <20260721152635.132887223@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,51 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-commit 1a58f6115bfb34eabcc7de8a3a9745b219179781 upstream.
+commit 9db20d23aac7916ff49be409a4bfd48fe7cbbfb4 upstream.
 
-Commit 186d124f07da ("tpm_eventlog.c: fix binary_bios_measurements")
-split the output to write the endian-converted event header first and
-then the variable-length event data.
+When the interrupt status register reads zero, the handler should
+return IRQ_NONE instead of IRQ_HANDLED. What the return value
+actually feeds into is the spurious interrupt accounting in
+note_interrupt(): falsely claiming IRQ_HANDLED defeats the "irq XX:
+nobody cared" detection, so a stuck interrupt source would never be
+caught.
 
-However, the split was at sizeof(struct tcpa_event) - 1, even though
-event_data was a zero-length array, and later a flexible array member,
-both of which already excluded the event data.
-
-Therefore, the current code writes the first three bytes of event_size
-from the endian-converted header and then the last byte from the raw
-header, which can emit a corrupted event_size on PPC64, where
-do_endian_conversion() maps to be32_to_cpu().
-
-Split one byte later to write the full endian-converted header first,
-followed by the variable-length event->event_data.
-
-Fixes: 186d124f07da ("tpm_eventlog.c: fix binary_bios_measurements")
-Cc: stable@vger.kernel.org # v5.10+
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: 5ea558473fa3 ("i2c: spacemit: add support for SpacemiT K1 SoC")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Cc: <stable@vger.kernel.org> # v6.15+
+Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Reviewed-by: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/ef8b623f45d4e430721e46572c2598d882044aed.1783667875.git.xiaopei01@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/eventlog/tpm1.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-k1.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/tpm/eventlog/tpm1.c
-+++ b/drivers/char/tpm/eventlog/tpm1.c
-@@ -236,12 +236,12 @@ static int tpm1_binary_bios_measurements
+--- a/drivers/i2c/busses/i2c-k1.c
++++ b/drivers/i2c/busses/i2c-k1.c
+@@ -596,7 +596,7 @@ static irqreturn_t spacemit_i2c_irq_hand
  
- 	temp_ptr = (char *) &temp_event;
+ 	status = readl(i2c->base + SPACEMIT_ISR);
+ 	if (!status)
+-		return IRQ_HANDLED;
++		return IRQ_NONE;
  
--	for (i = 0; i < (sizeof(struct tcpa_event) - 1) ; i++)
-+	for (i = 0; i < sizeof(struct tcpa_event); i++)
- 		seq_putc(m, temp_ptr[i]);
- 
- 	temp_ptr = (char *) v;
- 
--	for (i = (sizeof(struct tcpa_event) - 1);
-+	for (i = sizeof(struct tcpa_event);
- 	     i < (sizeof(struct tcpa_event) + temp_event.event_size); i++)
- 		seq_putc(m, temp_ptr[i]);
+ 	i2c->status = status;
  
 
 
