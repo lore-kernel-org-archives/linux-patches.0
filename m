@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D8744AB7F;
-	Tue, 21 Jul 2026 21:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A0C44AB60;
+	Tue, 21 Jul 2026 21:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669175; cv=none; b=X5lrTHehIEXQsIzeK0pkZmOmLmP0RTVWqVOc7/A4t2HfbU7SAKwKXAxu/wiJaeRVONDQeM8WIJ6JnS42JY6e8E3mF/a0fPLlLTjQMq08oLFjFSbQG4427/7S2edBFzyiYLe373HHStImqYLJgF9x0d0VHCEaozliDd7GCIRmK5E=
+	t=1784669178; cv=none; b=pZpbIQ+x3LkIHeuk38+Uk1lea8ywB/dKszGSsrddBX2ZccV+ZwfGsbGHp5xTRc8hcMEHXjVs7TU7gAnESuXvNg9izAyus/gbYWGHzqRh3+s+TacR2KcUE9CAa3CJF+9wP9BifkOPKCsWFz+a2fB6HM2VZ104M2ECLarR/mbQ5PM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669175; c=relaxed/simple;
-	bh=NEvotYwZy5Gc4WtoWcFPx66jPZsU70jttUn0V4eG5hc=;
+	s=arc-20240116; t=1784669178; c=relaxed/simple;
+	bh=e+sgyL82Jb+Q2R7qFgfm9vL5EISF4PrnhZpD0A8b24s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q70VzoQfEtoqCnOiMy4HStj5izkwUcb/G3ThgPRIibpZy+saWhXqh+AcTvnHL664N67SjvnWYE1QUH7LtoWbvRMvAz8tkTbZWDPilxaw/leKQZvcqixoTERzopltoFSRG5GCn4oqNkhExwgLfTp1ckB3IOHdVRIBpCAS+i/ABLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3NiRluO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BEwCRhJaPZ0LZqL2hxS1ck4BJR41IaEf3sayHy+GDTa3MKfNK1dkg2bmH8tlfh5ou84Hl052Z+D4NWY0vttDV2FHv5XWRxRVs55mtNrCRVetFJtUf6j8didQuO/NZ3mlLoydv1omih/whrLoBwHaYWNHewk8WVEekaozSsSkcaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2r//kCRl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3NiRluO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC131F00A3A;
-	Tue, 21 Jul 2026 21:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2r//kCRl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0551F000E9;
+	Tue, 21 Jul 2026 21:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669174;
-	bh=Jlb17+xzKuI6fnLcloM1+gPylPWjfZnFsR3FBdy0C6o=;
+	s=korg; t=1784669176;
+	bh=r0vuoa0LidaQHuJFlzm2YB73VNMXFIaAQaH0gw1Tx2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a3NiRluORAqqrHQDPC9uftNm+VTHEkoMaalsJSykxbdjeRxl5szw6Saxe5gpLU2nL
-	 kfGoqcRAj9PCOGJyYyQfnB8XgXAxptdT795mcV+EBRj44R8DNS6HWZXvZb9vvCVDNK
-	 MZ3ejh5bzHGt4suDgFkrRZu4t/kxCAa5wr+atIiE=
+	b=2r//kCRl/QTUJkSk6gbR131JELHJ+HzkF9ZQOIOBGI58Y0D62LQYo3Mc1IVTQYOTq
+	 Mk2nsqrq6m8Ba0Nekm87c2zdDWyLj42rpEWiNngd6hcmS8ZdBZ7Xy6L8xcPVpICDTD
+	 fblvXxjFYqycGyQiJ3qFesUFsUVHlDNU0hitcefQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0454/1067] kcm: use WRITE_ONCE() when changing lower socket callbacks
-Date: Tue, 21 Jul 2026 17:17:35 +0200
-Message-ID: <20260721152434.773531751@linuxfoundation.org>
+Subject: [PATCH 6.1 0455/1067] netfilter: nf_conncount: callers must hold rcu read lock
+Date: Tue, 21 Jul 2026 17:17:36 +0200
+Message-ID: <20260721152434.795183418@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,59 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 47186409c092cd7dd70350999186c700233e854d ]
+[ Upstream commit 64d7d5abe2160bba369b4a8f06bdf5630573bab0 ]
 
-kcm_attach() replaces a live lower TCP socket's sk_data_ready and
-sk_write_space callbacks with KCM handlers, and kcm_unattach() restores
-them later. Those callback-pointer updates are still plain stores even
-though the same fields can be read and invoked concurrently on other
-CPUs.
+rcu_derefence_raw() should not have been used here, it concealed this bug.
+Its used because struct rb_node lacks __rcu annotated pointers, so plain
+rcu_derefence causes sparse warnings.
 
-If another CPU observes an older callback snapshot after the live field
-has already been restored, callback execution can run with a mismatched
-target and sk_user_data state, leading to stale or misdirected wakeups.
+The major tradeoff is that rcu_derefence_raw() doesn't warn when the caller
+isn't in a rcu read section.
 
-Use WRITE_ONCE() for the callback replacement and restore operations so
-these shared callback fields follow the same visibility contract already
-established by the earlier 4022 fixes.
+Extend the rcu read lock scope accordingly and cause sparse warnings,
+those warnings are the lesser evil.
 
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260611053543.2429462-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 11efd5cb04a1 ("openvswitch: Support conntrack zone limit")
+Closes: https://sashiko.dev/#/patchset/20260603230610.7900-1-fw%40strlen.de
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/kcm/kcmsock.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/netfilter/nf_conncount.c | 6 +++---
+ net/openvswitch/conntrack.c  | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index 462bdb6bfa4d85..ba221c6a8cbd71 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -1403,8 +1403,8 @@ static int kcm_attach(struct socket *sock, struct socket *csock,
- 	psock->save_write_space = csk->sk_write_space;
- 	psock->save_state_change = csk->sk_state_change;
- 	csk->sk_user_data = psock;
--	csk->sk_data_ready = psock_data_ready;
--	csk->sk_write_space = psock_write_space;
-+	WRITE_ONCE(csk->sk_data_ready, psock_data_ready);
-+	WRITE_ONCE(csk->sk_write_space, psock_write_space);
- 	csk->sk_state_change = psock_state_change;
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index ae9ad439449fa5..b9265a8cdb2bc4 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -499,7 +499,7 @@ count_tree(struct net *net,
+ 	hash = jhash2(key, data->keylen, conncount_rnd) % CONNCOUNT_SLOTS;
+ 	root = &data->root[hash];
  
- 	write_unlock_bh(&csk->sk_callback_lock);
-@@ -1480,8 +1480,8 @@ static void kcm_unattach(struct kcm_psock *psock)
- 	 */
- 	write_lock_bh(&csk->sk_callback_lock);
- 	csk->sk_user_data = NULL;
--	csk->sk_data_ready = psock->save_data_ready;
--	csk->sk_write_space = psock->save_write_space;
-+	WRITE_ONCE(csk->sk_data_ready, psock->save_data_ready);
-+	WRITE_ONCE(csk->sk_write_space, psock->save_write_space);
- 	csk->sk_state_change = psock->save_state_change;
- 	strp_stop(&psock->strp);
+-	parent = rcu_dereference_raw(root->rb_node);
++	parent = rcu_dereference(root->rb_node);
+ 	while (parent) {
+ 		int diff;
  
+@@ -507,9 +507,9 @@ count_tree(struct net *net,
+ 
+ 		diff = key_diff(key, rbconn->key, data->keylen);
+ 		if (diff < 0) {
+-			parent = rcu_dereference_raw(parent->rb_left);
++			parent = rcu_dereference(parent->rb_left);
+ 		} else if (diff > 0) {
+-			parent = rcu_dereference_raw(parent->rb_right);
++			parent = rcu_dereference(parent->rb_right);
+ 		} else {
+ 			int ret;
+ 
+diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
+index b6ec5497b930fd..e0ff87aaf979ff 100644
+--- a/net/openvswitch/conntrack.c
++++ b/net/openvswitch/conntrack.c
+@@ -2096,10 +2096,10 @@ static int ovs_ct_limit_get_zone_limit(struct net *net,
+ 		} else {
+ 			rcu_read_lock();
+ 			limit = ct_limit_get(info, zone);
+-			rcu_read_unlock();
+ 
+ 			err = __ovs_ct_limit_get_zone_limit(
+ 				net, info->data, zone, limit, reply);
++			rcu_read_unlock();
+ 			if (err)
+ 				return err;
+ 		}
 -- 
 2.53.0
 
