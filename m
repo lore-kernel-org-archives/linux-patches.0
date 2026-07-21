@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06DE4071E3;
-	Tue, 21 Jul 2026 17:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671FB4071E3;
+	Tue, 21 Jul 2026 17:46:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656000; cv=none; b=ufhN9EMd3y6NWCn9LSmhr7w7gZJ1uXWNxfh9JKpScbmAkXYugEX3JI8LyaXiFY+HRRz/svVpi76F2/rNXtJotBqBOlnubh597yMBk3oZcPp9KVG2aIyIVBDT9sXqe/CzV0A/7Zki1QQ48eDMTcHl60bCOGGlwu+6Xs5tiEag+To=
+	t=1784656002; cv=none; b=hiS/GAKSKHS1mM+TBcSu0iMOlnj67P5p/IxGTKa0RjvOOBKOsM0dXULshNvvnoglNMAsC/qe9OlCFv8nmsFtHD3fWrm2+U/HfXjd6qn1m5J4LUdkHlu0ffMc7VAsz5JB9cBF/AJtOiUL97NgGbocPqycQECOiRAhGAeaMXMQfCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656000; c=relaxed/simple;
-	bh=Fhr96y49DeMjF4wbElAds8c0YTdG2knAgk/5fVC4L8Y=;
+	s=arc-20240116; t=1784656002; c=relaxed/simple;
+	bh=ZjMSIYVD0+O2HAlB71VQ7RyDbMLF46/mGsJ9gcq7Ri4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hav1dnkbRr9aTagygSZn42kyC4uNZ1BfxspBbt82o2phJDKVhTYKfL70hPMyHxUVMBokalo2hI1C74rK5J0IJ2BGgie8Ha1bdqwz5AiCavgAPhaxXV88DdlkpuDT8tQ50+sD0bWqsg+EMnjLm83BCilWBwk9UNpzbkA+MQw3N8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WgzTf6Vl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T1s/Ik/mFJ3yNt15rSrx3F2faKN5HUuXlk5e03dnYvJxuJHR3en+n1L7Aa8mzkkxKOxTGFlxhOJKQf8h05WPae4zfzuvileHLsJEJZTx8MTFsKAmwicBkuRLe1omCE7BsI5uhsmrZw5UqX8TNc/Ly0ZAduJq59PrLVVzdPseZ/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtCiMLSP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WgzTf6Vl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9651F000E9;
-	Tue, 21 Jul 2026 17:46:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtCiMLSP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC08C1F000E9;
+	Tue, 21 Jul 2026 17:46:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655998;
-	bh=loQTnE3l/ZuVp8bKfJVDzZTp8K6RDR+jRHQG7Pm1XN8=;
+	s=korg; t=1784656001;
+	bh=XNxcl+ifpawKD1iWYKUGRXDgO45D7CEgWCksHidC+3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WgzTf6VltHIMxTkj4bH6IoQfK0jeXsv1TagKvZkUk1rRWrYnyKLB/+oFroLI9yeKF
-	 dgscxXsDpL7m3Jcjyp9bv3XXmz06RPs/Ck6d45WGKKAa5/39WMx3ETYrFozUBx8uJS
-	 Ynl9AzwdTIr5Ob3g8Az0v+UJTvk5Lj1geLB75KQ8=
+	b=HtCiMLSPLaqA3DR0XZDjof7eVLyNzxIuS/lUUiwYneXQvctsGJI5gt7NCjjjGzty7
+	 6ujGojQpxQGKQ/XvG9AjaqOioA7DaW5BWea/qp0GoBjnGoutmGcGrr4uJ2zAjgbZba
+	 4rg4xVuldty2ZUj/QekDdESw/wO9/zAppiIERvgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	kernel test robot <lkp@intel.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0220/1611] MIPS: DEC: Remove do_IRQ() call indirection
-Date: Tue, 21 Jul 2026 17:05:36 +0200
-Message-ID: <20260721152519.947523436@linuxfoundation.org>
+Subject: [PATCH 6.18 0221/1611] mips: ralink: mt7621: add missing __iomem
+Date: Tue, 21 Jul 2026 17:05:37 +0200
+Message-ID: <20260721152519.971084437@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,60 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 35554eadc1b127bb5294504a4ac8f3a5dd9e299d ]
+[ Upstream commit 4ddaf88aadd3bd09c2eb3734c53d2864af6b144e ]
 
-As from commit 8f99a1626535 ("MIPS: Tracing: Add IRQENTRY_EXIT section
-for MIPS") do_IRQ() is not a macro anymore and can be invoked directly
-from assembly code, as a tail call.  Remove the dec_irq_dispatch() stub
-then and the indirection previously introduced with commit 187933f23679
-("[MIPS] do_IRQ cleanup"), improving performance by reducing the number
-of control flow changes and the overall instruction count, while fixing
-a compiler's complaint about a missing prototype for said stub:
+raw_readl and writel calls expect pointers annotated with __iomem.
 
-arch/mips/dec/setup.c:780:25: warning: no previous prototype for 'dec_irq_dispatch' [-Wmissing-prototypes]
-  780 | asmlinkage unsigned int dec_irq_dispatch(unsigned int irq)
-      |                         ^~~~~~~~~~~~~~~~
-
-(which gets promoted to a compilation error with CONFIG_WERROR).
-
-Fixes: 8f99a1626535 ("MIPS: Tracing: Add IRQENTRY_EXIT section for MIPS")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild/202211060456.cnV6IK6G-lkp@intel.com/
+Fixes: cc19db8b312a ("MIPS: ralink: mt7621: do memory detection on KSEG1")
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/dec/int-handler.S | 2 +-
- arch/mips/dec/setup.c       | 6 ------
- 2 files changed, 1 insertion(+), 7 deletions(-)
+ arch/mips/ralink/mt7621.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/dec/int-handler.S b/arch/mips/dec/int-handler.S
-index 011d1d678840aa..a0b439c90488fc 100644
---- a/arch/mips/dec/int-handler.S
-+++ b/arch/mips/dec/int-handler.S
-@@ -277,7 +277,7 @@
- 		 srlv	t3,t1,t2
+diff --git a/arch/mips/ralink/mt7621.c b/arch/mips/ralink/mt7621.c
+index 5a9fd3fe41d7c5..e25444b149f772 100644
+--- a/arch/mips/ralink/mt7621.c
++++ b/arch/mips/ralink/mt7621.c
+@@ -63,7 +63,7 @@ phys_addr_t mips_cpc_default_phys_base(void)
  
- handle_it:
--		j	dec_irq_dispatch
-+		j	do_IRQ
- 		 nop
+ static bool __init mt7621_addr_wraparound_test(phys_addr_t size)
+ {
+-	void *dm = (void *)KSEG1ADDR(&detect_magic);
++	void __iomem *dm = (void __iomem *)KSEG1ADDR(&detect_magic);
  
- #if defined(CONFIG_32BIT) && defined(CONFIG_MIPS_FP_SUPPORT)
-diff --git a/arch/mips/dec/setup.c b/arch/mips/dec/setup.c
-index 87f0a1436bf9cc..abe42616498db9 100644
---- a/arch/mips/dec/setup.c
-+++ b/arch/mips/dec/setup.c
-@@ -776,9 +776,3 @@ void __init arch_init_irq(void)
- 			pr_err("Failed to register halt interrupt\n");
- 	}
- }
--
--asmlinkage unsigned int dec_irq_dispatch(unsigned int irq)
--{
--	do_IRQ(irq);
--	return 0;
--}
+ 	if (CPHYSADDR(dm + size) >= MT7621_LOWMEM_MAX_SIZE)
+ 		return true;
 -- 
 2.53.0
 
