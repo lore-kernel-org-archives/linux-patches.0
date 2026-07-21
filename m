@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974903FAE11;
-	Tue, 21 Jul 2026 18:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABB93FAE11;
+	Tue, 21 Jul 2026 18:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659829; cv=none; b=tvdWcwObgRcE6HWDSgBTPUMlo+g71HsWXGpced5LX0vzQB3RuwZlBobzaNowDYwSNiLXqz1Yu5D1nO/7UuMHZ47FGpBKNqIXolDOqgnxIj/lG7celMCMDatgaoyLAzYmM4mNSuDZzidpW6FXOThxpPgKEM0rnoNbvQ3QeuzNFYo=
+	t=1784659832; cv=none; b=pwCbcQa+LHwoCW7vdC7qXYpr4r/j/IatsSiUyoWlmxVM/0Wx0ylj9I42oNlS4lx2/9R1seO9f7UOn7XMQqsc4Eq5rGkDlDCzn7tRiz3ulVgXI+nicstDXdN4ariPuYuKZxf7fqVl3vhV31RSdqBlnYP/IDObn/hlzCMZd0TANc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659829; c=relaxed/simple;
-	bh=xH0H+iVVN5wsh+tgeNd9GG754MBJGeWokwW8VwPI9G0=;
+	s=arc-20240116; t=1784659832; c=relaxed/simple;
+	bh=7e0baEUKhyquWNJNvwC0v8pPGed943DknobteyR0Pf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K4j/cUXZkGr3IqUbXwEqbxQZz9dqTJ0PqEok6iarSFdImoPxxu3FkdwuhZegYdtCHmiHqIMID3oEvvtC2WyZ+1TXrf2IhW9SfjQoAbXkzzFr0Y8mhwND3+iJFxHGZDfqAgTv/OAwQXQiXCsAckg8qZpZUF/sIbGI9odLJARPNB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WeXY8z2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SdMnzv1/XIB+KoygDUvq4xLjOphMJYHRyrjNXsRe/z5hozyCfam3ogJBYfpF6h2xuHS9qjFgOfsHS9rWCVloNaqfjas1S1G6CUGlSM5b5xIP9t8jMeKyyUFBHkltz4uF+gr4ALbZv8iHqPzXik7SB+gShQg37jBD6QZ4Rd2OnA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mlnx4umY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WeXY8z2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BE81F000E9;
-	Tue, 21 Jul 2026 18:50:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mlnx4umY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A14901F000E9;
+	Tue, 21 Jul 2026 18:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659828;
-	bh=hAPRI3AF6LvRThvvzymjnqxTHRxZowsKX8mgfQggxvo=;
+	s=korg; t=1784659831;
+	bh=QT/FXS+lobSGA5c5DVujZs4TWF6RLDsUu86Gb02AcGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1WeXY8z292rzapw09wnKeZAsRPN7hNCDCUXccLTCqZOvCatWR6GiYdrzbUnqiwC5f
-	 Zuw/ipOnYK4L0uXCkN82X2vdXw6itn+nM6jglnZ73unFPK/6ayzd3ifWlCh2Yjxcwj
-	 bjNZJeaYeqErlnKme1DjM1raR4Uj/UjXhlMIvG1k=
+	b=Mlnx4umYJWxVF/FAtlZiblDRyYlmYKxDuskBPgDbRnD4OCmBXAmKAd9d5tVCOKV6h
+	 LHU8zJ5T5ju9GghxSRyTEx+5oWKEX4TBSMzN6d+dsnFez0rOKzYVLOIkX5kgUMV5Sw
+	 UXCKEkq+UBLzS95IT5QC6mXc3yoFS6FiphTV1VMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhi-Jun You <hujy652@gmail.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0750/2077] net: ethernet: mtk_wed: fix loading WO firmware for MT7986
-Date: Tue, 21 Jul 2026 17:07:03 +0200
-Message-ID: <20260721152610.483059811@linuxfoundation.org>
+Subject: [PATCH 7.1 0751/2077] net/sched: sch_dualpi2: Add missing module alias
+Date: Tue, 21 Jul 2026 17:07:04 +0200
+Message-ID: <20260721152610.504931377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,46 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhi-Jun You <hujy652@gmail.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 9192a18f6de2f5e3eb3813ecd2895ac0f5c008a9 ]
+[ Upstream commit ee1ba0add3fbd5a28fa5423be373acd147f1e344 ]
 
-MT7986 requires a different mask for second WO firmware.
-Without this, WO would timeout after loading FW.
+When a qdisc is added by name, the kernel tries to autoload its module
+via request_qdisc_module(), which calls:
 
-The correct mask was removed when adding WED for MT7988.
-Add it back and add a WED version check to fix it.
+request_module(NET_SCH_ALIAS_PREFIX "%s", name);
 
-This can be reproduced with a MT7986 + MT7916 board.
+i.e. it asks modprobe to resolve the "net-sch-<kind>" alias (e.g.
+"net-sch-dualpi2") rather than the module's file name. Since dualpi2
+was shipped without this alias, the autoload fails:
 
-Fixes: e2f64db13aa1 ("net: ethernet: mtk_wed: introduce WED support for MT7988")
-Signed-off-by: Zhi-Jun You <hujy652@gmail.com>
-Link: https://patch.msgid.link/20260611150051.586-1-hujy652@gmail.com
+tc qdisc add dev lo root handle 1: dualpi2
+Error: Specified qdisc kind is unknown.
+
+Fix this by adding the missing alias so the qdisc is autoloaded on demand
+like the others.
+
+Fixes: 320d031ad6e4 ("sched: Struct definition and parsing of dualpi2 qdisc")
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Link: https://patch.msgid.link/20260611205849.3287640-1-victor@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_wed_mcu.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/sched/sch_dualpi2.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_wed_mcu.c b/drivers/net/ethernet/mediatek/mtk_wed_mcu.c
-index fa6b2160341692..0d38183c6ba704 100644
---- a/drivers/net/ethernet/mediatek/mtk_wed_mcu.c
-+++ b/drivers/net/ethernet/mediatek/mtk_wed_mcu.c
-@@ -367,8 +367,12 @@ mtk_wed_mcu_load_firmware(struct mtk_wed_wo *wo)
- 	/* wo firmware reset */
- 	wo_w32(MTK_WO_MCU_CFG_LS_WF_MCCR_CLR_ADDR, 0xc00);
+diff --git a/net/sched/sch_dualpi2.c b/net/sched/sch_dualpi2.c
+index 592c58938d3e80..5434df6ca8efe6 100644
+--- a/net/sched/sch_dualpi2.c
++++ b/net/sched/sch_dualpi2.c
+@@ -1210,6 +1210,7 @@ static struct Qdisc_ops dualpi2_qdisc_ops __read_mostly = {
+ 	.dump_stats	= dualpi2_dump_stats,
+ 	.owner		= THIS_MODULE,
+ };
++MODULE_ALIAS_NET_SCH("dualpi2");
  
--	val = wo_r32(MTK_WO_MCU_CFG_LS_WF_MCU_CFG_WM_WA_ADDR) |
--	      MTK_WO_MCU_CFG_LS_WF_WM_WA_WM_CPU_RSTB_MASK;
-+	val = wo_r32(MTK_WO_MCU_CFG_LS_WF_MCU_CFG_WM_WA_ADDR);
-+
-+	if (!mtk_wed_is_v3_or_greater(wo->hw) && wo->hw->index)
-+		val |= MTK_WO_MCU_CFG_LS_WF_WM_WA_WA_CPU_RSTB_MASK;
-+	else
-+		val |= MTK_WO_MCU_CFG_LS_WF_WM_WA_WM_CPU_RSTB_MASK;
- 	wo_w32(MTK_WO_MCU_CFG_LS_WF_MCU_CFG_WM_WA_ADDR, val);
- out:
- 	release_firmware(fw);
+ static int __init dualpi2_module_init(void)
+ {
 -- 
 2.53.0
 
