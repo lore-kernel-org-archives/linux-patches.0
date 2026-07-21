@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1C6415F20;
-	Tue, 21 Jul 2026 18:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BAB415F18;
+	Tue, 21 Jul 2026 18:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656903; cv=none; b=tSIii8JkCcVeUFmO/fir3KBMUQMhK1b/h2gDaBPvyC2LP56t4ZFlDl+UOa8rTRzP2QmhxEjfjM4n6+nnKWCMqLVKWxHJYDyKuXGLeVj9Zttmh2OqF/M0NkJdqlUAQ5m/kVKreqDx8pqbN8sH99VALs6g+vRADzPNORg6f14CGIk=
+	t=1784656904; cv=none; b=SCULgZn3Y+PXfB/TrHJIcys5FE2BcgZn2yJttZej4c3RTm/0nPkdVODD7zE6CH3xiztNLXF80b5UKrKpS0UJW+hvk+OQgq5Fj9dneNktOm5XY8YLfvqMxhW4MCs/oT91t+CemZhnFkPJ2EO8yG6OdSmw3Sm7uax3kFcJgjk30dQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656903; c=relaxed/simple;
-	bh=MEJcl/Adanx4SHaI+wm7gEluhLIdn2c0fJxpu3QdVrY=;
+	s=arc-20240116; t=1784656904; c=relaxed/simple;
+	bh=kSJElCuGiNbi9JVO5rRSrMcl9vUfJUnX/MzqNdXTDj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=be72F2PnuxMLKZhWLDq9YtzWVo9YdAkmBki9jiW2A41SostQlmhbtqlRtlEIlBUyGPxBid0wqguJdQfeSoK4L0Gp8WIh6mTkX0HFtY5e/0zJDQWDLFMeSWppPVoVgNUSh9um2ILjiBjCUUDyzoIs6EXjGs1U7fM88wqp+GKIKCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQ/SNm5D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XLkeQGufoAgL5pdiWmsOfJSAFBvhbXO/QARD37kDRQF+2UYfSxZjh6gKQ7lW/8ROdgDPL7qIWT4WqlRm0jbfq4QR8XcldglebnnjnN8P5L+YJ9m1WE51kvmptzKnj+hujF/6BfSxZur0aAklwz3dOhs+s5Qc0pTX8sR5l4Ais4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3uPId+9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQ/SNm5D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6F91F00ACF;
-	Tue, 21 Jul 2026 18:01:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3uPId+9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3D81F000E9;
+	Tue, 21 Jul 2026 18:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656902;
-	bh=6R6ZXxK915oCN6rS27mKHt8TTyAbO0fOiNo75JoywxY=;
+	s=korg; t=1784656899;
+	bh=+xY9SIuuMbl/mdSCnh1Nnmc1tVjKbmTqGljmDrnhzTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hQ/SNm5DJUv4TlCmLILe9+HrAgKay5jSlLOov9CAfTXrNeXz7OlgpxiMI+7IGxKLo
-	 fzCUNUXdQUcN+LK0v9H1+7Y3d1WmXQjCjv3XKGFkpAx377/+DepTESzdn3mfFt3i5n
-	 FLFGS8f9aZxGICXUD2BNuM+WkKDrl1CfovQJvwLw=
+	b=U3uPId+9bU6/AZHMJFzePPFebTAXE0LWrOE1T+HvYjN/pwOFOCnK2bKIpfaoyclm1
+	 TNRIfZvM3hAsXt1VRtX7J0B7rUox/6rIsR6uw08CCwnUsZRyyR/d4+4glkeOtU1X1R
+	 +XjwGyv4hLHSZpqnaAV1AeykKtF/jSsWmwohKxWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Ivan Vecera <ivecera@redhat.com>,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0519/1611] dpll: Support dynamic pin index allocation
-Date: Tue, 21 Jul 2026 17:10:35 +0200
-Message-ID: <20260721152527.019518528@linuxfoundation.org>
+Subject: [PATCH 6.18 0518/1611] net: wwan: t7xx: check skb_clone in control TX
+Date: Tue, 21 Jul 2026 17:10:34 +0200
+Message-ID: <20260721152526.997137647@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,148 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 711696b3e168cea4165e7b7f051f3f442a347430 ]
+[ Upstream commit 05f789fa90d95d5771230e78453cedff2486039d ]
 
-Allow drivers to register DPLL pins without manually specifying a pin
-index.
+t7xx_port_ctrl_tx() clones each skb fragment before passing it to the
+port transmit path. The clone is used immediately to set cloned->len, so
+an skb_clone() failure results in a NULL pointer dereference.
 
-Currently, drivers must provide a unique pin index when calling
-dpll_pin_get(). This works well for hardware-mapped pins but creates
-friction for drivers handling virtual pins or those without a strict
-hardware indexing scheme.
+Check the clone before using it. If previous fragments were already
+queued, preserve the driver's existing partial-write behavior by
+returning the number of bytes submitted so far.
 
-Introduce DPLL_PIN_IDX_UNSPEC (U32_MAX). When a driver passes this
-value as the pin index:
-1. The core allocates a unique index using an IDA
-2. The allocated index is mapped to a range starting above `INT_MAX`
-
-This separation ensures that dynamically allocated indices never collide
-with standard driver-provided hardware indices, which are assumed to be
-within the `0` to `INT_MAX` range. The index is automatically freed when
-the pin is released in dpll_pin_put().
-
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Link: https://patch.msgid.link/20260203174002.705176-5-ivecera@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 32239d600236 ("dpll: fix stale iteration in dpll_pin_on_pin_unregister()")
+Fixes: 36bd28c1cb0d ("wwan: core: Support slicing in port TX flow of WWAN subsystem")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260612035613.1192486-1-ruoyuw560@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/dpll_core.c | 48 ++++++++++++++++++++++++++++++++++++++--
- include/linux/dpll.h     |  2 ++
- 2 files changed, 48 insertions(+), 2 deletions(-)
+ drivers/net/wwan/t7xx/t7xx_port_wwan.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
-index b05fe2ba46d910..59081cf2c73ae0 100644
---- a/drivers/dpll/dpll_core.c
-+++ b/drivers/dpll/dpll_core.c
-@@ -10,6 +10,7 @@
+diff --git a/drivers/net/wwan/t7xx/t7xx_port_wwan.c b/drivers/net/wwan/t7xx/t7xx_port_wwan.c
+index 7fc569565ff99a..d2529df7592a7f 100644
+--- a/drivers/net/wwan/t7xx/t7xx_port_wwan.c
++++ b/drivers/net/wwan/t7xx/t7xx_port_wwan.c
+@@ -106,6 +106,8 @@ static int t7xx_port_ctrl_tx(struct t7xx_port *port, struct sk_buff *skb)
  
- #include <linux/device.h>
- #include <linux/err.h>
-+#include <linux/idr.h>
- #include <linux/property.h>
- #include <linux/slab.h>
- #include <linux/string.h>
-@@ -24,6 +25,7 @@ DEFINE_XARRAY_FLAGS(dpll_device_xa, XA_FLAGS_ALLOC);
- DEFINE_XARRAY_FLAGS(dpll_pin_xa, XA_FLAGS_ALLOC);
- 
- static RAW_NOTIFIER_HEAD(dpll_notifier_chain);
-+static DEFINE_IDA(dpll_pin_idx_ida);
- 
- static u32 dpll_device_xa_id;
- static u32 dpll_pin_xa_id;
-@@ -464,6 +466,36 @@ void dpll_device_unregister(struct dpll_device *dpll,
- }
- EXPORT_SYMBOL_GPL(dpll_device_unregister);
- 
-+static int dpll_pin_idx_alloc(u32 *pin_idx)
-+{
-+	int ret;
-+
-+	if (!pin_idx)
-+		return -EINVAL;
-+
-+	/* Alloc unique number from IDA. Number belongs to <0, INT_MAX> range */
-+	ret = ida_alloc(&dpll_pin_idx_ida, GFP_KERNEL);
-+	if (ret < 0)
-+		return ret;
-+
-+	/* Map the value to dynamic pin index range <INT_MAX+1, U32_MAX> */
-+	*pin_idx = (u32)ret + INT_MAX + 1;
-+
-+	return 0;
-+}
-+
-+static void dpll_pin_idx_free(u32 pin_idx)
-+{
-+	if (pin_idx <= INT_MAX)
-+		return; /* Not a dynamic pin index */
-+
-+	/* Map the index value from dynamic pin index range to IDA range and
-+	 * free it.
-+	 */
-+	pin_idx -= (u32)INT_MAX + 1;
-+	ida_free(&dpll_pin_idx_ida, pin_idx);
-+}
-+
- static void dpll_pin_prop_free(struct dpll_pin_properties *prop)
- {
- 	kfree(prop->package_label);
-@@ -521,9 +553,18 @@ dpll_pin_alloc(u64 clock_id, u32 pin_idx, struct module *module,
- 	struct dpll_pin *pin;
- 	int ret;
- 
-+	if (pin_idx == DPLL_PIN_IDX_UNSPEC) {
-+		ret = dpll_pin_idx_alloc(&pin_idx);
-+		if (ret)
-+			return ERR_PTR(ret);
-+	} else if (pin_idx > INT_MAX) {
-+		return ERR_PTR(-EINVAL);
-+	}
- 	pin = kzalloc(sizeof(*pin), GFP_KERNEL);
--	if (!pin)
--		return ERR_PTR(-ENOMEM);
-+	if (!pin) {
-+		ret = -ENOMEM;
-+		goto err_pin_alloc;
-+	}
- 	pin->pin_idx = pin_idx;
- 	pin->clock_id = clock_id;
- 	pin->module = module;
-@@ -551,6 +592,8 @@ dpll_pin_alloc(u64 clock_id, u32 pin_idx, struct module *module,
- 	dpll_pin_prop_free(&pin->prop);
- err_pin_prop:
- 	kfree(pin);
-+err_pin_alloc:
-+	dpll_pin_idx_free(pin_idx);
- 	return ERR_PTR(ret);
- }
- 
-@@ -654,6 +697,7 @@ void dpll_pin_put(struct dpll_pin *pin)
- 		xa_destroy(&pin->ref_sync_pins);
- 		dpll_pin_prop_free(&pin->prop);
- 		fwnode_handle_put(pin->fwnode);
-+		dpll_pin_idx_free(pin->pin_idx);
- 		kfree_rcu(pin, rcu);
- 	}
- 	mutex_unlock(&dpll_lock);
-diff --git a/include/linux/dpll.h b/include/linux/dpll.h
-index 480ea3cbe709b5..dd86d9d9d06897 100644
---- a/include/linux/dpll.h
-+++ b/include/linux/dpll.h
-@@ -235,6 +235,8 @@ int dpll_device_register(struct dpll_device *dpll, enum dpll_type type,
- void dpll_device_unregister(struct dpll_device *dpll,
- 			    const struct dpll_device_ops *ops, void *priv);
- 
-+#define DPLL_PIN_IDX_UNSPEC	U32_MAX
-+
- struct dpll_pin *
- dpll_pin_get(u64 clock_id, u32 dev_driver_id, struct module *module,
- 	     const struct dpll_pin_properties *prop);
+ 	while (cur) {
+ 		cloned = skb_clone(cur, GFP_KERNEL);
++		if (!cloned)
++			return cnt ? cnt : -ENOMEM;
+ 		cloned->len = skb_headlen(cur);
+ 		ret = t7xx_port_send_skb(port, cloned, 0, 0);
+ 		if (ret) {
 -- 
 2.53.0
 
