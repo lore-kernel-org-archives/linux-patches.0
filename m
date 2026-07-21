@@ -1,50 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FB0471247;
-	Tue, 21 Jul 2026 18:04:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77289471254;
+	Tue, 21 Jul 2026 18:04:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657046; cv=none; b=pXXGkVoLEgpXGLmW1LeE8ylRm/GWNOlGawjPS4atdDU0TvtyZDNCDxnFLhJ/y+m8qaAPC8QPfNsORDGiEOYFvxVXaflg0Dw41i4EIbqW3zr63YFEakv+3MBbP8Ei94NL7v6YfBWtB6hYFZ6sQwXoUEuGtRFyT6pkOnFDgGHwHLo=
+	t=1784657048; cv=none; b=AlMbTcOeE1F7i4JpoQak++eKuTdOOVjD3kf6ivhAsJ+vNUvWiKv5cllSj0ac8dkj8q/wzT5RakDMEO3NM8ttL6Pyc5UpvXVrFVD2mrF4dAM0ykl7rsrFdqrnsNDN1+ojRaLfwY69BCIvm+2O2setaCVbzRdKcMbRLOr4UOzIECA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657046; c=relaxed/simple;
-	bh=Ti3tjYu/KmoDA3/Fqz2PaJ1b1P3qyw7ymfOtmME0Bv4=;
+	s=arc-20240116; t=1784657048; c=relaxed/simple;
+	bh=ge93vOn0UO3C8wja2Lb8wm4V0cHgoG3uHUQU0pGM28A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UEX/zEjvj3GiZNo6iG8eCyYOjKb65/fYM4amWhm7ur8mirUTUvd6nSRnVxOARE7IEenHUya4lXCCxjcacqURZERre3uU91q0RO/dig4JbZjr8Q/iaRv6Tt98vqNV8nnElgT61KhUzRwRaKZuiFtcRM6pzUO6/PqB5DXLHcbQjDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8069EYN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W7x9D1sfK1VQ6F5R2rodR/Ms86R4FuoTqViPi2KABzvGVl+T3TIpM6BjCvL751I2PhM8fKdAx+lLVo4Ji7bcHNB1Q8lFU0na3J9UIz+Kk3x89iS693FNNMXZkNVGppxL+9YFMrhNUYXSrGNRLb0DPxEXKKhVcRBB1EThB4/UYbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPBBiFhe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8069EYN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5481F000E9;
-	Tue, 21 Jul 2026 18:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPBBiFhe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8981F000E9;
+	Tue, 21 Jul 2026 18:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657044;
-	bh=5xtMHxx34PEXevzT53PfQsB9wuoA9FIAYguQR3et/pA=;
+	s=korg; t=1784657047;
+	bh=9yefy2hewo8nJCMt8E1QSL/LoS4jxhPVagbdjD+/KNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H8069EYNu3GVzhQNBEbIEE9BKJlXVe5DMOFUYj7pnMa48MKcey3IGLgKnRindt5os
-	 6UtXerLbN5aWYQ2Llv1jJidSvytHRLeOb6wzfuGm2urI0enWLIZsyJ9C7RJsK4W80V
-	 p2JHoYx5mQ5vGZpqwKuoRrFdRaqd95tCZJky/hMI=
+	b=WPBBiFhewNdlYs7ZbrbfC1oYbDHv7kPJuusONz1v322B6ppfWqEeI7KV4k3kL403X
+	 LjmHvnF94JoD8qirhS7bQD55fuRfO4raBI2qjTNupeQbGIZeOHLTXxitSZw2D1efSS
+	 IDXxDpa4rwlxZ5q2AVGfZH6OXsE34lNESorRj4Ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Athira Rajeev <atrajeev@linux.ibm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Hari Bathini <hbathini@linux.vnet.ibm.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	linuxppc-dev@lists.ozlabs.org,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Petlan <mpetlan@redhat.com>,
-	Shivani Nittor <shivani@linux.ibm.com>,
-	Tanushree Shah <tanushree.shah@ibm.com>,
-	Tejas Manhas <tejas.manhas1@ibm.com>,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0617/1611] powerpc tools perf: Initialize error code in auxtrace_record_init function
-Date: Tue, 21 Jul 2026 17:12:13 +0200
-Message-ID: <20260721152529.263859692@linuxfoundation.org>
+Subject: [PATCH 6.18 0618/1611] PCI: qcom: Disable ASPM L0s for SA8775P
+Date: Tue, 21 Jul 2026 17:12:14 +0200
+Message-ID: <20260721152529.286706572@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -63,114 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Athira Rajeev <atrajeev@linux.ibm.com>
+From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
 
-[ Upstream commit 789d22d77879eabb042627f6627cdb62787bc142 ]
+[ Upstream commit 29f692985819f4089f02a86e151a72f6d4cdd90d ]
 
-perf trace record fails some cases in powerpc
+Due to a hardware issue, L0s is not properly supported by the PCIe
+controller on the SA8775p SoC. If enabled, the L0s to L0 transition
+triggers below correctable AER errors and may also affect link stability:
 
- # perf test "perf trace record and replay"
- 128: perf trace record and replay                                    : FAILED!
+  pcieport 0000:00:00.0: PME: Signaling with IRQ 332
+  pcieport 0000:00:00.0: AER: enabled with IRQ 332
+  pcieport 0000:00:00.0: AER: Correctable error message received from 0000:01:00.0
+  pci 0000:01:00.0: PCIe Bus Error: severity=Correctable, type=Data Link Layer, (Transmitter ID)
+  pci 0000:01:00.0:   device [17cb:1103] error status/mask=00001000/0000e000
+  pci 0000:01:00.0:    [12] Timeout
+  pcieport 0000:00:00.0: AER: Multiple Correctable error message received from 0000:01:00.0
+  pcieport 0000:00:00.0: PCIe Bus Error: severity=Correctable, type=Data Link Layer, (Transmitter ID)
+  pcieport 0000:00:00.0:   device [17cb:0115] error status/mask=00001000/0000e000
+  pcieport 0000:00:00.0:    [12] Timeout
 
-  # perf trace record sleep 1
-  # echo $?
-    32
+Hence, disable L0s for the SA8775p SoC to allow it to properly function
+by sacrificing a little bit of power saving.
 
-This is happening because of non-zero err value from
-auxtrace_record__init() function.
-
- static int record__auxtrace_init(struct record *rec)
- {
-        int err;
-
-        if ((rec->opts.auxtrace_snapshot_opts || rec->opts.auxtrace_sample_opts)
-            && record__threads_enabled(rec)) {
-                pr_err("AUX area tracing options are not available in parallel streaming mode.\n");
-                return -EINVAL;
-        }
-
-        if (!rec->itr) {
-                rec->itr = auxtrace_record__init(rec->evlist, &err);
-                if (err)
-                        return err;
-        }
-
-Here "int err" is not initialised. The code expects "err" to be set from
-auxtrace_record__init() function.
-
-Update auxtrace_record__init() in arch/powerpc/util/auxtrace.c to clear
-err value in the beginning.
-
-- Clear err value in beginning of function. Any fail later will
-set appropriate return code to err.
-
-- Even if we haven't found any event for auxtrace, perf record
-should continue for other events. NULL return
-will indicate that there is no auxtrace record initialized.
-
-- Not having "err" set here will affect monitoring of other events
-also because perf record will fail seeing random value in err.
-
-Set err to -EINVAL before invoking auxtrace_record__init() in
-builtin-record.c
-
-With the fix,
-
-  # perf trace record sleep 1
-  [ perf record: Woken up 2 times to write data ]
-  [ perf record: Captured and wrote 0.033 MB perf.data (228 samples) ]
-
-Fixes: 1dbfaf94cf66ec4b ("perf powerpc: Add basic CONFIG_AUXTRACE support for VPA pmu on powerpc")
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Athira Rajeev <atrajeev@linux.ibm.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Athira Rajeev <atrajeev@linux.ibm.com>
-Cc: Hari Bathini <hbathini@linux.vnet.ibm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: linuxppc-dev@lists.ozlabs.org
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Petlan <mpetlan@redhat.com>
-Cc: Shivani Nittor <shivani@linux.ibm.com>
-Cc: Tanushree Shah <tanushree.shah@ibm.com>
-Cc: Tejas Manhas <tejas.manhas1@ibm.com>
-Cc: Thomas Richter <tmricht@linux.ibm.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 58d0d3e032b3 ("PCI: qcom-ep: Add support for SA8775P SOC")
+Assisted-by: Claude:claude-4-6-sonnet
+Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+[mani: commit log, corrected fixes tag]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20260419093934.1223027-1-shengchao.guo@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/arch/powerpc/util/auxtrace.c | 6 ++++++
- tools/perf/builtin-record.c             | 1 +
- 2 files changed, 7 insertions(+)
+ drivers/pci/controller/dwc/pcie-qcom.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/arch/powerpc/util/auxtrace.c b/tools/perf/arch/powerpc/util/auxtrace.c
-index 62c6f67f1bbe66..57f2910c0b0198 100644
---- a/tools/perf/arch/powerpc/util/auxtrace.c
-+++ b/tools/perf/arch/powerpc/util/auxtrace.c
-@@ -70,6 +70,12 @@ struct auxtrace_record *auxtrace_record__init(struct evlist *evlist,
- 	struct evsel *pos;
- 	int found = 0;
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index a70911a9567535..fbdb5a92647851 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1438,6 +1438,7 @@ static const struct qcom_pcie_cfg cfg_1_9_0 = {
+ static const struct qcom_pcie_cfg cfg_1_34_0 = {
+ 	.ops = &ops_1_9_0,
+ 	.override_no_snoop = true,
++	.no_l0s = true,
+ };
  
-+	/*
-+	 * Set err value to zero here. Any fail later
-+	 * will set appropriate return code to err.
-+	 */
-+	*err = 0;
-+
- 	evlist__for_each_entry(evlist, pos) {
- 		if (strstarts(pos->name, "vpa_dtl")) {
- 			found = 1;
-diff --git a/tools/perf/builtin-record.c b/tools/perf/builtin-record.c
-index b1fb87016d5aa9..2563ef66a4d946 100644
---- a/tools/perf/builtin-record.c
-+++ b/tools/perf/builtin-record.c
-@@ -867,6 +867,7 @@ static int record__auxtrace_init(struct record *rec)
- 	}
- 
- 	if (!rec->itr) {
-+		err = -EINVAL;
- 		rec->itr = auxtrace_record__init(rec->evlist, &err);
- 		if (err)
- 			return err;
+ static const struct qcom_pcie_cfg cfg_2_1_0 = {
 -- 
 2.53.0
 
