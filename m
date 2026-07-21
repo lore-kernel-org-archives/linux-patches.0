@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74D3415F33;
-	Tue, 21 Jul 2026 21:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18B63B6BE3;
+	Tue, 21 Jul 2026 21:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668333; cv=none; b=IvieLpgA74larZ2HgpI2dnJu/TXuKILLAsaQSyzwZ7K3SUjq5Off5SZccSw7CsihyQ5n5GISdnL1BPl4n1TsM3vNG/bLuW6/AEiy0o1mr11ZD84DbeaqKb3yI6Nh487yKZkrmcWUfG833kLAUkcQtS3K2Rpg6uAsDx+6KlURxUA=
+	t=1784668337; cv=none; b=JsZArvRcrxKWRrngz6PrgHDZ0XB/TVeo5lHkl/LEcySY2JgXGxDM9dEKc4hpDMp+sJJTWXmeZTy/anPfL1ZQOUFaHoOhjipMZfqBi26WHapXxJNAHIbldK9reNelf9g1JFsFFxfZTi1IZrW1ULwC7ijF5N+uGItAlpJlqyMq75E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668333; c=relaxed/simple;
-	bh=PzC4GT6i+tUQssdrXDQHGr+yClBAiQ5VsoGFZvk0MG4=;
+	s=arc-20240116; t=1784668337; c=relaxed/simple;
+	bh=TimOR58kHuGgCax38xaTcOjkulStiY8m661sMV1dvls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ode0bFWoVwjJSskCqvcOW64r9khqb/FHMzlPCR8VeeiZJZmdArtYute0BoeC7Mm5wVKKsmTGU4umhOJHua+984Oa3oXj8iPOGEBCWam0zhXajuBBmG1WHBUSJd6Ec9RDD+ZpjxZkEgC1c4m9R+qxtfq6wWMPKjcU5q0Mge+ABR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBVLvzeK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dsw6nY2fWURMkTMQb8hKaxP9htGScr7U6huMCG9AdZaBuAwSuOOQfX8gNFJNG3B64TgA9nbXmczqZYIp0ten6B/iY07gJbptHFrfJrgQn+lz/0kUxjN1pdcP4BnfWCOYbUxBqzyA/NCOqzNXfEXtPBr/bDBh9+jm6HEspjI2E2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hE1tXu4J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBVLvzeK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495711F000E9;
-	Tue, 21 Jul 2026 21:12:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hE1tXu4J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C441F000E9;
+	Tue, 21 Jul 2026 21:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668332;
-	bh=VBq3wsClhVTIyBsLz9IG8z7sWrhWjjKh4Op1+9EkFX4=;
+	s=korg; t=1784668335;
+	bh=1krJJXqJKSUuijW4LC7gGJhdeNrYjVrBCyl24WuxW2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OBVLvzeKQyxlE9AhS1xR9QAk3F/jVESnuH2GUgBrTtUa/x+r2SQRvzuy2aCtVdrV2
-	 w4XuUvTALdahZChclXSy8oBiLa4AxmeciZRLEiZRu1mSKjeOTaPF7ixD23BiT+ko9c
-	 M+mVvUUYwYVn9cCTkWTig3TsNI2C/Qh28zkDNCzs=
+	b=hE1tXu4J3iu0Z2WX6KJDJYFcqXLXZOGM+ZfZyGWfQij0V+IwshsWa5hrzW7uX9EFO
+	 BAKbxjAeoCIZv/Fjr/ChRP2Jp4fRlPGTc43jHrbeA/drEz7iHje6OxGzrxw/ruhDml
+	 VhUy/0EZKtgg4skLTiSPBRcdARau1GE3T5gwiU+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gil Portnoy <dddhkts1@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 0135/1067] ksmbd: add permission checks for FSCTL_DUPLICATE_EXTENTS_TO_FILE
-Date: Tue, 21 Jul 2026 17:12:16 +0200
-Message-ID: <20260721152427.614030342@linuxfoundation.org>
+Subject: [PATCH 6.1 0136/1067] ksmbd: add a permission check for FSCTL_SET_ZERO_DATA
+Date: Tue, 21 Jul 2026 17:12:17 +0200
+Message-ID: <20260721152427.635894748@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,17 +53,24 @@ Content-Transfer-Encoding: 8bit
 
 From: Gil Portnoy <dddhkts1@gmail.com>
 
-commit 388e4139db27a9e3612c9d356b826f5b1ff6a9e3 upstream.
+commit 3320ba068198adc144c89d6661b805acce01735b upstream.
 
-The FSCTL_DUPLICATE_EXTENTS_TO_FILE arm of smb2_ioctl() overwrites the
-destination file's data via vfs_clone_file_range() with neither the
-share-level KSMBD_TREE_CONN_FLAG_WRITABLE check nor a per-handle
-fp->daccess check that the other write-bearing arms carry. A client can
-overwrite destination data on a read-only share, or from a handle opened
-with only FILE_WRITE_ATTRIBUTES (which still yields an FMODE_WRITE filp).
-FILE_WRITE_ATTRIBUTES-only destination handle overwrote the file's data via
-the clone. Add both checks, matching the FSCTL_SET_SPARSE permission fix;
-require FILE_WRITE_DATA since this writes data.
+FSCTL_SET_ZERO_DATA in smb2_ioctl() destroys file data via
+ksmbd_vfs_zero_data() -> vfs_fallocate(PUNCH_HOLE/ZERO_RANGE) after
+checking only the share-level KSMBD_TREE_CONN_FLAG_WRITABLE, with no
+per-handle access check. A handle opened with only FILE_WRITE_ATTRIBUTES
+still yields an FMODE_WRITE filp (FILE_WRITE_ATTRIBUTES is part of
+FILE_WRITE_DESIRE_ACCESS_LE, so smb2_create_open_flags() opens it
+O_WRONLY), so the vfs_fallocate FMODE_WRITE check does not stop it; only
+the missing fp->daccess gate would. Reproduced on mainline 7.1-rc7 with
+KASAN by an authenticated SMB client: a FILE_WRITE_ATTRIBUTES-only handle
+zeroed 4096 bytes of file data it had no FILE_WRITE_DATA right to
+(6/6; a FILE_READ_DATA-only handle was correctly denied).
+
+This is the unfixed sibling of commit cc57232cae23 ("ksmbd: fix FSCTL
+permission bypass by adding a permission check for FSCTL_SET_SPARSE").
+Because SET_ZERO_DATA writes data (not an attribute), require
+FILE_WRITE_DATA.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
@@ -71,28 +78,23 @@ Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/smb/server/smb2pdu.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -8033,6 +8033,17 @@ int smb2_ioctl(struct ksmbd_work *work)
- 			goto dup_ext_out;
- 		}
+@@ -7958,6 +7958,12 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 				goto out;
+ 			}
  
-+		if (!test_tree_conn_flag(work->tcon,
-+					 KSMBD_TREE_CONN_FLAG_WRITABLE)) {
-+			ret = -EACCES;
-+			goto dup_ext_out;
-+		}
++			if (!(fp->daccess & FILE_WRITE_DATA_LE)) {
++				ksmbd_fd_put(work, fp);
++				ret = -EACCES;
++				goto out;
++			}
 +
-+		if (!(fp_out->daccess & FILE_WRITE_DATA_LE)) {
-+			ret = -EACCES;
-+			goto dup_ext_out;
-+		}
-+
- 		src_off = le64_to_cpu(dup_ext->SourceFileOffset);
- 		dst_off = le64_to_cpu(dup_ext->TargetFileOffset);
- 		length = le64_to_cpu(dup_ext->ByteCount);
+ 			ret = ksmbd_vfs_zero_data(work, fp, off, len);
+ 			ksmbd_fd_put(work, fp);
+ 			if (ret < 0)
 
 
