@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1F74582CC;
-	Tue, 21 Jul 2026 22:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD1244605F;
+	Tue, 21 Jul 2026 22:21:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672499; cv=none; b=hEmkk/yt+tCKQP201zT0cTtFYR9PLE9pHF1LHJvvRzsZIjXAul2TTVN8YsOO3tZiQXWkWqjClTQsipXQJ/EQgY5bbmX7PbbqBgoX5Dbi5nkW5Ik4yEtKPYUCyN09M83fNELbKBltdcTHrhU4YtfSYbpo9xDXBAhZJHagEfsStOA=
+	t=1784672501; cv=none; b=bAKZoeSstcD5/18bp6gn/IvuIjT8Hr2Vbl35coutKOpP0xrJKS2Xp2DjlgJ5gR/jG2uTA8fzvpA9RJvS/64Z2U7HZ3FQeeHH3CVukWP/t5wb0XiBRKApxvEnrYw7Og+08VpOxCEf3Rb0glx8hH0cnxnR1/CPAzZ5l9ufLMKG6cM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672499; c=relaxed/simple;
-	bh=zEDW6TeeFWHVEkb+2DvA3+uPIaXEJqfC7GmMXyKbxz0=;
+	s=arc-20240116; t=1784672501; c=relaxed/simple;
+	bh=dNNdeQT8LIZ10uAuGfc5ABCEcuMx1ejJ8in1OgK4rxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P/Yg1iNyvYOeqMsybPPp42IUkie4WwJGObj4EFnVNKDcj0R64816fQ4RIvofcJEDoxFmyR0GYVnIhX+QGPEmjj0YktD4s9XtOZVhKxNZ7waNnuheWyt5zhlSZI/T+cLcfhucCxDhgLSiBfh3C1VhtSj1lrgkLDLwdfvgderJYoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TS9ekGHK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W4zxAO7GOP41qYIhzy7b93zismV+/9JKvKA7AgWzSv/EX1uWG2xp3Ow9FJ6X7LApXxMhARLOD0RK1R9hvnA9x1HGYatj6lx+6nOTiVOxpTMrsWZ8VKzEGeDxvS9q1K0oY5ehNS8VsciVAB1IJfBBUc1WhEKpzPwP+XdoksIq0PI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCeFup1V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TS9ekGHK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92AB51F00A3D;
-	Tue, 21 Jul 2026 22:21:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCeFup1V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D86C1F000E9;
+	Tue, 21 Jul 2026 22:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672497;
-	bh=DaHjaOoh5jngESg4D7B5metcT5Qx3ID1+yPRLrLYQik=;
+	s=korg; t=1784672499;
+	bh=NVijzOZOySx+g3AlQM3x18jOPZBowSN3iSE3KA9YzYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TS9ekGHKy2FPKT7BjJutcUnyu2iu4GfyO0YaUbZtklH8HUBEfI2qPbKYB4RjFmqnT
-	 Jjric8JlybmNQQVkR4Sw6L4B+CkP73Scy6OeOKPfgRJxL75PRy1axpxAfPhOL67IN1
-	 yCvtK4k0j3avaLvPF0T4O9dS3GyirQY9y5p6YJeI=
+	b=GCeFup1VImymeYdfeU4uBxBWWS8tT+hzsoQguXTV1rHxk3JahZgcOM4n1Fd/Zf3kJ
+	 2LTkFuXRPnwU1SrdKt0gnAchRYOTF773awD+9AxkShLOFii/MFcyVcldABjRNv9hkM
+	 Si/d4+dU077x8w85XYvFooiPIrGT6gDJm8pcK/8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ginger <ginger.jzllee@gmail.com>,
+	sashiko-reviews@lists.linux.dev,
 	Oliver Hartkopp <socketcan@hartkopp.net>,
 	stable@kernel.org,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.15 648/843] can: bcm: fix lockless bound/ifindex race and silent RX_SETUP failure
-Date: Tue, 21 Jul 2026 17:24:43 +0200
-Message-ID: <20260721152420.645797540@linuxfoundation.org>
+Subject: [PATCH 5.15 649/843] can: bcm: add missing rcu list annotations and operations
+Date: Tue, 21 Jul 2026 17:24:44 +0200
+Message-ID: <20260721152420.668676558@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -54,184 +54,120 @@ Content-Transfer-Encoding: 8bit
 
 From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit d9b091d9d22fee81ec53fb55d2032951993ceadb upstream.
+commit 7b2c3eabc4dafc062a25e10711154f2107526a78 upstream.
 
-bcm_sendmsg() reads bo->ifindex and checks bo->bound before taking
-lock_sock(), while bcm_notify(), bcm_connect() and bcm_release() all
-mutate both fields under that same lock. Because the lockless reads
-and the locked writes are unordered with respect to each other, a
-racing bcm_notify() (device unregister) or bcm_connect() (concurrent
-bind on another thread sharing the socket) can make bcm_sendmsg()
-observe an inconsistent combination, e.g. a stale bound=1 together
-with the now-cleared ifindex=0, silently turning a socket bound to a
-specific CAN interface into one that also matches "any" interface.
+sashiko-bot remarked the missing use of list_add_rcu() in
+bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
+when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
 
-Keep the lockless bo->bound check purely as a fast-path reject, and
-move the ifindex read (and a bo->bound re-check) into the locked
-section, where every writer already serializes. This removes the
-possibility of observing the two fields torn against each other,
-rather than trying to fix it with more READ_ONCE()/WRITE_ONCE() pairs
-on two independently updated fields. Annotate the now-purely-lockless
-bo->bound accesses consistently across all its write sites.
+To cover all initial settings of the bcm_op's the list_add_rcu() calls
+are moved to the end of the setup code.
 
-Also fix bcm_rx_setup() silently returning success when the target
-device disappears concurrently instead of reporting -ENODEV, so a
-broken RX op is no longer left registered as if it had succeeded.
+While at it, also fix the mirroring removal side: bcm_release() called
+bcm_remove_op() - which frees the op via call_rcu() - on ops that were
+still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
+Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
+matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
 
-Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
-Reported-by: Ginger <ginger.jzllee@gmail.com>
-Closes: https://lore.kernel.org/linux-can/CAGp+u1aBK8QVjsvAxM2Ldzep4rEbsP9x_pV3At4g=h1kVEtyhA@mail.gmail.com/
+Reported-by: sashiko-reviews@lists.linux.dev
+Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
+Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
 Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260714-bcm_fixes-v15-2-562f7e3e42da@hartkopp.net
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-5-562f7e3e42da@hartkopp.net
 Cc: stable@kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/bcm.c |   65 +++++++++++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 51 insertions(+), 14 deletions(-)
+ net/can/bcm.c |   25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
 --- a/net/can/bcm.c
 +++ b/net/can/bcm.c
-@@ -1251,6 +1251,11 @@ static int bcm_rx_setup(struct bcm_msg_h
+@@ -244,7 +244,7 @@ static int bcm_proc_show(struct seq_file
+ 			   (reduction == 100) ? "near " : "", reduction);
+ 	}
  
- 				op->rx_reg_dev = dev;
- 				dev_put(dev);
-+			} else {
-+				/* the requested device is gone - do not
-+				 * silently succeed without registering
-+				 */
-+				err = -ENODEV;
- 			}
+-	list_for_each_entry(op, &bo->tx_ops, list) {
++	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
  
- 		} else
-@@ -1320,12 +1325,13 @@ static int bcm_sendmsg(struct socket *so
- {
- 	struct sock *sk = sock->sk;
+ 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
+ 			   bcm_proc_getifname(net, ifname, op->ifindex));
+@@ -877,6 +877,7 @@ static int bcm_tx_setup(struct bcm_msg_h
  	struct bcm_sock *bo = bcm_sk(sk);
--	int ifindex = bo->ifindex; /* default ifindex for this bcm_op */
-+	int ifindex;
- 	struct bcm_msg_head msg_head;
- 	int cfsiz;
- 	int ret; /* read bytes or error codes as return value */
+ 	struct bcm_op *op;
+ 	struct canfd_frame *cf;
++	bool add_op_to_list = false;
+ 	unsigned int i;
+ 	int err;
  
--	if (!bo->bound)
-+	/* Lockless fast-path check for bound socket */
-+	if (!READ_ONCE(bo->bound))
- 		return -ENOTCONN;
+@@ -1018,8 +1019,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 		hrtimer_init(&op->thrtimer, CLOCK_MONOTONIC,
+ 			     HRTIMER_MODE_REL_SOFT);
  
- 	/* check for valid message length from userspace */
-@@ -1341,17 +1347,38 @@ static int bcm_sendmsg(struct socket *so
- 	if ((size - MHSIZ) % cfsiz)
- 		return -EINVAL;
+-		/* add this bcm_op to the list of the tx_ops */
+-		list_add(&op->list, &bo->tx_ops);
++		add_op_to_list = true;
  
-+	lock_sock(sk);
-+
-+	/* Re-validate under the socket lock: a concurrent bcm_notify()
-+	 * may have unbound this socket (device removal) after the
-+	 * lockless fast-path check above. bo->ifindex is only ever
-+	 * mutated under lock_sock(), so reading it here - instead of
-+	 * before taking the lock - guarantees it can't be observed
-+	 * torn against bo->bound.
-+	 */
-+	if (!bo->bound) {
-+		ret = -ENOTCONN;
-+		goto out_release;
-+	}
-+
-+	/* default ifindex for this bcm_op */
-+	ifindex = bo->ifindex;
-+
- 	/* check for alternative ifindex for this bcm_op */
+ 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
  
- 	if (!ifindex && msg->msg_name) {
- 		/* no bound device as default => check msg_name */
- 		DECLARE_SOCKADDR(struct sockaddr_can *, addr, msg->msg_name);
- 
--		if (msg->msg_namelen < BCM_MIN_NAMELEN)
--			return -EINVAL;
-+		if (msg->msg_namelen < BCM_MIN_NAMELEN) {
-+			ret = -EINVAL;
-+			goto out_release;
-+		}
- 
--		if (addr->can_family != AF_CAN)
--			return -EINVAL;
-+		if (addr->can_family != AF_CAN) {
-+			ret = -EINVAL;
-+			goto out_release;
-+		}
- 
- 		/* ifindex from sendto() */
- 		ifindex = addr->can_ifindex;
-@@ -1360,20 +1387,21 @@ static int bcm_sendmsg(struct socket *so
- 			struct net_device *dev;
- 
- 			dev = dev_get_by_index(sock_net(sk), ifindex);
--			if (!dev)
--				return -ENODEV;
-+			if (!dev) {
-+				ret = -ENODEV;
-+				goto out_release;
-+			}
- 
- 			if (dev->type != ARPHRD_CAN) {
- 				dev_put(dev);
--				return -ENODEV;
-+				ret = -ENODEV;
-+				goto out_release;
- 			}
- 
- 			dev_put(dev);
- 		}
+@@ -1041,6 +1041,10 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 		op->flags |= TX_ANNOUNCE;
  	}
  
--	lock_sock(sk);
++	/* add this bcm_op to the list of the tx_ops? */
++	if (add_op_to_list)
++		list_add_rcu(&op->list, &bo->tx_ops);
++
+ 	if (op->flags & TX_ANNOUNCE)
+ 		bcm_can_tx(op);
+ 
+@@ -1183,9 +1187,6 @@ static int bcm_rx_setup(struct bcm_msg_h
+ 			     HRTIMER_MODE_REL_SOFT);
+ 		op->thrtimer.function = bcm_rx_thr_handler;
+ 
+-		/* add this bcm_op to the list of the rx_ops */
+-		list_add(&op->list, &bo->rx_ops);
 -
- 	switch (msg_head.opcode) {
+ 		/* call can_rx_register() */
+ 		do_rx_register = 1;
  
- 	case TX_SETUP:
-@@ -1423,6 +1451,7 @@ static int bcm_sendmsg(struct socket *so
- 		break;
+@@ -1264,10 +1265,12 @@ static int bcm_rx_setup(struct bcm_msg_h
+ 					      bcm_rx_handler, op, "bcm", sk);
+ 		if (err) {
+ 			/* this bcm rx op is broken -> remove it */
+-			list_del_rcu(&op->list);
+ 			bcm_remove_op(op);
+ 			return err;
+ 		}
++
++		/* add this bcm_op to the list of the rx_ops */
++		list_add_rcu(&op->list, &bo->rx_ops);
  	}
  
-+out_release:
- 	release_sock(sk);
+ 	return msg_head->nframes * op->cfsiz + MHSIZ;
+@@ -1597,8 +1600,10 @@ static int bcm_release(struct socket *so
+ 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
+ #endif /* CONFIG_PROC_FS */
  
- 	return ret;
-@@ -1459,7 +1488,12 @@ static void bcm_notify(struct bcm_sock *
- 				bo->bcm_proc_read = NULL;
- 			}
- #endif
--			bo->bound   = 0;
-+			/* Paired with the lockless fast-path check in
-+			 * bcm_sendmsg(); bo->ifindex itself is only ever
-+			 * accessed under lock_sock() so it needs no
-+			 * annotation.
-+			 */
-+			WRITE_ONCE(bo->bound, 0);
- 			bo->ifindex = 0;
- 			notify_enodev = 1;
- 		}
-@@ -1600,7 +1634,7 @@ static int bcm_release(struct socket *so
+-	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
++	}
+ 
+ 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
+ 		/*
+@@ -1629,8 +1634,10 @@ static int bcm_release(struct socket *so
+ 
+ 	synchronize_rcu();
+ 
+-	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
++	}
  
  	/* remove device reference */
  	if (bo->bound) {
--		bo->bound   = 0;
-+		WRITE_ONCE(bo->bound, 0);
- 		bo->ifindex = 0;
- 	}
- 
-@@ -1669,7 +1703,10 @@ static int bcm_connect(struct socket *so
- 	}
- #endif /* CONFIG_PROC_FS */
- 
--	bo->bound = 1;
-+	/* bo->ifindex above is fully assigned before this point; pairs
-+	 * with the lockless fast-path check in bcm_sendmsg()
-+	 */
-+	WRITE_ONCE(bo->bound, 1);
- 
- fail:
- 	release_sock(sk);
 
 
