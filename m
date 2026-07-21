@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD6D433042;
-	Tue, 21 Jul 2026 20:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65DAD400DFC;
+	Tue, 21 Jul 2026 20:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664086; cv=none; b=UPqHraC/WTWVVzo14kJlRWsqs0PMA+WGy/P6A1BeT7++ONfghMRtVsLKnyt7QoOnUDhiYIp+4QHVjmpIK8I3LtGTSvNRNab45XvYy3LHYsj1RNanNHfrTE4C+LKs7h1GBTJCLy6hOhiC69Cv+WZ/p/Efvy0iXUeaQ9LQtXUhC8o=
+	t=1784664089; cv=none; b=sSZWEIHNmCAsXLb4dZTKLDgLQx+QfDGjXfRb8bnMQ1PxstemWSCnP+ncnt203NWgyJHhTY4grhZgXMQ/fTJgBNPbwjEevn3ApiOOb3LqTSAQxhxNtVAnGT/fzF3ri5COPeSdYdGaQgoNSjNLMF88oRKbQ/45stMWAhqOb3V9JvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664086; c=relaxed/simple;
-	bh=B/OuEV8vp9nYGRp5nn/d5pAIJvieZr65NxUtFYRg3to=;
+	s=arc-20240116; t=1784664089; c=relaxed/simple;
+	bh=vshfXO6bxhNdosn9c6PgrCRXGRGSDa1lGjePP4kU1Rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YKVXiNsZXNC1oiqnnoxlm1yN0U6Bo3BW7RHrGs0W2aEthGVMkT6OpchNa33GagUA3+47KZZhxZ2mwaIT0tobgoS7jy7lpMd1mGkuHNKSuNAc6yRpHYMP0ZLF15bCRz58Qnhgbe13RrU8sd3uq0Cq4YfPh6nheWUYZebAzknjTnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IDjfGloT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZvGzEJDeQHEnSnAIuVhMMLfOXzeeyY1T+g7PZt+y5JPW8HkNNJxNpUDO+lgt3mXZXE6WKlkHHp2ZJfTz78mNEuscy7juuuRVugCMdpsCPsGy4MuTUJ265ujy5L5WHFf8XvALktJu0MI4bzX3UNplBPRkPu2Xro+oBi0LTyGr2C0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+/xrsCR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IDjfGloT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8FF1F000E9;
-	Tue, 21 Jul 2026 20:01:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+/xrsCR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6871F000E9;
+	Tue, 21 Jul 2026 20:01:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664085;
-	bh=av9+wuAJzCbnpHBMWRvYpmwaBA0vZ0FDW/TDR+7w9fU=;
+	s=korg; t=1784664088;
+	bh=Qak1DeBMuLgzKTfvWAn6lYx1JMB96ROAsW3XiApfAT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IDjfGloTgV9xhrrbEqG/T8EGHQ3p94ZMWMbAFNSdENqaOI9S8n5+N218WgS9m9v1P
-	 uV/zS3D8gXzlKg58jUC6kimkUuuo048ldJ6a+1eMH8gkqMI1eBNYcYM/dUVZpfGoWT
-	 kds3L5nRIUugKPwvB75BkVa7S2w8kVB3knTw/8XI=
+	b=e+/xrsCRcDQ+fPbBsvFKNe9/ODHJ/i3oqlXEDfyaV0BlfKmm1O72jieiqe+UvGIpD
+	 s31Ju78tBdWhakej8cV9OgFE4y7It6cxOu6V5eAwjHo4ypErJyKJlTIUI5+42SoK8d
+	 +U1/Oi+N4QpzENJqN94xQKIN7x2JshD+3PpfZodM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 1013/1276] dm-verity: increase sprintf buffer size
-Date: Tue, 21 Jul 2026 17:24:16 +0200
-Message-ID: <20260721152508.673483373@linuxfoundation.org>
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 1061/1276] s390: Revert support for DCACHE_WORD_ACCESS
+Date: Tue, 21 Jul 2026 17:25:04 +0200
+Message-ID: <20260721152509.730511008@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -49,35 +52,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 88dd117c92a142253fb7a17e791773902b3babc6 upstream.
+commit 37540b8c287fc817bdbd0c62bb75ad6eab0e5d03 upstream.
 
-The prefix "DM_VERITY_ERR_BLOCK_NR" is 22 chars. Add '=', one digit for
-type, ',', up to 20 digits for a u64 block number, and a NUL terminator:
-that's 46 bytes. The buffer is 42 bytes. For block numbers >= 16 decimal
-digits (devices larger than ~16 EB with 4K blocks), snprintf silently
-truncates the uevent environment variable.
+load_unaligned_zeropad() reads eight bytes from unaligned addresses and may
+cross page boundaries. It handles exceptions which may happen if reading
+from the second page results in an exception.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-4.6
-Fixes: 65ff5b7ddf05 ("dm verity: add error handling modes for corrupted blocks")
+For pages which are donated to the Ultravisor for secure execution purposes
+the do_secure_storage_access() exception handler however does not handle
+such exceptions correctly. Such an exception may result in an endless
+exception loop which will never be resolved.
+
+An attempt to fix this [1] turned out to be not sufficient. For now revert
+load_unaligned_zeropad() until this problem has been resolved in a proper
+way.
+
+Note that the implementation of load_unaligned_zeropad() itself is
+correct. The revert is just a temporary workaround until there is complete
+fix for secure storage access exceptions.
+
+[1] commit b00be77302d7 ("s390/mm: Add missing secure storage access fixups for donated memory")
+
+Fixes: 802ba53eefc5 ("s390: add support for DCACHE_WORD_ACCESS")
 Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-verity-target.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/Kconfig                      |  1 -
+ arch/s390/include/asm/asm-extable.h    |  4 ----
+ arch/s390/include/asm/word-at-a-time.h | 22 ----------------------
+ arch/s390/mm/extable.c                 | 18 ------------------
+ 4 files changed, 45 deletions(-)
 
---- a/drivers/md/dm-verity-target.c
-+++ b/drivers/md/dm-verity-target.c
-@@ -26,7 +26,7 @@
+diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
+index 5e6aebf1b739a6..28e900e5212ca1 100644
+--- a/arch/s390/Kconfig
++++ b/arch/s390/Kconfig
+@@ -137,7 +137,6 @@ config S390
+ 	select ARCH_WANT_LD_ORPHAN_WARN
+ 	select BUILDTIME_TABLE_SORT
+ 	select CLONE_BACKWARDS2
+-	select DCACHE_WORD_ACCESS if !KMSAN
+ 	select DYNAMIC_FTRACE if FUNCTION_TRACER
+ 	select FUNCTION_ALIGNMENT_8B if CC_IS_GCC
+ 	select FUNCTION_ALIGNMENT_16B if !CC_IS_GCC
+diff --git a/arch/s390/include/asm/asm-extable.h b/arch/s390/include/asm/asm-extable.h
+index 00a67464c44534..f87e06ec86ac67 100644
+--- a/arch/s390/include/asm/asm-extable.h
++++ b/arch/s390/include/asm/asm-extable.h
+@@ -13,7 +13,6 @@
+ #define EX_TYPE_UA_LOAD_MEM	4
+ #define EX_TYPE_UA_LOAD_REG	5
+ #define EX_TYPE_UA_LOAD_REGPAIR	6
+-#define EX_TYPE_ZEROPAD		7
+ #define EX_TYPE_FPC		8
  
- #define DM_MSG_PREFIX			"verity"
+ #define EX_DATA_REG_ERR_SHIFT	0
+@@ -82,9 +81,6 @@
+ #define EX_TABLE_UA_LOAD_REGPAIR(_fault, _target, _regerr, _regzero)	\
+ 	__EX_TABLE(__ex_table, _fault, _target, EX_TYPE_UA_LOAD_REGPAIR, _regerr, _regzero, 0)
  
--#define DM_VERITY_ENV_LENGTH		42
-+#define DM_VERITY_ENV_LENGTH		46
- #define DM_VERITY_ENV_VAR_NAME		"DM_VERITY_ERR_BLOCK_NR"
+-#define EX_TABLE_ZEROPAD(_fault, _target, _regdata, _regaddr)		\
+-	__EX_TABLE(__ex_table, _fault, _target, EX_TYPE_ZEROPAD, _regdata, _regaddr, 0)
+-
+ #define EX_TABLE_FPC(_fault, _target)					\
+ 	__EX_TABLE(__ex_table, _fault, _target, EX_TYPE_FPC, __stringify(%%r0), __stringify(%%r0), 0)
  
- #define DM_VERITY_DEFAULT_PREFETCH_SIZE	262144
+diff --git a/arch/s390/include/asm/word-at-a-time.h b/arch/s390/include/asm/word-at-a-time.h
+index 203acd6e431b12..e9287036392d08 100644
+--- a/arch/s390/include/asm/word-at-a-time.h
++++ b/arch/s390/include/asm/word-at-a-time.h
+@@ -4,7 +4,6 @@
+ 
+ #include <linux/bitops.h>
+ #include <linux/wordpart.h>
+-#include <asm/asm-extable.h>
+ #include <asm/bitsperlong.h>
+ 
+ struct word_at_a_time {
+@@ -41,25 +40,4 @@ static inline unsigned long zero_bytemask(unsigned long data)
+ 	return ~1UL << data;
+ }
+ 
+-/*
+- * Load an unaligned word from kernel space.
+- *
+- * In the (very unlikely) case of the word being a page-crosser
+- * and the next page not being mapped, take the exception and
+- * return zeroes in the non-existing part.
+- */
+-static inline unsigned long load_unaligned_zeropad(const void *addr)
+-{
+-	unsigned long data;
+-
+-	asm volatile(
+-		"0:	lg	%[data],0(%[addr])\n"
+-		"1:	nopr	%%r7\n"
+-		EX_TABLE_ZEROPAD(0b, 1b, %[data], %[addr])
+-		EX_TABLE_ZEROPAD(1b, 1b, %[data], %[addr])
+-		: [data] "=d" (data)
+-		: [addr] "a" (addr), "m" (*(unsigned long *)addr));
+-	return data;
+-}
+-
+ #endif /* _ASM_WORD_AT_A_TIME_H */
+diff --git a/arch/s390/mm/extable.c b/arch/s390/mm/extable.c
+index 812ec5be129169..30e4b96be20727 100644
+--- a/arch/s390/mm/extable.c
++++ b/arch/s390/mm/extable.c
+@@ -61,22 +61,6 @@ static bool ex_handler_ua_load_reg(const struct exception_table_entry *ex,
+ 	return true;
+ }
+ 
+-static bool ex_handler_zeropad(const struct exception_table_entry *ex, struct pt_regs *regs)
+-{
+-	unsigned int reg_addr = FIELD_GET(EX_DATA_REG_ADDR, ex->data);
+-	unsigned int reg_data = FIELD_GET(EX_DATA_REG_ERR, ex->data);
+-	unsigned long data, addr, offset;
+-
+-	addr = regs->gprs[reg_addr];
+-	offset = addr & (sizeof(unsigned long) - 1);
+-	addr &= ~(sizeof(unsigned long) - 1);
+-	data = *(unsigned long *)addr;
+-	data <<= BITS_PER_BYTE * offset;
+-	regs->gprs[reg_data] = data;
+-	regs->psw.addr = extable_fixup(ex);
+-	return true;
+-}
+-
+ static bool ex_handler_fpc(const struct exception_table_entry *ex, struct pt_regs *regs)
+ {
+ 	asm volatile("sfpc	%[val]\n" : : [val] "d" (0));
+@@ -104,8 +88,6 @@ bool fixup_exception(struct pt_regs *regs)
+ 		return ex_handler_ua_load_reg(ex, false, regs);
+ 	case EX_TYPE_UA_LOAD_REGPAIR:
+ 		return ex_handler_ua_load_reg(ex, true, regs);
+-	case EX_TYPE_ZEROPAD:
+-		return ex_handler_zeropad(ex, regs);
+ 	case EX_TYPE_FPC:
+ 		return ex_handler_fpc(ex, regs);
+ 	}
+-- 
+2.53.0
+
 
 
