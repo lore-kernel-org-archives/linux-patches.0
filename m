@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D02381E92;
-	Tue, 21 Jul 2026 17:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC7C37B40C;
+	Tue, 21 Jul 2026 17:05:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653546; cv=none; b=Adaui1H89J8O/U+6OMc25CGGjHF90LZYz+6j8Is0IPcPP2eWi8CaY4DFJx05zAtraJwaXWF84gpw/oICVHtlGB21ZHikH9zzw9FHjR98MyS0WWmnVrvQXRfXyeGGgkYewkDPT+2urfHq/dbiFtmhAAymqyk8Pq4pB6FfT55kEgk=
+	t=1784653548; cv=none; b=LITXNXlHlLk9kfUDd5rQyBjcaHfGG4uqcKCQNTJg6bKWN2DoK/uNQelo2XJXP9949/bbFQyqy2q6VjHYvpC7qkVqFYrXCmW9X/TMP0hRTDsRvd13cIHbVJP2ucGC+RKxP6v494ibCJAlDnSm5XNtM1KWdEUrJciNlLNoZCVh9fU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653546; c=relaxed/simple;
-	bh=sXH+YfNmRZtMG3sGNfW32I3PKpv46vj5h12lP6jMXoU=;
+	s=arc-20240116; t=1784653548; c=relaxed/simple;
+	bh=QO9/+kph0zucdANqjLSTq3XC142Z3jiG3dakOQxhTfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CGOB/QeM//dNOk95D5ozK8/MI3jbPEiY/NactOmeykkcGkLkVC8x/1hxaSt2HxNkshYrzLN/EmBrHvY9+lNmb4HVYuExhrNOxi3aLqbEAXlbyEfq1EXi4A2mS5chGYfIrDHtWaZGaTBJy0OSmWSLH5J0VlokV7cGxc0nOvUOQ3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17DtzP9z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mUig1z4nOTsqWCnNk/RycjWI91K1PAziXq5pZorI12eEPGYY9pbHgMwT3863Tu58HYsYWfDjhboPkWTXIIrK/lThx7H6jkdtVR72ttY+rNYRgcT8yLzRMb8Z1R50Z7gaOGC8lvKDKaOnVtPCAodneM57dngFFxhL3kruGGT+yt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2m8laP0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17DtzP9z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09701F000E9;
-	Tue, 21 Jul 2026 17:05:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2m8laP0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FFF1F00A3A;
+	Tue, 21 Jul 2026 17:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653544;
-	bh=GaevFAGaOU/sLaECQAUcOs2ThoeC/Pfb5KAozYu1FEI=;
+	s=korg; t=1784653547;
+	bh=OkqL7oTAuymuZDbzJGZBZehpjzwqjYBdoRjnoz7xWxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=17DtzP9z4lZafXTMAix7N/CqTRjJDsJ2AwxmchXZyI7N7j/WHYqEXOmwz4ClTogP6
-	 0l9Ry92ysjHCl2PySWT178sSwDTSrbEYm7FS0A9K+zvgsVFzZ4bjGVUudqPFea/bo/
-	 3Gftai0tEXl+k2xOXZea0Ww0veiNiSWSvLwlVIOg=
+	b=O2m8laP0gjsqcMDwwf8V/pE0RgdCBvcxy+7u//Tdj+oYUXmlxbaoWj44b9A13uxq3
+	 0wppcDE66As/lq1ky1VLMwiRsn6L/m5j4q0PMeCsKvUcexDaTwo/QbRXV/s5dcH0uo
+	 9Yt+l2KkhGXkk9GBj8CbLxF83O5xk7TbGtN5U578=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
+	Samuel Moelius <sam.moelius@trailofbits.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1366/2077] xen/pvcalls: bound backend response req_id before indexing rsp[]
-Date: Tue, 21 Jul 2026 17:17:19 +0200
-Message-ID: <20260721152625.037382804@linuxfoundation.org>
+Subject: [PATCH 7.1 1367/2077] net/sched: dualpi2: clear stale classification on filter miss
+Date: Tue, 21 Jul 2026 17:17:20 +0200
+Message-ID: <20260721152625.060995162@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,230 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Samuel Moelius <sam.moelius@trailofbits.com>
 
-[ Upstream commit d33846c8dcc06b83b7acdeac1e8bfbb5c0c26cb2 ]
+[ Upstream commit bf83ee45874e9f071478bed39f9cf40cc741629f ]
 
-pvcalls_front_event_handler() takes req_id directly from the
-backend-supplied ring response and uses it to index the fixed-size
-bedata->rsp[] array for a memcpy() and a store, with no range check. A
-malicious or buggy backend can set req_id past PVCALLS_NR_RSP_PER_RING
-and drive an out-of-bounds write past the bedata allocation.
+DualPI2 leaves previous classification state attached to an skb when
+filter classification returns no match.  The enqueue path can then act
+on stale state from an earlier classification attempt.
 
-req_id was also declared int while the wire field rsp->req_id is u32, so
-a range check on the signed value alone is insufficient: a backend
-req_id of 0xffffffff becomes -1, passes a >= PVCALLS_NR_RSP_PER_RING
-test and indexes bedata->rsp[-1]. Declare req_id as u32 so a single
-bound covers both ends.
+A filter miss should fall back to the default class without reusing old
+per-packet classification data.
 
-A backend that sends an out-of-range req_id has violated the wire
-protocol, so rather than silently dropping the response, log once and
-stop trusting the backend: set bedata->disabled. The event handler then
-ignores further responses, and the request paths that wait for a
-response return -EIO instead of blocking forever. This mirrors the
-fatal-error handling xen-netback uses (xenvif_fatal_tx_err()).
+Initialize the classification result to CLASSIC before running the
+classifier.  Explicit L4S, priority, and successful filter
+classification can still override that default.
 
-The pvcalls frontend currently trusts its backend, so this is not a
-classic-Xen security issue, but it matters for hardening PV frontends
-against malicious backends (confidential and disaggregated deployments).
-
-Fixes: 2195046bfd69 ("xen/pvcalls: implement socket command and handle events")
-Suggested-by: Juergen Gross <jgross@suse.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260617014149.2647404-1-michael.bommarito@gmail.com>
+Fixes: 8f9516daedd6 ("sched: Add enqueue/dequeue of dualpi2 qdisc")
+Assisted-by: Codex:gpt-5.5-cyber-preview
+Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/pvcalls-front.c | 88 ++++++++++++++++++++++++++++++++-----
- 1 file changed, 76 insertions(+), 12 deletions(-)
+ net/sched/sch_dualpi2.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/xen/pvcalls-front.c b/drivers/xen/pvcalls-front.c
-index 50ce4820f7eebd..3e7aa807c31739 100644
---- a/drivers/xen/pvcalls-front.c
-+++ b/drivers/xen/pvcalls-front.c
-@@ -32,6 +32,7 @@ struct pvcalls_bedata {
- 	struct xen_pvcalls_front_ring ring;
- 	grant_ref_t ref;
- 	int irq;
-+	bool disabled;
+diff --git a/net/sched/sch_dualpi2.c b/net/sched/sch_dualpi2.c
+index 5434df6ca8efe6..27088760eff443 100644
+--- a/net/sched/sch_dualpi2.c
++++ b/net/sched/sch_dualpi2.c
+@@ -346,6 +346,8 @@ static int dualpi2_skb_classify(struct dualpi2_sched_data *q,
+ 	struct tcf_proto *fl;
+ 	int result;
  
- 	struct list_head socket_mappings;
- 	spinlock_t socket_lock;
-@@ -131,6 +132,20 @@ static inline int get_request(struct pvcalls_bedata *bedata, int *req_id)
- 	return 0;
- }
- 
-+/*
-+ * Wait for the backend's response to req_id, or for the frontend to be
-+ * disabled because the backend violated the wire protocol. Returns 0 once
-+ * the response has arrived, or -EIO if the frontend was disabled.
-+ */
-+static int pvcalls_front_wait_rsp(struct pvcalls_bedata *bedata, u32 req_id)
-+{
-+	wait_event(bedata->inflight_req,
-+		   READ_ONCE(bedata->rsp[req_id].req_id) == req_id ||
-+		   READ_ONCE(bedata->disabled));
++	cb->classified = DUALPI2_C_CLASSIC;
 +
-+	return READ_ONCE(bedata->disabled) ? -EIO : 0;
-+}
-+
- static bool pvcalls_front_write_todo(struct sock_mapping *map)
- {
- 	struct pvcalls_data_intf *intf = map->active.ring;
-@@ -168,7 +183,8 @@ static irqreturn_t pvcalls_front_event_handler(int irq, void *dev_id)
- 	struct pvcalls_bedata *bedata;
- 	struct xen_pvcalls_response *rsp;
- 	uint8_t *src, *dst;
--	int req_id = 0, more = 0, done = 0;
-+	u32 req_id = 0;
-+	int more = 0, done = 0;
- 
- 	if (dev == NULL)
- 		return IRQ_HANDLED;
-@@ -179,12 +195,31 @@ static irqreturn_t pvcalls_front_event_handler(int irq, void *dev_id)
- 		pvcalls_exit();
- 		return IRQ_HANDLED;
- 	}
-+	if (READ_ONCE(bedata->disabled)) {
-+		pvcalls_exit();
-+		return IRQ_HANDLED;
-+	}
- 
- again:
- 	while (RING_HAS_UNCONSUMED_RESPONSES(&bedata->ring)) {
- 		rsp = RING_GET_RESPONSE(&bedata->ring, bedata->ring.rsp_cons);
- 
- 		req_id = rsp->req_id;
-+		if (req_id >= PVCALLS_NR_RSP_PER_RING) {
-+			/*
-+			 * The backend supplied a req_id that would index
-+			 * bedata->rsp[] out of bounds: a protocol violation
-+			 * from a malicious or buggy backend. Log once, stop
-+			 * trusting this backend and disable the frontend rather
-+			 * than silently dropping the response and continuing.
-+			 */
-+			pr_err_once("pvcalls: backend sent out-of-range req_id %u, disabling frontend\n",
-+				    req_id);
-+			WRITE_ONCE(bedata->disabled, true);
-+			bedata->ring.rsp_cons++;
-+			done = 1;
-+			break;
-+		}
- 		if (rsp->cmd == PVCALLS_POLL) {
- 			struct sock_mapping *map = (struct sock_mapping *)(uintptr_t)
- 						   rsp->u.poll.id;
-@@ -217,7 +252,7 @@ static irqreturn_t pvcalls_front_event_handler(int irq, void *dev_id)
+ 	dualpi2_read_ect(skb);
+ 	if (cb->ect & q->ecn_mask) {
+ 		cb->classified = DUALPI2_C_L4S;
+@@ -359,10 +361,8 @@ static int dualpi2_skb_classify(struct dualpi2_sched_data *q,
  	}
  
- 	RING_FINAL_CHECK_FOR_RESPONSES(&bedata->ring, more);
--	if (more)
-+	if (more && !READ_ONCE(bedata->disabled))
- 		goto again;
- 	if (done)
- 		wake_up(&bedata->inflight_req);
-@@ -330,8 +365,11 @@ int pvcalls_front_socket(struct socket *sock)
- 	if (notify)
- 		notify_remote_via_irq(bedata->irq);
+ 	fl = rcu_dereference_bh(q->tcf_filters);
+-	if (!fl) {
+-		cb->classified = DUALPI2_C_CLASSIC;
++	if (!fl)
+ 		return NET_XMIT_SUCCESS;
+-	}
  
--	wait_event(bedata->inflight_req,
--		   READ_ONCE(bedata->rsp[req_id].req_id) == req_id);
-+	ret = pvcalls_front_wait_rsp(bedata, req_id);
-+	if (ret) {
-+		pvcalls_exit();
-+		return ret;
-+	}
- 
- 	/* read req_id, then the content */
- 	smp_rmb();
-@@ -477,8 +515,11 @@ int pvcalls_front_connect(struct socket *sock, struct sockaddr *addr,
- 	if (notify)
- 		notify_remote_via_irq(bedata->irq);
- 
--	wait_event(bedata->inflight_req,
--		   READ_ONCE(bedata->rsp[req_id].req_id) == req_id);
-+	ret = pvcalls_front_wait_rsp(bedata, req_id);
-+	if (ret) {
-+		pvcalls_exit_sock(sock);
-+		return ret;
-+	}
- 
- 	/* read req_id, then the content */
- 	smp_rmb();
-@@ -711,8 +752,11 @@ int pvcalls_front_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
- 	if (notify)
- 		notify_remote_via_irq(bedata->irq);
- 
--	wait_event(bedata->inflight_req,
--		   READ_ONCE(bedata->rsp[req_id].req_id) == req_id);
-+	ret = pvcalls_front_wait_rsp(bedata, req_id);
-+	if (ret) {
-+		pvcalls_exit_sock(sock);
-+		return ret;
-+	}
- 
- 	/* read req_id, then the content */
- 	smp_rmb();
-@@ -761,8 +805,11 @@ int pvcalls_front_listen(struct socket *sock, int backlog)
- 	if (notify)
- 		notify_remote_via_irq(bedata->irq);
- 
--	wait_event(bedata->inflight_req,
--		   READ_ONCE(bedata->rsp[req_id].req_id) == req_id);
-+	ret = pvcalls_front_wait_rsp(bedata, req_id);
-+	if (ret) {
-+		pvcalls_exit_sock(sock);
-+		return ret;
-+	}
- 
- 	/* read req_id, then the content */
- 	smp_rmb();
-@@ -820,6 +867,14 @@ int pvcalls_front_accept(struct socket *sock, struct socket *newsock,
- 		}
- 	}
- 
-+	if (READ_ONCE(bedata->disabled)) {
-+		clear_bit(PVCALLS_FLAG_ACCEPT_INFLIGHT,
-+			  (void *)&map->passive.flags);
-+		wake_up(&map->passive.inflight_accept_req);
-+		pvcalls_exit_sock(sock);
-+		return -EIO;
-+	}
-+
- 	map2 = kzalloc_obj(*map2);
- 	if (map2 == NULL) {
- 		clear_bit(PVCALLS_FLAG_ACCEPT_INFLIGHT,
-@@ -880,10 +935,18 @@ int pvcalls_front_accept(struct socket *sock, struct socket *newsock,
- 	}
- 
- 	if (wait_event_interruptible(bedata->inflight_req,
--		READ_ONCE(bedata->rsp[req_id].req_id) == req_id)) {
-+		READ_ONCE(bedata->rsp[req_id].req_id) == req_id ||
-+		READ_ONCE(bedata->disabled))) {
- 		pvcalls_exit_sock(sock);
- 		return -EINTR;
- 	}
-+	if (READ_ONCE(bedata->disabled)) {
-+		clear_bit(PVCALLS_FLAG_ACCEPT_INFLIGHT,
-+			  (void *)&map->passive.flags);
-+		wake_up(&map->passive.inflight_accept_req);
-+		pvcalls_exit_sock(sock);
-+		return -EIO;
-+	}
- 	/* read req_id, then the content */
- 	smp_rmb();
- 
-@@ -1054,7 +1117,8 @@ int pvcalls_front_release(struct socket *sock)
- 		notify_remote_via_irq(bedata->irq);
- 
- 	wait_event(bedata->inflight_req,
--		   READ_ONCE(bedata->rsp[req_id].req_id) == req_id);
-+		   READ_ONCE(bedata->rsp[req_id].req_id) == req_id ||
-+		   READ_ONCE(bedata->disabled));
- 
- 	if (map->active_socket) {
- 		/*
+ 	result = tcf_classify(skb, NULL, fl, &res, false);
+ 	if (result >= 0) {
 -- 
 2.53.0
 
