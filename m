@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC3F43C7AE;
-	Tue, 21 Jul 2026 22:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C10407CDA;
+	Tue, 21 Jul 2026 22:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672231; cv=none; b=GGTMC1FULQ95PObna1PEalzj12FvdLnvsh0vpIJTujtCRnty4Ro+IBrSYwYRJrGrJ/5INLvTd1doR5LB9ChotOz+g+4dGsEmwUCzoVjb0wUtseBi4YoG/tbGmZ91OdSaHq+4mdn/17PDXeHK+ofQ5YukKz0bvnHnE5jbIG9inYA=
+	t=1784672233; cv=none; b=JWqo4mmtB3mo2190J2515rQpC4LiaSYhg21OhZlYul+6UmIWTP1DtBk+7tZ5DL44dIJsJEc4Va9eQVXgMT5fAZn5KDgyj100f9S027nN3vGpubf+az4Z0mBF0AAgBm1AdhXhQ50dfrqglySniu8yNNkrxuRkosbc3L7RMGvnqJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672231; c=relaxed/simple;
-	bh=8peXXaK36/oTran+kE1Yw51sFHAtGAZHqdC21CoHxCA=;
+	s=arc-20240116; t=1784672233; c=relaxed/simple;
+	bh=M8a0UEKV1Lk2AT2UYF29MSEEW+NK0b90oiDJpH5rV7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lf8kSBqILrVlrl7NF0lTVxi6j15QZqdAHc7MItqR+E3V4W1KqMzpRa2iDroii4YR14VCYlx2XdgdNDqbi4KLACs7iWIVEiYs+PeU4t8SYb17lQLWrWSnrTp+u5cyWyr1UXIXti2YX1QC28dY5nJ4kVPk3suvTyhrabyMiKlJMtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QwSsE4qb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UalMB/1F0HnH89AJIKGZd7hJ4BtcaAD3+lor5qtGVVZjeHEnj0CYT8GX7KakS3/bnb7+5Y2FN7EwVSRCOULgUSHur2ckKjJUy8oVRsH2HIW0n0NSsxMEZQwcvPjAz7yA1YarKhGZyDnpd9MZmTbhkHpeE3n9d+cx1rcP31qVKgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CEOX6JwJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwSsE4qb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50FDD1F000E9;
-	Tue, 21 Jul 2026 22:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEOX6JwJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA3171F000E9;
+	Tue, 21 Jul 2026 22:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672229;
-	bh=dCr3ZKh/0Ku4MD/eVp2Nyu+J9v5wERImEimxR7Qvr3s=;
+	s=korg; t=1784672232;
+	bh=6MCgRE8E3WdAvk2GkEH8XIDdTiLF04BF8kVquQnqApM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QwSsE4qbgE72z/6fKoBFvkEjCmZSReA16GJeEjCI4mPQTVFA5bY1qeoIBcOuz75w0
-	 BV+xlwBB2tcy8zyW/s+gKXMm8wF4LAZmPqTtSuLRCdPhsMeh7NLnSt5k4c71mI3aHc
-	 htD80/jJoTWUw3Ryc9IhuRNiw7vsp9Dhl0WN+iAk=
+	b=CEOX6JwJ7Xt8QjE+uQ0R1BjGP8diL/JdixNN1qyY+VgH1xwmAANde9jJlc3R+aIto
+	 ph2JQVZQFpldQbcbHJ+oWBR7KD34hz9YFvkvVSh6TV98mkqmV09aWSiCOys07XXbib
+	 mx1tyWO5w5iWZrHUaJgTYiiLkiUq7U+hm4NJjAA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Ghosh <sumang@marvell.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cao Guanghui <caoguanghui@kylinos.cn>,
+	Su Yue <glass.su@suse.com>,
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 539/843] octeontx2-af: Allow mkex profile without DMAC and add L2M/L2B header extraction support
-Date: Tue, 21 Jul 2026 17:22:54 +0200
-Message-ID: <20260721152418.160642441@linuxfoundation.org>
+Subject: [PATCH 5.15 548/843] dm era: fix NULL pointer dereference in metadata_open()
+Date: Tue, 21 Jul 2026 17:23:03 +0200
+Message-ID: <20260721152418.372558830@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,239 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suman Ghosh <sumang@marvell.com>
+From: Cao Guanghui <caoguanghui@kylinos.cn>
 
-[ Upstream commit 2cee6401c4eaa562abc1d437d5d03e80bbee79c1 ]
+[ Upstream commit 9ae672606c17891d90b282e3490b817620549599 ]
 
-1. It is possible to have custom mkex profiles which do not extract
-DMAC at all into the key. Hence allow mkex profiles which do not
-have DMAC to be loaded into MCAM hardware. This patch also adds
-debugging prints needed to identify profiles with wrong
-configuration.
+metadata_open() returns NULL when kzalloc_obj() fails, but the
+caller era_ctr() only checks IS_ERR(md).  Since IS_ERR(NULL)
+returns false, the NULL pointer is treated as a valid result
+and later assigned to era->md, leading to a NULL pointer
+dereference when the metadata is accessed.
 
-2. If a mkex profile set "l2l3mb" field for Rx interface,
-then Rx multicast and broadcast entry should be configured.
+Fix this by returning ERR_PTR(-ENOMEM) on allocation failure,
+consistent with dm-cache-metadata.c, dm-thin-metadata.c, and
+dm-clone-metadata.c which all use ERR_PTR(-ENOMEM) for the
+same pattern.
 
-Signed-off-by: Suman Ghosh <sumang@marvell.com>
-Link: https://lore.kernel.org/r/20221031090856.1404303-1-sumang@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 235acadd3105 ("octeontx2-pf: check DMAC extraction support before filtering")
+Fixes: eec40579d848 ("dm: add era target")
+Signed-off-by: Cao Guanghui <caoguanghui@kylinos.cn>
+Reviewed-by: Su Yue <glass.su@suse.com>
+Reviewed-by: Ming-Hung Tsai <mtsai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/af/npc.h   |  1 +
- .../marvell/octeontx2/af/rvu_debugfs.c        |  6 ++
- .../marvell/octeontx2/af/rvu_npc_fs.c         | 81 ++++++++++++++-----
- 3 files changed, 70 insertions(+), 18 deletions(-)
+ drivers/md/dm-era-target.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/npc.h b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
-index 2662a46857ef9c..7505252c34fdb1 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/npc.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
-@@ -627,6 +627,7 @@ struct rvu_npc_mcam_rule {
- 	bool vfvlan_cfg;
- 	u16 chan;
- 	u16 chan_mask;
-+	u8 lxmb;
- };
+diff --git a/drivers/md/dm-era-target.c b/drivers/md/dm-era-target.c
+index a56df453660594..4f7edfe009e0f1 100644
+--- a/drivers/md/dm-era-target.c
++++ b/drivers/md/dm-era-target.c
+@@ -795,8 +795,10 @@ static struct era_metadata *metadata_open(struct block_device *bdev,
+ 	int r;
+ 	struct era_metadata *md = kzalloc(sizeof(*md), GFP_KERNEL);
  
- #endif /* NPC_H */
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-index a3dcb013f22de8..a65ffa0d3d6efa 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-@@ -2317,6 +2317,12 @@ static void rvu_dbg_npc_mcam_show_flows(struct seq_file *s,
- 	for_each_set_bit(bit, (unsigned long *)&rule->features, 64) {
- 		seq_printf(s, "\t%s  ", npc_get_field_name(bit));
- 		switch (bit) {
-+		case NPC_LXMB:
-+			if (rule->lxmb == 1)
-+				seq_puts(s, "\tL2M nibble is set\n");
-+			else
-+				seq_puts(s, "\tL2B nibble is set\n");
-+			break;
- 		case NPC_DMAC:
- 			seq_printf(s, "%pM ", rule->packet.dmac);
- 			seq_printf(s, "mask %pM\n", rule->mask.dmac);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
-index 7c4e1acd0f77b4..50d3994efa97af 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
-@@ -43,6 +43,7 @@ static const char * const npc_flow_names[] = {
- 	[NPC_DPORT_UDP]	= "udp destination port",
- 	[NPC_SPORT_SCTP] = "sctp source port",
- 	[NPC_DPORT_SCTP] = "sctp destination port",
-+	[NPC_LXMB]	= "Mcast/Bcast header ",
- 	[NPC_UNKNOWN]	= "unknown",
- };
- 
-@@ -340,8 +341,10 @@ static void npc_handle_multi_layer_fields(struct rvu *rvu, int blkaddr, u8 intf)
- 	vlan_tag2 = &key_fields[NPC_VLAN_TAG2];
- 
- 	/* if key profile programmed does not extract Ethertype at all */
--	if (!etype_ether->nr_kws && !etype_tag1->nr_kws && !etype_tag2->nr_kws)
-+	if (!etype_ether->nr_kws && !etype_tag1->nr_kws && !etype_tag2->nr_kws) {
-+		dev_err(rvu->dev, "mkex: Ethertype is not extracted.\n");
- 		goto vlan_tci;
+-	if (!md)
+-		return NULL;
++	if (!md) {
++		DMERR("could not allocate metadata struct");
++		return ERR_PTR(-ENOMEM);
 +	}
  
- 	/* if key profile programmed extracts Ethertype from one layer */
- 	if (etype_ether->nr_kws && !etype_tag1->nr_kws && !etype_tag2->nr_kws)
-@@ -354,35 +357,45 @@ static void npc_handle_multi_layer_fields(struct rvu *rvu, int blkaddr, u8 intf)
- 	/* if key profile programmed extracts Ethertype from multiple layers */
- 	if (etype_ether->nr_kws && etype_tag1->nr_kws) {
- 		for (i = 0; i < NPC_MAX_KWS_IN_KEY; i++) {
--			if (etype_ether->kw_mask[i] != etype_tag1->kw_mask[i])
-+			if (etype_ether->kw_mask[i] != etype_tag1->kw_mask[i]) {
-+				dev_err(rvu->dev, "mkex: Etype pos is different for untagged and tagged pkts.\n");
- 				goto vlan_tci;
-+			}
- 		}
- 		key_fields[NPC_ETYPE] = *etype_tag1;
- 	}
- 	if (etype_ether->nr_kws && etype_tag2->nr_kws) {
- 		for (i = 0; i < NPC_MAX_KWS_IN_KEY; i++) {
--			if (etype_ether->kw_mask[i] != etype_tag2->kw_mask[i])
-+			if (etype_ether->kw_mask[i] != etype_tag2->kw_mask[i]) {
-+				dev_err(rvu->dev, "mkex: Etype pos is different for untagged and double tagged pkts.\n");
- 				goto vlan_tci;
-+			}
- 		}
- 		key_fields[NPC_ETYPE] = *etype_tag2;
- 	}
- 	if (etype_tag1->nr_kws && etype_tag2->nr_kws) {
- 		for (i = 0; i < NPC_MAX_KWS_IN_KEY; i++) {
--			if (etype_tag1->kw_mask[i] != etype_tag2->kw_mask[i])
-+			if (etype_tag1->kw_mask[i] != etype_tag2->kw_mask[i]) {
-+				dev_err(rvu->dev, "mkex: Etype pos is different for tagged and double tagged pkts.\n");
- 				goto vlan_tci;
-+			}
- 		}
- 		key_fields[NPC_ETYPE] = *etype_tag2;
- 	}
- 
- 	/* check none of higher layers overwrite Ethertype */
- 	start_lid = key_fields[NPC_ETYPE].layer_mdata.lid + 1;
--	if (npc_check_overlap(rvu, blkaddr, NPC_ETYPE, start_lid, intf))
-+	if (npc_check_overlap(rvu, blkaddr, NPC_ETYPE, start_lid, intf)) {
-+		dev_err(rvu->dev, "mkex: Ethertype is overwritten by higher layers.\n");
- 		goto vlan_tci;
-+	}
- 	*features |= BIT_ULL(NPC_ETYPE);
- vlan_tci:
- 	/* if key profile does not extract outer vlan tci at all */
--	if (!vlan_tag1->nr_kws && !vlan_tag2->nr_kws)
-+	if (!vlan_tag1->nr_kws && !vlan_tag2->nr_kws) {
-+		dev_err(rvu->dev, "mkex: Outer vlan tci is not extracted.\n");
- 		goto done;
-+	}
- 
- 	/* if key profile extracts outer vlan tci from one layer */
- 	if (vlan_tag1->nr_kws && !vlan_tag2->nr_kws)
-@@ -393,15 +406,19 @@ static void npc_handle_multi_layer_fields(struct rvu *rvu, int blkaddr, u8 intf)
- 	/* if key profile extracts outer vlan tci from multiple layers */
- 	if (vlan_tag1->nr_kws && vlan_tag2->nr_kws) {
- 		for (i = 0; i < NPC_MAX_KWS_IN_KEY; i++) {
--			if (vlan_tag1->kw_mask[i] != vlan_tag2->kw_mask[i])
-+			if (vlan_tag1->kw_mask[i] != vlan_tag2->kw_mask[i]) {
-+				dev_err(rvu->dev, "mkex: Out vlan tci pos is different for tagged and double tagged pkts.\n");
- 				goto done;
-+			}
- 		}
- 		key_fields[NPC_OUTER_VID] = *vlan_tag2;
- 	}
- 	/* check none of higher layers overwrite outer vlan tci */
- 	start_lid = key_fields[NPC_OUTER_VID].layer_mdata.lid + 1;
--	if (npc_check_overlap(rvu, blkaddr, NPC_OUTER_VID, start_lid, intf))
-+	if (npc_check_overlap(rvu, blkaddr, NPC_OUTER_VID, start_lid, intf)) {
-+		dev_err(rvu->dev, "mkex: Outer vlan tci is overwritten by higher layers.\n");
- 		goto done;
-+	}
- 	*features |= BIT_ULL(NPC_OUTER_VID);
- done:
- 	return;
-@@ -522,6 +539,10 @@ static void npc_set_features(struct rvu *rvu, int blkaddr, u8 intf)
- 	if (npc_check_field(rvu, blkaddr, NPC_LB, intf))
- 		*features |= BIT_ULL(NPC_VLAN_ETYPE_CTAG) |
- 			     BIT_ULL(NPC_VLAN_ETYPE_STAG);
-+
-+	/* for L2M/L2B/L3M/L3B, check if the type is present in the key */
-+	if (npc_check_field(rvu, blkaddr, NPC_LXMB, intf))
-+		*features |= BIT_ULL(NPC_LXMB);
- }
- 
- /* Scan key extraction profile and record how fields of our interest
-@@ -599,16 +620,6 @@ static int npc_scan_verify_kex(struct rvu *rvu, int blkaddr)
- 		dev_err(rvu->dev, "Channel cannot be overwritten\n");
- 		return -EINVAL;
- 	}
--	/* DMAC should be present in key for unicast filter to work */
--	if (!npc_is_field_present(rvu, NPC_DMAC, NIX_INTF_RX)) {
--		dev_err(rvu->dev, "DMAC not present in Key\n");
--		return -EINVAL;
--	}
--	/* check that none of the fields overwrite DMAC */
--	if (npc_check_overlap(rvu, blkaddr, NPC_DMAC, 0, NIX_INTF_RX)) {
--		dev_err(rvu->dev, "DMAC cannot be overwritten\n");
--		return -EINVAL;
--	}
- 
- 	npc_set_features(rvu, blkaddr, NIX_INTF_TX);
- 	npc_set_features(rvu, blkaddr, NIX_INTF_RX);
-@@ -851,6 +862,11 @@ static void npc_update_flow(struct rvu *rvu, struct mcam_entry *entry,
- 		npc_update_entry(rvu, NPC_LE, entry, NPC_LT_LE_ESP,
- 				 0, ~0ULL, 0, intf);
- 
-+	if (features & BIT_ULL(NPC_LXMB)) {
-+		output->lxmb = is_broadcast_ether_addr(pkt->dmac) ? 2 : 1;
-+		npc_update_entry(rvu, NPC_LXMB, entry, output->lxmb, 0,
-+				 output->lxmb, 0, intf);
-+	}
- #define NPC_WRITE_FLOW(field, member, val_lo, val_hi, mask_lo, mask_hi)	      \
- do {									      \
- 	if (features & BIT_ULL((field))) {				      \
-@@ -1153,6 +1169,7 @@ static int npc_install_flow(struct rvu *rvu, int blkaddr, u16 target,
- 	rule->chan_mask = write_req.entry_data.kw_mask[0] & NPC_KEX_CHAN_MASK;
- 	rule->chan = write_req.entry_data.kw[0] & NPC_KEX_CHAN_MASK;
- 	rule->chan &= rule->chan_mask;
-+	rule->lxmb = dummy.lxmb;
- 	if (is_npc_intf_tx(req->intf))
- 		rule->intf = pfvf->nix_tx_intf;
- 	else
-@@ -1215,6 +1232,34 @@ int rvu_mbox_handler_npc_install_flow(struct rvu *rvu,
- 	if (!is_npc_interface_valid(rvu, req->intf))
- 		return NPC_FLOW_INTF_INVALID;
- 
-+	/* If DMAC is not extracted in MKEX, rules installed by AF
-+	 * can rely on L2MB bit set by hardware protocol checker for
-+	 * broadcast and multicast addresses.
-+	 */
-+	if (npc_check_field(rvu, blkaddr, NPC_DMAC, req->intf))
-+		goto process_flow;
-+
-+	if (is_pffunc_af(req->hdr.pcifunc)) {
-+		if (is_unicast_ether_addr(req->packet.dmac)) {
-+			dev_err(rvu->dev,
-+				"%s: mkex profile does not support ucast flow\n",
-+				__func__);
-+			return NPC_FLOW_NOT_SUPPORTED;
-+		}
-+
-+		if (!npc_is_field_present(rvu, NPC_LXMB, req->intf)) {
-+			dev_err(rvu->dev,
-+				"%s: mkex profile does not support bcast/mcast flow",
-+				__func__);
-+			return NPC_FLOW_NOT_SUPPORTED;
-+		}
-+
-+		/* Modify feature to use LXMB instead of DMAC */
-+		req->features &= ~BIT_ULL(NPC_DMAC);
-+		req->features |= BIT_ULL(NPC_LXMB);
-+	}
-+
-+process_flow:
- 	if (from_vf && req->default_rule)
- 		return NPC_FLOW_VF_PERM_DENIED;
- 
+ 	md->bdev = bdev;
+ 	md->block_size = block_size;
 -- 
 2.53.0
 
