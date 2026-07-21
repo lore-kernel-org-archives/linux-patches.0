@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7EF43644B3;
-	Tue, 21 Jul 2026 19:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D9342DA53;
+	Tue, 21 Jul 2026 19:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662526; cv=none; b=di+xBOgcpYlQw5qGdR5HbullZQZVJxnS3ghpBv/6zlzH9aYejknJYGZ5fMOfsRHkcjFQe2lbGjaMBFmLr3J39aCVj/dBVKX+q5sD9SyHX1sImxb7FQrugmSqRgy2heZi5YrwdFdII2pJfuCMmloFt9LTRZrcqcMi+5O6S2m902M=
+	t=1784662529; cv=none; b=jSOsDDfm/UjCB+E6VrDGtZ3jIHf67YLj8F4UxQbyS1U6f8FjEzEAkliydav0apZXdnM58Npfsze3kc8ThpmA8TuiSKjl9PkwYsccSr4cYWoh+KqPCqGwQ6ALgj3n7EvtVdnKQFKzvFpHdQRkzTkIUFN6ZQqznVhzcKDkKwZrmog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662526; c=relaxed/simple;
-	bh=uqdOLYxF20h4tlUqva5zFkCckHDZxRmomxC2wDIbF5Y=;
+	s=arc-20240116; t=1784662529; c=relaxed/simple;
+	bh=BOuIxSy/5PQq/eWXuLJHzFAOuM+Bv/UAiIpmXnV/m6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jdJ5oQqSsRU3YkY9XN6+64afNSuJzwGG5UUAOgLV3o5yhyj70gLtL8GFxdZP0LS+udU5yhNrAvrkFWDsRu5UM5Ccnljy1bDrsug722of8iWPfiaIpwMUgpSi6s1c40SlaBo1BlnnFiXLDAzgjwXmstWShMfj4oRtfjeXq/jjW/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jovsA+Ti; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=H1mUORndBLWkhBC8kwj7xZKM9HNptic+T2ogZRMH6aBioZkDXtLzYhmzhmDJzdwKbT31452yezhavCzQ5c9AEIrb9NvD3w9BGkc8Ya86TMHwUDtH7bEiJVlGNtNNyL2ek/I7YDa9/+oBKcxvC4yDWGxB6L76cRoO/b2xQZj1V+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ICUftEpS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jovsA+Ti"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2513E1F000E9;
-	Tue, 21 Jul 2026 19:35:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ICUftEpS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C431F000E9;
+	Tue, 21 Jul 2026 19:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662525;
-	bh=iXq6I3NbtdPl0SLK1Aggu1qCkNI+ue0kTDFZfU0doqw=;
+	s=korg; t=1784662528;
+	bh=SLhwGgLjhcNX5KDUQNKGqbaa+TLQKvcDMIkwK4B3ziA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jovsA+Ti0DJQXgiNPyKijBLHbbb6aRit8DLOZ93vFjmNL7nIK2KRY2/3T/4gJU/q+
-	 WE1VGobjl8qks36T/BU0ecCW4xZnyE0VQcmWYZxCTIgtm9qMXhNG/XC/iXbyV8y4aa
-	 ttw/fUhyphLq1AMwZDd7qTMQSwUKnxuiGCmb8Rd0=
+	b=ICUftEpSnztNKcCphyaCGraa5SHYHzir/8DpKLin5mpNsKYaOHW86gmGs59xO4yZH
+	 aIqZAztCvE1YL5wEnkCGid9rs8sUo1B8rUrV0YwxiJsDfaIwK/w+rl4QEgNq1H81yg
+	 tcq4VsG8QbtY3zyBuONsJBuoAWa/hntTyn7Bv4b0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0461/1276] perf sched: Fix NULL dereference in latency_runtime_event
-Date: Tue, 21 Jul 2026 17:15:04 +0200
-Message-ID: <20260721152456.419188684@linuxfoundation.org>
+Subject: [PATCH 6.12 0479/1276] dmaengine: dma-axi-dmac: Properly free struct axi_dmac_desc
+Date: Tue, 21 Jul 2026 17:15:22 +0200
+Message-ID: <20260721152456.823107532@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,54 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Nuno Sá <nuno.sa@analog.com>
 
-[ Upstream commit 8cbca8a480e15f6326ce94287570993f27a4b2d5 ]
+[ Upstream commit 4910ce1b3b35687bb2a5e742c4bfbea3c647c980 ]
 
-latency_runtime_event() passes the return value of
-machine__findnew_thread() directly to thread_atoms_search() at line
-1216, before checking for NULL at line 1220.  thread_atoms_search()
-calls pid_cmp() which dereferences the thread pointer via
-thread__tid(), causing a NULL pointer dereference if the allocation
-fails.
+Use axi_dmac_free_desc() to free fully the descriptor at fail path when
+call axi_dmac_alloc_desc() in axi_dmac_prep_peripheral_dma_vec().
 
-All other callers of thread_atoms_search() in this file
-(latency_switch_event, latency_wakeup_event,
-latency_migrate_task_event) correctly check for NULL first.
-
-Move the atoms assignment after the NULL check to match the pattern
-used by the other callers.
-
-Fixes: b91fc39f4ad7 ("perf machine: Protect the machine->threads with a rwlock")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 74609e568670 ("dmaengine: dma-axi-dmac: Implement device_prep_peripheral_dma_vec")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260424-dma-dmac-handle-vunmap-v4-2-90f43412fdc0@analog.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/dma/dma-axi-dmac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 00d50c356e43c1..12db6fe6e05a6a 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -1214,13 +1214,15 @@ static int latency_runtime_event(struct perf_sched *sched,
- 	const u32 pid	   = evsel__intval(evsel, sample, "pid");
- 	const u64 runtime  = evsel__intval(evsel, sample, "runtime");
- 	struct thread *thread = machine__findnew_thread(machine, -1, pid);
--	struct work_atoms *atoms = thread_atoms_search(&sched->atom_root, thread, &sched->cmp_pid);
-+	struct work_atoms *atoms;
- 	u64 timestamp = sample->time;
- 	int cpu = sample->cpu, err = -1;
+diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+index 47d95d2d743b1b..9daa1c69ae917f 100644
+--- a/drivers/dma/dma-axi-dmac.c
++++ b/drivers/dma/dma-axi-dmac.c
+@@ -643,7 +643,7 @@ axi_dmac_prep_peripheral_dma_vec(struct dma_chan *c, const struct dma_vec *vecs,
+ 	for (i = 0; i < nb; i++) {
+ 		if (!axi_dmac_check_addr(chan, vecs[i].addr) ||
+ 		    !axi_dmac_check_len(chan, vecs[i].len)) {
+-			kfree(desc);
++			axi_dmac_free_desc(desc);
+ 			return NULL;
+ 		}
  
- 	if (thread == NULL)
- 		return -1;
- 
-+	atoms = thread_atoms_search(&sched->atom_root, thread, &sched->cmp_pid);
-+
- 	/* perf.data is untrusted input — CPU may be absent or corrupted */
- 	if (cpu >= MAX_CPUS || cpu < 0) {
- 		pr_warning("WARNING: at offset %#" PRIx64 ": out-of-bound sample CPU %d, skipping sample\n",
 -- 
 2.53.0
 
