@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C4A471254;
-	Tue, 21 Jul 2026 21:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9982D4746AC;
+	Tue, 21 Jul 2026 21:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667833; cv=none; b=n+TqYBx1Ze0BH1MMKkLLsmxxm7vCVvz1sc6hrujQW4OXbfvRAzZfG7GM0HTuw8WOFkWgrE0wfbtcOWZBCy9o/PGvcqYDMVodB3Go+33Dps2OYcElr6fW2e6ffWe1cv7r8UMtG9cFjw3OSUHRN7IYXcgKKh8sjzy7tdhbj9twxn4=
+	t=1784667835; cv=none; b=lUuEBJTF3Ay0pCB5X/eh8uF1h+jBmJuKEnCjN+nYeQPjFxnurOWWFFvnDcqAZKt14FkrMOuogPMRl40YHZhTxE2CyXEQrb35mIya9Po7U8h8s6VWL4BcQM6z3baBqgMtqbNBIw7ouqAuVoiMSJ4x9vRvTBQVOSGvTjrL/U4Ml5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667833; c=relaxed/simple;
-	bh=p4peWU9K9nnv301dYxmvN5L0yDUPjs39rJHiuOQ+0xQ=;
+	s=arc-20240116; t=1784667835; c=relaxed/simple;
+	bh=LuMYLDe7uhv1aNN2iyZr0M+2dVn6nSogoyPOP9CKfz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=amyAMjjuB/tN8jfjNWj/PkcvB8K3IUyB8bYrfmomGrlPbDCa61eqTlvRchaXxUXe/swD0v5AL+YsIraS+k1V8bk3k1INoNlPQz+jAPORdz+pF+dfpz8l1ADh+TipiN9nvgXVBRqdLYoUvDJmhmWnO4xqdwhHOFQvRLfs8eNlDuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0qTV2t7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bomhB4+yUGVwfNQgXl6s1C+pZBhFd0FuSgDNzkiCyT60LQr0xH9ze1FWMNJHhXFDFFlc5VZ56mtlhpuA2DnjujbBgQloJljEIp3+7e+c/xCIZtIPAnODpLdwpT3mv5V/7/yxDH3npUV1753rEVr8ZYk+IujtMdxvDlja/b9M5NU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFnVkle2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0qTV2t7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EDBC1F00A3E;
-	Tue, 21 Jul 2026 21:03:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFnVkle2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BCB71F00A3A;
+	Tue, 21 Jul 2026 21:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667827;
-	bh=W15DywyFgmtI+mPu422fxjkRaxKqs7r/A3dB7ar10V0=;
+	s=korg; t=1784667829;
+	bh=GnCTCVpuHbvH0XCXyP3fccIVCWHzj4dcRz3S/KVJuBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a0qTV2t7eBkOVlBoMez1v+P0CBMc2/TQ59E/FWTn1rICXlhLsJIbSaOSagqRuXTeJ
-	 v+wONYRHiAWBt6MFySBEyA2X8PeNkE6A0McTNyxeSZUUP3jmM2RDyT/A47K7dJHAoQ
-	 b+LrMFX5sHetDIJzxDLxfERpKfE3XTZVdr34pDjM=
+	b=GFnVkle2g7+Qm4Va6/EgkvC0GU5tRGP9Rk4iiDVxqbR1umwKNS3kgIMr1J8KZNaEf
+	 6L+r1F05cCK3CtsumsuWTSBlzEPjXv+8RtdEb9edOpY4Y4nUOzwPqwRaQWF6FdEgNF
+	 tE3NARM/p+QXYS0tfWcZcXtBdJyc6an+X7HOj4CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trung Nguyen <trungnh@cystack.net>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	"Harry Yoo (Oracle)" <harry@kernel.org>,
+	Hao Li <hao.li@linux.dev>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1209/1266] HID: multitouch: fix out-of-bounds bit access on mt_io_flags
-Date: Tue, 21 Jul 2026 17:27:26 +0200
-Message-ID: <20260721152508.855546854@linuxfoundation.org>
+Subject: [PATCH 6.6 1210/1266] mm/slab: do not limit zeroing to orig_size when only red zoning is enabled
+Date: Tue, 21 Jul 2026 17:27:27 +0200
+Message-ID: <20260721152508.878012251@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,155 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trung Nguyen <trungnh@cystack.net>
+From: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>
 
-[ Upstream commit 8813b0612275cc61fe9e6603d0ee019247ade6be ]
+[ Upstream commit 648927ceb84021a25a0fbd5673740956f318d534 ]
 
-mt_io_flags is a single unsigned long, but mt_process_slot(),
-mt_release_pending_palms() and mt_release_contacts() use it as a
-per-slot bitmap indexed by the slot number. That slot number is only
-bounded by td->maxcontacts, which is taken from the device's
-ContactCountMaximum feature report and can be up to 255, not by
-BITS_PER_LONG.
+When init (zeroing) on allocation is requested, for kmalloc() we
+generally have to zero the full object size even if a smaller size is
+requested, in order to provide krealloc()'s __GFP_ZERO guarantees.
 
-As a result, a multitouch device that advertises a large contact count
-makes set_bit()/clear_bit() operate past the mt_io_flags word and
-corrupt the adjacent members of struct mt_device. The sticky-fingers
-release timer is the easiest way to reach this. mt_release_contacts()
-runs
+But if we track the requested size, krealloc() uses that information to
+do the right thing, so we can zero only the requested size. With red
+zoning also enabled, any extra size became part of the red zone, so it
+must not be zeroed and thus we must zero only the requested size.
 
-	for (i = 0; i < mt->num_slots; i++)
-		clear_bit(i, &td->mt_io_flags);
+However the current check is imprecise, and will trigger also when only
+SLAB_RED_ZONE is enabled without SLAB_STORE_USER (which enables tracking
+the requested size). This means enabling red zoning alone can compromise
+krealloc()'s __GFP_ZERO contract.
 
-with num_slots == maxcontacts. For maxcontacts around 250 the loop
-clears the bits that overlap td->applications.next, zeroing that list
-head, and the list_for_each_entry() that immediately follows then
-dereferences NULL. The kernel panics from timer (softirq) context. On a
-KASAN build this shows up as a general protection fault in
-mt_release_contacts() with a null-ptr-deref at offset 0x58, which is
-offsetof(struct mt_application, num_received).
+Fix this by using slub_debug_orig_size() instead, which is the exact
+check for whether the requested size is tracked. We don't need to care
+if red zoning is also enabled or not. Also update and expand the
+comment accordingly.
 
-The state is reachable from an untrusted USB or Bluetooth HID
-multitouch device; no local privileges are required.
-
-Store the per-slot active state in a separately allocated bitmap sized
-for maxcontacts, the same pattern already used for pending_palm_slots,
-and keep only MT_IO_FLAGS_RUNNING in mt_io_flags. The two
-"mt_io_flags & MT_IO_SLOTS_MASK" arming checks become
-bitmap_empty(td->active_slots, td->maxcontacts).
-
-Move MT_IO_FLAGS_RUNNING back to bit 0. It was bumped to bit 32 by the
-same commit to leave the low byte for the slot bits; with the slot bits
-gone it fits in bit 0 again, which also keeps it within the unsigned
-long on 32-bit.
-
-Fixes: 46f781e0d151 ("HID: multitouch: fix sticky fingers")
+Fixes: 9ce67395f5a0 ("mm/slub: only zero requested size of buffer for kzalloc when debug enabled")
 Cc: stable@vger.kernel.org
-Signed-off-by: Trung Nguyen <trungnh@cystack.net>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Link: https://patch.msgid.link/20260610-slab_alloc_flags-v2-1-7190909db118@kernel.org
+Reviewed-by: Harry Yoo (Oracle) <harry@kernel.org>
+Reviewed-by: Hao Li <hao.li@linux.dev>
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-multitouch.c |   32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ mm/slab.h |   17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -31,6 +31,7 @@
-  * [1] https://gitlab.freedesktop.org/libevdev/hid-tools
-  */
+--- a/mm/slab.h
++++ b/mm/slab.h
+@@ -734,14 +734,17 @@ static inline void slab_post_alloc_hook(
+ 	flags &= gfp_allowed_mask;
  
-+#include <linux/bitmap.h>
- #include <linux/device.h>
- #include <linux/hid.h>
- #include <linux/module.h>
-@@ -83,8 +84,7 @@ enum latency_mode {
- 	HID_LATENCY_HIGH = 1,
- };
- 
--#define MT_IO_SLOTS_MASK		GENMASK(7, 0) /* reserve first 8 bits for slot tracking */
--#define MT_IO_FLAGS_RUNNING		32
-+#define MT_IO_FLAGS_RUNNING		0
- 
- static const bool mtrue = true;		/* default for true */
- static const bool mfalse;		/* default for false */
-@@ -160,10 +160,9 @@ struct mt_device {
- 	struct mt_class mtclass;	/* our mt device class */
- 	struct timer_list release_timer;	/* to release sticky fingers */
- 	struct hid_device *hdev;	/* hid_device we're attached to */
--	unsigned long mt_io_flags;	/* mt flags (MT_IO_FLAGS_RUNNING)
--					 * first 8 bits are reserved for keeping the slot
--					 * states, this is fine because we only support up
--					 * to 250 slots (MT_MAX_MAXCONTACT)
-+	unsigned long mt_io_flags;	/* mt flags (MT_IO_FLAGS_RUNNING) */
-+	unsigned long *active_slots;	/* bitmap of slots with an active
-+					 * contact, sized for maxcontacts
- 					 */
- 	__u8 inputmode_value;	/* InputMode HID feature value */
- 	__u8 maxcontacts;
-@@ -947,7 +946,7 @@ static void mt_release_pending_palms(str
- 
- 	for_each_set_bit(slotnum, app->pending_palm_slots, td->maxcontacts) {
- 		clear_bit(slotnum, app->pending_palm_slots);
--		clear_bit(slotnum, &td->mt_io_flags);
-+		clear_bit(slotnum, td->active_slots);
- 
- 		input_mt_slot(input, slotnum);
- 		input_mt_report_slot_inactive(input);
-@@ -1153,9 +1152,9 @@ static int mt_process_slot(struct mt_dev
- 		input_event(input, EV_ABS, ABS_MT_TOUCH_MAJOR, major);
- 		input_event(input, EV_ABS, ABS_MT_TOUCH_MINOR, minor);
- 
--		set_bit(slotnum, &td->mt_io_flags);
-+		set_bit(slotnum, td->active_slots);
- 	} else {
--		clear_bit(slotnum, &td->mt_io_flags);
-+		clear_bit(slotnum, td->active_slots);
- 	}
- 
- 	return 0;
-@@ -1290,7 +1289,7 @@ static void mt_touch_report(struct hid_d
- 	 * defect.
+ 	/*
+-	 * For kmalloc object, the allocated memory size(object_size) is likely
+-	 * larger than the requested size(orig_size). If redzone check is
+-	 * enabled for the extra space, don't zero it, as it will be redzoned
+-	 * soon. The redzone operation for this extra space could be seen as a
+-	 * replacement of current poisoning under certain debug option, and
+-	 * won't break other sanity checks.
++	 * For kmalloc object, the allocated size (object_size) can be larger
++	 * than the requested size (orig_size). We however need to zero the
++	 * whole object_size to handle possible later krealloc() with
++	 *__GFP_ZERO properly.
++	 *
++	 * But if we keep track of the requested size, krealloc() uses that
++	 * information. Additionally if red zoning is enabled, the extra space
++	 * is also red zone, so we should not overwrite it. So limit zeroing to
++	 * orig_size if we track it.
  	 */
- 	if (app->quirks & MT_QUIRK_STICKY_FINGERS) {
--		if (td->mt_io_flags & MT_IO_SLOTS_MASK)
-+		if (!bitmap_empty(td->active_slots, td->maxcontacts))
- 			mod_timer(&td->release_timer,
- 				  jiffies + msecs_to_jiffies(100));
- 		else
-@@ -1330,6 +1329,15 @@ static int mt_touch_input_configured(str
- 	if (td->is_buttonpad)
- 		__set_bit(INPUT_PROP_BUTTONPAD, input->propbit);
+-	if (kmem_cache_debug_flags(s, SLAB_STORE_USER | SLAB_RED_ZONE) &&
++	if (kmem_cache_debug_flags(s, SLAB_STORE_USER) &&
+ 	    (s->flags & SLAB_KMALLOC))
+ 		zero_size = orig_size;
  
-+	if (!td->active_slots) {
-+		td->active_slots = devm_kcalloc(&td->hdev->dev,
-+						BITS_TO_LONGS(td->maxcontacts),
-+						sizeof(long),
-+						GFP_KERNEL);
-+		if (!td->active_slots)
-+			return -ENOMEM;
-+	}
-+
- 	app->pending_palm_slots = devm_kcalloc(&hi->input->dev,
- 					       BITS_TO_LONGS(td->maxcontacts),
- 					       sizeof(long),
-@@ -1738,7 +1746,7 @@ static void mt_release_contacts(struct h
- 			for (i = 0; i < mt->num_slots; i++) {
- 				input_mt_slot(input_dev, i);
- 				input_mt_report_slot_inactive(input_dev);
--				clear_bit(i, &td->mt_io_flags);
-+				clear_bit(i, td->active_slots);
- 			}
- 			input_mt_sync_frame(input_dev);
- 			input_sync(input_dev);
-@@ -1761,7 +1769,7 @@ static void mt_expired_timeout(struct ti
- 	 */
- 	if (test_and_set_bit_lock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags))
- 		return;
--	if (td->mt_io_flags & MT_IO_SLOTS_MASK)
-+	if (!bitmap_empty(td->active_slots, td->maxcontacts))
- 		mt_release_contacts(hdev);
- 	clear_bit_unlock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags);
- }
 
 
