@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 496DD46D0B7;
-	Tue, 21 Jul 2026 18:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0768A46D2BF;
+	Tue, 21 Jul 2026 18:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660268; cv=none; b=QHykWJiA5LnOmRbKUBC+8Jq2NGFtN17T2Mc9XIDtMWKbCFU2AmDRp18DjsB5SoVpvIwL/qWFwQ0OSO9aFkCY56sT0h1rYUiw3+6HCWmrCBaa10eHLhLElqx/qd0l1ttLbg74uj2+VlLvs65vC2wqhv2RfK9hC7YhCXvkx39kwBs=
+	t=1784660271; cv=none; b=jplTU+JQrDpJ8wtbPAxxTe0CFD2NWQfWWF2EmN5XlM38kK6GXQpDVBG4C5WwPyolAo7fpEHZS/93kkPIkigALDzLlyHjzXXpJGVEeVE0z0Ob+GQkZSiTgNT3mlq4ViwxW/34isU/PycUUlWOXWR2UY39ZJYT/Qoy70rm91rMx3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660268; c=relaxed/simple;
-	bh=4b1SDpaF2/15bjT9wkaPV2pyksBS1gIvSkYowmLxJT0=;
+	s=arc-20240116; t=1784660271; c=relaxed/simple;
+	bh=2yEuDT25wumeoCJ7tdKinvaG6G30rs2G5lKUW7jBTyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JaUKMJdTsqrmUE2wlv3XTvvzHpx2dpVCB/4armapkkGNVwD/1QiHKQFnq7cSyRGA3l3suiZ+MIuTMGAppe7uZKqBaL0I05SQRUCkeB8l799wphEPGCIVxfIN0p7J7EiqSNIbkYqi0RRttbvQqEQLN2Q4o4TVAGzKR6ksoi4H7hM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1J6ul0cf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RATOg7ogoJzV0K11mp7Q3ot7SEuoEnoI11FL46O9BoqmvqcNPHkzzvqq7k9LI0iQQmegRKeY9UsRRrLkB2qRQt8mTvk+XgnFZ1/7CjjzVa2c6yfsKvz1KBB58VsbY+HLmEWMkQILtyjAO9FofIHC2zPGYYKqRPNJqIgVB9lgw8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zqLa0u3k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1J6ul0cf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FF61F000E9;
-	Tue, 21 Jul 2026 18:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zqLa0u3k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BF01F00A3A;
+	Tue, 21 Jul 2026 18:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660263;
-	bh=mwq7u6De46BIsII2sbLjtl3uJyVNqCOpltMlDbwYTQg=;
+	s=korg; t=1784660266;
+	bh=aVKY8vISHUgaRHUa48qxx2S70K+gH/UJ9xQcFe7t+Rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1J6ul0cfq65RbL2M94zUjq5rxGufhiQsLx41U6t67XsUFHKVwzAz49YafvR/s6BPO
-	 855T2DO8JA+N2o5r2NfbmZ1fINTp9ozbBPX4gLe5n1S78HwVfU0wQLrOYTeiUNbSgr
-	 6ZClZnuwXmoTg7SlMSg/3BgVaR3zbzhOcKH7LYaY=
+	b=zqLa0u3kPidNg/MVzK7s0TfJk4izwAg3G83PWj4VDnD+m+OFo5Ud5tBJWQdcaEbBN
+	 zdPujJdtwnKWF87z0IWB38XAqF4fWm1mqosyACqvMShxJ+LezPKZ92X7pVACl3P67V
+	 vWpheWKFW2EDmpFM91TIo3Ks92xhYQAf1CMbfep8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Rosen Penev <rosenp@gmail.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0912/2077] clk: at91: keep securam node alive while mapping it
-Date: Tue, 21 Jul 2026 17:09:45 +0200
-Message-ID: <20260721152614.327740233@linuxfoundation.org>
+Subject: [PATCH 7.1 0913/2077] HID: logitech-hidpp: remove excess kernel-doc member in hidpp_scroll_counter
+Date: Tue, 21 Jul 2026 17:09:46 +0200
+Message-ID: <20260721152614.349496647@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,45 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 22fa1c39ba6fe726b547c877c924379b7fee260a ]
+[ Upstream commit f22a5db8a7d38152556f230d6d68e59dbc27971b ]
 
-pmc_register_ops() gets an owned reference to the
-"atmel,sama5d2-securam" node with of_find_compatible_node().  The
-success path dropped that reference before passing the node to
-of_iomap(), leaving of_iomap() to consume a node pointer after the caller
-had released its reference.
+The @dev member described in the kernel-doc does not exist in the
+struct. Remove the stale entry.
 
-Move of_node_put() after of_iomap() so the node remains referenced for
-the mapping operation.  The unavailable-node error path already releases
-the reference.
+Fixes: 0610430e3dea ("HID: logitech-hidpp: add input_device ptr to struct hidpp_device")
+Assisted-by: opencode:big-pickle
 
-Fixes: 4d21be864092 ("clk: at91: pmc: execute suspend/resume only for backup mode")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://patch.msgid.link/20260529042051.1626978-1-dbgh9129@gmail.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/at91/pmc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-logitech-hidpp.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/clk/at91/pmc.c b/drivers/clk/at91/pmc.c
-index b618a5e00b0068..03a6c31d6aa8b5 100644
---- a/drivers/clk/at91/pmc.c
-+++ b/drivers/clk/at91/pmc.c
-@@ -180,9 +180,9 @@ static int __init pmc_register_ops(void)
- 		of_node_put(np);
- 		return -ENODEV;
- 	}
--	of_node_put(np);
- 
- 	at91_pmc_backup_suspend = of_iomap(np, 0);
-+	of_node_put(np);
- 	if (!at91_pmc_backup_suspend) {
- 		pr_warn("%s(): unable to map securam\n", __func__);
- 		return -ENOMEM;
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index ccbf28869a968d..1990ba5b26ea67 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -164,7 +164,6 @@ struct hidpp_battery {
+ /**
+  * struct hidpp_scroll_counter - Utility class for processing high-resolution
+  *                             scroll events.
+- * @dev: the input device for which events should be reported.
+  * @wheel_multiplier: the scalar multiplier to be applied to each wheel event
+  * @remainder: counts the number of high-resolution units moved since the last
+  *             low-resolution event (REL_WHEEL or REL_HWHEEL) was sent. Should
 -- 
 2.53.0
 
