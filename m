@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522B339768C;
-	Tue, 21 Jul 2026 22:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18DE39768C;
+	Tue, 21 Jul 2026 22:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672342; cv=none; b=XhhIwBzdoVZG35Og8/UHiVUbZFUcHwPDs30sB5FFBwtb3KuCfBgNGlHOoY4jeMb6Ql4I03NIGOnazlJyl61B6wV28ZYjQlo/5EXB//45n6dZY/RregJv1pbvTbM63hpMoY3yYc5B5JPqCu7f2Jw5HyjWvK7umBGC/u9CR6CS6FA=
+	t=1784672345; cv=none; b=gayty5+VmnVNLVCyiKka7WhpLdm/7Jd5vhYl4Ie4FGZgfUt4sgBr33WryHFctX3JjBaH+eoi9b38jMqKdePS8c5kdk3YMokLPII1qGvazHEYpXWbzXaVgWbITV2S2O/eyoupFRtJPjpLL06v9W+3NUBxFUml9lLD6ibhvEwAeO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672342; c=relaxed/simple;
-	bh=eChGDw0NfRK+VtxxAAiMF/LzS2wVQsz5pRfTWS2IKVs=;
+	s=arc-20240116; t=1784672345; c=relaxed/simple;
+	bh=rzcHI/dsE3X51x4dYP2KetvLw/pYLYwFCo6XXGhZe/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g52MigZkvJnlA/BOwEwH+wNB3bZb/FNkXEW7DxZZCnSqb158xutAxHcbaO9E7IFhVR2NJBDW2qA9sm0D6KeQEaQvyGKUEGAFAx3g4deVI6nqsMuIVqwpXWs7DV7fGGsmLN1lR42wkBlodQ66XEklyikFCJbR+NhnW5iCKuMuotU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vEdflL/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=byBwnxnYhUoiHJtZoj3likZ50fedpw9K15EHrSCwwPuA/f+UqmpIWsO/kYD7u12zbR0gOvdGK2T7nwt1oo4Wj1q5zx50tIoL1DPYqTXQ9b1VlUGulCf35dWTbQCouBBAzFk+idFG/1Kn0IAS/ZWRQPtaNAfIkWhSuOJ1QDrr/fU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/+dl0Da; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vEdflL/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9BE1F000E9;
-	Tue, 21 Jul 2026 22:19:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/+dl0Da"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C8D1F000E9;
+	Tue, 21 Jul 2026 22:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672341;
-	bh=iyqH7jz/22JynZWU93g2zTs6e5Jy3GwjcC8nk3dZzUc=;
+	s=korg; t=1784672343;
+	bh=G867eeLiV6jJ+sGE8we+cigkZu8IWGHprRbpRLCANeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1vEdflL/ZC6CtIicXUFv482JHdZimLN0vncvnMZgFfyWBZMeNh1wvfUZltaiT3c0/
-	 R+p7XfxrH3VatvqkyxBIAAD6nHqS0vayKh4EFQ0UxmlZnZCbLvu23PSBaKXASpBQk5
-	 DsOyqGjGT5zLk4LVXZIAKEr6DZnOuY0KC7WaTyA8=
+	b=m/+dl0Da0RZS5GaRGG+qd/RQtyZdAX7sJPCCC+FhvGBuo3mEAnxWgOKo6PCiF2Xah
+	 vSAdhJlkwmZEF6W/FJvv1ehwy0LYsEuiNonW/3ujZpdyVvn5VKK5hkYej3r49LDb3C
+	 Hg10MSKw5EYnLdyL+8JDjQnU+/2YkrOAO+ZCc6Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -36,9 +36,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Julian Anastasov <ja@ssi.bg>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 545/843] ipvs: use parsed transport offset in TCP state lookup
-Date: Tue, 21 Jul 2026 17:23:00 +0200
-Message-ID: <20260721152418.298153694@linuxfoundation.org>
+Subject: [PATCH 5.15 546/843] ipvs: fix PMTU for GUE/GRE tunnel ICMP errors
+Date: Tue, 21 Jul 2026 17:23:01 +0200
+Message-ID: <20260721152418.320326393@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -59,56 +59,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit 2500fa3958b1ba51c2b065e39db1b04dfa7e23a2 ]
+[ Upstream commit 6b335af0d0d1ff44ac579d106953bf19299e5233 ]
 
-TCP state handling reparses the skb to find the TCP header. For IPv6 it
-uses sizeof(struct ipv6hdr), while the surrounding IPVS code already
-parsed the packet with ip_vs_fill_iph_skb() and has the real
-transport-header offset in iph.len.
+When an ICMP Fragmentation Needed error is received for a tunneled IPVS
+connection, ip_vs_in_icmp() recomputes the MTU that the original packet
+can use by subtracting the tunnel overhead from the reported next-hop
+MTU.
 
-This makes TCP state handling look at the wrong bytes when an IPv6
-packet carries extension headers. Use the parsed transport offset passed
-down from ip_vs_set_state() when reading the TCP header.
+The current code always subtracts sizeof(struct iphdr), which is only
+the IPIP overhead. For GUE and GRE tunnels, ipvs_udp_decap() and
+ipvs_gre_decap() already compute the additional tunnel header length,
+but that value is scoped to the decapsulation block and is lost before
+the ICMP_FRAG_NEEDED handling. As a result, the ICMP error sent back to
+the client advertises an MTU that is too large, so PMTUD can fail to
+converge for GUE/GRE-tunneled real servers.
 
-For IPv4 and for IPv6 packets without extension headers, the passed
-offset matches the previous value.
+With a reported next-hop MTU of 1400, a GUE tunnel currently returns
+1380 to the client. The correct value is 1368:
 
-Fixes: 0bbdd42b7efa6 ("IPVS: Extend protocol DNAT/SNAT and state handlers")
-Link: https://lore.kernel.org/netdev/20260705125659.37744-1-zhaoyz24@mails.tsinghua.edu.cn/
+  1400 - sizeof(struct iphdr) - sizeof(struct udphdr) -
+  sizeof(struct guehdr)
+
+Hoist the tunnel header length into the main ip_vs_in_icmp() scope and
+subtract sizeof(struct iphdr) + ulen in the Fragmentation Needed path.
+The IPIP path keeps ulen as 0, so its existing 1400 - 20 = 1380 result
+is unchanged.
+
+Fixes: 508f744c0de3 ("ipvs: strip udp tunnel headers from icmp errors")
+Cc: stable@vger.kernel.org
 Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
 Reported-by: Ao Wang <wangao@seu.edu.cn>
 Reported-by: Xuewei Feng <fengxw06@126.com>
 Reported-by: Qi Li <qli01@tsinghua.edu.cn>
 Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: Claude Code:GLM-5.2
+Assisted-by: Claude-Code:GLM-5.2
 Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 Acked-by: Julian Anastasov <ja@ssi.bg>
 Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: 3f7a535ff0fa ("ipvs: ensure inner headers in ICMP errors are in headroom")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_proto_tcp.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ net/netfilter/ipvs/ip_vs_core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_proto_tcp.c b/net/netfilter/ipvs/ip_vs_proto_tcp.c
-index dc8394383c148e..b382810156b2c6 100644
---- a/net/netfilter/ipvs/ip_vs_proto_tcp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_tcp.c
-@@ -585,13 +585,7 @@ tcp_state_transition(struct ip_vs_conn *cp, int direction,
- {
- 	struct tcphdr _tcph, *th;
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index 225fcc80dc901f..fd6ce9b8501ab4 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -1641,6 +1641,7 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 	bool tunnel, new_cp = false;
+ 	union nf_inet_addr *raddr;
+ 	char *outer_proto = "IPIP";
++	int ulen = 0;
  
--#ifdef CONFIG_IP_VS_IPV6
--	int ihl = cp->af == AF_INET ? ip_hdrlen(skb) : sizeof(struct ipv6hdr);
--#else
--	int ihl = ip_hdrlen(skb);
--#endif
--
--	th = skb_header_pointer(skb, ihl, sizeof(_tcph), &_tcph);
-+	th = skb_header_pointer(skb, iph_len, sizeof(_tcph), &_tcph);
- 	if (th == NULL)
- 		return;
+ 	*related = 1;
  
+@@ -1705,7 +1706,6 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 		   /* Error for our tunnel must arrive at LOCAL_IN */
+ 		   (skb_rtable(skb)->rt_flags & RTCF_LOCAL)) {
+ 		__u8 iproto;
+-		int ulen;
+ 
+ 		/* Non-first fragment has no UDP/GRE header */
+ 		if (unlikely(cih->frag_off & htons(IP_OFFSET)))
+@@ -1810,8 +1810,8 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 				if (dest_dst)
+ 					mtu = dst_mtu(dest_dst->dst_cache);
+ 			}
+-			if (mtu > 68 + sizeof(struct iphdr))
+-				mtu -= sizeof(struct iphdr);
++			if (mtu > 68 + sizeof(struct iphdr) + ulen)
++				mtu -= sizeof(struct iphdr) + ulen;
+ 			info = htonl(mtu);
+ 		}
+ 		/* Strip outer IP, ICMP and IPIP/UDP/GRE, go to IP header of
 -- 
 2.53.0
 
