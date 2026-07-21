@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800ED3E49C8;
-	Tue, 21 Jul 2026 17:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABBA4028CE;
+	Tue, 21 Jul 2026 17:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654196; cv=none; b=iFwF/bbvPHswWNv3wVCR6NxnLuoDb/y30QBovLm2Kd1RSfhDfZgF5/VHU8YToDji0aHoF+Sig2hRTYoUbOxsd8OCnD+K4wbwYds5kC8aOie6gEdAQ5j+R4wH+vZOL10gPTBCJBT08HnN7pJosTAR2RMG/9abJXczU3H0/rsmZcs=
+	t=1784654199; cv=none; b=F8VbZk3g0V+2/JqQS//BJC9KzrAU3EkfM8RssZTjuNBQl268pVdVEW1O70DFeWrKZHCrFYynSb6PbpaB25dzbdAL+ZH3kEdX2TrM1lrXjHVO/mFn5MWjQNdJm4mAErg+5FS//tyOjcDMk3zshFI8HYJXDsI8OHoCoyb84wb/0bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654196; c=relaxed/simple;
-	bh=ltRoHoLZRa5dCO/xAhqrgcVONfHn/V7tLZJ+cZjxqhQ=;
+	s=arc-20240116; t=1784654199; c=relaxed/simple;
+	bh=lZulbunmtQizmFDnINNR4n5r0P62maoHjRY96Si404Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EUY/meSd0tQ/uOTrc/W8wz+y1D0L4Q6Dhf735VAuON3bXHyjCisS6b7Xp9qkGODPXNbHFbNjsu+BQO5lYHfKfY+Dg8Tv9qJNo6amCiXqwkMSrAIQO8odTEFaaKqsqiKaDREjX9sEQlcnfsB+jp+NP17Ti7N33C0bDVc/D5hMs4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k0rMnTfb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JfHfwsbCyBmzoYKFZok+im24Ie7xPGHX4D/ELa8cItusgwCQTlAIhb1Yl9Re4TxNyrkAtkow1S8gmLyQp9LiY5HuWmV9CbfPxJKVSHW5IIEyMpVoqXE63yfaKaA2PsGaFey5MY+4RfX035OofnoC2oAKWvDSfenzhACEYlqaCdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wZS8nTI4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k0rMnTfb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAA21F000E9;
-	Tue, 21 Jul 2026 17:16:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZS8nTI4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FEE41F000E9;
+	Tue, 21 Jul 2026 17:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654195;
-	bh=U9T8UWo240Jc9iKUUjwkg9kccm/4Qo8IFgHiC5zJsyA=;
+	s=korg; t=1784654198;
+	bh=PPbMhEmbd2dxtI7tC3RoHP6AIanBpW3v8RLjgvyCBSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k0rMnTfb3pHaTysYMpK2QSiCmhzZQLDfLLbYlSWF3jvL3Tmmz+GmOmJKFne6ISAX2
-	 XPdIkj6sfNyLZnsFjzPx02teaK/ntd7yiZy1G0meyOZjeiv1kdgW4l6G5W/OZX9noS
-	 F3JEGfbLm06VmKDlQW4EQriFHUFDoJ50xg8TgDuc=
+	b=wZS8nTI4uHhXqWzNQW2uVMt6TTaWOHKK1wpfCK2yarttHfT5KIl6ZjBt8DRx7+p0B
+	 JApzgEGQ7k1JjMKGGv8HEyLI052CpplrM4Vl6PDdV+IRo7HhNV2xFT8yTSgArNILZe
+	 7e/iIM0hBdxpyBSTsi5uSimjbesEJ/uDXLGd9mS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Zhengyang Chen <chzhengyang2023@lzu.edu.cn>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 7.1 1611/2077] netfilter: flowtable: support IPIP tunnel with direct xmit
-Date: Tue, 21 Jul 2026 17:21:24 +0200
-Message-ID: <20260721152630.763233994@linuxfoundation.org>
+	Oliver Upton <oupton@kernel.org>,
+	Wei-Lin Chang <weilin.chang@arm.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 7.1 1571/2077] KVM: arm64: Ensure level is always initialized when relaxing perms
+Date: Tue, 21 Jul 2026 17:20:44 +0200
+Message-ID: <20260721152629.834216211@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -55,106 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Oliver Upton <oupton@kernel.org>
 
-commit fa7395c02d95e51bad2952325d2d6503bfbad437 upstream.
+commit 100baf0184896f859290a684f864b8200d8ac872 upstream.
 
-The combination of IPIP tunnel with direct xmit, eg. bridge device,
-breaks because no dst_entry is provided to check the skb headroom and to
-set the iph->frag_off field. This leads to invalid dst usage and can
-trigger a crash in the tunnel transmit path.
+stage2_update_leaf_attrs() returns early before writing to @level if the
+table walker returned an error. At the same time,
+kvm_pgtable_stage2_relax_perms() uses the level as a TLBI TTL hint when the
+error was EAGAIN, indicating the vCPU raced with a table update and the TLB
+entry it hit is now stale.
 
-Fix this by moving dst_cache and dst_cookie out of the runtime union so
-that they can be shared by neighbour, xfrm, and direct tunnel flows.
-For FLOW_OFFLOAD_XMIT_DIRECT tuples carrying tunnel metadata, preserve
-route state in these shared fields and release it through the common
-dst release path.
+Fall back to an unknown TTL if none was provided by the walk.
 
-Since dst_entry is now available to the three supported xmit modes and
-dst_release() already deals with NULL dst, remove the xmit type check
-in nft_flow_dst_release(). Moreover, skip the check if the dst entry
-is NULL in nf_flow_dst_check() which is now the case for the direct
-xmit case.
-
-Based on patch from Rein Wei <n05ec@lzu.edu.cn>.
-
-Fixes: d30301ba4b07 ("netfilter: flowtable: Add IPIP tx sw acceleration")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Reported-by: Zhengyang Chen <chzhengyang2023@lzu.edu.cn>
-Reported-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: be097997a273 ("KVM: arm64: Always invalidate TLB for stage-2 permission faults")
+Signed-off-by: Oliver Upton <oupton@kernel.org>
+Reviewed-by: Wei-Lin Chang <weilin.chang@arm.com>
+Link: https://patch.msgid.link/20260701231620.3300204-2-oupton@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_flow_table.h |    5 +++--
- net/netfilter/nf_flow_table_core.c    |   12 ++++++++----
- net/netfilter/nf_flow_table_ip.c      |    3 +--
- 3 files changed, 12 insertions(+), 8 deletions(-)
+ arch/arm64/kvm/hyp/pgtable.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/net/netfilter/nf_flow_table.h
-+++ b/include/net/netfilter/nf_flow_table.h
-@@ -155,11 +155,12 @@ struct flow_offload_tuple {
- 					tun_num:2,
- 					in_vlan_ingress:2;
- 	u16				mtu;
-+	u32				dst_cookie;
-+	struct dst_entry		*dst_cache;
-+
- 	union {
- 		struct {
--			struct dst_entry *dst_cache;
- 			u32		ifidx;
--			u32		dst_cookie;
- 		};
- 		struct {
- 			u32		ifidx;
---- a/net/netfilter/nf_flow_table_core.c
-+++ b/net/netfilter/nf_flow_table_core.c
-@@ -127,12 +127,18 @@ static int flow_offload_fill_route(struc
- 
- 	switch (route->tuple[dir].xmit_type) {
- 	case FLOW_OFFLOAD_XMIT_DIRECT:
-+		if (flow_tuple->tun_num) {
-+			flow_tuple->dst_cache = dst;
-+			flow_tuple->dst_cookie =
-+				flow_offload_dst_cookie(flow_tuple);
-+		}
- 		memcpy(flow_tuple->out.h_dest, route->tuple[dir].out.h_dest,
- 		       ETH_ALEN);
- 		memcpy(flow_tuple->out.h_source, route->tuple[dir].out.h_source,
- 		       ETH_ALEN);
- 		flow_tuple->out.ifidx = route->tuple[dir].out.ifindex;
--		dst_release(dst);
-+		if (!flow_tuple->tun_num)
-+			dst_release(dst);
- 		break;
- 	case FLOW_OFFLOAD_XMIT_XFRM:
- 	case FLOW_OFFLOAD_XMIT_NEIGH:
-@@ -152,9 +158,7 @@ static int flow_offload_fill_route(struc
- static void nft_flow_dst_release(struct flow_offload *flow,
- 				 enum flow_offload_tuple_dir dir)
+--- a/arch/arm64/kvm/hyp/pgtable.c
++++ b/arch/arm64/kvm/hyp/pgtable.c
+@@ -1358,7 +1358,7 @@ int kvm_pgtable_stage2_relax_perms(struc
+ 				   enum kvm_pgtable_prot prot, enum kvm_pgtable_walk_flags flags)
  {
--	if (flow->tuplehash[dir].tuple.xmit_type == FLOW_OFFLOAD_XMIT_NEIGH ||
--	    flow->tuplehash[dir].tuple.xmit_type == FLOW_OFFLOAD_XMIT_XFRM)
--		dst_release(flow->tuplehash[dir].tuple.dst_cache);
-+	dst_release(flow->tuplehash[dir].tuple.dst_cache);
- }
+ 	kvm_pte_t xn = 0, set = 0, clr = 0;
+-	s8 level;
++	s8 level = TLBI_TTL_UNKNOWN;
+ 	int ret;
  
- void flow_offload_route_init(struct flow_offload *flow,
---- a/net/netfilter/nf_flow_table_ip.c
-+++ b/net/netfilter/nf_flow_table_ip.c
-@@ -299,8 +299,7 @@ static bool nf_flow_exceeds_mtu(const st
- 
- static inline bool nf_flow_dst_check(struct flow_offload_tuple *tuple)
- {
--	if (tuple->xmit_type != FLOW_OFFLOAD_XMIT_NEIGH &&
--	    tuple->xmit_type != FLOW_OFFLOAD_XMIT_XFRM)
-+	if (!tuple->dst_cache)
- 		return true;
- 
- 	return dst_check(tuple->dst_cache, tuple->dst_cookie);
+ 	if (prot & KVM_PTE_LEAF_ATTR_HI_SW)
 
 
