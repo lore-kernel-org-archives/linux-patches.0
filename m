@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0F740587A;
-	Tue, 21 Jul 2026 17:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B136A46A5E7;
+	Tue, 21 Jul 2026 17:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654890; cv=none; b=oC4XM1dqKS90E+RoFS4YQ5UskV1ahFPavVZZ4YXRu5gxYev8YAvnwpqEjR/Lxbnv/nDKyC4anvIQDJk//U1xy9QsuIOP3LXWhdvJkfc7Fb6fxwHEkDjAdMFizrgoXLCIgL0l+No/l2KGulsaHjp2rejsaCJSPVkcPRK51Kn2Pw0=
+	t=1784654898; cv=none; b=pMmb/sgpJLDqUkQECnd2BmJ9YF5RP5UwLxQ6MVqlUWq7vA1ZENd6xfKl3jRgpafoe/SvfPqwE+1TqnGamqYIXrcSUgEiOWWGfV3gMB3Ewvkd0IEPb5PuBqlYuf/BGwexWgn/k6/H9Xa9FjPSctTFERWJVzo0eMCZNmHWCx7oAbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654890; c=relaxed/simple;
-	bh=M1vcq/uTkk/5/WxzUD4kxIU39rrJyU2qgYWQVP1TBmE=;
+	s=arc-20240116; t=1784654898; c=relaxed/simple;
+	bh=2JyHpuxAe8dQFF5Nd7J59FUj8JuQaoHNoHybLGcbQmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AdG3HvXj1AF/2Ap8EkBDrEWzlpIG1ts+CxlSAI158D1hA5Pa9HXn9cFPDoKy9aQ75QVOa8LyTC79TulWLy6+Ui1PXpWRL8k/qVCtrSDJrDlY/lOB3XBZOMAGKd4eTSbe1i4+c3k9xTsup4Zb9TTcN082RTy0oqpPSGQBFCMIFT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QY46b+Kj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SCCozFr1K7yQTzRaNmYLxBddf76kYddTgFqi7af+qpe8o4szqkEyHrhmZQFgOUnnbTjxDt1HXua7GNw6YY5EH0wBzAmPWmJTPgzBZSlF8ja81d/tAlnGO2KehLvjVbOF1MdIJWH2DjiuARWOjTty3juqzN+laW7tSm1CWC0TNm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYpfrL8J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QY46b+Kj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A661F000E9;
-	Tue, 21 Jul 2026 17:28:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYpfrL8J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0AB81F000E9;
+	Tue, 21 Jul 2026 17:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654886;
-	bh=N9lY/9B1wQkyfARyUTiU72i4HP1d9u81006QauUjxLQ=;
+	s=korg; t=1784654894;
+	bh=52L0JpzafYZUzTEidnGPb8/1vJ+GMJ7R2S1EnoElbTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QY46b+Kjmu1kDrT9fkxtuOrXAx65P4Ni2aGU0B0CWjd3+SnJGWUmicz9EXpBXCn1h
-	 JReeVXeXj3vFXPUPr8GwinXLJyks0sWlQrUGuAhvIVt8BUHgIsHJaGkt0V81C1MdxB
-	 HE/ABX0B1m86w1hGmOOIxkYzTKgAAwgShZuV/nsY=
+	b=TYpfrL8JY3wqys0UO8vu3fkvIwmUw8wUhNVyJiK0PUZ6DftHT6H4awyOiBD2sSzKz
+	 TAwDL9XjSwTTisLK8avnCfyjsoyecaZs4ZGhZO89E4Y1Jm/zw4GiaL8CuT0D2DMcYX
+	 nABz/sgE+i4lKCYcYQLQTCOL4L+c3E18UFHwU1QY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Juergen Gross <jgross@suse.com>,
+	WenTao Liang <vulab@iscas.ac.cn>,
+	Daniel Wagner <dwagner@suse.de>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 7.1 1874/2077] scsi: xen: scsiback: Free unsubmitted command instead of double-putting it
-Date: Tue, 21 Jul 2026 17:25:47 +0200
-Message-ID: <20260721152636.932984543@linuxfoundation.org>
+Subject: [PATCH 7.1 1877/2077] scsi: elx: efct: Fix refcount leak in efct_hw_io_abort()
+Date: Tue, 21 Jul 2026 17:25:50 +0200
+Message-ID: <20260721152637.000804361@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,94 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: WenTao Liang <vulab@iscas.ac.cn>
 
-commit ca978f8a93d4d36841839bf2847d29b88c2591d6 upstream.
+commit 2c007acf7b31c39c08ce4959451ad00b19be4c1f upstream.
 
-scsiback_get_pend_req() obtains a command tag and returns a vscsibk_pend
-whose embedded se_cmd has only been memset to 0, so its cmd_kref is 0;
-the se_cmd is initialised (kref_init() via target_init_cmd()) only
-later, in scsiback_cmd_exec(), on the successful VSCSIIF_ACT_SCSI_CDB
-path. The two error paths in scsiback_do_cmd_fn() taken before the
-command is submitted -- a failed scsiback_gnttab_data_map() and an
-unknown ring_req.act -- call
-transport_generic_free_cmd(&pending_req->se_cmd, 0), which kref_put()s a
-refcount of 0. That underflows it ("refcount_t: underflow;
-use-after-free") and, as the release function is not run, leaks the
-command tag.
+When efct_hw_reqtag_alloc() fails in efct_hw_io_abort(), the error path
+returns -ENOSPC without releasing the reference obtained via
+kref_get_unless_zero() earlier in the function. All other error paths
+correctly drop the reference. This causes a permanent reference leak on the
+io_to_abort object.
 
-Impact: a pvSCSI guest can leak every command tag of a LUN's session,
-stopping the LUN, by submitting requests with a bad grant reference or
-an unknown request type; under panic_on_warn the refcount underflow
-panics the host.
+Additionally, the abort_in_progress flag is left set to true on this path,
+which means future abort attempts for the same I/O will immediately return
+-EINPROGRESS even though the abort was never submitted, effectively
+blocking recovery.
 
-Add a helper that just returns the tag with target_free_tag() and sends
-the error response. It frees the tag while the v2p reference still pins
-the session, and snapshots the response fields beforehand because
-freeing the tag can let another ring reuse the pending_req slot.
+Fix this by adding the missing kref_put() call and reset abort_in_progress
+to false, matching the cleanup done in the efct_hw_wq_write() failure path
+below.
 
-Fixes: 2dbcdf33dbf6 ("xen-scsiback: Convert to percpu_ida tag allocation")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://patch.msgid.link/20260611123046.2323342-2-michael.bommarito@gmail.com
+Fixes: 63de51327a64 ("scsi: elx: efct: Hardware I/O and SGL initialization")
+Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Link: https://patch.msgid.link/20260611053037.63756-1-vulab@iscas.ac.cn
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/xen-scsiback.c |   28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ drivers/scsi/elx/efct/efct_hw.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/xen/xen-scsiback.c
-+++ b/drivers/xen/xen-scsiback.c
-@@ -611,6 +611,25 @@ static void scsiback_disconnect(struct v
- 	xenbus_unmap_ring_vfree(info->dev, info->ring.sring);
- }
- 
-+/*
-+ * Send the error response for a request that did not reach the target core
-+ * and return its tag.  Free the tag before the response drops the v2p
-+ * reference that keeps the session alive, and snapshot what the response
-+ * needs since returning the tag can let the slot be reused.
-+ */
-+static void scsiback_resp_and_free(struct vscsibk_pend *pending_req,
-+				   int32_t result)
-+{
-+	struct vscsibk_info *info = pending_req->info;
-+	struct v2p_entry *v2p = pending_req->v2p;
-+	struct se_session *se_sess = v2p->tpg->tpg_nexus->tvn_se_sess;
-+	u16 rqid = pending_req->rqid;
-+
-+	target_free_tag(se_sess, &pending_req->se_cmd);
-+	scsiback_send_response(info, NULL, result, 0, rqid);
-+	kref_put(&v2p->kref, scsiback_free_translation_entry);
-+}
-+
- static void scsiback_device_action(struct vscsibk_pend *pending_req,
- 	enum tcm_tmreq_table act, int tag)
- {
-@@ -792,9 +811,8 @@ static int scsiback_do_cmd_fn(struct vsc
- 		case VSCSIIF_ACT_SCSI_CDB:
- 			if (scsiback_gnttab_data_map(&ring_req, pending_req)) {
- 				scsiback_fast_flush_area(pending_req);
--				scsiback_do_resp_with_sense(NULL,
--						DID_ERROR << 16, 0, pending_req);
--				transport_generic_free_cmd(&pending_req->se_cmd, 0);
-+				scsiback_resp_and_free(pending_req,
-+						       DID_ERROR << 16);
- 			} else {
- 				scsiback_cmd_exec(pending_req);
- 			}
-@@ -808,9 +826,7 @@ static int scsiback_do_cmd_fn(struct vsc
- 			break;
- 		default:
- 			pr_err_ratelimited("invalid request\n");
--			scsiback_do_resp_with_sense(NULL, DID_ERROR << 16, 0,
--						    pending_req);
--			transport_generic_free_cmd(&pending_req->se_cmd, 0);
-+			scsiback_resp_and_free(pending_req, DID_ERROR << 16);
- 			break;
- 		}
+--- a/drivers/scsi/elx/efct/efct_hw.c
++++ b/drivers/scsi/elx/efct/efct_hw.c
+@@ -1997,6 +1997,8 @@ efct_hw_io_abort(struct efct_hw *hw, str
+ 	wqcb = efct_hw_reqtag_alloc(hw, efct_hw_wq_process_abort, io_to_abort);
+ 	if (!wqcb) {
+ 		efc_log_err(hw->os, "can't allocate request tag\n");
++		io_to_abort->abort_in_progress = false;
++		kref_put(&io_to_abort->ref, io_to_abort->release);
+ 		return -ENOSPC;
+ 	}
  
 
 
