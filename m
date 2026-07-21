@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07948471250;
-	Tue, 21 Jul 2026 18:36:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F48471250;
+	Tue, 21 Jul 2026 18:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658969; cv=none; b=cRFPzy7IOjFDIh1YqDoPyJcV55R/EZaVJA7Lm0bj+wZgeLz4ixbDhY0zlbQ+ClvWfUbZjB2x2vk3i5/VGM3jNjZ+Nx3bTZb8p/hbbUs37OXV8rN/z8GS/Ra+7Gyq23eq/LtskblFpA8zqJLJF5xOEh/896aQjPSbPUQ0A3/4mKQ=
+	t=1784658971; cv=none; b=WN8/bVwciPLDKH/3WItBp96O/E7jDSSJsT1BtnsY81RYfHFoFugMlcwegCVzUStrNI04vih8CxwMDNFrnYIofR9waMFgf9XGPMcfN/TUcpibAhO+uHsWS/pfjp9cHqnO/dr5pnW6wkl+3MX8DS9eGj/XpkFu7U60bUOeyIQLaMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658969; c=relaxed/simple;
-	bh=5zUplH1WfSmz9jWjQHTcd+sPMfLUrx6UuwLEWECYD+w=;
+	s=arc-20240116; t=1784658971; c=relaxed/simple;
+	bh=9EsRJhinwwk585h1m8M1cIIqg1sCxef9GaDDjkcN0iQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KisgYisxT+a5PXUSiNjPm33vt79TFHMSae0sgdHg5U9IEggczoCzzs064RxbUOKBSJC5hgh30NXHla9qcfKn1bz13Kl9A6uvrmuaVwedANS8DJ5qSKYIaqdzIZJrIPz7Ndy/PAAGn6ODtCSSNXsPgf5erM424d1990PzYADVwDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pu+8Nhir; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KD2o5wuNnGaHGKm49IKGJzG4tnl3tVqLrpQKD3cieo7sKSShRLhcKBA6vjbw6Rx2sBqEdWrU1vR7FyZN/RFDN5dS0cJBL0v3yjn04KLZgbZtAyA2kt1yOJb78DLmcIxVDF5Z9/RoKsF+YXavYthybzeyWpce/g9E1VaAaQ9GyUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjErBZHh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pu+8Nhir"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E3E91F000E9;
-	Tue, 21 Jul 2026 18:36:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjErBZHh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 266891F000E9;
+	Tue, 21 Jul 2026 18:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658967;
-	bh=BcU+nWB2Q3dSYHdagHzTWSnxXKcBMBqsaulPNzsLxFo=;
+	s=korg; t=1784658970;
+	bh=XEmUUXRTe0osEb1TlSEluVsVueLb9GmpPGSBWnide04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pu+8Nhir9gEQhGvAZ3GDL+6htFrip3PPLxw6RWOrMsv/GJ8HBUndhE51Bf8p6dPfI
-	 gOYy5TqpsTqn22OGHkS4rOTobLcWbtbs4gbCSIHrijFRLUm76ygXgkUp/jcsZnSywG
-	 d+hNo5Mx6+JMez/yl3sIstpsyMzkAGuZGhC81Zrc=
+	b=hjErBZHhydUDbj/6L4vw2zaUF1vuIlPx0Up9tdxSNPGaQL4nKBMj4lr9dNMFTq6sN
+	 1GiW7Z88xAE4vvWGltYgYRV6r9u4CvkjvBDtjbsF1OBt2SpIvH1mrIkPYD3QkRZs6q
+	 6kqSJbxCHfHKr0Ho+Bbq87uSVWuUolYRMjFTyRK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Waychison <mike@waychison.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 1342/1611] block: fix race in blk_time_get_ns() returning 0
-Date: Tue, 21 Jul 2026 17:24:18 +0200
-Message-ID: <20260721152545.638333425@linuxfoundation.org>
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	stable@kernel.org
+Subject: [PATCH 6.18 1302/1611] pkey: Move keytype check from pkey api to handler
+Date: Tue, 21 Jul 2026 17:23:38 +0200
+Message-ID: <20260721152544.732585376@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,90 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Waychison <mike@waychison.com>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-commit 691b052139c94ee6640ac39e0b764dd3867897c0 upstream.
+commit 754e9e49b76fd5be339172aa98544182ed3ca75e upstream.
 
-blk_time_get_ns() populates the per-plug cached timestamp and then
-returns it by re-reading the field:
+The PKEY_VERIFYPROTK ioctl takes data from user-space and verifies the
+contained protected key. While checking the integrity of the ioctl
+request structure is the responsibility of the generic pkey_api code,
+the verification of the contained protected key is the responsibility
+of the pkey handler.
 
-	if (!plug->cur_ktime) {
-		plug->cur_ktime = ktime_get_ns();
-		current->flags |= PF_BLOCK_TS;
-	}
-	return plug->cur_ktime;
+The keytype verification (based on the calculated bitsize of the key)
+is part of the protected key verification and therefore the
+responsibility of the pkey handler (which already verifies
+it). Therefore the keytype verification is removed from the generic
+pkey_api code.
 
-This is problematic when the compiler emits the final
-"return plug->cur_ktime" as a reload from memory, after PF_BLOCK_TS has
-already been set.
+As the calculation of the key bitsize is currently wrong, the removal
+of the keytype check in pkey_api also removes this wrong
+calculation. For this reason, the commit is flagged with the Fixes:
+tag.
 
-Since the cached timestamp is now invalidated from finish_task_switch()
-(fad156c2af22 "block: invalidate cached plug timestamp after task
-switch"), a task preempted between setting PF_BLOCK_TS and that reload
-has plug->cur_ktime zeroed by blk_plug_invalidate_ts() when it is
-scheduled back in.  The reload then returns 0.
-
-A 0 handed back here is stored as a start timestamp -- e.g.
-blk_account_io_start() writes it to rq->start_time_ns -- and later
-subtracted from "now".  blk_account_io_done() then adds (now - 0), i.e.
-roughly the system uptime, to the per-group nsecs[] counters.  On an
-otherwise idle, healthy device this appears as sudden ~uptime-sized jumps
-in the diskstats time fields (write_ticks/discard_ticks/time_in_queue).
-
-The solution is to be explicit in our reads and writes to this field
-that is preemption volatile.  We also add a barrier() to ensure that any
-setting of PF_BLOCK_TS is ordered to happen after the cur_ktime update.
-
-This issue was discovered using AI-assisted kprobes looking for paths
-that were leaking zeroed timestamps in a live system, based on the
-observation that we were sometimes seeing uptime-sized jumps in kernel
-exported counters. This was flagged by NodeDiskIOSaturation
-prometheus alerts that started firing on all hosts post 7.1.3 kernel
-upgrade, due to node-exporter now exporting a nonsensical
-node_disk_io_time_weighted_seconds_total.
-
-Fixes: fad156c2af22 ("block: invalidate cached plug timestamp after task switch")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mike Waychison <mike@waychison.com>
-Assisted-by: Claude:claude-opus-4.8
-Link: https://patch.msgid.link/20260715192950.2488921-1-mike@waychison.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@kernel.org # 6.12+
+Fixes: 8fcc231ce3be ("s390/pkey: Introduce pkey base with handler registry and handler modules")
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk.h |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/s390/crypto/pkey_api.c |   11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -699,6 +699,7 @@ static inline int req_ref_read(struct re
- static inline u64 blk_time_get_ns(void)
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -328,7 +328,6 @@ static int pkey_ioctl_verifyprotk(struct
  {
- 	struct blk_plug *plug = current->plug;
-+	u64 now;
+ 	struct pkey_verifyprotk kvp;
+ 	struct protaeskeytoken *t;
+-	u32 keytype;
+ 	u8 *tmpbuf;
+ 	int rc;
  
- 	if (!plug || !in_task())
- 		return ktime_get_ns();
-@@ -707,12 +708,18 @@ static inline u64 blk_time_get_ns(void)
- 	 * 0 could very well be a valid time, but rather than flag "this is
- 	 * a valid timestamp" separately, just accept that we'll do an extra
- 	 * ktime_get_ns() if we just happen to get 0 as the current time.
-+	 *
-+	 * cur_ktime can be zeroed by pre-emption the moment PF_BLOCK_TS is set.
- 	 */
--	if (!plug->cur_ktime) {
--		plug->cur_ktime = ktime_get_ns();
-+	now = READ_ONCE(plug->cur_ktime);
-+	if (!now) {
-+		now = ktime_get_ns();
-+		WRITE_ONCE(plug->cur_ktime, now);
-+		/* Ensure PF_BLOCK_TS is set after cur_ktime. */
-+		barrier();
- 		current->flags |= PF_BLOCK_TS;
+@@ -342,14 +341,6 @@ static int pkey_ioctl_verifyprotk(struct
+ 		return -EINVAL;
  	}
--	return plug->cur_ktime;
-+	return now;
- }
  
- static inline ktime_t blk_time_get(void)
+-	keytype = pkey_aes_bitsize_to_keytype(8 * kvp.protkey.len);
+-	if (!keytype) {
+-		PKEY_DBF_ERR("%s unknown/unsupported protkey length %u\n",
+-			     __func__, kvp.protkey.len);
+-		memzero_explicit(&kvp, sizeof(kvp));
+-		return -EINVAL;
+-	}
+-
+ 	/* build a 'protected key token' from the raw protected key */
+ 	tmpbuf = kzalloc(sizeof(*t), GFP_KERNEL);
+ 	if (!tmpbuf) {
+@@ -359,7 +350,7 @@ static int pkey_ioctl_verifyprotk(struct
+ 	t = (struct protaeskeytoken *)tmpbuf;
+ 	t->type = TOKTYPE_NON_CCA;
+ 	t->version = TOKVER_PROTECTED_KEY;
+-	t->keytype = keytype;
++	t->keytype = kvp.protkey.type;
+ 	t->len = kvp.protkey.len;
+ 	memcpy(t->protkey, kvp.protkey.protkey, kvp.protkey.len);
+ 
 
 
