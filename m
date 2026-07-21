@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B77846A60E;
-	Tue, 21 Jul 2026 19:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39577415F14;
+	Tue, 21 Jul 2026 19:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661774; cv=none; b=jJC+amsNat6/76WoHsxit2RFUKWP40gIkz8jwJKBWrs1xjmekqd4EiDO2I6sujPVDAbeILzQRKUPFbdEVVQOwi00ojo6Sq371bYO3BO8tJZGI3mnJ0XehJfKI7OIEv6uoa+BbsvgJf7M2V3YOQlolPB0ZH8YkahbMOTzJtWJXzA=
+	t=1784661777; cv=none; b=AS2xgQxXcF2fjzjcnhf9zSfKljtzHZTvi8du7Ux7/WiIB9W4fiaUscHgtXBBZFqkzVFIEm0UXgJWJhPq6Jtc9sZj0e5oRqIwY3k0zyIkTiN2R4JoTuazEZpas3mfMzKprgf+EUMRRXY4rsQ8Nd6U0iHKQu/sivV7J/d0lRO3JW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661774; c=relaxed/simple;
-	bh=FeodNrVQQPOXkhq+sLX0I/VyrNdnwgvZPkcoStRp2NQ=;
+	s=arc-20240116; t=1784661777; c=relaxed/simple;
+	bh=rFds99Nz/O1nGjaA30bOGGLuGlOYU06Y9/N2CF7jvKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cG8wtzZQrLRS6i2lJn8dKEwgFjCj4YtKpKVqyxIw27ezAhb6EHd5JRWr7uDAh3vFX9yUtcJnZmIlZevYT0fBVIZsRuPKdVqqXoPsYEz2EYhZS3SWARnxZtC+rU3Cq5otOoHA3x23kVnuCAXqq/UZJt1eHwfgElkL+5fWBw7Ltmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nv/yYiJv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P0psBYx4omAbl9Pcby6wafknQgin3iEO0Z+l9YHTocJOELYexQF6yUfyxUVAUcke1cau7QmzU2697xRoPPoZLaYBSv1ENkTHtiAz3JksVjDB1MSmjdjhtQ8Zu0UAQcPp+H2F8tboG4DYPvUTyNgmRFMh2QReKiaUJ+gTWFzFzZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vrmOtp1u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nv/yYiJv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130191F000E9;
-	Tue, 21 Jul 2026 19:22:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vrmOtp1u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68DA1F000E9;
+	Tue, 21 Jul 2026 19:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661773;
-	bh=fBH0qC/FLiTKK2Gmd6xXQGCPgbb/BVvYZC60IaEymos=;
+	s=korg; t=1784661776;
+	bh=XMg8p19dpW8XCOKItba3vuRobrvxTv8/kVt2xBHW1CM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nv/yYiJv1kpkqM7AkCHQwp1a9Fe/zvV5IdsHmv/r8xUdEqK2oN+WBzumvv64RK7+t
-	 Q3YmFDpKF6ABk4+N+PNtWyTneOTNnP2Sv4IF1gEl7EgpU3wwVKCeH2EtMb0sDz9b+e
-	 wgvkXW890kTPa3iulFMLfhrSYtHm6G37vIbg/xEM=
+	b=vrmOtp1u1IJgtxqb9AsTQ5wOoQ/s7AUdmIwUma8bOD3kUN3ZguLY2zWjTXrteeNzw
+	 ucdbpOGBz+HTFFjdryBAghscN96Cc8m3gqIl1PVw8weKbLXfu5rNEGO1AygMs7cc71
+	 kR5sphuGVvusjVYolfnIBKhNS1aYwI0hHMqGjh7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	abaci-kreproducer <abaci@linux.alibaba.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0194/1276] sched/deadline: Reject debugfs dl_server writes for offline CPUs
-Date: Tue, 21 Jul 2026 17:10:37 +0200
-Message-ID: <20260721152450.426927445@linuxfoundation.org>
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Val Packett <val@packett.cool>,
+	Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Subject: [PATCH 6.12 0195/1276] drm/msm/dp: fix HPD state status bit shift value
+Date: Tue, 21 Jul 2026 17:10:38 +0200
+Message-ID: <20260721152450.447951821@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -54,66 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
 
-[ Upstream commit 4043f549841619a01999bf5d4e0b7931ef87f6cc ]
+[ Upstream commit 2e6c2e81d81251623c458a60e2a57447dcbc988e ]
 
-Writing runtime or period via the per-CPU dl_server debugfs files
-(/sys/kernel/debug/sched/{fair,ext}_server/cpu*/{runtime,period}) on an
-offline CPU can trigger two distinct kernel issues:
+The HPD state status is the 3 most significant bits, not 4 bits of the
+HPD_INT_STATUS register.
 
-1) Divide-by-zero in dl_server_apply_params():
+Fix the bit shift macro so that the correct bits are returned in
+msm_dp_aux_is_link_connected().
 
-  Oops: divide error: 0000 [#1] SMP NOPTI
-  RIP: 0010:dl_server_apply_params+0x239/0x3a0
-  Call Trace:
-   sched_server_write_common.isra.0+0x21a/0x3c0
-   full_proxy_write+0x78/0xd0
-   vfs_write+0xe7/0x6e0
-
-  Both __dl_sub() and __dl_add() divide by cpus internally, which can be
-  0 once the CPU has been removed from any active root-domain span (this
-  has been latent since the debugfs interface was introduced).
-
-2) WARN_ON_ONCE in dl_server_start():
-
-  WARNING: kernel/sched/deadline.c:1805 at dl_server_start+0x232/0x270
-
-  Commit ee6e44dfe6e5 ("sched/deadline: Stop dl_server before CPU goes
-  offline") added this check to catch enqueueing the server on an
-  offline rq.
-
-There's no meaningful semantics for re-configuring the per-CPU dl_server
-bandwidth while the CPU is offline, so simply reject the write with
--EBUSY so userspace gets a clear error.
-
-Closes: https://lore.kernel.org/all/20260526092228.3B6891F00A3A@smtp.kernel.org/
-Fixes: d741f297bcea ("sched/fair: Fair server interface")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
-Tested-by: abaci-kreproducer <abaci@linux.alibaba.com>
-Link: https://patch.msgid.link/20260526100502.575774-1-arighi@nvidia.com
+Fixes: 19e52bcb27c2 ("drm/msm/dp: return correct connection status after suspend")
+Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Tested-by: Val Packett <val@packett.cool> # x1e80100-dell-latitude-7455
+Tested-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com> # Hamoa IOT EVK, QCS8300 Ride
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/727611/
+Link: https://lore.kernel.org/r/20260524-hpd-refactor-v6-1-cf3ab488dd7b@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/debug.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/msm/dp/dp_reg.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/debug.c b/kernel/sched/debug.c
-index 564ea17ae405e3..27dcb5a9be4f85 100644
---- a/kernel/sched/debug.c
-+++ b/kernel/sched/debug.c
-@@ -378,6 +378,9 @@ static ssize_t sched_fair_server_write(struct file *filp, const char __user *ubu
- 			return  -EINVAL;
- 		}
+diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
+index 3835c7f5cb9844..2b6c8ba2335fcc 100644
+--- a/drivers/gpu/drm/msm/dp/dp_reg.h
++++ b/drivers/gpu/drm/msm/dp/dp_reg.h
+@@ -49,8 +49,8 @@
+ #define DP_DP_IRQ_HPD_INT_ACK			(0x00000002)
+ #define DP_DP_HPD_REPLUG_INT_ACK		(0x00000004)
+ #define DP_DP_HPD_UNPLUG_INT_ACK		(0x00000008)
+-#define DP_DP_HPD_STATE_STATUS_BITS_MASK	(0x0000000F)
+-#define DP_DP_HPD_STATE_STATUS_BITS_SHIFT	(0x1C)
++#define DP_DP_HPD_STATE_STATUS_BITS_MASK	(0x00000007)
++#define DP_DP_HPD_STATE_STATUS_BITS_SHIFT	(0x1D)
  
-+		if (!cpu_online(cpu_of(rq)))
-+			return -EBUSY;
-+
- 		update_rq_clock(rq);
- 		dl_server_stop(&rq->fair_server);
- 
+ #define REG_DP_DP_HPD_INT_MASK			(0x0000000C)
+ #define DP_DP_HPD_PLUG_INT_MASK			(0x00000001)
 -- 
 2.53.0
 
