@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FC13B8412;
-	Tue, 21 Jul 2026 21:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939F544AB6E;
+	Tue, 21 Jul 2026 21:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670777; cv=none; b=LcEjWafGMRoYco+gnnjCL5Tes/f0frSTDfNrKEP3bdegFVmQfqpBbRseVmsT3HOtQ4ZqPmb57/+iyan/xCPi2IP1aPUZ4luMBhIlsIPDxGT7n+GsmF3ykUonyibIjvcFCJQDUOKJQDnE6OH+5QDtzX4NYsw355Y2rZJu/rjymuQ=
+	t=1784670779; cv=none; b=e2qUgXX1vGNnkRgHZz/84yf7goMVfKcQVDQEsACjHKlfjKSftuZXqnwGypuoIyXXdSVqR4uezSChOyG3UOwNMlcShQWanlbrwN2apRKidTT6cTBJLKjAXrHZQYvGUFmxeLVlS8Ig59Txe1yWg6daRLXxeSubPBLDUBFj9g2fN5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670777; c=relaxed/simple;
-	bh=57Yxmr3FGqGX+0xDJWe44dQVGz8mjqZ6ugpqAjkU4dY=;
+	s=arc-20240116; t=1784670779; c=relaxed/simple;
+	bh=1nGx7n1MSlC+NIA4RE8k9y9bpjdj6yGO8ZQoT0yxTKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XD1Ezig/XX6b0sW3S/2QDodBPI/t+HQQT6V6P/jVvM3bEX5Z0xQXAHJx6lK7/uI/NBp2n05Mm9mJuX78jS+1uaPcIcHYjzCEYoa2rCgJMWIl85Ec21yHdbczsis34l84BRc/h3JEPyb8q3PWBBjLyoBCwZlGRqTC5yC8W+Axtbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2Bu5bK+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NylqmOWLEDHqYh+lgOdZ9WV1I6jozxubpFQwgndb3TfSAgzoctBJQgIPxbQLL71UzRd22vAt+wHtI/qVrOXb3jA5VtCPl6XBwPeqp00TlwMduozpaIsKP4JddpbfsyW+le77f6JBfRexT2EDtRfzXa2+WI2jQCcMZdxLPhW42A8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s0TSi2mr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2Bu5bK+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5EE1F000E9;
-	Tue, 21 Jul 2026 21:52:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s0TSi2mr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9181F000E9;
+	Tue, 21 Jul 2026 21:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670775;
-	bh=gtZTRwuZ6GwJJ8x7XoLVOMeV6Eo2SH/WfPfeBYfOmwo=;
+	s=korg; t=1784670778;
+	bh=WHPZxT7xt0y261R8IcAGSFnwk6j0iM6sWIRLca0c7rY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T2Bu5bK+8E9O9ZS4RjaxoFv/LfQJJ3l+7Eed4v2V5iH/B7TcQqYJqVfuU/iAAO6cT
-	 RkGoQDlMBFBkohdRbfdVe9f2C2+NtPmX3r6AdrmDhPAumreQPDm9CITva8Lx0LI2m1
-	 GG9LNpvH/KmevqVUYhRXqkcvFwpI30zhH+4XKNoA=
+	b=s0TSi2mrAz0rVPtE6pfonLbNvTB7zrjBojya5lVkHSOBOgEhB63YgPUtLpEc8vMu9
+	 9YmeeIP5JbtgQDv3hK03aVFHbTnb9r6Qr9Ps7PFS3G85drHPKBzeiBqBwuQMg4zCfd
+	 i9CE+hSuYBqRhrmU9yBsKzkBCQ1syzS7htvi70Jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ning, Hongyu" <hongyu.ning@linux.intel.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Parav Pandit <parav@nvidia.com>
-Subject: [PATCH 6.1 1059/1067] virtio_ring: fix syncs DMA memory with different direction
-Date: Tue, 21 Jul 2026 17:27:40 +0200
-Message-ID: <20260721152448.276721811@linuxfoundation.org>
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 1060/1067] iio: imu: inv_mpu6050: fix frequency setting when chip is off
+Date: Tue, 21 Jul 2026 17:27:41 +0200
+Message-ID: <20260721152448.298309052@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,95 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-commit 1f475cd572ea77ae6474a17e693a96bca927efe9 upstream.
+commit daec424cc57b33a28f8621eb7ac85f8bd327bd6b upstream.
 
-Now the APIs virtqueue_dma_sync_single_range_for_{cpu,device} ignore
-the parameter 'dir', that is a mistake.
+Track correctly FIFO state and apply ODR change before starting
+the chip. Without the fix, you cannot change ODR more than 1 time
+when data buffering is off. This restriction on a single pending ODR
+change should only apply when the FIFO is on.
 
-[    6.101666] ------------[ cut here ]------------
-[    6.102079] DMA-API: virtio-pci 0000:00:04.0: device driver syncs DMA memory with different direction [device address=0x00000000ae010000] [size=32752 bytes] [mapped with DMA_FROM_DEVICE] [synced with DMA_BIDIRECTIONAL]
-[    6.103630] WARNING: CPU: 6 PID: 0 at kernel/dma/debug.c:1125 check_sync+0x53e/0x6c0
-[    6.107420] CPU: 6 PID: 0 Comm: swapper/6 Tainted: G            E      6.6.0+ #290
-[    6.108030] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-[    6.108936] RIP: 0010:check_sync+0x53e/0x6c0
-[    6.109289] Code: 24 10 e8 f5 d9 74 00 4c 8b 4c 24 10 4c 8b 44 24 18 48 8b 4c 24 20 48 89 c6 41 56 4c 89 ea 48 c7 c7 b0 f1 50 82 e8 32 fc f3 ff <0f> 0b 48 c7 c7 48 4b 4a 82 e8 74 d9 fc ff 8b 73 4c 48 8d 7b 50 31
-[    6.110750] RSP: 0018:ffffc90000180cd8 EFLAGS: 00010092
-[    6.111178] RAX: 00000000000000ce RBX: ffff888100aa5900 RCX: 0000000000000000
-[    6.111744] RDX: 0000000000000104 RSI: ffffffff824c3208 RDI: 00000000ffffffff
-[    6.112316] RBP: ffffc90000180d40 R08: 0000000000000000 R09: 00000000fffeffff
-[    6.112893] R10: ffffc90000180b98 R11: ffffffff82f63308 R12: ffffffff83d5af00
-[    6.113460] R13: ffff888100998200 R14: ffffffff824a4b5f R15: 0000000000000286
-[    6.114027] FS:  0000000000000000(0000) GS:ffff88842fd80000(0000) knlGS:0000000000000000
-[    6.114665] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    6.115128] CR2: 00007f10f1e03030 CR3: 0000000108272004 CR4: 0000000000770ee0
-[    6.115701] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[    6.116272] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[    6.116842] PKRU: 55555554
-[    6.117069] Call Trace:
-[    6.117275]  <IRQ>
-[    6.117452]  ? __warn+0x84/0x140
-[    6.117727]  ? check_sync+0x53e/0x6c0
-[    6.118034]  ? __report_bug+0xea/0x100
-[    6.118353]  ? check_sync+0x53e/0x6c0
-[    6.118653]  ? report_bug+0x41/0xc0
-[    6.118944]  ? handle_bug+0x3c/0x70
-[    6.119237]  ? exc_invalid_op+0x18/0x70
-[    6.119551]  ? asm_exc_invalid_op+0x1a/0x20
-[    6.119900]  ? check_sync+0x53e/0x6c0
-[    6.120199]  ? check_sync+0x53e/0x6c0
-[    6.120499]  debug_dma_sync_single_for_cpu+0x5c/0x70
-[    6.120906]  ? dma_sync_single_for_cpu+0xb7/0x100
-[    6.121291]  virtnet_rq_unmap+0x158/0x170 [virtio_net]
-[    6.121716]  virtnet_receive+0x196/0x220 [virtio_net]
-[    6.122135]  virtnet_poll+0x48/0x1b0 [virtio_net]
-[    6.122524]  __napi_poll+0x29/0x1b0
-[    6.123083]  net_rx_action+0x282/0x360
-[    6.123612]  __do_softirq+0xf3/0x2fb
-[    6.124138]  __irq_exit_rcu+0x8e/0xf0
-[    6.124663]  common_interrupt+0xbc/0xe0
-[    6.125202]  </IRQ>
-
-We need to enable CONFIG_DMA_API_DEBUG and work with need sync mode(such
-as swiotlb) to reproduce this warn.
-
-Fixes: 8bd2f71054bd ("virtio_ring: introduce dma sync api for virtqueue")
-Reported-by: "Ning, Hongyu" <hongyu.ning@linux.intel.com>
-Closes: https://lore.kernel.org/all/f37cb55a-6fc8-4e21-8789-46d468325eea@linux.intel.com/
-Suggested-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Message-Id: <20231201033303.25141-1-xuanzhuo@linux.alibaba.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Parav Pandit <parav@nvidia.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Tested-by: Hongyu Ning <hongyu.ning@linux.intel.com>
+Fixes: 111e1abd0045 ("iio: imu: inv_mpu6050: use the common inv_sensors timestamp module")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Link: https://lore.kernel.org/r/20240219154741.90601-1-inv.git-commit@tdk.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virtio/virtio_ring.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/virtio/virtio_ring.c
-+++ b/drivers/virtio/virtio_ring.c
-@@ -3039,8 +3039,7 @@ void virtqueue_dma_sync_single_range_for
- 	if (!vq->use_dma_api)
- 		return;
- 
--	dma_sync_single_range_for_cpu(dev, addr, offset, size,
--				      DMA_BIDIRECTIONAL);
-+	dma_sync_single_range_for_cpu(dev, addr, offset, size, dir);
- }
- EXPORT_SYMBOL_GPL(virtqueue_dma_sync_single_range_for_cpu);
- 
-@@ -3066,8 +3065,7 @@ void virtqueue_dma_sync_single_range_for
- 	if (!vq->use_dma_api)
- 		return;
- 
--	dma_sync_single_range_for_device(dev, addr, offset, size,
--					 DMA_BIDIRECTIONAL);
-+	dma_sync_single_range_for_device(dev, addr, offset, size, dir);
- }
- EXPORT_SYMBOL_GPL(virtqueue_dma_sync_single_range_for_device);
- 
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
+@@ -111,6 +111,7 @@ int inv_mpu6050_prepare_fifo(struct inv_
+ 	if (enable) {
+ 		/* reset timestamping */
+ 		inv_sensors_timestamp_reset(&st->timestamp);
++		inv_sensors_timestamp_apply_odr(&st->timestamp, 0, 0, 0);
+ 		/* reset FIFO */
+ 		d = st->chip_config.user_ctrl | INV_MPU6050_BIT_FIFO_RST;
+ 		ret = regmap_write(st->map, st->reg->user_ctrl, d);
+@@ -184,6 +185,10 @@ static int inv_mpu6050_set_enable(struct
+ 		if (result)
+ 			goto error_power_off;
+ 	} else {
++		st->chip_config.gyro_fifo_enable = 0;
++		st->chip_config.accl_fifo_enable = 0;
++		st->chip_config.temp_fifo_enable = 0;
++		st->chip_config.magn_fifo_enable = 0;
+ 		result = inv_mpu6050_prepare_fifo(st, false);
+ 		if (result)
+ 			goto error_power_off;
 
 
