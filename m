@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0D33C1400;
-	Tue, 21 Jul 2026 22:48:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ACB23C1F22;
+	Tue, 21 Jul 2026 22:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674135; cv=none; b=AOHpvhK6GErVWkPANpN1UsBbWB8UhzTmozb4fy94H3vxDjCtYRl7LB2hVVOCqyder+edRS1pW7kDyVUiDp4GFB4r/h+GrdOKq49EhSZYP4aaZMR9WagrtEt6GCGZhcauIEqy6nht0XLfs0AOL5HBzskiZ9Uib1O1oBct9Yd6PM4=
+	t=1784674137; cv=none; b=IALZkkxD3X+NX4IPet9qP+N1h/dOa5EU9z35CjrCxN/1PMC7CfhWIUtB0hhz+MPJD+R4gc0bmco75hbJ1Uk7Y5KsMabpcDUfadd3lqnc31xQvaYqMmxM5+opMkn/QhDyemWcnvLFAIDwaubRNx9UySlzRtgylbRcfM8DjaZwI+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674135; c=relaxed/simple;
-	bh=hwwjvMYluCtd66BugRc1WGyorJCRGbWjJm6xvMqJ4+Q=;
+	s=arc-20240116; t=1784674137; c=relaxed/simple;
+	bh=qE/mG/aaD5JaR922boBX0rRDPUsbj3a9cyY4Ol3A+aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CyIMfe3nTI2PqjdNuJSB85pxeFZWdvZ3A0YCk+Mnoji9UqQlAhFWMPRMBW8ejqR5jA3V2qAsov4LXmZoRorgxrjBAoF1zgwc+9F5zHqflN+UDDryqZ98s/BVTmJMLN/zjWY0QlIq//YEXE19TqH1LKkzebq/CNcfCovWUtn2jYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMmp4wjV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y2qW0Aslir9f2jcZ1Pnx7VC2TO4sr9ZXbLUb+JUQQlFofoFW5TZitUeEAjOQ0DmvJ9tPGmAy6KQzajOINGL1d4/En8+gB/OtZ81N921EWdR4qHoo1gqz6ga1KWvp7prpArs1lVdoWJUm2hKlhyzFQBiqZc7gLhyGBrOTx//24Jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgreKiun; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMmp4wjV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479E91F000E9;
-	Tue, 21 Jul 2026 22:48:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgreKiun"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01FB1F000E9;
+	Tue, 21 Jul 2026 22:48:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674133;
-	bh=VSvg3/9/OR12YlLIMIH6fd3ffKa5MU7yynQQdoqyF0g=;
+	s=korg; t=1784674136;
+	bh=zzE49wu/UTVhyFJaWyEUI9+ehVmx75adzVOFuw5Xo4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PMmp4wjVpZjnRJnRzIpJV+mF4AOREVICULhcVLzbw/43T1TCzoX4qbYYQBeCVllrg
-	 6FLeAdFaiEjpBL9WRs5K70lKJv+tmYHm1bp3HUCsJifBGgpFx3ukN1GR8V/Wb4LOjt
-	 seLg2iM0/MxC+ZYKwYx6lq/fk1dtGl9+0zkmXt/s=
+	b=RgreKiun2ymDAW5OtYCStnOlqv7H26dpelWKp7LfskAmjzychLKCjG3NrZokvY8Uo
+	 W67AryDAMMoT15s9LEqnP7quES7G0Kzc72gqNExgZrOZT81tTU6EdvvcPFX0lCK9oO
+	 nRGqYBx0pKzOmzqWv7LGlOnfkGulkFL2xgYw5Vxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Timur Tabi <ttabi@nvidia.com>,
-	Mark Brown <broonie@kernel.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	Simon Horman <horms@kernel.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 426/699] regulator: core: regulator_lock_two() should test for EDEADLK not EDEADLOCK
-Date: Tue, 21 Jul 2026 17:23:05 +0200
-Message-ID: <20260721152405.302253886@linuxfoundation.org>
+Subject: [PATCH 5.10 427/699] net/mlx5: Fix L3 tunnel entropy refcount leak
+Date: Tue, 21 Jul 2026 17:23:06 +0200
+Message-ID: <20260721152405.325028548@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,63 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Timur Tabi <ttabi@nvidia.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit d38f8bd771c4999b797d7074b348cf201414bd34 ]
+[ Upstream commit c914307e1d41c2cb7bcdcbfde4cd2f214f6aa027 ]
 
-Compare against -EDEADLK, which is what ww_mutex_lock() actually
-returns and what every other deadlock check in this file already uses.
+mlx5_tun_entropy_refcount_inc() counts both VXLAN and L2-to-L3
+tunnel reformat entries as entropy-enabling users. The matching
+decrement path only handled VXLAN, leaving L2-to-L3 tunnel entries
+counted after release.
 
-Function regulator_lock_two() acquires two regulators via
-regulator_lock_nested() -> ww_mutex_lock().  On contention,
-ww_mutex_lock() returns -EDEADLK, which is the caller's signal to drop
-the lock it holds and retry the acquisition in the canonical order.
+Handle MLX5_REFORMAT_TYPE_L2_TO_L3_TUNNEL in
+mlx5_tun_entropy_refcount_dec() as well so the enabling entry
+refcount remains balanced.
 
-However, regulator_lock_two() tests the return value against -EDEADLOCK
-rather than -EDEADLK.  On most architectures, EDEADLK and EDEADLOCK are
-the same value, so the comparison happens to be correct and the bug is
-invisible.  But on MIPS, SPARC, and PowerPC, those two errors have
-different values.  The test is wrong: a genuine -EDEADLK backoff no
-longer matches -EDEADLOCK, so instead of unlocking and retrying, the
-code falls into WARN_ON(ret) and returns with only one of the two
-regulators locked.
-
-In practice, this is a bug only on MIPS, because the regulator core is
-not built or used on the other two platforms.
-
-In general, EDEADLK is preferred over EDEADLOCK for new code.
-
-Fixes: cba6cfdc7c3f ("regulator: core: Avoid lockdep reports when resolving supplies")
-Signed-off-by: Timur Tabi <ttabi@nvidia.com>
-Link: https://patch.msgid.link/20260708235722.2953579-1-ttabi@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f828ca6a2fb6 ("net/mlx5e: Add support for hw encapsulation of MPLS over UDP")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260703141423.1723-1-lirongqing@baidu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 61971705b96fb1..335150e7775686 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -237,7 +237,7 @@ static void regulator_lock_two(struct regulator_dev *rdev1,
- 	ret = regulator_lock_nested(rdev1, ww_ctx);
- 	WARN_ON(ret);
- 	ret = regulator_lock_nested(rdev2, ww_ctx);
--	if (ret != -EDEADLOCK) {
-+	if (ret != -EDEADLK) {
- 		WARN_ON(ret);
- 		goto exit;
- 	}
-@@ -253,7 +253,7 @@ static void regulator_lock_two(struct regulator_dev *rdev1,
- 		swap(held, contended);
- 		ret = regulator_lock_nested(contended, ww_ctx);
- 
--		if (ret != -EDEADLOCK) {
-+		if (ret != -EDEADLK) {
- 			WARN_ON(ret);
- 			break;
- 		}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c
+index e042e092407939..1642ff7915ff84 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c
+@@ -177,7 +177,8 @@ void mlx5_tun_entropy_refcount_dec(struct mlx5_tun_entropy *tun_entropy,
+ 				   int reformat_type)
+ {
+ 	mutex_lock(&tun_entropy->lock);
+-	if (reformat_type == MLX5_REFORMAT_TYPE_L2_TO_VXLAN)
++	if (reformat_type == MLX5_REFORMAT_TYPE_L2_TO_VXLAN ||
++	    reformat_type == MLX5_REFORMAT_TYPE_L2_TO_L3_TUNNEL)
+ 		tun_entropy->num_enabling_entries--;
+ 	else if (reformat_type == MLX5_REFORMAT_TYPE_L2_TO_NVGRE &&
+ 		 --tun_entropy->num_disabling_entries == 0)
 -- 
 2.53.0
 
