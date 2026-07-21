@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3B5231829;
-	Tue, 21 Jul 2026 17:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2439470428;
+	Tue, 21 Jul 2026 17:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656232; cv=none; b=rrJ5rwB2FUTFjNfHIKO3cJWiH7it2p3w4zvIpGSz0fd6aJpW73KE6yA0QgvCKf1sDFqRa46EZR/EIhkLi5gl+I9SC4z5t7rFGz45uMyySVZc/0K3mD6AVenDFGgjzUeoeY7NWzTltEkuEgsfXHqNgox7B9aRu2uTHvTfq16MigA=
+	t=1784656235; cv=none; b=Xlu8UVvD00zs/cigqr2W8T4zI68MDBbssdHZvW6g/K3agsu0kis7w3IQEJq+gz8yXk3NL+bFZOfnifNIZaaasnlqPlWTYKz99dKveDs14Bf93+gmL2oqzCIAFVYEHbQ8GBMD1imwN16CgxZD12CFPbMHv2MGlz1imL+ou/vCUsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656232; c=relaxed/simple;
-	bh=jzSf34230iVL9nwU992RqLQh9koCkF+WseuXfGhNunw=;
+	s=arc-20240116; t=1784656235; c=relaxed/simple;
+	bh=INaywhpv1bQ7fwebFUAZGz7rEDQqGqWdYA8euG18SVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u16CN1DGlXygnRTcKYYD3qc9hMrtTjpUTfUmXFCTAPboXg7btsPKVJD3nP+1QNjVQ4f+k2KOBD9EijRML87iL1mYoO3PVvVY+7IJepT5IsKd5jXiULhvq9GbNfDNyStJivJvyQU5jftXmvUGqxRJb40CecqUlqYsyLw2FdKRXFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9CunCcR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sKCLbVOVjxLxbdXKj7DoVUyvKm3+QwNxoASGaTI+AbNks2Qu5H/3HG4llGzuhVMHHED49R5ZfJbmxmP89brTtHN8udEAen46G/AB6uPdWFxzSNBbaaRLVHvgEcyMzAjOi6+ZZwx0o3OT2vbvi6zHeMzXPMK/OZXYnU8nMwXt8Ac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBjQQplg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9CunCcR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE631F000E9;
-	Tue, 21 Jul 2026 17:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBjQQplg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366451F00A3A;
+	Tue, 21 Jul 2026 17:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656231;
-	bh=YW5Vu/D1wL1AinnygCO+zxZndAnyzU8sFfz8qfmgUGA=;
+	s=korg; t=1784656233;
+	bh=eBdtkpdH0/JonvwxveURm6YJskgdv1zxG5jQ3MLkhko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X9CunCcR8eeQOQ/HLJkxDTHm6GaGOhH3rN2NSkNYuiD8XTsdbgE1i2EY7izXezrdH
-	 Qp3EQo6xE5jrh1YVloT/fbcgboExfke2O0+ScEChLvYDRSZX3si7MfWCgEK1u50wHl
-	 jqq6v4FL6gUieywH5LWTjUWwUp76XDxAsx4pCXz0=
+	b=sBjQQplgu00hIqqB4jG4wNWr38DhLZuhxiN37fgsgNlqsuuKMr4UQaWBtSi8YS1eY
+	 5VlVYDbqTbNMg40Pn3ZL/XGaAqoE5ACRmK98jopya2jpNlsypuJBt0mGBD7yosYzh2
+	 mQweygyeOT2ReJ8k/phu/P1xv9LB2bJ/szKcxIto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sang-Heon Jeon <ekffu200098@gmail.com>,
-	Donghyeon Lee <asd142513@gmail.com>,
-	Munhui Chae <mochae@student.42seoul.kr>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Chen Cheng <chencheng@fnnas.com>,
+	Xiao Ni <xiao@kernel.org>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0309/1611] mm/fake-numa: fix under-allocation detection in uniform split
-Date: Tue, 21 Jul 2026 17:07:05 +0200
-Message-ID: <20260721152522.025427158@linuxfoundation.org>
+Subject: [PATCH 6.18 0283/1611] md/raid10: reset read_slot when reusing r10bio for discard
+Date: Tue, 21 Jul 2026 17:06:39 +0200
+Message-ID: <20260721152521.422404590@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,87 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Heon Jeon <ekffu200098@gmail.com>
+From: Chen Cheng <chencheng@fnnas.com>
 
-[ Upstream commit 3a3fc1dfd6a958615ebaab8fb251e89fc2b3f2f2 ]
+[ Upstream commit 6b8a26af065ddc93de2aa5c9f0df98dce9723442 ]
 
-When splitting NUMA node uniformly, split_nodes_size_interleave_uniform()
-returns the next absolute node ID, not the number of nodes created.
+put_all_bios() always drops devs[i].bio, but it only drops
+devs[i].repl_bio when r10_bio->read_slot < 0. If discard reuses an
+r10bio that was previously used for a read, read_slot can still be
+non-negative, and discard cleanup can skip bio_put() on repl_bio.
 
-The existing under-allocation detection logic compares next absolute node
-ID (ret) and request count (n), which only works when nid starts at 0.
+Reset read_slot to -1 when preparing an r10bio for discard so the
+replacement bio is always released correctly.
 
-For example, on a system with 2 physical NUMA nodes (node 0: 2GB, node
-1: 128MB) and numa=fake=8U, 8 fake nodes are successfully created from
-node 0 and split_nodes_size_interleave_uniform() returns 8. For node 1,
-fake node nid starts at 8, but only 4 fake nodes are created due to
-current FAKE_NODE_MIN_SIZE being 32MB, and
-split_nodes_size_interleave_uniform() returns 12. By existing
-under-allocation detection logic, "ret < n" (12 < 8) is false, so the
-under-allocation will not be detected.
-
-Fix under-allocation detection logic to compare the number of actually
-created nodes (ret - nid) against the request count (n). Also skip
-under-allocation detection logic for memoryless physical nodes where no
-fake nodes are created.
-
-Also, fix the outdated comment describing
-split_nodes_size_interleave_uniform() to match the actual return value.
-
-Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
-Reported-by: Donghyeon Lee <asd142513@gmail.com>
-Reported-by: Munhui Chae <mochae@student.42seoul.kr>
-Fixes: cc9aec03e58f ("x86/numa_emulation: Introduce uniform split capability") # 4.19
-Link: https://patch.msgid.link/20260417135805.1758378-1-ekffu200098@gmail.com
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Fixes: d30588b2731f ("md/raid10: improve raid10 discard request")
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Reviewed-by: Xiao Ni <xiao@kernel.org>
+Link: https://patch.msgid.link/20260515093019.3436882-1-chencheng@fnnas.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/numa_emulation.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/md/raid10.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/mm/numa_emulation.c b/mm/numa_emulation.c
-index 703c8fa0504801..55f26b22bb0be2 100644
---- a/mm/numa_emulation.c
-+++ b/mm/numa_emulation.c
-@@ -214,7 +214,7 @@ static u64 uniform_size(u64 max_addr, u64 base, u64 hole, int nr_nodes)
-  * Sets up fake nodes of `size' interleaved over physical nodes ranging from
-  * `addr' to `max_addr'.
-  *
-- * Returns zero on success or negative on error.
-+ * Returns node ID of the next node on success or negative error code.
-  */
- static int __init split_nodes_size_interleave_uniform(struct numa_meminfo *ei,
- 					      struct numa_meminfo *pi,
-@@ -398,7 +398,7 @@ void __init numa_emulation(struct numa_meminfo *numa_meminfo, int numa_dist_cnt)
- 	 */
- 	if (strchr(emu_cmdline, 'U')) {
- 		unsigned long n;
--		int nid = 0;
-+		int nid = 0, nr_created;
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 2815c05d1c9f0b..4a8814fd75cd0e 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -1727,6 +1727,7 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
+ 	r10_bio->mddev = mddev;
+ 	r10_bio->state = 0;
+ 	r10_bio->sectors = 0;
++	r10_bio->read_slot = -1;
+ 	memset(r10_bio->devs, 0, sizeof(r10_bio->devs[0]) * geo->raid_disks);
+ 	wait_blocked_dev(mddev, r10_bio);
  
- 		n = simple_strtoul(emu_cmdline, &emu_cmdline, 0);
- 		ret = -1;
-@@ -416,9 +416,18 @@ void __init numa_emulation(struct numa_meminfo *numa_meminfo, int numa_dist_cnt)
- 					n, &pi.blk[0], nid);
- 			if (ret < 0)
- 				break;
--			if (ret < n) {
-+
-+			/*
-+			 * If no memory was found for this physical node,
-+			 * skip the under-allocation check.
-+			 */
-+			if (ret == nid)
-+				continue;
-+
-+			nr_created = ret - nid;
-+			if (nr_created < n) {
- 				pr_info("%s: phys: %d only got %d of %ld nodes, failing\n",
--						__func__, i, ret, n);
-+						__func__, i, nr_created, n);
- 				ret = -1;
- 				break;
- 			}
 -- 
 2.53.0
 
