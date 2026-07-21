@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD182E736D;
-	Tue, 21 Jul 2026 17:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16FC12E736D;
+	Tue, 21 Jul 2026 17:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654461; cv=none; b=WyonFgiS3cJxTuLhkCYbeLR/u5AekiK23zwxzQtkDaFwxziJm9ObRlmIrKCSYYQrWE5lcMWCJnEXCIozz04c2mSLsA9qMO6aCfjyc/8NDBBNXrq794p11ccn88dJLYvPIWnbPApW41w+Z8IasN+UoOLwFty59LzMNQyAoZ4ot9Y=
+	t=1784654464; cv=none; b=NrfknA5loGzw5Qv2AxOoLj4ZLx9EHLS1rPkwNNsiJ4qMxuqq6O+aBvEG62E+oUh6+4Qudh9k5Azumj9IE7BMS2omm/oSwrnHUt+56gRWzOZGaxk1fTx6Jk5KHj/TMfLzAIIam4zmAJzS46WuR1ZpsNLh8DJDuWZeXN2G8xDF9zE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654461; c=relaxed/simple;
-	bh=zip+R7yxhLbx69seDue7vJnHAuQ1FKpFhiakr8aiGOo=;
+	s=arc-20240116; t=1784654464; c=relaxed/simple;
+	bh=UvXZZNE3iREnSfTB8pI+PB1vyJp3r2y7qO+sQ981/cE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SG5rNe2OvkJ9oNHrfc5f2ox0+QNezCEBghMU/og/1dKryBvZrdOy8Y4eXNnc0d7aeA5FWz8IK0rjigjvK1WsBgYBBxXMOyCw7xXge3bNC1YUKD6Fv3aHcZeCw24aGDlKbZS7+UytTYLYU5pEyrjlQhe8vKbohb2lkJtX8WUTI8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6IWBYD0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=usI+2nXhNWsK21MXlrtKM5Xisxc6QM5kbv4Iqg2gw9eKCg307lPHmk4ZgH+M2BAEckqNB7EHXHYAUY7yzoSkCArGzFo61QXWAoyEC5aVVXVzDMayHoUQ8c4K0suAnnNRPixiySOl9Npa7YnTtqMzpSzNKUxByzihNBzMVTJ7QjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNpw08mQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6IWBYD0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C671F000E9;
-	Tue, 21 Jul 2026 17:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNpw08mQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23541F000E9;
+	Tue, 21 Jul 2026 17:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654460;
-	bh=TMnj+Ykym+6RM0BTX8Aff1VnEL0ehftx9VnodKtpUyw=;
+	s=korg; t=1784654463;
+	bh=Oycrqih7w3CCg6GYz9x7f6aqxQXei4JQdiCe4XovSOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T6IWBYD0vhajVYa7g6zUvC3/b1QPbiV0KyBA/sNaFkPvnSDzPEypIwMixnouyPq5E
-	 Jq8Qqz5/535auKWQcz2oP4HgEs5JYxnt6ope9bycmaF+rcE3qtW45phTG2W7PCxziL
-	 9ohRstRrdjR7ZtkgyJ9TcKIkoRJyU/4k/syDe7T4=
+	b=bNpw08mQsAJ/colHax4InPjlKOMd5f4rQmvX/BR1PZaHrry6zbKwurHvBjt+BFH6U
+	 dNmvLiIUFj0tuygqZ8QTWocqdIdrFtXcGMiyxGIDKHbcRr0H9dRmpXWH/Nw0QmDmTB
+	 iUtYHSqHLqPXnQJDEG+YpMfkvcQiGC4ClaOmt+W0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 7.1 1706/2077] fs/ntfs3: add depth limit to indx_find_buffer to prevent stack overflow
-Date: Tue, 21 Jul 2026 17:22:59 +0200
-Message-ID: <20260721152632.997758935@linuxfoundation.org>
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 7.1 1715/2077] ntfs: avoid self-deadlock during inode eviction
+Date: Tue, 21 Jul 2026 17:23:08 +0200
+Message-ID: <20260721152633.207112089@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,81 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Hyunchul Lee <hyc.lee@gmail.com>
 
-commit 1ebd684b8f627f75bc3e03f8b2ad8400fd1f02cd upstream.
+commit 77dc384207d5fa63ba97c3bf3285fe1215a1cbf6 upstream.
 
-indx_find_buffer() recursively descends the B+ tree index with no depth
-limit.  A crafted NTFS image with circular index node references causes
-unbounded recursion, overflowing the kernel stack and panicking the
-system.
+An attribute-list update performed while allocating clusters can drop the
+last reference to the temporary attribute inode. Evicting that inode
+drops its reference to the base inode and can invoke ntfs_drop_big_inode()
+for the base inode from within the base inode's own writeback path.
 
-This is reachable by mounting a malicious NTFS filesystem (e.g. from a
-USB drive via desktop automount) and deleting a file whose index entry
-triggers the rebalancing fallback path in indx_delete_entry().
+If the base inode is unlinked, ntfs_drop_big_inode() calls
+truncate_setsize(), which waits for the inode's folio writeback to
+complete. The same writeback worker is responsible for completing that
+writeback, so it waits for itself indefinitely.
 
-Add a depth parameter and bail out with -EINVAL when it reaches the
-fnd->nodes array bound, matching the constraint already enforced by
-fnd_push() in indx_find().
+Prevent this self-deadlock by grabbing a reference to the base inode at the
+beginning of ntfs_writepages() and releasing it at the end of the function.
+This defers eviction until all bios have been submitted, allowing the wait
+for folio writeback to complete safely.
 
-The related function indx_find() was previously patched for a similar
-infinite-loop issue (commit 1732053c8a6b), but indx_find_buffer() was
-missed.
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Fixes: b041ca562526 ("ntfs: update iomap and address space operations")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Hyunchul Lee <hyc.lee@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/index.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ fs/ntfs/aops.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -2022,13 +2022,21 @@ out1:
- static struct indx_node *indx_find_buffer(struct ntfs_index *indx,
- 					  struct ntfs_inode *ni,
- 					  const struct INDEX_ROOT *root,
--					  __le64 vbn, struct indx_node *n)
-+					  __le64 vbn, struct indx_node *n,
-+					  int depth)
- {
- 	int err;
- 	const struct NTFS_DE *e;
- 	struct indx_node *r;
- 	const struct INDEX_HDR *hdr = n ? &n->index->ihdr : &root->ihdr;
+diff --git a/fs/ntfs/aops.c b/fs/ntfs/aops.c
+index 1fbf832ad165..88e5b2def66c 100644
+--- a/fs/ntfs/aops.c
++++ b/fs/ntfs/aops.c
+@@ -251,6 +251,8 @@ static int ntfs_writepages(struct address_space *mapping,
+ 		.wbc		= wbc,
+ 		.ops		= &ntfs_writeback_ops,
+ 	};
++	bool need_iput = false;
++	int ret;
  
+ 	if (NVolShutdown(ni->vol))
+ 		return -EIO;
+@@ -267,7 +269,20 @@ static int ntfs_writepages(struct address_space *mapping,
+ 		return -EOPNOTSUPP;
+ 	}
+ 
+-	return iomap_writepages(&wpc);
 +	/*
-+	 * Limit recursion depth to prevent stack overflow from crafted
-+	 * images.  Use the same bound as the fnd->nodes array (20).
++	 * Prevent eviction in writeback to avoid deadlock in
++	 * ntfs_drop_big_inode().
 +	 */
-+	if (depth > ARRAY_SIZE(((struct ntfs_fnd *)NULL)->nodes))
-+		return ERR_PTR(-EINVAL);
++	if ((ni->type == AT_DATA || ni->type == AT_INDEX_ALLOCATION) &&
++	    igrab(inode))
++		need_iput = true;
 +
- 	/* Step 1: Scan one level. */
- 	for (e = hdr_first_de(hdr);; e = hdr_next_de(hdr, e)) {
- 		if (!e)
-@@ -2049,7 +2057,8 @@ static struct indx_node *indx_find_buffe
- 			if (err)
- 				return ERR_PTR(err);
++	ret = iomap_writepages(&wpc);
++
++	if (need_iput)
++		iput(inode);
++
++	return ret;
+ }
  
--			r = indx_find_buffer(indx, ni, root, vbn, n);
-+			r = indx_find_buffer(indx, ni, root, vbn, n,
-+					     depth + 1);
- 			if (r)
- 				return r;
- 		}
-@@ -2462,7 +2471,7 @@ int indx_delete_entry(struct ntfs_index
- 
- 		fnd_clear(fnd);
- 
--		in = indx_find_buffer(indx, ni, root, sub_vbn, NULL);
-+		in = indx_find_buffer(indx, ni, root, sub_vbn, NULL, 0);
- 		if (IS_ERR(in)) {
- 			err = PTR_ERR(in);
- 			goto out;
+ static int ntfs_swap_activate(struct swap_info_struct *sis,
+-- 
+2.55.0
+
 
 
