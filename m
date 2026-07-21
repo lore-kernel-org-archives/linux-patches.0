@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FFD472F70;
-	Tue, 21 Jul 2026 17:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E65472F71;
+	Tue, 21 Jul 2026 17:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656145; cv=none; b=rsnLfDAcfXTeorW1OmM/3zx7zU7JQF5j9clFmFPJzDK5+gIjnwXUjmyB++ltWqjjF/1tP9lkmV7/0cg4qFBr9GhBiE2/Banod5DCC2Ur/CuKrpOKpO34P9Ch6bc39FaF+Bylq76ZDN0qyv1aaaqOAdOMC4JF0oTu0/Yjydt2Do4=
+	t=1784656147; cv=none; b=Xz0hNjA21RUj71UEynawYmPLR0wGoy6tLsrBA0qn9sY9XmRduqDEeRrIrIrd+oMYtL+sYDnE+7IgVOkHRsoXwqyz0fKmKL+vhXst2AnDH9EfztBnVJxQ6cN/UiKn8E0XLOWt6v6P+MnzWrHhP+/tueEWobXDSyyrHvgxbNJiDPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656145; c=relaxed/simple;
-	bh=cFrzGIR7Q935HvwFa8eyZ38fV5K/2Pdr0t0O6qU6C8o=;
+	s=arc-20240116; t=1784656147; c=relaxed/simple;
+	bh=Xv+6+IM8r/ISED9RQueE6TYiMpG6POjpFgOcQhitkKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FZe80MO6/RTgsIHyd9z15HHXsHQ9MgI0dRSweOQgDGqbK3NaaZ9ZIdv9qva+p1JmkRy4l9tog2kIlANYlUv6oj4riaWkdrLUYaE7jMrFkyOGT151EOLIko4eU3SxrnfmAAT90nP0t3+Hu9WYmVmx8MmSPgVu230xGhskTY55Ct0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ibdQVp+H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pj4JhTehtzh1qNPBB//m9p2clDqzJwLltLV6L2WXLrKG6escEngiIyxmoLZvpmTCSSXRneHI/3Jfb+q+TnLxS94RSAd9+UDnh+HenKWUPHIvj2BbM80KLcI1hMVYkaVMynYfYMuC2SlrAjE7in6SbexrFAy5FiMLuoWWtNZrqDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/6O8Q6a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ibdQVp+H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3CC1F000E9;
-	Tue, 21 Jul 2026 17:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/6O8Q6a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043FF1F000E9;
+	Tue, 21 Jul 2026 17:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656143;
-	bh=44wFSD5t8ojPSn5jfX/19SV1Xd82kPW6HTrhUpIHIKQ=;
+	s=korg; t=1784656146;
+	bh=lgjKjy1jsF8X/V34n6U2xMLJF/058X3Sk22wSiojAxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ibdQVp+HK1tk/M4G3SWw/t6F+WQUUyDentUzhVP9LKPys4tlbOTPQR7/LzdwXt5Mx
-	 u2iJm4XUjGAoZ0hke3LnlKWVAbUxaHiEo6eTwJ6z+0L45rQ2bBY5e8/WDNN6ErC8ZL
-	 QIs6taph+dFhvnnyvcCS9S43q6Y0EGIOaQ3Xcv1Y=
+	b=Y/6O8Q6a5EQoOviqj1VFRJBX4ccXp+6H/xHWBKvsGnwREzrgHFVVLlQ1dV3cURuny
+	 yv8ItLDGHS20ealSKLCRbC+vXjYsEt8inDKKHR58ZkXFMk57SniooPhIWCMImXjBYw
+	 TMNE1yp3B40kSK1Ru4o7EuQm6LJnqRnD8m4qopto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0274/1611] RDMA/rxe: Copy WQE to local buffer in non-SRQ receive path
-Date: Tue, 21 Jul 2026 17:06:30 +0200
-Message-ID: <20260721152521.215651706@linuxfoundation.org>
+Subject: [PATCH 6.18 0275/1611] Revert "media: venus: hfi_platform: Correct supported codecs for sc7280"
+Date: Tue, 21 Jul 2026 17:06:31 +0200
+Message-ID: <20260721152521.238722631@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,76 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristmd@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit d6ab440240a04b8737ee4c7bb21af9182e451733 ]
+[ Upstream commit 3eb9ba0da0ab73e135f93ffccf07381ba11f100e ]
 
-For non-SRQ QPs, the responder reads WQE fields directly from the
-shared queue buffer mapped into userspace. This allows a malicious
-user to modify fields like num_sge or sge entries while the kernel
-is processing the WQE, leading to out-of-bounds reads in
-rxe_resp_check_length() and copy_data().
+This reverts commit c0ab2901fc68 ("media: venus: hfi_platform: Correct
+supported codecs for sc7280"). The codecs might be deprecated, but they
+still work (somewhat) perfectly and don't cause any issues with the rest
+of the system. Reenable VP8 codecs by reverting the offending commit.
 
-Introduce get_recv_wqe() that validates num_sge and copies the WQE
-to a kernel-local buffer before processing, matching the approach
-already used for SRQ WQEs in get_srq_wqe(). The srq_wqe buffer is
-reused since SRQ and non-SRQ paths are mutually exclusive per QP.
+Tested with fluster:
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Link: https://patch.msgid.link/r/20260518215040.1598586-3-tristan@talencesecurity.com
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+|Test|FFmpeg-VP8-v4l2m2m|GStreamer-VP8-V4L2|
+|TOTAL|50/61|50/61|
+|TOTAL TIME|12.171s|11.824s|
+
+Fixes: c0ab2901fc68 ("media: venus: hfi_platform: Correct supported codecs for sc7280")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_resp.c | 27 ++++++++++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ .../media/platform/qcom/venus/hfi_parser.c    |  6 ++---
+ .../media/platform/qcom/venus/hfi_platform.c  | 24 -------------------
+ .../media/platform/qcom/venus/hfi_platform.h  |  2 --
+ 3 files changed, 2 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
-index 12669297468890..995805e16d78b3 100644
---- a/drivers/infiniband/sw/rxe/rxe_resp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_resp.c
-@@ -309,6 +309,29 @@ static enum resp_states get_srq_wqe(struct rxe_qp *qp)
- 	return RESPST_CHK_LENGTH;
- }
+diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
+index 92765f9c88730a..c4cf6cd50a9a03 100644
+--- a/drivers/media/platform/qcom/venus/hfi_parser.c
++++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+@@ -268,7 +268,6 @@ static int hfi_platform_parser(struct venus_core *core, struct venus_inst *inst)
+ 	const struct hfi_plat_caps *caps = NULL;
+ 	u32 enc_codecs, dec_codecs, count = 0;
+ 	unsigned int entries;
+-	int ret;
  
-+static enum resp_states rxe_get_recv_wqe(struct rxe_qp *qp)
-+{
-+	struct rxe_queue *q = qp->rq.queue;
-+	struct rxe_recv_wqe *wqe;
-+	unsigned int num_sge;
-+	size_t size;
-+
-+	wqe = queue_head(q, QUEUE_TYPE_FROM_CLIENT);
-+	if (!wqe)
-+		return RESPST_ERR_RNR;
-+
-+	num_sge = wqe->dma.num_sge;
-+	if (unlikely(num_sge > qp->rq.max_sge)) {
-+		rxe_dbg_qp(qp, "invalid num_sge in recv WQE\n");
-+		return RESPST_ERR_MALFORMED_WQE;
-+	}
-+	size = sizeof(*wqe) + num_sge * sizeof(struct rxe_sge);
-+	memcpy(&qp->resp.srq_wqe, wqe, size);
-+
-+	qp->resp.wqe = &qp->resp.srq_wqe.wqe;
-+	return RESPST_CHK_LENGTH;
-+}
-+
- static enum resp_states check_resource(struct rxe_qp *qp,
- 				       struct rxe_pkt_info *pkt)
+ 	plat = hfi_platform_get(core->res->hfi_version);
+ 	if (!plat)
+@@ -277,9 +276,8 @@ static int hfi_platform_parser(struct venus_core *core, struct venus_inst *inst)
+ 	if (inst)
+ 		return 0;
+ 
+-	ret = hfi_platform_get_codecs(core, &enc_codecs, &dec_codecs, &count);
+-	if (ret)
+-		return ret;
++	if (plat->codecs)
++		plat->codecs(core, &enc_codecs, &dec_codecs, &count);
+ 
+ 	if (plat->capabilities)
+ 		caps = plat->capabilities(core, &entries);
+diff --git a/drivers/media/platform/qcom/venus/hfi_platform.c b/drivers/media/platform/qcom/venus/hfi_platform.c
+index cde7f93045ac45..f19572ab1d1613 100644
+--- a/drivers/media/platform/qcom/venus/hfi_platform.c
++++ b/drivers/media/platform/qcom/venus/hfi_platform.c
+@@ -2,9 +2,7 @@
+ /*
+  * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+  */
+-#include <linux/of.h>
+ #include "hfi_platform.h"
+-#include "core.h"
+ 
+ const struct hfi_platform *hfi_platform_get(enum hfi_version version)
  {
-@@ -329,9 +352,7 @@ static enum resp_states check_resource(struct rxe_qp *qp,
- 		if (srq)
- 			return get_srq_wqe(qp);
+@@ -73,25 +71,3 @@ hfi_platform_get_codec_lp_freq(struct venus_core *core,
  
--		qp->resp.wqe = queue_head(qp->rq.queue,
--				QUEUE_TYPE_FROM_CLIENT);
--		return (qp->resp.wqe) ? RESPST_CHK_LENGTH : RESPST_ERR_RNR;
-+		return rxe_get_recv_wqe(qp);
- 	}
- 
- 	return RESPST_CHK_LENGTH;
+ 	return freq;
+ }
+-
+-int
+-hfi_platform_get_codecs(struct venus_core *core, u32 *enc_codecs,
+-			u32 *dec_codecs, u32 *count)
+-{
+-	const struct hfi_platform *plat;
+-
+-	plat = hfi_platform_get(core->res->hfi_version);
+-	if (!plat)
+-		return -EINVAL;
+-
+-	if (plat->codecs)
+-		plat->codecs(core, enc_codecs, dec_codecs, count);
+-
+-	if (IS_IRIS2_1(core)) {
+-		*enc_codecs &= ~HFI_VIDEO_CODEC_VP8;
+-		*dec_codecs &= ~HFI_VIDEO_CODEC_VP8;
+-	}
+-
+-	return 0;
+-}
+-
+diff --git a/drivers/media/platform/qcom/venus/hfi_platform.h b/drivers/media/platform/qcom/venus/hfi_platform.h
+index 5e4f8013a6b1db..a0b6d19f3e1a04 100644
+--- a/drivers/media/platform/qcom/venus/hfi_platform.h
++++ b/drivers/media/platform/qcom/venus/hfi_platform.h
+@@ -74,6 +74,4 @@ unsigned long hfi_platform_get_codec_vsp_freq(struct venus_core *core,
+ unsigned long hfi_platform_get_codec_lp_freq(struct venus_core *core,
+ 					     enum hfi_version version,
+ 					     u32 codec, u32 session_type);
+-int hfi_platform_get_codecs(struct venus_core *core, u32 *enc_codecs,
+-			    u32 *dec_codecs, u32 *count);
+ #endif
 -- 
 2.53.0
 
