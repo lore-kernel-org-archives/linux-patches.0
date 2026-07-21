@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF35B36DA1D;
-	Tue, 21 Jul 2026 21:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F3D36DA1D;
+	Tue, 21 Jul 2026 21:10:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668202; cv=none; b=rubXBE+vIMBytBbzvqqjYEbpze5WRVHFTD338gTiX45cee8Hj3kWN6MIG9cW7TajpPB/rGO+mi0yyqjTiABZK7yP5zWIt5JKawXrEVDOTlsAJ6XSwFIEmCBT5GRnpw/lUerDmVZvUrbKeXHsqj6hvmFStxaqL93l/nSnIugbKLs=
+	t=1784668204; cv=none; b=nYQPEZIvVjH/NL2OD+e0BJNB7/wqi3WVIz6XlDyLtfr7NgxXY5OSgRY2e35iAXkYUhzLCeJRw5JFL84hWVp3MBWxDJAD2D+itw2AFXUEChAYUsKJIjCjoJXUalrXLlriEH4eW0GJ5zu/UfYA/E1TcPtydmVBjNUbr/dhWffRSG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668202; c=relaxed/simple;
-	bh=NfbwdvbdJCMVBQw3AAJp/temitJE9QHOABIkUDbQ52I=;
+	s=arc-20240116; t=1784668204; c=relaxed/simple;
+	bh=IQddlqL58DksUzY0460BEFIZqWUa2yB4BNjqxMd/mdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fr7ykLUTe/wSeYOm1cLH0x05zFrKC0NF5SoQL9aLeHquPt4qNl4BzEkgzexEjpLRIs9M4fck+8vccx8Te81cAjTNssVlBhI79hkICMTcTnabZ5yCF7Mx6CAcWxGURkaAeUO7QReN9cv09pqW9Gd4oLM2rUbhmljkrx617DnHyEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obLyzd+z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GnweDvNAsHaHILEDbrHtiPmHWBV8pJYzRovpKJsIi9WVSkO5vGyKbFdtJ2dHxulCDx9mScgatsFvqGuSvY6XcEImdf483hyIK1lge05gA7knZiKTFbD/RACCveoiehruExdIKOI/h0BGkDebQMdablPV7TbWCYy2gwZVlRvfVfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RWSbxy0t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obLyzd+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 202AC1F000E9;
-	Tue, 21 Jul 2026 21:09:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWSbxy0t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E41E81F000E9;
+	Tue, 21 Jul 2026 21:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668200;
-	bh=LSObc3nZ1YMdm3Y1NX/GnFBXG3QnSnHx2CSJiJkc5J8=;
+	s=korg; t=1784668203;
+	bh=OqCauWU/hXc0aPe1g7XxYB0ER3KEfXYynfWj+aSwUfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=obLyzd+zDrabS5+YyKVEZorP/Zl8+Nhx2+oalFUw2Mlx8uWd3Ih9f1vNZJwhYGvMF
-	 GY3Evg8pG0wFcbfEmwkZMkNdmkJPBaeUCnzwMDljjk+j8D7SkRuQZ5oaoDGHKs4hgp
-	 fRsoMTY7eelx3XrIgWzZHqD/RUpVF5TpqAfYjIA4=
+	b=RWSbxy0t+svyygYCJzPdHjM4l6otLQaFwGHZm29dd0ifEMFr2SqS+D1WBEYlnmuP2
+	 rcTIaiBvX0ENdGTKzYad0wP87qSkqV8gtHObv0ncYhUuC2a5WrC6VjJRx5MIolO/WW
+	 hpUIAH9B6g9F8hzhJraQHcz/SO4JBWWFXmwWy/L4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 0085/1067] ALSA: usb-audio: Update US-16x08 EQ/comp shadow state after successful writes
-Date: Tue, 21 Jul 2026 17:11:26 +0200
-Message-ID: <20260721152426.478366905@linuxfoundation.org>
+	Alex Williamson <alex.williamson@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Alex Williamson <alex@shazbot.org>
+Subject: [PATCH 6.1 0086/1067] vfio/pci: Release the VGA arbiter client on register_device() failure
+Date: Tue, 21 Jul 2026 17:11:27 +0200
+Message-ID: <20260721152426.499304131@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -44,160 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Alex Williamson <alex.williamson@nvidia.com>
 
-commit a440c17869ecd71da0f295b62868fc742d09a8ba upstream.
+commit daedde7f024ecf88bc8e832ed40cf2c795f0796a upstream.
 
-snd_us16x08_comp_put() and snd_us16x08_eq_put() update their
-software stores before sending the USB write. If the transfer
-fails, later get callbacks report a value the hardware never
-accepted.
+The re-order in the Fixes commit below displaced vfio_pci_vga_init() as
+the last failure point of what is now vfio_pci_core_register_device()
+without introducing an unwind for the VGA arbiter registration.
 
-Build the outgoing message from the current store plus the
-pending value, then commit the store only after a successful
-write.
+In current kernels this is mostly benign because vfio_pci_set_decode()
+only uses pci_dev state, but the original failure path could leave a
+callback with a freed vdev cookie.  The stale registration also becomes
+unsafe again once the callback follows drvdata to the vfio device.
 
-Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
+Add the required VGA unwind callout.
+
+Fixes: 4aeec3984ddc ("vfio/pci: Re-order vfio_pci_probe()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-4-5a3bd4a673ae@gmail.com
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20260615191241.688297-3-alex.williamson@nvidia.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_us16x08.c |   78 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 52 insertions(+), 26 deletions(-)
+ drivers/vfio/pci/vfio_pci_core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/usb/mixer_us16x08.c
-+++ b/sound/usb/mixer_us16x08.c
-@@ -436,6 +436,7 @@ static int snd_us16x08_comp_put(struct s
- 	int index = ucontrol->id.index;
- 	char buf[sizeof(comp_msg)];
- 	int val_idx, val;
-+	int threshold, ratio, attack, release, gain, switch_on;
- 	int err;
+--- a/drivers/vfio/pci/vfio_pci_core.c
++++ b/drivers/vfio/pci/vfio_pci_core.c
+@@ -2193,6 +2193,7 @@ out_power:
+ 		pm_runtime_get_noresume(dev);
  
- 	val = ucontrol->value.integer.value[0];
-@@ -448,36 +449,61 @@ static int snd_us16x08_comp_put(struct s
- 	/* new control value incl. bias*/
- 	val_idx = elem->head.id - SND_US16X08_ID_COMP_BASE;
- 
--	store->val[val_idx][index] = ucontrol->value.integer.value[0];
-+	threshold = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_THRESHOLD)]
-+		[index];
-+	ratio = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_RATIO)][index];
-+	attack = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_ATTACK)][index];
-+	release = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_RELEASE)]
-+		[index];
-+	gain = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_GAIN)][index];
-+	switch_on = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_SWITCH)]
-+		[index];
-+
-+	switch (val_idx) {
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_THRESHOLD):
-+		threshold = val;
-+		break;
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_RATIO):
-+		ratio = val;
-+		break;
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_ATTACK):
-+		attack = val;
-+		break;
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_RELEASE):
-+		release = val;
-+		break;
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_GAIN):
-+		gain = val;
-+		break;
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_SWITCH):
-+		switch_on = val;
-+		break;
-+	}
- 
- 	/* prepare compressor URB message from template  */
- 	memcpy(buf, comp_msg, sizeof(comp_msg));
- 
- 	/* place comp values in message buffer watch bias! */
--	buf[8] = store->val[
--		COMP_STORE_IDX(SND_US16X08_ID_COMP_THRESHOLD)][index]
--		- SND_US16X08_COMP_THRESHOLD_BIAS;
--	buf[11] = ratio_map[store->val[
--		COMP_STORE_IDX(SND_US16X08_ID_COMP_RATIO)][index]];
--	buf[14] = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_ATTACK)][index]
--		+ SND_US16X08_COMP_ATTACK_BIAS;
--	buf[17] = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_RELEASE)][index]
--		+ SND_US16X08_COMP_RELEASE_BIAS;
--	buf[20] = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_GAIN)][index];
--	buf[26] = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_SWITCH)][index];
-+	buf[8] = threshold - SND_US16X08_COMP_THRESHOLD_BIAS;
-+	buf[11] = ratio_map[ratio];
-+	buf[14] = attack + SND_US16X08_COMP_ATTACK_BIAS;
-+	buf[17] = release + SND_US16X08_COMP_RELEASE_BIAS;
-+	buf[20] = gain;
-+	buf[26] = switch_on;
- 
- 	/* place channel selector in message buffer */
- 	buf[5] = index + 1;
- 
- 	err = snd_us16x08_send_urb(chip, buf, sizeof(comp_msg));
- 
--	if (err > 0) {
--		elem->cached |= 1 << index;
--		elem->cache_val[index] = val;
--	} else {
-+	if (err < 0) {
- 		usb_audio_dbg(chip, "Failed to set compressor, err:%d\n", err);
-+		return err;
- 	}
- 
-+	store->val[val_idx][index] = val;
-+	elem->cached |= 1 << index;
-+	elem->cache_val[index] = val;
- 	return 1;
- }
- 
-@@ -579,11 +605,10 @@ static int snd_us16x08_eq_put(struct snd
- 	/* copy URB buffer from EQ template */
- 	memcpy(buf, eqs_msq, sizeof(eqs_msq));
- 
--	store->val[b_idx][p_idx][index] = val;
--	buf[20] = store->val[b_idx][3][index];
--	buf[17] = store->val[b_idx][2][index];
--	buf[14] = store->val[b_idx][1][index];
--	buf[11] = store->val[b_idx][0][index];
-+	buf[20] = p_idx == 3 ? val : store->val[b_idx][3][index];
-+	buf[17] = p_idx == 2 ? val : store->val[b_idx][2][index];
-+	buf[14] = p_idx == 1 ? val : store->val[b_idx][1][index];
-+	buf[11] = p_idx == 0 ? val : store->val[b_idx][0][index];
- 
- 	/* place channel index in URB buffer */
- 	buf[5] = index + 1;
-@@ -593,14 +618,15 @@ static int snd_us16x08_eq_put(struct snd
- 
- 	err = snd_us16x08_send_urb(chip, buf, sizeof(eqs_msq));
- 
--	if (err > 0) {
--		/* store new value in EQ band cache */
--		elem->cached |= 1 << index;
--		elem->cache_val[index] = val;
--	} else {
-+	if (err < 0) {
- 		usb_audio_dbg(chip, "Failed to set eq param, err:%d\n", err);
-+		return err;
- 	}
- 
-+	store->val[b_idx][p_idx][index] = val;
-+	/* store new value in EQ band cache */
-+	elem->cached |= 1 << index;
-+	elem->cache_val[index] = val;
- 	return 1;
- }
- 
+ 	pm_runtime_forbid(dev);
++	vfio_pci_vga_uninit(vdev);
+ out_vf:
+ 	vfio_pci_vf_uninit(vdev);
+ 	return ret;
 
 
