@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF2F46F496;
-	Tue, 21 Jul 2026 18:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28DD38757B;
+	Tue, 21 Jul 2026 18:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657014; cv=none; b=VXzpA+Qgq+WJppX7/V76IV/CKortFqJqte7seTEpxh72LvoGSzjBuyHe51FybC1xrdVg7rrCYpIVCho0WjuNJVtkL6G9YajhQAxJlmW8m1fdp9Zzx5nZ18k1Ll+UhAeJTiunnCW0ex8KZO5TRW2PHVj0Cg2zBBFv6TjoTJun+oI=
+	t=1784657017; cv=none; b=bKM2AdeMqiqmCtXvUw0PXWyv0FwpjybIG9wGSLSega9vOyGDKOREAanY30BY2k7BrFoLnv6aHo04wW3YyRhDr21qIFjWpyHH/AtXUeNRXYeCrU7j6UzBf/tWM+553fdABf5M1X/EqJ6tlYbbJotdV2OT3hehlxuj0eGcBeDBfVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657014; c=relaxed/simple;
-	bh=3VCA3cn0cvxt2zwbIeyG+hM4tY8GWvDdUtjTpj4BVGs=;
+	s=arc-20240116; t=1784657017; c=relaxed/simple;
+	bh=gP1DYBTgm5FvCW0zIQGCkdPwU7KrB+IJMlIPL7vHtyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CMGgd2V5AJ5wc6IHES90FxQBcNOMUBqOseGGbY6faeUK3FUcK+hXdTP89o9E95GCE0kgFJ+OIdypFefnh2nDrXEAqwn9YMpxD1WmvZiPJ5lyoa8hrgdOnUczedgsLmB7gbDkKXJ0e0Q/tL1W+98Y8tPFcjEELCnBsp7YlusoKNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlGhAr9Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gs+vvMmIA3UmZ1RvbhLYyhDzdK1VVLOte4fRheFeeqk20HovWp8DAnfOlZT/6x0FG9QezsWn5QtN4Onl+4sTcPatKQsdL44En283D4IMf5MwMCoMAImyvbGUaSrXyWvwYYOaACZcetHPj8okP+psWRX1RtCSAUsTAJYwoenFdRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqbelmUo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlGhAr9Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638081F000E9;
-	Tue, 21 Jul 2026 18:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqbelmUo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DEF01F000E9;
+	Tue, 21 Jul 2026 18:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657012;
-	bh=itL5zeGSoiBSMDX+I6F+P4z+uUaDPAftVX4Ojg7VShI=;
+	s=korg; t=1784657015;
+	bh=O0rG5BtUJ5cu1FBELnDLFsOe0c4cxyqDHyQ22j/Vj4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LlGhAr9ZF/vocq+7MhCaI3vUjaEWV0FtfLhgsmHSGv30J6Q+9T3VM+f1n7XosZY8H
-	 87k0TRSdWg4eRhxjc05yFgzdherNIzwd3UM066B9DsxJLXzI6jDfi8+ZLHVdy5nMlP
-	 Mf9JRQ8BCgZkfQ4Z4iY2kZfcrNVFfIW0IsV/2tiQ=
+	b=gqbelmUovxnjxKkrdC48wuVRsJmycueNqEAlx+MXkEC7g6hUMAiQ7TQm9EWw5sN+x
+	 D/BUBrgwbPpEYUezUy6ON+cNYs5UBZ8Sf/P5tTPBlNsVCvBBzBNOPUlo3udRUaTNtT
+	 DAl9AtdqkYwB6KnwTNunEzCRgsB48Hqt9mqSces8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Matthew Bystrin <dev.mbstr@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0602/1611] mailbox: mtk-adsp: fix UAF during device teardown
-Date: Tue, 21 Jul 2026 17:11:58 +0200
-Message-ID: <20260721152528.927643927@linuxfoundation.org>
+Subject: [PATCH 6.18 0562/1611] mfd: rsmu: Fix page register setup
+Date: Tue, 21 Jul 2026 17:11:18 +0200
+Message-ID: <20260721152528.018637431@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -46,101 +45,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Matthew Bystrin <dev.mbstr@gmail.com>
 
-[ Upstream commit b57d1a40bc43258372fa1f4d39305e093947a262 ]
+[ Upstream commit 6bc38f26ed07197b11a2b588edf1f43bfbc81d76 ]
 
-When the SOF audio driver fails to initialize (e.g. firmware boot
-timeout), its devres unwind frees the snd_sof_dev object that the
-mailbox client (mtk-adsp-ipc) reaches via chan->cl->rx_callback.
-The mtk-adsp-mailbox shutdown clears the mailbox command registers
-but leaves the IRQ line unmasked, so a late interrupt can still
-queue a threaded handler after mbox_free_channel() had cleared
-chan->cl, and mbox_chan_received_data() would then trigger UAF:
+Fix writes to page register in 8A3400x family (Clock Matrix).
 
-  BUG: KASAN: slab-use-after-free in sof_ipc3_validate_fw_version
-   sof_ipc3_validate_fw_version
-   sof_ipc3_do_rx_work
-   sof_ipc3_rx_msg
-   mt8196_dsp_handle_request
-   mtk_adsp_ipc_recv
-   mbox_chan_received_data
-   mtk_adsp_mbox_isr
-   irq_thread_fn
-  Freed by task ...:
-   kfree
-   devres_release_all
-   really_probe
-   ... (sof-audio-of-mt8196 probe failure)
+All calls to rsmu_write_page_register() (both in i2c and spi) have
+resulted in early return, because all addresses in
+include/linux/mfd/idt8a340_reg.h are less than RSMU_CM_SCSR_BASE.
 
-The crash was observed roughly three seconds after the failed probe.
+There were 2 separate patch series which have to be merged in one time:
+mfd and ptp. The latter have been merged, the former[1] have not.
 
-disable_irq() in shutdown and enable_irq() in startup. disable_irq()
-also waits for any in-flight interrupts, so by the time
-mbox_free_channel() proceeds to clear chan->cl no rx_callback can run.
-
-In addition, request the IRQ with IRQF_NO_AUTOEN so it stays masked
-between probe and the first client bind — otherwise an early interrupt
-can crash on chan->cl == NULL in mbox_chan_received_data().
-
-Fixes: af2dfa96c52d ("mailbox: mediatek: add support for adsp mailbox controller")
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Link: https://lore.kernel.org/netdev/LV3P220MB1202F8E2FCCFBA2519B4966EA0192@LV3P220MB1202.NAMP220.PROD.OUTLOOK.COM/
+Fixes: 67d6c76fc815 ("mfd: rsmu: Support 32-bit address space")
+Signed-off-by: Matthew Bystrin <dev.mbstr@gmail.com>
+Link: https://patch.msgid.link/20260429072047.1111427-2-dev.mbstr@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mtk-adsp-mailbox.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/mfd/rsmu_i2c.c | 6 +-----
+ drivers/mfd/rsmu_spi.c | 5 +----
+ 2 files changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/mailbox/mtk-adsp-mailbox.c b/drivers/mailbox/mtk-adsp-mailbox.c
-index 91487aa4d7da08..8bcecddee0eb5c 100644
---- a/drivers/mailbox/mtk-adsp-mailbox.c
-+++ b/drivers/mailbox/mtk-adsp-mailbox.c
-@@ -19,6 +19,7 @@ struct mtk_adsp_mbox_priv {
- 	struct mbox_controller mbox;
- 	void __iomem *va_mboxreg;
- 	const struct mtk_adsp_mbox_cfg *cfg;
-+	int irq;
- };
- 
- struct mtk_adsp_mbox_cfg {
-@@ -67,6 +68,8 @@ static int mtk_adsp_mbox_startup(struct mbox_chan *chan)
- 	writel(0xFFFFFFFF, priv->va_mboxreg + priv->cfg->clr_in);
- 	writel(0xFFFFFFFF, priv->va_mboxreg + priv->cfg->clr_out);
- 
-+	enable_irq(priv->irq);
-+
- 	return 0;
- }
- 
-@@ -74,6 +77,8 @@ static void mtk_adsp_mbox_shutdown(struct mbox_chan *chan)
+diff --git a/drivers/mfd/rsmu_i2c.c b/drivers/mfd/rsmu_i2c.c
+index cba64f107a2fd1..9e5fc8259eec2e 100644
+--- a/drivers/mfd/rsmu_i2c.c
++++ b/drivers/mfd/rsmu_i2c.c
+@@ -134,14 +134,10 @@ static int rsmu_i2c_write_device(struct rsmu_ddata *rsmu, u8 reg, u8 *buf, u8 by
+ static int rsmu_write_page_register(struct rsmu_ddata *rsmu, u32 reg,
+ 				    rsmu_rw_device rsmu_write_device)
  {
- 	struct mtk_adsp_mbox_priv *priv = get_mtk_adsp_mbox_priv(chan->mbox);
+-	u32 page = reg & RSMU_CM_PAGE_MASK;
++	u32 page = (reg | RSMU_CM_SCSR_BASE) & RSMU_CM_PAGE_MASK;
+ 	u8 buf[4];
+ 	int err;
  
-+	disable_irq(priv->irq);
-+
- 	/* Clear ADSP mbox command */
- 	writel(0xFFFFFFFF, priv->va_mboxreg + priv->cfg->clr_in);
- 	writel(0xFFFFFFFF, priv->va_mboxreg + priv->cfg->clr_out);
-@@ -139,8 +144,10 @@ static int mtk_adsp_mbox_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return irq;
+-	/* Do not modify offset register for none-scsr registers */
+-	if (reg < RSMU_CM_SCSR_BASE)
+-		return 0;
+-
+ 	/* Simply return if we are on the same page */
+ 	if (rsmu->page == page)
+ 		return 0;
+diff --git a/drivers/mfd/rsmu_spi.c b/drivers/mfd/rsmu_spi.c
+index 39d9be1e141fb6..c931d8cea0a1a9 100644
+--- a/drivers/mfd/rsmu_spi.c
++++ b/drivers/mfd/rsmu_spi.c
+@@ -101,11 +101,8 @@ static int rsmu_write_page_register(struct rsmu_ddata *rsmu, u32 reg)
  
-+	priv->irq = irq;
- 	ret = devm_request_threaded_irq(dev, irq, mtk_adsp_mbox_irq,
--					mtk_adsp_mbox_isr, IRQF_TRIGGER_NONE,
-+					mtk_adsp_mbox_isr,
-+					IRQF_TRIGGER_NONE | IRQF_NO_AUTOEN,
- 					dev_name(dev), mbox->chans);
- 	if (ret < 0)
- 		return ret;
+ 	switch (rsmu->type) {
+ 	case RSMU_CM:
+-		/* Do not modify page register for none-scsr registers */
+-		if (reg < RSMU_CM_SCSR_BASE)
+-			return 0;
+ 		page_reg = RSMU_CM_PAGE_ADDR;
+-		page = reg & RSMU_PAGE_MASK;
++		page = (reg | RSMU_CM_SCSR_BASE) & RSMU_PAGE_MASK;
+ 		buf[0] = (u8)(page & 0xFF);
+ 		buf[1] = (u8)((page >> 8) & 0xFF);
+ 		buf[2] = (u8)((page >> 16) & 0xFF);
 -- 
 2.53.0
 
