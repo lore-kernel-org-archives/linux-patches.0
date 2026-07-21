@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B15346C4D9;
-	Tue, 21 Jul 2026 19:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A2442CB1E;
+	Tue, 21 Jul 2026 19:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661623; cv=none; b=Eje+USV8IZDaxyHP2iPW2IsGYtg/oFbZUjk90+KbundBr3MoG9BNlwyl6Yyk2CJBjacfoRIfm0MRqw4xFc8TqOi51MQM+myR3+QkjUZQ1FnMgeB3KOWAV7Nmu5gr5NlUihDR+HD7ZWLWq0Gw6qhFRAwH7dLZ5G8EBAm3L84tZJs=
+	t=1784661626; cv=none; b=CC+EnEpgx3v1HWNt15S7ffbR/yz0LEeg61ahwmbtPMEcZQCI1jTJo9/iweahkbhKaazqc16NizDaI9UsBMR8ZV9ar7g+/CYXjdNSkvxFQRm+Y36HeLxR+8TbabeB+xt1Ocz13OIJ9eKP8yWGrwAplkaobR1Iy1NXLhUqxYnS0gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661623; c=relaxed/simple;
-	bh=DVUHFNRIdAHovRul+I5P7+J9EJOdifMs39JE2Z7K1TI=;
+	s=arc-20240116; t=1784661626; c=relaxed/simple;
+	bh=up1jZ5vTXbZokgV4qsRYz9hJNtvKCkOEeyO0o6BK49Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qmCb9XLCJ4bEsSWf2C3YtUgqlAyKQHXZneentSx+1l8Gyila8DfHW1TScuh3hyFFQuAazlZzwbQ6A+dDWD60hiOEAWXqee/WaOJWhMRrCdVeoBQuzyMjN2K3PPaGqFCu94lGxXAR7R/MnmfvDIUDGjCYAB0tizm5ZQIeU1q9JbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=df2kwJEN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SkY15foKI344W6wj7G8FuEixTZahygFmOwERPtO9dQLZqKkaX4hj+4ZJzMOj9sTnWkxEDQ3PtUx65qhNG7cAtuxNKOzc5eTRg41xMlDPQcA94ZYC3MQ/Vf3eSuvr05H7SLem5XefHY4DtlxQR/IzAOE+7jQJ4moH9o2gLlEsm7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XusW0hQ/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="df2kwJEN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C1F1F000E9;
-	Tue, 21 Jul 2026 19:20:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XusW0hQ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5542B1F000E9;
+	Tue, 21 Jul 2026 19:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661622;
-	bh=NMWUtmDMTqzcF8b+JBiKpRcDzCygrVjUw5FPQZrfYTo=;
+	s=korg; t=1784661624;
+	bh=Fo2N5ISErxJh1pHrjM43J80hExecq9dnwR6r2rKJFZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=df2kwJENP0PoixAPqKW9iCS6iGQw/3l5F5ntXqe9IlbHkuUJldgg3Vo8Y4No8BDn4
-	 ViYcicxyJKZQi4wFDNAakGNOCV/W5smYTtyUDgd6gjdiDYNcvxAaZyyyIfZEGK/Xw9
-	 pB3By1dOAivE1eiEYVx1A5kEcDKAkkjdCz8XybYE=
+	b=XusW0hQ/kn1pD6NOJquoUPcJLYAMO/ibXP5THxNl3Me4DFKcZYpO7Vp2sWRM+yMTw
+	 w1L9kVL26oLB8vzy/QE+4B1+JECUltRCCfoBK6Ve9Ii2thu4vqcswGJzmn/z8wtUAS
+	 grfEMmglxhhDonAt7JUe6flk35P/G/2JWCDgZBe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Yury Norov <yury.norov@gmail.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0134/1276] bitops: use common function parameter names
-Date: Tue, 21 Jul 2026 17:09:37 +0200
-Message-ID: <20260721152449.100731014@linuxfoundation.org>
+Subject: [PATCH 6.12 0094/1276] arm64: dts: imx8x-colibri: Correct SODIMM PAD settings
+Date: Tue, 21 Jul 2026 17:08:57 +0200
+Message-ID: <20260721152448.199226981@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,88 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 8a51b2e874f47a6094353b59ecae421f0968fe3a ]
+[ Upstream commit 0a03ee38a262cab0d9754e9947d565e089a9f7a5 ]
 
-Fix the function prototypes to use the common parameter name 'addr'
-instead of 'p' (common to arch-specific implementations of these
-functions).
-This avoids the kernel-doc warnings:
+SION is BIT(30), not BIT(26). Correct it.
 
-Warning: include/asm-generic/bitops/lock.h:19 function parameter 'p'
- not described in 'arch_test_and_set_bit_lock'
-Warning: include/asm-generic/bitops/lock.h:41 function parameter 'p'
- not described in 'arch_clear_bit_unlock'
-Warning: include/asm-generic/bitops/lock.h:59 function parameter 'p'
- not described in 'arch___clear_bit_unlock'
-
-Fixes: 84c6591103db ("locking/atomics, asm-generic/bitops/lock.h: Rewrite using atomic_fetch_*()")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Yury Norov <yury.norov@gmail.com>
+Fixes: 7ece3cbc8b1ef ("arm64: dts: colibri-imx8x: Add atmel pinctrl groups")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/bitops/lock.h | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8x-colibri.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/asm-generic/bitops/lock.h b/include/asm-generic/bitops/lock.h
-index 14d4ec8c5152d6..ffb73b6129e736 100644
---- a/include/asm-generic/bitops/lock.h
-+++ b/include/asm-generic/bitops/lock.h
-@@ -16,16 +16,16 @@
-  * It can be used to implement bit locks.
-  */
- static __always_inline int
--arch_test_and_set_bit_lock(unsigned int nr, volatile unsigned long *p)
-+arch_test_and_set_bit_lock(unsigned int nr, volatile unsigned long *addr)
- {
- 	long old;
- 	unsigned long mask = BIT_MASK(nr);
+diff --git a/arch/arm64/boot/dts/freescale/imx8x-colibri.dtsi b/arch/arm64/boot/dts/freescale/imx8x-colibri.dtsi
+index edba5b58241465..0151cb687134e8 100644
+--- a/arch/arm64/boot/dts/freescale/imx8x-colibri.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8x-colibri.dtsi
+@@ -577,12 +577,12 @@ pinctrl_adc0: adc0grp {
+ 	 */
+ 	pinctrl_atmel_adap: atmeladaptergrp {
+ 		fsl,pins = <IMX8QXP_UART1_RX_LSIO_GPIO0_IO22			0x21>,		/* SODIMM  30 */
+-			   <IMX8QXP_UART1_TX_LSIO_GPIO0_IO21			0x4000021>;	/* SODIMM  28 */
++			   <IMX8QXP_UART1_TX_LSIO_GPIO0_IO21			0x40000021>;	/* SODIMM  28 */
+ 	};
  
--	p += BIT_WORD(nr);
--	if (READ_ONCE(*p) & mask)
-+	addr += BIT_WORD(nr);
-+	if (READ_ONCE(*addr) & mask)
- 		return 1;
+ 	/* Atmel MXT touchsceen + boards with built-in Capacitive Touch Connector */
+ 	pinctrl_atmel_conn: atmelconnectorgrp {
+-		fsl,pins = <IMX8QXP_QSPI0B_DATA2_LSIO_GPIO3_IO20		0x4000021>,	/* SODIMM 107 */
++		fsl,pins = <IMX8QXP_QSPI0B_DATA2_LSIO_GPIO3_IO20		0x40000021>,	/* SODIMM 107 */
+ 			   <IMX8QXP_QSPI0B_SS1_B_LSIO_GPIO3_IO24		0x21>;		/* SODIMM 106 */
+ 	};
  
--	old = raw_atomic_long_fetch_or_acquire(mask, (atomic_long_t *)p);
-+	old = raw_atomic_long_fetch_or_acquire(mask, (atomic_long_t *)addr);
- 	return !!(old & mask);
- }
- 
-@@ -38,10 +38,10 @@ arch_test_and_set_bit_lock(unsigned int nr, volatile unsigned long *p)
-  * This operation is atomic and provides release barrier semantics.
-  */
- static __always_inline void
--arch_clear_bit_unlock(unsigned int nr, volatile unsigned long *p)
-+arch_clear_bit_unlock(unsigned int nr, volatile unsigned long *addr)
- {
--	p += BIT_WORD(nr);
--	raw_atomic_long_fetch_andnot_release(BIT_MASK(nr), (atomic_long_t *)p);
-+	addr += BIT_WORD(nr);
-+	raw_atomic_long_fetch_andnot_release(BIT_MASK(nr), (atomic_long_t *)addr);
- }
- 
- /**
-@@ -56,14 +56,14 @@ arch_clear_bit_unlock(unsigned int nr, volatile unsigned long *p)
-  * See for example x86's implementation.
-  */
- static inline void
--arch___clear_bit_unlock(unsigned int nr, volatile unsigned long *p)
-+arch___clear_bit_unlock(unsigned int nr, volatile unsigned long *addr)
- {
- 	unsigned long old;
- 
--	p += BIT_WORD(nr);
--	old = READ_ONCE(*p);
-+	addr += BIT_WORD(nr);
-+	old = READ_ONCE(*addr);
- 	old &= ~BIT_MASK(nr);
--	raw_atomic_long_set_release((atomic_long_t *)p, old);
-+	raw_atomic_long_set_release((atomic_long_t *)addr, old);
- }
- 
- #ifndef arch_xor_unlock_is_negative_byte
 -- 
 2.53.0
 
