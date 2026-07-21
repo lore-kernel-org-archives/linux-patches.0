@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E9C1AF0BB;
-	Tue, 21 Jul 2026 19:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF23F42DFEC;
+	Tue, 21 Jul 2026 19:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662213; cv=none; b=nB35xi5Jvsj8JsvxnoAeK1LTqfBFlgiKouqnDNK3Zrd+4sgH3Q4KMGLWR6M75oH+yxkGoHItXyac1UYqkMk8jDdIGJKcHKZL6/EUR01ZJ+QlKNV1bZd2YJBq2Qi3yIyWm9VdLX7CedBaOJXetFU8TOQFzym9GTQM2ShOF7oc/HY=
+	t=1784662215; cv=none; b=teiFgJLL8QZ5SL6YzTmN8g0q08K0C9Oe5QyLo5xflAxHTrM0o1Cstwp1GH8Aj0M+PlamA1Jq7VhLqe+Z1gCMHcLQieVswhQaU/vtdDuocGV7xsGFeG9Vrw16UKpBADlzE2m0HOrGvXF05aajLlhu4I7sIfIlxgJdqpgW1d7jokc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662213; c=relaxed/simple;
-	bh=3TjBJ2APVETYZ3eZ2uOQWPlOkXlvBbepttYU9p5Gehg=;
+	s=arc-20240116; t=1784662215; c=relaxed/simple;
+	bh=GAmBkbZcfSHDCPsJVbW42SEoAEYkT+Si6DbICENVCIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gQhKLUR7HuZhTAMBJunz9zzwDl5A5UFrGijsGbNYXz395TkdPkvilAQzHrLoreDcVMuVvgaQWJOo5IiMHWeLIp2FPX+7wCpKAcgk1hi626RIcUGLAVe4c3O8WBgpDM4mYyoZyF4i6GjgUeLdXCVpPChXp0Xr4LmJWGxtfG1h9Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E57o8Okw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XtwcYktnDqPH6QL4g9jjLBQX8cordimdB7o9v7yLwfeq7ihXMiuEPmuno26Z7N/iU0auowFtVW4GGoXcTcgosYL69oi5VX8vNj2vJHpwV/sPqKXqQISTFAhvUiqlRbC33BkV/x1iAEWQE/hrXuobWLuuoRQEYrJYhvmnMCUrOkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2qikKNE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E57o8Okw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73DF41F000E9;
-	Tue, 21 Jul 2026 19:30:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2qikKNE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146D81F000E9;
+	Tue, 21 Jul 2026 19:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662211;
-	bh=aMPGjgfmHGprpo4/jczH/m9Goai+0zs27cjiBrlR5Hc=;
+	s=korg; t=1784662214;
+	bh=1GnLEp3d6/kOOi70pGGRLpC9shznD31PAA0wmBXUlLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E57o8Okw++brgnSit9LrXjOg8hkrGNJWgSzunJyH/KMQ47DNu3MpiC+5xPM+jFQqA
-	 lIh+XTyEr7POpHVOmNpt00BDpFkp3gv53uVnYfaHvQAlApnykpNJPiEiay0cHxOMDc
-	 smpgPhsIOL7b0PdbRs/Q4kN4DC4Gc9PahDMwcjV4=
+	b=i2qikKNEJdvleAqXLEeKXyQPgjXLJyQUKmVGIWsERP0NUP6XaqKVHeM1AhDVZikGq
+	 EecaXKU7WcSj0Hi+o65bXC7/TO3KmK63CkO69VjwZmyCKshVuiY+Jp6faqFImhUjoj
+	 wRpPXvPJUiEc5VqCmohlJ8+CJiwOzbvBDR8CGm0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Yael Chemla <ychemla@nvidia.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0358/1276] net/mlx5: Check max_macs devlink param value against max capability
-Date: Tue, 21 Jul 2026 17:13:21 +0200
-Message-ID: <20260721152454.123055202@linuxfoundation.org>
+Subject: [PATCH 6.12 0359/1276] octeontx2-af: npc: Fix size of entry2cntr_map
+Date: Tue, 21 Jul 2026 17:13:22 +0200
+Message-ID: <20260721152454.144170244@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -55,73 +52,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit d7b0413b35715d7b32cb12d4d424613eff85ed2b ]
+[ Upstream commit f9cd6fabe0e7c7f6fc30c6c192c7ed72aba37232 ]
 
-The max_macs devlink param is checked against the FW max value only at
-param register time (driver load) and inside the validate callback
-(devlink param set). The stored DRIVERINIT value persists across FW
-resets and devlink reloads without any further checks against the max.
+KASAN prints below splat. This is caused by allocating counter for
+reserved mcam entry for cpt 2nd pass entry. But mcam->entry2cntr_map
+is not allocated for reserved entries.
 
-If the FW link type changes from Ethernet to IB and a FW reset happens,
-the MAX cap for log_max_current_uc_list will become zero, but the
-previously stored max_macs value remains and is unconditionally
-programmed into the HCA caps in handle_hca_cap(). FW will then return a
-syndrome during SET_HCA_CAP:
+BUG: KASAN: slab-out-of-bounds in npc_map_mcam_entry_and_cntr+0xb0/0x1a0
+Write of size 2 at addr ffff0001033e7ffe by task kworker/0:1/14
 
- mlx5_cmd_out_err:839:(pid 3831): SET_HCA_CAP(0x109) op_mod(0x0) failed,
- status bad parameter(0x3), syndrome (0x537801), err(-22)
- set_hca_cap:907:(pid 3831): handle_hca_cap failed
+CPU: 0 PID: 14 Comm: kworker/0:1 Not tainted 6.1.67 #1
+Hardware name: Marvell CN106XX board (DT)
+Workqueue: events work_for_cpu_fn
+Call trace:
+ dump_backtrace.part.0+0xe4/0xf0
+ show_stack+0x18/0x30
+ dump_stack_lvl+0x88/0xb4
+ print_report+0x154/0x458
+ kasan_report+0xb8/0x194
+ __asan_store2+0x7c/0xa0
+ npc_map_mcam_entry_and_cntr+0xb0/0x1a0
+ rvu_mbox_handler_npc_mcam_write_entry+0x268/0x280
+ npc_install_flow+0x840/0xfe0
+ rvu_npc_install_cpt_pass2_entry+0x138/0x190
+ rvu_nix_init+0x148c/0x2880
+ rvu_probe+0x1800/0x30b0
+ local_pci_probe+0x78/0xe0
+ work_for_cpu_fn+0x30/0x50
+ process_one_work+0x4cc/0x97c
+ worker_thread+0x360/0x630
+ kthread+0x1a0/0x1b0
+ ret_from_fork+0x10/0x20
 
-This results in a failure to register the RDMA device.
-
-This patch skips programming log_max_current_uc_list when the MAX
-capability is 0 (in case of IB).
-
-Fixes: 8680a60fc1fc ("net/mlx5: Let user configure max_macs generic param")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Yael Chemla <ychemla@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Link: https://patch.msgid.link/20260611135230.534513-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 55307fcb9258 ("octeontx2-af: Add mbox messages to install and delete MCAM rules")
+Cc: Subbaraya Sundeep <sbhatta@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Link: https://patch.msgid.link/20260610022344.969774-1-rkannoth@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ .../ethernet/marvell/octeontx2/af/rvu_npc.c   | 40 +++++++------------
+ 1 file changed, 15 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index 4d8295249c427c..f77b6362fd9f52 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -576,7 +576,6 @@ static int handle_hca_cap(struct mlx5_core_dev *dev, void *set_ctx)
- {
- 	struct mlx5_profile *prof = &dev->profile;
- 	void *set_hca_cap;
--	int max_uc_list;
- 	int err;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+index 0163fbb758d3d3..5c5376eace1003 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+@@ -1933,7 +1933,7 @@ int npc_mcam_rsrcs_init(struct rvu *rvu, int blkaddr)
+ 	/* Alloc memory for MCAM entry to counter mapping and for tracking
+ 	 * counter's reference count.
+ 	 */
+-	mcam->entry2cntr_map = kcalloc(mcam->bmap_entries, sizeof(u16),
++	mcam->entry2cntr_map = kcalloc(mcam->total_entries, sizeof(u16),
+ 				       GFP_KERNEL);
+ 	if (!mcam->entry2cntr_map)
+ 		goto free_cntr_map;
+@@ -1949,10 +1949,11 @@ int npc_mcam_rsrcs_init(struct rvu *rvu, int blkaddr)
+ 	if (!mcam->entry2target_pffunc)
+ 		goto free_cntr_refcnt;
  
- 	err = mlx5_core_get_caps(dev, MLX5_CAP_GENERAL);
-@@ -659,10 +658,13 @@ static int handle_hca_cap(struct mlx5_core_dev *dev, void *set_ctx)
- 		MLX5_SET(cmd_hca_cap, set_hca_cap, roce,
- 			 mlx5_is_roce_on(dev));
- 
--	max_uc_list = max_uc_list_get_devlink_param(dev);
--	if (max_uc_list > 0)
--		MLX5_SET(cmd_hca_cap, set_hca_cap, log_max_current_uc_list,
--			 ilog2(max_uc_list));
-+	if (MLX5_CAP_GEN_MAX(dev, log_max_current_uc_list)) {
-+		int max_uc_list = max_uc_list_get_devlink_param(dev);
+-	for (index = 0; index < mcam->bmap_entries; index++) {
++	for (index = 0; index < mcam->bmap_entries; index++)
+ 		mcam->entry2pfvf_map[index] = NPC_MCAM_INVALID_MAP;
 +
-+		if (max_uc_list > 0)
-+			MLX5_SET(cmd_hca_cap, set_hca_cap,
-+				 log_max_current_uc_list, ilog2(max_uc_list));
-+	}
++	for (index = 0; index < mcam->total_entries; index++)
+ 		mcam->entry2cntr_map[index] = NPC_MCAM_INVALID_MAP;
+-	}
  
- 	return set_caps(dev, set_ctx, MLX5_SET_HCA_CAP_OP_MOD_GENERAL_DEVICE);
- }
+ 	for (cntr = 0; cntr < mcam->counters.max; cntr++)
+ 		mcam->cntr2pfvf_map[cntr] = NPC_MCAM_INVALID_MAP;
+@@ -3046,7 +3047,7 @@ int rvu_mbox_handler_npc_mcam_free_counter(struct rvu *rvu,
+ 		struct npc_mcam_oper_counter_req *req, struct msg_rsp *rsp)
+ {
+ 	struct npc_mcam *mcam = &rvu->hw->mcam;
+-	u16 index, entry = 0;
++	u16 index;
+ 	int blkaddr, err;
+ 
+ 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
+@@ -3064,20 +3065,16 @@ int rvu_mbox_handler_npc_mcam_free_counter(struct rvu *rvu,
+ 	mcam->cntr2pfvf_map[req->cntr] = NPC_MCAM_INVALID_MAP;
+ 	rvu_free_rsrc(&mcam->counters, req->cntr);
+ 
+-	/* Disable all MCAM entry's stats which are using this counter */
+-	while (entry < mcam->bmap_entries) {
++	/* Disable all MCAM entry's stats which are using this counter.
++	 * Scan the full MCAM index range: AF-reserved rules (e.g. CPT pass-2)
++	 */
++	for (index = 0; index < mcam->total_entries; index++) {
+ 		if (!mcam->cntr_refcnt[req->cntr])
+ 			break;
+-
+-		index = find_next_bit(mcam->bmap, mcam->bmap_entries, entry);
+-		if (index >= mcam->bmap_entries)
+-			break;
+-		entry = index + 1;
+ 		if (mcam->entry2cntr_map[index] != req->cntr)
+ 			continue;
+-
+-		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr,
+-					      index, req->cntr);
++		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr, index,
++					      req->cntr);
+ 	}
+ 
+ 	mutex_unlock(&mcam->lock);
+@@ -3088,7 +3085,7 @@ int rvu_mbox_handler_npc_mcam_unmap_counter(struct rvu *rvu,
+ 		struct npc_mcam_unmap_counter_req *req, struct msg_rsp *rsp)
+ {
+ 	struct npc_mcam *mcam = &rvu->hw->mcam;
+-	u16 index, entry = 0;
++	u16 index;
+ 	int blkaddr, rc;
+ 
+ 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
+@@ -3111,20 +3108,13 @@ int rvu_mbox_handler_npc_mcam_unmap_counter(struct rvu *rvu,
+ 	}
+ 
+ 	/* Disable all MCAM entry's stats which are using this counter */
+-	while (entry < mcam->bmap_entries) {
++	for (index = 0; index < mcam->total_entries; index++) {
+ 		if (!mcam->cntr_refcnt[req->cntr])
+ 			break;
+-
+-		index = find_next_bit(mcam->bmap, mcam->bmap_entries, entry);
+-		if (index >= mcam->bmap_entries)
+-			break;
+-		entry = index + 1;
+-
+ 		if (mcam->entry2cntr_map[index] != req->cntr)
+ 			continue;
+-
+-		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr,
+-					      index, req->cntr);
++		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr, index,
++					      req->cntr);
+ 	}
+ exit:
+ 	mutex_unlock(&mcam->lock);
 -- 
 2.53.0
 
