@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3606046AA8F;
-	Tue, 21 Jul 2026 15:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD41E46AA9A;
+	Tue, 21 Jul 2026 15:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648382; cv=none; b=li5khAyKuj1qdQi2mksACRbpWvzev38kwAppqOQbb3VT5Xx0Vfqzth5aTAuBG6M2dGJ2VodIb1iDunZSbWZ048woyOjxl5j8jnsYY4yzkU4zWZjASFCA1E0Yk78bXVaudm0eM0DoMOoyil9gyMY6VFjHyH+YxPI3i/4TVxd09Fg=
+	t=1784648385; cv=none; b=BhceU8oxW1zSef4T9SScfoflwu6hi3DXl2Fw9GBp/30atgHES97x+wAUUNK5pquXb2CEDHxFOA0rx7HCPpYCWB2Snr9ccZbC4mjJHYiuVNwWc7dY/9puWbqKQIkVQGQuPeRpEfehSM7NJ3s/dORDO6o55ct4yKZm5gB9x9SoCW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648382; c=relaxed/simple;
-	bh=o1SiEsUfjnvlwpRR6CnoOk+YOV12oYo9Fhr5j/se/AA=;
+	s=arc-20240116; t=1784648385; c=relaxed/simple;
+	bh=scUKIcSSoGF/2x0enJxbdc59PQQ4JgY3H0yipSUKUYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qNjhszdaLBxqYSYaQPiT1aa64O0QqwqjlFcwYvu+nrB9Fnh3+CPxOMy9Gyfsgc9qycd8yd+Jc9IPNUhZ5eW/9XO0x3KpHmhaF4V4VAHfJhmzzJbO06beYsu/34rcryVqwd+Ha3RzGcYqriiP+TovFJevfL9fk023PktbznleEMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LI6GZx2V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EMUbYPYXcMQHQFrF5k+EMGA31nsZuSJ2eSw7Ff3O2m/eb57vIa6TJfYSJM7ZXSkwZ4c+5NexHqG2gsslNjdbYLG2/jXTxXtoX6Si0Ae+2+yjtRiaSKkNJ7swc39P07sfVBU4QuNlEiykhmsFPnwOOqDjccEY+sGqrkoojejD63c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BKSU0pkV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LI6GZx2V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A8581F000E9;
-	Tue, 21 Jul 2026 15:39:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BKSU0pkV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE821F000E9;
+	Tue, 21 Jul 2026 15:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648381;
-	bh=1t9Yw0ETGosGuY1H4/0J0I4w6SZFYv/AsHuWlsQr4YE=;
+	s=korg; t=1784648383;
+	bh=9yaHJ5icR4b0AeoTAxrRUmN8ALlRuBOdKEgBMq6IzhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LI6GZx2VA+FI3umFvCydViVZKFecFZmU6iYc5re8UJY5WZvT4g7T1yXXpayKFGutt
-	 Q3vp9mc88xVUcziRhgS94iWesh2hu9kV/1QSlSM3IXUVPycyeOB5EhnWP/XEVkI0xT
-	 PDLK9XnZm5gvss/A3hZ4sWR6SZT8bJtMOucLAT0k=
+	b=BKSU0pkVZXvEwP9jdctI8kLRi6oUQRraOZz8GD1ZUIAis5SYN3T3GwXP2R1aNCShn
+	 M+EfZ1R32oLggftAEfwwSEyfI7/n2z5BNfTZsh0Wy1NBsb+mq0YLt6WiGC3TjVibkz
+	 c3CCDt3RMmjeW161UEY9gTy1268dr9udscSOj6nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Petr Mladek <pmladek@suse.com>,
+	Vivian Wang <wangruikang@iscas.ac.cn>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Yixun Lan <dlan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0134/2077] lib/vsprintf: Fix to check field_width and precision
-Date: Tue, 21 Jul 2026 16:56:47 +0200
-Message-ID: <20260721152555.852412483@linuxfoundation.org>
+Subject: [PATCH 7.1 0135/2077] dts: spacemit: set console baud rate on bpif3
+Date: Tue, 21 Jul 2026 16:56:48 +0200
+Message-ID: <20260721152555.874027365@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,97 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit 71876dffab295b6e25d4209f0424da8fc5020e12 ]
+[ Upstream commit 24c12ca43b12c104389d9a159207d0b25779d0af ]
 
-Check the field_width and presition correctly. Previously it depends
-on the bitfield conversion from int to check out-of-range error.
-However, commit 938df695e98d ("vsprintf: associate the format state
-with the format pointer") changed those fields to int.
-We need to check the out-of-range correctly without bitfield
-conversion.
+Because the default console's baud rate is not set, defconfig kernels do
+not have any serial output on this platform. Set the baud rate to
+115200, matching what is used by U-Boot etc on this platform.
 
-Fixes: 938df695e98d ("vsprintf: associate the format state with the format pointer")
-Reported-by: David Laight <david.laight.linux@gmail.com>
-Closes: https://lore.kernel.org/all/20260318151250.40fef0ab@pumpkin/
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Link: https://patch.msgid.link/177452712047.197965.16376597502504928495.stgit@devnote2
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Suggested-by: Vivian Wang <wangruikang@iscas.ac.cn>
+Fixes: d60d57ab6b2a8 ("riscv: dts: spacemit: add Banana Pi BPI-F3 board device tree")
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Yixun Lan <dlan@kernel.org>
+Link: https://lore.kernel.org/r/20260430-reword-overstep-3be08b7eab25@spud
+Signed-off-by: Yixun Lan <dlan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/vsprintf.c | 36 ++++++++++++++----------------------
- 1 file changed, 14 insertions(+), 22 deletions(-)
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/vsprintf.c b/lib/vsprintf.c
-index 9f359b31c8d1c1..3c76cc5c7f9ceb 100644
---- a/lib/vsprintf.c
-+++ b/lib/vsprintf.c
-@@ -2640,6 +2640,18 @@ static unsigned char spec_flag(unsigned char c)
- 	return (c < sizeof(spec_flag_array)) ? spec_flag_array[c] : 0;
- }
+diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+index 5790d927b93db3..333ac8ebf3f516 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+@@ -19,7 +19,7 @@ aliases {
+ 	};
  
-+static void set_field_width(struct printf_spec *spec, int width)
-+{
-+	spec->field_width = clamp(width, -FIELD_WIDTH_MAX, FIELD_WIDTH_MAX);
-+	WARN_ONCE(spec->field_width != width, "field width %d out of range", width);
-+}
-+
-+static void set_precision(struct printf_spec *spec, int prec)
-+{
-+	spec->precision = clamp(prec, 0, PRECISION_MAX);
-+	WARN_ONCE(spec->precision < prec, "precision %d too large", prec);
-+}
-+
- /*
-  * Helper function to decode printf style format.
-  * Each call decode a token from the format and return the
-@@ -2710,7 +2722,7 @@ struct fmt format_decode(struct fmt fmt, struct printf_spec *spec)
- 	spec->field_width = -1;
+ 	chosen {
+-		stdout-path = "serial0";
++		stdout-path = "serial0:115200n8";
+ 	};
  
- 	if (isdigit(*fmt.str))
--		spec->field_width = skip_atoi(&fmt.str);
-+		set_field_width(spec, skip_atoi(&fmt.str));
- 	else if (unlikely(*fmt.str == '*')) {
- 		/* it's the next argument */
- 		fmt.state = FORMAT_STATE_WIDTH;
-@@ -2724,9 +2736,7 @@ struct fmt format_decode(struct fmt fmt, struct printf_spec *spec)
- 	if (unlikely(*fmt.str == '.')) {
- 		fmt.str++;
- 		if (isdigit(*fmt.str)) {
--			spec->precision = skip_atoi(&fmt.str);
--			if (spec->precision < 0)
--				spec->precision = 0;
-+			set_precision(spec, skip_atoi(&fmt.str));
- 		} else if (*fmt.str == '*') {
- 			/* it's the next argument */
- 			fmt.state = FORMAT_STATE_PRECISION;
-@@ -2799,24 +2809,6 @@ struct fmt format_decode(struct fmt fmt, struct printf_spec *spec)
- 	return fmt;
- }
- 
--static void
--set_field_width(struct printf_spec *spec, int width)
--{
--	spec->field_width = width;
--	if (WARN_ONCE(spec->field_width != width, "field width %d too large", width)) {
--		spec->field_width = clamp(width, -FIELD_WIDTH_MAX, FIELD_WIDTH_MAX);
--	}
--}
--
--static void
--set_precision(struct printf_spec *spec, int prec)
--{
--	spec->precision = prec;
--	if (WARN_ONCE(spec->precision != prec, "precision %d too large", prec)) {
--		spec->precision = clamp(prec, 0, PRECISION_MAX);
--	}
--}
--
- /*
-  * Turn a 1/2/4-byte value into a 64-bit one for printing: truncate
-  * as necessary and deal with signedness.
+ 	leds {
 -- 
 2.53.0
 
