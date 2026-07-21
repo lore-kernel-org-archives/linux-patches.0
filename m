@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65AD935C6B3;
-	Tue, 21 Jul 2026 21:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7083B4E87;
+	Tue, 21 Jul 2026 21:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670630; cv=none; b=EeNwCDl4qfrie/HKJ4YSjlzqoaYtZYAyIj3sqpQYP+1Tz5Pif18Lz3MPOEslhtiO3tYjnOgJ/CusqU/e01dnbeB/H+eBR/HjY67ff9WCUi5V9RrEUxtsZ3YK5aVB2BW4ezg8qijLyoGsl8zsguci21azkYQf/WseNKzzmtH3MjU=
+	t=1784670633; cv=none; b=u+GzzgwDIUUG1i4oWXmH2SqEzWr/v7hH3G46lJKUdizvMDRnz4yAQ3kCzHrrtl8arxq9P9mq5Tr8DFMdwNYWqomUUWNHGjZ8XAQXEEZzjjsiWfWshaGVVYCzwkwS39IHY9zuMKSUBp0AaqvAG7FEgHyJG7JQTPhorLKIIQlhujY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670630; c=relaxed/simple;
-	bh=XJznKrTly+/Lbmi4H3MvGy39nApyUW4kOdFdKgNrBpY=;
+	s=arc-20240116; t=1784670633; c=relaxed/simple;
+	bh=nynCW4lnrktfsv7rmP45kuQ0e9dRIAkhd8K6BiZfvfo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YOhHkEoF1cGb9JifoDw9HKCOBrdYj5Zk4Ek3hlWWO1JXv7Bi4kgytoivFWg0H0SUmCoIFUitLrzdc1hSAyrnr+Q1VfrFLIuk90JPFXsbIO9Vi6uV7I63/+xHS5mN7otWkubnu0JwC+nWBWpVocXsk74ySNIkeguFCW+QKo4RzRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mAU3cpw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bVG43XRIMSpf5ilXkn0hrq6qUVbzgZRXqOW9Sk67T9Uy4ACRl9LTNX5xG5GqCgUDNBid18V/mKqu31r6WrS0ZuYdkOUiGKz3SBfDLfIFKbB2Wkw+VpTnAFOMDPUm7eF6/oLiVYSvF/NwehOoVnfrmPxGGXv7QtOQmghRggOQjcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ir4PB/gT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mAU3cpw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB2721F000E9;
-	Tue, 21 Jul 2026 21:50:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ir4PB/gT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852531F000E9;
+	Tue, 21 Jul 2026 21:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670629;
-	bh=voTNyKFJiXv+V64hRGg5nchUw5G+XChiPL37Yl/aRgI=;
+	s=korg; t=1784670632;
+	bh=lTmC4MgpOw0/0bpMPonIXP+WiFeEGM4zWOu+Mxxs7WA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1mAU3cpwOLtlzAf0mGN4N6/YbTxo8VeNC1BSik40y/5n8XFyENX1PWpUAWWbY2l45
-	 RUR1AlRyDhQjiTLfp/2qDFeJnqG66NXZp4ef0h9gKvggdd28ewDrXGrTkySGscxiWc
-	 gpkkFE9LatKONBjA1ZNyTV+y6tCJGdZ9hPwFG/ms=
+	b=ir4PB/gTuvghVegEhH7Tvw5ZlekZ4Hs+Q2B8jm57dz7bDx+2M5lkmFM2pBM/RJYdR
+	 UMUbCHPtisRL4aYQopuIltcGF81cIuWqxXhW+hED9HIJSH8t4d/ZosM67LjUTXVuPv
+	 2lOdXIkx/NgmY8WdM81eYh7o0rAWak6rU/Ly7imU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Musaab Khan <musaab.khan@protonmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1005/1067] ksmbd: track the connection owning a byte-range lock
-Date: Tue, 21 Jul 2026 17:26:46 +0200
-Message-ID: <20260721152447.051772128@linuxfoundation.org>
+Subject: [PATCH 6.1 0979/1067] gpio: sch: use raw_spinlock_t in the irq startup path
+Date: Tue, 21 Jul 2026 17:26:20 +0200
+Message-ID: <20260721152446.453670221@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,109 +53,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit c1016dd1d8b2bcd1158bbaabe94a31bb7e7431fb ]
+[ Upstream commit 286533cb14a3c8a8bd39ff64ea2fc8e1aa0f638b ]
 
-SMB2_LOCK adds each granted byte-range lock to both the file lock list
-and the lock list of the connection which handled the request.  The
-final close and durable handle paths, however, remove the connection
-list entry while holding fp->conn->llist_lock.
+sch_irq_unmask() enables the GPIO IRQ and then updates the controller
+state through sch_irq_mask_unmask(), which takes sch->lock with
+spin_lock_irqsave().  The callback can be reached from irq_startup()
+while setting up a requested IRQ.  That path is not sleepable, but on
+PREEMPT_RT a regular spinlock_t becomes a sleeping lock.
 
-With SMB3 multichannel, the connection handling the LOCK request can be
-different from the connection which opened the file.  The entry can
-therefore be removed under a different spinlock from the one protecting
-the list it belongs to.  A concurrent traversal can then access freed
-struct ksmbd_lock and struct file_lock objects.
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
 
-Record the connection owning each lock's clist entry and hold a
-reference to it while the entry is linked.  Use that connection and its
-llist_lock for unlock, rollback, close, and durable preserve.  Durable
-reconnect assigns the new connection as the owner when publishing the
-locks again.
+The grounded PoC kept the request_threaded_irq() -> __setup_irq() ->
+irq_startup() -> sch_irq_unmask() -> sch_irq_mask_unmask() carrier and
+used the original spin_lock_irqsave(&sch->lock) edge.  Lockdep reported:
 
-Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
+  BUG: sleeping function called from invalid context
+  hardirqs last disabled at ... __setup_irq.constprop.0 ... [vuln_msv]
+  sch_rt_spin_lock_irqsave+0x1c/0x30 [vuln_msv]
+  sch_irq_mask_unmask.constprop.0+0x31/0x70 [vuln_msv]
+  __setup_irq.constprop.0+0xd/0x30 [vuln_msv]
+
+Convert the SCH controller lock to raw_spinlock_t.  The same lock is
+also used by the GPIO direction and value callbacks, but those critical
+sections only update MMIO-backed GPIO registers and do not contain
+sleepable operations.  Keeping this register lock non-sleeping is
+therefore appropriate for the irqchip callbacks and does not change the
+GPIO-side locking contract.
+
+Fixes: 7a81638485c1 ("gpio: sch: Add edge event support")
 Cc: stable@vger.kernel.org
-Reported-by: Musaab Khan <musaab.khan@protonmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Link: https://patch.msgid.link/20260617154035.1199948-2-runyu.xiao@seu.edu.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+[ adjusted context for 6.6's pre-MMIO `iobase` port I/O and void `sch_gpio_set()` (no set_rv `return 0;`) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c   |   10 ++++++++--
- fs/smb/server/vfs_cache.c |   12 ++++++++----
- fs/smb/server/vfs_cache.h |    1 +
- 3 files changed, 17 insertions(+), 6 deletions(-)
+ drivers/gpio/gpio-sch.c |   32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -7136,9 +7136,11 @@ int smb2_lock(struct ksmbd_work *work)
- 						nolock = 0;
- 						list_del(&cmp_lock->flist);
- 						list_del(&cmp_lock->clist);
-+						cmp_lock->conn = NULL;
- 						spin_unlock(&conn->llist_lock);
- 						up_read(&conn_list_lock);
+--- a/drivers/gpio/gpio-sch.c
++++ b/drivers/gpio/gpio-sch.c
+@@ -38,7 +38,7 @@
  
-+						ksmbd_conn_put(conn);
- 						locks_free_lock(cmp_lock->fl);
- 						kfree(cmp_lock);
- 						goto out_check_cl;
-@@ -7273,6 +7275,7 @@ skip:
- 				goto out2;
- 			} else if (!rc) {
- 				list_add(&smb_lock->llist, &rollback_list);
-+				smb_lock->conn = ksmbd_conn_get(work->conn);
- 				spin_lock(&work->conn->llist_lock);
- 				list_add_tail(&smb_lock->clist,
- 					      &work->conn->lock_list);
-@@ -7327,11 +7330,14 @@ out:
- 		}
+ struct sch_gpio {
+ 	struct gpio_chip chip;
+-	spinlock_t lock;
++	raw_spinlock_t lock;
+ 	unsigned short iobase;
+ 	unsigned short resume_base;
  
- 		list_del(&smb_lock->llist);
--		spin_lock(&work->conn->llist_lock);
-+		conn = smb_lock->conn;
-+		spin_lock(&conn->llist_lock);
- 		if (!list_empty(&smb_lock->flist))
- 			list_del(&smb_lock->flist);
- 		list_del(&smb_lock->clist);
--		spin_unlock(&work->conn->llist_lock);
-+		smb_lock->conn = NULL;
-+		spin_unlock(&conn->llist_lock);
-+		ksmbd_conn_put(conn);
+@@ -102,9 +102,9 @@ static int sch_gpio_direction_in(struct
+ 	struct sch_gpio *sch = gpiochip_get_data(gc);
+ 	unsigned long flags;
  
- 		locks_free_lock(smb_lock->fl);
- 		if (rlock)
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -317,10 +317,14 @@ static void __ksmbd_close_fd(struct ksmb
- 	 * there are not accesses to fp->lock_list.
- 	 */
- 	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
--		if (!list_empty(&smb_lock->clist) && fp->conn) {
--			spin_lock(&fp->conn->llist_lock);
--			list_del(&smb_lock->clist);
--			spin_unlock(&fp->conn->llist_lock);
-+		struct ksmbd_conn *conn = smb_lock->conn;
-+
-+		if (conn) {
-+			spin_lock(&conn->llist_lock);
-+			list_del_init(&smb_lock->clist);
-+			smb_lock->conn = NULL;
-+			spin_unlock(&conn->llist_lock);
-+			ksmbd_conn_put(conn);
- 		}
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 	sch_gpio_reg_set(sch, gpio_num, GIO, 1);
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
+ 	return 0;
+ }
  
- 		list_del(&smb_lock->flist);
---- a/fs/smb/server/vfs_cache.h
-+++ b/fs/smb/server/vfs_cache.h
-@@ -31,6 +31,7 @@ struct ksmbd_session;
+@@ -120,9 +120,9 @@ static void sch_gpio_set(struct gpio_chi
+ 	struct sch_gpio *sch = gpiochip_get_data(gc);
+ 	unsigned long flags;
  
- struct ksmbd_lock {
- 	struct file_lock *fl;
-+	struct ksmbd_conn *conn;
- 	struct list_head clist;
- 	struct list_head flist;
- 	struct list_head llist;
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 	sch_gpio_reg_set(sch, gpio_num, GLV, val);
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
+ }
+ 
+ static int sch_gpio_direction_out(struct gpio_chip *gc, unsigned int gpio_num,
+@@ -131,9 +131,9 @@ static int sch_gpio_direction_out(struct
+ 	struct sch_gpio *sch = gpiochip_get_data(gc);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 	sch_gpio_reg_set(sch, gpio_num, GIO, 0);
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
+ 
+ 	/*
+ 	 * according to the datasheet, writing to the level register has no
+@@ -193,14 +193,14 @@ static int sch_irq_type(struct irq_data
+ 		return -EINVAL;
+ 	}
+ 
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 
+ 	sch_gpio_reg_set(sch, gpio_num, GTPE, rising);
+ 	sch_gpio_reg_set(sch, gpio_num, GTNE, falling);
+ 
+ 	irq_set_handler_locked(d, handle_edge_irq);
+ 
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
+ 
+ 	return 0;
+ }
+@@ -212,9 +212,9 @@ static void sch_irq_ack(struct irq_data
+ 	irq_hw_number_t gpio_num = irqd_to_hwirq(d);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 	sch_gpio_reg_set(sch, gpio_num, GTS, 1);
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
+ }
+ 
+ static void sch_irq_mask_unmask(struct gpio_chip *gc, irq_hw_number_t gpio_num, int val)
+@@ -222,9 +222,9 @@ static void sch_irq_mask_unmask(struct g
+ 	struct sch_gpio *sch = gpiochip_get_data(gc);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 	sch_gpio_reg_set(sch, gpio_num, GGPE, val);
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
+ }
+ 
+ static void sch_irq_mask(struct irq_data *d)
+@@ -265,12 +265,12 @@ static u32 sch_gpio_gpe_handler(acpi_han
+ 	int offset;
+ 	u32 ret;
+ 
+-	spin_lock_irqsave(&sch->lock, flags);
++	raw_spin_lock_irqsave(&sch->lock, flags);
+ 
+ 	core_status = inl(sch->iobase + CORE_BANK_OFFSET + GTS);
+ 	resume_status = inl(sch->iobase + RESUME_BANK_OFFSET + GTS);
+ 
+-	spin_unlock_irqrestore(&sch->lock, flags);
++	raw_spin_unlock_irqrestore(&sch->lock, flags);
+ 
+ 	pending = (resume_status << sch->resume_base) | core_status;
+ 	for_each_set_bit(offset, &pending, sch->chip.ngpio)
+@@ -336,7 +336,7 @@ static int sch_gpio_probe(struct platfor
+ 				 pdev->name))
+ 		return -EBUSY;
+ 
+-	spin_lock_init(&sch->lock);
++	raw_spin_lock_init(&sch->lock);
+ 	sch->iobase = res->start;
+ 	sch->chip = sch_gpio_chip;
+ 	sch->chip.label = dev_name(&pdev->dev);
 
 
