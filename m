@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174204F7988;
-	Tue, 21 Jul 2026 15:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8F340B0E2;
+	Tue, 21 Jul 2026 15:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784647809; cv=none; b=YelhUzwVryjG1b4gAVMfwjqLYkTdZ4TpRqaMmKIpBUZvwx231mZgIlKSVhq5pS9nJe6t95etVo4cZ4rRFV08oF5LL8idurPpleYdZKKGNzGh7u3JCeljeJRYR895oiYzsk+1RB8gxZFf8/c0q8JjV8fI4E+f59rbYYI8b3YmqXI=
+	t=1784647812; cv=none; b=mmjeXlG8TjMCl8MCbMH86e2eKb6CekGKhEHpGnyYj6a8siDL9oS9mpFJtPo9rLf5iCkg/skbPc/UQB6+1LPYGyRCrxCpTA2rw7uVGK2dnwZ6aO9ag4WrMrFHBE+/2o9vnYNYb3PRbCYK2eUVK0YxRdlO/6D5ZQ8QtZ2TnHDs6Eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784647809; c=relaxed/simple;
-	bh=Ks7OUS8Rt7SfJHFsaj52yFq/YgAmDNknzTrdhQxUE6I=;
+	s=arc-20240116; t=1784647812; c=relaxed/simple;
+	bh=ghASfrMThYOOobGbLgmeC3dkbCtozgyahTONsbW52U8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DDCXvBMpQO9kW82TIm3RTVbh7LbAd2zZ7o7RI4PafRMMMIr76YbTL0UEysy5VGx/alplQFTIIE1uDI3GACiC0GMRlSDCZKpFM8N6CJjfMYR7FbEP7bWeTnDXjGrZmT8z4vnmPzRZZ6fTu9/23FgqJZMtI0mey+SA8RkHEYa8yyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7J5fN94; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mOzx3M7rEQy833fGFk+3px4kR65PZhFZXUE9SyuZl/rQIqcoPgcTPqCLh+nKl+9rwRiTZKHpNUF+iNE3wxaJc2cez10MvH28JXhYIPg3NRgkA3+MJULHgAaVTkoT9iS51cLrRtktDL4h9DSinuP0mp6tLC7oPoVQ33nVKQNxWJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uu8EWB/q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7J5fN94"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 807CF1F000E9;
-	Tue, 21 Jul 2026 15:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uu8EWB/q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2470A1F000E9;
+	Tue, 21 Jul 2026 15:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784647808;
-	bh=jjrK2mrQQ1yARv1aPuwQjr0yxHZzcQfBfm8vKiRpTlQ=;
+	s=korg; t=1784647810;
+	bh=amFP20DKlSiC98s60mbep6rVUTSrRqV+d/VsmSwRYJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v7J5fN94I34sVO9vuwBnEUJdWTYVhVnE37eU7UoW/9izOZqfN5YgduoiRk9fFmsD9
-	 DtMM45FmAmlz9FfuUxNpm/cPE5eeLG60+I4vwdbqvkwopKo1uSVgJvuLP07h2WTOZZ
-	 nzSAYtzd8it7kQq1bh2iiKfqeSFRCORancImsECU=
+	b=Uu8EWB/qgxw5YwjjxvPoo9urQ6UQKrd+yGFsBMJd4vrPFP0/i92RFVlIPFmq7Y8hU
+	 sUUME00rk1OgXPnHlMJfdHQpfLK86f3sMi0lT6zUt+cNhNCTH0AuRkEYGkM7Zr1T1Q
+	 /5lrkCsgfik6sRJk4TKydLQXzj+xlaY0C9HjQz0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	=?UTF-8?q?Muhammet=20Kaan=20KILIN=C3=87?= <muhammetkaankilinc@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0002/2077] iommu/vt-d: Clear Present bit before tearing down scalable-mode context entry
-Date: Tue, 21 Jul 2026 16:54:35 +0200
-Message-ID: <20260721152552.717792954@linuxfoundation.org>
+Subject: [PATCH 7.1 0001/2077] crypto: algif_skcipher - force synchronous processing
+Date: Tue, 21 Jul 2026 16:54:34 +0200
+Message-ID: <20260721152552.694135077@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,65 +44,163 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Muhammet Kaan KILINÇ <muhammetkaankilinc@gmail.com>
 
-[ Upstream commit f46452c3df7a8d8a5addc0926e76ef19ea7da0a0 ]
+The AIO/async path in skcipher_recvmsg() passes the socket-wide ctx->iv
+directly into the skcipher request. After io_submit() the socket lock is
+dropped and the request is processed asynchronously by a worker (e.g.
+cryptd), which dereferences ctx->iv only later.
 
-device_pasid_table_teardown() zeroes the 128-bit scalable-mode context
-entry with context_clear_entry() while the Present bit is still set. This
-creates a window where the hardware can fetch a torn entry, with some
-fields already zeroed while Present is still set, leading to unpredictable
-behavior or spurious faults. The context-cache invalidation is issued only
-after the entry has been zeroed, and intel_pasid_free_table() then frees
-the PASID directory pages, so the IOMMU can keep walking a stale Present=1
-entry that points at freed memory.
+A concurrent sendmsg(ALG_SET_IV) on the same socket can overwrite ctx->iv
+inside this window, so the in-flight request runs under an
+attacker-controlled IV. For CTR and other stream modes this causes
+IV/keystream reuse and allows an unprivileged user to recover the
+plaintext of a concurrent operation.
 
-While x86 provides strong write ordering, the compiler may reorder the two
-64-bit writes to the entry, and the hardware fetch is not guaranteed to be
-atomic with respect to multiple CPU writes.
+Snapshotting ctx->iv into per-request storage for the async path is not
+sufficient here. For ciphers with statesize == 0 - which includes cbc
+and ctr - skcipher_prepare_alg() installs skcipher_noimport()/
+skcipher_noexport(), so ctx->state carries nothing and the MSG_MORE
+inter-chunk IV chaining is carried solely by the in-place req->iv
+writeback. A snapshot redirects that writeback into per-request memory
+that af_alg_free_resources() releases on completion, so AIO + MSG_MORE
+with cbc/ctr would silently produce wrong output. Writing the IV back
+from the completion callback instead is not possible either: that would
+require lock_sock() there, but the callback can run in softirq/atomic
+context, so it must not sleep.
 
-Commit c1e4f1dccbe9d ("iommu/vt-d: Clear Present bit before tearing down
-context entry") fixed this exact pattern in domain_context_clear_one() and
-the copied-context path, but device_pasid_table_teardown() was not
-converted.
+Make the operation synchronous instead. ctx->iv is then only ever
+dereferenced under the socket lock held by recvmsg(), which removes the
+race, and the req->iv writeback lands in ctx->iv as before, which keeps
+MSG_MORE chaining intact for statesize == 0 ciphers. The ctx->state
+import/export path is unchanged for ciphers that do have state.
 
-Align it with the "Guidance to Software for Invalidations" in the VT-d
-spec, Section 6.5.3.3, using the same ownership handshake as the sibling
-fix: clear only the Present bit, flush it to the IOMMU, perform the
-context-cache invalidation, and only then zero the rest of the entry.
+This is equivalent to the upstream resolution: commit fcc77d33a34c
+("net: Remove support for AIO on sockets") removed the AIO socket path
+across net/ entirely, producing the same end state for this file -
+algif_skcipher never processes an AIO request asynchronously. After this
+patch, _skcipher_recvmsg() matches mainline's crypto/algif_skcipher.c as
+it stands today, including the same now-dead -EIOCBQUEUED check. This
+patch deviates from that commit deliberately: rather than removing AIO
+socket support tree-wide, which would be far too invasive for stable, it
+removes only the AIO branch in crypto/algif_skcipher.c. io_submit() now
+completes synchronously, which is valid for the AIO interface; AF_ALG
+async is rarely used in practice.
 
-Fixes: 81e921fd32161 ("iommu/vt-d: Fix NULL domain on device release")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Assisted-by: Claude:claude-opus-4-7
-Link: https://lore.kernel.org/r/20260528025557.3209367-1-michael.bommarito@gmail.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+The -EIOCBQUEUED check in skcipher_recvmsg() is now dead but harmless,
+and is left alone to keep the fix minimal.
+
+Fixes: e870456d8e7c ("crypto: algif_skcipher - overhaul memory management")
+Cc: <stable@vger.kernel.org>
+Reported-by: Muhammet Kaan KILINÇ <muhammetkaankilinc@gmail.com>
+Signed-off-by: Muhammet Kaan KILINÇ <muhammetkaankilinc@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/pasid.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ crypto/algif_skcipher.c | 75 +++++++++++++----------------------------
+ 1 file changed, 24 insertions(+), 51 deletions(-)
 
---- a/drivers/iommu/intel/pasid.c
-+++ b/drivers/iommu/intel/pasid.c
-@@ -748,10 +748,12 @@ static void device_pasid_table_teardown(
- 	}
- 
- 	did = context_domain_id(context);
--	context_clear_entry(context);
-+	context_clear_present(context);
- 	__iommu_flush_cache(iommu, context, sizeof(*context));
- 	spin_unlock(&iommu->lock);
- 	intel_context_flush_no_pasid(info, context, did);
-+	context_clear_entry(context);
-+	__iommu_flush_cache(iommu, context, sizeof(*context));
+diff --git a/crypto/algif_skcipher.c b/crypto/algif_skcipher.c
+index ba0a17fd95aca2..35ebc3e0201b04 100644
+--- a/crypto/algif_skcipher.c
++++ b/crypto/algif_skcipher.c
+@@ -79,20 +79,6 @@ static int algif_skcipher_export(struct sock *sk, struct skcipher_request *req)
+ 	return err;
  }
  
- static int pci_pasid_table_teardown(struct pci_dev *pdev, u16 alias, void *data)
+-static void algif_skcipher_done(void *data, int err)
+-{
+-	struct af_alg_async_req *areq = data;
+-	struct sock *sk = areq->sk;
+-
+-	if (err)
+-		goto out;
+-
+-	err = algif_skcipher_export(sk, &areq->cra_u.skcipher_req);
+-
+-out:
+-	af_alg_async_cb(data, err);
+-}
+-
+ static int _skcipher_recvmsg(struct socket *sock, struct msghdr *msg,
+ 			     size_t ignored, int flags)
+ {
+@@ -171,43 +157,30 @@ static int _skcipher_recvmsg(struct socket *sock, struct msghdr *msg,
+ 		cflags |= CRYPTO_SKCIPHER_REQ_CONT;
+ 	}
+ 
+-	if (msg->msg_iocb && !is_sync_kiocb(msg->msg_iocb)) {
+-		/* AIO operation */
+-		sock_hold(sk);
+-		areq->iocb = msg->msg_iocb;
+-
+-		/* Remember output size that will be generated. */
+-		areq->outlen = len;
+-
+-		skcipher_request_set_callback(&areq->cra_u.skcipher_req,
+-					      cflags |
+-					      CRYPTO_TFM_REQ_MAY_SLEEP,
+-					      algif_skcipher_done, areq);
+-		err = ctx->enc ?
+-			crypto_skcipher_encrypt(&areq->cra_u.skcipher_req) :
+-			crypto_skcipher_decrypt(&areq->cra_u.skcipher_req);
+-
+-		/* AIO operation in progress */
+-		if (err == -EINPROGRESS)
+-			return -EIOCBQUEUED;
+-
+-		sock_put(sk);
+-	} else {
+-		/* Synchronous operation */
+-		skcipher_request_set_callback(&areq->cra_u.skcipher_req,
+-					      cflags |
+-					      CRYPTO_TFM_REQ_MAY_SLEEP |
+-					      CRYPTO_TFM_REQ_MAY_BACKLOG,
+-					      crypto_req_done, &ctx->wait);
+-		err = crypto_wait_req(ctx->enc ?
+-			crypto_skcipher_encrypt(&areq->cra_u.skcipher_req) :
+-			crypto_skcipher_decrypt(&areq->cra_u.skcipher_req),
+-						 &ctx->wait);
+-
+-		if (!err)
+-			err = algif_skcipher_export(
+-				sk, &areq->cra_u.skcipher_req);
+-	}
++	/*
++	 * Force synchronous processing.  The async (AIO) path passed the
++	 * socket-wide ctx->iv into the request, which the worker
++	 * dereferenced after the socket lock had been dropped, letting a
++	 * concurrent sendmsg(ALG_SET_IV) inject an attacker IV.  Mainline
++	 * removed the AIO socket path in commit fcc77d33a34c ("net: Remove
++	 * support for AIO on sockets"); the minimal stable fix is to always
++	 * complete synchronously, so ctx->iv is only ever dereferenced under
++	 * the socket lock.  This also keeps the IV chaining intact: for
++	 * ciphers with statesize == 0 (e.g. ctr, cbc) the chained IV is
++	 * carried by the req->iv writeback into ctx->iv, which is only
++	 * consistent on the synchronous path.
++	 */
++	skcipher_request_set_callback(&areq->cra_u.skcipher_req,
++				      cflags |
++				      CRYPTO_TFM_REQ_MAY_SLEEP |
++				      CRYPTO_TFM_REQ_MAY_BACKLOG,
++				      crypto_req_done, &ctx->wait);
++	err = crypto_wait_req(ctx->enc ?
++		crypto_skcipher_encrypt(&areq->cra_u.skcipher_req) :
++		crypto_skcipher_decrypt(&areq->cra_u.skcipher_req),
++				 &ctx->wait);
++	if (!err)
++		err = algif_skcipher_export(sk, &areq->cra_u.skcipher_req);
+ 
+ free:
+ 	af_alg_free_resources(areq);
+-- 
+2.53.0
+
 
 
