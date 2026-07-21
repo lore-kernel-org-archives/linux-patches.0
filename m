@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3820C3C1081;
-	Tue, 21 Jul 2026 22:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83F0305E3B;
+	Tue, 21 Jul 2026 22:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671272; cv=none; b=MApzzI8XUmoANHcQKS75KFV45U+enMInwnKw80z48WQeYeUH6NGAgwDOI/ObXXj2PS5o49DhHh/Ztk+qxp87jO4m8PlG82lfKEydE4DWXhYv0dg8S+HKAlgctREvWNVxYeDUv2lh/C7TYF/7sgHEL1OayS2A04jJxlPdIUmO2yk=
+	t=1784671274; cv=none; b=J5wKg5GqnGoVb6EqP5J0XBQwzFB5Pmh4+enL92thyUaMcrtDf1qkWunvRVFvq1Q/q88PQng6Oxa3Rr3Dca2xSB6A+8K13cxcl/RkTf8vT0mAIjQspFo2EzPOJs1da8mYWHXMC8o3tMoRDNUZ1c/9eF/40nKewgpL6bK5UZquaxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671272; c=relaxed/simple;
-	bh=LccinLH7uvVr6oaZTSKyP5kKYL3VsS4+VMiT+9LYCeI=;
+	s=arc-20240116; t=1784671274; c=relaxed/simple;
+	bh=aWUWxzID86jCy43m1d8k8kXcH94C07li4UuzpAaMKFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dUE/xqxppA463dPYacUd3JLo6RxWzcWJeyDuXDNzUe7MUkvc7raQiwZBC0VriHokrgD/+rZtlKXAcD8F4Kxdn0/b25JcJKLY9s0BFpNQd+hqyYp5ozBUTDt/l4vtoMVWOmz8XArVeehsHHFRPnb+coephItjgEbUUFuzG0NijmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gowhwcvF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IpAI7B5glpm7WvA3NlGfgXBBM2xuj1ZaM+MQ5x1x9fr36Fzfle1dyBMxwpCKCWSvSPvx4o0leAPK3s2yRkYjDuyjYen9E07pc/h6opuDlbxUyAUrM/il+5NuX8npPLMYnVVldhR8aUbEHdRFDi7JQdvtjr2aRTLgXDMmXmdi2g8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y26UglKS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gowhwcvF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1A21F000E9;
-	Tue, 21 Jul 2026 22:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y26UglKS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41ED61F000E9;
+	Tue, 21 Jul 2026 22:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671271;
-	bh=fXVL/ttOL0qI2yYsqygEqOEJ22M36q2N7b/uEfuePEw=;
+	s=korg; t=1784671273;
+	bh=s9YaRj+297zCaym31EyN9opaXYIYp06ma9Ikm0Cxn1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gowhwcvFz0Aibq3bvQD+hIuuNZzQvS1ASvUC9pvQRa5NApjZw4C3fajFJXSsrGysh
-	 SsZYtg4HnRi8zXprIXtbIKp0OFF9j3/OjgH6BaeKnaT+8BJUAW8h4nkjHPxX/bT766
-	 zGnZSOro3xCAq4MzLLhSuvzhCLh6LUfTn87XsydY=
+	b=y26UglKSooZPxOz0NF3zbfexj6owBNUEwXt+aBlPFAwL8z8gvBQ+JpkXHMeepjyvL
+	 iaTEkmeOzvYvtFFt8qUMttwJCNwco9tvCOh3x/6d6SN7l21IBT5RqNhBZleHm9PhmJ
+	 Biu37vSdqg6mMMd7qpIDItj3MSU81Tm7Xirqcg1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjan Kumar <kumarranja@chromium.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 184/843] Input: elan_i2c - prevent division by zero and arithmetic underflow
-Date: Tue, 21 Jul 2026 17:16:59 +0200
-Message-ID: <20260721152410.156553452@linuxfoundation.org>
+Subject: [PATCH 5.15 185/843] Input: goodix - clamp the device-reported contact count
+Date: Tue, 21 Jul 2026 17:17:00 +0200
+Message-ID: <20260721152410.176735474@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,107 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjan Kumar <kumarranja@chromium.org>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit df2b818fa009c10ff6ba875a1663ff001cda9558 upstream.
+commit 5ed62a96e06be4e94b8296b7932afee550a70e04 upstream.
 
-The Elan I2C touchpad driver queries the device for its physical
-dimensions and trace counts to calculate the device resolution and width.
-However, if the device firmware or device tree provides invalid zero
-values for x_traces or y_traces, it results in a fatal division-by-zero
-exception leading to a kernel panic during device probe.
+goodix_ts_read_input_report() copies the number of touch points reported
+by the device into an on-stack buffer
 
-Add checks to ensure these parameters are non-zero before performing
-the division. If invalid trace values are detected, fall back to a safe
-default of 1.
+	u8 point_data[2 + GOODIX_MAX_CONTACT_SIZE * GOODIX_MAX_CONTACTS];
 
-Additionally, prevent an arithmetic underflow in the touch reporting
-logic. Previously, if the calculated or fallback width was smaller than
-ETP_FWIDTH_REDUCE (90), the subtraction would underflow, resulting in a
-massive unsigned integer being reported to userspace. Clamp the adjusted
-width to a minimum of 0 to safely handle small physical dimensions and
-fallback scenarios.
+which is sized for at most GOODIX_MAX_CONTACTS (10) contacts. The only
+runtime check bounds the per-interrupt count against ts->max_touch_num,
+but that value is taken verbatim from a 4-bit field of the device
+configuration block and is never clamped:
 
-Completing the probe with safe fallback values ensures the sysfs nodes
-are created, keeping the firmware update path intact so a recovery
-firmware can be flashed to the device.
+	ts->max_touch_num = ts->config[MAX_CONTACTS_LOC] & 0x0f;
 
-Fixes: 6696777c6506 ("Input: add driver for Elan I2C/SMbus touchpad")
-Fixes: e3a9a1290688 ("Input: elan_i2c - do not query the info if they are provided")
-Signed-off-by: Ranjan Kumar <kumarranja@chromium.org>
-Link: https://patch.msgid.link/20260612060339.3829666-1-kumarranja@chromium.org
+The nibble can be 0..15, so a malfunctioning, malicious or counterfeit
+controller (or an attacker tampering with the I2C bus) can advertise up
+to 15 contacts. goodix_ts_read_input_report() then accepts a touch_num
+of up to 15 and the second goodix_i2c_read() writes
+ts->contact_size * (touch_num - 1) bytes past the one-contact header into
+point_data - up to 30 bytes (45 with the 9-byte report format) beyond the
+92-byte buffer: a stack out-of-bounds write.
+
+Clamp max_touch_num to GOODIX_MAX_CONTACTS, the number of contacts
+point_data[] is sized for, when reading it from the configuration.
+
+Fixes: a7ac7c95d468 ("Input: goodix - use max touch number from device config")
 Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260612-b4-disp-6844625d-v1-1-df0aed080c9d@proton.me
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/elan_i2c_core.c |   36 ++++++++++++++++++++++++++++++------
- 1 file changed, 30 insertions(+), 6 deletions(-)
+ drivers/input/touchscreen/goodix.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/input/mouse/elan_i2c_core.c
-+++ b/drivers/input/mouse/elan_i2c_core.c
-@@ -425,8 +425,17 @@ static int elan_query_device_parameters(
- 		if (error)
- 			return error;
- 	}
--	data->width_x = data->max_x / x_traces;
--	data->width_y = data->max_y / y_traces;
-+
-+	if (!x_traces || !y_traces) {
-+		dev_warn(&client->dev,
-+			 "invalid trace numbers: x=%u, y=%u\n",
-+			 x_traces, y_traces);
-+		data->width_x = 1;
-+		data->width_y = 1;
-+	} else {
-+		data->width_x = data->max_x / x_traces;
-+		data->width_y = data->max_y / y_traces;
-+	}
- 
- 	if (device_property_read_u32(&client->dev,
- 				     "touchscreen-x-mm", &x_mm) ||
-@@ -440,8 +449,16 @@ static int elan_query_device_parameters(
- 		data->x_res = elan_convert_resolution(hw_x_res, data->pattern);
- 		data->y_res = elan_convert_resolution(hw_y_res, data->pattern);
- 	} else {
--		data->x_res = (data->max_x + 1) / x_mm;
--		data->y_res = (data->max_y + 1) / y_mm;
-+		if (unlikely(x_mm == 0 || y_mm == 0)) {
-+			dev_warn(&client->dev,
-+				 "invalid physical dimensions: x_mm=%u, y_mm=%u\n",
-+				 x_mm, y_mm);
-+			data->x_res = 1;
-+			data->y_res = 1;
-+		} else {
-+			data->x_res = (data->max_x + 1) / x_mm;
-+			data->y_res = (data->max_y + 1) / y_mm;
-+		}
+--- a/drivers/input/touchscreen/goodix.c
++++ b/drivers/input/touchscreen/goodix.c
+@@ -935,7 +935,8 @@ static void goodix_read_config(struct go
  	}
  
- 	if (device_property_read_bool(&client->dev, "elan,clickpad"))
-@@ -960,6 +977,7 @@ static void elan_report_contact(struct e
+ 	ts->int_trigger_type = ts->config[TRIGGER_LOC] & 0x03;
+-	ts->max_touch_num = ts->config[MAX_CONTACTS_LOC] & 0x0f;
++	ts->max_touch_num = min(ts->config[MAX_CONTACTS_LOC] & 0x0f,
++				GOODIX_MAX_CONTACTS);
  
- 		if (data->report_features & ETP_FEATURE_REPORT_MK) {
- 			unsigned int mk_x, mk_y, area_x, area_y;
-+			int adj_width_x, adj_width_y;
- 			u8 mk_data = high_precision ?
- 				packet[ETP_MK_DATA_OFFSET + contact_num] :
- 				finger_data[3];
-@@ -971,8 +989,14 @@ static void elan_report_contact(struct e
- 			 * To avoid treating large finger as palm, let's reduce
- 			 * the width x and y per trace.
- 			 */
--			area_x = mk_x * (data->width_x - ETP_FWIDTH_REDUCE);
--			area_y = mk_y * (data->width_y - ETP_FWIDTH_REDUCE);
-+
-+			adj_width_x = data->width_x > ETP_FWIDTH_REDUCE ?
-+					data->width_x - ETP_FWIDTH_REDUCE : 0;
-+			adj_width_y = data->width_y > ETP_FWIDTH_REDUCE ?
-+					data->width_y - ETP_FWIDTH_REDUCE : 0;
-+
-+			area_x = mk_x * adj_width_x;
-+			area_y = mk_y * adj_width_y;
- 
- 			input_report_abs(input, ABS_TOOL_WIDTH, mk_x);
- 			input_report_abs(input, ABS_MT_TOUCH_MAJOR,
+ 	x_max = get_unaligned_le16(&ts->config[RESOLUTION_LOC]);
+ 	y_max = get_unaligned_le16(&ts->config[RESOLUTION_LOC + 2]);
 
 
