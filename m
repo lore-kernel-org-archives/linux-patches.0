@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9616819049B;
-	Tue, 21 Jul 2026 17:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3929B3D3321;
+	Tue, 21 Jul 2026 17:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654740; cv=none; b=Bf6vqMzyJWmpTXNJv2yV+GiGi4RRHlP608qQhQaVTLShy7l7EFOAQu0fbAsssrTIlG852w5FJMGR7GOl3GtCx1/N1nD4AVlrTWWEaEH/MorF3sIIux+81+1lpvuIf7Cv2eTqqEXWK4RRJqGWuxEKkaTSz+rx6e5OpbLAe484acc=
+	t=1784654742; cv=none; b=kqfzV9AWzTxJWfOYVa6LUsRw3kOC5c9g+FHiYEzeNOE+OSmgbqyP2vYAVUhI65eudjAuW0ItzG39cXi3QXBwKD+GLqD4zgSF2mdeYYxqHIdaYTGcSwfGcTl+ZspiGbFQI7HHJ+/noEnw59vJr8HK2mp7XwibWhQlw6ufbkEgRJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654740; c=relaxed/simple;
-	bh=Kg9nSUsHccNK6xLA54cNCldKaDD57ntps/LOnHIqJME=;
+	s=arc-20240116; t=1784654742; c=relaxed/simple;
+	bh=aSI8lkSo1t1E6vWc8oreFBf2aeT3CyH/IwG/wPPr/qg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tPc+H+a122XQbkPWD9hG2HQRX0LtI8Wlcxm73RSGU1+s8CUGEJ29CQMlXj8blE5r7pBjDq2V2pIDqmaWHjx/tyIThecBe2bBw1v+Z7xUiAVEwFsqjH8gVGOzJ2dfnoW8kpzKB0KcS+LBx02+hS58dFkqhccLn+QVAR+0iIDi7r4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ckaou6Mw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wsx5xxqZlaUf6ItqE/kmd+8zEzIo+IwgCy3rPPNCJBCuaAGoij1gyBwBU2oCbtwVPZUXANKDWAP70Xv2ywiBsUeWDVtPvwnUqgBnFBYPu3/SyIMkz4qmxDEKQuQ4x1344vIs+q0iRviHmFtFJAwmQkFnGqf1Bt67COsk4ut3N70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a6pKtDUG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ckaou6Mw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 092F31F000E9;
-	Tue, 21 Jul 2026 17:25:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a6pKtDUG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B461F000E9;
+	Tue, 21 Jul 2026 17:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654738;
-	bh=wXQDoCtSwLwnZPor3XnzbamwvD9+lQjMzwTAvA/t/+c=;
+	s=korg; t=1784654741;
+	bh=5QlstpSi4gG4P08UHJU4uNB4RjKrxX6GrfD4cSYdV/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ckaou6MwpakmOsFbV3av9Y2xe5zrXPI7biuMXhZXM4T31oP/OeIAuCs1t8znFGNfD
-	 DXbqlwxbm/Yf9HUrSmCuzOw2YItHFaLaoX5ywyncQe6KXBblJVES0y6ZmYtO5waxXq
-	 W27LVHmRnJvQEbiiLwiOljjGDAcqnDMQBxPTfpwQ=
+	b=a6pKtDUGlUPdSWnQgt+n+IHQKjMb/W/xxxJMFWU87cpYllssh3tsyi/gQWcJoJabk
+	 USshExqyr5Tf/LZkCscAdCf9/fY4csGtMC/+nZt6PH/jeo+MRB4NOZ2hXhoExtwEDp
+	 3IoXmGESO37x/O2+OGD2rDVe+LQ0+FgXr07t/iio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Nico Yip <zdi-disclosures@trendmicro.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	stable@kernel.org,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 7.1 1819/2077] can: esd_usb: kill anchored URBs before freeing netdevs
-Date: Tue, 21 Jul 2026 17:24:52 +0200
-Message-ID: <20260721152635.649725096@linuxfoundation.org>
+Subject: [PATCH 7.1 1820/2077] can: isotp: use unconditional synchronize_rcu() in isotp_release()
+Date: Tue, 21 Jul 2026 17:24:53 +0200
+Message-ID: <20260721152635.672403093@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,54 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit c43122fef328a70045fe7621c06de6b2b8e19264 upstream.
+commit 9b1a02e0d980ac6b0e36a90378f847062f81d7e4 upstream.
 
-esd_usb_disconnect() frees each CAN netdev with free_candev() inside
-its per-netdev loop and only calls unlink_all_urbs(dev) afterwards.
-The per-netdev private data (struct esd_usb_net_priv) is embedded in
-the net_device allocation returned by alloc_candev(), so once
-free_candev() has run, dev->nets[i] points to freed memory.
-unlink_all_urbs() then dereferences the freed dev->nets[i] to kill the
-per-netdev TX anchor (usb_kill_anchored_urbs(&priv->tx_submitted)),
-clear active_tx_jobs, and reset priv->tx_contexts[].
+isotp_notify() unregisters the (RCU) CAN filters via can_rx_unregister()
+and clears so->bound without waiting for a grace period. isotp_release()
+uses so->bound to decide whether it needs to call synchronize_rcu()
+before cancelling so->rxtimer, so when NETDEV_UNREGISTER runs first it
+skips that synchronize_rcu() and can cancel the timer while an
+in-flight isotp_rcv() is still executing and about to re-arm it via
+isotp_send_fc(), leading to a use-after-free timer callback on the
+freed socket.
 
-Reorder the teardown so the anchored URBs are killed before the netdevs
-are freed, matching other CAN/USB drivers in the same directory such as
-ems_usb, usb_8dev and mcba_usb, which unregister, then unlink, then
-free: unregister the netdevs first (which stops their TX queues), call
-unlink_all_urbs(dev) once, then free the netdevs.
+sakisho-bot remarked a problem with rtnl_lock held in isotp_notify(),
+therefore make isotp_release() always call synchronize_rcu() before
+cancelling the timers, regardless of so->bound. This still closes the
+original race (isotp_notify() clearing so->bound without waiting for
+in-flight isotp_rcv() callers before isotp_release() cancels the RX
+timer) without adding any RCU wait to the netdevice notifier path.
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260709164159.497640-1-fanwu01@zju.edu.cn
+Fixes: 14a4696bc311 ("can: isotp: isotp_release(): omit unintended hrtimer restart on socket release")
+Closes: https://lore.kernel.org/linux-can/20260707085210.6B6C01F000E9@smtp.kernel.org/
+Reported-by: Nico Yip <zdi-disclosures@trendmicro.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260712-isotp-fixes-v10-1-793a1b1ce17f@hartkopp.net
+Cc: stable@kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/esd_usb.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/can/isotp.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/net/can/usb/esd_usb.c
-+++ b/drivers/net/can/usb/esd_usb.c
-@@ -1390,10 +1390,13 @@ static void esd_usb_disconnect(struct us
- 				netdev = dev->nets[i]->netdev;
- 				netdev_info(netdev, "unregister\n");
- 				unregister_netdev(netdev);
--				free_candev(netdev);
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -1237,11 +1237,18 @@ static int isotp_release(struct socket *
+ 						  SINGLE_MASK(so->txid),
+ 						  isotp_rcv_echo, sk);
+ 				dev_put(dev);
+-				synchronize_rcu();
  			}
  		}
- 		unlink_all_urbs(dev);
-+		for (i = 0; i < dev->net_count; i++) {
-+			if (dev->nets[i])
-+				free_candev(dev->nets[i]->netdev);
-+		}
- 		kfree(dev);
  	}
- }
+ 
++	/* Always wait for a grace period before touching the timers below.
++	 * A concurrent NETDEV_UNREGISTER may have already unregistered our
++	 * filters and cleared so->bound in isotp_notify() without waiting
++	 * for in-flight isotp_rcv() callers to finish, so this call must not
++	 * be skipped just because so->bound is already 0 here.
++	 */
++	synchronize_rcu();
++
+ 	hrtimer_cancel(&so->txfrtimer);
+ 	hrtimer_cancel(&so->txtimer);
+ 	hrtimer_cancel(&so->rxtimer);
 
 
