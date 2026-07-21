@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856CA46D2C7;
-	Tue, 21 Jul 2026 17:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BA1401A13;
+	Tue, 21 Jul 2026 17:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654257; cv=none; b=CHDDuFEix2pOsalt60KW1wzYVXTSXQvp0P8qcSroTPSdhBamXYy/o9l+uTn7q81fMQEYTHkSRw58YLVUCVzVWUXjVU0l6BAr9MTcPcJoe/MoGkNAEQuanDVIjgNlDBIFIAe4lcd0Rb2FooXLLuprjuL9PIhbuktWIbn3g0qw/Gc=
+	t=1784654260; cv=none; b=J0cQxUFRVfmcvz5Fcd3LI0skvOQihfScd+NJwnD6sUePGInNPw892Emf2yy9++7Fe8qlBH6BZCjG3b2iFLX8wVkQ8QkdEWvGfB/DXC7ClPkZG4zUJ56XMpcdkSNCk+s098hur/FJWmksf3Hlp5ba0dV8rMaJ9KXcVd9ndeaSe9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654257; c=relaxed/simple;
-	bh=uloBPu2u0hXbGxPPcReCU56yfASDCz+WbBsBtyUv50I=;
+	s=arc-20240116; t=1784654260; c=relaxed/simple;
+	bh=8zrpVYVsdSLr3EX8rOSqSsuAcVxVJCGV4MyqJLvhCk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=THyMfrrNaCuiDJrJHKSbZ8PyScA9LMzE669S/ywTnJ/yB2cAGC3gkL3TMMAjjhinYst5A6TxvdXEH0DKFalzoS+24ZKwLQNVLHVNgKR04NSJ1sv1XpKBed0jybMoLtWRbFN6I6o6MNQ/KZs3ouXmxGoT7O5qwFdlHDIiGLHr7no=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVvLRVYh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pyts+pC1+HvwuTajTFbIIMaAPkXoHDFlRRuBJsCGKC+3pp3avHK/H/OGizRxhdMz4iHFMJBfORYfSYDKULB+lY7qCH7mSRhgz6ylt621ot1hkvhgERTXqr33FElPpdnq3NlihhUOSR5N/YCH2fcskrCT6pQi2m0JOETDnkkQ8Bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQDnD4Wo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVvLRVYh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23BE1F000E9;
-	Tue, 21 Jul 2026 17:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQDnD4Wo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA681F000E9;
+	Tue, 21 Jul 2026 17:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654256;
-	bh=dZmhelLUnp6cS0aGzhNvAnqERY0jlhz2+WUYEkvYKmg=;
+	s=korg; t=1784654259;
+	bh=iCn9ljFNMZzg7kcAimbD6FbzNzZIafXSnFKQeaXDuXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HVvLRVYhf/MjUDikPpDw/RcqJoyLCPBC2UFnJPl9wv9Lngv8oY/elZ5e7oAW+Zufx
-	 Nvb8siZO5HGB3Z9/mR0oTGrL1asuT+NdtOg9pBzhWP1uJEWqMyUNDuW61+xlHtEH3X
-	 nYgSfOJ4270ovMqAs5DQ0qE962L2XDtZ3Xd+mXWg=
+	b=uQDnD4WogqaS9j9acT1iJyDDoGbLx5D0+6vAstSAZNjLbP27T86KBUjt9KTislFcE
+	 RdWaqhOfwMmfpABgVJZzYIrIprgZNjzcFV568CHMG25avW30H1338NeAUtZSLkLLB0
+	 v6UBoJZRNsNYEqiXJR9go+bHU47CVc+Lf2BPDWxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-Subject: [PATCH 7.1 1636/2077] cpufreq: intel_pstate: Set non-turbo capacity to HWP_GUARANTEED_PERF()
-Date: Tue, 21 Jul 2026 17:21:49 +0200
-Message-ID: <20260721152631.338303544@linuxfoundation.org>
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 7.1 1637/2077] s390/perf_cpum_cf: Add missing array_index_nospec() to __hw_perf_event_init()
+Date: Tue, 21 Jul 2026 17:21:50 +0200
+Message-ID: <20260721152631.362000919@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,47 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Sumanth Korikkar <sumanthk@linux.ibm.com>
 
-commit 27d80e0f8b8dff97503fc0061754b1d3800cb961 upstream.
+commit 49145bce539117db4b6e9e83c0e5ef528e361050 upstream.
 
-Setting cpu->capacity_perf to cpu->pstate.max_pstate_physical in the
-"no turbo" case is inconsistent with what happens elsewhere in the
-driver and causes arch_scale_cpu_capacity() to be incorrect.  It also
-skews arch_scale_freq_capacity() which ends up differing from 1024 for
-the guaranteed P-state.
+ev variable is userspace controlled via event->attr.config and used
+as an array index after bounds checking, but without speculation
+barriers.
 
-Address that by setting capacity_perf to HWP_GUARANTEED_PERF() in the
-"no turbo" case.
+Add the missing array_index_nospec() call to prevent speculative
+execution.
 
-Fixes: 929ebc93ccaa ("cpufreq: intel_pstate: Set asymmetric CPU capacity on hybrid systems")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Tested-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/12928972.O9o76ZdvQC@rafael.j.wysocki
+Cc: stable@vger.kernel.org
+Fixes: 212188a596d1 ("[S390] perf: add support for s390x CPU counters")
+Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Acked-by: Thomas Richter <tmricht@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/intel_pstate.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/s390/kernel/perf_cpum_cf.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -1058,12 +1058,14 @@ static void hybrid_clear_cpu_capacity(un
+--- a/arch/s390/kernel/perf_cpum_cf.c
++++ b/arch/s390/kernel/perf_cpum_cf.c
+@@ -15,6 +15,7 @@
+ #include <linux/init.h>
+ #include <linux/miscdevice.h>
+ #include <linux/perf_event.h>
++#include <linux/nospec.h>
  
- static void hybrid_get_capacity_perf(struct cpudata *cpu)
- {
-+	u64 hwp_cap = READ_ONCE(cpu->hwp_cap_cached);
-+
- 	if (READ_ONCE(global.no_turbo)) {
--		cpu->capacity_perf = cpu->pstate.max_pstate_physical;
-+		cpu->capacity_perf = HWP_GUARANTEED_PERF(hwp_cap);
- 		return;
- 	}
- 
--	cpu->capacity_perf = HWP_HIGHEST_PERF(READ_ONCE(cpu->hwp_cap_cached));
-+	cpu->capacity_perf = HWP_HIGHEST_PERF(hwp_cap);
- }
- 
- static void hybrid_set_capacity_of_cpus(void)
+ #include <asm/cpu_mf.h>
+ #include <asm/hwctrset.h>
+@@ -768,6 +769,7 @@ static int __hw_perf_event_init(struct p
+ 			if (!is_userspace_event(ev)) {
+ 				if (ev >= ARRAY_SIZE(cpumf_generic_events_user))
+ 					return -EOPNOTSUPP;
++				ev = array_index_nospec(ev, ARRAY_SIZE(cpumf_generic_events_user));
+ 				ev = cpumf_generic_events_user[ev];
+ 			}
+ 		} else if (!attr->exclude_kernel && attr->exclude_user) {
+@@ -778,6 +780,7 @@ static int __hw_perf_event_init(struct p
+ 			if (!is_userspace_event(ev)) {
+ 				if (ev >= ARRAY_SIZE(cpumf_generic_events_basic))
+ 					return -EOPNOTSUPP;
++				ev = array_index_nospec(ev, ARRAY_SIZE(cpumf_generic_events_basic));
+ 				ev = cpumf_generic_events_basic[ev];
+ 			}
+ 		}
 
 
