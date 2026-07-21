@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B4946C4DD;
-	Tue, 21 Jul 2026 18:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED1C46A5EE;
+	Tue, 21 Jul 2026 18:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657998; cv=none; b=S+S/fnI7amNp4bt4f/J+cEQ04XZb+qHQT3FU5rTtnsKsmwiqRCgCC20Kdr/xmsfcjrqb4BCiJd7Pd3N5S5k5NU15MguKkRe+HteGCJiPaGoV2pSI2D1h99fByFMUWbFPtl5Q7ltcS8+ap+ejmbjQgZQx2VjXUdo+p+81Sz9p1v8=
+	t=1784658001; cv=none; b=BfqJDCNf3mHeaGH2wXFOwKTz0b+e7s6FVXOixPxWiauqmnJjnw25Gtl0F7pLbdzRhZwWlmBCj6oq103oao5SnoyQRMu9I64AorD+9d7lbJSxWtREwMjcyscrI/hhpxSs96ndtOaIAQxhug8qgx86oOZkg4pAKwDFDsCQYIyGryI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657998; c=relaxed/simple;
-	bh=TJxC0fJPGqQVK6GwlzMyZDTrz8Lf4ySc8HrzUeXwoF4=;
+	s=arc-20240116; t=1784658001; c=relaxed/simple;
+	bh=7VAdPhh0N6gQLhIXlFobxTLzl8UYUH5UO+lqjY7E5qc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eLFQNO4L9n5TrPm9wa894DvfwuxJ4Jcd5/KuR8uaGrVVBxF9m3r5rsLgX5/A5BOzdjFh2nxxi1EkJ7+0/RzWIHlxmxwUzUVBcXDCn5gWHiBe1sqSqVp4zIcs2EgDs+sg/NjzIGXhZxfcrKTwV29BIjStbVHF6HiD0RKGUELLyU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lfCpCtAw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TIw33fbk4Y9ckeZFw/p9+DQPGerMcST5SVx40EOzRO+Vz3dZ+leUfs7ee6B2n95kYFeNRKzjNU39MHwDiPVdou6FoP3KE8gvAUiVwMq/rza50cCfNmChd7Rc00UW6s28j0Xktv8skwuAN4WJa8NbAMOccfi/VRBDmUOIb2ZVMYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UA8QbJnW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lfCpCtAw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 225C01F000E9;
-	Tue, 21 Jul 2026 18:19:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UA8QbJnW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CA91F000E9;
+	Tue, 21 Jul 2026 18:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657997;
-	bh=40GJMyfMn6jVZxDPpP7Bdkez4hynC9N7u+0D95O9XR8=;
+	s=korg; t=1784658000;
+	bh=WOuBpMOPxjvnMVNY2IV2/24ypAAKF5rVYe8CinVx/Qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lfCpCtAw4sayY3PuYiG+f7tLusoF1OHWT1AV+ol3PXxqYVAGLYKRaN5JEkgWFVMUj
-	 jTsEFSSVcw4bjbYFZ4OwSTSil2DCHPAaFTCPhVvvNpxxG3r9Qkn14RA9RZ+1yLq3X+
-	 78SMAmEiY7UNmu4uWt3xU22rHJS4OIHMmSiHrkAg=
+	b=UA8QbJnW9g0HxtTks9hL2YvciWESlJoPsOeMvDmgAkRg4qOvLJhwm5uLnbZhHZTHY
+	 fY4cJ3jo82hl95sPC6OhEOBJtGbqlTKYFxa943oHjWlpixHbyG+e3sGk3hDSZ78Ks8
+	 Nov2jPF1zuk0U55AEaDtZr6zjXdUJ4YVXNU1lfL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0934/1611] net: sungem: fix probe error cleanup
-Date: Tue, 21 Jul 2026 17:17:30 +0200
-Message-ID: <20260721152536.394169365@linuxfoundation.org>
+Subject: [PATCH 6.18 0935/1611] net: ethernet: sunplus: spl2sw: fix phy_node refcount leak in remove
+Date: Tue, 21 Jul 2026 17:17:31 +0200
+Message-ID: <20260721152536.418009064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,70 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Shitalkumar Gandhi <shital.gandhi45@gmail.com>
 
-[ Upstream commit 36dea2f639249460d13f6ca66b2a9064187cd34d ]
+[ Upstream commit a9e29dcd8a84081177f693439d663ca9e216c9fa ]
 
-gem_init_one() calls gem_remove_one() when register_netdev() fails.
-gem_remove_one() unregisters and frees resources owned by the net_device,
-including the DMA block, MMIO mapping, PCI regions, and the net_device
-itself. gem_init_one() then falls through to its own cleanup labels and
-frees the same resources again.
+mac->phy_node is acquired via of_parse_phandle() in spl2sw_probe() and
+stored in the mac private data, transferring ownership of the
+device_node reference to mac. On driver removal, spl2sw_phy_remove()
+disconnects the PHY but never drops that reference, so each
+probe-then-remove cycle leaks one of_node refcount per port permanently.
 
-Keep the register_netdev() error path in gem_init_one(): clear drvdata so
-PM/remove paths do not see a half-registered device, remove the NAPI
-instance added during probe, and let the existing cleanup labels release
-the resources once.
+Drop the reference after phy_disconnect(). While at it, remove the
+redundant inner "if (ndev)" check; comm->ndev[i] was just verified
+non-NULL on the line above.
 
-The issue was found by a local static-analysis checker for probe error
-paths. The reported path was manually inspected before sending this fix.
+Compile-tested only; no SP7021 hardware available.
 
-Compile-tested with CONFIG_SUNGEM=y. Runtime testing was not performed
-because no sungem hardware is available.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260623025759.3468566-1-ruoyuw560@gmail.com
+Fixes: fd3040b9394c ("net: ethernet: Add driver for Sunplus SP7021")
+Signed-off-by: Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/f3bdd4c91f3e2269b4e256075f9dc70808b1b8e9.1782195965.git.shitalkumar.gandhi@cambiumnetworks.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/sungem.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/sunplus/spl2sw_phy.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/sun/sungem.c b/drivers/net/ethernet/sun/sungem.c
-index 8e69d917d827ca..26974ee713525b 100644
---- a/drivers/net/ethernet/sun/sungem.c
-+++ b/drivers/net/ethernet/sun/sungem.c
-@@ -2986,10 +2986,10 @@ static int gem_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	dev->max_mtu = GEM_MAX_MTU;
+diff --git a/drivers/net/ethernet/sunplus/spl2sw_phy.c b/drivers/net/ethernet/sunplus/spl2sw_phy.c
+index 6f899e48f51dfb..a4889c52e00e4c 100644
+--- a/drivers/net/ethernet/sunplus/spl2sw_phy.c
++++ b/drivers/net/ethernet/sunplus/spl2sw_phy.c
+@@ -79,12 +79,14 @@ int spl2sw_phy_connect(struct spl2sw_common *comm)
+ void spl2sw_phy_remove(struct spl2sw_common *comm)
+ {
+ 	struct net_device *ndev;
++	struct spl2sw_mac *mac;
+ 	int i;
  
- 	/* Register with kernel */
--	if (register_netdev(dev)) {
-+	err = register_netdev(dev);
-+	if (err) {
- 		pr_err("Cannot register net device, aborting\n");
--		err = -ENOMEM;
--		goto err_out_free_consistent;
-+		goto err_out_clear_drvdata;
- 	}
- 
- 	/* Undo the get_cell with appropriate locking (we could use
-@@ -3003,8 +3003,13 @@ static int gem_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		    dev->dev_addr);
- 	return 0;
- 
-+err_out_clear_drvdata:
-+	pci_set_drvdata(pdev, NULL);
-+	netif_napi_del(&gp->napi);
-+
- err_out_free_consistent:
--	gem_remove_one(pdev);
-+	dma_free_coherent(&pdev->dev, sizeof(struct gem_init_block),
-+			  gp->init_block, gp->gblock_dvma);
- err_out_iounmap:
- 	gem_put_cell(gp);
- 	iounmap(gp->regs);
+ 	for (i = 0; i < MAX_NETDEV_NUM; i++)
+ 		if (comm->ndev[i]) {
+ 			ndev = comm->ndev[i];
+-			if (ndev)
+-				phy_disconnect(ndev->phydev);
++			mac = netdev_priv(ndev);
++			phy_disconnect(ndev->phydev);
++			of_node_put(mac->phy_node);
+ 		}
+ }
 -- 
 2.53.0
 
