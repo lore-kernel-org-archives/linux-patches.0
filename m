@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA152BEFF5;
-	Tue, 21 Jul 2026 20:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C96366816;
+	Tue, 21 Jul 2026 20:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667205; cv=none; b=eUrAgAh8D9/mK1kW4NNgeGbn9ECyyZ82odcKZehm6jZjYZMMJ7bfR/cZb97t0O2UypJf25BTYQ9P1dixCSHWK7b3wkBL561IwxXSRXBF7z18zRZdT96AoMdl3xXchwnbaY6Tt5XeorlyAwDajWrJ/COtb7kBhfMy4dl/0MqngKo=
+	t=1784667208; cv=none; b=fLDYWEaI2tbFH0C8IJiatDInZOzvh2AEOWMMogxs86RijsPfXsvIvNVPuiKzFkagVyD1to1UgTQIkPVC0lg78AE0rVXrRRv9hQA1j++F6fXbjjPKziz5QLrxuSfRCsG4cIeVrNM0bhbqXnv75lYn1SuuCBuEupViq4Q6CC0CnAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667205; c=relaxed/simple;
-	bh=8idR1m3zbdJY8DR89IJNwiJC/6tLuKAt3j0GTWHJ9XU=;
+	s=arc-20240116; t=1784667208; c=relaxed/simple;
+	bh=n2y/rNoTqbnIr5AD/ge9Atg0d1XmD2IVXn3BKNj/U9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GQxZpAe1rypBGUD7BkzEENwvNVDrp6VJDxcH92JmkK8J6C8Qs8u5LO/5xOmbqMuv1i2jtAbyDLlONkt2OICotsOYtqGI0LyPFAHsBg9Sj20wAyr/Art+vVjDp+Qy1iaxILt5gP235zEcUDAuzdZODg1pZ8w6kKlIuZV/6mpFeRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z78mcLl7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KPU0qS62cvglkyuvS7EugT9ZPZUNnet92IMYE9jzvR5mMBgotTbQSzGE+ZeFmihTUWJeVUy2jsPWeMCIk/ZfGY6qDfE1x/pNrtI/wHVSl1duBMPXBiGMUBEA0UTzXWwDZW/J9N5pIyTbnEzpXbUR7CzVDOnnSSK4GVshiNJ16Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/ZZyppX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z78mcLl7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D771F000E9;
-	Tue, 21 Jul 2026 20:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/ZZyppX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC481F000E9;
+	Tue, 21 Jul 2026 20:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667204;
-	bh=4vyb/6/rBwh29LY1vhZdDDC3PtlDwWE7FeFLaX+sP3o=;
+	s=korg; t=1784667207;
+	bh=/tY3qLYkLTC1cUzWMDsEm9uTvEAeUK0B1yMNp3iD18A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z78mcLl7Y110L6ZuxxYMlW2daCAvxqu1PrbmntFEE3iKIdo4YmaxMj8XjVQcmgcop
-	 Fs7QYVIRgdtpKQ8duAIIPAB2JQ1Ip8SHKlNWwTPA2MuJRwHGmTBOJnalr96EPHYdV1
-	 teH5Kqgas28mVUAOmBGPmF6xlESS3b8aGq533cN4=
+	b=g/ZZyppXIj+9j56Bfn9F7F3qL6eIqtGvjMO4c8PqsPFYyJFeAz73V5Gj82gyWeOlX
+	 /uvUQioL8mcHFJtQ+hv9qOSEq19l7Joj346Iveo5t6LZ35icAuwG2J+kuw+FLiGiFa
+	 uW/Sza+SdyR4Kc4iMOmMTmI/28eQJXwc+WQOJ2og=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 0966/1266] lockd: Plug nlm_file leak when nlm_do_fopen() fails
-Date: Tue, 21 Jul 2026 17:23:23 +0200
-Message-ID: <20260721152503.446657107@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 0975/1266] mm/damon/core: make charge_addr_from aware of end-address exclusivity
+Date: Tue, 21 Jul 2026 17:23:32 +0200
+Message-ID: <20260721152503.659478664@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -49,38 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit f16a1513452edb532fec81e591c64c320866719c upstream.
+commit 5a2d162e22bf33eb89d53e802d0fc1ec422e19b6 upstream.
 
-A client can repeatedly drive nlm_do_fopen() failures by presenting
-file handles that the underlying export rejects. After kzalloc_obj()
-succeeds in nlm_lookup_file(), the freshly allocated nlm_file is not
-yet inserted into nlm_files[]. The nlm_do_fopen() failure path jumps
-to out_unlock, which releases nlm_file_mutex and returns without
-freeing the allocation, so each failure leaks one nlm_file.
+DAMON region end address is exclusive one, but charge_addr_from is
+assigned assuming the end address is inclusive.  As a result, DAMOS action
+to next up to min_region_sz memory can be skipped.  This is quite
+negligible user impact.  But, the bug is a bug that can be very simply
+fixed.  Fix the wrong assignment to respect the exclusiveness of the
+address.
 
-Route the failure through out_free so kfree() runs before the
-function returns.
+The issue was discovered [1] by Sashiko.
 
-Fixes: 7f024fcd5c97 ("Keep read and write fds with each nlm_file")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://lore.kernel.org/20260428042942.118230-1-sj@kernel.org
+Link: https://lore.kernel.org/20260428032324.115663-1-sj@kernel.org [1]
+Fixes: 50585192bc2e ("mm/damon/schemes: skip already charged targets and regions")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.16.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/lockd/svcsubs.c |    2 +-
+ mm/damon/core.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/lockd/svcsubs.c
-+++ b/fs/lockd/svcsubs.c
-@@ -139,7 +139,7 @@ nlm_lookup_file(struct svc_rqst *rqstp,
- 
- 	nfserr = nlm_do_fopen(rqstp, file, mode);
- 	if (nfserr)
--		goto out_unlock;
-+		goto out_free;
- 
- 	hlist_add_head(&file->f_list, &nlm_files[hash]);
- 
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1003,7 +1003,7 @@ static void damos_apply_scheme(struct da
+ 		quota->charged_sz += sz;
+ 		if (quota->esz && quota->charged_sz >= quota->esz) {
+ 			quota->charge_target_from = t;
+-			quota->charge_addr_from = r->ar.end + 1;
++			quota->charge_addr_from = r->ar.end;
+ 		}
+ 	}
+ 	if (s->action != DAMOS_STAT)
 
 
