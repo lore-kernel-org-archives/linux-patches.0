@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FAAE1F3D56;
-	Tue, 21 Jul 2026 17:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5D03998AF;
+	Tue, 21 Jul 2026 17:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654045; cv=none; b=DxZ/cb4aY74njprzGi4tXekZwpOH08W7MLx51LU33FjesYaNNQ2ROMFni5gB5G8WDf2fablxnGGP9bNaw5hxOJGLhsPNuMFqM5gxaoBw3+uD82zsxzYn9ryp/F+QBz8NMurucJIylFZz5unlxsD0mZP81Do4o50WbGSuQRpK+us=
+	t=1784654049; cv=none; b=F+a+MZwo/oolqFQMNsu2VG9FV92jysa5670bh4NMJjyCfs2CPTVFMXYT2lfT/5bRsh4YVyD2y9XlpeSdM78asm+6VgxlRNV4VvcZJP2b1BsZpW4JTXgVuOmENgmmvSzif7rNr8d2Mj5moxuzLM2gYEMohKmUEPRZQEAliI0hwwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654045; c=relaxed/simple;
-	bh=53zs4bSCLilpPrL3l6RULGQmm73WU7+LwyWgQJrj3Mk=;
+	s=arc-20240116; t=1784654049; c=relaxed/simple;
+	bh=bX2OD0LajoDvwPADYWBrN1TQhxxQNbAGUc2R1crcGFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RMK1tAC0rEKyrIPUnmA4KJhdMeHbtNEPx5BMqdbGhVzBmLacDBUOoIJXXGH9caOuN+dmZ30pGaXxP/7Fk32lJ/rwd982+lfCwOJ82kvPwYfLBh4QgoKHlKbKMfdeuOdSnfih9FOltXBebAG+CluXt1TRYiHg1ixegDSh3XgauUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLnRqrve; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YLOC6zbQYBfzLCw1TPhZ7wrNvpuPMOme63QyKNaV1lcASudFntq6Eb42Rmwy5wQzjmiyI+rS2HXvfT+lT7a6W76FUKs/ns80so0uwe6D64ivfTCf8mSkNV0G0IrmGTCL2GM70cCtVfsEV58/X7YsBN1mLgLbKpjDigHC470NJfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YxQW+FgC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLnRqrve"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19D71F00A3A;
-	Tue, 21 Jul 2026 17:14:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YxQW+FgC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F3041F00A3D;
+	Tue, 21 Jul 2026 17:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654044;
-	bh=47jYtlnAOjn97uajU8AQIHd1uI3XedX2wStWxw8Bpx0=;
+	s=korg; t=1784654047;
+	bh=fCDLt7mf0SgyybMN9ylGTnIbVHiSPOEqjPBf7fS2DFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PLnRqrveDsgvzdx66x0ceJeI7hrDe5tUUCvXVoCZyArDwmk+kPyylbroZ7Y17oAFz
-	 o/HcCKLf9hvMTaWbqS00Ip77309n08caoU3GwwPTAuLvfiwu9ZybkPj33lSm1TzPtY
-	 AxtCVkDzb/IdDD7cSoN7t447Im+w+0nbVw2tMFOg=
+	b=YxQW+FgCNRSlxIAir3cF/aWkxatZENRdIW9oPAJEEvqUG1NxeCqoSDwNX2R6I8GI2
+	 TL/fHxQBaJCIG/RAJZ7baHj6KnUpXcUdzsY4aV+9p+gTQ9/n9ljs3ehGdruqgpSojm
+	 d9t+ZHaXb5l5fZDLQ3/QTQVhFVxBw+UZl2dQftSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 7.1 1555/2077] KVM: s390: vsie: Use mmu cache to allocate rmap
-Date: Tue, 21 Jul 2026 17:20:28 +0200
-Message-ID: <20260721152629.453651965@linuxfoundation.org>
+Subject: [PATCH 7.1 1556/2077] KVM: s390: Initialize KVM_S390_GET_CMMA_BITS memory
+Date: Tue, 21 Jul 2026 17:20:29 +0200
+Message-ID: <20260721152629.479728178@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -49,129 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudio Imbrenda <imbrenda@linux.ibm.com>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-commit abeb7eb57f1671d9185ddf11236c784f07bdb928 upstream.
+commit c7dda3d0f869dc97223448a06c9a2e5235928e48 upstream.
 
-Use kvm_s390_mmu_cache_alloc_rmap() to allocate the rmap in
-gmap_insert_rmap(), instead of a normal kzalloc_obj() with GFP_ATOMIC.
+kvm_s390_get_cmma_bits() allocates its output buffer with vmalloc(),
+which does not zero the returned pages:
 
-This guarantees forward progress.
+	values = vmalloc(args->count);
 
-Fixes: a2c17f9270cc ("KVM: s390: New gmap code")
-CC: stable@vger.kernel.org # 7.1
+In the non-peek (migration) path, dat_get_cmma() reports a byte count
+spanning from the first to the last dirty page, but __dat_get_cmma_pte()
+writes values[gfn - start] only for pages whose CMMA dirty bit is set.
+The walk uses DAT_WALK_IGN_HOLES, so clean and unmapped pages that lie
+between two dirty pages within the reported span are visited but never
+store their byte.  Those gaps (up to KVM_S390_MAX_BIT_DISTANCE pages
+each) stay uninitialized yet fall inside [0, count) and are copied out
+by copy_to_user(), disclosing stale kernel memory to user space.
+
+Before the switch to the new gmap implementation the buffer was fully
+populated for every gfn in the span, so no uninitialized bytes were
+exposed; the dirty-only walk introduced the leak.
+
+Use vzalloc() so the gaps read back as zero.
+
+Fixes: e38c884df921 ("KVM: s390: Switch to new gmap")
+Cc: stable@vger.kernel.org
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
 Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260611104850.110313-6-imbrenda@linux.ibm.com>
+Message-ID: <20260611105036.11491-1-borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/gaccess.c | 16 ++++++++--------
- arch/s390/kvm/gmap.c    |  7 ++++---
- arch/s390/kvm/gmap.h    |  3 ++-
- 3 files changed, 14 insertions(+), 12 deletions(-)
+ arch/s390/kvm/kvm-s390.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kvm/gaccess.c b/arch/s390/kvm/gaccess.c
-index 0584fc91606f..36102b2727fb 100644
---- a/arch/s390/kvm/gaccess.c
-+++ b/arch/s390/kvm/gaccess.c
-@@ -1419,8 +1419,8 @@ static int walk_guest_tables(struct gmap *sg, unsigned long saddr, struct pgtwal
- 	return kvm_s390_get_guest_page(kvm, entries + LEVEL_MEM, table.pte.pfra, wr);
- }
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -2252,7 +2252,7 @@ static int kvm_s390_get_cmma_bits(struct
+ 		return 0;
+ 	}
  
--static int _do_shadow_pte(struct gmap *sg, gpa_t raddr, union pte *ptep_h, union pte *ptep,
--			  struct guest_fault *f, bool p)
-+static int _do_shadow_pte(struct kvm_s390_mmu_cache *mc, struct gmap *sg, gpa_t raddr,
-+			  union pte *ptep_h, union pte *ptep, struct guest_fault *f, bool p)
- {
- 	union pgste pgste;
- 	union pte newpte;
-@@ -1430,7 +1430,7 @@ static int _do_shadow_pte(struct gmap *sg, gpa_t raddr, union pte *ptep_h, union
- 	lockdep_assert_held(&sg->parent->children_lock);
- 
- 	scoped_guard(spinlock, &sg->host_to_rmap_lock)
--		rc = gmap_insert_rmap(sg, f->gfn, gpa_to_gfn(raddr), TABLE_TYPE_PAGE_TABLE);
-+		rc = gmap_insert_rmap(mc, sg, f->gfn, gpa_to_gfn(raddr), TABLE_TYPE_PAGE_TABLE);
- 	if (rc)
- 		return rc;
- 
-@@ -1462,8 +1462,8 @@ static int _do_shadow_pte(struct gmap *sg, gpa_t raddr, union pte *ptep_h, union
- 	return 0;
- }
- 
--static int _do_shadow_crste(struct gmap *sg, gpa_t raddr, union crste *host, union crste *table,
--			    struct guest_fault *f, bool p)
-+static int _do_shadow_crste(struct kvm_s390_mmu_cache *mc, struct gmap *sg, gpa_t raddr,
-+			    union crste *host, union crste *table, struct guest_fault *f, bool p)
- {
- 	union crste newcrste, oldcrste;
- 	unsigned long mask;
-@@ -1476,7 +1476,7 @@ static int _do_shadow_crste(struct gmap *sg, gpa_t raddr, union crste *host, uni
- 	mask = is_pmd(*table) ? _SEGMENT_FR_MASK : _REGION3_FR_MASK;
- 	r_gfn = gpa_to_gfn(raddr) & mask;
- 	scoped_guard(spinlock, &sg->host_to_rmap_lock)
--		rc = gmap_insert_rmap(sg, f->gfn & mask, r_gfn, host->h.tt);
-+		rc = gmap_insert_rmap(mc, sg, f->gfn & mask, r_gfn, host->h.tt);
- 	if (rc)
- 		return rc;
- 
-@@ -1578,8 +1578,8 @@ static int _gaccess_do_shadow(struct kvm_s390_mmu_cache *mc, struct gmap *sg,
- 	if (KVM_BUG_ON(l > TABLE_TYPE_REGION3, sg->kvm))
- 		return -EFAULT;
- 	if (l == TABLE_TYPE_PAGE_TABLE)
--		return _do_shadow_pte(sg, saddr, ptep_h, ptep, entries + LEVEL_MEM, w->p);
--	return _do_shadow_crste(sg, saddr, host, table, entries + LEVEL_MEM, w->p);
-+		return _do_shadow_pte(mc, sg, saddr, ptep_h, ptep, entries + LEVEL_MEM, w->p);
-+	return _do_shadow_crste(mc, sg, saddr, host, table, entries + LEVEL_MEM, w->p);
- }
- 
- static inline int ___gaccess_shadow_fault(struct kvm_vcpu *vcpu, struct gmap *sg, gpa_t saddr,
-diff --git a/arch/s390/kvm/gmap.c b/arch/s390/kvm/gmap.c
-index 52d55ddea8d4..1d289f8fa3b2 100644
---- a/arch/s390/kvm/gmap.c
-+++ b/arch/s390/kvm/gmap.c
-@@ -1000,7 +1000,8 @@ int gmap_pv_destroy_range(struct gmap *gmap, gfn_t start, gfn_t end, bool interr
- 	return 0;
- }
- 
--int gmap_insert_rmap(struct gmap *sg, gfn_t p_gfn, gfn_t r_gfn, int level)
-+int gmap_insert_rmap(struct kvm_s390_mmu_cache *mc, struct gmap *sg, gfn_t p_gfn,
-+		     gfn_t r_gfn, int level)
- {
- 	struct vsie_rmap *rmap __free(kvfree) = NULL;
- 	struct vsie_rmap *temp;
-@@ -1010,7 +1011,7 @@ int gmap_insert_rmap(struct gmap *sg, gfn_t p_gfn, gfn_t r_gfn, int level)
- 	KVM_BUG_ON(!is_shadow(sg), sg->kvm);
- 	lockdep_assert_held(&sg->host_to_rmap_lock);
- 
--	rmap = kzalloc_obj(*rmap, GFP_ATOMIC);
-+	rmap = kvm_s390_mmu_cache_alloc_rmap(mc);
- 	if (!rmap)
+-	values = vmalloc(args->count);
++	values = vzalloc(args->count);
+ 	if (!values)
  		return -ENOMEM;
  
-@@ -1057,7 +1058,7 @@ int gmap_protect_rmap(struct kvm_s390_mmu_cache *mc, struct gmap *sg, gfn_t p_gf
- 	if (level <= TABLE_TYPE_REGION1) {
- 		bitmask = -1UL << (8 + 11 * level);
- 		scoped_guard(spinlock, &sg->host_to_rmap_lock)
--			rc = gmap_insert_rmap(sg, p_gfn, r_gfn & bitmask, level);
-+			rc = gmap_insert_rmap(mc, sg, p_gfn, r_gfn & bitmask, level);
- 	}
- 	if (rc)
- 		return rc;
-diff --git a/arch/s390/kvm/gmap.h b/arch/s390/kvm/gmap.h
-index 20881e3ce9d8..1c040472f56d 100644
---- a/arch/s390/kvm/gmap.h
-+++ b/arch/s390/kvm/gmap.h
-@@ -100,7 +100,8 @@ int gmap_ucas_map(struct gmap *gmap, gfn_t p_gfn, gfn_t c_gfn, unsigned long cou
- void gmap_ucas_unmap(struct gmap *gmap, gfn_t c_gfn, unsigned long count);
- int gmap_enable_skeys(struct gmap *gmap);
- int gmap_pv_destroy_range(struct gmap *gmap, gfn_t start, gfn_t end, bool interruptible);
--int gmap_insert_rmap(struct gmap *sg, gfn_t p_gfn, gfn_t r_gfn, int level);
-+int gmap_insert_rmap(struct kvm_s390_mmu_cache *mc, struct gmap *sg, gfn_t p_gfn,
-+		     gfn_t r_gfn, int level);
- int gmap_protect_rmap(struct kvm_s390_mmu_cache *mc, struct gmap *sg, gfn_t p_gfn, gfn_t r_gfn,
- 		      kvm_pfn_t pfn, int level, bool wr);
- void gmap_set_cmma_all_dirty(struct gmap *gmap);
--- 
-2.55.0
-
 
 
