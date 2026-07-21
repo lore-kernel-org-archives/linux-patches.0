@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FAB386C1C;
-	Tue, 21 Jul 2026 20:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409392BEFF5;
+	Tue, 21 Jul 2026 20:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667172; cv=none; b=bdaw3lX05Q6XrwmrZQj/0iD+r4mBOF8YXx1+CRNveL29dq3jhRgr6OuwIFxJs7pwfKujjAnBRlTXhm0oAt2lHN7WCtekoVpX7+am4RKUrg/lOtDukSt8vAAjI49CzeyUXlevjTkFenrnx/tDyUNEWviFgxSRZUf/23I3DXM7fv8=
+	t=1784667174; cv=none; b=Z30NNXc++ULZVHQWVpjhHU+VDIq4DDNP/bYUcxY8hRFPqEWuBk1MNhaJnSgCSef+/z5TZJjv1aES/pCyfgNlAjb7bwzs+issDl93oKlGr8YqGdTxm9bF+HKqFbXt2ElvG/trgNXGqRkrl/qj9xc1+SwDU8RviNjd7GxlFaV1Clw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667172; c=relaxed/simple;
-	bh=4q4g3nhft87dDa4Wkw3VEaEDyC38DtxkimCswDMmKNw=;
+	s=arc-20240116; t=1784667174; c=relaxed/simple;
+	bh=ggvakjtuhOAL3Ph/X7muWf9o6JmZi6JH4f/YHDiYH+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VWj5sMHSuT0yLbkyg3DGFTIc3gFd6k33ZtD62ysN/wVGeKQR9bwTrQhTHTbCzMrUdIiaE8MLP5BGyumJ9U1QYQIvLRaNOODjEh9b9mzSHfuXdH2/k87WRFYYe5VqvBuw4ua/5iieVMokJe94jaGf375ZpGHszi1Ba49C9uvVWpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOTICFTp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WDL7ZX5cCR9zlAxOpdq6TI0GaYGDuo7xatoi4nC2hBqmDIYJBByjDbiiv2Tj+Mc1kscIScyxibpfdfyzsElZj+wiHYm2arZjq3hk98lIwg8YQoVrgZ8ZWEhe822iuxoKz//h1IrpuZIxsvoyjfSLGL9Zj/y5rWFupPQHOv2VmDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjacwu0v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOTICFTp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E3C61F000E9;
-	Tue, 21 Jul 2026 20:52:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjacwu0v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A635A1F000E9;
+	Tue, 21 Jul 2026 20:52:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667170;
-	bh=XGvmQqVRGwlVLX/0onkyUC9H/lYpsxdv6EWQ/nZYcD4=;
+	s=korg; t=1784667173;
+	bh=8EUT83/NkeTPrpBCVU6LHxyr6MLztazLG1dvEPzZqms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eOTICFTppZRWbfmvBGXriZ3ugUy9Cc2qajJ1JabErlUHG9Iw9Mpeq4bSVR281LV54
-	 ln2OghdR37jX+q8XFw74w/M8Ie2Df2QefvWK/Ifl0H/cE2cypU7Syboxx4IQJWFG1N
-	 e8ElnUQZ1kKfqGJ7AusbGosrwRxFtHsuoftnqPA0=
+	b=xjacwu0v6LREQKlF97Bd0y1wsM9u+GHZPOzRJKgBZfnVAYDU2YWO+Xu463hg82nli
+	 usZcld4idPk8MogvwZNJ5nhf90+e2MBQeGbeKakH20d2kYTT/C9D7Hd+1d9T2jJiGa
+	 TTqrb5JVtTB74L4PlmeRnx/dUuCWOtIPt/YKCW6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.6 0923/1266] netfilter: nf_conntrack_irc: fix parse_dcc() off-by-one OOB read
-Date: Tue, 21 Jul 2026 17:22:40 +0200
-Message-ID: <20260721152502.492240276@linuxfoundation.org>
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 0959/1266] Bluetooth: SCO: fix sleeping under spinlock in sco_conn_ready
+Date: Tue, 21 Jul 2026 17:23:16 +0200
+Message-ID: <20260721152503.287571453@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,61 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-commit ef6400ca25a13fd6dedbe8ef4a1d0979bbbfe88a upstream.
+commit b819db93d73f4593636299e229914052b89e3ef2 upstream.
 
-parse_dcc() treats data_end as an inclusive end pointer, but its only
-caller passes data_limit = ib_ptr + datalen, which points one past the
-last valid byte.
+sco_conn_ready calls sleeping functions under conn->lock spinlock.
 
-The newline search loop iterates while tmp <= data_end, so when no
-newline is present, *tmp is read at tmp == data_end, one byte beyond
-the region filled by skb_header_pointer().
+The critical section can be reduced: conn->hcon is modified only with
+hdev->lock held. It is guaranteed to be held in sco_conn_ready, so
+conn->lock is not needed to guard it.
 
-irc_buffer is kmalloc'd as MAX_SEARCH_SIZE + 1 bytes and datalen is
-capped at MAX_SEARCH_SIZE, so the stray read does not fault.  The byte
-is uninitialized or stale; if it contains an ASCII digit, simple_strtoul
-will consume it and produce a wrong DCC IP or port in the conntrack
-expectation.  The extra allocation byte is also a fragile guard: if the
-cap or allocation size changes, this becomes a real out-of-bounds read.
+Move taking conn->lock after lock_sock(parent). This also follows the
+lock ordering lock_sock() > conn->lock elsewhere in the file.
 
-Change the loop and its post-loop check to use strict less-than,
-consistent with the caller's exclusive-end convention.  Update the
-function comment accordingly.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 27c24fda62b60 ("Bluetooth: switch to lock_sock in SCO")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_irc.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/bluetooth/sco.c |   20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
---- a/net/netfilter/nf_conntrack_irc.c
-+++ b/net/netfilter/nf_conntrack_irc.c
-@@ -64,7 +64,7 @@ static const char *const dccprotos[] = {
- /* tries to get the ip_addr and port out of a dcc command
-  * return value: -1 on failure, 0 on success
-  *	data		pointer to first byte of DCC command data
-- *	data_end	pointer to last byte of dcc command data
-+ *	data_end	one past end of data
-  *	ip		returns parsed ip of dcc command
-  *	port		returns parsed port of dcc command
-  *	ad_beg_p	returns pointer to first byte of addr data
-@@ -82,10 +82,10 @@ static int parse_dcc(char *data, const c
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -1314,26 +1314,24 @@ static void sco_conn_ready(struct sco_co
+ 		sk->sk_state_change(sk);
+ 		release_sock(sk);
+ 	} else {
+-		sco_conn_lock(conn);
+-
+-		if (!conn->hcon) {
+-			sco_conn_unlock(conn);
++		if (!conn->hcon)
+ 			return;
+-		}
++
++		lockdep_assert_held(&conn->hcon->hdev->lock);
  
- 	/* Make sure we have a newline character within the packet boundaries
- 	 * because simple_strtoul parses until the first invalid character. */
--	for (tmp = data; tmp <= data_end; tmp++)
-+	for (tmp = data; tmp < data_end; tmp++)
- 		if (*tmp == '\n')
- 			break;
--	if (tmp > data_end || *tmp != '\n')
-+	if (tmp >= data_end || *tmp != '\n')
- 		return -1;
+ 		parent = sco_get_sock_listen(&conn->hcon->src);
+-		if (!parent) {
+-			sco_conn_unlock(conn);
++		if (!parent)
+ 			return;
+-		}
  
- 	*ad_beg_p = data;
+ 		lock_sock(parent);
+ 
++		sco_conn_lock(conn);
++
+ 		sk = sco_sock_alloc(sock_net(parent), NULL,
+ 				    BTPROTO_SCO, GFP_ATOMIC, 0);
+ 		if (!sk) {
+-			release_sock(parent);
+ 			sco_conn_unlock(conn);
++			release_sock(parent);
+ 			return;
+ 		}
+ 
+@@ -1353,9 +1351,9 @@ static void sco_conn_ready(struct sco_co
+ 		/* Wake up parent */
+ 		parent->sk_data_ready(parent);
+ 
+-		release_sock(parent);
+-
+ 		sco_conn_unlock(conn);
++
++		release_sock(parent);
+ 	}
+ }
+ 
 
 
