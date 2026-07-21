@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D25408039;
-	Tue, 21 Jul 2026 19:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF2546EC82;
+	Tue, 21 Jul 2026 19:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661806; cv=none; b=ULXWUkfzylTPQwrNs2LbI7SIlABAIyPZXLMsd4scWCcD3mCibr3UNOHrqpg/RVNVOG0HRI+QR8xFCcaFJVJEKoVjzaolhgW/raW/hHfWHBLR9SryvhcW2sTCT4YTUgdoi/9mJBkDv+mfsyfvWlsiYEbDdOZyVPrnWKf69q+N08k=
+	t=1784661809; cv=none; b=aedZDhOiJw4TB3Lmdd2B22hnN3JTS2FRkZLJLEjnwsex2SliwX0go4ItUK8yAGPomM0MiWn0OAQFF77fn+I0IHbIhiLO288XTIBLNGLA14rIQvwxx5WaIs6eIN+ZmFfnujUhfVjt97eS6pdCIcoNMrdnN6KnoPd9QGZys6jfBLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661806; c=relaxed/simple;
-	bh=WVDYg9f23B0N5udSZMWsNgz8WrKqaKPobQ/Wsz6nS3M=;
+	s=arc-20240116; t=1784661809; c=relaxed/simple;
+	bh=A/WO124HpcY5Pdxd9Kbe39VHFFRHpPYc5nYFV0gVD7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V3+nbCc+ZRNsrDU2YvD9a5ZT5tOXeSFEq1Jg8corVVEC4NOLW27pGotqNb6NerKefRzeXPr31KiPg09Vmnh5Z9rR5tyX0YBSHXkb0A02x5OqzxFK7xFN0I3vkKU7FRJuZV/eRnLkNUTmFgIqMj84ZMOkluW5SpcsMPZlRtMyWVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/WqlrFY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LniQQ8zAJTMnwlndCZ6aVEGLj8fI4befGqmHNI7rjvYy5CKBUtw1bP5Fxdxa666e3OFIXAMpJNSockC1gT6ezl5TUYnHFWzRfMO7ryYmM2IxT6y+n4maEoJVQuVm7gkIyKTtC+ea4ir91GZjM943bN5M+Sw6DHg4jeMSbNtamak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=auBE0v5V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/WqlrFY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8221F000E9;
-	Tue, 21 Jul 2026 19:23:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="auBE0v5V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528331F000E9;
+	Tue, 21 Jul 2026 19:23:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661805;
-	bh=XF9UkqGBIQICOtc9ZIsKCQF8uVkL76ek2YiJjAY5YwU=;
+	s=korg; t=1784661807;
+	bh=aH/ThPqIKHej+QU6mUWbY0xXn5XuDPFO4GHWVTczjpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o/WqlrFYD2wcJGZfxDwk+oEY3RVol88XGwB7AgD/9/wuj3u7UTulTLdInY/Za8BNE
-	 rVF6jvo09vvveWALSNAR1DZcviMUl7z1mmv9XROjVgs+eTLb2cC1UISQPZlMbU0iTW
-	 e1KmhAzg7vilXu8rxdCrNgsae3gYzhUOqlva7tXY=
+	b=auBE0v5V+eSt+8dC7HHEeRWR4lcCAh9Ji3LYrS0/StLSUMTJAN4HKvOkufsk88oGL
+	 aQM7WQZSk2t8eHssTxeQOcAeNwQ/YaXDIa47uS9BsmUMgseCAEkgAKEl9Sw7NXkpYN
+	 1BKmpWvw+SWe5/LboJ2YUyrqlx8TM42lreHDBDNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
 	Gui-Dong Han <hanguidong02@gmail.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0205/1276] Drivers: hv: vmbus: use generic driver_override infrastructure
-Date: Tue, 21 Jul 2026 17:10:48 +0200
-Message-ID: <20260721152450.674520618@linuxfoundation.org>
+Subject: [PATCH 6.12 0206/1276] rpmsg: use generic driver_override infrastructure
+Date: Tue, 21 Jul 2026 17:10:49 +0200
+Message-ID: <20260721152450.697610543@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -54,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit 331d8900121a1d74ecd45cd2db742ddcb5a0a565 ]
+[ Upstream commit 55ced13c42921714e90f8fae94b6ed803330dc6a ]
 
 When a driver is probed through __driver_attach(), the bus' match()
 callback is called without the device lock held, thus accessing the
@@ -66,37 +66,58 @@ care of proper locking internally.
 Note that calling match() from __driver_attach() without the device lock
 held is intentional. [1]
 
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
 Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
 Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
 Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
-Fixes: d765edbb301c ("vmbus: add driver_override support")
+Fixes: e95060478244 ("rpmsg: Introduce a driver override mechanism")
+Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20260505133935.3772495-4-dakr@kernel.org
+Link: https://patch.msgid.link/20260505133935.3772495-5-dakr@kernel.org
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/vmbus_drv.c | 43 ++++++++++--------------------------------
- include/linux/hyperv.h |  5 -----
- 2 files changed, 10 insertions(+), 38 deletions(-)
+ drivers/rpmsg/qcom_glink_native.c |  2 --
+ drivers/rpmsg/rpmsg_core.c        | 43 +++++--------------------------
+ drivers/rpmsg/virtio_rpmsg_bus.c  |  1 -
+ include/linux/rpmsg.h             |  4 ---
+ 4 files changed, 7 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index 0191562e606d0c..83f3215bc5bd59 100644
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -521,34 +521,6 @@ static ssize_t device_show(struct device *dev,
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index 58c4e2aac95196..c2d39a3bcea7e1 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -1618,7 +1618,6 @@ static void qcom_glink_rpdev_release(struct device *dev)
+ {
+ 	struct rpmsg_device *rpdev = to_rpmsg_device(dev);
+ 
+-	kfree(rpdev->driver_override);
+ 	kfree(rpdev);
  }
- static DEVICE_ATTR_RO(device);
+ 
+@@ -1870,7 +1869,6 @@ static void qcom_glink_device_release(struct device *dev)
+ 
+ 	/* Release qcom_glink_alloc_channel() reference */
+ 	kref_put(&channel->refcount, qcom_glink_channel_release);
+-	kfree(rpdev->driver_override);
+ 	kfree(rpdev);
+ }
+ 
+diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
+index a8ae840d170739..23b33529e4024e 100644
+--- a/drivers/rpmsg/rpmsg_core.c
++++ b/drivers/rpmsg/rpmsg_core.c
+@@ -421,33 +421,6 @@ rpmsg_show_attr(src, src, "0x%x\n");
+ rpmsg_show_attr(dst, dst, "0x%x\n");
+ rpmsg_show_attr(announce, announce ? "true" : "false", "%s\n");
  
 -static ssize_t driver_override_store(struct device *dev,
 -				     struct device_attribute *attr,
 -				     const char *buf, size_t count)
 -{
--	struct hv_device *hv_dev = device_to_hv_device(dev);
+-	struct rpmsg_device *rpdev = to_rpmsg_device(dev);
 -	int ret;
 -
--	ret = driver_set_override(dev, &hv_dev->driver_override, buf, count);
+-	ret = driver_set_override(dev, &rpdev->driver_override, buf, count);
 -	if (ret)
 -		return ret;
 -
@@ -106,80 +127,106 @@ index 0191562e606d0c..83f3215bc5bd59 100644
 -static ssize_t driver_override_show(struct device *dev,
 -				    struct device_attribute *attr, char *buf)
 -{
--	struct hv_device *hv_dev = device_to_hv_device(dev);
+-	struct rpmsg_device *rpdev = to_rpmsg_device(dev);
 -	ssize_t len;
 -
 -	device_lock(dev);
--	len = sysfs_emit(buf, "%s\n", hv_dev->driver_override);
+-	len = sysfs_emit(buf, "%s\n", rpdev->driver_override);
 -	device_unlock(dev);
--
 -	return len;
 -}
 -static DEVICE_ATTR_RW(driver_override);
 -
- /* Set up per device attributes in /sys/bus/vmbus/devices/<bus device> */
- static struct attribute *vmbus_dev_attrs[] = {
- 	&dev_attr_id.attr,
-@@ -579,7 +551,6 @@ static struct attribute *vmbus_dev_attrs[] = {
- 	&dev_attr_channel_vp_mapping.attr,
- 	&dev_attr_vendor.attr,
- 	&dev_attr_device.attr,
+ static ssize_t modalias_show(struct device *dev,
+ 			     struct device_attribute *attr, char *buf)
+ {
+@@ -468,7 +441,6 @@ static struct attribute *rpmsg_dev_attrs[] = {
+ 	&dev_attr_dst.attr,
+ 	&dev_attr_src.attr,
+ 	&dev_attr_announce.attr,
 -	&dev_attr_driver_override.attr,
  	NULL,
  };
- 
-@@ -691,9 +662,11 @@ static const struct hv_vmbus_device_id *hv_vmbus_get_id(const struct hv_driver *
- {
- 	const guid_t *guid = &dev->dev_type;
- 	const struct hv_vmbus_device_id *id;
+ ATTRIBUTE_GROUPS(rpmsg_dev);
+@@ -487,9 +459,11 @@ static int rpmsg_dev_match(struct device *dev, const struct device_driver *drv)
+ 	const struct rpmsg_driver *rpdrv = to_rpmsg_driver(drv);
+ 	const struct rpmsg_device_id *ids = rpdrv->id_table;
+ 	unsigned int i;
 +	int ret;
  
--	/* When driver_override is set, only bind to the matching driver */
--	if (dev->driver_override && strcmp(dev->driver_override, drv->name))
-+	/* If a driver override is set, only bind to the matching driver */
-+	ret = device_match_driver_override(&dev->device, &drv->driver);
-+	if (ret == 0)
- 		return NULL;
+-	if (rpdev->driver_override)
+-		return !strcmp(rpdev->driver_override, drv->name);
++	ret = device_match_driver_override(dev, drv);
++	if (ret >= 0)
++		return ret;
  
- 	/* Look at the dynamic ids first, before the static ones */
-@@ -701,8 +674,11 @@ static const struct hv_vmbus_device_id *hv_vmbus_get_id(const struct hv_driver *
- 	if (!id)
- 		id = hv_vmbus_dev_match(drv->id_table, guid);
+ 	if (ids)
+ 		for (i = 0; ids[i].name[0]; i++)
+@@ -599,6 +573,7 @@ static const struct bus_type rpmsg_bus = {
+ 	.name		= "rpmsg",
+ 	.match		= rpmsg_dev_match,
+ 	.dev_groups	= rpmsg_dev_groups,
++	.driver_override = true,
+ 	.uevent		= rpmsg_uevent,
+ 	.probe		= rpmsg_dev_probe,
+ 	.remove		= rpmsg_dev_remove,
+@@ -624,11 +599,9 @@ int rpmsg_register_device_override(struct rpmsg_device *rpdev,
  
--	/* driver_override will always match, send a dummy id */
--	if (!id && dev->driver_override)
-+	/*
-+	 * If there's a matching driver override, this function should succeed,
-+	 * thus return a dummy device ID if no matching ID is found.
-+	 */
-+	if (!id && ret > 0)
- 		id = &vmbus_device_null;
+ 	device_initialize(dev);
+ 	if (driver_override) {
+-		ret = driver_set_override(dev, &rpdev->driver_override,
+-					  driver_override,
+-					  strlen(driver_override));
++		ret = device_set_driver_override(dev, driver_override);
+ 		if (ret) {
+-			dev_err(dev, "device_set_override failed: %d\n", ret);
++			dev_err(dev, "device_set_driver_override() failed: %d\n", ret);
+ 			put_device(dev);
+ 			return ret;
+ 		}
+@@ -637,8 +610,6 @@ int rpmsg_register_device_override(struct rpmsg_device *rpdev,
+ 	ret = device_add(dev);
+ 	if (ret) {
+ 		dev_err(dev, "device_add failed: %d\n", ret);
+-		kfree(rpdev->driver_override);
+-		rpdev->driver_override = NULL;
+ 		put_device(dev);
+ 	}
  
- 	return id;
-@@ -981,6 +957,7 @@ static const struct dev_pm_ops vmbus_pm = {
- /* The one and only one */
- static const struct bus_type  hv_bus = {
- 	.name =		"vmbus",
-+	.driver_override =	true,
- 	.match =		vmbus_match,
- 	.shutdown =		vmbus_shutdown,
- 	.remove =		vmbus_remove,
-diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
-index 44bf8af37901ba..2f40e2f40aa2c1 100644
---- a/include/linux/hyperv.h
-+++ b/include/linux/hyperv.h
-@@ -1311,11 +1311,6 @@ struct hv_device {
- 	u16 device_id;
+diff --git a/drivers/rpmsg/virtio_rpmsg_bus.c b/drivers/rpmsg/virtio_rpmsg_bus.c
+index 89d7a3b8c48b5f..ee60e4580c81bd 100644
+--- a/drivers/rpmsg/virtio_rpmsg_bus.c
++++ b/drivers/rpmsg/virtio_rpmsg_bus.c
+@@ -378,7 +378,6 @@ static void virtio_rpmsg_release_device(struct device *dev)
+ 	struct rpmsg_device *rpdev = to_rpmsg_device(dev);
+ 	struct virtio_rpmsg_channel *vch = to_virtio_rpmsg_channel(rpdev);
  
- 	struct device device;
--	/*
--	 * Driver name to force a match.  Do not set directly, because core
--	 * frees it.  Use driver_set_override() to set or clear it.
--	 */
+-	kfree(rpdev->driver_override);
+ 	kfree(vch);
+ }
+ 
+diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
+index 90d8e4475f80ed..32819293670620 100644
+--- a/include/linux/rpmsg.h
++++ b/include/linux/rpmsg.h
+@@ -41,9 +41,6 @@ struct rpmsg_channel_info {
+  * rpmsg_device - device that belong to the rpmsg bus
+  * @dev: the device struct
+  * @id: device id (used to match between rpmsg drivers and devices)
+- * @driver_override: driver name to force a match; do not set directly,
+- *                   because core frees it; use driver_set_override() to
+- *                   set or clear it.
+  * @src: local address
+  * @dst: destination address
+  * @ept: the rpmsg endpoint of this channel
+@@ -53,7 +50,6 @@ struct rpmsg_channel_info {
+ struct rpmsg_device {
+ 	struct device dev;
+ 	struct rpmsg_device_id id;
 -	const char *driver_override;
- 
- 	struct vmbus_channel *channel;
- 	struct kset	     *channels_kset;
+ 	u32 src;
+ 	u32 dst;
+ 	struct rpmsg_endpoint *ept;
 -- 
 2.53.0
 
