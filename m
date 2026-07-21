@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC7440912B;
-	Tue, 21 Jul 2026 19:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4895B46D54B;
+	Tue, 21 Jul 2026 19:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660500; cv=none; b=PStJsxSBB/vSyxeTF20THWvTSqHai8n3QVFI/99h8JHEwj64PGk7duoSEbD3XD0KeVzZjE6qf0+567tlo4HpdXKXqTyofG3wxNwHVj09b/aWAUsK5TRc1zGipN1hoRgMqRzvG1fu4DvHTA8rGVY8zhQ/01usvxQ5CKxnwWJZ+rA=
+	t=1784660500; cv=none; b=VNf8JvvM8Dd9FnBrmo60ALPzTBKeB19gcJK30jTUFF9gbmwtyOpu3r1JWFR0MsEm/CYedBwPtVcqR8IAnZQ6nJiuOXMADs7z+CSeIvXF7YsCp9b/qa31K1hr+81j40ZWUlt8lIOy0v/dIP4URshqCrLHaNECV9uzNyFWazqC65c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784660500; c=relaxed/simple;
-	bh=ud9FddlT4hVJmqWb/7zvzDbzEsM+zqUX1RAT8qKdIxc=;
+	bh=O07kF4Hg5hvRz43XMQKGrzdcEp21s62E4gG+HMifivU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lrLAr8oRrWkqy6OwdfgQ6jOVAEqJhkwdY1BQe3wvzZABgVrHud7eSuuuDtlZisPPGes4On2Qp3xgJXeErlQORGMFr+UMK3rlBKlZHYo/jdKT1MY4DJaYYdvKGHXxp6TmP2ARvK5khMwuQHrixRjOfLiyhupMo4Z/hYcfvx4dl08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eF4bxR5j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lWapElpi8sU4EP7P60CKxIaWq7sKSG/xkhzf1uRBT8eFmmHH1Br/M75/wiwxWmMyB7HobJl4pO76KD2GComlh/jcs78rVK/BY4wYy8+PbWtvQ1oPTA3B9ictzqMv0NXhgSCfMgdo+9BwhV6dQ+kx+dgSPCsE0laM9XGmeGsAUnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTVnQCxb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eF4bxR5j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C6B01F00AC4;
-	Tue, 21 Jul 2026 19:01:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTVnQCxb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922A01F00A3A;
+	Tue, 21 Jul 2026 19:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660467;
-	bh=VXnxwlLsb5/msb6qYU4lN0iS6YzI18c1wZ/COznNsEM=;
+	s=korg; t=1784660494;
+	bh=WsKgF4kD/R1nWsNrSQ5NIKQVzlfUOCnEN0FJV7hLh0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eF4bxR5jiIKIN/m5WWum898uHdygu2vOdgh7WVPkWoz53fptxatlHtDaTwMJp/Lqo
-	 Kaa/utlpBnf5rVPaNCpxgnmXBWOecw54Apmt9Q26p5AowNGkutl54lv1KtSVc1USIo
-	 CXRC1gKGBPmT/TGvepSlmP8VD2/bf6gAp37OScVo=
+	b=NTVnQCxbqWty+UllYEBMYS5iNIRu4t1+3bjSStu3nCN5n/tkD2oTZT41hWgkRh21j
+	 VnDycEJaW0zuHQ4roXtaTVnEbR5zChWxoDcGbiJCVzTaj/fJmkz6333taMvObRDWAZ
+	 3HiJtb47E1ONPytymsj+f/bQMtdkQ8WNw43Tuhck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0991/2077] perf tools: Use scnprintf() in build_id__snprintf() and hwmon read_events()
-Date: Tue, 21 Jul 2026 17:11:04 +0200
-Message-ID: <20260721152616.192067997@linuxfoundation.org>
+Subject: [PATCH 7.1 1000/2077] xprtrdma: Return sendctx slot after Send preparation failure
+Date: Tue, 21 Jul 2026 17:11:13 +0200
+Message-ID: <20260721152616.404130706@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,77 +51,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit e33711d5e757011bb6d3506af4d6c97dad412b8f ]
+[ Upstream commit 60e7870052f417d83965db144f70ae21fcfcf37f ]
 
-build_id__snprintf() and hwmon_pmu__read_events() accumulate formatted
-output via snprintf(), which returns the would-have-been-written count
-on truncation.  In build_id__snprintf(), this inflates the return
-value beyond the buffer size.  In hwmon_pmu__read_events(), len
-overshoots out_buf_len and the next 'out_buf_len - len' underflows.
+rpcrdma_prepare_send_sges() gets a sendctx before it maps the SGEs
+for the Send WR. If one of the mapping helpers fails, no Send WR
+is posted, so no Send completion is guaranteed to advance rb_sc_tail.
 
-Switch both to scnprintf() which returns actual bytes written.
+Current cleanup clears sc_req so a later completion can sweep over
+that slot, but a consecutive run of preparation failures can still
+advance rb_sc_head until the ring appears full. At that point
+rpcrdma_sendctx_get_locked() returns NULL and no Send can be posted to
+produce the completion needed to recover the ring.
 
-In build_id__snprintf(), also tighten the loop guard from
-'offs < bf_size' to 'offs + 1 < bf_size': since scnprintf() returns
-at most size-1, offs never reaches bf_size, and the original condition
-would spin doing zero-byte writes once the buffer fills.
+The trigger requires CONFIG_SUNRPC_XPRT_RDMA and an NFS/RDMA mount.
+Mount setup and reliable DMA-map fault injection require local admin
+authority. Unprivileged I/O on an existing mount can exercise the send
+path, but a remote peer alone cannot force this local DMA-map failure.
 
-Fixes: fccaaf6fbbc59910 ("perf build-id: Change sprintf functions to snprintf")
-Fixes: 53cc0b351ec99278 ("perf hwmon_pmu: Add a tool PMU exposing events from hwmon in sysfs")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Ian Rogers <irogers@google.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Add rpcrdma_sendctx_unget_locked() for the single-consumer send path
+to rewind rb_sc_head when the just-acquired sendctx is canceled before
+ib_post_send(). Wake waiters after making the slot available again.
+After the rewind, every slot the completion sweep visits belongs to a
+posted Send, so rpcrdma_sendctx_put_locked() no longer needs to test
+sc_req before unmapping.
+
+Fixes: ae72950abf99 ("xprtrdma: Add data structure to manage RDMA Send arguments")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/build-id.c  |  7 +++++--
- tools/perf/util/hwmon_pmu.c | 12 ++++++------
- 2 files changed, 11 insertions(+), 8 deletions(-)
+ net/sunrpc/xprtrdma/rpc_rdma.c  |  5 ++++-
+ net/sunrpc/xprtrdma/verbs.c     | 40 +++++++++++++++++++++++++++++----
+ net/sunrpc/xprtrdma/xprt_rdma.h |  2 ++
+ 3 files changed, 42 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/util/build-id.c b/tools/perf/util/build-id.c
-index fdb35133fde43a..3c286cdbe6e0e6 100644
---- a/tools/perf/util/build-id.c
-+++ b/tools/perf/util/build-id.c
-@@ -93,8 +93,11 @@ int build_id__snprintf(const struct build_id *build_id, char *bf, size_t bf_size
- 		return 0;
- 	}
+diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
+index ae90e6dc1487e9..e8b5fc86a01bbf 100644
+--- a/net/sunrpc/xprtrdma/rpc_rdma.c
++++ b/net/sunrpc/xprtrdma/rpc_rdma.c
+@@ -743,6 +743,7 @@ inline int rpcrdma_prepare_send_sges(struct rpcrdma_xprt *r_xprt,
+ 				     struct xdr_buf *xdr,
+ 				     enum rpcrdma_chunktype rtype)
+ {
++	struct rpcrdma_sendctx *sc;
+ 	int ret;
  
--	for (size_t i = 0; i < build_id->size && offs < bf_size; ++i)
--		offs += snprintf(bf + offs, bf_size - offs, "%02x", build_id->data[i]);
-+	if (bf_size > 0)
-+		bf[0] = '\0';
-+
-+	for (size_t i = 0; i < build_id->size && offs + 1 < bf_size; ++i)
-+		offs += scnprintf(bf + offs, bf_size - offs, "%02x", build_id->data[i]);
+ 	ret = -EAGAIN;
+@@ -785,7 +786,9 @@ inline int rpcrdma_prepare_send_sges(struct rpcrdma_xprt *r_xprt,
+ 	return 0;
  
- 	return offs;
+ out_unmap:
+-	rpcrdma_sendctx_cancel(req->rl_sendctx);
++	sc = req->rl_sendctx;
++	rpcrdma_sendctx_cancel(sc);
++	rpcrdma_sendctx_unget_locked(r_xprt, sc);
+ out_nosc:
+ 	trace_xprtrdma_prepsend_failed(&req->rl_slot, ret);
+ 	return ret;
+diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+index 6a8370c8f43d9c..0ac82f26bf6ec9 100644
+--- a/net/sunrpc/xprtrdma/verbs.c
++++ b/net/sunrpc/xprtrdma/verbs.c
+@@ -631,6 +631,11 @@ static void rpcrdma_sendctxs_destroy(struct rpcrdma_xprt *r_xprt)
+ 	/* The QP is drained, but the final unsignaled Sends might not
+ 	 * have been walked by a signaled Send completion. Release those
+ 	 * Send owners before request buffers are reset.
++	 *
++	 * Unlike the completion sweep, this walk can visit slots with
++	 * no Send posted: after a partial rpcrdma_sendctxs_create()
++	 * failure on reconnect, rb_sc_head and rb_sc_tail are stale,
++	 * and slots between them can be NULL or have sc_req clear.
+ 	 */
+ 	for (i = rpcrdma_sendctx_next(buf, buf->rb_sc_tail);
+ 	     i != rpcrdma_sendctx_next(buf, buf->rb_sc_head);
+@@ -703,6 +708,12 @@ static unsigned long rpcrdma_sendctx_next(struct rpcrdma_buffer *buf,
+ 	return likely(item < buf->rb_sc_last) ? item + 1 : 0;
  }
-diff --git a/tools/perf/util/hwmon_pmu.c b/tools/perf/util/hwmon_pmu.c
-index fb3ffa8d32ad2a..dbf6a71af47f9a 100644
---- a/tools/perf/util/hwmon_pmu.c
-+++ b/tools/perf/util/hwmon_pmu.c
-@@ -442,12 +442,12 @@ static size_t hwmon_pmu__describe_items(struct hwmon_pmu *hwm, char *out_buf, si
  
- 				buf[read_len] = '\0';
- 				val = strtoll(buf, /*endptr=*/NULL, 10);
--				len += snprintf(out_buf + len, out_buf_len - len, "%s%s%s=%g%s",
--						len == 0 ? " " : ", ",
--						hwmon_item_strs[bit],
--						is_alarm ? "_alarm" : "",
--						(double)val / 1000.0,
--						hwmon_units[key.type]);
-+				len += scnprintf(out_buf + len, out_buf_len - len, "%s%s%s=%g%s",
-+						 len == 0 ? " " : ", ",
-+						 hwmon_item_strs[bit],
-+						 is_alarm ? "_alarm" : "",
-+						 (double)val / 1000.0,
-+						 hwmon_units[key.type]);
- 			}
- 			close(fd);
- 		}
++static unsigned long rpcrdma_sendctx_prev(struct rpcrdma_buffer *buf,
++					  unsigned long item)
++{
++	return item > 0 ? item - 1 : buf->rb_sc_last;
++}
++
+ /**
+  * rpcrdma_sendctx_get_locked - Acquire a send context
+  * @r_xprt: controlling transport instance
+@@ -759,6 +770,29 @@ struct rpcrdma_sendctx *rpcrdma_sendctx_get_locked(struct rpcrdma_xprt *r_xprt)
+ 	return NULL;
+ }
+ 
++/**
++ * rpcrdma_sendctx_unget_locked - Release an unposted send context
++ * @r_xprt: controlling transport instance
++ * @sc: send context to release
++ *
++ * Usage: Called when no Send is posted for the sendctx most
++ * recently returned by rpcrdma_sendctx_get_locked().
++ *
++ * The caller serializes calls to this function and to
++ * rpcrdma_sendctx_get_locked() (per transport).
++ */
++void rpcrdma_sendctx_unget_locked(struct rpcrdma_xprt *r_xprt,
++				  struct rpcrdma_sendctx *sc)
++{
++	struct rpcrdma_buffer *buf = &r_xprt->rx_buf;
++
++	if (WARN_ON_ONCE(buf->rb_sc_ctxs[buf->rb_sc_head] != sc))
++		return;
++
++	buf->rb_sc_head = rpcrdma_sendctx_prev(buf, buf->rb_sc_head);
++	xprt_write_space(&r_xprt->rx_xprt);
++}
++
+ /**
+  * rpcrdma_sendctx_put_locked - Release a send context
+  * @r_xprt: controlling transport instance
+@@ -776,8 +810,7 @@ static void rpcrdma_sendctx_put_locked(struct rpcrdma_xprt *r_xprt,
+ 	unsigned long next_tail;
+ 
+ 	/* Release previously completed but unsignaled Sends by walking
+-	 * up the queue until @sc is found. Entries left behind by a
+-	 * failed rpcrdma_prepare_send_sges() have sc_req cleared.
++	 * up the queue until @sc is found.
+ 	 */
+ 	next_tail = buf->rb_sc_tail;
+ 	do {
+@@ -787,8 +820,7 @@ static void rpcrdma_sendctx_put_locked(struct rpcrdma_xprt *r_xprt,
+ 
+ 		/* ORDER: item must be accessed _before_ tail is updated */
+ 		cur = buf->rb_sc_ctxs[next_tail];
+-		if (cur->sc_req)
+-			rpcrdma_sendctx_unmap(cur);
++		rpcrdma_sendctx_unmap(cur);
+ 
+ 	} while (buf->rb_sc_ctxs[next_tail] != sc);
+ 
+diff --git a/net/sunrpc/xprtrdma/xprt_rdma.h b/net/sunrpc/xprtrdma/xprt_rdma.h
+index f879d9b9f57ef4..57be5776aaff17 100644
+--- a/net/sunrpc/xprtrdma/xprt_rdma.h
++++ b/net/sunrpc/xprtrdma/xprt_rdma.h
+@@ -495,6 +495,8 @@ void rpcrdma_req_destroy(struct rpcrdma_req *req);
+ int rpcrdma_buffer_create(struct rpcrdma_xprt *);
+ void rpcrdma_buffer_destroy(struct rpcrdma_buffer *);
+ struct rpcrdma_sendctx *rpcrdma_sendctx_get_locked(struct rpcrdma_xprt *r_xprt);
++void rpcrdma_sendctx_unget_locked(struct rpcrdma_xprt *r_xprt,
++				  struct rpcrdma_sendctx *sc);
+ 
+ struct rpcrdma_mr *rpcrdma_mr_get(struct rpcrdma_xprt *r_xprt);
+ void rpcrdma_mrs_refresh(struct rpcrdma_xprt *r_xprt);
 -- 
 2.53.0
 
