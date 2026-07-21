@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0EA46DFE9;
-	Tue, 21 Jul 2026 18:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3973D1CCA;
+	Tue, 21 Jul 2026 18:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656982; cv=none; b=ECZhRcnOWovGt0P90HT+Ms+/hm4bFt6dfcuYRfV2ZtCbpIDK1XFsFWIxwN2rKKsmH4rq5R5PlM4Fa8oHFDgeRZqoCR0T8Du92xbrl5aHYMIRNylNdDo2YsIN9shHUw7Yjx+W0KvwO9gHyvcxPBw3ezx4aZAR1d0jOoxlQxTi7qw=
+	t=1784656985; cv=none; b=c/Gi1YsBmlFkP/Gqsp70I7spvWTX3GZb3OaYisZBCqwXrfDJZ5v4tkSXPbESd17RIWP87/vVzwZK/ItDg8DxxL0tdNi4dTD7nk9Zrl6fp/PJTMxWKsnEhJWKm2ufdrvwG+X1xb1lWzDYX3gvGLPFnceG4vwNLK7KmFLRFGCxFQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656982; c=relaxed/simple;
-	bh=faneA+NF/dbr9MWBHNExotMncFgD7wHRshGWGgdeVK0=;
+	s=arc-20240116; t=1784656985; c=relaxed/simple;
+	bh=kbqkW/bnuILlMfq/lIb8Ekp3/9EI8tek4BetqbzPFnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eAs7JRY4fvcTdklud7YVr+PU3ShnqdqzCzvcYSqfmsk+MPBVZ6MaQiqetq0cY3YLKdBI8S7fOJlV7/1Pd3kvNWSB43Fg2L5xBWXy/FRlTw5eQD19sgd870RSPPnzHu9DR+rUqk9YQrM5CXyHSvS7sI+r86wJTbFU+ngmMOUueH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lb4hgDoI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EE+h9pV/VffBzESDF1WfOiWzRltS+0DXxOX4DoFl6B5NN9jFEgoQCPvDjkuLYYJ+seNgZShNUWF6Kv4S3oKyXoBlLfV4Ufo7sJS9W8CsRFf1m26hZN2DHqZJi0vKSUVbqJ1pHmHvPtpjWxMdR+T+8Vh5kPXBW22E7zvOh7NJw0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YdjFJZhP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lb4hgDoI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28731F000E9;
-	Tue, 21 Jul 2026 18:03:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdjFJZhP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E3C1F000E9;
+	Tue, 21 Jul 2026 18:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656981;
-	bh=tI1npYlzzi4XDueen9Gfx4WxDpDk6ESuRnf98U1cjhc=;
+	s=korg; t=1784656984;
+	bh=EMwWIx5Va8lyfGGymQGItIS3jb84gmWojjJdb3cL0zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lb4hgDoIqGmlQtTGd3jCGyhUKcJM33xk15VFj5BBxfTelJ+wBxc9Y4aGgLRE8rk4F
-	 dgqTcSKHAeP+sp/Y1FRSccN7A6DbSMchG9fvYAAvIqhOUMqOnMbqqxQyhjzthDsNWz
-	 vPbS5hwteJ7lMpa9AqIVNUFWGNNWmsz+yA2SOSRI=
+	b=YdjFJZhPAaMLsyKqWaTjD9o5/xvgmBC/FxAxLzuUk46BazvdZlAC84Lz9/66BEVZl
+	 4oD+5uZORVQYXcNnYTTWYj5HHb+W/X7Q0CgBVWFW8cvBqIZ1hL11oN8vuhzZrqU6Ae
+	 GAocnC3AmfwveYIqFIjvso9sUamhp3iyWjwM/oLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	=?UTF-8?q?Lain=20 Fearyncess =20Yang?= <i@lain.vg>,
-	Rong Zhang <i@rong.moe>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+	Hsiu Che Yu <yu.whisper.personal@gmail.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0591/1611] PCI: loongson: Do not ignore downstream devices on external bridges
-Date: Tue, 21 Jul 2026 17:11:47 +0200
-Message-ID: <20260721152528.676029101@linuxfoundation.org>
+Subject: [PATCH 6.18 0592/1611] rust: alloc: fix assert in `Vec::reserve` doc test
+Date: Tue, 21 Jul 2026 17:11:48 +0200
+Message-ID: <20260721152528.699747428@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,121 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rong Zhang <i@rong.moe>
+From: Hsiu Che Yu <yu.whisper.personal@gmail.com>
 
-[ Upstream commit 1389ab9bf9f627d4daed86f492091b00f110aa86 ]
+[ Upstream commit 75619f2df7a5da6ffb61eedc2a73fdf70c65471c ]
 
-Loongson PCI host controllers have a hardware quirk that requires
-software to ignore downstream devices with device number > 0 on the
-internal bridges. The current implementation applies the workaround to
-all non-root buses, which breaks external bridges (e.g., PCIe switches)
-with multiple downstream devices.
+The assert in the doctest used `>= 10`, which only checks that the
+capacity can hold `additional` elements, ignoring the existing length
+of `v`. The correct check should ensure there is room for `additional`
+*extra* elements on top of what is already in the vector.
 
-Fix it by only applying the workaround to internal bridges.
+Fix the assert to use `>= v.len() + 10` so the example accurately
+reflects the actual semantics of the function.
 
-Tested on Loongson-LS3A4000-7A1000-NUC-SE, using AMD Promontory 21
-chipset add-in card [1].
-
-  $ lspci -tnnnvvv
-  -[0000:00]-+-00.0  Loongson Technology LLC 7A1000 Chipset Hyper Transport Bridge Controller [0014:7a00]
-             +-00.1  Loongson Technology LLC 7A2000 Chipset Hyper Transport Bridge Controller [0014:7a10]
-             +-03.0  Loongson Technology LLC 2K1000/2000 / 7A1000 Chipset Gigabit Ethernet Controller [0014:7a03]
-             +-04.0  Loongson Technology LLC 2K1000 / 7A1000/2000 Chipset USB OHCI Controller [0014:7a24]
-             +-04.1  Loongson Technology LLC 2K1000 / 7A1000/2000 Chipset USB EHCI Controller [0014:7a14]
-             +-05.0  Loongson Technology LLC 2K1000 / 7A1000/2000 Chipset USB OHCI Controller [0014:7a24]
-             +-05.1  Loongson Technology LLC 2K1000 / 7A1000/2000 Chipset USB EHCI Controller [0014:7a14]
-             +-06.0  Loongson Technology LLC 7A1000 Chipset Vivante GC1000 GPU [0014:7a15]
-             +-06.1  Loongson Technology LLC 2K1000 / 7A1000 Chipset Display Controller [0014:7a06]
-             +-07.0  Loongson Technology LLC 2K1000/2000/3000 / 3B6000M / 7A1000/2000 Chipset HD Audio Controller [0014:7a07]
-             +-08.0  Loongson Technology LLC 2K1000 / 7A1000 Chipset 3Gb/s SATA AHCI Controller [0014:7a08]
-             +-08.1  Loongson Technology LLC 2K1000 / 7A1000 Chipset 3Gb/s SATA AHCI Controller [0014:7a08]
-             +-08.2  Loongson Technology LLC 2K1000 / 7A1000 Chipset 3Gb/s SATA AHCI Controller [0014:7a08]
-             +-09.0-[01]----00.0  Qualcomm Technologies, Inc QCNFA765 Wireless Network Adapter [17cb:1103]
-             +-0a.0-[02]----00.0  Etron Technology, Inc. EJ188/EJ198 USB 3.0 Host Controller [1b6f:7052]
-             +-0f.0-[03-08]----00.0-[04-08]--+-00.0-[05]----00.0  Shenzhen Longsys Electronics Co., Ltd. FORESEE XP1000 / Lexar Professional CFexpress Type B Gold series, NM620 PCIe NVME SSD (DRAM-less) [1d97:5216]
-             |                               +-08.0-[06]----00.0  MAXIO Technology (Hangzhou) Ltd. NVMe SSD Controller MAP1202 (DRAM-less) [1e4b:1202]
-             |                               +-0c.0-[07]----00.0  Advanced Micro Devices, Inc. [AMD] 600 Series Chipset USB 3.2 Controller [1022:43f7]
-             |                               \-0d.0-[08]----00.0  Advanced Micro Devices, Inc. [AMD] 600 Series Chipset SATA Controller [1022:43f6]
-             \-16.0  Loongson Technology LLC 7A1000 Chipset SPI Controller [0014:7a0b]
-
-Fixes: 2410e3301fcc ("PCI: loongson: Don't access non-existent devices")
-Co-developed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Co-developed-by: Lain "Fearyncess" Yang <i@lain.vg>
-Signed-off-by: Lain "Fearyncess" Yang <i@lain.vg>
-Signed-off-by: Rong Zhang <i@rong.moe>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://oshwhub.com/wesd/b650 [1]
-Link: https://patch.msgid.link/20260501-ls7a-bridge-fixes-v2-1-69fa93683805@rong.moe
+Reported-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Closes: https://lore.kernel.org/rust-for-linux/CANiq72nkXWhjK9iFRrhGtkMZGsvNE_zVsu4JnxaFRfxWL7RRdg@mail.gmail.com/
+Fixes: 2aac4cd7dae3d ("rust: alloc: implement kernel `Vec` type")
+Signed-off-by: Hsiu Che Yu <yu.whisper.personal@gmail.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Link: https://patch.msgid.link/20260427-doctest-kvec-reserve-v1-1-0623abcd9c2e@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pci-loongson.c | 31 ++++++++++++++-------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ rust/kernel/alloc/kvec.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pci-loongson.c b/drivers/pci/controller/pci-loongson.c
-index 9609e6f50b9816..d0c643996476f8 100644
---- a/drivers/pci/controller/pci-loongson.c
-+++ b/drivers/pci/controller/pci-loongson.c
-@@ -80,6 +80,18 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
- 			DEV_LS7A_LPC, system_bus_quirk);
- 
-+static const struct pci_device_id loongson_internal_bridge_devids[] = {
-+	{ PCI_VDEVICE(LOONGSON, DEV_LS2K_PCIE_PORT0) },
-+	{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT0) },
-+	{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT1) },
-+	{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT2) },
-+	{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT3) },
-+	{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT4) },
-+	{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT5) },
-+	{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT6) },
-+	{ 0, },
-+};
-+
- /*
-  * Some Loongson PCIe ports have hardware limitations on their Maximum Read
-  * Request Size. They can't handle anything larger than this.  Sane
-@@ -92,24 +104,13 @@ static void loongson_set_min_mrrs_quirk(struct pci_dev *pdev)
- {
- 	struct pci_bus *bus = pdev->bus;
- 	struct pci_dev *bridge;
--	static const struct pci_device_id bridge_devids[] = {
--		{ PCI_VDEVICE(LOONGSON, DEV_LS2K_PCIE_PORT0) },
--		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT0) },
--		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT1) },
--		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT2) },
--		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT3) },
--		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT4) },
--		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT5) },
--		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT6) },
--		{ 0, },
--	};
- 
- 	/* look for the matching bridge */
- 	while (!pci_is_root_bus(bus)) {
- 		bridge = bus->self;
- 		bus = bus->parent;
- 
--		if (pci_match_id(bridge_devids, bridge)) {
-+		if (pci_match_id(loongson_internal_bridge_devids, bridge)) {
- 			if (pcie_get_readrq(pdev) > 256) {
- 				pci_info(pdev, "limiting MRRS to 256\n");
- 				pcie_set_readrq(pdev, 256);
-@@ -266,11 +267,11 @@ static void __iomem *pci_loongson_map_bus(struct pci_bus *bus,
- 	struct loongson_pci *priv = pci_bus_to_loongson_pci(bus);
- 
- 	/*
--	 * Do not read more than one device on the bus other than
--	 * the host bus.
-+	 * Do not read more than one device on the internal bridges.
- 	 */
- 	if ((priv->data->flags & FLAG_DEV_FIX) && bus->self) {
--		if (!pci_is_root_bus(bus) && (device > 0))
-+		if (!pci_is_root_bus(bus) && (device > 0) &&
-+		    pci_match_id(loongson_internal_bridge_devids, bus->self))
- 			return NULL;
- 	}
- 
+diff --git a/rust/kernel/alloc/kvec.rs b/rust/kernel/alloc/kvec.rs
+index b6a97b8fb51211..223c5ae0f83153 100644
+--- a/rust/kernel/alloc/kvec.rs
++++ b/rust/kernel/alloc/kvec.rs
+@@ -611,7 +611,7 @@ where
+     ///
+     /// v.reserve(10, GFP_KERNEL)?;
+     /// let cap = v.capacity();
+-    /// assert!(cap >= 10);
++    /// assert!(cap >= v.len() + 10);
+     ///
+     /// v.reserve(10, GFP_KERNEL)?;
+     /// let new_cap = v.capacity();
 -- 
 2.53.0
 
