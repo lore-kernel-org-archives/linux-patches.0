@@ -1,148 +1,139 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693711F3D56;
-	Tue, 21 Jul 2026 17:10:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D94372ECD
+	for <patches@lists.linux.dev>; Tue, 21 Jul 2026 17:10:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653857; cv=none; b=rd60DG7naPt6gugbkGlFKwVO9Oluw0NKn2X8+VqBvkPNXbywYGKSGUF/twdgogngajauptm6S9671+0cGcNMeVavCMmCUkoG3BzXs5aTT/AWsg7sQfYoqQKV8JCAcTv+I7Affx/5I9Hxvf3+z/zWBVsVF1/9OICJZ2NsBzYYms0=
+	t=1784653859; cv=none; b=tnCsmgOVvCFRlVCmYkBsLmVcMhjQ5j69VHrpf1pxAgC3TGhB4oT1dBCX/7fMz+Vi4qvGNv3wXQmWnpTEZhNzkiTXXK23D4HxycTGjTpMNu4PLKD0lEyewUrhxEXkEFaV66cSuAZcQKgoQENuAMb4QSaPrVxvvSPP0yJ+pJPiC4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653857; c=relaxed/simple;
-	bh=oiDL7xUaBQwmYoGsuZJwV3iwhFuVoI8TRz4c6nrqAow=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VT2D5JarZknpjuRm3qlV1yzEFilxafAYH6GjtuNeSs8lMq8fH6JcLtGO8ExI7PyRUANKuKzM9FJQdBKtEir9BfLSkLfl8B7/Tr6wyUV80eaKduamyIOdIBgFHmBJUNelll0Mam95ZdbfNZcriV9nQCU4tanO/CKHhZQ2X/11R9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xizga/ce; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784653859; c=relaxed/simple;
+	bh=6eidNqkwPlgy1eyK1ErXs4WrdbSONsBgimGthP2xbn0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NH5zrvpaG4qFPdMm4lXq/3Q89WRGdHHMe/05jaCy1G6SuzcVpj7XBEu8fNgTxZeqHy0Svtf4vFZTUm7c/HnU5i38jzcdqtCLA8E9uKJDKnqa+tph2sgSSyYHLcmatGZroKuL/mqLC9Hc0zK8Xy1LkwRVjiddF5W8hBgZKBEsAY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JtwuIhAI; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xizga/ce"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA7B1F000E9;
-	Tue, 21 Jul 2026 17:10:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653856;
-	bh=2EgkAnzbgyVKFIOBsG1A7lr0LvxPhILnD1rDsHKnqNA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xizga/ce8Hls0BnoWsRLy/aczj4TkIg+WIjyEt20kZLeh3RlXeB7094FqaAexQMgk
-	 LZ3MfkQHzd1l4HZ6+MO2QdYjkLA3Q6a0Kd87AnWVS/KJe1BR/qhNo9ap3+nDneU7oy
-	 FZf8JLneSqSkFuHoxZ8kbM2zJs/B5D/qvKBQJpw4=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1486/2077] ipv4: igmp: Fix potential UAF in igmp_gq_start_timer()
-Date: Tue, 21 Jul 2026 17:19:19 +0200
-Message-ID: <20260721152627.848097063@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
-References: <20260721152552.646164743@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JtwuIhAI"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-92ed3993c1eso506951585a.1
+        for <patches@lists.linux.dev>; Tue, 21 Jul 2026 10:10:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784653857; x=1785258657; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=G2zl8WdfYsburxD4Z1OSPDQaVBCCfCCyiW3l2jHNiTw=;
+        b=JtwuIhAIuXnMJM+5i3tilkM4Q/N5ansnCL4IE63ia3htsFgLAnquXso58IeyM+xleQ
+         CQpNRIcLwKmwp247VpopXcsHCkUkW3GCHlGmQJ69G+rwZaH11Qas8IrTkD59XPA7QXpJ
+         RFbq2LKFcZ41Ul9HYLEuUJN62l1OCw/sBQZ0N9Vn6xGkXFdSdYolBCejYc49xe5MwFeL
+         WTtGYThKoU4ZWnThUUoOCJijHah+M4kjLnIjGcrrIcRxaT7sNJao7zQfMzb6OS6vGtJT
+         5smBZplACZt57Ndh1oqMYNO/d/yrh4Om3+yUaIKVBuUbBPPEa/bqKvHf5uBzGu2VRAuc
+         voqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784653857; x=1785258657;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=G2zl8WdfYsburxD4Z1OSPDQaVBCCfCCyiW3l2jHNiTw=;
+        b=bht8Tw2w0NZLKBIQBU2+1boZ2BXo+q3MjBcqf7fE26w4uGr/wTgJncdI7l9eI5s3iQ
+         qHHMqrEkfPMl8JVhhJu21ShEnqoZ1ruELVwxPIuqIGT5ScQatAmvSWnLdwFQnDP4Ygun
+         ur/k+FuS/Pbeap6ExdVqPSn0TI+nbhy3MVFi4KLg0tk1e3KcGmgLa/ZGSe3GuMXj6jWS
+         ZB4qVCohBsOJ0E16nzs82lc/GHUYlNK5mceDmwUdpDWLrSPQdIHeVtFodt50BWHAQXJ5
+         izglW64EiqxURAVC8EVw0dmP4RC6iOk7U0Exgnr+z6jusrCTIBR/x1J3B0Qa6Mp/mD/K
+         NZvA==
+X-Gm-Message-State: AOJu0Yyukm5KzuO432BUW0Hx3w8C0zDlLhJ6QiWGFZZEoovg00LAazul
+	lavm9p0v1MtcjrcoxWosaHINX2rHzd16SjmsBUgKcBQznlUCe69HjS+W
+X-Gm-Gg: AfdE7cne/hMBCenWlfcMX/ekSMOlT+h9KNXhy5eGoKGba6smX5LlVPxeu4w0FRBiyA7
+	/QUOBDIsPKWZ8d0rm3wDiY8EEzWvWnZGdC3j96WhWV3NqTsI0mbml8HeeGgTDrVa6vavm1FPSO7
+	EIIJCH95Qo4lCwpXxI8S4l52bfnETblsDnl2HlXxrNRSccoRtCrEzh/Gh3OKNgMMZs5m0dQlePl
+	lEulssy9xYX7IWmtHsZQ4rPfspx13veFwFtl1+6zXLGq1+BtFKSVQvW6Kei/IGifv0FIJeokeu9
+	VLmBU2nhKWkPtL+Cvl/zYm7VZk0e7tRBo/IY3RovhFIw9yfNI2W/pLOP3nEn2ieGQzr1otIwHyY
+	DlujiUi0TQVQMNtkRB1vYIiuVc0Vd6ZBp+FdkrnBWe6L0U4PRXlsCNbmn4i50LxWs0JQtcVCbeV
+	tGDDqXVRqrhtKt5rSl8dgmrFC94xDm
+X-Received: by 2002:a05:620a:3708:b0:92e:e695:d622 with SMTP id af79cd13be357-930b3ea8f77mr1959767285a.28.1784653856795;
+        Tue, 21 Jul 2026 10:10:56 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-930b542bcefsm1201589685a.28.2026.07.21.10.10.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jul 2026 10:10:55 -0700 (PDT)
+Message-ID: <e24d45a1-c83e-4905-9593-abed06251c14@gmail.com>
+Date: Tue, 21 Jul 2026 10:10:53 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 0000/1266] 6.6.145-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20260721152441.786066624@linuxfoundation.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-7.1-stable review patch.  If anyone has any objections, please let me know.
+On 7/21/26 08:07, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.145 release.
+> There are 1266 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 23 Jul 2026 15:23:00 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.145-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-------------------
+Same perf build error on 6.6.145-rc1 as reported for 6.1.178-rc1:
 
-From: Eric Dumazet <edumazet@google.com>
+In file included from builtin-sched.c:27:
+builtin-sched.c: In function 'latency_switch_event':
+builtin-sched.c:1182:34: error: 'struct perf_sample' has no member named 
+'file_offset'
+  1182 |                            sample->file_offset, cpu);
+       |                                  ^~
+util/debug.h:24:44: note: in definition of macro 'pr_warning'
+    24 |         eprintf(0, verbose, pr_fmt(fmt), ##__VA_ARGS__)
+       |                                            ^~~~~~~~~~~
+builtin-sched.c: In function 'latency_runtime_event':
+builtin-sched.c:1260:34: error: 'struct perf_sample' has no member named 
+'file_offset'
+  1260 |                            sample->file_offset, cpu);
+       |                                  ^~
+util/debug.h:24:44: note: in definition of macro 'pr_warning'
+    24 |         eprintf(0, verbose, pr_fmt(fmt), ##__VA_ARGS__)
+       |                                            ^~~~~~~~~~~
+builtin-sched.c: In function 'map_switch_event':
+builtin-sched.c:1637:34: error: 'struct perf_sample' has no member named 
+'file_offset'
+  1637 |                            sample->file_offset, this_cpu.cpu);
+       |                                  ^~
+util/debug.h:24:44: note: in definition of macro 'pr_warning'
+    24 |         eprintf(0, verbose, pr_fmt(fmt), ##__VA_ARGS__)
+       |                                            ^~~~~~~~~~~
+make[5]: *** 
+[/local/users/fainelli/buildroot/output/arm64/build/linux-custom/tools/build/Makefile.build:97: 
+/local/users/fainelli/buildroot/output/arm64/build/linux-custom/tools/perf/builtin-sched.o] 
+Error 1
 
-[ Upstream commit 7b19c0f81ed1fdaec6bc522569be367199a9edf3 ]
-
-A race condition exists between device teardown (inetdev_destroy) and
-incoming IGMP query processing (igmp_rcv), leading to a Use-After-Free
-in the IGMP timer callback.
-
-During device destruction, inetdev_destroy() drops the primary reference
-to in_device, which can drop its refcount to 0. The actual freeing of
-in_device memory is deferred via RCU (using call_rcu()).
-
-Concurrently, igmp_rcv() runs under RCU read lock and obtains the
-in_device pointer. Because the memory is RCU-protected, CPU-0 can safely
-dereference in_device even if its refcount has hit 0.
-
-However, if CPU-0 calls igmp_gq_start_timer() and re-arms the timer, it
-attempts to acquire a reference using in_dev_hold(). This increments the
-refcount from 0 to 1, triggering a "refcount_t: addition on 0" warning.
-Since the in_device memory is still scheduled to be freed after the RCU
-grace period (as the free callback does not check the refcount again),
-the device is freed while the timer is still armed. When the timer
-expires, it accesses the freed memory, causing a kernel panic.
-
-Fix this by using refcount_inc_not_zero() (via a new helper
-in_dev_hold_safe()) to prevent acquiring a reference if the device is
-already being destroyed. If the refcount is 0, we do not arm the timer.
-
-A similar issue in IPv6 MLD is fixed in a subsequent patch.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260705181756.963063-2-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- include/linux/inetdevice.h |  5 +++++
- net/ipv4/igmp.c            | 14 +++++++++-----
- 2 files changed, 14 insertions(+), 5 deletions(-)
-
-diff --git a/include/linux/inetdevice.h b/include/linux/inetdevice.h
-index dccbeb25f70141..6032eea2539a60 100644
---- a/include/linux/inetdevice.h
-+++ b/include/linux/inetdevice.h
-@@ -293,6 +293,11 @@ static inline void in_dev_put(struct in_device *idev)
- #define __in_dev_put(idev)  refcount_dec(&(idev)->refcnt)
- #define in_dev_hold(idev)   refcount_inc(&(idev)->refcnt)
- 
-+static inline bool in_dev_hold_safe(struct in_device *idev)
-+{
-+	return refcount_inc_not_zero(&idev->refcnt);
-+}
-+
- #endif /* __KERNEL__ */
- 
- static __inline__ __be32 inet_make_mask(int logmask)
-diff --git a/net/ipv4/igmp.c b/net/ipv4/igmp.c
-index 523aecb3c9be72..73e9ebb17afaa1 100644
---- a/net/ipv4/igmp.c
-+++ b/net/ipv4/igmp.c
-@@ -248,16 +248,20 @@ static void igmp_gq_start_timer(struct in_device *in_dev)
- 		return;
- 
- 	in_dev->mr_gq_running = 1;
--	if (!mod_timer(&in_dev->mr_gq_timer, exp))
--		in_dev_hold(in_dev);
-+	if (in_dev_hold_safe(in_dev)) {
-+		if (mod_timer(&in_dev->mr_gq_timer, exp))
-+			in_dev_put(in_dev);
-+	}
- }
- 
- static void igmp_ifc_start_timer(struct in_device *in_dev, int delay)
- {
--	int tv = get_random_u32_below(delay);
-+	if (in_dev_hold_safe(in_dev)) {
-+		int tv = get_random_u32_below(delay);
- 
--	if (!mod_timer(&in_dev->mr_ifc_timer, jiffies+tv+2))
--		in_dev_hold(in_dev);
-+		if (mod_timer(&in_dev->mr_ifc_timer, jiffies + tv + 2))
-+			in_dev_put(in_dev);
-+	}
- }
- 
- static void igmp_mod_timer(struct ip_mc_list *im, int max_delay)
 -- 
-2.53.0
-
-
-
+Florian
