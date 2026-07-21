@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46DF356A12;
-	Tue, 21 Jul 2026 20:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6016249620;
+	Tue, 21 Jul 2026 20:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666729; cv=none; b=ZxT3q8MOnWIGAoIPOfACyZuXhsX/EXYmthdTow75VS8u2wCPPzuaMlsnQ7QOnqzbB67v9Sd4vi1Hgu5p/cfqZHCvd2Nu6cFYtpefcSJurLsB5whv2jAc17J5fCksUgjXHj5907yzkADafTtOiqRof+saRsqQolHEqWjTh0s3I8M=
+	t=1784666732; cv=none; b=THI7wVKXK25aBtuV3O7cDQjj9eZPATZeD6KghoP4oUjbrYrk+oxmg2CY4D6H/CsAJchjNTEr0RghFMNygO+6VaqIzgIruhhGkOXjlNm25bNjYVML5ITT1fzpNCUw7mBge0blJn/Fmi679tIJ8vKl8ul1p63Brxf6x+wUCy6hu8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666729; c=relaxed/simple;
-	bh=Ukihh6OD4cP1m2UNkVaDYhYma1Ug+1Mfn0AFq66v948=;
+	s=arc-20240116; t=1784666732; c=relaxed/simple;
+	bh=v5gdABp6HuTihW6RT3CXHBrU0HBPeMxkfmmtje8rMJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MK69sqLv/gWQijHLc4w7lpxYGh7X6PPKXR1QfcRyBqW532EmDWvNtMV8xaXeDPSEIrdLs54Ys/T1KwJjxW2IeyF0IFGd45ANLpRJ0s839g0/heSxqPBeMP7Kme4zzy4CaJ51yBErjfgZQcxwFtNj+xuHaged/hN3Dam6JGNfff0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xtvz77W+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QXcFj9DFZMqG0s9FgO5YIEmj8ow9kS6tjIRrSOz1dchfFp4XkjpJzwcEpC6XhDghwUB3l2MP0y6RTHUZs+0ejoyWPBZc/OwEwLoiCCQKMPIMgbX4Ma+pDGW1pPCZEsiEsiYtfBT6eea0NnrILZhfzFI/eZSFhRD4PuwDFiwlvyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjY0LsYk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xtvz77W+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269F71F000E9;
-	Tue, 21 Jul 2026 20:45:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjY0LsYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C49161F000E9;
+	Tue, 21 Jul 2026 20:45:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666728;
-	bh=Y5bbp2hJk7DFuTjlz0tgTDqwpwA5XO0nPX0RbIbyX/Q=;
+	s=korg; t=1784666731;
+	bh=Ph4IA3tvC52mYx6jJiaXjiEf2vXlelOJKW80kH27TCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xtvz77W+E4CsYTKw+WzWI95bXOuxl9HuZUftd/nQPRG9UEUHUQHnhcwM/Ns8SYpUS
-	 bFAESP65S1OJ/8XmWDlkUbQQycgdMpXYkhNrfAsnT+UcqXCI2DbtBJMX+EQJh3os9Z
-	 DX3eNyMOLYJiH4R7LQOVN6QpXdTdvBk4/KHRHZCU=
+	b=xjY0LsYke708jTJseEIABMINlWhWIHQFn7mL6xG3nk5UKxtfl7N59dl/oveppa3b1
+	 UOguMjbSC7iuQr47i+QT1GGc//WDSmZIAwC2kyCqD6qkDz4mPicmFVKnvb+hUmHyEH
+	 EN4WI/qeYn41cvMXRVxiBDL906MnD/rc/K46gDQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0794/1266] net: mvneta: re-enable percpu interrupt on resume
-Date: Tue, 21 Jul 2026 17:20:31 +0200
-Message-ID: <20260721152459.626951326@linuxfoundation.org>
+Subject: [PATCH 6.6 0795/1266] net: sungem: fix probe error cleanup
+Date: Tue, 21 Jul 2026 17:20:32 +0200
+Message-ID: <20260721152459.649239588@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,66 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit fd398d6480987e4c84fff0aaab6b9d6642a93343 ]
+[ Upstream commit 36dea2f639249460d13f6ca66b2a9064187cd34d ]
 
-On Marvell MPIC platforms (Armada 370/XP/38x), mvneta uses a percpu
-IRQ disable/enable scheme for NAPI: the ISR (mvneta_percpu_isr) calls
-disable_percpu_irq() to mask the MPIC per-CPU interrupt and schedules
-NAPI poll, which calls enable_percpu_irq() on completion to unmask.
+gem_init_one() calls gem_remove_one() when register_netdev() fails.
+gem_remove_one() unregisters and frees resources owned by the net_device,
+including the DMA block, MMIO mapping, PCI regions, and the net_device
+itself. gem_init_one() then falls through to its own cleanup labels and
+frees the same resources again.
 
-If suspend occurs while NAPI poll is pending (between
-disable_percpu_irq in the ISR and enable_percpu_irq in poll
-completion), the interrupt is never re-enabled:
+Keep the register_netdev() error path in gem_init_one(): clear drvdata so
+PM/remove paths do not see a half-registered device, remove the NAPI
+instance added during probe, and let the existing cleanup labels release
+the resources once.
 
-  1. mvneta_percpu_isr: disable_percpu_irq() + napi_schedule()
-     => MPIC masked, percpu_enabled cpumask bit cleared
-  2. NAPI poll does not complete before suspend proceeds
-     (on PREEMPT_RT this is highly likely since softirqs run in
-     ksoftirqd which gets frozen; on non-RT it can happen when
-     softirq processing is deferred to ksoftirqd)
-  3. mvneta_stop_dev => napi_disable(): cancels the pending poll
-     without executing the completion path
-  4. suspend_device_irqs => IRQCHIP_MASK_ON_SUSPEND: masks MPIC
-     (already masked, but records IRQS_SUSPENDED)
-  5. Resume: mpic_resume checks irq_percpu_is_enabled() => false
-     (bit was cleared in step 1) => skips unmask
-  6. mvneta_start_dev only restores device-level INTR_NEW_MASK,
-     does not touch the MPIC per-CPU mask
+The issue was found by a local static-analysis checker for probe error
+paths. The reported path was manually inspected before sending this fix.
 
-Result: MPIC per-CPU interrupt stays masked permanently. The NIC
-generates interrupts (INTR_NEW_CAUSE != 0) but the CPU never
-receives them, causing complete loss of network connectivity.
+Compile-tested with CONFIG_SUNGEM=y. Runtime testing was not performed
+because no sungem hardware is available.
 
-Fix by calling on_each_cpu(mvneta_percpu_enable) in the resume path
-to unconditionally unmask the MPIC per-CPU interrupt regardless of
-pre-suspend state.
-
-Fixes: 12bb03b436da ("net: mvneta: Handle per-cpu interrupts")
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20260622074350.1666290-1-yun.zhou@windriver.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260623025759.3468566-1-ruoyuw560@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvneta.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/sun/sungem.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
-index 2941721b65152e..eb7b13b66ea35b 100644
---- a/drivers/net/ethernet/marvell/mvneta.c
-+++ b/drivers/net/ethernet/marvell/mvneta.c
-@@ -5866,6 +5866,9 @@ static int mvneta_resume(struct device *device)
- 	rtnl_unlock();
- 	mvneta_set_rx_mode(dev);
+diff --git a/drivers/net/ethernet/sun/sungem.c b/drivers/net/ethernet/sun/sungem.c
+index d3a2fbb14140e9..7fc18a465e64ae 100644
+--- a/drivers/net/ethernet/sun/sungem.c
++++ b/drivers/net/ethernet/sun/sungem.c
+@@ -2986,10 +2986,10 @@ static int gem_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	dev->max_mtu = GEM_MAX_MTU;
  
-+	if (!pp->neta_armada3700)
-+		on_each_cpu(mvneta_percpu_enable, pp, true);
-+
+ 	/* Register with kernel */
+-	if (register_netdev(dev)) {
++	err = register_netdev(dev);
++	if (err) {
+ 		pr_err("Cannot register net device, aborting\n");
+-		err = -ENOMEM;
+-		goto err_out_free_consistent;
++		goto err_out_clear_drvdata;
+ 	}
+ 
+ 	/* Undo the get_cell with appropriate locking (we could use
+@@ -3003,8 +3003,13 @@ static int gem_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 		    dev->dev_addr);
  	return 0;
- }
- #endif
+ 
++err_out_clear_drvdata:
++	pci_set_drvdata(pdev, NULL);
++	netif_napi_del(&gp->napi);
++
+ err_out_free_consistent:
+-	gem_remove_one(pdev);
++	dma_free_coherent(&pdev->dev, sizeof(struct gem_init_block),
++			  gp->init_block, gp->gblock_dvma);
+ err_out_iounmap:
+ 	gem_put_cell(gp);
+ 	iounmap(gp->regs);
 -- 
 2.53.0
 
