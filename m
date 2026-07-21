@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9325B388890;
-	Tue, 21 Jul 2026 19:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02648388890;
+	Tue, 21 Jul 2026 19:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662358; cv=none; b=pZwK0yWBNRcONoR9FKhY6m5Lurvz1tTc319+ru47sFqMnycDVjTMaGQJst4W8ZcVgeD5byoyQf9dAw4L+zTjDCXX7A80TtxXXBokKKsnRRQUzwLz/vtIX868m36C1yVB1Ca9RaFKZM19NeYYKS9Oev2QCFtzwVzQXC0ZDzDquwg=
+	t=1784662361; cv=none; b=YJ3wph0HTLzSxJfRkApuPIUvNcMR43k2RScCyUsS75zB3ABX1Lc/jzwgXWn1KDwSK9PS1Otz7O9LALAT9uDyN6T7+ty2Ta1l3fXYGaAtze8jrOVsRpn/kMGB8sdN+4kd5ao3vszxVzYzHX7KL0bwvtZwJO+xbm/jGAadQJN6ssE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662358; c=relaxed/simple;
-	bh=suSSWUyDUJbuYjwXMa4omYUnDz93B+nci8CgDvXb60c=;
+	s=arc-20240116; t=1784662361; c=relaxed/simple;
+	bh=/X3E287lLEn9FmTzTfk9g3dluehRAKlfBLqE3c0OqCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qr8kyzClQg/ccpar5ojL4ICaT1CPlsieHK9TOm7fG5PHlXIH6HKBo0+Zj4/Sget7+tYBR7PpPq+vMLRu7CRjD6DL2wcit7LsYiqaXRqQUno021rMPa6gDY9dZRBwDGZNXzShiowf+GO2b/4bz7bAfhHXer5ZafKyd53Rg/b1F8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UpVTj1fN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H2gKIuYAWuCoRANgjRMb48+6fNQZE/LvvXfMCAeAosLLqsxDGFzVbQkPavrUsO7u+3+0L58b2nbaVi/cOj/K1YjD7flwicsxrjGVj9kyjii+Eb6NvpR0KUO+nwBb3U3Xxr7qk5LD1EJ8u5ohdjTavjeKPKoXcBYxsK9XiRoztv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3ZmN2i4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UpVTj1fN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC2D1F000E9;
-	Tue, 21 Jul 2026 19:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3ZmN2i4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691E81F000E9;
+	Tue, 21 Jul 2026 19:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662357;
-	bh=l742RGA8U0J5NWW6N/ZLL8oz/pgGGRShm+gzGxtqcwo=;
+	s=korg; t=1784662359;
+	bh=Jkm/70dDuzs7g/tyi+S9sGWlxzxubTKwGFN5+SCG6Ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UpVTj1fNUTvalRZCJ4FfJ9rz3lxZg3nsBh8qQHaQ7jmJttmoyFRhtSBEo1n/yhIZE
-	 ACN2tHMh+MARY7sSVh9cDCxAzsoFraYZByeLe0u8L1IExYK0A/V1yusF7KZPf1gb4f
-	 xfA+mJW4xQc/YRZrSuTqwuwmYQKVNBCFbWs4M4Aw=
+	b=a3ZmN2i4IXhRbQPOzBONOzDektI+9a0f0/TY1k2Jh2++Z0XWQcNgqNQ0SCDNh0jXw
+	 2JcXhqjk3pCrnkSssmY023DNoMgpKOHKReTu7Pg2bumWbbaAiE1Xdc0UYjwYTNEot3
+	 CkknD4QUwuI4SMmCS0EeETVzdfYmbJQuwIa1d5ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Lauritano <francesco.lauritano1@protonmail.com>,
-	Marco Scardovi <mscardovi95@gmail.com>,
-	Armin Wolf <W_Armin@gmx.de>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0412/1276] gpiolib: acpi: Only trigger ActiveBoth interrupts on boot
-Date: Tue, 21 Jul 2026 17:14:15 +0200
-Message-ID: <20260721152455.315616173@linuxfoundation.org>
+Subject: [PATCH 6.12 0371/1276] dpll: guard sync-pair removal on full pin unregister
+Date: Tue, 21 Jul 2026 17:13:34 +0200
+Message-ID: <20260721152454.408609006@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -56,79 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-[ Upstream commit 3bb62e3f99a557d257e5f5a803200051b7de3afa ]
+[ Upstream commit 0a5c720a7d57d2287d5566c4ad93ee26b7c06845 ]
 
-Commit ca876c7483b6 ("gpiolib-acpi: make sure we trigger edge events at
-least once on boot") introduced logic to trigger edge-based GPIO
-interrupts during initialization to ensure proper initial state setup
-when firmware doesn't initialize it.
+__dpll_pin_unregister() wiped the global sync-pair state on every
+(dpll, ops, priv, cookie) tuple removed from a pin. When a pin is
+registered multiple times and only one registration is being torn
+down, this dropped sync-pair pairings still in use by the surviving
+registrations.
 
-However, according to the Microsoft GPIO documentation, triggering GPIO
-interrupts during initialization should only happen for interrupts
-marked as ActiveBoth (both IRQF_TRIGGER_RISING and IRQF_TRIGGER_FALLING)
-and only when the associated GPIO line is already asserted (logic level
-low).
+Move dpll_pin_ref_sync_pair_del() inside the xa_empty(&pin->dpll_refs)
+branch so it only runs when the last registration is gone, alongside
+clearing the DPLL_REGISTERED mark.
 
-The current implementation incorrectly triggers:
-1. Any edge-triggered interrupt (RISING-only or FALLING-only)
-2. RISING interrupts when value is high and FALLING when value is low
-
-This causes problems at bootup for single-edge interrupts that
-don't follow the ActiveBoth pattern.
-
-Fix this by:
-- Only triggering when BOTH rising and falling edges are configured
-- Only triggering when the GPIO line is asserted (value == 0)
-
-Reported-by: Francesco Lauritano <francesco.lauritano1@protonmail.com>
-Closes: https://lore.kernel.org/all/6iFCwGH2vssb7NRUTWGpkubGMNbgIlBHSz40z8ZsezjxngXpoiiRiJaijviNvhiDAGIr43bfUmdxLmxYoHDjyft4DgwFc3Pnu5hzPguTa0s=@protonmail.com/
-Tested-by: Marco Scardovi <mscardovi95@gmail.com>
-Fixes: ca876c7483b69 ("gpiolib-acpi: make sure we trigger edge events at least once on boot")
-Link: https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/general-purpose-i-o--gpio-
-Suggested-by: Armin Wolf <W_Armin@gmx.de>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Fixes: 58256a26bfb3 ("dpll: add reference sync get/set")
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Link: https://patch.msgid.link/20260607183045.1213735-7-grzegorz.nitka@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-acpi-core.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/dpll/dpll_core.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-acpi-core.c b/drivers/gpio/gpiolib-acpi-core.c
-index f6bec9d2fd2654..895b891f825dd9 100644
---- a/drivers/gpio/gpiolib-acpi-core.c
-+++ b/drivers/gpio/gpiolib-acpi-core.c
-@@ -233,12 +233,23 @@ static void acpi_gpiochip_request_irq(struct acpi_gpio_chip *acpi_gpio,
- 
- 	event->irq_requested = true;
- 
--	/* Make sure we trigger the initial state of edge-triggered IRQs */
-+	/*
-+	 * Make sure we trigger the initial state of ActiveBoth IRQs.
-+	 *
-+	 * According to the Microsoft GPIO documentation, triggering GPIO
-+	 * interrupts marked as ActiveBoth during initialization is correct
-+	 * as long as the associated GPIO line is already "asserted"
-+	 * (logic level low). We should not trigger edge-based GPIO
-+	 * interrupts not marked as ActiveBoth.
-+	 *
-+	 * See: https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/general-purpose-i-o--gpio-
-+	 * Section: "GPIO controllers and ActiveBoth interrupts"
-+	 */
- 	if (acpi_gpio_need_run_edge_events_on_boot() &&
--	    (event->irqflags & (IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING))) {
-+	    ((event->irqflags & (IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING)) ==
-+	     (IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING))) {
- 		value = gpiod_get_raw_value_cansleep(event->desc);
--		if (((event->irqflags & IRQF_TRIGGER_RISING) && value == 1) ||
--		    ((event->irqflags & IRQF_TRIGGER_FALLING) && value == 0))
-+		if (value == 0)
- 			event->handler(event->irq, event);
- 	}
+diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
+index 08b5055ee09cf5..c457c7b03fce4d 100644
+--- a/drivers/dpll/dpll_core.c
++++ b/drivers/dpll/dpll_core.c
+@@ -856,11 +856,12 @@ __dpll_pin_unregister(struct dpll_device *dpll, struct dpll_pin *pin,
+ 		      const struct dpll_pin_ops *ops, void *priv, void *cookie)
+ {
+ 	ASSERT_DPLL_PIN_REGISTERED(pin);
+-	dpll_pin_ref_sync_pair_del(pin->id);
+ 	dpll_xa_ref_pin_del(&dpll->pin_refs, pin, ops, priv, cookie);
+ 	dpll_xa_ref_dpll_del(&pin->dpll_refs, dpll, ops, priv, cookie);
+-	if (xa_empty(&pin->dpll_refs))
++	if (xa_empty(&pin->dpll_refs)) {
++		dpll_pin_ref_sync_pair_del(pin->id);
+ 		xa_clear_mark(&dpll_pin_xa, pin->id, DPLL_REGISTERED);
++	}
  }
+ 
+ /**
 -- 
 2.53.0
 
