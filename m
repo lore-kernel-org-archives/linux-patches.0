@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3785333A9FC;
-	Tue, 21 Jul 2026 20:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB0C346A0C;
+	Tue, 21 Jul 2026 20:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666571; cv=none; b=T/w6TmV5Pd5kYg3JptawC3F6+voafNli/bY9kiWUNwz6Gyi6wTERXMXGVk4OGnxsPXLSuJ94Cei89eImEXoYhX059NqyLBe5j3z85lu49dMtfkPRCEiYMhAVoHCikrLZXAPD3yoOlSO9TtM0NG2TDTAdFzDtJ+vZpMqBaCrLr1A=
+	t=1784666574; cv=none; b=CXKqAAD9nakrcPrQ6t/JHzKVPhDenIiB4Mj7+KpamyUcWeiBPsi0TQlnktwOuJLnGMsEsO2RFexZKGOxTx2+wV+WtMujktVxslZ3oZF1hjPue3SBPqfrbO4+NlYx1chWZm8d7qnKqAI7ZsiO9N5vvu99E1tU8Q0Q/tVfsuz98Fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666571; c=relaxed/simple;
-	bh=PZXincLurhWfU5SzHfZjZnFBlfWo4SAEy2BBPTr8Edo=;
+	s=arc-20240116; t=1784666574; c=relaxed/simple;
+	bh=Gjutc8SnRN2JX8YAYWchryGRg9KZOqlziJWgOa6agH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CEyMi47SCoUBUdglQuS4C84g5otOLojPuWLvDexSV2Z5quMVJvUR40FMu9PRZm1fizQKvzlPitgGXRM9fsgZ8bwt4a9s8O1PlzeNfqYtGLvxD9WBVC1By4ZzL9IA0qxRWy2ppWkAwRp7tRmBAWyz+hmHPB56IiAXNavEi+s0iqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKFkcqZv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k7jMU4XVtTLmlSO7cAtmOziZEWmVF1JchEbASC++2XmD52OQ5CQIavW7VltCvQN5xTYaQqaTRzn+MW0QNlWxgVQkgmYwnbnIRz81rgYMeimK8/oNx8J7PJadhpDBjn8QKu1QoEQnaFxpkhuoAt7G1dfUlZE6CoWPkkcezsY0b44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gyrpvJcw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKFkcqZv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4921F000E9;
-	Tue, 21 Jul 2026 20:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gyrpvJcw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EF611F000E9;
+	Tue, 21 Jul 2026 20:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666570;
-	bh=46zAsk4fl3SD/IaY9avznnbrOT5az97MnUbldLe8pDo=;
+	s=korg; t=1784666572;
+	bh=a1Zxc/V50hPmco6KiD9d+Rwc073G5SWYYhSRsiB5VeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hKFkcqZv2o58OOpmqWyiAmLMJSRjrhizOGP5vyibTGc6kepOy/paiNHI1HfmVLUVq
-	 4o56/Jti9S6MgWdObh8sJJYNLhQ6mQyZdiDhDqYHSuK4tI2s8N8tmmPcxV7mRyxvSu
-	 L+4AhsTpqStBABS2tR0oHz+HSpksdpBGFfdx/gEE=
+	b=gyrpvJcw/V7fKJ5DjAB2ehhV8GyMkEl1v88NmmhwV6BTXiY4M7Xvkk6DV1YHQ7N2A
+	 gCyfNv3FjTjxmt3f9mxFtiSiAAkey9w9KmNbEUVPjaW0O1gUp7uDGsCVA6C+k9FeWf
+	 7ML51vzYD3EHvH7jslkGQkSTZIiyqUSZCbAsltw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
+	syzbot+fa2f5b1fb06147be5e16@syzkaller.appspotmail.com,
+	Yun Zhou <yun.zhou@windriver.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0731/1266] devlink: Fix parent ref leak in devl_rate_node_create()
-Date: Tue, 21 Jul 2026 17:19:28 +0200
-Message-ID: <20260721152458.229312283@linuxfoundation.org>
+Subject: [PATCH 6.6 0732/1266] flow_dissector: check device type before reading ETH_ADDRS
+Date: Tue, 21 Jul 2026 17:19:29 +0200
+Message-ID: <20260721152458.252605272@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,54 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-[ Upstream commit ba45106342bbdd905651cb9fcefb8c11871d4c25 ]
+[ Upstream commit bf6e8af2c8be77489bedeae9f8a9654cb710e500 ]
 
-In the original commit the function bails out on kstrdup failure,
-forgetting to decrement the refcnt of the parent.
+__skb_flow_dissect() unconditionally reads 12 bytes from eth_hdr(skb)
+when FLOW_DISSECTOR_KEY_ETH_ADDRS is requested. This assumes the skb
+has a valid Ethernet header at mac_header, which is not always the case.
 
-Fix that by moving the parent refcnt setting after kstrdup.
+The problem can be triggered by:
+ 1. Creating a TUN device in L3 mode (IFF_TUN, hard_header_len=0)
+ 2. Attaching a multiq qdisc with a flower filter matching on eth_src
+ 3. Sending a packet through AF_PACKET
 
-Fixes: caba177d7f4d ("devlink: Enable creation of the devlink-rate nodes from the driver")
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260616110633.1449432-2-cratiu@nvidia.com
+Since TUN in L3 mode has no link-layer header, mac_header points to
+the L3 data area. The flow dissector reads 12 bytes of uninitialized
+skb memory, which then propagates through fl_set_masked_key() and is
+used as a rhashtable lookup key in __fl_lookup(), as reported by KMSAN.
+
+Rejecting the filter in the control path (at tc filter add time) is
+not feasible because TC filter blocks can be shared between arbitrary
+devices -- a filter installed on an Ethernet device may later classify
+packets on a headerless device through a shared block. The device
+association is not fixed at filter creation time.
+
+Fix this by gating the memcpy on dev->type == ARPHRD_ETHER, which
+ensures only true Ethernet-framed packets have their addresses read.
+This is more precise than the previous hard_header_len >= 12 check,
+which would incorrectly pass for non-Ethernet link types like IPoIB
+(ARPHRD_INFINIBAND, hard_header_len=24) and FDDI (hard_header_len=21)
+whose L2 headers are not in Ethernet format. Additionally check
+skb_mac_header_was_set() to guard against the pathological case where
+mac_header is the unset sentinel (~0U), which would cause eth_hdr() to
+return a wild pointer.
+
+For the act_mirred redirect case (Ethernet packet redirected to a
+non-Ethernet device sharing a TC block), zeroing the key is the correct
+behavior: the packet is now being classified on the target device, where
+Ethernet address matching is not semantically meaningful.
+
+Note: on non-Ethernet devices, the zeroed key will match a filter
+configured with all-zero MAC addresses. This is an improvement over the
+previous behavior where uninitialized memory could randomly match any
+filter.
+
+Reported-by: syzbot+fa2f5b1fb06147be5e16@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=fa2f5b1fb06147be5e16
+Fixes: 67a900cc0436 ("flow_dissector: introduce support for Ethernet addresses")
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Link: https://patch.msgid.link/20260616123057.482154-1-yun.zhou@windriver.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/devlink/rate.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/core/flow_dissector.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/net/devlink/rate.c b/net/devlink/rate.c
-index e7e80af4abaf65..b4d13b5ef9b624 100644
---- a/net/devlink/rate.c
-+++ b/net/devlink/rate.c
-@@ -598,11 +598,6 @@ devl_rate_node_create(struct devlink *devlink, void *priv, char *node_name,
- 	if (!rate_node)
- 		return ERR_PTR(-ENOMEM);
+diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
+index 9432e5362b44f1..5ac4cd4f3c6832 100644
+--- a/net/core/flow_dissector.c
++++ b/net/core/flow_dissector.c
+@@ -1149,13 +1149,21 @@ bool __skb_flow_dissect(const struct net *net,
  
--	if (parent) {
--		rate_node->parent = parent;
--		refcount_inc(&rate_node->parent->refcnt);
--	}
--
- 	rate_node->type = DEVLINK_RATE_TYPE_NODE;
- 	rate_node->devlink = devlink;
- 	rate_node->priv = priv;
-@@ -613,6 +608,11 @@ devl_rate_node_create(struct devlink *devlink, void *priv, char *node_name,
- 		return ERR_PTR(-ENOMEM);
+ 	if (dissector_uses_key(flow_dissector,
+ 			       FLOW_DISSECTOR_KEY_ETH_ADDRS)) {
+-		struct ethhdr *eth = eth_hdr(skb);
+ 		struct flow_dissector_key_eth_addrs *key_eth_addrs;
+ 
+ 		key_eth_addrs = skb_flow_dissector_target(flow_dissector,
+ 							  FLOW_DISSECTOR_KEY_ETH_ADDRS,
+ 							  target_container);
+-		memcpy(key_eth_addrs, eth, sizeof(*key_eth_addrs));
++		/* TC filter blocks can be shared across devices with
++		 * different link types, so we cannot validate this
++		 * when the filter is installed -- check at dissect time.
++		 */
++		if (skb && skb->dev &&
++		    skb->dev->type == ARPHRD_ETHER &&
++		    skb_mac_header_was_set(skb))
++			memcpy(key_eth_addrs, eth_hdr(skb), sizeof(*key_eth_addrs));
++		else
++			memset(key_eth_addrs, 0, sizeof(*key_eth_addrs));
  	}
  
-+	if (parent) {
-+		rate_node->parent = parent;
-+		refcount_inc(&rate_node->parent->refcnt);
-+	}
-+
- 	refcount_set(&rate_node->refcnt, 1);
- 	list_add(&rate_node->list, &devlink->rate_list);
- 	devlink_rate_notify(rate_node, DEVLINK_CMD_RATE_NEW);
+ 	if (dissector_uses_key(flow_dissector,
 -- 
 2.53.0
 
