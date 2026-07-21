@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90B9346A0C;
-	Tue, 21 Jul 2026 20:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A333B3C15;
+	Tue, 21 Jul 2026 20:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666560; cv=none; b=OxU2w8wSi4Admy0K8uz0HiYGVFGxxlniEr9KbudndpraF9tRqYMfAXX6F7LMItfdiL7e33l31FR/2AXzPBxKMPP4pwlNoFmGrPHhU2LEX86vvlpZc2VZ0ggFXVo9p6yD7QxjIvn1XlF1nxEC+ZoZ3PXRkOiD89KTABM5brTj+RQ=
+	t=1784666563; cv=none; b=nIPEQnmCD1yqGpfgn1B/AjTspfpwmt6Yjse2FyYrXtypuVaaLp+Mu+7klBwZQblzM1Hi8+EvDSjle4Xk9wwU2IWQDOzExPcw/NKppK88DxzJXv6nycVbPHzhZu+h+2NPqoMQPxjv+9LzI+KGs4F/nQNBpDlHkshir9DVkUTr7Uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666560; c=relaxed/simple;
-	bh=ZZPeboUotlQjIUGb3VUz3DcFomzQKmbw9ZcmYdcZRkc=;
+	s=arc-20240116; t=1784666563; c=relaxed/simple;
+	bh=a61HCTSwxIYwfuYv4CBV64pfbu/Wj70FyFP/z9D1LqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ohDwH7B/qK3+XvHFaCBSP7x8vl8oqa4jXnC8JmG322GmjMbO5AZ7bhO6YYm/k+JqPYPy3GolJzfHe92DQMd66tFwTZajDH+3+a0cEm4ZlC2b1844+iHx7f8NjtuWFxVFmqOmY61/P0bHeLi4MddQGZWnv2C2hDe+HbHH5qeHP0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9YaJGIi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jJGbJAIMDmyZ5k7e5ppkWB9j5f6kTV3FO+uwtsgBHAfF2xrGJf2ouWCVxKOA/60X4fNqUnnTTcpjv5tk3CZcTcYPY3MIrb1g7+ekbBzCURQOluXci4F9E4XZfyF8J1ftznst7A5slGbPTcxv7uoi+9CK+hkRWRDMpwTjfrT20Xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTX4xY8F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9YaJGIi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21AD61F000E9;
-	Tue, 21 Jul 2026 20:42:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTX4xY8F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4401F000E9;
+	Tue, 21 Jul 2026 20:42:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666559;
-	bh=ltOp7heawy/fDHM5mEEtm3HBNzMGhnQhcsGSjtE+WTM=;
+	s=korg; t=1784666562;
+	bh=PeZI483/mmDBW9+++L+BN5Ewu2tNk70J8u7dxoGDRZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N9YaJGIiAFg0t2GsxPKFQtv9Z+lUpOUw/9cwNUC07LBJvk0BfiSpzYCoPhd3D4YnF
-	 zPWQenc0VpmqzAwMZRA4gQk1L4TGVcbJa/eFmeiSPaLJZhQ8H2BuxzIUgmaXryRtSJ
-	 XAsvRDg91Y/Pc26NMMj5mTvUIJOJyI2W+hiEQPhU=
+	b=KTX4xY8FFV5wDhaPR7W4aNZSQW3ba198Aqru9tgh8uSdRnlgBNuIRw5Niy5uXMJn/
+	 rQOkB6nYUm/IFoH/LitUxDJCU0tbqy6EuY9WeNwDBBPoG07OsbhKE+ZIdYBN+LOPGG
+	 Hh7ImydXJaf2DOv7TVDmo0WdKhXtmt2G+V8Kl/Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Quang Nguyen <quang.nguyen.wx@renesas.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0692/1266] perf symbols: Add bounds checks to read_build_id() note iteration in minimal build
-Date: Tue, 21 Jul 2026 17:18:49 +0200
-Message-ID: <20260721152457.340415481@linuxfoundation.org>
+Subject: [PATCH 6.6 0728/1266] spi: rpc-if: Use correct device for hardware reinitialization on resume
+Date: Tue, 21 Jul 2026 17:19:25 +0200
+Message-ID: <20260721152458.161097583@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,64 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Quang Nguyen <quang.nguyen.wx@renesas.com>
 
-[ Upstream commit 52e582e316c48c53bb3082c29f7862ebc554087e ]
+[ Upstream commit 7b25dbafa2fce50b1a48c1d057adb35da3563f9b ]
 
-symbol-minimal.c's read_build_id() iterates ELF notes with the same
-pattern as symbol-elf.c's elf_read_build_id(): pointer arithmetic
-driven by n_namesz and n_descsz from 32-bit note header fields,
-without validating that the name and desc fit within the note section
-data.  A malformed ELF file with oversized note sizes causes
-out-of-bounds reads past the section data buffer.
+rpcif_spi_resume() currently passes the SPI controller device to
+rpcif_hw_init(), but the function should be called with the RPC
+interface device.
 
-Add the same bounds check as the libelf path: validate namesz and
-descsz individually against remaining data before advancing the
-pointer, avoiding size_t overflow on 32-bit.
+Retrieve the rpcif private data from the SPI controller and pass
+rpc->dev instead. Also propagate the return value of rpcif_hw_init() so
+that a failure during resume is properly reported rather than silently
+ignored.
 
-Fixes: b691f64360ecec49 ("perf symbols: Implement poor man's ELF parser")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: ad4728740bd6 ("spi: rpc-if: Add resume support for RZ/G3E")
+Signed-off-by: Quang Nguyen <quang.nguyen.wx@renesas.com>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260618081932.172168-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-minimal.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/spi/spi-rpc-if.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/symbol-minimal.c b/tools/perf/util/symbol-minimal.c
-index a81a14769bd101..b95dd77239e835 100644
---- a/tools/perf/util/symbol-minimal.c
-+++ b/tools/perf/util/symbol-minimal.c
-@@ -1,3 +1,4 @@
-+#include "debug.h"
- #include "dso.h"
- #include "symbol.h"
- #include "symsrc.h"
-@@ -45,7 +46,7 @@ static int read_build_id(void *note_data, size_t note_len, struct build_id *bid,
- 	ptr = note_data;
- 	while (ptr < (note_data + note_len)) {
- 		const char *name;
--		size_t namesz, descsz;
-+		size_t namesz, descsz, remaining;
+diff --git a/drivers/spi/spi-rpc-if.c b/drivers/spi/spi-rpc-if.c
+index a1696672d12fea..2de7ae058c2931 100644
+--- a/drivers/spi/spi-rpc-if.c
++++ b/drivers/spi/spi-rpc-if.c
+@@ -192,8 +192,12 @@ static int __maybe_unused rpcif_spi_suspend(struct device *dev)
+ static int __maybe_unused rpcif_spi_resume(struct device *dev)
+ {
+ 	struct spi_controller *ctlr = dev_get_drvdata(dev);
++	struct rpcif *rpc = spi_controller_get_devdata(ctlr);
++	int ret;
  
- 		nhdr = ptr;
- 		if (need_swap) {
-@@ -57,6 +58,14 @@ static int read_build_id(void *note_data, size_t note_len, struct build_id *bid,
- 		namesz = NOTE_ALIGN(nhdr->n_namesz);
- 		descsz = NOTE_ALIGN(nhdr->n_descsz);
+-	rpcif_hw_init(dev, false);
++	ret = rpcif_hw_init(rpc->dev, false);
++	if (ret)
++		return ret;
  
-+		/* validate individually to avoid size_t overflow on 32-bit */
-+		remaining = note_data + note_len - ptr - sizeof(*nhdr);
-+		if (namesz > remaining || descsz > remaining - namesz) {
-+			pr_warning("%s: oversized note: n_namesz=%u, n_descsz=%u\n",
-+				   __func__, nhdr->n_namesz, nhdr->n_descsz);
-+			break;
-+		}
-+
- 		ptr += sizeof(*nhdr);
- 		name = ptr;
- 		ptr += namesz;
+ 	return spi_controller_resume(ctlr);
+ }
 -- 
 2.53.0
 
