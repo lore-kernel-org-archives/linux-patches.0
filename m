@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9128D443E2D;
-	Tue, 21 Jul 2026 22:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D4E449B02;
+	Tue, 21 Jul 2026 22:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672202; cv=none; b=LoBVi41nYDEHXnSCO1Lc9LMClJ8pVJ6fu5tq0VtF4wi8V8n72XiGrWNLFyTaS7quvfq3FezFK1Rv2VeZtEfjsbeqyWEKA5eDFoX6KU34CsVQZg8v/vDEQJKYdctsp9y46b1A8g89S8lleTMe/EMZ+X/erK5NvdVvEEbexbMHiAM=
+	t=1784672205; cv=none; b=lH8qXYQXDAk5t0ieNG0kSC5tNtzsRuN399H7Np9eNtg0eFA6hEjky8ggLUM6fQdw/ts8RYiBP+HomEvDPrGIRbogTZCZzT1kbdrtNTf4+j/ZRdf3CgsQVF194xxARPBlM9dtgOYrrawsd2u+0gWiluilT11MwdaHAMIcwrf2omw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672202; c=relaxed/simple;
-	bh=DtWC/ROEin9omV18SgZOQMGa3rlTG0n73xeU9RLRhY8=;
+	s=arc-20240116; t=1784672205; c=relaxed/simple;
+	bh=6nt0XsiKDOUS3G2NksRqN0354ab7u5m7ufBsuGrzdSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o1K2/0b4lh0R+Kw9lA/1+4Y5gkGwTRGOhg54D3Tc0J5Pd8I06CkQYqQjSBuPjTM5ut2s/edswKyRGguZ0sbUmXpa9jJkcfAR9x/uH1VX4b6mqyXP+BwzJz4XymFwEU4H0+q39OeH3CeM36zcU/E1YZiiyTi98N/zzQEr80Wdz+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNbBfwUF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X2RSDU4SyxM2eUYVVoVAC3FSZ9rdgmCuaYV8WO/GgGiNXhLGsUeL3Q/K+wqiObQktls6NHgu5uQBUNfYIRMdac5M9foj5vzWWqXSOogSH/M0h5bS06aytmEJUXNO2nOhZbwgy75EYU/zHALlsvASLaKHMw6rxD40kUxUByT7Igg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEGS0Nh5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNbBfwUF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D092D1F000E9;
-	Tue, 21 Jul 2026 22:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEGS0Nh5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06781F00A3A;
+	Tue, 21 Jul 2026 22:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672200;
-	bh=rvJsv3eZsPoTvNqwFV+sAriE7bJfhlyNyjsB7niokbc=;
+	s=korg; t=1784672203;
+	bh=yM7dMba5tPZiz8cqqM6QGHrdP0ldSdiVVTgFkncTBNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YNbBfwUFiq8hnzjuCfsodKBkxyPKZSaXCe0MCL3qFxD0FCLVqaKS00j6mZfzvTUmd
-	 J3nKK5X2CUtO+YG6ruVYULBsnCFm4FBzapmB5b5WXbJCZlHWHm2jRWnhodAPhu1zPB
-	 dU2fYVJcC0w4yY//YPS6diqOk88SjIdPfKMRA45s=
+	b=WEGS0Nh5UP4/72nUSoOxIweE0vUbo0EY3Mh38l6hfLlPeVi4OAX7v0OdBLwKE2U/E
+	 J2djILbAMnZzyylgSLuYKWNmji/L3di9SFwwqVweeDDMDZtkVu7PeGNxPMnxueF2lj
+	 I6t0jOXtIoWW8zpnCmy1rFno01iSlWQ89LcZVgHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Ghosh <sumang@marvell.com>,
 	Ratheesh Kannoth <rkannoth@marvell.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 533/843] octeontx2-af: Use hashed field in MCAM key
-Date: Tue, 21 Jul 2026 17:22:48 +0200
-Message-ID: <20260721152418.023052970@linuxfoundation.org>
+Subject: [PATCH 5.15 534/843] octeontx2-af: Exact match support
+Date: Tue, 21 Jul 2026 17:22:49 +0200
+Message-ID: <20260721152418.045384627@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -54,837 +53,1175 @@ Content-Transfer-Encoding: 8bit
 
 From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit a95ab93550d33ec870bd8eda5e7814c1e28ab6d0 ]
+[ Upstream commit 017691914c115903ee513d9ca058335bb35f8bd6 ]
 
-CN10KB variant of CN10K series of silicons supports
-a new feature where in a large protocol field
-(eg 128bit IPv6 DIP) can be condensed into a small
-hashed 32bit data. This saves a lot of space in MCAM key
-and allows user to add more protocol fields into the filter.
-A max of two such protocol data can be hashed.
-This patch adds support for hashing IPv6 SIP and/or DIP.
+CN10KB silicon has support for exact match table. This table
+can be used to match maimum 64 bit value of KPU parsed output.
+Hit/non hit in exact match table can be used as a KEX key to
+NPC mcam.
 
-Signed-off-by: Suman Ghosh <sumang@marvell.com>
+This patch makes use of Exact match table to increase number of
+DMAC filters supported. NPC  mcam is no more need for each of these
+DMAC entries as will be populated in Exact match table.
+
+This patch implements following
+
+1. Initialization of exact match table only for CN10KB.
+2. Add/del/update interface function for exact match table.
+
 Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 235acadd3105 ("octeontx2-pf: check DMAC extraction support before filtering")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/af/Makefile    |   2 +-
- .../net/ethernet/marvell/octeontx2/af/mbox.h  |  14 +
- .../net/ethernet/marvell/octeontx2/af/npc.h   |   8 +
- .../net/ethernet/marvell/octeontx2/af/rvu.c   |   5 +
- .../net/ethernet/marvell/octeontx2/af/rvu.h   |  13 +
- .../ethernet/marvell/octeontx2/af/rvu_cgx.c   |   1 +
- .../ethernet/marvell/octeontx2/af/rvu_npc.c   |  14 +-
- .../marvell/octeontx2/af/rvu_npc_fs.c         |  21 +-
- .../marvell/octeontx2/af/rvu_npc_fs.h         |  17 +
- .../marvell/octeontx2/af/rvu_npc_hash.c       | 338 ++++++++++++++++++
- .../marvell/octeontx2/af/rvu_npc_hash.h       | 132 +++++++
- .../ethernet/marvell/octeontx2/af/rvu_reg.h   |   6 +
- 12 files changed, 554 insertions(+), 17 deletions(-)
- create mode 100644 drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.h
- create mode 100644 drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
- create mode 100644 drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
+ .../net/ethernet/marvell/octeontx2/af/npc.h   |  16 +
+ .../net/ethernet/marvell/octeontx2/af/rvu.c   |   2 +
+ .../net/ethernet/marvell/octeontx2/af/rvu.h   |   9 +-
+ .../marvell/octeontx2/af/rvu_npc_hash.c       | 938 ++++++++++++++++++
+ .../marvell/octeontx2/af/rvu_npc_hash.h       |  56 ++
+ .../ethernet/marvell/octeontx2/af/rvu_reg.h   |   9 +
+ 6 files changed, 1029 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/Makefile b/drivers/net/ethernet/marvell/octeontx2/af/Makefile
-index 7f4a4ca9af78fb..40203560b29195 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/Makefile
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/Makefile
-@@ -11,4 +11,4 @@ rvu_mbox-y := mbox.o rvu_trace.o
- rvu_af-y := cgx.o rvu.o rvu_cgx.o rvu_npa.o rvu_nix.o \
- 		  rvu_reg.o rvu_npc.o rvu_debugfs.o ptp.o rvu_npc_fs.o \
- 		  rvu_cpt.o rvu_devlink.o rpm.o rvu_cn10k.o rvu_switch.o \
--		  rvu_sdp.o
-+		  rvu_sdp.o rvu_npc_hash.o
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
-index fafdf36ad58bfe..6fb7a67f5c4cf2 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
-@@ -237,6 +237,9 @@ M(NPC_MCAM_READ_BASE_RULE, 0x6011, npc_read_base_steer_rule,            \
- M(NPC_MCAM_GET_STATS, 0x6012, npc_mcam_entry_stats,                     \
- 				   npc_mcam_get_stats_req,              \
- 				   npc_mcam_get_stats_rsp)              \
-+M(NPC_GET_SECRET_KEY, 0x6013, npc_get_secret_key,                     \
-+				   npc_get_secret_key_req,              \
-+				   npc_get_secret_key_rsp)              \
- /* NIX mbox IDs (range 0x8000 - 0xFFFF) */				\
- M(NIX_LF_ALLOC,		0x8000, nix_lf_alloc,				\
- 				 nix_lf_alloc_req, nix_lf_alloc_rsp)	\
-@@ -416,6 +419,7 @@ struct get_hw_cap_rsp {
- 	struct mbox_msghdr hdr;
- 	u8 nix_fixed_txschq_mapping; /* Schq mapping fixed or flexible */
- 	u8 nix_shaping;		     /* Is shaping and coloring supported */
-+	u8 npc_hash_extract;	/* Is hash extract supported */
- };
- 
- /* CGX mbox message formats */
-@@ -1385,6 +1389,16 @@ struct npc_mcam_get_stats_rsp {
- 	u8 stat_ena; /* enabled */
- };
- 
-+struct npc_get_secret_key_req {
-+	struct mbox_msghdr hdr;
-+	u8 intf;
-+};
-+
-+struct npc_get_secret_key_rsp {
-+	struct mbox_msghdr hdr;
-+	u64 secret_key[3];
-+};
-+
- enum ptp_op {
- 	PTP_OP_ADJFINE = 0,
- 	PTP_OP_GET_CLOCK = 1,
 diff --git a/drivers/net/ethernet/marvell/octeontx2/af/npc.h b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
-index 857b8b85f550c1..b07b344942fe5d 100644
+index b07b344942fe5d..5df7354ba12855 100644
 --- a/drivers/net/ethernet/marvell/octeontx2/af/npc.h
 +++ b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
-@@ -10,6 +10,14 @@
+@@ -395,6 +395,22 @@ struct nix_rx_action {
+ #endif
+ };
  
- #define NPC_KEX_CHAN_MASK	0xFFFULL
++/* NPC_AF_INTFX_KEX_CFG field masks */
++#define NPC_EXACT_NIBBLE_START		40
++#define NPC_EXACT_NIBBLE_END		43
++#define NPC_EXACT_NIBBLE		GENMASK_ULL(43, 40)
++
++/* NPC_EXACT_KEX_S nibble definitions for each field */
++#define NPC_EXACT_NIBBLE_HIT		BIT_ULL(40)
++#define NPC_EXACT_NIBBLE_OPC		BIT_ULL(40)
++#define NPC_EXACT_NIBBLE_WAY		BIT_ULL(40)
++#define NPC_EXACT_NIBBLE_INDEX		GENMASK_ULL(43, 41)
++
++#define NPC_EXACT_RESULT_HIT		BIT_ULL(0)
++#define NPC_EXACT_RESULT_OPC		GENMASK_ULL(2, 1)
++#define NPC_EXACT_RESULT_WAY		GENMASK_ULL(4, 3)
++#define NPC_EXACT_RESULT_IDX		GENMASK_ULL(15, 5)
++
+ /* NPC_AF_INTFX_KEX_CFG field masks */
+ #define NPC_PARSE_NIBBLE		GENMASK_ULL(30, 0)
  
-+#define SET_KEX_LD(intf, lid, ltype, ld, cfg)	\
-+	rvu_write64(rvu, blkaddr,	\
-+		    NPC_AF_INTFX_LIDX_LTX_LDX_CFG(intf, lid, ltype, ld), cfg)
-+
-+#define SET_KEX_LDFLAGS(intf, ld, flags, cfg)	\
-+	rvu_write64(rvu, blkaddr,	\
-+		    NPC_AF_INTFX_LDATAX_FLAGSX_CFG(intf, ld, flags), cfg)
-+
- enum NPC_LID_E {
- 	NPC_LID_LA = 0,
- 	NPC_LID_LB,
 diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-index 187c66fb2458c2..e188cb93eaa020 100644
+index e188cb93eaa020..28a55362d37587 100644
 --- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
 +++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-@@ -68,6 +68,7 @@ static void rvu_setup_hw_capabilities(struct rvu *rvu)
- 	hw->cap.nix_tx_link_bp = true;
+@@ -18,6 +18,7 @@
+ #include "ptp.h"
+ 
+ #include "rvu_trace.h"
++#include "rvu_npc_hash.h"
+ 
+ #define DRV_NAME	"rvu_af"
+ #define DRV_STRING      "Marvell OcteonTX2 RVU Admin Function Driver"
+@@ -69,6 +70,7 @@ static void rvu_setup_hw_capabilities(struct rvu *rvu)
  	hw->cap.nix_rx_multicast = true;
  	hw->cap.nix_shaper_toggle_wait = false;
-+	hw->cap.npc_hash_extract = false;
+ 	hw->cap.npc_hash_extract = false;
++	hw->cap.npc_exact_match_enabled = false;
  	hw->rvu = rvu;
  
  	if (is_rvu_pre_96xx_C0(rvu)) {
-@@ -85,6 +86,9 @@ static void rvu_setup_hw_capabilities(struct rvu *rvu)
- 
- 	if (!is_rvu_otx2(rvu))
- 		hw->cap.per_pf_mbox_regs = true;
-+
-+	if (is_rvu_npc_hash_extract_en(rvu))
-+		hw->cap.npc_hash_extract = true;
- }
- 
- /* Poll a RVU block's register 'offset', for a 'zero'
-@@ -1973,6 +1977,7 @@ int rvu_mbox_handler_get_hw_cap(struct rvu *rvu, struct msg_req *req,
- 
- 	rsp->nix_fixed_txschq_mapping = hw->cap.nix_fixed_txschq_mapping;
- 	rsp->nix_shaping = hw->cap.nix_shaping;
-+	rsp->npc_hash_extract = hw->cap.npc_hash_extract;
- 
- 	return 0;
- }
 diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-index 66bb2222350c38..de36dc6843f61b 100644
+index de36dc6843f61b..08db46453e86e7 100644
 --- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
 +++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-@@ -353,6 +353,7 @@ struct hw_cap {
- 	bool	per_pf_mbox_regs; /* PF mbox specified in per PF registers ? */
+@@ -354,6 +354,7 @@ struct hw_cap {
  	bool	programmable_chans; /* Channels programmable ? */
  	bool	ipolicer;
-+	bool	npc_hash_extract; /* Hash extract enabled ? */
+ 	bool	npc_hash_extract; /* Hash extract enabled ? */
++	bool	npc_exact_match_enabled; /* Exact match supported ? */
  };
  
  struct rvu_hwinfo {
-@@ -432,6 +433,7 @@ struct npc_kpu_profile_adapter {
- 	const struct npc_kpu_profile_action	*ikpu; /* array[pkinds] */
- 	const struct npc_kpu_profile	*kpu; /* array[kpus] */
- 	struct npc_mcam_kex		*mkex;
-+	struct npc_mcam_kex_hash	*mkex_hash;
- 	bool				custom;
- 	size_t				pkinds;
- 	size_t				kpus;
-@@ -588,6 +590,17 @@ static inline bool is_rvu_otx2(struct rvu *rvu)
- 		midr == PCI_REVISION_ID_95XXMM || midr == PCI_REVISION_ID_95XXO);
- }
+@@ -385,6 +386,7 @@ struct rvu_hwinfo {
+ 	struct rvu	 *rvu;
+ 	struct npc_pkind pkind;
+ 	struct npc_mcam  mcam;
++	struct npc_exact_table *table;
+ };
  
-+static inline bool is_rvu_npc_hash_extract_en(struct rvu *rvu)
-+{
-+	u64 npc_const3;
+ struct mbox_wq_info {
+@@ -788,7 +790,6 @@ u32 convert_dwrr_mtu_to_bytes(u8 dwrr_mtu);
+ u32 convert_bytes_to_dwrr_mtu(u32 bytes);
+ 
+ /* NPC APIs */
+-int rvu_npc_init(struct rvu *rvu);
+ void rvu_npc_freemem(struct rvu *rvu);
+ int rvu_npc_get_pkind(struct rvu *rvu, u16 pf);
+ void rvu_npc_set_pkind(struct rvu *rvu, int pkind, struct rvu_pfvf *pfvf);
+@@ -807,6 +808,7 @@ void rvu_npc_install_allmulti_entry(struct rvu *rvu, u16 pcifunc, int nixlf,
+ 				    u64 chan);
+ void rvu_npc_enable_allmulti_entry(struct rvu *rvu, u16 pcifunc, int nixlf,
+ 				   bool enable);
 +
-+	npc_const3 = rvu_read64(rvu, BLKADDR_NPC, NPC_AF_CONST3);
-+	if (!(npc_const3 & BIT_ULL(62)))
+ void npc_enadis_default_mce_entry(struct rvu *rvu, u16 pcifunc,
+ 				  int nixlf, int type, bool enable);
+ void rvu_npc_disable_mcam_entries(struct rvu *rvu, u16 pcifunc, int nixlf);
+@@ -815,6 +817,7 @@ void rvu_npc_disable_default_entries(struct rvu *rvu, u16 pcifunc, int nixlf);
+ void rvu_npc_enable_default_entries(struct rvu *rvu, u16 pcifunc, int nixlf);
+ void rvu_npc_update_flowkey_alg_idx(struct rvu *rvu, u16 pcifunc, int nixlf,
+ 				    int group, int alg_idx, int mcam_index);
++
+ void rvu_npc_get_mcam_entry_alloc_info(struct rvu *rvu, u16 pcifunc,
+ 				       int blkaddr, int *alloc_cnt,
+ 				       int *enable_cnt);
+@@ -847,6 +850,10 @@ int npc_get_nixlf_mcam_index(struct npc_mcam *mcam, u16 pcifunc, int nixlf,
+ 			     int type);
+ bool is_mcam_entry_enabled(struct rvu *rvu, struct npc_mcam *mcam, int blkaddr,
+ 			   int index);
++int rvu_npc_init(struct rvu *rvu);
++int npc_install_mcam_drop_rule(struct rvu *rvu, int mcam_idx, u16 *counter_idx,
++			       u64 chan_val, u64 chan_mask, u64 exact_val, u64 exact_mask,
++			       u64 bcast_mcast_val, u64 bcast_mcast_mask);
+ 
+ /* CPT APIs */
+ int rvu_cpt_lf_teardown(struct rvu *rvu, u16 pcifunc, int lf, int slot);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
+index dbb33075b7f0c8..273f4b648c7390 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
+@@ -20,6 +20,7 @@
+ #include "cgx.h"
+ #include "rvu_npc_hash.h"
+ #include "rvu_npc_fs.h"
++#include "rvu_npc_hash.h"
+ 
+ static u64 rvu_npc_wide_extract(const u64 input[], size_t start_bit,
+ 				size_t width_bits)
+@@ -336,3 +337,940 @@ int rvu_mbox_handler_npc_get_secret_key(struct rvu *rvu,
+ 
+ 	return 0;
+ }
++
++/**
++ *	rvu_npc_exact_mac2u64 - utility function to convert mac address to u64.
++ *	@mac_addr: MAC address.
++ *	Return: mdata for exact match table.
++ */
++static u64 rvu_npc_exact_mac2u64(u8 *mac_addr)
++{
++	u64 mac = 0;
++	int index;
++
++	for (index = ETH_ALEN - 1; index >= 0; index--)
++		mac |= ((u64)*mac_addr++) << (8 * index);
++
++	return mac;
++}
++
++/**
++ *	rvu_exact_prepare_mdata - Make mdata for mcam entry
++ *	@mac: MAC address
++ *	@chan: Channel number.
++ *	@ctype: Channel Type.
++ *	@mask: LDATA mask.
++ *	Return: Meta data
++ */
++static u64 rvu_exact_prepare_mdata(u8 *mac, u16 chan, u16 ctype, u64 mask)
++{
++	u64 ldata = rvu_npc_exact_mac2u64(mac);
++
++	/* Please note that mask is 48bit which excludes chan and ctype.
++	 * Increase mask bits if we need to include them as well.
++	 */
++	ldata |= ((u64)chan << 48);
++	ldata |= ((u64)ctype  << 60);
++	ldata &= mask;
++	ldata = ldata << 2;
++
++	return ldata;
++}
++
++/**
++ *      rvu_exact_calculate_hash - calculate hash index to mem table.
++ *	@rvu: resource virtualization unit.
++ *	@chan: Channel number
++ *	@ctype: Channel type.
++ *	@mac: MAC address
++ *	@mask: HASH mask.
++ *	@table_depth: Depth of table.
++ *	Return: Hash value
++ */
++static u32 rvu_exact_calculate_hash(struct rvu *rvu, u16 chan, u16 ctype, u8 *mac,
++				    u64 mask, u32 table_depth)
++{
++	struct npc_exact_table *table = rvu->hw->table;
++	u64 hash_key[2];
++	u64 key_in[2];
++	u64 ldata;
++	u32 hash;
++
++	key_in[0] = RVU_NPC_HASH_SECRET_KEY0;
++	key_in[1] = RVU_NPC_HASH_SECRET_KEY2;
++
++	hash_key[0] = key_in[0] << 31;
++	hash_key[0] |= key_in[1];
++	hash_key[1] = key_in[0] >> 33;
++
++	ldata = rvu_exact_prepare_mdata(mac, chan, ctype, mask);
++
++	dev_dbg(rvu->dev, "%s: ldata=0x%llx hash_key0=0x%llx hash_key2=0x%llx\n", __func__,
++		ldata, hash_key[1], hash_key[0]);
++	hash = rvu_npc_toeplitz_hash(&ldata, (u64 *)hash_key, 64, 95);
++
++	hash &= table->mem_table.hash_mask;
++	hash += table->mem_table.hash_offset;
++	dev_dbg(rvu->dev, "%s: hash=%x\n", __func__,  hash);
++
++	return hash;
++}
++
++/**
++ *      rvu_npc_exact_alloc_mem_table_entry - find free entry in 4 way table.
++ *      @rvu: resource virtualization unit.
++ *	@way: Indicate way to table.
++ *	@index: Hash index to 4 way table.
++ *	@hash: Hash value.
++ *
++ *	Searches 4 way table using hash index. Returns 0 on success.
++ *	Return: 0 upon success.
++ */
++static int rvu_npc_exact_alloc_mem_table_entry(struct rvu *rvu, u8 *way,
++					       u32 *index, unsigned int hash)
++{
++	struct npc_exact_table *table;
++	int depth, i;
++
++	table = rvu->hw->table;
++	depth = table->mem_table.depth;
++
++	/* Check all the 4 ways for a free slot. */
++	mutex_lock(&table->lock);
++	for (i = 0; i <  table->mem_table.ways; i++) {
++		if (test_bit(hash + i * depth, table->mem_table.bmap))
++			continue;
++
++		set_bit(hash + i * depth, table->mem_table.bmap);
++		mutex_unlock(&table->lock);
++
++		dev_dbg(rvu->dev, "%s: mem table entry alloc success (way=%d index=%d)\n",
++			__func__, i, hash);
++
++		*way = i;
++		*index = hash;
++		return 0;
++	}
++	mutex_unlock(&table->lock);
++
++	dev_dbg(rvu->dev, "%s: No space in 4 way exact way, weight=%u\n", __func__,
++		bitmap_weight(table->mem_table.bmap, table->mem_table.depth));
++	return -ENOSPC;
++}
++
++/**
++ *	rvu_npc_exact_free_id - Free seq id from bitmat.
++ *	@rvu: Resource virtualization unit.
++ *	@seq_id: Sequence identifier to be freed.
++ */
++static void rvu_npc_exact_free_id(struct rvu *rvu, u32 seq_id)
++{
++	struct npc_exact_table *table;
++
++	table = rvu->hw->table;
++	mutex_lock(&table->lock);
++	clear_bit(seq_id, table->id_bmap);
++	mutex_unlock(&table->lock);
++	dev_dbg(rvu->dev, "%s: freed id %d\n", __func__, seq_id);
++}
++
++/**
++ *	rvu_npc_exact_alloc_id - Alloc seq id from bitmap.
++ *	@rvu: Resource virtualization unit.
++ *	@seq_id: Sequence identifier.
++ *	Return: True or false.
++ */
++static bool rvu_npc_exact_alloc_id(struct rvu *rvu, u32 *seq_id)
++{
++	struct npc_exact_table *table;
++	u32 idx;
++
++	table = rvu->hw->table;
++
++	mutex_lock(&table->lock);
++	idx = find_first_zero_bit(table->id_bmap, table->tot_ids);
++	if (idx == table->tot_ids) {
++		mutex_unlock(&table->lock);
++		dev_err(rvu->dev, "%s: No space in id bitmap (%d)\n",
++			__func__, bitmap_weight(table->id_bmap, table->tot_ids));
++
 +		return false;
++	}
++
++	/* Mark bit map to indicate that slot is used.*/
++	set_bit(idx, table->id_bmap);
++	mutex_unlock(&table->lock);
++
++	*seq_id = idx;
++	dev_dbg(rvu->dev, "%s: Allocated id (%d)\n", __func__, *seq_id);
 +
 +	return true;
 +}
 +
- static inline u16 rvu_nix_chan_cgx(struct rvu *rvu, u8 cgxid,
- 				   u8 lmacid, u8 chan)
- {
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-index dd231d9f89db1a..d8dd9082dd2704 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-@@ -14,6 +14,7 @@
- #include "lmac_common.h"
- #include "rvu_reg.h"
- #include "rvu_trace.h"
-+#include "rvu_npc_hash.h"
- 
- struct cgx_evq_entry {
- 	struct list_head evq_node;
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-index ddc2879d81f356..20bc3147527a6d 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-@@ -15,6 +15,7 @@
- #include "npc.h"
- #include "cgx.h"
- #include "npc_profile.h"
-+#include "rvu_npc_hash.h"
- 
- #define RSVD_MCAM_ENTRIES_PER_PF	3 /* Broadcast, Promisc and AllMulticast */
- #define RSVD_MCAM_ENTRIES_PER_NIXLF	1 /* Ucast for LFs */
-@@ -1233,14 +1234,6 @@ void rvu_npc_free_mcam_entries(struct rvu *rvu, u16 pcifunc, int nixlf)
- 	rvu_npc_disable_default_entries(rvu, pcifunc, nixlf);
- }
- 
--#define SET_KEX_LD(intf, lid, ltype, ld, cfg)	\
--	rvu_write64(rvu, blkaddr,			\
--		NPC_AF_INTFX_LIDX_LTX_LDX_CFG(intf, lid, ltype, ld), cfg)
--
--#define SET_KEX_LDFLAGS(intf, ld, flags, cfg)	\
--	rvu_write64(rvu, blkaddr,			\
--		NPC_AF_INTFX_LDATAX_FLAGSX_CFG(intf, ld, flags), cfg)
--
- static void npc_program_mkex_rx(struct rvu *rvu, int blkaddr,
- 				struct npc_mcam_kex *mkex, u8 intf)
- {
-@@ -1314,6 +1307,9 @@ static void npc_program_mkex_profile(struct rvu *rvu, int blkaddr,
- 		npc_program_mkex_rx(rvu, blkaddr, mkex, intf);
- 		npc_program_mkex_tx(rvu, blkaddr, mkex, intf);
- 	}
-+
-+	/* Programme mkex hash profile */
-+	npc_program_mkex_hash(rvu, blkaddr);
- }
- 
- static int npc_fwdb_prfl_img_map(struct rvu *rvu, void __iomem **prfl_img_addr,
-@@ -1515,6 +1511,7 @@ static int npc_prepare_default_kpu(struct npc_kpu_profile_adapter *profile)
- 	profile->kpus = ARRAY_SIZE(npc_kpu_profiles);
- 	profile->lt_def = &npc_lt_defaults;
- 	profile->mkex = &npc_mkex_default;
-+	profile->mkex_hash = &npc_mkex_hash_default;
- 
- 	return 0;
- }
-@@ -2100,6 +2097,7 @@ int rvu_npc_init(struct rvu *rvu)
- 
- 	rvu_npc_setup_interfaces(rvu, blkaddr);
- 
-+	npc_config_secret_key(rvu, blkaddr);
- 	/* Configure MKEX profile */
- 	npc_load_mkex_profile(rvu, blkaddr, rvu->mkex_pfl_name);
- 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
-index 64654bd1188459..08656eba898962 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
-@@ -10,6 +10,8 @@
- #include "rvu_reg.h"
- #include "rvu.h"
- #include "npc.h"
-+#include "rvu_npc_hash.h"
-+#include "rvu_npc_fs.h"
- 
- #define NPC_BYTESM		GENMASK_ULL(19, 16)
- #define NPC_HDR_OFFSET		GENMASK_ULL(15, 8)
-@@ -625,9 +627,9 @@ static int npc_check_unsupported_flows(struct rvu *rvu, u64 features, u8 intf)
-  * If any bits in mask are 0 then corresponding bits in value are
-  * dont care.
-  */
--static void npc_update_entry(struct rvu *rvu, enum key_fields type,
--			     struct mcam_entry *entry, u64 val_lo,
--			     u64 val_hi, u64 mask_lo, u64 mask_hi, u8 intf)
-+void npc_update_entry(struct rvu *rvu, enum key_fields type,
-+		      struct mcam_entry *entry, u64 val_lo,
-+		      u64 val_hi, u64 mask_lo, u64 mask_hi, u8 intf)
- {
- 	struct npc_mcam *mcam = &rvu->hw->mcam;
- 	struct mcam_entry dummy = { {0} };
-@@ -706,8 +708,6 @@ static void npc_update_entry(struct rvu *rvu, enum key_fields type,
- 	}
- }
- 
--#define IPV6_WORDS     4
--
- static void npc_update_ipv6_flow(struct rvu *rvu, struct mcam_entry *entry,
- 				 u64 features, struct flow_msg *pkt,
- 				 struct flow_msg *mask,
-@@ -780,7 +780,8 @@ static void npc_update_vlan_features(struct rvu *rvu, struct mcam_entry *entry,
- static void npc_update_flow(struct rvu *rvu, struct mcam_entry *entry,
- 			    u64 features, struct flow_msg *pkt,
- 			    struct flow_msg *mask,
--			    struct rvu_npc_mcam_rule *output, u8 intf)
-+			    struct rvu_npc_mcam_rule *output, u8 intf,
-+			    int blkaddr)
- {
- 	u64 dmac_mask = ether_addr_to_u64(mask->dmac);
- 	u64 smac_mask = ether_addr_to_u64(mask->smac);
-@@ -855,6 +856,9 @@ do {									      \
- 
- 	npc_update_ipv6_flow(rvu, entry, features, pkt, mask, output, intf);
- 	npc_update_vlan_features(rvu, entry, features, intf);
-+
-+	npc_update_field_hash(rvu, intf, entry, blkaddr, features,
-+			      pkt, mask, opkt, omask);
- }
- 
- static struct rvu_npc_mcam_rule *rvu_mcam_find_rule(struct npc_mcam *mcam,
-@@ -1033,7 +1037,7 @@ static int npc_install_flow(struct rvu *rvu, int blkaddr, u16 target,
- 	entry_index = req->entry;
- 
- 	npc_update_flow(rvu, entry, features, &req->packet, &req->mask, &dummy,
--			req->intf);
-+			req->intf, blkaddr);
- 
- 	if (is_npc_intf_rx(req->intf))
- 		npc_update_rx_entry(rvu, pfvf, entry, req, target, pf_set_vfs_mac);
-@@ -1058,7 +1062,8 @@ static int npc_install_flow(struct rvu *rvu, int blkaddr, u16 target,
- 			npc_update_flow(rvu, entry, missing_features,
- 					&def_ucast_rule->packet,
- 					&def_ucast_rule->mask,
--					&dummy, req->intf);
-+					&dummy, req->intf,
-+					blkaddr);
- 		installed_features = req->features | missing_features;
- 	}
- 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.h
-new file mode 100644
-index 00000000000000..bdd65ce56a32d7
---- /dev/null
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.h
-@@ -0,0 +1,17 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/* Marvell RVU Admin Function driver
-+ *
-+ * Copyright (C) 2022 Marvell.
-+ *
++/**
++ *      rvu_npc_exact_alloc_cam_table_entry - find free slot in fully associative table.
++ *      @rvu: resource virtualization unit.
++ *	@index: Index to exact CAM table.
++ *	Return: 0 upon success; else error number.
 + */
++static int rvu_npc_exact_alloc_cam_table_entry(struct rvu *rvu, int *index)
++{
++	struct npc_exact_table *table;
++	u32 idx;
 +
-+#ifndef __RVU_NPC_FS_H
-+#define __RVU_NPC_FS_H
++	table = rvu->hw->table;
 +
-+#define IPV6_WORDS	4
++	mutex_lock(&table->lock);
++	idx = find_first_zero_bit(table->cam_table.bmap, table->cam_table.depth);
++	if (idx == table->cam_table.depth) {
++		mutex_unlock(&table->lock);
++		dev_info(rvu->dev, "%s: No space in exact cam table, weight=%u\n", __func__,
++			 bitmap_weight(table->cam_table.bmap, table->cam_table.depth));
++		return -ENOSPC;
++	}
 +
-+void npc_update_entry(struct rvu *rvu, enum key_fields type,
-+		      struct mcam_entry *entry, u64 val_lo,
-+		      u64 val_hi, u64 mask_lo, u64 mask_hi, u8 intf);
++	/* Mark bit map to indicate that slot is used.*/
++	set_bit(idx, table->cam_table.bmap);
++	mutex_unlock(&table->lock);
 +
-+#endif /* RVU_NPC_FS_H */
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-new file mode 100644
-index 00000000000000..dbb33075b7f0c8
---- /dev/null
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-@@ -0,0 +1,338 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/* Marvell RVU Admin Function driver
-+ *
-+ * Copyright (C) 2022 Marvell.
-+ *
++	*index = idx;
++	dev_dbg(rvu->dev, "%s: cam table entry alloc success (index=%d)\n",
++		__func__, idx);
++	return 0;
++}
++
++/**
++ *	rvu_exact_prepare_table_entry - Data for exact match table entry.
++ *	@rvu: Resource virtualization unit.
++ *	@enable: Enable/Disable entry
++ *	@ctype: Software defined channel type. Currently set as 0.
++ *	@chan: Channel number.
++ *	@mac_addr: Destination mac address.
++ *	Return: mdata for exact match table.
 + */
++static u64 rvu_exact_prepare_table_entry(struct rvu *rvu, bool enable,
++					 u8 ctype, u16 chan, u8 *mac_addr)
 +
-+#include <linux/bitfield.h>
-+#include <linux/module.h>
-+#include <linux/pci.h>
-+#include <linux/firmware.h>
-+#include <linux/stddef.h>
-+#include <linux/debugfs.h>
-+#include <linux/bitfield.h>
-+
-+#include "rvu_struct.h"
-+#include "rvu_reg.h"
-+#include "rvu.h"
-+#include "npc.h"
-+#include "cgx.h"
-+#include "rvu_npc_hash.h"
-+#include "rvu_npc_fs.h"
-+
-+static u64 rvu_npc_wide_extract(const u64 input[], size_t start_bit,
-+				size_t width_bits)
 +{
-+	const u64 mask = ~(u64)((~(__uint128_t)0) << width_bits);
-+	const size_t msb = start_bit + width_bits - 1;
-+	const size_t lword = start_bit >> 6;
-+	const size_t uword = msb >> 6;
-+	size_t lbits;
-+	u64 hi, lo;
++	u64 ldata = rvu_npc_exact_mac2u64(mac_addr);
 +
-+	if (lword == uword)
-+		return (input[lword] >> (start_bit & 63)) & mask;
++	/* Enable or disable */
++	u64 mdata = FIELD_PREP(GENMASK_ULL(63, 63), enable ? 1 : 0);
 +
-+	lbits = 64 - (start_bit & 63);
-+	hi = input[uword];
-+	lo = (input[lword] >> (start_bit & 63));
-+	return ((hi << lbits) | lo) & mask;
++	/* Set Ctype */
++	mdata |= FIELD_PREP(GENMASK_ULL(61, 60), ctype);
++
++	/* Set chan */
++	mdata |= FIELD_PREP(GENMASK_ULL(59, 48), chan);
++
++	/* MAC address */
++	mdata |= FIELD_PREP(GENMASK_ULL(47, 0), ldata);
++
++	return mdata;
 +}
 +
-+static void rvu_npc_lshift_key(u64 *key, size_t key_bit_len)
++/**
++ *	rvu_exact_config_secret_key - Configure secret key.
++ *	@rvu: Resource virtualization unit.
++ */
++static void rvu_exact_config_secret_key(struct rvu *rvu)
 +{
-+	u64 prev_orig_word = 0;
-+	u64 cur_orig_word = 0;
-+	size_t extra = key_bit_len % 64;
-+	size_t max_idx = key_bit_len / 64;
-+	size_t i;
-+
-+	if (extra)
-+		max_idx++;
-+
-+	for (i = 0; i < max_idx; i++) {
-+		cur_orig_word = key[i];
-+		key[i] = key[i] << 1;
-+		key[i] |= ((prev_orig_word >> 63) & 0x1);
-+		prev_orig_word = cur_orig_word;
-+	}
-+}
-+
-+static u32 rvu_npc_toeplitz_hash(const u64 *data, u64 *key, size_t data_bit_len,
-+				 size_t key_bit_len)
-+{
-+	u32 hash_out = 0;
-+	u64 temp_data = 0;
-+	int i;
-+
-+	for (i = data_bit_len - 1; i >= 0; i--) {
-+		temp_data = (data[i / 64]);
-+		temp_data = temp_data >> (i % 64);
-+		temp_data &= 0x1;
-+		if (temp_data)
-+			hash_out ^= (u32)(rvu_npc_wide_extract(key, key_bit_len - 32, 32));
-+
-+		rvu_npc_lshift_key(key, key_bit_len);
-+	}
-+
-+	return hash_out;
-+}
-+
-+u32 npc_field_hash_calc(u64 *ldata, struct npc_mcam_kex_hash *mkex_hash,
-+			u64 *secret_key, u8 intf, u8 hash_idx)
-+{
-+	u64 hash_key[3];
-+	u64 data_padded[2];
-+	u32 field_hash;
-+
-+	hash_key[0] = secret_key[1] << 31;
-+	hash_key[0] |= secret_key[2];
-+	hash_key[1] = secret_key[1] >> 33;
-+	hash_key[1] |= secret_key[0] << 31;
-+	hash_key[2] = secret_key[0] >> 33;
-+
-+	data_padded[0] = mkex_hash->hash_mask[intf][hash_idx][0] & ldata[0];
-+	data_padded[1] = mkex_hash->hash_mask[intf][hash_idx][1] & ldata[1];
-+	field_hash = rvu_npc_toeplitz_hash(data_padded, hash_key, 128, 159);
-+
-+	field_hash &= mkex_hash->hash_ctrl[intf][hash_idx] >> 32;
-+	field_hash |= mkex_hash->hash_ctrl[intf][hash_idx];
-+	return field_hash;
-+}
-+
-+static u64 npc_update_use_hash(int lt, int ld)
-+{
-+	u64 cfg = 0;
-+
-+	switch (lt) {
-+	case NPC_LT_LC_IP6:
-+		/* Update use_hash(bit-20) and bytesm1 (bit-16:19)
-+		 * in KEX_LD_CFG
-+		 */
-+		cfg = KEX_LD_CFG_USE_HASH(0x1, 0x03,
-+					  ld ? 0x8 : 0x18,
-+					  0x1, 0x0, 0x10);
-+		break;
-+	}
-+
-+	return cfg;
-+}
-+
-+static void npc_program_mkex_hash_rx(struct rvu *rvu, int blkaddr,
-+				     u8 intf)
-+{
-+	struct npc_mcam_kex_hash *mkex_hash = rvu->kpu.mkex_hash;
-+	int lid, lt, ld, hash_cnt = 0;
-+
-+	if (is_npc_intf_tx(intf))
-+		return;
-+
-+	/* Program HASH_CFG */
-+	for (lid = 0; lid < NPC_MAX_LID; lid++) {
-+		for (lt = 0; lt < NPC_MAX_LT; lt++) {
-+			for (ld = 0; ld < NPC_MAX_LD; ld++) {
-+				if (mkex_hash->lid_lt_ld_hash_en[intf][lid][lt][ld]) {
-+					u64 cfg = npc_update_use_hash(lt, ld);
-+
-+					hash_cnt++;
-+					if (hash_cnt == NPC_MAX_HASH)
-+						return;
-+
-+					/* Set updated KEX configuration */
-+					SET_KEX_LD(intf, lid, lt, ld, cfg);
-+					/* Set HASH configuration */
-+					SET_KEX_LD_HASH(intf, ld,
-+							mkex_hash->hash[intf][ld]);
-+					SET_KEX_LD_HASH_MASK(intf, ld, 0,
-+							     mkex_hash->hash_mask[intf][ld][0]);
-+					SET_KEX_LD_HASH_MASK(intf, ld, 1,
-+							     mkex_hash->hash_mask[intf][ld][1]);
-+					SET_KEX_LD_HASH_CTRL(intf, ld,
-+							     mkex_hash->hash_ctrl[intf][ld]);
-+				}
-+			}
-+		}
-+	}
-+}
-+
-+static void npc_program_mkex_hash_tx(struct rvu *rvu, int blkaddr,
-+				     u8 intf)
-+{
-+	struct npc_mcam_kex_hash *mkex_hash = rvu->kpu.mkex_hash;
-+	int lid, lt, ld, hash_cnt = 0;
-+
-+	if (is_npc_intf_rx(intf))
-+		return;
-+
-+	/* Program HASH_CFG */
-+	for (lid = 0; lid < NPC_MAX_LID; lid++) {
-+		for (lt = 0; lt < NPC_MAX_LT; lt++) {
-+			for (ld = 0; ld < NPC_MAX_LD; ld++)
-+				if (mkex_hash->lid_lt_ld_hash_en[intf][lid][lt][ld]) {
-+					u64 cfg = npc_update_use_hash(lt, ld);
-+
-+					hash_cnt++;
-+					if (hash_cnt == NPC_MAX_HASH)
-+						return;
-+
-+					/* Set updated KEX configuration */
-+					SET_KEX_LD(intf, lid, lt, ld, cfg);
-+					/* Set HASH configuration */
-+					SET_KEX_LD_HASH(intf, ld,
-+							mkex_hash->hash[intf][ld]);
-+					SET_KEX_LD_HASH_MASK(intf, ld, 0,
-+							     mkex_hash->hash_mask[intf][ld][0]);
-+					SET_KEX_LD_HASH_MASK(intf, ld, 1,
-+							     mkex_hash->hash_mask[intf][ld][1]);
-+					SET_KEX_LD_HASH_CTRL(intf, ld,
-+							     mkex_hash->hash_ctrl[intf][ld]);
-+					hash_cnt++;
-+					if (hash_cnt == NPC_MAX_HASH)
-+						return;
-+				}
-+		}
-+	}
-+}
-+
-+void npc_config_secret_key(struct rvu *rvu, int blkaddr)
-+{
-+	struct hw_cap *hwcap = &rvu->hw->cap;
-+	struct rvu_hwinfo *hw = rvu->hw;
-+	u8 intf;
-+
-+	if (!hwcap->npc_hash_extract) {
-+		dev_info(rvu->dev, "HW does not support secret key configuration\n");
-+		return;
-+	}
-+
-+	for (intf = 0; intf < hw->npc_intfs; intf++) {
-+		rvu_write64(rvu, blkaddr, NPC_AF_INTFX_SECRET_KEY0(intf),
-+			    RVU_NPC_HASH_SECRET_KEY0);
-+		rvu_write64(rvu, blkaddr, NPC_AF_INTFX_SECRET_KEY1(intf),
-+			    RVU_NPC_HASH_SECRET_KEY1);
-+		rvu_write64(rvu, blkaddr, NPC_AF_INTFX_SECRET_KEY2(intf),
-+			    RVU_NPC_HASH_SECRET_KEY2);
-+	}
-+}
-+
-+void npc_program_mkex_hash(struct rvu *rvu, int blkaddr)
-+{
-+	struct hw_cap *hwcap = &rvu->hw->cap;
-+	struct rvu_hwinfo *hw = rvu->hw;
-+	u8 intf;
-+
-+	if (!hwcap->npc_hash_extract) {
-+		dev_dbg(rvu->dev, "Field hash extract feature is not supported\n");
-+		return;
-+	}
-+
-+	for (intf = 0; intf < hw->npc_intfs; intf++) {
-+		npc_program_mkex_hash_rx(rvu, blkaddr, intf);
-+		npc_program_mkex_hash_tx(rvu, blkaddr, intf);
-+	}
-+}
-+
-+void npc_update_field_hash(struct rvu *rvu, u8 intf,
-+			   struct mcam_entry *entry,
-+			   int blkaddr,
-+			   u64 features,
-+			   struct flow_msg *pkt,
-+			   struct flow_msg *mask,
-+			   struct flow_msg *opkt,
-+			   struct flow_msg *omask)
-+{
-+	struct npc_mcam_kex_hash *mkex_hash = rvu->kpu.mkex_hash;
-+	struct npc_get_secret_key_req req;
-+	struct npc_get_secret_key_rsp rsp;
-+	u64 ldata[2], cfg;
-+	u32 field_hash;
-+	u8 hash_idx;
-+
-+	if (!rvu->hw->cap.npc_hash_extract) {
-+		dev_dbg(rvu->dev, "%s: Field hash extract feature is not supported\n", __func__);
-+		return;
-+	}
-+
-+	req.intf = intf;
-+	rvu_mbox_handler_npc_get_secret_key(rvu, &req, &rsp);
-+
-+	for (hash_idx = 0; hash_idx < NPC_MAX_HASH; hash_idx++) {
-+		cfg = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_HASHX_CFG(intf, hash_idx));
-+		if ((cfg & BIT_ULL(11)) && (cfg & BIT_ULL(12))) {
-+			u8 lid = (cfg & GENMASK_ULL(10, 8)) >> 8;
-+			u8 ltype = (cfg & GENMASK_ULL(7, 4)) >> 4;
-+			u8 ltype_mask = cfg & GENMASK_ULL(3, 0);
-+
-+			if (mkex_hash->lid_lt_ld_hash_en[intf][lid][ltype][hash_idx]) {
-+				switch (ltype & ltype_mask) {
-+				/* If hash extract enabled is supported for IPv6 then
-+				 * 128 bit IPv6 source and destination addressed
-+				 * is hashed to 32 bit value.
-+				 */
-+				case NPC_LT_LC_IP6:
-+					if (features & BIT_ULL(NPC_SIP_IPV6)) {
-+						u32 src_ip[IPV6_WORDS];
-+
-+						be32_to_cpu_array(src_ip, pkt->ip6src, IPV6_WORDS);
-+						ldata[0] = (u64)src_ip[0] << 32 | src_ip[1];
-+						ldata[1] = (u64)src_ip[2] << 32 | src_ip[3];
-+						field_hash = npc_field_hash_calc(ldata,
-+										 mkex_hash,
-+										 rsp.secret_key,
-+										 intf,
-+										 hash_idx);
-+						npc_update_entry(rvu, NPC_SIP_IPV6, entry,
-+								 field_hash, 0, 32, 0, intf);
-+						memcpy(&opkt->ip6src, &pkt->ip6src,
-+						       sizeof(pkt->ip6src));
-+						memcpy(&omask->ip6src, &mask->ip6src,
-+						       sizeof(mask->ip6src));
-+						break;
-+					}
-+
-+					if (features & BIT_ULL(NPC_DIP_IPV6)) {
-+						u32 dst_ip[IPV6_WORDS];
-+
-+						be32_to_cpu_array(dst_ip, pkt->ip6dst, IPV6_WORDS);
-+						ldata[0] = (u64)dst_ip[0] << 32 | dst_ip[1];
-+						ldata[1] = (u64)dst_ip[2] << 32 | dst_ip[3];
-+						field_hash = npc_field_hash_calc(ldata,
-+										 mkex_hash,
-+										 rsp.secret_key,
-+										 intf,
-+										 hash_idx);
-+						npc_update_entry(rvu, NPC_DIP_IPV6, entry,
-+								 field_hash, 0, 32, 0, intf);
-+						memcpy(&opkt->ip6dst, &pkt->ip6dst,
-+						       sizeof(pkt->ip6dst));
-+						memcpy(&omask->ip6dst, &mask->ip6dst,
-+						       sizeof(mask->ip6dst));
-+					}
-+					break;
-+				}
-+			}
-+		}
-+	}
-+}
-+
-+int rvu_mbox_handler_npc_get_secret_key(struct rvu *rvu,
-+					struct npc_get_secret_key_req *req,
-+					struct npc_get_secret_key_rsp *rsp)
-+{
-+	u64 *secret_key = rsp->secret_key;
-+	u8 intf = req->intf;
 +	int blkaddr;
 +
++	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
++	rvu_write64(rvu, blkaddr, NPC_AF_INTFX_EXACT_SECRET0(NIX_INTF_RX),
++		    RVU_NPC_HASH_SECRET_KEY0);
++
++	rvu_write64(rvu, blkaddr, NPC_AF_INTFX_EXACT_SECRET1(NIX_INTF_RX),
++		    RVU_NPC_HASH_SECRET_KEY1);
++
++	rvu_write64(rvu, blkaddr, NPC_AF_INTFX_EXACT_SECRET2(NIX_INTF_RX),
++		    RVU_NPC_HASH_SECRET_KEY2);
++}
++
++/**
++ *	rvu_exact_config_search_key - Configure search key
++ *	@rvu: Resource virtualization unit.
++ */
++static void rvu_exact_config_search_key(struct rvu *rvu)
++{
++	int blkaddr;
++	u64 reg_val;
++
++	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
++
++	/* HDR offset */
++	reg_val = FIELD_PREP(GENMASK_ULL(39, 32), 0);
++
++	/* BYTESM1, number of bytes - 1 */
++	reg_val |= FIELD_PREP(GENMASK_ULL(18, 16), ETH_ALEN - 1);
++
++	/* Enable LID and set LID to  NPC_LID_LA */
++	reg_val |= FIELD_PREP(GENMASK_ULL(11, 11), 1);
++	reg_val |= FIELD_PREP(GENMASK_ULL(10, 8),  NPC_LID_LA);
++
++	/* Clear layer type based extraction */
++
++	/* Disable LT_EN */
++	reg_val |= FIELD_PREP(GENMASK_ULL(12, 12), 0);
++
++	/* Set LTYPE_MATCH to 0 */
++	reg_val |= FIELD_PREP(GENMASK_ULL(7, 4), 0);
++
++	/* Set LTYPE_MASK to 0 */
++	reg_val |= FIELD_PREP(GENMASK_ULL(3, 0), 0);
++
++	rvu_write64(rvu, blkaddr, NPC_AF_INTFX_EXACT_CFG(NIX_INTF_RX), reg_val);
++}
++
++/**
++ *	rvu_exact_config_result_ctrl - Set exact table hash control
++ *	@rvu: Resource virtualization unit.
++ *	@depth: Depth of Exact match table.
++ *
++ *	Sets mask and offset for hash for mem table.
++ */
++static void rvu_exact_config_result_ctrl(struct rvu *rvu, uint32_t depth)
++{
++	int blkaddr;
++	u64 reg = 0;
++
++	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
++
++	/* Set mask. Note that depth is a power of 2 */
++	rvu->hw->table->mem_table.hash_mask = (depth - 1);
++	reg |= FIELD_PREP(GENMASK_ULL(42, 32), (depth - 1));
++
++	/* Set offset as 0 */
++	rvu->hw->table->mem_table.hash_offset = 0;
++	reg |= FIELD_PREP(GENMASK_ULL(10, 0), 0);
++
++	/* Set reg for RX */
++	rvu_write64(rvu, blkaddr, NPC_AF_INTFX_EXACT_RESULT_CTL(NIX_INTF_RX), reg);
++	/* Store hash mask and offset for s/w algorithm */
++}
++
++/**
++ *	rvu_exact_config_table_mask - Set exact table mask.
++ *	@rvu: Resource virtualization unit.
++ */
++static void rvu_exact_config_table_mask(struct rvu *rvu)
++{
++	int blkaddr;
++	u64 mask = 0;
++
++	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
++
++	/* Don't use Ctype */
++	mask |= FIELD_PREP(GENMASK_ULL(61, 60), 0);
++
++	/* Set chan */
++	mask |= GENMASK_ULL(59, 48);
++
++	/* Full ldata */
++	mask |= GENMASK_ULL(47, 0);
++
++	/* Store mask for s/w hash calcualtion */
++	rvu->hw->table->mem_table.mask = mask;
++
++	/* Set mask for RX.*/
++	rvu_write64(rvu, blkaddr, NPC_AF_INTFX_EXACT_MASK(NIX_INTF_RX), mask);
++}
++
++/**
++ *      rvu_npc_exact_get_max_entries - Get total number of entries in table.
++ *      @rvu: resource virtualization unit.
++ *	Return: Maximum table entries possible.
++ */
++u32 rvu_npc_exact_get_max_entries(struct rvu *rvu)
++{
++	struct npc_exact_table *table;
++
++	table = rvu->hw->table;
++	return table->tot_ids;
++}
++
++/**
++ *      rvu_npc_exact_has_match_table - Checks support for exact match.
++ *      @rvu: resource virtualization unit.
++ *	Return: True if exact match table is supported/enabled.
++ */
++bool rvu_npc_exact_has_match_table(struct rvu *rvu)
++{
++	return  rvu->hw->cap.npc_exact_match_enabled;
++}
++
++/**
++ *      __rvu_npc_exact_find_entry_by_seq_id - find entry by id
++ *      @rvu: resource virtualization unit.
++ *	@seq_id: Sequence identifier.
++ *
++ *	Caller should acquire the lock.
++ *	Return: Pointer to table entry.
++ */
++static struct npc_exact_table_entry *
++__rvu_npc_exact_find_entry_by_seq_id(struct rvu *rvu, u32 seq_id)
++{
++	struct npc_exact_table *table = rvu->hw->table;
++	struct npc_exact_table_entry *entry = NULL;
++	struct list_head *lhead;
++
++	lhead = &table->lhead_gbl;
++
++	/* traverse to find the matching entry */
++	list_for_each_entry(entry, lhead, glist) {
++		if (entry->seq_id != seq_id)
++			continue;
++
++		return entry;
++	}
++
++	return NULL;
++}
++
++/**
++ *      rvu_npc_exact_add_to_list - Add entry to list
++ *      @rvu: resource virtualization unit.
++ *	@opc_type: OPCODE to select MEM/CAM table.
++ *	@ways: MEM table ways.
++ *	@index: Index in MEM/CAM table.
++ *	@cgx_id: CGX identifier.
++ *	@lmac_id: LMAC identifier.
++ *	@mac_addr: MAC address.
++ *	@chan: Channel number.
++ *	@ctype: Channel Type.
++ *	@seq_id: Sequence identifier
++ *	@cmd: True if function is called by ethtool cmd
++ *	@mcam_idx: NPC mcam index of DMAC entry in NPC mcam.
++ *	@pcifunc: pci function
++ *	Return: 0 upon success.
++ */
++static int rvu_npc_exact_add_to_list(struct rvu *rvu, enum npc_exact_opc_type opc_type, u8 ways,
++				     u32 index, u8 cgx_id, u8 lmac_id, u8 *mac_addr, u16 chan,
++				     u8 ctype, u32 *seq_id, bool cmd, u32 mcam_idx, u16 pcifunc)
++{
++	struct npc_exact_table_entry *entry, *tmp, *iter;
++	struct npc_exact_table *table = rvu->hw->table;
++	struct list_head *lhead, *pprev;
++
++	WARN_ON(ways >= NPC_EXACT_TBL_MAX_WAYS);
++
++	if (!rvu_npc_exact_alloc_id(rvu, seq_id)) {
++		dev_err(rvu->dev, "%s: Generate seq id failed\n", __func__);
++		return -EFAULT;
++	}
++
++	entry = kmalloc(sizeof(*entry), GFP_KERNEL);
++	if (!entry) {
++		rvu_npc_exact_free_id(rvu, *seq_id);
++		dev_err(rvu->dev, "%s: Memory allocation failed\n", __func__);
++		return -ENOMEM;
++	}
++
++	mutex_lock(&table->lock);
++	switch (opc_type) {
++	case NPC_EXACT_OPC_CAM:
++		lhead = &table->lhead_cam_tbl_entry;
++		table->cam_tbl_entry_cnt++;
++		break;
++
++	case NPC_EXACT_OPC_MEM:
++		lhead = &table->lhead_mem_tbl_entry[ways];
++		table->mem_tbl_entry_cnt++;
++		break;
++
++	default:
++		mutex_unlock(&table->lock);
++		kfree(entry);
++		rvu_npc_exact_free_id(rvu, *seq_id);
++
++		dev_err(rvu->dev, "%s: Unknown opc type%d\n", __func__, opc_type);
++		return  -EINVAL;
++	}
++
++	/* Add to global list */
++	INIT_LIST_HEAD(&entry->glist);
++	list_add_tail(&entry->glist, &table->lhead_gbl);
++	INIT_LIST_HEAD(&entry->list);
++	entry->index = index;
++	entry->ways = ways;
++	entry->opc_type = opc_type;
++
++	entry->pcifunc = pcifunc;
++
++	ether_addr_copy(entry->mac, mac_addr);
++	entry->chan = chan;
++	entry->ctype = ctype;
++	entry->cgx_id = cgx_id;
++	entry->lmac_id = lmac_id;
++
++	entry->seq_id = *seq_id;
++
++	entry->mcam_idx = mcam_idx;
++	entry->cmd = cmd;
++
++	pprev = lhead;
++
++	/* Insert entry in ascending order of index */
++	list_for_each_entry_safe(iter, tmp, lhead, list) {
++		if (index < iter->index)
++			break;
++
++		pprev = &iter->list;
++	}
++
++	/* Add to each table list */
++	list_add(&entry->list, pprev);
++	mutex_unlock(&table->lock);
++	return 0;
++}
++
++/**
++ *	rvu_npc_exact_mem_table_write - Wrapper for register write
++ *	@rvu: resource virtualization unit.
++ *	@blkaddr: Block address
++ *	@ways: ways for MEM table.
++ *	@index: Index in MEM
++ *	@mdata: Meta data to be written to register.
++ */
++static void rvu_npc_exact_mem_table_write(struct rvu *rvu, int blkaddr, u8 ways,
++					  u32 index, u64 mdata)
++{
++	rvu_write64(rvu, blkaddr, NPC_AF_EXACT_MEM_ENTRY(ways, index), mdata);
++}
++
++/**
++ *	rvu_npc_exact_cam_table_write - Wrapper for register write
++ *	@rvu: resource virtualization unit.
++ *	@blkaddr: Block address
++ *	@index: Index in MEM
++ *	@mdata: Meta data to be written to register.
++ */
++static void rvu_npc_exact_cam_table_write(struct rvu *rvu, int blkaddr,
++					  u32 index, u64 mdata)
++{
++	rvu_write64(rvu, blkaddr, NPC_AF_EXACT_CAM_ENTRY(index), mdata);
++}
++
++/**
++ *      rvu_npc_exact_dealloc_table_entry - dealloc table entry
++ *      @rvu: resource virtualization unit.
++ *	@opc_type: OPCODE for selection of table(MEM or CAM)
++ *	@ways: ways if opc_type is MEM table.
++ *	@index: Index of MEM or CAM table.
++ *	Return: 0 upon success.
++ */
++static int rvu_npc_exact_dealloc_table_entry(struct rvu *rvu, enum npc_exact_opc_type opc_type,
++					     u8 ways, u32 index)
++{
++	int blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
++	struct npc_exact_table *table;
++	u8 null_dmac[6] = { 0 };
++	int depth;
++
++	/* Prepare entry with all fields set to zero */
++	u64 null_mdata = rvu_exact_prepare_table_entry(rvu, false, 0, 0, null_dmac);
++
++	table = rvu->hw->table;
++	depth = table->mem_table.depth;
++
++	mutex_lock(&table->lock);
++
++	switch (opc_type) {
++	case NPC_EXACT_OPC_CAM:
++
++		/* Check whether entry is used already */
++		if (!test_bit(index, table->cam_table.bmap)) {
++			mutex_unlock(&table->lock);
++			dev_err(rvu->dev, "%s: Trying to free an unused entry ways=%d index=%d\n",
++				__func__, ways, index);
++			return -EINVAL;
++		}
++
++		rvu_npc_exact_cam_table_write(rvu, blkaddr, index, null_mdata);
++		clear_bit(index, table->cam_table.bmap);
++		break;
++
++	case NPC_EXACT_OPC_MEM:
++
++		/* Check whether entry is used already */
++		if (!test_bit(index + ways * depth, table->mem_table.bmap)) {
++			mutex_unlock(&table->lock);
++			dev_err(rvu->dev, "%s: Trying to free an unused entry index=%d\n",
++				__func__, index);
++			return -EINVAL;
++		}
++
++		rvu_npc_exact_mem_table_write(rvu, blkaddr, ways, index, null_mdata);
++		clear_bit(index + ways * depth, table->mem_table.bmap);
++		break;
++
++	default:
++		mutex_unlock(&table->lock);
++		dev_err(rvu->dev, "%s: invalid opc type %d", __func__, opc_type);
++		return -ENOSPC;
++	}
++
++	mutex_unlock(&table->lock);
++
++	dev_dbg(rvu->dev, "%s: Successfully deleted entry (index=%d, ways=%d opc_type=%d\n",
++		__func__, index,  ways, opc_type);
++
++	return 0;
++}
++
++/**
++ *	rvu_npc_exact_alloc_table_entry - Allociate an entry
++ *      @rvu: resource virtualization unit.
++ *	@mac: MAC address.
++ *	@chan: Channel number.
++ *	@ctype: Channel Type.
++ *	@index: Index of MEM table or CAM table.
++ *	@ways: Ways. Only valid for MEM table.
++ *	@opc_type: OPCODE to select table (MEM or CAM)
++ *
++ *	Try allocating a slot from MEM table. If all 4 ways
++ *	slot are full for a hash index, check availability in
++ *	32-entry CAM table for allocation.
++ *	Return: 0 upon success.
++ */
++static int rvu_npc_exact_alloc_table_entry(struct rvu *rvu,  char *mac, u16 chan, u8 ctype,
++					   u32 *index, u8 *ways, enum npc_exact_opc_type *opc_type)
++{
++	struct npc_exact_table *table;
++	unsigned int hash;
++	int err;
++
++	table = rvu->hw->table;
++
++	/* Check in 4-ways mem entry for free slote */
++	hash =  rvu_exact_calculate_hash(rvu, chan, ctype, mac, table->mem_table.mask,
++					 table->mem_table.depth);
++	err = rvu_npc_exact_alloc_mem_table_entry(rvu, ways, index, hash);
++	if (!err) {
++		*opc_type = NPC_EXACT_OPC_MEM;
++		dev_dbg(rvu->dev, "%s: inserted in 4 ways hash table ways=%d, index=%d\n",
++			__func__, *ways, *index);
++		return 0;
++	}
++
++	dev_dbg(rvu->dev, "%s: failed to insert in 4 ways hash table\n", __func__);
++
++	/* wayss is 0 for cam table */
++	*ways = 0;
++	err = rvu_npc_exact_alloc_cam_table_entry(rvu, index);
++	if (!err) {
++		*opc_type = NPC_EXACT_OPC_CAM;
++		dev_dbg(rvu->dev, "%s: inserted in fully associative hash table index=%u\n",
++			__func__, *index);
++		return 0;
++	}
++
++	dev_err(rvu->dev, "%s: failed to insert in fully associative hash table\n", __func__);
++	return -ENOSPC;
++}
++
++/**
++ *      rvu_npc_exact_del_table_entry_by_id - Delete and free table entry.
++ *      @rvu: resource virtualization unit.
++ *	@seq_id: Sequence identifier of the entry.
++ *
++ *	Deletes entry from linked lists and free up slot in HW MEM or CAM
++ *	table.
++ *	Return: 0 upon success.
++ */
++int rvu_npc_exact_del_table_entry_by_id(struct rvu *rvu, u32 seq_id)
++{
++	struct npc_exact_table_entry *entry = NULL;
++	struct npc_exact_table *table;
++	int *cnt;
++
++	table = rvu->hw->table;
++
++	mutex_lock(&table->lock);
++
++	/* Lookup for entry which needs to be updated */
++	entry = __rvu_npc_exact_find_entry_by_seq_id(rvu, seq_id);
++	if (!entry) {
++		dev_dbg(rvu->dev, "%s: failed to find entry for id=0x%x\n", __func__, seq_id);
++		mutex_unlock(&table->lock);
++		return -ENODATA;
++	}
++
++	cnt = (entry->opc_type == NPC_EXACT_OPC_CAM) ? &table->cam_tbl_entry_cnt :
++				&table->mem_tbl_entry_cnt;
++
++	/* delete from lists */
++	list_del_init(&entry->list);
++	list_del_init(&entry->glist);
++
++	(*cnt)--;
++
++	mutex_unlock(&table->lock);
++
++	rvu_npc_exact_dealloc_table_entry(rvu, entry->opc_type, entry->ways, entry->index);
++
++	rvu_npc_exact_free_id(rvu, seq_id);
++
++	dev_dbg(rvu->dev, "%s: delete entry success for id=0x%x, mca=%pM\n",
++		__func__, seq_id, entry->mac);
++	kfree(entry);
++
++	return 0;
++}
++
++/**
++ *      rvu_npc_exact_add_table_entry - Adds a table entry
++ *      @rvu: resource virtualization unit.
++ *	@cgx_id: cgx identifier.
++ *	@lmac_id: lmac identifier.
++ *	@mac: MAC address.
++ *	@chan: Channel number.
++ *	@ctype: Channel Type.
++ *	@seq_id: Sequence number.
++ *	@cmd: Whether it is invoked by ethtool cmd.
++ *	@mcam_idx: NPC mcam index corresponding to MAC
++ *	@pcifunc: PCI func.
++ *
++ *	Creates a new exact match table entry in either CAM or
++ *	MEM table.
++ *	Return: 0 upon success.
++ */
++static int __maybe_unused rvu_npc_exact_add_table_entry(struct rvu *rvu, u8 cgx_id, u8 lmac_id,
++							u8 *mac, u16 chan, u8 ctype, u32 *seq_id,
++							bool cmd, u32 mcam_idx, u16 pcifunc)
++{
++	int blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
++	enum npc_exact_opc_type opc_type;
++	u32 index;
++	u64 mdata;
++	int err;
++	u8 ways;
++
++	ctype = 0;
++
++	err = rvu_npc_exact_alloc_table_entry(rvu, mac, chan, ctype, &index, &ways, &opc_type);
++	if (err) {
++		dev_err(rvu->dev, "%s: Could not alloc in exact match table\n", __func__);
++		return err;
++	}
++
++	/* Write mdata to table */
++	mdata = rvu_exact_prepare_table_entry(rvu, true, ctype, chan, mac);
++
++	if (opc_type == NPC_EXACT_OPC_CAM)
++		rvu_npc_exact_cam_table_write(rvu, blkaddr, index, mdata);
++	else
++		rvu_npc_exact_mem_table_write(rvu, blkaddr, ways, index,  mdata);
++
++	/* Insert entry to linked list */
++	err = rvu_npc_exact_add_to_list(rvu, opc_type, ways, index, cgx_id, lmac_id,
++					mac, chan, ctype, seq_id, cmd, mcam_idx, pcifunc);
++	if (err) {
++		rvu_npc_exact_dealloc_table_entry(rvu, opc_type, ways, index);
++		dev_err(rvu->dev, "%s: could not add to exact match table\n", __func__);
++		return err;
++	}
++
++	dev_dbg(rvu->dev,
++		"%s: Successfully added entry (index=%d, dmac=%pM, ways=%d opc_type=%d\n",
++		__func__, index, mac, ways, opc_type);
++
++	return 0;
++}
++
++/**
++ *      rvu_npc_exact_update_table_entry - Update exact match table.
++ *      @rvu: resource virtualization unit.
++ *	@cgx_id: CGX identifier.
++ *	@lmac_id: LMAC identifier.
++ *	@old_mac: Existing MAC address entry.
++ *	@new_mac: New MAC address entry.
++ *	@seq_id: Sequence identifier of the entry.
++ *
++ *	Updates MAC address of an entry. If entry is in MEM table, new
++ *	hash value may not match with old one.
++ *	Return: 0 upon success.
++ */
++static int __maybe_unused rvu_npc_exact_update_table_entry(struct rvu *rvu, u8 cgx_id,
++							   u8 lmac_id, u8 *old_mac,
++							   u8 *new_mac, u32 *seq_id)
++{
++	int blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
++	struct npc_exact_table_entry *entry;
++	struct npc_exact_table *table;
++	u32 hash_index;
++	u64 mdata;
++
++	table = rvu->hw->table;
++
++	mutex_lock(&table->lock);
++
++	/* Lookup for entry which needs to be updated */
++	entry = __rvu_npc_exact_find_entry_by_seq_id(rvu, *seq_id);
++	if (!entry) {
++		mutex_unlock(&table->lock);
++		dev_dbg(rvu->dev,
++			"%s: failed to find entry for cgx_id=%d lmac_id=%d old_mac=%pM\n",
++			__func__, cgx_id, lmac_id, old_mac);
++		return -ENODATA;
++	}
++
++	/* If entry is in mem table and new hash index is different than old
++	 * hash index, we cannot update the entry. Fail in these scenarios.
++	 */
++	if (entry->opc_type == NPC_EXACT_OPC_MEM) {
++		hash_index =  rvu_exact_calculate_hash(rvu, entry->chan, entry->ctype,
++						       new_mac, table->mem_table.mask,
++						       table->mem_table.depth);
++		if (hash_index != entry->index) {
++			dev_err(rvu->dev,
++				"%s: Update failed due to index mismatch(new=0x%x, old=%x)\n",
++				__func__, hash_index, entry->index);
++			mutex_unlock(&table->lock);
++			return -EINVAL;
++		}
++	}
++
++	mdata = rvu_exact_prepare_table_entry(rvu, true, entry->ctype, entry->chan, new_mac);
++
++	if (entry->opc_type == NPC_EXACT_OPC_MEM)
++		rvu_npc_exact_mem_table_write(rvu, blkaddr, entry->ways, entry->index, mdata);
++	else
++		rvu_npc_exact_cam_table_write(rvu, blkaddr, entry->index, mdata);
++
++	/* Update entry fields */
++	ether_addr_copy(entry->mac, new_mac);
++	*seq_id = entry->seq_id;
++
++	dev_dbg(rvu->dev,
++		"%s: Successfully updated entry (index=%d, dmac=%pM, ways=%d opc_type=%d\n",
++		__func__, hash_index, entry->mac, entry->ways, entry->opc_type);
++
++	dev_dbg(rvu->dev, "%s: Successfully updated entry (old mac=%pM new_mac=%pM\n",
++		__func__, old_mac, new_mac);
++
++	mutex_unlock(&table->lock);
++	return 0;
++}
++
++/**
++ *      rvu_npc_exact_init - initialize exact match table
++ *      @rvu: resource virtualization unit.
++ *
++ *	Initialize HW and SW resources to manage 4way-2K table and fully
++ *	associative 32-entry mcam table.
++ *	Return: 0 upon success.
++ */
++int rvu_npc_exact_init(struct rvu *rvu)
++{
++	struct npc_exact_table *table;
++	u64 npc_const3;
++	int table_size;
++	int blkaddr;
++	u64 cfg;
++	int i;
++
++	/* Read NPC_AF_CONST3 and check for have exact
++	 * match functionality is present
++	 */
 +	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
 +	if (blkaddr < 0) {
 +		dev_err(rvu->dev, "%s: NPC block not implemented\n", __func__);
 +		return -EINVAL;
 +	}
 +
-+	secret_key[0] = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_SECRET_KEY0(intf));
-+	secret_key[1] = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_SECRET_KEY1(intf));
-+	secret_key[2] = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_SECRET_KEY2(intf));
++	/* Check exact match feature is supported */
++	npc_const3 = rvu_read64(rvu, blkaddr, NPC_AF_CONST3);
++	if (!(npc_const3 & BIT_ULL(62))) {
++		dev_info(rvu->dev, "%s: No support for exact match support\n",
++			 __func__);
++		return 0;
++	}
 +
++	/* Check if kex profile has enabled EXACT match nibble */
++	cfg = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_KEX_CFG(NIX_INTF_RX));
++	if (!(cfg & NPC_EXACT_NIBBLE_HIT)) {
++		dev_info(rvu->dev, "%s: NPC exact match nibble not enabled in KEX profile\n",
++			 __func__);
++		return 0;
++	}
++
++	/* Set capability to true */
++	rvu->hw->cap.npc_exact_match_enabled = true;
++
++	table = kmalloc(sizeof(*table), GFP_KERNEL);
++	if (!table)
++		return -ENOMEM;
++
++	dev_dbg(rvu->dev, "%s: Memory allocation for table success\n", __func__);
++	memset(table, 0, sizeof(*table));
++	rvu->hw->table = table;
++
++	/* Read table size, ways and depth */
++	table->mem_table.depth = FIELD_GET(GENMASK_ULL(31, 24), npc_const3);
++	table->mem_table.ways = FIELD_GET(GENMASK_ULL(19, 16), npc_const3);
++	table->cam_table.depth = FIELD_GET(GENMASK_ULL(15, 0), npc_const3);
++
++	dev_dbg(rvu->dev, "%s: NPC exact match 4way_2k table(ways=%d, depth=%d)\n",
++		__func__,  table->mem_table.ways, table->cam_table.depth);
++
++	/* Check if depth of table is not a sequre of 2
++	 * TODO: why _builtin_popcount() is not working ?
++	 */
++	if ((table->mem_table.depth & (table->mem_table.depth - 1)) != 0) {
++		dev_err(rvu->dev,
++			"%s: NPC exact match 4way_2k table depth(%d) is not square of 2\n",
++			__func__,  table->mem_table.depth);
++		return -EINVAL;
++	}
++
++	table_size = table->mem_table.depth * table->mem_table.ways;
++
++	/* Allocate bitmap for 4way 2K table */
++	table->mem_table.bmap = devm_kcalloc(rvu->dev, BITS_TO_LONGS(table_size),
++					     sizeof(long), GFP_KERNEL);
++	if (!table->mem_table.bmap)
++		return -ENOMEM;
++
++	dev_dbg(rvu->dev, "%s: Allocated bitmap for 4way 2K entry table\n", __func__);
++
++	/* Allocate bitmap for 32 entry mcam */
++	table->cam_table.bmap = devm_kcalloc(rvu->dev, 1, sizeof(long), GFP_KERNEL);
++
++	if (!table->cam_table.bmap)
++		return -ENOMEM;
++
++	dev_dbg(rvu->dev, "%s: Allocated bitmap for 32 entry cam\n", __func__);
++
++	table->tot_ids = (table->mem_table.depth * table->mem_table.ways) + table->cam_table.depth;
++	table->id_bmap = devm_kcalloc(rvu->dev, BITS_TO_LONGS(table->tot_ids),
++				      table->tot_ids, GFP_KERNEL);
++
++	if (!table->id_bmap)
++		return -ENOMEM;
++
++	dev_dbg(rvu->dev, "%s: Allocated bitmap for id map (total=%d)\n",
++		__func__, table->tot_ids);
++
++	/* Initialize list heads for npc_exact_table entries.
++	 * This entry is used by debugfs to show entries in
++	 * exact match table.
++	 */
++	for (i = 0; i < NPC_EXACT_TBL_MAX_WAYS; i++)
++		INIT_LIST_HEAD(&table->lhead_mem_tbl_entry[i]);
++
++	INIT_LIST_HEAD(&table->lhead_cam_tbl_entry);
++	INIT_LIST_HEAD(&table->lhead_gbl);
++
++	mutex_init(&table->lock);
++
++	rvu_exact_config_secret_key(rvu);
++	rvu_exact_config_search_key(rvu);
++
++	rvu_exact_config_table_mask(rvu);
++	rvu_exact_config_result_ctrl(rvu, table->mem_table.depth);
++
++	dev_info(rvu->dev, "initialized exact match table successfully\n");
 +	return 0;
 +}
 diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
-new file mode 100644
-index 00000000000000..d0d1ac925e1e66
---- /dev/null
+index d0d1ac925e1e66..f2346aa79ce2c3 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
 +++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
-@@ -0,0 +1,132 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/* Marvell RVU Admin Function driver
-+ *
-+ * Copyright (C) 2022 Marvell.
-+ *
-+ */
-+
-+#ifndef __RVU_NPC_HASH_H
-+#define __RVU_NPC_HASH_H
-+
-+#define RVU_NPC_HASH_SECRET_KEY0 0xa9d5af4c9fbc76b1
-+#define RVU_NPC_HASH_SECRET_KEY1 0xa9d5af4c9fbc87b4
-+#define RVU_NPC_HASH_SECRET_KEY2 0x5954c9e7
-+
-+#define NPC_MAX_HASH 2
-+#define NPC_MAX_HASH_MASK 2
-+
-+#define KEX_LD_CFG_USE_HASH(use_hash, bytesm1, hdr_ofs, ena, flags_ena, key_ofs) \
-+			    ((use_hash) << 20 | ((bytesm1) << 16) | ((hdr_ofs) << 8) | \
-+			     ((ena) << 7) | ((flags_ena) << 6) | ((key_ofs) & 0x3F))
-+#define KEX_LD_CFG_HASH(hdr_ofs, bytesm1, lt_en, lid_en, lid, ltype_match, ltype_mask)	\
-+			(((hdr_ofs) << 32) | ((bytesm1) << 16) | \
-+			 ((lt_en) << 12) | ((lid_en) << 11) | ((lid) << 8) | \
-+			 ((ltype_match) << 4) | ((ltype_mask) & 0xF))
-+
-+#define SET_KEX_LD_HASH(intf, ld, cfg) \
-+	rvu_write64(rvu, blkaddr,	\
-+		    NPC_AF_INTFX_HASHX_CFG(intf, ld), cfg)
-+
-+#define SET_KEX_LD_HASH_MASK(intf, ld, mask_idx, cfg) \
-+	rvu_write64(rvu, blkaddr,	\
-+		    NPC_AF_INTFX_HASHX_MASKX(intf, ld, mask_idx), cfg)
-+
-+#define SET_KEX_LD_HASH_CTRL(intf, ld, cfg) \
-+	rvu_write64(rvu, blkaddr,	\
-+		    NPC_AF_INTFX_HASHX_RESULT_CTRL(intf, ld), cfg)
-+
-+struct npc_mcam_kex_hash {
-+	/* NPC_AF_INTF(0..1)_LID(0..7)_LT(0..15)_LD(0..1)_CFG */
-+	bool lid_lt_ld_hash_en[NPC_MAX_INTF][NPC_MAX_LID][NPC_MAX_LT][NPC_MAX_LD];
-+	/* NPC_AF_INTF(0..1)_HASH(0..1)_CFG */
-+	u64 hash[NPC_MAX_INTF][NPC_MAX_HASH];
-+	/* NPC_AF_INTF(0..1)_HASH(0..1)_MASK(0..1) */
-+	u64 hash_mask[NPC_MAX_INTF][NPC_MAX_HASH][NPC_MAX_HASH_MASK];
-+	/* NPC_AF_INTF(0..1)_HASH(0..1)_RESULT_CTRL */
-+	u64 hash_ctrl[NPC_MAX_INTF][NPC_MAX_HASH];
-+} __packed;
-+
-+void npc_update_field_hash(struct rvu *rvu, u8 intf,
-+			   struct mcam_entry *entry,
-+			   int blkaddr,
-+			   u64 features,
-+			   struct flow_msg *pkt,
-+			   struct flow_msg *mask,
-+			   struct flow_msg *opkt,
-+			   struct flow_msg *omask);
-+void npc_config_secret_key(struct rvu *rvu, int blkaddr);
-+void npc_program_mkex_hash(struct rvu *rvu, int blkaddr);
-+u32 npc_field_hash_calc(u64 *ldata, struct npc_mcam_kex_hash *mkex_hash,
-+			u64 *secret_key, u8 intf, u8 hash_idx);
-+
-+static struct npc_mcam_kex_hash npc_mkex_hash_default __maybe_unused = {
-+	.lid_lt_ld_hash_en = {
-+	[NIX_INTF_RX] = {
-+		[NPC_LID_LC] = {
-+			[NPC_LT_LC_IP6] = {
-+				true,
-+				true,
-+			},
-+		},
-+	},
-+
-+	[NIX_INTF_TX] = {
-+		[NPC_LID_LC] = {
-+			[NPC_LT_LC_IP6] = {
-+				true,
-+				true,
-+			},
-+		},
-+	},
-+	},
-+
-+	.hash = {
-+	[NIX_INTF_RX] = {
-+		KEX_LD_CFG_HASH(0x8ULL, 0xf, 0x1, 0x1, NPC_LID_LC, NPC_LT_LC_IP6, 0xf),
-+		KEX_LD_CFG_HASH(0x18ULL, 0xf, 0x1, 0x1, NPC_LID_LC, NPC_LT_LC_IP6, 0xf),
-+	},
-+
-+	[NIX_INTF_TX] = {
-+		KEX_LD_CFG_HASH(0x8ULL, 0xf, 0x1, 0x1, NPC_LID_LC, NPC_LT_LC_IP6, 0xf),
-+		KEX_LD_CFG_HASH(0x18ULL, 0xf, 0x1, 0x1, NPC_LID_LC, NPC_LT_LC_IP6, 0xf),
-+	},
-+	},
-+
-+	.hash_mask = {
-+	[NIX_INTF_RX] = {
-+		[0] = {
-+			GENMASK_ULL(63, 0),
-+			GENMASK_ULL(63, 0),
-+		},
-+		[1] = {
-+			GENMASK_ULL(63, 0),
-+			GENMASK_ULL(63, 0),
-+		},
-+	},
-+
-+	[NIX_INTF_TX] = {
-+		[0] = {
-+			GENMASK_ULL(63, 0),
-+			GENMASK_ULL(63, 0),
-+		},
-+		[1] = {
-+			GENMASK_ULL(63, 0),
-+			GENMASK_ULL(63, 0),
-+		},
-+	},
-+	},
-+
-+	.hash_ctrl = {
-+	[NIX_INTF_RX] = {
-+		[0] = GENMASK_ULL(63, 32), /* MSB 32 bit is mask and LSB 32 bit is offset. */
-+		[1] = GENMASK_ULL(63, 32), /* MSB 32 bit is mask and LSB 32 bit is offset. */
-+	},
-+
-+	[NIX_INTF_TX] = {
-+		[0] = GENMASK_ULL(63, 32), /* MSB 32 bit is mask and LSB 32 bit is offset. */
-+		[1] = GENMASK_ULL(63, 32), /* MSB 32 bit is mask and LSB 32 bit is offset. */
-+	},
-+	},
+@@ -129,4 +129,60 @@ static struct npc_mcam_kex_hash npc_mkex_hash_default __maybe_unused = {
+ 	},
+ };
+ 
++enum npc_exact_opc_type {
++	NPC_EXACT_OPC_MEM,
++	NPC_EXACT_OPC_CAM,
 +};
 +
-+#endif /* RVU_NPC_HASH_H */
++struct npc_exact_table_entry {
++	struct list_head list;
++	struct list_head glist;
++	u32 seq_id;	/* Sequence number of entry */
++	u32 index;	/* Mem table or cam table index */
++	u32 mcam_idx;
++		/* Mcam index. This is valid only if "cmd" field is false */
++	enum npc_exact_opc_type opc_type;
++	u16 chan;
++	u16 pcifunc;
++	u8 ways;
++	u8 mac[ETH_ALEN];
++	u8 ctype;
++	u8 cgx_id;
++	u8 lmac_id;
++	bool cmd;	/* Is added by ethtool command ? */
++};
++
++struct npc_exact_table {
++	struct mutex lock;	/* entries update lock */
++	unsigned long *id_bmap;
++	u32 tot_ids;
++	struct {
++		int ways;
++		int depth;
++		unsigned long *bmap;
++		u64 mask;	// Masks before hash calculation.
++		u16 hash_mask;	// 11 bits for hash mask
++		u16 hash_offset; // 11 bits offset
++	} mem_table;
++
++	struct {
++		int depth;
++		unsigned long *bmap;
++	} cam_table;
++#define NPC_EXACT_TBL_MAX_WAYS 4
++
++	struct list_head lhead_mem_tbl_entry[NPC_EXACT_TBL_MAX_WAYS];
++	int mem_tbl_entry_cnt;
++
++	struct list_head lhead_cam_tbl_entry;
++	int cam_tbl_entry_cnt;
++
++	struct list_head lhead_gbl;
++};
++
++bool rvu_npc_exact_has_match_table(struct rvu *rvu);
++int rvu_npc_exact_del_table_entry_by_id(struct rvu *rvu, u32 seq_id);
++u32 rvu_npc_exact_get_max_entries(struct rvu *rvu);
++int rvu_npc_exact_init(struct rvu *rvu);
++
+ #endif /* RVU_NPC_HASH_H */
 diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.h
-index d81b63a0d430f9..98e36d24c6975e 100644
+index 98e36d24c6975e..dcea1e38010925 100644
 --- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.h
 +++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.h
-@@ -561,7 +561,13 @@
- #define NPC_AF_PCK_DEF_OIP4		(0x00620)
- #define NPC_AF_PCK_DEF_OIP6		(0x00630)
- #define NPC_AF_PCK_DEF_IIP4		(0x00640)
-+#define NPC_AF_INTFX_HASHX_RESULT_CTRL(a, b)	(0x006c0 | (a) << 4 | (b) << 3)
-+#define NPC_AF_INTFX_HASHX_MASKX(a, b, c)  (0x00700 | (a) << 5 | (b) << 4 | (c) << 3)
- #define NPC_AF_KEX_LDATAX_FLAGS_CFG(a)	(0x00800 | (a) << 3)
-+#define NPC_AF_INTFX_HASHX_CFG(a, b)  (0x00b00 | (a) << 6 | (b) << 4)
-+#define NPC_AF_INTFX_SECRET_KEY0(a)	(0x00e00 | (a) << 3)
-+#define NPC_AF_INTFX_SECRET_KEY1(a)	(0x00e20 | (a) << 3)
-+#define NPC_AF_INTFX_SECRET_KEY2(a)	(0x00e40 | (a) << 3)
- #define NPC_AF_INTFX_KEX_CFG(a)		(0x01010 | (a) << 8)
- #define NPC_AF_PKINDX_ACTION0(a)	(0x80000ull | (a) << 6)
- #define NPC_AF_PKINDX_ACTION1(a)	(0x80008ull | (a) << 6)
+@@ -601,6 +601,15 @@
+ #define NPC_AF_DBG_DATAX(a)		(0x3001400 | (a) << 4)
+ #define NPC_AF_DBG_RESULTX(a)		(0x3001800 | (a) << 4)
+ 
++#define NPC_AF_EXACT_MEM_ENTRY(a, b)	(0x300000 | (a) << 15 | (b) << 3)
++#define NPC_AF_EXACT_CAM_ENTRY(a)	(0xC00 | (a) << 3)
++#define NPC_AF_INTFX_EXACT_MASK(a)	(0x660 | (a) << 3)
++#define NPC_AF_INTFX_EXACT_RESULT_CTL(a)(0x680 | (a) << 3)
++#define NPC_AF_INTFX_EXACT_CFG(a)	(0xA00 | (a) << 3)
++#define NPC_AF_INTFX_EXACT_SECRET0(a)	(0xE00 | (a) << 3)
++#define NPC_AF_INTFX_EXACT_SECRET1(a)	(0xE20 | (a) << 3)
++#define NPC_AF_INTFX_EXACT_SECRET2(a)	(0xE40 | (a) << 3)
++
+ #define NPC_AF_MCAMEX_BANKX_CAMX_INTF(a, b, c) ({			   \
+ 	u64 offset;							   \
+ 									   \
 -- 
 2.53.0
 
