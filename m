@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66D143990E;
-	Tue, 21 Jul 2026 21:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49CEE35C6B3;
+	Tue, 21 Jul 2026 21:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668254; cv=none; b=lO4kucH7GuSsWWadp4yqZuX1t/OkdshZhN98zA15QEUdDvvBlMYNhfKDRvydWzt7M5Bj8N271FoD9OatQCBHPNcePKCiemELD+nw9nWg7mhFnaMRLOjUn9GUGsLwCC1xfE3FERnneurI/gjQncSWZQ8DfWEidTD3Rdwb/ci8eyU=
+	t=1784668257; cv=none; b=I/+HJuKorgQv1bHoqMOSIiXazVSCTCFx/dWmzIwhrNxEu3fVxmW0sgMBVKM7zYtPzaBOM2y3hbXAXOWwSN8zfTdblgLrfJxogCqvhBVkyjvqYNJq5FrXWNCK9C8J8qkvsPYF0ZYOUoDmFTJF8ZkLbBPjUUZmz3NahXmz9otSMuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668254; c=relaxed/simple;
-	bh=Eg1XBPRYgNNEjwE6/2vddP2e2evOsIxolrnAD0gySRc=;
+	s=arc-20240116; t=1784668257; c=relaxed/simple;
+	bh=vjLW1I6G25lsgtRR0hpKE/aGj98VthlOGY43ia6wemw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OW+bB7yy9UWuqouatHrTNCrEhK6MFF9dphtLTE2T05MftpTxDX/DR6PWHCIl0vC+knkXVJKqwutiP/adyWuuNsniePJ9dpE3xKmMsL4AM/NBoUO8PQLOZQsaa6vllRzCJawMChieZvCZAq+CsSwxpXESDz0LAqfjrJee3o8nPnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOWzuhmz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S8/3XQ7IXsOk+Pa0Zbgiw/6/Z3K6Rw+S4dg7W7z9y++KHGXHApEUGbj63g1691ZaVekjvr9JvrhaEcH2j7gEP2WB1ZtbMrt35nA7YRXo6QJaQXjDHgumRQr4DYaek5nBsVY7mAPDx2oMP98pSVJAH3AtX48YlA47u0yrCCYQEqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gAQjlzfi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOWzuhmz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17FF11F00A3A;
-	Tue, 21 Jul 2026 21:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gAQjlzfi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD1B1F000E9;
+	Tue, 21 Jul 2026 21:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668253;
-	bh=0zJtMuzMsw6U98e/Q33DG6/OJfaM/hptNnGH+T7/H10=;
+	s=korg; t=1784668256;
+	bh=nKVOiVYIgNN3h0P9Q59O7IQZ4iRQxO41tBgD3PO/Sa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pOWzuhmzNC/uQ7qKZUl82fVW9Q5Gsr4yg/GJ8M1vn/uXrxeEkZmR+x7YlRKVNF3+x
-	 mRlZmYCZMVa7TIVz/YaIMcW9Sdw4W8+VsLusb6JHnxVu031nIlbFpmllG/PSVOZQdW
-	 tSICo8JlLJL2EOb1U28WNYGxVp92niO9PlFFUleU=
+	b=gAQjlzfikLo9w9zpBeIXrlgNekvT9cA+XO4E9BoJHsAIeUS1Ox43yyTrC+Dv5+b74
+	 ozk/D4g9P8ElD4+MpeM7XziBTHE8YdibZYAbo2vDy3oatnaEqFIkh/bpLYaRgp2Pu1
+	 0xOJA4PBoyDXHimIfXURGee9L7B7VGnHsechcm/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 0099/1067] USB: chaoskey: Fix slab-use-after-free in chaoskey_release()
-Date: Tue, 21 Jul 2026 17:11:40 +0200
-Message-ID: <20260721152426.804898074@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 6.1 0108/1067] staging: media: atomisp: reduce load_primary_binaries() stack usage
+Date: Tue, 21 Jul 2026 17:11:49 +0200
+Message-ID: <20260721152427.004613021@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,65 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit abf76d3239dee97b66e7241ad04811f1ce562e28 upstream.
+commit f4d51e55dd47ef467fbe37d8575e20eee41b092d upstream.
 
-The chaoskey driver has a use-after-free bug in its release routine.
-If the user closes the device file after the USB device has been
-unplugged, a debugging log statement will try to access the
-usb_interface structure after it has been deallocated:
+The load_primary_binaries() function is overly complex and has som large
+variables on the stack, which can cause warnings depending on CONFIG_FRAME_WARN
+setting:
 
-	BUG: KASAN: slab-use-after-free in dev_driver_string (drivers/base/core.c:2406)
-	Read of size 8 at addr ffff888168e8a0b8 by task chaoskey_raw_re/10106
+drivers/staging/media/atomisp/pci/sh_css.c: In function 'load_primary_binaries':
+drivers/staging/media/atomisp/pci/sh_css.c:5260:1: error: the frame size of 1560 bytes is larger than 1536 bytes [-Werror=frame-larger-than=]
 
-	Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-	Call Trace:
-	 <TASK>
-	 dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-	 print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
-	 kasan_report (mm/kasan/report.c:595)
-	 dev_driver_string (drivers/base/core.c:2406)
-	 __dynamic_dev_dbg (lib/dynamic_debug.c:906)
-	 chaoskey_release (drivers/usb/misc/chaoskey.c:323)
-	 __fput (fs/file_table.c:510)
-	 fput_close_sync (fs/file_table.c:615)
-	 __x64_sys_close (fs/open.c:1507 fs/open.c:1492 fs/open.c:1492)
-	 do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
-	 entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+Half of the stack usage is for the prim_descr[] array, but only one
+member of the array is used at any given time.
 
-The driver's last reference to the interface structure is dropped in
-the chaoskey_free() routine, so the code must not use the interface --
-even in a debugging statement -- after that routine returns.
-(Exception: If we know that another reference is held by someone else,
-such as the device core while the disconnect routine runs, there's no
-problem.  Thanks to Johan Hovold for pointing this out.)
+Reduce the stack usage by turning the array into a single structure.
 
-Since the bad access is part of an unimportant debugging statement,
-we can fix the problem simply by removing the whole statement.
-
-Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Closes: https://lore.kernel.org/linux-usb/20EC9664-054E-438B-B411-2145D347F97B@gmail.com/
-Tested-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: 66e3e591891d ("usb: Add driver for Altus Metrum ChaosKey device (v2)")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/bb5b1dc6-eb59-43e1-8d26-51e658e88bbe@rowland.harvard.edu
+Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/chaoskey.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/staging/media/atomisp/pci/sh_css.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/misc/chaoskey.c
-+++ b/drivers/usb/misc/chaoskey.c
-@@ -321,7 +321,6 @@ bail:
- 	mutex_unlock(&dev->lock);
- destruction:
- 	mutex_unlock(&chaoskey_list_lock);
--	usb_dbg(interface, "release success");
- 	return rv;
- }
+--- a/drivers/staging/media/atomisp/pci/sh_css.c
++++ b/drivers/staging/media/atomisp/pci/sh_css.c
+@@ -5464,7 +5464,6 @@ static int load_primary_binaries(
+ 	struct ia_css_capture_settings *mycs;
+ 	unsigned int i;
+ 	bool need_extra_yuv_scaler = false;
+-	struct ia_css_binary_descr prim_descr[MAX_NUM_PRIMARY_STAGES];
  
+ 	IA_CSS_ENTER_PRIVATE("");
+ 	assert(pipe);
+@@ -5637,15 +5636,16 @@ static int load_primary_binaries(
+ 
+ 	/* Primary */
+ 	for (i = 0; i < mycs->num_primary_stage; i++) {
++		struct ia_css_binary_descr prim_descr;
+ 		struct ia_css_frame_info *local_vf_info = NULL;
+ 
+ 		if (pipe->enable_viewfinder[IA_CSS_PIPE_OUTPUT_STAGE_0] &&
+ 		    (i == mycs->num_primary_stage - 1))
+ 			local_vf_info = &vf_info;
+-		ia_css_pipe_get_primary_binarydesc(pipe, &prim_descr[i],
++		ia_css_pipe_get_primary_binarydesc(pipe, &prim_descr,
+ 						   &prim_in_info, &prim_out_info,
+ 						   local_vf_info, i);
+-		err = ia_css_binary_find(&prim_descr[i], &mycs->primary_binary[i]);
++		err = ia_css_binary_find(&prim_descr, &mycs->primary_binary[i]);
+ 		if (err) {
+ 			IA_CSS_LEAVE_ERR_PRIVATE(err);
+ 			return err;
 
 
