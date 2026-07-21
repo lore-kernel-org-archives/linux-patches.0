@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D3C2D7DF1;
-	Tue, 21 Jul 2026 20:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC8E24A078;
+	Tue, 21 Jul 2026 20:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664718; cv=none; b=pArzunPIyWc3NU8k1vueybErvX4LpxrNiAXQbjAU8Vap/27GD8rfRIpkPpt+EhpOeD6AazUoibTaN29VuN3CNx665yQoI6X5UgdyxUjSBKNT7FPZcI6Ea7iIJ/bvFYDVrYk0tOwI1UH1zEw6iMZsGMkAd3zIMExBvF5m6SASa9I=
+	t=1784664721; cv=none; b=InLy3tLvjMWwA7lFBvb5FoxNkAz3cZs3i01d5Ad5PDv0Op20YZCFGtdMz5BSzpDppxoz3pEqO+BI0reudoSWPU8w8s6B0b5DNWE4Dm+rLfhSnjAuQ1XzOPAb310u5wROa0nCY+hdimx9KLbXKQHT3JQBwCNn3GqIKP+97JOqJqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664718; c=relaxed/simple;
-	bh=+0hKRkVxS9gUnVelZ8oCBWSr/4aTfzO+sx+4hZmHnfo=;
+	s=arc-20240116; t=1784664721; c=relaxed/simple;
+	bh=XyKIimOUNBPDXV6rw+VVT6+kBjgO0vHC4UQgSWttNJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SSlOBlMXdy9iWFeXLajIARfL75cnswV4AHf17aI1fWfTXSbYLnynXJw3ItxFasFCKpfQP7ZGZS2PFa3xIRM8LazgYiRb8hcVKmFq+YOrqkNGhXpPTr+S+K9fooiDzP2hFiS5nB+51MuhrECSInuLcqqNxk0M7B5uTJlhWfPPw5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgNOkdPk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FQ6VnxknQAK+86bGjJUxdzdRKU36a1rbb04CyY+I9I1qzqsGipGh0HbUfZLw+12nGQBWeQIjGlSb6aoPykkGR8gKBo8aYlR04gPMbBLN0/Eh+QedGItuQh73vIBZGh4pTC2rpkEDvLnZrW0aq6Yj/X4s1cZGJKvelhcv5ny+wH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u72+cDHT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgNOkdPk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF4D1F00A3A;
-	Tue, 21 Jul 2026 20:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u72+cDHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0B31F000E9;
+	Tue, 21 Jul 2026 20:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664717;
-	bh=P/edV7zHzrU8MxBgU27QSenUiZFZEIoquDB+W+QVlHc=;
+	s=korg; t=1784664719;
+	bh=sSTRXbfpug6P5phQQ9jKpGP0vNngSE49i2JrWQrb8sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GgNOkdPksD/jX12DrLSdbNXcrSPCTxApUZUMpxzXgf3LdbTwadwpyKAeiwUniiukv
-	 qH88KiufKHfkTSrRphzElOfAUUULksM1CuPfywXA0GOhbhPyBJjdRtVnt+6kS6DfXd
-	 SDcdObPgwrbp5Z5G+FFJSLLyHkRZxu1TvDEopHIQ=
+	b=u72+cDHTCAycN8z6FcSzWCmjECTXTgVbnVAxgedkykB8Onl/4d6F2ClxVORMLhq4n
+	 lcCP2JQ89VESSAni3FAS72kqE6XtD+mKT6ZS7Z5UxS+Xwx8IXz4+zXutSUofaN0Ikd
+	 gS/dq8VfLFWyuDwgBYw6ZHcWt1FtNHl2eO0nYFDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0032/1266] i2c: core: fix irq domain leak on adapter registration failure
-Date: Tue, 21 Jul 2026 17:07:49 +0200
-Message-ID: <20260721152442.515765484@linuxfoundation.org>
+Subject: [PATCH 6.6 0006/1266] Bluetooth: btmtk: apply the common btmtk_fw_get_filename
+Date: Tue, 21 Jul 2026 17:07:23 +0200
+Message-ID: <20260721152441.934327732@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,47 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit 8ce19524e4cc2462685f596a6402fbd8fb984ab2 ]
+[ Upstream commit 7f935b21bee4d8a9f26b57ae6c3682161b247809 ]
 
-Make sure to tear down the host notify irq domain on adapter
-registration failure to avoid leaking it.
+Apply the common btmtk_fw_get_filename to avoid the similar coding in each
+driver.
 
-This issue was flagged by Sashiko when reviewing another adapter
-registration fix.
-
-Fixes: 4d5538f5882a ("i2c: use an IRQ to report Host Notify events, not alert")
-Cc: stable@vger.kernel.org	# 4.10
-Cc: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Stable-dep-of: ba14d7cf2fe7 ("i2c: core: fix adapter registration race")
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 5c5e8c52e3ca ("Bluetooth: btmtk: move btusb_mtk_[setup, shutdown] to btmtk.c")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core-base.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btmtksdio.c |  3 +++
+ drivers/bluetooth/btusb.c     | 10 ++--------
+ 2 files changed, 5 insertions(+), 8 deletions(-)
 
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -1551,7 +1551,7 @@ static int i2c_register_adapter(struct i
- 	res = device_register(&adap->dev);
- 	if (res) {
- 		pr_err("adapter '%s': can't register device (%d)\n", adap->name, res);
--		goto out_list;
-+		goto err_remove_irq_domain;
- 	}
+diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
+index e249aa7587833b..2be38c8e353efb 100644
+--- a/drivers/bluetooth/btmtksdio.c
++++ b/drivers/bluetooth/btmtksdio.c
+@@ -1111,6 +1111,9 @@ static int btmtksdio_setup(struct hci_dev *hdev)
+ 			return err;
+ 		}
  
- 	adap->debugfs = debugfs_create_dir(dev_name(&adap->dev), i2c_debugfs_root);
-@@ -1599,6 +1599,8 @@ out_reg:
- 	init_completion(&adap->dev_released);
- 	device_unregister(&adap->dev);
- 	wait_for_completion(&adap->dev_released);
-+err_remove_irq_domain:
-+	i2c_host_notify_irq_teardown(adap);
- out_list:
- 	mutex_lock(&core_lock);
- 	idr_remove(&i2c_adapter_idr, adap->nr);
++		btmtk_fw_get_filename(fwname, sizeof(fwname), dev_id,
++				      fw_version, 0);
++
+ 		snprintf(fwname, sizeof(fwname),
+ 			 "mediatek/BT_RAM_CODE_MT%04x_1_%x_hdr.bin",
+ 			 dev_id & 0xffff, (fw_version & 0xff) + 1);
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 9b2857a8e7ac1f..048929e336cf64 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2940,14 +2940,8 @@ static int btusb_mtk_setup(struct hci_dev *hdev)
+ 	case 0x7922:
+ 	case 0x7961:
+ 	case 0x7925:
+-		if (dev_id == 0x7925)
+-			snprintf(fw_bin_name, sizeof(fw_bin_name),
+-				 "mediatek/mt%04x/BT_RAM_CODE_MT%04x_1_%x_hdr.bin",
+-				 dev_id & 0xffff, dev_id & 0xffff, (fw_version & 0xff) + 1);
+-		else
+-			snprintf(fw_bin_name, sizeof(fw_bin_name),
+-				 "mediatek/BT_RAM_CODE_MT%04x_1_%x_hdr.bin",
+-				 dev_id & 0xffff, (fw_version & 0xff) + 1);
++		btmtk_fw_get_filename(fw_bin_name, sizeof(fw_bin_name), dev_id,
++				      fw_version, 0);
+ 
+ 		err = btmtk_setup_firmware_79xx(hdev, fw_bin_name,
+ 						btmtk_usb_hci_wmt_sync);
+-- 
+2.53.0
+
 
 
