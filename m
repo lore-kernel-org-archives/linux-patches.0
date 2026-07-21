@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB0046A611;
-	Tue, 21 Jul 2026 16:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30DF46C4B9;
+	Tue, 21 Jul 2026 16:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649709; cv=none; b=d15vcoHaTzw+Z/KzRsli+6gC/jVHhvSc0itm384qYX6VzLxKT9lR3R4dGwn8u1AP/M/D8qkBOYfol9b+3FP39iU40weamuSnmZvQzbG4JiIUXs9cAY521Cix1ctyZZZpei/2BtwmWf4B8PT5rg4NgO7Q7QpD2QlXdVLAebcFH3s=
+	t=1784649711; cv=none; b=nMr4FGVIfOTQDCT4YjGJDofbGLIoZGVuF/T0ykJ0sIvFTizNAHNmZwyJgADdt9anOaMspYO/kSkvADbF3Cnhx4Wr3h9pMrj+x0IOloNmQtvDEfex7XMwsY8tR9fpf8ToW3m0XLuQ79GPbq5NNjegAaA0iCoE+Vw7zn2DBjzz/18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649709; c=relaxed/simple;
-	bh=yud2988m4cI87kFBYxTHWvr0fCDByG7VPw6kluaCm98=;
+	s=arc-20240116; t=1784649711; c=relaxed/simple;
+	bh=OiP4MdAhuPwAcx/l4q2i+P0ElyAaVsqvlBElhcXA3PY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PnsllRzmi+1FdVXwK5igfglVEtun3qCR7KYv2qp3BpLlNKJ/AdFNheTmRt+ZtHurVjOG/bycVguSYrD0Ay15iZzZFZhv2AQZu9y33tM+yeQ29C49h2AlarGLjTBGSERMkVYo19lOypcZ25UeRmNCP2srHQMDECKzILAyMUWhGCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXf7Nq6B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p2qQ6BHOabSjM1wUo86yrFJ8RsUPc3bjyHU3rj+yvhz3OnsiTNWIfNGkzD8GCG6NaGwsS1YzAgoz9s16SPFym3TuQvQBkFFUPIGkMcYANuPoG5zZG42ET97XAzRQ/NvLv6Ro1vqcaQ4DsnokyULf4kp8o9oz7HWVnI/X2FN7ea8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tyd5Bbd9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXf7Nq6B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913FE1F00A3A;
-	Tue, 21 Jul 2026 16:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tyd5Bbd9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358B51F000E9;
+	Tue, 21 Jul 2026 16:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649708;
-	bh=V2uRvpEy6+HfyWEjQkEhwSFVo/cY7fUoGq80RVyLqQQ=;
+	s=korg; t=1784649710;
+	bh=ac+TZKU88ZbJxtct1CaZg1qseng7J4uzMznuXknd0/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lXf7Nq6BIqeCfiZ+eVFUTy8riIG0Nxmb3FEWRnHr6UghKzQ3/5gmoLTsLLrhDntIx
-	 KWqIziXYaSJdgxhfYzIxx2+0eqD8ulSzvNdomaqRdEukchq5LaJ/OsjBJ6SSmbUanJ
-	 AGrat0mQfMOuLqsEJWJbeMv7/obIb2gZ7697HUAg=
+	b=tyd5Bbd96xDl67O9TdOCZxji2kAmWZfvIlgpZmTfD5EVD9OViPHSo8VGBrzuBFB+U
+	 ZNwouKmLMdX7y1dnMtUiy5C9ap8SUx1qdrwXHRDjfXS71l4VMMB7We8w+oMLNQ8kuW
+	 vDMVBuEOfzyKXfkQGZ5axyo8h9lOkMKaF4wWUdcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zijun Hu <zijun.hu@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0677/2077] Bluetooth: hci_qca: fix NULL pointer dereference in qca_setup() for non-serdev device
-Date: Tue, 21 Jul 2026 17:05:50 +0200
-Message-ID: <20260721152608.765246104@linuxfoundation.org>
+Subject: [PATCH 7.1 0678/2077] Bluetooth: hci_qca: fix NULL pointer dereference in qca_dmp_hdr() for non-serdev device
+Date: Tue, 21 Jul 2026 17:05:51 +0200
+Message-ID: <20260721152608.788607135@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,59 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit 3ec629fee178d429f01ae843e4ea888de93012bf ]
+[ Upstream commit 6b8cbcf08de0db62254d1981f83db0f94681ccd9 ]
 
 hu->serdev is NULL for hci_uart attached via non-serdev paths, but
-qca_setup() unconditionally calls serdev_device_get_drvdata(hu->serdev)
-and dereferences the result, causing a NULL pointer dereference.
+qca_dmp_hdr() unconditionally dereferences hu->serdev->dev.driver->name,
+causing a NULL pointer dereference.
 
-Fix by guarding the dereference with a NULL check, consistent with the
-rest of qca_setup().
+Fix by guarding the dereference with a NULL check and falling back to
+"hci_ldisc_qca" for the non-serdev case.
 
-Fixes: 22d893eec0d5 ("Bluetooth: hci_qca: Refactor HFP hardware offload capability handling")
+Fixes: 06d3fdfcdf5c ("Bluetooth: hci_qca: Add qcom devcoredump support")
 Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_qca.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/bluetooth/hci_qca.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 34500137df2c10..cc7b34a61fa783 100644
+index cc7b34a61fa783..2444471956197b 100644
 --- a/drivers/bluetooth/hci_qca.c
 +++ b/drivers/bluetooth/hci_qca.c
-@@ -1916,9 +1916,12 @@ static int qca_setup(struct hci_uart *hu)
- 	const char *rampatch_name = qca_get_rampatch_name(hu);
- 	int ret;
- 	struct qca_btsoc_version ver;
--	struct qca_serdev *qcadev = serdev_device_get_drvdata(hu->serdev);
-+	struct qca_serdev *qcadev = NULL;
- 	const char *soc_name;
+@@ -1028,7 +1028,7 @@ static void qca_dmp_hdr(struct hci_dev *hdev, struct sk_buff *skb)
+ 	skb_put_data(skb, buf, strlen(buf));
  
-+	if (hu->serdev)
-+		qcadev = serdev_device_get_drvdata(hu->serdev);
-+
- 	ret = qca_check_speeds(hu);
- 	if (ret)
- 		return ret;
-@@ -1980,7 +1983,7 @@ static int qca_setup(struct hci_uart *hu)
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
--		if (qcadev->bdaddr_property_broken)
-+		if (qcadev && qcadev->bdaddr_property_broken)
- 			hci_set_quirk(hdev, HCI_QUIRK_BDADDR_PROPERTY_BROKEN);
+ 	snprintf(buf, sizeof(buf), "Driver: %s\n",
+-		hu->serdev->dev.driver->name);
++		 hu->serdev ? hu->serdev->dev.driver->name : "hci_ldisc_qca");
+ 	skb_put_data(skb, buf, strlen(buf));
+ }
  
- 		hci_set_aosp_capable(hdev);
-@@ -2073,7 +2076,7 @@ static int qca_setup(struct hci_uart *hu)
- 	else
- 		hu->hdev->set_bdaddr = qca_set_bdaddr;
- 
--	if (qcadev->support_hfp_hw_offload)
-+	if (qcadev && qcadev->support_hfp_hw_offload)
- 		qca_configure_hfp_offload(hdev);
- 
- 	qca->fw_version = le16_to_cpu(ver.patch_ver);
 -- 
 2.53.0
 
