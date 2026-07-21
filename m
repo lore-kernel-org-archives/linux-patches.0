@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B3946D2CA;
-	Tue, 21 Jul 2026 18:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E09F46D57B;
+	Tue, 21 Jul 2026 18:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658038; cv=none; b=MwCrUdngXZYCD7/L5c8AeN2HAIX1ITU4dXJKmrSV0/xnh4BZRsEsIR2bTmcDJJn84nNBetr6FthDX32eN4hBhMSbcGKCKjSLP7nSFml57wBDmLdK1F6HgVLrgG11DCxKl19ZOaI+xo8h4Jhbo2MjcdXhtkAnxHeRqpfU0X0U0Vs=
+	t=1784658041; cv=none; b=JQ4WL/LxjM3GgN9wr04nMQ8wDPxiNFDpNNRs11FwoK1uP02elxbSThe//F/C7b/C6C4PIsh7y9KyMXlwOOAJOit6zUG+xpRUk1DjH2BlSfxWXkuj6Bw8NKHKV+LtjZw3rp+7XpI3KCWBNm4eCEH0lsb5W6sgxBzy+bCck5J58Zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658038; c=relaxed/simple;
-	bh=vkTPY563AToUudkgCGK3sWt02e7/pCNe08qoaeK7DRk=;
+	s=arc-20240116; t=1784658041; c=relaxed/simple;
+	bh=m+7Lo3N6WwujkDCJXBpjKRE2BJh6SqpKCT8vIa1MQMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R+yQuJrC9OEzdfwiZENgyqQrcIlvnBCILvubCQSFNMmMIyFdszm4zoC2I63v9pO5FtzjetSlGwMxGO0kb/p95D+fxD1Mz2toVE8xsAfb8hjjupBbke+B9AyCx1JSEa2eFCX/QzGTYSI+0WbK0RvNxMDDJSzEdbaB4StvbldEULc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=apJRhQDZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CyZXfaERP268Zt1KGCa1FazuZ+FVM+dmhR4kGcSRmbC+cDjeKMObm8bWERMbk0URCRC8nWxD5/Rg3px0sYjwB/OHCsDLd6UKZrPPuyvnvvMasoE/eQOEBB6VOe1dC4A3IYNmqsDezD29U1z+gfv671DnancbSYvPJbWkUJeyNKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OTZAwHfA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="apJRhQDZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5FF1F000E9;
-	Tue, 21 Jul 2026 18:20:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OTZAwHfA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D7F1F00A3D;
+	Tue, 21 Jul 2026 18:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658037;
-	bh=qc7iROAOvPOFTkL1ZfyBxR5V5NFGSWFedTBFEzpKGy8=;
+	s=korg; t=1784658040;
+	bh=xzE0UQBbRIDbvQXUzBuxoNRv6rGu/zyCwPuW+iNBaF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=apJRhQDZGL2jituvJFm7uql9T/+cVs4G6gsPqQDsnkEOqNV2I+NKnN1lLZLyvxF2K
-	 wrq3c8C1h63kpgpOKSdfu/fSsYggtAlO6jvPSJJuIM8T/Zt5RB+YAuDFbXZS/VN3e7
-	 HSIV3cDvgAlNKAYQbz0sLuyY0ldFPtvqF18LU5a4=
+	b=OTZAwHfAtOQrDACrgK+ivOm3/pUWHuQkUYKj15CBq7EaoudoeuU2cx9fe2goE7IiW
+	 tdonObWDiTrZMOFdUrusX2Ql2DaWDj4oxkxm3GHLQ7Vf6kJy7V239edFn0I0/P4DDD
+	 ywbZFxSCiZj9L/shtvv6A8UwTbj4o1PW9XcEjmG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Gil Portnoy <dddhkts1@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0975/1611] drm/panthor: Fix potential invalid pointer deref in group_process_tiler_oom()
-Date: Tue, 21 Jul 2026 17:18:11 +0200
-Message-ID: <20260721152537.322775811@linuxfoundation.org>
+Subject: [PATCH 6.18 0993/1611] ksmbd: fix use-after-free of fp->owner.name in durable handle owner check
+Date: Tue, 21 Jul 2026 17:18:29 +0200
+Message-ID: <20260721152537.728209851@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,41 +52,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Gil Portnoy <dddhkts1@gmail.com>
 
-[ Upstream commit b39436d0ba1571dbcda69d20ec567344b3eecfc7 ]
+[ Upstream commit 38637163501fd9e2f684b8cd275d0db5d79f37c6 ]
 
-If heaps is an ERR_PTR(), panthor_heap_pool_put() will deref an invalid
-pointer. Make sure we set it to NULL in that case.
+Two concurrent SMB2 durable reconnects (DH2C/DHnC) on the same
+persistent_id race the fp->owner.name compare-read in
+ksmbd_vfs_compare_durable_owner() against the kfree() in
+ksmbd_reopen_durable_fd()'s reopen-success path. fp->owner.name is a
+standalone kstrdup() buffer whose lifetime is independent of the fp
+refcount, and the two sites share no lock: the compare reads the buffer
+while the reopen frees it, so the strcmp() can dereference freed memory.
 
-Fixes: de8548813824 ("drm/panthor: Add the scheduler logical block")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260625-panthor-signal-from-irq-v5-0-8836a74e0ef9@collabora.com?part=2
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260625-panthor-misc-fixes-v1-4-b67ed973fea6@collabora.com
+Commit 7ce4fc40018d ("ksmbd: fix durable reconnect double-bind race in
+ksmbd_reopen_durable_fd") made the fp->conn claim atomic under
+global_ft.lock (closing the owner.name double-free and the ksmbd_file
+write-UAF), but the compare-read versus reopen-free pair was left
+unserialized.
+
+  BUG: KASAN: slab-use-after-free in strcmp+0x2c/0x80
+  Read of size 1 by task kworker
+    strcmp
+    ksmbd_vfs_compare_durable_owner
+    smb2_check_durable_oplock
+    smb2_open
+  Freed by task kworker:
+    kfree
+    ksmbd_reopen_durable_fd
+    smb2_open
+  Allocated by task kworker:
+    kstrdup
+    session_fd_check
+    smb2_session_logoff
+  The buggy address belongs to the cache kmalloc-8
+
+Serialize both sides of the race with fp->f_lock.  The global durable
+file-table lock still protects the durable reconnect claim, but
+fp->owner.name is per-open state and does not need to block unrelated
+durable table lookups or reconnects.  The teardown is left at its
+existing location after the reopen-success point so that an __open_id()
+rollback still retains owner.name for a later legitimate reconnect to
+verify.
+
+Fixes: 49110a8ce654 ("ksmbd: validate owner of durable handle on reconnect")
+Assisted-by: Henry (Claude):claude-opus-4
+Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
+Co-developed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_sched.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/server/vfs_cache.c | 29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
-index 6930053009d5ce..749fe34b06db28 100644
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -1488,7 +1488,10 @@ static int group_process_tiler_oom(struct panthor_group *group, u32 cs_id)
- 	if (unlikely(csg_id < 0))
- 		return 0;
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index a1f59a8e16e281..fad426fe3d14d6 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -980,16 +980,21 @@ void ksmbd_stop_durable_scavenger(void)
+ static int ksmbd_vfs_copy_durable_owner(struct ksmbd_file *fp,
+ 		struct ksmbd_user *user)
+ {
++	char *name;
++
+ 	if (!user)
+ 		return -EINVAL;
  
--	if (IS_ERR(heaps) || frag_end > vt_end || vt_end >= vt_start) {
-+	if (IS_ERR(heaps)) {
-+		ret = -EINVAL;
-+		heaps = NULL;
-+	} else if (frag_end > vt_end || vt_end >= vt_start) {
- 		ret = -EINVAL;
- 	} else {
- 		/* We do the allocation without holding the scheduler lock to avoid
+ 	/* Duplicate the user name to ensure identity persistence */
+-	fp->owner.name = kstrdup(user->name, GFP_KERNEL);
+-	if (!fp->owner.name)
++	name = kstrdup(user->name, GFP_KERNEL);
++	if (!name)
+ 		return -ENOMEM;
+ 
++	spin_lock(&fp->f_lock);
+ 	fp->owner.uid = user->uid;
+ 	fp->owner.gid = user->gid;
++	fp->owner.name = name;
++	spin_unlock(&fp->f_lock);
+ 
+ 	return 0;
+ }
+@@ -1007,18 +1012,24 @@ static int ksmbd_vfs_copy_durable_owner(struct ksmbd_file *fp,
+ bool ksmbd_vfs_compare_durable_owner(struct ksmbd_file *fp,
+ 		struct ksmbd_user *user)
+ {
+-	if (!user || !fp->owner.name)
++	bool ret = false;
++
++	if (!user)
+ 		return false;
+ 
++	spin_lock(&fp->f_lock);
++	if (!fp->owner.name)
++		goto out;
++
+ 	/* Check if the UID and GID match first (fast path) */
+ 	if (fp->owner.uid != user->uid || fp->owner.gid != user->gid)
+-		return false;
++		goto out;
+ 
+ 	/* Validate the account name to ensure the same SecurityContext */
+-	if (strcmp(fp->owner.name, user->name))
+-		return false;
+-
+-	return true;
++	ret = (strcmp(fp->owner.name, user->name) == 0);
++out:
++	spin_unlock(&fp->f_lock);
++	return ret;
+ }
+ 
+ static bool session_fd_check(struct ksmbd_tree_connect *tcon,
+@@ -1172,9 +1183,11 @@ int ksmbd_reopen_durable_fd(struct ksmbd_work *work, struct ksmbd_file *fp)
+ 	}
+ 	up_write(&ci->m_lock);
+ 
++	spin_lock(&fp->f_lock);
+ 	fp->owner.uid = fp->owner.gid = 0;
+ 	kfree(fp->owner.name);
+ 	fp->owner.name = NULL;
++	spin_unlock(&fp->f_lock);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
