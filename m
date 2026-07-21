@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BE52D839C;
-	Tue, 21 Jul 2026 16:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B982D839C;
+	Tue, 21 Jul 2026 16:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649663; cv=none; b=JU/Pm48oRgLby3f8VFuo1WRr5lFVmkBWIuIS1gXDz0kPSrLM/jUOYeSy3Iw1sTmkzfDV7AB6KUQWbHHpb+WScqDGRraQ8UUFRlVntckawgwMI/qHQRkePIQpinhhIdftF9bXi1fUnE6yqEhPANYvwKz0IUnSKtm46f19vpEchuI=
+	t=1784649666; cv=none; b=nTp/K2hxaBr/CCLm/RUKijoyJBNSz2C/4bPyyV8iJ5K7F+JT/FUdFJF3MOhwHSs6xMSEoy57XU/HZ1yiVLz5muzUZkympCzlDpvBBkTR9xU9IWGGKzxbailv6nc88/L22TO5KpXvveNAWNOhNEjCRhEHTaZ6iDFUX9SWtnxz6aM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649663; c=relaxed/simple;
-	bh=TuwTpoZODeZhNzt5bPpufeGzMF1BA0AQlRylbJ07Bok=;
+	s=arc-20240116; t=1784649666; c=relaxed/simple;
+	bh=DqWbw08OYtrk6MuWA3EuCKHIrV2AZ+kddISA4XKJ4Qs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UsQAsab5/lTgf1WD/m20bDgnVtKG37FDxrZqW5Ctm8GZVHyNePI8Mj+Y/WFMmgRXPZ1TiIlHRXGNWV5wEqNqp7sy2c8TzQ0MO/qv8PbBNm82zEprFP9y9F575nSyQj2cRROpyvLlsshmdEEAWgJgysNwiq3CH24QOSPQjGRbEDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3KG1X0Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KVA6aySmBylniLGxugjau3HsF9NLzSVXPRs13Oag+1se9u8PeCFb3lie+51bGvGj5wWvIH/xJqbh2Lw1HGcEvDqbmoWvuy04/AfdI50XPdOtVspY8ldrL5RnlxN53AhkUlreZh3fJ8TMM/28JTZ3VoRCcwetuMq1Kvc6y8zEXT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aoi0KT+j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3KG1X0Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D2831F000E9;
-	Tue, 21 Jul 2026 16:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aoi0KT+j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9BB1F000E9;
+	Tue, 21 Jul 2026 16:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649662;
-	bh=wKVSUX4U9E/3NoRFNvA5eMxJ8C3vlb/QUDFv117FApw=;
+	s=korg; t=1784649665;
+	bh=k974e2AehDaX+qgKNbiJP2L0FBx/yxZGuM0+mIaJvQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U3KG1X0QtVIUQVpAVnnGP0iVW/njh00YmwYbMdgt542v7QV45OJaPww+jQxVIlepf
-	 W4/nTBoJF0iexq8alJdIppgQn5Pen9W9jH+PHAZ1ewoPMcQcjAPIIJob8GSc2A5sav
-	 jLfWdrBjzG9LJ5TYk/HJ5deTS1Zk+yNuYyg9DoB8=
+	b=Aoi0KT+jlXi8flsAyOhtTdd6GBPvtgjIpTB4FimzSPmp5Qyi9rYzRghVwxY+0iikD
+	 oKf+gF65PxSodN8UuJm8yYY49Ck2oH+MQSgUJI+cLdUD130vYK3dlEZVmhw8ZilfkC
+	 Twyw3KEgjPP8gozIgeqmMQpRUGUbJyRZuStpX7cQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Przywara <andre.przywara@arm.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0662/2077] pinctrl: sunxi: a523: Remove unneeded IRQ remuxing flag
-Date: Tue, 21 Jul 2026 17:05:35 +0200
-Message-ID: <20260721152608.419864650@linuxfoundation.org>
+Subject: [PATCH 7.1 0663/2077] pinctrl: airoha: an7581: add missed gpio32 pin group
+Date: Tue, 21 Jul 2026 17:05:36 +0200
+Message-ID: <20260721152608.442474244@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,64 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
 
-[ Upstream commit eaf84ff673409fa3dfc390c6afb53b641ee5acba ]
+[ Upstream commit bdc95d7e8de3eefa9fc062302625259c0b79136d ]
 
-The Allwinner A10 and H3 SoCs cannot read the state of a GPIO line when
-that line is muxed for IRQ triggering (muxval 6), but only if it's
-explicitly muxed for GPIO input (muxval 0). Other SoCs do not show this
-behaviour, so we added a optional workaround, triggered by a quirk bit,
-which triggers remuxing the pin when it's configured for IRQ, while we
-need to read its value.
+gpio32 pin group is missed for an7581 SoC. This patch add it.
 
-For some reasons this quirk flag was copied over to newer SoCs, even
-though they don't show this behaviour, and the GPIO data register
-reflects the true GPIO state even with a pin muxed to IRQ trigger.
-
-Remove the unneeded quirk from the A523 family, where it's definitely
-not needed (confirmed by experiments), and where it actually breaks,
-because the workaround is not compatible with the newer generation
-pinctrl IP used in that chip.
-
-Together with a DT change this fixes GPIO IRQ operation on the A523
-family of SoCs, as for instance used for the SD card detection.
-
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Fixes: b8a51e95b376 ("pinctrl: sunxi: Add support for the secondary A523 GPIO ports")
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Acked-by: Chen-Yu Tsai <wens@kernel.org>
+Fixes: 1c8ace2d0725 ("pinctrl: airoha: Add support for EN7581 SoC")
+Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/sunxi/pinctrl-sun55i-a523-r.c | 1 -
- drivers/pinctrl/sunxi/pinctrl-sun55i-a523.c   | 1 -
- 2 files changed, 2 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-airoha.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pinctrl/sunxi/pinctrl-sun55i-a523-r.c b/drivers/pinctrl/sunxi/pinctrl-sun55i-a523-r.c
-index 69cd2b4ebd7d75..462aa1c4a5fa65 100644
---- a/drivers/pinctrl/sunxi/pinctrl-sun55i-a523-r.c
-+++ b/drivers/pinctrl/sunxi/pinctrl-sun55i-a523-r.c
-@@ -26,7 +26,6 @@ static const u8 a523_r_irq_bank_muxes[SUNXI_PINCTRL_MAX_BANKS] =
- static struct sunxi_pinctrl_desc a523_r_pinctrl_data = {
- 	.irq_banks = ARRAY_SIZE(a523_r_irq_bank_map),
- 	.irq_bank_map = a523_r_irq_bank_map,
--	.irq_read_needs_mux = true,
- 	.io_bias_cfg_variant = BIAS_VOLTAGE_PIO_POW_MODE_SEL,
- 	.pin_base = PL_BASE,
- };
-diff --git a/drivers/pinctrl/sunxi/pinctrl-sun55i-a523.c b/drivers/pinctrl/sunxi/pinctrl-sun55i-a523.c
-index 7d2308c37d29e6..b6f78f1f30ac4a 100644
---- a/drivers/pinctrl/sunxi/pinctrl-sun55i-a523.c
-+++ b/drivers/pinctrl/sunxi/pinctrl-sun55i-a523.c
-@@ -26,7 +26,6 @@ static const u8 a523_irq_bank_muxes[SUNXI_PINCTRL_MAX_BANKS] =
- static struct sunxi_pinctrl_desc a523_pinctrl_data = {
- 	.irq_banks = ARRAY_SIZE(a523_irq_bank_map),
- 	.irq_bank_map = a523_irq_bank_map,
--	.irq_read_needs_mux = true,
- 	.io_bias_cfg_variant = BIAS_VOLTAGE_PIO_POW_MODE_SEL,
- };
- 
+diff --git a/drivers/pinctrl/mediatek/pinctrl-airoha.c b/drivers/pinctrl/mediatek/pinctrl-airoha.c
+index 995ba6175c9504..80516622322875 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-airoha.c
++++ b/drivers/pinctrl/mediatek/pinctrl-airoha.c
+@@ -539,6 +539,7 @@ static const int en7581_gpio28_pins[] = { 41 };
+ static const int en7581_gpio29_pins[] = { 42 };
+ static const int en7581_gpio30_pins[] = { 43 };
+ static const int en7581_gpio31_pins[] = { 44 };
++static const int en7581_gpio32_pins[] = { 45 };
+ static const int en7581_gpio33_pins[] = { 46 };
+ static const int en7581_gpio34_pins[] = { 47 };
+ static const int en7581_gpio35_pins[] = { 48 };
+@@ -623,6 +624,7 @@ static const struct pingroup en7581_pinctrl_groups[] = {
+ 	PINCTRL_PIN_GROUP("gpio29", en7581_gpio29),
+ 	PINCTRL_PIN_GROUP("gpio30", en7581_gpio30),
+ 	PINCTRL_PIN_GROUP("gpio31", en7581_gpio31),
++	PINCTRL_PIN_GROUP("gpio32", en7581_gpio32),
+ 	PINCTRL_PIN_GROUP("gpio33", en7581_gpio33),
+ 	PINCTRL_PIN_GROUP("gpio34", en7581_gpio34),
+ 	PINCTRL_PIN_GROUP("gpio35", en7581_gpio35),
 -- 
 2.53.0
 
