@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D06946C4D9;
-	Tue, 21 Jul 2026 15:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CFA446C4C9;
+	Tue, 21 Jul 2026 15:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648580; cv=none; b=aI94nQgdMXKfgvwqnInOb0moVdjd8HcKwFLpjJfD8s3OQMEInh6m2HjS/xOhNLzcYoI7Kj3BpjJ/ihFrdM3uzjt2mfKAm0ysbFPcBKFCZeDwJQwkJRWqQo3d7GsHqOfXM6q/OyPflOk1FAB5+PSbc8o0Rx4MXDegg6mdcZVRQS8=
+	t=1784648583; cv=none; b=e+xtKMefrnl0p3J06yD/09uSXX5drO/DdG+jA0kzyQBq6UrM8LtcIpZJ5laOEX6BitI+rJxGAViLFCcPJW0AEov4TQOpnGyGbqBF3jkR+tGVJQV5/yAbSmAZrBKO6qTWJl2zmsUfoIVe1CVfpXvS4AikYrAz/uj72HdTOTNn2yU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648580; c=relaxed/simple;
-	bh=JDfKaXmCXv3410kGAhMUvp67zHLVDXJ/5VPQ5slWppw=;
+	s=arc-20240116; t=1784648583; c=relaxed/simple;
+	bh=0A37qLSok5Zozu5y1txlWSk6o0Y5/QcOpRgjMGTICvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b1iXP5n1smpII6UWYIykhqGsQH32jnv1gtbBK1hx/DSSOo/9Xw+/PSXB1U/Yu3o1Q2j4CZNIAloMPmRfyF7vTySeKFJ8RnhN90DtEjsBY4eInv3c1rgLc4k+9JJj+195u7qm8nYUK87B+rYODJpTGAOTzz8lRMB3qoTnw0li6Do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YE11/KkG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d0CoY8EI0Z+4Jwqng/KLnUNYRzJdsWd6rL7fNE753iWteRs2KK2TF4gaN+mY3r70rUl8ebKs/gIS63nFw35GXUnmIVQrA1CTJRLtmLBe3W71Cukb6wrEgwhY3jZguBiqDVDkbrbGCB03mEpTuQl0U+AZ3icq5CBLz4i1BBuBRCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2pCJAKq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YE11/KkG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A8E1F00A3A;
-	Tue, 21 Jul 2026 15:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2pCJAKq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832621F00A3A;
+	Tue, 21 Jul 2026 15:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648579;
-	bh=g0Wqhh980RoKsgQxE+jqYtFuNwQcqjy6XHtJrljiCWA=;
+	s=korg; t=1784648582;
+	bh=OCu3nM9WSSgrlfCjzI3KGEMEZR9QIMv9Uw4BEnGX16I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YE11/KkGGfZW4vUR8GtH2Zm/qsa0imjHP+2LgqR8eGY5yvKknJyfGwxaRA8Y5CGB/
-	 7L6uVzN73zY5GEcCALmKU8YBdTc2Zqyacmx1+A2kHJSo/a+SfMD6Xm3gkd6yAEAGSq
-	 lrQ7L878Ry9da8IX3y92DxuldlG3F5+xub8PDvi8=
+	b=n2pCJAKqL5d8opdZnKpwdK3C20ETm40lL3CyA00L1DTztF7g7eX9coJQ4zCguzIOo
+	 TSqGO0/E7t2M/pbaRUjKIPzGsNjDtBVWxZujyUXiJS7fPSYNlKAHj+bAV88qrdHgld
+	 Sz2LbkMxIw0762kcXdq9aPJaigY4U/e6SMm0plhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Yury Norov <yury.norov@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0252/2077] bitops: use common function parameter names
-Date: Tue, 21 Jul 2026 16:58:45 +0200
-Message-ID: <20260721152558.624024520@linuxfoundation.org>
+Subject: [PATCH 7.1 0253/2077] regulator: dt-bindings: mt6359: Drop regulator-name pattern restrictions
+Date: Tue, 21 Jul 2026 16:58:46 +0200
+Message-ID: <20260721152558.647307915@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,88 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 8a51b2e874f47a6094353b59ecae421f0968fe3a ]
+[ Upstream commit cdc517688ffa2c30a64a20b558a9ecbf046c70f1 ]
 
-Fix the function prototypes to use the common parameter name 'addr'
-instead of 'p' (common to arch-specific implementations of these
-functions).
-This avoids the kernel-doc warnings:
+The name of the regulator should match what the board design specifies
+for the power rail. There should be no limitations on what the name can
+be, and they definitely don't always follow the PMIC's own names.
 
-Warning: include/asm-generic/bitops/lock.h:19 function parameter 'p'
- not described in 'arch_test_and_set_bit_lock'
-Warning: include/asm-generic/bitops/lock.h:41 function parameter 'p'
- not described in 'arch_clear_bit_unlock'
-Warning: include/asm-generic/bitops/lock.h:59 function parameter 'p'
- not described in 'arch___clear_bit_unlock'
+Drop the restrictions on regulator-name.
 
-Fixes: 84c6591103db ("locking/atomics, asm-generic/bitops/lock.h: Rewrite using atomic_fetch_*()")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Yury Norov <yury.norov@gmail.com>
+Fixes: 8771456635d5 ("dt-bindings: regulator: Add document for MT6359 regulator")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://patch.msgid.link/20260514091520.2718987-3-wenst@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/bitops/lock.h | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ .../bindings/regulator/mt6359-regulator.yaml  | 43 -------------------
+ 1 file changed, 43 deletions(-)
 
-diff --git a/include/asm-generic/bitops/lock.h b/include/asm-generic/bitops/lock.h
-index 14d4ec8c5152d6..ffb73b6129e736 100644
---- a/include/asm-generic/bitops/lock.h
-+++ b/include/asm-generic/bitops/lock.h
-@@ -16,16 +16,16 @@
-  * It can be used to implement bit locks.
-  */
- static __always_inline int
--arch_test_and_set_bit_lock(unsigned int nr, volatile unsigned long *p)
-+arch_test_and_set_bit_lock(unsigned int nr, volatile unsigned long *addr)
- {
- 	long old;
- 	unsigned long mask = BIT_MASK(nr);
+diff --git a/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml b/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml
+index fe4ac9350ba035..ac925334ae833c 100644
+--- a/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml
+@@ -18,84 +18,41 @@ patternProperties:
+   "^buck_v(s1|gpu11|modem|pu|core|s2|pa|proc2|proc1|core_sshub)$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^v(s1|gpu11|modem|pu|core|s2|pa|proc2|proc1|core_sshub)$"
+-
+     unevaluatedProperties: false
  
--	p += BIT_WORD(nr);
--	if (READ_ONCE(*p) & mask)
-+	addr += BIT_WORD(nr);
-+	if (READ_ONCE(*addr) & mask)
- 		return 1;
+   "^ldo_v(ibr|rf12|usb|camio|efuse|xo22)$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^v(ibr|rf12|usb|camio|efuse|xo22)$"
+-
+     unevaluatedProperties: false
  
--	old = raw_atomic_long_fetch_or_acquire(mask, (atomic_long_t *)p);
-+	old = raw_atomic_long_fetch_or_acquire(mask, (atomic_long_t *)addr);
- 	return !!(old & mask);
- }
+   "^ldo_v(rfck|emc|a12|a09|ufs|bbck)$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^v(rfck|emc|a12|a09|ufs|bbck)$"
+-
+     unevaluatedProperties: false
  
-@@ -38,10 +38,10 @@ arch_test_and_set_bit_lock(unsigned int nr, volatile unsigned long *p)
-  * This operation is atomic and provides release barrier semantics.
-  */
- static __always_inline void
--arch_clear_bit_unlock(unsigned int nr, volatile unsigned long *p)
-+arch_clear_bit_unlock(unsigned int nr, volatile unsigned long *addr)
- {
--	p += BIT_WORD(nr);
--	raw_atomic_long_fetch_andnot_release(BIT_MASK(nr), (atomic_long_t *)p);
-+	addr += BIT_WORD(nr);
-+	raw_atomic_long_fetch_andnot_release(BIT_MASK(nr), (atomic_long_t *)addr);
- }
+   "^ldo_vcn(18|13|33_1_bt|13_1_wifi|33_2_bt|33_2_wifi)$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^vcn(18|13|33_1_bt|13_1_wifi|33_2_bt|33_2_wifi)$"
+-
+     unevaluatedProperties: false
  
- /**
-@@ -56,14 +56,14 @@ arch_clear_bit_unlock(unsigned int nr, volatile unsigned long *p)
-  * See for example x86's implementation.
-  */
- static inline void
--arch___clear_bit_unlock(unsigned int nr, volatile unsigned long *p)
-+arch___clear_bit_unlock(unsigned int nr, volatile unsigned long *addr)
- {
- 	unsigned long old;
+   "^ldo_vsram_(proc2|others|md|proc1|others_sshub)$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^vsram_(proc2|others|md|proc1|others_sshub)$"
+-
+     unevaluatedProperties: false
  
--	p += BIT_WORD(nr);
--	old = READ_ONCE(*p);
-+	addr += BIT_WORD(nr);
-+	old = READ_ONCE(*addr);
- 	old &= ~BIT_MASK(nr);
--	raw_atomic_long_set_release((atomic_long_t *)p, old);
-+	raw_atomic_long_set_release((atomic_long_t *)addr, old);
- }
+   "^ldo_v(fe|bif|io)28$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^v(fe|bif|io)28$"
+-
+     unevaluatedProperties: false
  
- #ifndef arch_xor_unlock_is_negative_byte
+   "^ldo_v(aud|io|aux|rf|m)18$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^v(aud|io|aux|rf|m)18$"
+-
+     unevaluatedProperties: false
+ 
+   "^ldo_vsim[12]$":
+     type: object
+     $ref: regulator.yaml#
+-
+-    properties:
+-      regulator-name:
+-        pattern: "^vsim[12]$"
+-
+-    required:
+-      - regulator-name
+-
+     unevaluatedProperties: false
+ 
+ additionalProperties: false
 -- 
 2.53.0
 
