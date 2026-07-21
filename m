@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3611479873;
-	Tue, 21 Jul 2026 21:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB6A479873;
+	Tue, 21 Jul 2026 21:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667661; cv=none; b=OTXrdaJz/Xlvjkvm04160chz0XWWOXqBz4K1RiG/RkrU2KjjDmCr8bufi6gyvLEzGqn8/5f5scsBAusnhWOp4NP6th5rfamY4f9QMbi9nuuXsuaIBH9fam4C77Pm/hZFJ+Iau3IjNbXhbpRRGWKUm610fXUztGuwxxN5giFf040=
+	t=1784667664; cv=none; b=II+/vEQOGBcxyX4flzrjkjZqngyr4UG6FuLJRL37nh9zVWcs2XNaDaEkKEbZDam+LCwwa71pnygiqOo9k/oXqXdF4jvbKrK+13+72tt5qHSKqehtF6IrVyb3ryQgxMzP9lPwBJcMJF5+/EYioOpRlstWl7TYfOuYvCvNW+MYua4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667661; c=relaxed/simple;
-	bh=1fjYbWDjHHkcrD1uznNXelggFb+nnZKMb5hIGjvYpVs=;
+	s=arc-20240116; t=1784667664; c=relaxed/simple;
+	bh=8zwuLurVSUkyPiyEoilw1Kx4wA9COfCaxM2z6hdRpl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=je2+jqIkge3sEUL6NNYj4p7qF5MMA8zIHqMCSesaPOdnqao0RONpv3TtQP2rM9YJ+4LSAyti/jt3KL77OUts3KYDzQL8SwTt6G2S7ptFAC0dR8M3HXd4m9QQ7RuoQakcBKmsO6imnX46WS0uTqvsDx0psbyH+N9OvWVOUy4GDU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ev5ioanC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tKtvFzREa7nGfHfmAKgkhr3WRaeD60tEguvZF1qpaPGHDSzWmYZ9bQKRs0NnXy2E5G49+UvMucxA9PUyf06FNfY7GWgabhYNmY+aEWhiLw5+DPR/AALClUKA4OYQwzDZMzGUStu0NWhrVZ/N8KGMrD7lIn32I7xaHaimz4kG0KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUu9i/PX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ev5ioanC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E933E1F000E9;
-	Tue, 21 Jul 2026 21:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUu9i/PX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A53581F00A3A;
+	Tue, 21 Jul 2026 21:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667660;
-	bh=kUrqulyj9nATHBIBMLMf/FfmZlC2526LwnBx9hmcAs0=;
+	s=korg; t=1784667663;
+	bh=NgUCjThgBNqG62kwYMU4sTlluwTO5pPi+cWojCaUUmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ev5ioanCQHgK6nlTeYlXTbkJzzRcZg3mLs2PxGAaxIXWR3vAUUTcogyKAMqwIjZOr
-	 KXL8k8f3lACisHfj/cN37NgZRtFjtydoNJBApaXulE7g225tvWHikWXicF6iGu5NVw
-	 1q0hioB/trwdSQyeQtLEbELOf+CjMaREQgdhCY08=
+	b=mUu9i/PXF1NBgPmsxx/7QXbSuQnsnT6z/tQntNkgv4piB6i7xFWCXuziRC+bsoEkJ
+	 +O1W1p0HsH2wlMWbdud53filLA49OnnkWKNkkzSRzS7IJH8GfGBYWtClI5gvNfIQCw
+	 LcVlwUFomiV5TG29AwB+5NPHch4vmwAdDqF8YzjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.6 1143/1266] mtd: onenand: samsung: report DMA completion timeouts
-Date: Tue, 21 Jul 2026 17:26:20 +0200
-Message-ID: <20260721152507.364621604@linuxfoundation.org>
+Subject: [PATCH 6.6 1144/1266] mtd: mchp23k256: use SPI match data for chip caps
+Date: Tue, 21 Jul 2026 17:26:21 +0200
+Message-ID: <20260721152507.387575955@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,47 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit d03a19bd6c7f86b99ca8fb61a6ec2345cee1d9d6 upstream.
+commit d322e40f4edf92bf0ca329e5aa4ae1c0316feb38 upstream.
 
-The S5PC110 OneNAND DMA helpers have bounded waits for transfer
-completion. The polling helper falls out of its timeout loop and returns
-success, and the IRQ helper ignores wait_for_completion_timeout().
+The driver stores chip capacity information in both the OF match table
+and the SPI id table. Probe currently uses of_device_get_match_data(),
+so a non-OF SPI modalias match falls back to mchp23k256_caps even when
+the SPI id table selected a different part.
 
-Return -ETIMEDOUT when the DMA transfer-done bit or completion does not
-arrive before the timeout so callers can treat the buffer transfer as
-failed.
+Use spi_get_device_match_data() so SPI id-table driver_data is consumed
+when OF match data is absent. This keeps the existing default fallback
+while avoiding the wrong MTD geometry for id-table-only matches.
 
-Fixes: e23abf4b7743 ("mtd: OneNAND: S5PC110: Implement DMA interrupt method")
+Fixes: 4379075a870b ("mtd: mchp23k256: Add support for mchp23lcv1024")
 Cc: stable@vger.kernel.org
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/onenand/onenand_samsung.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/mtd/devices/mchp23k256.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/onenand/onenand_samsung.c
-+++ b/drivers/mtd/nand/onenand/onenand_samsung.c
-@@ -554,6 +554,9 @@ static int s5pc110_dma_poll(dma_addr_t d
- 	} while (!(status & S5PC110_DMA_TRANS_STATUS_TD) &&
- 		time_before(jiffies, timeout));
+--- a/drivers/mtd/devices/mchp23k256.c
++++ b/drivers/mtd/devices/mchp23k256.c
+@@ -188,7 +188,7 @@ static int mchp23k256_probe(struct spi_d
  
-+	if (!(status & S5PC110_DMA_TRANS_STATUS_TD))
-+		return -ETIMEDOUT;
-+
- 	writel(S5PC110_DMA_TRANS_CMD_TDC, base + S5PC110_DMA_TRANS_CMD);
+ 	data = dev_get_platdata(&spi->dev);
  
- 	return 0;
-@@ -608,7 +611,9 @@ static int s5pc110_dma_irq(dma_addr_t ds
+-	flash->caps = of_device_get_match_data(&spi->dev);
++	flash->caps = spi_get_device_match_data(spi);
+ 	if (!flash->caps)
+ 		flash->caps = &mchp23k256_caps;
  
- 	writel(S5PC110_DMA_TRANS_CMD_TR, base + S5PC110_DMA_TRANS_CMD);
- 
--	wait_for_completion_timeout(&onenand->complete, msecs_to_jiffies(20));
-+	if (!wait_for_completion_timeout(&onenand->complete,
-+					 msecs_to_jiffies(20)))
-+		return -ETIMEDOUT;
- 
- 	return 0;
- }
 
 
