@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119233C276E;
-	Tue, 21 Jul 2026 17:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECBA46C4B0;
+	Tue, 21 Jul 2026 17:31:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655099; cv=none; b=eJfE5MV2TKRlkDwg87PDD0sFQbUOLUMVMBrBUAPLaQDtlWfDTyYQEUVyrLXVOWaKquaXEUL02KqUdecyOQsvcpTPz5gqOpJHrMaIkdfrG+m/OPbOrRoCFG/vdaQpxc9KvMXUZqiNHRiRVYFyB932Yy0ZNBbaNNzJY5eHYCFR2Ic=
+	t=1784655101; cv=none; b=Jz2BVGyl8XNQoRSWb+cs1VOAtG+1tz7FK4qfiIXTZHN88NFcF3UF+dMMyggv7t7QowmUJk8Ss13JNh6IcumZs2oISHlluN6OhXzHN/cxjNNBe1bGHoh/BnuwElsoZ5Mu7zWoG7GI2j8o99v3iz55GMIl7/rEnMyWd2X5xtbiGzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655099; c=relaxed/simple;
-	bh=DgkOBmHbT30ZnM3Au0XLOJq3DforLIrlnRaEj0RB/sc=;
+	s=arc-20240116; t=1784655101; c=relaxed/simple;
+	bh=4O9o7HMLgRcQvCskB0wmarY+4LHFFA+DoGQ9g/49hLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tPtELbKDeT3ZpsNplhxTKX+fFCYgCYDD2H6SMhZhcJbPkIuQj5OSz9lO2uDCxwLzkYz3Iml3RwhqMvgHb2ueDIFLBAVzeZuShG6ElbFUNzF9oiumgObguleINjjI/LtDxDMfUSZbtmegq4pqwCzjdKtA7IYzrhs2PHkZE6ZC+Yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lz8/8cYv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JHi5Q6vm690qi3OChhBeRRDdaShs8GU+2OALvacXSv1ZUZ24ti4bU+7HlH+cwp5R4SU4hAAtCFNobdkdHExHfMIrE3rVF+9Ury7XV3ktwmtQgnBiQ1+31A+PTODFXHS7UzZpNVJVzTZlcdS3K7x3lIHfAte2gTvJqcz5F+ZEk0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wk+L0f+l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lz8/8cYv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA2E1F00A3D;
-	Tue, 21 Jul 2026 17:31:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wk+L0f+l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA791F000E9;
+	Tue, 21 Jul 2026 17:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655097;
-	bh=x01tF5bq56I+fPdzcfc5pdLFQ3bK8QjWBhTTAUHO4h4=;
+	s=korg; t=1784655100;
+	bh=qM0mNuh+O7NhE1gUXLXWt1cUAg8bwsRen6tfBcaUfzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lz8/8cYv0gVpJn7QRCT3nQ/3qb/7UTohIVDENM3upbOJKxRM8Ku3c5kl3HtrjZKM4
-	 pb2gibUhu1E/PDSPcMy/FK/jLwcArowxYiVxfeZt3HLPRS5MWvW0OERdW10vfuqBEJ
-	 +bvVscDJ44mj5g0cG7lkTdoumLrq1Jt5ybPAWX94=
+	b=Wk+L0f+lLI+i5aJWWaZg9wvB2wgeYEdD08Jg+GF35zE5TmKtGbORpYnGcWCYOBYIU
+	 sap3d6RibeLlm5RUaOm+2UauBHw2g+i3ZNsC3L8r87rGwVxScIzawwbhD0cDJ+jozC
+	 YS3dShvVhVeGhihVxlHvQm1CvvqbpNIY3SOJkASI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuewen Wang <wangxuewen@kylinos.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 7.1 1938/2077] LoongArch: Fix nr passing in set_direct_map_valid_noflush()
-Date: Tue, 21 Jul 2026 17:26:51 +0200
-Message-ID: <20260721152638.418765216@linuxfoundation.org>
+	David Lee <david.lee@trailofbits.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.1 1956/2077] fhandle: reject detached mounts in capable_wrt_mount()
+Date: Tue, 21 Jul 2026 17:27:09 +0200
+Message-ID: <20260721152638.845258204@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,33 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuewen Wang <wangxuewen@kylinos.cn>
+From: David Lee <david.lee@trailofbits.com>
 
-commit 70378a710598432f13509bdc16a1c0f06b3ecb53 upstream.
+commit 6c732471740bc2ac9b0946134f9f551dc75f4369 upstream.
 
-set_direct_map_valid_noflush() incorrectly passes 1 to __set_memory()
-instead of nr. This causes only the first page's attr to be updated when
-nr > 1.
+The recent fhandle RCU fix moved the mount namespace capability check
+into capable_wrt_mount(), so a non-NULL mnt_namespace survives the
+ns_capable() dereference. The helper still assumes the later
+READ_ONCE(mount->mnt_ns) must be non-NULL because may_decode_fh()
+checked is_mounted() first.
 
-Other architectures all pass nr correctly.
+That assumption is not stable. A detached mount from
+open_tree(..., OPEN_TREE_CLONE) can be dissolved on fput while
+open_by_handle_at() is between those checks, and umount_tree() can
+clear mount->mnt_ns. If the helper observes NULL, it dereferences
+mnt_ns->user_ns and panics.
 
+Return false when the RCU read observes a detached mount. This keeps
+the relaxed permission path conservative: a mount no longer attached
+to a namespace cannot authorize open_by_handle_at() access.
+
+Fixes: 620c266f3949 ("fhandle: relax open_by_handle_at() permission checks")
 Cc: stable@vger.kernel.org
-Fixes: 0c6378a71574 ("arch: introduce set_direct_map_valid_noflush()")
-Signed-off-by: Xuewen Wang <wangxuewen@kylinos.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Assisted-by: LLM
+Link: https://patch.msgid.link/20260701114438.24431-1-david.lee@trailofbits.com
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/mm/pageattr.c |    2 +-
+ fs/fhandle.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/loongarch/mm/pageattr.c
-+++ b/arch/loongarch/mm/pageattr.c
-@@ -234,5 +234,5 @@ int set_direct_map_valid_noflush(struct
- 		clear = __pgprot(_PAGE_PRESENT | _PAGE_VALID);
- 	}
- 
--	return __set_memory(addr, 1, set, clear);
-+	return __set_memory(addr, nr, set, clear);
+--- a/fs/fhandle.c
++++ b/fs/fhandle.c
+@@ -295,7 +295,7 @@ static bool capable_wrt_mount(struct mou
+ 	 */
+ 	guard(rcu)();
+ 	mnt_ns = READ_ONCE(mount->mnt_ns);
+-	return ns_capable(mnt_ns->user_ns, CAP_SYS_ADMIN);
++	return mnt_ns && ns_capable(mnt_ns->user_ns, CAP_SYS_ADMIN);
  }
+ 
+ static inline int may_decode_fh(struct handle_to_path_ctx *ctx,
 
 
