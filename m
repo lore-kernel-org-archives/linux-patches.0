@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6919470442;
-	Tue, 21 Jul 2026 20:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4640F46F49C;
+	Tue, 21 Jul 2026 20:01:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664103; cv=none; b=jrcRehis8pFsZeXe7EjR+UDm9G5lBJdUORbbRVPtMQyTHTv1UoW804qrFRbKe/9QcW5zxcwFabxJ7se9UquUV73PVQeek5CZTD5Gkt96mBvBBZDvVfrv8/mxYqCbgTjQ4DUZlfD7Um61Yt0v1uBHdQwgmIiMs/aFyjg8UlmBrnY=
+	t=1784664106; cv=none; b=F77eRttxVUpWNbzyZwD+nbBwdPGVWRnojrnyRxnCg1j5VdLklE9/VflzPN5sJraRCyMMi3lOAgOZNeneKt4O/K/mT3Hb33Si1sNhF2h1P4g/Eqg942lOLzY52JdP8tfenUIfzK2wxCe3Yt2HptLZIFbdP19QdRvbiLkiZhKoAxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664103; c=relaxed/simple;
-	bh=D9uBEZQUmSIGgUiB1Z/UWCAEJz1niHe+QYGkTBlz9do=;
+	s=arc-20240116; t=1784664106; c=relaxed/simple;
+	bh=Jpypk0WoO8rXDqLYlolElbVBo6dHvhEWJkADCGUB9wM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LEw4fohLpEuEpiIu81G1JqKib2+kmNQ9xwNeX7mbbbmgIt8Hrb3+Z5JB1Y1NGnuj+TJIPsl8VHDR6uB+Yg9Ifc1uRJFd/+Zc1Xdn5Ai4nmtiRV+zAvHg6jF5PIrX86MY32WgrYwi/oDFW/GimhfNqUR3yntWkomM7bmD5VZcCB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JaYxiBBg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mtrWKTQxaOMG9zzYBzos2BVvTgdZvy0f0b9/SESgPo0NlQ+pR8iUbNnCnPSkvAYDWplm+pJHDNxxnY0qJXwIEVjLYP8k9/jR0Y/OUjJam9zTKS6/6Nccef1kUfujW3qcduMb1dBh+gqWCKr9V/bZefXBzCUqnc0O3VzbqaVmuko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3uwfEUl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JaYxiBBg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77E81F000E9;
-	Tue, 21 Jul 2026 20:01:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3uwfEUl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28DC1F000E9;
+	Tue, 21 Jul 2026 20:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664101;
-	bh=1O2QjcB8GmoP/CylTNd40bQ20LFstUnh7KqT1IC77N8=;
+	s=korg; t=1784664104;
+	bh=7dfoj7vp2ldZD1/dV1bzTqOpOwiZUiWpSRtvg2p3BLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JaYxiBBgOhH6QXBNBrBxtZl1DmQ23IrJW4bNv8HMQKoAUgbvw604OE1CS62EuOybZ
-	 WzR/wADR0gKxozsfft/gUXr5J/Cs2EcqxDcEGNuGqymf1yFQOFiEDccTaOgVh3mZ2c
-	 jLA47+O9pq87hqV7c06wreiTldyU1rMjaWEBTJ2s=
+	b=G3uwfEUl3loPPgj1HlANlSLG63aTS1M8GLCMgKL2HUprkdrSh1WZd+K7CI0xXaSyk
+	 12Y7ny/RTS1HNUSDEX7TEC5f8wNOAPwpzybiu8MxsOd7NpBzBnmDcc3VDSRpe2LZkX
+	 XnwwmCVrTlPt4Dqpzq4yJMq6iB9l6kjzVqEPe8r8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Breno Leitao <leitao@debian.org>,
+	Andrea Righi <arighi@nvidia.com>,
+	David Thompson <davthompson@nvidia.com>,
+	Thangaraj Samynathan <Thangaraj.s@microchip.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 1074/1276] fsl/fman: Free init resources on KeyGen failure in fman_init()
-Date: Tue, 21 Jul 2026 17:25:17 +0200
-Message-ID: <20260721152510.020498932@linuxfoundation.org>
+Subject: [PATCH 6.12 1075/1276] net: lan743x: Initialize eth_syslock spinlock before use
+Date: Tue, 21 Jul 2026 17:25:18 +0200
+Message-ID: <20260721152510.043371691@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,41 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Andrea Righi <arighi@nvidia.com>
 
-commit d288efa2b94abc2e45a061fceb156b4f4e5b37be upstream.
+commit 39139b1c1c2b614096519b526112c726adb12ff0 upstream.
 
-fman_muram_alloc() allocates initialization resources before
-initializing the KeyGen block. If keygen_init() fails, the
-function returns -EINVAL directly and leaves those resources
-allocated. Free the initialization resources before returning
-from the KeyGen failure path.
+lan743x_hardware_init() calls pci11x1x_strap_get_status() during the
+PCI11x1x probe sequence. That helper acquires the Ethernet subsystem
+hardware lock via lan743x_hs_syslock_acquire(), which relies on
+adapter->eth_syslock_spinlock to serialize access.
 
-Fixes: 7472f4f281d0 ("fsl/fman: enable FMan Keygen")
-Cc: stable@kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260625004834.3394389-1-haoxiang_li2024@163.com
+The spinlock is currently initialized only after the strap status is
+read. With CONFIG_DEBUG_SPINLOCK enabled, taking the zeroed initialized
+spinlock can trip the spinlock debug check.
+
+Fix by initializing adapter->eth_syslock_spinlock before reading the
+strap status so the probe path never attempts to lock an uninitialized
+spinlock.
+
+Fixes: 46b777ad9a8c ("net: lan743x: Add support to SGMII 1G and 2.5G")
+Cc: stable@vger.kernel.org # v6.0+
+Signed-off-by: Andrea Righi <arighi@nvidia.com>
+Reviewed-by: David Thompson <davthompson@nvidia.com>
+Reviewed-by: Thangaraj Samynathan<Thangaraj.s@microchip.com>
+Link: https://patch.msgid.link/20260626163218.3591486-1-arighi@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/fman/fman.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/microchip/lan743x_main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/freescale/fman/fman.c
-+++ b/drivers/net/ethernet/freescale/fman/fman.c
-@@ -1995,8 +1995,10 @@ static int fman_init(struct fman *fman)
- 
- 	/* Init KeyGen */
- 	fman->keygen = keygen_init(fman->kg_regs);
--	if (!fman->keygen)
-+	if (!fman->keygen) {
-+		free_init_resources(fman);
- 		return -EINVAL;
-+	}
- 
- 	err = enable(fman, cfg);
- 	if (err != 0)
+--- a/drivers/net/ethernet/microchip/lan743x_main.c
++++ b/drivers/net/ethernet/microchip/lan743x_main.c
+@@ -3506,8 +3506,8 @@ static int lan743x_hardware_init(struct
+ 		adapter->max_tx_channels = PCI11X1X_MAX_TX_CHANNELS;
+ 		adapter->used_tx_channels = PCI11X1X_USED_TX_CHANNELS;
+ 		adapter->max_vector_count = PCI11X1X_MAX_VECTOR_COUNT;
+-		pci11x1x_strap_get_status(adapter);
+ 		spin_lock_init(&adapter->eth_syslock_spinlock);
++		pci11x1x_strap_get_status(adapter);
+ 		mutex_init(&adapter->sgmii_rw_lock);
+ 		pci11x1x_set_rfe_rd_fifo_threshold(adapter);
+ 		sgmii_ctl = lan743x_csr_read(adapter, SGMII_CTL);
 
 
