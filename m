@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FE9403AE9;
-	Tue, 21 Jul 2026 17:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3F03F12CE;
+	Tue, 21 Jul 2026 17:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654537; cv=none; b=KJboMT/audZDoS9NeTQ5Qz+E/LPp+dEwFFAO8JI+mMTyNUfdBueHfYRHgTye6YfCYL7GQIFPAPPJUjA51twRuuCuzc2zVZNZvryhd7YnOKqvDYB1YZmwhN8h0UftXKLF299QHkQTQBFbnWW/F6o80C/4OLDGecA3RlJ2gX4sdvA=
+	t=1784654540; cv=none; b=jcikgaTJZVIko91K2VrZEllvgGSr3fEuot31SsOXg76+TOl5Cbd9PkLZ4TLpbZHytRVwfOixuX22K//pfuOlJ3hE0K95EvBy2dJLm+D5NbKMCwz20rsxW49fW0F7zWJp2IiWs6DxxqCijhDW5QVbzu3vPikJcPEwaOnyLj0wJX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654537; c=relaxed/simple;
-	bh=ps9KGngJOUydx2W9+NskqK8cu82U0+SOPrr7cVAxWEs=;
+	s=arc-20240116; t=1784654540; c=relaxed/simple;
+	bh=odnNKH4gGjlc7tXwmTy/n0mz3TFCm4TJLKXe4tA6jbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bLTDu7B1989HnLdA3ipHcvuPS0LbjEiADKlqpFP2nfcEaSVk5CHzjUTZunDT6k+PiRYVdpf74ZG/TnPqO+4Y4IWwMinQTnzy9QVZW2IYFYh9proquWflpbtRGdYvazh6Wox3WICtWzG6p8zUfCAPU1M7fK8cO92/JdaAXWRyk4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AjUndhjM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FxDe8zQVJylhTEDWwFv0OEuGHFRXUilNxpifVdvtfve79glhJuMJ4LzjclEbisxUF1BTNtbnhAmBFm/fhx7XBCSuYmKdRhkfTuacqQMQUXCw/cZRQOgRpX2p6Ua8UiB4+SCyDR1HRy9gVhFRuJd9lcAdjW7RFtti2VzckxJH6Qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XV6XjJM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjUndhjM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB69C1F000E9;
-	Tue, 21 Jul 2026 17:22:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XV6XjJM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717101F000E9;
+	Tue, 21 Jul 2026 17:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654536;
-	bh=41vn9lp4oeDbzbQ2O3N/3vR1sTKUi5TJt0gPOQarqqg=;
+	s=korg; t=1784654538;
+	bh=TGBbWJpHyJoO0nSWQiRkN1kOknNi67+j7ZLHly9nvLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AjUndhjMct0G5B4OXbckvkC/Ad71RFf5ZYFOWgKu9NLU+i0m2I5t3Gb68K7h1NqyY
-	 u1VMDvwiV+RJ5yI43a07i5SNwFfx++S9pPU2nQ7YZcTYCdswnm4UWtbD8LLYvbgHH8
-	 vj0Tl43FrD9r039aFrFk4m5rNPWiMX6acByK2qQ0=
+	b=1XV6XjJMMDhUAKw0uQ0+zsRzNpDyE7RbaNV00qEYxoYYG1FAr6YfFRPnV4fTC+GbE
+	 8coxBu5qwBrNfkzTAm4I+jeaMwbPbzv2nn7HBz57s5oCC9azX6nCsz9AkL0F/WoVP+
+	 B8/IV5c7njakAhU2iqHnzmXCDIMmCDA3T95vFZ64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>
-Subject: [PATCH 7.1 1741/2077] kho: make sure scratch size is always aligned by CMA_MIN_ALIGNMENT_BYTES
-Date: Tue, 21 Jul 2026 17:23:34 +0200
-Message-ID: <20260721152633.810857071@linuxfoundation.org>
+	John Garry <john.g.garry@oracle.com>,
+	Ionut Nechita <ionut.nechita@windriver.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 7.1 1742/2077] scsi: sas: Skip opt_sectors when DMA reports no real optimization hint
+Date: Tue, 21 Jul 2026 17:23:35 +0200
+Message-ID: <20260721152633.834019284@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,78 +46,147 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pratyush Yadav (Google) <pratyush@kernel.org>
+From: Ionut Nechita <ionut.nechita@windriver.com>
 
-commit 0e39380a7316122e1b00012b3f3cd3e318b3e7d3 upstream.
+commit be8fcd4a8217a916344c88a4b1b84f5736dda17e upstream.
 
-When using scratch_scale, the scratch sizes are rounded up to
-CMA_MIN_ALIGNMENT_BYTES since they will be released as MIGRATE_CMA. This
-is not done when using fixed scratch sizes via command line. This can
-result in user specifying a size which is not aligned, and thus kernel
-releasing a pageblock that is only partially scratch.
+sas_host_setup() unconditionally sets shost->opt_sectors from
+dma_opt_mapping_size().
 
-Do the rounding up for both cases in scratch_size_update().
+When the IOMMU is disabled or in passthrough mode and no DMA ops provide
+an opt_mapping_size callback, dma_opt_mapping_size() returns
+min(dma_max_mapping_size(), SIZE_MAX) which equals
+dma_max_mapping_size() — a hard upper bound, not an optimization hint.
 
-Fixes: 3dc92c311498 ("kexec: add Kexec HandOver (KHO) generation helpers")
-Cc: stable@kernel.org
-Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-Link: https://patch.msgid.link/20260519160554.2713361-1-pratyush@kernel.org
-Signed-off-by: Pasha Tatashin <pasha.tatashin@soleen.com>
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+On a Dell PowerEdge R750 with mpt3sas (Broadcom SAS3816, FW 33.15.00.00)
+and intel_iommu=off the following values are observed:
+
+  dma_opt_mapping_size()  = dma_max_mapping_size() (no real hint)
+  shost->max_sectors      = 32767
+  opt_sectors             = min(32767, huge >> 9) = 32767
+  optimal_io_size         = 32767 << 9 = 16776704
+                          → round_down(16776704, 4096) = 16773120
+
+The SAS disk (SAMSUNG MZILT800HBHQ0D3) does not report an Optimal
+Transfer Length in VPD page B0, so sdkp->opt_xfer_blocks remains 0.
+
+sd_revalidate_disk() then uses min_not_zero(0, opt_sectors) =
+opt_sectors, propagating the bogus value into the block device's
+optimal_io_size (visible as OPT-IO = 16773120 in lsblk --topology).
+
+mkfs.xfs picks up optimal_io_size and minimum_io_size and computes:
+
+  swidth = 16773120 / 4096 = 4095
+  sunit  = 8192 / 4096     = 2
+
+Since 4095 % 2 != 0, XFS rejects the geometry:
+
+  SB stripe unit sanity check failed
+
+This makes it impossible to create XFS filesystems (e.g. for
+/var/lib/docker) during system bootstrap.
+
+Fix this by introducing a sas_dma_setup_opt_sectors() helper that sets
+opt_sectors only when dma_opt_mapping_size() is strictly less than
+dma_max_mapping_size(), indicating a genuine DMA optimization
+constraint.
+
+The helper computes min(opt_sectors, max_sectors) first, then rounds
+down to a power of two so that filesystem geometry calculations always
+produce clean results.
+
+When the two DMA values are equal, no backend provided a real hint, so
+opt_sectors stays at 0 ("no preference").
+
+[mkp: implemented hch's suggestion]
+
+Fixes: 4cbfca5f7750 ("scsi: scsi_transport_sas: cap shost opt_sectors according to DMA optimal limit")
+Cc: stable@vger.kernel.org
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Ionut Nechita <ionut.nechita@windriver.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260519135238.373784-2-ionut.nechita@windriver.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/liveupdate/kexec_handover.c |   32 +++++++++++++++++++++-----------
- 1 file changed, 21 insertions(+), 11 deletions(-)
+ drivers/scsi/scsi_transport_sas.c |   41 +++++++++++++++++++++++++++++++++-----
+ 1 file changed, 36 insertions(+), 5 deletions(-)
 
---- a/kernel/liveupdate/kexec_handover.c
-+++ b/kernel/liveupdate/kexec_handover.c
-@@ -593,20 +593,30 @@ early_param("kho_scratch", kho_parse_scr
+--- a/drivers/scsi/scsi_transport_sas.c
++++ b/drivers/scsi/scsi_transport_sas.c
+@@ -27,6 +27,7 @@
+ #include <linux/module.h>
+ #include <linux/jiffies.h>
+ #include <linux/err.h>
++#include <linux/log2.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+ #include <linux/blkdev.h>
+@@ -220,12 +221,45 @@ static int sas_bsg_initialize(struct Scs
+  * SAS host attributes
+  */
  
- static void __init scratch_size_update(void)
++/*
++ * Set shost->opt_sectors from the DMA optimal mapping size, but only
++ * when dma_opt_mapping_size() is strictly less than dma_max_mapping_size(),
++ * indicating a genuine optimization hint from an IOMMU or DMA backend.
++ * When the two are equal (e.g. IOMMU disabled / passthrough), no real
++ * hint exists, so leave opt_sectors at 0 to avoid bogus optimal_io_size
++ * values that break filesystem geometry (e.g. mkfs.xfs stripe alignment).
++ */
++static void sas_dma_setup_opt_sectors(struct Scsi_Host *shost)
++{
++	struct device *dma_dev = shost->dma_dev;
++	size_t opt = dma_opt_mapping_size(dma_dev);
++	size_t max = dma_max_mapping_size(dma_dev);
++	unsigned int opt_sectors;
++
++	/* opt >= max means no real hint was provided by the DMA layer */
++	if (opt >= max)
++		return;
++
++	/* Clamp to max_sectors to avoid overflow in sector arithmetic */
++	opt_sectors = min_t(unsigned int, opt >> SECTOR_SHIFT,
++			    shost->max_sectors);
++
++	/* Guard against zero before rounddown_pow_of_two() */
++	if (!opt_sectors)
++		return;
++
++	/*
++	 * Round down to power-of-two so filesystem geometry calculations
++	 * (e.g. XFS stripe width/unit) always produce clean divisors.
++	 */
++	shost->opt_sectors = rounddown_pow_of_two(opt_sectors);
++}
++
+ static int sas_host_setup(struct transport_container *tc, struct device *dev,
+ 			  struct device *cdev)
  {
--	phys_addr_t size;
-+	/*
-+	 * If fixed sizes are not provided via command line, calculate them
-+	 * now.
-+	 */
-+	if (scratch_scale) {
-+		phys_addr_t size;
+ 	struct Scsi_Host *shost = dev_to_shost(dev);
+ 	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
+-	struct device *dma_dev = shost->dma_dev;
  
--	if (!scratch_scale)
--		return;
-+		size = memblock_reserved_kern_size(ARCH_LOW_ADDRESS_LIMIT,
-+						   NUMA_NO_NODE);
-+		size = size * scratch_scale / 100;
-+		scratch_size_lowmem = size;
+ 	INIT_LIST_HEAD(&sas_host->rphy_list);
+ 	mutex_init(&sas_host->lock);
+@@ -237,10 +271,7 @@ static int sas_host_setup(struct transpo
+ 		dev_printk(KERN_ERR, dev, "fail to a bsg device %d\n",
+ 			   shost->host_no);
  
--	size = memblock_reserved_kern_size(ARCH_LOW_ADDRESS_LIMIT,
--					   NUMA_NO_NODE);
--	size = size * scratch_scale / 100;
--	scratch_size_lowmem = round_up(size, CMA_MIN_ALIGNMENT_BYTES);
-+		size = memblock_reserved_kern_size(MEMBLOCK_ALLOC_ANYWHERE,
-+						   NUMA_NO_NODE);
-+		size = size * scratch_scale / 100 - scratch_size_lowmem;
-+		scratch_size_global = size;
-+	}
+-	if (dma_dev->dma_mask) {
+-		shost->opt_sectors = min_t(unsigned int, shost->max_sectors,
+-				dma_opt_mapping_size(dma_dev) >> SECTOR_SHIFT);
+-	}
++	sas_dma_setup_opt_sectors(shost);
  
--	size = memblock_reserved_kern_size(MEMBLOCK_ALLOC_ANYWHERE,
--					   NUMA_NO_NODE);
--	size = size * scratch_scale / 100 - scratch_size_lowmem;
--	scratch_size_global = round_up(size, CMA_MIN_ALIGNMENT_BYTES);
-+	/*
-+	 * Scratch areas are released as MIGRATE_CMA. Round them up to the right
-+	 * size.
-+	 */
-+	scratch_size_lowmem = round_up(scratch_size_lowmem, CMA_MIN_ALIGNMENT_BYTES);
-+	scratch_size_global = round_up(scratch_size_global, CMA_MIN_ALIGNMENT_BYTES);
+ 	return 0;
  }
- 
- static phys_addr_t __init scratch_size_node(int nid)
 
 
