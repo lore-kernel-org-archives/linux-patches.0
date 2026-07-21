@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327453B3C0A;
-	Tue, 21 Jul 2026 20:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198E03B3C15;
+	Tue, 21 Jul 2026 20:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665996; cv=none; b=FbEMEYs08kzz1wHvB5g5nLLdLgSYvRSR03aCbv3n3EgcpPtJ3JrD/R8O2I2GpO+7G1eoVnUWEsJDvVMJIdSqWBdMFo8w4wUiEZsnn6IoUG0ievE6z/K72lboImMEc9Wbtw+0FtWLM8sy+6CfxEQL51bcay1gRZRQ1o4fC/65IHg=
+	t=1784665999; cv=none; b=HSqLUGaLVa/+u41uOUBnDgdhIvubYYMdqfWH08xlAg6bzcPCdKyTONwjoUVD0Y2QcpTZtnXtu3AQVuVjxQwUKVaeLSggbrfiJM5IwgZVcssRf9rK+jBobHu0mHNxed5vfSKPsEG7n5EEoG+MharvIHO45m58U1wOPpyYLYYbFfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665996; c=relaxed/simple;
-	bh=ih6yDoQ0Qswg5y43FWfQ3dZDNcUYlOZsM89Ep8NxEwg=;
+	s=arc-20240116; t=1784665999; c=relaxed/simple;
+	bh=pOfLUaFjN5CaE1GyhA86pCA4rlQomgUJT57tL7RQ2pQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sCPGrymN98JVGyln+vVzxdmMY/Ul6PCRVYFEPi7O3kpAI9bAce18F3jgT+1zh0lq6qv4791FfHe7wKhwAin646egyX4IHWjU3b/+JaNGPhTe7oCRpZjeJDv1rHIFoXwhrFQIaMRxlfOD3/PLdKA9tzcPkYvnGD74dMOqzYp9P5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jXVu39eV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N0YIzeYe+xXcXDzfQYpMWxKJQTYLFJBKz0Y8jgLRxuTSotAkNpnMIlCGNlKIiscCX+q++zQiquL4aKQ88RuGh3knna5OWfGm3R0wFsOipYlmO+o9WKj9un5QlguAfJTCVBaIWpGDxDbkl3GmneUrJqZg9Kw9drjm/9McJI+a3ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sEh0xGS1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jXVu39eV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990131F000E9;
-	Tue, 21 Jul 2026 20:33:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sEh0xGS1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C60A1F000E9;
+	Tue, 21 Jul 2026 20:33:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665995;
-	bh=sdVsx5f+zqR782w0yKa/YBCBA2dPylyzNKhmBIZGJzA=;
+	s=korg; t=1784665997;
+	bh=6hkn5TKwE7dZG7B/YSEDCn0mHF9w9G2Ft36yiI0Nefs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jXVu39eVv8JXN3kKaZ/QXPt3f6cySlp5U1wLnpMowbc/JBy5ef5gjASSiOU8iPoiK
-	 9kA42D/X6ahhLaJxVH6rIE61DxeEdWNn47tucONx7m0AZy/ey18cE/SglXazu2gvpi
-	 QgN+I7O5hWfKs6SiZVkLffdGmZCOs8beAugzmhvA=
+	b=sEh0xGS1IC0SQMOB4lfNRiM7Gqg1cVPL+KALILu7id56oZpOCbmFAFiPYni8zdUh4
+	 1JAkjMZCtq9kt71EokaPF1HZoD53LVXFFy5+CKyyNR9Bv3fr0xWJYwcmQ83YjrAqp2
+	 Sb2uYOUxXohD26Y3hAj/nAH3H/R2IUsQH3Eh6YdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	David Disseldorp <ddiss@suse.de>,
+	Lee Duncan <lduncan@suse.com>,
+	John Garry <john.g.garry@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0516/1266] watchdog: unregister PM notifier on watchdog unregister
-Date: Tue, 21 Jul 2026 17:15:53 +0200
-Message-ID: <20260721152453.395867559@linuxfoundation.org>
+Subject: [PATCH 6.6 0517/1266] scsi: target: Fix hexadecimal CHAP_I handling
+Date: Tue, 21 Jul 2026 17:15:54 +0200
+Message-ID: <20260721152453.418619827@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,44 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: David Disseldorp <ddiss@suse.de>
 
-[ Upstream commit a298c7302ee9584a7a1ac1e8acbede8d98ab51a4 ]
+[ Upstream commit 7e161211f1dd5288b4ea802b30e70ef919ebc3da ]
 
-watchdog_register_device() registers wdd->pm_nb when
-WDOG_NO_PING_ON_SUSPEND is set, but watchdog_unregister_device() does not
-remove it. This leaves an embedded notifier block on the PM notifier chain
-after the watchdog device has been unregistered.
+A mutual CHAP handshake requires target processing of an initiator-sent
+CHAP_I identifier. The RFC 3720 specification states:
 
-A later suspend/resume notification can then call watchdog_pm_notifier()
-with a stale watchdog_device pointer, or at minimum after wdd->wd_data has
-been cleared by watchdog_dev_unregister().
+  11.1.4.  Challenge Handshake Authentication Protocol (CHAP)
+  ...
+  CHAP_A=<A> CHAP_I=<I> CHAP_C=<C>
+  ...
+  Where N, (A,A1,A2), I, C, and R are (correspondingly) the Name,
+  Algorithm, Identifier, Challenge, and Response as defined in
+  [RFC1994], N is a text string, A,A1,A2, and I are numbers
 
-Unregister the PM notifier before tearing down the watchdog device.
+CHAP_I parsing currently calls extract_param(), which returns the
+@identifier string (stripped of any 0b/0B or 0x/0X prefix) and a @type
+which indicates DECIMAL, HEX, or BASE64 encoding (based on any stripped
+prefix).
 
-Fixes: 60bcd91aafd2 ("watchdog: introduce watchdog_dev_suspend/resume")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://lore.kernel.org/r/20260601192005.1970805-1-dbgh9129@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Any HEX encoded CHAP_I string is further processed via:
+
+  ret = kstrtoul(&identifier[2], 0, &id);
+
+This is incorrect for two reasons:
+
+ * The @identifier string has already been stripped of the 0x/0X prefix,
+   so skipping the first two bytes omits part of the number.
+
+ * The kstrtoul() call specifies a base of 0, which will see
+   &identifier[2] parsed as a decimal, unless a '0x' or (octal) '0' is
+   erroneously present at that offset.
+
+Fix this by passing the (zero-offset) identifier string to kstrtoul()
+along with a base=16 parameter. Also add an explicit error handler for
+BASE64 encoding.
+
+Hex-encoded CHAP_I handling can be testing using the libiscsi EncodedI
+test linked below.
+
+Reported-by: Sashiko (gemini/gemini-3.1-pro-preview)
+Link: https://sashiko.dev/#/patchset/20260521151121.808477-1-hossu.alexandru%40gmail.com
+Link: https://github.com/sahlberg/libiscsi/pull/473
+Fixes: 85db7391310b ("scsi: target: iscsi: Validate CHAP_R length before base64 decode")
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Reviewed-by: Lee Duncan <lduncan@suse.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Link: https://patch.msgid.link/20260605122019.24146-2-ddiss@suse.de
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/watchdog_core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/target/iscsi/iscsi_target_auth.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/watchdog/watchdog_core.c b/drivers/watchdog/watchdog_core.c
-index 5b55ccae06d4b0..2d0bb5e4c9c283 100644
---- a/drivers/watchdog/watchdog_core.c
-+++ b/drivers/watchdog/watchdog_core.c
-@@ -381,6 +381,9 @@ static void __watchdog_unregister_device(struct watchdog_device *wdd)
- 	if (test_bit(WDOG_STOP_ON_REBOOT, &wdd->status))
- 		unregister_reboot_notifier(&wdd->reboot_nb);
+diff --git a/drivers/target/iscsi/iscsi_target_auth.c b/drivers/target/iscsi/iscsi_target_auth.c
+index 02a4c9aff98d51..41e4def46ede69 100644
+--- a/drivers/target/iscsi/iscsi_target_auth.c
++++ b/drivers/target/iscsi/iscsi_target_auth.c
+@@ -437,9 +437,11 @@ static int chap_server_compute_hash(
+ 	}
  
-+	if (test_bit(WDOG_NO_PING_ON_SUSPEND, &wdd->status))
-+		unregister_pm_notifier(&wdd->pm_nb);
-+
- 	watchdog_dev_unregister(wdd);
- 	ida_simple_remove(&watchdog_ida, wdd->id);
- }
+ 	if (type == HEX)
+-		ret = kstrtoul(&identifier[2], 0, &id);
++		ret = kstrtoul(identifier, 16, &id);
++	else if (type == DECIMAL)
++		ret = kstrtoul(identifier, 10, &id);
+ 	else
+-		ret = kstrtoul(identifier, 0, &id);
++		ret = -EINVAL;
+ 
+ 	if (ret < 0) {
+ 		pr_err("kstrtoul() failed for CHAP identifier: %d\n", ret);
 -- 
 2.53.0
 
