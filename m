@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C815B44AB9F;
-	Tue, 21 Jul 2026 22:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7934444AB9F;
+	Tue, 21 Jul 2026 22:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674698; cv=none; b=uvQIIPygyydXVW98xs/DTBKAYXYqvnxrXMPMCIwdhev4jhn0M8ZQ+1/pr0S86hbia+IRKj+W9K96gpTAXvt8lgqFrOTMQiWr7lDaj6YVLLnKGyyU4qFKmJavHQr+zKiUitmSyfpMTHeCBqOBu0Cm7c0k7zg1dfKOb0GKKI1iwdk=
+	t=1784674700; cv=none; b=gLz4mBze4L6yzbXgt6RMIhXZIHu3cfnb2c0Buyaau17cy/aAY/4fMP2msOb23ZRo+lje6KIDRi0pMCgzIVDUXo+MpgsZH6kOK/A1NYKFQiC3UjkNuKR4ibk0kJXxdGrq178WEqZXSoCb2mXLu6SmH+hgFJ0UlZJH5PXIT8uuikU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674698; c=relaxed/simple;
-	bh=VcfDgr3U3vpvRhwK0zDkttqWKrJvLmE685kPIvXWZmM=;
+	s=arc-20240116; t=1784674700; c=relaxed/simple;
+	bh=QvCFWDCID1RA/6iAhjdues1m0xp4UXCl3sANQ/Oiwrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gk1PZU0vWW9JBntyIfhrNfVKcaUGbbFjU4/Q1GKDW5cvvWsv0d+VWpHPKZumx9PwX4plZqS+FDO1xL2F6whAqfGsj07JX8GVPGMFoh/Cd5zv1HjlL8dpOCyZvfOi2sggxIoG3hJnLckwLcnvWAiQO/A49Di2Vp4XG7trx6cgtiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KOG11bJT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iLpYZ/AkSKSSmTuZSoW5qXvUZ06V1KMYJzDjtplYiSydONyIrBs7UHS6jFVugkAf+Xkylq9qj7F0m8E2Di+RJiWVyMwNcELWBSeZvSSDw+twOUz+JFbi+mPTRpTeUTzOcB2ix1xwZkGZVKDNWMKzL+tRmji3sr3MK7dpfdHROE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kPrHvONo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOG11bJT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF20C1F00A3D;
-	Tue, 21 Jul 2026 22:58:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kPrHvONo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C5B1F000E9;
+	Tue, 21 Jul 2026 22:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674695;
-	bh=bMDw7KGTUEah2eSUlIeI4972apOOvDhjOlSv1x0GMhw=;
+	s=korg; t=1784674698;
+	bh=9PcrBrt5vt7K0RfQOJiPc5Ifgs4z7ui3VHkGczEuygw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KOG11bJT1g02FZlL5zYce3vlrZ95GxXF3AsdnXiH0XtM9wIaISeYwz1RtVZEUqOkR
-	 FzfW5q+spX6a35sp6ve+8BGGkg+kBS7O98FijxC6DQvGihKj7jlYwTRuxJUfnJRFFi
-	 hGX/gwU64SXrOE2vfdakGbRxbXuNKyYr2Xir/t5E=
+	b=kPrHvONokOax3tjPnkMVWiyPQtlSwtp19mh5hhlcsspXEVcXMBiJNqehEXyIauzY2
+	 gQD6p0B7KKFBCS7ZPUeFcpzNRSLhLBVqBdh47pLc66irq6hd/q/5H+JPjWyIh3hPNi
+	 GZyiiHnzo4t9dEFZHot9dx1AfwbjkT0UMWDIxvZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Tedd Ho-Jeong An <tedd.an@intel.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 596/699] Bluetooth: btintel: Check firmware version before download
-Date: Tue, 21 Jul 2026 17:25:55 +0200
-Message-ID: <20260721152409.175714528@linuxfoundation.org>
+Subject: [PATCH 5.10 587/699] iio: imu: inv_mpu6050: use the common inv_sensors timestamp module
+Date: Tue, 21 Jul 2026 17:25:46 +0200
+Message-ID: <20260721152408.962272030@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,260 +52,304 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-[ Upstream commit ac0565462e330a2b762ca5849a4140b29d725786 ]
+[ Upstream commit 111e1abd00455971f6a568900f033cbddec9d4e5 ]
 
-This checks the firmware build number, week and year against the
-repective loaded version. If details are a match, skip the download
-process.
+Replace timestamping by the new common inv_sensors timestamp
+module. The principle behind is the same but the implementation in
+the new module is far better providing less jitter and a better
+estimation.
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Tested-by: Tedd Ho-Jeong An <tedd.an@intel.com>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Stable-dep-of: c5b600a3c05b ("Bluetooth: btusb: fix use-after-free on marvell probe failure")
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://lore.kernel.org/r/20230606162147.79667-5-inv.git-commit@tdk.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: affe3f077d7a ("iio: imu: inv_icm42600: fix timestamping by limiting FIFO reading")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btintel.c   |  106 +++++++++++++++++++++++++++++++++---------
- drivers/bluetooth/btintel.h   |    5 +
- drivers/bluetooth/btusb.c     |    9 +++
- drivers/bluetooth/hci_intel.c |    7 +-
- 4 files changed, 101 insertions(+), 26 deletions(-)
+ drivers/iio/imu/inv_mpu6050/Kconfig           |    1 
+ drivers/iio/imu/inv_mpu6050/inv_mpu_core.c    |   30 +++++++--
+ drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h     |   18 ++---
+ drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c    |   83 ++------------------------
+ drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c |    6 +
+ 5 files changed, 45 insertions(+), 93 deletions(-)
 
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -24,6 +24,14 @@
- #define ECDSA_OFFSET		644
- #define ECDSA_HEADER_LEN	320
+--- a/drivers/iio/imu/inv_mpu6050/Kconfig
++++ b/drivers/iio/imu/inv_mpu6050/Kconfig
+@@ -7,6 +7,7 @@ config INV_MPU6050_IIO
+ 	tristate
+ 	select IIO_BUFFER
+ 	select IIO_TRIGGERED_BUFFER
++	select IIO_INV_SENSORS_TIMESTAMP
  
-+#define CMD_WRITE_BOOT_PARAMS	0xfc0e
-+struct cmd_write_boot_params {
-+	u32 boot_addr;
-+	u8  fw_build_num;
-+	u8  fw_build_ww;
-+	u8  fw_build_yy;
-+} __packed;
+ config INV_MPU6050_I2C
+ 	tristate "Invensense MPU6050 devices (I2C)"
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+@@ -12,12 +12,15 @@
+ #include <linux/jiffies.h>
+ #include <linux/irq.h>
+ #include <linux/interrupt.h>
+-#include <linux/iio/iio.h>
+ #include <linux/acpi.h>
+ #include <linux/platform_device.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/pm.h>
+ #include <linux/pm_runtime.h>
 +
- int btintel_check_bdaddr(struct hci_dev *hdev)
- {
- 	struct hci_rp_read_bd_addr *bda;
-@@ -841,7 +849,7 @@ static int btintel_sfi_ecdsa_header_secu
++#include <linux/iio/common/inv_sensors_timestamp.h>
++#include <linux/iio/iio.h>
++
+ #include "inv_mpu_iio.h"
+ #include "inv_mpu_magn.h"
  
- static int btintel_download_firmware_payload(struct hci_dev *hdev,
- 					     const struct firmware *fw,
--					     u32 *boot_param, size_t offset)
-+					     size_t offset)
- {
- 	int err;
- 	const u8 *fw_ptr;
-@@ -854,21 +862,6 @@ static int btintel_download_firmware_pay
- 	while (fw_ptr - fw->data < fw->size) {
- 		struct hci_command_hdr *cmd = (void *)(fw_ptr + frag_len);
+@@ -481,6 +484,7 @@ static int inv_mpu6050_init_config(struc
+ 	int result;
+ 	u8 d;
+ 	struct inv_mpu6050_state *st = iio_priv(indio_dev);
++	struct inv_sensors_timestamp_chip timestamp;
  
--		/* Each SKU has a different reset parameter to use in the
--		 * HCI_Intel_Reset command and it is embedded in the firmware
--		 * data. So, instead of using static value per SKU, check
--		 * the firmware data and save it for later use.
+ 	result = inv_mpu6050_set_gyro_fsr(st, st->chip_config.fsr);
+ 	if (result)
+@@ -504,12 +508,12 @@ static int inv_mpu6050_init_config(struc
+ 	if (result)
+ 		return result;
+ 
+-	/*
+-	 * Internal chip period is 1ms (1kHz).
+-	 * Let's use at the beginning the theorical value before measuring
+-	 * with interrupt timestamps.
+-	 */
+-	st->chip_period = NSEC_PER_MSEC;
++	/* clock jitter is +/- 2% */
++	timestamp.clock_period = NSEC_PER_SEC / INV_MPU6050_INTERNAL_FREQ_HZ;
++	timestamp.jitter = 20;
++	timestamp.init_period =
++			NSEC_PER_SEC / INV_MPU6050_DIVIDER_TO_FIFO_RATE(st->chip_config.divider);
++	inv_sensors_timestamp_init(&st->timestamp, &timestamp);
+ 
+ 	/* magn chip init, noop if not present in the chip */
+ 	result = inv_mpu_magn_probe(st);
+@@ -900,6 +904,8 @@ inv_mpu6050_fifo_rate_store(struct devic
+ 			    const char *buf, size_t count)
+ {
+ 	int fifo_rate;
++	u32 fifo_period;
++	bool fifo_on;
+ 	u8 d;
+ 	int result;
+ 	struct iio_dev *indio_dev = dev_to_iio_dev(dev);
+@@ -916,12 +922,21 @@ inv_mpu6050_fifo_rate_store(struct devic
+ 	d = INV_MPU6050_FIFO_RATE_TO_DIVIDER(fifo_rate);
+ 	/* compute back the fifo rate to handle truncation cases */
+ 	fifo_rate = INV_MPU6050_DIVIDER_TO_FIFO_RATE(d);
++	fifo_period = NSEC_PER_SEC / fifo_rate;
+ 
+ 	mutex_lock(&st->lock);
+ 	if (d == st->chip_config.divider) {
+ 		result = 0;
+ 		goto fifo_rate_fail_unlock;
+ 	}
++
++	fifo_on = st->chip_config.accl_fifo_enable ||
++		  st->chip_config.gyro_fifo_enable ||
++		  st->chip_config.magn_fifo_enable;
++	result = inv_sensors_timestamp_update_odr(&st->timestamp, fifo_period, fifo_on);
++	if (result)
++		goto fifo_rate_fail_unlock;
++
+ 	result = pm_runtime_get_sync(pdev);
+ 	if (result < 0) {
+ 		pm_runtime_put_noidle(pdev);
+@@ -1741,3 +1756,4 @@ EXPORT_SYMBOL_GPL(inv_mpu_pmops);
+ MODULE_AUTHOR("Invensense Corporation");
+ MODULE_DESCRIPTION("Invensense device MPU6050 driver");
+ MODULE_LICENSE("GPL");
++MODULE_IMPORT_NS(IIO_INV_SENSORS_TIMESTAMP);
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_iio.h
+@@ -9,15 +9,17 @@
+ #include <linux/i2c.h>
+ #include <linux/i2c-mux.h>
+ #include <linux/mutex.h>
+-#include <linux/iio/iio.h>
+-#include <linux/iio/buffer.h>
++#include <linux/platform_data/invensense_mpu6050.h>
+ #include <linux/regmap.h>
+-#include <linux/iio/sysfs.h>
++
++#include <linux/iio/buffer.h>
++#include <linux/iio/common/inv_sensors_timestamp.h>
++#include <linux/iio/iio.h>
+ #include <linux/iio/kfifo_buf.h>
+ #include <linux/iio/trigger.h>
+ #include <linux/iio/triggered_buffer.h>
+ #include <linux/iio/trigger_consumer.h>
+-#include <linux/platform_data/invensense_mpu6050.h>
++#include <linux/iio/sysfs.h>
+ 
+ /**
+  *  struct inv_mpu6050_reg_map - Notable registers.
+@@ -163,9 +165,7 @@ struct inv_mpu6050_hw {
+  *  @map		regmap pointer.
+  *  @irq		interrupt number.
+  *  @irq_mask		the int_pin_cfg mask to configure interrupt type.
+- *  @chip_period:	chip internal period estimation (~1kHz).
+- *  @it_timestamp:	timestamp from previous interrupt.
+- *  @data_timestamp:	timestamp for next data sample.
++ *  @timestamp:		timestamping module
+  *  @vdd_supply:	VDD voltage regulator for the chip.
+  *  @vddio_supply	I/O voltage regulator for the chip.
+  *  @magn_disabled:     magnetometer disabled for backward compatibility reason.
+@@ -189,9 +189,7 @@ struct inv_mpu6050_state {
+ 	int irq;
+ 	u8 irq_mask;
+ 	unsigned skip_samples;
+-	s64 chip_period;
+-	s64 it_timestamp;
+-	s64 data_timestamp;
++	struct inv_sensors_timestamp timestamp;
+ 	struct regulator *vdd_supply;
+ 	struct regulator *vddio_supply;
+ 	bool magn_disabled;
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c
+@@ -13,81 +13,10 @@
+ #include <linux/interrupt.h>
+ #include <linux/poll.h>
+ #include <linux/math64.h>
+-#include "inv_mpu_iio.h"
+-
+-/**
+- *  inv_mpu6050_update_period() - Update chip internal period estimation
+- *
+- *  @st:		driver state
+- *  @timestamp:		the interrupt timestamp
+- *  @nb:		number of data set in the fifo
+- *
+- *  This function uses interrupt timestamps to estimate the chip period and
+- *  to choose the data timestamp to come.
+- */
+-static void inv_mpu6050_update_period(struct inv_mpu6050_state *st,
+-				      s64 timestamp, size_t nb)
+-{
+-	/* Period boundaries for accepting timestamp */
+-	const s64 period_min =
+-		(NSEC_PER_MSEC * (100 - INV_MPU6050_TS_PERIOD_JITTER)) / 100;
+-	const s64 period_max =
+-		(NSEC_PER_MSEC * (100 + INV_MPU6050_TS_PERIOD_JITTER)) / 100;
+-	const s32 divider = INV_MPU6050_FREQ_DIVIDER(st);
+-	s64 delta, interval;
+-	bool use_it_timestamp = false;
+-
+-	if (st->it_timestamp == 0) {
+-		/* not initialized, forced to use it_timestamp */
+-		use_it_timestamp = true;
+-	} else if (nb == 1) {
+-		/*
+-		 * Validate the use of it timestamp by checking if interrupt
+-		 * has been delayed.
+-		 * nb > 1 means interrupt was delayed for more than 1 sample,
+-		 * so it's obviously not good.
+-		 * Compute the chip period between 2 interrupts for validating.
 -		 */
--		if (le16_to_cpu(cmd->opcode) == 0xfc0e) {
--			/* The boot parameter is the first 32-bit value
--			 * and rest of 3 octets are reserved.
--			 */
--			*boot_param = get_unaligned_le32(fw_ptr + frag_len +
--							 sizeof(*cmd));
--
--			bt_dev_dbg(hdev, "boot_param=0x%x", *boot_param);
+-		delta = div_s64(timestamp - st->it_timestamp, divider);
+-		if (delta > period_min && delta < period_max) {
+-			/* update chip period and use it timestamp */
+-			st->chip_period = (st->chip_period + delta) / 2;
+-			use_it_timestamp = true;
 -		}
+-	}
+ 
+-	if (use_it_timestamp) {
+-		/*
+-		 * Manage case of multiple samples in the fifo (nb > 1):
+-		 * compute timestamp corresponding to the first sample using
+-		 * estimated chip period.
+-		 */
+-		interval = (nb - 1) * st->chip_period * divider;
+-		st->data_timestamp = timestamp - interval;
+-	}
++#include <linux/iio/common/inv_sensors_timestamp.h>
+ 
+-	/* save it timestamp */
+-	st->it_timestamp = timestamp;
+-}
 -
- 		frag_len += sizeof(*cmd) + cmd->plen;
+-/**
+- *  inv_mpu6050_get_timestamp() - Return the current data timestamp
+- *
+- *  @st:		driver state
+- *  @return:		current data timestamp
+- *
+- *  This function returns the current data timestamp and prepares for next one.
+- */
+-static s64 inv_mpu6050_get_timestamp(struct inv_mpu6050_state *st)
+-{
+-	s64 ts;
+-
+-	/* return current data timestamp and increment */
+-	ts = st->data_timestamp;
+-	st->data_timestamp += st->chip_period * INV_MPU6050_FREQ_DIVIDER(st);
+-
+-	return ts;
+-}
++#include "inv_mpu_iio.h"
  
- 		/* The parameter length of the secure send command requires
-@@ -897,28 +890,101 @@ done:
- 	return err;
- }
- 
-+static bool btintel_firmware_version(struct hci_dev *hdev,
-+				     u8 num, u8 ww, u8 yy,
-+				     const struct firmware *fw,
-+				     u32 *boot_addr)
-+{
-+	const u8 *fw_ptr;
-+
-+	fw_ptr = fw->data;
-+
-+	while (fw_ptr - fw->data < fw->size) {
-+		struct hci_command_hdr *cmd = (void *)(fw_ptr);
-+
-+		/* Each SKU has a different reset parameter to use in the
-+		 * HCI_Intel_Reset command and it is embedded in the firmware
-+		 * data. So, instead of using static value per SKU, check
-+		 * the firmware data and save it for later use.
-+		 */
-+		if (le16_to_cpu(cmd->opcode) == CMD_WRITE_BOOT_PARAMS) {
-+			struct cmd_write_boot_params *params;
-+
-+			params = (void *)(fw_ptr + sizeof(*cmd));
-+
-+			bt_dev_info(hdev, "Boot Address: 0x%x",
-+				    le32_to_cpu(params->boot_addr));
-+
-+			bt_dev_info(hdev, "Firmware Version: %u-%u.%u",
-+				    params->fw_build_num, params->fw_build_ww,
-+				    params->fw_build_yy);
-+
-+			return (num == params->fw_build_num &&
-+				ww == params->fw_build_ww &&
-+				yy == params->fw_build_yy);
-+		}
-+
-+		fw_ptr += sizeof(*cmd) + cmd->plen;
-+	}
-+
-+	return false;
-+}
-+
- int btintel_download_firmware(struct hci_dev *hdev,
-+			      struct intel_version *ver,
- 			      const struct firmware *fw,
- 			      u32 *boot_param)
+ static int inv_reset_fifo(struct iio_dev *indio_dev)
  {
- 	int err;
+@@ -121,6 +50,7 @@ irqreturn_t inv_mpu6050_read_fifo(int ir
+ 	size_t bytes_per_datum;
+ 	int result;
+ 	u16 fifo_count;
++	u32 fifo_period;
+ 	s64 timestamp;
+ 	int int_status;
+ 	size_t i, nb;
+@@ -177,7 +107,10 @@ irqreturn_t inv_mpu6050_read_fifo(int ir
  
-+	/* SfP and WsP don't seem to update the firmware version on file
-+	 * so version checking is currently not possible.
-+	 */
-+	switch (ver->hw_variant) {
-+	case 0x0b:	/* SfP */
-+	case 0x0c:	/* WsP */
-+		/* Skip version checking */
-+		break;
-+	default:
-+		/* Skip download if firmware has the same version */
-+		if (btintel_firmware_version(hdev, ver->fw_build_num,
-+					     ver->fw_build_ww, ver->fw_build_yy,
-+					     fw, boot_param)) {
-+			bt_dev_info(hdev, "Firmware already loaded");
-+			/* Return -EALREADY to indicate that the firmware has
-+			 * already been loaded.
-+			 */
-+			return -EALREADY;
-+		}
-+	}
+ 	/* compute and process all complete datum */
+ 	nb = fifo_count / bytes_per_datum;
+-	inv_mpu6050_update_period(st, pf->timestamp, nb);
++	/* Each FIFO data contains all sensors, so same number for FIFO and sensor data */
++	fifo_period = NSEC_PER_SEC / INV_MPU6050_DIVIDER_TO_FIFO_RATE(st->chip_config.divider);
++	inv_sensors_timestamp_interrupt(&st->timestamp, fifo_period, nb, nb, pf->timestamp);
++	inv_sensors_timestamp_apply_odr(&st->timestamp, fifo_period, nb, 0);
+ 	for (i = 0; i < nb; ++i) {
+ 		result = regmap_noinc_read(st->map, st->reg->fifo_r_w,
+ 					   st->data, bytes_per_datum);
+@@ -188,7 +121,7 @@ irqreturn_t inv_mpu6050_read_fifo(int ir
+ 			st->skip_samples--;
+ 			continue;
+ 		}
+-		timestamp = inv_mpu6050_get_timestamp(st);
++		timestamp = inv_sensors_timestamp_pop(&st->timestamp);
+ 		iio_push_to_buffers_with_timestamp(indio_dev, st->data, timestamp);
+ 	}
+ 
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_trigger.c
+@@ -4,6 +4,9 @@
+ */
+ 
+ #include <linux/pm_runtime.h>
 +
- 	err = btintel_sfi_rsa_header_secure_send(hdev, fw);
- 	if (err)
- 		return err;
- 
--	return btintel_download_firmware_payload(hdev, fw, boot_param,
--						 RSA_HEADER_LEN);
-+	return btintel_download_firmware_payload(hdev, fw, RSA_HEADER_LEN);
- }
- EXPORT_SYMBOL_GPL(btintel_download_firmware);
- 
- int btintel_download_firmware_newgen(struct hci_dev *hdev,
-+				     struct intel_version_tlv *ver,
- 				     const struct firmware *fw, u32 *boot_param,
- 				     u8 hw_variant, u8 sbe_type)
- {
- 	int err;
- 	u32 css_header_ver;
- 
-+	/* Skip download if firmware has the same version */
-+	if (btintel_firmware_version(hdev, ver->min_fw_build_nn,
-+				     ver->min_fw_build_cw, ver->min_fw_build_yy,
-+				     fw, boot_param)) {
-+		bt_dev_info(hdev, "Firmware already loaded");
-+		/* Return -EALREADY to indicate that firmware has already been
-+		 * loaded.
-+		 */
-+		return -EALREADY;
-+	}
++#include <linux/iio/common/inv_sensors_timestamp.h>
 +
- 	/* iBT hardware variants 0x0b, 0x0c, 0x11, 0x12, 0x13, 0x14 support
- 	 * only RSA secure boot engine. Hence, the corresponding sfi file will
- 	 * have RSA header of 644 bytes followed by Command Buffer.
-@@ -948,7 +1014,7 @@ int btintel_download_firmware_newgen(str
- 		if (err)
- 			return err;
+ #include "inv_mpu_iio.h"
  
--		err = btintel_download_firmware_payload(hdev, fw, boot_param, RSA_HEADER_LEN);
-+		err = btintel_download_firmware_payload(hdev, fw, RSA_HEADER_LEN);
- 		if (err)
- 			return err;
- 	} else if (hw_variant >= 0x17) {
-@@ -969,7 +1035,6 @@ int btintel_download_firmware_newgen(str
- 				return err;
+ static unsigned int inv_scan_query_mpu6050(struct iio_dev *indio_dev)
+@@ -107,7 +110,8 @@ int inv_mpu6050_prepare_fifo(struct inv_
+ 	int ret;
  
- 			err = btintel_download_firmware_payload(hdev, fw,
--								boot_param,
- 								RSA_HEADER_LEN + ECDSA_HEADER_LEN);
- 			if (err)
- 				return err;
-@@ -979,7 +1044,6 @@ int btintel_download_firmware_newgen(str
- 				return err;
- 
- 			err = btintel_download_firmware_payload(hdev, fw,
--								boot_param,
- 								RSA_HEADER_LEN + ECDSA_HEADER_LEN);
- 			if (err)
- 				return err;
---- a/drivers/bluetooth/btintel.h
-+++ b/drivers/bluetooth/btintel.h
-@@ -157,9 +157,10 @@ struct regmap *btintel_regmap_init(struc
- int btintel_send_intel_reset(struct hci_dev *hdev, u32 boot_param);
- int btintel_read_boot_params(struct hci_dev *hdev,
- 			     struct intel_boot_params *params);
--int btintel_download_firmware(struct hci_dev *dev, const struct firmware *fw,
--			      u32 *boot_param);
-+int btintel_download_firmware(struct hci_dev *dev, struct intel_version *ver,
-+			      const struct firmware *fw, u32 *boot_param);
- int btintel_download_firmware_newgen(struct hci_dev *hdev,
-+				     struct intel_version_tlv *ver,
- 				     const struct firmware *fw,
- 				     u32 *boot_param, u8 hw_variant,
- 				     u8 sbe_type);
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2602,8 +2602,15 @@ static int btusb_intel_download_firmware
- 	set_bit(BTUSB_DOWNLOADING, &data->flags);
- 
- 	/* Start firmware downloading and get boot parameter */
--	err = btintel_download_firmware(hdev, fw, boot_param);
-+	err = btintel_download_firmware(hdev, ver, fw, boot_param);
- 	if (err < 0) {
-+		if (err == -EALREADY) {
-+			/* Firmware has already been loaded */
-+			set_bit(BTUSB_FIRMWARE_LOADED, &data->flags);
-+			err = 0;
-+			goto done;
-+		}
-+
- 		/* When FW download fails, send Intel Reset to retry
- 		 * FW download.
- 		 */
---- a/drivers/bluetooth/hci_intel.c
-+++ b/drivers/bluetooth/hci_intel.c
-@@ -735,7 +735,7 @@ static int intel_setup(struct hci_uart *
- 	set_bit(STATE_DOWNLOADING, &intel->flags);
- 
- 	/* Start firmware downloading and get boot parameter */
--	err = btintel_download_firmware(hdev, fw, &boot_param);
-+	err = btintel_download_firmware(hdev, &ver, fw, &boot_param);
- 	if (err < 0)
- 		goto done;
- 
-@@ -784,7 +784,10 @@ static int intel_setup(struct hci_uart *
- done:
- 	release_firmware(fw);
- 
--	if (err < 0)
-+	/* Check if there was an error and if is not -EALREADY which means the
-+	 * firmware has already been loaded.
-+	 */
-+	if (err < 0 && err != -EALREADY)
- 		return err;
- 
- 	/* We need to restore the default speed before Intel reset */
+ 	if (enable) {
+-		st->it_timestamp = 0;
++		/* reset timestamping */
++		inv_sensors_timestamp_reset(&st->timestamp);
+ 		/* reset FIFO */
+ 		d = st->chip_config.user_ctrl | INV_MPU6050_BIT_FIFO_RST;
+ 		ret = regmap_write(st->map, st->reg->user_ctrl, d);
 
 
