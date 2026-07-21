@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84DD356A12;
-	Tue, 21 Jul 2026 19:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641253A874B;
+	Tue, 21 Jul 2026 19:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662349; cv=none; b=vEqmNjn/CEFuzBu5+7KhOp4Bbr8z4gxVCrCt8aANW1/BYY2I0HjkkhFqJi/MJYFERQIm7cvXmR4qJ7STApxQzYhHHf1r668zeHH2eyl3bjIiMF2Av1RmVjwa0kSeM4rWEjB0zAAJa2M+bKtMh1mKUt1oYgt3BOvVf2hjr8U3XwM=
+	t=1784662351; cv=none; b=Wzc605COGDr6KWDmw9IDaudnIGcDA65Y1NZTXga7xb6T+cREDcJDKVFFZQwCMQAF/I7WMWAYGOhCbXF46UuByv0TUgCRYRbwIvk/VdLHO8ONXVIQNuHHNfDJi/UUdBh4wTmtcc0lSW8+tSYtoZgIf5BEPSBvViXN5b0ct6ZQXHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662349; c=relaxed/simple;
-	bh=VUlEURIyAd6BK1mvRT7k7oxbs/Aa1JWFTrjNgOOh0Po=;
+	s=arc-20240116; t=1784662351; c=relaxed/simple;
+	bh=5LUvISdJ0htACiBFp6ZbAXEExQ67mUxvyOQy7CgpRm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AL9zSEZdTemv1fx8+aGvEsOF3TddyIGMa/bzlZ1l4Rw2NvxaDrAgKZ8IYurG+8+wkxj/q3FJE8X+CihwcTVVvrm4rTPlXvNW52IVlDwFBkFVHRk3SF2WUtmP+KgyGnGF6BaZ5e9qTc9bOSGXWq8a+CSkmLH2ieTV/XlyRdce+40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x13IqfhA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UVo9nkR53n7BXPljpMIZ4JBvB4KHPWkpFXD84LRSE+fag/NyrFEerctQuxIQ8ozaIl//8D059WvEajQbpZ8JgyLF3yTTs9xclAhWvfvADdDGtCPZ/DPVVbiaciluioKPb6+prySwxLcUvyjjDSUD9d+/XR1yD/ZxX1DBUj8XMNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ZSLKE91; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x13IqfhA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB9D1F000E9;
-	Tue, 21 Jul 2026 19:32:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ZSLKE91"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C761F00A3A;
+	Tue, 21 Jul 2026 19:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662346;
-	bh=IDQ+NEOqdT/kEeLX4eWVkcFeaIxifFM35F68ZOLAyso=;
+	s=korg; t=1784662349;
+	bh=6oanxwXXBUcHV56MVK8NspzVskSIv7fA3MoTHBC2BEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x13IqfhACLHfqA1t1gys0JJDfrgtLuDL+DVuOZnUbYRW6n4dS5SI7ZC5P8V810bYj
-	 bDTjtv8qYuz2wX4EtBJ6cqBdH07m4KhnewNx6XtMPYIPRCV/TNE4azzozum9FWgoAq
-	 QXJlNjZw3uPu4dYOwWm8PRTHgH78dWWugbRKvNwQ=
+	b=1ZSLKE91HelSsX5rspVfRKSzFkHO5eAaPA/vdgkw/L6nPppVmtMgC1zOxmrZPCjEb
+	 FkFrkIttZewCzBGiNcdi+9h96MgKW1euQ6UUG0T03qxtROm3iHkk8dyO4YVrTMg4kq
+	 jRgfWXJ3QRlmxdp/BDA+EU4+J4t5uCkhX0PVWy/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0408/1276] eventpoll: extract ep_deliver_event() from ep_send_events()
-Date: Tue, 21 Jul 2026 17:14:11 +0200
-Message-ID: <20260721152455.228341063@linuxfoundation.org>
+Subject: [PATCH 6.12 0409/1276] eventpoll: wrap EP_UNACTIVE_PTR in typed sentinel helpers
+Date: Tue, 21 Jul 2026 17:14:12 +0200
+Message-ID: <20260721152455.249721603@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,209 +52,187 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 499a5e7f4a57fa08a297c627d007a55069acac9a ]
+[ Upstream commit 0dcb726466a556f273beaadfb76f12d1b0087dd7 ]
 
-ep_send_events()'s body covered two concerns: per-item work (PM
-wakeup-source bookkeeping, re-poll, copy_to_user, level-trigger
-re-queue, EPOLLONESHOT mask clear) and the scan-level accumulator
-(maxevents cap, EFAULT preservation, txlist/rdllist splice).
+ep->ovflist and epi->next both use EP_UNACTIVE_PTR (a cast to
+(void *)-1) as a sentinel, with distinct meanings at each site:
 
-Extract the per-item work as ep_deliver_event(), which returns a
-tri-state int:
+  ep->ovflist == EP_UNACTIVE_PTR         no scan in progress
+  epi->next   == EP_UNACTIVE_PTR         epi not on ovflist
 
-  1       one event was delivered; caller advances the counter,
-  0       re-poll produced no caller-requested events (item drops
-          out of the ready list; a future callback will re-queue),
- -EFAULT  copy_to_user() faulted; item is already re-inserted at
-          the head of the txlist so ep_done_scan() splices it back
-          to rdllist.
+Call sites had to know the sentinel's value and, by convention, what
+it meant in each context. Hide both behind inline helpers:
 
-The per-item comments (PM ordering, the "sole writer to rdllist"
-invariant for the LT re-queue, the EFAULT semantics) move into
-ep_deliver_event(). ep_send_events() reduces to the fatal-signal
-short-circuit, scan bracket, and a short txlist walk that accumulates
-the deliveries and preserves the "first error wins" EFAULT contract
-(res = delivered only if no event was previously delivered; otherwise
-the success count is returned and -EFAULT is reported on the next
-call).
+  ep_is_scanning(ep)       predicate for "scan in progress"
+  ep_enter_scan(ep)        WRITE_ONCE flip to NULL (scan start)
+  ep_exit_scan(ep)         WRITE_ONCE flip to sentinel (scan end)
+  epi_on_ovflist(epi)      predicate for "epi is on ovflist"
+  epi_clear_ovflist(epi)   clear epi's ovflist link slot
+
+Convert ep_events_available(), ep_start_scan(), ep_done_scan(),
+ep_poll_callback(), and ep_alloc_epitem() to use the wrappers. The
+ovflist state-machine transitions are now named, not encoded in
+sentinel comparisons, and the top-of-file "Ready-list state machine"
+section is the single place that spells out the sentinel's meaning.
+
+ep_alloc() keeps the raw "ep->ovflist = EP_UNACTIVE_PTR" init (no
+concurrent access at that point) with an inline "not scanning"
+comment, and the tfile_check_list sentinel is left alone -- it will
+disappear entirely when the loop-check globals move into a
+stack-allocated ep_ctl_ctx in a later commit.
+
+Also rework ep_done_scan()'s for-loop: the combined initializer +
+update clause that advanced nepi AND cleared epi->next in one step
+was clever but hard to read; splitting the update into two
+statements inside the body makes the epi_clear_ovflist() call
+visible.
 
 No functional change.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Link: https://patch.msgid.link/20260424-work-epoll-rework-v1-12-249ed00a20f3@kernel.org
+Link: https://patch.msgid.link/20260424-work-epoll-rework-v1-14-249ed00a20f3@kernel.org
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Stable-dep-of: 0c4aefe3c2d0 ("eventpoll: Fix epoll_wait() report false negative")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c | 138 ++++++++++++++++++++++++++++++-------------------
- 1 file changed, 84 insertions(+), 54 deletions(-)
+ fs/eventpoll.c | 73 +++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 52 insertions(+), 21 deletions(-)
 
 diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index 5954acefa927c0..5b4f4c1c04306b 100644
+index 5b4f4c1c04306b..81c54d8488110f 100644
 --- a/fs/eventpoll.c
 +++ b/fs/eventpoll.c
-@@ -1913,6 +1913,82 @@ static int ep_modify(struct eventpoll *ep, struct epitem *epi,
- 	return 0;
+@@ -507,6 +507,43 @@ static inline struct epitem *ep_item_from_wait(wait_queue_entry_t *p)
+ 	return container_of(p, struct eppoll_entry, wait)->base;
  }
  
 +/*
-+ * Attempt to deliver one event for @epi into @*uevents.
-+ *
-+ * Returns 1 if an event was delivered (with *uevents advanced to the
-+ * next slot), 0 if the re-poll reported no caller-requested events
-+ * (@epi drops out of the ready list; a future callback will re-add
-+ * it), or -EFAULT if copy_to_user() faulted (in which case @epi is
-+ * re-inserted at the head of @txlist so ep_done_scan() merges it
-+ * back to rdllist for the next attempt).
-+ *
-+ * PM bookkeeping and level-triggered re-queue are handled here.
-+ * Caller holds ep->mtx and the scan is active.
++ * Ready-list / ovflist state (see "Ready-list state machine" in the
++ * top-of-file banner for the full state machine). EP_UNACTIVE_PTR is
++ * the sentinel; these wrappers name each transition and each test so
++ * call sites do not need to know the sentinel's value.
 + */
-+static int ep_deliver_event(struct eventpoll *ep, struct epitem *epi,
-+			    poll_table *pt,
-+			    struct epoll_event __user **uevents,
-+			    struct list_head *txlist)
++
++/* True iff @ep is between ep_enter_scan() and ep_exit_scan(). */
++static inline bool ep_is_scanning(struct eventpoll *ep)
 +{
-+	struct epoll_event __user *next;
-+	struct wakeup_source *ws;
-+	__poll_t revents;
-+
-+	/*
-+	 * Activate ep->ws before deactivating epi->ws to prevent
-+	 * triggering auto-suspend here (in case we reactivate epi->ws
-+	 * below).  Rearranging to delay the deactivation would let
-+	 * epi->ws drift out of sync with ep_is_linked().
-+	 */
-+	ws = ep_wakeup_source(epi);
-+	if (ws) {
-+		if (ws->active)
-+			__pm_stay_awake(ep->ws);
-+		__pm_relax(ws);
-+	}
-+
-+	list_del_init(&epi->rdllink);
-+
-+	/*
-+	 * Re-poll under ep->mtx so userspace cannot change the item
-+	 * out from under us. If no caller-requested events remain,
-+	 * @epi stays off the ready list; the poll callback will
-+	 * re-queue it when events next appear.
-+	 */
-+	revents = ep_item_poll(epi, pt, 1);
-+	if (!revents)
-+		return 0;
-+
-+	next = epoll_put_uevent(revents, epi->event.data, *uevents);
-+	if (!next) {
-+		/*
-+		 * copy_to_user() faulted: put the item back so
-+		 * ep_done_scan() splices it onto rdllist for the next
-+		 * attempt.
-+		 */
-+		list_add(&epi->rdllink, txlist);
-+		ep_pm_stay_awake(epi);
-+		return -EFAULT;
-+	}
-+	*uevents = next;
-+
-+	if (epi->event.events & EPOLLONESHOT) {
-+		epi->event.events &= EP_PRIVATE_BITS;
-+	} else if (!(epi->event.events & EPOLLET)) {
-+		/*
-+		 * Level-triggered: re-queue so the next epoll_wait()
-+		 * rechecks availability. We are the sole writer to
-+		 * rdllist here -- epoll_ctl() callers are locked out
-+		 * by ep->mtx, and the poll callback queues to ovflist
-+		 * during scans.
-+		 */
-+		list_add_tail(&epi->rdllink, &ep->rdllist);
-+		ep_pm_stay_awake(epi);
-+	}
-+	return 1;
++	return READ_ONCE(ep->ovflist) != EP_UNACTIVE_PTR;
 +}
 +
- static int ep_send_events(struct eventpoll *ep,
- 			  struct epoll_event __user *events, int maxevents)
++/* Called by ep_start_scan(): divert ep_poll_callback() to ovflist. */
++static inline void ep_enter_scan(struct eventpoll *ep)
++{
++	WRITE_ONCE(ep->ovflist, NULL);
++}
++
++/* Called by ep_done_scan(): redirect ep_poll_callback() back to rdllist. */
++static inline void ep_exit_scan(struct eventpoll *ep)
++{
++	WRITE_ONCE(ep->ovflist, EP_UNACTIVE_PTR);
++}
++
++/* True iff @epi is currently linked on its ep's ovflist. */
++static inline bool epi_on_ovflist(const struct epitem *epi)
++{
++	return epi->next != EP_UNACTIVE_PTR;
++}
++
++/* Mark @epi as not on any ovflist (init and post-drain). */
++static inline void epi_clear_ovflist(struct epitem *epi)
++{
++	epi->next = EP_UNACTIVE_PTR;
++}
++
+ /**
+  * ep_events_available - Checks if ready events might be available.
+  *
+@@ -517,8 +554,7 @@ static inline struct epitem *ep_item_from_wait(wait_queue_entry_t *p)
+  */
+ static inline int ep_events_available(struct eventpoll *ep)
  {
-@@ -1935,70 +2011,24 @@ static int ep_send_events(struct eventpoll *ep,
- 	ep_start_scan(ep, &txlist);
+-	return !list_empty_careful(&ep->rdllist) ||
+-		READ_ONCE(ep->ovflist) != EP_UNACTIVE_PTR;
++	return !list_empty_careful(&ep->rdllist) || ep_is_scanning(ep);
+ }
+ 
+ #ifdef CONFIG_NET_RX_BUSY_POLL
+@@ -843,7 +879,7 @@ static void ep_start_scan(struct eventpoll *ep, struct list_head *txlist)
+ 	lockdep_assert_irqs_enabled();
+ 	spin_lock_irq(&ep->lock);
+ 	list_splice_init(&ep->rdllist, txlist);
+-	WRITE_ONCE(ep->ovflist, NULL);
++	ep_enter_scan(ep);
+ 	spin_unlock_irq(&ep->lock);
+ }
+ 
+@@ -858,29 +894,24 @@ static void ep_done_scan(struct eventpoll *ep,
+ 	 * other events might have been queued by the poll callback.
+ 	 * We re-insert them inside the main ready-list here.
+ 	 */
+-	for (nepi = READ_ONCE(ep->ovflist); (epi = nepi) != NULL;
+-	     nepi = epi->next, epi->next = EP_UNACTIVE_PTR) {
++	for (nepi = READ_ONCE(ep->ovflist); (epi = nepi) != NULL; ) {
++		nepi = epi->next;
++		epi_clear_ovflist(epi);
+ 		/*
+-		 * We need to check if the item is already in the list.
+-		 * During the "sproc" callback execution time, items are
+-		 * queued into ->ovflist but the "txlist" might already
+-		 * contain them, and the list_splice() below takes care of them.
++		 * Skip items that the caller already returned via @txlist
++		 * -- the list_splice() below takes care of those.
+ 		 */
+ 		if (!ep_is_linked(epi)) {
+ 			/*
+-			 * ->ovflist is LIFO, so we have to reverse it in order
+-			 * to keep in FIFO.
++			 * ovflist is LIFO; list_add() head-insert here
++			 * reverses the iteration order into FIFO.
+ 			 */
+ 			list_add(&epi->rdllink, &ep->rdllist);
+ 			ep_pm_stay_awake(epi);
+ 		}
+ 	}
+-	/*
+-	 * We need to set back ep->ovflist to EP_UNACTIVE_PTR, so that after
+-	 * releasing the lock, events will be queued in the normal way inside
+-	 * ep->rdllist.
+-	 */
+-	WRITE_ONCE(ep->ovflist, EP_UNACTIVE_PTR);
++	/* Back out of scan mode; callbacks target ep->rdllist again. */
++	ep_exit_scan(ep);
  
  	/*
--	 * We can loop without lock because we are passed a task private list.
--	 * Items cannot vanish during the loop we are holding ep->mtx.
-+	 * We can loop without lock because we are passed a task-private
-+	 * txlist; items cannot vanish while we hold ep->mtx.
+ 	 * Quickly re-inject items left on "txlist".
+@@ -1273,7 +1304,7 @@ static int ep_alloc(struct eventpoll **pep)
+ 	init_waitqueue_head(&ep->poll_wait);
+ 	INIT_LIST_HEAD(&ep->rdllist);
+ 	ep->rbr = RB_ROOT_CACHED;
+-	ep->ovflist = EP_UNACTIVE_PTR;
++	ep->ovflist = EP_UNACTIVE_PTR;	/* not scanning */
+ 	ep->user = get_current_user();
+ 	refcount_set(&ep->refcount, 1);
+ 
+@@ -1397,8 +1428,8 @@ static int ep_poll_callback(wait_queue_entry_t *wait, unsigned mode, int sync, v
+ 	 * semantics). All the events that happen during that period of time are
+ 	 * chained in ep->ovflist and requeued later on.
  	 */
- 	list_for_each_entry_safe(epi, tmp, &txlist, rdllink) {
--		struct wakeup_source *ws;
--		__poll_t revents;
-+		int delivered;
+-	if (READ_ONCE(ep->ovflist) != EP_UNACTIVE_PTR) {
+-		if (epi->next == EP_UNACTIVE_PTR) {
++	if (ep_is_scanning(ep)) {
++		if (!epi_on_ovflist(epi)) {
+ 			epi->next = READ_ONCE(ep->ovflist);
+ 			WRITE_ONCE(ep->ovflist, epi);
+ 			ep_pm_stay_awake_rcu(epi);
+@@ -1705,7 +1736,7 @@ static struct epitem *ep_alloc_epitem(struct eventpoll *ep,
+ 	epi->ep = ep;
+ 	ep_set_ffd(&epi->ffd, tfile, fd);
+ 	epi->event = *event;
+-	epi->next = EP_UNACTIVE_PTR;
++	epi_clear_ovflist(epi);
  
- 		if (res >= maxevents)
- 			break;
- 
--		/*
--		 * Activate ep->ws before deactivating epi->ws to prevent
--		 * triggering auto-suspend here (in case we reactive epi->ws
--		 * below).
--		 *
--		 * This could be rearranged to delay the deactivation of epi->ws
--		 * instead, but then epi->ws would temporarily be out of sync
--		 * with ep_is_linked().
--		 */
--		ws = ep_wakeup_source(epi);
--		if (ws) {
--			if (ws->active)
--				__pm_stay_awake(ep->ws);
--			__pm_relax(ws);
--		}
--
--		list_del_init(&epi->rdllink);
--
--		/*
--		 * If the event mask intersect the caller-requested one,
--		 * deliver the event to userspace. Again, we are holding ep->mtx,
--		 * so no operations coming from userspace can change the item.
--		 */
--		revents = ep_item_poll(epi, &pt, 1);
--		if (!revents)
--			continue;
--
--		events = epoll_put_uevent(revents, epi->event.data, events);
--		if (!events) {
--			list_add(&epi->rdllink, &txlist);
--			ep_pm_stay_awake(epi);
-+		delivered = ep_deliver_event(ep, epi, &pt, &events, &txlist);
-+		if (delivered < 0) {
- 			if (!res)
--				res = -EFAULT;
-+				res = delivered;
- 			break;
- 		}
--		res++;
--		if (epi->event.events & EPOLLONESHOT)
--			epi->event.events &= EP_PRIVATE_BITS;
--		else if (!(epi->event.events & EPOLLET)) {
--			/*
--			 * If this file has been added with Level
--			 * Trigger mode, we need to insert back inside
--			 * the ready list, so that the next call to
--			 * epoll_wait() will check again the events
--			 * availability. At this point, no one can insert
--			 * into ep->rdllist besides us. The epoll_ctl()
--			 * callers are locked out by
--			 * ep_send_events() holding "mtx" and the
--			 * poll callback will queue them in ep->ovflist.
--			 */
--			list_add_tail(&epi->rdllink, &ep->rdllist);
--			ep_pm_stay_awake(epi);
--		}
-+		res += delivered;
- 	}
-+
- 	ep_done_scan(ep, &txlist);
- 	mutex_unlock(&ep->mtx);
- 
+ 	return epi;
+ }
 -- 
 2.53.0
 
