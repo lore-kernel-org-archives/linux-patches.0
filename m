@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A29944AB68;
-	Tue, 21 Jul 2026 21:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D91744AB68;
+	Tue, 21 Jul 2026 21:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669236; cv=none; b=jtIa7If/OL+dFwD5yOpeGhx9cE3v/X3AWwjqTTtnh2jzSl0Lhz/ZGiPKphUb6W/T1lCwol1XRHvdzEr41WJXKwbqctqa45QVDrD2OO2E1swIp6IbtUy6YwEpBYHROc9KPN030mHhqb02YTgKfWAJSnDbqVrgwd+PfkvsXnYYlus=
+	t=1784669238; cv=none; b=QPKPi3wwgfKCIWPvrHA3n+yJJDEAfPdMBlh1f2XkpN9oZpHDxyh0TiP9uMs7yP1s6LqI61/8HVD4kQqo34UpyakiMOWg5xUM0lyYaEggGzy7jymHQw1m1gll+YGLD2SOheJOigPQlQnwnz5CPcNPlHKsXcSJj99IYesQhcw3N1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669236; c=relaxed/simple;
-	bh=jV9Nr9+jv08ygaKyQ6z/dbKCp9kmwnkpdssIoWApAf0=;
+	s=arc-20240116; t=1784669238; c=relaxed/simple;
+	bh=gksqzm1BuYYQ9pCPMUcJScrOkUuU+18msHUiIvPd3E0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dAPFAWTthjPmcX9SRpcFlzvDEIIq6Q4lcjkuxiNbM2jWlciJEYle3l5Hr4BLUwIoRYGZ8nj5Dr1BzJHOK644WQW7MKhYoPGL+1n7CvTuIYpCVD54vGpMCnyERe9S5LYM8cBKJsXGwfNOyHILHOA+Ai03O3vNJsrKqI7MBViHzxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOsYM/Fj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h+wanSLoAAS+EAOy78zddI5ZqRtw5vVEhh+d0OM+XFeILJHlvjUNUzVXXUNl/Hwwt6iJjADeUx2hxYSVlywNeyMgVooJAjkcI2AQ7IIwfS3npVnee3aXLVWFJyrSwARrupS7XKW855FlYWtrrLpIUuerhFbUSzBRe0lsi5o9X4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJrhdX19; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOsYM/Fj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812771F000E9;
-	Tue, 21 Jul 2026 21:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJrhdX19"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019AA1F000E9;
+	Tue, 21 Jul 2026 21:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669235;
-	bh=Wi3yLqj8wNjnzUnLbhXMDkpjDHn4exNxqDnD9Sn/QSA=;
+	s=korg; t=1784669237;
+	bh=J572bQi9OoeJhibGvFshR/9enZiCjl4IhpKh92FR5H0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sOsYM/FjzP37kgl3jqX4lR7B7jzFh0RYGlGJWwr06Gfwp2x7QFjbgO+x6mhliiW+K
-	 3fgYRjRuDX+/wnKygKzhSYht6JswD3qOQ58cMsQVHX0r9ureiupbrxdKutGpit4c1f
-	 /kKy+eAgpTfubbmxG+YCSTfl6jFu2i3YRnr8Vx58=
+	b=jJrhdX19PQcqYQjpdv1ii+8RyiIqpYNE3McHM5+D+DILBEmbv2V0Sz0Nom4RcpaWa
+	 hyNFufCZv6dEl/UwN8JCMIrchz9fn5h40OZlFx8l2Jer0yZ4EvmpL2QyQQW7cDRYCX
+	 UQNGjCoiUBMdlfp50aFnjrKVlnHqPhaPkSZhWTO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	David Ahern <dsahern@gmail.com>,
+	Gabriel Marin <gmx@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0479/1067] platform/x86: xo15-ebook: Fix wakeup source and GPE handling
-Date: Tue, 21 Jul 2026 17:18:00 +0200
-Message-ID: <20260721152435.328955492@linuxfoundation.org>
+Subject: [PATCH 6.1 0480/1067] perf sched: Add missing mmap2 handler in timehist
+Date: Tue, 21 Jul 2026 17:18:01 +0200
+Message-ID: <20260721152435.352443183@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -45,70 +53,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit b2fc2c6ebbd2d49935c8960755d8170faead2159 ]
+[ Upstream commit 91182741369b261c441e63e6678893032a6d7e4c ]
 
-The device_set_wakeup_enable() call in ebook_switch_add() doesn't
-actually do anything because power.can_wakeup is not set for ACPI
-device objects.  Moreover, had it done anything, it would have
-registered a wakeup source object that wouldn't have been used
-going forward and that wakeup source would have been leaked after
-driver removal because ebook_switch_remove() doesn't clean it up.
-Accordingly, remove that call from ebook_switch_add().
+perf_sched__timehist() registers event handlers for options using the
+sched->tool struct. It registers handlers for MMAP, COMM, EXIT, FORK, etc.
+but completely omits registering a handler for MMAP2 events.
 
-Also prevent leaking an enabled ACPI GPE after removing the driver by
-adding appropriate cleanup code to ebook_switch_remove().
+Failing to register both MMAP and MMAP2 handlers causes modern systems
+(which primarily output MMAP2 records) to silently drop VMA map mappings.
+This results in uninitialized machine/thread mapping structures, making it
+impossible to resolve shared library instruction pointers (IPs) to dynamic
+symbols/DSOs during timehist callchain analysis.
 
-Fixes: 89ca11771a4b ("OLPC XO-1.5 ebook switch driver")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/1966125.tdWV9SEqCh@rafael.j.wysocki
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fix this by correctly registering perf_event__process_mmap2 in
+sched->tool inside perf_sched__timehist().
+
+Fixes: 49394a2a24c78ce0 ("perf sched timehist: Introduce timehist command")
+Assisted-by: Gemini-CLI:Google Gemini 3
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: David Ahern <dsahern@gmail.com>
+Cc: Gabriel Marin <gmx@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/xo15-ebook.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ tools/perf/builtin-sched.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/xo15-ebook.c b/drivers/platform/x86/xo15-ebook.c
-index 97440462aa258a..6413bb8fe26df9 100644
---- a/drivers/platform/x86/xo15-ebook.c
-+++ b/drivers/platform/x86/xo15-ebook.c
-@@ -38,6 +38,7 @@ MODULE_DEVICE_TABLE(acpi, ebook_device_ids);
- struct ebook_switch {
- 	struct input_dev *input;
- 	char phys[32];			/* for input device */
-+	bool gpe_enabled;
- };
- 
- static int ebook_send_state(struct acpi_device *device)
-@@ -131,7 +132,7 @@ static int ebook_switch_add(struct acpi_device *device)
- 		/* Button's GPE is run-wake GPE */
- 		acpi_enable_gpe(device->wakeup.gpe_device,
- 				device->wakeup.gpe_number);
--		device_set_wakeup_enable(&device->dev, true);
-+		button->gpe_enabled = true;
- 	}
- 
- 	return 0;
-@@ -147,6 +148,10 @@ static int ebook_switch_remove(struct acpi_device *device)
- {
- 	struct ebook_switch *button = acpi_driver_data(device);
- 
-+	if (button->gpe_enabled)
-+		acpi_disable_gpe(device->wakeup.gpe_device,
-+				 device->wakeup.gpe_number);
-+
- 	input_unregister_device(button->input);
- 	kfree(button);
- 	return 0;
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index 3ffb41fa82b814..6584e39b2a8d48 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -3055,6 +3055,7 @@ static int perf_sched__timehist(struct perf_sched *sched)
+ 	 */
+ 	sched->tool.sample	 = perf_timehist__process_sample;
+ 	sched->tool.mmap	 = perf_event__process_mmap;
++	sched->tool.mmap2	 = perf_event__process_mmap2;
+ 	sched->tool.comm	 = perf_event__process_comm;
+ 	sched->tool.exit	 = perf_event__process_exit;
+ 	sched->tool.fork	 = perf_event__process_fork;
 -- 
 2.53.0
 
