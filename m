@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C6944AB97;
-	Tue, 21 Jul 2026 21:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2BF44AB71;
+	Tue, 21 Jul 2026 21:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668186; cv=none; b=BEQbOQCsRephg+lgSRnuayQuYr0nzxvrKYM747qgtVXwilhWRI52WHFbwlKBJSu/m41nEj8JSEpWww+nlb/47fvK50jrXzah1UytQlp0DQis7R9wS/Zq/UHS1HV6xZUY9ixJIZlOL0Wp1u6Ueq9EC3YaQie0wumwKaK+a/d0hww=
+	t=1784668188; cv=none; b=N0V6Aopd8b0/dnI+ED55fy9p6BFX8z5mQ1lDy3bIZd5iv5IO5YdNxATVBuWPJHOrwyUHno7ukiXaJTu5uvtDguu3XCyJXm+8VcMjhc1PQK9kJsreKoOGFwMJSt6TGPkpBl5q2Emq8NlqJdsjwRVLZMQ67OdDoH53MW3RZ02D9hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668186; c=relaxed/simple;
-	bh=qCsCAJkql22XLjYazxavOkhMuKFgnsu/5qQ4av3Sts0=;
+	s=arc-20240116; t=1784668188; c=relaxed/simple;
+	bh=+/RG/uyg83bgg6QZYeR/sw4Z7xWML4RvweH9njYRo7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/19Vpvafg98E1PkMNaeTGN7m3Kw56jWE9PRX45Ci6QLLyf173+dWb8OpDoEi2DIPnlazgd2P/44uj+LmkT3xAgETkGAQdAt+pUeuFY8SO4HkepucxEIymS7P9Kj7ECdLNzGsp40uq32JWhkGGsv5i/jS9UXOfjhGOHz5MGADvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SI26D5Zq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DbWS+G4klPAkcCPOTBe57HPzMYAedkIc3PJeM6tzwGplhsqmDTmB6gh/PgjJFv7OkTQkfdYqDOBIMq1E0fsT160jL/498VtJov/vZ5GRyaYidKGGG4+p6+4FydsKgwwAw9+rqDhrmuhasAhzi3GBDUWurx74VasrXrYM53E/zJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMBycnHJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SI26D5Zq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 221E91F000E9;
-	Tue, 21 Jul 2026 21:09:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMBycnHJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9D31F000E9;
+	Tue, 21 Jul 2026 21:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668184;
-	bh=BFsXg2TNn1J1HV1pVDmfy4gQkCXJmbkuT7+rujyIQgc=;
+	s=korg; t=1784668187;
+	bh=1jyXAVcvW2iBEZJH4I8HmgO8bjzNZa6Y5at8ffXLac8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SI26D5ZqBmuBELx/LST+Jpfd50rF9LRBR6HCF+dD0L+fBKrWcd/bmZi9vEIRTzNvm
-	 fy3R4ePefInHEAx/ZCi585OV4xQZvTQqXYGfDnacnN5hfCJ9s/rb7gCNazIiXFhFhM
-	 luzX1XRCDcRVypoegh7uSVXz2W8Zap8LavittTW0=
+	b=sMBycnHJfCKABi34TONcZmkGqEyA7PDY4n027M2ag7Y/iGHecBTFHPur/F/nj3Ii4
+	 qzBs2t4xbwTIn2+PzgIZ/e0lsIw55hGZViCZiSOF78nzWi2WbKONLjEJ73qYyn1gSt
+	 /nfi1xQzDi2G0SOhAUlFqDkrdqnQoWIuO7skXd74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Darvell Long <contact@darvell.me>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 0080/1067] ALSA: usb-audio: avoid kobject path lookup in DualSense match
-Date: Tue, 21 Jul 2026 17:11:21 +0200
-Message-ID: <20260721152426.363555201@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.1 0054/1067] iio: accel: bmc150: clamp the device-reported FIFO frame count
+Date: Tue, 21 Jul 2026 17:10:55 +0200
+Message-ID: <20260721152425.774661325@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,106 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darvell Long <contact@darvell.me>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 7693c0cc415f3a16a7a3355f245474a5e661be4e upstream.
+commit ce0e1cae26096fe959a0da5563a6d6d5a801d5fb upstream.
 
-The DualSense jack-detection input handler verifies that a matching input
-device belongs to the same physical controller by building kobject path
-strings for both the input device and the USB audio device, then comparing
-the path prefix.
+__bmc150_accel_fifo_flush() copies the number of samples the device
+reports in its hardware FIFO into an on-stack buffer
 
-This was observed when a weak physical connection caused the controller
-to rapidly disconnect and reconnect. During that repeated hotplug,
-snd_dualsense_ih_match() can run while the controller's USB device is
-being disconnected. kobject_get_path() walks ancestor kobjects and
-dereferences their names; if the USB device kobject name is no longer
-valid, this can fault in strlen():
+	u16 buffer[BMC150_ACCEL_FIFO_LENGTH * 3];
 
-  RIP: 0010:strlen+0x10/0x30
-  Call Trace:
-   kobject_get_path+0x34/0x150
-   snd_dualsense_ih_match+0x49/0xd0 [snd_usb_audio]
-   input_register_device+0x566/0x6a0
-   ps_probe+0xb89/0x1590 [hid_playstation]
+which is sized for at most BMC150_ACCEL_FIFO_LENGTH (32) samples. The
+frame count is read from the FIFO_STATUS register and only masked to its
+7 valid bits:
 
-The same ownership check can be done without building kobject path
-strings. The input device is parented below the HID device, USB interface
-and USB device, so walking the input device parent chain and comparing
-against the mixer USB device preserves the check without dereferencing
-kobject names during disconnect.
+	count = val & 0x7F;
 
-Fixes: 79d561c4ec04 ("ALSA: usb-audio: Add mixer quirk for Sony DualSense PS5")
-Cc: <stable@vger.kernel.org>
-Assisted-by: Cute:gpt-5.5
-Signed-off-by: Darvell Long <contact@darvell.me>
-Link: https://patch.msgid.link/20260624143723.2986353-1-contact@darvell.me
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+so it can be 0..127. The only other limit applied to it is the optional
+caller-supplied sample budget:
+
+	if (samples && count > samples)
+		count = samples;
+
+which does not constrain count on the flush-all path (samples == 0), and
+leaves it well above 32 whenever samples is larger. count samples are
+then transferred into buffer[]:
+
+	bmc150_accel_fifo_transfer(data, (u8 *)buffer, count);
+
+bmc150_accel_fifo_transfer() reads count * 6 bytes through regmap, so a
+malfunctioning, malicious or counterfeit accelerometer (or an attacker
+tampering with the I2C/SPI bus) that reports up to 127 frames writes up
+to 762 bytes into the 192-byte buffer: a stack out-of-bounds write of up
+to 570 bytes that clobbers the stack canary, saved registers and the
+return address.
+
+Clamp count to BMC150_ACCEL_FIFO_LENGTH, the number of samples buffer[]
+is sized for, before the transfer, mirroring the watermark clamp already
+done in bmc150_accel_set_watermark(). A well-formed flush reports at most
+BMC150_ACCEL_FIFO_LENGTH frames, so legitimate devices are unaffected.
+
+Fixes: 3bbec9773389 ("iio: bmc150_accel: add support for hardware fifo")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_quirks.c |   40 ++++++++++++----------------------------
- 1 file changed, 12 insertions(+), 28 deletions(-)
+ drivers/iio/accel/bmc150-accel-core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -573,46 +573,30 @@ static bool snd_dualsense_ih_match(struc
- {
- 	struct dualsense_mixer_elem_info *mei;
- 	struct usb_device *snd_dev;
--	char *input_dev_path, *usb_dev_path;
--	size_t usb_dev_path_len;
--	bool match = false;
-+	struct device *parent;
+--- a/drivers/iio/accel/bmc150-accel-core.c
++++ b/drivers/iio/accel/bmc150-accel-core.c
+@@ -1050,6 +1050,8 @@ static int __bmc150_accel_fifo_flush(str
+ 	if (samples && count > samples)
+ 		count = samples;
  
- 	mei = container_of(handler, struct dualsense_mixer_elem_info, ih);
- 	snd_dev = mei->info.head.mixer->chip->dev;
- 
--	input_dev_path = kobject_get_path(&dev->dev.kobj, GFP_KERNEL);
--	if (!input_dev_path) {
--		dev_warn(&snd_dev->dev, "Failed to get input dev path\n");
--		return false;
--	}
--
--	usb_dev_path = kobject_get_path(&snd_dev->dev.kobj, GFP_KERNEL);
--	if (!usb_dev_path) {
--		dev_warn(&snd_dev->dev, "Failed to get USB dev path\n");
--		goto free_paths;
--	}
--
- 	/*
- 	 * Ensure the VID:PID matched input device supposedly owned by the
- 	 * hid-playstation driver belongs to the actual hardware handled by
--	 * the current USB audio device, which implies input_dev_path being
--	 * a subpath of usb_dev_path.
-+	 * the current USB audio device.
- 	 *
- 	 * This verification is necessary when there is more than one identical
- 	 * controller attached to the host system.
-+	 *
-+	 * The input device is registered below the HID device, USB interface and
-+	 * USB device, so compare the parent chain directly instead of building
-+	 * kobject path strings. This avoids dereferencing kobject names while the
-+	 * USB device hierarchy is being torn down during disconnect.
- 	 */
--	usb_dev_path_len = strlen(usb_dev_path);
--	if (usb_dev_path_len >= strlen(input_dev_path))
--		goto free_paths;
--
--	usb_dev_path[usb_dev_path_len] = '/';
--	match = !memcmp(input_dev_path, usb_dev_path, usb_dev_path_len + 1);
--
--free_paths:
--	kfree(input_dev_path);
--	kfree(usb_dev_path);
-+	for (parent = dev->dev.parent; parent; parent = parent->parent) {
-+		if (parent == &snd_dev->dev)
-+			return true;
-+	}
- 
--	return match;
-+	return false;
- }
- 
- static int snd_dualsense_ih_connect(struct input_handler *handler,
++	count = min_t(u8, count, BMC150_ACCEL_FIFO_LENGTH);
++
+ 	ret = bmc150_accel_fifo_transfer(data, (u8 *)buffer, count);
+ 	if (ret)
+ 		return ret;
 
 
