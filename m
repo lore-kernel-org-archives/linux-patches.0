@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3613937B40C;
-	Tue, 21 Jul 2026 18:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7ED46A604;
+	Tue, 21 Jul 2026 18:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657711; cv=none; b=pC5QD7sin4QdAtPjigrl2XcIwZGt8ralgPrUmIILR5peL6YYVHL0Y5zinJGT1k2WyyTKtHwwrV65jd3Z7hM09yHG/88VATjA40gUhS+YeLoVzgjUQ5g4dTJlW/ZH4QiLopWY/gk1WqSyBorM6/0yA2MQSjHf8FJ6JSoAso6ELX4=
+	t=1784657713; cv=none; b=bqsOTBv0PrQGGpIiKmlgcxRS46IlB1Hlhyyi1W4mfXaRQwYAqf88qkeLN8wtFOfSo20noEx/l5LA1w7kSZypdO3X7ozMZOGD4DDPcF7bEFrDVe6j05TX6hQozoglIfPRMKJr9DLukWOu7aOVBdiid9wRTATQv1/n/3h+RNQ65PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657711; c=relaxed/simple;
-	bh=sNVp6ER0SlC1FVXJemnA1q3aYMH4fvOr/6KGmLKPPFc=;
+	s=arc-20240116; t=1784657713; c=relaxed/simple;
+	bh=gFkzHtogPrtjVohmdQ64f9JahvafDaPLdup02fxZWv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=niyzkSXG4BQKKBMZa+iibptkg/BbqIp+V0dZ+Dim1Xqv0AlLJ+mIM/zOg2MmqGdkzD01mNYsh5o9kwcRtAGOcOwlgGE8C1w004qqE5glebUtYWqc5U8H6zkUCLkEb6YUi2ghdQ87jjo82CRKz0UOC9+zoTlCq6eGDzk9R3+hHUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=055y7DZo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=arYLXv6T3cPSc3ydvBQQhqkWXbYFPH+s9jp6Is6m7ySD0nUGsQtedTXHkKfY6lSTHnkJFckDsCNQaE546PXeSG4rwyI69UTykpPFFGsrwWH8dXLd0RRPDdoooqRW4ZvHja4q1SRYGs2s7GwFLhMSIzPsBn9PhZr9ZeHrcQ8UeK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BsQVvzTJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="055y7DZo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 590F21F000E9;
-	Tue, 21 Jul 2026 18:15:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BsQVvzTJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E881F000E9;
+	Tue, 21 Jul 2026 18:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657709;
-	bh=T0ZoG8zqpgkP38TqtmosKi3E3ctQgMpWbtA0B7WY90g=;
+	s=korg; t=1784657712;
+	bh=yO1S9E1HhWWYGcanafrxwdfV961UxgpuxRMTk4sVlOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=055y7DZorKFoUrLV7N6R3OMpvewOhLMtmRNrDcIlVrycXqvwkzyULpiaPvY1hfmID
-	 8O87OosR+RiDcNVioF6w1AZHk+aDwOLf38govFB1dIF0escSKXXTdM9yrSq94oQbem
-	 FYy3rLMmv76xuzb32bqevtsSJ758Jx9/MdTpqCbA=
+	b=BsQVvzTJOAwp2kOyUAjFlPqK+JT8xI6Xo8+2uuiE13KhdeP/gdADe3Y7CJvL0nQ4s
+	 h2jUAYpwiqjGpRsYyUPWUWZMQ4UvA7EHmIAWEFkSpKYPAC8pV1n1YxAFNgjPdQsa5y
+	 y8Up6YmPMwTNSuFYl7oUEXTcMmZMP/gWX6f1svvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geetha sowjanya <gakula@marvell.com>,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0867/1611] octeontx2-pf: mcs: Fix mcs resources free on PF shutdown
-Date: Tue, 21 Jul 2026 17:16:23 +0200
-Message-ID: <20260721152534.893441021@linuxfoundation.org>
+Subject: [PATCH 6.18 0868/1611] net: emac: Fix NULL pointer dereference in emac_probe
+Date: Tue, 21 Jul 2026 17:16:24 +0200
+Message-ID: <20260721152534.915809943@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,48 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geetha sowjanya <gakula@marvell.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 450d0e90b10393bd9f50c127875a9fdd4cc81c30 ]
+[ Upstream commit f623d38fe6c4e8c40b23f42cc6fe6963fa49997b ]
 
-On PF shutdown, the current driver free mcs hardware
-resources though mcs resources are not allocated to it.
-This patch checks the mcs resources status and if resources
-are allocated then only sends mailbox message to free them.
+Move devm_request_irq() after devm_platform_ioremap_resource() so that
+dev->emacp is mapped before the interrupt handler can fire.  An early
+interrupt hitting emac_irq() would dereference the NULL dev->emacp and
+crash.
 
-Fixes: c54ffc73601c ("octeontx2-pf: mcs: Introduce MACSEC hardware offloading")
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Link: https://patch.msgid.link/1781636420-19816-3-git-send-email-sbhatta@marvell.com
+Also remove redundant error message. devm_platform_ioremap_resource()
+already returns an error message with dev_err_probe().
+
+Fixes: dcc34ef7c834 ("net: ibm: emac: manage emac_irq with devm")
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260618023405.415644-1-rosenp@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c    | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/ibm/emac/core.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-index 9a104dafe63f12..7b2deb78ea4c08 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-@@ -1806,11 +1806,16 @@ int cn10k_mcs_init(struct otx2_nic *pfvf)
+diff --git a/drivers/net/ethernet/ibm/emac/core.c b/drivers/net/ethernet/ibm/emac/core.c
+index 4e503b3d0d2d34..e1047915e101e3 100644
+--- a/drivers/net/ethernet/ibm/emac/core.c
++++ b/drivers/net/ethernet/ibm/emac/core.c
+@@ -3035,6 +3035,12 @@ static int emac_probe(struct platform_device *ofdev)
+ 	if (err)
+ 		goto err_gone;
  
- void cn10k_mcs_free(struct otx2_nic *pfvf)
- {
-+	struct cn10k_mcs_cfg *cfg = pfvf->macsec_cfg;
-+
- 	if (!test_bit(CN10K_HW_MACSEC, &pfvf->hw.cap_flag))
- 		return;
- 
--	cn10k_mcs_free_rsrc(pfvf, MCS_TX, MCS_RSRC_TYPE_SECY, 0, true);
--	cn10k_mcs_free_rsrc(pfvf, MCS_RX, MCS_RSRC_TYPE_SECY, 0, true);
-+	if (!list_empty(&cfg->txsc_list)) {
-+		cn10k_mcs_free_rsrc(pfvf, MCS_TX, MCS_RSRC_TYPE_SECY, 0, true);
-+		cn10k_mcs_free_rsrc(pfvf, MCS_RX, MCS_RSRC_TYPE_SECY, 0, true);
++	dev->emacp = devm_platform_ioremap_resource(ofdev, 0);
++	if (IS_ERR(dev->emacp)) {
++		err = PTR_ERR(dev->emacp);
++		goto err_gone;
 +	}
 +
- 	kfree(pfvf->macsec_cfg);
- 	pfvf->macsec_cfg = NULL;
- }
+ 	/* Setup error IRQ handler */
+ 	dev->emac_irq = platform_get_irq(ofdev, 0);
+ 	err = devm_request_irq(&ofdev->dev, dev->emac_irq, emac_irq, 0, "EMAC",
+@@ -3047,13 +3053,6 @@ static int emac_probe(struct platform_device *ofdev)
+ 
+ 	ndev->irq = dev->emac_irq;
+ 
+-	dev->emacp = devm_platform_ioremap_resource(ofdev, 0);
+-	if (IS_ERR(dev->emacp)) {
+-		dev_err(&ofdev->dev, "can't map device registers");
+-		err = PTR_ERR(dev->emacp);
+-		goto err_gone;
+-	}
+-
+ 	/* Wait for dependent devices */
+ 	err = emac_wait_deps(dev);
+ 	if (err)
 -- 
 2.53.0
 
