@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9BD46F484;
-	Tue, 21 Jul 2026 18:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3157538910F;
+	Tue, 21 Jul 2026 18:30:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658651; cv=none; b=IBv55BDrwT2cf0Z3BQY1eq3XHA8TQq/9GDXVJ2d5AWHAjuRaS8i5GV11H3Ws3KR6hlT79Ydl5hu5ALBWvkeP3nITj09tgHd82NzzDKDazHm7Hlbx7p3lq5WdfRk8N2+Wb/PLnzlzU2mkeuTMqQLEsbU98in/hcLGCUznueXuR5k=
+	t=1784658654; cv=none; b=UMNkVA2ILLruVAxX20g2qjpFX4m0bNbJWOEVbMa2oLXN3C9/JbfUCtykwpfR8yix8RxXAI2ozgEj3I/O8IZckV010vKG9LFjDaoyvLafW9aPpJbqigcEU2FfBbRGmWkF1cOFFVO0Fa3rff9JIZOgm6MfvJ04g0r8euap9Z+HyT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658651; c=relaxed/simple;
-	bh=RKnL7ovPb5SHYKnOlwqqPj3IqFjor6q8FDbAiEvWw4o=;
+	s=arc-20240116; t=1784658654; c=relaxed/simple;
+	bh=vSPH6dhkB8KHVf6pEr/I1slV7kbwztxHTiCtlH31aPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EW4bAIUqKrv6ap82naUuNvZsnNMVTqxWY39JO8MnvpKoL+7XQFDcl/RJ2r+6qotEfouQXWux88a5oYHz9RN+XXV+hDblGkC32EOLMYCS8KnuPr3JyQwJY3RgwHFHqt6So4t8qOucVAkyGgb2yxkWVmH/D+bLkZKjkSbZkzZEBPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvPNMa2P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aIQyJIqLekBO53EYAX/Wg1KdnmBMoAIh+IatTeeO57WHiqDsQ2JGDRQych9BTaqXzP65iYr4ULWkMgDrIigbyN5AiZ7ZIyTSjbJ8Ne/9IhSaRlSsvNk+1232HykelKJhr7cXh/Sn7sBo/MSx14CRH9DbdGWDEnaq+Q+AL8p6CDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8WxflMe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvPNMa2P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0441F00AC4;
-	Tue, 21 Jul 2026 18:30:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8WxflMe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 639541F00A3A;
+	Tue, 21 Jul 2026 18:30:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658649;
-	bh=zeXmXpYq69CeD8cYsFxGxVgsBDdBqMAeKgjiPovp9/g=;
+	s=korg; t=1784658651;
+	bh=fEcSm4WLy2weBDvKRrdzgxD8Bk8Cix3ZJ33ebWDU6S0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FvPNMa2PNxYd19X9YDhmoxSAKPTsn2HFe2Ue1+B8xaKM2N/gXiLPu5Q1SGxbkzUzL
-	 aQ3k853Gr6HoFBM69L8eFztaiDGdA+Mm5tSAyTEZIyBCc0wkC/MszfYJViPY7R++pN
-	 OMxjqm73+pZ/3uLilDT+oNA5W14IARdDynTt+6/Q=
+	b=P8WxflMeGmq3opM+Z6tqRDQMHxC8VZQntPGvUTiUwlW8GQVa4ItKfL1GqF+JX0wZo
+	 JzaTmTMcD02sU6lSSmOPDYOIiehVy4OGYpG7Q1qZfavO/o+0MmRPidljV56x+fauIr
+	 +DeYu0uxNmQ9vuUAqn8nF6XUE/Xr+w1RrjQknXC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.18 1206/1611] batman-adv: frag: fix primary_if leak on failed linearization
-Date: Tue, 21 Jul 2026 17:22:02 +0200
-Message-ID: <20260721152542.561166343@linuxfoundation.org>
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.18 1224/1611] MIPS: ip22-gio: fix gio device memory leak
+Date: Tue, 21 Jul 2026 17:22:20 +0200
+Message-ID: <20260721152542.968473714@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,33 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit 353d2c1d5492e53ae34f490a84494124dc3d3531 upstream.
+commit 7de9a1b45f5a95b58145653c525c8fb80292d9ab upstream.
 
-If the skb has a frag_list, it must be linearized before it can be split
-using skb_split(). But when this step failed, it must not only free the skb
-but also take care of the reference to the already found primary_if.
+The gio device release callback was never wired up so gio devices are
+not freed when the last reference is dropped.
 
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: a063f2fba3fa ("batman-adv: Don't skb_split skbuffs with frag_list")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Fixes: e84de0c61905 ("MIPS: GIO bus support for SGI IP22/28")
+Cc: stable@vger.kernel.org	# 3.3
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/fragmentation.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/mips/sgi-ip22/ip22-gio.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/batman-adv/fragmentation.c
-+++ b/net/batman-adv/fragmentation.c
-@@ -545,7 +545,7 @@ int batadv_frag_send_packet(struct sk_bu
- 	 */
- 	if (skb_has_frag_list(skb) && __skb_linearize(skb)) {
- 		ret = -ENOMEM;
--		goto free_skb;
-+		goto put_primary_if;
- 	}
- 
- 	/* Create one header to be copied to all fragments */
+--- a/arch/mips/sgi-ip22/ip22-gio.c
++++ b/arch/mips/sgi-ip22/ip22-gio.c
+@@ -101,6 +101,8 @@ int gio_device_register(struct gio_devic
+ {
+ 	giodev->dev.bus = &gio_bus_type;
+ 	giodev->dev.parent = &gio_bus;
++	giodev->dev.release = gio_release_dev;
++
+ 	return device_register(&giodev->dev);
+ }
+ EXPORT_SYMBOL_GPL(gio_device_register);
 
 
