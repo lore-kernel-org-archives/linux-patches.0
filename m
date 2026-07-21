@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1042E43DA38;
-	Tue, 21 Jul 2026 22:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5BD83B9930;
+	Tue, 21 Jul 2026 22:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671431; cv=none; b=pWY+gx5DW5dLvWkozexprr7+ppfDGTnX2zOz/qCTJs4EqSh1848OcjdU55soMPFc2k1Hyf11mUbK49FVnH/USeCHyvwyFVOgiENTAs9PqU08ypGjBWPzMl/ZQUrrCt+VYODqqA7YnfOuQzrBuQdWokt1775uPDd5/F1RpzFoRX8=
+	t=1784671433; cv=none; b=Uvw/09f0+qE7/qV6xczwidC7opW2e2QBRtu20kPI2EEdvLUA/mnqaKxENxpl7AgqtLyEmxNkT3nh+lZuiewUpg8HRuME39SgCveRxz6+5Xo9A6ec4r7uQvB+GWw7ocP/PLVewIy2yn/mYpZYQVpxQAozaM+Q0rjRUGIkg7QOUag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671431; c=relaxed/simple;
-	bh=4SKC/j0c1pqUCC109MPkkcnWryEz7y4xgpHLmrAtFdc=;
+	s=arc-20240116; t=1784671433; c=relaxed/simple;
+	bh=47FhO94JCgfm7H+b6tu/CtdHE4saamiWtOfF0jxyoLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D4t1qjXJ5DjlUGpEYN2MIb99kK4hOJlFZp8L5wqlowdgdDa65nR9hsosixpGh0AjNWWmlN9wjn2NR00SgHgOVvWtygqQkcxcfNtdcjZkI3nzi93c4yqnCHIobU8ohHiQxNXYfkWIzHRcDPBaw68AZ770DxY+KZF74ksCdF58hMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFekAQA7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m2wvLTaQMOUAu3mjbLHjMtffTW1Kmp/f50nwQD3KzWC9lZ5wWYfI3kZCARCRfv9SQXnVcfJiPatnaT69Tro/dUEpeFug8Ru+18QAEJBa3UUSCfVRYSWyz/vwQ5pIJC2rSyEDzUc7cRCB+rzWEjsuAHvFxrUg6nL4MjO+XCgDsXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RueKtoBv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFekAQA7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB221F000E9;
-	Tue, 21 Jul 2026 22:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RueKtoBv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8501F000E9;
+	Tue, 21 Jul 2026 22:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671429;
-	bh=Sz8p3TcvM91dgm9CyWaqT2AyiHAS6/SjsShYbPAJ4Vo=;
+	s=korg; t=1784671432;
+	bh=3boHm78pRXP0zMCvClBzw4KfWQMzRt3yAgFAOSbxExs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jFekAQA7lg4ge11laz41/vAmvjQ1aVU0ERJloNfEJCMkW3dgcUqVqPriDz4Fon68e
-	 MNU6TtxnZeeX4MVfzHpXFyFOJ0J+JDnZ4qOJjwmtCCdEsNHTnP0MPa8v4G8l1j9gUl
-	 ugy0F4S3KRatlxB7H/h1IgLk5YFyaoITe+CNG62U=
+	b=RueKtoBvfFcacBwkYii9Ga71x1739hASEi9tJXPqcs9iN1icGN/EaHolYIlcQ3lg/
+	 pRCynYqmyS2XBD1ZX0xSY6ahgQtaJMx3FR1XibgHqUdeNdyrCxmmzN2OT/MObgeU9L
+	 Ie2hey9mRreavNJatvRSQAQ0jx2ZZQLNSOUWsKKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
-	Yishai Hadas <yishaih@nvidia.com>,
+	"Carlos Bilbao (Lambda)" <carlos.bilbao@kernel.org>,
+	Sara Venkatesh <sarajvenkatesh@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 243/843] RDMA/mlx5: Fix devx subscribe-event unwind NULL dereference
-Date: Tue, 21 Jul 2026 17:17:58 +0200
-Message-ID: <20260721152411.481688470@linuxfoundation.org>
+Subject: [PATCH 5.15 244/843] RDMA/srpt: fix integer overflow in immediate data length check
+Date: Tue, 21 Jul 2026 17:17:59 +0200
+Message-ID: <20260721152411.503044794@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,101 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+From: Sara Venkatesh <sarajvenkatesh@gmail.com>
 
-[ Upstream commit 43f8f7946814c8e5f464518246fdbc69b6e32326 ]
+[ Upstream commit eb4ecdf631fe00e8020bf461503cb9b7017ed796 ]
 
-MLX5_IB_METHOD_DEVX_SUBSCRIBE_EVENT() links event_sub into sub_list
-before initializing the fields used by the shared error path.
+imm_buf->len is a user-controlled uint32_t received from the network.
+Adding it to imm_data_offset without overflow checking allows a
+malicious initiator to send len=0xFFFFFFFF, causing req_size to wrap
+around to a small value, bypassing the bounds check, and subsequently
+passing a ~4GB length to sg_init_one().
 
-If eventfd_ctx_fdget() then fails, the unwind path dereferences
-event_sub->ev_file in uverbs_uobject_put() and calls
-subscribe_event_xa_dealloc() with an unset xa_key_level1.
+Use check_add_overflow() to detect wrapping before the comparison.
 
-subscribe_event_xa_alloc() creates the XA entry exactly once for a given
-key_level1, on the first occurrence of that key. The unwind path must
-therefore call subscribe_event_xa_dealloc() exactly once for it as well.
-
-Enforce that by adding devx_key_in_sub_list() and calling
-subscribe_event_xa_dealloc() only when the last matching pending entry is
-being cleaned up.
-
-Fixes: 759738537142 ("IB/mlx5: Enable subscription for device events over DEVX")
-Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
-Link: https://patch.msgid.link/20260428224319.37682-1-prathameshdeshpande7@gmail.com
-Reviewed-by: Yishai Hadas <yishaih@nvidia.com>
+Fixes: 5dabcd0456d7 ("RDMA/srpt: Add support for immediate data")
+Reported-by: Carlos Bilbao (Lambda) <carlos.bilbao@kernel.org>
+Signed-off-by: Sara Venkatesh <sarajvenkatesh@gmail.com>
+Link: https://patch.msgid.link/20260504080036.3482415-1-sarajvenkatesh@gmail.com
+Reviewed-by: Carlos Bilbao (Lambda) <carlos.bilbao@kernel.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/devx.c | 30 +++++++++++++++++++++++-------
- 1 file changed, 23 insertions(+), 7 deletions(-)
+ drivers/infiniband/ulp/srpt/ib_srpt.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/devx.c b/drivers/infiniband/hw/mlx5/devx.c
-index b2d5e21dba26ca..c68c9f24940f5a 100644
---- a/drivers/infiniband/hw/mlx5/devx.c
-+++ b/drivers/infiniband/hw/mlx5/devx.c
-@@ -1844,6 +1844,17 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_OBJ_ASYNC_QUERY)(
- 	return err;
- }
+diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
+index 1b44ce0ac991c5..7aaff0f295069c 100644
+--- a/drivers/infiniband/ulp/srpt/ib_srpt.c
++++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
+@@ -1070,9 +1070,10 @@ static int srpt_get_desc_tbl(struct srpt_recv_ioctx *recv_ioctx,
+ 		struct srp_imm_buf *imm_buf = srpt_get_desc_buf(srp_cmd);
+ 		void *data = (void *)srp_cmd + imm_data_offset;
+ 		uint32_t len = be32_to_cpu(imm_buf->len);
+-		uint32_t req_size = imm_data_offset + len;
++		uint32_t req_size;
  
-+static bool devx_key_in_sub_list(struct list_head *list, u32 key_level1)
-+{
-+	struct devx_event_subscription *s;
-+
-+	list_for_each_entry(s, list, event_list)
-+		if (s->xa_key_level1 == key_level1)
-+			return true;
-+
-+	return false;
-+}
-+
- static void
- subscribe_event_xa_dealloc(struct mlx5_devx_event_table *devx_event_table,
- 			   u32 key_level1,
-@@ -2093,10 +2104,17 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_SUBSCRIBE_EVENT)(
- 		num_alloc_xa_entries++;
- 		event_sub = kzalloc(sizeof(*event_sub), GFP_KERNEL);
- 		if (!event_sub) {
-+			if (!devx_key_in_sub_list(&sub_list, key_level1))
-+				subscribe_event_xa_dealloc(devx_event_table,
-+							   key_level1,
-+							   obj,
-+							   obj_id);
- 			err = -ENOMEM;
- 			goto err;
- 		}
- 
-+		event_sub->ev_file = ev_file;
-+		event_sub->xa_key_level1 = key_level1;
- 		list_add_tail(&event_sub->event_list, &sub_list);
- 		uverbs_uobject_get(&ev_file->uobj);
- 		if (use_eventfd) {
-@@ -2111,9 +2129,6 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_SUBSCRIBE_EVENT)(
- 		}
- 
- 		event_sub->cookie = cookie;
--		event_sub->ev_file = ev_file;
--		/* May be needed upon cleanup the devx object/subscription */
--		event_sub->xa_key_level1 = key_level1;
- 		event_sub->xa_key_level2 = obj_id;
- 		INIT_LIST_HEAD(&event_sub->obj_list);
- 	}
-@@ -2158,10 +2173,11 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_SUBSCRIBE_EVENT)(
- 	list_for_each_entry_safe(event_sub, tmp_sub, &sub_list, event_list) {
- 		list_del(&event_sub->event_list);
- 
--		subscribe_event_xa_dealloc(devx_event_table,
--					   event_sub->xa_key_level1,
--					   obj,
--					   obj_id);
-+		if (!devx_key_in_sub_list(&sub_list, event_sub->xa_key_level1))
-+			subscribe_event_xa_dealloc(devx_event_table,
-+						   event_sub->xa_key_level1,
-+						   obj,
-+						   obj_id);
- 
- 		if (event_sub->eventfd)
- 			eventfd_ctx_put(event_sub->eventfd);
+-		if (req_size > srp_max_req_size) {
++		if (check_add_overflow((uint32_t)imm_data_offset, len, &req_size) ||
++		    req_size > srp_max_req_size) {
+ 			pr_err("Immediate data (length %d + %d) exceeds request size %d\n",
+ 			       imm_data_offset, len, srp_max_req_size);
+ 			return -EINVAL;
 -- 
 2.53.0
 
