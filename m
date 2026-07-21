@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FD947044A;
-	Tue, 21 Jul 2026 20:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FDB472F83;
+	Tue, 21 Jul 2026 20:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665696; cv=none; b=UZIATtMGRSGKSpM806EReOHwlYXNA195UfHkn+eIwUh/LereV20anrlBsvtZ7/6Nvw6djYeIHGWeqy7FC5II0JrGtCb8VphDDahUzwwosJUEDGylGu/QgZctANHVCq4yd1iKOJ3KdGWihDYMnd0GkE3D93wVd7G0fYZ3419aecQ=
+	t=1784665699; cv=none; b=sYNzu0vhNn1s/mcaT1pd+SDL5sF0PK4JoIbzjlsWUoER3mLxzYIxtakouiVHhjNSysAIM313wFWIzKh3rH2QBQ7Z1fBUwVOswGaaP9ZiboDXtmIyLkPO/HKG4F/YZAqxgH+6X/3hQwSVfJh1zKUvb9xU4VKjNwvLEEzg1lJcuxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665696; c=relaxed/simple;
-	bh=FApdMeMvIwZpkc7sPudE+Fk81JamsOIXuwMbPGcF160=;
+	s=arc-20240116; t=1784665699; c=relaxed/simple;
+	bh=tN5faJOjBa2rHJ56pzGJaX0+lAPRc45L/ZozSV2xrNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=csJKQzhCJXFcmSmhbdzmvvwZWktQkQyAh1+2Eu2dpszqAAqObbSe1kFyqLGTPNGwCoDSELWti+I49wdWPG1eCvVyciavhZd8XYBRfonIyxM5uoocfQWeH3UhC+DNKYUp+7nL49tKvTdr710HeviemX0oSzg5A6eCXdukskHAPfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eYabCAy2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E/KVBrOcUhNZxKcC4bgqTI002TlT8EkQQJ2MX7za8arPe26OT+6x2uALWYj/poaGcK8tMHlSJIr6jN38o83BivayY0M2OISL6GmL1Tm/bnM7nllFmoRw6E1sfl/31vuguLHD1x1TC+9TPD0kuF4PcxiOxm+F9N+or3bZV7TmMC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elpX2Jaa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eYabCAy2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8661F00A3A;
-	Tue, 21 Jul 2026 20:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elpX2Jaa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72CD1F00A3D;
+	Tue, 21 Jul 2026 20:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665689;
-	bh=f5lj/QdPJKV91X0Mk5llUpVVTeuicq5+ZPL81Q9XoAk=;
+	s=korg; t=1784665692;
+	bh=zV1B/geho5UyrIeBOEgg1mDmF45p1R94j1GmQLdsios=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eYabCAy2wYP/VAnsLF4spR1MglH4wPz7ANtHqhKV6W+k13Tb4ESrWJCTYjD4+m7Nn
-	 W3cZWammYaP051HJbgaWG9WaFZbSVZCq19AJtBc6jj5LXm77uK6iKJWKFDxhsOGlYk
-	 Au0uqx9AZDU5ehf67yhHuwNPO2gt1ar7JOLzkAfI=
+	b=elpX2JaaemyZ2qlGc/5pAsKt6EdpsT/Esu2E61ppQeiDwsP7mVtFJfP+EUGVINubg
+	 Ix0xsXKOqfv45/h/Xzu2IPyPM4TXo7aHbrXEtoF+WkqF2c29ETduLGtIGdzcfgoJDm
+	 YWuzj5BhO18FRmy53v7c5pgBGfaquc9Fi64ZY/7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0398/1266] evm: terminate and bound the evm_xattrs read buffer
-Date: Tue, 21 Jul 2026 17:13:55 +0200
-Message-ID: <20260721152450.736945745@linuxfoundation.org>
+Subject: [PATCH 6.6 0399/1266] thermal: hwmon: Fix critical temperature attribute removal
+Date: Tue, 21 Jul 2026 17:13:56 +0200
+Message-ID: <20260721152450.759981297@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,70 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 11143a19f5b8dc8f414deab87571134f9f447313 ]
+[ Upstream commit c2114dbda05354dbcf4dfbb30a2c623e8611c43a ]
 
-evm_read_xattrs() allocates size + 1 bytes, fills them from the list of
-enabled xattrs, and then passes strlen(temp) to
-simple_read_from_buffer(). When no configured xattrs are enabled, the
-fill loop stores nothing and temp[0] remains uninitialized, so strlen()
-reads beyond initialized memory.
+Since the return value of thermal_zone_crit_temp_valid() depends on
+the behavior of the thermal zone .get_crit_temp() callback which
+may change over time in theory, thermal_remove_hwmon_sysfs() may
+attempt to remove a critical temperature attribute that has not
+been created, passing a pointer to an uninitialized attribute
+structure to device_remove_file().
 
-Explicitly terminate the buffer after allocation, use snprintf() for
-each formatted line, and pass the accumulated length, without risk of
-truncation, to simple_read_from_buffer().
+To avoid that, set a flag in struct thermal_hwmon_temp after creating
+a critical temperature attribute and use the value of that flag to
+decide whether or not the attribute needs to be removed.
 
-Fixes: fa516b66a1bf ("EVM: Allow runtime modification of the set of verified xattrs")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: e8db5d6736a7 ("thermal: hwmon: Make the check for critical temp valid consistent")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/2437056.ElGaqSPkdT@rafael.j.wysocki
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/evm/evm_secfs.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/thermal/thermal_hwmon.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/security/integrity/evm/evm_secfs.c b/security/integrity/evm/evm_secfs.c
-index 9b907c2fee60b6..07c6982e1faca8 100644
---- a/security/integrity/evm/evm_secfs.c
-+++ b/security/integrity/evm/evm_secfs.c
-@@ -128,8 +128,8 @@ static ssize_t evm_read_xattrs(struct file *filp, char __user *buf,
- 			       size_t count, loff_t *ppos)
- {
- 	char *temp;
--	int offset = 0;
--	ssize_t rc, size = 0;
-+	size_t offset = 0, size = 0;
-+	ssize_t rc;
- 	struct xattr_list *xattr;
+diff --git a/drivers/thermal/thermal_hwmon.c b/drivers/thermal/thermal_hwmon.c
+index c3ae44659b8170..0e0c4061792cc5 100644
+--- a/drivers/thermal/thermal_hwmon.c
++++ b/drivers/thermal/thermal_hwmon.c
+@@ -40,6 +40,7 @@ struct thermal_hwmon_temp {
+ 	struct thermal_zone_device *tz;
+ 	struct thermal_hwmon_attr temp_input;	/* hwmon sys attr */
+ 	struct thermal_hwmon_attr temp_crit;	/* hwmon sys attr */
++	bool temp_crit_present;
+ };
  
- 	if (*ppos != 0)
-@@ -152,16 +152,22 @@ static ssize_t evm_read_xattrs(struct file *filp, char __user *buf,
- 		return -ENOMEM;
- 	}
- 
-+	temp[size] = '\0';
+ static LIST_HEAD(thermal_hwmon_list);
+@@ -197,6 +198,8 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
+ 					    &temp->temp_crit.attr);
+ 		if (result)
+ 			goto unregister_input;
 +
-+	/*
-+	 * No truncation possible: size is computed over the same enabled
-+	 * xattrs under xattr_list_mutex, so offset never exceeds size.
-+	 */
- 	list_for_each_entry(xattr, &evm_config_xattrnames, list) {
- 		if (!xattr->enabled)
- 			continue;
- 
--		sprintf(temp + offset, "%s\n", xattr->name);
--		offset += strlen(xattr->name) + 1;
-+		offset += snprintf(temp + offset, size + 1 - offset, "%s\n",
-+				   xattr->name);
++		temp->temp_crit_present = true;
  	}
  
- 	mutex_unlock(&xattr_list_mutex);
--	rc = simple_read_from_buffer(buf, count, ppos, temp, strlen(temp));
-+	rc = simple_read_from_buffer(buf, count, ppos, temp, offset);
+ 	mutex_lock(&thermal_hwmon_list_lock);
+@@ -241,7 +244,7 @@ void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz)
+ 	}
  
- 	kfree(temp);
+ 	device_remove_file(hwmon->device, &temp->temp_input.attr);
+-	if (thermal_zone_crit_temp_valid(tz))
++	if (temp->temp_crit_present)
+ 		device_remove_file(hwmon->device, &temp->temp_crit.attr);
  
+ 	mutex_lock(&thermal_hwmon_list_lock);
 -- 
 2.53.0
 
