@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB037415F0C;
-	Tue, 21 Jul 2026 22:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715A7415F10;
+	Tue, 21 Jul 2026 22:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674411; cv=none; b=dGXJGHoHQftKSpCSPmmRtjllmDtCf5gwmx0aujB1oVZM3MWxscvwrTtH7qTgrO/tL5JZjyAckkQtlBE59wi6Hd2QBrSy+dUJJfvmvqHB8Rhwdu3aYrXqBNWFRcOFr5C/E3rMsv1Tp7ZtTno9qeNbEbEDn2iCSZ97myiBFZJ0vF4=
+	t=1784674414; cv=none; b=lFRR1HTNOOnDLaOONHvOH9RlXOb+WCeXBCR3cxaSBVz1PB+zWEDM+el9idOaCZ57rK/kOQf6aaOUv3D8FEtZ3rjYr7Q+fUnsjV02p5UemKCFT7fkFWNhr4SCmtKdlZ6OIzbF5HCPYSbbhexx5g8lUp05rrklAILVqM9jDyWxfKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674411; c=relaxed/simple;
-	bh=E9HYyaSfa2xoe32tnohLuLohO1pn+zvxLR6un4qRsdA=;
+	s=arc-20240116; t=1784674414; c=relaxed/simple;
+	bh=A4dXxACwhlJwoMQSc4dvggGuIEqi0PTgtcpG319n53o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W2r+IxhGjgSiu1h5NfY4PoDIDkBBwBPie8zyJ2pGKD4W+cr0kmFXC87aJh2xoLxvSgGFbbjcL/DZaaWyFvtEeXIkdjTTq5C+g9rxh4sO97gh0FJjfnu9SvmKRyjjGmKWq6hfjJcYdiTOP63InaaVt520rkYs5qCHTB2kJ/DVxrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5CWx5MU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gyUxBlVmpn5VRIIxEITVsAKJskigWC6QKcWU921f3tRT9h5l97AU4ap8cjsj6J2/vnuK3HIHC5wHMgdEaO5kFSGYtA24hnpFrx2cMnprm67YA2KXmRBAjcQlfsEwACpkwxWfS9zbkGTcJ30dMdIuHJdxc0uf9M7Nq89IOB0kB/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skXWLdNt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5CWx5MU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6431F000E9;
-	Tue, 21 Jul 2026 22:53:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skXWLdNt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6ED91F000E9;
+	Tue, 21 Jul 2026 22:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674410;
-	bh=OFhW4ShupgLUMBJz6ecnnNtGFrmmd4s06D7CS2rNa+g=;
+	s=korg; t=1784674413;
+	bh=a2OM9+B3JnGNiFj5kZHEz0iVg20V8bavcoo5+gYdy94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K5CWx5MUlVI/KXP4purBNnhkvJjgncelgknGDV1ivRRKqsQVfUJ+tBwxVmpmr2IaL
-	 NpQb8/c4PlZ8vNOtY8Qg5HdKgSfW5IHHkmRfLrPfRUaXN0KrYPSQ7/xys8LmlfNcv1
-	 h5qspmwc9/ffkWEaTRs5/v0FE2LSbC+/7wd0QdWo=
+	b=skXWLdNtguB/QoOAWTVFWqJ/Njr84KjZQuhxhi8l0daaJbdp7zjTYSjf8V0Te+h9g
+	 raykKubvC+4I/o/292ouQSidA8U3mzGZWAlfin0dSoQ+qzYZXTscIG0lGJ7cx5P5UW
+	 tKGB3OuaS/5/eX/cgBZA+9BgJSqFZH5dKjAaCqaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Maoyi Xie <maoyixie.tju@gmail.com>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 530/699] net: ip6_vti: require CAP_NET_ADMIN in the device netns for changelink
-Date: Tue, 21 Jul 2026 17:24:49 +0200
-Message-ID: <20260721152407.653203931@linuxfoundation.org>
+Subject: [PATCH 5.10 531/699] net: ip_vti: require CAP_NET_ADMIN in the device netns for changelink
+Date: Tue, 21 Jul 2026 17:24:50 +0200
+Message-ID: <20260721152407.676585303@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -54,42 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit e2ac3b242c37dff323a964962e43854f4b1a2b79 upstream.
+commit 95cceadbfd52d7239bd730afdda0655287d77425 upstream.
 
-vti6_changelink() operates on at most two netns, dev_net(dev) and the
+vti_changelink() operates on at most two netns, dev_net(dev) and the
 tunnel link netns t->net. They differ once the device is created in or
 moved to a netns other than the one the request runs in. The rtnl
 changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
 caller privileged there but not in t->net can rewrite a tunnel that
 lives in t->net.
 
-Gate vti6_changelink() on rtnl_dev_link_net_capable() at its top,
+Gate vti_changelink() on rtnl_dev_link_net_capable() at its top,
 before any attribute is parsed.
 
 Reported-by: Xiao Liang <shaw.leon@gmail.com>
 Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
-Fixes: 61220ab34948 ("vti6: Enable namespace changing")
+Fixes: 895de9a3488a ("vti4: Enable namespace changing")
 Cc: stable@vger.kernel.org
 Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260612085941.3158249-7-maoyixie.tju@gmail.com
+Link: https://patch.msgid.link/20260612085941.3158249-4-maoyixie.tju@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_vti.c |    3 +++
+ net/ipv4/ip_vti.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/net/ipv6/ip6_vti.c
-+++ b/net/ipv6/ip6_vti.c
-@@ -1048,6 +1048,9 @@ static int vti6_changelink(struct net_de
- 	struct __ip6_tnl_parm p;
- 	struct vti6_net *ip6n;
+--- a/net/ipv4/ip_vti.c
++++ b/net/ipv4/ip_vti.c
+@@ -576,6 +576,9 @@ static int vti_changelink(struct net_dev
+ 	__u32 fwmark = t->fwmark;
+ 	struct ip_tunnel_parm p;
  
-+	if (!rtnl_dev_link_net_capable(dev, net))
++	if (!rtnl_dev_link_net_capable(dev, t->net))
 +		return -EPERM;
 +
- 	ip6n = net_generic(net, vti6_net_id);
- 	if (dev == ip6n->fb_tnl_dev)
- 		return -EINVAL;
+ 	vti_netlink_parms(data, &p, &fwmark);
+ 	return ip_tunnel_changelink(dev, tb, &p, fwmark);
+ }
 
 
