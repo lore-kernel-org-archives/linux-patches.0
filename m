@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD5635C68C;
-	Tue, 21 Jul 2026 21:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86C035C6A3;
+	Tue, 21 Jul 2026 21:21:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668913; cv=none; b=KhooQ9/ey3NvteWCChF4sR2wFq+g2Fbzbj9cyCo1UDYKnDVaPrxZLEn7g3ldUt3vJWzM/ogNGm56gko/qQ9FKF878IhZvy2Ie/AAtGW+SBBLSbBJiKuuuu8NbRO/dECF68cGxNpnYYHMPYW2LDJBDsbtzyvp5fxbESA3bWMLsWU=
+	t=1784668915; cv=none; b=g7xGizUgZ5MiHYwvZLpPOdfirOvonpX+ITETCuwXGIhpDB/GK/MxGt/vJJtl0Q/Ncl3zolqf6xiZ2TIesT1lr4gpwhPy+bEVN/GrP207CPigzIHk/B4nNKVdrf6ORTq9df5UeOxatr+545ahGGhge2tf98l0Ve+BisSNN4OLEZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668913; c=relaxed/simple;
-	bh=nA69dCQtzcP2cg6ZfziVy71arI2HZvsJ9cqfi2jCIj4=;
+	s=arc-20240116; t=1784668915; c=relaxed/simple;
+	bh=BdWLbHaKVPLE79GuclXZgtibzIwnkpQDzrynZyvtgDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eoSV+08youPqB5tzl4+cOhWKY7l5GcmqYZAwJS0cUinwnFyNWpOowDd6mrt4nkYsx8Rd+7oHdIOgI0ACW+Yso6F1ISTb9iDDvyeDguehhiJCZ+UKXrTB3o4Lt+T3As+DKX4766B0Sqd9ZDO79LvYkuBf4II7Gb9THyYjTGdY80Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n6JTQeIc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L3Oc73bj3+ShZCdJrztX/vHUkGALsgRoW4DG5kxfAF/UXXvlZVQQmuxTFVLIlg4S2+PX3t+Fr8GJPQxGafK2GoyGZXzJ+1hTH1Zg47IugaLIz+ZEeUHy9wg9SO8t1ThT27u97Zs2wpxrNBPafOJqw/32hdvfXUlI46yvMj9rXE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGOsEF2A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6JTQeIc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5D11F00A3A;
-	Tue, 21 Jul 2026 21:21:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGOsEF2A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDD11F000E9;
+	Tue, 21 Jul 2026 21:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668910;
-	bh=C2mBOOcSEZw0B9yRiMTZv4EKj4+9riTeAvarFVwQh+I=;
+	s=korg; t=1784668913;
+	bh=m5fGBFGT9bkzeJIZ3b0KMK/cVjOrSiXrVjMbBdTvzAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n6JTQeIc5uZ3cZqXnUxyvQco8y/jiJvjrZFnsiapeBUi+kCrB1XMVZAjGuy3hOBr/
-	 cFD4S5RO1iAbkr3BphtN6YbJSHL2OLT37FOugz8MxH7FsGG8CTdD+tEZt18FH/eXm2
-	 MbyKfuv1foTuI4KlABT0T9bVpgPOUYDnsv4J8IRA=
+	b=dGOsEF2A6U7SyfuDkRxva197hZF5D7M4ZBXiV1rZV2GJDbJ3R9lqq+57T8qis9rd+
+	 GeuIq6vqEo+V+hrvPzeyHAz8PEvNHBCNBgqmuZ7U30EoL5LNwPJa3SlckVKmRiwNru
+	 3fv+6dmXYwijiwC1jxvZQpWriEjmZdEFbRNA/mCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Val Packett <val@packett.cool>,
-	Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Subject: [PATCH 6.1 0355/1067] drm/msm/dp: Fix the ISR_* enum values
-Date: Tue, 21 Jul 2026 17:15:56 +0200
-Message-ID: <20260721152432.551526590@linuxfoundation.org>
+	zhoumin <teczm@foxmail.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0356/1067] EDAC/{skx_common,skx}: Fix UBSAN shift-out-of-bounds in skx_get_dimm_info
+Date: Tue, 21 Jul 2026 17:15:57 +0200
+Message-ID: <20260721152432.574083545@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -54,45 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+From: zhoumin <teczm@foxmail.com>
 
-[ Upstream commit 3fbfdc3b1d48cc115a86953e5df0c76cd2efc42b ]
+[ Upstream commit c63ed6e1f5fe648a4a099b6717f679999be482ef ]
 
-The ISR_HPD_* enum should represent values that can be read from the
-REG_DP_DP_HPD_INT_STATUS register. Swap ISR_HPD_IO_GLITCH_COUNT and
-ISR_HPD_REPLUG_COUNT to map them correctly to register values.
+When the skx_get_dimm_attr() helper returns -EINVAL,
+skx_get_dimm_info() does not validate these return values before using
+them in a shift operation:
 
-While we are at it, correct the spelling for ISR_HPD_REPLUG_COUNT.
+    size = ((1ull << (rows + cols + ranks)) * banks) >> (20 - 3);
 
-Fixes: 8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
-Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Tested-by: Val Packett <val@packett.cool> # x1e80100-dell-latitude-7455
-Tested-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com> # Hamoa IOT EVK, QCS8300 Ride
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/727602/
-Link: https://lore.kernel.org/r/20260524-hpd-refactor-v6-2-cf3ab488dd7b@oss.qualcomm.com
+If all three values are -22, the shift exponent becomes -66, triggering
+a UBSAN shift-out-of-bounds error:
+
+    UBSAN: shift-out-of-bounds in drivers/edac/skx_common.c
+    shift exponent -66 is negative
+
+Fixes: 88a242c98740 ("EDAC, skx_common: Separate common code out from skx_edac")
+Signed-off-by: zhoumin <teczm@foxmail.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://patch.msgid.link/tencent_2A0CC835A18366643CBD2865B169948AB409@qq.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/edac/skx_common.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index fd82752e502f18..5beb727f8437f9 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -34,9 +34,9 @@ enum {
- 	ISR_DISCONNECTED,
- 	ISR_CONNECT_PENDING,
- 	ISR_CONNECTED,
--	ISR_HPD_REPLUG_COUNT,
-+	ISR_HPD_IO_GLITCH_COUNT,
- 	ISR_IRQ_HPD_PULSE_COUNT,
--	ISR_HPD_LO_GLITH_COUNT,
-+	ISR_HPD_REPLUG_COUNT,
- };
+diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
+index c11870ac1b3c73..c5ff0175aa7eea 100644
+--- a/drivers/edac/skx_common.c
++++ b/drivers/edac/skx_common.c
+@@ -361,6 +361,9 @@ int skx_get_dimm_info(u32 mtr, u32 mcmtr, u32 amap, struct dimm_info *dimm,
+ 	rows = numrow(mtr);
+ 	cols = imc->hbm_mc ? 6 : numcol(mtr);
  
- /* event thread connection state */
++	if (ranks < 0 || rows < 0 || cols < 0)
++		return 0;
++
+ 	if (imc->hbm_mc) {
+ 		banks = 32;
+ 		mtype = MEM_HBM2;
 -- 
 2.53.0
 
