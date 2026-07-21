@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6764429822;
-	Tue, 21 Jul 2026 18:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B12471264;
+	Tue, 21 Jul 2026 18:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659251; cv=none; b=kYCYUmrVUF0fU2nZfuIFtEetf6tM19nTepz2cYihQuEslanhkid/Zu4poxwJsbrI6fh026wCnlYItVMW5gQ51Xrs+1Lri+cp22TDqFiD0xmAFyEfFKgFjmY0lEdodC1ER1vOT84yvC3X/Oxyz3HBatATkOXNRggGQRn9PSdJqB0=
+	t=1784659254; cv=none; b=ekILln9ADHaYRFtN2eyxcjbZWYtTVQYRhujRfgH5N3o1iwSQndZU+F+tBYfyHH03octBQcbYCVThqBdurSbN5vtcglZAUYA4Xcw/RAon9bYkXKCwaIvUG+SsZRZ/5B6IL1/RZxTS8CefEQsO0yxGfRrDOWOWsCwxFm6I+AiAqzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659251; c=relaxed/simple;
-	bh=y7nCCgz74ax4unlk5OHDtdQ2c/UwVjX19ldZQ1zBdmI=;
+	s=arc-20240116; t=1784659254; c=relaxed/simple;
+	bh=xu0KTsHV8GKjrrKaW4enrzMH5LChHvO71GvLJ2YP9S4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PcGijjB5+tdK8BZgkkI+9p3+RoieQlasKDVguzyKum5hyRnZT80vDvk+WxxrteiUdJdgW3M3hDv70iv6IPMfYWCb6z1IbTZ3FZjAr29GiOGZXhgV4dpzfXr8RoRyt5wbolV81PeR/e18lXuJJ4qC4lkGMG7WTrwG2gVRDbsA3Zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b45I3PuL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dN9M83XGb4WS0OJwMYS2qj7Pcuh8ytenmG24/4h+IQwmPTlRv0bhCnaegm2fuyiWgqQI4QrM+MUCzb5+d4KsHZWkfvpm7F7Ofi35EfI00zAuTft5hgSV5iuwdIwou/qGSomb/t8qCfeOXxQq/jdmfmxzrbdQeEqv68Lag5kIEpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzrNEuzp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b45I3PuL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17131F00A3D;
-	Tue, 21 Jul 2026 18:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzrNEuzp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B691F000E9;
+	Tue, 21 Jul 2026 18:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659250;
-	bh=cIK3mAtOCmLoduW/sTnKJgloGsig0B3frssZB8g3O1g=;
+	s=korg; t=1784659253;
+	bh=Tgw7cwC1EPyYiFSzfzwflzPLjcSpDg7rUwf/qGAzC+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b45I3PuL+GPlCLknnih8qh8E+ZIbERhfQyHdfX8FzCGEL/2zgI2Ku4FnYikkmJrK5
-	 SeNiTms4Q5pdYJH2cA3B0ulJK5aOWewBNQz/TNiYdVjmhvSqWE+D12XDNKK+06LNQB
-	 1TynhXUntzxkK740A9hfsbUY80m5QQGXcTMPZIww=
+	b=nzrNEuzpcQlMSO/U0U9YEmML8znMGd7/ibdwuKR3ZtOjEmyMDN5TDe5jiyKMAmxHw
+	 ZhUpOZelcEx9t8GEVuXCURe2FBclmkPhtBGay2k+sMpGH/DGmi93g/debNYyVIoX9K
+	 RdimB5P7QVoMtik0luRq/8gyLpiSSKP6tjTRsl+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+36256deb69a588e9290e@syzkaller.appspotmail.com,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 1451/1611] mac802154: remove interfaces with RCU list deletion
-Date: Tue, 21 Jul 2026 17:26:07 +0200
-Message-ID: <20260721152548.085387353@linuxfoundation.org>
+Subject: [PATCH 6.18 1452/1611] octeontx2-pf: fix SQB pointer leak on init failure
+Date: Tue, 21 Jul 2026 17:26:08 +0200
+Message-ID: <20260721152548.107532911@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,43 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 539dfcf69105d8d3d4d677b71de6e5ede2e6dfa0 upstream.
+commit 62e7df6d042aeebd5efb581074e28865c04477be upstream.
 
-Queue wake, stop, and disable paths walk local->interfaces under RCU.
-The bulk hardware teardown path removes entries with list_del(), so an
-asynchronous transmit completion can follow a poisoned list node in
-ieee802154_wake_queue().
+otx2_init_hw_resources() initializes SQ aura and pool resources before
+several later setup steps. On failure, err_free_sq_ptrs only frees SQB
+pages, leaving the per-SQ sqb_ptrs arrays behind.
 
-Use list_del_rcu() as in the single-interface removal path. The following
-unregister_netdevice() waits for in-flight RCU readers before freeing the
-netdevice, so no separate grace-period wait is needed.
+Use otx2_free_sq_res() for the SQ unwind path and let it free sqb_ptrs
+even when sq->sqe has not been allocated yet.
 
-Fixes: 592dfbfc72f5 ("mac820154: move interface unregistration into iface")
-Reported-by: syzbot+36256deb69a588e9290e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=36256deb69a588e9290e
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1.1.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have an
+OcteonTX2 PF device and the corresponding AF mailbox setup to test with,
+no runtime testing was able to be performed.
+
+Fixes: caa2da34fd25 ("octeontx2-pf: Initialize and config queues")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/20260701164222.9094-1-alhouseenyousef@gmail.com
+Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Link: https://patch.msgid.link/20260630071625.349996-1-dawei.feng@seu.edu.cn
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac802154/iface.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c |   21 +++++++++----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
---- a/net/mac802154/iface.c
-+++ b/net/mac802154/iface.c
-@@ -703,7 +703,7 @@ void ieee802154_remove_interfaces(struct
- 
- 	mutex_lock(&local->iflist_mtx);
- 	list_for_each_entry_safe(sdata, tmp, &local->interfaces, list) {
--		list_del(&sdata->list);
-+		list_del_rcu(&sdata->list);
- 
- 		unregister_netdevice(sdata->dev);
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -1569,15 +1569,15 @@ static void otx2_free_sq_res(struct otx2
+ 	otx2_sq_free_sqbs(pf);
+ 	for (qidx = 0; qidx < otx2_get_total_tx_queues(pf); qidx++) {
+ 		sq = &qset->sq[qidx];
+-		/* Skip freeing Qos queues if they are not initialized */
+-		if (!sq->sqe)
+-			continue;
+-		qmem_free(pf->dev, sq->sqe);
+-		qmem_free(pf->dev, sq->sqe_ring);
+-		qmem_free(pf->dev, sq->cpt_resp);
+-		qmem_free(pf->dev, sq->tso_hdrs);
+-		qmem_free(pf->dev, sq->timestamps);
+-		kfree(sq->sg);
++		/* sq->sqe is not initialized for unused QoS queues */
++		if (sq->sqe) {
++			qmem_free(pf->dev, sq->sqe);
++			qmem_free(pf->dev, sq->sqe_ring);
++			qmem_free(pf->dev, sq->cpt_resp);
++			qmem_free(pf->dev, sq->tso_hdrs);
++			qmem_free(pf->dev, sq->timestamps);
++			kfree(sq->sg);
++		}
+ 		kfree(sq->sqb_ptrs);
  	}
+ }
+@@ -1712,13 +1712,12 @@ int otx2_init_hw_resources(struct otx2_n
+ 	return err;
+ 
+ err_free_nix_queues:
+-	otx2_free_sq_res(pf);
+ 	otx2_free_cq_res(pf);
+ 	otx2_ctx_disable(mbox, NIX_AQ_CTYPE_RQ, false);
+ err_free_txsch:
+ 	otx2_txschq_stop(pf);
+ err_free_sq_ptrs:
+-	otx2_sq_free_sqbs(pf);
++	otx2_free_sq_res(pf);
+ err_free_rq_ptrs:
+ 	otx2_free_aura_ptr(pf, AURA_NIX_RQ);
+ 	otx2_ctx_disable(mbox, NPA_AQ_CTYPE_POOL, true);
 
 
