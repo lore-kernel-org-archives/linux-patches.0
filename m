@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E6C3B2D1D;
-	Tue, 21 Jul 2026 20:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1D3397E80;
+	Tue, 21 Jul 2026 20:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666012; cv=none; b=Hs4K9ffBuc8ABvjmKf656MoA74bPAVoE8ORkdQ7hxLL2/eK4C81OXrPokxQ0+ml1FEvDa+vgsk7maofGfHeQ3MHEno6FEIow4nnJE+1OkLB9l1gPwTDqoAKaYvGHrABIhv0v7Fjky1HCTFSytedlCtKYTDKbRkQEUGcB/jZ5qCI=
+	t=1784666014; cv=none; b=mRk/3hIyZW1I4kVfE/t58E8jaoCECsZ25wJbUR8ra6fqeV004g4041CAH0vgInIeAWvWtsi3PPPmb+M+iHYMHna38002MIEaHHhKm6Ch4VqAA3nx/w/sLFL6wmdiRthXmLGSuWeYP0vqcqsfWg/ePC9h02/H5w6GDB7cPRA9/30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666012; c=relaxed/simple;
-	bh=5yyUlieudDHL8hxfbuBLMIqfT2h7Hu7cuVmplt1AK3Q=;
+	s=arc-20240116; t=1784666014; c=relaxed/simple;
+	bh=ne1vmOJ9R6ZUBJWbFquCOylkhpAPCBmTCzX5at6NyU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OqD31lC7luwj6GctaCVSjtlR3peOQ8/PYgRVs4mjIwZEOS6emwZ5sI6fYS2yoP1mArhtct4J9sy93t3FFNOvmCneqR18BRgETLfH7oxo2NgCVhYuZTcug2fbpdApkld8IZ0gdMAYg4tLYQFZaVBtfGLFNXkFrcihOZmaurAiJTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Re819oLI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JFl4tHbvCdNKLQc+u91nIkO1jG+Y4fFqUjHFpUSyJSu1tHugaXK/+/OIeobx3SJtyPCnLq00fwxg0xUCbwbdDBwIMi/l2XQVN/4GuokMGKz7z/MbqbCdwToIRAiUMF9q9kGAnLbNVN4EgZu1wIoi3+lTx8aql2v5N/Ts1mNGf88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+rscWn3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Re819oLI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95CCB1F000E9;
-	Tue, 21 Jul 2026 20:33:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+rscWn3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E1E11F000E9;
+	Tue, 21 Jul 2026 20:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666011;
-	bh=7QQaBUqjC9pHNX5QjdpvUYCHDD7Ht8j7iIdyovRuKo8=;
+	s=korg; t=1784666013;
+	bh=mcPWymH15ggMtI2tOVcwsu3jregyw17A9Vp2XoI1Y/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Re819oLIdKToIHPynN3razFmG7YdYIoyhSoDBGwozpZC6Zl5lRC1U/6dyOTfJCWG2
-	 TgE26XeADQ9gG/7dKb7eNEWtf3OJqzGC2LBUgtsVq081/VwByiJuDX0kR4qhaA0zM+
-	 ApU147/nQoGNTgTKORvYPj9/x6S0zDMMqHawTzjk=
+	b=S+rscWn3OdvqzidPM+/BRm3nZsBRHsJAWfTOLmL/BpUOMngB0VpyWAdtuaTL3aoRZ
+	 2HCWDxaXtkGUteTZkcA18wD5cpOSzkGQODfCLgKEVr0N/FCUaIKiW/7k1tejjApkEM
+	 CaOmoN4ntmnVyIY82ETF5H7At21Woi3BIhGB0KTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0522/1266] hwspinlock: qcom: avoid uninitialized struct members
-Date: Tue, 21 Jul 2026 17:15:59 +0200
-Message-ID: <20260721152453.533960535@linuxfoundation.org>
+Subject: [PATCH 6.6 0505/1266] wifi: wcn36xx: fix OOB read from short trigger BA firmware response
+Date: Tue, 21 Jul 2026 17:15:42 +0200
+Message-ID: <20260721152453.149345392@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,47 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 8752c396ce3b2136b3d4c906fe103f6efb6782d9 ]
+[ Upstream commit b5e6f21923ca89d90256e7346301056f6502691e ]
 
-The reg_field is allocated on stack, so using the REG_FIELD macro will
-ensure that unused members do not have uninitialized values.
+The firmware response length is only checked against sizeof(*rsp) (20
+bytes), but when candidate_cnt >= 1, a 22-byte candidate struct is read
+at buf + 20 without verifying the response contains it. This causes an
+out-of-bounds read of stale heap data, corrupting the BA session state.
 
-Fixes: 19a0f61224d2 ("hwspinlock: qcom: Add support for Qualcomm HW Mutex block")
-Link: https://sashiko.dev/#/patchset/20260319105947.6237-1-wsa%2Brenesas%40sang-engineering.com
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260512091339.31085-2-wsa+renesas@sang-engineering.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Add validation that the response includes the candidate data.
+
+Fixes: 16be1ac55944 ("wcn36xx: Parse trigger_ba response properly")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260421135018.352774-4-tristmd@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwspinlock/qcom_hwspinlock.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/net/wireless/ath/wcn36xx/smd.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/hwspinlock/qcom_hwspinlock.c b/drivers/hwspinlock/qcom_hwspinlock.c
-index a0fd67fd293444..1daba80c6d6bd7 100644
---- a/drivers/hwspinlock/qcom_hwspinlock.c
-+++ b/drivers/hwspinlock/qcom_hwspinlock.c
-@@ -178,7 +178,6 @@ static struct regmap *qcom_hwspinlock_probe_mmio(struct platform_device *pdev,
- static int qcom_hwspinlock_probe(struct platform_device *pdev)
- {
- 	struct hwspinlock_device *bank;
--	struct reg_field field;
- 	struct regmap *regmap;
- 	size_t array_size;
- 	u32 stride;
-@@ -200,9 +199,7 @@ static int qcom_hwspinlock_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, bank);
+diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
+index 32a0e41c41ca9a..57de3747cbcffa 100644
+--- a/drivers/net/wireless/ath/wcn36xx/smd.c
++++ b/drivers/net/wireless/ath/wcn36xx/smd.c
+@@ -2659,6 +2659,9 @@ static int wcn36xx_smd_trigger_ba_rsp(void *buf, int len, struct add_ba_info *ba
+ 	if (rsp->candidate_cnt < 1)
+ 		return rsp->status ? rsp->status : -EINVAL;
  
- 	for (i = 0; i < QCOM_MUTEX_NUM_LOCKS; i++) {
--		field.reg = base + i * stride;
--		field.lsb = 0;
--		field.msb = 31;
-+		struct reg_field field = REG_FIELD(base + i * stride, 0, 31);
++	if (len < sizeof(*rsp) + sizeof(*candidate))
++		return -EINVAL;
++
+ 	candidate = (struct wcn36xx_hal_trigger_ba_rsp_candidate *)(buf + sizeof(*rsp));
  
- 		bank->lock[i].priv = devm_regmap_field_alloc(&pdev->dev,
- 							     regmap, field);
+ 	for (i = 0; i < STACFG_MAX_TC; i++) {
 -- 
 2.53.0
 
