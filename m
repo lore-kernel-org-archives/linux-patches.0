@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCE1402BB7;
-	Tue, 21 Jul 2026 17:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8B933689F;
+	Tue, 21 Jul 2026 17:16:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654191; cv=none; b=FL+6CmtkvvOr4H/nQgclja1KQkV4uzHxFOMx0ZquHf2rarEQV5tLKtmmM2cyDOrpwuvkZ0sKBCAo7aeQmOFZVMeYZdWOJkmtfmtN0GWdyPSQPncETAF3ZhCqt7PpXD05NtDbzGJUqXx34Ursp3JpJ7Y2TP0zfsmofnlBnULyURY=
+	t=1784654194; cv=none; b=tbgVp9pmz3reLDV8n0cSl14v8IwPGMORg1FXrF0A3NEwpRFVzkw8/G3ig/tHGNduMkHQrmpx7U8dh1VCT7Q/zvT1QbB8/ccB37kIupl/lEherEF42TVsWP3tLp7CWzF9z5aTEpv4NE/RBw4hHPYiAdCnA+ncSWaGjypy9yD9Wbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654191; c=relaxed/simple;
-	bh=yRBWEwWnvsI40BJU27ZN8Gl7Pnn8lKWYEJB1iFqOkgo=;
+	s=arc-20240116; t=1784654194; c=relaxed/simple;
+	bh=B81OdROjrTCt/ZesbWT5U5JEMYRmF+oTxJUApDSnR3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M5n3bzjgAeL/1UkKLTH1CAtxykfDK1G1UMkTWMZe0L2FRj05+fS+KVdZwalPCXw2umOuLKtOChllmcM20c/sSdwF0taDlxoFYjyk5bThqzo98e8En0vLtQRGKb8pv77NH/Sds/LKynZLUHhwiMijhho8Ob2D1fdFfat+2jzY8Cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NEgRSmaA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J6u/d2K0BQcx3XvOFuq5DptGWXtKsy6NAmT6TEsWHXfUlHZ2t0V78weZNb3uf1StssPTel1aXUOY9YmCqJ1UrRJ0IqRwA5pn4sNsxggCd6P287fMLfM35owrC2x1kIYSTkr6fVsmTvy7k5mDVJuSlaG5+GOnfNU+MaOJGEo+I8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHF3INrB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NEgRSmaA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A8161F000E9;
-	Tue, 21 Jul 2026 17:16:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHF3INrB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BB21F00A3A;
+	Tue, 21 Jul 2026 17:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654190;
-	bh=NZauNdVVMy0+kjtNU1tN93Bfk+mjyH11GGMcyc7uTsg=;
+	s=korg; t=1784654192;
+	bh=9kQxn6yquohKMEahUI5xRa2j7Y5xPpPTAZWC5vqTmtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NEgRSmaAzoOq4bhc/KHRfe4Q3BfjbYaeAqXQB3E786ousKOnPAHdiRWdqJUi9XoWa
-	 P2m1JPtzth4YSJa2g1EADYUl9B7CvDc/Npv3OIpvP/FxNQoeoAfrMypvBmJ8X2jJDj
-	 jDw6Rkv8K3BaMfFtohWNkv4wT0gAGq9Xlfv8cDcA=
+	b=oHF3INrBh6A98EE9sA2NzN2VZezue4HHQzxr8mbbx1sG72o9pDtgiPxjSIaqBOlt3
+	 uYD3vfebl9JYBOsfViaxqK4p7XpFg/qFJuEpWrBEEgysV6a3HYJ7BxG+aPdrIifZyz
+	 uxdTYUydLD7FRcRsKT/9q5TblNoFzt8udKtUhdOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 7.1 1609/2077] netfilter: nf_conntrack_reasm: guard mac_header adjustment after IPv6 defrag
-Date: Tue, 21 Jul 2026 17:21:22 +0200
-Message-ID: <20260721152630.717128748@linuxfoundation.org>
+Subject: [PATCH 7.1 1610/2077] netfilter: flowtable: use dst in this direction when pushing IPIP header
+Date: Tue, 21 Jul 2026 17:21:23 +0200
+Message-ID: <20260721152630.740087475@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,50 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 3b08fed5b7e0d5e3a25d73ef3ba09cd33ade16c9 upstream.
+commit c328b90c17fc5fa7786503695152880b2afb9326 upstream.
 
-nf_ct_frag6_reasm() slides the packet head forward to drop the IPv6
-fragment header and then unconditionally advances skb->mac_header:
+When pushing the IPIP header, the route of the other direction is used
+to calculate the headroom, use the route in this direction. Accessing
+the other tuple to set the IP source and destination is fine because
+this tuple does not provide such information to avoid storing redundant
+information. However, this tuple already provides the dst for this
+direction, this went unnoticed because this bug affects headroom and
+iph->frag_off only at this stage.
 
-	skb->mac_header += sizeof(struct frag_hdr);
-
-On the NF_INET_LOCAL_OUT defrag path the skb has no link-layer header
-yet, so skb->mac_header is still the "not set" sentinel (u16)~0U. Adding
-sizeof(struct frag_hdr) wraps it to a small value (0xffff + 8 == 7),
-after which skb_mac_header_was_set() wrongly reports a MAC header is
-present and skb_mac_header() points into the headroom.
-
-The reassembler has done this unconditional add since it was introduced;
-it was harmless while mac_header was a bare pointer, but wrong once
-mac_header became a u16 offset whose unset state is the ~0U sentinel
-tested by skb_mac_header_was_set(). The sibling net/ipv6/reassembly.c
-does the same relocation and does guard the adjustment; mirror the
-guard here.
-
-Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
+Fixes: d30301ba4b07 ("netfilter: flowtable: Add IPIP tx sw acceleration")
+Fixes: 93cf357fa797 ("netfilter: flowtable: Add IP6IP6 tx sw acceleration")
 Cc: stable@vger.kernel.org
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/netfilter/nf_conntrack_reasm.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/nf_flow_table_ip.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
---- a/net/ipv6/netfilter/nf_conntrack_reasm.c
-+++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
-@@ -348,7 +348,8 @@ static int nf_ct_frag6_reasm(struct frag
- 	skb_network_header(skb)[fq->nhoffset] = skb_transport_header(skb)[0];
- 	memmove(skb->head + sizeof(struct frag_hdr), skb->head,
- 		(skb->data - skb->head) - sizeof(struct frag_hdr));
--	skb->mac_header += sizeof(struct frag_hdr);
-+	if (skb_mac_header_was_set(skb))
-+		skb->mac_header += sizeof(struct frag_hdr);
- 	skb->network_header += sizeof(struct frag_hdr);
+diff --git a/net/netfilter/nf_flow_table_ip.c b/net/netfilter/nf_flow_table_ip.c
+index 29e93ac1e2e4..089f2bc19972 100644
+--- a/net/netfilter/nf_flow_table_ip.c
++++ b/net/netfilter/nf_flow_table_ip.c
+@@ -590,10 +590,10 @@ static int nf_flow_pppoe_push(struct sk_buff *skb, u16 id,
  
- 	skb_reset_transport_header(skb);
+ static int nf_flow_tunnel_ipip_push(struct net *net, struct sk_buff *skb,
+ 				    struct flow_offload_tuple *tuple,
+-				    __be32 *ip_daddr)
++				    struct dst_entry *dst, __be32 *ip_daddr)
+ {
+ 	struct iphdr *iph = (struct iphdr *)skb_network_header(skb);
+-	struct rtable *rt = dst_rtable(tuple->dst_cache);
++	struct rtable *rt = dst_rtable(dst);
+ 	u8 tos = iph->tos, ttl = iph->ttl;
+ 	__be16 frag_off = iph->frag_off;
+ 	u32 headroom = sizeof(*iph);
+@@ -636,21 +636,22 @@ static int nf_flow_tunnel_ipip_push(struct net *net, struct sk_buff *skb,
+ 
+ static int nf_flow_tunnel_v4_push(struct net *net, struct sk_buff *skb,
+ 				  struct flow_offload_tuple *tuple,
+-				  __be32 *ip_daddr)
++				  struct dst_entry *dst,  __be32 *ip_daddr)
+ {
+ 	if (tuple->tun_num)
+-		return nf_flow_tunnel_ipip_push(net, skb, tuple, ip_daddr);
++		return nf_flow_tunnel_ipip_push(net, skb, tuple, dst, ip_daddr);
+ 
+ 	return 0;
+ }
+ 
+ static int nf_flow_tunnel_ip6ip6_push(struct net *net, struct sk_buff *skb,
+ 				      struct flow_offload_tuple *tuple,
++				      struct dst_entry *dst,
+ 				      struct in6_addr **ip6_daddr)
+ {
+ 	struct ipv6hdr *ip6h = (struct ipv6hdr *)skb_network_header(skb);
+-	struct rtable *rt = dst_rtable(tuple->dst_cache);
+ 	__u8 dsfield = ipv6_get_dsfield(ip6h);
++	struct rtable *rt = dst_rtable(dst);
+ 	struct flowi6 fl6 = {
+ 		.daddr = tuple->tun.src_v6,
+ 		.saddr = tuple->tun.dst_v6,
+@@ -696,10 +697,11 @@ static int nf_flow_tunnel_ip6ip6_push(struct net *net, struct sk_buff *skb,
+ 
+ static int nf_flow_tunnel_v6_push(struct net *net, struct sk_buff *skb,
+ 				  struct flow_offload_tuple *tuple,
++				  struct dst_entry *dst,
+ 				  struct in6_addr **ip6_daddr)
+ {
+ 	if (tuple->tun_num)
+-		return nf_flow_tunnel_ip6ip6_push(net, skb, tuple, ip6_daddr);
++		return nf_flow_tunnel_ip6ip6_push(net, skb, tuple, dst, ip6_daddr);
+ 
+ 	return 0;
+ }
+@@ -842,7 +844,8 @@ nf_flow_offload_ip_hook(void *priv, struct sk_buff *skb,
+ 	other_tuple = &flow->tuplehash[!dir].tuple;
+ 	ip_daddr = other_tuple->src_v4.s_addr;
+ 
+-	if (nf_flow_tunnel_v4_push(state->net, skb, other_tuple, &ip_daddr) < 0)
++	if (nf_flow_tunnel_v4_push(state->net, skb, other_tuple,
++				   tuplehash->tuple.dst_cache, &ip_daddr) < 0)
+ 		return NF_DROP;
+ 
+ 	switch (tuplehash->tuple.xmit_type) {
+@@ -1158,6 +1161,7 @@ nf_flow_offload_ipv6_hook(void *priv, struct sk_buff *skb,
+ 	ip6_daddr = &other_tuple->src_v6;
+ 
+ 	if (nf_flow_tunnel_v6_push(state->net, skb, other_tuple,
++				   tuplehash->tuple.dst_cache,
+ 				   &ip6_daddr) < 0)
+ 		return NF_DROP;
+ 
+-- 
+2.55.0
+
 
 
