@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC3442DA53;
-	Tue, 21 Jul 2026 19:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE67E415F14;
+	Tue, 21 Jul 2026 19:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661355; cv=none; b=l/ReAn9UysM+D2VHTt+w5M7N6SD5+uaJm+Tx63fx5my7kigofvRAkHGSwMewKrGTHiDfF+x/pKce0vOyFSIEQdT+zFY0CiYDZvonTaiSpaIC2lfXqswVWiKNuEGF5qwNb4/7ogAGfnU6gbL5TPLkU0MUaERAMFiwNKuBATGqBbw=
+	t=1784661358; cv=none; b=U9DJEIXIdex62Gm1ZlM+mqRb24qz/YNpw0AfVFE8P8RzwdaXEPwX4MINMCCFChijQTeir04keUhXPZaGRl7fNzHZwWTCBIrJgH426yJy8vo6eEFjlpqKwmx1FaZofmQlMPk4/6ulTgt5JOH4Gi8PtO2/+EU+dTHkKCZcoado7bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661355; c=relaxed/simple;
-	bh=iXxLPTEez78cVq+WW+jmy0hWeV+bHndlqe48gzofxJo=;
+	s=arc-20240116; t=1784661358; c=relaxed/simple;
+	bh=IljMyx/1GjANhqTWDjs5DO2ZK383ecKeNQT8VV92o3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UOjPt/HYxZNRzzAnuB/Hgk+ek/fPzo0WoFMzRWv3y66BVyUM+0HG2Ye48FmR6XQwiBAVeTdAesKP6BT+YHdo9VTzFU9Oz0tGRCT5BvjG/PV/qBjUBAoJz0RF497gg5rGH9XOdBG15WTfsYhJa0qXmvwMD++sdH8U1UOWqZTj0gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e4HocNbu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ux3VXStvLGqnFp0+WqI3FR4bCM+OI4Cf3APecRCn3sr+i7Hg2bOUpw3jwFnupe+2VXP1jnQfHcSe1DryDqv3RwEFths+c0cGBLDWfjfIiLz9jFfZU0Yqssid+d5t0cdp2z/WRI96pquzCD4wsOWgZZ46+ODmHYs36GQNQfxeOX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OdIPru7v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e4HocNbu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64DA1F000E9;
-	Tue, 21 Jul 2026 19:15:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OdIPru7v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA951F000E9;
+	Tue, 21 Jul 2026 19:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661354;
-	bh=Nb1MlkBOPyJyTVDRapJzxgXI6tLRMBAfXV8+pnTp0GU=;
+	s=korg; t=1784661356;
+	bh=fbuAjYrEnpK+hXMnp92wARAhllcwyMOw6OrZdBNwQLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e4HocNbu3Lgls8Trz/lDz3/p/Pm3wfIaVLUVmPAxhQKo+77ZJQxyhW60vOQel8zOm
-	 p5j7zYhtZkvR7jRyoVs1cEGZR34XRY0hYKxYX293oBlS8KerPbJQmrM3lLcOUyc2fb
-	 21UceoMBxnyI2UetWdWOT1BYn6ZWwwGSJJFqdqcQ=
+	b=OdIPru7vNVmSnlzaLe+mlm6g1EZk8yvuyVXStR6wyJ6A2b4Q1qbNgTW4xmMEYSDug
+	 8kzsZS8xRCZlEs4y4+A91vfUQDSsPXLvIsehEevzAV+wzPnRHQgdpRQ595e4L70mFk
+	 2nZcxrcK3umN5PklEnWGCXzjM7Q4VUevffxXjYe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyu Jin <xingyuj@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Heiko Stuebner <heiko.stuebner@cherry.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0034/1276] af_unix: Drop all SCM attributes for SOCKMAP.
-Date: Tue, 21 Jul 2026 17:07:57 +0200
-Message-ID: <20260721152446.847839154@linuxfoundation.org>
+Subject: [PATCH 6.12 0035/1276] crypto: crypto4xx - Remove ahash-related code
+Date: Tue, 21 Jul 2026 17:07:58 +0200
+Message-ID: <20260721152446.869027776@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,178 +51,264 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 965dc93481d1b80d341bdd16c27b16fe197175ee ]
+commit 97855e7f1ccf4917f305baab199edb9f2595ff5b upstream.
 
-SOCKMAP can hide inflight fd from AF_UNIX GC.
+The hash implementation in crypto4xx has been disabled since 2009.
+As nobody has tried to fix this remove all the dead code.
 
-When a socket in SOCKMAP receives skb with inflight fd,
-sk_psock_verdict_data_ready() looks up the mapped socket and
-enqueue skb to its psock->ingress_skb.
-
-Since neither the old nor the new GC can inspect the psock
-queue, the hidden skb leaks the inflight sockets.  Note that
-this cannot be detected via kmemleak because inflight sockets
-are linked to a global list.
-
-In addition, SOCKMAP redirect breaks the Tarjan-based GC's
-assumption that unix_edge.successor is always alive, which
-is no longer true once skb is redirected, resulting in
-use-after-free below. [0]
-
-Moreover, SOCKMAP does not call scm_stat_del() properly,
-so unix_show_fdinfo() could report an incorrect fd count.
-
-sk_msg_recvmsg() does not support any SCM attributes in the
-first place.
-
-Let's drop all SCM attributes before passing skb to the
-SOCKMAP layer.
-
-[0]:
-BUG: KASAN: slab-use-after-free in unix_del_edges (net/unix/garbage.c:118 net/unix/garbage.c:181 net/unix/garbage.c:251)
-Read of size 8 at addr ffff888125362670 by task kworker/56:1/496
-
-CPU: 56 UID: 0 PID: 496 Comm: kworker/56:1 Not tainted 7.0.0-rc7-00263-gb9d8b856689d #3 PREEMPT(lazy)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-Workqueue: events sk_psock_backlog
-Call Trace:
- <TASK>
- dump_stack_lvl (lib/dump_stack.c:122)
- print_report (mm/kasan/report.c:379)
- kasan_report (mm/kasan/report.c:597)
- unix_del_edges (net/unix/garbage.c:118 net/unix/garbage.c:181 net/unix/garbage.c:251)
- unix_destroy_fpl (net/unix/garbage.c:317)
- unix_destruct_scm (./include/net/scm.h:80 ./include/net/scm.h:86 net/unix/af_unix.c:1976)
- sk_psock_backlog (./include/linux/skbuff.h:?)
- process_scheduled_works (kernel/workqueue.c:?)
- worker_thread (kernel/workqueue.c:?)
- kthread (kernel/kthread.c:438)
- ret_from_fork (arch/x86/kernel/process.c:164)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:258)
- </TASK>
-
-Allocated by task 955:
- kasan_save_track (mm/kasan/common.c:58 mm/kasan/common.c:78)
- __kasan_slab_alloc (mm/kasan/common.c:369)
- kmem_cache_alloc_noprof (mm/slub.c:4539)
- sk_prot_alloc (net/core/sock.c:2240)
- sk_alloc (net/core/sock.c:2301)
- unix_create1 (net/unix/af_unix.c:1099)
- unix_create (net/unix/af_unix.c:1169)
- __sock_create (net/socket.c:1606)
- __sys_socketpair (net/socket.c:1811)
- __x64_sys_socketpair (net/socket.c:1863 net/socket.c:1860 net/socket.c:1860)
- do_syscall_64 (arch/x86/entry/syscall_64.c:?)
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-Freed by task 496:
- kasan_save_track (mm/kasan/common.c:58 mm/kasan/common.c:78)
- kasan_save_free_info (mm/kasan/generic.c:587)
- __kasan_slab_free (mm/kasan/common.c:287)
- kmem_cache_free (mm/slub.c:6165)
- __sk_destruct (net/core/sock.c:2282 net/core/sock.c:2384)
- sk_psock_destroy (./include/net/sock.h:?)
- process_scheduled_works (kernel/workqueue.c:?)
- worker_thread (kernel/workqueue.c:?)
- kthread (kernel/kthread.c:438)
- ret_from_fork (arch/x86/kernel/process.c:164)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:258)
-
-Fixes: c63829182c37 ("af_unix: Implement ->psock_update_sk_prot()")
-Fixes: 77462de14a43 ("af_unix: Add read_sock for stream socket types")
-Reported-by: Xingyu Jin <xingyuj@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260415184830.3988432-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Heiko Stuebner <heiko.stuebner@cherry.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 35 +++++++++++++++++++++++++++--------
- 1 file changed, 27 insertions(+), 8 deletions(-)
+ drivers/crypto/amcc/crypto4xx_alg.c  | 106 ---------------------------
+ drivers/crypto/amcc/crypto4xx_core.c |  43 +----------
+ drivers/crypto/amcc/crypto4xx_core.h |   7 --
+ 3 files changed, 1 insertion(+), 155 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index f1e81843c1b0bc..23d94a08e48157 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -1884,16 +1884,19 @@ static void unix_peek_fds(struct scm_cookie *scm, struct sk_buff *skb)
- 
- static void unix_destruct_scm(struct sk_buff *skb)
+diff --git a/drivers/crypto/amcc/crypto4xx_alg.c b/drivers/crypto/amcc/crypto4xx_alg.c
+index e0af611a95d88f..04a68622ec09a8 100644
+--- a/drivers/crypto/amcc/crypto4xx_alg.c
++++ b/drivers/crypto/amcc/crypto4xx_alg.c
+@@ -12,9 +12,6 @@
+ #include <linux/interrupt.h>
+ #include <linux/spinlock_types.h>
+ #include <linux/scatterlist.h>
+-#include <linux/crypto.h>
+-#include <linux/hash.h>
+-#include <crypto/internal/hash.h>
+ #include <linux/dma-mapping.h>
+ #include <crypto/algapi.h>
+ #include <crypto/aead.h>
+@@ -602,106 +599,3 @@ int crypto4xx_decrypt_aes_gcm(struct aead_request *req)
  {
--	struct scm_cookie scm;
-+	struct scm_cookie scm = {};
-+
-+	swap(scm.pid, UNIXCB(skb).pid);
- 
--	memset(&scm, 0, sizeof(scm));
--	scm.pid = UNIXCB(skb).pid;
- 	if (UNIXCB(skb).fp)
- 		unix_detach_fds(&scm, skb);
- 
--	/* Alas, it calls VFS */
--	/* So fscking what? fput() had been SMP-safe since the last Summer */
- 	scm_destroy(&scm);
-+}
-+
-+static void unix_wfree(struct sk_buff *skb)
-+{
-+	unix_destruct_scm(skb);
- 	sock_wfree(skb);
+ 	return crypto4xx_crypt_aes_gcm(req, true);
  }
- 
-@@ -1909,7 +1912,7 @@ static int unix_scm_to_skb(struct scm_cookie *scm, struct sk_buff *skb, bool sen
- 	if (scm->fp && send_fds)
- 		err = unix_attach_fds(scm, skb);
- 
--	skb->destructor = unix_destruct_scm;
-+	skb->destructor = unix_wfree;
- 	return err;
- }
- 
-@@ -1970,6 +1973,13 @@ static void scm_stat_del(struct sock *sk, struct sk_buff *skb)
+-
+-/*
+- * HASH SHA1 Functions
+- */
+-static int crypto4xx_hash_alg_init(struct crypto_tfm *tfm,
+-				   unsigned int sa_len,
+-				   unsigned char ha,
+-				   unsigned char hm)
+-{
+-	struct crypto_alg *alg = tfm->__crt_alg;
+-	struct crypto4xx_alg *my_alg;
+-	struct crypto4xx_ctx *ctx = crypto_tfm_ctx(tfm);
+-	struct dynamic_sa_hash160 *sa;
+-	int rc;
+-
+-	my_alg = container_of(__crypto_ahash_alg(alg), struct crypto4xx_alg,
+-			      alg.u.hash);
+-	ctx->dev   = my_alg->dev;
+-
+-	/* Create SA */
+-	if (ctx->sa_in || ctx->sa_out)
+-		crypto4xx_free_sa(ctx);
+-
+-	rc = crypto4xx_alloc_sa(ctx, sa_len);
+-	if (rc)
+-		return rc;
+-
+-	crypto_ahash_set_reqsize(__crypto_ahash_cast(tfm),
+-				 sizeof(struct crypto4xx_ctx));
+-	sa = (struct dynamic_sa_hash160 *)ctx->sa_in;
+-	set_dynamic_sa_command_0(&sa->ctrl, SA_SAVE_HASH, SA_NOT_SAVE_IV,
+-				 SA_NOT_LOAD_HASH, SA_LOAD_IV_FROM_SA,
+-				 SA_NO_HEADER_PROC, ha, SA_CIPHER_ALG_NULL,
+-				 SA_PAD_TYPE_ZERO, SA_OP_GROUP_BASIC,
+-				 SA_OPCODE_HASH, DIR_INBOUND);
+-	set_dynamic_sa_command_1(&sa->ctrl, 0, SA_HASH_MODE_HASH,
+-				 CRYPTO_FEEDBACK_MODE_NO_FB, SA_EXTENDED_SN_OFF,
+-				 SA_SEQ_MASK_OFF, SA_MC_ENABLE,
+-				 SA_NOT_COPY_PAD, SA_NOT_COPY_PAYLOAD,
+-				 SA_NOT_COPY_HDR);
+-	/* Need to zero hash digest in SA */
+-	memset(sa->inner_digest, 0, sizeof(sa->inner_digest));
+-	memset(sa->outer_digest, 0, sizeof(sa->outer_digest));
+-
+-	return 0;
+-}
+-
+-int crypto4xx_hash_init(struct ahash_request *req)
+-{
+-	struct crypto4xx_ctx *ctx = crypto_tfm_ctx(req->base.tfm);
+-	int ds;
+-	struct dynamic_sa_ctl *sa;
+-
+-	sa = ctx->sa_in;
+-	ds = crypto_ahash_digestsize(
+-			__crypto_ahash_cast(req->base.tfm));
+-	sa->sa_command_0.bf.digest_len = ds >> 2;
+-	sa->sa_command_0.bf.load_hash_state = SA_LOAD_HASH_FROM_SA;
+-
+-	return 0;
+-}
+-
+-int crypto4xx_hash_update(struct ahash_request *req)
+-{
+-	struct crypto_ahash *ahash = crypto_ahash_reqtfm(req);
+-	struct crypto4xx_ctx *ctx = crypto_tfm_ctx(req->base.tfm);
+-	struct scatterlist dst;
+-	unsigned int ds = crypto_ahash_digestsize(ahash);
+-
+-	sg_init_one(&dst, req->result, ds);
+-
+-	return crypto4xx_build_pd(&req->base, ctx, req->src, &dst,
+-				  req->nbytes, NULL, 0, ctx->sa_in,
+-				  ctx->sa_len, 0, NULL);
+-}
+-
+-int crypto4xx_hash_final(struct ahash_request *req)
+-{
+-	return 0;
+-}
+-
+-int crypto4xx_hash_digest(struct ahash_request *req)
+-{
+-	struct crypto_ahash *ahash = crypto_ahash_reqtfm(req);
+-	struct crypto4xx_ctx *ctx = crypto_tfm_ctx(req->base.tfm);
+-	struct scatterlist dst;
+-	unsigned int ds = crypto_ahash_digestsize(ahash);
+-
+-	sg_init_one(&dst, req->result, ds);
+-
+-	return crypto4xx_build_pd(&req->base, ctx, req->src, &dst,
+-				  req->nbytes, NULL, 0, ctx->sa_in,
+-				  ctx->sa_len, 0, NULL);
+-}
+-
+-/*
+- * SHA1 Algorithm
+- */
+-int crypto4xx_sha1_alg_init(struct crypto_tfm *tfm)
+-{
+-	return crypto4xx_hash_alg_init(tfm, SA_HASH160_LEN, SA_HASH_ALG_SHA1,
+-				       SA_HASH_MODE_HASH);
+-}
+diff --git a/drivers/crypto/amcc/crypto4xx_core.c b/drivers/crypto/amcc/crypto4xx_core.c
+index 6006703fb6d767..0795ced8ba2c2d 100644
+--- a/drivers/crypto/amcc/crypto4xx_core.c
++++ b/drivers/crypto/amcc/crypto4xx_core.c
+@@ -485,18 +485,6 @@ static void crypto4xx_copy_pkt_to_dst(struct crypto4xx_device *dev,
  	}
  }
  
-+static void unix_orphan_scm(struct sock *sk, struct sk_buff *skb)
-+{
-+	scm_stat_del(sk, skb);
-+	unix_destruct_scm(skb);
-+	skb->destructor = sock_wfree;
-+}
-+
- /*
-  *	Send AF_UNIX data.
-  */
-@@ -2556,10 +2566,16 @@ static int unix_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
- 	int err;
- 
- 	mutex_lock(&u->iolock);
-+
- 	skb = skb_recv_datagram(sk, MSG_DONTWAIT, &err);
--	mutex_unlock(&u->iolock);
--	if (!skb)
-+	if (!skb) {
-+		mutex_unlock(&u->iolock);
- 		return err;
-+	}
-+
-+	unix_orphan_scm(sk, skb);
-+
-+	mutex_unlock(&u->iolock);
- 
- 	return recv_actor(sk, skb);
+-static void crypto4xx_copy_digest_to_dst(void *dst,
+-					struct pd_uinfo *pd_uinfo,
+-					struct crypto4xx_ctx *ctx)
+-{
+-	struct dynamic_sa_ctl *sa = (struct dynamic_sa_ctl *) ctx->sa_in;
+-
+-	if (sa->sa_command_0.bf.hash_alg == SA_HASH_ALG_SHA1) {
+-		memcpy(dst, pd_uinfo->sr_va->save_digest,
+-		       SA_HASH_ALG_SHA1_DIGEST_SIZE);
+-	}
+-}
+-
+ static void crypto4xx_ret_sg_desc(struct crypto4xx_device *dev,
+ 				  struct pd_uinfo *pd_uinfo)
+ {
+@@ -549,23 +537,6 @@ static void crypto4xx_cipher_done(struct crypto4xx_device *dev,
+ 	skcipher_request_complete(req, 0);
  }
-@@ -2754,6 +2770,9 @@ static int unix_stream_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
- #endif
  
- 	spin_unlock(&queue->lock);
-+
-+	unix_orphan_scm(sk, skb);
-+
- 	mutex_unlock(&u->iolock);
+-static void crypto4xx_ahash_done(struct crypto4xx_device *dev,
+-				struct pd_uinfo *pd_uinfo)
+-{
+-	struct crypto4xx_ctx *ctx;
+-	struct ahash_request *ahash_req;
+-
+-	ahash_req = ahash_request_cast(pd_uinfo->async_req);
+-	ctx = crypto_ahash_ctx(crypto_ahash_reqtfm(ahash_req));
+-
+-	crypto4xx_copy_digest_to_dst(ahash_req->result, pd_uinfo, ctx);
+-	crypto4xx_ret_sg_desc(dev, pd_uinfo);
+-
+-	if (pd_uinfo->state & PD_ENTRY_BUSY)
+-		ahash_request_complete(ahash_req, -EINPROGRESS);
+-	ahash_request_complete(ahash_req, 0);
+-}
+-
+ static void crypto4xx_aead_done(struct crypto4xx_device *dev,
+ 				struct pd_uinfo *pd_uinfo,
+ 				struct ce_pd *pd)
+@@ -642,9 +613,6 @@ static void crypto4xx_pd_done(struct crypto4xx_device *dev, u32 idx)
+ 	case CRYPTO_ALG_TYPE_AEAD:
+ 		crypto4xx_aead_done(dev, pd_uinfo, pd);
+ 		break;
+-	case CRYPTO_ALG_TYPE_AHASH:
+-		crypto4xx_ahash_done(dev, pd_uinfo);
+-		break;
+ 	}
+ }
  
- 	return recv_actor(sk, skb);
+@@ -915,8 +883,7 @@ int crypto4xx_build_pd(struct crypto_async_request *req,
+ 	}
+ 
+ 	pd->pd_ctl.w = PD_CTL_HOST_READY |
+-		((crypto_tfm_alg_type(req->tfm) == CRYPTO_ALG_TYPE_AHASH) ||
+-		 (crypto_tfm_alg_type(req->tfm) == CRYPTO_ALG_TYPE_AEAD) ?
++		((crypto_tfm_alg_type(req->tfm) == CRYPTO_ALG_TYPE_AEAD) ?
+ 			PD_CTL_HASH_FINAL : 0);
+ 	pd->pd_ctl_len.w = 0x00400000 | (assoclen + datalen);
+ 	pd_uinfo->state = PD_ENTRY_INUSE | (is_busy ? PD_ENTRY_BUSY : 0);
+@@ -1022,10 +989,6 @@ static int crypto4xx_register_alg(struct crypto4xx_device *sec_dev,
+ 			rc = crypto_register_aead(&alg->alg.u.aead);
+ 			break;
+ 
+-		case CRYPTO_ALG_TYPE_AHASH:
+-			rc = crypto_register_ahash(&alg->alg.u.hash);
+-			break;
+-
+ 		case CRYPTO_ALG_TYPE_RNG:
+ 			rc = crypto_register_rng(&alg->alg.u.rng);
+ 			break;
+@@ -1051,10 +1014,6 @@ static void crypto4xx_unregister_alg(struct crypto4xx_device *sec_dev)
+ 	list_for_each_entry_safe(alg, tmp, &sec_dev->alg_list, entry) {
+ 		list_del(&alg->entry);
+ 		switch (alg->alg.type) {
+-		case CRYPTO_ALG_TYPE_AHASH:
+-			crypto_unregister_ahash(&alg->alg.u.hash);
+-			break;
+-
+ 		case CRYPTO_ALG_TYPE_AEAD:
+ 			crypto_unregister_aead(&alg->alg.u.aead);
+ 			break;
+diff --git a/drivers/crypto/amcc/crypto4xx_core.h b/drivers/crypto/amcc/crypto4xx_core.h
+index 3adcc5e6569421..0cafce828aacce 100644
+--- a/drivers/crypto/amcc/crypto4xx_core.h
++++ b/drivers/crypto/amcc/crypto4xx_core.h
+@@ -16,7 +16,6 @@
+ #include <linux/ratelimit.h>
+ #include <linux/mutex.h>
+ #include <linux/scatterlist.h>
+-#include <crypto/internal/hash.h>
+ #include <crypto/internal/aead.h>
+ #include <crypto/internal/rng.h>
+ #include <crypto/internal/skcipher.h>
+@@ -135,7 +134,6 @@ struct crypto4xx_alg_common {
+ 	u32 type;
+ 	union {
+ 		struct skcipher_alg cipher;
+-		struct ahash_alg hash;
+ 		struct aead_alg aead;
+ 		struct rng_alg rng;
+ 	} u;
+@@ -177,11 +175,6 @@ int crypto4xx_encrypt_noiv_block(struct skcipher_request *req);
+ int crypto4xx_decrypt_noiv_block(struct skcipher_request *req);
+ int crypto4xx_rfc3686_encrypt(struct skcipher_request *req);
+ int crypto4xx_rfc3686_decrypt(struct skcipher_request *req);
+-int crypto4xx_sha1_alg_init(struct crypto_tfm *tfm);
+-int crypto4xx_hash_digest(struct ahash_request *req);
+-int crypto4xx_hash_final(struct ahash_request *req);
+-int crypto4xx_hash_update(struct ahash_request *req);
+-int crypto4xx_hash_init(struct ahash_request *req);
+ 
+ /*
+  * Note: Only use this function to copy items that is word aligned.
 -- 
 2.53.0
 
