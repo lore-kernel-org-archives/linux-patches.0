@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226BA40314E;
-	Tue, 21 Jul 2026 17:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB17146D2C7;
+	Tue, 21 Jul 2026 17:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654239; cv=none; b=sWFY1DA9aqMX5KMVUBomD0UtuQMMyBuLhHS3faagL96X92gd+dvKjq12ADaWnQfaWcDNutMnO9I0cIJ8gLTXIYh+XRfn0Sr9LOfbvs8rkWaXXFEA2sn8dNxfEieCeo98xAR5rHjKdJM3KCw/p65eJgSD91r/yQkAKo7an77ANCI=
+	t=1784654241; cv=none; b=Fi3B53g6mkGtWw52nUo5uid1kaeWaiRH8GhlMVnc/CJfWWQMCPGV0iIBqbaub6FRsy8Z7NXbabFNc5O7DkV8v2kJZFogUCg8hE9FYDFY3nN7UEO1bHTJvugDqMbiqX7w64KC7ynmMX/M5yhNMBRCZImZAreI7yOHDEde1V89aPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654239; c=relaxed/simple;
-	bh=URvSE88Yx08ckalM/69VY2MqXifrEbXHuozGnByZzpE=;
+	s=arc-20240116; t=1784654241; c=relaxed/simple;
+	bh=MTkkwMMx76qyG9PjYgJ8hbMjKdrdwfkpEQqmHLyrMmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1gvy9X8a4R9Sm6mJabfVPowdiNHSeK6V5hxb3HBnw1E6jrbvvvRsvxPB5NHu8Y9qLPZzMZThjhb4UEUHmiNQhIJG2U+g7Q6kXlIb4B5wyRhugi3EuiFNN6oinbBUOltJp2ERpaXmpPGEp8rhU5eWFlTUNwQNx15fX6pestZUcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+iskwXj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VSJeFtoqoxWf/Y8cy1pYI92/PchWfKRvTHLFwEyUdAxIrxmPnBWa1pyc9/cUGveVZkmRMX9W1H7CnOLBRTjbVrbuVhf9fQqNePu4lBssutkxKhnGdwGje6fmnsiaFVukhcSD8+pTq+gDvFlN6iwvIp1ENWbBp3fePgvS+rto/BE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SV+moQLN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+iskwXj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F981F000E9;
-	Tue, 21 Jul 2026 17:17:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SV+moQLN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF621F000E9;
+	Tue, 21 Jul 2026 17:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654238;
-	bh=GjJXEnhcxJOHgD1J7FVNzDb9/tLrwGowuRytNMe0Wvc=;
+	s=korg; t=1784654240;
+	bh=cRLXS3P50KgaHc6LvU2h39JVvp0XZWP7lStffRgyNGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V+iskwXj7W/O7sy7EYGveLZyAEZPgQXWXlC2uYArkGY3KsvzuDF65Uan6S1Q3/vkm
-	 QFZqht66BDTPxSUSx1KPNjQ60SZcGxNxOn6lpUfiU86h+UlgPLAQ/zh0hg4T0mUJzs
-	 BeTf9zEvXnFJSYUKqhfqxBGvp3AaPIb+slyhg6ao=
+	b=SV+moQLNQYwUMIBEIBI9K9ZgpJft+iOeBDKRdmA2vO4+m4FF+mCNDc6GhJ8ROlV/d
+	 lkcW9CoocXuw0z46ULBB7bZouelVOVJytOIRXyY5cKfkInGeo8zX5STua4u5aI4luJ
+	 kewnt8JZ32c0K8w1r0bthhMXoK75tc7DhvOiCv4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srikanth Aithal <Srikanth.Aithal@amd.com>,
-	"Tycho Andersen (AMD)" <tycho@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	stable@kernel.org
-Subject: [PATCH 7.1 1630/2077] x86/virt/sev: Revert "Drop WBINVD before setting MSR_AMD64_SYSCFG_SNP_EN"
-Date: Tue, 21 Jul 2026 17:21:43 +0200
-Message-ID: <20260721152631.200389336@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Ingo Molnar <mingo@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>
+Subject: [PATCH 7.1 1631/2077] x86/boot: Validate console=uart8250 baud rate to fix early boot hang
+Date: Tue, 21 Jul 2026 17:21:44 +0200
+Message-ID: <20260721152631.224299871@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,53 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tycho Andersen (AMD) <tycho@kernel.org>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 4c2509f3b79756679a02bea649c6a7501b58f52c upstream.
+commit ffa0aa5b625fe0bed7463ac613f8b06676ff4542 upstream.
 
-Revert
+When the baud rate is empty, 0, invalid, or overflows to 0 when stored
+as an int, the system will hang during early boot because of a division
+by zero in early_serial_init().
 
-  99cf1fb58e68 ("x86/virt/sev: Drop WBINVD before setting MSR_AMD64_SYSCFG_SNP_EN").
+Fall back to DEFAULT_BAUD when the resulting baud rate is 0 to prevent
+an early system hang.
 
-Section 8.8 of the SNP spec says:
-
-  Before invoking SNP_INIT_EX with INIT_RMP set to 1, software must ensure
-  that no CPUs contain dirty cache lines for the memory containing the RMP.
-
-Cachelines can be moved from cache to cache in a dirty state. The
-wbinvd_on_all_cpus() before SNP_INIT_EX flushes the caches for each CPU, but
-if the IPIs for WBINVD race with this dirty cacheline movement, it is possible
-that they may not get flushed, violating the firmware requirement.
-
-Doing wbinvd_on_all_cpus() before setting SNPEn is safer since the RMP
-table is not yet in use.
-
-  [ Heroically bisected by Srikanth. ]
-  [ bp: Massage commit message. ]
-
-Fixes: 99cf1fb58e68 ("x86/virt/sev: Drop WBINVD before setting MSR_AMD64_SYSCFG_SNP_EN")
-Reported-by: Srikanth Aithal <Srikanth.Aithal@amd.com>
-Signed-off-by: Tycho Andersen (AMD) <tycho@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Srikanth Aithal <Srikanth.Aithal@amd.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/20260707150033.2364758-1-tycho@kernel.org
+Fixes: ce0aa5dd20e4 ("x86, setup: Make the setup code also accept console=uart8250")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260713194924.126472-3-thorsten.blum@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/virt/svm/sev.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/boot/early_serial_console.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/arch/x86/virt/svm/sev.c
-+++ b/arch/x86/virt/svm/sev.c
-@@ -527,6 +527,8 @@ void snp_prepare(void)
+--- a/arch/x86/boot/early_serial_console.c
++++ b/arch/x86/boot/early_serial_console.c
+@@ -117,7 +117,7 @@ static unsigned int probe_baud(int port)
+ static void parse_console_uart8250(void)
+ {
+ 	char optstr[64], *options;
+-	int baud = DEFAULT_BAUD;
++	int baud;
+ 	int port = 0;
  
- 	cpus_read_lock();
- 
-+	wbinvd_on_all_cpus();
-+
  	/*
- 	 * MtrrFixDramModEn is not shared between threads on a core,
- 	 * therefore it must be set on all CPUs prior to enabling SNP.
+@@ -136,10 +136,13 @@ static void parse_console_uart8250(void)
+ 	else
+ 		return;
+ 
+-	if (options && (options[0] == ','))
+-		baud = simple_strtoull(options + 1, &options, 0);
+-	else
++	if (options && (options[0] == ',')) {
++		baud = simple_strtoull(options + 1, NULL, 0);
++		if (!baud)
++			baud = DEFAULT_BAUD;
++	} else {
+ 		baud = probe_baud(port);
++	}
+ 
+ 	if (port)
+ 		early_serial_init(port, baud);
 
 
