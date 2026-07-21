@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C60427A10;
-	Tue, 21 Jul 2026 19:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECDE427A10;
+	Tue, 21 Jul 2026 19:19:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661593; cv=none; b=U0jI1rzU7WD+a6VrCTe1ILGscp3nuEEh7WX5zT0YRsiYrCkcjg5Qu84363gplXApMVsPLqvIRd8eh9parhVjs/qTLvIY4tZTx3OaMLc2lq6wBfkvWe6eMU9wIU9lqqjsjM/VArR4QLg7n/IhY7a0CEt1nP4Im1FnbTrK01Z6DN4=
+	t=1784661596; cv=none; b=Mi6hNf+lFqx0H+Ckxw5zMafs+wxa8g/5oL/++F68LbICmyCeUPRGtE1O7LofWXUK3aiQ0OPSRooUwGU83N35klQC2z63XCxJ0/7obqmQDDHKO5ZU4bZgmvAkJZQPt2qa3ElmcAUchqqJ0zXV9yV0SKrsDpYPdKLDA4mAMX0enEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661593; c=relaxed/simple;
-	bh=VjAb3leMb7QCRFzmQckBprgYkFy/su/cToeIJZNqEtg=;
+	s=arc-20240116; t=1784661596; c=relaxed/simple;
+	bh=FCT0tnjnQzSvLUm6KjRNRsyF/rDt2cMmRKNqW93GPrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pu6gvF9fzL0FznvKmBsw8ukP+AHUYxPxslgAEks/G74qWPBmEJn897m3V9tICbAcqK0NG9U1/NNTYNeYbmynzZNHLbZluTMvxXjeKK9JRHFSY+R8nlnVDN4nB6SfTh33I3qSir5m9RYWxNZw3e6xCoSg13ea5Yk7/sUx2EFVQBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hwMq86fv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b78+NzkcJU1A9NUApD8ne54NAfxG2723ucCRmyM5YZMu693XT8dNmOAoqt1/rZdRK7GUETdOo5wMWJsFuqnqrlzUaOdyR31AI71owGGhp7nuGjf71EELg/HBS/8HIL7Nst2aHkXxzePSTpWlHs4ESOmC6T9N/RFoiqO/kzs5njg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQAI3Ste; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwMq86fv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27A641F000E9;
-	Tue, 21 Jul 2026 19:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQAI3Ste"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44C71F000E9;
+	Tue, 21 Jul 2026 19:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661592;
-	bh=PgYfxnXAZg8AjVhn1sl/JdGnqTqivDoMmUHeS9knZ+Q=;
+	s=korg; t=1784661595;
+	bh=tbY7mIfWFfUtQ9MZzN6fAxG9LGZHnslFr4cmfjD8gWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hwMq86fv2rohz/fnDTMa8j67WzA7WhZ+EKqsqGVmTUMA5UyeTePxORxpPAhcwEV0e
-	 hO32ftt4GXwCQlq+f6YV43J7XA4Up0qY7WhyZ1k8eVPOPLSdD8hjw2FbiT7As4UM3a
-	 Bu4KLF57PKw2TgBxziSF9XUoj1Mb0y/jvWA0XRTc=
+	b=NQAI3StevdSCOZHmlM9d/ict7AgoOLB1VUwqlWG+qkRJKXKpx7qU2T890nxtbEjy8
+	 TPDrwJiSvtHKZtLv1Srb0H6OOcNJ7IEo2ZMVd92hGsIZlKJBjY5OKHdoXlrgHfJMBV
+	 ALomyhafb4GFoEw1x/tAOS234uMCPSaDQXRTY/SE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Carlos Bilbao (Lambda)" <carlos.bilbao@kernel.org>,
-	Sara Venkatesh <sarajvenkatesh@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0124/1276] RDMA/srpt: fix integer overflow in immediate data length check
-Date: Tue, 21 Jul 2026 17:09:27 +0200
-Message-ID: <20260721152448.880227945@linuxfoundation.org>
+Subject: [PATCH 6.12 0125/1276] RDMA/hns: Initialize seqfile before creating file
+Date: Tue, 21 Jul 2026 17:09:28 +0200
+Message-ID: <20260721152448.901936057@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,47 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sara Venkatesh <sarajvenkatesh@gmail.com>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit eb4ecdf631fe00e8020bf461503cb9b7017ed796 ]
+[ Upstream commit b4070770506ff516e21b4923afdaf7eb5da0e150 ]
 
-imm_buf->len is a user-controlled uint32_t received from the network.
-Adding it to imm_data_offset without overflow checking allows a
-malicious initiator to send len=0xFFFFFFFF, causing req_size to wrap
-around to a small value, bypassing the bounds check, and subsequently
-passing a ~4GB length to sg_init_one().
+The debugfs file was created before seq->read and seq->data were set,
+leaving a small window where userspace could access an uninitialized
+seqfile.
 
-Use check_add_overflow() to detect wrapping before the comparison.
+Move debugfs_create_file() after the assignments to avoid this issue.
+Also, inline the original init_debugfs_seqfile() since it is not a
+really necessary helper.
 
-Fixes: 5dabcd0456d7 ("RDMA/srpt: Add support for immediate data")
-Reported-by: Carlos Bilbao (Lambda) <carlos.bilbao@kernel.org>
-Signed-off-by: Sara Venkatesh <sarajvenkatesh@gmail.com>
-Link: https://patch.msgid.link/20260504080036.3482415-1-sarajvenkatesh@gmail.com
-Reviewed-by: Carlos Bilbao (Lambda) <carlos.bilbao@kernel.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Fixes: ca7ad04cd5d2 ("RDMA/hns: Add debugfs to hns RoCE")
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20260507012148.1079712-2-huangjunxian6@hisilicon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srpt/ib_srpt.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_debugfs.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
-index 5dfb4644446ba8..128e4e836470c8 100644
---- a/drivers/infiniband/ulp/srpt/ib_srpt.c
-+++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
-@@ -1129,9 +1129,10 @@ static int srpt_get_desc_tbl(struct srpt_recv_ioctx *recv_ioctx,
- 		struct srp_imm_buf *imm_buf = srpt_get_desc_buf(srp_cmd);
- 		void *data = (void *)srp_cmd + imm_data_offset;
- 		uint32_t len = be32_to_cpu(imm_buf->len);
--		uint32_t req_size = imm_data_offset + len;
-+		uint32_t req_size;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_debugfs.c b/drivers/infiniband/hw/hns/hns_roce_debugfs.c
+index b869cdc5411893..db32c5897640fb 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_debugfs.c
++++ b/drivers/infiniband/hw/hns/hns_roce_debugfs.c
+@@ -26,17 +26,6 @@ static const struct file_operations hns_debugfs_seqfile_fops = {
+ 	.llseek = seq_lseek
+ };
  
--		if (req_size > srp_max_req_size) {
-+		if (check_add_overflow((uint32_t)imm_data_offset, len, &req_size) ||
-+		    req_size > srp_max_req_size) {
- 			pr_err("Immediate data (length %d + %d) exceeds request size %d\n",
- 			       imm_data_offset, len, srp_max_req_size);
- 			return -EINVAL;
+-static void init_debugfs_seqfile(struct hns_debugfs_seqfile *seq,
+-				 const char *name, struct dentry *parent,
+-				 int (*read_fn)(struct seq_file *, void *),
+-				 void *data)
+-{
+-	debugfs_create_file(name, 0400, parent, seq, &hns_debugfs_seqfile_fops);
+-
+-	seq->read = read_fn;
+-	seq->data = data;
+-}
+-
+ static const char * const sw_stat_info[] = {
+ 	[HNS_ROCE_DFX_AEQE_CNT] = "aeqe",
+ 	[HNS_ROCE_DFX_CEQE_CNT] = "ceqe",
+@@ -76,10 +65,12 @@ static void create_sw_stat_debugfs(struct hns_roce_dev *hr_dev,
+ {
+ 	struct hns_sw_stat_debugfs *dbgfs = &hr_dev->dbgfs.sw_stat_root;
+ 
+-	dbgfs->root = debugfs_create_dir("sw_stat", parent);
++	dbgfs->sw_stat.read = sw_stat_debugfs_show;
++	dbgfs->sw_stat.data = hr_dev;
+ 
+-	init_debugfs_seqfile(&dbgfs->sw_stat, "sw_stat", dbgfs->root,
+-			     sw_stat_debugfs_show, hr_dev);
++	dbgfs->root = debugfs_create_dir("sw_stat", parent);
++	debugfs_create_file("sw_stat", 0400, dbgfs->root, &dbgfs->sw_stat,
++			    &hns_debugfs_seqfile_fops);
+ }
+ 
+ /* debugfs for device */
 -- 
 2.53.0
 
