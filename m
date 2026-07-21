@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC5939733E;
-	Tue, 21 Jul 2026 21:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EE13B6356;
+	Tue, 21 Jul 2026 21:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669278; cv=none; b=BJvGRA3EmUjlJ7WaY4QqYUxv3S6Gwec5xcnBn7Tve1CAghlI5Ks3YoEbtWmWSKz1+++9p30Po2c0/bgB5LEBGb13RAlAI7TVBJmTPQZcEcwlaPicdJFo0Vk0p3fqVRISCbiPZZvvRbYNDn8eQwcHeV79RqWQucbIn5BO9GNj3Vg=
+	t=1784669282; cv=none; b=U3LEzQPV3iZgDYT3MaWpWuTsMkxWFnzaXzGWTnruGwv13NLfiJ2MVsQkOOYZRHJIRhW8fQwElfjuaALPlxj7pLbCOlGjW5y9mQShcGTIG9EgO1uFZymR6kF3zGJfJm9CZoxYOECZrFE/go1XARgrqU2iex5nVW3pRIeOer5LikY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669278; c=relaxed/simple;
-	bh=l1CfAmkRGh4znWPasXmb3xpV/azYvqvWU+k8pvvmf+Q=;
+	s=arc-20240116; t=1784669282; c=relaxed/simple;
+	bh=BuqSuijslrzonMF4FP1PFt/cNF+TFmD9JHISV7HRYVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AIK0XLrG77poZNUgZ9Vn7NDUIIz54nV81XIW0Ag07f5pSzBVoPQRme4L6IE9rfYWD/13qgalw3IrQITWzLPkq9MRikEsH08J+5bfEEBl/0ADLAIrUUCKiiUf3kwQZhtw37jctu/430ufnAaFZ0ExmAq4bm5rMS3OHawtwUk6VAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vi0hVP/4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bGInSUPBjNw7GX9vQRy4US7ngloDjEij2sg/AS2UT8C91IeE7ulCNMbDRpBAzcFk4+j2NMlSE5+TpkyC2xVPVPLRSyE1Qo31ItiVu1dZsxxCCJEZl2kV7GPmHgTC2yBZlD6znixsemb9lsdKxOhJebnQGJFuoHCT6sigdjjz5rY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTeIDti9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vi0hVP/4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900C91F00A3A;
-	Tue, 21 Jul 2026 21:27:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTeIDti9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C5F31F000E9;
+	Tue, 21 Jul 2026 21:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669269;
-	bh=u/c/IkzvGF8+5M2q/Pya2XhrW9OBvXPC4QLItcjlcK4=;
+	s=korg; t=1784669271;
+	bh=uPtfW5WaTXzLX8EYRsrUNCTJRZLTa7zqsCuMpjqiECI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vi0hVP/4ltHe+cabCBALZOS4zx6XGeUQLRBAT+aHVifBsaPoYXWZRCKFUhAer+DQ7
-	 2KaFcOCuQQ5/JRO6xrCwdguk/OnNr50yoZi1iZRQRQytQVJPjyVA2LG9J9wxDrGl/L
-	 QJvRfcXWEsXaiZCY0tz5FDM/0XFpui4iNB+ivQGg=
+	b=kTeIDti9X+4ebQs4R7wUwGumGvZwGJl3YWjms+DRGrf7PiwIG8vcUaPycBW7k/XfT
+	 jX8y0pnxHflKFXUT8Hg8DpJ8UFka6Sj1C1dRP4E2Dw3zCLUbznIhnWFTT1h/CWSFcc
+	 AnkLV/5JAOYSuo5Ufc2zyqxnPYTfAnmYrqTl0kgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
 	Joshua Crofts <joshua.crofts1@gmail.com>,
 	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0491/1067] iio: light: si1133: prevent race condition on timeout
-Date: Tue, 21 Jul 2026 17:18:12 +0200
-Message-ID: <20260721152435.598490258@linuxfoundation.org>
+Subject: [PATCH 6.1 0492/1067] iio: magnetometer: ak8975: fix potential kernel stack memory leak
+Date: Tue, 21 Jul 2026 17:18:13 +0200
+Message-ID: <20260721152435.619787273@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -54,58 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Joshua Crofts <joshua.crofts1@gmail.com>
 
-[ Upstream commit 8c50a95ceb230d17801758a9e41ffbbbe46f8b4d ]
+[ Upstream commit a9a00d727b7bbc5e913a919530a9dd468935bf95 ]
 
-Sashiko reported a bug where the si1133_command exits on timeout
-without halting the sensor or masking the interrupt. If the sensor
-completes the command later, any subsequent command to the sensor
-will cause the IRQ handler to complete immediately, returning stale
-data to the driver all while the command hasn't finished yet, shifting
-all potential reads in the future.
+Currently in the AK8975 driver there are four instances where potential
+uninitialized kernel stack memory leaks can occur. If
+i2c_smbus_read_i2c_block_data_or_emulated() returns a value less than
+the size of the buffer, uninitialized bytes are retained in the buffer
+and later the buffer is passed on to IIO buffers, potentially leaking
+memory to userspace.
 
-Fix this by masking the IRQ if wait_for_completion_timeout() fails.
-When initiating a new command, do a dummy read of the IRQ_STATUS
-register and turn the IRQ back on.
+Fix this by adding checks whether the return value of the function is
+equal to the size of the buffer and subsequently if the value is
+lesser than zero to distinguish from a returned error code.
 
-Fixes: e01e7eaf37d8 ("iio: light: introduce si1133")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/message/20260428-si1133-checkup-v2-5-70ad14bfefe2%40gmail.com
-Assisted-by: gemini:gemini-3.1-pro-preview
+Fixes: bc11ca4a0b84 ("iio:magnetometer:ak8975: triggered buffer support")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260513-ak8975-fix-v1-1-104ea605dd54%40gmail.com
 Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/si1133.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/iio/magnetometer/ak8975.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/iio/light/si1133.c b/drivers/iio/light/si1133.c
-index 17ee203d16a274..d207a928b1f823 100644
---- a/drivers/iio/light/si1133.c
-+++ b/drivers/iio/light/si1133.c
-@@ -395,8 +395,14 @@ static int si1133_command(struct si1133_data *data, u8 cmd)
- 
- 	expected_seq = (data->rsp_seq + 1) & SI1133_MAX_CMD_CTR;
- 
--	if (cmd == SI1133_CMD_FORCE)
-+	if (cmd == SI1133_CMD_FORCE) {
-+		/* Flush pending IRQs from a previous timeout. */
-+		regmap_read(data->regmap, SI1133_REG_IRQ_STATUS, &resp);
-+		regmap_write(data->regmap, SI1133_REG_IRQ_ENABLE,
-+			     SI1133_IRQ_CHANNEL_ENABLE);
-+
- 		reinit_completion(&data->completion);
+diff --git a/drivers/iio/magnetometer/ak8975.c b/drivers/iio/magnetometer/ak8975.c
+index 44f3ab2bb1b330..ac7541e1b7da54 100644
+--- a/drivers/iio/magnetometer/ak8975.c
++++ b/drivers/iio/magnetometer/ak8975.c
+@@ -464,6 +464,10 @@ static int ak8975_who_i_am(struct i2c_client *client,
+ 		dev_err(&client->dev, "Error reading WIA\n");
+ 		return ret;
+ 	}
++	if (ret != sizeof(wia_val)) {
++		dev_err(&client->dev, "Error reading WIA\n");
++		return -EIO;
 +	}
  
- 	err = regmap_write(data->regmap, SI1133_REG_COMMAND, cmd);
- 	if (err) {
-@@ -409,6 +415,7 @@ static int si1133_command(struct si1133_data *data, u8 cmd)
- 		/* wait for irq */
- 		if (!wait_for_completion_timeout(&data->completion,
- 			msecs_to_jiffies(SI1133_COMPLETION_TIMEOUT_MS))) {
-+			regmap_write(data->regmap, SI1133_REG_IRQ_ENABLE, 0);
- 			err = -ETIMEDOUT;
- 			goto out;
- 		}
+ 	if (wia_val[0] != AK8975_DEVICE_ID)
+ 		return -ENODEV;
+@@ -580,6 +584,10 @@ static int ak8975_setup(struct i2c_client *client)
+ 		dev_err(&client->dev, "Not able to read asa data\n");
+ 		return ret;
+ 	}
++	if (ret != sizeof(data->asa)) {
++		dev_err(&client->dev, "Error reading asa data\n");
++		return -EIO;
++	}
+ 
+ 	/* After reading fuse ROM data set power-down mode */
+ 	ret = ak8975_set_mode(data, POWER_DOWN);
+@@ -719,6 +727,10 @@ static int ak8975_read_axis(struct iio_dev *indio_dev, int index, int *val)
+ 			sizeof(rval), (u8*)&rval);
+ 	if (ret < 0)
+ 		goto exit;
++	if (ret != sizeof(rval)) {
++		ret = -EIO;
++		goto exit;
++	}
+ 
+ 	/* Read out ST2 for release lock on measurment data. */
+ 	ret = i2c_smbus_read_byte_data(client, data->def->ctrl_regs[ST2]);
+@@ -848,6 +860,8 @@ static void ak8975_fill_buffer(struct iio_dev *indio_dev)
+ 							(u8 *)fval);
+ 	if (ret < 0)
+ 		goto unlock;
++	if (ret != sizeof(fval))
++		goto unlock;
+ 
+ 	mutex_unlock(&data->lock);
+ 
 -- 
 2.53.0
 
