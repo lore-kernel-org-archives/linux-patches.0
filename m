@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7AD46AA6B;
-	Tue, 21 Jul 2026 15:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5851946AA6B;
+	Tue, 21 Jul 2026 15:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648437; cv=none; b=AQmGzc3JSW1Y3NYFHRWGd0nKs/IQFZBd9avWaoZGk+Hy4JhXgpD/zSxqDq1JMHr7zgk2gdUtvra6pogD34Pi9EzmpPMaWRNfVRYJhmGVypwriw5lnmLz7b2yh8Yp5kY8oaNF+yPgl0KQC+Gxan5PuwhgejfVhg2OBChduGt1dTw=
+	t=1784648440; cv=none; b=QQH0WEiAXDc9rrkrcMvPI0DD4MzcLm3FMmoHphDwzNAYwDBLGjw/VjUvr1YF9Ekc2jLpA4G5J7qthe4Xbw6DrRSJnTicaklIWf5kn0lm6hGiW0x/+miCMSG7QTCT3H8c3qnFGW3bQLuK3xhsAtBCP3c1m8AfbUJ3bP9bCop4e8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648437; c=relaxed/simple;
-	bh=Gd8/J5Urcv101ceBQTR2DG/xvN2XZWLoyp9MMbZjx0E=;
+	s=arc-20240116; t=1784648440; c=relaxed/simple;
+	bh=KmxN9aTjVaPGktDL5kS0eYVlNSpHgJ8v46iKQYeEPwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jo/iYQZeJkcZspR0RN5XONsOV+WUDx2Mv72W6cRcwcreDOe6n1LAK61A0r1v7yljVgrLKjwFaUz22hBW2xLp/w2guNen7UWgZPITo8JHs48gmgLhD4MFAP1IrRjtn/CiXh26qY+8JRfxMSzvdq4qb0xpru/tZVxlGkjYYTDDSg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SfJpg/WN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oxlhnRZFBKPZH3dK8PKbW61+SIPcW/EeVPEe3MC6JNittg9E3fAG0Q+p/f8EZH6PbJrIJxh4qiFEP+vsnEFfl+lVpEMZt5CrRLNfBKnYa7oOeVXOCQ+y8c+k4184yEN1d55/7r4ZcC0fvt471H1Di+ZAFoF0TNKCX9Zi/cKI0Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZnlA0qQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SfJpg/WN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4CE1F000E9;
-	Tue, 21 Jul 2026 15:40:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZnlA0qQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63FB1F000E9;
+	Tue, 21 Jul 2026 15:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648436;
-	bh=vyImLr48aXRL8P+3cY3ciYYRb89kTz42Iav5qZrHNsM=;
+	s=korg; t=1784648439;
+	bh=4itYFG2euTvRK1rqUK4XWdpha5TvBbGCUQrSaItQOS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SfJpg/WNG3JdjVNhTuqEqfWflSKi6ia6mfYfzxYsydAsvT0zIXLhDIuFfYoWh8k66
-	 6efxk3E9Y00xXLB6J9TQJ467HpUNbw0z1o0TvzmuntUW6LUtsAdir0KTRsbkalV4dA
-	 fjdtwTqwR6byGDZUypIYTCf5qx/qYbefxrzXuQ3g=
+	b=ZZnlA0qQUg/LG9isBqftU9YBiFOFXv/lxgpHfHA9oQnd2pcDhJX4m1Fdbo15XYl2k
+	 SMCeILYTPfQ9Pqu1w2hchIxVmmERkBEA2QLWUZk6/QrkpcOxSvEmzACKn3bWphQfwP
+	 bSE+mtJvB+8EsCnLejwRzn8QWuc7/CYHs6g+XtGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0199/2077] platform/chrome: chromeos_tbmc: Check ACPI_COMPANION()
-Date: Tue, 21 Jul 2026 16:57:52 +0200
-Message-ID: <20260721152557.374102519@linuxfoundation.org>
+Subject: [PATCH 7.1 0200/2077] platform/chrome: wilco_ec: event: Check ACPI_COMPANION()
+Date: Tue, 21 Jul 2026 16:57:53 +0200
+Message-ID: <20260721152557.398074086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,7 +53,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit c15dbae7c856fb53cc6ffb86c6c64ebb816d07c8 ]
+[ Upstream commit 51dcff9796fd486d7abf01081ca62e4072789e9d ]
 
 Every platform driver can be forced to match a device that doesn't match
 its list of device IDs because of device_match_driver_override(), so
@@ -61,36 +61,45 @@ platform drivers that rely on the existence of a device's ACPI companion
 object need to verify its presence.
 
 Accordingly, add a requisite ACPI_COMPANION() check against NULL to the
-chromeos_tbmc driver.
+wilco_ec event driver.
 
-Fixes: a2676ead257f ("platform/chrome: chromeos_tbmc: Convert to a platform driver")
+Fixes: 27d58498f690 ("platform/chrome: wilco_ec: event: Convert to a platform driver")
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://lore.kernel.org/r/1875121.VLH7GnMWUR@rafael.j.wysocki
+Link: https://lore.kernel.org/r/2076666.usQuhbGJ8B@rafael.j.wysocki
 Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/chromeos_tbmc.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/platform/chrome/wilco_ec/event.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/chrome/chromeos_tbmc.c b/drivers/platform/chrome/chromeos_tbmc.c
-index 5133806b2d9587..fd756761a481f4 100644
---- a/drivers/platform/chrome/chromeos_tbmc.c
-+++ b/drivers/platform/chrome/chromeos_tbmc.c
-@@ -69,9 +69,13 @@ static int chromeos_tbmc_probe(struct platform_device *pdev)
+diff --git a/drivers/platform/chrome/wilco_ec/event.c b/drivers/platform/chrome/wilco_ec/event.c
+index b6e935badc0e94..1b5cb89839e084 100644
+--- a/drivers/platform/chrome/wilco_ec/event.c
++++ b/drivers/platform/chrome/wilco_ec/event.c
+@@ -452,8 +452,13 @@ static void hangup_device(struct event_device_data *dev_data)
+ static int event_device_probe(struct platform_device *pdev)
  {
- 	struct input_dev *idev;
- 	struct device *dev = &pdev->dev;
--	struct acpi_device *adev = ACPI_COMPANION(dev);
+ 	struct event_device_data *dev_data;
 +	struct acpi_device *adev;
- 	int ret;
+ 	int error, minor;
  
-+	adev = ACPI_COMPANION(dev);
++	adev = ACPI_COMPANION(&pdev->dev);
 +	if (!adev)
 +		return -ENODEV;
 +
- 	idev = devm_input_allocate_device(dev);
- 	if (!idev)
- 		return -ENOMEM;
+ 	minor = ida_alloc_max(&event_ida, EVENT_MAX_DEV-1, GFP_KERNEL);
+ 	if (minor < 0) {
+ 		error = minor;
+@@ -494,8 +499,7 @@ static int event_device_probe(struct platform_device *pdev)
+ 		goto free_dev_data;
+ 
+ 	/* Install an ACPI notify handler. */
+-	error = acpi_dev_install_notify_handler(ACPI_COMPANION(&pdev->dev),
+-						ACPI_DEVICE_NOTIFY,
++	error = acpi_dev_install_notify_handler(adev, ACPI_DEVICE_NOTIFY,
+ 						event_device_notify, &pdev->dev);
+ 	if (error)
+ 		goto free_cdev;
 -- 
 2.53.0
 
