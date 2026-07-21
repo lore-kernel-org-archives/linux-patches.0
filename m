@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EDE47124F;
-	Tue, 21 Jul 2026 18:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DDE429822;
+	Tue, 21 Jul 2026 18:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657916; cv=none; b=EcBx9cPYwQM1ZnLHWWUSg1v+E1ewMOI24V1CIPTXp5q7EVy8eVkZl0otxQ7PBu1eCVwOjHeDyZEEy/fJX5Pye5tUEPFSLVJUpDieblYw4QOpqyjpSFaWJi5ciZnBUaWFr3VsuGKGLN4gw+sDO5t6/DMejfgxga/OwIdPo9SEfj8=
+	t=1784657919; cv=none; b=aeWPajO9U3OY+vQYa6Z3R4LxsbvMbZjV65vYxO6wHaBB3KDM00wh60vwLClHJIe24cPf3LCaaGGIkn8ZkzxtzTBj9xkTYL2aoaTrIEwUtQ9vKvtoPwrO9uNocBjyRYhYbEZJWnQWsZr5zDhJdEjoJBKNtLnB+qRNKdSJx6RHF+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657916; c=relaxed/simple;
-	bh=CxtoMgloU05SfN3Ee6Ft2OmYQLoOjhh64i/G6ERMcJY=;
+	s=arc-20240116; t=1784657919; c=relaxed/simple;
+	bh=OKXFjFDuNDsZGWlSZbhHtQlIakE37Iia3RpKe86ade8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o0PrJEffJt6XJj14zha+6V2+TRvAHnsA7R6g1a8CyLKNXAvXcA18hCoqs0V/4HOA3GI6vbTsXblZlsz5dv0Wm+OvCIIj4LA9HWpnPFVfax1uDBcZOZOaS5kgOW7gBzWnwxHLDAAAfcf9NJoZLkUZA5tDiQPuB9RGQKYmoBWGGTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HyamAZ39; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZRc5MPDAdfcOo1e14qmYQ3/IieSwIPRXsPM7wIbEP9huh4YjBX4mi7BqTClhz6DzEafYjIPEA/MYq+Jw3Y+6y5LYvmvHD3inLL+KqIM2gWK6vayqoSavodrPOiwipSD3qmtwDHV6vUS/nu+hH02aOgkdRgv0yvUF9bzZw8q7Wuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlaEc1b/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HyamAZ39"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68101F000E9;
-	Tue, 21 Jul 2026 18:18:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlaEc1b/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07291F000E9;
+	Tue, 21 Jul 2026 18:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657915;
-	bh=Y+U/Hmxn7JPtBZjrNxvJv/ngwO3AsgIrcla01P1cwDw=;
+	s=korg; t=1784657918;
+	bh=n0iIo3jSQphOHEoN4DHYISQ2CuIKnzC8fLI4yM3+J94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HyamAZ39AqRGGxdz/ddFFhZhOPVtxfB9geS0DgHfWThRl1hNFioeEYsMVUOd9riGU
-	 TB6aAK8z8wGfVncRKUNsXBtnhqkhEFToiJLROL5/Mpc6bm+2cmrgf1qGR041vB7XP/
-	 UifaAJTAQVyrVxiTstxAwBkJa+/5V0+fz6/z4L+A=
+	b=KlaEc1b/A4QOHW1Z0jqvvUL8viM22/M0W7gaxN/Ugo96sO0Z5K2/Pro6gEkoxyUBr
+	 Xkmaw6ql1Kh53mCo3kwJBRgjWlxfnzbu8WYHijXYyYOx7Pi4lzavDqaCLs2JFHNhh1
+	 aH7+JXvlYwN1gGj8tq36zR2WDG16vMKkANMHeooM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jiaming Zhang <r772577952@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0929/1611] rtc: cmos: unregister HPET IRQ handler on probe failure
-Date: Tue, 21 Jul 2026 17:17:25 +0200
-Message-ID: <20260721152536.281801616@linuxfoundation.org>
+Subject: [PATCH 6.18 0947/1611] ALSA: FCP: Fix NULL pointer dereference in interface lookup
+Date: Tue, 21 Jul 2026 17:17:43 +0200
+Message-ID: <20260721152536.688943859@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,61 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Jiaming Zhang <r772577952@gmail.com>
 
-[ Upstream commit a5bb580df018b5d1c5668f05f7979044fb19e23a ]
+[ Upstream commit e1e31e0ec8a609e17fd2e86b77bc00d9cbb24d7c ]
 
-cmos_do_probe() registers cmos_interrupt() as the HPET RTC IRQ
-handler before requesting the RTC IRQ and registering the RTC
-device. If either request_irq() or devm_rtc_register_device()
-fails afterwards, the error path leaves the HPET RTC IRQ handler
-installed. This leaves a stale handler behind and make a later
-hpet_register_irq_handler() fail with -EBUSY.
+A malformed USB device can provide a vendor-specific interface without
+any endpoint descriptors. fcp_find_fc_interface() currently selects the
+first vendor-specific interface and reads endpoint 0 from it, without
+checking whether the interface actually has any endpoints.
 
-Track whether the HPET handler was registered successfully and
-undo the registration on the probe error path. Also mask the HPET
-RTC IRQ bits to match the normal shutdown cleanup.
+When bNumEndpoints is zero, no endpoint array is allocated for the parsed
+alternate setting, so get_endpoint(..., 0) yields an invalid endpoint
+descriptor pointer. Dereferencing it through usb_endpoint_num() then
+triggers a NULL pointer dereference.
 
-Fixes: 9d8af78b0797 ("rtc: add HPET RTC emulation to RTC_DRV_CMOS")
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20260623100848.2127281-1-haoxiang_li2024@163.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Skip vendor-specific interfaces that do not have any endpoints.
+
+Fixes: 46757a3e7d50 ("ALSA: FCP: Add Focusrite Control Protocol driver")
+Reported-by: Jiaming Zhang <r772577952@gmail.com>
+Closes: https://lore.kernel.org/lkml/CANypQFb1EHj0xX8bA1WxSOSK-5xca6ZNKzOQcp12=s=puY7VFw@mail.gmail.com/
+Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
+Link: https://patch.msgid.link/20260625134933.425785-1-r772577952@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/usb/fcp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 0743c6acd6e2c1..f8068c717fb852 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -927,6 +927,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
- 	unsigned char			rtc_control;
- 	unsigned			address_space;
- 	u32				flags = 0;
-+	bool				hpet_registered = false;
- 	struct nvmem_config nvmem_cfg = {
- 		.name = "cmos_nvram",
- 		.word_size = 1,
-@@ -1084,6 +1085,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
- 						" failed in rtc_init().");
- 				goto cleanup1;
- 			}
-+			hpet_registered = true;
- 		} else
- 			rtc_cmos_int_handler = cmos_interrupt;
+diff --git a/sound/usb/fcp.c b/sound/usb/fcp.c
+index 11e9a96b46ffe5..6eab5cd0cd3587 100644
+--- a/sound/usb/fcp.c
++++ b/sound/usb/fcp.c
+@@ -1083,6 +1083,8 @@ static int fcp_find_fc_interface(struct usb_mixer_interface *mixer)
  
-@@ -1133,6 +1135,10 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
- 	if (is_valid_irq(rtc_irq))
- 		free_irq(rtc_irq, cmos_rtc.rtc);
- cleanup1:
-+	if (hpet_registered) {
-+		hpet_mask_rtc_irq_bit(RTC_IRQMASK);
-+		hpet_unregister_irq_handler(cmos_interrupt);
-+	}
- 	cmos_rtc.dev = NULL;
- cleanup0:
- 	if (RTC_IOMAPPED)
+ 		if (desc->bInterfaceClass != 255)
+ 			continue;
++		if (desc->bNumEndpoints < 1)
++			continue;
+ 
+ 		epd = get_endpoint(intf->altsetting, 0);
+ 		private->bInterfaceNumber = desc->bInterfaceNumber;
 -- 
 2.53.0
 
