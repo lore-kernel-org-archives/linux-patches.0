@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0C730EF7E;
-	Tue, 21 Jul 2026 19:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883FD30EF7E;
+	Tue, 21 Jul 2026 19:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663563; cv=none; b=VW+maH7OrBlUCosz79RwL0CgJyOxsebdeogIba0zoi2t5wf3p242pEsRBy9ia/saenpHjIfv5g8XfBq3xnHxFvflbWup6xmwBXfsxww4ClSJUfyXUhEBOsvfSHnI58eHIHhGd0UOEBP8Hw+4TuomK1iTlAJ5O+tFY0yu/7SwALg=
+	t=1784663566; cv=none; b=uiylmA9ReL0uZ4Bm6dJ0EutTG8O2p4X27r3tety0fox02IPNLKBF5R9Kia/aOlmGJT0Gr+RoCmdwTJkoUzkOo5ztZNyNy/G3QI9ZC/AalKIDOA8wYMbRqMNYMFclYRSdSITO16UoIg1JgjvNp+XMnQZOr5jaEdMwSKKabRz9YQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663563; c=relaxed/simple;
-	bh=LYtQ+9l987i2sTPzBji1pMv0a+WfFbS1AtNvvIxK3h8=;
+	s=arc-20240116; t=1784663566; c=relaxed/simple;
+	bh=QchNSG93DKgktbiXG6gJ/zzgqbYo8og2gX8vumg25y0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NcxC3jcsiSjwZpLYLHrfhKN+av6UTJaKS2XkqElhzc+aVsCkJXvu8luhNoxx4/nMbD1aMpgQSr4iKI8MSyjpZ+5G6kyr6rOoWP8qJbZkcjiHdwiet5KwPS6IXvI8NJYwIkHp0FWMBjiUFG3lLQRCrMNuUxjWGKox0wzT9qzoL9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhR+rEL8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=siYn1qK7Ao1ilTgdtm8OENVjCi7uRU12kzfuiOWq/UJWEwL3qdQ6l1xMACoQdPG7OnsmTxCZ6lF6kXuLxBUCZleuQD2wjT1g/+3n9NuTzH2bt6efhNIBOQVvhqsaIBgjjteIY+677mhE+Plf5MyJkkpRKjOJIcPUg5ozL12bRgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smkqNG3a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhR+rEL8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD221F000E9;
-	Tue, 21 Jul 2026 19:52:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smkqNG3a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4E91F000E9;
+	Tue, 21 Jul 2026 19:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663562;
-	bh=BZ5UFHWuMcicaktoWkfSR0kk5Z9f+dLYwwMD5wqYVLQ=;
+	s=korg; t=1784663565;
+	bh=/qttcv9cJIacCFLYAY+AagI7PDvmN1LqM6OTDl/4C/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HhR+rEL8iiO705l3lTNJ0Vfg75jKSZXoo1Mq3GMvKKV/xziqhDo1RUfJWU8hz+QJ3
-	 9hfKEJb8WyySeq+3YDRVUPb7/WpCWfrP+5tkZC/1fwctpDTgke5+Fq6jXkgzMRQ/PR
-	 /utw6itkL882MqMWv4yfyRCz98yusWhDX1QZOau8=
+	b=smkqNG3ab5UVuaz0i1LStHwH47eGdpSjqV2SE6hNdit7KptObeh3KIMWMXASBQhnP
+	 yYrDU7u7Mn7RK2e/Mu7QRppU5mgK7B9X27XkN6Rx1JZ65J8VJJAG4g+aFTF5+CNQeg
+	 xEntPakYa0T7pOcD5KVB34l8ebNl0UigagK94ttY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>
-Subject: [PATCH 6.12 0868/1276] gpu: host1x: Fix device reference leak in host1x_device_parse_dt() error path
-Date: Tue, 21 Jul 2026 17:21:51 +0200
-Message-ID: <20260721152505.475268603@linuxfoundation.org>
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Hari Prasath Gujulan Elango <gehariprasath@ti.com>,
+	Nishanth Menon <nm@ti.com>
+Subject: [PATCH 6.12 0869/1276] soc: ti: k3-ringacc: Fix access mode for k3_ringacc_ring_pop_tail_io/proxy
+Date: Tue, 21 Jul 2026 17:21:52 +0200
+Message-ID: <20260721152505.498329774@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,46 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-commit e75717f9aec04355777be41070890c6a815c76df upstream.
+commit b920352cfd2b0fcd1249ff006618c939b64fc8f7 upstream.
 
-After device_initialize(), the embedded struct device in struct
-host1x_device should be released through the device core with
-put_device().
+k3_ringacc_ring_pop_tail_io() and k3_ringacc_ring_pop_tail_proxy()
+incorrectly use K3_RINGACC_ACCESS_MODE_POP_HEAD instead of
+K3_RINGACC_ACCESS_MODE_POP_TAIL. This will result in ring elements being
+popped in the reverse order of that which the caller expects. Fix this.
 
-In host1x_device_add(), if host1x_device_parse_dt() fails, the current
-error path frees the object directly with kfree(device). That bypasses
-the normal device lifetime handling and leaks the reference held on the
-embedded struct device.
-
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
-
-Fix this by using put_device() in the host1x_device_parse_dt() failure
-path.
-
-Fixes: f4c5cf88fbd50 ("gpu: host1x: Provide a proper struct bus_type")
+Fixes: 3277e8aa2504 ("soc: ti: k3: add navss ringacc driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Acked-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260413141526.2961841-1-lgs201920130244@gmail.com
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Reviewed-by: Hari Prasath Gujulan Elango <gehariprasath@ti.com>
+Link: https://patch.msgid.link/20260501124129.362192-1-s-vadapalli@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/host1x/bus.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/ti/k3-ringacc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/host1x/bus.c
-+++ b/drivers/gpu/host1x/bus.c
-@@ -457,7 +457,7 @@ static int host1x_device_add(struct host
+--- a/drivers/soc/ti/k3-ringacc.c
++++ b/drivers/soc/ti/k3-ringacc.c
+@@ -1012,7 +1012,7 @@ static int k3_ringacc_ring_pop_head_prox
+ static int k3_ringacc_ring_pop_tail_proxy(struct k3_ring *ring, void *elem)
+ {
+ 	return k3_ringacc_ring_access_proxy(ring, elem,
+-					    K3_RINGACC_ACCESS_MODE_POP_HEAD);
++					    K3_RINGACC_ACCESS_MODE_POP_TAIL);
+ }
  
- 	err = host1x_device_parse_dt(device, driver);
- 	if (err < 0) {
--		kfree(device);
-+		put_device(&device->dev);
- 		return err;
- 	}
+ static int k3_ringacc_ring_access_io(struct k3_ring *ring, void *elem,
+@@ -1083,7 +1083,7 @@ static int k3_ringacc_ring_pop_io(struct
+ static int k3_ringacc_ring_pop_tail_io(struct k3_ring *ring, void *elem)
+ {
+ 	return k3_ringacc_ring_access_io(ring, elem,
+-					 K3_RINGACC_ACCESS_MODE_POP_HEAD);
++					 K3_RINGACC_ACCESS_MODE_POP_TAIL);
+ }
  
+ /*
 
 
