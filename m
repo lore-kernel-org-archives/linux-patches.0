@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BCB3909A9;
-	Tue, 21 Jul 2026 18:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B8946C4C0;
+	Tue, 21 Jul 2026 18:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658241; cv=none; b=hCQxThhEby+DgkKj0tKbAomNN7ZpcHQPurC8mOo+Sn4eknOgLFnbmH361u+0GrlX+gBcirUCpNbfq7bl8zNSU7i6sxpVWv0rLdaJK207Ax92mwpWg77QY7HGh/Vt6eyad6BWmIzTi9etDBr1ja9D8gyrwb0YlW70vGS3i6RX+J0=
+	t=1784658244; cv=none; b=YZGpcmqAMTVqFjxzF1SUaDdPIB6BSsAuJXOOLLFf1NV4K4dIz1t2Qn+vEYpuwarRlOxcUVJWXRx0aTbxXMWfRo8QO8a44CtOCOox784tidGyM5Jkf8ImPys5ZfDXgL9BewyLaymi+YYusM0uQwiAjTRjR8XquJiogyPZN85V1rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658241; c=relaxed/simple;
-	bh=rUc29A9PjNAf+JHDTKFoMagmrJ+s0uHJQQ4kyxrYoqs=;
+	s=arc-20240116; t=1784658244; c=relaxed/simple;
+	bh=C7E9qxVsI794Ylxb7Mi4lD5uP1jZqzETMgXeNoKAroQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cB6kaJErgIeUXV1JfwZ9sPAzNcp0wIpg+4ZJ+g2cSERWgK+5LXaqv11qT/XQq7Rr7rdMcaq4I9lPMfM+KdGvqhSfAI14PsJ8TAxZjBOFIIa9zQpi3vzOnHk5Zy0MXdqUjCr7iHOlYIedFSb+P+0vTRYEGrKfd49pcDafpDTRmAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQRfr4fX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e8lNPcsUD/cKL7VMACNMdt7jtrf5452KqWzG9913OkAe4fdnLh0YPrjiDxmxcvDXi+2VZMytw8421iuujHh0aUSgNacfOyD/qiW7sQOt+4iGChDCOExD/qBoSpxNwxAvxXW0PMLUo/umkgtd+L+HzMULSlMUob3cczzDBG+sJ/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=APem7OUE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQRfr4fX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065D91F000E9;
-	Tue, 21 Jul 2026 18:23:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="APem7OUE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4FD11F000E9;
+	Tue, 21 Jul 2026 18:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658240;
-	bh=pWVEjzgg0DiNhboVL7JArRDYBs0nNS7/M0p0/QvlRoQ=;
+	s=korg; t=1784658243;
+	bh=Ax0BGvHkPyZdMa3MxmYwOQbDhBex799kzFc3ALjeE+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yQRfr4fXgt5QXt3kCBWeZVEwaEreqUw5QL9WvsRlq0qhCe6UIsfJmxe70dem75fap
-	 hDy2K54/a1Nx+rVBsFTaKGvJd3BHSvMf0ZlOtfd6no9D95I94wq6UoKv0JN4cY+giB
-	 am2MZyqb/ntEMnYu9qVdPSgxEjC5JeRXNCXd/nuk=
+	b=APem7OUE2sdRgjGZMU8VAxIZUWgSYuZSAtFm/hbGFs+P24qEW3/sWUbUQn9UF2i59
+	 6MB3AWiduMj1CVZYNXz2+F+kKdi441H5Y6dC23YclQBz2I/CJ5jdsrJDAoNfvhBcvk
+	 IXjDE8EQ6oMrw8RHXoSFoQQh/5P0BoZvlZJonUHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1026/1611] cifs: Fix missing credit release on failure in cifs_issue_read()
-Date: Tue, 21 Jul 2026 17:19:02 +0200
-Message-ID: <20260721152538.468844515@linuxfoundation.org>
+Subject: [PATCH 6.18 1027/1611] ata: sata_gemini: unwind clocks on IDE pinctrl errors
+Date: Tue, 21 Jul 2026 17:19:03 +0200
+Message-ID: <20260721152538.495557864@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,38 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit c16b8c4cfb4fe2244cc33e469a93c1ab8684146b ]
+[ Upstream commit c0ace4130e813acbabdfaa28d4e94a849c2ffdd7 ]
 
-Fix missing release of credits in the failure path in cifs_issue_read()
-lest retrying the subreq just overwrites the credits value.
+gemini_sata_bridge_init() prepares and enables both SATA PCLKs, then
+disables them again while keeping the clocks prepared for later bridge
+start and stop operations. If gemini_setup_ide_pins() fails after that,
+gemini_sata_probe() returns directly and skips the existing
+out_unprep_clk unwind path.
 
-Fixes: 69c3c023af25 ("cifs: Implement netfslib hooks")
-Link: https://sashiko.dev/#/patchset/20260608145432.681865-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Route the IDE pinctrl failure through out_unprep_clk so the clocks
+prepared by gemini_sata_bridge_init() are unprepared before probe
+fails.
+
+Fixes: d872ced29d5f ("ata: sata_gemini: Introduce explicit IDE pin control")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/file.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/ata/sata_gemini.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
-index b0dc071a9de4f2..a34457d5143e1e 100644
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -242,6 +242,7 @@ static void cifs_issue_read(struct netfs_io_subrequest *subreq)
- 	return;
+diff --git a/drivers/ata/sata_gemini.c b/drivers/ata/sata_gemini.c
+index 530ee26b301210..56ae2820df5888 100644
+--- a/drivers/ata/sata_gemini.c
++++ b/drivers/ata/sata_gemini.c
+@@ -353,7 +353,7 @@ static int gemini_sata_probe(struct platform_device *pdev)
+ 	if (sg->ide_pins) {
+ 		ret = gemini_setup_ide_pins(dev);
+ 		if (ret)
+-			return ret;
++			goto out_unprep_clk;
+ 	}
  
- failed:
-+	add_credits_and_wake_if(rdata->server, &rdata->credits, 0);
- 	subreq->error = rc;
- 	netfs_read_subreq_terminated(subreq);
- }
+ 	dev_info(dev, "set up the Gemini IDE/SATA nexus\n");
 -- 
 2.53.0
 
