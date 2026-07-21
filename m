@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD9B472530;
-	Tue, 21 Jul 2026 20:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD9547253F;
+	Tue, 21 Jul 2026 20:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665672; cv=none; b=KHQY10G9+rRtfkfXD++Xgf5a0/pLi5MdcHgqALBuUxY7ppwOPHo5SJ8O1q0zLHUPCc7P0UIc4KoqUVdXfdhhexXm9TedLwKu3O0hMB7I35DCqG3jlCwraSd6aFtESaXuPkEG2YLAbp/8sFUn7z7kEpzcDINcdyIHT3/uTcGjr1o=
+	t=1784665673; cv=none; b=sn7YeESnuhaYeE22zmhL5RF/sWYIu2pZH6Fg/RovF0fMOo2lLr8XJEXjUIrDOhJdDTbPMFBQhM88hSiKnWumn0ng5mGAzKvgGXYZWjB2Vocx2Z0bDTeSVytu1E0EZd0UBJD6jZC1XC4m7sFfDXgY1n5cCs1m6mmpZ+1VrdwaHeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665672; c=relaxed/simple;
-	bh=EfdYXe/PfDIQcZQqVO6Ym/Y0hvrcMWRgNCQw/5EwRko=;
+	s=arc-20240116; t=1784665673; c=relaxed/simple;
+	bh=UALnmIm22UCECqS1om8YyhoaK4rYagQed4BLL8dSv0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PXSOPlUAYMXnJfinRgBkNSPMfXpyfr71XPfJNc/izV/bY0SJtYkLV2FWqaisIlx44WRCRS/+IeYpWBkO5KBOnmhTBhOhZmgGw758E5dvR9AwIHsRjsAsj45mg3m6dV66J9E/83KRfZKuCoWnvCqLQ+4nSAdhGaZhq5TvhzvMp+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0xnbKc3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DgLJIperc2nAABj/YTVkYeXx8cShgaOY/fvK8MIIEPyeKBiH7DtWGvTLBW6Qb4ZyGVdE+5KtPlBQK6FCIws5A2Mt7J9LMwB98fAxkcvNtx04hGQTDgpcMfoHSezF0MfRLqfiPyAtDZnRFxLx0pGzjhX6Sj5f90VxffetTSjt34E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tlwj6Fyv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0xnbKc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45CE1F00A3D;
-	Tue, 21 Jul 2026 20:27:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tlwj6Fyv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 796CC1F000E9;
+	Tue, 21 Jul 2026 20:27:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665668;
-	bh=4Vos7CoB/OO6qxY2VfEVoQ4IrMcSljRuVZX7XHUDDr0=;
+	s=korg; t=1784665671;
+	bh=15UrIJl3btCXyO6WfqNLF+FSJiPOjSwbnG2sRNS62iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p0xnbKc3d5vfCsDwyb1IOB1mDCzZDp2GAc+KhAbLR5FgiKpfLerBcnz+Uz5tLWRTe
-	 9uwftPjxdhoAOxJltIHGtA8RS0wZb5hPLIn0Xyy+SXKCsPuEcbnS/MNpk+5GdQ8Hu3
-	 P+89ILsp5QVVjIi+1QlB2a3DnQVPLeLVZbPOdBWE=
+	b=Tlwj6Fyv7/2sEQeQH+GpYvdjZvwjcB75aH9wAqwRUP6T63DKcwdmg7heUW7lE/KBj
+	 SHV3ZsaVUQvgAYiHQ9cwqC6AIOD2LEtaBf95qOxBUxd+YhUwGe1HeAf1pjX2uUw/At
+	 KNn73KYkyRe7DZsph8xR0fuMsX5vBKG/hsn7zz7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Wei Wang <wei.w.wang@hotmail.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0391/1266] nilfs2: fix backing_dev_info reference leak
-Date: Tue, 21 Jul 2026 17:13:48 +0200
-Message-ID: <20260721152450.576816435@linuxfoundation.org>
+Subject: [PATCH 6.6 0392/1266] iommu/amd: Fix a stale comment about which legacy mode is user visible
+Date: Tue, 21 Jul 2026 17:13:49 +0200
+Message-ID: <20260721152450.598623214@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,45 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 665f192a2a11384cb7dc1be5f87d16438522a4ed ]
+[ Upstream commit 4bf53c2d0c08bbdaa32f2114281f1ddab61902bf ]
 
-setup_bdev_super() already initializes sb->s_bdev and takes a
-reference on the block device backing_dev_info when assigning sb->s_bdi.
+Update a stale comment about which of the legacy modes is visible to the
+user, i.e. can be forced via amd_iommu_intr=legacy.
 
-nilfs_fill_super() takes another reference to the same
-backing_dev_info and stores it in sb->s_bdi again. The extra
-reference is not paired with a matching bdi_put(), since
-generic_shutdown_super() releases sb->s_bdi only once.
-
-Drop the redundant bdi_get() in nilfs_fill_super(). The single
-reference taken by setup_bdev_super() is enough and is released
-during superblock shutdown.
-
-Fixes: c1e012ea9e83 ("nilfs2: use setup_bdev_super to de-duplicate the mount code")
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: b74aa02d7a30 ("iommu/amd: Fix legacy interrupt remapping for x2APIC-enabled system")
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Wei Wang <wei.w.wang@hotmail.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/super.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/iommu/amd/amd_iommu_types.h | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/fs/nilfs2/super.c b/fs/nilfs2/super.c
-index a5d1fa4e7552f6..e14039ac792fe0 100644
---- a/fs/nilfs2/super.c
-+++ b/fs/nilfs2/super.c
-@@ -1086,8 +1086,6 @@ nilfs_fill_super(struct super_block *sb, void *data, int silent)
- 	sb->s_time_gran = 1;
- 	sb->s_max_links = NILFS_LINK_MAX;
+diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
+index 2571a782b7b61d..d81defd49949ce 100644
+--- a/drivers/iommu/amd/amd_iommu_types.h
++++ b/drivers/iommu/amd/amd_iommu_types.h
+@@ -926,12 +926,13 @@ static inline int get_hpet_devid(int id)
+ }
  
--	sb->s_bdi = bdi_get(sb->s_bdev->bd_disk->bdi);
+ enum amd_iommu_intr_mode_type {
+-	AMD_IOMMU_GUEST_IR_LEGACY,
 -
- 	err = load_nilfs(nilfs, sb);
- 	if (err)
- 		goto failed_nilfs;
+-	/* This mode is not visible to users. It is used when
+-	 * we cannot fully enable vAPIC and fallback to only support
+-	 * legacy interrupt remapping via 128-bit IRTE.
++	/*
++	 * The legacy format mode is not visible to users to prevent the user
++	 * from crashing x2APIC systems, which for all intents and purposes
++	 * require 128-bit IRTEs.   The legacy format will be forced as needed
++	 * when hardware doesn't support 128-bit IRTEs.
+ 	 */
++	AMD_IOMMU_GUEST_IR_LEGACY,
+ 	AMD_IOMMU_GUEST_IR_LEGACY_GA,
+ 	AMD_IOMMU_GUEST_IR_VAPIC,
+ };
 -- 
 2.53.0
 
