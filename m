@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CF0472F7F;
-	Tue, 21 Jul 2026 17:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CD5472F8C;
+	Tue, 21 Jul 2026 17:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656155; cv=none; b=MA7LVmVZuQpDIzXM73QCIDl/OcgVoIexogPP0riTK3dS45AlOxqqeZYTdw8ACB3NugKI0ksz5M2fwFtpDpRAw1Yo4sX8kP19C1g90xvHf3MJhYkt4pPus3cTH54R/iWOiFKHxRx7u2A3Uqq1qChG/quXbky1KVRCyCzWUI1DDRk=
+	t=1784656158; cv=none; b=uxW/SWw1EMU8Fou4cTS4SILol4JEyJw8mp39KJNOeBgEa1ulli8Qr2NNG/aGLrYRTxhN9kAF5QM9YwEQSAsAsOtnL9Hn8fBYQ23eOfl55eQSrrjU/BD5iZ3J3OWt1L+8fFoROlf1wx+buUuwzPu1TqTfMBD4NBV+0uzztT0BbNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656155; c=relaxed/simple;
-	bh=eANDdmdp8wlR79ovEqwsX/cmkmBZVE+IPPMzykZObCM=;
+	s=arc-20240116; t=1784656158; c=relaxed/simple;
+	bh=ksSREv/Vgnn9gPZv6xi8+AQdZJslshGZbWlFxA3N+Z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7XOvEeOA4iA6aHN8t8Dg8FZJA6kQpGxnsB3sL1QogeSbyCduKrZ7vdK0Fwe0nJHJeS8mGI6wBRfkVRuK+zEGn5760Tyf1oiYO9sVw9euHF4dX4rllGIGCCoK/YfH+ZczJspZy1yc/YSPInGFreGl+CobU50T1ssZguHsn9g8f4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVRV0/vL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r27tNl0XcxEvrTMrwjflCM+kwwzzBCba/FnqXVr7600Jr0G9qTeDLFOVuHw2IaQWi2MU1Kmnyfj0GzBynVvCfqPZOiaQKhwuYqEK1+iDtR6RCwjkGVlCTEBaUwXJ+TW6eNP3LIY5fHLuzI/jrZRNEcQC/uZcmLcAsDezD7bwqtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMLs2wcj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVRV0/vL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6CA1F000E9;
-	Tue, 21 Jul 2026 17:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMLs2wcj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79361F000E9;
+	Tue, 21 Jul 2026 17:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656154;
-	bh=6tmBXQZoJyNlBHwuRd/fWyGhThedusBZI0sDL0l4EcA=;
+	s=korg; t=1784656157;
+	bh=ZzNBm4DTHP0rhH8INe6DEHufMd/9afgb1OMySTqNulI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jVRV0/vLExqFYgxn3zgp1NwaqQzDJVmhsUPRkZVtXsGnCooCHHlqvtxKMCnYxhk7O
-	 K640IAlfmkz8VvfuLI7BrneiizOBvR7fbyBOWRZZ/vaN4RmEdgw31ACFZdYQNravym
-	 gcoHqNS6FP3YIg5U8P383zRPHZ0Vi6A5V7xb+CRM=
+	b=OMLs2wcjzHBbVsW6J3KKRMpFg3zjne4/z5znFfnV0GTvIZtkyJ88ikpflH22OR+1k
+	 ailyeNBvV7aDCQCyB4IM6XqWCf70dMQ9YrWJ6cBUobLn9bIUQErek1E/aOFW7hN5Tk
+	 jjyM3QuhvvJSsvFNP6vMaLkgDsEZc2C1JjODBFeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Renjiang Han <renjiang.han@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0278/1611] media: qcom: venus: relax encoder frame/blur step size on v6
-Date: Tue, 21 Jul 2026 17:06:34 +0200
-Message-ID: <20260721152521.308993416@linuxfoundation.org>
+Subject: [PATCH 6.18 0279/1611] amba: use generic driver_override infrastructure
+Date: Tue, 21 Jul 2026 17:06:35 +0200
+Message-ID: <20260721152521.331879585@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,73 +51,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Renjiang Han <renjiang.han@oss.qualcomm.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit c53e0550288b2e08b984b24035c471941b7820c7 ]
+[ Upstream commit 1947229f5f2a8d4ecf8c971aca68a1242bb7b37c ]
 
-Encoder HFI capabilities on v6 enforce a 16-pixel step for frame and blur
-dimensions, which does not reflect actual hardware requirements and can
-reject valid userspace configurations.
+When a driver is probed through __driver_attach(), the bus' match()
+callback is called without the device lock held, thus accessing the
+driver_override field without a lock, which can cause a UAF.
 
-Relax the step size to 1 while leaving min/max limits unchanged.
+Fix this by using the driver-core driver_override infrastructure taking
+care of proper locking internally.
 
-Fixes: 869d77e706290 ("media: venus: hfi_plat_v6: Populate capabilities for v6")
-Signed-off-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Note that calling match() from __driver_attach() without the device lock
+held is intentional. [1]
+
+Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
+Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
+Fixes: 3cf385713460 ("ARM: 8256/1: driver coamba: add device binding path 'driver_override'")
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260505133935.3772495-2-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/qcom/venus/hfi_platform_v6.c  | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/amba/bus.c       | 37 ++++++-------------------------------
+ include/linux/amba/bus.h |  5 -----
+ 2 files changed, 6 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v6.c b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-index d8568c08cc3612..fb8d10ab34043e 100644
---- a/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-+++ b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-@@ -173,8 +173,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.codec = HFI_VIDEO_CODEC_HEVC,
- 	.domain = VIDC_SESSION_TYPE_ENC,
- 	.cap_bufs_mode_dynamic = true,
--	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 8192, 16},
--	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 8192, 16},
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 8192, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 8192, 1},
- 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 138240, 1},
- 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 160000000, 1},
- 	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
-@@ -195,8 +195,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.caps[19] = {HFI_CAPABILITY_RATE_CONTROL_MODES, 0x1000001, 0x1000005, 1},
- 	.caps[20] = {HFI_CAPABILITY_COLOR_SPACE_CONVERSION, 0, 2, 1},
- 	.caps[21] = {HFI_CAPABILITY_ROTATION, 1, 4, 90},
--	.caps[22] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 16},
--	.caps[23] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 16},
-+	.caps[22] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 1},
-+	.caps[23] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 1},
- 	.num_caps = 24,
- 	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_6 | HFI_HEVC_TIER_HIGH0},
- 	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_6 | HFI_HEVC_TIER_HIGH0},
-@@ -210,8 +210,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.codec = HFI_VIDEO_CODEC_VP8,
- 	.domain = VIDC_SESSION_TYPE_ENC,
- 	.cap_bufs_mode_dynamic = true,
--	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 4096, 16},
--	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 4096, 16},
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 4096, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 4096, 1},
- 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 36864, 1},
- 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 74000000, 1},
- 	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
-@@ -229,8 +229,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.caps[16] = {HFI_CAPABILITY_P_FRAME_QP, 0, 127, 1},
- 	.caps[17] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 2, 1},
- 	.caps[18] = {HFI_CAPABILITY_RATE_CONTROL_MODES, 0x1000001, 0x1000005, 1},
--	.caps[19] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 16},
--	.caps[20] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 16},
-+	.caps[19] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 1},
-+	.caps[20] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 1},
- 	.caps[21] = {HFI_CAPABILITY_COLOR_SPACE_CONVERSION, 0, 2, 1},
- 	.caps[22] = {HFI_CAPABILITY_ROTATION, 1, 4, 90},
- 	.num_caps = 23,
+diff --git a/drivers/amba/bus.c b/drivers/amba/bus.c
+index 74e34a07ef72fb..d58f9550f8775d 100644
+--- a/drivers/amba/bus.c
++++ b/drivers/amba/bus.c
+@@ -82,33 +82,6 @@ static void amba_put_disable_pclk(struct amba_device *pcdev)
+ }
+ 
+ 
+-static ssize_t driver_override_show(struct device *_dev,
+-				    struct device_attribute *attr, char *buf)
+-{
+-	struct amba_device *dev = to_amba_device(_dev);
+-	ssize_t len;
+-
+-	device_lock(_dev);
+-	len = sprintf(buf, "%s\n", dev->driver_override);
+-	device_unlock(_dev);
+-	return len;
+-}
+-
+-static ssize_t driver_override_store(struct device *_dev,
+-				     struct device_attribute *attr,
+-				     const char *buf, size_t count)
+-{
+-	struct amba_device *dev = to_amba_device(_dev);
+-	int ret;
+-
+-	ret = driver_set_override(_dev, &dev->driver_override, buf, count);
+-	if (ret)
+-		return ret;
+-
+-	return count;
+-}
+-static DEVICE_ATTR_RW(driver_override);
+-
+ #define amba_attr_func(name,fmt,arg...)					\
+ static ssize_t name##_show(struct device *_dev,				\
+ 			   struct device_attribute *attr, char *buf)	\
+@@ -126,7 +99,6 @@ amba_attr_func(resource, "\t%016llx\t%016llx\t%016lx\n",
+ static struct attribute *amba_dev_attrs[] = {
+ 	&dev_attr_id.attr,
+ 	&dev_attr_resource.attr,
+-	&dev_attr_driver_override.attr,
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(amba_dev);
+@@ -209,10 +181,11 @@ static int amba_match(struct device *dev, const struct device_driver *drv)
+ {
+ 	struct amba_device *pcdev = to_amba_device(dev);
+ 	const struct amba_driver *pcdrv = to_amba_driver(drv);
++	int ret;
+ 
+ 	mutex_lock(&pcdev->periphid_lock);
+ 	if (!pcdev->periphid) {
+-		int ret = amba_read_periphid(pcdev);
++		ret = amba_read_periphid(pcdev);
+ 
+ 		/*
+ 		 * Returning any error other than -EPROBE_DEFER from bus match
+@@ -230,8 +203,9 @@ static int amba_match(struct device *dev, const struct device_driver *drv)
+ 	mutex_unlock(&pcdev->periphid_lock);
+ 
+ 	/* When driver_override is set, only bind to the matching driver */
+-	if (pcdev->driver_override)
+-		return !strcmp(pcdev->driver_override, drv->name);
++	ret = device_match_driver_override(dev, drv);
++	if (ret >= 0)
++		return ret;
+ 
+ 	return amba_lookup(pcdrv->id_table, pcdev) != NULL;
+ }
+@@ -439,6 +413,7 @@ static const struct dev_pm_ops amba_pm = {
+ const struct bus_type amba_bustype = {
+ 	.name		= "amba",
+ 	.dev_groups	= amba_dev_groups,
++	.driver_override = true,
+ 	.match		= amba_match,
+ 	.uevent		= amba_uevent,
+ 	.probe		= amba_probe,
+diff --git a/include/linux/amba/bus.h b/include/linux/amba/bus.h
+index 9946276aff7377..6c54d5c0d21f7f 100644
+--- a/include/linux/amba/bus.h
++++ b/include/linux/amba/bus.h
+@@ -71,11 +71,6 @@ struct amba_device {
+ 	unsigned int		cid;
+ 	struct amba_cs_uci_id	uci;
+ 	unsigned int		irq[AMBA_NR_IRQS];
+-	/*
+-	 * Driver name to force a match.  Do not set directly, because core
+-	 * frees it.  Use driver_set_override() to set or clear it.
+-	 */
+-	const char		*driver_override;
+ };
+ 
+ struct amba_driver {
 -- 
 2.53.0
 
