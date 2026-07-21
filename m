@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6942E434E4F;
-	Tue, 21 Jul 2026 21:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D3F434E4F;
+	Tue, 21 Jul 2026 21:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668122; cv=none; b=g6bEcxrwLiBFxfrIemI/Lcus8KUzdYJWGHsWXPvWHA2dQEoaVNWIuHQ+N3k2o3rAVxl/vpi39n4ib19MTqWl4EHQUrhYg4rxDkx7iZ/TmciHY+duDzhYMDouTXrUXaQJmR6FbWrKiin0RglOtrJOG7oxDQPj1WfZbmJqHBm4vCQ=
+	t=1784668125; cv=none; b=gOks42VtTW/rp6DqKkTh194QA3SvuZaJqDa8L+3EappGzdiq/zPyRS9i5kdbqhHI6wRufsek3ArpdsGWhudy/bgELAEaWF5Fz7KNK2Rp74+9SEfl3C6MV4lFmrrL4S27oj2nKNdcBy9YrdgcMCAWJUUG2k8CBccAGxMhkvus+CY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668122; c=relaxed/simple;
-	bh=44Y0VzBjAy3uT5ymYwE44WkBkdzRk8uRPqZjWgXwoT4=;
+	s=arc-20240116; t=1784668125; c=relaxed/simple;
+	bh=WNvtTtnKD3Qs62DRmi5kiD52CgQ1Bud6b6u6w17gP24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cMwVRek2fTLhWlqOw2zSBnICve2lHJGoHpHnKA5p2mMBEDs4NGq38Ej9PxkCqUymDhntPzepSyNz57Na+a7Pu2DXLOaoIm4cKDZxqIOeRQIWr1Zu2mOaWSPTT3atV9zBBaXU3gh/LYwZ/GB0c2ScWeQCgdXYIzIEPm/m9Tu8tSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sd4xLaK0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p7LN7yIP/+3nIlxF3Z3nX5uZy/+WZHz2qheXFjyxotenBUoK+cI6l4hgG6kiDqbfRfqvHJv0fYQVHOBsWZkZDO3ULV3+80oRK6wmkPtR9zGQnjl7ohklZwNbcaPi6QlPvQjUT5Dos7QE3edKomENoZIcgxeJVGosYcSjkQLCI6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3pEkxfP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sd4xLaK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF35D1F000E9;
-	Tue, 21 Jul 2026 21:08:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3pEkxfP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710121F000E9;
+	Tue, 21 Jul 2026 21:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668121;
-	bh=sv/z4samLJGfq7s8Fg5cKb6l4PM/xWokbe93Ndjtjt0=;
+	s=korg; t=1784668123;
+	bh=C3Ztu7/UVmHJKqOt7BNWe3bP24D3hbOKmeixpkYuIoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sd4xLaK0XjbuHDmS6j9ZPYpmJwRi/KuN2v7UDaIDLJlmAlAiVF/RzEyy/k3gJVLMT
-	 Giw3mjw3kwCLjb8CPk1pRdqcKctdsfKELreY3RpRKbx/ylynJm1gLTT9DRqDbpbtr+
-	 Ed113KXiQJp2abZ/yHKulvJWD2GEAa6/FLZjFoNc=
+	b=l3pEkxfPfznEvxYfzESWxhjcgdpmzSh4HQu9kakuVjn/8BQBGpaUB9qFHIBBtWNj/
+	 iluoLOjB4zGI0wVRAM7DrEwKclem74JjIHuj8umRlTOEFWwiSfvafOBAXFzR2TEBUZ
+	 VEofGLgmnvh4DVTRQ1AMivNa/ZUo3sVDtv70iPxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Liang <shaw.leon@gmail.com>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0013/1067] net: ip_gre: require CAP_NET_ADMIN in the device netns for changelink
-Date: Tue, 21 Jul 2026 17:10:14 +0200
-Message-ID: <20260721152424.827576862@linuxfoundation.org>
+Subject: [PATCH 6.1 0014/1067] device property: initialize the remaining fields of fwnode_handle in fwnode_init()
+Date: Tue, 21 Jul 2026 17:10:15 +0200
+Message-ID: <20260721152424.850732876@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,96 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-[ Upstream commit 8165f7ff57d9667d2bb477ef6af83ede7fed4ad7 ]
+[ Upstream commit 7eba000621fff223dd7bab484d48918c7c77a307 ]
 
-A tunnel changelink() operates on at most two netns, dev_net(dev) and
-the tunnel link netns t->net. They differ once the device is created in
-or moved to a netns other than the one the request runs in. The rtnl
-changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
-caller privileged there but not in t->net can rewrite a tunnel that
-lives in t->net.
+If a firmware node is allocated on the stack (for instance: temporary
+software node whose life-time we control) or on the heap - but using a
+non-zeroing allocation function - and initialized using fwnode_init(),
+its secondary pointer will contain uninitialized memory which likely
+will be neither NULL nor IS_ERR() and so may end up being dereferenced
+(for example: in dev_to_swnode()). Set fwnode->secondary to NULL on
+initialization. While at it: initialize the remaining fields of struct
+fwnode_handle too just to be sure.
 
-Add rtnl_dev_link_net_capable() next to rtnl_get_net_ns_capable() in
-net/core/rtnetlink.c. It requires CAP_NET_ADMIN in the link netns and is
-skipped when the link netns is dev_net(dev), where the rtnl path already
-checked it. The other patches in this series use the same helper.
-
-Gate ipgre_changelink() and erspan_changelink() with it, at the top of
-the op before any attribute is parsed, because the parsers update live
-tunnel fields first. ipgre_netlink_parms() sets t->collect_md before
-ip_tunnel_changelink() runs.
-
-Commit 8b484efd5cb4 ("ip6: vti: Use ip6_tnl.net in
-vti6_siocdevprivate().") added the same check on the ioctl path. This
-adds it on RTM_NEWLINK.
-
-Reported-by: Xiao Liang <shaw.leon@gmail.com>
-Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
-Fixes: b57708add314 ("gre: add x-netns support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260612085941.3158249-2-maoyixie.tju@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 01bb86b380a3 ("driver core: Add fwnode_init()")
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260511074927.9473-1-bartosz.golaszewski@oss.qualcomm.com
+[ Fix typo in commit message. - Danilo ]
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/rtnetlink.h |    2 ++
- net/core/rtnetlink.c    |    8 ++++++++
- net/ipv4/ip_gre.c       |    6 ++++++
- 3 files changed, 16 insertions(+)
+ include/linux/fwnode.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/net/rtnetlink.h
-+++ b/include/net/rtnetlink.h
-@@ -210,6 +210,8 @@ int rtnl_configure_link(struct net_devic
- int rtnl_nla_parse_ifinfomsg(struct nlattr **tb, const struct nlattr *nla_peer,
- 			     struct netlink_ext_ack *exterr);
- struct net *rtnl_get_net_ns_capable(struct sock *sk, int netnsid);
-+bool rtnl_dev_link_net_capable(const struct net_device *dev,
-+			       const struct net *link_net);
- 
- #define MODULE_ALIAS_RTNL_LINK(kind) MODULE_ALIAS("rtnl-link-" kind)
- 
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -2110,6 +2110,14 @@ struct net *rtnl_get_net_ns_capable(stru
+--- a/include/linux/fwnode.h
++++ b/include/linux/fwnode.h
+@@ -195,8 +195,10 @@ static inline void fwnode_init(struct fw
+ {
+ 	fwnode->secondary = NULL;
+ 	fwnode->ops = ops;
++	fwnode->dev = NULL;
+ 	INIT_LIST_HEAD(&fwnode->consumers);
+ 	INIT_LIST_HEAD(&fwnode->suppliers);
++	fwnode->flags = 0;
  }
- EXPORT_SYMBOL_GPL(rtnl_get_net_ns_capable);
  
-+bool rtnl_dev_link_net_capable(const struct net_device *dev,
-+			       const struct net *link_net)
-+{
-+	return net_eq(link_net, dev_net(dev)) ||
-+	       ns_capable(link_net->user_ns, CAP_NET_ADMIN);
-+}
-+EXPORT_SYMBOL_GPL(rtnl_dev_link_net_capable);
-+
- static int rtnl_valid_dump_ifinfo_req(const struct nlmsghdr *nlh,
- 				      bool strict_check, struct nlattr **tb,
- 				      struct netlink_ext_ack *extack)
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -1406,6 +1406,9 @@ static int ipgre_changelink(struct net_d
- 	struct ip_tunnel_parm p;
- 	int err;
- 
-+	if (!rtnl_dev_link_net_capable(dev, t->net))
-+		return -EPERM;
-+
- 	err = ipgre_newlink_encap_setup(dev, data);
- 	if (err)
- 		return err;
-@@ -1435,6 +1438,9 @@ static int erspan_changelink(struct net_
- 	struct ip_tunnel_parm p;
- 	int err;
- 
-+	if (!rtnl_dev_link_net_capable(dev, t->net))
-+		return -EPERM;
-+
- 	err = ipgre_newlink_encap_setup(dev, data);
- 	if (err)
- 		return err;
+ static inline void fwnode_set_flag(struct fwnode_handle *fwnode,
 
 
