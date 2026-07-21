@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3DF3AEF58;
-	Tue, 21 Jul 2026 22:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63299382385;
+	Tue, 21 Jul 2026 22:46:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673999; cv=none; b=t/DTxcuf2c5ZDno5+gFvfwdkR23sYp26e915qmwP5m19LvLzNgGRPqDw6noX9tN0Ck4JlbiPOactYzsi1HDetGSHU9NY+cEJLLChmLY71LP9O6QPk6iAMACN2n5SGdwb7Ffl+AtFxlW797RJg8Cvzu3hS6RDA08YNTEAZoJ4RO8=
+	t=1784674002; cv=none; b=cA6Klkji3NL6PgC1FxK8ZEXqM2gWEbmYzTyPBZbGlJQntFi+QK45kO3FND91QtUou0uMZl2a1JyPwtIwm0x+6th9VeKaZ2uDnpcODgkGmSn84aaeAGeG1f2HUUnM6JVFPNEKpYKTq2S6MoK2ZKxWDZAyRxQV/p4YLHRsRYFnw3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673999; c=relaxed/simple;
-	bh=tURhZePyzAnae0Wi7XUVc8OVcAQwLO+MAELtoUxV1iY=;
+	s=arc-20240116; t=1784674002; c=relaxed/simple;
+	bh=HczX83FBw5pZ5561NLztO9RCg2ubrXgIQtrIaanKPig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3/sNB/9STlFT2nZ6ntHvtJD0/tgy+iLF0ed2BTHYxTwZxN+1JSFUHpzP/M9TkhzLTR91vaj/PbchWRDcMpiWhoycrjxRiNm2RtnRzc+CEt6DTu2AY1VpUJHL3GHQ+K2vPSe8PbuO92Glsr1tIobKQub8eTkqw4YDYJaX3GmHDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zpXlF4cw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rwdnQpkoMkBmKH/RO+V5bQ0t2a+QuQ3OffNK/UiIBW5sle/YMWp5ROeP9JPpnxzISa7vGX6hxoGCghUtObceVwEALIpCmMNHUmUeHwijzaSMks9OY4XVNY2xQvIcUDu3BcS4jDllsmmcw/qdhLf3pE7Zx2VOjL2x92wFLh72XSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6mWoT9t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zpXlF4cw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3098E1F000E9;
-	Tue, 21 Jul 2026 22:46:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6mWoT9t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F041F000E9;
+	Tue, 21 Jul 2026 22:46:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673998;
-	bh=LAqqyfjBtKfFe7KBYRohS0kq8DANqmZhR6I5Z9ly+5M=;
+	s=korg; t=1784674001;
+	bh=idYgvazQIf8A843ZPq5ZnqgZjSF/lbzfhF1N1mnV9IA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zpXlF4cwAZ8ANjQi/2c1aftr6ikLDPf6Pz+D/KPscm3yBmpwg9nP+CYxJPFEksskH
-	 WS7AxenJC8PzoYrn0y+Rv9t4lZErZTVQ5PDJ/L365qiWJ2xcmVrAr/PCgi9jKtONuM
-	 voBSxHIYOaPoEAL9yMf5Bavw4P/v3MVCsaAKtYgM=
+	b=d6mWoT9tXzhmemxQ2J2RfWmNpRo9reNNq435XjhYZDtTjbW0/iuchhEZ0ZX8IOJmw
+	 k/LEZij6L/JZCECRGSKm4cnNKGfQVm9VmeeY9IS0vOC2PJpYs8JevC5LGBa+avrOTz
+	 NtiYxSaSuWzI8C8AH+PynSeWjINMFoG/ErIrb2+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 376/699] seg6: validate SRH length before reading fixed fields
-Date: Tue, 21 Jul 2026 17:22:15 +0200
-Message-ID: <20260721152404.175173064@linuxfoundation.org>
+Subject: [PATCH 5.10 359/699] netfilter: nft_synproxy: stop bypassing the priv->info snapshot
+Date: Tue, 21 Jul 2026 17:21:58 +0200
+Message-ID: <20260721152403.790098131@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,49 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit a75d99f46bf21b45965ce39c5cfb3b8bb5ffb1aa ]
+[ Upstream commit 11d4bc4e26fb66040a5b5d95e9abf37deac2b1fc ]
 
-seg6_validate_srh() reads fixed SRH fields such as srh->type and
-srh->hdrlen before checking that the supplied length covers the fixed
-struct ipv6_sr_hdr fields.
+nft_synproxy_eval_v4() and nft_synproxy_eval_v6() already take a
+whole-object READ_ONCE() snapshot of the shared priv->info state before
+building the SYNACK reply, but nft_synproxy_tcp_options() still masks
+opts->options with priv->info.options from the live shared object.
 
-The BPF SEG6 encap path reaches this with a BPF program-supplied pointer
-and length: bpf_lwt_push_encap() and the SEG6 local BPF END_B6 and
-END_B6_ENCAP actions call bpf_push_seg6_encap(), which forwards the
-length to seg6_validate_srh() with no minimum-size guard.  A 2-byte SEG6
-encap header can therefore make the validator read srh->type at offset 2
-beyond the caller-supplied buffer.
+When a named synproxy object is updated concurrently with SYN traffic,
+the eval path can then mix mss and timestamp handling from the local
+snapshot with an options mask taken from a newer configuration, so one
+SYNACK no longer reflects a coherent synproxy configuration.
 
-Reject lengths shorter than the fixed SRH at the top of
-seg6_validate_srh(), before any field is read.  This fixes the BPF helper
-path and keeps the common validator robust.
+Use info->options so nft_synproxy_tcp_options() stays on the same local
+snapshot that the eval path already copied from priv->info.
 
-Fixes: fe94cc290f53 ("bpf: Add IPv6 Segment Routing helpers")
-Signed-off-by: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20260623-f01-17-seg6-srh-len-v2-1-2edc40e9e3e1@mails.tsinghua.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ee394f96ad75 ("netfilter: nft_synproxy: add synproxy stateful object support")
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/netfilter/nft_synproxy.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv6/seg6.c b/net/ipv6/seg6.c
-index 77221f27262aaa..cb494c67c94445 100644
---- a/net/ipv6/seg6.c
-+++ b/net/ipv6/seg6.c
-@@ -31,6 +31,9 @@ bool seg6_validate_srh(struct ipv6_sr_hdr *srh, int len, bool reduced)
- 	int max_last_entry;
- 	int trailing;
+diff --git a/net/netfilter/nft_synproxy.c b/net/netfilter/nft_synproxy.c
+index 46d2eefb0b2182..aaba34ed0f7179 100644
+--- a/net/netfilter/nft_synproxy.c
++++ b/net/netfilter/nft_synproxy.c
+@@ -23,14 +23,13 @@ static const struct nla_policy nft_synproxy_policy[NFTA_SYNPROXY_MAX + 1] = {
+ static void nft_synproxy_tcp_options(struct synproxy_options *opts,
+ 				     const struct tcphdr *tcp,
+ 				     struct synproxy_net *snet,
+-				     struct nf_synproxy_info *info,
+-				     const struct nft_synproxy *priv)
++				     struct nf_synproxy_info *info)
+ {
+ 	this_cpu_inc(snet->stats->syn_received);
+ 	if (tcp->ece && tcp->cwr)
+ 		opts->options |= NF_SYNPROXY_OPT_ECN;
  
-+	if (len < sizeof(*srh))
-+		return false;
-+
- 	if (srh->type != IPV6_SRCRT_TYPE_4)
- 		return false;
+-	opts->options &= priv->info.options;
++	opts->options &= info->options;
+ 	opts->mss_encode = opts->mss_option;
+ 	opts->mss_option = info->mss;
+ 	if (opts->options & NF_SYNPROXY_OPT_TIMESTAMP)
+@@ -55,7 +54,7 @@ static void nft_synproxy_eval_v4(const struct nft_synproxy *priv,
  
+ 	if (tcp->syn) {
+ 		/* Initial SYN from client */
+-		nft_synproxy_tcp_options(opts, tcp, snet, &info, priv);
++		nft_synproxy_tcp_options(opts, tcp, snet, &info);
+ 		synproxy_send_client_synack(net, skb, tcp, opts);
+ 		consume_skb(skb);
+ 		regs->verdict.code = NF_STOLEN;
+@@ -86,7 +85,7 @@ static void nft_synproxy_eval_v6(const struct nft_synproxy *priv,
+ 
+ 	if (tcp->syn) {
+ 		/* Initial SYN from client */
+-		nft_synproxy_tcp_options(opts, tcp, snet, &info, priv);
++		nft_synproxy_tcp_options(opts, tcp, snet, &info);
+ 		synproxy_send_client_synack_ipv6(net, skb, tcp, opts);
+ 		consume_skb(skb);
+ 		regs->verdict.code = NF_STOLEN;
 -- 
 2.53.0
 
