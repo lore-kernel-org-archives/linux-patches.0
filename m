@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964A544AB7B;
-	Tue, 21 Jul 2026 22:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B68F370AFB;
+	Tue, 21 Jul 2026 22:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671444; cv=none; b=uuSGsSDGk5x0154zLZuxAIgVKBzLM+Feuwx/AYLT4ZciQ+v2Z+uIPo/lk7FzLZ/c58rE6dGN+GPvmGSiATgfMy+wyeeF4ZoEgnqbHxgAAT3bBg0yooMH03aK7weFUAwVAfHhXI6J13SXLrp8DC1Eghb8eTw0Hyb01BMtviCxQI8=
+	t=1784671447; cv=none; b=rko0lAR+siUv3YKOR78u1McSNcqjwUnUc6A4sS1ONK2nnulgMAr2IwyjQ3zSjpSQiZJtvkWdDAEDw+1/4rGyAxT+WZwfak9FvsD7AMlHcGnhMhJhapjyeFCXGX5YqwldpbAHrH9gRoBV4ErjzZf3rgRe2jeWOZfCO5T0ZO44RrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671444; c=relaxed/simple;
-	bh=XAnWLeDdCIatrd1hsYKr0r5G02ADjGL42zkVCYCban0=;
+	s=arc-20240116; t=1784671447; c=relaxed/simple;
+	bh=CtzeD9Au0sk2Bxvca0HPc7xxcWrG7MLlTryk3nXLjjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UYWWXB7u1SXeutuECYLIO9gfSEmjIOt/2wa2iRFXtQejD3yUqHp8tgS7ZeOl9tqxGuD3w8rNMpNcVnDS7utbZEPZOqSYtkyqpCZxrIhSRYmvpS8qI8EEzz4bg1zmK0kAonLizZrBUEoluFtRgRw9Rs7VuJfLFRP3L8UG4rAuWB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQwgySIS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ay5r+Mx51A1mpRES2rBLOHtCyH1mtccwLAV5kfiNexxWsGRbIj9ykoh/c4rvyZCaSAMckyNei5YIbaC3mpIcySdzAbwy6/rQ4bveWpmi3uCk65Sjq9ec6mgzc8KEaaKCvpWumcCIkxRPZng63+pzDeqWkrTVMYe6lsKe6sdsVkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RL33D20w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQwgySIS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C81B71F000E9;
-	Tue, 21 Jul 2026 22:04:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RL33D20w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF071F000E9;
+	Tue, 21 Jul 2026 22:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671443;
-	bh=QzxcKXZJquo+H18xqE+GJvVtPUsYmUqnfEaQrzGpHRs=;
+	s=korg; t=1784671445;
+	bh=ZtITLX4HsVyQHyjZXpi4zELR546fFyBDszVbzsuj1OM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IQwgySISW1aNxs1wEFfgMVsli5Kq8j5anPZ5ZDsYEms62Wko31odRk9HlMVDrgaal
-	 AgHelPpDY608bC+6UUrk4c3q5BhpQOZsNB91jG90xCr1iAMJmK1edP7WrwGTz+XMzA
-	 f2xwSnvBJ/qRTLWDVcwaDsDeLGM5SrhAuQsrDLM0=
+	b=RL33D20wQTcIhoZrlBkJiOb2Y6mQCEZZc29PvvTtlvRc8KhbnheUUMUj/gIMlEakE
+	 CZMhR9j3unrHSv/42ztJ4JCNCKIP4S36UxeOsNDRawRbYxMAWsEhxTxalLoEsh5N1w
+	 8gojdPDUXwuD5KlQVigBpgMEfAsWr0EdfXhdnqUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neil@brown.name>,
-	Tejun Heo <tj@kernel.org>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 247/843] sysfs: clamp show() return value in sysfs_kf_read()
-Date: Tue, 21 Jul 2026 17:18:02 +0200
-Message-ID: <20260721152411.573886846@linuxfoundation.org>
+Subject: [PATCH 5.15 248/843] net/sched: sch_drr: annotate data-races around cl->deficit
+Date: Tue, 21 Jul 2026 17:18:03 +0200
+Message-ID: <20260721152411.599295849@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,47 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 454257f6d124a92342dcbb7710c03dd6ef96c731 ]
+[ Upstream commit c67b104fd7982162885c5e43057ca761006748e2 ]
 
-sysfs_kf_seq_show() defends against buggy show() callbacks that return
-larger than PAGE_SIZE by clamping the value and printing a warning.
-sysfs_kf_read(), the prealloc variant, has no such defense.
+drr_dump_class_stats() runs without qdisc spinlock held.
 
-The only current in-tree user of __ATTR_PREALLOC is drivers/md/md.c,
-whose show() callbacks are well-behaved, so this is hardening against
-future drivers doing foolish things and out-of-tree code doing even more
-foolish things.
+Add missing READ_ONCE()/WRITE_ONCE() annotations around cl->deficit.
 
-Cc: NeilBrown <neil@brown.name>
-Cc: Tejun Heo <tj@kernel.org>
-Fixes: 2b75869bba67 ("sysfs/kernfs: allow attributes to request write buffer be pre-allocated.")
-Assisted-by: gregkh_clanker_t1000
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patch.msgid.link/2026052000-drove-unicycle-d61b@gregkh
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260519094618.2632073-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/sysfs/file.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/sched/sch_drr.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/sysfs/file.c b/fs/sysfs/file.c
-index fd55a4a04d6df0..5a741ac108d3a8 100644
---- a/fs/sysfs/file.c
-+++ b/fs/sysfs/file.c
-@@ -117,6 +117,10 @@ static ssize_t sysfs_kf_read(struct kernfs_open_file *of, char *buf,
- 	len = ops->show(kobj, of->kn->priv, buf);
- 	if (len < 0)
- 		return len;
-+	if (len >= (ssize_t)PAGE_SIZE) {
-+		printk("fill_read_buffer: %pS returned bad count\n", ops->show);
-+		len = PAGE_SIZE - 1;
-+	}
- 	if (pos) {
- 		if (len <= pos)
- 			return 0;
+diff --git a/net/sched/sch_drr.c b/net/sched/sch_drr.c
+index 5a543d35d53b8d..a2b9802d41c010 100644
+--- a/net/sched/sch_drr.c
++++ b/net/sched/sch_drr.c
+@@ -271,7 +271,7 @@ static int drr_dump_class_stats(struct Qdisc *sch, unsigned long arg,
+ 
+ 	memset(&xstats, 0, sizeof(xstats));
+ 	if (qlen)
+-		xstats.deficit = cl->deficit;
++		xstats.deficit = READ_ONCE(cl->deficit);
+ 
+ 	if (gnet_stats_copy_basic(qdisc_root_sleeping_running(sch),
+ 				  d, NULL, &cl->bstats) < 0 ||
+@@ -371,7 +371,7 @@ static int drr_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 
+ 	if (!cl_is_active(cl)) {
+ 		list_add_tail(&cl->alist, &q->active);
+-		cl->deficit = cl->quantum;
++		WRITE_ONCE(cl->deficit, cl->quantum);
+ 	}
+ 
+ 	sch->qstats.backlog += len;
+@@ -398,7 +398,7 @@ static struct sk_buff *drr_dequeue(struct Qdisc *sch)
+ 
+ 		len = qdisc_pkt_len(skb);
+ 		if (len <= cl->deficit) {
+-			cl->deficit -= len;
++			WRITE_ONCE(cl->deficit, cl->deficit - len);
+ 			skb = qdisc_dequeue_peeked(cl->qdisc);
+ 			if (unlikely(skb == NULL))
+ 				goto out;
+@@ -412,7 +412,7 @@ static struct sk_buff *drr_dequeue(struct Qdisc *sch)
+ 			return skb;
+ 		}
+ 
+-		cl->deficit += cl->quantum;
++		WRITE_ONCE(cl->deficit, cl->deficit + cl->quantum);
+ 		list_move_tail(&cl->alist, &q->active);
+ 	}
+ out:
 -- 
 2.53.0
 
