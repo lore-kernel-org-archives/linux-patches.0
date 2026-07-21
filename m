@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF262641CA;
-	Tue, 21 Jul 2026 21:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D8444AB99;
+	Tue, 21 Jul 2026 21:22:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668951; cv=none; b=PMauLnXKrFlGbmJ31+Nh0QBvL6q1kCWPnZNTAeIYt9o2ZlBodMDiqiXXDKG3V6cuu7VQUUpDvSwEz8qO91t9bkkR9JdexXAg/9G7alKCK+zvEjAt/GpKgFwFYSZus5hKscnnXGpgrGLpsDq7bpwCR3BirnqDvczhBhxzkMyNPQ8=
+	t=1784668954; cv=none; b=YKlJ/u1AKAsFEy4H4gteC2Pl1Neyg6v0Yqk/L+JJa4gXLz/uFjKr/cfxiPk8ZEhEE7bsq1eX1ZQWE5EYYghSromBzvVrfZ3kJmQsduWMzvcEPtDjWtgA2ZuGM88Z8uYXWxQZMX3S7c3VaejwdJm8n1Tgv1Rx22EyWna87HcfOt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668951; c=relaxed/simple;
-	bh=XmnFijv5PGWkyHK03fUYXUPWALob0iHBzFo3CFRTG80=;
+	s=arc-20240116; t=1784668954; c=relaxed/simple;
+	bh=GsTFt81D0/e6syTmSqyUJp1Jbh3gpK79ObYD/seMoLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pJuvt2yQSHZg/ixKHmnVnL1FwrLebcCy2JCCxiSHAj2UBTrwg6hDuiX2vDqtiQI15WA7X96eF/PQm0VHDB8GBt2tJgkAy+Rm7j3LCE7FOkhBC0ZN+/YfvINvozWWcLUK3Gjar2jAwQaRC7Rs65iXCDvbDI1uhEfpLeA55YhOuk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ixyDU9HA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j5RiZFQ+T6bs7nasJa3K2yFz3OXoyOe7KjL5FKS6uzJby6ZN4GSWA8jDv03y7Fd1zbzPXOk5fEumM5MMNIS9yfrHtNuumdnxlTgGkPscSyW/gO7SCYmo6oimrikRFWsiSSASg34ECgrUGH3uNjP5gaacuemhapWNeRJdgvYyOj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MiZd/7cQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ixyDU9HA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E421F000E9;
-	Tue, 21 Jul 2026 21:22:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MiZd/7cQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F1B81F000E9;
+	Tue, 21 Jul 2026 21:22:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668950;
-	bh=W9Ukf27LMOmwA7CRI8vxdtfe6i/1lodjeg3lkQuLx+U=;
+	s=korg; t=1784668952;
+	bh=5lhXWT5xVycKC9GIZ6vjRELUpDTTuA72ruF2ecDHJWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ixyDU9HAcl8IfDIeATfX3Z+bALFJq/96RmwmW7Er1M3MIVqyZnlvmB98S0X7Ma2OM
-	 udHHxMqhJn/vK3ydApGm1JYnsr+WhzP72w52se3NegD2Gzl8l4CwI6TwDNvw3vGgUL
-	 Iyv2LwSKkDW7YddzZqPEBC9EhbyMvOtuJH5b8PVQ=
+	b=MiZd/7cQhZ9ZXfh3XfkbsedgUEj2cTY0Wh+CYm/TRiG9VlUY50c+y1n2N65pyTiSp
+	 RD/tSrKh1sdBPDVwquQHUzdQFzkp8EtVheT+pRCGd/LdOhbD7QY51rPH4sM7+GrQjX
+	 k9JRixHDCUbWeFRKluq+Ibgm8pv5OD9MRnASupX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+36e50496c8ac4bcde3f9@syzkaller.appspotmail.com,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0369/1067] bpf: fix UAF by restoring RCU-delayed inode freeing in bpffs
-Date: Tue, 21 Jul 2026 17:16:10 +0200
-Message-ID: <20260721152432.875730447@linuxfoundation.org>
+Subject: [PATCH 6.1 0334/1067] mips: ralink: mt7621: add missing __iomem
+Date: Tue, 21 Jul 2026 17:15:35 +0200
+Message-ID: <20260721152432.068347163@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,86 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit b93c55b4932dd7e32dca8cf34a3443cc87a02906 ]
+[ Upstream commit 4ddaf88aadd3bd09c2eb3734c53d2864af6b144e ]
 
-commit 4f375ade6aa9 ("bpf: Avoid RCU context warning when unpinning
-htab with internal structs") moved inode cleanup from ->free_inode()
-into ->destroy_inode() to avoid sleeping in RCU context when calling
-bpf_any_put(). However this removed the RCU delay on freeing the
-inode itself and the cached symlink body (i_link), both of which
-can be accessed by RCU pathwalk (pick_link, may_lookup etc.).
+raw_readl and writel calls expect pointers annotated with __iomem.
 
-This causes a use-after-free when a concurrent unlinkat() drops the
-last inode reference and destroy_inode() frees the inode immediately,
-while another task is still walking the path in RCU mode and reads
-inode->i_opflags (offset +2) inside current_time() -> is_mgtime().
-
-KASAN reports:
-  BUG: KASAN: slab-use-after-free in is_mgtime include/linux/fs.h:2313
-  Read of size 2 at addr ffff8880407e4282 (offset +2 = i_opflags)
-
-The rules (per Al Viro):
-  ->destroy_inode()  called immediately, can sleep, use for blocking
-                     cleanup e.g. bpf_any_put()
-  ->free_inode()     called after RCU grace period, use for freeing
-                     inode and anything RCU-accessible e.g. i_link
-
-Fix: split the two concerns properly:
-  - keep bpf_any_put() in bpf_destroy_inode() since it is blocking
-    and needs to run promptly
-  - introduce bpf_free_inode() to handle kfree(i_link) and
-    free_inode_nonrcu() with proper RCU delay, preventing the UAF
-
-Fixes: 4f375ade6aa9 ("bpf: Avoid RCU context warning when unpinning htab with internal structs")
-Reported-by: syzbot+36e50496c8ac4bcde3f9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=36e50496c8ac4bcde3f9
-Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
-Link: https://lore.kernel.org/all/20260423043906.GN3518998@ZenIV/
-Link: https://lore.kernel.org/all/20260602002607.110866-1-kartikey406@gmail.com/T/ [v1]
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Acked-by: Al Viro <viro@zeniv.linux.org.uk>
-Link: https://lore.kernel.org/r/20260602025249.113828-1-kartikey406@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild/202211060456.cnV6IK6G-lkp@intel.com/
+Fixes: cc19db8b312a ("MIPS: ralink: mt7621: do memory detection on KSEG1")
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/inode.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ arch/mips/ralink/mt7621.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/inode.c b/kernel/bpf/inode.c
-index 9b184f3fbf45fc..924d858b7224b0 100644
---- a/kernel/bpf/inode.c
-+++ b/kernel/bpf/inode.c
-@@ -614,10 +614,18 @@ static void bpf_destroy_inode(struct inode *inode)
+diff --git a/arch/mips/ralink/mt7621.c b/arch/mips/ralink/mt7621.c
+index bbf5811afbf2c0..efa430dbe15241 100644
+--- a/arch/mips/ralink/mt7621.c
++++ b/arch/mips/ralink/mt7621.c
+@@ -63,7 +63,7 @@ phys_addr_t mips_cpc_default_phys_base(void)
+ 
+ static bool __init mt7621_addr_wraparound_test(phys_addr_t size)
  {
- 	enum bpf_type type;
+-	void *dm = (void *)KSEG1ADDR(&detect_magic);
++	void __iomem *dm = (void __iomem *)KSEG1ADDR(&detect_magic);
  
--	if (S_ISLNK(inode->i_mode))
--		kfree(inode->i_link);
- 	if (!bpf_inode_type(inode, &type))
- 		bpf_any_put(inode->i_private, type);
-+}
-+
-+/*
-+ * Called after RCU grace period - safe to free inode and anything
-+ *  that might be accessed by RCU pathwalk (inode fields, i_link).
-+ */
-+static void bpf_free_inode(struct inode *inode)
-+{
-+	if (S_ISLNK(inode->i_mode))
-+		kfree(inode->i_link);
- 	free_inode_nonrcu(inode);
- }
- 
-@@ -626,6 +634,7 @@ static const struct super_operations bpf_super_ops = {
- 	.drop_inode	= generic_delete_inode,
- 	.show_options	= bpf_show_options,
- 	.destroy_inode	= bpf_destroy_inode,
-+	.free_inode	= bpf_free_inode,
- };
- 
- enum {
+ 	if (CPHYSADDR(dm + size) >= MT7621_LOWMEM_MAX_SIZE)
+ 		return true;
 -- 
 2.53.0
 
