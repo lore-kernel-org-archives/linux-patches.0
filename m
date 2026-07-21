@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5B033689F;
-	Tue, 21 Jul 2026 17:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919DA33689F;
+	Tue, 21 Jul 2026 17:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654064; cv=none; b=jsFTxpevmT8FSVcDx483oO1URBRgJTBHy2JkXvM43bHLQCAvKdzouJw9Y7ZALwLtcpXdqLOFqkCyUKrfatzD/C5V8yS3z387zVESeDAvLv3rckk5fQ36YOZEBQOtvVe8OpNeY/+woL0oFX7pdOjxKSRuclpyQF8aewBuonMG4FQ=
+	t=1784654066; cv=none; b=J2A9XhVLQV7iK3/w98Grw/ecp7ySldmPi2FpidVm4AQzuSkwBBrrs/aZmIUMw3Z1zWlRzeGgqwoLJ/GinbNYIqwalss+7W6eaeEd/jgl04zZQmV51M/LnIywy4ALWjUT9nuNr8YReKIBu7uFiLxk/BzbOek2Bm9YJ10WsodjAxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654064; c=relaxed/simple;
-	bh=rQSeXma7RpCM8C+xd07AxnxWMJeBGAtRk8GXUbbmZh8=;
+	s=arc-20240116; t=1784654066; c=relaxed/simple;
+	bh=cqtqk5m4PSm7aep9j2lqQUHhATzRNZz6w3gC0bLEUGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hx3++lAR8KnHsSKHnRbxKyLFAY7RAk933ORdykmnyJGVCOChH5x+cgXdUX8/+GeblsKsM+THNQSg/jeYBPHGafUzm+iJSEw9VHnm12fdj07PyVIwlk6ZZ3CkQWc/Ic6vift4//T6N53MhFPenraFYyI/jIa9ujsXbcGEZ5tNJaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/OPDaqw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CuGPlbEXt3ZEUT6KOuU3lcHuNv+6xYLE5NPiaDd7Vw+EPaI2T1cXn3cZyhkVCvHHP40+BfDZ0LDcqTrxzmeA+zu1efsVH5j1qdkuLOlMjBqUF5GgAiiAPW8hFaVQ1Em9kIcKtL+rMvU5Gr08Df58DA3KDrNfA63xq+JFDgeZiBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qQscXDVR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/OPDaqw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5601F000E9;
-	Tue, 21 Jul 2026 17:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qQscXDVR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04AD51F000E9;
+	Tue, 21 Jul 2026 17:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654062;
-	bh=rG8C19AMVpNDCF5grQoEFDXIOY6NNIpmDvQnyT9FTjc=;
+	s=korg; t=1784654065;
+	bh=fxvLfpHVFcoiAUWa9bEr6RkOGQiX0vgBnfWD8GHmjRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P/OPDaqwiFjMDMHEkh+bg/zphlvPyN8iOe7Xk3Zn+E3oO1RSaBtAIEX2OM38WQgWp
-	 3PVHO1qpT1N5sh9UKXRaGf8liB5iwl9JHSCSx1VYnJPsATRFRc/u5R0+xYMzCDgGp/
-	 tYxCW68RYNmhMM1Ape2wNm/BlpbgG3wBkP44H8kk=
+	b=qQscXDVR9/cSV0/QMYCbAy0U9dTfGxM8fOF34Picu0aOS6uudwR6Dsqh0E5dicN8O
+	 jJXd8fBfWg29dCinPJ9IET4xPP+0j/5NkwXYH63JvBOwwP7isHl9+iU5YBAWzeacIn
+	 6E8WDjmytfi7ROR3QGg30W8PyrLHWbU9omwaya74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 7.1 1561/2077] KVM: arm64: vgic: Handle race between interrupt affinity change and LPI disabling
-Date: Tue, 21 Jul 2026 17:20:34 +0200
-Message-ID: <20260721152629.600317139@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 7.1 1562/2077] KVM: nVMX: Move vTPR vs. TPR Threshold consistency check into "normal" checks
+Date: Tue, 21 Jul 2026 17:20:35 +0200
+Message-ID: <20260721152629.623245451@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,76 +49,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 7258770e5814f15e8308ebda82ac9acf6964ba8e upstream.
+commit ebdac7554abb347ca4197be241116842161acd9b upstream.
 
-Hyunwoo Kim reports some really bad races should the following
-situation occur:
+Move the off-by-default consistency check for vmcs12.tpr_threshold vs.
+the virtual APIC vTPR into the "normal" controls checks, as waiting until
+KVM has loaded some amount of state is unnecessary and actively dangerous.
+Specifically, failure to unwind vmcs01.GUEST_CR3 to KVM's value when EPT
+is disabled results in KVM running L1 with an L1-controlled CR3, not with
+KVM's CR3!
 
-- LPI-I is pending in vcpu-B's AP list
-- vcpu-A writes to vcpu-B's RD to disable its LPIs
-- vcpu-C moves I from B to C
+Alternatively, KVM could simply reset the MMU to force a reload of
+vmcs01.GUEST_CR3, but the _only_ reason the check was shoved into a "late"
+flow was to wait until the vmcs12 pages were retrieved.  Rather than build
+up more crusty code, simply access vTPR using a regular guest memory access
+(performance isn't a concern).  To circumvent the restrictions that led to
+KVM deferring nested_get_vmcs12_pages(), (a) use a VM-scoped API to read
+guest memory so that it always hits non-SMM memslots (for RSM), and (b)
+skip the check (since its off-by-default anyways) when the vCPU doesn't
+want to run, i.e. when userspace is restoring/stuffing state.
 
-If the last two race nicely enough, vgic_prune_ap_list() can drop
-the irq and AP list locks, reacquire them, and in the interval
-the irq has been freed. UAF follows.
+If reading guest memory fails, simply skip the consistency check, as KVM's
+de facto ABI is that VMX instruction accesses to non-existent memory get
+PCI Bus Error semantics, where reads return 0xFFs.  And if vTPR=0xFF, then
+the vTPR is guaranteed to be greater than or equal to TPR_THRESHOLD.
 
-The fix is two-fold:
-
-- Before dropping the irq and ap_list locks, take a reference on
-  the irq
-
-- Do not try to handle migration of the pending bit: there is no
-  expectation that this state is retained, as per the architecture
-
-With that, we're sure that the interrupt is still around, and we
-safely remove it from the AP list as it has no target at this
-stage (unless another interrupt fires, but that's another story).
-
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Tested-by: Hyunwoo Kim <imv4bel@gmail.com>
-Link: https://lore.kernel.org/r/ailsCnyoS82r_QRz@v4bel
-Link: https://patch.msgid.link/20260615181625.3029352-1-maz@kernel.org
-Fixes: 5dd4b924e390a ("KVM: arm/arm64: vgic: Add refcounting for IRQs")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Fixes: 1100e4910ad2 ("KVM: nVMX: Add an off-by-default module param to WARN on missed consistency checks")
 Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260612145642.452392-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/x86/kvm/vmx/nested.c |   66 ++++++++++++++++++++--------------------------
+ 1 file changed, 29 insertions(+), 37 deletions(-)
 
---- a/arch/arm64/kvm/vgic/vgic.c
-+++ b/arch/arm64/kvm/vgic/vgic.c
-@@ -204,6 +204,7 @@ void vgic_flush_pending_lpis(struct kvm_
- 	list_for_each_entry_safe(irq, tmp, &vgic_cpu->ap_list_head, ap_list) {
- 		if (irq_is_lpi(vcpu->kvm, irq->intid)) {
- 			raw_spin_lock(&irq->irq_lock);
-+			irq->pending_latch = false;
- 			list_del(&irq->ap_list);
- 			irq->vcpu = NULL;
- 			raw_spin_unlock(&irq->irq_lock);
-@@ -795,7 +796,11 @@ retry:
- 			continue;
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -553,6 +553,9 @@ static int nested_vmx_check_msr_bitmap_c
+ static int nested_vmx_check_tpr_shadow_controls(struct kvm_vcpu *vcpu,
+ 						struct vmcs12 *vmcs12)
+ {
++	gpa_t vtpr_gpa = vmcs12->virtual_apic_page_addr + APIC_TASKPRI;
++	u32 vtpr;
++
+ 	if (!nested_cpu_has(vmcs12, CPU_BASED_TPR_SHADOW))
+ 		return 0;
+ 
+@@ -562,6 +565,32 @@ static int nested_vmx_check_tpr_shadow_c
+ 	if (CC(!nested_cpu_has_vid(vmcs12) && vmcs12->tpr_threshold >> 4))
+ 		return -EINVAL;
+ 
++	/*
++	 * Do the illegal vTPR vs. TPR Threshold consistency check if and only
++	 * if KVM is configured to WARN on missed consistency checks, otherwise
++	 * it's a waste of time.  KVM needs to rely on hardware to fully detect
++	 * an illegal combination due to the vTPR being writable by L1 at all
++	 * times (it's an in-memory value, not a VMCS field).  I.e. even if the
++	 * check passes now, it might fail at the actual VM-Enter.
++	 *
++	 * If reading guest memory fails, skip the check as KVM's de facto ABI
++	 * for VMX instruction accesses to non-existent memory is to provide
++	 * PCI Bus Error semantics (reads return 0xFFs), in which case the vTPR
++	 * is guaranteed to greater than or equal to the threshold.
++	 *
++	 * Note!  Deliberately use the VM-scoped API when reading guest memory,
++	 * to ensure the read doesn't hit SMRAM when restoring L2 state on RSM,
++	 * and only perform the check when in KVM_RUN, to avoid a false failure
++	 * if userspace hasn't yet configured memslots during state restore.
++	 */
++	if (warn_on_missed_cc && vcpu->wants_to_run &&
++	    nested_cpu_has(vmcs12, CPU_BASED_TPR_SHADOW) &&
++	    !nested_cpu_has_vid(vmcs12) &&
++	    !nested_cpu_has2(vmcs12, SECONDARY_EXEC_VIRTUALIZE_APIC_ACCESSES) &&
++	    !kvm_read_guest(vcpu->kvm, vtpr_gpa, &vtpr, sizeof(vtpr)) &&
++	    CC((vmcs12->tpr_threshold & GENMASK(3, 0)) > ((vtpr >> 4) & GENMASK(3, 0))))
++		return -EINVAL;
++
+ 	return 0;
+ }
+ 
+@@ -3085,38 +3114,6 @@ static int nested_vmx_check_controls(str
+ 	return 0;
+ }
+ 
+-static int nested_vmx_check_controls_late(struct kvm_vcpu *vcpu,
+-					  struct vmcs12 *vmcs12)
+-{
+-	void *vapic = to_vmx(vcpu)->nested.virtual_apic_map.hva;
+-	u32 vtpr = vapic ? (*(u32 *)(vapic + APIC_TASKPRI)) >> 4 : 0;
+-
+-	/*
+-	 * Don't bother with the consistency checks if KVM isn't configured to
+-	 * WARN on missed consistency checks, as KVM needs to rely on hardware
+-	 * to fully detect an illegal vTPR vs. TRP Threshold combination due to
+-	 * the vTPR being writable by L1 at all times (it's an in-memory value,
+-	 * not a VMCS field).  I.e. even if the check passes now, it might fail
+-	 * at the actual VM-Enter.
+-	 *
+-	 * Keying off the module param also allows treating an invalid vAPIC
+-	 * mapping as a consistency check failure without increasing the risk
+-	 * of breaking a "real" VM.
+-	 */
+-	if (!warn_on_missed_cc)
+-		return 0;
+-
+-	if ((exec_controls_get(to_vmx(vcpu)) & CPU_BASED_TPR_SHADOW) &&
+-	    nested_cpu_has(vmcs12, CPU_BASED_TPR_SHADOW) &&
+-	    !nested_cpu_has_vid(vmcs12) &&
+-	    !nested_cpu_has2(vmcs12, SECONDARY_EXEC_VIRTUALIZE_APIC_ACCESSES) &&
+-	    (CC(!vapic) ||
+-	     CC((vmcs12->tpr_threshold & GENMASK(3, 0)) > (vtpr & GENMASK(3, 0)))))
+-		return -EINVAL;
+-
+-	return 0;
+-}
+-
+ static int nested_vmx_check_address_space_size(struct kvm_vcpu *vcpu,
+ 				       struct vmcs12 *vmcs12)
+ {
+@@ -3666,11 +3663,6 @@ enum nvmx_vmentry_status nested_vmx_ente
+ 			return NVMX_VMENTRY_KVM_INTERNAL_ERROR;
  		}
  
--		/* This interrupt looks like it has to be migrated. */
-+		/*
-+		 * This interrupt looks like it has to be migrated,
-+		 * make sure it is kept alive while locks are dropped.
-+		 */
-+		vgic_get_irq_ref(irq);
- 
- 		raw_spin_unlock(&irq->irq_lock);
- 		raw_spin_unlock(&vgic_cpu->ap_list_lock);
-@@ -840,6 +845,8 @@ retry:
- 		raw_spin_unlock(&vcpuB->arch.vgic_cpu.ap_list_lock);
- 		raw_spin_unlock(&vcpuA->arch.vgic_cpu.ap_list_lock);
- 
-+		deleted_lpis |= vgic_put_irq_norelease(vcpu->kvm, irq);
-+
- 		if (target_vcpu_needs_kick) {
- 			kvm_make_request(KVM_REQ_IRQ_PENDING, target_vcpu);
- 			kvm_vcpu_kick(target_vcpu);
+-		if (nested_vmx_check_controls_late(vcpu, vmcs12)) {
+-			vmx_switch_vmcs(vcpu, &vmx->vmcs01);
+-			return NVMX_VMENTRY_VMFAIL;
+-		}
+-
+ 		if (nested_vmx_check_guest_state(vcpu, vmcs12,
+ 						 &entry_failure_code)) {
+ 			exit_reason.basic = EXIT_REASON_INVALID_STATE;
 
 
