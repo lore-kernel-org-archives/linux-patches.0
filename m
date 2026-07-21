@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43F3269CE6;
-	Tue, 21 Jul 2026 18:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA8D3CB2FA;
+	Tue, 21 Jul 2026 18:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656821; cv=none; b=UBq4PPbmo8xmnXVZtaEof3KKT3kuPNCkoavwKnZtY8105uvmIYLG6SIOz9joA0U0YLv+QM05R7cxroN0DzhgXHCIu8nD+ZHZyPJ8LH0CnijlGr1cbYK5F6i11yZIhG9l4/xz1wyqfDbJ9H2ekcXn6fbwFma2XwiN3nKFK0uxe5o=
+	t=1784656824; cv=none; b=UZZsGN06IkGPK0hIReJPC/48MblrgnD3ZoO1hzxArtN12D5YJKic5+Rt/HTzQMTgdS8rl+DVksvoerE3LHhFbH4CEluto0YGR2ded0xPHZrcBeMOYe6s3S2FImQXAbgaR3SKBCXh/Z914WDdaDbKuMt4yNgf1Nd6xY0hhcihJ8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656821; c=relaxed/simple;
-	bh=wISsZg84PuTOvvl5nHNFssRTV9aUD9PocapDR6OtMC0=;
+	s=arc-20240116; t=1784656824; c=relaxed/simple;
+	bh=iuFz1Q+Osp3junsYn+9WOqpQXkVVU2RHsmFqFqVmJa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/MrhnuBnohLMA0aBIRr5g61VuRzzzRz9l5U+glkjfm/5K0i2fYE0/Mjc8YLE1yQsis/z7H6NKMw8oQLfsnYLj/3FmTS5FBFPZloJMzaAhwoxoQnCw1znfpFQ5rCFlufD1A2poRx/w9h5L3++ZpKN7JslFFXl2GhjvDHd1aOJ6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijfuXbf9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OnyGKwMW3t6j2lzSxdXkVQ7ZxPSD/SnFhj3NwojD7OBFRcPIMLkrF/Z4JRSnjbcNvOMEhoNwmUAJeYma8yWMDubAUwvO1y9zloULbUef69eRnnPjQ9S4su4K/cmcAfgIIMargWWp/TsFCQ8JEzDQoYNmKAGAWu5J8BhgWxZG75U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTaXE6dz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijfuXbf9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55ED41F000E9;
-	Tue, 21 Jul 2026 18:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTaXE6dz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F267B1F00A3D;
+	Tue, 21 Jul 2026 18:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656819;
-	bh=SxBGwCgRS4k3Ec46uoJgyTRHt66R54PE32xpZGfRC9g=;
+	s=korg; t=1784656822;
+	bh=qeBmYdaYg0LYSERyor6EOTYbe0VwBNWhrssYVxGhDmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ijfuXbf9U2l2giNbOVBiROfRZKbjMrypcmTyzy0bWWUBHb73UJiyxKTc4lpJ64ypn
-	 CCi6jcq4ra0T8vSfQ2jqaXyuD04E1+FPw448OtV2RgjwXmlZQZmPZqw+DAnUJsPKqu
-	 uVLOCi2Rn1T0P1uYfRyiS/dIY18QNP7e5m7vIlzg=
+	b=DTaXE6dzIJd/jAi0DoWpuPDa/QnqxglQGkIxTj52P5qJ4CeKgiNPtGf2a1fvpsJw2
+	 Qaph/ow/FcI/Evr/yt1nYzfOFy7yDE00GtbrmdWKgEBQlBPLnf7UhjEK3jOxDdClK8
+	 1IqmBcPffzncE6UjrQ+YHQ4e4vKi8tS4+r4Q6LGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cen Zhang <zzzccc427@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0531/1611] ALSA: seq: oss: Serialize readq reset state with q->lock
-Date: Tue, 21 Jul 2026 17:10:47 +0200
-Message-ID: <20260721152527.294428776@linuxfoundation.org>
+Subject: [PATCH 6.18 0532/1611] ALSA: seq: avoid stale FIFO cells during resize
+Date: Tue, 21 Jul 2026 17:10:48 +0200
+Message-ID: <20260721152527.318815636@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,193 +53,174 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 49ce92d207820f588b0406add82f053decfbe5d9 ]
+[ Upstream commit e546128291f8d688dcb931827e2efd2aa6c0734d ]
 
-snd_seq_oss_readq_clear() resets qlen, head, and tail without
-q->lock even though the normal reader and producer paths serialize the
-same ring state under that spinlock. A reset can therefore race
-snd_seq_oss_readq_free() or snd_seq_oss_readq_put_event() and leave
-stale records in the queue, drop freshly queued ones, or report the
-wrong readiness after wakeup. KCSAN reports a data race between
-snd_seq_oss_readq_clear() and snd_seq_oss_readq_free().
+snd_seq_fifo_resize() still needs to publish the replacement pool
+before it waits for FIFO users. A blocking snd_seq_read() holds
+f->use_lock while it sleeps, so concurrent senders must be able to
+queue to the new pool and wake that reader instead of failing against a
+closing old pool.
 
-Take q->lock while clearing the ring and resetting input_time. Factor
-the enqueue logic into a caller-locked helper so
-snd_seq_oss_readq_put_timestamp() updates its suppression state under
-the same lock instead of racing the reset path.
+However, snd_seq_fifo_event_in() duplicates an event before it takes
+f->lock, and snd_seq_read() can dequeue a cell and later call
+snd_seq_fifo_cell_putback() if copy_to_user() or
+snd_seq_expand_var_event() fails. If resize swaps f->pool and detaches
+oldhead in between, either path can relink an old-pool cell after the
+snapshot. That stale cell sits outside the drained oldhead list, keeps
+oldpool->counter elevated, and can leave snd_seq_pool_delete() waiting
+for the retired pool to drain.
+
+Keep the existing swap-before-wait ordering in snd_seq_fifo_resize(),
+but reject stale cells before any FIFO relink. Revalidate event-in cells
+under f->lock and retry them against the published replacement pool, and
+free stale putback cells instead of linking them back into the FIFO.
 
 The buggy scenario involves two paths, with each column showing the
 order within that path:
 
-reset path:                      locked readq updater:
-1. snd_seq_oss_reset() or        1. A reader or callback producer
-   release reaches                  takes q->lock on the same queue.
-   snd_seq_oss_readq_clear().
-2. snd_seq_oss_readq_clear()     2. The updater tests or modifies
-   resets qlen, head, tail,         qlen, head, and tail.
-   and input_time.
-3. snd_seq_oss_readq_clear()     3. The updater completes its
-   wakes sleepers on                read-modify-write sequence.
-   q->midi_sleep.
-4. Without q->lock, the reset    4. The resulting ring state drives
-   can overlap the locked           later reads and readiness.
-   update.
+resize path:                    relink path:
+1. Allocate newpool.             1. Take f->use_lock.
+2. Swap f->pool to newpool and   2. Duplicate or dequeue an old-pool
+   detach oldhead.                  cell before oldpool closes.
+3. Mark oldpool closing and      3. Reach a later relink point after
+   wait for FIFO users.             resize published newpool.
+4. Free oldhead and delete       4. Relink the old-pool cell after
+   oldpool.                         resize detached oldhead.
+                                 5. Drop f->use_lock.
 
-KCSAN reports:
+The reproducer reports a resize ioctl blocked in the expected pool
+teardown path:
 
-BUG: KCSAN: data-race in snd_seq_oss_readq_clear /
-snd_seq_oss_readq_free
-
-write to 0xffff8881069fe608 of 4 bytes by task 120516 on cpu 0:
-  snd_seq_oss_readq_free+0x6c/0x80
-  snd_seq_oss_read+0xcb/0x250
-  odev_read+0x38/0x60
-  vfs_read+0xff/0x600
-  ksys_read+0xb4/0x140
-  __x64_sys_read+0x46/0x60
-  do_syscall_64+0xbb/0x2f0
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-read to 0xffff8881069fe608 of 4 bytes by task 120517 on cpu 1:
-  snd_seq_oss_readq_clear+0x1f/0x90
-  snd_seq_oss_reset+0xa7/0xf0
-  snd_seq_oss_ioctl+0x6f6/0x7e0
-  odev_ioctl+0x56/0xc0
+signal: resize iteration=98 target_pool=4 exceeded 250ms
+        (elapsed=251ms)
+diagnostic: resize_tid=651 wchan=snd_seq_pool_done
+diagnostic: resize_tid=651 stack=
+  snd_seq_pool_done+0x5b/0x140
+  snd_seq_pool_delete+0x7a/0x90
+  snd_seq_fifo_resize+0x193/0x1e0
+  snd_seq_ioctl_set_client_pool+0x214/0x260
+  snd_seq_ioctl+0x119/0x540
   __x64_sys_ioctl+0xd1/0x120
   do_syscall_64+0xbb/0x2f0
   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-value changed: 0x00000001 -> 0x00000000
+A second run with larger pools hit the same target path:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+signal: resize iteration=32 target_pool=64 exceeded 250ms
+        (elapsed=251ms)
+diagnostic: resize_tid=663 wchan=snd_seq_pool_done
+diagnostic: resize_tid=663 stack=
+  snd_seq_pool_done+0x5b/0x140
+  snd_seq_pool_delete+0x7a/0x90
+  snd_seq_fifo_resize+0x193/0x1e0
+  snd_seq_ioctl_set_client_pool+0x214/0x260
+  snd_seq_ioctl+0x119/0x540
+  __x64_sys_ioctl+0xd1/0x120
+  do_syscall_64+0xbb/0x2f0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 2d7d54002e39 ("ALSA: seq: Fix race during FIFO resize")
 
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/20260614004801.3507773-1-zzzccc427@gmail.com
+Link: https://patch.msgid.link/20260614004801.3507773-2-zzzccc427@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/oss/seq_oss_readq.c | 77 ++++++++++++++++++++----------
- 1 file changed, 52 insertions(+), 25 deletions(-)
+ sound/core/seq/seq_fifo.c | 52 ++++++++++++++++++++++++++++-----------
+ 1 file changed, 37 insertions(+), 15 deletions(-)
 
-diff --git a/sound/core/seq/oss/seq_oss_readq.c b/sound/core/seq/oss/seq_oss_readq.c
-index bbaf72e70b3593..b7cdb1c61f2651 100644
---- a/sound/core/seq/oss/seq_oss_readq.c
-+++ b/sound/core/seq/oss/seq_oss_readq.c
-@@ -73,13 +73,17 @@ snd_seq_oss_readq_delete(struct seq_oss_readq *q)
- void
- snd_seq_oss_readq_clear(struct seq_oss_readq *q)
+diff --git a/sound/core/seq/seq_fifo.c b/sound/core/seq/seq_fifo.c
+index 91cce18901114b..81fa4320ddf6e2 100644
+--- a/sound/core/seq/seq_fifo.c
++++ b/sound/core/seq/seq_fifo.c
+@@ -101,13 +101,17 @@ int snd_seq_fifo_event_in(struct snd_seq_fifo *f,
+ 			  struct snd_seq_event *event)
  {
--	if (q->qlen) {
--		q->qlen = 0;
--		q->head = q->tail = 0;
-+	scoped_guard(spinlock_irqsave, &q->lock) {
-+		if (q->qlen) {
-+			q->qlen = 0;
-+			q->head = 0;
-+			q->tail = 0;
-+		}
-+		q->input_time = (unsigned long)-1;
+ 	struct snd_seq_event_cell *cell;
++	struct snd_seq_pool *pool;
++	bool linked;
+ 	int err;
+ 
+ 	if (snd_BUG_ON(!f))
+ 		return -EINVAL;
+ 
+ 	guard(snd_seq_fifo)(f);
+-	err = snd_seq_event_dup(f->pool, event, &cell, 1, NULL, NULL); /* always non-blocking */
++retry:
++	pool = READ_ONCE(f->pool);
++	err = snd_seq_event_dup(pool, event, &cell, 1, NULL, NULL); /* always non-blocking */
+ 	if (err < 0) {
+ 		if ((err == -ENOMEM) || (err == -EAGAIN))
+ 			atomic_inc(&f->overflow);
+@@ -115,14 +119,24 @@ int snd_seq_fifo_event_in(struct snd_seq_fifo *f,
  	}
-+
- 	/* if someone sleeping, wake'em up */
- 	wake_up(&q->midi_sleep);
--	q->input_time = (unsigned long)-1;
- }
- 
- /*
-@@ -136,11 +140,11 @@ int snd_seq_oss_readq_sysex(struct seq_oss_readq *q, int dev,
- /*
-  * copy an event to input queue:
-  * return zero if enqueued
-+ * caller must hold lock
-  */
--int
--snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
-+static int snd_seq_oss_readq_put_event_locked(struct seq_oss_readq *q,
-+					      union evrec *ev)
- {
--	guard(spinlock_irqsave)(&q->lock);
- 	if (q->qlen >= q->maxlen - 1)
- 		return -ENOMEM;
- 
-@@ -148,12 +152,27 @@ snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
- 	q->tail = (q->tail + 1) % q->maxlen;
- 	q->qlen++;
- 
--	/* wake up sleeper */
--	wake_up(&q->midi_sleep);
--
- 	return 0;
- }
- 
-+/*
-+ * copy an event to input queue:
-+ * return zero if enqueued
-+ */
-+int
-+snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
-+{
-+	int rc;
-+
-+	scoped_guard(spinlock_irqsave, &q->lock) {
-+		rc = snd_seq_oss_readq_put_event_locked(q, ev);
-+		if (!rc)
-+			wake_up(&q->midi_sleep);
+ 		
+ 	/* append new cells to fifo */
++	linked = false;
+ 	scoped_guard(spinlock_irqsave, &f->lock) {
+-		if (f->tail != NULL)
+-			f->tail->next = cell;
+-		f->tail = cell;
+-		if (f->head == NULL)
+-			f->head = cell;
+-		cell->next = NULL;
+-		f->cells++;
++		if (cell->pool == f->pool) {
++			if (f->tail)
++				f->tail->next = cell;
++			f->tail = cell;
++			if (!f->head)
++				f->head = cell;
++			cell->next = NULL;
++			f->cells++;
++			linked = true;
++		}
 +	}
 +
-+	return rc;
-+}
-+
- 
- /*
-  * pop queue
-@@ -209,23 +228,31 @@ snd_seq_oss_readq_poll(struct seq_oss_readq *q, struct file *file, poll_table *w
- int
- snd_seq_oss_readq_put_timestamp(struct seq_oss_readq *q, unsigned long curt, int seq_mode)
- {
--	if (curt != q->input_time) {
--		union evrec rec;
--		memset(&rec, 0, sizeof(rec));
--		switch (seq_mode) {
--		case SNDRV_SEQ_OSS_MODE_SYNTH:
--			rec.echo = (curt << 8) | SEQ_WAIT;
--			snd_seq_oss_readq_put_event(q, &rec);
--			break;
--		case SNDRV_SEQ_OSS_MODE_MUSIC:
--			rec.t.code = EV_TIMING;
--			rec.t.cmd = TMR_WAIT_ABS;
--			rec.t.time = curt;
--			snd_seq_oss_readq_put_event(q, &rec);
--			break;
-+	int queued = 0;
-+
-+	scoped_guard(spinlock_irqsave, &q->lock) {
-+		if (curt != q->input_time) {
-+			union evrec rec;
-+
-+			memset(&rec, 0, sizeof(rec));
-+			switch (seq_mode) {
-+			case SNDRV_SEQ_OSS_MODE_SYNTH:
-+				rec.echo = (curt << 8) | SEQ_WAIT;
-+				queued = !snd_seq_oss_readq_put_event_locked(q, &rec);
-+				break;
-+			case SNDRV_SEQ_OSS_MODE_MUSIC:
-+				rec.t.code = EV_TIMING;
-+				rec.t.cmd = TMR_WAIT_ABS;
-+				rec.t.time = curt;
-+				queued = !snd_seq_oss_readq_put_event_locked(q, &rec);
-+				break;
-+			}
-+			q->input_time = curt;
- 		}
--		q->input_time = curt;
++	if (!linked) {
++		/* Retry against the replacement pool after resize publishes it. */
++		snd_seq_cell_free(cell);
++		goto retry;
  	}
-+	if (queued)
-+		wake_up(&q->midi_sleep);
+ 
+ 	/* wakeup client */
+@@ -194,13 +208,21 @@ int snd_seq_fifo_cell_out(struct snd_seq_fifo *f,
+ void snd_seq_fifo_cell_putback(struct snd_seq_fifo *f,
+ 			       struct snd_seq_event_cell *cell)
+ {
++	bool linked = false;
 +
- 	return 0;
+ 	if (cell) {
+-		guard(spinlock_irqsave)(&f->lock);
+-		cell->next = f->head;
+-		f->head = cell;
+-		if (!f->tail)
+-			f->tail = cell;
+-		f->cells++;
++		scoped_guard(spinlock_irqsave, &f->lock) {
++			if (cell->pool == f->pool) {
++				cell->next = f->head;
++				f->head = cell;
++				if (!f->tail)
++					f->tail = cell;
++				f->cells++;
++				linked = true;
++			}
++		}
++		if (!linked)
++			snd_seq_cell_free(cell);
+ 	}
  }
  
+@@ -237,7 +259,7 @@ int snd_seq_fifo_resize(struct snd_seq_fifo *f, int poolsize)
+ 		oldpool = f->pool;
+ 		oldhead = f->head;
+ 		/* exchange pools */
+-		f->pool = newpool;
++		WRITE_ONCE(f->pool, newpool);
+ 		f->head = NULL;
+ 		f->tail = NULL;
+ 		f->cells = 0;
 -- 
 2.53.0
 
