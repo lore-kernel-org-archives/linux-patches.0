@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E743FE356;
-	Tue, 21 Jul 2026 19:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741A046EC75;
+	Tue, 21 Jul 2026 19:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661587; cv=none; b=EayBR61T2fM24hQiM9VsJ3iYMt0K6Jddc6SKjfXjnwbT88JxOHJ0hD/QtV4Xa9s0f9oLfUaRcrpU6neJQmih9LztSxah3g1+IAs3H0Va40gLNSkL2sr47wsjJkHCGex0AD+UGGvDptcRyXoz+wAqOy04UI7im268TWtSWy1DT7I=
+	t=1784661588; cv=none; b=kT2Nt6CI0k8gwGjSuW3YhUUYl+n3MESWRsyRfd8ZeArAxVfTF/WF5Cqh2e24SzRSyO/u1kcKp0GF3J6OECCO4wxTbEj0tDsMr9bf69ZhMNZNbVsMxmlwVn70jEO9Y/BFTnn9y3qwBRB/ZlO3R/2M75VGqekPmbmTfo7CqMb4ZT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661587; c=relaxed/simple;
-	bh=xSwMPSvjkbb0/jZgyxenw6mChg8I7W/4WBc94hoKoU0=;
+	s=arc-20240116; t=1784661588; c=relaxed/simple;
+	bh=vEYiFkFcTU5RR0G297At5PWT0FbrSp8OURRsrAQ6BAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b4O79RHebK7OoY9wxjhTuz5IiTN78D130/5Zy/jfE7dXtYeXPSoe7Ln76Mp6zIFn88kGYSbhEB7noxB6sUqoUNseHX9VciYhfGVaxIlBFbQ+niLlZKBgYEDaPRwyyU/yWXaQE0hGH5lAbw6jV9ohLsh95a4RCuXxGJdH9R7twdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BcDib4Rr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y1+YXp62upyGjAOr4yJ1FXykO+pNgojemtlu+EMYR7gLd2Ni3jCs15J/nXDuB5CDxlcMBSnfRQ6Dy2ArDvZBo2ckqzpI2nYyvgUnNDZiGc5Nl/fwSYMhKPi0gFPWauHTr7iOQuR4fw07s+a4OTzUXUYIg9HWG0eqtvS1dhZisyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NyKUOgUg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BcDib4Rr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C1071F000E9;
-	Tue, 21 Jul 2026 19:19:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NyKUOgUg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE9C1F00A3A;
+	Tue, 21 Jul 2026 19:19:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661582;
-	bh=ybddiorq022y/v0YmjoNqCA0mpwLwSZxH2l+ippAUeI=;
+	s=korg; t=1784661587;
+	bh=CIsmNiiMZ1CxupjijV8ZzTkuwjFcUbz/4LmuJTMDN1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BcDib4RrFZY2eH8UOjlaf5PVZgTkpsYHtqhb1k7cLCW9jhwKYRo+CCUnO9RAQZhBQ
-	 lC/tecZbCVN7Fl3b/SfP8ynJz0lPYGKD6pSC9aknRtvmCaQstcXwxRNFEEEGXNyo9v
-	 liox9KD97uMn4os9VCJYlAOlntJ3RnHlK1TRxLjs=
+	b=NyKUOgUgKVMRymhoWfdsrJTbQHGJ7wiXWwhr7sK1c/+s+RDYDNoXibnZIn5Iqgv02
+	 jfVnhPAu2n9Urs2qmMImWUC6BuJOcyVRp9wNwIruD1ycqjigmUOV35Cyc5QoBBSw2Q
+	 QF6QOTWNoEMSckn80yfgY7l5XF73DmCeWAzWsHe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0120/1276] ipv6: addrconf: bail out of dad_failure when state is no longer POSTDAD
-Date: Tue, 21 Jul 2026 17:09:23 +0200
-Message-ID: <20260721152448.788051112@linuxfoundation.org>
+Subject: [PATCH 6.12 0122/1276] RDMA/hns: Fix arithmetic overflow in calc_hem_config()
+Date: Tue, 21 Jul 2026 17:09:25 +0200
+Message-ID: <20260721152448.834313004@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,88 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>
 
-[ Upstream commit 627ac78f2741e2ebd2225e2e953b6964a8a9182f ]
+[ Upstream commit a38e4410af9ad8b7ad2217254da06cd4dc21f0ed ]
 
-addrconf_dad_failure() transitions ifp->state from DAD to POSTDAD
-via addrconf_dad_end(), which drops ifp->lock on return.  The lock
-is re-acquired after net_info_ratelimited().  A concurrent
-ipv6_del_addr() can take the lock in that window, set ifp->state
-to DEAD and run list_del_rcu(&ifp->if_list).
+If bt_num is 3 or 2, then the expressions like
+l0_idx * chunk_ba_num + l1_idx are computed in 32-bit
+arithmetic before being assigned to a u64 index field,
+which can lead to overflow.
 
-addrconf_dad_failure() then overwrites DEAD with ERRDAD at errdad:
-and schedules a new dad_work.  The work calls ipv6_del_addr()
-again, hitting the already-poisoned list entry:
+Cast the first operand to u64 to ensure the arithmetic
+is performed in 64-bit.
 
-  general protection fault: 0000 [#1] SMP NOPTI
-  CPU: 4 PID: 217 Comm: kworker/4:1
-  Workqueue: ipv6_addrconf addrconf_dad_work
-  RIP: 0010:ipv6_del_addr+0xe9/0x280
-  RAX: dead000000000122
-  Call Trace:
-   addrconf_dad_stop+0x113/0x140
-   addrconf_dad_work+0x28c/0x430
-   process_one_work+0x1eb/0x3b0
-   worker_thread+0x4d/0x400
-   kthread+0x104/0x140
-   ret_from_fork+0x35/0x40
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fold the addrconf_dad_end() logic into addrconf_dad_failure() under
-a single ifp->lock critical section.  The STABLE_PRIVACY branch
-temporarily drops ifp->lock around address regeneration, so at
-lock_errdad: verify the state is still POSTDAD before transitioning
-to ERRDAD; bail out otherwise to avoid overwriting a state set by
-another path while the lock was released.
-
-Fixes: c15b1ccadb32 ("ipv6: move DAD and addrconf_verify processing to workqueue")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260513025509.3776405-1-lilinmao@kylinos.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2f49de21f3e9 ("RDMA/hns: Optimize mhop get flow for multi-hop addressing")
+Signed-off-by: Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>
+Link: https://patch.msgid.link/20260413091527.39990-1-Alexander.Chesnokov@kaspersky.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hem.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index c6fcdb60dfee14..522b05201c3e98 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -2162,16 +2162,18 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
- 	struct net *net = dev_net(idev->dev);
- 	int max_addresses;
- 
--	if (addrconf_dad_end(ifp)) {
-+	spin_lock_bh(&ifp->lock);
-+
-+	if (ifp->state != INET6_IFADDR_STATE_DAD) {
-+		spin_unlock_bh(&ifp->lock);
- 		in6_ifa_put(ifp);
- 		return;
- 	}
-+	ifp->state = INET6_IFADDR_STATE_POSTDAD;
- 
- 	net_info_ratelimited("%s: IPv6 duplicate address %pI6c used by %pM detected!\n",
- 			     ifp->idev->dev->name, &ifp->addr, eth_hdr(skb)->h_source);
- 
--	spin_lock_bh(&ifp->lock);
--
- 	if (ifp->flags & IFA_F_STABLE_PRIVACY) {
- 		struct in6_addr new_addr;
- 		struct inet6_ifaddr *ifp2;
-@@ -2219,6 +2221,11 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
- 		in6_ifa_put(ifp2);
- lock_errdad:
- 		spin_lock_bh(&ifp->lock);
-+		if (ifp->state != INET6_IFADDR_STATE_POSTDAD) {
-+			spin_unlock_bh(&ifp->lock);
-+			in6_ifa_put(ifp);
-+			return;
-+		}
- 	}
- 
- errdad:
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
+index 3d479c63b117a9..1680d0ac071ed1 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hem.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
+@@ -314,14 +314,14 @@ static int calc_hem_config(struct hns_roce_dev *hr_dev,
+ 	bt_num = hns_roce_get_bt_num(table->type, mhop->hop_num);
+ 	switch (bt_num) {
+ 	case 3:
+-		index->l1 = l0_idx * chunk_ba_num + l1_idx;
++		index->l1 = (u64)l0_idx * chunk_ba_num + l1_idx;
+ 		index->l0 = l0_idx;
+-		index->buf = l0_idx * chunk_ba_num * chunk_ba_num +
+-			     l1_idx * chunk_ba_num + l2_idx;
++		index->buf = (u64)l0_idx * chunk_ba_num * chunk_ba_num +
++					 (u64)l1_idx * chunk_ba_num + l2_idx;
+ 		break;
+ 	case 2:
+ 		index->l0 = l0_idx;
+-		index->buf = l0_idx * chunk_ba_num + l1_idx;
++		index->buf = (u64)l0_idx * chunk_ba_num + l1_idx;
+ 		break;
+ 	case 1:
+ 		index->buf = l0_idx;
 -- 
 2.53.0
 
