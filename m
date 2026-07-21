@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2BF44AB71;
-	Tue, 21 Jul 2026 21:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1821F44AB8E;
+	Tue, 21 Jul 2026 21:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668188; cv=none; b=N0V6Aopd8b0/dnI+ED55fy9p6BFX8z5mQ1lDy3bIZd5iv5IO5YdNxATVBuWPJHOrwyUHno7ukiXaJTu5uvtDguu3XCyJXm+8VcMjhc1PQK9kJsreKoOGFwMJSt6TGPkpBl5q2Emq8NlqJdsjwRVLZMQ67OdDoH53MW3RZ02D9hk=
+	t=1784668191; cv=none; b=knmpv2t4NbVabkwoMK9hGq8uzyWqeVBAZgt62V3GqI6WpRkr5w2Isybl965hHmM4l0ZUdW1VJnrmkdhoaCDeMZjjoRljJMZbee1ndDujPUetHccsdIZVgo+4uLfGL9pohu2hct3rUHtC7a6UaFfwH5Tcqwl0llM+8dRzWguTXdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668188; c=relaxed/simple;
-	bh=+/RG/uyg83bgg6QZYeR/sw4Z7xWML4RvweH9njYRo7k=;
+	s=arc-20240116; t=1784668191; c=relaxed/simple;
+	bh=SG85vDkytGqBM9PWBcAZyz5OcZWZLlUyikI9/4fJLvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DbWS+G4klPAkcCPOTBe57HPzMYAedkIc3PJeM6tzwGplhsqmDTmB6gh/PgjJFv7OkTQkfdYqDOBIMq1E0fsT160jL/498VtJov/vZ5GRyaYidKGGG4+p6+4FydsKgwwAw9+rqDhrmuhasAhzi3GBDUWurx74VasrXrYM53E/zJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMBycnHJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OkcaU4KIxzcJq+1Mq7ot2BlJ5YMruGsREtNqcjzRBcstkiA5eHUMun/lpcZf3bsiQqQj18lqrzpnD31MPNNZYLSYiKXccRIIlYur1jmKi2hbiGyChgPVPCsmmpiKY+4Kq7QoWEyfxMQ3eRb0/e7YqfWPJTenHBQFNL/l2L3VoOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQISZwHT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMBycnHJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9D31F000E9;
-	Tue, 21 Jul 2026 21:09:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQISZwHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790851F000E9;
+	Tue, 21 Jul 2026 21:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668187;
-	bh=1jyXAVcvW2iBEZJH4I8HmgO8bjzNZa6Y5at8ffXLac8=;
+	s=korg; t=1784668190;
+	bh=OSyzUVkEI1LPmS92s/aHz00aLue1UsFC2Z6LRbQfPPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sMBycnHJfCKABi34TONcZmkGqEyA7PDY4n027M2ag7Y/iGHecBTFHPur/F/nj3Ii4
-	 qzBs2t4xbwTIn2+PzgIZ/e0lsIw55hGZViCZiSOF78nzWi2WbKONLjEJ73qYyn1gSt
-	 /nfi1xQzDi2G0SOhAUlFqDkrdqnQoWIuO7skXd74=
+	b=aQISZwHTOlpKRwHEZ8PkDxlGrcSlhJH7c6RWTuJ45+uyJ9IEJlgzqV8NOUuZLsTZ2
+	 SZ/BtzfotMJ+0eVGCqQVti8Ut42jt55T9UH9Ah3TyBCxXvyPzyI6QKbAkmBs2NVuyk
+	 4h7ryl9VkGeHNkqZDriQfYsi3dHYChIOruxZYvqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.1 0054/1067] iio: accel: bmc150: clamp the device-reported FIFO frame count
-Date: Tue, 21 Jul 2026 17:10:55 +0200
-Message-ID: <20260721152425.774661325@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 0081/1067] ALSA: usb-audio: Propagate errors in scarlett_ctl_enum_put()
+Date: Tue, 21 Jul 2026 17:11:22 +0200
+Message-ID: <20260721152426.386357363@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -44,70 +44,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit ce0e1cae26096fe959a0da5563a6d6d5a801d5fb upstream.
+commit 0f25cf1f02e3dba626791d949c759a48c0a44996 upstream.
 
-__bmc150_accel_fifo_flush() copies the number of samples the device
-reports in its hardware FIFO into an on-stack buffer
+scarlett_ctl_enum_put() ignores the return value from
+snd_usb_set_cur_mix_value() and reports success whenever the
+requested enum value differs from the current one.
 
-	u16 buffer[BMC150_ACCEL_FIFO_LENGTH * 3];
+If the SET_CUR request fails, the callback still returns success even
+though neither the hardware state nor the cached mixer value changed.
 
-which is sized for at most BMC150_ACCEL_FIFO_LENGTH (32) samples. The
-frame count is read from the FIFO_STATUS register and only masked to its
-7 valid bits:
-
-	count = val & 0x7F;
-
-so it can be 0..127. The only other limit applied to it is the optional
-caller-supplied sample budget:
-
-	if (samples && count > samples)
-		count = samples;
-
-which does not constrain count on the flush-all path (samples == 0), and
-leaves it well above 32 whenever samples is larger. count samples are
-then transferred into buffer[]:
-
-	bmc150_accel_fifo_transfer(data, (u8 *)buffer, count);
-
-bmc150_accel_fifo_transfer() reads count * 6 bytes through regmap, so a
-malfunctioning, malicious or counterfeit accelerometer (or an attacker
-tampering with the I2C/SPI bus) that reports up to 127 frames writes up
-to 762 bytes into the 192-byte buffer: a stack out-of-bounds write of up
-to 570 bytes that clobbers the stack canary, saved registers and the
-return address.
-
-Clamp count to BMC150_ACCEL_FIFO_LENGTH, the number of samples buffer[]
-is sized for, before the transfer, mirroring the watermark clamp already
-done in bmc150_accel_set_watermark(). A well-formed flush reports at most
-BMC150_ACCEL_FIFO_LENGTH frames, so legitimate devices are unaffected.
-
-Fixes: 3bbec9773389 ("iio: bmc150_accel: add support for hardware fifo")
+Fixes: 76b188c4b370 ("ALSA: usb-audio: Scarlett mixer interface for 6i6, 18i6, 18i8 and 18i20")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-2-5a3bd4a673ae@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/bmc150-accel-core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/usb/mixer_scarlett.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/accel/bmc150-accel-core.c
-+++ b/drivers/iio/accel/bmc150-accel-core.c
-@@ -1050,6 +1050,8 @@ static int __bmc150_accel_fifo_flush(str
- 	if (samples && count > samples)
- 		count = samples;
- 
-+	count = min_t(u8, count, BMC150_ACCEL_FIFO_LENGTH);
-+
- 	ret = bmc150_accel_fifo_transfer(data, (u8 *)buffer, count);
- 	if (ret)
- 		return ret;
+--- a/sound/usb/mixer_scarlett.c
++++ b/sound/usb/mixer_scarlett.c
+@@ -438,7 +438,9 @@ static int scarlett_ctl_enum_put(struct
+ 	val = ucontrol->value.integer.value[0];
+ 	val = val + opt->start;
+ 	if (val != oval) {
+-		snd_usb_set_cur_mix_value(elem, 0, 0, val);
++		err = snd_usb_set_cur_mix_value(elem, 0, 0, val);
++		if (err < 0)
++			return err;
+ 		return 1;
+ 	}
+ 	return 0;
 
 
