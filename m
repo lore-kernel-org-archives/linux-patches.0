@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82418284662;
-	Tue, 21 Jul 2026 19:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262E242FCBC;
+	Tue, 21 Jul 2026 19:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663256; cv=none; b=h3ggfLXqgzClVXoYFtuTVCwgN+UlTZ+CgCZef+NtSrAwf1u5y/e3T47btKBRuX3ZQoEP/b+O292TUvPy3Oi8xGtsDqiQSm06V9NVsrk1E5bS8CgHrkWcU8C5zufrkHea/kAri6hpzWVJDoWDeano2yTSYIcExwVnlvAWrul4fqE=
+	t=1784663259; cv=none; b=bEU6AKKsjB0wKqiZlVF8x2v0vb+HhcjVvn3GB8+cIyt6oQe6nBC7qji59nYSY6CFWtcPBGM490IyJP9czXlU8pijOPCgtJBqGOJjU/ul148fyvxnDBGjoJAGx8uvMxxUsbT2UR8pjLUa3nmdADlD25rSu30cJsOxr8RmBINVzS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663256; c=relaxed/simple;
-	bh=ZvD22Yje6F9aYY1ULSm7lCtSL9RsMCvMPs2BlzdcGt8=;
+	s=arc-20240116; t=1784663259; c=relaxed/simple;
+	bh=zj0GWjXq/c5Ze4UdfMfApQHpfcnnWmlnl/IdYAgiFGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eRqRLnFvZSK4cNrCyFuvUFItAxTC0f6lNwFuj/YIiDe7j726nTL7g51ffrDW4+M+RWbAc9gbTnWkWZlva6zaSbGhaap+oF+qqet5OJ+s/wsRGkZTxjhdmqWss/V6Xic22hXMfhmsNKAm81U0BWO1uj4yrpAigXpLDdj4Jbu5eRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLzYBqZx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DPC4VD2gv1BjnoNoRuOtJBMEhaYBCsMD4S17yZep15YipCzfdE9Gd67j5469U3HusgyrWXRNYjOyuseVZucymj93Hi0ZFhvHftzvTmxaO8qXlmRjJdhwu72jS624NUMQdwkFvAQMuKJUpJSPMhAGc2/oZdAv9i8uRdidP7BrQoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zgMPSVQq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLzYBqZx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2B41F000E9;
-	Tue, 21 Jul 2026 19:47:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zgMPSVQq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C5B11F000E9;
+	Tue, 21 Jul 2026 19:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663255;
-	bh=65iu+fvv6zg80Z2TEtDP0fDG9xB3qx2rnoHkZO/RyA8=;
+	s=korg; t=1784663258;
+	bh=PT8tPQ9RLtc4pYTHNA8RzL0AUc2ThlJg3rlAjN7tyB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bLzYBqZxvYWoG0KG0AbvgjMGGA+6I2rBc2wyJ09UWl6zhZbAZ8ZJ16MucpdBrOaFE
-	 Xe2vVWlSXZo19F8x8i88IlRUDsxuWMltA88Os3xrsCJ7GdwPEAt/a1UyoTyDzBSHjJ
-	 K1lnzZCngMXfszWzKR5Yc3cRBGNt4AHuw2DxjtFU=
+	b=zgMPSVQq714FDRq/wBuUXUgIB43b2GVxbs5AN24vvHALIEL5F5Oy6TLIFm7DYMvrV
+	 54Yx+rgPKTkfqvi1TuaF2Q7pCsBEZF4qXMRCEpJGyEUcqAI02XWYnDVqZQhFh2q8Gz
+	 AcjBEhcLPg00G3hrfk7j9jCQ9f0f52pmo8AOhTIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	David Hildenbrand <david@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Ben Hutchings <ben@decadent.org.uk>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0755/1276] arm64/mm: Optimize TLB flush in unmap_hotplug_[pmd|pud]_range()
-Date: Tue, 21 Jul 2026 17:19:58 +0200
-Message-ID: <20260721152502.972518391@linuxfoundation.org>
+Subject: [PATCH 6.12 0738/1276] afs: Fix callback service message parsers to pass through -EAGAIN
+Date: Tue, 21 Jul 2026 17:19:41 +0200
+Message-ID: <20260721152502.596883499@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -57,67 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit ff4c5a0de1f2ef7737a8688a86e19301e567020d ]
+[ Upstream commit 0f36469d7ce98b362934113c550d08bb0c784231 ]
 
-Commit 48478b9f7913 ("arm64/mm: Enable batched TLB flush in
-unmap_hotplug_range") inadvertently introduced redundant TLB
-invalidation when clearing a block entry, resulting in unnecessary
-broadcast invalidation on CPUs without support for range-based
-invalidation.
+The AFS filesystem client uses an rxrpc server to listen for callback
+notifications.  Each callback call type handler has a delivery function
+that parses the incoming request stream, and this should return -EAGAIN the
+last packet hasn't yet been seen, but all currently queued received data is
+consumed.  afs_extract_data() does this, but the -EAGAIN return is switched
+to 0 inadvertantly
 
-Re-introduce the old behaviour, along with some expanded comments to
-help people working in this area next time around.
+Fix callback service message parsers to pass through -EAGAIN
 
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Reported-by: Ben Hutchings <ben@decadent.org.uk>
-Closes: https://lore.kernel.org/all/b0d5836032ce3135bfc473f6bff791306d086925.camel@decadent.org.uk/
-Fixes: 48478b9f7913 ("arm64/mm: Enable batched TLB flush in unmap_hotplug_range()")
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-[will: Reword comments and commit message]
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: d001648ec7cf ("rxrpc: Don't expose skbs to in-kernel users [ver #2]")
+Closes: https://sashiko.dev/#/patchset/20260609081738.770127-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260622090856.2746629-14-dhowells@redhat.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/mmu.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/afs/cmservice.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
-index 872227e4fada7f..2b5e0ccc0af555 100644
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -900,7 +900,13 @@ static void unmap_hotplug_pmd_range(pud_t *pudp, unsigned long addr,
- 			if (free_mapped) {
- 				/* CONT blocks are not supported in the vmemmap */
- 				WARN_ON(pmd_cont(pmd));
--				flush_tlb_kernel_range(addr, addr + PMD_SIZE);
-+				/*
-+				 * Invalidating a block entry requires just
-+				 * a single overlapping TLB invalidation,
-+				 * so limit the range of the flush to a single
-+				 * page.
-+				 */
-+				flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
- 				free_hotplug_page_range(pmd_page(pmd),
- 							PMD_SIZE, altmap);
- 			}
-@@ -930,7 +936,8 @@ static void unmap_hotplug_pud_range(p4d_t *p4dp, unsigned long addr,
- 		if (pud_sect(pud)) {
- 			pud_clear(pudp);
- 			if (free_mapped) {
--				flush_tlb_kernel_range(addr, addr + PUD_SIZE);
-+				/* See comment in unmap_hotplug_pmd_range(). */
-+				flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
- 				free_hotplug_page_range(pud_page(pud),
- 							PUD_SIZE, altmap);
- 			}
+diff --git a/fs/afs/cmservice.c b/fs/afs/cmservice.c
+index 99a3f20bc78691..0638cab00c6182 100644
+--- a/fs/afs/cmservice.c
++++ b/fs/afs/cmservice.c
+@@ -391,7 +391,6 @@ static int afs_deliver_cb_init_call_back_state3(struct afs_call *call)
+ 		ret = afs_extract_data(call, false);
+ 		switch (ret) {
+ 		case 0:		break;
+-		case -EAGAIN:	return 0;
+ 		default:	return ret;
+ 		}
+ 
+@@ -504,7 +503,6 @@ static int afs_deliver_cb_probe_uuid(struct afs_call *call)
+ 		ret = afs_extract_data(call, false);
+ 		switch (ret) {
+ 		case 0:		break;
+-		case -EAGAIN:	return 0;
+ 		default:	return ret;
+ 		}
+ 
 -- 
 2.53.0
 
