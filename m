@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA233E3DB4;
-	Tue, 21 Jul 2026 17:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AAA37A821;
+	Tue, 21 Jul 2026 17:09:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653794; cv=none; b=ezZmTASFmDANQHBnz8Vy+JEBrSVCmriTyGnWLBSkhCwz28d8BWmVjkNJ6hFazGkoGV9tmACTwDhF7vgXtq3p+iw9lUsQyrKUEUT5ATYzIAiHdgyyg8DNRV0EqmIcuzeBgbegkymEanUO58KHvv5fhAGv8ry8sMCZajMmfZU/UmE=
+	t=1784653796; cv=none; b=oWYQGG0phhJjDcl5QuAgS4HiYiUvbNBWno8oGgDvOfNHruQLf3rNZrW5xOuDuxIFPKy1FZTtg3aMiWpnan5xXwy7D2AaHo+EqWdj+YSyV+zlFLGfgUtaFYh5NncbneylQXAAAVnnIKdLc5GyML6oHuzSrZWgzYbBztnsPGFw25k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653794; c=relaxed/simple;
-	bh=VMUdYbT8ipwZGVjEUxqOP8vaXKnpDhNjcGC2tk4Wcp0=;
+	s=arc-20240116; t=1784653796; c=relaxed/simple;
+	bh=12i8JXvim1JI2raSFqA/k3UGLV82KHnn4/VLndMt8lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=swKt3tyjaEce79OrGH6wkIiGPCQPO/494ClpsNFoedvMKwW3gA9bsS7WoMsNlkWYFiLHrebTeSaGGh0zim2rDWgapM3Kpf3YLexNxRMW47pfHWEfd6kaNp0/JPiKNU//VxRZCoXuLCDX8HVJ0etVT7ZzJfrxcIVJjYuWPMnO0ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kvMNMbtc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VvIwol3vu4J9yN5D3vCGODH4KR5ngqXkxjx8FCQDmOz/NE1QfXxzkrNPZFZBDj1TIM56uIsigsXbx0r69PdJPaz6HkC8Whboou17biPwBHtC0N8Zikeq39y/fuvT+JF4IY3voPk+15M4YQ6oAlbvgh7LUulFXr85NmbHWmpbf8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhIAis8A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kvMNMbtc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3841F000E9;
-	Tue, 21 Jul 2026 17:09:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhIAis8A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E471F000E9;
+	Tue, 21 Jul 2026 17:09:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653792;
-	bh=hbf5yAavfBSH1RAvVMIBm6Vs8vKvJQvY7WYyBuc73ho=;
+	s=korg; t=1784653795;
+	bh=OEx6J8ad4p/TOF6a/4/jg3zfYjU1DdUjMvstRqIUOJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kvMNMbtcQi2QBClEaI6PFrqYI4Y5tWY86x4HPVwTocrRFJR2QhcmsEQ6Zjr0AeVoq
-	 yHt8O2SamcVokoiqQngvXl4EHh5iGsuAwi5NqLrjFIvN/mgfCqfIofTQiwH8ZhTULn
-	 FGIv9RSDdG9g91WiH7ojVFBP8fbiUAdhiiO5UI+I=
+	b=lhIAis8A7N2YAbBs+aXYDhrkkdUuLL0lrS8ih4c/TZR3P8+DU6WZa0P3hBKIXzb0x
+	 6PrpC9JlA3kp1LY5XbMZwTb5VMuM3Gs4nwHUmOgYdXXfThBjXFc6RN77sxxxCc83sK
+	 b5S6voaszmgmn8AdZ/nQKepmu5WMOoXTWSXk7my0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ravindra <ravindra@intel.com>,
 	Kiran K <kiran.k@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1460/2077] Bluetooth: btintel_pcie: Add support for smart trigger dump
-Date: Tue, 21 Jul 2026 17:18:53 +0200
-Message-ID: <20260721152627.233811761@linuxfoundation.org>
+Subject: [PATCH 7.1 1461/2077] Bluetooth: btintel_pcie: Separate coredump work from RX work
+Date: Tue, 21 Jul 2026 17:18:54 +0200
+Message-ID: <20260721152627.257682887@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,335 +52,308 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiran K <kiran.k@intel.com>
+From: Ravindra <ravindra@intel.com>
 
-[ Upstream commit 975a70ff0aec8a2be0d633113f781b301db4a816 ]
+[ Upstream commit f70f7f2512c6b9113dc78f6a25361166afd1412e ]
 
-Based on the debug configuration, firmware can raise MSI-X interrupt with
-firmware trigger cause bit set on specific events like Disconnection,
-Connection Timeout, Page Timeout etc.
+Sharing a single workqueue between coredump processing and RX
+delays evacuation of RX events while a coredump is in progress.
+The firmware's RX buffers can overflow during that window, leading
+to dropped events. The issue was observed in HID use cases where
+HID reports arrive in bursts and quickly fill the RX path while a
+coredump is being collected.
 
-Upon receiving an MSI-X interrupt with the firmware trigger cause bit
-set, the driver performs the following actions:
+Move coredump processing to a dedicated ordered coredump_workqueue
+with its own coredump_work, so coredumps run independently of RX.
+All four coredump trigger sources (FW assert, HW exception, user
+sysfs trigger, and resume-error detection) are switched to this new
+workqueue. Ordering serialises concurrent triggers without blocking
+RX.
 
-1. Reads Device Memory: Retrieves data from the device memory,
-   constructs an HCI diagnostic event, and sends it to the monitor. This
-   event includes details about the trigger, such as connection timeout or
-   page timeout.
-
-2. Dumps Device Coredump: Generates a coredump containing firmware
-   traces for further analysis.
-
-The coredump can be retrieved using:
-
-  $ cat /sys/class/devcoredump/devcd*/data > /tmp/btintel_coredump.bin
-
-HCI traces:
-= Vendor Diagnostic (len 12)
-        a5 a5 a5 a5 01 03 00 23 00 01 00 00
-
+Signed-off-by: Ravindra <ravindra@intel.com>
 Signed-off-by: Kiran K <kiran.k@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Stable-dep-of: 9c36951474d8 ("Bluetooth: btintel_pcie: Refactor FLR to use device_reprobe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.h      |   1 +
- drivers/bluetooth/btintel_pcie.c | 164 +++++++++++++++++++++++++++++++
- drivers/bluetooth/btintel_pcie.h |  10 +-
- 3 files changed, 174 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btintel_pcie.c | 102 +++++++++++++++++++++++++------
+ drivers/bluetooth/btintel_pcie.h |   5 ++
+ 2 files changed, 87 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel.h b/drivers/bluetooth/btintel.h
-index 182d66637a51d9..37d93abdd5a377 100644
---- a/drivers/bluetooth/btintel.h
-+++ b/drivers/bluetooth/btintel.h
-@@ -53,6 +53,7 @@ struct intel_tlv {
- } __packed;
- 
- #define BTINTEL_HCI_OP_RESET	0xfc01
-+#define BTINTEL_HCI_OP_DEBUG	0xfcd9
- 
- #define BTINTEL_CNVI_BLAZARI		0x900	/* BlazarI - Lunar Lake */
- #define BTINTEL_CNVI_BLAZARIW		0x901	/* BlazarIW - Wildcat Lake */
 diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index bbd5a2105209bf..bd984751cc1a11 100644
+index bd984751cc1a11..fd1b2045aa2c7b 100644
 --- a/drivers/bluetooth/btintel_pcie.c
 +++ b/drivers/bluetooth/btintel_pcie.c
-@@ -145,6 +145,22 @@ struct btintel_pcie_dbgc_ctxt {
- 	struct btintel_pcie_dbgc_ctxt_buf bufs[BTINTEL_PCIE_DBGC_BUFFER_COUNT];
- };
+@@ -1444,7 +1444,7 @@ static void btintel_pcie_msix_fw_trigger_handler(struct btintel_pcie_data *data)
+ 	if (!test_and_set_bit(BTINTEL_PCIE_COREDUMP_INPROGRESS, &data->flags))
+ 		data->dmp_hdr.trigger_reason = BTINTEL_PCIE_TRIGGER_REASON_FW_ASSERT;
  
-+struct btintel_pcie_trigger_evt {
-+	u8 type;
-+	u8 len;
-+	__le32 addr;
-+	__le32 size;
-+} __packed;
-+
-+struct btintel_pcie_fwtrigger_evt {
-+	__le32 reserved;
-+	u8	type; /* Debug Trigger event */
-+	__le16	len;
-+	u8	event_type;
-+	__le16	event_id;
-+	__le16	reserved2;
-+} __packed;
-+
- static LIST_HEAD(btintel_pcie_recovery_list);
- static DEFINE_SPINLOCK(btintel_pcie_recovery_lock);
- 
-@@ -718,6 +734,11 @@ static int btintel_pcie_read_dram_buffers(struct btintel_pcie_data *data)
- 		sizeof(*tlv) + strlen(vendor) +
- 		sizeof(*tlv) + strlen(driver);
- 
-+	if (data->dmp_hdr.event_type && data->dmp_hdr.event_id) {
-+		data_len += sizeof(*tlv) + sizeof(data->dmp_hdr.event_type);
-+		data_len += sizeof(*tlv) + sizeof(data->dmp_hdr.event_id);
-+	}
-+
- 	/*
- 	 * sizeof(u32) - signature
- 	 * sizeof(data_len) - to store tlv data size
-@@ -761,6 +782,17 @@ static int btintel_pcie_read_dram_buffers(struct btintel_pcie_data *data)
- 	p = btintel_pcie_copy_tlv(p, BTINTEL_CNVI_TOP, &data->dmp_hdr.cnvi_top,
- 				  sizeof(data->dmp_hdr.cnvi_top));
- 
-+	if (data->dmp_hdr.event_type && data->dmp_hdr.event_id) {
-+		p = btintel_pcie_copy_tlv(p, BTINTEL_EVENT_TYPE,
-+					  &data->dmp_hdr.event_type,
-+					  sizeof(data->dmp_hdr.event_type));
-+		p = btintel_pcie_copy_tlv(p, BTINTEL_EVENT_ID,
-+					  &data->dmp_hdr.event_id,
-+					  sizeof(data->dmp_hdr.event_id));
-+		data->dmp_hdr.event_type = 0;
-+		data->dmp_hdr.event_id = 0;
-+	}
-+
- 	memcpy(p, dbgc->bufs[0].data, dbgc->count * BTINTEL_PCIE_DBGC_BUFFER_SIZE);
- 	dev_coredumpv(&hdev->dev, pdata, dump_size, GFP_KERNEL);
- 	return 0;
-@@ -1348,6 +1380,73 @@ static void btintel_pcie_read_hwexp(struct btintel_pcie_data *data)
- 	kfree(buf);
+-	queue_work(data->workqueue, &data->rx_work);
++	queue_work(data->coredump_workqueue, &data->coredump_work);
  }
  
-+static int btintel_pcie_dump_fwtrigger_event(struct btintel_pcie_data *data)
-+{
-+	struct btintel_pcie_fwtrigger_evt *evt;
-+	struct sk_buff *skb;
-+	unsigned int len;
-+	int err;
-+	u8 *buf;
-+
-+	if (!data->debug_evt_size || !data->debug_evt_addr)
-+		return -EINVAL;
-+
-+	len = data->debug_evt_size;
-+
-+	len = ALIGN_DOWN(len, 4);
-+
-+	if (len < sizeof(*evt) || len > HCI_MAX_EVENT_SIZE) {
-+		bt_dev_err(data->hdev, "Invalid FW trigger data size (%u bytes)", len);
-+		return -EINVAL;
-+	}
-+
-+	buf = kzalloc(len, GFP_KERNEL);
-+	if (!buf)
-+		return -ENOMEM;
-+
-+	btintel_pcie_mac_init(data);
-+
-+	err = btintel_pcie_read_device_mem(data, buf, data->debug_evt_addr,
-+					   len);
-+	if (err)
-+		goto exit_on_error;
-+
-+	evt = (void *)buf;
-+	data->dmp_hdr.event_type = evt->event_type;
-+	data->dmp_hdr.event_id = le16_to_cpu(evt->event_id);
-+
-+	bt_dev_dbg(data->hdev, "event type: 0x%2.2x event id: 0x%4.4x len: %u",
-+		   data->dmp_hdr.event_type, data->dmp_hdr.event_id, len);
-+
-+	skb = bt_skb_alloc(len, GFP_KERNEL);
-+	if (!skb) {
-+		err = -ENOMEM;
-+		goto exit_on_error;
-+	}
-+	skb_put_data(skb, buf, len);
-+
-+	hci_recv_diag(data->hdev, skb);
-+	err = 0;
-+
-+exit_on_error:
-+	kfree(buf);
-+	return err;
-+}
-+
-+static void btintel_pcie_msix_fw_trigger_handler(struct btintel_pcie_data *data)
-+{
-+	bt_dev_dbg(data->hdev, "Received firmware smart trigger cause");
-+
-+	if (test_and_set_bit(BTINTEL_PCIE_FWTRIGGER_DUMP_INPROGRESS, &data->flags))
+ static void btintel_pcie_msix_hw_exp_handler(struct btintel_pcie_data *data)
+@@ -1461,16 +1461,21 @@ static void btintel_pcie_msix_hw_exp_handler(struct btintel_pcie_data *data)
+ 	if (!test_and_set_bit(BTINTEL_PCIE_COREDUMP_INPROGRESS, &data->flags))
+ 		data->dmp_hdr.trigger_reason = BTINTEL_PCIE_TRIGGER_REASON_FW_ASSERT;
+ 
+-	queue_work(data->workqueue, &data->rx_work);
++	queue_work(data->coredump_workqueue, &data->coredump_work);
+ }
+ 
+-static void btintel_pcie_rx_work(struct work_struct *work)
++static void btintel_pcie_coredump_worker(struct work_struct *work)
+ {
+ 	struct btintel_pcie_data *data = container_of(work,
+-					struct btintel_pcie_data, rx_work);
+-	struct sk_buff *skb;
++					struct btintel_pcie_data, coredump_work);
+ 	int err;
+ 
++	/* hdev is NULL until setup_hdev() succeeds, and is cleared on
++	 * teardown after disable_work_sync() drains us; bail in that case.
++	 */
++	if (!data->hdev)
 +		return;
 +
-+	/* Trigger device core dump when there is FW assert */
-+	if (!test_and_set_bit(BTINTEL_PCIE_COREDUMP_INPROGRESS, &data->flags))
-+		data->dmp_hdr.trigger_reason = BTINTEL_PCIE_TRIGGER_REASON_FW_ASSERT;
-+
-+	queue_work(data->workqueue, &data->rx_work);
+ 	if (test_bit(BTINTEL_PCIE_FWTRIGGER_DUMP_INPROGRESS, &data->flags)) {
+ 		err = btintel_pcie_dump_fwtrigger_event(data);
+ 		if (err)
+@@ -1494,6 +1499,13 @@ static void btintel_pcie_rx_work(struct work_struct *work)
+ 		btintel_pcie_read_hwexp(data);
+ 		clear_bit(BTINTEL_PCIE_HWEXP_INPROGRESS, &data->flags);
+ 	}
 +}
 +
- static void btintel_pcie_msix_hw_exp_handler(struct btintel_pcie_data *data)
- {
- 	bt_dev_err(data->hdev, "Received hw exception interrupt");
-@@ -1370,6 +1469,14 @@ static void btintel_pcie_rx_work(struct work_struct *work)
- 	struct btintel_pcie_data *data = container_of(work,
- 					struct btintel_pcie_data, rx_work);
- 	struct sk_buff *skb;
-+	int err;
-+
-+	if (test_bit(BTINTEL_PCIE_FWTRIGGER_DUMP_INPROGRESS, &data->flags)) {
-+		err = btintel_pcie_dump_fwtrigger_event(data);
-+		if (err)
-+			bt_dev_warn(data->hdev, "failed to log fwtrigger event");
-+		clear_bit(BTINTEL_PCIE_FWTRIGGER_DUMP_INPROGRESS, &data->flags);
-+	}
++static void btintel_pcie_rx_work(struct work_struct *work)
++{
++	struct btintel_pcie_data *data = container_of(work,
++					struct btintel_pcie_data, rx_work);
++	struct sk_buff *skb;
  
- 	if (test_bit(BTINTEL_PCIE_COREDUMP_INPROGRESS, &data->flags)) {
- 		btintel_pcie_dump_traces(data->hdev);
-@@ -1527,6 +1634,9 @@ static irqreturn_t btintel_pcie_irq_msix_handler(int irq, void *dev_id)
- 			btintel_pcie_msix_tx_handle(data);
+ 	/* Process the sk_buf in queue and send to the HCI layer */
+ 	while ((skb = skb_dequeue(&data->rx_skb_q))) {
+@@ -2168,9 +2180,11 @@ static int btintel_pcie_send_frame(struct hci_dev *hdev,
+ 
+ static void btintel_pcie_release_hdev(struct btintel_pcie_data *data)
+ {
+-	struct hci_dev *hdev;
++	struct hci_dev *hdev = data->hdev;
++
++	if (!hdev)
++		return;
+ 
+-	hdev = data->hdev;
+ 	hci_unregister_dev(hdev);
+ 	hci_free_dev(hdev);
+ 	data->hdev = NULL;
+@@ -2588,6 +2602,10 @@ static void btintel_pcie_reset_work(struct work_struct *wk)
+ 	btintel_pcie_synchronize_irqs(data);
+ 
+ 	flush_work(&data->rx_work);
++	/* Drain any in-flight coredump and block new ones across reset.
++	 * Safe from self-deadlock: coredump_work runs on a separate wq.
++	 */
++	disable_work_sync(&data->coredump_work);
+ 
+ 	bt_dev_dbg(data->hdev, "Release bluetooth interface");
+ 	if (data->reset_type == BTINTEL_PCIE_IOSF_PRR_PLDR) {
+@@ -2595,16 +2613,27 @@ static void btintel_pcie_reset_work(struct work_struct *wk)
+ 		 * pci_rescan_remove_lock. This mutex serializes against PCI device
+ 		 * addition/removal (hotplug), so no device can be added to or
+ 		 * removed from the bus list while this code runs.
++		 *
++		 * device_reprobe() inside btintel_pcie_perform_pldr() destroys
++		 * 'data' via .remove(); a fresh probe re-INIT_WORKs the
++		 * coredump_work with disable count 0, so we must not call
++		 * enable_work() on this path.
+ 		 */
+ 		btintel_pcie_perform_pldr(data);
+ 		goto out;
+ 	}
+ 	btintel_pcie_release_hdev(data);
+ 
+-	err = pci_reset_function(pdev);
++	/* Use pci_try_reset_function() rather than pci_reset_function() to
++	 * avoid an ABBA deadlock against btintel_pcie_remove(): the PCI core
++	 * calls .remove() with device_lock held, and remove() then waits for
++	 * this work via cancel_work_sync(); pci_reset_function() would in
++	 * turn try to acquire the same device_lock, deadlocking both paths.
++	 */
++	err = pci_try_reset_function(pdev);
+ 	if (err) {
+ 		BT_ERR("Failed resetting the pcie device (%d)", err);
+-		goto out;
++		goto out_enable;
  	}
  
-+	if (intr_hw & BTINTEL_PCIE_MSIX_HW_INT_CAUSES_FWTRIG)
-+		btintel_pcie_msix_fw_trigger_handler(data);
-+
- 	/* This interrupt is triggered by the firmware after updating
- 	 * boot_stage register and image_response register
- 	 */
-@@ -1601,6 +1711,7 @@ static struct btintel_pcie_causes_list causes_list[] = {
- 	{ BTINTEL_PCIE_MSIX_FH_INT_CAUSES_1,	BTINTEL_PCIE_CSR_MSIX_FH_INT_MASK,	0x01 },
- 	{ BTINTEL_PCIE_MSIX_HW_INT_CAUSES_GP0,	BTINTEL_PCIE_CSR_MSIX_HW_INT_MASK,	0x20 },
- 	{ BTINTEL_PCIE_MSIX_HW_INT_CAUSES_HWEXP, BTINTEL_PCIE_CSR_MSIX_HW_INT_MASK,	0x23 },
-+	{ BTINTEL_PCIE_MSIX_HW_INT_CAUSES_FWTRIG, BTINTEL_PCIE_CSR_MSIX_HW_INT_MASK,	0x25 },
- };
+ 	btintel_pcie_enable_interrupts(data);
+@@ -2614,7 +2643,7 @@ static void btintel_pcie_reset_work(struct work_struct *wk)
+ 	if (err) {
+ 		BT_ERR("Failed to enable bluetooth hardware after reset (%d)",
+ 		       err);
+-		goto out;
++		goto out_enable;
+ 	}
  
- /* This function configures the interrupt masks for both HW_INT_CAUSES and
-@@ -2087,6 +2198,55 @@ static void btintel_pcie_synchronize_irqs(struct btintel_pcie_data *data)
- 		synchronize_irq(data->msix_entries[i].vector);
+ 	btintel_pcie_reset_ia(data);
+@@ -2624,8 +2653,15 @@ static void btintel_pcie_reset_work(struct work_struct *wk)
+ 	err = btintel_pcie_setup_hdev(data);
+ 	if (err) {
+ 		BT_ERR("Failed registering hdev (%d)", err);
+-		goto out;
++		goto out_enable;
+ 	}
++
++out_enable:
++	/* Balance disable_work_sync() above on every exit. Leaving the
++	 * counter incremented on a failed reset would permanently disable
++	 * coredump_work even after a later successful reset.
++	 */
++	enable_work(&data->coredump_work);
+ out:
+ 	pci_dev_put(pdev);
+ 	pci_unlock_rescan_remove();
+@@ -2759,7 +2795,6 @@ static int btintel_pcie_setup_hdev(struct btintel_pcie_data *data)
+ 	hdev->bus = HCI_PCI;
+ 	hci_set_drvdata(hdev, data);
+ 
+-	data->hdev = hdev;
+ 	SET_HCIDEV_DEV(hdev, &data->pdev->dev);
+ 
+ 	hdev->manufacturer = 2;
+@@ -2778,15 +2813,17 @@ static int btintel_pcie_setup_hdev(struct btintel_pcie_data *data)
+ 	err = hci_register_dev(hdev);
+ 	if (err < 0) {
+ 		BT_ERR("Failed to register to hdev (%d)", err);
+-		goto exit_error;
++		hci_free_dev(hdev);
++		return err;
+ 	}
+ 
++	/* Publish hdev only after successful registration; the coredump
++	 * worker bails on !data->hdev, so it never observes a half-set-up
++	 * device.
++	 */
++	data->hdev = hdev;
+ 	data->dmp_hdr.driver_name = KBUILD_MODNAME;
+ 	return 0;
+-
+-exit_error:
+-	hci_free_dev(hdev);
+-	return err;
  }
  
-+static int btintel_pcie_get_debug_info_addr(struct hci_dev *hdev)
-+{
-+	struct btintel_pcie_data *data = hci_get_drvdata(hdev);
-+	struct btintel_pcie_trigger_evt *evt;
-+	u8 param[1] = {0x10};
-+	struct sk_buff *skb;
-+	int err = 0;
-+
-+	skb = __hci_cmd_sync(hdev, BTINTEL_HCI_OP_DEBUG, 1, param,
-+			     HCI_CMD_TIMEOUT);
-+	if (IS_ERR(skb)) {
-+		bt_dev_err(hdev, "Reading Intel read debug info address command failed (%ld)",
-+			   PTR_ERR(skb));
-+		/* Not all Intel products supports this command */
-+		if (PTR_ERR(skb) == -EOPNOTSUPP)
-+			return 0;
-+		return PTR_ERR(skb);
-+	}
-+
-+	if (skb->len < (1 + sizeof(*evt))) {
-+		bt_dev_err(hdev, "Debug info response too short (%u bytes)", skb->len);
-+		err = -EIO;
-+		goto exit_error;
-+	}
-+
-+	/* Check the status */
-+	if (skb->data[0]) {
-+		bt_dev_err(hdev, "Reading Intel read debug info command failed (0x%2.2x)",
-+			   skb->data[0]);
-+		err = -EIO;
-+		goto exit_error;
-+	}
-+
-+	/* Consume Command Complete Status field */
-+	skb_pull(skb, 1);
-+
-+	evt = (void *)skb->data;
-+
-+	data->debug_evt_addr = le32_to_cpu(evt->addr);
-+	data->debug_evt_size = le32_to_cpu(evt->size);
-+
-+	bt_dev_dbg(hdev, "config type: %u config len: %u debug event addr: 0x%8.8x size: 0x%8.8x",
-+		   evt->type, evt->len, data->debug_evt_addr,
-+		   data->debug_evt_size);
-+exit_error:
-+	kfree_skb(skb);
-+	return err;
-+}
-+
- static int btintel_pcie_setup_internal(struct hci_dev *hdev)
- {
- 	struct btintel_pcie_data *data = hci_get_drvdata(hdev);
-@@ -2186,6 +2346,10 @@ static int btintel_pcie_setup_internal(struct hci_dev *hdev)
- 	if (ver_tlv.img_type == 0x02 || ver_tlv.img_type == 0x03)
- 		data->dmp_hdr.fw_git_sha1 = ver_tlv.git_sha1;
+ static int btintel_pcie_probe(struct pci_dev *pdev,
+@@ -2817,9 +2854,16 @@ static int btintel_pcie_probe(struct pci_dev *pdev,
+ 	if (!data->workqueue)
+ 		return -ENOMEM;
  
-+	err = btintel_pcie_get_debug_info_addr(hdev);
-+	if (err)
-+		goto exit_error;
++	data->coredump_workqueue = alloc_ordered_workqueue(KBUILD_MODNAME "_cd", 0);
++	if (!data->coredump_workqueue) {
++		destroy_workqueue(data->workqueue);
++		return -ENOMEM;
++	}
 +
- 	btintel_print_fseq_info(hdev);
- exit_error:
- 	kfree_skb(skb);
+ 	skb_queue_head_init(&data->rx_skb_q);
+ 	INIT_WORK(&data->rx_work, btintel_pcie_rx_work);
+ 	INIT_WORK(&data->reset_work, btintel_pcie_reset_work);
++	INIT_WORK(&data->coredump_work, btintel_pcie_coredump_worker);
+ 
+ 	data->boot_stage_cache = 0x00;
+ 	data->img_resp_cache = 0x00;
+@@ -2862,6 +2906,8 @@ static int btintel_pcie_probe(struct pci_dev *pdev,
+ 	/* reset device before exit */
+ 	btintel_pcie_reset_bt(data);
+ 
++	destroy_workqueue(data->coredump_workqueue);
++
+ 	pci_clear_master(pdev);
+ 
+ 	pci_set_drvdata(pdev, NULL);
+@@ -2879,13 +2925,20 @@ static void btintel_pcie_remove(struct pci_dev *pdev)
+ 		return;
+ 	}
+ 
++	/* Permanently block coredump triggers and drain the worker before
++	 * tearing down. Must run before cancel_work_sync(&reset_work) so
++	 * the disable counter stays >= 1 even after reset_work()'s
++	 * balanced enable_work() (counter 2 -> 1, never reaching 0).
++	 */
++	disable_work_sync(&data->coredump_work);
++
+ 	/* Cancel pending reset work. Skip only when remove() is called from
+ 	 * within the reset work itself (PLDR device_reprobe path) to avoid
+ 	 * deadlock. current_work() returns the work_struct of the caller if
+ 	 * we are in a workqueue context.
+ 	 */
+ 	if (current_work() != &data->reset_work)
+-		cancel_work_sync(&data->reset_work);
++		disable_work_sync(&data->reset_work);
+ 
+ 	btintel_pcie_disable_interrupts(data);
+ 
+@@ -2905,6 +2958,7 @@ static void btintel_pcie_remove(struct pci_dev *pdev)
+ 
+ 	btintel_pcie_release_hdev(data);
+ 
++	destroy_workqueue(data->coredump_workqueue);
+ 	destroy_workqueue(data->workqueue);
+ 
+ 	btintel_pcie_free(data);
+@@ -2920,11 +2974,19 @@ static void btintel_pcie_coredump(struct device *dev)
+ 	struct  pci_dev *pdev = to_pci_dev(dev);
+ 	struct btintel_pcie_data *data = pci_get_drvdata(pdev);
+ 
++	if (!data)
++		return;
++
+ 	if (test_and_set_bit(BTINTEL_PCIE_COREDUMP_INPROGRESS, &data->flags))
+ 		return;
+ 
+ 	data->dmp_hdr.trigger_reason  = BTINTEL_PCIE_TRIGGER_REASON_USER_TRIGGER;
+-	queue_work(data->workqueue, &data->rx_work);
++	/* queue_work() returns false if the work is disabled (reset or
++	 * remove in progress); clear the in-progress bit so a later
++	 * trigger can succeed once the work is re-enabled.
++	 */
++	if (!queue_work(data->coredump_workqueue, &data->coredump_work))
++		clear_bit(BTINTEL_PCIE_COREDUMP_INPROGRESS, &data->flags);
+ }
+ #endif
+ 
+@@ -3065,7 +3127,7 @@ static int btintel_pcie_resume(struct device *dev)
+ 				      &data->flags)) {
+ 			data->dmp_hdr.trigger_reason =
+ 				BTINTEL_PCIE_TRIGGER_REASON_FW_ASSERT;
+-			queue_work(data->workqueue, &data->rx_work);
++			queue_work(data->coredump_workqueue, &data->coredump_work);
+ 		}
+ 		set_bit(BTINTEL_PCIE_CORE_HALTED, &data->flags);
+ 		btintel_pcie_reset(data->hdev);
 diff --git a/drivers/bluetooth/btintel_pcie.h b/drivers/bluetooth/btintel_pcie.h
-index 4bc4f34ffd1a59..e4a8fa47918880 100644
+index e4a8fa47918880..7caee093e3164a 100644
 --- a/drivers/bluetooth/btintel_pcie.h
 +++ b/drivers/bluetooth/btintel_pcie.h
-@@ -102,6 +102,7 @@ enum msix_hw_int_causes {
- 	BTINTEL_PCIE_MSIX_HW_INT_CAUSES_GP0	= BIT(0),	/* cause 32 */
- 	BTINTEL_PCIE_MSIX_HW_INT_CAUSES_GP1	= BIT(1),	/* cause 33 */
- 	BTINTEL_PCIE_MSIX_HW_INT_CAUSES_HWEXP	= BIT(3),	/* cause 35 */
-+	BTINTEL_PCIE_MSIX_HW_INT_CAUSES_FWTRIG	= BIT(5),	/* cause 37 */
- };
+@@ -466,6 +466,8 @@ struct btintel_pcie_dump_header {
+  * @workqueue: workqueue for RX work
+  * @rx_skb_q: SKB queue for RX packet
+  * @rx_work: RX work struct to process the RX packet in @rx_skb_q
++ * @coredump_workqueue: dedicated workqueue for coredump collection
++ * @coredump_work: work struct for coredump trace collection
+  * @dma_pool: DMA pool for descriptors, index array and ci
+  * @dma_p_addr: DMA address for pool
+  * @dma_v_addr: address of pool
+@@ -514,6 +516,9 @@ struct btintel_pcie_data {
+ 	struct work_struct	rx_work;
+ 	struct work_struct      reset_work;
  
- /* PCIe device states
-@@ -119,6 +120,7 @@ enum {
- 	BTINTEL_PCIE_CORE_HALTED,
- 	BTINTEL_PCIE_HWEXP_INPROGRESS,
- 	BTINTEL_PCIE_COREDUMP_INPROGRESS,
-+	BTINTEL_PCIE_FWTRIGGER_DUMP_INPROGRESS,
- 	BTINTEL_PCIE_RECOVERY_IN_PROGRESS,
- 	BTINTEL_PCIE_SETUP_DONE
- };
-@@ -134,7 +136,9 @@ enum btintel_pcie_tlv_type {
- 	BTINTEL_DUMP_TIME,
- 	BTINTEL_FW_BUILD,
- 	BTINTEL_VENDOR,
--	BTINTEL_DRIVER
-+	BTINTEL_DRIVER,
-+	BTINTEL_EVENT_TYPE,
-+	BTINTEL_EVENT_ID
- };
- 
- /* causes for the MBOX interrupts */
-@@ -434,6 +438,8 @@ struct btintel_pcie_dump_header {
- 	u32		wrap_ctr;
- 	u16		trigger_reason;
- 	int		state;
-+	u8		event_type;
-+	u16		event_id;
- };
- 
- /* struct btintel_pcie_data
-@@ -522,6 +528,8 @@ struct btintel_pcie_data {
- 	struct btintel_pcie_dbgc	dbgc;
- 	struct btintel_pcie_dump_header dmp_hdr;
- 	u8	pm_sx_event;
-+	u32	debug_evt_addr;
-+	u32	debug_evt_size;
- };
- 
- static inline u32 btintel_pcie_rd_reg32(struct btintel_pcie_data *data,
++	struct workqueue_struct	*coredump_workqueue;
++	struct work_struct	coredump_work;
++
+ 	struct dma_pool	*dma_pool;
+ 	dma_addr_t	dma_p_addr;
+ 	void		*dma_v_addr;
 -- 
 2.53.0
 
