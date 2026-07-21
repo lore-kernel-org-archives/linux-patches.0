@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D693314D05;
-	Tue, 21 Jul 2026 17:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC86939B4A2;
+	Tue, 21 Jul 2026 17:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655149; cv=none; b=fmOgT5Z0thUxIoskUpY9trlzg6Pj8p1Qu9wraiUfoKLQXm8kNyMsGx20+Gq1QLF8H5Yn8wXwal7qEGhYbZAJj6EpDm4CE6n/JJgjZeMlaBRYG0pcruJzd+wXDzMkzoumH+/CfcnKou5i0rQndCvrVlRlul4GHIjmkJopSew7YdY=
+	t=1784655151; cv=none; b=XVveg7pmvpMCEfND8aTRFhuCSanFVFK9fvf0O7NJ/P8bT8netMwpt2oDIcIt+AzeZWbTQQHf20YsW9mv3J9aedjrsHCm6Z0ckjD4myD/EsU7w3EHPr0g9zybwLrIcUq0S1ZqQ+ULWYtYrz0nvkxhXiH4s+28sXkL9Vp6Bo8/2w8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655149; c=relaxed/simple;
-	bh=Ttm0ybvf0u9hXYAxkdh346rEwM7m5LkMimJtmra4BpU=;
+	s=arc-20240116; t=1784655151; c=relaxed/simple;
+	bh=Yo+qLf7g26zqztvJe3/Wv480ZoxhoOO4r2j6Qh2OFOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sY8/Kp+imuqq0M6LYXY4+dj4eDofrDzJuqOci3fNejFUtQci2i4ADxaJ/JmJGBClvhqmvQqGwyXTmSwi/SEkhMCkc8i8iatA1IAWjG94ZNBVoFg5mxgnik/JIE9Qd9GX+h3t5Y9GCfN1VFE63a1tytEmlYz1lzFQWm/x2XbCykc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ecck8x80; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=crM37gySb4Mojx7x0zfAu/AgD6s+1dpZYULtxTZXd9ks6UJX2jafxO3PBl63UWVT3m6dhgR4xVFXi4h3YrVM9+2PtD9OsrGVoRoJrhEamQByy7TqWER2o/hU64gamJTEPp8Ew8Vz4uMr0hX72AkFMGcqv9HJ7KCZdLFiKXzYk4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ieTWOJgO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ecck8x80"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A461B1F000E9;
-	Tue, 21 Jul 2026 17:32:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ieTWOJgO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E55E1F00A3D;
+	Tue, 21 Jul 2026 17:32:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655148;
-	bh=R5ui6KsD3ySvvsdW+OgvrqwkshFGp3TXJPfRFWShhk8=;
+	s=korg; t=1784655150;
+	bh=A23vG9KGKszJD020dla4+3SQhjd+GCZMaGPn0kGE5TA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ecck8x80WftBBdnBGveQ4aA29XPleVPyvsJMI4oGOWKr5jACh05hfNcRKRs12c2QY
-	 D8IBacWKmQHZXm/3I79F/J0OLzzncEfJZWu0RoV+hUqlyg1Yc1lbfIqVAVoKvpt6DY
-	 X0X6xbL8ScMlfaGXXsysocQ0ctYZo2zY90xTXkSo=
+	b=ieTWOJgO2/mlsNfSvw78aBurbrhhaletosDOw7jVSQsfj0khN5bsx++BILMvQH0+E
+	 pAVN3gLM+V+myxrbwh7RduBL0m2Ac2lpd2mk1ZAqy5PBNCr3w/w3zjiCds9/rlSx8o
+	 BTJL2QsPNQNrdPD5r/QZIRg1fBiadHobZXTTIiko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nirmoy Das <nirmoyd@nvidia.com>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.1 1973/2077] selftests: net: make busywait timeout clock portable
-Date: Tue, 21 Jul 2026 17:27:26 +0200
-Message-ID: <20260721152639.239962971@linuxfoundation.org>
+Subject: [PATCH 7.1 1974/2077] llc: fix SAP refcount leak in llc_ui_autobind()
+Date: Tue, 21 Jul 2026 17:27:27 +0200
+Message-ID: <20260721152639.265423652@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,72 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nirmoy Das <nirmoyd@nvidia.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-commit dd6a23bac306b7aa322e0aaccb60c6e32a198fb3 upstream.
+commit 660667cd406648bbaffbd5c0d897c2263a852f11 upstream.
 
-loopy_wait() expects millisecond timestamps. However, Ubuntu Resolute
-can use uutils date, where `date -u +%s%3N` returns seconds plus full
-nanoseconds instead of a 3-digit millisecond field. This makes
-busywait expire too early and can make vlan_bridge_binding.sh read a
-stale operstate.
+llc_ui_autobind() opens a SAP after choosing a dynamic LSAP.
+llc_sap_open() returns a reference owned by the caller, and
+llc_sap_add_socket() takes a second reference for the socket's
+membership in the SAP hash tables.
 
-Fixes: 25ae948b4478 ("selftests/net: add lib.sh")
-Cc: stable@vger.kernel.org # 6.8+
-Link: https://github.com/uutils/coreutils/issues/11658
-Signed-off-by: Nirmoy Das <nirmoyd@nvidia.com>
-Link: https://patch.msgid.link/20260630165157.3814871-1-nirmoyd@nvidia.com
+llc_ui_bind() drops the caller's reference after adding the socket,
+but llc_ui_autobind() keeps it. When the socket is closed,
+llc_sap_remove_socket() releases only the socket reference, leaving
+the SAP on llc_sap_list with sk_count == 0.
+
+This is user-visible because repeated autobind and close cycles can consume
+all dynamic SAP values and make later autobinds fail with -EUSERS.
+
+Drop the caller's reference after a successful autobind, matching
+llc_ui_bind()'s ownership model.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Link: https://patch.msgid.link/20260630194856.1036497-1-shuangpeng.kernel@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/lib.sh |   25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+ net/llc/af_llc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/tools/testing/selftests/net/lib.sh
-+++ b/tools/testing/selftests/net/lib.sh
-@@ -70,12 +70,33 @@ ksft_exit_status_merge()
- 		$ksft_xfail $ksft_pass $ksft_skip $ksft_fail
- }
- 
-+timestamp_ms()
-+{
-+	local now
-+	local seconds
-+	local nanoseconds
-+
-+	now=$(date -u +%s:%N) || return
-+	seconds=${now%:*}
-+	nanoseconds=${now#*:}
-+
-+	if [[ $nanoseconds =~ ^[0-9]+$ ]]; then
-+		nanoseconds=${nanoseconds:0:9}
-+	else
-+		nanoseconds=0
-+	fi
-+
-+	echo $((seconds * 1000 + 10#$nanoseconds / 1000000))
-+}
-+
- loopy_wait()
- {
- 	local sleep_cmd=$1; shift
- 	local timeout_ms=$1; shift
-+	local start_time
-+	local current_time
- 
--	local start_time="$(date -u +%s%3N)"
-+	start_time=$(timestamp_ms) || return
- 	while true
- 	do
- 		local out
-@@ -84,7 +105,7 @@ loopy_wait()
- 			return 0
- 		fi
- 
--		local current_time="$(date -u +%s%3N)"
-+		current_time=$(timestamp_ms) || return
- 		if ((current_time - start_time > timeout_ms)); then
- 			echo -n "$out"
- 			return 1
+--- a/net/llc/af_llc.c
++++ b/net/llc/af_llc.c
+@@ -317,6 +317,7 @@ static int llc_ui_autobind(struct socket
+ 	/* assign new connection to its SAP */
+ 	llc_sap_add_socket(sap, sk);
+ 	sock_reset_flag(sk, SOCK_ZAPPED);
++	llc_sap_put(sap);
+ 	rc = 0;
+ out:
+ 	dev_put(dev);
 
 
