@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA90415F21;
-	Tue, 21 Jul 2026 17:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE264415F38;
+	Tue, 21 Jul 2026 17:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656327; cv=none; b=j658txfY88fOsvQZIltYW/DBrBPoo0QzTalMsGG3S+o4gfUYEApD/Tv3rMMoP/PV+SOj/U33mCC9Un63MFF4CMvApL9j1QVd3thynYnBYmw3JtFldNnMzuW+dt8q+EYtHuxYQA1G2Gteo2OXnZB9VRQRd5gp07Wct98cI8p28Z8=
+	t=1784656329; cv=none; b=usqdg+FEuRrDqaJY7qWmLl38q0boW6M7Uz8HZW4bkkbAvTIOlp5vnTrDU1hgGtokuGm1CoO8xGIDs23GjbIZ5Ak3w+iadoFuKi3dXK7gk65w/pEP+XFpwD5vypVjDQMBp3FfMKa+HR/b7LQrSlRi7mbVpDxVOYIxaLxlRSmIBo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656327; c=relaxed/simple;
-	bh=Dfpp4mE0siHq6yfHq5v+36OqncqR3wPd8FMfefcfk9A=;
+	s=arc-20240116; t=1784656329; c=relaxed/simple;
+	bh=kFtimvM9dHinxGdf9mlNGzYIXCw4Ht4AG4LXng2tQmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CJgzTxvPh1P1104KY433cFjyaZ3h5/pMnwU4N2uF6lzi3KlLfaEJJ9ZZQO+MokI7XStyVpITeYye0p4V4wcD8frmj4DQKVsCX6zBeWJs/G/RxFXSutcq1x4RbLDKMDGhoXz+LQIfYBCOcjJtvCCBVie3zc5ZektG0DgoU0ULB04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JBacwJe2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uqjHTVhFDP6aYJVR7mrmrpE8Fp9rupd68MyLH6U8s7HfmHD8hJhvEfmenTc1qzg/F3ZlZ2/GDgZJ9+ts8W+4kHImJsnAwS7q08esi/s8tJENEuwPLrnP5yGjiVrcVDAXhl4DN2NPBZxcPV2RrVb5qaLmGsq7Afxtq0yvTyWS1Ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/ZncEfJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JBacwJe2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0701F000E9;
-	Tue, 21 Jul 2026 17:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/ZncEfJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B6421F000E9;
+	Tue, 21 Jul 2026 17:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656325;
-	bh=/Da04PfR0pSDXMeOn5M9nVADwNumG2A+clzUZ/B7fgQ=;
+	s=korg; t=1784656328;
+	bh=22WW78VvTEQv1ovmyYjNGamp+PwzqBMZbm5HRZr/QqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JBacwJe24SPf3tW95zXzLKDh1gWwxboyxCKCLVCdQmxFhBaHpOUQyROw2bf305Sba
-	 rpN+FynLrggG+d/w4ep2uOQAbuNPpuCSiTDPKtgjonY330kYMJAXoGfzZc3S8sQB/j
-	 oIvgQMPq/lhAGDXTmJLACZsqq1+ytoqEC3zGWNkk=
+	b=X/ZncEfJbIAeeUF/VwJqV7J/2lnVHFf5+pD6Qg+cPy+lUeW+QcLIbCMjftrKct1GU
+	 t0x9r0yInMpVeuXamEvu9FeoKeLlc8V3YZO1k9deAZnc8Dj8WLMCB2DLV86yoA4aRD
+	 RxHZ79EXweEEpLzq9PjW30P1Y7iTM4W3TKp10xtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zide Chen <zide.chen@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0328/1611] perf/x86/intel/uncore: Fix discovery unit lookup for multi-die systems
-Date: Tue, 21 Jul 2026 17:07:24 +0200
-Message-ID: <20260721152522.471715519@linuxfoundation.org>
+Subject: [PATCH 6.18 0346/1611] ALSA: usb-audio: qcom: Initialize offload control return value
+Date: Tue, 21 Jul 2026 17:07:42 +0200
+Message-ID: <20260721152522.907748087@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -46,61 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zide Chen <zide.chen@intel.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 63f48abd55d0417996bca86022925c853a2b436b ]
+[ Upstream commit 2b5632d72fca0841bea283da2e3a478d24118508 ]
 
-In uncore_find_add_unit(), PMON units with the same unit ID may be
-added to the uncore discovery RB-tree for different dies. These units
-are distinguished by node->die.
+snd_usb_offload_create_ctl() returns ret after walking the USB PCM list,
+but ret is only assigned after a playback stream passes the endpoint and
+PCM-index filters.
 
-However, intel_generic_uncore_box_ctl() uses a fixed die ID of -1 when
-looking up the discovery unit, which may retrieve the wrong node on
-multi-die systems.
+If all playback streams are skipped, for example because there is no
+playback endpoint or because all PCM indexes exceed the 0xff control
+range, the function returns an uninitialized stack value.
 
-Use box->dieid instead so the correct discovery unit is selected.
+Initialize ret to 0 so the no-control-created path returns deterministic
+success, while preserving the existing negative error return when
+snd_ctl_add() fails.
 
-No functional issue has been observed so far because currently supported
-platforms happen to use the same unit control register for such units.
-
-Remove WARN_ON_ONCE() because with the above change a NULL unit can be
-expected, e.g. when a CPU die is offline during uncore enumeration and
-the unit is not added to the RB-tree. In this case,
-intel_uncore_find_discovery_unit() returns NULL once the die becomes
-online, and it is expected that the PMU box is not functional for that
-die.
-
-Fixes: b1d9ea2e1ca4 ("perf/x86/uncore: Apply the unit control RB tree to MSR uncore units")
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Link: https://patch.msgid.link/20260602144908.263680-2-zide.chen@intel.com
+Fixes: a67656f011d1 ("ALSA: usb-audio: qcom: Add USB offload route kcontrol")
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260605-alsa-usb-qcom-offload-ret-init-v1-1-dc72fcc4bd3b@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore_discovery.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/usb/qcom/mixer_usb_offload.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/uncore_discovery.c b/arch/x86/events/intel/uncore_discovery.c
-index c5adbe44090470..7dd3910d8de3af 100644
---- a/arch/x86/events/intel/uncore_discovery.c
-+++ b/arch/x86/events/intel/uncore_discovery.c
-@@ -480,8 +480,8 @@ static u64 intel_generic_uncore_box_ctl(struct intel_uncore_box *box)
- 	struct intel_uncore_discovery_unit *unit;
+diff --git a/sound/usb/qcom/mixer_usb_offload.c b/sound/usb/qcom/mixer_usb_offload.c
+index 2adeb64f4d33f4..005138714f7249 100644
+--- a/sound/usb/qcom/mixer_usb_offload.c
++++ b/sound/usb/qcom/mixer_usb_offload.c
+@@ -113,7 +113,7 @@ int snd_usb_offload_create_ctl(struct snd_usb_audio *chip, struct device *bedev)
+ 	struct snd_usb_substream *subs;
+ 	struct snd_usb_stream *as;
+ 	char ctl_name[48];
+-	int ret;
++	int ret = 0;
  
- 	unit = intel_uncore_find_discovery_unit(box->pmu->type->boxes,
--						-1, box->pmu->pmu_idx);
--	if (WARN_ON_ONCE(!unit))
-+						box->dieid, box->pmu->pmu_idx);
-+	if (!unit)
- 		return 0;
- 
- 	return unit->addr;
+ 	list_for_each_entry(as, &chip->pcm_list, list) {
+ 		subs = &as->substream[SNDRV_PCM_STREAM_PLAYBACK];
 -- 
 2.53.0
 
