@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D9D3783D4;
-	Tue, 21 Jul 2026 20:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B4A3FE356;
+	Tue, 21 Jul 2026 20:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665788; cv=none; b=fVFK2hq4lv/xUWrLwLJe7/u3SwuWQx/n950bw1nazWtcOipLHwOhcPlsNIWQd0IBn899MJzIlxxCCvGGzPhE0ln+mKOCm3kus6VjqH1yO75k8y1YfL21sKIulQ/LlFtWxH/b9Cu19MRKSoklrlEA5199RFhtF2uHk6BY0z8vN9c=
+	t=1784665791; cv=none; b=qUhh17PqB2Jn06IYyKARozCSqhvEAcPJvMB1VcbWXFBH3KFGqLTKlu8+qRyT8MnmKnxXr65wDNZN37U1OanCouOJq2C7swpBT/pJOr5lemzU3OprePfpQ6sU0CMzUPTMEnEze+BVs8nkmRIgfNQ6UfW2G5FTxTzuUpC5UvYqMKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665788; c=relaxed/simple;
-	bh=+f/elpM9NnjDQL/N88L/3axnKEFLxcRmo/flQpoQ8M0=;
+	s=arc-20240116; t=1784665791; c=relaxed/simple;
+	bh=XpWCrf9SOJFHSpbc41IXtneYoJrKNnHERLmXM+8kTYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Suz4Q9bO6o4KSCqNV3I1OiqJ7ZrSAshoqXQnjzOiQSLIX+ZRmQX3TC08b2FYjlSDP5hSWCnicT+QHVisR4JcxxpAeCr6lN4c67CR/eQdpqxvyh2/KITv5J8fPxdxCa/w/je4xvp5nzC7OfeHM0eoeIX955tr7Jb03RczqCPeP8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5CjsJD2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TigDsy5Gp6IRs6UEY/JjzKpnRzix9MaMkYnrqxNAU86ROU4wcYmsJxntH0jNcVT5ZnTlJZSDlMDMreNJRsNCsEnWhsCC2USVLeYKwfzLTr1wRBDFoSCEYNfUijBNI5Ab76/u3QhB56O4E46n+wYPaQZiSHmOwnbB9vWt6y33MeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RDDbtY9Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5CjsJD2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2326D1F000E9;
-	Tue, 21 Jul 2026 20:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDDbtY9Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9441F000E9;
+	Tue, 21 Jul 2026 20:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665787;
-	bh=yMSk3McuC4e4BEjDJEPBF1hVeDCrOc1GSDq2zKzzH8M=;
+	s=korg; t=1784665790;
+	bh=SBq6/ZJCoFgbVi9QOX8yagqj5FIyoNUJnLz0Zbl+8MY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z5CjsJD2Nv1DF0yTe2lQi2DdPnpNVa/6m0t6PFAEZGnl6yJyavBbXuGM5460AKddT
-	 zhoIg6DwnmA/BFkc8w5/xzidrm/MDndelQQ8cpzLFDe7NksbFxKLFaQQiBWXQ9Zz2P
-	 Ih5T1prjWrASzS5lyHwdfcTG3jJBBNFTdCca3bGs=
+	b=RDDbtY9ZEKl6EYc5igT97FwOIMheN7RC+5LGM9Y+lGhV+vcECPNjbwVbYEP9xwUfv
+	 US3GkzHSgqYUzwoVURheTzTmoqbPGYcenMoVTxPZx3PjMrDq8iGWMYy1WZBECQASFm
+	 gFyc+aOACkoWV2g0D0oQhncRensJnGzCg4XL/hYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	kernel test robot <lkp@intel.com>,
 	Rosen Penev <rosenp@gmail.com>,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0436/1266] mips: ralink: mt7621: add missing __iomem
-Date: Tue, 21 Jul 2026 17:14:33 +0200
-Message-ID: <20260721152451.596936188@linuxfoundation.org>
+Subject: [PATCH 6.6 0437/1266] mips: n64: add __iomem for writel call
+Date: Tue, 21 Jul 2026 17:14:34 +0200
+Message-ID: <20260721152451.618657580@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -55,34 +54,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 4ddaf88aadd3bd09c2eb3734c53d2864af6b144e ]
+[ Upstream commit 579f5329d5df2dbcf4bb5ef398701c2501d24892 ]
 
-raw_readl and writel calls expect pointers annotated with __iomem.
+sparse: incorrect type in argument 2 (different address spaces) @@
+expected void volatile [noderef] __iomem *mem @@
+got unsigned int [usertype] *
 
 Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild/202211060456.cnV6IK6G-lkp@intel.com/
-Fixes: cc19db8b312a ("MIPS: ralink: mt7621: do memory detection on KSEG1")
+Closes: https://lore.kernel.org/oe-kbuild-all/202105261445.AcvPd2EE-lkp@intel.com/
+Fixes: baec970aa5ba ("mips: Add N64 machine type")
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/ralink/mt7621.c | 2 +-
+ arch/mips/n64/init.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/ralink/mt7621.c b/arch/mips/ralink/mt7621.c
-index 137781d0bd0a12..01a6219214081a 100644
---- a/arch/mips/ralink/mt7621.c
-+++ b/arch/mips/ralink/mt7621.c
-@@ -63,7 +63,7 @@ phys_addr_t mips_cpc_default_phys_base(void)
+diff --git a/arch/mips/n64/init.c b/arch/mips/n64/init.c
+index dfbd864f466700..66ec28ab41f321 100644
+--- a/arch/mips/n64/init.c
++++ b/arch/mips/n64/init.c
+@@ -50,7 +50,7 @@ void __init prom_init(void)
  
- static bool __init mt7621_addr_wraparound_test(phys_addr_t size)
+ #define W 320
+ #define H 240
+-#define REG_BASE ((u32 *) CKSEG1ADDR(0x4400000))
++#define REG_BASE ((u32 __iomem *) CKSEG1ADDR(0x4400000))
+ 
+ static void __init n64rdp_write_reg(const u8 reg, const u32 value)
  {
--	void *dm = (void *)KSEG1ADDR(&detect_magic);
-+	void __iomem *dm = (void __iomem *)KSEG1ADDR(&detect_magic);
- 
- 	if (CPHYSADDR(dm + size) >= MT7621_LOWMEM_MAX_SIZE)
- 		return true;
 -- 
 2.53.0
 
