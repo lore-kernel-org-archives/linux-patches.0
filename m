@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7199746D0B2;
-	Tue, 21 Jul 2026 18:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A462246D0B2;
+	Tue, 21 Jul 2026 18:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656943; cv=none; b=FRLU6vVBkWm/vL9cAlL1b7zzzjHPU6QeAiyeY8jEhbod/7Mdcid6BYhke2LN9d8S6ub8ZbJBw0L7w4yHJYffyBcTz+8UFZZc+mT33jqeKiXA1FgenpGFDktnkNeNI/3m2ZMlzDGC9XlL/9VXe5bebkk2dMpGXXdgnLWJjTA9rvY=
+	t=1784656945; cv=none; b=PWRRDEb2FcKjURPuRW65Y6bOD7wPrOJEI8mJWEoW1bjZSN9VnESAXB21iZzibqmdqNuvY5dR0LMZk/OJmoo2gc+77qpzlZwsnL8Ox1nUTaZnCL/Z5urydfei5CNuflyk8yxZiHuw2W4VueOTkTUiplgm5TNwUlxHim4H7jN/pVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656943; c=relaxed/simple;
-	bh=JqHPqxyfH1Ajg1cbc9X1Rh7d25+ySiExzXze5lSsgDg=;
+	s=arc-20240116; t=1784656945; c=relaxed/simple;
+	bh=8dsN74cQzm22PTG+7NziphQVflZccR7z7GpafTsdQp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hTsUPCIEe030VVJ349QGivordmD1ZL+PICX/u9QCHyzhNUtefLDXULM6s7BrTGTxXH9ma44+2t8PjEl/8Y2qTpwkHxf6oRWeLBoFKgmWlwDXD34qCgf1yZy1ed/7bA71ZR/pC8HdvqKmFokv6D4VcT1n1zdo/xTJq4239cs/83w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QAP2QmWK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FwAHjEjz4SXP+mgJW9/ocPJABRTqivdPrhNCqiQxoGqHpwezwjZaK1zeT/ryyU/uP7u5w1AvVs7gFhYgbbV+ognpdzOGxbABFLppbLAsvYwpkjJfMNQGi8eHIVqMgLXLo8iI//ECdYP4LC69YLPGgYEfGR6e11JAcEj6WdE1OWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RbNrjU9j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QAP2QmWK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993EF1F000E9;
-	Tue, 21 Jul 2026 18:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RbNrjU9j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E841F000E9;
+	Tue, 21 Jul 2026 18:02:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656942;
-	bh=vb/LQ7rPvMHD1aFN6P9G/sbStPh5sIhi5+gJBfBBCho=;
+	s=korg; t=1784656944;
+	bh=shkppgyhbBj42RjxMfctYDLTENLkprg4wkJscWCeLYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QAP2QmWKzSTFT/IifD1tTT6OUf/+CQB1NOkxyJqhu+dYp1OPGVsge39XPUMdhYwzz
-	 NY1MJJQaKzkhXyBv8hk/QJSadTKuzNvvm3laNrtMgae2cRjWU3d/zSlX4SoleIRCzw
-	 ycdCJOQms2vvrqs3+D37p9UUAulcbjYyvQQwi1lo=
+	b=RbNrjU9jcA0zWvvEEJ8Ipn2rB9hjwNLmKbBJKSEdKB76+kK7HizC+PUOEvLjv/PZz
+	 WAmmG/D+bwVRIFYVMjOCkSa0FZHdcEOWuZ1WiFCgFLC4ORju+AQaa7pQiX1SDhiqt8
+	 sc7m/1vb3K11R0gczpHCg0sQR9yO5zbbrudYPNiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Alexandru Hossu <hossu.alexandru@gmail.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Zecheng Li <zli94@ncsu.edu>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0577/1611] staging: nvec: fix use-after-free in nvec_rx_completed()
-Date: Tue, 21 Jul 2026 17:11:33 +0200
-Message-ID: <20260721152528.355860467@linuxfoundation.org>
+Subject: [PATCH 6.18 0578/1611] perf debuginfo: Fix libdw API contract violations
+Date: Tue, 21 Jul 2026 17:11:34 +0200
+Message-ID: <20260721152528.379164352@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,55 +59,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Hossu <hossu.alexandru@gmail.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 26813881181deb3a32fbb59eadb2599cbe8423f6 ]
+[ Upstream commit 31088ccf0312b1a547046f1f69890ede07834a30 ]
 
-In nvec_rx_completed(), when an incomplete RX transfer is detected,
-nvec_msg_free() is called to return the message back to the pool by
-clearing its 'used' atomic flag. Immediately after this, the code
-accesses nvec->rx->data[0] to check the message type.
+Check return value of `dwfl_report_end` during offline initialization.
+Validate `dwfl_module_relocation_info` result before passing to `strcmp`
+to avoid potential segmentation faults.
 
-Since nvec_msg_free() marks the pool slot as available via atomic_set(),
-any concurrent or subsequent call to nvec_msg_alloc() could claim that
-same slot and overwrite its data[] array. Reading nvec->rx->data[0] after
-freeing the message is therefore a use-after-free.
+Additionally:
+ - Fix a file descriptor leak in `debuginfo__init_offline_dwarf()` when
+   `dwfl_report_offline()` or subsequent setup calls fail.
 
-Fix this by saving the message type byte before calling nvec_msg_free(),
-then using the saved value for the battery quirk check.
-
-Fixes: d6bdcf2e1019 ("staging: nvec: Add battery quirk to ignore incomplete responses")
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
-Link: https://patch.msgid.link/20260427081713.3401874-2-hossu.alexandru@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6f1b6291cf73cb32 ("perf tools: Add util/debuginfo.[ch] files")
+Assisted-by: Gemini-CLI:Google Gemini 3
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Zecheng Li <zli94@ncsu.edu>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/nvec/nvec.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/perf/util/debuginfo.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/staging/nvec/nvec.c b/drivers/staging/nvec/nvec.c
-index 263774e6a78cae..1cdaf7dd02e9f1 100644
---- a/drivers/staging/nvec/nvec.c
-+++ b/drivers/staging/nvec/nvec.c
-@@ -494,6 +494,8 @@ static void nvec_tx_completed(struct nvec_chip *nvec)
- static void nvec_rx_completed(struct nvec_chip *nvec)
+diff --git a/tools/perf/util/debuginfo.c b/tools/perf/util/debuginfo.c
+index bb9ebd84ec2d2a..07099b50f21926 100644
+--- a/tools/perf/util/debuginfo.c
++++ b/tools/perf/util/debuginfo.c
+@@ -42,6 +42,7 @@ static int debuginfo__init_offline_dwarf(struct debuginfo *dbg,
  {
- 	if (nvec->rx->pos != nvec_msg_size(nvec->rx)) {
-+		unsigned char msg_type = nvec->rx->data[0];
-+
- 		dev_err(nvec->dev, "RX incomplete: Expected %u bytes, got %u\n",
- 			(uint)nvec_msg_size(nvec->rx),
- 			(uint)nvec->rx->pos);
-@@ -502,7 +504,7 @@ static void nvec_rx_completed(struct nvec_chip *nvec)
- 		nvec->state = 0;
+ 	GElf_Addr dummy;
+ 	int fd;
++	bool fd_consumed = false;
  
- 		/* Battery quirk - Often incomplete, and likes to crash */
--		if (nvec->rx->data[0] == NVEC_BAT)
-+		if (msg_type == NVEC_BAT)
- 			complete(&nvec->ec_transfer);
+ 	fd = open(path, O_RDONLY);
+ 	if (fd < 0)
+@@ -55,6 +56,7 @@ static int debuginfo__init_offline_dwarf(struct debuginfo *dbg,
+ 	dbg->mod = dwfl_report_offline(dbg->dwfl, "", "", fd);
+ 	if (!dbg->mod)
+ 		goto error;
++	fd_consumed = true;
  
- 		return;
+ 	dbg->dbg = dwfl_module_getdwarf(dbg->mod, &dbg->bias);
+ 	if (!dbg->dbg)
+@@ -62,13 +64,14 @@ static int debuginfo__init_offline_dwarf(struct debuginfo *dbg,
+ 
+ 	dwfl_module_build_id(dbg->mod, &dbg->build_id, &dummy);
+ 
+-	dwfl_report_end(dbg->dwfl, NULL, NULL);
++	if (dwfl_report_end(dbg->dwfl, NULL, NULL) != 0)
++		goto error;
+ 
+ 	return 0;
+ error:
+ 	if (dbg->dwfl)
+ 		dwfl_end(dbg->dwfl);
+-	else
++	if (!fd_consumed)
+ 		close(fd);
+ 	memset(dbg, 0, sizeof(*dbg));
+ 
+@@ -168,7 +171,7 @@ int debuginfo__get_text_offset(struct debuginfo *dbg, Dwarf_Addr *offs,
+ 	/* Search the relocation related .text section */
+ 	for (i = 0; i < n; i++) {
+ 		p = dwfl_module_relocation_info(dbg->mod, i, &shndx);
+-		if (strcmp(p, ".text") == 0) {
++		if (p && strcmp(p, ".text") == 0) {
+ 			/* OK, get the section header */
+ 			scn = elf_getscn(elf, shndx);
+ 			if (!scn)
 -- 
 2.53.0
 
