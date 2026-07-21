@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26AAD386C39;
-	Tue, 21 Jul 2026 19:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3633471257;
+	Tue, 21 Jul 2026 19:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662247; cv=none; b=WFCX9CZ6+SlJ+p8h77c+gjG/J/KRIKPmBMJX0BlcZWqwWu35rGnEPPJm2qezGtS1ORQk7eSdWJTFmb1eDv7vpD7C2TLYQIGdxQsdg3iF/VA4j1Im2CMutCO1TGP5T3BJDcRBjQQwFVHtUY9twiLqDSI+uKR17lT6jnZnS5UOOD8=
+	t=1784662249; cv=none; b=MzKcGEPRRkVG4pJv5WgO3p75srdfpxxi7l74O0UEliJOqq+dz//vQz9ath9wOOUwKf5TkzLCGb6dFJCf2uZ4Jsc+q4Om42Q6ZkFF8uwVkWDGH3VqA5SWrENAf/buwIHkBZikBB/v2Upxzth9jh74SbSl4KfPqgVxCxXp7hlS1xI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662247; c=relaxed/simple;
-	bh=rOu5zpDTylIul0+szM3vsuf04Zwf1OFQlG8OnjF3/zM=;
+	s=arc-20240116; t=1784662249; c=relaxed/simple;
+	bh=yiYsCstMmACBAXQsrqaG+Gm50Bl0hdzDkYhgIjUre+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hg2KDbyIOqDxttKKC2SItvfttacoaHw8ly0BRzOJRWQtUhULmKkSCzXta1xrBLYLEOjWdkEfelWl+nr4KEtc8Cx9hooEBNzGHJjcm6j2vv8op6Zl4jKfEDmMtPK9cYYhJ+Hovws5ChB2dp0UF0cZ+zV3IY59LaZVWD1b900EVfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L64bHmXE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TEE/u91sHzEzmq0vtpkSvV/iTE8V/IMjpY04Y5AD+xBz6Sqn8vv6Dg/jw6RDgkDLMbPerBha1tRPnto77LYHgV0SONwmg+89u26k6j6Ci/hmahutxfB38y4GB7jmn1IFs/lPVFnFPtWShV8S2yLhiIwrnJ7SkI1HgIy+RXIc/iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eyHx5hBe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L64bHmXE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41911F000E9;
-	Tue, 21 Jul 2026 19:30:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eyHx5hBe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34AB61F000E9;
+	Tue, 21 Jul 2026 19:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662246;
-	bh=vttt/9u1hljX7wCB/PITbtC0mi15e2YptZU++N3kFI8=;
+	s=korg; t=1784662248;
+	bh=/oHoNSnK89jWi3QvlMIC3z58MUIlhsRdBXxzIKtVcL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L64bHmXEyR3dXEJ5w7MTJ7sx/YNWyXF+yrhrbAqXecNwiiQULlchHaF1IUxzwCDqT
-	 izb8MG8gNy9ofU8TJCw5AE05UZTJ4znC0f15xhLWSy4qY+UKN6g1spP1/9ghkAuPNU
-	 TtX6csEmQ3wRy1Rx8JH3n3xE2PyQeR4w4DS04vQk=
+	b=eyHx5hBeIKPu1HJcssA99wuXwnJ7oxB6TVreS+5X8qhfAXn/Cwv0chXZYDpMfKnSF
+	 fao4W5wZjnsFkYdqRS5L2RNgjWxMNGU5ScjHs7MZlsZlBMnKq7i9Tb+G/ArGx627Kz
+	 F8hmn66b5/d40gQ6rH9RODVk4jOtr4ISDvhQzvLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jordan Walters <jaggyaur@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0329/1276] ASoC: codecs: hdac_hdmi: Validate written enum value
-Date: Tue, 21 Jul 2026 17:12:52 +0200
-Message-ID: <20260721152453.460328659@linuxfoundation.org>
+Subject: [PATCH 6.12 0320/1276] Bluetooth: hci_core: Fix UAF in hci_unregister_dev()
+Date: Tue, 21 Jul 2026 17:12:43 +0200
+Message-ID: <20260721152453.257463026@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,47 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Jordan Walters <jaggyaur@gmail.com>
 
-[ Upstream commit 0b08baeccdcf52fad328ad645f5b4fbee04eea34 ]
+[ Upstream commit 5edcc018fa6e80b2c478454a4a8229c23d67c181 ]
 
-hdac_hdmi_set_pin_port_mux() uses the written enum value to index the
-texts array before calling snd_soc_dapm_put_enum_double(), which validates
-that the value is within the enum item range.
+hci_unregister_dev() does not disable cmd_timer and ncmd_timer
+before the hci_dev structure is freed. If a timeout fires
+during device teardown, the callback dereferences freed memory
+(including the hdev->reset function pointer), leading to a
+use-after-free.
 
-An out-of-range value can therefore make the driver read past the texts
-array before the helper rejects the write. Move the lookup after the helper
-has accepted the value.
+Add disable_delayed_work_sync() calls alongside the existing
+disable_work_sync() calls to ensure both timers are fully
+quiesced before teardown proceeds.
 
-Fixes: 4a3478debf36 ("ASoC: hdac_hdmi: Add jack reporting")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20260609124317.38046-2-sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0d151a103775 ("Bluetooth: hci_core: cancel all works upon hci_unregister_dev()")
+Signed-off-by: Jordan Walters <jaggyaur@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hdmi.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
-index 33c7ba842eee93..183c5a50a4e37d 100644
---- a/sound/soc/codecs/hdac_hdmi.c
-+++ b/sound/soc/codecs/hdac_hdmi.c
-@@ -909,12 +909,14 @@ static int hdac_hdmi_set_pin_port_mux(struct snd_kcontrol *kcontrol,
- 	struct hdac_device *hdev = dev_to_hdac_dev(dapm->dev);
- 	struct hdac_hdmi_priv *hdmi = hdev_to_hdmi_priv(hdev);
- 	struct hdac_hdmi_pcm *pcm;
--	const char *cvt_name =  e->texts[ucontrol->value.enumerated.item[0]];
-+	const char *cvt_name;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index e96ccdd7ef15e7..6800bb56dc398d 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2729,6 +2729,8 @@ void hci_unregister_dev(struct hci_dev *hdev)
+ 	disable_work_sync(&hdev->tx_work);
+ 	disable_work_sync(&hdev->power_on);
+ 	disable_work_sync(&hdev->error_reset);
++	disable_delayed_work_sync(&hdev->cmd_timer);
++	disable_delayed_work_sync(&hdev->ncmd_timer);
  
- 	ret = snd_soc_dapm_put_enum_double(kcontrol, ucontrol);
- 	if (ret < 0)
- 		return ret;
- 
-+	cvt_name = e->texts[ucontrol->value.enumerated.item[0]];
-+
- 	if (port == NULL)
- 		return -EINVAL;
+ 	hci_cmd_sync_clear(hdev);
  
 -- 
 2.53.0
