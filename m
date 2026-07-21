@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94483B8412;
-	Tue, 21 Jul 2026 21:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118A643C7B1;
+	Tue, 21 Jul 2026 21:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670639; cv=none; b=CWWHrYxXRH/UEtU/Cjfes4rh6bGg0fcxRy9gtxnmJWaYrY/flv8968cRNsCilqtrTZLBTBiaSdSjpjXtlpJYJSX59QriKgo9ld3V62ZgNx5xLNck9kkgm7ciY8jsw1kF1CE4anyQ3cvmhICYH2HYZDORjlDlKiIlcIuNe5+f360=
+	t=1784670641; cv=none; b=BzpxvenQT/CI67FgQyzVzTTAQ/a7hfGxm6W3HMVnnnulElSAJ25lfF1oKdYEq59qV8VgtZlbmTUuN5ZGhe5ML9Fk5x21GacuM1kcH5/DTzSmiNfGSTnr1Bw3xZe/TWyZ9MAOOYzvdZOFCD8tlAM33mdCHPpyde1E1R1Kth5gQ0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670639; c=relaxed/simple;
-	bh=oUJCJKNpxKxOb6EPfTzSL+KSsNtpjQNKDXV6ZUv3jFs=;
+	s=arc-20240116; t=1784670641; c=relaxed/simple;
+	bh=ql25+0qFKps3azdntC9sAMMme20pa1TsSoWYGLtQajE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MMnVjvlv4K51is5qKK7sbQaLCvHfN6RCbXFEWpFSgpZkiIbLNlqu8t4NVVhdUZsgRsGXVFrJM3ILPgivsgY31o1HE0FFOaQxLM1dibQEKfTQo0ZX/7MLFYkM/1JEhIMo2O+QlmLhRliJUU7V5ujUqBq/WNdELti94Q+U8LUtTRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHU/M180; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MHARi8eP2Ssq2u5SBG9ZFO5APWEVwq0zs0bJndOgt/8srRz6H+hvg1j5UcbnFSHYkDMPHkCR7EZuKnvStYXPjd6rgRc5IRMNUBeDVGA1CgFSE3BmYWWCeMXSwzEIfdBX34iqP/CnQmq1BaSPkE8A01LUR1M665M9ZhWeUb51Npc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFUle9yL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHU/M180"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54341F00A3D;
-	Tue, 21 Jul 2026 21:50:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFUle9yL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789671F000E9;
+	Tue, 21 Jul 2026 21:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670637;
-	bh=hiGNV5pNFgc3QlcD8/BHGysN6RDvFgxYb4+AavvlgGQ=;
+	s=korg; t=1784670640;
+	bh=x9sVEGZVZDA22UBCCyJVkLhslTCZPgoEoYp+JaBC20Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gHU/M180WSau6rutWdmAgIRuNJV2m6iV2XwAxe7iZoCvu/GGdKwJZSocdHpHGMy87
-	 t3xywtu1U/O8eE9iPh7jpM2830xIaU0B3b/FlDK4MZ5eRaNZ6h+Wl7VQSk2RzzKA+J
-	 kH8x4t32SJ0tajdq0qwOY8TlzqS5WDVTaQaXld1g=
+	b=jFUle9yL2jZ0OsQ4TB9TbS6yjN6aMr4kc0V7XyyDbfWaAX1F9mPeazVUOytGpDe3G
+	 jIX4SFhNpfqMPiAxLyVSaTwaDJ/f4nYlbSyCog7JAe5V2yrI1OTT14tarV9QStqSYJ
+	 kxS6W6n0Mf3tQOBkXak522MWhfGe18nujBlr/MIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Tejun Heo <tj@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Zide Chen <zide.chen@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1007/1067] writeback: fix race between cgroup_writeback_umount() and inode_switch_wbs()
-Date: Tue, 21 Jul 2026 17:26:48 +0200
-Message-ID: <20260721152447.097641972@linuxfoundation.org>
+Subject: [PATCH 6.1 1008/1067] perf/x86/intel/uncore: Defer ADL global PMON enable to enable_box()
+Date: Tue, 21 Jul 2026 17:26:49 +0200
+Message-ID: <20260721152447.119818486@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,178 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Zide Chen <zide.chen@intel.com>
 
-[ Upstream commit cba38ec4cbd3a7b8b942a8d52531a05be8a9ff0d ]
+[ Upstream commit 9a0bb848a37150aeccc10088e141339917d995dc ]
 
-When a container exits, the following BUG_ON() is occasionally triggered:
+On some Raptor Cove CPUs, enabling uncore PMON globally at driver init
+may increase power consumption even when no perf events are in use.
 
-==================================================================
- VFS: Busy inodes after unmount of sdb (ext4)
- ------------[ cut here ]------------
- kernel BUG at fs/super.c:695!
- CPU: 3 PID: 6 Comm: containerd-shim Tainted: G OE K 6.6 #1
- pstate: 63400009 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
- pc : generic_shutdown_super+0xf0/0x100
- lr : generic_shutdown_super+0xf0/0x100
- Call trace:
-  generic_shutdown_super+0xf0/0x100
-  kill_block_super+0x20/0x48
-  ext4_kill_sb+0x28/0x60
-  deactivate_locked_super+0x54/0x130
-  deactivate_super+0x84/0xa0
-  cleanup_mnt+0xa4/0x140
-  __cleanup_mnt+0x18/0x28
-  task_work_run+0x78/0xe0
-  do_notify_resume+0x204/0x240
-==================================================================
+Drop adl_uncore_msr_init_box() and defer programming the global control
+register to enable_box(), so it is only set when a box is actually used.
 
-The root cause is a race between cgroup_writeback_umount() and
-inode_switch_wbs()/cleanup_offline_cgwb(). There is a window between
-inode_prepare_wbs_switch() returning true and the subsequent
-wb_queue_isw() call. Following is the process that triggers the issue:
+IMC and IMC freerunning counters use a separate control path and are
+unaffected.
 
-      CPU A (umount)           |          CPU B (writeback)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                                 inode_switch_wbs/cleanup_offline_cgwb
-                                  atomic_inc(&isw_nr_in_flight)
-                                  inode_prepare_wbs_switch
-                                   -> passes SB_ACTIVE check
-                                   __iget(inode)
- generic_shutdown_super
-  sb->s_flags &= ~SB_ACTIVE
-  cgroup_writeback_umount(sb)
-   smp_mb()
-   atomic_read(&isw_nr_in_flight)
-   rcu_barrier()
-    -> no pending RCU callbacks
-   flush_workqueue(isw_wq)
-    -> nothing queued, returns
-  evict_inodes(sb)
-   -> Inode skipped as isw still holds a ref.
-  sop->put_super(sb)
-   /* destroys percpu counters */
-  -> VFS: Busy inodes after unmount!
-                                  wb_queue_isw()
-                                   queue_work(isw_wq, ...)
-                                  /* later in work function */
-                                  inode_switch_wbs_work_fn
-                                   process_inode_switch_wbs
-                                    iput() -> evict
-                                     percpu_counter_dec() // UAF!
-
-Fix this by extending the RCU read-side critical section in
-inode_switch_wbs() and cleanup_offline_cgwb() to cover from
-inode_prepare_wbs_switch() through wb_queue_isw().  Since there is
-no sleep in this window, rcu_read_lock() can be used.  Then add a
-synchronize_rcu() in cgroup_writeback_umount() before the existing
-rcu_barrier(), so that all in-flight switchers that have passed the
-SB_ACTIVE check have completed queue_work() before flush_workqueue()
-is called.
-
-The existing rcu_barrier() is intentionally retained so this fix can
-be backported unchanged to stable kernels (5.10.y, 6.6.y, ...) that
-still queue switches via queue_rcu_work(). It is a no-op on current
-mainline (since commit e1b849cfa6b6 ("writeback: Avoid contention on
-wb->list_lock when switching inodes")) and is removed in a follow-up
-patch.
-
-Fixes: a1a0e23e4903 ("writeback: flush inode cgroup wb switches instead of pinning super_block")
+Fixes: 772ed05f3c5c ("perf/x86/intel/uncore: Add Alder Lake support")
+Signed-off-by: Zide Chen <zide.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Cc: stable@vger.kernel.org
-Suggested-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/all/mxnjq2l6guusfchvauxr3v7c4bwjasybxlleqbbh4efloeqspz@iqylk76ohufz
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Link: https://patch.msgid.link/20260521095016.2791354-2-libaokun@linux.alibaba.com
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Link: https://patch.msgid.link/20260602144908.263680-5-zide.chen@intel.com
+[ deleted adl_uncore_msr_init_box() in its 6.12 wrmsrl() spelling since the tree predates the wrmsrq() rename ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fs-writeback.c |   31 +++++++++++++++++++++++++++++--
- 1 file changed, 29 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/uncore_snb.c |    7 -------
+ 1 file changed, 7 deletions(-)
 
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -623,12 +623,19 @@ static void inode_switch_wbs(struct inod
- 
- 	atomic_inc(&isw_nr_in_flight);
- 
--	/* find and pin the new wb */
-+	/*
-+	 * Paired with synchronize_rcu() in cgroup_writeback_umount():
-+	 * holding rcu_read_lock across inode_prepare_wbs_switch()
-+	 * (covering the SB_ACTIVE check and the inode grab) and
-+	 * wb_queue_isw() ensures synchronize_rcu() cannot return until
-+	 * the work is queued, so the subsequent flush_workqueue() will
-+	 * wait for the switch.
-+	 */
- 	rcu_read_lock();
-+	/* find and pin the new wb */
- 	memcg_css = css_from_id(new_wb_id, &memory_cgrp_subsys);
- 	if (memcg_css && !css_tryget(memcg_css))
- 		memcg_css = NULL;
--	rcu_read_unlock();
- 	if (!memcg_css)
- 		goto out_free;
- 
-@@ -643,9 +650,11 @@ static void inode_switch_wbs(struct inod
- 	isw->inodes[0] = inode;
- 
- 	wb_queue_isw(new_wb, isw);
-+	rcu_read_unlock();
- 	return;
- 
- out_free:
-+	rcu_read_unlock();
- 	atomic_dec(&isw_nr_in_flight);
- 	if (new_wb)
- 		wb_put(new_wb);
-@@ -704,6 +713,14 @@ bool cleanup_offline_cgwb(struct bdi_wri
- 		new_wb = &wb->bdi->wb; /* wb_get() is noop for bdi's wb */
- 
- 	nr = 0;
-+	/*
-+	 * Paired with synchronize_rcu() in cgroup_writeback_umount().
-+	 * Holding rcu_read_lock across the SB_ACTIVE check, the inode grab
-+	 * and wb_queue_isw() ensures synchronize_rcu() cannot return until
-+	 * the work is queued, so the subsequent flush_workqueue() will wait
-+	 * for the switch.
-+	 */
-+	rcu_read_lock();
- 	spin_lock(&wb->list_lock);
- 	/*
- 	 * In addition to the inodes that have completed writeback, also switch
-@@ -721,6 +738,7 @@ bool cleanup_offline_cgwb(struct bdi_wri
- 
- 	/* no attached inodes? bail out */
- 	if (nr == 0) {
-+		rcu_read_unlock();
- 		atomic_dec(&isw_nr_in_flight);
- 		wb_put(new_wb);
- 		kfree(isw);
-@@ -728,6 +746,7 @@ bool cleanup_offline_cgwb(struct bdi_wri
- 	}
- 
- 	wb_queue_isw(new_wb, isw);
-+	rcu_read_unlock();
- 
- 	return restart;
+--- a/arch/x86/events/intel/uncore_snb.c
++++ b/arch/x86/events/intel/uncore_snb.c
+@@ -537,12 +537,6 @@ void tgl_uncore_cpu_init(void)
+ 	skl_uncore_msr_ops.init_box = rkl_uncore_msr_init_box;
  }
-@@ -1159,6 +1178,14 @@ void cgroup_writeback_umount(void)
  
- 	if (atomic_read(&isw_nr_in_flight)) {
- 		/*
-+		 * Paired with rcu_read_lock() in inode_switch_wbs() and
-+		 * cleanup_offline_cgwb().  synchronize_rcu() waits for any
-+		 * in-flight switcher that already passed the SB_ACTIVE check
-+		 * to finish queueing its work, so flush_workqueue() below
-+		 * will then drain it.
-+		 */
-+		synchronize_rcu();
-+		/*
- 		 * Use rcu_barrier() to wait for all pending callbacks to
- 		 * ensure that all in-flight wb switches are in the workqueue.
- 		 */
+-static void adl_uncore_msr_init_box(struct intel_uncore_box *box)
+-{
+-	if (box->pmu->pmu_idx == 0)
+-		wrmsrl(ADL_UNC_PERF_GLOBAL_CTL, SNB_UNC_GLOBAL_CTL_EN);
+-}
+-
+ static void adl_uncore_msr_enable_box(struct intel_uncore_box *box)
+ {
+ 	wrmsrl(ADL_UNC_PERF_GLOBAL_CTL, SNB_UNC_GLOBAL_CTL_EN);
+@@ -561,7 +555,6 @@ static void adl_uncore_msr_exit_box(stru
+ }
+ 
+ static struct intel_uncore_ops adl_uncore_msr_ops = {
+-	.init_box	= adl_uncore_msr_init_box,
+ 	.enable_box	= adl_uncore_msr_enable_box,
+ 	.disable_box	= adl_uncore_msr_disable_box,
+ 	.exit_box	= adl_uncore_msr_exit_box,
 
 
