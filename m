@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5F743B48C;
-	Tue, 21 Jul 2026 22:49:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784FE3E49F5;
+	Tue, 21 Jul 2026 22:49:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674180; cv=none; b=D+8Dn3xqnEr7LRNkacgmlVWau6zspmHFTHz4dDHnicd+Kmfo8TpSnE8492w/Px1LHrNqRU7xkJTq1/JTKNx52LEChdWsQx0y3AoVwU2u+erkyqk0JBS5ztSrE5NeKneLbvkUMHoFI9e9Yw4+ftX4O+M2aPVYqUfZdlPtwjget/E=
+	t=1784674182; cv=none; b=nQIJw8Frav+BpfRRu5AyDyqxir9Jw2BFzpMvO2Dgjma3QOXQFQaCnCagubJGyRHOVwyQQpVHIWEb7EIIZG2uQh0shseoUROJ6jEOmfMUeNmpU88I3QurH5rMfa9dycnozFeBcneqiXXgq4TyXRodakGpPxyFzw5DXWIoyrYwC0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674180; c=relaxed/simple;
-	bh=ihbb5C7Qpe2acl0ssg2AzhjRqCmrCTQjMxLJdhF7dqE=;
+	s=arc-20240116; t=1784674182; c=relaxed/simple;
+	bh=ZVCiTrQ8Zrn6nIFdW6EqRljhCxp+bIV/z4gVN9PTcRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QUMv9jz1CtpZbv+QmIIhyK4JlNHFupuP1AlS6btcOZpUt92uTrdT1O5YNqWK3jeJgSNMl1KbmSSN63TFbTXVJG7tNayRwl8HqMmOobmfIP3Bp9UAcO8EU2b9v3AMa6+LxKGnYmnThMFtxB8RvASm4+S78QZTajbzIFLZn0ILqFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duVVA8+z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OiGUNm/JB/83/czIeujoHQMkffvOLYmQy1u/H3OHhryt+IYVzLtmoQHjz37k+486dk10XociFiHZs0+e0mQroZHy2djjb/6m9Gm/uDlQnEQb8+ffir7OXbVMe/MGRgq1v58GXdYYOaZ9QO9RWQ8iAi6CLemQr1nY1XTDfRYoq2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVJBxFF/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duVVA8+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 058A21F000E9;
-	Tue, 21 Jul 2026 22:49:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVJBxFF/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1DBA1F000E9;
+	Tue, 21 Jul 2026 22:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674178;
-	bh=kqLXBq7WxFadRYmyrxjChsVu7EHZ4KhWTujNIJg0GjY=;
+	s=korg; t=1784674181;
+	bh=Z51K0xeFtnC3XtIxHOaRWd7jYWSjfH8UjaN5iKQ2G30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=duVVA8+zp4q8lkclQ2TuUqfZikVzSbB9+Gn29MRvdeu6BpCeQiAwcMji0cG//XwIP
-	 lO7vQ20yJvNymupj2EPP08a+fORYSggeXffthT5PEYrxGhMvytVobAG7/3lw+9koki
-	 soF3pVGXDnVmftmQHCFN0xQnNTStefz8EgCjIwn8=
+	b=WVJBxFF/t7Yi78SWBZWy9QuUyX9QDpH+qhv/O9aqKde5Pu6OaA87RpRAsWcsD9zDW
+	 Gv3LrpJlJv3FTujE9MGD40SmioNH7kb5X+CyS5aPQySRcjIbKZ7f1+vAeb2Ld2tohx
+	 5nwI5jX93GbvGzDvAcESqThQnJDPw+zSY9+fr/lM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 442/699] fbdev: nvidia: fix potential memory leak in nvidiafb_probe()
-Date: Tue, 21 Jul 2026 17:23:21 +0200
-Message-ID: <20260721152405.670275870@linuxfoundation.org>
+	Hui Wang <hui.wang@canonical.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 407/699] ring-buffer: Fix event length with forced 8-byte alignment
+Date: Tue, 21 Jul 2026 17:22:46 +0200
+Message-ID: <20260721152404.876657192@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,32 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Hui Wang <hui.wang@canonical.com>
 
-commit 85f5e38c162bdf9dbbe197275d416402712f3707 upstream.
+[ Upstream commit c37e0a4b79a6bbb96ce5ffe279d7c001e20529e0 ]
 
-In nvidiafb_probe(), the memory allocated for modelist in
-nvidia_set_fbinfo() is not freed in the subsequent error paths.
-Fix that by calling fb_destroy_modelist().
+When RB_FORCE_8BYTE_ALIGNMENT is true, rb_calculate_event_length()
+reserves the space of event->array[0] for placing the data length and
+rb_update_event() stores the data length in event->array[0]
+accordingly. As a result the whole event length will add extra 4 bytes
+for sizeof(event.array[0]) unconditionally.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+But ring_buffer_event_length() only subtracts the
+sizeof(event->array[0]) for events larger than RB_MAX_SMALL_DATA +
+sizeof(event->array[0]). As a result, small events on architectures
+with RB_FORCE_8BYTE_ALIGNMENT=true report a data length that is 4
+bytes larger than expected.
+
+To fix it, add the RB_FORCE_8BYTE_ALIGNMENT as a condition to subtract
+the size of that length field whenever RB_FORCE_8BYTE_ALIGNMENT is
+true.
+
+This issue is observed in a riscv64 kernel with
+CONFIG_HAVE_64BIT_ALIGNED_ACCESS set to y, when we run ftrace selftest
+trace_marker_raw.tc, we get the weird log: for cases where the id is
+1..100, the number of data field is 8*N, but once id exceeds 100, the
+number of data field becomes 8*N+4:
+ # 1 buf: 58 00 00 00 80 5e d1 63 (number of data field is 8*1)
+ ...
+ # a buf: 58 ...                  (number of data field is 8*2)
+ ...
+ # 64 buf: 58 ...                 (number of data field is 8*13)
+ # 65 buf: 58 ...                 (number of data field is 8*13+4)
+
+After applying this change, the number of data field keeps being 8*N+4
+consistently.
+
+Link: https://patch.msgid.link/20260607072431.125633-2-hui.wang@canonical.com
+Fixes: 2271048d1b3b ("ring-buffer: Do 8 byte alignment for 64 bit that can not handle 4 byte align")
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/nvidia/nvidia.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/ring_buffer.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/nvidia/nvidia.c
-+++ b/drivers/video/fbdev/nvidia/nvidia.c
-@@ -1409,6 +1409,7 @@ static int nvidiafb_probe(struct pci_dev
- 
- err_out_iounmap_fb:
- 	iounmap(info->screen_base);
-+	fb_destroy_modelist(&info->modelist);
- err_out_free_base1:
- 	fb_destroy_modedb(info->monspecs.modedb);
- 	nvidia_delete_i2c_busses(par);
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 1089daa17b09e2..40b3332e0c12ab 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -246,7 +246,8 @@ unsigned ring_buffer_event_length(struct ring_buffer_event *event)
+ 	if (event->type_len > RINGBUF_TYPE_DATA_TYPE_LEN_MAX)
+ 		return length;
+ 	length -= RB_EVNT_HDR_SIZE;
+-	if (length > RB_MAX_SMALL_DATA + sizeof(event->array[0]))
++	if (length > RB_MAX_SMALL_DATA + sizeof(event->array[0]) ||
++	    RB_FORCE_8BYTE_ALIGNMENT)
+                 length -= sizeof(event->array[0]);
+ 	return length;
+ }
+-- 
+2.53.0
+
 
 
