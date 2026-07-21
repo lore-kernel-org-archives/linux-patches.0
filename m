@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C7F322DB7;
-	Tue, 21 Jul 2026 17:06:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8852E3D3337;
+	Tue, 21 Jul 2026 17:06:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653603; cv=none; b=QB/F8TjPIhH38lVmZrPavvHudn7hWEuPqmoQ3wuvLIgVc4dBWiiV8Qs96MDlBSBNjuw48WjVrZ0z1Y4G9yrPLnNMMIq7Cb0Rm54GgZB6wOeAgCgj7GM9HZct3lOZtmPLHq+aeq9YQ2+Ji8197pdK8rj0TccnPxh8Lx8RaabYYXw=
+	t=1784653606; cv=none; b=OXBeqI668MpcmfEEidRh1RxOIe+2cVAum2xx4UzCIanolv17I/xBYl62kcELTjsF1DDtcKgXSCc0jBPRhfGvLs6OZ5eO7+j7zN+/fbGyU09AaqtPJ+7x4kjJlXpzwL/KSD49+yk5k4bZGfrx6qf4IvLn/QSNtRe1crJ0vAKOTjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653603; c=relaxed/simple;
-	bh=7D0XQk6pavZOdxvJb05dt8xAQWQFVxUbb+d4lz/fd6U=;
+	s=arc-20240116; t=1784653606; c=relaxed/simple;
+	bh=Fd2mAxdE3XQ2Nk0ZcKeoXC2P3TNSBQYlLgq6fdC9oMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ER6KL5VmWNcuFqfTk289KHdWRLwuGmZnWqg7XdXKxmbS6mQDV4VeMqg1qZ7MhFRHucOmMxdSec4Huouwo52ShWJDP+YcWMynxYbXCCzZ+OHmrC2yTo19qlPNhEaqFtAnyvR29/zSUxu+rbGyYSPcGbxFpXDH87gXdlYDi5QgHsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMi0eokn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CNaMSPYW4vyfT4Kd+Q4ljG4aPtx28j/Bu9ehD+yVHzs/c5rCm7J3QkWptCm89dacbx2dFdRHuVfQif2SoK3n3DDCSUG3YlPpanj+FVLJU+OkaeKgjwEgNb4khjjd2Vnk0F7v0qRBFciv+AoHhBmdpbMF/cyG6PRQxEKaTqCq1jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AiHTcAfp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMi0eokn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3289D1F000E9;
-	Tue, 21 Jul 2026 17:06:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AiHTcAfp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D671F01558;
+	Tue, 21 Jul 2026 17:06:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653602;
-	bh=albir+uoPgyaX4zXIfDc4zv1ufdHOTWiaNRNeepiv6Y=;
+	s=korg; t=1784653605;
+	bh=BPlA0eWqYmR31sQx2ffy16VpMsWtPFf7i2C/a5MTAyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mMi0eoknufKh/vuoEvpAgulYc0TXLHrrc4Xi1gXN2Qmiz8jZARhYHfg1x8wvpG4Nt
-	 4E9hSiKQWO/ap4VlUtlT6u4qhZ1rQeVo+4+QIgX/YqBXUG3qVQbG6/HdLKfMO+vy7Y
-	 1bDrzLCqk154B52A2wpnIP01DXwCPljrnr102jiE=
+	b=AiHTcAfpbqTVo0fTvlnqFCruGvPHmshKrh5wMvP8TAj9Frd47ekVCL8x5L3zklMPK
+	 0fQG3gmhktJpZqTUpfP0gIBpWIcVVoGCUNYUjOrGX5QEVhoEPhQc4HBimYpRODUM5V
+	 Y5Fz64LqsiNKq830HJG1KB35Uk1UuvKkB8N4k7uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Deepakkumar Karn <dkarn@redhat.com>,
-	linux-afs@lists.infradead.org,
+	Amir Goldstein <amir73il@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1382/2077] afs: Fix leak of ungot volume
-Date: Tue, 21 Jul 2026 17:17:35 +0200
-Message-ID: <20260721152625.412461953@linuxfoundation.org>
+Subject: [PATCH 7.1 1391/2077] ovl: fix comment about locking order
+Date: Tue, 21 Jul 2026 17:17:44 +0200
+Message-ID: <20260721152625.621949358@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,38 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit d672c276f685a540ed2b2a8bafaed4650a89022c ]
+[ Upstream commit fd5637a2fe6dd4448392738691d63e5559fafb12 ]
 
-Fix afs_lookup_volume_rcu() so that it doesn't leak a dying volume if
-afs_try_get_volume() fails.
+Forgot to update the comment when we changed the locking order.
 
-Fixes: 32222f09782f ("afs: Apply server breaks to mmap'd files in the call processor")
-Closes: https://sashiko.dev/#/patchset/20260609081738.770127-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260622090856.2746629-17-dhowells@redhat.com
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Deepakkumar Karn <dkarn@redhat.com>
-cc: linux-afs@lists.infradead.org
+Fixes: 162d06444070c ("ovl: reorder ovl_want_write() after ovl_inode_lock()")
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://patch.msgid.link/20260609184656.1916631-1-amir73il@gmail.com
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/callback.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/overlayfs/inode.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/afs/callback.c b/fs/afs/callback.c
-index 74853e0d0435ae..61354003c006cf 100644
---- a/fs/afs/callback.c
-+++ b/fs/afs/callback.c
-@@ -134,6 +134,7 @@ static struct afs_volume *afs_lookup_volume_rcu(struct afs_cell *cell,
+diff --git a/fs/overlayfs/inode.c b/fs/overlayfs/inode.c
+index 00c69707bda984..bc71231cad532e 100644
+--- a/fs/overlayfs/inode.c
++++ b/fs/overlayfs/inode.c
+@@ -783,8 +783,8 @@ static const struct address_space_operations ovl_aops = {
+  *
+  * This chain is valid:
+  * - inode->i_rwsem			(inode_lock[2])
+- * - upper_mnt->mnt_sb->s_writers	(ovl_want_write[0])
+  * - OVL_I(inode)->lock			(ovl_inode_lock[2])
++ * - upper_mnt->mnt_sb->s_writers	(ovl_want_write[0])
+  * - OVL_I(lowerinode)->lock		(ovl_inode_lock[1])
+  *
+  * And this chain is valid:
+@@ -797,8 +797,8 @@ static const struct address_space_operations ovl_aops = {
+  * held, because it is in reverse order of the non-nested case using the same
+  * upper fs:
+  * - inode->i_rwsem			(inode_lock[1])
+- * - upper_mnt->mnt_sb->s_writers	(ovl_want_write[0])
+  * - OVL_I(inode)->lock			(ovl_inode_lock[1])
++ * - upper_mnt->mnt_sb->s_writers	(ovl_want_write[0])
+  */
+ #define OVL_MAX_NESTING FILESYSTEM_MAX_STACK_DEPTH
  
- 		if (volume && afs_try_get_volume(volume, afs_volume_trace_get_callback))
- 			break;
-+		volume = NULL;
- 	}
- 
- 	return volume;
 -- 
 2.53.0
 
