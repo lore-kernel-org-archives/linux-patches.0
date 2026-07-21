@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479E83B9950;
-	Tue, 21 Jul 2026 20:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F3C3B95E0;
+	Tue, 21 Jul 2026 20:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667311; cv=none; b=Y2MyfO7zW0oO571iMOs0le0mxD2LoXbnIUksRXNFXKkr1Dj92uziblzypscICKL5DPnlBp/mLOe0lCldGt97IpKBkREuFNg472FzCKZfrXySS1Tl/uAe9ojxmPR5LoLsWfJNb7cZ00FMtVrVFVvLF5/WfBivHcE7NC8jPoyyWcQ=
+	t=1784667314; cv=none; b=Dn5msqRt+GvRORUGsZFA7XCGvLjixYKYjTOxAr24DtNPHO6R9IwDQ/WuI7qdZcB3pMuBAuDET1vj+r991bp/h1aH/9k2ir8p+kRZrObcY7Qqz+xKHRM4wByvQUOivvBDhH03EEyMv0wwQlF/ysOGFZUb0EdNzsvO/m0rNlUwm2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667311; c=relaxed/simple;
-	bh=DfG8xNY4TPFCHsfh8PvaK2Eumxebj5MgGpYs6vpykTY=;
+	s=arc-20240116; t=1784667314; c=relaxed/simple;
+	bh=GZwIHKoDCRn3gRgv+TfVYA5nrz+nmdthSJu1cbdY2qg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M0Ryw22zg6gqvMxSqhvhiBTIfXSh+gnJvpDa74jxMGIn1lGvCcdTZLs6MPsgzQ/LwWMN1GYqsmkTo0y3aeO2CCwdY7OZVpAXvKZawTL4crErpCGQMC507687Ev88N7D9iXnJHld1QWzXm6SYkp287zKd7q2RqkT8F3iHN7+Y7P4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DL74aWbk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AKMaUfu2LBYOM6MAyOFhQWp+9hp2h5V+6rs+Pdsu5rmzcVMeCvjm3xO0P7DwDzffOzQmKDOf4ASHIkEODOIhicC+Sdr17qax7kQ29pQf6r9VGreTvUaUOEZp04aTORhhxvHE2D3Q6nJRYPR9UiHzXwmVYJ0kdiNXp3naLa2vxVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsn2l/+q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DL74aWbk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D0F1F000E9;
-	Tue, 21 Jul 2026 20:55:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsn2l/+q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 571381F000E9;
+	Tue, 21 Jul 2026 20:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667310;
-	bh=wVtM4/IJqyM4Ix6lYwULLfQcobiIHrF2rIsLzfUO4ws=;
+	s=korg; t=1784667312;
+	bh=lHlu4fCvoxGx3BoGFJd8rFFoP8G6lQ12ldlrUY+i6M8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DL74aWbkSAEUSNAiqWQmOnt87+FBj9Z5lmWysqmMWL4Y4TZl4iTXq0SiJoje/EpSh
-	 0+H6QRtshFW49cKq64Ep79zDVLgvCtBWSJl5nz5VzaL9Sp1kNQTq2ErW2vZ7oWtRfu
-	 OZa7n+SYpybqg5V16tSpYkSLbM38Ijpnlr+dP+Tw=
+	b=dsn2l/+qzozukFtQKk0VeTacFWP/kg9ctNT4WAx7z4tPT2KELa7tC/PjBI5qVDdOE
+	 R26IIWoznQPu/NSkOpaUg4e3nLMZmcGATgKMmY81mtJiOkE8seBHQRWjLyhqhtkomo
+	 oGROwmp5KcJCalsreZBCx6ORrliPzvEEVHgmP5lQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Alba Vives <sebasjosue84@gmail.com>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>
-Subject: [PATCH 6.6 1011/1266] fpga: microchip-spi: fix zero header_size OOB read in mpf_ops_parse_header()
-Date: Tue, 21 Jul 2026 17:24:08 +0200
-Message-ID: <20260721152504.449593346@linuxfoundation.org>
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 0970/1266] MIPS: ip22-gio: fix gio device memory leak
+Date: Tue, 21 Jul 2026 17:23:27 +0200
+Message-ID: <20260721152503.538820059@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,41 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Alba Vives <sebasjosue84@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 43a1974da6bc7ce8f4d1dc1d03d56997428c29c3 upstream.
+commit 7de9a1b45f5a95b58145653c525c8fb80292d9ab upstream.
 
-mpf_ops_parse_header() reads header_size from the bitstream at
-MPF_HEADER_SIZE_OFFSET (24). When header_size is zero, the expression
-*(buf + header_size - 1) reads one byte before the buffer start.
+The gio device release callback was never wired up so gio devices are
+not freed when the last reference is dropped.
 
-Since initial_header_size is set to 71 in mpf_ops, the fpga-mgr core
-guarantees the buffer is large enough to reach MPF_HEADER_SIZE_OFFSET.
-The only real gap is the zero header_size case, which cannot be
-resolved by providing a larger buffer, so return -EINVAL.
-
-Fixes: 5f8d4a900830 ("fpga: microchip-spi: add Microchip MPF FPGA manager")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20260518190742.61426-4-sebasjosue84@gmail.com
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+Fixes: e84de0c61905 ("MIPS: GIO bus support for SGI IP22/28")
+Cc: stable@vger.kernel.org	# 3.3
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/fpga/microchip-spi.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/mips/sgi-ip22/ip22-gio.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/fpga/microchip-spi.c
-+++ b/drivers/fpga/microchip-spi.c
-@@ -116,6 +116,9 @@ static int mpf_ops_parse_header(struct f
- 	}
- 
- 	header_size = *(buf + MPF_HEADER_SIZE_OFFSET);
-+	if (!header_size)
-+		return -EINVAL;
+--- a/arch/mips/sgi-ip22/ip22-gio.c
++++ b/arch/mips/sgi-ip22/ip22-gio.c
+@@ -101,6 +101,8 @@ int gio_device_register(struct gio_devic
+ {
+ 	giodev->dev.bus = &gio_bus_type;
+ 	giodev->dev.parent = &gio_bus;
++	giodev->dev.release = gio_release_dev;
 +
- 	if (header_size > count) {
- 		info->header_size = header_size;
- 		return -EAGAIN;
+ 	return device_register(&giodev->dev);
+ }
+ EXPORT_SYMBOL_GPL(gio_device_register);
 
 
