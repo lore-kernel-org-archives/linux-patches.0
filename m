@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF89644AB9F;
-	Tue, 21 Jul 2026 22:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779DB39733E;
+	Tue, 21 Jul 2026 22:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674542; cv=none; b=fy6OsYFgcp5w+1wKVzHfsF0uaAuXnrN2YCNrIvJBU82QK/4neZBRNUrBX4ERqu5mgsWnUOr75Ux1KlQdICPrAAJUDoiYyU7HrlXOoY2Jklcdc9NcMdGgIB6y64CIL408QpFFlv3eCsURPtBTZIiOKiDjjeq7O1uhqKs/tFo2vSY=
+	t=1784674544; cv=none; b=FsaEoRsKC7ob+hCyeAfc+ZrLzhrsby3xoPWtxb83PAib7fr7heOUvZwV+5ZLGPmChSx/tGpLIFM3W7qPnbkPpJN7uy3DTEI4ZQHSs91+Bbd+VLju6WCUyGQvaS/j3ywRthNo52CVZ/2jZ1ZPBWHRRIG7Vxu3MstredfBWc4c7WE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674542; c=relaxed/simple;
-	bh=+yO7vImien64qGDxBAY9VaoxfCknBf2LuhCC7Ght3ZU=;
+	s=arc-20240116; t=1784674544; c=relaxed/simple;
+	bh=/z6Ic6GmKEIB4FDIHJpiCPqoZo7yvUD4AEdi21ngcUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XPKIpe1TMYO3NfZ59z6963Bpvw9CK8nxywOjb6t5s4WfseY3ttZyefYGrCUB1LZlpUiu4+g/BsRZhhBPsNWtqHa57NxyqSHNJUtRwxeQZeT6Y31oiyahv29GzCVluIZzwscT+V70FVAX5eOwEVOuM9Fe1AaZ2GMlz2iZ50UFeo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11IQYv+Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m2M6Ie3mc2Ih8zlASAv436AEsr1aviU3jzW+pQXQb8tDjySVAL9rWMc0eltW/KFCI0SGrD0veOlLdjHRjRXEsO/JB/unGSP19wOSiedQKZ1Pk5EszeXmkHzjIrDKboLR0ruVV1NgmHFtI+vDsF9xF0UovP0JNVWDEfxYPRm73n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZf3Othx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11IQYv+Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1821F000E9;
-	Tue, 21 Jul 2026 22:55:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZf3Othx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF44A1F000E9;
+	Tue, 21 Jul 2026 22:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674540;
-	bh=rMmHi3sg9Tvs5Z7sOmFbgRUahHq5cEErv+E4/gV6NCg=;
+	s=korg; t=1784674543;
+	bh=rbbemDJiCGz6qvNygWOsnGsamdNC0mUi0Zkgk/I0biY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=11IQYv+QDM6qj+mXlnRVR/+PdYTIDuBPNBivYMxnzmv6sK2d4orRifQNcIJsxSNUZ
-	 +o8gh4oMA4ZJyisTNLVuSCrYxi7rN8AkOmKYUBLE44MC+LdP/A+AoUonIqJ5etqU1q
-	 v4XgT6YBE5M/8iMAZcpho5HvMxzyEdGbNpl7hGwU=
+	b=cZf3OthxcSmrLV2bv1PXYEd69ZLPSaE72V840owSHCgQwLCb4mAVS6it5z7hCfkNY
+	 4hxIS9PLsTf5pmmA+CCi7LhW+YXeAi/K32XDKujJ1mXETeqXEWC8SKvJ3fP5qQzKxu
+	 WnjpiLNzQ3TAB4npnS/wSC1hX6wzmpfFDCsOe6nQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Christian Lamparter <chunkeey@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.10 579/699] crypto: crypto4xx - Remove insecure and unused rng_alg
-Date: Tue, 21 Jul 2026 17:25:38 +0200
-Message-ID: <20260721152408.774127328@linuxfoundation.org>
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 5.10 580/699] batman-adv: clean untagged VLAN on netdev registration failure
+Date: Tue, 21 Jul 2026 17:25:39 +0200
+Message-ID: <20260721152408.798767377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,230 +49,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit 7811ec9e973d2c9e465083699f0c8240b98cb8c4 upstream.
+commit 8669a550c752d86baebc5fdc83b8ff35c4372c0e upstream.
 
-Remove crypto4xx_rng, as it is insecure and unused:
+When an mesh interface is registered, it creates an untagged struct
+batadv_meshif_vlan on top of it via the NETDEV_REGISTER notifier. But in
+this process, another receiver of this notification can veto the
+registration. The netdev registration will be aborted because of this veto.
 
-- It has only a 64-bit security strength, which is highly inadequate.
-  This can be seen by the fact that crypto4xx_hw_init() seeds it with
-  only 64 bits of entropy, and the fact that the original commit
-  mentions that it implements ANSI X9.17 Annex C.
+The register_netdevice() call will try to clean up the net_device using
+unregister_netdevice_queue() - which only uses the .priv_destructor to
+free private resources. In this situation, .dellink will not be called.
 
-  Another issue was that this driver didn't implement the crypto_rng API
-  correctly, as crypto4xx_prng_generate() didn't return 0 on success.
+The cleanup of the untagged batadv_meshif_vlan must thefore be done in the
+destructor to avoid a leak of this object.
 
-- No user of this code is known.  It's usable only theoretically via the
-  "rng" algorithm type of AF_ALG.  But userspace actually just uses the
-  actual Linux RNG (/dev/random etc) instead.  And rng_algs don't
-  contribute entropy to the actual Linux RNG either.  (This may have
-  been confused with hwrng, which does contribute entropy.)
-
-Fixes: d072bfa48853 ("crypto: crypto4xx - add prng crypto support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Acked-by: Christian Lamparter <chunkeey@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 5d2c05b21337 ("batman-adv: add per VLAN interface attribute framework")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+[ switch to old "mesh_iface" name "soft_iface", Context, keep early
+  batadv_softif_destroy_netlink() cleanup in case sysfs support is active,
+  only run destructor VLAN code on non-softif_destroy context ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/amcc/crypto4xx_core.c    |   87 --------------------------------
- drivers/crypto/amcc/crypto4xx_core.h    |    4 -
- drivers/crypto/amcc/crypto4xx_reg_def.h |   11 ----
- 3 files changed, 102 deletions(-)
+ net/batman-adv/main.c           |   17 +++++++++++++++++
+ net/batman-adv/soft-interface.c |    7 +++++--
+ net/batman-adv/soft-interface.h |    2 ++
+ net/batman-adv/types.h          |    7 +++++++
+ 4 files changed, 31 insertions(+), 2 deletions(-)
 
---- a/drivers/crypto/amcc/crypto4xx_core.c
-+++ b/drivers/crypto/amcc/crypto4xx_core.c
-@@ -31,11 +31,9 @@
- #include <crypto/ctr.h>
- #include <crypto/gcm.h>
- #include <crypto/sha.h>
--#include <crypto/rng.h>
- #include <crypto/scatterwalk.h>
- #include <crypto/skcipher.h>
- #include <crypto/internal/aead.h>
--#include <crypto/internal/rng.h>
- #include <crypto/internal/skcipher.h>
- #include "crypto4xx_reg_def.h"
- #include "crypto4xx_core.h"
-@@ -989,10 +987,6 @@ static int crypto4xx_register_alg(struct
- 			rc = crypto_register_aead(&alg->alg.u.aead);
- 			break;
+--- a/net/batman-adv/main.c
++++ b/net/batman-adv/main.c
+@@ -265,6 +265,7 @@ err_orig:
+ void batadv_mesh_free(struct net_device *soft_iface)
+ {
+ 	struct batadv_priv *bat_priv = netdev_priv(soft_iface);
++	struct batadv_softif_vlan *vlan;
  
--		case CRYPTO_ALG_TYPE_RNG:
--			rc = crypto_register_rng(&alg->alg.u.rng);
--			break;
--
- 		default:
- 			rc = crypto_register_skcipher(&alg->alg.u.cipher);
- 			break;
-@@ -1018,10 +1012,6 @@ static void crypto4xx_unregister_alg(str
- 			crypto_unregister_aead(&alg->alg.u.aead);
- 			break;
+ 	atomic_set(&bat_priv->mesh_state, BATADV_MESH_DEACTIVATING);
  
--		case CRYPTO_ALG_TYPE_RNG:
--			crypto_unregister_rng(&alg->alg.u.rng);
--			break;
--
- 		default:
- 			crypto_unregister_skcipher(&alg->alg.u.cipher);
- 		}
-@@ -1080,69 +1070,6 @@ static irqreturn_t crypto4xx_ce_interrup
- 		PPC4XX_TMO_ERR_INT);
+@@ -280,6 +281,22 @@ void batadv_mesh_free(struct net_device
+ 
+ 	batadv_mcast_free(bat_priv);
+ 
++	/* destroy the "untagged" VLAN in case of an register_netdevice() error.
++	 *
++	 * It will be handled normally by batadv_softif_destroy_netlink() and
++	 * batadv_softif_destroy_sysfs() before they call batadv_sysfs_del_meshif().
++	 *
++	 * But when a veto was received during the registration, the VLAN has to
++	 * be cleaned up in the destructor.
++	 */
++	if (!bat_priv->softif_destroy) {
++		vlan = batadv_softif_vlan_get(bat_priv, BATADV_NO_FLAGS);
++		if (vlan) {
++			batadv_softif_destroy_vlan(bat_priv, vlan);
++			batadv_softif_vlan_put(vlan);
++		}
++	}
++
+ 	/* Free the TT and the originator tables only after having terminated
+ 	 * all the other depending components which may use these structures for
+ 	 * their purposes.
+--- a/net/batman-adv/soft-interface.c
++++ b/net/batman-adv/soft-interface.c
+@@ -629,8 +629,8 @@ int batadv_softif_create_vlan(struct bat
+  * @bat_priv: the bat priv with all the soft interface information
+  * @vlan: the object to remove
+  */
+-static void batadv_softif_destroy_vlan(struct batadv_priv *bat_priv,
+-				       struct batadv_softif_vlan *vlan)
++void batadv_softif_destroy_vlan(struct batadv_priv *bat_priv,
++				struct batadv_softif_vlan *vlan)
+ {
+ 	/* explicitly remove the associated TT local entry because it is marked
+ 	 * with the NOPURGE flag
+@@ -834,6 +834,7 @@ static int batadv_softif_init_late(struc
+ 	bat_priv->tt.last_changeset_len = 0;
+ 	bat_priv->isolation_mark = 0;
+ 	bat_priv->isolation_mark_mask = 0;
++	bat_priv->softif_destroy = false;
+ 
+ 	/* randomize initial seqno to avoid collision */
+ 	get_random_bytes(&random_seqno, sizeof(random_seqno));
+@@ -1121,6 +1122,7 @@ void batadv_softif_destroy_sysfs(struct
+ 		batadv_softif_vlan_put(vlan);
+ 	}
+ 
++	bat_priv->softif_destroy = true;
+ 	batadv_sysfs_del_meshif(soft_iface);
+ 	unregister_netdevice(soft_iface);
  }
+@@ -1151,6 +1153,7 @@ static void batadv_softif_destroy_netlin
+ 		batadv_softif_vlan_put(vlan);
+ 	}
  
--static int ppc4xx_prng_data_read(struct crypto4xx_device *dev,
--				 u8 *data, unsigned int max)
--{
--	unsigned int i, curr = 0;
--	u32 val[2];
--
--	do {
--		/* trigger PRN generation */
--		writel(PPC4XX_PRNG_CTRL_AUTO_EN,
--		       dev->ce_base + CRYPTO4XX_PRNG_CTRL);
--
--		for (i = 0; i < 1024; i++) {
--			/* usually 19 iterations are enough */
--			if ((readl(dev->ce_base + CRYPTO4XX_PRNG_STAT) &
--			     CRYPTO4XX_PRNG_STAT_BUSY))
--				continue;
--
--			val[0] = readl_be(dev->ce_base + CRYPTO4XX_PRNG_RES_0);
--			val[1] = readl_be(dev->ce_base + CRYPTO4XX_PRNG_RES_1);
--			break;
--		}
--		if (i == 1024)
--			return -ETIMEDOUT;
--
--		if ((max - curr) >= 8) {
--			memcpy(data, &val, 8);
--			data += 8;
--			curr += 8;
--		} else {
--			/* copy only remaining bytes */
--			memcpy(data, &val, max - curr);
--			break;
--		}
--	} while (curr < max);
--
--	return curr;
--}
--
--static int crypto4xx_prng_generate(struct crypto_rng *tfm,
--				   const u8 *src, unsigned int slen,
--				   u8 *dstn, unsigned int dlen)
--{
--	struct rng_alg *alg = crypto_rng_alg(tfm);
--	struct crypto4xx_alg *amcc_alg;
--	struct crypto4xx_device *dev;
--	int ret;
--
--	amcc_alg = container_of(alg, struct crypto4xx_alg, alg.u.rng);
--	dev = amcc_alg->dev;
--
--	mutex_lock(&dev->core_dev->rng_lock);
--	ret = ppc4xx_prng_data_read(dev, dstn, dlen);
--	mutex_unlock(&dev->core_dev->rng_lock);
--	return ret;
--}
--
--
--static int crypto4xx_prng_seed(struct crypto_rng *tfm, const u8 *seed,
--			unsigned int slen)
--{
--	return 0;
--}
--
- /*
-  * Supported Crypto Algorithms
-  */
-@@ -1312,18 +1239,6 @@ static struct crypto4xx_alg_common crypt
- 			.cra_module	= THIS_MODULE,
- 		},
- 	} },
--	{ .type = CRYPTO_ALG_TYPE_RNG, .u.rng = {
--		.base = {
--			.cra_name		= "stdrng",
--			.cra_driver_name        = "crypto4xx_rng",
--			.cra_priority		= 300,
--			.cra_ctxsize		= 0,
--			.cra_module		= THIS_MODULE,
--		},
--		.generate               = crypto4xx_prng_generate,
--		.seed                   = crypto4xx_prng_seed,
--		.seedsize               = 0,
--	} },
++	bat_priv->softif_destroy = true;
+ 	batadv_sysfs_del_meshif(soft_iface);
+ 	unregister_netdevice_queue(soft_iface, head);
+ }
+--- a/net/batman-adv/soft-interface.h
++++ b/net/batman-adv/soft-interface.h
+@@ -25,6 +25,8 @@ void batadv_softif_destroy_sysfs(struct
+ bool batadv_softif_is_valid(const struct net_device *net_dev);
+ extern struct rtnl_link_ops batadv_link_ops;
+ int batadv_softif_create_vlan(struct batadv_priv *bat_priv, unsigned short vid);
++void batadv_softif_destroy_vlan(struct batadv_priv *bat_priv,
++				struct batadv_softif_vlan *vlan);
+ void batadv_softif_vlan_release(struct kref *ref);
+ struct batadv_softif_vlan *batadv_softif_vlan_get(struct batadv_priv *bat_priv,
+ 						  unsigned short vid);
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -1791,6 +1791,13 @@ struct batadv_priv {
+ 	/** @bat_v: B.A.T.M.A.N. V per soft-interface private data */
+ 	struct batadv_priv_bat_v bat_v;
+ #endif
++
++	/**
++	 * @softif_destroy: whether the mesh_free() is called via the
++	 *  batadv_softif_destroy_sysfs() or batadv_softif_destroy_netlink()
++	 *  codepath and doesn't have to clean up the untagged VLAN (sysfs)
++	 */
++	bool softif_destroy:1;
  };
  
- /*
-@@ -1393,7 +1308,6 @@ static int crypto4xx_probe(struct platfo
- 	core_dev->dev->core_dev = core_dev;
- 	core_dev->dev->is_revb = is_revb;
- 	core_dev->device = dev;
--	mutex_init(&core_dev->rng_lock);
- 	spin_lock_init(&core_dev->lock);
- 	INIT_LIST_HEAD(&core_dev->dev->alg_list);
- 	ratelimit_default_init(&core_dev->dev->aead_ratelimit);
-@@ -1471,7 +1385,6 @@ static int crypto4xx_remove(struct platf
- 	tasklet_kill(&core_dev->tasklet);
- 	/* Un-register with Linux CryptoAPI */
- 	crypto4xx_unregister_alg(core_dev->dev);
--	mutex_destroy(&core_dev->rng_lock);
- 	/* Free all allocated memory */
- 	crypto4xx_stop_all(core_dev);
- 
---- a/drivers/crypto/amcc/crypto4xx_core.h
-+++ b/drivers/crypto/amcc/crypto4xx_core.h
-@@ -14,10 +14,8 @@
- #define __CRYPTO4XX_CORE_H__
- 
- #include <linux/ratelimit.h>
--#include <linux/mutex.h>
- #include <linux/scatterlist.h>
- #include <crypto/internal/aead.h>
--#include <crypto/internal/rng.h>
- #include <crypto/internal/skcipher.h>
- #include "crypto4xx_reg_def.h"
- #include "crypto4xx_sa.h"
-@@ -111,7 +109,6 @@ struct crypto4xx_core_device {
- 	u32 irq;
- 	struct tasklet_struct tasklet;
- 	spinlock_t lock;
--	struct mutex rng_lock;
- };
- 
- struct crypto4xx_ctx {
-@@ -135,7 +132,6 @@ struct crypto4xx_alg_common {
- 	union {
- 		struct skcipher_alg cipher;
- 		struct aead_alg aead;
--		struct rng_alg rng;
- 	} u;
- };
- 
---- a/drivers/crypto/amcc/crypto4xx_reg_def.h
-+++ b/drivers/crypto/amcc/crypto4xx_reg_def.h
-@@ -90,20 +90,9 @@
- #define CRYPTO4XX_BYTE_ORDER_CFG 		0x000600d8
- #define CRYPTO4XX_ENDIAN_CFG			0x000600d8
- 
--#define CRYPTO4XX_PRNG_STAT			0x00070000
--#define CRYPTO4XX_PRNG_STAT_BUSY		0x1
- #define CRYPTO4XX_PRNG_CTRL			0x00070004
- #define CRYPTO4XX_PRNG_SEED_L			0x00070008
- #define CRYPTO4XX_PRNG_SEED_H			0x0007000c
--
--#define CRYPTO4XX_PRNG_RES_0			0x00070020
--#define CRYPTO4XX_PRNG_RES_1			0x00070024
--#define CRYPTO4XX_PRNG_RES_2			0x00070028
--#define CRYPTO4XX_PRNG_RES_3			0x0007002C
--
--#define CRYPTO4XX_PRNG_LFSR_L			0x00070030
--#define CRYPTO4XX_PRNG_LFSR_H			0x00070034
--
- /*
-  * Initialize CRYPTO ENGINE registers, and memory bases.
-  */
+ /**
 
 
