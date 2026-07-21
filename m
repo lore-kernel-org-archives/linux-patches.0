@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34BD346D2D2;
-	Tue, 21 Jul 2026 19:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF7A3ED3B2;
+	Tue, 21 Jul 2026 19:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661757; cv=none; b=IepwLEr1lpIMvIptszz3Bi4WeIfuqgZkDRqW+XsGd4EbDZ548pc0USJWK+3pUqck7k3V10oRuKa1bmlkuAyifVGlrIN+lfsJZZyi4QaHbyYVlzI0tsg/jh08bEZPZn7BGYVBthMHgeMaCzUczMQTJ0Xw+T7nXfyGCCnNoWKz+go=
+	t=1784661758; cv=none; b=CN7ABmVXTP4XomKPP5pbUtysnMmIy/pdUnjIsaEHarD3ccgTvBnfy5KDT3Lz3IvOlOFEn7Vn1TSNqDxZtH1r9UitgqMUPwPDUZm5f/HhZgiVaAtOdclQ72t06Th/tqbRqI2+XnUs9qUOE8nnTGs4Mcx728PyTPNdJ7oY6+ponkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661757; c=relaxed/simple;
-	bh=d1Vje5y8qSK+l2SWc4aQVEaofZqz6EXsaKD7BbtkcLo=;
+	s=arc-20240116; t=1784661758; c=relaxed/simple;
+	bh=UFgdakgOc2j6cdVHJsCM0WCv+PqY/R31uDAIEhUEmZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n2Bb77ceriE8+QzFy/BRyL0C4HDLMjyQvhhacinSI/cbK4rYZQRvecfXwykeFRDBRB7jn5N6H/DeDoZ30R+hYY+ACkixxnwETzsNS5IaSfk2RV/fcfppmzd5OQkCPvY0bPiTgMXCUcbBpfwKYC/5BOPspER3cW+83aR0FClVT7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xOsTqmtV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W9i0zZCvokOM3mq+xpkBAzThwr4HEy6bIhHETVGhSdapdI82KEOXQnpuC/qPSBu0DGOCvm0Y7gFW40ZGIhvRiBwWpLpeW8ej1mbSaXoL92shLwln7CXDry5wBc5n4tZP+71ZOp5eg6zs5FJ8gWGz8WkM8O17gMvIZGb47C/3KYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aghbehD+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOsTqmtV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08551F000E9;
-	Tue, 21 Jul 2026 19:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aghbehD+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0821F00A3A;
+	Tue, 21 Jul 2026 19:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661755;
-	bh=LevQjvdTaJtlHVRLMd3r4nD6onAzpFrWHt46kgOsw3w=;
+	s=korg; t=1784661757;
+	bh=MJBsFtK1ApwQ2AaSNI/N++P+R8WW1DeqYisvoUJbmzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xOsTqmtVwzNTO+QX1Vamt21YQhTE4HiWV2S2otZQHuGotK9WGpptQuuz8Gy3VLA0k
-	 78kDMSrm6peG8ewKLzj9dmGDcGQV9lLhvQwIcSKzWiwa6pMZs0hBOhnea2/SCDtzGn
-	 UxMEUwkswLTrXi6+AlhNKWgzdYKOsGrgp4mUWQM4=
+	b=aghbehD+4XGM7Ynj6IxvDcCqZK5FJ+nF0CvmqV3pID1uI5Dghc0g1XS3TNjLN5Ur4
+	 PQchaAQidkYhQ+X9BuwnC8w8IcOjzsS9ZefW2SGJLkYYak+YN828qyT4mGkUlCZsRq
+	 ZiOG8aKoyFHwv38BLBRXm0a0kgHThd/is5FTVLMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tom Zanussi <tom.zanussi@linux.intel.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Tom Zanussi <zanussi@kernel.org>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Tejun Heo <tj@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0143/1276] tracing: Bound synthetic-field strings with seq_buf
-Date: Tue, 21 Jul 2026 17:09:46 +0200
-Message-ID: <20260721152449.301374154@linuxfoundation.org>
+Subject: [PATCH 6.12 0144/1276] writeback: drop now-unnecessary rcu_barrier() in cgroup_writeback_umount()
+Date: Tue, 21 Jul 2026 17:09:47 +0200
+Message-ID: <20260721152449.323916487@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -55,125 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit f07883450eb14d1cf020b55d9f3a7ec5683bcd26 ]
+[ Upstream commit e90a6d668e26e00a72df2d09c173b563468f09c9 ]
 
-The synthetic field helpers build a prefixed synthetic variable name and
-a generated hist command in fixed MAX_FILTER_STR_VAL buffers. The
-current code appends those strings with raw strcat(), so long key lists,
-field names, or saved filters can run past the end of the staging
-buffers.
+Commit e1b849cfa6b6 ("writeback: Avoid contention on wb->list_lock when
+switching inodes") replaced the queue_rcu_work() based scheduling of
+inode wb switches with a plain queue_work().  Since then no switcher
+goes through call_rcu(), so rcu_barrier() in cgroup_writeback_umount()
+has no callbacks of its own to wait for.  It still drains unrelated
+call_rcu() callbacks from other subsystems on busy systems, which
+incidentally slows umount down; drop it.
 
-Build both strings with seq_buf and propagate -E2BIG if either the
-synthetic variable name or the generated command exceeds
-MAX_FILTER_STR_VAL. This keeps the existing tracing-side limit while
-using the helper intended for bounded command construction.
-
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Tom Zanussi <tom.zanussi@linux.intel.com>
-Link: https://patch.msgid.link/20260430043350.57928-1-pengpeng@iscas.ac.cn
-Fixes: 02205a6752f2 ("tracing: Add support for 'field variables'")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Tom Zanussi <zanussi@kernel.org>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-[ sdr: Moved struct seq_buf *s for upside-down x-mas tree formatting ]
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: e1b849cfa6b6 ("writeback: Avoid contention on wb->list_lock when switching inodes")
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Link: https://patch.msgid.link/20260521095016.2791354-3-libaokun@linux.alibaba.com
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 41 ++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 12 deletions(-)
+ fs/fs-writeback.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 2a1e3537332d5d..145070bbcda7d5 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -8,6 +8,7 @@
- #include <linux/module.h>
- #include <linux/kallsyms.h>
- #include <linux/security.h>
-+#include <linux/seq_buf.h>
- #include <linux/mutex.h>
- #include <linux/slab.h>
- #include <linux/stacktrace.h>
-@@ -2936,13 +2937,22 @@ find_synthetic_field_var(struct hist_trigger_data *target_hist_data,
- {
- 	struct hist_field *event_var;
- 	char *synthetic_name;
-+	struct seq_buf s;
- 
- 	synthetic_name = kzalloc(MAX_FILTER_STR_VAL, GFP_KERNEL);
- 	if (!synthetic_name)
- 		return ERR_PTR(-ENOMEM);
- 
--	strcpy(synthetic_name, "synthetic_");
--	strcat(synthetic_name, field_name);
-+	seq_buf_init(&s, synthetic_name, MAX_FILTER_STR_VAL);
-+	seq_buf_printf(&s, "synthetic_%s", field_name);
-+
-+	/* Terminate synthetic_name with a NUL. */
-+	seq_buf_str(&s);
-+
-+	if (seq_buf_has_overflowed(&s)) {
-+		kfree(synthetic_name);
-+		return ERR_PTR(-E2BIG);
-+	}
- 
- 	event_var = find_event_var(target_hist_data, system, event_name, synthetic_name);
- 
-@@ -2988,6 +2998,7 @@ create_field_var_hist(struct hist_trigger_data *target_hist_data,
- 	struct hist_field *key_field;
- 	struct hist_field *event_var;
- 	char *saved_filter;
-+	struct seq_buf s;
- 	char *cmd;
- 	int ret;
- 
-@@ -3032,28 +3043,34 @@ create_field_var_hist(struct hist_trigger_data *target_hist_data,
- 		return ERR_PTR(-ENOMEM);
+diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
+index 57a31bd110c0bf..4e1e0dd16428ba 100644
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -1218,11 +1218,6 @@ void cgroup_writeback_umount(struct super_block *sb)
+ 		 * will then drain it.
+ 		 */
+ 		synchronize_rcu();
+-		/*
+-		 * Use rcu_barrier() to wait for all pending callbacks to
+-		 * ensure that all in-flight wb switches are in the workqueue.
+-		 */
+-		rcu_barrier();
+ 		flush_workqueue(isw_wq);
  	}
- 
-+	seq_buf_init(&s, cmd, MAX_FILTER_STR_VAL);
-+
- 	/* Use the same keys as the compatible histogram */
--	strcat(cmd, "keys=");
-+	seq_buf_puts(&s, "keys=");
- 
- 	for_each_hist_key_field(i, hist_data) {
- 		key_field = hist_data->fields[i];
- 		if (!first)
--			strcat(cmd, ",");
--		strcat(cmd, key_field->field->name);
-+			seq_buf_putc(&s, ',');
-+		seq_buf_puts(&s, key_field->field->name);
- 		first = false;
- 	}
- 
- 	/* Create the synthetic field variable specification */
--	strcat(cmd, ":synthetic_");
--	strcat(cmd, field_name);
--	strcat(cmd, "=");
--	strcat(cmd, field_name);
-+	seq_buf_printf(&s, ":synthetic_%s=%s", field_name, field_name);
- 
- 	/* Use the same filter as the compatible histogram */
- 	saved_filter = find_trigger_filter(hist_data, file);
--	if (saved_filter) {
--		strcat(cmd, " if ");
--		strcat(cmd, saved_filter);
-+	if (saved_filter)
-+		seq_buf_printf(&s, " if %s", saved_filter);
-+
-+	/* Terminate cmd with a NUL. */
-+	seq_buf_str(&s);
-+
-+	if (seq_buf_has_overflowed(&s)) {
-+		kfree(cmd);
-+		kfree(var_hist);
-+		return ERR_PTR(-E2BIG);
- 	}
- 
- 	var_hist->cmd = kstrdup(cmd, GFP_KERNEL);
+ }
 -- 
 2.53.0
 
