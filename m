@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBB844AB7B;
-	Tue, 21 Jul 2026 21:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509F044AB73;
+	Tue, 21 Jul 2026 21:49:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670578; cv=none; b=cDw4Wljkhjbh8vfLI+pXeztRe69h+3RShY0LLX0fakuyaNAhoevPP+YmTM724gM+5NXMBKcq+sd91O0UikT7HKbf6ll4J/TNaESxW19Ts7H67B5cGMggkYnmtWahrWBK0Lag+9opAxTKyko+MEQU2Vyto9pEWisS7I78uutR3QM=
+	t=1784670580; cv=none; b=RYvl80xgTeSx13cH9WozkZQMaMG6YjdW3y1vQe/NIE3iebGSvh4jhuuNxlZnc0wfwCN5M+6WoYx+DQMIWZEoNjeOXshBimDiHD9d5JNhaEFSQKzkXthJ5ddK233FMp8HqRMY67AtFEh+HZloFFmS5l6BdK9xCJfCNSlP5PF6RtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670578; c=relaxed/simple;
-	bh=j70iPoZfruD0tvhViAv+VUmwtuORek4X1NDFpB1Wup0=;
+	s=arc-20240116; t=1784670580; c=relaxed/simple;
+	bh=bboWnnPlvZUoBEf/zLnBAfPNTDffVeMuhL0/0EzlGLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pHEEjfKdA11HkMr1pTxVptQWYdaBy1BHwYonKLLnX6WhTkMd3nEIgvzvydPQzte3Y3wuFX2lC/jq+U5n3u0m2wm6nzb/lWzy72TYvnLvhmwzik7bf8/6yjy53KSNeg60Uycps0TpbBLCMkgpIYyRS/Yhobxa3lDDV/JqW9GE1k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PY+38pTc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h2wB0ius0BcfIxmUkqpHPDR183Vh5mhTGsFLIwmqVYp75F0WwhwjfTFRnt7DK/yH9p3ag/MQpd1OlN9cGnY7w692AAiYEvSyeHtZ/fuZjpH3skA7qVR0W5sqVBty1I7ClO/kxzqT8x4d6NMUVzTPkw4cIqLY+qAd8LzZHxybjiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uTapllHs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PY+38pTc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C1641F000E9;
-	Tue, 21 Jul 2026 21:49:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uTapllHs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65F71F000E9;
+	Tue, 21 Jul 2026 21:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670576;
-	bh=aq0jTqT6h5AYc6+yKdJC9sSE8B2aZQgV12pN8/4wTwo=;
+	s=korg; t=1784670579;
+	bh=F1zccJCc8JjNBBq0W8XUq1fL1Rz41Ike+Xhe0Tw1Hhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PY+38pTcTZUrJ7qIqPwxZ27vhGS36otWls6sKdGY1POL2no0/89TJroVXarTDT57u
-	 mBt+lvaDjaG3kYBfXfDrLVXerH03X1bIfAVadfggLiDbfrBnwHYKQPwwEZvht+Gb4X
-	 WaXseXUe6J9lUe12BjHljkby3/O2NclYti54q7u8=
+	b=uTapllHsS9QJadYkILpHdC3iscdQnKJ8YR/nkLWz/g8cHUdz0Myp7WjSQHyQ+dCNk
+	 4BUSCEIQgGY5IFLI9PplM86+hmpoOXC2CRTDmyZ/Ak/lWUf1IQUk9tknoT3mPFkP7Q
+	 rXq2wgzOoA1azk+QHzo2c6D+pF4bTYVERIhcN3rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungwoo Kim <iam@sung-woo.kim>,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0986/1067] Bluetooth: L2CAP: Fix slab-use-after-free in l2cap_connect()
-Date: Tue, 21 Jul 2026 17:26:27 +0200
-Message-ID: <20260721152446.614107833@linuxfoundation.org>
+Subject: [PATCH 6.1 0987/1067] Bluetooth: 6lowpan: fix cyclic locking warning on netdev unregister
+Date: Tue, 21 Jul 2026 17:26:28 +0200
+Message-ID: <20260721152446.638188263@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -45,124 +45,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 4d7b41c0e43995b0e992b9f8903109275744b658 ]
+[ Upstream commit 9707a015fe8f3ba8ec7c270f3b2b8efb38823d6b ]
 
-Extend a critical section to prevent chan from early freeing.
-Also make the l2cap_connect() return type void. Nothing is using the
-returned value but it is ugly to return a potentially freed pointer.
-Making it void will help with backports because earlier kernels did use
-the return value. Now the compile will break for kernels where this
-patch is not a complete fix.
+6lowpan.c has theoretically conflicting lock orderings, which lockdep
+complains about:
 
-Call stack summary:
+    a) rtnl_lock > hdev->workqueue
 
-[use]
-l2cap_bredr_sig_cmd
-  l2cap_connect
-  ┌ mutex_lock(&conn->chan_lock);
-  │ chan = pchan->ops->new_connection(pchan); <- alloc chan
-  │ __l2cap_chan_add(conn, chan);
-  │   l2cap_chan_hold(chan);
-  │   list_add(&chan->list, &conn->chan_l);   ... (1)
-  └ mutex_unlock(&conn->chan_lock);
-    chan->conf_state              ... (4) <- use after free
+    from 6lowpan.c:delete_netdev -> rtnl_lock -> device_del
+    -> put_device(parent) -> hci_release_dev -> destroy_workqueue
 
-[free]
-l2cap_conn_del
-┌ mutex_lock(&conn->chan_lock);
-│ foreach chan in conn->chan_l:            ... (2)
-│   l2cap_chan_put(chan);
-│     l2cap_chan_destroy
-│       kfree(chan)               ... (3) <- chan freed
-└ mutex_unlock(&conn->chan_lock);
+    b) hdev->workqueue > l2cap_conn->lock > chan->lock > rtnl_lock
 
-==================================================================
-BUG: KASAN: slab-use-after-free in instrument_atomic_read
-include/linux/instrumented.h:68 [inline]
-BUG: KASAN: slab-use-after-free in _test_bit
-include/asm-generic/bitops/instrumented-non-atomic.h:141 [inline]
-BUG: KASAN: slab-use-after-free in l2cap_connect+0xa67/0x11a0
-net/bluetooth/l2cap_core.c:4260
-Read of size 8 at addr ffff88810bf040a0 by task kworker/u3:1/311
+    from hci_rx_work -> 6lowpan.c:chan_ready_cb
+    -> lowpan_register_netdev, ifup -> rtnl_lock
 
-Fixes: 73ffa904b782 ("Bluetooth: Move conf_{req,rsp} stuff to struct l2cap_chan")
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
+Actual deadlock appears not possible, as hci_rx_work is disabled and
+l2cap_conn flushed already on hdev unregister. Hence, do minimal thing
+to make lockdep happy by breaking chain a) by holding hdev refcount
+until after netdev put in 6lowpan.c.
+
+Fixes the lockdep complaint:
+WARNING: possible circular locking dependency detected.
+kworker/0:1/11 is trying to acquire lock:
+ffff8880023b3940 ((wq_completion)hci0#2){+.+.}-{0:0}, at: touch_wq_lockdep_map+0x8b/0x130
+but task is already holding lock:
+ffffffff95e4f9c0 (rtnl_mutex){+.+.}-{4:4}, at: lowpan_unregister_netdev+0xd/0x30
+Workqueue: events delete_netdev
+
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Stable-dep-of: 6fef032af009 ("Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_new_connection_cb()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c |   21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ net/bluetooth/6lowpan.c |   25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -3985,13 +3985,12 @@ static inline int l2cap_command_rej(stru
- 	return 0;
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -759,13 +759,33 @@ static inline struct l2cap_chan *chan_ne
+ 	return chan;
  }
  
--static struct l2cap_chan *l2cap_connect(struct l2cap_conn *conn,
--					struct l2cap_cmd_hdr *cmd,
--					u8 *data, u8 rsp_code, u8 amp_id)
-+static void l2cap_connect(struct l2cap_conn *conn, struct l2cap_cmd_hdr *cmd,
-+			  u8 *data, u8 rsp_code, u8 amp_id)
- {
- 	struct l2cap_conn_req *req = (struct l2cap_conn_req *) data;
- 	struct l2cap_conn_rsp rsp;
--	struct l2cap_chan *chan = NULL, *pchan;
-+	struct l2cap_chan *chan = NULL, *pchan = NULL;
- 	int result, status = L2CAP_CS_NO_INFO;
- 
- 	u16 dcid = 0, scid = __le16_to_cpu(req->scid);
-@@ -4004,7 +4003,7 @@ static struct l2cap_chan *l2cap_connect(
- 					 &conn->hcon->dst, ACL_LINK);
- 	if (!pchan) {
- 		result = L2CAP_CR_BAD_PSM;
--		goto sendresp;
-+		goto response;
- 	}
- 
- 	mutex_lock(&conn->chan_lock);
-@@ -4092,17 +4091,15 @@ static struct l2cap_chan *l2cap_connect(
- 	}
- 
- response:
--	l2cap_chan_unlock(pchan);
--	mutex_unlock(&conn->chan_lock);
--	l2cap_chan_put(pchan);
--
--sendresp:
- 	rsp.scid   = cpu_to_le16(scid);
- 	rsp.dcid   = cpu_to_le16(dcid);
- 	rsp.result = cpu_to_le16(result);
- 	rsp.status = cpu_to_le16(status);
- 	l2cap_send_cmd(conn, cmd->ident, rsp_code, sizeof(rsp), &rsp);
- 
-+	if (!pchan)
-+		return;
++static void unregister_dev(struct lowpan_btle_dev *dev)
++{
++	struct hci_dev *hdev = READ_ONCE(dev->hdev);
 +
- 	if (result == L2CAP_CR_PEND && status == L2CAP_CS_NO_INFO) {
- 		struct l2cap_info_req info;
- 		info.type = cpu_to_le16(L2CAP_IT_FEAT_MASK);
-@@ -4125,7 +4122,9 @@ sendresp:
- 		chan->num_conf_req++;
- 	}
++	/* If netdev holds last reference to hci_dev (its parent device), this
++	 * leads to theoretical cyclic locking on lowpan_unregister_netdev:
++	 *
++	 * rtnl_lock -> put_device(parent) -> hci_release_dev ->
++	 * destroy_workqueue -> hci_rx_work -> l2cap_recv_acldata ->
++	 * chan_ready_cb -> ifup -> rtnl_lock
++	 *
++	 * However, hci_rx_work is disabled in hci_unregister_dev, so this
++	 * should not occur. Make lockdep happy by postponing hdev release after
++	 * netdev put.
++	 */
++	hci_dev_hold(hdev);
++	lowpan_unregister_netdev(dev->netdev);
++	hci_dev_put(hdev);
++}
++
+ static void delete_netdev(struct work_struct *work)
+ {
+ 	struct lowpan_btle_dev *entry = container_of(work,
+ 						     struct lowpan_btle_dev,
+ 						     delete_netdev);
  
--	return chan;
-+	l2cap_chan_unlock(pchan);
-+	mutex_unlock(&conn->chan_lock);
-+	l2cap_chan_put(pchan);
+-	lowpan_unregister_netdev(entry->netdev);
++	unregister_dev(entry);
+ 
+ 	/* The entry pointer is deleted by the netdev destructor. */
  }
+@@ -1245,6 +1265,7 @@ static void disconnect_devices(void)
+ 			break;
  
- static int l2cap_connect_req(struct l2cap_conn *conn,
+ 		new_dev->netdev = entry->netdev;
++		new_dev->hdev = entry->hdev;
+ 		INIT_LIST_HEAD(&new_dev->list);
+ 
+ 		list_add_rcu(&new_dev->list, &devices);
+@@ -1256,7 +1277,7 @@ static void disconnect_devices(void)
+ 		ifdown(entry->netdev);
+ 		BT_DBG("Unregistering netdev %s %p",
+ 		       entry->netdev->name, entry->netdev);
+-		lowpan_unregister_netdev(entry->netdev);
++		unregister_dev(entry);
+ 		kfree(entry);
+ 	}
+ }
 
 
