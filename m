@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB1244AB68;
-	Tue, 21 Jul 2026 21:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFE844AB61;
+	Tue, 21 Jul 2026 21:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668993; cv=none; b=iJUaaBSzCsxZjSzauINlmRB8SAxWYS2pkEaidrzjlJ9+jUCvDnMgsQG5P1VZOBnvW0KLPqeYyjjaFPHfuC1lYni2iEBYSUn1ayveUIeDQmr37drU/+t7ODAQbGqijTYrNr/suQTTMjmak4tv8nif2He3+ujr71+Tx7z6oKwNWR8=
+	t=1784668996; cv=none; b=fObL21dXJM9FHRenhUMajo9EutlN6+79C72cZBrbobKnOJn5yFNjUp9h3+o1tdH6aSwU+Z7/SMR9NmhFKn04UAiHwbakMB2FyRtIDLJge8urfO++Fq4X+tMQGgGnipTnLffLIPOuhDk2rKMwDYFGyNe7q92fj9U8onhNKsjUwy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668993; c=relaxed/simple;
-	bh=QsbQeq71ZR451Ntj2I6Y83UEF3NWdwW2s7hL0gTVxME=;
+	s=arc-20240116; t=1784668996; c=relaxed/simple;
+	bh=+wKrdDJHvtCpJ+wPjeMPEpcmq7vrNrop6EExuHCJeK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f2jAnVefM0e2JGTIlYR/lmKBDDTE4Dfu0LxpnMMZkz9oMoVek05nU9CCr1lT1FZuex2M7egrizZwfl+PEqcuVHnCbxh3D5D0pIePBbOteE5ZUP2e0n9iLi6WHirA13tIWODj9ZaMPQtxWklx141HRpttJFT6w+EDeWdP4aDJXlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sYoPewfL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WV99Hh1Z7XN8XzKcy5Rq6SQ9AzTW3kLKs8QKHGTIdhQz/aB1ah7pvdh1CYXA96+JdTYROx9mHlSGst5XbRLYflnV0lCmStY2ZXCli0W4rFYfKmI5mH2Vq/lgOI8CMCbAqpJaBhEWh0kn5DBSfxvsSkcR0o5bLAHhoHQCyIi2dGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vcwxDQ+i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sYoPewfL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98861F000E9;
-	Tue, 21 Jul 2026 21:23:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcwxDQ+i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2091F000E9;
+	Tue, 21 Jul 2026 21:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668992;
-	bh=Vu8aYc1Di3Kz5/oBzOEAfwCf7WDDDPzeYh6KFGKGCyw=;
+	s=korg; t=1784668994;
+	bh=57AU5A635VHZx4lVGZOOIKrFck7uPezVsWgpSbJfg84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sYoPewfL+cXs277cNLa2V4gS8l5UaYmVwPjy/OLgDvLkuF8Wij0Pl8e6jtLt7PQF4
-	 fm/87G/ZNwLVd1PRe3njgt+pFzKUGE9MaASLOCYzXqN4MSQNid6QaOnbVhBbN2/DIY
-	 UQ5SukfxEAbtGwx/vnKtyM7OUVyqdiF+eFKwUm2Q=
+	b=vcwxDQ+iBCkNKf+9F6JIWMY4Jg0QFMd9SS1wfTaUkwMNzYy2VhPMCB7duA+nbxWTo
+	 WVZnrZGkqAxnRc0WV7e4xqNKaqXwopMTB1ucfnb6sh26LjYU+8KXhyY0ZzoaVhv9Qt
+	 ji/wXcjQwfc+WV7NWhR6iMypo70xiSdjwTndNm6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.huangfu@shopee.com>,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0387/1067] bpf: Update transport_header when encapsulating UDP tunnel in lwt
-Date: Tue, 21 Jul 2026 17:16:28 +0200
-Message-ID: <20260721152433.287025790@linuxfoundation.org>
+Subject: [PATCH 6.1 0388/1067] wifi: wcn36xx: fix heap overflow from oversized firmware HAL response
+Date: Tue, 21 Jul 2026 17:16:29 +0200
+Message-ID: <20260721152433.308450537@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,69 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 82d7d0adbc678064543e9d254864f6b4ea4a388c ]
+[ Upstream commit 88a240d86d3d64521f9194abe185ac71cc74d0bd ]
 
-Currently, bpf_lwt_push_ip_encap() does not update skb->transport_header.
-When a driver, e.g. ice, reuses the stale skb->transport_header to
-offload checksum computation to NIC hardware, VxLAN packets encapsulated
-by bpf_lwt_push_encap() helper may be dropped due to incorrect checksum.
+The firmware response dispatcher copies all synchronous HAL responses
+into the 4096-byte hal_buf without validating the response length. A
+response exceeding WCN36XX_HAL_BUF_SIZE causes a heap buffer overflow
+with firmware-controlled content.
 
-Update skb->transport_header in bpf_lwt_push_ip_encap() whenever the
-encapsulated packet uses UDP, so checksum offload works correctly.
+Add a bounds check on the response length.
 
-Fixes: 52f278774e79 ("bpf: implement BPF_LWT_ENCAP_IP mode in bpf_lwt_push_encap")
-Cc: Leon Hwang <leon.huangfu@shopee.com>
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://lore.kernel.org/r/20260602150931.49629-2-leon.hwang@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 8e84c2582169 ("wcn36xx: mac80211 driver for Qualcomm WCN3660/WCN3680 hardware")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260421135018.352774-2-tristmd@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/lwt_bpf.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/wireless/ath/wcn36xx/smd.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
-index 4a0797f0a154b2..efbd9eecb00d17 100644
---- a/net/core/lwt_bpf.c
-+++ b/net/core/lwt_bpf.c
-@@ -590,6 +590,7 @@ static int handle_gso_encap(struct sk_buff *skb, bool ipv4, int encap_len)
- 
- int bpf_lwt_push_ip_encap(struct sk_buff *skb, void *hdr, u32 len, bool ingress)
- {
-+	bool is_udp_tunnel;
- 	struct iphdr *iph;
- 	bool ipv4;
- 	int err;
-@@ -603,10 +604,16 @@ int bpf_lwt_push_ip_encap(struct sk_buff *skb, void *hdr, u32 len, bool ingress)
- 		ipv4 = true;
- 		if (unlikely(len < iph->ihl * 4))
- 			return -EINVAL;
-+		is_udp_tunnel = iph->protocol == IPPROTO_UDP;
-+		if (unlikely(is_udp_tunnel && len < iph->ihl * 4 + sizeof(struct udphdr)))
-+			return -EINVAL;
- 	} else if (iph->version == 6) {
- 		ipv4 = false;
- 		if (unlikely(len < sizeof(struct ipv6hdr)))
- 			return -EINVAL;
-+		is_udp_tunnel = ((struct ipv6hdr *)iph)->nexthdr == NEXTHDR_UDP;
-+		if (unlikely(is_udp_tunnel && len < sizeof(struct ipv6hdr) + sizeof(struct udphdr)))
-+			return -EINVAL;
- 	} else {
- 		return -EINVAL;
- 	}
-@@ -628,6 +635,11 @@ int bpf_lwt_push_ip_encap(struct sk_buff *skb, void *hdr, u32 len, bool ingress)
- 	if (ingress)
- 		skb_postpush_rcsum(skb, iph, len);
- 	skb_reset_network_header(skb);
-+	if (is_udp_tunnel) {
-+		size_t iph_sz = ipv4 ? iph->ihl * 4 : sizeof(struct ipv6hdr);
-+
-+		skb_set_transport_header(skb, skb_network_offset(skb) + iph_sz);
-+	}
- 	memcpy(skb_network_header(skb), hdr, len);
- 	bpf_compute_data_pointers(skb);
- 	skb_clear_hash(skb);
+diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
+index 566f0b9c15841e..bd51abef3a5be7 100644
+--- a/drivers/net/wireless/ath/wcn36xx/smd.c
++++ b/drivers/net/wireless/ath/wcn36xx/smd.c
+@@ -3353,6 +3353,10 @@ int wcn36xx_smd_rsp_process(struct rpmsg_device *rpdev,
+ 	case WCN36XX_HAL_EXIT_IMPS_RSP:
+ 	case WCN36XX_HAL_UPDATE_CHANNEL_LIST_RSP:
+ 	case WCN36XX_HAL_ADD_BCN_FILTER_RSP:
++		if (len > WCN36XX_HAL_BUF_SIZE) {
++			wcn36xx_warn("HAL response too large: %d\n", len);
++			break;
++		}
+ 		memcpy(wcn->hal_buf, buf, len);
+ 		wcn->hal_rsp_len = len;
+ 		complete(&wcn->hal_rsp_compl);
 -- 
 2.53.0
 
