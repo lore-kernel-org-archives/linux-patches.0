@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BAD3161BF;
-	Tue, 21 Jul 2026 17:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2B537A821;
+	Tue, 21 Jul 2026 17:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653876; cv=none; b=GQPUH+J/uM0YoR8cXsGUEiO3baFbRLgsmm83MpzcmyAAJj2NRMLuD+bjogoWjMr1KNN9N1glBHF1EpNWM/hM6EApYi0ynNkDKtRKDhvtT1oXnPAf2HB+BXmFEIqnm0G5cfOB6NOzqZmGXhIdgWa5+SA1mAtc3xtCVZK0N14IG+M=
+	t=1784653879; cv=none; b=U0lEvHga+XPyUhLXc5j1bXfHSEEiLZMKqbVUSXKqPpqBuEr7iXu484tbPSRT+Bm0xyeH8yx8qx9ziq0JScv66XIXpFjWV/cDGY4BcRS7bJCy1+EtuUKnoPyxy0lMacS8q4xM1C9cFjxnzu7IjdOBJpcZIh5eKI8S52cUJqOWf24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653876; c=relaxed/simple;
-	bh=XrvwXFcqmhNU1vMbzQcAhySUnPfxrw143ts1WgI1QOg=;
+	s=arc-20240116; t=1784653879; c=relaxed/simple;
+	bh=sqdxnkbF89QhOXEyjnhr00W/yNUDrUB5b+UtnDPyJbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xxz4Kys8vhXO/DvhMhZ1jUX4NSNzb8KdlA8U2ifzs5S3f+l1eDdEdXWEiehIdf3zQG5iyebOqdAGWGLO6FOvjR+OX0I8e8J+XiMRonUSWkU1gXo7pDxc35nAK1HU+Ridv7ahU5B0AQWSsEPZmRxq1IH7LIgu6mraH02doD5w+WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nvytbmbr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oisFq1PWqi37LsT70pxa8MKKLHVOmv5QaReWwJQfZ8AisNoeRTCqUUU2pxD+JVBZXeF6+NjfH84kUNMRjAnOuGEBq7GnUVBj6oTaCKvIaY4v2//LZrclDhyv4fR5UWA8Ght5Ub7+aGPNzTU0k52HJos+yr+sCLQRxK6DDt8lT8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uaERysmb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nvytbmbr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A76D1F000E9;
-	Tue, 21 Jul 2026 17:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uaERysmb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1318B1F000E9;
+	Tue, 21 Jul 2026 17:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653874;
-	bh=2l+V9L7qRqvS+V+7d3HeBsO685a+YRtk6VbIFxI9k1Q=;
+	s=korg; t=1784653877;
+	bh=HLe4JwSTFGa40RBhJQTD5yWoxg9vP5ZYhckNVgCJyrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NvytbmbrxK/nsTAgbzhzPk9lNIAqI6qXA8OqzkFfyMDoCW8rXrUUR69FHR5k0QTob
-	 mjjtMoS/KOAyn3vFHCB6V8d0vGaPmXUEh39opirGBkZkWNi4AxXcy9qTkKEuk6vC3z
-	 YaTrPlfjuUSKDlUunWuHWUEmofvQFgjaizfM6qbQ=
+	b=uaERysmbgRStqzvBUGh1DLYTQmLqElQbo+pa+WNOny1iC0ouuhNxh02sq6v+vaiW4
+	 dqJqnTQf/LYNKu9svIoHEvH8IVVgl2qkIV45KIBs6KYnxuggEgVylo9bA8dHbNH5eH
+	 PaaE617P1Ek91sEpgXdV9Q/aSuesOsmcIRuVI8q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Wang <wangjia@ultrarisc.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1475/2077] gpio: dwapb: Defer clock gating until noirq
-Date: Tue, 21 Jul 2026 17:19:08 +0200
-Message-ID: <20260721152627.584931542@linuxfoundation.org>
+Subject: [PATCH 7.1 1493/2077] ipvs: use parsed transport offset in TCP state lookup
+Date: Tue, 21 Jul 2026 17:19:26 +0200
+Message-ID: <20260721152628.007666644@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,173 +57,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Wang <wangjia@ultrarisc.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit d775b9451eb8f52021dea6483ad758fef81dbf1e ]
+[ Upstream commit 2500fa3958b1ba51c2b065e39db1b04dfa7e23a2 ]
 
-GPIO consumers such as gpio-keys can enable IRQ wake and adjust the wake
-trigger type from their suspend callbacks. If the DWAPB controller suspends
-first, masking interrupts and disabling its clocks in the normal suspend
-phase prevents that late wake configuration from reliably reaching the
-hardware. Systems with real DWAPB bus clocks then fail to wake from s2idle
-through GPIO keys.
+TCP state handling reparses the skb to find the TCP header. For IPv6 it
+uses sizeof(struct ipv6hdr), while the surrounding IPVS code already
+parsed the packet with ip_vs_fill_iph_skb() and has the real
+transport-header offset in iph.len.
 
-Save the register context in the normal suspend callback, but defer IRQ
-masking and clock gating until suspend_noirq. At that point all consumers
-have finished configuring wake IRQs, so keep the clocks enabled when wake
-lines are armed and only gate them when no wake source is active.
-Resume_noirq reenables clocks, if they were gated, before the normal resume
-path restores registers.
+This makes TCP state handling look at the wrong bytes when an IPv6
+packet carries extension headers. Use the parsed transport offset passed
+down from ip_vs_set_state() when reading the TCP header.
 
-Propagate wake requests to the parent irqchip while keeping the local wake
-mask in sync with failures.
+For IPv4 and for IPv6 packets without extension headers, the passed
+offset matches the previous value.
 
-Fixes: 6437c7ba69c3 ("gpio: dwapb: Add wakeup source support")
-Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
-Link: https://patch.msgid.link/20260702-gpio-dwapb-wakeup-v2-1-203f2f33429f@ultrarisc.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: 0bbdd42b7efa6 ("IPVS: Extend protocol DNAT/SNAT and state handlers")
+Link: https://lore.kernel.org/netdev/20260705125659.37744-1-zhaoyz24@mails.tsinghua.edu.cn/
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: Claude Code:GLM-5.2
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-dwapb.c | 79 +++++++++++++++++++++++++++++++++------
- 1 file changed, 67 insertions(+), 12 deletions(-)
+ net/netfilter/ipvs/ip_vs_proto_tcp.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/gpio/gpio-dwapb.c b/drivers/gpio/gpio-dwapb.c
-index 15cebc8b5d6635..0259c659733236 100644
---- a/drivers/gpio/gpio-dwapb.c
-+++ b/drivers/gpio/gpio-dwapb.c
-@@ -118,6 +118,7 @@ struct dwapb_gpio {
- 	unsigned int		flags;
- 	struct reset_control	*rst;
- 	struct clk_bulk_data	clks[DWAPB_NR_CLOCKS];
-+	bool			clocks_on_for_wake;
- 	struct dwapb_gpio_port	ports[] __counted_by(nr_ports);
- };
- 
-@@ -365,11 +366,24 @@ static int dwapb_irq_set_wake(struct irq_data *d, unsigned int enable)
- 	struct dwapb_gpio *gpio = to_dwapb_gpio(gc);
- 	struct dwapb_context *ctx = gpio->ports[0].ctx;
- 	irq_hw_number_t bit = irqd_to_hwirq(d);
-+	u32 wake_en = ctx->wake_en;
- 
- 	if (enable)
--		ctx->wake_en |= BIT(bit);
-+		wake_en |= BIT(bit);
- 	else
--		ctx->wake_en &= ~BIT(bit);
-+		wake_en &= ~BIT(bit);
-+
-+#ifdef CONFIG_IRQ_DOMAIN_HIERARCHY
-+	if (d->parent_data && !!ctx->wake_en != !!wake_en) {
-+		int err;
-+
-+		err = irq_chip_set_wake_parent(d, enable);
-+		if (err)
-+			return err;
-+	}
-+#endif
-+
-+	ctx->wake_en = wake_en;
- 
- 	return 0;
- }
-@@ -749,6 +763,8 @@ static int dwapb_gpio_suspend(struct device *dev)
- 	int i;
- 
- 	scoped_guard(gpio_generic_lock_irqsave, gen_gc) {
-+		gpio->clocks_on_for_wake = false;
-+
- 		for (i = 0; i < gpio->nr_ports; i++) {
- 			unsigned int offset;
- 			unsigned int idx = gpio->ports[i].idx;
-@@ -770,11 +786,38 @@ static int dwapb_gpio_suspend(struct device *dev)
- 				ctx->int_pol = dwapb_read(gpio, GPIO_INT_POLARITY);
- 				ctx->int_type = dwapb_read(gpio, GPIO_INTTYPE_LEVEL);
- 				ctx->int_deb = dwapb_read(gpio, GPIO_PORTA_DEBOUNCE);
-+			}
-+		}
-+	}
-+
-+	return 0;
-+}
-+
-+static int dwapb_gpio_suspend_noirq(struct device *dev)
-+{
-+	struct dwapb_gpio *gpio = dev_get_drvdata(dev);
-+	struct gpio_generic_chip *gen_gc = &gpio->ports[0].chip;
-+	bool wake_enabled = false;
-+	int i;
-+
-+	scoped_guard(gpio_generic_lock_irqsave, gen_gc) {
-+		for (i = 0; i < gpio->nr_ports; i++) {
-+			unsigned int idx = gpio->ports[i].idx;
-+			struct dwapb_context *ctx = gpio->ports[i].ctx;
- 
--				/* Mask out interrupts */
-+			if (idx == 0) {
-+				wake_enabled = ctx->wake_en;
- 				dwapb_write(gpio, GPIO_INTMASK, ~ctx->wake_en);
-+				break;
- 			}
- 		}
-+
-+		gpio->clocks_on_for_wake = wake_enabled;
-+	}
-+
-+	if (wake_enabled) {
-+		device_set_wakeup_path(dev);
-+		return 0;
- 	}
- 
- 	clk_bulk_disable_unprepare(DWAPB_NR_CLOCKS, gpio->clks);
-@@ -782,18 +825,27 @@ static int dwapb_gpio_suspend(struct device *dev)
- 	return 0;
- }
- 
--static int dwapb_gpio_resume(struct device *dev)
-+static int dwapb_gpio_resume_noirq(struct device *dev)
+diff --git a/net/netfilter/ipvs/ip_vs_proto_tcp.c b/net/netfilter/ipvs/ip_vs_proto_tcp.c
+index 2d3f6aeafe522d..f86b763efcc4dc 100644
+--- a/net/netfilter/ipvs/ip_vs_proto_tcp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_tcp.c
+@@ -584,13 +584,7 @@ tcp_state_transition(struct ip_vs_conn *cp, int direction,
  {
- 	struct dwapb_gpio *gpio = dev_get_drvdata(dev);
--	struct gpio_chip *gc = &gpio->ports[0].chip.gc;
--	struct gpio_generic_chip *gen_gc = to_gpio_generic_chip(gc);
--	int i, err;
-+	int err;
-+
-+	if (gpio->clocks_on_for_wake)
-+		return 0;
+ 	struct tcphdr _tcph, *th;
  
- 	err = clk_bulk_prepare_enable(DWAPB_NR_CLOCKS, gpio->clks);
--	if (err) {
-+	if (err)
- 		dev_err(gpio->dev, "Cannot reenable APB/Debounce clocks\n");
--		return err;
--	}
-+
-+	return err;
-+}
-+
-+static int dwapb_gpio_resume(struct device *dev)
-+{
-+	struct dwapb_gpio *gpio = dev_get_drvdata(dev);
-+	struct gpio_chip *gc = &gpio->ports[0].chip.gc;
-+	struct gpio_generic_chip *gen_gc = to_gpio_generic_chip(gc);
-+	int i;
+-#ifdef CONFIG_IP_VS_IPV6
+-	int ihl = cp->af == AF_INET ? ip_hdrlen(skb) : sizeof(struct ipv6hdr);
+-#else
+-	int ihl = ip_hdrlen(skb);
+-#endif
+-
+-	th = skb_header_pointer(skb, ihl, sizeof(_tcph), &_tcph);
++	th = skb_header_pointer(skb, iph_len, sizeof(_tcph), &_tcph);
+ 	if (th == NULL)
+ 		return;
  
- 	guard(gpio_generic_lock_irqsave)(gen_gc);
- 
-@@ -827,8 +879,11 @@ static int dwapb_gpio_resume(struct device *dev)
- 	return 0;
- }
- 
--static DEFINE_SIMPLE_DEV_PM_OPS(dwapb_gpio_pm_ops,
--				dwapb_gpio_suspend, dwapb_gpio_resume);
-+static const struct dev_pm_ops dwapb_gpio_pm_ops = {
-+	SYSTEM_SLEEP_PM_OPS(dwapb_gpio_suspend, dwapb_gpio_resume)
-+	NOIRQ_SYSTEM_SLEEP_PM_OPS(dwapb_gpio_suspend_noirq,
-+				  dwapb_gpio_resume_noirq)
-+};
- 
- static struct platform_driver dwapb_gpio_driver = {
- 	.driver		= {
 -- 
 2.53.0
 
