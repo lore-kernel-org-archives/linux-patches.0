@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB091347BC6;
-	Tue, 21 Jul 2026 22:49:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246CA347BC6;
+	Tue, 21 Jul 2026 22:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674199; cv=none; b=f3sMSQg9dYrAQ3HAnuht/ZC47zTM4mIGX/986FLaIgd6B1wT5Z7Q2Cr6efkPUnSUP8I1kf/qQqtCnjGwoIhy5muB+d20ijJjbTj36wLYoMs9IeIKzQEZViP2myv5WpNijd292gkCnjEeIw3VobrPBMKAi6lw218EEL4CY9tqd88=
+	t=1784674201; cv=none; b=aPEhTvY9B+JpHq+qIP2Rwagol5SJHtHOKOgMCNNqWh187GTR9jtDDQGRNGbLOPkiMfBuPXaatZxHpXkQlxR9zqUqlaaJhiqIzuDz592whk2O5V8dUs0SJmbP8sOYUyTsYiKBefEhgGuliXxpVDEVsHa/AAYfgCOS51WYqzYRa7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674199; c=relaxed/simple;
-	bh=1Zupt2nLeM+KlOSLM06Oc8Q/IOFrpxVsYd+gIlpC1HI=;
+	s=arc-20240116; t=1784674201; c=relaxed/simple;
+	bh=ZXfTpI9o+B2ev9OpcbqkloKwDyEOpnJMTboF/r13roI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CnBYxF/x6aJz3xh9Q72RpICyVObOoVa+7zmGrz4k5DOfagRqsL6+bmtnrFX5HodEtHdaLqYfdzlAZVICes/T6HoOB1tikJC2fMdXQJfcZcYjvdLiQdjj1LB1m7kOo+TUYIKRgnjv8Ud7ZV+ZM2zayp9RmbaJb+3mmUH6wfwhIqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PH735xiY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tfc+nv43RaVDFcVEtVGqMtsJZ8xHj2SXDrd0P8MCIK76yHaSoPMEnQ+q+jImiMtTFENqVr12PjnstcFa5KuFhLcG0kLFcaFwqpwG2USHU9/B/Fjt4+ctfNWydXdhxZNNbPf5SFm9Z/kX5mBQjgOxAZap2Jv33oH2jeNDNmgPSS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XK0/ExK6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PH735xiY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08EA81F000E9;
-	Tue, 21 Jul 2026 22:49:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XK0/ExK6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526D21F00A3A;
+	Tue, 21 Jul 2026 22:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674194;
-	bh=/KccKJ0TuUNfBESkdMrkqyUTZ+ob2Ct8Ff51dsYMNXk=;
+	s=korg; t=1784674199;
+	bh=1gXrlrkiclQw8S0KB3HICwN25vvHsMDK8URUsLGlCyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PH735xiYBMba7FgxwDdfnLAhavZys7pWV0k9KtHuOrwqWDAe6pglrI/AbAOz6YxmV
-	 6KLo73ygSk7+1lMYn02uepkYV0k3PLLu/l4prIXwTFKSbSDgsjLGEGJzSrL322ebIM
-	 MI6G2TgDlgT8fuaxJ2HBKKGECdIS1w8MTB5V+tdk=
+	b=XK0/ExK62HsMMu+amgLhV/UOOPqRYM1Uh6IoHyawTvR7nCTljsg1uMnOKlT3YET8l
+	 yXWbnQpQENdfjNJP7XUHVrKv4NDrtV1lsA7fJ28PWLoHGhlCBjvZEkacJiOXDzDMYJ
+	 Krw89wB6PZpN5bBGPA/TOad6STfNsWtMiJUL4Th4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 5.10 447/699] netfilter: nf_nat_sip: reload possible stale data pointer
-Date: Tue, 21 Jul 2026 17:23:26 +0200
-Message-ID: <20260721152405.784025151@linuxfoundation.org>
+	Enrico Pozzobon <enrico.pozzobon@dissecto.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 408/699] net: usb: lan78xx: disable VLAN filter in promiscuous mode
+Date: Tue, 21 Jul 2026 17:22:47 +0200
+Message-ID: <20260721152404.899319205@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -49,77 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Enrico Pozzobon <enrico.pozzobon@dissecto.com>
 
-commit 77e43bcb7ec177e293a5c3f1b91a2c5aebfb6c68 upstream.
+[ Upstream commit 60444706aa17616efc03190d099ac347e28b3d0a ]
 
-quoting sashiko:
- ------------------------------------------------------------------------
- [..] noticed a potential memory bug and header corruption involving the
- SIP NAT helper.
+The hardware VLAN filter (RFE_CTL_VLAN_FILTER_) drops VLAN-tagged frames
+whose VID has not been registered via lan78xx_vlan_rx_add_vid(). It is
+left enabled in promiscuous mode, so packet capture (e.g. tcpdump or
+Wireshark) does not see tagged frames for unregistered VIDs.
 
- In net/netfilter/nf_nat_sip.c:nf_nat_sip():
-	if (skb_ensure_writable(skb, skb->len)) {
-		nf_ct_helper_log(skb, ct, "cannot mangle packet");
-		return NF_DROP;
-	}
-	uh = (void *)skb->data + protoff;
-	uh->dest = ct_sip_info->forced_dport;
-	if (!nf_nat_mangle_udp_packet(skb, ct, ctinfo, protoff,
-				      0, 0, NULL, 0)) {
+Clear the filter while the interface is promiscuous and restore it from
+NETIF_F_HW_VLAN_CTAG_FILTER otherwise. Enforce the same condition in
+lan78xx_set_features() so netdev_update_features() cannot re-enable the
+filter while promiscuous.
 
- If a cloned or fragmented SKB is reallocated by skb_ensure_writable(), the
- old data buffer is freed. However, nf_nat_sip() fails to update *dptr to
- point to the new buffer.
-
- It also appears to use nf_nat_mangle_udp_packet() on what could be a TCP
- packet, which would overwrite the sequence number with a checksum update.
- ------------------------------------------------------------------------
-
-nf_conntrack_sip linerizes skbs, hence no fragmented skb can be seen.
-But clones are possible, so rebuild dptr.
-
-Disable nf_nat_mangle_udp_packet() branch for TCP streams.
-It doesn't look like this can ever happen, else we should have received
-bug reports about this, so just check the conntrack is UDP and drop
-otherwise.
-
-The calling conntrack_sip set ->forced_dport for SIP_HDR_VIA_UDP messages,
-so I don't think this is ever expected to be true for a TCP stream.
-
-Fixes: 7266507d8999 ("netfilter: nf_ct_sip: support Cisco 7941/7945 IP phones")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-sonnet-4-6
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 55d7de9de6c3 ("Microchip's LAN7800 family USB 2/3 to 10/100/1000 Ethernet device driver")
+Signed-off-by: Enrico Pozzobon <enrico.pozzobon@dissecto.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20260701-lan78xx-vlan-promisc-v3-1-232266d32743@dissecto.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_nat_sip.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/usb/lan78xx.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
---- a/net/netfilter/nf_nat_sip.c
-+++ b/net/netfilter/nf_nat_sip.c
-@@ -283,13 +283,22 @@ next:
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index af0622e9425849..1a76fccee9a8d7 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -1092,6 +1092,17 @@ static void lan78xx_deferred_multicast_write(struct work_struct *param)
+ 	lan78xx_write_reg(dev, RFE_CTL, pdata->rfe_ctl);
+ }
  
- 	/* Mangle destination port for Cisco phones, then fix up checksums */
- 	if (dir == IP_CT_DIR_REPLY && ct_sip_info->forced_dport) {
-+		int doff = *dptr - (const char *)skb->data;
- 		struct udphdr *uh;
- 
-+		if (doff <= 0)
-+			return NF_DROP;
++static void lan78xx_update_vlan_filter(struct lan78xx_priv *pdata,
++				       struct net_device *netdev,
++				       netdev_features_t features)
++{
++	if ((features & NETIF_F_HW_VLAN_CTAG_FILTER) &&
++	    !(netdev->flags & IFF_PROMISC))
++		pdata->rfe_ctl |= RFE_CTL_VLAN_FILTER_;
++	else
++		pdata->rfe_ctl &= ~RFE_CTL_VLAN_FILTER_;
++}
 +
-+		/* ct_sip_info->forced_dport only expected with UDP */
-+		if (nf_ct_protonum(ct) != IPPROTO_UDP)
-+			return NF_DROP;
-+
- 		if (skb_ensure_writable(skb, skb->len)) {
- 			nf_ct_helper_log(skb, ct, "cannot mangle packet");
- 			return NF_DROP;
+ static void lan78xx_set_multicast(struct net_device *netdev)
+ {
+ 	struct lan78xx_net *dev = netdev_priv(netdev);
+@@ -1126,6 +1137,8 @@ static void lan78xx_set_multicast(struct net_device *netdev)
  		}
+ 	}
  
-+		*dptr = skb->data + doff;
- 		uh = (void *)skb->data + protoff;
- 		uh->dest = ct_sip_info->forced_dport;
++	lan78xx_update_vlan_filter(pdata, dev->net, dev->net->features);
++
+ 	if (netdev_mc_count(dev->net)) {
+ 		struct netdev_hw_addr *ha;
+ 		int i;
+@@ -2397,10 +2410,7 @@ static int lan78xx_set_features(struct net_device *netdev,
+ 	else
+ 		pdata->rfe_ctl &= ~RFE_CTL_VLAN_STRIP_;
  
+-	if (features & NETIF_F_HW_VLAN_CTAG_FILTER)
+-		pdata->rfe_ctl |= RFE_CTL_VLAN_FILTER_;
+-	else
+-		pdata->rfe_ctl &= ~RFE_CTL_VLAN_FILTER_;
++	lan78xx_update_vlan_filter(pdata, netdev, features);
+ 
+ 	spin_unlock_irqrestore(&pdata->rfe_ctl_lock, flags);
+ 
+-- 
+2.53.0
+
 
 
