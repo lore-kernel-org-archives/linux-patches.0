@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57A23D1CCA;
-	Tue, 21 Jul 2026 17:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB6D376A06;
+	Tue, 21 Jul 2026 17:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653506; cv=none; b=MyymU53wOMIHawqA0n2K4Xza0NKlv5/IzMdmNpbJ7xJASd0X2JZ/x6hACwZyc0+aaejEPS58VWxjftidJyEePys9MJoZJAZk7i9Mr6nxcBk2RFPt1CB1EZsD2Qk5/UfBWjxXd4ZzuLXkuZdNEx4PQsCqSzjkfdDHI9RDsNnGCFc=
+	t=1784653508; cv=none; b=puOzHUW1gYETulIwM/wDsSHVODc4zokW+WFsaCTwV9srukUuaVJgCgoipkf8PZ7jq5XiEw3K+n7/NUazqtxnakjviY6wMrx070QR9dw+zKTqQ0efzFUYrinyimUdnxYr/LafBZMLEatOQgjMTIRS0yvjrDOUHMymiA6NSAHAe0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653506; c=relaxed/simple;
-	bh=lpzPB9AIv8+ph4NVeyILiAVfc0cMDH02W+mVxgCF8e0=;
+	s=arc-20240116; t=1784653508; c=relaxed/simple;
+	bh=iT98nd22FB4y0M7B2d4fETGEaxrbcJCK39QyR/88v/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mFebTx800JsYQ9ae/X684nazbuy9ZWutE984fOoGlEyBx7c9A127GRAFr96wFOrwbAEYp6nYnV3Uup6XcEm18KONhjVHZaPCrnC1lQJVWPMdQzd2qZQK18bu7ZBMjoMFK3kgUayvjuxZdEYjLpzyEfuP6/xoPJYk1uZL4YX3YTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmexjiIE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D1ohxFkGDaBVHORMTQ+yFdNYTTw9S0d+x8QLAwcR9AleC7OqU06O734o7vrx7hgwVchhdznE3JdSlQx60kfMI/G64vC5nYtawrRFX48kj5BumF3gJIBNkaeX5aZ4rNZAtMXak/YaviXl+gJyYK4ycjcEk4+WY5MtOr7uA4v/r18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1toK19Wy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmexjiIE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE5B1F000E9;
-	Tue, 21 Jul 2026 17:05:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1toK19Wy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93EEB1F000E9;
+	Tue, 21 Jul 2026 17:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653504;
-	bh=r4qjksQJtGOs5tJXP/N1eRKX1QL9ahNZtah0UvZxxrU=;
+	s=korg; t=1784653507;
+	bh=yBWDOWpblon7moqfOqBUZE8C8WvaWwUigAcdaPgoBkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mmexjiIEZdMyuwkr2TQGmdUjKuGTKWZYdeWfFORbafEze1L90cXBbC7dsdHnL+TfJ
-	 bJkB87WakRyXzwonU47l6UIyyx23JkkM/EAtiy/ce/1dBN+JBrv0Uw/dH5Yqc195m/
-	 5DaaxMeLMFWOElKe3jzjrQQ0w9ro/8d/cF+G4Ysc=
+	b=1toK19WykTDe5FuMfkjv4zT5mT+YJonE4bIDmQQ/EqlI2NTVkpsPjYOP251KShCmu
+	 4Mz507BsFMRm70uslIbM4J7sx5R7RzCvwoD15Ykcu5S/K8ckfDV3WC945Jjo3ht0ZC
+	 84WTnvcxCKs6sOSf4NsTE6BAmUEO5vlnvYY0yTmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1353/2077] tracing/probes: Make the $ prefix mandatory for comm access
-Date: Tue, 21 Jul 2026 17:17:06 +0200
-Message-ID: <20260721152624.731102511@linuxfoundation.org>
+Subject: [PATCH 7.1 1354/2077] irqchip/gic-v3-its: Fix OF node reference leak
+Date: Tue, 21 Jul 2026 17:17:07 +0200
+Message-ID: <20260721152624.753395440@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,52 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit a369299c3f785cf556bbef2de2db0aa2d294c4c9 ]
+[ Upstream commit 2e1368a9d61bdf5502ddade004f223a5831c5b8c ]
 
-Since $comm or $COMM are not event field but special fetcharg
-variables to access current->comm, It should not be accessed
-without '$' prefix even with typecast.
+of_get_cpu_node() returns a referenced device node. In
+its_cpu_init_collection(), the Cavium 23144 workaround only uses the
+node to compare the CPU NUMA node, but the reference is never dropped.
 
-Link: https://lore.kernel.org/all/178231209724.732967.12049805699091810641.stgit@devnote2/
+Use the device_node cleanup helper for the CPU node reference so it is
+released when leaving the workaround block, including the NUMA mismatch
+return path.
 
-Fixes: 69efd863a785 ("tracing/eprobes: Allow use of BTF names to dereference pointers")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: fbf8f40e1658 ("irqchip/gicv3-its: numa: Enable workaround for Cavium thunderx erratum 23144")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+Acked-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_probe.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/irqchip/irq-gic-v3-its.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
-index 0b1277f03dfcb5..3f928ed35180bd 100644
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -342,10 +342,6 @@ static int parse_trace_event(char *arg, struct fetch_insn *code,
- 	ret = parse_trace_event_arg(arg, code, ctx);
- 	if (!ret)
- 		return 0;
--	if (strcmp(arg, "comm") == 0 || strcmp(arg, "COMM") == 0) {
--		code->op = FETCH_OP_COMM;
--		return 0;
--	}
- 	return -EINVAL;
- }
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index 291d7668cc8daf..5f9f58ff758cc8 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -3290,11 +3290,9 @@ static void its_cpu_init_collection(struct its_node *its)
  
-@@ -1073,8 +1069,14 @@ static int parse_probe_vars(char *orig_arg, const struct fetch_type *t,
- 	int len;
+ 	/* avoid cross node collections and its mapping */
+ 	if (its->flags & ITS_FLAGS_WORKAROUND_CAVIUM_23144) {
+-		struct device_node *cpu_node;
++		struct device_node *cpu_node __free(device_node) = of_get_cpu_node(cpu, NULL);
  
- 	if (ctx->flags & TPARG_FL_TEVENT) {
--		if (parse_trace_event(arg, code, ctx) < 0)
-+		if (parse_trace_event(arg, code, ctx) < 0) {
-+			/* 'comm' should be checked after field parsing. */
-+			if (strcmp(arg, "comm") == 0 || strcmp(arg, "COMM") == 0) {
-+				code->op = FETCH_OP_COMM;
-+				return 0;
-+			}
- 			goto inval;
-+		}
- 		return 0;
+-		cpu_node = of_get_cpu_node(cpu, NULL);
+-		if (its->numa_node != NUMA_NO_NODE &&
+-			its->numa_node != of_node_to_nid(cpu_node))
++		if (its->numa_node != NUMA_NO_NODE && its->numa_node != of_node_to_nid(cpu_node))
+ 			return;
  	}
  
 -- 
