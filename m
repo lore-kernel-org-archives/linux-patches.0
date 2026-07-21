@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA09471257;
-	Tue, 21 Jul 2026 18:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5A5471259;
+	Tue, 21 Jul 2026 18:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657514; cv=none; b=iavOUEbZfGa04iKVo14PLKcuDizSU8pbWVL7fk8BmdA1l50HElEcuox9nA9DnDdl3K9nMnl6KNXxDmFUFGcHJ+i2C1HU9ercMljYzmD32+ws2zQu1Phxab9pAmwxY5zHKIfymjtVj4YpBx2EFXekmhxzva+G11Sww9WUhwf32Kw=
+	t=1784657516; cv=none; b=HX1keXLaSYm0WxPdWvEymlGCiLHQdDQLfWMjQ6xaVEQkMNquMbzFLkRv//mwa5fi7AFpuVgVTgbvGWtMTw6ay4QVb4h7dnrFIN4MbFaesoeqvqJscDOAt74/+Jf+rc0e2VAOlmV833qe6Xawnze6SYfKIAqgwlQc9SBbtWa7tJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657514; c=relaxed/simple;
-	bh=V/hkAOWRK492MO3yFQjinUztTuJ3MNMSMep9vh+eonI=;
+	s=arc-20240116; t=1784657516; c=relaxed/simple;
+	bh=KvaLaHtPxA7f2pEJ1OIuEU7Y9kdCKSIvW1wvNM4ousA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KPvbDh3mS5a2agvzrW7t1oom/BD6XKUFP0hlStnVMDxrxH7HkJQ+5gHM+RKN8b9fWvpazU6ajW//sHsX+TvvplQrljewe+MDDxDausMAonPtEzc1XRp00C5lbA6Kud7lOz+CYBmO7ebKYvlHsoChTPBJnDgVFCWBqKiDas+zpMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fOEhNhXo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OwG5Vz1FwFtKSHYbns/EH6O9hdRfsJhgzpBnmQcGOMQLu2XvycHITaE5b7UTEcADDwFOa7tAmgkgDM1BL0go7iBRO3AHsmUhuX0+crcyPrEeROny3d3pCSASiQsQKmoCJlP1rncH4TaFLBPy/HOAt1k0xwsAEEaMTRSL36yXPwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVw9jivS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fOEhNhXo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500301F000E9;
-	Tue, 21 Jul 2026 18:11:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVw9jivS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07AA61F00A3A;
+	Tue, 21 Jul 2026 18:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657512;
-	bh=5vCy9TADARnq72BtBsmSAE40qntpHlaCDq5qEgQ0zqw=;
+	s=korg; t=1784657515;
+	bh=MIzdwC1uyIVVkDpuAIPgx1LCwlYBJoY1Ld6s1nI4fT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fOEhNhXoEu6OrDxYXX/9A/fTUOfifRJ3udEc2gsJXgJXEvwGRvJDvIuE10sQjgYQg
-	 VMdxe3XeYs2+XAJzpXIov3g09nwgYiOCZ8t5zXjXRhVrO+XG7JWQa02fVVnNyacz+C
-	 Y6n3BZtQn47/vv4QBcVrNWY9C6xs7vnu1iB1vU3o=
+	b=tVw9jivSZ69nbFMEQt9cvmCuwCay6NPP3pDQ5yCcs7bum2vFtyll5V/laFXs4IRqw
+	 FTR6jYh3fv1OEjLBDa9lBqTjU3yIfHk/YTZ9ynZgAEKERxPR370w5fblGLcNMT+dzn
+	 Rku8fcQc4pFycIHS9VUQDQ2iPpyrznoPdLvkB7AU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0750/1611] i3c: mipi-i3c-hci: Quieten initialization messages
-Date: Tue, 21 Jul 2026 17:14:26 +0200
-Message-ID: <20260721152532.244159977@linuxfoundation.org>
+Subject: [PATCH 6.18 0751/1611] i3c: mipi-i3c-hci: Allow for Multi-Bus Instances
+Date: Tue, 21 Jul 2026 17:14:27 +0200
+Message-ID: <20260721152532.266349540@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,304 +54,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 581d5b7953b8f24d2f379c8c56ceaa7d163488ce ]
+[ Upstream commit b8460480f62e16751876a1f367dc14fb62867463 ]
 
-The copious initialization messages are at most useful only for debugging.
-Change them from dev_info() or dev_notice() to dev_dbg().
+Add support for MIPI I3C Host Controllers with the Multi-Bus Instance
+capability.  These controllers can host multiple I3C buses (up to 15)
+within a single hardware function (e.g., PCIe B/D/F), providing one
+indepedent HCI register set and corresponding I3C bus controller logic
+per bus.
+
+A separate platform device will represent each instance, but it is
+necessary to allow for shared resources.
+
+Multi-bus instances share the same MMIO address space, but the ranges are
+not guaranteed to be contiguous. To avoid overlapping mappings, pass
+base_regs from the parent mapping to child devices.
+
+Allow the IRQ to be shared among instances.
 
 Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260106164416.67074-4-adrian.hunter@intel.com
+Link: https://patch.msgid.link/20260106164416.67074-8-adrian.hunter@intel.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Stable-dep-of: 093eb8e73c90 ("i3c: mipi-i3c-hci: Preserve RUN bit when aborting DMA ring")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/core.c     | 18 +++----
- drivers/i3c/master/mipi-i3c-hci/dma.c      |  4 +-
- drivers/i3c/master/mipi-i3c-hci/ext_caps.c | 55 ++++++++++------------
- drivers/i3c/master/mipi-i3c-hci/pio.c      | 16 +++----
- 4 files changed, 45 insertions(+), 48 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/core.c     | 21 +++++++++++++++++----
+ include/linux/platform_data/mipi-i3c-hci.h | 15 +++++++++++++++
+ 2 files changed, 32 insertions(+), 4 deletions(-)
+ create mode 100644 include/linux/platform_data/mipi-i3c-hci.h
 
 diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
-index c355f4a2baf57a..6d8a00486ba62b 100644
+index 6d8a00486ba62b..75e6610cfd8129 100644
 --- a/drivers/i3c/master/mipi-i3c-hci/core.c
 +++ b/drivers/i3c/master/mipi-i3c-hci/core.c
-@@ -599,8 +599,8 @@ static int i3c_hci_init(struct i3c_hci *hci)
- 	hci->DAT_entry_size = FIELD_GET(DAT_ENTRY_SIZE, regval) ? 0 : 8;
- 	if (size_in_dwords)
- 		hci->DAT_entries = 4 * hci->DAT_entries / hci->DAT_entry_size;
--	dev_info(&hci->master.dev, "DAT: %u %u-bytes entries at offset %#x\n",
--		 hci->DAT_entries, hci->DAT_entry_size, offset);
-+	dev_dbg(&hci->master.dev, "DAT: %u %u-bytes entries at offset %#x\n",
-+		hci->DAT_entries, hci->DAT_entry_size, offset);
+@@ -14,6 +14,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/iopoll.h>
+ #include <linux/module.h>
++#include <linux/platform_data/mipi-i3c-hci.h>
+ #include <linux/platform_device.h>
  
- 	regval = reg_read(DCT_SECTION);
- 	offset = FIELD_GET(DCT_TABLE_OFFSET, regval);
-@@ -609,23 +609,23 @@ static int i3c_hci_init(struct i3c_hci *hci)
- 	hci->DCT_entry_size = FIELD_GET(DCT_ENTRY_SIZE, regval) ? 0 : 16;
- 	if (size_in_dwords)
- 		hci->DCT_entries = 4 * hci->DCT_entries / hci->DCT_entry_size;
--	dev_info(&hci->master.dev, "DCT: %u %u-bytes entries at offset %#x\n",
--		 hci->DCT_entries, hci->DCT_entry_size, offset);
-+	dev_dbg(&hci->master.dev, "DCT: %u %u-bytes entries at offset %#x\n",
-+		hci->DCT_entries, hci->DCT_entry_size, offset);
+ #include "hci.h"
+@@ -742,15 +743,27 @@ static int i3c_hci_init(struct i3c_hci *hci)
  
- 	regval = reg_read(RING_HEADERS_SECTION);
- 	offset = FIELD_GET(RING_HEADERS_OFFSET, regval);
- 	hci->RHS_regs = offset ? hci->base_regs + offset : NULL;
--	dev_info(&hci->master.dev, "Ring Headers at offset %#x\n", offset);
-+	dev_dbg(&hci->master.dev, "Ring Headers at offset %#x\n", offset);
+ static int i3c_hci_probe(struct platform_device *pdev)
+ {
++	const struct mipi_i3c_hci_platform_data *pdata = pdev->dev.platform_data;
+ 	struct i3c_hci *hci;
+ 	int irq, ret;
  
- 	regval = reg_read(PIO_SECTION);
- 	offset = FIELD_GET(PIO_REGS_OFFSET, regval);
- 	hci->PIO_regs = offset ? hci->base_regs + offset : NULL;
--	dev_info(&hci->master.dev, "PIO section at offset %#x\n", offset);
-+	dev_dbg(&hci->master.dev, "PIO section at offset %#x\n", offset);
+ 	hci = devm_kzalloc(&pdev->dev, sizeof(*hci), GFP_KERNEL);
+ 	if (!hci)
+ 		return -ENOMEM;
+-	hci->base_regs = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(hci->base_regs))
+-		return PTR_ERR(hci->base_regs);
++
++	/*
++	 * Multi-bus instances share the same MMIO address range, but not
++	 * necessarily in separate contiguous sub-ranges. To avoid overlapping
++	 * mappings, provide base_regs from the parent mapping.
++	 */
++	if (pdata)
++		hci->base_regs = pdata->base_regs;
++
++	if (!hci->base_regs) {
++		hci->base_regs = devm_platform_ioremap_resource(pdev, 0);
++		if (IS_ERR(hci->base_regs))
++			return PTR_ERR(hci->base_regs);
++	}
  
- 	regval = reg_read(EXT_CAPS_SECTION);
- 	offset = FIELD_GET(EXT_CAPS_OFFSET, regval);
- 	hci->EXTCAPS_regs = offset ? hci->base_regs + offset : NULL;
--	dev_info(&hci->master.dev, "Extended Caps at offset %#x\n", offset);
-+	dev_dbg(&hci->master.dev, "Extended Caps at offset %#x\n", offset);
+ 	platform_set_drvdata(pdev, hci);
+ 	/* temporary for dev_printk's, to be replaced in i3c_master_register */
+@@ -764,7 +777,7 @@ static int i3c_hci_probe(struct platform_device *pdev)
  
- 	ret = i3c_hci_parse_ext_caps(hci);
+ 	irq = platform_get_irq(pdev, 0);
+ 	ret = devm_request_irq(&pdev->dev, irq, i3c_hci_irq_handler,
+-			       0, NULL, hci);
++			       IRQF_SHARED, NULL, hci);
  	if (ret)
-@@ -710,7 +710,7 @@ static int i3c_hci_init(struct i3c_hci *hci)
- 			ret = -EIO;
- 		} else {
- 			hci->io = &mipi_i3c_hci_dma;
--			dev_info(&hci->master.dev, "Using DMA\n");
-+			dev_dbg(&hci->master.dev, "Using DMA\n");
- 		}
- 	}
+ 		return ret;
  
-@@ -722,7 +722,7 @@ static int i3c_hci_init(struct i3c_hci *hci)
- 			ret = -EIO;
- 		} else {
- 			hci->io = &mipi_i3c_hci_pio;
--			dev_info(&hci->master.dev, "Using PIO\n");
-+			dev_dbg(&hci->master.dev, "Using PIO\n");
- 		}
- 	}
- 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index 42ee94767be3d0..2364d9507d75f5 100644
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -213,7 +213,7 @@ static int hci_dma_init(struct i3c_hci *hci)
- 
- 	regval = rhs_reg_read(CONTROL);
- 	nr_rings = FIELD_GET(MAX_HEADER_COUNT_CAP, regval);
--	dev_info(&hci->master.dev, "%d DMA rings available\n", nr_rings);
-+	dev_dbg(&hci->master.dev, "%d DMA rings available\n", nr_rings);
- 	if (unlikely(nr_rings > 8)) {
- 		dev_err(&hci->master.dev, "number of rings should be <= 8\n");
- 		nr_rings = 8;
-@@ -233,7 +233,7 @@ static int hci_dma_init(struct i3c_hci *hci)
- 	for (i = 0; i < rings->total; i++) {
- 		u32 offset = rhs_reg_read(RHn_OFFSET(i));
- 
--		dev_info(&hci->master.dev, "Ring %d at offset %#x\n", i, offset);
-+		dev_dbg(&hci->master.dev, "Ring %d at offset %#x\n", i, offset);
- 		ret = -EINVAL;
- 		if (!offset)
- 			goto err_out;
-diff --git a/drivers/i3c/master/mipi-i3c-hci/ext_caps.c b/drivers/i3c/master/mipi-i3c-hci/ext_caps.c
-index 533a495e14c869..5350b209aa3d08 100644
---- a/drivers/i3c/master/mipi-i3c-hci/ext_caps.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/ext_caps.c
-@@ -27,9 +27,9 @@ static int hci_extcap_hardware_id(struct i3c_hci *hci, void __iomem *base)
- 	hci->vendor_version_id	= readl(base + 0x08);
- 	hci->vendor_product_id	= readl(base + 0x0c);
- 
--	dev_info(&hci->master.dev, "vendor MIPI ID: %#x\n", hci->vendor_mipi_id);
--	dev_info(&hci->master.dev, "vendor version ID: %#x\n", hci->vendor_version_id);
--	dev_info(&hci->master.dev, "vendor product ID: %#x\n", hci->vendor_product_id);
-+	dev_dbg(&hci->master.dev, "vendor MIPI ID: %#x\n", hci->vendor_mipi_id);
-+	dev_dbg(&hci->master.dev, "vendor version ID: %#x\n", hci->vendor_version_id);
-+	dev_dbg(&hci->master.dev, "vendor product ID: %#x\n", hci->vendor_product_id);
- 
- 	/* ought to go in a table if this grows too much */
- 	switch (hci->vendor_mipi_id) {
-@@ -49,7 +49,7 @@ static int hci_extcap_master_config(struct i3c_hci *hci, void __iomem *base)
- 	static const char * const functionality[] = {
- 		"(unknown)", "master only", "target only",
- 		"primary/secondary master" };
--	dev_info(&hci->master.dev, "operation mode: %s\n", functionality[operation_mode]);
-+	dev_dbg(&hci->master.dev, "operation mode: %s\n", functionality[operation_mode]);
- 	if (operation_mode & 0x1)
- 		return 0;
- 	dev_err(&hci->master.dev, "only master mode is currently supported\n");
-@@ -61,7 +61,7 @@ static int hci_extcap_multi_bus(struct i3c_hci *hci, void __iomem *base)
- 	u32 bus_instance = readl(base + 0x04);
- 	unsigned int count = FIELD_GET(GENMASK(3, 0), bus_instance);
- 
--	dev_info(&hci->master.dev, "%d bus instances\n", count);
-+	dev_dbg(&hci->master.dev, "%d bus instances\n", count);
- 	return 0;
- }
- 
-@@ -71,8 +71,7 @@ static int hci_extcap_xfer_modes(struct i3c_hci *hci, void __iomem *base)
- 	u32 entries = FIELD_GET(CAP_HEADER_LENGTH, header) - 1;
- 	unsigned int index;
- 
--	dev_info(&hci->master.dev, "transfer mode table has %d entries\n",
--		 entries);
-+	dev_dbg(&hci->master.dev, "transfer mode table has %d entries\n", entries);
- 	base += 4;  /* skip header */
- 	for (index = 0; index < entries; index++) {
- 		u32 mode_entry = readl(base);
-@@ -95,7 +94,7 @@ static int hci_extcap_xfer_rates(struct i3c_hci *hci, void __iomem *base)
- 
- 	base += 4;  /* skip header */
- 
--	dev_info(&hci->master.dev, "available data rates:\n");
-+	dev_dbg(&hci->master.dev, "available data rates:\n");
- 	for (index = 0; index < entries; index++) {
- 		rate_entry = readl(base);
- 		dev_dbg(&hci->master.dev, "entry %d: 0x%08x",
-@@ -103,12 +102,12 @@ static int hci_extcap_xfer_rates(struct i3c_hci *hci, void __iomem *base)
- 		rate = FIELD_GET(XFERRATE_ACTUAL_RATE_KHZ, rate_entry);
- 		rate_id = FIELD_GET(XFERRATE_RATE_ID, rate_entry);
- 		mode_id = FIELD_GET(XFERRATE_MODE_ID, rate_entry);
--		dev_info(&hci->master.dev, "rate %d for %s = %d kHz\n",
--			 rate_id,
--			 mode_id == XFERRATE_MODE_I3C ? "I3C" :
--			 mode_id == XFERRATE_MODE_I2C ? "I2C" :
--			 "unknown mode",
--			 rate);
-+		dev_dbg(&hci->master.dev, "rate %d for %s = %d kHz\n",
-+			rate_id,
-+			mode_id == XFERRATE_MODE_I3C ? "I3C" :
-+			mode_id == XFERRATE_MODE_I2C ? "I2C" :
-+			"unknown mode",
-+			rate);
- 		base += 4;
- 	}
- 
-@@ -122,8 +121,8 @@ static int hci_extcap_auto_command(struct i3c_hci *hci, void __iomem *base)
- 	u32 autocmd_ext_config = readl(base + 0x08);
- 	unsigned int count = FIELD_GET(GENMASK(3, 0), autocmd_ext_config);
- 
--	dev_info(&hci->master.dev, "%d/%d active auto-command entries\n",
--		 count, max_count);
-+	dev_dbg(&hci->master.dev, "%d/%d active auto-command entries\n",
-+		count, max_count);
- 	/* remember auto-command register location for later use */
- 	hci->AUTOCMD_regs = base;
- 	return 0;
-@@ -131,46 +130,46 @@ static int hci_extcap_auto_command(struct i3c_hci *hci, void __iomem *base)
- 
- static int hci_extcap_debug(struct i3c_hci *hci, void __iomem *base)
- {
--	dev_info(&hci->master.dev, "debug registers present\n");
-+	dev_dbg(&hci->master.dev, "debug registers present\n");
- 	hci->DEBUG_regs = base;
- 	return 0;
- }
- 
- static int hci_extcap_scheduled_cmd(struct i3c_hci *hci, void __iomem *base)
- {
--	dev_info(&hci->master.dev, "scheduled commands available\n");
-+	dev_dbg(&hci->master.dev, "scheduled commands available\n");
- 	/* hci->schedcmd_regs = base; */
- 	return 0;
- }
- 
- static int hci_extcap_non_curr_master(struct i3c_hci *hci, void __iomem *base)
- {
--	dev_info(&hci->master.dev, "Non-Current Master support available\n");
-+	dev_dbg(&hci->master.dev, "Non-Current Master support available\n");
- 	/* hci->NCM_regs = base; */
- 	return 0;
- }
- 
- static int hci_extcap_ccc_resp_conf(struct i3c_hci *hci, void __iomem *base)
- {
--	dev_info(&hci->master.dev, "CCC Response Configuration available\n");
-+	dev_dbg(&hci->master.dev, "CCC Response Configuration available\n");
- 	return 0;
- }
- 
- static int hci_extcap_global_DAT(struct i3c_hci *hci, void __iomem *base)
- {
--	dev_info(&hci->master.dev, "Global DAT available\n");
-+	dev_dbg(&hci->master.dev, "Global DAT available\n");
- 	return 0;
- }
- 
- static int hci_extcap_multilane(struct i3c_hci *hci, void __iomem *base)
- {
--	dev_info(&hci->master.dev, "Master Multi-Lane support available\n");
-+	dev_dbg(&hci->master.dev, "Master Multi-Lane support available\n");
- 	return 0;
- }
- 
- static int hci_extcap_ncm_multilane(struct i3c_hci *hci, void __iomem *base)
- {
--	dev_info(&hci->master.dev, "NCM Multi-Lane support available\n");
-+	dev_dbg(&hci->master.dev, "NCM Multi-Lane support available\n");
- 	return 0;
- }
- 
-@@ -203,7 +202,7 @@ static const struct hci_ext_caps ext_capabilities[] = {
- static int hci_extcap_vendor_NXP(struct i3c_hci *hci, void __iomem *base)
- {
- 	hci->vendor_data = (__force void *)base;
--	dev_info(&hci->master.dev, "Build Date Info = %#x\n", readl(base + 1*4));
-+	dev_dbg(&hci->master.dev, "Build Date Info = %#x\n", readl(base + 1 * 4));
- 	/* reset the FPGA */
- 	writel(0xdeadbeef, base + 1*4);
- 	return 0;
-@@ -241,9 +240,8 @@ static int hci_extcap_vendor_specific(struct i3c_hci *hci, void __iomem *base,
- 	}
- 
- 	if (!vendor_cap_entry) {
--		dev_notice(&hci->master.dev,
--			   "unknown ext_cap 0x%02x for vendor 0x%02x\n",
--			   cap_id, hci->vendor_mipi_id);
-+		dev_dbg(&hci->master.dev, "unknown ext_cap 0x%02x for vendor 0x%02x\n",
-+			cap_id, hci->vendor_mipi_id);
- 		return 0;
- 	}
- 	if (cap_length < vendor_cap_entry->min_length) {
-@@ -296,8 +294,7 @@ int i3c_hci_parse_ext_caps(struct i3c_hci *hci)
- 			}
- 		}
- 		if (!cap_entry) {
--			dev_notice(&hci->master.dev,
--				   "unknown ext_cap 0x%02x\n", cap_id);
-+			dev_dbg(&hci->master.dev, "unknown ext_cap 0x%02x\n", cap_id);
- 		} else if (cap_length < cap_entry->min_length) {
- 			dev_err(&hci->master.dev,
- 				"ext_cap 0x%02x has size %d (expecting >= %d)\n",
-diff --git a/drivers/i3c/master/mipi-i3c-hci/pio.c b/drivers/i3c/master/mipi-i3c-hci/pio.c
-index 67dc34163d51bd..bc8a011ef16823 100644
---- a/drivers/i3c/master/mipi-i3c-hci/pio.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/pio.c
-@@ -147,14 +147,14 @@ static int hci_pio_init(struct i3c_hci *hci)
- 	hci->io_data = pio;
- 
- 	size_val = pio_reg_read(QUEUE_SIZE);
--	dev_info(&hci->master.dev, "CMD/RESP FIFO = %ld entries\n",
--		 FIELD_GET(CR_QUEUE_SIZE, size_val));
--	dev_info(&hci->master.dev, "IBI FIFO = %ld bytes\n",
--		 4 * FIELD_GET(IBI_STATUS_SIZE, size_val));
--	dev_info(&hci->master.dev, "RX data FIFO = %d bytes\n",
--		 4 * (2 << FIELD_GET(RX_DATA_BUFFER_SIZE, size_val)));
--	dev_info(&hci->master.dev, "TX data FIFO = %d bytes\n",
--		 4 * (2 << FIELD_GET(TX_DATA_BUFFER_SIZE, size_val)));
-+	dev_dbg(&hci->master.dev, "CMD/RESP FIFO = %ld entries\n",
-+		FIELD_GET(CR_QUEUE_SIZE, size_val));
-+	dev_dbg(&hci->master.dev, "IBI FIFO = %ld bytes\n",
-+		4 * FIELD_GET(IBI_STATUS_SIZE, size_val));
-+	dev_dbg(&hci->master.dev, "RX data FIFO = %d bytes\n",
-+		4 * (2 << FIELD_GET(RX_DATA_BUFFER_SIZE, size_val)));
-+	dev_dbg(&hci->master.dev, "TX data FIFO = %d bytes\n",
-+		4 * (2 << FIELD_GET(TX_DATA_BUFFER_SIZE, size_val)));
- 
- 	/*
- 	 * Let's initialize data thresholds to half of the actual FIFO size.
+diff --git a/include/linux/platform_data/mipi-i3c-hci.h b/include/linux/platform_data/mipi-i3c-hci.h
+new file mode 100644
+index 00000000000000..ab7395f455f942
+--- /dev/null
++++ b/include/linux/platform_data/mipi-i3c-hci.h
+@@ -0,0 +1,15 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef INCLUDE_PLATFORM_DATA_MIPI_I3C_HCI_H
++#define INCLUDE_PLATFORM_DATA_MIPI_I3C_HCI_H
++
++#include <linux/compiler_types.h>
++
++/**
++ * struct mipi_i3c_hci_platform_data - Platform-dependent data for mipi_i3c_hci
++ * @base_regs: Register set base address (to support multi-bus instances)
++ */
++struct mipi_i3c_hci_platform_data {
++	void __iomem *base_regs;
++};
++
++#endif
 -- 
 2.53.0
 
