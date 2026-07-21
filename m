@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5F144AB9F;
-	Tue, 21 Jul 2026 22:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705713AA4F9;
+	Tue, 21 Jul 2026 22:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673318; cv=none; b=XVSU6HBzLfayHaKSanXvQ2/AYdEjjjEI9wWuxCAOGIsvZcL3TVZeyMJ2MnPFTIf0y4fSeNLQsD9VkRtUGxCEVTbPJ1QeSDSPvWWXig90AISHaajy2V7KZDvw8y9B35woczJNYnAgSGGkgXuaZYs6OERrqAINfTNQfJQBc3rumOI=
+	t=1784673322; cv=none; b=bpYBBndNYmzkco9LSGKwlGbqtvpBvJjb37oj22fzaFrhUWB+o5nNw+XPQ1CKBq4pYxHYjz6Q83x52SYE+fLXORvNSSx0vF+HRUfyJKuI7CR5RWKK41QPLVTO2AXNSFmEsSqJsn16+iiyKFXoUTy5S+YjF9yuIQqwgK8PT4wlajc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673318; c=relaxed/simple;
-	bh=3wKlXPHbol+Nu6aNzDWQi4LF09FjNQDyTNDSCqxNIbY=;
+	s=arc-20240116; t=1784673322; c=relaxed/simple;
+	bh=HoRQXBhy0PAY44o2x1DOUCJnqCwUhVQy9O60Is4IIP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XhH8kwCAGOv0wkue+uU1hCcNNuEIHOAF4RVoWlyangZp3abyVyWHK+MnYZsFj3us/C2CQxED7jxAY4nazJGueF6+zdfzcw+jiMU5SNdEhzuPXS9rx3oppm9dfclSIZ2lcaESYG+rEyOpynRFv5ENLnfoMBOtVIVys3TuqqRRRdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nL35bywJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hre/MbLFdlnkXTUMokLicPgrDL2WVpZDClT1cPDKLFMNQnFbykD19o4bdnz61AbZWahP2+XnPH9KaySOEEvJds1XBzOYu0COWSCgyFHlMgTH3tRrIHWjIbJqxn7KFT4xfIT16g8Nq35GynZQtLx9W+idw68Fx3MVXwwvrZAjmeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6n7TAZb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nL35bywJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED07D1F000E9;
-	Tue, 21 Jul 2026 22:35:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6n7TAZb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 979521F000E9;
+	Tue, 21 Jul 2026 22:35:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673317;
-	bh=/NTm5AwUrD7CL0kL8BrgcQJDafmoSWaDuqU6vpV/Wzg=;
+	s=korg; t=1784673320;
+	bh=77PoUfZI1CIn2lmDdjUCsXAXCg90QHb1q1mlO1CSpvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nL35bywJIcUsvLN71zTiJnP64HAkFC9o6k7of7xMJPbkdp02xEa8IcggJjlHm2PiS
-	 kOI/Tx2kJUygBO9kvGAunNBg4FOFnpMEww5i4wzZ6qiMMkMz99jpoWrQULDz4n6oej
-	 EqLugkQas36h5Y+0GF51rKm4S49MwzX1bonBi/Ms=
+	b=X6n7TAZbIeFuWf7eI55nynXky26M76MjefetqquRJyfRb+3MbDRLetKZPx/Apnrxl
+	 n6B70tYg1qZbD+iFzUJPumZHAgLzhXLcxCk0HCua0O+lZqL8tGVKAAj3yHutu1xqu4
+	 ZG8PFGsSAyNc5WSkIycw4/Bg8sqZusRla8DmhBSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	RD Babiera <rdbabiera@google.com>,
+	Andrei Kuchynski <akuchynski@chromium.org>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.10 116/699] usb: typec: tcpm: Validate SVID index in svdm_consume_modes()
-Date: Tue, 21 Jul 2026 17:17:55 +0200
-Message-ID: <20260721152358.323298131@linuxfoundation.org>
+Subject: [PATCH 5.10 117/699] usb: typec: ucsi: Invert DisplayPort role assignment
+Date: Tue, 21 Jul 2026 17:17:56 +0200
+Message-ID: <20260721152358.344882977@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,57 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Badhri Jagan Sridharan <badhri@google.com>
+From: Andrei Kuchynski <akuchynski@chromium.org>
 
-commit 7b681dd5fbf60b24a13c14661e5b7735759fb491 upstream.
+commit d092d7edf8faefa3e27b9fc7f0e7904b06c833a2 upstream.
 
-In svdm_consume_modes(), the SVID value is read from pmdata->svids using
-pmdata->svid_index as an array index without bounds validation:
+The existing implementation assigned these flags backwards, configuring
+the partner's DisplayPort role to match the port's role instead of
+complementing it.
+This prevents proper configuration during DP altmode activation, often
+causing `pin_assignment` to remain 0 in `dp_altmode_configure()` and
+resulting in VDM negotiation failures:
 
-    paltmode->svid = pmdata->svids[pmdata->svid_index];
+    [  583.328246] typec port1.1: VDM 0xff01a150 failed
 
-If pmdata->svid_index is driven beyond SVID_DISCOVERY_MAX (16), it results
-in an out-of-bounds read of the pmdata->svids array. Because pd_mode_data
-is embedded inside struct tcpm_port, indexing past svids reads into
-adjacent fields. In particular:
-- At index 16, it reads the altmodes count.
-- At index 18 and beyond, it reads into altmode_desc[], which contains
-  partner-supplied SVDM Discovery Modes VDOs.
+Additionally, the fix ensures that the `pin_assignment` sysfs attribute
+displays the correct values.
 
-By injecting a chosen SVID into altmode_desc[0].vdo and driving svid_index
-to 20, the partner can force paltmode->svid to be loaded with an arbitrary,
-partner- chosen SVID, which is then registered via
-typec_partner_register_altmode().
-
-Fix this by validating that pmdata->svid_index is non-negative and strictly
-less than pmdata->nsvids before accessing the pmdata->svids array inside
-svdm_consume_modes().
-
-Assisted-by: Antigravity:gemini-3.5-flash
-Fixes: 4ab8c18d4d67 ("usb: typec: Register a device for every mode")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
-Reviewed-by: RD Babiera <rdbabiera@google.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260622220803.305750-1-badhri@google.com
+Fixes: af8622f6a585 ("usb: typec: ucsi: Support for DisplayPort alt mode")
+Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260601142837.3240207-1-akuchynski@chromium.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/typec/ucsi/displayport.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -1157,6 +1157,11 @@ static void svdm_consume_modes(struct tc
- 		return;
- 	}
+--- a/drivers/usb/typec/ucsi/displayport.c
++++ b/drivers/usb/typec/ucsi/displayport.c
+@@ -150,12 +150,12 @@ static int ucsi_displayport_status_updat
+ 	 * that Multi-function is preferred.
+ 	 */
+ 	if (DP_CAP_CAPABILITY(cap) & DP_CAP_UFP_D) {
+-		dp->data.status |= DP_STATUS_CON_UFP_D;
++		dp->data.status |= DP_STATUS_CON_DFP_D;
  
-+	if (pmdata->svid_index < 0 || pmdata->svid_index >= pmdata->nsvids) {
-+		tcpm_log(port, "Invalid SVID index %d", pmdata->svid_index);
-+		return;
-+	}
-+
- 	for (i = 1; i < cnt; i++) {
- 		paltmode = &pmdata->altmode_desc[pmdata->altmodes];
- 		memset(paltmode, 0, sizeof(*paltmode));
+ 		if (DP_CAP_UFP_D_PIN_ASSIGN(cap) & BIT(DP_PIN_ASSIGN_D))
+ 			dp->data.status |= DP_STATUS_PREFER_MULTI_FUNC;
+ 	} else {
+-		dp->data.status |= DP_STATUS_CON_DFP_D;
++		dp->data.status |= DP_STATUS_CON_UFP_D;
+ 
+ 		if (DP_CAP_DFP_D_PIN_ASSIGN(cap) & BIT(DP_PIN_ASSIGN_D))
+ 			dp->data.status |= DP_STATUS_PREFER_MULTI_FUNC;
 
 
