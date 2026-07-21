@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4A83F825C;
-	Tue, 21 Jul 2026 20:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712C13B4E9B;
+	Tue, 21 Jul 2026 20:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667422; cv=none; b=eLjNlWy9s/RsWnM27HvIXyrOHPycqbOWwyAIjVn1Q+2BQssJJbL0nOL+N2L6pF70SW5pPgtk1laX8KP1BxFFMZyatoyG199epnFlHDdXupeyOumoJNHNxcK2LFoy9dx/tFrlVo6aIoH9YO67W/7M9/0VBCPhSQrqtEBKi4Wo7FE=
+	t=1784667425; cv=none; b=ifL3cPtugkktw2lwWkupOrXSxrGfDe4iUGojp+z8CvPiCEJw2mRKfdrooluPAq+S50MJrZUs2QBykiBwLqwEzVFe3I09/qmXqErCjJgKHJzRTNH/LXwSmdSP18Y6wXM5N0eH3dsdl6Or6auaW7rDw21F5TzNa/aGLkt3RnD2ens=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667422; c=relaxed/simple;
-	bh=Fv1EJj9MtNg6R1jx+RO3LKuOGrpZUw8LVcu1KnPOpmw=;
+	s=arc-20240116; t=1784667425; c=relaxed/simple;
+	bh=qXS6nWqzQ7qJ5A5jQ8YDGHU9GbFNDbsqgxKB3/N5PlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l2nXyENrW/XrGbP//ujXIi5U0WhkC430ryhGfoftn8hcIlJCXNNhiK/FWc+VGZec+NHKa6RE8nRIBaQL6JXcqmUF7ShfESvoU7LXKCTxtNFK9bOJzc3K4I39qSlqCCBKKZu00dc27RlJ1iyML5OK+yGh9LvpKPLBViptwZoABVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgDu0udF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jz/MfjEnFizJfXUY08YdzfzCoIrUslW2NSLuDx1Th5wwrpwIbOxGUHuhDPNaSihTehUQVHnyLa374QGeF8jhSte3nM8AwwG7/K2xWYwWkJiG/VK9jNuTzHTLuf2CSACFMeM1nPY/8GpCO29r5CQY0cdAr+OjgMswSUF1CLxJsu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1i1Lzd3W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgDu0udF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D1D1F000E9;
-	Tue, 21 Jul 2026 20:57:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1i1Lzd3W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73751F000E9;
+	Tue, 21 Jul 2026 20:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667421;
-	bh=6Z2k/nPHenf+IzKOM9x/x9l0ga2zsZHlY5zcTJLRelw=;
+	s=korg; t=1784667424;
+	bh=92aQuIfUNK1nCyL+1Sh2m1r+sa+X85l9wV3Munzg1Qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tgDu0udFDtGjnvDMX3+8e+BUJDSSzDCNkdRWFzk6Ol8FHHh6qUL7TjAbAoHEeikeg
-	 171byQ2LD7q2yRfPXkx3BGSsgTbsy2k5aBjLFxNegVwxm4CD+l8vHHXWofcvHZ106V
-	 N303OJ9LI0VFoss1Zlc8kHXoG0MqlaI9PwLisn40=
+	b=1i1Lzd3WtmcPOTqiHc5pHX0ZZXc5kqY2AM1ZqpGLmtFBdzdykAAbx8yA9oncZqB3F
+	 FJvJCu8n78WyhGA8CbNQFviERsIrv7JKTz6P+L0BZ7qK+qfstSfbqCmdFugxg13Xas
+	 HbIuNFfjdkbQ5OeiTRliCpIyKhxXkj/uDo11aAc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.6 1053/1266] dm-integrity: dont increment hash_offset twice
-Date: Tue, 21 Jul 2026 17:24:50 +0200
-Message-ID: <20260721152505.381159521@linuxfoundation.org>
+Subject: [PATCH 6.6 1054/1266] dm-verity: fix a possible NULL pointer dereference
+Date: Tue, 21 Jul 2026 17:24:51 +0200
+Message-ID: <20260721152505.404387713@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,31 +51,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit edf025f083854f80032b73a1aad69a3c90db236f upstream.
+commit e72b793ae440f6900fb17a4b8518c707b5cd3e17 upstream.
 
-hash_offset is already incremented in the loop "for (i = 0; i < to_copy;
-i++, ts--)". Do not increment it again.
+Fix a possible NULL pointer dereference dm_verity_loadpin_is_bdev_trusted
+if the device has no table.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-4.6
-Fixes: 84597a44a9d8 ("dm-integrity: dm integrity: add optional discard support")
+Assisted-by: Claude:claude-opus-4-6
+Fixes: b6c1c5745ccc ("dm: Add verity helpers for LoadPin")
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/md/dm-verity-loadpin.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -1483,9 +1483,6 @@ thorough_test:
- 			*metadata_offset = 0;
- 		}
+--- a/drivers/md/dm-verity-loadpin.c
++++ b/drivers/md/dm-verity-loadpin.c
+@@ -70,7 +70,7 @@ bool dm_verity_loadpin_is_bdev_trusted(s
  
--		if (unlikely(!is_power_of_2(ic->tag_size)))
--			hash_offset = (hash_offset + to_copy) % ic->tag_size;
--
- 		total_size -= to_copy;
- 	} while (unlikely(total_size));
+ 	table = dm_get_live_table(md, &srcu_idx);
  
+-	if (table->num_targets != 1)
++	if (!table || table->num_targets != 1)
+ 		goto out;
+ 
+ 	ti = dm_table_get_target(table, 0);
 
 
