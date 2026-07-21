@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD593B47E3;
-	Tue, 21 Jul 2026 22:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F895298CC4;
+	Tue, 21 Jul 2026 22:22:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672532; cv=none; b=sr/C+f3ipooL9sI1ppkpqh0l8wHHhh+DaJamK2x36K+eEUGa0tNmBlPNybQCfnktxltNgZOI7W9lyzbvzPBGPGSBe/u6hRqBrKAZUlUk5lHlSsqMOPFkPKZiKdt6zmfO6xto9jsjpqZjw3uzskoR6kZu6X5bTtKsAKcVqkvaZ0o=
+	t=1784672535; cv=none; b=q5soMTzKpVzBzuk8cg3eGq2/00ZHKDEcC/LCmGA/Wa2YFBxLjWI8UmhULt3EroEpELu1BnV6xAqjA3G6c3OTXaSD6nq1eT+tuBb5vIXwKmABjqDJdbi65spiAHezFmbvDeaMQuytooKfVyIUpAY0HG9jAE8QMPnibO73MrAn0LM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672532; c=relaxed/simple;
-	bh=Fb8kxadSrub3oYykpdfKFqW65EmCza+0DBvaYTkmBKc=;
+	s=arc-20240116; t=1784672535; c=relaxed/simple;
+	bh=8Wssx8XhRCfk+1aoq/Bx/BmGgNwbtLIhO9JZSPUby2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fEGqNci9Lt4Tb+BATBq5SZWr7oCT/RWU0Qb6EpqRKKRjgtPIrZ6B21jUroYJ67ngciVx6AC+KlqMy+2XDmNrihc7eziSIhSeBMljXcXG47056jDwL2w/6dfbArtTIGtVSuJm2dZVedyBhyacycStRa2ScBk9jPV6hmJwpE2NCaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9J5lzPP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D0JEIAHH8UfDw8JR3pGDQWdqK7V7D7M5dX1S9rxbEXsRZupgBs7RBW0m0VYaeGc8PmHLzFfZqfMVYkNYPLTMiNKp10Ulc5xIQzCd4uXuVo7LOeZ1MP5tHTfsZAaMFMNmxskEqwfk+Htp1k/IXwX2UobkvmyUvhwG5FQzmKu6UG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1kzO8tnS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9J5lzPP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289121F000E9;
-	Tue, 21 Jul 2026 22:22:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1kzO8tnS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64AF1F000E9;
+	Tue, 21 Jul 2026 22:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672531;
-	bh=2VZWubn5zreKlrGms9ORYReFGVHDlePKcx7/CU+EMlg=;
+	s=korg; t=1784672534;
+	bh=fqmoDH2srTxycJiAoqwxLgisrPtCmtpj4UbbarbTznc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W9J5lzPPnzpZT+R/aL/oC/b2T23/9VTe4yDo2AeiO+mKL8sAQ/l0dzErjp3wimu8Y
-	 Cy33LEJkkrnMnNma/M06/bAJ6h9qpDZyc2a19F8xXdyKm26n9dVvGrn8dWsXZVcphl
-	 1GvfjfyxZfdNhPwVoURrbpsZKC+DnCDPiKU9kV2g=
+	b=1kzO8tnS4etL80dbl6r1vVSFWIxqC8DNQLZWzGRneRqFbf14Pd9uVeubTNdccunGR
+	 /dreNPmxC9kliCwMESiJY88InJ7BD8PaAYJW/JaBWJ7vR74C0HRbdFbbOU6OJukJwS
+	 f/AH7DuKZJGPQ7zTEDE3nz9Ot6xpKLKJu+BJO5Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fuchs <fuchsfl@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.15 633/843] mtd: maps: vmu-flash: fix NULL pointer dereference in initialization
-Date: Tue, 21 Jul 2026 17:24:28 +0200
-Message-ID: <20260721152420.302626372@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Don Brace <don.brace@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.15 660/843] scsi: hpsa: Fix DMA mapping leak on IOACCEL2 reset path
+Date: Tue, 21 Jul 2026 17:24:55 +0200
+Message-ID: <20260721152420.911329071@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,32 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fuchs <fuchsfl@gmail.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 357e3b8e3a8769ba36eb8ec5e053e4825f1a9329 upstream.
+commit e166bafc483e927150cb9b5f286c9191ea0df84e upstream.
 
-The mtd_info contains a struct device, which must be linked to its
-parent. Without this, the initialization of the MTD fails with a NULL
-pointer dereference.
+If phys_disk->in_reset is set, the function returns directly without
+undoing the resources acquired for the command. Add the missing error
+cleanup by unmapping the IOACCEL2 SG chain block when needed, unmapping
+the SCSI command, and dropping the outstanding IOACCEL command count
+before returning.
 
-Fixes: 47a72688fae7 ("mtd: flash mapping support for Dreamcast VMU.")
+Fixes: c5dfd106414f ("scsi: hpsa: correct device resets")
 Cc: stable@vger.kernel.org
-Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Acked-by: Don Brace <don.brace@microchip.com>
+Link: https://patch.msgid.link/20260622160028.1240496-1-haoxiang_li2024@163.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/maps/vmu-flash.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/hpsa.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/mtd/maps/vmu-flash.c
-+++ b/drivers/mtd/maps/vmu-flash.c
-@@ -547,6 +547,7 @@ static void vmu_queryblocks(struct maple
- 	mpart->partition = card->partition;
- 	mtd_cur->priv = mpart;
- 	mtd_cur->owner = THIS_MODULE;
-+	mtd_cur->dev.parent = &mdev->dev;
+--- a/drivers/scsi/hpsa.c
++++ b/drivers/scsi/hpsa.c
+@@ -5029,6 +5029,10 @@ static int hpsa_scsi_ioaccel2_queue_comm
  
- 	pcache = kzalloc(sizeof(struct vmu_cache), GFP_KERNEL);
- 	if (!pcache)
+ 	if (phys_disk->in_reset) {
+ 		cmd->result = DID_RESET << 16;
++		atomic_dec(&phys_disk->ioaccel_cmds_out);
++		scsi_dma_unmap(cmd);
++		if (use_sg > h->ioaccel_maxsg)
++			hpsa_unmap_ioaccel2_sg_chain_block(h, cp);
+ 		return -1;
+ 	}
+ 
 
 
