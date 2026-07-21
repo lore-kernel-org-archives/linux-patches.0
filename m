@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081AE413D9C;
-	Tue, 21 Jul 2026 19:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0741342DA39;
+	Tue, 21 Jul 2026 19:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660494; cv=none; b=HRd4et74d4ozVYv7tLfLblh6RYduV4WurR0h+3koI/DKNX0MISv3ItXGDiWJpMz138n9lpe8N9kUXjQuisHKCyfX/nAxMA7YG7QxXCbMUzeZbs0h+jxYlygroju5DRj1iJ8Kke8aVhPzlq1sxtZmRaI7iKQju4DXFWE6EQnCfZU=
+	t=1784660496; cv=none; b=VvTvQXW0HUyYnYTV7Vhw7osCeyUjqPhJqR5RLOQQ0wwSavaom2OVjkNEge0wqi5Kqa8PajjDC0GxZYfOsSltsugSzXYUk8WJLgaktl/frvyaDemvYCpNmKJA1ElFQ2wIj0LQqBUAyfiS3xTUk1B3P6r+o+7rlVVOF3eK6YN64TQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660494; c=relaxed/simple;
-	bh=iLfCC6ZFClnFB9+vOgxnB2DZL9OrO915eV0ROcWFeNw=;
+	s=arc-20240116; t=1784660496; c=relaxed/simple;
+	bh=iG2kGOhFfWfSbaRKhcL5A9599Kj5+n1eqcYPIVN66JI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UQrJodOcmyGVYG8WXwGwk/ZrKI3iacxKUUhSiffHQC49YNhY5S17AjanZs4KqgLgnvHe/yQf9TUo+byKtv/QRps2nGcVQfuxb+rfJG1KkET57r8NkGsYfiv1lBKHHVLehLXA+zlNn/b35QChJF74oryd8eFTWxjYU1L89CoFo9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=seVEunhS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RZwkwRW8FTnqP6P8+s2lNaQ3kB6nP2O9xEVtH2OQn4tum4KH3WPyZ/4Cdc4+hDAvm0utMP4Um/gAt4nnRDDZGIwWIl+MeiO232QDZiG2jOyqUVLehzm/KGICT9rPok/Ifhg0qn0NLNaLqViuI82Yj20TVOY2ZeO6vGyXTLFZNcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPU6K0gK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="seVEunhS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352781F0155C;
-	Tue, 21 Jul 2026 19:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPU6K0gK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45961F00ACA;
+	Tue, 21 Jul 2026 19:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660459;
-	bh=hnN8C88ZkGSGacdD6PI80OVMCf224kfCaWDD/Zbqzzk=;
+	s=korg; t=1784660470;
+	bh=jOQIh/QQTjRCNVyzEfBBwlJlQxEOvODxndRKIFEi2as=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=seVEunhSmioZs+bd/Z2AOFjEdmjvE0DCX+s/zJ+o104EalTYg/H0OIPJME9qieOMN
-	 4hjx/t3thW2plJ+NkjE/3yJbliaVerplxw1P4DNxptr6OuANOxV5oRTMh0XJURc/Qi
-	 eqCQWjTW5kU0QxUv2R01oOYMvVsch7fu7wStvPSU=
+	b=tPU6K0gKUsXKSVourv8Z0kCH5T4Giy+sF+y+WaPzdumP80r5glRbeV9t64z+97x6n
+	 Er7FQ1AkJHkKWPKOsasvrRz9CkusXftBgjqd1wt6ggR3AI3ewT0VSmSERb60AuUNhY
+	 Fl+1lUDOriUmKkwqi26cIkw/Ayz738fxWhwvAjQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Chris Mason <clm@meta.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0988/2077] perf tools: Add O_CLOEXEC to open() calls in DSO and ELF code
-Date: Tue, 21 Jul 2026 17:11:01 +0200
-Message-ID: <20260721152616.122043132@linuxfoundation.org>
+Subject: [PATCH 7.1 0992/2077] xprtrdma: Fix ep kref imbalance on ADDR_CHANGE
+Date: Tue, 21 Jul 2026 17:11:05 +0200
+Message-ID: <20260721152616.216313044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,143 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Chris Mason <clm@meta.com>
 
-[ Upstream commit b145137fec13dc8fc7fcb14193ce395a1164e3a1 ]
+[ Upstream commit af9b65b29af341932625c4283dc7a23cdb62688a ]
 
-open() calls in dso.c and symbol-elf.c omit O_CLOEXEC, which leaks
-file descriptors to child processes spawned during symbol resolution
-(e.g., addr2line, objdump).  This can exhaust the fd limit during
-long profiling sessions or when processing many DSOs.
+rpcrdma_cm_event_handler() falls through to the disconnected: label
+on RDMA_CM_EVENT_ADDR_CHANGE and calls rpcrdma_ep_put() with no
+matching get when the event arrives before RDMA_CM_EVENT_ESTABLISHED.
+The kref then underflows during connect teardown and
+rpcrdma_xprt_disconnect() operates on a freed ep.
 
-Add O_CLOEXEC to all open() calls in both files (12 call sites).
+Reference counts across a normal connection lifecycle:
 
-Fixes: cdd059d731eeb466 ("perf tools: Move dso_* related functions into dso object")
-Fixes: e5a1845fc0aeca85 ("perf symbols: Split out util/symbol-elf.c")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+    rpcrdma_ep_create()             kref_init     ->1
+    rpcrdma_xprt_connect()          ep_get        ->2  (before post_recvs)
+    RDMA_CM_EVENT_ESTABLISHED       ep_get        ->3
+    RDMA_CM_EVENT_DISCONNECTED      ep_put        ->2
+    rpcrdma_xprt_drain()            ep_put        ->1
+    rpcrdma_xprt_disconnect() tail  ep_put        ->0  (ep_destroy)
+
+The connect-time get in rpcrdma_xprt_connect(), taken just before
+rpcrdma_post_recvs() "while there are outstanding Receives," is
+balanced by rpcrdma_xprt_drain. ADDR_CHANGE before ESTABLISHED has
+no get to consume, so its put drops the count to 1 and the drain
+put then frees the ep while rpcrdma_xprt_disconnect() still holds a
+pointer to it.
+
+Fix by dispatching on the prior re_connect_status via xchg(): for
+prev == 0 (pre-ESTABLISHED) wake the connect waiter and return with
+no put; for prev == 1 call rpcrdma_force_disconnect() and return.
+The case-1 arm relies on the subsequent RDMA_CM_EVENT_DISCONNECTED
+event -- reliably delivered when rdma_disconnect() is called on a
+still-connected cm_id -- to balance the ESTABLISHED get;
+rpcrdma_xprt_drain() continues to balance only that connect-time
+get. Any other prior value means teardown is already in flight.
+
+Fixes: 2acc5cae2923 ("xprtrdma: Prevent dereferencing r_xprt->rx_ep after it is freed")
+Assisted-by: kres:claude-opus-4-7
+Signed-off-by: Chris Mason <clm@meta.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dso.c        |  4 ++--
- tools/perf/util/symbol-elf.c | 20 ++++++++++----------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ net/sunrpc/xprtrdma/verbs.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
-index b791e1b6b2cf01..511e91843fbd8e 100644
---- a/tools/perf/util/dso.c
-+++ b/tools/perf/util/dso.c
-@@ -344,7 +344,7 @@ int filename__decompress(const char *name, char *pathname,
- 	 * descriptor to the uncompressed file.
- 	 */
- 	if (!compressions[comp].is_compressed(name))
--		return open(name, O_RDONLY);
-+		return open(name, O_RDONLY | O_CLOEXEC);
- 
- 	fd = mkstemp(tmpbuf);
- 	if (fd < 0) {
-@@ -1904,7 +1904,7 @@ static const u8 *__dso__read_symbol(struct dso *dso, const char *symfs_filename,
- 	int saved_errno;
- 
- 	nsinfo__mountns_enter(dso__nsinfo(dso), &nsc);
--	fd = open(symfs_filename, O_RDONLY);
-+	fd = open(symfs_filename, O_RDONLY | O_CLOEXEC);
- 	saved_errno = errno;
- 	nsinfo__mountns_exit(&nsc);
- 	if (fd < 0) {
-diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index 7afa8a1171396b..0ba2c60ea5aaba 100644
---- a/tools/perf/util/symbol-elf.c
-+++ b/tools/perf/util/symbol-elf.c
-@@ -217,7 +217,7 @@ bool filename__has_section(const char *filename, const char *sec)
- 	GElf_Shdr shdr;
- 	bool found = false;
- 
--	fd = open(filename, O_RDONLY);
-+	fd = open(filename, O_RDONLY | O_CLOEXEC);
- 	if (fd < 0)
- 		return false;
- 
-@@ -871,7 +871,7 @@ static int read_build_id(const char *filename, struct build_id *bid)
- 	if (size < BUILD_ID_SIZE)
- 		goto out;
- 
--	fd = open(filename, O_RDONLY);
-+	fd = open(filename, O_RDONLY | O_CLOEXEC);
- 	if (fd < 0)
- 		goto out;
- 
-@@ -934,7 +934,7 @@ int sysfs__read_build_id(const char *filename, struct build_id *bid)
- 	size_t size = sizeof(bid->data);
- 	int fd, err = -1;
- 
--	fd = open(filename, O_RDONLY);
-+	fd = open(filename, O_RDONLY | O_CLOEXEC);
- 	if (fd < 0)
- 		goto out;
- 
-@@ -994,7 +994,7 @@ int filename__read_debuglink(const char *filename, char *debuglink,
- 	if (err >= 0)
- 		goto out;
- 
--	fd = open(filename, O_RDONLY);
-+	fd = open(filename, O_RDONLY | O_CLOEXEC);
- 	if (fd < 0)
- 		goto out;
- 
-@@ -1152,7 +1152,7 @@ int symsrc__init(struct symsrc *ss, struct dso *dso, const char *name,
- 
- 		type = dso__symtab_type(dso);
- 	} else {
--		fd = open(name, O_RDONLY);
-+		fd = open(name, O_RDONLY | O_CLOEXEC);
- 		if (fd < 0) {
- 			*dso__load_errno(dso) = errno;
- 			return -1;
-@@ -1945,7 +1945,7 @@ static int kcore__open(struct kcore *kcore, const char *filename)
- {
- 	GElf_Ehdr *ehdr;
- 
--	kcore->fd = open(filename, O_RDONLY);
-+	kcore->fd = open(filename, O_RDONLY | O_CLOEXEC);
- 	if (kcore->fd == -1)
- 		return -1;
- 
-@@ -1978,7 +1978,7 @@ static int kcore__init(struct kcore *kcore, char *filename, int elfclass,
- 	if (temp)
- 		kcore->fd = mkstemp(filename);
- 	else
--		kcore->fd = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0400);
-+		kcore->fd = open(filename, O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC, 0400);
- 	if (kcore->fd == -1)
- 		return -1;
- 
-@@ -2454,11 +2454,11 @@ static int kcore_copy__compare_files(const char *from_filename,
- {
- 	int from, to, err = -1;
- 
--	from = open(from_filename, O_RDONLY);
-+	from = open(from_filename, O_RDONLY | O_CLOEXEC);
- 	if (from < 0)
- 		return -1;
- 
--	to = open(to_filename, O_RDONLY);
-+	to = open(to_filename, O_RDONLY | O_CLOEXEC);
- 	if (to < 0)
- 		goto out_close_from;
- 
-@@ -2876,7 +2876,7 @@ int get_sdt_note_list(struct list_head *head, const char *target)
- 	Elf *elf;
- 	int fd, ret;
- 
--	fd = open(target, O_RDONLY);
-+	fd = open(target, O_RDONLY | O_CLOEXEC);
- 	if (fd < 0)
- 		return -EBADF;
- 
+diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+index 97b8b2376602c8..5a36f35792e0d3 100644
+--- a/net/sunrpc/xprtrdma/verbs.c
++++ b/net/sunrpc/xprtrdma/verbs.c
+@@ -245,8 +245,17 @@ rpcrdma_cm_event_handler(struct rdma_cm_id *id, struct rdma_cm_event *event)
+ 		complete(&ep->re_done);
+ 		return 0;
+ 	case RDMA_CM_EVENT_ADDR_CHANGE:
+-		ep->re_connect_status = -ENODEV;
+-		goto disconnected;
++		switch (xchg(&ep->re_connect_status, -ENODEV)) {
++		case 0:
++			goto wake_connect_worker;
++		case 1:
++			/* The later DISCONNECTED event balances the
++			 * ESTABLISHED get; do not put here.
++			 */
++			rpcrdma_force_disconnect(ep);
++			return 0;
++		}
++		return 0;
+ 	case RDMA_CM_EVENT_ESTABLISHED:
+ 		rpcrdma_ep_get(ep);
+ 		ep->re_connect_status = 1;
+@@ -269,7 +278,6 @@ rpcrdma_cm_event_handler(struct rdma_cm_id *id, struct rdma_cm_event *event)
+ 		return 0;
+ 	case RDMA_CM_EVENT_DISCONNECTED:
+ 		ep->re_connect_status = -ECONNABORTED;
+-disconnected:
+ 		rpcrdma_force_disconnect(ep);
+ 		return rpcrdma_ep_put(ep);
+ 	default:
 -- 
 2.53.0
 
