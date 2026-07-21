@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240E746AA67;
-	Tue, 21 Jul 2026 15:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD9146AA70;
+	Tue, 21 Jul 2026 15:35:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648141; cv=none; b=nlB5fxnDlXD5Ndc8aEm71nV5ehrfmI0p5dBGhBIqZTCY1s6WWLg3y0o71H89Li4M/wIFxKJ4vHmv5sHiR/bKTjEv8gFdCh1BJJ/zm/APAocr58adaBwknmhvNigvalPJVRJ3puTfBTnz3pzjAc9FrBLXL9bZ8W+O5Aby5w3V0tI=
+	t=1784648143; cv=none; b=RTzqKOBGH2LQccrZrfRZdqA40rp0TrBadDfHYWeBWfxlAQlZabmK941oudsagKqHQpsaKZNVukHTnbrToFAJJU2+egmRYw8lBhdIp62Yf9Btl7z03cX1XjWaTViD5ABKkbEF4e7G8Iz6zTvQ15xyzqh5B8zs/l3FiwIBpxeNfRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648141; c=relaxed/simple;
-	bh=+HVTvLgV3OQTggdb8yzP5gT5cNONneDsWwHNfKRc4Ew=;
+	s=arc-20240116; t=1784648143; c=relaxed/simple;
+	bh=2irC+n/ZqDPvs+iUBytlYXWeRVsNj5HtrvEwjR1qW80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mCtJtAVNLwReFsu41hzEgEzpJ9C54cYRHPNrIK37fmgLSLSZzgDJXrlgam8c1eyJ2PC8ba83WmU8qLNcffhiA/3c8c4lGwd9Z8Wm+cSA1j7kExBTMT5F8wF+btt8sP5xR8W8EkSRI6N3c+P2BUoLoMha5D1ykLpkW3RHqmmQnVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jG3TGTCv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RUlrCc4JOcb43K4q+bg9A/GVT9dcPHMCB655JC8ILDGVR1YEABspn4Ne0BxXIG7ZGXEtOv0JEIdxwcDjff5A4ejSxJ8mJf3tJVgBPp0bsn80Vx82zZzRFHbBJlNejg7IbcyMwVu9eImVCEPoV7AN0aHLDrnqaD/X8QfwXzNCCzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L7Txiyb7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jG3TGTCv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841F81F000E9;
-	Tue, 21 Jul 2026 15:35:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L7Txiyb7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4FC1F000E9;
+	Tue, 21 Jul 2026 15:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648140;
-	bh=z4vWf5SVf5BXXRQJumhYW3JCJAMa4vmLnprG/0EptGs=;
+	s=korg; t=1784648142;
+	bh=qgNruFG4TUdGaYUcvObVZFgl3X4qcdpOIkU8qr6GNds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jG3TGTCvpDH2FLfIln0q9sFiftPy5+ia5G+j9P9cKYfIBvhdIXbKRUS2OoSUJGQqG
-	 fKaWt6XMUWKHKkYlub5lcgoycL/h033MEFZA+SSO5uV5unSbZ0zhxk/7Kh9Z9flNGn
-	 c8GLHpExG5XILIuaZSgiVW7WbBsK6WyGnSSvu5gw=
+	b=L7Txiyb7HJJUzGcfuhcgejtd3SvKvAXGh49kRoPx3E2lRM56/D8KiCjYn3jjVycvM
+	 ZPnBvn30GZEUdMagyopxdfZpAsF3oY23ZT/IgOPqxNaUweoaQ/0LvX6R9kBGsMqDCa
+	 u5clH97hX4EbpNKqHkBaXcl6a1Bh5pX7KUiGIZe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Max Zhen <max.zhen@amd.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0043/2077] clocksource/drivers/sun5i: Handle error returns from devm_reset_control_get_optional_exclusive()
-Date: Tue, 21 Jul 2026 16:55:16 +0200
-Message-ID: <20260721152553.702802943@linuxfoundation.org>
+Subject: [PATCH 7.1 0044/2077] accel/amdxdna: Fix leak when pinning ubuf pages
+Date: Tue, 21 Jul 2026 16:55:17 +0200
+Message-ID: <20260721152553.726120389@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,42 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Max Zhen <max.zhen@amd.com>
 
-[ Upstream commit fed9f727cc3f91dde8278961269419083502b40e ]
+[ Upstream commit d946347edc4f0a7b846325323d77e936a4c90d0f ]
 
-The devm_reset_control_get_optional_exclusive() function may return an
-ERR_PTR in case of genuine reset control acquisition errors, not just
-NULL which indicates the legitimate absence of an optional reset.
+When pin_user_pages_fast() returns fewer pages than requested, the pages
+that were successfully pinned are not released, leading to a leak.
 
-Add an IS_ERR() check after the call in sun5i_timer_probe(). On error,
-return the error code to ensure proper failure handling rather than
-proceeding with invalid pointers.
+Fix this by unpinning any partially pinned pages before returning failure.
 
-Fixes: 7e5bac610d2f ("clocksource/drivers/sun5i: Convert to platform device driver")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Acked-by: Chen-Yu Tsai <wens@kernel.org>
-Link: https://patch.msgid.link/20260205084037.3661261-1-nichen@iscas.ac.cn
+Fixes: bd72d4acda10 ("accel/amdxdna: Support user space allocated buffer")
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Max Zhen <max.zhen@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260326010642.2596525-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-sun5i.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/accel/amdxdna/amdxdna_ubuf.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clocksource/timer-sun5i.c b/drivers/clocksource/timer-sun5i.c
-index f827d3f98f60e6..d7e012992170b7 100644
---- a/drivers/clocksource/timer-sun5i.c
-+++ b/drivers/clocksource/timer-sun5i.c
-@@ -286,6 +286,9 @@ static int sun5i_timer_probe(struct platform_device *pdev)
+diff --git a/drivers/accel/amdxdna/amdxdna_ubuf.c b/drivers/accel/amdxdna/amdxdna_ubuf.c
+index 85390e3cc9f982..0e0cd69cd1fbfc 100644
+--- a/drivers/accel/amdxdna/amdxdna_ubuf.c
++++ b/drivers/accel/amdxdna/amdxdna_ubuf.c
+@@ -146,13 +146,17 @@ struct dma_buf *amdxdna_get_ubuf(struct drm_device *dev,
+ 		ret = pin_user_pages_fast(va_ent[i].vaddr, npages,
+ 					  FOLL_WRITE | FOLL_LONGTERM,
+ 					  &ubuf->pages[start]);
+-		if (ret < 0 || ret != npages) {
+-			ret = -ENOMEM;
++		if (ret >= 0) {
++			start += ret;
++			if (ret != npages) {
++				XDNA_ERR(xdna, "Partially pinned pages %d/%u", ret, npages);
++				ret = -ENOMEM;
++				goto destroy_pages;
++			}
++		} else {
+ 			XDNA_ERR(xdna, "Failed to pin pages ret %d", ret);
+ 			goto destroy_pages;
+ 		}
+-
+-		start += ret;
  	}
  
- 	rstc = devm_reset_control_get_optional_exclusive(dev, NULL);
-+	if (IS_ERR(rstc))
-+		return dev_err_probe(dev, PTR_ERR(rstc),
-+				     "failed to get reset\n");
- 	if (rstc)
- 		reset_control_deassert(rstc);
- 
+ 	exp_info.ops = &amdxdna_ubuf_dmabuf_ops;
 -- 
 2.53.0
 
