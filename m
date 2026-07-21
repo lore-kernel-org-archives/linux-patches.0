@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA9744AB6A;
-	Tue, 21 Jul 2026 22:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6FCF44AB6A;
+	Tue, 21 Jul 2026 22:34:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673257; cv=none; b=WMrRQHFnOdHVjCeOgNds3sw4THCcPfGLyK5U9+yikWF3gIAf9sIe1Ifu0R9kslNUTUXn7vPhSa52nAMw4hpR8jroGa5KZtMlYTfglMzGOSERoIrwI3KvjUrdP3kx103lEtTzsmtgFN20E4X4pHs0kPT4wjKXSR/iQS4zjDKS4Xg=
+	t=1784673260; cv=none; b=Mc+mcrDB+XbrcII46vmwkczfwkw9fw/dhYxgrFWfeyHzCylRnFh4xtuviGyWNu49OBxEzoBDkl497V73H2ES3nV5FuUWcnuIGvcdOKY2ZlZd5CKD3BMz/GVNIEcfqBElmd7q+7TmdrLYn1KTu+OaRahTTiQs7fOhbq8JtNQBgyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673257; c=relaxed/simple;
-	bh=A1t2HRifadxlxeQz190Du1Ipih6QO4bqBLBL5nucvgU=;
+	s=arc-20240116; t=1784673260; c=relaxed/simple;
+	bh=K++Bu3L3i6CB3qvRRYJ5pZIqrSz7JrFkdCawdPAZTKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f7rKznfPmiSILfkAjyGPFM4tUF6/VKDWv1XaADKn9/ctNxJzHkHksr0FSfxaie0jbjFrKvULoDRkqa3wwN/1gczirIfDRNxu/R2qug0+kUtS63cv9ZT9VKWrU7yKif1Oxsuz4D9OWgjSiCnBHRHyBbZoOfVBaCW4O53+oI+cnJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwqWqD7q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K3+j6dN63qB7rNEoRaA3YA9A8xQ6xSyVMcPs5aTSJJT4W653KG/I40dKV+5vP4Y9WbITbealy3J8qK0KJ2p+gUq7Nt0013/nflbHixr0UNKk1KoR1ZYoQbHa+aJzeO/CTbLz9V107QWnYacCZEwLbL/q+0wXQM4WS4d9w/94DDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTiQ3GgQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwqWqD7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DB31F000E9;
-	Tue, 21 Jul 2026 22:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTiQ3GgQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591821F000E9;
+	Tue, 21 Jul 2026 22:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673256;
-	bh=qOoQ8nrP2MowJ6LL71Vp9/aymzbb+FwN/NWn0ju8X20=;
+	s=korg; t=1784673258;
+	bh=Ka0DvgvZvlJ1aJHsxPEaEacgxw4h1j43W/OpwuM+xfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pwqWqD7q8/G3MNDX4x5g4f0Oqgup1D6HpjySLeYzdcLKHW/zTuakb0v1jIFeyRFy/
-	 hkZPOjYblDz7HxEs5ySKXllb2H3aSbJVATZVPZk6dah6ZHYPwJT0T99i0clfWloDLC
-	 Hmvv1VtV0OVNRn+RtznXPjAvluQpAPLGFwGOOed4=
+	b=KTiQ3GgQ8lw8g21teGXfu9/Pr/Oej+9WdQMx1SQ/bca2coEp1sV5wURqIr/DxYt7z
+	 82/4AdOt7q2NHnQquuq9TnGHdv+aZD+HWk7Y0oytPa1jL5isIi3vUxKDiPGiujdmgl
+	 lVR/rZZIcE6vsUJVb3eySSdmncuSqAmaLyO2ruTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+62f0f99d2f2bb8e3bbd7@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>
-Subject: [PATCH 5.10 095/699] nilfs2: reject CLEAN_SEGMENTS ioctl with out-of-range segment numbers
-Date: Tue, 21 Jul 2026 17:17:34 +0200
-Message-ID: <20260721152357.844711723@linuxfoundation.org>
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 096/699] net: usb: kalmia: bound RX frame length in kalmia_rx_fixup()
+Date: Tue, 21 Jul 2026 17:17:35 +0200
+Message-ID: <20260721152357.867714827@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,114 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit 0e7a690fe435f8d5ea3feb7c1d8d73ba7e8b8aa9 upstream.
+commit 47b6bcef6e679593d2e86e04ee72c46a4e2f7139 upstream.
 
-Syzbot reported a hung task in nilfs_transaction_begin() where multiple
-tasks performing chmod() on a nilfs2 mount blocked for over 143 seconds
-waiting to acquire ns_segctor_sem for read:
+kalmia_rx_fixup() computes usb_packet_length = skb->len - (2 *
+KALMIA_HEADER_LENGTH) as a u16, guarded only by a pre-loop check that
+skb->len is at least KALMIA_HEADER_LENGTH, which is 6. A device can
+deliver a short bulk-IN frame with skb->len in the 6 to 11 range, or
+leave a short trailing remainder on a later loop iteration. Either case
+underflows usb_packet_length to about 65530.
 
-  INFO: task syz.0.17:5918 blocked for more than 143 seconds.
-  Call Trace:
-   schedule+0x164/0x360
-   rwsem_down_read_slowpath+0x6d9/0x940
-   down_read+0x99/0x2e0
-   nilfs_transaction_begin+0x364/0x710 fs/nilfs2/segment.c:221
-   nilfs_setattr+0x124/0x2c0 fs/nilfs2/inode.c:921
-   notify_change+0xc1a/0xf40
-   chmod_common+0x273/0x4a0
-   do_fchmodat+0x12d/0x230
+That bypasses the usb_packet_length < ether_packet_length truncation path.
+The device-supplied ether_packet_length, a le16 up to 65535 read from
+header_start[2], then drives a memcmp() and the following skb_trim() and
+skb_pull() past the end of the rx buffer. The rx buffer is hard_mtu * 10,
+which is 14000 bytes. That is an out of bounds read.
 
-The writer holding ns_segctor_sem was a concurrent
-NILFS_IOCTL_CLEAN_SEGMENTS caller, stuck inside printk while emitting
-per-element warnings from nilfs_sufile_updatev():
+Require both the start and end framing headers to be present before
+subtracting them, on every loop iteration.
 
-   __nilfs_msg+0x373/0x450 fs/nilfs2/super.c:78
-   nilfs_sufile_updatev+0x21c/0x6d0 fs/nilfs2/sufile.c:186
-   nilfs_sufile_freev fs/nilfs2/sufile.h:93 [inline]
-   nilfs_free_segments fs/nilfs2/segment.c:1140 [inline]
-   nilfs_segctor_collect_blocks fs/nilfs2/segment.c:1261 [inline]
-   nilfs_segctor_do_construct+0x1f55/0x76c0
-   nilfs_clean_segments+0x3bd/0xa50
-   nilfs_ioctl_clean_segments fs/nilfs2/ioctl.c:922 [inline]
-   nilfs_ioctl+0x261f/0x2780
-
-The root cause is that user-supplied segment numbers are not validated
-before nilfs_clean_segments() begins doing work; the range check on
-each segnum is performed deep inside the call chain by
-nilfs_sufile_updatev(), which emits a nilfs_warn() per invalid entry
-while still holding the segctor lock and the sufile mi_sem.  Under load
-(repeated invocations across multiple mounts saturating the global
-printk path), the cumulative printk latency keeps ns_segctor_sem held
-long enough to trip the hung_task watchdog, blocking concurrent
-operations such as chmod() that need ns_segctor_sem for read.
-
-Fix by validating the contents of kbufs[4] in nilfs_clean_segments()
-immediately after acquiring ns_segctor_sem via nilfs_transaction_lock().
-Holding ns_segctor_sem serializes the check against
-nilfs_ioctl_resize(), which can modify ns_nsegments, so the validation
-uses a consistent value.  Out-of-range segment numbers are rejected
-with -EINVAL before any segment-cleaning work begins, so the bad
-entries never reach the per-element diagnostic path inside
-nilfs_sufile_updatev().
-
-Reported-by: syzbot+62f0f99d2f2bb8e3bbd7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=62f0f99d2f2bb8e3bbd7
-Tested-by: syzbot+62f0f99d2f2bb8e3bbd7@syzkaller.appspotmail.com
+Fixes: d40261236e8e ("net/usb: Add Samsung Kalmia driver for Samsung GT-B3730")
 Cc: stable@vger.kernel.org
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Fixes: 071cb4b81987 ("nilfs2: eliminate removal list of segments")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/178211531778.2216480.12637613349790980750@maoyixie.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/segment.c |   22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/net/usb/kalmia.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -2505,12 +2505,33 @@ int nilfs_clean_segments(struct super_bl
- 	struct nilfs_sc_info *sci = nilfs->ns_writer;
- 	struct nilfs_transaction_info ti;
- 	int err;
-+	size_t i, nfreesegs = argv[4].v_nmembs;
-+	__u64 *segnumv = kbufs[4];
+--- a/drivers/net/usb/kalmia.c
++++ b/drivers/net/usb/kalmia.c
+@@ -276,6 +276,14 @@ kalmia_rx_fixup(struct usbnet *dev, stru
+ 				"Received header: %6phC. Package length: %i\n",
+ 				header_start, skb->len - KALMIA_HEADER_LENGTH);
  
- 	if (unlikely(!sci))
- 		return -EROFS;
- 
- 	nilfs_transaction_lock(sb, &ti, 1);
- 
-+	/*
-+	 * Validate segment numbers under ns_segctor_sem (held for write
-+	 * by nilfs_transaction_lock above) so the check is serialized
-+	 * against nilfs_ioctl_resize(), which can modify ns_nsegments.
-+	 * Rejecting bad input here, before any segment-cleaning work
-+	 * begins, avoids the per-element diagnostic path inside
-+	 * nilfs_sufile_updatev() that would otherwise run under this
-+	 * same lock and stall concurrent readers.
-+	 */
-+	for (i = 0; i < nfreesegs; i++) {
-+		if (segnumv[i] >= nilfs->ns_nsegments) {
-+			nilfs_err(sb,
-+				 "Segment number %llu to be freed is out of range",
-+				 (unsigned long long)segnumv[i]);
-+			err = -EINVAL;
-+			goto bail_unlock;
-+		}
-+	}
++		/* both framing headers must be present before we subtract
++		 * them, otherwise usb_packet_length underflows and the
++		 * device-supplied ether_packet_length drives an out of bounds
++		 * access below
++		 */
++		if (skb->len < 2 * KALMIA_HEADER_LENGTH)
++			return 0;
 +
- 	err = nilfs_mdt_save_to_shadow_map(nilfs->ns_dat);
- 	if (unlikely(err))
- 		goto out_unlock;
-@@ -2551,6 +2572,7 @@ int nilfs_clean_segments(struct super_bl
- 	sci->sc_freesegs = NULL;
- 	sci->sc_nfreesegs = 0;
- 	nilfs_mdt_clear_shadow_map(nilfs->ns_dat);
-+ bail_unlock:
- 	nilfs_transaction_unlock(sb);
- 	return err;
- }
+ 		/* subtract start header and end header */
+ 		usb_packet_length = skb->len - (2 * KALMIA_HEADER_LENGTH);
+ 		ether_packet_length = get_unaligned_le16(&header_start[2]);
 
 
