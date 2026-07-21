@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9C428641E;
-	Tue, 21 Jul 2026 19:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21374265606;
+	Tue, 21 Jul 2026 19:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663124; cv=none; b=mB1E20H+7i2A+HW803O1TN2GZxIumztZr1TEYmC7Q30uUoNDJpKUJbBC/74NUcN1Tjqy29/S3ma5Yg0ZZFSzchLrqSJxKriaa1L1/JtFmxvmooCM3Ub8ao6FtGFOLmd+Z38+VQ5IqXr07tdY0JXvB2R20PPlaPnDuOh2B0gz1bI=
+	t=1784663127; cv=none; b=j1ymqhfGPQZYPncl3lG1QDRdD3ZBX1DtMAf46DwgzUsNqRkeyh4lvyjSflSQNI9D7s5z70LiKOB6YfMKO3Mx8SabfEp8mWj/9ZYhial4AvowPrPy4l7ll+knz7wTRe4H4Jxa6miYsJVg1Kj0C9mFB3ZOZ8zftfurxweX+rU5EHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663124; c=relaxed/simple;
-	bh=6XFhv116o/xWCsUJ92IIPM4tVDzMyEYo72VBtI1JVFw=;
+	s=arc-20240116; t=1784663127; c=relaxed/simple;
+	bh=boOZM3uE/viPM/5ehjVMC5vb+u7HKsQBUYtRGRc0VqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IvqCcogTQ1aiapy4dS6AQEU1vVMs2XcI7lKN0+QB6HzUEnukCWlr2PVPbOHlQ+CTXkKsWj01X/QhyXaUD+27HbOwfv2OVewvXw2do5sBeaC6jrz2mv6trHYyADowzQj8Gcv/6fNsqUyqHxg9+Xwd02tspNPxsrp2l4fzluLxkh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YB2mMj7G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KeCC/NErsJvIhIGbu3F4SFn95rFEkyCcKQmIcd8TvIaXTXMJc2HVMzkvRBAy9i36iuyeFRDFP8tLRukO9N5o21w4QGJualzjA1yggCCn896WaDhpaM0GNhbPRUZsHixd5NG0r2swQ2UQZGygHdB8GIyiMSgbMxSlq531x01BJK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FPSnpn8Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YB2mMj7G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F131F000E9;
-	Tue, 21 Jul 2026 19:45:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FPSnpn8Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 870471F000E9;
+	Tue, 21 Jul 2026 19:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663123;
-	bh=/H/diKXvWqtELhvEcHfHscCKXnm6QX9sd3uSuJ/JmLU=;
+	s=korg; t=1784663126;
+	bh=Ov0DWyhmvxD+Hxm5yiSaWHfRKJt/B9PajgGiCb8jw5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YB2mMj7GclvA84for16KGDHzysSDCNXBlNs0S6eyKr18CglpHYTPuPlNMl2CUS8Vs
-	 0CbVAH+Q1NNi0JpucQitUQ3GNsUZtGwNk/FqfnIFOejhLhLgahQvpzeSBDA+Bmx2n2
-	 bnO8FVQHc4T1bhbDOvAQuUurj8o2m8ajFBTyLPOw=
+	b=FPSnpn8ZB652MWXR2gGZ9euqqzXfi2szyBeKRwv9Ap6eVI6ItRbdEp9FIH3uDwo2I
+	 Rh/lDiniwwNJETEK/1aqjbevSh4eZDpRSn1nBREOAmV1thFGB+3GiH6jChPn7I/x8S
+	 0SJXkYSu390iH1C3efbVwRv9icl46t9FSQf9Yz7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
+	Petr Wozniak <petr.wozniak@gmail.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0705/1276] usbnet: gl620a: fix out-of-bounds read in genelink_rx_fixup()
-Date: Tue, 21 Jul 2026 17:19:08 +0200
-Message-ID: <20260721152501.871821534@linuxfoundation.org>
+Subject: [PATCH 6.12 0706/1276] net: phy: sfp: free mii_bus in sfp_i2c_mdiobus_destroy
+Date: Tue, 21 Jul 2026 17:19:09 +0200
+Message-ID: <20260721152501.894152270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,78 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Petr Wozniak <petr.wozniak@gmail.com>
 
-[ Upstream commit 8ff7f2a6da4fccaa5cc9be7251a24e71e29fbd1a ]
+[ Upstream commit 8f31efff9206f9f0adb853cad6916086aac4d5ef ]
 
-genelink_rx_fixup() splits an aggregated RX frame into its individual
-packets, using a per-packet length taken from device-supplied data. That
-length is only bounded by GL_MAX_PACKET_LEN (1514); it is never compared
-against how many bytes were actually received.
+sfp_i2c_mdiobus_create() allocates the I2C MDIO bus with mdio_i2c_alloc(),
+a plain (non-devm) allocation, and registers it. sfp_i2c_mdiobus_destroy()
+only unregisters the bus and clears sfp->i2c_mii without calling
+mdiobus_free(). As the only reference to the bus is then cleared, the
+struct mii_bus is leaked.
 
-A malicious GeneLink (GL620A) device can therefore send a short URB whose
-header claims packet_count > 1 and a first packet of up to 1514 bytes.
+This is hit whenever a copper/RollBall SFP module that instantiated an MDIO
+bus is removed: sfp_sm_main() takes the global teardown path and calls
+sfp_i2c_mdiobus_destroy(). sfp_cleanup(), on driver unbind, frees
+sfp->i2c_mii directly, which is why the leak only triggered on module
+hot-removal and not on unbind.
 
-	skb_put_data(gl_skb, packet->packet_data, size);
+Free the bus in sfp_i2c_mdiobus_destroy() to match the allocation done in
+sfp_i2c_mdiobus_create().
 
-then copies past the end of the receive buffer and hands the adjacent slab
-contents up the network stack, an out-of-bounds read that leaks kernel heap.
-No privilege is required: the path runs in the usbnet RX softirq as soon as
-the interface is up.
-
-  BUG: KASAN: slab-out-of-bounds in genelink_rx_fixup (drivers/net/usb/gl620a.c:112)
-  Read of size 1514 at addr ffff888011309708 by task ksoftirqd/0/14
-  Call Trace:
-    ...
-    __asan_memcpy (mm/kasan/shadow.c:105)
-    genelink_rx_fixup (include/linux/skbuff.h:2814 drivers/net/usb/gl620a.c:112)
-    usbnet_bh (drivers/net/usb/usbnet.c:572 drivers/net/usb/usbnet.c:1589)
-    process_one_work (kernel/workqueue.c:3322)
-    bh_worker (kernel/workqueue.c:3405)
-    tasklet_action (kernel/softirq.c:965)
-    handle_softirqs (kernel/softirq.c:622)
-    run_ksoftirqd (kernel/softirq.c:1076)
-    ...
-
-skb_pull() already verifies that the requested length fits the buffer and
-returns NULL otherwise. Move it ahead of the copy and check its result, so
-a packet that overruns the received data is rejected before it is read.
-Well-formed frames, whose packets are fully present, are unaffected.
-
-Fixes: 47ee3051c856 ("[PATCH] USB: usbnet (5/9) module for genesys gl620a cables")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260627205353.4000788-1-xmei5@asu.edu
+Fixes: e85b1347ace6 ("net: sfp: create/destroy I2C mdiobus before PHY probe/after PHY release")
+Signed-off-by: Petr Wozniak <petr.wozniak@gmail.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Link: https://patch.msgid.link/312bde8176fc429aa89524e3be250137f034ba84.1782581445.git.petr.wozniak@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/gl620a.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/phy/sfp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/usb/gl620a.c b/drivers/net/usb/gl620a.c
-index 0bfa37c1405918..09afd137b64e15 100644
---- a/drivers/net/usb/gl620a.c
-+++ b/drivers/net/usb/gl620a.c
-@@ -104,6 +104,9 @@ static int genelink_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 			return 0;
- 		}
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index 90ffba8f795209..6eefe98316f536 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -787,6 +787,7 @@ static int sfp_i2c_mdiobus_create(struct sfp *sfp)
+ static void sfp_i2c_mdiobus_destroy(struct sfp *sfp)
+ {
+ 	mdiobus_unregister(sfp->i2c_mii);
++	mdiobus_free(sfp->i2c_mii);
+ 	sfp->i2c_mii = NULL;
+ }
  
-+		if (!skb_pull(skb, size + 4))
-+			return 0;
-+
- 		// allocate the skb for the individual packet
- 		gl_skb = alloc_skb(size, GFP_ATOMIC);
- 		if (gl_skb) {
-@@ -116,9 +119,6 @@ static int genelink_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 		// advance to the next packet
- 		packet = (struct gl_packet *)&packet->packet_data[size];
- 		count--;
--
--		// shift the data pointer to the next gl_packet
--		skb_pull(skb, size + 4);
- 	}
- 
- 	// skip the packet length field 4 bytes
 -- 
 2.53.0
 
