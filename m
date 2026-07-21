@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50653EF672;
-	Tue, 21 Jul 2026 17:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B85938399A;
+	Tue, 21 Jul 2026 17:16:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654210; cv=none; b=f/N9sW3zAh+kku+zGwCuWQWTOmfxYCQRRV7zQSdaXzoXH1zkvTnLRFD+kjbANj3YbdBWIoj0c0KpVfxnG60f0ReMezKbg3Miud1CVt8jb8qEQMO7HZHkHy9/zaoKSC1kkik+JGZJmvy28M3c2hRzIblQFAwzDXJcJIqh3A3h8IA=
+	t=1784654212; cv=none; b=HEiIoiCvYO6R1Cs1930KvSwCfKRFafZ45B5igfzd2BK7Cs/iiLdBOkDrpEfei0eCTsSTU3DQapaiqhms1A6NhoEoNvJYYezupyTQE7SoDBBi0B70mmayOLeFeMEYfk8GrKh+Twh/E7sLEXIsEeZ593zm0nZGCzksb85aT95lMaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654210; c=relaxed/simple;
-	bh=EB+x13KUNriWUSh9VQaZN6pMsJlqOlQMv18ShBWPf8U=;
+	s=arc-20240116; t=1784654212; c=relaxed/simple;
+	bh=9BcwphX68wBzszyKm0o34HuKtiKiDzfpXMR1pAy99uI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s6qwgP/ovZPQrFFfg3R6vvTdov/H0eF/29QefYuLxNejdasGel5mVVoyHJbqghAuFs02We4qQaKiZJp/9ALJFw0kF6xM014CP6XGqLlD7ta0J1ojNujF8upSzcioN2LpZdoBJJ3V89n1ef79urj+G7SJKQ10aIjdt9BPXxZke4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jW5IEyW8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kK438tzh6a4zH5H7W7HKVaxKdXCcTvXGgCoytGFHROfHAbpwU6KN2yXzyQoCsPRxIINm6/V7A/5f60AIMXTNmsuWK5liXGittLVI2tdcT2GY5TbLiyS18lEQbSuuCQrRvoCB7shVvAtI72kRbu4nK64n8/leIOCNWbAtX1ydI9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zs3Kpotr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jW5IEyW8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E3A1F00A3A;
-	Tue, 21 Jul 2026 17:16:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zs3Kpotr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E25F51F00A3D;
+	Tue, 21 Jul 2026 17:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654208;
-	bh=/R8NiLHk7+A+/0d/AkK9mu0DjmaNqQlfCe4jKNo6ZvY=;
+	s=korg; t=1784654211;
+	bh=KFYoiEdBp9ra1BlRep5fnu1tRBaBXF+lk0RkPFOfX2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jW5IEyW8J1j+ZSBT2SmcEISvoPwqpYMuX/T2/arHZi9t4u38Fs2J63BYsqtFMolU0
-	 ByQlevJVCU1teAuYbLWRZwlrqA38jMfnvquqZGnLs57khEosrIywQhD3Rz/qSOT1lt
-	 +sq6rP19KdrboNbioK2dkthZXpmVjiirHAmRVv2c=
+	b=Zs3KpotrGIIoQVcmcz3ZMUdpO/CT+CTeUbp4RVMzvWvRVEboQ5Z5nvN72n98ntF5q
+	 Q/nxZbUZq8qxUl8TIdlCGBfAN5LHHYq55zmqWYecnpYAWghqM5aPrxGslDUmE2uTvQ
+	 vQ3B8j5aKJ6I5fJsM1tlXBKEqHQq2fJM7S8O7zJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oupton@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 7.1 1575/2077] KVM: arm64: nv: Respect read-only PFN when mapping L1 VNCR
-Date: Tue, 21 Jul 2026 17:20:48 +0200
-Message-ID: <20260721152629.926818102@linuxfoundation.org>
+	Kai Huang <kai.huang@intel.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 7.1 1566/2077] KVM: x86: Ignore pending PV EOI if the vCPU has since disabled PV EOIs
+Date: Tue, 21 Jul 2026 17:20:39 +0200
+Message-ID: <20260721152629.717338628@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,134 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Upton <oupton@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 2684e02bac41c5220f6c1ab2bdcc957b71812977 upstream.
+commit 9285e4070df2c40585c3d7ec9571faa7a2b97e17 upstream.
 
-KVM currently maps the L1 VNCR into the host stage-1 by relying entirely
-on the permissions of the guest stage-1. At the same time, it is
-entirely possible that the backing PFN is read-only (e.g. RO memslot),
-meaning that the L1 VNCR should use at most a read-only mapping.
+Ignore KVM's internal "service pending PV EOI" request if the vCPU has
+disabled PV EOIs since the request was made.  Asserting that PV EOIs are
+enabled can fail if reading guest memory in pv_eoi_get_user() fails, i.e.
+if pv_eoi_test_and_clr_pending() bails early, *and* the vCPU also disables
+PV EOIs.
 
-Cache the writability of the PFN in the VNCR TLB and use it to constrain
-the resulting fixmap permissions. Promote VNCR permission faults to an
-SEA in the case where the guest attempts to write to a read-only
-endpoint. Conveniently, this also plugs a page leak found by Sashiko [*]
-resulting from the early return for a read-only PFN.
+  kernel BUG at arch/x86/kvm/lapic.c:3338!
+  Oops: invalid opcode: 0000 [#1] SMP
+  CPU: 4 UID: 1000 PID: 890 Comm: pv_eoi_test Not tainted 7.0.0-d585aa5894d8-vm #337 PREEMPT
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  RIP: 0010:kvm_lapic_sync_from_vapic+0x12b/0x140 [kvm]
+  Call Trace:
+   <TASK>
+   kvm_arch_vcpu_ioctl_run+0x1075/0x1c30 [kvm]
+   kvm_vcpu_ioctl+0x2d5/0x980 [kvm]
+   __x64_sys_ioctl+0x8a/0xd0
+   do_syscall_64+0xb5/0xb40
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
+  Modules linked in: kvm_intel kvm irqbypass
+  ---[ end trace 0000000000000000 ]---
 
+Fixes: ae7a2a3fb6f8 ("KVM: host side for eoi optimization")
 Cc: stable@vger.kernel.org
-Fixes: 2a359e072596 ("KVM: arm64: nv: Handle mapping of VNCR_EL2 at EL2")
-Link: https://lore.kernel.org/kvm/20260608082603.16AEC1F00893@smtp.kernel.org/
-Signed-off-by: Oliver Upton <oupton@kernel.org>
-Link: https://patch.msgid.link/20260618234207.1063941-2-oupton@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Link: https://patch.msgid.link/20260624220516.3033391-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/nested.c |   36 ++++++++++++++++++++++++++----------
- 1 file changed, 26 insertions(+), 10 deletions(-)
+ arch/x86/kvm/lapic.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/kvm/nested.c
-+++ b/arch/arm64/kvm/nested.c
-@@ -24,6 +24,7 @@ struct vncr_tlb {
- 	struct s1_walk_result	wr;
- 
- 	u64			hpa;
-+	bool			hpa_writable;
- 
- 	/* -1 when not mapped on a CPU */
- 	int			cpu;
-@@ -1315,7 +1316,7 @@ static int kvm_translate_vncr(struct kvm
- 	if (!*is_gmem) {
- 		pfn = __kvm_faultin_pfn(memslot, gfn, write_fault ? FOLL_WRITE : 0,
- 					&writable, &page);
--		if (is_error_noslot_pfn(pfn) || (write_fault && !writable))
-+		if (is_error_noslot_pfn(pfn))
- 			return -EFAULT;
- 	} else {
- 		ret = kvm_gmem_get_pfn(vcpu->kvm, memslot, gfn, &pfn, &page, NULL);
-@@ -1324,6 +1325,8 @@ static int kvm_translate_vncr(struct kvm
- 					      write_fault, false, false);
- 			return ret;
- 		}
-+
-+		writable = !(memslot->flags & KVM_MEM_READONLY);
- 	}
- 
- 	scoped_guard(write_lock, &vcpu->kvm->mmu_lock) {
-@@ -1334,28 +1337,41 @@ static int kvm_translate_vncr(struct kvm
- 
- 		vt->gva = va;
- 		vt->hpa = pfn << PAGE_SHIFT;
-+		vt->hpa_writable = writable;
- 		vt->valid = true;
- 		vt->cpu = -1;
- 
- 		kvm_make_request(KVM_REQ_MAP_L1_VNCR_EL2, vcpu);
--		kvm_release_faultin_page(vcpu->kvm, page, false, vt->wr.pw);
-+		kvm_release_faultin_page(vcpu->kvm, page, false, vt->wr.pw && vt->hpa_writable);
- 	}
- 
--	if (vt->wr.pw)
-+	if (vt->wr.pw && vt->hpa_writable)
- 		mark_page_dirty(vcpu->kvm, gfn);
- 
- 	return 0;
- }
- 
--static void inject_vncr_perm(struct kvm_vcpu *vcpu)
-+static void handle_vncr_perm(struct kvm_vcpu *vcpu)
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -3371,6 +3371,12 @@ static void apic_sync_pv_eoi_from_guest(
+ 					struct kvm_lapic *apic)
  {
- 	struct vncr_tlb *vt = vcpu->arch.vncr_tlb;
- 	u64 esr = kvm_vcpu_get_esr(vcpu);
-+	u64 fsc;
+ 	int vector;
 +
-+	/*
-+	 * Promote to an external abort if the stage-1 permits writes but the
-+	 * HPA is read-only (e.g. RO memslot).
-+	 */
-+	if (kvm_is_write_fault(vcpu) && vt->wr.pw && !vt->hpa_writable)
-+		fsc = ESR_ELx_FSC_EXTABT;
-+	/*
-+	 * Otherwise, inject a permission fault using the guest's translation
-+	 * level rather than the host's.
-+	 */
-+	else
-+		fsc = ESR_ELx_FSC_PERM_L(vt->wr.level);
- 
--	/* Adjust the fault level to reflect that of the guest's */
- 	esr &= ~ESR_ELx_FSC;
--	esr |= FIELD_PREP(ESR_ELx_FSC,
--			  ESR_ELx_FSC_PERM_L(vt->wr.level));
-+	esr |= FIELD_PREP(ESR_ELx_FSC, fsc);
- 
- 	kvm_inject_nested_sync(vcpu, esr);
- }
-@@ -1389,7 +1405,7 @@ int kvm_handle_vncr_abort(struct kvm_vcp
- 		return kvm_handle_guest_sea(vcpu);
- 
- 	if (esr_fsc_is_permission_fault(esr)) {
--		inject_vncr_perm(vcpu);
-+		handle_vncr_perm(vcpu);
- 	} else if (esr_fsc_is_translation_fault(esr)) {
- 		bool valid, is_gmem = false;
- 		int ret;
-@@ -1437,7 +1453,7 @@ int kvm_handle_vncr_abort(struct kvm_vcp
- 			break;
- 		case -EPERM:
- 			/* Hack to deal with POE until we get kernel support */
--			inject_vncr_perm(vcpu);
-+			handle_vncr_perm(vcpu);
- 			break;
- 		case 0:
- 			break;
-@@ -1481,7 +1497,7 @@ static void kvm_map_l1_vncr(struct kvm_v
- 
- 	vt->cpu = smp_processor_id();
- 
--	if (vt->wr.pw && vt->wr.pr)
-+	if (vt->hpa_writable && vt->wr.pw && vt->wr.pr)
- 		prot = PAGE_KERNEL;
- 	else if (vt->wr.pr)
- 		prot = PAGE_KERNEL_RO;
++	if (unlikely(!pv_eoi_enabled(vcpu))) {
++		__clear_bit(KVM_APIC_PV_EOI_PENDING, &vcpu->arch.apic_attention);
++		return;
++	}
++
+ 	/*
+ 	 * PV EOI state is derived from KVM_APIC_PV_EOI_PENDING in host
+ 	 * and KVM_PV_EOI_ENABLED in guest memory as follows:
+@@ -3382,8 +3388,6 @@ static void apic_sync_pv_eoi_from_guest(
+ 	 * KVM_APIC_PV_EOI_PENDING is set, KVM_PV_EOI_ENABLED is unset:
+ 	 * 	-> host enabled PV EOI, guest executed EOI.
+ 	 */
+-	BUG_ON(!pv_eoi_enabled(vcpu));
+-
+ 	if (pv_eoi_test_and_clr_pending(vcpu))
+ 		return;
+ 	vector = apic_set_eoi(apic);
 
 
