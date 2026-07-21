@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94F5443A91;
-	Tue, 21 Jul 2026 22:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746DD377A8A;
+	Tue, 21 Jul 2026 22:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672755; cv=none; b=EEtCvCqog1oDharwEKVMmVeijNUaFpOypSyO1MiG9dU8+1XvLNGBsU5i3efv3gh8VvJA0zljZNF9iB6eqA8MV6h1di7dM55LhOrVwwOhLcZDgbZ3NzjBuNcFLavgvec7cXL5RDjS5bV+Oo/ZNWEBmsjRH1M1ont18mvOcPBIBvo=
+	t=1784672757; cv=none; b=WA9HOIcKMiNpFp+4JWAYI1emyzY31ENDm/qNBiPhcI8QyV/hwBXDbbhkNineP0wtKpoMCrvW8nPxMRwuexZgqPiANGbfRkD4v/sjio7qSeel/CGQFNSE+DrZklyHnH1UTaDnZuoyXJ2k/bQmq8SXdLEYh3yLRRD4yziMy7F7oSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672755; c=relaxed/simple;
-	bh=hnQSS2oQj1pFF6cM5dS3v4WnRhav61M3WEToiRZi+CY=;
+	s=arc-20240116; t=1784672757; c=relaxed/simple;
+	bh=CF86CxRUWXGLEUL+r6FL4S8alnRyrz969vhyDNogjKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kkkbsJQe7UXXecp3zyz1iRK9V4MwegM7iGAnhLNoANSKlgsP9ENCIHzWQQQjQL2THZpXLAttm8MxqqxPLwPIOsg1LBXs8QtxZF52U4lEMtTetMbWNNqwVJo8NhTys8SGNoTZ3on/YU8HdcLS5lVMx2zZaX8cweOEXkLIEzThMnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0BEYSxfh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IxReb95mBBZcGSLVdNMn5XkwpRa9H5Cll7lOf+pRRudIVVRpzsbJGwCYUENctuWD/Ftwo89HyzAI/Chx4OHCcjl2rUnJmfc4+tt9uPA2R0TjSKmGiASrWKD8E7v171JI+4pSpJeySmCLKIr4jBsYnxNUMf3cLbC3ft0owwz/6WM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oqRsdgcA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0BEYSxfh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A231F000E9;
-	Tue, 21 Jul 2026 22:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oqRsdgcA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1D11F000E9;
+	Tue, 21 Jul 2026 22:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672753;
-	bh=DcIkp867C9kC94tplRAaxIzAw3G3keLNJ1BGRxR8myI=;
+	s=korg; t=1784672756;
+	bh=Yiwg3A7kzQzu61MPd4p/EFIfOYWxWq2Z92cvmYrHIxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0BEYSxfhfIEflb1bFYqXT4cDkyTjY4KrJGhjLTfgPnOlIyut5bXkmlGBCQIZY2mOl
-	 qWJFcq0xH/zuHeyB1OJt5uDcF+FaljYOzZfL9MPeNTSQeff4iRaZ7gHpJBMi1derbN
-	 PpqxIaC3j98UKo+6h38n45vepmhelQt45FBe2PrE=
+	b=oqRsdgcAwWgsqODuQzK8que3mX2YC14KUtCZ31p3Xk/xB4Kl71f3mcbjLsfrCZ5TB
+	 3yeCLLCx35KGIaEVUPO3CbHUg+1iFJLg1cBCX/3cSPPgBQzjOVz1EDCj2wJ4zo/JII
+	 XhloOpM8O5ylZJ9YBYe2xT8sjl/iPG685nf/aZmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Dongdong <zhaodongdong@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Alex Williamson <alex.williamson@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 744/843] ALSA: aoa: check snd_ctl_new1() return value
-Date: Tue, 21 Jul 2026 17:26:19 +0200
-Message-ID: <20260721152422.785674130@linuxfoundation.org>
+Subject: [PATCH 5.15 745/843] vfio/pci: Release the VGA arbiter client on register_device() failure
+Date: Tue, 21 Jul 2026 17:26:20 +0200
+Message-ID: <20260721152422.808137896@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,58 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Dongdong <zhaodongdong@kylinos.cn>
+From: Alex Williamson <alex.williamson@nvidia.com>
 
-[ Upstream commit 8df560fefe6fed6a20b7e06720eeaeccec349ac0 ]
+[ Upstream commit daedde7f024ecf88bc8e832ed40cf2c795f0796a ]
 
-snd_ctl_new1() can return NULL when memory allocation fails. In
-layout.c, the function does not check the return value before
-dereferencing ctl->id.name or passing to aoa_snd_ctl_add(), which can
-lead to a NULL pointer dereference.
+The re-order in the Fixes commit below displaced vfio_pci_vga_init() as
+the last failure point of what is now vfio_pci_core_register_device()
+without introducing an unwind for the VGA arbiter registration.
 
-Add NULL checks after snd_ctl_new1() calls and return early if any
-fails.
+In current kernels this is mostly benign because vfio_pci_set_decode()
+only uses pci_dev state, but the original failure path could leave a
+callback with a freed vdev cookie.  The stale registration also becomes
+unsafe again once the callback follows drvdata to the vfio device.
 
-Assisted-by: Opencode:DeepSeek-V4-Flash
+Add the required VGA unwind callout.
+
+Fixes: 4aeec3984ddc ("vfio/pci: Re-order vfio_pci_probe()")
 Cc: stable@vger.kernel.org
-Fixes: f3d9478b2ce4 ("[ALSA] snd-aoa: add snd-aoa")
-Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
-Link: https://patch.msgid.link/tencent_35F3A25FEEBF190A2E15ED787754C57E3708@qq.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20260615191241.688297-3-alex.williamson@nvidia.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/aoa/fabrics/layout.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/vfio/pci/vfio_pci_core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/aoa/fabrics/layout.c
-+++ b/sound/aoa/fabrics/layout.c
-@@ -947,6 +947,8 @@ static void layout_attached_codec(struct
- 			if (lineout == 1)
- 				ldev->gpio.methods->set_lineout(codec->gpio, 1);
- 			ctl = snd_ctl_new1(&lineout_ctl, codec->gpio);
-+			if (!ctl)
-+				return;
- 			if (cc->connected & CC_LINEOUT_LABELLED_HEADPHONE)
- 				strscpy(ctl->id.name,
- 					"Headphone Switch", sizeof(ctl->id.name));
-@@ -961,6 +963,8 @@ static void layout_attached_codec(struct
- 			if (ldev->have_lineout_detect) {
- 				ctl = snd_ctl_new1(&lineout_detect_choice,
- 						   ldev);
-+				if (!ctl)
-+					return;
- 				if (cc->connected & CC_LINEOUT_LABELLED_HEADPHONE)
- 					strscpy(ctl->id.name,
- 						"Headphone Detect Autoswitch",
-@@ -968,6 +972,8 @@ static void layout_attached_codec(struct
- 				aoa_snd_ctl_add(ctl);
- 				ctl = snd_ctl_new1(&lineout_detected,
- 						   ldev);
-+				if (!ctl)
-+					return;
- 				if (cc->connected & CC_LINEOUT_LABELLED_HEADPHONE)
- 					strscpy(ctl->id.name,
- 						"Headphone Detected",
+--- a/drivers/vfio/pci/vfio_pci_core.c
++++ b/drivers/vfio/pci/vfio_pci_core.c
+@@ -1899,6 +1899,7 @@ int vfio_pci_core_register_device(struct
+ out_power:
+ 	if (!disable_idle_d3)
+ 		vfio_pci_set_power_state(vdev, PCI_D0);
++	vfio_pci_vga_uninit(vdev);
+ out_vf:
+ 	vfio_pci_vf_uninit(vdev);
+ out_group_put:
 
 
