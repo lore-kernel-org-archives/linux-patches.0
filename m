@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2465471431;
-	Tue, 21 Jul 2026 20:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E44471439;
+	Tue, 21 Jul 2026 20:02:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664163; cv=none; b=OH5PRgOFo4gP7Z5B1ZWFMtpYeODlWqNGW/Dhz+8RvqTaaXTNCKaEKu11Eg8Ju3Rlr1euWHRHckyPqG4aGEP7HBJTswUF1tsFO4b0ms+7kbPWjcO+wO38FVTfDDV8KD4CrBK/FOynBaDCVrqR8XXMfL7MgZRgMj55Xa9K0daXFq4=
+	t=1784664166; cv=none; b=ZH0oi/a7UJhJT85S+E0c/dDIcXYq5iFJ6X+0fyiMwhba0hePjQS3hDO1ycRntVnrRLR8TH2iIvpTrZ019GvAvn1DsyD2prrM6zT2ZxXAjdoi577QD8xgiLJ3nMIgDXTnNcrBCALbQMFu0YSUJIzkhlqWiRE3PVI+8Flx+nzhVxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664163; c=relaxed/simple;
-	bh=yaoCd51wBKn0GDBcmgT5/qCdvFtUFknTSRb1cPSv+O4=;
+	s=arc-20240116; t=1784664166; c=relaxed/simple;
+	bh=Nw5NuTQ1yjVGxuOUBc2NjtpzON3+5TIopRXoTNCOHQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lh0PTWZ0Sbd5SJxfUBZuOlt2XC/gEmv6VZR+gELfBDaPYsa2jdSbnpWt0XdpiMFy0Dkks3xD74qhjotXZppBieDb7hZAnxaPzVcFJ1LYG9cU8jUWGI01hNMwM2YeHTbfdi3Yn2S++5IIcntCo7M3NbMr3RxSebSNnL3+XNbUVWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vScuSNQi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nu7CrZ2aK45fUSDsBMKVmOw5kvm9S/e6vioZdfMikqWwz6qyu9yJJxR61aUAhd/MUll4MUMltJ7Gcig9Tc5wGyOHjeIzGBNFeuNoNfvowMApus2vafSZ98vpjQi5ay9r9wDd7i3EMK6OZZmlLOwL8i3JcSJfkHUPPUEggw0NzTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09lmBuJ4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vScuSNQi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133331F000E9;
-	Tue, 21 Jul 2026 20:02:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09lmBuJ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7041F000E9;
+	Tue, 21 Jul 2026 20:02:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664162;
-	bh=jyXr4dkMQSR/cUi2QuPs2b1vtcZqBKNSiHh1qw5nFn8=;
+	s=korg; t=1784664165;
+	bh=vvwTwzJKihjB6y11V6F6+m79EkEzIfxmKNxUdcxStpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vScuSNQiGR8LYDX8D9C7gawezSbqyFqmW6QzECveCIxTwAYbPLYcALtU3Mc2NZuZS
-	 Err+eIpo1/DtvNnynZzE/y5KBBhup4Tra000UCiSRaDg4ROdMbOD4aaigMEt2mYGMY
-	 51rSKu8sX2fV7q36CulARhA0l/Rs0PnVs0rKIhp0=
+	b=09lmBuJ4vV3IVFp4r71N3VyeywxecUyG4MdGmYqmOJwzjf0hbxuzLSEH6OrSC9CbZ
+	 T8QM9YBQWgDcYdyyN0oY6KDZfnBsouNcEaWepDXpyz+E0FIUiKZ8UNUe1blFJCj/E/
+	 eyyNTWgtKUNkJ+hwYxfXl5mYf9+Vb7eDv2IFKLbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	James Morse <james.morse@arm.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.12 1095/1276] arm64: smp: Fix hot-unplug tearing by forcing unregistration
-Date: Tue, 21 Jul 2026 17:25:38 +0200
-Message-ID: <20260721152510.490555575@linuxfoundation.org>
+	Terrence Adams <tadamsjr@google.com>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 6.12 1096/1276] ata: libata-core: Skip HPA resize for locked drives
+Date: Tue, 21 Jul 2026 17:25:39 +0200
+Message-ID: <20260721152510.512556296@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,75 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: TJ Adams <tadamsjr@google.com>
 
-commit 18a4e5cf633fad5c40ac9d936c51bf38db68796d upstream.
+commit 917d0a4b95ea7ba01ed6296fb808f752d5d81107 upstream.
 
-Sashiko review pointed out the following issue[1].
+Skip HPA resize in ata_hpa_resize() if the drive is security locked.
+If the drive is locked, the command to read the native max address
+fails with -EACCES, which currently causes the sticky quirk
+ATA_QUIRK_BROKEN_HPA to be set on the device.
 
-Commit eba4675008a6 ("arm64: arch_register_cpu() variant to check if
-an ACPI handle is now available.") introduced architectural safety
-blocks inside arch_unregister_cpu(). If a hot-unplug operation is
-determined to be a physical hardware removal (where _STA evaluates to
-!ACPI_STA_DEVICE_PRESENT), or if firmware evaluation fails, it aborts
-the unregistration transaction early to protect unreadied arm64
-infrastructure.
+Setting this sticky quirk causes subsequent revalidations (after the
+drive is unlocked) to bypass HPA checks, preventing the unlocked drive
+from exposing its full native capacity without a reboot or device removal.
 
-However, returning early from arch_unregister_cpu() causes a catastrophic
-state tearing because the generic ACPI layer (acpi_processor_post_eject())
-unconditionally continues its cleanup flow. This leaves the stale sysfs
-device leaked in the memory, deadlocking any subsequent hot-add attempts
-on the same CPU.
-
-Fix it by simplifying arch_unregister_cpu() to always proceed with
-the unregistration, as a pr_err_once() warning is sufficient to make
-it more visible for currently not supported physical CPU removal.
-Also remove the redundant NULL check on acpi_handle as it cannot be
-NULL when calling arch_unregister_cpu().
-
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Jonathan Cameron <jic23@kernel.org>
-Cc: James Morse <james.morse@arm.com>
 Cc: stable@vger.kernel.org
-Link: https://sashiko.dev/#/patchset/20260520022023.126670-1-ruanjinjie@huawei.com [1]
-Fixes: eba4675008a6 ("arm64: arch_register_cpu() variant to check if an ACPI handle is now available.")
-Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Terrence Adams <tadamsjr@google.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/smp.c |   16 +++-------------
- 1 file changed, 3 insertions(+), 13 deletions(-)
+ drivers/ata/libata-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kernel/smp.c
-+++ b/arch/arm64/kernel/smp.c
-@@ -543,23 +543,13 @@ void arch_unregister_cpu(int cpu)
- {
- 	acpi_handle acpi_handle = acpi_get_processor_handle(cpu);
- 	struct cpu *c = &per_cpu(cpu_devices, cpu);
--	acpi_status status;
- 	unsigned long long sta;
--
--	if (!acpi_handle) {
--		pr_err_once("Removing a CPU without associated ACPI handle\n");
--		return;
--	}
-+	acpi_status status;
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -1324,7 +1324,7 @@ static int ata_hpa_resize(struct ata_dev
+ 	/* do we need to do it? */
+ 	if ((dev->class != ATA_DEV_ATA && dev->class != ATA_DEV_ZAC) ||
+ 	    !ata_id_has_lba(dev->id) || !ata_id_hpa_enabled(dev->id) ||
+-	    (dev->quirks & ATA_QUIRK_BROKEN_HPA))
++	    (dev->quirks & ATA_QUIRK_BROKEN_HPA) || ata_id_is_locked(dev->id))
+ 		return 0;
  
- 	status = acpi_evaluate_integer(acpi_handle, "_STA", NULL, &sta);
--	if (ACPI_FAILURE(status))
--		return;
--
--	/* For now do not allow anything that looks like physical CPU HP */
--	if (cpu_present(cpu) && !(sta & ACPI_STA_DEVICE_PRESENT)) {
-+	if (!ACPI_FAILURE(status) &&
-+	    cpu_present(cpu) && !(sta & ACPI_STA_DEVICE_PRESENT))
- 		pr_err_once("Changing CPU present bit is not supported\n");
--		return;
--	}
- 
- 	unregister_cpu(c);
- }
+ 	/* read native max address */
 
 
