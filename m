@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E3D367B92;
-	Tue, 21 Jul 2026 21:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72757388873;
+	Tue, 21 Jul 2026 21:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669554; cv=none; b=hqG8ttgR3BmjRgvT0JRgtqHLP43tgtV6WWaRusK3tafGwCGReHF59Nkb5cGwm0HBbPPAsheHsN9e20JZZWmhXNyjtndx8kvoNAc3PqCUl8qB+QRA3pp7qNEWs9udO/3JQQvVVbg9esh5ZWt0ktXV1MLFDuPTHRTPj40F2I6LsQc=
+	t=1784669556; cv=none; b=eECkJ1hJ2OYeHD4Q1OtlGw0HkokF+FgaEgVbhIDuHkoRTAta02nOJz2o1QGQOEa0HGHU1wRWOjyrU1pwWRkJddqNUz0masJsEO6qGIHBEufEmNWX73vAJ7u3aE1QfGfhZ3+OHQ7uLFc6KE4iMA5Pbpocw1sDcON98YfNeOJzWHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669554; c=relaxed/simple;
-	bh=4bpglKJhnEba93BCdhGeiNX5VEdKNgpF5b0PzMXQQPs=;
+	s=arc-20240116; t=1784669556; c=relaxed/simple;
+	bh=Svl0CAtuEcyj2SMkHZgmCaArezc6s8+09vfpDIpq8oc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QenSyzmfxc0hT5sKpnyQDd60BUC/Ua0JrEom8kxdkbiTYrFwptxvXxSrxu7gfx5nCJZLZDwyisyGEw2cDejwqTuTPEI6a2PNhdW3v529QoGGqA7jeVfDc/LkSnQUR19WImyzUgVs5bOTHfsX9pu/2rEac1sYIGm6wjlcQtZcVD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8es0sZR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EwzrrAd+QinhIpUUL39mXBe+xfCWfiJSWD7MFrfYfxGBOxp+a1B+AU0CSi5Az/015+pLIfmVMhRnSP5T2QuSXZimSiSacnVJOpzlZ+UMN/uEdsCkKQeB0WFDMprUmkLycF19AJU0rrTeKLUVWrKYxb04v2dBtu9P9iy9hOQKRc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZ/3b7mG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8es0sZR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8A91F000E9;
-	Tue, 21 Jul 2026 21:32:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZ/3b7mG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2AB41F000E9;
+	Tue, 21 Jul 2026 21:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669552;
-	bh=o+JFvTPKzllY1C88jgOayRPYKMLsrjOSoQYvj9ORI78=;
+	s=korg; t=1784669555;
+	bh=AkyCx7FjzNU8UGNIEp5lkbedPkbBpczXf0GqJutrlLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T8es0sZRIJjXk2aISoNTnPT179ivJY7k5NtKYrvndF473xxoyj+mYw+DWp2u+l01m
-	 AN91p1HKUfTuiGtJPuxGuLr7l96Z9Cy0gjNupnXSx6Gnab2BmnDAH52Fj7tkSDets3
-	 Yg5quogQeaqgmaDtr3HvB+pBonBI4sKW/II0m18A=
+	b=WZ/3b7mGn+O+mCgvpxKYjMLTpuc6FVHVgf65+GQk+ie5qt8pBBfXouCiA/gVjZqzT
+	 KHeezADii39yrJfrxXZHJVRwa+HJUZtYuznJTLAO+QBl4y9cQQ0FiDGJynqso4X9Wy
+	 b7TPnIlsrvzePc+dvoMjVc3d0X393zb7Ph30nBTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jozsef Kadlecsik <kadlec@netfilter.org>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0597/1067] netfilter: ipset: Dont use test_bit() in lockless RCU readers in hash types
-Date: Tue, 21 Jul 2026 17:19:58 +0200
-Message-ID: <20260721152437.960303357@linuxfoundation.org>
+Subject: [PATCH 6.1 0598/1067] netfilter: ipset: fix order of kfree_rcu() and rcu_assign_pointer()
+Date: Tue, 21 Jul 2026 17:19:59 +0200
+Message-ID: <20260721152437.981240072@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,75 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-[ Upstream commit e4b4984e28c16406ecb318444dea4a8bf47def3e ]
+[ Upstream commit 3ca9982a8882470aa0ac4e8bb9a552b181d1efcd ]
 
-Sashiko pointed out that there are a few lockless RCU readers
-using test_bit() which is a relaxed atomic operation and
-provides no memory barrier guarantees. Use test_bit_acquire()
-instead where the operation may run parallel with add/del/gc,
-i.e. is not one from the next cases
+Sashiko pointed out that kfree_rcu() was called before
+rcu_assign_pointer() in handling the comment extension.
+Fix the order so that rcu_assign_pointer() called first.
 
-- protected by region lock
-- in a set destroy phase
-- in a new/temporary set creation phase
-
-Fixes: 18f84d41d34f ("netfilter: ipset: Introduce RCU locking in hash:* types")
+Fixes: b57b2d1fa53f ("netfilter: ipset: Prepare the ipset core to use RCU at set level")
 Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_hash_gen.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/netfilter/ipset/ip_set_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
-index 25c51a8e2bfb12..d2da54de4d15bc 100644
---- a/net/netfilter/ipset/ip_set_hash_gen.h
-+++ b/net/netfilter/ipset/ip_set_hash_gen.h
-@@ -676,7 +676,7 @@ mtype_resize(struct ip_set *set, bool retried)
- 				continue;
- 			pos = smp_load_acquire(&n->pos);
- 			for (j = 0; j < pos; j++) {
--				if (!test_bit(j, n->used))
-+				if (!test_bit_acquire(j, n->used))
- 					continue;
- 				data = ahash_data(n, j, dsize);
- 				if (SET_ELEM_EXPIRED(set, data))
-@@ -813,7 +813,7 @@ mtype_ext_size(struct ip_set *set, u32 *elements, size_t *ext_size)
- 				continue;
- 			pos = smp_load_acquire(&n->pos);
- 			for (j = 0; j < pos; j++) {
--				if (!test_bit(j, n->used))
-+				if (!test_bit_acquire(j, n->used))
- 					continue;
- 				data = ahash_data(n, j, set->dsize);
- 				if (!SET_ELEM_EXPIRED(set, data))
-@@ -1189,7 +1189,7 @@ mtype_test_cidrs(struct ip_set *set, struct mtype_elem *d,
- 			continue;
- 		pos = smp_load_acquire(&n->pos);
- 		for (i = 0; i < pos; i++) {
--			if (!test_bit(i, n->used))
-+			if (!test_bit_acquire(i, n->used))
- 				continue;
- 			data = ahash_data(n, i, set->dsize);
- 			if (!mtype_data_equal(data, d, &multi))
-@@ -1247,7 +1247,7 @@ mtype_test(struct ip_set *set, void *value, const struct ip_set_ext *ext,
+diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
+index d021795f3c609f..1d6579358f9ba2 100644
+--- a/net/netfilter/ipset/ip_set_core.c
++++ b/net/netfilter/ipset/ip_set_core.c
+@@ -351,8 +351,8 @@ ip_set_init_comment(struct ip_set *set, struct ip_set_comment *comment,
+ 
+ 	if (unlikely(c)) {
+ 		set->ext_size -= sizeof(*c) + strlen(c->str) + 1;
+-		kfree_rcu(c, rcu);
+ 		rcu_assign_pointer(comment->c, NULL);
++		kfree_rcu(c, rcu);
  	}
- 	pos = smp_load_acquire(&n->pos);
- 	for (i = 0; i < pos; i++) {
--		if (!test_bit(i, n->used))
-+		if (!test_bit_acquire(i, n->used))
- 			continue;
- 		data = ahash_data(n, i, set->dsize);
- 		if (!mtype_data_equal(data, d, &multi))
-@@ -1372,7 +1372,7 @@ mtype_list(const struct ip_set *set,
- 			continue;
- 		pos = smp_load_acquire(&n->pos);
- 		for (i = 0; i < pos; i++) {
--			if (!test_bit(i, n->used))
-+			if (!test_bit_acquire(i, n->used))
- 				continue;
- 			e = ahash_data(n, i, set->dsize);
- 			if (SET_ELEM_EXPIRED(set, e))
+ 	if (!len)
+ 		return;
+@@ -393,8 +393,8 @@ ip_set_comment_free(struct ip_set *set, void *ptr)
+ 	if (unlikely(!c))
+ 		return;
+ 	set->ext_size -= sizeof(*c) + strlen(c->str) + 1;
+-	kfree_rcu(c, rcu);
+ 	rcu_assign_pointer(comment->c, NULL);
++	kfree_rcu(c, rcu);
+ }
+ 
+ typedef void (*destroyer)(struct ip_set *, void *);
 -- 
 2.53.0
 
