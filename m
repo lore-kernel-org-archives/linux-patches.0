@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A15F472F8A;
-	Tue, 21 Jul 2026 21:01:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0557C476079;
+	Tue, 21 Jul 2026 21:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667685; cv=none; b=OwJ7q2fWlS5CF5hxenx1CzEH1t/lHy41xBtlgSQV4C85u3rU1QU4cCDtEIclu3n1t4i7N4vQBB5L0NRVbSRiPF1hjOXTfgwUM5dOo9ps7VTPJ4M4Rl2vsguWBYBPdzODHM019Db7IkfkwmJang5+kMFa+dnASh/Tmt3OkBWcAUU=
+	t=1784667688; cv=none; b=rrrxaWFHayqwc4tr3VIBge1m4XgbvWkaANCdPGFKS8xSstl7y5WAK6hZ+bEKIA65AzSyRl3g6Ffeu46n6kh5LzVp2bD8yBP8xtPUY0XtUEFP6xoE9MMBdFEcBWoByRnYkdFi2ysVtkCJOnBoVMlrQ7/JjiYNcrRQ5MqPFhiK5l4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667685; c=relaxed/simple;
-	bh=bHj3ITdfMLEV/ohAGedaZVdTu0s5XCUuXOrFSThqOZc=;
+	s=arc-20240116; t=1784667688; c=relaxed/simple;
+	bh=JU1z16y3U9dQ+1m5KnfRN1eDEnzqmWuSPGU01F7AvG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tm1DxUDuKrviZ0/wfp36yjs9rfzL5kKq0CevLt/i9tnpX5evrI1HBS9NJyS+5zxdXekonMEXr9iyu4Auv1uKiRk7Qv1a/PfagWHzd72OsI9NCD5sBc38KwhZhhHKq4zFfhzVsxXUY+NonnH3GkrxDzAWtTcigu2EalsHLDaH1lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NWVLcNuO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VOZtHUYjmtPbPP3IJy0DO3e53VF9CqfhztlWRZXQ2iw1r04gH1/yb9y1VluzqHx191OdzLTLbdtwQX1duOWU1Vm5sydEIGrXDx49XgvUEQn66GfUyBqJEkel1UDurWEvwNMXqLAkhIE7MKStsCC1CzspLNl5CzRv1dqF6azXhVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4uokciG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NWVLcNuO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA3F1F000E9;
-	Tue, 21 Jul 2026 21:01:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4uokciG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 696071F000E9;
+	Tue, 21 Jul 2026 21:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667684;
-	bh=k919DC5IRBu7Xtmtk0BGzvGpX90IMpziPE0MBpAA+mQ=;
+	s=korg; t=1784667686;
+	bh=jB8H142H/h80m8Hy2d/xeEvQfYgTmLSt7qxq1HBt4V0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NWVLcNuOU7LQw+WfG7EgwVvkj2MvuAenfa6mO8CieTt85xUxeeC+wlo5N/CBAlqwt
-	 XBlS3jsEuFniVOyFyiXneY7ZEisim92ArKmCNOxvvh6V3nH+cSdaMg121qISKdbUWk
-	 wkpxT7QaZeI45I+2bDP/I+DCj20R+dWc12kpFEOs=
+	b=o4uokciG9kHrevMfELJ64O/OZ1TcDxjO57OhVxvjsv66hrof24oeS1bldB/fXay8v
+	 DZIG4KSceJgLK2wrN6sWDY9c+I6IGIiJ7JGzjAvv/i80YfqL2abDXZ1dfHh1Gz4QcG
+	 DMqDqQvYsrvtHZmhpeQee/IFUp0XxRrA/61eBxCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 6.6 1111/1266] ata: pata_pxa: Fix DMA channel leak on probe error
-Date: Tue, 21 Jul 2026 17:25:48 +0200
-Message-ID: <20260721152506.663127541@linuxfoundation.org>
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 1112/1266] net: wwan: iosm: bound device offsets in the MUX downlink decoder
+Date: Tue, 21 Jul 2026 17:25:49 +0200
+Message-ID: <20260721152506.686193319@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,38 +52,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit fcaf242e7fc406e78f444a35441e3b58f5e28781 upstream.
+commit 526b8ef54668780c8f69e0211c342763d5dcbad1 upstream.
 
-When dmaengine_slave_config() fails, the DMA channel acquired by
-dma_request_chan() is not released before returning the error,
-leaking the channel reference.
+mux_dl_adb_decode() walks a chain of aggregated datagram tables using
+offsets and lengths taken from the modem. first_table_index,
+next_table_index, table_length, datagram_index and datagram_length are
+all device supplied le values. Only first_table_index was checked, and
+only for being non zero. The decoder then formed adth = block +
+adth_index and read the table header and the datagram entries with no
+bound against the received skb. A modem that reports an index or a
+length past the downlink buffer makes the decoder read out of bounds.
 
-Fix by adding dma_release_channel() in the error path.
+The buffer is IPC_MEM_MAX_DL_MUX_LITE_BUF_SIZE and skb->len is at most
+that, so skb->len is the real limit, but none of these in band offsets
+were checked against it.
 
-The ata_host_activate() error path already correctly releases the
-DMA channel.
+The table chain is also followed with no forward progress check. The loop
+takes the next table from adth->next_table_index and stops only when that
+reaches zero. A modem can stage two tables that point at each other, so
+the loop never ends. It runs in softirq and clones the skb on every pass.
 
+Validate every device offset and length against skb->len before use.
+The block header must fit. Each table header, on entry and after every
+next_table_index, must lie inside the skb. The datagram table must fit.
+Each datagram index and length must stay inside the skb. The header
+padding must not exceed the datagram length so the receive length does
+not wrap. Require each next_table_index to move forward so the chain
+cannot cycle.
+
+This was reproduced under KASAN as a slab out of bounds read on a normal
+downlink receive once the iosm net device is up.
+
+Fixes: 1f52d7b62285 ("net: wwan: iosm: Enable M.2 7360 WWAN card support")
+Suggested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Fixes: 88622d80af82 ("ata: pata_pxa: dmaengine conversion")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/178236824878.3259367.5389624724479864947@maoyixie.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/pata_pxa.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wwan/iosm/iosm_ipc_mux_codec.c |   40 +++++++++++++++++++++--------
+ 1 file changed, 30 insertions(+), 10 deletions(-)
 
---- a/drivers/ata/pata_pxa.c
-+++ b/drivers/ata/pata_pxa.c
-@@ -287,6 +287,7 @@ static int pxa_ata_probe(struct platform
- 	ret = dmaengine_slave_config(data->dma_chan, &config);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "dma configuration failed: %d\n", ret);
-+		dma_release_channel(data->dma_chan);
- 		return ret;
- 	}
+--- a/drivers/net/wwan/iosm/iosm_ipc_mux_codec.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_mux_codec.c
+@@ -553,19 +553,21 @@ static int mux_dl_process_dg(struct iosm
+ 	u32 packet_offset, i, rc, dg_len;
  
+ 	for (i = 0; i < nr_of_dg; i++, dg++) {
+-		if (le32_to_cpu(dg->datagram_index)
+-				< sizeof(struct mux_adbh))
++		u32 dg_index = le32_to_cpu(dg->datagram_index);
++
++		dg_len = le16_to_cpu(dg->datagram_length);
++
++		if (dg_index < sizeof(struct mux_adbh))
+ 			goto dg_error;
+ 
+-		/* Is the packet inside of the ADB */
+-		if (le32_to_cpu(dg->datagram_index) >=
+-					le32_to_cpu(adbh->block_length)) {
++		/* Is the packet inside of the ADB and the received skb ? */
++		if (dg_index >= le32_to_cpu(adbh->block_length) ||
++		    dg_index >= skb->len ||
++		    dg_len > skb->len - dg_index ||
++		    dl_head_pad_len >= dg_len) {
+ 			goto dg_error;
+ 		} else {
+-			packet_offset =
+-				le32_to_cpu(dg->datagram_index) +
+-				dl_head_pad_len;
+-			dg_len = le16_to_cpu(dg->datagram_length);
++			packet_offset = dg_index + dl_head_pad_len;
+ 			/* Pass the packet to the netif layer. */
+ 			rc = ipc_mux_net_receive(ipc_mux, if_id, ipc_mux->wwan,
+ 						 packet_offset,
+@@ -589,12 +591,16 @@ static void mux_dl_adb_decode(struct ios
+ 	struct mux_adbh *adbh;
+ 	struct mux_adth *adth;
+ 	int nr_of_dg, if_id;
+-	u32 adth_index;
++	u32 adth_index, prev_index = 0;
+ 	u8 *block;
+ 
+ 	block = skb->data;
+ 	adbh = (struct mux_adbh *)block;
+ 
++	/* The block header itself must fit in the received skb. */
++	if (skb->len < sizeof(struct mux_adbh))
++		goto adb_decode_err;
++
+ 	/* Process the aggregated datagram tables. */
+ 	adth_index = le32_to_cpu(adbh->first_table_index);
+ 
+@@ -606,6 +612,16 @@ static void mux_dl_adb_decode(struct ios
+ 
+ 	/* Loop through mixed session tables. */
+ 	while (adth_index) {
++		/* The table header must lie within the received skb, and the
++		 * chain must move forward so a modem cannot make the loop
++		 * cycle between two tables.
++		 */
++		if (adth_index <= prev_index ||
++		    adth_index < sizeof(struct mux_adbh) ||
++		    adth_index > skb->len - sizeof(struct mux_adth))
++			goto adb_decode_err;
++		prev_index = adth_index;
++
+ 		/* Get the reference to the table header. */
+ 		adth = (struct mux_adth *)(block + adth_index);
+ 
+@@ -629,6 +645,10 @@ static void mux_dl_adb_decode(struct ios
+ 		if (le16_to_cpu(adth->table_length) < sizeof(struct mux_adth))
+ 			goto adb_decode_err;
+ 
++		/* The whole datagram table must fit in the received skb. */
++		if (le16_to_cpu(adth->table_length) > skb->len - adth_index)
++			goto adb_decode_err;
++
+ 		/* Calculate the number of datagrams. */
+ 		nr_of_dg = (le16_to_cpu(adth->table_length) -
+ 					sizeof(struct mux_adth)) /
 
 
