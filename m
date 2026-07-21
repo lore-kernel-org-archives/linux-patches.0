@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD07046DFFD;
-	Tue, 21 Jul 2026 18:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EFD415F1A;
+	Tue, 21 Jul 2026 18:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660355; cv=none; b=RUCqWG7tdkn6Bd64fr2p6iczRghsXk0KVxmW0D4dMDc4n6SgOegtfJGYuHz63txe9iXVwiiF3fpCliTeIKPuK9KB/mGnir+23dkly0xmAJQbL7ht2op3EbA4Rl9m55+nAM0opuS79EAK30v8XovYuXoojFgSH5M2GMqopv06LDg=
+	t=1784660356; cv=none; b=a4iIZ19t18jCsskBf6zOxAsM3HViCcghqaskifIlMZb8fsvd4uH81q50hm7beaw7UMMngycCqxHjyheDeKei3KhDqXhI/Pkx7EXdPsgWdPmDh57bQLXs5NLrvL5JhzGn8B8cvdmyf71PIloPHzQP8kAdyf0j8QLFmfe5ZZIYS9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660355; c=relaxed/simple;
-	bh=S6XcL5sT53j6IK7n0gIlr3FNYHCSiAN/9nEsEDpJFP4=;
+	s=arc-20240116; t=1784660356; c=relaxed/simple;
+	bh=NhX6RRucpkF7mB0JmxR0yFwVFSlqb8Axni0Ct4WH+RY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lon33d9BWdswheEi1HNIi4sprGoXVWBQHiXux5ZEmMQPe3YIB0U8XNAA62tSHIAGbwdWxH4tVxeqAfSNKct55nS2jCa1tu5ASH6bNwlM0wi5rJGsFIJEjACuipji+u5+3mvbt59WO84M4g5OOOCO7vNX2NXRHwANM21SgSPtUjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KygR53DK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NMwGexvoNK0LH0iGWSUF33Gvi3K6PMJXGrHivgoNbvUvhDS3M/Oq3KN8WnESnBSDuc6icuMpmIxa6expttbzu7/rO6Kh25ng7l6ZaoNpOlQxVa9rbGopkYDLyfn/onw1FUZr//kYTe/z8/PxB5mlFiEQFduQ6qtOHeiIjZKakg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFwEXtP7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KygR53DK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 152E61F00AC4;
-	Tue, 21 Jul 2026 18:59:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFwEXtP7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64AAE1F00A3E;
+	Tue, 21 Jul 2026 18:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660353;
-	bh=62EqvzVnkSfO64w8D7pTxCpijSyOAzwI+sfhfNJmRYk=;
+	s=korg; t=1784660350;
+	bh=HAz+y+1ydw9hGS4eXxNwXvS03dpXusaLV0+jaiqCGpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KygR53DK47CUyHVxRsMogLFiHNRwTmA4bqhKuWGeJ0g99Y9eshe2gHdDISUietyKL
-	 8EDEChSATYQJAsqOZDwYHZPI9Oa+VFeRZdJPEc9KJFDJjVRDh3+Ai1lp54Byu7CIre
-	 rl5pDSsZNeBpwLdImoeG76l+JcwKXgZhOxBxjGrA=
+	b=JFwEXtP7Dda/wUW95ez5AeS8HDXmlZPuz0Wix7Y7TTS3wVL6w4twFRsEXjDg8i/jQ
+	 cg0OIAFXR5SzRdNQVl/nnORzltkM/r19Ag6KyJnH4NL+a4EC6bnj7xnR+LmEYtWAAC
+	 iqpYR99aWxUHsxDSeSeD4NJdPcl/oJhsPc6pSFUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Mihai Brodschi <m.brodschi@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0947/2077] perf sched: Replace BUG_ON and add NULL checks in replay event helpers
-Date: Tue, 21 Jul 2026 17:10:20 +0200
-Message-ID: <20260721152615.155217928@linuxfoundation.org>
+Subject: [PATCH 7.1 0920/2077] ntfs3: Allocate iomap inline_data using alloc_page
+Date: Tue, 21 Jul 2026 17:09:53 +0200
+Message-ID: <20260721152614.512685096@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,118 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Mihai Brodschi <m.brodschi@gmail.com>
 
-[ Upstream commit 75eafe4a3a93a0143a20c0cc286bfb9008ac1478 ]
+[ Upstream commit 70d3855594cf6e8791970714b65cac3202d6160e ]
 
-get_new_event() has three issues:
+This fixes a BUG reported in iomap_write_end_inline:
+iomap_inline_data_valid checks that the inline_data fits within
+a page. If the inline_data is allocated with kmemdup there's no
+guarantee that it's page-aligned, so the check sometimes fails.
+Allocate it with alloc_page to ensure it's page-aligned.
 
-1. The zalloc() result is dereferenced without a NULL check, crashing
-   on allocation failure.
-
-2. BUG_ON(!task->atoms) kills the process when realloc() fails.
-   Since perf.data is untrusted input, this should be a graceful error.
-
-3. The realloc pattern assigns directly to task->atoms, losing the old
-   pointer on failure.  task->nr_events is also incremented before the
-   realloc, leaving corrupted state on failure.
-
-Fix get_new_event() to:
-  - Check the zalloc() result before dereferencing
-  - Use a temporary for realloc() to avoid losing the old pointer
-  - Increment nr_events only after successful realloc
-  - Return NULL instead of calling BUG_ON on failure
-
-Also fix add_sched_event_wakeup() where zalloc() for wait_sem is
-passed to sem_init() without a NULL check.
-
-Update all callers (add_sched_event_run, add_sched_event_wakeup,
-add_sched_event_sleep) to handle NULL returns by returning early.
-The replay may produce incomplete output on OOM but will not crash.
-
-Fixes: ec156764d424 ("perf sched: Import schedbench.c")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221446
+Fixes: 099ef9ab9203 ("fs/ntfs3: implement iomap-based file operations")
+Signed-off-by: Mihai Brodschi <m.brodschi@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 28 +++++++++++++++++++++++++---
- 1 file changed, 25 insertions(+), 3 deletions(-)
+ fs/ntfs3/attrib.c | 10 +++++++---
+ fs/ntfs3/inode.c  |  4 ++--
+ 2 files changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 3646b0eaf44438..70157fcd20f2cc 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -365,14 +365,25 @@ get_new_event(struct task_desc *task, u64 timestamp)
- 	struct sched_atom *event = zalloc(sizeof(*event));
- 	unsigned long idx = task->nr_events;
- 	size_t size;
-+	struct sched_atom **atoms_p;
-+
-+	if (event == NULL) {
-+		pr_err("ERROR: sched: failed to allocate event\n");
-+		return NULL;
-+	}
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index e61c5bf7e27e44..ff0bf45759480b 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -1004,6 +1004,7 @@ int attr_data_get_block_locked(struct ntfs_inode *ni, CLST vcn, CLST clen,
+ 	struct ATTRIB *attr, *attr_b;
+ 	struct ATTR_LIST_ENTRY *le, *le_b;
+ 	struct mft_inode *mi, *mi_b;
++	struct page *page;
+ 	CLST hint, svcn, to_alloc, evcn1, next_svcn, asize, end, vcn0;
+ 	CLST alloc, evcn;
+ 	unsigned fr;
+@@ -1042,10 +1043,13 @@ int attr_data_get_block_locked(struct ntfs_inode *ni, CLST vcn, CLST clen,
+ 		*lcn = RESIDENT_LCN;
+ 		*len = data_size;
+ 		if (res && data_size) {
+-			*res = kmemdup(resident_data(attr_b), data_size,
+-				       GFP_KERNEL);
+-			if (!*res)
++			page = alloc_page(GFP_KERNEL);
++			if (!page) {
+ 				err = -ENOMEM;
++			} else {
++				*res = page_address(page);
++				memcpy(*res, resident_data(attr_b), data_size);
++			}
+ 		}
+ 		goto out;
+ 	}
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 42af1abe17f883..031f85fd53d4e8 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -801,7 +801,7 @@ static int ntfs_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
  
- 	event->timestamp = timestamp;
- 	event->nr = idx;
+ 	if (lcn == RESIDENT_LCN) {
+ 		if (offset >= clen) {
+-			kfree(res);
++			__free_page(virt_to_page(res));
+ 			if (flags & IOMAP_REPORT) {
+ 				/* special code for report. */
+ 				return -ENOENT;
+@@ -921,7 +921,7 @@ static int ntfs_iomap_end(struct inode *inode, loff_t pos, loff_t length,
  
-+	size = sizeof(struct sched_atom *) * (task->nr_events + 1);
-+	atoms_p = realloc(task->atoms, size);
-+	if (!atoms_p) {
-+		pr_err("ERROR: sched: failed to grow atoms array\n");
-+		free(event);
-+		return NULL;
-+	}
-+	task->atoms = atoms_p;
- 	task->nr_events++;
--	size = sizeof(struct sched_atom *) * task->nr_events;
--	task->atoms = realloc(task->atoms, size);
--	BUG_ON(!task->atoms);
- 
- 	task->atoms[idx] = event;
- 
-@@ -403,6 +414,8 @@ static void add_sched_event_run(struct perf_sched *sched, struct task_desc *task
+ out:
+ 	if (iomap->type == IOMAP_INLINE) {
+-		kfree(iomap->private);
++		__free_page(virt_to_page(iomap->private));
+ 		iomap->private = NULL;
  	}
  
- 	event = get_new_event(task, timestamp);
-+	if (event == NULL)
-+		return;
- 
- 	event->type = SCHED_EVENT_RUN;
- 	event->duration = duration;
-@@ -416,6 +429,8 @@ static void add_sched_event_wakeup(struct perf_sched *sched, struct task_desc *t
- 	struct sched_atom *event, *wakee_event;
- 
- 	event = get_new_event(task, timestamp);
-+	if (event == NULL)
-+		return;
- 	event->type = SCHED_EVENT_WAKEUP;
- 	event->wakee = wakee;
- 
-@@ -430,6 +445,10 @@ static void add_sched_event_wakeup(struct perf_sched *sched, struct task_desc *t
- 	}
- 
- 	wakee_event->wait_sem = zalloc(sizeof(*wakee_event->wait_sem));
-+	if (!wakee_event->wait_sem) {
-+		pr_err("ERROR: sched: failed to allocate semaphore\n");
-+		return;
-+	}
- 	sem_init(wakee_event->wait_sem, 0, 0);
- 	event->wait_sem = wakee_event->wait_sem;
- 
-@@ -441,6 +460,9 @@ static void add_sched_event_sleep(struct perf_sched *sched, struct task_desc *ta
- {
- 	struct sched_atom *event = get_new_event(task, timestamp);
- 
-+	if (event == NULL)
-+		return;
-+
- 	event->type = SCHED_EVENT_SLEEP;
- 
- 	sched->nr_sleep_events++;
 -- 
 2.53.0
 
