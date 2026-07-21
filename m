@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2255F43634C;
-	Tue, 21 Jul 2026 20:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C169E434E3B;
+	Tue, 21 Jul 2026 20:19:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665192; cv=none; b=IchHZ3m7jkt8qla2HB5fJW24iU+1tq1MKtE6aFoqL6zPUysXOcvUGImHzldu/HDu2oRZU3YE6yuV9WpS1esdGqVvX2KolTxb2GR9wo2UNhoEQeJZKJgUSoWb+ANHjS6MDsJAwqNzsPbLwSIivAI/M243IlbV/vcjOsLcFtj6bUg=
+	t=1784665194; cv=none; b=ZVCxRUyx5QZ8rqf8Kl4uZ7/eo7SibXG9HmYbv7flOkzulJvYQPiObNLzcaDmc/9sNdkUT02FHpw5+8g5SLMteLt73SisCqaj8BAtU4r0/ySTZCB1qDjywHY/8eYRSipkCEya/QvBC0B5f0cwkfZiFDCBSl6m2ZfR3VZsROe2wIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665192; c=relaxed/simple;
-	bh=8dZ4synRVosFp1OOx92PpirXAY5JglJcaZVXE4dkEnE=;
+	s=arc-20240116; t=1784665194; c=relaxed/simple;
+	bh=N9PFLM/LUlCJyb2YDSZE0/BUbUQp45Lu6FZiruKqSMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fuawwe+1fBoM0S6wQxU1E6/CXq7ihLKJXmaM5hKM7iMJsObVO9obOYXqDJFDOn4rZDFRu/SpQkNm34Ce1Cm60hELZ++zQo+gmmRjl7xOZIR7iQZLyjI1iZAhjvduseA1jpMah39Ccxoyye5wugvsPHG6NyRe7GoCOE2WqJcbrGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vbfx23UU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d3JEAQHkmdUw7S0Z0Yp3DYvaJv/Pk+dsKslTR35gz3CXG204uasKRSYX/XFDJ4Yt2hxoIfKn6n+41yjWZqlZGeSKXMApg91XzJmOk+jCZE5pQMI7y3Mj9dZObxQXdoWz0gwOYsAAm4G7RQ7NrnNsF6n3Jdnk3t+vXrYTlFcCgyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8955pE/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vbfx23UU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B001F000E9;
-	Tue, 21 Jul 2026 20:19:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8955pE/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3245C1F000E9;
+	Tue, 21 Jul 2026 20:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665191;
-	bh=NbWZr0nfed536/BPq5gYmxe6CM/TgJNcf6PZm1GMsn0=;
+	s=korg; t=1784665193;
+	bh=HY153/5hpMoHbDZrcI4ku8vI1vAIrxD4KMLajhAdiDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vbfx23UUCdqqSQ3JLtruER5G7YUWKrf6duS4n8OnR6dj5iZkcTR44Vs1Bfg10mdt7
-	 P3TMwbPg0rDvDkZ7Y+dV6xBCmT/p+ZBCL50qPF+D0J0bKytVjpnqou3cMEbPr5Mo1K
-	 yE8hHZusEd2J8/LyUD4jPhBvUKLAQ097j00Y1ts8=
+	b=d8955pE/D1CsHgFF/kNqLIwTbYUWMFtGm0I0G9brU421zpEzNYp8foXCsdItk2cAx
+	 diZNbNjwrKjGYt4j/5V74EcCxqYc1+hBMfuThUYcC1j2lK/jNyUq09KmIdLiavktTs
+	 Bi76JBGMwrdZ04vofLAbtG3lwzG/uo+WP6pXBh+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Lukas Wunner <lukas@wunner.de>,
-	Ignat Korchagin <ignat@linux.win>,
-	Alistair Francis <alistair.francis@wdc.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.6 0210/1266] X.509: Fix validation of ASN.1 certificate header
-Date: Tue, 21 Jul 2026 17:10:47 +0200
-Message-ID: <20260721152446.512109077@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Xuewen Wang <wangxuewen@kylinos.cn>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Subject: [PATCH 6.6 0211/1266] tools/mm/slabinfo: Fix trace disable logic inversion
+Date: Tue, 21 Jul 2026 17:10:48 +0200
+Message-ID: <20260721152446.537887164@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,40 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Xuewen Wang <wangxuewen@kylinos.cn>
 
-commit 3b626ba431c4501512ad07549310685e07fe4706 upstream.
+commit 235ab68d67eadbef1fdbfb771f21f5bacc77a2ae upstream.
 
-x509_load_certificate_list() seeks to enforce that a certificate starts
-with 0x30 0x82 (ASN.1 SEQUENCE tag followed by a length of more than 256
-and less than 65535 bytes).
+The disable trace path in slab_debug() had a logic error where it would
+set trace=1 instead of trace=0. This made trace functionality permanently
+enabled once turned on for any slab cache.
 
-But it only enforces that *either* of those two byte values are present,
-instead of checking for the *conjunction* of the two values.  Fix it.
-
-Fixes: 631cc66eb9ea ("MODSIGN: Provide module signing public keys to the kernel")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/r/20260508033917.B5873C2BCB0@smtp.kernel.org/
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org # v3.7+
-Reviewed-by: Ignat Korchagin <ignat@linux.win>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: a87615b8f9e2 ("SLUB: slabinfo upgrade")
+Cc: stable@vger.kernel.org
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Xuewen Wang <wangxuewen@kylinos.cn>
+WARNING: From:/Signed-off-by: email address mismatch: 'From: wangxuewen <18810879172@163.com>' != 'Signed-off-by: wangxuewen <wangxuewen@kylinos.cn>'
+Link: https://patch.msgid.link/20260518062159.80664-2-wangxuewen@kylinos.cn
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/asymmetric_keys/x509_loader.c |    2 +-
+ tools/mm/slabinfo.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/crypto/asymmetric_keys/x509_loader.c
-+++ b/crypto/asymmetric_keys/x509_loader.c
-@@ -20,7 +20,7 @@ int x509_load_certificate_list(const u8
- 		 */
- 		if (end - p < 4)
- 			goto dodgy_cert;
--		if (p[0] != 0x30 &&
-+		if (p[0] != 0x30 ||
- 		    p[1] != 0x82)
- 			goto dodgy_cert;
- 		plen = (p[2] << 8) | p[3];
+--- a/tools/mm/slabinfo.c
++++ b/tools/mm/slabinfo.c
+@@ -795,7 +795,7 @@ static void slab_debug(struct slabinfo *
+ 			fprintf(stderr, "%s can only enable trace for one slab at a time\n", s->name);
+ 	}
+ 	if (!tracing && s->trace)
+-		set_obj(s, "trace", 1);
++		set_obj(s, "trace", 0);
+ }
+ 
+ static void totals(void)
 
 
