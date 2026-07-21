@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C3846EF88;
-	Tue, 21 Jul 2026 20:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCE843634C;
+	Tue, 21 Jul 2026 20:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665282; cv=none; b=XVl01EoiWl6veZnldy/QaGaRzrJBe2dMXE9WBc3Sbg5Pbg8GliV3+T8hg7+zVJMQwHaatE9BLMpmwH1fgRZEiXYmJtk4D+t+MeVbWc94Un8RROJ2MEmJaJHfgeVmy6CK6A854KnaI4m5flapnmOfaQpIANX6f7NggJ0DIJmho+Y=
+	t=1784665285; cv=none; b=Us+uesqY3HAV+UW3sW5SfULGnqDz0WoZx4bYmFRQ3SkzpAmcn/RyjlN6s58FYOz91OJIV9/qmjFjJI0dBqkYWQh6xkUQVdiU0kt0XtDLw4Hh1gM2AVL0aNFfeI0c2SwM5xlU3KUFDpxxY/JQnnLu0RBZhYLEQVyaQRonEhdwibs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665282; c=relaxed/simple;
-	bh=BNX7sIUWYtqC9R4zmJnHq0Hb4fwUn5TE/APyBWFXQ9M=;
+	s=arc-20240116; t=1784665285; c=relaxed/simple;
+	bh=U9B6y0+Uot6J3YTp7/aNRvhwpI6PwiiB04SMCUKshr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SF3mo1la57TkITispdnyxZQ3nnNPumXiJt13fsJEYWeBUDKuA7NGc9D6aq30S86ywnXrpB0JYu8NsUX/tFn1jgxz/r6fDnuNATX3lnDev04QklGgFq8Cpx8DTHPDvgw5fp9zQziiSPNF5N3XwkskLR0PabpPj6JWflvNBaMt8v8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1FiIQsqI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RpTCMyn/NTl/lXhqvG8vpFgGv0Gc2Vy1dqv/N1dIWofT6oxHPDCVAyG4W40wcBPePORuhcL9kOAcNwQDrx9D+6TPRIMmjGUc/aN9HmIAsPbm93i2HV/sZ/lpEVGdK4/F6mVs7faXCgWVAuF3VilAsBNb7q6k2X573F3UVhUI5i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YffqK3qC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FiIQsqI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E529C1F000E9;
-	Tue, 21 Jul 2026 20:21:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YffqK3qC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD2C1F000E9;
+	Tue, 21 Jul 2026 20:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665281;
-	bh=/9+o4ZXAcYPh015X9hg9lC7MBfoG7AeeTilkdiO0cb8=;
+	s=korg; t=1784665284;
+	bh=keMegxtIeGxhMVfcFICr8W6jn9n7fGIt1GovVp7etuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1FiIQsqILGIjTLaV2JXLO+OEn2LqnygBmrNW6q9AuA2ifWWutHX4uNC+gXg/BhVip
-	 JsWAcvASP1OcvnHBUj8XUFNZO51IR1/YmyLG/eVhEFg+QrueemcmhJ+IElCAvscl1Y
-	 WARXbMuJWa/8Sn1igQoGQKDkKF2DCnhu6oAh6jhc=
+	b=YffqK3qCTU4F+UpBh6g0jsvL3ccrVdr431Av39Wf6DHVmDDOb6zEJ/LpyYfGlgq1x
+	 QCK8VcqUHE1lJft0nTMAFlddI1XwabzmZ7jS3G+6CeysG/TYuBZ5tDTMqTUtLl2udt
+	 zIoW8PfCkiJFyOF63D5OQEUETiHKCuVyVC3rOulk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	WenTao Liang <vulab@iscas.ac.cn>
-Subject: [PATCH 6.6 0228/1266] usb: dwc3: meson-g12a: fix refcount leak in dwc3_meson_g12a_resume()
-Date: Tue, 21 Jul 2026 17:11:05 +0200
-Message-ID: <20260721152446.919400344@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 0246/1266] USB: serial: digi_acceleport: fix write buffer corruption
+Date: Tue, 21 Jul 2026 17:11:23 +0200
+Message-ID: <20260721152447.318122517@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,77 +49,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Johan Hovold <johan@kernel.org>
 
-commit 692c354bef03b77b30e57e61934da502c8a12d45 upstream.
+commit 24ca1fea8f2753bf33e1d458ec1ae5d9b7796a65 upstream.
 
-If dwc3_meson_g12a_resume() succeeds in calling
-reset_control_reset(), an internal triggered_count reference is
-acquired. If any later step fails (usb_init, phy_init,
-phy_power_on, regulator_enable, or usb_post_init), the function
-returns the error without rearming the reset control. This leaks
-the reference and leaves the reset control in a triggered state,
-causing future reset_control_reset() calls to incorrectly return
-early as if already reset.
+The digi_write_inb_command() is supposed to wait for the write urb to
+become available or return an error, but instead it updates the transfer
+buffer and tries to resubmit the urb on timeout.
 
-Add an error path that calls reset_control_rearm() to balance
-the reference before returning the error.
+To make things worse, for commands like break control where no timeout
+is used, the driver would corrupt the urb immediately due to a broken
+jiffies comparison (on 32-bit machines this takes five minutes of uptime
+to trigger due to INITIAL_JIFFIES).
 
-Cc: stable <stable@kernel.org>
-Fixes: 5b0ba0caaf3a ("usb: dwc3: meson-g12a: refactor usb init")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260611131121.81784-1-vulab@iscas.ac.cn
+Fix this by adding the missing return on timeout and waiting
+indefinitely when no timeout has been specified as intended.
+
+This issue was (sort of) flagged by Sashiko when reviewing an unrelated
+change to the driver.
+
+Link: https://sashiko.dev/#/patchset/20260610132232.356139-1-johan%40kernel.org?part=11
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-meson-g12a.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/usb/serial/digi_acceleport.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-meson-g12a.c
-+++ b/drivers/usb/dwc3/dwc3-meson-g12a.c
-@@ -907,35 +907,39 @@ static int __maybe_unused dwc3_meson_g12
+--- a/drivers/usb/serial/digi_acceleport.c
++++ b/drivers/usb/serial/digi_acceleport.c
+@@ -433,20 +433,22 @@ static int digi_write_inb_command(struct
+ 	int len;
+ 	struct digi_port *priv = usb_get_serial_port_data(port);
+ 	unsigned char *data = port->write_urb->transfer_buffer;
++	unsigned long expire;
+ 	unsigned long flags;
  
- 	ret = priv->drvdata->usb_init(priv);
- 	if (ret)
--		return ret;
-+		goto err_rearm;
+ 	dev_dbg(&port->dev, "digi_write_inb_command: TOP: port=%d, count=%d\n",
+ 		priv->dp_port_num, count);
  
- 	/* Init PHYs */
- 	for (i = 0 ; i < PHY_COUNT ; ++i) {
- 		ret = phy_init(priv->phys[i]);
- 		if (ret)
--			return ret;
-+			goto err_rearm;
- 	}
+ 	if (timeout)
+-		timeout += jiffies;
+-	else
+-		timeout = ULONG_MAX;
++		expire = jiffies + timeout;
  
- 	/* Set PHY Power */
- 	for (i = 0 ; i < PHY_COUNT ; ++i) {
- 		ret = phy_power_on(priv->phys[i]);
- 		if (ret)
--			return ret;
-+			goto err_rearm;
- 	}
+ 	spin_lock_irqsave(&priv->dp_port_lock, flags);
+ 	while (count > 0 && ret == 0) {
+-		while (priv->dp_write_urb_in_use &&
+-		       time_before(jiffies, timeout)) {
++		while (priv->dp_write_urb_in_use) {
++			if (timeout && time_after(jiffies, expire)) {
++				ret = -ETIMEDOUT;
++				break;
++			}
+ 			cond_wait_interruptible_timeout_irqrestore(
+ 				&priv->write_wait, DIGI_RETRY_TIMEOUT,
+ 				&priv->dp_port_lock, flags);
+@@ -455,6 +457,9 @@ static int digi_write_inb_command(struct
+ 			spin_lock_irqsave(&priv->dp_port_lock, flags);
+ 		}
  
- 	if (priv->vbus && priv->otg_phy_mode == PHY_MODE_USB_HOST) {
- 		ret = regulator_enable(priv->vbus);
- 		if (ret)
--			return ret;
-+			goto err_rearm;
- 	}
- 
- 	if (priv->drvdata->usb_post_init) {
- 		ret = priv->drvdata->usb_post_init(priv);
- 		if (ret)
--			return ret;
-+			goto err_rearm;
- 	}
- 
- 	return 0;
++		if (ret)
++			break;
 +
-+err_rearm:
-+	reset_control_rearm(priv->reset);
-+	return ret;
- }
- 
- static const struct dev_pm_ops dwc3_meson_g12a_dev_pm_ops = {
+ 		/* len must be a multiple of 4 and small enough to */
+ 		/* guarantee the write will send buffered data first, */
+ 		/* so commands are in order with data and not split */
 
 
