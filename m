@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F1346AA81;
-	Tue, 21 Jul 2026 15:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE35E46AA69;
+	Tue, 21 Jul 2026 15:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648006; cv=none; b=hXzGRTY71ZKEcZrf7JpTXl/NoocaNLQlK4EGFtdSX9nLbvZrESMHuvT/tWgheae8/F07/ysxOJSipmxSEobfABE1bPzc7W2pch+cPK0IQJse5CshLbT8xzi0pot4I13730knAOSr5+VGMOzN3LFUvf9mpGF+ti27+vIo3Gym5m4=
+	t=1784648008; cv=none; b=ltbylQK+QivKpHJMvetw1IPIoEIJ1rA0k1c3JyLq6zkxe6L3NZFHpkQcc5qGlNbKsyegMmgVzLuiOgrKBUjd9X9YL8ludIjeW87ZoSM8GnXUTjIwV7RyJujCHN0T7mhvcURSNiaoOareZv36Fvj3PqwiMY6eevbmbiM2bWEV5/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648006; c=relaxed/simple;
-	bh=ajNnrreMfvfd/ZLzhCwnkQdYLzJAEy6AkbGnbStexxg=;
+	s=arc-20240116; t=1784648008; c=relaxed/simple;
+	bh=ehzTYaWAi2ODCUMfca3OA6uyVvf1WS/WB2LjqKE9Ijo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IWDbg/pZdpSJAjk7vSaichVzq7KiPwuzJJiJBJKTXkLzP4w21+2TDf/euawh20AMjFZoYgFbqtLRsjkfDWI2BCBXcl5ImvGZt1x6Utu4N7msY9f1PQZ5+pRC7vMlzWSPSr2FKwW/Y4f5Llz7I2VXFZ041CYGpfez0rPoJQjoVfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lV1e+nxt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D91soFw4MgenXs/M0IF0baY4RCwcRBnfNfmRrnSZQFKBUY4oT4ImWduDiOxJ8JPxOvfiO+nmQ0VEcldK2SK4LnEvAROy9+GwbNLd+1VIekEOlhRZOVEWx4EldrN6vkhB3vQR9E6wzW2SMZqJpgiHIW8GiUv5lggNzQXLSS5SMEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oB6W/XiZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lV1e+nxt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460881F000E9;
-	Tue, 21 Jul 2026 15:33:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oB6W/XiZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12001F00A3A;
+	Tue, 21 Jul 2026 15:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648004;
-	bh=ZN8xMSq3gq/gNrhZXjpqBNv2yxz1qoXZTERyCaODq/k=;
+	s=korg; t=1784648007;
+	bh=QefEtPEAmHth8oh5E/YHD1Yj9whMd9ILXfRzFHwNa00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lV1e+nxtolm6FHYCr7TkVRAQ0IC85do6TtzPgLNCxWdGW0aTlTGnSc9TcNITeJFl0
-	 sT2GqSws3DQ9y9weAmswwVSgpkzcbEUItCxFNeA9/dxRGqGh1TYhL/D4cwERR3ZiwR
-	 qSHCHYkrTQhyxlfEJ7IGJZ7ekZUWPayT6n80Y3Pg=
+	b=oB6W/XiZ1eVtTYJe+y9zAoIKjFCA+F06EZTrGsc6SdJDCVBpcZFbWudSseKMzmAxd
+	 jgqkTFDWiGJyxV6jWtHcbrLYd1yjjSpzqqbINPWM0DtSmO1antBaugE4ESY6IbpA2j
+	 z9pyzVW8m9kHI5MwzEEJ/dDyv6Al7FBSTS2oD5Xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Laine <damien.laine@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.1 0008/2077] ALSA: hda/realtek: Fix speakers on Legion Pro 7 16ARX8H with codec SSID 17aa:38a7
-Date: Tue, 21 Jul 2026 16:54:41 +0200
-Message-ID: <20260721152552.861823436@linuxfoundation.org>
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Yunke Cao <yunkec@google.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.1 0009/2077] media: uvcvideo: Use hw timestaming if the clock buffer is full
+Date: Tue, 21 Jul 2026 16:54:42 +0200
+Message-ID: <20260721152552.884575293@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,43 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Laine <damien.laine@gmail.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit d35dfb6329accfe1cfa0b57e35214b5cbbe0f9ae upstream.
+commit ede7de6e6b3db552d10ac50557d69c50d1b08486 upstream.
 
-Some units of the Lenovo Legion Pro 7 16ARX8H (82WS) report codec
-subsystem ID 17aa:38a7 instead of 17aa:38a8. Since only 38a8 has a
-codec SSID quirk, these machines fall through to the PCI SSID match
-17aa:386f (Legion Pro 7i 16IAX7) and get ALC287_FIXUP_CS35L41_I2C_2,
-which probes the Cirrus amplifiers of the Intel variant. The TI
-TAS2781 amplifier (ACPI TIAS2781:00) present on this AMD variant is
-never bound and the internal speakers remain silent.
+In some situations, even with a full clock buffer, it does not contain
+250msec of data. This results in the driver jumping back from software
+to hardware timestapsing creating a nasty artifact in the video.
 
-Add a codec SSID quirk for 17aa:38a7 pointing to
-ALC287_FIXUP_TAS2781_I2C, mirroring the existing 38a8 entry.
+If the clock buffer is full, use it to calculate the timestamp instead
+of defaulting to software stamps, the reduced accuracy is less visible
+than jumping from one timestamping mechanism to the other.
 
-Tested on a Legion Pro 7 16ARX8H (82WS, BIOS LPCN62WW): with the codec
-SSID overridden to 17aa:38a8 via the HDA patch loader, the TAS2781
-amplifier binds and the internal speakers work.
-
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Damien Laine <damien.laine@gmail.com>
-Link: https://patch.msgid.link/20260712213708.1835469-1-damien.laine@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 6243c83be6ee8 ("media: uvcvideo: Allow hw clock updates with buffers not full")
+Cc: stable@vger.kernel.org
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Tested-by: Yunke Cao <yunkec@google.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://patch.msgid.link/20260513-uvc-hwtimestamp-v3-2-7a64838b0b02@chromium.org
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/realtek/alc269.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/usb/uvc/uvc_video.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7723,6 +7723,7 @@ static const struct hda_quirk alc269_fix
- 	HDA_CODEC_QUIRK(0x17aa, 0x386e, "Legion Y9000X 2022 IAH7", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x386e, "Yoga Pro 7 14ARP8", ALC285_FIXUP_SPEAKER2_TO_DAC1),
- 	HDA_CODEC_QUIRK(0x17aa, 0x38a8, "Legion Pro 7 16ARX8H", ALC287_FIXUP_TAS2781_I2C), /* this must match before PCI SSID 17aa:386f below */
-+	HDA_CODEC_QUIRK(0x17aa, 0x38a7, "Legion Pro 7 16ARX8H", ALC287_FIXUP_TAS2781_I2C), /* this must match before PCI SSID 17aa:386f below */
- 	SND_PCI_QUIRK(0x17aa, 0x386f, "Legion Pro 7i 16IAX7", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x3870, "Lenovo Yoga 7 14ARB7", ALC287_FIXUP_YOGA7_14ARB7_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3877, "Lenovo Legion 7 Slim 16ARHA7", ALC287_FIXUP_CS35L41_I2C_2),
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -833,15 +833,22 @@ void uvc_video_clock_update(struct uvc_s
+ 		y2 += 2048 << 16;
+ 
+ 	/*
+-	 * Have at least 1/4 of a second of timestamps before we
+-	 * try to do any calculation. Otherwise we do not have enough
+-	 * precision. This value was determined by running Android CTS
+-	 * on different devices.
++	 * If the buffer is not full, we want to gather at least 1/4th of
++	 * timestamps before using HW timestamping. We do this to avoid jitter
++	 * on the initial frames.
++	 *
++	 * If the buffer is full we would use it regardless of how much data
++	 * it represents. This could be solved with an infinite big circular
++	 * buffer, but RAM is expensive these days, specially the infinitely
++	 * big.
++	 *
++	 * The value of 1/4th of a second was determined by running Android's
++	 * CTS on different devices.
+ 	 *
+ 	 * dev_sof runs at 1KHz, and we have a fixed point precision of
+ 	 * 16 bits.
+ 	 */
+-	if ((y2 - y1) < ((1000 / 4) << 16))
++	if (clock->size != clock->count && (y2 - y1) < ((1000 / 4) << 16))
+ 		goto done;
+ 
+ 	y = (u64)(y2 - y1) * (1ULL << 31) + (u64)y1 * (u64)x2
 
 
