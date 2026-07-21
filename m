@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C857643F4BA;
-	Tue, 21 Jul 2026 22:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B20843E071;
+	Tue, 21 Jul 2026 22:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672900; cv=none; b=IrFk1iYKZMZea7PRG8rrf6A/8FdUgEfMe2de4ONfXJM81Vu+WSjBYRkstRbBZ4JP08PyLBX05BA5p5jsehLmpso1wtlGDnRaAeRt6d2c+1VeW0424dqN+wr6EJAMeT06z8IrvPBAkEVdlsG5dwIsqVziaqU/DnSjyqve9TgyEEo=
+	t=1784672907; cv=none; b=jfrSA3c4DWKwmdjX1fHsn5u5WKdg3cDQAPHggIMgNFPIactLqPzxvzGLESEMtLSp28tdkr+eV/6dqWTwYlXF8v9KUTIB/Nj02UuCA/DqudkMy6TiVBRhlpOohlIQ8VHawZe2LXYusrk2fszLTMas6HTHDkgvqnHo1DoHDFuDsAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672900; c=relaxed/simple;
-	bh=KG/NzF7n7V9/TgwyN8/y2x744RUTF/gBrV2iMKoVK74=;
+	s=arc-20240116; t=1784672907; c=relaxed/simple;
+	bh=SnGm9kK4KD07znpIDns024YXt7x2EGiog01KwalBJBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lhzXsbvYImgtJuutn08KvjzoIe+YXmHOCZ7BIfq5n8KYaS1J1m6sB/YAv5lnrXgpVvFGGVWrXPGTaYFW1fdAd8YkBN6vmFY1piJ5leHfyeGyahwplslAIQLbWW9PsrQ77FYfNIAhMxSQoZKzsnhPHDGe1fGm/Vct/kEleu27PoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMb48MR4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ds9+ccbc7fOOtsxUPORr0WgsFONBqCiVWgbTBj3sQJDdZdgK5UHik3IHOzMpaEFtuOkzMyJGipZEw54CAPJckxTxj3md83JR2SSqoNpnNTQc3IMe0ok2NZiio4GvfUVlFscGiJIETQf8WpPf/4TsguzbcC0aMDoMoTzXKc312kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EswWUQdm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMb48MR4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BFA71F00A3A;
-	Tue, 21 Jul 2026 22:28:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EswWUQdm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8600A1F000E9;
+	Tue, 21 Jul 2026 22:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672893;
-	bh=4mNlo4Fdl5RIIqDQ0N9Rh+yuNPQCGaEj5ddbozcjqhM=;
+	s=korg; t=1784672899;
+	bh=28iGLy4Htpb7HsXZMjM+KR3NDsiTsfvVAKUJnOU6YpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DMb48MR40NOcqFVcRo9HJlKDtrckcVgnez40paGbmA6N05BOsmTZajUU2gRvwwuZi
-	 N39BmpcFolJHNlFanOXmMUZbRz5hLPSvEhMIkwxGCeOo+xgi7DhLCzl5evDwTGpyqC
-	 GQKCwDEuw9SvGhixf8IuA5TQeBFTBJUbQu5FqNZU=
+	b=EswWUQdmkTzRySkAiSwcFxH08n2J2tdQhYXpCB5rAlWGuJuQjOFJSMaznhUM2/r4g
+	 mHij9y/6biVOCVDk+qJCs7XugA5Ipha7GR2aPmHC4d4Hrddi28utgw2xi5hpceTC2/
+	 ielsDAyaM24vHueu6ZvTTSFOIHAcN9UpuqEc8u5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trung Nguyen <trungnh@cystack.net>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 797/843] HID: multitouch: fix out-of-bounds bit access on mt_io_flags
-Date: Tue, 21 Jul 2026 17:27:12 +0200
-Message-ID: <20260721152423.995486037@linuxfoundation.org>
+Subject: [PATCH 5.15 772/843] gpio: sch: use new GPIO line value setter callbacks
+Date: Tue, 21 Jul 2026 17:26:47 +0200
+Message-ID: <20260721152423.420940424@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,155 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trung Nguyen <trungnh@cystack.net>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 8813b0612275cc61fe9e6603d0ee019247ade6be ]
+[ Upstream commit 883c7eb2c4a9e143b2662ba754f9c16fb31adced ]
 
-mt_io_flags is a single unsigned long, but mt_process_slot(),
-mt_release_pending_palms() and mt_release_contacts() use it as a
-per-slot bitmap indexed by the slot number. That slot number is only
-bounded by td->maxcontacts, which is taken from the device's
-ContactCountMaximum feature report and can be up to 255, not by
-BITS_PER_LONG.
+struct gpio_chip now has callbacks for setting line values that return
+an integer, allowing to indicate failures. Convert the driver to using
+them.
 
-As a result, a multitouch device that advertises a large contact count
-makes set_bit()/clear_bit() operate past the mt_io_flags word and
-corrupt the adjacent members of struct mt_device. The sticky-fingers
-release timer is the easiest way to reach this. mt_release_contacts()
-runs
-
-	for (i = 0; i < mt->num_slots; i++)
-		clear_bit(i, &td->mt_io_flags);
-
-with num_slots == maxcontacts. For maxcontacts around 250 the loop
-clears the bits that overlap td->applications.next, zeroing that list
-head, and the list_for_each_entry() that immediately follows then
-dereferences NULL. The kernel panics from timer (softirq) context. On a
-KASAN build this shows up as a general protection fault in
-mt_release_contacts() with a null-ptr-deref at offset 0x58, which is
-offsetof(struct mt_application, num_received).
-
-The state is reachable from an untrusted USB or Bluetooth HID
-multitouch device; no local privileges are required.
-
-Store the per-slot active state in a separately allocated bitmap sized
-for maxcontacts, the same pattern already used for pending_palm_slots,
-and keep only MT_IO_FLAGS_RUNNING in mt_io_flags. The two
-"mt_io_flags & MT_IO_SLOTS_MASK" arming checks become
-bitmap_empty(td->active_slots, td->maxcontacts).
-
-Move MT_IO_FLAGS_RUNNING back to bit 0. It was bumped to bit 32 by the
-same commit to leave the low byte for the slot bits; with the slot bits
-gone it fits in bit 0 again, which also keeps it within the unsigned
-long on 32-bit.
-
-Fixes: 46f781e0d151 ("HID: multitouch: fix sticky fingers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Trung Nguyen <trungnh@cystack.net>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20250625-gpiochip-set-rv-gpio-round2-v1-3-bc110a3b52ff@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: 286533cb14a3 ("gpio: sch: use raw_spinlock_t in the irq startup path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-multitouch.c |   32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ drivers/gpio/gpio-sch.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -31,6 +31,7 @@
-  * [1] https://gitlab.freedesktop.org/libevdev/hid-tools
-  */
+--- a/drivers/gpio/gpio-sch.c
++++ b/drivers/gpio/gpio-sch.c
+@@ -116,7 +116,7 @@ static int sch_gpio_get(struct gpio_chip
+ 	return sch_gpio_reg_get(sch, gpio_num, GLV);
+ }
  
-+#include <linux/bitmap.h>
- #include <linux/device.h>
- #include <linux/hid.h>
- #include <linux/module.h>
-@@ -83,8 +84,7 @@ enum latency_mode {
- 	HID_LATENCY_HIGH = 1,
+-static void sch_gpio_set(struct gpio_chip *gc, unsigned int gpio_num, int val)
++static int sch_gpio_set(struct gpio_chip *gc, unsigned int gpio_num, int val)
+ {
+ 	struct sch_gpio *sch = gpiochip_get_data(gc);
+ 	unsigned long flags;
+@@ -124,6 +124,8 @@ static void sch_gpio_set(struct gpio_chi
+ 	spin_lock_irqsave(&sch->lock, flags);
+ 	sch_gpio_reg_set(sch, gpio_num, GLV, val);
+ 	spin_unlock_irqrestore(&sch->lock, flags);
++
++	return 0;
+ }
+ 
+ static int sch_gpio_direction_out(struct gpio_chip *gc, unsigned int gpio_num,
+@@ -145,8 +147,7 @@ static int sch_gpio_direction_out(struct
+ 	 * But we cannot prevent a short low pulse if direction is set to high
+ 	 * and an external pull-up is connected.
+ 	 */
+-	sch_gpio_set(gc, gpio_num, val);
+-	return 0;
++	return sch_gpio_set(gc, gpio_num, val);
+ }
+ 
+ static int sch_gpio_get_direction(struct gpio_chip *gc, unsigned int gpio_num)
+@@ -165,7 +166,7 @@ static const struct gpio_chip sch_gpio_c
+ 	.direction_input	= sch_gpio_direction_in,
+ 	.get			= sch_gpio_get,
+ 	.direction_output	= sch_gpio_direction_out,
+-	.set			= sch_gpio_set,
++	.set_rv			= sch_gpio_set,
+ 	.get_direction		= sch_gpio_get_direction,
  };
  
--#define MT_IO_SLOTS_MASK		GENMASK(7, 0) /* reserve first 8 bits for slot tracking */
--#define MT_IO_FLAGS_RUNNING		32
-+#define MT_IO_FLAGS_RUNNING		0
- 
- static const bool mtrue = true;		/* default for true */
- static const bool mfalse;		/* default for false */
-@@ -160,10 +160,9 @@ struct mt_device {
- 	struct mt_class mtclass;	/* our mt device class */
- 	struct timer_list release_timer;	/* to release sticky fingers */
- 	struct hid_device *hdev;	/* hid_device we're attached to */
--	unsigned long mt_io_flags;	/* mt flags (MT_IO_FLAGS_RUNNING)
--					 * first 8 bits are reserved for keeping the slot
--					 * states, this is fine because we only support up
--					 * to 250 slots (MT_MAX_MAXCONTACT)
-+	unsigned long mt_io_flags;	/* mt flags (MT_IO_FLAGS_RUNNING) */
-+	unsigned long *active_slots;	/* bitmap of slots with an active
-+					 * contact, sized for maxcontacts
- 					 */
- 	__u8 inputmode_value;	/* InputMode HID feature value */
- 	__u8 maxcontacts;
-@@ -947,7 +946,7 @@ static void mt_release_pending_palms(str
- 
- 	for_each_set_bit(slotnum, app->pending_palm_slots, td->maxcontacts) {
- 		clear_bit(slotnum, app->pending_palm_slots);
--		clear_bit(slotnum, &td->mt_io_flags);
-+		clear_bit(slotnum, td->active_slots);
- 
- 		input_mt_slot(input, slotnum);
- 		input_mt_report_slot_inactive(input);
-@@ -1153,9 +1152,9 @@ static int mt_process_slot(struct mt_dev
- 		input_event(input, EV_ABS, ABS_MT_TOUCH_MAJOR, major);
- 		input_event(input, EV_ABS, ABS_MT_TOUCH_MINOR, minor);
- 
--		set_bit(slotnum, &td->mt_io_flags);
-+		set_bit(slotnum, td->active_slots);
- 	} else {
--		clear_bit(slotnum, &td->mt_io_flags);
-+		clear_bit(slotnum, td->active_slots);
- 	}
- 
- 	return 0;
-@@ -1290,7 +1289,7 @@ static void mt_touch_report(struct hid_d
- 	 * defect.
- 	 */
- 	if (app->quirks & MT_QUIRK_STICKY_FINGERS) {
--		if (td->mt_io_flags & MT_IO_SLOTS_MASK)
-+		if (!bitmap_empty(td->active_slots, td->maxcontacts))
- 			mod_timer(&td->release_timer,
- 				  jiffies + msecs_to_jiffies(100));
- 		else
-@@ -1330,6 +1329,15 @@ static int mt_touch_input_configured(str
- 	if (td->is_buttonpad)
- 		__set_bit(INPUT_PROP_BUTTONPAD, input->propbit);
- 
-+	if (!td->active_slots) {
-+		td->active_slots = devm_kcalloc(&td->hdev->dev,
-+						BITS_TO_LONGS(td->maxcontacts),
-+						sizeof(long),
-+						GFP_KERNEL);
-+		if (!td->active_slots)
-+			return -ENOMEM;
-+	}
-+
- 	app->pending_palm_slots = devm_kcalloc(&hi->input->dev,
- 					       BITS_TO_LONGS(td->maxcontacts),
- 					       sizeof(long),
-@@ -1740,7 +1748,7 @@ static void mt_release_contacts(struct h
- 			for (i = 0; i < mt->num_slots; i++) {
- 				input_mt_slot(input_dev, i);
- 				input_mt_report_slot_inactive(input_dev);
--				clear_bit(i, &td->mt_io_flags);
-+				clear_bit(i, td->active_slots);
- 			}
- 			input_mt_sync_frame(input_dev);
- 			input_sync(input_dev);
-@@ -1763,7 +1771,7 @@ static void mt_expired_timeout(struct ti
- 	 */
- 	if (test_and_set_bit_lock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags))
- 		return;
--	if (td->mt_io_flags & MT_IO_SLOTS_MASK)
-+	if (!bitmap_empty(td->active_slots, td->maxcontacts))
- 		mt_release_contacts(hdev);
- 	clear_bit_unlock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags);
- }
 
 
