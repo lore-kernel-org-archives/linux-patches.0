@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58D9231829;
-	Tue, 21 Jul 2026 22:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62868346771;
+	Tue, 21 Jul 2026 22:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673458; cv=none; b=dFEQxpda5//rtAShy+kWWgES0IxtvWNXp5usSEgRhESsAP+GgqJusJZkSPpgaPrscEpPu+USpGsYm71yQXl93jFAfKk9oco831c+a4kPNnk6G+pqKGpO25Ltneff9/AVOefcDPVdaSJnKX6jDt6IOP1Tff2oSwq7WpNHMpybbAk=
+	t=1784673461; cv=none; b=OF2zXPZNrRO+s2c5YiKV7UHwhm1d5qIzAbVu75hfQPK+vatw2YOWDR/l+dYWTbOB8Q62KjQUd655Cr7VsWS8ZnU9HW0gp8GK+ZeUT6zksrSAJHnpEt8t9h/BmOFlJbEyJ1MsBoyu+PSbSLL7adWMo+yX6kT9EzXZSEaieAFvFwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673458; c=relaxed/simple;
-	bh=9vnXnEfk5Xsoc5+YDetGpM33a+5cvYtfL97Akdw9Gy4=;
+	s=arc-20240116; t=1784673461; c=relaxed/simple;
+	bh=Ku4t2av/7P+DXq7DVaxYQZtD1cvC+rb1nXcwoB8zfQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QYHiPjUgxYUhUNkHOhCL0Bbn8YEjU8UhvJzfTKxYs6Wgw9ix5lfltErCMR5kgQJyz/12pRdEaDhXjDkIFA/D8k/TiZ6cWOGrte1PJjBujHiybbP7jj5aVfUBuVRH9Zkg3ndlX4sijSr1eKxx1LJa8o1yWcfQGQCIYKCHqf+NSaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2OK8uuS5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=maCJWID9sHF0rBozciQasHL+g2PA6obR/JqsjGXlUILUH7CqC/htQlBxniiWbzFzXOSMU69AQJRSI9zGNnwilPorgdkHFlsJD3O3oJe2saHrPwZbZEipKpHAZaJV6Hm1z8CHOd6mx6lnEQ3a4dBLaF1aqvS2gFgd22U9aovNwtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xn9B3F0o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OK8uuS5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CEEA1F000E9;
-	Tue, 21 Jul 2026 22:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xn9B3F0o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35EE1F000E9;
+	Tue, 21 Jul 2026 22:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673457;
-	bh=A5YyHLS4ddKFeBC9yxGPZnia6lmsNPLNv+a4lm16lKM=;
+	s=korg; t=1784673460;
+	bh=fVyci9vChKaAMlzYbKEZ522t64yk5pmGVUjd8XDIXoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2OK8uuS51hjH97idh9ILWdoIHRY0RPx+9L3U86SxkT7NV5UnimJWe/NhBPhVnXNj+
-	 2J6jzkq8imxvTDZY9ubKl7uLYjhZNETV5yyvZNDgF1+6yMxKO3hrtc2isQScPyRrvo
-	 J3q308MOdd4kAIigMwCQIakr8iBnWGMiIUv0z93M=
+	b=xn9B3F0okE4hyQrGbZCPdzB+/wWyDa4zjIQcWEdDo0VMmoDrF+iS4G+xE0VA46Msv
+	 IaVmpkxWm4m4x40JZAV8jC7TRJ9hWCX/WmszE+fZH3I72uvMrhJuaAFjM4BDDzTwfo
+	 N8bt/uc+hGifv/nYqtvAmzGiLQEt+pUESOarFvEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	David Howells <dhowells@redhat.com>,
-	Li Daming <d4n.for.sec@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org
-Subject: [PATCH 5.10 168/699] afs: Fix further netns teardown to cancel the preallocation charger
-Date: Tue, 21 Jul 2026 17:18:47 +0200
-Message-ID: <20260721152359.493673234@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 169/699] drm/tidss: Drop extra drm_mode_config_reset() call
+Date: Tue, 21 Jul 2026 17:18:48 +0200
+Message-ID: <20260721152359.514913594@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -57,52 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-commit 2daf8ac812c3d78c642fe7652f62e29df5e3da20 upstream.
+[ Upstream commit f468fef38716f667e805e0fa2c497c6b9c325bb9 ]
 
-When an afs network namespace is torn down, it cancels and waits for the
-work item that keeps the preallocated rxrpc call/conn/peer queue charged
-before disabling incoming (i.e. listen 0), but there's a small window in
-which it can be requeued by an incoming call wending through the I/O
-thread.
+We are calling drm_mode_config_reset() twice at probe time. There's no
+reason for this and the second call can be removed, reducing work at
+probe time slightly.
 
-Fix this by cancelling the charger work item again after reducing the
-listen backlog to zero.
-
-Fixes: 47694fbc9d24 ("afs: Fix netns teardown to cancel the preallocation charger")
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://sashiko.dev/#/patchset/20260609140911.838677-1-dhowells%40redhat.com
-cc: Li Daming <d4n.for.sec@gmail.com>
-cc: Ren Wei <n05ec@lzu.edu.cn>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260624163819.3017002-5-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patch.msgid.link/20260311-tidss-minor-fixes-v2-1-cb4479784458@ideasonboard.com
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/rxrpc.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/tidss/tidss_kms.c | 2 --
+ 1 file changed, 2 deletions(-)
 
---- a/fs/afs/rxrpc.c
-+++ b/fs/afs/rxrpc.c
-@@ -108,8 +108,13 @@ void afs_close_socket(struct afs_net *ne
- 	_enter("");
+diff --git a/drivers/gpu/drm/tidss/tidss_kms.c b/drivers/gpu/drm/tidss/tidss_kms.c
+index 09485c7f0d6fcc..48e72862c7144a 100644
+--- a/drivers/gpu/drm/tidss/tidss_kms.c
++++ b/drivers/gpu/drm/tidss/tidss_kms.c
+@@ -277,8 +277,6 @@ int tidss_modeset_init(struct tidss_device *tidss)
+ 	if (ret)
+ 		return ret;
  
- 	cancel_work_sync(&net->charge_preallocation_work);
-+	/* Future work items should now see ->live is false. */
-+
- 	kernel_listen(net->socket, 0);
-+
-+	/* Make sure work items are no longer running. */
- 	flush_workqueue(afs_async_calls);
-+	cancel_work_sync(&net->charge_preallocation_work);
+-	drm_mode_config_reset(ddev);
+-
+ 	dev_dbg(tidss->dev, "%s done\n", __func__);
  
- 	if (net->spare_incoming_call) {
- 		afs_put_call(net->spare_incoming_call);
+ 	return 0;
+-- 
+2.53.0
+
 
 
