@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B120833A9FC;
-	Tue, 21 Jul 2026 22:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEBF367B92;
+	Tue, 21 Jul 2026 22:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673607; cv=none; b=i4mz8VMUo4Kh0/43pZbONS4HyC3fzOcneA4bziGt0xnX1gryvXTLVVBUi5Ymn4J9AwzCTBlx7FVFq5zF3LcSiHuA6L+6TkXaSuobGT9LjVoUts3RbXAeF+D2pLl1mldVrYf+E6A8CIGAk433X73hCFxNBYJJL4bLIuxmHK6ymcI=
+	t=1784673610; cv=none; b=i73AXZ3t1kN9ah7Syra9Jb9mjlvT2b8Q5CT4Ny+MxSY/X8edmj1n3IkgduZBGPReMrcDWviBXx5049cweklK8NwA7h/E2GmIkrE+d3UewHS0WowI1PqmrMvIV+OZkPsrrpwGqdCenHZR4lUTrkd7I1S3M4WUxXp+aW4ByZJNDRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673607; c=relaxed/simple;
-	bh=rNnmnXkoTYC7TaNlQ6jxOhYIkJDUVR/Rst4J9VliDA8=;
+	s=arc-20240116; t=1784673610; c=relaxed/simple;
+	bh=Py7ysGZP7BrMbQOvWBo9D0VZqOROeb9tv/KtVFI2ojc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ipJd5mqmD0yvIfb93xgqyNSDXRvBI0Ye/1CnZlwe9z69KqLecwgswqFon7dvESSz7zUKLnu2DnBMpzxb1+3S4cfyhPp+PQ+P5v8k5Oaab5UJd3fMy+GGxLRTa8q2vCSQK7Mr/cTaabffbn1hLPPBjjUe3/8SayRXdblaIiucZSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7/965Gc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VKMwmJDxnZ6OAMxXSwDC6I9JfxApsWsroFy0D6Ys5QeiPOYkWb4sG9h0LQpjS4xg4NQh/R7Ph6iEhgmCzZbFRazP7dazmrA2+DJOOd6GInbl2Iu4KRCAPlQs7jGbVTPdoaCzeb3pQS1tY5y5kOyl9jL1p8MX5lRKgPE6UsuvLRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LFsx2sA1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7/965Gc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23AE01F000E9;
-	Tue, 21 Jul 2026 22:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LFsx2sA1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09FD1F000E9;
+	Tue, 21 Jul 2026 22:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673606;
-	bh=fTN05kI8xmyPakPE3fAcKsGGEjgEFBP+79vkcLrUBEQ=;
+	s=korg; t=1784673609;
+	bh=iQFzK4qc7uhse574MapjHk57joOyqc6Ht7k2pSUHY18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J7/965Gc+RI3e1sK9JokQl4x5zXvt4R4TrJoS6rl3NQU43cw4w+an2PkSl3T4Sdhl
-	 C67eSEr8PWxfpD3UYoMKUee8dCY9xr/I3Ci+EqIqw7GcoWX4fuBs8/YaRobwS03VfQ
-	 hrginuxlBFN+CAjz9kvAOo0b1pDmW5rLmmBWHFtU=
+	b=LFsx2sA12oIc7uYHAimPp3UaX0Moqz4rxqmHBvcD9pPgHVAmX/wUfnyvbchQsXhdM
+	 Of3oxfVKCoVhQVYLCua+9+WUg/sK9v8ACxakpnMmR0XxHUchyrI0QETg3lupuzmEnd
+	 XmN2lRsUEhdGSuxMLBITad0yl0ipxRZqySvrtCg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 172/699] wifi: rtw88: fix OOB read from firmware RX descriptor exceeding DMA buffer
-Date: Tue, 21 Jul 2026 17:18:51 +0200
-Message-ID: <20260721152359.581967773@linuxfoundation.org>
+Subject: [PATCH 5.10 220/699] ARM: imx31: Fix IIM mapping leak in revision check
+Date: Tue, 21 Jul 2026 17:19:39 +0200
+Message-ID: <20260721152400.663340555@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,45 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 6e76e9ed273dfb4b3333a5ebbb94958cc5752ab6 ]
+[ Upstream commit ccb4b54b8ecf1ebafef96d538cd6c5c8455bb390 ]
 
-In rtw_pci_rx_napi(), new_len is computed as the sum of pkt_len (14-bit
-descriptor field, max 16383) and pkt_offset (drv_info_sz + shift, both
-firmware-controlled). The result can exceed RTK_PCI_RX_BUF_SIZE (11478),
-causing an out-of-bounds read from the pre-allocated DMA buffer when
-skb_put_data copies new_len bytes. The USB transport already validates
-this (rtw_usb_rx_data_put checks against RTW_USB_MAX_RECVBUF_SZ); the
-PCIe path does not.
+mx31_read_cpu_rev() maps the IIM registers with of_iomap() to read the
+silicon revision, but returns without unmapping the MMIO mapping.
 
-Add a check that new_len does not exceed the DMA buffer size.
+Keep the normalized revision value in a local variable and route the
+return path through iounmap() after the revision register has been read.
 
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260421111434.3389674-1-tristmd@gmail.com
+Fixes: 3172225d45bd ("ARM: imx31: Retrieve the IIM base address from devicetree")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/pci.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm/mach-imx/cpu-imx31.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/pci.c b/drivers/net/wireless/realtek/rtw88/pci.c
-index 676d861aaf9971..bc09e0225e44e0 100644
---- a/drivers/net/wireless/realtek/rtw88/pci.c
-+++ b/drivers/net/wireless/realtek/rtw88/pci.c
-@@ -980,6 +980,11 @@ static void rtw_pci_rx_isr(struct rtw_dev *rtwdev, struct rtw_pci *rtwpci,
- 		 * discard the frame if none available
- 		 */
- 		new_len = pkt_stat.pkt_len + pkt_offset;
-+		if (unlikely(new_len > RTK_PCI_RX_BUF_SIZE)) {
-+			rtw_dbg(rtwdev, RTW_DBG_RX,
-+				"oversized RX packet: %u\n", new_len);
-+			goto next_rp;
-+		}
- 		new = dev_alloc_skb(new_len);
- 		if (WARN_ONCE(!new, "rx routine starvation\n"))
- 			goto next_rp;
+diff --git a/arch/arm/mach-imx/cpu-imx31.c b/arch/arm/mach-imx/cpu-imx31.c
+index 35c544924e5095..e81ef9e36a1fab 100644
+--- a/arch/arm/mach-imx/cpu-imx31.c
++++ b/arch/arm/mach-imx/cpu-imx31.c
+@@ -36,6 +36,7 @@ static int mx31_read_cpu_rev(void)
+ 	void __iomem *iim_base;
+ 	struct device_node *np;
+ 	u32 i, srev;
++	int rev = IMX_CHIP_REVISION_UNKNOWN;
+ 
+ 	np = of_find_compatible_node(NULL, NULL, "fsl,imx31-iim");
+ 	iim_base = of_iomap(np, 0);
+@@ -48,13 +49,17 @@ static int mx31_read_cpu_rev(void)
+ 
+ 	for (i = 0; i < ARRAY_SIZE(mx31_cpu_type); i++)
+ 		if (srev == mx31_cpu_type[i].srev) {
++			rev = mx31_cpu_type[i].rev;
+ 			imx_print_silicon_rev(mx31_cpu_type[i].name,
+ 						mx31_cpu_type[i].rev);
+-			return mx31_cpu_type[i].rev;
++			goto out;
+ 		}
+ 
+ 	imx_print_silicon_rev("i.MX31", IMX_CHIP_REVISION_UNKNOWN);
+-	return IMX_CHIP_REVISION_UNKNOWN;
++
++out:
++	iounmap(iim_base);
++	return rev;
+ }
+ 
+ int mx31_revision(void)
 -- 
 2.53.0
 
