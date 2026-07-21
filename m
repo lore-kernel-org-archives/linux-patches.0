@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D00635C68B;
-	Tue, 21 Jul 2026 22:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFC43B9930;
+	Tue, 21 Jul 2026 22:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671644; cv=none; b=raQrCZujfdrRSXlDxAQh9uqEIlKo4UtH1sj0KHNFmx9a87+sCZBzfLpdOotoVx0qs2X8uVeRc/20iadBDUhquOWpO6tvgY+HRe4MQsgnEhlXmeg2iowJhSdTUd0ijKsPftwgh+rigKnmvYj70AXeRdVCM46d9Qa/XcR7NCUDtVI=
+	t=1784671647; cv=none; b=jr6gfqzW0Ek3IBBH0MiTDiAgAYOfOisIt8RKwGekfl3SS58I4FRN8csQh0lhEW8+1FekItXRNPCbfYSMgggojXg3qIu2ghu+UiYWmCJ1h1OPgAOXZV9c47T2s5AOaJBP3FxmVycaxRUvyZLeFYeYcmadPRC809BHizNGYTToJVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671644; c=relaxed/simple;
-	bh=qMZHB3rSVEzi069xLj+ljWmmKT83lx5m8jGtO+cTMuk=;
+	s=arc-20240116; t=1784671647; c=relaxed/simple;
+	bh=DniO/9pOUF2jGX2eAwjNvCWe/CuuD0+UZcrTcABacEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gxToh56NHBcJem0Y2xseiU6SWqLKKA+l/f8EgDqSpzLOg61FNv3cx6g1NP2F/Y+JROsoIvRVvMgeE6OOASrUVVn6v8uZpRkNT55kTFD6sRnopskxUU/96wCPbUcIYSqtdQocWA5POmxgFAjOBA+y3dnnO39rhcpGZrfwNlJfFKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BMbiQjUQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L00sPHENlzAORNkp61RZhAbEWSvCJKns+C4L092UAPznxEC1BNZKqww8dBEJkA9vFlZFMLSnmj4Jtg95suF/wexufCnMED1drvCHkaYk8Nqaf4SbwgIV3GGo/PQSTM8Pt3CEUBiTc4477WEL5x9asxmAWgctYx6WiIvg2ioBXKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwDD1HtO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BMbiQjUQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFF01F000E9;
-	Tue, 21 Jul 2026 22:07:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwDD1HtO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E4B1F000E9;
+	Tue, 21 Jul 2026 22:07:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671643;
-	bh=bQN0R2FBY0Cc7O1XPPNgg7VLuqqSQu048NRBBQPK2wI=;
+	s=korg; t=1784671646;
+	bh=1ZciyVY1rYqjR/MzmYUBwzVWnwfyDMKF/wQf2KgBd7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BMbiQjUQaYR/Oh5OAhoHY9zfxrLz9530uwNzURSHW0K6x+Tvoi8/CEwZ3b+LqU1EM
-	 cGvLuUXjTgnwp0D2vaVUxE/hxtALoxKIPs1AMDen3rUtlwKn6zvIMBU/almU+W4xLK
-	 JdIqa58TD1iceONtPp5UXRRjfUUyMXfDV3LwdEGk=
+	b=XwDD1HtOmQs9ehb+dhE1qv7h/J7h6zO+f+ZehU3cR2w3pm9kwjjqVKnUh7XpK/dpB
+	 bu066ghty7vegIBDwwLj1H3blRkCGDQBC7YF62Opd4j52dN+sgusfooNUCiONiB+hM
+	 32OtgDKLGInSD2mE6ZdGbNIFIishD1qexD8N7JHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 325/843] fbdev: sm501fb: Fix buffer errors in OF binding code
-Date: Tue, 21 Jul 2026 17:19:20 +0200
-Message-ID: <20260721152413.330510456@linuxfoundation.org>
+Subject: [PATCH 5.15 326/843] IB/mlx4: Fill in the access_flags if IB_MR_REREG_ACCESS is not specified
+Date: Tue, 21 Jul 2026 17:19:21 +0200
+Message-ID: <20260721152413.352911277@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,91 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Laight <david.laight.linux@gmail.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit d8421e09382cfe0bd2a044c8b0a822f64855dd4e ]
+[ Upstream commit bade9a3150d44ed20b8c6484c4c8a943b7289abb ]
 
-The code that gets the frame buffer mode from OF has 'use after free',
-'buffer overrun' and memory leaks.
+Sashiko noticed mlx4 was using whatever random access flags were provided
+when IB_MR_REREG_ACCESS is not used. Since IB_MR_REREG_TRANS needs
+access_flags it used the random ones which means it doesn't work sensibly
+if userspace provides only IB_MR_REREG_TRANS.
 
-info->edid_data isn't free if the probe functions fail or if
-pd->def_mode is set.
+Keep track of the current access_flag of the MR and use it if the user
+does not specify one.
 
-If both the CRT and PANEL are enabled info->edid_data is used after
-being freed and is freed twice.
+Also fixup a little confusion around mmr.access, it is the HW access flags
+so the convert_access() was missing. But nothing reads this by the time
+rereg_mr can happen.
 
-The string returned by of_get_property(np, "mode", &len) is just
-written over either the static "640x480-16@60" or the module parameter
-string without any regard for the length (which is most likely longer).
-
-Use kstrump() for the OF mode and free everything before freeing 'info.
-
-Fixes: 4295f9bf74a88 ("video, sm501: add OF binding to support SM501")
-Signed-off-by: David Laight <david.laight.linux@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 9376932d0c26 ("IB/mlx4_ib: Add support for user MR re-registration")
+Link: https://patch.msgid.link/r/0-v1-29ca7a402625+ddd6-mlx4_rereg_flags_jgg@nvidia.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sm501fb.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/mlx4/mlx4_ib.h | 1 +
+ drivers/infiniband/hw/mlx4/mr.c      | 9 +++++++--
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/sm501fb.c b/drivers/video/fbdev/sm501fb.c
-index 3c46838651b061..b556789974cdcc 100644
---- a/drivers/video/fbdev/sm501fb.c
-+++ b/drivers/video/fbdev/sm501fb.c
-@@ -95,6 +95,7 @@ struct sm501fb_info {
- 	void __iomem		*fbmem;		/* remapped framebuffer */
- 	size_t			 fbmem_len;	/* length of remapped region */
- 	u8 *edid_data;
-+	char *fb_mode;
- };
+diff --git a/drivers/infiniband/hw/mlx4/mlx4_ib.h b/drivers/infiniband/hw/mlx4/mlx4_ib.h
+index c60f6e9ac640d2..4574a6f9ab5391 100644
+--- a/drivers/infiniband/hw/mlx4/mlx4_ib.h
++++ b/drivers/infiniband/hw/mlx4/mlx4_ib.h
+@@ -136,6 +136,7 @@ struct mlx4_ib_mr {
+ 	dma_addr_t		page_map;
+ 	u32			npages;
+ 	u32			max_pages;
++	int			access_flags;
+ 	struct mlx4_mr		mmr;
+ 	struct ib_umem	       *umem;
+ 	size_t			page_map_size;
+diff --git a/drivers/infiniband/hw/mlx4/mr.c b/drivers/infiniband/hw/mlx4/mr.c
+index 004311925dbf9b..db3cd0a9c7ec87 100644
+--- a/drivers/infiniband/hw/mlx4/mr.c
++++ b/drivers/infiniband/hw/mlx4/mr.c
+@@ -439,6 +439,7 @@ struct ib_mr *mlx4_ib_reg_user_mr(struct ib_pd *pd, u64 start, u64 length,
+ 	if (err)
+ 		goto err_mr;
  
- /* per-framebuffer private data */
-@@ -1788,12 +1789,11 @@ static int sm501fb_init_fb(struct fb_info *fb, enum sm501_controller head,
- 			fb->var.yres_virtual = fb->var.yres;
- 		} else {
- 			if (info->edid_data) {
--				ret = fb_find_mode(&fb->var, fb, fb_mode,
-+				ret = fb_find_mode(&fb->var, fb,
-+					info->fb_mode ?: fb_mode,
- 					fb->monspecs.modedb,
- 					fb->monspecs.modedb_len,
- 					&sm501_default_mode, default_bpp);
--				/* edid_data is no longer needed, free it */
--				kfree(info->edid_data);
- 			} else {
- 				ret = fb_find_mode(&fb->var, fb,
- 					   NULL, NULL, 0, NULL, 8);
-@@ -1969,7 +1969,7 @@ static int sm501fb_probe(struct platform_device *pdev)
- 			/* Get EDID */
- 			cp = of_get_property(np, "mode", &len);
- 			if (cp)
--				strcpy(fb_mode, cp);
-+				info->fb_mode = kstrdup(cp, GFP_KERNEL);
- 			prop = of_get_property(np, "edid", &len);
- 			if (prop && len == EDID_LENGTH) {
- 				info->edid_data = kmemdup(prop, EDID_LENGTH,
-@@ -2026,6 +2026,12 @@ static int sm501fb_probe(struct platform_device *pdev)
- 		goto err_started_crt;
++	mr->access_flags = access_flags;
+ 	mr->ibmr.rkey = mr->ibmr.lkey = mr->mmr.key;
+ 	mr->ibmr.page_size = 1U << shift;
+ 
+@@ -495,6 +496,8 @@ struct ib_mr *mlx4_ib_rereg_user_mr(struct ib_mr *mr, int flags, u64 start,
+ 
+ 		if (err)
+ 			goto release_mpt_entry;
++	} else {
++		mr_access_flags = mmr->access_flags;
  	}
  
-+	/* These aren't needed any more */
-+	kfree(info->edid_data);
-+	kfree(info->fb_mode);
-+	info->edid_data = NULL;
-+	info->fb_mode = NULL;
-+
- 	/* we registered, return ok */
- 	return 0;
+ 	if (flags & IB_MR_REREG_TRANS) {
+@@ -536,8 +539,10 @@ struct ib_mr *mlx4_ib_rereg_user_mr(struct ib_mr *mr, int flags, u64 start,
+ 	 * return a failure. But dereg_mr will free the resources.
+ 	 */
+ 	err = mlx4_mr_hw_write_mpt(dev->dev, &mmr->mmr, pmpt_entry);
+-	if (!err && flags & IB_MR_REREG_ACCESS)
+-		mmr->mmr.access = mr_access_flags;
++	if (!err && flags & IB_MR_REREG_ACCESS) {
++		mmr->access_flags = mr_access_flags;
++		mmr->mmr.access = convert_access(mr_access_flags);
++	}
  
-@@ -2043,6 +2049,8 @@ static int sm501fb_probe(struct platform_device *pdev)
- 	framebuffer_release(info->fb[HEAD_CRT]);
- 
- err_alloc:
-+	kfree(info->edid_data);
-+	kfree(info->fb_mode);
- 	kfree(info);
- 
- 	return ret;
+ release_mpt_entry:
+ 	mlx4_mr_hw_put_mpt(dev->dev, pmpt_entry);
 -- 
 2.53.0
 
