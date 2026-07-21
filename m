@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6CC46D543;
-	Tue, 21 Jul 2026 15:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668F146A5E3;
+	Tue, 21 Jul 2026 15:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648969; cv=none; b=UOZamX5MaKP2mNxx5h9m6DSWdN/Wu9oHzVC/AdqzsuqdYKGvvsoJ3lJ9u1TWLeDqQiMhzqPakO/6eAA+v1rJ6nA39wx6Y2RIze02h/0fDaZ+QuNah0FE11yLEgRACrDBb/nG0cFoDNM0Rq9Fl2RdPobgvjcF8zfns5BT9GMJMCk=
+	t=1784648971; cv=none; b=EsiK6GePyOjt4oVftN/63v8AqOU7ySnOzil2ewwo9EKO1U/8wLM7fesSA46NoIssb22c+Wu1ya64sJxRn2poVhjbLbgxN8NvAuAdU6J0omfDoSGIdP1HEN96OSUFlECAYc2hBY1KGBh6ytBvUO/ze+spw5iciJYg24/9g4ohh3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648969; c=relaxed/simple;
-	bh=lT+uNbTJoImPtc8X3GVzAsSR7KU7/zX/df9DpJ5po8w=;
+	s=arc-20240116; t=1784648971; c=relaxed/simple;
+	bh=rNF+Kb2GuSjWqNn81gKy9qcNg9iTyStFlM4wzN0OnuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aVRaMqjBtU9fi3FzllPkVQF290wk6B98oX4SxCzePKwNDppNneK0OzqdETUfsenFYju3g4mVT3BOP0RV52F7o6+6XF1qBNTmDaxEgrHpehVpgpR1AUr3HtKxl3UpqdPOfkFtMr54Yzx3DCQeCBRnFUvLQSrFZAGpvH5XbJB2kgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvgti+UF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ko/tbRAzmL6G+tMcC8Bsv/c01/Wvdj6VvsXVbVSJSB6+RbfGxRtiSPgxysl6JEE6uhsxuq0I0gw/fjBhwTgy1wh7zU5umx+1W+CC+WVPR2daDxPxAIb6YLeNvJYi0+43WqStNEJVbeLFAveM3Fg6LMcX+h3CBFmllP6V5t/Lt64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZxMkv9i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvgti+UF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB381F00A3A;
-	Tue, 21 Jul 2026 15:49:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZxMkv9i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8811F000E9;
+	Tue, 21 Jul 2026 15:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648967;
-	bh=rnjxH6Ua6al5AyKRlphK79xShg4Ofm23gIYcsRek1qE=;
+	s=korg; t=1784648970;
+	bh=lfojVb+A4xkGSANkQXs2Ss4RRl/O0RhOou5Enh14XO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fvgti+UFm5FoDwGofI/9Z1EJKv383nZlIkajPKUWolr4hZr50WERgxckRU1Bevujf
-	 se0JMD8Pg26DfDmMMIQacgmgV08bAPQ6v/kqZQeyBZLm5FLzxIT8a+Hq1gb1kFkddF
-	 WzPTqLxiYISy3Tpn5U6FSiIWA03B8i3+z+0IDRsE=
+	b=fZxMkv9iIL/TLYcbi829uPccvsVOYcwYWgWp5HYirHerovs8tj4hNnawl9krnD+lw
+	 B4k70hoHBQK52wM6t1NdJN2RodrDeIyfrxFtrxphCTqM4HwyUxvSoJ46SMYH88z8CS
+	 Md/6Z39TyN1Ua84QBF+gvQND0BCOpDqTIvfXW8to=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
-	Xiao Ni <xiao@kernel.org>,
 	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0399/2077] md/raid1,raid10: fix bio accounting for split md cloned bios
-Date: Tue, 21 Jul 2026 17:01:12 +0200
-Message-ID: <20260721152602.128276399@linuxfoundation.org>
+Subject: [PATCH 7.1 0400/2077] raid1: fix nr_pending leak in REQ_ATOMIC bad-block error path
+Date: Tue, 21 Jul 2026 17:01:13 +0200
+Message-ID: <20260721152602.152471891@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,85 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 
-[ Upstream commit ba976e3501111d11c550848b3b7341a73035f582 ]
+[ Upstream commit 909d9dc3b5730c8ed7b764c68bc788342df2a07b ]
 
-Use md_cloned_bio() to control bio accounting instead of relying
-on r1bio_existed in raid1 or the io_accounting flag in raid10.
+In raid1_write_request(), each per-mirror loop iteration begins by
+incrementing rdev->nr_pending. If a REQ_ATOMIC write encounters a
+badblock within the requested range, the code jumps to err_handle
+without dropping the reference taken for the current mirror.
 
-The previous logic does not reliably reflect whether a bio is an
-md cloned bio. When a failed bio is split and resubmitted via
-bio_submit_split_bioset() on the error path, this can lead to either
-double accounting for md cloned bios, or missing accounting for bios
-returned from bio_submit_split_bioset()
+err_handle's cleanup loop will only decrements for k < i and
+r1_bio->bios[k] is non-NULL. The current slot is therefore skipped,
+leaving its nr_pending reference leaked permanently. The reference
+prevents the rdev from ever being removed, since raid1_remove_conf()
+refuses to remove an rdev with nr_pending > 0.
 
-Fix this by using md_cloned_bio() to detect md cloned bios and
-skip accounting accordingly.
+Fix this by calling rdev_dec_pending() before jumping to err_handle.
 
-Fixes: bb2a9acefaf9 ("md/raid1: switch to use md_account_bio() for io accounting")
-Fixes: 820455238366 ("md/raid10: switch to use md_account_bio() for io accounting")
+Fixes: f2a38abf5f1c ("md/raid1: Atomic write support")
 Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-Reviewed-by: Xiao Ni <xiao@kernel.org>
-Link: https://patch.msgid.link/20260501114652.590037-4-abd.masalkhi@gmail.com
+Link: https://patch.msgid.link/20260530151411.4119-1-abd.masalkhi@gmail.com
 Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c  | 2 +-
- drivers/md/raid10.c | 8 ++++----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/md/raid1.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 22458df5069e9d..603aa09088f05a 100644
+index 603aa09088f05a..1f22250334bca4 100644
 --- a/drivers/md/raid1.c
 +++ b/drivers/md/raid1.c
-@@ -1418,7 +1418,7 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
- 	}
+@@ -1603,8 +1603,10 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
+ 				 * complexity of supporting that is not worth
+ 				 * the benefit.
+ 				 */
+-				if (bio->bi_opf & REQ_ATOMIC)
++				if (bio->bi_opf & REQ_ATOMIC) {
++					rdev_dec_pending(rdev, mddev);
+ 					goto err_handle;
++				}
  
- 	r1_bio->read_disk = rdisk;
--	if (!r1bio_existed) {
-+	if (likely(!md_cloned_bio(mddev, bio))) {
- 		md_account_bio(mddev, &bio);
- 		r1_bio->master_bio = bio;
- 	}
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index b38a0ccd4661a3..5bd7698e0a1b54 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1146,7 +1146,7 @@ static bool regular_request_wait(struct mddev *mddev, struct r10conf *conf,
- }
- 
- static void raid10_read_request(struct mddev *mddev, struct bio *bio,
--				struct r10bio *r10_bio, bool io_accounting)
-+				struct r10bio *r10_bio)
- {
- 	struct r10conf *conf = mddev->private;
- 	struct bio *read_bio;
-@@ -1226,7 +1226,7 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
- 	}
- 	slot = r10_bio->read_slot;
- 
--	if (io_accounting) {
-+	if (likely(!md_cloned_bio(mddev, bio))) {
- 		md_account_bio(mddev, &bio);
- 		r10_bio->master_bio = bio;
- 	}
-@@ -1552,7 +1552,7 @@ static void __make_request(struct mddev *mddev, struct bio *bio, int sectors)
- 			conf->geo.raid_disks);
- 
- 	if (bio_data_dir(bio) == READ)
--		raid10_read_request(mddev, bio, r10_bio, true);
-+		raid10_read_request(mddev, bio, r10_bio);
- 	else
- 		raid10_write_request(mddev, bio, r10_bio);
- }
-@@ -2867,7 +2867,7 @@ static void handle_read_error(struct mddev *mddev, struct r10bio *r10_bio)
- 
- 	rdev_dec_pending(rdev, mddev);
- 	r10_bio->state = 0;
--	raid10_read_request(mddev, r10_bio->master_bio, r10_bio, false);
-+	raid10_read_request(mddev, r10_bio->master_bio, r10_bio);
- 	/*
- 	 * allow_barrier after re-submit to ensure no sync io
- 	 * can be issued while regular io pending.
+ 				good_sectors = first_bad - r1_bio->sector;
+ 				if (good_sectors < max_sectors)
 -- 
 2.53.0
 
