@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A582846D0A1;
-	Tue, 21 Jul 2026 17:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427D346D0AC;
+	Tue, 21 Jul 2026 17:35:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655299; cv=none; b=LU4GYB5zOwASiCFhISpxqkHuH4n56hrobjMCNwNday1m4MYAdp+R8vaujWx7ThFOINa4pOcFiZRZemrcmZU9Ih6djIFbW8d8+uHVLFQYJ28Haycv6Myz26HTcdeqb9C3bJKjV0plNiNvM7GKlzXw6TwoB88qCPGWrtYHjV3iYZQ=
+	t=1784655302; cv=none; b=clt0rTwGW6+97xkOjDe8h2PnSt4gsyUbp4oKXz41hlV+ahBWr3Er7Rg9v3XfVOix1NCsmhEqzQ+DnXXh3KYzQQVYlk3WOXhLgdMeVj35cetZ7DZPfdWB2g0DNPNqr8wDSf9DpN8MU62YzbIZ0QO+3iWOz3V2f7qOGXCB0uJQ7UE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655299; c=relaxed/simple;
-	bh=yI7kYsCeraIgQPDfO7ys0JlJ+ROklhQThc2k5PW+u5Q=;
+	s=arc-20240116; t=1784655302; c=relaxed/simple;
+	bh=aN2VIH719ISsP7C6B+yWWZn4IMR1ILQwys8d4eE0JjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H028xDHqowMFZzcweWd2FIhLW++fQFrXMwvJSdSOeQxkXmw/Xna9JHZrhNhts4xwmxOFNdOo0IzRvpUc7MVIQIeBd5DKf/MaMHvBVDwNzBYYN22e1nXkLYm7eLvHf13yvKYfibPjErwywem48I6WSgxtgXWmBhA1gp4BAIUSwoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpnVBAqJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iGShi6bhwrOlNdJfBg57c8mLpCXsGl8p1R24x770aUlqx7H10b9Pyi4lJQnvjzmxbQjrb+PV707JoD9kSTTP19kNBc097Ylf3Y/Thi74SJydNAvSueQaMLYNmN0vL4jih3qH0n980dPlyoLr0ivwxu2kSH+SA82KxDSGaC6Vp4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3LpkCyG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpnVBAqJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1750C1F000E9;
-	Tue, 21 Jul 2026 17:34:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3LpkCyG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C4B1F000E9;
+	Tue, 21 Jul 2026 17:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655298;
-	bh=LUVDyC+ljRBYAGA+fT/xkd7fNd1vBocYdFT4QmFmiXc=;
+	s=korg; t=1784655301;
+	bh=TarGPHJy1qiHSQYYI0WAHfYyn8vgqr6F0HdtESkTQ3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QpnVBAqJCTBT1MLZRUhkkrZqleD7u8+6b3uot0xPJQ/WHa5nL4Ne7vCcs2Tenforj
-	 cbY+Serczjrdipr4YltA2MGjqEntSGKieA7NdqZULay3ItFzDNNNbDJximEDA+TusE
-	 Ih/s676lSlKBgE8Nj+qyQnu8/L7BTW0eO/oWqEPg=
+	b=a3LpkCyGVC4QQyhWTQ/W8yt5o/a5xViAOrRaGpsKJL/5O4TqPLCyruaZG8lORVoBo
+	 eFm64LJC6NUWcAjoYEnZhhiIoby7YODaK4PuzOMCrMXHZ/t/i62ZkUKMCUo8ohQdqs
+	 nxc3Xf7s4MbcuBplTNKmLqLEvwLpaQfKnr6GXSYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Crystal Wood <crwood@redhat.com>
-Subject: [PATCH 7.1 1989/2077] tracing/osnoise: Call synchronize_rcu() when unregistering
-Date: Tue, 21 Jul 2026 17:27:42 +0200
-Message-ID: <20260721152639.625726447@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Mete Durlu <meted@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 7.1 1990/2077] s390/diag: Add missing array_index_nospec() call to memtop_get_page_count()
+Date: Tue, 21 Jul 2026 17:27:43 +0200
+Message-ID: <20260721152639.648405765@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,37 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Crystal Wood <crwood@redhat.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit fe58f457ad8d0a2bef4e053cfecca4b5cd266b1a upstream.
+commit b7577fe4c47a31ca7c99714c53244a44af03cdfe upstream.
 
-This ensures that any RCU readers traversing the instance list
-have finished, before releasing the reference on the tracer that
-the instance points to.
+'level' is user space controlled and used to read from an array. Add the
+missing array_index_nospec() call to prevent speculative execution.
 
 Cc: stable@vger.kernel.org
-Fixes: a6ed2aee54644 ("tracing: Switch to kvfree_rcu() API")
-Link: https://patch.msgid.link/20260609045430.1589786-1-crwood@redhat.com
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Crystal Wood <crwood@redhat.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 0d30871739ab ("s390/diag: Add memory topology information via diag310")
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Reviewed-by: Mete Durlu <meted@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_osnoise.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/s390/kernel/diag/diag310.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/kernel/trace/trace_osnoise.c
-+++ b/kernel/trace/trace_osnoise.c
-@@ -162,7 +162,9 @@ static void osnoise_unregister_instance(
- 	if (!found)
- 		return;
+--- a/arch/s390/kernel/diag/diag310.c
++++ b/arch/s390/kernel/diag/diag310.c
+@@ -190,17 +190,18 @@ static int memtop_get_stride_len(unsigne
+ static int memtop_get_page_count(unsigned long *res, unsigned long level)
+ {
+ 	static unsigned long memtop_pages[DIAG310_LEVELMAX];
+-	unsigned long pages;
++	unsigned long pages, idx;
+ 	int rc;
  
--	kvfree_rcu_mightsleep(inst);
-+	/* Do a full sync to ensure that tr remains valid, not just inst */
-+	synchronize_rcu();
-+	kvfree(inst);
- }
- 
- /*
+ 	if (level > DIAG310_LEVELMAX || level < DIAG310_LEVELMIN)
+ 		return -EINVAL;
+-	pages = READ_ONCE(memtop_pages[level - 1]);
++	idx = array_index_nospec(level - 1, ARRAY_SIZE(memtop_pages));
++	pages = READ_ONCE(memtop_pages[idx]);
+ 	if (!pages) {
+ 		rc = diag310_get_memtop_size(&pages, level);
+ 		if (rc)
+ 			return rc;
+-		WRITE_ONCE(memtop_pages[level - 1], pages);
++		WRITE_ONCE(memtop_pages[idx], pages);
+ 	}
+ 	*res = pages;
+ 	return 0;
 
 
