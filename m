@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0440146D55F;
-	Tue, 21 Jul 2026 15:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B900A1A239A;
+	Tue, 21 Jul 2026 15:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648803; cv=none; b=MRZEP1ERn9uSg/oEHdJ6iXZtzPh8TRp3ubRXLaa6teAFXGY3FZj0eh/hQsja0Sy1TaJD2TpV2uEu/KHKH417+ieXLtBZFRuN0+ey39xNDaPi7oCJ2/aj1lSriByU3lq3LjD4CgXXRZSvAV0O0lwgVc3EbyvKqrci5kXlyjbfi2k=
+	t=1784648805; cv=none; b=YE43CsQhXbqQaxYEeyv0qzetkhyzESxXWylGd6MMYmvyAWiZ94IiWUyklUgZFbI3muunvbtkOXAbM6xGP2WJ3RBW3UnUpLtznrSPxaBzp3pXCtWM50zPJOSGS0fA/ixHa+H+DcF/zzKVdd7YojXoDRdAxEWPA4cc6aMJ7jULAFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648803; c=relaxed/simple;
-	bh=J0a75rGPt3DHTTjIxbhu7PxqCiQ07snBx3JFMFXVa+0=;
+	s=arc-20240116; t=1784648805; c=relaxed/simple;
+	bh=8VnSOIp5yw58B1LxQ4Z36iS1qhsRATEgJ2Iv/JNKaRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oy0nwikYxGdZ2J22b/bKCXm4h/zcUSPJjGgUf7Y/qwjtHLfMbXsjSOrIzMSuTBl73vb1hdEism0Xra9avNc5U960eqb/ZVb5pX7JH0uI9TW2ifz0XPdlXEraG5sGuC901e/77EHQMhcLfxk7XGyZPnzK7sGzgDGOwg2rG2EteKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zcRxHPuf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VWW3/+/4NyW+fTcJZt/XhY0GKJGEucot1DHSEPj/+kk4Wq8hiVGCETo1WKpCGxsmnGKeEBUWPbJH+uX0R/Krb2odAfMhnPZ1BW8TKDIBjF1+1RbdosVfi2SYSBCAcZg1NGFUHeC5mMayCHLy6vjCfjcE5gADihi5OBeYRYexGPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PP+JhcpQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zcRxHPuf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680E01F00A3A;
-	Tue, 21 Jul 2026 15:46:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PP+JhcpQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F041F00A3A;
+	Tue, 21 Jul 2026 15:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648801;
-	bh=aCS3+tn7lqjmodxQkVAZux9Ja0BI/+BnFeNiJsiVGjw=;
+	s=korg; t=1784648804;
+	bh=QRHK9oD4MiCcfKJvzDsvpq6jHaulATpsop14lr7/laU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zcRxHPuf/SavpNopXYBcRfNaROyPbaEuOhif1LCCVbZs3azJJ0jNKzt9r5uNgpSAT
-	 h1oHf+q5FPOLiKwk+YHHOcMj/gwoLXkzgrfYY4wOFZ/IpD5cL0HeD00X0UVmu7/6rU
-	 t5493e1PJy/uhhsXeeADIRFMvX8ssRFNLYthy2E8=
+	b=PP+JhcpQ7PDI3EY0V0hr3N9C18cSJY6tntdCNNLcS/Tdpt5GrK5pogAHe+oc4I86r
+	 SGpK6/QNGFqDa96KjWCGFyCbwwpDkACpVzvnCJpXSvQEq5r3cj26tFpSglPIqMc1/+
+	 nIQW10M7FxnTbKaLBmdQs6sYL0C+0XfPE1gPxAJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Sudheer Dantuluri <dantuluris@google.com>,
+	Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0337/2077] net/sched: cls_bpf: prevent unbounded recursion in offload rollback
-Date: Tue, 21 Jul 2026 17:00:10 +0200
-Message-ID: <20260721152600.632052952@linuxfoundation.org>
+Subject: [PATCH 7.1 0338/2077] iommu/amd: Fix premature break in init_iommu_one()
+Date: Tue, 21 Jul 2026 17:00:11 +0200
+Message-ID: <20260721152600.656298830@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,90 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-[ Upstream commit 27db54b90bcc7c37867fe664107fa25ea6a116e4 ]
+[ Upstream commit 283d245468a2b61c41aa8b582f25ed5615d1c304 ]
 
-Quan Sun reported [1] a stack overflow in cls_bpf_offload_cmd().
+In init_iommu_one(), when processing IOMMU EFR attributes, the code checks
+whether GASUP is enabled. If GASUP is not enabled, the code falls back to
+legacy guest IR mode and then breaks out of the switch statement.
 
-Reproducer on netdevsim: add a skip_sw cls_bpf filter, set the
-bpf_tc_accept debugfs knob to 0, then `tc filter replace`. The replace
-calls tc_setup_cb_replace() which fails. cls_bpf_offload_cmd() then
-swaps prog/oldprog and recursively calls itself to roll back. But
-bpf_tc_accept=0 makes the rollback fail too, which triggers yet another
-rollback frame with the same arguments, and so on until the stack is
-exhausted.
+This break incorrectly skips the subsequent initialization steps that
+follow the GASUP check. These initializations are independent of GASUP
+support and must always be performed.
 
-bpf_tc_accept is just a convenient knob for the reproducer. Any driver
-whose tc_setup_cb_replace() fails twice in a row can hit the same loop,
-so this is not a netdevsim-only issue.
+Fix this by replacing the early break with a conditional else block,
+ensuring that the XTSUP check is only skipped when GASUP is not available.
 
-Two ways to fix it:
-
-  1) Have the rollback call tc_setup_cb_add() on oldprog instead of
-     re-entering cls_bpf_offload_cmd().
-  2) Mark the rollback frame with a flag and skip a second-level
-     rollback from inside it.
-
-Go with (2). It is the smaller change and keeps the original behaviour:
-the rollback still goes through tc_setup_cb_replace(), so the driver
-gets one real chance to restore its state. If that attempt also fails,
-we just return the original error instead of recursing.
-
-[1]: https://lore.kernel.org/bpf/ce5a6005-3c5e-4696-9e05-eba9461dc860@std.uestc.edu.cn/T/#u
-
-Fixes: 102740bd9436 ("cls_bpf: fix offload assumptions after callback conversion")
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260526025529.24382-1-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a44092e326d4 ("iommu/amd: Use IVHD EFR for early initialization of IOMMU features")
+Reported-by: Sudheer Dantuluri <dantuluris@google.com>
+Tested-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_bpf.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/iommu/amd/init.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/cls_bpf.c b/net/sched/cls_bpf.c
-index 9a346b6221b359..001d8c4ebfedc1 100644
---- a/net/sched/cls_bpf.c
-+++ b/net/sched/cls_bpf.c
-@@ -142,7 +142,8 @@ static bool cls_bpf_is_ebpf(const struct cls_bpf_prog *prog)
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 3bdb380d23e9a9..9a846dcd030638 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -1939,12 +1939,11 @@ static int __init init_iommu_one(struct amd_iommu *iommu, struct ivhd_header *h,
+ 		/* XT and GAM require GA mode. */
+ 		if ((h->efr_reg & (0x1 << IOMMU_EFR_GASUP_SHIFT)) == 0) {
+ 			amd_iommu_guest_ir = AMD_IOMMU_GUEST_IR_LEGACY;
+-			break;
++		} else {
++			if (h->efr_reg & BIT(IOMMU_EFR_XTSUP_SHIFT))
++				amd_iommu_xt_mode = IRQ_REMAP_X2APIC_MODE;
+ 		}
  
- static int cls_bpf_offload_cmd(struct tcf_proto *tp, struct cls_bpf_prog *prog,
- 			       struct cls_bpf_prog *oldprog,
--			       struct netlink_ext_ack *extack)
-+			       struct netlink_ext_ack *extack,
-+			       bool is_rollback)
- {
- 	struct tcf_block *block = tp->chain->block;
- 	struct tc_cls_bpf_offload cls_bpf = {};
-@@ -177,7 +178,8 @@ static int cls_bpf_offload_cmd(struct tcf_proto *tp, struct cls_bpf_prog *prog,
- 					  &oldprog->in_hw_count, true);
- 
- 	if (prog && err) {
--		cls_bpf_offload_cmd(tp, oldprog, prog, extack);
-+		if (!is_rollback)
-+			cls_bpf_offload_cmd(tp, oldprog, prog, extack, true);
- 		return err;
- 	}
- 
-@@ -208,7 +210,7 @@ static int cls_bpf_offload(struct tcf_proto *tp, struct cls_bpf_prog *prog,
- 	if (!prog && !oldprog)
- 		return 0;
- 
--	return cls_bpf_offload_cmd(tp, prog, oldprog, extack);
-+	return cls_bpf_offload_cmd(tp, prog, oldprog, extack, false);
- }
- 
- static void cls_bpf_stop_offload(struct tcf_proto *tp,
-@@ -217,7 +219,7 @@ static void cls_bpf_stop_offload(struct tcf_proto *tp,
- {
- 	int err;
- 
--	err = cls_bpf_offload_cmd(tp, NULL, prog, extack);
-+	err = cls_bpf_offload_cmd(tp, NULL, prog, extack, false);
- 	if (err)
- 		pr_err("Stopping hardware offload failed: %d\n", err);
- }
+-		if (h->efr_reg & BIT(IOMMU_EFR_XTSUP_SHIFT))
+-			amd_iommu_xt_mode = IRQ_REMAP_X2APIC_MODE;
+-
+ 		if (h->efr_attr & BIT(IOMMU_IVHD_ATTR_HATDIS_SHIFT)) {
+ 			pr_warn_once("Host Address Translation is not supported.\n");
+ 			amd_iommu_hatdis = true;
 -- 
 2.53.0
 
