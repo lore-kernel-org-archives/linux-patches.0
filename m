@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5365C44AB62;
-	Tue, 21 Jul 2026 21:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBAEC44AB6E;
+	Tue, 21 Jul 2026 21:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670787; cv=none; b=r+Ri5Gi8PIpMcN3AVA/AjTpoS2Kk5C9YJomNRaNooxRu+fJcN0V0kZAwY4LyLaxArFEBjalMUSQ15EUBQjB7i0Xd1f8DNCobn3onnWmzE7JCyNy89AchhSj7bYQ79gb4VRhvqIpFuQaGhqoEg9B0NwDEOcJjkEzMTH5DT8ofgoU=
+	t=1784670790; cv=none; b=YpDNBU87yAyp5Vz8DtEDBUcDFejhANmv/VwXSYt0Elmn03+bYGgA4yERzxMsKJEzGazwdFNq88yqBKtdj0dYrqo01T+VMBVDdas3WIrMKFp3UAHej7TlQLZBv4x/snM4TO84mF0nDhI0SpJF0YRM5km94cXbdaIHwGb5zS37iWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670787; c=relaxed/simple;
-	bh=arIWglZ3JjsPbBHog6mKUUYwebxnB2Wnk7V/omB4lNU=;
+	s=arc-20240116; t=1784670790; c=relaxed/simple;
+	bh=/6YXqW6z8zeg5SURhMxWMEsDsnCaTz+x2DFxwdSe+LE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QqAS5O6BZDdn/QNXyp6tR/wx2cxWUmfXnU999GKBLq1ykRSHIHzoQ31/z3BTVyVAyB9b2HBd7niqzNqcuYalFG0IquZnffj6U51uqosdOKWXq/TErqYtDVS4d++d5/DoEllDtscYKlgn5Kaq/uA9nVVofWLZj0aG2FOzg6BA230=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idUo771r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lje06UatIWrKKkRpCKeozFZ4X2qQ2Vyy2nOCvIrYRy+OjopgOyH53jFbCYSo71zaGGxvDGiunbXZ8qUp+0+sI2SRHwJsSHLjNNkMmK90njhlSl03t2un8Ak4RTYnshaOuqSQMXmd98eOUZx+bqj1wwwqUamC6jA0a2v8//7U9sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+vshCxJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idUo771r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31851F000E9;
-	Tue, 21 Jul 2026 21:53:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+vshCxJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C6271F000E9;
+	Tue, 21 Jul 2026 21:53:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670786;
-	bh=7rzTed3h02+XxQEWQ6+NpJrRW8pbsnX7+SSSEiCdUNQ=;
+	s=korg; t=1784670788;
+	bh=CeXVIsFrTBDqJQrtefZxwCrz4hicYmPBiJ/v67XtvWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=idUo771rJYAzUZque8j35om0C8R4kcZwQorfqyIzB9u8E+0CQBQ1HLusP+JTVUcQJ
-	 NLv2smgXKDTpNu2xAsLU8wJ0z5PCRKhYWz2eDm2kcwguIyEyi/p8+uVitgsxeYJRaS
-	 sztNTt9ChnND+b90qM9hsyTEaz+7lNdD/ChycAjY=
+	b=N+vshCxJgIXTMkIc4a01rXExojGk1EOkjYnQ739bRkDSmJiYDrqFpw5yrRu0E4p9m
+	 Wm0tBca0kBSHUgBAbSlw6Oc+6BxQotD/KuMM2DHCC3TRbw+1PRtUTvDa/vK3D6+cMF
+	 ek+fiW6ACaJpn9tc0ruujIXF3aZyNfpZ5vMxrRxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	syzbot+b2545b087a01a7319474@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
+	Pavel Skripkin <paskripkin@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 1062/1067] Bluetooth: Ignore too large handle values in BIG
-Date: Tue, 21 Jul 2026 17:27:43 +0200
-Message-ID: <20260721152448.343210473@linuxfoundation.org>
+Subject: [PATCH 6.1 1063/1067] bluetooth/hci: disallow setting handle bigger than HCI_CONN_HANDLE_MAX
+Date: Tue, 21 Jul 2026 17:27:44 +0200
+Message-ID: <20260721152448.364712505@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,36 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Pavel Skripkin <paskripkin@gmail.com>
 
-commit 015d79c96d62cd8a4a359fcf5be40d58088c936b upstream.
+commit 1cc18c2ab2e8c54c355ea7c0423a636e415a0c23 upstream.
 
-hci_le_big_sync_established_evt is necessary to filter out cases where the
-handle value is belonging to ida id range, otherwise ida will be erroneously
-released in hci_conn_cleanup.
+Syzbot hit warning in hci_conn_del() caused by freeing handle that was
+not allocated using ida allocator.
 
-Fixes: 181a42edddf5 ("Bluetooth: Make handle of hci_conn be unique")
+This is caused by handle bigger than HCI_CONN_HANDLE_MAX passed by
+hci_le_big_sync_established_evt(), which makes code think it's unset
+connection.
+
+Add same check for handle upper bound as in hci_conn_set_handle() to
+prevent warning.
+
+Link: https://syzkaller.appspot.com/bug?extid=b2545b087a01a7319474
 Reported-by: syzbot+b2545b087a01a7319474@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b2545b087a01a7319474
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Fixes: 181a42edddf5 ("Bluetooth: Make handle of hci_conn be unique")
+Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/bluetooth/hci_conn.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -6951,6 +6951,10 @@ static void hci_le_big_sync_established_
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -988,8 +988,8 @@ static int hci_conn_hash_alloc_unset(str
+ 			       U16_MAX, GFP_ATOMIC);
+ }
  
- 		bis = hci_conn_hash_lookup_handle(hdev, handle);
- 		if (!bis) {
-+			if (handle > HCI_CONN_HANDLE_MAX) {
-+				bt_dev_dbg(hdev, "ignore too large handle %u", handle);
-+				continue;
-+			}
- 			bis = hci_conn_add(hdev, ISO_LINK, BDADDR_ANY,
- 					   HCI_ROLE_SLAVE, handle);
- 			if (!bis)
+-struct hci_conn *hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t *dst,
+-			      u8 role, u16 handle)
++static struct hci_conn *__hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t *dst,
++				       u8 role, u16 handle)
+ {
+ 	struct hci_conn *conn;
+ 
+@@ -1096,7 +1096,16 @@ struct hci_conn *hci_conn_add_unset(stru
+ 	if (unlikely(handle < 0))
+ 		return NULL;
+ 
+-	return hci_conn_add(hdev, type, dst, role, handle);
++	return __hci_conn_add(hdev, type, dst, role, handle);
++}
++
++struct hci_conn *hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t *dst,
++			      u8 role, u16 handle)
++{
++	if (handle > HCI_CONN_HANDLE_MAX)
++		return ERR_PTR(-EINVAL);
++
++	return __hci_conn_add(hdev, type, dst, role, handle);
+ }
+ 
+ static bool hci_conn_unlink(struct hci_conn *conn)
 
 
