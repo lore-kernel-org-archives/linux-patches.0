@@ -1,36 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A2733AD8A;
-	Tue, 21 Jul 2026 18:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99992135AD;
+	Tue, 21 Jul 2026 18:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658756; cv=none; b=n5h6UZHP4mKs+w0RE+wM6kAdo0qe/zgDTwJcbRxJi3A2f1sdgOpQLIIsPS5nty4L3OgV0TZVTNyTrJ0oxq9JQfLhiikGBNncgKzw/gfy/QYQPa+HZdeiZ+W4JEPFEwFHCKjABzx9J2NZB4dx/TSUNkXOEPseKFfCSZ9h9vREr38=
+	t=1784658759; cv=none; b=Glq7vv/86mwU/vBbW3tQnBh722lD32tI4Vzd/lgBStfLTEWVPcHXALYC13Mn2QQA1EjhqhM2l33/EIa+w5HySmobF5VKhnJvF8li1KzhVdrys0Wu2UTDjZfBKqrUrATDF/ghu6mJB44whmZ8fxjME3/+Xy1FirGh9R9fCAgjvrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658756; c=relaxed/simple;
-	bh=Z7/DaLeDBKEeQAE6+Fp3RV/Aahp2V3O4dvNHedrDzSw=;
+	s=arc-20240116; t=1784658759; c=relaxed/simple;
+	bh=xtMrIJJQMxXQeep83lRCf0mKDQ+JA+9IBZO0XpskFsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DXRiIm+XNqbX4EQCR2anRWcRLx74t5XmgkZkKKXNzS2KAqZk2NqFcuGORv6+TctE8vH6MHibTaq9zoGaqacpWnmEWtUDHT2OJvYbs+RLt1viYE+9xhvJKyvKVavzk51EqWGqBxj1HqWAVkvvErsbNlsR8/KicETxkOH4Mpkzr3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ZFg9LTN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H0dezFhNnGqdK6yO+G5Zr+WlkWZoGY0l5qcfdnprj7hTIXeu3rgd3xHGQ3MKGx4iZhQJ0xiI4ic+sDt5crOSF/8BejIb2cYvFV2xPUl5PgHqdo2+8JVOLcTuqomruHjT8vaoBzhEIux+6SOFsRfwRbxaH0Ym/PFenBYNeH/+vo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2GM/aWK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ZFg9LTN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2811F000E9;
-	Tue, 21 Jul 2026 18:32:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2GM/aWK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005511F00A3D;
+	Tue, 21 Jul 2026 18:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658755;
-	bh=tvv/5nDP0kEKrgC1tGi0vvUCi9zxcPOGld6hzqcYS5Q=;
+	s=korg; t=1784658757;
+	bh=F+q6RLdSksGfM2RQ57nuxFx5tt27evwLh7WoRCadHl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0ZFg9LTNOti7uBlpKKABsiN8pJmPHq9J2+dPIArPZ3YYiUL5gdOoDovbOaEAP6pGI
-	 6GHd3V8KjfoD2aPQr1eLSqG8FeZD4dRJg9OjO64PZVA6/bfHYXYOf7ldAnGZb/jIAs
-	 5K8UaVjGj31OgJthCgIsI/M3TJJOMWDwknguRpRc=
+	b=y2GM/aWKkxQD45Ig6PBa56hxSQRhSkMWy2qeMsYM1UtdsoLW5SNeuEPegK8SmU7vA
+	 Kbdgp6zCYznrLOz8IhIWbD8Cr4WTH2tBXxGgrMfrqjdOPLFo+ZFWPNtzQlUNpYtktQ
+	 f7jPtmoLw//jj23OQbWcnc4cWEmf4se2ITwRouuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stafford Horne <shorne@gmail.com>
-Subject: [PATCH 6.18 1264/1611] openrisc: Add full instruction cache invalidate functions
-Date: Tue, 21 Jul 2026 17:23:00 +0200
-Message-ID: <20260721152543.880271196@linuxfoundation.org>
+	syzbot+7ea0b96c4ddb49fd1a70@syzkaller.appspotmail.com,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 1265/1611] ocfs2: use kzalloc for quota recovery bitmap allocation
+Date: Tue, 21 Jul 2026 17:23:01 +0200
+Message-ID: <20260721152543.903452828@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -49,105 +58,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stafford Horne <shorne@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit 1be031de802ba486a7605b52eda825f128b026e2 upstream.
+commit 93c8c6ea90be9e9df8fe14048ad4e3caad0770a6 upstream.
 
-Add functions to invalidate all cache lines which we will use for
-static_key patching.
+ocfs2 quota recovery allocates a bitmap buffer with kmalloc and does not
+fully initialize it.  This can lead to use of uninitialized bits during
+quota recovery from a corrupted filesystem image.
 
-On OpenRISC there is no instruction to invalidate an entire cache so we
-loop and invalidate cache lines one by one.  This is not extremely
-expensive on OpenRISC as we usually have only a few hundred cache lines.
+Use kzalloc instead to ensure the bitmap is zero-initialized.
 
-I considered using the invalidate cache page or range functions.
-However, tracking which ranges need invalidation would have been more
-expensive than flushing all pages.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Stafford Horne <shorne@gmail.com>
+Link: https://lore.kernel.org/20260418131048.1052507-1-tristmd@gmail.com
+Reported-by: syzbot+7ea0b96c4ddb49fd1a70@syzkaller.appspotmail.com
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/openrisc/include/asm/cacheflush.h |    4 ++++
- arch/openrisc/kernel/smp.c             |   21 +++++++++++++++++++++
- arch/openrisc/mm/cache.c               |   16 ++++++++++++++++
- 3 files changed, 41 insertions(+)
+ fs/ocfs2/quota_local.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/openrisc/include/asm/cacheflush.h
-+++ b/arch/openrisc/include/asm/cacheflush.h
-@@ -26,6 +26,7 @@ extern void local_icache_page_inv(struct
- extern void local_dcache_range_flush(unsigned long start, unsigned long end);
- extern void local_dcache_range_inv(unsigned long start, unsigned long end);
- extern void local_icache_range_inv(unsigned long start, unsigned long end);
-+extern void local_icache_all_inv(void);
- 
- /*
-  * Data cache flushing always happen on the local cpu. Instruction cache
-@@ -35,10 +36,13 @@ extern void local_icache_range_inv(unsig
- #ifndef CONFIG_SMP
- #define dcache_page_flush(page)      local_dcache_page_flush(page)
- #define icache_page_inv(page)        local_icache_page_inv(page)
-+#define icache_all_inv()             local_icache_all_inv()
- #else  /* CONFIG_SMP */
- #define dcache_page_flush(page)      local_dcache_page_flush(page)
- #define icache_page_inv(page)        smp_icache_page_inv(page)
-+#define icache_all_inv()             smp_icache_all_inv()
- extern void smp_icache_page_inv(struct page *page);
-+extern void smp_icache_all_inv(void);
- #endif /* CONFIG_SMP */
- 
- /*
---- a/arch/openrisc/kernel/smp.c
-+++ b/arch/openrisc/kernel/smp.c
-@@ -326,3 +326,24 @@ void smp_icache_page_inv(struct page *pa
- 	on_each_cpu(ipi_icache_page_inv, page, 1);
- }
- EXPORT_SYMBOL(smp_icache_page_inv);
-+
-+static void ipi_icache_all_inv(void *arg)
-+{
-+	local_icache_all_inv();
-+}
-+
-+void smp_icache_all_inv(void)
-+{
-+	if (num_online_cpus() < 2) {
-+		local_icache_all_inv();
-+		return;
-+	}
-+
-+	/*
-+	 * Ensure stores complete before we request remote icaches
-+	 * to invalidate.
-+	 */
-+	mb();
-+
-+	on_each_cpu(ipi_icache_all_inv, NULL, 1);
-+}
---- a/arch/openrisc/mm/cache.c
-+++ b/arch/openrisc/mm/cache.c
-@@ -63,6 +63,22 @@ void local_icache_page_inv(struct page *
- }
- EXPORT_SYMBOL(local_icache_page_inv);
- 
-+void local_icache_all_inv(void)
-+{
-+	if (cpu_cache_is_present(SPR_UPR_ICP)) {
-+		unsigned long iccfgr = mfspr(SPR_ICCFGR);
-+		unsigned long sets = 1 << ((iccfgr & SPR_ICCFGR_NCS) >> 3);
-+		unsigned long block_size = 16 << ((iccfgr & SPR_ICCFGR_CBS) >> 7);
-+		unsigned long paddr = 0;
-+		unsigned long end = sets * block_size;
-+
-+		while (paddr < end) {
-+			mtspr(SPR_ICBIR, paddr);
-+			paddr += block_size;
-+		}
-+	}
-+}
-+
- void local_dcache_range_flush(unsigned long start, unsigned long end)
- {
- 	cache_loop(start, end, SPR_DCBFR, SPR_UPR_DCP);
+--- a/fs/ocfs2/quota_local.c
++++ b/fs/ocfs2/quota_local.c
+@@ -302,7 +302,7 @@ static int ocfs2_add_recovery_chunk(stru
+ 	if (!rc)
+ 		return -ENOMEM;
+ 	rc->rc_chunk = chunk;
+-	rc->rc_bitmap = kmalloc(sb->s_blocksize, GFP_NOFS);
++	rc->rc_bitmap = kzalloc(sb->s_blocksize, GFP_NOFS);
+ 	if (!rc->rc_bitmap) {
+ 		kfree(rc);
+ 		return -ENOMEM;
 
 
