@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9608367B92;
-	Tue, 21 Jul 2026 21:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5335C37473A;
+	Tue, 21 Jul 2026 21:55:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670914; cv=none; b=hBOAF8Ko3WyOWAUG9Qj5nRqsdiU9pgerKenA2auBEefLUkIB8+bCrzsWw2W3xi5mEHiZB6ZqHpd7uOsyDeYbhXrpeF/dHwHuv54o1CD674zOb248h/6H3fiirlLyejas/C1/kKWnvW+35UsYsdMYgVIMLbBpwOl4KOj0Wj7XA78=
+	t=1784670917; cv=none; b=FNJDtn+sFMzaFXLLPLBQZ6sTr2Lkpk7OUmPdjpopc/E4adRgVPzsSARcDpj0l3MRHIgcYVsO9j70RwFVdxO9orPWSM8P9k0iFr/uJODKZUEnW7uGijlaSEvwNsUBBY6TnNhZuXnvLZ13fxkI8lJK+BAez1Og4LNfpm1vbjg2U7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670914; c=relaxed/simple;
-	bh=rqyva5UwpToc/+xD8LGPxozWyXoZrQ34a5jYyrQxInI=;
+	s=arc-20240116; t=1784670917; c=relaxed/simple;
+	bh=pR3ULBaqbwzADylkhbACXEYAufb1jhPLym0+UHF+/aM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NwlJ5oSNxRw+R0mF5+s0CyyNULsXvnhW71ZFS+YD83rsR7Lfxb16i0wgAs5RUumI59ZVDzOPYKHOuZZ1qJekxfKc/SpSwEYIw74F64Y3CMkq+RoVGPVPYNhfhOWvgn/d4hq1d2Jz2mEp1xpN3oxWYrK8x3OCWvk4Z/ijKXra5Rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8+sDJrA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qcm4aoLzXCdA1hLTujHpHv8wkid2GkZd2fYCqByq6clqGEFRBKdQeA+GfdIeu/g8XHR0WpWYv9JLeaccIBUwvwYQf9roZWqCaRRQVNE3FxLrEGk7/dWJKDxWZmqJcC4P1zhYktpkC7wehZvg76q/ogRxEiKzpnZfkYbQ5Rpia+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5Oa2Q5V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8+sDJrA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E2D1F000E9;
-	Tue, 21 Jul 2026 21:55:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5Oa2Q5V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03CA1F000E9;
+	Tue, 21 Jul 2026 21:55:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670913;
-	bh=/Uvc/nt344cqyWnmysXixgZYEgi0s/LFkIpMl6C4Dbo=;
+	s=korg; t=1784670916;
+	bh=BTomy2ezSg6NM9JLqqEOHig4U51JME9RFeaZlJ2uHmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N8+sDJrASpuO7moDz55rcTWZkG7wV+we2yHnhTWsnOXPAIenEev5bjBuV4L1XAZSe
-	 o+21mWTx2UHdR9P0u0t7Ir6+BGAjgVOsqZ6ggcuDFG2+unjKLkHYuLVJ2XpLGBMFaq
-	 4aBbyT6Va7ucq71Se87qRX1142anPrhtoB3Dtdpg=
+	b=e5Oa2Q5VTejCjxlCdhEz3NFYQRVjDP6kFXTIYr9A8t07konnkhFs34qYyGbpxm7WI
+	 9sg18pKPWBeQW6My55VliCm10sRmP5RYBfLedkv+1Jf9Lp2F1E0wjzN4UK3G0Q9MqP
+	 EFk0In3qSAn6628Met7LdradkXp+5gnPJPr1VElg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biren Pandya <birenpandya@gmail.com>,
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	Kyungwook Boo <bookyungwook@gmail.com>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Maxwell Doose <m32285159@gmail.com>,
+	Vladimir Zapolskiy <vz@kernel.org>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 5.15 049/843] iio: accel: kxsd9: fix runtime PM imbalance on write_raw() error
-Date: Tue, 21 Jul 2026 17:14:44 +0200
-Message-ID: <20260721152407.086412308@linuxfoundation.org>
+Subject: [PATCH 5.15 050/843] iio: adc: lpc32xx: Initialize completion before requesting IRQ
+Date: Tue, 21 Jul 2026 17:14:45 +0200
+Message-ID: <20260721152407.108532839@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,42 +55,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biren Pandya <birenpandya@gmail.com>
+From: Maxwell Doose <m32285159@gmail.com>
 
-commit 44a5fd874bb6873bdaec59f722c1d57832fbc9df upstream.
+commit e561b35633f450ee607e87a6401d97f156a0cd54 upstream.
 
-kxsd9_write_raw() takes a runtime PM reference with pm_runtime_get_sync()
-but returns -EINVAL directly when a scale with a non-zero integer part is
-requested, skipping the matching pm_runtime_put_autosuspend(). This leaks
-a runtime PM usage-counter reference on every such write, after which the
-device can no longer autosuspend.
+In the report from Jaeyoung Chung:
 
-Set the error code and fall through to the existing put instead of
-returning early.
+"lpc32xx_adc_probe() in drivers/iio/adc/lpc32xx_adc.c registers its
+interrupt handler with devm_request_irq() before it initializes
+st->completion with init_completion(). If an interrupt arrives after
+devm_request_irq() and before init_completion(), the handler calls
+complete() on an uninitialized completion, causing a kernel panic.
 
-Fixes: 9a9a369d6178 ("iio: accel: kxsd9: Deploy system and runtime PM")
-Signed-off-by: Biren Pandya <birenpandya@gmail.com>
-Assisted-by: Claude:claude-opus-4-8 coccinelle
+The probe path, in lpc32xx_adc_probe():
+
+    iodev = devm_iio_device_alloc(&pdev->dev, sizeof(*st)); /* st kzalloc-zeroed */
+    ...
+    retval = devm_request_irq(&pdev->dev, irq, lpc32xx_adc_isr, 0,
+                              LPC32XXAD_NAME, st);           /* register handler */
+    ...
+    init_completion(&st->completion);                       /* initialize completion */
+
+lpc32xx_adc_isr() calls complete():
+
+    complete(&st->completion);
+
+If the device raises an interrupt before init_completion() runs,
+complete() acquires the uninitialized wait.lock and walks the zeroed
+task_list in swake_up_locked(). The zeroed task_list makes list_empty()
+return false, so swake_up_locked() dereferences a NULL list entry,
+triggering a KASAN wild-memory-access."
+
+Fix the chance of a spurious IRQ causing an uninitialized pointer
+dereference by moving init_completion() above devm_request_irq().
+
+Fixes: 7901b2a1453e ("staging:iio:adc:lpc32xx rename local state structure to _state")
+Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Closes: https://lore.kernel.org/linux-iio/20260610115700.774689-1-jjy600901@snu.ac.kr/
+Signed-off-by: Maxwell Doose <m32285159@gmail.com>
+Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/kxsd9.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/iio/adc/lpc32xx_adc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/accel/kxsd9.c
-+++ b/drivers/iio/accel/kxsd9.c
-@@ -146,8 +146,9 @@ static int kxsd9_write_raw(struct iio_de
- 	if (mask == IIO_CHAN_INFO_SCALE) {
- 		/* Check no integer component */
- 		if (val)
--			return -EINVAL;
--		ret = kxsd9_write_scale(indio_dev, val2);
-+			ret = -EINVAL;
-+		else
-+			ret = kxsd9_write_scale(indio_dev, val2);
- 	}
+--- a/drivers/iio/adc/lpc32xx_adc.c
++++ b/drivers/iio/adc/lpc32xx_adc.c
+@@ -176,6 +176,8 @@ static int lpc32xx_adc_probe(struct plat
+ 	if (irq <= 0)
+ 		return -ENXIO;
  
- 	pm_runtime_mark_last_busy(st->dev);
++	init_completion(&st->completion);
++
+ 	retval = devm_request_irq(&pdev->dev, irq, lpc32xx_adc_isr, 0,
+ 				  LPC32XXAD_NAME, st);
+ 	if (retval < 0) {
+@@ -194,8 +196,6 @@ static int lpc32xx_adc_probe(struct plat
+ 
+ 	platform_set_drvdata(pdev, iodev);
+ 
+-	init_completion(&st->completion);
+-
+ 	iodev->name = LPC32XXAD_NAME;
+ 	iodev->info = &lpc32xx_adc_iio_info;
+ 	iodev->modes = INDIO_DIRECT_MODE;
 
 
