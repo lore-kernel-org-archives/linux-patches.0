@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48BF1474CC;
-	Tue, 21 Jul 2026 18:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89351315D53;
+	Tue, 21 Jul 2026 18:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659265; cv=none; b=IXXTuB27f+jpWQNPHDsvqkXDH56i5d2VEwo8Y7xd8qrvbjZBevXw2p+Q9uR0zFByNok1iYQwrvVw1q1T3cooJ1axDGQvbW0RLUa41p7Vz+sW7hmsoGxWAfk0jQA7VRf8ZKROG6uq4RrQQqA1w7me9VzLCNno60lvnkgJ3t+Xz6k=
+	t=1784659267; cv=none; b=YqvBA/C0fgyCCanTGXmUzHQhem/GgKFIpdOkwFTn72Q5VQzBpdTBGSlLmFpfzWf6PHSJXIysQFbjkD6PiDJZibiE97nJSblAxLTNfwQLLQcP1dPZskHoXnmvy1RmRDnm16MMJUEP0hrZq4IcYSigBw6L3VB9bgu65g1cRwIRpPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659265; c=relaxed/simple;
-	bh=op0GJU1xMDdLSZq7ARYHsDndXpJ0A4dECpNEbqyLeNc=;
+	s=arc-20240116; t=1784659267; c=relaxed/simple;
+	bh=HfErrKS6Hhq/qnRau6M6njncFleFSSRhfWDu9s+6cfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZT3TjTP8z/fzn6L9diLRrLg/hxHTy8PQ6ETcQWuiZGzPEc84g/Wix/JAYiLZWO4ukhwkpO4SmYsERbIRXH9JRtHNeJygyQnt5aotCXiVu1fhWvN8gAMzXQD3apMgobmVdVBfEks2vHKgaJSvI5O1XTZxUYfPa1of2HEqVHfKsQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ll01Q9kv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PZ6S6oDy+bbHoMJjtxV13nqrMsxJ8dzs8bu1PRuqWHiXSJ1oLSkHjiBdN4X+Mei687VmUiLc8oYiuZ5urGU7xtbQVLb8NpvbGdxy1Cpqp6BdcClEzxAxdBwUAqnVroxYdIPZmwwpkjZ69aEXyEPBusixFeXvxV7Et9UJNUN5fWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgHp3/Dt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ll01Q9kv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 507ED1F000E9;
-	Tue, 21 Jul 2026 18:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgHp3/Dt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02931F000E9;
+	Tue, 21 Jul 2026 18:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659263;
-	bh=G75TE9JdG9r538jByrWJ4ZibA0//cbsWGqmpFoZpAIQ=;
+	s=korg; t=1784659266;
+	bh=S9sPrh1xh0u+xdmdx9Jn4k8t+1+aWtMMI1O7RkHk/ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ll01Q9kvY/cC7PRnqsOk/QerTu9U1n53XZtU50DeeAneKROIZVZRsf6j0X4cvITQs
-	 2hZrK5GIhgtVlHDSoH7fh7gN4CtdVa5r2Zrx1q14D4rAUtdkkEWGS0Ahv8k8zEXFDM
-	 SwJKRdKq9EP44JJoyxet/3hWuTkNxcDRIGs/lpnQ=
+	b=SgHp3/Dt4veT+QVaV7qiPW6plVuxDfA7qJu+BhEK9eqw5BiQ+Kl22+zCZ9DT26C1q
+	 1hrLsokDLX6mUTDzhF987mn7yaFO9qwfOAvFgLUXYbKFNDccWL2VU0oFci2L6h5oEX
+	 WBckjiwapsq2ffuzkKNSrLfqctVNMYOqoaWe+Md4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 1438/1611] net/sched: sch_taprio: Replace direct dequeue call with peek and qdisc_dequeue_peeked
-Date: Tue, 21 Jul 2026 17:25:54 +0200
-Message-ID: <20260721152547.792272599@linuxfoundation.org>
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.18 1456/1611] ipvs: reset full ip_vs_seq structs in ip_vs_conn_new
+Date: Tue, 21 Jul 2026 17:26:12 +0200
+Message-ID: <20260721152548.196896855@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,45 +55,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-commit e056e1dfcddca877dd46d704e8ec9860cfc9ec44 upstream.
+commit 2975324d164c552b028632f107b567302863b7f6 upstream.
 
-When taprio's software path peeks a non-work-conserving child qdisc, the
-child stashes the peeked skb in its gso_skb; taprio_dequeue_from_txq()
-then takes the packet with a direct child ->dequeue() call, which ignores
-that stash, orphans the peeked skb and desyncs the child's qlen/backlog.
-With a qfq child this re-enters the child on an emptied list and
-dereferences NULL, panicking the kernel from softirq on ordinary egress.
+Commit 9a05475cebdd ("ipvs: avoid kmem_cache_zalloc in
+ip_vs_conn_new") changed ip_vs_conn_new() to allocate an ip_vs_conn
+object with kmem_cache_alloc().  The function then initializes many
+fields explicitly, but only resets in_seq.delta and out_seq.delta in the
+two struct ip_vs_seq members.
 
-Take the packet through qdisc_dequeue_peeked(), as sch_red and sch_sfb
-now do. The helper returns the child's stashed skb first and is a no-op
-when there is none, so a work-conserving child is unaffected and the
-gated path now consumes the skb whose length was charged to the budget.
+That leaves init_seq and previous_delta uninitialized.  This is normally
+harmless while the corresponding IP_VS_CONN_F_IN_SEQ or
+IP_VS_CONN_F_OUT_SEQ flag is clear.  For connections learned from a sync
+message, however, ip_vs_proc_conn() preserves those flags from
+IP_VS_CONN_F_BACKUP_MASK and passes opt=NULL when the message omits
+IPVS_OPT_SEQ_DATA.  In that case the new connection can be hashed with
+SEQ flags set but with the rest of in_seq/out_seq still containing stale
+slab data.
 
-Fixes: 5a781ccbd19e ("tc: Add support for configuring the taprio scheduler")
+When a packet for such a connection is later handled by an IPVS
+application helper, vs_fix_seq() and vs_fix_ack_seq() use
+previous_delta and init_seq to rewrite TCP sequence numbers.  A malformed
+sync message can therefore make forwarded packets carry stale slab bytes
+in their TCP seq/ack numbers, and can also corrupt the forwarded TCP
+flow.
+
+Reset both struct ip_vs_seq members completely before publishing the
+connection.  This matches the existing "reset struct ip_vs_seq" comment
+and keeps the sequence-adjustment gates inactive unless valid sequence
+data is installed later.
+
+Fixes: 9a05475cebdd ("ipvs: avoid kmem_cache_zalloc in ip_vs_conn_new")
 Cc: stable@vger.kernel.org
-Cc: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260625-b4-disp-31bcb279-v1-1-85c40b83c529@proton.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: Claude-Code:GLM-5.2
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_taprio.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/ipvs/ip_vs_conn.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -748,7 +748,7 @@ static struct sk_buff *taprio_dequeue_fr
- 		return NULL;
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -996,8 +996,8 @@ ip_vs_conn_new(const struct ip_vs_conn_p
+ 	cp->app = NULL;
+ 	cp->app_data = NULL;
+ 	/* reset struct ip_vs_seq */
+-	cp->in_seq.delta = 0;
+-	cp->out_seq.delta = 0;
++	memset(&cp->in_seq, 0, sizeof(cp->in_seq));
++	memset(&cp->out_seq, 0, sizeof(cp->out_seq));
  
- skip_peek_checks:
--	skb = child->ops->dequeue(child);
-+	skb = qdisc_dequeue_peeked(child);
- 	if (unlikely(!skb))
- 		return NULL;
- 
+ 	atomic_inc(&ipvs->conn_count);
+ 	if (flags & IP_VS_CONN_F_NO_CPORT)
 
 
