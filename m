@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F19F44607D;
-	Tue, 21 Jul 2026 19:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081CA44607D;
+	Tue, 21 Jul 2026 19:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663301; cv=none; b=LWC3G5fsBVl/ZGAm0PzHpEFZx6DaMNkVk9s5W/Rj/TwpbUW9quZwiciAgVqCFk6tAPgOPGmuiKX9diUTsmfmiCy0QplWxpB7VkkvuQtAfvfjAUXOq4oUf2Mt/y24qnyARaTaZYxb+VSLQvjpCX6nTzn19lMowJR8qJrsyt8lDZA=
+	t=1784663304; cv=none; b=iAzN0S9U6fbfWkThLhYVZGaYKeRVJT48khOiLB/iNnAZ4QFla7JKIE/wlFG6JMhrazVdRhgAbA8SoFtn4s2RXxzQeXzCADjhPsYce/B4xK+HHmsxE1y5l0gP4m5+mJNFITAZtSezn8BbaOesY2xMGdcP8Fd7PP2x0yRj/vEwVuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663301; c=relaxed/simple;
-	bh=gKzO5+7AL6eu+oGhDxadRNBghaRX3wfvxG3nEjL4JYA=;
+	s=arc-20240116; t=1784663304; c=relaxed/simple;
+	bh=FR3RZartXzfo/RzKQfRauUWr+xFJA78HcQcdzeACOw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kISMqVIeQ+AwsRr2Qlv70xXHc2e/D+WacbgSvAa9t1M4ffd5GVRHum5HGthlGjdgf+YS0Ufwe0lNSw2k+0UhGDRRoh54IDwubVy4/G2uPt+vZnlqVPlrp6JhJ1J8qyu/OM8ESQbr4I84nsIa0lsTt4cusTO7uR+UYgwrkVsJUUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2iGF34r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h1FKKxevFNLk8Exrv2kQDwyIdbNcly+6LpDSC/nkkqbBdM7So0kw/jKhXCjQS+MSRjIDhRihEt/SypINUlbjF8cwmM7gOkJjdTmN71jjswqhdPZ4ikWMOLtfvurtVnVtkPqRW4TpuPUOIQUxpdZyRR7R3csZxCOhK0YytOVhA0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oIxRYEu+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2iGF34r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C852F1F000E9;
-	Tue, 21 Jul 2026 19:48:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oIxRYEu+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF221F000E9;
+	Tue, 21 Jul 2026 19:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663300;
-	bh=BPcgZWt0PnGjqb15aafEupwZcpmffQSKwYflj1xB0DM=;
+	s=korg; t=1784663302;
+	bh=YEiPi+i7eyIjhP16QITkFP/bQaux5mA9x5Ql092vStI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t2iGF34rRwsGbj+RLm9MOrVnE1gaFHXYKHv+5GunwJOHltRnV/qMAW0sZLfcuqjHp
-	 AmoMyFeHwQDrUL5Bv+KSeZJ4uEJBx2oPcrNL1EwAkbTD9YcFfQza4PLxPzBWz4/GpI
-	 1MtxKEGmJD1Ivux7xzrToeBAeiwDEzQucPPU1nxU=
+	b=oIxRYEu+jeBmh4PpAoYPmpU2o3pvAHmBCVn9ExYy+EGHEWfZ/13bMIesxmdnchDM/
+	 3A1A44xCu1Y47AdrNuqHmtarQPnBxKd0XTKnYaGeLedYWv4Ou5kS46BpfV0UpoW13r
+	 hx/4AYptj34sN6FelzMW8JQqqqzZ8atJykalTe2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>,
-	Xiang Mei <xmei5@asu.edu>,
+	zdi-disclosures@trendmicro.com,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0770/1276] net: qualcomm: rmnet: validate MAP frame length before ingress parsing
-Date: Tue, 21 Jul 2026 17:20:13 +0200
-Message-ID: <20260721152503.306466565@linuxfoundation.org>
+Subject: [PATCH 6.12 0771/1276] net/sched: act_pedit: fix TOCTOU heap OOB write in tc offload
+Date: Tue, 21 Jul 2026 17:20:14 +0200
+Message-ID: <20260721152503.328844291@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,178 +53,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit f0f1887a9e30712a1df03e152dce6fb91344b1f3 ]
+[ Upstream commit 8b519cbcabe836a441369fbec1a8a6518a709251 ]
 
-When ingress deaggregation is disabled, rmnet_map_ingress_handler() passes
-the skb straight to __rmnet_map_ingress_handler(), skipping the length
-validation that rmnet_map_deaggregate() performs on the aggregated path.
-The parser then dereferences the MAP header and csum header/trailer based on
-the on-wire pkt_len without checking skb->len, so a short frame is read out
-of bounds:
+There is a TOCTOU race condition in flower lockless approach between sizing
+a flow_rule buffer and filling it.
+zdi-disclosures@trendmicro.com reports:
+The cls_flower classifier operates with TCF_PROTO_OPS_DOIT_UNLOCKED
+(fl_change runs without RTNL), while RTM_NEWACTION holds RTNL, so the
+independent locking domains make the race reachable in practice.  KASAN
+confirms:
+  BUG: KASAN: slab-out-of-bounds in tcf_pedit_offload_act_setup+0x81b/0x930
+  Write of size 4 at addr ffff888001f27520 by task poc-toctou/312
+  The buggy address is located 0 bytes to the right of
+   allocated 288-byte region [ffff888001f27400, ffff888001f27520)
+   (cache kmalloc-512)
 
-  BUG: KASAN: slab-out-of-bounds in rmnet_map_checksum_downlink_packet
-  Read of size 1 at addr ffff88801118ed00 by task exploit/147
-  Call Trace:
-   ...
-   rmnet_map_checksum_downlink_packet (drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c:413)
-   __rmnet_map_ingress_handler (drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c:96)
-   rmnet_rx_handler (drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c:129)
-   __netif_receive_skb_core.constprop.0 (net/core/dev.c:6089)
-   netif_receive_skb (net/core/dev.c:6460)
-   tun_get_user (drivers/net/tun.c:1955)
-   tun_chr_write_iter (drivers/net/tun.c:2001)
-   vfs_write (fs/read_write.c:688)
-   ksys_write (fs/read_write.c:740)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   ...
+Note: The result is a heap OOB write attacker-controlled content into the
+adjacent slab object (requires CAP_NET_ADMIN).
 
-Factor that validation out of rmnet_map_deaggregate() into
-rmnet_map_validate_packet_len() and run it on the no-aggregation path too.
-The MAP header is bounds-checked first, since this path can receive a frame
-shorter than the header.
+The fix introduces reading tcfp_nkeys under act->tcfa_lock in all places
+using a new tcf_pedit_nkeys_locked() which replaces the old tcf_pedit_nkeys().
+Additionally we close the remaining TOCTOU window between the sizing read and
+the fill reads by more careful accounting.
+Rather than silently truncating the key count, which leads to incorrect
+action semantics offloaded to hardware and secondary OOB writes if
+the remaining capacity is zero or consumed by prior actions, we enforce
+remaining capacity checks and return -ENOSPC if the required space exceeds
+the remaining capacity.
 
-Fixes: ceed73a2cf4a ("drivers: net: ethernet: qualcomm: rmnet: Initial implementation")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Suggested-by: Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260630174110.2003121-1-xmei5@asu.edu
+Fixes: 71d0ed7079df ("net/act_pedit: Support using offset relative to the conventional network headers")
+Reported-by: zdi-disclosures@trendmicro.com
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260701161912.125355-1-jhs@mojatatu.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/qualcomm/rmnet/rmnet_handlers.c  |  5 +-
- .../net/ethernet/qualcomm/rmnet/rmnet_map.h   |  1 +
- .../ethernet/qualcomm/rmnet/rmnet_map_data.c  | 72 ++++++++++---------
- 3 files changed, 45 insertions(+), 33 deletions(-)
+ include/net/tc_act/tc_pedit.h | 18 ++++++++----------
+ net/sched/act_api.c           | 13 +++++++++----
+ net/sched/act_pedit.c         | 13 +++++++++++--
+ net/sched/cls_api.c           | 22 +++++++++++++++++-----
+ 4 files changed, 45 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c
-index 9f3479500f85a1..d055a2628d8c9d 100644
---- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c
-+++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c
-@@ -126,7 +126,10 @@ rmnet_map_ingress_handler(struct sk_buff *skb,
- 
- 		consume_skb(skb);
- 	} else {
--		__rmnet_map_ingress_handler(skb, port);
-+		if (rmnet_map_validate_packet_len(skb, port))
-+			__rmnet_map_ingress_handler(skb, port);
-+		else
-+			kfree_skb(skb);
- 	}
+diff --git a/include/net/tc_act/tc_pedit.h b/include/net/tc_act/tc_pedit.h
+index cb7b82f2cbc7fd..97754ea0a8279d 100644
+--- a/include/net/tc_act/tc_pedit.h
++++ b/include/net/tc_act/tc_pedit.h
+@@ -37,17 +37,15 @@ static inline bool is_tcf_pedit(const struct tc_action *a)
+ 	return false;
  }
  
-diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map.h b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map.h
-index b70284095568ce..60ca8b780c88ad 100644
---- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map.h
-+++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map.h
-@@ -59,5 +59,6 @@ void rmnet_map_tx_aggregate_init(struct rmnet_port *port);
- void rmnet_map_tx_aggregate_exit(struct rmnet_port *port);
- void rmnet_map_update_ul_agg_config(struct rmnet_port *port, u32 size,
- 				    u32 count, u32 time);
-+u32 rmnet_map_validate_packet_len(struct sk_buff *skb, struct rmnet_port *port);
- 
- #endif /* _RMNET_MAP_H_ */
-diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
-index a5e3d1a88305ec..8471157a431beb 100644
---- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
-+++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
-@@ -333,54 +333,62 @@ struct rmnet_map_header *rmnet_map_add_map_header(struct sk_buff *skb,
- 	return map_header;
- }
- 
--/* Deaggregates a single packet
-- * A whole new buffer is allocated for each portion of an aggregated frame.
-- * Caller should keep calling deaggregate() on the source skb until 0 is
-- * returned, indicating that there are no more packets to deaggregate. Caller
-- * is responsible for freeing the original skb.
-- */
--struct sk_buff *rmnet_map_deaggregate(struct sk_buff *skb,
--				      struct rmnet_port *port)
-+u32 rmnet_map_validate_packet_len(struct sk_buff *skb, struct rmnet_port *port)
- {
- 	struct rmnet_map_v5_csum_header *next_hdr = NULL;
- 	struct rmnet_map_header *maph;
- 	void *data = skb->data;
--	struct sk_buff *skbn;
--	u8 nexthdr_type;
- 	u32 packet_len;
- 
--	if (skb->len == 0)
--		return NULL;
-+	if (skb->len < sizeof(*maph))
-+		return 0;
- 
- 	maph = (struct rmnet_map_header *)skb->data;
-+
-+	/* Some hardware can send us empty frames. Catch them */
-+	if (!maph->pkt_len)
-+		return 0;
-+
- 	packet_len = ntohs(maph->pkt_len) + sizeof(*maph);
- 
- 	if (port->data_format & RMNET_FLAGS_INGRESS_MAP_CKSUMV4) {
- 		packet_len += sizeof(struct rmnet_map_dl_csum_trailer);
--	} else if (port->data_format & RMNET_FLAGS_INGRESS_MAP_CKSUMV5) {
--		if (!(maph->flags & MAP_CMD_FLAG)) {
--			packet_len += sizeof(*next_hdr);
--			if (maph->flags & MAP_NEXT_HEADER_FLAG)
--				next_hdr = data + sizeof(*maph);
--			else
--				/* Mapv5 data pkt without csum hdr is invalid */
--				return NULL;
--		}
-+	} else if ((port->data_format & RMNET_FLAGS_INGRESS_MAP_CKSUMV5) &&
-+		   !(maph->flags & MAP_CMD_FLAG)) {
-+		/* Mapv5 data pkt without csum hdr is invalid */
-+		if (!(maph->flags & MAP_NEXT_HEADER_FLAG))
-+			return 0;
-+
-+		packet_len += sizeof(*next_hdr);
-+		next_hdr = data + sizeof(*maph);
- 	}
- 
--	if (((int)skb->len - (int)packet_len) < 0)
--		return NULL;
-+	if (skb->len < packet_len)
-+		return 0;
- 
--	/* Some hardware can send us empty frames. Catch them */
--	if (!maph->pkt_len)
--		return NULL;
-+	if (next_hdr &&
-+	    u8_get_bits(next_hdr->header_info, MAPV5_HDRINFO_HDR_TYPE_FMASK) !=
-+	    RMNET_MAP_HEADER_TYPE_CSUM_OFFLOAD)
-+		return 0;
- 
--	if (next_hdr) {
--		nexthdr_type = u8_get_bits(next_hdr->header_info,
--					   MAPV5_HDRINFO_HDR_TYPE_FMASK);
--		if (nexthdr_type != RMNET_MAP_HEADER_TYPE_CSUM_OFFLOAD)
--			return NULL;
--	}
-+	return packet_len;
-+}
-+
-+/* Deaggregates a single packet
-+ * A whole new buffer is allocated for each portion of an aggregated frame.
-+ * Caller should keep calling deaggregate() on the source skb until 0 is
-+ * returned, indicating that there are no more packets to deaggregate. Caller
-+ * is responsible for freeing the original skb.
+-static inline int tcf_pedit_nkeys(const struct tc_action *a)
++/* Must be called with act->tcfa_lock held to ensure consistency of parallel
++ * reads of the same action's pedit keys (e.g. flow_offload count vs fill).
++ * Note, this is only used for pedit offload.
 + */
-+struct sk_buff *rmnet_map_deaggregate(struct sk_buff *skb,
-+				      struct rmnet_port *port)
-+{
-+	struct sk_buff *skbn;
-+	u32 packet_len;
-+
-+	packet_len = rmnet_map_validate_packet_len(skb, port);
-+	if (!packet_len)
-+		return NULL;
++static inline int tcf_pedit_nkeys_locked(const struct tc_action *a)
+ {
+-	struct tcf_pedit_parms *parms;
+-	int nkeys;
+-
+-	rcu_read_lock();
+-	parms = to_pedit_parms(a);
+-	nkeys = parms->tcfp_nkeys;
+-	rcu_read_unlock();
+-
+-	return nkeys;
++	lockdep_assert_held(&a->tcfa_lock);
++	return rcu_dereference_protected(to_pedit(a)->parms,
++					 lockdep_is_held(&a->tcfa_lock))->tcfp_nkeys;
+ }
  
- 	skbn = alloc_skb(packet_len + RMNET_MAP_DEAGGR_SPACING, GFP_ATOMIC);
- 	if (!skbn)
+ static inline u32 tcf_pedit_htype(const struct tc_action *a, int index)
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index 7d903f0607439d..3b7ae280d32eba 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -148,10 +148,15 @@ static void offload_action_hw_count_dec(struct tc_action *act,
+ 
+ static unsigned int tcf_offload_act_num_actions_single(struct tc_action *act)
+ {
+-	if (is_tcf_pedit(act))
+-		return tcf_pedit_nkeys(act);
+-	else
+-		return 1;
++	unsigned int count;
++
++	if (is_tcf_pedit(act)) {
++		spin_lock_bh(&act->tcfa_lock);
++		count = tcf_pedit_nkeys_locked(act);
++		spin_unlock_bh(&act->tcfa_lock);
++		return count;
++	}
++	return 1;
+ }
+ 
+ static bool tc_act_skip_hw(u32 flags)
+diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
+index c0a5f5d78dacd9..5aa91fb145a270 100644
+--- a/net/sched/act_pedit.c
++++ b/net/sched/act_pedit.c
+@@ -563,9 +563,18 @@ static int tcf_pedit_offload_act_setup(struct tc_action *act, void *entry_data,
+ {
+ 	if (bind) {
+ 		struct flow_action_entry *entry = entry_data;
++		int nkeys = tcf_pedit_nkeys_locked(act);
+ 		int k;
+ 
+-		for (k = 0; k < tcf_pedit_nkeys(act); k++) {
++		/* If the required keys exceed the remaining capacity return
++		 * -ENOSPC to abort the offload and fallback to software.
++		 */
++		if (nkeys > *index_inc) {
++			NL_SET_ERR_MSG_MOD(extack, "Not enough space to offload all pedit keys");
++			return -ENOSPC;
++		}
++
++		for (k = 0; k < nkeys; k++) {
+ 			switch (tcf_pedit_cmd(act, k)) {
+ 			case TCA_PEDIT_KEY_EX_CMD_SET:
+ 				entry->id = FLOW_ACTION_MANGLE;
+@@ -602,7 +611,7 @@ static int tcf_pedit_offload_act_setup(struct tc_action *act, void *entry_data,
+ 			return -EOPNOTSUPP;
+ 		}
+ 
+-		for (k = 1; k < tcf_pedit_nkeys(act); k++) {
++		for (k = 1; k < tcf_pedit_nkeys_locked(act); k++) {
+ 			if (cmd != tcf_pedit_cmd(act, k)) {
+ 				NL_SET_ERR_MSG_MOD(extack, "Unsupported pedit command offload");
+ 				return -EOPNOTSUPP;
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 88f32a06de8712..c5aeff709ca66c 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -3876,12 +3876,21 @@ int tc_setup_action(struct flow_action *flow_action,
+ 
+ 		entry = &flow_action->entries[j];
+ 		spin_lock_bh(&act->tcfa_lock);
++
++		/* Abort the offload if we have exhausted the allocated capacity */
++		if (j >= flow_action->num_entries) {
++			NL_SET_ERR_MSG_MOD(extack, "Flow action buffer overflow");
++			err = -ENOSPC;
++			goto err_out_locked;
++		}
++
+ 		err = tcf_act_get_user_cookie(entry, act);
+ 		if (err)
+ 			goto err_out_locked;
+ 
+-		index = 0;
+-		err = tc_setup_offload_act(act, entry, &index, extack);
++		index = flow_action->num_entries - j;
++		err = tc_setup_offload_act(act, entry, &index,
++					   extack);
+ 		if (err)
+ 			goto err_out_locked;
+ 
+@@ -3935,10 +3944,13 @@ unsigned int tcf_exts_num_actions(struct tcf_exts *exts)
+ 	int i;
+ 
+ 	tcf_exts_for_each_action(i, act, exts) {
+-		if (is_tcf_pedit(act))
+-			num_acts += tcf_pedit_nkeys(act);
+-		else
++		if (is_tcf_pedit(act)) {
++			spin_lock_bh(&act->tcfa_lock);
++			num_acts += tcf_pedit_nkeys_locked(act);
++			spin_unlock_bh(&act->tcfa_lock);
++		} else {
+ 			num_acts++;
++		}
+ 	}
+ 	return num_acts;
+ }
 -- 
 2.53.0
 
