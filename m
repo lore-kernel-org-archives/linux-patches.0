@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4C5415F0E;
-	Tue, 21 Jul 2026 20:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D672A42F704;
+	Tue, 21 Jul 2026 20:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665614; cv=none; b=mQXZD8U0qTeKUXoViQzx2I7NcCYhYmWiob87JmPvmcT+688kmouaOzREBYzvpI2ub5j1nRJyVmYmntaBOqzq562Za6V9CqVh9iItpKHsLx7eklaZAHHpCvyAJmS0ZIpfWHrno2IP8RGNPf8iiJaXbqWmC/zXgkkKazMOfSgyIJA=
+	t=1784665616; cv=none; b=bfS/yo+K8e0Ga1/BkBYQ4UOF8C0UBbLPvZiIlsYNo2Npg9ZrUxPxScrGQYLfCqP+QEAqRj1m/co9OeQjf+AqvQaTZG19vCUtkHiKrx1aim7zjD+EBghjVjAhLCBh3MIvPRWtGjYVWRkZrgPr0xFhW1MI+CTWiZrKZeKMu6RkKqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665614; c=relaxed/simple;
-	bh=BSJnDPh1WPVOlUWCpqM9yBzAlAepQH2RuyKHuFKriK8=;
+	s=arc-20240116; t=1784665616; c=relaxed/simple;
+	bh=2uXPnNg28SQhe64lAV8E1aOJE0Atel1TezxK4/KbGF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bejXrLHg3NRKLK6TK5wg97heXO0xcMVxQLC9x8JufkVBbE7bucUtGI2J4IAGCV9oHWWv8Zif3zxszrT5fnyuvsEODUgK6O/EYdY1fxsq6VuxaQhgU96OTBaVDMfo7yV8TJySXl2DfPPmi1BjRVV5Iimu7wXZy3NMn7Tk88UT23M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tp08bdfL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XcXUU7tw6DbgjQFNzaC80RrTKDLnYOYUMnaO1BYLn2QqiHDAgOrHzoUfz8g23apGBzw9Xjbto9jzEQkqNgfXjj1w1R4SA5N9Nn26ud6RP3vrCxoUJMmy8VvDQ98nxH/BjO6+NNa7qEcc5m9J51m5Ksw1iv1pU2rUyOdjMkZroHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kX6i7UAS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tp08bdfL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645121F00A3A;
-	Tue, 21 Jul 2026 20:26:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kX6i7UAS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 058051F000E9;
+	Tue, 21 Jul 2026 20:26:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665612;
-	bh=kDzf6Ym96pkdiqqMyoFa1JzVBVLML+bnjlUCgSnF/HM=;
+	s=korg; t=1784665615;
+	bh=HPqG9BkbPhYn99JCFyUZd6fFzlbKjVuvXcP+Sj3m9Sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tp08bdfLHiqpYbDBWvx1/87htigk6H/D5HgNFcQoQjBm2vcZhyufLiQU9bKNqKqya
-	 s5Vv+iCgUPZzPDQsNc1tHSP6vzR8ET5xKBPgsbe2piQJPofCLG+nTAnXikoNY9l3B4
-	 UbxtVF2cyRC90aU3C2w5RNxmH0/FTA3PSBwm/c9U=
+	b=kX6i7UASo8/z4zwoHV9XUnoKzSei2RSL890Dua7Nm0YmJZFw2Egr8dUJUgMCMQf9T
+	 P8oPW7f6a1oellb45LlPsC4DokDqto1/0JPb/Zo6/bW47pQeIibPCJNTEztKOEsdSK
+	 LFWKhOTXJpN/xIvBsvgLSai9lv9K4BWPWZ1UptRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Dave Tian <daveti@purdue.edu>,
-	Weidong Zhu <weizhu@fiu.edu>,
-	Chao Shi <coshi036@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0327/1266] block: skip sync_blockdev() on surprise removal in bdev_mark_dead()
-Date: Tue, 21 Jul 2026 17:12:44 +0200
-Message-ID: <20260721152449.152018274@linuxfoundation.org>
+	Florian Fuchs <fuchsfl@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.6 0318/1266] Input: maplecontrol - set driver data before registering input device
+Date: Tue, 21 Jul 2026 17:12:35 +0200
+Message-ID: <20260721152448.955255665@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -55,67 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Shi <coshi036@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 49f06cff50a4ccf3b7a1a662ceb892b3b21a527a upstream.
+commit fe938ee497d58c644f6910cfe6ae155f6fb3e523 upstream.
 
-bdev_mark_dead()'s @surprise == true means the device is already gone.
-The filesystem callback fs_bdev_mark_dead() honours this and skips
-sync_filesystem(), but the bare block device path (no ->mark_dead op)
-lost its !surprise guard when the holder ->mark_dead callback was wired
-up (see Fixes), and now calls sync_blockdev() unconditionally, which can
-hang forever waiting on writeback that can no longer complete.
+Set maple driver data before calling input_register_device() to
+ensure that it is available if the device is opened immediately and
+the callback is triggered.
 
-syzkaller hit this via nvme_reset_work()'s "I/O queues lost" path:
-nvme_mark_namespaces_dead() -> blk_mark_disk_dead() ->
-bdev_mark_dead(bdev, true) -> sync_blockdev() blocks in
-folio_wait_writeback(), wedging the reset worker and every task waiting
-on it.
-
-Skip the sync on surprise removal, matching fs_bdev_mark_dead();
-invalidate_bdev() still runs. Orderly removal (surprise == false) is
-unchanged.
-
-Found by FuzzNvme.
-
-Fixes: d8530de5a6e8 ("block: call into the file system for bdev_mark_dead")
-Acked-by: Sungwoo Kim <iam@sung-woo.kim>
-Acked-by: Dave Tian <daveti@purdue.edu>
-Acked-by: Weidong Zhu <weizhu@fiu.edu>
-Signed-off-by: Chao Shi <coshi036@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260522220025.1770388-1-coshi036@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ adjusted for 6.6.y: bdev_mark_dead() there still unlocks bd_holder_lock
-  after the if/else and the else arm is a bare sync_blockdev(), so the
-  !surprise guard is added as "else if (!surprise)" instead of inside the
-  mainline else block. ]
-Signed-off-by: Chao Shi <coshi036@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Assisted-by: Antigravity:gemini-3.5-flash
+Tested-by: Florian Fuchs <fuchsfl@gmail.com>
+Link: https://patch.msgid.link/akNYib9hQFNN1fA9@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bdev.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/input/joystick/maplecontrol.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/block/bdev.c b/block/bdev.c
-index 598f94827b941f..a255492ba82654 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -1024,7 +1024,12 @@ void bdev_mark_dead(struct block_device *bdev, bool surprise)
- 	mutex_lock(&bdev->bd_holder_lock);
- 	if (bdev->bd_holder_ops && bdev->bd_holder_ops->mark_dead)
- 		bdev->bd_holder_ops->mark_dead(bdev, surprise);
--	else
-+	/*
-+	 * On surprise removal the device is already gone; syncing is
-+	 * futile and can hang forever waiting on I/O that will never
-+	 * complete.  Match fs_bdev_mark_dead(), which also skips it.
-+	 */
-+	else if (!surprise)
- 		sync_blockdev(bdev);
- 	mutex_unlock(&bdev->bd_holder_lock);
+--- a/drivers/input/joystick/maplecontrol.c
++++ b/drivers/input/joystick/maplecontrol.c
+@@ -112,6 +112,8 @@ static int probe_maple_controller(struct
+ 	pad->dev = idev;
+ 	pad->mdev = mdev;
  
--- 
-2.53.0
-
++	maple_set_drvdata(mdev, pad);
++
+ 	idev->open = dc_pad_open;
+ 	idev->close = dc_pad_close;
+ 
+@@ -146,7 +148,6 @@ static int probe_maple_controller(struct
+ 		goto fail;
+ 
+ 	mdev->driver = mdrv;
+-	maple_set_drvdata(mdev, pad);
+ 
+ 	return 0;
+ 
 
 
