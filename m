@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090F64071E3;
-	Tue, 21 Jul 2026 17:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8CD403AFB;
+	Tue, 21 Jul 2026 17:28:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654930; cv=none; b=p/e9ORsKGmDM7uBVjj198gOCsFLvE15PuJKUuDpPTDv7yzwOt3Wk1aPtzvYdRboghifz+dnpzEeSlFI5g+aB/1QPaBB4Sjn8kYnAexxAtt4xP1bugZesKuUIgWHI0C/M2Kv2LAs4JSXy2exwjlZAtZK2j24/bGYCFDe+JT28d70=
+	t=1784654932; cv=none; b=rqBlMlcrgFd3KM7skXPUIoFv/AZuOoaT1Ee7r9bTaVTXdkruRWLf27LhABnhlCZYurRtxQsJY++i8Mwyq7CZvTkRPRbz7/jsDG1jK4OWFtXFdgZDu7rNqM02OmkaJ/81t4W+RPI43SNwyMNcS1nfaOord+xNrE4bhadQYW89AAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654930; c=relaxed/simple;
-	bh=sDGDv1RB4zuSPOJ5TqUbRsLhru6WQZMas05RQ4UUHHs=;
+	s=arc-20240116; t=1784654932; c=relaxed/simple;
+	bh=xGPBpCr813BUBk6HOguTxotfVepCWpKh6nCKdmpUWSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sjge/N6B3mbkkTRBrvRe5LDRg+laDYwIlW9QMciCndkvHk2EAQ5a2n50rORGu5eQ2F1ultOVM13LUk92duAkEPE+Yd6FlIDqzAIPXTS/1IXC7WxRFdwc4AHGQ/1HJU5BWxqP4mXI8QVXbtsH4aA05uoW8zIdgi33HRA9tp6O5vE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OvS0Ny5C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TNKJBmJX0GS1v4Wdw3XKcDsOELbHWEtGlAU6zTd3zhfF91Y14ZcBMmRnYd3+YheiPXlG32Bwa0cG6HqGONc6Qa7OGkMz/MaZwIkrslJpiIKe2b8ncV6jVZ9j/sfa02dxqIVbfGA5I80PQf05RQKH9DhiZ/BZUBQus50eXpQ/BCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2AbaEu/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OvS0Ny5C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2573D1F000E9;
-	Tue, 21 Jul 2026 17:28:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2AbaEu/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C385C1F000E9;
+	Tue, 21 Jul 2026 17:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654928;
-	bh=32pi14mI0izoSHDdV39EgwLk8JyB/yXgMo23IS94BfE=;
+	s=korg; t=1784654931;
+	bh=7fud0tYnpiX3ASQs6GPmaOqyU1QkSSM/71KkJrDcev4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OvS0Ny5CW2MTU2KlrVnsdJaqIZQ/QfOXMujZZRUIcx2O42HsWVRYfCrcGa91fRkRn
-	 +1qAQaPwbj1+XIE9ANNRlyc9r0+npTY+Ta2lSh0a0Yi5k9TqR6jvpjpJMw442IDvCg
-	 E0Tp81SoBFAxLxjzAlasYMs0CVGLruaYW6YzlKzE=
+	b=r2AbaEu/aqeOA8dlfY8jgc4eCuC/2/AT/9TL11Coz3PgkPqPAru+v8gKCVzQQjENK
+	 D650GlXE7AATg246DkUYycbcap5iIW0ebAkXD4EwuSXBgmg/fWXoJ5TB0nojQvl6+o
+	 XKjl5td39H/1Z9TRv4e0miOxcOfRNglu0LYzaAAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.1 1889/2077] Input: ims-pcu - fix potential infinite loop in CDC union descriptor parsing
-Date: Tue, 21 Jul 2026 17:26:02 +0200
-Message-ID: <20260721152637.277480057@linuxfoundation.org>
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 7.1 1848/2077] dm-log: fix a bitset_size overflow on 32bit machines
+Date: Tue, 21 Jul 2026 17:25:21 +0200
+Message-ID: <20260721152636.326522245@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -49,41 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-commit d4579af29e67ca8722db0a1194227f8015c8981d upstream.
+commit 9743132a41f4d9d0e54c5f2adcb821b04796bab1 upstream.
 
-The driver parses CDC union descriptors in ims_pcu_get_cdc_union_desc()
-by iterating through the extra descriptor data. However, it does not
-verify that the bLength of each descriptor is at least 2. A malicious
-device could provide a descriptor with bLength = 0, leading to an
-infinite loop in the driver.
+Commit c20e36b7631d ("dm log: fix out-of-bounds write due to
+region_count overflow") made sure that region_count could fit in an
+unsigned int. But the bitmap memory isn't allocated based on
+region_count. It uses bitset_size (a size_t variable). The first step of
+calculating bitset_size is to set it to region_count, rounded up to a
+multiple of BITS_PER_LONG. If region_size is less than BITS_PER_LONG
+smaller than UINT_MAX, it will get rounded up to 2^32. On a 32bit
+architecture, this will make bitset_size wrap around to 0 and fail,
+despite region_count being valid.
 
-Add a check to ensure bLength is at least 2 before proceeding with
-parsing.
+Since bitset_size gets divided by 8, it can hold any valid region_count.
+It just needs a special case to handle the rollover. If it is 0, the
+value rolled over, and bitset size should be set to the number of bytes
+needed to hold 2^32 bits.
 
-Fixes: 628329d52474 (Input: add IMS Passenger Control Unit driver)
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: c20e36b7631d ("dm log: fix out-of-bounds write due to region_count overflow")
 Cc: stable@vger.kernel.org
-Assisted-by: Gemini:gemini-3.1-pro
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/ims-pcu.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/md/dm-log.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/input/misc/ims-pcu.c
-+++ b/drivers/input/misc/ims-pcu.c
-@@ -1707,8 +1707,9 @@ ims_pcu_get_cdc_union_desc(struct usb_in
- 	while (buflen >= sizeof(*union_desc)) {
- 		union_desc = (struct usb_cdc_union_desc *)buf;
+--- a/drivers/md/dm-log.c
++++ b/drivers/md/dm-log.c
+@@ -425,6 +425,9 @@ static int create_log_context(struct dm_
+ 	 */
+ 	bitset_size = dm_round_up(region_count, BITS_PER_LONG);
+ 	bitset_size >>= BYTE_SHIFT;
++	/* Handle dm_round_up rollover on 32-bit systems */
++	if (!bitset_size)
++		bitset_size = 1UL << (BITS_PER_LONG - BYTE_SHIFT);
  
--		if (union_desc->bLength > buflen) {
--			dev_err(&intf->dev, "Too large descriptor\n");
-+		if (union_desc->bLength < 2 || union_desc->bLength > buflen) {
-+			dev_err(&intf->dev, "Invalid descriptor length: %d\n",
-+				union_desc->bLength);
- 			return NULL;
- 		}
+ 	lc->bitset_uint32_count = bitset_size / sizeof(*lc->clean_bits);
  
 
 
