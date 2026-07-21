@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67128430CDC;
-	Tue, 21 Jul 2026 19:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12573430CDC;
+	Tue, 21 Jul 2026 19:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663746; cv=none; b=AgmEla+WJjENVtQxLCd2nThLXmAaxMBVAQ/DuCxL/T5VJdXV4jQIV6H8ff99AsjXqgWHbQ4EqFnW9Hn5Eksm5ZR+1TFAWnavj9Ktv3o8GzXKpiLUSgTpczZH5gQs6xOZ23iuRE0oZyCQqm8z1IIfRh6XVhIng8hw/KwpzWGHbdI=
+	t=1784663749; cv=none; b=VsrdYz28VQcDaLdPFFRhUpzHcD0wI+YMgeE04oJjfczx3LlgSFHMWX3A0sqxc9cDu2CWtqftLj7n/iU1ma3s8f/PYp4goGVLBTGxSW14eRnJtYxCeZZykCqhHQ4ikDLIx3Bfun38wyARXRDGR5KlrYlxVOKUfG7STVUaVXtOur0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663746; c=relaxed/simple;
-	bh=hZQk5WyfxklzkeJ+7BLJsNJhqdZTeAyiwFLBOn0crgs=;
+	s=arc-20240116; t=1784663749; c=relaxed/simple;
+	bh=1IL7h8ggPpdq/3p3XcJjXvbh/355AUMVZvAofvBMyJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iz3sj9ozZe61tExT3Y72xRO2ONg0zlDybMf1D0FeqYJCyfzHBOqlimjixm+y7pRqb13IBl8VDigJ4+1Hy6zTehurMr9dsul+0r0ZXoLvV6geNQkBk3VNG7rMcMhYnBCwoWOl2RLVbENAsTcAYuKuc7lEj94tIA4Eh2FlrkY+G2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SWqQ1HYN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y+CHXh7xxWcCqeFqxR09ifb51L6UaFxfI1k06O3XulGmSLCoSSsbYhlspRpHM25Vtu4v7gVSde8nTb7Jc+HPgdI40tDvtHtwmBQls0qeClllK5MBeQTC4ni9S9Vsta4PVRNJ9KFv5JOWiXT901o8EE0KOaT6fx6ko7lXTJV4dT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inkz0cjO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SWqQ1HYN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC88A1F000E9;
-	Tue, 21 Jul 2026 19:55:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inkz0cjO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76E9E1F000E9;
+	Tue, 21 Jul 2026 19:55:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663745;
-	bh=D58gAzKOMSvfjiEKTgv9+vddEHkLdVD57IWhAhwLHqY=;
+	s=korg; t=1784663748;
+	bh=2GNaOYyKQ8A545OAhgoW4dLzWeYPpVdrez+Tb2+ps54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SWqQ1HYNsXbScH5BwRvDlpZUPNEyMknipFWD6Tgp7AJoqRRttInl3STMQpsp00adu
-	 lBT/pNwC7u52+Bsp5UA7ErOyqXp+pB6TGjA2D6SJCyUnuWnidSpOm4MZCv6UfCeo7s
-	 rBtSowZQjtUGb7cv6f9ksCYxleJ9BfNlr1BY2/0Q=
+	b=inkz0cjOza6Xs7Xe0b4deyEIeKrf+pSZPL8J8VMdWppDeltaAdKzJ6MJRqnrXgenN
+	 qqRiMiE2YIZaDL2NUyRfjVre8jgG1xz6hHW5oKTD6g/2Egq7ugGcbhcjMa+Y+GEGtC
+	 HKFpVpIEFHX4/x5Y95gVl8qCO3gTdoomyYadYBZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	Ionut Nechita <ionut.nechita@windriver.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 0940/1276] scsi: sas: Skip opt_sectors when DMA reports no real optimization hint
-Date: Tue, 21 Jul 2026 17:23:03 +0200
-Message-ID: <20260721152507.066897265@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.12 0923/1276] ntfs3: bound to_move in indx_insert_into_root before hdr_insert_head
+Date: Tue, 21 Jul 2026 17:22:46 +0200
+Message-ID: <20260721152506.689439638@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,147 +44,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ionut Nechita <ionut.nechita@windriver.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit be8fcd4a8217a916344c88a4b1b84f5736dda17e upstream.
+commit 9b6926ac9c970ae0b2c2fe6289b16e9aa10b6a67 upstream.
 
-sas_host_setup() unconditionally sets shost->opt_sectors from
-dma_opt_mapping_size().
+indx_insert_into_root() promotes a full resident $INDEX_ROOT into
+$INDEX_ALLOCATION and copies all non-last resident root entries into
+a newly allocated INDEX_BUFFER via hdr_insert_head(). The source
+byte count 'to_move' is summed from the on-disk resident entry sizes
+and is independent of the destination buffer size, which comes from
+root->index_block_size (via indx->index_bits).
 
-When the IOMMU is disabled or in passthrough mode and no DMA ops provide
-an opt_mapping_size callback, dma_opt_mapping_size() returns
-min(dma_max_mapping_size(), SIZE_MAX) which equals
-dma_max_mapping_size() — a hard upper bound, not an optimization hint.
+A crafted NTFS image that keeps a valid, full resident root but
+shrinks root->index_block_size down to 512 after the root has been
+populated makes hdr_insert_head() memcpy attacker-controlled resident
+entry bytes past the end of the kmalloc(1u << indx->index_bits)
+allocation returned by indx_new(). For a 512-byte destination and a
+resident root whose non-last entries total 560 bytes, the memcpy
+overruns by 120 bytes and a following memmove extends the highest
+written offset to 136 bytes past the allocation. The overflow bytes
+are a direct copy of on-disk entries (via kmemdup), so they are
+fully attacker-controlled.
 
-On a Dell PowerEdge R750 with mpt3sas (Broadcom SAS3816, FW 33.15.00.00)
-and intel_iommu=off the following values are observed:
+The write is reachable from unprivileged open(O_CREAT) on a mounted
+crafted NTFS image: a single sufficiently long create in a directory
+whose resident root is already full forces root promotion and
+triggers the copy.
 
-  dma_opt_mapping_size()  = dma_max_mapping_size() (no real hint)
-  shost->max_sectors      = 32767
-  opt_sectors             = min(32767, huge >> 9) = 32767
-  optimal_io_size         = 32767 << 9 = 16776704
-                          → round_down(16776704, 4096) = 16773120
+This is a controlled out-of-bounds write of 120-136 bytes past a
+kmalloc(index_block_size) allocation, with attacker-controlled
+content. It is a bounded adjacent-heap corruption primitive; it is
+not an arbitrary-address write. Successful exploitation into a named
+victim object depends on the surrounding slab layout.
 
-The SAS disk (SAMSUNG MZILT800HBHQ0D3) does not report an Optimal
-Transfer Length in VPD page B0, so sdkp->opt_xfer_blocks remains 0.
+Reject the copy at the sink. The destination's INDEX_HDR already
+reports hdr_total (the payload capacity of the new buffer) and
+hdr_used (the bytes already consumed by the terminal END entry
+installed by indx_new()); require that to_move fits in the remaining
+payload before calling hdr_insert_head(). On mismatch, fail with
+-EINVAL and mark the filesystem as having a detected on-disk
+inconsistency, which is the same behaviour as the surrounding
+validation in this function.
 
-sd_revalidate_disk() then uses min_not_zero(0, opt_sectors) =
-opt_sectors, propagating the bogus value into the block device's
-optimal_io_size (visible as OPT-IO = 16773120 in lsblk --topology).
-
-mkfs.xfs picks up optimal_io_size and minimum_io_size and computes:
-
-  swidth = 16773120 / 4096 = 4095
-  sunit  = 8192 / 4096     = 2
-
-Since 4095 % 2 != 0, XFS rejects the geometry:
-
-  SB stripe unit sanity check failed
-
-This makes it impossible to create XFS filesystems (e.g. for
-/var/lib/docker) during system bootstrap.
-
-Fix this by introducing a sas_dma_setup_opt_sectors() helper that sets
-opt_sectors only when dma_opt_mapping_size() is strictly less than
-dma_max_mapping_size(), indicating a genuine DMA optimization
-constraint.
-
-The helper computes min(opt_sectors, max_sectors) first, then rounds
-down to a power of two so that filesystem geometry calculations always
-produce clean results.
-
-When the two DMA values are equal, no backend provided a real hint, so
-opt_sectors stays at 0 ("no preference").
-
-[mkp: implemented hch's suggestion]
-
-Fixes: 4cbfca5f7750 ("scsi: scsi_transport_sas: cap shost opt_sectors according to DMA optimal limit")
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
 Cc: stable@vger.kernel.org
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Ionut Nechita <ionut.nechita@windriver.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260519135238.373784-2-ionut.nechita@windriver.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_transport_sas.c |   41 +++++++++++++++++++++++++++++++++-----
- 1 file changed, 36 insertions(+), 5 deletions(-)
+ fs/ntfs3/index.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/scsi/scsi_transport_sas.c
-+++ b/drivers/scsi/scsi_transport_sas.c
-@@ -27,6 +27,7 @@
- #include <linux/module.h>
- #include <linux/jiffies.h>
- #include <linux/err.h>
-+#include <linux/log2.h>
- #include <linux/slab.h>
- #include <linux/string.h>
- #include <linux/blkdev.h>
-@@ -220,12 +221,45 @@ static int sas_bsg_initialize(struct Scs
-  * SAS host attributes
-  */
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -1743,6 +1743,22 @@ static int indx_insert_into_root(struct
+ 	hdr_used = le32_to_cpu(hdr->used);
+ 	hdr_total = le32_to_cpu(hdr->total);
  
-+/*
-+ * Set shost->opt_sectors from the DMA optimal mapping size, but only
-+ * when dma_opt_mapping_size() is strictly less than dma_max_mapping_size(),
-+ * indicating a genuine optimization hint from an IOMMU or DMA backend.
-+ * When the two are equal (e.g. IOMMU disabled / passthrough), no real
-+ * hint exists, so leave opt_sectors at 0 to avoid bogus optimal_io_size
-+ * values that break filesystem geometry (e.g. mkfs.xfs stripe alignment).
-+ */
-+static void sas_dma_setup_opt_sectors(struct Scsi_Host *shost)
-+{
-+	struct device *dma_dev = shost->dma_dev;
-+	size_t opt = dma_opt_mapping_size(dma_dev);
-+	size_t max = dma_max_mapping_size(dma_dev);
-+	unsigned int opt_sectors;
-+
-+	/* opt >= max means no real hint was provided by the DMA layer */
-+	if (opt >= max)
-+		return;
-+
-+	/* Clamp to max_sectors to avoid overflow in sector arithmetic */
-+	opt_sectors = min_t(unsigned int, opt >> SECTOR_SHIFT,
-+			    shost->max_sectors);
-+
-+	/* Guard against zero before rounddown_pow_of_two() */
-+	if (!opt_sectors)
-+		return;
-+
 +	/*
-+	 * Round down to power-of-two so filesystem geometry calculations
-+	 * (e.g. XFS stripe width/unit) always produce clean divisors.
++	 * The destination INDEX_BUFFER has 'hdr_total' bytes of payload
++	 * available after the header, of which 'hdr_used' are already
++	 * consumed by the single terminal END entry installed by
++	 * indx_new(). A crafted image can present a resident root whose
++	 * non-last entries (summing to 'to_move') exceed what fits in
++	 * this buffer; copying them unchecked would overrun the
++	 * kmalloc(1u << indx->index_bits) allocation backing the new
++	 * buffer. Reject the copy in that case.
 +	 */
-+	shost->opt_sectors = rounddown_pow_of_two(opt_sectors);
-+}
++	if (to_move > hdr_total - hdr_used) {
++		err = -EINVAL;
++		ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
++		goto out_put_n;
++	}
 +
- static int sas_host_setup(struct transport_container *tc, struct device *dev,
- 			  struct device *cdev)
- {
- 	struct Scsi_Host *shost = dev_to_shost(dev);
- 	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
--	struct device *dma_dev = shost->dma_dev;
+ 	/* Copy root entries into new buffer. */
+ 	hdr_insert_head(hdr, re, to_move);
  
- 	INIT_LIST_HEAD(&sas_host->rphy_list);
- 	mutex_init(&sas_host->lock);
-@@ -237,10 +271,7 @@ static int sas_host_setup(struct transpo
- 		dev_printk(KERN_ERR, dev, "fail to a bsg device %d\n",
- 			   shost->host_no);
- 
--	if (dma_dev->dma_mask) {
--		shost->opt_sectors = min_t(unsigned int, shost->max_sectors,
--				dma_opt_mapping_size(dma_dev) >> SECTOR_SHIFT);
--	}
-+	sas_dma_setup_opt_sectors(shost);
- 
- 	return 0;
- }
 
 
