@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343EB39A7FD;
-	Tue, 21 Jul 2026 19:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23E6388E40;
+	Tue, 21 Jul 2026 19:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661075; cv=none; b=q7w2e+exihYP8LhKBCVsU6NQSV4mMBVLyEgu+g4pqBDcFsP4lWb64/0nJQYpHE7s3BUEkDEF5Py176smBTADFkiIxGdRjacKPDNmEnYAX0bPjeRFWFptU10irwbdBIKqlh3t7awYTTh5kpnyGTrIOaYLTeAD7rklDSBgWUF9A7w=
+	t=1784661077; cv=none; b=Eg/i2jN01VIGxs4WGXrHKLNuPnr730T9qtXAlXkN1OcDNR3+1E2mFwjyEK/dK4V2z/P3BVOhWJburay7L2nlgPljoetL8r9qjqAyiHCuOSOUbnZsmsPwcRlLzPrhaPQrPS+HfUoINvGAhhcsQfqDs4WUDTjC7SkVXLorRS3XWE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661075; c=relaxed/simple;
-	bh=X8B0ZIrRAa0pzyni1oCQPmoQVSbhm4TcNQDxz8JFG14=;
+	s=arc-20240116; t=1784661077; c=relaxed/simple;
+	bh=FoyOBB0cWRB5IupZLzqRo0YW52dukpm2qSz0ldrLR3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gW6MwdENyAviyTcKUkK7A4i/EwyZcd30ZW58pOF4zysvR/3PgpqAsVb5iN/gKPKjTAVnheufwIRGvGmhyS2xpLVwK/h3DL1pQzv1KleytP67QvsZzNy3Ezj0Bm83SE+9cdkuqSe48ojZtY/AXlycZXk7W83OL2I05qL5hwULgRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ob3ndMbc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RH8WUDTAR3QyflD/ca3pKQ4s4M+5WKJmdUcdLscCxOCQ7YpX5wNp9gNNVRbShUqrutMNlMgScuYg++YXJ2bncAmVKECfjSxgoK/FUYr27izIj37ILqZnad2HB0uFfx8xtbNvbQ730TPG9j7/HKOk0onwEdoHPpnsr/77vMTVcH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzX4F18h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ob3ndMbc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C411F000E9;
-	Tue, 21 Jul 2026 19:11:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzX4F18h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4365C1F000E9;
+	Tue, 21 Jul 2026 19:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661074;
-	bh=AneNwUUC5aLdKun+x3G29TeBOH26BM45ZPRE5NV0MdM=;
+	s=korg; t=1784661076;
+	bh=+UCZKV2Z1oHgh6f+9kChCJAF+junAg6K1J+JyBMgTfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ob3ndMbcH7R/9qivA8NJbVq8ClXi5Tp2aX6RBzYWkTUVPoX0bYABcU430V8h5hWBU
-	 VpaFqlttxz+yxnzYV8Q0tbjmwEON7TvKzAI6dYSa4lQd/Gqph5an3t1MMTxa6iq5U8
-	 9UplTrebTtc71Xe+dVvhw5QakANQVXROpQkJmy4E=
+	b=EzX4F18h5Zj7V/Qm5Lpbtg+1u4/VR8WI/qYBEtt7unzZw/wthCFSKrqdku85U7ElV
+	 ofAGj5BKpGy2UOx15ATbDcG2Bo/GkgfzMQIFRSEqSeVOmRXW2aIM5X8C75/iOtLqCu
+	 oGDtK0gML3EXprhmgSD40/s8/UJJZ+115Pa8t2P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Chan <michael.chan@broadcom.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1221/2077] eth: bnxt: improve the timing of stats
-Date: Tue, 21 Jul 2026 17:14:54 +0200
-Message-ID: <20260721152621.614219165@linuxfoundation.org>
+Subject: [PATCH 7.1 1222/2077] ipv4: fib: Dont ignore error route in local/main tables.
+Date: Tue, 21 Jul 2026 17:14:55 +0200
+Message-ID: <20260721152621.636323011@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,183 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 40529e58629baa9ce72143cb46cf1b3d2ca0d465 ]
+[ Upstream commit b72f0db64205d9ce462038ba995d5d31eff32dc1 ]
 
-Kernel selftests wait 1.25x of the promised stats refresh time
-(as read from ethtool -c). bnxt reports 1sec by default, but
-the stats update process has two steps. First device DMAs the
-new values, then the service task performs update in full-width
-SW counters. So the worst case delay is actually 2x.
+When CONFIG_IP_MULTIPLE_TABLES is enabled but no rule is added,
+fib_lookup() performs route lookup directly on two tables.
 
-Note that the behavior is different for ring stats and port stats.
-Port stats are fetched synchronously by the service worker, so
-there's no risk of doubling up the delay there.
+Since the first lookup does not properly bail out, the result
+of an error route in the merged local/main table could be
+overwritten by another route in the default table:
 
-The problem of stale stats impacts not only tests but real workloads
-which monitor egress bandwidth of a NIC. The inaccuracy causes double
-counting in the next cycle and spurious overload alarms.
+  # unshare -n
+  # ip link set lo up
+  # ip route add 192.168.0.0/24 dev lo table 253
+  # ip route add unreachable 192.168.0.0/24
+  # ip route get 192.168.0.1
+  192.168.0.1 dev lo table default uid 0
+      cache <local>
 
-Try to read from the DMA buffer more aggressively, to mitigate
-timing issues between DMA and service task. The SW update should
-be cheap.
+Once a random rule is added, the error route is respected:
 
-Fixes: 51f307856b60 ("bnxt_en: Allow statistics DMA to be configurable using ethtool -C.")
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20260619191538.104165-1-kuba@kernel.org
+  # ip rule add table 0
+  # ip rule del table 0
+  # ip route get 192.168.0.1
+  RTNETLINK answers: No route to host
+
+Let's fix the inconsistent behaviour.
+
+Fixes: f4530fa574df ("ipv4: Avoid overhead when no custom FIB rules are installed.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260619212753.3367244-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 48 ++++++++++++++++++-
- drivers/net/ethernet/broadcom/bnxt/bnxt.h     |  5 ++
- .../net/ethernet/broadcom/bnxt/bnxt_ethtool.c |  1 +
- 3 files changed, 53 insertions(+), 1 deletion(-)
+ include/net/ip_fib.h | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 1125130449887e..d44d3ac255aa45 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -10530,7 +10530,7 @@ static void bnxt_accumulate_stats(struct bnxt_stats_mem *stats)
- 				stats->hw_masks, stats->len / 8, false);
- }
- 
--static void bnxt_accumulate_all_stats(struct bnxt *bp)
-+static void bnxt_accumulate_ring_stats(struct bnxt *bp)
+diff --git a/include/net/ip_fib.h b/include/net/ip_fib.h
+index 541da2dde6266d..040eed88fc672e 100644
+--- a/include/net/ip_fib.h
++++ b/include/net/ip_fib.h
+@@ -375,7 +375,7 @@ static inline int fib_lookup(struct net *net, struct flowi4 *flp,
+ 			     struct fib_result *res, unsigned int flags)
  {
- 	struct bnxt_stats_mem *ring0_stats;
- 	bool ignore_zero = false;
-@@ -10553,6 +10553,10 @@ static void bnxt_accumulate_all_stats(struct bnxt *bp)
- 					ring0_stats->hw_masks,
- 					ring0_stats->len / 8, ignore_zero);
- 	}
-+}
-+
-+static void bnxt_accumulate_port_stats(struct bnxt *bp)
-+{
- 	if (bp->flags & BNXT_FLAG_PORT_STATS) {
- 		struct bnxt_stats_mem *stats = &bp->port_stats;
- 		__le64 *hw_stats = stats->hw_stats;
-@@ -10575,6 +10579,41 @@ static void bnxt_accumulate_all_stats(struct bnxt *bp)
- 	}
- }
+ 	struct fib_table *tb;
+-	int err = -ENETUNREACH;
++	int err = -EAGAIN;
  
-+static void bnxt_accumulate_all_stats(struct bnxt *bp)
-+{
-+	bnxt_accumulate_ring_stats(bp);
-+	bnxt_accumulate_port_stats(bp);
-+}
-+
-+/* Re-accumulate ring stats from DMA buffers if stale.
-+ * uAPIs for reading sw_stats should call this first.
-+ *
-+ * We promise user space update frequency of bp->stats_coal_ticks but
-+ * the update is a two step process - first device updates the DMA buffer,
-+ * then we have to update from that buffer to driver stats in the service work.
-+ * Worst case we would be 2x off from the desired frequency.
-+ * Sync the stats sooner, if stale. The 20% threshold was chosen arbitrarily.
-+ *
-+ * Ideally we would split the user-configured time into two portions,
-+ * i.e. also lower the DMA period by the 20%. But the DMA timer seems to have
-+ * too coarse granularity to play such tricks.
-+ */
-+void bnxt_sync_ring_stats(struct bnxt *bp)
-+{
-+	unsigned long stale;
-+
-+	if (!netif_running(bp->dev) || !bp->stats_coal_ticks)
-+		return;
-+
-+	spin_lock(&bp->stats_lock);
-+	stale = usecs_to_jiffies(bp->stats_coal_ticks / 5);
-+	if (time_after_eq(jiffies, bp->stats_updated_jiffies + stale)) {
-+		bnxt_accumulate_ring_stats(bp);
-+		bp->stats_updated_jiffies = jiffies;
-+	}
-+	spin_unlock(&bp->stats_lock);
-+}
-+
- static int bnxt_hwrm_port_qstats(struct bnxt *bp, u8 flags)
- {
- 	struct hwrm_port_qstats_input *req;
-@@ -13573,6 +13612,7 @@ bnxt_get_stats64(struct net_device *dev, struct rtnl_link_stats64 *stats)
- 		return;
- 	}
+ 	flags |= FIB_LOOKUP_NOREF;
+ 	if (net->ipv4.fib_has_custom_rules)
+@@ -389,17 +389,16 @@ static inline int fib_lookup(struct net *net, struct flowi4 *flp,
+ 	if (tb)
+ 		err = fib_table_lookup(tb, flp, res, flags);
  
-+	bnxt_sync_ring_stats(bp);
- 	bnxt_get_ring_stats(bp, stats);
- 	bnxt_add_prev_stats(bp, stats);
+-	if (!err)
++	if (err != -EAGAIN)
+ 		goto out;
  
-@@ -14754,7 +14794,10 @@ static void bnxt_sp_task(struct work_struct *work)
- 	if (test_and_clear_bit(BNXT_PERIODIC_STATS_SP_EVENT, &bp->sp_event)) {
- 		bnxt_hwrm_port_qstats(bp, 0);
- 		bnxt_hwrm_port_qstats_ext(bp, 0);
-+		spin_lock(&bp->stats_lock);
- 		bnxt_accumulate_all_stats(bp);
-+		bp->stats_updated_jiffies = jiffies;
-+		spin_unlock(&bp->stats_lock);
- 	}
+ 	tb = rcu_dereference_rtnl(net->ipv4.fib_default);
+ 	if (tb)
+ 		err = fib_table_lookup(tb, flp, res, flags);
  
- 	if (test_and_clear_bit(BNXT_LINK_CHNG_SP_EVENT, &bp->sp_event)) {
-@@ -15496,6 +15539,7 @@ static int bnxt_init_board(struct pci_dev *pdev, struct net_device *dev)
- 	INIT_DELAYED_WORK(&bp->fw_reset_task, bnxt_fw_reset_task);
+-out:
+ 	if (err == -EAGAIN)
+ 		err = -ENETUNREACH;
+-
++out:
+ 	rcu_read_unlock();
  
- 	spin_lock_init(&bp->ntp_fltr_lock);
-+	spin_lock_init(&bp->stats_lock);
- #if BITS_PER_LONG == 32
- 	spin_lock_init(&bp->db_lock);
- #endif
-@@ -16064,6 +16108,7 @@ static void bnxt_get_queue_stats_rx(struct net_device *dev, int i,
- 	if (!bp->bnapi)
- 		return;
- 
-+	bnxt_sync_ring_stats(bp);
- 	cpr = &bp->bnapi[i]->cp_ring;
- 	sw = cpr->stats.sw_stats;
- 
-@@ -16092,6 +16137,7 @@ static void bnxt_get_queue_stats_tx(struct net_device *dev, int i,
- 	if (!bp->tx_ring)
- 		return;
- 
-+	bnxt_sync_ring_stats(bp);
- 	bnapi = bp->tx_ring[bp->tx_ring_map[i]].bnapi;
- 	sw = bnapi->cp_ring.stats.sw_stats;
- 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index a2e75cfb65ab04..fa13cee557798b 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -2621,6 +2621,10 @@ struct bnxt {
- #define BNXT_MIN_STATS_COAL_TICKS	  250000
- #define BNXT_MAX_STATS_COAL_TICKS	 1000000
- 
-+	/* Protects stats_updated_jiffies and writes to sw_stats */
-+	spinlock_t		stats_lock;
-+	unsigned long		stats_updated_jiffies;
-+
- 	struct work_struct	sp_task;
- 	unsigned long		sp_event;
- #define BNXT_RX_MASK_SP_EVENT		0
-@@ -3029,6 +3033,7 @@ void bnxt_reenable_sriov(struct bnxt *bp);
- void bnxt_close_nic(struct bnxt *, bool, bool);
- void bnxt_get_ring_drv_stats(struct bnxt *bp,
- 			     struct bnxt_total_ring_drv_stats *stats);
-+void bnxt_sync_ring_stats(struct bnxt *bp);
- bool bnxt_rfs_capable(struct bnxt *bp, bool new_rss_ctx);
- int bnxt_dbg_hwrm_rd_reg(struct bnxt *bp, u32 reg_off, u16 num_words,
- 			 u32 *reg_buf);
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-index 9b14134d62d254..b98761d55a2b0b 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-@@ -606,6 +606,7 @@ static void bnxt_get_ethtool_stats(struct net_device *dev,
- 		goto skip_ring_stats;
- 	}
- 
-+	bnxt_sync_ring_stats(bp);
- 	tpa_stats = bnxt_get_num_tpa_ring_stats(bp);
- 	for (i = 0; i < bp->cp_nr_rings; i++) {
- 		struct bnxt_napi *bnapi = bp->bnapi[i];
+ 	return err;
 -- 
 2.53.0
 
