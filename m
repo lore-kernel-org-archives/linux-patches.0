@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA5E399015;
-	Tue, 21 Jul 2026 22:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2AA399015;
+	Tue, 21 Jul 2026 22:53:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674401; cv=none; b=SaIOtEzOP11JxE9sNkQd2ebJ7aAOsIOEqzYSSWucWi53RHDhnyft2R6hZdeHsfTzz9gW+tQmZbvY472a2AOcsfOtiWbZUjVpYtOLc97VQuqK8K/eUFaq4ZK1WuMqoN2S14Q0E/Aa/xRmBExjbWYiqZbmLsOTSGUmR5V8aPUbPtc=
+	t=1784674404; cv=none; b=AS2lRsQeRFx/mgci4b5qXnSYszakSaXVQnHXgxtnZYxsw4WMRMx99um2BQQvouvBiy8qolW4yxEP48ySF26cpryRz0TK7sKlP3LVfMfm9LV0IZ9xaQndtAvRQAQOR+vq2WD907xifz6YBfZQkemxPhOEWC/20orzey2GvDASVVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674401; c=relaxed/simple;
-	bh=KcVMVd9HBrLpj9jM0cUF+y7K9A3PB18KI7t+5FmyJso=;
+	s=arc-20240116; t=1784674404; c=relaxed/simple;
+	bh=AF5EJjjPSTDbuRZom4nUTrwc692glIqVHSijxqUUGF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c7IXCBzPSwISP7peeYlld0nJ4icfiUKOvIf2oEaKxLoK9Qy3yTVVPKEg78zcYapbVWdE22zRbNK2iziG6TSmMWPowQSjEPKgRnPWdbaj1LWEXu7NIboXMX70UmjxhOKyQzXMjdtmVMFrByksWrQbw/QNpMKnHtqTq9Xq4lMTHc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z9rNNPoJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f7RIP5RP7vSp3riIEsO/1RKbuLcSi0A/JoomM+9ME9MkL69vnVedRLARQZCnI+bXfR4I1dwLiszHLz05n8mfDVvDhufol+9ThkfzmPEzphVeNisR2GmVZYwW1spxJZ0aOLz6p2CvUE+Y+yNPAxRDTB3AT62367F7hdibddsgzOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b38je3rc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z9rNNPoJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D522B1F000E9;
-	Tue, 21 Jul 2026 22:53:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b38je3rc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1301F000E9;
+	Tue, 21 Jul 2026 22:53:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674400;
-	bh=Gw0HQaQFbw7N6ZFb4ABQOOGGW1hKiEz1z5SelbHHTSQ=;
+	s=korg; t=1784674403;
+	bh=TFd9/5J+PmuRj0Bl4iYT0d2d4sXErkR0wBICYWIreZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z9rNNPoJF/i1sUz60OeMHl4NsEmmh3FwzkAJ8Mshutn97YpKsXOGNVX/PRchCU2Di
-	 b67axHKtzBadgRyoRgwgR3sA/P2mzm4Nxs9bvBEl8mC5dg5jxzlpRUmzslojga2QHx
-	 iPNZ/l1kjXHfKyfSOWFKN2CUAjbROqsaTOHzkbSk=
+	b=b38je3rciLUESpAf7l/7DGsal4AXjDtNR/F8ukZPDjwpxV0fcEyMGr8mXRHI2FWTx
+	 p9qxucVC86lluF9Lp3HQHA488u5AHuQ2Ca8NoIoe3HA7ohw0jRM9oOFD15MJzHjXjn
+	 WC6GOgs6KSV23odhSGOwt8LXTcPc4yULXuJ1m2HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <include@grrlz.net>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 5.10 526/699] cpu: hotplug: Preserve per instance callback errors
-Date: Tue, 21 Jul 2026 17:24:45 +0200
-Message-ID: <20260721152407.560474860@linuxfoundation.org>
+	Linus Walleij <linusw@kernel.org>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 5.10 527/699] gpios: palmas: add .get_direction() op
+Date: Tue, 21 Jul 2026 17:24:46 +0200
+Message-ID: <20260721152407.582692847@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,53 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <include@grrlz.net>
+From: Andreas Kemnade <andreas@kemnade.info>
 
-commit 673db10729fb121ea1b16fe57791a0cb9eac1eb5 upstream.
+commit db4a79713ed8e252d5e4edf6eaaa80948b6855a2 upstream.
 
-cpuhp_invoke_callback() unwinds earlier callbacks for the same
-hotplug state when one instance fails. The rollback path currently
-reuses ret, so a successful rollback can hide the original error and
-make the failed transition look successful.
+Accessing debug/gpio is quite noisy without a get_direction()
+implementation. To calm that down add an implementation.
 
-Keep the rollback result separate from the original error.
-
-Fixes: 724a86881d03 ("smp/hotplug: Callback vs state-machine consistency")
-Signed-off-by: Bradley Morgan <include@grrlz.net>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Fixes: 3d50a2785271 ("gpio: palmas: Add support for Palmas GPIO")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260619163719.12103-1-include@grrlz.net
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://patch.msgid.link/20260704-palmas-getdirection-v2-1-2fd85fee3832@kemnade.info
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cpu.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpio/gpio-palmas.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -156,7 +156,7 @@ static int cpuhp_invoke_callback(unsigne
- 	struct cpuhp_step *step = cpuhp_get_step(state);
- 	int (*cbm)(unsigned int cpu, struct hlist_node *node);
- 	int (*cb)(unsigned int cpu);
--	int ret, cnt;
-+	int ret, cnt, rollback_ret;
- 
- 	if (st->fail == state) {
- 		st->fail = CPUHP_INVALID;
-@@ -222,12 +222,12 @@ err:
- 			break;
- 
- 		trace_cpuhp_multi_enter(cpu, st->target, state, cbm, node);
--		ret = cbm(cpu, node);
--		trace_cpuhp_exit(cpu, st->state, state, ret);
-+		rollback_ret = cbm(cpu, node);
-+		trace_cpuhp_exit(cpu, st->state, state, rollback_ret);
- 		/*
- 		 * Rollback must not fail,
- 		 */
--		WARN_ON_ONCE(ret);
-+		WARN_ON_ONCE(rollback_ret);
- 	}
+--- a/drivers/gpio/gpio-palmas.c
++++ b/drivers/gpio/gpio-palmas.c
+@@ -118,6 +118,24 @@ static int palmas_gpio_input(struct gpio
  	return ret;
  }
+ 
++static int palmas_gpio_get_direction(struct gpio_chip *gc, unsigned int offset)
++{
++	struct palmas_gpio *pg = gpiochip_get_data(gc);
++	struct palmas *palmas = pg->palmas;
++	unsigned int val;
++	unsigned int reg;
++	int ret;
++	int gpio16 = (offset/8);
++
++	offset %= 8;
++	reg = (gpio16) ? PALMAS_GPIO_DATA_DIR2 : PALMAS_GPIO_DATA_DIR;
++	ret = palmas_read(palmas, PALMAS_GPIO_BASE, reg, &val);
++	if (ret)
++		return ret;
++
++	return (val & BIT(offset)) ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
++}
++
+ static int palmas_gpio_to_irq(struct gpio_chip *gc, unsigned offset)
+ {
+ 	struct palmas_gpio *pg = gpiochip_get_data(gc);
+@@ -166,6 +184,7 @@ static int palmas_gpio_probe(struct plat
+ 	palmas_gpio->gpio_chip.can_sleep = true;
+ 	palmas_gpio->gpio_chip.direction_input = palmas_gpio_input;
+ 	palmas_gpio->gpio_chip.direction_output = palmas_gpio_output;
++	palmas_gpio->gpio_chip.get_direction = palmas_gpio_get_direction;
+ 	palmas_gpio->gpio_chip.to_irq = palmas_gpio_to_irq;
+ 	palmas_gpio->gpio_chip.set	= palmas_gpio_set;
+ 	palmas_gpio->gpio_chip.get	= palmas_gpio_get;
 
 
