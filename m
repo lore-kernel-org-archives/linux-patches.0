@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DFB3E49F5;
-	Tue, 21 Jul 2026 22:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C6C39733E;
+	Tue, 21 Jul 2026 22:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674447; cv=none; b=O3miGXedsxnnbtkIaXzvfxz9QTjY1koyhOVRWLlMSJDQRkWnoyOrn+xNgOOZv5Nt0vtQDrmb9umDzkiaTagn3vRln3QnCwaaji/UFNzEjdJdVusdtbZ1dnUDozoy38QjgW0vHHWtjGSgbF1vGMpc3AKQphoNb7SimOMH1QkymC0=
+	t=1784674451; cv=none; b=qCPHg6+ySj9ujC7s08Mu2PLkrofVW7tKjlw9X/BxyJb8iyM+7MnQk/mU/bP0nzrqsJzxHTqHuYzJj4KfrnWtn6yVtErS58nVN9UAsAiNyieuhbSU6EgD9b02JLgIyXFCmy6ZqpzcF3bMAMVIGCDcdM/ket5CxPR5QFBcxfZoeo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674447; c=relaxed/simple;
-	bh=ZmzSl1JJxZoRdBX9GnDhX6PZL+JWPZ4Ayci3t+8MeJE=;
+	s=arc-20240116; t=1784674451; c=relaxed/simple;
+	bh=PMnycoPFYiOKAcjAzmNpTq4NL3hEQFvphm5FEO8b3bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qhJo0N5Wt0d0v3ERNYezkfxt8eSCO+ls7gKh4g9CGxKsE207QYFvlaIycHhXvfR25/1fYw5TcUW1+/3xYyZJSjmi8/MBtn6Vdg7Av/k1vb97KWdTYIW/La4D15dt8mNdwmkgNtgqAZhUJtxYtjUAioRYoSRbTyJajJHx3809uGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ci3fH95o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hHicn5SgqpcBRzj2kB24TsO2laHEXCUWRO9v6kyTqudnrVLIM1+fpGk2gkIX18R53I8W4DJa29KsL6T32l5gKxvuAbBefFxn/s0OlDTg0Vana4hbgBDysDtbyL1fWVyoS/HSjIIIko2pUbTi7ZAk0RT7HDo8Grhpqs7KXT828+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UtYjHQvb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ci3fH95o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB5621F000E9;
-	Tue, 21 Jul 2026 22:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UtYjHQvb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9D61F00A3A;
+	Tue, 21 Jul 2026 22:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674445;
-	bh=/8qz19Xp2EA9uhv6F7cHvE14LvBmiVDl11vQeIrVE+U=;
+	s=korg; t=1784674450;
+	bh=V7kGqU9a7KIwW3pYpq2nU1ECuySsMDaAPwNtSMtHUII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ci3fH95oEfeMAxf/YjlEd+PfQsQ/Ju83fFlNk6OXKnasjudm8+tWo+t15dKQCG1Ui
-	 qu/VR3PCqxXsi/XAlbF/tpOGqh+ODbVKzdlmSSvYd9l9WkLoyW9QrmRY16D3DZcaCp
-	 ieTnYNn8oADZO3MPGegrt0wgISRuMJuLDXodwoys=
+	b=UtYjHQvbV4YRb5RecGiGhVkOnhJDhcrerKLz8R7xJsXRdJgy0UQlf5vAFX9RUefQ4
+	 wBHapYbemcVvAI8HfiB6jx3XP+XRaW0LeVz8yBGwWwzR9iNyFih7ep/ZuonTswU/+u
+	 BRQyajC9Uu8XofzKFybUbHzCMNVVhkodxCjwOzE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 501/699] sctp: validate STALE_COOKIE cause length before reading staleness
-Date: Tue, 21 Jul 2026 17:24:20 +0200
-Message-ID: <20260721152406.997749016@linuxfoundation.org>
+	Nico Yip <zdi-disclosures@trendmicro.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.10 503/699] can: isotp: use unconditional synchronize_rcu() in isotp_release()
+Date: Tue, 21 Jul 2026 17:24:22 +0200
+Message-ID: <20260721152407.042101734@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,103 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit 1cd23ca80784223fa2204e16203f754da4e821f8 upstream.
+commit 9b1a02e0d980ac6b0e36a90378f847062f81d7e4 upstream.
 
-When an ERROR chunk with a STALE_COOKIE cause is received in the
-COOKIE_ECHOED state, sctp_sf_do_5_2_6_stale() reads the 4-byte Measure
-of Staleness that follows the cause header:
+isotp_notify() unregisters the (RCU) CAN filters via can_rx_unregister()
+and clears so->bound without waiting for a grace period. isotp_release()
+uses so->bound to decide whether it needs to call synchronize_rcu()
+before cancelling so->rxtimer, so when NETDEV_UNREGISTER runs first it
+skips that synchronize_rcu() and can cancel the timer while an
+in-flight isotp_rcv() is still executing and about to re-arm it via
+isotp_send_fc(), leading to a use-after-free timer callback on the
+freed socket.
 
-	err   = (struct sctp_errhdr *)(chunk->skb->data);
-	stale = ntohl(*(__be32 *)((u8 *)err + sizeof(*err)));
+sakisho-bot remarked a problem with rtnl_lock held in isotp_notify(),
+therefore make isotp_release() always call synchronize_rcu() before
+cancelling the timers, regardless of so->bound. This still closes the
+original race (isotp_notify() clearing so->bound without waiting for
+in-flight isotp_rcv() callers before isotp_release() cancels the RX
+timer) without adding any RCU wait to the netdevice notifier path.
 
-err is the first cause in the chunk, not the STALE_COOKIE cause that
-caused the dispatch, and nothing guarantees the staleness field is
-present. sctp_walk_errors() only requires a cause to be as long as the
-4-byte header, so for a STALE_COOKIE cause of length 4 the read runs
-past the cause, and for a minimal ERROR chunk past skb->tail. The value
-is echoed to the peer in the Cookie Preservative of the reply INIT,
-leaking uninitialized memory.
-
-sctp_sf_cookie_echoed_err() already walks to the STALE_COOKIE cause, so
-check its length there and pass it to sctp_sf_do_5_2_6_stale(), which
-reads that cause instead of the first one. A STALE_COOKIE cause too
-short to hold the staleness field is discarded.
-
-The read is reachable by any peer that can drive an association into
-COOKIE_ECHOED, including an unprivileged process using a raw SCTP socket
-in a user and network namespace.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Cc: stable@vger.kernel.org
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260704033545.2438373-2-bestswngs@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 14a4696bc311 ("can: isotp: isotp_release(): omit unintended hrtimer restart on socket release")
+Closes: https://lore.kernel.org/linux-can/20260707085210.6B6C01F000E9@smtp.kernel.org/
+Reported-by: Nico Yip <zdi-disclosures@trendmicro.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260712-isotp-fixes-v10-1-793a1b1ce17f@hartkopp.net
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_statefuns.c |   23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ net/can/isotp.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -73,7 +73,8 @@ static enum sctp_disposition sctp_sf_do_
- 					const struct sctp_association *asoc,
- 					const union sctp_subtype type,
- 					void *arg,
--					struct sctp_cmd_seq *commands);
-+					struct sctp_cmd_seq *commands,
-+					struct sctp_errhdr *err);
- static enum sctp_disposition sctp_sf_shut_8_4_5(
- 					struct net *net,
- 					const struct sctp_endpoint *ep,
-@@ -2419,9 +2420,15 @@ enum sctp_disposition sctp_sf_cookie_ech
- 	 * errors.
- 	 */
- 	sctp_walk_errors(err, chunk->chunk_hdr) {
--		if (SCTP_ERROR_STALE_COOKIE == err->cause)
--			return sctp_sf_do_5_2_6_stale(net, ep, asoc, type,
--							arg, commands);
-+		if (err->cause != SCTP_ERROR_STALE_COOKIE)
-+			continue;
-+		/* The staleness is only meaningful if the cause is long
-+		 * enough to hold it; a shorter one is malformed.
-+		 */
-+		if (ntohs(err->length) < sizeof(*err) + sizeof(__be32))
-+			break;
-+		return sctp_sf_do_5_2_6_stale(net, ep, asoc, type,
-+					      arg, commands, err);
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -1184,11 +1184,18 @@ static int isotp_release(struct socket *
+ 						  SINGLE_MASK(so->txid),
+ 						  isotp_rcv_echo, sk);
+ 				dev_put(dev);
+-				synchronize_rcu();
+ 			}
+ 		}
  	}
  
- 	/* It is possible to have malformed error causes, and that
-@@ -2463,13 +2470,13 @@ static enum sctp_disposition sctp_sf_do_
- 					const struct sctp_association *asoc,
- 					const union sctp_subtype type,
- 					void *arg,
--					struct sctp_cmd_seq *commands)
-+					struct sctp_cmd_seq *commands,
-+					struct sctp_errhdr *err)
- {
- 	int attempts = asoc->init_err_counter + 1;
--	struct sctp_chunk *chunk = arg, *reply;
- 	struct sctp_cookie_preserve_param bht;
- 	struct sctp_bind_addr *bp;
--	struct sctp_errhdr *err;
-+	struct sctp_chunk *reply;
- 	u32 stale;
- 
- 	if (attempts > asoc->max_init_attempts) {
-@@ -2480,8 +2487,6 @@ static enum sctp_disposition sctp_sf_do_
- 		return SCTP_DISPOSITION_DELETE_TCB;
- 	}
- 
--	err = (struct sctp_errhdr *)(chunk->skb->data);
--
- 	/* When calculating the time extension, an implementation
- 	 * SHOULD use the RTT information measured based on the
- 	 * previous COOKIE ECHO / ERROR exchange, and should add no
++	/* Always wait for a grace period before touching the timers below.
++	 * A concurrent NETDEV_UNREGISTER may have already unregistered our
++	 * filters and cleared so->bound in isotp_notify() without waiting
++	 * for in-flight isotp_rcv() callers to finish, so this call must not
++	 * be skipped just because so->bound is already 0 here.
++	 */
++	synchronize_rcu();
++
+ 	hrtimer_cancel(&so->txfrtimer);
+ 	hrtimer_cancel(&so->txtimer);
+ 	hrtimer_cancel(&so->rxtimer);
 
 
