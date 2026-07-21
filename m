@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464FD449B2A;
-	Tue, 21 Jul 2026 17:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A4646A5E7;
+	Tue, 21 Jul 2026 17:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655059; cv=none; b=I/c5BPxhhct8r8ZlOnKDIaHrKxjG72kjGYWZ5ubSimepvPgX6t65pkPwlN/zsO/k6NiKhbRG5OhWX3tcgf2qTQZwFtQTCi/oB5OJWnFEHhYHeKt+nu9K3pMvgCnprjl9ysjnNzYhhMo6THO0AbDLMdXywbUD3H9MYwfJEuYD0mA=
+	t=1784655062; cv=none; b=C/d1Lc9Xq06wJnMeI1+rNH0P92p1uhHVvjvumCKUuM5hj/1QlYF6G9S3nxhzit1QfaZnMskbVTNQwD+EXiRc5mnk/mckklSJUFhE76Sl/8xFVtZmN76Ci3fE7tMhoQguagCu1IzalXpW2vPwwpjSKUUnEAA1L7LrPJiLdHoIwOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655059; c=relaxed/simple;
-	bh=2ExcJxQAKf8GOQ0h6uzu1n8Ncwu5KqhjDDGhtfgtDW8=;
+	s=arc-20240116; t=1784655062; c=relaxed/simple;
+	bh=D9Uv2uHyHcnPXBqu2snN2aWF0dWuz4M7Kh/M2JdMh9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tdq+7Xkxji+SDpqEOQLwYSGoreT2ud4ThjcIFZQGoRDLE3vlOptl/w72LnszMtYPUei384DYLArx/9F5f/cyyCfG7Pw75sEPIqMdytq/v7llpx8+Kkv91H1fRG2BkFRSCu3rbTO9zR6cHK7Ywkp6en5Qo5EJKjwyKC14dK5r/bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t65/kdhd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lTHjU/AiMvDADQ/7W8SuXGqhyLuOotxzqlToHJsm+j2DAuvEcIUNwlZnv50lc621nfu7kRpTfv/WzFC/wsXbNph55rBuJwiNSyvVl6mKqiN6Cw6bqp2Yv1NENTMzP1a4soaklOrUWeUo2TzYnXc5dhWJIyshPKjXAVjngcauA9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ipde+VuN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t65/kdhd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7701F000E9;
-	Tue, 21 Jul 2026 17:30:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ipde+VuN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9287F1F000E9;
+	Tue, 21 Jul 2026 17:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655058;
-	bh=sf6gFpZP43BpPJwpaC5wLlhNFv02Gmx6GgfMqnBU+9o=;
+	s=korg; t=1784655060;
+	bh=pDFaPcWFKJRdqRXWA8KCJZDAbGQBeDN9KMGBgSeZlMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t65/kdhdIiW+3QWKGvXvuCGfNgu/qhhPME6Omlr1KyASAXMCWszt1ES/JEY+N7NFe
-	 /IhONGNUKl1xbb22l4i7sc1qLB0F7JtsicW7Wjib3+QkE1pz65V6tbvMhpGTDAs0hN
-	 JHlfGM+t5Zh6HoTJF7lcdIGKck+N3OtWOEeKOCdA=
+	b=Ipde+VuNBKHI7VmLAgEPDv55hCEDCwVo5cj97VDhIAumxsMVeywzRfBgN62Kjs39x
+	 BAV5bOtotyd6dBqe4q3S3dfxpeEApRyQcbe0YHrspn51n/qEpOT/PyKoYA7SlpW9y4
+	 47gsc4c7Ilv2RPFbytFMsTn9qSqRp+e3b9eAjOYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 7.1 1897/2077] posix-cpu-timers: Use u64 multiplication in update_rlimit_cpu()
-Date: Tue, 21 Jul 2026 17:26:10 +0200
-Message-ID: <20260721152637.463679221@linuxfoundation.org>
+	Cao Ruichuang <create0818@163.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 7.1 1898/2077] selftests/ftrace: Drop invalid top-level local in test_ownership
+Date: Tue, 21 Jul 2026 17:26:11 +0200
+Message-ID: <20260721152637.486818359@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,53 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Cao Ruichuang <create0818@163.com>
 
-commit 26aff38fefb1d6cd87e22525f41cc8f1aa61b24f upstream.
+commit 808c447df2fe234eb7d9e08ecf53159d291c104c upstream.
 
-update_rlimit_cpu() converts the RLIMIT_CPU value to nanoseconds with
+test_ownership.tc is sourced by ftracetest under /bin/sh.
 
-        u64 nsecs = rlim_new * NSEC_PER_SEC;
+The script currently declares mount_point with local at file scope,
+which makes /bin/sh abort with "local: not in a function" before the
+test can reach the eventfs ownership checks.
 
-On 32-bit kernels both rlim_new (unsigned long) and NSEC_PER_SEC
-(1000000000L) are 32-bit, so the multiplication is performed in unsigned
-long and truncated for rlim_new > 4 seconds before being widened to u64.
+Replace the top-level local declaration with a normal shell variable so
+kernels that support the gid= tracefs mount option can run the test at
+all.
 
-The same file already casts to u64 for the matching computation in
-check_process_timers():
-
-        u64 softns = (u64)soft * NSEC_PER_SEC;
-
-As a result, the truncated value is installed into the CPUCLOCK_PROF
-expiry cache (nextevt), causing the process CPU timer to be programmed
-to fire prematurely for any RLIMIT_CPU soft limit >= 5 seconds. The
-actual SIGXCPU/SIGKILL decision in check_process_timers() already casts
-to u64 and is therefore correct, so limit enforcement is not broken;
-only the expiry-cache programming is wrong. Apply the same cast here so
-both paths convert rlim_cur identically.
-
-64-bit kernels are unaffected.
-
-Fixes: 858cf3a8c599 ("timers/itimer: Convert internal cputime_t units to nsec")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://lore.kernel.org/r/20260407102613.81419-1-create0818@163.com
+Fixes: 8b55572e51805 ("tracing/selftests: Add tracefs mount options test")
+Signed-off-by: Cao Ruichuang <create0818@163.com>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260616112017.1681372-1-zhanxusheng@xiaomi.com
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/posix-cpu-timers.c |    2 +-
+ tools/testing/selftests/ftrace/test.d/00basic/test_ownership.tc |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/time/posix-cpu-timers.c
-+++ b/kernel/time/posix-cpu-timers.c
-@@ -41,7 +41,7 @@ void posix_cputimers_group_init(struct p
-  */
- int update_rlimit_cpu(struct task_struct *task, unsigned long rlim_new)
- {
--	u64 nsecs = rlim_new * NSEC_PER_SEC;
-+	u64 nsecs = (u64)rlim_new * NSEC_PER_SEC;
- 	unsigned long irq_fl;
+--- a/tools/testing/selftests/ftrace/test.d/00basic/test_ownership.tc
++++ b/tools/testing/selftests/ftrace/test.d/00basic/test_ownership.tc
+@@ -6,7 +6,7 @@
+ original_group=`stat -c "%g" .`
+ original_owner=`stat -c "%u" .`
  
- 	if (!lock_task_sighand(task, &irq_fl))
+-local mount_point=$(get_mount_point)
++mount_point=$(get_mount_point)
+ 
+ mount_options=$(get_mnt_options "$mount_point")
+ 
 
 
