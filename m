@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE9147141E;
-	Tue, 21 Jul 2026 22:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81D9443A81;
+	Tue, 21 Jul 2026 22:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672159; cv=none; b=L4OiuwaazZvHSw6xk2K3a7J30UHtlry9H8GJkrf1+ePbzpMPDh7pTFfj6r71wr5GPslts+pfK1HSmJJSerplENNqhvynw42Ru57CVnKqSUlLkkignlQa0LD6gg9F5lBaVs1omZoL0lUNILVcR7UsjXY79N8mWB2zgwyeaF9ZS/A=
+	t=1784672161; cv=none; b=JVCfiSzaMKLncPKbRqvtQ3GPvrkSJZaimkNDPZl/lt29Jm8G2/bfPOdGp00PG4sBRZ7Ytykx5Np+DZSmxC9yR7yjH+51CMtwim613uIIkCR3ySI4OqqPGjfs74sR3vCLRe5rbOa4iP4Y9+iidpik9UTWAgkWmKril1NCsiaj1sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672159; c=relaxed/simple;
-	bh=liYwuMHDeWu++VWyrtcZxF5RuIAzBBjFGhMErt7WRJQ=;
+	s=arc-20240116; t=1784672161; c=relaxed/simple;
+	bh=Oval4lp63pyQEAusMCsLKI3moTMc3iRodVuCcKnoCnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bkB6ATS6Ar3F1p+xVKuYzJOxXOAOG6DTKgQ2pS66GV5vg2pyIpLUlSF1lj8NzhN/y1lfToPWakUHRND9aAWFCKMPl2mIwHwmBgYE2gg2pNHDqv/UZnaxjP1+zhNvIlN/4aoEfpfbrItgjeJBOfZdpFAglcwFwZqMpZbL08Pg7w4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KH+8KyJt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uM3ZcMEN9yfgn35JVkefryxgGpnKy6RYdwpEykv7+dQs3rkpWmTfNYjp/1z2P39cZBNspa2u2g6U1GC8IxojkWi41bAz604R26mUx1Mr5mAhFSKFiaVGAAMecCqRw2MM6oxyU7I3+PeSUHYQ+oNvJVCjAu1nnTgLEWq4D2J5IDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysHe7u0M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KH+8KyJt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6DC91F000E9;
-	Tue, 21 Jul 2026 22:15:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysHe7u0M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48EB71F000E9;
+	Tue, 21 Jul 2026 22:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672158;
-	bh=8ymeU2e76paImgUBDFvBvhby9vLqV3V/FZCd2oqhcb0=;
+	s=korg; t=1784672160;
+	bh=vOiJuxgXgX6Kxv75Jp6VK8iZvvlVtrsRUULrpIf2Pk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KH+8KyJta4zdeAMZ+3bkFwl34A/7WAPDbP5RZq+lbzPwbocOaRG/iOJ5wsL7jmuG5
-	 +ubLGIB5LJ3516YLj2z7OYqgTerUamnz1IPFYs4Yz5yotNSmbavAOKTENK/qUsZEiC
-	 TOpOhURH5o0BX3rSOh7LukhZAZy0IBuD00vfEvws=
+	b=ysHe7u0MdZ+H9BwKtKZ6N3IiNVleWBSSuzYbtcpo9Xk68gQOypL7FNoap7SZYu79k
+	 hHUckalL3NxIaG3GsZzr0lxpxtnmQjq+X7QWY0zUMUo2kP0GUfWD3abrFmg5WsaXjM
+	 04qeyJhDjW4XyI/YV+tFsSEF2Sg9RtTqCbwIbfuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
+	Feng Wu <wufengwufengwufeng@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 519/843] netfilter: xt_u32: reject invalid shift counts
-Date: Tue, 21 Jul 2026 17:22:34 +0200
-Message-ID: <20260721152417.704625677@linuxfoundation.org>
+Subject: [PATCH 5.15 520/843] netfilter: xt_rateest: fix u64 truncation in xt_rateest_mt()
+Date: Tue, 21 Jul 2026 17:22:35 +0200
+Message-ID: <20260721152417.727880810@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -57,63 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wyatt Feng <bronzed_45_vested@icloud.com>
+From: Feng Wu <wufengwufengwufeng@gmail.com>
 
-[ Upstream commit 64cdf7d30ac18e43df6c48004435febb965809a8 ]
+[ Upstream commit 444853cd438201007da5359821adcc2995655ab1 ]
 
-u32_match_it() executes rule-supplied shift operands on a 32-bit
-value. A malformed u32 rule can provide a shift count of 32 or more,
-triggering an undefined shift out-of-bounds during packet evaluation.
+On links faster than ~34 Gbps, where byte rate may exceed 2^32-1
+(~ 4.3 GBps), the comparison result becomes incorrect because the
+truncated value no longer reflects the actual estimator rate.
 
-Validate XT_U32_LEFTSH and XT_U32_RIGHTSH operands in
-u32_mt_checkentry() and reject malformed rules before they reach the
-packet path.
+Fix by changing the local variables to u64.
 
-Fixes: 1b50b8a371e9 ("[NETFILTER]: Add u32 match")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Fixes: 1c0d32fde5bd ("net_sched: gen_estimator: complete rewrite of rate estimators")
+Signed-off-by: Feng Wu <wufengwufengwufeng@gmail.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_u32.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ net/netfilter/xt_rateest.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/xt_u32.c b/net/netfilter/xt_u32.c
-index 117d4615d6684c..ec1a21e3b6e2c3 100644
---- a/net/netfilter/xt_u32.c
-+++ b/net/netfilter/xt_u32.c
-@@ -100,7 +100,7 @@ static int u32_mt_checkentry(const struct xt_mtchk_param *par)
+diff --git a/net/netfilter/xt_rateest.c b/net/netfilter/xt_rateest.c
+index b1d736c15fcbe5..7c05b63425784e 100644
+--- a/net/netfilter/xt_rateest.c
++++ b/net/netfilter/xt_rateest.c
+@@ -16,7 +16,7 @@ xt_rateest_mt(const struct sk_buff *skb, struct xt_action_param *par)
  {
- 	const struct xt_u32 *data = par->matchinfo;
- 	const struct xt_u32_test *ct;
--	unsigned int i;
-+	unsigned int i, j;
+ 	const struct xt_rateest_match_info *info = par->matchinfo;
+ 	struct gnet_stats_rate_est64 sample = {0};
+-	u_int32_t bps1, bps2, pps1, pps2;
++	u64 bps1, bps2, pps1, pps2;
+ 	bool ret = true;
  
- 	if (data->ntests > ARRAY_SIZE(data->tests))
- 		return -EINVAL;
-@@ -111,6 +111,16 @@ static int u32_mt_checkentry(const struct xt_mtchk_param *par)
- 		if (ct->nnums > ARRAY_SIZE(ct->location) ||
- 		    ct->nvalues > ARRAY_SIZE(ct->value))
- 			return -EINVAL;
-+
-+		for (j = 1; j < ct->nnums; ++j) {
-+			switch (ct->location[j].nextop) {
-+			case XT_U32_LEFTSH:
-+			case XT_U32_RIGHTSH:
-+				if (ct->location[j].number >= 32)
-+					return -EINVAL;
-+				break;
-+			}
-+		}
- 	}
- 
- 	return 0;
+ 	gen_estimator_read(&info->est1->rate_est, &sample);
 -- 
 2.53.0
 
