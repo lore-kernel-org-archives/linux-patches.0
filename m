@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D389F443318;
-	Tue, 21 Jul 2026 22:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9419C44AB8E;
+	Tue, 21 Jul 2026 22:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672464; cv=none; b=pGCoFZOhVtjDaW9c4fN7/TYertti7JNHf8dTQnk+y7cpPFHu4e+rP13X/PA+hvhtx4/vNkv8OERX/EW3k1JiuFKTUEmnKipeD32/r/5MSuFdODSK+VKqFKCfNhgs/Vs7vusKpL8vOS9KKji6i6UmAWp2b4kDxw+bWlWFNW0Y7+g=
+	t=1784672466; cv=none; b=PN1dgdmrJ8SAGlplrPbS5dAo2ChRpIuW4icF6SQzNTeaK4eAUfIuQg3781KH4gBx1NiBGMH4PF0J0zK0QP7bFTzWyGK6twTyS9zce45C1EnENB6Y42t70mFUpYzVvDd1EFsq+1pSPPvikxgxKYAz6DaWvsdbR5RaKzlC2FMuJLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672464; c=relaxed/simple;
-	bh=kJ/6mYHPg3sZHc2/hy0i//CTS3VYOvSAe3vxUE5X9+E=;
+	s=arc-20240116; t=1784672466; c=relaxed/simple;
+	bh=SBPXrNcvoIZkql19Dv8/kGPbKYcowi2Ra5IUEgIMgdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nvoFmgV/+ndOFxG60BNdZvXKWWTAFCFXEh4r9ce+hWpBKBovYk7k7ilXGgQhGBN23WEtz/iS82bSHr/8Mq65vXLo7mpW1PMrioUsUbsW821uwRe5TepRQJVYC86hGble1o8E1khGtwz1jRBDo2j9Ctqegn8WNcOWAVZWzgPQPqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYvzUE+7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UKj8KzK5yC9EDqPIjGJ2VcKWoinj7L//Qd8UZkTsAWBJm2I24/12QlcYzlgyjYhqgEEY199yaaJdavOJwYQVS74zeQnzekFnFzEuLvrSn+o3J2JcVz89hihdljWzGC+TMi3g/HFJdQlTqo2NERkgw82W95kdYrxHY+PlvBTiPqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0k6ahAQJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYvzUE+7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B681F000E9;
-	Tue, 21 Jul 2026 22:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0k6ahAQJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0042A1F000E9;
+	Tue, 21 Jul 2026 22:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672462;
-	bh=Mo9Bc4UTWrILihu0UtROheodddCIejGGc3VIwPrFOLM=;
+	s=korg; t=1784672465;
+	bh=0B3W2pqyC+VsoI278AsIetTh+rH64gYXy0pzbGl8i7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WYvzUE+75Q3AXZISe+3pOleV4Lcds4dhM0xw3M3nQZ/33o26S+Gn0QV1PuYpDdQG+
-	 C8ToyvukGH5ozukXGvl14HyWHbBj00jpKWRBney97X1bMm6gWvtyjGUxiSVK4AUAPF
-	 meEshtkq+wHUZmAst6b1uYfsWFDOGRmUpKR47Brs=
+	b=0k6ahAQJcYwc4pEVeXHSZCzIUSHnPKS6yymtR215rLBypJhpuOLUiA/FUAkLn0Hcj
+	 6UO0YzoL/zwHd0TWKV0Jm/3y+jiMafOLMorbAYz/ggaPRQQC50ZS6z+o/L48qE2Z0o
+	 MMhxabLClzLlmqtVRKcFvoscieZfZkCg7yHQAgxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 5.15 591/843] batman-adv: dat: ensure accessible eth_hdr proto field
-Date: Tue, 21 Jul 2026 17:23:46 +0200
-Message-ID: <20260721152419.344723953@linuxfoundation.org>
+Subject: [PATCH 5.15 592/843] batman-adv: dat: fix tie-break for candidate selection
+Date: Tue, 21 Jul 2026 17:23:47 +0200
+Message-ID: <20260721152419.368614488@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,102 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 26560c4a03dc4d607331600c187f59ab2df5f341 upstream.
+commit 98052bdaf6ac1639a63ffc10244eeeab1f62ed2b upstream.
 
-When batadv_get_vid() accesses the proto field of the ethernet header, it
-is not checking if the data itself is accessible. The caller is responsible
-for it. But in contrast to other call sites, batadv_dat_get_vid() and its
-caller didn't make sure this is true. This could have caused an
-out-of-bounds access.
+The original version of the candidate selection for DAT attempted to
+compare both candidate and max_orig_node to identify which has the smaller
+MAC address. This comparison is required as tie-break when a hash collision
+happened.
+
+But the used function returned 0 when the function was not equal and a
+non-zero value when it was equal. As result, the actually selected
+node was dependent on the order of entries in the orig_hash and not
+actually on the mac addresses. The last originator in the hash collision
+would always win.
+
+To have a proper ordering, it must diff the actual MAC address bytes and
+reject the candidate when the diff is not smaller than 0.
 
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: be1db4f6615b ("batman-adv: make the Distributed ARP Table vlan aware")
+Fixes: 785ea1144182 ("batman-adv: Distributed ARP Table - create DHT helper functions")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/distributed-arp-table.c |   23 +++++++++++++++++++++++
- net/batman-adv/main.c                  |    3 +++
- 2 files changed, 26 insertions(+)
+ net/batman-adv/distributed-arp-table.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/net/batman-adv/distributed-arp-table.c
 +++ b/net/batman-adv/distributed-arp-table.c
-@@ -1077,6 +1077,9 @@ out:
-  * @skb: the buffer containing the packet to extract the VID from
-  * @hdr_size: the size of the batman-adv header encapsulating the packet
-  *
-+ * The caller must ensure that at least @hdr_size + ETH_HLEN bytes are
-+ * accessible after skb->data.
-+ *
-  * Return: If the packet embedded in the skb is vlan tagged this function
-  * returns the VID with the BATADV_VLAN_HAS_TAG flag. Otherwise BATADV_NO_FLAGS
-  * is returned.
-@@ -1159,6 +1162,10 @@ bool batadv_dat_snoop_outgoing_arp_reque
- 	if (!atomic_read(&bat_priv->distributed_arp_table))
+@@ -546,7 +546,7 @@ static bool batadv_is_orig_node_eligible
+ 	 * the one with the lowest address
+ 	 */
+ 	if (tmp_max == max && max_orig_node &&
+-	    batadv_compare_eth(candidate->orig, max_orig_node->orig))
++	    memcmp(candidate->orig, max_orig_node->orig, ETH_ALEN) >= 0)
  		goto out;
  
-+	/* first, find out the vid. */
-+	if (!pskb_may_pull(skb, hdr_size + ETH_HLEN))
-+		goto out;
-+
- 	vid = batadv_dat_get_vid(skb, &hdr_size);
- 
- 	type = batadv_arp_get_type(bat_priv, skb, hdr_size);
-@@ -1254,6 +1261,10 @@ bool batadv_dat_snoop_incoming_arp_reque
- 	if (!atomic_read(&bat_priv->distributed_arp_table))
- 		goto out;
- 
-+	/* first, find out the vid. */
-+	if (!pskb_may_pull(skb, hdr_size + ETH_HLEN))
-+		goto out;
-+
- 	vid = batadv_dat_get_vid(skb, &hdr_size);
- 
- 	type = batadv_arp_get_type(bat_priv, skb, hdr_size);
-@@ -1316,6 +1327,10 @@ void batadv_dat_snoop_outgoing_arp_reply
- 	if (!atomic_read(&bat_priv->distributed_arp_table))
- 		return;
- 
-+	/* first, find out the vid. */
-+	if (!pskb_may_pull(skb, hdr_size + ETH_HLEN))
-+		return;
-+
- 	vid = batadv_dat_get_vid(skb, &hdr_size);
- 
- 	type = batadv_arp_get_type(bat_priv, skb, hdr_size);
-@@ -1364,6 +1379,10 @@ bool batadv_dat_snoop_incoming_arp_reply
- 	if (!atomic_read(&bat_priv->distributed_arp_table))
- 		goto out;
- 
-+	/* first, find out the vid. */
-+	if (!pskb_may_pull(skb, hdr_size + ETH_HLEN))
-+		goto out;
-+
- 	vid = batadv_dat_get_vid(skb, &hdr_size);
- 
- 	type = batadv_arp_get_type(bat_priv, skb, hdr_size);
-@@ -1818,6 +1837,10 @@ bool batadv_dat_drop_broadcast_packet(st
- 	if (batadv_forw_packet_is_rebroadcast(forw_packet))
- 		goto out;
- 
-+	/* first, find out the vid. */
-+	if (!pskb_may_pull(forw_packet->skb, hdr_size + ETH_HLEN))
-+		goto out;
-+
- 	vid = batadv_dat_get_vid(forw_packet->skb, &hdr_size);
- 
- 	type = batadv_arp_get_type(bat_priv, forw_packet->skb, hdr_size);
---- a/net/batman-adv/main.c
-+++ b/net/batman-adv/main.c
-@@ -618,6 +618,9 @@ __be32 batadv_skb_crc32(struct sk_buff *
-  * @skb: the buffer containing the packet
-  * @header_len: length of the batman header preceding the ethernet header
-  *
-+ * The caller must ensure that at least @header_len + ETH_HLEN bytes are
-+ * accessible after skb->data.
-+ *
-  * Return: VID with the BATADV_VLAN_HAS_TAG flag when the packet embedded in the
-  * skb is vlan tagged. Otherwise BATADV_NO_FLAGS.
-  */
+ 	ret = true;
 
 
