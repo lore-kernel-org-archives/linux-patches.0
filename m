@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D541446AA62;
-	Tue, 21 Jul 2026 15:34:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FDA246AA6C;
+	Tue, 21 Jul 2026 15:34:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648079; cv=none; b=e9tH00xcaQKNwZK7xNpv9k6og0gUw9LQllj6eA8W7tvMq1QxnDrTSLIPM6T5tN783LSrr0OCKYxKjvdeHnAxwm4E149FNLFlzIbDo3zt5OsF5FDyTDM2TtgFo5qcTGIT+5bblHFiu7IJ6DlNs6t8cla2DfRLR0JTquUXvng/8wU=
+	t=1784648083; cv=none; b=KEe6ZEUrEzWj6uPiSCaPGGDOk1T0DCyPo9UUVICssEOjfYL11B6V1gG5TctNDIhTzr+JX3oND2bGbieeVwS9gxsI4N4+Q/4sGGH4fW9SX3FL7kqykZlG/7KU4S7R5tyf+7e/9VjimIWRa8+S5DSMYiM1qlFSWUflYuCQilE6uXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648079; c=relaxed/simple;
-	bh=tDtxzrzeC36az41WjaUhsn+kZUZ2CocC6gq2Q9FbGu4=;
+	s=arc-20240116; t=1784648083; c=relaxed/simple;
+	bh=Mc3ZnHf9K5ZMTTUu0KsABqwagJTKfA2uG+m7nxHKR+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L1sTdAn2vIHXaMeB69xSbe6txMv+HZF+mxVKIxm9DHnweKIuQ0Vx+6F0zEFE1SPyDth4VBHm0DeP7mjIWMAMJ/xOFHHSejqEB0EksxZxGlp8TYZ5mWSix9mk4PysKzyQR0WDqwHa/je+w0HR1cFXbE1FjyA4u8Rd+tUIq06lKk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cENYEZ3+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b7o4xkHcilgftO0mWNksaOxzYAj+W6HI9X5iqM4aHB7pMXsn7HTPw/4MI+FeWsLNhu3yWBW2TdtTrv4GIESYtrZQO3LAPEwnbYgQwXexCXYqs1jFeImrLytCbCmoaidsJYeY9/9u5zHeuwr8RELodzi+t3asKeO3l1oO2ajSRtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hmf+AMyp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cENYEZ3+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481FF1F000E9;
-	Tue, 21 Jul 2026 15:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hmf+AMyp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31F81F000E9;
+	Tue, 21 Jul 2026 15:34:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648078;
-	bh=U2DzaQMjfV3Z7YkfUtCXAaG1DvTwU+i2KxDrJwXnZv0=;
+	s=korg; t=1784648081;
+	bh=fBB4gIhLM7cKa+RypC2i5cCUJao6N4RxnQmDYJb7qwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cENYEZ3+K6GWlRDMnT7W7o1NbDmuCb1IVFPiBmksySY7X0MpBT+pxorK5moq9W5Uo
-	 LXGXaTiwOMNxjZ6UUn7DvtpDgLl1oO5YvjHjn+TdXTCU6euvmb1uztKlsX4GlVAlcI
-	 YflhaWZdzDbqED6u6RyC4NDSYiwBvI9Hem3gz02c=
+	b=Hmf+AMypKnr/nj3T8Gz6ThL4VG0a5iSSFKBtkiBCBX8YwkUxql0+sgMj83DypOMu5
+	 4N5VcHB8vdLSkXphMRJV00TKcZrk4QjDa02GZXqA3/VOtETSXdvC/mCSxaaacKBXl4
+	 CJQXXdfx8WBVlV45QwNhor6eqE+N6eqfdIPkmrhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0064/2077] drm/radeon: fix memory leak in radeon_ring_restore() on lock failure
-Date: Tue, 21 Jul 2026 16:55:37 +0200
-Message-ID: <20260721152554.204182971@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Li Daming <d4n.for.sec@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 0038/2077] afs: Fix uncancelled rxrpc OOB message handler
+Date: Tue, 21 Jul 2026 16:55:11 +0200
+Message-ID: <20260721152553.587677298@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,48 +57,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 82f1d6042611d45b8b9de423bbcb4e0ced9ec62b ]
+commit a4057e58b07005d0fe0491bdbf1868c1491909ee upstream.
 
-radeon_ring_restore() takes ownership of the data buffer allocated by
-radeon_ring_backup(). The caller (radeon_gpu_reset()) only frees it in
-the non-restore branch; in the restore branch it relies on
-radeon_ring_restore() to free it.
+Fix AFS to cancel its OOB message processing (typically to respond to
+security challenges).  Also move OOB message processing to afs_wq so that
+it's also waited for and make the OOB handler just return if the net
+namespace is no longer live.
 
-If radeon_ring_lock() fails, the function returned early without calling
-kvfree(data), leaking the ring backup buffer on every GPU reset that
-fails at the lock stage. During repeated GPU resets this causes
-cumulative kernel memory exhaustion.
-
-Free data before returning the error.
-
-Fixes: 55d7c22192be ("drm/radeon: implement ring saving on reset v4")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 5800b1cf3fd8 ("rxrpc: Allow CHALLENGEs to the passed to the app for a RESPONSE")
+Link: https://sashiko.dev/#/patchset/20260609140911.838677-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Li Daming <d4n.for.sec@gmail.com>
+cc: Ren Wei <n05ec@lzu.edu.cn>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260624163819.3017002-6-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/radeon_ring.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/afs/cm_security.c |    3 ++-
+ fs/afs/rxrpc.c       |    5 ++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/radeon_ring.c b/drivers/gpu/drm/radeon/radeon_ring.c
-index 581ae20c46e4b5..a5dff072c1ac03 100644
---- a/drivers/gpu/drm/radeon/radeon_ring.c
-+++ b/drivers/gpu/drm/radeon/radeon_ring.c
-@@ -356,8 +356,10 @@ int radeon_ring_restore(struct radeon_device *rdev, struct radeon_ring *ring,
+--- a/fs/afs/cm_security.c
++++ b/fs/afs/cm_security.c
+@@ -101,7 +101,8 @@ void afs_process_oob_queue(struct work_s
+ 	struct sk_buff *oob;
+ 	enum rxrpc_oob_type type;
  
- 	/* restore the saved ring content */
- 	r = radeon_ring_lock(rdev, ring, size);
--	if (r)
-+	if (r) {
-+		kvfree(data);
- 		return r;
-+	}
+-	while ((oob = rxrpc_kernel_dequeue_oob(net->socket, &type))) {
++	while (READ_ONCE(net->live) &&
++	       (oob = rxrpc_kernel_dequeue_oob(net->socket, &type))) {
+ 		switch (type) {
+ 		case RXRPC_OOB_CHALLENGE:
+ 			afs_respond_to_challenge(oob);
+--- a/fs/afs/rxrpc.c
++++ b/fs/afs/rxrpc.c
+@@ -128,6 +128,7 @@ void afs_close_socket(struct afs_net *ne
+ 	_enter("");
  
- 	for (i = 0; i < size; ++i) {
- 		radeon_ring_write(ring, data[i]);
--- 
-2.53.0
-
+ 	cancel_work_sync(&net->charge_preallocation_work);
++	cancel_work_sync(&net->rx_oob_work);
+ 	/* Future work items should now see ->live is false. */
+ 
+ 	kernel_listen(net->socket, 0);
+@@ -148,6 +149,7 @@ void afs_close_socket(struct afs_net *ne
+ 
+ 	kernel_sock_shutdown(net->socket, SHUT_RDWR);
+ 	flush_workqueue(afs_async_calls);
++	cancel_work_sync(&net->rx_oob_work);
+ 	net->socket->sk->sk_user_data = NULL;
+ 	sock_release(net->socket);
+ 	key_put(net->fs_cm_token_key);
+@@ -989,5 +991,6 @@ static void afs_rx_notify_oob(struct soc
+ {
+ 	struct afs_net *net = sk->sk_user_data;
+ 
+-	schedule_work(&net->rx_oob_work);
++	if (READ_ONCE(net->live))
++		queue_work(afs_wq, &net->rx_oob_work);
+ }
 
 
