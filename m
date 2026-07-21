@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2C43B6C17;
-	Tue, 21 Jul 2026 22:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887D243E066;
+	Tue, 21 Jul 2026 22:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672840; cv=none; b=OIHtrLoB0kcD/AAEUT67kKRnOf5bUSanM4q9Q14KqgjdBWdu8ts1tu7e0Y0klTqQH8XEf/qQEefU9NX9m7ZjbD8t2LAiZqA8lRMcSjUtum8gZ53vzsC9BfrzSqmnDGbPvaqE/thwHfyNM/Q0D8pn8JUdxBmatVvXwcZgC9U/OaY=
+	t=1784672842; cv=none; b=lcw+oJIGPjVS+VwGbbGf0dMZQXHPy3QGx5gUwiA8H3yiJflLg5RSPWywzK0YHUjmtVpD4VbdI0QEWWwC0u+NtPG/JMBQCcsNg6zgJF2rDRuGFlyviIy4muqNBmNFk58oS0+x/MmpmkYe4901en+SiOFNbVWjuvF5QHc9TK+7jrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672840; c=relaxed/simple;
-	bh=HqTsv8jmy6exx2U22TfS70oAe3wxp5yqEtZkfKXk5jQ=;
+	s=arc-20240116; t=1784672842; c=relaxed/simple;
+	bh=1ipKSzo9m4KF9k9pjdci+MSArptwjVBuMl0wC7/DME8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K08Uqf0LWh9JDiZ8/sYaBLKYKU2sarIL7VJ37vj36Vs438gxPcnWJRqyNXMFK9qdou7hhCh3uk1MU+EKnMy4x5yl0FPg3hODHlrSllpNhGxkdKMMyjJUXjscBc4MlfHMp+BaM8gTe/L0ogLwgsWAMgfhNnXp2miV4OD/USLIwPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PH4gEZHZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HPXsBbqq/VqsXmiVt+TYV1rDM1YP9ECQyq+mgjT8uR/cvgGOnEiz1ZV8901JkLs6EhYO7nGW70RsioYZUfVtN6tVcGAlEamjqb34TE+JAcdagrxBsCUOg2clEy55l8lY+kr+moGqKMm78x7el4zM0ellVQgtmJKFjkUBX6TwEAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FCaPM2DG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PH4gEZHZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 101CF1F000E9;
-	Tue, 21 Jul 2026 22:27:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FCaPM2DG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76E61F000E9;
+	Tue, 21 Jul 2026 22:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672838;
-	bh=1G5B9J/w1GCH1EGNrqB5CNC+OGABlSocivInoT6pA+0=;
+	s=korg; t=1784672841;
+	bh=srMXHurondJ33cMHjXJ1bjwBpelMYrZjizOEBrn8sJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PH4gEZHZaeoStCInvns+vQtqVfGI2uq7ibCElal6dnliFNrVUmiY9q4kuNmajH9Be
-	 mIXxkdBnkbLyO+HnkNk2m8snkyFs5sXVsvg4lWtAqIiUXoLBfSl1C4ZmKQys24oP3G
-	 ZoeqE52q9oDfH1p+XhziyPbuOj0M8O6iZENC/Ux0=
+	b=FCaPM2DGpWn7ksNklD8yfM6R5d6lE2yvUJAg4SFrRM04nln5qU3nQCa8LaznNdPZL
+	 TqEI/tH+4N3f69rSsLLdgHIHQ9I/yoW3k714cbnBqvrhuPnf93LRPGVT+nVuFIl42i
+	 FZB0aJaiOG03thJUyFRhhHZcuH6DKZHdhQZTmTOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Beims <rafael.beims@toradex.com>,
-	Jeff Chen <jeff.chen_1@nxp.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 723/843] wifi: mwifiex: fix permanently busy scans after multiple roam iterations
-Date: Tue, 21 Jul 2026 17:25:58 +0200
-Message-ID: <20260721152422.306992070@linuxfoundation.org>
+	Marco Nenciarini <mnencia@kcore.it>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 770/843] PCI: Skip Resizable BAR restore on read error
+Date: Tue, 21 Jul 2026 17:26:45 +0200
+Message-ID: <20260721152423.373754937@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,87 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael Beims <rafael.beims@toradex.com>
+From: Marco Nenciarini <mnencia@kcore.it>
 
-commit d78a407bad6f500884a8606aea1a5a9207be4030 upstream.
+[ Upstream commit ee7471fe968d210939be9046089a924cd23c8c3b ]
 
-In order for the firmware to sleep, the driver has to confirm a
-previously received sleep request. The normal sequence of evets goes
-like this:
-EVENT_SLEEP -> adapter->ps_state = PS_STATE_PRE_SLEEP -> sleep-confirm
--> SLEEP -> EVENT_AWAKE -> AWAKE.
-Before sending the sleep-confirm command, the driver must make sure
-there are no commands either running or waiting to be completed.
+pci_restore_rebar_state() uses the Resizable BAR Control register to decide
+how many BARs to restore (nbars) and which BAR each iteration addresses
+(bar_idx).
 
-mwifiex_ret_802_11_associate() unconditionally sets
-ps_state = PS_STATE_AWAKE when it processes the association command
-response, outside of the normal powersave management flow. If
-EVENT_SLEEP arrives while the association command is in flight,
-ps_state is PRE_SLEEP when the association command response is parsed,
-and the forced AWAKE overwrites it. The deferred sleep-confirm is
-never sent.
+When a device does not respond, config reads typically return
+PCI_ERROR_RESPONSE (~0).  Both fields are 3 bits wide, so nbars and bar_idx
+both evaluate to 7, past the spec's valid ranges for both fields.
+pci_resource_n() then returns an unrelated resource slot, whose size is
+used to derive a nonsensical value written back to the Resizable BAR
+Control register.
 
-A subsequent scan_start command is correctly acknowledged, but the
-firmware doesn't generate scan_result events. The scan request never
-finishes, and additional requests from userspace fail with -EBUSY.
+Bail out if any Resizable BAR Control read returns PCI_ERROR_RESPONSE. No
+further BARs are touched, which is safe because a config read that returns
+PCI_ERROR_RESPONSE indicates the device is unreachable and restoration is
+pointless.
 
-After testing on both IW412 and W8997, I could only trigger the bug on
-the IW412 and observed the firmwares behave differently. On the IW412
-the firmware still sends EVENT_SLEEP while the authentication /
-association process is ongoing. A W8997 under the same
-conditions seems to suppress power-save for the duration of the
-association, so PRE_SLEEP never coincided with the association response
-even after extended periods of testing using the loops
-described below (>12hours).
-
-On the IW412, the delay between commands that triggers an EVENT_SLEEP
-was empirically determined to be ~20ms. This delay can naturally occur
-when the driver is outputting debugging information
-(debug_mask = 0x00000037), in which situation the busy scans issue is
-repeatable while running "test 1)" as described below. If the delay
-between commands is less than ~20ms, the firmware stays awake and
-the issue was not reproducible running the same test.
-
-The host_mlme=false path also behaves differently. In this case, the
-entire authentication / association transaction is executed by one
-command (HostCmd_CMD_802_11_ASSOCIATE), and the firmware doesn't emit
-EVENT_SLEEP while the command is running.
-
-Remove the assignment so the ps_state is only manipulated in the paths
-that are related to powersave event handling and on the main workqueue
-for correct sleep confirmation.
-
-The following loop tests were performed (with debugging output enabled):
-1) force roaming between two AP's, one 5GHz and one 2.4GHz, same
-SSID. Use wpa_cli to trigger the roaming behavior, sleep 2s
-between iterations.
-2) force a disconnection to AP 1 and a connection to AP 2, test
-scan. Use wpa_cli to trigger the connection changes, sleep 2s
-between iterations.
-
-Each test ran in each device for at least 3 hours.
-
-Fixes: 5e6e3a92b9a4 ("wireless: mwifiex: initial commit for Marvell mwifiex driver")
+Fixes: d3252ace0bc6 ("PCI: Restore resized BAR state on resume")
+Signed-off-by: Marco Nenciarini <mnencia@kcore.it>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Rafael Beims <rafael.beims@toradex.com>
-Reviewed-by: Jeff Chen <jeff.chen_1@nxp.com>
-Link: https://patch.msgid.link/20260612122547.1586872-2-rafael@beims.me
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/666cac19b5daa0ab0e0ab64454e76b4d24465dbd.1776429882.git.mnencia@kcore.it
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/join.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/pci/rebar.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/wireless/marvell/mwifiex/join.c
-+++ b/drivers/net/wireless/marvell/mwifiex/join.c
-@@ -702,7 +702,6 @@ int mwifiex_ret_802_11_associate(struct
- 	/* Send a Media Connected event, according to the Spec */
- 	priv->media_connected = true;
+--- a/drivers/pci/rebar.c
++++ b/drivers/pci/rebar.c
+@@ -131,6 +131,9 @@ void pci_restore_rebar_state(struct pci_
+ 		return;
  
--	priv->adapter->ps_state = PS_STATE_AWAKE;
- 	priv->adapter->pps_uapsd_mode = false;
- 	priv->adapter->tx_lock_flag = false;
+ 	pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
++	if (PCI_POSSIBLE_ERROR(ctrl))
++		return;
++
+ 	nbars = FIELD_GET(PCI_REBAR_CTRL_NBAR_MASK, ctrl);
  
+ 	for (i = 0; i < nbars; i++, pos += 8) {
+@@ -138,6 +141,9 @@ void pci_restore_rebar_state(struct pci_
+ 		int bar_idx, size;
+ 
+ 		pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
++		if (PCI_POSSIBLE_ERROR(ctrl))
++			return;
++
+ 		bar_idx = ctrl & PCI_REBAR_CTRL_BAR_IDX;
+ 		res = pdev->resource + bar_idx;
+ 		size = pci_rebar_bytes_to_size(resource_size(res));
 
 
