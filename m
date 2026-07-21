@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6334D431A5C;
-	Tue, 21 Jul 2026 19:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8C9356A12;
+	Tue, 21 Jul 2026 19:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661482; cv=none; b=sAXrzmXMtflykDYDUwoeh1Az4WUVovzeU8QtzWjJMOeeAME5jTTpoLT6BgMRgpRKszqaSp63ergvtguhHYK9puFcGZOnMRI3eBLphlok+qah5exMZg7mYVh5Ae2pWfc/7D6b79bv11DD/6XtENXJm8qVyO6m89+55R0NxbuBs28=
+	t=1784661485; cv=none; b=f97hYu43FLYB/WZ6Rp5+68Y6Y+1sQqH5PXCANiCu4HjzDP/bnuJe73V8IquLSa0PNFsfUd8G/4P1feCcnjxWvQf8PyABEr/RhYKcqat0H+D8tXpLnvtsJUH+93Ny88EbE5nWxBgxTwUcjqAVgxVEb+oTaHZ1JTFkOqRau3pNn2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661482; c=relaxed/simple;
-	bh=EXunZ4lXFrIAlpON4D+qSFUhNlKVx878XHdYG6j5Zuw=;
+	s=arc-20240116; t=1784661485; c=relaxed/simple;
+	bh=tcslv5Baljadg38vCykAEi3Uh2V7+OG8WriJX5xGD10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dMM40SmQ1tMyngiL6+hHDVUjCgxrJcnGG2cFp1eo7h7gUTIiuRm3A6Pv+YGAvCk4ITAr5SaH3ejMy4Yti/GKwZW0XgUmUCAbWrSJtfbx42aefKBeygQck2x7YrqH3eAhz2/LO+7fX2GpsXVHI0QR73yvnURdnz2iKi/BfWLb780=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=syNk0w+A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fLL380LEOP5ZggeLzjq51TpKkm4KUltKkcmKedHl3GBQrvps6krlJ+xQb8sUAR5InZT1zV28s6UQhSjxsjnLm+CuL3BO7G8ASRKI8vAiZbWA/YFz0Sax0V9JlwD7lOFAKrsDBPtPujp3KfFe3VgMdAHIH80gpvfiD3oNir6cdzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jadu4jIK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="syNk0w+A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5111F000E9;
-	Tue, 21 Jul 2026 19:18:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jadu4jIK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73EF21F000E9;
+	Tue, 21 Jul 2026 19:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661481;
-	bh=sqz4FVyeTJGG1iiQqPgwB7RIpvEM5MLS1TGSffpbyJY=;
+	s=korg; t=1784661484;
+	bh=nPvu5VdM2U59f+I3XKnZTWqirmEazcOQ5i0U34XU3jQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=syNk0w+Aohq5Ga/pyg9Q/swyArjY1Dkp1Senkrbvgv3pZ/CEX+5XEtaTjjpgW8XpI
-	 Kk5h7B2e9d4h5TdQVqrLNCg3mlbeT/NW/P4h+wiUJyFD1Mr/Er0zcGnj+gmiybYOeE
-	 s0i3sbuQAyOEoHgeENazzs8NDHNig2ckugRV2k7s=
+	b=Jadu4jIK9pKe2wBwBXPlBSDCtlDdvLAb/yMi1TVEm6ouOi77Zri0iu1z6S2SQSraD
+	 4aFyMMXyxj3JN/seSnsUhkP3aPXiz1ZevIJ2U7ZCxe0vZImQQkcE3CBZJlhZ7iFW0X
+	 phGOiLqolZntWmSgRkHS518WajEOZ1F80p2t+HUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Hans de Goede <hansg@kernel.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 0046/1276] media: uvcvideo: Fix sequence number when no EOF
-Date: Tue, 21 Jul 2026 17:08:09 +0200
-Message-ID: <20260721152447.116974059@linuxfoundation.org>
+	Tristan Madani <tristan@talencesecurity.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0082/1276] wifi: ath9k: fix OOB access from firmware tx status queue ID
+Date: Tue, 21 Jul 2026 17:08:45 +0200
+Message-ID: <20260721152447.929030013@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -48,155 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit f078966ca1fb1b3865d8e6bbe2705cfd277fc637 upstream.
+[ Upstream commit 7ce2f118a2389e8f0a64068c6fe7cc7d40639be0 ]
 
-If the driver could not detect the EOF, the sequence number is increased
-twice:
- 1) When we enter uvc_video_decode_start() with the old buffer and FID has
-   flipped => We return -EAGAIN and last_fid is not flipped
- 2) When we enter uvc_video_decode_start() with the new buffer.
+ath_tx_edma_tasklet() accesses sc->tx.txq[ts.qid] where ts.qid is a
+4-bit hardware field (0-15), but the txq array only has
+ATH9K_NUM_TX_QUEUES (10) entries. A qid >= 10 causes an OOB array
+access.
 
-Fix this issue by moving the new frame detection logic earlier in
-uvc_video_decode_start().
+Add a bounds check on ts.qid before using it as an array index.
 
-This also has some nice side affects:
-
-- The error status from the new packet will no longer get propagated
-  to the previous frame-buffer.
-- uvc_video_clock_decode() will no longer update the previous frame
-  buf->stf with info from the new packet.
-- uvc_video_clock_decode() and uvc_video_stats_decode() will no longer
-  get called twice for the same packet.
-
-Cc: stable@kernel.org
-Fixes: 650b95feee35 ("[media] uvcvideo: Generate discontinuous sequence numbers when frames are lost")
-Reported-by: Hans de Goede <hansg@kernel.org>
-Closes: https://lore.kernel.org/linux-media/CANiDSCuj4cPuB5_v2xyvAagA5FjoN8V5scXiFFOeD3aKDMqkCg@mail.gmail.com/T/#me39fb134e8c2c085567a31548c3403eb639625e4
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fce041beb03f ("ath9k: unify edma and non-edma tx code, improve tx fifo handling")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/20260415222343.1540564-1-tristmd@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_video.c |   92 +++++++++++++++++++-------------------
- 1 file changed, 47 insertions(+), 45 deletions(-)
+ drivers/net/wireless/ath/ath9k/xmit.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -1192,6 +1192,53 @@ static int uvc_video_decode_start(struct
- 	fid = data[1] & UVC_STREAM_FID;
+diff --git a/drivers/net/wireless/ath/ath9k/xmit.c b/drivers/net/wireless/ath/ath9k/xmit.c
+index 35aa47a9db90b3..26faccc98dd82d 100644
+--- a/drivers/net/wireless/ath/ath9k/xmit.c
++++ b/drivers/net/wireless/ath/ath9k/xmit.c
+@@ -2759,6 +2759,11 @@ void ath_tx_edma_tasklet(struct ath_softc *sc)
+ 			continue;
+ 		}
  
- 	/*
-+	 * Mark the buffer as done if we're at the beginning of a new frame.
-+	 * End of frame detection is better implemented by checking the EOF
-+	 * bit (FID bit toggling is delayed by one frame compared to the EOF
-+	 * bit), but some devices don't set the bit at end of frame (and the
-+	 * last payload can be lost anyway). We thus must check if the FID has
-+	 * been toggled.
-+	 *
-+	 * stream->last_fid is initialized to -1, and buf->bytesused to 0,
-+	 * so the first isochronous frame will never trigger an end of frame
-+	 * detection.
-+	 *
-+	 * Empty buffers (bytesused == 0) don't trigger end of frame detection
-+	 * as it doesn't make sense to return an empty buffer. This also
-+	 * avoids detecting end of frame conditions at FID toggling if the
-+	 * previous payload had the EOF bit set.
-+	 */
-+	if (fid != stream->last_fid && buf && buf->bytesused != 0) {
-+		uvc_dbg(stream->dev, FRAME,
-+			"Frame complete (FID bit toggled)\n");
-+		buf->state = UVC_BUF_STATE_READY;
-+
-+		return -EAGAIN;
-+	}
-+
-+	/*
-+	 * Some cameras, when running two parallel streams (one MJPEG alongside
-+	 * another non-MJPEG stream), are known to lose the EOF packet for a frame.
-+	 * We can detect the end of a frame by checking for a new SOI marker, as
-+	 * the SOI always lies on the packet boundary between two frames for
-+	 * these devices.
-+	 */
-+	if (stream->dev->quirks & UVC_QUIRK_MJPEG_NO_EOF &&
-+	    (stream->cur_format->fcc == V4L2_PIX_FMT_MJPEG ||
-+	     stream->cur_format->fcc == V4L2_PIX_FMT_JPEG) &&
-+	    buf && buf->bytesused != 0) {
-+		const u8 *packet = data + header_len;
-+
-+		if (len >= header_len + 2 &&
-+		    packet[0] == 0xff && packet[1] == JPEG_MARKER_SOI) {
-+			buf->state = UVC_BUF_STATE_READY;
-+			buf->error = 1;
-+			stream->last_fid ^= UVC_STREAM_FID;
-+			return -EAGAIN;
++		if (ts.qid >= ATH9K_NUM_TX_QUEUES) {
++			ath_dbg(common, XMIT, "invalid qid %d\n", ts.qid);
++			continue;
 +		}
-+	}
 +
-+	/*
- 	 * Increase the sequence number regardless of any buffer states, so
- 	 * that discontinuous sequence numbers always indicate lost frames.
- 	 */
-@@ -1258,51 +1305,6 @@ static int uvc_video_decode_start(struct
- 			meta_buf->state = UVC_BUF_STATE_ACTIVE;
- 	}
+ 		txq = &sc->tx.txq[ts.qid];
  
--	/*
--	 * Mark the buffer as done if we're at the beginning of a new frame.
--	 * End of frame detection is better implemented by checking the EOF
--	 * bit (FID bit toggling is delayed by one frame compared to the EOF
--	 * bit), but some devices don't set the bit at end of frame (and the
--	 * last payload can be lost anyway). We thus must check if the FID has
--	 * been toggled.
--	 *
--	 * stream->last_fid is initialized to -1, so the first isochronous
--	 * frame will never trigger an end of frame detection.
--	 *
--	 * Empty buffers (bytesused == 0) don't trigger end of frame detection
--	 * as it doesn't make sense to return an empty buffer. This also
--	 * avoids detecting end of frame conditions at FID toggling if the
--	 * previous payload had the EOF bit set.
--	 */
--	if (fid != stream->last_fid && buf->bytesused != 0) {
--		uvc_dbg(stream->dev, FRAME,
--			"Frame complete (FID bit toggled)\n");
--		buf->state = UVC_BUF_STATE_READY;
--		return -EAGAIN;
--	}
--
--	/*
--	 * Some cameras, when running two parallel streams (one MJPEG alongside
--	 * another non-MJPEG stream), are known to lose the EOF packet for a frame.
--	 * We can detect the end of a frame by checking for a new SOI marker, as
--	 * the SOI always lies on the packet boundary between two frames for
--	 * these devices.
--	 */
--	if (stream->dev->quirks & UVC_QUIRK_MJPEG_NO_EOF &&
--	    (stream->cur_format->fcc == V4L2_PIX_FMT_MJPEG ||
--	    stream->cur_format->fcc == V4L2_PIX_FMT_JPEG)) {
--		const u8 *packet = data + header_len;
--
--		if (len >= header_len + 2 &&
--		    packet[0] == 0xff && packet[1] == JPEG_MARKER_SOI &&
--		    buf->bytesused != 0) {
--			buf->state = UVC_BUF_STATE_READY;
--			buf->error = 1;
--			stream->last_fid ^= UVC_STREAM_FID;
--			return -EAGAIN;
--		}
--	}
--
- 	stream->last_fid = fid;
- 
- 	return header_len;
+ 		ath_txq_lock(sc, txq);
+-- 
+2.53.0
+
 
 
