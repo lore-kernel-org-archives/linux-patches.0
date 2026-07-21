@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A120944211F;
-	Tue, 21 Jul 2026 21:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0B8298CC4;
+	Tue, 21 Jul 2026 21:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671152; cv=none; b=I01fHlbK0PksD+i/nGGntnXHcxeiDmqhrgzp2z7XfeauHo5VxlkOEIJw/O2BVL7zWHyGZWCJkNh0IFxmj68ehCXPRFUOgk5E3V9nrYxvGqq+6AGgblgQO8krMdeah+Pekk1PTPFCcyeK2Gu3tWdZmE+ymzf1yseHBC4LhTthc2w=
+	t=1784671155; cv=none; b=IuoIJJQhXy0Fz62Qn29VACQjtusDTaaLJOC5JtO1FOoF+XhumnFYRk+Xk14pNSSk2S9/eFeQjaXDCZ4x4NhkMHiPAlFQn8ZpymtCZAVVAT6wM1dgY3lsT7rvM0orwTBumkUYCV1EAbbdD5nPrhKOEPUM11qLsB7JXzW2yE0QYHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671152; c=relaxed/simple;
-	bh=0d3Z2YHzdb7dBDZXh05VyG7m64yzzWyMsDGs0uFnlig=;
+	s=arc-20240116; t=1784671155; c=relaxed/simple;
+	bh=rPdHaR4disdavUIbGpdZ5nXF+F7NmltZGYoIrZ+Xz0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TDFNIaq1+w9U41KJ9NBMzj+aZobu47iVcXXYYB5aqsMzJktOyXs5qB+e2FOHgK7j68zBQJ1aq2aPH9pcL51pSFI4QCR/LZcDAne9iKhZQLc1K9voOaT6hMZVjWQbbwt7dTZwMRJHrkIX7VnnKipAhwspvQThY2yP97Jhm772hzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0sQMs3i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oraW5++VSQhf0a2XBOc1jpALWAEdJpRBn4T7sYl/WPggioUyyq/MYs6CbYiE0aK+8JR1QFWulC3b3EV4Lbg/rEcJscItZDkaoJvZ14HOpV2hDP4uJ1BwSb9guvEpsmfkQfzmVwbcoMJLLFMuE63TWIPvBO2zPFGdRNwVWE+ujTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zn1OS0Ox; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0sQMs3i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EA41F000E9;
-	Tue, 21 Jul 2026 21:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zn1OS0Ox"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692431F000E9;
+	Tue, 21 Jul 2026 21:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671151;
-	bh=1CcrHkn6hwJxrk7/fHejlVN+WEfrr768IjGM0vYZQAQ=;
+	s=korg; t=1784671153;
+	bh=6f5uhfP7FA5i2cSc5rqpSXNLJTCu4GBn1/6yC5156+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B0sQMs3iTBKapzs2CICBU0ALzwMFSC3St9EBeI4gUUj0Fwjom8FUNhPdGHP6/f/52
-	 7EFxB7XD0sH8rsU0uHWrwvNUX7YfQwn+plTa2FVwlNqCp24zlaNgmk0MP2nL8i4gXc
-	 k5zsDRU4xDpv0HoUJifPrntqMGWiZOBoCql0zXk0=
+	b=zn1OS0OxyNo4GE0/bsm/8bIyMk4mTFsMl+RWO1Jbhe+vZj85Ib63w2qYEDYrq4HpM
+	 WbpLBu69AZpsGQomp3P0nlsy+9MslW8giiVGEfoSTSgpEb/i9vSpv3umSJdGj71C2a
+	 smle82YUKTPJ/TMEbFoIb5LZXaBFiWm23S0FXLeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>
-Subject: [PATCH 5.15 139/843] usb: sl811-hcd: disable controller wakeup on remove
-Date: Tue, 21 Jul 2026 17:16:14 +0200
-Message-ID: <20260721152409.140788250@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.15 140/843] USB: storage: include US_FL_NO_SAME in quirks mask
+Date: Tue, 21 Jul 2026 17:16:15 +0200
+Message-ID: <20260721152409.161797363@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,41 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 4e8ba83ac4d311992e6a4c21de5dd705010df06e upstream.
+commit 2c00e09e3f9f06f8434f5ea2ee6179ce46692ee6 upstream.
 
-sl811h_probe() enables the HCD controller device as a wakeup source after
-usb_add_hcd() succeeds, but sl811h_remove() removes the HCD and releases
-the driver resources without disabling that wakeup source.
+usb_stor_adjust_quirks() parses the usb-storage.quirks module
+parameter into a new flag set and then applies it with the quirk
+mask to override built-in flags.
 
-Disable controller wakeup after usb_remove_hcd() and before usb_put_hcd()
-so the wakeup source object is detached while the controller device pointer
-is still available.
+The mask is meant to cover the flags that can be overridden by
+the module parameter. The 'k' quirk character sets US_FL_NO_SAME,
+but US_FL_NO_SAME is not included in the mask.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+As a result, the module parameter can set US_FL_NO_SAME, but it
+cannot clear a built-in US_FL_NO_SAME flag by providing an override
+entry that omits 'k'.
 
-Fixes: 3c9740a117d4 ("usb: hcd: move controller wakeup setting initialization to individual driver")
+Add US_FL_NO_SAME to the mask so that the module parameter can
+override it in the same way as the other supported flags.
+
+Fixes: 8010622c86ca ("USB: UAS: introduce a quirk to set no_write_same")
 Cc: stable <stable@kernel.org>
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260701121625.96815-1-mhun512@gmail.com
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/3BCE5880F9A45C2E+20260602053842.2920137-1-raoxu@uniontech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/sl811-hcd.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/storage/usb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/host/sl811-hcd.c
-+++ b/drivers/usb/host/sl811-hcd.c
-@@ -1590,6 +1590,7 @@ sl811h_remove(struct platform_device *de
+--- a/drivers/usb/storage/usb.c
++++ b/drivers/usb/storage/usb.c
+@@ -488,7 +488,7 @@ void usb_stor_adjust_quirks(struct usb_d
+ 			US_FL_INITIAL_READ10 | US_FL_WRITE_CACHE |
+ 			US_FL_NO_ATA_1X | US_FL_NO_REPORT_OPCODES |
+ 			US_FL_MAX_SECTORS_240 | US_FL_NO_REPORT_LUNS |
+-			US_FL_ALWAYS_SYNC);
++			US_FL_ALWAYS_SYNC | US_FL_NO_SAME);
  
- 	remove_debug_file(sl811);
- 	usb_remove_hcd(hcd);
-+	device_wakeup_disable(hcd->self.controller);
- 
- 	/* some platforms may use IORESOURCE_IO */
- 	res = platform_get_resource(dev, IORESOURCE_MEM, 1);
+ 	p = quirks;
+ 	while (*p) {
 
 
