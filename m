@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A7043DA5C;
-	Tue, 21 Jul 2026 22:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CC9298CC4;
+	Tue, 21 Jul 2026 22:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671301; cv=none; b=pSO48KxtgbVrzz71B/bss0HXa4TRSJfNnJYy4D1S/UEulgS+IoBvSvpmNNIlfxl3DG6Yll2wqbFduI9GJaRTDlKCbPCdnTyVyt1qCV+tf0cUHMCmsQMkEOMeCap8Fm7ovIR69EwTQ8HnwI67hF0ZemY2HMq/7qBGc4erqU67Uuo=
+	t=1784671304; cv=none; b=PPHkCYbFuYrd6/9RrrN7Q9SHPYeOLOkQp0tMrxBxfOu8/UC1B1XzYwkhC/Ow3RPUAPupK+pYA0oYaeWSCihSSJT6N9isKD0veOI/y8+906IxsIKAcEHu4nfWEIX2E+SE1NCnC2Ylj+YYxrWr5+NLrPONmL3+sHzDegLmqYcYbPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671301; c=relaxed/simple;
-	bh=T/B1KuS9rDb9r7Q/jzSJcs6qx7suyQWzTGgYU+dFqDo=;
+	s=arc-20240116; t=1784671304; c=relaxed/simple;
+	bh=KaHj/h7AN7F6YKLD/eCHOYN5Upx7zVY6qGpj9x4MObU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jhflw3xSk76WiXrr7svCLCsVDo0cG6tVpdlDSHpntEbd/xwAOlwtNth/aPzbr665b7qBFdaBDv67B9rCi2+LBgomi/jGYdZ9MwLMcCbPk39tLZnAG08O7aW6VqzvVn9wF7+7HVXQ8lFGgRERAEg36T1kJ4oj5+kAO8nx422bjrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXe0ExcJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ftgrbW3tVwV/OD4p3hMeLdtOg+SMK7XYrhRoVZ1gPRKpZhVLkL5jD+jKMWvjABZiuq9iicmsxKXcesl77l7DK2gfmvJQ9AQfqwKHu036OKvieoegGOU9RuA6c7N+w13o6rvWezWx9QDj5ow/siPEWfccXO3ILLcgSmjnyAtT2Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFMD0kc5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXe0ExcJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52551F000E9;
-	Tue, 21 Jul 2026 22:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFMD0kc5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C18F1F000E9;
+	Tue, 21 Jul 2026 22:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671300;
-	bh=NOrkbPU/gzuvIh8VK9nizA5cHdnmFDE5fMu9ZkQ08ZE=;
+	s=korg; t=1784671302;
+	bh=yOKEYZMtEO5zzHXMb5Xco1VH6OwNOuxlxGwdcyQg0Ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PXe0ExcJFbtk35aTRqSeBKYI+foOpO3bJBanMKwzfQw5HhhcxV33R53P2NvbIbMuW
-	 mdqygbgnYfjSR+bXfJYCkbB4+lKfRlneIXPn9Zxu755JDLNbs/rGqZaPhZ/FWQEkh5
-	 y01NYXDYPuN6A2JL1GLPZZOEZFu/kj5VBEodnzU0=
+	b=sFMD0kc50VszbqKfnj0bPNj1sQRcVGGFBjx52k5nTt11Wh8pi/TrVSHVJd4RcBTCr
+	 tHmMEL48Qwj1zhaXips9LLVhMyJ4C9rVymVXTUKRyVpZXlWIZ7vx2mYvu4S1013q8B
+	 hnfETTy+XNs1A1s/OLAS8RQ9t4w/7kMeztHxrqpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 5.15 194/843] RDMA/siw: bound Read Response placement to the RREAD length
-Date: Tue, 21 Jul 2026 17:17:09 +0200
-Message-ID: <20260721152410.379586415@linuxfoundation.org>
+	Alberto Ruiz <aruiz@redhat.com>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 5.15 195/843] fuse: fix device node leak in cuse_process_init_reply()
+Date: Tue, 21 Jul 2026 17:17:10 +0200
+Message-ID: <20260721152410.401504833@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,65 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Alberto Ruiz <aruiz@redhat.com>
 
-commit 7d29f7e9dbd844cae4d3e559cf78324b9642fd6b upstream.
+commit 9fa4f7a53406430ee9982f2f636a15b338185122 upstream.
 
-In drivers/infiniband/sw/siw/siw_qp_rx.c, siw_proc_rresp() places each
-inbound Read Response DDP segment at sge->laddr + wqe->processed and then
-accumulates wqe->processed, but it never checks the running total against
-the sink buffer length on continuation segments. siw_check_sge() resolves
-and validates the sink memory only on the first fragment (the if (!*mem)
-branch), and siw_rresp_check_ntoh() compares the cumulative length against
-wqe->bytes only on the final segment (the !frx->more_ddp_segs guard).
+If device_add() succeeds during CUSE initialization but a subsequent
+step (cdev_alloc() or cdev_add()) fails, the error path calls
+put_device() without first calling device_del().  This leaks the
+devtmpfs entry created by device_add(), leaving a stale /dev/<name>
+node that persists until reboot.
 
-A connected siw peer that answers an outstanding RREAD with Read Response
-segments that keep the DDP Last flag clear, carrying more total payload
-than the RREAD requested, drives wqe->processed past the validated sink
-buffer; the next siw_rx_data() call writes out of bounds at
-sge->laddr + wqe->processed. siw runs iWARP over ordinary routable TCP,
-so the peer is the remote end of an established RDMA connection and needs
-no local privilege.
+Since the cuse_conn is never linked into cuse_conntbl on the failure
+path, cuse_channel_release() sees cc->dev == NULL and skips
+device_unregister(), so no other code path cleans up the node.
 
-Bound every segment before placement, exactly as siw_proc_send() and
-siw_proc_write() already do for their tagged and untagged paths, and
-terminate the connection with a base-or-bounds DDP error when the
-Read Response would overrun the sink buffer.
+This has several consequences:
 
-This is the second receive-path length fix for this file. A separate
-change rejects an MPA FPDU length that underflows the per-fragment
-remainder in the header decode; that guard does not cover this case,
-because here each individual segment length is self-consistent and only
-the accumulated placement offset overruns the buffer.
+ - The device name is permanently poisoned: any subsequent attempt to
+   create a CUSE device with the same name hits the stale sysfs entry,
+   device_add() fails, and the new device is aborted.
 
-Fixes: 8b6a361b8c48 ("rdma/siw: receive path")
-Link: https://patch.msgid.link/r/20260602194700.2273758-1-michael.bommarito@gmail.com
+ - The collision manifests as ENODEV returned to userspace with no
+   dmesg diagnostic, making it very difficult to debug.
+
+ - The failure is self-perpetuating: once a name is leaked, all future
+   attempts with that name fail identically.
+
+Fix this by introducing an err_dev label that calls device_del() to
+undo device_add() before falling through to err_unlock.  The existing
+err_unlock path from a device_add() failure correctly skips device_del()
+since the device was never added.
+
+Testing instructions can be found at the lore link below.
+
+Link: https://lore.kernel.org/all/20260408-wip-cuse-leak-fix-v1-0-1c028d575e97@redhat.com/
+Signed-off-by: Alberto Ruiz <aruiz@redhat.com>
+Fixes: 151060ac1314 ("CUSE: implement CUSE - Character device in Userspace")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_rx.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/fuse/cuse.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/infiniband/sw/siw/siw_qp_rx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_rx.c
-@@ -848,6 +848,15 @@ int siw_proc_rresp(struct siw_qp *qp)
- 	}
- 	mem_p = *mem;
+--- a/fs/fuse/cuse.c
++++ b/fs/fuse/cuse.c
+@@ -386,7 +386,7 @@ static void cuse_process_init_reply(stru
+ 	rc = -ENOMEM;
+ 	cdev = cdev_alloc();
+ 	if (!cdev)
+-		goto err_unlock;
++		goto err_dev;
  
-+	if (unlikely(wqe->processed + srx->fpdu_part_rem > wqe->bytes)) {
-+		siw_dbg_qp(qp, "rresp len: %d + %d > %d\n",
-+			   wqe->processed, srx->fpdu_part_rem, wqe->bytes);
-+		wqe->wc_status = SIW_WC_LOC_LEN_ERR;
-+		siw_init_terminate(qp, TERM_ERROR_LAYER_DDP,
-+				   DDP_ETYPE_TAGGED_BUF,
-+				   DDP_ECODE_T_BASE_BOUNDS, 0);
-+		return -EINVAL;
-+	}
- 	bytes = min(srx->fpdu_part_rem, srx->skb_new);
+ 	cdev->owner = THIS_MODULE;
+ 	cdev->ops = &cuse_frontend_fops;
+@@ -412,6 +412,8 @@ out:
  
- 	if (mem_p->mem_obj == NULL)
+ err_cdev:
+ 	cdev_del(cdev);
++err_dev:
++	device_del(dev);
+ err_unlock:
+ 	mutex_unlock(&cuse_lock);
+ 	put_device(dev);
 
 
