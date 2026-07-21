@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5383382385;
-	Tue, 21 Jul 2026 22:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD98382385;
+	Tue, 21 Jul 2026 22:57:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674630; cv=none; b=JyJM/frUden2bRZRsZbNLzoH9A1kCpCPD6QuF7Y1NP9ZhKsqw38hX4WhVbybWpZyfP04+AEj3l9e3FLDfX+kBzzgh79hPMk1KR7iJIW67WngBjLbRiRGOHB0qos6Yu1Todcs5qUj41mb3D1YfMvlluA3sNHr4x3FnkUCEOBzZQg=
+	t=1784674633; cv=none; b=szIAJMPXDrcjSx1vF+MTPfUtgkPu/ncsKF3v3W5+pl46rd0kMUUAZJWfW/7GFTeujT0YRGESKGFll0f/UO4XIRdzTMCvDplnsFZ7A/jxR+IFuk+EFBz9PgUOjbKAD1KelKqWRETNASNMwXUnFsnkB8uK9UbAg3tSY3b6LGtQd+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674630; c=relaxed/simple;
-	bh=0L9gu0aBwPtnFugtN5e5/Cve5DHRVm8A1jizSzltHzE=;
+	s=arc-20240116; t=1784674633; c=relaxed/simple;
+	bh=ZIgSPJOFdReL04ReKpJeizxfiNvcBqvbeKmxnv9dCFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mo6b83n0n4RtC5zaqYfYvo+WQnPg/KzQ1y9fTXZ4cIgdli/HHKa1cNLniVi8g4gDHS2VIg82Xlst8nEBBAybqyJzMKWsSQTTwilY/cT85Ddo7J3ab82w4X3T56QF+tb7ZdVzX1kMwysCZWAUxGcip92R8olgYHc32B/XG85MMzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sY2bdrIb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JFLO0e2fvqH2e/AIZyg/kq0lW2xdPBzIYlKqRkOmnUHari199lEQD63HRtLjhuPjDsi8lpFRaPgpaq+4knOqbcZefezV7STzlaV3x7bY54jWNyjTcOuwd5itKrLJ4e5OtpHJzJPiP7k8ldxih+vRBVhPw9SC7Jalgprypan1WsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejB9/J+H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sY2bdrIb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28201F00A3A;
-	Tue, 21 Jul 2026 22:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejB9/J+H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 960E31F000E9;
+	Tue, 21 Jul 2026 22:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674629;
-	bh=QCPBtz35UUIESaxRARsfUyr2cWwwOvE97LJLA4d/Ds0=;
+	s=korg; t=1784674632;
+	bh=JUZYSnqCBtZXJf/bUBKQDNWMpTmgzk+lVq+F598lUk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sY2bdrIb3x7eDM1S7l8sQ/d9ubxKUOmNq0UrXctDs7HHybWOmrp96eHoT4op3VZTb
-	 h0PCdjXKNc/aM1KISvTvx/QAxJsfhjKQ51+9zZGv7a+o/rzLrjnjDBL3RUMIWBm4M/
-	 cnE+boe+BHLdCVmI9VaPczojNW6AoEnowDhVjS08=
+	b=ejB9/J+HCz2MeJjDaYZzPrEn0FReakBbWASWKxYXJVn73b9MLFlWjXM7jMFGy7ShR
+	 msiH1hEt4m+pheLfBLYzwSprWSOoj3KhigSOJKTOoXNv3/M3BkM0NiQL+uLVDNaTdX
+	 3yl/SNm0FYSfWIxm+7KKYtc/XuOge1oG6LOd+3CM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Fabio Aiuto <fabioaiuto83@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 613/699] PCI: imx6: Fix IMX6SX_GPR12_PCIE_TEST_POWERDOWN handling
-Date: Tue, 21 Jul 2026 17:26:12 +0200
-Message-ID: <20260721152409.571385795@linuxfoundation.org>
+Subject: [PATCH 5.10 614/699] staging: rtl8723bs: split too long line
+Date: Tue, 21 Jul 2026 17:26:13 +0200
+Message-ID: <20260721152409.596588378@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,52 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: Fabio Aiuto <fabioaiuto83@gmail.com>
 
-[ Upstream commit aad953fb4eed0df5486cd54ccad80ac197678e01 ]
+[ Upstream commit 98dc120895a9a669e35155ee03b98452723aba95 ]
 
-The IMX6SX_GPR12_PCIE_TEST_POWERDOWN bit does not control the PCIe
-reference clock on i.MX6SX. Instead, it is part of i.MX6SX PCIe core
-reset sequence.
+fix the following post-commit hook checkpatch issue.
 
-Move the IMX6SX_GPR12_PCIE_TEST_POWERDOWN assertion/deassertion into
-the core reset functions to properly reflect its purpose. Remove the
-.enable_ref_clk() callback for i.MX6SX since it was incorrectly
-manipulating this bit.
+WARNING: line length of 103 exceeds 100 columns
+30: FILE: drivers/staging/rtl8723bs/core/rtw_mlme_ext.c:711:
++
+receive_disconnect(padapter, pmlmeinfo->network.MacAddress, 0);
 
-Fixes: e3c06cd063d6 ("PCI: imx6: Add initial imx6sx support")
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260319090844.444987-1-hongxing.zhu@nxp.com
+Signed-off-by: Fabio Aiuto <fabioaiuto83@gmail.com>
+Link: https://lore.kernel.org/r/4e87fb741205b9f314aec739921405a7ebef908a.1618480688.git.fabioaiuto83@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: a1fc19d61f66 ("staging: rtl8723bs: fix WEP length underflow and OOB read in OnAuth()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_mlme_ext.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -428,9 +428,6 @@ static int imx6_pcie_enable_ref_clk(stru
- 			dev_err(dev, "unable to enable pcie_axi clock\n");
- 			break;
- 		}
--
--		regmap_update_bits(imx6_pcie->iomuxc_gpr, IOMUXC_GPR12,
--				   IMX6SX_GPR12_PCIE_TEST_POWERDOWN, 0);
- 		break;
- 	case IMX6QP:
- 	case IMX6Q:
-@@ -557,6 +554,8 @@ static void imx6_pcie_deassert_core_rese
- 		imx7d_pcie_wait_for_phy_pll_lock(imx6_pcie);
- 		break;
- 	case IMX6SX:
-+		regmap_clear_bits(imx6_pcie->iomuxc_gpr, IOMUXC_GPR12,
-+				  IMX6SX_GPR12_PCIE_TEST_POWERDOWN);
- 		regmap_update_bits(imx6_pcie->iomuxc_gpr, IOMUXC_GPR5,
- 				   IMX6SX_GPR5_PCIE_BTNRST_RESET, 0);
- 		break;
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
+@@ -835,7 +835,8 @@ unsigned int OnBeacon(struct adapter *pa
+ 				ret = rtw_check_bcn_info(padapter, pframe, len);
+ 				if (!ret) {
+ 						DBG_871X_LEVEL(_drv_always_, "ap has changed, disconnect now\n ");
+-						receive_disconnect(padapter, pmlmeinfo->network.MacAddress, 0);
++						receive_disconnect(padapter,
++								   pmlmeinfo->network.MacAddress, 0);
+ 						return _SUCCESS;
+ 				}
+ 				/* update WMM, ERP in the beacon */
 
 
