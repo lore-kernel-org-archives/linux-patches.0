@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51EC470119;
-	Tue, 21 Jul 2026 20:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A6A47010C;
+	Tue, 21 Jul 2026 20:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664139; cv=none; b=lpcvmM9GHtVSheZCxjySu9H50vryDcOkMB93SuO57UKLrtAZNOyTlL3KFlI1e8Bva2NolLJ7gDfPOngDjvyOyQZPhp9Uw9hOJhgkihSN8mBUKrdScQpkrC2mgLvNpLiM2oF0wgVXigSyI+DQgcjzHgKgjUy0Ikrikr/FQE8B+Zc=
+	t=1784664142; cv=none; b=mbWXgAE9BClSyT2U4DlJwwSknK+L05sTHAiKyysmfZ8nKanjTNLFB0o8f53+34VyLVpG4osEmATDMNoi42RpC8/DZ3yuphTLWCQs4XhBCjYla5t7OM1iBOwQsP8O9ehpLNd5ZvAWzjopTAYc/oWLgK/7IwBnUR2bPBFn7BSo7oQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664139; c=relaxed/simple;
-	bh=lhq/rqgYyQHibb2xUY1QHaHkNrXdEGxgS4Hc+dvvtH0=;
+	s=arc-20240116; t=1784664142; c=relaxed/simple;
+	bh=wSi22vV7ELQXd/qw7XmOFxT8CD2NV14M36eORl5qL7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m+mhd7wupT88/yP31qNCwCjFd5Uq1mXJjclULqjSrvfSOngo6V3lTmJ11Kk0X2k8FZQzXOPEkUFbPzoQb+3oLRSLutwsKuMwFgZI75b4269XdLKggQnNK9oQ+NEP5ROgpXdXlgAO3jqFbZAMXDj6DjgvG4bLHa6uDfYXEP+pEW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUIOWlaz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O3xacreRx1qLIYjys9trTtKjYIh9gXodu+QF15RGn2sprbFRgxL0+IIcXeO7A5EUVcZWjJE5YM8fBNYTYjGiYnWvCLZhNIjj2Nyk602+r6XTKJuU64Wd3JEP560OKqo0A8Ys4zGruCyUugItwr6Wx/PjBKaLPmTpxa1GBy3ChTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p99MGhXs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUIOWlaz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B2B1F00A3A;
-	Tue, 21 Jul 2026 20:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p99MGhXs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49DA1F00A3A;
+	Tue, 21 Jul 2026 20:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664138;
-	bh=3AnuLzZMHK9eipDWMW6W+LysUIYk0SSf+5OP3gxoMwA=;
+	s=korg; t=1784664141;
+	bh=Z9VOIxPBUh4sDOpjAyQCTfyIjOeoiiBfGOt6stAuZAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vUIOWlazlGKpAcbVWlx5qoljeSuNtiIOznzRJVhJY0U0sZhN3pEJsjUaCaVGUrr7d
-	 RK2BTmmsw9GiDtJuhFljYbX9tSeRZW4hQ5Hb5tXFb5G+koMdaK9joc3nX8zIsHtGYo
-	 KqYQ5di58IAzznaIKmnyvV2Vq+uSx2/NUTA4PRwg=
+	b=p99MGhXs4y9IzYYaSm9fA94R71YSh8HSjthdY9VFTClxQILIdE1SNYVSnON2ZIzWv
+	 CORy3tOytCI+AtbYRzFvb2scKzYxeCw0xJm7p6CfROpYuM1ahoyk02PAaxcw+LDuuV
+	 wEvqQ/azK745jUoXLHV2zoudNd21M9VXCiNt2QII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.12 1087/1276] irqchip/irq-riscv-imsic-early: Fix fwnode leak on state setup failure
-Date: Tue, 21 Jul 2026 17:25:30 +0200
-Message-ID: <20260721152510.310390793@linuxfoundation.org>
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.12 1088/1276] s390/monwriter: Reject buffer reuse with different data length
+Date: Tue, 21 Jul 2026 17:25:31 +0200
+Message-ID: <20260721152510.333044112@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,64 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
 
-commit 1358126fbed104e5657955d3ba029b283687ba02 upstream.
+commit 2995ccec260caa9e85b3301a4aba1e66ed80ad74 upstream.
 
-imsic_early_acpi_init() allocates a firmware node before setting up the
-IMSIC state. If imsic_setup_state() fails, the function returns without
-freeing the allocated fwnode.
+When data buffers are reused, e.g. for interval sample records, the
+first record determines the data length, and the size of the buffer for
+user copy. Current monwriter code does not check if the data length was
+changed for subsequent records, which also would never happen for valid
+user programs.
 
-Free the fwnode and clear the global pointer on this error path, matching
-the cleanup already done when imsic_early_probe() fails.
+However, a malicious user could change the data length, resulting in out
+of bounds user copy to the kernel buffer, and memory corruption. By
+default, the monwriter misc device is created with root-only permissions,
+so practical impact is typically low.
 
-[ tglx: Use a common cleanup path instead of copying code around ]
+Fix this by checking for changed data length and rejecting such records.
 
-Fixes: fbe826b1c106 ("irqchip/riscv-imsic: Add ACPI support")
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260623073744.2009137-1-haoxiang_li2024@163.com
+Signed-off-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-riscv-imsic-early.c |   15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/s390/char/monwriter.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/irqchip/irq-riscv-imsic-early.c
-+++ b/drivers/irqchip/irq-riscv-imsic-early.c
-@@ -236,16 +236,13 @@ static int __init imsic_early_acpi_init(
- 	rc = imsic_setup_state(imsic_acpi_fwnode, imsic);
- 	if (rc) {
- 		pr_err("%pfwP: failed to setup state (error %d)\n", imsic_acpi_fwnode, rc);
--		return rc;
-+		goto cleanup;
- 	}
- 
- 	/* Do early setup of IMSIC state and IPIs */
- 	rc = imsic_early_probe(imsic_acpi_fwnode);
--	if (rc) {
--		irq_domain_free_fwnode(imsic_acpi_fwnode);
--		imsic_acpi_fwnode = NULL;
--		return rc;
--	}
-+	if (rc)
-+		goto cleanup;
- 
- 	rc = imsic_platform_acpi_probe(imsic_acpi_fwnode);
- 
-@@ -264,8 +261,12 @@ static int __init imsic_early_acpi_init(
- 	 * DT where IPI works but MSI probe fails for some reason.
- 	 */
- 	return 0;
--}
- 
-+cleanup:
-+	irq_domain_free_fwnode(imsic_acpi_fwnode);
-+	imsic_acpi_fwnode = NULL;
-+	return rc;
-+}
- IRQCHIP_ACPI_DECLARE(riscv_imsic, ACPI_MADT_TYPE_IMSIC, NULL,
- 		     1, imsic_early_acpi_init);
- #endif
+--- a/drivers/s390/char/monwriter.c
++++ b/drivers/s390/char/monwriter.c
+@@ -122,6 +122,9 @@ static int monwrite_new_hdr(struct mon_p
+ 			kfree(monbuf->data);
+ 			kfree(monbuf);
+ 			monbuf = NULL;
++		} else if (monbuf->hdr.datalen != monhdr->datalen) {
++			/* Data with buffer reuse must not change its length */
++			return -EINVAL;
+ 		}
+ 	} else if (monhdr->mon_function != MONWRITE_STOP_INTERVAL) {
+ 		if (mon_buf_count >= mon_max_bufs)
 
 
