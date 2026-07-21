@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EBED3C1400;
-	Tue, 21 Jul 2026 22:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB26367B92;
+	Tue, 21 Jul 2026 22:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673710; cv=none; b=qaHJ1l9vEudO0jvPL4YT+qgw1gucEV2cU9vk7Vx7WgANeloj9/RyIAp57tmeDwf8Jmg9BUrVNBdYWnXmq760ovy6izSHacH4Qj6/D1izF3XemmSu780KgqdhpRv7GKpW6lfln57o4QqxEA17It9YI3CmOp+QdompF5oASpb8F4U=
+	t=1784673713; cv=none; b=WbkeQBbgD9uwYrWmQz4lWxvJ/qUNE1UaooR4d7deJnaCo+bcLQvvU7JZbN4QZYCZeM2oOv0EFAaUnY0/xjQ1BZIh38uJ7xvRwiPFTCvKtQ6SCiq3kUB6Qqywn+a3Uxl8YcQnp55hu3yizSBk/88Pf949zgXkliMLazQxu2QoYJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673710; c=relaxed/simple;
-	bh=3vk/spsgy+WxPSFua9BcmwuUYlsPBJw8moEa5fdLVMg=;
+	s=arc-20240116; t=1784673713; c=relaxed/simple;
+	bh=0GRM09UEke6XK9VElfxk7PKa7uyK7BbkDEedCAZ+U1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VHs9QxE+K8jifd8YwxKzYLB+x38XqxMC2t6YKt9RzCE/bJJvi0XzYxZmdpoJ/UpzROkpFknjj7NEWCJkk675ZNJ9E0DfhNHcoMTEdh897jBRn4wqLtr0R7/DmLVnZ5GfQJfdqidXYXkhD5Z11CxNJrOFUZybq/4vnWioqUjaZyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfzJNi4p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WNJiHKp801WocJYakdgmqWAgNtXlRFH6+av03GzVaN6Bm8kxNPTqpG4TcmIBwkmnMazKUKVRPDBz0Bqbqg8J2PJWmLh+K7TqR8b0iBrWQL5Uc1qpC8RXXiiHetjzTronyX8MjGr/22JWI9r5OEuFp2uDGuiP7j/NIkcd9acG0Ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nF9oRbgF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfzJNi4p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 925121F00ACF;
-	Tue, 21 Jul 2026 22:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nF9oRbgF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E68F1F000E9;
+	Tue, 21 Jul 2026 22:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673709;
-	bh=3oxqKiebx2HWSO2C2iAhSlICZglXeBA4GdZDGBc0XJ8=;
+	s=korg; t=1784673711;
+	bh=Rd5hp71foqez1/ONZNFOeM7BCzd8l0eOiDz5n/OlTCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qfzJNi4phi0G40JD7S4sLxxxmNo8IWPuq1dow/bnqdfsEpXQVFJiQXkzMgwVCrQQ9
-	 ojX3LAV3WslYyyDApl0l0dEfn7YPOWSavMdnmrM2Uas64GVq2Bc6WfDcGQq1cHOAZh
-	 j7BSA9db476EHX1kpFA9u2kynRVgDqPhCmloVBOA=
+	b=nF9oRbgFhwSGjj60qweN6Ac9HhTNRY/QXpXSEHUrOnRlQWg8VR8RskZSVyhSaqKXI
+	 /SW+JgR6a8WaKgEFEHMfnjebcA6jHETgOo58rAde1Kp2OZvZooyp3hpKrJ0KHvbjHj
+	 5OmsPPCtjDdCBqkJj+NNQCBqNnraVB2eDHjf7bi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Lars=20P=C3=B6schel?= <lars.poeschel@edag.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 263/699] crypto: rng - Free default RNG on module exit
-Date: Tue, 21 Jul 2026 17:20:22 +0200
-Message-ID: <20260721152401.633626579@linuxfoundation.org>
+Subject: [PATCH 5.10 264/699] spi: xilinx: use FIFO occupancy register to determine buffer size
+Date: Tue, 21 Jul 2026 17:20:23 +0200
+Message-ID: <20260721152401.657578336@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -44,47 +46,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Lars Pöschel <lars.poeschel@edag.com>
 
-[ Upstream commit 606ba888b98e0d26a2c4e5c8dc0542e3ad8f0f3a ]
+[ Upstream commit 47f3b5365536e8c38f264824ab15fdb74454e066 ]
 
-When the rng module is removed the default RNG will be leaked.
-Call crypto_del_default_rng to free it if possible.
+The method the driver uses to determine the size of the FIFO has a
+problem. What it currently does is this:
+It stops the SPI hardware and writes to the TX FIFO register until TX
+FIFO FULL asserts in the status register. But the hardware does not only
+have the FIFO, it also has a shift register which can hold a byte. This
+can be seen, when writing a byte to the FIFO (while the SPI hardware is
+stopped,) the TX FIFO EMPTY is still empty. So, if we have a FIFO size
+of 16 for example, the current method returns a 17.
+This is a problem, at least when using the driver in irq mode. The same
+size determined for the TX FIFO is also assumed for the RX FIFO. When a
+SPI transaction wants to write the amount of the FIFO size or more
+bytes, the following happens, for example with 16 bytes FIFO size:
+The driver stops the SPI hardware and writes 17 bytes to the TX FIFO and
+starts the SPI hardware and goes sleep.
+The hardware then shifts out 17 bytes (FIFO + shift register) and
+simultaneously reads bytes into the RX FIFO, but it only has 16 places,
+so it looses one byte. Then TX FIFO empty asserts, wakes the driver
+again, which has a fast path and reads 16 bytes from the RX FIFO, but
+before reading the last 17th byte (which is lost) it does this:
 
-Fixes: 7cecadb7cca8 ("crypto: rng - Do not free default RNG when it becomes unused")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+	sr = xspi->read_fn(xspi->regs + XSPI_SR_OFFSET);
+	if (!(sr & XSPI_SR_RX_EMPTY_MASK)) {
+		xilinx_spi_rx(xspi);
+		rx_words--;
+	}
+
+It reads the status register and checks if the RX FIFO is not empty.
+But it is empty in our case. So this check spins in a while loop
+forever locking the driver.
+
+This patch fixes the logic to determine the FIFO size.
+
+Fixes: 4c9a761402d7 ("spi/xilinx: Simplify spi_fill_tx_fifo")
+Signed-off-by: Lars Pöschel <lars.poeschel@edag.com>
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Link: https://patch.msgid.link/20260612105244.9076-1-lars.poeschel.linux@edag.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/rng.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/spi/spi-xilinx.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/crypto/rng.c b/crypto/rng.c
-index a2bf2efb7937f9..5992cdb392c50a 100644
---- a/crypto/rng.c
-+++ b/crypto/rng.c
-@@ -232,5 +232,16 @@ void crypto_unregister_rngs(struct rng_alg *algs, int count)
- }
- EXPORT_SYMBOL_GPL(crypto_unregister_rngs);
+diff --git a/drivers/spi/spi-xilinx.c b/drivers/spi/spi-xilinx.c
+index d497fc4bc19ebd..337ccdaa057c2c 100644
+--- a/drivers/spi/spi-xilinx.c
++++ b/drivers/spi/spi-xilinx.c
+@@ -369,11 +369,18 @@ static int xilinx_spi_find_buffer_size(struct xilinx_spi *xspi)
+ 		xspi->regs + XIPIF_V123B_RESETR_OFFSET);
  
-+static void __exit rng_exit(void)
-+{
-+	int err;
+ 	/* Fill the Tx FIFO with as many words as possible */
+-	do {
++	while (1) {
+ 		xspi->write_fn(0, xspi->regs + XSPI_TXD_OFFSET);
+ 		sr = xspi->read_fn(xspi->regs + XSPI_SR_OFFSET);
++		if (sr & XSPI_SR_TX_FULL_MASK)
++			break;
 +
-+	err = crypto_del_default_rng();
-+	if (err)
-+		pr_err("Failed delete default RNG: %d\n", err);
-+}
+ 		n_words++;
+-	} while (!(sr & XSPI_SR_TX_FULL_MASK));
++	}
 +
-+module_exit(rng_exit);
-+
- MODULE_LICENSE("GPL");
- MODULE_DESCRIPTION("Random Number Generator");
++	/* Handle the NO FIFO case separately */
++	if (!n_words)
++		return 1;
+ 
+ 	return n_words;
+ }
 -- 
 2.53.0
 
