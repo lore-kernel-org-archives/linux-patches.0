@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E56846D54D;
-	Tue, 21 Jul 2026 15:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2762746D543;
+	Tue, 21 Jul 2026 15:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648686; cv=none; b=QNFzVxubyVKyAxN4TRpaYGGm10w3jIGXP/V7a9uBzRRtEjbmfTK0Ts0GXAH2InHipWsyPqeHmpsX1SZxVN8Pj7ujl1w30/JJDwt7rS3E7WUY0JmklNzrFeX7//ajQswUKafPM7FtBzKMMpw/LLyvMn8x8u7uu/TLo1/e9xsUT6Q=
+	t=1784648689; cv=none; b=e6XDAhBb8xacysbSIYSy+GPq5NGflsqY8wzfMr1c9C1iBo/fWYRQJTGJlLeA99iV5jJnqbbannYZcdcg7o56iJERcLBkUbhrIsxYBn3teLkeokZNCeFYCDvqMbgROyEyBjK/IPsqoczwagusapS0D1hGBTOWqpjJYpZuBdMHhl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648686; c=relaxed/simple;
-	bh=Y1uX0Kb0/JjCvcZrI6GdQePTCHGm1BLTmwFTnmOKSM8=;
+	s=arc-20240116; t=1784648689; c=relaxed/simple;
+	bh=kfG2RrHkRzZc/mOXVNC8ohSDbqtULCrFlU4NcaexCuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DqvXHrrBCzKqtTZuTGdM1iK5SjpR4M/JvFITs1sFdkLAw3Y20gUCF5vQNGRI+YUvtJwI3dzi74dZHztaSzBajnQl/n/Ob0zunmgh8/eLJ+4N6w85X3p9UPw0PONHY73h/JWwt7xlf69etRMZQ2ZvzlaXcqTNCBvNpI7ctrkZUa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ro/63H8o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hfloutWf4Kx7iEFNonQEJ14XqitKP2NbJ6uKHqFvFwG1aK0KN4rOsjXesCaqsXRLHThCjmDg6DSs0yKECx1d2DFOWCNccrBybWkQeiqMWIwvoPVVRFSy1lt7AxdJPnmSLRgXEi899cVtKY5J4EzqzOS+uoGjkSpq+SZo2uw7GmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijBE4Zh4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ro/63H8o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47EA1F00A3A;
-	Tue, 21 Jul 2026 15:44:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijBE4Zh4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D21F1F000E9;
+	Tue, 21 Jul 2026 15:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648685;
-	bh=ztB08IlgXj0brG8M5PmSjBR5yvJjGJbRErvKIG3oIk0=;
+	s=korg; t=1784648688;
+	bh=/8Lk/AU7e+QggRIPtJzMqae7LbFXi7EJdh1xDqZGUNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ro/63H8ouN8/+Z0fqVYhk3cjNjrRLSWvAWc4zLkrvzpMfWCrVnjtyfp827apwDy/g
-	 66qLC6aBjS00a7h7BSop1mdu3E6j5GM2uBQu0UrZJUD5347cRqJjp2SEh07M/1Z1Jm
-	 eSa45BKefJfIZiWCJovhDvpbJ0dCdGTNwdFbNlQ4=
+	b=ijBE4Zh4LyymE/MJKjpBSfXAX9+kNHL+TYO3XJMX360kdsZDJHSL8Rx6cemNbWd8V
+	 olBAbsYPj1/5M3no9/tETVOPL+4aMWSPXGRflOg9a8Ssp4MgAbiwmbfuUWO6ndv0L0
+	 P+vHXIk910BafYlYNlOEYXsdznbnykTur4jYqYGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chancel Liu <chancel.liu@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jacob Moroni <jmoroni@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0293/2077] ASoC: dapm: Fix widget lookup with prefixed names across DAPM contexts
-Date: Tue, 21 Jul 2026 16:59:26 +0200
-Message-ID: <20260721152559.585735532@linuxfoundation.org>
+Subject: [PATCH 7.1 0294/2077] RDMA/irdma: Fix out-of-bounds write in irdma_copy_user_pgaddrs
+Date: Tue, 21 Jul 2026 16:59:27 +0200
+Message-ID: <20260721152559.609166438@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,135 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chancel Liu <chancel.liu@nxp.com>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit 8468c8aafe8b5807e5acba2f8aa96d0b3ce0c248 ]
+[ Upstream commit 5ebb3ed757be3e04cf803026004aa0beaeb13e9b ]
 
-Currently dapm_find_widget() manually constructs a prefixed widget name
-based on the provided DAPM context and compares it using strcmp(). This
-happens to work in most cases because callers usually know which DAPM
-context the target widget belongs to and pass in the matching DAPM
-context.
+The irdma_copy_user_pgaddrs function loops through all of the umem DMA
+blocks to populate the PBLEs and will stop when either the last DMA
+block is reached or palloc->total_cnt is reached. The issue is that
+the logic for checking palloc->total_cnt would only work for non-zero
+values.
 
-However, this assumption breaks when search_other_contexts is enabled.
-In such cases, callers may intentionally pass a different DAPM context,
-while searching for a widget that actually belongs to another DAPM
-context.
+When irdma_setup_pbles is called with lvl==0, it
+calls irdma_copy_user_pgaddrs with palloc->total_cnt==0, which means
+the only way to break out of the loop is to reach the last umem DMA
+block, which means it could end up going beyond the fixed size of 4
+iwmr->pgaddrmem array that is used in the lvl==0 case.
 
-For example, when searching for a "DAC" widget, the widget belongs to
-the codec DAPM and be registered with a codec prefix, while the caller
-passes card->dapm and intends to search across all DAPM contexts. The
-current implementation incorrectly applies the caller card DAPM causing
-the lookup to fail even though the widget exists on the card.
+In the case of QP/CQ/SRQ rings, the value of lvl is determined by a
+separate input (for example, req.cq_pages in the case of a CQ). So,
+we must perform explicit checking to ensure we don't overflow the
+pgaddrmem array if the user provides a umem that consists of more
+blocks than their provided req.cq_pages.
 
-Improve the matching strategy to support both use cases:
-1. When the caller provides a fully qualified name with prefix, perform
-   exact string matching. This preserves the ability to use prefixes for
-   disambiguation.
-2. When the caller provides a bare widget name without prefix, try exact
-   matching first, then fall back to prefix-stripped comparison using
-   snd_soc_dapm_widget_name_cmp().
-
-To determine whether the pin name includes a prefix, a new helper
-function snd_soc_dapm_pin_has_prefix() is introduced. It checks if the
-pin name starts with any known component prefix on the card.
-
-This fixes widget lookup failures when searching across different DAPM
-contexts while maintaining backward compatibility for explicitly
-prefixed lookups.
-
-Fixes: ae4fc532244b ("ASoC: dapm: use component prefix when checking widget names")
-Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
-Assisted-by: Cody:Claude-4.5-Sonnet
-Link: https://patch.msgid.link/20260507013654.2945915-2-chancel.liu@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Link: https://patch.msgid.link/r/20260512183852.614045-1-jmoroni@google.com
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soc-dapm.h |  1 +
- sound/soc/soc-dapm.c     | 49 ++++++++++++++++++++++++++++++----------
- 2 files changed, 38 insertions(+), 12 deletions(-)
+ drivers/infiniband/hw/irdma/verbs.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/include/sound/soc-dapm.h b/include/sound/soc-dapm.h
-index 4f8fb7622a139d..c1e4f467efda73 100644
---- a/include/sound/soc-dapm.h
-+++ b/include/sound/soc-dapm.h
-@@ -685,6 +685,7 @@ int snd_soc_dapm_sync_unlocked(struct snd_soc_dapm_context *dapm);
- int snd_soc_dapm_force_enable_pin(struct snd_soc_dapm_context *dapm, const char *pin);
- int snd_soc_dapm_force_enable_pin_unlocked(struct snd_soc_dapm_context *dapm, const char *pin);
- int snd_soc_dapm_ignore_suspend(struct snd_soc_dapm_context *dapm, const char *pin);
-+bool snd_soc_dapm_pin_has_prefix(struct snd_soc_card *card, const char *pin);
- void snd_soc_dapm_mark_endpoints_dirty(struct snd_soc_card *card);
- 
- /* dapm path query */
-diff --git a/sound/soc/soc-dapm.c b/sound/soc/soc-dapm.c
-index d6192204e613da..a26771c8e6ee69 100644
---- a/sound/soc/soc-dapm.c
-+++ b/sound/soc/soc-dapm.c
-@@ -2906,20 +2906,18 @@ static struct snd_soc_dapm_widget *dapm_find_widget(
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 8cd4275328052e..661f2e0299ef7d 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -2781,10 +2781,11 @@ static inline u64 *irdma_next_pbl_addr(u64 *pbl, struct irdma_pble_info **pinfo,
+  * irdma_copy_user_pgaddrs - copy user page address to pble's os locally
+  * @iwmr: iwmr for IB's user page addresses
+  * @pbl: ple pointer to save 1 level or 0 level pble
++ * @pbl_len: Max number of PBL entries to populate
+  * @level: indicated level 0, 1 or 2
+  */
+ static void irdma_copy_user_pgaddrs(struct irdma_mr *iwmr, u64 *pbl,
+-				    enum irdma_pble_level level)
++				    u32 pbl_len, enum irdma_pble_level level)
  {
- 	struct snd_soc_dapm_widget *w;
- 	struct snd_soc_dapm_widget *fallback = NULL;
--	char prefixed_pin[80];
--	const char *pin_name;
--	const char *prefix = dapm_prefix(dapm);
--
--	if (prefix) {
--		snprintf(prefixed_pin, sizeof(prefixed_pin), "%s %s",
--			 prefix, pin);
--		pin_name = prefixed_pin;
--	} else {
--		pin_name = pin;
--	}
-+	bool pin_has_prefix = snd_soc_dapm_pin_has_prefix(dapm->card, pin);
-+	bool match;
+ 	struct ib_umem *region = iwmr->region;
+ 	struct irdma_pbl *iwpbl = &iwmr->iwpbl;
+@@ -2792,7 +2793,9 @@ static void irdma_copy_user_pgaddrs(struct irdma_mr *iwmr, u64 *pbl,
+ 	struct irdma_pble_info *pinfo;
+ 	struct ib_block_iter biter;
+ 	u32 idx = 0;
+-	u32 pbl_cnt = 0;
++
++	if (!pbl_len)
++		return;
  
- 	for_each_card_widgets(dapm->card, w) {
--		if (!strcmp(w->name, pin_name)) {
-+		match = false;
-+
-+		if (!strcmp(pin, w->name))
-+			match = true;
-+		else if (!pin_has_prefix && !snd_soc_dapm_widget_name_cmp(w, pin))
-+			match = true;
-+
-+		if (match) {
- 			if (w->dapm == dapm)
- 				return w;
- 			else
-@@ -4872,6 +4870,33 @@ int snd_soc_dapm_ignore_suspend(struct snd_soc_dapm_context *dapm,
- }
- EXPORT_SYMBOL_GPL(snd_soc_dapm_ignore_suspend);
+ 	pinfo = (level == PBLE_LEVEL_1) ? NULL : palloc->level2.leaf;
  
-+/**
-+ * snd_soc_dapm_pin_has_prefix - check if given pin has a known prefix
-+ * @card: card to be checked
-+ * @pin: pin name
-+ *
-+ * Returns true if given pin has a known prefix
-+ */
-+bool snd_soc_dapm_pin_has_prefix(struct snd_soc_card *card, const char *pin)
-+{
-+	struct snd_soc_component *component;
-+	const char *prefix;
-+	size_t prefix_len;
-+
-+	for_each_card_components(card, component) {
-+		prefix = component->name_prefix;
-+		if (!prefix)
-+			continue;
-+
-+		prefix_len = strlen(prefix);
-+		if (!strncmp(pin, prefix, prefix_len) && pin[prefix_len] == ' ')
-+			return true;
-+	}
-+
-+	return false;
-+}
-+EXPORT_SYMBOL_GPL(snd_soc_dapm_pin_has_prefix);
-+
- /**
-  * snd_soc_dapm_free - free dapm resources
-  * @dapm: DAPM context
+@@ -2801,7 +2804,7 @@ static void irdma_copy_user_pgaddrs(struct irdma_mr *iwmr, u64 *pbl,
+ 
+ 	rdma_umem_for_each_dma_block(region, &biter, iwmr->page_size) {
+ 		*pbl = rdma_block_iter_dma_address(&biter);
+-		if (++pbl_cnt == palloc->total_cnt)
++		if (!--pbl_len)
+ 			break;
+ 		pbl = irdma_next_pbl_addr(pbl, &pinfo, &idx);
+ 	}
+@@ -2877,6 +2880,7 @@ static int irdma_setup_pbles(struct irdma_pci_f *rf, struct irdma_mr *iwmr,
+ 	u64 *pbl;
+ 	int status;
+ 	enum irdma_pble_level level = PBLE_LEVEL_1;
++	u32 pbl_len;
+ 
+ 	if (lvl) {
+ 		status = irdma_get_pble(rf->pble_rsrc, palloc, iwmr->page_cnt,
+@@ -2884,16 +2888,18 @@ static int irdma_setup_pbles(struct irdma_pci_f *rf, struct irdma_mr *iwmr,
+ 		if (status)
+ 			return status;
+ 
++		pbl_len = palloc->total_cnt;
+ 		iwpbl->pbl_allocated = true;
+ 		level = palloc->level;
+ 		pinfo = (level == PBLE_LEVEL_1) ? &palloc->level1 :
+ 						  palloc->level2.leaf;
+ 		pbl = pinfo->addr;
+ 	} else {
++		pbl_len = IRDMA_MAX_SAVED_PHY_PGADDR;
+ 		pbl = iwmr->pgaddrmem;
+ 	}
+ 
+-	irdma_copy_user_pgaddrs(iwmr, pbl, level);
++	irdma_copy_user_pgaddrs(iwmr, pbl, pbl_len, level);
+ 
+ 	if (lvl)
+ 		iwmr->pgaddrmem[0] = *pbl;
 -- 
 2.53.0
 
