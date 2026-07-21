@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138344C8FE4;
-	Tue, 21 Jul 2026 17:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F219471248;
+	Tue, 21 Jul 2026 17:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656479; cv=none; b=F+1euaSAFssiq54RzJwUM35QCPYM02/wEQsbgcAfRpyPvKjXyt4gAg6GFr3qr2tC8ZHjcLuE4kUpbw3KFd+bFDc7yGnNEwhTxUN/lLPMxkZk3QorVI4UA1GSHYQwS/NWTVakOP+tSDw+asANfhoOq5bL+ydxfqpEzONknaGRx7M=
+	t=1784656482; cv=none; b=CrAvL7S70yWZma59di8AP2wyctKi2Ugkuw6Q/MXUc2vpzeDwhUNGKdzCVAUqtXS6IsAoNRzk2PtLkqBOULStx/zXQiuuQ7ncWZZ5Uhw8CZAnYk1/MJAdBYg2gkYZE8+A/29FF3+Q36vK9mAskrAnz/7XJYHgbeUHbbd5ctoYEW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656479; c=relaxed/simple;
-	bh=x1Mt+m/Ts0IZ01rKrpbpcL9BK9OOkKLel/8lcQzWnfQ=;
+	s=arc-20240116; t=1784656482; c=relaxed/simple;
+	bh=atOFiWKQ+KFX+xMK0E1zSyNBeG9fGDE+erNc3BOYm50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J3do0Bh8/qAggqk2P8DPyECZQxGrpvoMROlbB7eXCp3qRXI1z5jadmnOsrfsBuuaE0cntKygoLUD5BVCl/WuVVc7zhmOL/ABi6hNXuwn5TaYual3xl7BEibnmegUHFV3ymbqw1fNwQMVICGUiq+ZFoIytWK/Pmuh+8flc3Fsw+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ha87rJ2J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qTZYx9TVOnkDIVoOPCls44NcOw9UJESG9z6gFLrXluksC6b+MD57OwiRBNmux8Wg6n2Pd3wD77XofNUX4LPyjmO9WzZOcva1SAlvjVO5NXustYVNKKKRVC/Iwxsq7uA2Fu3zaG2Y/4Mp29YbISVY2IXuSKE/RRQfNLnmI+L7n1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZ6JTc2d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ha87rJ2J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550021F000E9;
-	Tue, 21 Jul 2026 17:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZ6JTc2d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38571F00A3A;
+	Tue, 21 Jul 2026 17:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656476;
-	bh=QXnY3PkBFEvI1ofTVZmCap0IV1bSQvF3ryQj37RXHns=;
+	s=korg; t=1784656479;
+	bh=u8TOeBg0oxR9xJp6Wmoseh/SjFpf1CqrAtDmlkO9G5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ha87rJ2J5BC3Jw9uH7zxwaYQ/R5NMsj9B6bVJ7tGYMcvISM99pD40FWZgoR+dBeQr
-	 OwGCp8pwdE2MqWEUf1VjA7/IS1HZBznOzI9TZSzqFk6VszpH/0OSpXWdN7MFTGTtro
-	 MrJj4f2wWC2p2ESJ4hxvNclKZpXVoTB+25C5o0pY=
+	b=GZ6JTc2d/uNrptq+CdoeKPvrG8cf8tMFxCLp3SJQRpkc4OAJ2Q3e89WDVXwJuIMc5
+	 v+xFLgrE3r1rGTaZ7iBRdGDhfguYp7T6shM1qdzuv+2oACQySZsvIFtuHfRCraDnTb
+	 bLMg71ZjwngtpFIHERW0l1Y9pTjbAhcfKKmzOo/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sechang Lim <rhkrqnwk98@gmail.com>,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0375/1611] bpf: Fix NULL pointer dereference in bpf_task_from_vpid()
-Date: Tue, 21 Jul 2026 17:08:11 +0200
-Message-ID: <20260721152523.619027037@linuxfoundation.org>
+Subject: [PATCH 6.18 0402/1611] wifi: mt76: mt7996: add missing max_remain_on_channel_duration
+Date: Tue, 21 Jul 2026 17:08:38 +0200
+Message-ID: <20260721152524.277997686@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,71 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sechang Lim <rhkrqnwk98@gmail.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 50dff00615522f3ec03449680ca23beb4cfc549c ]
+[ Upstream commit ac41612e0044fa29cf9bc45b6808dda6d87ac2da ]
 
-bpf_task_from_vpid() looks up a task in the pid namespace of the
-current task, via find_task_by_vpid():
+Having this unset breaks remain-on-channel and mgmt TX.
+Move setting it to mt76 core to keep it in one place.
 
-  find_task_by_vpid(vpid)
-    find_task_by_pid_ns(vpid, task_active_pid_ns(current))
-      find_pid_ns(nr, ns) -> idr_find(&ns->idr, nr)
-
-cgroup_skb programs run in softirq, which may interrupt a task that is
-itself in do_exit(). Once that task has passed
-exit_notify() -> release_task() -> __unhash_process(), its thread_pid is
-cleared, so task_active_pid_ns(current) returns NULL and find_pid_ns()
-dereferences &NULL->idr:
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000050
-  RIP: 0010:idr_find+0x11/0x30 lib/idr.c:176
-  Call Trace:
-   <IRQ>
-   find_pid_ns kernel/pid.c:370 [inline]
-   find_task_by_pid_ns+0x3b/0xe0 kernel/pid.c:485
-   bpf_task_from_vpid+0x5b/0x200 kernel/bpf/helpers.c:2916
-   bpf_prog_run_array_cg+0x17e/0x530 kernel/bpf/cgroup.c:81
-   __cgroup_bpf_run_filter_skb+0x12b/0x250 kernel/bpf/cgroup.c:1612
-   sk_filter_trim_cap+0x1dc/0x4c0 net/core/filter.c:148
-   tcp_v4_rcv+0x18d1/0x2200 net/ipv4/tcp_ipv4.c:2223
-   </IRQ>
-   <TASK>
-   do_exit+0xa63/0x1270 kernel/exit.c:1010
-   get_signal+0x141c/0x1530 kernel/signal.c:3037
-
-Bail out when current has no pid namespace.
-
-Fixes: 675c3596ff32 ("bpf: Add bpf_task_from_vpid() kfunc")
-Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
-Acked-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://lore.kernel.org/bpf/20260608050001.2545245-1-rhkrqnwk98@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: 69d54ce7491d0 ("wifi: mt76: mt7996: switch to single multi-radio wiphy")
+Link: https://patch.msgid.link/20260324154904.2555603-2-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mac80211.c    | 2 ++
+ drivers/net/wireless/mediatek/mt76/mt7615/init.c | 1 -
+ drivers/net/wireless/mediatek/mt76/mt792x_core.c | 1 -
+ 3 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index a62cbdf5a3cde5..7357ddc1fc9283 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -2672,11 +2672,13 @@ __bpf_kfunc struct task_struct *bpf_task_from_vpid(s32 vpid)
- {
- 	struct task_struct *p;
+diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
+index 2d24f9fa51a505..f6a642fd29d2dd 100644
+--- a/drivers/net/wireless/mediatek/mt76/mac80211.c
++++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
+@@ -449,6 +449,8 @@ mt76_phy_init(struct mt76_phy *phy, struct ieee80211_hw *hw)
+ 	wiphy_ext_feature_set(wiphy, NL80211_EXT_FEATURE_AIRTIME_FAIRNESS);
+ 	wiphy_ext_feature_set(wiphy, NL80211_EXT_FEATURE_AQL);
  
--	rcu_read_lock();
-+	guard(rcu)();
-+	if (!task_active_pid_ns(current))
-+		return NULL;
-+
- 	p = find_task_by_vpid(vpid);
- 	if (p)
- 		p = bpf_task_acquire(p);
--	rcu_read_unlock();
++	if (!wiphy->max_remain_on_channel_duration)
++		wiphy->max_remain_on_channel_duration = 5000;
+ 	if (!wiphy->available_antennas_tx)
+ 		wiphy->available_antennas_tx = phy->antenna_mask;
+ 	if (!wiphy->available_antennas_rx)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/init.c b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
+index 3e7af3e58736cb..c4f5f6ee916aff 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
+@@ -195,7 +195,6 @@ mt7615_check_offload_capability(struct mt7615_dev *dev)
+ 		ieee80211_hw_set(hw, SUPPORTS_DYNAMIC_PS);
  
- 	return p;
- }
+ 		wiphy->flags &= ~WIPHY_FLAG_4ADDR_STATION;
+-		wiphy->max_remain_on_channel_duration = 5000;
+ 		wiphy->features |= NL80211_FEATURE_SCHED_SCAN_RANDOM_MAC_ADDR |
+ 				   NL80211_FEATURE_SCAN_RANDOM_MAC_ADDR |
+ 				   WIPHY_FLAG_HAS_REMAIN_ON_CHANNEL |
+diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_core.c b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
+index 9cad572c34a38a..a5bdccae92c5bd 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt792x_core.c
++++ b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
+@@ -657,7 +657,6 @@ int mt792x_init_wiphy(struct ieee80211_hw *hw)
+ 				 BIT(NL80211_IFTYPE_P2P_CLIENT) |
+ 				 BIT(NL80211_IFTYPE_P2P_GO) |
+ 				 BIT(NL80211_IFTYPE_P2P_DEVICE);
+-	wiphy->max_remain_on_channel_duration = 5000;
+ 	wiphy->max_scan_ie_len = MT76_CONNAC_SCAN_IE_LEN;
+ 	wiphy->max_scan_ssids = 4;
+ 	wiphy->max_sched_scan_plan_interval =
 -- 
 2.53.0
 
