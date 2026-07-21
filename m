@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBED13B388C;
-	Tue, 21 Jul 2026 20:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED493B1EFC;
+	Tue, 21 Jul 2026 20:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666147; cv=none; b=FNdDYifybcKB9XGyq6HZyVLxLZ76tG3NCUcuGuY4zCdPGepgq0uKl/NXga01Bnn3UQFaemdIe+g87TSsmzSLTLVHYEs2oNEOfi0XQdy44tFmKl5woLhNPDUs2CFqdxMBxafjdPQctbcDfWdYlJz0EZI0Ken7LPagwVF6rzKrsXs=
+	t=1784666150; cv=none; b=ogu2rRSjputmnI0fCXEDEOKfDqml/A7AOjuIRLNUJQOjKzB0sWFC0SDpkG+eUBE/ngS0W15JR6sXKZPb5E38VSFG4WfcOZflNKID3f0ikrmGSe6C2rQUqdMXbO7FvdIYesGjryLwkHXVrnC8jT5trAiA839B8odXJDaY2+7tw1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666147; c=relaxed/simple;
-	bh=TVYGsyrN0+uHndGhs9YXk5brgG0tf3GXu013kt+Wc6M=;
+	s=arc-20240116; t=1784666150; c=relaxed/simple;
+	bh=mCFGgPEVZDvBmw4fh+3aILUfv80mLkuRz5Wlwf83Rbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m2XaVG0hEDgOee58tGfpTWW5F9fdijtjGP+GfbCwMdhj+F2WuLkHxZBQyYqpHCf1iTIUWHxxaoUGjM7vJ5tVB9/KT5xawSfBXoV8A4+d/Z7VNm3vpYav3QD02Z0nNp3v3+n4LPJTnzpcYMSBjDz/iqnlXkfNHQ/Idj7FYTgr0Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSqy2dtk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FgdvAKTsPR0ylqiA6ZpSNK2evklnP6ZLqUMWXmnQrV10iQgrgcXciNrlq/T8AXvMtQ/sMSu9quZMWOmzdXN4qGyU5AggODu1jSKgnNmdjQTmuDsMOWCh7DF9GjIrEg/rM4pdZEfqL2+NdNFjyFmPf6rgsoxakHbH/y9AQAmoaxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q7M1hPWg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSqy2dtk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD461F000E9;
-	Tue, 21 Jul 2026 20:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q7M1hPWg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025F51F000E9;
+	Tue, 21 Jul 2026 20:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666145;
-	bh=cec07ju1GGx5Z/nNyzs1WPGMRjG9YhsNn4vtLetBQow=;
+	s=korg; t=1784666148;
+	bh=zECechAMDnS5WEKFLT1z6JeZx/ramC1Um9Wq4Erc/08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RSqy2dtk93FLEGw063K41fl/1oWuIb3jFXRW/ps7jGF318fHvsCNfA5owVIENxqpX
-	 +V4zl4nSsLjY2h7CNcxoBP75JjAFyoN5JrG5BQoG4wXFhTm9YKKUOwRgBnQWMU7he5
-	 JYVmPJqLE3epZHHSjiuejd/I+LWrHJeBWJq69xBo=
+	b=q7M1hPWg8+KN1JjSuJB1aA9kxqaFYXFWv6T2jdIfIS9j4ndAHVL4kThz9vPc2vTnf
+	 nokNla7jG/TINpQp7RC5XlJfb589rLnM+DiKQOXxcRMh6FLQZqBxiLttpwxWdYalh4
+	 GZHS3Z/VINCuKhCUN6n+jhDPZ9T9EGwNAb91g2i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Lucas Tsai <lucas_tsai@richtek.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0572/1266] ASoC: adau1372: Clear PLL_EN on failed PLL lock without reset GPIO
-Date: Tue, 21 Jul 2026 17:16:49 +0200
-Message-ID: <20260721152454.665396831@linuxfoundation.org>
+Subject: [PATCH 6.6 0573/1266] power: supply: core: fix supplied_from allocations
+Date: Tue, 21 Jul 2026 17:16:50 +0200
+Message-ID: <20260721152454.686518142@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,48 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Lucas Tsai <lucas_tsai@richtek.com>
 
-[ Upstream commit 69b4141b428bcf2cf7a863950c0d6e5c5ae89ac1 ]
+[ Upstream commit ba61aed9a34671222d1149acfc2f0179a9ce7e80 ]
 
-The PLL lock failure path in adau1372_set_power() unwinds by putting
-the regmap back in cache-only mode, asserting the optional power-down
-GPIO and disabling mclk.
+If dts property power-supplies has multiple values, then accessing to
+psy->supplied_from[i-1] in __power_supply_populate_supplied_from will
+overrun supplied_from array.
 
-adau1372_enable_pll() enables CLK_CTRL.PLL_EN before polling the PLL
-lock bit. If the lock fails on a board without a power-down GPIO, the
-error path disables mclk and returns an error, but leaves PLL_EN set in
-the hardware register. The normal power-off path already handles the
-no-GPIO case by explicitly clearing PLL_EN.
-
-Mirror that cleanup in the PLL lock failure path and clear PLL_EN while
-the regmap is still live, before switching it back to cache-only mode.
-
-Fixes: bfe6a264effc ("ASoC: adau1372: Fix clock leak on PLL lock failure")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260604125520.1428905-1-lgs201920130244@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f6e0b081fb30 ("power_supply: Populate supplied_from hierarchy from the device tree")
+Signed-off-by: Lucas Tsai <lucas_tsai@richtek.com>
+Link: https://patch.msgid.link/20260609114403.3896073-1-lucas_tsai@richtek.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/adau1372.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/power/supply/power_supply_core.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/codecs/adau1372.c b/sound/soc/codecs/adau1372.c
-index 25f123110b5be4..7dc0b5c79e3998 100644
---- a/sound/soc/codecs/adau1372.c
-+++ b/sound/soc/codecs/adau1372.c
-@@ -812,6 +812,11 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
- 		if (adau1372->use_pll) {
- 			ret = adau1372_enable_pll(adau1372);
- 			if (ret) {
-+				if (!adau1372->pd_gpio)
-+					regmap_update_bits(adau1372->regmap,
-+							   ADAU1372_REG_CLK_CTRL,
-+							   ADAU1372_CLK_CTRL_PLL_EN,
-+							   0);
- 				regcache_cache_only(adau1372->regmap, true);
- 				if (adau1372->pd_gpio)
- 					gpiod_set_value(adau1372->pd_gpio, 1);
+diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
+index 1893d37dd575de..4f350db05efa09 100644
+--- a/drivers/power/supply/power_supply_core.c
++++ b/drivers/power/supply/power_supply_core.c
+@@ -262,18 +262,13 @@ static int power_supply_check_supplies(struct power_supply *psy)
+ 	if (cnt == 1)
+ 		return 0;
+ 
+-	/* All supplies found, allocate char ** array for filling */
+-	psy->supplied_from = devm_kzalloc(&psy->dev, sizeof(*psy->supplied_from),
++	/* All supplies found, allocate char * array for filling */
++	psy->supplied_from = devm_kcalloc(&psy->dev,
++					  cnt - 1, sizeof(*psy->supplied_from),
+ 					  GFP_KERNEL);
+ 	if (!psy->supplied_from)
+ 		return -ENOMEM;
+ 
+-	*psy->supplied_from = devm_kcalloc(&psy->dev,
+-					   cnt - 1, sizeof(**psy->supplied_from),
+-					   GFP_KERNEL);
+-	if (!*psy->supplied_from)
+-		return -ENOMEM;
+-
+ 	return power_supply_populate_supplied_from(psy);
+ }
+ #else
 -- 
 2.53.0
 
