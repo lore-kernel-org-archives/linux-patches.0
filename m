@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA77340926D;
-	Tue, 21 Jul 2026 18:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D95D46D0A0;
+	Tue, 21 Jul 2026 18:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659808; cv=none; b=f5LoPXfz5qJGPuh2KQEyL9WPk7Hc6Elec0F7zIXB8PbvAlO3owsJiESzZkggzXSzTw6FF39XXz3I2L3U1oOPI+HGfCrtFvfp+QOL8XdJS3towE43XgxNRGAvSGHC8CUUxDHdRXDMNphYJZXRfQzTuEoNMao2+dM0KQEmfa6QWSo=
+	t=1784659811; cv=none; b=e9ImBixXE8WQTmFQPQe3HjgxvuVJ7wSG0/IP2L6Tie+s2boRos1e+LD1htMY+ittd1bJwCsjVuJ1o+BvFfye+ZDhnI/PhERjMYpgB4bkzljaVVa9HBlFNFTgokuTM3dBHUyvLTorBuWN5MdyslVE28+Cq/xK2ZWGRm6D5WSxAlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659808; c=relaxed/simple;
-	bh=xyFwZzq7JEq0yiNxFXOQW2c9VP9J1wfCgnAuJiPM/Cc=;
+	s=arc-20240116; t=1784659811; c=relaxed/simple;
+	bh=uiViAyBzm8+1eLDrC+JwFm8jKCwM7k+eR6j7GEXlUJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j7LJ4AXl2vB7vlOByygWGLoNkjAtCBgpnrHZOiqV7IhYSq2qKFpxEQivf95JgOUic6HXJ7SIJesch62OyrCHquWaZED6XOGPJL8C2pE7pfRlsOtCG6LkBZFOnzVvICwwrK2byZlNSuJq9ZViLTwDeIWDPQs8uhwPEhLXrgnipcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vn94NpO7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TGA4gUjIzy81SBrwNiT2GRZYj5Up6DYhvwiyTK5eLnb8quriVglRtN2X0S02ZLCo4TlWKXzc7zozRDKuWsw5Up9iJYVUaaQ0T0re0dwivDGP82T5prl0IQ9BXj8/VcdyTh3QN8LuCMvRYjRJcbX/eBmUe3RQnu/mxh3ESf6Srlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xnm7MQCJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vn94NpO7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6CE1F000E9;
-	Tue, 21 Jul 2026 18:50:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xnm7MQCJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B28A1F000E9;
+	Tue, 21 Jul 2026 18:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659807;
-	bh=tH/r1u4sQBWbtG66/2D5qQMAVhyTmXlNkZwFwlw797k=;
+	s=korg; t=1784659810;
+	bh=G1XU0Ng7fYY8POyruky1XXmVfM1nTHrPJp0k25z9fU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vn94NpO7xJYR6Cnqe21micIw8sGtwYRRDwBy8Z5XUITpMaAdWvffHwA8LHBIP7Yyt
-	 YYnBQUqCoMBEqdFf+t9c7J5MnqgopFpxa5gFJhsuHG+okieL+xn8rIYn0umCnV7LzI
-	 +5jCqv0de780hzXZxaiMxtbzrfoEUQndqEnnpw9s=
+	b=Xnm7MQCJ7aBmojS7SHXZKZEzy8CVMxQQZ7amCRqrk08qw+3Uq86gIwcKVG0v254oY
+	 CUwbOh0oKJMCySmw1g6cfwnhYN/marBCxv03fHQOVFY2T51+NE5rXqDRqjHKJV9Ruz
+	 QxrfuUFS7FLyET5N53irLHK7PYF8yZKrrY7wbRDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Sechang Lim <rhkrqnwk98@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Fiona Ebner <f.ebner@proxmox.com>,
+	Gabriel Goller <g.goller@proxmox.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0742/2077] tcp: clear sock_ops cb flags before force-closing a child socket
-Date: Tue, 21 Jul 2026 17:06:55 +0200
-Message-ID: <20260721152610.294976851@linuxfoundation.org>
+Subject: [PATCH 7.1 0743/2077] virtio_net: do not allow tunnel csum offload for non GSO packets
+Date: Tue, 21 Jul 2026 17:06:56 +0200
+Message-ID: <20260721152610.319549419@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,88 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sechang Lim <rhkrqnwk98@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 990348e5bb457697c2f1f7f7b65154a3334d9d2b ]
+[ Upstream commit 86c51f0f23136ea5ef5541f607287e07150cd23f ]
 
-A child socket inherits the listener's bpf_sock_ops_cb_flags via
-sk_clone_lock(). If its setup fails in tcp_v4_syn_recv_sock() /
-tcp_v6_syn_recv_sock(), the child is freed through put_and_exit, where
-inet_csk_prepare_forced_close() drops the socket lock and tcp_done() runs
-without it.
+Fiona reports broken connectivity for virtio net setup using UDP tunnel
+inside the guest and NIC with not UDP tunnel TSO support in the host.
 
-If BPF_SOCK_OPS_STATE_CB_FLAG was inherited, tcp_done() -> tcp_set_state()
-calls tcp_call_bpf(), which expects the lock and trips sock_owned_by_me():
+Currently the virtio_net driver exposes csum offload for UDP-tunneled,
+TCP non GSO packets. Such packet reach the host as CSUM_PARTIAL ones
+with the 'encapsulation' flag cleared, as the virtio specification do
+not support this specific kind of offload.
 
-  WARNING: include/net/sock.h:1799 at tcp_set_state+0x433/0x550
-  RIP: 0010:tcp_set_state+0x433/0x550 include/net/sock.h:1799
-  Call Trace:
-   <IRQ>
-   tcp_done+0xba/0x250 net/ipv4/tcp.c:5095
-   tcp_v4_syn_recv_sock+0x850/0xa50 net/ipv4/tcp_ipv4.c:1787
-   tcp_check_req+0xf30/0x1360 net/ipv4/tcp_minisocks.c:926
-   tcp_v4_rcv+0x1047/0x1b50 net/ipv4/tcp_ipv4.c:2164
-   </IRQ>
+HW NICs with UDP tunnel TSO support - and those drivers directly
+accessing skb->csum_start/csum_offset - are still capable of computing
+the needed csum correctly, but otherwise the packets reach the wire with
+bad csum on both the inner and outer transport header.
 
-The child is freed before it is ever established, so it should run no
-sock_ops callback. Clear its cb flags in inet_csk_prepare_for_destroy_sock(),
-the common point for the IPv4, IPv6 and chtls forced-close paths and for the
-MPTCP ->syn_recv_sock() failure path (dispose_child), which reaches tcp_done()
-on a child that was never established too.
+Address the issue explicitly disabling csum offload for UDP tunneled,
+non GSO packets via the ndo_features_check op.
 
-Suggested-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Fixes: d44874910a26 ("bpf: Add BPF_SOCK_OPS_STATE_CB")
-Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260611092923.1895982-1-rhkrqnwk98@gmail.com
+Fixes: 56a06bd40fab ("virtio_net: enable gso over UDP tunnel support.")
+Reported-by: Fiona Ebner <f.ebner@proxmox.com>
+Closes: https://bugzilla.proxmox.com/show_bug.cgi?id=7627
+Tested-by: Fiona Ebner <f.ebner@proxmox.com>
+Tested-by: Gabriel Goller <g.goller@proxmox.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Gabriel Goller <g.goller@proxmox.com>
+Tested-by: Gabriel Goller <g.goller@proxmox.com>
+Link: https://patch.msgid.link/6c3b6c47fb05c100f384630dc48f3975cf37b67a.1781195144.git.pabeni@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h               | 9 +++++++++
- net/ipv4/inet_connection_sock.c | 1 +
- 2 files changed, 10 insertions(+)
+ drivers/net/virtio_net.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 98848db62894aa..607298501e1230 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -2942,6 +2942,11 @@ static inline int tcp_call_bpf_3arg(struct sock *sk, int op, u32 arg1, u32 arg2,
- 	return tcp_call_bpf(sk, op, 3, args);
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index f4adcfee7a8001..7d2eeb9b122667 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -6222,6 +6222,19 @@ static void virtnet_free_irq_moder(struct virtnet_info *vi)
+ 	rtnl_unlock();
  }
  
-+static inline void tcp_clear_sock_ops_cb_flags(struct sock *sk)
++static netdev_features_t virtnet_features_check(struct sk_buff *skb,
++						struct net_device *dev,
++						netdev_features_t features)
 +{
-+	tcp_sk(sk)->bpf_sock_ops_cb_flags = 0;
++	/* Inner csum offload is only available for GSO packets. */
++	if (skb->encapsulation &&
++	    (!skb_is_gso(skb) || netif_needs_gso(skb, features)))
++		return features & ~NETIF_F_CSUM_MASK;
++
++	/* Passthru. */
++	return features;
 +}
 +
- #else
- static inline int tcp_call_bpf(struct sock *sk, int op, u32 nargs, u32 *args)
- {
-@@ -2959,6 +2964,10 @@ static inline int tcp_call_bpf_3arg(struct sock *sk, int op, u32 arg1, u32 arg2,
- 	return -EPERM;
- }
- 
-+static inline void tcp_clear_sock_ops_cb_flags(struct sock *sk)
-+{
-+}
-+
- #endif
- 
- static inline u32 tcp_timeout_init(struct sock *sk)
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 5b934ce8d98a8c..690f7fb3f029e8 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1285,6 +1285,7 @@ EXPORT_SYMBOL(inet_csk_destroy_sock);
- void inet_csk_prepare_for_destroy_sock(struct sock *sk)
- {
- 	/* The below has to be done to allow calling inet_csk_destroy_sock */
-+	tcp_clear_sock_ops_cb_flags(sk);
- 	sock_set_flag(sk, SOCK_DEAD);
- 	tcp_orphan_count_inc();
- }
+ static const struct net_device_ops virtnet_netdev = {
+ 	.ndo_open            = virtnet_open,
+ 	.ndo_stop   	     = virtnet_close,
+@@ -6235,7 +6248,7 @@ static const struct net_device_ops virtnet_netdev = {
+ 	.ndo_bpf		= virtnet_xdp,
+ 	.ndo_xdp_xmit		= virtnet_xdp_xmit,
+ 	.ndo_xsk_wakeup         = virtnet_xsk_wakeup,
+-	.ndo_features_check	= passthru_features_check,
++	.ndo_features_check	= virtnet_features_check,
+ 	.ndo_get_phys_port_name	= virtnet_get_phys_port_name,
+ 	.ndo_set_features	= virtnet_set_features,
+ 	.ndo_tx_timeout		= virtnet_tx_timeout,
 -- 
 2.53.0
 
