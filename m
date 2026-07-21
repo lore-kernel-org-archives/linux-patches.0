@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6380446EF62;
-	Tue, 21 Jul 2026 19:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59CF4229C6;
+	Tue, 21 Jul 2026 19:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660608; cv=none; b=PXLsBnCm3AzQXyVj1k2ihJPrKD5jQ8gw2fdDdKr70YYFwgryS5Gzz7PSyh8JywqBMz8Q8jJ6NwfsOthQZaBHyrux2n6yS9MPXRueDS+mTmbygv8mgcLJLSPRAk+viMKcoSx4OKF88cFb8Gs/AmMLEYc6LC/pcTC4FTl6SCj3yvs=
+	t=1784660612; cv=none; b=jb2h6KpaXpuqS1RWjGTg34yDut/b9RWlA9In7/jTBdHOVwJmZKnNWuodG23m++RO9EXZQvpUewLFqhowKspvx5kUfVFdyoGdNO/RTqM08iV6rwMzr5hSBrY9gG9uukANaViIMNEj0MDsAZgpa/BP7kh40BId+xqS44KYgr2p0QU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660608; c=relaxed/simple;
-	bh=x78sD1THw5xXB8ZQijc5me7Q74N7vdZk5ufr5biDDik=;
+	s=arc-20240116; t=1784660612; c=relaxed/simple;
+	bh=77js8B72Ta1d9Brez8GLFY5Z/I5i2ZanxLFawu2dHnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ELO7v3SboHrC0yg9Vg5Qlo/x5Z6fCrvIWH4nnGFO+YsMsc9SOZkXNVNZUp67Yhb05uNs4cPEI/HMHmzbGR7oczskwcvrw5w/KS6aTNTb1pJmz2VxztV1AZY6RUJDVjrwSSWcnSiz94pQbO8tLHkIlE/N1mUyCDbYqUVLAUhhMTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sHhxdrNe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WXKsrHbpNLWah6r3EMlP3ut1MA89KPbkQoej137aAHGbsdcvqVRghAlZe8avMxd17yk24DgOIK4XmmjOkW303jjR6Fhi8wY5j69aJRXeqU+gtHkGzBGioo1Ho6FZ31JEQ8aYFeuD5J029D4Ex4mTQtGu3lGQR1CHbPWGtwcG6A0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qei8y1W9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sHhxdrNe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 222CD1F000E9;
-	Tue, 21 Jul 2026 19:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qei8y1W9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0A51F00A3A;
+	Tue, 21 Jul 2026 19:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660605;
-	bh=ggbAx7nweku0rIScoWJYrDTexNEUV33etWUtq1xk9zA=;
+	s=korg; t=1784660608;
+	bh=XKcFcJ3ih6MNhaSPA+S5RdMl+RffaOY7ds2BUm6vPIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sHhxdrNeOOqsa3rmytWuu80pLM/b/GCZPtMO+kmeKuhgbds2EDIQ8B4OPEsk26OG9
-	 WjwwO9UuhvPClg9utddqONUSWBF/zFVyeXSuxgyre9tgHIxQB3LwY17F2NFqrUoeMr
-	 1zDLALNumxwzaYmO7oaibbkiMgfOiR5ytY+YuAxA=
+	b=qei8y1W9tvmFZIjM6h34SvlWrhqBHftbiaAfnr1qkLh9RnY3zDRMIF2pgD+T4y7EH
+	 5rAhlXLVCTgnm1I0NsCEP9oyLyXtxiXpE+5OvnHvrYU222JvkyEpVxfqBtlG3r35kr
+	 qYdpilQcfEuSvU30cPiZa03vCuHrdaYTewyP03VA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Georgia Garcia <georgia.garcia@canonical.com>,
+	Ryan Lee <ryan.lee@canonical.com>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1042/2077] apparmor: fix rawdata_f_data implicit flex array
-Date: Tue, 21 Jul 2026 17:11:55 +0200
-Message-ID: <20260721152617.390313655@linuxfoundation.org>
+Subject: [PATCH 7.1 1043/2077] apparmor: grab ns lock and refresh when looking up changehat child profiles
+Date: Tue, 21 Jul 2026 17:11:56 +0200
+Message-ID: <20260721152617.413283970@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,56 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Ryan Lee <ryan.lee@canonical.com>
 
-[ Upstream commit ad213bbbc0e3e270ce7df2d9d80d4ce3826993d7 ]
+[ Upstream commit 32e92764d6f8d251c1bca62be33793287b453a81 ]
 
-rawdata_f_data has a blob of data that is allocated at its end but
-not explicitly declared. Makes sure it is correctly declared as a
-flex_rray.
+There was a race condition involving change_hat and profile replacement in
+which replacement of the parent profile during a changehat operation could
+result in the list of children becoming empty and the changehat operation
+failing. To prevent this:
+ - grab the namespace lock until we've built the hat transition, and
+ - use aa_get_newest_profile to avoid using stale profile objects.
 
-Fixes: 63c16c3a76085 ("apparmor: Initial implementation of raw policy blob compression")
+Link: https://bugs.launchpad.net/bugs/2139664
+Fixes: 89dbf1962aa63 ("apparmor: move change_hat mediation to using labels")
 Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+Signed-off-by: Ryan Lee <ryan.lee@canonical.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/apparmorfs.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ security/apparmor/domain.c | 33 +++++++++++++++++++++++++++++++--
+ 1 file changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
-index aeff3d2d863bc5..725a69aa1c2a37 100644
---- a/security/apparmor/apparmorfs.c
-+++ b/security/apparmor/apparmorfs.c
-@@ -71,10 +71,10 @@
- 
- struct rawdata_f_data {
- 	struct aa_loaddata *loaddata;
-+	DECLARE_FLEX_ARRAY(char, data);
- };
- 
- #ifdef CONFIG_SECURITY_APPARMOR_EXPORT_BINARY
--#define RAWDATA_F_DATA_BUF(p) (char *)(p + 1)
- 
- static void rawdata_f_data_free(struct rawdata_f_data *private)
+diff --git a/security/apparmor/domain.c b/security/apparmor/domain.c
+index 6748ac74b060bd..c2652165a5886d 100644
+--- a/security/apparmor/domain.c
++++ b/security/apparmor/domain.c
+@@ -12,6 +12,7 @@
+ #include <linux/fs.h>
+ #include <linux/file.h>
+ #include <linux/mount.h>
++#include <linux/mutex.h>
+ #include <linux/syscalls.h>
+ #include <linux/personality.h>
+ #include <linux/xattr.h>
+@@ -1109,6 +1110,7 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 				   int count, int flags)
  {
-@@ -1436,7 +1436,7 @@ static ssize_t rawdata_read(struct file *file, char __user *buf, size_t size,
- 	struct rawdata_f_data *private = file->private_data;
+ 	struct aa_profile *profile, *root, *hat = NULL;
++	struct aa_ns *ns, *new_ns;
+ 	struct aa_label *new;
+ 	struct label_it it;
+ 	bool sibling = false;
+@@ -1119,6 +1121,32 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 	AA_BUG(!hats);
+ 	AA_BUG(count < 1);
  
- 	return simple_read_from_buffer(buf, size, ppos,
--				       RAWDATA_F_DATA_BUF(private),
-+				       private->data,
- 				       private->loaddata->size);
++	/*
++	 * Acquire the newest label and then hold the lock until we choose a
++	 * hat, so that profile replacement doesn't atomically truncate the
++	 * list of potential hats. Because we are getting the namespaces from
++	 * the profiles and label, we can rely on the namespaces being live
++	 * and avoid incrementing their refcounts while grabbing the lock.
++	 */
++	label = aa_get_label(label);
++	ns = labels_ns(label);
++
++retry:
++	mutex_lock_nested(&ns->lock, ns->level);
++	if (label_is_stale(label)) {
++		new = aa_get_newest_label(label);
++		new_ns = labels_ns(new);
++		if (new_ns != ns) {
++			aa_put_label(new);
++			mutex_unlock(&ns->lock);
++			ns = new_ns;
++			label = new;
++			goto retry;
++		}
++		aa_put_label(label);
++		label = new;
++	}
++
+ 	if (PROFILE_IS_HAT(labels_profile(label)))
+ 		sibling = true;
+ 
+@@ -1127,7 +1155,7 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 		name = hats[i];
+ 		label_for_each_in_scope(it, labels_ns(label), label, profile) {
+ 			if (sibling && PROFILE_IS_HAT(profile)) {
+-				root = aa_get_profile_rcu(&profile->parent);
++				root = aa_get_profile(profile->parent);
+ 			} else if (!sibling && !PROFILE_IS_HAT(profile)) {
+ 				root = aa_get_profile(profile);
+ 			} else {	/* conflicting change type */
+@@ -1187,6 +1215,7 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 				      GLOBAL_ROOT_UID, info, error);
+ 		}
+ 	}
++	mutex_unlock(&ns->lock);
+ 	return ERR_PTR(error);
+ 
+ build:
+@@ -1199,7 +1228,7 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 		error = -ENOMEM;
+ 		goto fail;
+ 	} /* else if (IS_ERR) build_change_hat has logged error so return new */
+-
++	mutex_unlock(&ns->lock);
+ 	return new;
  }
- 
-@@ -1469,8 +1469,7 @@ static int rawdata_open(struct inode *inode, struct file *file)
- 	private->loaddata = loaddata;
- 
- 	error = decompress_zstd(loaddata->data, loaddata->compressed_size,
--				RAWDATA_F_DATA_BUF(private),
--				loaddata->size);
-+				private->data, loaddata->size);
- 	if (error)
- 		goto fail_decompress;
  
 -- 
 2.53.0
