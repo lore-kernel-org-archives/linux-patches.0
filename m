@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFE844AB61;
-	Tue, 21 Jul 2026 21:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374AC44AB61;
+	Tue, 21 Jul 2026 21:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668996; cv=none; b=fObL21dXJM9FHRenhUMajo9EutlN6+79C72cZBrbobKnOJn5yFNjUp9h3+o1tdH6aSwU+Z7/SMR9NmhFKn04UAiHwbakMB2FyRtIDLJge8urfO++Fq4X+tMQGgGnipTnLffLIPOuhDk2rKMwDYFGyNe7q92fj9U8onhNKsjUwy0=
+	t=1784669001; cv=none; b=P43jGlkXi/kctn6io4/0K9QKOEAoTZPTAcz1EjKSudvUcNhtW3+ae0AY1hs5UnsAzViBw/sX9733LXeXbJ1wwKCojaYpY0o9c5qMVjK0nsbmn5CG8FcyLuHOQ0oXhfs1RltEk98pn8oDm6gk0sX7IUUDlseCF35tEz5cPBYn0qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668996; c=relaxed/simple;
-	bh=+wKrdDJHvtCpJ+wPjeMPEpcmq7vrNrop6EExuHCJeK0=;
+	s=arc-20240116; t=1784669001; c=relaxed/simple;
+	bh=g8Lq7fmxedPt0UO5IIqM1cnlZtHdh/W30YbFUMZ9+JI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WV99Hh1Z7XN8XzKcy5Rq6SQ9AzTW3kLKs8QKHGTIdhQz/aB1ah7pvdh1CYXA96+JdTYROx9mHlSGst5XbRLYflnV0lCmStY2ZXCli0W4rFYfKmI5mH2Vq/lgOI8CMCbAqpJaBhEWh0kn5DBSfxvsSkcR0o5bLAHhoHQCyIi2dGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vcwxDQ+i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lX3gWwQYNtvQc3ccfL0P8UCJXBuh/jBBvyK9WgPP6kndScvCpL1Bk1SbZy8d/dRwJjSWoCYagYJlvEK51KNrE0EEp6xDIOyzcTCCHOwUgpAkH+xzh0fvjZtNcrWvoew4DSDwhh4L41zyCjNjqXNpPkoSVKLeprZfCU3JS4YqSDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gRcmGm5E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcwxDQ+i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2091F000E9;
-	Tue, 21 Jul 2026 21:23:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gRcmGm5E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3751F00A3A;
+	Tue, 21 Jul 2026 21:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668994;
-	bh=57AU5A635VHZx4lVGZOOIKrFck7uPezVsWgpSbJfg84=;
+	s=korg; t=1784669000;
+	bh=93oZ34r+7Q1wBBM4uF2qpNXWc0nkzWv3el8L9EizaR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vcwxDQ+iBCkNKf+9F6JIWMY4Jg0QFMd9SS1wfTaUkwMNzYy2VhPMCB7duA+nbxWTo
-	 WVZnrZGkqAxnRc0WV7e4xqNKaqXwopMTB1ucfnb6sh26LjYU+8KXhyY0ZzoaVhv9Qt
-	 ji/wXcjQwfc+WV7NWhR6iMypo70xiSdjwTndNm6w=
+	b=gRcmGm5EtDVRP5pltRjPsgp8hD8joRbS9D6IIDxNazWaRwIl4qFv4KcspapYwNref
+	 V0FssteACX5KjefD7pOOf9atLpR4WPMQpVoqtsGaqhWKRMCedutOkI76vqCMrjPYzR
+	 rWqKNuHYx0BC5Aa1/gfkn0T6vLkcv1Br2qVbvae8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Loic Poulain <loic.poulain@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0388/1067] wifi: wcn36xx: fix heap overflow from oversized firmware HAL response
-Date: Tue, 21 Jul 2026 17:16:29 +0200
-Message-ID: <20260721152433.308450537@linuxfoundation.org>
+Subject: [PATCH 6.1 0390/1067] wifi: wcn36xx: fix OOB read from short trigger BA firmware response
+Date: Tue, 21 Jul 2026 17:16:31 +0200
+Message-ID: <20260721152433.357852709@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -54,40 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 88a240d86d3d64521f9194abe185ac71cc74d0bd ]
+[ Upstream commit b5e6f21923ca89d90256e7346301056f6502691e ]
 
-The firmware response dispatcher copies all synchronous HAL responses
-into the 4096-byte hal_buf without validating the response length. A
-response exceeding WCN36XX_HAL_BUF_SIZE causes a heap buffer overflow
-with firmware-controlled content.
+The firmware response length is only checked against sizeof(*rsp) (20
+bytes), but when candidate_cnt >= 1, a 22-byte candidate struct is read
+at buf + 20 without verifying the response contains it. This causes an
+out-of-bounds read of stale heap data, corrupting the BA session state.
 
-Add a bounds check on the response length.
+Add validation that the response includes the candidate data.
 
-Fixes: 8e84c2582169 ("wcn36xx: mac80211 driver for Qualcomm WCN3660/WCN3680 hardware")
+Fixes: 16be1ac55944 ("wcn36xx: Parse trigger_ba response properly")
 Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
 Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260421135018.352774-2-tristmd@gmail.com
+Link: https://patch.msgid.link/20260421135018.352774-4-tristmd@gmail.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/wcn36xx/smd.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/ath/wcn36xx/smd.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
-index 566f0b9c15841e..bd51abef3a5be7 100644
+index ad329252a7ceb8..79f0ed675a838b 100644
 --- a/drivers/net/wireless/ath/wcn36xx/smd.c
 +++ b/drivers/net/wireless/ath/wcn36xx/smd.c
-@@ -3353,6 +3353,10 @@ int wcn36xx_smd_rsp_process(struct rpmsg_device *rpdev,
- 	case WCN36XX_HAL_EXIT_IMPS_RSP:
- 	case WCN36XX_HAL_UPDATE_CHANNEL_LIST_RSP:
- 	case WCN36XX_HAL_ADD_BCN_FILTER_RSP:
-+		if (len > WCN36XX_HAL_BUF_SIZE) {
-+			wcn36xx_warn("HAL response too large: %d\n", len);
-+			break;
-+		}
- 		memcpy(wcn->hal_buf, buf, len);
- 		wcn->hal_rsp_len = len;
- 		complete(&wcn->hal_rsp_compl);
+@@ -2659,6 +2659,9 @@ static int wcn36xx_smd_trigger_ba_rsp(void *buf, int len, struct add_ba_info *ba
+ 	if (rsp->candidate_cnt < 1)
+ 		return rsp->status ? rsp->status : -EINVAL;
+ 
++	if (len < sizeof(*rsp) + sizeof(*candidate))
++		return -EINVAL;
++
+ 	candidate = (struct wcn36xx_hal_trigger_ba_rsp_candidate *)(buf + sizeof(*rsp));
+ 
+ 	for (i = 0; i < STACFG_MAX_TC; i++) {
 -- 
 2.53.0
 
