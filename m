@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF1644AB62;
-	Tue, 21 Jul 2026 21:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576A644AB62;
+	Tue, 21 Jul 2026 21:52:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670739; cv=none; b=TjiVKNVtMKh6xk2kdqXpLuP0YyZM4Pfqy4876k4XjhHZEaKCsp65KPKdf/1qi3JfEqONanniQro6+GgBauRGJj4+vPPqxeSp5aK0CO9O053uabR3//AmXoW+nMHB8SR8P69WWFL5gkhH/AgQ/HV9JJkviyW53kyOooXmF6MXWM0=
+	t=1784670742; cv=none; b=dEgBH0st/X1+ce+SUSnVFseTOTfKYf+U2uOklX4KqeI7uJrQ9gDu5TSBSaFu1tuqM/7R/bdCZ5IdmNcMKZoFm4fPQHtjpFQfqO3wKAwc/5BJBfWP9YeNge94o0rObYBGkWrKEHKRorG3XdWcKz9pLOghmC54JFABejPxVkXMDv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670739; c=relaxed/simple;
-	bh=3RnDhJs/oekE0T9tJQ2TGa0w27Nin8avcq4/NbjGCR0=;
+	s=arc-20240116; t=1784670742; c=relaxed/simple;
+	bh=6YHybxM6jH1BcHgFOh8MqYuBzGyjL4iXKJpT4KO2cDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ug138YsNeAOt2Oegwlwo6rcxzZb4tU7TpzPozU5WhH30M440WwPNqWA0lcC0gUv+uQzeOTN24PlWHG1uhQG7eBreanvnKG4bxqg1v24gNFtwkY7Y8LS4raFYtzblJcvDSvwy74CZXknxn5I/gV8MnKf+9rkYVHcDquABU/VFMjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxLQyN+k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XlSR7pwArQarRvIAR19hDS49iCXVPjc5E7WoPJxoPbkEMIQsNqikHVKvLEiGrsObPM54+AfbircLYJsyjMKUz4Ha23OcxsV2RHp86HO2+NoBmQMiSzOPxEmgJYEkuWHEPhQBDRn/S9NnuWJHZHPwHRcAnJckrPrjQ31PiiFsTDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5jqnUL2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxLQyN+k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C96D1F000E9;
-	Tue, 21 Jul 2026 21:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5jqnUL2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88221F000E9;
+	Tue, 21 Jul 2026 21:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670738;
-	bh=6QHBU3XrHAuI3ygeivS6jHg/lP2dQlpg7nAYQZBNkrE=;
+	s=korg; t=1784670741;
+	bh=OpOWLEorYJggsqvxjxmvKJwtET0q9+g6MwyHDfS9L+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jxLQyN+kNU7nycfxQQRVZ/bM6dkKfiu8nekw31s+xnJ4uZxeHzgWSJOWrnXbZPVp/
-	 +/TM/TeYsicw4DRyYhotMo9U8W1+n0dc3VRmvDO2nmWUuRat7UltsIVMiOK0Jdyv9D
-	 5Nov+e3vkFop9ASm1RowusV+VNMkNZXyZjR0utAM=
+	b=M5jqnUL2EUYTunL1hEwkBxIF9vxg70OgqS0DCJrSEOmdOwI7StBWTcQ73Xp93QBmM
+	 z3GrXZ0tdeITwXltgcRhW30SOmKg1kk6DiJY4L7MSZE3tLZnbqHibqFgYF6KgiWnWZ
+	 102b3EeVwfqHSB4gGol7W/G9/voS5AQ206sGhiqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Oliver Upton <oupton@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.1 1046/1067] KVM: Move kvm_io_bus_get_dev() locking responsibilities to callers
-Date: Tue, 21 Jul 2026 17:27:27 +0200
-Message-ID: <20260721152447.992025965@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.1 1047/1067] seqlock: fix scoped_seqlock_read kernel-doc
+Date: Tue, 21 Jul 2026 17:27:28 +0200
+Message-ID: <20260721152448.013213065@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,79 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit 3a07249981629ace483ebbef81ef6b34c2d2afec upstream.
+commit f88a31308db6a856229150039b0f56d59696ed31 upstream.
 
-kvm_io_bus_get_dev() returns a device that is only matched by the
-address, and nothing else. This can cause a lifetime issue if
-the matched device is not the expected type, as by the time
-the caller can introspect the object, it might be gone (the srcu
-lock having been dropped).
+Eliminate all kernel-doc warnings in seqlock.h:
 
-Given that there is only a single user of this helper, the simplest
-option is to move the locking responsibility to the caller, which
-can keep the srcu lock held for as long as it wants.
+- correct the macro to have "()" immediately following the macro name
+- don't include the macro parameters in the short description (first line)
+- make the parameter names in the comments match the actual macro
+  parameter names.
+- use "::" for the Example
 
-Note that this aligns with other kvm_io_bus*() helpers, which
-already require the srcu lock to be held by the callers.
+WARNING: include/linux/seqlock.h:1341 This comment starts with '/**', but isn't a kernel-doc comment.
+ * scoped_seqlock_read (lock, ss_state) - execute the read side critical
+Documentation/locking/seqlock:242: include/linux/seqlock.h:1351: WARNING:
+  Definition list ends without a blank line; unexpected unindent. [docutils]
+Warning: include/linux/seqlock.h:1357 function parameter '_seqlock' not described in 'scoped_seqlock_read'
+Warning: include/linux/seqlock.h:1357 function parameter '_target' not described in 'scoped_seqlock_read'
 
-Reported-by: Will Deacon <will@kernel.org>
-Fixes: 8a39d00670f07 ("KVM: kvm_io_bus: Add kvm_io_bus_get_dev() call")
-Link: https://lore.kernel.org/all/20260626111344.802555-1-maz@kernel.org
-Cc: stable@vger.kernel.org
-Reviewed-by: Oliver Upton <oupton@kernel.org>
-Link: https://patch.msgid.link/20260627105105.1005990-1-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Fixes: cc39f3872c08 ("seqlock: Introduce scoped_seqlock_read()")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260123183749.3997533-1-rdunlap@infradead.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c |    2 ++
- virt/kvm/kvm_main.c            |   16 +++++-----------
- 2 files changed, 7 insertions(+), 11 deletions(-)
+ include/linux/seqlock.h |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -713,6 +713,8 @@ struct vgic_its *vgic_msi_to_its(struct
+--- a/include/linux/seqlock.h
++++ b/include/linux/seqlock.h
+@@ -1357,15 +1357,14 @@ __scoped_seqlock_next(struct ss_tmp *sst
+ 	     __scoped_seqlock_next(&_s, _seqlock, _target))
  
- 	address = (u64)msi->address_hi << 32 | msi->address_lo;
- 
-+	guard(srcu)(&kvm->srcu);
-+
- 	kvm_io_dev = kvm_io_bus_get_dev(kvm, KVM_MMIO_BUS, address);
- 	if (!kvm_io_dev)
- 		return ERR_PTR(-EINVAL);
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -5465,25 +5465,19 @@ struct kvm_io_device *kvm_io_bus_get_dev
- 					 gpa_t addr)
- {
- 	struct kvm_io_bus *bus;
--	int dev_idx, srcu_idx;
--	struct kvm_io_device *iodev = NULL;
-+	int dev_idx;
- 
--	srcu_idx = srcu_read_lock(&kvm->srcu);
-+	lockdep_assert_held(&kvm->srcu);
- 
- 	bus = srcu_dereference(kvm->buses[bus_idx], &kvm->srcu);
- 	if (!bus)
--		goto out_unlock;
-+		return NULL;
- 
- 	dev_idx = kvm_io_bus_get_first_dev(bus, addr, 1);
- 	if (dev_idx < 0)
--		goto out_unlock;
-+		return NULL;
- 
--	iodev = bus->range[dev_idx].dev;
--
--out_unlock:
--	srcu_read_unlock(&kvm->srcu, srcu_idx);
--
--	return iodev;
-+	return bus->range[dev_idx].dev;
- }
- EXPORT_SYMBOL_GPL(kvm_io_bus_get_dev);
- 
+ /**
+- * scoped_seqlock_read (lock, ss_state) - execute the read side critical
+- *                                        section without manual sequence
+- *                                        counter handling or calls to other
+- *                                        helpers
+- * @lock: pointer to seqlock_t protecting the data
+- * @ss_state: one of {ss_lock, ss_lock_irqsave, ss_lockless} indicating
+- *            the type of critical read section
++ * scoped_seqlock_read() - execute the read-side critical section
++ *                         without manual sequence counter handling
++ *                         or calls to other helpers
++ * @_seqlock: pointer to seqlock_t protecting the data
++ * @_target: an enum ss_state: one of {ss_lock, ss_lock_irqsave, ss_lockless}
++ *           indicating the type of critical read section
+  *
+- * Example:
++ * Example::
+  *
+  *     scoped_seqlock_read (&lock, ss_lock) {
+  *         // read-side critical section
 
 
