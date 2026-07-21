@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670E246D094;
-	Tue, 21 Jul 2026 18:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B253538910F;
+	Tue, 21 Jul 2026 18:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659840; cv=none; b=Y8Zh26QA8Rbcyxr9hjfBOxWSACXxvOmFh4u0za9AY+ssTm9evvmvQW4TwTTQIkYee5HL+qYQbHQZyQpfvRxGGc6YvdsIrYv9bgnLNVJXcYwg1UGpjvqFeXrX72jaXnHctICHnsiIQ31Umr1Oji6SQ4rYNHTgiKLKODsKbR9zGl0=
+	t=1784659843; cv=none; b=g35LZ7knfObauUe5IDgjQSqtM+MiBNatKYSsxngkkBx6dXsE2XhSIP57K8CCnfmCzoupzsMkcmoK+oAYlqcI3TSWP7l2TjmBO7f9GYrgkGUYtoox74m5gTpwKnHDrTO74kpe5hAQ+WW0L8ghfYTECsr/0aPupiJTaeum0lMlusI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659840; c=relaxed/simple;
-	bh=hWjECP93ad4aR0YG9r26W33gVSZNwMuj8AJ0eAacfKs=;
+	s=arc-20240116; t=1784659843; c=relaxed/simple;
+	bh=jm3wjnk16Dtu+93BbIx1OIkOVw0qXZOKrPhJupHxYDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sbXID1oMr1ac/7EHzt46mE7++r+k8Tt0Wl2Xq99wRX3KBBdYZQSQO3ixNMwMWrlQ2Drt3XwosaQWhBWG1SYIIblkg1aqCWrko0FqZXhUbCJcMFNi1RXiwz6X7wixRQyjm9n8AX05kHnFz7hGiBqCi5Bx1vMIqTQDtx8LhcWSFxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KprkKwDX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ANOZIpGCX9bqvb/rckDtGbTZ/ZX+eA2dzNMRvtfJENuTEZDJ4rc7eDNsYbpYHZN//8LnNkHBYA0o37otnzDV99ONJjRkWjtoVYIM3jdC7QEfUsGecFX+aeg5Dl2De3y+TTf+RfZ7e/yhB6BBiMasfnDRkfvrEvHXfQ9Rk3uVzb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJnj7aHk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KprkKwDX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829F91F000E9;
-	Tue, 21 Jul 2026 18:50:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJnj7aHk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E8A1F000E9;
+	Tue, 21 Jul 2026 18:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659839;
-	bh=rs4c/7uqRHazUe4PhSdPNWf0BGCGxY4gHAMqONK0f4o=;
+	s=korg; t=1784659841;
+	bh=ujFU3WuSgbgEuLxQlT8hYZZ3r5iAD0xJFwpuYQqso3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KprkKwDXh+8n/zbSYfYvfiKAQqwvKb13O8C+DYXTWRZw2NoH2nzsRDeZIeRNa4KKa
-	 Ju9S9AWdVr3TxPdVvYmh5eWmCMtQj5Pr2KUFTcP/kblwDTD0IJcS8NuqpjfaiWZV/A
-	 ExFYbOYzgrEcraCQoIHSej+U9Xt3VVlCjdy+DMy8=
+	b=sJnj7aHkVFc0MlIAcZXTLV69KctfyBVfP9a7kOStLoflH6j/vgZiwOkCk308xB1cP
+	 xlZsWIwXiC4YXFCdi0BLcXC/1GTgER8lgO6Fjos25qfztTi+1ApFjwpY/HtxOifeoV
+	 SNlcXVBIPc54DYuiGLHAxJ7aA7Kq0Kpbx6ZgcRzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Yael Chemla <ychemla@nvidia.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xu Kuohai <xukuohai@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0753/2077] net/mlx5: Check max_macs devlink param value against max capability
-Date: Tue, 21 Jul 2026 17:07:06 +0200
-Message-ID: <20260721152610.550076294@linuxfoundation.org>
+Subject: [PATCH 7.1 0754/2077] bpf: Fix setting retval to -EPERM for cgroup hooks not returning errno
+Date: Tue, 21 Jul 2026 17:07:07 +0200
+Message-ID: <20260721152610.572773969@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -55,73 +51,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Xu Kuohai <xukuohai@huawei.com>
 
-[ Upstream commit d7b0413b35715d7b32cb12d4d424613eff85ed2b ]
+[ Upstream commit 4c71303c837449158815c521fcee4ec3b8721dbd ]
 
-The max_macs devlink param is checked against the FW max value only at
-param register time (driver load) and inside the validate callback
-(devlink param set). The stored DRIVERINIT value persists across FW
-resets and devlink reloads without any further checks against the max.
+When a cgroup BPF program exits with 0, bpf_prog_run_array_cg() sets
+the hook return value to -EPERM if it is not a valid errno. This is
+correct for errno-based hooks, which return 0 on success and negative
+errno on failure, but wrong for boolean and void LSM hooks. Boolean
+LSM hooks should only return true or false, and void LSM hooks have
+no return value at all.
 
-If the FW link type changes from Ethernet to IB and a FW reset happens,
-the MAX cap for log_max_current_uc_list will become zero, but the
-previously stored max_macs value remains and is unconditionally
-programmed into the HCA caps in handle_hca_cap(). FW will then return a
-syndrome during SET_HCA_CAP:
+Fix it by skipping setting -EPERM for hooks not returning errno.
 
- mlx5_cmd_out_err:839:(pid 3831): SET_HCA_CAP(0x109) op_mod(0x0) failed,
- status bad parameter(0x3), syndrome (0x537801), err(-22)
- set_hca_cap:907:(pid 3831): handle_hca_cap failed
-
-This results in a failure to register the RDMA device.
-
-This patch skips programming log_max_current_uc_list when the MAX
-capability is 0 (in case of IB).
-
-Fixes: 8680a60fc1fc ("net/mlx5: Let user configure max_macs generic param")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Yael Chemla <ychemla@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Link: https://patch.msgid.link/20260611135230.534513-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 69fd337a975c ("bpf: per-cgroup lsm flavor")
+Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
+Link: https://lore.kernel.org/r/20260610201724.733943-2-xukuohai@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ include/linux/bpf_lsm.h |  6 ++++++
+ kernel/bpf/bpf_lsm.c    | 20 ++++++++++++++++++
+ kernel/bpf/cgroup.c     | 47 +++++++++++++++++++++++++++++------------
+ 3 files changed, 60 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index 74827e8ca12555..37af619e5e0454 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -527,7 +527,6 @@ static int handle_hca_cap(struct mlx5_core_dev *dev, void *set_ctx)
+diff --git a/include/linux/bpf_lsm.h b/include/linux/bpf_lsm.h
+index e4593b4a123824..dda272d78f013f 100644
+--- a/include/linux/bpf_lsm.h
++++ b/include/linux/bpf_lsm.h
+@@ -54,6 +54,7 @@ int bpf_set_dentry_xattr_locked(struct dentry *dentry, const char *name__str,
+ 				const struct bpf_dynptr *value_p, int flags);
+ int bpf_remove_dentry_xattr_locked(struct dentry *dentry, const char *name__str);
+ bool bpf_lsm_has_d_inode_locked(const struct bpf_prog *prog);
++bool bpf_lsm_hook_returns_errno(u32 btf_id);
+ 
+ #else /* !CONFIG_BPF_LSM */
+ 
+@@ -108,6 +109,11 @@ static inline bool bpf_lsm_has_d_inode_locked(const struct bpf_prog *prog)
  {
- 	struct mlx5_profile *prof = &dev->profile;
- 	void *set_hca_cap;
--	int max_uc_list;
- 	int err;
- 
- 	err = mlx5_core_get_caps(dev, MLX5_CAP_GENERAL);
-@@ -610,10 +609,13 @@ static int handle_hca_cap(struct mlx5_core_dev *dev, void *set_ctx)
- 		MLX5_SET(cmd_hca_cap, set_hca_cap, roce,
- 			 mlx5_is_roce_on(dev));
- 
--	max_uc_list = max_uc_list_get_devlink_param(dev);
--	if (max_uc_list > 0)
--		MLX5_SET(cmd_hca_cap, set_hca_cap, log_max_current_uc_list,
--			 ilog2(max_uc_list));
-+	if (MLX5_CAP_GEN_MAX(dev, log_max_current_uc_list)) {
-+		int max_uc_list = max_uc_list_get_devlink_param(dev);
+ 	return false;
+ }
 +
-+		if (max_uc_list > 0)
-+			MLX5_SET(cmd_hca_cap, set_hca_cap,
-+				 log_max_current_uc_list, ilog2(max_uc_list));
-+	}
++static inline bool bpf_lsm_hook_returns_errno(u32 btf_id)
++{
++	return true;
++}
+ #endif /* CONFIG_BPF_LSM */
  
- 	/* enable absolute native port num */
- 	if (MLX5_CAP_GEN_MAX(dev, abs_native_port_num))
+ #endif /* _LINUX_BPF_LSM_H */
+diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
+index c5c925f0020216..564071a92d7d20 100644
+--- a/kernel/bpf/bpf_lsm.c
++++ b/kernel/bpf/bpf_lsm.c
+@@ -427,6 +427,26 @@ BTF_ID(func, bpf_lsm_audit_rule_known)
+ BTF_ID(func, bpf_lsm_inode_xattr_skipcap)
+ BTF_SET_END(bool_lsm_hooks)
+ 
++/* hooks returning void */
++#define LSM_HOOK_void(DEFAULT, NAME, ...) BTF_ID(func, bpf_lsm_##NAME)
++#define LSM_HOOK_int(DEFAULT, NAME, ...)  /* nothing */
++#define LSM_HOOK(RET, DEFAULT, NAME, ...) LSM_HOOK_##RET(DEFAULT, NAME, __VA_ARGS__)
++BTF_SET_START(void_lsm_hooks)
++#include <linux/lsm_hook_defs.h>
++#undef LSM_HOOK
++#undef LSM_HOOK_void
++#undef LSM_HOOK_int
++BTF_SET_END(void_lsm_hooks)
++
++bool bpf_lsm_hook_returns_errno(u32 btf_id)
++{
++	if (btf_id_set_contains(&bool_lsm_hooks, btf_id))
++		return false;
++	if (btf_id_set_contains(&void_lsm_hooks, btf_id))
++		return false;
++	return true;
++}
++
+ int bpf_lsm_get_retval_range(const struct bpf_prog *prog,
+ 			     struct bpf_retval_range *retval_range)
+ {
+diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+index 89ea605457906e..90921459e2c433 100644
+--- a/kernel/bpf/cgroup.c
++++ b/kernel/bpf/cgroup.c
+@@ -55,6 +55,28 @@ void __init cgroup_bpf_lifetime_notifier_init(void)
+ 						&cgroup_bpf_lifetime_nb));
+ }
+ 
++#ifdef CONFIG_BPF_LSM
++struct cgroup_lsm_atype {
++	u32 attach_btf_id;
++	int refcnt;
++	bool returns_errno;
++};
++
++static struct cgroup_lsm_atype cgroup_lsm_atype[CGROUP_LSM_NUM];
++
++static bool cgroup_bpf_hook_returns_errno(enum cgroup_bpf_attach_type atype)
++{
++	if (atype >= CGROUP_LSM_START && atype <= CGROUP_LSM_END)
++		return READ_ONCE(cgroup_lsm_atype[atype - CGROUP_LSM_START].returns_errno);
++	return true;
++}
++#else
++static bool cgroup_bpf_hook_returns_errno(enum cgroup_bpf_attach_type atype)
++{
++	return true;
++}
++#endif
++
+ /* __always_inline is necessary to prevent indirect call through run_prog
+  * function pointer.
+  */
+@@ -83,7 +105,8 @@ bpf_prog_run_array_cg(const struct cgroup_bpf *cgrp,
+ 			*(ret_flags) |= (func_ret >> 1);
+ 			func_ret &= 1;
+ 		}
+-		if (!func_ret && !IS_ERR_VALUE((long)run_ctx.retval))
++		if (!func_ret && cgroup_bpf_hook_returns_errno(atype) &&
++		    !IS_ERR_VALUE((long)run_ctx.retval))
+ 			run_ctx.retval = -EPERM;
+ 		item++;
+ 	}
+@@ -156,13 +179,6 @@ unsigned int __cgroup_bpf_run_lsm_current(const void *ctx,
+ }
+ 
+ #ifdef CONFIG_BPF_LSM
+-struct cgroup_lsm_atype {
+-	u32 attach_btf_id;
+-	int refcnt;
+-};
+-
+-static struct cgroup_lsm_atype cgroup_lsm_atype[CGROUP_LSM_NUM];
+-
+ static enum cgroup_bpf_attach_type
+ bpf_cgroup_atype_find(enum bpf_attach_type attach_type, u32 attach_btf_id)
+ {
+@@ -191,10 +207,13 @@ void bpf_cgroup_atype_get(u32 attach_btf_id, int cgroup_atype)
+ 
+ 	lockdep_assert_held(&cgroup_mutex);
+ 
+-	WARN_ON_ONCE(cgroup_lsm_atype[i].attach_btf_id &&
+-		     cgroup_lsm_atype[i].attach_btf_id != attach_btf_id);
+-
+-	cgroup_lsm_atype[i].attach_btf_id = attach_btf_id;
++	if (!cgroup_lsm_atype[i].attach_btf_id) {
++		cgroup_lsm_atype[i].attach_btf_id = attach_btf_id;
++		WRITE_ONCE(cgroup_lsm_atype[i].returns_errno,
++			   bpf_lsm_hook_returns_errno(attach_btf_id));
++	} else {
++		WARN_ON_ONCE(cgroup_lsm_atype[i].attach_btf_id != attach_btf_id);
++	}
+ 	cgroup_lsm_atype[i].refcnt++;
+ }
+ 
+@@ -203,8 +222,10 @@ void bpf_cgroup_atype_put(int cgroup_atype)
+ 	int i = cgroup_atype - CGROUP_LSM_START;
+ 
+ 	cgroup_lock();
+-	if (--cgroup_lsm_atype[i].refcnt <= 0)
++	if (--cgroup_lsm_atype[i].refcnt <= 0) {
++		WRITE_ONCE(cgroup_lsm_atype[i].returns_errno, true);
+ 		cgroup_lsm_atype[i].attach_btf_id = 0;
++	}
+ 	WARN_ON_ONCE(cgroup_lsm_atype[i].refcnt < 0);
+ 	cgroup_unlock();
+ }
 -- 
 2.53.0
 
