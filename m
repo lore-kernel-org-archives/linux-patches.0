@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAADD47126D;
-	Tue, 21 Jul 2026 17:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C42471240;
+	Tue, 21 Jul 2026 17:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656506; cv=none; b=bS9fRIoexRCDVVz4EJ4ljc/mlKSnDvKRZl7y+YKDzWRbopxCWN8rwn1x0PKcivKtrl+H76ZcmsXzFU3jjWRvkv29uOjEiV7p+dfJE44wkxmGJkToxd9/i68qelcZPzmUv44eNRHiezwdRMTae4qKMCGFir2dXGe4EVgTC9dqcYo=
+	t=1784656509; cv=none; b=kQEiSCI9rwM/1p60YYQCEvCUQXyslFH1nq4kRXHC25eYLYxwStR9DypdWrWAq1H7bY5cr63cQpfXI0arnj+4kr74WQV2mS3Y0oaeJB6F/RQZ/36Tt4uMvpbBv1pdNdY0eJOFXO0os+uZFgIFdOeGMhPJebajvhE7hfmJDlTOO6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656506; c=relaxed/simple;
-	bh=xk01nonv3lhJ7wkn1qrdfWPoE8niTxkFRzs/VYh6qeU=;
+	s=arc-20240116; t=1784656509; c=relaxed/simple;
+	bh=/teD8Qu1wnJki7nITYCoC+jLSiepyeNSvTmeeNtH2bE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i6XdytZp6NGF7BH3zYBKmnyEWrUVrFW9xjWCfoUfTQZyq3bXI1UWyPciI4CRQ0+9ogGKFDQSb2cQ8mFZ/mLHu3W34XxIoxbpvcoosDea1LgVqeWEPlIZWeYadYoiwxL5DuxjfID6h4f2o52ly97m+Oz9yER8GS25RaD+ryraNME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szVzXGs5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S+rJ8/tPT5ep7OaQZziMaZM1kFtk0AdSeNA4p6ESpBjcy8OLH2iqfpozEGuuEKfyqDb0noeFiHZnDtng6P0qNnddWD9C6KO5B0xjeHVpGAFXthbWKtOUFgGjn3u1lTFRIvXYMJxIpjS4kHdwN3xp6FzCoUuRqQUD62wau2LFoLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BorlZVZK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szVzXGs5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0B81F000E9;
-	Tue, 21 Jul 2026 17:55:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BorlZVZK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCC731F000E9;
+	Tue, 21 Jul 2026 17:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656505;
-	bh=el1n6Rp4AUjCna6tAjfG25YOpl5LinyqtVN3n8oqkd4=;
+	s=korg; t=1784656508;
+	bh=iZEJ5CubnH1CqP6+yXt7OmO2oisRJZp+c/80UjCAA+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=szVzXGs570RBH8IWuLBApANBjJ1Rw2Qay3YUzRHEtIRQEQ0gIYdbVcetlXqIblGYh
-	 rXcFYzt/Y1sVkAZozBcPzw16PLHPomfANjNM721iZ7yykpO/C/myDd1d3y91B3qobA
-	 /SpNXT/CiXHYoxJM50sq2m5YlKBhFZ4K79WG18us=
+	b=BorlZVZK1W2TYWGizMSHDoKFTUH4vPNGXt0OlfC1sq4DuZ/1UEIyQAJfHsBasWdQ6
+	 3FifdcTUe4VQETi/UkuYNczYt2anBSAB6OHd+dsRsve0N5PeYt/EU4ZfHtIlcrIHQD
+	 sbO1v0HTEsfBFXCFHwODS7abZA7j+ZEkXdQsA+QI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ryder Lee <ryder.lee@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0376/1611] ACPI: IPMI: Fix message kref handling on dead device
-Date: Tue, 21 Jul 2026 17:08:12 +0200
-Message-ID: <20260721152523.645917112@linuxfoundation.org>
+Subject: [PATCH 6.18 0412/1611] wifi: mt76: mt7915: fix potential tx_retries underflow
+Date: Tue, 21 Jul 2026 17:08:48 +0200
+Message-ID: <20260721152524.520570590@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,53 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Ryder Lee <ryder.lee@mediatek.com>
 
-[ Upstream commit 63320db6a5d84ec3fed8b3d36ba5244d07ddd108 ]
+[ Upstream commit 05e72b6167970043348bfbe8f72a3b67a38a9f1c ]
 
-acpi_ipmi_space_handler() takes an extra reference on tx_msg before
-checking whether the selected IPMI device is dead. The reference
-belongs to the tx_msg_list entry and is normally dropped by
-ipmi_cancel_tx_msg() or ipmi_flush_tx_msg() after the message is removed
-from the list.
+When FIELD_GET returns 0 for the retry count, subtracting 1 causes
+an unsigned integer underflow, resulting in tx_retries becoming a
+very large value (0xFFFFFFFF for u32).
 
-On the dead-device path, the message has not been queued yet, but the
-error path still calls ipmi_msg_release() directly. That bypasses
-kref_put() and frees tx_msg while the queued-message reference is still
-recorded in the kref count.
+Fix by checking if count is non-zero before subtracting 1.
 
-Take the queued-message reference only after the dead-device check
-succeeds, immediately before adding tx_msg to the list.
-
-Fixes: 7b9844772237 ("ACPI / IPMI: Add reference counting for ACPI IPMI transfers")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260603163108.2149359-1-dbgh9129@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 943e4fb96e6f ("wifi: mt76: mt7915: report tx retries/failed counts for non-WED path")
+Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
+Link: https://patch.msgid.link/20260605113306.3485554-1-ryder.lee@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_ipmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mac.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/acpi/acpi_ipmi.c b/drivers/acpi/acpi_ipmi.c
-index 5fba4dab5d0886..c672abc3a6dbbe 100644
---- a/drivers/acpi/acpi_ipmi.c
-+++ b/drivers/acpi/acpi_ipmi.c
-@@ -550,7 +550,6 @@ acpi_ipmi_space_handler(u32 function, acpi_physical_address address,
- 		return AE_TYPE;
- 	}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+index 9364e8673eb9de..50af0d9f240b6e 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+@@ -912,16 +912,16 @@ mt7915_mac_tx_free(struct mt7915_dev *dev, void *data, int len)
+ 		}
  
--	acpi_ipmi_msg_get(tx_msg);
- 	mutex_lock(&driver_data.ipmi_lock);
- 	/* Do not add a tx_msg that can not be flushed. */
- 	if (ipmi_device->dead) {
-@@ -558,6 +557,7 @@ acpi_ipmi_space_handler(u32 function, acpi_physical_address address,
- 		ipmi_msg_release(tx_msg);
- 		return AE_NOT_EXIST;
- 	}
-+	acpi_ipmi_msg_get(tx_msg);
- 	spin_lock_irqsave(&ipmi_device->tx_msg_lock, flags);
- 	list_add_tail(&tx_msg->head, &ipmi_device->tx_msg_list);
- 	spin_unlock_irqrestore(&ipmi_device->tx_msg_lock, flags);
+ 		if (!mtk_wed_device_active(&mdev->mmio.wed) && wcid) {
+-			u32 tx_retries = 0, tx_failed = 0;
++			u32 tx_retries = 0, tx_failed = 0, count;
+ 
+ 			if (v3 && (info & MT_TX_FREE_MPDU_HEADER_V3)) {
+-				tx_retries =
+-					FIELD_GET(MT_TX_FREE_COUNT_V3, info) - 1;
++				count = FIELD_GET(MT_TX_FREE_COUNT_V3, info);
++				tx_retries = count ? count - 1 : 0;
+ 				tx_failed = tx_retries +
+ 					!!FIELD_GET(MT_TX_FREE_STAT_V3, info);
+ 			} else if (!v3 && (info & MT_TX_FREE_MPDU_HEADER)) {
+-				tx_retries =
+-					FIELD_GET(MT_TX_FREE_COUNT, info) - 1;
++				count = FIELD_GET(MT_TX_FREE_COUNT, info);
++				tx_retries = count ? count - 1 : 0;
+ 				tx_failed = tx_retries +
+ 					!!FIELD_GET(MT_TX_FREE_STAT, info);
+ 			}
 -- 
 2.53.0
 
