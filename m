@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7143B42CB;
-	Tue, 21 Jul 2026 22:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CA344AB8E;
+	Tue, 21 Jul 2026 22:50:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674235; cv=none; b=E7AaGDFsiWFHEb8vU79H+sYpL2snrSrqnHD0Rhg9nFvP0rvmw9Ru4ht2WhKXSxrNCm73ZkBIVYZd1N2dobWgcbzBatFwi47g7lRAjUNnAZnO4BVnzC8CFIHvq8cYDvzDo6uAVxG/u61jkOBmeeWCuNicO9UGFujo9H2/rh77ZzU=
+	t=1784674240; cv=none; b=gy8LNzdFUHIRgPD39Jx0p9SIq2hnp3koUiYvkh5CkpBB5022B/LU2qFfE5PT/DGFuMimzZtfDS3BT0rE6Cy5w1t5m5442M5bpWwbj3kEEf/NIyWvxfiUd7Jx5jJ9/v8gqea5DnlW2Vn0phLpuiLFFclFz3JFel/nzzwjOWpj+FM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674235; c=relaxed/simple;
-	bh=1nTdRnDMq5pXJzLMCWhVeQ33mdKos3bvmmahOYluu9Y=;
+	s=arc-20240116; t=1784674240; c=relaxed/simple;
+	bh=78SdAVKSo8AKxeJbseKLPtJFzZFu6DGR/ZzGSUVTE7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WVUDs2cT/626ZFDo6Xxa/DJN+r5wwko0vw2FDfSdvyZ/T2KXblX7xQ1s4FxDmRsDt+3o66nUH1t2mp+M1+5eEBETc9Xroqgxk0edEeZanWQoHvnZd5mWKRMVM8KDsALBr3LJ3nfYXVrXvEcbBj43l109MadFM+eBW2sZ3Ga7maA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JGvzd0a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uayvlX/FzYWtewgjyvWNjFkRmMvPyrZNW9AnHZ0oq2J7GdxtXc2dH7su8x7ya5NqrW8A0gPwvPOHTQTOagiurnNch3465oZ59tearv0xBfVUAXXySVKKN1ZQYr0aqZ4rRnWTDTfe/usXp488RGkJF1MfKYB+6CWzw5jO2qAUZBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tlHPnOCD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JGvzd0a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEF4B1F000E9;
-	Tue, 21 Jul 2026 22:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tlHPnOCD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01CCF1F00A3A;
+	Tue, 21 Jul 2026 22:50:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674234;
-	bh=xLwykwzKjWkbGGmihOTae4JYuptXsnqZqUjoEagZTrU=;
+	s=korg; t=1784674239;
+	bh=W5+lY8AxvXVX1Fs22ArGHftXvbz/zQL5ElqkPLkJu6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2JGvzd0aR4IFafdaPkH5clLZjA+wY7yoaTtqLLSJP4IRP20vkAdqTwS7WJunw9vmV
-	 KKPMiUF3tYXLJomWYWW/eUOEQMLIk4cvhJpwEcZU/PAy2kzZHW2pbnj072TGQfsDKZ
-	 pmlmijiN5SiilJ6kM7RtH9IQ2yLwYNH9bb0rwrAM=
+	b=tlHPnOCDwxIpM8IcqH9bHn8vaUjSFrU63ueu3sV8tbrguiL5kE1Tu0t3oSXkwLr55
+	 dH/dyvpP7vSf252Yv4/kpo2/xji67BCLB5yA8eicX5LGLa5ulVDasmJDCUCwd+6CWv
+	 paF3m/JsYygfZ5ML32xtQ/isR/++i/EvRdEImbig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 5.10 465/699] batman-adv: tt: avoid request storms during pending request
-Date: Tue, 21 Jul 2026 17:23:44 +0200
-Message-ID: <20260721152406.184964630@linuxfoundation.org>
+Subject: [PATCH 5.10 467/699] batman-adv: frag: free unfragmentable packet
+Date: Tue, 21 Jul 2026 17:23:46 +0200
+Message-ID: <20260721152406.229264909@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,38 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 27c7d40008231ae4140d35501b60087a9de2d2c3 upstream.
+commit 6b628425aed49a1c7a4ffc997583840fc582d32b upstream.
 
-batadv_send_tt_request() allocates a tt_req_node when none exists for the
-destination originator node. This should prevent that a multiple TT
-requests are send at the same time to an originator.
+The caller of batadv_frag_send_packet() assume that the skb provided to the
+function are always consumed. But the pre-check for an empty payload or the
+zero fragment size returned an error without any further actions.
 
-But if allocation of the send buffer failed, this request must be cleaned
-up again. But indicator for such a failure is "ret == false". But the
-actual implementation is checking for "ret == true".
-
-The check must be inverted to not loose the information about the TT
-request directly after it was attempted to be sent out. This should avoid
-potential request storms.
+A failed pre-check must use the same error handling code as the rest of the
+function.
 
 Cc: stable@vger.kernel.org
-Fixes: 335fbe0f5d25 ("batman-adv: tvlv - convert tt query packet to use tvlv unicast packets")
+Fixes: ee75ed88879a ("batman-adv: Fragment and send skbs larger than mtu")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/translation-table.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/batman-adv/fragmentation.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -3260,7 +3260,7 @@ out:
- 	if (primary_if)
- 		batadv_hardif_put(primary_if);
+--- a/net/batman-adv/fragmentation.c
++++ b/net/batman-adv/fragmentation.c
+@@ -525,8 +525,10 @@ int batadv_frag_send_packet(struct sk_bu
+ 	mtu = min_t(unsigned int, mtu, BATADV_FRAG_MAX_FRAG_SIZE);
+ 	max_fragment_size = mtu - header_size;
  
--	if (ret && tt_req_node) {
-+	if (!ret && tt_req_node) {
- 		spin_lock_bh(&bat_priv->tt.req_list_lock);
- 		if (!hlist_unhashed(&tt_req_node->list)) {
- 			hlist_del_init(&tt_req_node->list);
+-	if (skb->len == 0 || max_fragment_size == 0)
+-		return -EINVAL;
++	if (skb->len == 0 || max_fragment_size == 0) {
++		ret = -EINVAL;
++		goto free_skb;
++	}
+ 
+ 	num_fragments = (skb->len - 1) / max_fragment_size + 1;
+ 	max_fragment_size = (skb->len - 1) / num_fragments + 1;
 
 
