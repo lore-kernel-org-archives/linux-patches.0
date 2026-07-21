@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F040543B3FA;
-	Tue, 21 Jul 2026 21:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5E743E06B;
+	Tue, 21 Jul 2026 21:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669888; cv=none; b=tedwkRpS+4FeF8ZK+5QhYPxm39dtwqKffUcP7f32w2T8lwm4BQeBPzvSQGFZzg2SUieyZFgFTuB+F01K/4ojvuxdJ61zlBx7dTHI4F5mjIjSPf+GZR0CWKeUGQdKf9hjmje0VSihkeb9ZD4oFHPLiLyFjutP/GAwmDDNC7PG7Pw=
+	t=1784669891; cv=none; b=OipiAn92cK/x/Uh1YSftOFpAz9croZSC+wnv7+JBjrHtyuOzv8MYxznpEMT7Z3jdEYC623hw4duphkNGa6o6CD+PkSDe2aAeGIObd+w1/4yHwZeLYtw6E8WEjRxBC0vuc/rtX4auCz1xo4LFtMXNHwHR6w/5qUb2YCdfE6sj7JI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669888; c=relaxed/simple;
-	bh=5H/vBctcoMLbb4s8n8DExyQnsq2lUdtucx13nQZR39E=;
+	s=arc-20240116; t=1784669891; c=relaxed/simple;
+	bh=180h+D9v0b1n/hUI5TpWPJtDQs6BNFjcQYOOim+S66U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wa1t1t9Yt5r549AVi3ejDP7kUpxOBRXuJrLTuIXxEGAojnUQbFmgvt8A+QsTa0r4QSS0jqKFcAuW3IikLxrqojRuEeWYwrwhu0dsZuk4AGP8zLY+O9y+eAO8kWLTzGzw0fBzOgjVHULi6igK8/5w6JmWULCbiIjoeANndgI+IW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7yF95vb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZClAbf43yOy1cCUOMWW+uoHiWozT4F8wh4UthaHuXrTPzbUoy/Y5LDI6siOd2kv8C+5OCmfgjGW+t1N9Xa1QBb++cL1ItCjdhCt1omoDWBR1l8nXvfu6XCYhUngY3LbhxdJtdcpLMg384Fnx2jU8BH01XcQfxoTG+QA+mGkZDvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRmB1cGZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7yF95vb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 412161F00A3A;
-	Tue, 21 Jul 2026 21:38:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRmB1cGZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D845A1F00A3D;
+	Tue, 21 Jul 2026 21:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669883;
-	bh=xqV+PkQc/O2D26+C+vRnH5t2iiBqgL0CJOfLqR6bYrE=;
+	s=korg; t=1784669886;
+	bh=wW1wf9xoL47gTwRKfQGPMcw6YQ/lX5U5YAPKPPqOFis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T7yF95vb7tTZH/+NxDrVRH6etiQ7arzg0LdgPJYk8nWc7Sx5exwVxvR79DK02SpKF
-	 W9pUzcp62NkJ44+GCNNDnUB0zhOSHSzG+MGN4EF+Z6mp0PafZq9fZXDIGVCmjRsvqU
-	 f6PAFQZ4HF9jrRKon9p8y3gCF0C+lP+FuIMqbFGA=
+	b=wRmB1cGZYHjnq1Ipk9+qEfV9y3py7LVW1Niu9OFE6M5Y7nODyQ3Jaj+RYiOZo9Hgz
+	 zHlGZhjTQ0cb64oeijOIjIchY/K9bczIAMqaoE9QCuEF2spO0AWCCpt548q7MVBIUN
+	 H9BjZMAyx97sTTOv75CutB5LNuoDtzCN0GG/TmMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Nickolay Goppen <setotau@mainlining.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 0723/1067] arm64: dts: qcom: sdm630: describe adsp_mem region properly
-Date: Tue, 21 Jul 2026 17:22:04 +0200
-Message-ID: <20260721152440.762178468@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PATCH 6.1 0724/1067] KVM: s390: pci: Fix GISC refcount leak on AIF enable failure
+Date: Tue, 21 Jul 2026 17:22:05 +0200
+Message-ID: <20260721152440.784124046@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,44 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolay Goppen <setotau@mainlining.org>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit ce414263e9ebe5080381a50cbdf9065c29816202 upstream.
+commit 7b69729046a4c58f4cb457184e5ac4aaa179bff4 upstream.
 
-Downstream [1] this region is marked as shared, reusable and dynamic so
-describe it that way.
+kvm_s390_gisc_register() registers the guest ISC before pinning
+the guest interrupt forwarding pages and allocating the AISB bit.
+If any of the later setup steps fails, the function unwinds the
+pinned pages and other local state, but does not unregister the
+GISC reference. Add the missing kvm_s390_gisc_unregister() to the
+error unwind path.
 
-[1]: https://github.com/xiaomi-sdm660/android_kernel_xiaomi_sdm660/blob/11-EAS/arch/arm/boot/dts/qcom/sdm660.dtsi#L448
-
-Fixes: b190fb010664 ("arm64: dts: qcom: sdm630: Add sdm630 dts file")
+Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
 Cc: stable@vger.kernel.org
-Reviewed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
-Link: https://lore.kernel.org/r/20260429-qcom-sdm660-cdsp-adsp-fastrpc-dts-fix-v5-4-16bc82e622ad@mainlining.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Acked-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-ID: <20260624061910.2794734-1-haoxiang_li2024@163.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ arch/s390/kvm/pci.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -402,9 +402,12 @@
- 			no-map;
- 		};
+--- a/arch/s390/kvm/pci.c
++++ b/arch/s390/kvm/pci.c
+@@ -330,6 +330,7 @@ unpin2:
+ unpin1:
+ 	unpin_user_page(aibv_page);
+ out:
++	kvm_s390_gisc_unregister(kvm, fib->fmt0.isc);
+ 	return rc;
+ }
  
--		adsp_mem: adsp-region@f6000000 {
--			reg = <0x0 0xf6000000 0x0 0x800000>;
--			no-map;
-+		adsp_mem: adsp-region {
-+			compatible = "shared-dma-pool";
-+			alloc-ranges = <0x0 0x80000000 0x0 0x80000000>;
-+			alignment = <0x0 0x400000>;
-+			size = <0x0 0x800000>;
-+			reusable;
- 		};
- 
- 		qseecom_mem: qseecom-region@f6800000 {
 
 
