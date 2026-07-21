@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E537C44AB96;
-	Tue, 21 Jul 2026 21:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC3844AB62;
+	Tue, 21 Jul 2026 21:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668696; cv=none; b=FFxSJax+ALaJbL+qdrEAVTN0mIYW2A4jK+6DpkZacsFfLtbD77S2Hkatfs+fL80CwuM+pqUEiVkFiYW3bOzZrV/xCMX9q+Ks7w07sapqMrDv9SPAub48P2R8YbRMdc3+KdJ2HOQDcVby/HQdvrOsyu+yfUK8UdaIG9DDh6td3/g=
+	t=1784668698; cv=none; b=nhiNsCZ0Zo7AZ5pW1cYE2U0uIVXR+urWo/q525ENHe75o2pjFkKFqt0FmOy1xTENcDnFqXcZdMiZQWlcTUNJUgILgxO3zhqg59MIdvfcVCQq8z9vJm6bM8r9n7Cr1FLYbAMEWhUmToZXuJeIyASoAAhaXTLnae6arnLgXpsCaTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668696; c=relaxed/simple;
-	bh=YcRjY569pO8fE3z0l2Gk2g06B/PgyeMTFk+ABKVVhQ8=;
+	s=arc-20240116; t=1784668698; c=relaxed/simple;
+	bh=eyk8B9UY+NvCOTYWafk7tXOX2epMc9CVVRYzeDoCRKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ER98x41SXxCdSBPspaTqdeFYa5vlUVxULS4KKbhrivYj3SFmHSaD9ieR8GfVSc9vkv64AUcGhPKrwj3kdEiCv1XYdKoGi/mN5YfReC3ckYNIGAkofKgjnnDJBnarDOJlIIxXL8rCgAliYPjdRKqLsUrOv75QFSJi1hVOMSEmdoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+TIHTSV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JoRlTxtJD58fwzj5tSVCq7ML25CcZH469pZHuQl5XB444U/2LgWAj7pwo1B1lfD3bbM06GZxlNbEuDWJWR3GV2urFys2Cts4gjPcIb8vTaW94BWzBE1F20hVjGKacF6HSMGdK+je5xC8JG3NnUIz1lA5v0T3UUsu9bf439WWV3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQasnnJh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+TIHTSV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5720A1F00A3A;
-	Tue, 21 Jul 2026 21:18:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQasnnJh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F337B1F000E9;
+	Tue, 21 Jul 2026 21:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668694;
-	bh=mL8CZwe92dnUbNzhk2iTaDnPN7mvCRCRiIZHwKqynV4=;
+	s=korg; t=1784668697;
+	bh=+n82MbYaYPUMieuPpQz39TXeT8DKeeCKohqU+dXYqB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W+TIHTSVE7+fyqRHo/i6iqLqx9MpRS/BUM0zQHofThME+THi1TpyVUftwnxypYHyz
-	 2teaRBSBtHpxC5kp2u1JIe1aAHnq61uhPEtuOfgaSC/3vXWix8ENR236XitHLY44mq
-	 qXDnhDoBlDvkNF+w0/aPMHjL3HkKogdNTFRLejkM=
+	b=fQasnnJhOKGHqOkdl6tTRJ2U4EDxao1tDEpn0o1ayfGoCvv3zPEbbAtOrgZMDbKPV
+	 F1GFuNEEjqOUAcAJPV3bHIdzD1Nu97kpombCu79Rx6CnQvmQ79t9RjToeUZj8SHznZ
+	 I8N9QHPgyR6e6g/G8pCGxb0tFNVhBI3lWsgguep8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH 6.1 0272/1067] serial: msm: Disable DMA for kernel console UART
-Date: Tue, 21 Jul 2026 17:14:33 +0200
-Message-ID: <20260721152430.679168531@linuxfoundation.org>
+	Matthias Feser <mfe@KBSgmbhfr.onmicrosoft.com>,
+	Moteen Shah <m-shah@ti.com>
+Subject: [PATCH 6.1 0273/1067] serial: 8250_omap: clear rx_running on zero-length DMA completes
+Date: Tue, 21 Jul 2026 17:14:34 +0200
+Message-ID: <20260721152430.701701309@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,52 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Matthias Feser <mfe@KBSgmbhfr.onmicrosoft.com>
 
-commit 22dd2777e6c180e1c945b00f6d18550979436324 upstream.
+commit 061b627ba534230a18ec4d7251562af12325d06a upstream.
 
-At the moment, concurrent writes from userspace and the kernel to the
-console can trigger a race condition that results in an infinite loop of
-the same messages printed over and over again. This is most likely to
-happen during system startup or shutdown when the init system starts/stops
-a large number of system services that interact with various kernel code.
+On AM33xx RX DMA only triggers when the FIFO reaches the
+configured threshold (typically 48 bytes). For smaller bursts
+no DMA request is issued and the FIFO is drained by RX timeout.
 
-When userspace writes to the TTY device, the driver initiates an
-asynchronous DMA transfer and releases the port lock. At the same moment,
-the kernel printk path might grab the port lock and re-configure the UART
-controller for PIO, without waiting for the DMA operation to complete. It
-seems like this collision results in zero progress being reported for the
-DMA engine, so the same text is printed to the console over and over again.
+In this case __dma_rx_do_complete() can legitimately see count == 0.
 
-For the kernel console, we want a reliable output path that will be
-functional even during crashes etc. So rather than implementing complex
-code to synchronize the kernel console write routines with the userspace
-DMA write routines, simply disable DMA for the console UART instance.
+The current code exits early in this case and does not clear
+dma->rx_running, leaving the DMA state inconsistent. This can
+prevent RX DMA from restarting and may cause
+omap_8250_rx_dma_flush() to fail, marking DMA as broken.
 
-Similar checks exist in many other serial drivers, e.g. 8250_port.c,
-imx.c, sh-sci.c etc.
+Fix this by clearing dma->rx_running once the DMA transfer has
+completed or been terminated, even if no data was transferred.
 
+Fixes: a5fd8945a478 ("serial: 8250: 8250_omap.c: Clear DMA RX running status only after DMA termination is done")
 Cc: stable <stable@kernel.org>
-Fixes: 3a878c430fd6 ("tty: serial: msm: Add TX DMA support")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260706-serial-msm-console-dma-collision-v1-1-3179b8cb1d89@linaro.org
+Signed-off-by: Matthias Feser <mfe@KBSgmbhfr.onmicrosoft.com>
+Reviewed-by: Moteen Shah <m-shah@ti.com>
+Link: https://patch.msgid.link/BE3P281MB55155F2F5795E411F5A65282EE0B2@BE3P281MB5515.DEUP281.PROD.OUTLOOK.COM
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/msm_serial.c |    3 ++-
+ drivers/tty/serial/8250/8250_omap.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/msm_serial.c
-+++ b/drivers/tty/serial/msm_serial.c
-@@ -1225,7 +1225,8 @@ static int msm_startup(struct uart_port
- 	data |= MSM_UART_MR1_AUTO_RFR_LEVEL0 & rfr_level;
- 	msm_write(port, data, MSM_UART_MR1);
- 
--	if (msm_port->is_uartdm) {
-+	/* Disable DMA for console to prevent PIO/DMA collisions */
-+	if (msm_port->is_uartdm && !uart_console(port)) {
- 		msm_request_tx_dma(msm_port, msm_port->uart.mapbase);
- 		msm_request_rx_dma(msm_port, msm_port->uart.mapbase);
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -864,11 +864,12 @@ static void __dma_rx_do_complete(struct
+ 				dev_err(p->port.dev, "teardown incomplete\n");
+ 		}
  	}
++
++	dma->rx_running = 0;
+ 	if (!count)
+ 		goto out;
+ 	ret = tty_insert_flip_string(tty_port, dma->rx_buf, count);
+ 
+-	dma->rx_running = 0;
+ 	p->port.icount.rx += ret;
+ 	p->port.icount.buf_overrun += count - ret;
+ out:
 
 
