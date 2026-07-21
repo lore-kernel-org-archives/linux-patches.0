@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52E1946D090;
-	Tue, 21 Jul 2026 17:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0AE946D091;
+	Tue, 21 Jul 2026 17:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655389; cv=none; b=KWbf9eGNDfBNtJb6JZ9+APw4yyLHZ7hu2eziSMxi37cFPfv9I0gzeWjC3Nslvlrgad5jtVyKlpI0qgx7lBAFyHB3q/uZOveWonp3bcRXC+CMSUPy/sDrH3F4hTuKvucvLpNg025GajdEDAoIHBMvgS4rWJuPi7Tw6YAVzWSAUig=
+	t=1784655392; cv=none; b=JKqqUuDAvfYWhSf8VkK4h0TxgQBckjEn0kjZmkoJ/h+TiQIkdzEBKkdhztUSWeXrP0FVQjKyAoX/HldhdZSv8E7MToFOL48T+ojT+Um8FnVUqJu+gxJQ9aRzp/u2/gPFSEYbvJ0vX96elAXB0P1N+O2hOLjCPmhpM5Jnx37b1m8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655389; c=relaxed/simple;
-	bh=c5ZbLLaLhcK5avahNHtIdpWaa5ki7zB0T8aw/Onn4Ew=;
+	s=arc-20240116; t=1784655392; c=relaxed/simple;
+	bh=B1rcSe88eSb6SEHPDdyuUGEvBnnB9MEmgCP9PJ/Xqmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ydemdlu1aIY1gZPiHjuD7mudVCW5ev8MlL1rhN8a9zFP1GB8/SIaxbmsgyknuVXgoa+fCx5CpRdktVmcDitN9tbfwl1F57VXlm7Pr3wxrstral3nCo61RERiBODrhEkZr4GPq5q9PtbJbHXyKjOwHevwzP3XmTyK6QLjoF2cW7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cbq/5x7b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iEbF2nY983B/4U8F9m/eGNtn3uOZOGFyoi2qEhswBQSje3YIGxEiUVPtS6smgrKKf0YozPXcNd+PlXeR3V//IOvkAVZ9ylTrKCbJ6OoNG2gop+mQ5yymAVcz/X5Xh49b19cXMKWVWbDneUpTnfCBtBRRdPUy8L2nDN1f74lPg5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FLps9nYl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cbq/5x7b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9EF71F000E9;
-	Tue, 21 Jul 2026 17:36:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLps9nYl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C291F000E9;
+	Tue, 21 Jul 2026 17:36:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655388;
-	bh=MRBZPvreaOHjw3+xG2cnKT5s7EtzVURxLMQUSNW5yCk=;
+	s=korg; t=1784655390;
+	bh=xG6a/9XSt4s5gIhMfRUMXa65+PyFIqHzg4SvLJ/qr/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cbq/5x7bJSEwd6lXVMK/t8fWEzCYUJ/kPx4sI8Ep9DejL2FG1R2w2F1mGuPBuNes/
-	 yrch0M7BL2KfPYGxLm5ji6oYirOuP6L2wq68ZjKz8+j98V0BRaI1+7KNB203eDE7jU
-	 Sf3xv1wbzWTg8lc1e05XfIk20m4It79gnSgJU2N8=
+	b=FLps9nYlnZjhrBks6M95WqC4+e24PzSNAjaFo35vLYXhyPkB82FL7rvWS71TcMk+k
+	 UYR3VLSOkFqax737bQE3fZSaPMeP8HWSftgktDmriGECmqDSbloryMXZMaHfi0J/TD
+	 mzCK/JgHug3j2y4NQ5/PKlBsmjIlokJkEk7vXWKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Mauricio Faria de Oliveira <mfo@igalia.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 2064/2077] xfs: add newly added RTGs to the free pool in growfs
-Date: Tue, 21 Jul 2026 17:28:57 +0200
-Message-ID: <20260721152641.382979331@linuxfoundation.org>
+Subject: [PATCH 7.1 2065/2077] usb: atm: ueagle-atm: use dev_dbg() for device found message
+Date: Tue, 21 Jul 2026 17:28:58 +0200
+Message-ID: <20260721152641.407202305@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,43 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Mauricio Faria de Oliveira <mfo@igalia.com>
 
-[ Upstream commit ae3692c7f440c1ff577aae1a51202415ec4a794b ]
+[ Upstream commit 05c5075c3115010f97434c53d353d9a0d4b0e64e ]
 
-When growing a zoned RT section, the newly added RTGs also need to be
-tagged as free in the radix tree and add to the nr_free_zones counters.
-Call xfs_add_free_zone to do that, otherwise using up the newly added
-space will wait for free zones forever.
+Convert dev_info() to dev_dbg().
 
-Fixes: 01b71e64bb87 ("xfs: support growfs on zoned file systems")
-Cc: stable@vger.kernel.org # v6.15
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Per 'Documentation/process/coding-style.rst':
+
+  13) Printing kernel messages
+
+  ...  When drivers are working properly they are quiet,
+  so prefer to use dev_dbg/pr_debug unless something is wrong.
+
+While in there, correct the verb form and add 'with' for clarity.
+
+Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/all/2026051628-squatter-stature-c0e0@gregkh/
+Signed-off-by: Mauricio Faria de Oliveira <mfo@igalia.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260520-ueagle-atm-cleanup-v1-1-010c8bc7b214@igalia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: e2674dfbed8a ("usb: atm: ueagle-atm: wait for pre-firmware load in .disconnect()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_rtalloc.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/atm/ueagle-atm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_rtalloc.c
-+++ b/fs/xfs/xfs_rtalloc.c
-@@ -933,6 +933,14 @@ xfs_growfs_rt_zoned(
- 	mp->m_features |= XFS_FEAT_REALTIME;
- 	xfs_rtrmapbt_compute_maxlevels(mp);
- 	xfs_rtrefcountbt_compute_maxlevels(mp);
-+
-+	/*
-+	 * Finally add the newly added zone to the freelist and add the space
-+	 * to the available counter.  The order is important here: only add
-+	 * the available space after the zones, as available space guarantees
-+	 * that zones to back it are available.
-+	 */
-+	xfs_zone_mark_free(rtg);
- 	xfs_zoned_add_available(mp, freed_rtx);
- out_free:
- 	kfree(nmp);
+--- a/drivers/usb/atm/ueagle-atm.c
++++ b/drivers/usb/atm/ueagle-atm.c
+@@ -2590,7 +2590,7 @@ static int uea_probe(struct usb_interfac
+ 	int ret;
+ 
+ 	uea_enters(usb);
+-	uea_info(usb, "ADSL device founded vid (%#X) pid (%#X) Rev (%#X): %s\n",
++	uea_dbg(usb, "ADSL device found with vid (%#X) pid (%#X) Rev (%#X): %s\n",
+ 		le16_to_cpu(usb->descriptor.idVendor),
+ 		le16_to_cpu(usb->descriptor.idProduct),
+ 		le16_to_cpu(usb->descriptor.bcdDevice),
 
 
