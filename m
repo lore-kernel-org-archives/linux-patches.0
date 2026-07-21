@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CFB35C6A7;
-	Tue, 21 Jul 2026 21:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CED35C695;
+	Tue, 21 Jul 2026 21:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668687; cv=none; b=Wx0OkSNmWJSB9JdYbgKVn9MGk56ZajJs5aky2j7f26jlx+9tfWY7wui7CnQparyBOcvDjvjzp7aK7zt3SfoAFT0eMHLl9A06iVhMFrpXANuIyDvvNKH0qEYBckbC4Bq5PR+YxqGRPY1db5sxuYdxdLj9C95mLzgt/vNO9mQtcUk=
+	t=1784668689; cv=none; b=dizcEhJJXpfKDXyIBe0TC0H/uzs3uey7NOaBVZwV/c95C2XFGbVgvlSZAKgG8OQ4IEaphsJ1VSDmvcsZXNjkS+vzLH6PN2IQjD5n5GWFuAi8BDh7QOUfFFBPYU9SBmiU0tVohX8juRs1Znh75679WyYq8clooboOzoXglRCnnlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668687; c=relaxed/simple;
-	bh=CO5cdSicEOCYN84ogxcT6YhFJ5OFtdhWa6YFz0rLdUY=;
+	s=arc-20240116; t=1784668689; c=relaxed/simple;
+	bh=CkTDnmBjGaHxdGYKbpnJC9HkHqDW0eYg41L6es3BQBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j+FhfVlPaXzCHtnJMih7jz72pZLz1Zbo1yLGPuDHoCA3niBysZTWCxvrrWcCprLnWU2vQFW2XHuBaBn9lstOoBZdnnui60QBDFDWxSzgsgdweyyuuqkkzClOmmdaVoggQVtSgH6tda47qi1TWyEfcysq7ND6nRUgu+Ptq1dzXro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjmoY0Sr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dT2p+l+M+uquTCOYDKIqbZJrW5p+kUnaofJ2ukpHfvbcKaEusM1h7RdC+5baRDIL0r2/GfFbHQDUilqjPCffRckvo+rCN0Ke8pPbCdl6jkw/qbF9iyzsrLEvS7KV/pE8uMepcbEUuNWxCy2HJmevnHhhz/KThsx4VyEVdHn5p+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrxWqj8l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjmoY0Sr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39181F000E9;
-	Tue, 21 Jul 2026 21:18:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrxWqj8l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C1531F00A3A;
+	Tue, 21 Jul 2026 21:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668684;
-	bh=IKeeVvOi0k/c64POZeDY61QvPgVN5F8/V1L576OHD0Y=;
+	s=korg; t=1784668686;
+	bh=wSV7nb3MYODquVgqceThjAV9TjP8dZlEAvCvhxPgT5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GjmoY0Srs8R08Uu9rrzth9E0yvlSstLL1lYKayHtxETC1U6PI7wxCW+Nt6NB/VqGM
-	 wxTrx5W8LTCb005DvQaiUx43xi+vzgO+jTZ78NJbKxalNFXBaF13QNoX389AQoKw4u
-	 /fHDG9oKTjj7nmGPYH2fK2BAvqPkGnb8UDKbzbkI=
+	b=lrxWqj8ldYyIXx/GqShcWt1rEsKmo0PCWo66Z/gCxLwd/OL1L/O1ZYr/aYxR2Ofqv
+	 a4VAOWFTSqCKISvcXNQBfumR0qvl1AEOB3IyIaQt/H+wsumbPaS1+kXqDzakSrb3uU
+	 YDF04SmKS22gAOPR6IZxTh2x8+9xfVeTxLlJGXOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable@kernel.org,
 	Ricardo Ribalda <ribalda@chromium.org>,
 	Hans de Goede <johannes.goede@oss.qualcomm.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 0268/1067] media: uvcvideo: Avoid partial metadata buffers
-Date: Tue, 21 Jul 2026 17:14:29 +0200
-Message-ID: <20260721152430.589587221@linuxfoundation.org>
+Subject: [PATCH 6.1 0269/1067] media: uvcvideo: Fix buffer sequence in frame gaps
+Date: Tue, 21 Jul 2026 17:14:30 +0200
+Message-ID: <20260721152430.611542193@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,80 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit a15b773fe4ffa450b56347cc506b2d1405600f5d upstream.
+commit 2f24ac8dd87983a55f0498898f34a5f2b735b802 upstream.
 
-If the metadata queue that is empty receives a new buffer while we are
-in the middle of processing a frame, the first metadata buffer will
-contain partial information.
+In UVC, the FID flips with every frame. For every FID flip, we increase
+the stream sequence number.
 
-Avoid this by tracking the state of the metadata buffer and making sure
-that it is in sync with the data buffer.
+Now, if a FID flips multiple times and there is no data transferred between
+the flips, the buffer sequence number will be set to the value of the
+stream sequence number after the first flip.
 
-Now that we are at it, make sure that we skip buffers of size 1 or 0.
-They are not allowed by the spec... but it is a simple check to add and
-better be safe than sorry.
+Userspace uses the buffer sequence number to determine if there have been
+missing frames. With the current behaviour, userspace will think that the
+gap is in the wrong location.
 
-Fixes: 088ead255245 ("media: uvcvideo: Add a metadata device node")
-Cc: stable@vger.kernel.org
+This patch modifies uvc_video_decode_start() to provide the correct buffer
+sequence number and timestamp.
+
+Cc: stable@kernel.org
+Fixes: 650b95feee35 ("[media] uvcvideo: Generate discontinuous sequence numbers when frames are lost")
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://patch.msgid.link/20260417-uvc-meta-partial-v2-2-31d274af7d2d@chromium.org
 Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
 Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_video.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/media/usb/uvc/uvc_video.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
 --- a/drivers/media/usb/uvc/uvc_video.c
 +++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -1085,7 +1085,9 @@ static void uvc_video_stats_stop(struct
-  * uvc_video_decode_end will never be called with a NULL buffer.
-  */
- static int uvc_video_decode_start(struct uvc_streaming *stream,
--		struct uvc_buffer *buf, const u8 *data, int len)
-+				  struct uvc_buffer *buf,
-+				  struct uvc_buffer *meta_buf,
-+				  const u8 *data, int len)
- {
- 	u8 fid;
- 
-@@ -1156,6 +1158,8 @@ static int uvc_video_decode_start(struct
- 
- 		/* TODO: Handle PTS and SCR. */
- 		buf->state = UVC_BUF_STATE_ACTIVE;
-+		if (meta_buf)
-+			meta_buf->state = UVC_BUF_STATE_ACTIVE;
+@@ -1112,6 +1112,19 @@ static int uvc_video_decode_start(struct
+ 		stream->sequence++;
+ 		if (stream->sequence)
+ 			uvc_video_stats_update(stream);
++
++		/*
++		 * On a FID flip initialize sequence number and timestamp.
++		 *
++		 * The driver already takes care of injecting FID flips for
++		 * UVC_QUIRK_STREAM_NO_FID and UVC_QUIRK_MJPEG_NO_EOF.
++		 */
++		if (buf) {
++			buf->buf.field = V4L2_FIELD_NONE;
++			buf->buf.sequence = stream->sequence;
++			buf->buf.vb2_buf.timestamp =
++					ktime_to_ns(uvc_video_get_time());
++		}
  	}
  
- 	/*
-@@ -1350,7 +1354,7 @@ static void uvc_video_decode_meta(struct
- 	ktime_t time;
- 	const u8 *scr;
+ 	uvc_video_clock_decode(stream, buf, data, len);
+@@ -1152,10 +1165,6 @@ static int uvc_video_decode_start(struct
+ 			return -ENODATA;
+ 		}
  
--	if (!meta_buf || length == 2)
-+	if (length <= 2 || !meta_buf || meta_buf->state != UVC_BUF_STATE_ACTIVE)
- 		return;
- 
- 	has_pts = mem[1] & UVC_STREAM_PTS;
-@@ -1467,7 +1471,7 @@ static void uvc_video_decode_isoc(struct
- 		/* Decode the payload header. */
- 		mem = urb->transfer_buffer + urb->iso_frame_desc[i].offset;
- 		do {
--			ret = uvc_video_decode_start(stream, buf, mem,
-+			ret = uvc_video_decode_start(stream, buf, meta_buf, mem,
- 				urb->iso_frame_desc[i].actual_length);
- 			if (ret == -EAGAIN)
- 				uvc_video_next_buffers(stream, &buf, &meta_buf);
-@@ -1516,7 +1520,8 @@ static void uvc_video_decode_bulk(struct
- 	 */
- 	if (stream->bulk.header_size == 0 && !stream->bulk.skip_payload) {
- 		do {
--			ret = uvc_video_decode_start(stream, buf, mem, len);
-+			ret = uvc_video_decode_start(stream, buf, meta_buf, mem,
-+						     len);
- 			if (ret == -EAGAIN)
- 				uvc_video_next_buffers(stream, &buf, &meta_buf);
- 		} while (ret == -EAGAIN);
+-		buf->buf.field = V4L2_FIELD_NONE;
+-		buf->buf.sequence = stream->sequence;
+-		buf->buf.vb2_buf.timestamp = ktime_to_ns(uvc_video_get_time());
+-
+ 		/* TODO: Handle PTS and SCR. */
+ 		buf->state = UVC_BUF_STATE_ACTIVE;
+ 		if (meta_buf)
 
 
