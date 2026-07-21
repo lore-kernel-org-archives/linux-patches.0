@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52B240587A;
-	Tue, 21 Jul 2026 18:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA34415F2B;
+	Tue, 21 Jul 2026 18:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658339; cv=none; b=L41couGNQHKAzu2h6Mf8sXw3bLIGmUhZ3NVLtruIxgSsabij47vGGy+bdj3vU4py9FFlBYEA5bUDRgHHFiZW24RWblCnJjUYhgcb1J/Og80CpkOYd/v2zf7Urq4j6Ad81iNQHEofdoWch3hi5lEOMNI0Hc8mkgp+7uatWJyu3VY=
+	t=1784658342; cv=none; b=Yp+8a4S3zZzSAK6Hnh0Uhna2SSar4vz/v9/HTris14FpRitU8+yKA83Lt64Gjp4WJsDYG/DbLkhwFznA+sA7ON16Wfmg0v1ymIymf/eH3ROLL+OzcRDHqfl7wZtFNUzUXaVFCyZnHs1vTMGnUlpPJxd1P4zT6PhF5jovDEgbToY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658339; c=relaxed/simple;
-	bh=9lmP6D4ToGMyXCdz1BIWErgOGkcVUPhWj7qDorDaZL0=;
+	s=arc-20240116; t=1784658342; c=relaxed/simple;
+	bh=zL7WZYgaT7hhBewjovshOhlBalWg2Wh9oBU14a/24Ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hStVp7rnDuXXwvHKnxlga7VBD8m2r97vtWu4IFN86jPUG7Az9PZj1DiTtbR/Q5pAKNlnP2p8Dg26irT9TNq2MGCLFgwHBx2UbNpO4SNC9gGgpjC3FYaE6j83M0oTjmn9bXqH9MwrtIAML5ONrqkEcdBkulyfUFfGTm0e/vjlcrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EPaTCtid; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b7CZuqkJKLqGpIiKG2+ixFHi8PoQbaOUlX3TVG5Qsr2Lh5ExMnqaNjQEtB0rqbdHa6ZZOtK2mB3qQ7AyzGIiopJ2ObfFkpR1dZ1AgBRKShhDW2ixPNsxYVhubgbKdrTJmLZDnZ3D3943fGicD1uvHs9PX9EZ5DTUVitBfFB73ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sa+ZO6rc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPaTCtid"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06EAE1F000E9;
-	Tue, 21 Jul 2026 18:25:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sa+ZO6rc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5AF81F000E9;
+	Tue, 21 Jul 2026 18:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658338;
-	bh=eowvfVlhsP3mvg4z41Kp5Wt1TFV0LDa8XlstmN9oaa4=;
+	s=korg; t=1784658341;
+	bh=q7W53kUqaSuu/vM/Ggtsl5vEQHPHuzGZ4K3T5KOBXus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EPaTCtid0XKDPT37D8r2WXmBWSkHvuywnaEzxHNa7NvLd5Qg5hExSlYLpZH0Jgv98
-	 SL6KL0G8lpBrAGfOTFYoUxMPXgWzRnZpLpI3+b+fV/lc1hD8waUs9UCykVR34dO4cD
-	 go/0NHr4vyW+WGmN/2F8BR7cIO5RCULPLiOjtpbs=
+	b=Sa+ZO6rcc1qpTYwG4iJ0KNNgoPIc8J2xg6u733gADdpyBvbhs+1eP8deDbDgzxyEU
+	 u67VaEIXblPoilD93Zyk7//E6lSWVTk7/SlhyteDtfpRvU0HfBhGs3AMnhH3Hv5cP2
+	 iadMCuf/1Z4ZZnURb3TtXF7t7kgqk4Imzw5ooXvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1069/1611] net: mdio: select REGMAP_MMIO instead of depending on it
-Date: Tue, 21 Jul 2026 17:19:45 +0200
-Message-ID: <20260721152539.452752712@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 1105/1611] net: atm: reject out-of-range traffic classes in QoS validation
+Date: Tue, 21 Jul 2026 17:20:21 +0200
+Message-ID: <20260721152540.268863747@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,42 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Zhengchuan Liang <zcliangcn@gmail.com>
 
-[ Upstream commit 1a3267a8c9ecabb8e27f5cbda6d19295d5e41beb ]
+commit cdf19f380e46192e7084be559638aab1f6ed86a2 upstream.
 
-REGMAP_MMIO is a hidden (non-user-visible) tristate symbol. Using
-depends on it is incorrect because there is no way for the user to
-enable it directly. Change to select, which is the convention used
-by every other driver in the tree that needs REGMAP_MMIO.
+Reject ATM traffic classes above ATM_ANYCLASS in check_tp().
+SO_ATMQOS stores the supplied QoS after check_qos() succeeds, so
+accepting larger values leaves invalid traffic_class values in
+vcc->qos.
 
-Fixes: 8057cbb8335c ("net: mdio: mscc-miim: Add depend of REGMAP_MMIO on MDIO_MSCC_MIIM")
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260702032653.1580616-1-rosenp@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+That bad state later reaches pvc_info(), which indexes class_name[]
+with vcc->qos.{rx,tp}.traffic_class. Values above ATM_ANYCLASS cause
+an out-of-bounds read when /proc/net/atm/pvc is read.
+
+Tighten the existing QoS validation so invalid traffic_class values
+are rejected at the point where user supplied QoS is accepted.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/58f02c6f73d9818fd5d2022e1116759fdde6116b.1780965530.git.zcliangcn@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/mdio/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/atm/common.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/mdio/Kconfig b/drivers/net/mdio/Kconfig
-index 44380378911b7d..4da50e55b6be0d 100644
---- a/drivers/net/mdio/Kconfig
-+++ b/drivers/net/mdio/Kconfig
-@@ -123,7 +123,8 @@ config MDIO_MVUSB
- 
- config MDIO_MSCC_MIIM
- 	tristate "Microsemi MIIM interface support"
--	depends on HAS_IOMEM && REGMAP_MMIO
-+	depends on HAS_IOMEM
-+	select REGMAP_MMIO
- 	help
- 	  This driver supports the MIIM (MDIO) interface found in the network
- 	  switches of the Microsemi SoCs; it is recommended to switch on
--- 
-2.53.0
-
+--- a/net/atm/common.c
++++ b/net/atm/common.c
+@@ -720,6 +720,8 @@ static int atm_change_qos(struct atm_vcc
+ static int check_tp(const struct atm_trafprm *tp)
+ {
+ 	/* @@@ Should be merged with adjust_tp */
++	if (tp->traffic_class > ATM_ANYCLASS)
++		return -EINVAL;
+ 	if (!tp->traffic_class || tp->traffic_class == ATM_ANYCLASS)
+ 		return 0;
+ 	if (tp->traffic_class != ATM_UBR && !tp->min_pcr && !tp->pcr &&
 
 
