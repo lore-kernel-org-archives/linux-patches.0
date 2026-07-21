@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5758471264;
-	Tue, 21 Jul 2026 18:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EA1471264;
+	Tue, 21 Jul 2026 18:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660212; cv=none; b=pmEPV+tMSewVoc0nQYIm1G5269vEVbtsf3ymJzxh7fuqX/NJMNJpJqQnn86ZLymR4TYwmHefxirxFM2LwdBMdn8lXxwh25oxzYbCseN0yN1stPTfZ5bzwiVM8im9dhOhA9x/vwljsCUE2uNA6nJpDahXYnPCJpRg9nscXA5DzrE=
+	t=1784660214; cv=none; b=SJLAm8+LoTLvjjf4EjRl8NQZ+Af8Nb0OTxblRujrQEGXPQ9Hkqefgw2iRagd4Vx/t5K4Rs1Ndas57SL4Itd79RdEe2BX3ltt8vnEjgXfIfmm5wNtHwBwxjpBbvaZZoQTF8BCOOgvYxZemfSR7dEoF34/bf09vbxqS1W2xiLG5+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660212; c=relaxed/simple;
-	bh=b5bMvusSPE9pHna3htNJOm6xvSTJvhP3MMAVcdd5YZw=;
+	s=arc-20240116; t=1784660214; c=relaxed/simple;
+	bh=ncNL4AKxqsmssO2K8m05HMC5BLFRMvYtPz71dei4pkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aTabkXb4byxP/HnT+HTBKIDSMW43LhSlVcazGA+k+iruW7EZoaBMJ8mdM0DFdid7JY3wjpNHJHlZTlqHgWP7jS2verNREuQqGGvX9F1cVM2zX5ZUISQo7TyFd+zfA0tQY/h/cixFOrWPhlAELnhvhCSHviR9t4AL+K3BQmiXH/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+p4T5ow; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cwl7IU2Y6XQDy7ntzaMOjNZUqwItIryUwvqE6Dyr9aTKFIGHOAUygbYjYVh7h03jSBeIXKZdkY82UIRgMpT3z2BcaOciOvYtPC3Ps9mfDdINkHbR46hwpYHyv1K58xeTn8LRDskv6za3lskjTKpdTjJl+3iBJX/O6Fo9SQyCWt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsU2TRmj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+p4T5ow"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F541F000E9;
-	Tue, 21 Jul 2026 18:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsU2TRmj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB631F00A3A;
+	Tue, 21 Jul 2026 18:56:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660210;
-	bh=3ua5Eelmg2CFtLEUMDsbicjAe+jfmnpF6sWpDO3TrhU=;
+	s=korg; t=1784660213;
+	bh=Q84ivI8JvqEGpKJvSIEyo+xaKdye/9YsgGn0A0tfgko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b+p4T5owAuwGqRVkYgpEfsaAw7Zpa2oLaIjtSVxWfEjUxMqxW9jaJa5PlKuCUOKUy
-	 A8oAQGnqQJ3+gw9qbJ+td/OmleS+ewFwyoBIzAFxdFE0vzdTdGB7p4szMV0vUuzN74
-	 1/OFn5pYTW3Ef64P64HZQ3dUWnZqqEW+hDTB/mPw=
+	b=dsU2TRmjUnRt8M20uUQUkTLeNeR7AVmB/cckAp0xUnpXzDf6d0kCJZ54UDRPdZa9E
+	 DcD6RRviDw3PDIwQPRGVmrIAtyLUEEkytCVWIfcTr+HEQVhgGiGwr9WHaWtLNa3p9e
+	 QnYjbmSFknK/wdUQUYJ3oSCFpQyMPSbfs91mTVIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Kim <james010kim@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0894/2077] char: tlclk: fix use-after-free in tlclk_cleanup()
-Date: Tue, 21 Jul 2026 17:09:27 +0200
-Message-ID: <20260721152613.903167525@linuxfoundation.org>
+Subject: [PATCH 7.1 0895/2077] hpet: Check ACPI_COMPANION() against NULL at probe time
+Date: Tue, 21 Jul 2026 17:09:28 +0200
+Message-ID: <20260721152613.927528676@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,58 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Kim <james010kim@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit bbf003b7794d6ad6f939fdd29f1f1bde8ac554c1 ]
+[ Upstream commit fa5e2952341b792b72d5410dbfcd0b2ac8046d2a ]
 
-This patch improves the module cleanup process in the tlclk driver to
-prevent potential use-after-free and race conditions.
+Every platform driver can be forced to match a device that doesn't match
+its list of device IDs because of device_match_driver_override(), so
+platform drivers that rely on the existence of a device's ACPI companion
+object need to verify its presence.
 
-Currently, the file_operations structure does not specify the .owner
-field, which could allow the module to be unloaded while user-space
-processes are still interacting with the device. Additionally, the
-tlclk_cleanup() function frees the alarm_events memory before ensuring
-that blocked processes in the waitqueue are fully awakened and that the
-switchover_timer has completed.
+Accordingly, add a requisite ACPI_COMPANION() check against NULL to the
+hpet driver.
 
-To address these cases, this patch:
-- Sets '.owner = THIS_MODULE' in tlclk_fops to safely defer module
-  unloading while the device is in use.
-- Updates tlclk_cleanup() to explicitly wake up all blocked readers
-  (wake_up_all), properly release hardware I/O regions, and safely
-  delete the timer (timer_delete_sync) prior to freeing memory.
-
-Fixes: 1a80ba882730 ("[PATCH] Telecom Clock Driver for MPCBL0010 ATCA computer blade")
-Signed-off-by: James Kim <james010kim@gmail.com>
-Link: https://patch.msgid.link/20260503101131.64219-1-james010kim@gmail.com
+Fixes: 71f0a267346b ("hpet: Convert ACPI driver to a platform one")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/4750803.LvFx2qVVIh@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tlclk.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/char/hpet.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/char/tlclk.c b/drivers/char/tlclk.c
-index 677d230a226cf5..dd45fe5eb6f270 100644
---- a/drivers/char/tlclk.c
-+++ b/drivers/char/tlclk.c
-@@ -264,6 +264,7 @@ static ssize_t tlclk_read(struct file *filp, char __user *buf, size_t count,
- }
+diff --git a/drivers/char/hpet.c b/drivers/char/hpet.c
+index 46c84e5df00fd5..285c6037417ab2 100644
+--- a/drivers/char/hpet.c
++++ b/drivers/char/hpet.c
+@@ -976,10 +976,14 @@ static acpi_status hpet_resources(struct acpi_resource *res, void *data)
  
- static const struct file_operations tlclk_fops = {
-+	.owner = THIS_MODULE,
- 	.read = tlclk_read,
- 	.open = tlclk_open,
- 	.release = tlclk_release,
-@@ -837,6 +838,9 @@ static void __exit tlclk_cleanup(void)
- 	misc_deregister(&tlclk_miscdev);
- 	unregister_chrdev(tlclk_major, "telco_clock");
+ static int hpet_acpi_probe(struct platform_device *pdev)
+ {
+-	struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
++	struct acpi_device *device;
+ 	acpi_status result;
+ 	struct hpet_data data;
  
-+	got_event = 1;
-+	wake_up_all(&wq);
++	device = ACPI_COMPANION(&pdev->dev);
++	if (!device)
++		return -ENODEV;
 +
- 	release_region(TLCLK_BASE, 8);
- 	timer_delete_sync(&switchover_timer);
- 	kfree(alarm_events);
+ 	memset(&data, 0, sizeof(data));
+ 
+ 	result =
 -- 
 2.53.0
 
