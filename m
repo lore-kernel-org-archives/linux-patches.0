@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8881B35C686;
-	Tue, 21 Jul 2026 21:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2131144AB6A;
+	Tue, 21 Jul 2026 21:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668727; cv=none; b=BIKjM+Ww/kwOIFQn7NOWFSikpnW0tSRMneC/ROpuTjnj9d+0AqlaKs8c88THGnYjZVmfG3Qcpmnk0A+SQo5fclSnnsFZ8bXFiPf71aZoyfiwGCN2PA8VHUjAVVPaPUB79np+VyzV6yTYlYYSM4BDjVKT+VGxJYtaQNUim7Suxic=
+	t=1784668730; cv=none; b=E32iqMnnVeTwtdYoD8LOYj4u1w3Ze3fdnNqn99QIjafo7rPmH8ltecaetb7Dh5ivyVPUWIojAsomZhBS7CMrkUxuklfZ42mBy2jc5rAUjFnG+tlwn+ODyqhqGtaeQ1WlRzBmTUb9F3QC7NWakRNT/dZGmzTRRo5VVQfBFoeUj14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668727; c=relaxed/simple;
-	bh=bt3hCswXpp8xG77nFDMlHHqz+U3XHo5xi74MBsYZ/OA=;
+	s=arc-20240116; t=1784668730; c=relaxed/simple;
+	bh=FwVAk6vAYFH8JKQH87gmWPKpwTmZwqHd2AcpImBiMcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DhyoVa8aDQCbqiKNuHw0dt0HI37bET2vMR3gGw5nIjJnFBw4Bf00Xma+g7stH5l4xIvf34ASsctqm3BcKm3A/ocD9PgsDQaObF0sTfg57plDIfwhS754vdUCopJnwFtl48k1N//QCAdUaKC6NGWr4zngaTCD+ZyXY7ZFDiDy7jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNXd394X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YzlYkl0rDQDb2o0nQ4BpErroq77vAAST+z+2qeMhf6okMSUAfsbGpjBASFZ/V0fgXqadF1N3ct7M8byzhlAWj2P7U0/LA/IHm6lN7rEjbO7vTRff9N2HC+2plquqIXnMM8L08m6Moprf7Y4E6/9P0e8XFjHJQX7sB+TuEeOyIKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLQkpzft; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNXd394X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12151F00A3A;
-	Tue, 21 Jul 2026 21:18:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLQkpzft"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BED1F000E9;
+	Tue, 21 Jul 2026 21:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668726;
-	bh=axlWFwWMue9hW8o/Z08p+Rs6uuaZTZ58rSXpWbYAOd8=;
+	s=korg; t=1784668729;
+	bh=x8gwDuJ+GQfgqQHNxnwqvZ6c6ZmwICKTzyU5W8WhdOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nNXd394XWWwBalgB+eeObVU8cKEOYFeM/Nfe20+NQPZF1QoWqWbGWJ8u0Exqp8z5y
-	 AQwR+9Umx/BQ6+M6Uh2RZWKucb1ZWBcgzXDUhaSLPeJ806kY5WpE00hbTHP+IKkLrV
-	 E1tSd339XUvsei9CGavPmYMF6NOMElarzLaNmCnE=
+	b=ZLQkpzftWWJTmvOC5a5wIrcq5t5ctC2Q6as8sSbu1/PvEEHp7gnh9ZC7xJGCXW6AV
+	 vKDRj8NCfse1KBDzQ0YE4fxOroQXZcro7pMsW3Ha2kTuvu/S7g1EBc3DrfcTds/WsS
+	 9f8ztarpLKG0VZXIUyhSvPdNKzQrzEG0M5/RmKsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis Kotze <loukot@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0283/1067] wifi: cfg80211: fix grammar in MLO group key error message
-Date: Tue, 21 Jul 2026 17:14:44 +0200
-Message-ID: <20260721152430.932146401@linuxfoundation.org>
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 0243/1067] Input: maple_keyb - set driver data before registering input device
+Date: Tue, 21 Jul 2026 17:14:04 +0200
+Message-ID: <20260721152430.037001506@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,49 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Louis Kotze <loukot@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 9dcc1af3bbf5441f71a1e51b8d81bdf38a249607 ]
+commit 536394ec81419b67d9f4f0028812c4372397be1b upstream.
 
-The error message emitted by nl80211_validate_key_link_id() when a group
-key install on an MLO wdev is missing the link ID reads "link ID must
-for MLO group key", which is missing the words "be set". This makes the
-error harder to grep and parse in userspace logs, and is reported
-verbatim by wpa_supplicant via its nl80211 extack relay, e.g.:
+Set maple driver data before calling input_register_device() to
+ensure that it is available if the device is opened immediately and
+the callback is triggered.
 
-  wpa_supplicant: nl80211: kernel reports: link ID must for MLO group key
-
-The sibling error strings in the same helper already use grammatical
-phrasing ("link ID not allowed for pairwise key", "invalid link ID for
-MLO group key", "link ID not allowed for non-MLO group key"). Fix this
-one to match.
-
-No functional change.
-
-Fixes: e7a7b84e3317 ("wifi: cfg80211: Add link_id parameter to various key operations for MLO")
-Signed-off-by: Louis Kotze <loukot@gmail.com>
-Link: https://patch.msgid.link/20260414122728.92234-1-loukot@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/nl80211.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/keyboard/maple_keyb.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 9c8306fbb4e45d..36a7b9707eabd2 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -4435,7 +4435,7 @@ static int nl80211_validate_key_link_id(struct genl_info *info,
- 	if (wdev->valid_links) {
- 		if (link_id == -1) {
- 			GENL_SET_ERR_MSG(info,
--					 "link ID must for MLO group key");
-+					 "link ID must be set for MLO group key");
- 			return -EINVAL;
- 		}
- 		if (!(wdev->valid_links & BIT(link_id))) {
--- 
-2.53.0
-
+--- a/drivers/input/keyboard/maple_keyb.c
++++ b/drivers/input/keyboard/maple_keyb.c
+@@ -169,6 +169,8 @@ static int probe_maple_kbd(struct device
+ 	kbd->dev = idev;
+ 	memcpy(kbd->keycode, dc_kbd_keycode, sizeof(kbd->keycode));
+ 
++	maple_set_drvdata(mdev, kbd);
++
+ 	idev->name = mdev->product_name;
+ 	idev->evbit[0] = BIT(EV_KEY) | BIT(EV_REP);
+ 	idev->keycode = kbd->keycode;
+@@ -193,8 +195,6 @@ static int probe_maple_kbd(struct device
+ 
+ 	mdev->driver = mdrv;
+ 
+-	maple_set_drvdata(mdev, kbd);
+-
+ 	return error;
+ 
+ fail_register:
 
 
