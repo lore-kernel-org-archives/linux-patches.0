@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CDA3D1CCA;
-	Tue, 21 Jul 2026 17:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FCB397E9A;
+	Tue, 21 Jul 2026 17:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653714; cv=none; b=nxNCsIX6GPejkknOnQp9R6OUDDbXnpFjIyiWhFsFAQSbs8M8dF3u3s8PmsFwr+TPnxEklxq3W30SpsVQQebT6bqcLpQ4+5g2oj4WrvKEK82M8qRYvO6bBkiYBJGBOxJxgmuXj+H/gquN6Mm9qgF9jnKjUdHlPOe+PvI4djWHPbs=
+	t=1784653717; cv=none; b=IiI30wO9jfn/0Po01lrWdV9+jkO3qzsbUNOK7RbYcRknCRpUZCf1HAewCIfq8Y52UzGaAuU3yo99xLFirVhW7w9oMA4AoizuOXFwe4ewlT8llexI+pHF5pLHp+XLhi4t7J49B9sRRobiXrrk2BEuVzSRM1G1ZYLdSIECosAczow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653714; c=relaxed/simple;
-	bh=kY+zNbGPO3tHaPsyvjy2WUYHMIiZnOEzct7fm0Fusvo=;
+	s=arc-20240116; t=1784653717; c=relaxed/simple;
+	bh=HcdMhnch9536vyAkK3O+o+e2xiscewQ+zeNkoVfvBho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r634uj797Ph6PNDE7VuQaT/lspuG3up5ibefjTqQKWMEO5SjpfHxRxPFusmDiQY+Oc1Gg+rKjqnpL576tqVXfcgkTobB2xEx773hqXOViDC2oM91OutTSxgur3G79bYq3DWGPsNPFyoS21bMpuhfmcWSOXC80DtoLtzhfxv1uKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQUwu8Xu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jBZM23DndCzwkBwcLj2LZj5wQwKBM+Rc0fD/Jmr/tKxvF8uYWjaipalB/zK1+aAun99zL2oC+UdRZrOWGe0aOycW9vPz5JgDGUJYJ4tSLuOBxMsOiLHQ1/D9su+TEdJ39+q2D7L8bS69OPqLTJoFBHxMJlIBmMc65JgDcInd58U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gfh98zev; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQUwu8Xu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6621F00A3A;
-	Tue, 21 Jul 2026 17:08:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gfh98zev"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780991F00A3A;
+	Tue, 21 Jul 2026 17:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653713;
-	bh=TBvXiANtybHFZdijn0SGOrgMraA6rjxFYNII3AbPXus=;
+	s=korg; t=1784653716;
+	bh=VlgFrSO98SwhItALuSwRgObZZ4vTyg4QIGPulHcGYkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WQUwu8XuETFsQu+tUitqtUoRtNe0+P3NhZe8rp3Zkbmoum+tuSkhdiakBTacunG5d
-	 UoVS7ktMxfAgePYjvpD2+eIdDlIA6raqwRpNCfakix+zj1KVCpcWIBogUhAO1zR6QN
-	 p1nuTq85sojIGdkYbH3yxXayBmUVUwZo4kavLzmU=
+	b=Gfh98zevCrwvv4z43SL+yG4paBFtgW/MKdKTc15+y7sOuSqxqUoFTYzNEcms3MTXX
+	 fh55frqRnkCyXJNY+y8v84N4HPtCroJ3phkzlgHf46Sap3QMhgdKkADGhD0UchywFE
+	 pfJ7QA+AOOqpK7Ac2Id5V5Iyx6YiLjVd3FL9sDS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fengnan Chang <changfengnan@bytedance.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1388/2077] iomap: release pages on atomic dio size mismatch
-Date: Tue, 21 Jul 2026 17:17:41 +0200
-Message-ID: <20260721152625.553493707@linuxfoundation.org>
+Subject: [PATCH 7.1 1389/2077] minix: avoid overflow in bitmap block count calculation
+Date: Tue, 21 Jul 2026 17:17:42 +0200
+Message-ID: <20260721152625.577260126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,56 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fengnan Chang <changfengnan@bytedance.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 681e452683b69a8e1a571cba0f238f8ceacf55d2 ]
+[ Upstream commit fb3e566cafc38fe3ba35e6843a2d529a3748870c ]
 
-If bio_iov_iter_get_pages() or the bounce helper succeeds but builds a
-short bio, the REQ_ATOMIC size check rejects it before submission.  The
-old error path only dropped the bio reference, leaving any pages already
-attached to the bio unreleased.
+minix_check_superblock() uses minix_blocks_needed() to verify that the
+on-disk imap and zmap block counts are large enough for the advertised
+inode and zone counts.
 
-Release or unbounce the pages before falling through to out_put_bio on
-this error path.
+The helper currently performs DIV_ROUND_UP() in unsigned int arithmetic.
+A Minix v3 image can set s_ninodes or s_zones near UINT_MAX so the
+addition inside DIV_ROUND_UP() wraps to zero. That makes a zero imap/zmap
+block count look valid, after which minix_fill_super() can dereference
+s_imap[0] or s_zmap[0] even though no bitmap buffers were allocated.
 
-This bug was reported by sashiko:
-https://sashiko.dev/#/patchset/20260608073134.95964-1-changfengnan%40bytedance.com
+Impact: mounting a crafted Minix v3 image whose s_ninodes or s_zones is
+near UINT_MAX makes minix_check_superblock() accept a zero bitmap-block
+count and minix_fill_super() dereference s_imap[0]/s_zmap[0], panicking
+the kernel.
 
-Fixes: 9e0933c21c12 ("fs: iomap: Atomic write support")
-Signed-off-by: Fengnan Chang <changfengnan@bytedance.com>
-Link: https://patch.msgid.link/20260612044041.10677-1-changfengnan@bytedance.com
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+The divisor is the bitmap capacity in bits, blocksize * 8, which is
+always a power of two: minix_fill_super() obtains the block size through
+sb_set_blocksize(), and blk_validate_block_size() rejects any size that
+is not a power of two. Use DIV_ROUND_UP_POW2(), which divides before
+adding the round-up term and so cannot overflow for a power-of-two
+divisor.
+
+Fixes: 8c97a6ddc956 ("minix: Add required sanity checking to minix_check_superblock()")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260618143922.3066874-1-michael.bommarito@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/direct-io.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/minix/minix.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/iomap/direct-io.c b/fs/iomap/direct-io.c
-index b36ee619cdcdda..9fedf367c3ebe6 100644
---- a/fs/iomap/direct-io.c
-+++ b/fs/iomap/direct-io.c
-@@ -369,7 +369,7 @@ static ssize_t iomap_dio_bio_iter_one(struct iomap_iter *iter,
- 	 */
- 	if ((op & REQ_ATOMIC) && WARN_ON_ONCE(ret != iomap_length(iter))) {
- 		ret = -EINVAL;
--		goto out_put_bio;
-+		goto out_bio_release_pages;
- 	}
+diff --git a/fs/minix/minix.h b/fs/minix/minix.h
+index f2025c9b58252f..9e52d4302f0d2e 100644
+--- a/fs/minix/minix.h
++++ b/fs/minix/minix.h
+@@ -97,7 +97,7 @@ static inline struct minix_inode_info *minix_i(struct inode *inode)
  
- 	if (iter->iomap.flags & IOMAP_F_INTEGRITY) {
-@@ -393,6 +393,11 @@ static ssize_t iomap_dio_bio_iter_one(struct iomap_iter *iter,
- 	iomap_dio_submit_bio(iter, dio, bio, pos);
- 	return ret;
+ static inline unsigned minix_blocks_needed(unsigned bits, unsigned blocksize)
+ {
+-	return DIV_ROUND_UP(bits, blocksize * 8);
++	return DIV_ROUND_UP_POW2(bits, blocksize * 8);
+ }
  
-+out_bio_release_pages:
-+	if (dio->flags & IOMAP_DIO_BOUNCE)
-+		bio_iov_iter_unbounce(bio, true, false);
-+	else
-+		bio_release_pages(bio, false);
- out_put_bio:
- 	bio_put(bio);
- 	return ret;
+ #if defined(CONFIG_MINIX_FS_NATIVE_ENDIAN) && \
 -- 
 2.53.0
 
