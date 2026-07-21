@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734573ED3B2;
-	Tue, 21 Jul 2026 19:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CEA946EF6C;
+	Tue, 21 Jul 2026 19:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661705; cv=none; b=MMTRx2iRp3ZEtEaCPfp3pR0l2EiWyTCVQ3LZkxQXeCts8jwfERtdTRcXy7M3bt0Q6TZWQzwUz1yTa7CQJTnfhhsgc/UjwY48jVQ+dIelV+g7A6MWtn7wjTTBIwiNf2iTUdLtw00xbBOgBJsp0QhgaGwUVuDJHtb4fsOguXbxiB0=
+	t=1784661708; cv=none; b=c5abXyPjor6TtO9tePRtEoRrLYDkJt38d1MlVxulcRGzL2rksKIpCufPCpqCADtTYjUgigiWTFEHE2AMGo7PQr/Vi6pnPJUwlNxUPUK+AL9e6CJVnFjTd+YiK1+siTJm/KdWcplu7nlprXb2YydXHtxtL7CmR4QYoKHslA0zedI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661705; c=relaxed/simple;
-	bh=0NNCfEtAh2tEbUodHHr4hQz5eCFtoMdoNU0pUeWuGZw=;
+	s=arc-20240116; t=1784661708; c=relaxed/simple;
+	bh=/QPYA0IOl1K8IpCCt5yL0ySZHdlC/4otC+vsc3GSAsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MmBmxaKIalwucmuFHmsKMs1cHUT39cpz7sDCxblcM0nXVVYKHl0geKVsOVxM2T8WEYETs6IYUOQrXuSaZFuRMlPI3lxgHV/zzWCu5mVKkD1AMV7i5wOrOhZheukrGdeOsVD0ea/JCgI0hyQECNzlevDnnMJ6KxQrqfU6OQhyWR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8UUYtoA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oCb4lOe0Yb2Jmei4/d/VJZvTyhAlBCOvh2zX0cpBhirltDuAsYRP8UG4fKd6vZ0JAGVGL5y6AIu/75XlxtjwRkbmo7AqS6RUx5ytxNv5g//anFZ5rJ3fC4njlZBdETAKJ24AIoDjJiJQvkhv3cOBQCLOKJ4ABhf0JNoonsL3vSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdOqzMZ5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8UUYtoA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D95BB1F000E9;
-	Tue, 21 Jul 2026 19:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdOqzMZ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82ADE1F000E9;
+	Tue, 21 Jul 2026 19:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661704;
-	bh=vnsU+OwaTg/QFYR4qVB5yVilrb6jeuDItmxFOzBd53U=;
+	s=korg; t=1784661707;
+	bh=cF7k2Sr8r3eBJZr4qeb5IhMSse1T65Vp1YsfAbmz3ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F8UUYtoAmoCu8B1V9WkskDiHJHZxydqzwCgRNIQ9c6VzIx2nFRv7jPL6lLNo054Z6
-	 zzTj2y4DRmnUQX2RnoLpUSFYsnCCHmMMmkeaBTAcC5puzt/09deWQis+VDF4yLlzPG
-	 49xTUYsQtGacCSn5KrLxbi1CVU62UwPWWrwaAR0U=
+	b=gdOqzMZ5UfVFNYpoZc94bPacSWsNcVX6vByfFD4uGMUrPMvtAEd1fOl/3+5ZJAX0Q
+	 pLRdqdpY9QI7oIWiHh2dF0MppqAcrNjajldX4vj693ZEXfkCH1X205Qs3bq3+zzUaA
+	 i3CORuI2HXL5ZZeKazCJzcT7sTMH1Wb4lwwga5Xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Pratyush Yadav <pratyush@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0166/1276] driver core: Guard deferred probe timeout extension with delayed_work_pending()
-Date: Tue, 21 Jul 2026 17:10:09 +0200
-Message-ID: <20260721152449.813779228@linuxfoundation.org>
+Subject: [PATCH 6.12 0167/1276] mtd: spi-nor: Drop duplicate Kconfig dependency
+Date: Tue, 21 Jul 2026 17:10:10 +0200
+Message-ID: <20260721152449.836002272@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,43 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 557495bc879013c3d5e21d667e987e7ce3a514de ]
+[ Upstream commit a6470e2162e9c3779a4bd6ff3bed1b81d796e46e ]
 
-mod_delayed_work() unconditionally queues the work even when it wasn't
-previously pending, which can fire the timeout prematurely or restart it
-after it already fired. Add a delayed_work_pending() guard to restore
-the originally intended semantics.
+I do not think the MTD dependency is needed twice. This is likely a
+duplicate coming from a former rebase when the spi-nor core got cleaned
+up a while ago. Remove the extra line.
 
-Premature firing calls fw_devlink_drivers_done() before all built-in
-drivers have registered, causing fw_devlink to prematurely relax device
-links for suppliers whose drivers haven't loaded yet.
-
-Fixes: 1137838865bf ("driver core: Use mod_delayed_work to prevent lost deferred probe work")
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20260525012340.3860581-2-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: b35b9a10362d ("mtd: spi-nor: Move m25p80 code in spi-nor.c")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/dd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mtd/spi-nor/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index f84cbb900908e0..a694549c59a7e2 100644
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -326,7 +326,8 @@ void deferred_probe_extend_timeout(void)
- 	 * If the work hasn't been queued yet or if the work expired, don't
- 	 * start a new one.
- 	 */
--	if (mod_delayed_work(system_wq, &deferred_probe_timeout_work,
-+	if (delayed_work_pending(&deferred_probe_timeout_work) &&
-+	    mod_delayed_work(system_wq, &deferred_probe_timeout_work,
- 			     secs_to_jiffies(driver_deferred_probe_timeout)))
- 		pr_debug("Extended deferred probe timeout by %d secs\n",
- 					driver_deferred_probe_timeout);
+diff --git a/drivers/mtd/spi-nor/Kconfig b/drivers/mtd/spi-nor/Kconfig
+index 24cd25de2b8b71..fd05a24d64a96f 100644
+--- a/drivers/mtd/spi-nor/Kconfig
++++ b/drivers/mtd/spi-nor/Kconfig
+@@ -1,7 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ menuconfig MTD_SPI_NOR
+ 	tristate "SPI NOR device support"
+-	depends on MTD
+ 	depends on MTD && SPI_MASTER
+ 	select SPI_MEM
+ 	help
 -- 
 2.53.0
 
