@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3837944607D;
-	Tue, 21 Jul 2026 15:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A8746C4B7;
+	Tue, 21 Jul 2026 15:47:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648835; cv=none; b=PMlujCO/em1zEXCantYbmkHkmwY/qzH2nxQmJT8nlEs9U4F7zaBjl11wkD+miiToe7wV4g0hEd1sFEL+PFI/Ogwb6Cp3duoW2R5z547MKvOql+RO1z6HkPUht22P1TRNEcFJ2mjg2Zv3hbXh6sJY5r2d0yjok9Vu1k0lv3dTCLM=
+	t=1784648837; cv=none; b=TwqVidu6sb33y5QvslabTLR0xu4bOBSzd1P5NKILQNRzke1kW/ztkKN0EymXjRljpyAjB4DWvIn1HPJsRnYt/WhkuFs/vYaCsSDsFydVjy53Md4XHRgG+FkJN+4WO9NuzAf7y0GXTm51CCe17eSBP1+FkwPH87aIhuSjYH/o85M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648835; c=relaxed/simple;
-	bh=NeACuUH/tFwtZArK8dxj/QbnPGnIigMotKC72AUnc6E=;
+	s=arc-20240116; t=1784648837; c=relaxed/simple;
+	bh=Q5aiCc8C3MIaUE2YJvJLFHPQ9zDwc0OjBLNPc9lXuMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J5ciU156caK7hYlfRvlOM1SBGbkziEz5C3kMV1J03GLo/B8TdF7TxuehLnsUj9Kde7pRSD7xUV++S2gK9VdMjKaNXMGVWiMeYAOD/nvHwsAe5vb9rNhw4v3/75KiPFVBFeOCMkfURDbygKZFlUdjvjM0ZPuRSozA1C1/vZ1ZIyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fj5urFA/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b4tT0Uyxw9ZyJosGOh3Mgr46I1u5ncRy8Nq/pcMlLQC+NnHIKlPshtcNxT6hNK0wS5IMwEWeONvwOoJIHSFMtL2Itfpe1DCQU/+65DaXS1EeJVmbm58T7EHb+WK+Q0ch0UkKYzY/mP37XlW/InrpUN1cG7zw+MwBxW+MCtvHMiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmUAsF/z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fj5urFA/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E8501F000E9;
-	Tue, 21 Jul 2026 15:47:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmUAsF/z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F531F00A3F;
+	Tue, 21 Jul 2026 15:47:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648834;
-	bh=iGSzCNSUvo6Ec6NqG8cF58F1YVMIopC05AbcLQiCtP4=;
+	s=korg; t=1784648836;
+	bh=PhwhxBiWq0BXQJ6kijtHZsdspTIAUAROs2mHbC5VgUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fj5urFA/3ocHWt9fGJ2vmS12Ay+2P16v6bhtKskh7ss5HSdhWJNeU+xyrHwAuuyix
-	 XmzlOyzbVoocsxXf4tTr7i2KHELKsU8om5M/cTABpXPpUKaeudU5/cQWTUVFA9WCIp
-	 eixoFJ8YrP0mOClkELusXhTWwjN9aR7jQUuYZRK4=
+	b=cmUAsF/zrYW2S7Vq2P0qxaFIoOKWKVLbd2nbJxo+USBmzUmXgZCwzA6z0AUWUJQ8X
+	 UclSnxw4BXhVL2CuuAFRq07drI/0XjNol62D9HZeM1V2kR3ddljS+xmgfX/N9lMT06
+	 t0yh5STuezpKGydyaWertPkqnlMKxWPXuYu2X86E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mikko Perttunen <mperttunen@nvidia.com>,
 	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0348/2077] gpu: host1x: Fix iommu_map_sgtable() return value check
-Date: Tue, 21 Jul 2026 17:00:21 +0200
-Message-ID: <20260721152600.901078032@linuxfoundation.org>
+Subject: [PATCH 7.1 0349/2077] drm/tegra: Fix iommu_map_sgtable() return value check
+Date: Tue, 21 Jul 2026 17:00:22 +0200
+Message-ID: <20260721152600.923811903@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,55 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit 18f74762013a4b6aa6f905c4459e0f506f9c5c7b ]
+[ Upstream commit b3f349517de8f4469c385ebb7bfdfcc148790c0f ]
 
 Commit "iommu: return full error code from iommu_map_sg[_atomic]()"
 changed iommu_map_sgtable() to return an ssize_t and negative values
 in error cases, rather than a size_t and a zero.
 
-pin_job() also was incorrectly assigning to 'int', which could cause
-overflows into negative values.
-
-Update pin_job() to correctly check for errors from iommu_map_sgtable.
+Update tegra_bo_iommu_map() to correctly check for errors from
+iommu_map_sgtable.
 
 Fixes: ad8f36e4b6b1 ("iommu: return full error code from iommu_map_sg[_atomic]()")
 Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
 Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260421-iommu_map_sgtable-return-v1-1-fb484c07d2a1@nvidia.com
+Link: https://patch.msgid.link/20260421-iommu_map_sgtable-return-v1-2-fb484c07d2a1@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/job.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/tegra/gem.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/host1x/job.c b/drivers/gpu/host1x/job.c
-index 3ed49e1fd93322..70bda32f1ff488 100644
---- a/drivers/gpu/host1x/job.c
-+++ b/drivers/gpu/host1x/job.c
-@@ -235,6 +235,8 @@ static unsigned int pin_job(struct host1x *host, struct host1x_job *job)
- 		}
+diff --git a/drivers/gpu/drm/tegra/gem.c b/drivers/gpu/drm/tegra/gem.c
+index 2377e2b76397a3..436394e0481252 100644
+--- a/drivers/gpu/drm/tegra/gem.c
++++ b/drivers/gpu/drm/tegra/gem.c
+@@ -234,6 +234,7 @@ static const struct host1x_bo_ops tegra_bo_ops = {
+ static int tegra_bo_iommu_map(struct tegra_drm *tegra, struct tegra_bo *bo)
+ {
+ 	int prot = IOMMU_READ | IOMMU_WRITE;
++	ssize_t size;
+ 	int err;
  
- 		if (host->domain) {
-+			ssize_t map_err;
+ 	if (bo->mm)
+@@ -255,13 +256,15 @@ static int tegra_bo_iommu_map(struct tegra_drm *tegra, struct tegra_bo *bo)
+ 
+ 	bo->iova = bo->mm->start;
+ 
+-	bo->size = iommu_map_sgtable(tegra->domain, bo->iova, bo->sgt, prot);
+-	if (!bo->size) {
++	size = iommu_map_sgtable(tegra->domain, bo->iova, bo->sgt, prot);
++	if (size < 0) {
+ 		dev_err(tegra->drm->dev, "failed to map buffer\n");
+-		err = -ENOMEM;
++		err = size;
+ 		goto remove;
+ 	}
+ 
++	bo->size = size;
 +
- 			for_each_sgtable_sg(map->sgt, sg, j)
- 				gather_size += sg->length;
+ 	mutex_unlock(&tegra->mm_lock);
  
-@@ -248,11 +250,11 @@ static unsigned int pin_job(struct host1x *host, struct host1x_job *job)
- 				goto put;
- 			}
- 
--			err = iommu_map_sgtable(host->domain, iova_dma_addr(&host->iova, alloc),
--						map->sgt, IOMMU_READ);
--			if (err == 0) {
-+			map_err = iommu_map_sgtable(host->domain, iova_dma_addr(&host->iova, alloc),
-+						    map->sgt, IOMMU_READ);
-+			if (map_err < 0) {
- 				__free_iova(&host->iova, alloc);
--				err = -EINVAL;
-+				err = map_err;
- 				goto put;
- 			}
- 
+ 	return 0;
 -- 
 2.53.0
 
