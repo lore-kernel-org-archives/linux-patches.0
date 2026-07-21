@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82B1441616;
-	Tue, 21 Jul 2026 22:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84534443A91;
+	Tue, 21 Jul 2026 22:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673106; cv=none; b=UN/DyqX4rR9OQu+0OxeCIruAh1QSbfbMCvN8o28MFR8OgWdR+lTx4m3BDOwjuUUaepBp8OiprZcn8YHxeshOYcIzbRat0xvpOWyhRXoj5ErRS8026CRORHC2rI24V5DpFhKgqyBvsxyBHICu/rZMdI2PWyVMeSLTdSB2yJ5y5rc=
+	t=1784673109; cv=none; b=pcNcRzP57y3aN2qO4Z6cS9e5D678uxeWu84HEuEkO6TD5YWtRUCsqNizCA5BXdwpAN25ZDNYNdQQMzw9nYBfBUHDn4+SuNdLbpOBZMw5oZ4bz3hrwDwjzie1jPA8wwnkiWvcRZ8Cqz3AdT8+81BH2ri434fldxo8HhqhXJfRjhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673106; c=relaxed/simple;
-	bh=a3/i/04/ldTCorjMADXhzwOhPUpOAx8VM6oGidZkDnc=;
+	s=arc-20240116; t=1784673109; c=relaxed/simple;
+	bh=T0ok0OM0HKwTKrd41+EcmFlxk4m3iQH1IgnuwuDAiRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HZ871RFw2r5PYdSbCinBoHeBR56/ruYgAyzkrA5wk97oQ0dditAkzGsURIu3vYfN40SoTQ3esPvTJMb34X0IC6vR6yeRF/aVWf+rENid6YkXPHGTmatNdGC9DPQAcd315zcIvGU7wmFw35DDqValCpdArQBmDn1ysjVsV4VGZtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTZkYiHm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oxKPCwiFynKCE6oBvALIbiq9aWhJEPBa3bmDPohCHycEqo4y9rBxpV9/zVDbLjMEB1cEAPG5E+LQp+DF+67/djyWgPPSo3phVTmgHS+NebH9DI5CuOeZa03HeM5/zLn0Kb/2GOV6u2ygYEkd0TlO+xdkWQQ7kQHMGg7ZFD7AaZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BO1zkeuO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTZkYiHm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 715F01F000E9;
-	Tue, 21 Jul 2026 22:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BO1zkeuO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E321F000E9;
+	Tue, 21 Jul 2026 22:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673105;
-	bh=Wxkut0bqGdjEcNC9WZTEjOi2BfYbdq8FsBNU9SH3Af0=;
+	s=korg; t=1784673108;
+	bh=BdzFKPAnFJH2TJfDhOe8mpS3ZfifEF5IrlfgXMoxOjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DTZkYiHmZ1GUdpYbKSNDtub6I5qs8d9vDnSSeLYj7obQt0CYXQkBoVdd/r1QOb+Lq
-	 IsNgoIRcwNp3NwccG3xW/hrjPSDMXHw0FV2jE2dW8vZdvQaJDfgC46j1oedELjl7P5
-	 eCnt99jX0NbTFu4Y9FRAeblYPCScFpAHo6C9uc6c=
+	b=BO1zkeuORAs/7DWZXnT5C6Sirwv7BBmMPV+s8ErlKIIW4qLQvFOBBEz28wDvNonO6
+	 fZk9Kt4dUlcrEd3UWq9qOX7iZVgbKl1EuJm+wi8B0ZXDwUT6aMmli8tWLA9sgIfn8x
+	 Dm6uoxyXsMwX9+wMiwW2p5B1oSgSgZkWW63BC38A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Alexander Martyniuk <alexevgmart@gmail.com>
-Subject: [PATCH 5.10 011/699] bus: mhi: host: Add alignment check for event ring read pointer
-Date: Tue, 21 Jul 2026 17:16:10 +0200
-Message-ID: <20260721152355.936429058@linuxfoundation.org>
+Subject: [PATCH 5.10 012/699] netfilter: nf_log: validate MAC header was set before dumping it
+Date: Tue, 21 Jul 2026 17:16:11 +0200
+Message-ID: <20260721152355.959441686@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,42 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit eff9704f5332a13b08fbdbe0f84059c9e7051d5f upstream.
+commit a84b6fedbc97078788be78dbdd7517d143ad1a77 upstream.
 
-Though we do check the event ring read pointer by "is_valid_ring_ptr"
-to make sure it is in the buffer range, but there is another risk the
-pointer may be not aligned.  Since we are expecting event ring elements
-are 128 bits(struct mhi_ring_element) aligned, an unaligned read pointer
-could lead to multiple issues like DoS or ring buffer memory corruption.
+The fallback path of dump_mac_header() guards the MAC header access
+only with "skb->mac_header != skb->network_header", without checking
+skb_mac_header_was_set(). When the MAC header is unset, mac_header is
+0xffff, so the test passes and skb_mac_header(skb) returns
+skb->head + 0xffff, ~64 KiB past the buffer; the loop then reads
+dev->hard_header_len bytes out of bounds into the kernel log.
 
-So add a alignment check for event ring read pointer.
+This is reachable via the netdev logger: nf_log_unknown_packet() calls
+dump_mac_header() unconditionally, and an skb sent through AF_PACKET
+with PACKET_QDISC_BYPASS reaches the egress hook with mac_header still
+unset (__dev_queue_xmit(), which would reset it, is bypassed).
 
-Fixes: ec32332df764 ("bus: mhi: core: Sanity check values from remote device before use")
-cc: stable@vger.kernel.org
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20231031-alignment_check-v2-1-1441db7c5efd@quicinc.com
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Add the skb_mac_header_was_set() check the ARPHRD_ETHER path already
+uses, and replace the open-coded MAC header length test with
+skb_mac_header_len(). Only skbs with an unset MAC header are affected;
+valid ones are dumped as before.
+
+ BUG: KASAN: slab-out-of-bounds in dump_mac_header (net/netfilter/nf_log_syslog.c:831)
+ Read of size 1 at addr ffff88800ea49d3f by task exploit/148
+ Call Trace:
+  kasan_report (mm/kasan/report.c:595)
+  dump_mac_header (net/netfilter/nf_log_syslog.c:831)
+  nf_log_netdev_packet (net/netfilter/nf_log_syslog.c:938 net/netfilter/nf_log_syslog.c:963)
+  nf_log_packet (net/netfilter/nf_log.c:260)
+  nft_log_eval (net/netfilter/nft_log.c:60)
+  nft_do_chain (net/netfilter/nf_tables_core.c:285)
+  nft_do_chain_netdev (net/netfilter/nft_chain_filter.c:307)
+  nf_hook_slow (net/netfilter/core.c:619)
+  nf_hook_direct_egress (net/packet/af_packet.c:257)
+  packet_xmit (net/packet/af_packet.c:280)
+  packet_sendmsg (net/packet/af_packet.c:3114)
+  __sys_sendto (net/socket.c:2265)
+
+Fixes: 7eb9282cd0ef ("netfilter: ipt_LOG/ip6t_LOG: add option to print decoded MAC header")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/main.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv4/netfilter/nf_log_ipv4.c |    4 ++--
+ net/ipv6/netfilter/nf_log_ipv6.c |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -222,7 +222,8 @@ static void mhi_del_ring_element(struct
+--- a/net/ipv4/netfilter/nf_log_ipv4.c
++++ b/net/ipv4/netfilter/nf_log_ipv4.c
+@@ -296,8 +296,8 @@ static void dump_ipv4_mac_header(struct
  
- static bool is_valid_ring_ptr(struct mhi_ring *ring, dma_addr_t addr)
- {
--	return addr >= ring->iommu_base && addr < ring->iommu_base + ring->len;
-+	return addr >= ring->iommu_base && addr < ring->iommu_base + ring->len &&
-+			!(addr & (sizeof(struct mhi_tre) - 1));
- }
+ fallback:
+ 	nf_log_buf_add(m, "MAC=");
+-	if (dev->hard_header_len &&
+-	    skb->mac_header != skb->network_header) {
++	if (dev->hard_header_len && skb_mac_header_was_set(skb) &&
++	    skb_mac_header_len(skb) != 0) {
+ 		const unsigned char *p = skb_mac_header(skb);
+ 		unsigned int i;
  
- int mhi_destroy_device(struct device *dev, void *data)
+--- a/net/ipv6/netfilter/nf_log_ipv6.c
++++ b/net/ipv6/netfilter/nf_log_ipv6.c
+@@ -309,8 +309,8 @@ static void dump_ipv6_mac_header(struct
+ 
+ fallback:
+ 	nf_log_buf_add(m, "MAC=");
+-	if (dev->hard_header_len &&
+-	    skb->mac_header != skb->network_header) {
++	if (dev->hard_header_len && skb_mac_header_was_set(skb) &&
++	    skb_mac_header_len(skb) != 0) {
+ 		const unsigned char *p = skb_mac_header(skb);
+ 		unsigned int len = dev->hard_header_len;
+ 		unsigned int i;
 
 
