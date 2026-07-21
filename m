@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C403ED3B2;
-	Tue, 21 Jul 2026 15:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF73C3ED3B2;
+	Tue, 21 Jul 2026 15:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649388; cv=none; b=MAfYEvq3FBD7G/Gj3I3pRQVBHt3lPEttfTbhdRH/g+xNuIAnDTjNzRa6sJ0PWiIN0bM2lExHf4WJLAsNHi6RtMZ8jHLJxtbPpE2c4IWH7PDe5iqfZGznY0Xic8so9mH7DrRqJzoYHpWyxCOCZ/lqeWvMgAvCGvaOs4vrJPELkD8=
+	t=1784649390; cv=none; b=bKejt18ddE3Fa5aI6m5A2E+cotUc07dK1UzcB8JdtTkMKxgTcfwIDmGNvPQ2gvg3XkaW/XT3xmRWiTIVXjOLRnvKZZCGDH0Qg97C547GAJ4ci2e8Q87etf0ICPGNCfA5PJGtgf46eymTQdV2lpT2tGbpRrJc2HX2ss5z/IwHIKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649388; c=relaxed/simple;
-	bh=8s98rAP6L+3mcvmgaz71VJjjDrbVkYNMQB1vIqOuHzI=;
+	s=arc-20240116; t=1784649390; c=relaxed/simple;
+	bh=mY+2nIbnQ/iZe/qBYCaY27xtriuBJgeGBz0UdCApjsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mB9vxxoDv8pm2pVOxDzONWopvZoa1FDJqjcE25P2Jos3GbNwK2wX1nd1O/XetckavhAi17ChXuFB40lyXWvHgL59u4Kv84y06ekuq2rmfM4OgLrE1zG5i3rTV5mhQg0ByDqJmn63w82sRjQQMNwv8uF6T8Rt93GmmsajCXTtpIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lpD712fA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hJRbc/r3uz+kAokZVKrlc7BkB1Gznc99pnptGfesP5rYljyxGnqTmwLNa2s3wmhVGi7sM2mz9ZgrRSArwwGg31qi8jkp35+qVZHR+14fAoc1DLvmFdFYRYf5vcgeIFJnc1oBUzT4fM9KTZ+nh0KYaKhD0MMATdunrcLSLUdul/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V11pU/HF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lpD712fA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7DD1F000E9;
-	Tue, 21 Jul 2026 15:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V11pU/HF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51C031F000E9;
+	Tue, 21 Jul 2026 15:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649387;
-	bh=MSuVzaZrlmNssth032A883cN7j7onEkZl/M8/a0OqJU=;
+	s=korg; t=1784649389;
+	bh=uybwoMA79/JvzOutASlUjemmotgRKf8HDZeqhYU80qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lpD712fAcOlus8UOgjOq/BNLMo4qwpHJSt7M9b1mHFEfb3csUBgQ71hbD6bszbWXA
-	 Uf8+Fyl5POCV9+fcKt1ylMbzALRdXxZFRKY6DiIB+sLpMDWY+rfdmf/sEa8HJq1g3A
-	 bRyhuSmwZyh55GJAQytHu3t+F7mXh4lZgK2OmmIQ=
+	b=V11pU/HFMZZx5ZX3bAT7BJ/ZqerwrsQ4laC1zzHhvcoTdKAL52V643FuKRz75J7+o
+	 ZvlkviFkzCnA9n0vy1ruUorjSlvE6hLrvx0I/NYBDnaNwe28bKKnC/Q6iBtawnqd0y
+	 MLOPZM4882uiZTm9N31si3atfMWiZZmSDSqOaxmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Sneh Mankad <sneh.mankad@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0560/2077] watchdog: unregister PM notifier on watchdog unregister
-Date: Tue, 21 Jul 2026 17:03:53 +0200
-Message-ID: <20260721152606.021387796@linuxfoundation.org>
+Subject: [PATCH 7.1 0561/2077] pinctrl: qcom: Fix resolving register base address from device node
+Date: Tue, 21 Jul 2026 17:03:54 +0200
+Message-ID: <20260721152606.043790400@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,44 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
 
-[ Upstream commit a298c7302ee9584a7a1ac1e8acbede8d98ab51a4 ]
+[ Upstream commit 4e31ab47997540d0ff4c9de801741bed03c1ab3f ]
 
-watchdog_register_device() registers wdd->pm_nb when
-WDOG_NO_PING_ON_SUSPEND is set, but watchdog_unregister_device() does not
-remove it. This leaves an embedded notifier block on the PM notifier chain
-after the watchdog device has been unregistered.
+Commit 56ffb63749f4 ("pinctrl: qcom: add multi TLMM region option parameter")
+added reg-names property based register reading. However multiple platforms
+are not using the reg-names as they have only single TLMM register region.
 
-A later suspend/resume notification can then call watchdog_pm_notifier()
-with a stale watchdog_device pointer, or at minimum after wdd->wd_data has
-been cleared by watchdog_dev_unregister().
+Commit tried to handle this using the default_region module parameter,
+however this condition is unreachable as the error return precedes it by
+just checking if reg-names property exists or not, making it impossible
+to use tlmm-test for the SoCs (x1e80100) which don't have reg-names
+property in TLMM device.
 
-Unregister the PM notifier before tearing down the watchdog device.
+Fix this by moving the default_region check at the start of the
+tlmm_reg_base().
 
-Fixes: 60bcd91aafd2 ("watchdog: introduce watchdog_dev_suspend/resume")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://lore.kernel.org/r/20260601192005.1970805-1-dbgh9129@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 56ffb63749f4 ("pinctrl: qcom: add multi TLMM region option parameter")
+Signed-off-by: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/watchdog_core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pinctrl/qcom/tlmm-test.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/watchdog/watchdog_core.c b/drivers/watchdog/watchdog_core.c
-index 8300520688d079..6c087b4ef5dd52 100644
---- a/drivers/watchdog/watchdog_core.c
-+++ b/drivers/watchdog/watchdog_core.c
-@@ -391,6 +391,9 @@ static void __watchdog_unregister_device(struct watchdog_device *wdd)
- 	if (test_bit(WDOG_STOP_ON_REBOOT, &wdd->status))
- 		unregister_reboot_notifier(&wdd->reboot_nb);
+diff --git a/drivers/pinctrl/qcom/tlmm-test.c b/drivers/pinctrl/qcom/tlmm-test.c
+index 7d7fff538755a2..4ac96538a417fc 100644
+--- a/drivers/pinctrl/qcom/tlmm-test.c
++++ b/drivers/pinctrl/qcom/tlmm-test.c
+@@ -581,6 +581,9 @@ static int tlmm_reg_base(struct device_node *tlmm, struct resource *res)
+ 	int ret;
+ 	int i;
  
-+	if (test_bit(WDOG_NO_PING_ON_SUSPEND, &wdd->status))
-+		unregister_pm_notifier(&wdd->pm_nb);
++	if (!strcmp(tlmm_reg_name, "default_region"))
++		return of_address_to_resource(tlmm, 0, res);
 +
- 	watchdog_dev_unregister(wdd);
- 	ida_free(&watchdog_ida, wdd->id);
- }
+ 	count = of_property_count_strings(tlmm, "reg-names");
+ 	if (count <= 0) {
+ 		pr_err("failed to find tlmm reg name\n");
+@@ -597,18 +600,14 @@ static int tlmm_reg_base(struct device_node *tlmm, struct resource *res)
+ 		return -EINVAL;
+ 	}
+ 
+-	if (!strcmp(tlmm_reg_name, "default_region")) {
+-		ret = of_address_to_resource(tlmm, 0, res);
+-	} else {
+-		for (i = 0; i < count; i++) {
+-			if (!strcmp(reg_names[i], tlmm_reg_name)) {
+-				ret = of_address_to_resource(tlmm, i, res);
+-				break;
+-			}
++	for (i = 0; i < count; i++) {
++		if (!strcmp(reg_names[i], tlmm_reg_name)) {
++			ret = of_address_to_resource(tlmm, i, res);
++			break;
+ 		}
+-		if (i == count)
+-			ret = -EINVAL;
+ 	}
++	if (i == count)
++		ret = -EINVAL;
+ 
+ 	kfree(reg_names);
+ 
 -- 
 2.53.0
 
