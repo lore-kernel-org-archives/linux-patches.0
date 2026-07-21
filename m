@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F3E46C4B9;
-	Tue, 21 Jul 2026 18:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C024D46C4DE;
+	Tue, 21 Jul 2026 18:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658562; cv=none; b=S0CcBFkCH+v49smeU0m4bXzKU0otwX9bPeuQhQy73jr1KymsYWXHVHsja82O7msoVTpSw1hmYg74KcUzO2W2AVtL9+ZAkNFZVkrTUWU3/l80z1OCe2C/E9iyJodwero1YY2TUU6t3F4RG9YOC4Ro1CgizVWjhzpAMgwTyXEoXwk=
+	t=1784658564; cv=none; b=o5XYJb+pRPo3s0s5MOGqgEDBhfQQTBuyx4EGTv2DJNf/Tty1mtYjGfpgrqDIERNC3+uet6/D9UcC91NAnRiQmSlW8n1MKRop+W+Ds2CK5A/9Y+4JAmgk/zvnoCyBY2z9o2ah3n4cz6AtFSs/J/uEYD428ThtaWSpHLayXaUm7Io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658562; c=relaxed/simple;
-	bh=H+362mlocoLiOeLSqnxc3MCFZLBDt22KHnEHKlYf68w=;
+	s=arc-20240116; t=1784658564; c=relaxed/simple;
+	bh=7mwc0784+sxsShXTiye3ztgP0o2cGe2p3senDCFZgsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G0Oagp0uQ/VJGFtfjT+cpo/cnzYtcTHnWxzmzQIQ9MvS8iZahC+bvmzcZ/LpDzyD9C2CoeAlHv2uxcBqlfpJwoBEWi+0KieVsqvDbxOVKPYix9lwLGNXtlSPg7icWHASLAHbGWnTk7gEFcZd7xW/bUr13duJLruv70gzeNvMwbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q2umv00r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=earyeobj2azzsQpn5XSKsWab6Cz30xjQtMnOiGATpPwOm6LO5m4K9WeZlq0EV7IaYK28tpQTUzODINg/Fw6EEOMa/ls+lBXM2Dn88IUw6VuvSSL7mbTi8/gld5Y/KHfKwJ593fta0vgSeJLPJFQt7d7DoLKc/4eFptmxLEffASE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SeXEpNx9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q2umv00r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8886C1F000E9;
-	Tue, 21 Jul 2026 18:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SeXEpNx9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312C71F000E9;
+	Tue, 21 Jul 2026 18:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658561;
-	bh=YJ92pxy6RH0kTEuBgRf1Z5Pcb87tWqjG6z6toveAhKQ=;
+	s=korg; t=1784658563;
+	bh=w0xfB6tclmDNrW18TWCsDcOYK3FEIscyGWQv/mLzXGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q2umv00rKgUt3vXUthwMqmuYTq2sUBGvp/JD8Nc5+lVfkIjcztICK32okc60FJ3oY
-	 wtx3TbO45KfzTcJQ6Nt7CJcMl2wISKSdd2vygHv99+weP9jKyPOaVOQ7waTdk9mfJA
-	 a2cmBD8MJcltfbWwS/N9f33doSU1epwepfr/BRAg=
+	b=SeXEpNx9EBTpWld8vjo4gtXEIPDyCSKUm0i6almIXCcmHZ2hbUovTKUAATbh3bpNy
+	 UrX5zHBg2P17/t3VeaiR9XlKkGiobOxaBrdfm+Z5GvWt/YEh7aFUwYq0R7/DG1/Anx
+	 Vr+ElL1AgtJSJHaXY43hFQ6NYEjESfePiO8Redcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
 	Sandipan Das <sandipan.das@amd.com>,
 	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Stephane Eranian <eranian@google.com>
-Subject: [PATCH 6.18 1189/1611] perf/x86/amd/brs: Fix kernel address leakage
-Date: Tue, 21 Jul 2026 17:21:45 +0200
-Message-ID: <20260721152542.176779302@linuxfoundation.org>
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 6.18 1190/1611] perf/x86/amd/lbr: Fix kernel address leakage
+Date: Tue, 21 Jul 2026 17:21:46 +0200
+Message-ID: <20260721152542.198793733@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,83 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Sandipan Das <sandipan.das@amd.com>
 
-commit 47915e855fb38b42133e31ba917d99565f862154 upstream.
+commit 2a892294b83f541115c94b0bb637f39bef187657 upstream.
 
 A user-only branch stack can contain branches that originate from
 the kernel. As a result, kernel addresses are exposed to user space
 even when PERF_SAMPLE_BRANCH_USER is requested. On AMD processors
-supporting X86_FEATURE_BRS (Zen 3 only), perf can still report entries
-such as SYSRET/interrupt returns for which the branch-from addresses
-are in the kernel.
+supporting X86_FEATURE_AMD_LBR_V2, perf can still report SYSRET/ERET
+entries for which the branch-from addresses are in the kernel.
 
 E.g.
 
-  $ perf record -j any,u -c 4000 -e branch-brs -o - -- \
+  $ perf record -e cycles -o - -j any,save_type,u -- \
         perf bench syscall basic --loop 1000 | \
         perf script -i - -F brstack|tr ' ' '\n'| \
         grep -E '0x[89a-f][0-9a-f]{15}'
 
   ...
-  0xffffffff810001c4/0x72e2e32955eb/-/-/-/0//-
-  0xffffffff810001c4/0x72e2d94a9821/-/-/-/0//-
-  0xffffffff810001c4/0x72e2d94ffa1b/-/-/-/0//-
+  0xffffffff81001268/0x717a90a38f1a/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a90a39157/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a90a2c628/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a90a41b60/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a90a260db/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a90a260db/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a8bef1c30/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a8e4d3c90/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
   ...
 
-BRS provides no hardware branch filtering, so privilege level
-filtering is performed entirely in software. However, amd_brs_match_plm()
-only validates the branch-to address against the requested privilege
-levels. For branches from the kernel to user space, the branch-from
-address is left unchecked and is leaked. Extend the software filter to
-also validate the branch-from address, so that any branch record whose
-branch-from address is in the kernel is dropped when
-PERF_SAMPLE_BRANCH_USER is requested.
+The reason is that the hardware filter only considers the privilege
+level applicable to the branch target. Extend software filtering to
+also validate the branch-from addresses against br_sel, so that any
+branch record whose branch-from address is in the kernel is dropped
+when PERF_SAMPLE_BRANCH_USER is requested.
 
-Fixes: 8910075d61a3 ("perf/x86/amd: Enable branch sampling priv level filtering")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: f4f925dae741 ("perf/x86/amd/lbr: Add LbrExtV2 hardware branch filter support")
+Reported-by: Ian Rogers <irogers@google.com>
 Signed-off-by: Sandipan Das <sandipan.das@amd.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Cc: stable@vger.kernel.org
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Stephane Eranian <eranian@google.com>
-Link: https://patch.msgid.link/f05931c4f89a146c364bd5dc6b8170b1ac611c65.1783701239.git.sandipan.das@amd.com
-Closes: https://lore.kernel.org/all/20260710110235.F3FD81F000E9@smtp.kernel.org/
+Link: https://patch.msgid.link/a898a29725f6b2f30518354cdc2e432db66c43cf.1783680119.git.sandipan.das@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/amd/brs.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/x86/events/amd/lbr.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/events/amd/brs.c
-+++ b/arch/x86/events/amd/brs.c
-@@ -259,13 +259,13 @@ void amd_brs_disable_all(void)
- 		amd_brs_disable();
- }
+--- a/arch/x86/events/amd/lbr.c
++++ b/arch/x86/events/amd/lbr.c
+@@ -125,7 +125,8 @@ static void amd_pmu_lbr_filter(void)
+ 		}
  
--static bool amd_brs_match_plm(struct perf_event *event, u64 to)
-+static bool amd_brs_match_plm(struct perf_event *event, u64 from, u64 to)
- {
- 	int type = event->attr.branch_sample_type;
- 	int plm_k = PERF_SAMPLE_BRANCH_KERNEL | PERF_SAMPLE_BRANCH_HV;
- 	int plm_u = PERF_SAMPLE_BRANCH_USER;
- 
--	if (!(type & plm_k) && kernel_ip(to))
-+	if (!(type & plm_k) && (kernel_ip(to) || kernel_ip(from)))
- 		return 0;
- 
- 	if (!(type & plm_u) && !kernel_ip(to))
-@@ -338,11 +338,11 @@ void amd_brs_drain(void)
- 		 */
- 		to = (u64)(((s64)to << shift) >> shift);
- 
--		if (!amd_brs_match_plm(event, to))
--			continue;
--
- 		rdmsrq(brs_from(brs_idx), from);
- 
-+		if (!amd_brs_match_plm(event, from, to))
-+			continue;
-+
- 		perf_clear_branch_entry_bitfields(br+nr);
- 
- 		br[nr].from = from;
+ 		/* If type does not correspond, then discard */
+-		if (type == X86_BR_NONE || (br_sel & type) != type) {
++		if (type == X86_BR_NONE || (br_sel & type) != type ||
++		    (!(br_sel & X86_BR_KERNEL) && kernel_ip(cpuc->lbr_entries[i].from))) {
+ 			cpuc->lbr_entries[i].from = 0;	/* mark invalid */
+ 			compress = true;
+ 		}
 
 
