@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEA6442FCF;
-	Tue, 21 Jul 2026 20:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7A53AE6E4;
+	Tue, 21 Jul 2026 20:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667579; cv=none; b=obCO7ghAWRGXbLZvsrZnwDcV6j6S3BTSgP8rpjPePBXq0sO2JZXVdHOmcBS4M239XJoujMZnISQDHfye76e7I5rUnbnmhI8nMnRBsDT7w6pRDPcKjgpu/3HzSDzKXJQLsz7YxzWVEUDka8g4PGZZh8teAX12cfKxuikRMaPBmpQ=
+	t=1784667581; cv=none; b=CeUJ0u5CNUXrp0fQZpgyHcoxML22+JFbQ9GRIdWXv83/ZIkXDI1JDwfy+pX6SGWZvlZ/9T9OACKuwMk/uojrJR4bQPplMmz4crAugRSygsKHAKpegKpfhiEH/5uUZfnlpVPqkeMYAU8tnZNz57nuZ9zgvBHVb6r4dKGwPDFIkGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667579; c=relaxed/simple;
-	bh=RsASm/FaLMsjcuR5vtv75f+TFEBPH1acO3qUMH/Bjmo=;
+	s=arc-20240116; t=1784667581; c=relaxed/simple;
+	bh=iEbqImxfdjQIu45EkqK5iUjxx07NICqXWvhtj8MdmBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MuL1i9DwZchShs+FcJFkP0NfZzzHPnsBO0GmVQbEVPHCjJQHRyThq580A9cVTikPWDBQjm45WI0lVlAoLnEswT4UD8ptsirWE8z4mOyYVoExwCbZLfLapBf9Fhxv2cugih3ZkzGQvfOCZx9gwyBk9L6601a9HN2PWZmfTZTGPHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x3c07RkF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WX7lAbdjy6oC0KF363I6MaszNRtvjzv4DeOWKOgVRrbQ1IMt3iNw5bVU1cbqaIh+I2hvttbDlkUGE4kM+mzRypcxtF28TN+ick1QRAAgsNbeBjSvwuqvT5GeAAjfqG4DLhvrrLz2o3j7DaNCangqOWvA49+fLFhjyiXm3x308Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d9kE9Var; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3c07RkF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF901F000E9;
-	Tue, 21 Jul 2026 20:59:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9kE9Var"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183F21F000E9;
+	Tue, 21 Jul 2026 20:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667577;
-	bh=VX+lFsKg5lKEfVtzJAfzub/KagJXgb+Zriiw9iRT9gg=;
+	s=korg; t=1784667580;
+	bh=Ng5qjF9eje/x780DsNScMSWVbZ76zKYzs0o/AuLs5Ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x3c07RkFAF0qndKI7/olHf2Si73Dk0XuYmVa+OcmKEwzzzNCX7DlO3acXsw74VIX2
-	 ccsgTr7x9VDZnpUvECs2E/DmJee4TT0XZSzuOGL5o6B4aNr8dJBgmiaYuDIydd+QGM
-	 71KreoWT7XVwKN6y1BGeGiYXqUFYXSovSvfcUi8U=
+	b=d9kE9Var/OhVxgr8wiA1xwfHryzwCjOj9LvFXZ9gMJ7ZjwHgrAGDdZOq34GueufJq
+	 Gh/AARTmx1uWxNF6dHtY8DVNGTShoazl7169rYKgLUanmqOyS35V8AyEOEQYljJT+i
+	 TbkyeI54NJNpFUp2Z/tLHcE9LKCO/CmzRfo9YerM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.6 1115/1266] s390/monwriter: Reject buffer reuse with different data length
-Date: Tue, 21 Jul 2026 17:25:52 +0200
-Message-ID: <20260721152506.753325465@linuxfoundation.org>
+	syzbot+36256deb69a588e9290e@syzkaller.appspotmail.com,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 1116/1266] mac802154: remove interfaces with RCU list deletion
+Date: Tue, 21 Jul 2026 17:25:53 +0200
+Message-ID: <20260721152506.774857232@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,43 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-commit 2995ccec260caa9e85b3301a4aba1e66ed80ad74 upstream.
+commit 539dfcf69105d8d3d4d677b71de6e5ede2e6dfa0 upstream.
 
-When data buffers are reused, e.g. for interval sample records, the
-first record determines the data length, and the size of the buffer for
-user copy. Current monwriter code does not check if the data length was
-changed for subsequent records, which also would never happen for valid
-user programs.
+Queue wake, stop, and disable paths walk local->interfaces under RCU.
+The bulk hardware teardown path removes entries with list_del(), so an
+asynchronous transmit completion can follow a poisoned list node in
+ieee802154_wake_queue().
 
-However, a malicious user could change the data length, resulting in out
-of bounds user copy to the kernel buffer, and memory corruption. By
-default, the monwriter misc device is created with root-only permissions,
-so practical impact is typically low.
+Use list_del_rcu() as in the single-interface removal path. The following
+unregister_netdevice() waits for in-flight RCU readers before freeing the
+netdevice, so no separate grace-period wait is needed.
 
-Fix this by checking for changed data length and rejecting such records.
-
+Fixes: 592dfbfc72f5 ("mac820154: move interface unregistration into iface")
+Reported-by: syzbot+36256deb69a588e9290e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=36256deb69a588e9290e
 Cc: stable@vger.kernel.org
-Signed-off-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20260701164222.9094-1-alhouseenyousef@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/char/monwriter.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/mac802154/iface.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/s390/char/monwriter.c
-+++ b/drivers/s390/char/monwriter.c
-@@ -122,6 +122,9 @@ static int monwrite_new_hdr(struct mon_p
- 			kfree(monbuf->data);
- 			kfree(monbuf);
- 			monbuf = NULL;
-+		} else if (monbuf->hdr.datalen != monhdr->datalen) {
-+			/* Data with buffer reuse must not change its length */
-+			return -EINVAL;
- 		}
- 	} else if (monhdr->mon_function != MONWRITE_STOP_INTERVAL) {
- 		if (mon_buf_count >= mon_max_bufs)
+--- a/net/mac802154/iface.c
++++ b/net/mac802154/iface.c
+@@ -703,7 +703,7 @@ void ieee802154_remove_interfaces(struct
+ 
+ 	mutex_lock(&local->iflist_mtx);
+ 	list_for_each_entry_safe(sdata, tmp, &local->interfaces, list) {
+-		list_del(&sdata->list);
++		list_del_rcu(&sdata->list);
+ 
+ 		unregister_netdevice(sdata->dev);
+ 	}
 
 
