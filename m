@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3980C39A7FD;
-	Tue, 21 Jul 2026 19:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6FE43C7C9;
+	Tue, 21 Jul 2026 19:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660659; cv=none; b=DLDVCQJ3p050N7JTVesRKtUDHGtRPpIdvw4TA0ffKmjtKxLhLW7P0v7x0xGWuCrU39BVMvMjNzf+NJhU5Qj1qFochcOHyFkmoYKPyQutNIBvKle2KY1gmDdQ9XroF/AzSwiVofHFiNhZKfbxqTpq03kx1NjYg0OyEBUShVXxdDM=
+	t=1784660662; cv=none; b=fidPpas4BdUfOPDp5yUsGV2h+uqfKfCjniu1ycKN2/A6MNQFXEusfv5m/px61rW91iJ3Z72lwoaNi5k7deNd5EcIDIfzs0Bf32KkBW1mvFMmGS8b4q4CAIbJrdiLdTmtyIr4czWuR/LjDHbjxmiSpIg+DdGrrEyIHKRgtFKAW3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660659; c=relaxed/simple;
-	bh=H8yJT1iQXZkL4nOuGhw3gDKnDNZVM9mXLQYOBxigSQ8=;
+	s=arc-20240116; t=1784660662; c=relaxed/simple;
+	bh=d8uIGEbSflgxGLd/m8do/zdaJOPjumVQhE5E9t9EGro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lIBIacmwIy3TJFnPmA5E+86l2u0wkw0O6AZByPrhvdQdBrNI5OqXXt2YMa+iOtpPjfZoe5tkeRIMb6kAs7G46B9Ju1RJTHYevo3EHCqHeOpmA9tFzDPm32+Rv+7vlqdmv6QpHYRi9GXzv1YCA5dmc9bEjZWKjWeR55jdN7tRw6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+By8a1b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pL5lrVC/EyxJQANnV7V+fvsZw5GTPpKKanc7U6fEQeSwLfKs4epUH3J2SZBJKXPDeztaoEFgt0lQPHuDjIG3KHTgAGMJ3z71TqiJD5GgcdupFBLITsnltfdUGtSg1m0Mb8jqKR4ucARqmK1ilS7LZTEdhUDleIn+l7zM3BFemAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F1zgmrsp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+By8a1b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0721F00A3E;
-	Tue, 21 Jul 2026 19:04:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F1zgmrsp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E131F000E9;
+	Tue, 21 Jul 2026 19:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660658;
-	bh=UZeT0kLQRqNNHCuhIgVlPRPNf3K1qyfq2GosCO9xExk=;
+	s=korg; t=1784660660;
+	bh=q8kmzFd110+B27McJZTQr1VydJRXEmG40Z4QYnoRMQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U+By8a1bX5D6M0Hk3KdZa0oH2H6SKKObwFS02FPSOj/NkwHQiaVv/rlSlEhbHIFDB
-	 wsKU6BeIrhfElBV3FncG11ig58f5XJvk50KF/1GGp/EL9+3Fsc27xRAv9GgLtDWRjd
-	 MMory9JSjoBwl4+V3p+D1bm5dSzhX2PaPDRYFESI=
+	b=F1zgmrspXMKk0P7JV3xStakUp8vHVvC2OD/UQVIC0jsOggQMsVb6JjosBSF3dnDT6
+	 kCu16sYEo3DNrsHsARErRuwB68yj7ceR9ai6t9J94goYCRxXNUWXYJnHo5kb5hJ+iZ
+	 k84/qu23ORpP/tEYQAuyMxlQemiOf5yg6txpqo/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Kan Liang <kan.liang@intel.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1019/2077] tools lib api: Fix filename__write_int() writing uninitialized stack data
-Date: Tue, 21 Jul 2026 17:11:32 +0200
-Message-ID: <20260721152616.856538276@linuxfoundation.org>
+Subject: [PATCH 7.1 1010/2077] perf intel-pt: Fix snprintf size tracking bug in insn decoder
+Date: Tue, 21 Jul 2026 17:11:23 +0200
+Message-ID: <20260721152616.638720775@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,47 +55,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 438ece06185696e14c63c6113d5e2d34ec0a9680 ]
+[ Upstream commit b6bb3b005dcdd960b8e0b7f9d6869132b3de08d5 ]
 
-filename__write_int() formats an integer into a 64-byte buffer with
-sprintf() then passes sizeof(buf) (64) as the write length.  This
-writes all 64 bytes including uninitialized stack data past the
-formatted string.  Most sysfs files reject the oversized write,
-making the function always return -1.
+dump_insn() tracks remaining buffer space with a 'left' variable,
+but the loop subtracts the cumulative offset 'n' each iteration
+instead of just the per-iteration delta:
 
-Fix by capturing the sprintf() return value and using it as the
-write length.
+    n += snprintf(x->out + n, left, "%02x ", inbuf[i]);
+    left -= n;  /* BUG: n is cumulative, not the delta */
 
+After two iterations left goes massively negative, wrapping to a
+huge value when passed as size_t to snprintf(), disabling all bounds
+checking for the rest of the loop.
+
+Switch to scnprintf() accumulation using sizeof(x->out) - n as the
+remaining space, which is always correct and eliminates the separate
+'left' variable entirely.
+
+Fixes: 48d02a1d5c137d36 ("perf script: Add 'brstackinsn' for branch stacks")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: 3b00ea938653d136 ("tools lib api fs: Add sysfs__write_int function")
-Cc: Kan Liang <kan.liang@intel.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Andi Kleen <ak@linux.intel.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/api/fs/fs.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ .../util/intel-pt-decoder/intel-pt-insn-decoder.c     | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/tools/lib/api/fs/fs.c b/tools/lib/api/fs/fs.c
-index 3cc302d4c47b16..d16911818d4d35 100644
---- a/tools/lib/api/fs/fs.c
-+++ b/tools/lib/api/fs/fs.c
-@@ -376,12 +376,13 @@ int filename__write_int(const char *filename, int value)
+diff --git a/tools/perf/util/intel-pt-decoder/intel-pt-insn-decoder.c b/tools/perf/util/intel-pt-decoder/intel-pt-insn-decoder.c
+index 72c7a4e15d617b..f90fcbc4302df5 100644
+--- a/tools/perf/util/intel-pt-decoder/intel-pt-insn-decoder.c
++++ b/tools/perf/util/intel-pt-decoder/intel-pt-insn-decoder.c
+@@ -220,7 +220,6 @@ const char *dump_insn(struct perf_insn *x, uint64_t ip __maybe_unused,
  {
- 	int fd = open(filename, O_WRONLY), err = -1;
- 	char buf[64];
-+	int len;
+ 	struct insn insn;
+ 	int n, i, ret;
+-	int left;
  
- 	if (fd < 0)
- 		return -errno;
+ 	ret = insn_decode(&insn, inbuf, inlen,
+ 			  x->is64bit ? INSN_MODE_64 : INSN_MODE_32);
+@@ -229,13 +228,9 @@ const char *dump_insn(struct perf_insn *x, uint64_t ip __maybe_unused,
+ 		return "<bad>";
+ 	if (lenp)
+ 		*lenp = insn.length;
+-	left = sizeof(x->out);
+-	n = snprintf(x->out, left, "insn: ");
+-	left -= n;
+-	for (i = 0; i < insn.length; i++) {
+-		n += snprintf(x->out + n, left, "%02x ", inbuf[i]);
+-		left -= n;
+-	}
++	n = scnprintf(x->out, sizeof(x->out), "insn: ");
++	for (i = 0; i < insn.length; i++)
++		n += scnprintf(x->out + n, sizeof(x->out) - n, "%02x ", inbuf[i]);
+ 	return x->out;
+ }
  
--	sprintf(buf, "%d", value);
--	if (write(fd, buf, sizeof(buf)) == sizeof(buf))
-+	len = sprintf(buf, "%d", value);
-+	if (write(fd, buf, len) == len)
- 		err = 0;
- 
- 	close(fd);
 -- 
 2.53.0
 
