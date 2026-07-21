@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F3E3BD63B;
-	Tue, 21 Jul 2026 22:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB2B305E3B;
+	Tue, 21 Jul 2026 22:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671560; cv=none; b=dJbBLGVE7bFdEATCDxh/lp+3amaBJGMTDU/n3CqJ4LoY3/wgdm6fo9MdWbdp+mog5wakiUf18+lFoOQY8BYsTJzxolDks2ExV9Qp93bTF1QdBwSVhuLMv03w7aKa8f64PRdlSpRQMX1NLVhdfQcZWbLOG5c78Iz6ELNtqXvLLTs=
+	t=1784671562; cv=none; b=kN1P3/J676xtQ7QS1xSUJ/dlymMjPAPZyZuBY8KIIwLLgN4RBTnyMDlf9LPCHFNq27Ku0qWh6MFUgLvOOx+NfiWT1TPRW9Yk5c84QyvbfVdIbllZRP/h9zp8G53cRa8x7mbSqUddMqL5Zoa9bD7bl9BCOkt6n2qYk1hDYxPV2WQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671560; c=relaxed/simple;
-	bh=lxZdTxbq20Z291rrIw9KadWjDWWM0/xmoG7lzh6IZPE=;
+	s=arc-20240116; t=1784671562; c=relaxed/simple;
+	bh=ZA5pVSJ0saIxtWV0syxECUdmUoa9IIGrU6I13t91MAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HARlj9rteBvBxxFT/Z0SagWQuxrO0I2skhI+5V0iSU08G+ZdiIYixBgO7D8XVX1n2luBQ/N4vnhVpsABnxWEtio8R8/iYhf+N9TAn7uu3zhqD92qUS60wPZWfyEVtpXFLEgCnEUAFS9cy9kQk8XErZW4/H5D0wv3tSJcA83ZfOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJ2UIyFH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pt1bVLwtSkvhWPDO+gNByjHp8XBHhySj6Eo36V32PlnYpPxzXU5TxbbsmkLei2myDFut0X6sEPsdzXH9wpqrxWPIMb0MHujwxZsUZnJlqj2hmeKbyDoBgvL/1BDCYLgphIUqoTZD3An7Ip6RT/4fEXzH0340iLnnDKNA5U3FGuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jb3LAz0R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJ2UIyFH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F7F1F000E9;
-	Tue, 21 Jul 2026 22:05:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jb3LAz0R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2711F000E9;
+	Tue, 21 Jul 2026 22:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671559;
-	bh=tXm41WVNG5uO9rqFgMDt9tBPB0Pqu63P5dVuLFDact0=;
+	s=korg; t=1784671561;
+	bh=r1L7BBAb8bEqJ6FZ1RhTmmM6hBJlLXxk5hvBbGaxKP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eJ2UIyFHUQvaTeChlP/k960kRw7JJ+/gIqcJRPuawb61ZsfWk0wEJLvS0LgKhIhh4
-	 6z2Nc4S5Z8IuSI8Sh8fx2AsFiQ3tSN3dImyo1j5SI5I4I3zoDIJ9xQTb0digHW0bCP
-	 hnHDGA/QhwcNUWSi0yAnBAZsy8XODsdJH63L/+FE=
+	b=Jb3LAz0RTYxz+asAyIFTnhJJAhQW1PWakhQwqj0vrVtbOpZDelqlF4M5jVx6hC296
+	 jjde+0uOzJydC4/5ALSAxyZXGE0glgZ4ysJ0Cudn9NzyXVv8Ni8yo58wkbSQPvt+1L
+	 fSf2ylZsIGCudn+cA4O28YhPNSL55Fx3hz0NhN/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Breno Leitao <leitao@debian.org>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 292/843] lib/test_meminit: use && for bools
-Date: Tue, 21 Jul 2026 17:18:47 +0200
-Message-ID: <20260721152412.598523575@linuxfoundation.org>
+Subject: [PATCH 5.15 266/843] workqueue: drop spurious * from print_worker_info() fn declaration
+Date: Tue, 21 Jul 2026 17:18:21 +0200
+Message-ID: <20260721152412.007593525@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,39 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Potapenko <glider@google.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 8e0c2085c978ed6d9764d79fc785920360096f21 ]
+[ Upstream commit 611583a76ea97991b0f65ec1ff099eac7fe0bae4 ]
 
-As pointed out by Dan Carpenter, test_kmemcache() was using a bitwise AND
-on two bools instead of a boolean AND.  Fix this for the sake of code
-cleanliness.
+print_worker_info() declares its local 'fn' as work_func_t * but
+worker->current_func has type work_func_t (a function pointer). The
+extra level of indirection is wrong and only happens to be harmless
+today because every supported Linux architecture has
+sizeof(work_func_t) == sizeof(work_func_t *):
+copy_from_kernel_nofault() reads the correct number of bytes by
+accident, and %ps still resolves the printed address because the
+stored value is the function address regardless of declared type.
 
-Link: https://lore.kernel.org/20260504100637.1535762-1-glider@google.com
-Fixes: 5015a300a522 ("lib: introduce test_meminit module")
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/kernel-janitors/afOcIan1ap9kD26M@stanley.mountain/
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+On any future ABI where sizeof(void (*)()) differs from
+sizeof(void *), the nofault copy would transfer the wrong number of
+bytes and the subsequent %ps would print an incorrect address.
+
+Match the field type so the intent is explicit and the code does not
+silently rely on equal pointer sizes.
+
+Fixes: 3d1cb2059d93 ("workqueue: include workqueue info when printing debug dump of a worker task")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_meminit.c | 2 +-
+ kernel/workqueue.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/test_meminit.c b/lib/test_meminit.c
-index 0f1a3bd09b7b5c..9e031f4c39b64f 100644
---- a/lib/test_meminit.c
-+++ b/lib/test_meminit.c
-@@ -358,7 +358,7 @@ static int __init test_kmemcache(int *total_failures)
- 			ctor = flags & 1;
- 			rcu = flags & 2;
- 			zero = flags & 4;
--			if (ctor & zero)
-+			if (ctor && zero)
- 				continue;
- 			num_tests += do_kmem_cache_size(size, ctor, rcu, zero,
- 							&failures);
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index 73002260674fe5..61db234c28433e 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -4688,7 +4688,7 @@ EXPORT_SYMBOL_GPL(set_worker_desc);
+  */
+ void print_worker_info(const char *log_lvl, struct task_struct *task)
+ {
+-	work_func_t *fn = NULL;
++	work_func_t fn = NULL;
+ 	char name[WQ_NAME_LEN] = { };
+ 	char desc[WORKER_DESC_LEN] = { };
+ 	struct pool_workqueue *pwq = NULL;
 -- 
 2.53.0
 
