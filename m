@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C44231829;
-	Tue, 21 Jul 2026 22:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0B3443A9F;
+	Tue, 21 Jul 2026 22:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673510; cv=none; b=DWTe0Kq0nv8gudEg8wd4+zBqGmlby5r0yefdXj1NLFR4TrJiaGAXsZZDqL6ywC9SIJcT13Q4ft0Z7YXWmRJIc0HiVEZWaxeeTiSW/dZ7rEsVaG0WwtfWuG/XjnH9aBpcaFBZoUud+owIHjgV8Ll15FgvQR/9V8XJBbHIPG16FDc=
+	t=1784673511; cv=none; b=UMTg7aL8fYpS7xFBMHcdnAYGHsX//v236+PK58dQElvqUxPlPzi/hq0hllYI8GyJRrTWCoP1vaFj7mL/De1wU/Edma8Bq+L5latVENCfue8ditt7TA4BIxTwBMFGa9ygVtn75b0wgHRaDf5AcoL1uiaE+zBWlsOkVCU1GbfEWqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673510; c=relaxed/simple;
-	bh=DldLpEURZ/eYtI0p2pvo/WGRRYStBBRec5whlCBiOqY=;
+	s=arc-20240116; t=1784673511; c=relaxed/simple;
+	bh=0swpSv7GurC3W4JHlygrtJ6LCRiI/Q7TG1Tm5j+n9zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xo17qdyqQOyVA7WNYPtninPw4sfY4rze7PnuEm8wzxqQ3p5jZwMgkMbnWwggeT0Ty30yuAo6NN2Gr7iNEkWYWPBVw60SVf28EbNDxEm17nsKIWLnsILGscyD578NAnKE0N1lEWq+jwqLdRKjBKUC16S24uaBocu3O+nP+w7h8Do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bo12Xw8L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LRHkKPunIZ8Bhzze0i6rfV6OlWHsS1cbCwJbLMTgWZt0Ic5sFTwpSXxuRwgRWdK+SEknTjOwzNLjbTJBGxFYLQKsVGmQCqPm6qVTXYnp+4/gPbAZes4wQtWQ7MN+gQSo4xWwRCGbnrc3ufQ9EhviHwFdzEztD0RlfKeHBMRggY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kphk1ns1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bo12Xw8L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367D71F00A3E;
-	Tue, 21 Jul 2026 22:38:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kphk1ns1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8341E1F000E9;
+	Tue, 21 Jul 2026 22:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673503;
-	bh=wATmyOz5a7X5i4HDCwQiTZt+H/Lgah9M2Olq25fqVUk=;
+	s=korg; t=1784673509;
+	bh=LhSyNIokyZbzg+3wDhNSFd65/Qb6mBqAJp+Dihp+mbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bo12Xw8LIlpB1m6zaxW1uQ6liJhlscjMwROQitcs+81YuTXXUOes3Rkg0bgU1AaCG
-	 X7h8rVepn0aXGKdewgz3e3xmHMTcBV2pTZwpRXvHUyhyKkdj5y88VfxQCvM8A7UoCS
-	 /1tVKPqRcqIE0CQ1LQppmpMIo3Oa5cibo/VJlrzU=
+	b=Kphk1ns1b6T2IbY2j6bFgMContDUTop1qkK5r1YM6hJ5FLWrgS/JazlNzvJMjwQP2
+	 N0IkamusRMaPz0U6BdSYsxA/ZDoMxRYnfmW7mNWnQkwHCU5ofVHXzbUq/AM2K1fflH
+	 ldJ1gzxbfx/obdOH29hMRwiMS6uu2mk77F9RIQoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 188/699] ipv6: addrconf: bail out of dad_failure when state is no longer POSTDAD
-Date: Tue, 21 Jul 2026 17:19:07 +0200
-Message-ID: <20260721152359.938954013@linuxfoundation.org>
+Subject: [PATCH 5.10 190/699] RDMA/mlx5: Fix devx subscribe-event unwind NULL dereference
+Date: Tue, 21 Jul 2026 17:19:09 +0200
+Message-ID: <20260721152359.984094974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,88 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
 
-[ Upstream commit 627ac78f2741e2ebd2225e2e953b6964a8a9182f ]
+[ Upstream commit 43f8f7946814c8e5f464518246fdbc69b6e32326 ]
 
-addrconf_dad_failure() transitions ifp->state from DAD to POSTDAD
-via addrconf_dad_end(), which drops ifp->lock on return.  The lock
-is re-acquired after net_info_ratelimited().  A concurrent
-ipv6_del_addr() can take the lock in that window, set ifp->state
-to DEAD and run list_del_rcu(&ifp->if_list).
+MLX5_IB_METHOD_DEVX_SUBSCRIBE_EVENT() links event_sub into sub_list
+before initializing the fields used by the shared error path.
 
-addrconf_dad_failure() then overwrites DEAD with ERRDAD at errdad:
-and schedules a new dad_work.  The work calls ipv6_del_addr()
-again, hitting the already-poisoned list entry:
+If eventfd_ctx_fdget() then fails, the unwind path dereferences
+event_sub->ev_file in uverbs_uobject_put() and calls
+subscribe_event_xa_dealloc() with an unset xa_key_level1.
 
-  general protection fault: 0000 [#1] SMP NOPTI
-  CPU: 4 PID: 217 Comm: kworker/4:1
-  Workqueue: ipv6_addrconf addrconf_dad_work
-  RIP: 0010:ipv6_del_addr+0xe9/0x280
-  RAX: dead000000000122
-  Call Trace:
-   addrconf_dad_stop+0x113/0x140
-   addrconf_dad_work+0x28c/0x430
-   process_one_work+0x1eb/0x3b0
-   worker_thread+0x4d/0x400
-   kthread+0x104/0x140
-   ret_from_fork+0x35/0x40
+subscribe_event_xa_alloc() creates the XA entry exactly once for a given
+key_level1, on the first occurrence of that key. The unwind path must
+therefore call subscribe_event_xa_dealloc() exactly once for it as well.
 
-Fold the addrconf_dad_end() logic into addrconf_dad_failure() under
-a single ifp->lock critical section.  The STABLE_PRIVACY branch
-temporarily drops ifp->lock around address regeneration, so at
-lock_errdad: verify the state is still POSTDAD before transitioning
-to ERRDAD; bail out otherwise to avoid overwriting a state set by
-another path while the lock was released.
+Enforce that by adding devx_key_in_sub_list() and calling
+subscribe_event_xa_dealloc() only when the last matching pending entry is
+being cleaned up.
 
-Fixes: c15b1ccadb32 ("ipv6: move DAD and addrconf_verify processing to workqueue")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260513025509.3776405-1-lilinmao@kylinos.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 759738537142 ("IB/mlx5: Enable subscription for device events over DEVX")
+Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+Link: https://patch.msgid.link/20260428224319.37682-1-prathameshdeshpande7@gmail.com
+Reviewed-by: Yishai Hadas <yishaih@nvidia.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/mlx5/devx.c | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 251164ee646983..c0f84b2315528f 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -2110,16 +2110,18 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
- 	struct inet6_dev *idev = ifp->idev;
- 	struct net *net = dev_net(ifp->idev->dev);
+diff --git a/drivers/infiniband/hw/mlx5/devx.c b/drivers/infiniband/hw/mlx5/devx.c
+index 679d85db26f4fd..361cd3c9780465 100644
+--- a/drivers/infiniband/hw/mlx5/devx.c
++++ b/drivers/infiniband/hw/mlx5/devx.c
+@@ -1746,6 +1746,17 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_OBJ_ASYNC_QUERY)(
+ 	return err;
+ }
  
--	if (addrconf_dad_end(ifp)) {
-+	spin_lock_bh(&ifp->lock);
++static bool devx_key_in_sub_list(struct list_head *list, u32 key_level1)
++{
++	struct devx_event_subscription *s;
 +
-+	if (ifp->state != INET6_IFADDR_STATE_DAD) {
-+		spin_unlock_bh(&ifp->lock);
- 		in6_ifa_put(ifp);
- 		return;
++	list_for_each_entry(s, list, event_list)
++		if (s->xa_key_level1 == key_level1)
++			return true;
++
++	return false;
++}
++
+ static void
+ subscribe_event_xa_dealloc(struct mlx5_devx_event_table *devx_event_table,
+ 			   u32 key_level1,
+@@ -1995,10 +2006,17 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_SUBSCRIBE_EVENT)(
+ 		num_alloc_xa_entries++;
+ 		event_sub = kzalloc(sizeof(*event_sub), GFP_KERNEL);
+ 		if (!event_sub) {
++			if (!devx_key_in_sub_list(&sub_list, key_level1))
++				subscribe_event_xa_dealloc(devx_event_table,
++							   key_level1,
++							   obj,
++							   obj_id);
+ 			err = -ENOMEM;
+ 			goto err;
+ 		}
+ 
++		event_sub->ev_file = ev_file;
++		event_sub->xa_key_level1 = key_level1;
+ 		list_add_tail(&event_sub->event_list, &sub_list);
+ 		uverbs_uobject_get(&ev_file->uobj);
+ 		if (use_eventfd) {
+@@ -2013,9 +2031,6 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_SUBSCRIBE_EVENT)(
+ 		}
+ 
+ 		event_sub->cookie = cookie;
+-		event_sub->ev_file = ev_file;
+-		/* May be needed upon cleanup the devx object/subscription */
+-		event_sub->xa_key_level1 = key_level1;
+ 		event_sub->xa_key_level2 = obj_id;
+ 		INIT_LIST_HEAD(&event_sub->obj_list);
  	}
-+	ifp->state = INET6_IFADDR_STATE_POSTDAD;
+@@ -2060,10 +2075,11 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_SUBSCRIBE_EVENT)(
+ 	list_for_each_entry_safe(event_sub, tmp_sub, &sub_list, event_list) {
+ 		list_del(&event_sub->event_list);
  
- 	net_info_ratelimited("%s: IPv6 duplicate address %pI6c used by %pM detected!\n",
- 			     ifp->idev->dev->name, &ifp->addr, eth_hdr(skb)->h_source);
+-		subscribe_event_xa_dealloc(devx_event_table,
+-					   event_sub->xa_key_level1,
+-					   obj,
+-					   obj_id);
++		if (!devx_key_in_sub_list(&sub_list, event_sub->xa_key_level1))
++			subscribe_event_xa_dealloc(devx_event_table,
++						   event_sub->xa_key_level1,
++						   obj,
++						   obj_id);
  
--	spin_lock_bh(&ifp->lock);
--
- 	if (ifp->flags & IFA_F_STABLE_PRIVACY) {
- 		struct in6_addr new_addr;
- 		struct inet6_ifaddr *ifp2;
-@@ -2167,6 +2169,11 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
- 		in6_ifa_put(ifp2);
- lock_errdad:
- 		spin_lock_bh(&ifp->lock);
-+		if (ifp->state != INET6_IFADDR_STATE_POSTDAD) {
-+			spin_unlock_bh(&ifp->lock);
-+			in6_ifa_put(ifp);
-+			return;
-+		}
- 	}
- 
- errdad:
+ 		if (event_sub->eventfd)
+ 			eventfd_ctx_put(event_sub->eventfd);
 -- 
 2.53.0
 
