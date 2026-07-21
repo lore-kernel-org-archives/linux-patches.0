@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3F646AA69;
-	Tue, 21 Jul 2026 15:33:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1431046AA62;
+	Tue, 21 Jul 2026 15:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784647982; cv=none; b=GM0l8e2f4UBntblbkahR/WI9Xyy9JN57zI3jYLcvIiJUx+Mkdry/+v9XOHC1J58lH+fD9WkDtepT35uotWY9tOEVs6Xhbb05Y8XE2a5nWwCxjC45B1F4buOw3zg3RpDpXNdyJjRbQ82zuXeyBqSbwzAfg3OJ53MDvymBDRWQdEc=
+	t=1784647985; cv=none; b=FaudSsUbgzrysLjJkzLvL5TzEkju7TESKoz3vuZXo5COGMBoFuoqlN+Eb0RwP8WIdqU+66aKtbCo7Cl+E6KwXBbOO3E0w7QbKUgdjDcuIGcHktQwG/OHHrEgmBzZpnPMYdBY3Fy2Za7HvrNaZdZyG2vMD5L2J32mII5O2bUB9Nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784647982; c=relaxed/simple;
-	bh=Z5SudWA7c/EXkZyq9JL1u/rDtVeykGPPEvONaH8yfB8=;
+	s=arc-20240116; t=1784647985; c=relaxed/simple;
+	bh=0bEl4wGKmSeesM62c6mp2G+dCJxHP6ogGzKaSANEU08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LXK/xa4cjWflgurS9Zq3laVfzJBj8FO85qgo1p8OQmNjBaLksk0hVN8qzVTQMTtKR8kdd2jhKyX1+y2VNNgv1x+WXvIdrAoP5rp0I38hM78Q3m+RMxzFe9svyxlb9XrVv/+tRcnlAHYZr5P2Nr+Yizb01jh8sqAcvO3RpRCpT5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSlBgX+T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lO4Iitr3Xa+zuEV109/o4yGfg75K52LD3/xhv3HL8mBDiwq2yHN66Sw/OnerHBPbh05sljWlE0+KwEl0PMNV56BloD3KjGIVx+UW+tNOderc5ZZXvqR6YHLuLftwpg/0hhCgViqkgFEO7INIQuIeO9aZs6dWTMAZrl68NSc3G3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EghQD7MJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSlBgX+T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79F61F000E9;
-	Tue, 21 Jul 2026 15:33:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EghQD7MJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F60C1F000E9;
+	Tue, 21 Jul 2026 15:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784647981;
-	bh=fGJkeoH4nXXhdHbTFAvG1wEFLHs48LxmtMjtqAYg2JU=;
+	s=korg; t=1784647984;
+	bh=ssvwz1iFLD0S1Au7q+shvjJ3F/2TnniXtME37Z7u3Rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dSlBgX+T25lbXc0OXCf5WdMnK+QuxEpRofUu96SybgTNDN/gIzAgO8VUQuLP2VC62
-	 GQBE6A6mUw9lCQMp9pnaXc+oV8t6pKZ45WuJAZh0YV1VRlJjUJgkvQTYnJEb1FTAPq
-	 k7GIdEg4c95XCTyxnvivtIIKDRTE/N2w6CoUEi5g=
+	b=EghQD7MJUhgQ+dqoFCB3nq8ZLo9nOavMo9QmKrL3ls/8thHgZ2akiv70UW/1v3yab
+	 xpNtAJPV2NEaPfTW6+sd7IcY89FA8+H42NZYXBv7rwnPoOvB3paNU6dIKI4Cgaq56l
+	 NHvlu/RhTNVM7lAdyYSzlJMR41HMqqAQoXxv3CFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linux-afs@lists.infradead.org,
 	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 0027/2077] rxrpc: Fix potential infinite loop in rxrpc_recvmsg()
-Date: Tue, 21 Jul 2026 16:55:00 +0200
-Message-ID: <20260721152553.316312458@linuxfoundation.org>
+Subject: [PATCH 7.1 0028/2077] rxrpc: Fix rxrpc_rotate_tx_rotate() to check theres something to rotate
+Date: Tue, 21 Jul 2026 16:55:01 +0200
+Message-ID: <20260721152553.340282312@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -57,36 +57,37 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-commit 67a0332f442ef07713cd2d9c13d59db0f1c23648 upstream.
+commit a5462da5a349fc7f17ad5ebd899380260d03e7ed upstream.
 
-Fix the wait in rxrpc_recvmsg() also take check the oob queue.
+Fix rxrpc_rotate_tx_rotate() to check that there's something in the
+transmission buffer to be rotated before it attempts to rotate anything.
 
-Fixes: 5800b1cf3fd8 ("rxrpc: Allow CHALLENGEs to the passed to the app for a RESPONSE")
-Link: https://sashiko.dev/#/patchset/20260616155749.2125907-1-dhowells%40redhat.com
+Fixes: b341a0263b1b ("rxrpc: Implement progressive transmission queue struct")
+Link: https://sashiko.dev/#/patchset/20260618134802.2477777-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
 cc: Jeffrey Altman <jaltman@auristor.com>
 cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@kernel.org
-Link: https://patch.msgid.link/20260624163819.3017002-9-dhowells@redhat.com
+Link: https://patch.msgid.link/20260624163819.3017002-12-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/recvmsg.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/rxrpc/input.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/rxrpc/recvmsg.c
-+++ b/net/rxrpc/recvmsg.c
-@@ -436,7 +436,8 @@ try_again:
- 		return -EAGAIN;
+--- a/net/rxrpc/input.c
++++ b/net/rxrpc/input.c
+@@ -236,6 +236,9 @@ static bool rxrpc_rotate_tx_window(struc
+ 		call->acks_lowest_nak = to;
  	}
  
--	if (list_empty(&rx->recvmsg_q)) {
-+	if (list_empty(&rx->recvmsg_q) &&
-+	    skb_queue_empty_lockless(&rx->recvmsg_oobq)) {
- 		ret = -EWOULDBLOCK;
- 		if (timeo == 0) {
- 			call = NULL;
++	if (after(seq, to))
++		return false;
++
+ 	/* We may have a left over fully-consumed buffer at the front that we
+ 	 * couldn't drop before (rotate_and_keep below).
+ 	 */
 
 
