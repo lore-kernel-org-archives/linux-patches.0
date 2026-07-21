@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE1346D2CC;
-	Tue, 21 Jul 2026 18:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0690446EF96;
+	Tue, 21 Jul 2026 18:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659657; cv=none; b=qc/9yLHeMc60fS8a5GvPLD5NxtW8H1V36SCCPkY82NL0FDyMJuS0CW0R5hrWwSJwe07QbjR2CTGkr2rDtjv7RgPmp4oFmKroJFVRSO58quzxhEm9oHJsb//rUR5whapdfXlJN96vOgTggjo+YMq18QNAXtkDks4ipOCjPz1jMNM=
+	t=1784659660; cv=none; b=AOnEFYd9tP5whqQ6jTWX3j+1nxsYUYzGufbIE0+KHkN+mLrHA7tbwV8cOKjDzoVF7/y/GKGxnMQzaF1kOPfGVulMeXrEhWAvhNlSBHSYnNYPsGACphvIm3twt16ONG6m+63NwqjyZ9U7es7rYTbk0EQK/z+erFe7ylmkGwkv23M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659657; c=relaxed/simple;
-	bh=85+jwEy1TkN7LIsy61C3Ly2QEIRgb0jC0eHt+U6wxxg=;
+	s=arc-20240116; t=1784659660; c=relaxed/simple;
+	bh=gvX0t0GKSxk/bFoa06Wv8x+JimRZEWb5VrqNnfyTWEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O1CFOitL4ehdPxYPuQ8TJNq1S1Y0ZsvR+7qNaw/238ipqYYrSa8p08g52+oJRoS5RTfa5PUKjZFT5OMIdOa+1Zfxd4rd16aSbZxN3R/Usr/NDzIio1aD5mGUtG5zVomVKBtqVqYteoV342Zdxe6p/UTPKTPha0uSJeZQHXUjD3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4giZGvG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WbZV7NAhGwMxD1hzkPms+yEoJzx27EzgccBwgUlJT1qSVT8LS8jinSb7xeti1oErXtoSV68TxogfVCvF9QjvchL9ifXEC1LDrz3JHbm40q0ai5M5jbob2ZSmAMh68E3ysG4fWYd6riHylbzSBVJkaF9yD6BNDQ3AqAP0u37ZrAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X01obeGI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4giZGvG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3C5D1F000E9;
-	Tue, 21 Jul 2026 18:47:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X01obeGI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF171F000E9;
+	Tue, 21 Jul 2026 18:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659656;
-	bh=0EH4LU7jwATAAu2NghlJqp377oWHJlPykJxu6HResFs=;
+	s=korg; t=1784659658;
+	bh=tj61+cZhlwDziMgMQZbZuOQg8KpQRJ+lfLv2WiGpAyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y4giZGvG5ffzHKrYLJCfiW+c0cbGNg34M3w6HXwxMG4EEYin77lxqQO46gOMKP1sg
-	 vHtEsacLDdWhpxHlgdmLyCdBDSerAv8lG1WOUtEV+8dxLfiH5OQMxJx1MVl+TLK8mQ
-	 YzPtO1WufcDsnrvmRxzzRXMPADgzGJ7JgsW+MCGA=
+	b=X01obeGIMCCD5qXovA5Xo5QjwHOk46t1H7p1nln/YtF9UUJ14FMnDruflvnFNEmG4
+	 C2Bl9xPK0FpHNuy39q8yv8rDOahqcbz1gVIlgKXrFqHkgt+sNnX/SPa7A6WVw4sPoV
+	 qBhvocKkcHOuCZQruKPC3eW6j01FYz6p9/s/7VbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>
-Subject: [PATCH 6.18 1603/1611] perf symbol: Fix ENOENT case for filename__read_build_id
-Date: Tue, 21 Jul 2026 17:28:39 +0200
-Message-ID: <20260721152551.531515898@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	syzbot+ce1e5a1b4e086b43e56d@syzkaller.appspotmail.com,
+	syzbot+306212936b13e520679d@syzkaller.appspotmail.com,
+	syzbot+457452d30bcdda75ead2@syzkaller.appspotmail.com,
+	Mauricio Faria de Oliveira <mfo@igalia.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Sasha Levin <sashal@kernel.org>,
+	Andrey Tsygunka <aitsygunka@yandex.ru>
+Subject: [PATCH 6.18 1577/1611] usb: atm: ueagle-atm: wait for pre-firmware load in .disconnect()
+Date: Tue, 21 Jul 2026 17:28:13 +0200
+Message-ID: <20260721152550.941321432@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,90 +56,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Mauricio Faria de Oliveira <mfo@igalia.com>
 
-commit 5c5f6fe32df2edb4f72bdca62ec2b9f20b7c5ba4 upstream.
+[ Upstream commit e2674dfbed8a30d57e2bc872c4bfa6c3eec918bf ]
 
-Some callers of filename__read_build_id assume the error value must be
--1, fix by making them handle all < 0 values.
+ueagle-atm uses the asynchronous request_firmware_nowait() in .probe(),
+but does not wait for its completion, not even in .disconnect(); so, if the
+device is unplugged meanwhile, its teardown runs concurrently with that.
 
-If is_regular_file fails in filename__read_build_id then it could be
-the file is missing (ENOENT) and it would be wrong to return
--EWOULDBLOCK in that case. Fix the logic so -EWOULDBLOCK is only
-reported if other errors with stat haven't occurred.
+Even though this inconsistency is worth addressing on its own, it has also
+triggered several bug reports in syzbot over the years (some auto-closed)
+where the firmware sysfs fallback mechanism (CONFIG_FW_LOADER_USER_HELPER)
+creates a firmware subdirectory in the device directory during its removal,
+which might hit unexpected conditions in kernfs, apparently, depending at
+which point the add and remove operations raced. (See links.)
 
-Fixes: 834ebb5678d7 ("perf tools: Don't read build-ids from non-regular files")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+The pattern is:
+
+usb ?-?: Direct firmware load for ueagle-atm/eagle?.fw failed with error -2
+usb ?-?: Falling back to sysfs fallback for: ueagle-atm/eagle?.fw
+<ERROR>
+Call trace:
+ ...
+ kernfs_create_dir_ns
+ sysfs_create_dir_ns
+ create_dir
+ kobject_add_internal
+ kobject_add_varg
+ kobject_add
+ class_dir_create_and_add
+ get_device_parent
+ device_add
+ fw_load_sysfs_fallback
+ fw_load_from_user_helper
+ firmware_fallback_sysfs
+ _request_firmware
+ request_firmware_work_func
+ ...
+
+(Some variations are observed, after fw_load_sysfs_fallback(), e.g., [1].)
+
+While the kernfs side is being looked at, the ueagle-atm side can be fixed
+by waiting for the pre-firmware load in the .disconnect() handler.
+
+This change has a similar approach to previous work by Andrey Tsygunka [2]
+(wait_for_completion() in .disconnect()), but it is relatively different in
+design/implementation; using the Originally-by tag for credit assignment.
+
+This has been tested with:
+- synthetic reproducer to check the error path;
+- USB gadget (virtual device) to check the firmware upload path;
+- QEMU device emulator to check the device ID re-enumeration path;
+(The latter two were written by Claude; no other code/text in this commit.)
+
+Links (year first reported):
+ 2025 https://syzbot.org/bug?extid=ce1e5a1b4e086b43e56d
+ 2025 https://syzbot.org/bug?extid=9af8471255ac36e34fd4
+ 2024 https://syzbot.org/bug?extid=306212936b13e520679d
+ 2023 https://syzkaller.appspot.com/bug?extid=457452d30bcdda75ead2
+ 2022 https://syzbot.org/bug?extid=782984d6f1701b526edb
+ 2021 https://syzbot.org/bug?id=f3f221579f4ef7e9691281f3c6f56c05f83e8490
+ 2021 https://syzbot.org/bug?id=84d86f0d71394829df6fc53daf6642c045983881
+ 2021 https://syzbot.org/bug?id=3302dc1c0e2b9c94f2e8edb404eabc9267bc6f90
+
+[1] https://syzkaller.appspot.com/bug?extid=457452d30bcdda75ead2
+[2] https://lore.kernel.org/lkml/20250410093146.3776801-2-aitsygunka@yandex.ru/
+
+Cc: stable <stable@kernel.org>
+Reported-by: syzbot+ce1e5a1b4e086b43e56d@syzkaller.appspotmail.com
+Closes: https://syzbot.org/bug?extid=ce1e5a1b4e086b43e56d
+Reported-by: syzbot+306212936b13e520679d@syzkaller.appspotmail.com
+Closes: https://syzbot.org/bug?extid=306212936b13e520679d
+Reported-by: syzbot+457452d30bcdda75ead2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=457452d30bcdda75ead2
+Originally-by: Andrey Tsygunka <aitsygunka@yandex.ru>
+Fixes: b72458a80c75 ("[PATCH] USB: Eagle and ADI 930 usb adsl modem driver")
+Assisted-by: Claude:claude-opus-4.7 # usb gadget & qemu device for testing
+Signed-off-by: Mauricio Faria de Oliveira <mfo@igalia.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260526-ueagle-atm_req-fw-sync-v3-1-93c01961daaf@igalia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/builtin-buildid-cache.c |    6 ++++--
- tools/perf/util/libbfd.c           |    4 +++-
- tools/perf/util/symbol-elf.c       |    4 +++-
- tools/perf/util/symbol-minimal.c   |    4 +++-
- 4 files changed, 13 insertions(+), 5 deletions(-)
+ drivers/usb/atm/ueagle-atm.c |   36 +++++++++++++++++++++++++++++++-----
+ 1 file changed, 31 insertions(+), 5 deletions(-)
 
---- a/tools/perf/builtin-buildid-cache.c
-+++ b/tools/perf/builtin-buildid-cache.c
-@@ -276,12 +276,14 @@ static bool dso__missing_buildid_cache(s
+--- a/drivers/usb/atm/ueagle-atm.c
++++ b/drivers/usb/atm/ueagle-atm.c
+@@ -593,7 +593,9 @@ static int uea_send_modem_cmd(struct usb
+ static void uea_upload_pre_firmware(const struct firmware *fw_entry,
+ 								void *context)
  {
- 	char filename[PATH_MAX];
- 	struct build_id bid = { .size = 0, };
-+	int err;
+-	struct usb_device *usb = context;
++	struct usb_interface *intf = context;
++	struct usb_device *usb = interface_to_usbdev(intf);
++	struct completion *fw_done = usb_get_intfdata(intf);
+ 	const u8 *pfw;
+ 	u8 value;
+ 	u32 crc = 0;
+@@ -662,15 +664,17 @@ err_fw_corrupted:
+ 	uea_err(usb, "firmware is corrupted\n");
+ err:
+ 	release_firmware(fw_entry);
++	complete(fw_done);
+ }
  
- 	if (!dso__build_id_filename(dso, filename, sizeof(filename), false))
- 		return true;
+ /*
+  * uea_load_firmware - Load usb firmware for pre-firmware devices.
+  */
+-static int uea_load_firmware(struct usb_device *usb, unsigned int ver)
++static int uea_load_firmware(struct usb_interface *intf, unsigned int ver)
+ {
+ 	int ret;
+ 	char *fw_name = EAGLE_FIRMWARE;
++	struct usb_device *usb = interface_to_usbdev(intf);
  
--	if (filename__read_build_id(filename, &bid) == -1) {
--		if (errno == ENOENT)
-+	err = filename__read_build_id(filename, &bid);
-+	if (err < 0) {
-+		if (err == -ENOENT)
- 			return false;
+ 	uea_info(usb, "pre-firmware device, uploading firmware\n");
  
- 		pr_warning("Problems with %s file, consider removing it from the cache\n",
---- a/tools/perf/util/libbfd.c
-+++ b/tools/perf/util/libbfd.c
-@@ -426,8 +426,10 @@ int libbfd__read_build_id(const char *fi
+@@ -693,7 +697,7 @@ static int uea_load_firmware(struct usb_
+ 	}
  
- 	if (!filename)
- 		return -EFAULT;
+ 	ret = request_firmware_nowait(THIS_MODULE, 1, fw_name, &usb->dev,
+-					GFP_KERNEL, usb,
++					GFP_KERNEL, intf,
+ 					uea_upload_pre_firmware);
+ 	if (ret)
+ 		uea_err(usb, "firmware %s is not available\n", fw_name);
+@@ -2556,8 +2560,23 @@ static int uea_probe(struct usb_interfac
+ 
+ 	usb_reset_device(usb);
+ 
+-	if (UEA_IS_PREFIRM(id))
+-		return uea_load_firmware(usb, UEA_CHIP_VERSION(id));
++	if (UEA_IS_PREFIRM(id)) {
++		struct completion *fw_done;
 +
-+	errno = 0;
- 	if (!is_regular_file(filename))
--		return -EWOULDBLOCK;
-+		return errno == 0 ? -EWOULDBLOCK : -errno;
- 
- 	fd = open(filename, O_RDONLY);
- 	if (fd < 0)
---- a/tools/perf/util/symbol-elf.c
-+++ b/tools/perf/util/symbol-elf.c
-@@ -916,8 +916,10 @@ int filename__read_build_id(const char *
- 
- 	if (!filename)
- 		return -EFAULT;
++		/* Wait for the firmware load to be done, in .disconnect() */
++		fw_done = kzalloc_obj(*fw_done);
++		if (!fw_done)
++			return -ENOMEM;
 +
-+	errno = 0;
- 	if (!is_regular_file(filename))
--		return -EWOULDBLOCK;
-+		return errno == 0 ? -EWOULDBLOCK : -errno;
- 
- 	err = kmod_path__parse(&m, filename);
- 	if (err)
---- a/tools/perf/util/symbol-minimal.c
-+++ b/tools/perf/util/symbol-minimal.c
-@@ -113,8 +113,10 @@ int filename__read_build_id(const char *
- 
- 	if (!filename)
- 		return -EFAULT;
++		init_completion(fw_done);
++		usb_set_intfdata(intf, fw_done);
 +
-+	errno = 0;
- 	if (!is_regular_file(filename))
--		return -EWOULDBLOCK;
-+		return errno == 0 ? -EWOULDBLOCK : -errno;
++		ret = uea_load_firmware(intf, UEA_CHIP_VERSION(id));
++		if (ret)
++			kfree(fw_done);
++
++		return ret;
++	}
  
- 	fd = open(filename, O_RDONLY);
- 	if (fd < 0)
+ 	ret = usbatm_usb_probe(intf, id, &uea_usbatm_driver);
+ 	if (ret == 0) {
+@@ -2587,6 +2606,13 @@ static void uea_disconnect(struct usb_in
+ 		usbatm_usb_disconnect(intf);
+ 		mutex_unlock(&uea_mutex);
+ 		uea_info(usb, "ADSL device removed\n");
++	} else if (usb->config->desc.bNumInterfaces == 1) {
++		struct completion *fw_done = usb_get_intfdata(intf);
++
++		uea_dbg(usb, "pre-firmware device, waiting firmware upload\n");
++		wait_for_completion(fw_done);
++		uea_dbg(usb, "pre-firmware device, finished waiting\n");
++		kfree(fw_done);
+ 	}
+ }
+ 
 
 
