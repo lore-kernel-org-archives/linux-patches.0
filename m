@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82C63793D2;
-	Tue, 21 Jul 2026 15:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AD946D57E;
+	Tue, 21 Jul 2026 15:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648640; cv=none; b=dXmlW5GlGcJzTmlabNnSrmTNP98eXFP8eACsObeSekSNXqmcGBrbsLIEek8I0oKN3lGNs3FZ6yv604whap0bJg8Q9yEonsxyvZLZ2WDquLcia3eZMSGQBlXvcS80rVz4eYSzoKwo6BzjMFuPpCtMdlxJdPJO1duqGyTo5RJaUW8=
+	t=1784648641; cv=none; b=Z3wtgp65RhObU/5DaRAfKlBmgnOXy4jHkGdyvq8osz6zo0eh9xYqaRocitnbXH22swCRW+1GuWXSAAhr03B2MFK/zEdfes6KbB0/jjYYYgFd8khEBvTf5pQLrdfmlh4rOLl7d0DqPkwtQdgi/FDbaaO7m5MhFv+Dw1p+qEONnLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648640; c=relaxed/simple;
-	bh=5ZK3l9LIxmTzdI7B/xAc+tMdoY+T0REfMKLd19zCzEk=;
+	s=arc-20240116; t=1784648641; c=relaxed/simple;
+	bh=Rv7C1sXhvURcjD4c6FoTZvf4q1Lmd2mWyof7+je7FA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XvANsPeuvJcN/apagG+7YRXMB9NLU6eQMC3taTnDkI2/0p9lFR2Y/gLPoQOGTRmCpZI9B6c3mFZunjmJbCQ0Qjkyy/v+cLb5JjJNdATw/jRwv5w+LfewtP2+ifSE1oJeloA++NPo2H9DcMDJlafb7OVarTJVmQjLNHcHYANGx9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dqS6e/r7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CDCrVAyRikxW1+kU5qUQQLKLOrX9NkQ9jfJ0qwobFzRo10P9z/wF0+d2dRJInipyPm3vcS/1eWmGF5WH2pu7xES0l3eDfFz64qVlVOW13GwlLM1oUMi+D3viYkM+vaqUXXYl1xwqKgiqDqpuLo+qelYHoBgt4r6RdQ/kj/N8lBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgQ9mhnh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqS6e/r7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345C91F000E9;
-	Tue, 21 Jul 2026 15:43:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgQ9mhnh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82BE1F00A3A;
+	Tue, 21 Jul 2026 15:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648637;
-	bh=azA+7stLRfQGuuAUi7nSynMvLu1Q9KiNQ0zGPdDOyLs=;
+	s=korg; t=1784648640;
+	bh=cuTGakr+E43JGf0ztkKfptApr8SDBzDAnRBEpC+a3wE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dqS6e/r7VueHZb0E0M0T+7cyouSIKbzm6ks33z6sW48a2WcWuMXA5srpeyesijqoV
-	 jXM6eZqupbXPRA1trCZtReCaKhijL6vSmP7QlYGqChCSmL2jipVflIEric7bU54mvx
-	 j10QHYabakn0FDDTkbqN2xNcXdu6QOkwELDA8Q+Y=
+	b=hgQ9mhnhDN9sokAWThMYk9ndMm4x3Vcact5j1RY/ReM+hVICg0DxB0teq2bLTIRU2
+	 HnRqq1ueTT6S4VDppbg+gk/Epd/LUxW56f7M3sqHh9t0UMkf5m2/DVh2TVVnPdMamR
+	 6jvcK9STozw1UcE6DJqy2aG7DgmBKf7EqwOZMYAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
+	Harshal Dev <harshal.dev@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0221/2077] IB/mlx5: Fix transport-domain rollback and initialize lb mutex earlier
-Date: Tue, 21 Jul 2026 16:58:14 +0200
-Message-ID: <20260721152557.892817819@linuxfoundation.org>
+Subject: [PATCH 7.1 0269/2077] arm64: dts: qcom: sm8450: Add power-domain and iface clk for ice node
+Date: Tue, 21 Jul 2026 16:59:02 +0200
+Message-ID: <20260721152559.020409307@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,66 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+From: Harshal Dev <harshal.dev@oss.qualcomm.com>
 
-[ Upstream commit e79389115b9d27287ff6230a9750675106ed7668 ]
+[ Upstream commit 3a5cb1ccbfb3141862b28f24cd5050083233aae7 ]
 
-mlx5_ib_alloc_transport_domain() allocates a transport domain and then
-may fail in mlx5_ib_enable_lb(). In that case, the allocated TD is leaked.
+Qualcomm in-line crypto engine (ICE) platform driver specifies and votes
+for its own resources. Before accessing ICE hardware during probe, to
+avoid potential unclocked register access issues (when clk_ignore_unused
+is not passed on the kernel command line), in addition to the 'core' clock
+the 'iface' clock should also be turned on by the driver. This can only be
+done if the UFS_PHY_GDSC power domain is enabled. Specify both the
+UFS_PHY_GDSC power domain and the 'iface' clock in the ICE node for sm8450.
 
-Fix this by deallocating the TD when mlx5_ib_enable_lb() returns an
-error. Also return 0 explicitly in the no-loopback-capability success
-branch, and move dev->lb.mutex initialization to mlx5_ib_stage_init_init().
-
-Fixes: 146d2f1af324 ("IB/mlx5: Allocate a Transport Domain for each ucontext")
-Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 86b0aef435851 ("arm64: dts: qcom: sm8450: Use standalone ICE node for UFS")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260416-qcom_ice_power_and_clk_vote-v5-8-5ccf5d7e2846@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index 61078281953d6c..aa2eb64ecf15e6 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -2069,9 +2069,13 @@ static int mlx5_ib_alloc_transport_domain(struct mlx5_ib_dev *dev, u32 *tdn,
- 	if ((MLX5_CAP_GEN(dev->mdev, port_type) != MLX5_CAP_PORT_TYPE_ETH) ||
- 	    (!MLX5_CAP_GEN(dev->mdev, disable_local_lb_uc) &&
- 	     !MLX5_CAP_GEN(dev->mdev, disable_local_lb_mc)))
--		return err;
-+		return 0;
-+
-+	err = mlx5_ib_enable_lb(dev, true, false);
-+	if (err)
-+		mlx5_cmd_dealloc_transport_domain(dev->mdev, *tdn, uid);
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index e0c37ce3042a22..47b028259d9101 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -5374,7 +5374,11 @@ ice: crypto@1d88000 {
+ 			compatible = "qcom,sm8450-inline-crypto-engine",
+ 				     "qcom,inline-crypto-engine";
+ 			reg = <0 0x01d88000 0 0x18000>;
+-			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
++			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
++				 <&gcc GCC_UFS_PHY_AHB_CLK>;
++			clock-names = "core",
++				      "iface";
++			power-domains = <&gcc UFS_PHY_GDSC>;
+ 		};
  
--	return mlx5_ib_enable_lb(dev, true, false);
-+	return err;
- }
- 
- static void mlx5_ib_dealloc_transport_domain(struct mlx5_ib_dev *dev, u32 tdn,
-@@ -4488,6 +4492,8 @@ static int mlx5_ib_stage_init_init(struct mlx5_ib_dev *dev)
- 		dev->port[i].roce.last_port_state = IB_PORT_DOWN;
- 	}
- 
-+	mutex_init(&dev->lb.mutex);
-+
- 	err = mlx5r_cmd_query_special_mkeys(dev);
- 	if (err)
- 		return err;
-@@ -4788,11 +4794,6 @@ static int mlx5_ib_stage_caps_init(struct mlx5_ib_dev *dev)
- 	if (err)
- 		return err;
- 
--	if ((MLX5_CAP_GEN(dev->mdev, port_type) == MLX5_CAP_PORT_TYPE_ETH) &&
--	    (MLX5_CAP_GEN(dev->mdev, disable_local_lb_uc) ||
--	     MLX5_CAP_GEN(dev->mdev, disable_local_lb_mc)))
--		mutex_init(&dev->lb.mutex);
--
- 	if (MLX5_CAP_GEN_64(dev->mdev, general_obj_types) &
- 			MLX5_GENERAL_OBJ_TYPES_CAP_VIRTIO_NET_Q) {
- 		err = mlx5_ib_init_var_region(dev);
+ 		cryptobam: dma-controller@1dc4000 {
 -- 
 2.53.0
 
