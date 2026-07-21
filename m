@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02834439904;
-	Tue, 21 Jul 2026 20:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86E643C063;
+	Tue, 21 Jul 2026 20:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667559; cv=none; b=TzhB19XPPVjpEkkOYEWt9nZDeTV720CK04rAQhdcGo0gjWkCaR5kJjhdb/sZPCZXYoNT/YXxH7F/j68u2gD2SrSx07Q95KJ0GKbqZ/wrSqn8DCwX8u4QTGqGhUg5Rnz9HXs2bCSN+r+4ojq4HlGvJqR38gSHdO8Yjm5k8uGJA4E=
+	t=1784667560; cv=none; b=eAQeS8i28AJvptB44itVpDSQv1+tt4eyf0va34Cqh91OGjwBKGpi1qYwnygPavljPkd9D8gMrLAeu8mhsNkaww7A2jREu0LWnY14qE9FuwDH2cAmDgENBuujCSxkIp3Vt+bzXSbLYwkZu/LLq5mdcasbltU3+oon/11ot9QtKjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667559; c=relaxed/simple;
-	bh=EUQkxIDHb2QUNfIF+Wka+Gw2/NokcBRsoPIEEPHkwPA=;
+	s=arc-20240116; t=1784667560; c=relaxed/simple;
+	bh=Nr8rTgkT3G8qxZrlIFCtjgLwR8V9XPmkousDA+b9tv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=evLFLJLWAXgbxVpmaFBu9aACT2ct57Il+A4Omkaz+whO3v3BbyQX/9pFrztAA/PPmYyeLwH3O59aGjRXZwtw8hh9i5gujEb4+DVB7jyNv3+ZtEjETANvdYk9tugOUOIdetze5HXcYvI1i2fTyMIYMzqdDfEbqWwxWmYJtY+c7YA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vo3JS741; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DWn1FIbMa+1UKGgJ2UHMoe7VFtdl6W+AVLkI8KeOHizD4b7h57cKSMcc44qsu9MzZD8yjYh/5WNivbcJ623ueewO92wbGc4EjxkpjBR/o2KUZixBc/opunO//9XWO4yp32kzJC6a+WvlnnMAq0EpGkbOCIr/JRk6lEwrDmi71H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHWYTfRz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vo3JS741"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28CC91F000E9;
-	Tue, 21 Jul 2026 20:59:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHWYTfRz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C5C1F00A3A;
+	Tue, 21 Jul 2026 20:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667556;
-	bh=tKvC//l0yB0QM6g3SaeuUbx1ZUBDW1rTLexlwMsn+qo=;
+	s=korg; t=1784667559;
+	bh=TqK7BGYyMEGHvzhRkV8vO4j/ey3rP3oyQN+oX9q1H1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vo3JS741tmAXXtGgPUOZf3WjPMYnsAMvO83q09AXQt2NfllBR6mkiviT39BaX1fJH
-	 f4AnC1Y9wr8EA6/QPafEIHJmXKZMb946vZaU7egqCiTxLVM4vijdbPk6M2iLHvKTF0
-	 hCGmI0bPi+oQrwbXx3EZN+Mek00U0bI0KksMcuts=
+	b=GHWYTfRzs5O55QeNVSqs4/HZe4p3tuW45eam+q3Ay5/wTIRcM7G7I4Mhv95cJWUgI
+	 hI58oBMHQsu+cu/V5UbQk9FTjwGd+Xa7kT0VmoyzBxImo2Nnoa6C7wiyLYainzoxA2
+	 KGHqOu2h0MdPMurDGdwwht4JeJfe/6v3DW/cuGAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Daniel Wagner <dwagner@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 1064/1266] scsi: elx: efct: Fix I/O leak on unsupported additional CDB
-Date: Tue, 21 Jul 2026 17:25:01 +0200
-Message-ID: <20260721152505.631370231@linuxfoundation.org>
+	Sashiko bot <sashiko-bot@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.6 1065/1266] Input: ims-pcu - fix use-after-free and double-free in disconnect
+Date: Tue, 21 Jul 2026 17:25:02 +0200
+Message-ID: <20260721152505.653716861@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,36 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 9cb2d5291dbfe7bed565ead3337047dee9ed1064 upstream.
+commit 462a999917755a3bf77448dfd64307963cf0a9f0 upstream.
 
-efct_dispatch_fcp_cmd() allocates an efct_io before dispatching an
-unsolicited FCP command. If the command has an unsupported additional
-CDB, the function returns -EIO before handing the IO to the SCSI layer.
+ims_pcu_disconnect() only intended to perform cleanup when the primary
+(control) interface is unbound. However, it currently relies on the
+interface class to distinguish between control and data interfaces.
+A malicious device could present a data interface with the same class
+as the control interface, leading to premature cleanup and potential
+use-after-free or double-free.
 
-Free the allocated IO before returning from this error path.
+Switch to verifying that the interface being disconnected is indeed
+the control interface.
 
-Fixes: f45ae6aac0a0 ("scsi: elx: efct: Unsolicited FC frame processing routines")
+Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Link: https://patch.msgid.link/20260622075844.832871-1-haoxiang_li2024@163.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Sashiko bot <sashiko-bot@kernel.org>
+Assisted-by: Gemini:gemini-3.1-pro
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/elx/efct/efct_unsol.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/misc/ims-pcu.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/scsi/elx/efct/efct_unsol.c
-+++ b/drivers/scsi/elx/efct/efct_unsol.c
-@@ -385,6 +385,7 @@ efct_dispatch_fcp_cmd(struct efct_node *
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -2065,7 +2065,6 @@ err_free_mem:
+ static void ims_pcu_disconnect(struct usb_interface *intf)
+ {
+ 	struct ims_pcu *pcu = usb_get_intfdata(intf);
+-	struct usb_host_interface *alt = intf->cur_altsetting;
  
- 		if (cmnd->fc_flags & FCP_CFL_LEN_MASK) {
- 			efc_log_err(efct, "Additional CDB not supported\n");
-+			efct_scsi_io_free(io);
- 			return -EIO;
- 		}
- 		/*
+ 	usb_set_intfdata(intf, NULL);
+ 
+@@ -2073,7 +2072,7 @@ static void ims_pcu_disconnect(struct us
+ 	 * See if we are dealing with control or data interface. The cleanup
+ 	 * happens when we unbind primary (control) interface.
+ 	 */
+-	if (alt->desc.bInterfaceClass != USB_CLASS_COMM)
++	if (intf != pcu->ctrl_intf)
+ 		return;
+ 
+ 	sysfs_remove_group(&intf->dev.kobj, &ims_pcu_attr_group);
 
 
