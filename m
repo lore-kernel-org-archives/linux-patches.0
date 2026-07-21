@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B60146AA82;
-	Tue, 21 Jul 2026 15:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B1546AA6B;
+	Tue, 21 Jul 2026 15:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648366; cv=none; b=bwu8XKOK5hXcbb0RUUg5NhtQENLYYrneRwtDA1dpt7MUCOGxhC3ZiYqh/k2sPhYGKFMdTPKUqpXUZTQYfbE0YZjD0r2bUVVb2Kj7uTlzGX/nPwXXUouz1b19zPZ8vUIbnJmpJiY1gSdPuFEYmGQapthrRjtefCxAkNQAgL3aWLU=
+	t=1784648369; cv=none; b=HprCAvwZ06uR5dRs03OQO+S9/Eh7HPKI0YBRi/zUXa3twIuw0Ztu/jiUZ4rR+MX08nn2NQe4leToe/3hx+lVMWGoKk0nd8BwXqD0syg6G6mun35XxJ68OjPHkOqfDsGDZtovqjd4Gn1s+pMenBiTKktc66Qgd65c5mfGmv9PDkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648366; c=relaxed/simple;
-	bh=UGQp7g+PpsS/XOGpP2NVapuA7BfVKrapPLvAlYBqjUw=;
+	s=arc-20240116; t=1784648369; c=relaxed/simple;
+	bh=fbi9aT0qK1dcRCRxIRcWSSt90QRCKF1a+N51XrGiAIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GDKOhplT9HfW8XsMPt9cnflKXIOxTqSWhbuuX65i9bUkMjV3OmxiFgDIJDbDTWR1d7sbC+9SI1xnaqUzzOQ+GuVPqw6yuMVXTww876iGN4Eearba2AYMuDUVjxVBKIp6CIh0uo6VCYOCAsdIr3HAN/9ppPq3ZQfjpCHkpvLSIzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/TU0sUX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fa5k3Ql8xwxxl2wRo7uUyMDzHz2jVzXMPup3N+FcsUyY1qPEtuVcrDOaSptwkH7l2QApdPenTC4VV5Be7dllKWrE8b/f4fGoixecn401ruZJSy6hgtUWpd12Od+nDoxEtatinvc16JaOufKYbiTuMmkx3t7tnlB+gHmWuPJN2AY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bt6e8duS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/TU0sUX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8CAD1F000E9;
-	Tue, 21 Jul 2026 15:39:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bt6e8duS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B9AD1F000E9;
+	Tue, 21 Jul 2026 15:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648365;
-	bh=qI6mj0sXXTZR1OP9+bksxcUS47XY4tPXQhO7g3cGtQI=;
+	s=korg; t=1784648368;
+	bh=bMUN7hHRA8O580WDTZBfhYzfmtfk8vvLGeVGUPDw2QY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F/TU0sUXvAIlHROvHE7h0HWogPmRyL2FyY8OJEKfAA3PC1J7g2VBzsGatlbRoiTli
-	 JQrQrU1Cmu6byrzAq1BigiDMz54af0//21TkLQswJCLJyWdzNshEdAlVkqA2UF5Iw1
-	 h23waav7DtemtSiFtjfW4eBXshLAevkTTNQ8Bo6A=
+	b=bt6e8duS/O+OsCXp4T6smqT9Pz6w7/n7TSVx+4slAi3r2l3Wtv/Bk8OcN8x1pWggk
+	 sl+54h/+cxQwOa5VAHS/Hn7jZnTxTF9BthM3USxmYyV0rerAgvsBwgxYjgvl8+nOhu
+	 2Q2S//1ZpC/Ov15yXc7EK+jEmsWdLINnVzuMl0l0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0170/2077] dlm: fix add msg handle in send_queue ordered
-Date: Tue, 21 Jul 2026 16:57:23 +0200
-Message-ID: <20260721152556.699621895@linuxfoundation.org>
+Subject: [PATCH 7.1 0171/2077] nilfs2: fix backing_dev_info reference leak
+Date: Tue, 21 Jul 2026 16:57:24 +0200
+Message-ID: <20260721152556.721437358@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,48 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-[ Upstream commit d2248cb70c070f8f04762872772e155b59016f17 ]
+[ Upstream commit 665f192a2a11384cb7dc1be5f87d16438522a4ed ]
 
-In a benchmark scenario triggering a lot of requests that triggers a lot
-of DLM messages on the network it can be that the mh->seq is not ordered
-according the oldest seq number. This ordering is required by
-dlm_receive_ack as "before(mh->seq, seq)" will stop to check for older
-sequence numbers that are ordered in the tail of "node->send_queue".
+setup_bdev_super() already initializes sb->s_bdev and takes a
+reference on the block device backing_dev_info when assigning sb->s_bdi.
 
-The side effects of not having it correct ordered regarding
-"before(mh->seq, seq)" are refcounting issues and use-after free.
+nilfs_fill_super() takes another reference to the same
+backing_dev_info and stores it in sb->s_bdi again. The extra
+reference is not paired with a matching bdi_put(), since
+generic_shutdown_super() releases sb->s_bdi only once.
 
-I only was able to reproduce this issue in a experimental DLM branch
-and a user space DLM benchmark that uses io_uring. After changing this I
-don't experienced any refcounting with the sending buffer issues anymore.
+Drop the redundant bdi_get() in nilfs_fill_super(). The single
+reference taken by setup_bdev_super() is enough and is released
+during superblock shutdown.
 
-Fixes: 489d8e559c659 ("fs: dlm: add reliable connection if reconnect")
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Fixes: c1e012ea9e83 ("nilfs2: use setup_bdev_super to de-duplicate the mount code")
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/midcomms.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nilfs2/super.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/dlm/midcomms.c b/fs/dlm/midcomms.c
-index d54bdd8fc4f2ed..64826a9b79a557 100644
---- a/fs/dlm/midcomms.c
-+++ b/fs/dlm/midcomms.c
-@@ -968,10 +968,10 @@ static void midcomms_new_msg_cb(void *data)
- 	atomic_inc(&mh->node->send_queue_cnt);
+diff --git a/fs/nilfs2/super.c b/fs/nilfs2/super.c
+index 7aa5ef8606cdd4..893a504cb80c8a 100644
+--- a/fs/nilfs2/super.c
++++ b/fs/nilfs2/super.c
+@@ -1070,8 +1070,6 @@ nilfs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	sb->s_time_gran = 1;
+ 	sb->s_max_links = NILFS_LINK_MAX;
  
- 	spin_lock_bh(&mh->node->send_queue_lock);
-+	/* need to be locked with list_add_tail_rcu() because list is ordered */
-+	mh->seq = atomic_fetch_inc(&mh->node->seq_send);
- 	list_add_tail_rcu(&mh->list, &mh->node->send_queue);
- 	spin_unlock_bh(&mh->node->send_queue_lock);
+-	sb->s_bdi = bdi_get(sb->s_bdev->bd_disk->bdi);
 -
--	mh->seq = atomic_fetch_inc(&mh->node->seq_send);
- }
- 
- static struct dlm_msg *dlm_midcomms_get_msg_3_2(struct dlm_mhandle *mh, int nodeid,
+ 	err = load_nilfs(nilfs, sb);
+ 	if (err)
+ 		goto failed_nilfs;
 -- 
 2.53.0
 
