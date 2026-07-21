@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C84046A61C;
-	Tue, 21 Jul 2026 18:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F050F3D16E6;
+	Tue, 21 Jul 2026 18:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657883; cv=none; b=LcaPpbjjy6WiCA24DT70ytI/bWjib8A3NOzKgj2zIgimGtdhr+lBnc7f0tobjk2V9PAqmu3WGCffLxBWZBD8o8kba0P+K+qSDfxoAxQcmJmXxMVPp2fTyg3T3u4RVnYnpczCuYpx/wXLTWa+T6LpRZAaT9v1F9Cjvu64Hcxw1K8=
+	t=1784657885; cv=none; b=h+pAylq428TWb3N9bpcdHScUb4hMV9o3fXv7VAldlnZsw7iYX9eIgn1e/bA4KgwwnI1zCjKOD7uFvOjeQ+RsSeoV91PRbEG0WXMgylLY4mV9fXHzZdvxEUxecHXQx5ZlwLsSJPtcyNhcAIM2l0GYwkH/J8MhUEesX4Wj7LhMx7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657883; c=relaxed/simple;
-	bh=oM1f55cxdKMiXKcYzmXKXYEG0xyACFXN7we05K7/SAI=;
+	s=arc-20240116; t=1784657885; c=relaxed/simple;
+	bh=2c++WRD+93dvuu/GsklUVtITNROufrTUUe2EihmJJbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gG74KB3JacP1zPcAcljcFA7HlLz7c/W6H0XijnIrZx3f6hWfUNQqycULmKioV7g37fxDFqvSXYrzX0tJTYzaCml2WkfFszle/FdAkA8eDxq8PwvHVslLO4+bHraFB/xZszGiXYH0qcfwQ+6RFv3q/xGcf4GAT6KwQpSPrt690II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJvTBwo1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dkn+XX9f+5jktcUVlQhRSQMv98Z6dCBOStyM8OWmiQ0GoHDxmZG7aurDFVfidAQPt3XwEscjQiteL2MpIVHO8c5zX94ZfStWFME/y1mWX+5j81MmmVStTKz5JvqBMAooiYooh4Lh5UdpGoQH4XSH/5zFugFvEr9olrExJPWphWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UusffENB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJvTBwo1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD4B1F000E9;
-	Tue, 21 Jul 2026 18:18:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UusffENB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F8C1F00A3A;
+	Tue, 21 Jul 2026 18:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657881;
-	bh=e8QycP5+i/S91cBJLRtUw+qppkpDs/cjbIFjlYgpXO4=;
+	s=korg; t=1784657883;
+	bh=i+tbyUrMef1JD4O9Q+d8dO+3fpTdfuGBopJFOpYoAKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OJvTBwo1QNZ6m8ieduj3whNCZaDNcCEYJptZsrP/Y+gyRePpg0pC/bgTnX/FGRixJ
-	 L6uPgWvv2Xjo3zeKe5IjbEEi0zi47GOzSFVPcFh0rFVc6+yibYyWwweLQJOVsqaLOJ
-	 lDSFZOoV86BtWxc5FbxgYss055jDNeAYxklciSBQ=
+	b=UusffENBob9ViP7+sgfqBqeFh8nIt1ckmsxGiKoMR2bo6HpDV5GBD1Yywr4bjzaNR
+	 40Zjqj0QGE1x5EKwcHLZjQfn9ruYLXmPlM/LIUehsi/ZIWC6p411wbd0JIKv5Us0tr
+	 7FOT0gmajv7Kc2hKEuU5NFdEOW+ToS9sI39WDIpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhaoJinming <zhaojinming@uniontech.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.18 0889/1611] ice: dpll: set pointers to NULL after kfree in ice_dpll_deinit_info
-Date: Tue, 21 Jul 2026 17:16:45 +0200
-Message-ID: <20260721152535.386252796@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 0880/1611] power: sequencing: fix ABBA deadlock in pwrseq_device_unregister()
+Date: Tue, 21 Jul 2026 17:16:36 +0200
+Message-ID: <20260721152535.185762465@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,63 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhaoJinming <zhaojinming@uniontech.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-[ Upstream commit a903afff66d7379c6ece42bd18b2a17f4c79d1a9 ]
+[ Upstream commit 2d5a7d406ecece5837af1e278ffbbf6c0315560a ]
 
-ice_dpll_deinit_info() calls kfree() on several pf->dplls fields
-(inputs, outputs, eec.input_prio, pps.input_prio) but does not set
-the pointers to NULL afterward. This leaves dangling pointers in the
-pf->dplls structure.
+The pwrseq core takes three locks in consistent order everywhere:
 
-While not currently exploitable through existing code paths, this is
-unsafe because:
+  pwrseq_sem -> pwrseq->rw_lock -> pwrseq->state_lock
 
-1. If ice_dpll_init_info() is called again after a deinit (e.g. during
-   driver recovery), and a subsequent allocation within init fails, the
-   error path will jump to deinit_info and call ice_dpll_deinit_info()
-   again. Since some pointers still hold the old freed addresses, this
-   would result in a double-free.
+pwrseq_get() -> pwrseq_match_device() takes pwrseq_sem for reading, then
+rw_lock for reading. pwrseq_power_on()/pwrseq_power_off() take rw_lock
+for reading and then state_lock.
 
-2. Any future code that checks these pointers before use or after free
-   would be unprotected against use-after-free.
+pwrseq_device_unregister() is the only exception, it takes: state_lock,
+then rw_lock for writing and finally pwrseq_sem for writing. This created
+two potential ABBA deadlock situations that sashiko pointed out.
 
-Follow the common kernel convention of setting pointers to NULL after
-kfree() so that:
-- kfree(NULL) is a safe no-op, preventing double-free
-- NULL checks on these pointers become meaningful
+  - pwrseq_power_on/off() take rw_lock for reading then state_lock, while
+    pwrseq_unregister() takes state_lock then rw_lock for writing
+  - pwrseq_get() takes pwrseq_sem for reading then rw_lock for reading,
+    while pwrseq_unregister() takes rw_lock for writing then pwrseq_sem
+    for writing
 
-This is a preparatory fix for a subsequent patch that routes additional
-error paths in ice_dpll_init_info() to the deinit_info label.
+Reorder the unregister path to taking pwrseq_sem for writing -> rw_lock
+for writing and drop the state_lock entirely. This is safe as
+enable_count is only ever written under rw_lock held for read (via
+pwrseq_unit_enable()/disable(), reached only from pwrseq_power_on/off()),
+so holding rw_lock for writing already excludes every other writer and
+reader and the active-users WARN() stays race-free without state_lock.
 
-Fixes: d7999f5ea64b ("ice: implement dpll interface to control cgu")
-Signed-off-by: ZhaoJinming <zhaojinming@uniontech.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 249ebf3f65f8 ("power: sequencing: implement the pwrseq core")
+Closes: https://sashiko.dev/#/patchset/20260616151049.1705503-1-vulab%40iscas.ac.cn
+Link: https://patch.msgid.link/20260618-pwrseq-abba-deadlock-v1-1-943a3fd81c06@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_dpll.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/power/sequencing/core.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_dpll.c b/drivers/net/ethernet/intel/ice/ice_dpll.c
-index 81267bae0e5cb5..f3a7129d91d3ea 100644
---- a/drivers/net/ethernet/intel/ice/ice_dpll.c
-+++ b/drivers/net/ethernet/intel/ice/ice_dpll.c
-@@ -3772,9 +3772,13 @@ ice_dpll_init_pins_info(struct ice_pf *pf, enum ice_dpll_pin_type pin_type)
- static void ice_dpll_deinit_info(struct ice_pf *pf)
- {
- 	kfree(pf->dplls.inputs);
-+	pf->dplls.inputs = NULL;
- 	kfree(pf->dplls.outputs);
-+	pf->dplls.outputs = NULL;
- 	kfree(pf->dplls.eec.input_prio);
-+	pf->dplls.eec.input_prio = NULL;
- 	kfree(pf->dplls.pps.input_prio);
-+	pf->dplls.pps.input_prio = NULL;
- }
+diff --git a/drivers/power/sequencing/core.c b/drivers/power/sequencing/core.c
+index d5da006e1ee856..0a1bc6c20c11b3 100644
+--- a/drivers/power/sequencing/core.c
++++ b/drivers/power/sequencing/core.c
+@@ -543,15 +543,18 @@ void pwrseq_device_unregister(struct pwrseq_device *pwrseq)
+ 	struct device *dev = &pwrseq->dev;
+ 	struct pwrseq_target *target;
  
- /**
+-	scoped_guard(mutex, &pwrseq->state_lock) {
++	scoped_guard(rwsem_write, &pwrseq_sem) {
+ 		guard(rwsem_write)(&pwrseq->rw_lock);
+ 
++		/*
++		 * Holding rw_lock for write excludes all power on/off callers
++		 * (they hold it for read), so it's safe to read enable_count
++		 * here without taking the state_lock.
++		 */
+ 		list_for_each_entry(target, &pwrseq->targets, list)
+ 			WARN(target->unit->enable_count,
+ 			     "REMOVING POWER SEQUENCER WITH ACTIVE USERS\n");
+ 
+-		guard(rwsem_write)(&pwrseq_sem);
+-
+ 		device_del(dev);
+ 	}
+ 
 -- 
 2.53.0
 
