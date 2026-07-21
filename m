@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4259846C4A3;
-	Tue, 21 Jul 2026 15:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE11046A612;
+	Tue, 21 Jul 2026 15:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649462; cv=none; b=LnqcqN6+muhU8pY1P5Z/OV+j86EIO0yyXmANCwjHdJUfdl2JayGabyRU+JNwGC6NrVSsGEmPcPg4zLAeZsQ3GJjn+lfNrcLPWgBszaJRWGvmUBLqN40UEctsfS4PEFySQbwea/Qhe7Zqu86LxfhSpB9e2ECFNGI2wDgVcEH2HvU=
+	t=1784649465; cv=none; b=lFgNuSey1tCg9f9pa1go+p+kvkkNOZE4wcUlVEO5m6xb5WeZEx6WLQ4ZLvL1s4Ks22sccOryDg7JHMGR1/2WVt8Id39gNDoKc+PLxXN8zWIYaBJfB/XRjwWNgvpDhUfeHlEapfcAb5I4LqKqLJx9sRgLqRxZDjYxySbqwRWHfb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649462; c=relaxed/simple;
-	bh=BH2Ebsf8j64jjOxJsK9wxEhcReDZUEiQGvwPOunHJK8=;
+	s=arc-20240116; t=1784649465; c=relaxed/simple;
+	bh=PxCM6vYT+UEyIDbDr5o4ilqFhuQ5P5bfauxtPcNmjqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JfwY0ENFFu2eQ/Dl85ryaXEKVoF/v+griJQjpLLMUme9P2GaaB8vkar79HLlEud9nSjPCvywzUnRl1V/rDRGHM7xVDPM+4ZKtEUsiX4VFHC2U4ADc8fStyGDI+2lodMVEOpS1WDxWyVRYSNWD8eF3+xEcexYCtIlESua7CxB77w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FTK6RVPZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HmxF3Qp5nbdoPBpXJ8VWEA1IIJF3JLQmlihWr7EPy0Xos8DUkyLP4UnsxqOYKkq0wedKTGmGVcj+GtKbm9ZAfT46uPKjcHTYGag0Qnr/euOgUjYI1WoN17kY+wUNn7a+OymW8qLO3sjY4v4oaggtusvnj7lMiy2MWKVNDXD81IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o88bz8Yw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FTK6RVPZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B801F000E9;
-	Tue, 21 Jul 2026 15:57:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o88bz8Yw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FFA31F000E9;
+	Tue, 21 Jul 2026 15:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649461;
-	bh=jumha3vTii80gqK08Y+4uKGxJfwmrE1oGns8TMYJvtQ=;
+	s=korg; t=1784649463;
+	bh=SZ4mk8QLOznW5mcLF9PcIJxdcRhxfC9PNF+P+zzVbYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FTK6RVPZ+Nke5nYmc294yo9uaSwRMur+7pKetodvEXlohGPyQ1RAfjmjK+N+DORV5
-	 c1OdoPb+k/Eh3EJXh1W18iFEYbkpls/QyeaB1eXiO1i4OSaF34CPWEFJ7NSLf3yM+o
-	 rU20T1O3gZHs82ChLMnOTt0HpddfJjlWc2e5+AY4=
+	b=o88bz8Yw4BcN3528BPVTeuspxf5Xc3IjrihM5Y1AAvh8+VBWVwAHOR7Ts+QWE/EbI
+	 RNEPAJ4aPSNRGZU8qD+juPS+WT8W+eA60t80YYCA2xw3LoM+qWx/axuu6PbHFaB2cS
+	 BVT4bSqIU5ZIk+f46F79KW0pQ+tQS1KlQ5yKHRyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Aviel Zohar <avielzohar123@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0550/2077] IB/mlx5: Properly support implicit ODP rereg_mr
-Date: Tue, 21 Jul 2026 17:03:43 +0200
-Message-ID: <20260721152605.785241283@linuxfoundation.org>
+Subject: [PATCH 7.1 0586/2077] wifi: mt76: mt7925: validate skb length in testmode query
+Date: Tue, 21 Jul 2026 17:04:19 +0200
+Message-ID: <20260721152606.634071697@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,55 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Aviel Zohar <avielzohar123@gmail.com>
 
-[ Upstream commit ee7a8335069150c3f1893a697ab30bbeca00d796 ]
+[ Upstream commit c7369a00860a0704461d440e7c3bf9b49bfdbaee ]
 
-Due to all the child mkeys in the implicit ODP configuration we cannot
-change anything in place for the parent mkey. Instead the whole thing
-needs to be rebuilt if any change is requested. If the user does not
-specify a translation then force the implicit values which will then fall
-through the logic into mlx5_ib_reg_user_mr() to allocate a completely new
-MR.
+In mt7925_tm_query(), the response skb from mt76_mcu_send_and_get_msg()
+is used in a memcpy without validating its length:
 
-Since implicit children were also touching the mr->pd, this removes
-another case where the access was racy.
+  memcpy(evt_resp, skb->data + 8, MT7925_EVT_RSP_LEN);
 
-Fixes: ef3642c4f54d ("RDMA/mlx5: Fix error unwinds for rereg_mr")
-Link: https://sashiko.dev/#/patchset/20260427-security-bug-fixes-v3-0-4621fa52de0e%40nvidia.com?part=4
-Link: https://patch.msgid.link/r/3-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+where MT7925_EVT_RSP_LEN is 512. If the firmware returns a response
+shorter than 520 bytes (8 + 512), this reads beyond the skb data
+buffer. The over-read data is then returned to userspace via nla_put()
+in mt7925_testmode_dump().
+
+Add a length check before the memcpy to ensure the skb contains
+sufficient data.
+
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+Signed-off-by: Aviel Zohar <avielzohar123@gmail.com>
+Link: https://patch.msgid.link/20260413033136.5417-2-avielzohar123@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/mr.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7925/testmode.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
-index d70d3e3dbd1a95..f3884faf1a117c 100644
---- a/drivers/infiniband/hw/mlx5/mr.c
-+++ b/drivers/infiniband/hw/mlx5/mr.c
-@@ -1188,6 +1188,21 @@ struct ib_mr *mlx5_ib_rereg_user_mr(struct ib_mr *ib_mr, int flags, u64 start,
- 	if (!(flags & IB_MR_REREG_PD))
- 		new_pd = ib_mr->pd;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/testmode.c b/drivers/net/wireless/mediatek/mt76/mt7925/testmode.c
+index 3d40aacfc011f5..22a8f1ddc321da 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/testmode.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/testmode.c
+@@ -105,6 +105,11 @@ mt7925_tm_query(struct mt792x_dev *dev, struct mt7925_tm_cmd *req,
+ 	if (ret)
+ 		goto out;
  
-+	if (mr->is_odp_implicit && !(flags & IB_MR_REREG_TRANS)) {
-+		if (!(new_access_flags & IB_ACCESS_ON_DEMAND))
-+			return ERR_PTR(-EOPNOTSUPP);
-+
-+		/*
-+		 * Due to all the child mkeys we cannot actually change an
-+		 * implicit MR in place. If the user did not specify a new
-+		 * translation then force the fixed implicit MR values.
-+		 */
-+		start = 0;
-+		iova = 0;
-+		length = U64_MAX;
-+		flags |= IB_MR_REREG_TRANS;
++	if (skb->len < MT7925_EVT_RSP_LEN + 8) {
++		ret = -EINVAL;
++		goto out;
 +	}
 +
- 	if (!(flags & IB_MR_REREG_TRANS)) {
- 		struct ib_umem *umem;
+ 	memcpy((char *)evt_resp, (char *)skb->data + 8, MT7925_EVT_RSP_LEN);
  
+ out:
 -- 
 2.53.0
 
