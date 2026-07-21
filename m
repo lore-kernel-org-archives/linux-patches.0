@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275D83644B3;
-	Tue, 21 Jul 2026 19:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE58C3A4F4B;
+	Tue, 21 Jul 2026 19:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663341; cv=none; b=gD0Tvqh/v1tluXAKYlgBRWSByUAINVqipSsd2JH2O8fSqEjqvcVLSg5SiL97B60nIBNsARiMuNfI6XtdBSdD+6xbTIc2uT6tlKYhydMijCA4uY9EnLAhni6lGR+WdPE/dxz7UdE0ixiDiPXEFahqGO2FyKmno9XgeEdVaCp/EtU=
+	t=1784663343; cv=none; b=SmzBs5oqsnKbh2U+TB11MUyCn+B9EhdaS7lBRcy3/hEH2iV2YWFZwatd5636DVYvbF4fcvp+gsIOvEuy71qpHgz+acX7y4bbqF7mrq3GEiJYg8X2YxkPm5TSd7EJdXcAxIO+PNMqHjX7Of5/ZnV7xTL555nYUfbiwQ+kOuNaALw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663341; c=relaxed/simple;
-	bh=3+sHxDScKvBeH+pkxDICHbw/5kfl4r9K8BJryw6a0pg=;
+	s=arc-20240116; t=1784663343; c=relaxed/simple;
+	bh=OBDHFUh8yNf+PCOzXRiBC3xqok7YOcTEGQ2CXiWp6M8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZIK6ZLdIiF9hPNyx1cJIjHoMlQNfFFa/JWf8h6InfqkM4UjQYvdRyoHc5aXA8ERQE7IwI7rHmyVAPIYd2aPMXLyVRwn6NGr+u+pl6F7GrTluceg5JOkDZI+QaVuuHWP3eHcWOt91i9XuZsk/fIjhzpBegMIi7/VApZgk13D5zG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPRsTazV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sYJy84OPq2tneVqKS3pM7E3290BDFmmGi4CjK0Qo5E0e3Zk0QLuacBSAItTf2iA7Peu1DM9a7RPU/1Z52ca5CdZAegt7+VgIkJpPTv+yQwYgnrAJnMeXpCIU0AwK7ZgQ/nCpEEeHlisB0BWlrrlpzFxp0KWuyrLF/olLfFIE2f8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4b8RlA8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPRsTazV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74D8D1F000E9;
-	Tue, 21 Jul 2026 19:48:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4b8RlA8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD211F000E9;
+	Tue, 21 Jul 2026 19:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663340;
-	bh=VIQE82lak8tewqIlXXPpBZOY8TTlWHsVnRrzeMck+oM=;
+	s=korg; t=1784663342;
+	bh=ROs6bN+h/oIHHiYEkpo8/Ze9hjSTUstHm4C1SCtRHuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pPRsTazVHeOFMWgc/nK9nhl/JNovKe8hrEK8dhSr20AXPngpT9CmVrgi6v+SHOIk+
-	 E7lhuydHNcEYbVT97Ajz2xrQbG4Ol1O27O25HSQY8zqB3DrVdW6GIgx57ZZjL2IFDn
-	 j/CVR6LNSaCUQKZd/x0ffHmC7+w7qmquCcTOZg+k=
+	b=X4b8RlA8pw3MzGDuGueUpWrs3RcPlceGwsYgUIZ33Y6gc+wMsmeyfxd1gT+SSV433
+	 yZJEL6aQZZi14qvFa9DZJAhU9p7tlVpCgAJSO7Ba1HByrZCEtseVsSA47XyR6eH6oW
+	 8T3RUcbzd/2bRnsGdbWk1EL3bkVlykg+ssFguFfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Amir Goldstein <amir73il@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0743/1276] minix: avoid overflow in bitmap block count calculation
-Date: Tue, 21 Jul 2026 17:19:46 +0200
-Message-ID: <20260721152502.707486170@linuxfoundation.org>
+Subject: [PATCH 6.12 0744/1276] ovl: fix comment about locking order
+Date: Tue, 21 Jul 2026 17:19:47 +0200
+Message-ID: <20260721152502.730956625@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,56 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit fb3e566cafc38fe3ba35e6843a2d529a3748870c ]
+[ Upstream commit fd5637a2fe6dd4448392738691d63e5559fafb12 ]
 
-minix_check_superblock() uses minix_blocks_needed() to verify that the
-on-disk imap and zmap block counts are large enough for the advertised
-inode and zone counts.
+Forgot to update the comment when we changed the locking order.
 
-The helper currently performs DIV_ROUND_UP() in unsigned int arithmetic.
-A Minix v3 image can set s_ninodes or s_zones near UINT_MAX so the
-addition inside DIV_ROUND_UP() wraps to zero. That makes a zero imap/zmap
-block count look valid, after which minix_fill_super() can dereference
-s_imap[0] or s_zmap[0] even though no bitmap buffers were allocated.
-
-Impact: mounting a crafted Minix v3 image whose s_ninodes or s_zones is
-near UINT_MAX makes minix_check_superblock() accept a zero bitmap-block
-count and minix_fill_super() dereference s_imap[0]/s_zmap[0], panicking
-the kernel.
-
-The divisor is the bitmap capacity in bits, blocksize * 8, which is
-always a power of two: minix_fill_super() obtains the block size through
-sb_set_blocksize(), and blk_validate_block_size() rejects any size that
-is not a power of two. Use DIV_ROUND_UP_POW2(), which divides before
-adding the round-up term and so cannot overflow for a power-of-two
-divisor.
-
-Fixes: 8c97a6ddc956 ("minix: Add required sanity checking to minix_check_superblock()")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260618143922.3066874-1-michael.bommarito@gmail.com
-Reviewed-by: Jan Kara <jack@suse.cz>
+Fixes: 162d06444070c ("ovl: reorder ovl_want_write() after ovl_inode_lock()")
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://patch.msgid.link/20260609184656.1916631-1-amir73il@gmail.com
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/minix/minix.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/overlayfs/inode.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/minix/minix.h b/fs/minix/minix.h
-index d54273c3c9ffd3..c81e48badae93d 100644
---- a/fs/minix/minix.h
-+++ b/fs/minix/minix.h
-@@ -91,7 +91,7 @@ static inline struct minix_inode_info *minix_i(struct inode *inode)
+diff --git a/fs/overlayfs/inode.c b/fs/overlayfs/inode.c
+index baa54c718bd722..14b06060db4b03 100644
+--- a/fs/overlayfs/inode.c
++++ b/fs/overlayfs/inode.c
+@@ -800,8 +800,8 @@ static const struct address_space_operations ovl_aops = {
+  *
+  * This chain is valid:
+  * - inode->i_rwsem			(inode_lock[2])
+- * - upper_mnt->mnt_sb->s_writers	(ovl_want_write[0])
+  * - OVL_I(inode)->lock			(ovl_inode_lock[2])
++ * - upper_mnt->mnt_sb->s_writers	(ovl_want_write[0])
+  * - OVL_I(lowerinode)->lock		(ovl_inode_lock[1])
+  *
+  * And this chain is valid:
+@@ -814,8 +814,8 @@ static const struct address_space_operations ovl_aops = {
+  * held, because it is in reverse order of the non-nested case using the same
+  * upper fs:
+  * - inode->i_rwsem			(inode_lock[1])
+- * - upper_mnt->mnt_sb->s_writers	(ovl_want_write[0])
+  * - OVL_I(inode)->lock			(ovl_inode_lock[1])
++ * - upper_mnt->mnt_sb->s_writers	(ovl_want_write[0])
+  */
+ #define OVL_MAX_NESTING FILESYSTEM_MAX_STACK_DEPTH
  
- static inline unsigned minix_blocks_needed(unsigned bits, unsigned blocksize)
- {
--	return DIV_ROUND_UP(bits, blocksize * 8);
-+	return DIV_ROUND_UP_POW2(bits, blocksize * 8);
- }
- 
- #if defined(CONFIG_MINIX_FS_NATIVE_ENDIAN) && \
 -- 
 2.53.0
 
