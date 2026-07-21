@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C14537B40C;
-	Tue, 21 Jul 2026 17:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE15322DB7;
+	Tue, 21 Jul 2026 17:03:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653402; cv=none; b=HqTZOUV55K+NOgabiAILix22RzA/IRzRb6pi2i4weHnEpuA/1ltDAijsVHYKgvQR8ssmvpdkVd3bTruXdMYThn+EmcIw1Sb2wZhEIq9TLJYb96Nd9fopyy3lnT/5t7QtuNuFv66stqMtXHud7waPRC4UGNg+mkwmt0ujnS6pqDI=
+	t=1784653405; cv=none; b=KVqK4erih8N6wZxRqEuoQ2/hgNoqm0uW35137WkEfMIuR1UiU4l7zJaMhiTyCCtIzqx5QxAS1B7LvwTzpYCCZidUI5MKDYXjaS3I2vvQRa4P6pEAi5uM2CjiXHyLKkGgwis5C9Qs5WLS7HVS5pJZrmbdIWKpcuyB5Ww+hdR2mlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653402; c=relaxed/simple;
-	bh=0OpkOWnF8MvzM2JVQ3oZqsmYp6MQUiZFXhndG27hhB8=;
+	s=arc-20240116; t=1784653405; c=relaxed/simple;
+	bh=HaN18AsEZcgrfz2IXiD+c0b7nZOnRhrcLWlT2zc8F0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JJAYH650Daar7bciFT/YgW0UVKlw4Cgi4EJHnOQOXc8zWHW4L59OX0XooIS8Hy8JNUjBrc/79+xp5NWImLZdzNoMAq+drlDeMboFafYWpdyRr8l9c/4X1w8zzIzX6LYgwRxF0Ip9A5svR4QvVgCL/mrG8Y9YTZpW832hH45REK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VhYyvqsB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HPaGno8aNtKoXxKcP5od6wlq/d53U0xVMcEb58yInNZC8K2mde/LfPjpgP1RlA4QwyZXkV8jz4pHGRr2aawUinvOMXuZjwN4LCOP4XWHSUBX6TVaMueskAjfqPmmKQ5+nvJzwZk/QHTrjXTRpnWLsEqNEDzqgZ29B0fM7PVMFcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imFj7n5e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VhYyvqsB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0FC1F000E9;
-	Tue, 21 Jul 2026 17:03:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imFj7n5e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8091F000E9;
+	Tue, 21 Jul 2026 17:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653401;
-	bh=ns0ODY6qsJJeg4ac+k3Pi15ryHvyCik5+9lxa9lFhU0=;
+	s=korg; t=1784653404;
+	bh=xNe/xdeDCk7DX4YODLt57tR8igOsj6arwZL19Ji3fDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VhYyvqsBDrj99YlS2hCYRTa2Xm1DiRX4uac868hQwflcbl06uOEyrRg7UnuTiQRam
-	 vrskhdSbqm7JZEPVsCOd3nhPtliqy5vT7HvKiOV77K3GE1ZY+7+jsvIBpIBQ372Rkv
-	 XcubK2T9mKXzVOlRIhijw7LLJJQlB3wGyL3UcQ8U=
+	b=imFj7n5eZ02loJSWmrGs/vSQhum8cxK7bRdZczBGUSvoNjNrawIEQGNQpesydZ3wb
+	 53V6vdFhSpw851iKJKsGIP5flhv7XYLWOGV2M9Lx3IUB1jzNZh1t7z54ym6fPLKnm2
+	 4KavMeZycNVxha5kRkNG4tJTgtFJeCjlBbzZqmM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Corey Leavitt <corey@leavitt.info>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Carlo Szelinsky <github@szelinsky.de>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1313/2077] gpio: htc-egpio: use managed gpiochip registration
-Date: Tue, 21 Jul 2026 17:16:26 +0200
-Message-ID: <20260721152623.791091649@linuxfoundation.org>
+Subject: [PATCH 7.1 1314/2077] net: pse-pd: scope pse_control regulator handle to kref lifetime
+Date: Tue, 21 Jul 2026 17:16:27 +0200
+Message-ID: <20260721152623.814032249@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,52 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Corey Leavitt <corey@leavitt.info>
 
-[ Upstream commit 17326db5f0ab4ec1901e75d052b5ebef486b467f ]
+[ Upstream commit 16759757c4d28e958fd5a5a1fe0f86828872f28d ]
 
-egpio_probe() registers each nested gpio_chip with gpiochip_add_data()
-but ignores the return value. If one registration fails, probe still
-returns success even though one of the chips was not published to
-gpiolib.
+__pse_control_release() drops psec->ps via devm_regulator_put(), which
+only succeeds if the devres entry added by the matching
+devm_regulator_get_exclusive() is still present on pcdev->dev at the
+time the pse_control's kref hits zero.
 
-Use devm_gpiochip_add_data() and fail probe if any chip registration
-fails. This lets devres unwind already registered chips and prevents
-the driver from publishing a partially initialized device.
+That assumption does not hold when the controller is unbound while a
+pse_control still has consumers: pcdev->dev's devres list is released
+LIFO, so every per-attach regulator-GET devres runs (and
+regulator_put()s the underlying regulator) before
+pse_controller_unregister() itself is invoked. Any later
+pse_control_put() from that unbind path then reads psec->ps as a
+dangling pointer inside devm_regulator_put() and WARNs at
+drivers/regulator/devres.c:232 (devres_release() fails to find the
+already-released match).
 
-Fixes: a1635b8fe59d ("[ARM] 4947/1: htc-egpio, a driver for GPIO/IRQ expanders with fixed input/output pins")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260624131828.94139-1-pengpeng@iscas.ac.cn
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+The pse_control's consumer handle is logically scoped to the
+pse_control's refcount, not to pcdev->dev's devres lifetime. Switch to
+the plain regulator_get_exclusive() / regulator_put() pair so the
+regulator put in __pse_control_release() no longer depends on the
+controller's devres still being present. No change to the
+regulator-framework-visible refcount or lifetime of the underlying
+regulator: a single get paired with a single put. The existing
+devm_regulator_register() for the per-PI rails is unchanged (those ARE
+correctly scoped to the controller's lifetime).
+
+This addresses only the regulator handle. The same unbind-while-held
+scenario also leaves __pse_control_release() reading psec->pcdev->pi[]
+and psec->pcdev->owner after pse_controller_unregister() has freed
+pcdev->pi, because the controller does not drain its outstanding
+pse_control references on unregister. That wider pse_control vs
+pcdev lifetime problem pre-dates this change and is addressed by the
+PSE controller notifier series, which drains phydev->psec on
+PSE_UNREGISTERED before pcdev->pi is freed.
+
+Link: https://lore.kernel.org/netdev/20260620112440.1734404-1-github@szelinsky.de/
+Fixes: d83e13761d5b ("net: pse-pd: Use regulator framework within PSE framework")
+Signed-off-by: Corey Leavitt <corey@leavitt.info>
+Acked-by: Kory Maincent <kory.maincent@bootlin.com>
+Signed-off-by: Carlo Szelinsky <github@szelinsky.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260624204017.2752934-1-github@szelinsky.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-htc-egpio.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/pse-pd/pse_core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpio-htc-egpio.c b/drivers/gpio/gpio-htc-egpio.c
-index d15423c718d033..25a4d4494f3c3a 100644
---- a/drivers/gpio/gpio-htc-egpio.c
-+++ b/drivers/gpio/gpio-htc-egpio.c
-@@ -268,6 +268,7 @@ static int __init egpio_probe(struct platform_device *pdev)
- 	struct gpio_chip  *chip;
- 	unsigned int      irq, irq_end;
- 	int               i;
-+	int               ret;
+diff --git a/drivers/net/pse-pd/pse_core.c b/drivers/net/pse-pd/pse_core.c
+index 69dbdbde9d71a7..a5e6d7b26b9fd7 100644
+--- a/drivers/net/pse-pd/pse_core.c
++++ b/drivers/net/pse-pd/pse_core.c
+@@ -1367,7 +1367,7 @@ static void __pse_control_release(struct kref *kref)
  
- 	/* Initialize ei data structure. */
- 	ei = devm_kzalloc(&pdev->dev, struct_size(ei, chip, pdata->num_chips), GFP_KERNEL);
-@@ -326,7 +327,10 @@ static int __init egpio_probe(struct platform_device *pdev)
- 		chip->base            = pdata->chip[i].gpio_base;
- 		chip->ngpio           = pdata->chip[i].num_gpios;
+ 	if (psec->pcdev->pi[psec->id].admin_state_enabled)
+ 		regulator_disable(psec->ps);
+-	devm_regulator_put(psec->ps);
++	regulator_put(psec->ps);
  
--		gpiochip_add_data(chip, &ei->chip[i]);
-+		ret = devm_gpiochip_add_data(&pdev->dev, chip, &ei->chip[i]);
-+		if (ret)
-+			return dev_err_probe(&pdev->dev, ret,
-+					     "failed to register gpiochip %d\n", i);
- 	}
+ 	module_put(psec->pcdev->owner);
  
- 	/* Set initial pin values */
+@@ -1436,8 +1436,8 @@ pse_control_get_internal(struct pse_controller_dev *pcdev, unsigned int index,
+ 		goto free_psec;
+ 
+ 	pcdev->pi[index].admin_state_enabled = ret;
+-	psec->ps = devm_regulator_get_exclusive(pcdev->dev,
+-						rdev_get_name(pcdev->pi[index].rdev));
++	psec->ps = regulator_get_exclusive(pcdev->dev,
++					   rdev_get_name(pcdev->pi[index].rdev));
+ 	if (IS_ERR(psec->ps)) {
+ 		ret = PTR_ERR(psec->ps);
+ 		goto put_module;
 -- 
 2.53.0
 
