@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A6245DF45;
-	Tue, 21 Jul 2026 21:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726EF4582EC;
+	Tue, 21 Jul 2026 21:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667921; cv=none; b=YTWsmQTHFyyfsNgZbsjAZOUYA9/gc1zOh8PfOPYSAFiH6TzCIcKKNKfKlpjE63b7GtrarLxXTtrMqvdBSQajW7ACtIaic3efnvO51IPzCNb73lrgvnTQqo5iTJxsQ1C7xEmGiIXfMs6d81g+Z2xmaje26pn+l+LqQzjmo3MjrXo=
+	t=1784667923; cv=none; b=iXPnKWPNC9lRfNKgf3KjiJOkHpydwqxmbymDA/VeiGXbWZY9sFKKN4JnWQr9YTopRxpjsAWn7HJ6t70s58nUctKjZA3vWLYwCQ/OvNNkt17IDDIeLT2xQ6WwBMI1KXYalbbq8mq04RL4mVNSgTNp7ZrsuQ307rU6QEWum5+B98s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667921; c=relaxed/simple;
-	bh=Mzqx1veuQfB7VRqdbn/SYl3ruE+O+oSPHKtnRl70I8s=;
+	s=arc-20240116; t=1784667923; c=relaxed/simple;
+	bh=VLtoYCEwLRGzbZJe3MADDC0OAPrUXom6J3b3p/JVYTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=niOHAbtBI0mQRLxPj8Xv/Due9fs3x63qFZ3zkAquEjR30MWqSj/jLmr09phWPwxpMQHtPpeWsg8x8vTQoCQVi7hDC4YljXwnwVco9NgBWi7seF3lRhkgn97Syd9ceOfvh2ZCQQ38/w7r6McVukrGqI6imWBnYsTZO41ebmCkw8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9s47X7G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rcFLCQzdPfu2TYd9PSFlZ53Jd2xkaVRYoBJ3nq2JiQQnNkyieaI9V9k722YG0N4RpWXrCKK1gKH7MQL/7DmC06pndqD5ZLAJFV1qbfIevmd8rhs/9VGfpTnyDCQWMiUw3lWsGSNNyfVb1waSZrcuPOzDz7iscv5wWJYiDS8fat8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fe/e1EHp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9s47X7G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1FF1F000E9;
-	Tue, 21 Jul 2026 21:05:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fe/e1EHp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79EC1F00A3A;
+	Tue, 21 Jul 2026 21:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667919;
-	bh=mIC4h5SwjZQ/asbG9KlBtgX5Yws3StDGZUnn4RVBBSY=;
+	s=korg; t=1784667922;
+	bh=3Hrcdg8asgI1R8UGnDkKabXHfCQ5ETVXha8QGUYv34g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L9s47X7GPqhzqkRJHBqMx/ahta/r0uTI9sE3leD8VpZ9eBBOmTfAKpARWY3tZlKrf
-	 mNdWEJmQYzpeuShzq1U9Fo9l9+YR3aDPVm91QbrJfnvt5TkWGWuGhxMhFKKQ9WszM2
-	 GeF0aQuFYYLeRiMjnHHbNnULLa7XnYp0e2Dm2qUQ=
+	b=Fe/e1EHpM/WS89d9VrfEYwwbD+ggzWCkhot72pHUlPjExkcbL/QW+tLEG+NIo3I/W
+	 jXgJkwtk9x8n1oPvCC9WySJE7yB/avISJf9jfVrluszgUKRtylJvw+tFbEWxkMFz9L
+	 IpbWGAn06ZesKyUw21MybBVAA53CWaOaHC8LIXo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Musaab Khan <musaab.khan@protonmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1199/1266] ksmbd: track the connection owning a byte-range lock
-Date: Tue, 21 Jul 2026 17:27:16 +0200
-Message-ID: <20260721152508.627851807@linuxfoundation.org>
+Subject: [PATCH 6.6 1200/1266] proc: rename proc_setattr to proc_nochmod_setattr
+Date: Tue, 21 Jul 2026 17:27:17 +0200
+Message-ID: <20260721152508.650432097@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,135 +52,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit c1016dd1d8b2bcd1158bbaabe94a31bb7e7431fb ]
+[ Upstream commit 690005b0b1e6b567c88b7790e6d90d4d6c9e09cc ]
 
-SMB2_LOCK adds each granted byte-range lock to both the file lock list
-and the lock list of the connection which handled the request.  The
-final close and durable handle paths, however, remove the connection
-list entry while holding fp->conn->llist_lock.
+What is currently proc_setattr is a special version added after the more
+general procfs ->seattr in commit 6d76fa58b050 ("Don't allow chmod() on
+the /proc/<pid>/ files").  Give it a name that reflects that to free the
+proc_setattr name and better describe what is doing.
 
-With SMB3 multichannel, the connection handling the LOCK request can be
-different from the connection which opened the file.  The entry can
-therefore be removed under a different spinlock from the one protecting
-the list it belongs to.  A concurrent traversal can then access freed
-struct ksmbd_lock and struct file_lock objects.
-
-Record the connection owning each lock's clist entry and hold a
-reference to it while the entry is linked.  Use that connection and its
-llist_lock for unlock, rollback, close, and durable preserve.  Durable
-reconnect assigns the new connection as the owner when publishing the
-locks again.
-
-Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
-Cc: stable@vger.kernel.org
-Reported-by: Musaab Khan <musaab.khan@protonmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260325063711.3298685-5-hch@lst.de
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 6255da28d4bb ("proc: protect ptrace_may_access() with exec_update_lock (FD links)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c   |   10 ++++++++--
- fs/smb/server/vfs_cache.c |   23 +++++++++++++++++------
- fs/smb/server/vfs_cache.h |    1 +
- 3 files changed, 26 insertions(+), 8 deletions(-)
+ fs/proc/base.c       |   22 +++++++++++-----------
+ fs/proc/fd.c         |    6 +++---
+ fs/proc/internal.h   |    4 ++--
+ fs/proc/namespaces.c |    4 ++--
+ fs/proc/proc_net.c   |    2 +-
+ 5 files changed, 19 insertions(+), 19 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -7580,9 +7580,11 @@ int smb2_lock(struct ksmbd_work *work)
- 						nolock = 0;
- 						list_del(&cmp_lock->flist);
- 						list_del(&cmp_lock->clist);
-+						cmp_lock->conn = NULL;
- 						spin_unlock(&conn->llist_lock);
- 						up_read(&conn_list_lock);
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -721,7 +721,7 @@ static bool proc_fd_access_allowed(struc
+ 	return allowed;
+ }
  
-+						ksmbd_conn_put(conn);
- 						locks_free_lock(cmp_lock->fl);
- 						kfree(cmp_lock);
- 						goto out_check_cl;
-@@ -7717,6 +7719,7 @@ skip:
- 				goto out2;
- 			} else if (!rc) {
- 				list_add(&smb_lock->llist, &rollback_list);
-+				smb_lock->conn = ksmbd_conn_get(work->conn);
- 				spin_lock(&work->conn->llist_lock);
- 				list_add_tail(&smb_lock->clist,
- 					      &work->conn->lock_list);
-@@ -7771,11 +7774,14 @@ out:
- 		}
+-int proc_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
++int proc_nochmod_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 		 struct iattr *attr)
+ {
+ 	int error;
+@@ -794,7 +794,7 @@ static int proc_pid_permission(struct mn
  
- 		list_del(&smb_lock->llist);
--		spin_lock(&work->conn->llist_lock);
-+		conn = smb_lock->conn;
-+		spin_lock(&conn->llist_lock);
- 		if (!list_empty(&smb_lock->flist))
- 			list_del(&smb_lock->flist);
- 		list_del(&smb_lock->clist);
--		spin_unlock(&work->conn->llist_lock);
-+		smb_lock->conn = NULL;
-+		spin_unlock(&conn->llist_lock);
-+		ksmbd_conn_put(conn);
  
- 		locks_free_lock(smb_lock->fl);
- 		if (rlock)
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -391,10 +391,14 @@ static void __ksmbd_close_fd(struct ksmb
- 	 * there are not accesses to fp->lock_list.
- 	 */
- 	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
--		if (!list_empty(&smb_lock->clist) && fp->conn) {
--			spin_lock(&fp->conn->llist_lock);
--			list_del(&smb_lock->clist);
--			spin_unlock(&fp->conn->llist_lock);
-+		struct ksmbd_conn *conn = smb_lock->conn;
-+
-+		if (conn) {
-+			spin_lock(&conn->llist_lock);
-+			list_del_init(&smb_lock->clist);
-+			smb_lock->conn = NULL;
-+			spin_unlock(&conn->llist_lock);
-+			ksmbd_conn_put(conn);
- 		}
+ static const struct inode_operations proc_def_inode_operations = {
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
  
- 		list_del(&smb_lock->flist);
-@@ -1092,9 +1096,15 @@ static bool session_fd_check(struct ksmb
- 	up_write(&ci->m_lock);
+ static int proc_single_show(struct seq_file *m, void *v)
+@@ -1867,7 +1867,7 @@ out:
+ const struct inode_operations proc_pid_link_inode_operations = {
+ 	.readlink	= proc_pid_readlink,
+ 	.get_link	= proc_pid_get_link,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
  
- 	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
--		spin_lock(&conn->llist_lock);
-+		struct ksmbd_conn *lock_conn = smb_lock->conn;
-+
-+		if (!lock_conn)
-+			continue;
-+		spin_lock(&lock_conn->llist_lock);
- 		list_del_init(&smb_lock->clist);
--		spin_unlock(&conn->llist_lock);
-+		smb_lock->conn = NULL;
-+		spin_unlock(&lock_conn->llist_lock);
-+		ksmbd_conn_put(lock_conn);
- 	}
  
- 	fp->conn = NULL;
-@@ -1215,6 +1225,7 @@ int ksmbd_reopen_durable_fd(struct ksmbd
- 	}
+@@ -2317,7 +2317,7 @@ proc_map_files_get_link(struct dentry *d
+ static const struct inode_operations proc_map_files_link_inode_operations = {
+ 	.readlink	= proc_pid_readlink,
+ 	.get_link	= proc_map_files_get_link,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
  
- 	list_for_each_entry(smb_lock, &fp->lock_list, flist) {
-+		smb_lock->conn = ksmbd_conn_get(conn);
- 		spin_lock(&conn->llist_lock);
- 		list_add_tail(&smb_lock->clist, &conn->lock_list);
- 		spin_unlock(&conn->llist_lock);
---- a/fs/smb/server/vfs_cache.h
-+++ b/fs/smb/server/vfs_cache.h
-@@ -32,6 +32,7 @@ struct ksmbd_session;
+ static struct dentry *
+@@ -2396,7 +2396,7 @@ out:
+ static const struct inode_operations proc_map_files_inode_operations = {
+ 	.lookup		= proc_map_files_lookup,
+ 	.permission	= proc_fd_permission,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
  
- struct ksmbd_lock {
- 	struct file_lock *fl;
-+	struct ksmbd_conn *conn;
- 	struct list_head clist;
- 	struct list_head flist;
- 	struct list_head llist;
+ static int
+@@ -2892,7 +2892,7 @@ static struct dentry *proc_##LSM##_attr_
+ static const struct inode_operations proc_##LSM##_attr_dir_inode_ops = { \
+ 	.lookup		= proc_##LSM##_attr_dir_lookup, \
+ 	.getattr	= pid_getattr, \
+-	.setattr	= proc_setattr, \
++	.setattr	= proc_nochmod_setattr, \
+ }
+ 
+ #ifdef CONFIG_SECURITY_SMACK
+@@ -2951,7 +2951,7 @@ static struct dentry *proc_attr_dir_look
+ static const struct inode_operations proc_attr_dir_inode_operations = {
+ 	.lookup		= proc_attr_dir_lookup,
+ 	.getattr	= pid_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ #endif
+@@ -3444,7 +3444,7 @@ static struct dentry *proc_tgid_base_loo
+ static const struct inode_operations proc_tgid_base_inode_operations = {
+ 	.lookup		= proc_tgid_base_lookup,
+ 	.getattr	= pid_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ 	.permission	= proc_pid_permission,
+ };
+ 
+@@ -3644,7 +3644,7 @@ static int proc_tid_comm_permission(stru
+ }
+ 
+ static const struct inode_operations proc_tid_comm_inode_operations = {
+-		.setattr	= proc_setattr,
++		.setattr	= proc_nochmod_setattr,
+ 		.permission	= proc_tid_comm_permission,
+ };
+ 
+@@ -3775,7 +3775,7 @@ static const struct file_operations proc
+ static const struct inode_operations proc_tid_base_inode_operations = {
+ 	.lookup		= proc_tid_base_lookup,
+ 	.getattr	= pid_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ static struct dentry *proc_task_instantiate(struct dentry *dentry,
+@@ -3973,7 +3973,7 @@ static int proc_task_getattr(struct mnt_
+ static const struct inode_operations proc_task_inode_operations = {
+ 	.lookup		= proc_task_lookup,
+ 	.getattr	= proc_task_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ 	.permission	= proc_pid_permission,
+ };
+ 
+--- a/fs/proc/fd.c
++++ b/fs/proc/fd.c
+@@ -104,7 +104,7 @@ static int proc_fdinfo_permission(struct
+ 
+ static const struct inode_operations proc_fdinfo_file_inode_operations = {
+ 	.permission	= proc_fdinfo_permission,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ static const struct file_operations proc_fdinfo_file_operations = {
+@@ -374,7 +374,7 @@ const struct inode_operations proc_fd_in
+ 	.lookup		= proc_lookupfd,
+ 	.permission	= proc_fd_permission,
+ 	.getattr	= proc_fd_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ static struct dentry *proc_fdinfo_instantiate(struct dentry *dentry,
+@@ -415,7 +415,7 @@ static int proc_readfdinfo(struct file *
+ const struct inode_operations proc_fdinfo_inode_operations = {
+ 	.lookup		= proc_lookupfdinfo,
+ 	.permission	= proc_fdinfo_permission,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ const struct file_operations proc_fdinfo_operations = {
+--- a/fs/proc/internal.h
++++ b/fs/proc/internal.h
+@@ -183,8 +183,8 @@ extern int proc_pid_statm(struct seq_fil
+ extern const struct dentry_operations pid_dentry_operations;
+ extern int pid_getattr(struct mnt_idmap *, const struct path *,
+ 		       struct kstat *, u32, unsigned int);
+-extern int proc_setattr(struct mnt_idmap *, struct dentry *,
+-			struct iattr *);
++int proc_nochmod_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
++			struct iattr *attr);
+ extern void proc_pid_evict_inode(struct proc_inode *);
+ extern struct inode *proc_pid_make_inode(struct super_block *, struct task_struct *, umode_t);
+ extern void pid_update_inode(struct task_struct *, struct inode *);
+--- a/fs/proc/namespaces.c
++++ b/fs/proc/namespaces.c
+@@ -92,7 +92,7 @@ static int proc_ns_readlink(struct dentr
+ static const struct inode_operations proc_ns_link_inode_operations = {
+ 	.readlink	= proc_ns_readlink,
+ 	.get_link	= proc_ns_get_link,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+ 
+ static struct dentry *proc_ns_instantiate(struct dentry *dentry,
+@@ -179,5 +179,5 @@ out_no_task:
+ const struct inode_operations proc_ns_dir_inode_operations = {
+ 	.lookup		= proc_ns_dir_lookup,
+ 	.getattr	= pid_getattr,
+-	.setattr	= proc_setattr,
++	.setattr	= proc_nochmod_setattr,
+ };
+--- a/fs/proc/proc_net.c
++++ b/fs/proc/proc_net.c
+@@ -321,7 +321,7 @@ static int proc_tgid_net_getattr(struct
+ const struct inode_operations proc_net_inode_operations = {
+ 	.lookup		= proc_tgid_net_lookup,
+ 	.getattr	= proc_tgid_net_getattr,
+-	.setattr        = proc_setattr,
++	.setattr        = proc_nochmod_setattr,
+ };
+ 
+ static int proc_tgid_net_readdir(struct file *file, struct dir_context *ctx)
 
 
