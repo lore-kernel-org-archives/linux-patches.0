@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E7A471250;
-	Tue, 21 Jul 2026 18:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68673264FF;
+	Tue, 21 Jul 2026 18:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659286; cv=none; b=F1lrOaEQz1uceotxXuwPsNfbwCdUJ2cLHjDa1feWrr60zUpXyl1sT/7vrA390T1p3sMgvmNbWIZluI+RaKyxKQm8Xrhs3Z2UzI4Hw90jpzOoOV7ghCtsMGFubT/7YY2ef7I9xQ4vN6BCGoYMB7+ajP1DxS4eaRRSfWM8ePLjzvU=
+	t=1784659288; cv=none; b=PQ0MjxF0Ytvzn3FdbDHSPK8gja8xyOUKOGxm2fA03XzUIRvwd3ruVi9C/oMIMEcxqu5qOiMYoAlvRu5W6iQjmIIg6YFDJ9eeJOe2uEkW0EQJ+aUOHhYsGmDlsEBOA8YCQG1VH5WKWdHCfr7DgdvEtLxTaIAqrPMCIdC2uDDnVUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659286; c=relaxed/simple;
-	bh=4FL1tZD6025xg3MyP6iRWRBX/bLcR102UcLRRhPnXVM=;
+	s=arc-20240116; t=1784659288; c=relaxed/simple;
+	bh=S87usd8+PApMCdK3DkBj/kAeaq9mx5F1lxTrOyzhXNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uxvfGR5Vl5ikSDMlnljwkllJDOz0J19lvBxXXRfeN7YGfkhOJQiGLkSx7Wno/IS/dL69fXJTKo1yT0lXp/h4fI8wWkLI8ZnEZQJ1Ekm6qIW443vbLOuRdp6MPzX8V4Dr9vvblOvbJWcg+LhY5CIjLiMI1avWN+FFRmJavNzT9O0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGWbY3zK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qb0a3ttxXnSBO5PEO28BgseaXiOpjihxuG3fyBbZhqiERHMIMoxktHkvo41Ln0r5EJcgtVc1wvVUUfhoTDhm5HPY4mTV+VHq/sVrmszpjJDdy4Ar2dnGHjkMk03ffJGwk1PIY1aBmUWKc2qoChLdSqCbWeb9uWA2Unr6za/1Ds8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HcWq9MH4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGWbY3zK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B3E1F000E9;
-	Tue, 21 Jul 2026 18:41:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HcWq9MH4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC3A1F000E9;
+	Tue, 21 Jul 2026 18:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659285;
-	bh=kYlcxDpkBxFdfnBynyqYq5AtlXOk/LO2vTJVsJIor4U=;
+	s=korg; t=1784659287;
+	bh=B+HaVBqcVb9q8tL65GOCaTd7R3KXPuVzccqqae000oI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZGWbY3zK1tlKOxsiJlHZfMP++6JsJPn9UODasM9w6gsKKmDbJnolazKdEvReX47PU
-	 FQ8BtVQxM76chi4eq7UO2TkrlRCMrr4IPBPnc/P8UbBkmcchqQUa7SKhiibDnF8CBx
-	 +YtNtdrwrj6EeRz75hQwgu+Ezn1XNo9p8mWD3r74=
+	b=HcWq9MH4M+HAhUSaT3XrvN5xJ48CBEpivbQurk6RRmVki4NnRpLmkf3Keq1+CGI3J
+	 sRNVJALoWN3nj3RKiYJJzGPmGPpdDp/St4KcJbKbaAeM9RKR0BCKHolmghQBelUJW4
+	 8U0al4zBCNgOOTPsV8i3dvxDyilIiEhkxMtZuGK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.18 1463/1611] fs/resctrl: Fix double-add of pseudo-locked regions RMID to free list
-Date: Tue, 21 Jul 2026 17:26:19 +0200
-Message-ID: <20260721152548.353702139@linuxfoundation.org>
+	Terrence Adams <tadamsjr@google.com>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 6.18 1464/1611] ata: libata-core: Skip HPA resize for locked drives
+Date: Tue, 21 Jul 2026 17:26:20 +0200
+Message-ID: <20260721152548.376444792@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,56 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+From: TJ Adams <tadamsjr@google.com>
 
-commit b9f089723aee892efc77c349ae47a6b452b293c4 upstream.
+commit 917d0a4b95ea7ba01ed6296fb808f752d5d81107 upstream.
 
-A pseudo-locked group's RMID is freed when it is created. On unmount
-rmdir_all_sub() unconditionally frees all RMID of all groups, resulting
-in a double-free of the pseudo-locked group's RMID. The consequence of this
-is that the original free results in the pseudo-locked group's RMID being
-added to the rmid_free_lru linked list and the second free then attempts
-to add the same RMID entry to the rmid_free_lru again.
+Skip HPA resize in ata_hpa_resize() if the drive is security locked.
+If the drive is locked, the command to read the native max address
+fails with -EACCES, which currently causes the sticky quirk
+ATA_QUIRK_BROKEN_HPA to be set on the device.
 
-Do not double-free a pseudo-locked group's RMID.
+Setting this sticky quirk causes subsequent revalidations (after the
+drive is unlocked) to bypass HPA checks, preventing the unlocked drive
+from exposing its full native capacity without a reboot or device removal.
 
-Fixes: e0bdfe8e36f3 ("x86/intel_rdt: Support creation/removal of pseudo-locked region")
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/551432dd7e624a862b8e58314c38aaba0afff3e9.1783377598.git.reinette.chatre@intel.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Terrence Adams <tadamsjr@google.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/resctrl/rdtgroup.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/ata/libata-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -2986,10 +2986,6 @@ static void rmdir_all_sub(void)
- 		if (rdtgrp == &rdtgroup_default)
- 			continue;
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -1324,7 +1324,7 @@ static int ata_hpa_resize(struct ata_dev
+ 	/* do we need to do it? */
+ 	if ((dev->class != ATA_DEV_ATA && dev->class != ATA_DEV_ZAC) ||
+ 	    !ata_id_has_lba(dev->id) || !ata_id_hpa_enabled(dev->id) ||
+-	    (dev->quirks & ATA_QUIRK_BROKEN_HPA))
++	    (dev->quirks & ATA_QUIRK_BROKEN_HPA) || ata_id_is_locked(dev->id))
+ 		return 0;
  
--		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
--		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
--			rdtgroup_pseudo_lock_remove(rdtgrp);
--
- 		/*
- 		 * Give any CPUs back to the default group. We cannot copy
- 		 * cpu_online_mask because a CPU might have executed the
-@@ -3000,7 +2996,13 @@ static void rmdir_all_sub(void)
- 
- 		rdtgroup_unassign_cntrs(rdtgrp);
- 
--		free_rmid(rdtgrp->closid, rdtgrp->mon.rmid);
-+		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
-+		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
-+			rdtgroup_pseudo_lock_remove(rdtgrp);
-+		} else {
-+			/* Pseudo-locked group's RMID is freed during setup. */
-+			free_rmid(rdtgrp->closid, rdtgrp->mon.rmid);
-+		}
- 
- 		kernfs_remove(rdtgrp->kn);
- 		list_del(&rdtgrp->rdtgroup_list);
+ 	/* read native max address */
 
 
