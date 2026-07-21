@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45A44189DA;
-	Tue, 21 Jul 2026 21:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CFF3B9D9D;
+	Tue, 21 Jul 2026 21:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669779; cv=none; b=JOEbHY4oudvMmcVYRek/RA+DVeSCt64OQnJnazuahsP8mw3sO7BiLrEjQtz3mJyyMS5NEtrDaVkPwwtfWdMvFruKVfPjdYiVp7p62EcAUGW3r3+ved9yKrl62p/QFKv3SNg4B3nTxbVar/UJsSufuP6Nbm5R3FTcZAhbil2FBnw=
+	t=1784669781; cv=none; b=hU8hGAXVHDWnqihcdoIKwRHlQFrCk7wA3Ngk31/oAtT/6uf/EHpyhjNRuVqqmK+qljkw6+i0z+oGzLmb+4FjlIZzGiOxKK9cIc0NPG7xP1tV5EA8EnYKIXs5YG6UKIfBZP3sETKt/hmaUXkGEJ7bG4EiJnZ7WNhTqo3fbhqNinY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669779; c=relaxed/simple;
-	bh=6wvCLvxTC0KQ/bFnY9jw5tcXHFAAZaPB8M6W1c/aS7Q=;
+	s=arc-20240116; t=1784669781; c=relaxed/simple;
+	bh=uoYGbVnz78uDOopF2wOP5MHPC90ARteONj8hkEgGLzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=flIL5f8L/VH5+iuGa+VB+0CQvNc4L6m7uxIgnR+TaXdDE5ThahFMKEj0W535HDfL96VpypnqbLzgcGrdI98QzdsEJ7+nwB5WOCOHj7yNo1GQnYg47EK7uBTqcLEgT2w+CLCQgCOvGTkFotHKVsoMw2YL4P0wULGKTGlh07//S7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uctKo/+g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ke2Cutvp4DH4eMtiVDWGOoKgpjH5+nGiGFrMYXQh1A8WtWQJNn9FNsL7pDs+x/tqbVrSerYXjSZcZTzX3K+1LvakYMf95sRuWioiERRzyY4InkIawaJQtg7L4Yex/CnjU7B+4O2zA1cNLPX18XzwBkGpRKPn1eK94QE0LhJ6Dl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLN7tY3j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uctKo/+g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E341F000E9;
-	Tue, 21 Jul 2026 21:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLN7tY3j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2BDA1F000E9;
+	Tue, 21 Jul 2026 21:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669777;
-	bh=1n/huxbxEmxLUpo157Y3ZzcDFpLD48nkSBQnw4QT+ao=;
+	s=korg; t=1784669780;
+	bh=eB5dbMUFexMSO3usr1xGoMSHTXB6GCNfXTQ3bRJqwMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uctKo/+g1o+S24bgM7HFHH6IE3EnOfpTNaUQCed/HI2OAqrcaY74cNJv8VGU1E53n
-	 oVLXL83edGDu6OEMgA9Vjlz5hhlyb3Fof1kFiDoWK7fKPVsdOhr8vXus6KOxtBYF5h
-	 O3MEdYMuktTWYUkh15KGcV8asJu0oxoOi2qHzoZQ=
+	b=YLN7tY3jwY5zFH1DBS0tpHnrT0tjWZu4WJGAglhEs1vvCYLbbCRGIlD64f0LTtk/x
+	 FLK8A+bco6Sv9ImIAjrJJdVmhQalvqHKtCVrDsN6+3xhfFzAnSh6D17rAAG5pMMlv+
+	 kxuY/ifHa2VQi9mz+ylG2ViaT5GA72DcZtBf/l4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Wozniak <petr.wozniak@gmail.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Wyatt Feng <bronzed_45_vested@icloud.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0656/1067] net: phy: sfp: free mii_bus in sfp_i2c_mdiobus_destroy
-Date: Tue, 21 Jul 2026 17:20:57 +0200
-Message-ID: <20260721152439.268285457@linuxfoundation.org>
+Subject: [PATCH 6.1 0683/1067] netfilter: xt_u32: reject invalid shift counts
+Date: Tue, 21 Jul 2026 17:21:24 +0200
+Message-ID: <20260721152439.875174505@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,48 +57,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Wozniak <petr.wozniak@gmail.com>
+From: Wyatt Feng <bronzed_45_vested@icloud.com>
 
-[ Upstream commit 8f31efff9206f9f0adb853cad6916086aac4d5ef ]
+[ Upstream commit 64cdf7d30ac18e43df6c48004435febb965809a8 ]
 
-sfp_i2c_mdiobus_create() allocates the I2C MDIO bus with mdio_i2c_alloc(),
-a plain (non-devm) allocation, and registers it. sfp_i2c_mdiobus_destroy()
-only unregisters the bus and clears sfp->i2c_mii without calling
-mdiobus_free(). As the only reference to the bus is then cleared, the
-struct mii_bus is leaked.
+u32_match_it() executes rule-supplied shift operands on a 32-bit
+value. A malformed u32 rule can provide a shift count of 32 or more,
+triggering an undefined shift out-of-bounds during packet evaluation.
 
-This is hit whenever a copper/RollBall SFP module that instantiated an MDIO
-bus is removed: sfp_sm_main() takes the global teardown path and calls
-sfp_i2c_mdiobus_destroy(). sfp_cleanup(), on driver unbind, frees
-sfp->i2c_mii directly, which is why the leak only triggered on module
-hot-removal and not on unbind.
+Validate XT_U32_LEFTSH and XT_U32_RIGHTSH operands in
+u32_mt_checkentry() and reject malformed rules before they reach the
+packet path.
 
-Free the bus in sfp_i2c_mdiobus_destroy() to match the allocation done in
-sfp_i2c_mdiobus_create().
-
-Fixes: e85b1347ace6 ("net: sfp: create/destroy I2C mdiobus before PHY probe/after PHY release")
-Signed-off-by: Petr Wozniak <petr.wozniak@gmail.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Link: https://patch.msgid.link/312bde8176fc429aa89524e3be250137f034ba84.1782581445.git.petr.wozniak@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1b50b8a371e9 ("[NETFILTER]: Add u32 match")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/sfp.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/xt_u32.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index 5cc3d53bbf666d..907d4005a1cf56 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -607,6 +607,7 @@ static int sfp_i2c_mdiobus_create(struct sfp *sfp)
- static void sfp_i2c_mdiobus_destroy(struct sfp *sfp)
+diff --git a/net/netfilter/xt_u32.c b/net/netfilter/xt_u32.c
+index 117d4615d6684c..ec1a21e3b6e2c3 100644
+--- a/net/netfilter/xt_u32.c
++++ b/net/netfilter/xt_u32.c
+@@ -100,7 +100,7 @@ static int u32_mt_checkentry(const struct xt_mtchk_param *par)
  {
- 	mdiobus_unregister(sfp->i2c_mii);
-+	mdiobus_free(sfp->i2c_mii);
- 	sfp->i2c_mii = NULL;
- }
+ 	const struct xt_u32 *data = par->matchinfo;
+ 	const struct xt_u32_test *ct;
+-	unsigned int i;
++	unsigned int i, j;
  
+ 	if (data->ntests > ARRAY_SIZE(data->tests))
+ 		return -EINVAL;
+@@ -111,6 +111,16 @@ static int u32_mt_checkentry(const struct xt_mtchk_param *par)
+ 		if (ct->nnums > ARRAY_SIZE(ct->location) ||
+ 		    ct->nvalues > ARRAY_SIZE(ct->value))
+ 			return -EINVAL;
++
++		for (j = 1; j < ct->nnums; ++j) {
++			switch (ct->location[j].nextop) {
++			case XT_U32_LEFTSH:
++			case XT_U32_RIGHTSH:
++				if (ct->location[j].number >= 32)
++					return -EINVAL;
++				break;
++			}
++		}
+ 	}
+ 
+ 	return 0;
 -- 
 2.53.0
 
