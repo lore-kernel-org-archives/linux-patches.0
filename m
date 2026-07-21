@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A38E231829;
-	Tue, 21 Jul 2026 22:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AF635C6AC;
+	Tue, 21 Jul 2026 22:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673589; cv=none; b=MMLWOE5a34i7j1xRVRtxyjZkGntpqU5ipeNCgIoi98U0uDkgDYSbf5T2LKU6c18dgSGytwMYbmpi1P23bO2+8nwqNP9BHFAV5iV/q7eGuPycF8+HANjeAkGFPjGIcfTH1ZXABkcQGUKoKj+hHRcJJgHlApP7Mr6q0aWKoq56b9g=
+	t=1784673591; cv=none; b=nLk8MESmCKKhfgo+bIcFNSVTLDFYki6YdA9MCRevPLHj9nFntcf/zf1yZ2Fm6OrfS5cQXlhVFzKak8WDyWePKLYyRMlM8N8mWTkVpj19Yai7gMmXV61U8psXUqmzgQkG4c8Kd+u/j5jTestlNHWEIN7IeKWKGc68oC+6bdEvnpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673589; c=relaxed/simple;
-	bh=B4X5dU+eFDeUk2A7m+FLJHVfosturHM+24oes+ZntQ8=;
+	s=arc-20240116; t=1784673591; c=relaxed/simple;
+	bh=xqTwPZq1i5CJytz+RuW2RJiSlxPGGemaP2n6Zq0p/dY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TaWHvE9wyv4iB+Nt6ex7Fsz4XKb2mGb/fa0u7VkZbc7TeaeqBM51l+G3nsEEgtm7Ahch9aG9kkm4lPYklSrlt5kWfqFpJgFTJ+VAEttxi60tDxg3H7nOeAOLXx0z4EmuRtXyoAoCCLZ5VRt8fby/ed9bFFY2NQTwt94dp7QtIKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+atSbXs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bHEt6ldFlvhxSZKFh+4UisMHuFhuXoLjJ13rUFuOYMSvf/zHcE8knz9v/pbjahkvtPd8hPLGnTqWYimLOXfjnQJBwgVAbx2sC4+7hGSvnxDop/ixxw8fRl6Ii7YVwQRFaqJ7A09adZiI6FamDbj2xTB8gcQVvyFEy24Ef24Fn4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4OQokiI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+atSbXs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900FC1F000E9;
-	Tue, 21 Jul 2026 22:39:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4OQokiI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 338D41F000E9;
+	Tue, 21 Jul 2026 22:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673588;
-	bh=PwaNpvQ27pYB0XSI7FYrBzjNa+qE+mIQwxkf/gOoywU=;
+	s=korg; t=1784673590;
+	bh=ZRyzRuN6w8D/YtxA3QlztxkFLLgHDeEVCkGvrATXaEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U+atSbXsITgPorMUj+pC4xNZvRz4z9jyzFeKXAj5tj7uHb7Vf9zGR/iJV+Z2L6p2b
-	 1ja31XHIzKQ38jx0lbDGKlvEAF3HSU3qF7x4zSocYB1a3SsoRYiHEqj+oJJqNNBylx
-	 GcAiy0jRY3XBTY2aLx2zgELOZKFcIb1Ywv7aw3C4=
+	b=v4OQokiIZGLYGkyKEVl6lscb526szeH2xFNwrUY4Tkv2OR2qfjBa3vM1povYE3k0c
+	 muImGyNL0RXYowDmb8daL6UgglYhASktYqtibJxjI5RtaQOYefTCtqeKWcMClZZAgO
+	 vlEuygv/J8AhkGZ/xa7+9OBQilfxWpqgNFUN3v8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Renjiang Han <renjiang.han@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 217/699] media: qcom: venus: drop extra padding in NV12 raw size calculation
-Date: Tue, 21 Jul 2026 17:19:36 +0200
-Message-ID: <20260721152400.595986185@linuxfoundation.org>
+Subject: [PATCH 5.10 218/699] ext4: fix LOGFLUSH shutdown ordering to allow ordered-mode data writeback
+Date: Tue, 21 Jul 2026 17:19:37 +0200
+Message-ID: <20260721152400.618174877@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,42 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Renjiang Han <renjiang.han@oss.qualcomm.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit e1c9adabb268cc5d56723b7df1da49e59070f309 ]
+[ Upstream commit d99748ef1695ce17eaf51c64b7a06952fa7cddab ]
 
-get_framesize_raw_nv12() currently adds SZ_4K to the UV plane size and an
-additional SZ_8K to the total buffer size. This inflates the calculated
-sizeimage and leads userspace to over-allocate buffers without a clear
-requirement.
+In EXT4_GOING_FLAGS_LOGFLUSH mode, the EXT4_FLAGS_SHUTDOWN flag was set
+before calling ext4_force_commit().  This caused ordered-mode data
+writeback (triggered by journal commit) to fail with -EIO, since
+ext4_do_writepages() checks for the shutdown flag.  The journal would
+then be aborted prematurely before the commit could succeed.
 
-Remove the extra SZ_4K/SZ_8K padding and compute the NV12 size as the sum
-of Y and UV planes, keeping the final ALIGN(size, SZ_4K) intact.
+Fix this by calling ext4_force_commit() first, then setting the
+shutdown flag, so that pending data can be written back correctly.
 
-Fixes: e1cb72de702ad ("media: venus: helpers: move frame size calculations on common place")
-Signed-off-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Note that moving ext4_force_commit() before setting the shutdown flag
+creates a small window in which new writes may occur and generate new
+journal transactions.  When the journal is subsequently aborted, the
+new transactions will not be able to write to disk.  This is intentional
+because LOGFLUSH's semantics are to flush pre-existing journal entries
+before shutdown, not to guarantee atomicity for writes that race with
+the ioctl.
+
+Fixes: 783d94854499 ("ext4: add EXT4_IOC_GOINGDOWN ioctl")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260424104201.1930823-1-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/helpers.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/ioctl.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index dcf9fc0da1ce42..d590c845ea2675 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -834,8 +834,8 @@ static u32 get_framesize_raw_nv12(u32 width, u32 height)
- 	uv_sclines = ALIGN(((height + 1) >> 1), 16);
- 
- 	y_plane = y_stride * y_sclines;
--	uv_plane = uv_stride * uv_sclines + SZ_4K;
--	size = y_plane + uv_plane + SZ_8K;
-+	uv_plane = uv_stride * uv_sclines;
-+	size = y_plane + uv_plane;
- 
- 	return ALIGN(size, SZ_4K);
- }
+diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
+index b6da12b4c8a82c..0d1c69c5a088e7 100644
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -638,11 +638,17 @@ static int ext4_shutdown(struct super_block *sb, unsigned long arg)
+ 		thaw_bdev(sb->s_bdev, sb);
+ 		break;
+ 	case EXT4_GOING_FLAGS_LOGFLUSH:
++		/*
++		 * Call ext4_force_commit() before setting EXT4_FLAGS_SHUTDOWN.
++		 * This is because in data=ordered mode, journal commit
++		 * triggers data writeback which fails if shutdown is already
++		 * set, causing the journal to be aborted prematurely before
++		 * the commit succeeds.
++		 */
++		(void) ext4_force_commit(sb);
+ 		set_bit(EXT4_FLAGS_SHUTDOWN, &sbi->s_ext4_flags);
+-		if (sbi->s_journal && !is_journal_aborted(sbi->s_journal)) {
+-			(void) ext4_force_commit(sb);
++		if (sbi->s_journal && !is_journal_aborted(sbi->s_journal))
+ 			jbd2_journal_abort(sbi->s_journal, -ESHUTDOWN);
+-		}
+ 		break;
+ 	case EXT4_GOING_FLAGS_NOLOGFLUSH:
+ 		set_bit(EXT4_FLAGS_SHUTDOWN, &sbi->s_ext4_flags);
 -- 
 2.53.0
 
