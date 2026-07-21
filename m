@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CEA746A5F9;
-	Tue, 21 Jul 2026 15:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B183C434E2C;
+	Tue, 21 Jul 2026 15:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648901; cv=none; b=QkRERRyMYBMA3kO83syi3s3ne3rtZti5a6aEj0Wq/CdEkihl3lRauJ/VcCZPyBtxRiRbk96Ra5X+DehISVRbmJykhUx8Q86DOdlMs257oS4gTZSzuM563SPciV39OXpoIQcisiBDUvJP+i7qhMJdKrbwLyDnyAT0oHOxPyz36lo=
+	t=1784648903; cv=none; b=dEQZ7ei66fYVOMkVWt70IFViOE3sFsloC0dfo3a+ttWm2tyPxe6+f/QbxXjF81V9SmHeFuN11CJ4xRkuH5jR72FO1mIN2fD9caUO0VTVx/5tYvpjAWwdDLlaBg3YbyEzfc5Bdo4NgciGGJNr1nHJGvArbBq/NtpyMISw3LIMROw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648901; c=relaxed/simple;
-	bh=KqlRfVx5xVSkxR6UVUi4ToHOLNZniXcrxXPG0dXD8L0=;
+	s=arc-20240116; t=1784648903; c=relaxed/simple;
+	bh=WqCMqQ+yrdmoDmPv5PaWzAZavDxm7p6GWI3FzkpC8iI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OolZRYzH7JK8+zlWpDLwVzoRrHKDcoOlclKVQW26QIsA9kJ8WMc+4qCOGsgDPVb9p3hrU3gb0TUzlyl0qcZhYYJEhJTFDDvSssYFZZ4d3DzZ7rtF7zFb9JV4aKnfyiVhuirM4sbc3/GOap7m6DATfU+dnRfvlq3JxQ5vx+FrWUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFSExxsg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SlPaQ3yi0hp3Vz3IUhs9AODpoW9W5Anvm+AjtAkKftVla4QPSUsk4hZOHTB/Wv3Uf3GrCNFlFFUyDa5YYaXzH04gWw4h3qr1fIoeD8UiJKB6X9Xybg6lH8QzYCz1TtbsEkCRXMNJqCjABee5g/l15vrmExG6j97H9k398R0NQ6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCFk3heL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFSExxsg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F661F000E9;
-	Tue, 21 Jul 2026 15:48:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCFk3heL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E3D1F000E9;
+	Tue, 21 Jul 2026 15:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648899;
-	bh=/3+nnPsynOyK3eFvTE+112uB5xt3HzlnE1oF0QQViRA=;
+	s=korg; t=1784648902;
+	bh=U4lWV2DhhgmwazWnJMAMs5pXzPYVD2yZ+NwjZ6wIVT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YFSExxsgZVgr2IggqC9aRACbXRgygpcQCr2jFhxCCswxEgBbmazZkREwT2UqCTgPp
-	 63RgXEKd9jtUuVv7eM3iyH2faET6i4o0Nw46PmS++oC0CCj5dSN7uXxcvbQc1chS8E
-	 z3EGMiq32P/MYa+bPPn9U88eqt1wmE3ztS6CjjUQ=
+	b=tCFk3heLmNL3oeSNzj5TZldQm+Xui1DSxx5/ail18NPJH5aoLOzl7Pda0Cskg+RH5
+	 d/WDifoL+XzmPIffJ/Ngt+x0ncfSWWc49Ir/ewuYiclgmT2NL38QS436LlW8ruC/xS
+	 OTKuBFEsV6CwvZsSwZKb8uDYUmdw9XClzTOepRUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0375/2077] drm/msm/a8xx: Make a8xx_recover IFPC safe
-Date: Tue, 21 Jul 2026 17:00:48 +0200
-Message-ID: <20260721152601.534566108@linuxfoundation.org>
+Subject: [PATCH 7.1 0376/2077] drm/msm/a8xx: Fix RSCC offset
+Date: Tue, 21 Jul 2026 17:00:49 +0200
+Message-ID: <20260721152601.559537224@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -55,55 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-[ Upstream commit e7c45d9838b7487c1846a0202c649336b2f5bf87 ]
+[ Upstream commit 586a34dafc08c4fa68d1b4673de24cd84d09df05 ]
 
-Similar to a6xx_recover(), check the GX power domain status before
-accessing mmio in GX domain a8xx_recover().
+In A8xx, the RSCC block is part of GPU's register space. Update the
+virtual base address of rscc to point to the correct address.
 
-Fixes: 288a93200892 ("drm/msm/adreno: Introduce A8x GPU Support")
+Fixes: 50e8a557d8d3 ("drm/msm/a8xx: Add support for A8x GMU")
 Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/720977/
-Message-ID: <20260427-gfx-clk-fixes-v2-5-797e54b3d464@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/727117/
+Message-ID: <20260522-glymur-gpu-dt-v5-1-562c406b210c@oss.qualcomm.com>
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a8xx_gpu.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
-index ccfccc45133fda..9b99ec5ceeb582 100644
---- a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
-@@ -886,17 +886,22 @@ void a8xx_recover(struct msm_gpu *gpu)
- 
- 	adreno_dump_info(gpu);
- 
--	if (hang_debug)
--		a8xx_dump(gpu);
--
- 	/*
- 	 * To handle recovery specific sequences during the rpm suspend we are
- 	 * about to trigger
- 	 */
- 	a6xx_gpu->hung = true;
- 
--	/* Halt SQE first */
--	gpu_write(gpu, REG_A8XX_CP_SQE_CNTL, 3);
-+	if (adreno_gpu->funcs->gx_is_on(adreno_gpu)) {
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 1b44b9e21ad868..cab4c46c6cf2ea 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -2357,7 +2357,12 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 			goto err_mmio;
+ 		}
+ 	} else if (adreno_is_a8xx(adreno_gpu)) {
+-		gmu->rscc = gmu->mmio + 0x19000;
 +		/*
-+		 * Sometimes crashstate capture is skipped, so SQE should be
-+		 * halted here again
++		 * On a8xx , RSCC lives at GPU base + 0x50000, which falls
++		 * inside the GPU's kgsl_3d0_reg_memory range rather than the
++		 * GMU's.
 +		 */
-+		gpu_write(gpu, REG_A8XX_CP_SQE_CNTL, 3);
-+
-+		if (hang_debug)
-+			a8xx_dump(gpu);
-+	}
- 
- 	pm_runtime_dont_use_autosuspend(&gpu->pdev->dev);
- 
++		gmu->rscc = gpu->mmio + 0x50000;
+ 	} else {
+ 		gmu->rscc = gmu->mmio + 0x23000;
+ 	}
 -- 
 2.53.0
 
