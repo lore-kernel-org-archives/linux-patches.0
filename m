@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC58346D567;
-	Tue, 21 Jul 2026 15:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E34846A603;
+	Tue, 21 Jul 2026 15:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649214; cv=none; b=B/Gq+Gezp67HI6E9TrO0jIos9oXVICjLvtIfewcbfp6LMh5zNSd72s70lBA6hstjoM+EeF6Wiu/dbIFoXHO3aWbjWlItd+BpGrLqRwtK7OMxMBtJb7ZM788o4UHfFle+TJQHtccefDsOfDo56fDsrQHa42+AMMgf+3Oak9s07nE=
+	t=1784649216; cv=none; b=a6yqJDNiBr8ciNEdrstJu7rv+OZMOoHeeyVnejZOilR+vGOXNxpaLkAD3B27HeIn1l9+jciO6mhwMwl+gGb4DxSqVx0LtPuKQTFz4ub0es3oxUqg5ItMqY/G446h3DZB3QmdPmEnj2aQt+oJM4iHIL98DIJYCoFXcxwi8+d4IV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649214; c=relaxed/simple;
-	bh=f9stMkzmrvcKtKEzuOo/xoollqYrTrLUow0acpr72sw=;
+	s=arc-20240116; t=1784649216; c=relaxed/simple;
+	bh=oW+NxAsB+/8F0G2z4IXrLK2arhCNx39V+6EyNI2XPmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j7EktyJDawQA0H1OCYJetBVnmuPYHPdS8uuTi7CShX3vSwO60keH+8mkzO+7zmTgt37f+NrHyLmVx3KFDEmjtGvVXstiiKB+f+L7SabzsIbDgS1aYlQifdl/m9/dN9YDgjMtI8Y6bUfuDkG8g7Xtt4sD9ovC/sJpYtGH/mwADQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E42++2eu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zxo0NStVxBRfvePoCWeTCj8C50N9Ejiqrni6ZRXgIsqvKZzFhK3kiIaREaoerVR8O07s0Otmex53kLTO5D6SndNr/b6V32HsJU+QiP4+hI1IxENIQy9TCuxi3HHfM462lDS6Czi3L4HYgH0V5ZJ/ZJ4u2tgdBpAP9p0I9tbPuUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpyGgYm1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E42++2eu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D22A1F000E9;
-	Tue, 21 Jul 2026 15:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpyGgYm1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54951F000E9;
+	Tue, 21 Jul 2026 15:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649212;
-	bh=KdYrEfXtkRS6JaWLNjEQnUcR9tOmia35endlZq8hykQ=;
+	s=korg; t=1784649215;
+	bh=k3ZssowYqlyvKZnJg9dMO/oiF9yaP/IXUocVndkiuQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E42++2euhINM8wirG5g0vW5trh0JDxwKo46kyOw59C48nFB5QuDXikUXatufe/Wyd
-	 aDNK/N2OdyJATKSX8VvxqaBRFEXijuoOuqJdkL00majXTwTmws/5n+fTR96RCA9GZT
-	 1AYQHTUblbGj0SgnaePLW5CHX+e9pWO1jiWF5EcI=
+	b=rpyGgYm1P2c+YHm3KeaMXv4IljUsMPDKBUoUHzprOvxdv2QoS3wyRaUAfCcWPDRnX
+	 8/dHrEhPpCHIoTveJYbFILqCI9aoSLJ/2J/sAzpDXcBese2Xncj4NeUIT9eUhkDTKa
+	 0VCIptBu4hRVl2GdAAKpbtohCd+74MkEW4bRJODY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengming Hu <hu.shengming@zte.com.cn>,
-	"Harry Yoo (Oracle)" <harry@kernel.org>,
-	Hao Li <hao.li@linux.dev>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Junxiao Chang <junxiao.chang@intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Nikolay Borisov <nik.borisov@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0492/2077] mm/slub: preserve original size in _kmalloc_nolock_noprof retry path
-Date: Tue, 21 Jul 2026 17:02:45 +0200
-Message-ID: <20260721152604.414015379@linuxfoundation.org>
+Subject: [PATCH 7.1 0493/2077] x86/cpu: Remove obsolete aperfmperf_get_khz() declaration
+Date: Tue, 21 Jul 2026 17:02:46 +0200
+Message-ID: <20260721152604.439368348@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,68 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengming Hu <hu.shengming@zte.com.cn>
+From: Junxiao Chang <junxiao.chang@intel.com>
 
-[ Upstream commit 19b206b9534a85266efa78febeb4ae185e75bccd ]
+[ Upstream commit a5f28da54f36f1a8b289d9bdd3e780b2ede0da6f ]
 
-_kmalloc_nolock_noprof() retries from the next kmalloc bucket when the
-initial allocation fails. The retry currently reuses `size` as the
-bucket selector and overwrites it with s->object_size + 1.
+aperfmperf_get_khz() was replaced by arch_freq_get_on_cpu().
+The remaining declaration in the header file is no longer used
+and should be removed.
 
-That value is later passed as the original allocation size to
-__slab_alloc_node(), slab_post_alloc_hook() and kasan_kmalloc(). On a
-successful retry this makes KASAN/slub-debug observe the retry bucket
-selector rather than the caller requested size, potentially widening the
-valid kmalloc range and hiding overflows.
-
-Keep the caller requested size separately as orig_size and pass it to
-the allocation/debug/KASAN paths. Continue using `size` as the retry cache
-selector.
-
-Fixes: af92793e52c3 ("slab: Introduce kmalloc_nolock() and kfree_nolock()")
-Signed-off-by: Shengming Hu <hu.shengming@zte.com.cn>
-Reviewed-by: Harry Yoo (Oracle) <harry@kernel.org>
-Reviewed-by: Hao Li <hao.li@linux.dev>
-Link: https://patch.msgid.link/202606042027323804pk3MRY42Jy7y42OHAhQZ@zte.com.cn
-Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Fixes: f3eca381bd49 ("x86/aperfmperf: Replace arch_freq_get_on_cpu()")
+Signed-off-by: Junxiao Chang <junxiao.chang@intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
+Link: https://patch.msgid.link/20260606021514.1433619-1-junxiao.chang@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/slub.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/x86/kernel/cpu/cpu.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/mm/slub.c b/mm/slub.c
-index 9365501d0df148..eed3251eb7d0cc 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -5325,6 +5325,7 @@ EXPORT_SYMBOL(__kmalloc_noprof);
- void *kmalloc_nolock_noprof(size_t size, gfp_t gfp_flags, int node)
- {
- 	gfp_t alloc_gfp = __GFP_NOWARN | __GFP_NOMEMALLOC | gfp_flags;
-+	size_t orig_size = size;
- 	struct kmem_cache *s;
- 	bool can_retry = true;
- 	void *ret;
-@@ -5373,7 +5374,7 @@ void *kmalloc_nolock_noprof(size_t size, gfp_t gfp_flags, int node)
- 	 * kfence_alloc. Hence call __slab_alloc_node() (at most twice)
- 	 * and slab_post_alloc_hook() directly.
- 	 */
--	ret = __slab_alloc_node(s, alloc_gfp, node, _RET_IP_, size);
-+	ret = __slab_alloc_node(s, alloc_gfp, node, _RET_IP_, orig_size);
- 
- 	/*
- 	 * It's possible we failed due to trylock as we preempted someone with
-@@ -5397,9 +5398,9 @@ void *kmalloc_nolock_noprof(size_t size, gfp_t gfp_flags, int node)
- success:
- 	maybe_wipe_obj_freeptr(s, ret);
- 	slab_post_alloc_hook(s, NULL, alloc_gfp, 1, &ret,
--			     slab_want_init_on_alloc(alloc_gfp, s), size);
-+			     slab_want_init_on_alloc(alloc_gfp, s), orig_size);
- 
--	ret = kasan_kmalloc(s, ret, size, alloc_gfp);
-+	ret = kasan_kmalloc(s, ret, orig_size, alloc_gfp);
- 	return ret;
+diff --git a/arch/x86/kernel/cpu/cpu.h b/arch/x86/kernel/cpu/cpu.h
+index 5c7a3a71191a14..dca2d5845e4276 100644
+--- a/arch/x86/kernel/cpu/cpu.h
++++ b/arch/x86/kernel/cpu/cpu.h
+@@ -75,7 +75,6 @@ static inline struct amd_northbridge *amd_init_l3_cache(int index)
  }
- EXPORT_SYMBOL_GPL(kmalloc_nolock_noprof);
+ #endif
+ 
+-unsigned int aperfmperf_get_khz(int cpu);
+ void cpu_select_mitigations(void);
+ 
+ extern void x86_spec_ctrl_setup_ap(void);
 -- 
 2.53.0
 
