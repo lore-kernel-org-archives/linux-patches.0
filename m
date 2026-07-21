@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8044544AB62;
-	Tue, 21 Jul 2026 21:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E400D35C6B3;
+	Tue, 21 Jul 2026 21:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670705; cv=none; b=Nh7vcWIMpFxUAVTcDwEeVNmB0vTPF44CgsWUMr1Fryl5lGmbMbq8Y4gRCcXG+nYj9Cvv1x+wjTllfduzTNoHaB7GksH6EgPGv4QSm3q4F8/psu5+rzU7bILYv90Iq4zwycwqrc8PJ2v5QgsMv6S2oFSZSR8Xs12+VLr9wiZLUvc=
+	t=1784670708; cv=none; b=AFPYYasK6L6+XO8CWN8rk7Tt2m8HJkEXuyM7cVCB4RaAmxBxj3JxpGRaIjpNJTCrWAqC2BhnDeE8ayShu9yrSChD1yzyivw5SQKv15vcqGP/jvyaWxW3CGGktqAs5ZGQr5KEe/tXsgWYQB1/iCfhmTe+MxLTicfPf0s6Ptkbh0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670705; c=relaxed/simple;
-	bh=DU0WMe6xwajuxTWKDs8mP/WPlLdiiWKoGCF8rcr+xsc=;
+	s=arc-20240116; t=1784670708; c=relaxed/simple;
+	bh=3gCpYCiGcyd3uyoAkoDSRFqx09bp7I/QC6VK6IJjDrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Htjt3Rfd4jz2e9DzDWMCP4IOKd/pmU0PDoxK2MXEYOVZfh0TPWYYrVDPc05OQdE5fyN76xAU4KJIP8JuJU28OXl7zzVk/YRh019vYlM4hIvbIvXsgMGsMu8nDT4XM162yIq0tjSnNcSG6MeepJnYFhlSRdIJC4F1uRhtt4d0TLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFoVRbOP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hT7etw3vpmpGzHohgCpK0w+pGKOURlWq3+GhAHLSZPDP7ExnVU/F/GKKW+uco9qsd1R+i2fTS1jU41l1LuiDH8nfiBlksK4vAQzTOzrwW1czMU0za5u2uOdUmkCQbZ7AZZW6j6kbczkWZSKbcRhhkPNapIC2SQol908wNznERLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWpCjoaT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFoVRbOP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACAF21F000E9;
-	Tue, 21 Jul 2026 21:51:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWpCjoaT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D801F000E9;
+	Tue, 21 Jul 2026 21:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670704;
-	bh=7WiZBsnOTXoYGkRu9txXBOXWUuOxvaomUpDqjc3Fvms=;
+	s=korg; t=1784670706;
+	bh=5unfzrKCy6EVDS6QWx3QqCDN9VkmIhA9j1dJ4reknJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zFoVRbOPtf8/0IpnKtcLHFWRf0dfR5i2WfexCPp0jAHqfNoS0EBDrGymV0xlL8vOP
-	 NF5M3pjbZjLc8eRVw1CTOBXSjIEYM+WOV+omDhFj88v1/Bnk039h9kZZvvY0KrsU2s
-	 HPOUbxa+JVu64b+DN0mJUFbDp7M4KRvq7987yPe4=
+	b=BWpCjoaTSvAedw9azCEaZloYIWo2vjepUZZsqUO2Co0N3EqKic/fpzzDDBxhlIm+l
+	 4nxkSzD0Ejpbgtinx8Tm+ddrqncBjNpnsd1RGD/TmAO/jAuUIbuv2PGuJcqksOpvJg
+	 7v/UTj7PjJA6oCrUSk4+/kv95aRXu0M0fFYn7B8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Neill Kapron <nkapron@google.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Maksim Lukoshkov <maksim.lukoshkov@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1034/1067] usb: gadget: f_fs: Tie read_buffer lifetime to ffs_epfile
-Date: Tue, 21 Jul 2026 17:27:15 +0200
-Message-ID: <20260721152447.714478581@linuxfoundation.org>
+Subject: [PATCH 6.1 1035/1067] crypto: qat - fix restarting state leak on allocation failure
+Date: Tue, 21 Jul 2026 17:27:16 +0200
+Message-ID: <20260721152447.738123558@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -45,59 +47,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neill Kapron <nkapron@google.com>
+From: Ahsan Atta <ahsan.atta@intel.com>
 
-[ Upstream commit 8bdcf96eb135aebacac319667f87db034fb38406 ]
+[ Upstream commit 7d3ed20f7e46b3e991936fedd7a28f3ff4aec8d2 ]
 
-Currently, ffs_epfile_release unconditionally frees the endpoint's
-read_buffer when a file descriptor is closed. If userspace explicitly
-opens the endpoint multiple times and closes one, the read_buffer is
-destroyed. This can lead to silent data loss if other file descriptors
-are still actively reading from the endpoint.
+In adf_dev_aer_schedule_reset(), ADF_STATUS_RESTARTING is set before
+allocating reset_data. If the allocation fails, the function returns
+-ENOMEM without queuing reset work, so nothing ever clears the bit.
+This leaves the device permanently stuck in the restarting state,
+causing all subsequent reset attempts to be silently skipped.
 
-By tying the lifetime of the read_buffer to the ffs_epfile structure itself
-(which is destroyed when the functionfs instance is torn down in
-ffs_epfiles_destroy), we eliminate the brittle dependency on open/release
-calls while correctly matching the conceptual lifetime of unread data on
-the hardware endpoint.
+Fix this by using test_and_set_bit() to atomically claim the
+RESTARTING state, preventing duplicate reset scheduling races under
+concurrent fatal error reporting. If the subsequent allocation fails,
+clear the bit to restore clean state so future reset attempts can
+proceed.
 
-Fixes: 9353afbbfa7b ("usb: gadget: f_fs: buffer data from ‘oversized’ OUT requests")
-Cc: stable <stable@kernel.org>
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Neill Kapron <nkapron@google.com>
-Link: https://patch.msgid.link/20260619040609.4010746-3-nkapron@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ adjusted context in ffs_epfiles_destroy() since 6.12 lacks the simple_remove_by_name() rework and still uses dentry-based cleanup ]
+Cc: stable@vger.kernel.org
+Fixes: d8cba25d2c68 ("crypto: qat - Intel(R) QAT driver framework")
+Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Co-developed-by: Maksim Lukoshkov <maksim.lukoshkov@intel.com>
+Signed-off-by: Maksim Lukoshkov <maksim.lukoshkov@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/qat/qat_common/adf_aer.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -1292,7 +1292,6 @@ ffs_epfile_release(struct inode *inode,
+--- a/drivers/crypto/qat/qat_common/adf_aer.c
++++ b/drivers/crypto/qat/qat_common/adf_aer.c
+@@ -116,13 +116,14 @@ static int adf_dev_aer_schedule_reset(st
+ 	struct adf_reset_dev_data *reset_data;
  
- 	ENTER();
+ 	if (!adf_dev_started(accel_dev) ||
+-	    test_bit(ADF_STATUS_RESTARTING, &accel_dev->status))
++	    test_and_set_bit(ADF_STATUS_RESTARTING, &accel_dev->status))
+ 		return 0;
  
--	__ffs_epfile_read_buffer_free(epfile);
- 	ffs_data_closed(epfile->ffs);
- 
- 	return 0;
-@@ -1957,6 +1956,7 @@ static void ffs_epfiles_destroy(struct f
- 
- 	for (; count; --count, ++epfile) {
- 		BUG_ON(mutex_is_locked(&epfile->mutex));
-+		__ffs_epfile_read_buffer_free(epfile);
- 		if (epfile->dentry) {
- 			d_delete(epfile->dentry);
- 			dput(epfile->dentry);
+-	set_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
+ 	reset_data = kzalloc(sizeof(*reset_data), GFP_KERNEL);
+-	if (!reset_data)
++	if (!reset_data) {
++		clear_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
+ 		return -ENOMEM;
++	}
+ 	reset_data->accel_dev = accel_dev;
+ 	init_completion(&reset_data->compl);
+ 	reset_data->mode = mode;
 
 
