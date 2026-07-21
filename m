@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CED35C695;
-	Tue, 21 Jul 2026 21:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C132A44AB9F;
+	Tue, 21 Jul 2026 21:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668689; cv=none; b=dizcEhJJXpfKDXyIBe0TC0H/uzs3uey7NOaBVZwV/c95C2XFGbVgvlSZAKgG8OQ4IEaphsJ1VSDmvcsZXNjkS+vzLH6PN2IQjD5n5GWFuAi8BDh7QOUfFFBPYU9SBmiU0tVohX8juRs1Znh75679WyYq8clooboOzoXglRCnnlU=
+	t=1784668691; cv=none; b=Ku81T+p8mnuDyxCby9/Li/Q3zCnPoylNeh4mzRxkT7wDlHeZu/0Ej7ktn7dqE3FwqBOGy3TNX/9sJOo/+wcNx9TsO9I/k9sVIuSQzF9sG0em0GPCqqdqLbaURa/8vgzcr6qMOqRenTrVnPnfogvsVybBUZrGENN58oxlDFtQrfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668689; c=relaxed/simple;
-	bh=CkTDnmBjGaHxdGYKbpnJC9HkHqDW0eYg41L6es3BQBs=;
+	s=arc-20240116; t=1784668691; c=relaxed/simple;
+	bh=WfRWgdkNJHD8iJGPnmO0foKKXHOcT/804qiAgv+iJYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dT2p+l+M+uquTCOYDKIqbZJrW5p+kUnaofJ2ukpHfvbcKaEusM1h7RdC+5baRDIL0r2/GfFbHQDUilqjPCffRckvo+rCN0Ke8pPbCdl6jkw/qbF9iyzsrLEvS7KV/pE8uMepcbEUuNWxCy2HJmevnHhhz/KThsx4VyEVdHn5p+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrxWqj8l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E1Q66GpMS/MyKnb5XrQBuEtDPjsDDGjDr+w9FbWDsWz3R+Tg1BI8620zrg5o67qyu2hOtnI9dgbKwSqwmgsLNlnUguvckE3nVE1wl6V7K/h/qKjvrye0ghqm/JI/E7rZajqqk79DStZ9oJ7QHyew58eJk42CPHUSFXrzg8Pnxfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dOp0eTYa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrxWqj8l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C1531F00A3A;
-	Tue, 21 Jul 2026 21:18:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOp0eTYa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 152AA1F000E9;
+	Tue, 21 Jul 2026 21:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668686;
-	bh=wSV7nb3MYODquVgqceThjAV9TjP8dZlEAvCvhxPgT5Y=;
+	s=korg; t=1784668689;
+	bh=cb7YVsnGCMf1HzPJiaio5w0Sbl0Aq0Te7uRosl5vEMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lrxWqj8ldYyIXx/GqShcWt1rEsKmo0PCWo66Z/gCxLwd/OL1L/O1ZYr/aYxR2Ofqv
-	 a4VAOWFTSqCKISvcXNQBfumR0qvl1AEOB3IyIaQt/H+wsumbPaS1+kXqDzakSrb3uU
-	 YDF04SmKS22gAOPR6IZxTh2x8+9xfVeTxLlJGXOA=
+	b=dOp0eTYaDG6xANydWW7kTiEXW4XJj+l0iSN7Y5zAArDpTTgQirz8tlfb+1hblJsFv
+	 cO3uUeZ1OCU/W0v1u3sAIwYXlaaUTi/f0EY/TpVUyidMwVdNbjyPFTtulV/AtxoERA
+	 7Ig/WK9xPzJSiWiaiiok7YMXaYXsYO9tWEVE5L/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 0269/1067] media: uvcvideo: Fix buffer sequence in frame gaps
-Date: Tue, 21 Jul 2026 17:14:30 +0200
-Message-ID: <20260721152430.611542193@linuxfoundation.org>
+Subject: [PATCH 6.1 0270/1067] dt-bindings: media: sun4i-a10-video-engine: Add interconnect properties
+Date: Tue, 21 Jul 2026 17:14:31 +0200
+Message-ID: <20260721152430.633116233@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,67 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Chen-Yu Tsai <wens@kernel.org>
 
-commit 2f24ac8dd87983a55f0498898f34a5f2b735b802 upstream.
+commit 018f2dc3a42098d3b04edd1480adc51d268adb14 upstream.
 
-In UVC, the FID flips with every frame. For every FID flip, we increase
-the stream sequence number.
+The Allwinner video engine sits behind the MBUS that is represented as
+an interconnect.
 
-Now, if a FID flips multiple times and there is no data transferred between
-the flips, the buffer sequence number will be set to the value of the
-stream sequence number after the first flip.
+Make sure that the interconnect properties are valid in the binding.
 
-Userspace uses the buffer sequence number to determine if there have been
-missing frames. With the current behaviour, userspace will think that the
-gap is in the wrong location.
-
-This patch modifies uvc_video_decode_start() to provide the correct buffer
-sequence number and timestamp.
-
-Cc: stable@kernel.org
-Fixes: 650b95feee35 ("[media] uvcvideo: Generate discontinuous sequence numbers when frames are lost")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Fixes: d41662e52a03 ("media: dt-bindings: media: allwinner,sun4i-a10-video-engine: Add R40 compatible")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_video.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -1112,6 +1112,19 @@ static int uvc_video_decode_start(struct
- 		stream->sequence++;
- 		if (stream->sequence)
- 			uvc_video_stats_update(stream);
+--- a/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml
++++ b/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml
+@@ -63,6 +63,16 @@ properties:
+       CMA pool to use for buffers allocation instead of the default
+       CMA pool.
+ 
++  # FIXME: This should be made required eventually once every SoC will
++  # have the MBUS declared.
++  interconnects:
++    maxItems: 1
 +
-+		/*
-+		 * On a FID flip initialize sequence number and timestamp.
-+		 *
-+		 * The driver already takes care of injecting FID flips for
-+		 * UVC_QUIRK_STREAM_NO_FID and UVC_QUIRK_MJPEG_NO_EOF.
-+		 */
-+		if (buf) {
-+			buf->buf.field = V4L2_FIELD_NONE;
-+			buf->buf.sequence = stream->sequence;
-+			buf->buf.vb2_buf.timestamp =
-+					ktime_to_ns(uvc_video_get_time());
-+		}
- 	}
- 
- 	uvc_video_clock_decode(stream, buf, data, len);
-@@ -1152,10 +1165,6 @@ static int uvc_video_decode_start(struct
- 			return -ENODATA;
- 		}
- 
--		buf->buf.field = V4L2_FIELD_NONE;
--		buf->buf.sequence = stream->sequence;
--		buf->buf.vb2_buf.timestamp = ktime_to_ns(uvc_video_get_time());
--
- 		/* TODO: Handle PTS and SCR. */
- 		buf->state = UVC_BUF_STATE_ACTIVE;
- 		if (meta_buf)
++  # FIXME: This should be made required eventually once every SoC will
++  # have the MBUS declared.
++  interconnect-names:
++    const: dma-mem
++
+ required:
+   - compatible
+   - reg
 
 
