@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EE746DFF2;
-	Tue, 21 Jul 2026 17:58:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FEF470116;
+	Tue, 21 Jul 2026 17:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656738; cv=none; b=lf5Wr1R3jzd5d5ot0LQJgDwjKiKiICurOmJKvWLay6W+gGQ9N1aovpSOcqsa7VHPJeHPM1gJX6lWzBMpFYbvPr4nX+iGx1JBHKstilz6regm7NyYfcx+A9BO42+P6l5rAzhWSP1qrrRmMNlZQPkePIjuHcSpcbp1esHWDrsk/fc=
+	t=1784656741; cv=none; b=cNI79imouy1wF6x3jPcKgMUUUyjOIEgqm+6jmLORHBrkrz8BbNs+EELjKUHjQgtAWWZSEMCZ9uKH/drnriGjDenMswkqDtyzXXymyhFGf6yaozCWELz70iONXzoOtqVs+1x+aUSNrGACt6t/lCL4ifQ8asc96EIzZzszKgwtjNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656738; c=relaxed/simple;
-	bh=Uc3K0bhYUP9/6WLGBwCHbgfRCrAPp9z3Et02bGXe8ro=;
+	s=arc-20240116; t=1784656741; c=relaxed/simple;
+	bh=sjbwpQiI3PY7RYbSOZcopoU9vzGP4iqT55qsiUN2Tdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E4UJOnv3A+yI+ml8RD5+XIcco3xnQJS0vBOCJoSt4fB8XALIBNqsDt+kyEcF/v9rLaANszi2NOVM9MItN19n9iAxIvkXe13aQwmxA5KPsrt5xjRP9vKDHfh+u/ie4++NDdNNTko+Ftj1kr7s4Y3bRDX8piDvX04485OUG4yiRkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c3IrEBWz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tIsBDNlj/9YykCH8j7n8UESYbjDBLb+E0oDdEfGq6l6i5wQoj2cIjL4OllPObs7nTJVagH9yPg9m73C/+6apnv41wGEWzfxQ/p9rB/WGiMUG+d+ZE+8GttKRmdJh96HG0fpfLM5wNhYcQpnumVp6uz3W/tZjgCi8F+WmnZIRKQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rVSGxbN8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c3IrEBWz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CDB1F000E9;
-	Tue, 21 Jul 2026 17:58:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rVSGxbN8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 634541F000E9;
+	Tue, 21 Jul 2026 17:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656737;
-	bh=GQTUyjPY6WAX7VG8Pn0HYTMyK3tlpLKErc9/Lmd+CHE=;
+	s=korg; t=1784656739;
+	bh=VN8IWZdJQnVfy0Vh1vioy8BokWETXMu3GT2TTcjcWEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c3IrEBWzfektS/hBFbqVADQ93vOnutQyLwPzW0Zw9VjCQe61FVPJS4BDTm0aguV4c
-	 ickhc5jb7Kg0mAETDjbXXZntYZEl8H6oZ4nyMpPNtGmMl73BSauJMyo37cFUfvJd3D
-	 cOSLnIpKPbgCDGW96noq+6ash3Ot6fp8DxN7Uafc=
+	b=rVSGxbN8SYL4ZHJJ0oPqf/VGr7leD9c4FBz7QxUQQ3EWyU2ORxYfGkCChf6v0MRES
+	 By6JBp46QbL0ejfpn2Gm29JsmBKVi6CxCIVpxZCOZIcIlUkDd1OrVoQubj4q8Ptf6u
+	 an1Sacemg0SCGWLwC00jPJo/EH6fTw9bCEW/0/GY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0499/1611] iommu: Avoid copying the user array twice in the full-array copy helper
-Date: Tue, 21 Jul 2026 17:10:15 +0200
-Message-ID: <20260721152526.568012050@linuxfoundation.org>
+Subject: [PATCH 6.18 0500/1611] ASoC: adau1372: Clear PLL_EN on failed PLL lock without reset GPIO
+Date: Tue, 21 Jul 2026 17:10:16 +0200
+Message-ID: <20260721152526.591644007@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,46 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit e28bee5b445178390d63f7a93a5a219063c6434e ]
+[ Upstream commit 69b4141b428bcf2cf7a863950c0d6e5c5ae89ac1 ]
 
-iommu_copy_struct_from_full_user_array() copies a whole user array into a
-kernel buffer. In the common case, where user entry_len equals destination
-entry size, it takes a fast path and copies the whole array with a single
-copy_from_user().
+The PLL lock failure path in adau1372_set_power() unwinds by putting
+the regmap back in cache-only mode, asserting the optional power-down
+GPIO and disabling mclk.
 
-That fast path does not return, so it falls through into the item-by-item
-copy_struct_from_user() loop and copies every entry a second time. For an
-equal entry_len that loop is just a copy_from_user() of the same bytes, so
-the whole array is copied twice for no benefit.
+adau1372_enable_pll() enables CLK_CTRL.PLL_EN before polling the PLL
+lock bit. If the lock fails on a board without a power-down GPIO, the
+error path disables mclk and returns an error, but leaves PLL_EN set in
+the hardware register. The normal power-off path already handles the
+no-GPIO case by explicitly clearing PLL_EN.
 
-Return right after the bulk copy. The per-item loop then runs only on the
-slow path, where entry_len differs and each entry needs size adaption.
+Mirror that cleanup in the PLL lock failure path and clear PLL_EN while
+the regmap is still live, before switching it back to cache-only mode.
 
-Fixes: 4f2e59ccb698 ("iommu: Add iommu_copy_struct_from_full_user_array helper")
-Link: https://patch.msgid.link/r/6c9eca4ff584cb977661e97799ac6fe934e7f51c.1780521606.git.nicolinc@nvidia.com
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: bfe6a264effc ("ASoC: adau1372: Fix clock leak on PLL lock failure")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260604125520.1428905-1-lgs201920130244@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/iommu.h | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/adau1372.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index 66e4abb2df0dcd..84cf41f51f05dd 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -544,6 +544,7 @@ iommu_copy_struct_from_full_user_array(void *kdst, size_t kdst_entry_size,
- 				   user_array->entry_num *
- 					   user_array->entry_len))
- 			return -EFAULT;
-+		return 0;
- 	}
- 
- 	/* Copy item by item */
+diff --git a/sound/soc/codecs/adau1372.c b/sound/soc/codecs/adau1372.c
+index d7363f9d53bb31..879afeb81c422d 100644
+--- a/sound/soc/codecs/adau1372.c
++++ b/sound/soc/codecs/adau1372.c
+@@ -813,6 +813,11 @@ static int adau1372_set_power(struct adau1372 *adau1372, bool enable)
+ 		if (adau1372->use_pll) {
+ 			ret = adau1372_enable_pll(adau1372);
+ 			if (ret) {
++				if (!adau1372->pd_gpio)
++					regmap_update_bits(adau1372->regmap,
++							   ADAU1372_REG_CLK_CTRL,
++							   ADAU1372_CLK_CTRL_PLL_EN,
++							   0);
+ 				regcache_cache_only(adau1372->regmap, true);
+ 				if (adau1372->pd_gpio)
+ 					gpiod_set_value(adau1372->pd_gpio, 1);
 -- 
 2.53.0
 
