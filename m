@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EF53BCD29;
-	Tue, 21 Jul 2026 21:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794A83BCD29;
+	Tue, 21 Jul 2026 21:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668037; cv=none; b=Rppsfff8AyHgwwuJz6h9tMy6S+vNFrYzpu2Ce0WiroAEg6EfKKn994qfsJluXHH98IBMuNZ9+L1gHd9GvD2z0uGD4+0qE3ICEZVVccwKZSeb8c/7ST193RyyQ9icWjdxwovzoHo+ew09xJoJy/vR8qP8CQfSdMM9batno8k8+LY=
+	t=1784668040; cv=none; b=qr2n0ZdBzhXzLXl4cmFMuKfEZ6/83xlgeI8usYNIRrhfeKr4w+kdyZ8FScDq2yzH0vLxU6BYowvbpQ7yBwNDVtALBzRSfGXJRkFRPBvSiSxzik+Pe7QN9xzbQ7uhBoDaw3nMWxHznQIDaKAwUUHO1FXgIq5UwC5Qzev580EAP1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668037; c=relaxed/simple;
-	bh=1qD567lOmxh0rJxZcf6WNNZwoD8Va3+TFj8dNObi9C0=;
+	s=arc-20240116; t=1784668040; c=relaxed/simple;
+	bh=ElSO3yYHqpilhuj9e2Iee2JTXZgP5rB4PXLOPYLV4YM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PUUTB/TVIIUeqByQoXW5Apw+KWPgs5i6fh1k1pr8DHNKJbuGNEmQDSoCT1hFK/fYMVQaBuqqgvLsDSX2YiDy71BKLCb3whyWE5noxeXVqK5NoM8wbvPSZWnHuy+EUJFmXHwJmJAS+GV0KMzlJT91lzbtXaYxpngJw1fEydUp+WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBemkIBK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f1YOlTTpzZHGC/ffeRK7PIbY5F91tyq19DAXd55YXz4nWsvtMQsBdLALMSY6haT06ikEYkRy/OOz2N+23GGXSwQB5mQBUP4xfaETG98FT6U4AsBWCI3SPbnHx5lU9eLyCfpfBY5jirS3U5JM3k3f0F8Pwp/Cfewmiw8ZltjpC2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vtcJJ63w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBemkIBK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45CF81F000E9;
-	Tue, 21 Jul 2026 21:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vtcJJ63w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF80D1F000E9;
+	Tue, 21 Jul 2026 21:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668036;
-	bh=anx8Njge9mRvbtcl3c6RE4WgfPWq+EMdfVqXJtkvR0U=;
+	s=korg; t=1784668039;
+	bh=4K5bPNIP+SWzIouE1DI2sX7TfGt7SFCYvBSL5R0b8D8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bBemkIBKA1jsiXBhxEYonLL9cdsHQXfx11TPjrcD0Z8/g8STQ3T2vhtnSfTcqFwhw
-	 B2j7D3Lokaqd1DEXOumQK4w630UhJ4qSLYPZrjZ3Hwy/sZ66GP5Kw1U9tARqHibQfi
-	 bxQ57LzwaHMl/B+KdbwFZQrBV2aZ7rWxd5UE8t/U=
+	b=vtcJJ63whEJvviBwVJQTS1WTtYvXUzi92Yys8Jk4gbSoswAFHNi6mLOADrOqx5lCh
+	 V60I83ZLfUdUL4tTqoO97xv9ZMBjCru9sgUpLcfr6uSOgcLJbpYqJ/OKZiuSHybPuc
+	 wgU34WMeH3HdHEJyQwHFARvnTNVdvTD4szMX/ZUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Phil Reid <preid@electromag.com.au>,
+	Johan Hovold <johan@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0007/1067] net/sched: act_pedit: use NLA_POLICY for parsing ex keys
-Date: Tue, 21 Jul 2026 17:10:08 +0200
-Message-ID: <20260721152424.697647462@linuxfoundation.org>
+Subject: [PATCH 6.1 0025/1067] i2c: core: fix hang on adapter registration failure
+Date: Tue, 21 Jul 2026 17:10:26 +0200
+Message-ID: <20260721152425.102808423@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,52 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 5036034572b79daa6d6600338e8e8229e2a44b09 ]
+[ Upstream commit 3c7e164344e5bcf6f274bbf59a3274f5caad9bc1 ]
 
-Transform two checks in the 'ex' key parsing into netlink policies
-removing extra if checks.
+Clients may be registered from bus notifier callbacks when the adapter
+is registered. On a subsequent error during registration, the adapter
+references taken by such clients prevent the wait for the references to
+be released from ever completing.
 
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fix this by refactoring client deregistration and deregistering also on
+late adapter registration failures.
+
+Fixes: f8756c67b3de ("i2c: core: call of_i2c_setup_smbus_alert in i2c_register_adapter")
+Cc: stable@vger.kernel.org	# 4.15
+Cc: Phil Reid <preid@electromag.com.au>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Stable-dep-of: ba14d7cf2fe7 ("i2c: core: fix adapter registration race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_pedit.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/i2c/i2c-core-base.c |   49 ++++++++++++++++++++++++++------------------
+ 1 file changed, 29 insertions(+), 20 deletions(-)
 
-diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
-index 09310b56b45beb..1d06873da8f12d 100644
---- a/net/sched/act_pedit.c
-+++ b/net/sched/act_pedit.c
-@@ -35,8 +35,9 @@ static const struct nla_policy pedit_policy[TCA_PEDIT_MAX + 1] = {
- };
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -62,6 +62,7 @@
+ static DEFINE_MUTEX(core_lock);
+ static DEFINE_IDR(i2c_adapter_idr);
  
- static const struct nla_policy pedit_key_ex_policy[TCA_PEDIT_KEY_EX_MAX + 1] = {
--	[TCA_PEDIT_KEY_EX_HTYPE]  = { .type = NLA_U16 },
--	[TCA_PEDIT_KEY_EX_CMD]	  = { .type = NLA_U16 },
-+	[TCA_PEDIT_KEY_EX_HTYPE] =
-+		NLA_POLICY_MAX(NLA_U16, TCA_PEDIT_HDR_TYPE_MAX),
-+	[TCA_PEDIT_KEY_EX_CMD] = NLA_POLICY_MAX(NLA_U16, TCA_PEDIT_CMD_MAX),
- };
++static void i2c_deregister_clients(struct i2c_adapter *adap);
+ static int i2c_detect(struct i2c_adapter *adapter, struct i2c_driver *driver);
  
- static struct tcf_pedit_key_ex *tcf_pedit_keys_ex_parse(struct nlattr *nla,
-@@ -86,12 +87,6 @@ static struct tcf_pedit_key_ex *tcf_pedit_keys_ex_parse(struct nlattr *nla,
- 		k->htype = nla_get_u16(tb[TCA_PEDIT_KEY_EX_HTYPE]);
- 		k->cmd = nla_get_u16(tb[TCA_PEDIT_KEY_EX_CMD]);
+ static DEFINE_STATIC_KEY_FALSE(i2c_trace_msg_key);
+@@ -1600,6 +1601,7 @@ static int i2c_register_adapter(struct i
+ 	return 0;
  
--		if (k->htype > TCA_PEDIT_HDR_TYPE_MAX ||
--		    k->cmd > TCA_PEDIT_CMD_MAX) {
--			err = -EINVAL;
--			goto err_out;
--		}
+ out_reg:
++	i2c_deregister_clients(adap);
+ 	debugfs_remove_recursive(adap->debugfs);
+ 	init_completion(&adap->dev_released);
+ 	device_unregister(&adap->dev);
+@@ -1743,29 +1745,10 @@ static int __process_removed_adapter(str
+ 	return 0;
+ }
+ 
+-/**
+- * i2c_del_adapter - unregister I2C adapter
+- * @adap: the adapter being unregistered
+- * Context: can sleep
+- *
+- * This unregisters an I2C adapter which was previously registered
+- * by @i2c_add_adapter or @i2c_add_numbered_adapter.
+- */
+-void i2c_del_adapter(struct i2c_adapter *adap)
++static void i2c_deregister_clients(struct i2c_adapter *adap)
+ {
+-	struct i2c_adapter *found;
+ 	struct i2c_client *client, *next;
+ 
+-	/* First make sure that this adapter was ever added */
+-	mutex_lock(&core_lock);
+-	found = idr_find(&i2c_adapter_idr, adap->nr);
+-	mutex_unlock(&core_lock);
+-	if (found != adap) {
+-		pr_debug("attempting to delete unregistered adapter [%s]\n", adap->name);
+-		return;
+-	}
 -
- 		k++;
- 	}
+-	i2c_acpi_remove_space_handler(adap);
+ 	/* Tell drivers about this removal */
+ 	mutex_lock(&core_lock);
+ 	bus_for_each_drv(&i2c_bus_type, NULL, adap,
+@@ -1791,6 +1774,32 @@ void i2c_del_adapter(struct i2c_adapter
+ 	 * them up properly, so we give them a chance to do that first. */
+ 	device_for_each_child(&adap->dev, NULL, __unregister_client);
+ 	device_for_each_child(&adap->dev, NULL, __unregister_dummy);
++}
++
++/**
++ * i2c_del_adapter - unregister I2C adapter
++ * @adap: the adapter being unregistered
++ * Context: can sleep
++ *
++ * This unregisters an I2C adapter which was previously registered
++ * by @i2c_add_adapter or @i2c_add_numbered_adapter.
++ */
++void i2c_del_adapter(struct i2c_adapter *adap)
++{
++	struct i2c_adapter *found;
++
++	/* First make sure that this adapter was ever added */
++	mutex_lock(&core_lock);
++	found = idr_find(&i2c_adapter_idr, adap->nr);
++	mutex_unlock(&core_lock);
++	if (found != adap) {
++		pr_debug("attempting to delete unregistered adapter [%s]\n", adap->name);
++		return;
++	}
++
++	i2c_acpi_remove_space_handler(adap);
++
++	i2c_deregister_clients(adap);
  
--- 
-2.53.0
-
+ #ifdef CONFIG_I2C_COMPAT
+ 	class_compat_remove_link(i2c_adapter_compat_class, &adap->dev,
 
 
