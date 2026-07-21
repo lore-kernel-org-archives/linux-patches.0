@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E7A407CDA;
-	Tue, 21 Jul 2026 22:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C44231829;
+	Tue, 21 Jul 2026 22:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673509; cv=none; b=sakgcJOmr2eyXMr38gKPS9yJ2ZXLjwFy6KYtmhMaFUBNrTyLzMcw/4BJZp6noJgZy66HHNno2psR3YKSNFwHZpktLIEHyxnbh2nmecCv7cHWqoxuuBuX9IX3AIGSlU/f19AKWNklWzHm7fEdkxD0gq5A1JL4nS17iBN8K3zOxIM=
+	t=1784673510; cv=none; b=DWTe0Kq0nv8gudEg8wd4+zBqGmlby5r0yefdXj1NLFR4TrJiaGAXsZZDqL6ywC9SIJcT13Q4ft0Z7YXWmRJIc0HiVEZWaxeeTiSW/dZ7rEsVaG0WwtfWuG/XjnH9aBpcaFBZoUud+owIHjgV8Ll15FgvQR/9V8XJBbHIPG16FDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673509; c=relaxed/simple;
-	bh=QwTkPToA1kwrLK2jsFitJNUUQ+T36K6SkBE1AtMUSj8=;
+	s=arc-20240116; t=1784673510; c=relaxed/simple;
+	bh=DldLpEURZ/eYtI0p2pvo/WGRRYStBBRec5whlCBiOqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C4T996Mz+WHB3jLcooX5mjJvw4+bI9RPLans0Rd6+E11jRezqV0gdyVIL8GsXZhVYZgYx7RaamdbiN2veIZZoGwBAcwDsnmLf7pMlFkkdf8QRzJlrVZEe/tdg/u8fny8RXbLJXAbCdjbmsMjyMpNzixTb/PUdu9UlRSX37Ugrck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JD3KO+v1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xo17qdyqQOyVA7WNYPtninPw4sfY4rze7PnuEm8wzxqQ3p5jZwMgkMbnWwggeT0Ty30yuAo6NN2Gr7iNEkWYWPBVw60SVf28EbNDxEm17nsKIWLnsILGscyD578NAnKE0N1lEWq+jwqLdRKjBKUC16S24uaBocu3O+nP+w7h8Do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bo12Xw8L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JD3KO+v1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF9B1F00AC4;
-	Tue, 21 Jul 2026 22:38:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bo12Xw8L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367D71F00A3E;
+	Tue, 21 Jul 2026 22:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673501;
-	bh=7adf0UptX69QeCvVBHmqay+JkJEMx93WDAiJ39h/3HQ=;
+	s=korg; t=1784673503;
+	bh=wATmyOz5a7X5i4HDCwQiTZt+H/Lgah9M2Olq25fqVUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JD3KO+v1Ysc79xOq521AP+7a3jtK32DscRXFE6D/lfoAXUYrMtFqH3D4S+PF1tRTB
-	 2vvt5S8ZCVbogpKoFFuA03UkGqEGeqO7pIxleBvA9NSuwMYckc6vZMNmpJupeIk8D8
-	 QQcakpcFDDO5v82RvqILh8gSiw32gZjHpI+REWR8=
+	b=Bo12Xw8LIlpB1m6zaxW1uQ6liJhlscjMwROQitcs+81YuTXXUOes3Rkg0bgU1AaCG
+	 X7h8rVepn0aXGKdewgz3e3xmHMTcBV2pTZwpRXvHUyhyKkdj5y88VfxQCvM8A7UoCS
+	 /1tVKPqRcqIE0CQ1LQppmpMIo3Oa5cibo/VJlrzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 187/699] net/sched: sch_htb: annotate data-races (I)
-Date: Tue, 21 Jul 2026 17:19:06 +0200
-Message-ID: <20260721152359.917160454@linuxfoundation.org>
+Subject: [PATCH 5.10 188/699] ipv6: addrconf: bail out of dad_failure when state is no longer POSTDAD
+Date: Tue, 21 Jul 2026 17:19:07 +0200
+Message-ID: <20260721152359.938954013@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,61 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit e54c33503bf7cebb1c1790251ce90f1252678081 ]
+[ Upstream commit 627ac78f2741e2ebd2225e2e953b6964a8a9182f ]
 
-htb_dump() runs without holding qdisc spinlock.
+addrconf_dad_failure() transitions ifp->state from DAD to POSTDAD
+via addrconf_dad_end(), which drops ifp->lock on return.  The lock
+is re-acquired after net_info_ratelimited().  A concurrent
+ipv6_del_addr() can take the lock in that window, set ifp->state
+to DEAD and run list_del_rcu(&ifp->if_list).
 
-Add missing READ_ONCE()/WRITE_ONCE() annotations around
-q->overlimits and q->direct_pkts.
+addrconf_dad_failure() then overwrites DEAD with ERRDAD at errdad:
+and schedules a new dad_work.  The work calls ipv6_del_addr()
+again, hitting the already-poisoned list entry:
 
-Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260514095935.3926276-3-edumazet@google.com
+  general protection fault: 0000 [#1] SMP NOPTI
+  CPU: 4 PID: 217 Comm: kworker/4:1
+  Workqueue: ipv6_addrconf addrconf_dad_work
+  RIP: 0010:ipv6_del_addr+0xe9/0x280
+  RAX: dead000000000122
+  Call Trace:
+   addrconf_dad_stop+0x113/0x140
+   addrconf_dad_work+0x28c/0x430
+   process_one_work+0x1eb/0x3b0
+   worker_thread+0x4d/0x400
+   kthread+0x104/0x140
+   ret_from_fork+0x35/0x40
+
+Fold the addrconf_dad_end() logic into addrconf_dad_failure() under
+a single ifp->lock critical section.  The STABLE_PRIVACY branch
+temporarily drops ifp->lock around address regeneration, so at
+lock_errdad: verify the state is still POSTDAD before transitioning
+to ERRDAD; bail out otherwise to avoid overwriting a state set by
+another path while the lock was released.
+
+Fixes: c15b1ccadb32 ("ipv6: move DAD and addrconf_verify processing to workqueue")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260513025509.3776405-1-lilinmao@kylinos.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_htb.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/ipv6/addrconf.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
-index b301efa41c1ced..75ca5e5def3fea 100644
---- a/net/sched/sch_htb.c
-+++ b/net/sched/sch_htb.c
-@@ -536,7 +536,7 @@ htb_change_class_mode(struct htb_sched *q, struct htb_class *cl, s64 *diff)
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 251164ee646983..c0f84b2315528f 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -2110,16 +2110,18 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
+ 	struct inet6_dev *idev = ifp->idev;
+ 	struct net *net = dev_net(ifp->idev->dev);
  
- 	if (new_mode == HTB_CANT_SEND) {
- 		cl->overlimits++;
--		q->overlimits++;
-+		WRITE_ONCE(q->overlimits, q->overlimits + 1);
+-	if (addrconf_dad_end(ifp)) {
++	spin_lock_bh(&ifp->lock);
++
++	if (ifp->state != INET6_IFADDR_STATE_DAD) {
++		spin_unlock_bh(&ifp->lock);
+ 		in6_ifa_put(ifp);
+ 		return;
+ 	}
++	ifp->state = INET6_IFADDR_STATE_POSTDAD;
+ 
+ 	net_info_ratelimited("%s: IPv6 duplicate address %pI6c used by %pM detected!\n",
+ 			     ifp->idev->dev->name, &ifp->addr, eth_hdr(skb)->h_source);
+ 
+-	spin_lock_bh(&ifp->lock);
+-
+ 	if (ifp->flags & IFA_F_STABLE_PRIVACY) {
+ 		struct in6_addr new_addr;
+ 		struct inet6_ifaddr *ifp2;
+@@ -2167,6 +2169,11 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
+ 		in6_ifa_put(ifp2);
+ lock_errdad:
+ 		spin_lock_bh(&ifp->lock);
++		if (ifp->state != INET6_IFADDR_STATE_POSTDAD) {
++			spin_unlock_bh(&ifp->lock);
++			in6_ifa_put(ifp);
++			return;
++		}
  	}
  
- 	if (cl->prio_activity) {	/* not necessary: speed optimization */
-@@ -592,7 +592,7 @@ static int htb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		/* enqueue to helper queue */
- 		if (q->direct_queue.qlen < q->direct_qlen) {
- 			__qdisc_enqueue_tail(skb, &q->direct_queue);
--			q->direct_pkts++;
-+			WRITE_ONCE(q->direct_pkts, q->direct_pkts + 1);
- 		} else {
- 			return qdisc_drop(skb, sch, to_free);
- 		}
-@@ -1050,12 +1050,12 @@ static int htb_dump(struct Qdisc *sch, struct sk_buff *skb)
- 	struct nlattr *nest;
- 	struct tc_htb_glob gopt;
- 
--	sch->qstats.overlimits = q->overlimits;
-+	sch->qstats.overlimits = READ_ONCE(q->overlimits);
- 	/* Its safe to not acquire qdisc lock. As we hold RTNL,
- 	 * no change can happen on the qdisc parameters.
- 	 */
- 
--	gopt.direct_pkts = q->direct_pkts;
-+	gopt.direct_pkts = READ_ONCE(q->direct_pkts);
- 	gopt.version = HTB_VER;
- 	gopt.rate2quantum = q->rate2quantum;
- 	gopt.defcls = q->defcls;
+ errdad:
 -- 
 2.53.0
 
