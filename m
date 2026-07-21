@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D53269D18;
-	Tue, 21 Jul 2026 18:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C4838910F;
+	Tue, 21 Jul 2026 18:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660075; cv=none; b=oj9qCihVdN7Et1dZ9s8LARhYgAdqOf3aTs8BOSmL0xm+QQ0DXseBX4wLwYvktnIbG5f5QJGBi8w8ABZjeqDO8BPyZ9QusaCaYgGvpsvWmpsnZZG8RTMxNiTVV6gn0wq/nqkAvDqP+/1yRWwfOcLETvlWqpZ4SZCdPzwYF4Y9LU0=
+	t=1784660080; cv=none; b=ApvoWgrwbCDqEbOs/G1G6yzRfNGDs5uGnAwcQhzUNG0BE6b+I9zcuJi2VkwF8lz9XkkeUs/Wt9JITJC/XRfDBKNB/bnVw9rXUzN9ZlJ1uRN6+uNS4/z8UmAPw1mwbQSUxKXRvBgidKlIZDS9GvHArAy5Ikw6AHbumCS+YbTbNGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660075; c=relaxed/simple;
-	bh=ikPbEgBQsVwZjLRdr+xgrOteq5KGcDQOixgHUmc55lo=;
+	s=arc-20240116; t=1784660080; c=relaxed/simple;
+	bh=pEK+4TJOXFITUNSMI4oXkNyZ0Xqb8N0sT4NCX3jC9e0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G8fC4DKfp/OWN9Z5Hswto5DwmBoCifqEqYjN2ThFSRV9jViBge9jCsLbHSBuXYbN2mIjK6j3NGLdg4oxn2/I+nPQY/bpJRRPTHaibP24jUgALYSFsvM6v76+r0nKPOXgWod+DyEuSoRsvZC/IZwiTZtHVletK6Zc1FPLjb8jo4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IIXyzYoh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mKSQ8rzHG/cSQqhWNI3MUkn7bgLyGco4W2kDnSQDVGArtmB6508mA6Tf+9030v43oz2vU4iIeqzzd0l21T+qpZ9aXgzJr0Yfh1zY+UzUhp9RxT+uPCO5m1AkZ+CiOVE+9OX8499j+22NbLH92me6IahqKu8ciIpIEXVkXRunhVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SeCK7Lsi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IIXyzYoh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD6801F000E9;
-	Tue, 21 Jul 2026 18:54:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SeCK7Lsi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CDFA1F00A3A;
+	Tue, 21 Jul 2026 18:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660074;
-	bh=xoj5tE+wegdm3JZazX9TMoHhnpY4YCHZvfxQzLpGth0=;
+	s=korg; t=1784660079;
+	bh=haCChNHiT1kHDuBPE65NxiQIlVC9OgnmhJe1xyW/PWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IIXyzYohe+X+yc99OgW5rNMsJOexl0aQvkoLT1oPM7FHZTpQUB6JFrVfZadb5rCgy
-	 wCMYZ5+nanFdfdsk3IHzTofMTyQ7r3afq0YDoA1RDA6P1sw/zybnTAaQVe9jrWAskO
-	 wGqyUIoYzOFb9iluZRGDbKGqujYf3KRcIM0q3JTM=
+	b=SeCK7LsisjnR/IlDaRafr5gWGTy58YyvcJG+pJiNFtP2FjIzfqInCoPB1OIq1yuRC
+	 ryj/8I8D8WjOha+m36OWcifIPaboS57NzeDoNllOiqaxkmBeVfd3VZewxiGKVpRZcI
+	 C9GebVz4+7vzse56EXuE5q+G8h5NBzHOsQ+NMHd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Simon Trimmer <simont@opensource.cirrus.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0843/2077] soundwire: dont program SDW_SCP_BUSCLOCK_SCALE on a unattached Peripheral
-Date: Tue, 21 Jul 2026 17:08:36 +0200
-Message-ID: <20260721152612.675595708@linuxfoundation.org>
+Subject: [PATCH 7.1 0827/2077] 9p: Add missing read barrier in virtio zero-copy path
+Date: Tue, 21 Jul 2026 17:08:20 +0200
+Message-ID: <20260721152612.294386114@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -48,51 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit c368dd5cbd61ffab2b6f8a89b0d5775e2e16cde6 ]
+[ Upstream commit aa88278693cbfaf7a2acf961379973fbb63b165c ]
 
-The SDW_SCP_BUSCLOCK_SCALE register will be programmed when the
-Peripheral is attached. We can and should skip programming the
-SDW_SCP_BUSCLOCK_SCALE register when the Peripheral is unattached.
+Commit 2b6e72ed747f ("9P: Add memory barriers to protect request
+fields over cb/rpc threads handoff") added a read barrier after
+p9_client_rpc() waits for req->status, pairing with the write barrier in
+p9_client_cb(). The virtio zero-copy wait path was missed.
 
-Fixes: 645291cfe5e5 ("Soundwire: stream: program BUSCLOCK_SCALE")
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Simon Trimmer <simont@opensource.cirrus.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Link: https://patch.msgid.link/20260428084612.322701-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Add the same read barrier after the zero-copy wait before reading the
+completed request.
+
+Fixes: 2b6e72ed747f ("9P: Add memory barriers to protect request fields over cb/rpc threads handoff")
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Message-ID: <20260529075441.233369-1-hanguidong02@gmail.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/stream.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/9p/trans_virtio.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/soundwire/stream.c b/drivers/soundwire/stream.c
-index 4ed8fb7663ad40..0b96268380283e 100644
---- a/drivers/soundwire/stream.c
-+++ b/drivers/soundwire/stream.c
-@@ -697,6 +697,13 @@ static int sdw_program_params(struct sdw_bus *bus, bool prepare)
- 		if (scale_index < 0)
- 			return scale_index;
- 
-+		/* Skip the unattached Peripherals */
-+		if (!completion_done(&slave->enumeration_complete)) {
-+			dev_warn(&slave->dev,
-+				 "Not enumerated, skip programming BUSCLOCK_SCALE\n");
-+			continue;
-+		}
-+
- 		ret = sdw_write_no_pm(slave, addr1, scale_index);
- 		if (ret < 0) {
- 			dev_err(&slave->dev, "SDW_SCP_BUSCLOCK_SCALE register write failed\n");
+diff --git a/net/9p/trans_virtio.c b/net/9p/trans_virtio.c
+index 4cdab7094b273a..b0d0094ec8e2c8 100644
+--- a/net/9p/trans_virtio.c
++++ b/net/9p/trans_virtio.c
+@@ -532,6 +532,11 @@ p9_virtio_zc_request(struct p9_client *client, struct p9_req_t *req,
+ 	p9_debug(P9_DEBUG_TRANS, "virtio request kicked\n");
+ 	err = io_wait_event_killable(req->wq,
+ 				     READ_ONCE(req->status) >= REQ_STATUS_RCVD);
++	/*
++	 * Make sure our req is coherent with regard to updates in other
++	 * threads - echoes to wmb() in the callback
++	 */
++	smp_rmb();
+ 	// RERROR needs reply (== error string) in static data
+ 	if (READ_ONCE(req->status) == REQ_STATUS_RCVD &&
+ 	    unlikely(req->rc.sdata[4] == P9_RERROR))
 -- 
 2.53.0
 
