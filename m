@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2023033A9FC;
-	Tue, 21 Jul 2026 19:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70E242DA39;
+	Tue, 21 Jul 2026 19:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660625; cv=none; b=jQ0HVnJi14SDIXevpjjBxYIrQymoN/7hWENrUVZxZzNCrhQ+AVWFp/25ZnM7idUdgcy8A4UFiQXNszDKMD/76gLu0ddtOXR+AJHwIzI/hB94B76r8aGfoEUaxeGXPfsZnB1KBuc7vByL9CA0wbSIqApbAS0PB+iomXg1/BsAsHw=
+	t=1784660627; cv=none; b=I9kpUIfcvquy8PuZ2ZqsSzL+2ueuutHkcDYgo0Agtl4YbNvSV86cvn/Uki4+DndlafdHFKKG5recJZ1/HNfYpwjAp4YYxToKsJeXqUmo4z1vXUxL4ToCr9Cp2CVKijunfDWvujP02hxDyfIBr3e6grxZp6uMqeFxQXXlEYb1Qfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660625; c=relaxed/simple;
-	bh=FBv4MOnnoGBpSGUuLVrdAZKxZYtOtCBs+3Zdqt3xDfc=;
+	s=arc-20240116; t=1784660627; c=relaxed/simple;
+	bh=PaGfF15RrmU3iJpRGHEl7Ay5oM57uNsb0MGX+pof/jw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qnghMI6VO2O3j0sssDSr1CRG7Sa1ngPCV54QBCUbNSiB/hGDJI9qRaq1j8oi3uG+rT07z/TbkBLrKi96Ro1JHYIkAR1BzMkvj0IWaCkSYKaG3bTrE/g29ns5K8J26XE9IN0P+8HZxK1pcyvCzfiSlC9a0OalQimoCmeNIawSUVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0XjrP6hU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=su89wwmxLkG2MEDNOmfch109eR9mkVLFpDaUZQxqtran2DiydFeGAcfomdO4LOKSoBQ7sQK9UkXQhX+hch0CHhXeDW87LUpujzZWYUd46zr1PxIIuLHtlaC9+60h++K6tMRDnaNQPt3ErMKVh7S37qjRKfX+aTNFnvKA1tzPaTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kthPr/e/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0XjrP6hU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8652C1F000E9;
-	Tue, 21 Jul 2026 19:03:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kthPr/e/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3E11F000E9;
+	Tue, 21 Jul 2026 19:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660624;
-	bh=cm4gpG6Lmd8lkfr0157+BbHrEAYrYuIPbnBegm5zm+Y=;
+	s=korg; t=1784660626;
+	bh=1rKtF5dWm7UegBEkvWScDFl1I+hf84LRQ5pXDm6Lugc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0XjrP6hUVgCGyeG51iqZJMi6+7fVv2aqb43Ez2UkktXxJ7YfydRRnDkxIkDqeWiV+
-	 UjQ+QrWrjV89yRCgv+Vd7xIKb4jhqF2LqPVwWsr4drZAsRRORQo1ipL16OWfj+L/Ze
-	 ZzFNu3tdjzpK4dhGSERoI4Fy4DWRp0G2N7O5hSNg=
+	b=kthPr/e/OJnAyFXCzuihOKE9cRDXv2SFYtFM3W/cZV/+T8GL6X/2c7hFPRoy8lJr9
+	 Kvx6XHvAwB4wf+U2F0ldKpYlk4CSjn9eti6QOC5Ggj73dm0LpsxtrBQJeauhWbLrhd
+	 bbl03KohWxAw6bwNLmF0AtuMMKk09AWMXgf8EYTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Lee <ryan.lee@canonical.com>,
-	Zygmunt Krynicki <me@zygoon.pl>,
-	John Johansen <john.johansen@canonical.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1049/2077] apparmor: release exe file resources on path failure
-Date: Tue, 21 Jul 2026 17:12:02 +0200
-Message-ID: <20260721152617.556021953@linuxfoundation.org>
+Subject: [PATCH 7.1 1014/2077] perf hwmon: Fix parse_hwmon_filename() strlcpy buffer overflow
+Date: Tue, 21 Jul 2026 17:11:27 +0200
+Message-ID: <20260721152616.735324808@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,45 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zygmunt Krynicki <me@zygoon.pl>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 7306c41672487a6c28430714be063bc6942c28f2 ]
+[ Upstream commit e1a2c9d70b312acc262f6be936dd5bbd9bbc6236 ]
 
-get_current_exe_path() takes both an exe_file reference and a path
-reference before resolving the path name. If aa_path_name() failed, it
-returned immediately and leaked both references.
+parse_hwmon_filename() strips the "_alarm" suffix from event names
+by copying into a 24-byte stack buffer:
 
-Route the failure through the common cleanup path so fput() and path_put()
-always run after the references are acquired.
+    strlcpy(fn_type, fn_item, fn_item_len - 5);
 
-Fixes: 8d34e16f7f2b ("apparmor: userns: Add support for execpath in userns")
-Reviewed-by: Ryan Lee <ryan.lee@canonical.com>
-Signed-off-by: Zygmunt Krynicki <me@zygoon.pl>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+The third argument is the source length minus the suffix, not the
+destination buffer capacity.  A long event name ending in "_alarm"
+can have fn_item_len - 5 > sizeof(fn_type), causing strlcpy() to
+write past the 24-byte fn_type[] array.  The assert() only validates
+that the longest *valid* hwmon item fits, but does not protect
+against crafted input.
+
+Clamp the strlcpy size to min(fn_item_len - 5, sizeof(fn_type)).
+
+Fixes: 4810b761f812da3c ("perf hwmon_pmu: Add hwmon filename parser")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Ian Rogers <irogers@google.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/task.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ tools/perf/util/hwmon_pmu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/security/apparmor/task.c b/security/apparmor/task.c
-index 0db0e81b460017..6445cb5f852668 100644
---- a/security/apparmor/task.c
-+++ b/security/apparmor/task.c
-@@ -313,9 +313,12 @@ static const char *get_current_exe_path(char *buffer, int buffer_size)
- 	p = exe_file->f_path;
- 	path_get(&p);
- 
--	if (aa_path_name(&p, FLAG_VIEW_SUBNS, buffer, &path_str, NULL, NULL))
--		return ERR_PTR(-ENOMEM);
-+	if (aa_path_name(&p, FLAG_VIEW_SUBNS, buffer, &path_str, NULL, NULL)) {
-+		path_str = ERR_PTR(-ENOMEM);
-+		goto out;
-+	}
- 
-+out:
- 	fput(exe_file);
- 	path_put(&p);
- 
+diff --git a/tools/perf/util/hwmon_pmu.c b/tools/perf/util/hwmon_pmu.c
+index fbfb872ceb1826..bdcbe887579a1f 100644
+--- a/tools/perf/util/hwmon_pmu.c
++++ b/tools/perf/util/hwmon_pmu.c
+@@ -202,7 +202,8 @@ bool parse_hwmon_filename(const char *filename,
+ 	fn_item_len = strlen(fn_item);
+ 	if (fn_item_len > 6 && !strcmp(&fn_item[fn_item_len - 6], "_alarm")) {
+ 		assert(strlen(LONGEST_HWMON_ITEM_STR) < sizeof(fn_type));
+-		strlcpy(fn_type, fn_item, fn_item_len - 5);
++		/* fn_item_len - 5 strips "_alarm"; clamp to buffer size */
++		strlcpy(fn_type, fn_item, min_t(size_t, fn_item_len - 5, sizeof(fn_type)));
+ 		fn_item = fn_type;
+ 		*alarm = true;
+ 	}
 -- 
 2.53.0
 
