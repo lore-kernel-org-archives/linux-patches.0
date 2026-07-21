@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800F53C1098;
-	Tue, 21 Jul 2026 21:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0A534B1A6;
+	Tue, 21 Jul 2026 21:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670440; cv=none; b=kl/im7GdmMbl8ppTdU2dS31sxKjTiYkSQAf317AqHGdggGXrxlKsUK939sJI9vjJA33+CiZUmIrLJX4nyQ/RvkL4Uy0pp+hYhdTOB9Pf9SmT1IUf1iy33grimLjAbWHyKpAbcdZV9jzBEJy8K/A5S4eQgJVigAqOYFNKNNucrtE=
+	t=1784670443; cv=none; b=B6BFFkUZGXMz2Z3dwKabn3IJXuMjEZxfd+yIn8EttxfXdHWzTDxH7c+q9zzBHt0HUifc8ywLf02hVTIbEYocTz/dg7QZ/WarzUsRGp2dw0Xm2WDFdfQ69hnWiKoXrbI9fEaBOB+BJXoloyZ3qO7E7Oj8nqt6zBSIiSUpt1r5eNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670440; c=relaxed/simple;
-	bh=zDIVqTQK3NmrtGzv2SAthZ0eS0OXh5AMJha9kfYgxjg=;
+	s=arc-20240116; t=1784670443; c=relaxed/simple;
+	bh=EykOsIuU/lIWGlsaaZe0xY/y3jW6puFUjTkRGK7wxeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APwivANXfjkkzlrdaV3KsjLbeQhSkLYSNCOo/lgLSTtZ5sm0EDI/8Uc7X3vIYm05VE/5S64yRDGHhUGQ6EL7/JFyNnwx9vxehvnNn5LeciYEY1GpdIEz+fB+tryBekNV4NuYJC3xCGCL66c1TWhwdbm4CPLUXDkxIuUbo5E7lOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02lADguG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QGqLfBnBt78ASaEoeqPt7hTw/bfqH0aMSgBiBQxZJz4VwyV6kKDvQSjT43nQKg4si5uLbdflOMtGLLejaekR5OH7uTJEr50NP5B/EO8nXSimxXKuyx9I6QEEWF/XRaiXoehLP4ClBd9JIsz2ih+nNxF6O1wVLaCFSXUeeKomyaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JeJH2mAK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02lADguG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F501F000E9;
-	Tue, 21 Jul 2026 21:47:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JeJH2mAK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 608CF1F000E9;
+	Tue, 21 Jul 2026 21:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670439;
-	bh=Ytdwjdezc4e9vWBAn6KgGNM078ypxUqiBfWd+PSaaXw=;
+	s=korg; t=1784670441;
+	bh=NXwz6angUI044Dt+vR1B6VBLJHQCPVL6yFN8m8twWnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=02lADguGDPPp7saKBKdRKoruePsT2AD4ICFtpPHxBkzETk04PTLhnStwF+pF6IpXb
-	 fxw99fupA0WhgAAWoG6K9O+RIjFY6Z8K8tShNrGSQ+kcoONfIkReXuEouyz0bTgdDl
-	 YDMe95NyaEwe2eLI65CuxcATCSAiLdnzFNcD5HHQ=
+	b=JeJH2mAKxnroN8jth7Pi4r9Ufum8fe1zJFaVsd4c1h0fxwXIyf53FCMV/da16lGnx
+	 YCAtJbyI59ZsdoHXjlRIshIaVaHCzbbli3/l2/BGpH/K+bdZQanDs1CE+6Yzh8XpuQ
+	 32QYbUYNMHyq+kg7mghu300k1FGtl9eBdogUu6D0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yikai Zhao <yikai@z1k.dev>,
-	SJ Park <sj@kernel.org>,
-	Liew Rui Yan <aethernet65535@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0889/1067] mm/damon/reclaim: fix typo in damon_reclaim_timer_fn()
-Date: Tue, 21 Jul 2026 17:24:50 +0200
-Message-ID: <20260721152444.419855921@linuxfoundation.org>
+Subject: [PATCH 6.1 0890/1067] batman-adv: retrieve ethhdr after potential skb realloc on RX
+Date: Tue, 21 Jul 2026 17:24:51 +0200
+Message-ID: <20260721152444.441989160@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,41 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liew Rui Yan <aethernet65535@gmail.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-Commit 2f54908fae211 ("mm/damon/reclaim: detect and use fresh enabled
-and kdamond_pid values") introduced a typo in damon_reclaim_timer_fn()
-where '!=' was used instead of '==' (unlike damon_lru_sort_timer_fn()).
-This caused damon_reclaim to return early during the delayed work,
-breaking early boot parameter configuration like
-'damon_reclaim.enabled=Y'.
+commit 035e1fed892d3d06002a73ff73668f618a514644 upstream.
 
-Fix this by changing '!=' to '=='.
+pskb_may_pull() in batadv_interface_rx() could reallocate the buffer behind
+the skb. Variables which were pointing to the old buffer need to be
+reassigned to avoid an use-after-free.
 
-Fixes: 2f54908fae21 ("mm/damon/reclaim: detect and use fresh enabled and kdamond_pid values")
-Cc: <stable@vger.kernel.org> # 6.1.x
-Reported-by: Yikai Zhao <yikai@z1k.dev>
-Closes: https://lore.kernel.org/CANMyjpgq5n0Ekt4dgyLRHGb89_Ew0aOMZ3j32V_w0GjHkqH1FQ@mail.gmail.com
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+This was done correctly for the VLAN header but missed for the ethernet
+header which is later used for the TT and AP isolation handling.
+
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
+Fixes: c78296665c3d ("batman-adv: Check skb size before using encapsulated ETH+VLAN header")
+[ move from mesh- to soft-interface.c ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/reclaim.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/batman-adv/soft-interface.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-index 016cd8d83ca9de..bb4b705d842c1d 100644
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -198,7 +198,7 @@ static void damon_reclaim_timer_fn(struct work_struct *work)
- 	bool now_enabled;
+diff --git a/net/batman-adv/soft-interface.c b/net/batman-adv/soft-interface.c
+index c0549abcae7a64..40354da5c5b555 100644
+--- a/net/batman-adv/soft-interface.c
++++ b/net/batman-adv/soft-interface.c
+@@ -444,6 +444,7 @@ void batadv_interface_rx(struct net_device *soft_iface,
+ 		if (!pskb_may_pull(skb, VLAN_ETH_HLEN))
+ 			goto dropped;
  
- 	now_enabled = enabled;
--	if (damon_reclaim_enabled() != now_enabled)
-+	if (damon_reclaim_enabled() == now_enabled)
- 		return;
- 	damon_reclaim_turn(now_enabled);
- }
++		ethhdr = eth_hdr(skb);
+ 		vhdr = skb_vlan_eth_hdr(skb);
+ 
+ 		/* drop batman-in-batman packets to prevent loops */
 -- 
 2.53.0
 
