@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0943446C4BB;
-	Tue, 21 Jul 2026 15:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB92B46C4B2;
+	Tue, 21 Jul 2026 15:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649487; cv=none; b=nLy7OGYTT7ZNj/Ddis/Nhppuy3xf7EkeUQIBtDJA+WwQpl8FvruSrR8B71hm5xigy5XIt5X+b9Bi52EIa8mmgmg7Rhf8SGd0oZe5oce+bN/w6zsegwb2UHGbk7BabmalOwkgncMpon+dKD55qZZ9n/sHj+xs4CCoZuChJLcIENA=
+	t=1784649490; cv=none; b=rO21l8UvZH22RWTuCPTQRGAE/JRaVOeuB9gvUNJup+WZtTP1b+J9eidWq82+DisodY5XB5yteR2SCW/Onp4FIaoBObFtQUOvDO51r90wtGZcnDzfdWQ5mz3K+FBdl0dVRLAQX9JNoroU5dRdK9sQjUR4yWULqnUmXR/ZhDLBago=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649487; c=relaxed/simple;
-	bh=pLPDJ6772lU4WdovzOwXgEgoUpCpHDnXQ20fmPfgm1g=;
+	s=arc-20240116; t=1784649490; c=relaxed/simple;
+	bh=Dj7LPawj83dCy45gPEXwh+gxxFpM54+8WHUdCM1+R6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PMwYXpdrnfo9vlln0qvRkEBrtDnAt8bQPTSVVzf/NQgtCxz+WKPF4faj0jDyAI5KAceUpnvdDn5fZQpx67RdeXGe8DfyJlNdD3j+uLU40jAciXcowICc6x9rfcdvoKrgUQe9ih2ZcKt34s1c58QP9+IH0C83P/J+m9PiarqHUVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvmgaL5X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mw6TcuObGS4L04GFsexc52IkIUak+bi1RF18iw+YzXtfI66f/aRr3uVd7Q72thxpNwJuS5pa+IWTQgs45YyTCQNDiOfPnRy4XcOpTAzgsrc6499yhR3Q7t8sDfsZ5xLlyauDt/IwQaOI5phRbkZnz5Y1NVzVI5Zv4NVbvJztXmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1MvfVHb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvmgaL5X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 539A51F00A3A;
-	Tue, 21 Jul 2026 15:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1MvfVHb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91F41F000E9;
+	Tue, 21 Jul 2026 15:58:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649484;
-	bh=QEDEvV37YSCNanJ5Y4PWrJIPvHKG3EpzURxZbuZ7+ac=;
+	s=korg; t=1784649487;
+	bh=sq4zin1s/GhBzQGODOuiT5rlq3RHWS7tmN06WvnV+QA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LvmgaL5XxoNTDnzVhU/S5+oaERZ9L7Xox+KHETWCbiDDx/DI958K/3H0AsG67jE7d
-	 R3lN6WSjtRSiSQa2D4ppt96MlxNEHjMjbuGLwEobOVa16M365zQusSg035WuUwWKW6
-	 gXq56DPBRkDeyjUtLhxFOk6CKNU1/xoC00uokwa8=
+	b=w1MvfVHbBHYfqjAMHEnQAGw1CG0ct7euWNacNClByT0friiJbpL4qKMQ/7cEwnmuF
+	 8jf+DEHBQKqIcCmPa4CVgnqEQzFJ0+8RW7OcObaSEYjlBDINFVdOcqzTx8ljzPf15W
+	 hLnD+F7Rpfq1W8MFFog323+sD0Gl+Ad+jQe8E4wY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0552/2077] IB/mlx5: Remove unused mkc bits in mlx5r_umr_update_mr_page_shift()
-Date: Tue, 21 Jul 2026 17:03:45 +0200
-Message-ID: <20260721152605.831815543@linuxfoundation.org>
+Subject: [PATCH 7.1 0553/2077] IB/mlx5: Pull the pdn out of the depths of the umr machinery
+Date: Tue, 21 Jul 2026 17:03:46 +0200
+Message-ID: <20260721152605.854290625@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,86 +52,373 @@ Content-Transfer-Encoding: 8bit
 
 From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 4910483bd7ee2b40d0cc8ebd537fa33c95562029 ]
+[ Upstream commit f387a9f06ea4f05e607a91b161963c0b19436652 ]
 
-The HW only processes mkc fields selected by mkey_mask.
-pd, qpn and mkey_7_0 are never selected so they can be left as zero.
+Instead of getting the pdn deep inside the umr code, pass it in from the
+top. to_mpd(mr->ibmr.pd)->pdn is not safe due to the rereg races, so all
+the call sites need some revision to obtain the pdn in a safe way.
 
-This removes a racy read of mr->pd.
+Mark them with mlx5_mr_pdn(); following patches will go through and remove
+these.
 
-Fixes: e73242aa14d2 ("RDMA/mlx5: Optimize DMABUF mkey page size")
-Link: https://patch.msgid.link/r/5-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com
+Cases where the XLT flags are known and do not require the PDN can pass 0,
+such as for mlx5_ib_dmabuf_invalidate_cb().
+
+Also extract the DMABUF data_direct special case from inside the UMR code
+and into the only place that needs it, pagefault_dmabuf_mr(). The actual
+mr was created directly without using the UMR flow. Ultimately this will
+be moved into mlx5_ib_init_dmabuf_mr().
+
+Link: https://patch.msgid.link/r/6-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com
+Assisted-by: Codex:gpt-5-5
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: 8e0a02a989c1 ("IB/mlx5: Don't mangle the mr->pd inside the rereg callback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/umr.c | 16 +++-------------
- drivers/infiniband/hw/mlx5/umr.h |  3 +--
- 2 files changed, 4 insertions(+), 15 deletions(-)
+ drivers/infiniband/hw/mlx5/mlx5_ib.h |  9 ++++
+ drivers/infiniband/hw/mlx5/mr.c      |  8 +--
+ drivers/infiniband/hw/mlx5/odp.c     | 12 +++--
+ drivers/infiniband/hw/mlx5/umr.c     | 75 ++++++++++++++--------------
+ drivers/infiniband/hw/mlx5/umr.h     |  6 +--
+ 5 files changed, 64 insertions(+), 46 deletions(-)
 
+diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+index e156dc4d752996..0a2b8ede0d818a 100644
+--- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
++++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+@@ -331,6 +331,10 @@ struct mlx5_ib_flow_db {
+ #define MLX5_IB_QPT_DCT		IB_QPT_RESERVED4
+ #define MLX5_IB_WR_UMR		IB_WR_RESERVED1
+ 
++/*
++ * A valid pdn is required when flags include MLX5_IB_UPD_XLT_ENABLE,
++ * MLX5_IB_UPD_XLT_PD or MLX5_IB_UPD_XLT_ACCESS.
++ */
+ #define MLX5_IB_UPD_XLT_ZAP	      BIT(0)
+ #define MLX5_IB_UPD_XLT_ENABLE	      BIT(1)
+ #define MLX5_IB_UPD_XLT_ATOMIC	      BIT(2)
+@@ -1209,6 +1213,11 @@ static inline struct mlx5_ib_pd *to_mpd(struct ib_pd *ibpd)
+ 	return container_of(ibpd, struct mlx5_ib_pd, ibpd);
+ }
+ 
++static inline u32 mlx5_mr_pdn(struct mlx5_ib_mr *mr)
++{
++	return to_mpd(mr->ibmr.pd)->pdn;
++}
++
+ static inline struct mlx5_ib_srq *to_msrq(struct ib_srq *ibsrq)
+ {
+ 	return container_of(ibsrq, struct mlx5_ib_srq, ibsrq);
+diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
+index f3884faf1a117c..e29f5e628312b3 100644
+--- a/drivers/infiniband/hw/mlx5/mr.c
++++ b/drivers/infiniband/hw/mlx5/mr.c
+@@ -781,7 +781,8 @@ static struct ib_mr *create_real_mr(struct ib_pd *pd, struct ib_umem *umem,
+ 		 * configured properly but left disabled. It is safe to go ahead
+ 		 * and configure it again via UMR while enabling it.
+ 		 */
+-		err = mlx5r_umr_update_mr_pas(mr, MLX5_IB_UPD_XLT_ENABLE);
++		err = mlx5r_umr_update_mr_pas(mr, MLX5_IB_UPD_XLT_ENABLE,
++					      to_mpd(pd)->pdn);
+ 		if (err) {
+ 			mlx5_ib_dereg_mr(&mr->ibmr, NULL);
+ 			return ERR_PTR(err);
+@@ -890,7 +891,8 @@ static void mlx5_ib_dmabuf_invalidate_cb(struct dma_buf_attachment *attach)
+ 	if (!umem_dmabuf->sgt || !mr)
+ 		return;
+ 
+-	mlx5r_umr_update_mr_pas(mr, MLX5_IB_UPD_XLT_ZAP);
++	/* MLX5_IB_UPD_XLT_ZAP does not change the pdn */
++	mlx5r_umr_update_mr_pas(mr, MLX5_IB_UPD_XLT_ZAP, 0);
+ 	ib_umem_dmabuf_unmap_pages(umem_dmabuf);
+ }
+ 
+@@ -1141,7 +1143,7 @@ static int umr_rereg_pas(struct mlx5_ib_mr *mr, struct ib_pd *pd,
+ 	mr->ibmr.length = new_umem->length;
+ 	mr->page_shift = order_base_2(page_size);
+ 	mr->umem = new_umem;
+-	err = mlx5r_umr_update_mr_pas(mr, upd_flags);
++	err = mlx5r_umr_update_mr_pas(mr, upd_flags, mlx5_mr_pdn(mr));
+ 	if (err) {
+ 		/*
+ 		 * The MR is revoked at this point so there is no issue to free
+diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
+index 1119ce163ea783..42235b9dd6ab18 100644
+--- a/drivers/infiniband/hw/mlx5/odp.c
++++ b/drivers/infiniband/hw/mlx5/odp.c
+@@ -833,12 +833,14 @@ static int pagefault_dmabuf_mr(struct mlx5_ib_mr *mr, size_t bcnt,
+ 			       u32 *bytes_mapped, u32 flags)
+ {
+ 	struct ib_umem_dmabuf *umem_dmabuf = to_ib_umem_dmabuf(mr->umem);
++	struct mlx5_ib_dev *dev = mr_to_mdev(mr);
+ 	int access_mode = mr->data_direct ? MLX5_MKC_ACCESS_MODE_KSM :
+ 					    MLX5_MKC_ACCESS_MODE_MTT;
+ 	unsigned int old_page_shift = mr->page_shift;
+ 	unsigned int page_shift;
+ 	unsigned long page_size;
+ 	u32 xlt_flags = 0;
++	u32 pdn = 0;
+ 	int err;
+ 
+ 	if (flags & MLX5_PF_FLAGS_ENABLE)
+@@ -857,8 +859,12 @@ static int pagefault_dmabuf_mr(struct mlx5_ib_mr *mr, size_t bcnt,
+ 		err = -EINVAL;
+ 	} else {
+ 		page_shift = order_base_2(page_size);
++		if (mr->data_direct)
++			pdn = dev->ddr.pdn;
++		else
++			pdn = mlx5_mr_pdn(mr);
+ 		if (page_shift != mr->page_shift && mr->dmabuf_faulted) {
+-			err = mlx5r_umr_dmabuf_update_pgsz(mr, xlt_flags,
++			err = mlx5r_umr_dmabuf_update_pgsz(mr, xlt_flags, pdn,
+ 							   page_shift);
+ 		} else {
+ 			mr->page_shift = page_shift;
+@@ -866,8 +872,8 @@ static int pagefault_dmabuf_mr(struct mlx5_ib_mr *mr, size_t bcnt,
+ 				err = mlx5r_umr_update_data_direct_ksm_pas(
+ 					mr, xlt_flags);
+ 			else
+-				err = mlx5r_umr_update_mr_pas(mr,
+-							      xlt_flags);
++				err = mlx5r_umr_update_mr_pas(mr, xlt_flags,
++							      pdn);
+ 		}
+ 	}
+ 	dma_resv_unlock(umem_dmabuf->attach->dmabuf->resv);
 diff --git a/drivers/infiniband/hw/mlx5/umr.c b/drivers/infiniband/hw/mlx5/umr.c
-index 688d5246f284e8..f0ba8d91f81d16 100644
+index f0ba8d91f81d16..f3f428f5e1b663 100644
 --- a/drivers/infiniband/hw/mlx5/umr.c
 +++ b/drivers/infiniband/hw/mlx5/umr.c
-@@ -937,8 +937,7 @@ int mlx5r_umr_update_xlt(struct mlx5_ib_mr *mr, u64 idx, int npages,
-  * pinned and the HW can switch from 4K to huge-page alignment).
-  */
- int mlx5r_umr_update_mr_page_shift(struct mlx5_ib_mr *mr,
--				   unsigned int page_shift,
--				   bool dd)
-+				   unsigned int page_shift)
+@@ -603,11 +603,11 @@ mlx5r_umr_set_update_xlt_ctrl_seg(struct mlx5_wqe_umr_ctrl_seg *ctrl_seg,
+ 
+ static void mlx5r_umr_set_update_xlt_mkey_seg(struct mlx5_ib_dev *dev,
+ 					      struct mlx5_mkey_seg *mkey_seg,
+-					      struct mlx5_ib_mr *mr,
++					      struct mlx5_ib_mr *mr, u32 pdn,
+ 					      unsigned int page_shift)
+ {
+ 	mlx5r_umr_set_access_flags(dev, mkey_seg, mr->access_flags);
+-	MLX5_SET(mkc, mkey_seg, pd, to_mpd(mr->ibmr.pd)->pdn);
++	MLX5_SET(mkc, mkey_seg, pd, pdn);
+ 	MLX5_SET64(mkc, mkey_seg, start_addr, mr->ibmr.iova);
+ 	MLX5_SET64(mkc, mkey_seg, len, mr->ibmr.length);
+ 	MLX5_SET(mkc, mkey_seg, log_page_size, page_shift);
+@@ -670,23 +670,22 @@ static void mlx5r_umr_final_update_xlt(struct mlx5_ib_dev *dev,
+ 	wqe->data_seg.byte_count = cpu_to_be32(sg->length);
+ }
+ 
+-static void
+-_mlx5r_umr_init_wqe(struct mlx5_ib_mr *mr, struct mlx5r_umr_wqe *wqe,
+-		    struct ib_sge *sg, unsigned int flags,
+-		    unsigned int page_shift, bool dd)
++static void _mlx5r_umr_init_wqe(struct mlx5_ib_mr *mr,
++				struct mlx5r_umr_wqe *wqe, struct ib_sge *sg,
++				unsigned int flags, u32 pdn,
++				unsigned int page_shift)
  {
  	struct mlx5_ib_dev *dev = mr_to_mdev(mr);
- 	struct mlx5r_umr_wqe wqe = {};
-@@ -953,16 +952,8 @@ int mlx5r_umr_update_mr_page_shift(struct mlx5_ib_mr *mr,
- 	/* Fill mkey segment with the new page size, keep the rest unchanged */
- 	MLX5_SET(mkc, &wqe.mkey_seg, log_page_size, page_shift);
  
--	if (dd)
--		MLX5_SET(mkc, &wqe.mkey_seg, pd, dev->ddr.pdn);
--	else
--		MLX5_SET(mkc, &wqe.mkey_seg, pd, to_mpd(mr->ibmr.pd)->pdn);
--
- 	MLX5_SET64(mkc, &wqe.mkey_seg, start_addr, mr->ibmr.iova);
- 	MLX5_SET64(mkc, &wqe.mkey_seg, len, mr->ibmr.length);
--	MLX5_SET(mkc, &wqe.mkey_seg, qpn, 0xffffff);
--	MLX5_SET(mkc, &wqe.mkey_seg, mkey_7_0,
--		 mlx5_mkey_variant(mr->mmkey.key));
+ 	mlx5r_umr_set_update_xlt_ctrl_seg(&wqe->ctrl_seg, flags, sg);
+-	mlx5r_umr_set_update_xlt_mkey_seg(dev, &wqe->mkey_seg, mr, page_shift);
+-	if (dd) /* Use the data direct internal kernel PD */
+-		MLX5_SET(mkc, &wqe->mkey_seg, pd, dev->ddr.pdn);
++	mlx5r_umr_set_update_xlt_mkey_seg(dev, &wqe->mkey_seg, mr, pdn,
++					  page_shift);
+ 	mlx5r_umr_set_update_xlt_data_seg(&wqe->data_seg, sg);
+ }
  
- 	err = mlx5r_umr_post_send_wait(dev, mr->mmkey.key, &wqe, false);
- 	if (!err)
-@@ -1049,7 +1040,7 @@ static int _mlx5r_umr_zap_mkey(struct mlx5_ib_mr *mr,
- 	 * non-present.
- 	 */
- 	if (*nblocks) {
--		err = mlx5r_umr_update_mr_page_shift(mr, max_page_shift, dd);
-+		err = mlx5r_umr_update_mr_page_shift(mr, max_page_shift);
- 		if (err) {
- 			mr->page_shift = old_page_shift;
- 			return err;
-@@ -1114,8 +1105,7 @@ int mlx5r_umr_dmabuf_update_pgsz(struct mlx5_ib_mr *mr, u32 xlt_flags,
- 			goto err;
+-static int
+-_mlx5r_umr_update_mr_pas(struct mlx5_ib_mr *mr, unsigned int flags, bool dd,
+-			 size_t start_block, size_t nblocks)
++static int _mlx5r_umr_update_mr_pas(struct mlx5_ib_mr *mr, unsigned int flags,
++				    u32 pdn, bool dd, size_t start_block,
++				    size_t nblocks)
+ {
+ 	size_t ent_size = dd ? sizeof(struct mlx5_ksm) : sizeof(struct mlx5_mtt);
+ 	struct mlx5_ib_dev *dev = mr_to_mdev(mr);
+@@ -720,7 +719,7 @@ _mlx5r_umr_update_mr_pas(struct mlx5_ib_mr *mr, unsigned int flags, bool dd,
+ 
+ 	orig_sg_length = sg.length;
+ 
+-	_mlx5r_umr_init_wqe(mr, &wqe, &sg, flags, mr->page_shift, dd);
++	_mlx5r_umr_init_wqe(mr, &wqe, &sg, flags, pdn, mr->page_shift);
+ 
+ 	/* Set initial translation offset to start_block */
+ 	offset = (u64)start_block * ent_size;
+@@ -811,7 +810,8 @@ int mlx5r_umr_update_data_direct_ksm_pas_range(struct mlx5_ib_mr *mr,
+ 	    !(flags & MLX5_IB_UPD_XLT_KEEP_PGSZ)))
+ 		return -EINVAL;
+ 
+-	return _mlx5r_umr_update_mr_pas(mr, flags, true, start_block, nblocks);
++	return _mlx5r_umr_update_mr_pas(mr, flags, mr_to_mdev(mr)->ddr.pdn,
++					true, start_block, nblocks);
+ }
+ 
+ int mlx5r_umr_update_data_direct_ksm_pas(struct mlx5_ib_mr *mr,
+@@ -821,12 +821,13 @@ int mlx5r_umr_update_data_direct_ksm_pas(struct mlx5_ib_mr *mr,
+ }
+ 
+ int mlx5r_umr_update_mr_pas_range(struct mlx5_ib_mr *mr, unsigned int flags,
+-				  size_t start_block, size_t nblocks)
++				  u32 pdn, size_t start_block, size_t nblocks)
+ {
+ 	if (WARN_ON(mr->umem->is_odp))
+ 		return -EINVAL;
+ 
+-	return _mlx5r_umr_update_mr_pas(mr, flags, false, start_block, nblocks);
++	return _mlx5r_umr_update_mr_pas(mr, flags, pdn, false, start_block,
++					nblocks);
+ }
+ 
+ /*
+@@ -834,9 +835,9 @@ int mlx5r_umr_update_mr_pas_range(struct mlx5_ib_mr *mr, unsigned int flags,
+  * Dmabuf MR is handled in a similar way, except that the MLX5_IB_UPD_XLT_ZAP
+  * flag may be used.
+  */
+-int mlx5r_umr_update_mr_pas(struct mlx5_ib_mr *mr, unsigned int flags)
++int mlx5r_umr_update_mr_pas(struct mlx5_ib_mr *mr, unsigned int flags, u32 pdn)
+ {
+-	return mlx5r_umr_update_mr_pas_range(mr, flags, 0, 0);
++	return mlx5r_umr_update_mr_pas_range(mr, flags, pdn, 0, 0);
+ }
+ 
+ static bool umr_can_use_indirect_mkey(struct mlx5_ib_dev *dev)
+@@ -861,6 +862,7 @@ int mlx5r_umr_update_xlt(struct mlx5_ib_mr *mr, u64 idx, int npages,
+ 	size_t orig_sg_length;
+ 	size_t pages_iter;
+ 	struct ib_sge sg;
++	u32 pdn = mlx5_mr_pdn(mr);
+ 	int err = 0;
+ 	void *xlt;
+ 
+@@ -895,7 +897,8 @@ int mlx5r_umr_update_xlt(struct mlx5_ib_mr *mr, u64 idx, int npages,
  	}
  
--	err = mlx5r_umr_update_mr_page_shift(mr, mr->page_shift,
--					     mr->data_direct);
-+	err = mlx5r_umr_update_mr_page_shift(mr, mr->page_shift);
+ 	mlx5r_umr_set_update_xlt_ctrl_seg(&wqe.ctrl_seg, flags, &sg);
+-	mlx5r_umr_set_update_xlt_mkey_seg(dev, &wqe.mkey_seg, mr, page_shift);
++	mlx5r_umr_set_update_xlt_mkey_seg(dev, &wqe.mkey_seg, mr, pdn,
++					  page_shift);
+ 	mlx5r_umr_set_update_xlt_data_seg(&wqe.data_seg, &sg);
+ 
+ 	for (pages_mapped = 0;
+@@ -962,17 +965,18 @@ int mlx5r_umr_update_mr_page_shift(struct mlx5_ib_mr *mr,
+ 	return err;
+ }
+ 
+-static inline int
+-_mlx5r_dmabuf_umr_update_pas(struct mlx5_ib_mr *mr, unsigned int flags,
+-			     size_t start_block, size_t nblocks, bool dd)
++static inline int _mlx5r_dmabuf_umr_update_pas(struct mlx5_ib_mr *mr,
++					       unsigned int flags, u32 pdn,
++					       size_t start_block,
++					       size_t nblocks, bool dd)
+ {
+ 	if (dd)
+ 		return mlx5r_umr_update_data_direct_ksm_pas_range(mr, flags,
+ 								  start_block,
+ 								  nblocks);
+ 	else
+-		return mlx5r_umr_update_mr_pas_range(mr, flags, start_block,
+-						     nblocks);
++		return mlx5r_umr_update_mr_pas_range(mr, flags, pdn,
++						     start_block, nblocks);
+ }
+ 
+ /**
+@@ -986,11 +990,9 @@ _mlx5r_dmabuf_umr_update_pas(struct mlx5_ib_mr *mr, unsigned int flags,
+  * Return: On success, returns the number of entries that were zapped.
+  *         On error, returns a negative error code.
+  */
+-static int _mlx5r_umr_zap_mkey(struct mlx5_ib_mr *mr,
+-			       unsigned int flags,
+-			       unsigned int page_shift,
+-			       size_t *nblocks,
+-			       bool dd)
++static int _mlx5r_umr_zap_mkey(struct mlx5_ib_mr *mr, unsigned int flags,
++			       unsigned int page_shift, size_t *nblocks,
++			       u32 pdn, bool dd)
+ {
+ 	unsigned int old_page_shift = mr->page_shift;
+ 	struct mlx5_ib_dev *dev = mr_to_mdev(mr);
+@@ -1030,7 +1032,7 @@ static int _mlx5r_umr_zap_mkey(struct mlx5_ib_mr *mr,
+ 	 */
+ 	if (*nblocks)
+ 		mr->page_shift = max_page_shift;
+-	err = _mlx5r_dmabuf_umr_update_pas(mr, flags, 0, *nblocks, dd);
++	err = _mlx5r_dmabuf_umr_update_pas(mr, flags, pdn, 0, *nblocks, dd);
+ 	if (err) {
+ 		mr->page_shift = old_page_shift;
+ 		return err;
+@@ -1055,6 +1057,7 @@ static int _mlx5r_umr_zap_mkey(struct mlx5_ib_mr *mr,
+  * entries accordingly
+  * @mr:        The memory region to update
+  * @xlt_flags: Translation table update flags
++ * @pdn:       Protection domain number
+  * @page_shift: The new (optimized) page shift to use
+  *
+  * This function updates the page size and mkey translation entries for a DMABUF
+@@ -1074,7 +1077,7 @@ static int _mlx5r_umr_zap_mkey(struct mlx5_ib_mr *mr,
+  *
+  * Returns 0 on success or a negative error code on failure.
+  */
+-int mlx5r_umr_dmabuf_update_pgsz(struct mlx5_ib_mr *mr, u32 xlt_flags,
++int mlx5r_umr_dmabuf_update_pgsz(struct mlx5_ib_mr *mr, u32 xlt_flags, u32 pdn,
+ 				 unsigned int page_shift)
+ {
+ 	unsigned int old_page_shift = mr->page_shift;
+@@ -1083,7 +1086,7 @@ int mlx5r_umr_dmabuf_update_pgsz(struct mlx5_ib_mr *mr, u32 xlt_flags,
+ 	int err;
+ 
+ 	err = _mlx5r_umr_zap_mkey(mr, xlt_flags, page_shift, &zapped_blocks,
+-				  mr->data_direct);
++				  pdn, mr->data_direct);
+ 	if (err)
+ 		return err;
+ 
+@@ -1096,10 +1099,8 @@ int mlx5r_umr_dmabuf_update_pgsz(struct mlx5_ib_mr *mr, u32 xlt_flags,
+ 		 * the page size in the mkey yet.
+ 		 */
+ 		err = _mlx5r_dmabuf_umr_update_pas(
+-			mr,
+-			xlt_flags | MLX5_IB_UPD_XLT_KEEP_PGSZ,
+-			zapped_blocks,
+-			total_blocks - zapped_blocks,
++			mr, xlt_flags | MLX5_IB_UPD_XLT_KEEP_PGSZ, pdn,
++			zapped_blocks, total_blocks - zapped_blocks,
+ 			mr->data_direct);
+ 		if (err)
+ 			goto err;
+@@ -1108,7 +1109,7 @@ int mlx5r_umr_dmabuf_update_pgsz(struct mlx5_ib_mr *mr, u32 xlt_flags,
+ 	err = mlx5r_umr_update_mr_page_shift(mr, mr->page_shift);
  	if (err)
  		goto err;
- 	err = _mlx5r_dmabuf_umr_update_pas(mr, xlt_flags, 0, zapped_blocks,
+-	err = _mlx5r_dmabuf_umr_update_pas(mr, xlt_flags, 0, zapped_blocks,
++	err = _mlx5r_dmabuf_umr_update_pas(mr, xlt_flags, pdn, 0, zapped_blocks,
+ 					   mr->data_direct);
+ 	if (err)
+ 		goto err;
 diff --git a/drivers/infiniband/hw/mlx5/umr.h b/drivers/infiniband/hw/mlx5/umr.h
-index 7eeaf6a94c9743..59809d4d7d7297 100644
+index 59809d4d7d7297..99192ec67957c7 100644
 --- a/drivers/infiniband/hw/mlx5/umr.h
 +++ b/drivers/infiniband/hw/mlx5/umr.h
-@@ -106,8 +106,7 @@ int mlx5r_umr_update_mr_pas(struct mlx5_ib_mr *mr, unsigned int flags);
+@@ -101,13 +101,13 @@ int mlx5r_umr_update_data_direct_ksm_pas_range(struct mlx5_ib_mr *mr,
+ 					       size_t nblocks);
+ int mlx5r_umr_update_data_direct_ksm_pas(struct mlx5_ib_mr *mr, unsigned int flags);
+ int mlx5r_umr_update_mr_pas_range(struct mlx5_ib_mr *mr, unsigned int flags,
+-				  size_t start_block, size_t nblocks);
+-int mlx5r_umr_update_mr_pas(struct mlx5_ib_mr *mr, unsigned int flags);
++				  u32 pdn, size_t start_block, size_t nblocks);
++int mlx5r_umr_update_mr_pas(struct mlx5_ib_mr *mr, unsigned int flags, u32 pdn);
  int mlx5r_umr_update_xlt(struct mlx5_ib_mr *mr, u64 idx, int npages,
  			 int page_shift, int flags);
  int mlx5r_umr_update_mr_page_shift(struct mlx5_ib_mr *mr,
--				   unsigned int page_shift,
--				   bool dd);
-+				   unsigned int page_shift);
- int mlx5r_umr_dmabuf_update_pgsz(struct mlx5_ib_mr *mr, u32 xlt_flags,
+ 				   unsigned int page_shift);
+-int mlx5r_umr_dmabuf_update_pgsz(struct mlx5_ib_mr *mr, u32 xlt_flags,
++int mlx5r_umr_dmabuf_update_pgsz(struct mlx5_ib_mr *mr, u32 xlt_flags, u32 pdn,
  				 unsigned int page_shift);
  
+ #endif /* _MLX5_IB_UMR_H */
 -- 
 2.53.0
 
