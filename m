@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A660646D0BD;
-	Tue, 21 Jul 2026 18:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5750D403E8E;
+	Tue, 21 Jul 2026 18:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657945; cv=none; b=b38coj0CCh0tgARIKvjnDJNbsbqHDxUHG6wqg5bfAt3sjQjSaT6ZhynrwBfq7ujtGg1XZ6yvfWSgQ0VuQnFIoIWjTiQp/1QnbRwgBikPxpq2XEpN6W5y9iK01ihACHZutFHpvmySdWBYcxd8qssVAgMs1NmDmjhaHkLl3hEkaLg=
+	t=1784657948; cv=none; b=tRwtglzsp+XlwaVer0S+9sdLu42O50M5TQu0ouHIjl/Xb4PtvnH+aKfBROw595itpZKDFqW0o2uD5oES7stnexX+Tpqe3CaFOBCfqMTQhuOqMRt4UCcZlwZJmB+hCcfFFSpfsBmxSAnxxtCM64m5EKpLAn/0tzstwhWBOIUSRQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657945; c=relaxed/simple;
-	bh=r1fqfch6s2A9iGsHCBU0n8ef0IaNTQO0RqWzh0hQSBU=;
+	s=arc-20240116; t=1784657948; c=relaxed/simple;
+	bh=gFFS08gBe/vKHRBnzuRLDay+QqD9OfzODppY1LKfGhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qSX5FCc1OZep9NA/bdY6e+zZljsQ04JC0QFd13YsE2VHPTOFFsrv/TplYBaGsDhF8ZPVTPssFYeWy24P7HFHcZ2UhuJWjZ1aATeDsJ3b+Gpq6bmn6PQMAaN47ZZyqst/NNvUO0pFxZ56XTUYmcxg3L5P4ugToUkJebzDIYdKT8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N37AY6l0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W3br/vYWsCdvU1cUSzrFAYJKbK5uVjLJYisoelDvpKmZ2jbJ9whziSF816Qk9mMQ+xpdQLKMZirQunftH1ock7PstsrpwiSVVgSgG9m9NFWTZ2PInFnmbxHyT8npNCg5HGgRWc6dtHGu1FajDK5U8ezYKBSej+9Hr8OBduFOVk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHq54bLy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N37AY6l0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 182E61F000E9;
-	Tue, 21 Jul 2026 18:19:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHq54bLy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B109D1F000E9;
+	Tue, 21 Jul 2026 18:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657944;
-	bh=VAmzLXSL+1pO8oDgGPxWyr/4Q0LDlN2JCtblyWV6D2I=;
+	s=korg; t=1784657947;
+	bh=Did8Cz7jBN07oE4JWYYA7W/lhoUIXNEzJRtWkwuTgkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N37AY6l0MS1Nqcm3GTNPHW3TXBcVHx0+k43IOtLiPXbCHs3RCb9Y6CPynxZXJkLWf
-	 rQ4G4HH+fvwg2a1eDxvWy/BFqiDTEFLs593PIG/RQK+j32YwWxA1LQ/6XQIgxzfuu5
-	 JtBR/Wo748D766FFZMICsGBF8kVPo2/1UsoRvLJc=
+	b=DHq54bLymu75NdzHs5WvUQNu+M5zh+xq1WB0YqnR0HNTsnm0Twy47sMwRpf52lLHl
+	 O+yWXNaXTM5eR8EMDhwfAcHJpFJFqRtKGsvIQM5S1UmDhF5vW2BsO5u6PnHE28Y6v8
+	 4U9V5UfBr21m5cElWYDAOMhde6EYvxBd+QVo3Ymw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Yang <mmyangfl@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Wei Fang <wei.fang@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0930/1611] net: dsa: realtek: fix memory leak in rtl8366rb_setup_led()
-Date: Tue, 21 Jul 2026 17:17:26 +0200
-Message-ID: <20260721152536.303527805@linuxfoundation.org>
+Subject: [PATCH 6.18 0957/1611] net: enetc: check the number of BDs needed for xdp_frame
+Date: Tue, 21 Jul 2026 17:17:53 +0200
+Message-ID: <20260721152536.918088460@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,52 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Yang <mmyangfl@gmail.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 056a5087d87ead77dedbe9cf5bde53b7cd4b4651 ]
+[ Upstream commit 555c5475e787802eeae0d2b91c2f66c330db2767 ]
 
-led_classdev_register_ext() only reads init_data.devicename - it never
-stores the pointer. However, the caller allocated devicename with
-kasprintf() but never freed it, leaking the string memory.
+The size of xdp_redirect_arr array is ENETC_MAX_SKB_FRAGS. However, the
+number of fragments contained in xdp_frame may be greater than or equal
+to ENETC_MAX_SKB_FRAGS, which will cause the access to xdp_redirect_arr
+to be out of bounds.
 
-Fix it with a stack buffer to avoid dynamic buffers completely.
-
-Fixes: 32d617005475 ("net: dsa: realtek: add LED drivers for rtl8366rb")
-Signed-off-by: David Yang <mmyangfl@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260618140200.1888707-1-mmyangfl@gmail.com
+Fixes: 9d2b68cc108d ("net: enetc: add support for XDP_REDIRECT")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20260626073244.2168214-1-wei.fang@oss.nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/realtek/rtl8366rb-leds.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/dsa/realtek/rtl8366rb-leds.c b/drivers/net/dsa/realtek/rtl8366rb-leds.c
-index 509ffd3f8db5cb..ba50d311cb1515 100644
---- a/drivers/net/dsa/realtek/rtl8366rb-leds.c
-+++ b/drivers/net/dsa/realtek/rtl8366rb-leds.c
-@@ -89,6 +89,7 @@ static int rtl8366rb_setup_led(struct realtek_priv *priv, struct dsa_port *dp,
- 	struct led_init_data init_data = { };
- 	enum led_default_state state;
- 	struct rtl8366rb_led *led;
-+	char name[64];
- 	u32 led_group;
- 	int ret;
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index b5dd49337513d9..6603ed69629676 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -1774,6 +1774,7 @@ int enetc_xdp_xmit(struct net_device *ndev, int num_frames,
+ {
+ 	struct enetc_tx_swbd xdp_redirect_arr[ENETC_MAX_SKB_FRAGS] = {0};
+ 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
++	struct skb_shared_info *shinfo;
+ 	struct enetc_bdr *tx_ring;
+ 	int xdp_tx_bd_cnt, i, k;
+ 	int xdp_tx_frm_cnt = 0;
+@@ -1789,6 +1790,12 @@ int enetc_xdp_xmit(struct net_device *ndev, int num_frames,
+ 	prefetchw(ENETC_TXBD(*tx_ring, tx_ring->next_to_use));
  
-@@ -129,10 +130,9 @@ static int rtl8366rb_setup_led(struct realtek_priv *priv, struct dsa_port *dp,
- 	init_data.fwnode = led_fwnode;
- 	init_data.devname_mandatory = true;
- 
--	init_data.devicename = kasprintf(GFP_KERNEL, "Realtek-%d:0%d:%d",
--					 dp->ds->index, dp->index, led_group);
--	if (!init_data.devicename)
--		return -ENOMEM;
-+	snprintf(name, sizeof(name), "Realtek-%d:0%d:%d",
-+		 dp->ds->index, dp->index, led_group);
-+	init_data.devicename = name;
- 
- 	ret = devm_led_classdev_register_ext(priv->dev, &led->cdev, &init_data);
- 	if (ret) {
+ 	for (k = 0; k < num_frames; k++) {
++		if (xdp_frame_has_frags(frames[k])) {
++			shinfo = xdp_get_shared_info_from_frame(frames[k]);
++			if (unlikely((shinfo->nr_frags + 1) > ENETC_MAX_SKB_FRAGS))
++				break;
++		}
++
+ 		xdp_tx_bd_cnt = enetc_xdp_frame_to_xdp_tx_swbd(tx_ring,
+ 							       xdp_redirect_arr,
+ 							       frames[k]);
 -- 
 2.53.0
 
