@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EBA43E9FD;
-	Tue, 21 Jul 2026 22:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7315431A4E;
+	Tue, 21 Jul 2026 22:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674322; cv=none; b=Wn04CyBDXJdkIvN/e7Mw2q027+UG2CSokVXFferNAaMexRicuwdxDzWsgD/GCN2wzyOoen5yB2ko58c82mSffg84GfMj7+VfXLZowKVGIHs48WTZMea8gpvToWl28E/aCcrY32nBBkWkK7TvZgThxuZpAMVSrp+ajkak8UhIsSU=
+	t=1784674324; cv=none; b=FjJxnoRUo7v1r3O0zPW6YNtXD6BPmMRwWghh7Ogm6Q8/lGhT1rtsqS3sV/19qrMqHFpGeTNAM6sriI6Hma9Ehv4OUptUCzPzfazegtd3TWb3/aUh1yF8l0Hh0dSSCKqBZbrhDB/CT1RahUxYpiMIn07w+XXq/xNSPj9WD8UGlSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674322; c=relaxed/simple;
-	bh=vKIqCCZSIqkYOBeSM+ixPFE08HojWZNstS4eUuowSaQ=;
+	s=arc-20240116; t=1784674324; c=relaxed/simple;
+	bh=V8sKccmZ/5XdNM9H0TZnOql3OidkQgwI7rCjbx0ld6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HK6/FtTYaBdGJO8twhviipQPYgdkelcmT8qUTykdFPWBGcR2n7WY3N0vwYa9hhpzJS1DtSnqu2vMD2O70elOSiqqoAyC1v89xW2jGRs0Lfkgp3zGkMOyNYSRZdo79SRVfKJK2f2xEEKE+zJvnBNhC7v27PBGgYtV64SPTgWjpCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGRfn4Wh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tt6aPIIOtvzAvE1sfAclIJfFs5HbXz0aRWuCBDNAtRs6jl0LDlhqJ1kN+K1javfxnZsCZpY8eFwW8U530UNIFTmx8Q+QWl37exxjbC+vEplNIy4/MBps0K5VwlMeTkjFTq9VQ6r5MP3+hPeTd8TngIFWu4DbT7IP7wnIJKo8Sqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NW+btjXB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGRfn4Wh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C091A1F00A3A;
-	Tue, 21 Jul 2026 22:52:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NW+btjXB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB601F00A3A;
+	Tue, 21 Jul 2026 22:52:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674321;
-	bh=MV/fbVaxViP+s8vIWWkeW/hCTUZmbMHWf5nYwcIgUmM=;
+	s=korg; t=1784674323;
+	bh=TX3wEjUEml6DNZn6ZbAmj3ALSFLGiw/chOvotWNcJ0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rGRfn4Wh2moZmoVlsZurHteqDpC52hYwlIgNuU7uAXAgS8XDpnHzEijfvBx3WAtAO
-	 OAkCDQcpCNz3bYgP8lCpuZ7IkYfhVxX/rsS80gDVqyhbO2Pl5NMKhP+lOftaRvNHEx
-	 XgCbEZ0CbjCh/m4Kv7HwUlltzp5uldLbCTa7VuCg=
+	b=NW+btjXBIec+rIW3XAqpewwuCLnDKCfIOvtgoE2PEGicSLEw00pexYB9OEf8GBJ1o
+	 /QP3FwnGV1keLQ1qK0VAoGSLHOgMTsZOgoLgotsc+xp/uFLQWdZuCcERFqyX2o12cU
+	 +mynwDM40TSETVdltnKbMCLWrRh8tKpZI0WrPzXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Jun <1742789905@qq.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>
-Subject: [PATCH 5.10 454/699] soc: fsl: qe: panic on ioremap() failure in qe_reset()
-Date: Tue, 21 Jul 2026 17:23:33 +0200
-Message-ID: <20260721152405.942013549@linuxfoundation.org>
+	Armin Wolf <W_Armin@gmx.de>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 5.10 455/699] leds: uleds: Fix potential buffer overread
+Date: Tue, 21 Jul 2026 17:23:34 +0200
+Message-ID: <20260721152405.963931576@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,42 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Jun <1742789905@qq.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-commit a0fe29d20e7822182e12324905af5115c1b3aed3 upstream.
+commit c19fe864f667afc49d1391d764e20b66555bcf7a upstream.
 
-When ioremap() fails in qe_reset(), the global pointer qe_immr remains
-NULL, leading to a subsequent NULL pointer dereference when the pointer
-is accessed. Since this happens early in the boot process, a failure to
-map a few bytes of I/O memory indicates a fatal error from which the
-system cannot recover.
+The name string supplied by userspace is not guaranteed to be
+null-terminated, so using strchr() on it might result in a buffer
+overread. The same thing will happen when said string is used by
+the LED class device.
 
-Follow the same pattern as qe_sdma_init() and panic immediately when
-ioremap() fails. This avoids a silent NULL pointer dereference later
-and makes the error explicit.
+Fix this by using strnchr() instead and explicitly check that
+the name string is properly null-terminated.
 
-Fixes: 986585385131 ("[POWERPC] Add QUICC Engine (QE) infrastructure")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wang Jun <1742789905@qq.com>
-Link: https://lore.kernel.org/r/tencent_FED49CF5331CC0C7910618883332A08E2606@qq.com
-[chleroy: Rearranged change to reduce churn]
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Fixes: e381322b0190 ("leds: Introduce userspace LED class driver")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20260524235553.189134-1-W_Armin@gmx.de
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/fsl/qe/qe.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/leds/uleds.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/soc/fsl/qe/qe.c
-+++ b/drivers/soc/fsl/qe/qe.c
-@@ -88,6 +88,9 @@ void qe_reset(void)
- 	if (qe_immr == NULL)
- 		qe_immr = ioremap(get_qe_base(), QE_IMMAP_SIZE);
+--- a/drivers/leds/uleds.c
++++ b/drivers/leds/uleds.c
+@@ -102,7 +102,8 @@ static ssize_t uleds_write(struct file *
  
-+	if (!qe_immr)
-+		panic("QE:ioremap failed!");
-+
- 	qe_snums_init();
- 
- 	qe_issue_cmd(QE_RESET, QE_CR_SUBBLOCK_INVALID,
+ 	name = udev->user_dev.name;
+ 	if (!name[0] || !strcmp(name, ".") || !strcmp(name, "..") ||
+-	    strchr(name, '/')) {
++	    strnchr(name, sizeof(udev->user_dev.name), '/') ||
++	    !strnchr(name, sizeof(udev->user_dev.name), '\0')) {
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
 
 
