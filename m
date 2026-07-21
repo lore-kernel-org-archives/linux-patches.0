@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39D0395D8E;
-	Tue, 21 Jul 2026 20:06:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A08E395D8E;
+	Tue, 21 Jul 2026 20:06:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664407; cv=none; b=K62xKBSlrTibNhmkmuJ7qUz8AF3pNjLelwIrBDnDEEi7L4infq6NbNocMX5X7tCAQuPJ3xYPcE6Exql6F+AF4ImW6B1Bo/WcFO8WhH2kI/lkiGdOciTI20fqSxmqDxlGSMVQIRJCHoN+Mf8FlDRtZ7rafNxxs882VCAWeQ5hF74=
+	t=1784664409; cv=none; b=iJxRWbgyrgZJ52RISFku9dsDZHqCqYNukSxsXbmnEzmYM0t2sxha+hLGzPUDJ5KPTcChMLbfQzxw1TN1+B4rd/tyfZR/PEFLBNM1FozXz9v5ZbAVhVSspi7qljpraRSzjsrDrMHWO8D74csUSt2GV/XwknNyA0fr+vW2SFve5+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664407; c=relaxed/simple;
-	bh=jEASUAxy6/dd8xkDlJtT4PG5ISZIYBWsWONgJdkEGsQ=;
+	s=arc-20240116; t=1784664409; c=relaxed/simple;
+	bh=fj3IbpTxUNOjlAKeG9v1ZjwcHjEmG/Jvmk1pza12+Og=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ovSHbXDLbfrR1tm58GwUn24sbkp1CM00+FiCgerqpk1cWI6yFOozUoC/xNAZwYAF1OHaE6vvZ5PGUX4QJGzpcKAyeGhSQAVs9Xxv63jm5q1WZX54mG+C2bNSEtWApTXyO4DCXOZ+aomWuhIKBEwi9nh0lJumQR8POQb4Sg4FMK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZk1Vz0T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EcRUjEGJAcPn+Uw5dvTEaOejEncmMZa9pVmwIrJgAzsDpkSCGCD7/EZjpyc1guRIN356WuaZCaSzcTAGsiy0F2aIJ4QOUWnvyP4W94Que6GdulzG2fhnCgYwA58i7Pk6UrgaLNraWgWC/Lanxu1VwwjGPrKvu3wIpqrUzjX34Gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mb34CYgO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZk1Vz0T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156B41F000E9;
-	Tue, 21 Jul 2026 20:06:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mb34CYgO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABECA1F000E9;
+	Tue, 21 Jul 2026 20:06:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664405;
-	bh=zCzcKBzzlCLY7dfKKpsrR5bshKswSrZHocI7aeDbYoY=;
+	s=korg; t=1784664408;
+	bh=yGSf5B6d+HMetOf60v6dvLRQZtyq+qRdHyQQ+HCdMVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aZk1Vz0TZJoyIouMQjSXHvHMirBnneAhacOsMmx7wM1oJVj34ffaDkuHfGQ18Wian
-	 RX3F/8F7QrJiLrVlPsGxx2uSJBBkjcg65lSxUOk7jWMF+ihdYr9+4QJZoPwHTLJ5o/
-	 duFrDF13lAdTgwuzbd1mOy/XEitGHy9C8lRt2pnw=
+	b=mb34CYgO18+vAOSTNr+kx5acFM7SmwLeu0cAFK1j3xDKlyWFkEXVRG1SjkaNy9aO2
+	 RGfzZociQsH4q6mW5vNsxYZtPvh9HyOH0Gp8KcUim3dFluhfjxlgg75NPIM9Vbit/K
+	 R287hHAZuGBzbg7qUdbiUhwUEWNWCltsv6OFLP9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Zide Chen <zide.chen@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1187/1276] proc: protect ptrace_may_access() with exec_update_lock (FD links)
-Date: Tue, 21 Jul 2026 17:27:10 +0200
-Message-ID: <20260721152512.605290373@linuxfoundation.org>
+Subject: [PATCH 6.12 1188/1276] perf/x86/intel/uncore: Defer ADL global PMON enable to enable_box()
+Date: Tue, 21 Jul 2026 17:27:11 +0200
+Message-ID: <20260721152512.628555501@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,271 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Zide Chen <zide.chen@intel.com>
 
-[ Upstream commit 6255da28d4bb5349fe18e84cb043ccd394eba75d ]
+[ Upstream commit 9a0bb848a37150aeccc10088e141339917d995dc ]
 
-proc_pid_get_link() and proc_pid_readlink() currently look up the task from
-the pid once, then do the ptrace access check on that task, then look up
-the task from the pid a second time to do the actual access.
-That's racy in several ways.
+On some Raptor Cove CPUs, enabling uncore PMON globally at driver init
+may increase power consumption even when no perf events are in use.
 
-To fix it, pass the task to the ->proc_get_link() handler, and instead of
-proc_fd_access_allowed(), introduce a new helper call_proc_get_link() that
-looks up and locks the task, does the access check, and calls
-->proc_get_link().
+Drop adl_uncore_msr_init_box() and defer programming the global control
+register to enable_box(), so it is only set when a box is actually used.
 
-Fixes: 778c1144771f ("[PATCH] proc: Use sane permission checks on the /proc/<pid>/fd/ symlinks")
+IMC and IMC freerunning counters use a separate control path and are
+unaffected.
+
+Fixes: 772ed05f3c5c ("perf/x86/intel/uncore: Add Alder Lake support")
+Signed-off-by: Zide Chen <zide.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://patch.msgid.link/20260518-procfs-lockfix-part1-v1-2-5c3d20e0ac33@google.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Link: https://patch.msgid.link/20260602144908.263680-5-zide.chen@intel.com
+[ deleted adl_uncore_msr_init_box() in its 6.12 wrmsrl() spelling since the tree predates the wrmsrq() rename ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/base.c     |  119 ++++++++++++++++++++---------------------------------
- fs/proc/fd.c       |   25 ++++-------
- fs/proc/internal.h |    2 
- 3 files changed, 58 insertions(+), 88 deletions(-)
+ arch/x86/events/intel/uncore_snb.c |    7 -------
+ 1 file changed, 7 deletions(-)
 
---- a/fs/proc/base.c
-+++ b/fs/proc/base.c
-@@ -218,33 +218,24 @@ static int get_task_root(struct task_str
- 	return result;
+--- a/arch/x86/events/intel/uncore_snb.c
++++ b/arch/x86/events/intel/uncore_snb.c
+@@ -538,12 +538,6 @@ void tgl_uncore_cpu_init(void)
+ 	skl_uncore_msr_ops.init_box = rkl_uncore_msr_init_box;
  }
  
--static int proc_cwd_link(struct dentry *dentry, struct path *path)
-+static int proc_cwd_link(struct dentry *dentry, struct path *path,
-+			 struct task_struct *task)
- {
--	struct task_struct *task = get_proc_task(d_inode(dentry));
- 	int result = -ENOENT;
- 
--	if (task) {
--		task_lock(task);
--		if (task->fs) {
--			get_fs_pwd(task->fs, path);
--			result = 0;
--		}
--		task_unlock(task);
--		put_task_struct(task);
-+	task_lock(task);
-+	if (task->fs) {
-+		get_fs_pwd(task->fs, path);
-+		result = 0;
- 	}
-+	task_unlock(task);
- 	return result;
- }
- 
--static int proc_root_link(struct dentry *dentry, struct path *path)
-+static int proc_root_link(struct dentry *dentry, struct path *path,
-+			  struct task_struct *task)
- {
--	struct task_struct *task = get_proc_task(d_inode(dentry));
--	int result = -ENOENT;
--
--	if (task) {
--		result = get_task_root(task, path);
--		put_task_struct(task);
--	}
--	return result;
-+	return get_task_root(task, path);
- }
- 
- /*
-@@ -704,23 +695,6 @@ static int proc_pid_syscall(struct seq_f
- /*                       Here the fs part begins                        */
- /************************************************************************/
- 
--/* permission checks */
--static bool proc_fd_access_allowed(struct inode *inode)
+-static void adl_uncore_msr_init_box(struct intel_uncore_box *box)
 -{
--	struct task_struct *task;
--	bool allowed = false;
--	/* Allow access to a task's file descriptors if it is us or we
--	 * may use ptrace attach to the process and find out that
--	 * information.
--	 */
--	task = get_proc_task(inode);
--	if (task) {
--		allowed = ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS);
--		put_task_struct(task);
--	}
--	return allowed;
+-	if (box->pmu->pmu_idx == 0)
+-		wrmsrl(ADL_UNC_PERF_GLOBAL_CTL, SNB_UNC_GLOBAL_CTL_EN);
 -}
 -
- int proc_nochmod_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 		 struct iattr *attr)
+ static void adl_uncore_msr_enable_box(struct intel_uncore_box *box)
  {
-@@ -1778,16 +1752,12 @@ static const struct file_operations proc
- 	.release	= single_release,
- };
- 
--static int proc_exe_link(struct dentry *dentry, struct path *exe_path)
-+static int proc_exe_link(struct dentry *dentry, struct path *exe_path,
-+			 struct task_struct *task)
- {
--	struct task_struct *task;
- 	struct file *exe_file;
- 
--	task = get_proc_task(d_inode(dentry));
--	if (!task)
--		return -ENOENT;
- 	exe_file = get_task_exe_file(task);
--	put_task_struct(task);
- 	if (exe_file) {
- 		*exe_path = exe_file->f_path;
- 		path_get(&exe_file->f_path);
-@@ -1797,26 +1767,42 @@ static int proc_exe_link(struct dentry *
- 		return -ENOENT;
+ 	wrmsrl(ADL_UNC_PERF_GLOBAL_CTL, SNB_UNC_GLOBAL_CTL_EN);
+@@ -562,7 +556,6 @@ static void adl_uncore_msr_exit_box(stru
  }
  
-+static int call_proc_get_link(struct dentry *dentry, struct inode *inode, struct path *path_out)
-+{
-+	struct task_struct *task;
-+	int ret;
-+
-+	task = get_proc_task(inode);
-+	if (!task)
-+		return -ENOENT;
-+	ret = down_read_killable(&task->signal->exec_update_lock);
-+	if (ret)
-+		goto out_put_task;
-+	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS)) {
-+		ret = -EACCES;
-+		goto out;
-+	}
-+	ret = PROC_I(inode)->op.proc_get_link(dentry, path_out, task);
-+
-+out:
-+	up_read(&task->signal->exec_update_lock);
-+out_put_task:
-+	put_task_struct(task);
-+	return ret;
-+}
-+
- static const char *proc_pid_get_link(struct dentry *dentry,
- 				     struct inode *inode,
- 				     struct delayed_call *done)
- {
- 	struct path path;
--	int error = -EACCES;
-+	int error;
- 
- 	if (!dentry)
- 		return ERR_PTR(-ECHILD);
--
--	/* Are we allowed to snoop on the tasks file descriptors? */
--	if (!proc_fd_access_allowed(inode))
--		goto out;
--
--	error = PROC_I(inode)->op.proc_get_link(dentry, &path);
--	if (error)
--		goto out;
--
--	error = nd_jump_link(&path);
--out:
-+	error = call_proc_get_link(dentry, inode, &path);
-+	if (!error)
-+		error = nd_jump_link(&path);
- 	return ERR_PTR(error);
- }
- 
-@@ -1850,17 +1836,11 @@ static int proc_pid_readlink(struct dent
- 	struct inode *inode = d_inode(dentry);
- 	struct path path;
- 
--	/* Are we allowed to snoop on the tasks file descriptors? */
--	if (!proc_fd_access_allowed(inode))
--		goto out;
--
--	error = PROC_I(inode)->op.proc_get_link(dentry, &path);
--	if (error)
--		goto out;
--
--	error = do_proc_readlink(&path, buffer, buflen);
--	path_put(&path);
--out:
-+	error = call_proc_get_link(dentry, inode, &path);
-+	if (!error) {
-+		error = do_proc_readlink(&path, buffer, buflen);
-+		path_put(&path);
-+	}
- 	return error;
- }
- 
-@@ -2246,21 +2226,16 @@ static const struct dentry_operations ti
- 	.d_delete	= pid_delete_dentry,
- };
- 
--static int map_files_get_link(struct dentry *dentry, struct path *path)
-+static int map_files_get_link(struct dentry *dentry, struct path *path,
-+			      struct task_struct *task)
- {
- 	unsigned long vm_start, vm_end;
- 	struct vm_area_struct *vma;
--	struct task_struct *task;
- 	struct mm_struct *mm;
- 	int rc;
- 
- 	rc = -ENOENT;
--	task = get_proc_task(d_inode(dentry));
--	if (!task)
--		goto out;
--
- 	mm = get_task_mm(task);
--	put_task_struct(task);
- 	if (!mm)
- 		goto out;
- 
---- a/fs/proc/fd.c
-+++ b/fs/proc/fd.c
-@@ -172,24 +172,19 @@ static const struct dentry_operations ti
- 	.d_delete	= pid_delete_dentry,
- };
- 
--static int proc_fd_link(struct dentry *dentry, struct path *path)
-+static int proc_fd_link(struct dentry *dentry, struct path *path,
-+			struct task_struct *task)
- {
--	struct task_struct *task;
- 	int ret = -ENOENT;
-+	unsigned int fd = proc_fd(d_inode(dentry));
-+	struct file *fd_file;
- 
--	task = get_proc_task(d_inode(dentry));
--	if (task) {
--		unsigned int fd = proc_fd(d_inode(dentry));
--		struct file *fd_file;
--
--		fd_file = fget_task(task, fd);
--		if (fd_file) {
--			*path = fd_file->f_path;
--			path_get(&fd_file->f_path);
--			ret = 0;
--			fput(fd_file);
--		}
--		put_task_struct(task);
-+	fd_file = fget_task(task, fd);
-+	if (fd_file) {
-+		*path = fd_file->f_path;
-+		path_get(&fd_file->f_path);
-+		ret = 0;
-+		fput(fd_file);
- 	}
- 
- 	return ret;
---- a/fs/proc/internal.h
-+++ b/fs/proc/internal.h
-@@ -108,7 +108,7 @@ extern struct kmem_cache *proc_dir_entry
- void pde_free(struct proc_dir_entry *pde);
- 
- union proc_op {
--	int (*proc_get_link)(struct dentry *, struct path *);
-+	int (*proc_get_link)(struct dentry *, struct path *, struct task_struct *);
- 	int (*proc_show)(struct seq_file *m,
- 		struct pid_namespace *ns, struct pid *pid,
- 		struct task_struct *task);
+ static struct intel_uncore_ops adl_uncore_msr_ops = {
+-	.init_box	= adl_uncore_msr_init_box,
+ 	.enable_box	= adl_uncore_msr_enable_box,
+ 	.disable_box	= adl_uncore_msr_disable_box,
+ 	.exit_box	= adl_uncore_msr_exit_box,
 
 
