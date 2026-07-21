@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A1345A28C;
-	Tue, 21 Jul 2026 21:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFD545A29F;
+	Tue, 21 Jul 2026 21:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671071; cv=none; b=MrBXbvTin6vM0f82ChDnTSb36g62gtXRTBwppdNZE9Zrgij6ktj4hHQ+JdR6tanoSOoZWKrxHWNOoSt/AeheM4SHqACm+FFrPPIBZ91J8y0mRkIl3/V+kFTUqry/FzeG3XgErQ2xfhiy/LkNnm3MG+WJf5IyptCn4KkHszAaXmc=
+	t=1784671077; cv=none; b=KD7R3j7+jNTTtBP8NuwsMkXIHHqgkPPaFJaCrHyPUcMxMKIDOfHFV2Ro2aD85BxUmqSG8jE8zyNu3XyylY/8aB9gt28+z9jYn+n30bC1O2aRz4xlRkDIahQXQoYNMWyvLrNt3RtpTtbNNWOoUhh+ZrcpVEPjwRXdfo4Uf8pLtBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671071; c=relaxed/simple;
-	bh=TpJXIBOO4JwVqfJW1RTJe4sQ3YvtWtlQEHhPFMI0g6A=;
+	s=arc-20240116; t=1784671077; c=relaxed/simple;
+	bh=blJxiBtVv1Q/fNTjA4FxdaSKuDUhckkZAwSifGjL49c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DLXA5Y/+QH5Rl/ofwtMbBbv9BRxWUkgsoIie7klkLEKuhd58Hw2Bs6ubTSx3Tu7rSb1ZI4bvf2WT44CFzDhxCgAV6IH8Slz24l0zy76Gz4qNQl7kdWLOCYZDpEnYRgd4v0HFAdXXz2pIjdAj86hEtcXsy88CoMWsPLWfgB2ioaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X2VZeU8+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oktA7GqmMx5tpJxKXflx1eFAeAB/eqRzkSMTG0f38nMRtkFd2As2/6LSgB15PRHtr9EaMXkWVWoxcu5LfvbFroADGH20Mzd0Mh3KsAKMrTaGSU5HF3f1ABRziWaCI6Y9Ud4uvbXRGj7v5IgkXheuiJO/Ww+RxJ6MRzlhHImH5zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GP4LKJiH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X2VZeU8+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2DD1F00A3A;
-	Tue, 21 Jul 2026 21:57:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GP4LKJiH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F031F000E9;
+	Tue, 21 Jul 2026 21:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671069;
-	bh=UQefpT0FFoXW9axPSlMay8Jrr956y3AnjlHbB46ycVs=;
+	s=korg; t=1784671071;
+	bh=HCaKnJfQn4+0DzWaENf5BftJOJJK+nZyRGOpMfUKLOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X2VZeU8+YHC0AvMga2tmLrDo4yli5PdxaVCh0tzfJdSuWDQpb6Q9Zxeq67LqIrx5C
-	 HBfoflvV7HIlq4kq2ztiRPKtBY2s1rX+TVFV5Q0H8XgmUpwUlUJquWwaFHUaME5uPE
-	 /9BkoQybzAVc6DXSmdlOJQpkIOQWPE4SWP34E8NM=
+	b=GP4LKJiHZvuf1feWDs0paaDhTnnGgB3FYJUXjLzXj87GGM0tQQNCkl/D8bMt0XmVE
+	 Z8PJnDZJ7P22Cp61mS5lq+ms7mBtRsnFbL8k6s4hcCAVo7QjPgxkRcdmx6j4ra0ObS
+	 Qj7ICGjIyDJWuL/GWJYpdceFwOjricKR1QubOc1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuyang Huang <yuyanghuang@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 107/843] ipv4: igmp: remove multicast group from hash table on device destruction
-Date: Tue, 21 Jul 2026 17:15:42 +0200
-Message-ID: <20260721152408.410048489@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Lianqin Hu <hulianqin@vivo.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.15 081/843] usb: xhci: Fix sleep in atomic context in xhci_free_streams()
+Date: Tue, 21 Jul 2026 17:15:16 +0200
+Message-ID: <20260721152407.822019781@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -46,90 +45,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuyang Huang <yuyanghuang@google.com>
+From: 胡连勤 <hulianqin@vivo.com>
 
-commit 7993211bde166471dffac074dc965489f86531f8 upstream.
+commit 42c37c4b75d38b51d84f31a8e29427f5e06a7c2a upstream.
 
-When a device is destroyed under RTNL, ip_mc_destroy_dev() iterates through
-the multicast list and calls ip_ma_put() on each membership, scheduling
-them for RCU reclamation. However, they are not unlinked from the device's
-multicast hash table (mc_hash).
+When a USB device with active stream endpoints is disconnected,
+xhci_free_streams() is called from the hub_event workqueue to
+free the stream resources.  It calls xhci_free_stream_info()
+while holding xhci->lock with irqs disabled.
 
-Since the device remains published in dev->ip_ptr until after
-ip_mc_destroy_dev() completes, concurrent RCU readers traversing mc_hash
-can still locate and access the multicast group after its refcount is
-decremented. If the RCU callback runs and frees the group while a reader is
-accessing it, a use-after-free occurs.
+xhci_free_stream_info() invokes xhci_free_stream_ctx(), which
+calls dma_free_coherent() for large stream context arrays.
 
-Fix this by unlinking the multicast group from mc_hash using
-ip_mc_hash_remove() before scheduling it for reclamation.
+dma_free_coherent() can sleep (e.g. via vunmap), triggering
+a BUG when called from atomic context.
 
-BUG: KASAN: slab-use-after-free in ip_check_mc_rcu+0x149/0x3f0
-Read of size 4 at addr ffff888009bf1408 by task mausezahn/2276
+Call trace:
+ dma_free_attrs+0x174/0x220
+ xhci_free_stream_info+0xd0/0x11c
+ xhci_free_streams+0x278/0x37c
+ usb_free_streams+0x98/0xc0
+ usb_unbind_interface+0x1b8/0x2f8
+ device_release_driver_internal+0x1d4/0x2cc
+ device_release_driver+0x18/0x28
+ bus_remove_device+0x160/0x1a4
+ device_del+0x1ec/0x350
+ usb_disable_device+0x98/0x214
+ usb_disconnect+0xf0/0x35c
+ hub_event+0xab4/0x19ec
+ process_one_work+0x278/0x63c
 
-Call Trace:
- <IRQ>
- dump_stack_lvl+0x67/0x90
- print_report+0x175/0x7c0
- kasan_report+0x147/0x180
- ip_check_mc_rcu+0x149/0x3f0
- udp_v4_early_demux+0x36d/0x12d0
- ip_rcv_finish_core+0xb8b/0x1390
- ip_rcv_finish+0x54/0x120
- NF_HOOK+0x213/0x2b0
- __netif_receive_skb+0x126/0x340
- process_backlog+0x4f2/0xf00
- __napi_poll+0x92/0x2c0
- net_rx_action+0x583/0xc60
- handle_softirqs+0x236/0x7f0
- do_softirq+0x57/0x80
- </IRQ>
+Fix this by saving the stream_info pointers and clearing the
+ep references under the lock, then calling xhci_free_stream_info()
+outside the lock where sleeping is allowed.
 
-Allocated by task 2239:
- kasan_save_track+0x3e/0x80
- __kasan_kmalloc+0x72/0x90
- ____ip_mc_inc_group+0x31a/0xa40
- __ip_mc_join_group+0x334/0x3f0
- do_ip_setsockopt+0x16fa/0x2010
- ip_setsockopt+0x3f/0x90
- do_sock_setsockopt+0x1ad/0x300
-
-Freed by task 0:
- kasan_save_track+0x3e/0x80
- kasan_save_free_info+0x40/0x50
- __kasan_slab_free+0x3a/0x60
- __rcu_free_sheaf_prepare+0xd4/0x220
- rcu_free_sheaf+0x36/0x190
- rcu_core+0x8d9/0x12f0
- handle_softirqs+0x236/0x7f0
-
-Fixes: e9897071350b ("igmp: hash a hash table to speedup ip_check_mc_rcu()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yuyang Huang <yuyanghuang@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260701235014.73505-1-yuyanghuang@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 8df75f42f8e6 ("USB: xhci: Add memory allocation for USB3 bulk streams.")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260703144033.483286-3-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/igmp.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/host/xhci.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/net/ipv4/igmp.c
-+++ b/net/ipv4/igmp.c
-@@ -1816,6 +1816,7 @@ void ip_mc_destroy_dev(struct in_device
- #endif
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -3710,6 +3710,7 @@ static int xhci_free_streams(struct usb_
+ 	struct xhci_virt_device *vdev;
+ 	struct xhci_command *command;
+ 	struct xhci_input_control_ctx *ctrl_ctx;
++	struct xhci_stream_info *stream_info[EP_CTX_PER_DEV];
+ 	unsigned int ep_index;
+ 	unsigned long flags;
+ 	u32 changed_ep_bitmask;
+@@ -3770,10 +3771,15 @@ static int xhci_free_streams(struct usb_
+ 	if (ret < 0)
+ 		return ret;
  
- 	while ((i = rtnl_dereference(in_dev->mc_list)) != NULL) {
-+		ip_mc_hash_remove(in_dev, i);
- 		in_dev->mc_list = i->next_rcu;
- 		in_dev->mc_count--;
- 		ip_mc_clear_src(i);
++	/*
++	 * dma_free_coherent() called by xhci_free_stream_info() may sleep,
++	 * so save stream_info pointers and clear references under lock,
++	 * then free the memory outside lock.
++	 */
+ 	spin_lock_irqsave(&xhci->lock, flags);
+ 	for (i = 0; i < num_eps; i++) {
+ 		ep_index = xhci_get_endpoint_index(&eps[i]->desc);
+-		xhci_free_stream_info(xhci, vdev->eps[ep_index].stream_info);
++		stream_info[i] = vdev->eps[ep_index].stream_info;
+ 		vdev->eps[ep_index].stream_info = NULL;
+ 		/* FIXME Unset maxPstreams in endpoint context and
+ 		 * update deq ptr to point to normal string ring.
+@@ -3783,6 +3789,9 @@ static int xhci_free_streams(struct usb_
+ 	}
+ 	spin_unlock_irqrestore(&xhci->lock, flags);
+ 
++	for (i = 0; i < num_eps; i++)
++		xhci_free_stream_info(xhci, stream_info[i]);
++
+ 	return 0;
+ }
+ 
 
 
