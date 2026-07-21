@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A9144AB7F;
-	Tue, 21 Jul 2026 21:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC9A44AB7F;
+	Tue, 21 Jul 2026 21:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668957; cv=none; b=cKFe3JEq12cKGkGzP/TJP2ljsk52KxlhWYzzpw3uh1oVhXaZWMFFznFOVhi5bTJBkbehmHyOVp/LBD0HAJNGFeOqhbOEDYqmgFQDLR61haoM+OSvq8+6bG+trvq4vgZcEszxg5KPpXtuvpwosAmskagaDYyZ18jQnC2jww1b8G4=
+	t=1784668959; cv=none; b=tTAg+JsQ+4Ofw2rAgdd8vfjWB603s0BGjJf3kNmcpAk+Osn8amAzZixJA2DGgYE5xThI1ii7W602G4zrGva/Eu41KK1fvAkVBRSxJNpC5FxHCx3B1NhglVSDKEiEQnUip6+NInawyxVxtFXd0vcgM1pY/snLhzjkkkAcQcESsqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668957; c=relaxed/simple;
-	bh=mFw53dNRkYyYaxWhgHGIamROmzNjq60ytTetZnJweJ8=;
+	s=arc-20240116; t=1784668959; c=relaxed/simple;
+	bh=I5pSNlGCZZVietkKj2UNtHv27+0GShbKtQexpbRQfTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ficb/0FtbBpBg/es7YNNp9ZHQUXTb5CBluPnjxduDE9DY5oxo6DSH/vptVvd5afF/dRqgMnPOSDFknvvUgRQMd0a562dUg+lM2nHqNUtkB9UrVohm39827BCQmNXaoRocTSY9lY2xjGLyFpu35N1/G1MdHCv4TVj/e5Q42T8XlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZWXYbTf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d/lDzq7xWKAWPgPOpL8WFzn6wHBZhWaJ2awSF7yGNsFtjkjpMs+avnmIyGa6uRp4NspGMKYuqNTkPmJuDZqfDoEvr+3UATXldfxdTzF223uPIEx6vvvIuwZMxrN7UqGQebhBeBG3pwD+nO5vrPw3nwTxb/bulfnGhnBP6nfJofU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjIY0uJD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZWXYbTf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3071F000E9;
-	Tue, 21 Jul 2026 21:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjIY0uJD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F90A1F00A3A;
+	Tue, 21 Jul 2026 21:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668955;
-	bh=JNaN3B6ZhBqb8n8rcndH6AVjkuvkQWRuGGfsD+o1Mm4=;
+	s=korg; t=1784668958;
+	bh=loKSF/qhfwx10UKe2BZpamfjMpbB+2Rfo/YoSnpeSgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sZWXYbTf0Zau2CYj1ReexlReZnyz4SoVY2AD7CS0BNpbWzZyN+1WCY8L8lM+A8Y5A
-	 dfSNwZvfta11l7hpJmva6P093k6nOVj98i8I8qaI0u8kzBLbiiyacQgMCExa/39uru
-	 wH4t/zO/zQMZqDBpo8tCBbX+NbEwfH22IoR94j1c=
+	b=wjIY0uJDLhS5yNuSOImqz3gQUSkRdH0xNFcNLPI/XxzqFjnYlQlCQb84ot218oaVE
+	 WmH/2hmSWEu6ysSIhSmeoVYpNFqyn5n+qoZQdzCGReKQAJRh7JstIYNC0DCteQ7HWk
+	 HdZv7GH7rRsBZB80bKXKHomJXUGOoI5mV6R9j7rI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sang-Heon Jeon <ekffu200098@gmail.com>,
-	Donghyeon Lee <asd142513@gmail.com>,
-	Munhui Chae <mochae@student.42seoul.kr>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Qiaoting.Lin" <linqiaoting@xiaomi.com>,
+	"Guanyou.Chen" <chenguanyou@xiaomi.com>,
+	"Chunhui.Li" <chunhui.li@mediatek.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0370/1067] mm/fake-numa: fix under-allocation detection in uniform split
-Date: Tue, 21 Jul 2026 17:16:11 +0200
-Message-ID: <20260721152432.898440312@linuxfoundation.org>
+Subject: [PATCH 6.1 0371/1067] sched: restore timer_slack_ns when resetting RT policy on fork
+Date: Tue, 21 Jul 2026 17:16:12 +0200
+Message-ID: <20260721152432.919926591@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,87 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Heon Jeon <ekffu200098@gmail.com>
+From: Guanyou.Chen <chenguanyou9338@gmail.com>
 
-[ Upstream commit 3a3fc1dfd6a958615ebaab8fb251e89fc2b3f2f2 ]
+[ Upstream commit 63c1a12bc0e09af7dee919c4fb4a300a719d5125 ]
 
-When splitting NUMA node uniformly, split_nodes_size_interleave_uniform()
-returns the next absolute node ID, not the number of nodes created.
+Commit ed4fb6d7ef68 ("hrtimer: Use and report correct timerslack values
+for realtime tasks") sets timer_slack_ns to 0 for RT tasks in
+__setscheduler_params(). However, when an RT task with SCHED_RESET_ON_FORK
+creates child threads, the children inherit timer_slack_ns=0 from the
+parent. sched_fork() resets the child's policy to SCHED_NORMAL but does
+not restore timer_slack_ns, leaving the child permanently running with
+zero slack.
 
-The existing under-allocation detection logic compares next absolute node
-ID (ret) and request count (n), which only works when nid starts at 0.
+Fix this by restoring timer_slack_ns from default_timer_slack_ns in
+sched_fork() when resetting from RT/DL to NORMAL policy, matching the
+existing behavior in __setscheduler_params().
 
-For example, on a system with 2 physical NUMA nodes (node 0: 2GB, node
-1: 128MB) and numa=fake=8U, 8 fake nodes are successfully created from
-node 0 and split_nodes_size_interleave_uniform() returns 8. For node 1,
-fake node nid starts at 8, but only 4 fake nodes are created due to
-current FAKE_NODE_MIN_SIZE being 32MB, and
-split_nodes_size_interleave_uniform() returns 12. By existing
-under-allocation detection logic, "ret < n" (12 < 8) is false, so the
-under-allocation will not be detected.
+Note: this fix alone requires a correct default_timer_slack_ns to be
+effective. See the following patch for that fix.
 
-Fix under-allocation detection logic to compare the number of actually
-created nodes (ret - nid) against the request count (n). Also skip
-under-allocation detection logic for memoryless physical nodes where no
-fake nodes are created.
-
-Also, fix the outdated comment describing
-split_nodes_size_interleave_uniform() to match the actual return value.
-
-Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
-Reported-by: Donghyeon Lee <asd142513@gmail.com>
-Reported-by: Munhui Chae <mochae@student.42seoul.kr>
-Fixes: cc9aec03e58f ("x86/numa_emulation: Introduce uniform split capability") # 4.19
-Link: https://patch.msgid.link/20260417135805.1758378-1-ekffu200098@gmail.com
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Fixes: ed4fb6d7ef68 ("hrtimer: Use and report correct timerslack values for realtime tasks")
+Reported-by: Qiaoting.Lin <linqiaoting@xiaomi.com>
+Signed-off-by: Guanyou.Chen <chenguanyou@xiaomi.com>
+Signed-off-by: Chunhui.Li <chunhui.li@mediatek.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260522131000.1664983-2-chenguanyou@xiaomi.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/numa_emulation.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ kernel/sched/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/mm/numa_emulation.c b/arch/x86/mm/numa_emulation.c
-index 9a9305367fdd16..b8ae605537145e 100644
---- a/arch/x86/mm/numa_emulation.c
-+++ b/arch/x86/mm/numa_emulation.c
-@@ -211,7 +211,7 @@ static u64 uniform_size(u64 max_addr, u64 base, u64 hole, int nr_nodes)
-  * Sets up fake nodes of `size' interleaved over physical nodes ranging from
-  * `addr' to `max_addr'.
-  *
-- * Returns zero on success or negative on error.
-+ * Returns node ID of the next node on success or negative error code.
-  */
- static int __init split_nodes_size_interleave_uniform(struct numa_meminfo *ei,
- 					      struct numa_meminfo *pi,
-@@ -395,7 +395,7 @@ void __init numa_emulation(struct numa_meminfo *numa_meminfo, int numa_dist_cnt)
- 	if (strchr(emu_cmdline, 'U')) {
- 		nodemask_t physnode_mask = numa_nodes_parsed;
- 		unsigned long n;
--		int nid = 0;
-+		int nid = 0, nr_created;
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 56111b42da2a9e..fa9008e5d8bd6d 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -4620,6 +4620,7 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
+ 			p->policy = SCHED_NORMAL;
+ 			p->static_prio = NICE_TO_PRIO(0);
+ 			p->rt_priority = 0;
++			p->timer_slack_ns = p->default_timer_slack_ns;
+ 		} else if (PRIO_TO_NICE(p->static_prio) < 0)
+ 			p->static_prio = NICE_TO_PRIO(0);
  
- 		n = simple_strtoul(emu_cmdline, &emu_cmdline, 0);
- 		ret = -1;
-@@ -413,9 +413,18 @@ void __init numa_emulation(struct numa_meminfo *numa_meminfo, int numa_dist_cnt)
- 					n, &pi.blk[0], nid);
- 			if (ret < 0)
- 				break;
--			if (ret < n) {
-+
-+			/*
-+			 * If no memory was found for this physical node,
-+			 * skip the under-allocation check.
-+			 */
-+			if (ret == nid)
-+				continue;
-+
-+			nr_created = ret - nid;
-+			if (nr_created < n) {
- 				pr_info("%s: phys: %d only got %d of %ld nodes, failing\n",
--						__func__, i, ret, n);
-+						__func__, i, nr_created, n);
- 				ret = -1;
- 				break;
- 			}
 -- 
 2.53.0
 
