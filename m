@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F6344AB7B;
-	Tue, 21 Jul 2026 22:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAB343C05F;
+	Tue, 21 Jul 2026 22:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671330; cv=none; b=ijMivcNXL5dRgMOPaKtchr+Ai9K0TB6cy/bR5kD1AIb5MjyYIxHMVK0RCkPw6n2kk11ztmLHMRZPAYOkqxbd3KyzT+905q54ctFug8WNg3WGvPHfT9eBGyZC7ewJnVr1doRrS/ekxB2Py7JOGmE3/BLa+oU+2sCm7FnMvXcoIiw=
+	t=1784671333; cv=none; b=Bna0xQV116HInXeinu9mcUbrA10ETOw237sV9jrspTJAIrC4RG5u4WiTwygau+5hl/m92PnDaL7iriYp5HQ22FCPQt8p7Jheuz0KwCQw40QpM1JPy6mK1wQ7PpOGZZ1DhT1LWuum5duVklAJNEu9+c7OdQK9TMxPlaySyS/+BZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671330; c=relaxed/simple;
-	bh=ZR16iiGydEWPW0eUS5m5Wiz+noiQQQmXvvcMjHJph1I=;
+	s=arc-20240116; t=1784671333; c=relaxed/simple;
+	bh=lHspJFMdx12gfLjpHl8g+IRSF1Iw+ZjTmAu8qHlNozk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FqejA4klq9mh7x9oyBNzUg2auXz0h0Q/AABl5CHd/XVsTPF2f/OFQ/l3At4+SPMF/wXbJFOgX7k7istspOde4RZlCZEZ3lJklggx7nbyw75mAbyPi/p+VgLQ6GajZWX/MiNOqmxExwA5P3MjMrm8R84IYc2XDhCZKSvMWyoaajI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMX8nQYF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HRLy+UGmRco+l1D3u0yFHyTJA8zu0GtSyZtDEjKwz5NapCyJejrvlFb6z/ag1oTmNZ5s4dEw+vApxxcYeGnHEGRNDfIRbem24QAlJcI7Lmwwga6hwV9nxwEYDj24Py6u1xZ9lyqvNwPM6CwyMVmZqijOseBqlpRNzic1UBAdQSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XJXI9gtW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMX8nQYF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8381F000E9;
-	Tue, 21 Jul 2026 22:02:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XJXI9gtW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 848421F000E9;
+	Tue, 21 Jul 2026 22:02:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671329;
-	bh=vEUVwJTGSp6iKfX4yANy/sBb+jmukwKnF2D2LlfN4Kg=;
+	s=korg; t=1784671332;
+	bh=0zmNz2Y5b+T45JyVFd5iOh6M5zG9WE3KOo4RdbduHzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HMX8nQYFiFmzNvtgDEwi/8sbWT4XmWWY+l4Au47Ek5i93+pzUnjQcK30jj8FmB7mx
-	 y4AnM2ewWk2bvT1Dj09N0EySKswByCcO1+aGIw6WB4c/f0AtR/FyQGsmyD7ZZ1ph0b
-	 +r+DSBHpVrOkkDWjTaBcff2fToS5MkuD4RJg5quc=
+	b=XJXI9gtWZDUQ3GqktJR1gva6YHJaNlQ2pd780BQtwOFdgEZqG0C/BT9HFeCTRM1vr
+	 hiCtu45vV+ygaWnwPVQE5zAOoMn9Er3/mtaiJJDmDXIDsPFM4JiZRjXVHKbKbbzaFy
+	 MsMSjWcisN6tykLx/g4BS8vM0zN3GqtUbr3v9Axk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
-	Corentin LABBE <clabbe.montjoie@gmail.com>,
-	Eric Biggers <ebiggers@kernel.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 204/843] crypto: sun4i-ss - Remove insecure and unused rng_alg
-Date: Tue, 21 Jul 2026 17:17:19 +0200
-Message-ID: <20260721152410.605872759@linuxfoundation.org>
+Subject: [PATCH 5.15 205/843] crypto: crypto4xx - Remove ahash-related code
+Date: Tue, 21 Jul 2026 17:17:20 +0200
+Message-ID: <20260721152410.630008172@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,312 +51,264 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit b2c41fa9dd8fc740c489e060b199165771f268d1 upstream.
+commit 97855e7f1ccf4917f305baab199edb9f2595ff5b upstream.
 
-Remove sun4i_ss_rng, as it is insecure and unused:
+The hash implementation in crypto4xx has been disabled since 2009.
+As nobody has tried to fix this remove all the dead code.
 
-- It has multiple vulnerabilities.  sun4i_ss_prng_seed() is missing
-  locking and has a buffer overflow.  sun4i_ss_prng_generate() fails to
-  fill the entire buffer with cryptographic random bytes, because it
-  rounds the destination length down and also doesn't actually wait for
-  the hardware to be ready before pulling bytes from it.
-
-- No user of this code is known.  It's usable only theoretically via the
-  "rng" algorithm type of AF_ALG.  But userspace actually just uses the
-  actual Linux RNG (/dev/random etc) instead.  And rng_algs don't
-  contribute entropy to the actual Linux RNG either.  (This may have
-  been confused with hwrng, which does contribute entropy.)
-
-The sun4i_ss_prng_seed() buffer overflow was reported by Tianchu Chen
-and discovered by Atuin - Automated Vulnerability Discovery Engine
-
-There's no point in fixing all these vulnerabilities individually when
-this is unused code, so let's just remove it.
-
-Fixes: b8ae5c7387ad ("crypto: sun4i-ss - support the Security System PRNG")
-Cc: stable@vger.kernel.org
-Reported-by: Tianchu Chen <flynnnchen@tencent.com>
-Closes: https://lore.kernel.org/r/af749a8447bd7f0e9dd26ca6c87e9c6afecb09d9@linux.dev/
-Acked-by: Corentin LABBE <clabbe.montjoie@gmail.com>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/configs/sunxi_defconfig              |  1 -
- drivers/crypto/allwinner/Kconfig              |  8 ---
- drivers/crypto/allwinner/sun4i-ss/Makefile    |  1 -
- .../crypto/allwinner/sun4i-ss/sun4i-ss-core.c | 36 ----------
- .../crypto/allwinner/sun4i-ss/sun4i-ss-prng.c | 69 -------------------
- drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h  | 20 ------
- 6 files changed, 135 deletions(-)
- delete mode 100644 drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
+ drivers/crypto/amcc/crypto4xx_alg.c  | 106 ---------------------------
+ drivers/crypto/amcc/crypto4xx_core.c |  43 +----------
+ drivers/crypto/amcc/crypto4xx_core.h |   7 --
+ 3 files changed, 1 insertion(+), 155 deletions(-)
 
-diff --git a/arch/arm/configs/sunxi_defconfig b/arch/arm/configs/sunxi_defconfig
-index a60c134c5e0466..5127c937b48531 100644
---- a/arch/arm/configs/sunxi_defconfig
-+++ b/arch/arm/configs/sunxi_defconfig
-@@ -168,7 +168,6 @@ CONFIG_ROOT_NFS=y
- CONFIG_NLS_CODEPAGE_437=y
- CONFIG_NLS_ISO8859_1=y
- CONFIG_CRYPTO_DEV_SUN4I_SS=y
--CONFIG_CRYPTO_DEV_SUN4I_SS_PRNG=y
- CONFIG_CRYPTO_DEV_SUN8I_CE=y
- CONFIG_CRYPTO_DEV_SUN8I_SS=y
- CONFIG_DMA_CMA=y
-diff --git a/drivers/crypto/allwinner/Kconfig b/drivers/crypto/allwinner/Kconfig
-index b8e75210a0e315..06ea0e9fe6f22f 100644
---- a/drivers/crypto/allwinner/Kconfig
-+++ b/drivers/crypto/allwinner/Kconfig
-@@ -24,14 +24,6 @@ config CRYPTO_DEV_SUN4I_SS
- 	  To compile this driver as a module, choose M here: the module
- 	  will be called sun4i-ss.
- 
--config CRYPTO_DEV_SUN4I_SS_PRNG
--	bool "Support for Allwinner Security System PRNG"
--	depends on CRYPTO_DEV_SUN4I_SS
--	select CRYPTO_RNG
--	help
--	  Select this option if you want to provide kernel-side support for
--	  the Pseudo-Random Number Generator found in the Security System.
+diff --git a/drivers/crypto/amcc/crypto4xx_alg.c b/drivers/crypto/amcc/crypto4xx_alg.c
+index ded73224273295..91cecec729f25e 100644
+--- a/drivers/crypto/amcc/crypto4xx_alg.c
++++ b/drivers/crypto/amcc/crypto4xx_alg.c
+@@ -12,9 +12,6 @@
+ #include <linux/interrupt.h>
+ #include <linux/spinlock_types.h>
+ #include <linux/scatterlist.h>
+-#include <linux/crypto.h>
+-#include <linux/hash.h>
+-#include <crypto/internal/hash.h>
+ #include <linux/dma-mapping.h>
+ #include <crypto/algapi.h>
+ #include <crypto/aead.h>
+@@ -616,106 +613,3 @@ int crypto4xx_decrypt_aes_gcm(struct aead_request *req)
+ {
+ 	return crypto4xx_crypt_aes_gcm(req, true);
+ }
 -
- config CRYPTO_DEV_SUN4I_SS_DEBUG
- 	bool "Enable sun4i-ss stats"
- 	depends on CRYPTO_DEV_SUN4I_SS
-diff --git a/drivers/crypto/allwinner/sun4i-ss/Makefile b/drivers/crypto/allwinner/sun4i-ss/Makefile
-index c0a2797d316827..06a9ae81f9f808 100644
---- a/drivers/crypto/allwinner/sun4i-ss/Makefile
-+++ b/drivers/crypto/allwinner/sun4i-ss/Makefile
-@@ -1,4 +1,3 @@
- # SPDX-License-Identifier: GPL-2.0-only
- obj-$(CONFIG_CRYPTO_DEV_SUN4I_SS) += sun4i-ss.o
- sun4i-ss-y += sun4i-ss-core.o sun4i-ss-hash.o sun4i-ss-cipher.o
--sun4i-ss-$(CONFIG_CRYPTO_DEV_SUN4I_SS_PRNG) += sun4i-ss-prng.o
-diff --git a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-core.c b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-core.c
-index 44b8fc4b786dc8..0520cc6447e2db 100644
---- a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-core.c
-+++ b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-core.c
-@@ -216,23 +216,6 @@ static struct sun4i_ss_alg_template ss_algs[] = {
- 		}
- 	}
- },
--#ifdef CONFIG_CRYPTO_DEV_SUN4I_SS_PRNG
+-/*
+- * HASH SHA1 Functions
+- */
+-static int crypto4xx_hash_alg_init(struct crypto_tfm *tfm,
+-				   unsigned int sa_len,
+-				   unsigned char ha,
+-				   unsigned char hm)
 -{
--	.type = CRYPTO_ALG_TYPE_RNG,
--	.alg.rng = {
--		.base = {
--			.cra_name		= "stdrng",
--			.cra_driver_name	= "sun4i_ss_rng",
--			.cra_priority		= 300,
--			.cra_ctxsize		= 0,
--			.cra_module		= THIS_MODULE,
--		},
--		.generate               = sun4i_ss_prng_generate,
--		.seed                   = sun4i_ss_prng_seed,
--		.seedsize               = SS_SEED_LEN / BITS_PER_BYTE,
--	}
--},
--#endif
- };
- 
- static int sun4i_ss_dbgfs_read(struct seq_file *seq, void *v)
-@@ -250,12 +233,6 @@ static int sun4i_ss_dbgfs_read(struct seq_file *seq, void *v)
- 				   ss_algs[i].stat_req, ss_algs[i].stat_opti, ss_algs[i].stat_fb,
- 				   ss_algs[i].stat_bytes);
- 			break;
--		case CRYPTO_ALG_TYPE_RNG:
--			seq_printf(seq, "%s %s reqs=%lu tsize=%lu\n",
--				   ss_algs[i].alg.rng.base.cra_driver_name,
--				   ss_algs[i].alg.rng.base.cra_name,
--				   ss_algs[i].stat_req, ss_algs[i].stat_bytes);
--			break;
- 		case CRYPTO_ALG_TYPE_AHASH:
- 			seq_printf(seq, "%s %s reqs=%lu\n",
- 				   ss_algs[i].alg.hash.halg.base.cra_driver_name,
-@@ -486,13 +463,6 @@ static int sun4i_ss_probe(struct platform_device *pdev)
- 				goto error_alg;
- 			}
- 			break;
--		case CRYPTO_ALG_TYPE_RNG:
--			err = crypto_register_rng(&ss_algs[i].alg.rng);
--			if (err) {
--				dev_err(ss->dev, "Fail to register %s\n",
--					ss_algs[i].alg.rng.base.cra_name);
--			}
--			break;
- 		}
- 	}
- 
-@@ -512,9 +482,6 @@ static int sun4i_ss_probe(struct platform_device *pdev)
- 		case CRYPTO_ALG_TYPE_AHASH:
- 			crypto_unregister_ahash(&ss_algs[i].alg.hash);
- 			break;
--		case CRYPTO_ALG_TYPE_RNG:
--			crypto_unregister_rng(&ss_algs[i].alg.rng);
--			break;
- 		}
- 	}
- error_pm:
-@@ -535,9 +502,6 @@ static int sun4i_ss_remove(struct platform_device *pdev)
- 		case CRYPTO_ALG_TYPE_AHASH:
- 			crypto_unregister_ahash(&ss_algs[i].alg.hash);
- 			break;
--		case CRYPTO_ALG_TYPE_RNG:
--			crypto_unregister_rng(&ss_algs[i].alg.rng);
--			break;
- 		}
- 	}
- 
-diff --git a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
-deleted file mode 100644
-index 491fcb7b81b40b..00000000000000
---- a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
-+++ /dev/null
-@@ -1,69 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0-or-later
--#include "sun4i-ss.h"
+-	struct crypto_alg *alg = tfm->__crt_alg;
+-	struct crypto4xx_alg *my_alg;
+-	struct crypto4xx_ctx *ctx = crypto_tfm_ctx(tfm);
+-	struct dynamic_sa_hash160 *sa;
+-	int rc;
 -
--int sun4i_ss_prng_seed(struct crypto_rng *tfm, const u8 *seed,
--		       unsigned int slen)
--{
--	struct sun4i_ss_alg_template *algt;
--	struct rng_alg *alg = crypto_rng_alg(tfm);
+-	my_alg = container_of(__crypto_ahash_alg(alg), struct crypto4xx_alg,
+-			      alg.u.hash);
+-	ctx->dev   = my_alg->dev;
 -
--	algt = container_of(alg, struct sun4i_ss_alg_template, alg.rng);
--	memcpy(algt->ss->seed, seed, slen);
+-	/* Create SA */
+-	if (ctx->sa_in || ctx->sa_out)
+-		crypto4xx_free_sa(ctx);
+-
+-	rc = crypto4xx_alloc_sa(ctx, sa_len);
+-	if (rc)
+-		return rc;
+-
+-	crypto_ahash_set_reqsize(__crypto_ahash_cast(tfm),
+-				 sizeof(struct crypto4xx_ctx));
+-	sa = (struct dynamic_sa_hash160 *)ctx->sa_in;
+-	set_dynamic_sa_command_0(&sa->ctrl, SA_SAVE_HASH, SA_NOT_SAVE_IV,
+-				 SA_NOT_LOAD_HASH, SA_LOAD_IV_FROM_SA,
+-				 SA_NO_HEADER_PROC, ha, SA_CIPHER_ALG_NULL,
+-				 SA_PAD_TYPE_ZERO, SA_OP_GROUP_BASIC,
+-				 SA_OPCODE_HASH, DIR_INBOUND);
+-	set_dynamic_sa_command_1(&sa->ctrl, 0, SA_HASH_MODE_HASH,
+-				 CRYPTO_FEEDBACK_MODE_NO_FB, SA_EXTENDED_SN_OFF,
+-				 SA_SEQ_MASK_OFF, SA_MC_ENABLE,
+-				 SA_NOT_COPY_PAD, SA_NOT_COPY_PAYLOAD,
+-				 SA_NOT_COPY_HDR);
+-	/* Need to zero hash digest in SA */
+-	memset(sa->inner_digest, 0, sizeof(sa->inner_digest));
+-	memset(sa->outer_digest, 0, sizeof(sa->outer_digest));
 -
 -	return 0;
 -}
 -
--int sun4i_ss_prng_generate(struct crypto_rng *tfm, const u8 *src,
--			   unsigned int slen, u8 *dst, unsigned int dlen)
+-int crypto4xx_hash_init(struct ahash_request *req)
 -{
--	struct sun4i_ss_alg_template *algt;
--	struct rng_alg *alg = crypto_rng_alg(tfm);
--	int i, err;
--	u32 v;
--	u32 *data = (u32 *)dst;
--	const u32 mode = SS_OP_PRNG | SS_PRNG_CONTINUE | SS_ENABLED;
--	size_t len;
--	struct sun4i_ss_ctx *ss;
--	unsigned int todo = (dlen / 4) * 4;
+-	struct crypto4xx_ctx *ctx = crypto_tfm_ctx(req->base.tfm);
+-	int ds;
+-	struct dynamic_sa_ctl *sa;
 -
--	algt = container_of(alg, struct sun4i_ss_alg_template, alg.rng);
--	ss = algt->ss;
--
--	err = pm_runtime_resume_and_get(ss->dev);
--	if (err < 0)
--		return err;
--
--	if (IS_ENABLED(CONFIG_CRYPTO_DEV_SUN4I_SS_DEBUG)) {
--		algt->stat_req++;
--		algt->stat_bytes += todo;
--	}
--
--	spin_lock_bh(&ss->slock);
--
--	writel(mode, ss->base + SS_CTL);
--
--	while (todo > 0) {
--		/* write the seed */
--		for (i = 0; i < SS_SEED_LEN / BITS_PER_LONG; i++)
--			writel(ss->seed[i], ss->base + SS_KEY0 + i * 4);
--
--		/* Read the random data */
--		len = min_t(size_t, SS_DATA_LEN / BITS_PER_BYTE, todo);
--		readsl(ss->base + SS_TXFIFO, data, len / 4);
--		data += len / 4;
--		todo -= len;
--
--		/* Update the seed */
--		for (i = 0; i < SS_SEED_LEN / BITS_PER_LONG; i++) {
--			v = readl(ss->base + SS_KEY0 + i * 4);
--			ss->seed[i] = v;
--		}
--	}
--
--	writel(0, ss->base + SS_CTL);
--	spin_unlock_bh(&ss->slock);
--
--	pm_runtime_put(ss->dev);
+-	sa = ctx->sa_in;
+-	ds = crypto_ahash_digestsize(
+-			__crypto_ahash_cast(req->base.tfm));
+-	sa->sa_command_0.bf.digest_len = ds >> 2;
+-	sa->sa_command_0.bf.load_hash_state = SA_LOAD_HASH_FROM_SA;
 -
 -	return 0;
 -}
-diff --git a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h
-index 0fee6f4e2d90dc..e1a849ce11b1cc 100644
---- a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h
-+++ b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h
-@@ -31,8 +31,6 @@
+-
+-int crypto4xx_hash_update(struct ahash_request *req)
+-{
+-	struct crypto_ahash *ahash = crypto_ahash_reqtfm(req);
+-	struct crypto4xx_ctx *ctx = crypto_tfm_ctx(req->base.tfm);
+-	struct scatterlist dst;
+-	unsigned int ds = crypto_ahash_digestsize(ahash);
+-
+-	sg_init_one(&dst, req->result, ds);
+-
+-	return crypto4xx_build_pd(&req->base, ctx, req->src, &dst,
+-				  req->nbytes, NULL, 0, ctx->sa_in,
+-				  ctx->sa_len, 0, NULL);
+-}
+-
+-int crypto4xx_hash_final(struct ahash_request *req)
+-{
+-	return 0;
+-}
+-
+-int crypto4xx_hash_digest(struct ahash_request *req)
+-{
+-	struct crypto_ahash *ahash = crypto_ahash_reqtfm(req);
+-	struct crypto4xx_ctx *ctx = crypto_tfm_ctx(req->base.tfm);
+-	struct scatterlist dst;
+-	unsigned int ds = crypto_ahash_digestsize(ahash);
+-
+-	sg_init_one(&dst, req->result, ds);
+-
+-	return crypto4xx_build_pd(&req->base, ctx, req->src, &dst,
+-				  req->nbytes, NULL, 0, ctx->sa_in,
+-				  ctx->sa_len, 0, NULL);
+-}
+-
+-/*
+- * SHA1 Algorithm
+- */
+-int crypto4xx_sha1_alg_init(struct crypto_tfm *tfm)
+-{
+-	return crypto4xx_hash_alg_init(tfm, SA_HASH160_LEN, SA_HASH_ALG_SHA1,
+-				       SA_HASH_MODE_HASH);
+-}
+diff --git a/drivers/crypto/amcc/crypto4xx_core.c b/drivers/crypto/amcc/crypto4xx_core.c
+index e1556a3582a30e..eeb9546bfec9da 100644
+--- a/drivers/crypto/amcc/crypto4xx_core.c
++++ b/drivers/crypto/amcc/crypto4xx_core.c
+@@ -485,18 +485,6 @@ static void crypto4xx_copy_pkt_to_dst(struct crypto4xx_device *dev,
+ 	}
+ }
+ 
+-static void crypto4xx_copy_digest_to_dst(void *dst,
+-					struct pd_uinfo *pd_uinfo,
+-					struct crypto4xx_ctx *ctx)
+-{
+-	struct dynamic_sa_ctl *sa = (struct dynamic_sa_ctl *) ctx->sa_in;
+-
+-	if (sa->sa_command_0.bf.hash_alg == SA_HASH_ALG_SHA1) {
+-		memcpy(dst, pd_uinfo->sr_va->save_digest,
+-		       SA_HASH_ALG_SHA1_DIGEST_SIZE);
+-	}
+-}
+-
+ static void crypto4xx_ret_sg_desc(struct crypto4xx_device *dev,
+ 				  struct pd_uinfo *pd_uinfo)
+ {
+@@ -549,23 +537,6 @@ static void crypto4xx_cipher_done(struct crypto4xx_device *dev,
+ 	skcipher_request_complete(req, 0);
+ }
+ 
+-static void crypto4xx_ahash_done(struct crypto4xx_device *dev,
+-				struct pd_uinfo *pd_uinfo)
+-{
+-	struct crypto4xx_ctx *ctx;
+-	struct ahash_request *ahash_req;
+-
+-	ahash_req = ahash_request_cast(pd_uinfo->async_req);
+-	ctx = crypto_ahash_ctx(crypto_ahash_reqtfm(ahash_req));
+-
+-	crypto4xx_copy_digest_to_dst(ahash_req->result, pd_uinfo, ctx);
+-	crypto4xx_ret_sg_desc(dev, pd_uinfo);
+-
+-	if (pd_uinfo->state & PD_ENTRY_BUSY)
+-		ahash_request_complete(ahash_req, -EINPROGRESS);
+-	ahash_request_complete(ahash_req, 0);
+-}
+-
+ static void crypto4xx_aead_done(struct crypto4xx_device *dev,
+ 				struct pd_uinfo *pd_uinfo,
+ 				struct ce_pd *pd)
+@@ -642,9 +613,6 @@ static void crypto4xx_pd_done(struct crypto4xx_device *dev, u32 idx)
+ 	case CRYPTO_ALG_TYPE_AEAD:
+ 		crypto4xx_aead_done(dev, pd_uinfo, pd);
+ 		break;
+-	case CRYPTO_ALG_TYPE_AHASH:
+-		crypto4xx_ahash_done(dev, pd_uinfo);
+-		break;
+ 	}
+ }
+ 
+@@ -915,8 +883,7 @@ int crypto4xx_build_pd(struct crypto_async_request *req,
+ 	}
+ 
+ 	pd->pd_ctl.w = PD_CTL_HOST_READY |
+-		((crypto_tfm_alg_type(req->tfm) == CRYPTO_ALG_TYPE_AHASH) ||
+-		 (crypto_tfm_alg_type(req->tfm) == CRYPTO_ALG_TYPE_AEAD) ?
++		((crypto_tfm_alg_type(req->tfm) == CRYPTO_ALG_TYPE_AEAD) ?
+ 			PD_CTL_HASH_FINAL : 0);
+ 	pd->pd_ctl_len.w = 0x00400000 | (assoclen + datalen);
+ 	pd_uinfo->state = PD_ENTRY_INUSE | (is_busy ? PD_ENTRY_BUSY : 0);
+@@ -1022,10 +989,6 @@ static int crypto4xx_register_alg(struct crypto4xx_device *sec_dev,
+ 			rc = crypto_register_aead(&alg->alg.u.aead);
+ 			break;
+ 
+-		case CRYPTO_ALG_TYPE_AHASH:
+-			rc = crypto_register_ahash(&alg->alg.u.hash);
+-			break;
+-
+ 		case CRYPTO_ALG_TYPE_RNG:
+ 			rc = crypto_register_rng(&alg->alg.u.rng);
+ 			break;
+@@ -1051,10 +1014,6 @@ static void crypto4xx_unregister_alg(struct crypto4xx_device *sec_dev)
+ 	list_for_each_entry_safe(alg, tmp, &sec_dev->alg_list, entry) {
+ 		list_del(&alg->entry);
+ 		switch (alg->alg.type) {
+-		case CRYPTO_ALG_TYPE_AHASH:
+-			crypto_unregister_ahash(&alg->alg.u.hash);
+-			break;
+-
+ 		case CRYPTO_ALG_TYPE_AEAD:
+ 			crypto_unregister_aead(&alg->alg.u.aead);
+ 			break;
+diff --git a/drivers/crypto/amcc/crypto4xx_core.h b/drivers/crypto/amcc/crypto4xx_core.h
+index 56c10668c0ab0a..0d83cde84cca9a 100644
+--- a/drivers/crypto/amcc/crypto4xx_core.h
++++ b/drivers/crypto/amcc/crypto4xx_core.h
+@@ -16,7 +16,6 @@
+ #include <linux/ratelimit.h>
+ #include <linux/mutex.h>
+ #include <linux/scatterlist.h>
+-#include <crypto/internal/hash.h>
+ #include <crypto/internal/aead.h>
+ #include <crypto/internal/rng.h>
  #include <crypto/internal/skcipher.h>
- #include <crypto/aes.h>
- #include <crypto/internal/des.h>
--#include <crypto/internal/rng.h>
--#include <crypto/rng.h>
- 
- #define SS_CTL            0x00
- #define SS_KEY0           0x04
-@@ -62,10 +60,6 @@
- 
- /* SS_CTL configuration values */
- 
--/* PRNG generator mode - bit 15 */
--#define SS_PRNG_ONESHOT		(0 << 15)
--#define SS_PRNG_CONTINUE	(1 << 15)
--
- /* IV mode for hash */
- #define SS_IV_ARBITRARY		(1 << 14)
- 
-@@ -94,14 +88,10 @@
- #define SS_OP_3DES		(2 << 4)
- #define SS_OP_SHA1		(3 << 4)
- #define SS_OP_MD5		(4 << 4)
--#define SS_OP_PRNG		(5 << 4)
- 
- /* Data end bit - bit 2 */
- #define SS_DATA_END		(1 << 2)
- 
--/* PRNG start bit - bit 1 */
--#define SS_PRNG_START		(1 << 1)
--
- /* SS Enable bit - bit 0 */
- #define SS_DISABLED		(0 << 0)
- #define SS_ENABLED		(1 << 0)
-@@ -128,9 +118,6 @@
- #define SS_RXFIFO_EMP_INT_ENABLE	(1 << 2)
- #define SS_TXFIFO_AVA_INT_ENABLE	(1 << 0)
- 
--#define SS_SEED_LEN 192
--#define SS_DATA_LEN 160
--
- /*
-  * struct ss_variant - Describe SS hardware variant
-  * @sha1_in_be:		The SHA1 digest is given by SS in BE, and so need to be inverted.
-@@ -151,9 +138,6 @@ struct sun4i_ss_ctx {
- 	char buf[4 * SS_RX_MAX];/* buffer for linearize SG src */
- 	char bufo[4 * SS_TX_MAX]; /* buffer for linearize SG dst */
- 	spinlock_t slock; /* control the use of the device */
--#ifdef CONFIG_CRYPTO_DEV_SUN4I_SS_PRNG
--	u32 seed[SS_SEED_LEN / BITS_PER_LONG];
--#endif
- 	struct dentry *dbgfs_dir;
- 	struct dentry *dbgfs_stats;
- };
-@@ -164,7 +148,6 @@ struct sun4i_ss_alg_template {
+@@ -135,7 +134,6 @@ struct crypto4xx_alg_common {
+ 	u32 type;
  	union {
- 		struct skcipher_alg crypto;
- 		struct ahash_alg hash;
--		struct rng_alg rng;
- 	} alg;
- 	struct sun4i_ss_ctx *ss;
- 	unsigned long stat_req;
-@@ -230,6 +213,3 @@ int sun4i_ss_des_setkey(struct crypto_skcipher *tfm, const u8 *key,
- 			unsigned int keylen);
- int sun4i_ss_des3_setkey(struct crypto_skcipher *tfm, const u8 *key,
- 			 unsigned int keylen);
--int sun4i_ss_prng_generate(struct crypto_rng *tfm, const u8 *src,
--			   unsigned int slen, u8 *dst, unsigned int dlen);
--int sun4i_ss_prng_seed(struct crypto_rng *tfm, const u8 *seed, unsigned int slen);
+ 		struct skcipher_alg cipher;
+-		struct ahash_alg hash;
+ 		struct aead_alg aead;
+ 		struct rng_alg rng;
+ 	} u;
+@@ -182,11 +180,6 @@ int crypto4xx_encrypt_noiv_block(struct skcipher_request *req);
+ int crypto4xx_decrypt_noiv_block(struct skcipher_request *req);
+ int crypto4xx_rfc3686_encrypt(struct skcipher_request *req);
+ int crypto4xx_rfc3686_decrypt(struct skcipher_request *req);
+-int crypto4xx_sha1_alg_init(struct crypto_tfm *tfm);
+-int crypto4xx_hash_digest(struct ahash_request *req);
+-int crypto4xx_hash_final(struct ahash_request *req);
+-int crypto4xx_hash_update(struct ahash_request *req);
+-int crypto4xx_hash_init(struct ahash_request *req);
+ 
+ /*
+  * Note: Only use this function to copy items that is word aligned.
 -- 
 2.53.0
 
