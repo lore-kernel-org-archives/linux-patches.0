@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A78E43DA38;
-	Tue, 21 Jul 2026 22:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3FB643E068;
+	Tue, 21 Jul 2026 22:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672829; cv=none; b=pMtLW3CgOogcILlPZNBuDdCqLO03xjquwVaimsmUU2Rg7TV6lWXv5/sCI9C+p4ftoAO5y4/FOmSrmMaZGK1dLguUtKhtiz6+KoFGTH0qWR16KzJyodsKRMAi6SSQGf5xsEvVP54je97RtcjpNmrdRsOTVoJQv0ZKdguC7rI1Fls=
+	t=1784672831; cv=none; b=IQTEzfALJPK4gUunYMyn8sHprqs9CtdvNmA67rNiBcg/LABspgpO6+dc6uftR92HFecOXWFBwayKSYt1yoHn4A0eGe3avwrWj7XE+ouS2c9k8F8PXSkMioxVEIwiO+W8kRcj3je+MgYXTYAyozSw4KBHZ/5UFZ2kjVmb9Saq6Pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672829; c=relaxed/simple;
-	bh=fcPU/iBdchFs9JkYyu/ziS7G6WEL5oCOMIRReawDcss=;
+	s=arc-20240116; t=1784672831; c=relaxed/simple;
+	bh=WRlw/Wdn9jggDQ+Fy5a4dawc6NNKIF8wbbnOQt94DtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZHSnLvSGdFglCrMynjpfQuCR+d+HqXjxJqOS1cNWoLlvI1tX0v0SGYrru//6/4Nrv59wSjEZDYjKLSjCWtJRAmPDZpJkwXoHFMFZBHSIiCYQP5p2Do/TjB71T5wjeopR2G0Xv0doJTCyFncxd3cYa+ndO7AkphYY+ZhlY/EeQkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6LUAIiJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G2bcY4RgSc15OIaiFI7PTtN/ou/q6XBfHvBlijVWnl2YvP1FAl0l9LtX1R1cXdx9cbQ5/V+pzv2GPhh+bUvxPpOB9nfqGhOvcPLx19cC4F1tEpmVFlmBlgQHHv3ykuepmXVWniT2C7s8sDJ9sjx01IaeIqpN/Jl/elHmcjdPhHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BA6KAzFG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6LUAIiJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5321F000E9;
-	Tue, 21 Jul 2026 22:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BA6KAzFG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 361901F000E9;
+	Tue, 21 Jul 2026 22:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672828;
-	bh=0m1cMsqtTe1b7ENaL5RuV2hhGlvOtp5EING7QRT0kAY=;
+	s=korg; t=1784672830;
+	bh=n7gr+ABA0sScHEbRg8Fsllwxs/X0rVD0WY9HZgQkyN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D6LUAIiJwH6Cqx+T75dbBzZ0qa8c9yXrYkTR4qhfdYRvKBVo8+OE+sjnmzeObddIG
-	 Zt7fquEA94JJSzovYs9205lWkpBKV3+McmgsRasiiNqP1A+dGOlp0gN5dWFf4BJA+J
-	 bAsnWc+XqQu6v1FbxcG4Did4XEsFuQPys3aNYpJU=
+	b=BA6KAzFGawJmL2Q55ivyCMP2ebia83Ledlw/toKH4sakVhs060HO956UXvzqv6Qgz
+	 RcBQIRHTCLAplhHceAg07yMw8NCWVBcvR/P4UAbaXWmoWrGPhsv6gLHgp09K5dPNxX
+	 Ozrc+95vG3vtCKvwbFWPmZS83FaR+k9AnxJqO+Is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vz@kernel.org>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.15 729/843] mtd: rawnand: lpc32xx_slc: fail DMA transfer on completion timeout
-Date: Tue, 21 Jul 2026 17:26:04 +0200
-Message-ID: <20260721152422.441977384@linuxfoundation.org>
+	Jeremy Linton <jeremy.linton@arm.com>,
+	Jarred White <jarredwhite@linux.microsoft.com>,
+	Easwar Hariharan <easwar.hariharan@linux.microsoft.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 730/843] ACPI: CPPC: Suppress UBSAN warning caused by field misuse
+Date: Tue, 21 Jul 2026 17:26:05 +0200
+Message-ID: <20260721152422.463599106@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,59 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Jeremy Linton <jeremy.linton@arm.com>
 
-commit 17a8ce84964f243c8f89dc7353ac7e8d3137bc74 upstream.
+[ Upstream commit 1b1acf2dada0cc3931bb2cb9ff8832edfbee46a1 ]
 
-lpc32xx_xmit_dma() waits for the DMA completion callback but ignores
-wait_for_completion_timeout(). A timed out DMA transfer is therefore
-unmapped and reported as successful to the NAND read/write path.
+The definition of reg->access_width changes depending on the
+reg->space_id type.  Type ACPI_ADR_SPACE_PLATFORM_COMM uses
+access_width to indicate the PCC region, which can result in a UBSAN
+if the value is greater than 4.
 
-Return -ETIMEDOUT when the completion wait expires. Terminate the DMA
-channel before unmapping the scatterlist so the timed out transfer cannot
-continue to access the buffer after the error is returned.
+For example:
 
-Fixes: 2944a44da09e ("mtd: add LPC32xx SLC NAND driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+ UBSAN: shift-out-of-bounds in drivers/acpi/cppc_acpi.c:1090:9
+ shift exponent 32 is too large for 32-bit type 'int'
+ CPU: 61 UID: 0 PID: 1220 Comm: (udev-worker) Not tainted 7.0.10-201.fc44.aarch64 #1 PREEMPT(lazy)
+ Hardware name: To be filled by O.E.M.
+ Call trace:
+  ...(trimming)
+  ubsan_epilogue+0x10/0x48
+  __ubsan_handle_shift_out_of_bounds+0xdc/0x1e0
+  cpc_write+0x4d0/0x670
+  cppc_set_perf+0x18c/0x490
+  cppc_cpufreq_cpu_init+0x1c8/0x380 [cppc_cpufreq]
+  ... (trimming)
+
+Lets fix this by validating the region type, as well as whether
+access_width has a value. Then since we are returning bit_width
+directly for ACPI_ADR_SPACE_PLATFORM_COMM, drop the code correcting
+the size.
+
+Fixes: 2f4a4d63a193 ("ACPI: CPPC: Use access_width over bit_width for system memory accesses")
+Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
+Tested-by: Jarred White <jarredwhite@linux.microsoft.com>
+Reviewed-by: Jarred White <jarredwhite@linux.microsoft.com>
+Reviewed-by: Easwar Hariharan <easwar.hariharan@linux.microsoft.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260601235808.1113137-1-jeremy.linton@arm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/lpc32xx_slc.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/acpi/cppc_acpi.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/mtd/nand/raw/lpc32xx_slc.c
-+++ b/drivers/mtd/nand/raw/lpc32xx_slc.c
-@@ -444,6 +444,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
- 	struct dma_async_tx_descriptor *desc;
- 	int flags = DMA_CTRL_ACK | DMA_PREP_INTERRUPT;
- 	int res;
-+	unsigned long time_left;
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -161,8 +161,13 @@ show_cppc_data(cppc_get_perf_caps, cppc_
+ show_cppc_data(cppc_get_perf_ctrs, cppc_perf_fb_ctrs, reference_perf);
+ show_cppc_data(cppc_get_perf_ctrs, cppc_perf_fb_ctrs, wraparound_time);
  
- 	host->dma_slave_config.direction = dir;
- 	host->dma_slave_config.src_addr = dma;
-@@ -481,12 +482,19 @@ static int lpc32xx_xmit_dma(struct mtd_i
- 	dmaengine_submit(desc);
- 	dma_async_issue_pending(host->dma_chan);
+-/* Check for valid access_width, otherwise, fallback to using bit_width */
+-#define GET_BIT_WIDTH(reg) ((reg)->access_width ? (8 << ((reg)->access_width - 1)) : (reg)->bit_width)
++/*
++ * PCC reuses the access_width field as the subspace id, so only decode access
++ * size for non-PCC registers. Otherwise, use the bit_width.
++ */
++#define GET_BIT_WIDTH(reg) (((reg)->access_width &&				\
++			     (reg)->space_id != ACPI_ADR_SPACE_PLATFORM_COMM) ? \
++			    (8 << ((reg)->access_width - 1)) : (reg)->bit_width)
  
--	wait_for_completion_timeout(&host->comp, msecs_to_jiffies(1000));
-+	time_left = wait_for_completion_timeout(&host->comp,
-+						msecs_to_jiffies(1000));
-+	if (!time_left) {
-+		dmaengine_terminate_sync(host->dma_chan);
-+		res = -ETIMEDOUT;
-+	} else {
-+		res = 0;
-+	}
- 
- 	dma_unmap_sg(host->dma_chan->device->dev, &host->sgl, 1,
- 		     DMA_BIDIRECTIONAL);
- 
--	return 0;
-+	return res;
- out1:
- 	dma_unmap_sg(host->dma_chan->device->dev, &host->sgl, 1,
- 		     DMA_BIDIRECTIONAL);
+ /* Shift and apply the mask for CPC reads/writes */
+ #define MASK_VAL_READ(reg, val) (((val) >> (reg)->bit_offset) &				\
+@@ -970,7 +975,6 @@ static int cpc_read(int cpu, struct cpc_
+ 		 * by the bit width field; the access size is used to indicate
+ 		 * the PCC subspace id.
+ 		 */
+-		size = reg->bit_width;
+ 		vaddr = GET_PCC_VADDR(reg->address, pcc_ss_id);
+ 	}
+ 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
+@@ -1030,7 +1034,6 @@ static int cpc_write(int cpu, struct cpc
+ 		 * by the bit width field; the access size is used to indicate
+ 		 * the PCC subspace id.
+ 		 */
+-		size = reg->bit_width;
+ 		vaddr = GET_PCC_VADDR(reg->address, pcc_ss_id);
+ 	}
+ 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
 
 
