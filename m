@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27CB439904;
-	Tue, 21 Jul 2026 22:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F6344AB7B;
+	Tue, 21 Jul 2026 22:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671328; cv=none; b=lcFmPYD4QGPgfe5KwIO17MeidvW246IknntsM03s/TrrcqYf3/tWGW3qwltN8n9FCYQv4MnycH8yr+AbG/TvhHcWInE0ZYj8kvz53/5CuRtABQKjRZJ02Vo/GV602OgCDS6GzeZrWahqzbZLc7I1Jh3O6hvLRgUH3dVK01Al/qk=
+	t=1784671330; cv=none; b=ijMivcNXL5dRgMOPaKtchr+Ai9K0TB6cy/bR5kD1AIb5MjyYIxHMVK0RCkPw6n2kk11ztmLHMRZPAYOkqxbd3KyzT+905q54ctFug8WNg3WGvPHfT9eBGyZC7ewJnVr1doRrS/ekxB2Py7JOGmE3/BLa+oU+2sCm7FnMvXcoIiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671328; c=relaxed/simple;
-	bh=qXggAjbmsIP12IzURMGjpP+CQl5ZjTUD4SUR/FoctAk=;
+	s=arc-20240116; t=1784671330; c=relaxed/simple;
+	bh=ZR16iiGydEWPW0eUS5m5Wiz+noiQQQmXvvcMjHJph1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G1dFev5ddCdY9qpY3UrivYlTnEr1L3IvaRl6LROVWCtKtFPzJUKdcxfjfc4I5oY0RbIa+6OZHMm8RDaQEfM9vcYlLdAM4Hfap92alSePnB23TIHeYbzh7pO9g0WMS95ZEzrwtw1bzy6ATao10Rj/UNF4pRZd0fkZsQYT2M+kt2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MAkr8dA9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FqejA4klq9mh7x9oyBNzUg2auXz0h0Q/AABl5CHd/XVsTPF2f/OFQ/l3At4+SPMF/wXbJFOgX7k7istspOde4RZlCZEZ3lJklggx7nbyw75mAbyPi/p+VgLQ6GajZWX/MiNOqmxExwA5P3MjMrm8R84IYc2XDhCZKSvMWyoaajI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMX8nQYF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MAkr8dA9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49CC31F000E9;
-	Tue, 21 Jul 2026 22:02:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMX8nQYF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8381F000E9;
+	Tue, 21 Jul 2026 22:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671326;
-	bh=4sCRERdO5bE3X7w/mZuZOkFSV3mFs8kuPPiSdgsfx3o=;
+	s=korg; t=1784671329;
+	bh=vEUVwJTGSp6iKfX4yANy/sBb+jmukwKnF2D2LlfN4Kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MAkr8dA93LZWtrbw6cIVLgSLkuwthimbgBIJmCvnPF3LXP2ShwQTK+CwH370DcpQa
-	 ZXBLDknxoj4uR8NGx2rc5Do+/pOGP9IKv+ANUA8JtQYgnumLujTK/VJ0XktbEnv6Wt
-	 Hky6rz/FLFy4XUaJ7Jkk6/3o4MgPlr7XXuQtPFgI=
+	b=HMX8nQYFiFmzNvtgDEwi/8sbWT4XmWWY+l4Au47Ek5i93+pzUnjQcK30jj8FmB7mx
+	 y4AnM2ewWk2bvT1Dj09N0EySKswByCcO1+aGIw6WB4c/f0AtR/FyQGsmyD7ZZ1ph0b
+	 +r+DSBHpVrOkkDWjTaBcff2fToS5MkuD4RJg5quc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taeyang Lee <0wn@theori.io>,
-	Feng Ning <feng@innora.ai>,
-	Demi Marie Obenour <demiobenour@gmail.com>,
+	Tianchu Chen <flynnnchen@tencent.com>,
+	Corentin LABBE <clabbe.montjoie@gmail.com>,
 	Eric Biggers <ebiggers@kernel.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 203/843] crypto: af_alg - Remove zero-copy support from skcipher and aead
-Date: Tue, 21 Jul 2026 17:17:18 +0200
-Message-ID: <20260721152410.583150116@linuxfoundation.org>
+Subject: [PATCH 5.15 204/843] crypto: sun4i-ss - Remove insecure and unused rng_alg
+Date: Tue, 21 Jul 2026 17:17:19 +0200
+Message-ID: <20260721152410.605872759@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -56,167 +55,310 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@kernel.org>
 
-commit ffdd2bc378953b525aca61902534e753f1f8e734 upstream.
+commit b2c41fa9dd8fc740c489e060b199165771f268d1 upstream.
 
-The zero-copy support is one of the riskiest aspects of AF_ALG.  It
-allows userspace to request cryptographic operations directly on
-pagecache pages of files like the 'su' binary.  It also allows userspace
-to concurrently modify the memory which is being operated on, a recipe
-for TOCTOU vulnerabilities.
+Remove sun4i_ss_rng, as it is insecure and unused:
 
-While zero-copy support is more valuable in other areas of the kernel
-like the frequently used networking and file I/O code, it has far less
-value in AF_ALG, which is a niche UAPI.  AF_ALG primarily just exists
-for backwards compatibility with a small set of userspace programs such
-as 'iwd' that haven't yet been fixed to use userspace crypto code.
+- It has multiple vulnerabilities.  sun4i_ss_prng_seed() is missing
+  locking and has a buffer overflow.  sun4i_ss_prng_generate() fails to
+  fill the entire buffer with cryptographic random bytes, because it
+  rounds the destination length down and also doesn't actually wait for
+  the hardware to be ready before pulling bytes from it.
 
-Originally AF_ALG was intended to be used to access hardware crypto
-accelerators.  However, it isn't an efficient interface for that anyway,
-and it turned out to be rarely used in this way in practice.
+- No user of this code is known.  It's usable only theoretically via the
+  "rng" algorithm type of AF_ALG.  But userspace actually just uses the
+  actual Linux RNG (/dev/random etc) instead.  And rng_algs don't
+  contribute entropy to the actual Linux RNG either.  (This may have
+  been confused with hwrng, which does contribute entropy.)
 
-Thus, the risks of the zero-copy support in AF_ALG vastly outweigh its
-benefits.  Let's just remove it.
+The sun4i_ss_prng_seed() buffer overflow was reported by Tianchu Chen
+and discovered by Atuin - Automated Vulnerability Discovery Engine
 
-This commit removes it from the "skcipher" and "aead" algorithm types.
-"hash" will be handled separately.
+There's no point in fixing all these vulnerabilities individually when
+this is unused code, so let's just remove it.
 
-This is a soft break, not a hard break.  Even after this commit, it
-still works to use splice() or sendfile() to transfer data to an AF_ALG
-request socket from a pipe or any file, respectively.  What changes is
-just that the kernel now makes an internal, stable copy of the data
-before doing the crypto operation.  So performance is slightly reduced,
-but the UAPI isn't broken.  And, very importantly, it's much safer.
-
-Tested with libkcapi/test.sh.  All its test cases still pass.  I also
-verified that this would have prevented the copy.fail exploit as well.
-I also used a custom test program to verify that sendfile() still works.
-
-Fixes: 8ff590903d5f ("crypto: algif_skcipher - User-space interface for skcipher operations")
-Fixes: 400c40cf78da ("crypto: algif - add AEAD support")
-Reported-by: Taeyang Lee <0wn@theori.io>
-Link: https://copy.fail/
-Reported-by: Feng Ning <feng@innora.ai>
-Closes: https://lore.kernel.org/r/afYcc-tZFwvZZo76@ans-MacBook-Pro.local
-Reviewed-by: Demi Marie Obenour <demiobenour@gmail.com>
+Fixes: b8ae5c7387ad ("crypto: sun4i-ss - support the Security System PRNG")
 Cc: stable@vger.kernel.org
+Reported-by: Tianchu Chen <flynnnchen@tencent.com>
+Closes: https://lore.kernel.org/r/af749a8447bd7f0e9dd26ca6c87e9c6afecb09d9@linux.dev/
+Acked-by: Corentin LABBE <clabbe.montjoie@gmail.com>
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/crypto/userspace-if.rst | 31 ++-------------
- crypto/af_alg.c                       | 54 +++++----------------------
- 2 files changed, 14 insertions(+), 71 deletions(-)
+ arch/arm/configs/sunxi_defconfig              |  1 -
+ drivers/crypto/allwinner/Kconfig              |  8 ---
+ drivers/crypto/allwinner/sun4i-ss/Makefile    |  1 -
+ .../crypto/allwinner/sun4i-ss/sun4i-ss-core.c | 36 ----------
+ .../crypto/allwinner/sun4i-ss/sun4i-ss-prng.c | 69 -------------------
+ drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h  | 20 ------
+ 6 files changed, 135 deletions(-)
+ delete mode 100644 drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
 
-diff --git a/Documentation/crypto/userspace-if.rst b/Documentation/crypto/userspace-if.rst
-index b45dabbf69d685..90dbbd56c4e355 100644
---- a/Documentation/crypto/userspace-if.rst
-+++ b/Documentation/crypto/userspace-if.rst
-@@ -328,33 +328,10 @@ CRYPTO_USER_API_RNG_CAVP option:
- Zero-Copy Interface
- -------------------
+diff --git a/arch/arm/configs/sunxi_defconfig b/arch/arm/configs/sunxi_defconfig
+index a60c134c5e0466..5127c937b48531 100644
+--- a/arch/arm/configs/sunxi_defconfig
++++ b/arch/arm/configs/sunxi_defconfig
+@@ -168,7 +168,6 @@ CONFIG_ROOT_NFS=y
+ CONFIG_NLS_CODEPAGE_437=y
+ CONFIG_NLS_ISO8859_1=y
+ CONFIG_CRYPTO_DEV_SUN4I_SS=y
+-CONFIG_CRYPTO_DEV_SUN4I_SS_PRNG=y
+ CONFIG_CRYPTO_DEV_SUN8I_CE=y
+ CONFIG_CRYPTO_DEV_SUN8I_SS=y
+ CONFIG_DMA_CMA=y
+diff --git a/drivers/crypto/allwinner/Kconfig b/drivers/crypto/allwinner/Kconfig
+index b8e75210a0e315..06ea0e9fe6f22f 100644
+--- a/drivers/crypto/allwinner/Kconfig
++++ b/drivers/crypto/allwinner/Kconfig
+@@ -24,14 +24,6 @@ config CRYPTO_DEV_SUN4I_SS
+ 	  To compile this driver as a module, choose M here: the module
+ 	  will be called sun4i-ss.
  
--In addition to the send/write/read/recv system call family, the AF_ALG
--interface can be accessed with the zero-copy interface of
--splice/vmsplice. As the name indicates, the kernel tries to avoid a copy
--operation into kernel space.
+-config CRYPTO_DEV_SUN4I_SS_PRNG
+-	bool "Support for Allwinner Security System PRNG"
+-	depends on CRYPTO_DEV_SUN4I_SS
+-	select CRYPTO_RNG
+-	help
+-	  Select this option if you want to provide kernel-side support for
+-	  the Pseudo-Random Number Generator found in the Security System.
 -
--The zero-copy operation requires data to be aligned at the page
--boundary. Non-aligned data can be used as well, but may require more
--operations of the kernel which would defeat the speed gains obtained
--from the zero-copy interface.
--
--The system-inherent limit for the size of one zero-copy operation is 16
--pages. If more data is to be sent to AF_ALG, user space must slice the
--input into segments with a maximum size of 16 pages.
--
--Zero-copy can be used with the following code example (a complete
--working example is provided with libkcapi):
--
--::
--
--    int pipes[2];
--
--    pipe(pipes);
--    /* input data in iov */
--    vmsplice(pipes[1], iov, iovlen, SPLICE_F_GIFT);
--    /* opfd is the file descriptor returned from accept() system call */
--    splice(pipes[0], NULL, opfd, NULL, ret, 0);
--    read(opfd, out, outlen);
-+AF_ALG used to have zero-copy support, but it was removed due to it being a
-+frequent source of vulnerabilities.  For backwards compatibility the splice()
-+and sendfile() system calls are still supported, but the kernel will make an
-+internal copy of the data before passing it to the crypto code.
+ config CRYPTO_DEV_SUN4I_SS_DEBUG
+ 	bool "Enable sun4i-ss stats"
+ 	depends on CRYPTO_DEV_SUN4I_SS
+diff --git a/drivers/crypto/allwinner/sun4i-ss/Makefile b/drivers/crypto/allwinner/sun4i-ss/Makefile
+index c0a2797d316827..06a9ae81f9f808 100644
+--- a/drivers/crypto/allwinner/sun4i-ss/Makefile
++++ b/drivers/crypto/allwinner/sun4i-ss/Makefile
+@@ -1,4 +1,3 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ obj-$(CONFIG_CRYPTO_DEV_SUN4I_SS) += sun4i-ss.o
+ sun4i-ss-y += sun4i-ss-core.o sun4i-ss-hash.o sun4i-ss-cipher.o
+-sun4i-ss-$(CONFIG_CRYPTO_DEV_SUN4I_SS_PRNG) += sun4i-ss-prng.o
+diff --git a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-core.c b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-core.c
+index 44b8fc4b786dc8..0520cc6447e2db 100644
+--- a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-core.c
++++ b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-core.c
+@@ -216,23 +216,6 @@ static struct sun4i_ss_alg_template ss_algs[] = {
+ 		}
+ 	}
+ },
+-#ifdef CONFIG_CRYPTO_DEV_SUN4I_SS_PRNG
+-{
+-	.type = CRYPTO_ALG_TYPE_RNG,
+-	.alg.rng = {
+-		.base = {
+-			.cra_name		= "stdrng",
+-			.cra_driver_name	= "sun4i_ss_rng",
+-			.cra_priority		= 300,
+-			.cra_ctxsize		= 0,
+-			.cra_module		= THIS_MODULE,
+-		},
+-		.generate               = sun4i_ss_prng_generate,
+-		.seed                   = sun4i_ss_prng_seed,
+-		.seedsize               = SS_SEED_LEN / BITS_PER_BYTE,
+-	}
+-},
+-#endif
+ };
  
+ static int sun4i_ss_dbgfs_read(struct seq_file *seq, void *v)
+@@ -250,12 +233,6 @@ static int sun4i_ss_dbgfs_read(struct seq_file *seq, void *v)
+ 				   ss_algs[i].stat_req, ss_algs[i].stat_opti, ss_algs[i].stat_fb,
+ 				   ss_algs[i].stat_bytes);
+ 			break;
+-		case CRYPTO_ALG_TYPE_RNG:
+-			seq_printf(seq, "%s %s reqs=%lu tsize=%lu\n",
+-				   ss_algs[i].alg.rng.base.cra_driver_name,
+-				   ss_algs[i].alg.rng.base.cra_name,
+-				   ss_algs[i].stat_req, ss_algs[i].stat_bytes);
+-			break;
+ 		case CRYPTO_ALG_TYPE_AHASH:
+ 			seq_printf(seq, "%s %s reqs=%lu\n",
+ 				   ss_algs[i].alg.hash.halg.base.cra_driver_name,
+@@ -486,13 +463,6 @@ static int sun4i_ss_probe(struct platform_device *pdev)
+ 				goto error_alg;
+ 			}
+ 			break;
+-		case CRYPTO_ALG_TYPE_RNG:
+-			err = crypto_register_rng(&ss_algs[i].alg.rng);
+-			if (err) {
+-				dev_err(ss->dev, "Fail to register %s\n",
+-					ss_algs[i].alg.rng.base.cra_name);
+-			}
+-			break;
+ 		}
+ 	}
  
- Setsockopt Interface
-diff --git a/crypto/af_alg.c b/crypto/af_alg.c
-index bbd47d04f89dc2..8dfb94aa99285b 100644
---- a/crypto/af_alg.c
-+++ b/crypto/af_alg.c
-@@ -972,53 +972,19 @@ EXPORT_SYMBOL_GPL(af_alg_sendmsg);
- ssize_t af_alg_sendpage(struct socket *sock, struct page *page,
- 			int offset, size_t size, int flags)
- {
--	struct sock *sk = sock->sk;
--	struct alg_sock *ask = alg_sk(sk);
--	struct af_alg_ctx *ctx = ask->private;
--	struct af_alg_tsgl *sgl;
--	int err = -EINVAL;
-+	struct bio_vec bvec;
-+	struct msghdr msg = {
-+		.msg_flags = flags,
-+	};
+@@ -512,9 +482,6 @@ static int sun4i_ss_probe(struct platform_device *pdev)
+ 		case CRYPTO_ALG_TYPE_AHASH:
+ 			crypto_unregister_ahash(&ss_algs[i].alg.hash);
+ 			break;
+-		case CRYPTO_ALG_TYPE_RNG:
+-			crypto_unregister_rng(&ss_algs[i].alg.rng);
+-			break;
+ 		}
+ 	}
+ error_pm:
+@@ -535,9 +502,6 @@ static int sun4i_ss_remove(struct platform_device *pdev)
+ 		case CRYPTO_ALG_TYPE_AHASH:
+ 			crypto_unregister_ahash(&ss_algs[i].alg.hash);
+ 			break;
+-		case CRYPTO_ALG_TYPE_RNG:
+-			crypto_unregister_rng(&ss_algs[i].alg.rng);
+-			break;
+ 		}
+ 	}
  
- 	if (flags & MSG_SENDPAGE_NOTLAST)
--		flags |= MSG_MORE;
+diff --git a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
+deleted file mode 100644
+index 491fcb7b81b40b..00000000000000
+--- a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
++++ /dev/null
+@@ -1,69 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-or-later
+-#include "sun4i-ss.h"
 -
--	lock_sock(sk);
--	if (!ctx->more && ctx->used)
--		goto unlock;
+-int sun4i_ss_prng_seed(struct crypto_rng *tfm, const u8 *seed,
+-		       unsigned int slen)
+-{
+-	struct sun4i_ss_alg_template *algt;
+-	struct rng_alg *alg = crypto_rng_alg(tfm);
 -
--	if (!size)
--		goto done;
+-	algt = container_of(alg, struct sun4i_ss_alg_template, alg.rng);
+-	memcpy(algt->ss->seed, seed, slen);
 -
--	if (!af_alg_writable(sk)) {
--		err = af_alg_wait_for_wmem(sk, flags);
--		if (err)
--			goto unlock;
+-	return 0;
+-}
+-
+-int sun4i_ss_prng_generate(struct crypto_rng *tfm, const u8 *src,
+-			   unsigned int slen, u8 *dst, unsigned int dlen)
+-{
+-	struct sun4i_ss_alg_template *algt;
+-	struct rng_alg *alg = crypto_rng_alg(tfm);
+-	int i, err;
+-	u32 v;
+-	u32 *data = (u32 *)dst;
+-	const u32 mode = SS_OP_PRNG | SS_PRNG_CONTINUE | SS_ENABLED;
+-	size_t len;
+-	struct sun4i_ss_ctx *ss;
+-	unsigned int todo = (dlen / 4) * 4;
+-
+-	algt = container_of(alg, struct sun4i_ss_alg_template, alg.rng);
+-	ss = algt->ss;
+-
+-	err = pm_runtime_resume_and_get(ss->dev);
+-	if (err < 0)
+-		return err;
+-
+-	if (IS_ENABLED(CONFIG_CRYPTO_DEV_SUN4I_SS_DEBUG)) {
+-		algt->stat_req++;
+-		algt->stat_bytes += todo;
 -	}
 -
--	err = af_alg_alloc_tsgl(sk);
--	if (err)
--		goto unlock;
+-	spin_lock_bh(&ss->slock);
 -
--	ctx->merge = 0;
--	sgl = list_entry(ctx->tsgl_list.prev, struct af_alg_tsgl, list);
+-	writel(mode, ss->base + SS_CTL);
 -
--	if (sgl->cur)
--		sg_unmark_end(sgl->sg + sgl->cur - 1);
+-	while (todo > 0) {
+-		/* write the seed */
+-		for (i = 0; i < SS_SEED_LEN / BITS_PER_LONG; i++)
+-			writel(ss->seed[i], ss->base + SS_KEY0 + i * 4);
 -
--	sg_mark_end(sgl->sg + sgl->cur);
+-		/* Read the random data */
+-		len = min_t(size_t, SS_DATA_LEN / BITS_PER_BYTE, todo);
+-		readsl(ss->base + SS_TXFIFO, data, len / 4);
+-		data += len / 4;
+-		todo -= len;
 -
--	get_page(page);
--	sg_set_page(sgl->sg + sgl->cur, page, size, offset);
--	sgl->cur++;
--	ctx->used += size;
+-		/* Update the seed */
+-		for (i = 0; i < SS_SEED_LEN / BITS_PER_LONG; i++) {
+-			v = readl(ss->base + SS_KEY0 + i * 4);
+-			ss->seed[i] = v;
+-		}
+-	}
 -
--done:
--	ctx->more = flags & MSG_MORE;
+-	writel(0, ss->base + SS_CTL);
+-	spin_unlock_bh(&ss->slock);
 -
--unlock:
--	af_alg_data_wakeup(sk);
--	release_sock(sk);
-+		msg.msg_flags |= MSG_MORE;
+-	pm_runtime_put(ss->dev);
+-
+-	return 0;
+-}
+diff --git a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h
+index 0fee6f4e2d90dc..e1a849ce11b1cc 100644
+--- a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h
++++ b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h
+@@ -31,8 +31,6 @@
+ #include <crypto/internal/skcipher.h>
+ #include <crypto/aes.h>
+ #include <crypto/internal/des.h>
+-#include <crypto/internal/rng.h>
+-#include <crypto/rng.h>
  
--	return err ?: size;
-+	bvec.bv_page = page;
-+	bvec.bv_len = size;
-+	bvec.bv_offset = offset;
-+	iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, &bvec, 1, size);
-+	return sock_sendmsg(sock, &msg);
- }
- EXPORT_SYMBOL_GPL(af_alg_sendpage);
+ #define SS_CTL            0x00
+ #define SS_KEY0           0x04
+@@ -62,10 +60,6 @@
  
+ /* SS_CTL configuration values */
+ 
+-/* PRNG generator mode - bit 15 */
+-#define SS_PRNG_ONESHOT		(0 << 15)
+-#define SS_PRNG_CONTINUE	(1 << 15)
+-
+ /* IV mode for hash */
+ #define SS_IV_ARBITRARY		(1 << 14)
+ 
+@@ -94,14 +88,10 @@
+ #define SS_OP_3DES		(2 << 4)
+ #define SS_OP_SHA1		(3 << 4)
+ #define SS_OP_MD5		(4 << 4)
+-#define SS_OP_PRNG		(5 << 4)
+ 
+ /* Data end bit - bit 2 */
+ #define SS_DATA_END		(1 << 2)
+ 
+-/* PRNG start bit - bit 1 */
+-#define SS_PRNG_START		(1 << 1)
+-
+ /* SS Enable bit - bit 0 */
+ #define SS_DISABLED		(0 << 0)
+ #define SS_ENABLED		(1 << 0)
+@@ -128,9 +118,6 @@
+ #define SS_RXFIFO_EMP_INT_ENABLE	(1 << 2)
+ #define SS_TXFIFO_AVA_INT_ENABLE	(1 << 0)
+ 
+-#define SS_SEED_LEN 192
+-#define SS_DATA_LEN 160
+-
+ /*
+  * struct ss_variant - Describe SS hardware variant
+  * @sha1_in_be:		The SHA1 digest is given by SS in BE, and so need to be inverted.
+@@ -151,9 +138,6 @@ struct sun4i_ss_ctx {
+ 	char buf[4 * SS_RX_MAX];/* buffer for linearize SG src */
+ 	char bufo[4 * SS_TX_MAX]; /* buffer for linearize SG dst */
+ 	spinlock_t slock; /* control the use of the device */
+-#ifdef CONFIG_CRYPTO_DEV_SUN4I_SS_PRNG
+-	u32 seed[SS_SEED_LEN / BITS_PER_LONG];
+-#endif
+ 	struct dentry *dbgfs_dir;
+ 	struct dentry *dbgfs_stats;
+ };
+@@ -164,7 +148,6 @@ struct sun4i_ss_alg_template {
+ 	union {
+ 		struct skcipher_alg crypto;
+ 		struct ahash_alg hash;
+-		struct rng_alg rng;
+ 	} alg;
+ 	struct sun4i_ss_ctx *ss;
+ 	unsigned long stat_req;
+@@ -230,6 +213,3 @@ int sun4i_ss_des_setkey(struct crypto_skcipher *tfm, const u8 *key,
+ 			unsigned int keylen);
+ int sun4i_ss_des3_setkey(struct crypto_skcipher *tfm, const u8 *key,
+ 			 unsigned int keylen);
+-int sun4i_ss_prng_generate(struct crypto_rng *tfm, const u8 *src,
+-			   unsigned int slen, u8 *dst, unsigned int dlen);
+-int sun4i_ss_prng_seed(struct crypto_rng *tfm, const u8 *seed, unsigned int slen);
 -- 
 2.53.0
 
