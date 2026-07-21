@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF7240315F;
-	Tue, 21 Jul 2026 17:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061114028F7;
+	Tue, 21 Jul 2026 17:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654508; cv=none; b=Q4++TNQnA0to1r/aFC/eK9JR80YidXzbsgV7NugPChXDlAO/DvaBrrxC9KGG3rdG+TIBQNV9BAJuwjU6sbbmGQqdtQF02vrugMYFFTEqVJyyp8hk23dEjjrFznP0pxhrJvMXeji24rp+mP+5aiMGBSsOpQRMnS9jFj4ay1Xjh7o=
+	t=1784654511; cv=none; b=VSQXgcjx6BxSHA/lWdwnV5zXy7z4GgraLUSvYf4eN5CBlrG4g/T+96Gv7OT6WBmTa397KcO5INKOUNuIMwQKqSd+bLupU8Ut0epJiE8V+8zRLX+TtG8omhxO9wSwUhSxnDzp1jHniUeu2AgHBUlg4IFdcYymJS8nkhLrZpg7/Jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654508; c=relaxed/simple;
-	bh=boaxoTwnDMImp0wOicHV+BmderuTmcp/gh6Tn1imXPU=;
+	s=arc-20240116; t=1784654511; c=relaxed/simple;
+	bh=hnulnbRxM1kE8lTkfRRaTtQwGW3ZpY0eEEfw5oZMzDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W50vjU4wVNB52iRGZ2FBr7s2YCoLqr+K8fG7sfiBJfSlDZM/NL+8oBmJO7DuiwSR7EhMiSGJj81uqtE3Q5O+dfXlKZk9+jNPI6+i9XzktVV8TLiT4FGZ50oXHfL5mdu8y8GPMKDivD9zSpm+LHO+tP59CL2/AIPS0Abke68MXBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOBzRxlW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Rc51YpPVf0G15/PILfeBI9iJFzZfjqNKgfZOgS+SI9XvTc743NELelq2I+/9Ai3pdMJ/VoikVaj8mcNBeanQLmQeO9IlaXCg69nYQVCggH6WCWEmaIYzCnyo5xm3i7mi9yGSL5sN/kEgYy5JYf+CTfIHA+Xb4w+qoQYIdN9o98g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGbEaQjX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOBzRxlW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7271F000E9;
-	Tue, 21 Jul 2026 17:21:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGbEaQjX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F3441F000E9;
+	Tue, 21 Jul 2026 17:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654507;
-	bh=KwZe6WsSmXw82dfulnThlcjUAf/QS+bCCaZ4bZ5F5F4=;
+	s=korg; t=1784654509;
+	bh=zm6k8aaCPUSa5kuVcTMIOrYL8JFEUBzM4kGgSBd/f1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MOBzRxlWFZPnlKsTVMxM2kbSdnLRK9CcVQvUWnFEKhPA/n6yvYkA6chB0fyoF9E7N
-	 jFialaxgxHO8n+hsUsa0I8fvyZidCS+NGX9FOQVzPyvZbKs+GLNDw7mnpF0g4Abziw
-	 71I5tKP23z5V0HA1ltqYe21bzJRW4jvAfhqMT+Ek=
+	b=cGbEaQjXYYjFU5d/6zEES+bCvWdYq8V4DqlpR3XsWA92mOFZwYik3bwnC1TwoQ/v+
+	 d6DoovvBSR9m6OOX/IxngNO6L/1Mff4pOKNQ8PLpbH2UnCezgdBsDB53AfrTqzFqt4
+	 mqf6c2vF/R2RYmnvQmb1okfo9ksn3EOdOaWF6XQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dev Jain <dev.jain@arm.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Oscar Salvador (SUSE)" <osalvador@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 1731/2077] fs/proc/task_mmu: do not warn on seeing non-migration pmd entry
-Date: Tue, 21 Jul 2026 17:23:24 +0200
-Message-ID: <20260721152633.577358619@linuxfoundation.org>
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.1 1732/2077] proc: only bump parent nlink when registering directories
+Date: Tue, 21 Jul 2026 17:23:25 +0200
+Message-ID: <20260721152633.601081703@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -48,58 +44,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dev Jain <dev.jain@arm.com>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-commit cd1fc0e3c1f67c0c31dfc215e5d9b771133dedc0 upstream.
+commit 16b02eb4b9b272c221255c20d34ccd5db53a3ed3 upstream.
 
-Patch series "mm/hmm: A fix and a selftest", v3.
+proc_register() increments the parent directory's link count for every
+entry it registers, while remove_proc_entry() and remove_proc_subtree()
+decrement it only when the removed entry is a directory.  Regular files
+thus inflate the parent's count while they exist, and leak one link
+permanently on every create and remove cycle.
 
-Patch 1 fixes a stale warning present from the time when only migration
-softleaf entries were supported at the PMD level.
+For example, /proc/bus/pci/00 with twenty-two device files and no
+subdirectories reports nlink 24 instead of 2, and SR-IOV VF enable
+and disable cycles, each creating and removing the VF config space
+entries under /proc/bus/pci/<bus>, inflate the link count of that
+directory without bound.
 
-Patch 2 adds some code into hmm-tests.c which exercises the pagemap path
-for PMD device-private entries.
+Before commit e06689bf5701 ("proc: change ->nlink under
+proc_subdir_lock"), the increment lived in proc_mkdir_data() and
+proc_create_mount_point(), and was therefore applied only to
+directories.  Moving it into proc_register() to bring it under
+proc_subdir_lock dropped the S_ISDIR check.
 
+Thus, move the nlink accounting into pde_subdir_insert() and
+pde_erase(), only updating it for directories in both, so the link
+count is always changed together with the directory entry itself.
 
-This patch (of 2):
-
-pagemap_pmd_range_thp() warns if a non-present PMD is not a migration
-entry.  This became false once device-private entries at the PMD level
-were added.
-
-Therefore, remove the stale migration-only assertion.
-
-Link: https://lore.kernel.org/20260604055308.1947679-1-dev.jain@arm.com
-Link: https://lore.kernel.org/20260604055308.1947679-2-dev.jain@arm.com
-Fixes: a30b48bf1b24 ("mm/migrate_device: implement THP migration of zone device pages")
-Signed-off-by: Dev Jain <dev.jain@arm.com>
-Reviewed-by: Balbir Singh <balbirs@nvidia.com>
-Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
-Tested-by: Lorenzo Stoakes <ljs@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Oscar Salvador (SUSE) <osalvador@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: e06689bf5701 ("proc: change ->nlink under proc_subdir_lock")
+Cc: stable@vger.kernel.org # v5.5+
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Link: https://patch.msgid.link/20260613211005.921692-1-kwilczynski@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/task_mmu.c |    1 -
- 1 file changed, 1 deletion(-)
+ fs/proc/generic.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/fs/proc/task_mmu.c
-+++ b/fs/proc/task_mmu.c
-@@ -2042,7 +2042,6 @@ static int pagemap_pmd_range_thp(pmd_t *
- 			flags |= PM_SOFT_DIRTY;
- 		if (pmd_swp_uffd_wp(pmd))
- 			flags |= PM_UFFD_WP;
--		VM_WARN_ON_ONCE(!pmd_is_migration_entry(pmd));
- 		page = softleaf_to_page(entry);
- 	}
+--- a/fs/proc/generic.c
++++ b/fs/proc/generic.c
+@@ -112,6 +112,8 @@ static bool pde_subdir_insert(struct pro
+ 	/* Add new node and rebalance tree. */
+ 	rb_link_node(&de->subdir_node, parent, new);
+ 	rb_insert_color(&de->subdir_node, root);
++	if (S_ISDIR(de->mode))
++		dir->nlink++;
+ 	return true;
+ }
  
+@@ -404,7 +406,6 @@ struct proc_dir_entry *proc_register(str
+ 		write_unlock(&proc_subdir_lock);
+ 		goto out_free_inum;
+ 	}
+-	dir->nlink++;
+ 	write_unlock(&proc_subdir_lock);
+ 
+ 	return dp;
+@@ -702,6 +703,8 @@ static void pde_erase(struct proc_dir_en
+ {
+ 	rb_erase(&pde->subdir_node, &parent->subdir);
+ 	RB_CLEAR_NODE(&pde->subdir_node);
++	if (S_ISDIR(pde->mode))
++		parent->nlink--;
+ }
+ 
+ /*
+@@ -727,8 +730,6 @@ void remove_proc_entry(const char *name,
+ 			de = NULL;
+ 		} else {
+ 			pde_erase(de, parent);
+-			if (S_ISDIR(de->mode))
+-				parent->nlink--;
+ 		}
+ 	}
+ 	write_unlock(&proc_subdir_lock);
+@@ -787,8 +788,6 @@ int remove_proc_subtree(const char *name
+ 			continue;
+ 		}
+ 		next = de->parent;
+-		if (S_ISDIR(de->mode))
+-			next->nlink--;
+ 		write_unlock(&proc_subdir_lock);
+ 
+ 		proc_entry_rundown(de);
 
 
