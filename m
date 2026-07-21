@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5BA44AB62;
-	Tue, 21 Jul 2026 22:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C3C3B9D9D;
+	Tue, 21 Jul 2026 22:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671383; cv=none; b=qT5jHTpWuNmOLc44jqjQlxeLFUNMtQSizw5nrHtqVpZnVXjWPZCxZrfzsKEVgF7Ka8z8gdMhTMNgRgAdZt1Rix/FRN9yMdJk7UZqy1tgL0y8ddYI806fwHhLCCdpxahhT+jpnA97QxAxjvtwNuGoa0EQNQx6Sjp1XEdy+ic2Yrc=
+	t=1784671386; cv=none; b=eyiGAcWVQtjdzKsbrYF8U6q6RT3Mpv0QEU5zD9woYv+XNYH6gXVTQhfZ7MwJWCg0SRENWF5S0pV5/elLToPV7tXYo7nNcDxiWPZO/yRrG9nyIa7UYMfP5J/A+37+oeG/+0FV/5FCmtDp6baGtEIzI9qF1ZV/y7DPCaTc8tkMR9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671383; c=relaxed/simple;
-	bh=WLuey3zJaR+89e74RbDB7q6pSURjcV5xDj7X5qY16tw=;
+	s=arc-20240116; t=1784671386; c=relaxed/simple;
+	bh=5P3tyrvEo/wlj2bPPWZYOx0U1x0qpNLSFYCHbF9Z18o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b9VcMyf+3bKbDDjQJ1afhFQuOy5uAIL0/zk97Nb2SX6b+XSMjI0gaCuKdfAs68enlMLlx74iS45nnrbn6BBMqaubMpQ+Yr2GmYMcYwL5bvPWrNDYvve8NHGp9rN4RhRRH1+XNG/5asr8OI8Mte276TMcm4rE+EvjZhCeae1hW5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqv3qxcF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E9ha4p8Yy2OKeUUoigBmj1dgBNVLS5yTRwxptklbcRZvnKvM2uiSJPzBGxXBr9vQtpJgUbeW69OVbQcLvcel5VAUtBa6rmBg2pv5AILI/RKorQCQpWFMRfx80R2M1pagHBlRc1wsC7As0st4CJxe01u07gmJlI+Eh3xp+DwDhVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uf9a8Rae; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqv3qxcF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31371F000E9;
-	Tue, 21 Jul 2026 22:03:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uf9a8Rae"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DA51F000E9;
+	Tue, 21 Jul 2026 22:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671382;
-	bh=YFM+NGpQMezgCjmUFyy+NaLfirtJSO4uwUt30BmcuWg=;
+	s=korg; t=1784671384;
+	bh=P17tgbWZ53jGw4Ts49npAYJ6DlBRtvgh6XiOxUklgOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nqv3qxcFW5wJlmurtiz/t4Wx8V4r8zuq7L1V85ibHT7DUeaPmclxOzdqKLTDbjbVP
-	 g2MB2dHFh7txwcgVR9XnvldmvHFBRmbQrzypFJxiG5mls8to8+7SCz14hhLOhbD/UD
-	 YWQicwKvtdlOu7x2H46LgQIshCU/ZZj82nj/IQ8I=
+	b=uf9a8RaeQJpig+iJ8X8/IRNzUOEu/IUMEjVFXeF/mF0sr6HCzywP/ZE5PxHDbmQQ2
+	 heO2yssu00Yat4eN+AkW8RMMWUo2JvhwtFi/jJ7ktn34NVDi5/Mc1SPsw6YYH+C5Gy
+	 7X7vy9O02siiQcAZHtVz28cbfysXrA7RI5JViqe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 218/843] drm/radeon: fix memory leak in radeon_ring_restore() on lock failure
-Date: Tue, 21 Jul 2026 17:17:33 +0200
-Message-ID: <20260721152410.922486702@linuxfoundation.org>
+Subject: [PATCH 5.15 227/843] pinctrl: sunxi: fix regulator leak in sunxi_pmx_request() error path
+Date: Tue, 21 Jul 2026 17:17:42 +0200
+Message-ID: <20260721152411.121560377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,46 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 82f1d6042611d45b8b9de423bbcb4e0ced9ec62b ]
+[ Upstream commit 334f7bcbdc79dc8e5b938ac3372453a5368221cf ]
 
-radeon_ring_restore() takes ownership of the data buffer allocated by
-radeon_ring_backup(). The caller (radeon_gpu_reset()) only frees it in
-the non-restore branch; in the restore branch it relies on
-radeon_ring_restore() to free it.
+In the error path of sunxi_pmx_request(), the code calls
+regulator_put(s_reg->regulator) to release the regulator. However,
+s_reg->regulator is only assigned after a successful regulator_enable().
+This causes a memory leak: the regulator obtained via regulator_get()
+is never properly released when regulator_enable() fails.
 
-If radeon_ring_lock() fails, the function returned early without calling
-kvfree(data), leaking the ring backup buffer on every GPU reset that
-fails at the lock stage. During repeated GPU resets this causes
-cumulative kernel memory exhaustion.
-
-Free data before returning the error.
-
-Fixes: 55d7c22192be ("drm/radeon: implement ring saving on reset v4")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: dc1445584177 ("pinctrl: sunxi: Fix and simplify pin bank regulator handling")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/radeon_ring.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/pinctrl/sunxi/pinctrl-sunxi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/radeon/radeon_ring.c b/drivers/gpu/drm/radeon/radeon_ring.c
-index 7e207276df374f..e009ee1559c8ed 100644
---- a/drivers/gpu/drm/radeon/radeon_ring.c
-+++ b/drivers/gpu/drm/radeon/radeon_ring.c
-@@ -354,8 +354,10 @@ int radeon_ring_restore(struct radeon_device *rdev, struct radeon_ring *ring,
+diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi.c b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
+index afe41ea0ff1e28..8d670af25b0335 100644
+--- a/drivers/pinctrl/sunxi/pinctrl-sunxi.c
++++ b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
+@@ -813,7 +813,7 @@ static int sunxi_pmx_request(struct pinctrl_dev *pctldev, unsigned offset)
+ 	return 0;
  
- 	/* restore the saved ring content */
- 	r = radeon_ring_lock(rdev, ring, size);
--	if (r)
-+	if (r) {
-+		kvfree(data);
- 		return r;
-+	}
+ out:
+-	regulator_put(s_reg->regulator);
++	regulator_put(reg);
  
- 	for (i = 0; i < size; ++i) {
- 		radeon_ring_write(ring, data[i]);
+ 	return ret;
+ }
 -- 
 2.53.0
 
