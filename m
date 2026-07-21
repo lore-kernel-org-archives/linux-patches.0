@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F391E46D088;
-	Tue, 21 Jul 2026 17:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DF946AA6F;
+	Tue, 21 Jul 2026 17:32:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655173; cv=none; b=ogyyNt+IeA7nXB1Zge6Jy/Pcfjn0ncknFsq9ZpgtMr2ZY6FtuxVn4cKr0ktWUSqgQ1tWJFQiL8JxA27o4ZeOE/VPdlLgsdhDpYfU5flJFW6NPmXRu5QYSQTUEosvmKKA+j9Qu5sby3iZJmdhlsPozRXlZ5ZbNRARh6nMRffYnow=
+	t=1784655176; cv=none; b=WIyYYQrBnl68z9xRsPxFLWYW/S5FaNCUpQt/fRRPiwdcDmXkpiDJJOSkOxcMGR24Fgzi/czynTp4gfp0GZ2LzgZAiLJNXoD34g7TWWiFmYtjQcZ1VA1LjzXueQpAsA2H8SA70OyVmwgqm9mRioS7KGsb9yMInX9BazAe6Tam0GA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655173; c=relaxed/simple;
-	bh=DEQhejK2Xa9VJT6yShzNls6FO2i2T7KuY8ZGdf4MMXY=;
+	s=arc-20240116; t=1784655176; c=relaxed/simple;
+	bh=CmDrMatGLXEkwAyAgL8Gs8SUQRYawaT26wXQUxsNopE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S2KvWlmTwT7rHyaIBDkpWlSeiqMvM78wVuRxpCvJbg1rGbYMDLNcNpjh1CrH72ZIrl5ep+aPT0mr5yujcUGlHXlbm78yq0u8W5d0ZCkcttZg4OOWqnCVM25k5F8t5ok90P4l8bBt8zF43I1K9ObWFwbyGbwCrI2EgtEYW9AxgPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UcnMZ+En; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KX6De/6Fj13xlo1QgWKxyRAPnMLD9HzJeUH3UsxwW747tCQWXEzacAcW3vmBcggo77KS9g3nl1g81gHia0iidfMfOpYdjfqWa44BlNS7DOTEie2y8Duqb7DdaHnzKWpVyTlzkldbNVF/FRB1tHRwhDcIWQG6VkzCuvcsnhWqN/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0PaipC4a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UcnMZ+En"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652B21F000E9;
-	Tue, 21 Jul 2026 17:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0PaipC4a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09EBF1F000E9;
+	Tue, 21 Jul 2026 17:32:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655171;
-	bh=Gjy2QzZkeS5TRwFZkfa2yUz4Uuly2JMkBo5WqSBmCuw=;
+	s=korg; t=1784655174;
+	bh=l9whtrMnnnJ9zqiWAzjlF+BFI0DUseIt7lpFby1W7VM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UcnMZ+En/bYkTlD2gz70RBcxJ33KN1+GvOzanQDVVWZciK/de8HOc3MxrnTAvUQkw
-	 0DAn/r7Leb4Vp4uyIv5SitNDBKxCK2sPlY1QWhBT47Z0qK5rk738E8IPCVCVvbsXre
-	 nvfmdTsYSUrjd/4zDhPtGHwVOfAlLWHNsustJHQM=
+	b=0PaipC4aRvs8pGrYAR5kcNUxmCCrqKN3Gl9cSMAaBVQq/gruTCJmS7zj/461gJqlM
+	 ng4NR/HKjC+S8ooo1xwA22fol+hMs+RdFUpWm6DccMrJS/qy3zJn/QDhEaOPNEipeI
+	 4vsLlompKM0v/WYf3NbgPxNmTS/rtSQfoDf/Nm28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,11 +30,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Jonathan Cameron <jic23@kernel.org>,
 	James Morse <james.morse@arm.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
 	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Will Deacon <will@kernel.org>
-Subject: [PATCH 7.1 1981/2077] arm64: smp: Fix hot-unplug tearing by forcing unregistration
-Date: Tue, 21 Jul 2026 17:27:34 +0200
-Message-ID: <20260721152639.435643707@linuxfoundation.org>
+Subject: [PATCH 7.1 1982/2077] cpu/hotplug: Fix NULL kobject warning in cpuhp_smt_enable()
+Date: Tue, 21 Jul 2026 17:27:35 +0200
+Message-ID: <20260721152639.458050497@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -55,73 +56,172 @@ Content-Transfer-Encoding: 8bit
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit 18a4e5cf633fad5c40ac9d936c51bf38db68796d upstream.
+commit f9a82544c7174851f5c7524622f5966dcafd3a47 upstream.
 
-Sashiko review pointed out the following issue[1].
+On arm64, when booting with `maxcpus` greater than the number of present
+CPUs (e.g., QEMU -smp cpus=4,maxcpus=8), some CPUs are marked as 'present'
+but have not yet been registered via register_cpu(). Consequently,
+the per-cpu device objects for these CPUs are not yet initialized.
 
-Commit eba4675008a6 ("arm64: arch_register_cpu() variant to check if
-an ACPI handle is now available.") introduced architectural safety
-blocks inside arch_unregister_cpu(). If a hot-unplug operation is
-determined to be a physical hardware removal (where _STA evaluates to
-!ACPI_STA_DEVICE_PRESENT), or if firmware evaluation fails, it aborts
-the unregistration transaction early to protect unreadied arm64
-infrastructure.
+In cpuhp_smt_enable(), the code iterates over all present CPUs. Calling
+_cpu_up() for these unregistered CPUs eventually leads to
+sysfs_create_group() being called with a NULL kobject (or a kobject
+without a directory), triggering the following warning in
+fs/sysfs/group.c:
 
-However, returning early from arch_unregister_cpu() causes a catastrophic
-state tearing because the generic ACPI layer (acpi_processor_post_eject())
-unconditionally continues its cleanup flow. This leaves the stale sysfs
-device leaked in the memory, deadlocking any subsequent hot-add attempts
-on the same CPU.
+  WARNING: fs/sysfs/group.c:137 at internal_create_group+0x41c/0x4bc, CPU#2: sh/181
+  [...]
+  Call trace:
+    internal_create_group+0x41c/0x4bc (P)
+    sysfs_create_group+0x18/0x24
+    topology_add_dev+0x1c/0x28
+    cpuhp_invoke_callback+0x104/0x20c
+    __cpuhp_invoke_callback_range+0x94/0x11c
+    _cpu_up+0x200/0x37c
 
-Fix it by simplifying arch_unregister_cpu() to always proceed with
-the unregistration, as a pr_err_once() warning is sufficient to make
-it more visible for currently not supported physical CPU removal.
-Also remove the redundant NULL check on acpi_handle as it cannot be
-NULL when calling arch_unregister_cpu().
+When booting with ACPI, arm64 smp_prepare_cpus() currently sets all
+enumerated CPUs as "present" regardless of their status in the MADT. This
+causes issues with SMT hotplug control. For instance, with QEMU's
+"-smp 4,maxcpus=8" configuration, the MADT GICC entries are populated as
+follows:
+
+1. The first four CPUs: `Enabled` set but `Online Capable` not set.
+
+2. The remaining four CPUs: `Online Capable` set but `Enabled` not set
+   to support potential hot-plugging.
+
+Fix this by:
+
+1. When booting with ACPI, checking the ACPI_MADT_ENABLED flag in the GICC
+   entry before calling set_cpu_present() during SMP initialization.
+
+2. Properly managing the present mask in acpi_map_cpu() and
+   acpi_unmap_cpu() to support actual CPU hotplug events, This aligns with
+   other architectures like x86 and LoongArch.
+
+3. Update the arm64 CPU hotplug documentation to no longer state that all
+   online-capable vCPUs are marked as present by the kernel at boot time.
+
+This ensures that only physically available or explicitly enabled CPUs
+are in the present mask, keeping the SMT control logic consistent with
+the actual hardware state.
 
 Cc: Catalin Marinas <catalin.marinas@arm.com>
 Cc: Jonathan Cameron <jic23@kernel.org>
 Cc: James Morse <james.morse@arm.com>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
 Cc: stable@vger.kernel.org
-Link: https://sashiko.dev/#/patchset/20260520022023.126670-1-ruanjinjie@huawei.com [1]
-Fixes: eba4675008a6 ("arm64: arch_register_cpu() variant to check if an ACPI handle is now available.")
+Link: https://uefi.org/specs/ACPI/6.5/05_ACPI_Software_Programming_Model.html#gic-cpu-interface-gicc-structure
+Fixes: eed4583bcf9a ("arm64: Kconfig: Enable HOTPLUG_SMT")
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
 Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/smp.c |   16 +++-------------
- 1 file changed, 3 insertions(+), 13 deletions(-)
+ Documentation/arch/arm64/cpu-hotplug.rst |   28 ++++++++++++++++------------
+ arch/arm64/kernel/acpi.c                 |    2 ++
+ arch/arm64/kernel/smp.c                  |   12 +++++++++++-
+ 3 files changed, 29 insertions(+), 13 deletions(-)
 
+--- a/Documentation/arch/arm64/cpu-hotplug.rst
++++ b/Documentation/arch/arm64/cpu-hotplug.rst
+@@ -47,11 +47,12 @@ ever have can be described at boot. Ther
+ as such devices are emulated.
+ 
+ CPU Hotplug on virtual systems is supported. It is distinct from physical
+-CPU Hotplug as all resources are described as ``present``, but CPUs may be
+-marked as disabled by firmware. Only the CPU's online/offline behaviour is
+-influenced by firmware. An example is where a virtual machine boots with a
+-single CPU, and additional CPUs are added once a cloud orchestrator deploys
+-the workload.
++CPU Hotplug as all vCPU resources are statically described in the firmware
++configuration tables (e.g. MADT), meaning their maximum possible count is
++known at boot. However, vCPUs that are not enabled at boot are not marked
++as ``present`` by the kernel until they are hotplugged. An example is where
++a virtual machine boots with a single CPU, and additional CPUs are added
++once a cloud orchestrator deploys the workload.
+ 
+ For a virtual machine, the VMM (e.g. Qemu) plays the part of firmware.
+ 
+@@ -60,16 +61,19 @@ brought online. Firmware can enforce its
+ ``DENIED``.
+ 
+ The ACPI tables must describe all the resources of the virtual machine. CPUs
+-that firmware wishes to disable either from boot (or later) should not be
+-``enabled`` in the MADT GICC structures, but should have the ``online capable``
+-bit set, to indicate they can be enabled later. The boot CPU must be marked as
+-``enabled``.  The 'always on' GICR structure must be used to describe the
+-redistributors.
++that are hot-pluggable must have the ``online capable`` bit set and the
++``enabled`` bit cleared in the MADT GICC structures to indicate they can be
++enabled later. The boot CPU must be marked as ``enabled`` with its
++``online capable`` bit cleared. The 'always on' GICR structure must be used
++to describe the redistributors.
+ 
+ CPUs described as ``online capable`` but not ``enabled`` can be set to enabled
+ by the DSDT's Processor object's _STA method. On virtual systems the _STA method
+-must always report the CPU as ``present``. Changes to the firmware policy can
+-be notified to the OS via device-check or eject-request.
++must always set the ``ACPI_STA_DEVICE_PRESENT`` bit, while toggling the
++``ACPI_STA_DEVICE_ENABLED`` bit to reflect its plug status. The kernel will
++then dynamically mark the vCPU as ``present`` within the OS when the
++``ACPI_STA_DEVICE_ENABLED`` bit becomes set during hot-add. Changes to the
++firmware policy can be notified to the OS via device-check or eject-request.
+ 
+ CPUs described as ``enabled`` in the static table, should not have their _STA
+ modified dynamically by firmware. Soft-restart features such as kexec will
+--- a/arch/arm64/kernel/acpi.c
++++ b/arch/arm64/kernel/acpi.c
+@@ -448,12 +448,14 @@ int acpi_map_cpu(acpi_handle handle, phy
+ 		return *pcpu;
+ 	}
+ 
++	set_cpu_present(*pcpu, true);
+ 	return 0;
+ }
+ EXPORT_SYMBOL(acpi_map_cpu);
+ 
+ int acpi_unmap_cpu(int cpu)
+ {
++	set_cpu_present(cpu, false);
+ 	return 0;
+ }
+ EXPORT_SYMBOL(acpi_unmap_cpu);
 --- a/arch/arm64/kernel/smp.c
 +++ b/arch/arm64/kernel/smp.c
-@@ -535,23 +535,13 @@ void arch_unregister_cpu(int cpu)
- {
- 	acpi_handle acpi_handle = acpi_get_processor_handle(cpu);
- 	struct cpu *c = &per_cpu(cpu_devices, cpu);
--	acpi_status status;
- 	unsigned long long sta;
--
--	if (!acpi_handle) {
--		pr_err_once("Removing a CPU without associated ACPI handle\n");
--		return;
--	}
-+	acpi_status status;
+@@ -556,6 +556,11 @@ struct acpi_madt_generic_interrupt *acpi
+ }
+ EXPORT_SYMBOL_GPL(acpi_cpu_get_madt_gicc);
  
- 	status = acpi_evaluate_integer(acpi_handle, "_STA", NULL, &sta);
--	if (ACPI_FAILURE(status))
--		return;
--
--	/* For now do not allow anything that looks like physical CPU HP */
--	if (cpu_present(cpu) && !(sta & ACPI_STA_DEVICE_PRESENT)) {
-+	if (!ACPI_FAILURE(status) &&
-+	    cpu_present(cpu) && !(sta & ACPI_STA_DEVICE_PRESENT))
- 		pr_err_once("Changing CPU present bit is not supported\n");
--		return;
--	}
++static bool acpi_cpu_is_present(int cpu)
++{
++	return acpi_cpu_get_madt_gicc(cpu)->flags & ACPI_MADT_ENABLED;
++}
++
+ /*
+  * acpi_map_gic_cpu_interface - parse processor MADT entry
+  *
+@@ -660,6 +665,10 @@ static void __init acpi_parse_and_init_c
+ 		early_map_cpu_to_node(i, acpi_numa_get_nid(i));
+ }
+ #else
++static bool acpi_cpu_is_present(int cpu)
++{
++	return false;
++}
+ #define acpi_parse_and_init_cpus(...)	do { } while (0)
+ #endif
  
- 	unregister_cpu(c);
+@@ -798,7 +807,8 @@ void __init smp_prepare_cpus(unsigned in
+ 		if (err)
+ 			continue;
+ 
+-		set_cpu_present(cpu, true);
++		if (acpi_disabled || acpi_cpu_is_present(cpu))
++			set_cpu_present(cpu, true);
+ 		numa_store_cpu_info(cpu);
+ 	}
  }
 
 
