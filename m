@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9CB3B42EF;
-	Tue, 21 Jul 2026 20:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884AF2D8376;
+	Tue, 21 Jul 2026 20:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666447; cv=none; b=hjrB8kvXzak3MyorTCFg6AD3Yugd5/AUPLVZ9DUmb2D1H1OC2swPXNhRkq5Um4mQpMTdMqzdaA9B9R0CqBJzmqR8gAOdR5tmkeLjflIYNAwsuErw2gly5+xZuHLK6K5SXWHNcPzJWD2/cG5s/ZvEhxepgVQ8v92XxTUZSE9/tSo=
+	t=1784666449; cv=none; b=tSk7Q9s7NrkxGNq+K6nPugb4G3fD2URpbCu773XNIZEsuR2imfCi4qmGVH5VhxzpGNu+ukC6AhCFXKEw9kSJ4rCZhHtWzydW7s0LxFsEE/hiefEwIIqKCkKURLy4n3fZXTbOab4T/aHY8VIYUZfr+mSMkj+foPuXttCfUsSWnHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666447; c=relaxed/simple;
-	bh=5NYxaCfUoPeL+XYLVfkI+Ciz1rP1dt8nvMx1irXB6TU=;
+	s=arc-20240116; t=1784666449; c=relaxed/simple;
+	bh=5I0/irSLndocKk9I1EP8OUDOnJ8+T6O5eaG6rk9KGPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dSMFIbT9wMTZ8bHAy755bPmzHB93e1P00XAbEROyfld+8BJFFbi7yakqg512wpKhLx3BUxw5tDA8j43wL7pI5LZ3Meb5+28h1M71X3mpkLhwiT/Pt4aCzfaDx9+V45pwiUFoh9ZACWobCWhKSVZHOttbqEzRJdnkvYF0SHF57+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0iqLoEXZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O2Yq1D+nv5WGeHG9pog6zy09VOFgADucw3SIXUkDW7QeE5viOY9LgZH/kK4os6X876pk2CjmkwrqUWfF4TROs3jVOFMYVSldY4kHxgm6icWHTPjKNewLVzu+CrcdVpaFE5NsCTOFuynjFuvy7IVj6AyAi56H2rDN1HobHUrDZtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tnCYflvB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0iqLoEXZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5898A1F000E9;
-	Tue, 21 Jul 2026 20:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tnCYflvB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED4D1F000E9;
+	Tue, 21 Jul 2026 20:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666445;
-	bh=lEuf9EzqA1af1eN9tX4WtxgrpvN6Srm2poOhNvec+9Q=;
+	s=korg; t=1784666448;
+	bh=3nw6akWrkUOEGNC3YNFXhZoMM/9vI2D7lK/8LQ6RqrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0iqLoEXZQxiyvq4GKWmbybd+xvtYVL85wl7vvotBHDNw+zzmA1GMaLB8u8THT1fjj
-	 w91Xk0IRoe3BbupLO1s2my8BEE7vvlc58CkUC+dm3XuCzKnvartFU1Wxwy87Zzxj4r
-	 ofbdwY5szpbAGrO7LJki+/uL7gDAbu5FYf0LsiRY=
+	b=tnCYflvBbB+THvfT0Co5c/b+0Me5szGGeekt4Yz6AThVujhdSjXpbQmg+ijezK8o8
+	 XD5dgbDOKF4JClYTdbsV63RVvox1vVCJt96D1PU/y4CcUUIlNF5hfNRnmxAOEqSVSb
+	 DvURCnaI67Dc89M89VGb8K5lVL6GhkAJuYyh+C+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0684/1266] perf symbols: Bounds-check .gnu_debuglink section data
-Date: Tue, 21 Jul 2026 17:18:41 +0200
-Message-ID: <20260721152457.159419141@linuxfoundation.org>
+Subject: [PATCH 6.6 0685/1266] perf intel-pt: Fix snprintf size tracking bug in insn decoder
+Date: Tue, 21 Jul 2026 17:18:42 +0200
+Message-ID: <20260721152457.181116106@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -54,54 +55,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 9c74f0aab398cb32ab250401f323c0fdc9a3a496 ]
+[ Upstream commit b6bb3b005dcdd960b8e0b7f9d6869132b3de08d5 ]
 
-filename__read_debuglink() copies .gnu_debuglink section data into a
-caller-provided buffer via:
+dump_insn() tracks remaining buffer space with a 'left' variable,
+but the loop subtracts the cumulative offset 'n' each iteration
+instead of just the per-iteration delta:
 
-    strncpy(debuglink, data->d_buf, size);
+    n += snprintf(x->out + n, left, "%02x ", inbuf[i]);
+    left -= n;  /* BUG: n is cumulative, not the delta */
 
-where size is PATH_MAX.  If the ELF section is smaller than size and
-lacks a null terminator, strncpy reads past data->d_buf into adjacent
-memory.  A malformed ELF file can trigger this, potentially causing a
-segfault or leaking heap data.
+After two iterations left goes massively negative, wrapping to a
+huge value when passed as size_t to snprintf(), disabling all bounds
+checking for the rest of the loop.
 
-Additionally, strncpy does not guarantee null termination when the
-source fills the buffer.
+Switch to scnprintf() accumulation using sizeof(x->out) - n as the
+remaining space, which is always correct and eliminates the separate
+'left' variable entirely.
 
-Replace with an explicit memcpy bounded by both the output buffer
-size and the actual section data size (data->d_size), followed by
-explicit null termination.
-
-Fixes: e5a1845fc0aeca85 ("perf symbols: Split out util/symbol-elf.c")
+Fixes: 48d02a1d5c137d36 ("perf script: Add 'brstackinsn' for branch stacks")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Andi Kleen <ak@linux.intel.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-elf.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ .../util/intel-pt-decoder/intel-pt-insn-decoder.c     | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index 0f5f60bc4180bf..83b76e88ed603e 100644
---- a/tools/perf/util/symbol-elf.c
-+++ b/tools/perf/util/symbol-elf.c
-@@ -1159,7 +1159,14 @@ int filename__read_debuglink(const char *filename, char *debuglink,
- 		goto out_elf_end;
+diff --git a/tools/perf/util/intel-pt-decoder/intel-pt-insn-decoder.c b/tools/perf/util/intel-pt-decoder/intel-pt-insn-decoder.c
+index c5d57027ec23d3..03a143a02d40db 100644
+--- a/tools/perf/util/intel-pt-decoder/intel-pt-insn-decoder.c
++++ b/tools/perf/util/intel-pt-decoder/intel-pt-insn-decoder.c
+@@ -213,7 +213,6 @@ const char *dump_insn(struct perf_insn *x, uint64_t ip __maybe_unused,
+ {
+ 	struct insn insn;
+ 	int n, i, ret;
+-	int left;
  
- 	/* the start of this section is a zero-terminated string */
--	strncpy(debuglink, data->d_buf, size);
-+	if (data->d_size > 0) {
-+		size_t len = min(size - 1, data->d_size);
-+
-+		memcpy(debuglink, data->d_buf, len);
-+		debuglink[len] = '\0';
-+	} else {
-+		debuglink[0] = '\0';
-+	}
- 
- 	err = 0;
+ 	ret = insn_decode(&insn, inbuf, inlen,
+ 			  x->is64bit ? INSN_MODE_64 : INSN_MODE_32);
+@@ -222,13 +221,9 @@ const char *dump_insn(struct perf_insn *x, uint64_t ip __maybe_unused,
+ 		return "<bad>";
+ 	if (lenp)
+ 		*lenp = insn.length;
+-	left = sizeof(x->out);
+-	n = snprintf(x->out, left, "insn: ");
+-	left -= n;
+-	for (i = 0; i < insn.length; i++) {
+-		n += snprintf(x->out + n, left, "%02x ", inbuf[i]);
+-		left -= n;
+-	}
++	n = scnprintf(x->out, sizeof(x->out), "insn: ");
++	for (i = 0; i < insn.length; i++)
++		n += scnprintf(x->out + n, sizeof(x->out) - n, "%02x ", inbuf[i]);
+ 	return x->out;
+ }
  
 -- 
 2.53.0
