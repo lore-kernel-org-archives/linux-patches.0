@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B1546AA6B;
-	Tue, 21 Jul 2026 15:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF5446AA71;
+	Tue, 21 Jul 2026 15:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648369; cv=none; b=HprCAvwZ06uR5dRs03OQO+S9/Eh7HPKI0YBRi/zUXa3twIuw0Ztu/jiUZ4rR+MX08nn2NQe4leToe/3hx+lVMWGoKk0nd8BwXqD0syg6G6mun35XxJ68OjPHkOqfDsGDZtovqjd4Gn1s+pMenBiTKktc66Qgd65c5mfGmv9PDkA=
+	t=1784648371; cv=none; b=XDhz1VthDIU7KIxgRFJGxeJJJ2qetK6MzNlymbZYijtjvmLF0XMxf7mXL0l/+Es901+rPYRlfJo0TA/M5uvdA7+/BdtBYzcwDUtvtanMsHylWEXR2oRAK/z9k+jr4mHqZLGo+u2PKt5uHTZDicmXyhLrE7OUex9BbyGLNaX8Ba4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648369; c=relaxed/simple;
-	bh=fbi9aT0qK1dcRCRxIRcWSSt90QRCKF1a+N51XrGiAIw=;
+	s=arc-20240116; t=1784648371; c=relaxed/simple;
+	bh=iYwQLbURkuwChCYD6mdS26cF9xraXQ8/aU5q6Mt+eTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fa5k3Ql8xwxxl2wRo7uUyMDzHz2jVzXMPup3N+FcsUyY1qPEtuVcrDOaSptwkH7l2QApdPenTC4VV5Be7dllKWrE8b/f4fGoixecn401ruZJSy6hgtUWpd12Od+nDoxEtatinvc16JaOufKYbiTuMmkx3t7tnlB+gHmWuPJN2AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bt6e8duS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OQKevFc8qoIlLHtMcVR/H+4pQcS350I0QEiFVLsfOYUZIq77EtVm0TwB80TOUrOaLVUctC0ujvMzS+bEPaTL8N3kRGSs/eEydLN+FPZL9HtAdNE3MfKN2cGGkZLIJTCv/icD8S4JZpoLkgHgzX408jENpNlqwXLdJVvhUs9VUjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7mRiOTE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bt6e8duS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B9AD1F000E9;
-	Tue, 21 Jul 2026 15:39:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7mRiOTE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB181F00A3A;
+	Tue, 21 Jul 2026 15:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648368;
-	bh=bMUN7hHRA8O580WDTZBfhYzfmtfk8vvLGeVGUPDw2QY=;
+	s=korg; t=1784648370;
+	bh=jloW3RTjtTXobyJf6MWiJQXexlMNXOZyGvGVRRCK9v8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bt6e8duS/O+OsCXp4T6smqT9Pz6w7/n7TSVx+4slAi3r2l3Wtv/Bk8OcN8x1pWggk
-	 sl+54h/+cxQwOa5VAHS/Hn7jZnTxTF9BthM3USxmYyV0rerAgvsBwgxYjgvl8+nOhu
-	 2Q2S//1ZpC/Ov15yXc7EK+jEmsWdLINnVzuMl0l0=
+	b=j7mRiOTEnJchruB9K3H5gWL5xkWAugLoRy1mhv3OxGt0vuecJoDDmiLvYioe6tqxd
+	 DKWCuu/SuCWrnZOvVyfUodxQCmw7fb0AfYJ2WLa+ptN5to/JTl1AIZT37CGHsaPSvu
+	 tdiDImiy7RH7Qqxi8J7baB9MMlxUDP/EaM588h94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0171/2077] nilfs2: fix backing_dev_info reference leak
-Date: Tue, 21 Jul 2026 16:57:24 +0200
-Message-ID: <20260721152556.721437358@linuxfoundation.org>
+Subject: [PATCH 7.1 0172/2077] ntb: Store original DMA address for future release
+Date: Tue, 21 Jul 2026 16:57:25 +0200
+Message-ID: <20260721152556.743830457@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,45 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 665f192a2a11384cb7dc1be5f87d16438522a4ed ]
+[ Upstream commit da6d997ac556479c112554ab5d95cbd04683eb11 ]
 
-setup_bdev_super() already initializes sb->s_bdev and takes a
-reference on the block device backing_dev_info when assigning sb->s_bdi.
+The DMA API requires that dma_free_attrs receive the exact dma_handle
+originally returned by the allocation function. Do not modify it.
 
-nilfs_fill_super() takes another reference to the same
-backing_dev_info and stores it in sb->s_bdi again. The extra
-reference is not paired with a matching bdi_put(), since
-generic_shutdown_super() releases sb->s_bdi only once.
-
-Drop the redundant bdi_get() in nilfs_fill_super(). The single
-reference taken by setup_bdev_super() is enough and is released
-during superblock shutdown.
-
-Fixes: c1e012ea9e83 ("nilfs2: use setup_bdev_super to de-duplicate the mount code")
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: fc5d1829f9bf ("NTB: transport: Try harder to alloc an aligned MW buffer")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20260501-dma-attrs-debug-v2-1-8dbac75cd501@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/super.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/ntb/ntb_transport.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nilfs2/super.c b/fs/nilfs2/super.c
-index 7aa5ef8606cdd4..893a504cb80c8a 100644
---- a/fs/nilfs2/super.c
-+++ b/fs/nilfs2/super.c
-@@ -1070,8 +1070,6 @@ nilfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 	sb->s_time_gran = 1;
- 	sb->s_max_links = NILFS_LINK_MAX;
+diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
+index 7cabc82305d6b1..771eb7d9f43560 100644
+--- a/drivers/ntb/ntb_transport.c
++++ b/drivers/ntb/ntb_transport.c
+@@ -223,6 +223,7 @@ struct ntb_transport_mw {
+ 	void *alloc_addr;
+ 	void *virt_addr;
+ 	dma_addr_t dma_addr;
++	dma_addr_t original_dma_addr;
+ };
  
--	sb->s_bdi = bdi_get(sb->s_bdev->bd_disk->bdi);
--
- 	err = load_nilfs(nilfs, sb);
- 	if (err)
- 		goto failed_nilfs;
+ struct ntb_transport_client_dev {
+@@ -766,7 +767,7 @@ static void ntb_free_mw(struct ntb_transport_ctx *nt, int num_mw)
+ 
+ 	ntb_mw_clear_trans(nt->ndev, PIDX, num_mw);
+ 	dma_free_coherent(dma_dev, mw->alloc_size,
+-			  mw->alloc_addr, mw->dma_addr);
++			  mw->alloc_addr, mw->original_dma_addr);
+ 	mw->xlat_size = 0;
+ 	mw->buff_size = 0;
+ 	mw->alloc_size = 0;
+@@ -802,6 +803,7 @@ static int ntb_alloc_mw_buffer(struct ntb_transport_mw *mw,
+ 		return -ENOMEM;
+ 	}
+ 	virt_addr = alloc_addr;
++	mw->original_dma_addr = dma_addr;
+ 
+ 	/*
+ 	 * we must ensure that the memory address allocated is BAR size
 -- 
 2.53.0
 
