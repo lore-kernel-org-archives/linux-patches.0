@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0303B44AB9F;
-	Tue, 21 Jul 2026 22:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7AB224B05;
+	Tue, 21 Jul 2026 22:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674657; cv=none; b=scK5gCpWyZR2w6/Aap39XE2BC8TJQfO4kW9hE59ePFyXV+BpeMKFhiXLbwIg+Vuqiy5Rey3pyDqfwVMwu/5K0+MUkjQGF8TIofrP4EONeIKlLLXQxjw6rjuIgI0INSbZdXUdAOwxMYMMJP3kcuTzi439Tqn8gxVFwIkrRwyZ+ho=
+	t=1784674660; cv=none; b=nweJXJeKKaXex1BQAzAzW5voKQzVymyMonh4tf7WxJjKWDOXY7auDaBHbIoHdUafPd0StAmk4hTvGKHjvUOJQoyF1XO829KgWSOIbs22m+m5NjX6OZNXjH+y5N4K6JfWrnE+mSTXMldAPVVer+yj/f4p3EyKHeDZ4Res8p+FXac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674657; c=relaxed/simple;
-	bh=/vsrvtUOn/1pkSJvqJI0nSBiaovn1l3aEICa4he+pJI=;
+	s=arc-20240116; t=1784674660; c=relaxed/simple;
+	bh=OmR5qBBdgYAmGFHLuJ9h0TDsXlNYiUzwBBnv3TsoVZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ax1sVj7rGTATYykd0i5jw1jc2I4sESMib2JAd9CIqkQlE+o9MORZIgkt8/1e26oNw27DNAR4lTtKdW7C2QUJamIVgy8Wv7ek0B9Mdge/tdfpATfdecgmWAXtFzxfd7wNb/6i+GCwxXB05AliUGvDZifciXrDpM4osXVTf6FSRjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=otnWCjZD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sYpp1xlOfYJju8JfygWwg/w5QWrBz2pXWCfdKa9y4N56KQ7mAb1kMU+Th9uu1cHi3XszScK4bKN0XR8D7qhZ+pS3+gJUDIycUBvJLXYFM7QV+vdu4L2Lu8baH/j1Y/W59ktk5cY7qqOlqrtGR38IO2eOGKefHxmuB72Cw0RYvac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BeZAEsBn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="otnWCjZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 678091F000E9;
-	Tue, 21 Jul 2026 22:57:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BeZAEsBn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B7491F000E9;
+	Tue, 21 Jul 2026 22:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674655;
-	bh=mG7hcrxVuFQcOgDwsNFVJW4KWCgCqQQSYK65gG5sF0s=;
+	s=korg; t=1784674658;
+	bh=h4DqTAnONVI3ei4YeQuJbI0LNiOD4l1tZnXu/Y+f668=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=otnWCjZDd/Im+dUsQdC+0MHV6+WxUnpub4Kduf3SYbGzbYoVETbjldWC9Oxk5EnOS
-	 C81UZdY7fb1sXFF1sLPNlO9y6Kj1U5UxLWF56NTFKEaLMHVzATWwAMvS08vmV+MgTx
-	 tP5BwfPWCsuQqvngJPCQ79MPmn4MNITOnnWv2wC8=
+	b=BeZAEsBntbz95Yy1I775zae/Y6N1hZqOKJFLUYnDUn6qyhec0D9EB1sUg77MaiB8n
+	 /JPiPGmLUwEY/ocCGZu5SrU8FvsiV1Vz5i8gRi0Q75Pg0RM8ii+5jWuTfmHlpKDhcQ
+	 hJcak2lne/JZc+l3u5+bPaJ9TsGD3t3FpePISB/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Franziska Naepelt <franziska.naepelt@googlemail.com>,
+	stable <stable@kernel.org>,
+	Luka Gejak <luka.gejak@linux.dev>,
+	Alexandru Hossu <hossu.alexandru@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 622/699] staging: rtl8723bs: Fix space issues
-Date: Tue, 21 Jul 2026 17:26:21 +0200
-Message-ID: <20260721152409.776710136@linuxfoundation.org>
+Subject: [PATCH 5.10 623/699] staging: rtl8723bs: fix heap buffer overflow in rtw_cfg80211_set_wpa_ie()
+Date: Tue, 21 Jul 2026 17:26:22 +0200
+Message-ID: <20260721152409.798253581@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,263 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Franziska Naepelt <franziska.naepelt@googlemail.com>
+From: Alexandru Hossu <hossu.alexandru@gmail.com>
 
-[ Upstream commit c4b811b9361b0d7ea167a79587f5ec0a13fd8863 ]
+[ Upstream commit 5a752a616e756844388a1a45404db9fc29fec655 ]
 
-Fix the following checkpatch space issues:
-- CHECK: spaces preferred around that '*' (ctx:VxV)
-- CHECK: spaces preferred around that '+' (ctx:VxV)
-- CHECK: spaces preferred around that '-' (ctx:VxV)
-- CHECK: spaces preferred around that '|' (ctx:VxV)
-- CHECK: No space is necessary after a cast
-- WARNING: please, no spaces at the start of a line
+supplicant_ie is a 256-byte array in struct security_priv. The WPA and
+WPA2 IE copy paths use:
 
-Signed-off-by: Franziska Naepelt <franziska.naepelt@googlemail.com>
-Link: https://lore.kernel.org/r/20230701102538.5359-1-franziska.naepelt@googlemail.com
+    memcpy(padapter->securitypriv.supplicant_ie, &pwpa[0], wpa_ielen + 2);
+
+where wpa_ielen is the raw IE length field (u8, 0-255). When a local user
+supplies a connect request via nl80211 with a crafted WPA IE of length 255,
+wpa_ielen + 2 equals 257, overflowing the 256-byte buffer by one byte into
+the adjacent last_mic_err_time field.
+
+rtw_parse_wpa_ie() does not prevent this: its length consistency check
+compares *(wpa_ie+1) against (u8)(wpa_ie_len-2), which is (u8)(255) == 255
+when wpa_ie_len = 257, so the check passes silently.
+
+Add explicit bounds checks for both the WPA and WPA2 paths before the
+memcpy, rejecting any IE whose total size (wpa_ielen + 2) exceeds the
+supplicant_ie buffer.
+
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
+Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
+Link: https://patch.msgid.link/20260522004531.1038924-4-hossu.alexandru@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 5a752a616e75 ("staging: rtl8723bs: fix heap buffer overflow in rtw_cfg80211_set_wpa_ie()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |   84 ++++++++++------------
- 1 file changed, 40 insertions(+), 44 deletions(-)
+ drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 --- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
 +++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-@@ -98,14 +98,14 @@ static struct ieee80211_channel rtw_2ghz
- static void rtw_2g_channels_init(struct ieee80211_channel *channels)
- {
- 	memcpy((void *)channels, (void *)rtw_2ghz_channels,
--		sizeof(struct ieee80211_channel)*RTW_2G_CHANNELS_NUM
-+		sizeof(struct ieee80211_channel) * RTW_2G_CHANNELS_NUM
- 	);
- }
- 
- static void rtw_2g_rates_init(struct ieee80211_rate *rates)
- {
- 	memcpy(rates, rtw_g_rates,
--		sizeof(struct ieee80211_rate)*RTW_G_RATES_NUM
-+		sizeof(struct ieee80211_rate) * RTW_G_RATES_NUM
- 	);
- }
- 
-@@ -132,8 +132,8 @@ static struct ieee80211_supported_band *
- 	if (!spt_band)
- 		goto exit;
- 
--	spt_band->channels = (struct ieee80211_channel *)(((u8 *)spt_band)+sizeof(struct ieee80211_supported_band));
--	spt_band->bitrates = (struct ieee80211_rate *)(((u8 *)spt_band->channels)+sizeof(struct ieee80211_channel)*n_channels);
-+	spt_band->channels = (struct ieee80211_channel *)(((u8 *)spt_band) + sizeof(struct ieee80211_supported_band));
-+	spt_band->bitrates = (struct ieee80211_rate *)(((u8 *)spt_band->channels) + sizeof(struct ieee80211_channel) * n_channels);
- 	spt_band->band = band;
- 	spt_band->n_channels = n_channels;
- 	spt_band->n_bitrates = n_bitrates;
-@@ -267,10 +267,10 @@ struct cfg80211_bss *rtw_cfg80211_inform
- 		u32 wpsielen = 0;
- 		u8 *wpsie = NULL;
- 
--		wpsie = rtw_get_wps_ie(pnetwork->network.IEs+_FIXED_IE_LENGTH_, pnetwork->network.IELength-_FIXED_IE_LENGTH_, NULL, &wpsielen);
-+		wpsie = rtw_get_wps_ie(pnetwork->network.IEs + _FIXED_IE_LENGTH_, pnetwork->network.IELength - _FIXED_IE_LENGTH_, NULL, &wpsielen);
- 
- 		if (wpsie && wpsielen > 0)
--			psr = rtw_get_wps_attr_content(wpsie,  wpsielen, WPS_ATTR_SELECTED_REGISTRAR, (u8 *)(&sr), NULL);
-+			psr = rtw_get_wps_attr_content(wpsie, wpsielen, WPS_ATTR_SELECTED_REGISTRAR, (u8 *)(&sr), NULL);
- 
- 		if (sr != 0)
- 		{
-@@ -306,9 +306,9 @@ struct cfg80211_bss *rtw_cfg80211_inform
- 	/* We've set wiphy's signal_type as CFG80211_SIGNAL_TYPE_MBM: signal strength in mBm (100*dBm) */
- 	if (check_fwstate(pmlmepriv, _FW_LINKED) == true &&
- 		is_same_network(&pmlmepriv->cur_network.network, &pnetwork->network, 0)) {
--		notify_signal = 100*translate_percentage_to_dbm(padapter->recvpriv.signal_strength);/* dbm */
-+		notify_signal = 100 * translate_percentage_to_dbm(padapter->recvpriv.signal_strength);/* dbm */
- 	} else {
--		notify_signal = 100*translate_percentage_to_dbm(pnetwork->network.PhyInfo.SignalStrength);/* dbm */
-+		notify_signal = 100 * translate_percentage_to_dbm(pnetwork->network.PhyInfo.SignalStrength);/* dbm */
- 	}
- 
- 	buf = kzalloc(MAX_BSSINFO_LEN, GFP_ATOMIC);
-@@ -507,22 +507,22 @@ check_bss:
- 		roam_info.channel = notify_channel;
- 		roam_info.bssid = cur_network->network.MacAddress;
- 		roam_info.req_ie =
--			pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2;
-+			pmlmepriv->assoc_req + sizeof(struct ieee80211_hdr_3addr) + 2;
- 		roam_info.req_ie_len =
--			pmlmepriv->assoc_req_len-sizeof(struct ieee80211_hdr_3addr)-2;
-+			pmlmepriv->assoc_req_len - sizeof(struct ieee80211_hdr_3addr) - 2;
- 		roam_info.resp_ie =
--			pmlmepriv->assoc_rsp+sizeof(struct ieee80211_hdr_3addr)+6;
-+			pmlmepriv->assoc_rsp + sizeof(struct ieee80211_hdr_3addr) + 6;
- 		roam_info.resp_ie_len =
--			pmlmepriv->assoc_rsp_len-sizeof(struct ieee80211_hdr_3addr)-6;
-+			pmlmepriv->assoc_rsp_len - sizeof(struct ieee80211_hdr_3addr) - 6;
- 		cfg80211_roamed(padapter->pnetdev, &roam_info, GFP_ATOMIC);
- 	}
- 	else
- 	{
- 		cfg80211_connect_result(padapter->pnetdev, cur_network->network.MacAddress
--			, pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2
--			, pmlmepriv->assoc_req_len-sizeof(struct ieee80211_hdr_3addr)-2
--			, pmlmepriv->assoc_rsp+sizeof(struct ieee80211_hdr_3addr)+6
--			, pmlmepriv->assoc_rsp_len-sizeof(struct ieee80211_hdr_3addr)-6
-+			, pmlmepriv->assoc_req + sizeof(struct ieee80211_hdr_3addr) + 2
-+			, pmlmepriv->assoc_req_len - sizeof(struct ieee80211_hdr_3addr) - 2
-+			, pmlmepriv->assoc_rsp + sizeof(struct ieee80211_hdr_3addr) + 6
-+			, pmlmepriv->assoc_rsp_len - sizeof(struct ieee80211_hdr_3addr) - 6
- 			, WLAN_STATUS_SUCCESS, GFP_ATOMIC);
- 	}
- }
-@@ -855,7 +855,7 @@ static int rtw_cfg80211_set_encryption(s
- 	param->u.crypt.err = 0;
- 	param->u.crypt.alg[IEEE_CRYPT_ALG_NAME_LEN - 1] = '\0';
- 
--	if (param_len < (u32) ((u8 *) param->u.crypt.key - (u8 *) param) + param->u.crypt.key_len)
-+	if (param_len < (u32)((u8 *)param->u.crypt.key - (u8 *)param) + param->u.crypt.key_len)
- 	{
- 		ret =  -EINVAL;
- 		goto exit;
-@@ -1252,10 +1252,10 @@ static int cfg80211_rtw_get_station(stru
- 	}
- 
- 	/* for Ad-Hoc/AP mode */
--	if ((check_fwstate(pmlmepriv, WIFI_ADHOC_STATE)
-- || check_fwstate(pmlmepriv, WIFI_ADHOC_MASTER_STATE)
-- || check_fwstate(pmlmepriv, WIFI_AP_STATE))
--		&& check_fwstate(pmlmepriv, _FW_LINKED)
-+	if ((check_fwstate(pmlmepriv, WIFI_ADHOC_STATE) ||
-+	     check_fwstate(pmlmepriv, WIFI_ADHOC_MASTER_STATE) ||
-+	     check_fwstate(pmlmepriv, WIFI_AP_STATE)) &&
-+	    check_fwstate(pmlmepriv, _FW_LINKED)
- 	)
- 	{
- 		/* TODO: should acquire station info... */
-@@ -1518,7 +1518,7 @@ static int cfg80211_rtw_scan(struct wiph
- 		DBG_871X("%s under WIFI_AP_STATE\n", __func__);
- #endif
- 
--		if (check_fwstate(pmlmepriv, WIFI_UNDER_WPS|_FW_UNDER_SURVEY|_FW_UNDER_LINKING) == true)
-+		if (check_fwstate(pmlmepriv, WIFI_UNDER_WPS | _FW_UNDER_SURVEY | _FW_UNDER_LINKING) == true)
- 		{
- 			DBG_8192C("%s, fwstate = 0x%x\n", __func__, pmlmepriv->fw_state);
- 
-@@ -1591,7 +1591,7 @@ static int cfg80211_rtw_scan(struct wiph
- 	}
- 
- 	/* parsing channels, n_channels */
--	memset(ch, 0, sizeof(struct rtw_ieee80211_channel)*RTW_CHANNEL_SCAN_AMOUNT);
-+	memset(ch, 0, sizeof(struct rtw_ieee80211_channel) * RTW_CHANNEL_SCAN_AMOUNT);
- 	for (i = 0; i < request->n_channels && i < RTW_CHANNEL_SCAN_AMOUNT; i++) {
- 		#ifdef DEBUG_CFG80211
- 		DBG_871X(FUNC_ADPT_FMT CHAN_FMT"\n", FUNC_ADPT_ARG(padapter), CHAN_ARG(request->channels[i]));
-@@ -1609,7 +1609,7 @@ static int cfg80211_rtw_scan(struct wiph
- 		for (j = request->n_channels - 1; j >= 0; j--)
- 			for (i = 0; i < survey_times; i++)
- 		{
--			memcpy(&ch[j*survey_times+i], &ch[j], sizeof(struct rtw_ieee80211_channel));
-+			memcpy(&ch[j * survey_times + i], &ch[j], sizeof(struct rtw_ieee80211_channel));
- 		}
- 		_status = rtw_sitesurvey_cmd(padapter, ssid, RTW_SSID_SCAN_AMOUNT, ch, survey_times * request->n_channels);
- 	} else {
-@@ -1789,7 +1789,7 @@ static int rtw_cfg80211_set_wpa_ie(struc
- 		goto exit;
- 	}
- 
--	if (ielen > MAX_WPA_IE_LEN+MAX_WPS_IE_LEN+MAX_P2P_IE_LEN) {
-+	if (ielen > MAX_WPA_IE_LEN + MAX_WPS_IE_LEN + MAX_P2P_IE_LEN) {
- 		ret = -EINVAL;
- 		goto exit;
- 	}
-@@ -1817,26 +1817,22 @@ static int rtw_cfg80211_set_wpa_ie(struc
- 	}
+@@ -1818,6 +1818,10 @@ static int rtw_cfg80211_set_wpa_ie(struc
  
  	pwpa = rtw_get_wpa_ie(buf, &wpa_ielen, ielen);
--	if (pwpa && wpa_ielen > 0)
--	{
--		if (rtw_parse_wpa_ie(pwpa, wpa_ielen+2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS)
--		{
-+	if (pwpa && wpa_ielen > 0) {
-+		if (rtw_parse_wpa_ie(pwpa, wpa_ielen + 2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
+ 	if (pwpa && wpa_ielen > 0) {
++		if (wpa_ielen + 2 > sizeof(padapter->securitypriv.supplicant_ie)) {
++			ret = -EINVAL;
++			goto exit;
++		}
+ 		if (rtw_parse_wpa_ie(pwpa, wpa_ielen + 2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
  			padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_8021X;
  			padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeWPAPSK;
--			memcpy(padapter->securitypriv.supplicant_ie, &pwpa[0], wpa_ielen+2);
-+			memcpy(padapter->securitypriv.supplicant_ie, &pwpa[0], wpa_ielen + 2);
- 
- 			DBG_8192C("got wpa_ie, wpa_ielen:%u\n", wpa_ielen);
- 		}
- 	}
+@@ -1829,6 +1833,10 @@ static int rtw_cfg80211_set_wpa_ie(struc
  
  	pwpa2 = rtw_get_wpa2_ie(buf, &wpa2_ielen, ielen);
--	if (pwpa2 && wpa2_ielen > 0)
--	{
--		if (rtw_parse_wpa2_ie(pwpa2, wpa2_ielen+2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS)
--		{
-+	if (pwpa2 && wpa2_ielen > 0) {
-+		if (rtw_parse_wpa2_ie(pwpa2, wpa2_ielen + 2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
+ 	if (pwpa2 && wpa2_ielen > 0) {
++		if (wpa2_ielen + 2 > sizeof(padapter->securitypriv.supplicant_ie)) {
++			ret = -EINVAL;
++			goto exit;
++		}
+ 		if (rtw_parse_wpa2_ie(pwpa2, wpa2_ielen + 2, &group_cipher, &pairwise_cipher, NULL) == _SUCCESS) {
  			padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_8021X;
  			padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeWPA2PSK;
--			memcpy(padapter->securitypriv.supplicant_ie, &pwpa2[0], wpa2_ielen+2);
-+			memcpy(padapter->securitypriv.supplicant_ie, &pwpa2[0], wpa2_ielen + 2);
- 
- 			DBG_8192C("got wpa2_ie, wpa2_ielen:%u\n", wpa2_ielen);
- 		}
-@@ -2303,7 +2299,7 @@ static int cfg80211_rtw_set_pmksa(struct
- 
- 			memcpy(psecuritypriv->PMKIDList[index].PMKID, (u8 *)pmksa->pmkid, WLAN_PMKID_LEN);
- 			psecuritypriv->PMKIDList[index].bUsed = true;
--			psecuritypriv->PMKIDIndex = index+1;
-+			psecuritypriv->PMKIDIndex = index + 1;
- 			blInserted = true;
- 			break;
- 		}
-@@ -2477,8 +2473,8 @@ static netdev_tx_t rtw_cfg80211_monitor_
- 		return _rtw_xmit_entry(skb, padapter->pnetdev);
- 
- 	}
--	else if ((frame_control & (IEEE80211_FCTL_FTYPE|IEEE80211_FCTL_STYPE))
--		== (IEEE80211_FTYPE_MGMT|IEEE80211_STYPE_ACTION)
-+	else if ((frame_control & (IEEE80211_FCTL_FTYPE | IEEE80211_FCTL_STYPE))
-+		== (IEEE80211_FTYPE_MGMT | IEEE80211_STYPE_ACTION)
- 	)
- 	{
- 		/* only for action frames */
-@@ -2616,7 +2612,7 @@ static int rtw_cfg80211_add_monitor_if(s
- 	}
- 
- 	*ndev = pwdev_priv->pmon_ndev = mon_ndev;
--	memcpy(pwdev_priv->ifname_mon, name, IFNAMSIZ+1);
-+	memcpy(pwdev_priv->ifname_mon, name, IFNAMSIZ + 1);
- 
- out:
- 	if (ret && mon_wdev) {
-@@ -2719,14 +2715,14 @@ static int rtw_add_beacon(struct adapter
- 	if (head_len < 24)
- 		return -EINVAL;
- 
--	pbuf = rtw_zmalloc(head_len+tail_len);
-+	pbuf = rtw_zmalloc(head_len + tail_len);
- 	if (!pbuf)
- 		return -ENOMEM;
- 
--	memcpy(pbuf, (void *)head+24, head_len-24);/*  24 =beacon header len. */
--	memcpy(pbuf+head_len-24, (void *)tail, tail_len);
-+	memcpy(pbuf, (void *)head + 24, head_len - 24);/*  24 =beacon header len. */
-+	memcpy(pbuf + head_len - 24, (void *)tail, tail_len);
- 
--	len = head_len+tail_len-24;
-+	len = head_len + tail_len - 24;
- 
- 	/* check wps ie if inclued */
- 	if (rtw_get_wps_ie(pbuf+_FIXED_IE_LENGTH_, len-_FIXED_IE_LENGTH_, NULL, &wps_ielen))
-@@ -3082,7 +3078,7 @@ static int cfg80211_rtw_mgmt_tx(struct w
- 	pwdev_priv = adapter_wdev_data(padapter);
- 
- 	/* cookie generation */
--	*cookie = (unsigned long) buf;
-+	*cookie = (unsigned long)buf;
- 
- #ifdef DEBUG_CFG80211
- 	DBG_871X(FUNC_ADPT_FMT" len =%zu, ch =%d"
 
 
