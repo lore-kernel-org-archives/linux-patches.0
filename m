@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AED37B40C;
-	Tue, 21 Jul 2026 17:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF3C37B40C;
+	Tue, 21 Jul 2026 17:04:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653463; cv=none; b=JG71SN3uoXDMENsSuCW6DYMt+v+xDDT2QofeVAlrFx6lriWZdhCMvFxjxn6YL0FqDAA81LqO61KS6b/55up6WeEqFLFhez1jlgDiS7j+XopYMACB/ymxdPjDroGIys1IkgcpvbuHBEX3MInp8W2KjST2xtadK82/Tz/yRD7JYNI=
+	t=1784653465; cv=none; b=HreyNUmDznM+Zf0kUx3Id/3ETkZcot5zznnx+18zIhzqSWYTyCUmAtM5JOVuS3pa7anEo4TLA3JsSLT0s8MDiaB7y1RRMPryCqsHEXX9Vy67wnBJi09nJLxRC9iRijsP6AJ96hlXBqsq23pn7Nwx6KcWGqcnOnyMZMZopKsplaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653463; c=relaxed/simple;
-	bh=ma2/NdjzbasmbbPLLZm5OZz3uHZj18AfUaJ5m/tzF3E=;
+	s=arc-20240116; t=1784653465; c=relaxed/simple;
+	bh=YXxxqOMKCG2DLLSA7Q9vH4JbWiYsOz1Ue6mf7aHMUoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kB+zcj4csun0k02kIJ5O7dn/AS0XnbGgtCFWkxvDuoX1kiArFk2PXCpOWoO03CzNhuO+Cz4kV13L3x4V/03rjnlmZoHfZuxnOI9KL9d6liifFMHfJyyvhsi6YrxQDtyVrXXoBHMnHdyzsDyFOy1V2kyzzkLkCJXrVlUzCUKhikc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KulHzwic; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YUO50j93QY0mprbTDWucQ9KLy+Sn6Uw1deTUC6YWWG3iqnro7VppTxy9asXa+H8geOBGx4ppj43cAaOVHYNoXhrS06E8h0Hbg4s5OefmOJoOHoI3fXiDgebY70SMpPDmxF1PtErFejG2VzmoofyG/6jtzxanT8/vznQ/kLAqavU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0nKshep4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KulHzwic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9AB1F000E9;
-	Tue, 21 Jul 2026 17:04:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nKshep4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471FF1F000E9;
+	Tue, 21 Jul 2026 17:04:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653462;
-	bh=gfbg+5ogyfCkwMdKKXwVvsUm6aAa3t1emuO/cu3e57A=;
+	s=korg; t=1784653464;
+	bh=26jHIWo5e/+iAdgpj4DsQ1L1AVr6BfZx1WeKuNoKwAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KulHzwiclweOuuXFi+b6TpHHNfFmW9xukEszdRXpiLPcr/+UE/eMG/1L0OcUwWA8M
-	 4hDLOlARBQ/jYLW5iPgp6zq8hjS29Kas59+NEP4bOSdX4eC5lwPZk0mOLdXKWdmKhK
-	 LeezlEmKzYnOfMpocQcz9WISXESL32U0IwBvuzvw=
+	b=0nKshep4xUuy37FZv0RigoDItVu0VXBYjpm1c1Jqe8ElImXsWTiP8veazebWphvd/
+	 fh9ZlGM1XUC2GvX2m0f8AZUvfpAL2mQMOgeblUhbeq905aH3RYhWQP/MEe53CzHO6R
+	 GX7q1m1G6bTggYhycDyVWGF/h2Ynj8/58Kj0mmaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zdi-disclosures@trendmicro.com,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1334/2077] net/sched: sch_teql: Introduce slaves_lock to avoid race condition and UAF
-Date: Tue, 21 Jul 2026 17:16:47 +0200
-Message-ID: <20260721152624.279004916@linuxfoundation.org>
+Subject: [PATCH 7.1 1293/2077] dt-bindings: net: renesas,ether: Drop example "ethernet-phy-ieee802.3-c22" fallback
+Date: Tue, 21 Jul 2026 17:16:06 +0200
+Message-ID: <20260721152623.319307054@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -47,342 +48,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-[ Upstream commit e5b811fe793166aecc59b085c1b7c31262ef2316 ]
+[ Upstream commit 14eb1d2c03b38ce3427f299967f7a4d97ebff4c2 ]
 
-The teql master->slaves singly linked list is not protected against
-multiple writes. It can be mod'ed concurently from teql_master_xmit(),
-teql_dequeue(), teql_init() and teql_destroy() without holding any list
-lock or RCU protection.
+Fix the Micrel PHY in the example which shouldn't have the
+fallback "ethernet-phy-ieee802.3-c22" compatible:
 
-zdi-disclosures@trendmicro.com has demonstrated that the qdisc is freed
-after an RCU grace period, but teql_master_xmit() running on another
-CPU can still hold a stale pointer into the list, resulting in a
-slab-use-after-free:
+Documentation/devicetree/bindings/net/renesas,ether.example.dtb: ethernet-phy@1 \
+  (ethernet-phy-id0022.1537): compatible: ['ethernet-phy-id0022.1537', 'ethernet-phy-ieee802.3-c22'] is too long
+        from schema $id: http://devicetree.org/schemas/net/micrel.yaml
 
-BUG: KASAN: slab-use-after-free in teql_master_xmit+0xf0f/0x16b0
-Read of size 8 at addr ffff888013fb0440 by task poc/332
-Freed 512-byte region [ffff888013fb0400, ffff888013fb0600) (kmalloc-512)
-
-The fix?
-Add a per-master slaves_lock spinlock that serializes all mutations of
-master->slaves and the NEXT_SLAVE() links in teql_destroy() and
-teql_qdisc_init(). teql_master_xmit() also takes the same slaves_lock
-around those updates.
-Annotate master->slaves and the per-slave ->next pointer with __rcu and
-use the appropriate RCU accessors everywhere they are touched:
-rcu_assign_pointer() on the writer side (under slaves_lock),
-rcu_dereference_protected() for the writer-side loads (also under
-slaves_lock), rcu_dereference_bh() for the loads in teql_master_xmit() and
-rtnl_dereference() for the loads in teql_master_open()/teql_master_mtu(),
-which run under RTNL.
-Pair this with rcu_read_lock_bh()/rcu_read_unlock_bh() around the list
-traversal in teql_master_xmit(), so that readers either observe a fully
-linked list or are deferred until the in-flight mutation completes. The two
-early-return paths in teql_master_xmit() are updated to release the RCU-bh
-read-side critical section before returning, since leaving it held would
-disable BH on that CPU for good.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: zdi-disclosures@trendmicro.com
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260628111229.669751-1-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Acked-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Fixes: 37a2fce09001 ("dt-bindings: sh_eth convert bindings to json-schema")
+Link: https://patch.msgid.link/20260624150250.131966-2-robh@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_teql.c | 125 +++++++++++++++++++++++++++++--------------
- 1 file changed, 86 insertions(+), 39 deletions(-)
+ Documentation/devicetree/bindings/net/renesas,ether.yaml | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_teql.c b/net/sched/sch_teql.c
-index e7bbc9e5174d0e..24ba31f8c82855 100644
---- a/net/sched/sch_teql.c
-+++ b/net/sched/sch_teql.c
-@@ -52,7 +52,8 @@
- struct teql_master {
- 	struct Qdisc_ops qops;
- 	struct net_device *dev;
--	struct Qdisc *slaves;
-+	struct Qdisc __rcu	*slaves;
-+	spinlock_t		slaves_lock; /* serializes writes to ->slaves */
- 	struct list_head master_list;
- 	unsigned long	tx_bytes;
- 	unsigned long	tx_packets;
-@@ -61,7 +62,7 @@ struct teql_master {
- };
+diff --git a/Documentation/devicetree/bindings/net/renesas,ether.yaml b/Documentation/devicetree/bindings/net/renesas,ether.yaml
+index f0a52f47f95a0d..dd7187f12a6757 100644
+--- a/Documentation/devicetree/bindings/net/renesas,ether.yaml
++++ b/Documentation/devicetree/bindings/net/renesas,ether.yaml
+@@ -121,8 +121,7 @@ examples:
+         #size-cells = <0>;
  
- struct teql_sched_data {
--	struct Qdisc *next;
-+	struct Qdisc __rcu	*next;
- 	struct teql_master *m;
- 	struct sk_buff_head q;
- };
-@@ -101,7 +102,9 @@ teql_dequeue(struct Qdisc *sch)
- 	if (skb == NULL) {
- 		struct net_device *m = qdisc_dev(q);
- 		if (m) {
--			dat->m->slaves = sch;
-+			spin_lock_bh(&dat->m->slaves_lock);
-+			rcu_assign_pointer(dat->m->slaves, sch);
-+			spin_unlock_bh(&dat->m->slaves_lock);
- 			netif_wake_queue(m);
- 		}
- 	} else {
-@@ -132,34 +135,49 @@ teql_destroy(struct Qdisc *sch)
- 	struct Qdisc *q, *prev;
- 	struct teql_sched_data *dat = qdisc_priv(sch);
- 	struct teql_master *master = dat->m;
-+	struct netdev_queue *txq = NULL;
-+	bool reset_master_queue = false;
- 
- 	if (!master)
- 		return;
- 
--	prev = master->slaves;
-+	spin_lock_bh(&master->slaves_lock);
-+	prev = rcu_dereference_protected(master->slaves,
-+					 lockdep_is_held(&master->slaves_lock));
- 	if (prev) {
- 		do {
--			q = NEXT_SLAVE(prev);
--			if (q == sch) {
--				NEXT_SLAVE(prev) = NEXT_SLAVE(q);
--				if (q == master->slaves) {
--					master->slaves = NEXT_SLAVE(q);
--					if (q == master->slaves) {
--						struct netdev_queue *txq;
--
--						txq = netdev_get_tx_queue(master->dev, 0);
--						master->slaves = NULL;
--
--						dev_reset_queue(master->dev,
--								txq, NULL);
--					}
--				}
--				skb_queue_purge(&dat->q);
--				break;
-+			struct Qdisc *head, *next;
-+
-+			q = rcu_dereference_protected(NEXT_SLAVE(prev),
-+						      lockdep_is_held(&master->slaves_lock));
-+			if (q != sch) {
-+				prev = q;
-+				continue;
- 			}
- 
--		} while ((prev = q) != master->slaves);
-+			next = rcu_dereference_protected(NEXT_SLAVE(q),
-+							 lockdep_is_held(&master->slaves_lock));
-+			rcu_assign_pointer(NEXT_SLAVE(prev), next);
-+
-+			head = rcu_dereference_protected(master->slaves,
-+							 lockdep_is_held(&master->slaves_lock));
-+			if (q == head) {
-+				rcu_assign_pointer(master->slaves, next);
-+				if (q == next) {
-+					txq = netdev_get_tx_queue(master->dev, 0);
-+					rcu_assign_pointer(master->slaves, NULL);
-+					reset_master_queue = true;
-+				}
-+			}
-+			skb_queue_purge(&dat->q);
-+			break;
-+		} while (prev != rcu_dereference_protected(master->slaves,
-+							   lockdep_is_held(&master->slaves_lock)));
- 	}
-+	spin_unlock_bh(&master->slaves_lock);
-+
-+	if (reset_master_queue)
-+		dev_reset_queue(master->dev, txq, NULL);
- }
- 
- static int teql_qdisc_init(struct Qdisc *sch, struct nlattr *opt,
-@@ -168,6 +186,7 @@ static int teql_qdisc_init(struct Qdisc *sch, struct nlattr *opt,
- 	struct net_device *dev = qdisc_dev(sch);
- 	struct teql_master *m = (struct teql_master *)sch->ops;
- 	struct teql_sched_data *q = qdisc_priv(sch);
-+	struct Qdisc *first;
- 
- 	if (dev->hard_header_len > m->dev->hard_header_len)
- 		return -EINVAL;
-@@ -184,7 +203,9 @@ static int teql_qdisc_init(struct Qdisc *sch, struct nlattr *opt,
- 
- 	skb_queue_head_init(&q->q);
- 
--	if (m->slaves) {
-+	spin_lock_bh(&m->slaves_lock);
-+	first = rcu_dereference_protected(m->slaves, lockdep_is_held(&m->slaves_lock));
-+	if (first) {
- 		if (m->dev->flags & IFF_UP) {
- 			if ((m->dev->flags & IFF_POINTOPOINT &&
- 			     !(dev->flags & IFF_POINTOPOINT)) ||
-@@ -192,8 +213,10 @@ static int teql_qdisc_init(struct Qdisc *sch, struct nlattr *opt,
- 			     !(dev->flags & IFF_BROADCAST)) ||
- 			    (m->dev->flags & IFF_MULTICAST &&
- 			     !(dev->flags & IFF_MULTICAST)) ||
--			    dev->mtu < m->dev->mtu)
-+			    dev->mtu < m->dev->mtu) {
-+				spin_unlock_bh(&m->slaves_lock);
- 				return -EINVAL;
-+			}
- 		} else {
- 			if (!(dev->flags&IFF_POINTOPOINT))
- 				m->dev->flags &= ~IFF_POINTOPOINT;
-@@ -204,14 +227,17 @@ static int teql_qdisc_init(struct Qdisc *sch, struct nlattr *opt,
- 			if (dev->mtu < m->dev->mtu)
- 				m->dev->mtu = dev->mtu;
- 		}
--		q->next = NEXT_SLAVE(m->slaves);
--		NEXT_SLAVE(m->slaves) = sch;
-+		rcu_assign_pointer(q->next,
-+				   rcu_dereference_protected(NEXT_SLAVE(first),
-+							     lockdep_is_held(&m->slaves_lock)));
-+		rcu_assign_pointer(NEXT_SLAVE(first), sch);
- 	} else {
--		q->next = sch;
--		m->slaves = sch;
-+		rcu_assign_pointer(q->next, sch);
-+		rcu_assign_pointer(m->slaves, sch);
- 		m->dev->mtu = dev->mtu;
- 		m->dev->flags = (m->dev->flags&~FMASK)|(dev->flags&FMASK);
- 	}
-+	spin_unlock_bh(&m->slaves_lock);
- 	return 0;
- }
- 
-@@ -285,7 +311,9 @@ static netdev_tx_t teql_master_xmit(struct sk_buff *skb, struct net_device *dev)
- 	int subq = skb_get_queue_mapping(skb);
- 	struct sk_buff *skb_res = NULL;
- 
--	start = master->slaves;
-+	rcu_read_lock_bh();
-+
-+	start = rcu_dereference_bh(master->slaves);
- 
- restart:
- 	nores = 0;
-@@ -317,10 +345,17 @@ static netdev_tx_t teql_master_xmit(struct sk_buff *skb, struct net_device *dev)
- 				    netdev_start_xmit(skb, slave, slave_txq, false) ==
- 				    NETDEV_TX_OK) {
- 					__netif_tx_unlock(slave_txq);
--					master->slaves = NEXT_SLAVE(q);
-+					spin_lock_bh(&master->slaves_lock);
-+					if (rcu_dereference_protected(master->slaves,
-+								      lockdep_is_held(&master->slaves_lock)) == q)
-+						rcu_assign_pointer(master->slaves,
-+								   rcu_dereference_protected(NEXT_SLAVE(q),
-+											     lockdep_is_held(&master->slaves_lock)));
-+					spin_unlock_bh(&master->slaves_lock);
- 					netif_wake_queue(dev);
- 					master->tx_packets++;
- 					master->tx_bytes += length;
-+					rcu_read_unlock_bh();
- 					return NETDEV_TX_OK;
- 				}
- 				__netif_tx_unlock(slave_txq);
-@@ -329,14 +364,21 @@ static netdev_tx_t teql_master_xmit(struct sk_buff *skb, struct net_device *dev)
- 				busy = 1;
- 			break;
- 		case 1:
--			master->slaves = NEXT_SLAVE(q);
-+			spin_lock_bh(&master->slaves_lock);
-+			if (rcu_dereference_protected(master->slaves,
-+						      lockdep_is_held(&master->slaves_lock)) == q)
-+				rcu_assign_pointer(master->slaves,
-+						   rcu_dereference_protected(NEXT_SLAVE(q),
-+									     lockdep_is_held(&master->slaves_lock)));
-+			spin_unlock_bh(&master->slaves_lock);
-+			rcu_read_unlock_bh();
- 			return NETDEV_TX_OK;
- 		default:
- 			nores = 1;
- 			break;
- 		}
- 		__skb_pull(skb, skb_network_offset(skb));
--	} while ((q = NEXT_SLAVE(q)) != start);
-+	} while ((q = rcu_dereference_bh(NEXT_SLAVE(q))) != start);
- 
- 	if (nores && skb_res == NULL) {
- 		skb_res = skb;
-@@ -345,29 +387,32 @@ static netdev_tx_t teql_master_xmit(struct sk_buff *skb, struct net_device *dev)
- 
- 	if (busy) {
- 		netif_stop_queue(dev);
-+		rcu_read_unlock_bh();
- 		return NETDEV_TX_BUSY;
- 	}
- 	master->tx_errors++;
- 
- drop:
- 	master->tx_dropped++;
-+	rcu_read_unlock_bh();
- 	dev_kfree_skb(skb);
- 	return NETDEV_TX_OK;
- }
- 
- static int teql_master_open(struct net_device *dev)
- {
--	struct Qdisc *q;
-+	struct Qdisc *q, *first;
- 	struct teql_master *m = netdev_priv(dev);
- 	int mtu = 0xFFFE;
- 	unsigned int flags = IFF_NOARP | IFF_MULTICAST;
- 
--	if (m->slaves == NULL)
-+	first = rtnl_dereference(m->slaves);
-+	if (!first)
- 		return -EUNATCH;
- 
- 	flags = FMASK;
- 
--	q = m->slaves;
-+	q = first;
- 	do {
- 		struct net_device *slave = qdisc_dev(q);
- 
-@@ -389,7 +434,7 @@ static int teql_master_open(struct net_device *dev)
- 			flags &= ~IFF_BROADCAST;
- 		if (!(slave->flags&IFF_MULTICAST))
- 			flags &= ~IFF_MULTICAST;
--	} while ((q = NEXT_SLAVE(q)) != m->slaves);
-+	} while ((q = rtnl_dereference(NEXT_SLAVE(q))) != first);
- 
- 	m->dev->mtu = mtu;
- 	m->dev->flags = (m->dev->flags&~FMASK) | flags;
-@@ -417,14 +462,15 @@ static void teql_master_stats64(struct net_device *dev,
- static int teql_master_mtu(struct net_device *dev, int new_mtu)
- {
- 	struct teql_master *m = netdev_priv(dev);
--	struct Qdisc *q;
-+	struct Qdisc *q, *first;
- 
--	q = m->slaves;
-+	first = rtnl_dereference(m->slaves);
-+	q = first;
- 	if (q) {
- 		do {
- 			if (new_mtu > qdisc_dev(q)->mtu)
- 				return -EINVAL;
--		} while ((q = NEXT_SLAVE(q)) != m->slaves);
-+		} while ((q = rtnl_dereference(NEXT_SLAVE(q))) != first);
- 	}
- 
- 	WRITE_ONCE(dev->mtu, new_mtu);
-@@ -444,6 +490,7 @@ static __init void teql_master_setup(struct net_device *dev)
- 	struct teql_master *master = netdev_priv(dev);
- 	struct Qdisc_ops *ops = &master->qops;
- 
-+	spin_lock_init(&master->slaves_lock);
- 	master->dev	= dev;
- 	ops->priv_size  = sizeof(struct teql_sched_data);
- 
+         phy1: ethernet-phy@1 {
+-            compatible = "ethernet-phy-id0022.1537",
+-                         "ethernet-phy-ieee802.3-c22";
++            compatible = "ethernet-phy-id0022.1537";
+             reg = <1>;
+             interrupt-parent = <&irqc0>;
+             interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
 -- 
 2.53.0
 
