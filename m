@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B268C472F99;
-	Tue, 21 Jul 2026 19:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02C5471425;
+	Tue, 21 Jul 2026 19:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663506; cv=none; b=Cqp6S18DuhySmVjr4sr7GdSDfywgYUmDuCzZK/qy8BH4IVtpJ4G27Pl/zqwXoCn5mLf0um/Yd2+zRCT4h4L5tTwVHeFNlbuWA2bck90TmkkYioEEnzlSk6m7HlYnQll3Wgm9TevsU6bhr2ungbl0KlQXHQNNkWo7fi2W8Fl/JyA=
+	t=1784663508; cv=none; b=acKixECKJH3VsZgUTFw74c73HJp7E23HDyt8nwTsOeFVCFScTGfte2c8K1hFImSJtMfF5PsE/bJGeMf0BbTutKFqhJOE8Y2eBz2WL9IAIUTTsvfSaF8q/JCR8i/zKnC+mytNA1ZHMYuM+1EJhruu6GIR/PTstg8JCy4JPK0cXf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663506; c=relaxed/simple;
-	bh=d/SqbfbE6rnai7jeFFyu/GmX3S65UJV4u7iQB9PmDh4=;
+	s=arc-20240116; t=1784663508; c=relaxed/simple;
+	bh=VcdVLA7RPT4t+psWrG74amAE7ZMheCPi+Ob5sXOftSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EKcDjpvYxurfpmkuaFTr4izjkSvexQUHJ2wvHA75BijUnoOrCuT1IvZPXgl+8y5hJLFpniqEL6SarKXXP58EP2sgWn1DLe1vuonX6pkh5ngwlxNXkGfw/M2Lrx+v3GqBDz1I7LLQnfsxWrq+iuproqghf6APUJWvn4pmtyt6S8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FP3OMem/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gMJtNbC4QDeG+OY//Ct0u8IFGojpZdPTJrygWjjGSWst8JatEZIGU4R6PNqsHfgalqTt4AOweGWXZekeU9S6vegxadDS/S+aUqbISgE2e7tR/5ZtgwKOrJFN2uOw7eGGvkfOqmhayAWykQkNwv4VahrV6rzOi86zHth+52a3Cqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFDFMXvK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FP3OMem/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238241F00A3A;
-	Tue, 21 Jul 2026 19:51:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFDFMXvK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6162E1F000E9;
+	Tue, 21 Jul 2026 19:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663501;
-	bh=nAkfgsgFyt7EgVjckrSUEbWomhZYNtJlKHSB2m1qqwk=;
+	s=korg; t=1784663506;
+	bh=nARTMkCPy47pPxn/59Z/gmUqZe4hlORD1rPDvPlyHCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FP3OMem/p3sNeruXSGMSLE/iwNnuF4EPcIwMHi4IP1JijQd1FXSIJfRV65IfAeFZg
-	 gF6RCK3AMZqM9dYPe4HPApdRxv1GuRC6yu0y8/BY67HoMgDKQUEhagvzFmkU9JN/8Q
-	 JaMOIaSVcqZ4t88buXxWrPnwo6ZgrVodXK7WkYDQ=
+	b=HFDFMXvKShUSrFPvmbD8WLlOSZRKV7Gh2opsOy/W9FiDFdlFVKU9X00ElilTRwHC4
+	 ABcRijISZS02qse5HSFg0nIUzzTRbhigeUKR4T3pSN+ZHis+YAEcJWn2teZjfzCFem
+	 6yC/IWh2EhZI+c/CSczFJeKUl5vP3IZuoY8PUHJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Qiang Ma <maqianga@uniontech.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.12 0830/1276] LoongArch: KVM: Return full old CSR value from kvm_emu_xchg_csr()
-Date: Tue, 21 Jul 2026 17:21:13 +0200
-Message-ID: <20260721152504.634855074@linuxfoundation.org>
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.12 0849/1276] fbdev: vesafb: fix memory leak in vesafb_probe()
+Date: Tue, 21 Jul 2026 17:21:32 +0200
+Message-ID: <20260721152505.051721623@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,38 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Ma <maqianga@uniontech.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit ebd50de14f1a06b7e0206083904bcc62b9ba65be upstream.
+commit b15d708995c01bbffe7dcd634a31959f6805bed3 upstream.
 
-The LoongArch CSRXCHG instruction returns the full old CSR value in rd
-after applying the masked update. kvm_emu_xchg_csr() currently masks
-the saved value before returning it to the guest, so rd receives only
-the bits selected by the write mask.
+Since commit 73ce73c30ba9 ("fbdev: Transfer video= option strings to
+caller; clarify ownership") the string returned from fb_get_options()
+is expected to be freed by the caller. But the string is not freed in
+vesafb_probe(). Fix that by freeing the option string after setup.
 
-That breaks the architectural behavior and makes a zero mask return 0
-instead of the previous CSR value. So, keep the masked CSR update, but
-return the unmodified old CSR value.
-
+Fixes: 73ce73c30ba9 ("fbdev: Transfer video= option strings to caller; clarify ownership")
 Cc: stable@vger.kernel.org
-Fixes: da50f5a693ff ("LoongArch: KVM: Implement handle csr exception")
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/exit.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/video/fbdev/vesafb.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/loongarch/kvm/exit.c
-+++ b/arch/loongarch/kvm/exit.c
-@@ -103,7 +103,6 @@ static unsigned long kvm_emu_xchg_csr(st
- 		old = kvm_read_sw_gcsr(csr, csrid);
- 		val = (old & ~csr_mask) | (val & csr_mask);
- 		kvm_write_sw_gcsr(csr, csrid, val);
--		old = old & csr_mask;
- 	} else
- 		pr_warn_once("Unsupported csrxchg 0x%x with pc %lx\n", csrid, vcpu->arch.pc);
+--- a/drivers/video/fbdev/vesafb.c
++++ b/drivers/video/fbdev/vesafb.c
+@@ -267,6 +267,7 @@ static int vesafb_probe(struct platform_
+ 	/* ignore error return of fb_get_options */
+ 	fb_get_options("vesafb", &option);
+ 	vesafb_setup(option);
++	kfree(option);
  
+ 	if (si->orig_video_isVGA != VIDEO_TYPE_VLFB)
+ 		return -ENODEV;
 
 
