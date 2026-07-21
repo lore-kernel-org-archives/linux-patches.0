@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7B73B95E0;
-	Tue, 21 Jul 2026 21:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CF23B95E0;
+	Tue, 21 Jul 2026 21:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670207; cv=none; b=VwhhxI4Pb6DcGBzqs9fa6Gk545wr1RmRONkvWHi9eB8anGm47JE2ArthE5G1lDDA47xg96XC8pxkwHEulpguFAsQjqpG4FrPztbW2i26i5S5sPxr2tH3dYNj/2SNigYJ7RP9/dsw4tTKqquk/aM/7wwkqp9ThwsZKpywmhFON0o=
+	t=1784670210; cv=none; b=MpvXFOswmMoP5/VB6MokXqUQ0GEQSdJgM68ilyEsU87UHTL3hLGqxdg94AJdDNUw5TCec51N8syUf+xCfOZmHuaotA+JxfCNuR3QCOrqsspahajyLpDlTSAZZphAK1hj+RtPSjF7pVdc7iXoPLTrJ9Udl/a+fCrs63ULRB0rjNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670207; c=relaxed/simple;
-	bh=71Tpw0wh4mYM3r5Fke3toyuz60zVozoORJhjWLQzPSM=;
+	s=arc-20240116; t=1784670210; c=relaxed/simple;
+	bh=eyNjzUgxX0XdlAhjaAqf+l+t7QE0SQK1F/Z1Vru2t6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oyus9bbbA3+Cs/M/y5ATVKNhKIL+0YnaIwKmKb8+Kj9uTN3/tAKYXMEUJna4vUemMkG6n6QJz4uupkHHkjou5FzJO0tfU5/mhW+Kq+riOAbEyk2ZkTqqs6qdB8ZARZ/yM5shTNhD8y/QxDw4ebaaLYphJsUDf9++l8dNCz9bi8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdmVPHU5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bm438OfNtcQ2cK1s/hxLancfndSo5li4l4+rzugIX1y9KBobl4hKh0dTP8uMMzSWjyTwV7S3DQ36gGEMl1XLJe6VvKxFVmLmG3OQBPo3WGFJyNF/RO81jyhFDT/IZggoa7dHPtQvvH3sDJJh7El4/YxqFA3RvYMk/8ZkS4F5A2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6Dr826t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdmVPHU5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904311F000E9;
-	Tue, 21 Jul 2026 21:43:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6Dr826t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C331F000E9;
+	Tue, 21 Jul 2026 21:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670206;
-	bh=khzxlkTgkGVkw2sspWhadi2/wyIeS1WumUgSNTuKAaI=;
+	s=korg; t=1784670208;
+	bh=7VwghNQu/vF9MqVO7Zi8AXfsRXTmrVCLIAxwWo3kppU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fdmVPHU5RPODHBtQd/f6Q/ClAw2V5aG07OvmmI/QQ4ucu4sZgAQ32qUgeQKLIAajC
-	 wN1SBVJn8kyCoe4WPnE8OqYpRYe1GXETve6XZZirk6dgjTgCzzzbdA4M6oaTCOTeDJ
-	 CDbrGjtwKEb+kZk3P3sMWECIpg7XB2mavOso0xUQ=
+	b=W6Dr826tJn8PVH+L2N7xxWrl3lllHQS3exfLab4dnfAAysw9OCC6FBom7vHb8ISEt
+	 XSSh2ej+paOU4mIRo0BVaEArRztIsGISWpnmgopWhivoDMxTFm6J3eu4NiT7fCBSKH
+	 y7/HqbjpkAEscHaRvBLKo9U+9ag3FU+vRm1iDR8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavitra Jha <jhapavitra98@gmail.com>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.1 0792/1067] fs/ntfs3: bound NTFS_DE view.data_off in UpdateRecordData{Root,Allocation}
-Date: Tue, 21 Jul 2026 17:23:13 +0200
-Message-ID: <20260721152442.278112020@linuxfoundation.org>
+	sashiko-reviews@lists.linux.dev,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.1 0839/1067] can: bcm: add missing rcu list annotations and operations
+Date: Tue, 21 Jul 2026 17:24:00 +0200
+Message-ID: <20260721152443.319568979@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,80 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit 3e127829e57f5190f612412ece4541cb96d5ec7a upstream.
+commit 7b2c3eabc4dafc062a25e10711154f2107526a78 upstream.
 
-In do_action()'s UpdateRecordDataRoot (fslog.c:3489) and
-UpdateRecordDataAllocation (fslog.c:3697) cases, the memmove
-destination is `Add2Ptr(e, le16_to_cpu(e->view.data_off))`,
-where e->view.data_off comes from an on-disk NTFS_DE inside
-an INDEX_ROOT or INDEX_BUFFER.  Neither case validates
-view.data_off + dlen against e->size; the existing
-check_if_index_root / check_if_alloc_index helpers walk the
-entry chain and validate the entry's offset, but not its
-internal view fields.
+sashiko-bot remarked the missing use of list_add_rcu() in
+bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
+when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
 
-The neighbouring read sites (e.g., fs/ntfs3/index.c when
-iterating view entries) check view.data_off + view.data_size
-<= e->size.  Apply the same bound at the two memmove sites.
+To cover all initial settings of the bcm_op's the list_add_rcu() calls
+are moved to the end of the setup code.
 
-Reproduced under UML+KASAN on mainline 8d90b09e6741 via
-pr_warn-only probe instrumentation: with view.data_off forced
-to 0xFFFC, the memmove writes 32 bytes past the end of the
-NTFS_DE.
+While at it, also fix the mirroring removal side: bcm_release() called
+bcm_remove_op() - which frees the op via call_rcu() - on ops that were
+still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
+Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
+matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
 
-This is similar in shape to Pavitra Jha's 2026-05-02 patch
-"fs/ntfs3: prevent oob in case UpdateRecordDataRoot"
-(<20260502105008.21827-1-jhapavitra98@gmail.com>) which
-proposes calling ntfs3_bad_de_range(); that helper does not
-exist in mainline.  This patch uses inline checks.
-
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Cc: stable@vger.kernel.org
-Reported-by: Pavitra Jha <jhapavitra98@gmail.com>
-Closes: https://lore.kernel.org/ntfs3/20260502105008.21827-1-jhapavitra98@gmail.com/
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Reported-by: sashiko-reviews@lists.linux.dev
+Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
+Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-5-562f7e3e42da@hartkopp.net
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ net/can/bcm.c |   25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -3515,6 +3515,18 @@ move_data:
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -248,7 +248,7 @@ static int bcm_proc_show(struct seq_file
+ 			   (reduction == 100) ? "near " : "", reduction);
+ 	}
  
- 		e = Add2Ptr(attr, le16_to_cpu(lrh->attr_off));
+-	list_for_each_entry(op, &bo->tx_ops, list) {
++	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
  
-+		/*
-+		 * e->view.data_off and dlen come from the on-disk
-+		 * INDEX_ROOT entry / LRH.  The neighbouring read sites
-+		 * (e.g. fs/ntfs3/index.c) check that
-+		 * view.data_off + view.data_size <= e->size; mirror that
-+		 * bound here so the memmove cannot reach past the entry.
-+		 */
-+		if (le16_to_cpu(e->view.data_off) > le16_to_cpu(e->size) ||
-+		    le16_to_cpu(e->view.data_off) + dlen >
-+			    le16_to_cpu(e->size))
-+			goto dirty_vol;
+ 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
+ 			   bcm_proc_getifname(net, ifname, op->ifindex));
+@@ -903,6 +903,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 	struct bcm_sock *bo = bcm_sk(sk);
+ 	struct bcm_op *op;
+ 	struct canfd_frame *cf;
++	bool add_op_to_list = false;
+ 	unsigned int i;
+ 	int err;
+ 
+@@ -1045,8 +1046,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 		hrtimer_init(&op->thrtimer, CLOCK_MONOTONIC,
+ 			     HRTIMER_MODE_REL_SOFT);
+ 
+-		/* add this bcm_op to the list of the tx_ops */
+-		list_add(&op->list, &bo->tx_ops);
++		add_op_to_list = true;
+ 
+ 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
+ 
+@@ -1068,6 +1068,10 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 		op->flags |= TX_ANNOUNCE;
+ 	}
+ 
++	/* add this bcm_op to the list of the tx_ops? */
++	if (add_op_to_list)
++		list_add_rcu(&op->list, &bo->tx_ops);
 +
- 		memmove(Add2Ptr(e, le16_to_cpu(e->view.data_off)), data, dlen);
+ 	if (op->flags & TX_ANNOUNCE)
+ 		bcm_can_tx(op);
  
- 		mi->dirty = true;
-@@ -3723,6 +3735,12 @@ move_data:
- 			goto dirty_vol;
+@@ -1211,9 +1215,6 @@ static int bcm_rx_setup(struct bcm_msg_h
+ 			     HRTIMER_MODE_REL_SOFT);
+ 		op->thrtimer.function = bcm_rx_thr_handler;
+ 
+-		/* add this bcm_op to the list of the rx_ops */
+-		list_add(&op->list, &bo->rx_ops);
+-
+ 		/* call can_rx_register() */
+ 		do_rx_register = 1;
+ 
+@@ -1292,10 +1293,12 @@ static int bcm_rx_setup(struct bcm_msg_h
+ 					      bcm_rx_handler, op, "bcm", sk);
+ 		if (err) {
+ 			/* this bcm rx op is broken -> remove it */
+-			list_del_rcu(&op->list);
+ 			bcm_remove_op(op);
+ 			return err;
  		}
- 
-+		/* See UpdateRecordDataRoot for the rationale. */
-+		if (le16_to_cpu(e->view.data_off) > le16_to_cpu(e->size) ||
-+		    le16_to_cpu(e->view.data_off) + dlen >
-+			    le16_to_cpu(e->size))
-+			goto dirty_vol;
 +
- 		memmove(Add2Ptr(e, le16_to_cpu(e->view.data_off)), data, dlen);
++		/* add this bcm_op to the list of the rx_ops */
++		list_add_rcu(&op->list, &bo->rx_ops);
+ 	}
  
- 		a_dirty = true;
+ 	return msg_head->nframes * op->cfsiz + MHSIZ;
+@@ -1625,8 +1628,10 @@ static int bcm_release(struct socket *so
+ 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
+ #endif /* CONFIG_PROC_FS */
+ 
+-	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
++	}
+ 
+ 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
+ 		/*
+@@ -1657,8 +1662,10 @@ static int bcm_release(struct socket *so
+ 
+ 	synchronize_rcu();
+ 
+-	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
++	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
++		list_del_rcu(&op->list);
+ 		bcm_remove_op(op);
++	}
+ 
+ 	/* remove device reference */
+ 	if (bo->bound) {
 
 
