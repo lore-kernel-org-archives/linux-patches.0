@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDEC535DA40;
-	Tue, 21 Jul 2026 19:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9246A4302F8;
+	Tue, 21 Jul 2026 19:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662479; cv=none; b=juDlzViSSpt0kgvk6b/RxxhM4UNDVjy2Bs62nz2V1IQxFd/gS1i1Fw27bfSVRM1fN/UpM5RHp8Jh/nqO+lfjuw04QtF62lGz7eu0qf74PtyhEJpm0WaNYBOHYuHNq7D+WgEdHuVrm+ehgsqlkyZfDFpcnRpwArLg81o9teFtbDI=
+	t=1784662481; cv=none; b=I6ob3KBDNc6PxZk7TCwYn/0vXbq1Euc7WgoTzOQikFO31JabNCzpl3ubFFNe7RyFYo+A2ekJ3kcLDqoh9x/GnTWOzjx3+az7du74qAKRnNbLJ6g23/TSxU+9hSvaIMwOd5HoeAh+4Bk8nWaSLur2Ue5NhpbNY9dbzxDA+h90Bhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662479; c=relaxed/simple;
-	bh=bEgG/to0v8f9yEBPTfYmF5e0qSfmLBMEIYqYohaGhv8=;
+	s=arc-20240116; t=1784662481; c=relaxed/simple;
+	bh=LkVH7UcPy1tP9YNkKHloAo0C2BH1mYwKNvOctBnenvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tYZS/yY3holpnWbkWxNzh+YKqolQfdYiYwNiP5I9uVs5tnXN8tTh/M3ZOTEzk0r3a0Jdssx7MMIcel+F3Y0XKW4+/OaxttjveICGRhN1N98Ndm4CVGLZieS+B5T2bnDANS6L0sCc2Zq6GDm3Ntpca80MOHo0NHkhZJCkan3K/5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lifd8naN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RUYn6otiqo/6Bxl+6oL4Bx24TdDkcx+UMIU8U+FjYMSdX20dsL4BWYKoaVwFqkcMXQzizchubE1fRQTY6O7Y/L+AgQT6Z6Wco7QrbROUqvkvjcFis1WmQuu+JM4m3xKI27y4i2GdCIExwtOdVaZpnoDOxhCu/WsOLprocKud55w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ONk45nK/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lifd8naN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 608191F000E9;
-	Tue, 21 Jul 2026 19:34:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONk45nK/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045A31F000E9;
+	Tue, 21 Jul 2026 19:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662477;
-	bh=stovjmZm+adx3Upoz9TmxzOOfiSw+RfE+MpbJ0aWASE=;
+	s=korg; t=1784662480;
+	bh=gGtPPB7Sb7G+9Niac2pVQhAENI2IBH553qgwx1vkcnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lifd8naN5OcnC2zSyYYCm/AD85OX9PWxA//LR5+kx/KCv9LUyVYb8LxC/yOvLM4gw
-	 p3uSLxysscBlQSbI2uvY0080bUXx0iPEg4ic7sM0tEytvZtJzzqrRYrPZDDnF8qO/0
-	 SK2312M9Zr3g1XQI0UHtnE7xD1AQO8zKB4LCKOnU=
+	b=ONk45nK/p4YgTRViOuFMxmC+mjutWA9LwYPEbQ2nDQfJUI5rB6HKTCH4mNUtLDPMJ
+	 xkbDpi+VmlyAIxUmczpiaDyljoAvdz9a5TltAh4UxL2ruJTN5ZJ2UUfSMbwDDufjZI
+	 fUyvHXbA44wyYOGgDyHqWV9BZIJKbAUlfVSHOs0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Blanchard <anton@samba.org>,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0458/1276] perf tools: Guard test_bit from out-of-bounds sample CPU
-Date: Tue, 21 Jul 2026 17:15:01 +0200
-Message-ID: <20260721152456.352493022@linuxfoundation.org>
+Subject: [PATCH 6.12 0418/1276] PCI: Introduce named defines for PCI ROM
+Date: Tue, 21 Jul 2026 17:14:21 +0200
+Message-ID: <20260721152455.454369770@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,106 +47,105 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit a5498ccf8079fc91c938f122ff9697b0c526b2fd ]
+[ Upstream commit 113e86bc58a918f85d250723436a4d541a873358 ]
 
-When PERF_SAMPLE_CPU is absent from a perf.data file, sample->cpu is
-initialized to (u32)-1 by evsel__parse_sample().  Five call sites pass
-this value directly to test_bit(sample->cpu, cpu_bitmap), reading
-massively out of bounds past the DECLARE_BITMAP(..., MAX_NR_CPUS)
-allocation of 4096 bits.
+Convert the magic numbers associated with PCI ROM into named
+definitions. Some of these definitions will be used in the second
+fix patch.
 
-Add a sample->cpu >= MAX_NR_CPUS guard before each test_bit() call,
-matching the existing safe pattern in builtin-kwork.c.  This catches
-both the (u32)-1 sentinel and any corrupted CPU value exceeding the
-bitmap size.
-
-Fixes: 5d67be97f890 ("perf report/annotate/script: Add option to specify a CPU range")
-Cc: Anton Blanchard <anton@samba.org>
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Link: https://patch.msgid.link/20260508082128.3344255-2-kanie@linux.alibaba.com
+Stable-dep-of: 538796b807fc ("PCI: Check ROM header and data structure addr before accessing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-annotate.c | 3 ++-
- tools/perf/builtin-diff.c     | 3 ++-
- tools/perf/builtin-report.c   | 3 ++-
- tools/perf/builtin-sched.c    | 6 ++++--
- 4 files changed, 10 insertions(+), 5 deletions(-)
+ drivers/pci/rom.c | 40 ++++++++++++++++++++++++++++------------
+ 1 file changed, 28 insertions(+), 12 deletions(-)
 
-diff --git a/tools/perf/builtin-annotate.c b/tools/perf/builtin-annotate.c
-index 3dc6197ef3fa6d..3882f400065c7c 100644
---- a/tools/perf/builtin-annotate.c
-+++ b/tools/perf/builtin-annotate.c
-@@ -298,7 +298,8 @@ static int process_sample_event(const struct perf_tool *tool,
- 		goto out_put;
- 	}
+diff --git a/drivers/pci/rom.c b/drivers/pci/rom.c
+index e18d3a4383ba6b..d4a141bd148b4b 100644
+--- a/drivers/pci/rom.c
++++ b/drivers/pci/rom.c
+@@ -5,13 +5,28 @@
+  * (C) Copyright 2004 Jon Smirl <jonsmirl@yahoo.com>
+  * (C) Copyright 2004 Silicon Graphics, Inc. Jesse Barnes <jbarnes@sgi.com>
+  */
++
++#include <linux/bits.h>
+ #include <linux/kernel.h>
+ #include <linux/export.h>
+ #include <linux/pci.h>
++#include <linux/sizes.h>
+ #include <linux/slab.h>
  
--	if (ann->cpu_list && !test_bit(sample->cpu, ann->cpu_bitmap))
-+	if (ann->cpu_list && (sample->cpu >= MAX_NR_CPUS ||
-+			     !test_bit(sample->cpu, ann->cpu_bitmap)))
- 		goto out_put;
+ #include "pci.h"
  
- 	if (!al.filtered &&
-diff --git a/tools/perf/builtin-diff.c b/tools/perf/builtin-diff.c
-index 82fb7773e03e62..bf5611e1f5e006 100644
---- a/tools/perf/builtin-diff.c
-+++ b/tools/perf/builtin-diff.c
-@@ -417,7 +417,8 @@ static int diff__process_sample_event(const struct perf_tool *tool,
- 		goto out;
- 	}
- 
--	if (cpu_list && !test_bit(sample->cpu, cpu_bitmap)) {
-+	if (cpu_list && (sample->cpu >= MAX_NR_CPUS ||
-+			!test_bit(sample->cpu, cpu_bitmap))) {
- 		ret = 0;
- 		goto out;
- 	}
-diff --git a/tools/perf/builtin-report.c b/tools/perf/builtin-report.c
-index 8700c39680662a..86cbca6285a51a 100644
---- a/tools/perf/builtin-report.c
-+++ b/tools/perf/builtin-report.c
-@@ -301,7 +301,8 @@ static int process_sample_event(const struct perf_tool *tool,
- 	if (symbol_conf.hide_unresolved && al.sym == NULL)
- 		goto out_put;
- 
--	if (rep->cpu_list && !test_bit(sample->cpu, rep->cpu_bitmap))
-+	if (rep->cpu_list && (sample->cpu >= MAX_NR_CPUS ||
-+			     !test_bit(sample->cpu, rep->cpu_bitmap)))
- 		goto out_put;
- 
- 	if (sort__mode == SORT_MODE__BRANCH) {
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index fa5f00d47e6277..6d7106fb1c0cbc 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -2185,7 +2185,8 @@ static void timehist_print_sample(struct perf_sched *sched,
- 	char nstr[30];
- 	u64 wait_time;
- 
--	if (cpu_list && !test_bit(sample->cpu, cpu_bitmap))
-+	if (cpu_list && (sample->cpu >= MAX_NR_CPUS ||
-+			!test_bit(sample->cpu, cpu_bitmap)))
- 		return;
- 
- 	timestamp__scnprintf_usec(t, tstr, sizeof(tstr));
-@@ -2823,7 +2824,8 @@ static int timehist_sched_change_event(const struct perf_tool *tool,
- 	}
- 
- 	if (!sched->idle_hist || thread__tid(thread) == 0) {
--		if (!cpu_list || test_bit(sample->cpu, cpu_bitmap))
-+		if (!cpu_list || (sample->cpu < MAX_NR_CPUS &&
-+				 test_bit(sample->cpu, cpu_bitmap)))
- 			timehist_update_runtime_stats(tr, t, tprev);
- 
- 		if (sched->idle_hist) {
++#define PCI_ROM_HEADER_SIZE			0x1A
++#define PCI_ROM_POINTER_TO_DATA_STRUCT		0x18
++#define PCI_ROM_LAST_IMAGE_INDICATOR		0x15
++#define PCI_ROM_LAST_IMAGE_INDICATOR_BIT	BIT(7)
++#define PCI_ROM_IMAGE_LEN			0x10
++#define PCI_ROM_IMAGE_SECTOR_SIZE		SZ_512
++#define PCI_ROM_IMAGE_SIGNATURE			0xAA55
++
++/* Data structure signature is "PCIR" in ASCII representation */
++#define PCI_ROM_DATA_STRUCT_SIGNATURE		0x52494350
++#define PCI_ROM_DATA_STRUCT_LEN			0x0A
++
+ /**
+  * pci_enable_rom - enable ROM decoding for a PCI device
+  * @pdev: PCI device to enable
+@@ -91,26 +106,27 @@ static size_t pci_get_rom_size(struct pci_dev *pdev, void __iomem *rom,
+ 	do {
+ 		void __iomem *pds;
+ 		/* Standard PCI ROMs start out with these bytes 55 AA */
+-		if (readw(image) != 0xAA55) {
+-			pci_info(pdev, "Invalid PCI ROM header signature: expecting 0xaa55, got %#06x\n",
+-				 readw(image));
++		if (readw(image) != PCI_ROM_IMAGE_SIGNATURE) {
++			pci_info(pdev, "Invalid PCI ROM header signature: expecting %#06x, got %#06x\n",
++				 PCI_ROM_IMAGE_SIGNATURE, readw(image));
+ 			break;
+ 		}
+-		/* get the PCI data structure and check its "PCIR" signature */
+-		pds = image + readw(image + 24);
+-		if (readl(pds) != 0x52494350) {
+-			pci_info(pdev, "Invalid PCI ROM data signature: expecting 0x52494350, got %#010x\n",
+-				 readl(pds));
++		/* Get the PCI data structure and check its "PCIR" signature */
++		pds = image + readw(image + PCI_ROM_POINTER_TO_DATA_STRUCT);
++		if (readl(pds) != PCI_ROM_DATA_STRUCT_SIGNATURE) {
++			pci_info(pdev, "Invalid PCI ROM data signature: expecting %#010x, got %#010x\n",
++				 PCI_ROM_DATA_STRUCT_SIGNATURE, readl(pds));
+ 			break;
+ 		}
+-		last_image = readb(pds + 21) & 0x80;
+-		length = readw(pds + 16);
+-		image += length * 512;
++		last_image = readb(pds + PCI_ROM_LAST_IMAGE_INDICATOR) &
++				   PCI_ROM_LAST_IMAGE_INDICATOR_BIT;
++		length = readw(pds + PCI_ROM_IMAGE_LEN);
++		image += length * PCI_ROM_IMAGE_SECTOR_SIZE;
+ 		/* Avoid iterating through memory outside the resource window */
+ 		if (image >= rom + size)
+ 			break;
+ 		if (!last_image) {
+-			if (readw(image) != 0xAA55) {
++			if (readw(image) != PCI_ROM_IMAGE_SIGNATURE) {
+ 				pci_info(pdev, "No more image in the PCI ROM\n");
+ 				break;
+ 			}
 -- 
 2.53.0
 
