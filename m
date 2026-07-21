@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D2A43C7C5;
-	Tue, 21 Jul 2026 21:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C670343D4FE;
+	Tue, 21 Jul 2026 21:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668278; cv=none; b=j1dTUT5k39RtCx9sY1G9s5f7ZrF6M0QLl1QWgUCcFviNL1VPoDXpiUWw26VbPluu7wS3gel7BjiC2uO36qCu64r1+5X8ZSBKo3QwJP+uaaJk+t06NzPqidZpYDnSJ56fWzzvljrIL0bo5dpLFc5nXpQBeJ4O84TEEgIHhVQhinA=
+	t=1784668281; cv=none; b=W9OYhu8mNxZCeZl/hH4xoNEP8AVn6KCyhiGCiVsFLtbRaHnW2NJcwwXHEC8l951KIKE1/xXLWaa4pZ+0Erx+arAmwdXl54BWnYlWt8CoqRLmRNYCHJO35Z+GKBAeOH1tgahfuRPuTQdCi+YZgd3eZbZrAXKd+56/kKmHqn1IeAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668278; c=relaxed/simple;
-	bh=1uBYIS2J/ltckugyt+AJF0gUWRSWqkBZyd94cr0pLTY=;
+	s=arc-20240116; t=1784668281; c=relaxed/simple;
+	bh=iEddto00NdJ5/nu2efFsyUcvnwRx4ClR1VqiJcmIaww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OQIK+MoHE2GzRcjgZZUffKmgWYjRV0U1drFOb9FFNYT1i00WXvxqkmjB56L95LPfISaONQyhDTvd+08749StRfXosVZ6AqyA6JEkTTW2FU5X0Mla+Uz73hoO68Ktns5y7s9Xe9We/ypsftUslFO3foGSDczIhI7YR0rug5SJv8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OiFJ6ANw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PpR/0SC/lHymwMeIrsdtJXBb2OyE1bVkiBfyF9OQAZMs6p/QJft/a6wdQzAWLS8VQckCrGUluvXW/GldE7hcOG8lZacdKiguqJ9kW0ycFfcrpKF3BhUNZ2od14CXhdnVMlJJLeAYLkL62H9PUOkDDS6//Q8TeObfCGfl9Q7GLvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pujbIa5C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OiFJ6ANw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D49D1F000E9;
-	Tue, 21 Jul 2026 21:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pujbIa5C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246981F000E9;
+	Tue, 21 Jul 2026 21:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668277;
-	bh=96aCNj3aGNt4gZXjU09X8c7thzGo91GtJVvmhMegsfk=;
+	s=korg; t=1784668279;
+	bh=OmywMeBDgTRlLpYlgyg3/f3RWJUEUPN8HsxP4nvtYm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OiFJ6ANwFE4YjhuXgZYqJra38Q7z0GPU9TWeT63ntEX1LddQASbyno9zHtqWc4jk/
-	 xLU9QjKemIuPDS6TUpMODSalrRKahrKDXuyZOioqOR/uuTlpUEwSir9qEXnwVQZp/S
-	 tO3c8ypBZmL35GhEpMDqW1Os6g0jrVy+xaJvSU1A=
+	b=pujbIa5CxUaSaQgGHvqgP3ovpMoCpZILHAoCJcdecQFv1ylrmf5KLXSngQ6vToVFG
+	 fhU+o8hgdAcuGrM2S6370r/Ca/n0Jp382UqYz9sPM3mc8xCJXYrkPZNK5bQosrcHm6
+	 1TmUNv4i+7bFRPcNZmI5QNwSaQxhqQm3Olh5tvPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Portnoy <dddhkts1@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 0116/1067] ksmbd: fix use-after-free of a deferred file_lock on SMB2_CLOSE then SMB2_CANCEL
-Date: Tue, 21 Jul 2026 17:11:57 +0200
-Message-ID: <20260721152427.183368590@linuxfoundation.org>
+	Zijing Yin <yzjaurora@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.1 0117/1067] net: af_key: initialize alg_key_len for IPComp states
+Date: Tue, 21 Jul 2026 17:11:58 +0200
+Message-ID: <20260721152427.205923852@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,83 +51,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Portnoy <dddhkts1@gmail.com>
+From: Zijing Yin <yzjaurora@gmail.com>
 
-commit 10f293a07f9e10e988b0ae44e2e99c631f5a68e0 upstream.
+commit d129c3177d7b1138fd5066fcc63a698b3ba415b0 upstream.
 
-Commit f580d27e8928 ("ksmbd: fix use-after-free of a deferred file_lock on
-double SMB2_CANCEL") made smb2_cancel() skip a work whose state is
-KSMBD_WORK_CANCELLED, so its cancel_fn cannot be fired a second time. But
-KSMBD_WORK has three states (ACTIVE, CANCELLED, CLOSED), and the same
-freeing producer path is reached for CLOSED too:
+pfkey_msg2xfrm_state() handles the IPComp (SADB_X_SATYPE_IPCOMP) case by
+allocating x->calg and copying only the algorithm name:
 
-  SMB2_CLOSE on the locking handle -> set_close_state_blocked_works() sets
-  the deferred work's state to KSMBD_WORK_CLOSED and wakes the smb2_lock()
-  worker. The worker takes the non-ACTIVE early-exit, locks_free_lock()s
-  the file_lock and, because the state is not KSMBD_WORK_CANCELLED, takes
-  the STATUS_RANGE_NOT_LOCKED branch with "goto out2" -- which, like the
-  cancelled branch, skips release_async_work(). The work stays on
-  conn->async_requests with a live cancel_fn = smb2_remove_blocked_lock
-  pointing at the freed file_lock.
+	x->calg = kmalloc_obj(*x->calg);
+	if (!x->calg) {
+		err = -ENOMEM;
+		goto out;
+	}
+	strcpy(x->calg->alg_name, a->name);
+	x->props.calgo = sa->sadb_sa_encrypt;
 
-A subsequent SMB2_CANCEL for the same AsyncId then passes the
-KSMBD_WORK_CANCELLED-only guard (its state is KSMBD_WORK_CLOSED), so
-smb2_cancel() fires cancel_fn again over the freed file_lock -- the same
-use-after-free fixed, via SMB2_CLOSE instead of a first SMB2_CANCEL:
+Unlike the authentication (x->aalg) and encryption (x->ealg) branches of
+the same function, the compression branch never initializes
+calg->alg_key_len.  IPComp carries no key and the allocation only
+reserves sizeof(struct xfrm_algo) (i.e. no room for a key), so the field
+is left containing uninitialized slab data.
 
-  BUG: KASAN: slab-use-after-free in __locks_delete_block
-    __locks_delete_block
-    locks_delete_block
-    ksmbd_vfs_posix_lock_unblock
-    smb2_remove_blocked_lock
-    smb2_cancel                 <- 2nd SMB2_CANCEL fires cancel_fn
-    handle_ksmbd_work
-  Allocated by ...: locks_alloc_lock <- smb2_lock
-  Freed by ...:     locks_free_lock  <- smb2_lock (non-ACTIVE early-exit)
-  ... cache file_lock_cache of size 192
+calg->alg_key_len is later used as a length by xfrm_algo_clone() when an
+IPComp state is cloned during XFRM_MSG_MIGRATE:
 
-Reproduced on mainline 7.1-rc7 (which already contains f580d27e8928) with
-KASAN by an authenticated SMB client; the double-SMB2_CANCEL control is
-silent on that kernel, so the splat is attributable to the CLOSE trigger.
+	xfrm_state_migrate()
+	  xfrm_state_clone_and_setup()
+	    x->calg = xfrm_algo_clone(orig->calg);
+	      kmemdup(orig, xfrm_alg_len(orig));
 
-Only an ACTIVE deferred work may have its cancel_fn fired: both terminal
-states (CANCELLED and CLOSED) reach the smb2_lock() early-exit that frees
-the file_lock and skips release_async_work(). Guard on KSMBD_WORK_ACTIVE
-so any non-active work is skipped.
+where xfrm_alg_len() returns sizeof(*alg) + (alg_key_len + 7) / 8.  With
+a non-zero garbage alg_key_len, kmemdup() reads past the end of the
+68-byte calg object.  Adding an IPComp SA via PF_KEY and then migrating
+it triggers (net-next, KASAN, init_on_alloc=0):
 
-Fixes: f580d27e8928 ("ksmbd: fix use-after-free of a deferred file_lock on double SMB2_CANCEL")
+  BUG: KASAN: slab-out-of-bounds in kmemdup_noprof+0x44/0x60
+  Read of size 4164 at addr ff11000025a74980 by task diag2/9287
+  CPU: 3 UID: 0 PID: 9287 Comm: diag2 7.1.0-rc6-g903db046d557 #1
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x10e/0x1f0
+   print_report+0xf7/0x600
+   kasan_report+0xe4/0x120
+   kasan_check_range+0x105/0x1b0
+   __asan_memcpy+0x23/0x60
+   kmemdup_noprof+0x44/0x60
+   xfrm_state_migrate+0x70a/0x1da0
+   xfrm_migrate+0x753/0x18a0
+   xfrm_do_migrate+0xb47/0xf10
+   xfrm_user_rcv_msg+0x411/0xb50
+   netlink_rcv_skb+0x158/0x420
+   xfrm_netlink_rcv+0x71/0x90
+   netlink_unicast+0x584/0x850
+   netlink_sendmsg+0x8b0/0xdc0
+   ____sys_sendmsg+0x9f7/0xb90
+   ___sys_sendmsg+0x134/0x1d0
+   __sys_sendmsg+0x16d/0x220
+   do_syscall_64+0x116/0x7d0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+
+  Allocated by task 9287:
+   kasan_save_stack+0x33/0x60
+   kasan_save_track+0x14/0x30
+   __kasan_kmalloc+0xaa/0xb0
+   pfkey_add+0x2652/0x2ea0
+   pfkey_process+0x6d0/0x830
+   pfkey_sendmsg+0x42c/0x850
+   __sys_sendto+0x461/0x4b0
+   __x64_sys_sendto+0xe0/0x1c0
+   do_syscall_64+0x116/0x7d0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+  The buggy address belongs to the object at ff11000025a74980
+   which belongs to the cache kmalloc-96 of size 96
+  The buggy address is located 0 bytes inside of
+   allocated 68-byte region [ff11000025a74980, ff11000025a749c4)
+
+Depending on the uninitialized value the same field can instead request
+an oversized kmemdup() allocation and make the migration clone fail.
+
+The XFRM netlink path is not affected: verify_one_alg() rejects an
+XFRMA_ALG_COMP attribute shorter than xfrm_alg_len(), so a calg added via
+XFRM_MSG_NEWSA is always self-consistent.
+
+Initialize calg->alg_key_len to 0, matching the aalg/ealg branches.
+
+Fixes: 80c9abaabf42 ("[XFRM]: Extension for dynamic update of endpoint address(es)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Zijing Yin <yzjaurora@gmail.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/key/af_key.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -6816,14 +6816,14 @@ int smb2_cancel(struct ksmbd_work *work)
- 				continue;
- 
- 			/*
--			 * A cancelled deferred byte-range lock frees its
--			 * file_lock and takes the smb2_lock() early-exit that
--			 * skips release_async_work(), so the work stays on
--			 * conn->async_requests with a live cancel_fn pointing
--			 * at the freed file_lock.  Re-firing it on a second
--			 * SMB2_CANCEL is a use-after-free.
-+			 * Only an ACTIVE deferred work may have its cancel_fn
-+			 * fired.  A CANCELLED or CLOSED work already took the
-+			 * smb2_lock() non-ACTIVE early-exit that frees the
-+			 * file_lock and skips release_async_work(), so it is
-+			 * still on conn->async_requests with a live cancel_fn
-+			 * pointing at the freed file_lock.
- 			 */
--			if (iter->state == KSMBD_WORK_CANCELLED)
-+			if (iter->state != KSMBD_WORK_ACTIVE)
- 				break;
- 
- 			ksmbd_debug(SMB,
+--- a/net/key/af_key.c
++++ b/net/key/af_key.c
+@@ -1202,6 +1202,7 @@ static struct xfrm_state * pfkey_msg2xfr
+ 				goto out;
+ 			}
+ 			strcpy(x->calg->alg_name, a->name);
++			x->calg->alg_key_len = 0;
+ 			x->props.calgo = sa->sadb_sa_encrypt;
+ 		} else {
+ 			int keysize = 0;
 
 
