@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1945471421;
-	Tue, 21 Jul 2026 18:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68748471437;
+	Tue, 21 Jul 2026 18:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659723; cv=none; b=QajSg54cF2fstDbynrVpHO/Ab0FuCKisrVHMk/SEAb6Vn2CmLcAmDDArewPpd/Qw4TjTa0vlJoJP18wXahm75CBpWvDtSFSHBiSmqJfIO8JDh2YatXiBA8zu46FgEgV5O2bCXeOeMcQgm3qAD+hyZpPnDH5RHtQYatjDAm3/BrE=
+	t=1784659726; cv=none; b=Dj2tZl+9rVoXCK0EED+jHXR0AjK3DpSC2qnP+W3bjMJsDTPUk5IDVdkZ8w7BNTBE7yG2yuLVGzkwTFcj75poMvEYDKbHVatm0KJI7VofJ3enmoVvw26+0deHR5vVa92tC3awN/wo9dHzaJsBU7hYL0WrdgN8m+MQ+1qDgDwHiAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659723; c=relaxed/simple;
-	bh=/3VBVgob8KqZ/bQS3uawBinvqfZsqL1Lxyvc/u2MFME=;
+	s=arc-20240116; t=1784659726; c=relaxed/simple;
+	bh=d1XK3kt5Y0lEuDGgaQ8BToz3sUGyaWo1fnEsq2h8HKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TvnuOfYhm6uUgm188yUASDmp95y4lbMOy/bSxOrWhvmJqznCthJ0RG/gDXUQpSohrpHUbG0E0f7CoTbSb7+0/2WAtaxjjhAK6zTlvAKg5y1gx6WTRvvprcQpOzDcWvBN6pQZG29DA0xDzfjSd0a2+DF7uUFhpFOAf2BDcpo/c+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4UcqoI2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eUhWXYcxUSDQFozF5KbsdIWdi97fyMawB/ps+vQXTWouxZVFp+vHmYpnAFde6ImXdzZS+KBPnCVg/iIsRpcRLEB6LLwPgrgDpfs/tXTfo6ED3eU6qXTSO9t4ZFP7bOln8oy4J7zJakaJ0wQ+PYTVh2+8Vzlz/xYdFy+h4MQ59hI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFEOhzD+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4UcqoI2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1F11F00A3E;
-	Tue, 21 Jul 2026 18:48:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFEOhzD+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D344A1F00A3A;
+	Tue, 21 Jul 2026 18:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659722;
-	bh=cjHOH6TuOHMhhWYSpg2FwqZHc46zktWcnJZChq/EAqo=;
+	s=korg; t=1784659725;
+	bh=TEWNy/ZU5Ul3UTz5/7aU4FdHaJ65TnRdhBvIiqaBAFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H4UcqoI2eazrN6WOVTMDGSyPPFeXHYsGoLRBiGn51cLF/4MpD6OyqVXBkD8GvcvQK
-	 10d5dyqcVlcs3+5McXGZGB466L2w7y+MuIeyOnH3Ll74f9heOpV5HZQiYX9+U2X6Wq
-	 4XyJPGijxvbsK2QXKbIbP4joJruMjWhv2t56HGSA=
+	b=bFEOhzD+sA6rfX/r9dirzwtBpkD2SyCoB399cN835hhu1jvUTD+Ty27KIMsiS/OqB
+	 S7DozJRPmbJzYOxgQdnYMIpNlWwth96y3/R+E/KnGAWTV9gIIByvP36yfxMryIt73D
+	 ActMVtGoTkHZKWLDzlFvdj4GGgfXUjG5I3FOmS2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Eric Dumazet <edumazet@google.com>,
+	syzbot+cb2aa2390ac024e25f5c@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0709/2077] net/sched: cls_flow: Dont expose folded kernel pointers
-Date: Tue, 21 Jul 2026 17:06:22 +0200
-Message-ID: <20260721152609.518923571@linuxfoundation.org>
+Subject: [PATCH 7.1 0710/2077] ipv4: fib: Dont dump dying fib_info in fib_leaf_notify().
+Date: Tue, 21 Jul 2026 17:06:23 +0200
+Message-ID: <20260721152609.542241076@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,71 +54,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit f294fc71c4a0fa4964f6428a1b4e7929c1d83125 ]
+[ Upstream commit 06b693d2eb6651a63ad85bad8673de3b7d4edd6d ]
 
-The flow classifier falls back to addr_fold() for fields that are missing
-from packet headers. In map mode, userspace controls mask, xor, rshift,
-addend and divisor, and can observe the resulting classid through class
-statistics. This allows a tc classifier in a user/network namespace to
-recover the 32-bit folded value of skb->sk, skb_dst() or skb_nfct().
+syzbot reported use-after-free in nsim_fib4_prepare_event(). [0]
 
-Align with standard kernel practices for pointer hashing and replace the
-XOR folding with a keyed siphash (which is cryptographically secure)
+The problem is that the following functions call fib_info_hold() /
+refcount_inc() while dumping fib_info under RCU, which is unsafe.
 
-Fixes: e5dfb815181f ("[NET_SCHED]: Add flow classifier")
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Tested-by: Kyle Zeng <kylebot@openai.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260610101839.14135-1-jhs@mojatatu.com
+  * mlxsw_sp_router_fib4_event()
+  * rocker_router_fib_event()
+  * nsim_fib4_prepare_event()
+
+refcount_inc_not_zero() must be used, but it would be too late
+there.
+
+Let's guarantee the lifetime of fib_info in fib_leaf_notify().
+
+Note that IPv6 does not need the corresponding change since
+fib6_table_dump() holds fib6_table.tb6_lock.
+
+[0]:
+refcount_t: addition on 0; use-after-free.
+WARNING: lib/refcount.c:25 at refcount_warn_saturate+0x9f/0x110 lib/refcount.c:25, CPU#0: kworker/u8:15/3420
+Modules linked in:
+CPU: 0 UID: 0 PID: 3420 Comm: kworker/u8:15 Not tainted syzkaller #0 PREEMPT_{RT,(full)}
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/18/2026
+Workqueue: netns cleanup_net
+RIP: 0010:refcount_warn_saturate+0x9f/0x110 lib/refcount.c:25
+Code: eb 66 85 db 74 3e 83 fb 01 75 4c e8 1b f1 22 fd 48 8d 3d 84 cb f1 0a 67 48 0f b9 3a eb 4a e8 08 f1 22 fd 48 8d 3d 81 cb f1 0a <67> 48 0f b9 3a eb 37 e8 f5 f0 22 fd 48 8d 3d 7e cb f1 0a 67 48 0f
+RSP: 0018:ffffc9000f2c7270 EFLAGS: 00010293
+RAX: ffffffff84a18858 RBX: 0000000000000002 RCX: ffff888032ff9ec0
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffff8f9353e0
+RBP: 0000000000000000 R08: ffff888032ff9ec0 R09: 0000000000000005
+R10: 0000000000000100 R11: 0000000000000004 R12: ffff8880570cc000
+R13: dffffc0000000000 R14: ffff88802b40563c R15: ffff8880570cc000
+FS:  0000000000000000(0000) GS:ffff888126173000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fb1f4d5d000 CR3: 000000006072a000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ __refcount_add include/linux/refcount.h:-1 [inline]
+ __refcount_inc include/linux/refcount.h:366 [inline]
+ refcount_inc include/linux/refcount.h:383 [inline]
+ fib_info_hold include/net/ip_fib.h:629 [inline]
+ nsim_fib4_prepare_event drivers/net/netdevsim/fib.c:930 [inline]
+ nsim_fib_event_schedule_work drivers/net/netdevsim/fib.c:1000 [inline]
+ nsim_fib_event_nb+0x1055/0x1240 drivers/net/netdevsim/fib.c:1043
+ call_fib_notifier+0x45/0x80 net/core/fib_notifier.c:25
+ call_fib_entry_notifier net/ipv4/fib_trie.c:90 [inline]
+ fib_leaf_notify net/ipv4/fib_trie.c:2176 [inline]
+ fib_table_notify net/ipv4/fib_trie.c:2194 [inline]
+ fib_notify+0x36b/0x5e0 net/ipv4/fib_trie.c:2217
+ fib_net_dump net/core/fib_notifier.c:70 [inline]
+ register_fib_notifier+0x184/0x360 net/core/fib_notifier.c:108
+ nsim_fib_create+0x85d/0x9f0 drivers/net/netdevsim/fib.c:1596
+ nsim_dev_reload_create drivers/net/netdevsim/dev.c:1604 [inline]
+ nsim_dev_reload_up+0x374/0x7c0 drivers/net/netdevsim/dev.c:1058
+ devlink_reload+0x501/0x8d0 net/devlink/dev.c:475
+ devlink_pernet_pre_exit+0x1ff/0x420 net/devlink/core.c:558
+ ops_pre_exit_list net/core/net_namespace.c:161 [inline]
+ ops_undo_list+0x187/0x940 net/core/net_namespace.c:234
+ cleanup_net+0x56e/0x800 net/core/net_namespace.c:702
+ process_one_work kernel/workqueue.c:3314 [inline]
+ process_scheduled_works+0xb5d/0x1860 kernel/workqueue.c:3397
+ worker_thread+0xa53/0xfc0 kernel/workqueue.c:3478
+ kthread+0x388/0x470 kernel/kthread.c:436
+ ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
+
+Fixes: 0ae3eb7b4611 ("netdevsim: fib: Perform the route programming in a non-atomic context")
+Fixes: c3852ef7f2f8 ("ipv4: fib: Replay events when registering FIB notifier")
+Reported-by: syzbot+cb2aa2390ac024e25f5c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a290011.39669fcc.33b062.00b1.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260610061744.2030996-2-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_flow.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ include/net/ip_fib.h | 5 +++++
+ net/ipv4/fib_trie.c  | 4 ++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/net/sched/cls_flow.c b/net/sched/cls_flow.c
-index ab364e4e468624..356c68ebc3895a 100644
---- a/net/sched/cls_flow.c
-+++ b/net/sched/cls_flow.c
-@@ -21,6 +21,7 @@
- #include <net/inet_sock.h>
+diff --git a/include/net/ip_fib.h b/include/net/ip_fib.h
+index 318593743b6e15..541da2dde6266d 100644
+--- a/include/net/ip_fib.h
++++ b/include/net/ip_fib.h
+@@ -629,6 +629,11 @@ static inline void fib_info_hold(struct fib_info *fi)
+ 	refcount_inc(&fi->fib_clntref);
+ }
  
- #include <net/pkt_cls.h>
-+#include <linux/siphash.h>
- #include <net/ip.h>
- #include <net/route.h>
- #include <net/flow_dissector.h>
-@@ -57,11 +58,15 @@ struct flow_filter {
- 	struct rcu_work		rwork;
- };
- 
-+static siphash_aligned_key_t flow_keys_secret __read_mostly;
++static inline bool fib_info_hold_safe(struct fib_info *fi)
++{
++	return refcount_inc_not_zero(&fi->fib_clntref);
++}
 +
- static inline u32 addr_fold(void *addr)
+ static inline void fib_info_put(struct fib_info *fi)
  {
--	unsigned long a = (unsigned long)addr;
--
--	return (a & 0xFFFFFFFF) ^ (BITS_PER_LONG > 32 ? a >> 32 : 0);
-+#ifdef CONFIG_64BIT
-+	return (u32)siphash_1u64((u64)addr, &flow_keys_secret);
-+#else
-+	return (u32)siphash_1u32((u32)addr, &flow_keys_secret);
-+#endif
- }
+ 	if (refcount_dec_and_test(&fi->fib_clntref))
+diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
+index 1308213791f19d..dac543c1d6867a 100644
+--- a/net/ipv4/fib_trie.c
++++ b/net/ipv4/fib_trie.c
+@@ -2172,10 +2172,14 @@ static int fib_leaf_notify(struct key_vector *l, struct fib_table *tb,
+ 		if (fa->fa_slen == last_slen)
+ 			continue;
  
- static u32 flow_get_src(const struct sk_buff *skb, const struct flow_keys *flow)
-@@ -596,6 +601,7 @@ static int flow_init(struct tcf_proto *tp)
- 		return -ENOBUFS;
- 	INIT_LIST_HEAD(&head->filters);
- 	rcu_assign_pointer(tp->root, head);
-+	net_get_random_once(&flow_keys_secret, sizeof(flow_keys_secret));
- 	return 0;
- }
- 
++		if (!fib_info_hold_safe(fa->fa_info))
++			continue;
++
+ 		last_slen = fa->fa_slen;
+ 		err = call_fib_entry_notifier(nb, FIB_EVENT_ENTRY_REPLACE,
+ 					      l->key, KEYLENGTH - fa->fa_slen,
+ 					      fa, extack);
++		fib_info_put(fa->fa_info);
+ 		if (err)
+ 			return err;
+ 	}
 -- 
 2.53.0
 
