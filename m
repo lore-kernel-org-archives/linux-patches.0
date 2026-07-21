@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36173E49C8;
-	Tue, 21 Jul 2026 17:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB80402444;
+	Tue, 21 Jul 2026 17:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654226; cv=none; b=t9SAztOkeCRCfTVDCe6BFXnPXpqYRcwOIGfyiscUaBvmxjEB5OCyeAzMTO+m1q6qqUd+tD+n+IhVg/MVZGELNjmGDN8iTiStXV04N+9qXt7j5U0ivRVah8WM2HTX4XIEBTWd1QLARfVSNxq+l5bvxMUGehF/fvg8AYxKnNLRvTc=
+	t=1784654228; cv=none; b=RKzovKxgO7FCc/h0PdfUCZOZc8thfsHJ2JXh8peyEk6bUaz1OFAEoBxr1gh9V6FUQIYCWsI9BgdNSdGbJLK6Be7bvczS/RmxMKYW7wuYajO+hJl+AQBrbYkltwdA08w5aCptwE5qqX0wFNrpIIrYDq9JwXHNDOGPlVBlfI6QzPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654226; c=relaxed/simple;
-	bh=DgRgXeVQKdsnieGw+kE8uiFaFKn9T9sqH5x50tlzc2Q=;
+	s=arc-20240116; t=1784654228; c=relaxed/simple;
+	bh=6ppqjV1BrbVt+/57AvpFOMEIXHnDm2YhcGs9eY4V5fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e+MJPxHxkWdZ8cdM7/qr3pRsxnxYDO2vP57zKdZyxH0gFtyA3c5VXJjCePFTXi92/4FLjc9lIW064iL+3uJ/uwsN048d8XuelfepK2ltLh7f0ZYIyMprOiYVdZ2yBSTfrNkfZVZNMG+oxL6mYlU8cKR/GGNbP0MSpjDUjCa6bWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJCZc6GR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kpIw6fdNiYGmfzaHpU+Qtfb37fAFcXPIl+WsEKiVyq/x/ZtjLGFPJosBLtJE66M6J+POEUP+MBlOOhkBTp+ESckorjUgIqeKeuhv2q5IVGXv7gfWDRgjlto3WCK1qk3//C0oInOrSAWff+ETxLKfp3cDaTp4aOhyoxfdA3lOgqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZz13TuX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJCZc6GR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460631F000E9;
-	Tue, 21 Jul 2026 17:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZz13TuX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34D61F000E9;
+	Tue, 21 Jul 2026 17:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654224;
-	bh=WA26tlEroiM6Bp3Ii/+wlfH4EHyjOQE8uNeW74wkF0k=;
+	s=korg; t=1784654227;
+	bh=/hm72ovExVORQYufqzCTbp+OeZqe7L1WB5Ndygethek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iJCZc6GRwaRjScsogXisGog9y7oMZ/PL4/nOuUzcaidmYictddxZcEpW29imtUsM9
-	 0m8IJXZiCYQQZyx6HBHdgZd0XBwg+RXwo/GmyRSq9nPfTHBJnEo2ePpGuhg6jYpI7l
-	 08jm2eOmZZVVF6PMHh5+coNqW3Bg12xGMjqModkY=
+	b=nZz13TuXFCn2WT9sbYWezytQoc0dM1qwGDP1QnspLQsSracyCMNlwDQO638joYZRT
+	 ZGTBX3A24ffII1RO/E6Qf4VRy/VFsczZbfBvALtCqJlhxZCD8DTmBI7V23ZlNKY65p
+	 GQAmwsPio9OzxTpKAhHfUJ6gF8u9L76jT7/ORzYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 7.1 1625/2077] selinux: fix incorrect execmem checks on overlayfs
-Date: Tue, 21 Jul 2026 17:21:38 +0200
-Message-ID: <20260721152631.086053015@linuxfoundation.org>
+	Armin Wolf <W_Armin@gmx.de>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 7.1 1626/2077] leds: uleds: Fix potential buffer overread
+Date: Tue, 21 Jul 2026 17:21:39 +0200
+Message-ID: <20260721152631.109305112@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,157 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-commit 9fe595fad54d4ac6a402edb3f60bec859d52cea6 upstream.
+commit c19fe864f667afc49d1391d764e20b66555bcf7a upstream.
 
-The commit fixing the overlayfs mmap() and mprotect() access checks
-failed to skip the execmem check in __file_map_prot_check() for the case
-where the "mounter check" is being performed. This check should be
-performed only against the credentials of the task that is calling
-mmap()/mprotect(), since it doesn't pertain to the file itself, but
-rather just gates the ability of the calling task to get an executable
-memory mapping in general.
+The name string supplied by userspace is not guaranteed to be
+null-terminated, so using strchr() on it might result in a buffer
+overread. The same thing will happen when said string is used by
+the LED class device.
 
-The purpose of the "mounter check" is to guard against using an
-overlayfs mount to gain file access that would otherwise be denied to
-the mounter. For execmem this is not relevant, as there is no further
-file access granted based on it (notice that the file's context is not
-used as the target in the check), so checking it also against the
-mounter credentials would be incorrect.
-
-Fix this by passing a boolean to [__]file_map_prot_check() and
-selinux_mmap_file_common() that indicates if we are doing the "mounter
-check" and skiping the execmem check in that case. Since this boolean
-also indicates if we use current_cred() or the mounter cred as the
-subject, also remove the "cred" argument from these functions and
-determine it based on the boolean and the file struct.
+Fix this by using strnchr() instead and explicitly check that
+the name string is properly null-terminated.
 
 Cc: stable@vger.kernel.org
-Fixes: 82544d36b172 ("selinux: fix overlayfs mmap() and mprotect() access checks")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Reviewed-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: e381322b0190 ("leds: Introduce userspace LED class driver")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20260524235553.189134-1-W_Armin@gmx.de
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/hooks.c |   42 ++++++++++++++++++++++++------------------
- 1 file changed, 24 insertions(+), 18 deletions(-)
+ drivers/leds/uleds.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -3973,9 +3973,9 @@ static int selinux_file_ioctl_compat(str
+--- a/drivers/leds/uleds.c
++++ b/drivers/leds/uleds.c
+@@ -102,7 +102,8 @@ static ssize_t uleds_write(struct file *
  
- static int default_noexec __ro_after_init;
- 
--static int __file_map_prot_check(const struct cred *cred,
--				 const struct file *file, unsigned long prot,
--				 bool shared, bool bf_user_file)
-+static int __file_map_prot_check(const struct file *file, unsigned long prot,
-+				 bool shared, bool mounter_check,
-+				 bool bf_user_file)
- {
- 	struct inode *inode = NULL;
- 	bool prot_exec = prot & PROT_EXEC;
-@@ -3988,10 +3988,10 @@ static int __file_map_prot_check(const s
- 			inode = file_inode(file);
- 	}
- 
--	if (default_noexec && prot_exec &&
-+	if (!mounter_check && default_noexec && prot_exec &&
- 	    (!file || IS_PRIVATE(inode) || (!shared && prot_write))) {
- 		int rc;
--		u32 sid = cred_sid(cred);
-+		u32 sid = current_sid();
- 
- 		/*
- 		 * We are making executable an anonymous mapping or a private
-@@ -4004,6 +4004,8 @@ static int __file_map_prot_check(const s
- 	}
- 
- 	if (file) {
-+		const struct cred *cred = mounter_check ?
-+				file->f_cred : current_cred();
- 		/* "read" always possible, "write" only if shared */
- 		u32 av = FILE__READ;
- 		if (shared && prot_write)
-@@ -4017,11 +4019,11 @@ static int __file_map_prot_check(const s
- 	return 0;
- }
- 
--static inline int file_map_prot_check(const struct cred *cred,
--				      const struct file *file,
--				      unsigned long prot, bool shared)
-+static inline int file_map_prot_check(const struct file *file,
-+				      unsigned long prot, bool shared,
-+				      bool mounter_check)
- {
--	return __file_map_prot_check(cred, file, prot, shared, false);
-+	return __file_map_prot_check(file, prot, shared, mounter_check, false);
- }
- 
- static int selinux_mmap_addr(unsigned long addr)
-@@ -4037,12 +4039,14 @@ static int selinux_mmap_addr(unsigned lo
- 	return rc;
- }
- 
--static int selinux_mmap_file_common(const struct cred *cred, struct file *file,
--				    unsigned long prot, bool shared)
-+static int selinux_mmap_file_common(struct file *file, unsigned long prot,
-+				    bool shared, bool mounter_check)
- {
- 	if (file) {
- 		int rc;
- 		struct common_audit_data ad;
-+		const struct cred *cred = mounter_check ?
-+				file->f_cred : current_cred();
- 
- 		ad.type = LSM_AUDIT_DATA_FILE;
- 		ad.u.file = file;
-@@ -4051,15 +4055,16 @@ static int selinux_mmap_file_common(cons
- 			return rc;
- 	}
- 
--	return file_map_prot_check(cred, file, prot, shared);
-+	return file_map_prot_check(file, prot, shared, mounter_check);
- }
- 
- static int selinux_mmap_file(struct file *file,
- 			     unsigned long reqprot __always_unused,
- 			     unsigned long prot, unsigned long flags)
- {
--	return selinux_mmap_file_common(current_cred(), file, prot,
--					(flags & MAP_TYPE) == MAP_SHARED);
-+	return selinux_mmap_file_common(file, prot,
-+					(flags & MAP_TYPE) == MAP_SHARED,
-+					false);
- }
- 
- /**
-@@ -4091,8 +4096,9 @@ static int selinux_mmap_backing_file(str
- 	if (vma->vm_flags & VM_EXEC)
- 		prot |= PROT_EXEC;
- 
--	return selinux_mmap_file_common(backing_file->f_cred, backing_file,
--					prot, vma->vm_flags & VM_SHARED);
-+	return selinux_mmap_file_common(backing_file, prot,
-+					vma->vm_flags & VM_SHARED,
-+					true);
- }
- 
- static int selinux_file_mprotect(struct vm_area_struct *vma,
-@@ -4153,11 +4159,11 @@ static int selinux_file_mprotect(struct
- 		}
- 	}
- 
--	rc = __file_map_prot_check(cred, file, prot, shared, backing_file);
-+	rc = __file_map_prot_check(file, prot, shared, false, backing_file);
- 	if (rc)
- 		return rc;
- 	if (backing_file) {
--		rc = file_map_prot_check(file->f_cred, file, prot, shared);
-+		rc = file_map_prot_check(file, prot, shared, true);
- 		if (rc)
- 			return rc;
+ 	name = udev->user_dev.name;
+ 	if (!name[0] || !strcmp(name, ".") || !strcmp(name, "..") ||
+-	    strchr(name, '/')) {
++	    strnchr(name, sizeof(udev->user_dev.name), '/') ||
++	    !strnchr(name, sizeof(udev->user_dev.name), '\0')) {
+ 		ret = -EINVAL;
+ 		goto out;
  	}
 
 
