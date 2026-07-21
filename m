@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB27C471421;
-	Tue, 21 Jul 2026 20:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9FC46D0A0;
+	Tue, 21 Jul 2026 20:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665570; cv=none; b=bhiNehxaaX6npaUSwIRspqZvQemK8LudIQ1brYxK7vVyEgpore3x29UivAM8H2++XMAI9TLqyq8qURMrOmPNh1N2nBxtEOQCkJEOnwFa3s21b4VcxNrl/5vchgdA2AbUubnDyPGmJjd93P9ZaQHheesTs/Rcj2Hq5U29HD5kHZA=
+	t=1784665572; cv=none; b=pCOHN1Mcuez5DqmgD3TfsO+2t5AW//MAst7uVddif5n8NPCYQcrdYnQkqDZnc+yJOCgxiZlV1POZZPVzgo+i0nJlioAmKXH4OJX2LR24k2NxnIt6/mQyKLxw3ff4f8fe7OxMx/FiccbMGDWfO3r9LiYnF5+k2gZ1XfYVDkOKctQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665570; c=relaxed/simple;
-	bh=C+htPyK+FI0YHymC7NTJJ/aMVn6sMYUJie+cx0UOHSU=;
+	s=arc-20240116; t=1784665572; c=relaxed/simple;
+	bh=rMP6X3pV5Jd9QEKSXlONKxRziEa6XzL0jSws3nAwsYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UdrqVLNYhgKNWdqQETEleACuE0Xv8LcAyTNblcTwFyZS4j3lK8weh9HeHhkIoMpB0BuvnmHEOlu2+GsNt0k6IEAAWvHhfEthRzmIrYbNKQM75YKjescj6fdyGDUsu0voXtiU06HVy1QF/onU+0uelVBe6dCbix6cPye0a1h9bcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+UYjShZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hjyj4yIWairSqSJho3rqTG3wjtm3hNyibsXx6egw0oA1isljinVYUCEryS5gLBwCSfyHG8iI/uzwesBawYfUWP7NtPgf96FT0TFFE1TRd10wAj6BtUf0B/3q+Spah0K/RExiSr1viqgTjZLv52cVV6zo5PrEkAvKoyWjnsMRF7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wP0M9TU3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+UYjShZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A397F1F000E9;
-	Tue, 21 Jul 2026 20:26:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wP0M9TU3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2051F00A3D;
+	Tue, 21 Jul 2026 20:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665565;
-	bh=FldvJ0NyyJlpIF2DNz7VW1o96DTBegtUAH8uNzNGlBQ=;
+	s=korg; t=1784665567;
+	bh=d2/tmZGvCyF7OCMPWaxT/nEuKSzEM8MlD9ZXJgzkIzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g+UYjShZpH8bHiYur1uiFhaefMGkfGH7uX1whCMxf3yacMg7+WC0b3uMfE6a9IxoO
-	 eroRObsfPhbCpclfQ+L0XCW+BzjXjWHLidPI2Xz+eViIXNG5QhLz8w5nxyy8hzU+R7
-	 Tka1xot9936HtR1hFJJZgRpO7QLJVw092WVSh9Is=
+	b=wP0M9TU3i20xIJFDF8xPvlgwWkcDsIIILx8MLtYD/flnO8etEOm6nshMCqLvkD6xt
+	 MMHL5mqvnvO0Os1G6gPY28H3v0C453JnRHh0XDDaJZ2/vVD9H3oGWJnyByINuiBRLp
+	 ZC2q/4ocvYlPx6kYVbQJBRRt4PGrioZf9Mg79e3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Matthias Feser <mfe@KBSgmbhfr.onmicrosoft.com>,
-	Moteen Shah <m-shah@ti.com>
-Subject: [PATCH 6.6 0351/1266] serial: 8250_omap: clear rx_running on zero-length DMA completes
-Date: Tue, 21 Jul 2026 17:13:08 +0200
-Message-ID: <20260721152449.687589126@linuxfoundation.org>
+	Simon Horman <simon.horman@redhat.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	David Howells <dhowells@redhat.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0352/1266] rxrpc: rxrpc_verify_data ensure rx_dec_buffer alloc
+Date: Tue, 21 Jul 2026 17:13:09 +0200
+Message-ID: <20260721152449.709251459@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,50 +56,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Feser <mfe@KBSgmbhfr.onmicrosoft.com>
+From: Jeffrey Altman <jaltman@auristor.com>
 
-commit 061b627ba534230a18ec4d7251562af12325d06a upstream.
+commit 16c8ae9735c5bd7e54dd7478d6348e0fc860842d upstream.
 
-On AM33xx RX DMA only triggers when the FIFO reaches the
-configured threshold (typically 48 bytes). For smaller bursts
-no DMA request is issued and the FIFO is drained by RX timeout.
+rxrpc_recvmsg_data() calls rxrpc_verify_data() whenever the
+rxrpc_call.rx_dec_buffer is unallocated and assumes that upon
+successful return that rx_dec_buffer must be allocated.
+However, rxrpc_verify_data() does not request an allocation if
+the rxrpc_skb_priv.len is zero.
 
-In this case __dma_rx_do_complete() can legitimately see count == 0.
+In addition, failure to allocate rx_dec_buffer will result in a
+call to skb_copy_bits() with a NULL destination which can
+trigger a NULL pointer dereference.
 
-The current code exits early in this case and does not clear
-dma->rx_running, leaving the DMA state inconsistent. This can
-prevent RX DMA from restarting and may cause
-omap_8250_rx_dma_flush() to fail, marking DMA as broken.
+To prevent these issues rxrpc_verify_data() is modified to
+always attempt to allocate the rxrpc_call.rx_dec_buffer if it
+is NULL.
 
-Fix this by clearing dma->rx_running once the DMA transfer has
-completed or been terminated, even if no data was transferred.
+This issue was identified with assistance of a private
+sashiko instance.
 
-Fixes: a5fd8945a478 ("serial: 8250: 8250_omap.c: Clear DMA RX running status only after DMA termination is done")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Matthias Feser <mfe@KBSgmbhfr.onmicrosoft.com>
-Reviewed-by: Moteen Shah <m-shah@ti.com>
-Link: https://patch.msgid.link/BE3P281MB55155F2F5795E411F5A65282EE0B2@BE3P281MB5515.DEUP281.PROD.OUTLOOK.COM
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d2bc90cf6c75cb ("rxrpc: Fix DATA decrypt vs splice() by copying data to buffer in recvmsg")
+Reported-by: Simon Horman <simon.horman@redhat.com>
+Signed-off-by: Jeffrey Altman <jaltman@auristor.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Jiayuan Chen <jiayuan.chen@linux.dev>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260609140911.838677-2-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_omap.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/rxrpc/recvmsg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -953,11 +953,12 @@ static void __dma_rx_do_complete(struct
- 				dev_err(p->port.dev, "teardown incomplete\n");
- 		}
- 	}
-+
-+	dma->rx_running = 0;
- 	if (!count)
- 		goto out;
- 	ret = tty_insert_flip_string(tty_port, dma->rx_buf, count);
+--- a/net/rxrpc/recvmsg.c
++++ b/net/rxrpc/recvmsg.c
+@@ -157,7 +157,7 @@ static int rxrpc_verify_data(struct rxrp
+ 	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
+ 	int ret;
  
--	dma->rx_running = 0;
- 	p->port.icount.rx += ret;
- 	p->port.icount.buf_overrun += count - ret;
- out:
+-	if (sp->len > call->rx_dec_bsize) {
++	if (sp->len > call->rx_dec_bsize || !call->rx_dec_buffer) {
+ 		/* Make sure we can hold a 1412-byte jumbo subpacket and make
+ 		 * sure that the buffer size is aligned to a crypto blocksize.
+ 		 */
 
 
