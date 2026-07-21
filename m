@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C8246D56D;
-	Tue, 21 Jul 2026 20:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E3AB47252F;
+	Tue, 21 Jul 2026 20:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664540; cv=none; b=PtdlLWyEOXAqmKz8IH2ohRgarRiQ1u0OQg5rilNhkaNNii+FuF9HMLUQ2Kj1rzC3y0rGuXs/wfqft25gx8dAVUl1K6QJOR1WUoHPTJPeE/YcUKqdMsiVLLaVeZmZt6sRA7u49ynm6d5rbWJLzHciBh9l3qgQF1Mzlzhqp7dzIc8=
+	t=1784664542; cv=none; b=jO1fs9/f7sMrwwBhbM+AaRRB3cYbzwXpmtyli3cC7fGj3R6Mk3Q++1TheM0ZcWOXS5E7Ckv5GUjAcJcFt8CAEukMDRCzXSuowLFD7z33OyAYAgQskx5EACuSESuXJN16neX/l5p8THTiB7P0GpLlQDm/3XajXDOdQSShKKu5e4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664540; c=relaxed/simple;
-	bh=BWh+HHpla7X5tdXX/cQwIiNrWYmZNO5dlhFBr+2jPNs=;
+	s=arc-20240116; t=1784664542; c=relaxed/simple;
+	bh=s4gogwGBaJ87H2qU/op/XvEhkbX0MHmtJcCfZEZQcs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T12Tjxnu7ej5YEKkWbyAqwtrNppnHmAZ++gxBtixOov92I9TlVtQyiRAAg/c/xGbhAywNgX82ejygAIoIWJEkHsVPIvG16J+dxqranjL/br472ygNVhCcNW2TEyRSeEBnysMzrySvLOhb8+mFjYugP0/0mlxYZ1VxcgG07w6rNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W12tCWKk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pr0K9jwa85kX495iDFUQTrcIbs9Gl5yGNITjtteTs7sZnn2CclvTYihHGb7ASVd8dEhYBoN4l/PoFLh7h0fifNTVJTo02C7LZ6Ios7IKcp0E/1guoygRvKkZVpEwrMf+IZ6YkFulcpEO/4bWFhgNxPqwsz7NpUB+jGf0q/gIock=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fqtMuJ7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W12tCWKk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47CF1F00A3A;
-	Tue, 21 Jul 2026 20:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fqtMuJ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20021F000E9;
+	Tue, 21 Jul 2026 20:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664538;
-	bh=YrRDRr7reA6WyGVDqTahcoL9MnC58OdPmS/jdiaRPlU=;
+	s=korg; t=1784664541;
+	bh=/gCA8TwbUo7qFqI/62xMjEyL17ecDS+VZdkNPafS48s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W12tCWKkVU46wkhykunFh8bY2IaOcALr0IfsHAEsSLQO1W5UW2sdu0DHBZX36vBOt
-	 cn6TC/i/2vbD5Ff9F7hATAiowrfB7GfKGIWeuWJwHWQGJ6xNVcJzHDYElVr5JCKTao
-	 AF7G9goJ2qvrkLubS4GwL+PCUDLbRkG3tyImQ+M4=
+	b=0fqtMuJ7dmUNCGAycIBjcW/u4Q7Fvw6ZwrUSSoabeBD1/h94hUVpLxuN3a01l7QV/
+	 YFupfefuLm++BcIcCSSzJi1BCSKVB8B5evg4Lczgmo+Sw3NGo33WA1nw3XwAsHCJsT
+	 1p+6FJAxGSoXWb2qxSnfpnpv9z/z7VPn1dB3kREo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Dooks <ben.dooks@codethink.co.uk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>
-Subject: [PATCH 6.12 1237/1276] default_gfp(): avoid using the "newfangled" __VA_OPT__ trick
-Date: Tue, 21 Jul 2026 17:28:00 +0200
-Message-ID: <20260721152513.771865146@linuxfoundation.org>
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 1202/1276] bpf: Convert lpm_trie.c to rqspinlock
+Date: Tue, 21 Jul 2026 17:27:25 +0200
+Message-ID: <20260721152512.961702783@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,47 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-commit 551d44200152cb26f75d2ef990aeb6185b7e37fd upstream.
+[ Upstream commit 47979314c0fe245ed54306e2f91b3f819c7c0f9f ]
 
-The default_gfp() helper that I added is not wrong, but it turns out
-that it causes unnecessary headaches for 'sparse' which doesn't support
-the use of __VA_OPT__ (introduced in C++20 and C23, and supported by gcc
-and clang for a long time).
+Convert all LPM trie usage of raw_spinlock to rqspinlock.
 
-We do already use __VA_OPT__ in some other cases in the kernel (drm/xe
-and btrfs), but it has been fairly limited.  Now it triggers for pretty
-much everything, and sparse ends up not working at all.
+Note that rcu_dereference_protected in trie_delete_elem is switched over
+to plain rcu_dereference, the RCU read lock should be held from BPF
+program side or eBPF syscall path, and the trie->lock is just acquired
+before the dereference. It is not clear the reason the protected variant
+was used from the commit history, but the above reasoning makes sense so
+switch over.
 
-We can use the traditional gcc ',##__VA_ARGS__' syntax instead: it may
-not be the "C standard" way and is slightly less natural in this
-context, but it is the traditional model for this and avoids the sparse
-problem.
-
-Reported-and-tested-by: Ricardo Ribalda <ribalda@chromium.org>
-Reported-and-tested-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Reported-by: Ben Dooks <ben.dooks@codethink.co.uk>
-Fixes: e19e1b480ac7 ("add default_gfp() helper macro and use it in the new *alloc_obj() helpers")
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Closes: https://lore.kernel.org/lkml/000000000000adb08b061413919e@google.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20250316040541.108729-22-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 2f884d371faf ("bpf: Allow LPM map access from sleepable BPF programs")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/gfp.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/lpm_trie.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/include/linux/gfp.h
-+++ b/include/linux/gfp.h
-@@ -13,8 +13,8 @@ struct vm_area_struct;
- struct mempolicy;
+--- a/kernel/bpf/lpm_trie.c
++++ b/kernel/bpf/lpm_trie.c
+@@ -15,6 +15,7 @@
+ #include <net/ipv6.h>
+ #include <uapi/linux/btf.h>
+ #include <linux/btf_ids.h>
++#include <linux/bpf_local_storage.h>
  
- /* Helper macro to avoid gfp flags if they are the default one */
--#define __default_gfp(a,...) a
--#define default_gfp(...) __default_gfp(__VA_ARGS__ __VA_OPT__(,) GFP_KERNEL)
-+#define __default_gfp(a,b,...) b
-+#define default_gfp(...) __default_gfp(,##__VA_ARGS__,GFP_KERNEL)
+ /* Intermediate node */
+ #define LPM_TREE_NODE_FLAG_IM BIT(0)
+@@ -361,8 +362,7 @@ static long trie_update_elem(struct bpf_
+ 	 */
+ 	slot = &trie->root;
  
- /* Convert GFP flags to their corresponding migrate type */
- #define GFP_MOVABLE_MASK (__GFP_RECLAIMABLE|__GFP_MOVABLE)
+-	while ((node = rcu_dereference_protected(*slot,
+-					lockdep_is_held(&trie->lock)))) {
++	while ((node = rcu_dereference(*slot))) {
+ 		matchlen = longest_prefix_match(trie, node, key);
+ 
+ 		if (node->prefixlen != matchlen ||
+@@ -483,8 +483,7 @@ static long trie_delete_elem(struct bpf_
+ 	trim = &trie->root;
+ 	trim2 = trim;
+ 	parent = NULL;
+-	while ((node = rcu_dereference_protected(
+-		       *trim, lockdep_is_held(&trie->lock)))) {
++	while ((node = rcu_dereference(*trim))) {
+ 		matchlen = longest_prefix_match(trie, node, key);
+ 
+ 		if (node->prefixlen != matchlen ||
 
 
