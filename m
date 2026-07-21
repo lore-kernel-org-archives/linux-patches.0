@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1778E45A2B1;
-	Tue, 21 Jul 2026 20:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4117F479880;
+	Tue, 21 Jul 2026 20:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667517; cv=none; b=jgJN+T9q1j0NGe3CEk1isAqPLO+WXFfYsejKeJ05PQEmid0fVgwKyjcBnGeUuU56JLcgFITNKz7rprWOxSCIGbtPYure/DB8sKh9pct5Q5OIZrjVCfIG+p0yfZHP7jZKG1uOVm4Tr8kxvgJ7TcmLuvikTjOxQ2CUcVnFnEJES/s=
+	t=1784667517; cv=none; b=ehAFwru2GqtY1estZY2eIhhhKylHLa1nK1oaHdwdVKEltck7+buA0LsuSFGc03RVjao9TwIkOb0nQxhwHX+cebR7IIySy8aCwkmvYFwubcX2fGnttwR9rIVURsbTlaiKILozItnlgiaY4WDASi+Tb1j45gGcnbh9HN/+W/coX1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784667517; c=relaxed/simple;
-	bh=1s2NPZsb4UgZvFnkdUOBe/Sex/Cqoi+gMPQGYr3v6Ro=;
+	bh=FxKL2EEboRCSE9P5hROs/jFGgLc86ZTFSR/Frm6QpZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lWAoMrQC3DCXJLdq1Ssd0OKZBXrLyz9O50OeLDQsJuUH9Yb391y5Vgcju6kgnplDvPCt4FvPzZIjJbA0UeC4d35+UGNqXU6B/GhbRRLFNv2PFJ65+c136Ias63B0zX9g8QL9NbHADH8hTX3glnVToUWsdXHlpb9Oin57NB4cGmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kk4Rh2Xd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bFfrLyndIo5FYXWbfhw6MtfZOHwW3u2UXnLT/70/9j+AnFPuJ6r5edmzeOy9yr7vlflPaI/bHDuDAtcSJdE0TBnNfNQQjwCXaKg3PK2SW98VUqXVbMT7C6sWQ4n3GLzpxzNo6TonN8TGmsMdy89AZSxgs9YClYQjUMEpj5zGhfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s9vpsNyf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kk4Rh2Xd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A41C1F00A3F;
-	Tue, 21 Jul 2026 20:58:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s9vpsNyf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B3A1F00AC4;
+	Tue, 21 Jul 2026 20:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667504;
-	bh=n9dtsINHK5Dipj7On2480Kmb0OUZtU/E5EQpxOBj8ZQ=;
+	s=korg; t=1784667514;
+	bh=e8UpCJK+vPkFdEufxXHhbdl0JW3xBFeVbMwX/RznlD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kk4Rh2Xd9dJB9OsCK/iHEb2qW210mwEoAuj3vy9SF7VIjD0wCEnz1YnaDQOUfQTST
-	 pCiJ+vHCNiDz5sza7HoLFpYQjPZ4iohNx6MlWIPjnteoMcbLGK/QhWLYffuuIDmsAW
-	 aVYhgtWMMQUoAUouyAxpYGI2YFIjpxtlnFfvhy9Y=
+	b=s9vpsNyfY305hHnYyfNE01JPnPb+YlMFUHc8qDU8EUGapk9E08aUJC9UlwNlbyPq7
+	 JeYrjzp3hE4uBoMau8V15KMxKJchsNDAKPZSu3tlSoxAZHF/UJ938VTT4B3yeZn5DC
+	 ifIPiUQ23jwGqAQIfglrN0lYmfBITyIKq/HHB8gI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Liang <shaw.leon@gmail.com>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 1086/1266] net: ip_vti: require CAP_NET_ADMIN in the device netns for changelink
-Date: Tue, 21 Jul 2026 17:25:23 +0200
-Message-ID: <20260721152506.113967675@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>
+Subject: [PATCH 6.6 1089/1266] ieee802154: admin-gate legacy LLSEC dump operations
+Date: Tue, 21 Jul 2026 17:25:26 +0200
+Message-ID: <20260721152506.179553953@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,44 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 95cceadbfd52d7239bd730afdda0655287d77425 upstream.
+commit 9c1e0b6d49471a712511d23fc9d06901561135e8 upstream.
 
-vti_changelink() operates on at most two netns, dev_net(dev) and the
-tunnel link netns t->net. They differ once the device is created in or
-moved to a netns other than the one the request runs in. The rtnl
-changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
-caller privileged there but not in t->net can rewrite a tunnel that
-lives in t->net.
+In net/ieee802154/netlink.c, the legacy IEEE802154_NL family ops table
+builds the LLSEC dump entries (LLSEC_LIST_KEY, LLSEC_LIST_DEV,
+LLSEC_LIST_DEVKEY, LLSEC_LIST_SECLEVEL) with IEEE802154_DUMP() which
+sets no .flags, so generic netlink runs them ungated. The modern
+nl802154 family admin-gates the equivalent reads via
+NL802154_CMD_GET_SEC_KEY and friends with .flags = GENL_ADMIN_PERM.
 
-Gate vti_changelink() on rtnl_dev_link_net_capable() at its top,
-before any attribute is parsed.
+Any local uid that can open AF_NETLINK / NETLINK_GENERIC can resolve
+the "802.15.4 MAC" family and dump LLSEC_LIST_KEY on any wpan netdev
+that has an LLSEC key installed; the dump handler writes the raw
+16-byte AES-128 key bytes (IEEE802154_ATTR_LLSEC_KEY_BYTES, copied
+verbatim from struct ieee802154_llsec_key.key) into the reply.
+Recovering the AES key compromises 802.15.4 LLSEC link confidentiality
+and authenticity, since LLSEC uses CCM* and the same key authenticates
+and encrypts frames.
 
-Reported-by: Xiao Liang <shaw.leon@gmail.com>
-Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
-Fixes: 895de9a3488a ("vti4: Enable namespace changing")
+Impact: any local uid with no capabilities can read the raw 16-byte
+AES-128 LLSEC key from the kernel keytable on any wpan netdev that has
+an administrator-installed LLSEC key, by issuing an LLSEC_LIST_KEY
+dump on the legacy IEEE802154_NL generic-netlink family.
+
+Introduce IEEE802154_DUMP_PRIV() mirroring IEEE802154_DUMP() but
+setting .flags = GENL_ADMIN_PERM, and use it for the four LLSEC dump
+entries. LIST_PHY and LIST_IFACE retain IEEE802154_DUMP() because the
+modern nl802154 family exposes their equivalents to unprivileged
+readers by design (NL802154_CMD_GET_WPAN_PHY and
+NL802154_CMD_GET_INTERFACE carry "can be retrieved by unprivileged
+users" annotations).
+
+Fixes: 3e9c156e2c21 ("ieee802154: add netlink interfaces for llsec")
 Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260612085941.3158249-4-maoyixie.tju@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://lore.kernel.org/20260520141640.1149513-2-michael.bommarito@gmail.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ip_vti.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/ieee802154/ieee802154.h |    8 ++++++++
+ net/ieee802154/netlink.c    |   16 ++++++++--------
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
---- a/net/ipv4/ip_vti.c
-+++ b/net/ipv4/ip_vti.c
-@@ -579,6 +579,9 @@ static int vti_changelink(struct net_dev
- 	__u32 fwmark = t->fwmark;
- 	struct ip_tunnel_parm p;
+--- a/net/ieee802154/ieee802154.h
++++ b/net/ieee802154/ieee802154.h
+@@ -23,6 +23,14 @@ void ieee802154_nl_exit(void);
+ 		.dumpit	= _dump,			\
+ 	}
  
-+	if (!rtnl_dev_link_net_capable(dev, t->net))
-+		return -EPERM;
++#define IEEE802154_DUMP_PRIV(_cmd, _func, _dump)	\
++	{						\
++		.cmd	= _cmd,				\
++		.doit	= _func,			\
++		.dumpit	= _dump,			\
++		.flags	= GENL_ADMIN_PERM,		\
++	}
 +
- 	vti_netlink_parms(data, &p, &fwmark);
- 	return ip_tunnel_changelink(dev, tb, &p, fwmark);
- }
+ struct genl_info;
+ 
+ struct sk_buff *ieee802154_nl_create(int flags, u8 req);
+--- a/net/ieee802154/netlink.c
++++ b/net/ieee802154/netlink.c
+@@ -98,20 +98,20 @@ static const struct genl_small_ops ieee8
+ 	IEEE802154_OP(IEEE802154_SET_MACPARAMS, ieee802154_set_macparams),
+ 	IEEE802154_OP(IEEE802154_LLSEC_GETPARAMS, ieee802154_llsec_getparams),
+ 	IEEE802154_OP(IEEE802154_LLSEC_SETPARAMS, ieee802154_llsec_setparams),
+-	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_KEY, NULL,
+-			ieee802154_llsec_dump_keys),
++	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_KEY, NULL,
++			     ieee802154_llsec_dump_keys),
+ 	IEEE802154_OP(IEEE802154_LLSEC_ADD_KEY, ieee802154_llsec_add_key),
+ 	IEEE802154_OP(IEEE802154_LLSEC_DEL_KEY, ieee802154_llsec_del_key),
+-	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_DEV, NULL,
+-			ieee802154_llsec_dump_devs),
++	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_DEV, NULL,
++			     ieee802154_llsec_dump_devs),
+ 	IEEE802154_OP(IEEE802154_LLSEC_ADD_DEV, ieee802154_llsec_add_dev),
+ 	IEEE802154_OP(IEEE802154_LLSEC_DEL_DEV, ieee802154_llsec_del_dev),
+-	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_DEVKEY, NULL,
+-			ieee802154_llsec_dump_devkeys),
++	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_DEVKEY, NULL,
++			     ieee802154_llsec_dump_devkeys),
+ 	IEEE802154_OP(IEEE802154_LLSEC_ADD_DEVKEY, ieee802154_llsec_add_devkey),
+ 	IEEE802154_OP(IEEE802154_LLSEC_DEL_DEVKEY, ieee802154_llsec_del_devkey),
+-	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_SECLEVEL, NULL,
+-			ieee802154_llsec_dump_seclevels),
++	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_SECLEVEL, NULL,
++			     ieee802154_llsec_dump_seclevels),
+ 	IEEE802154_OP(IEEE802154_LLSEC_ADD_SECLEVEL,
+ 		      ieee802154_llsec_add_seclevel),
+ 	IEEE802154_OP(IEEE802154_LLSEC_DEL_SECLEVEL,
 
 
