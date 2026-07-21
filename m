@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E174646EC8E;
-	Tue, 21 Jul 2026 19:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C520E43031D;
+	Tue, 21 Jul 2026 19:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662007; cv=none; b=WkHXyxP2ENGuU+P9y9HRV7g9XiU4jZdG2KBZX3X5HhdTIe1gDDZ1p0rw+t/OtFv3ifFWFbgx2fPfj5NLmN9WXjiqH1ZDXR+yF/QCmlwLuUktgPfsJgb2JUhzQGzMscM1Z11nZGD2nzMK3zHPiSYxiyLG8AH9vzjFH82CfW7bvhY=
+	t=1784662010; cv=none; b=uX+YSfoNIacFnhmSmaE1fal48Ml/kIL+YQoRwkYH4lO6UXk4WyzD8WL4w8R9gz7AHKmYEfAtxeWAVC3W3AIf+oSbgDZ8gR/UXRnOf8JJZx5Zz0btLiG+126pfluaRrahq+lruMxG3PJKMXzm5lohrtfaqgtqW8sk5fmo3e7nO38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662007; c=relaxed/simple;
-	bh=GNmj+9SSQX23UXpn67Ex0gzJji06d0EMG7qzRYEhPlc=;
+	s=arc-20240116; t=1784662010; c=relaxed/simple;
+	bh=vgS4MGBqOQ07BB9DS9VMCJqxwhRPClc0xMMMmmLkfQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kkM42CbbtaXmjDuxS2wXAG06lt+P8lgFYBnr7qYqY9zEFHBtVbHtDg1Dp6WM7ZNnkxO+btayZXaHiBtoGtpkWQSES5Xnj2L+PcPDH7pRu66vhw+WWqq0/N6cu0VjJhiVy8LpZfP7Piopg58Rv7l1jKQ3NQ0Sdm8HWWYqNhYfNmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOq5J2aD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hFJ8GKh+j2+boOWqCw5rCKI/uzP8xc2Cai0aWMqZWYAZ+qY9jyFcIuYJgX9JF68WjfnzY/EUfKY1xdIpLNeJiNrbj6hrG9KxEXw0kbdSFlD31FzGYS1lfW45YGjJKgxyZhZRJu5FHq/E8TS97fhJNsq2IQTg3tIHHAyUsRcs0KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V279OM4V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOq5J2aD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53C721F000E9;
-	Tue, 21 Jul 2026 19:26:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V279OM4V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6031F00A3A;
+	Tue, 21 Jul 2026 19:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662005;
-	bh=OLYX+dS4S8RTb0FPVvO+WKYfb4K+uC7f1bLjhCICXPg=;
+	s=korg; t=1784662008;
+	bh=w45F+ztJfximLeCzcW3SOZkDIxoVeZzKw9TseGZAgv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iOq5J2aDnGI93xAhkTFcL1xmiBO8gQBKBtYGd2JeDlZL6OkW4WzRDNro6eVgPXenw
-	 VNorf7ITvz4wJ400BcsnZcpu/dPbjqmUJGusbzD4fExg8QVv8citVSfcjhJQ2XmUFA
-	 uedFXsZp/dA1NFgvu53H3uzeHaCTMXa4HWfPi4P0=
+	b=V279OM4VK4uqz/0PUZrVyuH/I/X6eIY3z5eZavTNT5eeFwng0W2avgOXHXKQ/mY4y
+	 3J6MhC4B9g7BWRx6tg0w7ojC3t26ZKd1mEULM9onnOXpw5NRR9btPYPSp4Rk/7BdlW
+	 gejaTUrnXrNNvAHN0FSHec2UaPxh2LPkrnXWSxCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0274/1276] scsi: target: Remove tcm_loop target reset handling
-Date: Tue, 21 Jul 2026 17:11:57 +0200
-Message-ID: <20260721152452.211193569@linuxfoundation.org>
+Subject: [PATCH 6.12 0283/1276] wifi: mt76: mt792x: skip MLD header rewrite for 802.3 encap TX
+Date: Tue, 21 Jul 2026 17:12:06 +0200
+Message-ID: <20260721152452.414010409@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,117 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit 7c08d430835a90414cd962e3a9602e5b002dee3b ]
+[ Upstream commit a1152244702bb31b64650e5ca8308142286c0e4a ]
 
-tcm_loop_target_reset is supposed to handle all the LUNs on a target but
-it's only doing a TMR_LUN_RESET so only that one LUN is handled.  This
-will cause us to return early while IOs to other LUNs are still hung in
-lower layers. This just removes the target reset handler for the driver
-because LIO doesn't support target resets and for the common case where
-this is run from the scsi-ml error hamdler we have already tried an
-abort and lun reset so waiting again is most likely useless.
+mt792x_tx() rewrites addr1/addr2/addr3 by treating skb->data as
+an 802.11 header for MLD traffic.
 
-Fixes: 1333eee56cdf ("scsi: target: tcm_loop: Drain commands in target_reset handler")
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260530052349.5134-1-michael.christie@oracle.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+That is only valid for native 802.11 frames. Direct 802.3 TX can also
+reach this path with IEEE80211_TX_CTL_HW_80211_ENCAP set, where
+skb->data is not an 802.11 header.
+
+Skip the MLD header rewrite for HW-encap packets to avoid corrupting
+802.3 frame contents.
+
+Fixes: ebb1406813c6 ("wifi: mt76: mt7925: add link handling to txwi")
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/20260425144648.734030-1-sean.wang@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/loopback/tcm_loop.c | 64 ------------------------------
- 1 file changed, 64 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt792x_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/target/loopback/tcm_loop.c b/drivers/target/loopback/tcm_loop.c
-index 1d1043cc649cdd..31b2563fee5e00 100644
---- a/drivers/target/loopback/tcm_loop.c
-+++ b/drivers/target/loopback/tcm_loop.c
-@@ -268,69 +268,6 @@ static int tcm_loop_device_reset(struct scsi_cmnd *sc)
- 	return (ret == TMR_FUNCTION_COMPLETE) ? SUCCESS : FAILED;
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_core.c b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
+index b87eed4d168df5..c6afdf90fade6e 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt792x_core.c
++++ b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
+@@ -79,7 +79,8 @@ void mt792x_tx(struct ieee80211_hw *hw, struct ieee80211_tx_control *control,
+ 		wcid = &mvif->sta.deflink.wcid;
+ 	}
  
--static bool tcm_loop_flush_work_iter(struct request *rq, void *data)
--{
--	struct scsi_cmnd *sc = blk_mq_rq_to_pdu(rq);
--	struct tcm_loop_cmd *tl_cmd = scsi_cmd_priv(sc);
--	struct se_cmd *se_cmd = &tl_cmd->tl_se_cmd;
--
--	flush_work(&se_cmd->work);
--	return true;
--}
--
--static int tcm_loop_target_reset(struct scsi_cmnd *sc)
--{
--	struct tcm_loop_hba *tl_hba;
--	struct tcm_loop_tpg *tl_tpg;
--	struct Scsi_Host *sh = sc->device->host;
--	int ret;
--
--	/*
--	 * Locate the tcm_loop_hba_t pointer
--	 */
--	tl_hba = *(struct tcm_loop_hba **)shost_priv(sh);
--	if (!tl_hba) {
--		pr_err("Unable to perform device reset without active I_T Nexus\n");
--		return FAILED;
--	}
--	/*
--	 * Locate the tl_tpg pointer from TargetID in sc->device->id
--	 */
--	tl_tpg = &tl_hba->tl_hba_tpgs[sc->device->id];
--	if (!tl_tpg)
--		return FAILED;
--
--	/*
--	 * Issue a LUN_RESET to drain all commands that the target core
--	 * knows about.  This handles commands not yet marked CMD_T_COMPLETE.
--	 */
--	ret = tcm_loop_issue_tmr(tl_tpg, sc->device->lun, 0, TMR_LUN_RESET);
--	if (ret != TMR_FUNCTION_COMPLETE)
--		return FAILED;
--
--	/*
--	 * Flush any deferred target core completion work that may still be
--	 * queued.  Commands that already had CMD_T_COMPLETE set before the TMR
--	 * are skipped by the TMR drain, but their async completion work
--	 * (transport_lun_remove_cmd → percpu_ref_put, release_cmd → scsi_done)
--	 * may still be pending in target_completion_wq.
--	 *
--	 * The SCSI EH will reuse in-flight scsi_cmnd structures for recovery
--	 * commands (e.g. TUR) immediately after this handler returns SUCCESS —
--	 * if deferred work is still pending, the memset in queuecommand would
--	 * zero the se_cmd while the work accesses it, leaking the LUN
--	 * percpu_ref and hanging configfs unlink forever.
--	 *
--	 * Use blk_mq_tagset_busy_iter() to find all started requests and
--	 * flush_work() on each — the same pattern used by mpi3mr, scsi_debug,
--	 * and other SCSI drivers to drain outstanding commands during reset.
--	 */
--	blk_mq_tagset_busy_iter(&sh->tag_set, tcm_loop_flush_work_iter, NULL);
--
--	tl_tpg->tl_transport_status = TCM_TRANSPORT_ONLINE;
--	return SUCCESS;
--}
--
- static const struct scsi_host_template tcm_loop_driver_template = {
- 	.show_info		= tcm_loop_show_info,
- 	.proc_name		= "tcm_loopback",
-@@ -339,7 +276,6 @@ static const struct scsi_host_template tcm_loop_driver_template = {
- 	.change_queue_depth	= scsi_change_queue_depth,
- 	.eh_abort_handler = tcm_loop_abort_task,
- 	.eh_device_reset_handler = tcm_loop_device_reset,
--	.eh_target_reset_handler = tcm_loop_target_reset,
- 	.this_id		= -1,
- 	.sg_tablesize		= 256,
- 	.max_sectors		= 0xFFFF,
+-	if (vif && control->sta && ieee80211_vif_is_mld(vif)) {
++	if (vif && control->sta && ieee80211_vif_is_mld(vif) &&
++	    !(info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP)) {
+ 		struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
+ 		struct ieee80211_link_sta *link_sta;
+ 		struct ieee80211_bss_conf *conf;
 -- 
 2.53.0
 
