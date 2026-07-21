@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E8C43E088;
-	Tue, 21 Jul 2026 22:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DC144470A;
+	Tue, 21 Jul 2026 22:19:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672366; cv=none; b=dyKnmBY1LRfvv7wZCFQpDX9bz+4zPJOFDTD2yEmsNE02hAWYxhR7fFqV3cNd+PSDYetn5Hsgj1acvhIHVzNc+bSse4XBsiDgJ8gHrCKFp0lQqrSVv5ykTGEZYHGGXAkbPyzsUcADy887WdYeGCrlmAcvzLYoXb2DgYo41nxAOwg=
+	t=1784672370; cv=none; b=VQCi7QeHP0KL8CpZnBqOJTOPgCTDaHWXD2OHQR7vXkbyq/pFSVuifs5QFfEoTRKax7L3OZbOCgMgboSJyn+wy+I0LGIrEP1fylhFqZn7ukFQLtaaB9Q2FyeHB0giF4tzWi+sHdd0Jv0NEFzRs9CEln5IQbkKmA/E/xq5wek1i2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672366; c=relaxed/simple;
-	bh=KVCEqCnr+46CcKcy0Ov/yg4gqJQSv550YdfBA2j/Q2I=;
+	s=arc-20240116; t=1784672370; c=relaxed/simple;
+	bh=uvyA5AsmOniS0q/GroUkzYC+nD5PmYNCkqawrYlhd/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oHgZ+9PXUMbvi4kCI7qIAMPyon6mlV66I7DsPdlU2PbZ5ezP2qHwXbke/e5i5jBXdZp9OE/z7yAGPIp399vz99mnqOWO6BLkVxwy+RBTohGmAI5o1jQIR9M2H/+Cc0FvPEBMPcFBFsZ/Y38A6jQUjTZ49GsE/m9QE6SrbobJmCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQ5hWEfH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QwBgooqcWAyMxCc13gz+3Gnk6OVAfE66r00ZC/QKHWQzHwDgbZh3/DzyTYZwAIm4Z7OmkObEpaqN8KuPEQwy3j8trJSjhAhN0uH5aaL2X6fMrx/zFl27SPLBPwER5NTTzG2Ce8/hI/++8nVgbCEdftGjINVlwmZsWA1G5oPmhTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZHOelX3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQ5hWEfH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7561F000E9;
-	Tue, 21 Jul 2026 22:19:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZHOelX3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351241F000E9;
+	Tue, 21 Jul 2026 22:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672365;
-	bh=He1wK38o9m2OynQaCfpp60sQN9FeeLFEPFK+rHH4CSY=;
+	s=korg; t=1784672367;
+	bh=NwnfGzoFJaB6p3E0N8FsfSVzATugRIFYP65ZVA0fgTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QQ5hWEfHhWEMijhPd0XMhXLZwkHelCPMymd85ckZiwK/ufDIuDGUOhe5NGmmJWu1C
-	 eVyOxxT0Zfpvg6sSZYLgVAlbnuo2uJifKyq5mcgfl/v3u7Ati3Bt6O0ZEIjHDv6zdI
-	 6axL15Hq3U6hicf5L3chmwKUy1/PAu+dXsw9iAQY=
+	b=DZHOelX3jI+A7XpztH9uGaz0IwoYnafRIb1bwoEuJLvHT/Cnv+0xE/cF4Qw9muRIl
+	 DcSSStn8g7VCwYeZL0lrsrrQKLynCTbOR9rgiFrIl3A+IAuQIafIxNMnGTTUVnQPJo
+	 6lDJPq9Cu3kM6wln0eZcn0FkvbDsM6WBoVM4b2nA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 5.15 598/843] mfd: tps6586x: Fix OF node refcount
-Date: Tue, 21 Jul 2026 17:23:53 +0200
-Message-ID: <20260721152419.500070970@linuxfoundation.org>
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.15 599/843] Bluetooth: SCO: fix sleeping under spinlock in sco_conn_ready
+Date: Tue, 21 Jul 2026 17:23:54 +0200
+Message-ID: <20260721152419.522349547@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,38 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-commit 3001ed2b4e06da2276c42ace6551617065a5b1f9 upstream.
+commit b819db93d73f4593636299e229914052b89e3ef2 upstream.
 
-Platform devices created with platform_device_alloc() call
-platform_device_release() when the last reference to the device's
-kobject is dropped. This function calls of_node_put() unconditionally.
-This works fine for devices created with platform_device_register_full()
-but users of the split approach (platform_device_alloc() +
-platform_device_add()) must bump the reference of the of_node they
-assign manually. Add the missing call to of_node_get().
+sco_conn_ready calls sleeping functions under conn->lock spinlock.
 
-Cc: stable@vger.kernel.org
-Fixes: 62f6b0879304 ("tps6586x: Add device tree support")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260521-pdev-fwnode-ref-v1-1-88c324a1b8d2@oss.qualcomm.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+The critical section can be reduced: conn->hcon is modified only with
+hdev->lock held. It is guaranteed to be held in sco_conn_ready, so
+conn->lock is not needed to guard it.
+
+Move taking conn->lock after lock_sock(parent). This also follows the
+lock ordering lock_sock() > conn->lock elsewhere in the file.
+
+Fixes: 27c24fda62b60 ("Bluetooth: switch to lock_sock in SCO")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/tps6586x.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/sco.c |   20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
---- a/drivers/mfd/tps6586x.c
-+++ b/drivers/mfd/tps6586x.c
-@@ -399,7 +399,7 @@ static int tps6586x_add_subdevs(struct t
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -1126,26 +1126,24 @@ static void sco_conn_ready(struct sco_co
+ 		sk->sk_state_change(sk);
+ 		release_sock(sk);
+ 	} else {
+-		sco_conn_lock(conn);
+-
+-		if (!conn->hcon) {
+-			sco_conn_unlock(conn);
++		if (!conn->hcon)
+ 			return;
+-		}
++
++		lockdep_assert_held(&conn->hcon->hdev->lock);
  
- 		pdev->dev.parent = tps6586x->dev;
- 		pdev->dev.platform_data = subdev->platform_data;
--		pdev->dev.of_node = subdev->of_node;
-+		pdev->dev.of_node = of_node_get(subdev->of_node);
+ 		parent = sco_get_sock_listen(&conn->hcon->src);
+-		if (!parent) {
+-			sco_conn_unlock(conn);
++		if (!parent)
+ 			return;
+-		}
  
- 		ret = platform_device_add(pdev);
- 		if (ret) {
+ 		lock_sock(parent);
+ 
++		sco_conn_lock(conn);
++
+ 		sk = sco_sock_alloc(sock_net(parent), NULL,
+ 				    BTPROTO_SCO, GFP_ATOMIC, 0);
+ 		if (!sk) {
+-			release_sock(parent);
+ 			sco_conn_unlock(conn);
++			release_sock(parent);
+ 			return;
+ 		}
+ 
+@@ -1165,9 +1163,9 @@ static void sco_conn_ready(struct sco_co
+ 		/* Wake up parent */
+ 		parent->sk_data_ready(parent);
+ 
+-		release_sock(parent);
+-
+ 		sco_conn_unlock(conn);
++
++		release_sock(parent);
+ 	}
+ }
+ 
 
 
