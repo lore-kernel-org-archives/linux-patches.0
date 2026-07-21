@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD80E43C7B1;
-	Tue, 21 Jul 2026 22:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E4C415F23;
+	Tue, 21 Jul 2026 22:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671409; cv=none; b=h2pJVGGDpXFmVgi1aXjraB4ua5mKZjdFkfAL59ifQOB3Gk8cY+Rv8C0ny8vbChHcpFdiA1GNpaLF9/22Uhq98zhdf1hoonST/7ckqTvQR5DlhkTdYs8TlR4udrgas2sMN4a59464Z1K1A0dMt4LS7JVB+mRv0OGFmF1ou2LRIm4=
+	t=1784671412; cv=none; b=lieYFtOsaEjAZn4tkuTuWgyqJvxOXd6cGY5fqi6s1GgcRsYbrvk7mcNiqpN62I7KZBtndHXbqXtuCzLW4zwTD56VpeHUWQOw5wrlrciFyeZAajQVcNezdV9cdkO0iuUeQyAEOZkgMX0UdvWPhPVZQkREUfYIrZXcWW0FZVDqWmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671409; c=relaxed/simple;
-	bh=V0K20Wj7iGPTNnkX83PC+2U69D1pxDxjKfd06iUsvDs=;
+	s=arc-20240116; t=1784671412; c=relaxed/simple;
+	bh=e0+kMW5Z2JbUvCEfMPbxaNJOGvsy/hzhK765/UPQ3LQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AfZzxTpxg/vewca41Y4Boxu/T4P7JHUbs1ezg/R3dXqE42k9ZglndCF2/nujZdLQv26S3+fKTbJ92REOK7QTDhRSQ+0cpwKZ7DPpox7txfZJq9NoKV1WwuM3KFiH3DNw1mYl/55POCiGNXmGdXJnUaMzXCyC+yfSXH0ymoSGxf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzrxTBaw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hDvHz1hdkamPX5sk8z24323SSLY1aRQts3PyvoEgUMHCawBEngYyPaEMF8dDSEbbVNUTld+uJs7KCv2i15Fib4XNSn+TA6PwxlqvIV97J1oUxWSqUy7JD74muc9XlMfzKZtA1C+P1PXGntjSTav6P4RRykb3kcc8eAVJKq0f9oA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZUR1wx3p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzrxTBaw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DEF51F00A3D;
-	Tue, 21 Jul 2026 22:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZUR1wx3p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA26F1F000E9;
+	Tue, 21 Jul 2026 22:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671408;
-	bh=zCGxmWG3QzmfzDQKWmSRAHKIcUUbtil1fPvpFdVRZNg=;
+	s=korg; t=1784671411;
+	bh=p3L+FJ2i9H/rZMVmAaCj6bptJ/ug0zpMD4jIOsmaGdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SzrxTBaw//aDiRx7pWXBU71/Voej5SE3JjK2ZZuBh20l8KCWYa46OjDBdNzekfFxx
-	 si2a11wULatd4jyjeLXXVsFAsueY7kMBAJDMBszgKr1DjYh4olMP8mxai0EnO8J3cf
-	 QCzYs4bzMBfQrAqZmzSdRQR21vtrRvLTsyuZwmXk=
+	b=ZUR1wx3poH7fIOTFrVn4apXd9Rj1JxlYg9UzWYuQwxAwXeA+2BNcwjmXaTdYIewZ0
+	 IFX0xI3fxw2Mi8mR4UVLEq5VRi9Xwbf2FwDElwEjJlNlocyeZU4Z3TSBmJRRgpuhR1
+	 pgaBQGiB+O8jhdwhEYBuZM0UtFFak+K73MzVhr2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Saravana Kannan <saravanak@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 236/843] thermal: hwmon: Fix critical temperature attribute removal
-Date: Tue, 21 Jul 2026 17:17:51 +0200
-Message-ID: <20260721152411.325344388@linuxfoundation.org>
+Subject: [PATCH 5.15 219/843] driver core: use READ_ONCE() for dev->driver in dev_has_sync_state()
+Date: Tue, 21 Jul 2026 17:17:34 +0200
+Message-ID: <20260721152410.943690367@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,60 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit c2114dbda05354dbcf4dfbb30a2c623e8611c43a ]
+[ Upstream commit e9506871a8ea304cde48ff4a57226df2aadddae3 ]
 
-Since the return value of thermal_zone_crit_temp_valid() depends on
-the behavior of the thermal zone .get_crit_temp() callback which
-may change over time in theory, thermal_remove_hwmon_sysfs() may
-attempt to remove a critical temperature attribute that has not
-been created, passing a pointer to an uninitialized attribute
-structure to device_remove_file().
+dev_has_sync_state() reads dev->driver twice without holding
+device_lock() -- once for the NULL check and once to dereference
+->sync_state. Some callers only hold device_links_write_lock, which
+doesn't prevent a concurrent unbind from clearing dev->driver via
+device_unbind_cleanup().
 
-To avoid that, set a flag in struct thermal_hwmon_temp after creating
-a critical temperature attribute and use the value of that flag to
-decide whether or not the attribute needs to be removed.
+Fix it by reading dev->driver exactly once with READ_ONCE(), pairing
+with the WRITE_ONCE() in device_set_driver().
 
-Fixes: e8db5d6736a7 ("thermal: hwmon: Make the check for critical temp valid consistent")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2437056.ElGaqSPkdT@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/driver-core/DHW8QPU1VU1F.3P6PH69HLFBYC@kernel.org/
+Fixes: ac338acf514e ("driver core: Add dev_has_sync_state()")
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Saravana Kannan <saravanak@kernel.org>
+Link: https://patch.msgid.link/20260418162221.1121873-1-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_hwmon.c | 5 ++++-
+ include/linux/device.h | 5 ++++-
  1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/thermal_hwmon.c b/drivers/thermal/thermal_hwmon.c
-index ad03262cca5692..131c1cf6ab9cad 100644
---- a/drivers/thermal/thermal_hwmon.c
-+++ b/drivers/thermal/thermal_hwmon.c
-@@ -39,6 +39,7 @@ struct thermal_hwmon_temp {
- 	struct thermal_zone_device *tz;
- 	struct thermal_hwmon_attr temp_input;	/* hwmon sys attr */
- 	struct thermal_hwmon_attr temp_crit;	/* hwmon sys attr */
-+	bool temp_crit_present;
- };
+diff --git a/include/linux/device.h b/include/linux/device.h
+index 2c16bc2149c20d..8da560db916331 100644
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -838,9 +838,12 @@ static inline struct device_node *dev_of_node(struct device *dev)
  
- static LIST_HEAD(thermal_hwmon_list);
-@@ -188,6 +189,8 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 					    &temp->temp_crit.attr);
- 		if (result)
- 			goto unregister_input;
+ static inline bool dev_has_sync_state(struct device *dev)
+ {
++	struct device_driver *drv;
 +
-+		temp->temp_crit_present = true;
- 	}
- 
- 	mutex_lock(&thermal_hwmon_list_lock);
-@@ -232,7 +235,7 @@ void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz)
- 	}
- 
- 	device_remove_file(hwmon->device, &temp->temp_input.attr);
--	if (thermal_zone_crit_temp_valid(tz))
-+	if (temp->temp_crit_present)
- 		device_remove_file(hwmon->device, &temp->temp_crit.attr);
- 
- 	mutex_lock(&thermal_hwmon_list_lock);
+ 	if (!dev)
+ 		return false;
+-	if (dev->driver && dev->driver->sync_state)
++	drv = READ_ONCE(dev->driver);
++	if (drv && drv->sync_state)
+ 		return true;
+ 	if (dev->bus && dev->bus->sync_state)
+ 		return true;
 -- 
 2.53.0
 
