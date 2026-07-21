@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0538644AB61;
-	Tue, 21 Jul 2026 21:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB6A29CE9;
+	Tue, 21 Jul 2026 21:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668983; cv=none; b=jhhWFiCf2Y3yMSm/aJOSV/FiHmLz7Vv8byWAG3Kio1eDENXZttiWP10j1DV8bk4Qi8kUV4Xnt2lwwHWYb1/g1OC/DP2oJOWNm0wyRDb7mCrUvnyQ2IG1c0qvsHAKZXAFFA3ropvRREntevIH1e7dsr7TjPJ2fKdW4dY2PTQEbjg=
+	t=1784668985; cv=none; b=YQEeaW00s07cQnRcytJ2nHa6VzCPLf6f3v9BT9XStseSLKZG2La+DKPRvlmbo9fsZH6IfK1fBgGmZppMVHnfuZpTL6aGHnLulRXHvmqQDIJ0utD11YQoPsgruuPAOXHC11Xpglz+Fq06O9UaSGyK8YcKfGTWHDgDJnzkmb7jbVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668983; c=relaxed/simple;
-	bh=h/IZ9LhcsyOb8JFpsdBn1sUPDqawrHXF7qnI8KjK1/k=;
+	s=arc-20240116; t=1784668985; c=relaxed/simple;
+	bh=UlxMMWcLzpL1vni3oB+K+Rd1DvSZD6vDviNXGhUFyek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=teiKWu3jzYQGM1lN8GV9SmLQLxIjm88y6WK/WBYpNfwsZIl/P3/Xf/3xrWcK2cm2l4uxG5p/pCWHKity03F5blMr2BhBX8JEu9KeD3AkS3qTCSHUBz6LEOTJvINPGbTOGyLLJjPfWSTxc2R8wdsjpX6Nj1X9VCSOlWLTFyH2wNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXY7i46K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IIPy4J+4O0IVh6oVx8zd7Y7npxwELqc0ynAyuaRC+c/wdhzNQOd1eO1R8Cqb+RH3071aWWBN4xjrpN4YsQciBz+mVkaicnF07MameI+DGlFaQnkdjR4KjmLBLxMZrQx24fwQCb+fwqEVmLQ1EnGHnDHR/ClI1+kP+s1sXPhhhYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMyaYh4J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXY7i46K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611281F000E9;
-	Tue, 21 Jul 2026 21:23:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMyaYh4J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F481F000E9;
+	Tue, 21 Jul 2026 21:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668981;
-	bh=4jqNn7/8WlKp8hqz78K5FtX39zybZAnuMprQbT1b3CI=;
+	s=korg; t=1784668984;
+	bh=XuWKD0jfCC5uM2fz1gVAgtLTDjbWtlciMatdKGpOY44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LXY7i46Kr7WWsjjofr2R1+S/uSJlSCUGw5jZTiBku1kjaEOnO7eE+v3Ej+6TeNeh6
-	 L9ZM36wvF8lBkUFTiQFReYTRVZhDeoXjQQavLPz2O9BcqgneJX7zQFFuNXqcJ/WDMs
-	 MU52uVWzn62pWdPaa61455GY1UcSPyzMHTIS+YrI=
+	b=oMyaYh4Jg0Iwkf5LVduHTrXfGWEuSOy/Z8D3L6PXaWzNio8+XZZArnbr7YRjVsupD
+	 f3iuy66E5VGBwyVfxtlmkA33LbDmshP1431xNggiENVJmCyr1kqQnGTVsXVM3YL4e5
+	 neY3OwxNL0tJ/awJU94oO5ZI8rkeI4LDVF7iBoKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Tejun Heo <tj@kernel.org>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0339/1067] workqueue: drop spurious * from print_worker_info() fn declaration
-Date: Tue, 21 Jul 2026 17:15:40 +0200
-Message-ID: <20260721152432.179628532@linuxfoundation.org>
+Subject: [PATCH 6.1 0330/1067] RDMA/counter: Fix incorrect port index in rdma_counter_init() error cleanup
+Date: Tue, 21 Jul 2026 17:15:31 +0200
+Message-ID: <20260721152431.977717591@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,47 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Tao Cui <cuitao@kylinos.cn>
 
-[ Upstream commit 611583a76ea97991b0f65ec1ff099eac7fe0bae4 ]
+[ Upstream commit b86fd95805a7bd4c5b9465c9e7f75e45bbe7eb6f ]
 
-print_worker_info() declares its local 'fn' as work_func_t * but
-worker->current_func has type work_func_t (a function pointer). The
-extra level of indirection is wrong and only happens to be harmless
-today because every supported Linux architecture has
-sizeof(work_func_t) == sizeof(work_func_t *):
-copy_from_kernel_nofault() reads the correct number of bytes by
-accident, and %ps still resolves the printed address because the
-stored value is the function address regardless of declared type.
+The error cleanup loop in rdma_counter_init() iterates with variable
+'i' but accesses dev->port_data[port] instead of dev->port_data[i].
+This causes the failed port's hstats to be freed multiple times while
+leaking hstats of previously initialized ports.
 
-On any future ABI where sizeof(void (*)()) differs from
-sizeof(void *), the nofault copy would transfer the wrong number of
-bytes and the subsequent %ps would print an incorrect address.
-
-Match the field type so the intent is explicit and the code does not
-silently rely on equal pointer sizes.
-
-Fixes: 3d1cb2059d93 ("workqueue: include workqueue info when printing debug dump of a worker task")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 56594ae1d250 ("RDMA/core: Annotate destroy of mutex to ensure that it is released as unlocked")
+Link: https://patch.msgid.link/r/20260520104546.1776253-3-cuitao@kylinos.cn
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/workqueue.c | 2 +-
+ drivers/infiniband/core/counters.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index 93303148a434f4..7eb712b88e2a41 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -4672,7 +4672,7 @@ EXPORT_SYMBOL_GPL(set_worker_desc);
-  */
- void print_worker_info(const char *log_lvl, struct task_struct *task)
- {
--	work_func_t *fn = NULL;
-+	work_func_t fn = NULL;
- 	char name[WQ_NAME_LEN] = { };
- 	char desc[WORKER_DESC_LEN] = { };
- 	struct pool_workqueue *pwq = NULL;
+diff --git a/drivers/infiniband/core/counters.c b/drivers/infiniband/core/counters.c
+index af59486fe41852..d41af5ab6403ab 100644
+--- a/drivers/infiniband/core/counters.c
++++ b/drivers/infiniband/core/counters.c
+@@ -649,7 +649,7 @@ void rdma_counter_init(struct ib_device *dev)
+ 
+ fail:
+ 	for (i = port; i >= rdma_start_port(dev); i--) {
+-		port_counter = &dev->port_data[port].port_counter;
++		port_counter = &dev->port_data[i].port_counter;
+ 		rdma_free_hw_stats_struct(port_counter->hstats);
+ 		port_counter->hstats = NULL;
+ 		mutex_destroy(&port_counter->lock);
 -- 
 2.53.0
 
