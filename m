@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DAE397E9A;
-	Tue, 21 Jul 2026 17:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04604384CD6;
+	Tue, 21 Jul 2026 17:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653979; cv=none; b=O0WSD2Q2cAz3bhkQtO7fLMR5mRyfbaZ00ElQE8QC0rcaM8x6LxmASMk+pcJuS7Y48M/TkHXHM3je+AJBxZw2Lx83LTtcOBMVw6gubZqNu1rG+HFgmMZRQKofeZDBIwfJen4ROOY7BQKulGpAsXQKiD7/pMXQMNQbxu/+aujUYz8=
+	t=1784653982; cv=none; b=Dhy4Z5HBn8lnH31kLgC9c/b23P5+DcAXL8XNXbIG+86/F0IrstCbcDTzc84LRnVOtL1bwdRmQH+z2pCprXt2Z26Gstp1YiqFT/QRIP96KDo7tPmUyJMhTX2u95EYyN5ljQvP6AholtXRAokuPFOV2tDzJk9Adz0k91N4RhOJR6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653979; c=relaxed/simple;
-	bh=zLcMtxGtte5Eyu7gfhcFRkWtbW2Fjj2RsOAOoOWtnIU=;
+	s=arc-20240116; t=1784653982; c=relaxed/simple;
+	bh=69dG9k+fw+lMRYXnXHLDT3+R3a6/hecgzK83RFh957g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKPAiHAXWfUDD0txqTnev6/r1bvan4UlfD0knb9d5rk1gSvaOPD9fukSo/by5nSTDgNPRXEwwvv/ytf6kEMTiOCCeklh/Qs5Q3HJnSPKxfdpPtTfhY2Rd7lGXXzatYPi07/xgaPFvDo6ZvKK8otpR/ijpIiQ94alZT2wP5Gr8WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=onyyS9CT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nen+fRSnRCaTAo0ze5jBCGN/mlUY3gfXbRv++D1uWBaMCqlpFSRE/lKGGcKFQ5LlvpGxNw/c+CKXO1LOdocEG8pZTL9POtq/GrERuTyZnQvfFzck5ADdqv75zAq8SZN89llqRHNPM55DQOTqzp4i5hbyTOis+wpNqFhIkg6MhHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vwNDmeMK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="onyyS9CT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A0D1F000E9;
-	Tue, 21 Jul 2026 17:12:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwNDmeMK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 926AF1F000E9;
+	Tue, 21 Jul 2026 17:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653978;
-	bh=xIUZpwv0iFQMN8f+04S1kNlF+ODnQ0XgJmjAom9ctWk=;
+	s=korg; t=1784653980;
+	bh=50hqhgwAujOai0U2l3NGtlGihD8Qet9yTeparS2E9xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=onyyS9CTMVsct+92SXIHvHNYMwyrWXWNYJKh+817IE0DC8v1Z4pARUfBMknjLgA68
-	 SLP76h3yFRPuSe/G1QLLLpa/PxICCys0/uOSKB4bVa7HFDDSXxIZz6EGKsiu97Sfsi
-	 cpW5vM4MibAsrE0aKCPTKh3TJPMPORl6DRBs7hkI=
+	b=vwNDmeMKgf5Rhz0oYKv7Gm0bddi3QhoUqZJX0Se9MJM7UiXrWeSoPaMIGWjpnabC4
+	 p2lCiYYA6uqzt1QbR3Seq8FdUgA6bLncACimQCxunRQBoGKP8QRM1wZQCOryvY8d1S
+	 sIDdHOL64o3tcQyRbrmoNQjnnEazmp+3SLSyOV/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 7.1 1532/2077] arm64: dts: s32g3: Fix SWT8 watchdog address
-Date: Tue, 21 Jul 2026 17:20:05 +0200
-Message-ID: <20260721152628.913382735@linuxfoundation.org>
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH 7.1 1533/2077] arm64: dts: renesas: ironhide: Describe inline ECC carveouts
+Date: Tue, 21 Jul 2026 17:20:06 +0200
+Message-ID: <20260721152628.936766209@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,40 +50,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-commit 65210e81f7837a871a17237d15e4b1191d5e8771 upstream.
+commit 6fa6ee724d8dadf392139e242ac936b5da730c4b upstream.
 
-Add missing hex annotation to fix the SWT8 watchdog address in 'reg'
-property, as reported by dtc W=1:
+The DBSC5 DRAM controller protects DRAM content using inline ECC.
+The inline ECC utilizes areas of DRAM for its operation, which are
+in the DRAM address range, but must not be accessed or modified.
+Describe the inline ECC carveout areas used by the DBSC5 controller
+on this hardware as reserved-memory, which must not be accessed.
+Include DRAM areas which are unprotected by ECC as well, those are
+parts of the DRAM which directly precede the ECC carveout.
 
-  s32g3.dtsi:863.27-869.5: Warning (simple_bus_reg): /soc@0/watchdog@40500000: simple-bus unit address format error, expected "269fb20"
+In case of high DRAM utilization, unless the inline ECC carveouts
+are properly reserved, Linux may use and corrupt the memory used
+by the DBSC5 DRAM controller for inline ECC, which would lead to
+the system becoming unstable.
 
-Lack of hex '0x' meant address would be interpreted as decimal thus
-completely different value used as this device MMIO.  If device was
-enabled this could lead to corruption of other device address space and
-broken boot.
-
+Fixes: ad142a4ef710 ("arm64: dts: renesas: r8a78000: Add initial Ironhide board support")
 Cc: stable@vger.kernel.org
-Fixes: 6db84f042745 ("arm64: dts: s32g3: Add the Software Timer Watchdog (SWT) nodes")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260710160450.64967-1-marek.vasut+renesas@mailbox.org
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/s32g3.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/renesas/r8a78000-ironhide.dts |   41 ++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
---- a/arch/arm64/boot/dts/freescale/s32g3.dtsi
-+++ b/arch/arm64/boot/dts/freescale/s32g3.dtsi
-@@ -862,7 +862,7 @@
+--- a/arch/arm64/boot/dts/renesas/r8a78000-ironhide.dts
++++ b/arch/arm64/boot/dts/renesas/r8a78000-ironhide.dts
+@@ -93,6 +93,47 @@
+ 			reg = <0x0 0x8c400000 0x0 0x02000000>;
+ 			no-map;
+ 		};
++
++		/* DRAM controller inline ECC areas */
++		ecc@10cccc0000 {
++			reg = <0x10 0xcccc0000 0x0 0x33340000>;
++			no-map;
++		};
++
++		ecc@12cccc0000 {
++			reg = <0x12 0xcccc0000 0x0 0x33340000>;
++			no-map;
++		};
++
++		ecc@14cccc0000 {
++			reg = <0x14 0xcccc0000 0x0 0x33340000>;
++			no-map;
++		};
++
++		ecc@16cccc0000 {
++			reg = <0x16 0xcccc0000 0x0 0x33340000>;
++			no-map;
++		};
++
++		ecc@18cccc0000 {
++			reg = <0x18 0xcccc0000 0x0 0x33340000>;
++			no-map;
++		};
++
++		ecc@1a66660000 {
++			reg = <0x1a 0x66660000 0x0 0x999a0000>;
++			no-map;
++		};
++
++		ecc@1c66660000 {
++			reg = <0x1c 0x66660000 0x0 0x999a0000>;
++			no-map;
++		};
++
++		ecc@1e66660000 {
++			reg = <0x1e 0x66660000 0x0 0x999a0000>;
++			no-map;
++		};
+ 	};
+ };
  
- 		swt8: watchdog@40500000 {
- 			compatible = "nxp,s32g3-swt", "nxp,s32g2-swt";
--			reg = <40500000 0x1000>;
-+			reg = <0x40500000 0x1000>;
- 			clocks = <&clks 0x3a>, <&clks 0x3b>, <&clks 0x3b>;
- 			clock-names = "counter", "module", "register";
- 			status = "disabled";
 
 
