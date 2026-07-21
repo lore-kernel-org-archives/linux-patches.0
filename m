@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBD546F48A;
-	Tue, 21 Jul 2026 19:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68DB415F1A;
+	Tue, 21 Jul 2026 19:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662852; cv=none; b=Ad1YY/iY80aw4hkPeZCSl/ju9C+P/yJDINJ6zt8IvJUnXwaQvTBlbVgaf9RAt/HffWuF2OvTiPf793OIwjHz4vbwnngHv/nTfW1Zy/YulWUCSoPoW0uKYJrySLhJcmvb/k+RSy5FLsAPbwe372S040cCYcN0YyO+MJBQu5P8GkA=
+	t=1784662854; cv=none; b=ioNt+PoKZKhiq1O3rvH0TtBZWCu2jKr5UmEsx+Ft+Ap1zmRxlh8hYOAWYyJnyvFpvjVxJQNgrMiAUdtbbhBIfH4F8y9a3Y50OEGZ447MOiTsE+QDKe3NFZhj585KP0asP5I7Cxxdv1CLCn9kYXHoxJrb7m7RWsfYgaSxs6gqVqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662852; c=relaxed/simple;
-	bh=qwyt4UWuTZqCoeCY4DnDjli+pX6IH1+gEWe8NH/8+rE=;
+	s=arc-20240116; t=1784662854; c=relaxed/simple;
+	bh=Kp/XYV12CbDdDeGlk6SV8pbFNyJSd90pGlKiWWaabYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IIT43EdnFfny0pShRnf4cKv9+ji7xAOJtKam1naBqowx6xiKyAmSIO8VE3IO67UcB0GYS+ChTqq0+fchA8NSvZPj8rm7KcIyPkc5n+zj4DU6+3Tg1FH2d0Sm5G17dpQUChEJSgSww+L8EC4ET0IHki0CEbqrOfVjrwEkkzgV6jY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WhGhKF0I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SolItlALphJz93jUarhvRQBWhOnVtTQJg8X12PVJuHLmsIIXwK3DHQ8kNrvB6UeMdtByyH6X5eZxx9N8PDQtJBePc6BSFRk0x05XIVeRc4MpZaNa5d9ft4DAe8XjuM38exHW5JoQjAtGNB1rudWdwXtA9Vbi3MsZvHSg2KjTmvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jkz4CiJV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WhGhKF0I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954A51F000E9;
-	Tue, 21 Jul 2026 19:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jkz4CiJV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1F91F000E9;
+	Tue, 21 Jul 2026 19:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662851;
-	bh=4reyHoUWyYHXvZsTJtor+OLlolNgMs2Ezxb1y2TgYdM=;
+	s=korg; t=1784662853;
+	bh=6B7U4tJfgRAk6+qv9lOfH0rBanjuBxIT8G0CtUMK8Ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WhGhKF0IU8lN84FuRXYuA8mqRTdGuwb42m8sOBsdb80YGk9Xqu8oL3KsGd4uJIp5T
-	 ZIdvus3atV7llfswdCSfRxkGykBFhWYcNT4uviQ//pScFjAT+OOTdD+xQW9cVDicIo
-	 Ppi9ysJRYFwUoCHes2oBKYbrTw3Asp4bGkZda2B0=
+	b=jkz4CiJVCcsiNH358/4VVo3KYO8s0JztGSIhApEB7Cr5qR+cxmq7IxbVPgShZPHln
+	 d+iowh0IOUaGidUrVBIxNhGUpQhBG7h7WeXSrED57EKprqhXz+Fs5wMfbSKqUWkRlB
+	 Lwo/RfYGAnkwfseYFybJ+IR2fadvqI6QMx68HvDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	James Clark <james.clark@arm.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0558/1276] perf: Remove redundant kernel.h include
-Date: Tue, 21 Jul 2026 17:16:41 +0200
-Message-ID: <20260721152458.604357561@linuxfoundation.org>
+Subject: [PATCH 6.12 0559/1276] perf cs-etm: Reject CPU IDs that would overflow signed comparison
+Date: Tue, 21 Jul 2026 17:16:42 +0200
+Message-ID: <20260721152458.627745343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -54,48 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 7a0ba3891104da77cfd1a16d41699e0fdf45603a ]
+[ Upstream commit 542e88a4c6f7b6edd1326ce767d4cb3c2ea9d61d ]
 
-Now that the bitfield dependency is resolved, the explicit inclusion of
-kernel.h is no longer needed.
+metadata[j][CS_ETM_CPU] is a u64 from perf.data, but the comparison
+with max_cpu casts it to (int).  A crafted value like 0xFFFFFFFF becomes
+-1 after the cast, which compares less than max_cpu (0), so the queue
+array is never sized to accommodate it.  When the value is later passed
+to cs_etm__get_queue(), it indexes queue_array with the original large
+value, causing an out-of-bounds access.
 
-Remove the redundant include.
+Validate that CS_ETM_CPU fits in an int before using it in the signed
+comparison.
 
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
+Fixes: 57880a7966be510c ("perf: cs-etm: Allocate queues for all CPUs")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: James Clark <james.clark@arm.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 542e88a4c6f7 ("perf cs-etm: Reject CPU IDs that would overflow signed comparison")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/arch/arm64/util/header.c | 1 -
- tools/perf/util/cs-etm.c            | 1 -
- 2 files changed, 2 deletions(-)
+ tools/perf/util/cs-etm.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/arch/arm64/util/header.c b/tools/perf/arch/arm64/util/header.c
-index 741df3614a09ac..d0ccc727593ca2 100644
---- a/tools/perf/arch/arm64/util/header.c
-+++ b/tools/perf/arch/arm64/util/header.c
-@@ -1,4 +1,3 @@
--#include <linux/kernel.h>
- #include <linux/bits.h>
- #include <linux/bitfield.h>
- #include <stdio.h>
 diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index 3fd669817eb9bf..776bef4e00156e 100644
+index 776bef4e00156e..e1b2612efa88a8 100644
 --- a/tools/perf/util/cs-etm.c
 +++ b/tools/perf/util/cs-etm.c
-@@ -6,7 +6,6 @@
+@@ -6,6 +6,7 @@
   * Author: Mathieu Poirier <mathieu.poirier@linaro.org>
   */
  
--#include <linux/kernel.h>
++#include <limits.h>
  #include <linux/bitfield.h>
  #include <linux/bitops.h>
  #include <linux/coresight-pmu.h>
+@@ -3465,7 +3466,13 @@ int cs_etm__process_auxtrace_info_full(union perf_event *event,
+ 			goto err_free_metadata;
+ 		}
+ 
+-		if ((int) metadata[j][CS_ETM_CPU] > max_cpu)
++		/* CPU id comes from perf.data and must fit max_cpu + 1 without overflow */
++		if (metadata[j][CS_ETM_CPU] >= INT_MAX) {
++			err = -EINVAL;
++			goto err_free_metadata;
++		}
++
++		if ((int)metadata[j][CS_ETM_CPU] > max_cpu)
+ 			max_cpu = metadata[j][CS_ETM_CPU];
+ 	}
+ 
 -- 
 2.53.0
 
