@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA3E368D40;
-	Tue, 21 Jul 2026 22:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E698D3AE6E4;
+	Tue, 21 Jul 2026 22:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673329; cv=none; b=vF8FUPCnxwlYuRmFNZUJW+O5zxHNRfLLzK6U6e5fU0ye5/RGV1rWz+4GOemdcuvuFUNzheI07mMpuYyMHdcN65DZzwjRCuFLzKwmZiquYwPDhxfiipxhrJotWXTohzOS/FEPootWweV8BMEQKqzU9TKXeb9tRMVZyX2tJ6NWNKU=
+	t=1784673332; cv=none; b=VmGv2CqFOhfwAnUEYOiBP9d6Tm/JMln0EasWyaUbMdBSwYUWOydOu754oHUmfzyGoLfp/tWdlzS8CqE8cg1KWAk3gFo76UiT4G8zYMU9Fza+YAgouai+ha5aq4a4Zdgvr490Lt74zM4cFdZgsAeKelGE/RNNcTehk7YmHj5oRYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673329; c=relaxed/simple;
-	bh=eZ8jE3igTZEx5PpeHgsL6+TbPFAHDzLcr91icalN+yk=;
+	s=arc-20240116; t=1784673332; c=relaxed/simple;
+	bh=JRnvab1+c4IzRU0FbwTXNcNMxmaBuwjYe0DShQ5t3hw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lBWOgDmeKv/wwLiVCCZ6KPR+MrUs7bBoftb7VjqLPt+7FBsUoFmIy5IvR7ZkTsbPwlvHuHluaOUaDqbEsrIRyXTCDltNHWNx4eugwNw1HZ+xAIivPoNq0Gd/wOacfcTOBtWZMwPF5fxi4Ts5eZlpiK9swYvN/MD3v6+uywD/o/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDHcLXhf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gJnzK+j+V6xST0rQcaKA28YHKhQGpYqBOqzstNtQXZrdTWth28tGyEmivCTDmsiKzdjQ8O0zcx3A7dAtOQCSfSDvgzsqVTVfYMZHEgGss95tgEw0uyNKOzZvAm4ncT/nsJ4yDQpyca7ue0kDkev6t/dORnA0i1vPV7+U/FYPr+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbRHztHr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDHcLXhf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9007C1F000E9;
-	Tue, 21 Jul 2026 22:35:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbRHztHr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E961F000E9;
+	Tue, 21 Jul 2026 22:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673328;
-	bh=He731H0IgTm0h/kHT2mzH2pHmuWAMr2lyHcJZ3lcEKU=;
+	s=korg; t=1784673330;
+	bh=sw9MngPofm7UirkoGwwWuO/IPd4ztuiKN/Dhr9/6Tlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CDHcLXhf9OBkp/vZ9udLdWRV9IF2mgMJZCQfjUpYiiYcCI0hWMtH2triN3nn4DM4u
-	 cp1b6wN1VrJ23vYI44Bj4TA9CS/a0Q5zW/CCS5cU+AVSzi5cc82eNuTt9cH59ARL7X
-	 qhSXMBtPTNWLNxVzorjUR+LTpTKOS3/OZv9YyXME=
+	b=gbRHztHrpFsf1/dfCz+c1nd/lnPo0Q5gOR1JsRh60eUrVmXm5JTCSSTq/Pn+ASH8r
+	 TxflEwnFVNUvYnG8h8LOfPKtJlx49DvOulkLFB54xs3FtW9GrWF6WC9I4CaNNeHf2A
+	 lT+sYR5yM8uBfSJvQahlXPUdiOIplmAeDK2jUISg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+674ff7e4d7fdfd572afc@syzkaller.appspotmail.com,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 084/699] Bluetooth: fix UAF in bt_accept_dequeue()
-Date: Tue, 21 Jul 2026 17:17:23 +0200
-Message-ID: <20260721152357.599607213@linuxfoundation.org>
+	Liviu Stan <liviu.stan@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 120/699] iio: temperature: ltc2983: Fix n_wires default bypassing rotation check
+Date: Tue, 21 Jul 2026 17:17:59 +0200
+Message-ID: <20260721152358.414180252@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,97 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Liviu Stan <liviu.stan@analog.com>
 
-commit 4bd0b274054f2679f28b70222b607bb0afc3ab9a upstream.
+[ Upstream commit 434c150752675f44dc52c384a7fa22e5176bc35a ]
 
-bt_accept_get() takes a temporary reference before dropping the accept
-queue lock. bt_accept_dequeue() currently drops that reference before
-bt_accept_unlink(), leaving only the queue reference.
+When adi,number-of-wires is absent, n_wires is left at 0. The binding
+documents a default of 2 wires, matching the hardware default. However
+the current-rotate validation checks n_wires == 2 || n_wires == 3, so
+with n_wires = 0 the guard is bypassed and adi,current-rotate is accepted
+for a 2-wire RTD.
 
-bt_accept_unlink() drops the queue reference. The subsequent
-sock_hold() therefore accesses freed memory if it was the final
-reference, as observed by KASAN during listening L2CAP socket cleanup.
+Initialize n_wires = 2 to match the binding default and ensure the
+rotation check fires correctly when the property is absent.
 
-Retain the temporary queue-walk reference through unlink and hand it to
-the caller on success. Drop it explicitly on the closed and
-not-yet-connected paths.
-
-Fixes: ab1513597c6c ("Bluetooth: fix UAF in l2cap_sock_cleanup_listen() vs l2cap_conn_del()")
-Reported-by: syzbot+674ff7e4d7fdfd572afc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=674ff7e4d7fdfd572afc
-Cc: stable@vger.kernel.org
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f110f3188e56 ("iio: temperature: Add support for LTC2983")
+Signed-off-by: Liviu Stan <liviu.stan@analog.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Liviu Stan <liviu.stan@analog.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/af_bluetooth.c |   17 +++--------------
- net/bluetooth/l2cap_sock.c   |    4 ++--
- 2 files changed, 5 insertions(+), 16 deletions(-)
+ drivers/iio/temperature/ltc2983.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bluetooth/af_bluetooth.c
-+++ b/net/bluetooth/af_bluetooth.c
-@@ -281,7 +281,7 @@ struct sock *bt_accept_dequeue(struct so
+diff --git a/drivers/iio/temperature/ltc2983.c b/drivers/iio/temperature/ltc2983.c
+index ecc8b2e129b896..c6748cfc5d5ce2 100644
+--- a/drivers/iio/temperature/ltc2983.c
++++ b/drivers/iio/temperature/ltc2983.c
+@@ -697,7 +697,7 @@ static struct ltc2983_sensor *ltc2983_rtd_new(const struct device_node *child,
+ 	int ret = 0;
+ 	struct device *dev = &st->spi->dev;
+ 	struct device_node *phandle;
+-	u32 excitation_current = 0, n_wires = 0;
++	u32 excitation_current = 0, n_wires = 2;
  
- restart:
- 	for (sk = bt_accept_get(parent, NULL); sk; sk = next) {
--		/* Prevent early freeing of sk due to unlink and sock_kill */
-+		/* The reference from bt_accept_get() keeps sk alive. */
- 		lock_sock(sk);
- 
- 		/* Check sk has not already been unlinked via
-@@ -297,13 +297,11 @@ restart:
- 
- 		next = bt_accept_get(parent, sk);
- 
--		/* sk is safely in the parent list so reduce reference count */
--		sock_put(sk);
--
- 		/* FIXME: Is this check still needed */
- 		if (sk->sk_state == BT_CLOSED) {
- 			bt_accept_unlink(sk);
- 			release_sock(sk);
-+			sock_put(sk);
- 			continue;
- 		}
- 
-@@ -313,16 +311,6 @@ restart:
- 			if (newsock)
- 				sock_graft(sk, newsock);
- 
--			/* Hand the caller a reference taken while sk is
--			 * still locked.  bt_accept_unlink() just dropped
--			 * the accept-queue reference; without this hold a
--			 * concurrent teardown (e.g. l2cap_conn_del() ->
--			 * l2cap_sock_kill()) could free sk between
--			 * release_sock() and the caller using it.  Every
--			 * caller drops this with sock_put() when done.
--			 */
--			sock_hold(sk);
--
- 			release_sock(sk);
- 			if (next)
- 				sock_put(next);
-@@ -330,6 +318,7 @@ restart:
- 		}
- 
- 		release_sock(sk);
-+		sock_put(sk);
- 	}
- 
- 	return NULL;
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1420,8 +1420,8 @@ static void l2cap_sock_cleanup_listen(st
- 
- 	/* Close not yet accepted channels.
- 	 *
--	 * bt_accept_dequeue() now returns sk with an extra reference held
--	 * (taken while sk was still locked) so a concurrent l2cap_conn_del()
-+	 * bt_accept_dequeue() returns sk with its temporary queue-walk
-+	 * reference held, so a concurrent l2cap_conn_del()
- 	 * -> l2cap_sock_kill() cannot free sk under us.
- 	 *
- 	 * cleanup_listen() runs under the parent sk lock, so unlike
+ 	rtd = devm_kzalloc(dev, sizeof(*rtd), GFP_KERNEL);
+ 	if (!rtd)
+-- 
+2.53.0
+
 
 
