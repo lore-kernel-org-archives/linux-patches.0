@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7B130F80C;
-	Tue, 21 Jul 2026 17:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463AB446839;
+	Tue, 21 Jul 2026 17:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655779; cv=none; b=PoGYDBI4X9xU5NnqIQPzCBwi395fRxHPK+CwE9ahw7w8BKbTSIcfdbzOhQXb52Q0CN15+A2sGRf3VTVFQxdyiullgj8GNavGEVAHqFSZfylyIQCIo380WFBNymbErLbDaXMOeBYUN81JffXK1GxvLbjlRcxItCMWonj0VxE+IdI=
+	t=1784655782; cv=none; b=JPlV6hihFWXwfErbjJaVtV8RZQknrT5HZP7agrrkmon00Uo9XCKrTV8nr9VbcgBTZonOej++IIYuvqNz0FZCcqCW3cC+nj5VlkzMvZu2U/G/rKDAXmlbOB4g7T16F1cHoTwiYjm4OrrWZZEZ7clUZK0JwL3PIqIoLLhLjcbfsbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655779; c=relaxed/simple;
-	bh=ix4+LyJRNBKrr4AdgdE88FxCbTsdHOk5hfwZjkhxAMM=;
+	s=arc-20240116; t=1784655782; c=relaxed/simple;
+	bh=6iknlKcuG3DdB6lYykzEKgpo2st8QI/3pvS7gFRmy34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DozUZDZ1cxMG9yZhQPPeUQRcwtpkyaSCyjWvkwdYvJDnXki/ZYU1mokPrBmdOBocDz16yUnorXCJ9X7nrbNESyhjFwG+N5lNpYRTcZ3+3Bjkz0vExNVjEOZkwcaC+2VF39wJRq+lSsqA2xpEdcNMl862doLLkE+ZoLWI/i0COYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yhsicgiB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YC/an22r3/93nZfOc48GrF8b4QqsHtlk5Gj/IpuQkua0AD3MSe/1Jb0yXfwl5sHOLNdA168o27QcCqlkgGuaV0b7h9uSdU4Kd81A39B/Pf58QMbMn2OPP3DagdH9G20BCmkDMdoRjSqLwpbyalL9YqVjEFWjUAPT0BpvSJQ27DY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q8ih0Sgr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhsicgiB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB681F000E9;
-	Tue, 21 Jul 2026 17:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8ih0Sgr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E5D1F000E9;
+	Tue, 21 Jul 2026 17:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655778;
-	bh=d1SuF/5uSexPmNCTEowL+1eqgZf8vkpbEW9zgKi7Yq0=;
+	s=korg; t=1784655781;
+	bh=WB5LBMTOtylGVhn1YKfggHxzuOM/gumUcGN6WjAGcL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yhsicgiB9/LWUYsI7aIZqdckjn+0Kix2nyarNJnzvF+sJDMsBOt7Q3UjMlCVB0IIb
-	 uKmmX5Cn8JVszoRduKfXei2oE9Z46H+L3CuQxvg66H+gl2UiDpPJPTAQlcMMcVn32I
-	 Kwy8atGB2cX0zDAgYp2Ld2WovBuxkPG4Nq6cy/uE=
+	b=q8ih0SgrYyp0LCGZj7eiZxEDKmtzZAF6KI189nTiXiwOMQusjh2RfCbTa0mXUFWKT
+	 jbVX2wJom1Ce7emXjh/gtsNSiVwFr+Ywa48qNpBPU35CMtSMqWtbjRTfMtn/GZ3Y67
+	 ghTILMWBQeoU09dRPDtfWPvV5vlwqv6z9C8HMXM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsiu Che Yu <yu.whisper.personal@gmail.com>,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	linux-clk@vger.kernel.org,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Brian Masney <bmasney@redhat.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0136/1611] rust: alloc: fix `Vec::extend_with` SAFETY comment
-Date: Tue, 21 Jul 2026 17:04:12 +0200
-Message-ID: <20260721152517.933584649@linuxfoundation.org>
+Subject: [PATCH 6.18 0137/1611] clk: scmi: Fix clock rate rounding
+Date: Tue, 21 Jul 2026 17:04:13 +0200
+Message-ID: <20260721152517.955145309@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,36 +57,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hsiu Che Yu <yu.whisper.personal@gmail.com>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-[ Upstream commit f497aae6ded43f91b1dbf29a35d7062823635640 ]
+[ Upstream commit d0c81a38d06d446d341532700b3a4a43d3b00eb1 ]
 
-Fix an incorrect operator in the SAFETY comment, changing `<` to `<=`,
-since `Vec::reserve` guarantees capacity for exactly n additional elements,
-so the equal case should be included.
+While the do_div() helper used for rounding expects its divisor argument
+to be a 32bits quantity, the currently provided divisor parameter is a
+64bit value that, as a consequence, is silently truncated and a possible
+source of bugs.
 
-Signed-off-by: Hsiu Che Yu <yu.whisper.personal@gmail.com>
-Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
-Fixes: 2aac4cd7dae3d ("rust: alloc: implement kernel `Vec` type")
-Link: https://patch.msgid.link/18fc8eee2f057a6bfbcadae156d1d0b7c40d0077.1777111268.git.yu.whisper.personal@gmail.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fix by using the proper div64_ul helper.
+
+Cc: Michael Turquette <mturquette@baylibre.com>
+Cc: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-clk@vger.kernel.org
+Fixes: 7a8655e19bdb ("clk: scmi: Fix the rounding of clock rate")
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260508153300.2224715-2-cristian.marussi@arm.com
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/alloc/kvec.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/clk-scmi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/rust/kernel/alloc/kvec.rs b/rust/kernel/alloc/kvec.rs
-index ac8d6f763ae81d..b6a97b8fb51211 100644
---- a/rust/kernel/alloc/kvec.rs
-+++ b/rust/kernel/alloc/kvec.rs
-@@ -754,7 +754,7 @@ impl<T: Clone, A: Allocator> Vec<T, A> {
-         spare[n - 1].write(value);
+diff --git a/drivers/clk/clk-scmi.c b/drivers/clk/clk-scmi.c
+index 6b286ea6f1218c..b6a12f3bc123c9 100644
+--- a/drivers/clk/clk-scmi.c
++++ b/drivers/clk/clk-scmi.c
+@@ -10,9 +10,9 @@
+ #include <linux/device.h>
+ #include <linux/err.h>
+ #include <linux/of.h>
++#include <linux/math64.h>
+ #include <linux/module.h>
+ #include <linux/scmi_protocol.h>
+-#include <asm/div64.h>
  
-         // SAFETY:
--        // - `self.len() + n < self.capacity()` due to the call to reserve above,
-+        // - `self.len() + n <= self.capacity()` due to the call to reserve above,
-         // - the loop and the line above initialized the next `n` elements.
-         unsafe { self.inc_len(n) };
+ #define NOT_ATOMIC	false
+ #define ATOMIC		true
+@@ -83,7 +83,7 @@ static int scmi_clk_determine_rate(struct clk_hw *hw,
+ 
+ 	ftmp = req->rate - fmin;
+ 	ftmp += clk->info->range.step_size - 1; /* to round up */
+-	do_div(ftmp, clk->info->range.step_size);
++	ftmp = div64_ul(ftmp, clk->info->range.step_size);
+ 
+ 	req->rate = ftmp * clk->info->range.step_size + fmin;
  
 -- 
 2.53.0
