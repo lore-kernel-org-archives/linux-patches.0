@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A943B4EAB;
-	Tue, 21 Jul 2026 20:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF0B3B1EFC;
+	Tue, 21 Jul 2026 20:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666452; cv=none; b=oCe/HeyHPF1EKX6axBFb0ccPqCUucKx9RjyGGu/QPt/xWTbn3Kh3huJOr7IapYXnga1WEYj8hwmRae3zOBtH6dJBm+BCvVd4xp/BjftcIbupdG3jf3Ac6kXTiojgkNn5y35adPEKAaRD2oW2a0e2RjnlDSw2btuJa1Wpk3ucsuo=
+	t=1784666454; cv=none; b=mwo0vQsG4Y8V1+g8NX1s8cvboO+sXgwniUdBeIuYDlQssEMJkX5SMh2G8rLw7Z6gjPLfBCU2ZJ5CGwiL9Tm3pZFfBrPWg2ZV9TmJ+bedYM6leCS5l+8yfrq7zDYymzCDEVH3u58CDj4eDFWy7GcrFRGYzQxHrtCAhbj4U5AeaqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666452; c=relaxed/simple;
-	bh=q97KBT5UF4B+vRrVIjviEMJHw9foSPQBFh+ILRZbe88=;
+	s=arc-20240116; t=1784666454; c=relaxed/simple;
+	bh=1piupUUrDQsOFzhKXdd2hZ1Ff6jIPEGdFH2qeruWtCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kbkIZJRKM2Ey4A8cMf5zt9qk2B7Iy9EWM52H8zuj+AIiQt68QeIh3cuK6Gtbgg4njjQ8UzSV/yg8Y6r7NgRdnoM/QU6nB7dkRbDQAygN7cVYry4/dVeJJjEGaKLEwkk/M3E855DzqDG3pllTb5T0KHjpiY0nunQ+jfD6et7wgmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8p3b9Rs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kU82SC9eqLCvlB+ZNWUJ3+YFJn01e4CO9UZpuauaVGnCSzTOoY/e4NtqTRV1JChMyyFTo+25Hzr9WiGRkFi+btYyGtGxVMwIG798vawh6+1FwClF5l7DeZqBPkm3vng7eG9heFfLWgBsN5Lq+q57HROge8YiFFrb0wqxNe+Ek6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1H7Vo5c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8p3b9Rs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9802C1F000E9;
-	Tue, 21 Jul 2026 20:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1H7Vo5c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6CE1F00A3A;
+	Tue, 21 Jul 2026 20:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666451;
-	bh=zyoxuavMFw3ZIfJXkf8nzxqObim7ATJ3Gd27HJHSXJA=;
+	s=korg; t=1784666453;
+	bh=wNsrfIZi5kDgcqmlxJUMlRZYNJk9u6iT4QsKH6Hnr8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v8p3b9Rs6GbLkRNPv6lY8NT0rHR7dLrnSka2phzpYYqRpsux7i/e57k5UALqmpOR7
-	 09EYVz8GWACO9wyk+M25YxqPOZqZr2kRJZYRxvCBSQqDUj64BE8v1mUDbWDR7YNZAh
-	 Ikz/SqKyzhdrdtPpA/dC+oj88+WamVG2eVGExW8M=
+	b=z1H7Vo5cDvZrvkYUJLxp+vBOtCnfSrQfGyRz/phxH++n5fU6FkYGCEc3x30GHxUVp
+	 wH93reFPgbJKEB1Eu2Uz6HV71Dt5/tSVlYhl8q4x75MiYcc2vIZa4MiH4c9bjV3Zeo
+	 zjLdqMPqoeY+OSYFmw+LgnUUURk2PnRsY2wYCJw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0686/1266] perf tools: Fix thread__set_comm_from_proc() on empty comm file
-Date: Tue, 21 Jul 2026 17:18:43 +0200
-Message-ID: <20260721152457.203463576@linuxfoundation.org>
+Subject: [PATCH 6.6 0687/1266] perf symbols: Bounds-check descsz in sysfs__read_build_id() GNU fallback
+Date: Tue, 21 Jul 2026 17:18:44 +0200
+Message-ID: <20260721152457.225095454@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -54,48 +55,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 31d596054550f793508abe7dd593853ece47d428 ]
+[ Upstream commit 1b4e9fbdeabc549965e70ac0cd8095d57ff6df06 ]
 
-thread__set_comm_from_proc() calls procfs__read_str() then strips
-the trailing newline via comm[sz - 1] = '\0'.  procfs__read_str()
-allocates the buffer before reading, so on an empty /proc/pid/comm
-(reachable during late exit teardown) it returns success with sz = 0
-and an unterminated heap buffer.
+When sysfs__read_build_id() matches NT_GNU_BUILD_ID with the right
+namesz but the name content is not "GNU", it falls back to reading
+descsz bytes into the stack buffer bf[BUFSIZ]:
 
-The sz - 1 underflow was the original sashiko finding: it writes a
-null byte before the allocation.  But even with a sz > 0 guard on
-the newline strip, the unterminated buffer would still be passed to
-thread__set_comm() which calls strlen() — an unbounded heap read.
+    } else if (read(fd, bf, descsz) != (ssize_t)descsz)
 
-Fix by treating sz == 0 as failure: free the buffer and return -1.
-This is consistent with pmu.c's perf_pmu__parse_scale/unit which
-already treat len == 0 from filename__read_str as an error.
+Unlike the else branch which validates namesz + descsz against
+sizeof(bf), this path passes descsz directly to read() without any
+bounds check.  A crafted sysfs file with a large n_descsz overflows
+the 8192-byte stack buffer.
 
-Fixes: 2f3027ac28bf6bc3 ("perf thread: Introduce method to set comm from /proc/pid/self")
+Add a descsz > sizeof(bf) check before the read, breaking out of
+the loop on oversized values.
+
+Fixes: e5a1845fc0aeca85 ("perf symbols: Split out util/symbol-elf.c")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/thread.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/perf/util/symbol-elf.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/thread.c b/tools/perf/util/thread.c
-index 61e9f449c72581..ec0ccc310cdad8 100644
---- a/tools/perf/util/thread.c
-+++ b/tools/perf/util/thread.c
-@@ -273,6 +273,11 @@ int thread__set_comm_from_proc(struct thread *thread)
- 	if (!(snprintf(path, sizeof(path), "%d/task/%d/comm",
- 		       thread__pid(thread), thread__tid(thread)) >= (int)sizeof(path)) &&
- 	    procfs__read_str(path, &comm, &sz) == 0) {
-+		/* sz==0: read got nothing, e.g. race during exit teardown */
-+		if (sz == 0) {
-+			free(comm);
-+			return -1;
-+		}
- 		comm[sz - 1] = '\0';
- 		err = thread__set_comm(thread, comm, 0);
- 	}
+diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
+index 83b76e88ed603e..4a2fb6e3d4ef38 100644
+--- a/tools/perf/util/symbol-elf.c
++++ b/tools/perf/util/symbol-elf.c
+@@ -1059,8 +1059,13 @@ int sysfs__read_build_id(const char *filename, struct build_id *bid)
+ 					err = 0;
+ 					break;
+ 				}
+-			} else if (read(fd, bf, descsz) != (ssize_t)descsz)
+-				break;
++			} else {
++				/* descsz from untrusted file — clamp to buffer */
++				if (descsz > sizeof(bf))
++					break;
++				if (read(fd, bf, descsz) != (ssize_t)descsz)
++					break;
++			}
+ 		} else {
+ 			size_t n;
+ 
 -- 
 2.53.0
 
